@@ -33,7 +33,7 @@
     Dim iArrInd(16) As Tuple(Of Integer, Boolean)
     Dim sInts() As Integer = {0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0} 'the starting indexes of each catagory
 
-    Dim hairColor As Color
+    Dim hairColor As Color = Color.FromArgb(255, 204, 203, 213)
     Dim skincolor As Color = Color.FromArgb(255, 247, 219, 195)
 
     Public Shared fGlasses, fEyes, fFace, fFacialMark, fMouth, fBody, fCloak, fClothing, fFrontHair, fEyebrows, fNose, fRearHair1, fEars, fAccA, fHat, fRearHair2, bkg As List(Of Image)
@@ -204,6 +204,8 @@
         For i = 0 To 16
             iArrInd(i) = New Tuple(Of Integer, Boolean)(sInts(i), currSex)
         Next
+        ComboBox2.Items.Add("Warrior")
+        ComboBox2.Items.Add("Mage")
         picPort.BackgroundImage = CreateBMP(iArr)
     End Sub
     'CharacterGenerator1_FormClosing handles the finalization of the in game image library
@@ -314,6 +316,21 @@
         mHat(0) = picPort.Image
         mFrontHair(0) = picPort.Image
         mFacialMark(0) = picPort.Image
+
+        If (ComboBox2.Text <> "Warrior" And ComboBox2.Text <> "Mage") Then
+            If MessageBox.Show("Woah there buddy! One of your choices was a bit of a write in, eh?  You sure you want to do that?", "Sneeky sneek", MessageBoxButtons.YesNo) = Windows.Forms.DialogResult.No Then
+                Exit Sub
+            End If
+        End If
+        Form1.player.name = TextBox1.Text
+        If currSex Then
+            Form1.player.sexBool = True
+            Form1.player.sex = "Female"
+        Else
+            Form1.player.sexBool = False
+            Form1.player.sex = "Male"
+        End If
+        Form1.player.setClass(ComboBox2.Text)
 
         NormalClothes.bsizeneg1 = New Tuple(Of Integer, Boolean)(CInt(Form1.player.iArrInd(3).Item1), False)
         NormalClothes.bsize1 = New Tuple(Of Integer, Boolean)(CInt(Form1.player.iArrInd(3).Item1), True)
@@ -1026,15 +1043,16 @@
     'sex Selection buttons
     Private Sub btnMale_Click(sender As Object, e As EventArgs) Handles btnMale.Click
         currSex = False
+        Form1.player.sexBool = False
         pnlBody.Controls.Clear()
         currAttribute = mBody
-        For i = 0 To mBody.Count - 1
-            Dim x As Integer = (i * 71)
+        For i = 0 To currAttribute.Count - 1
+            Dim x As Integer = (i * 71 * Me.Size.Width / 581)
             Dim y As Integer = 0
             Dim img As New PictureBox
-            img.BackgroundImage = mBody(i)
-            img.Location = New Point(x, y)
-            img.Size = New Point(70, 70)
+            img.BackgroundImage = currAttribute(i)
+            img.Location = New Point(x, y - 20)
+            img.Size = New Point(70 * Me.Size.Width / 581, 104 * Me.Size.Width / 581)
             img.BackgroundImageLayout = ImageLayout.Stretch
             AddHandler img.Click, AddressOf PicOnClick
             pnlBody.Controls.Add(img)
@@ -1048,7 +1066,7 @@
         iArr(0) = bkg(0)
         iArr(1) = mRearHair2(0)
         iArr(2) = mBody(0)
-        iArr(3) = mClothing(1)
+        iArr(3) = mClothing(0)
         iArr(4) = mFace(0)
         iArr(5) = mRearHair1(0)
         iArr(6) = mEars(0)
@@ -1062,6 +1080,23 @@
         iArr(14) = picPort.Image
         iArr(15) = mFrontHair(1)
         iArr(16) = picPort.Image
+
+        iArrInd(1) = New Tuple(Of Integer, Boolean)(0, False)
+        iArrInd(2) = New Tuple(Of Integer, Boolean)(0, False)
+        iArrInd(3) = New Tuple(Of Integer, Boolean)(0, False)
+        iArrInd(4) = New Tuple(Of Integer, Boolean)(0, False)
+        iArrInd(5) = New Tuple(Of Integer, Boolean)(0, False)
+        iArrInd(6) = New Tuple(Of Integer, Boolean)(0, False)
+        iArrInd(7) = New Tuple(Of Integer, Boolean)(0, False)
+        iArrInd(8) = New Tuple(Of Integer, Boolean)(0, False)
+        iArrInd(9) = New Tuple(Of Integer, Boolean)(0, False)
+        iArrInd(10) = New Tuple(Of Integer, Boolean)(0, False)
+        iArrInd(11) = New Tuple(Of Integer, Boolean)(0, False)
+        iArrInd(12) = New Tuple(Of Integer, Boolean)(0, False)
+        iArrInd(13) = New Tuple(Of Integer, Boolean)(0, False)
+        iArrInd(14) = New Tuple(Of Integer, Boolean)(0, False)
+        iArrInd(15) = New Tuple(Of Integer, Boolean)(1, False)
+        iArrInd(16) = New Tuple(Of Integer, Boolean)(0, False)
 
         attrOrder(0) = bkg
         attrOrder(1) = mRearHair2
@@ -1080,19 +1115,23 @@
         attrOrder(14) = mAccA
         attrOrder(15) = mFrontHair
         attrOrder(16) = mHat
+
+        changeHC(hairColor)
+        changeSC(skincolor)
         picPort.BackgroundImage = CreateBMP(iArr)
     End Sub
     Private Sub btnFemale_Click(sender As Object, e As EventArgs) Handles btnFemale.Click
         currSex = True
-        pnlBody.Controls.Clear()
+        Form1.player.sexBool = True
         currAttribute = fBody
-        For i = 0 To fBody.Count - 1
-            Dim x As Integer = (i * 71)
+        pnlBody.Controls.Clear()
+        For i = 0 To currAttribute.Count - 1
+            Dim x As Integer = (i * 71 * Me.Size.Width / 581)
             Dim y As Integer = 0
             Dim img As New PictureBox
-            img.BackgroundImage = fBody(i)
-            img.Location = New Point(x, y)
-            img.Size = New Point(70, 70)
+            img.BackgroundImage = currAttribute(i)
+            img.Location = New Point(x, y - 20)
+            img.Size = New Point(70 * Me.Size.Width / 581, 104 * Me.Size.Width / 581)
             img.BackgroundImageLayout = ImageLayout.Stretch
             AddHandler img.Click, AddressOf PicOnClick
             pnlBody.Controls.Add(img)
@@ -1105,7 +1144,7 @@
         iArr(0) = bkg(0)
         iArr(1) = fRearHair2(0)
         iArr(2) = fBody(0)
-        iArr(3) = fClothing(1)
+        iArr(3) = fClothing(0)
         iArr(4) = fFace(0)
         iArr(5) = fRearHair1(0)
         iArr(6) = fEars(0)
@@ -1119,6 +1158,23 @@
         iArr(14) = picPort.Image
         iArr(15) = fFrontHair(1)
         iArr(16) = picPort.Image
+
+        iArrInd(1) = New Tuple(Of Integer, Boolean)(0, True)
+        iArrInd(2) = New Tuple(Of Integer, Boolean)(0, True)
+        iArrInd(3) = New Tuple(Of Integer, Boolean)(0, True)
+        iArrInd(4) = New Tuple(Of Integer, Boolean)(0, True)
+        iArrInd(5) = New Tuple(Of Integer, Boolean)(0, True)
+        iArrInd(6) = New Tuple(Of Integer, Boolean)(0, True)
+        iArrInd(7) = New Tuple(Of Integer, Boolean)(0, True)
+        iArrInd(8) = New Tuple(Of Integer, Boolean)(0, True)
+        iArrInd(9) = New Tuple(Of Integer, Boolean)(0, True)
+        iArrInd(10) = New Tuple(Of Integer, Boolean)(0, True)
+        iArrInd(11) = New Tuple(Of Integer, Boolean)(0, True)
+        iArrInd(12) = New Tuple(Of Integer, Boolean)(0, True)
+        iArrInd(13) = New Tuple(Of Integer, Boolean)(0, True)
+        iArrInd(14) = New Tuple(Of Integer, Boolean)(0, True)
+        iArrInd(15) = New Tuple(Of Integer, Boolean)(1, True)
+        iArrInd(16) = New Tuple(Of Integer, Boolean)(0, True)
 
         attrOrder(0) = bkg
         attrOrder(1) = fRearHair2
@@ -1137,6 +1193,9 @@
         attrOrder(14) = fAccA
         attrOrder(15) = fFrontHair
         attrOrder(16) = fHat
+
+        changeHC(hairColor)
+        changeSC(skincolor)
         picPort.BackgroundImage = CreateBMP(iArr)
     End Sub
     'haircolor change methods
@@ -1157,10 +1216,22 @@
             btnEyebrows_Click(sender, e)
             currAttribute = mEyebrows
         End If
+        For i = 0 To currAttribute.Count - 1
+            Dim x As Integer = (i * 71 * Me.Size.Width / 581)
+            Dim y As Integer = 0
+            Dim img As New PictureBox
+            img.BackgroundImage = currAttribute(i)
+            img.Location = New Point(x, y - 20)
+            img.Size = New Point(70 * Me.Size.Width / 581, 104 * Me.Size.Width / 581)
+            img.BackgroundImageLayout = ImageLayout.Stretch
+            AddHandler img.Click, AddressOf PicOnClick
+            pnlBody.Controls.Add(img)
+        Next
         cd.Dispose()
     End Sub
     Sub changeHC(ByVal c As Color)
         Form1.player.haircolor = c
+        hairColor = c
         If Form1.player.sexBool Then
             fFrontHair = getImg("img/fFrontHair")
             fRearHair1 = getImg("img/fRearHair1")
@@ -1221,6 +1292,7 @@
         cd.ShowDialog()
         changeSC(cd.sc)
         cd.Dispose()
+        btnBody_Click(sender, e)
     End Sub
     Sub changeSC(ByVal c As Color)
         Form1.player.skincolor = c

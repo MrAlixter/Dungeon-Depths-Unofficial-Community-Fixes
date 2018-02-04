@@ -27,6 +27,7 @@ Game-Breaking:
 
 Engine Improvements:
 - [done] multiple saves
+- [done] Combine character generator menus
 - Tutorial of some sort
 - Lust stat gauge
 - Use pushLblEvent over the log

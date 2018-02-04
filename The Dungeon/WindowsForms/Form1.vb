@@ -74,7 +74,7 @@
         shopkeeper = New NPC(2)
 
         If Not System.IO.File.Exists("dis.cla") Then
-            If MessageBox.Show("This game features adult content, and is not for anyone under the age of 18 or otherwise of legal age in their country. By clicking 'Yes' below, you confirm that you are legally an adult in your country.", "Obligatory Disclaimer", MessageBoxButtons.YesNo) = Windows.Forms.DialogResult.Yes Then
+            If MessageBox.Show("This game features adult content sexual in nature, and is not for anyone under the age of 18 or otherwise of legal age in their country. By clicking 'Yes' below, you confirm that you are legally an adult in your country.", "Obligatory Disclaimer", MessageBoxButtons.YesNo) = Windows.Forms.DialogResult.Yes Then
                 System.IO.File.CreateText("dis.cla")
             Else
                 Me.Close()
@@ -87,9 +87,6 @@
         btnS.Visible = False
         btnL.Visible = False
         btnControls.Visible = False
-        Dim form2 As New Form2
-        form2.ShowDialog()
-        form2.Dispose()
         Dim chargen As New CharacterGenerator1
         chargen.currSex = player.sexBool
         chargen.ShowDialog()
