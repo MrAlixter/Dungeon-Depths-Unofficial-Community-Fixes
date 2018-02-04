@@ -17,7 +17,7 @@ Known Bugs:
   - Some transformations re-equip items incorrectly
   - Hair & skin transparancy is not saved
 Major:
-  - [???] Character creation can throw an exception, particularly working with ears (Error 001)
+  - [done] Character creation can throw an exception, particularly working with ears (Error 001)
   - [done] The shopkeeper/ladder/chests can spawn on top of one another
   - Restoring from the princess tf causes some problems.
   - Masculine Potion
