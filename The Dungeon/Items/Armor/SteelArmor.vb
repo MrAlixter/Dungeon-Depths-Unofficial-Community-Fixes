@@ -1,0 +1,23 @@
+﻿Public Class SteelArmor
+    Inherits Armor
+
+    Sub New()
+        MyBase.setName("Steel_Armor")
+        MyBase.setDesc("A basic armor set forged from steel." & vbCrLf & _
+                       "+5 DEF")
+        MyBase.setUsable(False)
+        MyBase.dBoost = 5
+        MyBase.count = 0
+        MyBase.value = 125
+        MyBase.bsizeneg1 = New Tuple(Of Integer, Boolean)(6, False)
+        MyBase.bsize1 = New Tuple(Of Integer, Boolean)(13, True)
+        MyBase.bsize2 = New Tuple(Of Integer, Boolean)(14, True)
+        MyBase.bsize3 = New Tuple(Of Integer, Boolean)(15, True)
+    End Sub
+
+    Overrides Sub discard()
+        Form1.lstLog.Items.Add("You drop the " & getName())
+        Form1.lstLog.TopIndex = Form1.lstLog.Items.Count - 1
+        count -= 1
+    End Sub
+End Class

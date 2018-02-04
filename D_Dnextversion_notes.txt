@@ -1,0 +1,247 @@
+To-Do 1.0:
+
+Known Bugs:
+- Minor:
+  - [temp fix] midas gauntlet does not drop gold statue
+  - [???] shopkeeper @ sign disappears sometimes
+  - Self polymorph bounces off targax
+  - Explorer's health is not shown sometimes
+  - [done] Equipping a staff and self polymorphing nets a mana gain
+  - Traps disappear on save and load
+  - [done] Medicinal tea does not restore health past maximum (without charms) and cuts health 
+  - Equipping forced form equipment during combat doesn't fully tf until combat completes
+  - Polymorphing to a form with greater hp nets a health gain
+  - Polymorphing, and then polymorphingd again causes you to return to the previous polymorph
+  - Losing to a goo girl causes an unknown cause of death error and nets a game over
+  - Marissa can occasionally hit for extreme damage
+  - Some transformations re-equip items incorrectly
+  - Hair & skin transparancy is not saved
+Major:
+  - [???] Character creation can throw an exception, particularly working with ears (Error 001)
+  - [done] The shopkeeper/ladder/chests can spawn on top of one another
+  - Restoring from the princess tf causes some problems.
+  - Masculine Potion
+Game-Breaking:
+  - [???] Encounters on floor past floor 3 may throw unhandled exceptions
+  - Using the Just-Straight-Poison (The default name for mystery potions) will throw an unhandled exeption
+
+Engine Improvements:
+- [done] multiple saves
+- Tutorial of some sort
+- Lust stat gauge
+- Use pushLblEvent over the log
+- cool down between encounters
+- Keyboard controls for mouse actions
+- Global variable for inventory size
+- better save forward compatibility
+
+New Features:
+- [done] Fusion Crystal
+- [done] info box with credits
+  - undercoversam - advice balancing
+  - Rangorak - kisekae & art advice/created default clothing 4
+  - Houdini111 - extensive debugging assistance/bug list generations
+- Food [8/9]:
+  - Fortune Cookie (Forsee's a random change at some point)
+    - ...
+- Re-write TFs
+  - ...
+- Genral hair color at all times
+- Rest function
+- Lust managment
+- Tails
+- Wait during combat
+- Use panels instead of forms where possible
+- More detailed self inspect
+- Tweaking Balance
+  - ...
+  - Buff the warrior
+    - [done] Start with +50 health, +10 attack, +10 defence
+  - WIL
+    - Killing monsters and bossed can raise will
+    - Running from monsters, traps, and lust lower will
+    - WIL will affect tf speed, and WIL checks will determine some TFs
+  - EVD 
+    - Evade influances the likelyhood of a player avoiding an attack
+  - [2 / 10] Common enemies tf player, not kill
+    - ...
+    - Zombie - 
+    - Slime turns your clothes into goo
+    - goo girl absorbs you for 30 turns, uses as sex toy (if slime then perma absorb)
+    - Imp raises lust/boob size/dick size
+    - Cocatrice petrifies, x2 to chickens
+    - Lat. Dom. equips a cowbell on the player
+  - More dynamic enemies
+    - Attack classes 
+    - Stuns (5%)
+    - Chance of charge attack (8%)
+    - Evade Stats have impact
+  - [done][5 / 5] Weapon Stuff
+    - ...
+  - [7 / 13] Form Exclusive specials (used 1nce per combat)
+    - ...
+    - Goddess : ???
+    - Maid : Dustscreen (Guranteed escape)
+    - Princess: Royal Decree (Enemy attack 1/2ed)
+    - Nurse : Medical knowlege (healing effects heal double for 1 turn)
+    - Naga : Tail chokehold (Deals ATK + 25 damage)
+    - Cow Girl : Milk Cannon (deals superlight damage, creates healing milk)
+- [done] Finish level 3
+  - ...
+- Finish level 4 
+  - miniBoss: Bodystealing Goo
+  - Obvious chest with key
+  - goo takes body
+  - if key is taken, must get body back
+  - otherwise can choose whether to get body back
+  - steals body, needs to be found 
+- Finish level 5
+  - Boss: Medusa
+  - Straight shot full of statues
+- [13 / 30] Add 30 more items
+  - ...
+  - Pickaxe		(weapon +3 ATK)
+  - Nurses Cap		(nurse tf/Fast healing) +4 img
+  - Ouiji Board		(Fights ghost enemies/allows possesion)
+  - Holy Water 		(Expels Ghost)
+  - Cowbell		(cow tf/Creates heavy_cream) +9 img
+  - T-Shirt		(armor +2 DEF) +4 img
+  - Wet T-Shirt		(armor +1 DEF) +3 img
+  - TF halting potion   (stops tf without reverting)
+  - Perma-TF potion     (makes tfstate the starting state)
+  - Cursed Bustier      (armor +10 DEF/manequin tf) +4 img
+  - Cursed Sword	(weapon +10 ATK/sword tf) +1 img
+  - Cursed Tunic	(armor +5 DEF/girl tf) +2 img
+  - Cursed Dirndl 	(armor +5 DEF) +4 img
+  - Warp Orb 		(Teleports player, may cause tf to random body)
+  - Ex-fabric goop 	(armor)
+  - Mirror Shield 	(Weapon, needed to fight medusa)
+  - Healing Milk 	(Heals)
+  - Lust dimension portal rune (Triggers tentecles, related to the trap)
+
+  - Spidersilk
+  - spider venom
+  - hypnotic scepter
+  - Widow's charm
+  - poisoned dagger
+  - chitin armor
+  - widow egg
+  - slime chestplate
+  - sealed vial (only blobs can use)
+  - More equipment options
+    - Accesories (rings, necklaces, tattoos)
+      - Slave Collar
+      - Slime helmet
+    - Glasses
+    - Over Armor (Working title)
+      - Robes (Mage only, mana buff)
+        - Necromancer robe
+      - Mantles (Warrior only, atk buff)
+  - Spellbook diversification
+    - Advanced Spellbook
+    - Banned Spellbook
+- Vial of slime/slime tf
+  - [done] slime hair
+  - slime head
+  - full slime
+  - superior slime
+  - blob
+    - absorb common mobs with physical bodies, reshape them (re-create character)
+- [0 / 5] Seasonal outfit (won't make it on time for some)
+  - Christmas
+  - Valentines Day
+  - Summer
+  - Halloween
+  - 1-Year aniversery
+- [1 / 8] Enemy types
+  - [done] goo girl
+  - Thing in the wall
+  - Possesive spirit
+  - Dark Wizard/witch
+  - Cocatrice
+  - Imp
+  - [done] Mimic
+  - Dominatrix Enchantress
+
+- Rework monsters
+  - FLOOR 1:
+    - Enslaved Thrall
+      - bad end: become a thrall
+      - drops: stick of gum, chain collar, compass, mana potion
+    - Slime
+      - bad end: further slime tf
+      - drops: vial of slime, health potions
+    - Spider
+      - bad end: aphrodisiac spray
+      - drops: spidersilk, spider venom
+
+  - FLOOR 2
+    - Enthralling Necromancer
+    - bad end: become bimbo thrall
+    - drops: hypnotic scepte, spellbook, mana potion, necromancer robe
+  - FLOOR 3
+    - Arachne Huntress
+    - bad end: venom/half spider tf
+    - drops: widow's charm, poisoned dagger, chitin armor, widow egg
+  - FLOOR 4
+    - Goo Girl
+    - bad end: rapid slime tf
+    - drops: slime helmet, slime chestplate, health potion, vial of slime,
+             sealed vial
+
+- [1 / 4] Add 4 NPC's
+  - [done] Shopkeeper +3 img
+  - Shady Wizard +3 img
+    - bad end: blowup doll tf
+    - sells magic/illicit stuff
+  - Hypnotist Teacher +3 img
+  - Magic Items Shop +3 img
+- [3 / 5] 5 Traps
+  - ...
+  - hypnosis trap
+     - Female master
+     - male master
+     - no master
+  - Summoning Circle (Tentacles)
+- [0 / 6] 6 more mystery potions
+  - Murky potion / Weakness Potion (-10% stats for 30 turns)
+  - Smokey Potion / Shrink Potion (1/10 stats, but 10x evade for 30 turns)
+  - Clear Potion / Snake potion (50/50 chance between temporary snake tf and naga tf)
+  - Aqua Potion / Masculine potion (Gives dick/Grows Muscles?)
+  - Rose Potion / HyperHeal Potion (Raises hp to full +10 max hp)
+  - Glittery Potion / HyperMana Potion (Raises mana to full +5 max mana)
+- [0 / 6] 6 Combo TFs
+  - Demon Princess
+  - Bimbo Princess
+  - Dragon Maid
+  - Demonic Angel
+  - Nurse Cow
+  - Holy Cow
+- Combine charachter generator screens
+- inspect items in shop
+- Wait option
+- Non-combat armor benefits
+- Armor reduces spell accuracy
+- [done?] magic armor
+- breakdown of stats on hover
+- re-value all items
+- unselect items by clicking again
+- inventory not reset after use of items
+- debug menu in the about section
+  - possible custom item implementation
+- character presets
+- a config file to save player presets and implemented items
+- stat description in about section
+- player TFs into inaninmate items, left in chests behind
+
+- Forest Area:
+  - Dryad
+  - Daughters of Circe Apprentince
+  - Pollenbearer
+  - Fairy
+  - Daughter of Circe
+  - Circe
+
+
+
+

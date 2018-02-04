@@ -1,0 +1,263 @@
+﻿Public Class State
+    'the State class contains all relevent data unique to a player's form at any given time
+
+    'instance data for a state
+    Dim name, sex, title, description As String
+    Dim health, maxHealth, mana, maxMana, attack, defence As Integer
+    Dim discipline, speed, evade, gold, lust As Integer
+    Dim breastSize, hunger As Integer
+    Dim equippedWeapon As Weapon
+    Dim equippedArmor As Armor
+    Public iArrInd(16) As Tuple(Of Integer, Boolean)
+    Dim perks(13) As Boolean
+    Dim sexBool, invNeedsUDate As Boolean
+    Dim haircolor, skincolor, textColor As Color
+    Dim pImage As Image
+    Dim wingIndex As Integer
+    Public initFlag As Boolean = False
+
+    'constructs a state from an instance of a player
+    Sub New(ByRef p As Player)
+        name = p.name
+        sex = p.sex
+        title = p.title
+        description = p.description
+        health = p.health
+        maxHealth = p.maxHealth
+        mana = p.mana
+        maxMana = p.mana
+        attack = p.attack
+        defence = p.defence
+        discipline = p.discipline
+        speed = p.speed
+        evade = p.evade
+        gold = p.gold
+        lust = p.lust
+        breastSize = p.breastSize
+        hunger = p.hunger
+        equippedWeapon = p.equippedWeapon
+        equippedArmor = p.equippedArmor
+        iArrInd = p.iArrInd.Clone
+        perks = p.perks
+        sexBool = p.sexBool
+        invNeedsUDate = p.invNeedsUDate
+        haircolor = p.haircolor
+        skincolor = p.skincolor
+        textColor = p.TextColor
+        pImage = p.pImage
+        wingIndex = p.wingInd
+        initFlag = True
+    End Sub
+    'constructs a state with placeholder values
+    'this constructor is used to initialize a state
+    Sub New()
+        name = ""
+        sex = ""
+        title = ""
+        description = ""
+        health = 0
+        maxHealth = 0
+        mana = 0
+        maxMana = 0
+        attack = 0
+        defence = 0
+        discipline = 0
+        speed = 0
+        evade = 0
+        gold = 0
+        lust = 0
+        breastSize = 0
+        hunger = 0
+        equippedWeapon = New BareFists
+        equippedArmor = New Naked
+        iArrInd = {New Tuple(Of Integer, Boolean)(2, False), New Tuple(Of Integer, Boolean)(2, False), New Tuple(Of Integer, Boolean)(2, False), New Tuple(Of Integer, Boolean)(2, False), New Tuple(Of Integer, Boolean)(2, False), New Tuple(Of Integer, Boolean)(2, False), New Tuple(Of Integer, Boolean)(2, False), New Tuple(Of Integer, Boolean)(2, False), New Tuple(Of Integer, Boolean)(2, False), New Tuple(Of Integer, Boolean)(2, False), New Tuple(Of Integer, Boolean)(2, False), New Tuple(Of Integer, Boolean)(2, False), New Tuple(Of Integer, Boolean)(2, False), New Tuple(Of Integer, Boolean)(2, False), New Tuple(Of Integer, Boolean)(2, False), New Tuple(Of Integer, Boolean)(2, False), New Tuple(Of Integer, Boolean)(2, False), New Tuple(Of Integer, Boolean)(2, False), New Tuple(Of Integer, Boolean)(2, False), New Tuple(Of Integer, Boolean)(2, False)}
+        perks = {False}
+        sexBool = False
+        invNeedsUDate = False
+        haircolor = Color.Black
+        skincolor = Color.Black
+        textColor = Color.Black
+        wingIndex = 0
+        ReDim perks(13)
+        ReDim iArrInd(16)
+    End Sub
+
+    'load applies a state to a given instance of a player
+    Public Sub load(ByRef p As Player)
+        p.name = name
+        p.sex = sex
+        p.title = title
+        p.description = description
+        p.maxHealth = maxHealth
+        If p.health > maxHealth + p.hBuff Then p.health = maxHealth + p.hBuff
+        p.maxMana = maxMana
+        If p.mana > maxMana + p.mBuff Then p.mana = maxMana + p.mBuff
+        p.attack = attack
+        p.defence = defence
+        p.discipline = discipline
+        p.speed = speed
+        p.evade = evade
+        p.gold = gold
+        p.lust = lust
+        p.breastSize = breastSize
+        p.equippedWeapon = equippedWeapon
+        Form3.clothesChange(equippedArmor.getName)
+        p.equippedArmor = equippedArmor
+        p.iArrInd = iArrInd.Clone
+        p.perks = perks.Clone
+        p.sexBool = sexBool
+        p.invNeedsUDate = invNeedsUDate
+        p.haircolor = haircolor
+        p.skincolor = skincolor
+        p.TextColor = textColor
+        p.wingInd = wingIndex
+        p.pImage = pImage
+    End Sub
+    'save applies a given instance of a player to a state
+    Public Sub save(ByRef p As Player)
+        name = p.name
+        sex = p.sex
+        title = p.title
+        description = p.description
+        health = p.health
+        'health += p.hBuff
+        maxHealth = p.maxHealth
+        'maxHealth += p.hBuff
+        mana = p.mana
+        'mana += p.mBuff
+        maxMana = p.maxMana
+        'maxMana += p.mBuff
+        attack = p.attack
+        'attack += p.aBuff
+        defence = p.defence
+        'defence += p.dBuff
+        discipline = p.discipline
+        'discipline += p.wBuff
+        speed = p.speed
+        'speed += p.sBuff
+        evade = p.evade
+        gold = p.gold
+        lust = p.lust
+        breastSize = p.breastSize
+        hunger = p.hunger
+        equippedWeapon = p.equippedWeapon
+        equippedArmor = p.equippedArmor
+        iArrInd = p.iArrInd.Clone
+        perks = p.perks.Clone
+        sexBool = p.sexBool
+        invNeedsUDate = p.invNeedsUDate
+        haircolor = p.haircolor
+        skincolor = p.skincolor
+        textColor = p.TextColor
+        wingIndex = p.wingInd
+        pImage = p.pImage
+    End Sub
+
+    'read converts a string given from a save file into a state
+    Public Sub read(ByVal s As String)
+        Form3.init()
+        Dim pimg() As Image = {Form1.picPlayer.BackgroundImage, Form1.picPlayerB.BackgroundImage, Form1.picChicken.BackgroundImage, Form1.picBimbof.BackgroundImage, Form1.picPlayerf.BackgroundImage}
+        Dim readArray() As String = s.Split("*")
+        If readArray(0) = "N/A" Then
+            name = ""
+            sex = ""
+            title = ""
+            description = ""
+            health = 0
+            maxHealth = 0
+            mana = 0
+            maxMana = 0
+            attack = 0
+            defence = 0
+            discipline = 0
+            speed = 0
+            evade = 0
+            gold = 0
+            lust = 0
+            breastSize = 0
+            hunger = 0
+            equippedWeapon = New BareFists
+            equippedArmor = New Naked
+            iArrInd = {New Tuple(Of Integer, Boolean)(2, False), New Tuple(Of Integer, Boolean)(2, False), New Tuple(Of Integer, Boolean)(2, False), New Tuple(Of Integer, Boolean)(2, False), New Tuple(Of Integer, Boolean)(2, False), New Tuple(Of Integer, Boolean)(2, False), New Tuple(Of Integer, Boolean)(2, False), New Tuple(Of Integer, Boolean)(2, False), New Tuple(Of Integer, Boolean)(2, False), New Tuple(Of Integer, Boolean)(2, False), New Tuple(Of Integer, Boolean)(2, False), New Tuple(Of Integer, Boolean)(2, False), New Tuple(Of Integer, Boolean)(2, False), New Tuple(Of Integer, Boolean)(2, False), New Tuple(Of Integer, Boolean)(2, False), New Tuple(Of Integer, Boolean)(2, False), New Tuple(Of Integer, Boolean)(2, False), New Tuple(Of Integer, Boolean)(2, False), New Tuple(Of Integer, Boolean)(2, False), New Tuple(Of Integer, Boolean)(2, False)}
+            perks = {False}
+            sexBool = False
+            invNeedsUDate = False
+            haircolor = Color.Black
+            skincolor = Color.Black
+            textColor = Color.Black
+            Exit Sub
+        End If
+
+        name = readArray(0)
+        title = readArray(1)
+        description = readArray(2)
+        health = CInt(readArray(3))
+        maxHealth = CInt(readArray(4))
+        mana = CInt(readArray(5))
+        maxMana = CInt(readArray(6))
+        If Not readArray(7).Equals("placehold") Then wingIndex = CInt(readArray(7)) Else wingIndex = 0
+        attack = CInt(readArray(10))
+        defence = CInt(readArray(11))
+        discipline = CInt(readArray(12))
+        speed = CInt(readArray(13))
+        evade = CInt(readArray(14))
+        hunger = CInt(readArray(15))
+        gold = CInt(readArray(16))
+
+        For i = 0 To UBound(Form3.aNameList)
+            If readArray(17) = Form3.aNameList(i) Then
+                equippedArmor = Form3.aList(i)
+                Exit For
+            End If
+        Next
+        For i = 0 To UBound(Form3.wNameList)
+            If readArray(18) = Form3.wNameList(i) Then
+                equippedWeapon = Form3.wList(i)
+                Exit For
+            End If
+        Next
+
+        sex = readArray(19)
+        If sex = "Male" Then sexBool = False Else sexBool = True
+
+        breastSize = CInt(readArray(21))
+
+
+        haircolor = Color.FromArgb(255, CInt(readArray(22)), CInt(readArray(23)), CInt(readArray(24)))
+        skincolor = Color.FromArgb(255, CInt(readArray(25)), CInt(readArray(26)), CInt(readArray(27)))
+        textColor = Color.FromArgb(255, CInt(readArray(28)), CInt(readArray(29)), CInt(readArray(30)))
+
+        Dim b1 As Integer = readArray(31)
+        For i = 0 To b1
+            perks(i) = readArray(32 + i)
+        Next
+        b1 += 1
+        For i = 0 To UBound(iArrInd)
+            Dim arr() As String = readArray(32 + b1 + i).Split("%")
+            iArrInd(i) = New Tuple(Of Integer, Boolean)(CInt(arr(0)), CBool(arr(1)))
+        Next
+        pImage = pimg(readArray(32 + b1 + 17))
+        initFlag = True
+    End Sub
+    'write converts a state into a string to be put into a save file
+    Public Function write() As String
+        If initFlag Then
+            Dim output As String = CStr(name & "*" & title & "*" & description & "*" & health & "*" & maxHealth & "*" & mana & "*" & maxMana & "*" & wingIndex & "*" & "placehold" & "*" & "placehold" & "*" & _
+               attack & "*" & defence & "*" & discipline & "*" & speed & "*" & evade & "*" & hunger & "*" & gold & "*" & equippedArmor.getName() & "*" & equippedWeapon.getName() & "*" & _
+               sex & "*" & "placeholder" & "*" & breastSize & "*" & haircolor.R & "*" & haircolor.G & "*" & haircolor.B & "*" & skincolor.R & "*" & skincolor.G & "*" & skincolor.B & "*" & _
+               textColor.R & "*" & textColor.G & "*" & textColor.B & "*")
+            output += UBound(perks) & "*"
+            For i = 0 To UBound(perks)
+                output += (perks(i) & "*")
+            Next
+            For i = 0 To UBound(iArrInd)
+                output += (iArrInd(i).Item1 & "%" & iArrInd(i).Item2 & "*")
+            Next
+            If Not initFlag Then pImage = Form1.picChicken.BackgroundImage
+            output += Array.IndexOf({Form1.picPlayer.BackgroundImage, Form1.picPlayerB.BackgroundImage, Form1.picChicken.BackgroundImage, Form1.picBimbof.BackgroundImage, Form1.picPlayerf.BackgroundImage}, pImage).ToString & "*"
+            Return output + "#"
+        Else
+            Return "N/A#"
+        End If
+    End Function
+End Class

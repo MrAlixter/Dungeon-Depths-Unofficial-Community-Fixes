@@ -1,0 +1,353 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="12.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProjectGuid>{FC2A8B65-BAFD-4754-B0F6-3FEFD39A6A23}</ProjectGuid>
+    <OutputType>WinExe</OutputType>
+    <StartupObject>DungeonDepths.My.MyApplication</StartupObject>
+    <RootNamespace>DungeonDepths</RootNamespace>
+    <AssemblyName>Dungeon_Depths</AssemblyName>
+    <FileAlignment>512</FileAlignment>
+    <MyType>WindowsForms</MyType>
+    <TargetFrameworkVersion>v4.0</TargetFrameworkVersion>
+    <PublishUrl>publish\</PublishUrl>
+    <Install>true</Install>
+    <InstallFrom>Disk</InstallFrom>
+    <UpdateEnabled>false</UpdateEnabled>
+    <UpdateMode>Foreground</UpdateMode>
+    <UpdateInterval>7</UpdateInterval>
+    <UpdateIntervalUnits>Days</UpdateIntervalUnits>
+    <UpdatePeriodically>false</UpdatePeriodically>
+    <UpdateRequired>false</UpdateRequired>
+    <MapFileExtensions>true</MapFileExtensions>
+    <ApplicationRevision>0</ApplicationRevision>
+    <ApplicationVersion>1.0.0.%2a</ApplicationVersion>
+    <IsWebBootstrapper>false</IsWebBootstrapper>
+    <UseApplicationTrust>false</UseApplicationTrust>
+    <BootstrapperEnabled>true</BootstrapperEnabled>
+    <TargetFrameworkProfile />
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <PlatformTarget>AnyCPU</PlatformTarget>
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <DefineDebug>true</DefineDebug>
+    <DefineTrace>true</DefineTrace>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DocumentationFile>Dungeon_Depths.xml</DocumentationFile>
+    <NoWarn>42016,41999,42017,42018,42019,42032,42036,42020,42021,42022</NoWarn>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <PlatformTarget>AnyCPU</PlatformTarget>
+    <DebugType>pdbonly</DebugType>
+    <DefineDebug>false</DefineDebug>
+    <DefineTrace>true</DefineTrace>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DocumentationFile>Dungeon_Depths.xml</DocumentationFile>
+    <NoWarn>42016,41999,42017,42018,42019,42032,42036,42020,42021,42022</NoWarn>
+  </PropertyGroup>
+  <PropertyGroup>
+    <OptionExplicit>On</OptionExplicit>
+  </PropertyGroup>
+  <PropertyGroup>
+    <OptionCompare>Binary</OptionCompare>
+  </PropertyGroup>
+  <PropertyGroup>
+    <OptionStrict>Off</OptionStrict>
+  </PropertyGroup>
+  <PropertyGroup>
+    <OptionInfer>On</OptionInfer>
+  </PropertyGroup>
+  <PropertyGroup>
+    <ApplicationIcon>favicon %285%29.ico</ApplicationIcon>
+  </PropertyGroup>
+  <PropertyGroup>
+    <SignAssembly>true</SignAssembly>
+  </PropertyGroup>
+  <PropertyGroup>
+    <TargetZone>LocalIntranet</TargetZone>
+  </PropertyGroup>
+  <PropertyGroup>
+    <GenerateManifests>true</GenerateManifests>
+  </PropertyGroup>
+  <PropertyGroup>
+    <ApplicationManifest>My Project\app.manifest</ApplicationManifest>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="System" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Deployment" />
+    <Reference Include="System.Drawing" />
+    <Reference Include="System.Windows.Forms" />
+    <Reference Include="System.Xml" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Xml.Linq" />
+    <Reference Include="System.Data.DataSetExtensions" />
+  </ItemGroup>
+  <ItemGroup>
+    <Import Include="Microsoft.VisualBasic" />
+    <Import Include="System" />
+    <Import Include="System.Collections" />
+    <Import Include="System.Collections.Generic" />
+    <Import Include="System.Data" />
+    <Import Include="System.Drawing" />
+    <Import Include="System.Diagnostics" />
+    <Import Include="System.Windows.Forms" />
+    <Import Include="System.Linq" />
+    <Import Include="System.Xml.Linq" />
+    <Import Include="System.Threading.Tasks" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="WindowsForms\AboutBox1.Designer.vb">
+      <DependentUpon>AboutBox1.vb</DependentUpon>
+    </Compile>
+    <Compile Include="WindowsForms\AboutBox1.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Items\Useable\Food\AngelFood.vb" />
+    <Compile Include="Items\Useable\Food\Apple.vb" />
+    <Compile Include="Items\Armor\Armor.vb" />
+    <Compile Include="Items\Useable\Charms\AttackCharm.vb" />
+    <Compile Include="Items\Weapons\BareFists.vb" />
+    <Compile Include="Items\Useable\Potions\Mystery Potions\BEPotion.vb" />
+    <Compile Include="Items\Useable\Potions\Mystery Potions\BlackHairPotion.vb" />
+    <Compile Include="Items\Useable\Potions\Mystery Potions\BlondePotion.vb" />
+    <Compile Include="Entities\Boss.vb" />
+    <Compile Include="Items\Armor\BrawlerCosplay.vb" />
+    <Compile Include="Items\Weapons\BronzeXiphos.vb" />
+    <Compile Include="Items\Armor\BunnySuit.vb" />
+    <Compile Include="Items\Useable\CatEars.vb" />
+    <Compile Include="Items\Armor\CatLingerie.vb" />
+    <Compile Include="WindowsForms\CharacterGenerator1.Designer.vb">
+      <DependentUpon>CharacterGenerator1.vb</DependentUpon>
+    </Compile>
+    <Compile Include="WindowsForms\CharacterGenerator1.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Tiles\Chest.vb" />
+    <Compile Include="Items\Useable\Food\ChickenLeg.vb" />
+    <Compile Include="Items\Unimplemented\ChickenSuit.vb" />
+    <Compile Include="Items\Useable\Compass.vb" />
+    <Compile Include="Items\Useable\Food\Cupcake.vb" />
+    <Compile Include="Items\Useable\Charms\DefenceCharm.vb" />
+    <Compile Include="Items\Useable\Food\Food.vb" />
+    <Compile Include="WindowsForms\Form1.Designer.vb">
+      <DependentUpon>Form1.vb</DependentUpon>
+    </Compile>
+    <Compile Include="WindowsForms\Form1.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="WindowsForms\Form2.Designer.vb">
+      <DependentUpon>Form2.vb</DependentUpon>
+    </Compile>
+    <Compile Include="WindowsForms\Form2.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="WindowsForms\Form3.Designer.vb">
+      <DependentUpon>Form3.vb</DependentUpon>
+    </Compile>
+    <Compile Include="WindowsForms\Form3.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="WindowsForms\Form4.Designer.vb">
+      <DependentUpon>Form4.vb</DependentUpon>
+    </Compile>
+    <Compile Include="WindowsForms\Form4.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="WindowsForms\Form5.Designer.vb">
+      <DependentUpon>Form5.vb</DependentUpon>
+    </Compile>
+    <Compile Include="WindowsForms\Form5.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="WindowsForms\Form6.Designer.vb">
+      <DependentUpon>Form6.vb</DependentUpon>
+    </Compile>
+    <Compile Include="WindowsForms\Form6.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Items\Useable\FusionCrystal.vb" />
+    <Compile Include="Items\Useable\Glowstick.vb" />
+    <Compile Include="Items\Armor\GoddessGown.vb" />
+    <Compile Include="Items\Misc\Gold.vb" />
+    <Compile Include="Items\Armor\GoldAdornment.vb" />
+    <Compile Include="Items\Armor\GoldArmor.vb" />
+    <Compile Include="Items\Weapons\GoldenStaff.vb" />
+    <Compile Include="Items\Weapons\GoldSword.vb" />
+    <Compile Include="Items\Useable\Charms\HealthCharm.vb" />
+    <Compile Include="Items\Useable\Potions\HealthPotion.vb" />
+    <Compile Include="Items\Useable\Food\HeavyCream.vb" />
+    <Compile Include="Items\Useable\Food\Herbs.vb" />
+    <Compile Include="Items\Useable\Potions\Mystery Potions\MasculinePotion.vb" />
+    <Compile Include="Entities\MiniBoss.vb" />
+    <Compile Include="Items\Item.vb" />
+    <Compile Include="Items\Misc\Key.vb" />
+    <Compile Include="Items\Unimplemented\LeatherWhip.vb" />
+    <Compile Include="Items\Armor\LiveArmor.vb" />
+    <Compile Include="Items\Armor\LiveLingerie.vb" />
+    <Compile Include="Items\Weapons\MaidDuster.vb" />
+    <Compile Include="Items\Armor\MaidOutfit.vb" />
+    <Compile Include="Items\Useable\Charms\ManaCharm.vb" />
+    <Compile Include="Items\Useable\Potions\ManaPotion.vb" />
+    <Compile Include="Items\Weapons\MidasGuantlet.vb" />
+    <Compile Include="Items\Useable\Mirror.vb" />
+    <Compile Include="Entities\Monster.vb" />
+    <Compile Include="Tiles\mTile.vb" />
+    <Compile Include="My Project\AssemblyInfo.vb" />
+    <Compile Include="My Project\Application.Designer.vb">
+      <AutoGen>True</AutoGen>
+      <DependentUpon>Application.myapp</DependentUpon>
+    </Compile>
+    <Compile Include="My Project\Resources.Designer.vb">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Resources.resx</DependentUpon>
+    </Compile>
+    <Compile Include="My Project\Settings.Designer.vb">
+      <AutoGen>True</AutoGen>
+      <DependentUpon>Settings.settings</DependentUpon>
+      <DesignTimeSharedInput>True</DesignTimeSharedInput>
+    </Compile>
+    <Compile Include="Items\Armor\Naked.vb" />
+    <Compile Include="Items\Armor\NormalClothes.vb" />
+    <Compile Include="Entities\NPC.vb" />
+    <Compile Include="Items\Weapons\OakStaff.vb" />
+    <Compile Include="Items\Useable\Food\PApple.vb" />
+    <Compile Include="Entities\Player\Player.vb" />
+    <Compile Include="Items\Useable\Potions\Potion.vb" />
+    <Compile Include="PriorityQue\PQ.vb" />
+    <Compile Include="PriorityQue\PQInterface.vb" />
+    <Compile Include="Items\Armor\PrincessGown.vb" />
+    <Compile Include="PriorityQue\Q.vb" />
+    <Compile Include="Items\Useable\Potions\Mystery Potions\RedHairPotion.vb" />
+    <Compile Include="Items\Useable\Potions\RestorationPotion.vb" />
+    <Compile Include="Items\Useable\RigWrench.vb" />
+    <Compile Include="Items\Armor\Ropes.vb" />
+    <Compile Include="WindowsForms\SCPicker.Designer.vb">
+      <DependentUpon>SCPicker.vb</DependentUpon>
+    </Compile>
+    <Compile Include="WindowsForms\SCPicker.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="PriorityQue\Segment.vb" />
+    <Compile Include="WindowsForms\Shop.Designer.vb">
+      <DependentUpon>Shop.vb</DependentUpon>
+    </Compile>
+    <Compile Include="WindowsForms\Shop.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Items\Unimplemented\ShrinkPotion.vb" />
+    <Compile Include="Items\Armor\SkimpyClothes.vb" />
+    <Compile Include="Items\Unimplemented\SnakePotion.vb" />
+    <Compile Include="Items\Armor\SorcerersRobes.vb" />
+    <Compile Include="Items\Weapons\SoulBlade.vb" />
+    <Compile Include="Entities\Player\Specials.vb" />
+    <Compile Include="Items\Useable\Charms\SpeedCharm.vb" />
+    <Compile Include="Items\Useable\Spellbook.vb" />
+    <Compile Include="Entities\Player\Spells.vb" />
+    <Compile Include="Items\Armor\SportBra.vb" />
+    <Compile Include="Items\Weapons\Staff.vb" />
+    <Compile Include="Entities\Player\State.vb" />
+    <Compile Include="Tiles\Statue.vb" />
+    <Compile Include="Items\Armor\MagGirlOutfit.vb" />
+    <Compile Include="Items\Armor\SteelArmor.vb" />
+    <Compile Include="Items\Armor\SteelBikini.vb" />
+    <Compile Include="Items\Weapons\MagGirlWand.vb" />
+    <Compile Include="Items\Weapons\SteelSword.vb" />
+    <Compile Include="Items\Useable\StickOfGum.vb" />
+    <Compile Include="Items\Armor\SuccubusGarb.vb" />
+    <Compile Include="Items\Armor\TankTop.vb" />
+    <Compile Include="Items\Weapons\TargaxSword.vb" />
+    <Compile Include="Items\Useable\Potions\Mystery Potions\TGPotion.vb" />
+    <Compile Include="Tiles\Trap.vb" />
+    <Compile Include="Entities\Updatable.vb" />
+    <Compile Include="Items\Useable\VialOfSlime.vb" />
+    <Compile Include="Items\Armor\WarriorsCurass.vb" />
+    <Compile Include="Items\Unimplemented\WeaknessPotion.vb" />
+    <Compile Include="Items\Weapons\Weapon.vb" />
+    <Compile Include="Items\Armor\WitchCosplay.vb" />
+    <Compile Include="Items\Weapons\WizardStaff.vb" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="WindowsForms\AboutBox1.resx">
+      <DependentUpon>AboutBox1.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="WindowsForms\CharacterGenerator1.resx">
+      <DependentUpon>CharacterGenerator1.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="WindowsForms\Form1.resx">
+      <DependentUpon>Form1.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="WindowsForms\Form2.resx">
+      <DependentUpon>Form2.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="WindowsForms\Form3.resx">
+      <DependentUpon>Form3.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="WindowsForms\Form4.resx">
+      <DependentUpon>Form4.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="WindowsForms\Form5.resx">
+      <DependentUpon>Form5.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="WindowsForms\Form6.resx">
+      <DependentUpon>Form6.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="My Project\Resources.resx">
+      <Generator>ResXFileCodeGenerator</Generator>
+      <LastGenOutput>Resources.Designer.vb</LastGenOutput>
+    </EmbeddedResource>
+    <EmbeddedResource Include="WindowsForms\SCPicker.resx">
+      <DependentUpon>SCPicker.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="WindowsForms\Shop.resx">
+      <DependentUpon>Shop.vb</DependentUpon>
+    </EmbeddedResource>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="My Project\app.manifest" />
+    <None Include="My Project\Application.myapp">
+      <Generator>MyApplicationCodeGenerator</Generator>
+      <LastGenOutput>Application.Designer.vb</LastGenOutput>
+    </None>
+    <None Include="My Project\Settings.settings">
+      <Generator>SettingsSingleFileGenerator</Generator>
+      <CustomToolNamespace>My</CustomToolNamespace>
+      <LastGenOutput>Settings.Designer.vb</LastGenOutput>
+    </None>
+    <None Include="App.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="favicon %285%29.ico" />
+  </ItemGroup>
+  <ItemGroup>
+    <BootstrapperPackage Include=".NETFramework,Version=v4.5">
+      <Visible>False</Visible>
+      <ProductName>Microsoft .NET Framework 4.5 %28x86 and x64%29</ProductName>
+      <Install>true</Install>
+    </BootstrapperPackage>
+    <BootstrapperPackage Include="Microsoft.Net.Client.3.5">
+      <Visible>False</Visible>
+      <ProductName>.NET Framework 3.5 SP1 Client Profile</ProductName>
+      <Install>false</Install>
+    </BootstrapperPackage>
+    <BootstrapperPackage Include="Microsoft.Net.Framework.3.5.SP1">
+      <Visible>False</Visible>
+      <ProductName>.NET Framework 3.5 SP1</ProductName>
+      <Install>false</Install>
+    </BootstrapperPackage>
+  </ItemGroup>
+  <ItemGroup />
+  <Import Project="$(MSBuildToolsPath)\Microsoft.VisualBasic.targets" />
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
+</Project>

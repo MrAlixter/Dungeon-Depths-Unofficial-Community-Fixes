@@ -1,0 +1,25 @@
+﻿Public Class LiveArmor
+    Inherits Armor
+    Sub New()
+        MyBase.setName("Living_Armor")
+        MyBase.setDesc("A suit of living armor embued with a the soul of a mimic." & vbCrLf & _
+                       "+6 DEF" & vbCrLf & _
+                       "The mimic's movment continually raises lust" & vbCrLf & _
+                       "May not be easy to remove")
+        MyBase.setUsable(False)
+        MyBase.dBoost = 6
+        MyBase.count = 0
+        MyBase.value = 350
+        bsizeneg1 = New Tuple(Of Integer, Boolean)(15, False)
+        bsize1 = New Tuple(Of Integer, Boolean)(81, True)
+        bsize2 = New Tuple(Of Integer, Boolean)(83, True)
+        bsize3 = New Tuple(Of Integer, Boolean)(85, True)
+        bsize4 = New Tuple(Of Integer, Boolean)(87, True)
+    End Sub
+
+    Overrides Sub discard()
+        Form1.lstLog.Items.Add("You drop the " & getName())
+        Form1.lstLog.TopIndex = Form1.lstLog.Items.Count - 1
+        count -= 1
+    End Sub
+End Class
