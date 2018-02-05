@@ -42,14 +42,22 @@
     </dependentAssembly>
   </dependency>
   <dependency>
-    <dependentAssembly dependencyType="install" allowDelayedBinding="true" codebase="Dungeon_Depths.exe" size="591360">
+<<<<<<< HEAD
+    <dependentAssembly dependencyType="install" allowDelayedBinding="true" codebase="Dungeon_Depths.exe" size="590848">
+=======
+    <dependentAssembly dependencyType="install" allowDelayedBinding="true" codebase="Dungeon_Depths.exe" size="647680">
+>>>>>>> 10afce99ff2083b135f9f7f8a964282a775473ec
       <assemblyIdentity name="Dungeon_Depths" version="0.5.0.0" language="neutral" processorArchitecture="msil" />
       <hash>
         <dsig:Transforms>
           <dsig:Transform Algorithm="urn:schemas-microsoft-com:HashTransforms.Identity" />
         </dsig:Transforms>
         <dsig:DigestMethod Algorithm="http://www.w3.org/2000/09/xmldsig#sha1" />
-        <dsig:DigestValue>/VxZ1gN7rlA8gtcz1PjqUOVyw0Y=</dsig:DigestValue>
+<<<<<<< HEAD
+        <dsig:DigestValue>L4a3suHAsPmle9MTinU4kqvh5EY=</dsig:DigestValue>
+=======
+        <dsig:DigestValue>x4deBdu6i7NAmH2KgVIVNaIaOa4=</dsig:DigestValue>
+>>>>>>> 10afce99ff2083b135f9f7f8a964282a775473ec
       </hash>
     </dependentAssembly>
   </dependency>

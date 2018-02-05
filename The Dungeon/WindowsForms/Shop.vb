@@ -26,11 +26,6 @@
                 pCanBuy.Add(p.inventory(i))
             End If
         Next
-        cBoxBuyQTY.Items.Add(1)
-        cBoxBuyQTY.Items.Add(2)
-        cBoxBuyQTY.Items.Add(3)
-        cBoxBuyQTY.Items.Add(5)
-        cBoxBuyQTY.Items.Add(10)
     End Sub
 
     'sell
@@ -71,13 +66,25 @@
     Private Sub cBoxBuy_SelectedValueChanged(sender As Object, e As EventArgs) Handles cBoxBuy.SelectedValueChanged
         Try
             ind = cBoxBuy.Items.IndexOf(cBoxBuy.Text)
+            cBoxBuyQTY.Items.Clear()
+            Dim numCanBuy As Integer = Math.Floor(p.gold / pCanBuy(ind).value)
+            If numCanBuy < 1 Then
+                cBoxBuyQTY.Text = "N/a"
+                cBoxBuyQTY.Items.Add("N/a")
+                Exit Sub
+            End If
+            If numCanBuy >= 1 Then cBoxBuyQTY.Items.Add(1)
+            If numCanBuy >= 2 Then cBoxBuyQTY.Items.Add(2)
+            If numCanBuy >= 3 Then cBoxBuyQTY.Items.Add(3)
+            If numCanBuy >= 5 Then cBoxBuyQTY.Items.Add(5)
+            If numCanBuy >= 10 Then cBoxBuyQTY.Items.Add(10)
             cBoxBuyQTY.Text = 1
         Catch ex As NullReferenceException
 
         End Try
     End Sub
     Private Sub btnBuy_Click(sender As Object, e As EventArgs) Handles btnBuy.Click
-        If cBoxBuy.Text = "-- Select --" Or cBoxBuyQTY.Text = "" Then Exit Sub
+        If cBoxBuy.Text = "-- Select --" Or cBoxBuyQTY.Text = "" Or cBoxBuyQTY.Text = "N/a" Then Exit Sub
         If ind <> -1 AndAlso p.gold >= (pCanBuy(ind).value * (CInt(cBoxBuyQTY.Text))) Then
             pCanBuy(ind).count += (CInt(cBoxBuyQTY.Text))
             p.gold -= pCanBuy(ind).value * (CInt(cBoxBuyQTY.Text))

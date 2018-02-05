@@ -98,6 +98,10 @@
             Game.lstLog.Items.Add("A magic girl needs her uniform!")
         End If
 
+        If p.title.Equals("Blow-Up Doll") Then
+            p.equippedArmor = New Naked
+        End If
+
         'handles any tfs or triggers triggered by equipping of certain armors
         If p.equippedArmor.getName = "Living_Armor" And Not p.perks(12) Then
             p.perks(12) = True
