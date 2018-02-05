@@ -32,7 +32,7 @@
     Public skincolor As Color = Color.FromArgb(255, 247, 219, 195)
     'inventory variables
     Public inventory As New ArrayList()
-    Public inventorynames(59) As String
+    Public inventorynames(60) As String
     Dim armor() As Armor
     Dim weapons() As Weapon
     Dim useable(), food(), potions(), misc() As Item
