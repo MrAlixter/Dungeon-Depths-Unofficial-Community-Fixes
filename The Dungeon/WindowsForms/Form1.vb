@@ -576,9 +576,8 @@
             Case Keys.T
                 keyspresed += "t"
             Case Keys.Enter
-                MsgBox(keyspresed)
                 If cheatList.Contains(keyspresed) Then
-
+                    MsgBox(keyspresed)
                     If keyspresed = "mark" Then
                         player.sex = "Male"
                         player.sexBool = False

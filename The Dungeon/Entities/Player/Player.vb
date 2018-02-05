@@ -397,7 +397,7 @@
         Dim tEweap As Weapon = equippedWeapon
         Dim tEarm As Armor = equippedArmor
         If tEweap.getName = "Magic_Girl_Wand" Then tEweap = New BareFists()
-
+        If tEarm.getName = "Goddess_Gown" Or tEarm.getName = "Succubus_Garb" Then tEarm = New NormalClothes
         pState.load(Me)
 
         health = tHth
