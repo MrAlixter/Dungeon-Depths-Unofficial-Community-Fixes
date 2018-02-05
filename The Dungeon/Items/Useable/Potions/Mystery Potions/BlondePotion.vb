@@ -7,17 +7,17 @@
         MyBase.value = 300
     End Sub
     Public Overrides Sub effect()
-        Dim p As Player = Form1.player
+        Dim p As Player = Game.player
         p.inventorynames(25) = "Blonde_Potion"
         If p.iArrInd(1).Item1 < 5 Or (p.iArrInd(1).Item1 = 7 And p.sexBool) Then
-            Form1.pushLblEvent("You now have blonde hair!")
+            Game.pushLblEvent("You now have blonde hair!")
             p.haircolor = Color.FromArgb(p.haircolor.A, 255, 215, 0)
             p.createP()
-            If Not Form1.player.perks(5) Or Not Form1.player.title.Equals("Magic Girl") Then
-                Form1.player.pState.save(Form1.player)
+            If Not Game.player.perks(5) Or Not Game.player.title.Equals("Magic Girl") Then
+                Game.player.pState.save(Game.player)
             End If
         Else
-            Form1.pushLblEvent("Your hair color doesn't change!")
+            Game.pushLblEvent("Your hair color doesn't change!")
         End If
     End Sub
 End Class

@@ -11,15 +11,15 @@
 
     Overrides Sub use()
         If Me.getUsable() = False Then Exit Sub
-        Form1.lstLog.Items.Add("You use the " & getName() & ". +2 DEF!")
-        Form1.lstLog.TopIndex = Form1.lstLog.Items.Count - 1
-        Form1.player.dBuff += 2
-        Form1.player.UIupdate()
+        Game.lstLog.Items.Add("You use the " & getName() & ". +2 DEF!")
+        Game.lstLog.TopIndex = Game.lstLog.Items.Count - 1
+        Game.player.dBuff += 2
+        Game.player.UIupdate()
         count -= 1
     End Sub
     Overrides Sub discard()
-        Form1.lstLog.Items.Add("You drop the " & getName())
-        Form1.lstLog.TopIndex = Form1.lstLog.Items.Count - 1
+        Game.lstLog.Items.Add("You drop the " & getName())
+        Game.lstLog.TopIndex = Game.lstLog.Items.Count - 1
         count -= 1
     End Sub
 End Class

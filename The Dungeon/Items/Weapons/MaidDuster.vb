@@ -11,7 +11,7 @@
     End Sub
 
     Overrides Sub use()
-        Dim p As Player = Form1.player
-        Form4.transform(p, "maid", 0)
+        Dim p As Player = Game.player
+        Polymorph.transform(p, "maid", 0)
     End Sub
 End Class

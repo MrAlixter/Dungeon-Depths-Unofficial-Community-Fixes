@@ -7,12 +7,12 @@
         MyBase.value = 300
     End Sub
     Public Overrides Sub effect()
-        Dim p As Player = Form1.player
+        Dim p As Player = Game.player
         p.inventorynames(29) = "Breast_Enlarging_Potion"
         p.be()
-        If Not Form1.player.perks(5) Or Not Form1.player.title.Equals("Magic Girl") Then
-            Form1.player.pState.save(Form1.player)
+        If Not Game.player.perks(5) Or Not Game.player.title.Equals("Magic Girl") Then
+            Game.player.pState.save(Game.player)
         End If
-        Form1.pushLblEvent("You breasts tingle plesently . . .")
+        Game.pushLblEvent("You breasts tingle plesently . . .")
     End Sub
 End Class

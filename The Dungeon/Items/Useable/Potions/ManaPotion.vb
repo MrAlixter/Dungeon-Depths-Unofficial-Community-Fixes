@@ -11,15 +11,15 @@
 
     Overrides Sub use()
         If Me.getUsable() = False Then Exit Sub
-        Form1.lstLog.Items.Add("You drink the " & getName())
-        Form1.lstLog.TopIndex = Form1.lstLog.Items.Count - 1
-        Form1.player.mana += 25
-        If Form1.player.mana > Form1.player.getmaxMana Then Form1.player.mana = Form1.player.getmaxMana
+        Game.lstLog.Items.Add("You drink the " & getName())
+        Game.lstLog.TopIndex = Game.lstLog.Items.Count - 1
+        Game.player.mana += 25
+        If Game.player.mana > Game.player.getmaxMana Then Game.player.mana = Game.player.getmaxMana
         count -= 1
     End Sub
     Overrides Sub discard()
-        Form1.lstLog.Items.Add("You drop the " & getName())
-        Form1.lstLog.TopIndex = Form1.lstLog.Items.Count - 1
+        Game.lstLog.Items.Add("You drop the " & getName())
+        Game.lstLog.TopIndex = Game.lstLog.Items.Count - 1
         count -= 1
     End Sub
 End Class

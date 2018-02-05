@@ -15,13 +15,13 @@
     End Sub
 
     Overrides Sub discard()
-        If Form1.player.title.Equals("Magic Girl") Then
-            Form1.lstLog.Items.Add("You can't just drop your uniform!")
-            Form1.lstLog.TopIndex = Form1.lstLog.Items.Count - 1
+        If Game.player.title.Equals("Magic Girl") Then
+            Game.lstLog.Items.Add("You can't just drop your uniform!")
+            Game.lstLog.TopIndex = Game.lstLog.Items.Count - 1
             Exit Sub
         End If
-        Form1.lstLog.Items.Add("You drop the " & getName())
-        Form1.lstLog.TopIndex = Form1.lstLog.Items.Count - 1
+        Game.lstLog.Items.Add("You drop the " & getName())
+        Game.lstLog.TopIndex = Game.lstLog.Items.Count - 1
         count -= 1
     End Sub
 End Class

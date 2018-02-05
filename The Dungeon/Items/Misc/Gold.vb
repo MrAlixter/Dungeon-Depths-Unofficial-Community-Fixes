@@ -9,6 +9,6 @@
         MyBase.value = 100
     End Sub
     Public Overrides Sub add(i As Integer)
-        Form1.player.gold += i
+        Game.player.gold += i
     End Sub
 End Class

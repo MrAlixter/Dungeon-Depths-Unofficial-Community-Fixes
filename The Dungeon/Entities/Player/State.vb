@@ -101,7 +101,7 @@
         p.lust = lust
         p.breastSize = breastSize
         p.equippedWeapon = equippedWeapon
-        Form3.clothesChange(equippedArmor.getName)
+        Equipment.clothesChange(equippedArmor.getName)
         p.equippedArmor = equippedArmor
         p.iArrInd = iArrInd.Clone
         p.perks = perks.Clone
@@ -155,8 +155,8 @@
 
     'read converts a string given from a save file into a state
     Public Sub read(ByVal s As String)
-        Form3.init()
-        Dim pimg() As Image = {Form1.picPlayer.BackgroundImage, Form1.picPlayerB.BackgroundImage, Form1.picChicken.BackgroundImage, Form1.picBimbof.BackgroundImage, Form1.picPlayerf.BackgroundImage}
+        Equipment.init()
+        Dim pimg() As Image = {Game.picPlayer.BackgroundImage, Game.picPlayerB.BackgroundImage, Game.picChicken.BackgroundImage, Game.picBimbof.BackgroundImage, Game.picPlayerf.BackgroundImage}
         Dim readArray() As String = s.Split("*")
         If readArray(0) = "N/A" Then
             name = ""
@@ -204,15 +204,15 @@
         hunger = CInt(readArray(15))
         gold = CInt(readArray(16))
 
-        For i = 0 To UBound(Form3.aNameList)
-            If readArray(17) = Form3.aNameList(i) Then
-                equippedArmor = Form3.aList(i)
+        For i = 0 To UBound(Equipment.aNameList)
+            If readArray(17) = Equipment.aNameList(i) Then
+                equippedArmor = Equipment.aList(i)
                 Exit For
             End If
         Next
-        For i = 0 To UBound(Form3.wNameList)
-            If readArray(18) = Form3.wNameList(i) Then
-                equippedWeapon = Form3.wList(i)
+        For i = 0 To UBound(Equipment.wNameList)
+            If readArray(18) = Equipment.wNameList(i) Then
+                equippedWeapon = Equipment.wList(i)
                 Exit For
             End If
         Next
@@ -253,8 +253,8 @@
             For i = 0 To UBound(iArrInd)
                 output += (iArrInd(i).Item1 & "%" & iArrInd(i).Item2 & "*")
             Next
-            If Not initFlag Then pImage = Form1.picChicken.BackgroundImage
-            output += Array.IndexOf({Form1.picPlayer.BackgroundImage, Form1.picPlayerB.BackgroundImage, Form1.picChicken.BackgroundImage, Form1.picBimbof.BackgroundImage, Form1.picPlayerf.BackgroundImage}, pImage).ToString & "*"
+            If Not initFlag Then pImage = Game.picChicken.BackgroundImage
+            output += Array.IndexOf({Game.picPlayer.BackgroundImage, Game.picPlayerB.BackgroundImage, Game.picChicken.BackgroundImage, Game.picBimbof.BackgroundImage, Game.picPlayerf.BackgroundImage}, pImage).ToString & "*"
             Return output + "#"
         Else
             Return "N/A#"

@@ -1,6 +1,6 @@
 ﻿Public Class Shop
-    Dim sk As NPC = Form1.currNPC
-    Dim p As Player = Form1.player
+    Dim sk As NPC = Game.currNPC
+    Dim p As Player = Game.player
     Dim pCanBuy As ArrayList = New ArrayList
     Dim pCanSell As ArrayList = New ArrayList
     Dim ind As Integer = -1
@@ -63,8 +63,8 @@
         Next
         cBoxSell.Text = "-- Select --"
         cBoxSellQTY.Text = ""
-        Form1.player.invNeedsUDate = True
-        Form1.player.UIupdate()
+        Game.player.invNeedsUDate = True
+        Game.player.UIupdate()
     End Sub
 
     'buy
@@ -83,8 +83,8 @@
             p.gold -= pCanBuy(ind).value * (CInt(cBoxBuyQTY.Text))
             sk.gold += pCanBuy(ind).value * (CInt(cBoxBuyQTY.Text))
         ElseIf p.gold < (pCanBuy(ind).value * (CInt(cBoxBuyQTY.Text))) Then
-            Form1.lstLog.Items.Add("You don't have the money!")
-            Form1.lstLog.TopIndex = Form1.lstLog.Items.Count - 1
+            Game.lstLog.Items.Add("You don't have the money!")
+            Game.lstLog.TopIndex = Game.lstLog.Items.Count - 1
         End If
         cBoxSell.Items.Clear()
         pCanSell.Clear()
@@ -98,8 +98,8 @@
         lblSKG.Text = sk.name & "'s Gold = " & sk.gold
         cBoxBuy.Text = "-- Select --"
         cBoxBuyQTY.Text = ""
-        Form1.player.invNeedsUDate = True
-        Form1.player.UIupdate()
+        Game.player.invNeedsUDate = True
+        Game.player.UIupdate()
     End Sub
 
     Function lineup(ByVal s As String, ByVal i As Integer)

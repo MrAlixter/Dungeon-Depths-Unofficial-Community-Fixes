@@ -11,14 +11,14 @@
 
     Overrides Sub use()
         If Me.getUsable() = False Then Exit Sub
-        Form1.player.iArr(6) = CharacterGenerator1.fAttributes(6)(1)
-        Form1.player.iArrInd(6) = New Tuple(Of Integer, Boolean)(1, Form1.player.sexBool)
-        Form1.picPortrait.BackgroundImage = CharacterGenerator1.CreateBMP(Form1.player.iArr)
+        Game.player.iArr(6) = CharacterGenerator.fAttributes(6)(1)
+        Game.player.iArrInd(6) = New Tuple(Of Integer, Boolean)(1, Game.player.sexBool)
+        Game.picPortrait.BackgroundImage = CharacterGenerator.CreateBMP(Game.player.iArr)
         count -= 1
     End Sub
     Overrides Sub discard()
-        Form1.lstLog.Items.Add("You drop the " & getName())
-        Form1.lstLog.TopIndex = Form1.lstLog.Items.Count - 1
+        Game.lstLog.Items.Add("You drop the " & getName())
+        Game.lstLog.TopIndex = Game.lstLog.Items.Count - 1
         count -= 1
     End Sub
 End Class

@@ -10,7 +10,7 @@
         setCalories(20)
     End Sub
     Public Overrides Sub Effect()
-        Dim p As Player = Form1.player
-        Form4.transform(p, "angel", 0)
+        Dim p As Player = Game.player
+        Polymorph.transform(p, "angel", 0)
     End Sub
 End Class

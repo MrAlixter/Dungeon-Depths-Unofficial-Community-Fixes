@@ -12,14 +12,14 @@
 
     Overrides Sub use()
         If Me.getUsable() = False Then Exit Sub
-        Form1.lstLog.Items.Add("You use the " & getName())
-        Form1.lstLog.TopIndex = Form1.lstLog.Items.Count - 1
-        If Form1.mBoard(Form1.stairs.Y, Form1.stairs.X).Tag = 1 Then Form1.mBoard(Form1.stairs.Y, Form1.stairs.X).Tag = 2
+        Game.lstLog.Items.Add("You use the " & getName())
+        Game.lstLog.TopIndex = Game.lstLog.Items.Count - 1
+        If Game.mBoard(Game.stairs.Y, Game.stairs.X).Tag = 1 Then Game.mBoard(Game.stairs.Y, Game.stairs.X).Tag = 2
         count -= 1
     End Sub
     Overrides Sub discard()
-        Form1.lstLog.Items.Add("You drop the " & getName())
-        Form1.lstLog.TopIndex = Form1.lstLog.Items.Count - 1
+        Game.lstLog.Items.Add("You drop the " & getName())
+        Game.lstLog.TopIndex = Game.lstLog.Items.Count - 1
         count -= 1
     End Sub
 End Class

@@ -10,14 +10,14 @@
 
     Overrides Sub use()
         If Me.getUsable() = False Then Exit Sub
-        Form1.lstLog.Items.Add("You apply the " & getName())
-        Form4.transform(Form1.player, "slime", 0)
+        Game.lstLog.Items.Add("You apply the " & getName())
+        Polymorph.transform(Game.player, "slime", 0)
         count -= 1
-        Form1.lstLog.TopIndex = Form1.lstLog.Items.Count - 1
+        Game.lstLog.TopIndex = Game.lstLog.Items.Count - 1
     End Sub
     Overrides Sub discard()
-        Form1.lstLog.Items.Add("You drop the " & getName())
-        Form1.lstLog.TopIndex = Form1.lstLog.Items.Count - 1
+        Game.lstLog.Items.Add("You drop the " & getName())
+        Game.lstLog.TopIndex = Game.lstLog.Items.Count - 1
         count -= 1
     End Sub
 End Class

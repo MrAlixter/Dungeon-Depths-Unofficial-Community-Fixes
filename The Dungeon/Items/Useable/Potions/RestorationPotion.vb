@@ -11,22 +11,22 @@
 
     Overrides Sub use()
         If Me.getUsable() = False Then Exit Sub
-        Form1.lstLog.Items.Add("You drink the " & getName())
-        Form1.player.health += 25
-        If Form1.player.health > Form1.player.maxHealth Then Form1.player.health = Form1.player.maxHealth
+        Game.lstLog.Items.Add("You drink the " & getName())
+        Game.player.health += 25
+        If Game.player.health > Game.player.maxHealth Then Game.player.health = Game.player.maxHealth
         'If Not Form1.player.iArrInd.Equals(Form1.player.sIArrInd) And Not Form1.player.iArrInd.Equals(Form1.player.pIArrInd) Then
         'Form1.player.revert2()
         ' ElseIf Form1.player.iArrInd.Equals(Form1.player.sIArrInd) Then
         'Form1.lstLog.Items.Add( "You can't revert further!")
         'Else
-        Form1.player.revert()
+        Game.player.revert()
         'End If
-        Form1.lstLog.TopIndex = Form1.lstLog.Items.Count - 1
+        Game.lstLog.TopIndex = Game.lstLog.Items.Count - 1
         count -= 1
     End Sub
     Overrides Sub discard()
-        Form1.lstLog.Items.Add("You drop the " & getName())
-        Form1.lstLog.TopIndex = Form1.lstLog.Items.Count - 1
+        Game.lstLog.Items.Add("You drop the " & getName())
+        Game.lstLog.TopIndex = Game.lstLog.Items.Count - 1
         count -= 1
     End Sub
 End Class

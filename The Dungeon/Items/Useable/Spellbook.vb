@@ -15,7 +15,7 @@
         Dim sName As String = "YOU DONE FUCKED UP"
         Dim ct As Integer = 0
         Dim out As String = ""
-        While ct < 1 Or Form1.cboxMG.Items.Contains(sName)
+        While ct < 1 Or Game.cboxMG.Items.Contains(sName)
             ct += 1
             Dim spell As Integer = CInt(Int(Rnd() * 7))
             Select Case spell
@@ -27,7 +27,7 @@
                     sName = "Self Polymorph"
                     Dim form As String = "Err"
                     Dim c As Integer = 0
-                    While c < 1 Or Form1.formList.Contains(form)
+                    While c < 1 Or Game.formList.Contains(form)
                         c += 1
                         Dim learnForm As Integer = CInt(Int(Rnd() * 4))
                         Select Case learnForm
@@ -45,8 +45,8 @@
                             Exit Select
                         End If
                     End While
-                    If Not Form1.formList.Contains(form) Then
-                        Form1.formList.Add(form)
+                    If Not Game.formList.Contains(form) Then
+                        Game.formList.Add(form)
                         out = "You learn how to turn yourself into a " & form & "!"
                         Exit While
                     End If
@@ -56,7 +56,7 @@
                     sName = "Polymorph Enemy"
                     Dim form As String = "Err"
                     Dim c As Integer = 0
-                    While c < 1 Or Form1.formList.Contains(form)
+                    While c < 1 Or Game.formList.Contains(form)
                         c += 1
                         Dim learnForm As Integer = CInt(Int(Rnd() * 3))
                         Select Case learnForm
@@ -72,8 +72,8 @@
                             Exit Select
                         End If
                     End While
-                    If Not Form1.tFormList.Contains(form) Then
-                        Form1.tFormList.Add(form)
+                    If Not Game.tFormList.Contains(form) Then
+                        Game.tFormList.Add(form)
                         out = "You learn how to polymorph somthing into a " & form & "!"
                         Exit While
                     End If
@@ -89,21 +89,21 @@
                     '    sName = "Freeze"
             End Select
             If ct > 60 Then
-                Form1.lstLog.Items.Add("You know all the spells already!")
+                Game.lstLog.Items.Add("You know all the spells already!")
                 count -= 1
                 Exit Sub
             End If
         End While
-        If sName = "Turn to Frog" Or sName = "Polymorph Enemy" Or sName = "Arcane Hypnosis" Or sName = "Freeze" Or sName = "Petrify" Then Form1.cboxNPCMG.Items.Add(sName)
-        If Not Form1.cboxMG.Items.Contains(sName) Then Form1.cboxMG.Items.Add(sName)
-        Form1.lstLog.Items.Add("You read the " & getName() & ". " & sName & " learned!")
-        If Not out.Equals("") Then Form1.lstLog.Items.Add(out)
+        If sName = "Turn to Frog" Or sName = "Polymorph Enemy" Or sName = "Arcane Hypnosis" Or sName = "Freeze" Or sName = "Petrify" Then Game.cboxNPCMG.Items.Add(sName)
+        If Not Game.cboxMG.Items.Contains(sName) Then Game.cboxMG.Items.Add(sName)
+        Game.lstLog.Items.Add("You read the " & getName() & ". " & sName & " learned!")
+        If Not out.Equals("") Then Game.lstLog.Items.Add(out)
         count -= 1
-        Form1.lstLog.TopIndex = Form1.lstLog.Items.Count - 1
+        Game.lstLog.TopIndex = Game.lstLog.Items.Count - 1
     End Sub
     Overrides Sub discard()
-        Form1.lstLog.Items.Add("You drop the " & getName())
-        Form1.lstLog.TopIndex = Form1.lstLog.Items.Count - 1
+        Game.lstLog.Items.Add("You drop the " & getName())
+        Game.lstLog.TopIndex = Game.lstLog.Items.Count - 1
         count -= 1
     End Sub
 End Class

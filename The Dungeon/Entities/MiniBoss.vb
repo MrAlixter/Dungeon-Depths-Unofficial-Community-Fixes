@@ -34,19 +34,19 @@
                 MyBase.attack = 15
                 MyBase.defence = 15
                 MyBase.speed = 15
-                ReDim MyBase.inventory(Form1.player.inventorynames.Count - 1)
+                ReDim MyBase.inventory(Game.player.inventorynames.Count - 1)
                 Randomize()
                 For i = 0 To 5
                     Dim invInd As Integer = 8
                     While invInd <> 8 And invInd <> 10 And invInd <> 24 And invInd <> 53 And invInd <> 58
-                        invInd = Int(Rnd() * Form1.player.inventorynames.Count)
+                        invInd = Int(Rnd() * Game.player.inventorynames.Count)
                     End While
                     MyBase.inventory(invInd) = (Int(Rnd() * 2) + 1)
                 Next
         End Select
-        If speed = Form1.player.speed Then speed -= 1
+        If speed = Game.player.speed Then speed -= 1
         MyBase.sName = getName()
-        MyBase.pos = Form1.player.pos
+        MyBase.pos = Game.player.pos
     End Sub
     Sub New(ByVal s As String)
         MyBase.New(-1)
@@ -63,19 +63,19 @@
         Next
     End Sub
     Public Overrides Sub attackCMD(target As Player)
-        Form1.player.currTarget = Me
+        Game.player.currTarget = Me
         If name.Equals("Marissa the Enchantress") Then
             Dim r As Integer = 1 ' CInt(Int(Rnd() * 10))
-            If r = 1 And Form1.player.perks(6) = False Then
-                Form1.lstLog.Items.Add((getName() & " casts a curse on you!"))
-                Form1.player.perks(6) = True
+            If r = 1 And Game.player.perks(6) = False Then
+                Game.lstLog.Items.Add((getName() & " casts a curse on you!"))
+                Game.player.perks(6) = True
                 'attack = 0
-            ElseIf Form1.player.perks(6) And health < 45 Then
-                Form1.lstLog.Items.Add((getName() & " heals herself!  +25 health!"))
+            ElseIf Game.player.perks(6) And health < 45 Then
+                Game.lstLog.Items.Add((getName() & " heals herself!  +25 health!"))
                 health += 25
                 ' attack = 0
-            ElseIf Form1.player.health < 20 Then
-                Form1.lstLog.Items.Add((getName() & " waits expectantly . . ."))
+            ElseIf Game.player.health < 20 Then
+                Game.lstLog.Items.Add((getName() & " waits expectantly . . ."))
             Else
                 MyBase.attackCMD(target)
                 'attack = 20
@@ -83,6 +83,6 @@
         Else
             MyBase.attackCMD(target)
         End If
-        Form1.lstLog.TopIndex = Form1.lstLog.Items.Count - 1
+        Game.lstLog.TopIndex = Game.lstLog.Items.Count - 1
     End Sub
 End Class

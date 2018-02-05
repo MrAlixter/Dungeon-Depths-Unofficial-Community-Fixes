@@ -11,18 +11,18 @@
     End Sub
     Overrides Sub use()
         If Me.getUsable() = False Then Exit Sub
-        Form1.lstLog.Items.Add("You drink the " & getName())
-        Form1.player.hunger -= getCalories()
-        If Form1.player.hunger < 0 Then Form1.player.hunger = 0
+        Game.lstLog.Items.Add("You drink the " & getName())
+        Game.player.hunger -= getCalories()
+        If Game.player.hunger < 0 Then Game.player.hunger = 0
         Effect()
-        Form1.lstLog.TopIndex = Form1.lstLog.Items.Count - 1
+        Game.lstLog.TopIndex = Game.lstLog.Items.Count - 1
         count -= 1
     End Sub
     Public Overrides Sub Effect()
         Dim r As Integer = Int(Rnd() * 3)
-        If r = 0 Then Form1.player.be()
-        If Not Form1.player.perks(5) Or Not Form1.player.title.Equals("Magic Girl") Then
-            Form1.player.pState.save(Form1.player)
+        If r = 0 Then Game.player.be()
+        If Not Game.player.perks(5) Or Not Game.player.title.Equals("Magic Girl") Then
+            Game.player.pState.save(Game.player)
         End If
     End Sub
 End Class

@@ -9,8 +9,8 @@ Public Class PQ
     Public Sub add(o As Updatable, t As Integer) Implements PQInterface.add
         t += getCurrentTime()
         If (t < seg.getTime()) Then
-            Form1.lstLog.Items.Add("Silly user, time travel is forbidden!")
-            Form1.lstLog.TopIndex = Form1.lstLog.Items.Count - 1
+            Game.lstLog.Items.Add("Silly user, time travel is forbidden!")
+            Game.lstLog.TopIndex = Game.lstLog.Items.Count - 1
         ElseIf t = seg.getTime() Then
             seg.getEvents().add(o)
         Else   'search list for correct insertion point, then insert
@@ -32,8 +32,8 @@ Public Class PQ
     End Sub
     Function remove() As Updatable Implements PQInterface.remove
         If Me.isEmpty() Then
-            Form1.lstLog.Items.Add("Error: removing from empty queue")
-            Form1.lstLog.TopIndex = Form1.lstLog.Items.Count - 1
+            Game.lstLog.Items.Add("Error: removing from empty queue")
+            Game.lstLog.TopIndex = Game.lstLog.Items.Count - 1
             Return Nothing
         ElseIf (seg.getEvents().length() = 0) Then
             seg = seg.getNext()

@@ -11,6 +11,6 @@
     End Sub
 
     Overrides Sub effect()
-        Form1.player.perks(1) = True
+        Game.player.perks(1) = True
     End Sub
 End Class

@@ -10,16 +10,16 @@
 
     Overrides Sub use()
         If Me.getUsable() = False Then Exit Sub
-        If getName() = "Medicinal_Tea" Then Form1.lstLog.Items.Add("You drink the " & getName()) Else Form1.lstLog.Items.Add("You eat the " & getName())
-        Form1.lstLog.TopIndex = Form1.lstLog.Items.Count - 1
-        Form1.player.hunger -= calories
-        If Form1.player.hunger < 0 Then Form1.player.hunger = 0
+        If getName() = "Medicinal_Tea" Then Game.lstLog.Items.Add("You drink the " & getName()) Else Game.lstLog.Items.Add("You eat the " & getName())
+        Game.lstLog.TopIndex = Game.lstLog.Items.Count - 1
+        Game.player.hunger -= calories
+        If Game.player.hunger < 0 Then Game.player.hunger = 0
         Effect()
         count -= 1
     End Sub
     Overrides Sub discard()
-        Form1.lstLog.Items.Add("You drop the " & getName())
-        Form1.lstLog.TopIndex = Form1.lstLog.Items.Count - 1
+        Game.lstLog.Items.Add("You drop the " & getName())
+        Game.lstLog.TopIndex = Game.lstLog.Items.Count - 1
         count -= 1
     End Sub
     Overridable Sub Effect()

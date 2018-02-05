@@ -21,7 +21,7 @@
     End Sub
 
     Sub examine()
-        Form1.lstLog.Items.Add(desc)
-        Form1.lstLog.TopIndex = Form1.lstLog.Items.Count - 1
+        Game.lstLog.Items.Add(desc)
+        Game.lstLog.TopIndex = Game.lstLog.Items.Count - 1
     End Sub
 End Class
