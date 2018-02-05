@@ -134,8 +134,7 @@
         Game.fromCombat()
         If Game.player.perks(7) Then Game.player.perksct(7) += 1
         dead = True
-        If sName.Equals("Marissa the Enchantress") Then Game.beatboss(1) = True
-        If sName.Equals("Targax the Brutal") Then Game.beatboss(2) = True
+        endBoss()
         Game.lstLog.TopIndex = Game.lstLog.Items.Count - 1
     End Sub
     Public Overridable Sub despawn(ByVal reason As String)
@@ -215,8 +214,7 @@
         Game.statueList.Add(New Statue(Me))
         If Game.player.perks(7) Then Game.player.perksct(7) += 1
         dead = True
-        If sName.Equals("Marissa the Enchantress") Then Game.beatboss(1) = True
-        If sName.Equals("Targax the Brutal") Then Game.beatboss(2) = True
+        endBoss()
         Game.lstLog.TopIndex = Game.lstLog.Items.Count - 1
     End Sub
     Public Overridable Sub toGold()
@@ -233,8 +231,7 @@
         Game.player.gold += gd
         If Game.player.perks(7) Then Game.player.perksct(7) += 1
         dead = True
-        If sName.Equals("Marissa the Enchantress") Then Game.beatboss(1) = True
-        If sName.Equals("Targax the Brutal") Then Game.beatboss(2) = True
+        endBoss()
         Game.lstLog.TopIndex = Game.lstLog.Items.Count - 1
     End Sub
     Public Overridable Sub toBlade()
@@ -248,8 +245,7 @@
         Game.fromCombat()
         If Game.player.perks(7) Then Game.player.perksct(7) += 1
         dead = True
-        If sName.Equals("Marissa the Enchantress") Then Game.beatboss(1) = True
-        If sName.Equals("Targax the Brutal") Then Game.beatboss(2) = True
+        endBoss()
         Game.lstLog.TopIndex = Game.lstLog.Items.Count - 1
     End Sub
     Public Overridable Sub revert()
@@ -301,6 +297,10 @@
         Next
         reader.Close()
         Return True
+    End Function
+    Private Function endBoss()
+        If sName.Equals("Marissa the Enchantress") Then Game.beatboss(1) = True
+        If sName.Equals("Targax the Brutal") Then Game.beatboss(2) = True
     End Function
     Public Function getName() As String
         If form = "" Then

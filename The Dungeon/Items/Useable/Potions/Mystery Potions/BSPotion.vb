@@ -3,7 +3,7 @@
     'BSPotions decrease breastsize by a cup
     Sub New()
         MyBase.setRealName("Breast_Shrinking_Potion")
-        MyBase.setDesc("A off looking potion")
+        MyBase.setDesc("A bizzare looking potion")
         MyBase.value = 300
     End Sub
     Public Overrides Sub effect()
