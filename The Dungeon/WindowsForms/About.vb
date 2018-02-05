@@ -23,7 +23,7 @@
         Me.TextBoxDescription.Text = "Dungeon_Depths is a 2D dungeon crawler with art made in Kisekae2.0 featuring TF fetish content, made for adults." & vbCrLf &
                                      "Special thanks to:" & vbCrLf &
                                      "- undercoversam for advice on balancing" & vbCrLf & " " & vbCrLf &
-                                     "- Houdini111 for extensive debugging assistance" & vbCrLf & " " & vbCrLf &
+                                     "- Houdini111 for extensive debugging assistance and other contributions" & vbCrLf & " " & vbCrLf &
                                      "- Rangorak for advice on Kisekae2.0 and for the design of the fourth default clothing options"
     End Sub
 

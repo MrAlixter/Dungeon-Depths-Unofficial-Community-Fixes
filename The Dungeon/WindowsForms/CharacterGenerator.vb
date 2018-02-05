@@ -41,12 +41,6 @@
     Public Shared fGlasses, fEyes, fFace, fFacialMark, fMouth, fBody, fCloak, fClothing, fFrontHair, fEyebrows, fNose, fRearHair1, fEars, fAccA, fHat, fRearHair2, bkg As List(Of Image)
     Public Shared mGlasses, mEyes, mFace, mFacialMark, mMouth, mBody, mCloak, mClothing, mFrontHair, mEyebrows, mNose, mRearHair1, mEars, mAccA, mHat, mRearHair2 As List(Of Image)
     Public Shared fTFAccA, fTFBody, fTFClothes, fTFEars, fTFEyes, fTFface, fTfFrontHair, fTFMouth, fTFNose, fTFRearhair1, fTfRearhair2 As List(Of Image)
-    'Quits to main menu without starting the game
-    Private Sub btnBack_Click(sender As Object, e As EventArgs) Handles btnBack.Click
-        quit = True
-        Me.Close()
-    End Sub
-
     Public Shared mTFAccA, mTFBody, mTFClothes, mTFEars, mTFEyes, mTFface, mTfFrontHair, mTFMouth, mTFNose, mTFRearhair1, mTfRearhair2 As List(Of Image)
     Public Shared wings As List(Of Image)
 
@@ -1046,6 +1040,11 @@
     End Sub
     'btnSave_Click closes the form, finalizing the players choices
     Private Sub btnSave_Click(sender As Object, e As EventArgs) Handles btnSave.Click
+        Me.Close()
+    End Sub
+    'Quits to main menu without starting the game
+    Private Sub btnBack_Click(sender As Object, e As EventArgs) Handles btnBack.Click
+        quit = True
         Me.Close()
     End Sub
     'sex Selection buttons
