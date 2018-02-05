@@ -9,8 +9,8 @@
         Dim p As Player = Game.player
         p.inventorynames(59) = "Masculine_Potion"
         If p.sexBool Then
-            p.tg2()
-            Game.pushLblEvent("You are now a Man!")
+            p.FtM()
+            Game.pushLblEvent("You are now a man!")
         Else
             Game.pushLblEvent("Nothing happened!")
         End If

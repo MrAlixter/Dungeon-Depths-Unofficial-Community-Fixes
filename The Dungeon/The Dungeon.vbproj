@@ -102,6 +102,7 @@
     <Import Include="System.Threading.Tasks" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Items\Useable\Potions\Mystery Potions\BSPotion.vb" />
     <Compile Include="WindowsForms\About.Designer.vb">
       <DependentUpon>About.vb</DependentUpon>
     </Compile>
@@ -257,7 +258,7 @@
     <Compile Include="Items\Armor\SuccubusGarb.vb" />
     <Compile Include="Items\Armor\TankTop.vb" />
     <Compile Include="Items\Weapons\TargaxSword.vb" />
-    <Compile Include="Items\Useable\Potions\Mystery Potions\TGPotion.vb" />
+    <Compile Include="Items\Useable\Potions\Mystery Potions\FemininePotion.vb" />
     <Compile Include="Tiles\Trap.vb" />
     <Compile Include="Entities\Updatable.vb" />
     <Compile Include="Items\Useable\VialOfSlime.vb" />
@@ -273,6 +274,7 @@
     </EmbeddedResource>
     <EmbeddedResource Include="WindowsForms\CharacterGenerator.resx">
       <DependentUpon>CharacterGenerator.vb</DependentUpon>
+      <SubType>Designer</SubType>
     </EmbeddedResource>
     <EmbeddedResource Include="WindowsForms\Game.resx">
       <DependentUpon>Game.vb</DependentUpon>
@@ -288,6 +290,7 @@
     </EmbeddedResource>
     <EmbeddedResource Include="WindowsForms\Controls.resx">
       <DependentUpon>Controls.vb</DependentUpon>
+      <SubType>Designer</SubType>
     </EmbeddedResource>
     <EmbeddedResource Include="My Project\Resources.resx">
       <Generator>ResXFileCodeGenerator</Generator>

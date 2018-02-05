@@ -469,7 +469,7 @@
         inventory.Add(New BlondePotion())    '25
         inventory.Add(New BlackHairPotion())    '26
         inventory.Add(New RedHairPotion())    '27
-        inventory.Add(New TGPotion())    '28
+        inventory.Add(New FemininePotion())    '28
         inventory.Add(New BEPotion())    '29
 
         inventory.Add(New ChickenLeg()) '30
@@ -502,6 +502,7 @@
         inventory.Add(New RigWrench()) '57
         inventory.Add(New FusionCrystal()) '58
         inventory.Add(New MasculinePotion()) '59
+        inventory.Add(New BSPotion()) '60
 
         For i = 0 To inventory.Count - 1
             inventorynames(i) = inventory(i).getName()
@@ -528,9 +529,9 @@
         food = {inventory(30), inventory(31), inventory(32), inventory(33), _
                 inventory(34), inventory(35), inventory(44)}
 
-        potions = {inventory(2), inventory(13), inventory(14), inventory(25), _
-                   inventory(26), inventory(27), inventory(28), inventory(29), _
-                   inventory(59)}
+        potions = {inventory(2), inventory(13), inventory(14), inventory(25),
+                   inventory(26), inventory(27), inventory(28), inventory(29),
+                   inventory(59), inventory(60)}
 
         misc = {inventory(43), inventory(53)}
 
@@ -564,7 +565,7 @@
                         lust += 10
                         'tfStage2
                         If Not iArrInd(2).Item2 Or Not iArrInd(1).Item2 Or Not sexBool Or Not iArrInd(4).Item2 Then
-                            tg()
+                            MtF()
                         End If
                     Case 19
                         'tfStage3
@@ -861,14 +862,14 @@
             End If
         Next
         changeHairColor(haircolor)
-            changeSkinColor(skincolor)
-            Game.lstLog.TopIndex = Game.lstLog.Items.Count - 1
-            If lust > 0 Then lustUpdate()
-            If wingInd > 0 Then addWings(wingInd)
-            currState.save(Me)
-            If Not solFlag Then Game.picPortrait.BackgroundImage = CharacterGenerator.CreateBMP(iArr)
+        changeSkinColor(skincolor)
+        Game.lstLog.TopIndex = Game.lstLog.Items.Count - 1
+        If lust > 0 Then lustUpdate()
+        If wingInd > 0 Then addWings(wingInd)
+        currState.save(Me)
+        If Not solFlag Then Game.picPortrait.BackgroundImage = CharacterGenerator.CreateBMP(iArr)
     End Sub
-    Public Sub tg()
+    Public Sub MtF()
         If perks(5) Or title.Equals("Magic Girl") Then
             Game.lstLog.Items.Add("Your form prevents you from being altered.")
             Exit Sub
@@ -906,7 +907,7 @@
         perksct(7) = 0
         Game.lstLog.TopIndex = Game.lstLog.Items.Count - 1
     End Sub
-    Public Sub tg2()
+    Public Sub FtM()
         If perks(5) Or title.Equals("Magic Girl") Then
             Game.lstLog.Items.Add("Your form prevents you from being altered.")
             Exit Sub
@@ -946,6 +947,37 @@
                     iArrInd(2) = New Tuple(Of Integer, Boolean)(14, True)
             End Select
             Game.lstLog.Items.Add("+ 1 cup size!")
+            If iArrInd(3).Item2 = False Then iArrInd(3) = New Tuple(Of Integer, Boolean)(iArrInd(3).Item1, True)
+        End If
+        bsizeroute()
+        Equipment.portraitUDate()
+        Game.lstLog.TopIndex = Game.lstLog.Items.Count - 1
+        createP()
+    End Sub
+    Friend Sub bs()
+        If perks(5) Or title.Equals("Magic Girl") Then
+            Game.lstLog.Items.Add("Your form prevents you from being altered.")
+            Exit Sub
+        End If
+        'If breastSize = -1 Then breastSize = 0
+        If breastSize > -1 And breastSize <= 6 Then
+            breastSize -= 1
+            If breastSize = 0 Then breastSize = -1
+            Select Case breastSize
+                Case -1
+                    iArrInd(2) = New Tuple(Of Integer, Boolean)(0, False)
+                Case 1
+                    iArrInd(2) = New Tuple(Of Integer, Boolean)(0, True)
+                Case 2
+                    iArrInd(2) = New Tuple(Of Integer, Boolean)(12, True)
+                Case 3
+                    iArrInd(2) = New Tuple(Of Integer, Boolean)(2, True)
+                Case 4
+                    iArrInd(2) = New Tuple(Of Integer, Boolean)(13, True)
+                Case 5
+                    iArrInd(2) = New Tuple(Of Integer, Boolean)(14, True)
+            End Select
+            Game.lstLog.Items.Add("- 1 cup size!")
             If iArrInd(3).Item2 = False Then iArrInd(3) = New Tuple(Of Integer, Boolean)(iArrInd(3).Item1, True)
         End If
         bsizeroute()

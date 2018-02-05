@@ -27,9 +27,9 @@
     Public isMark As Boolean = False    'indicates if the 'mark' cheat code has been used. (NOT SAVED)
     Dim keyspresed As String = ""   'records last 4 keys pressed (NOT SAVED)
     'variables related to the mystery potions
-    Public OHPotionNames() As String = {"Red_Potion", "Green_Potion", "Blue_Potion", "Yellow_Potion", "Glowing_Potion", "Murky_Potion"} '"Clear_Potion", "Smokey_Potion"}
+    Public OHPotionNames() As String = {"Red_Potion", "Green_Potion", "Blue_Potion", "Yellow_Potion", "Glowing_Potion", "Murky_Potion", "Purple_Potion"} '"Clear_Potion", "Smokey_Potion"}
     Public HPotionNames() As String = OHPotionNames.Clone()
-    Dim APotionNames() As String = {"Blonde_Potion", "Red_Hair_Potion", "Black_Hair_Potion", "Feminine_Potion", "Breast_Enlarging_Potion", "Masculine_Potion"} '"Weakness_Potion", "Shrink_Potion", "Snake_Potion"}
+    Dim APotionNames() As String = {"Blonde_Potion", "Red_Hair_Potion", "Black_Hair_Potion", "Feminine_Potion", "Breast_Enlarging_Potion", "Masculine_Potion", "Breast_Shrinking_Potion"} '"Weakness_Potion", "Shrink_Potion", "Snake_Potion"}
     'save lists of the players polymorph forms
     '      self      enemy
     Public formList, tFormList As New ArrayList()
@@ -609,10 +609,10 @@
                         player.pState.save(player)
                         player.createP()
                     ElseIf keyspresed = "girl" Then
-                        player.tg()
+                        player.MtF()
                         player.createP()
                     ElseIf keyspresed = "dick" Then
-                        player.tg2()
+                        player.FtM()
                         player.createP()
                     ElseIf keyspresed = "blue" Then
                         player.haircolor = Color.Cyan
