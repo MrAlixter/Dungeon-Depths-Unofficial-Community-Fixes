@@ -304,8 +304,8 @@
             inventory.Item(21).add(1)
             equippedWeapon = inventory.Item(21)
         ElseIf s = "dev" Then
-            health += 999
-            maxHealth += 999
+            health += 250
+            maxHealth += 250
             mana += 999
             maxMana += 999
             For i = 0 To inventory.Count - 1

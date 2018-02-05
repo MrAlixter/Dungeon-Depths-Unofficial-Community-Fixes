@@ -39,7 +39,7 @@
     Dim monsterTier2() As Integer = {0, 1, 2, 3}
     Public turn As Integer = 0  '(NOT SAVED)
     Public beatboss() As Boolean = {False, False, False, False, False}  'which bosses have been beat?
-    Dim floorboss() As String = {"Foor0", "Marissa the Enchantress", "Targax the Brutal", "Key"} 'boss names (NOT SAVED)
+    Dim floorboss() As String = {"Floor0", "Marissa the Enchantress", "Targax the Brutal", "Key"} 'boss names (NOT SAVED)
     Public version As Double = 0.5      'the save file version
     Public lblEventOnClose As Action    'the event method preformed when lblEvent closes (NOT SAVED)
     Public invFilters() As Boolean = {True, True, True, True, True, True}
@@ -91,7 +91,6 @@
         chargen.currSex = player.sexBool
         chargen.ShowDialog()
         picPortrait.BackgroundImage = chargen.ExportIMG()
-
         chargen.Dispose()
         Dim int As Integer = 100 - player.getSpeed
         If int < 1 Then int = 1
@@ -271,6 +270,7 @@
         Next
     End Sub
     Sub placeTraps()
+        trapList.Clear()
         Dim numtrap As Integer = CInt(Int(Rnd() * 5) + 3) * Int(mBoardWidth / 30)
         For i = 1 To numtrap
             Randomize()
@@ -767,6 +767,7 @@
             writer.WriteLine(chestList.Item(i).ToString())
         Next
         writer.WriteLine(trapList.Count - 1)
+        MsgBox(trapList.Count)
         For i = 0 To trapList.Count - 1
             writer.WriteLine(trapList.Item(i).ToString())
         Next
