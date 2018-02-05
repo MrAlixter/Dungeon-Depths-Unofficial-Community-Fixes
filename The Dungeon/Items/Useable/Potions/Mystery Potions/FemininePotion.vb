@@ -1,4 +1,4 @@
-﻿Public Class TGPotion
+﻿Public Class FemininePotion
     Inherits Potion
     Sub New()
         MyBase.setRealName("Feminine_Potion")
@@ -9,7 +9,7 @@
         Dim p As Player = Game.player
         p.inventorynames(28) = "Feminine_Potion"
         If p.sexBool = False Then
-            p.tg()
+            p.MtF()
             Game.pushLblEvent("You are now a woman!")
         ElseIf Not p.perks(2) Then
             p.perks(2) = True

@@ -610,10 +610,10 @@
                         player.pState.save(player)
                         player.createP()
                     ElseIf keyspresed = "girl" Then
-                        player.tg()
+                        player.MtF()
                         player.createP()
                     ElseIf keyspresed = "dick" Then
-                        player.tg2()
+                        player.FtM()
                         player.createP()
                     ElseIf keyspresed = "blue" Then
                         player.haircolor = Color.Cyan
