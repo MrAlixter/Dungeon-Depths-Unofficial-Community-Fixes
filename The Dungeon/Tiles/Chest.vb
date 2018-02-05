@@ -47,10 +47,10 @@
         Next
     End Sub
     Sub open()
-        If Form1.player.pos <> pos Then Exit Sub
-        If Not Form1.combatmode And Form1.floor >= 3 Then
+        If Game.player.pos <> pos Then Exit Sub
+        If Not Game.combatmode And Game.floor >= 3 Then
             Dim mOdds As Integer
-            If Form1.floor = 3 Then
+            If Game.floor = 3 Then
                 mOdds = Int(Rnd() * 2)
             Else
                 mOdds = Int(Rnd() * 10)
@@ -62,21 +62,21 @@
         End If
         Dim c As String = "Chest Contents: " & vbCrLf
         For i = 0 To UBound(contents)
-            Form1.player.inventory.Item(i).add(contents(i))
+            Game.player.inventory.Item(i).add(contents(i))
             If contents(i) > 0 Then
-                c += " " & vbCrLf & "+" & contents(i) & " " & Form1.player.inventorynames(i) & " "
+                c += " " & vbCrLf & "+" & contents(i) & " " & Game.player.inventorynames(i) & " "
             End If
         Next
 
         c += " " & vbCrLf & " " & vbCrLf & "Press ';' to continue."
-        Form1.lblEvent.Text = c
-        Form1.lblEvent.BringToFront()
-        Form1.lblEvent.Location = New Point((250 * Form1.Size.Width / 688) - (Form1.lblEvent.Size.Width / 2), 65 * Form1.Size.Width / 688)
-        Form1.lblEvent.Visible = True
-        Form1.player.invNeedsUDate = True
-        Form1.player.UIupdate()
-        Form1.lstLog.Items.Add("You open a chest!")
-        Form1.lstLog.TopIndex = Form1.lstLog.Items.Count - 1
+        Game.lblEvent.Text = c
+        Game.lblEvent.BringToFront()
+        Game.lblEvent.Location = New Point((250 * Game.Size.Width / 688) - (Game.lblEvent.Size.Width / 2), 65 * Game.Size.Width / 688)
+        Game.lblEvent.Visible = True
+        Game.player.invNeedsUDate = True
+        Game.player.UIupdate()
+        Game.lstLog.Items.Add("You open a chest!")
+        Game.lstLog.TopIndex = Game.lstLog.Items.Count - 1
     End Sub
     Public Overrides Function ToString() As String
         Dim output As String = ""

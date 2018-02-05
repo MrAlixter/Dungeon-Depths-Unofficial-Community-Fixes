@@ -11,7 +11,7 @@
     End Sub
 
     Public Overrides Sub Effect()
-        Form1.player.health += 50
-        If Form1.player.health > Form1.player.getmaxHealth Then Form1.player.health = Form1.player.getmaxHealth
+        Game.player.health += 50
+        If Game.player.health > Game.player.getmaxHealth Then Game.player.health = Game.player.getmaxHealth
     End Sub
 End Class

@@ -10,16 +10,16 @@
 
     Overrides Sub use()
         If Me.getUsable() = False Then Exit Sub
-        If Form1.cboxMG.Items.Contains("Self Polymorph") Then
-            If MessageBox.Show("Do you want to cast Self Polymorph?", "Mirror", MessageBoxButtons.YesNo) = Windows.Forms.DialogResult.Yes Then Spells.SelfPolymorph(Form1.player)
+        If Game.cboxMG.Items.Contains("Self Polymorph") Then
+            If MessageBox.Show("Do you want to cast Self Polymorph?", "Mirror", MessageBoxButtons.YesNo) = Windows.Forms.DialogResult.Yes Then Spells.SelfPolymorph(Game.player)
         Else
-            Form1.lstLog.Items.Add(Form1.player.description)
-            Form1.lstLog.TopIndex = Form1.lstLog.Items.Count - 1
+            Game.lstLog.Items.Add(Game.player.description)
+            Game.lstLog.TopIndex = Game.lstLog.Items.Count - 1
         End If
     End Sub
     Overrides Sub discard()
-        Form1.lstLog.Items.Add("You drop the " & getName())
-        Form1.lstLog.TopIndex = Form1.lstLog.Items.Count - 1
+        Game.lstLog.Items.Add("You drop the " & getName())
+        Game.lstLog.TopIndex = Game.lstLog.Items.Count - 1
         count -= 1
     End Sub
 End Class

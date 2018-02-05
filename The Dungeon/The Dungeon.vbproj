@@ -62,7 +62,8 @@
     <OptionInfer>On</OptionInfer>
   </PropertyGroup>
   <PropertyGroup>
-    <ApplicationIcon>favicon %285%29.ico</ApplicationIcon>
+    <ApplicationIcon>
+    </ApplicationIcon>
   </PropertyGroup>
   <PropertyGroup>
     <SignAssembly>true</SignAssembly>
@@ -101,10 +102,10 @@
     <Import Include="System.Threading.Tasks" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="WindowsForms\AboutBox1.Designer.vb">
-      <DependentUpon>AboutBox1.vb</DependentUpon>
+    <Compile Include="WindowsForms\About.Designer.vb">
+      <DependentUpon>About.vb</DependentUpon>
     </Compile>
-    <Compile Include="WindowsForms\AboutBox1.vb">
+    <Compile Include="WindowsForms\About.vb">
       <SubType>Form</SubType>
     </Compile>
     <Compile Include="Items\Useable\Food\AngelFood.vb" />
@@ -121,10 +122,10 @@
     <Compile Include="Items\Armor\BunnySuit.vb" />
     <Compile Include="Items\Useable\CatEars.vb" />
     <Compile Include="Items\Armor\CatLingerie.vb" />
-    <Compile Include="WindowsForms\CharacterGenerator1.Designer.vb">
-      <DependentUpon>CharacterGenerator1.vb</DependentUpon>
+    <Compile Include="WindowsForms\CharacterGenerator.Designer.vb">
+      <DependentUpon>CharacterGenerator.vb</DependentUpon>
     </Compile>
-    <Compile Include="WindowsForms\CharacterGenerator1.vb">
+    <Compile Include="WindowsForms\CharacterGenerator.vb">
       <SubType>Form</SubType>
     </Compile>
     <Compile Include="Tiles\Chest.vb" />
@@ -134,40 +135,34 @@
     <Compile Include="Items\Useable\Food\Cupcake.vb" />
     <Compile Include="Items\Useable\Charms\DefenceCharm.vb" />
     <Compile Include="Items\Useable\Food\Food.vb" />
-    <Compile Include="WindowsForms\Form1.Designer.vb">
-      <DependentUpon>Form1.vb</DependentUpon>
+    <Compile Include="WindowsForms\Game.Designer.vb">
+      <DependentUpon>Game.vb</DependentUpon>
     </Compile>
-    <Compile Include="WindowsForms\Form1.vb">
+    <Compile Include="WindowsForms\Game.vb">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="WindowsForms\Form2.Designer.vb">
-      <DependentUpon>Form2.vb</DependentUpon>
+    <Compile Include="WindowsForms\Equipment.Designer.vb">
+      <DependentUpon>Equipment.vb</DependentUpon>
     </Compile>
-    <Compile Include="WindowsForms\Form2.vb">
+    <Compile Include="WindowsForms\Equipment.vb">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="WindowsForms\Form3.Designer.vb">
-      <DependentUpon>Form3.vb</DependentUpon>
+    <Compile Include="WindowsForms\Polymorph.Designer.vb">
+      <DependentUpon>Polymorph.vb</DependentUpon>
     </Compile>
-    <Compile Include="WindowsForms\Form3.vb">
+    <Compile Include="WindowsForms\Polymorph.vb">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="WindowsForms\Form4.Designer.vb">
-      <DependentUpon>Form4.vb</DependentUpon>
+    <Compile Include="WindowsForms\Hypnosis.Designer.vb">
+      <DependentUpon>Hypnosis.vb</DependentUpon>
     </Compile>
-    <Compile Include="WindowsForms\Form4.vb">
+    <Compile Include="WindowsForms\Hypnosis.vb">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="WindowsForms\Form5.Designer.vb">
-      <DependentUpon>Form5.vb</DependentUpon>
+    <Compile Include="WindowsForms\Controls.Designer.vb">
+      <DependentUpon>Controls.vb</DependentUpon>
     </Compile>
-    <Compile Include="WindowsForms\Form5.vb">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="WindowsForms\Form6.Designer.vb">
-      <DependentUpon>Form6.vb</DependentUpon>
-    </Compile>
-    <Compile Include="WindowsForms\Form6.vb">
+    <Compile Include="WindowsForms\Controls.vb">
       <SubType>Form</SubType>
     </Compile>
     <Compile Include="Items\Useable\FusionCrystal.vb" />
@@ -273,29 +268,26 @@
     <Compile Include="Items\Weapons\WizardStaff.vb" />
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="WindowsForms\AboutBox1.resx">
-      <DependentUpon>AboutBox1.vb</DependentUpon>
+    <EmbeddedResource Include="WindowsForms\About.resx">
+      <DependentUpon>About.vb</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="WindowsForms\CharacterGenerator1.resx">
-      <DependentUpon>CharacterGenerator1.vb</DependentUpon>
+    <EmbeddedResource Include="WindowsForms\CharacterGenerator.resx">
+      <DependentUpon>CharacterGenerator.vb</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="WindowsForms\Form1.resx">
-      <DependentUpon>Form1.vb</DependentUpon>
+    <EmbeddedResource Include="WindowsForms\Game.resx">
+      <DependentUpon>Game.vb</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="WindowsForms\Form2.resx">
-      <DependentUpon>Form2.vb</DependentUpon>
+    <EmbeddedResource Include="WindowsForms\Equipment.resx">
+      <DependentUpon>Equipment.vb</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="WindowsForms\Form3.resx">
-      <DependentUpon>Form3.vb</DependentUpon>
+    <EmbeddedResource Include="WindowsForms\Polymorph.resx">
+      <DependentUpon>Polymorph.vb</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="WindowsForms\Form4.resx">
-      <DependentUpon>Form4.vb</DependentUpon>
+    <EmbeddedResource Include="WindowsForms\Hypnosis.resx">
+      <DependentUpon>Hypnosis.vb</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="WindowsForms\Form5.resx">
-      <DependentUpon>Form5.vb</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="WindowsForms\Form6.resx">
-      <DependentUpon>Form6.vb</DependentUpon>
+    <EmbeddedResource Include="WindowsForms\Controls.resx">
+      <DependentUpon>Controls.vb</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="My Project\Resources.resx">
       <Generator>ResXFileCodeGenerator</Generator>
@@ -322,9 +314,6 @@
     <None Include="App.config" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="favicon %285%29.ico" />
-  </ItemGroup>
-  <ItemGroup>
     <BootstrapperPackage Include=".NETFramework,Version=v4.5">
       <Visible>False</Visible>
       <ProductName>Microsoft .NET Framework 4.5 %28x86 and x64%29</ProductName>
@@ -341,7 +330,9 @@
       <Install>false</Install>
     </BootstrapperPackage>
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <Content Include="favicon.ico" />
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.VisualBasic.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.

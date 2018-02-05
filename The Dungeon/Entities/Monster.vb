@@ -86,9 +86,9 @@
                 attack = 1
                 defence = 1
                 speed = 1
-                ReDim inventory(Form1.player.inventorynames.Count - 1)
+                ReDim inventory(Game.player.inventorynames.Count - 1)
                 For i = 0 To 2
-                    inventory(Int(Rnd() * Form1.player.inventorynames.Count)) = (Int(Rnd() * 2) + 1)
+                    inventory(Int(Rnd() * Game.player.inventorynames.Count)) = (Int(Rnd() * 2) + 1)
                 Next
         End Select
 
@@ -102,11 +102,11 @@
         title = " The "
         Me.mindex = mIndex
         sName = name
-        If speed = Form1.player.getSpeed Then speed -= 1
-        pos = Form1.player.pos
+        If speed = Game.player.getSpeed Then speed -= 1
+        pos = Game.player.pos
     End Sub
     Public Overridable Sub attackCMD(ByVal target As Player)
-        Form1.player.currTarget = Me
+        Game.player.currTarget = Me
         target.takeDMG(attack)
     End Sub
     Public Sub takeDMG(ByVal dmg As Integer)
@@ -119,7 +119,7 @@
         Next
         Dim c1 As Chest = New Chest(inventory, pos)
         If totalSum > 0 Then c1.open()
-        Form1.npcList.Remove(Me)
+        Game.npcList.Remove(Me)
         If mindex = 2 And Not name.Equals("Zombie") Then
             Dim writer As IO.StreamWriter
             writer = IO.File.CreateText("gho.sts")
@@ -127,45 +127,45 @@
             writer.Flush()
             writer.Close()
         End If
-        Form1.lstLog.Items.Add("You've deafeated the " & name & "!  Chest Dropped!")
+        Game.lstLog.Items.Add("You've deafeated the " & name & "!  Chest Dropped!")
         'Form1.player.xp += xpGain
-        Form1.player.perks(6) = False
-        Form1.player.currState.save(Form1.player)
-        Form1.fromCombat()
-        If Form1.player.perks(7) Then Form1.player.perksct(7) += 1
+        Game.player.perks(6) = False
+        Game.player.currState.save(Game.player)
+        Game.fromCombat()
+        If Game.player.perks(7) Then Game.player.perksct(7) += 1
         dead = True
-        If sName.Equals("Marissa the Enchantress") Then Form1.beatboss(1) = True
-        If sName.Equals("Targax the Brutal") Then Form1.beatboss(2) = True
-        Form1.lstLog.TopIndex = Form1.lstLog.Items.Count - 1
+        If sName.Equals("Marissa the Enchantress") Then Game.beatboss(1) = True
+        If sName.Equals("Targax the Brutal") Then Game.beatboss(2) = True
+        Game.lstLog.TopIndex = Game.lstLog.Items.Count - 1
     End Sub
     Public Overridable Sub despawn(ByVal reason As String)
-        Form1.npcList.Remove(Me)
+        Game.npcList.Remove(Me)
         If reason = "run" Then
-            Form1.lstLog.Items.Add("You ran from the " & name & "!")
+            Game.lstLog.Items.Add("You ran from the " & name & "!")
         ElseIf reason = "npc" Then
-            Form1.lstLog.Items.Add("You walk away from " & name & "!")
+            Game.lstLog.Items.Add("You walk away from " & name & "!")
         ElseIf reason = "animaltf" Then
             Dim output As String = ""
             If Me.GetType() Is GetType(Monster) Then output += "The "
             output += name & ", seeing that you are no longer human, wanders off."
-            Form1.lstLog.Items.Add(output)
+            Game.lstLog.Items.Add(output)
         ElseIf reason = "flee" Then
             Dim output As String = ""
             If Me.GetType() Is GetType(Monster) Then output += "The "
             output += name & " runs away in fear!"
-            Form1.lstLog.Items.Add(output)
+            Game.lstLog.Items.Add(output)
         End If
         If UBound(inventory) >= 53 AndAlso inventory(53) > 0 And name <> "Shopkeeper" Then
-            Form1.pushLblEvent("Your foe drops a key!")
+            Game.pushLblEvent("Your foe drops a key!")
             Dim inv(53) As Integer
             inv(53) = 1
             Dim c1 As Chest = New Chest(inventory, pos)
-            Form1.chestList.Add(c1)
+            Game.chestList.Add(c1)
         End If
-        Form1.player.perks(6) = False
-        Form1.player.currState.save(Form1.player)
-        Form1.fromCombat()
-        Form1.lstLog.TopIndex = Form1.lstLog.Items.Count - 1
+        Game.player.perks(6) = False
+        Game.player.currState.save(Game.player)
+        Game.fromCombat()
+        Game.lstLog.TopIndex = Game.lstLog.Items.Count - 1
     End Sub
     Public Overridable Sub update() Implements Updatable.update
         If health <= 0 Then
@@ -184,13 +184,13 @@
             revert()
         End If
         If Not isStunned Then
-            If Form1.player.title = "Black Cat" Or Form1.player.title = "Chicken" And Me.GetType() = GetType(Monster) Then despawn("animaltf")
-            attackCMD(Form1.player)
+            If Game.player.title = "Black Cat" Or Game.player.title = "Chicken" And Me.GetType() = GetType(Monster) Then despawn("animaltf")
+            attackCMD(Game.player)
         Else
             If Me.GetType() Is GetType(Monster) Then
-                Form1.lstLog.Items.Add("The " & getName() & " is too stunned to react!")
+                Game.lstLog.Items.Add("The " & getName() & " is too stunned to react!")
             Else
-                Form1.lstLog.Items.Add(getName() & " is too stunned to react!")
+                Game.lstLog.Items.Add(getName() & " is too stunned to react!")
             End If
             If stunct <= 0 Then
                 isStunned = False
@@ -199,58 +199,58 @@
                 stunct -= 1
             End If
         End If
-        Form1.lstLog.Items.Add(getName() & " has " & health & " life.")
-        Form1.lstLog.TopIndex = Form1.lstLog.Items.Count - 1
+        Game.lstLog.Items.Add(getName() & " has " & health & " life.")
+        Game.lstLog.TopIndex = Game.lstLog.Items.Count - 1
     End Sub
     Public Overridable Sub toStatue()
         Dim c1 As Chest = New Chest(inventory, pos)
         c1.open()
-        Form1.npcList.Remove(Me)
-        Form1.lstLog.Items.Add("You've deafeated the " & name & "!")
+        Game.npcList.Remove(Me)
+        Game.lstLog.Items.Add("You've deafeated the " & name & "!")
         'Form1.player.xp += xpGain
-        Form1.player.perks(6) = False
-        Form1.player.currState.save(Form1.player)
-        Form1.fromCombat()
-        Form1.pushLblEvent(title & name & "'s chest slowly turns to stone where the spell hits " & rPronoun & ". The petrification spreads out over " & pPronoun & " body, and as more of " & pPronoun & " body turns to a fine gray stone " & pPronoun & " struggling becomes less and less intense. As the last of the life drains out of " & pPronoun & " eyes, all that is left of the once dangerous " & name & " is a lifeless stone statue. It doesn't seem like " & pronoun & " will be needing " & pPronoun & " personal items anymore.")
-        Form1.statueList.Add(New Statue(Me))
-        If Form1.player.perks(7) Then Form1.player.perksct(7) += 1
+        Game.player.perks(6) = False
+        Game.player.currState.save(Game.player)
+        Game.fromCombat()
+        Game.pushLblEvent(title & name & "'s chest slowly turns to stone where the spell hits " & rPronoun & ". The petrification spreads out over " & pPronoun & " body, and as more of " & pPronoun & " body turns to a fine gray stone " & pPronoun & " struggling becomes less and less intense. As the last of the life drains out of " & pPronoun & " eyes, all that is left of the once dangerous " & name & " is a lifeless stone statue. It doesn't seem like " & pronoun & " will be needing " & pPronoun & " personal items anymore.")
+        Game.statueList.Add(New Statue(Me))
+        If Game.player.perks(7) Then Game.player.perksct(7) += 1
         dead = True
-        If sName.Equals("Marissa the Enchantress") Then Form1.beatboss(1) = True
-        If sName.Equals("Targax the Brutal") Then Form1.beatboss(2) = True
-        Form1.lstLog.TopIndex = Form1.lstLog.Items.Count - 1
+        If sName.Equals("Marissa the Enchantress") Then Game.beatboss(1) = True
+        If sName.Equals("Targax the Brutal") Then Game.beatboss(2) = True
+        Game.lstLog.TopIndex = Game.lstLog.Items.Count - 1
     End Sub
     Public Overridable Sub toGold()
         Dim c1 As Chest = New Chest(inventory, pos)
         c1.open()
-        Form1.npcList.Remove(Me)
-        Form1.lstLog.Items.Add("You've deafeated the " & name & "!")
+        Game.npcList.Remove(Me)
+        Game.lstLog.Items.Add("You've deafeated the " & name & "!")
         'Form1.player.xp += xpGain
-        Form1.player.perks(6) = False
-        Form1.player.currState.save(Form1.player)
-        Form1.fromCombat()
+        Game.player.perks(6) = False
+        Game.player.currState.save(Game.player)
+        Game.fromCombat()
         Dim gd As Integer = (maxHealth + attack + defence) * 7
-        Form1.pushLblEvent(title & name & "'s chest slowly turns to solid gold where you poked " & rPronoun & ". The gilded surface spreads out over " & pPronoun & " body, and as more of " & pPronoun & " body turns to the precious metal " & pPronoun & " struggling becomes less and less intense. As the last of the life drains out of " & pPronoun & " eyes, all that is left of the once dangerous " & name & " is a lifeless gold statue, which you then topple over, shattering it into tiny pieces.   " & vbCrLf & "+" & gd & " gold.")
-        Form1.player.gold += gd
-        If Form1.player.perks(7) Then Form1.player.perksct(7) += 1
+        Game.pushLblEvent(title & name & "'s chest slowly turns to solid gold where you poked " & rPronoun & ". The gilded surface spreads out over " & pPronoun & " body, and as more of " & pPronoun & " body turns to the precious metal " & pPronoun & " struggling becomes less and less intense. As the last of the life drains out of " & pPronoun & " eyes, all that is left of the once dangerous " & name & " is a lifeless gold statue, which you then topple over, shattering it into tiny pieces.   " & vbCrLf & "+" & gd & " gold.")
+        Game.player.gold += gd
+        If Game.player.perks(7) Then Game.player.perksct(7) += 1
         dead = True
-        If sName.Equals("Marissa the Enchantress") Then Form1.beatboss(1) = True
-        If sName.Equals("Targax the Brutal") Then Form1.beatboss(2) = True
-        Form1.lstLog.TopIndex = Form1.lstLog.Items.Count - 1
+        If sName.Equals("Marissa the Enchantress") Then Game.beatboss(1) = True
+        If sName.Equals("Targax the Brutal") Then Game.beatboss(2) = True
+        Game.lstLog.TopIndex = Game.lstLog.Items.Count - 1
     End Sub
     Public Overridable Sub toBlade()
         Dim c1 As Chest = New Chest(inventory, pos)
         c1.open()
-        Form1.npcList.Remove(Me)
-        Form1.lstLog.Items.Add("You've deafeated the " & name & "!")
+        Game.npcList.Remove(Me)
+        Game.lstLog.Items.Add("You've deafeated the " & name & "!")
         'Form1.player.xp += xpGain
-        Form1.player.perks(6) = False
-        Form1.player.currState.save(Form1.player)
-        Form1.fromCombat()
-        If Form1.player.perks(7) Then Form1.player.perksct(7) += 1
+        Game.player.perks(6) = False
+        Game.player.currState.save(Game.player)
+        Game.fromCombat()
+        If Game.player.perks(7) Then Game.player.perksct(7) += 1
         dead = True
-        If sName.Equals("Marissa the Enchantress") Then Form1.beatboss(1) = True
-        If sName.Equals("Targax the Brutal") Then Form1.beatboss(2) = True
-        Form1.lstLog.TopIndex = Form1.lstLog.Items.Count - 1
+        If sName.Equals("Marissa the Enchantress") Then Game.beatboss(1) = True
+        If sName.Equals("Targax the Brutal") Then Game.beatboss(2) = True
+        Game.lstLog.TopIndex = Game.lstLog.Items.Count - 1
     End Sub
     Public Overridable Sub revert()
         name = sName
@@ -260,17 +260,17 @@
         defence = sDefence
         speed = sSpeed
         npcIndex = 0
-        Form1.pushLblEvent("The " & name & " return to " & pPronoun & " original self!")
+        Game.pushLblEvent("The " & name & " return to " & pPronoun & " original self!")
     End Sub
 
     Shared Sub createMimic(ByVal cont() As Integer)
         Dim m As Monster = New Monster(5)
         m.inventory = cont
-        Form1.npcList.Add(m)
-        Form1.toCombat()
-        Form1.lstLog.Items.Add((m.getName() & " attacks!"))
-        Form1.lstLog.TopIndex = Form1.lstLog.Items.Count - 1
-        Form1.drawBoard()
+        Game.npcList.Add(m)
+        Game.toCombat()
+        Game.lstLog.Items.Add((m.getName() & " attacks!"))
+        Game.lstLog.TopIndex = Game.lstLog.Items.Count - 1
+        Game.drawBoard()
     End Sub
     Private Function loadGhost() As Boolean
         Dim reader As IO.StreamReader
@@ -295,7 +295,7 @@
         Dim sexBool As Boolean = CBool(ghostArray(6))
         Dim haircolor As Color = Color.FromArgb(255, ghostArray(7), ghostArray(8), ghostArray(9))
 
-        ReDim inventory(UBound(Form1.player.inventorynames))
+        ReDim inventory(UBound(Game.player.inventorynames))
         For i = 0 To UBound(inventory)
             inventory(i) = ghostArray(10 + i)
         Next

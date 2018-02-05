@@ -127,9 +127,9 @@
         solFlag = True
         ReDim iArr(16)
         createP()
-        For i = 0 To UBound(Form1.HPotionNames)
-            inventory(25 + i).setName(Form1.HPotionNames(i))
-            inventorynames(25 + i) = Form1.HPotionNames(i)
+        For i = 0 To UBound(Game.HPotionNames)
+            inventory(25 + i).setName(Game.HPotionNames(i))
+            inventorynames(25 + i) = Game.HPotionNames(i)
         Next
         bsizeroute()
     End Sub
@@ -138,22 +138,22 @@
     'movement commands
     Public Sub moveUp()
         If (pos.Y - 1) < 0 Or canMoveFlag = False Then Exit Sub
-        If Form1.mBoard(pos.Y - 1, pos.X).Tag = 0 Then Exit Sub
+        If Game.mBoard(pos.Y - 1, pos.X).Tag = 0 Then Exit Sub
         pos.Y -= 1
     End Sub
     Public Sub moveDown()
-        If (pos.Y + 1) > Form1.mBoardHeight - 1 Or canMoveFlag = False Then Exit Sub
-        If Form1.mBoard(pos.Y + 1, pos.X).Tag = 0 Then Exit Sub
+        If (pos.Y + 1) > Game.mBoardHeight - 1 Or canMoveFlag = False Then Exit Sub
+        If Game.mBoard(pos.Y + 1, pos.X).Tag = 0 Then Exit Sub
         pos.Y += 1
     End Sub
     Public Sub moveLeft()
         If (pos.X - 1) < 0 Or canMoveFlag = False Then Exit Sub
-        If Form1.mBoard(pos.Y, pos.X - 1).Tag = 0 Then Exit Sub
+        If Game.mBoard(pos.Y, pos.X - 1).Tag = 0 Then Exit Sub
         pos.X -= 1
     End Sub
     Public Sub moveRight()
-        If (pos.X + 1) > Form1.mBoardWidth - 1 Or canMoveFlag = False Then Exit Sub
-        If Form1.mBoard(pos.Y, pos.X + 1).Tag = 0 Then Exit Sub
+        If (pos.X + 1) > Game.mBoardWidth - 1 Or canMoveFlag = False Then Exit Sub
+        If Game.mBoard(pos.Y, pos.X + 1).Tag = 0 Then Exit Sub
         pos.X += 1
     End Sub
     'combat commands
@@ -164,11 +164,11 @@
         Randomize()
         Dim dmg As Integer = equippedWeapon.attack(Me, target)
         If dmg = -1 Then
-            Form1.lstLog.Items.Add(CStr("You miss" & target.title & " " & target.getName() & "!"))
+            Game.lstLog.Items.Add(CStr("You miss" & target.title & " " & target.getName() & "!"))
             Exit Sub
         ElseIf dmg = -2 Then
             dmg += (12 + (getAttack()) + (equippedWeapon.aBoost)) * 2
-            Form1.lstLog.Items.Add(CStr("You hit" & target.title & " " & target.getName() & " for " & dmg & " damage!" & ".  Critical hit!"))
+            Game.lstLog.Items.Add(CStr("You hit" & target.title & " " & target.getName() & " for " & dmg & " damage!" & ".  Critical hit!"))
             target.takeDMG(dmg)
             target.isStunned = True
             target.stunct = 0
@@ -176,17 +176,17 @@
         ElseIf dmg < 1 Then
             dmg = 1
         End If
-        Form1.lstLog.Items.Add(CStr("You hit" & target.title & " " & target.getName() & " for " & dmg & " damage!"))
+        Game.lstLog.Items.Add(CStr("You hit" & target.title & " " & target.getName() & " for " & dmg & " damage!"))
         target.takeDMG(dmg)
-        Form1.lstLog.TopIndex = Form1.lstLog.Items.Count - 1
+        Game.lstLog.TopIndex = Game.lstLog.Items.Count - 1
     End Sub
     Public Sub takeDMG(ByVal dmg As Integer)
         'If Form1.combatmode = False Then Exit Sub
         Dim actualDMG As Integer = dmg - ((getDefence() / 100) * dmg)
         If actualDMG < 1 Then actualDMG = 1
         health -= actualDMG
-        Form1.lstLog.Items.Add(CStr("You got hit! -" & actualDMG & " health!"))
-        Form1.lstLog.TopIndex = Form1.lstLog.Items.Count - 1
+        Game.lstLog.Items.Add(CStr("You got hit! -" & actualDMG & " health!"))
+        Game.lstLog.TopIndex = Game.lstLog.Items.Count - 1
     End Sub
 
     'genral functions
@@ -194,7 +194,7 @@
     Public Sub Die()
         Try
             If currTarget.name.Equals("Shopkeeper") Then
-                Dim n As NPC = Form1.currNPC
+                Dim n As NPC = Game.currNPC
                 petrify(Color.Goldenrod)
                 Dim out As String = "'You should have known better than to try and rob a shop keeper,' the shopkeep says," & vbCrLf & _
                     " glaring down at you, '...and if its gold you're after, I guess I've got some good news for you.'" & vbCrLf & _
@@ -205,27 +205,27 @@
                     "around it to gold as well. In a matter of seconds, all that is left of " & Me.name & " the " & vbCrLf & _
                     Me.title & " is a solid gold statue. The shopkeeper sighs, muttering to no one in particular, " & vbCrLf & _
                     vbCrLf & vbCrLf & "'Now how am I going to get you back to the refinery?'"
-                Form1.pushLblEvent(out)
+                Game.pushLblEvent(out)
                 title = "Trophy"
                 MsgBox(out)
             ElseIf currTarget.name.Equals("Mindless Bimbo") Then
                 currTarget.despawn("run")
-                Form1.player.perks(1) = True
-                Form1.player.perksct(1) = 1
+                Game.player.perks(1) = True
+                Game.player.perksct(1) = 1
                 Dim out As String = "Exausted, you slump to the floor.  Glancing up, the horny mess attacking you seem to have gotten a running start, throwing herself on top of you, and pulling you into a sloppy kiss.  As she clumsily fumbles around, trying to remove your clothes, you roll out from underneath her and beat a hasty retreat, the faint sweetness of bubblegum lingering in your mouth."
-                Form1.pushLblEvent(out)
+                Game.pushLblEvent(out)
                 health = 10
                 Exit Sub
             ElseIf currTarget.name.Equals("Zombie") Then
                 currTarget.despawn("run")
                 Dim out As String = "Despite your fatigue, you are able to roll out of the way of the zombie's kill-blow, and make a clumsy escape." & vbCrLf & " " & vbCrLf & "[Insert a TF here (eventually)]"
-                Form1.pushLblEvent(out)
+                Game.pushLblEvent(out)
                 health = 10
                 Exit Sub
             ElseIf currTarget.name.Equals("Slime") Or currTarget.name.Equals("Goo Girl") Then
                 currTarget.despawn("run")
                 Dim out As String = "As the " & currTarget.name & " closes in on you, you push yourself off the ground, sidestep it, and make a hasty retreat." & vbCrLf & " " & vbCrLf & "[Insert a TF here (eventually)]"
-                Form1.pushLblEvent(out)
+                Game.pushLblEvent(out)
                 health = 10
                 Exit Sub
             ElseIf currTarget.name.Equals("Mimic") Then
@@ -235,7 +235,7 @@
                     out += "  As you black out, you can feel the tendrils writhing around you crotch.  As the darkness takes you, so does the orgasmic bliss of the mimic's magic touch."
                     lust += 50
                     createP()
-                    Form1.pushLblEvent(out)
+                    Game.pushLblEvent(out)
                     health = 10
                     Exit Sub
                 End If
@@ -252,9 +252,9 @@
                 equippedArmor = New LiveArmor
                 inventory(55).add(1)
                 perks(12) = True
-                Form3.portraitUDate()
+                Equipment.portraitUDate()
                 createP()
-                Form1.pushLblEvent(out)
+                Game.pushLblEvent(out)
                 health = 10
                 Exit Sub
             End If
@@ -263,7 +263,7 @@
         End Try
         Dim r As Integer = CInt(Int(Rnd() * 2))
         If r = 0 Then
-            If Not Form1.currNPC Is Nothing AndAlso Form1.currNPC.name.Equals("Shopkeeper") Then title = "Golem (Gold)"
+            If Not Game.currNPC Is Nothing AndAlso Game.currNPC.name.Equals("Shopkeeper") Then title = "Golem (Gold)"
             Dim writer As IO.StreamWriter
             writer = IO.File.CreateText("gho.sts")
             writer.WriteLine(Me.toGhost())
@@ -272,9 +272,9 @@
         End If
         If MessageBox.Show("Game Over!  Reload the a save?", "Game Over . . .", MessageBoxButtons.YesNo) = Windows.Forms.DialogResult.Yes Then
             Try
-                Form1.combatmode = False
-                Form1.solFlag = True
-                Form1.toSOL()
+                Game.combatmode = False
+                Game.solFlag = True
+                Game.toSOL()
                 Exit Sub
             Catch ex As Exception
                 MsgBox("No save detected!")
@@ -298,7 +298,7 @@
         ElseIf s = "Mage" Then
             mana += 30
             maxMana += 15
-            Form1.cboxMG.Items.Add("Fireball")
+            Game.cboxMG.Items.Add("Fireball")
             inventory.Item(2).add(3)
             inventory.Item(4).add(1)
             inventory.Item(21).add(1)
@@ -313,14 +313,14 @@
             Next
         End If
         title = s
-        Form3.clothesChange(equippedArmor.getName)
+        Equipment.clothesChange(equippedArmor.getName)
         If equippedWeapon.GetType().IsSubclassOf(GetType(Staff)) Then
             mana += equippedWeapon.aBoost
             maxMana += equippedWeapon.aBoost
         End If
         If sex = "Female" Then sexBool = True
         If sex = "Male" Then sexBool = False
-        pImage = Form1.picPlayer.BackgroundImage
+        pImage = Game.picPlayer.BackgroundImage
         TextColor = Color.White
         description = CStr(name & " is a " & sex & " " & title)
 
@@ -370,23 +370,23 @@
 
 
 
-        If Form1.cboxMG.Items.Contains("Heartblast Starcannon") Then
-            Form1.cboxMG.Items.Remove("Heartblast Starcannon")
-            Form1.lstLog.Items.Add("'Heartblast Starcannon' spell forgotten!")
-            Form1.lstLog.TopIndex = Form1.lstLog.Items.Count - 1
+        If Game.cboxMG.Items.Contains("Heartblast Starcannon") Then
+            Game.cboxMG.Items.Remove("Heartblast Starcannon")
+            Game.lstLog.Items.Add("'Heartblast Starcannon' spell forgotten!")
+            Game.lstLog.TopIndex = Game.lstLog.Items.Count - 1
         End If
 
         If health > maxHealth + hBuff Then health = maxHealth + hBuff
         If mana > maxMana + mBuff Then mana = maxMana + mBuff
 
-        Form1.pushLblEvent("With a poof of smoke, you return to your original self!")
-        Form1.pImage = pImage
-        Form1.lblEvent.ForeColor = TextColor
-        Form1.lblNameTitle.ForeColor = TextColor
+        Game.pushLblEvent("With a poof of smoke, you return to your original self!")
+        Game.pImage = pImage
+        Game.lblEvent.ForeColor = TextColor
+        Game.lblNameTitle.ForeColor = TextColor
 
         changeHairColor(haircolor)
         createP()
-        Form3.portraitUDate()
+        Equipment.portraitUDate()
         UIupdate()
     End Sub
     Public Sub revert2()
@@ -408,22 +408,22 @@
         currState.save(Me)
         pState.save(Me)
 
-        If Form1.cboxMG.Items.Contains("Heartblast Starcannon") Then
-            Form1.cboxMG.Items.Remove("Heartblast Starcannon")
-            Form1.lstLog.Items.Add("'Heartblast Starcannon' spell forgotten!")
-            Form1.lstLog.TopIndex = Form1.lstLog.Items.Count - 1
+        If Game.cboxMG.Items.Contains("Heartblast Starcannon") Then
+            Game.cboxMG.Items.Remove("Heartblast Starcannon")
+            Game.lstLog.Items.Add("'Heartblast Starcannon' spell forgotten!")
+            Game.lstLog.TopIndex = Game.lstLog.Items.Count - 1
         End If
 
         If health > maxHealth + hBuff Then health = maxHealth + hBuff
         If mana > maxMana + mBuff Then mana = maxMana + mBuff
-        Form1.pushLblEvent("You return to your former form!")
-        Form1.pImage = pImage
-        Form1.lblEvent.ForeColor = TextColor
-        Form1.lblNameTitle.ForeColor = TextColor
+        Game.pushLblEvent("You return to your former form!")
+        Game.pImage = pImage
+        Game.lblEvent.ForeColor = TextColor
+        Game.lblNameTitle.ForeColor = TextColor
 
         changeHairColor(haircolor)
         createP()
-        Form3.portraitUDate()
+        Equipment.portraitUDate()
         UIupdate()
     End Sub
 
@@ -435,7 +435,7 @@
             perks(0) = True
         ElseIf perks(0) = True Then
             perks(0) = False
-        ElseIf Form1.turn Mod 35 = 0 Then
+        ElseIf Game.turn Mod 35 = 0 Then
             hunger += 1
         End If
     End Sub
@@ -539,9 +539,9 @@
         Next
     End Sub
     Sub perkUpdate()
-        If perks(0) And Form1.turn Mod 5 = 0 Then
+        If perks(0) And Game.turn Mod 5 = 0 Then
             health -= 5
-            Form1.lstLog.Items.Add("Your stomach aches... -5 health!")
+            Game.lstLog.Items.Add("Your stomach aches... -5 health!")
         End If
         If perks(1) Then
             perks(3) = False
@@ -551,7 +551,7 @@
             End If
             If Not title.Equals("Bimbo") Then
                 If perksct(1) < 19 And perksct(1) Mod 3 = 0 Then
-                    haircolor = Form1.cShift(haircolor, Form4.bimboyellow, 5)
+                    haircolor = Game.cShift(haircolor, Polymorph.bimboyellow, 5)
                     createP()
                 End If
                 Select Case perksct(1)
@@ -568,23 +568,23 @@
                         End If
                     Case 19
                         'tfStage3
-                        Form4.transform(Me, "bimbo", 0)
+                        Polymorph.transform(Me, "bimbo", 0)
                     Case 25
-                        Form4.transform(Me, "bimbo", 1)
+                        Polymorph.transform(Me, "bimbo", 1)
                 End Select
                 perksct(1) += 1
                 Dim outputln1 As String = "Chewing the gum causes a dizzy calm wash to over you."
-                If perksct(1) = 1 Then Form1.pushLblEvent(outputln1)
+                If perksct(1) = 1 Then Game.pushLblEvent(outputln1)
             Else
                 Dim outputln1 As String = "Chewing the gum make your head feel warm and fuzzy and stuff. You like, totally, love this gum!"
-                Form1.pushLblEvent(outputln1)
-                Form1.lblNameTitle.ForeColor = Color.HotPink
+                Game.pushLblEvent(outputln1)
+                Game.lblNameTitle.ForeColor = Color.HotPink
                 perks(1) = False
                 perksct(1) = 0
             End If
         End If
         If perks(2) Then
-            Form3.clothingCurse1()
+            Equipment.clothingCurse1()
         End If
         If perks(3) Then
             If perksct(3) < 0 Then
@@ -592,7 +592,7 @@
             Else
                 perksct(3) += 1
                 If perksct(3) <= 1 Then
-                    Form4.transform(Me, "Chicken")
+                    Polymorph.transform(Me, "Chicken")
                 ElseIf perksct(3) < 10 Then
 
                 Else
@@ -608,9 +608,9 @@
             If Not haircolor.A = 180 Then
                 perks(4) = False
             Else
-                If health < maxHealth + hBuff And Form1.turn Mod 2 = 0 Then
+                If health < maxHealth + hBuff And Game.turn Mod 2 = 0 Then
                     health += 25
-                    Form1.lstLog.Items.Add("Your gel body heals some of the damage done to it. +5 health")
+                    Game.lstLog.Items.Add("Your gel body heals some of the damage done to it. +5 health")
                     If health > getmaxHealth() Then health = getmaxHealth()
                 End If
             End If
@@ -629,37 +629,37 @@
                 If perksct(6) < (discipline * 1.2) Then
                     Select Case perksct(6)
                         Case Int((discipline * 1.2) * 0.1)
-                            Form4.transform(Me, "neko", 0)
+                            Polymorph.transform(Me, "neko", 0)
                         Case Int((discipline * 1.2) * 0.2)
-                            Form4.transform(Me, "neko", 1)
+                            Polymorph.transform(Me, "neko", 1)
                         Case Int((discipline * 1.2) * 0.4)
                             If Not title.Equals("Magic Girl") Then
-                                Form4.transform(Me, "neko", 2)
+                                Polymorph.transform(Me, "neko", 2)
                             Else
                                 haircolor = Color.FromArgb(255, 20, 20, 20)
-                                Form1.pushLblEvent("Your hair becomes a shiny black!")
+                                Game.pushLblEvent("Your hair becomes a shiny black!")
                                 lust += 5
                             End If
                         Case Int((discipline * 1.2) * 0.5)
-                            Form4.transform(Me, "neko", 3)
+                            Polymorph.transform(Me, "neko", 3)
                         Case Int((discipline * 1.2) * 0.6)
-                            Form4.transform(Me, "neko", 4)
+                            Polymorph.transform(Me, "neko", 4)
                         Case Int((discipline * 1.2) * 0.8)
                             If title.Equals("Magic Girl") Then
-                                Form4.transform(Me, "neko", 6)
+                                Polymorph.transform(Me, "neko", 6)
                             Else
-                                Form4.transform(Me, "neko", 5)
+                                Polymorph.transform(Me, "neko", 5)
                             End If
                             inventory.Item(12).addOne()
                             lust += 5
-                            Form3.clothesChange("Cat_Lingerie")
+                            Equipment.clothesChange("Cat_Lingerie")
                         Case Int((discipline * 1.2))
-                            Form4.transform(Me, "neko", 7)
+                            Polymorph.transform(Me, "neko", 7)
                     End Select
                     createP()
                     perksct(6) += 1
                 Else
-                    Form4.transform(Me, "neko", 7)
+                    Polymorph.transform(Me, "neko", 7)
                 End If
             End If
         End If
@@ -667,11 +667,11 @@
             If name <> "Targax" Then
                 If equippedWeapon.getName.Equals("Sword_of_the_Brutal") Then
                     If perksct(7) = 2 Then
-                        Form4.transform(Me, "targax", 0)
+                        Polymorph.transform(Me, "targax", 0)
                     ElseIf perksct(7) = 4 Then
-                        Form4.transform(Me, "targax", 1)
+                        Polymorph.transform(Me, "targax", 1)
                     ElseIf perksct(7) = 6 And name <> "Targax" Then
-                        Form4.transform(Me, "targax", 2)
+                        Polymorph.transform(Me, "targax", 2)
                     End If
                 Else
                     perks(7) = False
@@ -683,10 +683,10 @@
             If Not haircolor.A = 180 Then
                 perks(8) = False
             Else
-                If health < maxHealth + hBuff And Form1.turn Mod 4 = 0 Then
+                If health < maxHealth + hBuff And Game.turn Mod 4 = 0 Then
                     Dim h As Integer = Int(Rnd() * 15) + 1
                     health += h
-                    Form1.lstLog.Items.Add("The gel portion of your body is able to heal some of your wounds! +" & h & " health")
+                    Game.lstLog.Items.Add("The gel portion of your body is able to heal some of your wounds! +" & h & " health")
                     If health > getmaxHealth() Then health = getmaxHealth()
                 End If
             End If
@@ -700,8 +700,8 @@
                 aBuff = aBuff - attack * 1.5
                 dBuff = dBuff + (defence) + 1
                 perks(9) = False
-                Form1.lstLog.Items.Add("Berserker rage has worn off.")
-                Form1.lstLog.TopIndex = Form1.lstLog.Items.Count - 1
+                Game.lstLog.Items.Add("Berserker rage has worn off.")
+                Game.lstLog.TopIndex = Game.lstLog.Items.Count - 1
             End If
         End If
         If perks(10) Then
@@ -711,8 +711,8 @@
             Else
                 dBuff = dBuff - (defence * 0.8)
                 perks(10) = False
-                Form1.lstLog.Items.Add("Massive mammaries has worn off.")
-                Form1.lstLog.TopIndex = Form1.lstLog.Items.Count - 1
+                Game.lstLog.Items.Add("Massive mammaries has worn off.")
+                Game.lstLog.TopIndex = Game.lstLog.Items.Count - 1
             End If
         End If
         If perks(11) Then
@@ -726,16 +726,16 @@
                 aBuff = aBuff - (attack * 0.5)
                 dBuff = dBuff - (defence * 0.6)
                 perks(11) = False
-                Form1.lstLog.Items.Add("Ironhide Fury has worn off.")
-                Form1.lstLog.TopIndex = Form1.lstLog.Items.Count - 1
+                Game.lstLog.Items.Add("Ironhide Fury has worn off.")
+                Game.lstLog.TopIndex = Game.lstLog.Items.Count - 1
             End If
         End If
         If perks(12) Then
             If equippedArmor.getName.Equals("Living_Armor") Then
-                If Form1.turn Mod 6 = 0 And lust < 100 Then
+                If Game.turn Mod 6 = 0 And lust < 100 Then
                     Dim l As Integer = Int(Rnd() * 15) + 10
                     lust += l
-                    Form1.lstLog.Items.Add("Your living armor raises your lust!")
+                    Game.lstLog.Items.Add("Your living armor raises your lust!")
                     createP()
                 End If
             Else
@@ -744,17 +744,17 @@
         End If
         If perks(13) Then
             If equippedArmor.getName.Equals("Living_Lingerie") Then
-                If Form1.turn Mod 4 = 0 And lust < 100 Then
+                If Game.turn Mod 4 = 0 And lust < 100 Then
                     Dim l As Integer = Int(Rnd() * 15) + 10
                     lust += l
-                    Form1.lstLog.Items.Add("Your living lingerie raises your lust!")
+                    Game.lstLog.Items.Add("Your living lingerie raises your lust!")
                     createP()
                 End If
             Else
                 perks(13) = False
             End If
         End If
-        Form1.lstLog.TopIndex = Form1.lstLog.Items.Count - 1
+        Game.lstLog.TopIndex = Game.lstLog.Items.Count - 1
         description = CStr(name & " is a " & sex & " " & title)
     End Sub
     Sub UIupdate()
@@ -763,25 +763,25 @@
             Die()
             Exit Sub
         End If
-        If Form1.lblNameTitle.Text <> name & " the " & title Then Form1.lblNameTitle.Text = name & " the " & title
-        If Form1.lblHealth.Text <> "Health = " & health & "/" & getmaxHealth() Then Form1.lblHealth.Text = "Health = " & health & "/" & getmaxHealth()
-        If Form1.lblMana.Text <> "Mana = " & mana & "/" & getmaxMana() Then Form1.lblMana.Text = "Mana = " & mana & "/" & getmaxMana()
-        If Form1.lblHunger.Text <> "Hunger = " & hunger & "/100" Then Form1.lblHunger.Text = "Hunger = " & hunger & "/100"
-        If Form1.lblATK.Text <> "ATK = " & (getAttack()) + equippedWeapon.aBoost Then Form1.lblATK.Text = "ATK = " & (getAttack()) + equippedWeapon.aBoost
-        If Form1.lblDEF.Text <> "DEF = " & getDefence() Then Form1.lblDEF.Text = "DEF = " & getDefence()
-        If Form1.lblSKL.Text <> "WIL = " & getWillpower() Then Form1.lblSKL.Text = "WIL = " & getWillpower()
-        If Form1.lblSPD.Text <> "SPD = " & getSpeed() Then Form1.lblSPD.Text = "SPD = " & getSpeed()
-        If Form1.lblEVD.Text <> "EVD = " & evade Then Form1.lblEVD.Text = "EVD = " & evade
-        If Form1.lblGold.Text <> "GOLD = " & gold And gold <= 999999 Then
-            Form1.lblGold.Text = "GOLD = " & gold
-        ElseIf Form1.lblGold.Text <> "GOLD = " & gold And Form1.lblGold.Text <> "GOLD = 999999+" Then
-            Form1.lblGold.Text = "GOLD = 999999+"
+        If Game.lblNameTitle.Text <> name & " the " & title Then Game.lblNameTitle.Text = name & " the " & title
+        If Game.lblHealth.Text <> "Health = " & health & "/" & getmaxHealth() Then Game.lblHealth.Text = "Health = " & health & "/" & getmaxHealth()
+        If Game.lblMana.Text <> "Mana = " & mana & "/" & getmaxMana() Then Game.lblMana.Text = "Mana = " & mana & "/" & getmaxMana()
+        If Game.lblHunger.Text <> "Hunger = " & hunger & "/100" Then Game.lblHunger.Text = "Hunger = " & hunger & "/100"
+        If Game.lblATK.Text <> "ATK = " & (getAttack()) + equippedWeapon.aBoost Then Game.lblATK.Text = "ATK = " & (getAttack()) + equippedWeapon.aBoost
+        If Game.lblDEF.Text <> "DEF = " & getDefence() Then Game.lblDEF.Text = "DEF = " & getDefence()
+        If Game.lblSKL.Text <> "WIL = " & getWillpower() Then Game.lblSKL.Text = "WIL = " & getWillpower()
+        If Game.lblSPD.Text <> "SPD = " & getSpeed() Then Game.lblSPD.Text = "SPD = " & getSpeed()
+        If Game.lblEVD.Text <> "EVD = " & evade Then Game.lblEVD.Text = "EVD = " & evade
+        If Game.lblGold.Text <> "GOLD = " & gold And gold <= 999999 Then
+            Game.lblGold.Text = "GOLD = " & gold
+        ElseIf Game.lblGold.Text <> "GOLD = " & gold And Game.lblGold.Text <> "GOLD = 999999+" Then
+            Game.lblGold.Text = "GOLD = 999999+"
         End If
 
-        Dim numItems As Integer = Form1.lstInventory.Items.Count
+        Dim numItems As Integer = Game.lstInventory.Items.Count
         Dim tArr(inventory.Count + 5) As String
         Dim ct As Integer = 0
-        If Form1.invFilters(0) Then
+        If Game.invFilters(0) Then
             tArr(ct) = "-USEABLES:"
             ct += 1
             For i = 0 To UBound(useable)
@@ -791,7 +791,7 @@
                 End If
             Next
         End If
-        If Form1.invFilters(1) Then
+        If Game.invFilters(1) Then
             tArr(ct) = "-POTIONS:"
             ct += 1
             For i = 0 To UBound(potions)
@@ -801,7 +801,7 @@
                 End If
             Next
         End If
-        If Form1.invFilters(2) Then
+        If Game.invFilters(2) Then
             tArr(ct) = "-FOOD:"
             ct += 1
             For i = 0 To UBound(food)
@@ -811,7 +811,7 @@
                 End If
             Next
         End If
-        If Form1.invFilters(3) Then
+        If Game.invFilters(3) Then
             tArr(ct) = "-ARMOR:"
             ct += 1
             For i = 0 To UBound(armor)
@@ -821,7 +821,7 @@
                 End If
             Next
         End If
-        If Form1.invFilters(4) Then
+        If Game.invFilters(4) Then
             tArr(ct) = "-WEAPONS:"
             ct += 1
             For i = 0 To UBound(weapons)
@@ -831,7 +831,7 @@
                 End If
             Next
         End If
-        If Form1.invFilters(5) Then
+        If Game.invFilters(5) Then
             tArr(ct) = "-MISC:"
             ct += 1
             For i = 0 To UBound(misc)
@@ -843,37 +843,37 @@
         End If
         If ct <> numItems Or invNeedsUDate Then
             'MsgBox(ct & "," & numItems)
-            Form1.lstInventory.Items.Clear()
+            Game.lstInventory.Items.Clear()
             For i = 0 To UBound(tArr)
-                If Not tArr(i) Is Nothing Then Form1.lstInventory.Items.Add(tArr(i))
+                If Not tArr(i) Is Nothing Then Game.lstInventory.Items.Add(tArr(i))
             Next
         End If
         invNeedsUDate = False
-        If Form1.turn < 2 AndAlso Not CharacterGenerator1.CreateBMP(iArr).Equals(Form1.picPortrait.BackgroundImage) Then createP() 'Form3.portraitUDate()
+        If Game.turn < 2 AndAlso Not CharacterGenerator.CreateBMP(iArr).Equals(Game.picPortrait.BackgroundImage) Then createP() 'Form3.portraitUDate()
     End Sub
     Public Sub createP()
-        If Not Form1.picPortrait.BackgroundImage Is Nothing Then Form1.picPortrait.BackgroundImage.Dispose()
+        If Not Game.picPortrait.BackgroundImage Is Nothing Then Game.picPortrait.BackgroundImage.Dispose()
         For i = 0 To 16
             If iArrInd(i).Item2 Then
-                iArr(i) = CharacterGenerator1.fAttributes(i)(iArrInd(i).Item1)
+                iArr(i) = CharacterGenerator.fAttributes(i)(iArrInd(i).Item1)
             Else
-                iArr(i) = CharacterGenerator1.mAttributes(i)(iArrInd(i).Item1)
+                iArr(i) = CharacterGenerator.mAttributes(i)(iArrInd(i).Item1)
             End If
         Next
         changeHairColor(haircolor)
             changeSkinColor(skincolor)
-            Form1.lstLog.TopIndex = Form1.lstLog.Items.Count - 1
+            Game.lstLog.TopIndex = Game.lstLog.Items.Count - 1
             If lust > 0 Then lustUpdate()
             If wingInd > 0 Then addWings(wingInd)
             currState.save(Me)
-            If Not solFlag Then Form1.picPortrait.BackgroundImage = CharacterGenerator1.CreateBMP(iArr)
+            If Not solFlag Then Game.picPortrait.BackgroundImage = CharacterGenerator.CreateBMP(iArr)
     End Sub
     Public Sub tg()
         If perks(5) Or title.Equals("Magic Girl") Then
-            Form1.lstLog.Items.Add("Your form prevents you from being altered.")
+            Game.lstLog.Items.Add("Your form prevents you from being altered.")
             Exit Sub
         End If
-        If Not Form1.isMark Then
+        If Not Game.isMark Then
             sexBool = True
             sex = "Female"
             breastSize = 1
@@ -883,11 +883,11 @@
             sex = "Female"
             sexBool = True
             breastSize = 2
-            iArrInd(1) = New Tuple(Of Integer, Boolean)(CharacterGenerator1.fRearHair2.Count - 1, True)
+            iArrInd(1) = New Tuple(Of Integer, Boolean)(CharacterGenerator.fRearHair2.Count - 1, True)
             iArrInd(2) = New Tuple(Of Integer, Boolean)(9, True)
-            iArrInd(3) = New Tuple(Of Integer, Boolean)(CharacterGenerator1.fClothing.Count - 1, True)
+            iArrInd(3) = New Tuple(Of Integer, Boolean)(CharacterGenerator.fClothing.Count - 1, True)
             iArrInd(4) = New Tuple(Of Integer, Boolean)(0, True)
-            iArrInd(5) = New Tuple(Of Integer, Boolean)(CharacterGenerator1.fRearHair1.Count - 1, True)
+            iArrInd(5) = New Tuple(Of Integer, Boolean)(CharacterGenerator.fRearHair1.Count - 1, True)
             iArrInd(6) = New Tuple(Of Integer, Boolean)(0, True)
             iArrInd(7) = New Tuple(Of Integer, Boolean)(0, True)
             iArrInd(8) = New Tuple(Of Integer, Boolean)(4, True)
@@ -897,21 +897,21 @@
             iArrInd(12) = New Tuple(Of Integer, Boolean)(0, True)
             iArrInd(13) = New Tuple(Of Integer, Boolean)(0, True)
             iArrInd(14) = New Tuple(Of Integer, Boolean)(0, True)
-            iArrInd(15) = New Tuple(Of Integer, Boolean)(CharacterGenerator1.fFrontHair.Count - 1, True)
+            iArrInd(15) = New Tuple(Of Integer, Boolean)(CharacterGenerator.fFrontHair.Count - 1, True)
             iArrInd(16) = New Tuple(Of Integer, Boolean)(0, True)
             createP()
         End If
-        Form3.portraitUDate()
+        Equipment.portraitUDate()
         changeSkinColor(skincolor)
         perksct(7) = 0
-        Form1.lstLog.TopIndex = Form1.lstLog.Items.Count - 1
+        Game.lstLog.TopIndex = Game.lstLog.Items.Count - 1
     End Sub
     Public Sub tg2()
         If perks(5) Or title.Equals("Magic Girl") Then
-            Form1.lstLog.Items.Add("Your form prevents you from being altered.")
+            Game.lstLog.Items.Add("Your form prevents you from being altered.")
             Exit Sub
         End If
-        If Not Form1.isMark Then
+        If Not Game.isMark Then
             sexBool = False
             sex = "Male"
             breastSize = -1
@@ -920,12 +920,12 @@
             createP()
         End If
         perksct(7) = 0
-        Form3.portraitUDate()
-        Form1.lstLog.TopIndex = Form1.lstLog.Items.Count - 1
+        Equipment.portraitUDate()
+        Game.lstLog.TopIndex = Game.lstLog.Items.Count - 1
     End Sub
     Public Sub be()
         If perks(5) Or title.Equals("Magic Girl") Then
-            Form1.lstLog.Items.Add("Your form prevents you from being altered.")
+            Game.lstLog.Items.Add("Your form prevents you from being altered.")
             Exit Sub
         End If
         If breastSize = -1 Then breastSize = 0
@@ -945,12 +945,12 @@
                 Case 5
                     iArrInd(2) = New Tuple(Of Integer, Boolean)(14, True)
             End Select
-            Form1.lstLog.Items.Add("+ 1 cup size!")
+            Game.lstLog.Items.Add("+ 1 cup size!")
             If iArrInd(3).Item2 = False Then iArrInd(3) = New Tuple(Of Integer, Boolean)(iArrInd(3).Item1, True)
         End If
         bsizeroute()
-        Form3.portraitUDate()
-        Form1.lstLog.TopIndex = Form1.lstLog.Items.Count - 1
+        Equipment.portraitUDate()
+        Game.lstLog.TopIndex = Game.lstLog.Items.Count - 1
         createP()
     End Sub
     Sub bsizeroute()
@@ -958,7 +958,7 @@
             breastSize = 1
         ElseIf iArrInd(2).Item1 = 1 Or iArrInd(2).Item1 = 6 And breastSize <> 2 Then
             breastSize = 2
-        ElseIf (iArrInd(2).Item1 = 2 Or iArr(2).Equals(CharacterGenerator1.fTFBody(10)) Or iArr(2).Equals(Form1.picFMarkBody.BackgroundImage)) Or iArrInd(2).Item1 = 7 And breastSize <> 3 Then
+        ElseIf (iArrInd(2).Item1 = 2 Or iArr(2).Equals(CharacterGenerator.fTFBody(10)) Or iArr(2).Equals(Game.picFMarkBody.BackgroundImage)) Or iArrInd(2).Item1 = 7 And breastSize <> 3 Then
             breastSize = 3
         ElseIf iArrInd(2).Item1 = 3 Or iArrInd(2).Item1 = 8 And breastSize <> 4 Then
             breastSize = 4
@@ -992,7 +992,7 @@
                 If iArrInd(3).Item1 < 5 Then
                     iArrInd(3) = New Tuple(Of Integer, Boolean)(iArrInd(3).Item1, True)
                 Else
-                    Form3.portraitUDate()
+                    Equipment.portraitUDate()
                 End If
         End Select
         'face
@@ -1075,7 +1075,7 @@
                 If iArrInd(3).Item1 < 5 Then
                     iArrInd(3) = New Tuple(Of Integer, Boolean)(iArrInd(3).Item1, False)
                 Else
-                    Form3.portraitUDate()
+                    Equipment.portraitUDate()
                 End If
         End Select
         'face
@@ -1140,123 +1140,123 @@
         Dim t(16) As Image
         If iArrInd(1).Item2 Then
             If iArrInd(1).Item1 < 5 Then
-                t(1) = CharacterGenerator1.getImg("img/fRearHair2")(iArrInd(1).Item1)
+                t(1) = CharacterGenerator.getImg("img/fRearHair2")(iArrInd(1).Item1)
             Else
-                t(1) = CharacterGenerator1.getImg("img/fTF/tfRearHair2")(iArrInd(1).Item1 - 5)
+                t(1) = CharacterGenerator.getImg("img/fTF/tfRearHair2")(iArrInd(1).Item1 - 5)
             End If
             If iArrInd(5).Item1 < 5 Then
-                t(5) = CharacterGenerator1.getImg("img/fRearHair1")(iArrInd(5).Item1)
+                t(5) = CharacterGenerator.getImg("img/fRearHair1")(iArrInd(5).Item1)
             Else
-                t(5) = CharacterGenerator1.getImg("img/fTF/tfRearHair1")(iArrInd(5).Item1 - 5)
+                t(5) = CharacterGenerator.getImg("img/fTF/tfRearHair1")(iArrInd(5).Item1 - 5)
             End If
             If iArrInd(15).Item1 < 5 Then
-                t(15) = CharacterGenerator1.getImg("img/fFrontHair")(iArrInd(15).Item1)
+                t(15) = CharacterGenerator.getImg("img/fFrontHair")(iArrInd(15).Item1)
             Else
-                t(15) = CharacterGenerator1.getImg("img/fTF/tfFrontHair")(iArrInd(15).Item1 - 6)
+                t(15) = CharacterGenerator.getImg("img/fTF/tfFrontHair")(iArrInd(15).Item1 - 6)
             End If
-            CharacterGenerator1.fFrontHair(0) = CharacterGenerator1.picPort.Image
+            CharacterGenerator.fFrontHair(0) = CharacterGenerator.picPort.Image
         Else
             If iArrInd(1).Item1 < 5 Then
-                t(1) = CharacterGenerator1.getImg("img/mRearHair2")(iArrInd(1).Item1)
+                t(1) = CharacterGenerator.getImg("img/mRearHair2")(iArrInd(1).Item1)
             Else
-                t(1) = CharacterGenerator1.getImg("img/mTF/tfRearHair2")(iArrInd(1).Item1 - 5)
+                t(1) = CharacterGenerator.getImg("img/mTF/tfRearHair2")(iArrInd(1).Item1 - 5)
             End If
             If iArrInd(5).Item1 < 5 Then
-                t(5) = CharacterGenerator1.getImg("img/mRearHair1")(iArrInd(5).Item1)
+                t(5) = CharacterGenerator.getImg("img/mRearHair1")(iArrInd(5).Item1)
             Else
-                t(5) = CharacterGenerator1.getImg("img/mTF/tfRearHair1")(iArrInd(5).Item1 - 5)
+                t(5) = CharacterGenerator.getImg("img/mTF/tfRearHair1")(iArrInd(5).Item1 - 5)
             End If
             If iArrInd(15).Item1 < 5 Then
-                t(15) = CharacterGenerator1.getImg("img/mFrontHair")(iArrInd(15).Item1)
+                t(15) = CharacterGenerator.getImg("img/mFrontHair")(iArrInd(15).Item1)
             Else
-                t(15) = CharacterGenerator1.getImg("img/mTF/tfFrontHair")(iArrInd(15).Item1 - 6)
+                t(15) = CharacterGenerator.getImg("img/mTF/tfFrontHair")(iArrInd(15).Item1 - 6)
             End If
-            CharacterGenerator1.mFrontHair(0) = CharacterGenerator1.picPort.Image
+            CharacterGenerator.mFrontHair(0) = CharacterGenerator.picPort.Image
         End If
         If iArrInd(10).Item2 Then
-            t(10) = CharacterGenerator1.getImg("img/fEyebrows")(iArrInd(10).Item1)
+            t(10) = CharacterGenerator.getImg("img/fEyebrows")(iArrInd(10).Item1)
         Else
-            If iArrInd(10).Item1 < 3 Then t(10) = CharacterGenerator1.getImg("img/mEyebrows")(iArrInd(10).Item1)
+            If iArrInd(10).Item1 < 3 Then t(10) = CharacterGenerator.getImg("img/mEyebrows")(iArrInd(10).Item1)
         End If
-        If iArrInd(15).Item1 = 0 Then iArr(15) = CharacterGenerator1.picPort.Image
-        iArr(1) = CharacterGenerator1.recolor(t(1), c)
-        iArr(5) = CharacterGenerator1.recolor(t(5), c)
-        If Not iArr(15).Equals(CharacterGenerator1.picPort.Image) Then iArr(15) = CharacterGenerator1.recolor(t(15), c)
-        If iArrInd(10).Item1 < 3 Then iArr(10) = CharacterGenerator1.recolor(t(10), c)
-        If Not solFlag Then Form1.picPortrait.BackgroundImage = CharacterGenerator1.CreateBMP(iArr)
+        If iArrInd(15).Item1 = 0 Then iArr(15) = CharacterGenerator.picPort.Image
+        iArr(1) = CharacterGenerator.recolor(t(1), c)
+        iArr(5) = CharacterGenerator.recolor(t(5), c)
+        If Not iArr(15).Equals(CharacterGenerator.picPort.Image) Then iArr(15) = CharacterGenerator.recolor(t(15), c)
+        If iArrInd(10).Item1 < 3 Then iArr(10) = CharacterGenerator.recolor(t(10), c)
+        If Not solFlag Then Game.picPortrait.BackgroundImage = CharacterGenerator.CreateBMP(iArr)
     End Sub
     Public Sub changeSkinColor(ByVal c As Color)
         skincolor = c
         Dim t(16) As Image
         If iArrInd(2).Item2 Then
             If iArrInd(2).Item1 = 0 Then
-                t(2) = CharacterGenerator1.getImg("img/fBody")(iArrInd(2).Item1)
-                iArr(2) = CharacterGenerator1.recolor2(t(2), c)
+                t(2) = CharacterGenerator.getImg("img/fBody")(iArrInd(2).Item1)
+                iArr(2) = CharacterGenerator.recolor2(t(2), c)
             Else
                 Dim range As List(Of Image)
                 Dim offset As Integer
 
-                Dim fTFBody As List(Of Image) = CharacterGenerator1.getImg("img/fTF/tfBody")
+                Dim fTFBody As List(Of Image) = CharacterGenerator.getImg("img/fTF/tfBody")
                 offset = fTFBody.Count - 5
                 range = fTFBody.GetRange(offset, 5)
                 fTFBody = fTFBody.GetRange(0, offset)
                 fTFBody.InsertRange(4, range)
 
                 t(2) = fTFBody(iArrInd(2).Item1 - 1)
-                iArr(2) = CharacterGenerator1.recolor2(t(2), c)
+                iArr(2) = CharacterGenerator.recolor2(t(2), c)
             End If
         Else
             If iArrInd(2).Item1 = 0 Then
-                t(2) = CharacterGenerator1.getImg("img/mBody")(iArrInd(2).Item1)
-                iArr(2) = CharacterGenerator1.recolor2(t(2), c)
+                t(2) = CharacterGenerator.getImg("img/mBody")(iArrInd(2).Item1)
+                iArr(2) = CharacterGenerator.recolor2(t(2), c)
             Else
-                t(2) = CharacterGenerator1.getImg("img/mTF/tfBody")(iArrInd(2).Item1 - 1)
-                iArr(2) = CharacterGenerator1.recolor2(t(2), c)
+                t(2) = CharacterGenerator.getImg("img/mTF/tfBody")(iArrInd(2).Item1 - 1)
+                iArr(2) = CharacterGenerator.recolor2(t(2), c)
             End If
         End If
         If iArrInd(4).Item2 Then
-                t(4) = CharacterGenerator1.getImg("img/fFace")(iArrInd(4).Item1)
-                iArr(4) = CharacterGenerator1.recolor2(t(4), c)
+                t(4) = CharacterGenerator.getImg("img/fFace")(iArrInd(4).Item1)
+                iArr(4) = CharacterGenerator.recolor2(t(4), c)
             If iArrInd(7).Item1 = 0 Then
-                t(7) = CharacterGenerator1.getImg("img/fNose")(iArrInd(7).Item1)
-                iArr(7) = CharacterGenerator1.recolor2(t(7), c)
+                t(7) = CharacterGenerator.getImg("img/fNose")(iArrInd(7).Item1)
+                iArr(7) = CharacterGenerator.recolor2(t(7), c)
             End If
             If iArrInd(6).Item1 = 0 Or iArrInd(6).Item1 = 3 Then
-                t(6) = CharacterGenerator1.getImg("img/fEars")(iArrInd(6).Item1)
-                iArr(6) = CharacterGenerator1.recolor2(t(6), c)
+                t(6) = CharacterGenerator.getImg("img/fEars")(iArrInd(6).Item1)
+                iArr(6) = CharacterGenerator.recolor2(t(6), c)
             ElseIf iArrInd(6).Item1 = 7 Or iArrInd(6).Item1 = 8 Then
-                t(6) = CharacterGenerator1.getImg("img/fTF/tfEars")(iArrInd(6).Item1 - 5)
-                iArr(6) = CharacterGenerator1.recolor2(t(6), c)
+                t(6) = CharacterGenerator.getImg("img/fTF/tfEars")(iArrInd(6).Item1 - 5)
+                iArr(6) = CharacterGenerator.recolor2(t(6), c)
             End If
         Else
-            t(4) = CharacterGenerator1.getImg("img/mFace")(iArrInd(4).Item1)
-            iArr(4) = CharacterGenerator1.recolor2(t(4), c)
+            t(4) = CharacterGenerator.getImg("img/mFace")(iArrInd(4).Item1)
+            iArr(4) = CharacterGenerator.recolor2(t(4), c)
             If iArrInd(6).Item1 = 0 Or iArrInd(6).Item1 = 3 Then
-                t(6) = CharacterGenerator1.getImg("img/mEars")(iArrInd(6).Item1)
-                iArr(6) = CharacterGenerator1.recolor2(t(6), c)
+                t(6) = CharacterGenerator.getImg("img/mEars")(iArrInd(6).Item1)
+                iArr(6) = CharacterGenerator.recolor2(t(6), c)
             End If
             If iArrInd(7).Item1 = 0 Then
-                t(7) = CharacterGenerator1.getImg("img/mNose")(iArrInd(7).Item1)
-                iArr(7) = CharacterGenerator1.recolor2(t(7), c)
+                t(7) = CharacterGenerator.getImg("img/mNose")(iArrInd(7).Item1)
+                iArr(7) = CharacterGenerator.recolor2(t(7), c)
             End If
         End If
-        If Not solFlag Then Form1.picPortrait.BackgroundImage = CharacterGenerator1.CreateBMP(iArr)
+        If Not solFlag Then Game.picPortrait.BackgroundImage = CharacterGenerator.CreateBMP(iArr)
     End Sub
     Public Sub lustUpdate()
         Select Case Int(lust / 20)
             Case 0
             Case 1
-                iArr(4) = CharacterGenerator1.CreateBMP({iArr(4), Form1.picLust1.BackgroundImage})
+                iArr(4) = CharacterGenerator.CreateBMP({iArr(4), Game.picLust1.BackgroundImage})
             Case 2
-                iArr(4) = CharacterGenerator1.CreateBMP({iArr(4), Form1.picLust2.BackgroundImage})
+                iArr(4) = CharacterGenerator.CreateBMP({iArr(4), Game.picLust2.BackgroundImage})
             Case 3
-                iArr(4) = CharacterGenerator1.CreateBMP({iArr(4), Form1.picLust3.BackgroundImage})
+                iArr(4) = CharacterGenerator.CreateBMP({iArr(4), Game.picLust3.BackgroundImage})
             Case Else
-                iArr(4) = CharacterGenerator1.CreateBMP({iArr(4), Form1.picLust4.BackgroundImage})
+                iArr(4) = CharacterGenerator.CreateBMP({iArr(4), Game.picLust4.BackgroundImage})
         End Select
     End Sub
     Sub addWings(ByVal i As Integer)
-        iArr(1) = CharacterGenerator1.CreateBMP({CharacterGenerator1.wings(i), iArr(1)})
+        iArr(1) = CharacterGenerator.CreateBMP({CharacterGenerator.wings(i), iArr(1)})
     End Sub
     Public Sub petrify(ByVal c As Color)
         If title = "Succubus" Or title = "Slime" Or title = "Dragon" Or title = "Chicken" Then revert2()
@@ -1270,17 +1270,17 @@
         End If
         createP()
         changeSkinColor(c)
-        iArr(8) = CharacterGenerator1.recolor(iArr(8), c)
-        iArr(9) = CharacterGenerator1.recolor(iArr(9), c)
+        iArr(8) = CharacterGenerator.recolor(iArr(8), c)
+        iArr(9) = CharacterGenerator.recolor(iArr(9), c)
 
         canMoveFlag = False
-        Form1.picPortrait.BackgroundImage = CharacterGenerator1.CreateBMP(iArr)
+        Game.picPortrait.BackgroundImage = CharacterGenerator.CreateBMP(iArr)
     End Sub
     Public Sub toStatue(ByVal c As Color, ByVal r As String)
         petrify(c)
         If r.Equals("midas") Then
             Dim out As String = "As you reach out to touch your opponent, you clumsily swipe, missing them, and hit...yourself?  Already your legs are gold, and only have a moment to scream, your vocal cords quickly following suit. ''Well,'' you think, ''...at least I won't have to worry abou money anymore.'' " & vbCrLf & "And like that, the dungeon gains another decoration."
-            Form1.pushLblEvent(out)
+            Game.pushLblEvent(out)
             MsgBox(out)
             Die()
         End If

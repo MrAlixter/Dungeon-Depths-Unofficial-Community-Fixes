@@ -163,3 +163,28 @@ F:\dungeon_depths\The Dungeon\obj\Debug\The Dungeon.vbproj.GenerateResource.Cach
 F:\dungeon_depths\The Dungeon\obj\Debug\Dungeon_Depths.TrustInfo.xml
 F:\dungeon_depths\The Dungeon\obj\Debug\Dungeon_Depths.exe.manifest
 F:\dungeon_depths\The Dungeon\obj\Debug\Dungeon_Depths.application
+C:\dungeon_depths\The Dungeon\bin\Debug\Dungeon_Depths.exe.config
+C:\dungeon_depths\The Dungeon\bin\Debug\Dungeon_Depths.exe.manifest
+C:\dungeon_depths\The Dungeon\bin\Debug\Dungeon_Depths.application
+C:\dungeon_depths\The Dungeon\bin\Debug\Dungeon_Depths.exe
+C:\dungeon_depths\The Dungeon\bin\Debug\Dungeon_Depths.pdb
+C:\dungeon_depths\The Dungeon\bin\Debug\Dungeon_Depths.xml
+C:\dungeon_depths\The Dungeon\obj\Debug\The Dungeon.vbprojResolveAssemblyReference.cache
+C:\dungeon_depths\The Dungeon\obj\Debug\DungeonDepths.Resources.resources
+C:\dungeon_depths\The Dungeon\obj\Debug\DungeonDepths.SCPicker.resources
+C:\dungeon_depths\The Dungeon\obj\Debug\DungeonDepths.Shop.resources
+C:\dungeon_depths\The Dungeon\obj\Debug\The Dungeon.vbproj.GenerateResource.Cache
+C:\dungeon_depths\The Dungeon\obj\Debug\The Dungeon.vbproj.CoreCompileInputs.cache
+C:\dungeon_depths\The Dungeon\obj\Debug\Dungeon_Depths.TrustInfo.xml
+C:\dungeon_depths\The Dungeon\obj\Debug\Dungeon_Depths.exe.manifest
+C:\dungeon_depths\The Dungeon\obj\Debug\Dungeon_Depths.application
+C:\dungeon_depths\The Dungeon\obj\Debug\Dungeon_Depths.exe
+C:\dungeon_depths\The Dungeon\obj\Debug\Dungeon_Depths.xml
+C:\dungeon_depths\The Dungeon\obj\Debug\Dungeon_Depths.pdb
+C:\dungeon_depths\The Dungeon\obj\Debug\DungeonDepths.About.resources
+C:\dungeon_depths\The Dungeon\obj\Debug\DungeonDepths.Equipment.resources
+C:\dungeon_depths\The Dungeon\obj\Debug\DungeonDepths.Polymorph.resources
+C:\dungeon_depths\The Dungeon\obj\Debug\DungeonDepths.Hypnosis.resources
+C:\dungeon_depths\The Dungeon\obj\Debug\DungeonDepths.Controls.resources
+C:\dungeon_depths\The Dungeon\obj\Debug\DungeonDepths.CharacterGenerator.resources
+C:\dungeon_depths\The Dungeon\obj\Debug\DungeonDepths.Game.resources

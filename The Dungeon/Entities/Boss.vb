@@ -13,6 +13,6 @@
                 speed = 1
                 inventory = {1}
         End Select
-        pos = Form1.player.pos
+        pos = Game.player.pos
     End Sub
 End Class

@@ -17,45 +17,45 @@
             Dim i As Integer = InputBox("Which save slot?   1 2 3 4" & vbCrLf & _
                                         "                              5 6 7 8")
             If Not System.IO.File.Exists("s" & i & ".ave") Then
-                Form1.pushLblEvent("Despite looking for someone to fuse with, you can't find anyone at that location")
+                Game.pushLblEvent("Despite looking for someone to fuse with, you can't find anyone at that location")
                 Exit Sub
             End If
-            Dim save = Form1.getPlayerFromFile("s" & i & ".ave")
+            Dim save = Game.getPlayerFromFile("s" & i & ".ave")
             Dim p2 As Player = save.Item1
-            If save.Item2 <> Form1.version Or p2.perks(5) Or Form1.player.perks(5) Or (Form1.player.title.Equals("Magic Girl") Xor p2.title.Equals("Magic Girl")) Then
-                Form1.pushLblEvent("After talking it over, " & Form1.player.name & " and " & p2.name & " decide that they are incompatable, and not to fuse.")
+            If save.Item2 <> Game.version Or p2.perks(5) Or Game.player.perks(5) Or (Game.player.title.Equals("Magic Girl") Xor p2.title.Equals("Magic Girl")) Then
+                Game.pushLblEvent("After talking it over, " & Game.player.name & " and " & p2.name & " decide that they are incompatable, and not to fuse.")
                 Exit Sub
             End If
 
-            Form1.pushLblEvent(Form1.player.name & " takes the fusion crystal in both hands as they glance over at " & p2.name & _
-                               ", who nods in confirmation.  " & Form1.player.name & " then snaps the crystal in half, keeping one half " & _
+            Game.pushLblEvent(Game.player.name & " takes the fusion crystal in both hands as they glance over at " & p2.name & _
+                               ", who nods in confirmation.  " & Game.player.name & " then snaps the crystal in half, keeping one half " & _
                                "and tossing the other to " & p2.name & ".  Once separated, the shards begin glowing and pulling towards " & _
                                "each other, pulling the two with them.  As the shards gets closer, their attraction increases, and soon " & _
                                "the crystal is whole again.  The second that the two pieces reunite, their glow becomes blinding, engulfing" & _
                                " both explorers." & vbCrLf & _
-                               Form1.player.name & " and " & p2.name & " fuse together to form " & nameFusion(Form1.player.name, p2.name) & _
+                               Game.player.name & " and " & p2.name & " fuse together to form " & nameFusion(Game.player.name, p2.name) & _
                                ", a superior explorer!  The change is permenant, and unfortunately " & p2.name & _
                                "'s known spells and forms are lost.")
 
-            Dim fuPlay As Player = Fusion(Form1.player, p2)
+            Dim fuPlay As Player = Fusion(Game.player, p2)
             fuPlay.solFlag = False
-            Form1.player = fuPlay
+            Game.player = fuPlay
             fuPlay.createP()
             fuPlay.invNeedsUDate = True
             fuPlay.UIupdate()
             fuPlay.sState.save(fuPlay)
-            Dim f3 As New Form3
+            Dim f3 As New Equipment
             f3.ShowDialog()
             f3.Dispose()
             fuPlay.currState.save(fuPlay)
             fuPlay.pState.save(fuPlay)
             count -= 1
-            Form1.lstLog.TopIndex = Form1.lstLog.Items.Count - 1
+            Game.lstLog.TopIndex = Game.lstLog.Items.Count - 1
         End If
     End Sub
     Overrides Sub discard()
-        Form1.lstLog.Items.Add("You drop the " & getName())
-        Form1.lstLog.TopIndex = Form1.lstLog.Items.Count - 1
+        Game.lstLog.Items.Add("You drop the " & getName())
+        Game.lstLog.TopIndex = Game.lstLog.Items.Count - 1
         count -= 1
     End Sub
 

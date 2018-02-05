@@ -9,6 +9,6 @@
         MyBase.value = 2500
     End Sub
     Public Overrides Sub add(i As Integer)
-        If i > 0 Then Form1.beatboss(3) = True
+        If i > 0 Then Game.beatboss(3) = True
     End Sub
 End Class
