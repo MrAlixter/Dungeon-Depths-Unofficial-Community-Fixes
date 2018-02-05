@@ -502,6 +502,7 @@
         inventory.Add(New RigWrench()) '57
         inventory.Add(New FusionCrystal()) '58
         inventory.Add(New MasculinePotion()) '59
+        inventory.Add(New BSPotion()) '60
 
         For i = 0 To inventory.Count - 1
             inventorynames(i) = inventory(i).getName()
@@ -528,9 +529,9 @@
         food = {inventory(30), inventory(31), inventory(32), inventory(33), _
                 inventory(34), inventory(35), inventory(44)}
 
-        potions = {inventory(2), inventory(13), inventory(14), inventory(25), _
-                   inventory(26), inventory(27), inventory(28), inventory(29), _
-                   inventory(59)}
+        potions = {inventory(2), inventory(13), inventory(14), inventory(25),
+                   inventory(26), inventory(27), inventory(28), inventory(29),
+                   inventory(59), inventory(60)}
 
         misc = {inventory(43), inventory(53)}
 

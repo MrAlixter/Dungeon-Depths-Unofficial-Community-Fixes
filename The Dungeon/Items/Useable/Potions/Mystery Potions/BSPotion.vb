@@ -8,7 +8,7 @@
     End Sub
     Public Overrides Sub effect()
         Dim p As Player = Game.player
-        p.inventorynames(29) = "Breast_Enlarging_Potion"
+        p.inventorynames(60) = "Breast_Shrinking_Potion"
         p.bs()
         If Not Game.player.perks(5) Or Not Game.player.title.Equals("Magic Girl") Then
             Game.player.pState.save(Game.player)

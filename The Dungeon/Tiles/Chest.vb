@@ -2,7 +2,7 @@
     Dim contents(59) As Integer
     Public pos As Point
     Dim tier1() As Integer = {0, 1, 2, 3, 4, 13, 14, 30, 31, 37}
-    Dim tier2() As Integer = {25, 26, 27, 28, 29, 33, 34, 36, 43, 46, 48, 49, 50, 51, 52, 59}
+    Dim tier2() As Integer = {25, 26, 27, 28, 29, 33, 34, 36, 43, 46, 48, 49, 50, 51, 52, 59, 60}
     Dim tier3() As Integer = {11, 16, 17, 19, 22, 23, 32, 35, 44, 45, 47, 57}
     Sub New(ByVal x As Integer, ByVal y As Integer)
         pos = New Point(x, y)
