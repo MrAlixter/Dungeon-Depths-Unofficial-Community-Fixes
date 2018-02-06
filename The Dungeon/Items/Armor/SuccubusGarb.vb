@@ -3,6 +3,8 @@
     Sub New()
         MyBase.setName("Succubus_Garb")
         MyBase.setDesc("DO NOT SEE THIS EVER")
+        id = Nothing
+        tier = Nothing
         MyBase.setUsable(False)
         MyBase.aBoost = 2
         MyBase.count = 0

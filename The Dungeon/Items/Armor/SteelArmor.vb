@@ -5,6 +5,8 @@
         MyBase.setName("Steel_Armor")
         MyBase.setDesc("A basic armor set forged from steel." & vbCrLf & _
                        "+5 DEF")
+        id = 5
+        tier = Nothing
         MyBase.setUsable(False)
         MyBase.dBoost = 5
         MyBase.count = 0

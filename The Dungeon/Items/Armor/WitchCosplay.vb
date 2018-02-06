@@ -6,6 +6,8 @@
         MyBase.setDesc("A glamourous garment made more to show off one's body than to show off any magical ability." & vbCrLf & _
                        "+7 DEF" & vbCrLf & _
                        "+10 MANA")
+        id = 18
+        tier = Nothing
         MyBase.setUsable(False)
         MyBase.mBoost = 10
         MyBase.dBoost = 7

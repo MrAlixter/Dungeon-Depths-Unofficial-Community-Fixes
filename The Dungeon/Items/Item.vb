@@ -4,6 +4,8 @@
     Dim isUsable As Boolean
     Public count As Integer
     Public value As Integer
+    Public tier As Integer
+    Public id As Integer
 
     'getters/setters
     Function getName()
@@ -20,6 +22,12 @@
     End Sub
     Public Function getUsable()
         Return isUsable
+    End Function
+    Public Function getTier()
+        Return tier
+    End Function
+    Public Function getId()
+        Return id
     End Function
     Sub setUsable(ByVal b As Boolean)
         isUsable = b

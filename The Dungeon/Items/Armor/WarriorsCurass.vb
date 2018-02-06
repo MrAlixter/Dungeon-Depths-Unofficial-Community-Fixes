@@ -6,6 +6,8 @@
         MyBase.setDesc("A protective garment made more for elite fighters rather than fashion-minded common folk." & vbCrLf & _
                        "+12 DEF" & vbCrLf & _
                        "+5 ATK")
+        id = 19
+        tier = 3
         MyBase.setUsable(False)
         MyBase.aBoost = 5
         MyBase.dBoost = 12
