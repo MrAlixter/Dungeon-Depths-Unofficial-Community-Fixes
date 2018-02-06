@@ -32,7 +32,7 @@
     Public skincolor As Color = Color.FromArgb(255, 247, 219, 195)
     'inventory variables
     Public inventory As New ArrayList()
-    Public inventorynames(59) As String
+    Public inventorynames(60) As String
     Dim armor() As Armor
     Dim weapons() As Weapon
     Dim useable(), food(), potions(), misc() As Item
@@ -304,8 +304,8 @@
             inventory.Item(21).add(1)
             equippedWeapon = inventory.Item(21)
         ElseIf s = "dev" Then
-            health += 999
-            maxHealth += 999
+            health += 250
+            maxHealth += 250
             mana += 999
             maxMana += 999
             For i = 0 To inventory.Count - 1
@@ -397,7 +397,7 @@
         Dim tEweap As Weapon = equippedWeapon
         Dim tEarm As Armor = equippedArmor
         If tEweap.getName = "Magic_Girl_Wand" Then tEweap = New BareFists()
-
+        If tEarm.getName = "Goddess_Gown" Or tEarm.getName = "Succubus_Garb" Then tEarm = New NormalClothes
         pState.load(Me)
 
         health = tHth

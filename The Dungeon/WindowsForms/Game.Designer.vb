@@ -1717,7 +1717,6 @@ Partial Class Game
         Me.Controls.Add(Me.btnFilter)
         Me.Controls.Add(Me.lstInventory)
         Me.Controls.Add(Me.picPortrait)
-        Me.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle
         Me.Icon = CType(resources.GetObject("$this.Icon"), System.Drawing.Icon)
         Me.MaximizeBox = False
         Me.Name = "Form1"

@@ -22,7 +22,7 @@
     Public npcmode As Boolean = False   'indicates if the player is talking to an npc (NOT SAVED)
     Public npcIndex As Integer = 0  'indicates which npc is encountered (NOT SAVED)
     'a list containing all valid cheats
-    Public cheatList() As String = {"girl", "nude", "blue", "catc", "bmbo", "bigr", "slut", "kill", "dick", "lust", "form", "tfme", _
+    Public cheatList() As String = {"girl", "nude", "blue", "catc", "bmbo", "bigr", "slut", "kill", "dick", "lust", "form", "tfme",
                                     "gogo", "mana", "fuse", "rock", "doll"} 'list of cheats (NOT SAVES)
     Public isMark As Boolean = False    'indicates if the 'mark' cheat code has been used. (NOT SAVED)
     Dim keyspresed As String = ""   'records last 4 keys pressed (NOT SAVED)
@@ -39,7 +39,7 @@
     Dim monsterTier2() As Integer = {0, 1, 2, 3}
     Public turn As Integer = 0  '(NOT SAVED)
     Public beatboss() As Boolean = {False, False, False, False, False}  'which bosses have been beat?
-    Dim floorboss() As String = {"Foor0", "Marissa the Enchantress", "Targax the Brutal", "Key"} 'boss names (NOT SAVED)
+    Dim floorboss() As String = {"Floor0", "Marissa the Enchantress", "Targax the Brutal", "Key"} 'boss names (NOT SAVED)
     Public version As Double = 0.5      'the save file version
     Public lblEventOnClose As Action    'the event method preformed when lblEvent closes (NOT SAVED)
     Public invFilters() As Boolean = {True, True, True, True, True, True}
@@ -97,7 +97,6 @@
             Exit Sub
         End If
         picPortrait.BackgroundImage = chargen.ExportIMG()
-
         chargen.Dispose()
         Dim int As Integer = 100 - player.getSpeed
         If int < 1 Then int = 1
@@ -107,16 +106,20 @@
         'potion name shuffle
         ShuffleArray(HPotionNames)
         For i = 0 To UBound(HPotionNames)
-            If i < 5 Then
-                player.inventory(25 + i).setName(HPotionNames(i))
-                player.inventorynames(25 + i) = HPotionNames(i)
-            Else
-                Select Case i
-                    Case 5
-                        player.inventory(59).setName(HPotionNames(i))
-                        player.inventorynames(59) = HPotionNames(i)
-                End Select
-            End If
+            'TODO
+            'MAKE POTIONS ADJUST THEIR NAMES CORRECTLY, NO MATTER WHERE THEY ARE IN THE INVENTORY
+            'Make potion array? 
+
+            'If i < 5 Then
+            '   player.inventory(25 + i).setName(HPotionNames(i))
+            '   player.inventorynames(25 + i) = HPotionNames(i)
+            'Else
+            '   Select Case i
+            '   Case 5
+            '       player.inventory(59).setName(HPotionNames(i))
+            '       player.inventorynames(59) = HPotionNames(i)
+            '   End Select
+            'End If
         Next
 
         player.currState = New State(player)
@@ -277,6 +280,7 @@
         Next
     End Sub
     Sub placeTraps()
+        trapList.Clear()
         Dim numtrap As Integer = CInt(Int(Rnd() * 5) + 3) * Int(mBoardWidth / 30)
         For i = 1 To numtrap
             Randomize()
@@ -582,9 +586,8 @@
             Case Keys.T
                 keyspresed += "t"
             Case Keys.Enter
-                MsgBox(keyspresed)
                 If cheatList.Contains(keyspresed) Then
-
+                    MsgBox(keyspresed)
                     If keyspresed = "mark" Then
                         player.sex = "Male"
                         player.sexBool = False
@@ -773,6 +776,7 @@
             writer.WriteLine(chestList.Item(i).ToString())
         Next
         writer.WriteLine(trapList.Count - 1)
+        MsgBox(trapList.Count)
         For i = 0 To trapList.Count - 1
             writer.WriteLine(trapList.Item(i).ToString())
         Next

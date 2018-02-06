@@ -1,5 +1,5 @@
 ﻿Public Class Chest
-    Dim contents(59) As Integer
+    Dim contents(60) As Integer
     Public pos As Point
     Dim tier1() As Integer = {0, 1, 2, 3, 4, 13, 14, 30, 31, 37}
     Dim tier2() As Integer = {25, 26, 27, 28, 29, 33, 34, 36, 43, 46, 48, 49, 50, 51, 52, 59, 60}
