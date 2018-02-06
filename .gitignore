@@ -1,1 +1,3 @@
-db.lock
+".vs/"
+"The Dungeon/obj/"
+"The Dungeon/bin/Debug/*.ave"
