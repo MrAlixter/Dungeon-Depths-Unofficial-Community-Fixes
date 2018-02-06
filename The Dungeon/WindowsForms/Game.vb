@@ -27,6 +27,7 @@
     Public isMark As Boolean = False    'indicates if the 'mark' cheat code has been used. (NOT SAVED)
     Dim keyspresed As String = ""   'records last 4 keys pressed (NOT SAVED)
     'variables related to the mystery potions
+    Public Potions As New ArrayList()
     Public OHPotionNames() As String = {"Red_Potion", "Green_Potion", "Blue_Potion", "Yellow_Potion", "Glowing_Potion", "Murky_Potion", "Purple_Potion"} '"Clear_Potion", "Smokey_Potion"}
     Public HPotionNames() As String = OHPotionNames.Clone()
     Dim APotionNames() As String = {"Blonde_Potion", "Red_Hair_Potion", "Black_Hair_Potion", "Feminine_Potion", "Breast_Enlarging_Potion", "Masculine_Potion", "Breast_Shrinking_Potion"} '"Weakness_Potion", "Shrink_Potion", "Snake_Potion"}
@@ -50,6 +51,8 @@
     'startup/new level methods
     'Form1_Load handles the loading of the form
     Private Sub Form1_Load(sender As Object, e As EventArgs) Handles Me.Load
+
+        loadPotionList()
         'sets the player tile image to the default @
         pImage = picPlayer.BackgroundImage
         'scales the font size to that of the window
@@ -80,6 +83,9 @@
                 Me.Close()
             End If
         End If
+    End Sub
+    Sub loadPotionList()
+
     End Sub
     'newGame prepares the application at the start of a new game
     Sub newGame()

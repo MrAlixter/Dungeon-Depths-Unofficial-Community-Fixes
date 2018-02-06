@@ -4,6 +4,8 @@
     Sub New()
         MyBase.setName("Restore_Potion")
         MyBase.setDesc("'Restores ye to ye original form' says the bottle.")
+        id = 14
+        tier = 1
         MyBase.setUsable(True)
         MyBase.count = 0
         MyBase.value = 275

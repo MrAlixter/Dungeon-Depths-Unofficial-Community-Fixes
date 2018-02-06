@@ -6,6 +6,8 @@
                        "Disclaimers:" & vbCrLf & _
                        "Only saves of the current version can be fused." & vbCrLf & _
                        "Spells and Forms known by the second fusee are not carried over")
+        id = 58
+        tier = Nothing
         MyBase.setUsable(True)
         MyBase.count = 0
         MyBase.value = 1000

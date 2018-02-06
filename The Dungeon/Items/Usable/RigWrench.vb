@@ -4,6 +4,8 @@
     Sub New()
         MyBase.setName("Disarment_Kit")
         MyBase.setDesc("A kit that disables any traps around you.")
+        id = 57
+        tier = 3
         MyBase.setUsable(True)
         MyBase.count = 0
         MyBase.value = 475

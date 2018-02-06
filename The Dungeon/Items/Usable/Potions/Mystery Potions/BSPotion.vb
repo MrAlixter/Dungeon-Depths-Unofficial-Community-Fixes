@@ -1,9 +1,11 @@
 ﻿Public Class BSPotion
-    Inherits Potion
+    Inherits MysteryPotion
     'BSPotions decrease breastsize by a cup
     Sub New()
         MyBase.setRealName("Breast_Shrinking_Potion")
         MyBase.setDesc("A bizzare looking potion")
+        id = 60
+        tier = 2
         MyBase.value = 300
     End Sub
     Public Overrides Sub effect()

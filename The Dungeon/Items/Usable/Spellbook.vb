@@ -4,6 +4,8 @@
     Sub New()
         MyBase.setName("Spellbook")
         MyBase.setDesc("A simple, leather-bound book that likely contains something cool and magic.")
+        id = 4
+        tier = 1
         MyBase.setUsable(True)
         MyBase.count = 0
         MyBase.value = 500

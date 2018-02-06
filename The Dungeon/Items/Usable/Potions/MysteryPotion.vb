@@ -1,9 +1,11 @@
-﻿Public Class Potion
+﻿Public Class MysteryPotion
     Inherits Item
     Dim realName As String
     Sub New()
         MyBase.setName("Mystery_Potion")
         MyBase.setDesc("A mysterios potion who's name hasn't been loaded potion")
+        id = Nothing
+        tier = Nothing
         MyBase.setUsable(True)
         MyBase.count = 0
         MyBase.value = 0

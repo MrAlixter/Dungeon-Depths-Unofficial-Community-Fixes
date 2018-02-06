@@ -4,8 +4,8 @@
     Dim isUsable As Boolean
     Public count As Integer
     Public value As Integer
-    Public tier As Integer
-    Public id As Integer
+    Public tier As Integer = Nothing
+    Public id As Integer = Nothing
 
     'getters/setters
     Function getName()

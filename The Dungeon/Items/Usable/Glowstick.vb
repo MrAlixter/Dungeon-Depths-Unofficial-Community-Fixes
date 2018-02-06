@@ -4,6 +4,8 @@
     Sub New()
         MyBase.setName("Glowstick")
         MyBase.setDesc("A light source for illuminating the map.")
+        id = 37
+        tier = 1
         MyBase.setUsable(True)
         MyBase.count = 0
         MyBase.value = 150

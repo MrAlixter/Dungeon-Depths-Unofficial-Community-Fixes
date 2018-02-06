@@ -4,6 +4,8 @@
     Sub New()
         MyBase.setName("Cat_Ears")
         MyBase.setDesc("These will give you cat ears.")
+        id = 15
+        tier = Nothing
         MyBase.setUsable(True)
         MyBase.count = 0
         MyBase.value = 250

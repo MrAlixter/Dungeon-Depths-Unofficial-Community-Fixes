@@ -1,8 +1,10 @@
 ﻿Public Class MasculinePotion
-    Inherits Potion
+    Inherits MysteryPotion
     Sub New()
         MyBase.setRealName("Masculine_Potion")
         MyBase.setDesc("A chancy looking potion")
+        id = 59
+        tier = 2
         MyBase.value = 300
     End Sub
     Public Overrides Sub effect()

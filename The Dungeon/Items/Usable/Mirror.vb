@@ -3,6 +3,8 @@
     Sub New()
         MyBase.setName("Mirror")
         MyBase.setDesc("A shiny mirror that could bounce a spell back at its caster.")
+        id = 36
+        tier = 2
         MyBase.setUsable(True)
         MyBase.count = 0
         MyBase.value = 300
