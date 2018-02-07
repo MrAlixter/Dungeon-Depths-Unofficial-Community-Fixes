@@ -4,6 +4,8 @@
     Sub New()
         MyBase.setName("Oak_Staff")
         MyBase.setDesc("A simple oak staff for casing spells. +15 Mana")
+        id = 21
+        tier = Nothing
         MyBase.setUsable(False)
         MyBase.mBoost = 15
         count = 0
