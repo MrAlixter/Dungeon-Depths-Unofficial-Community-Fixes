@@ -5,6 +5,8 @@
         MyBase.setDesc("A sports bra made of a strechy matierial that allows it to fit many different bust sizes." & vbCrLf & _
                        "+1 DEF" & vbCrLf & _
                        "+5 SPD")
+        id = 47
+        tier = 3
         MyBase.setUsable(False)
         MyBase.dBoost = 1
         MyBase.sBoost = 5

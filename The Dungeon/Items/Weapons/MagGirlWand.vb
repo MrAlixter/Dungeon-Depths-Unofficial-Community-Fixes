@@ -4,6 +4,8 @@
     Sub New()
         MyBase.setName("Magic_Girl_Wand")
         MyBase.setDesc("A mysterious wand used by a mysterious protector. +10 ATK")
+        id = 11
+        tier = 3
         MyBase.setUsable(False)
         MyBase.aBoost = 10
         MyBase.count = 0

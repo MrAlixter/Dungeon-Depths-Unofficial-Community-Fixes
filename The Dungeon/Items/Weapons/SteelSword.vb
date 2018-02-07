@@ -4,6 +4,8 @@
     Sub New()
         MyBase.setName("Steel_Sword")
         MyBase.setDesc("A simple sword forged from steel. +10 ATK")
+        id = 6
+        tier = Nothing
         MyBase.setUsable(False)
         MyBase.aBoost = 10
         MyBase.count = 0

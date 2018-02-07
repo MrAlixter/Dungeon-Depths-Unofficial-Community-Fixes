@@ -3,9 +3,11 @@
     'BrawlerCosplay provides a +15 defensive boost
     Sub New()
         MyBase.setName("Brawler_Cosplay")
-        MyBase.setDesc("A glamourous garment made more for the highlighting one's body than for any practical function. " & vbCrLf & _
-                       "+12 DEF" & vbCrLf & _
+        MyBase.setDesc("A glamourous garment made more for the highlighting one's body than for any practical function. " & vbCrLf &
+                       "+12 DEF" & vbCrLf &
                        "+5 ATK")
+        id = 20
+        tier = Nothing
         MyBase.setUsable(False)
         MyBase.dBoost = 12
         MyBase.aBoost = 5

@@ -5,6 +5,8 @@
         MyBase.setDesc("A grey tanktop made of a breathable fabric for the athletic." & vbCrLf & _
                        "+1 DEF" & vbCrLf & _
                        "+5 SPD")
+        id = 46
+        tier = 2
         MyBase.setUsable(False)
         MyBase.dBoost = 1
         MyBase.sBoost = 5

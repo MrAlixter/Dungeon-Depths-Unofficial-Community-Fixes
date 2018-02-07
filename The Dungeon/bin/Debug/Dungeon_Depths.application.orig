@@ -7,7 +7,7 @@
     <framework targetVersion="4.0" profile="Full" supportedRuntime="4.0.30319" />
   </compatibleFrameworks>
   <dependency>
-    <dependentAssembly dependencyType="install" codebase="Dungeon_Depths.exe.manifest" size="5152">
+    <dependentAssembly dependencyType="install" codebase="Dungeon_Depths.exe.manifest" size="5241">
       <assemblyIdentity name="Dungeon_Depths.exe" version="1.0.0.0" publicKeyToken="0000000000000000" language="neutral" processorArchitecture="msil" type="win32" />
       <hash>
         <dsig:Transforms>
@@ -15,10 +15,14 @@
         </dsig:Transforms>
         <dsig:DigestMethod Algorithm="http://www.w3.org/2000/09/xmldsig#sha1" />
 <<<<<<< HEAD
-        <dsig:DigestValue>B+exrjZzBX1+Wa9oqC/ILcrYOo4=</dsig:DigestValue>
+<<<<<<< HEAD
+        <dsig:DigestValue>2SN1bMi3XBjzum2ic+khMmSKA9o=</dsig:DigestValue>
 =======
-        <dsig:DigestValue>HNke/nOsbhPsrBns40rsjp2lAu8=</dsig:DigestValue>
->>>>>>> 10afce99ff2083b135f9f7f8a964282a775473ec
+        <dsig:DigestValue>NwixAipQt7rBWic+gBGSJEJPOIw=</dsig:DigestValue>
+>>>>>>> 44c92465ce674ca5cf131addeae51005139ecd55
+=======
+        <dsig:DigestValue>wOr/pRjny2vid2+Z4EboyZuE8KE=</dsig:DigestValue>
+>>>>>>> houdini111
       </hash>
     </dependentAssembly>
   </dependency>

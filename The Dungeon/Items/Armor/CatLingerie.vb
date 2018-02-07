@@ -5,6 +5,8 @@
         MyBase.setName("Cat_Lingerie")
         MyBase.setDesc("A skimpy, pink, cat themed set of underwear. Nya." & vbCrLf & _
                        "+0 DEF")
+        id = 12
+        tier = Nothing
         MyBase.setUsable(False)
         MyBase.dBoost = 0
         MyBase.count = 0

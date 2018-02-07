@@ -5,6 +5,8 @@
         MyBase.setName("Bunny_Suit")
         MyBase.setDesc("A sultry outfit worn by waitresses in a club. " & vbCrLf & _
                        "+1 DEF")
+        id = 16
+        tier = 3
         MyBase.setUsable(False)
         MyBase.dBoost = 1
         MyBase.count = 0

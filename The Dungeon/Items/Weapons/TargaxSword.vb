@@ -4,6 +4,8 @@
     Sub New()
         MyBase.setName("Sword_of_the_Brutal")
         MyBase.setDesc("A suspicious sword owned by a brutal despot. +60 ATK")
+        id = 24
+        tier = Nothing
         MyBase.setUsable(False)
         MyBase.aBoost = 60
         MyBase.count = 0
