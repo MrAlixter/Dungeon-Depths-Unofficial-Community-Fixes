@@ -1,1 +1,3 @@
 F:\dungeon_depths\The Dungeon\bin\Debug\Dungeon_Depths.exe.config
+F:\dungeon_depths\The Dungeon\obj\Debug\Dungeon_Depths.exe
+F:\dungeon_depths\The Dungeon\obj\Debug\Dungeon_Depths.pdb

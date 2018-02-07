@@ -1246,6 +1246,8 @@
             player.perksct(5) = 0
             player.revert2()
         End If
+        npcList.Clear()
+        player.currTarget = Nothing
     End Sub
     'the NPC versions of from and to combat
     Sub NPCtoCombat(ByRef m As Monster)
@@ -1296,6 +1298,8 @@
             player.perksct(5) = 0
             player.revert2()
         End If
+        npcList.Clear()
+        player.currTarget = Nothing
     End Sub
     'run handles the player choice to run from combat
     Sub run()
@@ -1351,10 +1355,13 @@
             drawBoard()
         End If
         m.despawn("npc")
+        npcList.Clear()
+        player.currTarget = Nothing
         npcmode = False
     End Sub
     Sub npcEncounter(ByRef m As NPC)
         If m.dead Then Exit Sub
+        npcList.Clear()
         npcList.Add(m)
         npcmode = True
         currNPC = m
