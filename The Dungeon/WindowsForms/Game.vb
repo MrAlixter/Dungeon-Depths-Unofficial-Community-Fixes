@@ -116,16 +116,16 @@
             'MAKE POTIONS ADJUST THEIR NAMES CORRECTLY, NO MATTER WHERE THEY ARE IN THE INVENTORY
             'Make potion array? 
 
-            'If i < 5 Then
-            '   player.inventory(25 + i).setName(HPotionNames(i))
-            '   player.inventorynames(25 + i) = HPotionNames(i)
-            'Else
-            '   Select Case i
-            '   Case 5
-            '       player.inventory(59).setName(HPotionNames(i))
-            '       player.inventorynames(59) = HPotionNames(i)
-            '   End Select
-            'End If
+            If i < 5 Then
+                player.inventory(25 + i).setName(HPotionNames(i))
+                player.inventorynames(25 + i) = HPotionNames(i)
+            Else
+                Select Case i
+                    Case 5
+                        player.inventory(59).setName(HPotionNames(i))
+                        player.inventorynames(59) = HPotionNames(i)
+                End Select
+            End If
         Next
 
         player.currState = New State(player)
