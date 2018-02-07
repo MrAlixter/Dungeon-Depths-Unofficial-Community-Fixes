@@ -4,6 +4,8 @@
     Sub New()
         MyBase.setName("Key")
         MyBase.setDesc("TFng")
+        id = 53
+        tier = Nothing
         MyBase.setUsable(True)
         MyBase.count = 0
         MyBase.value = 2500

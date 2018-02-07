@@ -4,6 +4,8 @@
     Sub New()
         MyBase.setName("Staff")
         MyBase.setDesc("A simple staff.")
+        id = 21
+        tier = Nothing
         MyBase.setUsable(False)
         MyBase.aBoost = 0
         count = 0

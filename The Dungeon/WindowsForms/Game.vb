@@ -8,12 +8,15 @@
     Public mPics(,) As PictureBox       '(NOT SAVED)
     Public floor As Integer = 0
     Public stairs As Point
+
+    Public player As Player = New Player()
+
+    Public baseChest As Chest = New Chest(player.inventory.Count - 1)
     Public chestList As ArrayList = New ArrayList()
     Public statueList As ArrayList = New ArrayList()    '(NOT SAVED)
     Public trapList As ArrayList = New ArrayList()
     'player instance variables
     Public updatelist As PQ = New PQ
-    Public player As Player = New Player()
     Public shopkeeper As NPC
     Public npcList As ArrayList = New ArrayList()     'list of non-player updatables (NOT SAVED)
     Public currNPC As NPC   'the current npc the player is talking to (NOT SAVED)
@@ -22,14 +25,15 @@
     Public npcmode As Boolean = False   'indicates if the player is talking to an npc (NOT SAVED)
     Public npcIndex As Integer = 0  'indicates which npc is encountered (NOT SAVED)
     'a list containing all valid cheats
-    Public cheatList() As String = {"girl", "nude", "blue", "catc", "bmbo", "bigr", "slut", "kill", "dick", "lust", "form", "tfme", _
+    Public cheatList() As String = {"girl", "nude", "blue", "catc", "bmbo", "bigr", "slut", "kill", "dick", "lust", "form", "tfme",
                                     "gogo", "mana", "fuse", "rock", "doll"} 'list of cheats (NOT SAVES)
     Public isMark As Boolean = False    'indicates if the 'mark' cheat code has been used. (NOT SAVED)
     Dim keyspresed As String = ""   'records last 4 keys pressed (NOT SAVED)
     'variables related to the mystery potions
-    Public OHPotionNames() As String = {"Red_Potion", "Green_Potion", "Blue_Potion", "Yellow_Potion", "Glowing_Potion", "Murky_Potion"} '"Clear_Potion", "Smokey_Potion"}
-    Public HPotionNames() As String = OHPotionNames.Clone()
-    Dim APotionNames() As String = {"Blonde_Potion", "Red_Hair_Potion", "Black_Hair_Potion", "Feminine_Potion", "Breast_Enlarging_Potion", "Masculine_Potion"} '"Weakness_Potion", "Shrink_Potion", "Snake_Potion"}
+    Public Potions As New ArrayList()
+    'Public OHPotionNames() As String = {"Red_Potion", "Green_Potion", "Blue_Potion", "Yellow_Potion", "Glowing_Potion", "Murky_Potion", "Purple_Potion"} '"Clear_Potion", "Smokey_Potion"}
+    'Public HPotionNames() As String = OHPotionNames.Clone()
+    'Dim APotionNames() As String = {"Blonde_Potion", "Red_Hair_Potion", "Black_Hair_Potion", "Feminine_Potion", "Breast_Enlarging_Potion", "Masculine_Potion", "Breast_Shrinking_Potion"} '"Weakness_Potion", "Shrink_Potion", "Snake_Potion"}
     'save lists of the players polymorph forms
     '      self      enemy
     Public formList, tFormList As New ArrayList()
@@ -50,6 +54,7 @@
     'startup/new level methods
     'Form1_Load handles the loading of the form
     Private Sub Form1_Load(sender As Object, e As EventArgs) Handles Me.Load
+        loadPotionList()
         'sets the player tile image to the default @
         pImage = picPlayer.BackgroundImage
         'scales the font size to that of the window
@@ -81,6 +86,18 @@
             End If
         End If
     End Sub
+    Sub loadPotionList()
+        Dim HiddenNames As ArrayList = New ArrayList({"Red_Potion", "Green_Potion", "Blue_Potion", "Yellow_Potion", "Glowing_Potion", "Murky_Potion", "Purple_Potion"}) '"Clear_Potion", "Smokey_Potion"}
+        Dim index As Integer = 0
+        For i = 0 To player.inventory.Count - 1
+            If player.inventory(i).GetType().IsSubclassOf(GetType(MysteryPotion)) Then
+                Potions.Add(player.inventory(i))
+                index = Int(Rnd() * (HiddenNames.Count - 1))
+                CType(player.inventory(i), MysteryPotion).setName(HiddenNames(index))
+                HiddenNames.RemoveAt(index)
+            End If
+        Next
+    End Sub
     'newGame prepares the application at the start of a new game
     Sub newGame()
         combatmode = False
@@ -101,22 +118,36 @@
         Dim int As Integer = 100 - player.getSpeed
         If int < 1 Then int = 1
         updatelist.add(player, int)
+
+        'Fill Chest Tier List
+        For i = 0 To player.inventory.Count - 1
+            If player.inventory(i).tier <> Nothing Then
+                baseChest.tiers(player.inventory(i).tier).Add(player.inventory(i))
+            End If
+        Next
+
         initializeBoard()
 
         'potion name shuffle
-        ShuffleArray(HPotionNames)
-        For i = 0 To UBound(HPotionNames)
-            If i < 5 Then
-                player.inventory(25 + i).setName(HPotionNames(i))
-                player.inventorynames(25 + i) = HPotionNames(i)
-            Else
-                Select Case i
-                    Case 5
-                        player.inventory(59).setName(HPotionNames(i))
-                        player.inventorynames(59) = HPotionNames(i)
-                End Select
-            End If
-        Next
+        '[DEPRECATED]
+        'THIS HAS BEEN MOVED TO THE CREATION OF THE POTION LIST IN loadPotionList()
+        'ShuffleArray(HPotionNames)
+        'For i = 0 To UBound(HPotionNames)
+        '    'TODO
+        '    'MAKE POTIONS ADJUST THEIR NAMES CORRECTLY, NO MATTER WHERE THEY ARE IN THE INVENTORY
+        '    'Make potion array? 
+
+        '    If i < 5 Then
+        '        player.inventory(25 + i).setName(HPotionNames(i))
+        '        player.inventorynames(25 + i) = HPotionNames(i)
+        '    Else
+        '        Select Case i
+        '            Case 5
+        '                player.inventory(59).setName(HPotionNames(i))
+        '                player.inventorynames(59) = HPotionNames(i)
+        '        End Select
+        '    End If
+        'Next
 
         player.currState = New State(player)
         player.sState = New State(player)
@@ -268,7 +299,7 @@
                 chestX = CInt(Int(Rnd() * mBoardWidth))
                 chestY = CInt(Int(Rnd() * mBoardHeight))
             Loop
-            Dim chest As New Chest(chestX, chestY)
+            Dim chest As Chest = baseChest.Create(chestX, chestY)
             If r = i Then chest.add(53, 1)
             chestList.Add(chest)
             mBoard(chestY, chestX).ForeColor = Color.FromArgb(45, 45, 45)
@@ -613,10 +644,13 @@
                             player.pState.save(player)
                             player.createP()
                         ElseIf keyspresed = "girl" Then
-                            player.tg()
+                            player.MtF()
                             player.createP()
                         ElseIf keyspresed = "dick" Then
-                            player.tg2()
+                            player.FtM()
+                            player.createP()
+                        ElseIf keyspresed = "blue" Then
+                            player.haircolor = Color.Cyan
                             player.createP()
                         ElseIf keyspresed = "blue" Then
                             player.haircolor = Color.Cyan
@@ -662,22 +696,21 @@
                             player.currTarget.takeDMG("9999")
                         End If
                         keyspresed = ""
-                        Return True
+                        'MsgBox(keyspresed)
                     End If
-                    keyspresed = ""
-                    'MsgBox(keyspresed)
+
                 Case Keys.Up
-                player.moveUp()
-                randomEvents()
+                    player.moveUp()
+                    randomEvents()
                 Case Keys.Down
-                player.moveDown()
-                randomEvents()
+                    player.moveDown()
+                    randomEvents()
                 Case Keys.Left
-                player.moveLeft()
-                randomEvents()
+                	player.moveLeft()
+                	randomEvents()
                 Case Keys.Right
-                player.moveRight()
-                randomEvents()
+                	player.moveRight()
+                	randomEvents()
                 Case Keys.OemSemicolon
                     Try
                         oemSemiColon()
@@ -755,7 +788,7 @@
         End If
     End Sub
 
-    'save/load methods
+    'save/loadSave methods
     'save handles the saving of the game
     Sub save(ByVal a As String)
         If lblEvent.Visible = True Or combatmode Or npcmode Then
@@ -800,9 +833,13 @@
         For i = 0 To cmboxSpec.Items.Count - 1
             writer.WriteLine(cmboxSpec.Items(i))
         Next
-        For i = 0 To UBound(HPotionNames)
-            writer.WriteLine(HPotionNames(i))
+        For i = 0 To Potions.Count - 1
+            writer.WriteLine(Potions(i).getName)
+            writer.WriteLine(Potions(i).getRealName)
         Next
+        'For i = 0 To UBound(HPotionNames)
+        '    writer.WriteLine(HPotionNames(i))
+        'Next
         For i = 0 To UBound(beatboss)
             writer.WriteLine(beatboss(i))
         Next
@@ -816,8 +853,8 @@
         player.solFlag = False
         player.createP()
     End Sub
-    'load1 handles the loading of a game
-    Sub load1(ByVal a As String)
+    'loadSave handles the loading of a game
+    Sub loadSave(ByVal a As String)
         cboxMG.Items.Clear()
         cboxMG.Text = "-- Select --"
         cboxNPCMG.Items.Clear()
@@ -879,7 +916,7 @@
 
         stairs = New Point(reader.ReadLine(), reader.ReadLine())
         For i = 0 To CInt(reader.ReadLine())
-            chestList.Add(New Chest(reader.ReadLine()))
+            chestList.Add(baseChest.Create(reader.ReadLine()))
         Next
 
         For i = 0 To CInt(reader.ReadLine())
@@ -898,9 +935,19 @@
         For i = 0 To CInt(reader.ReadLine())
             cmboxSpec.Items.Add(reader.ReadLine())
         Next
-        For i = 0 To UBound(HPotionNames)
-            HPotionNames(i) = reader.ReadLine()
+        For i = 0 To Potions.Count - 1
+            Dim nextKnownName = reader.ReadLine()
+            Dim nextRealPotionName = reader.ReadLine()
+            For j = 0 To Potions.Count - 1
+                If CType(Potions(j), MysteryPotion).getRealName = nextRealPotionName Then
+                    Potions(j).setName(nextKnownName)
+                    j = Potions.Count
+                End If
+            Next
         Next
+        'For i = 0 To UBound(HPotionNames)
+        '    HPotionNames(i) = reader.ReadLine()
+        'Next
         For i = 0 To UBound(beatboss)
             beatboss(i) = CBool(reader.ReadLine)
         Next
@@ -934,7 +981,7 @@
     Private Sub btnS1_Click(sender As Object, e As EventArgs) Handles btnS1.Click
         If solFlag Then
             Try
-                load1("s1.ave")
+                loadSave("s1.ave")
             Catch ex As System.IO.FileNotFoundException
                 MsgBox("Error 004: No save detected!")
             Catch ex2 As Exception
@@ -949,7 +996,7 @@
     Private Sub btnS2_Click(sender As Object, e As EventArgs) Handles btnS2.Click
         If solFlag Then
             Try
-                load1("s2.ave")
+                loadSave("s2.ave")
             Catch ex As System.IO.FileNotFoundException
                 MsgBox("Error 004: No save detected!")
             Catch ex2 As Exception
@@ -964,7 +1011,7 @@
     Private Sub btnS3_Click(sender As Object, e As EventArgs) Handles btnS3.Click
         If solFlag Then
             Try
-                load1("s3.ave")
+                loadSave("s3.ave")
             Catch ex As System.IO.FileNotFoundException
                 MsgBox("Error 004: No save detected!")
             Catch ex2 As Exception
@@ -979,7 +1026,7 @@
     Private Sub btnS4_Click(sender As Object, e As EventArgs) Handles btnS4.Click
         If solFlag Then
             Try
-                load1("s4.ave")
+                loadSave("s4.ave")
             Catch ex As System.IO.FileNotFoundException
                 MsgBox("Error 004: No save detected!")
             Catch ex2 As Exception
@@ -994,7 +1041,7 @@
     Private Sub btnS5_Click(sender As Object, e As EventArgs) Handles btnS5.Click
         If solFlag Then
             Try
-                load1("s5.ave")
+                loadSave("s5.ave")
             Catch ex As System.IO.FileNotFoundException
                 MsgBox("Error 004: No save detected!")
             Catch ex2 As Exception
@@ -1009,7 +1056,7 @@
     Private Sub btnS6_Click(sender As Object, e As EventArgs) Handles btnS6.Click
         If solFlag Then
             Try
-                load1("s6.ave")
+                loadSave("s6.ave")
             Catch ex As System.IO.FileNotFoundException
                 MsgBox("Error 004: No save detected!")
             Catch ex2 As Exception
@@ -1024,7 +1071,7 @@
     Private Sub btnS7_Click(sender As Object, e As EventArgs) Handles btnS7.Click
         If solFlag Then
             Try
-                load1("s7.ave")
+                loadSave("s7.ave")
             Catch ex As System.IO.FileNotFoundException
                 MsgBox("Error 004: No save detected!")
             Catch ex2 As Exception
@@ -1039,7 +1086,7 @@
     Private Sub btnS8_Click(sender As Object, e As EventArgs) Handles btnS8.Click
         If solFlag Then
             Try
-                load1("s8.ave")
+                loadSave("s8.ave")
             Catch ex As System.IO.FileNotFoundException
                 MsgBox("Error 004: No save detected!")
             Catch ex2 As Exception
@@ -1127,7 +1174,15 @@
         Try
             If lstInventory.SelectedItem.ToString.Substring(0, 1) = "-" Then Throw New NullReferenceException
             Dim subString As String = lstInventory.SelectedItem.ToString.Split(" (")(1)
-            Dim aInd As Integer = Array.IndexOf(player.inventorynames, subString)
+            Dim aInd As Integer = player.inventorynames.IndexOf(subString)
+            If aInd < 0 Then
+                For i = 0 To Potions.Count - 1
+                    If CType(Potions(i), MysteryPotion).getName() = subString Then
+                        aInd = player.inventorynames.IndexOf(CType(Potions(i), MysteryPotion).getRealName())
+                        Exit For
+                    End If
+                Next
+            End If
             If aInd >= 0 Then
                 'MsgBox(aInd & ", " & subString)
                 'MsgBox(player.inventorynames(32))
@@ -1545,7 +1600,7 @@
     Private Sub btnS_Click(sender As Object, e As EventArgs) Handles btnS.Click
         newGame()
     End Sub
-    'btnL is the load button on the start menu
+    'btnL is the loadSave button on the start menu
     Private Sub btnL_Click(sender As Object, e As EventArgs) Handles btnL.Click
         Try
             btnS.Visible = False
@@ -1701,7 +1756,7 @@
     End Sub
     Private Sub LoadToolStripMenuItem_Click(sender As Object, e As EventArgs) Handles LoadToolStripMenuItem.Click
         If lblEvent.Visible = True Or combatmode Or npcmode Then
-            pushLblEvent("You can't load now!")
+            pushLblEvent("You can't loadSave now!")
             Exit Sub
         End If
         solFlag = True

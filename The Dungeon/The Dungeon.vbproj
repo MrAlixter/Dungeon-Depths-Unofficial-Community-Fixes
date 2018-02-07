@@ -101,25 +101,26 @@
     <Import Include="System.Threading.Tasks" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Items\Usable\Potions\Mystery Potions\BSPotion.vb" />
     <Compile Include="WindowsForms\About.Designer.vb">
       <DependentUpon>About.vb</DependentUpon>
     </Compile>
     <Compile Include="WindowsForms\About.vb">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="Items\Useable\Food\AngelFood.vb" />
-    <Compile Include="Items\Useable\Food\Apple.vb" />
+    <Compile Include="Items\Usable\Food\AngelFood.vb" />
+    <Compile Include="Items\Usable\Food\Apple.vb" />
     <Compile Include="Items\Armor\Armor.vb" />
-    <Compile Include="Items\Useable\Charms\AttackCharm.vb" />
+    <Compile Include="Items\Usable\Charms\AttackCharm.vb" />
     <Compile Include="Items\Weapons\BareFists.vb" />
-    <Compile Include="Items\Useable\Potions\Mystery Potions\BEPotion.vb" />
-    <Compile Include="Items\Useable\Potions\Mystery Potions\BlackHairPotion.vb" />
-    <Compile Include="Items\Useable\Potions\Mystery Potions\BlondePotion.vb" />
+    <Compile Include="Items\Usable\Potions\Mystery Potions\BEPotion.vb" />
+    <Compile Include="Items\Usable\Potions\Mystery Potions\BlackHairPotion.vb" />
+    <Compile Include="Items\Usable\Potions\Mystery Potions\BlondePotion.vb" />
     <Compile Include="Entities\Boss.vb" />
     <Compile Include="Items\Armor\BrawlerCosplay.vb" />
     <Compile Include="Items\Weapons\BronzeXiphos.vb" />
     <Compile Include="Items\Armor\BunnySuit.vb" />
-    <Compile Include="Items\Useable\CatEars.vb" />
+    <Compile Include="Items\Usable\CatEars.vb" />
     <Compile Include="Items\Armor\CatLingerie.vb" />
     <Compile Include="WindowsForms\CharacterGenerator.Designer.vb">
       <DependentUpon>CharacterGenerator.vb</DependentUpon>
@@ -128,12 +129,12 @@
       <SubType>Form</SubType>
     </Compile>
     <Compile Include="Tiles\Chest.vb" />
-    <Compile Include="Items\Useable\Food\ChickenLeg.vb" />
+    <Compile Include="Items\Usable\Food\ChickenLeg.vb" />
     <Compile Include="Items\Unimplemented\ChickenSuit.vb" />
-    <Compile Include="Items\Useable\Compass.vb" />
-    <Compile Include="Items\Useable\Food\Cupcake.vb" />
-    <Compile Include="Items\Useable\Charms\DefenceCharm.vb" />
-    <Compile Include="Items\Useable\Food\Food.vb" />
+    <Compile Include="Items\Usable\Compass.vb" />
+    <Compile Include="Items\Usable\Food\Cupcake.vb" />
+    <Compile Include="Items\Usable\Charms\DefenceCharm.vb" />
+    <Compile Include="Items\Usable\Food\Food.vb" />
     <Compile Include="WindowsForms\Game.Designer.vb">
       <DependentUpon>Game.vb</DependentUpon>
     </Compile>
@@ -164,19 +165,19 @@
     <Compile Include="WindowsForms\Controls.vb">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="Items\Useable\FusionCrystal.vb" />
-    <Compile Include="Items\Useable\Glowstick.vb" />
+    <Compile Include="Items\Usable\FusionCrystal.vb" />
+    <Compile Include="Items\Usable\Glowstick.vb" />
     <Compile Include="Items\Armor\GoddessGown.vb" />
     <Compile Include="Items\Misc\Gold.vb" />
     <Compile Include="Items\Armor\GoldAdornment.vb" />
     <Compile Include="Items\Armor\GoldArmor.vb" />
     <Compile Include="Items\Weapons\GoldenStaff.vb" />
     <Compile Include="Items\Weapons\GoldSword.vb" />
-    <Compile Include="Items\Useable\Charms\HealthCharm.vb" />
-    <Compile Include="Items\Useable\Potions\HealthPotion.vb" />
-    <Compile Include="Items\Useable\Food\HeavyCream.vb" />
-    <Compile Include="Items\Useable\Food\Herbs.vb" />
-    <Compile Include="Items\Useable\Potions\Mystery Potions\MasculinePotion.vb" />
+    <Compile Include="Items\Usable\Charms\HealthCharm.vb" />
+    <Compile Include="Items\Usable\Potions\HealthPotion.vb" />
+    <Compile Include="Items\Usable\Food\HeavyCream.vb" />
+    <Compile Include="Items\Usable\Food\Herbs.vb" />
+    <Compile Include="Items\Usable\Potions\Mystery Potions\MasculinePotion.vb" />
     <Compile Include="Entities\MiniBoss.vb" />
     <Compile Include="Items\Item.vb" />
     <Compile Include="Items\Misc\Key.vb" />
@@ -185,10 +186,10 @@
     <Compile Include="Items\Armor\LiveLingerie.vb" />
     <Compile Include="Items\Weapons\MaidDuster.vb" />
     <Compile Include="Items\Armor\MaidOutfit.vb" />
-    <Compile Include="Items\Useable\Charms\ManaCharm.vb" />
-    <Compile Include="Items\Useable\Potions\ManaPotion.vb" />
+    <Compile Include="Items\Usable\Charms\ManaCharm.vb" />
+    <Compile Include="Items\Usable\Potions\ManaPotion.vb" />
     <Compile Include="Items\Weapons\MidasGuantlet.vb" />
-    <Compile Include="Items\Useable\Mirror.vb" />
+    <Compile Include="Items\Usable\Mirror.vb" />
     <Compile Include="Entities\Monster.vb" />
     <Compile Include="Tiles\mTile.vb" />
     <Compile Include="My Project\AssemblyInfo.vb" />
@@ -210,16 +211,16 @@
     <Compile Include="Items\Armor\NormalClothes.vb" />
     <Compile Include="Entities\NPC.vb" />
     <Compile Include="Items\Weapons\OakStaff.vb" />
-    <Compile Include="Items\Useable\Food\PApple.vb" />
+    <Compile Include="Items\Usable\Food\PApple.vb" />
     <Compile Include="Entities\Player\Player.vb" />
-    <Compile Include="Items\Useable\Potions\Potion.vb" />
+    <Compile Include="Items\Usable\Potions\MysteryPotion.vb" />
     <Compile Include="PriorityQue\PQ.vb" />
     <Compile Include="PriorityQue\PQInterface.vb" />
     <Compile Include="Items\Armor\PrincessGown.vb" />
     <Compile Include="PriorityQue\Q.vb" />
-    <Compile Include="Items\Useable\Potions\Mystery Potions\RedHairPotion.vb" />
-    <Compile Include="Items\Useable\Potions\RestorationPotion.vb" />
-    <Compile Include="Items\Useable\RigWrench.vb" />
+    <Compile Include="Items\Usable\Potions\Mystery Potions\RedHairPotion.vb" />
+    <Compile Include="Items\Usable\Potions\RestorationPotion.vb" />
+    <Compile Include="Items\Usable\RigWrench.vb" />
     <Compile Include="Items\Armor\Ropes.vb" />
     <Compile Include="WindowsForms\SCPicker.Designer.vb">
       <DependentUpon>SCPicker.vb</DependentUpon>
@@ -240,8 +241,8 @@
     <Compile Include="Items\Armor\SorcerersRobes.vb" />
     <Compile Include="Items\Weapons\SoulBlade.vb" />
     <Compile Include="Entities\Player\Specials.vb" />
-    <Compile Include="Items\Useable\Charms\SpeedCharm.vb" />
-    <Compile Include="Items\Useable\Spellbook.vb" />
+    <Compile Include="Items\Usable\Charms\SpeedCharm.vb" />
+    <Compile Include="Items\Usable\Spellbook.vb" />
     <Compile Include="Entities\Player\Spells.vb" />
     <Compile Include="Items\Armor\SportBra.vb" />
     <Compile Include="Items\Weapons\Staff.vb" />
@@ -252,14 +253,14 @@
     <Compile Include="Items\Armor\SteelBikini.vb" />
     <Compile Include="Items\Weapons\MagGirlWand.vb" />
     <Compile Include="Items\Weapons\SteelSword.vb" />
-    <Compile Include="Items\Useable\StickOfGum.vb" />
+    <Compile Include="Items\Usable\StickOfGum.vb" />
     <Compile Include="Items\Armor\SuccubusGarb.vb" />
     <Compile Include="Items\Armor\TankTop.vb" />
     <Compile Include="Items\Weapons\TargaxSword.vb" />
-    <Compile Include="Items\Useable\Potions\Mystery Potions\TGPotion.vb" />
+    <Compile Include="Items\Usable\Potions\Mystery Potions\FemininePotion.vb" />
     <Compile Include="Tiles\Trap.vb" />
     <Compile Include="Entities\Updatable.vb" />
-    <Compile Include="Items\Useable\VialOfSlime.vb" />
+    <Compile Include="Items\Usable\VialOfSlime.vb" />
     <Compile Include="Items\Armor\WarriorsCurass.vb" />
     <Compile Include="Items\Unimplemented\WeaknessPotion.vb" />
     <Compile Include="Items\Weapons\Weapon.vb" />
@@ -272,6 +273,7 @@
     </EmbeddedResource>
     <EmbeddedResource Include="WindowsForms\CharacterGenerator.resx">
       <DependentUpon>CharacterGenerator.vb</DependentUpon>
+      <SubType>Designer</SubType>
     </EmbeddedResource>
     <EmbeddedResource Include="WindowsForms\Game.resx">
       <DependentUpon>Game.vb</DependentUpon>
@@ -287,6 +289,7 @@
     </EmbeddedResource>
     <EmbeddedResource Include="WindowsForms\Controls.resx">
       <DependentUpon>Controls.vb</DependentUpon>
+      <SubType>Designer</SubType>
     </EmbeddedResource>
     <EmbeddedResource Include="My Project\Resources.resx">
       <Generator>ResXFileCodeGenerator</Generator>

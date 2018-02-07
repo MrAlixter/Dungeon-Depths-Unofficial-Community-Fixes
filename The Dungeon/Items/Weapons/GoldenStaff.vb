@@ -4,6 +4,8 @@
     Sub New()
         MyBase.setName("Golden_Staff")
         MyBase.setDesc("A glowing runed staff for powerful spellcasters. +50 MANA")
+        id = 41
+        tier = Nothing
         MyBase.setUsable(False)
         MyBase.mBoost = 50
         count = 0

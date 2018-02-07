@@ -4,6 +4,8 @@
     Sub New()
         MyBase.setName("Leather_Sword")
         MyBase.setDesc("A black leather whip that critically hits more often. +25 ATK")
+        id = Nothing
+        tier = Nothing
         MyBase.setUsable(False)
         MyBase.aBoost = 25
         MyBase.count = 0

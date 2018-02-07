@@ -4,6 +4,8 @@
     Sub New()
         MyBase.setName("Duster")
         MyBase.setDesc("A grey feather duster that looks like you could use for cleaning.")
+        id = 45
+        tier = 3
         MyBase.setUsable(True)
         MyBase.aBoost = 5
         MyBase.count = 0

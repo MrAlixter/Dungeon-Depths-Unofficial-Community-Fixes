@@ -3,6 +3,8 @@
     Sub New()
         MyBase.setName("Naked")
         MyBase.setDesc("NO CLOTHES")
+        id = Nothing
+        tier = Nothing
         MyBase.setUsable(False)
         MyBase.aBoost = 0
         MyBase.count = 0

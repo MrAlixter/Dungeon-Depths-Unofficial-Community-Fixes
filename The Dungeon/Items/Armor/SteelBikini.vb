@@ -5,6 +5,8 @@
         MyBase.setName("Steel_Bikini")
         MyBase.setDesc("A skimpy steel swimsuit that gives a new meaning to 'Breast plates'." & vbCrLf & _
                        "+5 DEF")
+        id = 7
+        tier = Nothing
         MyBase.setUsable(False)
         MyBase.dBoost = 5
         MyBase.count = 0

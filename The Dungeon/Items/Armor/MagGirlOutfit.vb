@@ -6,6 +6,8 @@
         MyBase.setDesc("A mysterious uniform worn by a mysterious protector." & vbCrLf & _
                        "+10 DEF" & vbCrLf & _
                        "Magical girls can not remove this uniform.")
+        id = 10
+        tier = Nothing
         MyBase.setUsable(False)
         MyBase.dBoost = 10
         MyBase.count = 0

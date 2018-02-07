@@ -142,7 +142,7 @@
                 p.TextColor = Color.FromArgb(231, 126, 245)
                 If p.sex = "Male" Then
                     p.sexBool = True
-                    p.tg()
+                    p.MtF()
                     out += " Your body becomes daintier, and you are soon fully female."
                 End If
                 Equipment.clothesChange("Succubus_Garb")
@@ -176,7 +176,7 @@
                 p.maxMana = 9999
                 p.TextColor = Color.Goldenrod
                 If p.sex = "Male" Then
-                    p.tg()
+                    p.MtF()
                     out += " Your body becomes daintier, and you are soon fully female."
                 End If
                 Equipment.clothesChange("Goddess_Gown")
@@ -355,10 +355,10 @@
         ElseIf form = "princess" Then
             Select Case ind
                 Case 0
-                    Game.pushLblEvent("As you bite into the apple, your mind starts to get foggy.  You yawn, " & _
-                                                   "and lay down on the floor.  As you nod off, you realize that that apple" & _
-                                                   " probably was probably either enchanted or poisoned, and as you black out" & _
-                                                   " your last thought is that this seems like something out of an old fairy " & _
+                    Game.pushLblEvent("As you bite into the apple, your mind starts to get foggy.  You yawn, " &
+                                                   "and lay down on the floor.  As you nod off, you realize that that apple" &
+                                                   " probably was probably either enchanted or poisoned, and as you black out" &
+                                                   " your last thought is that this seems like something out of an old fairy " &
                                                    "tail.", AddressOf PApple.princessTF)
                     p.iArrInd(8) = New Tuple(Of Integer, Boolean)(3, p.sexBool)
                     If p.sexBool Then
@@ -370,7 +370,7 @@
                     Game.pushLblEvent("As you come to several hours later, you groan and rub your forhead, only to knock a golden crown off of your head. This jolts you up, and you examine yourself further.  Long hair, poofy ballgown, gloves that go up past your elbows?!  Well, it seems like your 'fairy-tail' hunch wasn't too far off after all.  Dusting youself off, you get ready to embark back on your journey to return to your kingdom.  Wait...that isn't why you came here..." & vbCrLf & "Or was it?")
                     Equipment.clothesChange("Regal_Gown")
                     If Not p.sexBool Then
-                        p.tg()
+                        p.MtF()
                     End If
                     p.title = "Princess"
                     p.changeHairColor(Color.FromArgb(255, 181, 148, 98))
@@ -385,12 +385,12 @@
                     End If
             End Select
         ElseIf form = "doll" Then
-            Game.pushLblEvent("Looking down, you see some sort of coupon laying on the ground.  Picking it up, you read " & vbCrLf & _
-                               "𝘕𝘦𝘦𝘥 𝘱𝘰𝘵𝘦𝘯𝘵 𝘮𝘢𝘨𝘪𝘤 𝘪𝘵𝘦𝘮𝘴 𝘸𝘪𝘵𝘩 𝘯𝘰 𝘲𝘶𝘦𝘴𝘵𝘪𝘰𝘯𝘴 𝘢𝘴𝘬𝘦𝘥?  𝘏𝘪𝘵 𝘶𝘱 𝘵𝘩𝘦 𝘉𝘳𝘰𝘸𝘯 𝘏𝘢𝘵, 𝘤𝘰𝘮𝘪𝘯𝘨 𝘵𝘰 𝘢 𝘥𝘶𝘯𝘨𝘦𝘰𝘯 𝘯𝘦𝘢𝘳 " & _
-                               "𝘺𝘰𝘶 𝘴𝘰𝘰𝘯!  𝘚𝘦𝘦 𝘵𝘩𝘦 𝘣𝘢𝘤𝘬 𝘧𝘰𝘳 𝘢 𝘧𝘳𝘦𝘦 𝘴𝘢𝘮𝘱𝘭𝘦." & vbCrLf & _
-                               "Flipping the scrap over, your fingers brush against a rune, activating it with the slightest touch." & _
-                               "  You suddenly find yourself feeling immobile, yet strangely light as your body collapses in on itself, leaving you an immobile sheet of vinyl." & _
-                               "  A rush of air from the rune returns you to an exagerated female form, though apart from having changed with the rest of your " & _
+            Game.pushLblEvent("Looking down, you see some sort of coupon laying on the ground.  Picking it up, you read " & vbCrLf &
+                               "𝘕𝘦𝘦𝘥 𝘱𝘰𝘵𝘦𝘯𝘵 𝘮𝘢𝘨𝘪𝘤 𝘪𝘵𝘦𝘮𝘴 𝘸𝘪𝘵𝘩 𝘯𝘰 𝘲𝘶𝘦𝘴𝘵𝘪𝘰𝘯𝘴 𝘢𝘴𝘬𝘦𝘥?  𝘏𝘪𝘵 𝘶𝘱 𝘵𝘩𝘦 𝘉𝘳𝘰𝘸𝘯 𝘏𝘢𝘵, 𝘤𝘰𝘮𝘪𝘯𝘨 𝘵𝘰 𝘢 𝘥𝘶𝘯𝘨𝘦𝘰𝘯 𝘯𝘦𝘢𝘳 " &
+                               "𝘺𝘰𝘶 𝘴𝘰𝘰𝘯!  𝘚𝘦𝘦 𝘵𝘩𝘦 𝘣𝘢𝘤𝘬 𝘧𝘰𝘳 𝘢 𝘧𝘳𝘦𝘦 𝘴𝘢𝘮𝘱𝘭𝘦." & vbCrLf &
+                               "Flipping the scrap over, your fingers brush against a rune, activating it with the slightest touch." &
+                               "  You suddenly find yourself feeling immobile, yet strangely light as your body collapses in on itself, leaving you an immobile sheet of vinyl." &
+                               "  A rush of air from the rune returns you to an exagerated female form, though apart from having changed with the rest of your " &
                                "genitalia seems largly unchanged.  Propping yourself up, you try to re-equip your gear only to find that you can barely hold a weapon, let alone wear armor. This 'free sample' seems to have turned you into a sentient sex doll.  𝘉𝘳𝘰𝘸𝘯 𝘏𝘢𝘵, 𝘩𝘶𝘩...")
             Equipment.clothesChange("Naked")
             p.title = "Blow-Up Doll"
@@ -558,7 +558,7 @@
                     p.iArrInd(5) = New Tuple(Of Integer, Boolean)(9, True)
                     p.iArrInd(15) = New Tuple(Of Integer, Boolean)(13, True)
                 Else
-                    p.haircolor = bimboYellow
+                    p.haircolor = bimboyellow
                     p.iArrInd(1) = New Tuple(Of Integer, Boolean)(1, True)
                     p.iArrInd(5) = New Tuple(Of Integer, Boolean)(5, True)
                     p.iArrInd(15) = New Tuple(Of Integer, Boolean)(6, True)
@@ -680,7 +680,7 @@
                 p.lust += 5
             Case 4
                 If Not p.sexBool Then
-                    p.tg()
+                    p.MtF()
                     p.be()
                     p.iArrInd(9) = New Tuple(Of Integer, Boolean)(13, True)
                     Game.pushLblEvent("Your body slims down, and your chest inlates, giving you average sized breasts.  Soon after, your cock and balls shift into a vagina. You are now female!")
@@ -706,7 +706,7 @@
             Case 7
                 If p.discipline < 5 Then
                     If p.sex = "Male" Then
-                        p.tg()
+                        p.MtF()
                         p.be()
                         p.iArrInd(1) = New Tuple(Of Integer, Boolean)(12, True)
                         p.iArrInd(5) = New Tuple(Of Integer, Boolean)(17, True)

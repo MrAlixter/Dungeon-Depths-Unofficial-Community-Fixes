@@ -6,6 +6,8 @@
                        "+6 DEF" & vbCrLf & _
                        "The mimic's movment continually raises lust" & vbCrLf & _
                        "May not be easy to remove")
+        id = 55
+        tier = Nothing
         MyBase.setUsable(False)
         MyBase.dBoost = 6
         MyBase.count = 0

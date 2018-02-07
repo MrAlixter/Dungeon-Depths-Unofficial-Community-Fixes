@@ -4,6 +4,8 @@
     Sub New()
         MyBase.setName("SoulBlade")
         MyBase.setDesc("A ornate sword forged from someone's soul.")
+        id = 9
+        tier = Nothing
         MyBase.setUsable(False)
         MyBase.aBoost = 5
         MyBase.count = 0

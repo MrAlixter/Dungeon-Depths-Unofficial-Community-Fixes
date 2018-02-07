@@ -5,6 +5,8 @@
         MyBase.setName("Gold_Armor")
         MyBase.setDesc("A expensive looking armor set made for the wealthy." & vbCrLf & _
                        "+30 DEF")
+        id = 38
+        tier = Nothing
         MyBase.setUsable(False)
         MyBase.dBoost = 30
         MyBase.count = 0
