@@ -3,6 +3,8 @@
     Sub New()
         MyBase.setName("Maid_Outfit")
         MyBase.setDesc("DO NOT SEE THIS EVER")
+        id = Nothing
+        tier = Nothing
         MyBase.setUsable(False)
         MyBase.sBoost = 2
         MyBase.count = 0

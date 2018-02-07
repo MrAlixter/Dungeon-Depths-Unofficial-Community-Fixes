@@ -4,6 +4,8 @@
     Sub New()
         MyBase.setName("Chicken_Suit")
         MyBase.setDesc("Utterly worthless for combat, this suit makes its wearer look like a bird. -30 DEF")
+        id = 8
+        tier = Nothing
         MyBase.setUsable(False)
         MyBase.aBoost = -30
         MyBase.count = 0

@@ -6,6 +6,8 @@
     Sub New()
         MyBase.setName("Fists")
         MyBase.setDesc("DO NOT SEE THIS EVER")
+        id = Nothing
+        tier = Nothing
         MyBase.setUsable(False)
         MyBase.aBoost = 0
         MyBase.count = 0

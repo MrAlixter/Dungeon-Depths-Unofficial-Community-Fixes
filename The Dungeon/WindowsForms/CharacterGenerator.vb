@@ -41,12 +41,6 @@
     Public Shared fGlasses, fEyes, fFace, fFacialMark, fMouth, fBody, fCloak, fClothing, fFrontHair, fEyebrows, fNose, fRearHair1, fEars, fAccA, fHat, fRearHair2, bkg As List(Of Image)
     Public Shared mGlasses, mEyes, mFace, mFacialMark, mMouth, mBody, mCloak, mClothing, mFrontHair, mEyebrows, mNose, mRearHair1, mEars, mAccA, mHat, mRearHair2 As List(Of Image)
     Public Shared fTFAccA, fTFBody, fTFClothes, fTFEars, fTFEyes, fTFface, fTfFrontHair, fTFMouth, fTFNose, fTFRearhair1, fTfRearhair2 As List(Of Image)
-    'Quits to main menu without starting the game
-    Private Sub btnBack_Click(sender As Object, e As EventArgs) Handles btnBack.Click
-        quit = True
-        Me.Close()
-    End Sub
-
     Public Shared mTFAccA, mTFBody, mTFClothes, mTFEars, mTFEyes, mTFface, mTfFrontHair, mTFMouth, mTFNose, mTFRearhair1, mTfRearhair2 As List(Of Image)
     Public Shared wings As List(Of Image)
 
@@ -97,16 +91,16 @@
         mRearHair1 = getImg("img/mRearHair1")
         mRearHair2 = getImg("img/mRearHair2")
 
-        mTFAccA = getImg("img/mTf/tfAccA")
-        mTFBody = getImg("img/mTf/tfBody")
-        mTFEars = getImg("img/mTf/tfEars")
-        mTFEyes = getImg("img/mTf/tfEyes")
-        mTFface = getImg("img/mTf/tfFace")
-        mTfFrontHair = getImg("img/mTf/tfFrontHair")
-        mTFMouth = getImg("img/mTf/tfMouth")
-        mTFNose = getImg("img/mTf/tfNose")
-        mTFRearhair1 = getImg("img/mTf/tfRearHair1")
-        mTfRearhair2 = getImg("img/mTf/tfRearHair2")
+        mTFAccA = getImg("img/mTF/tfAccA")
+        mTFBody = getImg("img/mTF/tfBody")
+        mTFEars = getImg("img/mTF/tfEars")
+        mTFEyes = getImg("img/mTF/tfEyes")
+        mTFface = getImg("img/mTF/tfFace")
+        mTfFrontHair = getImg("img/mTF/tfFrontHair")
+        mTFMouth = getImg("img/mTF/tfMouth")
+        mTFNose = getImg("img/mTF/tfNose")
+        mTFRearhair1 = getImg("img/mTF/tfRearHair1")
+        mTfRearhair2 = getImg("img/mTF/tfRearHair2")
 
         If currSex Then currAttribute = fBody Else currAttribute = mBody
         If Not currSex Then
@@ -1046,6 +1040,11 @@
     End Sub
     'btnSave_Click closes the form, finalizing the players choices
     Private Sub btnSave_Click(sender As Object, e As EventArgs) Handles btnSave.Click
+        Me.Close()
+    End Sub
+    'Quits to main menu without starting the game
+    Private Sub btnBack_Click(sender As Object, e As EventArgs) Handles btnBack.Click
+        quit = True
         Me.Close()
     End Sub
     'sex Selection buttons

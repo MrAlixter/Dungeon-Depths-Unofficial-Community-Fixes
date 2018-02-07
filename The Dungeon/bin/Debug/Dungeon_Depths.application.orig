@@ -7,7 +7,7 @@
     <framework targetVersion="4.0" profile="Full" supportedRuntime="4.0.30319" />
   </compatibleFrameworks>
   <dependency>
-    <dependentAssembly dependencyType="install" codebase="Dungeon_Depths.exe.manifest" size="5152">
+    <dependentAssembly dependencyType="install" codebase="Dungeon_Depths.exe.manifest" size="5241">
       <assemblyIdentity name="Dungeon_Depths.exe" version="1.0.0.0" publicKeyToken="0000000000000000" language="neutral" processorArchitecture="msil" type="win32" />
       <hash>
         <dsig:Transforms>
@@ -15,10 +15,10 @@
         </dsig:Transforms>
         <dsig:DigestMethod Algorithm="http://www.w3.org/2000/09/xmldsig#sha1" />
 <<<<<<< HEAD
-        <dsig:DigestValue>B+exrjZzBX1+Wa9oqC/ILcrYOo4=</dsig:DigestValue>
+        <dsig:DigestValue>tD7rRSN75sXLN0wKs4h6aAUUGUU=</dsig:DigestValue>
 =======
-        <dsig:DigestValue>HNke/nOsbhPsrBns40rsjp2lAu8=</dsig:DigestValue>
->>>>>>> 10afce99ff2083b135f9f7f8a964282a775473ec
+        <dsig:DigestValue>n2diBmHB+Xg4K36gj79zVz3198M=</dsig:DigestValue>
+>>>>>>> InventoryRework
       </hash>
     </dependentAssembly>
   </dependency>

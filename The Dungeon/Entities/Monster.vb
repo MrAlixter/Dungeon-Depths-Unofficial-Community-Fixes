@@ -117,7 +117,8 @@
         For i = 0 To UBound(inventory)
             totalSum += inventory(i)
         Next
-        Dim c1 As Chest = New Chest(inventory, pos)
+        Dim c1 As Chest
+        c1 = Game.baseChest.Create(inventory, pos)
         If totalSum > 0 Then c1.open()
         Game.npcList.Remove(Me)
         If mindex = 2 And Not name.Equals("Zombie") Then
@@ -158,7 +159,7 @@
             Game.pushLblEvent("Your foe drops a key!")
             Dim inv(53) As Integer
             inv(53) = 1
-            Dim c1 As Chest = New Chest(inventory, pos)
+            Dim c1 As Chest = Game.baseChest.Create(inventory, pos)
             Game.chestList.Add(c1)
         End If
         Game.player.perks(6) = False
@@ -202,7 +203,7 @@
         Game.lstLog.TopIndex = Game.lstLog.Items.Count - 1
     End Sub
     Public Overridable Sub toStatue()
-        Dim c1 As Chest = New Chest(inventory, pos)
+        Dim c1 As Chest = Game.baseChest.Create(inventory, pos)
         c1.open()
         Game.npcList.Remove(Me)
         Game.lstLog.Items.Add("You've deafeated the " & name & "!")
@@ -218,7 +219,7 @@
         Game.lstLog.TopIndex = Game.lstLog.Items.Count - 1
     End Sub
     Public Overridable Sub toGold()
-        Dim c1 As Chest = New Chest(inventory, pos)
+        Dim c1 As Chest = Game.baseChest.Create(inventory, pos)
         c1.open()
         Game.npcList.Remove(Me)
         Game.lstLog.Items.Add("You've deafeated the " & name & "!")
@@ -235,7 +236,7 @@
         Game.lstLog.TopIndex = Game.lstLog.Items.Count - 1
     End Sub
     Public Overridable Sub toBlade()
-        Dim c1 As Chest = New Chest(inventory, pos)
+        Dim c1 As Chest = Game.baseChest.Create(inventory, pos)
         c1.open()
         Game.npcList.Remove(Me)
         Game.lstLog.Items.Add("You've deafeated the " & name & "!")
@@ -291,17 +292,17 @@
         Dim sexBool As Boolean = CBool(ghostArray(6))
         Dim haircolor As Color = Color.FromArgb(255, ghostArray(7), ghostArray(8), ghostArray(9))
 
-        ReDim inventory(UBound(Game.player.inventorynames))
+        ReDim inventory(Game.player.inventorynames.Count)
         For i = 0 To UBound(inventory)
             inventory(i) = ghostArray(10 + i)
         Next
         reader.Close()
         Return True
     End Function
-    Private Function endBoss()
+    Private Sub endBoss()
         If sName.Equals("Marissa the Enchantress") Then Game.beatboss(1) = True
         If sName.Equals("Targax the Brutal") Then Game.beatboss(2) = True
-    End Function
+    End Sub
     Public Function getName() As String
         If form = "" Then
             Return name

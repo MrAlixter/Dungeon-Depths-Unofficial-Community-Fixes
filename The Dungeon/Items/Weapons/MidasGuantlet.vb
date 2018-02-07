@@ -4,6 +4,8 @@
     Sub New()
         MyBase.setName("Midas_Gauntlet")
         MyBase.setDesc("A ornate glove that allows you to turn a monster to gold.")
+        id = 42
+        tier = Nothing
         MyBase.setUsable(False)
         MyBase.aBoost = 0
         MyBase.count = 0

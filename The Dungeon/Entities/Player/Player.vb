@@ -32,7 +32,7 @@
     Public skincolor As Color = Color.FromArgb(255, 247, 219, 195)
     'inventory variables
     Public inventory As New ArrayList()
-    Public inventorynames(60) As String
+    Public inventorynames As New ArrayList()
     Dim armor() As Armor
     Dim weapons() As Weapon
     Dim useable(), food(), potions(), misc() As Item
@@ -127,10 +127,12 @@
         solFlag = True
         ReDim iArr(16)
         createP()
-        For i = 0 To UBound(Game.HPotionNames)
-            inventory(25 + i).setName(Game.HPotionNames(i))
-            inventorynames(25 + i) = Game.HPotionNames(i)
-        Next
+
+        'For i = 0 To UBound(Game.HPotionNames)
+        '   inventory(25 + i).setName(Game.HPotionNames(i))
+        '   inventorynames(25 + i) = Game.HPotionNames(i)
+        'Next
+
         bsizeroute()
     End Sub
 
@@ -242,7 +244,7 @@
                 out += "  As you black out, you can see the mimic working its way into your armor.  As the darkness takes you, so does the orgasmic bliss of the mimic's magic touch."
                 Dim x As Integer = -1
                 Dim n As String = equippedArmor.getName()
-                For i = 0 To UBound(inventorynames)
+                For i = 0 To inventorynames.Count - 1
                     If inventorynames(i).Equals(n) Then
                         x = i
                         Exit For
@@ -505,7 +507,11 @@
         inventory.Add(New BSPotion()) '60
 
         For i = 0 To inventory.Count - 1
-            inventorynames(i) = inventory(i).getName()
+            If inventory(i).GetType().IsSubclassOf(GetType(MysteryPotion)) Then
+                inventorynames.Insert(i, CType(inventory(i), MysteryPotion).getRealName())
+            Else
+                inventorynames.Insert(i, inventory(i).getName())
+            End If
             'MsgBox(inventory(i).getName())
         Next
         armor = {New NormalClothes, New SkimpyClothes, New Naked, New PrincessGown, _

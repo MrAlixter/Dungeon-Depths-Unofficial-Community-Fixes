@@ -7,6 +7,8 @@
                        "-5 ATK" & vbCrLf & _
                        "-5 SPD" & vbCrLf & _
                        "May not be easy to remove")
+        id = 54
+        tier = Nothing
         MyBase.setUsable(False)
         MyBase.aBoost = -5
         MyBase.dBoost = -5

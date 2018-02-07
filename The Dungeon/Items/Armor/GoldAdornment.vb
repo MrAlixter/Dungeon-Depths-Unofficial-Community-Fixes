@@ -5,6 +5,8 @@
         MyBase.setName("Gold_Adornment")
         MyBase.setDesc("A shiny golden outfit that leaves little to the imagination.  This is a common choice for those who want to be admired" & vbCrLf & _
                        "+15 DEF")
+        id = 39
+        tier = Nothing
         MyBase.setUsable(False)
         MyBase.dBoost = 15
         MyBase.count = 0

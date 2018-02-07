@@ -7,14 +7,14 @@
     <framework targetVersion="4.0" profile="Full" supportedRuntime="4.0.30319" />
   </compatibleFrameworks>
   <dependency>
-    <dependentAssembly dependencyType="install" codebase="Dungeon_Depths.exe.manifest" size="5152">
+    <dependentAssembly dependencyType="install" codebase="Dungeon_Depths.exe.manifest" size="5241">
       <assemblyIdentity name="Dungeon_Depths.exe" version="1.0.0.0" publicKeyToken="0000000000000000" language="neutral" processorArchitecture="msil" type="win32" />
       <hash>
         <dsig:Transforms>
           <dsig:Transform Algorithm="urn:schemas-microsoft-com:HashTransforms.Identity" />
         </dsig:Transforms>
         <dsig:DigestMethod Algorithm="http://www.w3.org/2000/09/xmldsig#sha1" />
-        <dsig:DigestValue>tD7rRSN75sXLN0wKs4h6aAUUGUU=</dsig:DigestValue>
+        <dsig:DigestValue>wOr/pRjny2vid2+Z4EboyZuE8KE=</dsig:DigestValue>
       </hash>
     </dependentAssembly>
   </dependency>
