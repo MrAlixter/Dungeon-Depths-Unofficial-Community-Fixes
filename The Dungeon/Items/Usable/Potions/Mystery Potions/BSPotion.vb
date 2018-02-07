@@ -11,10 +11,14 @@
     Public Overrides Sub effect()
         Dim p As Player = Game.player
         p.inventorynames(60) = "Breast_Shrinking_Potion"
-        p.bs()
-        If Not Game.player.perks(5) Or Not Game.player.title.Equals("Magic Girl") Then
-            Game.player.pState.save(Game.player)
+        If p.breastSize > 0 Then
+            p.bs()
+            If Not Game.player.perks(5) Or Not Game.player.title.Equals("Magic Girl") Then
+                Game.player.pState.save(Game.player)
+            End If
+            Game.pushLblEvent("You breasts squeeze painfully . . .")
+        Else
+            Game.pushLblEvent("Nothing happens")
         End If
-        Game.pushLblEvent("You breasts squeeze painfully . . .")
     End Sub
 End Class

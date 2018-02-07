@@ -4,6 +4,8 @@
     Sub New()
         MyBase.setName("Medicinal_Tea")
         MyBase.setDesc("A bitter tea that restores health. -15 Hunger, +50 Health")
+        id = 33
+        tier = 2
         MyBase.setUsable(True)
         MyBase.count = 0
         MyBase.value = 275

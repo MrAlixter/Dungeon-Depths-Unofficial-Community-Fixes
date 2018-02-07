@@ -29,7 +29,7 @@
             Case 1
                 Dim x As Integer = -1
                 Dim n As String = Game.player.equippedArmor.getName()
-                For i = 0 To UBound(Game.player.inventorynames)
+                For i = 0 To Game.player.inventorynames.Count
                     If Game.player.inventorynames(i).Equals(n) Then
                         x = i
                         Exit For

@@ -4,6 +4,8 @@
     Sub New()
         MyBase.setName("Angel_Food_Cake")
         MyBase.setDesc("An divine sugary confection. -20 Hunger")
+        id = 44
+        tier = 3
         MyBase.setUsable(True)
         MyBase.count = 0
         MyBase.value = 375

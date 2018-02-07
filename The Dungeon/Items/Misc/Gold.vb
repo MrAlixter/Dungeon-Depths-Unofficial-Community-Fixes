@@ -5,7 +5,7 @@
         MyBase.setName("Gold")
         MyBase.setDesc("TFng")
         id = 43
-        tier = Nothing
+        tier = 2
         MyBase.setUsable(True)
         MyBase.count = 0
         MyBase.value = 100

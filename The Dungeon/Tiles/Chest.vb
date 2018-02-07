@@ -1,51 +1,76 @@
 ﻿Public Class Chest
-    Dim contents(60) As Integer
+    Public contents() As Integer
     Public pos As Point
-    Dim tier1() As Integer = {0, 1, 2, 3, 4, 13, 14, 30, 31, 37}
-    Dim tier2() As Integer = {25, 26, 27, 28, 29, 33, 34, 36, 43, 46, 48, 49, 50, 51, 52, 59, 60}
-    Dim tier3() As Integer = {11, 16, 17, 19, 22, 23, 32, 35, 44, 45, 47, 57}
-    Sub New(ByVal x As Integer, ByVal y As Integer)
-        pos = New Point(x, y)
+    Public tier1 = New ArrayList()
+    Public tier2 = New ArrayList()
+    Public tier3 = New ArrayList()
+    Public tiers() = {Nothing, tier1, tier2, tier3}
+    Sub New()
+        'Empty. 
+        'For duplication of baseChest (to later be filled)
+    End Sub
+    Sub New(size As Integer)
+        contents = New Integer(size) {}
+        'This should be used for creating the baseChest
+        'This should be the only constructor used for the baseChest
+    End Sub
+    Function Create(ByVal x As Integer, ByVal y As Integer)
+        Dim chest = Me.Clone()
+
+        chest.pos = New Point(x, y)
         Randomize()
         Dim numC As Integer = CInt(Int(Rnd() * 5) + 1)
         For i = 0 To numC
             Dim r As Integer = Int(Rnd() * 10)
-            Dim tier() As Integer = tier1
+            Dim itemTier As Integer = 1
             Select Case r
-                Case 0
-                    tier = tier1
-                Case 1
-                    tier = tier1
-                Case 2
-                    tier = tier1
-                Case 3
-                    tier = tier1
-                Case 4
-                    tier = tier1
+                Case 0 To 4
+                    itemTier = 1
                 Case 9
-                    tier = tier3
+                    itemTier = 3
                 Case Else
-                    tier = tier2
+                    itemTier = 2
             End Select
-            Dim itemID As Integer = tier(Int(Rnd() * tier.Length))
-            contents(itemID) += 1
+            If itemTier < 1 Or itemTier > tiers.Length - 1 Then
+                MessageBox.Show("Chest @ (" & CStr(x) & ", " & CStr(y) & ") tried making an item out of tier range.\nDefaulting to tier 1.")
+                itemTier = 1
+            End If
+            Dim itemID As Integer = tiers(itemTier)(Int(Rnd() * tiers(itemTier).Count)).id 'Int(Rnd() * tier.Length))
+            chest.add(itemID, 1)
             If itemID = 43 Then contents(itemID) += Int(Rnd() * 150)
         Next
-    End Sub
-    Sub New(ByVal i() As Integer, ByVal p As Point)
+        Return chest
+    End Function
+    Function Create(ByVal i() As Integer, ByVal p As Point)
+        Dim chest = Me.Clone()
+
         For ind = 0 To UBound(i)
-            contents(ind) += i(ind)
+            chest.contents(ind) += i(ind)
         Next
-        contents(43) = Int(Rnd() * 250)
-        pos = p
-    End Sub
-    Sub New(ByVal s As String)
+        chest.contents(43) = Int(Rnd() * 250) 'Add some amount of gold
+        chest.pos = p
+        Return chest
+    End Function
+    Function Create(ByVal s As String)
+        Dim chest = Me.Clone()
+
         Dim cArray() As String = s.Split("*")
-        pos = New Point(cArray(0), cArray(1))
+        chest.pos = New Point(cArray(0), cArray(1))
         For i = 2 To UBound(contents)
-            contents(i) = cArray(i)
+            chest.contents(i) = cArray(i)
         Next
-    End Sub
+
+        Return chest
+    End Function
+    Function Clone()
+        Dim toReturn = New Chest()
+        toReturn.tier1 = Me.tier1
+        toReturn.tier2 = Me.tier2
+        toReturn.tier3 = Me.tier3
+        toReturn.tiers = Me.tiers
+        toReturn.contents = New Integer(Me.contents.Length - 1) {}
+        Return toReturn
+    End Function
     Sub open()
         If Game.player.pos <> pos Then Exit Sub
         If Not Game.combatmode And Game.floor >= 3 Then
@@ -63,8 +88,13 @@
         Dim c As String = "Chest Contents: " & vbCrLf
         For i = 0 To UBound(contents)
             Game.player.inventory.Item(i).add(contents(i))
+
             If contents(i) > 0 Then
-                c += " " & vbCrLf & "+" & contents(i) & " " & Game.player.inventorynames(i) & " "
+                If Game.player.inventory(i).GetType().IsSubclassOf(GetType(MysteryPotion)) Then
+                    c += " " & vbCrLf & "+" & contents(i) & " " & Game.player.inventory(i).getName() & " "
+                Else
+                    c += " " & vbCrLf & "+" & contents(i) & " " & Game.player.inventory(i).getName() & " "
+                End If
             End If
         Next
 

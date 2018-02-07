@@ -16,9 +16,9 @@
         Game.lstLog.Items.Add("You drink the " & getName())
         If Not MyBase.getName().Equals(realName) Then
             Game.lstLog.Items.Add("The " & getName() & " was actually a " & realName)
-            Dim ind As Integer = Array.IndexOf(Game.HPotionNames, MyBase.getName)
+            'Dim ind As Integer = Array.IndexOf(Game.HPotionNames, MyBase.getName)
             MyBase.setName(realName)
-            Game.HPotionNames(ind) = realName
+            'Game.HPotionNames(ind) = realName
         End If
         effect()
         Game.lstLog.TopIndex = Game.lstLog.Items.Count - 1
@@ -36,4 +36,7 @@
     Sub setRealName(ByVal s As String)
         realName = s
     End Sub
+    Function getRealName()
+        Return realName
+    End Function
 End Class
