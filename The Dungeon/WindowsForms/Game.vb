@@ -43,7 +43,7 @@
     Public version As Double = 0.5      'the save file version
     Public lblEventOnClose As Action    'the event method preformed when lblEvent closes (NOT SAVED)
     Public invFilters() As Boolean = {True, True, True, True, True, True}
-    Dim eClock As Integer = 5
+    Dim eClock As Integer = 15
     Dim needsTurnUpdate As Boolean = True
     Public solFlag As Boolean = False
 
@@ -478,7 +478,8 @@
     'randomEvents decides whether random encounters will occur, and handles what will be encountered
     Sub randomEvents()
         Randomize()
-        If combatmode = True Or npcmode = True Then Exit Sub
+        If eClock > 0 Then eClock -= 1
+        If combatmode = True Or npcmode = True Or eClock <> 0 Then Exit Sub
         Dim rand As Integer = CInt(Int(Rnd() * 200))
         Dim currTier As Integer() = monsterTier1
         Select Case floor
@@ -505,6 +506,7 @@
             npcList.Add(m)
             toCombat()
             lstLog.Items.Add((m.getName() & " attacks!"))
+            eClock = 5
         End If
         lstLog.TopIndex = lstLog.Items.Count - 1
     End Sub
@@ -522,168 +524,174 @@
         End If
         If combatmode = True And Not (Keydata.Equals(Keys.Enter) Or Keydata.Equals(Keys.K) Or Keydata.Equals(Keys.I) Or Keydata.Equals(Keys.L)) Then Return True
         If npcmode = True Then Return True
-        If turn > 15 And eClock < 1 Then randomEvents()
-        If eClock > 0 Then eClock -= 1
         If player.mana < player.getmaxMana And turn Mod 3 = 0 Then player.mana += 1
-        If npcList.Count > 0 Then
-            For i = 0 To npcList.Count - 1
-                Dim int1 As Integer = 100 - npcList.Item(i).speed
-                If int1 < 1 Then int1 = 1
-                updatelist.add(npcList.Item(i), (int1))
-            Next
-        End If
-        Dim spos As Point = player.pos
-        Select Case Keydata
-            Case Keys.W
-                keyspresed += "w"
+            If npcList.Count > 0 Then
+                For i = 0 To npcList.Count - 1
+                    Dim int1 As Integer = 100 - npcList.Item(i).speed
+                    If int1 < 1 Then int1 = 1
+                    updatelist.add(npcList.Item(i), (int1))
+                Next
+            End If
+            Dim spos As Point = player.pos
+            Select Case Keydata
+                Case Keys.W
+                    keyspresed += "w"
                 player.moveUp()
-            Case Keys.S
-                keyspresed += "s"
+                randomEvents()
+                Case Keys.S
+                    keyspresed += "s"
                 player.moveDown()
-            Case Keys.A
-                keyspresed += "a"
+                randomEvents()
+                Case Keys.A
+                    keyspresed += "a"
                 player.moveLeft()
-            Case Keys.D
-                keyspresed += "d"
+                randomEvents()
+                Case Keys.D
+                    keyspresed += "d"
                 player.moveRight()
-            Case Keys.M
-                keyspresed += "m"
-            Case Keys.R
-                keyspresed += "r"
-            Case Keys.K
-                keyspresed += "k"
-            Case Keys.G
-                keyspresed += "g"
-            Case Keys.I
-                keyspresed += "i"
-            Case Keys.L
-                keyspresed += "l"
-            Case Keys.N
-                keyspresed += "n"
-            Case Keys.U
-                keyspresed += "u"
-            Case Keys.F
-                keyspresed += "f"
-            Case Keys.D
-                keyspresed += "d"
-            Case Keys.E
-                keyspresed += "e"
-                Try
-                    oemSemiColon()
-                Catch ex As Exception
-                    Return True
-                End Try
-            Case Keys.B
-                keyspresed += "b"
-            Case Keys.O
-                keyspresed += "o"
-            Case Keys.C
-                keyspresed += "c"
-            Case Keys.T
-                keyspresed += "t"
-            Case Keys.Enter
-                If cheatList.Contains(keyspresed) Then
-                    MsgBox(keyspresed)
-                    If keyspresed = "mark" Then
-                        player.sex = "Male"
-                        player.sexBool = False
-                        isMark = True
-                        player.iArrInd(1) = New Tuple(Of Integer, Boolean)(CharacterGenerator.mRearHair2.Count - 1, False)
-                        player.iArrInd(2) = New Tuple(Of Integer, Boolean)(0, False)
-                        player.iArrInd(3) = New Tuple(Of Integer, Boolean)(CharacterGenerator.mClothing.Count - 1, False)
-                        player.iArrInd(4) = New Tuple(Of Integer, Boolean)(0, False)
-                        player.iArrInd(5) = New Tuple(Of Integer, Boolean)(CharacterGenerator.mRearHair1.Count - 1, False)
-                        player.iArrInd(6) = New Tuple(Of Integer, Boolean)(0, False)
-                        player.iArrInd(7) = New Tuple(Of Integer, Boolean)(0, False)
-                        player.iArrInd(8) = New Tuple(Of Integer, Boolean)(2, False)
-                        player.iArrInd(9) = New Tuple(Of Integer, Boolean)(2, False)
-                        player.iArrInd(10) = New Tuple(Of Integer, Boolean)(0, False)
-                        player.iArrInd(11) = New Tuple(Of Integer, Boolean)(0, False)
-                        player.iArrInd(12) = New Tuple(Of Integer, Boolean)(0, False)
-                        player.iArrInd(13) = New Tuple(Of Integer, Boolean)(0, False)
-                        player.iArrInd(14) = New Tuple(Of Integer, Boolean)(0, False)
-                        player.iArrInd(15) = New Tuple(Of Integer, Boolean)(CharacterGenerator.mFrontHair.Count - 1, False)
-                        player.iArrInd(16) = New Tuple(Of Integer, Boolean)(0, False)
-                        player.haircolor = Color.FromArgb(255, 125, 94, 50)
-                        player.sState.save(player)
-                        player.pState.save(player)
-                        player.createP()
-                    ElseIf keyspresed = "girl" Then
-                        player.tg()
-                        player.createP()
-                    ElseIf keyspresed = "dick" Then
-                        player.tg2()
-                        player.createP()
-                    ElseIf keyspresed = "blue" Then
-                        player.haircolor = Color.Cyan
-                        player.createP()
-                    ElseIf keyspresed = "bmbo" Then
-                        player.perks(1) = True
-                    ElseIf keyspresed = "catc" Then
-                        player.perks(6) = True
-                    ElseIf keyspresed = "mana" Then
-                        player.inventory(49).add(1)
-                        player.invNeedsUDate = True
-                        player.UIupdate()
-                    ElseIf keyspresed = "form" Then
-                        formList.Add("Slime")
-                        formList.Add("Goddess")
-                        formList.Add("Succubus")
-                        formList.Add("Dragon")
-                    ElseIf keyspresed = "fuse" Then
-                        player.inventory(58).add(1)
-                        player.invNeedsUDate = True
-                        player.UIupdate()
-                    ElseIf keyspresed = "tfme" Then
-                        Polymorph.porm = True
-                        Dim p As Polymorph = New Polymorph
-                        p.ShowDialog()
-                        p.Dispose()
-                    ElseIf keyspresed = "bigr" Then
-                        player.be()
-                    ElseIf keyspresed = "rock" Then
-                        player.petrify(Color.Gray)
-                    ElseIf keyspresed = "doll" Then
-                        Polymorph.transform(player, "doll", 0)
-                    ElseIf keyspresed = "gogo" Then
-                        Dim f As Integer = CInt(InputBox("Which floor?"))
-                        floor = f - 1
-                        initializeBoard()
-                    ElseIf keyspresed = "slut" Then
-                        'player.perks(2) = True
-                        player.inventory(1).add(1)
-                        player.lust += 20
-                        player.createP()
-                    ElseIf keyspresed = "kill" Then
-                        player.currTarget.takeDMG("9999")
+                randomEvents()
+                Case Keys.M
+                    keyspresed += "m"
+                Case Keys.R
+                    keyspresed += "r"
+                Case Keys.K
+                    keyspresed += "k"
+                Case Keys.G
+                    keyspresed += "g"
+                Case Keys.I
+                    keyspresed += "i"
+                Case Keys.L
+                    keyspresed += "l"
+                Case Keys.N
+                    keyspresed += "n"
+                Case Keys.U
+                    keyspresed += "u"
+                Case Keys.F
+                    keyspresed += "f"
+                Case Keys.D
+                    keyspresed += "d"
+                Case Keys.E
+                    keyspresed += "e"
+                    Try
+                        oemSemiColon()
+                    Catch ex As Exception
+                        Return True
+                    End Try
+                Case Keys.B
+                    keyspresed += "b"
+                Case Keys.O
+                    keyspresed += "o"
+                Case Keys.C
+                    keyspresed += "c"
+                Case Keys.T
+                    keyspresed += "t"
+                Case Keys.Enter
+                    If cheatList.Contains(keyspresed) Then
+                        MsgBox(keyspresed)
+                        If keyspresed = "mark" Then
+                            player.sex = "Male"
+                            player.sexBool = False
+                            isMark = True
+                            player.iArrInd(1) = New Tuple(Of Integer, Boolean)(CharacterGenerator.mRearHair2.Count - 1, False)
+                            player.iArrInd(2) = New Tuple(Of Integer, Boolean)(0, False)
+                            player.iArrInd(3) = New Tuple(Of Integer, Boolean)(CharacterGenerator.mClothing.Count - 1, False)
+                            player.iArrInd(4) = New Tuple(Of Integer, Boolean)(0, False)
+                            player.iArrInd(5) = New Tuple(Of Integer, Boolean)(CharacterGenerator.mRearHair1.Count - 1, False)
+                            player.iArrInd(6) = New Tuple(Of Integer, Boolean)(0, False)
+                            player.iArrInd(7) = New Tuple(Of Integer, Boolean)(0, False)
+                            player.iArrInd(8) = New Tuple(Of Integer, Boolean)(2, False)
+                            player.iArrInd(9) = New Tuple(Of Integer, Boolean)(2, False)
+                            player.iArrInd(10) = New Tuple(Of Integer, Boolean)(0, False)
+                            player.iArrInd(11) = New Tuple(Of Integer, Boolean)(0, False)
+                            player.iArrInd(12) = New Tuple(Of Integer, Boolean)(0, False)
+                            player.iArrInd(13) = New Tuple(Of Integer, Boolean)(0, False)
+                            player.iArrInd(14) = New Tuple(Of Integer, Boolean)(0, False)
+                            player.iArrInd(15) = New Tuple(Of Integer, Boolean)(CharacterGenerator.mFrontHair.Count - 1, False)
+                            player.iArrInd(16) = New Tuple(Of Integer, Boolean)(0, False)
+                            player.haircolor = Color.FromArgb(255, 125, 94, 50)
+                            player.sState.save(player)
+                            player.pState.save(player)
+                            player.createP()
+                        ElseIf keyspresed = "girl" Then
+                            player.tg()
+                            player.createP()
+                        ElseIf keyspresed = "dick" Then
+                            player.tg2()
+                            player.createP()
+                        ElseIf keyspresed = "blue" Then
+                            player.haircolor = Color.Cyan
+                            player.createP()
+                        ElseIf keyspresed = "bmbo" Then
+                            player.perks(1) = True
+                        ElseIf keyspresed = "catc" Then
+                            player.perks(6) = True
+                        ElseIf keyspresed = "mana" Then
+                            player.inventory(49).add(1)
+                            player.invNeedsUDate = True
+                            player.UIupdate()
+                        ElseIf keyspresed = "form" Then
+                            formList.Add("Slime")
+                            formList.Add("Goddess")
+                            formList.Add("Succubus")
+                            formList.Add("Dragon")
+                        ElseIf keyspresed = "fuse" Then
+                            player.inventory(58).add(1)
+                            player.invNeedsUDate = True
+                            player.UIupdate()
+                        ElseIf keyspresed = "tfme" Then
+                            Polymorph.porm = True
+                            Dim p As Polymorph = New Polymorph
+                            p.ShowDialog()
+                            p.Dispose()
+                        ElseIf keyspresed = "bigr" Then
+                            player.be()
+                        ElseIf keyspresed = "rock" Then
+                            player.petrify(Color.Gray)
+                        ElseIf keyspresed = "doll" Then
+                            Polymorph.transform(player, "doll", 0)
+                        ElseIf keyspresed = "gogo" Then
+                            Dim f As Integer = CInt(InputBox("Which floor?"))
+                            floor = f - 1
+                            initializeBoard()
+                        ElseIf keyspresed = "slut" Then
+                            'player.perks(2) = True
+                            player.inventory(1).add(1)
+                            player.lust += 20
+                            player.createP()
+                        ElseIf keyspresed = "kill" Then
+                            player.currTarget.takeDMG("9999")
+                        End If
+                        keyspresed = ""
+                        Return True
                     End If
                     keyspresed = ""
-                    Return True
-                End If
-                keyspresed = ""
-                'MsgBox(keyspresed)
-            Case Keys.Up
+                    'MsgBox(keyspresed)
+                Case Keys.Up
                 player.moveUp()
-            Case Keys.Down
+                randomEvents()
+                Case Keys.Down
                 player.moveDown()
-            Case Keys.Left
+                randomEvents()
+                Case Keys.Left
                 player.moveLeft()
-            Case Keys.Right
+                randomEvents()
+                Case Keys.Right
                 player.moveRight()
-            Case Keys.OemSemicolon
-                Try
-                    oemSemiColon()
-                Catch ex As Exception
-                    Return True
-                End Try
-        End Select
-        Dim int As Integer = 100 - player.getSpeed
-        If int < 1 Then int = 1
-        updatelist.add(player, (int))
-        turn += 1
-        drawBoard()
-        lstLog.TopIndex = lstLog.Items.Count - 1
-        Return True
+                randomEvents()
+                Case Keys.OemSemicolon
+                    Try
+                        oemSemiColon()
+                    Catch ex As Exception
+                        Return True
+                    End Try
+            End Select
+            Dim int As Integer = 100 - player.getSpeed
+            If int < 1 Then int = 1
+            updatelist.add(player, (int))
+            turn += 1
+            drawBoard()
+            lstLog.TopIndex = lstLog.Items.Count - 1
+            Return True
     End Function
     'processCmdKey is a leftover from an earlier version, and may not be needed anymore
     Protected Overrides Function ProcessCmdKey(ByRef msg As System.Windows.Forms.Message, ByVal keyData As System.Windows.Forms.Keys) As Boolean
@@ -1347,6 +1355,8 @@
             drawBoard()
         End If
         m.despawn("npc")
+        npcList.Clear()
+        player.currTarget = Nothing
         npcmode = False
     End Sub
     Sub npcEncounter(ByRef m As NPC)

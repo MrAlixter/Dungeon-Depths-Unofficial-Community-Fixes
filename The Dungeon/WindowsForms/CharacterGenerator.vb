@@ -91,16 +91,16 @@
         mRearHair1 = getImg("img/mRearHair1")
         mRearHair2 = getImg("img/mRearHair2")
 
-        mTFAccA = getImg("img/mTf/tfAccA")
-        mTFBody = getImg("img/mTf/tfBody")
-        mTFEars = getImg("img/mTf/tfEars")
-        mTFEyes = getImg("img/mTf/tfEyes")
-        mTFface = getImg("img/mTf/tfFace")
-        mTfFrontHair = getImg("img/mTf/tfFrontHair")
-        mTFMouth = getImg("img/mTf/tfMouth")
-        mTFNose = getImg("img/mTf/tfNose")
-        mTFRearhair1 = getImg("img/mTf/tfRearHair1")
-        mTfRearhair2 = getImg("img/mTf/tfRearHair2")
+        mTFAccA = getImg("img/mTF/tfAccA")
+        mTFBody = getImg("img/mTF/tfBody")
+        mTFEars = getImg("img/mTF/tfEars")
+        mTFEyes = getImg("img/mTF/tfEyes")
+        mTFface = getImg("img/mTF/tfFace")
+        mTfFrontHair = getImg("img/mTF/tfFrontHair")
+        mTFMouth = getImg("img/mTF/tfMouth")
+        mTFNose = getImg("img/mTF/tfNose")
+        mTFRearhair1 = getImg("img/mTF/tfRearHair1")
+        mTfRearhair2 = getImg("img/mTF/tfRearHair2")
 
         If currSex Then currAttribute = fBody Else currAttribute = mBody
         If Not currSex Then
