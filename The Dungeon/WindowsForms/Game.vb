@@ -98,6 +98,13 @@
             End If
         Next
     End Sub
+    'Sub loadPotionList(names As String())
+    '   Dim index As Integer = 0
+    '   For i = 0 To Potions.Count - 1
+    '        index = Potions.IndexOf(CType(player.inventory(i), MysteryPotion).getRealName())
+    '        CType(player.inventory(index), MysteryPotion).setName(names(index))
+    '   Next
+    'End Sub
     'newGame prepares the application at the start of a new game
     Sub newGame()
         combatmode = False
@@ -935,16 +942,29 @@
         For i = 0 To CInt(reader.ReadLine())
             cmboxSpec.Items.Add(reader.ReadLine())
         Next
+        Dim potionKnownNames = New List(Of String)
+        Dim potionRealNames = New List(Of String)
         For i = 0 To Potions.Count - 1
             Dim nextKnownName = reader.ReadLine()
             Dim nextRealPotionName = reader.ReadLine()
-            For j = 0 To Potions.Count - 1
-                If CType(Potions(j), MysteryPotion).getRealName = nextRealPotionName Then
-                    Potions(j).setName(nextKnownName)
-                    j = Potions.Count
-                End If
-            Next
+            If CType(Potions(i), MysteryPotion).getRealName() = nextRealPotionName Then
+                'This should work most of the time
+                Potions(i).setName(nextKnownName)
+                potionKnownNames.Add(nextKnownName)
+                potionRealNames.Add(nextRealPotionName)
+            Else
+                'If the above doesn't work, this should find the right potion every time
+                For j = 0 To Potions.Count - 1
+                    If CType(Potions(j), MysteryPotion).getRealName() = nextRealPotionName Then
+                        Potions(j).setName(nextKnownName)
+                        potionKnownNames.Add(nextKnownName)
+                        potionRealNames.Add(nextRealPotionName)
+                        Exit For
+                    End If
+                Next
+            End If
         Next
+        player.renamePotions(potionKnownNames, potionRealNames)
         'For i = 0 To UBound(HPotionNames)
         '    HPotionNames(i) = reader.ReadLine()
         'Next
