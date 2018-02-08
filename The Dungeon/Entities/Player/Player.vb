@@ -35,7 +35,7 @@
     Public inventorynames As New ArrayList()
     Dim armor() As Armor
     Dim weapons() As Weapon
-    Dim useable, food, potions, misc As Item()
+    Dim useable(), food(), potions(), misc() As Item
     Public invNeedsUDate As Boolean = False
     'player & form states
     Public currState, pState, sState As State
@@ -134,19 +134,6 @@
         'Next
 
         bsizeroute()
-    End Sub
-
-    Sub renamePotions(knownNames As List(Of String), realNames As List(Of String))
-        For i = 0 To potions.Count - 1
-            If potions(i).GetType().IsSubclassOf(GetType(MysteryPotion)) Then
-                For j = 0 To knownNames.Count - 1
-                    If realNames(j) = CType(potions(i), MysteryPotion).getRealName() Then
-                        potions(i).setName(knownNames(j))
-                        Exit For
-                    End If
-                Next
-            End If
-        Next
     End Sub
 
     'commands
@@ -645,6 +632,10 @@
             End If
         End If
         If perks(6) Then
+            If currTarget Is Nothing Then
+                perks(6) = False
+                perksct(6) = 0
+            End If
             If Not perks(5) Then
                 If perksct(6) < (discipline * 1.2) Then
                     Select Case perksct(6)

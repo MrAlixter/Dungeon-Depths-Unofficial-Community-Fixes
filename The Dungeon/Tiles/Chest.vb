@@ -14,11 +14,11 @@
         'This should be used for creating the baseChest
         'This should be the only constructor used for the baseChest
     End Sub
-    Function Create(ByVal x As Integer, ByVal y As Integer)
+    Function Create(ByVal x As Integer, ByVal y As Integer, ByVal code As String)
         Dim chest = Me.Clone()
 
         chest.pos = New Point(x, y)
-        Randomize()
+        Randomize(code.GetHashCode)
         Dim numC As Integer = CInt(Int(Rnd() * 5) + 1)
         For i = 0 To numC
             Dim r As Integer = Int(Rnd() * 10)
