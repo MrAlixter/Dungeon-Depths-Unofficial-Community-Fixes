@@ -1,3 +1,23 @@
 F:\dungeon_depths\The Dungeon\bin\Debug\Dungeon_Depths.exe.config
 F:\dungeon_depths\The Dungeon\obj\Debug\Dungeon_Depths.exe
 F:\dungeon_depths\The Dungeon\obj\Debug\Dungeon_Depths.pdb
+F:\dungeon_depths\The Dungeon\bin\Debug\Dungeon_Depths.exe.manifest
+F:\dungeon_depths\The Dungeon\bin\Debug\Dungeon_Depths.application
+F:\dungeon_depths\The Dungeon\bin\Debug\Dungeon_Depths.exe
+F:\dungeon_depths\The Dungeon\bin\Debug\Dungeon_Depths.pdb
+F:\dungeon_depths\The Dungeon\bin\Debug\Dungeon_Depths.xml
+F:\dungeon_depths\The Dungeon\obj\Debug\DungeonDepths.About.resources
+F:\dungeon_depths\The Dungeon\obj\Debug\DungeonDepths.CharacterGenerator.resources
+F:\dungeon_depths\The Dungeon\obj\Debug\DungeonDepths.Game.resources
+F:\dungeon_depths\The Dungeon\obj\Debug\DungeonDepths.Equipment.resources
+F:\dungeon_depths\The Dungeon\obj\Debug\DungeonDepths.Polymorph.resources
+F:\dungeon_depths\The Dungeon\obj\Debug\DungeonDepths.Hypnosis.resources
+F:\dungeon_depths\The Dungeon\obj\Debug\DungeonDepths.Controls.resources
+F:\dungeon_depths\The Dungeon\obj\Debug\DungeonDepths.Resources.resources
+F:\dungeon_depths\The Dungeon\obj\Debug\DungeonDepths.SCPicker.resources
+F:\dungeon_depths\The Dungeon\obj\Debug\DungeonDepths.Shop.resources
+F:\dungeon_depths\The Dungeon\obj\Debug\The Dungeon.vbproj.GenerateResource.Cache
+F:\dungeon_depths\The Dungeon\obj\Debug\Dungeon_Depths.TrustInfo.xml
+F:\dungeon_depths\The Dungeon\obj\Debug\Dungeon_Depths.exe.manifest
+F:\dungeon_depths\The Dungeon\obj\Debug\Dungeon_Depths.application
+F:\dungeon_depths\The Dungeon\obj\Debug\Dungeon_Depths.xml

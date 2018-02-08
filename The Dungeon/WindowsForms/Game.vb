@@ -44,6 +44,7 @@
     Public turn As Integer = 0  '(NOT SAVED)
     Public beatboss() As Boolean = {False, False, False, False, False}  'which bosses have been beat?
     Dim floorboss() As String = {"Floor0", "Marissa the Enchantress", "Targax the Brutal", "Key"} 'boss names (NOT SAVED)
+    Dim floorLayouts As ArrayList = New ArrayList()
     Public version As Double = 0.5      'the save file version
     Public lblEventOnClose As Action    'the event method preformed when lblEvent closes (NOT SAVED)
     Public invFilters() As Boolean = {True, True, True, True, True, True}
@@ -98,13 +99,6 @@
             End If
         Next
     End Sub
-    'Sub loadPotionList(names As String())
-    '   Dim index As Integer = 0
-    '   For i = 0 To Potions.Count - 1
-    '        index = Potions.IndexOf(CType(player.inventory(i), MysteryPotion).getRealName())
-    '        CType(player.inventory(index), MysteryPotion).setName(names(index))
-    '   Next
-    'End Sub
     'newGame prepares the application at the start of a new game
     Sub newGame()
         combatmode = False
@@ -133,6 +127,10 @@
             End If
         Next
 
+        floorLayouts.Add("placeholder")
+        floorLayouts.Add(genRNDLVLCode())
+        floorLayouts.Add(genRNDLVLCode())
+        floorLayouts.Add(genRNDLVLCode())
         initializeBoard()
 
         'potion name shuffle
@@ -171,7 +169,11 @@
     Private Sub initializeBoard()
         floor += 1
         newBoard()
-        generateLevel()
+        If floor < 4 Then
+            generateLevel(floorLayouts(floor))
+        Else
+            generateLevel(genRNDLVLCode())
+        End If
         drawBoard()
     End Sub
     'newBoard disposes of the old board and its graphical representation
@@ -227,10 +229,20 @@
         Next yInd
     End Sub
     'generateLevel creates the random rooms and corridors of each level
-    Sub generateLevel()
+    Function genRNDLVLCode() As String
+        Dim numLetters As String = "abcdefghijklmnopqrstuvwxyz123456789"
+        Dim output As String = ""
+        Randomize()
+        For i = 0 To 8
+            output += numLetters.Substring(Int(Rnd() * numLetters.Length), 1)
+        Next
+        Return output
+    End Function
+    Sub generateLevel(ByVal code As String)
+        Rnd(-1)
+        Randomize(code.GetHashCode)
         Dim numRooms As Integer = CInt(Int(Rnd() * 15) + 1) * Int(mBoardWidth / 30)
         For i = 0 To numRooms
-            Randomize()
             Dim roomY As Integer = CInt(Int(Rnd() * 5) + 3)
             Dim roomX As Integer = CInt(Int(Rnd() * 5) + 3)
             Dim pos As Point = New Point(CInt(Int(Rnd() * mBoardWidth)), CInt(Int(Rnd() * (mBoardHeight - 1))))
@@ -275,7 +287,7 @@
         player.pos = New Point(playerX, playerY)
 
         placeStairs()
-        placeChest()
+        placeChest(code)
         If floor > 2 Then placeTraps()
         placeNPCs()
     End Sub
@@ -291,7 +303,8 @@
         mBoard(stairsY, stairsX).ForeColor = Color.FromArgb(45, 45, 45)
         mBoard(stairsY, stairsX).Text = "H"
     End Sub
-    Sub placeChest()
+    Sub placeChest(ByVal code As String)
+        Randomize(code.GetHashCode)
         Dim numChests As Integer = CInt(Int(Rnd() * 5) + 3) * Int(mBoardWidth / 30)
         Dim r As Integer
         If floor = 3 Then
@@ -299,14 +312,13 @@
             r = Int(Rnd() * (numChests))
         End If
         For i = 1 To numChests
-            Randomize()
             Dim chestX As Integer = CInt(Int(Rnd() * mBoardWidth))
             Dim chestY As Integer = CInt(Int(Rnd() * mBoardHeight))
             Do While (mBoard(chestY, chestX).Tag <> 1 Or mBoard(chestY, chestX).Text <> "")
                 chestX = CInt(Int(Rnd() * mBoardWidth))
                 chestY = CInt(Int(Rnd() * mBoardHeight))
             Loop
-            Dim chest As Chest = baseChest.Create(chestX, chestY)
+            Dim chest As Chest = baseChest.Create(chestX, chestY, code)
             If r = i Then chest.add(53, 1)
             chestList.Add(chest)
             mBoard(chestY, chestX).ForeColor = Color.FromArgb(45, 45, 45)
@@ -317,14 +329,12 @@
         trapList.Clear()
         Dim numtrap As Integer = CInt(Int(Rnd() * 5) + 3) * Int(mBoardWidth / 30)
         For i = 1 To numtrap
-            Randomize()
             Dim trapX As Integer = CInt(Int(Rnd() * mBoardWidth))
             Dim trapY As Integer = CInt(Int(Rnd() * mBoardHeight))
             Do While (mBoard(trapY, trapX).Tag <> 1 Or mBoard(trapY, trapX).Text <> "")
                 trapX = CInt(Int(Rnd() * mBoardWidth))
                 trapY = CInt(Int(Rnd() * mBoardHeight))
             Loop
-            Randomize()
             Dim trap As New Trap(New Point(trapX, trapY), Int(Rnd() * 4))
             trapList.Add(trap)
             mBoard(trapY, trapX).ForeColor = Color.FromArgb(45, 45, 45)
@@ -334,7 +344,6 @@
     Sub placeNPCs()
         Dim numNpc As Integer = CInt(Int(Rnd() * 1))
         For i = 0 To numNpc
-            Randomize()
             Dim npcX As Integer = CInt(Int(Rnd() * mBoardWidth))
             Dim npcY As Integer = CInt(Int(Rnd() * mBoardHeight))
             Do While (mBoard(npcY, npcX).Tag <> 1 Or mBoard(npcY, npcX).Text <> "")
@@ -623,88 +632,87 @@
                     keyspresed += "c"
                 Case Keys.T
                     keyspresed += "t"
-                Case Keys.Enter
-                    If cheatList.Contains(keyspresed) Then
-                        MsgBox(keyspresed)
-                        If keyspresed = "mark" Then
-                            player.sex = "Male"
-                            player.sexBool = False
-                            isMark = True
-                            player.iArrInd(1) = New Tuple(Of Integer, Boolean)(CharacterGenerator.mRearHair2.Count - 1, False)
-                            player.iArrInd(2) = New Tuple(Of Integer, Boolean)(0, False)
-                            player.iArrInd(3) = New Tuple(Of Integer, Boolean)(CharacterGenerator.mClothing.Count - 1, False)
-                            player.iArrInd(4) = New Tuple(Of Integer, Boolean)(0, False)
-                            player.iArrInd(5) = New Tuple(Of Integer, Boolean)(CharacterGenerator.mRearHair1.Count - 1, False)
-                            player.iArrInd(6) = New Tuple(Of Integer, Boolean)(0, False)
-                            player.iArrInd(7) = New Tuple(Of Integer, Boolean)(0, False)
-                            player.iArrInd(8) = New Tuple(Of Integer, Boolean)(2, False)
-                            player.iArrInd(9) = New Tuple(Of Integer, Boolean)(2, False)
-                            player.iArrInd(10) = New Tuple(Of Integer, Boolean)(0, False)
-                            player.iArrInd(11) = New Tuple(Of Integer, Boolean)(0, False)
-                            player.iArrInd(12) = New Tuple(Of Integer, Boolean)(0, False)
-                            player.iArrInd(13) = New Tuple(Of Integer, Boolean)(0, False)
-                            player.iArrInd(14) = New Tuple(Of Integer, Boolean)(0, False)
-                            player.iArrInd(15) = New Tuple(Of Integer, Boolean)(CharacterGenerator.mFrontHair.Count - 1, False)
-                            player.iArrInd(16) = New Tuple(Of Integer, Boolean)(0, False)
-                            player.haircolor = Color.FromArgb(255, 125, 94, 50)
-                            player.sState.save(player)
-                            player.pState.save(player)
-                            player.createP()
-                        ElseIf keyspresed = "girl" Then
-                            player.MtF()
-                            player.createP()
-                        ElseIf keyspresed = "dick" Then
-                            player.FtM()
-                            player.createP()
-                        ElseIf keyspresed = "blue" Then
-                            player.haircolor = Color.Cyan
-                            player.createP()
-                        ElseIf keyspresed = "blue" Then
-                            player.haircolor = Color.Cyan
-                            player.createP()
-                        ElseIf keyspresed = "bmbo" Then
-                            player.perks(1) = True
-                        ElseIf keyspresed = "catc" Then
-                            player.perks(6) = True
-                        ElseIf keyspresed = "mana" Then
-                            player.inventory(49).add(1)
-                            player.invNeedsUDate = True
-                            player.UIupdate()
-                        ElseIf keyspresed = "form" Then
-                            formList.Add("Slime")
-                            formList.Add("Goddess")
-                            formList.Add("Succubus")
-                            formList.Add("Dragon")
-                        ElseIf keyspresed = "fuse" Then
-                            player.inventory(58).add(1)
-                            player.invNeedsUDate = True
-                            player.UIupdate()
-                        ElseIf keyspresed = "tfme" Then
-                            Polymorph.porm = True
-                            Dim p As Polymorph = New Polymorph
-                            p.ShowDialog()
-                            p.Dispose()
-                        ElseIf keyspresed = "bigr" Then
-                            player.be()
-                        ElseIf keyspresed = "rock" Then
-                            player.petrify(Color.Gray)
-                        ElseIf keyspresed = "doll" Then
-                            Polymorph.transform(player, "doll", 0)
-                        ElseIf keyspresed = "gogo" Then
-                            Dim f As Integer = CInt(InputBox("Which floor?"))
-                            floor = f - 1
-                            initializeBoard()
-                        ElseIf keyspresed = "slut" Then
-                            'player.perks(2) = True
-                            player.inventory(1).add(1)
-                            player.lust += 20
-                            player.createP()
-                        ElseIf keyspresed = "kill" Then
-                            player.currTarget.takeDMG("9999")
-                        End If
-                        keyspresed = ""
-                        'MsgBox(keyspresed)
+            Case Keys.Enter
+                If cheatList.Contains(keyspresed) Then
+                    If keyspresed = "mark" Then
+                        player.sex = "Male"
+                        player.sexBool = False
+                        isMark = True
+                        player.iArrInd(1) = New Tuple(Of Integer, Boolean)(CharacterGenerator.mRearHair2.Count - 1, False)
+                        player.iArrInd(2) = New Tuple(Of Integer, Boolean)(0, False)
+                        player.iArrInd(3) = New Tuple(Of Integer, Boolean)(CharacterGenerator.mClothing.Count - 1, False)
+                        player.iArrInd(4) = New Tuple(Of Integer, Boolean)(0, False)
+                        player.iArrInd(5) = New Tuple(Of Integer, Boolean)(CharacterGenerator.mRearHair1.Count - 1, False)
+                        player.iArrInd(6) = New Tuple(Of Integer, Boolean)(0, False)
+                        player.iArrInd(7) = New Tuple(Of Integer, Boolean)(0, False)
+                        player.iArrInd(8) = New Tuple(Of Integer, Boolean)(2, False)
+                        player.iArrInd(9) = New Tuple(Of Integer, Boolean)(2, False)
+                        player.iArrInd(10) = New Tuple(Of Integer, Boolean)(0, False)
+                        player.iArrInd(11) = New Tuple(Of Integer, Boolean)(0, False)
+                        player.iArrInd(12) = New Tuple(Of Integer, Boolean)(0, False)
+                        player.iArrInd(13) = New Tuple(Of Integer, Boolean)(0, False)
+                        player.iArrInd(14) = New Tuple(Of Integer, Boolean)(0, False)
+                        player.iArrInd(15) = New Tuple(Of Integer, Boolean)(CharacterGenerator.mFrontHair.Count - 1, False)
+                        player.iArrInd(16) = New Tuple(Of Integer, Boolean)(0, False)
+                        player.haircolor = Color.FromArgb(255, 125, 94, 50)
+                        player.sState.save(player)
+                        player.pState.save(player)
+                        player.createP()
+                    ElseIf keyspresed = "girl" Then
+                        player.MtF()
+                        player.createP()
+                    ElseIf keyspresed = "dick" Then
+                        player.FtM()
+                        player.createP()
+                    ElseIf keyspresed = "blue" Then
+                        player.haircolor = Color.Cyan
+                        player.createP()
+                    ElseIf keyspresed = "blue" Then
+                        player.haircolor = Color.Cyan
+                        player.createP()
+                    ElseIf keyspresed = "bmbo" Then
+                        player.perks(1) = True
+                    ElseIf keyspresed = "catc" Then
+                        player.perks(6) = True
+                    ElseIf keyspresed = "mana" Then
+                        player.inventory(49).add(1)
+                        player.invNeedsUDate = True
+                        player.UIupdate()
+                    ElseIf keyspresed = "form" Then
+                        formList.Add("Slime")
+                        formList.Add("Goddess")
+                        formList.Add("Succubus")
+                        formList.Add("Dragon")
+                    ElseIf keyspresed = "fuse" Then
+                        player.inventory(58).add(1)
+                        player.invNeedsUDate = True
+                        player.UIupdate()
+                    ElseIf keyspresed = "tfme" Then
+                        Polymorph.porm = True
+                        Dim p As Polymorph = New Polymorph
+                        p.ShowDialog()
+                        p.Dispose()
+                    ElseIf keyspresed = "bigr" Then
+                        player.be()
+                    ElseIf keyspresed = "rock" Then
+                        player.petrify(Color.Gray)
+                    ElseIf keyspresed = "doll" Then
+                        Polymorph.transform(player, "doll", 0)
+                    ElseIf keyspresed = "gogo" Then
+                        Dim f As Integer = CInt(InputBox("Which floor?"))
+                        floor = f - 1
+                        initializeBoard()
+                    ElseIf keyspresed = "slut" Then
+                        'player.perks(2) = True
+                        player.inventory(1).add(1)
+                        player.lust += 20
+                        player.createP()
+                    ElseIf keyspresed = "kill" Then
+                        player.currTarget.takeDMG("9999")
                     End If
+                    keyspresed = ""
+                    'MsgBox(keyspresed)
+                End If
 
                 Case Keys.Up
                     player.moveUp()
@@ -854,6 +862,12 @@
         writer.WriteLine(floor)
         writer.WriteLine(shopkeeper.pos.X)
         writer.WriteLine(shopkeeper.pos.Y)
+
+        writer.WriteLine(floorLayouts.Count - 1)
+        For i = 0 To floorLayouts.Count - 1
+            writer.WriteLine(floorLayouts(i))
+        Next
+
         writer.Flush()
         writer.Close()
         pushLblEvent("Game successfully saved!")
@@ -942,29 +956,16 @@
         For i = 0 To CInt(reader.ReadLine())
             cmboxSpec.Items.Add(reader.ReadLine())
         Next
-        Dim potionKnownNames = New List(Of String)
-        Dim potionRealNames = New List(Of String)
         For i = 0 To Potions.Count - 1
             Dim nextKnownName = reader.ReadLine()
             Dim nextRealPotionName = reader.ReadLine()
-            If CType(Potions(i), MysteryPotion).getRealName() = nextRealPotionName Then
-                'This should work most of the time
-                Potions(i).setName(nextKnownName)
-                potionKnownNames.Add(nextKnownName)
-                potionRealNames.Add(nextRealPotionName)
-            Else
-                'If the above doesn't work, this should find the right potion every time
-                For j = 0 To Potions.Count - 1
-                    If CType(Potions(j), MysteryPotion).getRealName() = nextRealPotionName Then
-                        Potions(j).setName(nextKnownName)
-                        potionKnownNames.Add(nextKnownName)
-                        potionRealNames.Add(nextRealPotionName)
-                        Exit For
-                    End If
-                Next
-            End If
+            For j = 0 To Potions.Count - 1
+                If CType(Potions(j), MysteryPotion).getRealName = nextRealPotionName Then
+                    Potions(j).setName(nextKnownName)
+                    j = Potions.Count
+                End If
+            Next
         Next
-        player.renamePotions(potionKnownNames, potionRealNames)
         'For i = 0 To UBound(HPotionNames)
         '    HPotionNames(i) = reader.ReadLine()
         'Next
@@ -976,6 +977,11 @@
         shopkeeper = New NPC(2)
         shopkeeper.pos.X = reader.ReadLine()
         shopkeeper.pos.Y = reader.ReadLine()
+
+        floorLayouts.Clear()
+        For i = 0 To CInt(reader.ReadLine())
+            floorLayouts.Add(reader.ReadLine())
+        Next
         combatmode = False
 
         Equipment.init()
