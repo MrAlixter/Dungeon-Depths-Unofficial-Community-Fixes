@@ -37,6 +37,7 @@
     'save lists of the players polymorph forms
     '      self      enemy
     Public formList, tFormList As New ArrayList()
+    Public titleList = New List(Of String)
     'other misc form1 instance variables
     Dim selectedItem As Item    'the item hilighted in the inventory (NOT SAVED)
     Dim monsterTier1() As Integer = {0, 1, 2}
@@ -55,6 +56,17 @@
     'Form1_Load handles the loading of the form
     Private Sub Form1_Load(sender As Object, e As EventArgs) Handles Me.Load
         loadPotionList()
+        titleList.Add("Warrior")
+        titleList.Add("Mage")
+        titleList.Add("Dragon")
+        titleList.Add("Bimbo")
+        titleList.Add("Paladin")
+        titleList.Add("Succubus")
+        titleList.Add("Slime")
+        titleList.Add("Black Cat")
+        titleList.Add("Chicken")
+        titleList.Add("Goddess")
+        titleList.Add("Magic Girl")
         'sets the player tile image to the default @
         pImage = picPlayer.BackgroundImage
         'scales the font size to that of the window
@@ -1791,7 +1803,9 @@
         ab1.ShowDialog()
         ab1.Dispose()
     End Sub
-
+    Private Sub DebugToolStripMenuItem_Click(sender As Object, e As EventArgs) Handles DebugToolStripMenuItem.Click
+        Debug_Window.ShowDialog()
+    End Sub
     'utility methods/functions
     'ShuffleArray takes an array, and randomizes its order
     Public Sub ShuffleArray(ByRef A() As String)
@@ -1964,6 +1978,7 @@
         Next
         Return save
     End Function
+
     'color shift function
     Shared Function cShift(ByVal oC As Color, ByVal c As Color, ByVal inc As Integer)
         If oC.Equals(c) Then Return c
