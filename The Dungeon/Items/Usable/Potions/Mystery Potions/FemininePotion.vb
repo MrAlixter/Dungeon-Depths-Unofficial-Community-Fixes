@@ -15,7 +15,9 @@
             Game.pushLblEvent("You are now a woman!")
         ElseIf Not p.perks(2) Then
             p.perks(2) = True
-            p.iArrInd(1) = New Tuple(Of Integer, Boolean)(p.iArrInd(1).Item1, True)
+            p.iArrInd(1) = New Tuple(Of Integer, Boolean)(p.sState.iArrInd(1).Item1, True)
+            p.iArrInd(5) = New Tuple(Of Integer, Boolean)(p.sState.iArrInd(5).Item1, True)
+            p.iArrInd(15) = New Tuple(Of Integer, Boolean)(p.sState.iArrInd(15).Item1, True)
             Equipment.clothingCurse1()
             Game.pushLblEvent("All thoughts of modesty vanish from your brain.  You will now dress sluttier!")
         Else

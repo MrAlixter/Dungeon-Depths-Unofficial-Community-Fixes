@@ -197,6 +197,43 @@
         End If
         Game.lstLog.TopIndex = Game.lstLog.Items.Count - 1
     End Sub
+    Sub antiClothingCurse()
+        If p.perks(5) Then Exit Sub
+        Dim affectedFlag As Boolean = True
+        Select Case p.equippedArmor.getName.GetHashCode
+            Case "Steel_Bikini".GetHashCode
+                p.inventory.Item(7).count -= 1
+                p.equippedArmor = New SteelArmor
+                p.inventory.Item(5).addOne()
+            Case "Witch_Cosplay".GetHashCode
+                p.inventory.Item(18).count -= 1
+                p.equippedArmor = New SorcerersRobes
+                p.inventory.Item(17).addOne()
+            Case "Brawler_Cosplay".GetHashCode
+                p.inventory.Item(20).count -= 1
+                p.equippedArmor = New WarriorsCurass
+                p.inventory.Item(19).addOne()
+            Case "Gold_Adornment".GetHashCode
+                p.inventory.Item(39).count -= 1
+                p.equippedArmor = New GoldArmor
+                p.inventory.Item(38).add(1)
+            Case "Living_Lingerie".GetHashCode
+                p.inventory.Item(56).count -= 1
+                p.equippedArmor = New LiveArmor
+                p.inventory.Item(55).add(1)
+            Case "Skimpy_Clothes".GetHashCode
+                p.equippedArmor = New NormalClothes
+            Case Else
+                affectedFlag = False
+        End Select
+        If affectedFlag Then
+            Game.lstLog.Items.Add("Your curse is broken!")
+            Game.lblEvent.ForeColor = Color.Pink
+            Game.pushLblEvent("Your curse is broken! Unfortunatly, nothing can be done about the clothes in your inventory that have been affected.")
+            portraitUDate()
+        End If
+        Game.lstLog.TopIndex = Game.lstLog.Items.Count - 1
+    End Sub
     'clothesChange handles the equipping and unequipping of armors
     Public Sub clothesChange(ByVal clothes As String)
         If aNameList.Count < 5 Then init()
