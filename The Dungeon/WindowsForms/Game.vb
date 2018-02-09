@@ -428,10 +428,10 @@
     End Sub
     Sub placeChest(ByVal code As String)
         Randomize(code.GetHashCode)
-        Dim numChests As Integer = CInt(Int(Rnd() * 5) + 3) * Int(mBoardWidth / 30)
+        Dim numChests As Integer = CInt(Int(Rnd() * 8) + 3) * Int(mBoardWidth / 30)
         Dim r As Integer
         If floor = 3 Then
-            numChests += 4
+            numChests *= 1.5
             r = Int(Rnd() * (numChests))
         End If
         For i = 1 To numChests
