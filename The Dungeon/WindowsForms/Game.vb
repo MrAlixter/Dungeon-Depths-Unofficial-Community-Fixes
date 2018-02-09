@@ -241,11 +241,12 @@
     Sub generateLevel(ByVal code As String)
         Rnd(-1)
         Randomize(code.GetHashCode)
-        Dim numRooms As Integer = CInt(Int(Rnd() * 15) + 1) * Int(mBoardWidth / 30)
+        Dim numRooms As Integer = CInt(Int(Rnd() * 15) + 1) * Int(2.25 * mBoardWidth / 30)
         Dim exits As List(Of Point) = New List(Of Point)
         For i = 0 To numRooms
-            Dim roomY As Integer = CInt(Int(Rnd() * 5) + 3)
-            Dim roomX As Integer = CInt(Int(Rnd() * 5) + 3)
+            Dim roomsizecurve As Integer() = {3, 3, 4, 4, 4, 5, 5, 5, 5, 6, 6, 6, 6, 7, 7, 7, 8, 8, 9, 12}
+            Dim roomY As Integer = roomsizecurve(CInt(Int(Rnd() * roomsizecurve.Length)))
+            Dim roomX As Integer = roomsizecurve(CInt(Int(Rnd() * roomsizecurve.Length)))
             Dim pos As Point = New Point(CInt(Int(Rnd() * mBoardWidth)), CInt(Int(Rnd() * (mBoardHeight - 1))))
             Dim yBound As Integer = pos.Y + roomY
             Dim xBound As Integer = pos.X + roomX
@@ -290,10 +291,16 @@
         While exits.Count > 1
             Dim r1 As Integer = Int(Rnd() * exits.Count)
             Dim r2 As Integer = Int(Rnd() * exits.Count)
-            connectRooms(exits(r1), exits(r2))
-            If r1 <> r2 Then
+            Dim r3 As Integer = Int(Rnd() * 3)
+            If r1 > r2 Or r3 > 0 Then
+                makeDeadEnd(exits(r1), exits)
                 exits.RemoveAt(r1)
-                If r1 > r2 Then exits.RemoveAt(r2) Else exits.RemoveAt(r2 - 1)
+            Else
+                If r1 <> r2 Then
+                    connectRooms(exits(r1), exits(r2))
+                    exits.RemoveAt(r1)
+                    exits.RemoveAt(r2 - 1)
+                End If
             End If
         End While
         Dim playerX As Integer
@@ -353,6 +360,40 @@
             End If
         End If
     End Sub
+    Sub makeDeadEnd(ByVal p1 As Point, ByRef exits As List(Of Point))
+        Dim xOry As Boolean = CBool(Int(Rnd() * 2))
+        Dim dir As Boolean = CBool(Int(Rnd() * 2))
+        For i = 0 To 6
+            If xOry Then
+                Dim y As Integer
+                If dir Then
+                    For y = p1.Y To Int(Rnd() * 8)
+                        If y < mBoardHeight And y > 0 And p1.X < mBoardWidth And p1.X > 0 Then mBoard(y, p1.X).Tag = 1
+                    Next
+                Else
+                    For y = p1.Y To Int(Rnd() * 8) Step -1
+                        If y < mBoardHeight And y > 0 And p1.X < mBoardWidth And p1.X > 0 Then mBoard(y, p1.X).Tag = 1
+                    Next
+                End If
+                p1 = New Point(p1.X, y)
+            Else
+                Dim x As Integer
+                If dir Then
+                    For x = p1.X To Int(Rnd() * 8)
+                        If x < mBoardWidth And x > 0 And p1.Y < mBoardHeight And p1.Y > 0 Then mBoard(p1.Y, x).Tag = 1
+                    Next
+                Else
+                    For x = p1.X To Int(Rnd() * 8) Step -1
+                        If x < mBoardWidth And x > 0 And p1.Y < mBoardHeight And p1.Y > 0 Then mBoard(p1.Y, x).Tag = 1
+                    Next
+                End If
+                p1 = New Point(x, p1.Y)
+            End If
+            Dim cont As Integer = (Int(Rnd() * 20))
+            If cont = 11 Then exits.Add(p1)
+            If cont < 8 Then Exit For
+        Next
+    End Sub
     Sub printBoard()
         Dim writer As IO.StreamWriter
         writer = IO.File.CreateText("bo.ard")
@@ -371,6 +412,7 @@
         writer.Flush()
         writer.Close()
     End Sub
+
 
     'placeStairs, placeChest, placeTraps, and placeNPCs place their respective entities on mBoard
     Sub placeStairs()
@@ -640,6 +682,7 @@
     End Sub
     'handleKeyPress handles the players pressed keys, and is the driver function for each turn
     Function HandleKeyPress(ByVal Keydata As Keys) As Boolean
+        If tmrKeyCD.Enabled Then Return True Else tmrKeyCD.Enabled = True
         If lblEvent.Visible And npcmode = True Then
             oemSemiColon()
             Return True
@@ -2071,4 +2114,8 @@
 
         Return Color.FromArgb(a, r, g, b)
     End Function
+
+    Private Sub tmrKeyCD_Tick(sender As Object, e As EventArgs) Handles tmrKeyCD.Tick
+        tmrKeyCD.Enabled = False
+    End Sub
 End Class

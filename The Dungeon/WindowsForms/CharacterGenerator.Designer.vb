@@ -321,7 +321,7 @@ Partial Class CharacterGenerator
         Me.TextBox1.ForeColor = System.Drawing.Color.White
         Me.TextBox1.Location = New System.Drawing.Point(12, 31)
         Me.TextBox1.Name = "TextBox1"
-        Me.TextBox1.Size = New System.Drawing.Size(196, 20)
+        Me.TextBox1.Size = New System.Drawing.Size(196, 26)
         Me.TextBox1.TabIndex = 24
         Me.TextBox1.Text = "Alex"
         '
@@ -332,7 +332,7 @@ Partial Class CharacterGenerator
         Me.Label1.ForeColor = System.Drawing.Color.White
         Me.Label1.Location = New System.Drawing.Point(8, 9)
         Me.Label1.Name = "Label1"
-        Me.Label1.Size = New System.Drawing.Size(37, 13)
+        Me.Label1.Size = New System.Drawing.Size(54, 19)
         Me.Label1.TabIndex = 23
         Me.Label1.Text = "Name:"
         '
@@ -344,7 +344,7 @@ Partial Class CharacterGenerator
         Me.ComboBox2.FormattingEnabled = True
         Me.ComboBox2.Location = New System.Drawing.Point(12, 84)
         Me.ComboBox2.Name = "ComboBox2"
-        Me.ComboBox2.Size = New System.Drawing.Size(196, 21)
+        Me.ComboBox2.Size = New System.Drawing.Size(196, 27)
         Me.ComboBox2.TabIndex = 26
         Me.ComboBox2.Text = "Warrior"
         '
@@ -355,7 +355,7 @@ Partial Class CharacterGenerator
         Me.Label3.ForeColor = System.Drawing.Color.White
         Me.Label3.Location = New System.Drawing.Point(8, 62)
         Me.Label3.Name = "Label3"
-        Me.Label3.Size = New System.Drawing.Size(43, 13)
+        Me.Label3.Size = New System.Drawing.Size(63, 19)
         Me.Label3.TabIndex = 25
         Me.Label3.Text = "Class:"
         '
@@ -371,7 +371,7 @@ Partial Class CharacterGenerator
         Me.btnBack.Text = "Back"
         Me.btnBack.UseVisualStyleBackColor = False
         '
-        'CharacterGenerator1
+        'CharacterGenerator
         '
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Inherit
         Me.BackColor = System.Drawing.Color.Black
@@ -407,7 +407,7 @@ Partial Class CharacterGenerator
         Me.FormBorderStyle = System.Windows.Forms.FormBorderStyle.Fixed3D
         Me.Icon = CType(resources.GetObject("$this.Icon"), System.Drawing.Icon)
         Me.MaximizeBox = False
-        Me.Name = "CharacterGenerator1"
+        Me.Name = "CharacterGenerator"
         Me.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen
         Me.Text = " "
         CType(Me.picPort, System.ComponentModel.ISupportInitialize).EndInit()
