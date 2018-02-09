@@ -2,8 +2,8 @@
     'Form1 is the main driver form that runs the game
 
     'board instance variables
-    Public mBoardWidth As Integer = 30
-    Public mBoardHeight As Integer = 20
+    Public mBoardWidth As Integer = 50
+    Public mBoardHeight As Integer = 40
     Public mBoard(,) As mTile
     Public mPics(,) As PictureBox       '(NOT SAVED)
     Public floor As Integer = 0
@@ -178,15 +178,15 @@
     End Sub
     'newBoard disposes of the old board and its graphical representation
     Sub newBoard()
-        If floor > 5 Then
-            If player.title.Equals("Bimbo") Then
-                player.pImage = picBimbof.BackgroundImage
-            Else
-                player.pImage = picPlayerf.BackgroundImage
-            End If
-            pImage = player.pImage
-            player.currState.save(player)
-        End If
+        'If floor > 5 Then
+        '    If player.title.Equals("Bimbo") Then
+        '        player.pImage = picBimbof.BackgroundImage
+        '    Else
+        '        player.pImage = picPlayerf.BackgroundImage
+        '    End If
+        '    pImage = player.pImage
+        '    player.currState.save(player)
+        'End If
         chestList.Clear()
         statueList.Clear()
         npcList.Clear()
@@ -242,6 +242,7 @@
         Rnd(-1)
         Randomize(code.GetHashCode)
         Dim numRooms As Integer = CInt(Int(Rnd() * 15) + 1) * Int(mBoardWidth / 30)
+        Dim exits As List(Of Point) = New List(Of Point)
         For i = 0 To numRooms
             Dim roomY As Integer = CInt(Int(Rnd() * 5) + 3)
             Dim roomX As Integer = CInt(Int(Rnd() * 5) + 3)
@@ -258,25 +259,43 @@
                     mBoard(yP, xP).Tag = 1
                 Next
             Next
-        Next
-        Dim alt As Boolean = True
-        For yI = 0 To mBoardHeight - 1
-            If yI Mod 4 = 1 And alt = True Then
-                alt = False
-            ElseIf yI Mod 4 = 1 And alt = False Then
-                alt = True
+
+            Dim numExits As Integer = Int(Rnd() * 3)
+            Dim mainExit As Point
+            Select Case Int(Rnd() * 2)
+                Case 0
+                    mainExit = (New Point(pos.X + 2, Int(Rnd() * (yBound - pos.Y)) + pos.Y))
+                    If mainExit.X - 1 < mBoardWidth And mainExit.X - 1 > 0 Then mBoard(mainExit.Y, mainExit.X - 1).Tag = 1
+                Case Else
+                    mainExit = (New Point(Int(Rnd() * (xBound - pos.X)) + pos.X, pos.Y + 2))
+                    If mainExit.Y - 1 < mBoardHeight And mainExit.Y - 1 > 0 Then mBoard(mainExit.Y - 1, mainExit.X).Tag = 1
+            End Select
+            If i > 0 Then
+                connectRooms(mainExit, exits(exits.Count - 1))
+            Else
+                exits.Add(mainExit)
             End If
-            For xI = 0 To mBoardWidth - 1
-                If yI Mod 4 = 1 And xI <> 0 And xI <> mBoardWidth - 1 Then
-                    mBoard(yI, xI).Tag = 1
-                End If
-                If alt = True And yI <> 0 And yI <> mBoardHeight - 1 And xI = 1 Then
-                    mBoard(yI, xI).Tag = 1
-                ElseIf alt = False And yI <> 0 And yI <> mBoardHeight - 1 And xI = mBoardWidth - 2 Then
-                    mBoard(yI, xI).Tag = 1
-                End If
+            For n = 1 To numExits
+                Select Case Int(Rnd() * 2)
+                    Case 0
+                        exits.Add(New Point(pos.X + 2, Int(Rnd() * (yBound - pos.Y)) + pos.Y))
+                        If exits.Last.X - 1 < mBoardWidth And exits.Last.X - 1 > 0 Then mBoard(exits.Last.Y, exits.Last.X - 1).Tag = 1
+                    Case 1
+                        exits.Add(New Point(Int(Rnd() * (xBound - pos.X)) + pos.X, pos.Y + 2))
+                        If exits.Last.Y - 1 < mBoardHeight And exits.Last.Y - 1 > 0 Then mBoard(exits.Last.Y - 1, exits.Last.X).Tag = 1
+                End Select
             Next
         Next
+
+        While exits.Count > 1
+            Dim r1 As Integer = Int(Rnd() * exits.Count)
+            Dim r2 As Integer = Int(Rnd() * exits.Count)
+            connectRooms(exits(r1), exits(r2))
+            If r1 <> r2 Then
+                exits.RemoveAt(r1)
+                If r1 > r2 Then exits.RemoveAt(r2) Else exits.RemoveAt(r2 - 1)
+            End If
+        End While
         Dim playerX As Integer
         Dim playerY As Integer
         Do While (mBoard(playerY, playerX).Tag <> 1)
@@ -291,6 +310,68 @@
         If floor > 2 Then placeTraps()
         placeNPCs()
     End Sub
+    Sub connectRooms(ByVal p1 As Point, ByVal p2 As Point)
+        Dim cursor As Point = p1
+        Dim xOry As Boolean = CBool(Int(Rnd() * 2))
+        If xOry Then
+            If p1.Y < p2.Y Then
+                For y = p1.Y To p2.Y
+                    If y < mBoardHeight And y > 0 And p1.X < mBoardWidth And p1.X > 0 Then mBoard(y, p1.X).Tag = 1
+                Next
+            Else
+                For y = p1.Y To p2.Y Step -1
+                    If y < mBoardHeight And y > 0 And p1.X < mBoardWidth And p1.X > 0 Then mBoard(y, p1.X).Tag = 1
+                Next
+            End If
+            If p1.X < p2.X Then
+                For x = p1.X To p2.X
+                    If x < mBoardWidth And x > 0 And p2.Y < mBoardHeight And p2.Y > 0 Then mBoard(p2.Y, x).Tag = 1
+                Next
+            Else
+                For x = p1.X To p2.X Step -1
+                    If x < mBoardWidth And x > 0 And p2.Y < mBoardHeight And p2.Y > 0 Then mBoard(p2.Y, x).Tag = 1
+                Next
+            End If
+        Else
+            If p1.X < p2.X Then
+                For x = p1.X To p2.X
+                    If x < mBoardWidth And x > 0 And p2.Y < mBoardHeight And p2.Y > 0 Then mBoard(p2.Y, x).Tag = 1
+                Next
+            Else
+                For x = p1.X To p2.X Step -1
+                    If x < mBoardWidth And x > 0 And p2.Y < mBoardHeight And p2.Y > 0 Then mBoard(p2.Y, x).Tag = 1
+                Next
+            End If
+            If p1.Y < p2.Y Then
+                For y = p1.Y To p2.Y
+                    If y < mBoardHeight And y > 0 And p1.X < mBoardWidth And p1.X > 0 Then mBoard(y, p1.X).Tag = 1
+                Next
+            Else
+                For y = p1.Y To p2.Y Step -1
+                    If y < mBoardHeight And y > 0 And p1.X < mBoardWidth And p1.X > 0 Then mBoard(y, p1.X).Tag = 1
+                Next
+            End If
+        End If
+    End Sub
+    Sub printBoard()
+        Dim writer As IO.StreamWriter
+        writer = IO.File.CreateText("bo.ard")
+        For y = 0 To mBoardHeight - 1
+            Dim line As String = ""
+            For x = 0 To mBoardWidth - 1
+                Select Case mBoard(y, x).Tag
+                    Case 0
+                        line += " "
+                    Case Else
+                        line += "#"
+                End Select
+            Next
+            writer.WriteLine(line)
+        Next
+        writer.Flush()
+        writer.Close()
+    End Sub
+
     'placeStairs, placeChest, placeTraps, and placeNPCs place their respective entities on mBoard
     Sub placeStairs()
         Dim stairsX As Integer
@@ -572,66 +653,66 @@
         If combatmode = True And Not (Keydata.Equals(Keys.Enter) Or Keydata.Equals(Keys.K) Or Keydata.Equals(Keys.I) Or Keydata.Equals(Keys.L)) Then Return True
         If npcmode = True Then Return True
         If player.mana < player.getmaxMana And turn Mod 3 = 0 Then player.mana += 1
-            If npcList.Count > 0 Then
-                For i = 0 To npcList.Count - 1
-                    Dim int1 As Integer = 100 - npcList.Item(i).speed
-                    If int1 < 1 Then int1 = 1
-                    updatelist.add(npcList.Item(i), (int1))
-                Next
-            End If
-            Dim spos As Point = player.pos
-            Select Case Keydata
-                Case Keys.W
-                    keyspresed += "w"
+        If npcList.Count > 0 Then
+            For i = 0 To npcList.Count - 1
+                Dim int1 As Integer = 100 - npcList.Item(i).speed
+                If int1 < 1 Then int1 = 1
+                updatelist.add(npcList.Item(i), (int1))
+            Next
+        End If
+        Dim spos As Point = player.pos
+        Select Case Keydata
+            Case Keys.W
+                keyspresed += "w"
                 player.moveUp()
                 randomEvents()
-                Case Keys.S
-                    keyspresed += "s"
+            Case Keys.S
+                keyspresed += "s"
                 player.moveDown()
                 randomEvents()
-                Case Keys.A
-                    keyspresed += "a"
+            Case Keys.A
+                keyspresed += "a"
                 player.moveLeft()
                 randomEvents()
-                Case Keys.D
-                    keyspresed += "d"
+            Case Keys.D
+                keyspresed += "d"
                 player.moveRight()
                 randomEvents()
-                Case Keys.M
-                    keyspresed += "m"
-                Case Keys.R
-                    keyspresed += "r"
-                Case Keys.K
-                    keyspresed += "k"
-                Case Keys.G
-                    keyspresed += "g"
-                Case Keys.I
-                    keyspresed += "i"
-                Case Keys.L
-                    keyspresed += "l"
-                Case Keys.N
-                    keyspresed += "n"
-                Case Keys.U
-                    keyspresed += "u"
-                Case Keys.F
-                    keyspresed += "f"
-                Case Keys.D
-                    keyspresed += "d"
-                Case Keys.E
-                    keyspresed += "e"
-                    Try
-                        oemSemiColon()
-                    Catch ex As Exception
-                        Return True
-                    End Try
-                Case Keys.B
-                    keyspresed += "b"
-                Case Keys.O
-                    keyspresed += "o"
-                Case Keys.C
-                    keyspresed += "c"
-                Case Keys.T
-                    keyspresed += "t"
+            Case Keys.M
+                keyspresed += "m"
+            Case Keys.R
+                keyspresed += "r"
+            Case Keys.K
+                keyspresed += "k"
+            Case Keys.G
+                keyspresed += "g"
+            Case Keys.I
+                keyspresed += "i"
+            Case Keys.L
+                keyspresed += "l"
+            Case Keys.N
+                keyspresed += "n"
+            Case Keys.U
+                keyspresed += "u"
+            Case Keys.F
+                keyspresed += "f"
+            Case Keys.D
+                keyspresed += "d"
+            Case Keys.E
+                keyspresed += "e"
+                Try
+                    oemSemiColon()
+                Catch ex As Exception
+                    Return True
+                End Try
+            Case Keys.B
+                keyspresed += "b"
+            Case Keys.O
+                keyspresed += "o"
+            Case Keys.C
+                keyspresed += "c"
+            Case Keys.T
+                keyspresed += "t"
             Case Keys.Enter
                 If cheatList.Contains(keyspresed) Then
                     If keyspresed = "mark" Then
@@ -714,32 +795,32 @@
                     'MsgBox(keyspresed)
                 End If
 
-                Case Keys.Up
-                    player.moveUp()
-                    randomEvents()
-                Case Keys.Down
-                    player.moveDown()
-                    randomEvents()
-                Case Keys.Left
-                	player.moveLeft()
-                	randomEvents()
-                Case Keys.Right
-                	player.moveRight()
-                	randomEvents()
-                Case Keys.OemSemicolon
-                    Try
-                        oemSemiColon()
-                    Catch ex As Exception
-                        Return True
-                    End Try
-            End Select
-            Dim int As Integer = 100 - player.getSpeed
-            If int < 1 Then int = 1
-            updatelist.add(player, (int))
-            turn += 1
-            drawBoard()
-            lstLog.TopIndex = lstLog.Items.Count - 1
-            Return True
+            Case Keys.Up
+                player.moveUp()
+                randomEvents()
+            Case Keys.Down
+                player.moveDown()
+                randomEvents()
+            Case Keys.Left
+                player.moveLeft()
+                randomEvents()
+            Case Keys.Right
+                player.moveRight()
+                randomEvents()
+            Case Keys.OemSemicolon
+                Try
+                    oemSemiColon()
+                Catch ex As Exception
+                    Return True
+                End Try
+        End Select
+        Dim int As Integer = 100 - player.getSpeed
+        If int < 1 Then int = 1
+        updatelist.add(player, (int))
+        turn += 1
+        drawBoard()
+        lstLog.TopIndex = lstLog.Items.Count - 1
+        Return True
     End Function
     'processCmdKey is a leftover from an earlier version, and may not be needed anymore
     Protected Overrides Function ProcessCmdKey(ByRef msg As System.Windows.Forms.Message, ByVal keyData As System.Windows.Forms.Keys) As Boolean
