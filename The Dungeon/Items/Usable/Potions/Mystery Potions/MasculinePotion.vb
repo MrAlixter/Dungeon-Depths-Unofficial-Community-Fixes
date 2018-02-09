@@ -10,9 +10,22 @@
     Public Overrides Sub effect()
         Dim p As Player = Game.player
         p.inventorynames(59) = "Masculine_Potion"
-        If p.sexBool Then
+        If p.sexBool And Not p.perks(2) Then
             p.FtM()
             Game.pushLblEvent("You are now a man!")
+            Equipment.antiClothingCurse()
+            Equipment.portraitUDate()
+        ElseIf p.perks(2) Then
+            p.iArrInd(1) = New Tuple(Of Integer, Boolean)(p.sState.iArrInd(1).Item1, False)
+            p.iArrInd(2) = New Tuple(Of Integer, Boolean)(0, True)
+            p.iArrInd(4) = New Tuple(Of Integer, Boolean)(p.sState.iArrInd(4).Item1, False)
+            p.iArrInd(5) = New Tuple(Of Integer, Boolean)(p.sState.iArrInd(5).Item1, False)
+            p.iArrInd(10) = New Tuple(Of Integer, Boolean)(p.sState.iArrInd(10).Item1, False)
+            p.iArrInd(15) = New Tuple(Of Integer, Boolean)(p.sState.iArrInd(15).Item1, False)
+            Game.pushLblEvent("You are now a man!")
+            p.perks(2) = False
+            Equipment.antiClothingCurse()
+            Equipment.portraitUDate()
         Else
             Game.pushLblEvent("Nothing happened!")
         End If

@@ -94,6 +94,7 @@ Partial Class Game
         Me.InteractstairschestsToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
         Me.StatInfoToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
         Me.InfoToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
+        Me.ReportToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
         Me.SettingsToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
         Me.picPortrait = New System.Windows.Forms.PictureBox()
         Me.btnEXM = New System.Windows.Forms.Button()
@@ -918,7 +919,7 @@ Partial Class Game
         '
         'HelpToolStripMenuItem
         '
-        Me.HelpToolStripMenuItem.DropDownItems.AddRange(New System.Windows.Forms.ToolStripItem() {Me.HelpToolStripMenuItem1, Me.StatInfoToolStripMenuItem, Me.InfoToolStripMenuItem})
+        Me.HelpToolStripMenuItem.DropDownItems.AddRange(New System.Windows.Forms.ToolStripItem() {Me.HelpToolStripMenuItem1, Me.StatInfoToolStripMenuItem, Me.InfoToolStripMenuItem, Me.ReportToolStripMenuItem})
         Me.HelpToolStripMenuItem.Font = New System.Drawing.Font("Consolas", 9.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.HelpToolStripMenuItem.ForeColor = System.Drawing.Color.White
         Me.HelpToolStripMenuItem.Name = "HelpToolStripMenuItem"
@@ -967,6 +968,14 @@ Partial Class Game
         Me.InfoToolStripMenuItem.Name = "InfoToolStripMenuItem"
         Me.InfoToolStripMenuItem.Size = New System.Drawing.Size(182, 30)
         Me.InfoToolStripMenuItem.Text = "Info"
+        '
+        'ReportToolStripMenuItem
+        '
+        Me.ReportToolStripMenuItem.BackColor = System.Drawing.Color.Black
+        Me.ReportToolStripMenuItem.ForeColor = System.Drawing.Color.White
+        Me.ReportToolStripMenuItem.Name = "ReportToolStripMenuItem"
+        Me.ReportToolStripMenuItem.Size = New System.Drawing.Size(182, 30)
+        Me.ReportToolStripMenuItem.Text = "Report"
         '
         'SettingsToolStripMenuItem
         '
@@ -1724,6 +1733,7 @@ Partial Class Game
         Me.Controls.Add(Me.btnFilter)
         Me.Controls.Add(Me.lstInventory)
         Me.Controls.Add(Me.picPortrait)
+        Me.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle
         Me.Icon = CType(resources.GetObject("$this.Icon"), System.Drawing.Icon)
         Me.MaximizeBox = False
         Me.Name = "Game"
@@ -1909,5 +1919,6 @@ Partial Class Game
     Friend WithEvents picStatuef As System.Windows.Forms.PictureBox
     Friend WithEvents picTrapf As System.Windows.Forms.PictureBox
     Friend WithEvents tmrKeyCD As System.Windows.Forms.Timer
+    Friend WithEvents ReportToolStripMenuItem As System.Windows.Forms.ToolStripMenuItem
 
 End Class
