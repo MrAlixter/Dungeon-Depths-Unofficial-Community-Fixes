@@ -1613,6 +1613,14 @@
             pushLblEvent("You can't use items now!")
             Exit Sub
         End If
+        selectedItem.use()
+        player.invNeedsUDate = True
+        player.UIupdate()
+        lstInventory.SelectedItem = Nothing
+        selectedItem = Nothing
+        btnUse.Enabled = False
+        btnDrop.Enabled = False
+        btnLook.Enabled = False
         If combatmode Then
             If npcList.Count > 0 Then
                 For i = 0 To npcList.Count - 1
@@ -1628,14 +1636,7 @@
             'updates the combat banner
             updatePnlCombat(player, player.currTarget)
         End If
-        selectedItem.use()
-        player.invNeedsUDate = True
-        player.UIupdate()
-        lstInventory.SelectedItem = Nothing
-        selectedItem = Nothing
-        btnUse.Enabled = False
-        btnDrop.Enabled = False
-        btnLook.Enabled = False
+        lblPHealth.Text = player.health & "/" & player.getmaxHealth
     End Sub
     Private Sub btnDrop_Click(sender As Object, e As EventArgs) Handles btnDrop.Click
         selectedItem.discard()
@@ -1684,11 +1685,11 @@
     End Sub
     Private Sub btnSpec_Click(sender As Object, e As EventArgs) Handles btnSpec.Click
         turn += 1
+        lblCombatEvents.Text = ""
         player.currTarget = Nothing
         If lblEvent.Visible = True Then
             lblEvent.Visible = False
             lblEvent.ForeColor = Color.White
-            drawBoard()
         End If
         If cmboxSpec.Text = "-- Select --" Then Exit Sub
         Dim m As Monster = Nothing
@@ -1711,8 +1712,12 @@
         Dim int As Integer = 100 - player.getSpeed
         If int < 1 Then int = 1
         updatelist.add(player, int)
-        drawBoard()
-
+        Do While updatelist.isEmpty() = False
+            Dim u As Updatable = updatelist.remove()
+            u.update()
+        Loop
+        'updates the combat banner
+        updatePnlCombat(player, player.currTarget)
     End Sub
     Private Sub btnRUN_Click(sender As Object, e As EventArgs) Handles btnRUN.Click
         If lblEvent.Visible = True Then
@@ -1725,11 +1730,11 @@
     End Sub
     Private Sub btnMG_Click(sender As Object, e As EventArgs) Handles btnMG.Click
         turn += 1
+        lblCombatEvents.Text = ""
         player.currTarget = Nothing
         If lblEvent.Visible = True Then
             lblEvent.Visible = False
             lblEvent.ForeColor = Color.White
-            drawBoard()
         End If
         If cboxMG.Text = "-- Select --" Or player.mana <= 0 Then Exit Sub
         Dim m As Monster = Nothing
@@ -1750,7 +1755,12 @@
         Dim int As Integer = 100 - player.getSpeed
         If int < 1 Then int = 1
         updatelist.add(player, int)
-        drawBoard()
+        Do While updatelist.isEmpty() = False
+            Dim u As Updatable = updatelist.remove()
+            u.update()
+        Loop
+        'updates the combat banner
+        updatePnlCombat(player, player.currTarget)
     End Sub
     Private Sub btnEQP_Click(sender As Object, e As EventArgs) Handles btnEQP.Click
         Dim f3 As Equipment = New Equipment()
@@ -2178,7 +2188,7 @@
         lblCombatEvents.Text += (out & vbCrLf)
     End Sub
     Sub updatePnlCombat(ByVal p As Player, ByVal t As Monster)
-        If lblTurn.Text.Equals("Turn: " & turn) Then Exit Sub
+        If lblTurn.Text.Equals("Turn: " & turn) Or t Is Nothing Then Exit Sub
         lblPHealth.Text = p.health & "/" & p.getmaxHealth
         lblEHealth.Text = t.health & "/" & t.maxHealth
         lblTurn.Text = "Turn: " & turn
@@ -2227,7 +2237,7 @@
         lblPHealtDiff.Location = New Point(x, lblPHealtDiff.Location.Y)
         If ratioPH <= 0.2 Then picPHealth.BackColor = Color.Crimson Else picPHealth.BackColor = Color.YellowGreen
 
-
+        player.UIupdate()
     End Sub
     Sub pnlCombatClose()
         pnlCombat.Visible = False

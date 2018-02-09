@@ -72,9 +72,9 @@
                 Game.player.perks(6) = True
                 'attack = 0
             ElseIf Game.player.perks(6) And health < 45 Then
-                Game.lstLog.Items.Add((getName() & " heals herself!  +25 health!"))
-                Game.pushLblCombatEvent((getName() & " heals herself for 25 health!"))
-                takeDMG(-25)
+                Game.lstLog.Items.Add((getName() & " heals herself!  +35 health!"))
+                Game.pushLblCombatEvent((getName() & " heals herself for 35 health!"))
+                takeDMG(-35)
                 ' attack = 0
             ElseIf Game.player.health < 20 Then
                 Game.lstLog.Items.Add((getName() & " waits expectantly . . ."))

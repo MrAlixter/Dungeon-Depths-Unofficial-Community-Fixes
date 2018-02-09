@@ -214,7 +214,7 @@
                     "around it to gold as well. In a matter of seconds, all that is left of " & Me.name & " the " & vbCrLf & _
                     Me.title & " is a solid gold statue. The shopkeeper sighs, muttering to no one in particular, " & vbCrLf & _
                     vbCrLf & vbCrLf & "'Now how am I going to get you back to the refinery?'"
-                Game.pushLblEvent(out)
+                'Game.pushLblEvent(out)
                 title = "Trophy"
                 MsgBox(out)
             ElseIf currTarget.name.Equals("Mindless Bimbo") Then
