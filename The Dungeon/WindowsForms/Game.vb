@@ -67,6 +67,13 @@
         titleList.Add("Chicken")
         titleList.Add("Goddess")
         titleList.Add("Magic Girl")
+        titleList.Add("Targaxian")
+        titleList.Add("Princess")
+        titleList.Add("Blow-Up Doll")
+        titleList.Add("Cow")
+        titleList.Add("Kitty")
+        titleList.Add("Soul-Lord")
+        titleList.Add("Maid")
         'sets the player tile image to the default @
         pImage = picPlayer.BackgroundImage
         'scales the font size to that of the window
@@ -1805,6 +1812,8 @@
     End Sub
     Private Sub DebugToolStripMenuItem_Click(sender As Object, e As EventArgs) Handles DebugToolStripMenuItem.Click
         Debug_Window.ShowDialog()
+        player.invNeedsUDate = True
+        player.UIupdate()
     End Sub
     'utility methods/functions
     'ShuffleArray takes an array, and randomizes its order

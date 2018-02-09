@@ -23,7 +23,6 @@ Partial Class Debug_Window
     <System.Diagnostics.DebuggerStepThrough()> _
     Private Sub InitializeComponent()
         Dim resources As System.ComponentModel.ComponentResourceManager = New System.ComponentModel.ComponentResourceManager(GetType(Debug_Window))
-        Me.Label1 = New System.Windows.Forms.Label()
         Me.lblTurn = New System.Windows.Forms.Label()
         Me.lblFloor = New System.Windows.Forms.Label()
         Me.groupGeneral = New System.Windows.Forms.GroupBox()
@@ -37,18 +36,18 @@ Partial Class Debug_Window
         Me.lblSex = New System.Windows.Forms.Label()
         Me.lblName = New System.Windows.Forms.Label()
         Me.groupItems = New System.Windows.Forms.GroupBox()
+        Me.lblInventory = New System.Windows.Forms.Label()
+        Me.lblItems = New System.Windows.Forms.Label()
+        Me.boxInventory = New System.Windows.Forms.ListBox()
+        Me.boxItems = New System.Windows.Forms.ListBox()
+        Me.btnAdd = New System.Windows.Forms.Button()
+        Me.btnRemove = New System.Windows.Forms.Button()
+        Me.number = New System.Windows.Forms.NumericUpDown()
         Me.groupGeneral.SuspendLayout()
         Me.groupPlayer.SuspendLayout()
+        Me.groupItems.SuspendLayout()
+        CType(Me.number, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.SuspendLayout()
-        '
-        'Label1
-        '
-        Me.Label1.AutoSize = True
-        Me.Label1.Location = New System.Drawing.Point(0, 0)
-        Me.Label1.Name = "Label1"
-        Me.Label1.Size = New System.Drawing.Size(39, 13)
-        Me.Label1.TabIndex = 0
-        Me.Label1.Text = "Label1"
         '
         'lblTurn
         '
@@ -198,26 +197,114 @@ Partial Class Debug_Window
         '
         'groupItems
         '
+        Me.groupItems.Controls.Add(Me.number)
+        Me.groupItems.Controls.Add(Me.btnRemove)
+        Me.groupItems.Controls.Add(Me.btnAdd)
+        Me.groupItems.Controls.Add(Me.boxItems)
+        Me.groupItems.Controls.Add(Me.boxInventory)
+        Me.groupItems.Controls.Add(Me.lblItems)
+        Me.groupItems.Controls.Add(Me.lblInventory)
         Me.groupItems.Dock = System.Windows.Forms.DockStyle.Left
         Me.groupItems.Font = New System.Drawing.Font("Consolas", 12.0!)
         Me.groupItems.ForeColor = System.Drawing.Color.White
         Me.groupItems.Location = New System.Drawing.Point(340, 0)
         Me.groupItems.Name = "groupItems"
-        Me.groupItems.Size = New System.Drawing.Size(194, 511)
+        Me.groupItems.Size = New System.Drawing.Size(294, 511)
         Me.groupItems.TabIndex = 5
         Me.groupItems.TabStop = False
         Me.groupItems.Text = "INVENTORY"
+        '
+        'lblInventory
+        '
+        Me.lblInventory.AutoSize = True
+        Me.lblInventory.Font = New System.Drawing.Font("Consolas", 12.0!)
+        Me.lblInventory.ForeColor = System.Drawing.Color.White
+        Me.lblInventory.Location = New System.Drawing.Point(6, 216)
+        Me.lblInventory.Name = "lblInventory"
+        Me.lblInventory.Size = New System.Drawing.Size(90, 19)
+        Me.lblInventory.TabIndex = 6
+        Me.lblInventory.Text = "INVENTORY"
+        '
+        'lblItems
+        '
+        Me.lblItems.AutoSize = True
+        Me.lblItems.Font = New System.Drawing.Font("Consolas", 12.0!)
+        Me.lblItems.ForeColor = System.Drawing.Color.White
+        Me.lblItems.Location = New System.Drawing.Point(234, 283)
+        Me.lblItems.Name = "lblItems"
+        Me.lblItems.Size = New System.Drawing.Size(54, 19)
+        Me.lblItems.TabIndex = 7
+        Me.lblItems.Text = "ITEMS"
+        '
+        'boxInventory
+        '
+        Me.boxInventory.BackColor = System.Drawing.Color.Black
+        Me.boxInventory.ForeColor = System.Drawing.Color.White
+        Me.boxInventory.FormattingEnabled = True
+        Me.boxInventory.ItemHeight = 19
+        Me.boxInventory.Location = New System.Drawing.Point(6, 19)
+        Me.boxInventory.Name = "boxInventory"
+        Me.boxInventory.SelectionMode = System.Windows.Forms.SelectionMode.MultiExtended
+        Me.boxInventory.Size = New System.Drawing.Size(280, 194)
+        Me.boxInventory.Sorted = True
+        Me.boxInventory.TabIndex = 8
+        '
+        'boxItems
+        '
+        Me.boxItems.BackColor = System.Drawing.Color.Black
+        Me.boxItems.ForeColor = System.Drawing.Color.White
+        Me.boxItems.FormattingEnabled = True
+        Me.boxItems.ItemHeight = 19
+        Me.boxItems.Location = New System.Drawing.Point(6, 305)
+        Me.boxItems.Name = "boxItems"
+        Me.boxItems.SelectionMode = System.Windows.Forms.SelectionMode.MultiExtended
+        Me.boxItems.Size = New System.Drawing.Size(280, 194)
+        Me.boxItems.TabIndex = 9
+        '
+        'btnAdd
+        '
+        Me.btnAdd.BackColor = System.Drawing.Color.Black
+        Me.btnAdd.Font = New System.Drawing.Font("Consolas", 8.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.btnAdd.ForeColor = System.Drawing.Color.White
+        Me.btnAdd.Location = New System.Drawing.Point(10, 266)
+        Me.btnAdd.Name = "btnAdd"
+        Me.btnAdd.Size = New System.Drawing.Size(89, 36)
+        Me.btnAdd.TabIndex = 181
+        Me.btnAdd.Text = "Add"
+        Me.btnAdd.UseVisualStyleBackColor = False
+        '
+        'btnRemove
+        '
+        Me.btnRemove.BackColor = System.Drawing.Color.Black
+        Me.btnRemove.Font = New System.Drawing.Font("Consolas", 8.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.btnRemove.ForeColor = System.Drawing.Color.White
+        Me.btnRemove.Location = New System.Drawing.Point(197, 219)
+        Me.btnRemove.Name = "btnRemove"
+        Me.btnRemove.Size = New System.Drawing.Size(89, 36)
+        Me.btnRemove.TabIndex = 182
+        Me.btnRemove.Text = "Remove"
+        Me.btnRemove.UseVisualStyleBackColor = False
+        '
+        'number
+        '
+        Me.number.BackColor = System.Drawing.Color.Black
+        Me.number.ForeColor = System.Drawing.Color.White
+        Me.number.Location = New System.Drawing.Point(103, 242)
+        Me.number.Maximum = New Decimal(New Integer() {999999, 0, 0, 0})
+        Me.number.Name = "number"
+        Me.number.Size = New System.Drawing.Size(89, 26)
+        Me.number.TabIndex = 183
+        Me.number.TextAlign = System.Windows.Forms.HorizontalAlignment.Center
         '
         'Debug_Window
         '
         Me.AutoScaleDimensions = New System.Drawing.SizeF(6.0!, 13.0!)
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font
         Me.BackColor = System.Drawing.Color.Black
-        Me.ClientSize = New System.Drawing.Size(534, 511)
+        Me.ClientSize = New System.Drawing.Size(634, 511)
         Me.Controls.Add(Me.groupItems)
         Me.Controls.Add(Me.groupPlayer)
         Me.Controls.Add(Me.groupGeneral)
-        Me.Controls.Add(Me.Label1)
         Me.Icon = CType(resources.GetObject("$this.Icon"), System.Drawing.Icon)
         Me.Name = "Debug_Window"
         Me.SizeGripStyle = System.Windows.Forms.SizeGripStyle.Hide
@@ -227,12 +314,12 @@ Partial Class Debug_Window
         Me.groupGeneral.PerformLayout()
         Me.groupPlayer.ResumeLayout(False)
         Me.groupPlayer.PerformLayout()
+        Me.groupItems.ResumeLayout(False)
+        Me.groupItems.PerformLayout()
+        CType(Me.number, System.ComponentModel.ISupportInitialize).EndInit()
         Me.ResumeLayout(False)
-        Me.PerformLayout()
 
     End Sub
-
-    Friend WithEvents Label1 As Label
     Friend WithEvents lblTurn As Label
     Friend WithEvents lblFloor As Label
     Friend WithEvents groupGeneral As GroupBox
@@ -246,4 +333,11 @@ Partial Class Debug_Window
     Friend WithEvents lblTitle As Label
     Friend WithEvents boxTurn As TextBox
     Friend WithEvents boxFloor As TextBox
+    Friend WithEvents lblItems As Label
+    Friend WithEvents lblInventory As Label
+    Friend WithEvents boxItems As ListBox
+    Friend WithEvents boxInventory As ListBox
+    Friend WithEvents btnRemove As Button
+    Friend WithEvents btnAdd As Button
+    Friend WithEvents number As NumericUpDown
 End Class
