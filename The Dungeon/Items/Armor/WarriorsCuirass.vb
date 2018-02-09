@@ -1,8 +1,8 @@
-﻿Public Class WarriorsCurass
+﻿Public Class WarriorsCuirass
     Inherits Armor
 
     Sub New()
-        MyBase.setName("Warrior's_Curass")
+        MyBase.setName("Warrior's_Cuirass")
         MyBase.setDesc("A protective garment made more for elite fighters rather than fashion-minded common folk." & vbCrLf & _
                        "+12 DEF" & vbCrLf & _
                        "+5 ATK")
