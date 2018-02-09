@@ -35,7 +35,7 @@
     Public inventorynames As New ArrayList()
     Dim armor() As Armor
     Dim weapons() As Weapon
-    Dim useable(), food(), potions(), misc() As Item
+    Public useable(), food(), potions(), misc() As Item
     Public invNeedsUDate As Boolean = False
     'player & form states
     Public currState, pState, sState As State

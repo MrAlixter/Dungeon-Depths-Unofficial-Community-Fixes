@@ -1103,9 +1103,19 @@
             Dim nextKnownName = reader.ReadLine()
             Dim nextRealPotionName = reader.ReadLine()
             For j = 0 To Potions.Count - 1
-                If CType(Potions(j), MysteryPotion).getRealName = nextRealPotionName Then
-                    Potions(j).setName(nextKnownName)
-                    j = Potions.Count
+                If Potions(j).GetType().IsSubclassOf(GetType(MysteryPotion)) Then
+                    If CType(Potions(j), MysteryPotion).getRealName = nextRealPotionName Then
+                        Potions(j).setName(nextKnownName)
+                        Exit For
+                    End If
+                End If
+            Next
+            For j = 0 To player.potions.Count - 1
+                If player.potions(j).GetType().IsSubclassOf(GetType(MysteryPotion)) Then
+                    If CType(player.potions(j), MysteryPotion).getRealName = nextRealPotionName Then
+                        player.potions(j).setName(nextKnownName)
+                        Exit For
+                    End If
                 End If
             Next
         Next
