@@ -2070,10 +2070,10 @@
         Dim img As Bitmap = Nothing
         Try
             Dim iarr(16) As Image
-
             Dim pState As String() = reader.ReadLine().Split("#")(0).Split("*")
             Dim haircolor = Color.FromArgb(255, CInt(pState(22)), CInt(pState(23)), CInt(pState(24)))
             Dim skincolor = Color.FromArgb(255, CInt(pState(25)), CInt(pState(26)), CInt(pState(27)))
+            Dim ids(16) As Tuple(Of Integer, Boolean)
             For i = 0 To 16
                 Dim arr() As String = pState(32 + CInt(pState(31)) + 1 + i).Split("%")
                 Dim id = New Tuple(Of Integer, Boolean)(CInt(arr(0)), CBool(arr(1)))
@@ -2082,13 +2082,10 @@
                 Else
                     iarr(i) = CharacterGenerator.mAttributes(i)(id.Item1)
                 End If
+                ids(i) = id
                 If i = 6 And (id.Item1 = 0 Or id.Item1 = 3) Then iarr(6) = CharacterGenerator.recolor2(iarr(6), skincolor)
             Next
-            iarr(1) = CharacterGenerator.recolor(iarr(1), haircolor)
-            iarr(5) = CharacterGenerator.recolor(iarr(5), haircolor)
-            If Not iarr(15).Equals(CharacterGenerator.picPort.Image) Then iarr(15) = CharacterGenerator.recolor(iarr(15), haircolor)
-            iarr(10) = CharacterGenerator.recolor(iarr(10), haircolor)
-
+            changeHairColor(haircolor, ids, iarr)
             iarr(2) = CharacterGenerator.recolor2(iarr(2), skincolor)
             iarr(4) = CharacterGenerator.recolor2(iarr(4), skincolor)
             iarr(7) = CharacterGenerator.recolor2(iarr(7), skincolor)
@@ -2242,5 +2239,53 @@
     Sub pnlCombatClose()
         pnlCombat.Visible = False
         lblCombatEvents.Text = ""
+    End Sub
+    Shared Sub changeHairColor(ByVal c As Color, ByVal iarrind() As Tuple(Of Integer, Boolean), ByRef iarr As Image())
+        Dim t(16) As Image
+        If iarrind(1).Item2 Then
+            If iarrind(1).Item1 < 5 Then
+                t(1) = CharacterGenerator.getImg("img/fRearHair2")(iarrind(1).Item1)
+            Else
+                t(1) = CharacterGenerator.getImg("img/fTF/tfRearHair2")(iarrind(1).Item1 - 5)
+            End If
+            If iarrind(5).Item1 < 5 Then
+                t(5) = CharacterGenerator.getImg("img/fRearHair1")(iarrind(5).Item1)
+            Else
+                t(5) = CharacterGenerator.getImg("img/fTF/tfRearHair1")(iarrind(5).Item1 - 5)
+            End If
+            If iarrind(15).Item1 < 5 Then
+                t(15) = CharacterGenerator.getImg("img/fFrontHair")(iarrind(15).Item1)
+            Else
+                t(15) = CharacterGenerator.getImg("img/fTF/tfFrontHair")(iarrind(15).Item1 - 6)
+            End If
+            CharacterGenerator.fFrontHair(0) = CharacterGenerator.picPort.Image
+        Else
+            If iarrind(1).Item1 < 5 Then
+                t(1) = CharacterGenerator.getImg("img/mRearHair2")(iarrind(1).Item1)
+            Else
+                t(1) = CharacterGenerator.getImg("img/mTF/tfRearHair2")(iarrind(1).Item1 - 5)
+            End If
+            If iarrind(5).Item1 < 5 Then
+                t(5) = CharacterGenerator.getImg("img/mRearHair1")(iarrind(5).Item1)
+            Else
+                t(5) = CharacterGenerator.getImg("img/mTF/tfRearHair1")(iarrind(5).Item1 - 5)
+            End If
+            If iarrind(15).Item1 < 5 Then
+                t(15) = CharacterGenerator.getImg("img/mFrontHair")(iarrind(15).Item1)
+            Else
+                t(15) = CharacterGenerator.getImg("img/mTF/tfFrontHair")(iarrind(15).Item1 - 6)
+            End If
+            CharacterGenerator.mFrontHair(0) = CharacterGenerator.picPort.Image
+        End If
+        If iarrind(10).Item2 Then
+            t(10) = CharacterGenerator.getImg("img/fEyebrows")(iarrind(10).Item1)
+        Else
+            If iarrind(10).Item1 < 3 Then t(10) = CharacterGenerator.getImg("img/mEyebrows")(iarrind(10).Item1)
+        End If
+        If iarrind(15).Item1 = 0 Then iarr(15) = CharacterGenerator.picPort.Image
+        iarr(1) = CharacterGenerator.recolor(t(1), c)
+        iarr(5) = CharacterGenerator.recolor(t(5), c)
+        If Not iarr(15).Equals(CharacterGenerator.picPort.Image) Then iarr(15) = CharacterGenerator.recolor(t(15), c)
+        If iarrind(10).Item1 < 3 Then iarr(10) = CharacterGenerator.recolor(t(10), c)
     End Sub
 End Class

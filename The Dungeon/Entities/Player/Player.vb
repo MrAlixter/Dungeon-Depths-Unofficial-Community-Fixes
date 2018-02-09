@@ -1238,6 +1238,7 @@
         If iArrInd(10).Item1 < 3 Then iArr(10) = CharacterGenerator.recolor(t(10), c)
         If Not solFlag Then Game.picPortrait.BackgroundImage = CharacterGenerator.CreateBMP(iArr)
     End Sub
+
     Public Sub changeSkinColor(ByVal c As Color)
         skincolor = c
         Dim t(16) As Image
