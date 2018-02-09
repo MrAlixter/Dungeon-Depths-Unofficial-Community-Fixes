@@ -8,6 +8,7 @@
                 spellroute(c, t, s)
             Else
                 Game.lstLog.Items.Add("The spell bounces off the Shopkeeper!")
+                Game.pushLblCombatEvent("The spell bounces off the Shopkeeper!")
                 c.mana -= 10
                 If c.mana < 0 Then c.mana = 0
             End If
@@ -17,6 +18,7 @@
                 spellroute(c, t, s)
             Else
                 Game.lstLog.Items.Add("The spell bounces off Targax!")
+                Game.pushLblCombatEvent("The spell bounces off Targax!")
                 c.mana -= 10
                 If c.mana < 0 Then c.mana = 0
             End If
@@ -26,28 +28,33 @@
     Shared Sub DragonsBreath(ByRef target As Monster, ByRef caster As Player)
         If caster.mana < 10 And caster.title <> "Dragon" Then
             Game.lstLog.Items.Add("Not enough mana!")
+            Game.pushLblCombatEvent("Not enough mana!")
             Exit Sub
         End If
         Game.lstLog.Items.Add("Breath FIRE!")
         target.takeDMG(75)
         If caster.title <> "Dragon" Then caster.mana -= 10
         Game.lstLog.Items.Add(CStr("You hit the " & target.name & " for 75 damage!"))
+        Game.pushLblCombatEvent(CStr("You hit the " & target.name & " for 75 damage!"))
         Game.lstLog.TopIndex = Game.lstLog.Items.Count - 1
     End Sub
     Shared Sub Fireball(ByRef target As Monster, ByRef caster As Player)
         If caster.mana < 5 And caster.title <> "Fire Elemental" Then
             Game.lstLog.Items.Add("Not enough mana!")
+            Game.pushLblCombatEvent("Not enough mana!")
             Exit Sub
         End If
         Game.lstLog.Items.Add("Cast Fireball!")
         target.takeDMG(45)
         If caster.title <> "Fire Elemental" Then caster.mana -= 5
         Game.lstLog.Items.Add(CStr("You hit the " & target.name & " for 45 damage!"))
+        Game.pushLblCombatEvent(CStr("You hit the " & target.name & " for 45 damage!"))
         Game.lstLog.TopIndex = Game.lstLog.Items.Count - 1
     End Sub
     Shared Sub SuperFireball(ByRef target As Monster, ByRef caster As Player)
         If caster.mana < 8 And caster.title <> "Fire Elemental" Then
             Game.lstLog.Items.Add("Not enough mana!")
+            Game.pushLblCombatEvent("Not enough mana!")
             Exit Sub
         ElseIf caster.title = "Fire Elemental" And caster.mana < 2 Then
             Game.lstLog.Items.Add("Not enough mana!")
@@ -57,33 +64,39 @@
         target.takeDMG(60)
         If caster.title <> "Fire Elemental" Then caster.mana -= 8 Else caster.mana -= 2
         Game.lstLog.Items.Add(CStr("You hit the " & target.name & " for 60 damage!"))
+        Game.pushLblCombatEvent(CStr("You hit the " & target.name & " for 60 damage!"))
         Game.lstLog.TopIndex = Game.lstLog.Items.Count - 1
     End Sub
     Shared Sub HBSC(ByRef target As Monster, ByRef caster As Player)
         If caster.mana < 6 Then
             Game.lstLog.Items.Add("Not enough mana!")
+            Game.pushLblCombatEvent("Not enough mana!")
             Exit Sub
         End If
         Game.lstLog.Items.Add("Cast Heartblast Starcannon!")
         target.takeDMG(65)
         caster.mana -= 5
         Game.lstLog.Items.Add(CStr("You hit the " & target.name & " for 65 damage!"))
+        Game.pushLblCombatEvent(CStr("You hit the " & target.name & " for 65 damage!"))
         Game.lstLog.TopIndex = Game.lstLog.Items.Count - 1
     End Sub
     Shared Sub IcicleSpear(ByRef target As Monster, ByRef caster As Player)
         If caster.mana < 6 And caster.title <> "Ice Elemental" Then
             Game.lstLog.Items.Add("Not enough mana!")
+            Game.pushLblCombatEvent("Not enough mana!")
             Exit Sub
         End If
         Game.lstLog.Items.Add("Cast Icicle Spear!")
         target.takeDMG(55)
         If caster.title <> "Ice Elemental" Then caster.mana -= 6
         Game.lstLog.Items.Add(CStr("You hit the " & target.name & " for 55 damage!"))
+        Game.pushLblCombatEvent(CStr("You hit the " & target.name & " for 55 damage!"))
         Game.lstLog.TopIndex = Game.lstLog.Items.Count - 1
     End Sub
     Shared Sub SelfPolymorph(ByRef caster As Player)
         If caster.mana < 5 Then
             Game.lstLog.Items.Add("Not enough mana!")
+            Game.pushLblCombatEvent("Not enough mana!")
             Exit Sub
         End If
         Game.lstLog.Items.Add("Cast Self Polymorph!")
@@ -93,11 +106,13 @@
         p.ShowDialog()
         p.Dispose()
         Game.lstLog.Items.Add(CStr("You turn yourself into a " & Game.player.title & "!"))
+        Game.pushLblCombatEvent(CStr("You turn yourself into a " & Game.player.title & "!"))
         Game.lstLog.TopIndex = Game.lstLog.Items.Count - 1
     End Sub
     Shared Sub EnemyPolymorph(ByRef target As Monster, ByRef caster As Player)
         If caster.mana < 5 Then
             Game.lstLog.Items.Add("Not enough mana!")
+            Game.pushLblCombatEvent("Not enough mana!")
             Exit Sub
         End If
         Game.lstLog.Items.Add("Cast Enemy Polymorph!")
@@ -111,11 +126,13 @@
             target.update()
         End If
         Game.lstLog.Items.Add(CStr("You transform" & target.title & " " & target.name & "!"))
+        Game.pushLblCombatEvent(CStr("You transform" & target.title & " " & target.name & "!"))
         Game.lstLog.TopIndex = Game.lstLog.Items.Count - 1
     End Sub
     Shared Sub turnToFrog(ByRef target As Monster, ByRef caster As Player)
         If caster.mana < 9 Then
             Game.lstLog.Items.Add("Not enough mana!")
+            Game.pushLblCombatEvent("Not enough mana!")
             Exit Sub
         End If
         Game.lstLog.Items.Add("Cast Turn to Frog!")
@@ -129,11 +146,13 @@
         target.maxHealth = 50
         caster.mana -= 9
         Game.lstLog.Items.Add(CStr("You hit the " & target.name & ", turning " & target.rPronoun & " into a frog!"))
+        Game.pushLblCombatEvent(CStr("You hit the " & target.name & ", turning " & target.rPronoun & " into a frog!"))
         Game.lstLog.TopIndex = Game.lstLog.Items.Count - 1
     End Sub
     Shared Sub turnToFrogN(ByRef target As NPC, ByRef caster As Player)
         If caster.mana < 9 Then
             Game.lstLog.Items.Add("Not enough mana!")
+            Game.pushLblCombatEvent("Not enough mana!")
             Exit Sub
         End If
         Game.lstLog.Items.Add("Cast Turn to Frog!")
@@ -149,11 +168,13 @@
         target.maxHealth = 50
         caster.mana -= 9
         Game.lstLog.Items.Add(CStr("You hit the " & target.name & ", turning " & target.rPronoun & " into a frog!"))
+        Game.pushLblCombatEvent(CStr("You hit the " & target.name & ", turning " & target.rPronoun & " into a frog!"))
         Game.lstLog.TopIndex = Game.lstLog.Items.Count - 1
     End Sub
     Shared Sub MindShrink(ByRef target As Monster, ByRef caster As Player)
         If caster.mana < 3 Then
             Game.lstLog.Items.Add("Not enough mana!")
+            Game.pushLblCombatEvent("Not enough mana!")
             Exit Sub
         End If
         Game.lstLog.Items.Add("Cast Mindshrink!")
@@ -167,11 +188,13 @@
 
         caster.mana -= 3
         Game.lstLog.Items.Add(CStr("You reduced the " & target.name & "'s stats!"))
+        Game.pushLblCombatEvent(CStr("You reduced the " & target.name & "'s stats!"))
         Game.lstLog.TopIndex = Game.lstLog.Items.Count - 1
     End Sub
     Shared Sub ArcaneHypnosis(ByRef target As Monster, ByRef caster As Player)
         If caster.mana < 7 Then
             Game.lstLog.Items.Add("Not enough mana!")
+            Game.pushLblCombatEvent("Not enough mana!")
             Exit Sub
         End If
         Game.lstLog.Items.Add("Cast Arcane Hypnosis!")
@@ -181,17 +204,29 @@
         p.ShowDialog()
         p.Dispose()
         Game.lstLog.Items.Add(CStr("You transform" & target.title & " " & target.name & "!"))
+        Game.pushLblCombatEvent(CStr("You transform" & target.title & " " & target.name & "!"))
         Game.lstLog.TopIndex = Game.lstLog.Items.Count - 1
     End Sub
     Shared Sub Petrify(ByRef target As Monster, ByRef caster As Player)
         If caster.mana < 5 And caster.title <> "Gorgon" Then
             Game.lstLog.Items.Add("Not enough mana!")
+            Game.pushLblCombatEvent("Not enough mana!")
             Exit Sub
         End If
         Game.lstLog.Items.Add("Cast Petrify!")
         If caster.title <> "Gorgon" Then caster.mana -= 5
-        If target.GetType() Is GetType(Monster) Then Game.lstLog.Items.Add(CStr("Your magic strikes the " & target.name & " in the chest, turning it briefly to stone!")) Else Game.lstLog.Items.Add(CStr("Your magic strikes " & target.name & " in the chest, turning " & target.rPronoun & " to stone"))
-        If target.speed Mod 5 > 0 Then Game.lstLog.Items.Add(CStr(target.speed Mod 5 & " more until they become a statue!"))
+        If target.GetType() Is GetType(Monster) Then
+            Game.lstLog.Items.Add(CStr("Your magic strikes the " & target.name & " in the chest, turning it briefly to stone!"))
+            Game.pushLblCombatEvent(CStr("Your magic strikes the " & target.name & " in the chest, turning it briefly to stone!"))
+        Else
+            Game.lstLog.Items.Add(CStr("Your magic strikes " & target.name & " in the chest, turning " & target.rPronoun & " to stone"))
+            Game.pushLblCombatEvent(CStr("Your magic strikes " & target.name & " in the chest, turning " & target.rPronoun & " to stone"))
+        End If
+        If target.speed Mod 5 > 0 Then
+            Game.lstLog.Items.Add(CStr(target.speed Mod 5 & " more until they become a statue!"))
+            Game.pushLblCombatEvent(CStr(target.speed Mod 5 & " more until they become a statue!"))
+        End If
+
         If target.speed > 0 Then
             If caster.title <> "Gorgon" Then target.speed -= 5 Else target.speed -= 100
         Else
@@ -203,6 +238,7 @@
     Shared Sub turnToBlade(ByRef target As Monster, ByRef caster As Player)
         If caster.mana < 9 Then
             Game.lstLog.Items.Add("Not enough mana!")
+            Game.pushLblCombatEvent("Not enough mana!")
             Exit Sub
         End If
         Game.lstLog.Items.Add("Cast Turn to Blade!")
@@ -212,6 +248,7 @@
         caster.inventory.Item(9).absorb(target)
         caster.mana -= 9
         Game.lstLog.Items.Add(CStr("You hit the " & target.name & ", turning " & target.rPronoun & " into a sword!"))
+        Game.pushLblCombatEvent(CStr("You hit the " & target.name & ", turning " & target.rPronoun & " into a sword!"))
         Game.lstLog.TopIndex = Game.lstLog.Items.Count - 1
     End Sub
 
@@ -236,6 +273,7 @@
                     Spells.SelfPolymorph(c)
                 ElseIf s = "Self Polymorph" And c.title.Equals("Magic Girl") Then
                     Game.lstLog.Items.Add("You can't polymorph yourself!")
+                    Game.pushLblCombatEvent("You can't polymorph yourself!")
                 End If
                 If s = "Polymorph Enemy" Then Spells.EnemyPolymorph(t, c)
                 If s = "Turn to Frog" Then Spells.turnToFrog(t, c)
@@ -245,6 +283,7 @@
             Else
                 If 1 = 1 Then
                     Game.lstLog.Items.Add("The spell fails as you cast it!")
+                    Game.pushLblCombatEvent("The spell fails as you cast it!")
                 Else
                     Game.lstLog.Items.Add("The spell bounces off your opponent!")
                 End If

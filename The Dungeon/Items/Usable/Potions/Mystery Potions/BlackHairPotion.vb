@@ -15,7 +15,7 @@
             Game.pushLblEvent("You now have black hair!")
             p.haircolor = Color.FromArgb(p.haircolor.A, 20, 20, 20)
             p.createP()
-            If Not Game.player.perks(5) Or Not Game.player.title.Equals("Magic Girl") Then
+            If Not Game.player.perks(5) And Not Game.player.title.Equals("Magic Girl") Then
                 Game.player.pState.save(Game.player)
             End If
         Else

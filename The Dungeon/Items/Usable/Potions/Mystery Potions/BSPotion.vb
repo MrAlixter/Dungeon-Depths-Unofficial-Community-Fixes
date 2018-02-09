@@ -13,7 +13,7 @@
         p.inventorynames(60) = "Breast_Shrinking_Potion"
         If p.breastSize > 0 Then
             p.bs()
-            If Not Game.player.perks(5) Or Not Game.player.title.Equals("Magic Girl") Then
+            If Not Game.player.perks(5) And Not Game.player.title.Equals("Magic Girl") Then
                 Game.player.pState.save(Game.player)
             End If
             Game.pushLblEvent("You breasts squeeze painfully . . .")

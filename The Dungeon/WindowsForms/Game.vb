@@ -49,9 +49,7 @@
     Public lblEventOnClose As Action    'the event method preformed when lblEvent closes (NOT SAVED)
     Public invFilters() As Boolean = {True, True, True, True, True, True}
     Dim eClock As Integer = 15
-    Dim needsTurnUpdate As Boolean = True
     Public solFlag As Boolean = False
-
     'startup/new level methods
     'Form1_Load handles the loading of the form
     Private Sub Form1_Load(sender As Object, e As EventArgs) Handles Me.Load
@@ -63,29 +61,32 @@
         For i = 0 To Me.Controls.Count - 1
             Me.Controls(i).Font = newFont
         Next
-        FileToolStripMenuItem.Font = newFont
-        SaveToolStripMenuItem.Font = newFont
-        LoadToolStripMenuItem.Font = newFont
-        HelpToolStripMenuItem.Font = newFont
-        HelpToolStripMenuItem1.Font = newFont
-        InfoToolStripMenuItem.Font = newFont
-        newFont = New System.Drawing.Font("Consolas", CInt(9.25 * Me.Size.Width / 688), FontStyle.Underline)
-        lblNameTitle.Font = newFont
-        newFont = New System.Drawing.Font("Consolas", CInt(7 * Me.Size.Width / 688))
-        btnDrop.Font = newFont
-        btnLook.Font = newFont
-        newFont = New System.Drawing.Font("Consolas", CInt(9 * Me.Size.Width / 688))
+            FileToolStripMenuItem.Font = newFont
+            SaveToolStripMenuItem.Font = newFont
+            LoadToolStripMenuItem.Font = newFont
+            HelpToolStripMenuItem.Font = newFont
+            HelpToolStripMenuItem1.Font = newFont
+            InfoToolStripMenuItem.Font = newFont
+            newFont = New System.Drawing.Font("Consolas", CInt(9.25 * Me.Size.Width / 688), FontStyle.Underline)
+            lblNameTitle.Font = newFont
+            newFont = New System.Drawing.Font("Consolas", CInt(7 * Me.Size.Width / 688))
+            btnDrop.Font = newFont
+            btnLook.Font = newFont
+            newFont = New System.Drawing.Font("Consolas", CInt(9 * Me.Size.Width / 688))
         MenuStrip1.Font = newFont
-        'creates the shopkeeper
-        shopkeeper = New NPC(2)
+        For i = 0 To pnlCombat.Controls.Count - 1
+            pnlCombat.Controls(i).Font = newFont
+        Next
+            'creates the shopkeeper
+            shopkeeper = New NPC(2)
 
-        If Not System.IO.File.Exists("dis.cla") Then
-            If MessageBox.Show("This game features adult content sexual in nature, and is not for anyone under the age of 18 or otherwise of legal age in their country. By clicking 'Yes' below, you confirm that you are legally an adult in your country.", "Obligatory Disclaimer", MessageBoxButtons.YesNo) = Windows.Forms.DialogResult.Yes Then
-                System.IO.File.CreateText("dis.cla")
-            Else
-                Me.Close()
+            If Not System.IO.File.Exists("dis.cla") Then
+                If MessageBox.Show("This game features adult content sexual in nature, and is not for anyone under the age of 18 or otherwise of legal age in their country. By clicking 'Yes' below, you confirm that you are legally an adult in your country.", "Obligatory Disclaimer", MessageBoxButtons.YesNo) = Windows.Forms.DialogResult.Yes Then
+                    System.IO.File.CreateText("dis.cla")
+                Else
+                    Me.Close()
+                End If
             End If
-        End If
     End Sub
     Sub loadPotionList()
         Randomize()
@@ -490,12 +491,13 @@
         '"discover" any hidden tiles adjacent to the player and erase the players last location
         viewBubble()
         'moves down the priority que by the updatable's speed
+        If pnlCombat.Visible = True Then lblCombatEvents.Text = ""
         Do While updatelist.isEmpty() = False
             Dim u As Updatable = updatelist.remove()
             u.update()
         Loop
         'updates the combat banner
-        If combatmode And needsTurnUpdate Then lstLog.Items.Add("-| Turn " & turn & " |---| What will you do? |--")
+        If combatmode Then updatePnlCombat(player, player.currTarget)
 
         'fills in any missing spaces
         If mBoard(stairs.Y, stairs.X).Text <> "H" Then
@@ -675,6 +677,7 @@
                 m = New Monster(r)
             End If
             npcList.Add(m)
+            player.currTarget = m
             toCombat()
             lstLog.Items.Add((m.getName() & " attacks!"))
             eClock = 5
@@ -1023,6 +1026,7 @@
         picNPC.Visible = False
         btnSpec.Visible = False
         cmboxSpec.Visible = False
+        pnlCombatClose()
 
         Dim reader As IO.StreamReader
         reader = IO.File.OpenText(a)
@@ -1418,6 +1422,8 @@
     'combat functions
     'toCombat displays the players combat menus
     Sub toCombat()
+        updatePnlCombat(player, player.currTarget)
+        pnlCombat.Visible = True
         combatmode = True
         player.canMoveFlag = False
         btnATK.Visible = True
@@ -1432,6 +1438,7 @@
     End Sub
     'fromCombat hides the players combat menus
     Public Sub fromCombat()
+        pnlCombatClose()
         btnATK.Visible = False
         btnMG.Visible = False
         btnRUN.Visible = False
@@ -1456,6 +1463,8 @@
     End Sub
     'the NPC versions of from and to combat
     Sub NPCtoCombat(ByRef m As Monster)
+        updatePnlCombat(player, m)
+        pnlCombat.Visible = True
         combatmode = True
         npcmode = False
         lstLog.Items.Add((m.getName() & " attacks!"))
@@ -1478,6 +1487,7 @@
         lstLog.TopIndex = lstLog.Items.Count - 1
     End Sub
     Sub NPCfromCombat(ByRef m As Monster)
+        pnlCombatClose()
         combatmode = False
         npcmode = True
         pushLblEvent((m.getName() & " stops fighting!"))
@@ -1510,6 +1520,7 @@
     Sub run()
         If player.perks(7) Then
             lstLog.Items.Add("Something inside you decides that running away is cowardly, so you don't.")
+            pushLblCombatEvent("Something inside you decides that running away is cowardly, so you don't.")
             lstLog.TopIndex = lstLog.Items.Count - 1
             Exit Sub
         End If
@@ -1517,13 +1528,13 @@
         For i = 0 To npcList.Count() - 1
             If (npcList.Item(i).GetType().IsSubclassOf(GetType(Monster)) Or npcList.Item(i).GetType() Is GetType(Monster)) AndAlso Not (npcList.Item(i).GetType() Is GetType(Boss)) Then
                 If UBound(npcList.Item(i).inventory) >= 53 AndAlso npcList.Item(i).inventory(53) > 0 Then
-                    pushLblEvent("The glimmer of a key can be seen with your opponent!")
+                    pushLblCombatEvent("The glimmer of a key can be seen with your opponent!")
                     Exit For
                 End If
                 If run <> 1 Then
                     npcList.Item(i).despawn("run")
                 Else
-                    pushLblEvent("You can't get away!")
+                    pushLblCombatEvent("You can't get away!")
                     If npcList.Count > 0 Then
                         For x = 0 To npcList.Count - 1
                             Dim int1 As Integer = 100 - npcList.Item(x).speed
@@ -1534,9 +1545,12 @@
                     Dim int As Integer = 100 - player.getSpeed
                     If int < 1 Then int = 1
                     updatelist.add(player, int)
-                    needsTurnUpdate = False
-                    drawBoard()
-                    needsTurnUpdate = True
+                    Do While updatelist.isEmpty() = False
+                        Dim u As Updatable = updatelist.remove()
+                        u.update()
+                    Loop
+                    'updates the combat banner
+                    updatePnlCombat(player, player.currTarget)
                     Exit Sub
                 End If
 
@@ -1607,6 +1621,22 @@
         btnUse.Enabled = False
         btnDrop.Enabled = False
         btnLook.Enabled = False
+        If combatmode Then
+            If npcList.Count > 0 Then
+                For i = 0 To npcList.Count - 1
+                    Dim int1 As Integer = 100 - npcList.Item(i).speed
+                    If int1 < 1 Then int1 = 1
+                    updatelist.add(npcList.Item(i), (int1))
+                Next
+            End If
+            Do While updatelist.isEmpty() = False
+                Dim u As Updatable = updatelist.remove()
+                u.update()
+            Loop
+            'updates the combat banner
+            updatePnlCombat(player, player.currTarget)
+        End If
+        lblPHealth.Text = player.health & "/" & player.getmaxHealth
     End Sub
     Private Sub btnDrop_Click(sender As Object, e As EventArgs) Handles btnDrop.Click
         selectedItem.discard()
@@ -1649,16 +1679,17 @@
         End If
         Dim int As Integer = 100 - player.getSpeed
         If int < 1 Then int = 1
+        player.isAttacking = True
         updatelist.add(player, int)
         drawBoard()
     End Sub
     Private Sub btnSpec_Click(sender As Object, e As EventArgs) Handles btnSpec.Click
         turn += 1
+        lblCombatEvents.Text = ""
         player.currTarget = Nothing
         If lblEvent.Visible = True Then
             lblEvent.Visible = False
             lblEvent.ForeColor = Color.White
-            drawBoard()
         End If
         If cmboxSpec.Text = "-- Select --" Then Exit Sub
         Dim m As Monster = Nothing
@@ -1681,8 +1712,12 @@
         Dim int As Integer = 100 - player.getSpeed
         If int < 1 Then int = 1
         updatelist.add(player, int)
-        drawBoard()
-
+        Do While updatelist.isEmpty() = False
+            Dim u As Updatable = updatelist.remove()
+            u.update()
+        Loop
+        'updates the combat banner
+        updatePnlCombat(player, player.currTarget)
     End Sub
     Private Sub btnRUN_Click(sender As Object, e As EventArgs) Handles btnRUN.Click
         If lblEvent.Visible = True Then
@@ -1695,11 +1730,11 @@
     End Sub
     Private Sub btnMG_Click(sender As Object, e As EventArgs) Handles btnMG.Click
         turn += 1
+        lblCombatEvents.Text = ""
         player.currTarget = Nothing
         If lblEvent.Visible = True Then
             lblEvent.Visible = False
             lblEvent.ForeColor = Color.White
-            drawBoard()
         End If
         If cboxMG.Text = "-- Select --" Or player.mana <= 0 Then Exit Sub
         Dim m As Monster = Nothing
@@ -1720,7 +1755,12 @@
         Dim int As Integer = 100 - player.getSpeed
         If int < 1 Then int = 1
         updatelist.add(player, int)
-        drawBoard()
+        Do While updatelist.isEmpty() = False
+            Dim u As Updatable = updatelist.remove()
+            u.update()
+        Loop
+        'updates the combat banner
+        updatePnlCombat(player, player.currTarget)
     End Sub
     Private Sub btnEQP_Click(sender As Object, e As EventArgs) Handles btnEQP.Click
         Dim f3 As Equipment = New Equipment()
@@ -1892,6 +1932,7 @@
         Else
             m = New MiniBoss(floor)
         End If
+        player.currTarget = m
         npcList.Add(m)
         lstLog.Items.Add((m.getName & " attacks!"))
         toCombat()
@@ -2029,10 +2070,10 @@
         Dim img As Bitmap = Nothing
         Try
             Dim iarr(16) As Image
-
             Dim pState As String() = reader.ReadLine().Split("#")(0).Split("*")
             Dim haircolor = Color.FromArgb(255, CInt(pState(22)), CInt(pState(23)), CInt(pState(24)))
             Dim skincolor = Color.FromArgb(255, CInt(pState(25)), CInt(pState(26)), CInt(pState(27)))
+            Dim ids(16) As Tuple(Of Integer, Boolean)
             For i = 0 To 16
                 Dim arr() As String = pState(32 + CInt(pState(31)) + 1 + i).Split("%")
                 Dim id = New Tuple(Of Integer, Boolean)(CInt(arr(0)), CBool(arr(1)))
@@ -2041,13 +2082,10 @@
                 Else
                     iarr(i) = CharacterGenerator.mAttributes(i)(id.Item1)
                 End If
+                ids(i) = id
                 If i = 6 And (id.Item1 = 0 Or id.Item1 = 3) Then iarr(6) = CharacterGenerator.recolor2(iarr(6), skincolor)
             Next
-            iarr(1) = CharacterGenerator.recolor(iarr(1), haircolor)
-            iarr(5) = CharacterGenerator.recolor(iarr(5), haircolor)
-            If Not iarr(15).Equals(CharacterGenerator.picPort.Image) Then iarr(15) = CharacterGenerator.recolor(iarr(15), haircolor)
-            iarr(10) = CharacterGenerator.recolor(iarr(10), haircolor)
-
+            changeHairColor(haircolor, ids, iarr)
             iarr(2) = CharacterGenerator.recolor2(iarr(2), skincolor)
             iarr(4) = CharacterGenerator.recolor2(iarr(4), skincolor)
             iarr(7) = CharacterGenerator.recolor2(iarr(7), skincolor)
@@ -2120,5 +2158,134 @@
     End Sub
     Private Sub ReportToolStripMenuItem_Click(sender As Object, e As EventArgs) Handles ReportToolStripMenuItem.Click
         Process.Start("https://bitbucket.org/VowelHeavyUsername/dungeon_depths/issues?status=new&status=open")
+    End Sub
+
+    Sub pushLblCombatEvent(ByVal s As String)
+        Dim sSplit() As String = s.Split(" ")
+        Dim c As Integer = 0
+        Dim ct As Integer = 0
+        Dim out As String = ""
+        Do While c < sSplit.Length
+            If ct < 50 Then
+                If Not sSplit(c).Equals("fugoo") Then
+                    out += sSplit(c) & " "
+                    ct += sSplit(c).Length + 1
+                    c += 1
+                Else
+                    sSplit(c) = ""
+                    out += vbCrLf
+                    ct = 0
+                    c += 1
+                End If
+            Else
+                out += vbCrLf
+                ct = 0
+            End If
+        Loop
+        lblCombatEvents.Text += (out & vbCrLf)
+    End Sub
+    Sub updatePnlCombat(ByVal p As Player, ByVal t As Monster)
+        If lblTurn.Text.Equals("Turn: " & turn) Or t Is Nothing Then Exit Sub
+        lblPHealth.Text = p.health & "/" & p.getmaxHealth
+        lblEHealth.Text = t.health & "/" & t.maxHealth
+        lblTurn.Text = "Turn: " & turn
+        lblPName.Text = p.name
+        lblEName.Text = t.getName
+        If t.getName.Length > 10 Then
+            Dim tRatio = 10 / t.getName.Length
+            Dim newFont As Font = New System.Drawing.Font("Consolas", CInt(9 * 2 * tRatio * Me.Size.Width / 688))
+            lblEName.Font = newFont
+        Else
+            Dim newFont As Font = New System.Drawing.Font("Consolas", CInt(9 * Me.Size.Width / 688))
+            lblEName.Font = newFont
+        End If
+
+        If lblEHealthChange.Tag > 0 Then
+            lblEHealthChange.Text = "+" & lblEHealthChange.Tag
+            lblEHealthChange.ForeColor = Color.YellowGreen
+        Else
+            lblEHealthChange.Text = lblEHealthChange.Tag
+            lblEHealthChange.ForeColor = Color.Crimson
+        End If
+        If lblEHealthChange.Tag = 0 Then lblEHealthChange.Visible = False Else lblEHealthChange.Visible = True
+        lblEHealthChange.Tag = 0
+
+        If lblPHealtDiff.Tag > 0 Then
+            lblPHealtDiff.Text = "+" & lblPHealtDiff.Tag
+            lblPHealtDiff.ForeColor = Color.YellowGreen
+        Else
+            lblPHealtDiff.Text = lblPHealtDiff.Tag
+            lblPHealtDiff.ForeColor = Color.Crimson
+        End If
+        If lblPHealtDiff.Tag = 0 Then lblPHealtDiff.Visible = False Else lblPHealtDiff.Visible = True
+        lblPHealtDiff.Tag = 0
+
+        Dim ratioEH As Double = t.health / t.maxHealth
+        picEHbar.Size = New Size(ratioEH * 174, 15)
+        Dim x As Integer = picEHbar.Location.X + (ratioEH * 174) - 30
+        If x < picEHbar.Location.X Then x = picEHbar.Location.X
+        lblEHealthChange.Location = New Point(x, lblEHealthChange.Location.Y)
+        If ratioEH <= 0.2 Then picEHbar.BackColor = Color.Crimson Else picEHbar.BackColor = Color.YellowGreen
+
+        Dim ratioPH As Double = p.health / p.getmaxHealth
+        picPHealth.Size = New Size(ratioPH * 174, 15)
+        x = picPHealth.Location.X + (ratioPH * 174) - 30
+        If x > picPHealth.Location.X + 174 - 30 Then x = picPHealth.Location.X + 174 - 30
+        lblPHealtDiff.Location = New Point(x, lblPHealtDiff.Location.Y)
+        If ratioPH <= 0.2 Then picPHealth.BackColor = Color.Crimson Else picPHealth.BackColor = Color.YellowGreen
+
+        player.UIupdate()
+    End Sub
+    Sub pnlCombatClose()
+        pnlCombat.Visible = False
+        lblCombatEvents.Text = ""
+    End Sub
+    Shared Sub changeHairColor(ByVal c As Color, ByVal iarrind() As Tuple(Of Integer, Boolean), ByRef iarr As Image())
+        Dim t(16) As Image
+        If iarrind(1).Item2 Then
+            If iarrind(1).Item1 < 5 Then
+                t(1) = CharacterGenerator.getImg("img/fRearHair2")(iarrind(1).Item1)
+            Else
+                t(1) = CharacterGenerator.getImg("img/fTF/tfRearHair2")(iarrind(1).Item1 - 5)
+            End If
+            If iarrind(5).Item1 < 5 Then
+                t(5) = CharacterGenerator.getImg("img/fRearHair1")(iarrind(5).Item1)
+            Else
+                t(5) = CharacterGenerator.getImg("img/fTF/tfRearHair1")(iarrind(5).Item1 - 5)
+            End If
+            If iarrind(15).Item1 < 5 Then
+                t(15) = CharacterGenerator.getImg("img/fFrontHair")(iarrind(15).Item1)
+            Else
+                t(15) = CharacterGenerator.getImg("img/fTF/tfFrontHair")(iarrind(15).Item1 - 6)
+            End If
+            CharacterGenerator.fFrontHair(0) = CharacterGenerator.picPort.Image
+        Else
+            If iarrind(1).Item1 < 5 Then
+                t(1) = CharacterGenerator.getImg("img/mRearHair2")(iarrind(1).Item1)
+            Else
+                t(1) = CharacterGenerator.getImg("img/mTF/tfRearHair2")(iarrind(1).Item1 - 5)
+            End If
+            If iarrind(5).Item1 < 5 Then
+                t(5) = CharacterGenerator.getImg("img/mRearHair1")(iarrind(5).Item1)
+            Else
+                t(5) = CharacterGenerator.getImg("img/mTF/tfRearHair1")(iarrind(5).Item1 - 5)
+            End If
+            If iarrind(15).Item1 < 5 Then
+                t(15) = CharacterGenerator.getImg("img/mFrontHair")(iarrind(15).Item1)
+            Else
+                t(15) = CharacterGenerator.getImg("img/mTF/tfFrontHair")(iarrind(15).Item1 - 6)
+            End If
+            CharacterGenerator.mFrontHair(0) = CharacterGenerator.picPort.Image
+        End If
+        If iarrind(10).Item2 Then
+            t(10) = CharacterGenerator.getImg("img/fEyebrows")(iarrind(10).Item1)
+        Else
+            If iarrind(10).Item1 < 3 Then t(10) = CharacterGenerator.getImg("img/mEyebrows")(iarrind(10).Item1)
+        End If
+        If iarrind(15).Item1 = 0 Then iarr(15) = CharacterGenerator.picPort.Image
+        iarr(1) = CharacterGenerator.recolor(t(1), c)
+        iarr(5) = CharacterGenerator.recolor(t(5), c)
+        If Not iarr(15).Equals(CharacterGenerator.picPort.Image) Then iarr(15) = CharacterGenerator.recolor(t(15), c)
+        If iarrind(10).Item1 < 3 Then iarr(10) = CharacterGenerator.recolor(t(10), c)
     End Sub
 End Class
