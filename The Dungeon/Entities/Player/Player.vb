@@ -570,7 +570,11 @@
                 End If
                 Select Case perksct(1)
                     Case 0
-                        If Not title.Equals("Magic Girl") And Not perks(5) Then pState.save(Me)
+                        If Not title.Equals("Magic Girl") And Not perks(5) Then
+                            pState.save(Me)
+                        ElseIf title.Equals("Magic Girl") Then
+                            Polymorph.transform(Me, "bimbo", 2)
+                        End If
                         lust += 10
                         'tfstage1
                         iArrInd(11) = New Tuple(Of Integer, Boolean)(0, sexBool)
@@ -588,7 +592,7 @@
                 End Select
                 perksct(1) += 1
                 Dim outputln1 As String = "Chewing the gum causes a dizzy calm wash to over you."
-                If perksct(1) = 1 Then Game.pushLblEvent(outputln1)
+                If perksct(1) = 1 And Not title.Equals("Magic Girl") Then Game.pushLblEvent(outputln1)
             Else
                 Dim outputln1 As String = "Chewing the gum make your head feel warm and fuzzy and stuff. You like, totally, love this gum!"
                 Game.pushLblEvent(outputln1)
@@ -1273,7 +1277,7 @@
             If iArrInd(6).Item1 = 0 Or iArrInd(6).Item1 = 3 Then
                 t(6) = CharacterGenerator.getImg("img/fEars")(iArrInd(6).Item1)
                 iArr(6) = CharacterGenerator.recolor2(t(6), c)
-            ElseIf iArrInd(6).Item1 = 7 Or iArrInd(6).Item1 = 8 Then
+            ElseIf iArrInd(6).Item1 = 6 Then
                 t(6) = CharacterGenerator.getImg("img/fTF/tfEars")(iArrInd(6).Item1 - 5)
                 iArr(6) = CharacterGenerator.recolor2(t(6), c)
             End If

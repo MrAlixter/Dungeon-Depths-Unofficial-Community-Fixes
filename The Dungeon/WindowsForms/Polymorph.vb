@@ -349,7 +349,7 @@
             p.iArrInd(5) = New Tuple(Of Integer, Boolean)(8, True)
             p.iArrInd(15) = New Tuple(Of Integer, Boolean)(3, True)
             p.iArrInd(16) = New Tuple(Of Integer, Boolean)(2, True)
-            If Not Game.player.perks(5) Or Not Game.player.title.Equals("Magic Girl") Then
+            If Not Game.player.perks(5) And Not Game.player.title.Equals("Magic Girl") Then
                 Game.player.pState.save(Game.player)
             End If
         ElseIf form = "princess" Then
@@ -380,7 +380,7 @@
                     p.iArrInd(9) = New Tuple(Of Integer, Boolean)(p.pState.iArrInd(9).Item1, True)
                     p.iArrInd(15) = New Tuple(Of Integer, Boolean)(10, True)
                     p.iArrInd(16) = New Tuple(Of Integer, Boolean)(6, True)
-                    If Not Game.player.perks(5) Or Not Game.player.title.Equals("Magic Girl") Then
+                    If Not Game.player.perks(5) And Not Game.player.title.Equals("Magic Girl") Then
                         Game.player.pState.save(Game.player)
                     End If
             End Select
@@ -601,14 +601,6 @@
                 p.defence -= 10
                 'final tf Stage
                 If Name.Equals("Targax") Then p.haircolor = Color.FromArgb(255, 20, 20, 20) Else p.haircolor = Color.FromArgb(255, 245, 231, 184)
-
-                If p.title.Equals("Magic Girl") Then
-                    p.iArrInd(16) = New Tuple(Of Integer, Boolean)(0, True)
-                    p.iArrInd(2) = New Tuple(Of Integer, Boolean)(7, True)
-                    Equipment.clothesChange("Magic_Girl_Outfit")
-                    p.breastSize = 3
-                    Equipment.portraitUDate()
-                End If
                 If Game.isMark Then
                     p.iArrInd(1) = New Tuple(Of Integer, Boolean)(CharacterGenerator.fRearHair2.Count - 2, True)
                     p.iArrInd(2) = New Tuple(Of Integer, Boolean)(6, True)
@@ -643,14 +635,32 @@
                     Else
                         p.iArrInd(9) = New Tuple(Of Integer, Boolean)(16, True)
                     End If
-                    If p.title.Equals("Magic Girl") Then
-                        p.haircolor = Color.FromArgb(255, 255, 250, 205)
-                        p.iArrInd(1) = New Tuple(Of Integer, Boolean)(10, True)
-                        p.iArrInd(5) = New Tuple(Of Integer, Boolean)(10, True)
-                        p.iArrInd(15) = New Tuple(Of Integer, Boolean)(7, True)
-                    End If
                     p.iArrInd(8) = New Tuple(Of Integer, Boolean)(6, True)
                 End If
+                If Game.floor < 6 Then p.pImage = Game.picPlayerB.BackgroundImage Else p.pImage = Game.picBimbof.BackgroundImage
+                p.TextColor = Color.HotPink
+                p.perks(1) = False
+                p.perksct(1) = 0
+            Case 2
+                p.iArrInd(16) = New Tuple(Of Integer, Boolean)(0, True)
+                p.iArrInd(2) = New Tuple(Of Integer, Boolean)(7, True)
+                Equipment.clothesChange("Magic_Girl_Outfit")
+                p.breastSize = 3
+                Equipment.portraitUDate()
+                p.haircolor = Color.FromArgb(255, 255, 250, 205)
+                p.iArrInd(1) = New Tuple(Of Integer, Boolean)(10, True)
+                p.iArrInd(5) = New Tuple(Of Integer, Boolean)(10, True)
+                p.iArrInd(15) = New Tuple(Of Integer, Boolean)(7, True)
+                p.iArrInd(6) = New Tuple(Of Integer, Boolean)(0, True)
+                p.iArrInd(8) = New Tuple(Of Integer, Boolean)(6, True)
+                p.iArrInd(9) = New Tuple(Of Integer, Boolean)(8, True)
+                p.iArrInd(13) = New Tuple(Of Integer, Boolean)(0, True)
+
+                Game.pushLblEvent("You immediatly feel funny, the increased magic in your system reacting swiftly with the gum.  In your haze, you look down to see your clothes have become tight and pink. You giggle, all traces of intelect vanishing as your body becomes more curvy and feminine. Your hair lengthens, becoming a platinum blonde, and your clothes finish changing to match your new figure.")
+                p.title = "Bimbo"
+                p.lust += 10
+                p.attack -= 10
+                p.defence -= 10
                 If Game.floor < 6 Then p.pImage = Game.picPlayerB.BackgroundImage Else p.pImage = Game.picBimbof.BackgroundImage
                 p.TextColor = Color.HotPink
                 p.perks(1) = False
@@ -778,7 +788,7 @@
                     Game.player.createP()
                     Game.player.perks(8) = True
                 End If
-                If Not Game.player.perks(5) Or Not Game.player.title.Equals("Magic Girl") Then
+                If Not Game.player.perks(5) And Not Game.player.title.Equals("Magic Girl") Then
                     Game.player.pState.save(Game.player)
                 End If
         End Select
