@@ -178,15 +178,15 @@
     End Sub
     'newBoard disposes of the old board and its graphical representation
     Sub newBoard()
-        'If floor > 5 Then
-        '    If player.title.Equals("Bimbo") Then
-        '        player.pImage = picBimbof.BackgroundImage
-        '    Else
-        '        player.pImage = picPlayerf.BackgroundImage
-        '    End If
-        '    pImage = player.pImage
-        '    player.currState.save(player)
-        'End If
+        If floor > 5 Then
+            If player.title.Equals("Bimbo") Then
+                player.pImage = picBimbof.BackgroundImage
+            Else
+                player.pImage = picPlayerf.BackgroundImage
+            End If
+            pImage = player.pImage
+            player.currState.save(player)
+        End If
         chestList.Clear()
         statueList.Clear()
         npcList.Clear()
