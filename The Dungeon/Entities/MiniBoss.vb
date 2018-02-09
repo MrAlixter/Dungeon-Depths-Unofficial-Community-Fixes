@@ -68,14 +68,17 @@
             Dim r As Integer = 1 ' CInt(Int(Rnd() * 10))
             If r = 1 And Game.player.perks(6) = False Then
                 Game.lstLog.Items.Add((getName() & " casts a curse on you!"))
+                Game.pushLblCombatEvent((getName() & " casts a curse on you!"))
                 Game.player.perks(6) = True
                 'attack = 0
             ElseIf Game.player.perks(6) And health < 45 Then
                 Game.lstLog.Items.Add((getName() & " heals herself!  +25 health!"))
-                health += 25
+                Game.pushLblCombatEvent((getName() & " heals herself for 25 health!"))
+                takeDMG(-25)
                 ' attack = 0
             ElseIf Game.player.health < 20 Then
                 Game.lstLog.Items.Add((getName() & " waits expectantly . . ."))
+                Game.pushLblCombatEvent((getName() & " waits expectantly . . ."))
             Else
                 MyBase.attackCMD(target)
                 'attack = 20

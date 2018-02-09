@@ -661,29 +661,29 @@
         Select Case ind
             Case 0
                 p.iArrInd(6) = New Tuple(Of Integer, Boolean)(1, p.sexBool)
-                Game.pushLblEvent("Your ears twitch, becoming feline while Marissa gives you a malicious grin.  'I'm sure you tell where this is going,' she giggles.  You now have cat ears!")
+                Game.pushLblCombatEvent("Your ears twitch, becoming feline while Marissa gives you a malicious grin.  'I'm sure you tell where this is going,' she giggles.  You now have cat ears!")
                 p.lust += 5
             Case 1
                 p.iArrInd(4) = New Tuple(Of Integer, Boolean)(0, True)
-                Game.pushLblEvent("Your facial structure softens, and now you have a feminine face!")
+                Game.pushLblCombatEvent("Your facial structure softens, and now you have a feminine face!")
                 p.lust += 5
             Case 2
                 p.iArrInd(1) = New Tuple(Of Integer, Boolean)(12, True)
                 p.iArrInd(5) = New Tuple(Of Integer, Boolean)(17, True)
                 p.iArrInd(15) = New Tuple(Of Integer, Boolean)(1, True)
                 p.haircolor = Color.FromArgb(255, 20, 20, 20)
-                Game.pushLblEvent("Your hair grows down to your ass, and darkens to a shade of shiny black.  You now have long black hair!")
+                Game.pushLblCombatEvent("Your hair grows down to your ass, and darkens to a shade of shiny black.  You now have long black hair!")
             Case 3
                 p.iArrInd(7) = New Tuple(Of Integer, Boolean)(0, True)
                 p.iArrInd(9) = New Tuple(Of Integer, Boolean)(13, True)
-                Game.pushLblEvent("You wince and close your eye as a burning sensation flows through them. You now have kitten eyes!")
+                Game.pushLblCombatEvent("You wince and close your eye as a burning sensation flows through them. You now have kitten eyes!")
                 p.lust += 5
             Case 4
                 If Not p.sexBool Then
                     p.MtF()
                     p.be()
                     p.iArrInd(9) = New Tuple(Of Integer, Boolean)(13, True)
-                    Game.pushLblEvent("Your body slims down, and your chest inlates, giving you average sized breasts.  Soon after, your cock and balls shift into a vagina. You are now female!")
+                    Game.pushLblCombatEvent("Your body slims down, and your chest inlates, giving you average sized breasts.  Soon after, your cock and balls shift into a vagina. You are now female!")
                 Else
                     p.be()
                     p.perksct(6) += 1
@@ -693,7 +693,7 @@
                 p.iArrInd(2) = New Tuple(Of Integer, Boolean)(6, True)
                 p.iArrInd(3) = New Tuple(Of Integer, Boolean)(40, True)
                 p.iArrInd(8) = New Tuple(Of Integer, Boolean)(9, True)
-                Game.pushLblEvent("Your tits expand, your clothes shift, and you feel your will grow weaker. You are now permenantly a cat girl!  Soon you will be Marissa's pet! ")
+                Game.pushLblCombatEvent("Your tits expand, your clothes shift, and you feel your will grow weaker. You are now permenantly a cat girl!  Soon you will be Marissa's pet! ")
             Case 6
                 p.iArrInd(1) = New Tuple(Of Integer, Boolean)(12, True)
                 p.iArrInd(5) = New Tuple(Of Integer, Boolean)(17, True)
@@ -702,7 +702,7 @@
                 p.iArrInd(3) = New Tuple(Of Integer, Boolean)(40, True)
                 p.iArrInd(8) = New Tuple(Of Integer, Boolean)(9, True)
                 p.haircolor = Color.FromArgb(255, 20, 20, 20)
-                Game.pushLblEvent("Your hair grows down to your ass, and darkens to a shade of shiny black.  You now have long black hair!  Your tits expand, your clothes shift, and you feel your will grow weaker. You are now a cat girl!  Soon you will be Marissa's pet! ")
+                Game.pushLblCombatEvent("Your hair grows down to your ass, and darkens to a shade of shiny black.  You now have long black hair!  Your tits expand, your clothes shift, and you feel your will grow weaker. You are now a cat girl!  Soon you will be Marissa's pet! ")
             Case 7
                 If p.discipline < 5 Then
                     If p.sex = "Male" Then
@@ -723,7 +723,7 @@
                 End If
                 p.title = "Kitty"
                 p.be()
-                Game.pushLblEvent("As the last of your resistance drains away, all you can find yourself doing is focusing on your new mistress's voice as she orders you down onto all fours.  You happily oblige, purring softly, and she giggles.  ''Come on kitty, lets go!'' she orders and the two of you, with her leading, wander off into the darkness.  GAME OVER!")
+                Game.pushLblCombatEvent("As the last of your resistance drains away, all you can find yourself doing is focusing on your new mistress's voice as she orders you down onto all fours.  You happily oblige, purring softly, and she giggles.  ''Come on kitty, lets go!'' she orders and the two of you, with her leading, wander off into the darkness.  GAME OVER!")
                 MsgBox(Game.lblEvent.Text)
                 p.Die()
                 p.perks(6) = False

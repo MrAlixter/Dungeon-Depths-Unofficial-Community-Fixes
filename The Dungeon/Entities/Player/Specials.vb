@@ -18,7 +18,7 @@
         p.perks(9) = True
         p.perksct(9) = 3
         Game.lstLog.Items.Add("BERSERKER RAGE!")
-        Game.pushLblEvent("BERSERKER RAGE!" & vbCrLf & "+50% ATK, -25% DEF for 3 turns.")
+        Game.pushLblCombatEvent("BERSERKER RAGE!" & vbCrLf & "+50% ATK, -25% DEF for 3 turns.")
         Game.lstLog.TopIndex = Game.lstLog.Items.Count - 1
     End Sub
     Shared Sub rdec(ByRef p As Player)
@@ -26,21 +26,21 @@
         If p.health <= mBoost Then p.Die() Else p.health -= mBoost
         p.mana += mBoost
         Game.lstLog.Items.Add("Risky Decision!")
-        Game.pushLblEvent("Risky Decision!" & vbCrLf & "Convert 33% Max Health into mana.")
+        Game.pushLblCombatEvent("Risky Decision!" & vbCrLf & "Convert 33% Max Health into mana.")
         Game.lstLog.TopIndex = Game.lstLog.Items.Count - 1
     End Sub
     Shared Sub mamm(ByRef p As Player)
         p.perks(10) = True
         p.perksct(10) = 1
         Game.lstLog.Items.Add("Massive Mammaries!")
-        Game.pushLblEvent("Massive Mammaries!" & vbCrLf & "+80% DEF for 1 turn.")
+        Game.pushLblCombatEvent("Massive Mammaries!" & vbCrLf & "+80% DEF for 1 turn.")
         Game.lstLog.TopIndex = Game.lstLog.Items.Count - 1
     End Sub
     Shared Sub used(ByRef p As Player, ByRef m As Monster)
         m.isStunned = True
         m.stunct = 2
         Game.lstLog.Items.Add("Unholy Seduction!")
-        Game.pushLblEvent("Unholy Seduction!" & vbCrLf & "Stuns enemy for 3 turns.")
+        Game.pushLblCombatEvent("Unholy Seduction!" & vbCrLf & "Stuns enemy for 3 turns.")
         Game.lstLog.TopIndex = Game.lstLog.Items.Count - 1
     End Sub
     Shared Sub habs(ByRef p As Player, ByRef m As Monster)
@@ -50,14 +50,14 @@
         p.health += rcv
         If p.health > p.maxHealth + p.hBuff Then p.health = p.maxHealth + p.hBuff
         Game.lstLog.Items.Add("Absorbtion!")
-        Game.pushLblEvent("Absorbtion!" & vbCrLf & "Deals " & dmg & " damage and heals you for " & rcv)
+        Game.pushLblCombatEvent("Absorbtion!" & vbCrLf & "Deals " & dmg & " damage and heals you for " & rcv)
         Game.lstLog.TopIndex = Game.lstLog.Items.Count - 1
     End Sub
     Shared Sub iron(ByRef p As Player)
         p.perks(11) = True
         p.perksct(11) = 3
         Game.lstLog.Items.Add("Ironhide Fury!")
-        Game.pushLblEvent("Ironhide Fury!" & vbCrLf & "+50% ATK, +60% DEF for 3 turn.")
+        Game.pushLblCombatEvent("Ironhide Fury!" & vbCrLf & "+50% ATK, +60% DEF for 3 turn.")
         Game.lstLog.TopIndex = Game.lstLog.Items.Count - 1
     End Sub
 End Class
