@@ -758,6 +758,7 @@
                 keyspresed += "t"
             Case Keys.Enter
                 If cheatList.Contains(keyspresed) Then
+                    MsgBox(keyspresed)
                     If keyspresed = "mark" Then
                         player.sex = "Male"
                         player.sexBool = False
@@ -827,17 +828,15 @@
                         floor = f - 1
                         initializeBoard()
                     ElseIf keyspresed = "slut" Then
-                        'player.perks(2) = True
+                        player.perks(2) = True
                         player.inventory(1).add(1)
                         player.lust += 20
                         player.createP()
                     ElseIf keyspresed = "kill" Then
                         player.currTarget.takeDMG("9999")
                     End If
-                    keyspresed = ""
-                    'MsgBox(keyspresed)
                 End If
-
+                keyspresed = ""
             Case Keys.Up
                 player.moveUp()
                 randomEvents()
@@ -2117,5 +2116,8 @@
 
     Private Sub tmrKeyCD_Tick(sender As Object, e As EventArgs) Handles tmrKeyCD.Tick
         tmrKeyCD.Enabled = False
+    End Sub
+    Private Sub ReportToolStripMenuItem_Click(sender As Object, e As EventArgs) Handles ReportToolStripMenuItem.Click
+        Process.Start("https://bitbucket.org/VowelHeavyUsername/dungeon_depths/issues?status=new&status=open")
     End Sub
 End Class
