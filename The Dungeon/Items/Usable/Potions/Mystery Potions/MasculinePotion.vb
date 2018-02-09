@@ -14,6 +14,7 @@
             p.FtM()
             Game.pushLblEvent("You are now a man!")
             Equipment.antiClothingCurse()
+            Equipment.portraitUDate()
         ElseIf p.perks(2) Then
             p.iArrInd(1) = New Tuple(Of Integer, Boolean)(p.sState.iArrInd(1).Item1, False)
             p.iArrInd(2) = New Tuple(Of Integer, Boolean)(0, True)
@@ -22,7 +23,9 @@
             p.iArrInd(10) = New Tuple(Of Integer, Boolean)(p.sState.iArrInd(10).Item1, False)
             p.iArrInd(15) = New Tuple(Of Integer, Boolean)(p.sState.iArrInd(15).Item1, False)
             Game.pushLblEvent("You are now a man!")
+            p.perks(2) = False
             Equipment.antiClothingCurse()
+            Equipment.portraitUDate()
         Else
             Game.pushLblEvent("Nothing happened!")
         End If

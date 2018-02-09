@@ -261,7 +261,7 @@
     <Compile Include="Tiles\Trap.vb" />
     <Compile Include="Entities\Updatable.vb" />
     <Compile Include="Items\Usable\VialOfSlime.vb" />
-    <Compile Include="Items\Armor\WarriorsCurass.vb" />
+    <Compile Include="Items\Armor\WarriorsCuirass.vb" />
     <Compile Include="Items\Unimplemented\WeaknessPotion.vb" />
     <Compile Include="Items\Weapons\Weapon.vb" />
     <Compile Include="Items\Armor\WitchCosplay.vb" />

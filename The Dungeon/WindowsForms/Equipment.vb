@@ -172,7 +172,7 @@
                 p.inventory.Item(17).count -= 1
                 p.equippedArmor = New WitchCosplay
                 p.inventory.Item(18).addOne()
-            Case "Warrior's_Curass".GetHashCode
+            Case "Warrior's_Cuirass".GetHashCode
                 p.inventory.Item(19).count -= 1
                 p.equippedArmor = New BrawlerCosplay
                 p.inventory.Item(20).addOne()
@@ -211,7 +211,7 @@
                 p.inventory.Item(17).addOne()
             Case "Brawler_Cosplay".GetHashCode
                 p.inventory.Item(20).count -= 1
-                p.equippedArmor = New WarriorsCurass
+                p.equippedArmor = New WarriorsCuirass
                 p.inventory.Item(19).addOne()
             Case "Gold_Adornment".GetHashCode
                 p.inventory.Item(39).count -= 1

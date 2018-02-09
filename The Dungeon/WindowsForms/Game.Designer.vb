@@ -94,6 +94,7 @@ Partial Class Game
         Me.InteractstairschestsToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
         Me.StatInfoToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
         Me.InfoToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
+        Me.ReportToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
         Me.SettingsToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
         Me.picPortrait = New System.Windows.Forms.PictureBox()
         Me.btnEXM = New System.Windows.Forms.Button()
@@ -150,7 +151,6 @@ Partial Class Game
         Me.picStatuef = New System.Windows.Forms.PictureBox()
         Me.picTrapf = New System.Windows.Forms.PictureBox()
         Me.tmrKeyCD = New System.Windows.Forms.Timer(Me.components)
-        Me.ReportToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
         CType(Me.picMarkBClothes, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me.picMarkBRearHair2, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me.picMarkBRearHair1, System.ComponentModel.ISupportInitialize).BeginInit()
@@ -890,7 +890,7 @@ Partial Class Game
         Me.FileToolStripMenuItem.Font = New System.Drawing.Font("Consolas", 9.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.FileToolStripMenuItem.ForeColor = System.Drawing.Color.White
         Me.FileToolStripMenuItem.Name = "FileToolStripMenuItem"
-        Me.FileToolStripMenuItem.Size = New System.Drawing.Size(62, 28)
+        Me.FileToolStripMenuItem.Size = New System.Drawing.Size(62, 26)
         Me.FileToolStripMenuItem.Text = "File"
         '
         'SaveToolStripMenuItem
@@ -923,7 +923,7 @@ Partial Class Game
         Me.HelpToolStripMenuItem.Font = New System.Drawing.Font("Consolas", 9.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.HelpToolStripMenuItem.ForeColor = System.Drawing.Color.White
         Me.HelpToolStripMenuItem.Name = "HelpToolStripMenuItem"
-        Me.HelpToolStripMenuItem.Size = New System.Drawing.Size(62, 28)
+        Me.HelpToolStripMenuItem.Size = New System.Drawing.Size(62, 26)
         Me.HelpToolStripMenuItem.Text = "Help"
         '
         'HelpToolStripMenuItem1
@@ -932,7 +932,7 @@ Partial Class Game
         Me.HelpToolStripMenuItem1.DropDownItems.AddRange(New System.Windows.Forms.ToolStripItem() {Me.WASDArrowsMoveToolStripMenuItem, Me.InteractstairschestsToolStripMenuItem})
         Me.HelpToolStripMenuItem1.ForeColor = System.Drawing.Color.White
         Me.HelpToolStripMenuItem1.Name = "HelpToolStripMenuItem1"
-        Me.HelpToolStripMenuItem1.Size = New System.Drawing.Size(210, 30)
+        Me.HelpToolStripMenuItem1.Size = New System.Drawing.Size(182, 30)
         Me.HelpToolStripMenuItem1.Text = "Controls"
         '
         'WASDArrowsMoveToolStripMenuItem
@@ -956,7 +956,7 @@ Partial Class Game
         Me.StatInfoToolStripMenuItem.BackColor = System.Drawing.Color.Black
         Me.StatInfoToolStripMenuItem.ForeColor = System.Drawing.Color.White
         Me.StatInfoToolStripMenuItem.Name = "StatInfoToolStripMenuItem"
-        Me.StatInfoToolStripMenuItem.Size = New System.Drawing.Size(210, 30)
+        Me.StatInfoToolStripMenuItem.Size = New System.Drawing.Size(182, 30)
         Me.StatInfoToolStripMenuItem.Text = "Stat Info"
         Me.StatInfoToolStripMenuItem.Visible = False
         '
@@ -966,15 +966,23 @@ Partial Class Game
         Me.InfoToolStripMenuItem.Font = New System.Drawing.Font("Consolas", 9.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.InfoToolStripMenuItem.ForeColor = System.Drawing.Color.White
         Me.InfoToolStripMenuItem.Name = "InfoToolStripMenuItem"
-        Me.InfoToolStripMenuItem.Size = New System.Drawing.Size(210, 30)
+        Me.InfoToolStripMenuItem.Size = New System.Drawing.Size(182, 30)
         Me.InfoToolStripMenuItem.Text = "Info"
+        '
+        'ReportToolStripMenuItem
+        '
+        Me.ReportToolStripMenuItem.BackColor = System.Drawing.Color.Black
+        Me.ReportToolStripMenuItem.ForeColor = System.Drawing.Color.White
+        Me.ReportToolStripMenuItem.Name = "ReportToolStripMenuItem"
+        Me.ReportToolStripMenuItem.Size = New System.Drawing.Size(182, 30)
+        Me.ReportToolStripMenuItem.Text = "Report"
         '
         'SettingsToolStripMenuItem
         '
         Me.SettingsToolStripMenuItem.Font = New System.Drawing.Font("Consolas", 9.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.SettingsToolStripMenuItem.ForeColor = System.Drawing.Color.White
         Me.SettingsToolStripMenuItem.Name = "SettingsToolStripMenuItem"
-        Me.SettingsToolStripMenuItem.Size = New System.Drawing.Size(102, 28)
+        Me.SettingsToolStripMenuItem.Size = New System.Drawing.Size(102, 26)
         Me.SettingsToolStripMenuItem.Text = "Settings"
         Me.SettingsToolStripMenuItem.Visible = False
         '
@@ -1615,14 +1623,6 @@ Partial Class Game
         '
         Me.tmrKeyCD.Interval = 40
         '
-        'ReportToolStripMenuItem
-        '
-        Me.ReportToolStripMenuItem.BackColor = System.Drawing.Color.Black
-        Me.ReportToolStripMenuItem.ForeColor = System.Drawing.Color.White
-        Me.ReportToolStripMenuItem.Name = "ReportToolStripMenuItem"
-        Me.ReportToolStripMenuItem.Size = New System.Drawing.Size(210, 30)
-        Me.ReportToolStripMenuItem.Text = "Report"
-        '
         'Game
         '
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Inherit
@@ -1733,6 +1733,7 @@ Partial Class Game
         Me.Controls.Add(Me.btnFilter)
         Me.Controls.Add(Me.lstInventory)
         Me.Controls.Add(Me.picPortrait)
+        Me.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle
         Me.Icon = CType(resources.GetObject("$this.Icon"), System.Drawing.Icon)
         Me.MaximizeBox = False
         Me.Name = "Game"

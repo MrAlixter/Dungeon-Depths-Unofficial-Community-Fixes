@@ -88,7 +88,8 @@
         End If
     End Sub
     Sub loadPotionList()
-        Dim HiddenNames As ArrayList = New ArrayList({"Red_Potion", "Green_Potion", "Blue_Potion", "Yellow_Potion", "Glowing_Potion", "Murky_Potion", "Purple_Potion"}) '"Clear_Potion", "Smokey_Potion"}
+        Randomize()
+        Dim HiddenNames As ArrayList = New ArrayList({"Red_Potion", "Green_Potion", "Blue_Potion", "Yellow_Potion", "Glowing_Potion", "Murky_Potion", "Purple_Potion", "Clear_Potion", "Smokey_Potion"})
         Dim index As Integer = 0
         For i = 0 To player.inventory.Count - 1
             If player.inventory(i).GetType().IsSubclassOf(GetType(MysteryPotion)) Then

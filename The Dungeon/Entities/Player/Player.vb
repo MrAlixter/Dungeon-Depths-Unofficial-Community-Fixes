@@ -461,7 +461,7 @@
         inventory.Add(New BunnySuit())    '16
         inventory.Add(New SorcerersRobes())    '17
         inventory.Add(New WitchCosplay())    '18
-        inventory.Add(New WarriorsCurass())    '19
+        inventory.Add(New WarriorsCuirass())    '19
         inventory.Add(New BrawlerCosplay())    '20
         inventory.Add(New OakStaff())    '21
         inventory.Add(New WizardStaff())    '22
