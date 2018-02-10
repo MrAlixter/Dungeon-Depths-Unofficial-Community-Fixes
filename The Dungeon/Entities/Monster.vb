@@ -111,6 +111,7 @@
     End Sub
     Public Sub takeDMG(ByVal dmg As Integer)
         health -= dmg
+        Game.lblEHealthChange.Tag -= dmg
     End Sub
     Public Sub Die()
         Dim totalSum As Integer = 0
@@ -173,10 +174,6 @@
             Exit Sub
         End If
         If dead = True Then Exit Sub
-        If firstTurn = True Then
-            firstTurn = False
-            Exit Sub
-        End If
         If tfCt > 0 Then
             tfCt += 1
         ElseIf tfCt > tfEnd Then
@@ -189,8 +186,10 @@
         Else
             If Me.GetType() Is GetType(Monster) Then
                 Game.lstLog.Items.Add("The " & getName() & " is too stunned to react!")
+                Game.pushLblCombatEvent("The " & getName() & " is too stunned to react!")
             Else
                 Game.lstLog.Items.Add(getName() & " is too stunned to react!")
+                Game.pushLblCombatEvent(getName() & " is too stunned to react!")
             End If
             If stunct <= 0 Then
                 isStunned = False

@@ -44,7 +44,6 @@ Partial Class Game
         Me.picMarkRHair2 = New System.Windows.Forms.PictureBox()
         Me.picMarkRHair1 = New System.Windows.Forms.PictureBox()
         Me.picMarkFHair = New System.Windows.Forms.PictureBox()
-        Me.lblEvent = New System.Windows.Forms.Label()
         Me.btnLeave = New System.Windows.Forms.Button()
         Me.btnFight = New System.Windows.Forms.Button()
         Me.btnNPCMG = New System.Windows.Forms.Button()
@@ -152,6 +151,19 @@ Partial Class Game
         Me.picStatuef = New System.Windows.Forms.PictureBox()
         Me.picTrapf = New System.Windows.Forms.PictureBox()
         Me.tmrKeyCD = New System.Windows.Forms.Timer(Me.components)
+        Me.pnlCombat = New System.Windows.Forms.Panel()
+        Me.Label2 = New System.Windows.Forms.Label()
+        Me.lblCombatEvents = New System.Windows.Forms.Label()
+        Me.lblPHealtDiff = New System.Windows.Forms.Label()
+        Me.lblEHealthChange = New System.Windows.Forms.Label()
+        Me.lblTurn = New System.Windows.Forms.Label()
+        Me.lblPHealth = New System.Windows.Forms.Label()
+        Me.lblPName = New System.Windows.Forms.Label()
+        Me.lblEHealth = New System.Windows.Forms.Label()
+        Me.lblEName = New System.Windows.Forms.Label()
+        Me.picPHealth = New System.Windows.Forms.PictureBox()
+        Me.picEHbar = New System.Windows.Forms.PictureBox()
+        Me.lblEvent = New System.Windows.Forms.Label()
         CType(Me.picMarkBClothes, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me.picMarkBRearHair2, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me.picMarkBRearHair1, System.ComponentModel.ISupportInitialize).BeginInit()
@@ -201,6 +213,9 @@ Partial Class Game
         CType(Me.picShopkeeperf, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me.picStatuef, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me.picTrapf, System.ComponentModel.ISupportInitialize).BeginInit()
+        Me.pnlCombat.SuspendLayout()
+        CType(Me.picPHealth, System.ComponentModel.ISupportInitialize).BeginInit()
+        CType(Me.picEHbar, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.SuspendLayout()
         '
         'btnUse1
@@ -425,7 +440,7 @@ Partial Class Game
         Me.lblEvent.ForeColor = System.Drawing.Color.White
         Me.lblEvent.Location = New System.Drawing.Point(406, 111)
         Me.lblEvent.Name = "lblEvent"
-        Me.lblEvent.Size = New System.Drawing.Size(45, 15)
+        Me.lblEvent.Size = New System.Drawing.Size(65, 21)
         Me.lblEvent.TabIndex = 164
         Me.lblEvent.Text = "Label2"
         Me.lblEvent.TextAlign = System.Drawing.ContentAlignment.MiddleLeft
@@ -478,7 +493,7 @@ Partial Class Game
         Me.cboxNPCMG.FormattingEnabled = True
         Me.cboxNPCMG.Location = New System.Drawing.Point(238, 419)
         Me.cboxNPCMG.Name = "cboxNPCMG"
-        Me.cboxNPCMG.Size = New System.Drawing.Size(149, 21)
+        Me.cboxNPCMG.Size = New System.Drawing.Size(149, 27)
         Me.cboxNPCMG.TabIndex = 182
         Me.cboxNPCMG.Text = "-- Select --"
         Me.cboxNPCMG.Visible = False
@@ -682,7 +697,7 @@ Partial Class Game
         Me.cboxMG.FormattingEnabled = True
         Me.cboxMG.Location = New System.Drawing.Point(237, 419)
         Me.cboxMG.Name = "cboxMG"
-        Me.cboxMG.Size = New System.Drawing.Size(149, 21)
+        Me.cboxMG.Size = New System.Drawing.Size(149, 27)
         Me.cboxMG.TabIndex = 157
         Me.cboxMG.Text = "-- Select --"
         Me.cboxMG.Visible = False
@@ -707,7 +722,7 @@ Partial Class Game
         Me.lblEVD.ForeColor = System.Drawing.Color.White
         Me.lblEVD.Location = New System.Drawing.Point(736, 252)
         Me.lblEVD.Name = "lblEVD"
-        Me.lblEVD.Size = New System.Drawing.Size(67, 13)
+        Me.lblEVD.Size = New System.Drawing.Size(99, 19)
         Me.lblEVD.TabIndex = 155
         Me.lblEVD.Text = "EVD = TEMP"
         '
@@ -718,7 +733,7 @@ Partial Class Game
         Me.lblSPD.ForeColor = System.Drawing.Color.White
         Me.lblSPD.Location = New System.Drawing.Point(736, 233)
         Me.lblSPD.Name = "lblSPD"
-        Me.lblSPD.Size = New System.Drawing.Size(67, 13)
+        Me.lblSPD.Size = New System.Drawing.Size(99, 19)
         Me.lblSPD.TabIndex = 154
         Me.lblSPD.Text = "SPD = TEMP"
         '
@@ -729,7 +744,7 @@ Partial Class Game
         Me.lblSKL.ForeColor = System.Drawing.Color.White
         Me.lblSKL.Location = New System.Drawing.Point(736, 214)
         Me.lblSKL.Name = "lblSKL"
-        Me.lblSKL.Size = New System.Drawing.Size(67, 13)
+        Me.lblSKL.Size = New System.Drawing.Size(99, 19)
         Me.lblSKL.TabIndex = 153
         Me.lblSKL.Text = "SKL = TEMP"
         '
@@ -740,7 +755,7 @@ Partial Class Game
         Me.lblDEF.ForeColor = System.Drawing.Color.White
         Me.lblDEF.Location = New System.Drawing.Point(736, 195)
         Me.lblDEF.Name = "lblDEF"
-        Me.lblDEF.Size = New System.Drawing.Size(67, 13)
+        Me.lblDEF.Size = New System.Drawing.Size(99, 19)
         Me.lblDEF.TabIndex = 152
         Me.lblDEF.Text = "DEF = TEMP"
         '
@@ -751,7 +766,7 @@ Partial Class Game
         Me.lblATK.ForeColor = System.Drawing.Color.White
         Me.lblATK.Location = New System.Drawing.Point(736, 176)
         Me.lblATK.Name = "lblATK"
-        Me.lblATK.Size = New System.Drawing.Size(67, 13)
+        Me.lblATK.Size = New System.Drawing.Size(99, 19)
         Me.lblATK.TabIndex = 151
         Me.lblATK.Text = "ATK = TEMP"
         '
@@ -762,7 +777,7 @@ Partial Class Game
         Me.lblLevel.ForeColor = System.Drawing.Color.White
         Me.lblLevel.Location = New System.Drawing.Point(736, 157)
         Me.lblLevel.Name = "lblLevel"
-        Me.lblLevel.Size = New System.Drawing.Size(67, 13)
+        Me.lblLevel.Size = New System.Drawing.Size(99, 19)
         Me.lblLevel.TabIndex = 150
         Me.lblLevel.Text = "Level TEMP"
         Me.lblLevel.Visible = False
@@ -774,7 +789,7 @@ Partial Class Game
         Me.lblXP.ForeColor = System.Drawing.Color.White
         Me.lblXP.Location = New System.Drawing.Point(736, 129)
         Me.lblXP.Name = "lblXP"
-        Me.lblXP.Size = New System.Drawing.Size(109, 13)
+        Me.lblXP.Size = New System.Drawing.Size(162, 19)
         Me.lblXP.TabIndex = 149
         Me.lblXP.Text = "Expirience = TEMP"
         Me.lblXP.Visible = False
@@ -786,7 +801,7 @@ Partial Class Game
         Me.lblHunger.ForeColor = System.Drawing.Color.White
         Me.lblHunger.Location = New System.Drawing.Point(736, 110)
         Me.lblHunger.Name = "lblHunger"
-        Me.lblHunger.Size = New System.Drawing.Size(85, 13)
+        Me.lblHunger.Size = New System.Drawing.Size(126, 19)
         Me.lblHunger.TabIndex = 148
         Me.lblHunger.Text = "Hunger = TEMP"
         '
@@ -797,7 +812,7 @@ Partial Class Game
         Me.lblMana.ForeColor = System.Drawing.Color.White
         Me.lblMana.Location = New System.Drawing.Point(736, 91)
         Me.lblMana.Name = "lblMana"
-        Me.lblMana.Size = New System.Drawing.Size(73, 13)
+        Me.lblMana.Size = New System.Drawing.Size(108, 19)
         Me.lblMana.TabIndex = 147
         Me.lblMana.Text = "Mana = TEMP"
         '
@@ -808,7 +823,7 @@ Partial Class Game
         Me.lblHealth.ForeColor = System.Drawing.Color.White
         Me.lblHealth.Location = New System.Drawing.Point(736, 72)
         Me.lblHealth.Name = "lblHealth"
-        Me.lblHealth.Size = New System.Drawing.Size(85, 13)
+        Me.lblHealth.Size = New System.Drawing.Size(126, 19)
         Me.lblHealth.TabIndex = 146
         Me.lblHealth.Text = "Health = TEMP"
         '
@@ -820,7 +835,7 @@ Partial Class Game
         Me.lblNameTitle.ForeColor = System.Drawing.Color.White
         Me.lblNameTitle.Location = New System.Drawing.Point(732, 40)
         Me.lblNameTitle.Name = "lblNameTitle"
-        Me.lblNameTitle.Size = New System.Drawing.Size(112, 15)
+        Me.lblNameTitle.Size = New System.Drawing.Size(160, 22)
         Me.lblNameTitle.TabIndex = 145
         Me.lblNameTitle.Text = "PLACEHOLDERTEXT"
         '
@@ -832,7 +847,7 @@ Partial Class Game
         Me.Label1.ForeColor = System.Drawing.Color.White
         Me.Label1.Location = New System.Drawing.Point(736, 391)
         Me.Label1.Name = "Label1"
-        Me.Label1.Size = New System.Drawing.Size(77, 15)
+        Me.Label1.Size = New System.Drawing.Size(120, 23)
         Me.Label1.TabIndex = 144
         Me.Label1.Text = "Inventory:" & Global.Microsoft.VisualBasic.ChrW(13) & Global.Microsoft.VisualBasic.ChrW(10)
         '
@@ -854,9 +869,10 @@ Partial Class Game
         Me.lstInventory.Font = New System.Drawing.Font("Consolas", 8.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.lstInventory.ForeColor = System.Drawing.Color.White
         Me.lstInventory.FormattingEnabled = True
+        Me.lstInventory.ItemHeight = 19
         Me.lstInventory.Location = New System.Drawing.Point(734, 419)
         Me.lstInventory.Name = "lstInventory"
-        Me.lstInventory.Size = New System.Drawing.Size(262, 147)
+        Me.lstInventory.Size = New System.Drawing.Size(262, 156)
         Me.lstInventory.TabIndex = 142
         '
         'lstLog
@@ -865,7 +881,7 @@ Partial Class Game
         Me.lstLog.Font = New System.Drawing.Font("Consolas", 7.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.lstLog.ForeColor = System.Drawing.Color.White
         Me.lstLog.FormattingEnabled = True
-        Me.lstLog.ItemHeight = 10
+        Me.lstLog.ItemHeight = 17
         Me.lstLog.Location = New System.Drawing.Point(13, 510)
         Me.lstLog.Name = "lstLog"
         Me.lstLog.Size = New System.Drawing.Size(701, 174)
@@ -879,7 +895,7 @@ Partial Class Game
         Me.MenuStrip1.Items.AddRange(New System.Windows.Forms.ToolStripItem() {Me.FileToolStripMenuItem, Me.HelpToolStripMenuItem, Me.SettingsToolStripMenuItem})
         Me.MenuStrip1.Location = New System.Drawing.Point(3, 4)
         Me.MenuStrip1.Name = "MenuStrip1"
-        Me.MenuStrip1.Size = New System.Drawing.Size(269, 24)
+        Me.MenuStrip1.Size = New System.Drawing.Size(132, 30)
         Me.MenuStrip1.TabIndex = 140
         Me.MenuStrip1.Text = "MenuStrip1"
         '
@@ -890,7 +906,7 @@ Partial Class Game
         Me.FileToolStripMenuItem.Font = New System.Drawing.Font("Consolas", 9.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.FileToolStripMenuItem.ForeColor = System.Drawing.Color.White
         Me.FileToolStripMenuItem.Name = "FileToolStripMenuItem"
-        Me.FileToolStripMenuItem.Size = New System.Drawing.Size(47, 20)
+        Me.FileToolStripMenuItem.Size = New System.Drawing.Size(62, 26)
         Me.FileToolStripMenuItem.Text = "File"
         '
         'SaveToolStripMenuItem
@@ -898,7 +914,7 @@ Partial Class Game
         Me.SaveToolStripMenuItem.BackColor = System.Drawing.Color.Black
         Me.SaveToolStripMenuItem.ForeColor = System.Drawing.Color.White
         Me.SaveToolStripMenuItem.Name = "SaveToolStripMenuItem"
-        Me.SaveToolStripMenuItem.Size = New System.Drawing.Size(130, 22)
+        Me.SaveToolStripMenuItem.Size = New System.Drawing.Size(172, 30)
         Me.SaveToolStripMenuItem.Text = "Save"
         '
         'LoadToolStripMenuItem
@@ -906,7 +922,7 @@ Partial Class Game
         Me.LoadToolStripMenuItem.BackColor = System.Drawing.Color.Black
         Me.LoadToolStripMenuItem.ForeColor = System.Drawing.Color.White
         Me.LoadToolStripMenuItem.Name = "LoadToolStripMenuItem"
-        Me.LoadToolStripMenuItem.Size = New System.Drawing.Size(130, 22)
+        Me.LoadToolStripMenuItem.Size = New System.Drawing.Size(172, 30)
         Me.LoadToolStripMenuItem.Text = "Load"
         '
         'NewGameToolStripMenuItem
@@ -914,7 +930,7 @@ Partial Class Game
         Me.NewGameToolStripMenuItem.BackColor = System.Drawing.Color.Black
         Me.NewGameToolStripMenuItem.ForeColor = System.Drawing.Color.White
         Me.NewGameToolStripMenuItem.Name = "NewGameToolStripMenuItem"
-        Me.NewGameToolStripMenuItem.Size = New System.Drawing.Size(130, 22)
+        Me.NewGameToolStripMenuItem.Size = New System.Drawing.Size(172, 30)
         Me.NewGameToolStripMenuItem.Text = "New Game"
         '
         'HelpToolStripMenuItem
@@ -923,7 +939,7 @@ Partial Class Game
         Me.HelpToolStripMenuItem.Font = New System.Drawing.Font("Consolas", 9.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.HelpToolStripMenuItem.ForeColor = System.Drawing.Color.White
         Me.HelpToolStripMenuItem.Name = "HelpToolStripMenuItem"
-        Me.HelpToolStripMenuItem.Size = New System.Drawing.Size(47, 20)
+        Me.HelpToolStripMenuItem.Size = New System.Drawing.Size(62, 26)
         Me.HelpToolStripMenuItem.Text = "Help"
         '
         'HelpToolStripMenuItem1
@@ -932,7 +948,7 @@ Partial Class Game
         Me.HelpToolStripMenuItem1.DropDownItems.AddRange(New System.Windows.Forms.ToolStripItem() {Me.WASDArrowsMoveToolStripMenuItem, Me.InteractstairschestsToolStripMenuItem})
         Me.HelpToolStripMenuItem1.ForeColor = System.Drawing.Color.White
         Me.HelpToolStripMenuItem1.Name = "HelpToolStripMenuItem1"
-        Me.HelpToolStripMenuItem1.Size = New System.Drawing.Size(137, 22)
+        Me.HelpToolStripMenuItem1.Size = New System.Drawing.Size(182, 30)
         Me.HelpToolStripMenuItem1.Text = "Controls"
         '
         'WASDArrowsMoveToolStripMenuItem
@@ -940,7 +956,7 @@ Partial Class Game
         Me.WASDArrowsMoveToolStripMenuItem.BackColor = System.Drawing.Color.Black
         Me.WASDArrowsMoveToolStripMenuItem.ForeColor = System.Drawing.Color.White
         Me.WASDArrowsMoveToolStripMenuItem.Name = "WASDArrowsMoveToolStripMenuItem"
-        Me.WASDArrowsMoveToolStripMenuItem.Size = New System.Drawing.Size(291, 22)
+        Me.WASDArrowsMoveToolStripMenuItem.Size = New System.Drawing.Size(402, 30)
         Me.WASDArrowsMoveToolStripMenuItem.Text = "w, a, s, d / arrows = move"
         '
         'InteractstairschestsToolStripMenuItem
@@ -948,7 +964,7 @@ Partial Class Game
         Me.InteractstairschestsToolStripMenuItem.BackColor = System.Drawing.Color.Black
         Me.InteractstairschestsToolStripMenuItem.ForeColor = System.Drawing.Color.White
         Me.InteractstairschestsToolStripMenuItem.Name = "InteractstairschestsToolStripMenuItem"
-        Me.InteractstairschestsToolStripMenuItem.Size = New System.Drawing.Size(291, 22)
+        Me.InteractstairschestsToolStripMenuItem.Size = New System.Drawing.Size(402, 30)
         Me.InteractstairschestsToolStripMenuItem.Text = "e / ; = interact(stairs/chests)"
         '
         'StatInfoToolStripMenuItem
@@ -956,7 +972,7 @@ Partial Class Game
         Me.StatInfoToolStripMenuItem.BackColor = System.Drawing.Color.Black
         Me.StatInfoToolStripMenuItem.ForeColor = System.Drawing.Color.White
         Me.StatInfoToolStripMenuItem.Name = "StatInfoToolStripMenuItem"
-        Me.StatInfoToolStripMenuItem.Size = New System.Drawing.Size(137, 22)
+        Me.StatInfoToolStripMenuItem.Size = New System.Drawing.Size(182, 30)
         Me.StatInfoToolStripMenuItem.Text = "Stat Info"
         Me.StatInfoToolStripMenuItem.Visible = False
         '
@@ -982,7 +998,7 @@ Partial Class Game
         Me.InfoToolStripMenuItem.Font = New System.Drawing.Font("Consolas", 9.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.InfoToolStripMenuItem.ForeColor = System.Drawing.Color.White
         Me.InfoToolStripMenuItem.Name = "InfoToolStripMenuItem"
-        Me.InfoToolStripMenuItem.Size = New System.Drawing.Size(137, 22)
+        Me.InfoToolStripMenuItem.Size = New System.Drawing.Size(182, 30)
         Me.InfoToolStripMenuItem.Text = "Info"
         '
         'SettingsToolStripMenuItem
@@ -990,7 +1006,7 @@ Partial Class Game
         Me.SettingsToolStripMenuItem.Font = New System.Drawing.Font("Consolas", 9.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.SettingsToolStripMenuItem.ForeColor = System.Drawing.Color.White
         Me.SettingsToolStripMenuItem.Name = "SettingsToolStripMenuItem"
-        Me.SettingsToolStripMenuItem.Size = New System.Drawing.Size(75, 20)
+        Me.SettingsToolStripMenuItem.Size = New System.Drawing.Size(102, 26)
         Me.SettingsToolStripMenuItem.Text = "Settings"
         Me.SettingsToolStripMenuItem.Visible = False
         '
@@ -1021,7 +1037,7 @@ Partial Class Game
         Me.lblGold.ForeColor = System.Drawing.Color.White
         Me.lblGold.Location = New System.Drawing.Point(736, 271)
         Me.lblGold.Name = "lblGold"
-        Me.lblGold.Size = New System.Drawing.Size(91, 13)
+        Me.lblGold.Size = New System.Drawing.Size(135, 19)
         Me.lblGold.TabIndex = 210
         Me.lblGold.Text = "GOLD = 999999+"
         '
@@ -1177,7 +1193,7 @@ Partial Class Game
         Me.cmboxSpec.FormattingEnabled = True
         Me.cmboxSpec.Location = New System.Drawing.Point(237, 461)
         Me.cmboxSpec.Name = "cmboxSpec"
-        Me.cmboxSpec.Size = New System.Drawing.Size(149, 21)
+        Me.cmboxSpec.Size = New System.Drawing.Size(149, 27)
         Me.cmboxSpec.TabIndex = 231
         Me.cmboxSpec.Text = "-- Select --"
         Me.cmboxSpec.Visible = False
@@ -1227,7 +1243,7 @@ Partial Class Game
         Me.fUseable.ForeColor = System.Drawing.Color.White
         Me.fUseable.Location = New System.Drawing.Point(738, 422)
         Me.fUseable.Name = "fUseable"
-        Me.fUseable.Size = New System.Drawing.Size(68, 17)
+        Me.fUseable.Size = New System.Drawing.Size(98, 23)
         Me.fUseable.TabIndex = 236
         Me.fUseable.Text = "Useable"
         Me.fUseable.UseVisualStyleBackColor = True
@@ -1631,11 +1647,164 @@ Partial Class Game
         '
         Me.tmrKeyCD.Interval = 40
         '
+        'pnlCombat
+        '
+        Me.pnlCombat.BackColor = System.Drawing.Color.Black
+        Me.pnlCombat.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle
+        Me.pnlCombat.Controls.Add(Me.Label2)
+        Me.pnlCombat.Controls.Add(Me.lblCombatEvents)
+        Me.pnlCombat.Controls.Add(Me.lblPHealtDiff)
+        Me.pnlCombat.Controls.Add(Me.lblEHealthChange)
+        Me.pnlCombat.Controls.Add(Me.lblTurn)
+        Me.pnlCombat.Controls.Add(Me.lblPHealth)
+        Me.pnlCombat.Controls.Add(Me.lblPName)
+        Me.pnlCombat.Controls.Add(Me.lblEHealth)
+        Me.pnlCombat.Controls.Add(Me.lblEName)
+        Me.pnlCombat.Controls.Add(Me.picPHealth)
+        Me.pnlCombat.Controls.Add(Me.picEHbar)
+        Me.pnlCombat.Location = New System.Drawing.Point(115, 50)
+        Me.pnlCombat.Name = "pnlCombat"
+        Me.pnlCombat.Size = New System.Drawing.Size(568, 362)
+        Me.pnlCombat.TabIndex = 270
+        Me.pnlCombat.Visible = False
+        '
+        'Label2
+        '
+        Me.Label2.AutoSize = True
+        Me.Label2.Font = New System.Drawing.Font("Consolas", 9.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.Label2.ForeColor = System.Drawing.Color.White
+        Me.Label2.Location = New System.Drawing.Point(5, 334)
+        Me.Label2.Name = "Label2"
+        Me.Label2.Size = New System.Drawing.Size(400, 22)
+        Me.Label2.TabIndex = 10
+        Me.Label2.Text = "Press a combat button to continue . . ."
+        '
+        'lblCombatEvents
+        '
+        Me.lblCombatEvents.AutoSize = True
+        Me.lblCombatEvents.Font = New System.Drawing.Font("Consolas", 9.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.lblCombatEvents.ForeColor = System.Drawing.Color.White
+        Me.lblCombatEvents.Location = New System.Drawing.Point(11, 128)
+        Me.lblCombatEvents.Name = "lblCombatEvents"
+        Me.lblCombatEvents.Size = New System.Drawing.Size(0, 22)
+        Me.lblCombatEvents.TabIndex = 9
+        '
+        'lblPHealtDiff
+        '
+        Me.lblPHealtDiff.AutoSize = True
+        Me.lblPHealtDiff.Font = New System.Drawing.Font("Consolas", 9.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.lblPHealtDiff.ForeColor = System.Drawing.Color.White
+        Me.lblPHealtDiff.Location = New System.Drawing.Point(379, 88)
+        Me.lblPHealtDiff.Name = "lblPHealtDiff"
+        Me.lblPHealtDiff.Size = New System.Drawing.Size(50, 22)
+        Me.lblPHealtDiff.TabIndex = 8
+        Me.lblPHealtDiff.Text = "-999"
+        '
+        'lblEHealthChange
+        '
+        Me.lblEHealthChange.AutoSize = True
+        Me.lblEHealthChange.Font = New System.Drawing.Font("Consolas", 9.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.lblEHealthChange.ForeColor = System.Drawing.Color.White
+        Me.lblEHealthChange.Location = New System.Drawing.Point(139, 91)
+        Me.lblEHealthChange.Name = "lblEHealthChange"
+        Me.lblEHealthChange.Size = New System.Drawing.Size(50, 22)
+        Me.lblEHealthChange.TabIndex = 7
+        Me.lblEHealthChange.Text = "-999"
+        '
+        'lblTurn
+        '
+        Me.lblTurn.AutoSize = True
+        Me.lblTurn.Font = New System.Drawing.Font("Consolas", 9.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.lblTurn.ForeColor = System.Drawing.Color.White
+        Me.lblTurn.Location = New System.Drawing.Point(236, 20)
+        Me.lblTurn.Name = "lblTurn"
+        Me.lblTurn.Size = New System.Drawing.Size(120, 22)
+        Me.lblTurn.TabIndex = 6
+        Me.lblTurn.Text = "Turn: 99999"
+        '
+        'lblPHealth
+        '
+        Me.lblPHealth.AutoSize = True
+        Me.lblPHealth.Font = New System.Drawing.Font("Consolas", 9.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.lblPHealth.ForeColor = System.Drawing.Color.White
+        Me.lblPHealth.Location = New System.Drawing.Point(450, 48)
+        Me.lblPHealth.Name = "lblPHealth"
+        Me.lblPHealth.Size = New System.Drawing.Size(100, 22)
+        Me.lblPHealth.TabIndex = 5
+        Me.lblPHealth.Text = "9999/9999"
+        '
+        'lblPName
+        '
+        Me.lblPName.AutoSize = True
+        Me.lblPName.BackColor = System.Drawing.Color.Black
+        Me.lblPName.Font = New System.Drawing.Font("Consolas", 9.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.lblPName.ForeColor = System.Drawing.Color.White
+        Me.lblPName.Location = New System.Drawing.Point(448, 19)
+        Me.lblPName.Name = "lblPName"
+        Me.lblPName.Size = New System.Drawing.Size(110, 22)
+        Me.lblPName.TabIndex = 4
+        Me.lblPName.Text = "PlayerName"
+        '
+        'lblEHealth
+        '
+        Me.lblEHealth.AutoSize = True
+        Me.lblEHealth.Font = New System.Drawing.Font("Consolas", 9.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.lblEHealth.ForeColor = System.Drawing.Color.White
+        Me.lblEHealth.Location = New System.Drawing.Point(20, 49)
+        Me.lblEHealth.Name = "lblEHealth"
+        Me.lblEHealth.Size = New System.Drawing.Size(100, 22)
+        Me.lblEHealth.TabIndex = 3
+        Me.lblEHealth.Text = "9999/9999"
+        '
+        'lblEName
+        '
+        Me.lblEName.AutoSize = True
+        Me.lblEName.BackColor = System.Drawing.Color.Black
+        Me.lblEName.Font = New System.Drawing.Font("Consolas", 9.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.lblEName.ForeColor = System.Drawing.Color.White
+        Me.lblEName.Location = New System.Drawing.Point(18, 19)
+        Me.lblEName.Name = "lblEName"
+        Me.lblEName.Size = New System.Drawing.Size(100, 22)
+        Me.lblEName.TabIndex = 2
+        Me.lblEName.Text = "EnemyName"
+        '
+        'picPHealth
+        '
+        Me.picPHealth.BackColor = System.Drawing.Color.YellowGreen
+        Me.picPHealth.Location = New System.Drawing.Point(374, 73)
+        Me.picPHealth.Name = "picPHealth"
+        Me.picPHealth.Size = New System.Drawing.Size(174, 15)
+        Me.picPHealth.TabIndex = 1
+        Me.picPHealth.TabStop = False
+        '
+        'picEHbar
+        '
+        Me.picEHbar.BackColor = System.Drawing.Color.YellowGreen
+        Me.picEHbar.Location = New System.Drawing.Point(22, 73)
+        Me.picEHbar.Name = "picEHbar"
+        Me.picEHbar.Size = New System.Drawing.Size(174, 15)
+        Me.picEHbar.TabIndex = 0
+        Me.picEHbar.TabStop = False
+        '
+        'lblEvent
+        '
+        Me.lblEvent.AutoSize = True
+        Me.lblEvent.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle
+        Me.lblEvent.Font = New System.Drawing.Font("Consolas", 9.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.lblEvent.ForeColor = System.Drawing.Color.White
+        Me.lblEvent.Location = New System.Drawing.Point(304, 120)
+        Me.lblEvent.Name = "lblEvent"
+        Me.lblEvent.Size = New System.Drawing.Size(72, 24)
+        Me.lblEvent.TabIndex = 271
+        Me.lblEvent.Text = "Label2"
+        Me.lblEvent.Visible = False
+        '
         'Game
         '
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Inherit
         Me.BackColor = System.Drawing.Color.Black
         Me.ClientSize = New System.Drawing.Size(1008, 690)
+        Me.Controls.Add(Me.pnlCombat)
         Me.Controls.Add(Me.picTrapf)
         Me.Controls.Add(Me.picStatuef)
         Me.Controls.Add(Me.picShopkeeperf)
@@ -1689,7 +1858,6 @@ Partial Class Game
         Me.Controls.Add(Me.picMarkRHair2)
         Me.Controls.Add(Me.picMarkRHair1)
         Me.Controls.Add(Me.picMarkFHair)
-        Me.Controls.Add(Me.lblEvent)
         Me.Controls.Add(Me.btnLeave)
         Me.Controls.Add(Me.btnFight)
         Me.Controls.Add(Me.btnNPCMG)
@@ -1741,6 +1909,7 @@ Partial Class Game
         Me.Controls.Add(Me.btnFilter)
         Me.Controls.Add(Me.lstInventory)
         Me.Controls.Add(Me.picPortrait)
+        Me.Controls.Add(Me.lblEvent)
         Me.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle
         Me.Icon = CType(resources.GetObject("$this.Icon"), System.Drawing.Icon)
         Me.MaximizeBox = False
@@ -1797,6 +1966,10 @@ Partial Class Game
         CType(Me.picShopkeeperf, System.ComponentModel.ISupportInitialize).EndInit()
         CType(Me.picStatuef, System.ComponentModel.ISupportInitialize).EndInit()
         CType(Me.picTrapf, System.ComponentModel.ISupportInitialize).EndInit()
+        Me.pnlCombat.ResumeLayout(False)
+        Me.pnlCombat.PerformLayout()
+        CType(Me.picPHealth, System.ComponentModel.ISupportInitialize).EndInit()
+        CType(Me.picEHbar, System.ComponentModel.ISupportInitialize).EndInit()
         Me.ResumeLayout(False)
         Me.PerformLayout()
 
@@ -1821,7 +1994,6 @@ Partial Class Game
     Friend WithEvents picMarkRHair2 As System.Windows.Forms.PictureBox
     Friend WithEvents picMarkRHair1 As System.Windows.Forms.PictureBox
     Friend WithEvents picMarkFHair As System.Windows.Forms.PictureBox
-    Friend WithEvents lblEvent As System.Windows.Forms.Label
     Friend WithEvents btnLeave As System.Windows.Forms.Button
     Friend WithEvents btnFight As System.Windows.Forms.Button
     Friend WithEvents btnNPCMG As System.Windows.Forms.Button
@@ -1928,5 +2100,18 @@ Partial Class Game
     Friend WithEvents picTrapf As System.Windows.Forms.PictureBox
     Friend WithEvents tmrKeyCD As System.Windows.Forms.Timer
     Friend WithEvents ReportToolStripMenuItem As System.Windows.Forms.ToolStripMenuItem
+    Friend WithEvents pnlCombat As System.Windows.Forms.Panel
+    Friend WithEvents lblCombatEvents As System.Windows.Forms.Label
+    Friend WithEvents lblPHealtDiff As System.Windows.Forms.Label
+    Friend WithEvents lblEHealthChange As System.Windows.Forms.Label
+    Friend WithEvents lblTurn As System.Windows.Forms.Label
+    Friend WithEvents lblPHealth As System.Windows.Forms.Label
+    Friend WithEvents lblPName As System.Windows.Forms.Label
+    Friend WithEvents lblEHealth As System.Windows.Forms.Label
+    Friend WithEvents lblEName As System.Windows.Forms.Label
+    Friend WithEvents picPHealth As System.Windows.Forms.PictureBox
+    Friend WithEvents picEHbar As System.Windows.Forms.PictureBox
+    Friend WithEvents lblEvent As System.Windows.Forms.Label
+    Friend WithEvents Label2 As System.Windows.Forms.Label
     Friend WithEvents DebugToolStripMenuItem As ToolStripMenuItem
 End Class

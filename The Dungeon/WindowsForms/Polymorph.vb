@@ -349,7 +349,7 @@
             p.iArrInd(5) = New Tuple(Of Integer, Boolean)(8, True)
             p.iArrInd(15) = New Tuple(Of Integer, Boolean)(3, True)
             p.iArrInd(16) = New Tuple(Of Integer, Boolean)(2, True)
-            If Not Game.player.perks(5) Or Not Game.player.title.Equals("Magic Girl") Then
+            If Not Game.player.perks(5) And Not Game.player.title.Equals("Magic Girl") Then
                 Game.player.pState.save(Game.player)
             End If
         ElseIf form = "princess" Then
@@ -380,7 +380,7 @@
                     p.iArrInd(9) = New Tuple(Of Integer, Boolean)(p.pState.iArrInd(9).Item1, True)
                     p.iArrInd(15) = New Tuple(Of Integer, Boolean)(10, True)
                     p.iArrInd(16) = New Tuple(Of Integer, Boolean)(6, True)
-                    If Not Game.player.perks(5) Or Not Game.player.title.Equals("Magic Girl") Then
+                    If Not Game.player.perks(5) And Not Game.player.title.Equals("Magic Girl") Then
                         Game.player.pState.save(Game.player)
                     End If
             End Select
@@ -601,14 +601,6 @@
                 p.defence -= 10
                 'final tf Stage
                 If Name.Equals("Targax") Then p.haircolor = Color.FromArgb(255, 20, 20, 20) Else p.haircolor = Color.FromArgb(255, 245, 231, 184)
-
-                If p.title.Equals("Magic Girl") Then
-                    p.iArrInd(16) = New Tuple(Of Integer, Boolean)(0, True)
-                    p.iArrInd(2) = New Tuple(Of Integer, Boolean)(7, True)
-                    Equipment.clothesChange("Magic_Girl_Outfit")
-                    p.breastSize = 3
-                    Equipment.portraitUDate()
-                End If
                 If Game.isMark Then
                     p.iArrInd(1) = New Tuple(Of Integer, Boolean)(CharacterGenerator.fRearHair2.Count - 2, True)
                     p.iArrInd(2) = New Tuple(Of Integer, Boolean)(6, True)
@@ -643,14 +635,32 @@
                     Else
                         p.iArrInd(9) = New Tuple(Of Integer, Boolean)(16, True)
                     End If
-                    If p.title.Equals("Magic Girl") Then
-                        p.haircolor = Color.FromArgb(255, 255, 250, 205)
-                        p.iArrInd(1) = New Tuple(Of Integer, Boolean)(10, True)
-                        p.iArrInd(5) = New Tuple(Of Integer, Boolean)(10, True)
-                        p.iArrInd(15) = New Tuple(Of Integer, Boolean)(7, True)
-                    End If
                     p.iArrInd(8) = New Tuple(Of Integer, Boolean)(6, True)
                 End If
+                If Game.floor < 6 Then p.pImage = Game.picPlayerB.BackgroundImage Else p.pImage = Game.picBimbof.BackgroundImage
+                p.TextColor = Color.HotPink
+                p.perks(1) = False
+                p.perksct(1) = 0
+            Case 2
+                p.iArrInd(16) = New Tuple(Of Integer, Boolean)(0, True)
+                p.iArrInd(2) = New Tuple(Of Integer, Boolean)(7, True)
+                Equipment.clothesChange("Magic_Girl_Outfit")
+                p.breastSize = 3
+                Equipment.portraitUDate()
+                p.haircolor = Color.FromArgb(255, 255, 250, 205)
+                p.iArrInd(1) = New Tuple(Of Integer, Boolean)(10, True)
+                p.iArrInd(5) = New Tuple(Of Integer, Boolean)(10, True)
+                p.iArrInd(15) = New Tuple(Of Integer, Boolean)(7, True)
+                p.iArrInd(6) = New Tuple(Of Integer, Boolean)(0, True)
+                p.iArrInd(8) = New Tuple(Of Integer, Boolean)(6, True)
+                p.iArrInd(9) = New Tuple(Of Integer, Boolean)(8, True)
+                p.iArrInd(13) = New Tuple(Of Integer, Boolean)(0, True)
+
+                Game.pushLblEvent("You immediatly feel funny, the increased magic in your system reacting swiftly with the gum.  In your haze, you look down to see your clothes have become tight and pink. You giggle, all traces of intelect vanishing as your body becomes more curvy and feminine. Your hair lengthens, becoming a platinum blonde, and your clothes finish changing to match your new figure.")
+                p.title = "Bimbo"
+                p.lust += 10
+                p.attack -= 10
+                p.defence -= 10
                 If Game.floor < 6 Then p.pImage = Game.picPlayerB.BackgroundImage Else p.pImage = Game.picBimbof.BackgroundImage
                 p.TextColor = Color.HotPink
                 p.perks(1) = False
@@ -661,29 +671,29 @@
         Select Case ind
             Case 0
                 p.iArrInd(6) = New Tuple(Of Integer, Boolean)(1, p.sexBool)
-                Game.pushLblEvent("Your ears twitch, becoming feline while Marissa gives you a malicious grin.  'I'm sure you tell where this is going,' she giggles.  You now have cat ears!")
+                Game.pushLblCombatEvent("Your ears twitch, becoming feline while Marissa gives you a malicious grin.  'I'm sure you tell where this is going,' she giggles.  You now have cat ears!")
                 p.lust += 5
             Case 1
                 p.iArrInd(4) = New Tuple(Of Integer, Boolean)(0, True)
-                Game.pushLblEvent("Your facial structure softens, and now you have a feminine face!")
+                Game.pushLblCombatEvent("Your facial structure softens, and now you have a feminine face!")
                 p.lust += 5
             Case 2
                 p.iArrInd(1) = New Tuple(Of Integer, Boolean)(12, True)
                 p.iArrInd(5) = New Tuple(Of Integer, Boolean)(17, True)
                 p.iArrInd(15) = New Tuple(Of Integer, Boolean)(1, True)
                 p.haircolor = Color.FromArgb(255, 20, 20, 20)
-                Game.pushLblEvent("Your hair grows down to your ass, and darkens to a shade of shiny black.  You now have long black hair!")
+                Game.pushLblCombatEvent("Your hair grows down to your ass, and darkens to a shade of shiny black.  You now have long black hair!")
             Case 3
                 p.iArrInd(7) = New Tuple(Of Integer, Boolean)(0, True)
                 p.iArrInd(9) = New Tuple(Of Integer, Boolean)(13, True)
-                Game.pushLblEvent("You wince and close your eye as a burning sensation flows through them. You now have kitten eyes!")
+                Game.pushLblCombatEvent("You wince and close your eye as a burning sensation flows through them. You now have kitten eyes!")
                 p.lust += 5
             Case 4
                 If Not p.sexBool Then
                     p.MtF()
                     p.be()
                     p.iArrInd(9) = New Tuple(Of Integer, Boolean)(13, True)
-                    Game.pushLblEvent("Your body slims down, and your chest inlates, giving you average sized breasts.  Soon after, your cock and balls shift into a vagina. You are now female!")
+                    Game.pushLblCombatEvent("Your body slims down, and your chest inlates, giving you average sized breasts.  Soon after, your cock and balls shift into a vagina. You are now female!")
                 Else
                     p.be()
                     p.perksct(6) += 1
@@ -693,7 +703,7 @@
                 p.iArrInd(2) = New Tuple(Of Integer, Boolean)(6, True)
                 p.iArrInd(3) = New Tuple(Of Integer, Boolean)(40, True)
                 p.iArrInd(8) = New Tuple(Of Integer, Boolean)(9, True)
-                Game.pushLblEvent("Your tits expand, your clothes shift, and you feel your will grow weaker. You are now permenantly a cat girl!  Soon you will be Marissa's pet! ")
+                Game.pushLblCombatEvent("Your tits expand, your clothes shift, and you feel your will grow weaker. You are now permenantly a cat girl!  Soon you will be Marissa's pet! ")
             Case 6
                 p.iArrInd(1) = New Tuple(Of Integer, Boolean)(12, True)
                 p.iArrInd(5) = New Tuple(Of Integer, Boolean)(17, True)
@@ -702,7 +712,7 @@
                 p.iArrInd(3) = New Tuple(Of Integer, Boolean)(40, True)
                 p.iArrInd(8) = New Tuple(Of Integer, Boolean)(9, True)
                 p.haircolor = Color.FromArgb(255, 20, 20, 20)
-                Game.pushLblEvent("Your hair grows down to your ass, and darkens to a shade of shiny black.  You now have long black hair!  Your tits expand, your clothes shift, and you feel your will grow weaker. You are now a cat girl!  Soon you will be Marissa's pet! ")
+                Game.pushLblCombatEvent("Your hair grows down to your ass, and darkens to a shade of shiny black.  You now have long black hair!  Your tits expand, your clothes shift, and you feel your will grow weaker. You are now a cat girl!  Soon you will be Marissa's pet! ")
             Case 7
                 If p.discipline < 5 Then
                     If p.sex = "Male" Then
@@ -723,8 +733,8 @@
                 End If
                 p.title = "Kitty"
                 p.be()
-                Game.pushLblEvent("As the last of your resistance drains away, all you can find yourself doing is focusing on your new mistress's voice as she orders you down onto all fours.  You happily oblige, purring softly, and she giggles.  ''Come on kitty, lets go!'' she orders and the two of you, with her leading, wander off into the darkness.  GAME OVER!")
-                MsgBox(Game.lblEvent.Text)
+                Game.pushLblCombatEvent("As the last of your resistance drains away, all you can find yourself doing is focusing on your new mistress's voice as she orders you down onto all fours.  You happily oblige, purring softly, and she giggles.  ''Come on kitty, lets go!'' she orders and the two of you, with her leading, wander off into the darkness.  GAME OVER!")
+                MsgBox(Game.lblCombatEvents.Text)
                 p.Die()
                 p.perks(6) = False
                 p.perksct(6) = 0
@@ -778,7 +788,7 @@
                     Game.player.createP()
                     Game.player.perks(8) = True
                 End If
-                If Not Game.player.perks(5) Or Not Game.player.title.Equals("Magic Girl") Then
+                If Not Game.player.perks(5) And Not Game.player.title.Equals("Magic Girl") Then
                     Game.player.pState.save(Game.player)
                 End If
         End Select

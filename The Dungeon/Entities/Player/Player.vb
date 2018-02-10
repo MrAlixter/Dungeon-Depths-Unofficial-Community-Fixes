@@ -50,6 +50,7 @@
 
     Public solFlag = False
     Public wingInd = 0
+    Public isAttacking = False
 
     'New takes no parameters and sets all of the inst. variables to temp variables.
     'Variables will be set at the start of a game
@@ -163,14 +164,17 @@
         currTarget = m
     End Sub
     Public Sub attackCMD(ByVal target As Monster)
+        isAttacking = False
         Randomize()
         Dim dmg As Integer = equippedWeapon.attack(Me, target)
         If dmg = -1 Then
             Game.lstLog.Items.Add(CStr("You miss" & target.title & " " & target.getName() & "!"))
+            Game.pushLblCombatEvent(CStr("You miss" & target.title & " " & target.getName() & "!"))
             Exit Sub
         ElseIf dmg = -2 Then
             dmg += (12 + (getAttack()) + (equippedWeapon.aBoost)) * 2
             Game.lstLog.Items.Add(CStr("You hit" & target.title & " " & target.getName() & " for " & dmg & " damage!" & ".  Critical hit!"))
+            Game.pushLblCombatEvent("You hit" & target.title & " " & target.getName() & " for " & dmg & " damage!" & ".  Critical hit!")
             target.takeDMG(dmg)
             target.isStunned = True
             target.stunct = 0
@@ -180,6 +184,7 @@
         End If
         Game.lstLog.Items.Add(CStr("You hit" & target.title & " " & target.getName() & " for " & dmg & " damage!"))
         target.takeDMG(dmg)
+        Game.pushLblCombatEvent(CStr("You hit" & target.title & " " & target.getName() & " for " & dmg & " damage!"))
         Game.lstLog.TopIndex = Game.lstLog.Items.Count - 1
     End Sub
     Public Sub takeDMG(ByVal dmg As Integer)
@@ -187,7 +192,9 @@
         Dim actualDMG As Integer = dmg - ((getDefence() / 100) * dmg)
         If actualDMG < 1 Then actualDMG = 1
         health -= actualDMG
+        Game.lblPHealtDiff.Tag -= actualDMG
         Game.lstLog.Items.Add(CStr("You got hit! -" & actualDMG & " health!"))
+        Game.pushLblCombatEvent(CStr("You got hit! -" & actualDMG & " health!"))
         Game.lstLog.TopIndex = Game.lstLog.Items.Count - 1
     End Sub
 
@@ -207,7 +214,7 @@
                     "around it to gold as well. In a matter of seconds, all that is left of " & Me.name & " the " & vbCrLf & _
                     Me.title & " is a solid gold statue. The shopkeeper sighs, muttering to no one in particular, " & vbCrLf & _
                     vbCrLf & vbCrLf & "'Now how am I going to get you back to the refinery?'"
-                Game.pushLblEvent(out)
+                'Game.pushLblEvent(out)
                 title = "Trophy"
                 MsgBox(out)
             ElseIf currTarget.name.Equals("Mindless Bimbo") Then
@@ -431,7 +438,7 @@
 
     'updatable functions
     Sub update() Implements Updatable.update
-        If Not (currTarget Is Nothing) Then attackCMD(currTarget)
+        If Not (currTarget Is Nothing) And isAttacking Then attackCMD(currTarget)
         bsizeroute()
         If hunger >= 100 Then
             perks(0) = True
@@ -563,7 +570,11 @@
                 End If
                 Select Case perksct(1)
                     Case 0
-                        If Not title.Equals("Magic Girl") And Not perks(5) Then pState.save(Me)
+                        If Not title.Equals("Magic Girl") And Not perks(5) Then
+                            pState.save(Me)
+                        ElseIf title.Equals("Magic Girl") Then
+                            Polymorph.transform(Me, "bimbo", 2)
+                        End If
                         lust += 10
                         'tfstage1
                         iArrInd(11) = New Tuple(Of Integer, Boolean)(0, sexBool)
@@ -581,7 +592,7 @@
                 End Select
                 perksct(1) += 1
                 Dim outputln1 As String = "Chewing the gum causes a dizzy calm wash to over you."
-                If perksct(1) = 1 Then Game.pushLblEvent(outputln1)
+                If perksct(1) = 1 And Not title.Equals("Magic Girl") Then Game.pushLblEvent(outputln1)
             Else
                 Dim outputln1 As String = "Chewing the gum make your head feel warm and fuzzy and stuff. You like, totally, love this gum!"
                 Game.pushLblEvent(outputln1)
@@ -1227,6 +1238,7 @@
         If iArrInd(10).Item1 < 3 Then iArr(10) = CharacterGenerator.recolor(t(10), c)
         If Not solFlag Then Game.picPortrait.BackgroundImage = CharacterGenerator.CreateBMP(iArr)
     End Sub
+
     Public Sub changeSkinColor(ByVal c As Color)
         skincolor = c
         Dim t(16) As Image
@@ -1266,7 +1278,7 @@
             If iArrInd(6).Item1 = 0 Or iArrInd(6).Item1 = 3 Then
                 t(6) = CharacterGenerator.getImg("img/fEars")(iArrInd(6).Item1)
                 iArr(6) = CharacterGenerator.recolor2(t(6), c)
-            ElseIf iArrInd(6).Item1 = 7 Or iArrInd(6).Item1 = 8 Then
+            ElseIf iArrInd(6).Item1 = 6 Then
                 t(6) = CharacterGenerator.getImg("img/fTF/tfEars")(iArrInd(6).Item1 - 5)
                 iArr(6) = CharacterGenerator.recolor2(t(6), c)
             End If
