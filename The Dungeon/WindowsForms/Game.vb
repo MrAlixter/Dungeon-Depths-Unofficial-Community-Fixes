@@ -1,4 +1,6 @@
-﻿Public Class Game
+﻿Imports System.ComponentModel
+
+Public Class Game
     'Form1 is the main driver form that runs the game
 
     'board instance variables
@@ -51,6 +53,8 @@
     Public invFilters() As Boolean = {True, True, True, True, True, True}
     Dim eClock As Integer = 15
     Public solFlag As Boolean = False
+    Public bwCGInit As BackgroundWorker = New BackgroundWorker
+
     'startup/new level methods
     'Form1_Load handles the loading of the form
     Private Sub Form1_Load(sender As Object, e As EventArgs) Handles Me.Load
@@ -106,6 +110,7 @@
                 Me.Close()
             End If
         End If
+
     End Sub
     Sub loadPotionList()
         Randomize()
@@ -441,7 +446,6 @@
         writer.Flush()
         writer.Close()
     End Sub
-
 
     'placeStairs, placeChest, placeTraps, and placeNPCs place their respective entities on mBoard
     Sub placeStairs()
@@ -1291,7 +1295,15 @@
     End Sub
     Sub toSOL()
         pnlSaveLoad.Visible = True
-        CharacterGenerator.init()
+        btnS1.Enabled = True
+        btnS2.Enabled = True
+        btnS3.Enabled = True
+        btnS4.Enabled = True
+        btnS5.Enabled = True
+        btnS6.Enabled = True
+        btnS7.Enabled = True
+        btnS8.Enabled = True
+
         If System.IO.File.Exists("s.ave") Then convertSave("s.ave")
 
         If System.IO.File.Exists("s1.ave") Then
@@ -1341,7 +1353,6 @@
         Else
             If solFlag Then btnS8.Enabled = False
         End If
-
     End Sub
     Sub closesol()
         Dim int As Integer = 100 - player.getSpeed
@@ -1642,9 +1653,11 @@
             pushLblEvent("You can't use items now!")
             Exit Sub
         End If
+        Dim tmpInd As Integer = lstInventory.TopIndex
         selectedItem.use()
         player.invNeedsUDate = True
         player.UIupdate()
+        lstInventory.TopIndex = tmpInd
         lstInventory.SelectedItem = Nothing
         selectedItem = Nothing
         btnUse.Enabled = False
@@ -1825,7 +1838,14 @@
             btnS.Visible = False
             btnL.Visible = False
             btnControls.Visible = False
+            bwCGInit = New BackgroundWorker()
+            bwCGInit.WorkerReportsProgress = True
+            bwCGInit.WorkerSupportsCancellation = True
+            AddHandler bwCGInit.DoWork, AddressOf CharacterGenerator.init
+            AddHandler bwCGInit.ProgressChanged, AddressOf bw_ProgressChanged
+            AddHandler bwCGInit.RunWorkerCompleted, AddressOf bw_RunWorkerCompleted
             CharacterGenerator.init()
+
             CharacterGenerator.fFrontHair(0) = CharacterGenerator.picPort.Image
             CharacterGenerator.mFrontHair(0) = CharacterGenerator.picPort.Image
             newBoard()
@@ -2195,6 +2215,20 @@
         Process.Start("https://bitbucket.org/VowelHeavyUsername/dungeon_depths/issues?status=new&status=open")
     End Sub
 
+    Private Sub bw_ProgressChanged(ByVal sender As Object, ByVal e As ProgressChangedEventArgs)
+        If pbarLoad.Visible = False Then pbarLoad.Visible = True
+        pbarLoad.Value = (e.ProgressPercentage / 100) * 100
+    End Sub
+    Private Sub bw_RunWorkerCompleted(ByVal sender As Object, ByVal e As RunWorkerCompletedEventArgs)
+        If e.Cancelled = True Then
+            pbarLoad.Visible = False
+        ElseIf e.Error IsNot Nothing Then
+            MsgBox("Error: " & e.Error.Message)
+        Else
+            pbarLoad.Visible = False
+        End If
+    End Sub
+
     Sub pushLblCombatEvent(ByVal s As String)
         Dim sSplit() As String = s.Split(" ")
         Dim c As Integer = 0
@@ -2324,4 +2358,5 @@
         If Not iarr(15).Equals(CharacterGenerator.picPort.Image) Then iarr(15) = CharacterGenerator.recolor(t(15), c)
         If iarrind(10).Item1 < 3 Then iarr(10) = CharacterGenerator.recolor(t(10), c)
     End Sub
+
 End Class
