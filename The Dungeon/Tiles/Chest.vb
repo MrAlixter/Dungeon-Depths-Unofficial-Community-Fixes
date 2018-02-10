@@ -35,7 +35,10 @@
                 MessageBox.Show("Chest @ (" & CStr(x) & ", " & CStr(y) & ") tried making an item out of tier range.\nDefaulting to tier 1.")
                 itemTier = 1
             End If
-            Dim itemID As Integer = tiers(itemTier)(Int(Rnd() * tiers(itemTier).Count)).id 'Int(Rnd() * tier.Length))
+
+            Dim rng As Integer = Int(Rnd() * tiers(itemTier).Count)
+            If rng > tiers(itemTier).Count - 1 Then rng = tiers(itemTier).Count - 1
+            Dim itemID As Integer = tiers(itemTier)(rng).id 'Int(Rnd() * tier.Length))
             chest.add(itemID, 1)
             If itemID = 43 Then contents(itemID) += Int(Rnd() * 150)
         Next

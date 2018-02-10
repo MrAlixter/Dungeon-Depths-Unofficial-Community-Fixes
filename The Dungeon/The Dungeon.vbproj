@@ -102,6 +102,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Items\Usable\Potions\Mystery Potions\BSPotion.vb" />
+    <Compile Include="Items\Usable\Potions\Mystery Potions\HyperManaPotion.vb" />
     <Compile Include="WindowsForms\About.Designer.vb">
       <DependentUpon>About.vb</DependentUpon>
     </Compile>
@@ -153,6 +154,7 @@
     <Compile Include="WindowsForms\Equipment.vb">
       <SubType>Form</SubType>
     </Compile>
+    <Compile Include="Items\Usable\Potions\Mystery Potions\HyperHealPotion.vb" />
     <Compile Include="WindowsForms\Polymorph.Designer.vb">
       <DependentUpon>Polymorph.vb</DependentUpon>
     </Compile>

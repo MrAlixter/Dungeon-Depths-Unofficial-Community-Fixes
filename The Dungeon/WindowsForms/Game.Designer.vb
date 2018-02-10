@@ -164,6 +164,7 @@ Partial Class Game
         Me.picPHealth = New System.Windows.Forms.PictureBox()
         Me.picEHbar = New System.Windows.Forms.PictureBox()
         Me.lblEvent = New System.Windows.Forms.Label()
+        Me.pbarLoad = New System.Windows.Forms.ProgressBar()
         CType(Me.picMarkBClothes, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me.picMarkBRearHair2, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me.picMarkBRearHair1, System.ComponentModel.ISupportInitialize).BeginInit()
@@ -431,20 +432,6 @@ Partial Class Game
         Me.picMarkFHair.TabIndex = 191
         Me.picMarkFHair.TabStop = False
         Me.picMarkFHair.Visible = False
-        '
-        'lblEvent
-        '
-        Me.lblEvent.AutoSize = True
-        Me.lblEvent.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle
-        Me.lblEvent.Font = New System.Drawing.Font("Consolas", 8.0!)
-        Me.lblEvent.ForeColor = System.Drawing.Color.White
-        Me.lblEvent.Location = New System.Drawing.Point(406, 111)
-        Me.lblEvent.Name = "lblEvent"
-        Me.lblEvent.Size = New System.Drawing.Size(65, 21)
-        Me.lblEvent.TabIndex = 164
-        Me.lblEvent.Text = "Label2"
-        Me.lblEvent.TextAlign = System.Drawing.ContentAlignment.MiddleLeft
-        Me.lblEvent.Visible = False
         '
         'btnLeave
         '
@@ -981,7 +968,7 @@ Partial Class Game
         Me.ReportToolStripMenuItem.BackColor = System.Drawing.Color.Black
         Me.ReportToolStripMenuItem.ForeColor = System.Drawing.Color.White
         Me.ReportToolStripMenuItem.Name = "ReportToolStripMenuItem"
-        Me.ReportToolStripMenuItem.Size = New System.Drawing.Size(137, 22)
+        Me.ReportToolStripMenuItem.Size = New System.Drawing.Size(182, 30)
         Me.ReportToolStripMenuItem.Text = "Report"
         '
         'DebugToolStripMenuItem
@@ -989,7 +976,7 @@ Partial Class Game
         Me.DebugToolStripMenuItem.BackColor = System.Drawing.Color.Black
         Me.DebugToolStripMenuItem.ForeColor = System.Drawing.Color.White
         Me.DebugToolStripMenuItem.Name = "DebugToolStripMenuItem"
-        Me.DebugToolStripMenuItem.Size = New System.Drawing.Size(137, 22)
+        Me.DebugToolStripMenuItem.Size = New System.Drawing.Size(182, 30)
         Me.DebugToolStripMenuItem.Text = "Debug"
         '
         'InfoToolStripMenuItem
@@ -1258,7 +1245,7 @@ Partial Class Game
         Me.fPotion.ForeColor = System.Drawing.Color.White
         Me.fPotion.Location = New System.Drawing.Point(738, 444)
         Me.fPotion.Name = "fPotion"
-        Me.fPotion.Size = New System.Drawing.Size(68, 17)
+        Me.fPotion.Size = New System.Drawing.Size(98, 23)
         Me.fPotion.TabIndex = 237
         Me.fPotion.Text = "Potions"
         Me.fPotion.UseVisualStyleBackColor = True
@@ -1273,7 +1260,7 @@ Partial Class Game
         Me.fFood.ForeColor = System.Drawing.Color.White
         Me.fFood.Location = New System.Drawing.Point(738, 466)
         Me.fFood.Name = "fFood"
-        Me.fFood.Size = New System.Drawing.Size(50, 17)
+        Me.fFood.Size = New System.Drawing.Size(71, 23)
         Me.fFood.TabIndex = 238
         Me.fFood.Text = "Food"
         Me.fFood.UseVisualStyleBackColor = True
@@ -1288,7 +1275,7 @@ Partial Class Game
         Me.fArmor.ForeColor = System.Drawing.Color.White
         Me.fArmor.Location = New System.Drawing.Point(738, 488)
         Me.fArmor.Name = "fArmor"
-        Me.fArmor.Size = New System.Drawing.Size(56, 17)
+        Me.fArmor.Size = New System.Drawing.Size(80, 23)
         Me.fArmor.TabIndex = 239
         Me.fArmor.Text = "Armor"
         Me.fArmor.UseVisualStyleBackColor = True
@@ -1303,7 +1290,7 @@ Partial Class Game
         Me.fWeapon.ForeColor = System.Drawing.Color.White
         Me.fWeapon.Location = New System.Drawing.Point(738, 510)
         Me.fWeapon.Name = "fWeapon"
-        Me.fWeapon.Size = New System.Drawing.Size(62, 17)
+        Me.fWeapon.Size = New System.Drawing.Size(89, 23)
         Me.fWeapon.TabIndex = 240
         Me.fWeapon.Text = "Weapon"
         Me.fWeapon.UseVisualStyleBackColor = True
@@ -1318,7 +1305,7 @@ Partial Class Game
         Me.fMisc.ForeColor = System.Drawing.Color.White
         Me.fMisc.Location = New System.Drawing.Point(738, 532)
         Me.fMisc.Name = "fMisc"
-        Me.fMisc.Size = New System.Drawing.Size(50, 17)
+        Me.fMisc.Size = New System.Drawing.Size(71, 23)
         Me.fMisc.TabIndex = 241
         Me.fMisc.Text = "Misc"
         Me.fMisc.UseVisualStyleBackColor = True
@@ -1797,13 +1784,23 @@ Partial Class Game
         Me.lblEvent.Size = New System.Drawing.Size(72, 24)
         Me.lblEvent.TabIndex = 271
         Me.lblEvent.Text = "Label2"
+        Me.lblEvent.TextAlign = System.Drawing.ContentAlignment.MiddleLeft
         Me.lblEvent.Visible = False
+        '
+        'pbarLoad
+        '
+        Me.pbarLoad.Location = New System.Drawing.Point(297, 361)
+        Me.pbarLoad.Name = "pbarLoad"
+        Me.pbarLoad.Size = New System.Drawing.Size(395, 30)
+        Me.pbarLoad.TabIndex = 272
+        Me.pbarLoad.Visible = False
         '
         'Game
         '
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Inherit
         Me.BackColor = System.Drawing.Color.Black
         Me.ClientSize = New System.Drawing.Size(1008, 690)
+        Me.Controls.Add(Me.pbarLoad)
         Me.Controls.Add(Me.pnlCombat)
         Me.Controls.Add(Me.picTrapf)
         Me.Controls.Add(Me.picStatuef)
@@ -2114,4 +2111,5 @@ Partial Class Game
     Friend WithEvents lblEvent As System.Windows.Forms.Label
     Friend WithEvents Label2 As System.Windows.Forms.Label
     Friend WithEvents DebugToolStripMenuItem As ToolStripMenuItem
+    Friend WithEvents pbarLoad As System.Windows.Forms.ProgressBar
 End Class

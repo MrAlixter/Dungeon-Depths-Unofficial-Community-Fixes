@@ -371,8 +371,11 @@
         Return iArr
     End Function
     'initializes and orders the image libraries without launching a CharacterGenerator1
-    Public Sub init()
+    Public Sub init() '(ByVal sender As Object, ByVal e As System.ComponentModel.DoWorkEventArgs)
+        'Dim worker As System.ComponentModel.BackgroundWorker = CType(sender, System.ComponentModel.BackgroundWorker)
+
         currAtrButton = btnBody
+        'worker.ReportProgress(1)
         fGlasses = getImg("img/fGlasses")
         fAccA = getImg("img/fAccA")
         fHat = getImg("img/fHat")
@@ -380,6 +383,7 @@
         fCloak = getImg("img/fCloakF")
         fClothing = getImg("img/fClothing")
         fEars = getImg("img/fEars")
+        'worker.ReportProgress(15)
         fEyebrows = getImg("img/fEyebrows")
         fEyes = getImg("img/fEyes")
         fFace = getImg("img/fFace")
@@ -392,6 +396,7 @@
         bkg = getImg("img/bkg")
 
         initTF()
+        'worker.ReportProgress(50)
 
         mGlasses = getImg("img/mGlasses")
         mAccA = getImg("img/mAccA")
@@ -409,19 +414,23 @@
         mNose = getImg("img/mNose")
         mRearHair1 = getImg("img/mRearHair1")
         mRearHair2 = getImg("img/mRearHair2")
+        'worker.ReportProgress(60)
 
         mTFAccA = getImg("img/mTf/tfAccA")
         mTFBody = getImg("img/mTf/tfBody")
         mTFEars = getImg("img/mTf/tfEars")
         mTFEyes = getImg("img/mTf/tfEyes")
         mTFface = getImg("img/mTf/tfFace")
+        'worker.ReportProgress(65)
         mTfFrontHair = getImg("img/mTf/tfFrontHair")
         mTFMouth = getImg("img/mTf/tfMouth")
         mTFNose = getImg("img/mTf/tfNose")
         mTFRearhair1 = getImg("img/mTf/tfRearHair1")
         mTfRearhair2 = getImg("img/mTf/tfRearHair2")
+        'worker.ReportProgress(70)
 
         wings = getImg("img/Wings")
+        'worker.ReportProgress(75)
 
         fGlasses(0) = picPort.Image
         fCloak(0) = picPort.Image
@@ -435,6 +444,7 @@
         mHat(0) = picPort.Image
         mFrontHair(0) = picPort.Image
         mFacialMark(0) = picPort.Image
+        'worker.ReportProgress(78)
 
         fAccA.AddRange(fTFAccA)
         fBody.AddRange(fTFBody)
@@ -450,6 +460,7 @@
         fHat.Add(fTFBody(10))
         fHat.Add(fTFBody(12))
         fHat.Add(fTFBody(13))
+        'worker.ReportProgress(80)
 
         fFrontHair.Add(Game.picMarkBFHair.BackgroundImage)
         fRearHair1.Add(Game.picMarkBRearHair1.BackgroundImage)
@@ -460,7 +471,7 @@
         fRearHair2.Add(Game.picFMarkRHair2.BackgroundImage)
         fClothing.Add(Game.picfMarkClothes.BackgroundImage)
         fBody.Add(Game.picFMarkBody.BackgroundImage)
-
+        'worker.ReportProgress(85)
 
         mAccA.AddRange(mTFAccA)
         mBody.AddRange(mTFBody)
@@ -480,6 +491,7 @@
         mRearHair1.Add(Game.picMarkRHair1.BackgroundImage)
         mRearHair2.Add(Game.picMarkRHair2.BackgroundImage)
         mClothing.Add(Game.picMarkClothes.BackgroundImage)
+        'worker.ReportProgress(90)
 
         fAttributes(0) = bkg
         fAttributes(1) = fRearHair2
@@ -499,6 +511,8 @@
         fAttributes(15) = fFrontHair
         fAttributes(16) = fHat
 
+        'worker.ReportProgress(95)
+
         mAttributes(0) = bkg
         mAttributes(1) = mRearHair2
         mAttributes(2) = mBody
@@ -516,6 +530,7 @@
         mAttributes(14) = mAccA
         mAttributes(15) = mFrontHair
         mAttributes(16) = mHat
+        'worker.ReportProgress(100)
     End Sub
     'orders the image libraries by number, not name
     Sub initTF()
@@ -553,7 +568,6 @@
         fTFEyes = range
 
         fTFface = getImg("img/fTF/tfFace")
-
         fTfFrontHair = getImg("img/fTF/tfFrontHair")
         offset = fTfFrontHair.Count - 4
         range = fTfFrontHair.GetRange(offset, 4)
@@ -583,7 +597,6 @@
         temp = fTfRearhair2.GetRange(0, offset)
         range.AddRange(temp)
         fTfRearhair2 = range
-
     End Sub
     'getImg reads all .png files in a directory into a List data structure
     Shared Function getImg(ByVal direct As String) As List(Of Image)
