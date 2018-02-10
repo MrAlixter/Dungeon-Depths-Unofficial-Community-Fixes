@@ -101,6 +101,14 @@
             End If
         Next
     End Sub
+    Sub loadPotionListFromFile()
+        For i = 0 To player.inventory.Count - 1
+            If player.inventory(i).GetType().IsSubclassOf(GetType(MysteryPotion)) Then
+                CType(player.inventory(i), MysteryPotion).setName(Potions(0).getName())
+                Potions.RemoveAt(0)
+            End If
+        Next
+    End Sub
     'newGame prepares the application at the start of a new game
     Sub newGame()
         combatmode = False
@@ -1093,6 +1101,9 @@
                 End If
             Next
         Next
+        Dim tempPotions As ArrayList = Potions.Clone()
+        loadPotionListFromFile()
+        Potions = tempPotions
         'For i = 0 To UBound(HPotionNames)
         '    HPotionNames(i) = reader.ReadLine()
         'Next
@@ -1806,11 +1817,11 @@
             btnS.Visible = True
             btnL.Visible = True
             btnControls.Visible = True
-        Catch ex2 As Exception
-            MsgBox("Error 005: Error in loaded in save file!")
-            btnS.Visible = True
-            btnL.Visible = True
-            btnControls.Visible = True
+            'Catch ex2 As Exception
+            '    MsgBox("Error 005: Error in loaded in save file!")
+            '    btnS.Visible = True
+            '    btnL.Visible = True
+            '    btnControls.Visible = True
         End Try
     End Sub
     Private Sub btnControls_Click(sender As Object, e As EventArgs) Handles btnControls.Click
