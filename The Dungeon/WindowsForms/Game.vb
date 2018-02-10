@@ -55,7 +55,6 @@ Public Class Game
     Public invFilters() As Boolean = {True, True, True, True, True, True}
     Dim eClock As Integer = 15
     Public solFlag As Boolean = False
-
     Private trd As Thread
     Dim imagesWorker As BackgroundWorker
     Private savePics As New List(Of Image)(9)
@@ -130,10 +129,11 @@ Public Class Game
                 Me.Close()
             End If
         End If
+
     End Sub
     Sub loadPotionList()
         Randomize()
-        Dim HiddenNames As ArrayList = New ArrayList({"Red_Potion", "Green_Potion", "Blue_Potion", "Yellow_Potion", "Glowing_Potion", "Murky_Potion", "Purple_Potion", "Clear_Potion", "Smokey_Potion"})
+        Dim HiddenNames As ArrayList = New ArrayList({"Red_Potion", "Green_Potion", "Blue_Potion", "Yellow_Potion", "Glowing_Potion", "Murky_Potion", "Purple_Potion", "Clear_Potion", "Smokey_Potion", "Rose_Potion", "Aqua_Potion", "Glittery_Potion"})
         Dim index As Integer = 0
         For i = 0 To player.inventory.Count - 1
             If player.inventory(i).GetType().IsSubclassOf(GetType(MysteryPotion)) Then
@@ -455,7 +455,6 @@ Public Class Game
         writer.Flush()
         writer.Close()
     End Sub
-
 
     'placeStairs, placeChest, placeTraps, and placeNPCs place their respective entities on mBoard
     Sub placeStairs()
@@ -1678,9 +1677,11 @@ Public Class Game
             pushLblEvent("You can't use items now!")
             Exit Sub
         End If
+        Dim tmpInd As Integer = lstInventory.TopIndex
         selectedItem.use()
         player.invNeedsUDate = True
         player.UIupdate()
+        lstInventory.TopIndex = tmpInd
         lstInventory.SelectedItem = Nothing
         selectedItem = Nothing
         btnUse.Enabled = False
@@ -1857,10 +1858,15 @@ Public Class Game
     End Sub
     'btnL is the loadSave button on the start menu
     Private Sub btnL_Click(sender As Object, e As EventArgs) Handles btnL.Click
+        btnS.Visible = False
+        btnL.Visible = False
+        btnControls.Visible = False
+        Application.DoEvents()
         Try
-            btnS.Visible = False
-            btnL.Visible = False
-            btnControls.Visible = False
+            CharacterGenerator.init()
+
+            CharacterGenerator.fFrontHair(0) = CharacterGenerator.picPort.Image
+            CharacterGenerator.mFrontHair(0) = CharacterGenerator.picPort.Image
             solFlag = True
             toSOL()
         Catch ex As System.IO.FileNotFoundException
@@ -1868,11 +1874,11 @@ Public Class Game
             btnS.Visible = True
             btnL.Visible = True
             btnControls.Visible = True
-            'Catch ex2 As Exception
-            '    MsgBox("Error 005: Error in loaded in save file!")
-            '    btnS.Visible = True
-            '    btnL.Visible = True
-            '    btnControls.Visible = True
+        Catch ex2 As Exception
+            MsgBox("Error 005: Error in loaded in save file!")
+            btnS.Visible = True
+            btnL.Visible = True
+            btnControls.Visible = True
         End Try
     End Sub
     Private Sub btnControls_Click(sender As Object, e As EventArgs) Handles btnControls.Click
@@ -2228,6 +2234,20 @@ Public Class Game
         Process.Start("https://bitbucket.org/VowelHeavyUsername/dungeon_depths/issues?status=new&status=open")
     End Sub
 
+    Private Sub bw_ProgressChanged(ByVal sender As Object, ByVal e As ProgressChangedEventArgs)
+        If pbarLoad.Visible = False Then pbarLoad.Visible = True
+        pbarLoad.Value = (e.ProgressPercentage / 100) * 100
+    End Sub
+    Private Sub bw_RunWorkerCompleted(ByVal sender As Object, ByVal e As RunWorkerCompletedEventArgs)
+        If e.Cancelled = True Then
+            pbarLoad.Visible = False
+        ElseIf e.Error IsNot Nothing Then
+            MsgBox("Error: " & e.Error.Message)
+        Else
+            pbarLoad.Visible = False
+        End If
+    End Sub
+
     Sub pushLblCombatEvent(ByVal s As String)
         Dim sSplit() As String = s.Split(" ")
         Dim c As Integer = 0
@@ -2250,7 +2270,8 @@ Public Class Game
                 ct = 0
             End If
         Loop
-        lblCombatEvents.Text += (out & vbCrLf)
+        lblCombatEvents.Text += (out & vbCrLf &
+                                 "-------------------------------------------------" & vbCrLf)
     End Sub
     Sub updatePnlCombat(ByVal p As Player, ByVal t As Monster)
         If lblTurn.Text.Equals("Turn: " & turn) Or t Is Nothing Then Exit Sub
@@ -2368,7 +2389,6 @@ Public Class Game
         If Not iarr(15).Equals(CharacterGenerator.picPort.Image) Then iarr(15) = CharacterGenerator.recolor(t(15), c)
         If iarrind(10).Item1 < 3 Then iarr(10) = CharacterGenerator.recolor(t(10), c)
     End Sub
-
     Private Sub prefetchImages()
         If imagesWorkerArg Is Nothing Then
             savePicsReady = False
