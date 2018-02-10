@@ -1,4 +1,5 @@
 ﻿Imports System.ComponentModel
+Imports System.Threading
 
 Public Class Game
     'Form1 is the main driver form that runs the game
@@ -53,11 +54,21 @@ Public Class Game
     Public invFilters() As Boolean = {True, True, True, True, True, True}
     Dim eClock As Integer = 15
     Public solFlag As Boolean = False
-    Public bwCGInit As BackgroundWorker = New BackgroundWorker
+    Private trd As Thread
+    Dim imagesWorker As BackgroundWorker
+    Private savePics As New List(Of Image)(9)
+    Dim imagesWorkerArg = Nothing
+    Dim savePicsReady As Boolean = False
+    Dim boardReady As Boolean = False
 
     'startup/new level methods
     'Form1_Load handles the loading of the form
     Private Sub Form1_Load(sender As Object, e As EventArgs) Handles Me.Load
+        imagesWorker = New BackgroundWorker
+        AddHandler imagesWorker.DoWork, AddressOf prefetchImages
+        imagesWorkerArg = Nothing
+        imagesWorker.RunWorkerAsync()
+
         loadPotionList()
         titleList.Add("Warrior")
         titleList.Add("Mage")
@@ -135,6 +146,18 @@ Public Class Game
     End Sub
     'newGame prepares the application at the start of a new game
     Sub newGame()
+        floorLayouts.Add("placeholder")
+        floorLayouts.Add(genRNDLVLCode())
+        floorLayouts.Add(genRNDLVLCode())
+        floorLayouts.Add(genRNDLVLCode())
+
+        'Generate board in background'
+        'boardReady = False
+        'Dim boardWorker = New BackgroundWorker
+        'AddHandler boardWorker.DoWork, AddressOf workerPrepareBoard
+        'boardWorker.RunWorkerAsync(False)
+
+
         combatmode = False
         btnS.Visible = False
         btnL.Visible = False
@@ -161,32 +184,8 @@ Public Class Game
             End If
         Next
 
-        floorLayouts.Add("placeholder")
-        floorLayouts.Add(genRNDLVLCode())
-        floorLayouts.Add(genRNDLVLCode())
-        floorLayouts.Add(genRNDLVLCode())
-        initializeBoard()
-
-        'potion name shuffle
-        '[DEPRECATED]
-        'THIS HAS BEEN MOVED TO THE CREATION OF THE POTION LIST IN loadPotionList()
-        'ShuffleArray(HPotionNames)
-        'For i = 0 To UBound(HPotionNames)
-        '    'TODO
-        '    'MAKE POTIONS ADJUST THEIR NAMES CORRECTLY, NO MATTER WHERE THEY ARE IN THE INVENTORY
-        '    'Make potion array? 
-
-        '    If i < 5 Then
-        '        player.inventory(25 + i).setName(HPotionNames(i))
-        '        player.inventorynames(25 + i) = HPotionNames(i)
-        '    Else
-        '        Select Case i
-        '            Case 5
-        '                player.inventory(59).setName(HPotionNames(i))
-        '                player.inventorynames(59) = HPotionNames(i)
-        '        End Select
-        '    End If
-        'Next
+        initializeBoard(False)
+        drawBoard()
 
         player.currState = New State(player)
         player.sState = New State(player)
@@ -200,7 +199,7 @@ Public Class Game
         lstLog.TopIndex = lstLog.Items.Count - 1
     End Sub
     'initializeBoard increments the floor count, and generates the next level
-    Private Sub initializeBoard()
+    Private Sub initializeBoard(Optional Draw As Boolean = True)
         floor += 1
         newBoard()
         If floor < 4 Then
@@ -208,7 +207,7 @@ Public Class Game
         Else
             generateLevel(genRNDLVLCode())
         End If
-        drawBoard()
+        If Draw Then drawBoard()
     End Sub
     'newBoard disposes of the old board and its graphical representation
     Sub newBoard()
@@ -1176,6 +1175,8 @@ Public Class Game
             End Try
         Else
             save("s1.ave")
+            imagesWorkerArg = 1
+            imagesWorker.RunWorkerAsync()
         End If
         pnlSaveLoad.Visible = False
         If picStart.Visible Then closesol()
@@ -1191,6 +1192,8 @@ Public Class Game
             End Try
         Else
             save("s2.ave")
+            imagesWorkerArg = 2
+            imagesWorker.RunWorkerAsync()
         End If
         pnlSaveLoad.Visible = False
         If picStart.Visible Then closesol()
@@ -1206,6 +1209,8 @@ Public Class Game
             End Try
         Else
             save("s3.ave")
+            imagesWorkerArg = 3
+            imagesWorker.RunWorkerAsync()
         End If
         pnlSaveLoad.Visible = False
         If picStart.Visible Then closesol()
@@ -1221,6 +1226,8 @@ Public Class Game
             End Try
         Else
             save("s4.ave")
+            imagesWorkerArg = 4
+            imagesWorker.RunWorkerAsync()
         End If
         pnlSaveLoad.Visible = False
         If picStart.Visible Then closesol()
@@ -1236,6 +1243,8 @@ Public Class Game
             End Try
         Else
             save("s5.ave")
+            imagesWorkerArg = 5
+            imagesWorker.RunWorkerAsync()
         End If
         pnlSaveLoad.Visible = False
         If picStart.Visible Then closesol()
@@ -1251,6 +1260,8 @@ Public Class Game
             End Try
         Else
             save("s6.ave")
+            imagesWorkerArg = 6
+            imagesWorker.RunWorkerAsync()
         End If
         pnlSaveLoad.Visible = False
         If picStart.Visible Then closesol()
@@ -1266,6 +1277,8 @@ Public Class Game
             End Try
         Else
             save("s7.ave")
+            imagesWorkerArg = 7
+            imagesWorker.RunWorkerAsync()
         End If
         pnlSaveLoad.Visible = False
         If picStart.Visible Then closesol()
@@ -1281,6 +1294,8 @@ Public Class Game
             End Try
         Else
             save("s8.ave")
+            imagesWorkerArg = 8
+            imagesWorker.RunWorkerAsync()
         End If
         pnlSaveLoad.Visible = False
         If picStart.Visible Then closesol()
@@ -1295,64 +1310,63 @@ Public Class Game
     End Sub
     Sub toSOL()
         pnlSaveLoad.Visible = True
-        btnS1.Enabled = True
-        btnS2.Enabled = True
-        btnS3.Enabled = True
-        btnS4.Enabled = True
-        btnS5.Enabled = True
-        btnS6.Enabled = True
-        btnS7.Enabled = True
-        btnS8.Enabled = True
+        'CharacterGenerator.init()
+
+        While Not savePicsReady
+            Threading.Thread.Sleep(50)
+        End While
 
         If System.IO.File.Exists("s.ave") Then convertSave("s.ave")
 
-        If System.IO.File.Exists("s1.ave") Then
-            btnS1.BackgroundImage = getImgFromFile("s1.ave")
+        If savePics(1) IsNot Nothing Then
+            btnS1.BackgroundImage = savePics(1)
         Else
             If solFlag Then btnS1.Enabled = False
         End If
 
-        If System.IO.File.Exists("s2.ave") Then
-            btnS2.BackgroundImage = getImgFromFile("s2.ave")
+        If savePics(2) IsNot Nothing Then
+            btnS2.BackgroundImage = savePics(2)
         Else
             If solFlag Then btnS2.Enabled = False
         End If
 
-        If System.IO.File.Exists("s3.ave") Then
-            btnS3.BackgroundImage = getImgFromFile("s3.ave")
+        If savePics(3) IsNot Nothing Then
+            btnS3.BackgroundImage = savePics(3)
         Else
             If solFlag Then btnS3.Enabled = False
         End If
 
-        If System.IO.File.Exists("s4.ave") Then
-            btnS4.BackgroundImage = getImgFromFile("s4.ave")
+        If savePics(4) IsNot Nothing Then
+            btnS4.BackgroundImage = savePics(4)
         Else
             If solFlag Then btnS4.Enabled = False
         End If
 
-        If System.IO.File.Exists("s5.ave") Then
-            btnS5.BackgroundImage = getImgFromFile("s5.ave")
+        If savePics(5) IsNot Nothing Then
+            btnS5.BackgroundImage = savePics(5)
         Else
             If solFlag Then btnS5.Enabled = False
         End If
 
-        If System.IO.File.Exists("s6.ave") Then
-            btnS6.BackgroundImage = getImgFromFile("s6.ave")
+        If savePics(6) IsNot Nothing Then
+            btnS6.BackgroundImage = savePics(6)
         Else
             If solFlag Then btnS6.Enabled = False
         End If
 
-        If System.IO.File.Exists("s7.ave") Then
-            btnS7.BackgroundImage = getImgFromFile("s7.ave")
+        If savePics(7) IsNot Nothing Then
+            btnS7.BackgroundImage = savePics(7)
         Else
             If solFlag Then btnS7.Enabled = False
         End If
 
-        If System.IO.File.Exists("s8.ave") Then
-            btnS8.BackgroundImage = getImgFromFile("s8.ave")
+        If savePics(8) IsNot Nothing Then
+            btnS8.BackgroundImage = savePics(8)
         Else
             If solFlag Then btnS8.Enabled = False
         End If
+
+        Me.Update()
     End Sub
     Sub closesol()
         Dim int As Integer = 100 - player.getSpeed
@@ -1834,21 +1848,15 @@ Public Class Game
     End Sub
     'btnL is the loadSave button on the start menu
     Private Sub btnL_Click(sender As Object, e As EventArgs) Handles btnL.Click
+        btnS.Visible = False
+        btnL.Visible = False
+        btnControls.Visible = False
+        Application.DoEvents()
         Try
-            btnS.Visible = False
-            btnL.Visible = False
-            btnControls.Visible = False
-            bwCGInit = New BackgroundWorker()
-            bwCGInit.WorkerReportsProgress = True
-            bwCGInit.WorkerSupportsCancellation = True
-            AddHandler bwCGInit.DoWork, AddressOf CharacterGenerator.init
-            AddHandler bwCGInit.ProgressChanged, AddressOf bw_ProgressChanged
-            AddHandler bwCGInit.RunWorkerCompleted, AddressOf bw_RunWorkerCompleted
             CharacterGenerator.init()
 
             CharacterGenerator.fFrontHair(0) = CharacterGenerator.picPort.Image
             CharacterGenerator.mFrontHair(0) = CharacterGenerator.picPort.Image
-            newBoard()
             solFlag = True
             toSOL()
         Catch ex As System.IO.FileNotFoundException
@@ -1996,7 +2004,7 @@ Public Class Game
     End Sub
     Private Sub LoadToolStripMenuItem_Click(sender As Object, e As EventArgs) Handles LoadToolStripMenuItem.Click
         If lblEvent.Visible = True Or combatmode Or npcmode Then
-            pushLblEvent("You can't loadSave now!")
+            pushLblEvent("You can't load now!")
             Exit Sub
         End If
         solFlag = True
@@ -2130,6 +2138,7 @@ Public Class Game
             For i = 0 To 16
                 Dim arr() As String = pState(32 + CInt(pState(31)) + 1 + i).Split("%")
                 Dim id = New Tuple(Of Integer, Boolean)(CInt(arr(0)), CBool(arr(1)))
+
                 If id.Item2 Then
                     iarr(i) = CharacterGenerator.fAttributes(i)(id.Item1)
                 Else
@@ -2358,5 +2367,50 @@ Public Class Game
         If Not iarr(15).Equals(CharacterGenerator.picPort.Image) Then iarr(15) = CharacterGenerator.recolor(t(15), c)
         If iarrind(10).Item1 < 3 Then iarr(10) = CharacterGenerator.recolor(t(10), c)
     End Sub
+    Private Sub prefetchImages()
+        If imagesWorkerArg Is Nothing Then
+            savePicsReady = False
+            CharacterGenerator.init()
 
+            Try
+                savePics(0) = Nothing
+            Catch ex As Exception
+                savePics.Add(Nothing)
+            End Try
+
+            For i = 1 To 8
+                If System.IO.File.Exists("s" & i.ToString() & ".ave") Then
+                    Dim pic As Image = getImgFromFile("s" & i.ToString() & ".ave")
+                    Try
+                        savePics(i) = pic
+                    Catch ex As Exception
+                        savePics.Add(pic)
+                    End Try
+                Else
+                    Try
+                        savePics(i) = Nothing
+                    Catch ex As Exception
+                        savePics.Add(Nothing)
+                    End Try
+                End If
+            Next
+            savePicsReady = True
+        Else
+            If System.IO.File.Exists("s" & imagesWorkerArg.ToString() & ".ave") Then
+                Dim pic As Image = getImgFromFile("s" & imagesWorkerArg.ToString() & ".ave")
+                Try
+                    savePics(imagesWorkerArg) = pic
+                Catch ex As Exception
+                    savePics.Add(pic)
+                End Try
+            Else
+                Try
+                    savePics(imagesWorkerArg) = Nothing
+                Catch ex As Exception
+                    savePics.Add(Nothing)
+                End Try
+            End If
+            imagesWorkerArg = Nothing
+        End If
+    End Sub
 End Class
