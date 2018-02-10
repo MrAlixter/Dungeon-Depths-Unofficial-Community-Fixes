@@ -2315,8 +2315,9 @@ Public Class Game
         If x < picEHbar.Location.X Then x = picEHbar.Location.X
         lblEHealthChange.Location = New Point(x, lblEHealthChange.Location.Y)
         If healthCol Is Nothing = False Then
-            Dim place = Int(t.health / t.maxHealth * 100)
+            Dim place = Int(ratioEH * 100)
             If place >= 100 Then place = 99
+            If place < 0 Then place = 0
             picEHbar.BackColor = healthCol.GetPixel(place, 0)
         Else
             If ratioEH <= 0.2 Then picEHbar.BackColor = Color.Crimson Else picEHbar.BackColor = Color.YellowGreen
@@ -2328,8 +2329,9 @@ Public Class Game
         If x > picPHealth.Location.X + 174 - 30 Then x = picPHealth.Location.X + 174 - 30
         lblPHealtDiff.Location = New Point(x, lblPHealtDiff.Location.Y)
         If healthCol Is Nothing = False Then
-            Dim place = Int(p.health / p.maxHealth * 100)
+            Dim place = Int(ratioPH * 100)
             If place >= 100 Then place = 99
+            If place < 0 Then place = 0
             picPHealth.BackColor = healthCol.GetPixel(place, 0)
         Else
             If ratioPH <= 0.2 Then picPHealth.BackColor = Color.Crimson Else picPHealth.BackColor = Color.YellowGreen
