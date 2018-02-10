@@ -1,4 +1,5 @@
 ﻿Imports System.ComponentModel
+Imports System.IO
 Imports System.Threading
 
 Public Class Game
@@ -62,6 +63,8 @@ Public Class Game
     Dim savePicsReady As Boolean = False
     Dim boardReady As Boolean = False
 
+    Dim healthCol As Bitmap = Nothing
+
     'startup/new level methods
     'Form1_Load handles the loading of the form
     Private Sub Form1_Load(sender As Object, e As EventArgs) Handles Me.Load
@@ -89,6 +92,11 @@ Public Class Game
         titleList.Add("Kitty")
         titleList.Add("Soul-Lord")
         titleList.Add("Maid")
+
+        If (File.Exists("img/LifeColors.png")) Then
+            healthCol = Image.FromFile("img/LifeColors.png")
+        End If
+
         'sets the player tile image to the default @
         pImage = picPlayer.BackgroundImage
         'scales the font size to that of the window
@@ -157,7 +165,6 @@ Public Class Game
         'AddHandler boardWorker.DoWork, AddressOf workerPrepareBoard
         'boardWorker.RunWorkerAsync(False)
 
-
         combatmode = False
         btnS.Visible = False
         btnL.Visible = False
@@ -186,7 +193,6 @@ Public Class Game
 
         initializeBoard(False)
         drawBoard()
-
         player.currState = New State(player)
         player.sState = New State(player)
         player.pState = New State(player)
@@ -198,6 +204,10 @@ Public Class Game
         player.UIupdate()
         lstLog.TopIndex = lstLog.Items.Count - 1
     End Sub
+    'Private Sub workerPrepareBoard(sender As Object, e As DoWorkEventArgs)
+    '    Dim arg = e.Argument
+    '    initializeBoard(arg)
+    'End Sub
     'initializeBoard increments the floor count, and generates the next level
     Private Sub initializeBoard(Optional Draw As Boolean = True)
         floor += 1
@@ -1851,10 +1861,6 @@ Public Class Game
             btnS.Visible = False
             btnL.Visible = False
             btnControls.Visible = False
-            'CharacterGenerator.init()
-            'CharacterGenerator.fFrontHair(0) = CharacterGenerator.picPort.Image
-            'CharacterGenerator.mFrontHair(0) = CharacterGenerator.picPort.Image
-            'newBoard()
             solFlag = True
             toSOL()
         Catch ex As System.IO.FileNotFoundException
@@ -2287,14 +2293,26 @@ Public Class Game
         Dim x As Integer = picEHbar.Location.X + (ratioEH * 174) - 30
         If x < picEHbar.Location.X Then x = picEHbar.Location.X
         lblEHealthChange.Location = New Point(x, lblEHealthChange.Location.Y)
-        If ratioEH <= 0.2 Then picEHbar.BackColor = Color.Crimson Else picEHbar.BackColor = Color.YellowGreen
+        If healthCol Is Nothing = False Then
+            Dim place = Int(t.health / t.maxHealth * 100)
+            If place >= 100 Then place = 99
+            picEHbar.BackColor = healthCol.GetPixel(place, 0)
+        Else
+            If ratioEH <= 0.2 Then picEHbar.BackColor = Color.Crimson Else picEHbar.BackColor = Color.YellowGreen
+        End If
 
         Dim ratioPH As Double = p.health / p.getmaxHealth
         picPHealth.Size = New Size(ratioPH * 174, 15)
         x = picPHealth.Location.X + (ratioPH * 174) - 30
         If x > picPHealth.Location.X + 174 - 30 Then x = picPHealth.Location.X + 174 - 30
         lblPHealtDiff.Location = New Point(x, lblPHealtDiff.Location.Y)
-        If ratioPH <= 0.2 Then picPHealth.BackColor = Color.Crimson Else picPHealth.BackColor = Color.YellowGreen
+        If healthCol Is Nothing = False Then
+            Dim place = Int(p.health / p.maxHealth * 100)
+            If place >= 100 Then place = 99
+            picPHealth.BackColor = healthCol.GetPixel(place, 0)
+        Else
+            If ratioPH <= 0.2 Then picPHealth.BackColor = Color.Crimson Else picPHealth.BackColor = Color.YellowGreen
+        End If
 
         player.UIupdate()
     End Sub
