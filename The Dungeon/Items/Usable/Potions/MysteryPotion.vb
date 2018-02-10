@@ -36,6 +36,9 @@
     Sub setRealName(ByVal s As String)
         realName = s
     End Sub
+    Sub setBaseName(ByRef s As String)
+        MyBase.setName(s)
+    End Sub
     Function getRealName()
         Return realName
     End Function

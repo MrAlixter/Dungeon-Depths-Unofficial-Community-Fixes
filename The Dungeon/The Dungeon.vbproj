@@ -136,6 +136,12 @@
     <Compile Include="Items\Usable\Food\Cupcake.vb" />
     <Compile Include="Items\Usable\Charms\DefenceCharm.vb" />
     <Compile Include="Items\Usable\Food\Food.vb" />
+    <Compile Include="WindowsForms\DebugWindow.Designer.vb">
+      <DependentUpon>DebugWindow.vb</DependentUpon>
+    </Compile>
+    <Compile Include="WindowsForms\DebugWindow.vb">
+      <SubType>Form</SubType>
+    </Compile>
     <Compile Include="WindowsForms\Game.Designer.vb">
       <DependentUpon>Game.vb</DependentUpon>
     </Compile>
@@ -276,6 +282,9 @@
     <EmbeddedResource Include="WindowsForms\CharacterGenerator.resx">
       <DependentUpon>CharacterGenerator.vb</DependentUpon>
       <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="WindowsForms\DebugWindow.resx">
+      <DependentUpon>DebugWindow.vb</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="WindowsForms\Game.resx">
       <DependentUpon>Game.vb</DependentUpon>
