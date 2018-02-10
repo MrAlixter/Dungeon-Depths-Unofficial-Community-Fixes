@@ -955,7 +955,6 @@
             writer.WriteLine(chestList.Item(i).ToString())
         Next
         writer.WriteLine(trapList.Count - 1)
-        MsgBox(trapList.Count)
         For i = 0 To trapList.Count - 1
             writer.WriteLine(trapList.Item(i).ToString())
         Next
