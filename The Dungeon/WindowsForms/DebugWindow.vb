@@ -6,8 +6,8 @@
         clear()
 
         'GENERAL
-        boxFloor.Text = Game.floor
-        boxTurn.Text = Game.turn
+        boxFloor.Value = Game.floor
+        boxTurn.Value = Game.turn
 
         'PLAYER
         boxName.Text = Game.player.name
@@ -22,6 +22,13 @@
             boxForm.Items.Add(Game.titleList(i).ToString())
         Next
         boxForm.SelectedItem = Game.player.title
+        boxAtk.Value = Game.player.attack
+        boxDef.Value = Game.player.defence
+        boxWil.Value = Game.player.discipline
+        boxSpd.Value = Game.player.speed
+        boxEvd.Value = Game.player.evade
+        boxGold.Value = Game.player.gold
+
 
         'INVENTORY
         updateInventoryList()
@@ -69,6 +76,48 @@
         Next
     End Sub
 
+    Private Sub boxTurn_ValueChanged(sender As Object, e As EventArgs) Handles boxTurn.ValueChanged
+        Game.turn = boxTurn.Value
+    End Sub
+
+    Private Sub boxName_TextChanged(sender As Object, e As EventArgs) Handles boxName.TextChanged
+        If boxName.Text.Trim() <> "" Then
+            Game.player.name = boxName.Text.Trim()
+        End If
+    End Sub
+
+    Private Sub boxAtk_ValueChanged(sender As Object, e As EventArgs) Handles boxAtk.ValueChanged
+        Game.player.attack = boxAtk.Value
+    End Sub
+
+    Private Sub boxDef_ValueChanged(sender As Object, e As EventArgs) Handles boxDef.ValueChanged
+        Game.player.defence = boxDef.Value
+    End Sub
+
+    Private Sub boxWil_ValueChanged(sender As Object, e As EventArgs) Handles boxWil.ValueChanged
+        Game.player.discipline = boxWil.Value
+    End Sub
+
+    Private Sub boxSpd_ValueChanged(sender As Object, e As EventArgs) Handles boxSpd.ValueChanged
+        Game.player.speed = boxSpd.Value
+    End Sub
+
+    Private Sub boxEvd_ValueChanged(sender As Object, e As EventArgs) Handles boxEvd.ValueChanged
+        Game.player.evade = boxEvd.Value
+    End Sub
+
+    Private Sub boxGold_ValueChanged(sender As Object, e As EventArgs) Handles boxGold.ValueChanged
+        Game.player.gold = boxGold.Value
+    End Sub
+
+    Private Sub boxSex_SelectedValueChanged(sender As Object, e As EventArgs) Handles boxSex.SelectedValueChanged
+        If Game.player.sex = "Male" And boxSex.Items(boxSex.SelectedIndex) = "Female" Then
+            Game.player.MtF()
+        ElseIf Game.player.sex = "Female" And boxSex.Items(boxSex.SelectedIndex) = "Male" Then
+            Game.player.FtM()
+        End If
+    End Sub
+
     Private Sub btnRemove_Click(sender As Object, e As EventArgs) Handles btnRemove.Click
         If boxInventory.SelectedIndices.Count < 1 Then Exit Sub
         Dim selected As ListBox.SelectedIndexCollection = boxInventory.SelectedIndices
@@ -109,7 +158,6 @@
                 updateInventoryList()
                 boxItems.SelectedIndices.Remove(boxItems.SelectedIndices(0))
             Loop
-
         End If
     End Sub
 
