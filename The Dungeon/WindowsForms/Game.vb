@@ -448,7 +448,7 @@
     End Sub
     Sub placeChest(ByVal code As String)
         Randomize(code.GetHashCode)
-        Dim numChests As Integer = CInt(Int(Rnd() * 8) + 3) * Int(mBoardWidth / 30)
+        Dim numChests As Integer = CInt(Int(Rnd() * 8) + 3) * Int(mBoardWidth / 30) * 100
         Dim r As Integer
         If floor = 3 Then
             numChests *= 1.5
@@ -971,7 +971,7 @@
             writer.WriteLine(chestList.Item(i).ToString())
         Next
         writer.WriteLine(trapList.Count - 1)
-        MsgBox(trapList.Count)
+        'MsgBox(trapList.Count)
         For i = 0 To trapList.Count - 1
             writer.WriteLine(trapList.Item(i).ToString())
         Next
@@ -1105,19 +1105,22 @@
             For j = 0 To Potions.Count - 1
                 If Potions(j).GetType().IsSubclassOf(GetType(MysteryPotion)) Then
                     If CType(Potions(j), MysteryPotion).getRealName = nextRealPotionName Then
-                        Potions(j).setName(nextKnownName)
+                        Potions(j).setBaseName(nextKnownName)
+                        'Potions(j).setName(nextKnownName)
+                        'Potions(j).GetType()
+                        'CType(Potions(j), MysteryPotion).setBaseName(nextKnownName)
                         Exit For
                     End If
                 End If
             Next
-            For j = 0 To player.potions.Count - 1
-                If player.potions(j).GetType().IsSubclassOf(GetType(MysteryPotion)) Then
-                    If CType(player.potions(j), MysteryPotion).getRealName = nextRealPotionName Then
-                        player.potions(j).setName(nextKnownName)
-                        Exit For
-                    End If
-                End If
-            Next
+            'For j = 0 To player.potions.Count - 1
+            '   If player.potions(j).GetType().IsSubclassOf(GetType(MysteryPotion)) Then
+            '       If CType(player.potions(j), MysteryPotion).getRealName = nextRealPotionName Then
+            '           player.potions(j).setName(nextKnownName)
+            '           Exit For
+            '       End If
+            '   End If
+            'Next
         Next
         'For i = 0 To UBound(HPotionNames)
         '    HPotionNames(i) = reader.ReadLine()
@@ -2152,6 +2155,7 @@
     Private Sub tmrKeyCD_Tick(sender As Object, e As EventArgs) Handles tmrKeyCD.Tick
         tmrKeyCD.Enabled = False
     End Sub
+
     Private Sub ReportToolStripMenuItem_Click(sender As Object, e As EventArgs) Handles ReportToolStripMenuItem.Click
         Process.Start("https://bitbucket.org/VowelHeavyUsername/dungeon_depths/issues?status=new&status=open")
     End Sub
