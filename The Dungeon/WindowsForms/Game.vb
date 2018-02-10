@@ -1,4 +1,6 @@
-﻿Public Class Game
+﻿Imports System.Threading
+
+Public Class Game
     'Form1 is the main driver form that runs the game
 
     'board instance variables
@@ -51,9 +53,18 @@
     Public invFilters() As Boolean = {True, True, True, True, True, True}
     Dim eClock As Integer = 15
     Public solFlag As Boolean = False
+
+    Private trd As Thread
+    Private savePics As New List(Of Image)(9)
+    Dim savePicsReady As Boolean = False
+
     'startup/new level methods
     'Form1_Load handles the loading of the form
     Private Sub Form1_Load(sender As Object, e As EventArgs) Handles Me.Load
+        trd = New Thread(AddressOf prefetchImages)
+        trd.IsBackground = True
+        trd.Start()
+
         loadPotionList()
         titleList.Add("Warrior")
         titleList.Add("Mage")
@@ -1172,6 +1183,9 @@
             End Try
         Else
             save("s1.ave")
+            trd = New Thread(Sub() prefetchImages(1))
+            trd.IsBackground = True
+            trd.Start()
         End If
         pnlSaveLoad.Visible = False
         If picStart.Visible Then closesol()
@@ -1187,6 +1201,9 @@
             End Try
         Else
             save("s2.ave")
+            trd = New Thread(Sub() prefetchImages(2))
+            trd.IsBackground = True
+            trd.Start()
         End If
         pnlSaveLoad.Visible = False
         If picStart.Visible Then closesol()
@@ -1202,6 +1219,9 @@
             End Try
         Else
             save("s3.ave")
+            trd = New Thread(Sub() prefetchImages(3))
+            trd.IsBackground = True
+            trd.Start()
         End If
         pnlSaveLoad.Visible = False
         If picStart.Visible Then closesol()
@@ -1217,6 +1237,9 @@
             End Try
         Else
             save("s4.ave")
+            trd = New Thread(Sub() prefetchImages(4))
+            trd.IsBackground = True
+            trd.Start()
         End If
         pnlSaveLoad.Visible = False
         If picStart.Visible Then closesol()
@@ -1232,6 +1255,9 @@
             End Try
         Else
             save("s5.ave")
+            trd = New Thread(Sub() prefetchImages(5))
+            trd.IsBackground = True
+            trd.Start()
         End If
         pnlSaveLoad.Visible = False
         If picStart.Visible Then closesol()
@@ -1247,6 +1273,9 @@
             End Try
         Else
             save("s6.ave")
+            trd = New Thread(Sub() prefetchImages(6))
+            trd.IsBackground = True
+            trd.Start()
         End If
         pnlSaveLoad.Visible = False
         If picStart.Visible Then closesol()
@@ -1262,6 +1291,9 @@
             End Try
         Else
             save("s7.ave")
+            trd = New Thread(Sub() prefetchImages(7))
+            trd.IsBackground = True
+            trd.Start()
         End If
         pnlSaveLoad.Visible = False
         If picStart.Visible Then closesol()
@@ -1277,6 +1309,9 @@
             End Try
         Else
             save("s8.ave")
+            trd = New Thread(Sub() prefetchImages(8))
+            trd.IsBackground = True
+            trd.Start()
         End If
         pnlSaveLoad.Visible = False
         If picStart.Visible Then closesol()
@@ -1291,57 +1326,63 @@
     End Sub
     Sub toSOL()
         pnlSaveLoad.Visible = True
-        CharacterGenerator.init()
+        'CharacterGenerator.init()
+
+        While Not savePicsReady
+            Threading.Thread.Sleep(50)
+        End While
+
         If System.IO.File.Exists("s.ave") Then convertSave("s.ave")
 
-        If System.IO.File.Exists("s1.ave") Then
-            btnS1.BackgroundImage = getImgFromFile("s1.ave")
+        If savePics(1) IsNot Nothing Then
+            btnS1.BackgroundImage = savePics(1)
         Else
             If solFlag Then btnS1.Enabled = False
         End If
 
-        If System.IO.File.Exists("s2.ave") Then
-            btnS2.BackgroundImage = getImgFromFile("s2.ave")
+        If savePics(2) IsNot Nothing Then
+            btnS2.BackgroundImage = savePics(2)
         Else
             If solFlag Then btnS2.Enabled = False
         End If
 
-        If System.IO.File.Exists("s3.ave") Then
-            btnS3.BackgroundImage = getImgFromFile("s3.ave")
+        If savePics(3) IsNot Nothing Then
+            btnS3.BackgroundImage = savePics(3)
         Else
             If solFlag Then btnS3.Enabled = False
         End If
 
-        If System.IO.File.Exists("s4.ave") Then
-            btnS4.BackgroundImage = getImgFromFile("s4.ave")
+        If savePics(4) IsNot Nothing Then
+            btnS4.BackgroundImage = savePics(4)
         Else
             If solFlag Then btnS4.Enabled = False
         End If
 
-        If System.IO.File.Exists("s5.ave") Then
-            btnS5.BackgroundImage = getImgFromFile("s5.ave")
+        If savePics(5) IsNot Nothing Then
+            btnS5.BackgroundImage = savePics(5)
         Else
             If solFlag Then btnS5.Enabled = False
         End If
 
-        If System.IO.File.Exists("s6.ave") Then
-            btnS6.BackgroundImage = getImgFromFile("s6.ave")
+        If savePics(6) IsNot Nothing Then
+            btnS6.BackgroundImage = savePics(6)
         Else
             If solFlag Then btnS6.Enabled = False
         End If
 
-        If System.IO.File.Exists("s7.ave") Then
-            btnS7.BackgroundImage = getImgFromFile("s7.ave")
+        If savePics(7) IsNot Nothing Then
+            btnS7.BackgroundImage = savePics(7)
         Else
             If solFlag Then btnS7.Enabled = False
         End If
 
-        If System.IO.File.Exists("s8.ave") Then
-            btnS8.BackgroundImage = getImgFromFile("s8.ave")
+        If savePics(8) IsNot Nothing Then
+            btnS8.BackgroundImage = savePics(8)
         Else
             If solFlag Then btnS8.Enabled = False
         End If
 
+        Me.Update()
     End Sub
     Sub closesol()
         Dim int As Integer = 100 - player.getSpeed
@@ -1825,10 +1866,10 @@
             btnS.Visible = False
             btnL.Visible = False
             btnControls.Visible = False
-            CharacterGenerator.init()
-            CharacterGenerator.fFrontHair(0) = CharacterGenerator.picPort.Image
-            CharacterGenerator.mFrontHair(0) = CharacterGenerator.picPort.Image
-            newBoard()
+            'CharacterGenerator.init()
+            'CharacterGenerator.fFrontHair(0) = CharacterGenerator.picPort.Image
+            'CharacterGenerator.mFrontHair(0) = CharacterGenerator.picPort.Image
+            'newBoard()
             solFlag = True
             toSOL()
         Catch ex As System.IO.FileNotFoundException
@@ -2110,6 +2151,7 @@
             For i = 0 To 16
                 Dim arr() As String = pState(32 + CInt(pState(31)) + 1 + i).Split("%")
                 Dim id = New Tuple(Of Integer, Boolean)(CInt(arr(0)), CBool(arr(1)))
+                
                 If id.Item2 Then
                     iarr(i) = CharacterGenerator.fAttributes(i)(id.Item1)
                 Else
@@ -2322,5 +2364,51 @@
         iarr(5) = CharacterGenerator.recolor(t(5), c)
         If Not iarr(15).Equals(CharacterGenerator.picPort.Image) Then iarr(15) = CharacterGenerator.recolor(t(15), c)
         If iarrind(10).Item1 < 3 Then iarr(10) = CharacterGenerator.recolor(t(10), c)
+    End Sub
+
+    Private Sub prefetchImages()
+        savePicsReady = False
+        CharacterGenerator.init()
+
+        Try
+            savePics(0) = Nothing
+        Catch ex As Exception
+            savePics.Add(Nothing)
+        End Try
+
+        For i = 1 To 8
+            If System.IO.File.Exists("s" & i.ToString() & ".ave") Then
+                Dim pic As Image = getImgFromFile("s" & i.ToString() & ".ave")
+                Try
+                    savePics(i) = pic
+                Catch ex As Exception
+                    savePics.Add(pic)
+                End Try
+            Else
+                Try
+                    savePics(i) = Nothing
+                Catch ex As Exception
+                    savePics.Add(Nothing)
+                End Try
+            End If
+        Next
+        savePicsReady = True
+    End Sub
+
+    Private Sub prefetchImages(ByVal i As Integer)
+        If System.IO.File.Exists("s" & i.ToString() & ".ave") Then
+            Dim pic As Image = getImgFromFile("s" & i.ToString() & ".ave")
+            Try
+                savePics(i) = pic
+            Catch ex As Exception
+                savePics.Add(pic)
+            End Try
+        Else
+            Try
+                savePics(i) = Nothing
+            Catch ex As Exception
+                savePics.Add(Nothing)
+            End Try
+        End If
     End Sub
 End Class
