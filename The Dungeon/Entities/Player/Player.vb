@@ -512,6 +512,8 @@
         inventory.Add(New FusionCrystal()) '58
         inventory.Add(New MasculinePotion()) '59
         inventory.Add(New BSPotion()) '60
+        inventory.Add(New HyperHealPotion()) '61
+        inventory.Add(New HyperManaPotion()) '62
 
         For i = 0 To inventory.Count - 1
             If inventory(i).GetType().IsSubclassOf(GetType(MysteryPotion)) Then
@@ -544,7 +546,7 @@
 
         potions = {inventory(2), inventory(13), inventory(14), inventory(25),
                    inventory(26), inventory(27), inventory(28), inventory(29),
-                   inventory(59), inventory(60)}
+                   inventory(59), inventory(60), inventory(61), inventory(62)}
 
         misc = {inventory(43), inventory(53)}
 

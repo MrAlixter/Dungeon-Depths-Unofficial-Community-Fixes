@@ -90,7 +90,7 @@
     End Sub
     Sub loadPotionList()
         Randomize()
-        Dim HiddenNames As ArrayList = New ArrayList({"Red_Potion", "Green_Potion", "Blue_Potion", "Yellow_Potion", "Glowing_Potion", "Murky_Potion", "Purple_Potion", "Clear_Potion", "Smokey_Potion"})
+        Dim HiddenNames As ArrayList = New ArrayList({"Red_Potion", "Green_Potion", "Blue_Potion", "Yellow_Potion", "Glowing_Potion", "Murky_Potion", "Purple_Potion", "Clear_Potion", "Smokey_Potion", "Rose_Potion", "Aqua_Potion", "Glittery_Potion"})
         Dim index As Integer = 0
         For i = 0 To player.inventory.Count - 1
             If player.inventory(i).GetType().IsSubclassOf(GetType(MysteryPotion)) Then
@@ -1817,11 +1817,11 @@
             btnS.Visible = True
             btnL.Visible = True
             btnControls.Visible = True
-            'Catch ex2 As Exception
-            '    MsgBox("Error 005: Error in loaded in save file!")
-            '    btnS.Visible = True
-            '    btnL.Visible = True
-            '    btnControls.Visible = True
+        Catch ex2 As Exception
+            MsgBox("Error 005: Error in loaded in save file!")
+            btnS.Visible = True
+            btnL.Visible = True
+            btnControls.Visible = True
         End Try
     End Sub
     Private Sub btnControls_Click(sender As Object, e As EventArgs) Handles btnControls.Click
@@ -2192,7 +2192,8 @@
                 ct = 0
             End If
         Loop
-        lblCombatEvents.Text += (out & vbCrLf)
+        lblCombatEvents.Text += (out & vbCrLf & _
+                                 "-------------------------------------------------" & vbCrLf)
     End Sub
     Sub updatePnlCombat(ByVal p As Player, ByVal t As Monster)
         If lblTurn.Text.Equals("Turn: " & turn) Or t Is Nothing Then Exit Sub
