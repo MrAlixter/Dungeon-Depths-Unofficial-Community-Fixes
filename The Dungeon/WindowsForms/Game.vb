@@ -96,6 +96,13 @@ Public Class Game
             healthCol = Image.FromFile("img/LifeColors.png")
         End If
 
+        'Fill Chest Tier List
+        For i = 0 To player.inventory.Count - 1
+            If player.inventory(i).tier <> Nothing Then
+                baseChest.tiers(player.inventory(i).tier).Add(player.inventory(i))
+            End If
+        Next
+
         'sets the player tile image to the default @
         pImage = picPlayer.BackgroundImage
         'scales the font size to that of the window
@@ -183,13 +190,6 @@ Public Class Game
         Dim int As Integer = 100 - player.getSpeed
         If int < 1 Then int = 1
         updatelist.add(player, int)
-
-        'Fill Chest Tier List
-        For i = 0 To player.inventory.Count - 1
-            If player.inventory(i).tier <> Nothing Then
-                baseChest.tiers(player.inventory(i).tier).Add(player.inventory(i))
-            End If
-        Next
 
         initializeBoard(False)
         drawBoard()
