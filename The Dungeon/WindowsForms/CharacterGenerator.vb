@@ -31,7 +31,7 @@
 
     Public quit As Boolean = False
 
-    Dim attrOrder(16) As List(Of Image)
+    Public attrOrder(16) As List(Of Image)
     Dim iArrInd(16) As Tuple(Of Integer, Boolean)
     Dim sInts() As Integer = {0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0} 'the starting indexes of each catagory
 

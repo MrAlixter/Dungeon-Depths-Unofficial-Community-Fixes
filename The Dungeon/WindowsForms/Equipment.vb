@@ -396,5 +396,6 @@
         Game.lstLog.TopIndex = Game.lstLog.Items.Count - 1
         p.createP()
         'Form1.picPortrait.BackgroundImage = CharacterGenerator1.CreateBMP(p.iArr)
+        Game.picPortrait.Update()
     End Sub
 End Class
