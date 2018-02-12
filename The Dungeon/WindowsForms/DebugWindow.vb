@@ -22,12 +22,37 @@
             boxForm.Items.Add(Game.titleList(i).ToString())
         Next
         boxForm.SelectedItem = Game.player.title
+        boxHealth.Value = Game.player.health
+        boxMaxHealth.Value = Game.player.maxHealth
+        boxMana.Value = Game.player.mana
+        boxMaxMana.Value = Game.player.maxMana
+        boxHunger.Value = Game.player.hunger
         boxAtk.Value = Game.player.attack
         boxDef.Value = Game.player.defence
         boxWil.Value = Game.player.discipline
         boxSpd.Value = Game.player.speed
         boxEvd.Value = Game.player.evade
         boxGold.Value = Game.player.gold
+
+
+        'PORTRAIT
+        picPreview.Image = Game.picPortrait.BackgroundImage
+        Dim w As Integer = 146
+        Dim h As Integer = 216
+        For i = 0 To tabPortrait.TabPages.Count - 1
+            Dim x As Integer = (tabPortrait.TabPages(i).Width - w) / 2
+            Dim y As Integer = (tabPortrait.TabPages(i).Height - h) / 2
+            For j = 0 To CharacterGenerator.fAttributes(i).Count - 1
+                Dim img As New PictureBox
+                tabPortrait.TabPages(i).Controls.Add(img)
+                img.Image = CharacterGenerator.fAttributes(i)(j)
+                img.Location = New Point(x, y - 20)
+                img.Size = New Point(w, h)
+                'img.BackgroundImageLayout = ImageLayout.Stretch
+                'AddHandler img.Click, AddressOf PicOnClick
+                y += tabPortrait.TabPages(i).Height
+            Next
+        Next
 
 
         'INVENTORY
@@ -86,6 +111,26 @@
         End If
     End Sub
 
+    Private Sub boxHealth_ValueChanged(sender As Object, e As EventArgs) Handles boxHealth.ValueChanged
+        Game.player.health = boxHealth.Value
+    End Sub
+
+    Private Sub boxMaxHealth_ValueChanged(sender As Object, e As EventArgs) Handles boxMaxHealth.ValueChanged
+        Game.player.maxHealth = boxMaxHealth.Value
+    End Sub
+
+    Private Sub boxMana_ValueChanged(sender As Object, e As EventArgs) Handles boxMana.ValueChanged
+        Game.player.mana = boxMana.Value
+    End Sub
+
+    Private Sub boxMaxMana_ValueChanged(sender As Object, e As EventArgs) Handles boxMaxMana.ValueChanged
+        Game.player.maxMana = boxMaxMana.Value
+    End Sub
+
+    Private Sub boxHunger_ValueChanged(sender As Object, e As EventArgs) Handles boxHunger.ValueChanged
+        Game.player.hunger = boxHunger.Value
+    End Sub
+
     Private Sub boxAtk_ValueChanged(sender As Object, e As EventArgs) Handles boxAtk.ValueChanged
         Game.player.attack = boxAtk.Value
     End Sub
@@ -116,6 +161,8 @@
         ElseIf Game.player.sex = "Female" And boxSex.Items(boxSex.SelectedIndex) = "Male" Then
             Game.player.FtM()
         End If
+        picPreview.Image = Game.picPortrait.BackgroundImage
+        picPreview.Update()
     End Sub
 
     Private Sub btnRemove_Click(sender As Object, e As EventArgs) Handles btnRemove.Click

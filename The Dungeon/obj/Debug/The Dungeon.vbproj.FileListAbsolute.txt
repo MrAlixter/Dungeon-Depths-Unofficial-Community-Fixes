@@ -22,4 +22,3 @@ F:\dungeon_depths\The Dungeon\obj\Debug\Dungeon_Depths.exe.manifest
 F:\dungeon_depths\The Dungeon\obj\Debug\Dungeon_Depths.application
 F:\dungeon_depths\The Dungeon\obj\Debug\Dungeon_Depths.xml
 F:\dungeon_depths\The Dungeon\obj\Debug\The Dungeon.vbprojResolveAssemblyReference.cache
-F:\dungeon_depths\The Dungeon\obj\Debug\DungeonDepths.Debug_Window.resources

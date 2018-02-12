@@ -38,7 +38,7 @@
                 Randomize()
                 For i = 0 To 5
                     Dim invInd As Integer = 8
-                    While invInd = 8 Or invInd = 10 Or invInd = 24 Or invInd Or 53
+                    While invInd = 8 Or invInd = 10 Or invInd = 24 Or invInd = 53
                         invInd = Int(Rnd() * Game.player.inventorynames.Count)
                     End While
                     MyBase.inventory(invInd) = (Int(Rnd() * 2) + 1)
