@@ -31,6 +31,24 @@ Partial Class Debug_Window
         Me.tabMain = New System.Windows.Forms.TabControl()
         Me.tabGeneral = New System.Windows.Forms.TabPage()
         Me.tabPlayer = New System.Windows.Forms.TabPage()
+        Me.tabPortrait = New System.Windows.Forms.TabControl()
+        Me.tabPageBackground = New System.Windows.Forms.TabPage()
+        Me.tabPageRearHair = New System.Windows.Forms.TabPage()
+        Me.tabPageBody = New System.Windows.Forms.TabPage()
+        Me.tabPageClothing = New System.Windows.Forms.TabPage()
+        Me.tabPageFace = New System.Windows.Forms.TabPage()
+        Me.tabPageMiddleHair = New System.Windows.Forms.TabPage()
+        Me.tabPageEars = New System.Windows.Forms.TabPage()
+        Me.tabPageNose = New System.Windows.Forms.TabPage()
+        Me.tabPageMouth = New System.Windows.Forms.TabPage()
+        Me.tabPageEyes = New System.Windows.Forms.TabPage()
+        Me.tabPageEyebrows = New System.Windows.Forms.TabPage()
+        Me.tabPageFaceMark = New System.Windows.Forms.TabPage()
+        Me.tabPageGlasses = New System.Windows.Forms.TabPage()
+        Me.tabPageCloak = New System.Windows.Forms.TabPage()
+        Me.tabPageAccessories = New System.Windows.Forms.TabPage()
+        Me.tabPageFrontHair = New System.Windows.Forms.TabPage()
+        Me.tabPageHat = New System.Windows.Forms.TabPage()
         Me.picPreview = New System.Windows.Forms.PictureBox()
         Me.playerDivider = New System.Windows.Forms.TextBox()
         Me.lblGold = New System.Windows.Forms.Label()
@@ -69,30 +87,13 @@ Partial Class Debug_Window
         Me.lblInventory = New System.Windows.Forms.Label()
         Me.boxItems = New System.Windows.Forms.ListBox()
         Me.lblItems = New System.Windows.Forms.Label()
-        Me.tabPortrait = New System.Windows.Forms.TabControl()
-        Me.tabPageBackground = New System.Windows.Forms.TabPage()
-        Me.tabPageRearHair = New System.Windows.Forms.TabPage()
-        Me.tabPageBody = New System.Windows.Forms.TabPage()
-        Me.tabPageClothing = New System.Windows.Forms.TabPage()
-        Me.tabPageFace = New System.Windows.Forms.TabPage()
-        Me.tabPageMiddleHair = New System.Windows.Forms.TabPage()
-        Me.tabPageEars = New System.Windows.Forms.TabPage()
-        Me.tabPageNose = New System.Windows.Forms.TabPage()
-        Me.tabPageMouth = New System.Windows.Forms.TabPage()
-        Me.tabPageEyes = New System.Windows.Forms.TabPage()
-        Me.tabPageEyebrows = New System.Windows.Forms.TabPage()
-        Me.tabPageFaceMark = New System.Windows.Forms.TabPage()
-        Me.tabPageGlasses = New System.Windows.Forms.TabPage()
-        Me.tabPageCloak = New System.Windows.Forms.TabPage()
-        Me.tabPageAccessories = New System.Windows.Forms.TabPage()
-        Me.tabPageFrontHair = New System.Windows.Forms.TabPage()
-        Me.tabPageHat = New System.Windows.Forms.TabPage()
         Me.groupGeneral.SuspendLayout()
         CType(Me.boxTurn, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me.boxFloor, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.tabMain.SuspendLayout()
         Me.tabGeneral.SuspendLayout()
         Me.tabPlayer.SuspendLayout()
+        Me.tabPortrait.SuspendLayout()
         CType(Me.picPreview, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me.boxEvd, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me.boxSpd, System.ComponentModel.ISupportInitialize).BeginInit()
@@ -107,7 +108,6 @@ Partial Class Debug_Window
         CType(Me.boxHealth, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.tabInventory.SuspendLayout()
         CType(Me.number, System.ComponentModel.ISupportInitialize).BeginInit()
-        Me.tabPortrait.SuspendLayout()
         Me.SuspendLayout()
         '
         'lblTurn
@@ -240,9 +240,208 @@ Partial Class Debug_Window
         Me.tabPlayer.TabIndex = 1
         Me.tabPlayer.Text = "PLAYER"
         '
+        'tabPortrait
+        '
+        Me.tabPortrait.Controls.Add(Me.tabPageBackground)
+        Me.tabPortrait.Controls.Add(Me.tabPageRearHair)
+        Me.tabPortrait.Controls.Add(Me.tabPageBody)
+        Me.tabPortrait.Controls.Add(Me.tabPageClothing)
+        Me.tabPortrait.Controls.Add(Me.tabPageFace)
+        Me.tabPortrait.Controls.Add(Me.tabPageMiddleHair)
+        Me.tabPortrait.Controls.Add(Me.tabPageEars)
+        Me.tabPortrait.Controls.Add(Me.tabPageNose)
+        Me.tabPortrait.Controls.Add(Me.tabPageMouth)
+        Me.tabPortrait.Controls.Add(Me.tabPageEyes)
+        Me.tabPortrait.Controls.Add(Me.tabPageEyebrows)
+        Me.tabPortrait.Controls.Add(Me.tabPageFaceMark)
+        Me.tabPortrait.Controls.Add(Me.tabPageGlasses)
+        Me.tabPortrait.Controls.Add(Me.tabPageCloak)
+        Me.tabPortrait.Controls.Add(Me.tabPageAccessories)
+        Me.tabPortrait.Controls.Add(Me.tabPageFrontHair)
+        Me.tabPortrait.Controls.Add(Me.tabPageHat)
+        Me.tabPortrait.Location = New System.Drawing.Point(3, 226)
+        Me.tabPortrait.Name = "tabPortrait"
+        Me.tabPortrait.SelectedIndex = 0
+        Me.tabPortrait.Size = New System.Drawing.Size(736, 291)
+        Me.tabPortrait.TabIndex = 262
+        '
+        'tabPageBackground
+        '
+        Me.tabPageBackground.AutoScroll = True
+        Me.tabPageBackground.BackColor = System.Drawing.Color.Black
+        Me.tabPageBackground.Location = New System.Drawing.Point(4, 24)
+        Me.tabPageBackground.Name = "tabPageBackground"
+        Me.tabPageBackground.Padding = New System.Windows.Forms.Padding(3)
+        Me.tabPageBackground.Size = New System.Drawing.Size(728, 263)
+        Me.tabPageBackground.TabIndex = 0
+        Me.tabPageBackground.Text = "BACKGROUND"
+        '
+        'tabPageRearHair
+        '
+        Me.tabPageRearHair.AutoScroll = True
+        Me.tabPageRearHair.BackColor = System.Drawing.Color.Black
+        Me.tabPageRearHair.Location = New System.Drawing.Point(4, 24)
+        Me.tabPageRearHair.Name = "tabPageRearHair"
+        Me.tabPageRearHair.Padding = New System.Windows.Forms.Padding(3)
+        Me.tabPageRearHair.Size = New System.Drawing.Size(728, 263)
+        Me.tabPageRearHair.TabIndex = 1
+        Me.tabPageRearHair.Text = "REAR HAIR"
+        '
+        'tabPageBody
+        '
+        Me.tabPageBody.AutoScroll = True
+        Me.tabPageBody.BackColor = System.Drawing.Color.Black
+        Me.tabPageBody.Location = New System.Drawing.Point(4, 24)
+        Me.tabPageBody.Name = "tabPageBody"
+        Me.tabPageBody.Padding = New System.Windows.Forms.Padding(3)
+        Me.tabPageBody.Size = New System.Drawing.Size(728, 263)
+        Me.tabPageBody.TabIndex = 2
+        Me.tabPageBody.Text = "BODY"
+        '
+        'tabPageClothing
+        '
+        Me.tabPageClothing.AutoScroll = True
+        Me.tabPageClothing.BackColor = System.Drawing.Color.Black
+        Me.tabPageClothing.Location = New System.Drawing.Point(4, 24)
+        Me.tabPageClothing.Name = "tabPageClothing"
+        Me.tabPageClothing.Padding = New System.Windows.Forms.Padding(3)
+        Me.tabPageClothing.Size = New System.Drawing.Size(728, 263)
+        Me.tabPageClothing.TabIndex = 3
+        Me.tabPageClothing.Text = "CLOTHING"
+        '
+        'tabPageFace
+        '
+        Me.tabPageFace.AutoScroll = True
+        Me.tabPageFace.BackColor = System.Drawing.Color.Black
+        Me.tabPageFace.Location = New System.Drawing.Point(4, 24)
+        Me.tabPageFace.Name = "tabPageFace"
+        Me.tabPageFace.Size = New System.Drawing.Size(230, 482)
+        Me.tabPageFace.TabIndex = 4
+        Me.tabPageFace.Text = "FACE"
+        '
+        'tabPageMiddleHair
+        '
+        Me.tabPageMiddleHair.AutoScroll = True
+        Me.tabPageMiddleHair.BackColor = System.Drawing.Color.Black
+        Me.tabPageMiddleHair.Location = New System.Drawing.Point(4, 24)
+        Me.tabPageMiddleHair.Name = "tabPageMiddleHair"
+        Me.tabPageMiddleHair.Size = New System.Drawing.Size(728, 263)
+        Me.tabPageMiddleHair.TabIndex = 5
+        Me.tabPageMiddleHair.Text = "MIDDLE HAIR"
+        '
+        'tabPageEars
+        '
+        Me.tabPageEars.AutoScroll = True
+        Me.tabPageEars.BackColor = System.Drawing.Color.Black
+        Me.tabPageEars.Location = New System.Drawing.Point(4, 24)
+        Me.tabPageEars.Name = "tabPageEars"
+        Me.tabPageEars.Size = New System.Drawing.Size(728, 263)
+        Me.tabPageEars.TabIndex = 6
+        Me.tabPageEars.Text = "EARS"
+        '
+        'tabPageNose
+        '
+        Me.tabPageNose.AutoScroll = True
+        Me.tabPageNose.BackColor = System.Drawing.Color.Black
+        Me.tabPageNose.Location = New System.Drawing.Point(4, 24)
+        Me.tabPageNose.Name = "tabPageNose"
+        Me.tabPageNose.Size = New System.Drawing.Size(728, 263)
+        Me.tabPageNose.TabIndex = 7
+        Me.tabPageNose.Text = "NOSE"
+        '
+        'tabPageMouth
+        '
+        Me.tabPageMouth.AutoScroll = True
+        Me.tabPageMouth.BackColor = System.Drawing.Color.Black
+        Me.tabPageMouth.Location = New System.Drawing.Point(4, 24)
+        Me.tabPageMouth.Name = "tabPageMouth"
+        Me.tabPageMouth.Size = New System.Drawing.Size(728, 263)
+        Me.tabPageMouth.TabIndex = 8
+        Me.tabPageMouth.Text = "MOUTH"
+        '
+        'tabPageEyes
+        '
+        Me.tabPageEyes.AutoScroll = True
+        Me.tabPageEyes.BackColor = System.Drawing.Color.Black
+        Me.tabPageEyes.Location = New System.Drawing.Point(4, 24)
+        Me.tabPageEyes.Name = "tabPageEyes"
+        Me.tabPageEyes.Size = New System.Drawing.Size(728, 263)
+        Me.tabPageEyes.TabIndex = 9
+        Me.tabPageEyes.Text = "EYES"
+        '
+        'tabPageEyebrows
+        '
+        Me.tabPageEyebrows.AutoScroll = True
+        Me.tabPageEyebrows.BackColor = System.Drawing.Color.Black
+        Me.tabPageEyebrows.Location = New System.Drawing.Point(4, 24)
+        Me.tabPageEyebrows.Name = "tabPageEyebrows"
+        Me.tabPageEyebrows.Size = New System.Drawing.Size(728, 263)
+        Me.tabPageEyebrows.TabIndex = 10
+        Me.tabPageEyebrows.Text = "EYEBROWS"
+        '
+        'tabPageFaceMark
+        '
+        Me.tabPageFaceMark.AutoScroll = True
+        Me.tabPageFaceMark.BackColor = System.Drawing.Color.Black
+        Me.tabPageFaceMark.Location = New System.Drawing.Point(4, 24)
+        Me.tabPageFaceMark.Name = "tabPageFaceMark"
+        Me.tabPageFaceMark.Size = New System.Drawing.Size(728, 263)
+        Me.tabPageFaceMark.TabIndex = 11
+        Me.tabPageFaceMark.Text = "FACE MARK"
+        '
+        'tabPageGlasses
+        '
+        Me.tabPageGlasses.AutoScroll = True
+        Me.tabPageGlasses.BackColor = System.Drawing.Color.Black
+        Me.tabPageGlasses.Location = New System.Drawing.Point(4, 24)
+        Me.tabPageGlasses.Name = "tabPageGlasses"
+        Me.tabPageGlasses.Size = New System.Drawing.Size(728, 263)
+        Me.tabPageGlasses.TabIndex = 12
+        Me.tabPageGlasses.Text = "GLASSES"
+        '
+        'tabPageCloak
+        '
+        Me.tabPageCloak.AutoScroll = True
+        Me.tabPageCloak.BackColor = System.Drawing.Color.Black
+        Me.tabPageCloak.Location = New System.Drawing.Point(4, 24)
+        Me.tabPageCloak.Name = "tabPageCloak"
+        Me.tabPageCloak.Size = New System.Drawing.Size(728, 263)
+        Me.tabPageCloak.TabIndex = 13
+        Me.tabPageCloak.Text = "CLOAK"
+        '
+        'tabPageAccessories
+        '
+        Me.tabPageAccessories.AutoScroll = True
+        Me.tabPageAccessories.BackColor = System.Drawing.Color.Black
+        Me.tabPageAccessories.Location = New System.Drawing.Point(4, 24)
+        Me.tabPageAccessories.Name = "tabPageAccessories"
+        Me.tabPageAccessories.Size = New System.Drawing.Size(728, 263)
+        Me.tabPageAccessories.TabIndex = 14
+        Me.tabPageAccessories.Text = "ACCESSORIES"
+        '
+        'tabPageFrontHair
+        '
+        Me.tabPageFrontHair.AutoScroll = True
+        Me.tabPageFrontHair.BackColor = System.Drawing.Color.Black
+        Me.tabPageFrontHair.Location = New System.Drawing.Point(4, 24)
+        Me.tabPageFrontHair.Name = "tabPageFrontHair"
+        Me.tabPageFrontHair.Size = New System.Drawing.Size(728, 263)
+        Me.tabPageFrontHair.TabIndex = 15
+        Me.tabPageFrontHair.Text = "FRONT HAIR"
+        '
+        'tabPageHat
+        '
+        Me.tabPageHat.AutoScroll = True
+        Me.tabPageHat.BackColor = System.Drawing.Color.Black
+        Me.tabPageHat.Location = New System.Drawing.Point(4, 24)
+        Me.tabPageHat.Name = "tabPageHat"
+        Me.tabPageHat.Size = New System.Drawing.Size(728, 263)
+        Me.tabPageHat.TabIndex = 16
+        Me.tabPageHat.Text = "HAT"
+        '
         'picPreview
         '
-        Me.picPreview.Location = New System.Drawing.Point(345, 300)
+        Me.picPreview.Location = New System.Drawing.Point(548, 4)
         Me.picPreview.Name = "picPreview"
         Me.picPreview.Size = New System.Drawing.Size(146, 216)
         Me.picPreview.TabIndex = 236
@@ -677,205 +876,6 @@ Partial Class Debug_Window
         Me.lblItems.TabIndex = 7
         Me.lblItems.Text = "ITEMS"
         '
-        'tabPortrait
-        '
-        Me.tabPortrait.Controls.Add(Me.tabPageBackground)
-        Me.tabPortrait.Controls.Add(Me.tabPageRearHair)
-        Me.tabPortrait.Controls.Add(Me.tabPageBody)
-        Me.tabPortrait.Controls.Add(Me.tabPageClothing)
-        Me.tabPortrait.Controls.Add(Me.tabPageFace)
-        Me.tabPortrait.Controls.Add(Me.tabPageMiddleHair)
-        Me.tabPortrait.Controls.Add(Me.tabPageEars)
-        Me.tabPortrait.Controls.Add(Me.tabPageNose)
-        Me.tabPortrait.Controls.Add(Me.tabPageMouth)
-        Me.tabPortrait.Controls.Add(Me.tabPageEyes)
-        Me.tabPortrait.Controls.Add(Me.tabPageEyebrows)
-        Me.tabPortrait.Controls.Add(Me.tabPageFaceMark)
-        Me.tabPortrait.Controls.Add(Me.tabPageGlasses)
-        Me.tabPortrait.Controls.Add(Me.tabPageCloak)
-        Me.tabPortrait.Controls.Add(Me.tabPageAccessories)
-        Me.tabPortrait.Controls.Add(Me.tabPageFrontHair)
-        Me.tabPortrait.Controls.Add(Me.tabPageHat)
-        Me.tabPortrait.Location = New System.Drawing.Point(497, 4)
-        Me.tabPortrait.Name = "tabPortrait"
-        Me.tabPortrait.SelectedIndex = 0
-        Me.tabPortrait.Size = New System.Drawing.Size(238, 510)
-        Me.tabPortrait.TabIndex = 262
-        '
-        'tabPageBackground
-        '
-        Me.tabPageBackground.AutoScroll = True
-        Me.tabPageBackground.BackColor = System.Drawing.Color.Black
-        Me.tabPageBackground.Location = New System.Drawing.Point(4, 24)
-        Me.tabPageBackground.Name = "tabPageBackground"
-        Me.tabPageBackground.Padding = New System.Windows.Forms.Padding(3)
-        Me.tabPageBackground.Size = New System.Drawing.Size(230, 482)
-        Me.tabPageBackground.TabIndex = 0
-        Me.tabPageBackground.Text = "BACKGROUND"
-        '
-        'tabPageRearHair
-        '
-        Me.tabPageRearHair.AutoScroll = True
-        Me.tabPageRearHair.BackColor = System.Drawing.Color.Black
-        Me.tabPageRearHair.Location = New System.Drawing.Point(4, 24)
-        Me.tabPageRearHair.Name = "tabPageRearHair"
-        Me.tabPageRearHair.Padding = New System.Windows.Forms.Padding(3)
-        Me.tabPageRearHair.Size = New System.Drawing.Size(230, 482)
-        Me.tabPageRearHair.TabIndex = 1
-        Me.tabPageRearHair.Text = "REAR HAIR"
-        '
-        'tabPageBody
-        '
-        Me.tabPageBody.AutoScroll = True
-        Me.tabPageBody.BackColor = System.Drawing.Color.Black
-        Me.tabPageBody.Location = New System.Drawing.Point(4, 24)
-        Me.tabPageBody.Name = "tabPageBody"
-        Me.tabPageBody.Padding = New System.Windows.Forms.Padding(3)
-        Me.tabPageBody.Size = New System.Drawing.Size(230, 482)
-        Me.tabPageBody.TabIndex = 2
-        Me.tabPageBody.Text = "BODY"
-        '
-        'tabPageClothing
-        '
-        Me.tabPageClothing.AutoScroll = True
-        Me.tabPageClothing.BackColor = System.Drawing.Color.Black
-        Me.tabPageClothing.Location = New System.Drawing.Point(4, 24)
-        Me.tabPageClothing.Name = "tabPageClothing"
-        Me.tabPageClothing.Padding = New System.Windows.Forms.Padding(3)
-        Me.tabPageClothing.Size = New System.Drawing.Size(230, 482)
-        Me.tabPageClothing.TabIndex = 3
-        Me.tabPageClothing.Text = "CLOTHING"
-        '
-        'tabPageFace
-        '
-        Me.tabPageFace.AutoScroll = True
-        Me.tabPageFace.BackColor = System.Drawing.Color.Black
-        Me.tabPageFace.Location = New System.Drawing.Point(4, 24)
-        Me.tabPageFace.Name = "tabPageFace"
-        Me.tabPageFace.Size = New System.Drawing.Size(230, 482)
-        Me.tabPageFace.TabIndex = 4
-        Me.tabPageFace.Text = "FACE"
-        '
-        'tabPageMiddleHair
-        '
-        Me.tabPageMiddleHair.AutoScroll = True
-        Me.tabPageMiddleHair.BackColor = System.Drawing.Color.Black
-        Me.tabPageMiddleHair.Location = New System.Drawing.Point(4, 24)
-        Me.tabPageMiddleHair.Name = "tabPageMiddleHair"
-        Me.tabPageMiddleHair.Size = New System.Drawing.Size(230, 482)
-        Me.tabPageMiddleHair.TabIndex = 5
-        Me.tabPageMiddleHair.Text = "MIDDLE HAIR"
-        '
-        'tabPageEars
-        '
-        Me.tabPageEars.AutoScroll = True
-        Me.tabPageEars.BackColor = System.Drawing.Color.Black
-        Me.tabPageEars.Location = New System.Drawing.Point(4, 24)
-        Me.tabPageEars.Name = "tabPageEars"
-        Me.tabPageEars.Size = New System.Drawing.Size(230, 482)
-        Me.tabPageEars.TabIndex = 6
-        Me.tabPageEars.Text = "EARS"
-        '
-        'tabPageNose
-        '
-        Me.tabPageNose.AutoScroll = True
-        Me.tabPageNose.BackColor = System.Drawing.Color.Black
-        Me.tabPageNose.Location = New System.Drawing.Point(4, 24)
-        Me.tabPageNose.Name = "tabPageNose"
-        Me.tabPageNose.Size = New System.Drawing.Size(230, 482)
-        Me.tabPageNose.TabIndex = 7
-        Me.tabPageNose.Text = "NOSE"
-        '
-        'tabPageMouth
-        '
-        Me.tabPageMouth.AutoScroll = True
-        Me.tabPageMouth.BackColor = System.Drawing.Color.Black
-        Me.tabPageMouth.Location = New System.Drawing.Point(4, 24)
-        Me.tabPageMouth.Name = "tabPageMouth"
-        Me.tabPageMouth.Size = New System.Drawing.Size(230, 482)
-        Me.tabPageMouth.TabIndex = 8
-        Me.tabPageMouth.Text = "MOUTH"
-        '
-        'tabPageEyes
-        '
-        Me.tabPageEyes.AutoScroll = True
-        Me.tabPageEyes.BackColor = System.Drawing.Color.Black
-        Me.tabPageEyes.Location = New System.Drawing.Point(4, 24)
-        Me.tabPageEyes.Name = "tabPageEyes"
-        Me.tabPageEyes.Size = New System.Drawing.Size(230, 482)
-        Me.tabPageEyes.TabIndex = 9
-        Me.tabPageEyes.Text = "EYES"
-        '
-        'tabPageEyebrows
-        '
-        Me.tabPageEyebrows.AutoScroll = True
-        Me.tabPageEyebrows.BackColor = System.Drawing.Color.Black
-        Me.tabPageEyebrows.Location = New System.Drawing.Point(4, 24)
-        Me.tabPageEyebrows.Name = "tabPageEyebrows"
-        Me.tabPageEyebrows.Size = New System.Drawing.Size(230, 482)
-        Me.tabPageEyebrows.TabIndex = 10
-        Me.tabPageEyebrows.Text = "EYEBROWS"
-        '
-        'tabPageFaceMark
-        '
-        Me.tabPageFaceMark.AutoScroll = True
-        Me.tabPageFaceMark.BackColor = System.Drawing.Color.Black
-        Me.tabPageFaceMark.Location = New System.Drawing.Point(4, 24)
-        Me.tabPageFaceMark.Name = "tabPageFaceMark"
-        Me.tabPageFaceMark.Size = New System.Drawing.Size(230, 482)
-        Me.tabPageFaceMark.TabIndex = 11
-        Me.tabPageFaceMark.Text = "FACE MARK"
-        '
-        'tabPageGlasses
-        '
-        Me.tabPageGlasses.AutoScroll = True
-        Me.tabPageGlasses.BackColor = System.Drawing.Color.Black
-        Me.tabPageGlasses.Location = New System.Drawing.Point(4, 24)
-        Me.tabPageGlasses.Name = "tabPageGlasses"
-        Me.tabPageGlasses.Size = New System.Drawing.Size(230, 482)
-        Me.tabPageGlasses.TabIndex = 12
-        Me.tabPageGlasses.Text = "GLASSES"
-        '
-        'tabPageCloak
-        '
-        Me.tabPageCloak.AutoScroll = True
-        Me.tabPageCloak.BackColor = System.Drawing.Color.Black
-        Me.tabPageCloak.Location = New System.Drawing.Point(4, 24)
-        Me.tabPageCloak.Name = "tabPageCloak"
-        Me.tabPageCloak.Size = New System.Drawing.Size(230, 482)
-        Me.tabPageCloak.TabIndex = 13
-        Me.tabPageCloak.Text = "CLOAK"
-        '
-        'tabPageAccessories
-        '
-        Me.tabPageAccessories.AutoScroll = True
-        Me.tabPageAccessories.BackColor = System.Drawing.Color.Black
-        Me.tabPageAccessories.Location = New System.Drawing.Point(4, 24)
-        Me.tabPageAccessories.Name = "tabPageAccessories"
-        Me.tabPageAccessories.Size = New System.Drawing.Size(230, 482)
-        Me.tabPageAccessories.TabIndex = 14
-        Me.tabPageAccessories.Text = "ACCESSORIES"
-        '
-        'tabPageFrontHair
-        '
-        Me.tabPageFrontHair.AutoScroll = True
-        Me.tabPageFrontHair.BackColor = System.Drawing.Color.Black
-        Me.tabPageFrontHair.Location = New System.Drawing.Point(4, 24)
-        Me.tabPageFrontHair.Name = "tabPageFrontHair"
-        Me.tabPageFrontHair.Size = New System.Drawing.Size(230, 482)
-        Me.tabPageFrontHair.TabIndex = 15
-        Me.tabPageFrontHair.Text = "FRONT HAIR"
-        '
-        'tabPageHat
-        '
-        Me.tabPageHat.AutoScroll = True
-        Me.tabPageHat.BackColor = System.Drawing.Color.Black
-        Me.tabPageHat.Location = New System.Drawing.Point(4, 24)
-        Me.tabPageHat.Name = "tabPageHat"
-        Me.tabPageHat.Size = New System.Drawing.Size(230, 482)
-        Me.tabPageHat.TabIndex = 16
-        Me.tabPageHat.Text = "HAT"
-        '
         'Debug_Window
         '
         Me.AutoScaleDimensions = New System.Drawing.SizeF(6.0!, 13.0!)
@@ -896,6 +896,7 @@ Partial Class Debug_Window
         Me.tabGeneral.ResumeLayout(False)
         Me.tabPlayer.ResumeLayout(False)
         Me.tabPlayer.PerformLayout()
+        Me.tabPortrait.ResumeLayout(False)
         CType(Me.picPreview, System.ComponentModel.ISupportInitialize).EndInit()
         CType(Me.boxEvd, System.ComponentModel.ISupportInitialize).EndInit()
         CType(Me.boxSpd, System.ComponentModel.ISupportInitialize).EndInit()
@@ -911,7 +912,6 @@ Partial Class Debug_Window
         Me.tabInventory.ResumeLayout(False)
         Me.tabInventory.PerformLayout()
         CType(Me.number, System.ComponentModel.ISupportInitialize).EndInit()
-        Me.tabPortrait.ResumeLayout(False)
         Me.ResumeLayout(False)
 
     End Sub

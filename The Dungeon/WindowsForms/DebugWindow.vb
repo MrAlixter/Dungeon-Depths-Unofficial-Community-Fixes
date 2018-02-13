@@ -1,4 +1,7 @@
-﻿Public Class Debug_Window
+﻿Imports System.ComponentModel
+Imports System.Threading
+
+Public Class Debug_Window
     Dim inventoryList As List(Of String) = New List(Of String)
     Dim itemsList As List(Of String) = New List(Of String)
 
@@ -37,20 +40,35 @@
 
         'PORTRAIT
         picPreview.Image = Game.picPortrait.BackgroundImage
+        picPreview.BackgroundImage = Game.player.iArr(0)
+        Dim PADDING = 0.1
         Dim w As Integer = 146
         Dim h As Integer = 216
+        Dim threadCount As Integer = 4
+        'Dim done As Array(threadCount)
+        Dim go As Boolean = True
+        While go
+
+            'For i = 0 To UBound(done)
+
+            'Next
+        End While
+
+
         For i = 0 To tabPortrait.TabPages.Count - 1
-            Dim x As Integer = (tabPortrait.TabPages(i).Width - w) / 2
+            Dim x As Integer = w * PADDING
             Dim y As Integer = (tabPortrait.TabPages(i).Height - h) / 2
             For j = 0 To CharacterGenerator.fAttributes(i).Count - 1
                 Dim img As New PictureBox
+                img.Name = i.ToString() & ":" & j.ToString()
                 tabPortrait.TabPages(i).Controls.Add(img)
                 img.Image = CharacterGenerator.fAttributes(i)(j)
-                img.Location = New Point(x, y - 20)
+                img.BackgroundImage = CharacterGenerator.fAttributes(0)(0)
+                img.Location = New Point(x, y) 'y - 20)
                 img.Size = New Point(w, h)
                 'img.BackgroundImageLayout = ImageLayout.Stretch
-                'AddHandler img.Click, AddressOf PicOnClick
-                y += tabPortrait.TabPages(i).Height
+                AddHandler img.Click, AddressOf clickOnPic
+                x += w * (1 + PADDING)
             Next
         Next
 
@@ -60,6 +78,12 @@
         number.Value = 0
         updateItemsList()
     End Sub
+
+    Private Function fillPages(first As Integer, last As Integer) '(Inclusive, exclusive)
+        Dim worker As New BackgroundWorker
+
+        Return True
+    End Function
 
     Private Sub clear()
         Dim ctrl As Control = Me
@@ -163,6 +187,17 @@
         End If
         picPreview.Image = Game.picPortrait.BackgroundImage
         picPreview.Update()
+    End Sub
+
+    Private Sub clickOnPic(sender As Object, e As EventArgs)
+        Dim tab As Integer = sender.Name.Split(":")(0)
+        Dim pic As Integer = sender.Name.Split(":")(1)
+
+        Game.player.iArr(tab) = CType(sender, PictureBox).Image
+        Game.player.iArrInd(tab) = New Tuple(Of Integer, Boolean)(tab, Game.player.sexBool)
+
+        'picPreview.Image = CharacterGenerator.recolor(CharacterGenerator.CreateBMP(Game.player.iArr), Game.player.skincolor)
+        picPreview.Image = CharacterGenerator.CreateBMP(Game.player.iArr)
     End Sub
 
     Private Sub btnRemove_Click(sender As Object, e As EventArgs) Handles btnRemove.Click
