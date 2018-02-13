@@ -164,7 +164,7 @@ Partial Class Game
         Me.picPHealth = New System.Windows.Forms.PictureBox()
         Me.picEHbar = New System.Windows.Forms.PictureBox()
         Me.lblEvent = New System.Windows.Forms.Label()
-        Me.pbarLoad = New System.Windows.Forms.ProgressBar()
+        Me.picLoadBar = New System.Windows.Forms.PictureBox()
         CType(Me.picMarkBClothes, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me.picMarkBRearHair2, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me.picMarkBRearHair1, System.ComponentModel.ISupportInitialize).BeginInit()
@@ -217,6 +217,7 @@ Partial Class Game
         Me.pnlCombat.SuspendLayout()
         CType(Me.picPHealth, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me.picEHbar, System.ComponentModel.ISupportInitialize).BeginInit()
+        CType(Me.picLoadBar, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.SuspendLayout()
         '
         'btnUse1
@@ -935,7 +936,7 @@ Partial Class Game
         Me.HelpToolStripMenuItem1.DropDownItems.AddRange(New System.Windows.Forms.ToolStripItem() {Me.WASDArrowsMoveToolStripMenuItem, Me.InteractstairschestsToolStripMenuItem})
         Me.HelpToolStripMenuItem1.ForeColor = System.Drawing.Color.White
         Me.HelpToolStripMenuItem1.Name = "HelpToolStripMenuItem1"
-        Me.HelpToolStripMenuItem1.Size = New System.Drawing.Size(182, 30)
+        Me.HelpToolStripMenuItem1.Size = New System.Drawing.Size(210, 30)
         Me.HelpToolStripMenuItem1.Text = "Controls"
         '
         'WASDArrowsMoveToolStripMenuItem
@@ -959,7 +960,7 @@ Partial Class Game
         Me.StatInfoToolStripMenuItem.BackColor = System.Drawing.Color.Black
         Me.StatInfoToolStripMenuItem.ForeColor = System.Drawing.Color.White
         Me.StatInfoToolStripMenuItem.Name = "StatInfoToolStripMenuItem"
-        Me.StatInfoToolStripMenuItem.Size = New System.Drawing.Size(182, 30)
+        Me.StatInfoToolStripMenuItem.Size = New System.Drawing.Size(210, 30)
         Me.StatInfoToolStripMenuItem.Text = "Stat Info"
         Me.StatInfoToolStripMenuItem.Visible = False
         '
@@ -968,7 +969,7 @@ Partial Class Game
         Me.ReportToolStripMenuItem.BackColor = System.Drawing.Color.Black
         Me.ReportToolStripMenuItem.ForeColor = System.Drawing.Color.White
         Me.ReportToolStripMenuItem.Name = "ReportToolStripMenuItem"
-        Me.ReportToolStripMenuItem.Size = New System.Drawing.Size(182, 30)
+        Me.ReportToolStripMenuItem.Size = New System.Drawing.Size(210, 30)
         Me.ReportToolStripMenuItem.Text = "Report"
         '
         'DebugToolStripMenuItem
@@ -976,7 +977,7 @@ Partial Class Game
         Me.DebugToolStripMenuItem.BackColor = System.Drawing.Color.Black
         Me.DebugToolStripMenuItem.ForeColor = System.Drawing.Color.White
         Me.DebugToolStripMenuItem.Name = "DebugToolStripMenuItem"
-        Me.DebugToolStripMenuItem.Size = New System.Drawing.Size(182, 30)
+        Me.DebugToolStripMenuItem.Size = New System.Drawing.Size(210, 30)
         Me.DebugToolStripMenuItem.Text = "Debug"
         '
         'InfoToolStripMenuItem
@@ -985,7 +986,7 @@ Partial Class Game
         Me.InfoToolStripMenuItem.Font = New System.Drawing.Font("Consolas", 9.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.InfoToolStripMenuItem.ForeColor = System.Drawing.Color.White
         Me.InfoToolStripMenuItem.Name = "InfoToolStripMenuItem"
-        Me.InfoToolStripMenuItem.Size = New System.Drawing.Size(182, 30)
+        Me.InfoToolStripMenuItem.Size = New System.Drawing.Size(210, 30)
         Me.InfoToolStripMenuItem.Text = "Info"
         '
         'SettingsToolStripMenuItem
@@ -1787,20 +1788,22 @@ Partial Class Game
         Me.lblEvent.TextAlign = System.Drawing.ContentAlignment.MiddleLeft
         Me.lblEvent.Visible = False
         '
-        'pbarLoad
+        'picLoadBar
         '
-        Me.pbarLoad.Location = New System.Drawing.Point(297, 361)
-        Me.pbarLoad.Name = "pbarLoad"
-        Me.pbarLoad.Size = New System.Drawing.Size(395, 30)
-        Me.pbarLoad.TabIndex = 272
-        Me.pbarLoad.Visible = False
+        Me.picLoadBar.BackColor = System.Drawing.Color.White
+        Me.picLoadBar.Location = New System.Drawing.Point(306, 361)
+        Me.picLoadBar.Name = "picLoadBar"
+        Me.picLoadBar.Size = New System.Drawing.Size(395, 17)
+        Me.picLoadBar.TabIndex = 11
+        Me.picLoadBar.TabStop = False
+        Me.picLoadBar.Visible = False
         '
         'Game
         '
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Inherit
         Me.BackColor = System.Drawing.Color.Black
         Me.ClientSize = New System.Drawing.Size(1008, 690)
-        Me.Controls.Add(Me.pbarLoad)
+        Me.Controls.Add(Me.picLoadBar)
         Me.Controls.Add(Me.pnlCombat)
         Me.Controls.Add(Me.picTrapf)
         Me.Controls.Add(Me.picStatuef)
@@ -1967,6 +1970,7 @@ Partial Class Game
         Me.pnlCombat.PerformLayout()
         CType(Me.picPHealth, System.ComponentModel.ISupportInitialize).EndInit()
         CType(Me.picEHbar, System.ComponentModel.ISupportInitialize).EndInit()
+        CType(Me.picLoadBar, System.ComponentModel.ISupportInitialize).EndInit()
         Me.ResumeLayout(False)
         Me.PerformLayout()
 
@@ -2111,5 +2115,5 @@ Partial Class Game
     Friend WithEvents lblEvent As System.Windows.Forms.Label
     Friend WithEvents Label2 As System.Windows.Forms.Label
     Friend WithEvents DebugToolStripMenuItem As ToolStripMenuItem
-    Friend WithEvents pbarLoad As System.Windows.Forms.ProgressBar
+    Friend WithEvents picLoadBar As System.Windows.Forms.PictureBox
 End Class
