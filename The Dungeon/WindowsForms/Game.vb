@@ -57,6 +57,7 @@ Public Class Game
     Public solFlag As Boolean = False
     Private trd As Thread
     Dim imagesWorker As BackgroundWorker
+    Dim boardWorker As BackgroundWorker
     Private savePics As New List(Of Image)(9)
     Dim imagesWorkerArg = Nothing
     Dim savePicsReady As Boolean = False
@@ -211,6 +212,19 @@ Public Class Game
     'initializeBoard increments the floor count, and generates the next level
     Private Sub initializeBoard(Optional Draw As Boolean = True)
         floor += 1
+        player.canMoveFlag = False
+        boardWorker = New BackgroundWorker
+        boardWorker.WorkerReportsProgress = True
+        boardWorker.WorkerSupportsCancellation = True
+        AddHandler boardWorker.DoWork, AddressOf bw_DoWork
+        AddHandler boardWorker.ProgressChanged, AddressOf bw_ProgressChanged
+        AddHandler boardWorker.RunWorkerCompleted, AddressOf bw_RunWorkerCompleted
+        picLoadBar.Size = New Size(10, 17)
+
+        If picLoadBar.Visible = False Then picLoadBar.Visible = True
+        Application.DoEvents()
+
+        boardWorker.RunWorkerAsync()
         newBoard()
         If floor < 4 Then
             generateLevel(floorLayouts(floor))
@@ -248,6 +262,7 @@ Public Class Game
                 Next
             Next
         End If
+        boardWorker.ReportProgress(40)
         'increase the board size slightly on floors after 3
         If floor > 2 And mBoardHeight < 40 Then
             mBoardHeight += 1
@@ -256,6 +271,7 @@ Public Class Game
         'create all of  the board lables dynamacly at runtime
         ReDim mBoard(mBoardHeight - 1, mBoardWidth - 1)
         ReDim mPics(15, 23)
+        Dim numTiles = mBoardHeight * mBoardWidth
         For yInd = 0 To mBoardHeight - 1
             For xInd = 0 To mBoardWidth - 1
                 mBoard(yInd, xInd) = New mTile(0, "", Color.Black)
@@ -268,8 +284,14 @@ Public Class Game
                     Me.Controls.Add(newPicture)
                     mPics(yInd, xInd) = newPicture
                 End If
+
+                Dim progress As Double = (xInd + (yInd * mBoardWidth)) / numTiles
+                boardWorker.ReportProgress(40 + (progress * 60))
+                Application.DoEvents()
             Next xInd
         Next yInd
+        boardWorker.ReportProgress(99)
+        boardWorker.CancelAsync()
     End Sub
     'generateLevel creates the random rooms and corridors of each level
     Function genRNDLVLCode() As String
@@ -2234,18 +2256,35 @@ Public Class Game
         Process.Start("https://bitbucket.org/VowelHeavyUsername/dungeon_depths/issues?status=new&status=open")
     End Sub
 
+    Private Sub bw_DoWork(ByVal sender As Object, ByVal e As DoWorkEventArgs)
+        Dim worker As BackgroundWorker = CType(sender, BackgroundWorker)
+
+        While boardWorker.IsBusy
+            If boardWorker.CancellationPending = True Then
+                e.Cancel = True
+                Exit While
+            Else
+                'Perform a time consuming operation
+                System.Threading.Thread.Sleep(500)
+            End If
+        End While
+    End Sub
     Private Sub bw_ProgressChanged(ByVal sender As Object, ByVal e As ProgressChangedEventArgs)
-        If pbarLoad.Visible = False Then pbarLoad.Visible = True
-        pbarLoad.Value = (e.ProgressPercentage / 100) * 100
+        picLoadBar.Size = New Size((e.ProgressPercentage / 100) * 395, 17)
     End Sub
     Private Sub bw_RunWorkerCompleted(ByVal sender As Object, ByVal e As RunWorkerCompletedEventArgs)
         If e.Cancelled = True Then
-            pbarLoad.Visible = False
+            picLoadBar.Size = New Size(395, 17)
+            Application.DoEvents()
+            picLoadBar.Visible = False
         ElseIf e.Error IsNot Nothing Then
             MsgBox("Error: " & e.Error.Message)
         Else
-            pbarLoad.Visible = False
+            picLoadBar.Size = New Size(395, 17)
+            Application.DoEvents()
+            picLoadBar.Visible = False
         End If
+        player.canMoveFlag = True
     End Sub
 
     Sub pushLblCombatEvent(ByVal s As String)

@@ -222,9 +222,12 @@
 
         breastSize = CInt(readArray(21))
 
-
-        haircolor = Color.FromArgb(255, CInt(readArray(22)), CInt(readArray(23)), CInt(readArray(24)))
-        skincolor = Color.FromArgb(255, CInt(readArray(25)), CInt(readArray(26)), CInt(readArray(27)))
+        Dim A = 255
+        If Not readArray(8).Equals("placehold") Then A = readArray(8)
+        haircolor = Color.FromArgb(A, CInt(readArray(22)), CInt(readArray(23)), CInt(readArray(24)))
+        A = 255
+        If Not readArray(9).Equals("placehold") Then A = readArray(9)
+        skincolor = Color.FromArgb(A, CInt(readArray(25)), CInt(readArray(26)), CInt(readArray(27)))
         textColor = Color.FromArgb(255, CInt(readArray(28)), CInt(readArray(29)), CInt(readArray(30)))
 
         Dim b1 As Integer = readArray(31)
@@ -242,7 +245,7 @@
     'write converts a state into a string to be put into a save file
     Public Function write() As String
         If initFlag Then
-            Dim output As String = CStr(name & "*" & title & "*" & description & "*" & health & "*" & maxHealth & "*" & mana & "*" & maxMana & "*" & wingIndex & "*" & "placehold" & "*" & "placehold" & "*" & _
+            Dim output As String = CStr(name & "*" & title & "*" & description & "*" & health & "*" & maxHealth & "*" & mana & "*" & maxMana & "*" & wingIndex & "*" & haircolor.A & "*" & skincolor.A & "*" & _
                attack & "*" & defence & "*" & discipline & "*" & speed & "*" & evade & "*" & hunger & "*" & gold & "*" & equippedArmor.getName() & "*" & equippedWeapon.getName() & "*" & _
                sex & "*" & "placeholder" & "*" & breastSize & "*" & haircolor.R & "*" & haircolor.G & "*" & haircolor.B & "*" & skincolor.R & "*" & skincolor.G & "*" & skincolor.B & "*" & _
                textColor.R & "*" & textColor.G & "*" & textColor.B & "*")
