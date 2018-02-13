@@ -1089,6 +1089,20 @@ Public Class Game
         cmboxSpec.Visible = False
         pnlCombatClose()
 
+        player.canMoveFlag = False
+        boardWorker = New BackgroundWorker
+        boardWorker.WorkerReportsProgress = True
+        boardWorker.WorkerSupportsCancellation = True
+        AddHandler boardWorker.DoWork, AddressOf bw_DoWork
+        AddHandler boardWorker.ProgressChanged, AddressOf bw_ProgressChanged
+        AddHandler boardWorker.RunWorkerCompleted, AddressOf bw_RunWorkerCompleted
+        picLoadBar.Size = New Size(10, 17)
+
+        If picLoadBar.Visible = False Then picLoadBar.Visible = True
+        Application.DoEvents()
+
+        boardWorker.RunWorkerAsync()
+
         Dim reader As IO.StreamReader
         reader = IO.File.OpenText(a)
         If CDbl(reader.ReadLine()) < version Then
@@ -1096,6 +1110,7 @@ Public Class Game
             picStart.Visible = True
             btnS.Visible = True
             btnL.Visible = True
+            boardWorker.CancelAsync()
             Exit Sub
         End If
 
@@ -1347,7 +1362,6 @@ Public Class Game
         While Not savePicsReady
             Threading.Thread.Sleep(50)
         End While
-
         If System.IO.File.Exists("s.ave") Then convertSave("s.ave")
 
         If savePics(1) IsNot Nothing Then
