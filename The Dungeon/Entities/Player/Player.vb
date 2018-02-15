@@ -232,8 +232,9 @@
                 health = 10
                 Exit Sub
             ElseIf currTarget.name.Equals("Slime") Or currTarget.name.Equals("Goo Girl") Then
+                Dim tarName = currTarget.name
                 currTarget.despawn("run")
-                Dim out As String = "As the " & currTarget.name & " closes in on you, you push yourself off the ground, sidestep it, and make a hasty retreat." & vbCrLf & " " & vbCrLf & "[Insert a TF here (eventually)]"
+                Dim out As String = "As the " & tarName & " closes in on you, you push yourself off the ground, sidestep it, and make a hasty retreat." & vbCrLf & " " & vbCrLf & "[Insert a TF here (eventually)]"
                 Game.pushLblEvent(out)
                 health = 10
                 Exit Sub
