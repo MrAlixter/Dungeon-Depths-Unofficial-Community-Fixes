@@ -58,6 +58,7 @@ Public Class Game
     Private trd As Thread
     Dim imagesWorker As BackgroundWorker
     Dim boardWorker As BackgroundWorker
+    Public playerPortraitWorker As BackgroundWorker
     Private savePics As New List(Of Image)(9)
     Dim imagesWorkerArg = Nothing
     Dim savePicsReady As Boolean = False
@@ -2300,7 +2301,10 @@ Public Class Game
         End If
         player.canMoveFlag = True
     End Sub
-
+    Public Sub ppw_DoWork(ByVal sender As Object, ByVal e As DoWorkEventArgs)
+        Dim worker As BackgroundWorker = CType(sender, BackgroundWorker)
+        player.createP()
+    End Sub
     Sub pushLblCombatEvent(ByVal s As String)
         Dim sSplit() As String = s.Split(" ")
         Dim c As Integer = 0

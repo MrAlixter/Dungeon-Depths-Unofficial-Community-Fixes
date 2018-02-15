@@ -1170,7 +1170,7 @@
             Case 15
                 iArrInd(9) = New Tuple(Of Integer, Boolean)(8, False)
             Case Else
-                If iArrInd(8).Item1 < 5 Then iArrInd(9) = New Tuple(Of Integer, Boolean)(iArrInd(9).Item1, False)
+                If iArrInd(9).Item1 < 5 Then iArrInd(9) = New Tuple(Of Integer, Boolean)(iArrInd(9).Item1, False)
         End Select
         'eyebrows
         Select Case iArrInd(10).Item1
