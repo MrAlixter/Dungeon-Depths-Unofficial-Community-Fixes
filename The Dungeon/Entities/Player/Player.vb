@@ -262,7 +262,6 @@
                 inventory(55).add(1)
                 perks(12) = True
                 Equipment.portraitUDate()
-                createP()
                 Game.pushLblEvent(out)
                 health = 10
                 Exit Sub
@@ -394,7 +393,6 @@
         Game.lblNameTitle.ForeColor = TextColor
 
         changeHairColor(haircolor)
-        createP()
         Equipment.portraitUDate()
         UIupdate()
     End Sub
@@ -431,7 +429,6 @@
         Game.lblNameTitle.ForeColor = TextColor
 
         changeHairColor(haircolor)
-        createP()
         Equipment.portraitUDate()
         UIupdate()
     End Sub
@@ -566,8 +563,8 @@
                 perksct(1) = 0
             End If
             If Not title.Equals("Bimbo") Then
-                If perksct(1) < 19 And perksct(1) Mod 3 = 0 Then
-                    haircolor = Game.cShift(haircolor, Polymorph.bimboyellow, 5)
+                If perksct(1) < 19 And perksct(1) Mod 10 = 0 Then
+                    haircolor = Game.cShift(haircolor, Polymorph.bimboyellow, 25)
                     createP()
                 End If
                 Select Case perksct(1)
@@ -680,7 +677,6 @@
                         Case Int((discipline * 1.2))
                             Polymorph.transform(Me, "neko", 7)
                     End Select
-                    createP()
                     perksct(6) += 1
                 Else
                     Polymorph.transform(Me, "neko", 7)
@@ -902,7 +898,6 @@
             sex = "Female"
             breastSize = 1
             idRouteMF()
-            createP()
         Else
             sex = "Female"
             sexBool = True
@@ -923,7 +918,6 @@
             iArrInd(14) = New Tuple(Of Integer, Boolean)(0, True)
             iArrInd(15) = New Tuple(Of Integer, Boolean)(CharacterGenerator.fFrontHair.Count - 1, True)
             iArrInd(16) = New Tuple(Of Integer, Boolean)(0, True)
-            createP()
         End If
         Equipment.portraitUDate()
         changeSkinColor(skincolor)
@@ -941,7 +935,6 @@
             breastSize = -1
             perks(2) = False
             idRouteFM()
-            createP()
         End If
         perksct(7) = 0
         Equipment.portraitUDate()
@@ -975,7 +968,6 @@
         bsizeroute()
         Equipment.portraitUDate()
         Game.lstLog.TopIndex = Game.lstLog.Items.Count - 1
-        createP()
     End Sub
     Friend Sub bs()
         If perks(5) Or title.Equals("Magic Girl") Then
@@ -1006,7 +998,6 @@
         bsizeroute()
         Equipment.portraitUDate()
         Game.lstLog.TopIndex = Game.lstLog.Items.Count - 1
-        createP()
     End Sub
     Sub bsizeroute()
         If (iArrInd(2).Item1 = 0 Or iArrInd(2).Item1 = 5) And iArrInd(2).Item2 And breastSize <> 1 Then
