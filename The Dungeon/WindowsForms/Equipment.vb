@@ -82,15 +82,15 @@
         If p.mana > p.getmaxMana Then p.mana = p.getmaxMana
 
         'if the player has the slutty dress curse, this takes care of it
-        If p.perks(2) Then
+        If p.perks("slutcurse") > -1 Then
             clothingCurse1()
         End If
 
         'handles any tfs or triggers triggered by equipping of certain weapons
         If p.equippedWeapon.getName = "Magic_Girl_Wand" And Not p.title.Equals("Magic Girl") Then
             Polymorph.transform(p, "Magic Girl")
-        ElseIf p.equippedWeapon.getName = "Sword_of_the_Brutal" And Not p.perks(7) Then
-            p.perks(7) = True
+        ElseIf p.equippedWeapon.getName = "Sword_of_the_Brutal" And Not p.perks("swordpossess") > -1 Then
+            p.perks("swordpossess") = 0
         End If
 
         If p.title.Equals("Magic Girl") And p.equippedArmor.getName.Equals("Magic_Girl_Outfit") And Not revertFlag Then
@@ -103,10 +103,10 @@
         End If
 
         'handles any tfs or triggers triggered by equipping of certain armors
-        If p.equippedArmor.getName = "Living_Armor" And Not p.perks(12) Then
-            p.perks(12) = True
-        ElseIf p.equippedArmor.getName = "Living_Lingerie" And Not p.perks(13) Then
-            p.perks(13) = True
+        If p.equippedArmor.getName = "Living_Armor" And Not p.perks("livearm") > -1 Then
+            p.perks("livearm") = 0
+        ElseIf p.equippedArmor.getName = "Living_Lingerie" And Not p.perks("livelinge") > -1 Then
+            p.perks("livelinge") = 0
         End If
 
         'updates the player, the stat display, and the portrait before the form closes
@@ -128,12 +128,16 @@
 
         'adds the default clothes for various forms
         cmbobxArmor.Items.Add("Naked")
-        If p.title = "Bimbo" Or p.perks(2) Then
+        If p.title = "Bimbo" Or p.perks("slutcurse") > -1 Then
             cmbobxArmor.Items.Add("Skimpy_Clothes")
         ElseIf p.title = "Princess" Then
             cmbobxArmor.Items.Add("Regal_Gown")
         ElseIf p.title = "Maid" Then
             cmbobxArmor.Items.Add("Maid_Outfit")
+        ElseIf p.title = "Succubus" Then
+            cmbobxArmor.Items.Add("Succubus_Garb")
+        ElseIf p.title = "Goddess" Then
+            cmbobxArmor.Items.Add("Goddess_Gown")
         Else
             cmbobxArmor.Items.Add("Common_Clothes")
         End If
@@ -161,7 +165,7 @@
 
     'clothingCurse1 routes the normal versions of armors to their slut forms, if they have them.
     Sub clothingCurse1()
-        If p.perks(5) Then Exit Sub
+        If p.perks("polymorphed") > -1 Then Exit Sub
         Dim affectedFlag As Boolean = True
         Select Case p.equippedArmor.getName.GetHashCode
             Case "Steel_Armor".GetHashCode
@@ -198,7 +202,7 @@
         Game.lstLog.TopIndex = Game.lstLog.Items.Count - 1
     End Sub
     Sub antiClothingCurse()
-        If p.perks(5) Then Exit Sub
+        If p.perks("polymorphed") > -1 Then Exit Sub
         Dim affectedFlag As Boolean = True
         Select Case p.equippedArmor.getName.GetHashCode
             Case "Steel_Bikini".GetHashCode

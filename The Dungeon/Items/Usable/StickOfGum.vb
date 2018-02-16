@@ -13,6 +13,6 @@
     End Sub
 
     Overrides Sub effect()
-        Game.player.perks(1) = True
+        Game.player.perks("bimbotf") = 0
     End Sub
 End Class

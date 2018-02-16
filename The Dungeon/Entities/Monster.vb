@@ -131,10 +131,10 @@
         End If
         Game.lstLog.Items.Add("You've deafeated the " & name & "!  Chest Dropped!")
         'Form1.player.xp += xpGain
-        Game.player.perks(6) = False
+        Game.player.perks("nekocurse") = -1
         Game.player.currState.save(Game.player)
         Game.fromCombat()
-        If Game.player.perks(7) Then Game.player.perksct(7) += 1
+        If Game.player.perks("swordpossess") Then Game.player.perks("swordpossess") += 1
         dead = True
         endBoss()
         Game.lstLog.TopIndex = Game.lstLog.Items.Count - 1
@@ -163,7 +163,7 @@
             Dim c1 As Chest = Game.baseChest.Create(inventory, pos)
             Game.chestList.Add(c1)
         End If
-        Game.player.perks(6) = False
+        Game.player.perks("nekocurse") = -1
         Game.player.currState.save(Game.player)
         Game.fromCombat()
         Game.lstLog.TopIndex = Game.lstLog.Items.Count - 1
@@ -207,12 +207,12 @@
         Game.npcList.Remove(Me)
         Game.lstLog.Items.Add("You've deafeated the " & name & "!")
         'Form1.player.xp += xpGain
-        Game.player.perks(6) = False
+        Game.player.perks("nekocurse") = -1
         Game.player.currState.save(Game.player)
         Game.fromCombat()
         Game.pushLblEvent(title & name & "'s chest slowly turns to stone where the spell hits " & rPronoun & ". The petrification spreads out over " & pPronoun & " body, and as more of " & pPronoun & " body turns to a fine gray stone " & pPronoun & " struggling becomes less and less intense. As the last of the life drains out of " & pPronoun & " eyes, all that is left of the once dangerous " & name & " is a lifeless stone statue. It doesn't seem like " & pronoun & " will be needing " & pPronoun & " personal items anymore.")
         Game.statueList.Add(New Statue(Me))
-        If Game.player.perks(7) Then Game.player.perksct(7) += 1
+        If Game.player.perks("swordpossess") Then Game.player.perks("swordpossess") += 1
         dead = True
         endBoss()
         Game.lstLog.TopIndex = Game.lstLog.Items.Count - 1
@@ -223,13 +223,13 @@
         Game.npcList.Remove(Me)
         Game.lstLog.Items.Add("You've deafeated the " & name & "!")
         'Form1.player.xp += xpGain
-        Game.player.perks(6) = False
+        Game.player.perks("nekocurse") = -1
         Game.player.currState.save(Game.player)
         Game.fromCombat()
         Dim gd As Integer = (maxHealth + attack + defence) * 7
         Game.pushLblEvent(title & name & "'s chest slowly turns to solid gold where you poked " & rPronoun & ". The gilded surface spreads out over " & pPronoun & " body, and as more of " & pPronoun & " body turns to the precious metal " & pPronoun & " struggling becomes less and less intense. As the last of the life drains out of " & pPronoun & " eyes, all that is left of the once dangerous " & name & " is a lifeless gold statue, which you then topple over, shattering it into tiny pieces.   " & vbCrLf & "+" & gd & " gold.")
         Game.player.gold += gd
-        If Game.player.perks(7) Then Game.player.perksct(7) += 1
+        If Game.player.perks("swordpossess") Then Game.player.perks("swordpossess") += 1
         dead = True
         endBoss()
         Game.lstLog.TopIndex = Game.lstLog.Items.Count - 1
@@ -240,10 +240,10 @@
         Game.npcList.Remove(Me)
         Game.lstLog.Items.Add("You've deafeated the " & name & "!")
         'Form1.player.xp += xpGain
-        Game.player.perks(6) = False
+        Game.player.perks("nekocurse") = -1
         Game.player.currState.save(Game.player)
         Game.fromCombat()
-        If Game.player.perks(7) Then Game.player.perksct(7) += 1
+        If Game.player.perks("swordpossess") Then Game.player.perks("swordpossess") += 1
         dead = True
         endBoss()
         Game.lstLog.TopIndex = Game.lstLog.Items.Count - 1
@@ -263,6 +263,7 @@
         Dim m As Monster = New Monster(5)
         m.inventory = cont
         Game.npcList.Add(m)
+        Game.player.currTarget = m
         Game.toCombat()
         Game.lstLog.Items.Add((m.getName() & " attacks!"))
         Game.lstLog.TopIndex = Game.lstLog.Items.Count - 1

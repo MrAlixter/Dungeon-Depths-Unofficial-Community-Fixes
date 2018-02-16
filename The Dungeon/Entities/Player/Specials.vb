@@ -15,8 +15,7 @@
         End If
     End Sub
     Shared Sub brage(ByRef p As Player)
-        p.perks(9) = True
-        p.perksct(9) = 3
+        p.perks("brage") = 3
         Game.lstLog.Items.Add("BERSERKER RAGE!")
         Game.pushLblCombatEvent("BERSERKER RAGE!" & vbCrLf & "+50% ATK, -25% DEF for 3 turns.")
         Game.lstLog.TopIndex = Game.lstLog.Items.Count - 1
@@ -30,8 +29,7 @@
         Game.lstLog.TopIndex = Game.lstLog.Items.Count - 1
     End Sub
     Shared Sub mamm(ByRef p As Player)
-        p.perks(10) = True
-        p.perksct(10) = 1
+        p.perks("mmammaries") = 1
         Game.lstLog.Items.Add("Massive Mammaries!")
         Game.pushLblCombatEvent("Massive Mammaries!" & vbCrLf & "+80% DEF for 1 turn.")
         Game.lstLog.TopIndex = Game.lstLog.Items.Count - 1
@@ -54,8 +52,7 @@
         Game.lstLog.TopIndex = Game.lstLog.Items.Count - 1
     End Sub
     Shared Sub iron(ByRef p As Player)
-        p.perks(11) = True
-        p.perksct(11) = 3
+        p.perks("ihfury") = 3
         Game.lstLog.Items.Add("Ironhide Fury!")
         Game.pushLblCombatEvent("Ironhide Fury!" & vbCrLf & "+50% ATK, +60% DEF for 3 turn.")
         Game.lstLog.TopIndex = Game.lstLog.Items.Count - 1

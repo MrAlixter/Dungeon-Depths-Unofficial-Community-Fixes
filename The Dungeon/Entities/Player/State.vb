@@ -9,7 +9,7 @@
     Dim equippedWeapon As Weapon
     Dim equippedArmor As Armor
     Public iArrInd(16) As Tuple(Of Integer, Boolean)
-    Dim perks(13) As Boolean
+    Dim perks As Dictionary(Of String, Integer)
     Dim sexBool, invNeedsUDate As Boolean
     Dim haircolor, skincolor, textColor As Color
     Dim pImage As Image
@@ -71,14 +71,13 @@
         equippedWeapon = New BareFists
         equippedArmor = New Naked
         iArrInd = {New Tuple(Of Integer, Boolean)(2, False), New Tuple(Of Integer, Boolean)(2, False), New Tuple(Of Integer, Boolean)(2, False), New Tuple(Of Integer, Boolean)(2, False), New Tuple(Of Integer, Boolean)(2, False), New Tuple(Of Integer, Boolean)(2, False), New Tuple(Of Integer, Boolean)(2, False), New Tuple(Of Integer, Boolean)(2, False), New Tuple(Of Integer, Boolean)(2, False), New Tuple(Of Integer, Boolean)(2, False), New Tuple(Of Integer, Boolean)(2, False), New Tuple(Of Integer, Boolean)(2, False), New Tuple(Of Integer, Boolean)(2, False), New Tuple(Of Integer, Boolean)(2, False), New Tuple(Of Integer, Boolean)(2, False), New Tuple(Of Integer, Boolean)(2, False), New Tuple(Of Integer, Boolean)(2, False), New Tuple(Of Integer, Boolean)(2, False), New Tuple(Of Integer, Boolean)(2, False), New Tuple(Of Integer, Boolean)(2, False)}
-        perks = {False}
+        perks = New Dictionary(Of String, Integer)()
         sexBool = False
         invNeedsUDate = False
         haircolor = Color.Black
         skincolor = Color.Black
         textColor = Color.Black
         wingIndex = 0
-        ReDim perks(13)
         ReDim iArrInd(16)
     End Sub
 
@@ -104,7 +103,7 @@
         Equipment.clothesChange(equippedArmor.getName)
         p.equippedArmor = equippedArmor
         p.iArrInd = iArrInd.Clone
-        p.perks = perks.Clone
+        p.perks = New Dictionary(Of String, Integer)(perks)
         p.sexBool = sexBool
         p.invNeedsUDate = invNeedsUDate
         p.haircolor = haircolor
@@ -143,7 +142,7 @@
         equippedWeapon = p.equippedWeapon
         equippedArmor = p.equippedArmor
         iArrInd = p.iArrInd.Clone
-        perks = p.perks.Clone
+        perks = New Dictionary(Of String, Integer)(p.perks)
         sexBool = p.sexBool
         invNeedsUDate = p.invNeedsUDate
         haircolor = p.haircolor
@@ -179,7 +178,7 @@
             equippedWeapon = New BareFists
             equippedArmor = New Naked
             iArrInd = {New Tuple(Of Integer, Boolean)(2, False), New Tuple(Of Integer, Boolean)(2, False), New Tuple(Of Integer, Boolean)(2, False), New Tuple(Of Integer, Boolean)(2, False), New Tuple(Of Integer, Boolean)(2, False), New Tuple(Of Integer, Boolean)(2, False), New Tuple(Of Integer, Boolean)(2, False), New Tuple(Of Integer, Boolean)(2, False), New Tuple(Of Integer, Boolean)(2, False), New Tuple(Of Integer, Boolean)(2, False), New Tuple(Of Integer, Boolean)(2, False), New Tuple(Of Integer, Boolean)(2, False), New Tuple(Of Integer, Boolean)(2, False), New Tuple(Of Integer, Boolean)(2, False), New Tuple(Of Integer, Boolean)(2, False), New Tuple(Of Integer, Boolean)(2, False), New Tuple(Of Integer, Boolean)(2, False), New Tuple(Of Integer, Boolean)(2, False), New Tuple(Of Integer, Boolean)(2, False), New Tuple(Of Integer, Boolean)(2, False)}
-            perks = {False}
+            perks = New Dictionary(Of String, Integer)()
             sexBool = False
             invNeedsUDate = False
             haircolor = Color.Black
@@ -230,11 +229,12 @@
         skincolor = Color.FromArgb(A, CInt(readArray(25)), CInt(readArray(26)), CInt(readArray(27)))
         textColor = Color.FromArgb(255, CInt(readArray(28)), CInt(readArray(29)), CInt(readArray(30)))
 
+
         Dim b1 As Integer = readArray(31)
-        For i = 0 To b1
-            perks(i) = readArray(32 + i)
+        For i = 0 To b1 - 1
+            Dim kvp = readArray(32 + i).Split("!")
+            perks(kvp(0)) = CInt(kvp(1))
         Next
-        b1 += 1
         For i = 0 To UBound(iArrInd)
             Dim arr() As String = readArray(32 + b1 + i).Split("%")
             iArrInd(i) = New Tuple(Of Integer, Boolean)(CInt(arr(0)), CBool(arr(1)))
@@ -249,9 +249,9 @@
                attack & "*" & defence & "*" & discipline & "*" & speed & "*" & evade & "*" & hunger & "*" & gold & "*" & equippedArmor.getName() & "*" & equippedWeapon.getName() & "*" & _
                sex & "*" & "placeholder" & "*" & breastSize & "*" & haircolor.R & "*" & haircolor.G & "*" & haircolor.B & "*" & skincolor.R & "*" & skincolor.G & "*" & skincolor.B & "*" & _
                textColor.R & "*" & textColor.G & "*" & textColor.B & "*")
-            output += UBound(perks) & "*"
-            For i = 0 To UBound(perks)
-                output += (perks(i) & "*")
+            output += perks.Count & "*"
+            For Each kvp As KeyValuePair(Of String, Integer) In perks
+                output += (kvp.Key & "!" & kvp.Value & "*")
             Next
             For i = 0 To UBound(iArrInd)
                 output += (iArrInd(i).Item1 & "%" & iArrInd(i).Item2 & "*")
