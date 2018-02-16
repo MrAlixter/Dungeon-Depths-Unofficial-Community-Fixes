@@ -57,9 +57,8 @@
                 Game.player.createP()
                 Game.pushLblEvent(out)
             Case 2
-                Dim ruby As Color = Color.FromArgb(255, 200, 55, 55)
                 Dim rubyTF As Color = Color.FromArgb(185, 200, 55, 55)
-                Game.player.skincolor = Game.cShift(Game.player.skincolor, ruby, 50)
+                Game.player.skincolor = Game.cShift(Game.player.skincolor, Color.Crimson, 50)
                 Game.player.pState.save(Game.player)
                 Game.player.petrify(rubyTF)
                 Dim out As String = "As you walk through the dungeon, you see what looks like a valuable ruby on the ground, and you bend down to pick it up.  As soon as you touch it, a shock runs through your body, and starting with the hand you have on the gem your body is turned into ruby.  𝘚𝘩𝘪𝘵!  Looks like that ruby was probably cursed . . ."

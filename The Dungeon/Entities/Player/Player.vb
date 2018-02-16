@@ -24,6 +24,7 @@
     Public perksct(UBound(perks)) As Integer
     Public pImage As Image 'tile image of the player
     Public TextColor As Color
+    Public isDead As Boolean = False
     'portrait variables
     Public sexBool As Boolean
     Public iArr As Image()
@@ -263,7 +264,6 @@
                 inventory(55).add(1)
                 perks(12) = True
                 Equipment.portraitUDate()
-                createP()
                 Game.pushLblEvent(out)
                 health = 10
                 Exit Sub
@@ -271,6 +271,7 @@
         Catch ex As Exception
             MsgBox("D_D Error 002: Unknown Cause of death")
         End Try
+        isDead = True
         Dim r As Integer = CInt(Int(Rnd() * 2))
         If r = 0 Then
             If Not Game.currNPC Is Nothing AndAlso Game.currNPC.name.Equals("Shopkeeper") Then title = "Golem (Gold)"
@@ -290,7 +291,7 @@
                 MsgBox("No save detected!")
             End Try
         End If
-        Application.Exit()
+        Game.formReset()
     End Sub
     'setClass sets the player stats at the beginning of the game
     Public Sub setClass(ByVal s As String)
@@ -395,7 +396,6 @@
         Game.lblNameTitle.ForeColor = TextColor
 
         changeHairColor(haircolor)
-        createP()
         Equipment.portraitUDate()
         UIupdate()
     End Sub
@@ -432,7 +432,6 @@
         Game.lblNameTitle.ForeColor = TextColor
 
         changeHairColor(haircolor)
-        createP()
         Equipment.portraitUDate()
         UIupdate()
     End Sub
@@ -567,8 +566,8 @@
                 perksct(1) = 0
             End If
             If Not title.Equals("Bimbo") Then
-                If perksct(1) < 19 And perksct(1) Mod 3 = 0 Then
-                    haircolor = Game.cShift(haircolor, Polymorph.bimboyellow, 5)
+                If perksct(1) < 19 And perksct(1) Mod 10 = 0 Then
+                    haircolor = Game.cShift(haircolor, Polymorph.bimboyellow, 25)
                     createP()
                 End If
                 Select Case perksct(1)
@@ -592,6 +591,7 @@
                         Polymorph.transform(Me, "bimbo", 0)
                     Case 25
                         Polymorph.transform(Me, "bimbo", 1)
+                        perksct(1) -= 1
                 End Select
                 perksct(1) += 1
                 Dim outputln1 As String = "Chewing the gum causes a dizzy calm wash to over you."
@@ -655,9 +655,9 @@
                     Select Case perksct(6)
                         Case Int((discipline * 1.2) * 0.1)
                             Polymorph.transform(Me, "neko", 0)
-                        Case Int((discipline * 1.2) * 0.2)
+                        Case Int((discipline * 1.2) * 0.3)
                             Polymorph.transform(Me, "neko", 1)
-                        Case Int((discipline * 1.2) * 0.4)
+                        Case Int((discipline * 1.2) * 0.5)
                             If Not title.Equals("Magic Girl") Then
                                 Polymorph.transform(Me, "neko", 2)
                             Else
@@ -665,11 +665,11 @@
                                 Game.pushLblEvent("Your hair becomes a shiny black!")
                                 lust += 5
                             End If
-                        Case Int((discipline * 1.2) * 0.5)
+                        Case Int((discipline * 1.2) * 0.7)
                             Polymorph.transform(Me, "neko", 3)
-                        Case Int((discipline * 1.2) * 0.6)
+                        Case Int((discipline * 1.2) * 0.9)
                             Polymorph.transform(Me, "neko", 4)
-                        Case Int((discipline * 1.2) * 0.8)
+                        Case Int((discipline * 1.2) * 1.1)
                             If title.Equals("Magic Girl") Then
                                 Polymorph.transform(Me, "neko", 6)
                             Else
@@ -681,7 +681,6 @@
                         Case Int((discipline * 1.2))
                             Polymorph.transform(Me, "neko", 7)
                     End Select
-                    createP()
                     perksct(6) += 1
                 Else
                     Polymorph.transform(Me, "neko", 7)
@@ -894,6 +893,8 @@
         If lust > 0 Then lustUpdate()
         If wingInd > 0 Then addWings(wingInd)
         currState.save(Me)
+        Game.lblEvent.ForeColor = TextColor
+        Game.lblNameTitle.ForeColor = TextColor
         If Not solFlag Then Game.picPortrait.BackgroundImage = CharacterGenerator.CreateBMP(iArr)
     End Sub
     Public Sub MtF()
@@ -906,7 +907,6 @@
             sex = "Female"
             breastSize = 1
             idRouteMF()
-            createP()
         Else
             sex = "Female"
             sexBool = True
@@ -927,9 +927,7 @@
             iArrInd(14) = New Tuple(Of Integer, Boolean)(0, True)
             iArrInd(15) = New Tuple(Of Integer, Boolean)(CharacterGenerator.fFrontHair.Count - 1, True)
             iArrInd(16) = New Tuple(Of Integer, Boolean)(0, True)
-            createP()
         End If
-        Equipment.portraitUDate()
         changeSkinColor(skincolor)
         perksct(7) = 0
         Game.lstLog.TopIndex = Game.lstLog.Items.Count - 1
@@ -945,10 +943,8 @@
             breastSize = -1
             perks(2) = False
             idRouteFM()
-            createP()
         End If
         perksct(7) = 0
-        Equipment.portraitUDate()
         Game.lstLog.TopIndex = Game.lstLog.Items.Count - 1
     End Sub
     Public Sub be()
@@ -977,9 +973,7 @@
             If iArrInd(3).Item2 = False Then iArrInd(3) = New Tuple(Of Integer, Boolean)(iArrInd(3).Item1, True)
         End If
         bsizeroute()
-        Equipment.portraitUDate()
         Game.lstLog.TopIndex = Game.lstLog.Items.Count - 1
-        createP()
     End Sub
     Friend Sub bs()
         If perks(5) Or title.Equals("Magic Girl") Then
@@ -1008,9 +1002,7 @@
             If iArrInd(3).Item2 = False Then iArrInd(3) = New Tuple(Of Integer, Boolean)(iArrInd(3).Item1, True)
         End If
         bsizeroute()
-        Equipment.portraitUDate()
         Game.lstLog.TopIndex = Game.lstLog.Items.Count - 1
-        createP()
     End Sub
     Sub bsizeroute()
         If (iArrInd(2).Item1 = 0 Or iArrInd(2).Item1 = 5) And iArrInd(2).Item2 And breastSize <> 1 Then
@@ -1174,7 +1166,7 @@
             Case 15
                 iArrInd(9) = New Tuple(Of Integer, Boolean)(8, False)
             Case Else
-                If iArrInd(8).Item1 < 5 Then iArrInd(9) = New Tuple(Of Integer, Boolean)(iArrInd(9).Item1, False)
+                If iArrInd(9).Item1 < 5 Then iArrInd(9) = New Tuple(Of Integer, Boolean)(iArrInd(9).Item1, False)
         End Select
         'eyebrows
         Select Case iArrInd(10).Item1

@@ -58,6 +58,7 @@ Public Class Game
     Private trd As Thread
     Dim imagesWorker As BackgroundWorker
     Dim boardWorker As BackgroundWorker
+    Public playerPortraitWorker As BackgroundWorker
     Private savePics As New List(Of Image)(9)
     Dim imagesWorkerArg = Nothing
     Dim savePicsReady As Boolean = False
@@ -585,7 +586,11 @@ Public Class Game
         If mBoard(player.pos.Y, player.pos.X).Text = "+" Then
             For i = 0 To trapList.Count - 1
                 If trapList(i).pos = player.pos Then
-                    trapList(i).activate()
+                    Try
+                        trapList(i).activate()
+                    Catch ex As Exception
+                        pushLblEvent("As you wander forward, your foot falls on a pressure plate.  As soon as you hear it click, you snap to attention.  Looking around, you see that nothing seems to have happened." & vbCrLf & "𝘚𝘰𝘮𝘦𝘵𝘩𝘪𝘯𝘨 𝘮𝘶𝘴𝘵 𝘩𝘢𝘷𝘦 𝘨𝘰𝘯𝘦 𝘸𝘳𝘰𝘯𝘨 𝘸𝘪𝘵𝘩 𝘵𝘩𝘦 𝘵𝘳𝘢𝘱'𝘴 𝘢𝘤𝘵𝘪𝘷𝘢𝘵𝘪𝘰𝘯...")
+                    End Try
                     Exit For
                 End If
             Next
@@ -671,7 +676,7 @@ Public Class Game
                         Case 3
                             mPics(y, x).BackgroundImage = picStairs.BackgroundImage
                         Case 4
-                            mPics(y, x).BackgroundImage = pImage
+                            mPics(y, x).BackgroundImage = player.pImage
                         Case 5
                             mPics(y, x).BackgroundImage = picChest.BackgroundImage
                         Case 6
@@ -686,13 +691,14 @@ Public Class Game
                         Case 0
                             mPics(y, x).BackgroundImage = picTree.BackgroundImage
                         Case 1
-                            mPics(y, x).BackgroundImage = picFog.BackgroundImage
+                            mPics(y, x).BackgroundImage = Nothing
+                            mPics(y, x).BackColor = Color.DarkGreen
                         Case 2
                             mPics(y, x).BackgroundImage = picTileF.BackgroundImage
                         Case 3
                             mPics(y, x).BackgroundImage = picLadderf.BackgroundImage
                         Case 4
-                            mPics(y, x).BackgroundImage = pImage
+                            mPics(y, x).BackgroundImage = player.pImage
                         Case 5
                             mPics(y, x).BackgroundImage = picChestf.BackgroundImage
                         Case 6
@@ -1356,9 +1362,9 @@ Public Class Game
         End If
     End Sub
     Sub toSOL()
+        fromCombat()
         pnlSaveLoad.Visible = True
         'CharacterGenerator.init()
-
         While Not savePicsReady
             Threading.Thread.Sleep(50)
         End While
@@ -1413,6 +1419,7 @@ Public Class Game
         End If
 
         Me.Update()
+        player.canMoveFlag = False
     End Sub
     Sub closesol()
         Dim int As Integer = 100 - player.getSpeed
@@ -1420,6 +1427,8 @@ Public Class Game
         updatelist.add(player, int)
         combatmode = False
         picStart.Visible = False
+        If player.isDead Then formReset()
+        player.canMoveFlag = True
     End Sub
 
     'inventory functions
@@ -1522,6 +1531,8 @@ Public Class Game
     'combat functions
     'toCombat displays the players combat menus
     Sub toCombat()
+        lblEHealthChange.Tag = 0
+        lblPHealtDiff.Tag = 0
         updatePnlCombat(player, player.currTarget)
         pnlCombat.Visible = True
         combatmode = True
@@ -1563,6 +1574,8 @@ Public Class Game
     End Sub
     'the NPC versions of from and to combat
     Sub NPCtoCombat(ByRef m As Monster)
+        lblEHealthChange.Tag = 0
+        lblPHealtDiff.Tag = 0
         updatePnlCombat(player, m)
         pnlCombat.Visible = True
         combatmode = True
@@ -2094,6 +2107,10 @@ Public Class Game
     End Sub
     'pushLblEvent takes a string, formats it to wrap, and pushes a dialog box containing it
     Sub pushLblEvent(ByVal s As String)
+        If combatmode Then
+            pushLblCombatEvent(s)
+            Exit Sub
+        End If
         Dim sSplit() As String = s.Split(" ")
         Dim c As Integer = 0
         Dim ct As Integer = 0
@@ -2124,6 +2141,10 @@ Public Class Game
     End Sub
     'This pushLblEvent is identical to the first, but takes an additional action that it executes on close.
     Sub pushLblEvent(ByVal s As String, ByRef effect As Action)
+        If combatmode Then
+            pushLblCombatEvent(s)
+            Exit Sub
+        End If
         Dim sSplit() As String = s.Split(" ")
         Dim c As Integer = 0
         Dim ct As Integer = 0
@@ -2300,7 +2321,11 @@ Public Class Game
         End If
         player.canMoveFlag = True
     End Sub
-
+    Public Sub ppw_DoWork(ByVal sender As Object, ByVal e As DoWorkEventArgs)
+        Dim worker As BackgroundWorker = CType(sender, BackgroundWorker)
+        player.createP()
+        Equipment.portraitUDate()
+    End Sub
     Sub pushLblCombatEvent(ByVal s As String)
         Dim sSplit() As String = s.Split(" ")
         Dim c As Integer = 0
@@ -2489,5 +2514,15 @@ Public Class Game
             End If
             imagesWorkerArg = Nothing
         End If
+    End Sub
+
+    Sub formReset()
+        Application.Exit()
+        'fromCombat()
+        'picStart.Visible = True
+        'btnS.Visible = True
+        'btnL.Visible = True
+        'btnControls.Visible = True
+        'player.canMoveFlag = False
     End Sub
 End Class

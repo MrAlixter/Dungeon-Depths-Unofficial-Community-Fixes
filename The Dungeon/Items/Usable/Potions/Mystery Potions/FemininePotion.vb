@@ -27,5 +27,6 @@
         If Not Game.player.perks(5) And Not Game.player.title.Equals("Magic Girl") Then
             Game.player.pState.save(Game.player)
         End If
+        Equipment.portraitUDate()
     End Sub
 End Class
