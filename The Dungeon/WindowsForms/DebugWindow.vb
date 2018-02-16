@@ -47,12 +47,12 @@ Public Class Debug_Window
         Dim threadCount As Integer = 4
         'Dim done As Array(threadCount)
         Dim go As Boolean = True
-        While go
+        'While go
 
-            'For i = 0 To UBound(done)
+        '   For i = 0 To UBound(done)
 
-            'Next
-        End While
+        '   Next
+        'End While
 
 
         For i = 0 To tabPortrait.TabPages.Count - 1
