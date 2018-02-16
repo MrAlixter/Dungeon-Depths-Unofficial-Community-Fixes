@@ -1006,7 +1006,6 @@ Partial Class Game
         Me.picPortrait.Size = New System.Drawing.Size(125, 189)
         Me.picPortrait.TabIndex = 208
         Me.picPortrait.TabStop = False
-        Me.picPortrait.Visible = False
         '
         'btnEXM
         '

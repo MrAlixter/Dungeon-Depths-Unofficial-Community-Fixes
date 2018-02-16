@@ -1199,6 +1199,20 @@ Public Class Game
 
         Equipment.init()
         reader.Close()
+        If player.title = "Bimbo" Then
+            If floor > 5 Then
+                player.pImage = picBimbof.BackgroundImage
+            Else
+                player.pImage = picPlayerB.BackgroundImage
+            End If
+        Else
+            If floor > 5 Then
+                player.pImage = picPlayerf.BackgroundImage
+            Else
+                player.pImage = picPlayer.BackgroundImage
+            End If
+        End If
+
         drawBoard()
         lblNameTitle.Text = player.name & " the " & player.title
         lblHealth.Text = "Health = " & player.health & "/" & player.maxHealth
@@ -1212,7 +1226,6 @@ Public Class Game
         lblSPD.Text = "SPD = " & player.getSpeed
         lblEVD.Text = "EVD = " & player.evade
 
-        player.createP()
         pushLblEvent("Game successfully loaded!")
         player.solFlag = False
         player.createP()
@@ -2193,7 +2206,6 @@ Public Class Game
         Dim reader As IO.StreamReader
         reader = IO.File.OpenText(a)
         reader.ReadLine()
-
         Dim img As Bitmap = Nothing
         Try
             Dim iarr(16) As Image
@@ -2202,7 +2214,7 @@ Public Class Game
             Dim skincolor = Color.FromArgb(255, CInt(pState(25)), CInt(pState(26)), CInt(pState(27)))
             Dim ids(16) As Tuple(Of Integer, Boolean)
             For i = 0 To 16
-                Dim arr() As String = pState(32 + CInt(pState(31)) + 1 + i).Split("%")
+                Dim arr() As String = pState(32 + CInt(pState(31)) + i).Split("%")
                 Dim id = New Tuple(Of Integer, Boolean)(CInt(arr(0)), CBool(arr(1)))
 
                 If id.Item2 Then

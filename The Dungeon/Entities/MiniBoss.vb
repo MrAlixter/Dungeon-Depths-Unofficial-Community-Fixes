@@ -66,7 +66,7 @@
         Game.player.currTarget = Me
         If name.Equals("Marissa the Enchantress") Then
             Dim r As Integer = 1 ' CInt(Int(Rnd() * 10))
-            If r = 1 And Game.player.perks("nekocurse") > -1 Then
+            If r = 1 And Game.player.perks("nekocurse") = -1 Then
                 Game.lstLog.Items.Add((getName() & " casts a curse on you!"))
                 Game.pushLblCombatEvent((getName() & " casts a curse on you!"))
                 Game.player.perks("nekocurse") = 0

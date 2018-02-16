@@ -658,7 +658,7 @@
             If currTarget Is Nothing Then
                 perks("nekocurse") = -1
             End If
-            If Not perks("polymorphed") Then
+            If Not perks("polymorphed") > -1 Then
                 If perks("nekocurse") < (discipline * 1.2) Then
                     Select Case perks("nekocurse")
                         Case Int((discipline * 1.2) * 0.1)

@@ -229,10 +229,11 @@
         skincolor = Color.FromArgb(A, CInt(readArray(25)), CInt(readArray(26)), CInt(readArray(27)))
         textColor = Color.FromArgb(255, CInt(readArray(28)), CInt(readArray(29)), CInt(readArray(30)))
 
+
         Dim b1 As Integer = readArray(31)
-        For i = 1 To b1
+        For i = 0 To b1 - 1
             Dim kvp = readArray(32 + i).Split("!")
-            perks.Add(kvp(0), CInt(kvp(1)))
+            perks(kvp(0)) = CInt(kvp(1))
         Next
         For i = 0 To UBound(iArrInd)
             Dim arr() As String = readArray(32 + b1 + i).Split("%")
