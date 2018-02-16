@@ -14,7 +14,7 @@
 
     Public Overrides Sub Effect()
         Dim p As Player = Game.player
-        If Not p.perks(5) And Not p.title.Equals("Magic Girl") Then
+        If Not p.perks("polymorphed") > -1 And Not p.title.Equals("Magic Girl") Then
             Polymorph.transform(p, "princess", 0)
         End If
     End Sub

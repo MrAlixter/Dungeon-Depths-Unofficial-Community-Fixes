@@ -24,7 +24,7 @@
         Else
             Game.pushLblEvent("Nothing happened!")
         End If
-        If Not Game.player.perks(5) And Not Game.player.title.Equals("Magic Girl") Then
+        If Not Game.player.perks("polymorphed") > -1 And Not Game.player.title.Equals("Magic Girl") Then
             Game.player.pState.save(Game.player)
         End If
         Equipment.portraitUDate()

@@ -63,6 +63,7 @@ Partial Class CharacterGenerator
         Me.picPort.Size = New System.Drawing.Size(146, 217)
         Me.picPort.TabIndex = 0
         Me.picPort.TabStop = False
+        Me.picPort.Visible = False
         '
         'btnFemale
         '
@@ -205,6 +206,7 @@ Partial Class CharacterGenerator
         Me.pnlBody.Name = "pnlBody"
         Me.pnlBody.Size = New System.Drawing.Size(635, 140)
         Me.pnlBody.TabIndex = 13
+        Me.pnlBody.Visible = False
         '
         'btnGlasses
         '

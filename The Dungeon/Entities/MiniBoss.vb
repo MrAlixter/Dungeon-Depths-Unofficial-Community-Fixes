@@ -66,12 +66,12 @@
         Game.player.currTarget = Me
         If name.Equals("Marissa the Enchantress") Then
             Dim r As Integer = 1 ' CInt(Int(Rnd() * 10))
-            If r = 1 And Game.player.perks(6) = False Then
+            If r = 1 And Game.player.perks("nekocurse") > -1 Then
                 Game.lstLog.Items.Add((getName() & " casts a curse on you!"))
                 Game.pushLblCombatEvent((getName() & " casts a curse on you!"))
-                Game.player.perks(6) = True
+                Game.player.perks("nekocurse") = 0
                 'attack = 0
-            ElseIf Game.player.perks(6) And health < 45 Then
+            ElseIf Game.player.perks("nekocurse") > -1 And health < 45 Then
                 Game.lstLog.Items.Add((getName() & " heals herself!  +35 health!"))
                 Game.pushLblCombatEvent((getName() & " heals herself for 35 health!"))
                 takeDMG(-35)
