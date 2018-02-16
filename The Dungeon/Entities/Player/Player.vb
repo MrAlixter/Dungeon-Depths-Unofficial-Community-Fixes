@@ -588,6 +588,7 @@
                         Polymorph.transform(Me, "bimbo", 0)
                     Case 25
                         Polymorph.transform(Me, "bimbo", 1)
+                        perksct(1) -= 1
                 End Select
                 perksct(1) += 1
                 Dim outputln1 As String = "Chewing the gum causes a dizzy calm wash to over you."
@@ -651,9 +652,9 @@
                     Select Case perksct(6)
                         Case Int((discipline * 1.2) * 0.1)
                             Polymorph.transform(Me, "neko", 0)
-                        Case Int((discipline * 1.2) * 0.2)
+                        Case Int((discipline * 1.2) * 0.3)
                             Polymorph.transform(Me, "neko", 1)
-                        Case Int((discipline * 1.2) * 0.4)
+                        Case Int((discipline * 1.2) * 0.5)
                             If Not title.Equals("Magic Girl") Then
                                 Polymorph.transform(Me, "neko", 2)
                             Else
@@ -661,11 +662,11 @@
                                 Game.pushLblEvent("Your hair becomes a shiny black!")
                                 lust += 5
                             End If
-                        Case Int((discipline * 1.2) * 0.5)
+                        Case Int((discipline * 1.2) * 0.7)
                             Polymorph.transform(Me, "neko", 3)
-                        Case Int((discipline * 1.2) * 0.6)
+                        Case Int((discipline * 1.2) * 0.9)
                             Polymorph.transform(Me, "neko", 4)
-                        Case Int((discipline * 1.2) * 0.8)
+                        Case Int((discipline * 1.2) * 1.1)
                             If title.Equals("Magic Girl") Then
                                 Polymorph.transform(Me, "neko", 6)
                             Else
@@ -886,6 +887,8 @@
         If lust > 0 Then lustUpdate()
         If wingInd > 0 Then addWings(wingInd)
         currState.save(Me)
+        Game.lblEvent.ForeColor = TextColor
+        Game.lblNameTitle.ForeColor = TextColor
         If Not solFlag Then Game.picPortrait.BackgroundImage = CharacterGenerator.CreateBMP(iArr)
     End Sub
     Public Sub MtF()
@@ -919,7 +922,6 @@
             iArrInd(15) = New Tuple(Of Integer, Boolean)(CharacterGenerator.fFrontHair.Count - 1, True)
             iArrInd(16) = New Tuple(Of Integer, Boolean)(0, True)
         End If
-        Equipment.portraitUDate()
         changeSkinColor(skincolor)
         perksct(7) = 0
         Game.lstLog.TopIndex = Game.lstLog.Items.Count - 1
@@ -937,7 +939,6 @@
             idRouteFM()
         End If
         perksct(7) = 0
-        Equipment.portraitUDate()
         Game.lstLog.TopIndex = Game.lstLog.Items.Count - 1
     End Sub
     Public Sub be()
@@ -966,7 +967,6 @@
             If iArrInd(3).Item2 = False Then iArrInd(3) = New Tuple(Of Integer, Boolean)(iArrInd(3).Item1, True)
         End If
         bsizeroute()
-        Equipment.portraitUDate()
         Game.lstLog.TopIndex = Game.lstLog.Items.Count - 1
     End Sub
     Friend Sub bs()
@@ -996,7 +996,6 @@
             If iArrInd(3).Item2 = False Then iArrInd(3) = New Tuple(Of Integer, Boolean)(iArrInd(3).Item1, True)
         End If
         bsizeroute()
-        Equipment.portraitUDate()
         Game.lstLog.TopIndex = Game.lstLog.Items.Count - 1
     End Sub
     Sub bsizeroute()
