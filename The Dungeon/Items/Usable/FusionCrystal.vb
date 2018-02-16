@@ -41,6 +41,8 @@
 
             Dim fuPlay As Player = Fusion(Game.player, p2)
             fuPlay.solFlag = False
+            Game.updatelist = New PQ
+
             Game.player = fuPlay
             fuPlay.createP()
             fuPlay.invNeedsUDate = True
@@ -51,7 +53,6 @@
             f3.Dispose()
             fuPlay.currState.save(fuPlay)
             fuPlay.pState.save(fuPlay)
-            count -= 1
             Game.lstLog.TopIndex = Game.lstLog.Items.Count - 1
         End If
     End Sub
@@ -158,9 +159,12 @@
         player.gold = p1.gold + p2.gold
 
         player.inventorynames = p1.inventorynames.Clone
+
         For i = 0 To player.inventory.Count - 1
+            player.inventory(i).setname(p1.inventory(i).getname)
             player.inventory(i).add(p1.inventory(i).count + p2.inventory(i).count)
         Next
+
         player.inventory(0).add(-1)
         player.inventory(2).add(-1)
         player.inventory(58).add(-1)
@@ -203,6 +207,10 @@
 
         player.equippedWeapon = New BareFists
         player.equippedArmor = New Naked
+
+        player.invNeedsUDate = True
+        player.UIupdate()
+
         Return player
     End Function
 End Class

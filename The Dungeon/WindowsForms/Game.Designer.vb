@@ -152,8 +152,8 @@ Partial Class Game
         Me.picTrapf = New System.Windows.Forms.PictureBox()
         Me.tmrKeyCD = New System.Windows.Forms.Timer(Me.components)
         Me.pnlCombat = New System.Windows.Forms.Panel()
+        Me.lblCombatEvents = New System.Windows.Forms.TextBox()
         Me.Label2 = New System.Windows.Forms.Label()
-        Me.lblCombatEvents = New System.Windows.Forms.Label()
         Me.lblPHealtDiff = New System.Windows.Forms.Label()
         Me.lblEHealthChange = New System.Windows.Forms.Label()
         Me.lblTurn = New System.Windows.Forms.Label()
@@ -936,7 +936,7 @@ Partial Class Game
         Me.HelpToolStripMenuItem1.DropDownItems.AddRange(New System.Windows.Forms.ToolStripItem() {Me.WASDArrowsMoveToolStripMenuItem, Me.InteractstairschestsToolStripMenuItem})
         Me.HelpToolStripMenuItem1.ForeColor = System.Drawing.Color.White
         Me.HelpToolStripMenuItem1.Name = "HelpToolStripMenuItem1"
-        Me.HelpToolStripMenuItem1.Size = New System.Drawing.Size(210, 30)
+        Me.HelpToolStripMenuItem1.Size = New System.Drawing.Size(182, 30)
         Me.HelpToolStripMenuItem1.Text = "Controls"
         '
         'WASDArrowsMoveToolStripMenuItem
@@ -960,7 +960,7 @@ Partial Class Game
         Me.StatInfoToolStripMenuItem.BackColor = System.Drawing.Color.Black
         Me.StatInfoToolStripMenuItem.ForeColor = System.Drawing.Color.White
         Me.StatInfoToolStripMenuItem.Name = "StatInfoToolStripMenuItem"
-        Me.StatInfoToolStripMenuItem.Size = New System.Drawing.Size(210, 30)
+        Me.StatInfoToolStripMenuItem.Size = New System.Drawing.Size(182, 30)
         Me.StatInfoToolStripMenuItem.Text = "Stat Info"
         Me.StatInfoToolStripMenuItem.Visible = False
         '
@@ -969,7 +969,7 @@ Partial Class Game
         Me.ReportToolStripMenuItem.BackColor = System.Drawing.Color.Black
         Me.ReportToolStripMenuItem.ForeColor = System.Drawing.Color.White
         Me.ReportToolStripMenuItem.Name = "ReportToolStripMenuItem"
-        Me.ReportToolStripMenuItem.Size = New System.Drawing.Size(210, 30)
+        Me.ReportToolStripMenuItem.Size = New System.Drawing.Size(182, 30)
         Me.ReportToolStripMenuItem.Text = "Report"
         '
         'DebugToolStripMenuItem
@@ -977,7 +977,7 @@ Partial Class Game
         Me.DebugToolStripMenuItem.BackColor = System.Drawing.Color.Black
         Me.DebugToolStripMenuItem.ForeColor = System.Drawing.Color.White
         Me.DebugToolStripMenuItem.Name = "DebugToolStripMenuItem"
-        Me.DebugToolStripMenuItem.Size = New System.Drawing.Size(210, 30)
+        Me.DebugToolStripMenuItem.Size = New System.Drawing.Size(182, 30)
         Me.DebugToolStripMenuItem.Text = "Debug"
         '
         'InfoToolStripMenuItem
@@ -986,7 +986,7 @@ Partial Class Game
         Me.InfoToolStripMenuItem.Font = New System.Drawing.Font("Consolas", 9.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.InfoToolStripMenuItem.ForeColor = System.Drawing.Color.White
         Me.InfoToolStripMenuItem.Name = "InfoToolStripMenuItem"
-        Me.InfoToolStripMenuItem.Size = New System.Drawing.Size(210, 30)
+        Me.InfoToolStripMenuItem.Size = New System.Drawing.Size(182, 30)
         Me.InfoToolStripMenuItem.Text = "Info"
         '
         'SettingsToolStripMenuItem
@@ -1639,8 +1639,8 @@ Partial Class Game
         '
         Me.pnlCombat.BackColor = System.Drawing.Color.Black
         Me.pnlCombat.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle
-        Me.pnlCombat.Controls.Add(Me.Label2)
         Me.pnlCombat.Controls.Add(Me.lblCombatEvents)
+        Me.pnlCombat.Controls.Add(Me.Label2)
         Me.pnlCombat.Controls.Add(Me.lblPHealtDiff)
         Me.pnlCombat.Controls.Add(Me.lblEHealthChange)
         Me.pnlCombat.Controls.Add(Me.lblTurn)
@@ -1656,6 +1656,21 @@ Partial Class Game
         Me.pnlCombat.TabIndex = 270
         Me.pnlCombat.Visible = False
         '
+        'lblCombatEvents
+        '
+        Me.lblCombatEvents.BackColor = System.Drawing.Color.Black
+        Me.lblCombatEvents.BorderStyle = System.Windows.Forms.BorderStyle.None
+        Me.lblCombatEvents.Cursor = System.Windows.Forms.Cursors.Arrow
+        Me.lblCombatEvents.Font = New System.Drawing.Font("Consolas", 9.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.lblCombatEvents.ForeColor = System.Drawing.Color.White
+        Me.lblCombatEvents.Location = New System.Drawing.Point(9, 126)
+        Me.lblCombatEvents.Multiline = True
+        Me.lblCombatEvents.Name = "lblCombatEvents"
+        Me.lblCombatEvents.ReadOnly = True
+        Me.lblCombatEvents.ScrollBars = System.Windows.Forms.ScrollBars.Horizontal
+        Me.lblCombatEvents.Size = New System.Drawing.Size(549, 205)
+        Me.lblCombatEvents.TabIndex = 11
+        '
         'Label2
         '
         Me.Label2.AutoSize = True
@@ -1666,16 +1681,6 @@ Partial Class Game
         Me.Label2.Size = New System.Drawing.Size(400, 22)
         Me.Label2.TabIndex = 10
         Me.Label2.Text = "Press a combat button to continue . . ."
-        '
-        'lblCombatEvents
-        '
-        Me.lblCombatEvents.AutoSize = True
-        Me.lblCombatEvents.Font = New System.Drawing.Font("Consolas", 9.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.lblCombatEvents.ForeColor = System.Drawing.Color.White
-        Me.lblCombatEvents.Location = New System.Drawing.Point(11, 128)
-        Me.lblCombatEvents.Name = "lblCombatEvents"
-        Me.lblCombatEvents.Size = New System.Drawing.Size(0, 22)
-        Me.lblCombatEvents.TabIndex = 9
         '
         'lblPHealtDiff
         '
@@ -2102,7 +2107,6 @@ Partial Class Game
     Friend WithEvents tmrKeyCD As System.Windows.Forms.Timer
     Friend WithEvents ReportToolStripMenuItem As System.Windows.Forms.ToolStripMenuItem
     Friend WithEvents pnlCombat As System.Windows.Forms.Panel
-    Friend WithEvents lblCombatEvents As System.Windows.Forms.Label
     Friend WithEvents lblPHealtDiff As System.Windows.Forms.Label
     Friend WithEvents lblEHealthChange As System.Windows.Forms.Label
     Friend WithEvents lblTurn As System.Windows.Forms.Label
@@ -2116,4 +2120,5 @@ Partial Class Game
     Friend WithEvents Label2 As System.Windows.Forms.Label
     Friend WithEvents DebugToolStripMenuItem As ToolStripMenuItem
     Friend WithEvents picLoadBar As System.Windows.Forms.PictureBox
+    Friend WithEvents lblCombatEvents As System.Windows.Forms.TextBox
 End Class

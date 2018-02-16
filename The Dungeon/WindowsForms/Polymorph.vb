@@ -410,7 +410,6 @@
             p.iArrInd(15) = New Tuple(Of Integer, Boolean)(14, True)
             p.iArrInd(16) = New Tuple(Of Integer, Boolean)(0, True)
         End If
-        p.createP()
         Equipment.portraitUDate()
     End Sub
     'monster transform method
@@ -594,7 +593,6 @@
                     out += "In your haze, you look down to see your clothes have become tight and pink. You giggle, all traces of intelect vanishing as your body becomes more curvy and feminine. Your hair lengthens, becoming a platinum blonde, and your clothes finish changing to match your new figure."
                 End If
                 If p.perksct(1) = 25 Then Game.pushLblEvent(out)
-
                 p.title = "Bimbo"
                 p.lust += 10
                 p.attack -= 10
