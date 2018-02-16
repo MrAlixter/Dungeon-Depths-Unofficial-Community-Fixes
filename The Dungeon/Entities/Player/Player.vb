@@ -20,8 +20,7 @@
     Public currTarget As Monster
     Public pos As Point
     Public canMoveFlag As Boolean = True
-    Public perks(13) As Boolean 'perks also include triggers for events
-    Public perksct(UBound(perks)) As Integer
+    Public perks As Dictionary(Of String, Integer) = New Dictionary(Of String, Integer)() 'perks also include triggers for events
     Public pImage As Image 'tile image of the player
     Public TextColor As Color
     Public isDead As Boolean = False
@@ -206,22 +205,21 @@
             If currTarget.name.Equals("Shopkeeper") Then
                 Dim n As NPC = Game.currNPC
                 petrify(Color.Goldenrod)
-                Dim out As String = "'You should have known better than to try and rob a shop keeper,' the shopkeep says," & vbCrLf & _
-                    " glaring down at you, '...and if its gold you're after, I guess I've got some good news for you.'" & vbCrLf & _
-                    "  With that, " & n.pronoun & " reaches into " & n.pPronoun & " bag and puts on a gaudy gauntlet " & vbCrLf & _
-                    "that begins glowing with a golden light. You lack the strength to fight back as " & n.pronoun & " places" & vbCrLf & _
-                    " his thumb on your forhead, and suddenly everything just seems so heavy. 'Noooo...' you moan, " & vbCrLf & _
-                    "as the area around where he touched turns to gold, and that gold turns your flesh and blood " & vbCrLf & _
-                    "around it to gold as well. In a matter of seconds, all that is left of " & Me.name & " the " & vbCrLf & _
-                    Me.title & " is a solid gold statue. The shopkeeper sighs, muttering to no one in particular, " & vbCrLf & _
+                Dim out As String = "'You should have known better than to try and rob a shop keeper,' the shopkeep says," & vbCrLf &
+                    " glaring down at you, '...and if its gold you're after, I guess I've got some good news for you.'" & vbCrLf &
+                    "  With that, " & n.pronoun & " reaches into " & n.pPronoun & " bag and puts on a gaudy gauntlet " & vbCrLf &
+                    "that begins glowing with a golden light. You lack the strength to fight back as " & n.pronoun & " places" & vbCrLf &
+                    " his thumb on your forhead, and suddenly everything just seems so heavy. 'Noooo...' you moan, " & vbCrLf &
+                    "as the area around where he touched turns to gold, and that gold turns your flesh and blood " & vbCrLf &
+                    "around it to gold as well. In a matter of seconds, all that is left of " & Me.name & " the " & vbCrLf &
+                    Me.title & " is a solid gold statue. The shopkeeper sighs, muttering to no one in particular, " & vbCrLf &
                     vbCrLf & vbCrLf & "'Now how am I going to get you back to the refinery?'"
                 'Game.pushLblEvent(out)
                 title = "Trophy"
                 MsgBox(out)
             ElseIf currTarget.name.Equals("Mindless Bimbo") Then
                 currTarget.despawn("run")
-                Game.player.perks(1) = True
-                Game.player.perksct(1) = 1
+                Game.player.perks("bimbotf") = 1
                 Dim out As String = "Exausted, you slump to the floor.  Glancing up, the horny mess attacking you seem to have gotten a running start, throwing herself on top of you, and pulling you into a sloppy kiss.  As she clumsily fumbles around, trying to remove your clothes, you roll out from underneath her and beat a hasty retreat, the faint sweetness of bubblegum lingering in your mouth."
                 Game.pushLblEvent(out)
                 health = 10
@@ -441,14 +439,15 @@
         If Not (currTarget Is Nothing) And isAttacking Then attackCMD(currTarget)
         bsizeroute()
         If hunger >= 100 Then
-            perks(0) = True
-        ElseIf perks(0) = True Then
-            perks(0) = False
+            perks("hunger") = 0
+        ElseIf perks("hunger") > -1 Then
+            perks("hunger") = 0
         ElseIf Game.turn Mod 35 = 0 Then
             hunger += 1
         End If
     End Sub
     Sub createInvPerks()
+        'create inventory
         inventory.Add(New Compass())    '0
         inventory.Add(New StickOfGum()) '1
         inventory.Add(New HealthPotion())   '2
@@ -523,25 +522,25 @@
             End If
             'MsgBox(inventory(i).getName())
         Next
-        armor = {New NormalClothes, New SkimpyClothes, New Naked, New PrincessGown, _
-                 New MaidOutfit, New GoddessGown, New SuccubusGarb, _
-                 inventory(5), inventory(7), inventory(8), inventory(10), _
-                 inventory(12), inventory(16), inventory(17), inventory(18), _
-                 inventory(19), inventory(20), inventory(38), inventory(39), _
-                 inventory(46), inventory(47), inventory(54), inventory(55), _
+        armor = {New NormalClothes, New SkimpyClothes, New Naked, New PrincessGown,
+                 New MaidOutfit, New GoddessGown, New SuccubusGarb,
+                 inventory(5), inventory(7), inventory(8), inventory(10),
+                 inventory(12), inventory(16), inventory(17), inventory(18),
+                 inventory(19), inventory(20), inventory(38), inventory(39),
+                 inventory(46), inventory(47), inventory(54), inventory(55),
                  inventory(56)}
 
-        weapons = {New BareFists(), _
-                   inventory(6), inventory(9), inventory(11), inventory(21), _
-                   inventory(22), inventory(23), inventory(24), inventory(40), _
+        weapons = {New BareFists(),
+                   inventory(6), inventory(9), inventory(11), inventory(21),
+                   inventory(22), inventory(23), inventory(24), inventory(40),
                    inventory(41), inventory(42), inventory(45)}
 
-        useable = {inventory(0), inventory(1), inventory(3), inventory(4), _
-                   inventory(15), inventory(36), inventory(37), inventory(45), _
-                   inventory(48), inventory(49), inventory(50), inventory(51), _
+        useable = {inventory(0), inventory(1), inventory(3), inventory(4),
+                   inventory(15), inventory(36), inventory(37), inventory(45),
+                   inventory(48), inventory(49), inventory(50), inventory(51),
                    inventory(52), inventory(57), inventory(58)}
 
-        food = {inventory(30), inventory(31), inventory(32), inventory(33), _
+        food = {inventory(30), inventory(31), inventory(32), inventory(33),
                 inventory(34), inventory(35), inventory(44)}
 
         potions = {inventory(2), inventory(13), inventory(14), inventory(25),
@@ -550,29 +549,39 @@
 
         misc = {inventory(43), inventory(53)}
 
-        For i = 0 To UBound(perks)
-            perksct(i) = 0
-        Next
+        perks.Add("hunger", -1) '0
+        perks.Add("bimbotf", -1) '1
+        perks.Add("slutcurse", -1) '2
+        perks.Add("chickentf", -1) '3
+        perks.Add("slimehair", -1) '4
+        perks.Add("polymorphed", -1) '5
+        perks.Add("nekocurse", -1) '6
+        perks.Add("swordpossess", -1) '7
+        perks.Add("vsslimehair", -1) '8
+        perks.Add("brage", -1) '9
+        perks.Add("mmammaries", -1) '10
+        perks.Add("ihfury", -1) '11
+        perks.Add("livearm", -1) '12
+        perks.Add("livelinge", -1) '13
     End Sub
     Sub perkUpdate()
-        If perks(0) And Game.turn Mod 5 = 0 Then
+        'hunger
+        If perks("hunger") > -1 And Game.turn Mod 5 = 0 Then
             health -= 5
             Game.lstLog.Items.Add("Your stomach aches... -5 health!")
         End If
-        If perks(1) Then
-            perks(3) = False
-            If perks(5) Then
-                perks(1) = False
-                perksct(1) = 0
-            End If
+        'bimbo tf
+        If perks("bimbotf") > -1 Then
+            perks("chickentf") = -1
+            If perks("polymorphed") > -1 Then perks("bimbotf") = -1
             If Not title.Equals("Bimbo") Then
-                If perksct(1) < 19 And perksct(1) Mod 10 = 0 Then
+                If perks("bimbotf") < 19 And perks("bimbotf") Mod 10 = 0 Then
                     haircolor = Game.cShift(haircolor, Polymorph.bimboyellow, 25)
                     createP()
                 End If
-                Select Case perksct(1)
+                Select Case perks("bimbotf")
                     Case 0
-                        If Not title.Equals("Magic Girl") And Not perks(5) Then
+                        If Not title.Equals("Magic Girl") And Not perks("polymorphed") > -1 Then
                             pState.save(Me)
                         ElseIf title.Equals("Magic Girl") Then
                             Polymorph.transform(Me, "bimbo", 2)
@@ -591,43 +600,43 @@
                         Polymorph.transform(Me, "bimbo", 0)
                     Case 25
                         Polymorph.transform(Me, "bimbo", 1)
-                        perksct(1) -= 1
+                        perks("bimbotf") -= 1
                 End Select
-                perksct(1) += 1
+                perks("bimbotf") += 1
                 Dim outputln1 As String = "Chewing the gum causes a dizzy calm wash to over you."
-                If perksct(1) = 1 And Not title.Equals("Magic Girl") Then Game.pushLblEvent(outputln1)
+                If perks("bimbotf") = 1 And Not title.Equals("Magic Girl") Then Game.pushLblEvent(outputln1)
             Else
                 Dim outputln1 As String = "Chewing the gum make your head feel warm and fuzzy and stuff. You like, totally, love this gum!"
                 Game.pushLblEvent(outputln1)
                 Game.lblNameTitle.ForeColor = Color.HotPink
-                perks(1) = False
-                perksct(1) = 0
+                perks("bimbotf") = -1
             End If
         End If
-        If perks(2) Then
+        'clothing curse
+        If perks("slutcurse") > -1 Then
             Equipment.clothingCurse1()
         End If
-        If perks(3) Then
-            If perksct(3) < 0 Then
-                perks(3) = False
-            Else
-                perksct(3) += 1
-                If perksct(3) <= 1 Then
-                    Polymorph.transform(Me, "Chicken")
-                ElseIf perksct(3) < 10 Then
-
-                Else
-                    perks(3) = False
-                    revert2()
-                    perksct(3) = -10
-                End If
-            End If
-        ElseIf Not perks(3) And perksct(3) < 0 Then
-            perksct(3) += 1
-        End If
-        If perks(4) Then
+        'removed chicken tf
+        'If perks("chickentf") > -1 Then
+        '    If perks("chickentf") < 0 Then
+        '        perks("chickentf") = -1
+        '    Else
+        '        perks("chickentf") += 1
+        '        If perks("chickentf") <= 1 Then
+        '            Polymorph.transform(Me, "Chicken")
+        '        ElseIf perks("chickentf") < 10 Then
+        '        Else
+        '            revert2()
+        '            perks("chickentf") = -1
+        '        End If
+        '    End If
+        'ElseIf perks("chickentf") > 0 Then
+        '    perks("chickentf") += 1
+        'End If
+        'slime hair tf
+        If perks("slimehair") > -1 Then
             If Not haircolor.A = 180 Then
-                perks(4) = False
+                perks("slimehair") = -1
             Else
                 If health < maxHealth + hBuff And Game.turn Mod 2 = 0 Then
                     health += 25
@@ -636,23 +645,23 @@
                 End If
             End If
         End If
-        If perks(5) Then
-            If perksct(5) > 0 Then
-                perksct(5) -= 1
+        'triggers timed polymorphs
+        If perks("polymorphed") > -1 Then
+            If perks("polymorphed") > 0 Then
+                perks("polymorphed") -= 1
             Else
-                perks(5) = False
-                perksct(5) = 0
+                perks("polymorphed") = -1
                 revert2()
             End If
         End If
-        If perks(6) Then
+        'marissa's tf
+        If perks("nekocurse") > -1 Then
             If currTarget Is Nothing Then
-                perks(6) = False
-                perksct(6) = 0
+                perks("nekocurse") = -1
             End If
-            If Not perks(5) Then
-                If perksct(6) < (discipline * 1.2) Then
-                    Select Case perksct(6)
+            If Not perks("polymorphed") > -1 Then
+                If perks("nekocurse") < (discipline * 1.2) Then
+                    Select Case perks("nekocurse")
                         Case Int((discipline * 1.2) * 0.1)
                             Polymorph.transform(Me, "neko", 0)
                         Case Int((discipline * 1.2) * 0.3)
@@ -681,34 +690,33 @@
                         Case Int((discipline * 1.2))
                             Polymorph.transform(Me, "neko", 7)
                     End Select
-                    perksct(6) += 1
+                    perks("nekocurse") += 1
                 Else
                     Polymorph.transform(Me, "neko", 7)
                 End If
             End If
         End If
-        If perks(7) Then
+        'targax sword tf
+        If perks("swordpossess") > -1 Then
             If name <> "Targax" Then
                 If equippedWeapon.getName.Equals("Sword_of_the_Brutal") Then
-                    If perksct(7) = 2 Then
+                    If perks("swordpossess") = 2 Then
                         Polymorph.transform(Me, "targax", 0)
-                        perksct(7) += 1
-                    ElseIf perksct(7) = 5 Then
+                    ElseIf perks("swordpossess") = 4 Then
                         Polymorph.transform(Me, "targax", 1)
-                        perksct(7) += 1
-                    ElseIf perksct(7) = 8 And name <> "Targax" Then
+                    ElseIf perks("swordpossess") = 6 And name <> "Targax" Then
                         Polymorph.transform(Me, "targax", 2)
                         perksct(7) += 1
                     End If
                 Else
-                    perks(7) = False
-                    perksct(7) = 0
+                    perks("swordpossess") = -1
                 End If
             End If
         End If
-        If perks(8) Then
+        'vial of slime hair bonus
+        If perks("vsslimehair") > -1 Then
             If Not haircolor.A = 180 Then
-                perks(8) = False
+                perks("vsslimehair") = -1
             Else
                 If health < maxHealth + hBuff And Game.turn Mod 4 = 0 Then
                     Dim h As Integer = Int(Rnd() * 15) + 1
@@ -718,46 +726,49 @@
                 End If
             End If
         End If
-        If perks(9) Then
-            If perksct(9) > 0 Then
+        'berserker rage special
+        If perks("brage") > -1 Then
+            If perks("brage") > 0 Then
                 aBuff = aBuff + (attack / 2)
                 dBuff = dBuff - (defence / 3)
-                perksct(9) -= 1
+                perks("brage") -= 1
             Else
                 aBuff = aBuff - attack * 1.5
                 dBuff = dBuff + (defence) + 1
-                perks(9) = False
+                perks("brage") = -1
                 Game.lstLog.Items.Add("Berserker rage has worn off.")
                 Game.lstLog.TopIndex = Game.lstLog.Items.Count - 1
             End If
         End If
-        If perks(10) Then
-            If perksct(10) = 1 Then
+        'massive mammaries special
+        If perks("mmammaries") > -1 Then
+            If perks("mmammaries") = 1 Then
                 dBuff = dBuff + (defence * 0.8)
-                perksct(10) -= 1
+                perks("mmammaries") -= 1
             Else
                 dBuff = dBuff - (defence * 0.8)
-                perks(10) = False
+                perks("mmammaries") = -1
                 Game.lstLog.Items.Add("Massive mammaries has worn off.")
                 Game.lstLog.TopIndex = Game.lstLog.Items.Count - 1
             End If
         End If
-        If perks(11) Then
-            If perksct(11) = 3 Then
+        If perks("ihfury") > -1 Then
+            If perks("ihfury") = 3 Then
                 aBuff = aBuff + (attack * 0.5)
                 dBuff = dBuff + (defence * 0.6)
-                perksct(11) -= 1
-            ElseIf perksct(11) > 0 Then
-                perksct(11) -= 1
+                perks("ihfury") -= 1
+            ElseIf perks("ihfury") > 0 Then
+                perks("ihfury") -= 1
             Else
                 aBuff = aBuff - (attack * 0.5)
                 dBuff = dBuff - (defence * 0.6)
-                perks(11) = False
+                perks("ihfury") = -1
                 Game.lstLog.Items.Add("Ironhide Fury has worn off.")
                 Game.lstLog.TopIndex = Game.lstLog.Items.Count - 1
             End If
         End If
-        If perks(12) Then
+        'living armor
+        If perks("livearm") > -1 Then
             If equippedArmor.getName.Equals("Living_Armor") Then
                 If Game.turn Mod 6 = 0 And lust < 100 Then
                     Dim l As Integer = Int(Rnd() * 15) + 10
@@ -766,10 +777,11 @@
                     createP()
                 End If
             Else
-                perks(12) = False
+                perks("livearm") = -1
             End If
         End If
-        If perks(13) Then
+        'living lingerie
+        If perks("livelinge") > -1 Then
             If equippedArmor.getName.Equals("Living_Lingerie") Then
                 If Game.turn Mod 4 = 0 And lust < 100 Then
                     Dim l As Integer = Int(Rnd() * 15) + 10
@@ -778,7 +790,7 @@
                     createP()
                 End If
             Else
-                perks(13) = False
+                perks("livelinge") = -1
             End If
         End If
         Game.lstLog.TopIndex = Game.lstLog.Items.Count - 1
@@ -898,7 +910,7 @@
         If Not solFlag Then Game.picPortrait.BackgroundImage = CharacterGenerator.CreateBMP(iArr)
     End Sub
     Public Sub MtF()
-        If perks(5) Or title.Equals("Magic Girl") Then
+        If perks("polymorphed") > -1 Or title.Equals("Magic Girl") Then
             Game.lstLog.Items.Add("Your form prevents you from being altered.")
             Exit Sub
         End If
@@ -929,11 +941,11 @@
             iArrInd(16) = New Tuple(Of Integer, Boolean)(0, True)
         End If
         changeSkinColor(skincolor)
-        perksct(7) = 0
+        If perks("swordpossess") > -1 Then perks("swordpossess") = 0
         Game.lstLog.TopIndex = Game.lstLog.Items.Count - 1
     End Sub
     Public Sub FtM()
-        If perks(5) Or title.Equals("Magic Girl") Then
+        If perks("polymorphed") > -1 Or title.Equals("Magic Girl") Then
             Game.lstLog.Items.Add("Your form prevents you from being altered.")
             Exit Sub
         End If
@@ -944,11 +956,11 @@
             perks(2) = False
             idRouteFM()
         End If
-        perksct(7) = 0
+        If perks("swordpossess") > -1 Then perks("swordpossess") = 0
         Game.lstLog.TopIndex = Game.lstLog.Items.Count - 1
     End Sub
     Public Sub be()
-        If perks(5) Or title.Equals("Magic Girl") Then
+        If perks("polymorphed") > -1 Or title.Equals("Magic Girl") Then
             Game.lstLog.Items.Add("Your form prevents you from being altered.")
             Exit Sub
         End If
@@ -976,7 +988,7 @@
         Game.lstLog.TopIndex = Game.lstLog.Items.Count - 1
     End Sub
     Friend Sub bs()
-        If perks(5) Or title.Equals("Magic Girl") Then
+        If perks("polymorphed") > -1 Or title.Equals("Magic Girl") Then
             Game.lstLog.Items.Add("Your form prevents you from being altered.")
             Exit Sub
         End If
@@ -1267,8 +1279,8 @@
             End If
         End If
         If iArrInd(4).Item2 Then
-                t(4) = CharacterGenerator.getImg("img/fFace")(iArrInd(4).Item1)
-                iArr(4) = CharacterGenerator.recolor2(t(4), c)
+            t(4) = CharacterGenerator.getImg("img/fFace")(iArrInd(4).Item1)
+            iArr(4) = CharacterGenerator.recolor2(t(4), c)
             If iArrInd(7).Item1 = 0 Then
                 t(7) = CharacterGenerator.getImg("img/fNose")(iArrInd(7).Item1)
                 iArr(7) = CharacterGenerator.recolor2(t(7), c)
@@ -1413,7 +1425,7 @@
         Return output
     End Function
     Public Function toGhost() As String
-        Dim output = CStr(name & " the " & title & "*" & health & "*" & maxHealth & _
+        Dim output = CStr(name & " the " & title & "*" & health & "*" & maxHealth &
             "*" & getAttack() & "*" & getDefence() & "*" & getSpeed() & "*" & sexBool & "*" & haircolor.R & "*" & haircolor.G & "*" & haircolor.B & "*")
         For i = 0 To inventory.Count - 1
             output += (inventory.Item(i).count) & "*"

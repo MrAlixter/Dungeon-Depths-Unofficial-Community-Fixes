@@ -455,8 +455,8 @@ Public Class Game
                 End If
                 p1 = New Point(x, p1.Y)
             End If
-            Dim cont As Integer = (Int(Rnd() * 20))
-            If cont = 11 Then exits.Add(p1)
+            Dim cont As Integer = (Int(Rnd() * 35))
+            If cont = 11 Or cont = 27 Then exits.Add(p1)
             If cont < 8 Then Exit For
         Next
     End Sub
@@ -1199,6 +1199,20 @@ Public Class Game
 
         Equipment.init()
         reader.Close()
+        If player.title = "Bimbo" Then
+            If floor > 5 Then
+                player.pImage = picBimbof.BackgroundImage
+            Else
+                player.pImage = picPlayerB.BackgroundImage
+            End If
+        Else
+            If floor > 5 Then
+                player.pImage = picPlayerf.BackgroundImage
+            Else
+                player.pImage = picPlayer.BackgroundImage
+            End If
+        End If
+
         drawBoard()
         lblNameTitle.Text = player.name & " the " & player.title
         lblHealth.Text = "Health = " & player.health & "/" & player.maxHealth
@@ -1212,7 +1226,6 @@ Public Class Game
         lblSPD.Text = "SPD = " & player.getSpeed
         lblEVD.Text = "EVD = " & player.evade
 
-        player.createP()
         pushLblEvent("Game successfully loaded!")
         player.solFlag = False
         player.createP()
@@ -1564,9 +1577,8 @@ Public Class Game
 
         player.currTarget = Nothing
 
-        If player.perks(5) Then
-            player.perks(5) = False
-            player.perksct(5) = 0
+        If player.perks("polymorphed") > -1 Then
+            player.perks("polymorphed") = -1
             player.revert2()
         End If
         npcList.Clear()
@@ -1621,9 +1633,8 @@ Public Class Game
         btnLeave.Visible = True
         lstLog.TopIndex = lstLog.Items.Count - 1
 
-        If player.perks(5) Then
-            player.perks(5) = False
-            player.perksct(5) = 0
+        If player.perks("polymorphed") > -1 Then
+            player.perks("polymorphed") = 0
             player.revert2()
         End If
         npcList.Clear()
@@ -1631,7 +1642,8 @@ Public Class Game
     End Sub
     'run handles the player choice to run from combat
     Sub run()
-        If player.perks(7) Then
+        If player.health < 1 Then Exit Sub
+        If player.perks("swordpossess") > -1 Then
             lstLog.Items.Add("Something inside you decides that running away is cowardly, so you don't.")
             pushLblCombatEvent("Something inside you decides that running away is cowardly, so you don't.")
             lstLog.TopIndex = lstLog.Items.Count - 1
@@ -1671,7 +1683,7 @@ Public Class Game
             End If
         Next
         Dim chick As Integer = 1 'CInt(Int(Rnd() * 5))
-        If chick = 4 And Not player.perks(3) Then player.perks(3) = True
+        If chick = 4 And Not player.perks("chickentf") Then player.perks(3) = True
     End Sub
     Sub leaveNPC()
         Dim m As NPC = Nothing
@@ -2194,7 +2206,6 @@ Public Class Game
         Dim reader As IO.StreamReader
         reader = IO.File.OpenText(a)
         reader.ReadLine()
-
         Dim img As Bitmap = Nothing
         Try
             Dim iarr(16) As Image
@@ -2203,7 +2214,7 @@ Public Class Game
             Dim skincolor = Color.FromArgb(255, CInt(pState(25)), CInt(pState(26)), CInt(pState(27)))
             Dim ids(16) As Tuple(Of Integer, Boolean)
             For i = 0 To 16
-                Dim arr() As String = pState(32 + CInt(pState(31)) + 1 + i).Split("%")
+                Dim arr() As String = pState(32 + CInt(pState(31)) + i).Split("%")
                 Dim id = New Tuple(Of Integer, Boolean)(CInt(arr(0)), CBool(arr(1)))
 
                 If id.Item2 Then
@@ -2353,6 +2364,10 @@ Public Class Game
     End Sub
     Sub updatePnlCombat(ByVal p As Player, ByVal t As Monster)
         If lblTurn.Text.Equals("Turn: " & turn) Or t Is Nothing Then Exit Sub
+        If t.health <= 0 Then
+            t.Die()
+            Exit Sub
+        End If
         lblPHealth.Text = p.health & "/" & p.getmaxHealth
         lblEHealth.Text = t.health & "/" & t.maxHealth
         lblTurn.Text = "Turn: " & turn

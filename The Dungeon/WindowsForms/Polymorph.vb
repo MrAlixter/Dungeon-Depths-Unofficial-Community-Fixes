@@ -52,7 +52,7 @@
 
     'player transform methods
     Sub transform(ByRef p As Player)
-        If Not p.perks(5) Or Not p.title.Equals("Magic Girl") Then
+        If Not p.perks("polymorphed") > -1 Or Not p.title.Equals("Magic Girl") Then
             p.pState.save(p)
         End If
         If cboxPMorph.Text.Equals(p.title) Then
@@ -203,14 +203,13 @@
             out += " Your eyes burn with an awesome fury as golden flames engulf you.  Your opponent squints and covers their eyes, blinded by your new found vibrance.  Dialing back your personal light show, you give them a cocky grin.  They may not know it, but this battle is already over."
             color1 = Color.Goldenrod
         End If
-        p.perksct(5) += (Int(Rnd() * 15) * 1.5) + 2
+        p.perks("polymorphed") += (Int(Rnd() * 15) * 1.5) + 2
         Equipment.portraitUDate()
         p.createP()
         Game.lblEvent.ForeColor = color1
         Game.lblNameTitle.ForeColor = color1
         Game.pushLblEvent(out)
-        p.perks(5) = True
-        p.perksct(5) -= 1
+        p.perks("polymorphed") -= 1
         p.TextColor = Game.lblEvent.ForeColor
         p.pImage = Game.pImage
         p.health += p.hBuff
@@ -219,11 +218,11 @@
         Game.lstLog.TopIndex = Game.lstLog.Items.Count - 1
     End Sub
     Public Sub transform(ByRef p As Player, ByVal form As String)
-        If p.perks(5) Then
+        If p.perks("polymorphed") > -1 Then
             Game.lstLog.Items.Add("Your form prevents you from being polymorphed.")
             Exit Sub
         End If
-        If Not p.perks(5) And Not p.title.Equals("Magic Girl") Then
+        If Not p.perks("polymorphed") > -1 And Not p.title.Equals("Magic Girl") Then
             p.pState.save(p)
         End If
         Dim color1 As Color = Color.White
@@ -318,11 +317,11 @@
         p.createP()
     End Sub
     Public Sub transform(ByRef p As Player, ByVal form As String, ByVal ind As Integer)
-        If p.perks(5) Then
+        If p.perks("polymorphed") > -1 Then
             Game.lstLog.Items.Add("Your form prevents you from being polymorphed.")
             Exit Sub
         End If
-        If Not p.perks(5) And Not p.title.Equals("Magic Girl") Then
+        If Not p.perks("polymorphed") > -1 And Not p.title.Equals("Magic Girl") Then
             p.pState.save(p)
         End If
         If form = "bimbo" Then
@@ -394,8 +393,8 @@
                                "genitalia seems largly unchanged.  Propping yourself up, you try to re-equip your gear only to find that you can barely hold a weapon, let alone wear armor. This 'free sample' seems to have turned you into a sentient sex doll.  𝘉𝘳𝘰𝘸𝘯 𝘏𝘢𝘵, 𝘩𝘶𝘩...")
             Equipment.clothesChange("Naked")
             p.title = "Blow-Up Doll"
-            p.perks(5) = True
-            p.perksct(5) = Int(Rnd() * 50)
+            p.perks("polymorphed") = -1
+            p.perks("polymorphed") = Int(Rnd() * 50)
             p.defence = 1
 
             p.iArrInd(1) = New Tuple(Of Integer, Boolean)(14, True)
@@ -573,7 +572,7 @@
                 End If
                 If p.title.Equals("Magic Girl") Then
                     p.iArrInd(16) = New Tuple(Of Integer, Boolean)(CharacterGenerator.fHat.Count - 3, True)
-                    p.perksct(1) = 24
+                    p.perks("bimbotf") = 24
                 End If
                 If p.iArrInd(6).Item1 = 8 And p.iArrInd(6).Item2 Then p.iArrInd(6) = New Tuple(Of Integer, Boolean)(0, True)
                 p.iArrInd(8) = New Tuple(Of Integer, Boolean)(5, True)
@@ -592,7 +591,7 @@
                 ElseIf p.sexBool And p.breastSize >= 3 Then
                     out += "In your haze, you look down to see your clothes have become tight and pink. You giggle, all traces of intelect vanishing as your body becomes more curvy and feminine. Your hair lengthens, becoming a platinum blonde, and your clothes finish changing to match your new figure."
                 End If
-                If p.perksct(1) = 25 Then Game.pushLblEvent(out)
+                If p.perks("bimbotf") = 25 Then Game.pushLblEvent(out)
                 p.title = "Bimbo"
                 p.lust += 10
                 p.attack -= 10
@@ -637,8 +636,7 @@
                 End If
                 If Game.floor < 6 Then p.pImage = Game.picPlayerB.BackgroundImage Else p.pImage = Game.picBimbof.BackgroundImage
                 p.TextColor = Color.HotPink
-                p.perks(1) = False
-                p.perksct(1) = 0
+                p.perks("bimbotf") = -1
             Case 2
                 p.iArrInd(16) = New Tuple(Of Integer, Boolean)(0, True)
                 p.iArrInd(2) = New Tuple(Of Integer, Boolean)(7, True)
@@ -661,8 +659,7 @@
                 p.defence -= 10
                 If Game.floor < 6 Then p.pImage = Game.picPlayerB.BackgroundImage Else p.pImage = Game.picBimbof.BackgroundImage
                 p.TextColor = Color.HotPink
-                p.perks(1) = False
-                p.perksct(1) = 0
+                p.perks("bimbotf") = -1
         End Select
     End Sub
     Sub nekoTF(ByRef p As Player, ByVal ind As Integer)
@@ -694,7 +691,7 @@
                     Game.pushLblCombatEvent("Your body slims down, and your chest inlates, giving you average sized breasts.  Soon after, your cock and balls shift into a vagina. You are now female!")
                 Else
                     p.be()
-                    p.perksct(6) += 1
+                    p.perks("nekocurse") += 1
                 End If
                 p.lust += 5
             Case 5
@@ -734,8 +731,7 @@
                 Game.pushLblCombatEvent("As the last of your resistance drains away, all you can find yourself doing is focusing on your new mistress's voice as she orders you down onto all fours.  You happily oblige, purring softly, and she giggles.  ''Come on kitty, lets go!'' she orders and the two of you, with her leading, wander off into the darkness.  GAME OVER!")
                 MsgBox(Game.lblCombatEvents.Text)
                 p.Die()
-                p.perks(6) = False
-                p.perksct(6) = 0
+                p.perks("nekocurse") = -1
         End Select
     End Sub
     Sub targaxTF(ByRef p As Player, ByVal ind As Integer)
@@ -771,7 +767,6 @@
                 p.maxHealth = 300
                 p.attack = 75
                 p.iArrInd(8) = New Tuple(Of Integer, Boolean)(13, True)
-                p.createP()
                 p.sState.save(p)
                 p.pState.save(p)
         End Select
@@ -784,9 +779,9 @@
                 Else
                     Game.player.haircolor = Color.FromArgb(180, 5, 245, 198)
                     Game.player.createP()
-                    Game.player.perks(8) = True
+                    Game.player.perks("vsslimehair") = 0
                 End If
-                If Not Game.player.perks(5) And Not Game.player.title.Equals("Magic Girl") Then
+                If Not Game.player.perks("polymorphed") And Not Game.player.title.Equals("Magic Girl") Then
                     Game.player.pState.save(Game.player)
                 End If
         End Select
