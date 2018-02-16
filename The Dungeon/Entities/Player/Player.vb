@@ -693,10 +693,13 @@
                 If equippedWeapon.getName.Equals("Sword_of_the_Brutal") Then
                     If perksct(7) = 2 Then
                         Polymorph.transform(Me, "targax", 0)
-                    ElseIf perksct(7) = 4 Then
+                        perksct(7) += 1
+                    ElseIf perksct(7) = 5 Then
                         Polymorph.transform(Me, "targax", 1)
-                    ElseIf perksct(7) = 6 And name <> "Targax" Then
+                        perksct(7) += 1
+                    ElseIf perksct(7) = 8 And name <> "Targax" Then
                         Polymorph.transform(Me, "targax", 2)
+                        perksct(7) += 1
                     End If
                 Else
                     perks(7) = False

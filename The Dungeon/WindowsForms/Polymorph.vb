@@ -410,7 +410,7 @@
             p.iArrInd(15) = New Tuple(Of Integer, Boolean)(14, True)
             p.iArrInd(16) = New Tuple(Of Integer, Boolean)(0, True)
         End If
-        p.createP()
+        'p.createP()
         Equipment.portraitUDate()
     End Sub
     'monster transform method
