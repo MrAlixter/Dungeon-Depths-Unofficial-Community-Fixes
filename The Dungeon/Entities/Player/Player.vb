@@ -24,6 +24,7 @@
     Public perksct(UBound(perks)) As Integer
     Public pImage As Image 'tile image of the player
     Public TextColor As Color
+    Public isDead As Boolean = False
     'portrait variables
     Public sexBool As Boolean
     Public iArr As Image()
@@ -269,6 +270,7 @@
         Catch ex As Exception
             MsgBox("D_D Error 002: Unknown Cause of death")
         End Try
+        isDead = True
         Dim r As Integer = CInt(Int(Rnd() * 2))
         If r = 0 Then
             If Not Game.currNPC Is Nothing AndAlso Game.currNPC.name.Equals("Shopkeeper") Then title = "Golem (Gold)"
@@ -288,7 +290,7 @@
                 MsgBox("No save detected!")
             End Try
         End If
-        Application.Exit()
+        Game.formReset()
     End Sub
     'setClass sets the player stats at the beginning of the game
     Public Sub setClass(ByVal s As String)

@@ -1362,9 +1362,9 @@ Public Class Game
         End If
     End Sub
     Sub toSOL()
+        fromCombat()
         pnlSaveLoad.Visible = True
         'CharacterGenerator.init()
-
         While Not savePicsReady
             Threading.Thread.Sleep(50)
         End While
@@ -1419,6 +1419,7 @@ Public Class Game
         End If
 
         Me.Update()
+        player.canMoveFlag = False
     End Sub
     Sub closesol()
         Dim int As Integer = 100 - player.getSpeed
@@ -1426,6 +1427,8 @@ Public Class Game
         updatelist.add(player, int)
         combatmode = False
         picStart.Visible = False
+        If player.isDead Then formReset()
+        player.canMoveFlag = True
     End Sub
 
     'inventory functions
@@ -2104,6 +2107,10 @@ Public Class Game
     End Sub
     'pushLblEvent takes a string, formats it to wrap, and pushes a dialog box containing it
     Sub pushLblEvent(ByVal s As String)
+        If combatmode Then
+            pushLblCombatEvent(s)
+            Exit Sub
+        End If
         Dim sSplit() As String = s.Split(" ")
         Dim c As Integer = 0
         Dim ct As Integer = 0
@@ -2134,6 +2141,10 @@ Public Class Game
     End Sub
     'This pushLblEvent is identical to the first, but takes an additional action that it executes on close.
     Sub pushLblEvent(ByVal s As String, ByRef effect As Action)
+        If combatmode Then
+            pushLblCombatEvent(s)
+            Exit Sub
+        End If
         Dim sSplit() As String = s.Split(" ")
         Dim c As Integer = 0
         Dim ct As Integer = 0
@@ -2503,5 +2514,15 @@ Public Class Game
             End If
             imagesWorkerArg = Nothing
         End If
+    End Sub
+
+    Sub formReset()
+        Application.Exit()
+        'fromCombat()
+        'picStart.Visible = True
+        'btnS.Visible = True
+        'btnL.Visible = True
+        'btnControls.Visible = True
+        'player.canMoveFlag = False
     End Sub
 End Class
