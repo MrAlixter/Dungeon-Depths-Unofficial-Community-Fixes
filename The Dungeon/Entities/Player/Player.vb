@@ -201,6 +201,7 @@
     'genral functions
     'Die handles a player death
     Public Sub Die()
+        If Game.pnlSaveLoad.Visible = True Then Exit Sub
         Try
             If currTarget.name.Equals("Shopkeeper") Then
                 Dim n As NPC = Game.currNPC
@@ -655,7 +656,7 @@
         End If
         'marissa's tf
         If perks("nekocurse") > -1 Then
-            If currTarget Is Nothing Then
+            If currTarget Is Nothing Or currTarget.dead Then
                 perks("nekocurse") = -1
             End If
             If Not perks("polymorphed") > -1 Then

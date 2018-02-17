@@ -195,22 +195,25 @@ New Features:
   - Shady Wizard +3 img
     - bad end: blowup doll tf
     - sells magic/illicit stuff
+      - Mirrorshield
+      - 
   - Hypnotist Teacher +3 img
   - Magic Items Shop +3 img
-- [3 / 5] 5 Traps
+- [3 / 6] 6 Traps
   - ...
+  - [done] Blow-Up doll coupon trap
   - hypnosis trap
      - Female master
      - male master
      - no master
   - Summoning Circle (Tentacles)
-- [0 / 6] 6 more mystery potions
+- [3 / 6] 6 more mystery potions
   - Murky potion / Weakness Potion (-10% stats for 30 turns)
   - Smokey Potion / Shrink Potion (1/10 stats, but 10x evade for 30 turns)
   - Clear Potion / Snake potion (50/50 chance between temporary snake tf and naga tf)
-  - Aqua Potion / Masculine potion (Gives dick/Grows Muscles?)
-  - Rose Potion / HyperHeal Potion (Raises hp to full +10 max hp)
-  - Glittery Potion / HyperMana Potion (Raises mana to full +5 max mana)
+  - [done] Aqua Potion / Masculine potion (Gives dick/Grows Muscles?)
+  - [done] Rose Potion / HyperHeal Potion (Raises hp to full +10 max hp)
+  - [done] Glittery Potion / HyperMana Potion (Raises mana to full +5 max mana)
 - [0 / 6] 6 Combo TFs
   - Demon Princess
   - Bimbo Princess
@@ -218,17 +221,17 @@ New Features:
   - Demonic Angel
   - Nurse Cow
   - Holy Cow
-- Combine charachter generator screens
+- [done] Combine charachter generator screens
 - inspect items in shop
-- Wait option
+- [done] Wait option
 - Non-combat armor benefits
 - Armor reduces spell accuracy
 - [done?] magic armor
 - breakdown of stats on hover
-- re-value all items
+- [done] re-value all items
 - unselect items by clicking again
-- inventory not reset after use of items
-- debug menu in the about section
+- [done] inventory not reset after use of items
+- [houdini] debug menu in the about section
   - possible custom item implementation
 - character presets
 - a config file to save player presets and implemented items
