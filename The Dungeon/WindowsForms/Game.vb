@@ -48,7 +48,7 @@ Public Class Game
     Dim monsterTier2() As Integer = {0, 1, 2, 3}
     Public turn As Integer = 0  '(NOT SAVED)
     Public beatboss() As Boolean = {False, False, False, False, False, False}  'which bosses have been beat?
-    Dim floorboss() As String = {"Floor0", "Marissa the Enchantress", "Targax the Brutal", "Key", "Key", "Medusa"} 'boss names (NOT SAVED)
+    Public floorboss() As String = {"Floor0", "Marissa the Enchantress", "Targax the Brutal", "Key", "Key", "Medusa"} 'boss names (NOT SAVED)
     Dim floorLayouts As ArrayList = New ArrayList()
     Public version As Double = 0.5      'the save file version
     Public lblEventOnClose As Action    'the event method preformed when lblEvent closes (NOT SAVED)
@@ -1403,6 +1403,7 @@ Public Class Game
             btnL.Visible = True
             btnControls.Visible = True
         End If
+        player.canMoveFlag = True
         If player.isDead Then formReset()
     End Sub
     Sub toSOL()

@@ -75,6 +75,7 @@
         Return toReturn
     End Function
     Sub open()
+
         If Game.player.pos <> pos Then Exit Sub
         If Not Game.combatmode And Game.floor >= 3 Then
             Dim mOdds As Integer
@@ -91,7 +92,7 @@
         Dim c As String = "Chest Contents: " & vbCrLf
         For i = 0 To UBound(contents)
             Game.player.inventory.Item(i).add(contents(i))
-
+            
             If contents(i) > 0 Then
                 If Game.player.inventory(i).GetType().IsSubclassOf(GetType(MysteryPotion)) Then
                     c += " " & vbCrLf & "+" & contents(i) & " " & Game.player.inventory(i).getName() & " "
