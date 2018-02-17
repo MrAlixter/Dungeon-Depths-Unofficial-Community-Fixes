@@ -134,7 +134,7 @@
         Game.player.perks("nekocurse") = -1
         Game.player.currState.save(Game.player)
         Game.fromCombat()
-        If Game.player.perks("swordpossess") Then Game.player.perks("swordpossess") += 1
+        If Game.player.perks("swordpossess") > -1 Then Game.player.perks("swordpossess") += 1
         dead = True
         endBoss()
         Game.lstLog.TopIndex = Game.lstLog.Items.Count - 1
@@ -212,7 +212,7 @@
         Game.fromCombat()
         Game.pushLblEvent(title & name & "'s chest slowly turns to stone where the spell hits " & rPronoun & ". The petrification spreads out over " & pPronoun & " body, and as more of " & pPronoun & " body turns to a fine gray stone " & pPronoun & " struggling becomes less and less intense. As the last of the life drains out of " & pPronoun & " eyes, all that is left of the once dangerous " & name & " is a lifeless stone statue. It doesn't seem like " & pronoun & " will be needing " & pPronoun & " personal items anymore.")
         Game.statueList.Add(New Statue(Me))
-        If Game.player.perks("swordpossess") Then Game.player.perks("swordpossess") += 1
+        If Game.player.perks("swordpossess") > -1 Then Game.player.perks("swordpossess") += 1
         dead = True
         endBoss()
         Game.lstLog.TopIndex = Game.lstLog.Items.Count - 1
@@ -229,7 +229,7 @@
         Dim gd As Integer = (maxHealth + attack + defence) * 7
         Game.pushLblEvent(title & name & "'s chest slowly turns to solid gold where you poked " & rPronoun & ". The gilded surface spreads out over " & pPronoun & " body, and as more of " & pPronoun & " body turns to the precious metal " & pPronoun & " struggling becomes less and less intense. As the last of the life drains out of " & pPronoun & " eyes, all that is left of the once dangerous " & name & " is a lifeless gold statue, which you then topple over, shattering it into tiny pieces.   " & vbCrLf & "+" & gd & " gold.")
         Game.player.gold += gd
-        If Game.player.perks("swordpossess") Then Game.player.perks("swordpossess") += 1
+        If Game.player.perks("swordpossess") > -1 Then Game.player.perks("swordpossess") += 1
         dead = True
         endBoss()
         Game.lstLog.TopIndex = Game.lstLog.Items.Count - 1
@@ -243,7 +243,7 @@
         Game.player.perks("nekocurse") = -1
         Game.player.currState.save(Game.player)
         Game.fromCombat()
-        If Game.player.perks("swordpossess") Then Game.player.perks("swordpossess") += 1
+        If Game.player.perks("swordpossess") > -1 Then Game.player.perks("swordpossess") += 1
         dead = True
         endBoss()
         Game.lstLog.TopIndex = Game.lstLog.Items.Count - 1
@@ -302,6 +302,9 @@
     Private Sub endBoss()
         If sName.Equals("Marissa the Enchantress") Then Game.beatboss(1) = True
         If sName.Equals("Targax the Brutal") Then Game.beatboss(2) = True
+    End Sub
+    Private Sub endMonster()
+
     End Sub
     Public Function getName() As String
         If form = "" Then

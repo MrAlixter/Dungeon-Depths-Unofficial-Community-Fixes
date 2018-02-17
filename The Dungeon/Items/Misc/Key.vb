@@ -11,6 +11,8 @@
         MyBase.value = 2500
     End Sub
     Public Overrides Sub add(i As Integer)
-        If i > 0 Then Game.beatboss(3) = True
+        If i > 0 And Game.beatboss(Game.floor).Equals("Key") Then
+            Game.beatboss(Game.floor) = True
+        End If
     End Sub
 End Class
