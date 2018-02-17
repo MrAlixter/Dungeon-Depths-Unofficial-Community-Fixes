@@ -114,13 +114,7 @@
         Game.lblEHealthChange.Tag -= dmg
     End Sub
     Public Sub Die()
-        Dim totalSum As Integer = 0
-        For i = 0 To UBound(inventory)
-            totalSum += inventory(i)
-        Next
-        Dim c1 As Chest
-        c1 = Game.baseChest.Create(inventory, pos)
-        If totalSum > 0 Then c1.open()
+        endMonster()
         Game.npcList.Remove(Me)
         If mindex = 2 And Not name.Equals("Zombie") Then
             Dim writer As IO.StreamWriter
@@ -129,15 +123,6 @@
             writer.Flush()
             writer.Close()
         End If
-        Game.lstLog.Items.Add("You've deafeated the " & name & "!  Chest Dropped!")
-        'Form1.player.xp += xpGain
-        Game.player.perks("nekocurse") = -1
-        Game.player.currState.save(Game.player)
-        Game.fromCombat()
-        If Game.player.perks("swordpossess") > -1 Then Game.player.perks("swordpossess") += 1
-        dead = True
-        endBoss()
-        Game.lstLog.TopIndex = Game.lstLog.Items.Count - 1
     End Sub
     Public Overridable Sub despawn(ByVal reason As String)
         Game.npcList.Remove(Me)
@@ -202,51 +187,18 @@
         Game.lstLog.TopIndex = Game.lstLog.Items.Count - 1
     End Sub
     Public Overridable Sub toStatue()
-        Dim c1 As Chest = Game.baseChest.Create(inventory, pos)
-        c1.open()
-        Game.npcList.Remove(Me)
-        Game.lstLog.Items.Add("You've deafeated the " & name & "!")
-        'Form1.player.xp += xpGain
-        Game.player.perks("nekocurse") = -1
-        Game.player.currState.save(Game.player)
-        Game.fromCombat()
+        endMonster()
         Game.pushLblEvent(title & name & "'s chest slowly turns to stone where the spell hits " & rPronoun & ". The petrification spreads out over " & pPronoun & " body, and as more of " & pPronoun & " body turns to a fine gray stone " & pPronoun & " struggling becomes less and less intense. As the last of the life drains out of " & pPronoun & " eyes, all that is left of the once dangerous " & name & " is a lifeless stone statue. It doesn't seem like " & pronoun & " will be needing " & pPronoun & " personal items anymore.")
         Game.statueList.Add(New Statue(Me))
-        If Game.player.perks("swordpossess") > -1 Then Game.player.perks("swordpossess") += 1
-        dead = True
-        endBoss()
-        Game.lstLog.TopIndex = Game.lstLog.Items.Count - 1
     End Sub
     Public Overridable Sub toGold()
-        Dim c1 As Chest = Game.baseChest.Create(inventory, pos)
-        c1.open()
-        Game.npcList.Remove(Me)
-        Game.lstLog.Items.Add("You've deafeated the " & name & "!")
-        'Form1.player.xp += xpGain
-        Game.player.perks("nekocurse") = -1
-        Game.player.currState.save(Game.player)
-        Game.fromCombat()
+        endMonster()
         Dim gd As Integer = (maxHealth + attack + defence) * 7
         Game.pushLblEvent(title & name & "'s chest slowly turns to solid gold where you poked " & rPronoun & ". The gilded surface spreads out over " & pPronoun & " body, and as more of " & pPronoun & " body turns to the precious metal " & pPronoun & " struggling becomes less and less intense. As the last of the life drains out of " & pPronoun & " eyes, all that is left of the once dangerous " & name & " is a lifeless gold statue, which you then topple over, shattering it into tiny pieces.   " & vbCrLf & "+" & gd & " gold.")
         Game.player.gold += gd
-        If Game.player.perks("swordpossess") > -1 Then Game.player.perks("swordpossess") += 1
-        dead = True
-        endBoss()
-        Game.lstLog.TopIndex = Game.lstLog.Items.Count - 1
     End Sub
     Public Overridable Sub toBlade()
-        Dim c1 As Chest = Game.baseChest.Create(inventory, pos)
-        c1.open()
-        Game.npcList.Remove(Me)
-        Game.lstLog.Items.Add("You've deafeated the " & name & "!")
-        'Form1.player.xp += xpGain
-        Game.player.perks("nekocurse") = -1
-        Game.player.currState.save(Game.player)
-        Game.fromCombat()
-        If Game.player.perks("swordpossess") > -1 Then Game.player.perks("swordpossess") += 1
-        dead = True
-        endBoss()
-        Game.lstLog.TopIndex = Game.lstLog.Items.Count - 1
+        endMonster()
     End Sub
     Public Overridable Sub revert()
         name = sName
@@ -304,7 +256,22 @@
         If sName.Equals("Targax the Brutal") Then Game.beatboss(2) = True
     End Sub
     Private Sub endMonster()
-
+        Dim totalSum As Integer = 0
+        For i = 0 To UBound(inventory)
+            totalSum += inventory(i)
+        Next
+        Dim c1 As Chest
+        c1 = Game.baseChest.Create(inventory, pos)
+        If totalSum > 0 Then c1.open()
+        Game.npcList.Remove(Me)
+        Game.lstLog.Items.Add("You've deafeated the " & name & "!")
+        Game.player.perks("nekocurse") = -1
+        Game.player.currState.save(Game.player)
+        Game.fromCombat()
+        If Game.player.perks("swordpossess") > -1 Then Game.player.perks("swordpossess") += 1
+        dead = True
+        endBoss()
+        Game.lstLog.TopIndex = Game.lstLog.Items.Count - 1
     End Sub
     Public Function getName() As String
         If form = "" Then

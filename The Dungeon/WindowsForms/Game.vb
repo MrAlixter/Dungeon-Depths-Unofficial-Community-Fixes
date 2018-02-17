@@ -1078,6 +1078,7 @@ Public Class Game
         'For i = 0 To UBound(HPotionNames)
         '    writer.WriteLine(HPotionNames(i))
         'Next
+        writer.WriteLine(UBound(beatboss))
         For i = 0 To UBound(beatboss)
             writer.WriteLine(beatboss(i))
         Next
@@ -1211,7 +1212,7 @@ Public Class Game
         'For i = 0 To UBound(HPotionNames)
         '    HPotionNames(i) = reader.ReadLine()
         'Next
-        For i = 0 To UBound(beatboss)
+        For i = 0 To CInt(reader.ReadLine())
             beatboss(i) = CBool(reader.ReadLine)
         Next
         turn = reader.ReadLine()
@@ -1402,6 +1403,7 @@ Public Class Game
             btnL.Visible = True
             btnControls.Visible = True
         End If
+        If player.isDead Then formReset()
     End Sub
     Sub toSOL()
         fromCombat()
@@ -1581,6 +1583,7 @@ Public Class Game
         player.canMoveFlag = False
         btnATK.Visible = True
         btnMG.Visible = True
+        btnWait.Visible = True
         btnRUN.Visible = True
         cboxMG.Visible = True
         cmboxSpec.Visible = True
@@ -1599,6 +1602,7 @@ Public Class Game
         picEnemy.Visible = False
         combatmode = False
         picNPC.Visible = False
+        btnWait.Visible = False
         player.canMoveFlag = True
         player.currTarget = Nothing
         cmboxSpec.Visible = False
@@ -1626,6 +1630,7 @@ Public Class Game
         btnMG.Visible = True
         btnRUN.Visible = True
         cboxMG.Visible = True
+        btnWait.Visible = True
         cmboxSpec.Visible = True
         btnSpec.Visible = True
         cmboxSpec.Items.Clear()
@@ -1649,6 +1654,7 @@ Public Class Game
         btnATK.Visible = False
         btnMG.Visible = False
         btnRUN.Visible = False
+        btnWait.Visible = False
         cboxMG.Visible = False
         cmboxSpec.Visible = False
         btnSpec.Visible = False
@@ -2568,5 +2574,37 @@ Public Class Game
         'btnL.Visible = True
         'btnControls.Visible = True
         'player.canMoveFlag = False
+    End Sub
+
+    Private Sub btnSettings_Click(sender As Object, e As EventArgs)
+        MsgBox("This will be where the settings are changed eventually")
+    End Sub
+
+    Private Sub btnWait_Click(sender As Object, e As EventArgs) Handles btnWait.Click
+        turn += 1
+        If lblEvent.Visible = True Then
+            lblEvent.Visible = False
+            lblEvent.ForeColor = Color.White
+        End If
+        Dim m As Monster = Nothing
+        For i = 0 To npcList.Count() - 1
+            If npcList.Item(i).GetType().IsSubclassOf(GetType(Monster)) Or npcList.Item(i).GetType() Is GetType(Monster) Then
+                m = npcList.Item(i)
+                Exit For
+            End If
+        Next
+        player.setTarg(m)
+        If npcList.Count > 0 Then
+            For i = 0 To npcList.Count - 1
+                Dim int1 As Integer = 100 - npcList.Item(i).speed
+                If int1 < 1 Then int1 = 1
+                updatelist.add(npcList.Item(i), (int1))
+            Next
+        End If
+        Dim int As Integer = 100 - player.getSpeed
+        If int < 1 Then int = 1
+        updatelist.add(player, int)
+        drawBoard()
+        pushLblCombatEvent("You wait for a bit...")
     End Sub
 End Class

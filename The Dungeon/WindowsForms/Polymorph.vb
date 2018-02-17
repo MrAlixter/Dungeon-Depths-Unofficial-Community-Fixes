@@ -348,7 +348,7 @@
             p.iArrInd(5) = New Tuple(Of Integer, Boolean)(8, True)
             p.iArrInd(15) = New Tuple(Of Integer, Boolean)(3, True)
             p.iArrInd(16) = New Tuple(Of Integer, Boolean)(2, True)
-            If Not Game.player.perks(5) And Not Game.player.title.Equals("Magic Girl") Then
+            If Not Game.player.perks("polymorphed") > -1 And Not Game.player.title.Equals("Magic Girl") Then
                 Game.player.pState.save(Game.player)
             End If
         ElseIf form = "princess" Then
@@ -379,7 +379,7 @@
                     p.iArrInd(9) = New Tuple(Of Integer, Boolean)(p.pState.iArrInd(9).Item1, True)
                     p.iArrInd(15) = New Tuple(Of Integer, Boolean)(10, True)
                     p.iArrInd(16) = New Tuple(Of Integer, Boolean)(6, True)
-                    If Not Game.player.perks(5) And Not Game.player.title.Equals("Magic Girl") Then
+                    If Not Game.player.perks("polymorphed") > -1 And Not Game.player.title.Equals("Magic Girl") Then
                         Game.player.pState.save(Game.player)
                     End If
             End Select
