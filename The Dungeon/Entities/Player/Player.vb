@@ -373,7 +373,7 @@
         gold = tGold
         equippedArmor = tEarm
         equippedWeapon = tEweap
-        perks(2) = False
+        perks("slutcurse") = False
         currState.save(Me)
         pState.save(Me)
 
@@ -551,9 +551,9 @@
 
         perks.Add("hunger", -1) '0
         perks.Add("bimbotf", -1) '1
-        perks.Add("slutcurse", -1) '2
+        perks.Add("slutcurse", False) '2
         perks.Add("chickentf", -1) '3
-        perks.Add("slimehair", -1) '4
+        perks.Add("slimehair", False) '4
         perks.Add("polymorphed", -1) '5
         perks.Add("nekocurse", -1) '6
         perks.Add("swordpossess", -1) '7
@@ -613,7 +613,7 @@
             End If
         End If
         'clothing curse
-        If perks("slutcurse") > -1 Then
+        If perks("slutcurse") Then
             Equipment.clothingCurse1()
         End If
         'removed chicken tf
@@ -634,9 +634,9 @@
         '    perks("chickentf") += 1
         'End If
         'slime hair tf
-        If perks("slimehair") > -1 Then
+        If perks("slimehair") Then
             If Not haircolor.A = 180 Then
-                perks("slimehair") = -1
+                perks("slimehair") = False
             Else
                 If health < maxHealth + hBuff And Game.turn Mod 2 = 0 Then
                     health += 25
@@ -706,7 +706,6 @@
                         Polymorph.transform(Me, "targax", 1)
                     ElseIf perks("swordpossess") = 6 And name <> "Targax" Then
                         Polymorph.transform(Me, "targax", 2)
-                        perksct(7) += 1
                     End If
                 Else
                     perks("swordpossess") = -1
@@ -953,7 +952,7 @@
             sexBool = False
             sex = "Male"
             breastSize = -1
-            perks(2) = False
+            perks("slutcurse") = False
             idRouteFM()
         End If
         If perks("swordpossess") > -1 Then perks("swordpossess") = 0

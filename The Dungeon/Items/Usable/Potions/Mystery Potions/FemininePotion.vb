@@ -13,8 +13,8 @@
         If p.sexBool = False Then
             p.MtF()
             Game.pushLblEvent("You are now a woman!")
-        ElseIf Not p.perks(2) Then
-            p.perks(2) = True
+        ElseIf Not p.perks("slutcurse") Then
+            p.perks("slutcurse") = True
             p.iArrInd(1) = New Tuple(Of Integer, Boolean)(p.sState.iArrInd(1).Item1, True)
             p.iArrInd(5) = New Tuple(Of Integer, Boolean)(p.sState.iArrInd(5).Item1, True)
             p.iArrInd(15) = New Tuple(Of Integer, Boolean)(p.sState.iArrInd(15).Item1, True)
