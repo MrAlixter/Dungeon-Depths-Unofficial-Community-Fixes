@@ -47,8 +47,8 @@ Public Class Game
     Dim monsterTier1() As Integer = {0, 1, 2}
     Dim monsterTier2() As Integer = {0, 1, 2, 3}
     Public turn As Integer = 0  '(NOT SAVED)
-    Public beatboss() As Boolean = {False, False, False, False, False}  'which bosses have been beat?
-    Dim floorboss() As String = {"Floor0", "Marissa the Enchantress", "Targax the Brutal", "Key"} 'boss names (NOT SAVED)
+    Public beatboss() As Boolean = {False, False, False, False, False, False}  'which bosses have been beat?
+    Dim floorboss() As String = {"Floor0", "Marissa the Enchantress", "Targax the Brutal", "Key", "Key", "Medusa"} 'boss names (NOT SAVED)
     Dim floorLayouts As ArrayList = New ArrayList()
     Public version As Double = 0.5      'the save file version
     Public lblEventOnClose As Action    'the event method preformed when lblEvent closes (NOT SAVED)
@@ -167,6 +167,8 @@ Public Class Game
         floorLayouts.Add(genRNDLVLCode())
         floorLayouts.Add(genRNDLVLCode())
         floorLayouts.Add(genRNDLVLCode())
+        floorLayouts.Add(genRNDLVLCode())
+        floorLayouts.Add("bossstage")
 
         'Generate board in background'
         'boardReady = False
@@ -227,7 +229,7 @@ Public Class Game
 
         boardWorker.RunWorkerAsync()
         newBoard()
-        If floor < 4 Then
+        If floor < 6 Then
             generateLevel(floorLayouts(floor))
         Else
             generateLevel(genRNDLVLCode())
@@ -306,6 +308,10 @@ Public Class Game
     End Function
     Sub generateLevel(ByVal code As String)
         Rnd(-1)
+        If code.Equals("bossstage") Then
+            genBossFloor()
+            Exit Sub
+        End If
         Randomize(code.GetHashCode)
         Dim numRooms As Integer = CInt(Int(Rnd() * 15) + 1) * Int(2.25 * mBoardWidth / 30)
         Dim exits As List(Of Point) = New List(Of Point)
@@ -458,6 +464,27 @@ Public Class Game
             Dim cont As Integer = (Int(Rnd() * 35))
             If cont = 11 Or cont = 27 Then exits.Add(p1)
             If cont < 8 Then Exit For
+        Next
+    End Sub
+    Sub genBossFloor()
+        For y = 0 To 25
+            For x = 3 To 7
+                mBoard(y, x).Tag = 2
+            Next
+        Next
+        player.pos = New Point(5, 25)
+        stairs = New Point(5, 2)
+        If floor = 5 Then genMedusaStatues()
+    End Sub
+    Sub genMedusaStatues()
+        Randomize()
+        Dim numStatues As Integer = Int((Rnd() * 5) + 6)
+        For i = 0 To numStatues
+            Dim x = Int((Rnd() * 4) + 3)
+            Dim y = Int((Rnd() * 15) + 3)
+            Dim tr As New Monster(-1)
+            tr.pos = New Point(x, y)
+            statueList.Add(New Statue(tr))
         Next
     End Sub
     Sub printBoard()
@@ -718,6 +745,7 @@ Public Class Game
     'general functions
     'randomEvents decides whether random encounters will occur, and handles what will be encountered
     Sub randomEvents()
+        If floor = 5 Then Exit Sub
         Randomize()
         If eClock > 0 Then eClock -= 1
         If combatmode = True Or npcmode = True Or eClock <> 0 Then Exit Sub
@@ -973,16 +1001,17 @@ Public Class Game
                 End If
             Next
         End If
-        If floor < 3 Then
+        If floor < 5 Then
             If player.pos = stairs And beatboss(floor) Then
-                If floor < 3 Then
+                If floor < 5 Then
+                    If floorboss(floor).Equals("Key") Then player.inventory(53).add(-1)
                     initializeBoard()
                     If combatmode Then fromCombat()
                 Else
                     MsgBox("END OF CONTENT")
                 End If
             ElseIf player.pos = stairs Then
-                If floor = 3 Then pushLblEvent("The stairs are behind a locked gate!  Perhaps the key is in a chest..." & vbCrLf & "[while this game is in development it can also be bought from the shop for 2500]") Else pushLblEvent("You must defeat " & floorboss(floor) & "!")
+                If floorboss(floor).Equals("Key") Then pushLblEvent("The stairs are behind a locked gate!  Perhaps the key is in a chest..." & vbCrLf & "[while this game is in development it can also be bought from the shop for 2500]") Else pushLblEvent("You must defeat " & floorboss(floor) & "!")
             End If
         ElseIf player.pos = stairs Then
             initializeBoard()
