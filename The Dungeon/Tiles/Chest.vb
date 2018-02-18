@@ -50,7 +50,8 @@
         For ind = 0 To UBound(i)
             chest.contents(ind) += i(ind)
         Next
-        chest.contents(43) = Int(Rnd() * 250) 'Add some amount of gold
+
+        If chest.contents(43) < 1 Then chest.contents(43) = Int(Rnd() * 250)
         chest.pos = p
         Return chest
     End Function

@@ -26,15 +26,15 @@
         Select Case mIndex
             Case -1
                 name = "Explorer"
-                inventory = {1}
+                setInventory({0})
             Case 0
-                name = "Zombie"
+                name = "Enslaved Thrall"
                 health = 75
                 maxHealth = 75
                 attack = 15
                 defence = 5
                 speed = 5
-                inventory = {0, 1}
+                setInventory({0, 1, 13})
             Case 1
                 name = "Slime"
                 health = 75
@@ -42,35 +42,40 @@
                 attack = 15
                 defence = 2
                 speed = 7
-                inventory = {0, 0, 0, 2}
+                setInventory({2, 3})
             Case 2
                 Try
                     loadGhost()
                 Catch ex As Exception
-                    name = "Zombie"
+                    name = "Enslaved Thrall"
                     health = 75
                     maxHealth = 75
                     attack = 15
                     defence = 5
                     speed = 5
-                    inventory = {0, 1}
+                    setInventory({0, 1, 13})
                 End Try
             Case 3
                 name = "Goo Girl"
-                health = 150
-                maxHealth = 150
+                health = 200
+                maxHealth = 200
                 attack = 30
                 defence = 4
                 speed = 14
-                inventory = {0, 0, 0, 2}
+                setInventory({3})
             Case 4
-                name = "Shadow Warrior"
-                health = 200
-                maxHealth = 200
-                attack = 50
+                Dim rng = Int(Rnd() * 2)
+                If rng = 0 Then
+                    name = "Enthralling Sorcerer"
+                Else
+                    name = "Enthralling Sorceress"
+                End If
+                health = 150
+                maxHealth = 150
+                attack = 25
                 defence = 10
-                speed = 10
-                inventory = {0, 0, 2, 0, 0, Int(Rnd() * 2)}
+                speed = 20
+                setInventory({4, 13})
             Case 5
                 name = "Mimic"
                 health = 150
@@ -78,7 +83,23 @@
                 attack = 25
                 defence = 10
                 speed = 50
-                inventory = {0}
+                setInventory({0})
+            Case 6
+                name = "Spider"
+                health = 50
+                maxHealth = 50
+                attack = 35
+                defence = 8
+                speed = 45
+                setInventory({63})
+            Case 7
+                name = "Arachne Huntress"
+                health = 100
+                maxHealth = 100
+                attack = 50
+                defence = 15
+                speed = 60
+                setInventory({63})
             Case Else
                 name = "Some Guy"
                 health = 66
@@ -116,7 +137,7 @@
     Public Sub Die()
         endMonster()
         Game.npcList.Remove(Me)
-        If mindex = 2 And Not name.Equals("Zombie") Then
+        If mindex = 2 And Not name.Equals("Ensaved Thrall") Then
             Dim writer As IO.StreamWriter
             writer = IO.File.CreateText("gho.sts")
             writer.WriteLine("MTGRAVE")
@@ -154,6 +175,7 @@
         Game.lstLog.TopIndex = Game.lstLog.Items.Count - 1
     End Sub
     Public Overridable Sub update() Implements Updatable.update
+        Game.player.currTarget = Me
         If health <= 0 Then
             Die()
             Exit Sub
@@ -209,6 +231,24 @@
         speed = sSpeed
         npcIndex = 0
         Game.pushLblEvent("The " & name & " return to " & pPronoun & " original self!")
+    End Sub
+    Public Sub setInventory(ByVal inv() As Integer)
+        ReDim inventory(Game.player.inventory.Count - 1)
+        For i = 0 To UBound(inv)
+            Select Case Game.player.inventory(inv(i)).tier
+                Case 3
+                    Dim rng = (Int(Rnd() * 5))
+                    If rng = 1 Then inventory(inv(i)) += 1
+                Case 2
+                    Dim rng = (Int(Rnd() * 3))
+                    If rng = 1 Then inventory(inv(i)) += 1
+                Case Else
+                    Dim rng = (Int(Rnd() * 5))
+                    If rng = 3 Or rng = 4 Then rng = 0
+                    inventory(inv(i)) += rng
+            End Select
+        Next
+        inventory(43) = Int(Rnd() * 250) 'Add some amount of gold
     End Sub
 
     Shared Sub createMimic(ByVal cont() As Integer)

@@ -219,21 +219,27 @@
                 title = "Trophy"
                 MsgBox(out)
             ElseIf currTarget.name.Equals("Mindless Bimbo") Then
-                currTarget.despawn("run")
                 Game.player.perks("bimbotf") = 1
                 Dim out As String = "Exausted, you slump to the floor.  Glancing up, the horny mess attacking you seem to have gotten a running start, throwing herself on top of you, and pulling you into a sloppy kiss.  As she clumsily fumbles around, trying to remove your clothes, you roll out from underneath her and beat a hasty retreat, the faint sweetness of bubblegum lingering in your mouth."
+                currTarget.despawn("run")
                 Game.pushLblEvent(out)
                 health = 10
                 Exit Sub
-            ElseIf currTarget.name.Equals("Zombie") Then
+            ElseIf currTarget.name.Equals("Enslaved Thrall") Then
+                Dim out As String = "Despite your fatigue, you are able to roll out of the way of the thrall's attempt to restrain you, and make a clumsy escape." & vbCrLf & " " & vbCrLf & "[Insert a TF here (eventually)]"
                 currTarget.despawn("run")
-                Dim out As String = "Despite your fatigue, you are able to roll out of the way of the zombie's kill-blow, and make a clumsy escape." & vbCrLf & " " & vbCrLf & "[Insert a TF here (eventually)]"
                 Game.pushLblEvent(out)
                 health = 10
                 Exit Sub
             ElseIf currTarget.name.Equals("Slime") Or currTarget.name.Equals("Goo Girl") Then
-                currTarget.despawn("run")
                 Dim out As String = "As the " & currTarget.name & " closes in on you, you push yourself off the ground, sidestep it, and make a hasty retreat." & vbCrLf & " " & vbCrLf & "[Insert a TF here (eventually)]"
+                currTarget.despawn("run")
+                Game.pushLblEvent(out)
+                health = 10
+                Exit Sub
+            ElseIf currTarget.name.Equals("Spider") Or currTarget.name.Equals("Arachne Huntress") Or currTarget.name.Equals("Enthralling Sorcerer") Or currTarget.name.Equals("Enthralling Sorceress") Then
+                Dim out As String = "As the " & currTarget.name & " closes in on you, you push yourself off the ground, sidestep it, and make a hasty retreat." & vbCrLf & " " & vbCrLf & "[Insert a TF here (eventually)]"
+                currTarget.despawn("run")
                 Game.pushLblEvent(out)
                 health = 10
                 Exit Sub
@@ -513,6 +519,7 @@
         inventory.Add(New BSPotion()) '60
         inventory.Add(New HyperHealPotion()) '61
         inventory.Add(New HyperManaPotion()) '62
+        inventory.Add(New SpidersilkWhip()) '63
 
         For i = 0 To inventory.Count - 1
             If inventory(i).GetType().IsSubclassOf(GetType(MysteryPotion)) Then
@@ -533,7 +540,7 @@
         weapons = {New BareFists(), _
                    inventory(6), inventory(9), inventory(11), inventory(21), _
                    inventory(22), inventory(23), inventory(24), inventory(40), _
-                   inventory(41), inventory(42), inventory(45)}
+                   inventory(41), inventory(42), inventory(45), inventory(63)}
 
         useable = {inventory(0), inventory(1), inventory(3), inventory(4), _
                    inventory(15), inventory(36), inventory(37), inventory(45), _

@@ -44,8 +44,10 @@ Public Class Game
     Public titleList = New List(Of String)
     'other misc form1 instance variables
     Dim selectedItem As Item    'the item hilighted in the inventory (NOT SAVED)
-    Dim monsterTier1() As Integer = {0, 1, 2}
-    Dim monsterTier2() As Integer = {0, 1, 2, 3}
+    Dim monsterTier1() As Integer = {0, 1, 2, 6}
+    Dim monsterTier2() As Integer = {0, 1, 2, 4, 6}
+    Dim monsterTier3() As Integer = {0, 1, 2, 4, 6, 7}
+    Dim monsterTier4() As Integer = {0, 1, 2, 3, 4, 6, 7}
     Public turn As Integer = 0  '(NOT SAVED)
     Public beatboss() As Boolean = {False, False, False, False, False, False}  'which bosses have been beat?
     Public floorboss() As String = {"Floor0", "Marissa the Enchantress", "Targax the Brutal", "Key", "Key", "Medusa"} 'boss names (NOT SAVED)
@@ -757,11 +759,11 @@ Public Class Game
             Case 2
                 currTier = monsterTier2
             Case 3
-                currTier = monsterTier2
+                currTier = monsterTier3
             Case 4
-                currTier = monsterTier2
+                currTier = monsterTier4
             Case Else
-                currTier = monsterTier1
+                currTier = monsterTier4
         End Select
         Dim r As Integer = Int(Rnd() * (UBound(currTier) + 1))
         Dim r2 As Integer = Int(Rnd() * (UBound(currTier) + 1))
@@ -770,7 +772,7 @@ Public Class Game
             If r2 = UBound(currTier) And r2 = r And ((floor < 5 AndAlso Not beatboss(floor)) Or floor >= 5) And Not floor = 3 Then
                 m = New MiniBoss(floor)
             Else
-                m = New Monster(r)
+                m = New Monster(currTier(r))
             End If
             npcList.Add(m)
             player.currTarget = m
@@ -1609,14 +1611,11 @@ Public Class Game
         cmboxSpec.Visible = False
         btnSpec.Visible = False
 
-        player.currTarget = Nothing
-
         If player.perks("polymorphed") > -1 Then
             player.perks("polymorphed") = -1
             player.revert2()
         End If
         npcList.Clear()
-        player.currTarget = Nothing
     End Sub
     'the NPC versions of from and to combat
     Sub NPCtoCombat(ByRef m As Monster)
@@ -1849,7 +1848,6 @@ Public Class Game
     Private Sub btnSpec_Click(sender As Object, e As EventArgs) Handles btnSpec.Click
         turn += 1
         lblCombatEvents.Text = ""
-        player.currTarget = Nothing
         If lblEvent.Visible = True Then
             lblEvent.Visible = False
             lblEvent.ForeColor = Color.White
@@ -1894,7 +1892,6 @@ Public Class Game
     Private Sub btnMG_Click(sender As Object, e As EventArgs) Handles btnMG.Click
         turn += 1
         lblCombatEvents.Text = ""
-        player.currTarget = Nothing
         If lblEvent.Visible = True Then
             lblEvent.Visible = False
             lblEvent.ForeColor = Color.White
@@ -2409,7 +2406,7 @@ Public Class Game
         lblTurn.Text = "Turn: " & turn
         lblPName.Text = p.name
         lblEName.Text = t.getName
-        If t.getName.Length > 10 Then
+        If t.getName.Length > 15 Then
             Dim tRatio = 10 / t.getName.Length
             Dim newFont As Font = New System.Drawing.Font("Consolas", CInt(9 * 2 * tRatio * Me.Size.Width / 688))
             lblEName.Font = newFont
