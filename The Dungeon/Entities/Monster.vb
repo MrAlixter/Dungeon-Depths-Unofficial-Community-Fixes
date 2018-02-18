@@ -137,7 +137,7 @@
     Public Sub Die()
         endMonster()
         Game.npcList.Remove(Me)
-        If mindex = 2 And Not name.Equals("Ensaved Thrall") Then
+        If mindex = 2 And Not name.Equals("Enslaved Thrall") Then
             Dim writer As IO.StreamWriter
             writer = IO.File.CreateText("gho.sts")
             writer.WriteLine("MTGRAVE")
