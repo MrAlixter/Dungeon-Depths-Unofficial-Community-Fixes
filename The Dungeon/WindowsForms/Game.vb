@@ -44,11 +44,13 @@ Public Class Game
     Public titleList = New List(Of String)
     'other misc form1 instance variables
     Dim selectedItem As Item    'the item hilighted in the inventory (NOT SAVED)
-    Dim monsterTier1() As Integer = {0, 1, 2}
-    Dim monsterTier2() As Integer = {0, 1, 2, 3}
+    Dim monsterTier1() As Integer = {0, 1, 2, 6}
+    Dim monsterTier2() As Integer = {0, 1, 2, 4, 6}
+    Dim monsterTier3() As Integer = {0, 1, 2, 4, 6, 7}
+    Dim monsterTier4() As Integer = {0, 1, 2, 3, 4, 6, 7}
     Public turn As Integer = 0  '(NOT SAVED)
-    Public beatboss() As Boolean = {False, False, False, False, False}  'which bosses have been beat?
-    Dim floorboss() As String = {"Floor0", "Marissa the Enchantress", "Targax the Brutal", "Key"} 'boss names (NOT SAVED)
+    Public beatboss() As Boolean = {False, False, False, False, False, False}  'which bosses have been beat?
+    Public floorboss() As String = {"Floor0", "Marissa the Enchantress", "Targax the Brutal", "Key", "Key", "Medusa"} 'boss names (NOT SAVED)
     Dim floorLayouts As ArrayList = New ArrayList()
     Public version As Double = 0.5      'the save file version
     Public lblEventOnClose As Action    'the event method preformed when lblEvent closes (NOT SAVED)
@@ -167,6 +169,8 @@ Public Class Game
         floorLayouts.Add(genRNDLVLCode())
         floorLayouts.Add(genRNDLVLCode())
         floorLayouts.Add(genRNDLVLCode())
+        floorLayouts.Add(genRNDLVLCode())
+        floorLayouts.Add("bossstage")
 
         'Generate board in background'
         'boardReady = False
@@ -227,7 +231,7 @@ Public Class Game
 
         boardWorker.RunWorkerAsync()
         newBoard()
-        If floor < 4 Then
+        If floor < 6 Then
             generateLevel(floorLayouts(floor))
         Else
             generateLevel(genRNDLVLCode())
@@ -306,6 +310,10 @@ Public Class Game
     End Function
     Sub generateLevel(ByVal code As String)
         Rnd(-1)
+        If code.Equals("bossstage") Then
+            genBossFloor()
+            Exit Sub
+        End If
         Randomize(code.GetHashCode)
         Dim numRooms As Integer = CInt(Int(Rnd() * 15) + 1) * Int(2.25 * mBoardWidth / 30)
         Dim exits As List(Of Point) = New List(Of Point)
@@ -458,6 +466,27 @@ Public Class Game
             Dim cont As Integer = (Int(Rnd() * 35))
             If cont = 11 Or cont = 27 Then exits.Add(p1)
             If cont < 8 Then Exit For
+        Next
+    End Sub
+    Sub genBossFloor()
+        For y = 0 To 25
+            For x = 3 To 7
+                mBoard(y, x).Tag = 2
+            Next
+        Next
+        player.pos = New Point(5, 25)
+        stairs = New Point(5, 2)
+        If floor = 5 Then genMedusaStatues()
+    End Sub
+    Sub genMedusaStatues()
+        Randomize()
+        Dim numStatues As Integer = Int((Rnd() * 5) + 6)
+        For i = 0 To numStatues
+            Dim x = Int((Rnd() * 4) + 3)
+            Dim y = Int((Rnd() * 15) + 3)
+            Dim tr As New Monster(-1)
+            tr.pos = New Point(x, y)
+            statueList.Add(New Statue(tr))
         Next
     End Sub
     Sub printBoard()
@@ -718,6 +747,7 @@ Public Class Game
     'general functions
     'randomEvents decides whether random encounters will occur, and handles what will be encountered
     Sub randomEvents()
+        If floor = 5 Then Exit Sub
         Randomize()
         If eClock > 0 Then eClock -= 1
         If combatmode = True Or npcmode = True Or eClock <> 0 Then Exit Sub
@@ -729,11 +759,11 @@ Public Class Game
             Case 2
                 currTier = monsterTier2
             Case 3
-                currTier = monsterTier2
+                currTier = monsterTier3
             Case 4
-                currTier = monsterTier2
+                currTier = monsterTier4
             Case Else
-                currTier = monsterTier1
+                currTier = monsterTier4
         End Select
         Dim r As Integer = Int(Rnd() * (UBound(currTier) + 1))
         Dim r2 As Integer = Int(Rnd() * (UBound(currTier) + 1))
@@ -742,7 +772,7 @@ Public Class Game
             If r2 = UBound(currTier) And r2 = r And ((floor < 5 AndAlso Not beatboss(floor)) Or floor >= 5) And Not floor = 3 Then
                 m = New MiniBoss(floor)
             Else
-                m = New Monster(r)
+                m = New Monster(currTier(r))
             End If
             npcList.Add(m)
             player.currTarget = m
@@ -973,16 +1003,17 @@ Public Class Game
                 End If
             Next
         End If
-        If floor < 3 Then
+        If floor < 5 Then
             If player.pos = stairs And beatboss(floor) Then
-                If floor < 3 Then
+                If floor < 5 Then
+                    If floorboss(floor).Equals("Key") Then player.inventory(53).add(-1)
                     initializeBoard()
                     If combatmode Then fromCombat()
                 Else
                     MsgBox("END OF CONTENT")
                 End If
             ElseIf player.pos = stairs Then
-                If floor = 3 Then pushLblEvent("The stairs are behind a locked gate!  Perhaps the key is in a chest..." & vbCrLf & "[while this game is in development it can also be bought from the shop for 2500]") Else pushLblEvent("You must defeat " & floorboss(floor) & "!")
+                If floorboss(floor).Equals("Key") Then pushLblEvent("The stairs are behind a locked gate!  Perhaps the key is in a chest..." & vbCrLf & "[while this game is in development it can also be bought from the shop for 2500]") Else pushLblEvent("You must defeat " & floorboss(floor) & "!")
             End If
         ElseIf player.pos = stairs Then
             initializeBoard()
@@ -1049,6 +1080,7 @@ Public Class Game
         'For i = 0 To UBound(HPotionNames)
         '    writer.WriteLine(HPotionNames(i))
         'Next
+        writer.WriteLine(UBound(beatboss))
         For i = 0 To UBound(beatboss)
             writer.WriteLine(beatboss(i))
         Next
@@ -1182,7 +1214,7 @@ Public Class Game
         'For i = 0 To UBound(HPotionNames)
         '    HPotionNames(i) = reader.ReadLine()
         'Next
-        For i = 0 To UBound(beatboss)
+        For i = 0 To CInt(reader.ReadLine())
             beatboss(i) = CBool(reader.ReadLine)
         Next
         turn = reader.ReadLine()
@@ -1373,6 +1405,8 @@ Public Class Game
             btnL.Visible = True
             btnControls.Visible = True
         End If
+        player.canMoveFlag = True
+        If player.isDead Then formReset()
     End Sub
     Sub toSOL()
         fromCombat()
@@ -1552,6 +1586,7 @@ Public Class Game
         player.canMoveFlag = False
         btnATK.Visible = True
         btnMG.Visible = True
+        btnWait.Visible = True
         btnRUN.Visible = True
         cboxMG.Visible = True
         cmboxSpec.Visible = True
@@ -1570,19 +1605,17 @@ Public Class Game
         picEnemy.Visible = False
         combatmode = False
         picNPC.Visible = False
+        btnWait.Visible = False
         player.canMoveFlag = True
         player.currTarget = Nothing
         cmboxSpec.Visible = False
         btnSpec.Visible = False
-
-        player.currTarget = Nothing
 
         If player.perks("polymorphed") > -1 Then
             player.perks("polymorphed") = -1
             player.revert2()
         End If
         npcList.Clear()
-        player.currTarget = Nothing
     End Sub
     'the NPC versions of from and to combat
     Sub NPCtoCombat(ByRef m As Monster)
@@ -1597,6 +1630,7 @@ Public Class Game
         btnMG.Visible = True
         btnRUN.Visible = True
         cboxMG.Visible = True
+        btnWait.Visible = True
         cmboxSpec.Visible = True
         btnSpec.Visible = True
         cmboxSpec.Items.Clear()
@@ -1620,6 +1654,7 @@ Public Class Game
         btnATK.Visible = False
         btnMG.Visible = False
         btnRUN.Visible = False
+        btnWait.Visible = False
         cboxMG.Visible = False
         cmboxSpec.Visible = False
         btnSpec.Visible = False
@@ -1814,7 +1849,6 @@ Public Class Game
     Private Sub btnSpec_Click(sender As Object, e As EventArgs) Handles btnSpec.Click
         turn += 1
         lblCombatEvents.Text = ""
-        player.currTarget = Nothing
         If lblEvent.Visible = True Then
             lblEvent.Visible = False
             lblEvent.ForeColor = Color.White
@@ -1859,7 +1893,6 @@ Public Class Game
     Private Sub btnMG_Click(sender As Object, e As EventArgs) Handles btnMG.Click
         turn += 1
         lblCombatEvents.Text = ""
-        player.currTarget = Nothing
         If lblEvent.Visible = True Then
             lblEvent.Visible = False
             lblEvent.ForeColor = Color.White
@@ -2374,7 +2407,7 @@ Public Class Game
         lblTurn.Text = "Turn: " & turn
         lblPName.Text = p.name
         lblEName.Text = t.getName
-        If t.getName.Length > 10 Then
+        If t.getName.Length > 15 Then
             Dim tRatio = 10 / t.getName.Length
             Dim newFont As Font = New System.Drawing.Font("Consolas", CInt(9 * 2 * tRatio * Me.Size.Width / 688))
             lblEName.Font = newFont
@@ -2540,5 +2573,37 @@ Public Class Game
         'btnL.Visible = True
         'btnControls.Visible = True
         'player.canMoveFlag = False
+    End Sub
+
+    Private Sub btnSettings_Click(sender As Object, e As EventArgs)
+        MsgBox("This will be where the settings are changed eventually")
+    End Sub
+
+    Private Sub btnWait_Click(sender As Object, e As EventArgs) Handles btnWait.Click
+        turn += 1
+        If lblEvent.Visible = True Then
+            lblEvent.Visible = False
+            lblEvent.ForeColor = Color.White
+        End If
+        Dim m As Monster = Nothing
+        For i = 0 To npcList.Count() - 1
+            If npcList.Item(i).GetType().IsSubclassOf(GetType(Monster)) Or npcList.Item(i).GetType() Is GetType(Monster) Then
+                m = npcList.Item(i)
+                Exit For
+            End If
+        Next
+        player.setTarg(m)
+        If npcList.Count > 0 Then
+            For i = 0 To npcList.Count - 1
+                Dim int1 As Integer = 100 - npcList.Item(i).speed
+                If int1 < 1 Then int1 = 1
+                updatelist.add(npcList.Item(i), (int1))
+            Next
+        End If
+        Dim int As Integer = 100 - player.getSpeed
+        If int < 1 Then int = 1
+        updatelist.add(player, int)
+        drawBoard()
+        pushLblCombatEvent("You wait for a bit...")
     End Sub
 End Class

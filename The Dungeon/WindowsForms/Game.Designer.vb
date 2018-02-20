@@ -165,6 +165,7 @@ Partial Class Game
         Me.picEHbar = New System.Windows.Forms.PictureBox()
         Me.lblEvent = New System.Windows.Forms.Label()
         Me.picLoadBar = New System.Windows.Forms.PictureBox()
+        Me.btnWait = New System.Windows.Forms.Button()
         CType(Me.picMarkBClothes, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me.picMarkBRearHair2, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me.picMarkBRearHair1, System.ComponentModel.ISupportInitialize).BeginInit()
@@ -439,7 +440,7 @@ Partial Class Game
         Me.btnLeave.BackColor = System.Drawing.Color.Black
         Me.btnLeave.Font = New System.Drawing.Font("Consolas", 8.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.btnLeave.ForeColor = System.Drawing.Color.White
-        Me.btnLeave.Location = New System.Drawing.Point(583, 419)
+        Me.btnLeave.Location = New System.Drawing.Point(456, 458)
         Me.btnLeave.Name = "btnLeave"
         Me.btnLeave.Size = New System.Drawing.Size(89, 36)
         Me.btnLeave.TabIndex = 186
@@ -656,7 +657,7 @@ Partial Class Game
         Me.btnRUN.BackColor = System.Drawing.Color.Black
         Me.btnRUN.Font = New System.Drawing.Font("Consolas", 8.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.btnRUN.ForeColor = System.Drawing.Color.White
-        Me.btnRUN.Location = New System.Drawing.Point(510, 419)
+        Me.btnRUN.Location = New System.Drawing.Point(597, 419)
         Me.btnRUN.Name = "btnRUN"
         Me.btnRUN.Size = New System.Drawing.Size(86, 36)
         Me.btnRUN.TabIndex = 159
@@ -1380,7 +1381,7 @@ Partial Class Game
         Me.Button1.Cursor = System.Windows.Forms.Cursors.Hand
         Me.Button1.Font = New System.Drawing.Font("Consolas", 8.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.Button1.ForeColor = System.Drawing.Color.White
-        Me.Button1.Location = New System.Drawing.Point(335, 447)
+        Me.Button1.Location = New System.Drawing.Point(335, 444)
         Me.Button1.Name = "Button1"
         Me.Button1.Size = New System.Drawing.Size(313, 39)
         Me.Button1.TabIndex = 248
@@ -1803,6 +1804,19 @@ Partial Class Game
         Me.picLoadBar.TabStop = False
         Me.picLoadBar.Visible = False
         '
+        'btnWait
+        '
+        Me.btnWait.BackColor = System.Drawing.Color.Black
+        Me.btnWait.Font = New System.Drawing.Font("Consolas", 8.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.btnWait.ForeColor = System.Drawing.Color.White
+        Me.btnWait.Location = New System.Drawing.Point(497, 419)
+        Me.btnWait.Name = "btnWait"
+        Me.btnWait.Size = New System.Drawing.Size(86, 36)
+        Me.btnWait.TabIndex = 272
+        Me.btnWait.Text = "Wait"
+        Me.btnWait.UseVisualStyleBackColor = False
+        Me.btnWait.Visible = False
+        '
         'Game
         '
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Inherit
@@ -1915,6 +1929,7 @@ Partial Class Game
         Me.Controls.Add(Me.lstInventory)
         Me.Controls.Add(Me.picPortrait)
         Me.Controls.Add(Me.lblEvent)
+        Me.Controls.Add(Me.btnWait)
         Me.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle
         Me.Icon = CType(resources.GetObject("$this.Icon"), System.Drawing.Icon)
         Me.MaximizeBox = False
@@ -2121,4 +2136,5 @@ Partial Class Game
     Friend WithEvents DebugToolStripMenuItem As ToolStripMenuItem
     Friend WithEvents picLoadBar As System.Windows.Forms.PictureBox
     Friend WithEvents lblCombatEvents As System.Windows.Forms.TextBox
+    Friend WithEvents btnWait As System.Windows.Forms.Button
 End Class

@@ -53,16 +53,12 @@
                 Case 5
                     c = Color.GreenYellow
             End Select
-            If Game.player.iArrInd(1).Item1 < 5 Or (Game.player.iArrInd(1).Item1 = 7 And Game.player.sexBool) Then
                 Game.pushLblEvent("As you crack the glowstick to activate it, the tube cracks open slightly, spraying some fluid on your face.  You wipe it off, and while you don't feel any different, your hair seems a little more...vibrant than it was before.")
                 Game.player.haircolor = c
                 Game.player.createP()
                 If Not Game.player.perks("polymorphed") > -1 And Not Game.player.title.Equals("Magic Girl") Then
                     Game.player.pState.save(Game.player)
                 End If
-            Else
-                Game.pushLblEvent("As you crack the glowstick to activate it, the tube cracks open slightly, spraying some fluid on your face.  You wipe it off, and nothing unusual seems to have happened.")
-            End If
         End If
         Game.drawBoard()
         count -= 1

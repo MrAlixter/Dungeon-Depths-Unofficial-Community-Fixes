@@ -99,7 +99,7 @@
                 p.defence = 100
                 Equipment.clothesChange("Naked")
                 p.equippedWeapon = New BareFists()
-                p.iArrInd(16) = New Tuple(Of Integer, Boolean)(CharacterGenerator.fHat.Count - 1, True)
+                p.iArrInd(16) = New Tuple(Of Integer, Boolean)(CharacterGenerator.fHat.Count - 2, True)
                 p.TextColor = Color.Green
                 p.dragState.save(p)
             Else
