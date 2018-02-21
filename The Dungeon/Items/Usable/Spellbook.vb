@@ -14,7 +14,7 @@
     Overrides Sub use()
         Randomize()
         If Me.getUsable() = False Then Exit Sub
-        Dim sName As String = "YOU DONE FUCKED UP"
+        Dim sName As String = "ERROR"
         Dim ct As Integer = 0
         Dim out As String = ""
         While ct < 1 Or Game.cboxMG.Items.Contains(sName)

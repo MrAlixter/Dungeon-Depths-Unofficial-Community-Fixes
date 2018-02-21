@@ -50,7 +50,7 @@
                 Game.player.inventory(54).add(1)
                 Equipment.clothesChange("Ropes")
                 Equipment.portraitUDate()
-                If Not Game.player.perks(5) And Not Game.player.title.Equals("Magic Girl") Then
+                If Not Game.player.perks("polymorphed") > -1 And Not Game.player.title.Equals("Magic Girl") Then
                     Game.player.pState.save(Game.player)
                 End If
                 Game.player.UIupdate()
