@@ -22,9 +22,10 @@
         Me.LabelCompanyName.Text = My.Application.Info.CompanyName
         Me.TextBoxDescription.Text = "Dungeon_Depths is a 2D dungeon crawler with art made in Kisekae2.0 featuring TF fetish content, made for adults." & vbCrLf &
                                      "Special thanks to:" & vbCrLf &
+                                     "- Houdini111 for extensive contributions in debugging and development" & vbCrLf & " " & vbCrLf &
                                      "- undercoversam for advice on balancing" & vbCrLf & " " & vbCrLf &
-                                     "- Houdini111 for extensive debugging assistance and other contributions" & vbCrLf & " " & vbCrLf &
-                                     "- Rangorak for advice on Kisekae2.0 and for the design of the fourth default clothing options"
+                                     "- Rangorak for advice on Kisekae2.0 and for the design of the fourth default clothing options" & vbCrLf & " " & vbCrLf &
+                                     "- Storm for the ability to bodyswap with the explorer"
     End Sub
 
     Private Sub OKButton_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles OKButton.Click
