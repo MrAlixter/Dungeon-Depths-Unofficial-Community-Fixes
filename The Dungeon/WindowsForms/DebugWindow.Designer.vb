@@ -315,7 +315,7 @@ Partial Class Debug_Window
         Me.tabPageFace.BackColor = System.Drawing.Color.Black
         Me.tabPageFace.Location = New System.Drawing.Point(4, 24)
         Me.tabPageFace.Name = "tabPageFace"
-        Me.tabPageFace.Size = New System.Drawing.Size(230, 482)
+        Me.tabPageFace.Size = New System.Drawing.Size(728, 263)
         Me.tabPageFace.TabIndex = 4
         Me.tabPageFace.Text = "FACE"
         '

@@ -172,12 +172,6 @@ Public Class Game
         floorLayouts.Add(genRNDLVLCode())
         floorLayouts.Add("bossstage")
 
-        'Generate board in background'
-        'boardReady = False
-        'Dim boardWorker = New BackgroundWorker
-        'AddHandler boardWorker.DoWork, AddressOf workerPrepareBoard
-        'boardWorker.RunWorkerAsync(False)
-
         combatmode = False
         btnS.Visible = False
         btnL.Visible = False

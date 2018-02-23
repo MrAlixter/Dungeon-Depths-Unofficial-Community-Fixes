@@ -39,38 +39,7 @@ Public Class Debug_Window
 
 
         'PORTRAIT
-        picPreview.Image = Game.picPortrait.BackgroundImage
-        picPreview.BackgroundImage = Game.player.iArr(0)
-        Dim PADDING = 0.1
-        Dim w As Integer = 146
-        Dim h As Integer = 216
-        Dim threadCount As Integer = 4
-        'Dim done As Array(threadCount)
-        Dim go As Boolean = True
-        'While go
-
-        '   For i = 0 To UBound(done)
-
-        '   Next
-        'End While
-
-
-        For i = 0 To tabPortrait.TabPages.Count - 1
-            Dim x As Integer = w * PADDING
-            Dim y As Integer = (tabPortrait.TabPages(i).Height - h) / 2
-            For j = 0 To CharacterGenerator.fAttributes(i).Count - 1
-                Dim img As New PictureBox
-                img.Name = i.ToString() & ":" & j.ToString()
-                tabPortrait.TabPages(i).Controls.Add(img)
-                img.Image = CharacterGenerator.fAttributes(i)(j)
-                img.BackgroundImage = CharacterGenerator.fAttributes(0)(0)
-                img.Location = New Point(x, y) 'y - 20)
-                img.Size = New Point(w, h)
-                'img.BackgroundImageLayout = ImageLayout.Stretch
-                AddHandler img.Click, AddressOf clickOnPic
-                x += w * (1 + PADDING)
-            Next
-        Next
+        loadPortrait()
 
 
         'INVENTORY
@@ -79,11 +48,87 @@ Public Class Debug_Window
         updateItemsList()
     End Sub
 
-    Private Function fillPages(first As Integer, last As Integer) '(Inclusive, exclusive)
-        Dim worker As New BackgroundWorker
+    Private Sub loadPortrait()
+        picPreview.Image = Game.picPortrait.BackgroundImage
+        picPreview.BackgroundImage = Game.player.iArr(0)
+        Dim PADDING = 0.1
+        Dim w As Integer = 146
+        Dim h As Integer = 216
+        'fillPages()
+        'Dim go As Boolean = True
+        'While go
+        '    For i = 0 To workers.Count - 1
+        '        If Not done(i) Then
+        '            Thread.Sleep(50)
+        '            Exit For
+        '        End If
+        '    Next
+        'End While
 
-        Return True
-    End Function
+        Dim attr
+        If Game.player.sexBool Then
+            attr = CharacterGenerator.fAttributes
+        Else
+            attr = CharacterGenerator.mAttributes
+        End If
+        For i = 0 To tabPortrait.TabPages.Count - 1
+            Dim x As Integer = w * PADDING
+            Dim y As Integer = (tabPortrait.TabPages(i).Height - h) / 2
+            For j = 0 To attr(i).Count - 1
+                Dim img As New PictureBox
+                img.Name = i.ToString() & ":" & j.ToString()
+                tabPortrait.TabPages(i).Controls.Add(img)
+                img.Image = attr(i)(j)
+                CharacterGenerator.recolor2(img.Image, Game.player.skincolor)
+                img.BackgroundImage = attr(0)(0)
+                img.Location = New Point(x, y) 'y - 20)
+                img.Size = New Point(w, h)
+                'img.BackgroundImageLayout = ImageLayout.Stretch
+                AddHandler img.Click, AddressOf clickOnPic
+                x += w * (1 + PADDING)
+            Next
+        Next
+    End Sub
+
+    Private Sub clearPortrait()
+        For i = 0 To tabPortrait.TabPages.Count - 1
+            For j = 0 To tabPortrait.TabPages(i).Controls.Count - 1
+                tabPortrait.TabPages(i).Controls(0).Dispose()
+            Next
+        Next
+    End Sub
+
+    Private Sub fillPages(ByRef done As List(Of Boolean), place As Integer, first As Integer, last As Integer) '(Inclusive, exclusive)
+        Dim worker As New BackgroundWorker
+        worker.WorkerSupportsCancellation = True
+        AddHandler worker.DoWork, AddressOf bw_DoWork
+        AddHandler worker.RunWorkerCompleted, AddressOf bw_RunWorkerCompleted
+        worker.RunWorkerAsync()
+    End Sub
+
+    Private Sub bw_DoWork(ByVal sender As Object, ByVal e As DoWorkEventArgs)
+        Dim worker As BackgroundWorker = CType(sender, BackgroundWorker)
+
+        While worker.IsBusy
+            If worker.CancellationPending = True Then
+                e.Cancel = True
+                Exit While
+            Else
+                'Perform a time consuming operation
+                System.Threading.Thread.Sleep(100)
+            End If
+        End While
+    End Sub
+
+    Private Sub bw_RunWorkerCompleted(ByVal sender As Object, ByVal e As RunWorkerCompletedEventArgs)
+        If e.Cancelled = True Then
+            Close()
+            Application.DoEvents()
+        ElseIf e.Error IsNot Nothing Then
+            MsgBox("Error: " & e.Error.Message)
+        End If
+        'Player.canMoveFlag = True
+    End Sub
 
     Private Sub clear()
         Dim ctrl As Control = Me
@@ -97,6 +142,7 @@ Public Class Debug_Window
             End If
             ctrl = GetNextControl(ctrl, True)
         Loop
+        clearPortrait()
     End Sub
 
     Private Sub updateInventoryList()
@@ -185,8 +231,8 @@ Public Class Debug_Window
         ElseIf Game.player.sex = "Female" And boxSex.Items(boxSex.SelectedIndex) = "Male" Then
             Game.player.FtM()
         End If
-        picPreview.Image = Game.picPortrait.BackgroundImage
-        picPreview.Update()
+        clearPortrait()
+        loadPortrait()
     End Sub
 
     Private Sub clickOnPic(sender As Object, e As EventArgs)
