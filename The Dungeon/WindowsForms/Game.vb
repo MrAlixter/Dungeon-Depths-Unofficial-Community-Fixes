@@ -715,7 +715,7 @@ Public Class Game
                             mPics(y, x).BackgroundImage = picTree.BackgroundImage
                         Case 1
                             mPics(y, x).BackgroundImage = Nothing
-                            mPics(y, x).BackColor = Color.DarkGreen
+                            mPics(y, x).BackColor = Color.FromArgb(255, 19, 38, 22)
                         Case 2
                             mPics(y, x).BackgroundImage = picTileF.BackgroundImage
                         Case 3

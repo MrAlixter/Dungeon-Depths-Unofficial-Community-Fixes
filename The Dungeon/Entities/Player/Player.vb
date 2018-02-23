@@ -439,6 +439,57 @@
         Equipment.portraitUDate()
         UIupdate()
     End Sub
+    Public Sub genRandomPortrait(ByVal sb As Boolean)
+        Randomize()
+
+        haircolor = Color.FromArgb(255, Int(Rnd() * 125) + 100, Int(Rnd() * 125) + 100, Int(Rnd() * 125) + 100)
+        Dim r1 As Integer = Int(Rnd() * 6)
+        Select Case r1
+            Case 0
+                skincolor = (Color.AntiqueWhite)
+            Case 1
+                skincolor = (Color.FromArgb(255, 247, 219, 195))
+            Case 2
+                skincolor = (Color.FromArgb(255, 240, 184, 160))
+            Case 3
+                skincolor = (Color.FromArgb(255, 210, 161, 140))
+            Case 4
+                skincolor = (Color.FromArgb(255, 180, 138, 120))
+            Case Else
+                skincolor = (Color.FromArgb(255, 105, 80, 70))
+        End Select
+
+        Dim r As Integer = Int(Rnd() * 5)
+        iArrInd(1) = New Tuple(Of Integer, Boolean)(r, True)
+        iArrInd(2) = New Tuple(Of Integer, Boolean)(0, True)
+        iArrInd(4) = New Tuple(Of Integer, Boolean)(0, True)
+        iArrInd(5) = New Tuple(Of Integer, Boolean)(r, True)
+        r = Int(Rnd() * 5)
+        iArrInd(3) = New Tuple(Of Integer, Boolean)(r, True)
+        r = Int(Rnd() * 4)
+        iArrInd(6) = New Tuple(Of Integer, Boolean)(r, True)
+        iArrInd(7) = New Tuple(Of Integer, Boolean)(0, True)
+        r = Int(Rnd() * 3)
+        If r = 1 Then r = 4
+        iArrInd(8) = New Tuple(Of Integer, Boolean)(r, True)
+        r = Int(Rnd() * 3)
+        iArrInd(9) = New Tuple(Of Integer, Boolean)(r, True)
+        iArrInd(10) = New Tuple(Of Integer, Boolean)(0, True)
+        iArrInd(11) = New Tuple(Of Integer, Boolean)(0, True)
+        If Rnd() > 0.65 Then
+            iArrInd(12) = New Tuple(Of Integer, Boolean)(4, True)
+        End If
+        iArrInd(13) = New Tuple(Of Integer, Boolean)(0, True)
+        iArrInd(14) = New Tuple(Of Integer, Boolean)(0, True)
+        r = Int(Rnd() * 4) + 1
+        iArrInd(15) = New Tuple(Of Integer, Boolean)(r, True)
+        iArrInd(16) = New Tuple(Of Integer, Boolean)(0, True)
+
+        TextColor = Color.White
+        If Game.floor < 6 Then pImage = Game.picPlayer.BackgroundImage Else pImage = Game.picPlayerf.BackgroundImage
+
+        Equipment.portraitUDate()
+    End Sub
 
     'updatable functions
     Sub update() Implements Updatable.update

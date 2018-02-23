@@ -135,6 +135,11 @@
         Game.lblEHealthChange.Tag -= dmg
     End Sub
     Public Sub Die()
+        If name = "Explorer" Then
+            If MessageBox.Show("Would you like to take the Explorer's body?", "Body Swap?", MessageBoxButtons.YesNo) = Windows.Forms.DialogResult.Yes Then
+                bodySwap(Game.player)
+            End If
+        End If
         endMonster()
         Game.npcList.Remove(Me)
         If mindex = 2 And Not name.Equals("Enslaved Thrall") Then
@@ -214,10 +219,10 @@
         Game.statueList.Add(New Statue(Me))
     End Sub
     Public Overridable Sub toGold()
-        endMonster()
         Dim gd As Integer = (maxHealth + attack + defence) * 7
+        inventory(43) += gd
+        endMonster()
         Game.pushLblEvent(title & name & "'s chest slowly turns to solid gold where you poked " & rPronoun & ". The gilded surface spreads out over " & pPronoun & " body, and as more of " & pPronoun & " body turns to the precious metal " & pPronoun & " struggling becomes less and less intense. As the last of the life drains out of " & pPronoun & " eyes, all that is left of the once dangerous " & name & " is a lifeless gold statue, which you then topple over, shattering it into tiny pieces.   " & vbCrLf & "+" & gd & " gold.")
-        Game.player.gold += gd
     End Sub
     Public Overridable Sub toBlade()
         endMonster()
@@ -320,4 +325,52 @@
             Return form & " (" & name & ")"
         End If
     End Function
+
+    Public Sub bodySwap(ByRef p As Player)
+        Randomize()
+
+        p.title = "Explorer"
+        p.sex = "Female"
+        p.sexBool = True
+
+        p.health = 70 + Int(Rnd() * 50)
+        p.maxHealth = p.health
+        p.attack = 5 + Int(Rnd() * 7)
+        p.defence = 5 + Int(Rnd() * 7)
+        p.discipline = 5 + Int(Rnd() * 7)
+        p.speed = 5 + Int(Rnd() * 7)
+        p.evade = 5 + Int(Rnd() * 7)
+        p.gold = 25 + Int(Rnd() * 200)
+        p.lust = 0
+        p.mana = Int(Rnd() * 7)
+        p.hunger = 0
+        p.hBuff = 0
+        p.mBuff = 0
+        p.wBuff = 0
+        p.aBuff = 0
+        p.dBuff = 0
+
+        p.breastSize = Int(Rnd() * 3) + 1
+
+        p.inventory.Clear()
+        p.perks.Clear()
+        p.createInvPerks()
+
+        Dim armor = New Integer() {5, 7, 12, 16, 17, 18, 19, 20, 38, 39, 46, 47, 54, 54}
+        Dim armorIndex = armor(Int(Rnd() * (armor.Length)))
+        Dim weapon = New Integer() {6, 9, 21, 22}
+        Dim weaponIndex = weapon(Int(Rnd() * (weapon.Length )))
+        p.inventory(armorIndex).addOne()
+        p.inventory(weaponIndex).addOne()
+        p.equippedArmor = p.inventory(armorIndex)
+        p.equippedWeapon = p.inventory(weaponIndex)
+
+        p.genRandomPortrait(True)
+
+        Dim si As Integer = p.sState.iArrInd(3).Item1
+        p.currState.save(p)
+        p.pState.save(p)
+        p.sState.save(p)
+        p.sState.iArrInd(3) = New Tuple(Of Integer, Boolean)(si, True)
+    End Sub
 End Class
