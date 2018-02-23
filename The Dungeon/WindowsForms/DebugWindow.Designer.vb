@@ -23,11 +23,6 @@ Partial Class Debug_Window
     <System.Diagnostics.DebuggerStepThrough()>
     Private Sub InitializeComponent()
         Dim resources As System.ComponentModel.ComponentResourceManager = New System.ComponentModel.ComponentResourceManager(GetType(Debug_Window))
-        Me.lblTurn = New System.Windows.Forms.Label()
-        Me.lblFloor = New System.Windows.Forms.Label()
-        Me.groupGeneral = New System.Windows.Forms.GroupBox()
-        Me.boxTurn = New System.Windows.Forms.NumericUpDown()
-        Me.boxFloor = New System.Windows.Forms.NumericUpDown()
         Me.tabMain = New System.Windows.Forms.TabControl()
         Me.tabGeneral = New System.Windows.Forms.TabPage()
         Me.tabPlayer = New System.Windows.Forms.TabPage()
@@ -87,9 +82,11 @@ Partial Class Debug_Window
         Me.lblInventory = New System.Windows.Forms.Label()
         Me.boxItems = New System.Windows.Forms.ListBox()
         Me.lblItems = New System.Windows.Forms.Label()
-        Me.groupGeneral.SuspendLayout()
-        CType(Me.boxTurn, System.ComponentModel.ISupportInitialize).BeginInit()
-        CType(Me.boxFloor, System.ComponentModel.ISupportInitialize).BeginInit()
+        Me.lblFloor = New System.Windows.Forms.Label()
+        Me.lblTurn = New System.Windows.Forms.Label()
+        Me.boxFloor = New System.Windows.Forms.NumericUpDown()
+        Me.boxTurn = New System.Windows.Forms.NumericUpDown()
+        Me.groupGeneral = New System.Windows.Forms.GroupBox()
         Me.tabMain.SuspendLayout()
         Me.tabGeneral.SuspendLayout()
         Me.tabPlayer.SuspendLayout()
@@ -108,72 +105,10 @@ Partial Class Debug_Window
         CType(Me.boxHealth, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.tabInventory.SuspendLayout()
         CType(Me.number, System.ComponentModel.ISupportInitialize).BeginInit()
+        CType(Me.boxFloor, System.ComponentModel.ISupportInitialize).BeginInit()
+        CType(Me.boxTurn, System.ComponentModel.ISupportInitialize).BeginInit()
+        Me.groupGeneral.SuspendLayout()
         Me.SuspendLayout()
-        '
-        'lblTurn
-        '
-        Me.lblTurn.AutoSize = True
-        Me.lblTurn.Dock = System.Windows.Forms.DockStyle.Top
-        Me.lblTurn.Font = New System.Drawing.Font("Consolas", 12.0!)
-        Me.lblTurn.ForeColor = System.Drawing.Color.White
-        Me.lblTurn.Location = New System.Drawing.Point(3, 51)
-        Me.lblTurn.Name = "lblTurn"
-        Me.lblTurn.Padding = New System.Windows.Forms.Padding(0, 0, 0, 10)
-        Me.lblTurn.Size = New System.Drawing.Size(63, 29)
-        Me.lblTurn.TabIndex = 1
-        Me.lblTurn.Text = "TURN: "
-        '
-        'lblFloor
-        '
-        Me.lblFloor.AutoSize = True
-        Me.lblFloor.Dock = System.Windows.Forms.DockStyle.Top
-        Me.lblFloor.Font = New System.Drawing.Font("Consolas", 12.0!)
-        Me.lblFloor.ForeColor = System.Drawing.Color.White
-        Me.lblFloor.Location = New System.Drawing.Point(3, 22)
-        Me.lblFloor.Name = "lblFloor"
-        Me.lblFloor.Padding = New System.Windows.Forms.Padding(0, 0, 0, 10)
-        Me.lblFloor.Size = New System.Drawing.Size(72, 29)
-        Me.lblFloor.TabIndex = 2
-        Me.lblFloor.Text = "FLOOR: "
-        '
-        'groupGeneral
-        '
-        Me.groupGeneral.BackColor = System.Drawing.Color.Black
-        Me.groupGeneral.Controls.Add(Me.boxTurn)
-        Me.groupGeneral.Controls.Add(Me.boxFloor)
-        Me.groupGeneral.Controls.Add(Me.lblTurn)
-        Me.groupGeneral.Controls.Add(Me.lblFloor)
-        Me.groupGeneral.Font = New System.Drawing.Font("Consolas", 12.0!)
-        Me.groupGeneral.ForeColor = System.Drawing.Color.White
-        Me.groupGeneral.Location = New System.Drawing.Point(6, 7)
-        Me.groupGeneral.Name = "groupGeneral"
-        Me.groupGeneral.Size = New System.Drawing.Size(185, 511)
-        Me.groupGeneral.TabIndex = 3
-        Me.groupGeneral.TabStop = False
-        Me.groupGeneral.Text = "GENERAL"
-        '
-        'boxTurn
-        '
-        Me.boxTurn.BackColor = System.Drawing.Color.Black
-        Me.boxTurn.ForeColor = System.Drawing.Color.White
-        Me.boxTurn.Location = New System.Drawing.Point(66, 49)
-        Me.boxTurn.Maximum = New Decimal(New Integer() {999999, 0, 0, 0})
-        Me.boxTurn.Name = "boxTurn"
-        Me.boxTurn.Size = New System.Drawing.Size(113, 26)
-        Me.boxTurn.TabIndex = 196
-        Me.boxTurn.TextAlign = System.Windows.Forms.HorizontalAlignment.Right
-        '
-        'boxFloor
-        '
-        Me.boxFloor.BackColor = System.Drawing.Color.Black
-        Me.boxFloor.Enabled = False
-        Me.boxFloor.ForeColor = System.Drawing.Color.White
-        Me.boxFloor.Location = New System.Drawing.Point(66, 20)
-        Me.boxFloor.Maximum = New Decimal(New Integer() {999999, 0, 0, 0})
-        Me.boxFloor.Name = "boxFloor"
-        Me.boxFloor.Size = New System.Drawing.Size(113, 26)
-        Me.boxFloor.TabIndex = 195
-        Me.boxFloor.TextAlign = System.Windows.Forms.HorizontalAlignment.Right
         '
         'tabMain
         '
@@ -876,6 +811,71 @@ Partial Class Debug_Window
         Me.lblItems.TabIndex = 7
         Me.lblItems.Text = "ITEMS"
         '
+        'lblFloor
+        '
+        Me.lblFloor.AutoSize = True
+        Me.lblFloor.Dock = System.Windows.Forms.DockStyle.Top
+        Me.lblFloor.Font = New System.Drawing.Font("Consolas", 12.0!)
+        Me.lblFloor.ForeColor = System.Drawing.Color.White
+        Me.lblFloor.Location = New System.Drawing.Point(3, 22)
+        Me.lblFloor.Name = "lblFloor"
+        Me.lblFloor.Padding = New System.Windows.Forms.Padding(0, 0, 0, 10)
+        Me.lblFloor.Size = New System.Drawing.Size(72, 29)
+        Me.lblFloor.TabIndex = 2
+        Me.lblFloor.Text = "FLOOR: "
+        '
+        'lblTurn
+        '
+        Me.lblTurn.AutoSize = True
+        Me.lblTurn.Dock = System.Windows.Forms.DockStyle.Top
+        Me.lblTurn.Font = New System.Drawing.Font("Consolas", 12.0!)
+        Me.lblTurn.ForeColor = System.Drawing.Color.White
+        Me.lblTurn.Location = New System.Drawing.Point(3, 51)
+        Me.lblTurn.Name = "lblTurn"
+        Me.lblTurn.Padding = New System.Windows.Forms.Padding(0, 0, 0, 10)
+        Me.lblTurn.Size = New System.Drawing.Size(63, 29)
+        Me.lblTurn.TabIndex = 1
+        Me.lblTurn.Text = "TURN: "
+        '
+        'boxFloor
+        '
+        Me.boxFloor.BackColor = System.Drawing.Color.Black
+        Me.boxFloor.Enabled = False
+        Me.boxFloor.ForeColor = System.Drawing.Color.White
+        Me.boxFloor.Location = New System.Drawing.Point(66, 20)
+        Me.boxFloor.Maximum = New Decimal(New Integer() {999999, 0, 0, 0})
+        Me.boxFloor.Name = "boxFloor"
+        Me.boxFloor.Size = New System.Drawing.Size(113, 26)
+        Me.boxFloor.TabIndex = 195
+        Me.boxFloor.TextAlign = System.Windows.Forms.HorizontalAlignment.Right
+        '
+        'boxTurn
+        '
+        Me.boxTurn.BackColor = System.Drawing.Color.Black
+        Me.boxTurn.ForeColor = System.Drawing.Color.White
+        Me.boxTurn.Location = New System.Drawing.Point(66, 49)
+        Me.boxTurn.Maximum = New Decimal(New Integer() {999999, 0, 0, 0})
+        Me.boxTurn.Name = "boxTurn"
+        Me.boxTurn.Size = New System.Drawing.Size(113, 26)
+        Me.boxTurn.TabIndex = 196
+        Me.boxTurn.TextAlign = System.Windows.Forms.HorizontalAlignment.Right
+        '
+        'groupGeneral
+        '
+        Me.groupGeneral.BackColor = System.Drawing.Color.Black
+        Me.groupGeneral.Controls.Add(Me.boxTurn)
+        Me.groupGeneral.Controls.Add(Me.boxFloor)
+        Me.groupGeneral.Controls.Add(Me.lblTurn)
+        Me.groupGeneral.Controls.Add(Me.lblFloor)
+        Me.groupGeneral.Font = New System.Drawing.Font("Consolas", 12.0!)
+        Me.groupGeneral.ForeColor = System.Drawing.Color.White
+        Me.groupGeneral.Location = New System.Drawing.Point(6, 7)
+        Me.groupGeneral.Name = "groupGeneral"
+        Me.groupGeneral.Size = New System.Drawing.Size(185, 511)
+        Me.groupGeneral.TabIndex = 3
+        Me.groupGeneral.TabStop = False
+        Me.groupGeneral.Text = "GENERAL"
+        '
         'Debug_Window
         '
         Me.AutoScaleDimensions = New System.Drawing.SizeF(6.0!, 13.0!)
@@ -888,10 +888,6 @@ Partial Class Debug_Window
         Me.SizeGripStyle = System.Windows.Forms.SizeGripStyle.Hide
         Me.StartPosition = System.Windows.Forms.FormStartPosition.CenterParent
         Me.Text = "Debug Window"
-        Me.groupGeneral.ResumeLayout(False)
-        Me.groupGeneral.PerformLayout()
-        CType(Me.boxTurn, System.ComponentModel.ISupportInitialize).EndInit()
-        CType(Me.boxFloor, System.ComponentModel.ISupportInitialize).EndInit()
         Me.tabMain.ResumeLayout(False)
         Me.tabGeneral.ResumeLayout(False)
         Me.tabPlayer.ResumeLayout(False)
@@ -912,14 +908,13 @@ Partial Class Debug_Window
         Me.tabInventory.ResumeLayout(False)
         Me.tabInventory.PerformLayout()
         CType(Me.number, System.ComponentModel.ISupportInitialize).EndInit()
+        CType(Me.boxFloor, System.ComponentModel.ISupportInitialize).EndInit()
+        CType(Me.boxTurn, System.ComponentModel.ISupportInitialize).EndInit()
+        Me.groupGeneral.ResumeLayout(False)
+        Me.groupGeneral.PerformLayout()
         Me.ResumeLayout(False)
 
     End Sub
-    Friend WithEvents lblTurn As Label
-    Friend WithEvents lblFloor As Label
-    Friend WithEvents groupGeneral As GroupBox
-    Friend WithEvents boxTurn As NumericUpDown
-    Friend WithEvents boxFloor As NumericUpDown
     Friend WithEvents tabMain As TabControl
     Friend WithEvents tabGeneral As TabPage
     Friend WithEvents tabPlayer As TabPage
@@ -979,4 +974,9 @@ Partial Class Debug_Window
     Friend WithEvents tabPageAccessories As TabPage
     Friend WithEvents tabPageFrontHair As TabPage
     Friend WithEvents tabPageHat As TabPage
+    Friend WithEvents groupGeneral As GroupBox
+    Friend WithEvents boxTurn As NumericUpDown
+    Friend WithEvents boxFloor As NumericUpDown
+    Friend WithEvents lblTurn As Label
+    Friend WithEvents lblFloor As Label
 End Class
