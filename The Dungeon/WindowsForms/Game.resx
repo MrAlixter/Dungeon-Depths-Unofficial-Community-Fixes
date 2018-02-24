@@ -2662,9 +2662,22 @@
   <metadata name="lblCombatEvents.Locked" type="System.Boolean, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089">
     <value>True</value>
   </metadata>
-  <metadata name="lblCombatEvents.Locked" type="System.Boolean, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089">
-    <value>True</value>
-  </metadata>
+  <data name="picSWiz.BackgroundImage" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
+    <value>
+        iVBORw0KGgoAAAANSUhEUgAAAA8AAAAPCAYAAAA71pVKAAAABGdBTUEAALGPC/xhBQAAAAlwSFlzAAAW
+        JQAAFiUBSVIk8AAAAIJJREFUOE+dkNENwCAIRB2tm9lB3MbBbDB55gT8qCYXObhHU0utddxqwq213wpw
+        733e71NSkTMF+BS0Q598ClNn0sUbrAP12tP+gn0Ib2+gfZ1vsB/6IJ6FAdbXJqw1PsAnwNf4BfsBdSYW
+        bTCQehO/gpinsP/CSQFGukSlmQXfqY4PApIo3NNa4BUAAAAASUVORK5CYII=
+</value>
+  </data>
+  <data name="picSWizF.BackgroundImage" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
+    <value>
+        iVBORw0KGgoAAAANSUhEUgAAAA8AAAAPCAYAAAA71pVKAAAABGdBTUEAALGPC/xhBQAAAAlwSFlzAAAW
+        JQAAFiUBSVIk8AAAAItJREFUOE+tkd0JgDAQgzuLi+i7givpIA7hhJUIqWm8iogPH/eXXG1N/Trmr/xn
+        7vbpjMuQQlQLKnNLiKXsb/M1u5m1dnxxMfuAtfZcd5pdxJqfy77OEYs5GjLXe+rCyqyvjeg565u5ZfBc
+        6/DBmEdQD4oZYKj3A7wKefzP0QktKjPRJYrrQvM7xnwA6cu497vXPG8AAAAASUVORK5CYII=
+</value>
+  </data>
   <metadata name="$this.TrayHeight" type="System.Int32, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089">
     <value>42</value>
   </metadata>

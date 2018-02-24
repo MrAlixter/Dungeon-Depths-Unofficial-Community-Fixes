@@ -280,7 +280,7 @@ Public Class Game
         For yInd = 0 To mBoardHeight - 1
             For xInd = 0 To mBoardWidth - 1
                 mBoard(yInd, xInd) = New mTile(0, "", Color.Black)
-                If xInd <= 23 And yInd <= 15 Then
+                If (xInd <= 23 And yInd <= 15) Then
                     Dim newPicture As PictureBox = New PictureBox()
                     newPicture.BackgroundImageLayout = ImageLayout.Stretch
                     newPicture.Size = New Point(YSize * 1.25, XSize * 1.25)
@@ -289,7 +289,6 @@ Public Class Game
                     Me.Controls.Add(newPicture)
                     mPics(yInd, xInd) = newPicture
                 End If
-
                 Dim progress As Double = (xInd + (yInd * mBoardWidth)) / numTiles
                 boardWorker.ReportProgress(40 + (progress * 60))
                 Application.DoEvents()

@@ -166,6 +166,8 @@ Partial Class Game
         Me.lblEvent = New System.Windows.Forms.Label()
         Me.picLoadBar = New System.Windows.Forms.PictureBox()
         Me.btnWait = New System.Windows.Forms.Button()
+        Me.picSWiz = New System.Windows.Forms.PictureBox()
+        Me.picSWizF = New System.Windows.Forms.PictureBox()
         CType(Me.picMarkBClothes, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me.picMarkBRearHair2, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me.picMarkBRearHair1, System.ComponentModel.ISupportInitialize).BeginInit()
@@ -219,6 +221,8 @@ Partial Class Game
         CType(Me.picPHealth, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me.picEHbar, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me.picLoadBar, System.ComponentModel.ISupportInitialize).BeginInit()
+        CType(Me.picSWiz, System.ComponentModel.ISupportInitialize).BeginInit()
+        CType(Me.picSWizF, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.SuspendLayout()
         '
         'btnUse1
@@ -1817,11 +1821,33 @@ Partial Class Game
         Me.btnWait.UseVisualStyleBackColor = False
         Me.btnWait.Visible = False
         '
+        'picSWiz
+        '
+        Me.picSWiz.BackgroundImage = CType(resources.GetObject("picSWiz.BackgroundImage"), System.Drawing.Image)
+        Me.picSWiz.Location = New System.Drawing.Point(611, 12)
+        Me.picSWiz.Name = "picSWiz"
+        Me.picSWiz.Size = New System.Drawing.Size(15, 15)
+        Me.picSWiz.TabIndex = 273
+        Me.picSWiz.TabStop = False
+        Me.picSWiz.Visible = False
+        '
+        'picSWizF
+        '
+        Me.picSWizF.BackgroundImage = CType(resources.GetObject("picSWizF.BackgroundImage"), System.Drawing.Image)
+        Me.picSWizF.Location = New System.Drawing.Point(632, 12)
+        Me.picSWizF.Name = "picSWizF"
+        Me.picSWizF.Size = New System.Drawing.Size(15, 15)
+        Me.picSWizF.TabIndex = 274
+        Me.picSWizF.TabStop = False
+        Me.picSWizF.Visible = False
+        '
         'Game
         '
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Inherit
         Me.BackColor = System.Drawing.Color.Black
         Me.ClientSize = New System.Drawing.Size(1008, 690)
+        Me.Controls.Add(Me.picSWizF)
+        Me.Controls.Add(Me.picSWiz)
         Me.Controls.Add(Me.picLoadBar)
         Me.Controls.Add(Me.pnlCombat)
         Me.Controls.Add(Me.picTrapf)
@@ -1991,6 +2017,8 @@ Partial Class Game
         CType(Me.picPHealth, System.ComponentModel.ISupportInitialize).EndInit()
         CType(Me.picEHbar, System.ComponentModel.ISupportInitialize).EndInit()
         CType(Me.picLoadBar, System.ComponentModel.ISupportInitialize).EndInit()
+        CType(Me.picSWiz, System.ComponentModel.ISupportInitialize).EndInit()
+        CType(Me.picSWizF, System.ComponentModel.ISupportInitialize).EndInit()
         Me.ResumeLayout(False)
         Me.PerformLayout()
 
@@ -2137,4 +2165,6 @@ Partial Class Game
     Friend WithEvents picLoadBar As System.Windows.Forms.PictureBox
     Friend WithEvents lblCombatEvents As System.Windows.Forms.TextBox
     Friend WithEvents btnWait As System.Windows.Forms.Button
+    Friend WithEvents picSWiz As System.Windows.Forms.PictureBox
+    Friend WithEvents picSWizF As System.Windows.Forms.PictureBox
 End Class
