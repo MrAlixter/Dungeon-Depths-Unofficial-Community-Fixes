@@ -369,12 +369,13 @@
         Dim tGold As Integer = gold
         Dim tEweap As Weapon = equippedWeapon
         Dim tEarm As Armor = equippedArmor
+        Dim hRatio As Double = health / getmaxHealth()
         If tEweap.getName = "Magic_Girl_Wand" Then tEweap = New BareFists()
         If tEarm.getName = "Magic_Girl_Outfit" Then tEarm = New Naked()
 
         sState.load(Me)
 
-        health = tHth
+        health = tHth * hRatio
         mana = tMna
         gold = tGold
         equippedArmor = tEarm
@@ -410,11 +411,12 @@
         Dim tGold As Integer = gold
         Dim tEweap As Weapon = equippedWeapon
         Dim tEarm As Armor = equippedArmor
+        Dim hRatio As Double = health / getmaxHealth()
         If tEweap.getName = "Magic_Girl_Wand" Then tEweap = New BareFists()
         If tEarm.getName = "Goddess_Gown" Or tEarm.getName = "Succubus_Garb" Then tEarm = New NormalClothes
         pState.load(Me)
 
-        health = tHth
+        health = tHth * hRatio
         mana = tMna
         gold = tGold
         If Not tEarm.getName.Equals("Magic_Girl_Outfit") Then equippedArmor = tEarm
