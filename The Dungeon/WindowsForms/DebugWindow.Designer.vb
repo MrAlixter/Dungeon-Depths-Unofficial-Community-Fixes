@@ -25,6 +25,8 @@ Partial Class Debug_Window
         Dim resources As System.ComponentModel.ComponentResourceManager = New System.ComponentModel.ComponentResourceManager(GetType(Debug_Window))
         Me.tabMain = New System.Windows.Forms.TabControl()
         Me.tabGeneral = New System.Windows.Forms.TabPage()
+        Me.groupNotes = New System.Windows.Forms.GroupBox()
+        Me.boxNotes = New System.Windows.Forms.RichTextBox()
         Me.groupGeneral = New System.Windows.Forms.GroupBox()
         Me.boxTurn = New System.Windows.Forms.NumericUpDown()
         Me.boxFloor = New System.Windows.Forms.NumericUpDown()
@@ -93,6 +95,7 @@ Partial Class Debug_Window
         Me.lblItems = New System.Windows.Forms.Label()
         Me.tabMain.SuspendLayout()
         Me.tabGeneral.SuspendLayout()
+        Me.groupNotes.SuspendLayout()
         Me.groupGeneral.SuspendLayout()
         CType(Me.boxTurn, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me.boxFloor, System.ComponentModel.ISupportInitialize).BeginInit()
@@ -130,6 +133,7 @@ Partial Class Debug_Window
         'tabGeneral
         '
         Me.tabGeneral.BackColor = System.Drawing.Color.Black
+        Me.tabGeneral.Controls.Add(Me.groupNotes)
         Me.tabGeneral.Controls.Add(Me.groupGeneral)
         Me.tabGeneral.Location = New System.Drawing.Point(4, 24)
         Me.tabGeneral.Name = "tabGeneral"
@@ -137,6 +141,26 @@ Partial Class Debug_Window
         Me.tabGeneral.Size = New System.Drawing.Size(742, 548)
         Me.tabGeneral.TabIndex = 0
         Me.tabGeneral.Text = "GENERAL"
+        '
+        'groupNotes
+        '
+        Me.groupNotes.Controls.Add(Me.boxNotes)
+        Me.groupNotes.Location = New System.Drawing.Point(197, 7)
+        Me.groupNotes.Name = "groupNotes"
+        Me.groupNotes.Size = New System.Drawing.Size(537, 535)
+        Me.groupNotes.TabIndex = 4
+        Me.groupNotes.TabStop = False
+        '
+        'boxNotes
+        '
+        Me.boxNotes.BackColor = System.Drawing.Color.Black
+        Me.boxNotes.ForeColor = System.Drawing.Color.White
+        Me.boxNotes.Location = New System.Drawing.Point(68, 67)
+        Me.boxNotes.Name = "boxNotes"
+        Me.boxNotes.ReadOnly = True
+        Me.boxNotes.Size = New System.Drawing.Size(400, 400)
+        Me.boxNotes.TabIndex = 1
+        Me.boxNotes.Text = resources.GetString("boxNotes.Text")
         '
         'groupGeneral
         '
@@ -934,6 +958,7 @@ Partial Class Debug_Window
         Me.Text = "Debug Window"
         Me.tabMain.ResumeLayout(False)
         Me.tabGeneral.ResumeLayout(False)
+        Me.groupNotes.ResumeLayout(False)
         Me.groupGeneral.ResumeLayout(False)
         Me.groupGeneral.PerformLayout()
         CType(Me.boxTurn, System.ComponentModel.ISupportInitialize).EndInit()
@@ -1027,4 +1052,6 @@ Partial Class Debug_Window
     Friend WithEvents pnlHC As Panel
     Friend WithEvents lblSC As Label
     Friend WithEvents pnlSC As Panel
+    Friend WithEvents groupNotes As GroupBox
+    Friend WithEvents boxNotes As RichTextBox
 End Class
