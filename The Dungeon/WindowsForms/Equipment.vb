@@ -82,7 +82,7 @@
         If p.mana > p.getmaxMana Then p.mana = p.getmaxMana
 
         'if the player has the slutty dress curse, this takes care of it
-        If p.perks("slutcurse") > -1 Then
+        If p.perks("slutcurse") Then
             clothingCurse1()
         End If
 
@@ -128,7 +128,7 @@
 
         'adds the default clothes for various forms
         cmbobxArmor.Items.Add("Naked")
-        If p.title = "Bimbo" Or p.perks("slutcurse") > -1 Then
+        If p.title = "Bimbo" Or p.perks("slutcurse") Then
             cmbobxArmor.Items.Add("Skimpy_Clothes")
         ElseIf p.title = "Princess" Then
             cmbobxArmor.Items.Add("Regal_Gown")
@@ -265,7 +265,7 @@
                 Case 2
                     p.iArrInd(3) = p.equippedArmor.bsize2
                 Case 3
-                    If Game.isMark And (p.title = "Bimbo" Or p.perks(2)) Then p.iArrInd(3) = New Tuple(Of Integer, Boolean)(CharacterGenerator.fClothing.Count - 2, True) Else p.iArrInd(3) = p.equippedArmor.bsize3
+                    If Game.isMark And (p.title = "Bimbo" Or p.perks("slutcurse")) Then p.iArrInd(3) = New Tuple(Of Integer, Boolean)(CharacterGenerator.fClothing.Count - 2, True) Else p.iArrInd(3) = p.equippedArmor.bsize3
                 Case 4
                     p.iArrInd(3) = p.equippedArmor.bsize4
                 Case Else

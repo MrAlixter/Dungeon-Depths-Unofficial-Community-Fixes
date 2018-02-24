@@ -23,14 +23,36 @@ Partial Class Debug_Window
     <System.Diagnostics.DebuggerStepThrough()>
     Private Sub InitializeComponent()
         Dim resources As System.ComponentModel.ComponentResourceManager = New System.ComponentModel.ComponentResourceManager(GetType(Debug_Window))
-        Me.lblTurn = New System.Windows.Forms.Label()
-        Me.lblFloor = New System.Windows.Forms.Label()
+        Me.tabMain = New System.Windows.Forms.TabControl()
+        Me.tabGeneral = New System.Windows.Forms.TabPage()
         Me.groupGeneral = New System.Windows.Forms.GroupBox()
         Me.boxTurn = New System.Windows.Forms.NumericUpDown()
         Me.boxFloor = New System.Windows.Forms.NumericUpDown()
-        Me.tabMain = New System.Windows.Forms.TabControl()
-        Me.tabGeneral = New System.Windows.Forms.TabPage()
+        Me.lblTurn = New System.Windows.Forms.Label()
+        Me.lblFloor = New System.Windows.Forms.Label()
         Me.tabPlayer = New System.Windows.Forms.TabPage()
+        Me.lblHC = New System.Windows.Forms.Label()
+        Me.pnlHC = New System.Windows.Forms.Panel()
+        Me.lblSC = New System.Windows.Forms.Label()
+        Me.pnlSC = New System.Windows.Forms.Panel()
+        Me.tabPortrait = New System.Windows.Forms.TabControl()
+        Me.tabPageBackground = New System.Windows.Forms.TabPage()
+        Me.tabPageRearHair = New System.Windows.Forms.TabPage()
+        Me.tabPageBody = New System.Windows.Forms.TabPage()
+        Me.tabPageClothing = New System.Windows.Forms.TabPage()
+        Me.tabPageFace = New System.Windows.Forms.TabPage()
+        Me.tabPageMiddleHair = New System.Windows.Forms.TabPage()
+        Me.tabPageEars = New System.Windows.Forms.TabPage()
+        Me.tabPageNose = New System.Windows.Forms.TabPage()
+        Me.tabPageMouth = New System.Windows.Forms.TabPage()
+        Me.tabPageEyes = New System.Windows.Forms.TabPage()
+        Me.tabPageEyebrows = New System.Windows.Forms.TabPage()
+        Me.tabPageFaceMark = New System.Windows.Forms.TabPage()
+        Me.tabPageGlasses = New System.Windows.Forms.TabPage()
+        Me.tabPageCloak = New System.Windows.Forms.TabPage()
+        Me.tabPageAccessories = New System.Windows.Forms.TabPage()
+        Me.tabPageFrontHair = New System.Windows.Forms.TabPage()
+        Me.tabPageHat = New System.Windows.Forms.TabPage()
         Me.picPreview = New System.Windows.Forms.PictureBox()
         Me.playerDivider = New System.Windows.Forms.TextBox()
         Me.lblGold = New System.Windows.Forms.Label()
@@ -69,30 +91,13 @@ Partial Class Debug_Window
         Me.lblInventory = New System.Windows.Forms.Label()
         Me.boxItems = New System.Windows.Forms.ListBox()
         Me.lblItems = New System.Windows.Forms.Label()
-        Me.tabPortrait = New System.Windows.Forms.TabControl()
-        Me.tabPageBackground = New System.Windows.Forms.TabPage()
-        Me.tabPageRearHair = New System.Windows.Forms.TabPage()
-        Me.tabPageBody = New System.Windows.Forms.TabPage()
-        Me.tabPageClothing = New System.Windows.Forms.TabPage()
-        Me.tabPageFace = New System.Windows.Forms.TabPage()
-        Me.tabPageMiddleHair = New System.Windows.Forms.TabPage()
-        Me.tabPageEars = New System.Windows.Forms.TabPage()
-        Me.tabPageNose = New System.Windows.Forms.TabPage()
-        Me.tabPageMouth = New System.Windows.Forms.TabPage()
-        Me.tabPageEyes = New System.Windows.Forms.TabPage()
-        Me.tabPageEyebrows = New System.Windows.Forms.TabPage()
-        Me.tabPageFaceMark = New System.Windows.Forms.TabPage()
-        Me.tabPageGlasses = New System.Windows.Forms.TabPage()
-        Me.tabPageCloak = New System.Windows.Forms.TabPage()
-        Me.tabPageAccessories = New System.Windows.Forms.TabPage()
-        Me.tabPageFrontHair = New System.Windows.Forms.TabPage()
-        Me.tabPageHat = New System.Windows.Forms.TabPage()
+        Me.tabMain.SuspendLayout()
+        Me.tabGeneral.SuspendLayout()
         Me.groupGeneral.SuspendLayout()
         CType(Me.boxTurn, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me.boxFloor, System.ComponentModel.ISupportInitialize).BeginInit()
-        Me.tabMain.SuspendLayout()
-        Me.tabGeneral.SuspendLayout()
         Me.tabPlayer.SuspendLayout()
+        Me.tabPortrait.SuspendLayout()
         CType(Me.picPreview, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me.boxEvd, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me.boxSpd, System.ComponentModel.ISupportInitialize).BeginInit()
@@ -107,34 +112,31 @@ Partial Class Debug_Window
         CType(Me.boxHealth, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.tabInventory.SuspendLayout()
         CType(Me.number, System.ComponentModel.ISupportInitialize).BeginInit()
-        Me.tabPortrait.SuspendLayout()
         Me.SuspendLayout()
         '
-        'lblTurn
+        'tabMain
         '
-        Me.lblTurn.AutoSize = True
-        Me.lblTurn.Dock = System.Windows.Forms.DockStyle.Top
-        Me.lblTurn.Font = New System.Drawing.Font("Consolas", 12.0!)
-        Me.lblTurn.ForeColor = System.Drawing.Color.White
-        Me.lblTurn.Location = New System.Drawing.Point(3, 51)
-        Me.lblTurn.Name = "lblTurn"
-        Me.lblTurn.Padding = New System.Windows.Forms.Padding(0, 0, 0, 10)
-        Me.lblTurn.Size = New System.Drawing.Size(63, 29)
-        Me.lblTurn.TabIndex = 1
-        Me.lblTurn.Text = "TURN: "
+        Me.tabMain.Controls.Add(Me.tabGeneral)
+        Me.tabMain.Controls.Add(Me.tabPlayer)
+        Me.tabMain.Controls.Add(Me.tabInventory)
+        Me.tabMain.Dock = System.Windows.Forms.DockStyle.Fill
+        Me.tabMain.Font = New System.Drawing.Font("Consolas", 10.0!)
+        Me.tabMain.Location = New System.Drawing.Point(0, 0)
+        Me.tabMain.Name = "tabMain"
+        Me.tabMain.SelectedIndex = 0
+        Me.tabMain.Size = New System.Drawing.Size(750, 576)
+        Me.tabMain.TabIndex = 207
         '
-        'lblFloor
+        'tabGeneral
         '
-        Me.lblFloor.AutoSize = True
-        Me.lblFloor.Dock = System.Windows.Forms.DockStyle.Top
-        Me.lblFloor.Font = New System.Drawing.Font("Consolas", 12.0!)
-        Me.lblFloor.ForeColor = System.Drawing.Color.White
-        Me.lblFloor.Location = New System.Drawing.Point(3, 22)
-        Me.lblFloor.Name = "lblFloor"
-        Me.lblFloor.Padding = New System.Windows.Forms.Padding(0, 0, 0, 10)
-        Me.lblFloor.Size = New System.Drawing.Size(72, 29)
-        Me.lblFloor.TabIndex = 2
-        Me.lblFloor.Text = "FLOOR: "
+        Me.tabGeneral.BackColor = System.Drawing.Color.Black
+        Me.tabGeneral.Controls.Add(Me.groupGeneral)
+        Me.tabGeneral.Location = New System.Drawing.Point(4, 24)
+        Me.tabGeneral.Name = "tabGeneral"
+        Me.tabGeneral.Padding = New System.Windows.Forms.Padding(3)
+        Me.tabGeneral.Size = New System.Drawing.Size(742, 548)
+        Me.tabGeneral.TabIndex = 0
+        Me.tabGeneral.Text = "GENERAL"
         '
         'groupGeneral
         '
@@ -147,7 +149,7 @@ Partial Class Debug_Window
         Me.groupGeneral.ForeColor = System.Drawing.Color.White
         Me.groupGeneral.Location = New System.Drawing.Point(6, 7)
         Me.groupGeneral.Name = "groupGeneral"
-        Me.groupGeneral.Size = New System.Drawing.Size(185, 511)
+        Me.groupGeneral.Size = New System.Drawing.Size(185, 535)
         Me.groupGeneral.TabIndex = 3
         Me.groupGeneral.TabStop = False
         Me.groupGeneral.Text = "GENERAL"
@@ -175,33 +177,39 @@ Partial Class Debug_Window
         Me.boxFloor.TabIndex = 195
         Me.boxFloor.TextAlign = System.Windows.Forms.HorizontalAlignment.Right
         '
-        'tabMain
+        'lblTurn
         '
-        Me.tabMain.Controls.Add(Me.tabGeneral)
-        Me.tabMain.Controls.Add(Me.tabPlayer)
-        Me.tabMain.Controls.Add(Me.tabInventory)
-        Me.tabMain.Dock = System.Windows.Forms.DockStyle.Fill
-        Me.tabMain.Font = New System.Drawing.Font("Consolas", 10.0!)
-        Me.tabMain.Location = New System.Drawing.Point(0, 0)
-        Me.tabMain.Name = "tabMain"
-        Me.tabMain.SelectedIndex = 0
-        Me.tabMain.Size = New System.Drawing.Size(750, 550)
-        Me.tabMain.TabIndex = 207
+        Me.lblTurn.AutoSize = True
+        Me.lblTurn.Dock = System.Windows.Forms.DockStyle.Top
+        Me.lblTurn.Font = New System.Drawing.Font("Consolas", 12.0!)
+        Me.lblTurn.ForeColor = System.Drawing.Color.White
+        Me.lblTurn.Location = New System.Drawing.Point(3, 51)
+        Me.lblTurn.Name = "lblTurn"
+        Me.lblTurn.Padding = New System.Windows.Forms.Padding(0, 0, 0, 10)
+        Me.lblTurn.Size = New System.Drawing.Size(63, 29)
+        Me.lblTurn.TabIndex = 1
+        Me.lblTurn.Text = "TURN: "
         '
-        'tabGeneral
+        'lblFloor
         '
-        Me.tabGeneral.BackColor = System.Drawing.Color.Black
-        Me.tabGeneral.Controls.Add(Me.groupGeneral)
-        Me.tabGeneral.Location = New System.Drawing.Point(4, 24)
-        Me.tabGeneral.Name = "tabGeneral"
-        Me.tabGeneral.Padding = New System.Windows.Forms.Padding(3)
-        Me.tabGeneral.Size = New System.Drawing.Size(742, 522)
-        Me.tabGeneral.TabIndex = 0
-        Me.tabGeneral.Text = "GENERAL"
+        Me.lblFloor.AutoSize = True
+        Me.lblFloor.Dock = System.Windows.Forms.DockStyle.Top
+        Me.lblFloor.Font = New System.Drawing.Font("Consolas", 12.0!)
+        Me.lblFloor.ForeColor = System.Drawing.Color.White
+        Me.lblFloor.Location = New System.Drawing.Point(3, 22)
+        Me.lblFloor.Name = "lblFloor"
+        Me.lblFloor.Padding = New System.Windows.Forms.Padding(0, 0, 0, 10)
+        Me.lblFloor.Size = New System.Drawing.Size(72, 29)
+        Me.lblFloor.TabIndex = 2
+        Me.lblFloor.Text = "FLOOR: "
         '
         'tabPlayer
         '
         Me.tabPlayer.BackColor = System.Drawing.Color.Black
+        Me.tabPlayer.Controls.Add(Me.lblHC)
+        Me.tabPlayer.Controls.Add(Me.pnlHC)
+        Me.tabPlayer.Controls.Add(Me.lblSC)
+        Me.tabPlayer.Controls.Add(Me.pnlSC)
         Me.tabPlayer.Controls.Add(Me.tabPortrait)
         Me.tabPlayer.Controls.Add(Me.picPreview)
         Me.tabPlayer.Controls.Add(Me.playerDivider)
@@ -236,13 +244,248 @@ Partial Class Debug_Window
         Me.tabPlayer.Location = New System.Drawing.Point(4, 24)
         Me.tabPlayer.Name = "tabPlayer"
         Me.tabPlayer.Padding = New System.Windows.Forms.Padding(3)
-        Me.tabPlayer.Size = New System.Drawing.Size(742, 522)
+        Me.tabPlayer.Size = New System.Drawing.Size(742, 548)
         Me.tabPlayer.TabIndex = 1
         Me.tabPlayer.Text = "PLAYER"
         '
+        'lblHC
+        '
+        Me.lblHC.AutoSize = True
+        Me.lblHC.Font = New System.Drawing.Font("Consolas", 12.0!)
+        Me.lblHC.ForeColor = System.Drawing.Color.White
+        Me.lblHC.Location = New System.Drawing.Point(250, 210)
+        Me.lblHC.Name = "lblHC"
+        Me.lblHC.Size = New System.Drawing.Size(99, 19)
+        Me.lblHC.TabIndex = 266
+        Me.lblHC.Text = "HAIR COLOR"
+        '
+        'pnlHC
+        '
+        Me.pnlHC.Location = New System.Drawing.Point(357, 211)
+        Me.pnlHC.Name = "pnlHC"
+        Me.pnlHC.Size = New System.Drawing.Size(134, 26)
+        Me.pnlHC.TabIndex = 265
+        '
+        'lblSC
+        '
+        Me.lblSC.AutoSize = True
+        Me.lblSC.Font = New System.Drawing.Font("Consolas", 12.0!)
+        Me.lblSC.ForeColor = System.Drawing.Color.White
+        Me.lblSC.Location = New System.Drawing.Point(3, 210)
+        Me.lblSC.Name = "lblSC"
+        Me.lblSC.Size = New System.Drawing.Size(99, 19)
+        Me.lblSC.TabIndex = 264
+        Me.lblSC.Text = "SKIN COLOR"
+        '
+        'pnlSC
+        '
+        Me.pnlSC.Location = New System.Drawing.Point(110, 211)
+        Me.pnlSC.Name = "pnlSC"
+        Me.pnlSC.Size = New System.Drawing.Size(134, 26)
+        Me.pnlSC.TabIndex = 263
+        '
+        'tabPortrait
+        '
+        Me.tabPortrait.Controls.Add(Me.tabPageBackground)
+        Me.tabPortrait.Controls.Add(Me.tabPageRearHair)
+        Me.tabPortrait.Controls.Add(Me.tabPageBody)
+        Me.tabPortrait.Controls.Add(Me.tabPageClothing)
+        Me.tabPortrait.Controls.Add(Me.tabPageFace)
+        Me.tabPortrait.Controls.Add(Me.tabPageMiddleHair)
+        Me.tabPortrait.Controls.Add(Me.tabPageEars)
+        Me.tabPortrait.Controls.Add(Me.tabPageNose)
+        Me.tabPortrait.Controls.Add(Me.tabPageMouth)
+        Me.tabPortrait.Controls.Add(Me.tabPageEyes)
+        Me.tabPortrait.Controls.Add(Me.tabPageEyebrows)
+        Me.tabPortrait.Controls.Add(Me.tabPageFaceMark)
+        Me.tabPortrait.Controls.Add(Me.tabPageGlasses)
+        Me.tabPortrait.Controls.Add(Me.tabPageCloak)
+        Me.tabPortrait.Controls.Add(Me.tabPageAccessories)
+        Me.tabPortrait.Controls.Add(Me.tabPageFrontHair)
+        Me.tabPortrait.Controls.Add(Me.tabPageHat)
+        Me.tabPortrait.Location = New System.Drawing.Point(3, 254)
+        Me.tabPortrait.Name = "tabPortrait"
+        Me.tabPortrait.SelectedIndex = 0
+        Me.tabPortrait.Size = New System.Drawing.Size(736, 291)
+        Me.tabPortrait.TabIndex = 262
+        '
+        'tabPageBackground
+        '
+        Me.tabPageBackground.AutoScroll = True
+        Me.tabPageBackground.BackColor = System.Drawing.Color.Black
+        Me.tabPageBackground.Location = New System.Drawing.Point(4, 24)
+        Me.tabPageBackground.Name = "tabPageBackground"
+        Me.tabPageBackground.Padding = New System.Windows.Forms.Padding(3)
+        Me.tabPageBackground.Size = New System.Drawing.Size(728, 263)
+        Me.tabPageBackground.TabIndex = 0
+        Me.tabPageBackground.Text = "BACKGROUND"
+        '
+        'tabPageRearHair
+        '
+        Me.tabPageRearHair.AutoScroll = True
+        Me.tabPageRearHair.BackColor = System.Drawing.Color.Black
+        Me.tabPageRearHair.Location = New System.Drawing.Point(4, 24)
+        Me.tabPageRearHair.Name = "tabPageRearHair"
+        Me.tabPageRearHair.Padding = New System.Windows.Forms.Padding(3)
+        Me.tabPageRearHair.Size = New System.Drawing.Size(728, 263)
+        Me.tabPageRearHair.TabIndex = 1
+        Me.tabPageRearHair.Text = "REAR HAIR"
+        '
+        'tabPageBody
+        '
+        Me.tabPageBody.AutoScroll = True
+        Me.tabPageBody.BackColor = System.Drawing.Color.Black
+        Me.tabPageBody.Location = New System.Drawing.Point(4, 24)
+        Me.tabPageBody.Name = "tabPageBody"
+        Me.tabPageBody.Padding = New System.Windows.Forms.Padding(3)
+        Me.tabPageBody.Size = New System.Drawing.Size(728, 263)
+        Me.tabPageBody.TabIndex = 2
+        Me.tabPageBody.Text = "BODY"
+        '
+        'tabPageClothing
+        '
+        Me.tabPageClothing.AutoScroll = True
+        Me.tabPageClothing.BackColor = System.Drawing.Color.Black
+        Me.tabPageClothing.Location = New System.Drawing.Point(4, 24)
+        Me.tabPageClothing.Name = "tabPageClothing"
+        Me.tabPageClothing.Padding = New System.Windows.Forms.Padding(3)
+        Me.tabPageClothing.Size = New System.Drawing.Size(728, 263)
+        Me.tabPageClothing.TabIndex = 3
+        Me.tabPageClothing.Text = "CLOTHING"
+        '
+        'tabPageFace
+        '
+        Me.tabPageFace.AutoScroll = True
+        Me.tabPageFace.BackColor = System.Drawing.Color.Black
+        Me.tabPageFace.Location = New System.Drawing.Point(4, 24)
+        Me.tabPageFace.Name = "tabPageFace"
+        Me.tabPageFace.Size = New System.Drawing.Size(728, 263)
+        Me.tabPageFace.TabIndex = 4
+        Me.tabPageFace.Text = "FACE"
+        '
+        'tabPageMiddleHair
+        '
+        Me.tabPageMiddleHair.AutoScroll = True
+        Me.tabPageMiddleHair.BackColor = System.Drawing.Color.Black
+        Me.tabPageMiddleHair.Location = New System.Drawing.Point(4, 24)
+        Me.tabPageMiddleHair.Name = "tabPageMiddleHair"
+        Me.tabPageMiddleHair.Size = New System.Drawing.Size(728, 263)
+        Me.tabPageMiddleHair.TabIndex = 5
+        Me.tabPageMiddleHair.Text = "MIDDLE HAIR"
+        '
+        'tabPageEars
+        '
+        Me.tabPageEars.AutoScroll = True
+        Me.tabPageEars.BackColor = System.Drawing.Color.Black
+        Me.tabPageEars.Location = New System.Drawing.Point(4, 24)
+        Me.tabPageEars.Name = "tabPageEars"
+        Me.tabPageEars.Size = New System.Drawing.Size(728, 263)
+        Me.tabPageEars.TabIndex = 6
+        Me.tabPageEars.Text = "EARS"
+        '
+        'tabPageNose
+        '
+        Me.tabPageNose.AutoScroll = True
+        Me.tabPageNose.BackColor = System.Drawing.Color.Black
+        Me.tabPageNose.Location = New System.Drawing.Point(4, 24)
+        Me.tabPageNose.Name = "tabPageNose"
+        Me.tabPageNose.Size = New System.Drawing.Size(728, 263)
+        Me.tabPageNose.TabIndex = 7
+        Me.tabPageNose.Text = "NOSE"
+        '
+        'tabPageMouth
+        '
+        Me.tabPageMouth.AutoScroll = True
+        Me.tabPageMouth.BackColor = System.Drawing.Color.Black
+        Me.tabPageMouth.Location = New System.Drawing.Point(4, 24)
+        Me.tabPageMouth.Name = "tabPageMouth"
+        Me.tabPageMouth.Size = New System.Drawing.Size(728, 263)
+        Me.tabPageMouth.TabIndex = 8
+        Me.tabPageMouth.Text = "MOUTH"
+        '
+        'tabPageEyes
+        '
+        Me.tabPageEyes.AutoScroll = True
+        Me.tabPageEyes.BackColor = System.Drawing.Color.Black
+        Me.tabPageEyes.Location = New System.Drawing.Point(4, 24)
+        Me.tabPageEyes.Name = "tabPageEyes"
+        Me.tabPageEyes.Size = New System.Drawing.Size(728, 263)
+        Me.tabPageEyes.TabIndex = 9
+        Me.tabPageEyes.Text = "EYES"
+        '
+        'tabPageEyebrows
+        '
+        Me.tabPageEyebrows.AutoScroll = True
+        Me.tabPageEyebrows.BackColor = System.Drawing.Color.Black
+        Me.tabPageEyebrows.Location = New System.Drawing.Point(4, 24)
+        Me.tabPageEyebrows.Name = "tabPageEyebrows"
+        Me.tabPageEyebrows.Size = New System.Drawing.Size(728, 263)
+        Me.tabPageEyebrows.TabIndex = 10
+        Me.tabPageEyebrows.Text = "EYEBROWS"
+        '
+        'tabPageFaceMark
+        '
+        Me.tabPageFaceMark.AutoScroll = True
+        Me.tabPageFaceMark.BackColor = System.Drawing.Color.Black
+        Me.tabPageFaceMark.Location = New System.Drawing.Point(4, 24)
+        Me.tabPageFaceMark.Name = "tabPageFaceMark"
+        Me.tabPageFaceMark.Size = New System.Drawing.Size(728, 263)
+        Me.tabPageFaceMark.TabIndex = 11
+        Me.tabPageFaceMark.Text = "FACE MARK"
+        '
+        'tabPageGlasses
+        '
+        Me.tabPageGlasses.AutoScroll = True
+        Me.tabPageGlasses.BackColor = System.Drawing.Color.Black
+        Me.tabPageGlasses.Location = New System.Drawing.Point(4, 24)
+        Me.tabPageGlasses.Name = "tabPageGlasses"
+        Me.tabPageGlasses.Size = New System.Drawing.Size(728, 263)
+        Me.tabPageGlasses.TabIndex = 12
+        Me.tabPageGlasses.Text = "GLASSES"
+        '
+        'tabPageCloak
+        '
+        Me.tabPageCloak.AutoScroll = True
+        Me.tabPageCloak.BackColor = System.Drawing.Color.Black
+        Me.tabPageCloak.Location = New System.Drawing.Point(4, 24)
+        Me.tabPageCloak.Name = "tabPageCloak"
+        Me.tabPageCloak.Size = New System.Drawing.Size(728, 263)
+        Me.tabPageCloak.TabIndex = 13
+        Me.tabPageCloak.Text = "CLOAK"
+        '
+        'tabPageAccessories
+        '
+        Me.tabPageAccessories.AutoScroll = True
+        Me.tabPageAccessories.BackColor = System.Drawing.Color.Black
+        Me.tabPageAccessories.Location = New System.Drawing.Point(4, 24)
+        Me.tabPageAccessories.Name = "tabPageAccessories"
+        Me.tabPageAccessories.Size = New System.Drawing.Size(728, 263)
+        Me.tabPageAccessories.TabIndex = 14
+        Me.tabPageAccessories.Text = "ACCESSORIES"
+        '
+        'tabPageFrontHair
+        '
+        Me.tabPageFrontHair.AutoScroll = True
+        Me.tabPageFrontHair.BackColor = System.Drawing.Color.Black
+        Me.tabPageFrontHair.Location = New System.Drawing.Point(4, 24)
+        Me.tabPageFrontHair.Name = "tabPageFrontHair"
+        Me.tabPageFrontHair.Size = New System.Drawing.Size(728, 263)
+        Me.tabPageFrontHair.TabIndex = 15
+        Me.tabPageFrontHair.Text = "FRONT HAIR"
+        '
+        'tabPageHat
+        '
+        Me.tabPageHat.AutoScroll = True
+        Me.tabPageHat.BackColor = System.Drawing.Color.Black
+        Me.tabPageHat.Location = New System.Drawing.Point(4, 24)
+        Me.tabPageHat.Name = "tabPageHat"
+        Me.tabPageHat.Size = New System.Drawing.Size(728, 263)
+        Me.tabPageHat.TabIndex = 16
+        Me.tabPageHat.Text = "HAT"
+        '
         'picPreview
         '
-        Me.picPreview.Location = New System.Drawing.Point(345, 300)
+        Me.picPreview.Location = New System.Drawing.Point(548, 4)
         Me.picPreview.Name = "picPreview"
         Me.picPreview.Size = New System.Drawing.Size(146, 216)
         Me.picPreview.TabIndex = 236
@@ -253,7 +496,7 @@ Partial Class Debug_Window
         Me.playerDivider.Location = New System.Drawing.Point(248, 3)
         Me.playerDivider.Multiline = True
         Me.playerDivider.Name = "playerDivider"
-        Me.playerDivider.Size = New System.Drawing.Size(1, 210)
+        Me.playerDivider.Size = New System.Drawing.Size(1, 225)
         Me.playerDivider.TabIndex = 235
         '
         'lblGold
@@ -588,7 +831,7 @@ Partial Class Debug_Window
         Me.tabInventory.Location = New System.Drawing.Point(4, 24)
         Me.tabInventory.Name = "tabInventory"
         Me.tabInventory.Padding = New System.Windows.Forms.Padding(3)
-        Me.tabInventory.Size = New System.Drawing.Size(742, 522)
+        Me.tabInventory.Size = New System.Drawing.Size(742, 548)
         Me.tabInventory.TabIndex = 2
         Me.tabInventory.Text = "INVENTORY"
         '
@@ -597,7 +840,7 @@ Partial Class Debug_Window
         Me.number.BackColor = System.Drawing.Color.Black
         Me.number.Font = New System.Drawing.Font("Consolas", 12.0!)
         Me.number.ForeColor = System.Drawing.Color.White
-        Me.number.Location = New System.Drawing.Point(327, 247)
+        Me.number.Location = New System.Drawing.Point(327, 261)
         Me.number.Maximum = New Decimal(New Integer() {999999, 0, 0, 0})
         Me.number.Name = "number"
         Me.number.Size = New System.Drawing.Size(89, 26)
@@ -623,10 +866,10 @@ Partial Class Debug_Window
         Me.boxInventory.ForeColor = System.Drawing.Color.White
         Me.boxInventory.FormattingEnabled = True
         Me.boxInventory.ItemHeight = 19
-        Me.boxInventory.Location = New System.Drawing.Point(6, 11)
+        Me.boxInventory.Location = New System.Drawing.Point(6, 6)
         Me.boxInventory.Name = "boxInventory"
         Me.boxInventory.SelectionMode = System.Windows.Forms.SelectionMode.MultiExtended
-        Me.boxInventory.Size = New System.Drawing.Size(280, 498)
+        Me.boxInventory.Size = New System.Drawing.Size(280, 536)
         Me.boxInventory.Sorted = True
         Me.boxInventory.TabIndex = 8
         '
@@ -635,7 +878,7 @@ Partial Class Debug_Window
         Me.btnAdd.BackColor = System.Drawing.Color.Black
         Me.btnAdd.Font = New System.Drawing.Font("Consolas", 8.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.btnAdd.ForeColor = System.Drawing.Color.White
-        Me.btnAdd.Location = New System.Drawing.Point(361, 174)
+        Me.btnAdd.Location = New System.Drawing.Point(361, 203)
         Me.btnAdd.Name = "btnAdd"
         Me.btnAdd.Size = New System.Drawing.Size(89, 36)
         Me.btnAdd.TabIndex = 181
@@ -647,7 +890,7 @@ Partial Class Debug_Window
         Me.lblInventory.AutoSize = True
         Me.lblInventory.Font = New System.Drawing.Font("Consolas", 12.0!)
         Me.lblInventory.ForeColor = System.Drawing.Color.White
-        Me.lblInventory.Location = New System.Drawing.Point(288, 11)
+        Me.lblInventory.Location = New System.Drawing.Point(288, 6)
         Me.lblInventory.Name = "lblInventory"
         Me.lblInventory.Size = New System.Drawing.Size(90, 19)
         Me.lblInventory.TabIndex = 6
@@ -660,10 +903,10 @@ Partial Class Debug_Window
         Me.boxItems.ForeColor = System.Drawing.Color.White
         Me.boxItems.FormattingEnabled = True
         Me.boxItems.ItemHeight = 19
-        Me.boxItems.Location = New System.Drawing.Point(456, 11)
+        Me.boxItems.Location = New System.Drawing.Point(456, 6)
         Me.boxItems.Name = "boxItems"
         Me.boxItems.SelectionMode = System.Windows.Forms.SelectionMode.MultiExtended
-        Me.boxItems.Size = New System.Drawing.Size(280, 498)
+        Me.boxItems.Size = New System.Drawing.Size(280, 536)
         Me.boxItems.TabIndex = 9
         '
         'lblItems
@@ -671,231 +914,33 @@ Partial Class Debug_Window
         Me.lblItems.AutoSize = True
         Me.lblItems.Font = New System.Drawing.Font("Consolas", 12.0!)
         Me.lblItems.ForeColor = System.Drawing.Color.White
-        Me.lblItems.Location = New System.Drawing.Point(396, 490)
+        Me.lblItems.Location = New System.Drawing.Point(396, 523)
         Me.lblItems.Name = "lblItems"
         Me.lblItems.Size = New System.Drawing.Size(54, 19)
         Me.lblItems.TabIndex = 7
         Me.lblItems.Text = "ITEMS"
-        '
-        'tabPortrait
-        '
-        Me.tabPortrait.Controls.Add(Me.tabPageBackground)
-        Me.tabPortrait.Controls.Add(Me.tabPageRearHair)
-        Me.tabPortrait.Controls.Add(Me.tabPageBody)
-        Me.tabPortrait.Controls.Add(Me.tabPageClothing)
-        Me.tabPortrait.Controls.Add(Me.tabPageFace)
-        Me.tabPortrait.Controls.Add(Me.tabPageMiddleHair)
-        Me.tabPortrait.Controls.Add(Me.tabPageEars)
-        Me.tabPortrait.Controls.Add(Me.tabPageNose)
-        Me.tabPortrait.Controls.Add(Me.tabPageMouth)
-        Me.tabPortrait.Controls.Add(Me.tabPageEyes)
-        Me.tabPortrait.Controls.Add(Me.tabPageEyebrows)
-        Me.tabPortrait.Controls.Add(Me.tabPageFaceMark)
-        Me.tabPortrait.Controls.Add(Me.tabPageGlasses)
-        Me.tabPortrait.Controls.Add(Me.tabPageCloak)
-        Me.tabPortrait.Controls.Add(Me.tabPageAccessories)
-        Me.tabPortrait.Controls.Add(Me.tabPageFrontHair)
-        Me.tabPortrait.Controls.Add(Me.tabPageHat)
-        Me.tabPortrait.Location = New System.Drawing.Point(497, 4)
-        Me.tabPortrait.Name = "tabPortrait"
-        Me.tabPortrait.SelectedIndex = 0
-        Me.tabPortrait.Size = New System.Drawing.Size(238, 510)
-        Me.tabPortrait.TabIndex = 262
-        '
-        'tabPageBackground
-        '
-        Me.tabPageBackground.AutoScroll = True
-        Me.tabPageBackground.BackColor = System.Drawing.Color.Black
-        Me.tabPageBackground.Location = New System.Drawing.Point(4, 24)
-        Me.tabPageBackground.Name = "tabPageBackground"
-        Me.tabPageBackground.Padding = New System.Windows.Forms.Padding(3)
-        Me.tabPageBackground.Size = New System.Drawing.Size(230, 482)
-        Me.tabPageBackground.TabIndex = 0
-        Me.tabPageBackground.Text = "BACKGROUND"
-        '
-        'tabPageRearHair
-        '
-        Me.tabPageRearHair.AutoScroll = True
-        Me.tabPageRearHair.BackColor = System.Drawing.Color.Black
-        Me.tabPageRearHair.Location = New System.Drawing.Point(4, 24)
-        Me.tabPageRearHair.Name = "tabPageRearHair"
-        Me.tabPageRearHair.Padding = New System.Windows.Forms.Padding(3)
-        Me.tabPageRearHair.Size = New System.Drawing.Size(230, 482)
-        Me.tabPageRearHair.TabIndex = 1
-        Me.tabPageRearHair.Text = "REAR HAIR"
-        '
-        'tabPageBody
-        '
-        Me.tabPageBody.AutoScroll = True
-        Me.tabPageBody.BackColor = System.Drawing.Color.Black
-        Me.tabPageBody.Location = New System.Drawing.Point(4, 24)
-        Me.tabPageBody.Name = "tabPageBody"
-        Me.tabPageBody.Padding = New System.Windows.Forms.Padding(3)
-        Me.tabPageBody.Size = New System.Drawing.Size(230, 482)
-        Me.tabPageBody.TabIndex = 2
-        Me.tabPageBody.Text = "BODY"
-        '
-        'tabPageClothing
-        '
-        Me.tabPageClothing.AutoScroll = True
-        Me.tabPageClothing.BackColor = System.Drawing.Color.Black
-        Me.tabPageClothing.Location = New System.Drawing.Point(4, 24)
-        Me.tabPageClothing.Name = "tabPageClothing"
-        Me.tabPageClothing.Padding = New System.Windows.Forms.Padding(3)
-        Me.tabPageClothing.Size = New System.Drawing.Size(230, 482)
-        Me.tabPageClothing.TabIndex = 3
-        Me.tabPageClothing.Text = "CLOTHING"
-        '
-        'tabPageFace
-        '
-        Me.tabPageFace.AutoScroll = True
-        Me.tabPageFace.BackColor = System.Drawing.Color.Black
-        Me.tabPageFace.Location = New System.Drawing.Point(4, 24)
-        Me.tabPageFace.Name = "tabPageFace"
-        Me.tabPageFace.Size = New System.Drawing.Size(230, 482)
-        Me.tabPageFace.TabIndex = 4
-        Me.tabPageFace.Text = "FACE"
-        '
-        'tabPageMiddleHair
-        '
-        Me.tabPageMiddleHair.AutoScroll = True
-        Me.tabPageMiddleHair.BackColor = System.Drawing.Color.Black
-        Me.tabPageMiddleHair.Location = New System.Drawing.Point(4, 24)
-        Me.tabPageMiddleHair.Name = "tabPageMiddleHair"
-        Me.tabPageMiddleHair.Size = New System.Drawing.Size(230, 482)
-        Me.tabPageMiddleHair.TabIndex = 5
-        Me.tabPageMiddleHair.Text = "MIDDLE HAIR"
-        '
-        'tabPageEars
-        '
-        Me.tabPageEars.AutoScroll = True
-        Me.tabPageEars.BackColor = System.Drawing.Color.Black
-        Me.tabPageEars.Location = New System.Drawing.Point(4, 24)
-        Me.tabPageEars.Name = "tabPageEars"
-        Me.tabPageEars.Size = New System.Drawing.Size(230, 482)
-        Me.tabPageEars.TabIndex = 6
-        Me.tabPageEars.Text = "EARS"
-        '
-        'tabPageNose
-        '
-        Me.tabPageNose.AutoScroll = True
-        Me.tabPageNose.BackColor = System.Drawing.Color.Black
-        Me.tabPageNose.Location = New System.Drawing.Point(4, 24)
-        Me.tabPageNose.Name = "tabPageNose"
-        Me.tabPageNose.Size = New System.Drawing.Size(230, 482)
-        Me.tabPageNose.TabIndex = 7
-        Me.tabPageNose.Text = "NOSE"
-        '
-        'tabPageMouth
-        '
-        Me.tabPageMouth.AutoScroll = True
-        Me.tabPageMouth.BackColor = System.Drawing.Color.Black
-        Me.tabPageMouth.Location = New System.Drawing.Point(4, 24)
-        Me.tabPageMouth.Name = "tabPageMouth"
-        Me.tabPageMouth.Size = New System.Drawing.Size(230, 482)
-        Me.tabPageMouth.TabIndex = 8
-        Me.tabPageMouth.Text = "MOUTH"
-        '
-        'tabPageEyes
-        '
-        Me.tabPageEyes.AutoScroll = True
-        Me.tabPageEyes.BackColor = System.Drawing.Color.Black
-        Me.tabPageEyes.Location = New System.Drawing.Point(4, 24)
-        Me.tabPageEyes.Name = "tabPageEyes"
-        Me.tabPageEyes.Size = New System.Drawing.Size(230, 482)
-        Me.tabPageEyes.TabIndex = 9
-        Me.tabPageEyes.Text = "EYES"
-        '
-        'tabPageEyebrows
-        '
-        Me.tabPageEyebrows.AutoScroll = True
-        Me.tabPageEyebrows.BackColor = System.Drawing.Color.Black
-        Me.tabPageEyebrows.Location = New System.Drawing.Point(4, 24)
-        Me.tabPageEyebrows.Name = "tabPageEyebrows"
-        Me.tabPageEyebrows.Size = New System.Drawing.Size(230, 482)
-        Me.tabPageEyebrows.TabIndex = 10
-        Me.tabPageEyebrows.Text = "EYEBROWS"
-        '
-        'tabPageFaceMark
-        '
-        Me.tabPageFaceMark.AutoScroll = True
-        Me.tabPageFaceMark.BackColor = System.Drawing.Color.Black
-        Me.tabPageFaceMark.Location = New System.Drawing.Point(4, 24)
-        Me.tabPageFaceMark.Name = "tabPageFaceMark"
-        Me.tabPageFaceMark.Size = New System.Drawing.Size(230, 482)
-        Me.tabPageFaceMark.TabIndex = 11
-        Me.tabPageFaceMark.Text = "FACE MARK"
-        '
-        'tabPageGlasses
-        '
-        Me.tabPageGlasses.AutoScroll = True
-        Me.tabPageGlasses.BackColor = System.Drawing.Color.Black
-        Me.tabPageGlasses.Location = New System.Drawing.Point(4, 24)
-        Me.tabPageGlasses.Name = "tabPageGlasses"
-        Me.tabPageGlasses.Size = New System.Drawing.Size(230, 482)
-        Me.tabPageGlasses.TabIndex = 12
-        Me.tabPageGlasses.Text = "GLASSES"
-        '
-        'tabPageCloak
-        '
-        Me.tabPageCloak.AutoScroll = True
-        Me.tabPageCloak.BackColor = System.Drawing.Color.Black
-        Me.tabPageCloak.Location = New System.Drawing.Point(4, 24)
-        Me.tabPageCloak.Name = "tabPageCloak"
-        Me.tabPageCloak.Size = New System.Drawing.Size(230, 482)
-        Me.tabPageCloak.TabIndex = 13
-        Me.tabPageCloak.Text = "CLOAK"
-        '
-        'tabPageAccessories
-        '
-        Me.tabPageAccessories.AutoScroll = True
-        Me.tabPageAccessories.BackColor = System.Drawing.Color.Black
-        Me.tabPageAccessories.Location = New System.Drawing.Point(4, 24)
-        Me.tabPageAccessories.Name = "tabPageAccessories"
-        Me.tabPageAccessories.Size = New System.Drawing.Size(230, 482)
-        Me.tabPageAccessories.TabIndex = 14
-        Me.tabPageAccessories.Text = "ACCESSORIES"
-        '
-        'tabPageFrontHair
-        '
-        Me.tabPageFrontHair.AutoScroll = True
-        Me.tabPageFrontHair.BackColor = System.Drawing.Color.Black
-        Me.tabPageFrontHair.Location = New System.Drawing.Point(4, 24)
-        Me.tabPageFrontHair.Name = "tabPageFrontHair"
-        Me.tabPageFrontHair.Size = New System.Drawing.Size(230, 482)
-        Me.tabPageFrontHair.TabIndex = 15
-        Me.tabPageFrontHair.Text = "FRONT HAIR"
-        '
-        'tabPageHat
-        '
-        Me.tabPageHat.AutoScroll = True
-        Me.tabPageHat.BackColor = System.Drawing.Color.Black
-        Me.tabPageHat.Location = New System.Drawing.Point(4, 24)
-        Me.tabPageHat.Name = "tabPageHat"
-        Me.tabPageHat.Size = New System.Drawing.Size(230, 482)
-        Me.tabPageHat.TabIndex = 16
-        Me.tabPageHat.Text = "HAT"
         '
         'Debug_Window
         '
         Me.AutoScaleDimensions = New System.Drawing.SizeF(6.0!, 13.0!)
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font
         Me.BackColor = System.Drawing.Color.Black
-        Me.ClientSize = New System.Drawing.Size(750, 550)
+        Me.ClientSize = New System.Drawing.Size(750, 576)
         Me.Controls.Add(Me.tabMain)
         Me.Icon = CType(resources.GetObject("$this.Icon"), System.Drawing.Icon)
         Me.Name = "Debug_Window"
         Me.SizeGripStyle = System.Windows.Forms.SizeGripStyle.Hide
         Me.StartPosition = System.Windows.Forms.FormStartPosition.CenterParent
         Me.Text = "Debug Window"
+        Me.tabMain.ResumeLayout(False)
+        Me.tabGeneral.ResumeLayout(False)
         Me.groupGeneral.ResumeLayout(False)
         Me.groupGeneral.PerformLayout()
         CType(Me.boxTurn, System.ComponentModel.ISupportInitialize).EndInit()
         CType(Me.boxFloor, System.ComponentModel.ISupportInitialize).EndInit()
-        Me.tabMain.ResumeLayout(False)
-        Me.tabGeneral.ResumeLayout(False)
         Me.tabPlayer.ResumeLayout(False)
         Me.tabPlayer.PerformLayout()
+        Me.tabPortrait.ResumeLayout(False)
         CType(Me.picPreview, System.ComponentModel.ISupportInitialize).EndInit()
         CType(Me.boxEvd, System.ComponentModel.ISupportInitialize).EndInit()
         CType(Me.boxSpd, System.ComponentModel.ISupportInitialize).EndInit()
@@ -911,15 +956,9 @@ Partial Class Debug_Window
         Me.tabInventory.ResumeLayout(False)
         Me.tabInventory.PerformLayout()
         CType(Me.number, System.ComponentModel.ISupportInitialize).EndInit()
-        Me.tabPortrait.ResumeLayout(False)
         Me.ResumeLayout(False)
 
     End Sub
-    Friend WithEvents lblTurn As Label
-    Friend WithEvents lblFloor As Label
-    Friend WithEvents groupGeneral As GroupBox
-    Friend WithEvents boxTurn As NumericUpDown
-    Friend WithEvents boxFloor As NumericUpDown
     Friend WithEvents tabMain As TabControl
     Friend WithEvents tabGeneral As TabPage
     Friend WithEvents tabPlayer As TabPage
@@ -979,4 +1018,13 @@ Partial Class Debug_Window
     Friend WithEvents tabPageAccessories As TabPage
     Friend WithEvents tabPageFrontHair As TabPage
     Friend WithEvents tabPageHat As TabPage
+    Friend WithEvents groupGeneral As GroupBox
+    Friend WithEvents boxTurn As NumericUpDown
+    Friend WithEvents boxFloor As NumericUpDown
+    Friend WithEvents lblTurn As Label
+    Friend WithEvents lblFloor As Label
+    Friend WithEvents lblHC As Label
+    Friend WithEvents pnlHC As Panel
+    Friend WithEvents lblSC As Label
+    Friend WithEvents pnlSC As Panel
 End Class

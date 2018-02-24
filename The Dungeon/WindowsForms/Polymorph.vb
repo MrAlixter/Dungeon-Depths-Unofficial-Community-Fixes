@@ -52,7 +52,7 @@
 
     'player transform methods
     Sub transform(ByRef p As Player)
-        If Not p.perks("polymorphed") > -1 Or Not p.title.Equals("Magic Girl") Then
+        If Not p.perks("polymorphed") Or Not p.title.Equals("Magic Girl") Then
             p.pState.save(p)
         End If
         If cboxPMorph.Text.Equals(p.title) Then
@@ -78,7 +78,7 @@
         ElseIf p.title = "Dragon" Then
             out = out & "Your scales slowly disappear into your skin as you slowly turn back into a biped. On the bright side, you are pretty sure you could still breath fire if you really wanted to."
         ElseIf p.title = "Slime" Then
-            p.perks(4) = False
+            p.perks("slimehair") = False
             out = out & "Your body is feeling much more solid than before. You get the feeling healing won't be as easy as it was when you were semi-liquid."
         ElseIf p.title = "Succubus" Then
             out = out & "You roll your eyes as the purple tint leaves your skin, and your demonic features slowly shrink into nothingness."
@@ -112,8 +112,8 @@
             If Not p.slimState.initFlag Then
                 p.health = 120
                 p.maxHealth = 120
-                p.TextColor = Color.FromArgb(255,2, 249, 200)
-                p.perks(4) = True
+                p.TextColor = Color.FromArgb(255, 2, 249, 200)
+                p.perks("slimehair") = True
                 Equipment.clothesChange("Naked")
                 p.equippedWeapon = New BareFists()
                 p.haircolor = Color.FromArgb(180, 5, 245, 198)
@@ -218,7 +218,7 @@
         Game.lstLog.TopIndex = Game.lstLog.Items.Count - 1
     End Sub
     Public Sub transform(ByRef p As Player, ByVal form As String)
-        If p.perks("polymorphed") > -1 Then
+        If p.perks("polymorphed") Then
             Game.lstLog.Items.Add("Your form prevents you from being polymorphed.")
             Exit Sub
         End If
@@ -245,7 +245,7 @@
         ElseIf p.title = "Dragon" Then
             out = out & "Your scales slowly disappear into your skin as you slowly turn back into a biped. On the bright side, you are pretty sure you could still breath fire if you really wanted to."
         ElseIf p.title = "Slime" Then
-            p.perks(4) = False
+            p.perks("slimehair") = False
             out = out & "Your body is feeling much more solid than before. You get the feeling healing won't be as easy as it was when you were semi-liquid."
         ElseIf p.title = "Succubus" Then
             out = out & "You roll your eyes as the purple tint leaves your skin, and your demonic features slowly shrink into nothingness."
@@ -781,7 +781,7 @@
                     Game.player.createP()
                     Game.player.perks("vsslimehair") = 0
                 End If
-                If Not Game.player.perks("polymorphed") And Not Game.player.title.Equals("Magic Girl") Then
+                If Not Game.player.perks("polymorphed") > -1 And Not Game.player.title.Equals("Magic Girl") Then
                     Game.player.pState.save(Game.player)
                 End If
         End Select

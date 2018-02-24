@@ -23,7 +23,7 @@
             p.iArrInd(10) = New Tuple(Of Integer, Boolean)(p.sState.iArrInd(10).Item1, False)
             p.iArrInd(15) = New Tuple(Of Integer, Boolean)(p.sState.iArrInd(15).Item1, False)
             Game.pushLblEvent("You are now a man!")
-            p.perks(2) = False
+            p.perks("slutcurse") = False
             Equipment.antiClothingCurse()
             Equipment.portraitUDate()
         Else

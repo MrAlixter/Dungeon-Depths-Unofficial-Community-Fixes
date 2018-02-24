@@ -1,4 +1,7 @@
-﻿Public Class Debug_Window
+﻿Imports System.ComponentModel
+Imports System.Threading
+
+Public Class Debug_Window
     Dim inventoryList As List(Of String) = New List(Of String)
     Dim itemsList As List(Of String) = New List(Of String)
 
@@ -33,32 +36,100 @@
         boxSpd.Value = Game.player.speed
         boxEvd.Value = Game.player.evade
         boxGold.Value = Game.player.gold
-
+        pnlSC.BackColor = Game.player.skincolor
+        pnlHC.BackColor = Game.player.haircolor
 
         'PORTRAIT
-        picPreview.Image = Game.picPortrait.BackgroundImage
-        Dim w As Integer = 146
-        Dim h As Integer = 216
-        For i = 0 To tabPortrait.TabPages.Count - 1
-            Dim x As Integer = (tabPortrait.TabPages(i).Width - w) / 2
-            Dim y As Integer = (tabPortrait.TabPages(i).Height - h) / 2
-            For j = 0 To CharacterGenerator.fAttributes(i).Count - 1
-                Dim img As New PictureBox
-                tabPortrait.TabPages(i).Controls.Add(img)
-                img.Image = CharacterGenerator.fAttributes(i)(j)
-                img.Location = New Point(x, y - 20)
-                img.Size = New Point(w, h)
-                'img.BackgroundImageLayout = ImageLayout.Stretch
-                'AddHandler img.Click, AddressOf PicOnClick
-                y += tabPortrait.TabPages(i).Height
-            Next
-        Next
+        loadPortrait()
 
 
         'INVENTORY
         updateInventoryList()
         number.Value = 0
         updateItemsList()
+    End Sub
+
+    Private Sub loadPortrait()
+        picPreview.Image = Game.picPortrait.BackgroundImage
+        picPreview.BackgroundImage = Game.player.iArr(0)
+        Dim PADDING = 0.1
+        Dim w As Integer = 146
+        Dim h As Integer = 216
+        'fillPages()
+        'Dim go As Boolean = True
+        'While go
+        '    For i = 0 To workers.Count - 1
+        '        If Not done(i) Then
+        '            Thread.Sleep(50)
+        '            Exit For
+        '        End If
+        '    Next
+        'End While
+
+        Dim attr
+        If Game.player.sexBool Then
+            attr = CharacterGenerator.fAttributes
+        Else
+            attr = CharacterGenerator.mAttributes
+        End If
+        For i = 0 To tabPortrait.TabPages.Count - 1
+            Dim x As Integer = w * PADDING
+            Dim y As Integer = (tabPortrait.TabPages(i).Height - h) / 2
+            For j = 0 To attr(i).Count - 1
+                Dim img As New PictureBox
+                img.Name = i.ToString() & ":" & j.ToString()
+                tabPortrait.TabPages(i).Controls.Add(img)
+                img.Image = attr(i)(j)
+                'REMOVED UNTIL THE NEXT UPDATE (when I'll be able to get around to figuring out how to make it work)
+                'CharacterGenerator.recolor2(img.Image, Game.player.skincolor)
+                img.BackgroundImage = attr(0)(0)
+                img.Location = New Point(x, y) 'y - 20)
+                img.Size = New Point(w, h)
+                'img.BackgroundImageLayout = ImageLayout.Stretch
+                AddHandler img.Click, AddressOf clickOnPic
+                x += w * (1 + PADDING)
+            Next
+        Next
+    End Sub
+
+    Private Sub clearPortrait()
+        For i = 0 To tabPortrait.TabPages.Count - 1
+            For j = 0 To tabPortrait.TabPages(i).Controls.Count - 1
+                tabPortrait.TabPages(i).Controls(0).Dispose()
+            Next
+        Next
+    End Sub
+
+    Private Sub fillPages(ByRef done As List(Of Boolean), place As Integer, first As Integer, last As Integer) '(Inclusive, exclusive)
+        Dim worker As New BackgroundWorker
+        worker.WorkerSupportsCancellation = True
+        AddHandler worker.DoWork, AddressOf bw_DoWork
+        AddHandler worker.RunWorkerCompleted, AddressOf bw_RunWorkerCompleted
+        worker.RunWorkerAsync()
+    End Sub
+
+    Private Sub bw_DoWork(ByVal sender As Object, ByVal e As DoWorkEventArgs)
+        Dim worker As BackgroundWorker = CType(sender, BackgroundWorker)
+
+        While worker.IsBusy
+            If worker.CancellationPending = True Then
+                e.Cancel = True
+                Exit While
+            Else
+                'Perform a time consuming operation
+                System.Threading.Thread.Sleep(100)
+            End If
+        End While
+    End Sub
+
+    Private Sub bw_RunWorkerCompleted(ByVal sender As Object, ByVal e As RunWorkerCompletedEventArgs)
+        If e.Cancelled = True Then
+            Close()
+            Application.DoEvents()
+        ElseIf e.Error IsNot Nothing Then
+            MsgBox("Error: " & e.Error.Message)
+        End If
+        'Player.canMoveFlag = True
     End Sub
 
     Private Sub clear()
@@ -73,6 +144,7 @@
             End If
             ctrl = GetNextControl(ctrl, True)
         Loop
+        clearPortrait()
     End Sub
 
     Private Sub updateInventoryList()
@@ -161,8 +233,63 @@
         ElseIf Game.player.sex = "Female" And boxSex.Items(boxSex.SelectedIndex) = "Male" Then
             Game.player.FtM()
         End If
-        picPreview.Image = Game.picPortrait.BackgroundImage
-        picPreview.Update()
+        clearPortrait()
+        loadPortrait()
+    End Sub
+
+    Private Sub pnlSC_Paint(sender As Object, e As EventArgs) Handles pnlSC.Click
+        Dim cd As New SCPicker
+        cd.ShowDialog()
+        'REMOVED THE NEXT LINE BECAUSE IT'S NOT WORKING YET
+        'CharacterGenerator.changeSC(cd.sc)
+        CType(sender, Panel).BackColor = cd.sc
+        cd.Dispose()
+        picPreview.Image = CharacterGenerator.CreateBMP(Game.player.iArr)
+    End Sub
+
+    Private Sub pnlHC_Paint(sender As Object, e As EventArgs) Handles pnlHC.Click
+        Dim cd As New ColorDialog()
+        cd.Color = Game.player.haircolor
+        cd.ShowDialog()
+        'REMOVED THE NEXT LINE BECAUSE IT'S NOT WORKING YET
+        'CharacterGenerator.changeHC(cd.Color)
+        CType(sender, Panel).BackColor = cd.Color
+        'If currAtrButton.Equals(btnBHair) Then
+        '    btnBHair_Click(sender, e)
+        '    currAttribute = mRearHair2
+        'End If
+        'If currAtrButton.Equals(btnFHair) Then
+        '    btnFHair_Click(sender, e)
+        '    currAttribute = mFrontHair
+        'End If
+        'If currAtrButton.Equals(btnEyebrows) Then
+        '    btnEyebrows_Click(sender, e)
+        '    currAttribute = mEyebrows
+        'End If
+        'For i = 0 To currAttribute.Count - 1
+        '    Dim x As Integer = (i * 71 * Me.Size.Width / 581)
+        '    Dim y As Integer = 0
+        '    Dim img As New PictureBox
+        '    img.BackgroundImage = currAttribute(i)
+        '    img.Location = New Point(x, y - 20)
+        '    img.Size = New Point(70 * Me.Size.Width / 581, 104 * Me.Size.Width / 581)
+        '    img.BackgroundImageLayout = ImageLayout.Stretch
+        '    AddHandler img.Click, AddressOf PicOnClick
+        '    pnlBody.Controls.Add(img)
+        'Next
+        cd.Dispose()
+        picPreview.Image = CharacterGenerator.CreateBMP(Game.player.iArr)
+    End Sub
+
+    Private Sub clickOnPic(sender As Object, e As EventArgs)
+        Dim tab As Integer = sender.Name.Split(":")(0)
+        Dim pic As Integer = sender.Name.Split(":")(1)
+
+        Game.player.iArr(tab) = CType(sender, PictureBox).Image
+        Game.player.iArrInd(tab) = New Tuple(Of Integer, Boolean)(tab, Game.player.sexBool)
+
+        'picPreview.Image = CharacterGenerator.recolor(CharacterGenerator.CreateBMP(Game.player.iArr), Game.player.skincolor)
+        picPreview.Image = CharacterGenerator.CreateBMP(Game.player.iArr)
     End Sub
 
     Private Sub btnRemove_Click(sender As Object, e As EventArgs) Handles btnRemove.Click
