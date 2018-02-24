@@ -172,12 +172,6 @@ Public Class Game
         floorLayouts.Add(genRNDLVLCode())
         floorLayouts.Add("bossstage")
 
-        'Generate board in background'
-        'boardReady = False
-        'Dim boardWorker = New BackgroundWorker
-        'AddHandler boardWorker.DoWork, AddressOf workerPrepareBoard
-        'boardWorker.RunWorkerAsync(False)
-
         combatmode = False
         btnS.Visible = False
         btnL.Visible = False
@@ -897,9 +891,9 @@ Public Class Game
                         player.haircolor = Color.Cyan
                         player.createP()
                     ElseIf keyspresed = "bmbo" Then
-                        player.perks(1) = True
+                        player.perks("bimbotf") = True
                     ElseIf keyspresed = "catc" Then
-                        player.perks(6) = True
+                        player.perks("nekocurse") = True
                     ElseIf keyspresed = "mana" Then
                         player.inventory(49).add(1)
                         player.invNeedsUDate = True
@@ -929,7 +923,7 @@ Public Class Game
                         floor = f - 1
                         initializeBoard()
                     ElseIf keyspresed = "slut" Then
-                        player.perks(2) = True
+                        player.perks("slutcurse") = True
                         player.inventory(1).add(1)
                         player.lust += 20
                         player.createP()
@@ -1717,7 +1711,8 @@ Public Class Game
             End If
         Next
         Dim chick As Integer = 1 'CInt(Int(Rnd() * 5))
-        If chick = 4 And Not player.perks("chickentf") Then player.perks(3) = True
+        'THIS LINE APPEARS REDUNDANT/BROKEN
+        'If chick = 4 And Not player.perks("chickentf") Then player.perks(3) = True
     End Sub
     Sub leaveNPC()
         Dim m As NPC = Nothing

@@ -206,14 +206,14 @@
             If currTarget.name.Equals("Shopkeeper") Then
                 Dim n As NPC = Game.currNPC
                 petrify(Color.Goldenrod)
-                Dim out As String = "'You should have known better than to try and rob a shop keeper,' the shopkeep says," & vbCrLf & _
-                    " glaring down at you, '...and if its gold you're after, I guess I've got some good news for you.'" & vbCrLf & _
-                    "  With that, " & n.pronoun & " reaches into " & n.pPronoun & " bag and puts on a gaudy gauntlet " & vbCrLf & _
-                    "that begins glowing with a golden light. You lack the strength to fight back as " & n.pronoun & " places" & vbCrLf & _
-                    " his thumb on your forhead, and suddenly everything just seems so heavy. 'Noooo...' you moan, " & vbCrLf & _
-                    "as the area around where he touched turns to gold, and that gold turns your flesh and blood " & vbCrLf & _
-                    "around it to gold as well. In a matter of seconds, all that is left of " & Me.name & " the " & vbCrLf & _
-                    Me.title & " is a solid gold statue. The shopkeeper sighs, muttering to no one in particular, " & vbCrLf & _
+                Dim out As String = "'You should have known better than to try and rob a shop keeper,' the shopkeep says," & vbCrLf &
+                    " glaring down at you, '...and if its gold you're after, I guess I've got some good news for you.'" & vbCrLf &
+                    "  With that, " & n.pronoun & " reaches into " & n.pPronoun & " bag and puts on a gaudy gauntlet " & vbCrLf &
+                    "that begins glowing with a golden light. You lack the strength to fight back as " & n.pronoun & " places" & vbCrLf &
+                    " his thumb on your forhead, and suddenly everything just seems so heavy. 'Noooo...' you moan, " & vbCrLf &
+                    "as the area around where he touched turns to gold, and that gold turns your flesh and blood " & vbCrLf &
+                    "around it to gold as well. In a matter of seconds, all that is left of " & Me.name & " the " & vbCrLf &
+                    Me.title & " is a solid gold statue. The shopkeeper sighs, muttering to no one in particular, " & vbCrLf &
                     vbCrLf & vbCrLf & "'Now how am I going to get you back to the refinery?'"
                 'Game.pushLblEvent(out)
                 title = "Trophy"
@@ -380,7 +380,7 @@
         gold = tGold
         equippedArmor = tEarm
         equippedWeapon = tEweap
-        perks(2) = False
+        perks("slutcurse") = False
         currState.save(Me)
         pState.save(Me)
 
@@ -582,25 +582,25 @@
             End If
             'MsgBox(inventory(i).getName())
         Next
-        armor = {New NormalClothes, New SkimpyClothes, New Naked, New PrincessGown, _
-                 New MaidOutfit, New GoddessGown, New SuccubusGarb, _
-                 inventory(5), inventory(7), inventory(8), inventory(10), _
-                 inventory(12), inventory(16), inventory(17), inventory(18), _
-                 inventory(19), inventory(20), inventory(38), inventory(39), _
-                 inventory(46), inventory(47), inventory(54), inventory(55), _
+        armor = {New NormalClothes, New SkimpyClothes, New Naked, New PrincessGown,
+                 New MaidOutfit, New GoddessGown, New SuccubusGarb,
+                 inventory(5), inventory(7), inventory(8), inventory(10),
+                 inventory(12), inventory(16), inventory(17), inventory(18),
+                 inventory(19), inventory(20), inventory(38), inventory(39),
+                 inventory(46), inventory(47), inventory(54), inventory(55),
                  inventory(56)}
 
-        weapons = {New BareFists(), _
-                   inventory(6), inventory(9), inventory(11), inventory(21), _
-                   inventory(22), inventory(23), inventory(24), inventory(40), _
+        weapons = {New BareFists(),
+                   inventory(6), inventory(9), inventory(11), inventory(21),
+                   inventory(22), inventory(23), inventory(24), inventory(40),
                    inventory(41), inventory(42), inventory(45), inventory(63)}
 
-        useable = {inventory(0), inventory(1), inventory(3), inventory(4), _
-                   inventory(15), inventory(36), inventory(37), inventory(45), _
-                   inventory(48), inventory(49), inventory(50), inventory(51), _
+        useable = {inventory(0), inventory(1), inventory(3), inventory(4),
+                   inventory(15), inventory(36), inventory(37), inventory(45),
+                   inventory(48), inventory(49), inventory(50), inventory(51),
                    inventory(52), inventory(57), inventory(58)}
 
-        food = {inventory(30), inventory(31), inventory(32), inventory(33), _
+        food = {inventory(30), inventory(31), inventory(32), inventory(33),
                 inventory(34), inventory(35), inventory(44)}
 
         potions = {inventory(2), inventory(13), inventory(14), inventory(25),
@@ -1484,7 +1484,7 @@
         Return output
     End Function
     Public Function toGhost() As String
-        Dim output = CStr(name & " the " & title & "*" & health & "*" & maxHealth & _
+        Dim output = CStr(name & " the " & title & "*" & health & "*" & maxHealth &
             "*" & getAttack() & "*" & getDefence() & "*" & getSpeed() & "*" & sexBool & "*" & haircolor.R & "*" & haircolor.G & "*" & haircolor.B & "*")
         For i = 0 To inventory.Count - 1
             output += (inventory.Item(i).count) & "*"
