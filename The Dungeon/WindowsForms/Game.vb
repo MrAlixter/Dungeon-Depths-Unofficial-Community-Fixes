@@ -30,7 +30,7 @@ Public Class Game
     Public npcIndex As Integer = 0  'indicates which npc is encountered (NOT SAVED)
     'a list containing all valid cheats
     Public cheatList() As String = {"girl", "nude", "blue", "catc", "bmbo", "bigr", "slut", "kill", "dick", "lust", "form", "tfme",
-                                    "gogo", "mana", "fuse", "rock", "doll"} 'list of cheats (NOT SAVES)
+                                    "gogo", "mana", "fuse", "rock", "doll", "seee"} 'list of cheats (NOT SAVES)
     Public isMark As Boolean = False    'indicates if the 'mark' cheat code has been used. (NOT SAVED)
     Dim keyspresed As String = ""   'records last 4 keys pressed (NOT SAVED)
     'variables related to the mystery potions
@@ -609,7 +609,7 @@ Public Class Game
             For i = 0 To trapList.Count - 1
                 If trapList(i).pos = player.pos Then
                     Try
-                        trapList(i).activate()
+                        trapList(i).activate(i)
                     Catch ex As Exception
                         pushLblEvent("As you wander forward, your foot falls on a pressure plate.  As soon as you hear it click, you snap to attention.  Looking around, you see that nothing seems to have happened." & vbCrLf & "𝘚𝘰𝘮𝘦𝘵𝘩𝘪𝘯𝘨 𝘮𝘶𝘴𝘵 𝘩𝘢𝘷𝘦 𝘨𝘰𝘯𝘦 𝘸𝘳𝘰𝘯𝘨 𝘸𝘪𝘵𝘩 𝘵𝘩𝘦 𝘵𝘳𝘢𝘱'𝘴 𝘢𝘤𝘵𝘪𝘷𝘢𝘵𝘪𝘰𝘯...")
                     End Try
@@ -912,6 +912,28 @@ Public Class Game
                         Dim p As Polymorph = New Polymorph
                         p.ShowDialog()
                         p.Dispose()
+                    ElseIf keyspresed = "seee" Then
+                        For indY = -mBoardHeight To mBoardHeight
+                            For indX = -mBoardWidth To mBoardWidth
+                                If player.pos.Y + indY < mBoardHeight And player.pos.Y + indY >= 0 And player.pos.X + indX < mBoardWidth And player.pos.X + indX >= 0 Then
+                                    If mBoard(player.pos.Y + indY, player.pos.X + indX).Text = "@" Then mBoard(player.pos.Y + indY, player.pos.X + indX).Text = ""
+                                    If mBoard(player.pos.Y + indY, player.pos.X + indX).Text = "H" And mBoard(player.pos.Y + indY, player.pos.X + indX).Tag < 2 Then
+                                        mBoard(player.pos.Y + indY, player.pos.X + indX).ForeColor = Color.Black
+                                        lstLog.Items.Add("Floor " & floor & ": Staircase Discovered")
+                                    End If
+                                    If mBoard(player.pos.Y + indY, player.pos.X + indX).Text = "#" And mBoard(player.pos.Y + indY, player.pos.X + indX).Tag < 2 Then
+                                        mBoard(player.pos.Y + indY, player.pos.X + indX).ForeColor = Color.Black
+                                        lstLog.Items.Add("Chest discovered!")
+                                    End If
+                                    If mBoard(player.pos.Y + indY, player.pos.X + indX).Text = "$" And mBoard(player.pos.Y + indY, player.pos.X + indX).Tag < 2 Then
+                                        mBoard(player.pos.Y + indY, player.pos.X + indX).ForeColor = Color.Navy
+                                        lstLog.Items.Add("Shop discovered!")
+                                    End If
+                                    If mBoard(player.pos.Y + indY, player.pos.X + indX).Tag = 1 Then mBoard(player.pos.Y + indY, player.pos.X + indX).Tag = 2
+                                End If
+                            Next
+                        Next
+                        lstLog.TopIndex = lstLog.Items.Count - 1
                     ElseIf keyspresed = "bigr" Then
                         player.be()
                     ElseIf keyspresed = "rock" Then
