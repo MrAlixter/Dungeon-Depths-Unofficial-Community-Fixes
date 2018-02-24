@@ -36,7 +36,8 @@ Public Class Debug_Window
         boxSpd.Value = Game.player.speed
         boxEvd.Value = Game.player.evade
         boxGold.Value = Game.player.gold
-
+        pnlSC.BackColor = Game.player.skincolor
+        pnlHC.BackColor = Game.player.haircolor
 
         'PORTRAIT
         loadPortrait()
@@ -234,6 +235,50 @@ Public Class Debug_Window
         End If
         clearPortrait()
         loadPortrait()
+    End Sub
+
+    Private Sub pnlSC_Paint(sender As Object, e As EventArgs) Handles pnlSC.Click
+        Dim cd As New SCPicker
+        cd.ShowDialog()
+        'REMOVED THE NEXT LINE BECAUSE IT'S NOT WORKING YET
+        'CharacterGenerator.changeSC(cd.sc)
+        CType(sender, Panel).BackColor = cd.sc
+        cd.Dispose()
+        picPreview.Image = CharacterGenerator.CreateBMP(Game.player.iArr)
+    End Sub
+
+    Private Sub pnlHC_Paint(sender As Object, e As EventArgs) Handles pnlHC.Click
+        Dim cd As New ColorDialog()
+        cd.Color = Game.player.haircolor
+        cd.ShowDialog()
+        'REMOVED THE NEXT LINE BECAUSE IT'S NOT WORKING YET
+        'CharacterGenerator.changeHC(cd.Color)
+        CType(sender, Panel).BackColor = cd.Color
+        'If currAtrButton.Equals(btnBHair) Then
+        '    btnBHair_Click(sender, e)
+        '    currAttribute = mRearHair2
+        'End If
+        'If currAtrButton.Equals(btnFHair) Then
+        '    btnFHair_Click(sender, e)
+        '    currAttribute = mFrontHair
+        'End If
+        'If currAtrButton.Equals(btnEyebrows) Then
+        '    btnEyebrows_Click(sender, e)
+        '    currAttribute = mEyebrows
+        'End If
+        'For i = 0 To currAttribute.Count - 1
+        '    Dim x As Integer = (i * 71 * Me.Size.Width / 581)
+        '    Dim y As Integer = 0
+        '    Dim img As New PictureBox
+        '    img.BackgroundImage = currAttribute(i)
+        '    img.Location = New Point(x, y - 20)
+        '    img.Size = New Point(70 * Me.Size.Width / 581, 104 * Me.Size.Width / 581)
+        '    img.BackgroundImageLayout = ImageLayout.Stretch
+        '    AddHandler img.Click, AddressOf PicOnClick
+        '    pnlBody.Controls.Add(img)
+        'Next
+        cd.Dispose()
+        picPreview.Image = CharacterGenerator.CreateBMP(Game.player.iArr)
     End Sub
 
     Private Sub clickOnPic(sender As Object, e As EventArgs)

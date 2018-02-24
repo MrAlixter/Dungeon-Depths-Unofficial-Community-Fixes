@@ -25,7 +25,16 @@ Partial Class Debug_Window
         Dim resources As System.ComponentModel.ComponentResourceManager = New System.ComponentModel.ComponentResourceManager(GetType(Debug_Window))
         Me.tabMain = New System.Windows.Forms.TabControl()
         Me.tabGeneral = New System.Windows.Forms.TabPage()
+        Me.groupGeneral = New System.Windows.Forms.GroupBox()
+        Me.boxTurn = New System.Windows.Forms.NumericUpDown()
+        Me.boxFloor = New System.Windows.Forms.NumericUpDown()
+        Me.lblTurn = New System.Windows.Forms.Label()
+        Me.lblFloor = New System.Windows.Forms.Label()
         Me.tabPlayer = New System.Windows.Forms.TabPage()
+        Me.lblHC = New System.Windows.Forms.Label()
+        Me.pnlHC = New System.Windows.Forms.Panel()
+        Me.lblSC = New System.Windows.Forms.Label()
+        Me.pnlSC = New System.Windows.Forms.Panel()
         Me.tabPortrait = New System.Windows.Forms.TabControl()
         Me.tabPageBackground = New System.Windows.Forms.TabPage()
         Me.tabPageRearHair = New System.Windows.Forms.TabPage()
@@ -82,13 +91,11 @@ Partial Class Debug_Window
         Me.lblInventory = New System.Windows.Forms.Label()
         Me.boxItems = New System.Windows.Forms.ListBox()
         Me.lblItems = New System.Windows.Forms.Label()
-        Me.lblFloor = New System.Windows.Forms.Label()
-        Me.lblTurn = New System.Windows.Forms.Label()
-        Me.boxFloor = New System.Windows.Forms.NumericUpDown()
-        Me.boxTurn = New System.Windows.Forms.NumericUpDown()
-        Me.groupGeneral = New System.Windows.Forms.GroupBox()
         Me.tabMain.SuspendLayout()
         Me.tabGeneral.SuspendLayout()
+        Me.groupGeneral.SuspendLayout()
+        CType(Me.boxTurn, System.ComponentModel.ISupportInitialize).BeginInit()
+        CType(Me.boxFloor, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.tabPlayer.SuspendLayout()
         Me.tabPortrait.SuspendLayout()
         CType(Me.picPreview, System.ComponentModel.ISupportInitialize).BeginInit()
@@ -105,9 +112,6 @@ Partial Class Debug_Window
         CType(Me.boxHealth, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.tabInventory.SuspendLayout()
         CType(Me.number, System.ComponentModel.ISupportInitialize).BeginInit()
-        CType(Me.boxFloor, System.ComponentModel.ISupportInitialize).BeginInit()
-        CType(Me.boxTurn, System.ComponentModel.ISupportInitialize).BeginInit()
-        Me.groupGeneral.SuspendLayout()
         Me.SuspendLayout()
         '
         'tabMain
@@ -120,7 +124,7 @@ Partial Class Debug_Window
         Me.tabMain.Location = New System.Drawing.Point(0, 0)
         Me.tabMain.Name = "tabMain"
         Me.tabMain.SelectedIndex = 0
-        Me.tabMain.Size = New System.Drawing.Size(750, 550)
+        Me.tabMain.Size = New System.Drawing.Size(750, 576)
         Me.tabMain.TabIndex = 207
         '
         'tabGeneral
@@ -130,13 +134,82 @@ Partial Class Debug_Window
         Me.tabGeneral.Location = New System.Drawing.Point(4, 24)
         Me.tabGeneral.Name = "tabGeneral"
         Me.tabGeneral.Padding = New System.Windows.Forms.Padding(3)
-        Me.tabGeneral.Size = New System.Drawing.Size(742, 522)
+        Me.tabGeneral.Size = New System.Drawing.Size(742, 548)
         Me.tabGeneral.TabIndex = 0
         Me.tabGeneral.Text = "GENERAL"
+        '
+        'groupGeneral
+        '
+        Me.groupGeneral.BackColor = System.Drawing.Color.Black
+        Me.groupGeneral.Controls.Add(Me.boxTurn)
+        Me.groupGeneral.Controls.Add(Me.boxFloor)
+        Me.groupGeneral.Controls.Add(Me.lblTurn)
+        Me.groupGeneral.Controls.Add(Me.lblFloor)
+        Me.groupGeneral.Font = New System.Drawing.Font("Consolas", 12.0!)
+        Me.groupGeneral.ForeColor = System.Drawing.Color.White
+        Me.groupGeneral.Location = New System.Drawing.Point(6, 7)
+        Me.groupGeneral.Name = "groupGeneral"
+        Me.groupGeneral.Size = New System.Drawing.Size(185, 535)
+        Me.groupGeneral.TabIndex = 3
+        Me.groupGeneral.TabStop = False
+        Me.groupGeneral.Text = "GENERAL"
+        '
+        'boxTurn
+        '
+        Me.boxTurn.BackColor = System.Drawing.Color.Black
+        Me.boxTurn.ForeColor = System.Drawing.Color.White
+        Me.boxTurn.Location = New System.Drawing.Point(66, 49)
+        Me.boxTurn.Maximum = New Decimal(New Integer() {999999, 0, 0, 0})
+        Me.boxTurn.Name = "boxTurn"
+        Me.boxTurn.Size = New System.Drawing.Size(113, 26)
+        Me.boxTurn.TabIndex = 196
+        Me.boxTurn.TextAlign = System.Windows.Forms.HorizontalAlignment.Right
+        '
+        'boxFloor
+        '
+        Me.boxFloor.BackColor = System.Drawing.Color.Black
+        Me.boxFloor.Enabled = False
+        Me.boxFloor.ForeColor = System.Drawing.Color.White
+        Me.boxFloor.Location = New System.Drawing.Point(66, 20)
+        Me.boxFloor.Maximum = New Decimal(New Integer() {999999, 0, 0, 0})
+        Me.boxFloor.Name = "boxFloor"
+        Me.boxFloor.Size = New System.Drawing.Size(113, 26)
+        Me.boxFloor.TabIndex = 195
+        Me.boxFloor.TextAlign = System.Windows.Forms.HorizontalAlignment.Right
+        '
+        'lblTurn
+        '
+        Me.lblTurn.AutoSize = True
+        Me.lblTurn.Dock = System.Windows.Forms.DockStyle.Top
+        Me.lblTurn.Font = New System.Drawing.Font("Consolas", 12.0!)
+        Me.lblTurn.ForeColor = System.Drawing.Color.White
+        Me.lblTurn.Location = New System.Drawing.Point(3, 51)
+        Me.lblTurn.Name = "lblTurn"
+        Me.lblTurn.Padding = New System.Windows.Forms.Padding(0, 0, 0, 10)
+        Me.lblTurn.Size = New System.Drawing.Size(63, 29)
+        Me.lblTurn.TabIndex = 1
+        Me.lblTurn.Text = "TURN: "
+        '
+        'lblFloor
+        '
+        Me.lblFloor.AutoSize = True
+        Me.lblFloor.Dock = System.Windows.Forms.DockStyle.Top
+        Me.lblFloor.Font = New System.Drawing.Font("Consolas", 12.0!)
+        Me.lblFloor.ForeColor = System.Drawing.Color.White
+        Me.lblFloor.Location = New System.Drawing.Point(3, 22)
+        Me.lblFloor.Name = "lblFloor"
+        Me.lblFloor.Padding = New System.Windows.Forms.Padding(0, 0, 0, 10)
+        Me.lblFloor.Size = New System.Drawing.Size(72, 29)
+        Me.lblFloor.TabIndex = 2
+        Me.lblFloor.Text = "FLOOR: "
         '
         'tabPlayer
         '
         Me.tabPlayer.BackColor = System.Drawing.Color.Black
+        Me.tabPlayer.Controls.Add(Me.lblHC)
+        Me.tabPlayer.Controls.Add(Me.pnlHC)
+        Me.tabPlayer.Controls.Add(Me.lblSC)
+        Me.tabPlayer.Controls.Add(Me.pnlSC)
         Me.tabPlayer.Controls.Add(Me.tabPortrait)
         Me.tabPlayer.Controls.Add(Me.picPreview)
         Me.tabPlayer.Controls.Add(Me.playerDivider)
@@ -171,9 +244,45 @@ Partial Class Debug_Window
         Me.tabPlayer.Location = New System.Drawing.Point(4, 24)
         Me.tabPlayer.Name = "tabPlayer"
         Me.tabPlayer.Padding = New System.Windows.Forms.Padding(3)
-        Me.tabPlayer.Size = New System.Drawing.Size(742, 522)
+        Me.tabPlayer.Size = New System.Drawing.Size(742, 548)
         Me.tabPlayer.TabIndex = 1
         Me.tabPlayer.Text = "PLAYER"
+        '
+        'lblHC
+        '
+        Me.lblHC.AutoSize = True
+        Me.lblHC.Font = New System.Drawing.Font("Consolas", 12.0!)
+        Me.lblHC.ForeColor = System.Drawing.Color.White
+        Me.lblHC.Location = New System.Drawing.Point(250, 210)
+        Me.lblHC.Name = "lblHC"
+        Me.lblHC.Size = New System.Drawing.Size(99, 19)
+        Me.lblHC.TabIndex = 266
+        Me.lblHC.Text = "HAIR COLOR"
+        '
+        'pnlHC
+        '
+        Me.pnlHC.Location = New System.Drawing.Point(357, 211)
+        Me.pnlHC.Name = "pnlHC"
+        Me.pnlHC.Size = New System.Drawing.Size(134, 26)
+        Me.pnlHC.TabIndex = 265
+        '
+        'lblSC
+        '
+        Me.lblSC.AutoSize = True
+        Me.lblSC.Font = New System.Drawing.Font("Consolas", 12.0!)
+        Me.lblSC.ForeColor = System.Drawing.Color.White
+        Me.lblSC.Location = New System.Drawing.Point(3, 210)
+        Me.lblSC.Name = "lblSC"
+        Me.lblSC.Size = New System.Drawing.Size(99, 19)
+        Me.lblSC.TabIndex = 264
+        Me.lblSC.Text = "SKIN COLOR"
+        '
+        'pnlSC
+        '
+        Me.pnlSC.Location = New System.Drawing.Point(110, 211)
+        Me.pnlSC.Name = "pnlSC"
+        Me.pnlSC.Size = New System.Drawing.Size(134, 26)
+        Me.pnlSC.TabIndex = 263
         '
         'tabPortrait
         '
@@ -194,7 +303,7 @@ Partial Class Debug_Window
         Me.tabPortrait.Controls.Add(Me.tabPageAccessories)
         Me.tabPortrait.Controls.Add(Me.tabPageFrontHair)
         Me.tabPortrait.Controls.Add(Me.tabPageHat)
-        Me.tabPortrait.Location = New System.Drawing.Point(3, 226)
+        Me.tabPortrait.Location = New System.Drawing.Point(3, 254)
         Me.tabPortrait.Name = "tabPortrait"
         Me.tabPortrait.SelectedIndex = 0
         Me.tabPortrait.Size = New System.Drawing.Size(736, 291)
@@ -387,7 +496,7 @@ Partial Class Debug_Window
         Me.playerDivider.Location = New System.Drawing.Point(248, 3)
         Me.playerDivider.Multiline = True
         Me.playerDivider.Name = "playerDivider"
-        Me.playerDivider.Size = New System.Drawing.Size(1, 210)
+        Me.playerDivider.Size = New System.Drawing.Size(1, 225)
         Me.playerDivider.TabIndex = 235
         '
         'lblGold
@@ -722,7 +831,7 @@ Partial Class Debug_Window
         Me.tabInventory.Location = New System.Drawing.Point(4, 24)
         Me.tabInventory.Name = "tabInventory"
         Me.tabInventory.Padding = New System.Windows.Forms.Padding(3)
-        Me.tabInventory.Size = New System.Drawing.Size(742, 522)
+        Me.tabInventory.Size = New System.Drawing.Size(742, 548)
         Me.tabInventory.TabIndex = 2
         Me.tabInventory.Text = "INVENTORY"
         '
@@ -731,7 +840,7 @@ Partial Class Debug_Window
         Me.number.BackColor = System.Drawing.Color.Black
         Me.number.Font = New System.Drawing.Font("Consolas", 12.0!)
         Me.number.ForeColor = System.Drawing.Color.White
-        Me.number.Location = New System.Drawing.Point(327, 247)
+        Me.number.Location = New System.Drawing.Point(327, 261)
         Me.number.Maximum = New Decimal(New Integer() {999999, 0, 0, 0})
         Me.number.Name = "number"
         Me.number.Size = New System.Drawing.Size(89, 26)
@@ -757,10 +866,10 @@ Partial Class Debug_Window
         Me.boxInventory.ForeColor = System.Drawing.Color.White
         Me.boxInventory.FormattingEnabled = True
         Me.boxInventory.ItemHeight = 19
-        Me.boxInventory.Location = New System.Drawing.Point(6, 11)
+        Me.boxInventory.Location = New System.Drawing.Point(6, 6)
         Me.boxInventory.Name = "boxInventory"
         Me.boxInventory.SelectionMode = System.Windows.Forms.SelectionMode.MultiExtended
-        Me.boxInventory.Size = New System.Drawing.Size(280, 498)
+        Me.boxInventory.Size = New System.Drawing.Size(280, 536)
         Me.boxInventory.Sorted = True
         Me.boxInventory.TabIndex = 8
         '
@@ -769,7 +878,7 @@ Partial Class Debug_Window
         Me.btnAdd.BackColor = System.Drawing.Color.Black
         Me.btnAdd.Font = New System.Drawing.Font("Consolas", 8.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.btnAdd.ForeColor = System.Drawing.Color.White
-        Me.btnAdd.Location = New System.Drawing.Point(361, 174)
+        Me.btnAdd.Location = New System.Drawing.Point(361, 203)
         Me.btnAdd.Name = "btnAdd"
         Me.btnAdd.Size = New System.Drawing.Size(89, 36)
         Me.btnAdd.TabIndex = 181
@@ -781,7 +890,7 @@ Partial Class Debug_Window
         Me.lblInventory.AutoSize = True
         Me.lblInventory.Font = New System.Drawing.Font("Consolas", 12.0!)
         Me.lblInventory.ForeColor = System.Drawing.Color.White
-        Me.lblInventory.Location = New System.Drawing.Point(288, 11)
+        Me.lblInventory.Location = New System.Drawing.Point(288, 6)
         Me.lblInventory.Name = "lblInventory"
         Me.lblInventory.Size = New System.Drawing.Size(90, 19)
         Me.lblInventory.TabIndex = 6
@@ -794,10 +903,10 @@ Partial Class Debug_Window
         Me.boxItems.ForeColor = System.Drawing.Color.White
         Me.boxItems.FormattingEnabled = True
         Me.boxItems.ItemHeight = 19
-        Me.boxItems.Location = New System.Drawing.Point(456, 11)
+        Me.boxItems.Location = New System.Drawing.Point(456, 6)
         Me.boxItems.Name = "boxItems"
         Me.boxItems.SelectionMode = System.Windows.Forms.SelectionMode.MultiExtended
-        Me.boxItems.Size = New System.Drawing.Size(280, 498)
+        Me.boxItems.Size = New System.Drawing.Size(280, 536)
         Me.boxItems.TabIndex = 9
         '
         'lblItems
@@ -805,83 +914,18 @@ Partial Class Debug_Window
         Me.lblItems.AutoSize = True
         Me.lblItems.Font = New System.Drawing.Font("Consolas", 12.0!)
         Me.lblItems.ForeColor = System.Drawing.Color.White
-        Me.lblItems.Location = New System.Drawing.Point(396, 490)
+        Me.lblItems.Location = New System.Drawing.Point(396, 523)
         Me.lblItems.Name = "lblItems"
         Me.lblItems.Size = New System.Drawing.Size(54, 19)
         Me.lblItems.TabIndex = 7
         Me.lblItems.Text = "ITEMS"
-        '
-        'lblFloor
-        '
-        Me.lblFloor.AutoSize = True
-        Me.lblFloor.Dock = System.Windows.Forms.DockStyle.Top
-        Me.lblFloor.Font = New System.Drawing.Font("Consolas", 12.0!)
-        Me.lblFloor.ForeColor = System.Drawing.Color.White
-        Me.lblFloor.Location = New System.Drawing.Point(3, 22)
-        Me.lblFloor.Name = "lblFloor"
-        Me.lblFloor.Padding = New System.Windows.Forms.Padding(0, 0, 0, 10)
-        Me.lblFloor.Size = New System.Drawing.Size(72, 29)
-        Me.lblFloor.TabIndex = 2
-        Me.lblFloor.Text = "FLOOR: "
-        '
-        'lblTurn
-        '
-        Me.lblTurn.AutoSize = True
-        Me.lblTurn.Dock = System.Windows.Forms.DockStyle.Top
-        Me.lblTurn.Font = New System.Drawing.Font("Consolas", 12.0!)
-        Me.lblTurn.ForeColor = System.Drawing.Color.White
-        Me.lblTurn.Location = New System.Drawing.Point(3, 51)
-        Me.lblTurn.Name = "lblTurn"
-        Me.lblTurn.Padding = New System.Windows.Forms.Padding(0, 0, 0, 10)
-        Me.lblTurn.Size = New System.Drawing.Size(63, 29)
-        Me.lblTurn.TabIndex = 1
-        Me.lblTurn.Text = "TURN: "
-        '
-        'boxFloor
-        '
-        Me.boxFloor.BackColor = System.Drawing.Color.Black
-        Me.boxFloor.Enabled = False
-        Me.boxFloor.ForeColor = System.Drawing.Color.White
-        Me.boxFloor.Location = New System.Drawing.Point(66, 20)
-        Me.boxFloor.Maximum = New Decimal(New Integer() {999999, 0, 0, 0})
-        Me.boxFloor.Name = "boxFloor"
-        Me.boxFloor.Size = New System.Drawing.Size(113, 26)
-        Me.boxFloor.TabIndex = 195
-        Me.boxFloor.TextAlign = System.Windows.Forms.HorizontalAlignment.Right
-        '
-        'boxTurn
-        '
-        Me.boxTurn.BackColor = System.Drawing.Color.Black
-        Me.boxTurn.ForeColor = System.Drawing.Color.White
-        Me.boxTurn.Location = New System.Drawing.Point(66, 49)
-        Me.boxTurn.Maximum = New Decimal(New Integer() {999999, 0, 0, 0})
-        Me.boxTurn.Name = "boxTurn"
-        Me.boxTurn.Size = New System.Drawing.Size(113, 26)
-        Me.boxTurn.TabIndex = 196
-        Me.boxTurn.TextAlign = System.Windows.Forms.HorizontalAlignment.Right
-        '
-        'groupGeneral
-        '
-        Me.groupGeneral.BackColor = System.Drawing.Color.Black
-        Me.groupGeneral.Controls.Add(Me.boxTurn)
-        Me.groupGeneral.Controls.Add(Me.boxFloor)
-        Me.groupGeneral.Controls.Add(Me.lblTurn)
-        Me.groupGeneral.Controls.Add(Me.lblFloor)
-        Me.groupGeneral.Font = New System.Drawing.Font("Consolas", 12.0!)
-        Me.groupGeneral.ForeColor = System.Drawing.Color.White
-        Me.groupGeneral.Location = New System.Drawing.Point(6, 7)
-        Me.groupGeneral.Name = "groupGeneral"
-        Me.groupGeneral.Size = New System.Drawing.Size(185, 511)
-        Me.groupGeneral.TabIndex = 3
-        Me.groupGeneral.TabStop = False
-        Me.groupGeneral.Text = "GENERAL"
         '
         'Debug_Window
         '
         Me.AutoScaleDimensions = New System.Drawing.SizeF(6.0!, 13.0!)
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font
         Me.BackColor = System.Drawing.Color.Black
-        Me.ClientSize = New System.Drawing.Size(750, 550)
+        Me.ClientSize = New System.Drawing.Size(750, 576)
         Me.Controls.Add(Me.tabMain)
         Me.Icon = CType(resources.GetObject("$this.Icon"), System.Drawing.Icon)
         Me.Name = "Debug_Window"
@@ -890,6 +934,10 @@ Partial Class Debug_Window
         Me.Text = "Debug Window"
         Me.tabMain.ResumeLayout(False)
         Me.tabGeneral.ResumeLayout(False)
+        Me.groupGeneral.ResumeLayout(False)
+        Me.groupGeneral.PerformLayout()
+        CType(Me.boxTurn, System.ComponentModel.ISupportInitialize).EndInit()
+        CType(Me.boxFloor, System.ComponentModel.ISupportInitialize).EndInit()
         Me.tabPlayer.ResumeLayout(False)
         Me.tabPlayer.PerformLayout()
         Me.tabPortrait.ResumeLayout(False)
@@ -908,10 +956,6 @@ Partial Class Debug_Window
         Me.tabInventory.ResumeLayout(False)
         Me.tabInventory.PerformLayout()
         CType(Me.number, System.ComponentModel.ISupportInitialize).EndInit()
-        CType(Me.boxFloor, System.ComponentModel.ISupportInitialize).EndInit()
-        CType(Me.boxTurn, System.ComponentModel.ISupportInitialize).EndInit()
-        Me.groupGeneral.ResumeLayout(False)
-        Me.groupGeneral.PerformLayout()
         Me.ResumeLayout(False)
 
     End Sub
@@ -979,4 +1023,8 @@ Partial Class Debug_Window
     Friend WithEvents boxFloor As NumericUpDown
     Friend WithEvents lblTurn As Label
     Friend WithEvents lblFloor As Label
+    Friend WithEvents lblHC As Label
+    Friend WithEvents pnlHC As Panel
+    Friend WithEvents lblSC As Label
+    Friend WithEvents pnlSC As Panel
 End Class
