@@ -58,7 +58,9 @@
                 Game.pushLblEvent(out)
             Case 2
                 Dim rubyTF As Color = Color.FromArgb(185, 200, 55, 55)
-                Game.player.skincolor = Game.cShift(Game.player.skincolor, Color.Crimson, 50)
+                Dim r As Integer = Game.player.skincolor.R + 50
+                If r > 255 Then r = 255
+                Game.player.skincolor = Color.FromArgb(Game.player.skincolor.A, r, Game.player.skincolor.G, Game.player.skincolor.B)
                 Game.player.pState.save(Game.player)
                 Game.player.petrify(rubyTF)
                 Dim out As String = "As you walk through the dungeon, you see what looks like a valuable ruby on the ground, and you bend down to pick it up.  As soon as you touch it, a shock runs through your body, and starting with the hand you have on the gem your body is turned into ruby.  𝘚𝘩𝘪𝘵!  Looks like that ruby was probably cursed . . ."
