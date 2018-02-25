@@ -392,7 +392,7 @@
             Game.lstLog.TopIndex = Game.lstLog.Items.Count - 1
         End If
 
-        If health > maxHealth + hBuff Then health = maxHealth + hBuff
+        If health > maxHealth + hBuff Then health = (maxHealth + hBuff) * hRatio
         If mana > maxMana + mBuff Then mana = maxMana + mBuff
 
         Game.pushLblEvent("With a poof of smoke, you return to your original self!")
@@ -430,7 +430,7 @@
             Game.lstLog.TopIndex = Game.lstLog.Items.Count - 1
         End If
 
-        If health > maxHealth + hBuff Then health = maxHealth + hBuff
+        If health > maxHealth + hBuff Then health = (maxHealth + hBuff) * hRatio
         If mana > maxMana + mBuff Then mana = maxMana + mBuff
         Game.pushLblEvent("You return to your former form!")
         Game.pImage = pImage
