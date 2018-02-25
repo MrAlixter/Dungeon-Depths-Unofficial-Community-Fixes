@@ -2227,7 +2227,7 @@ Public Class Game
             End If
         Loop
         If Not combatmode Then out += " " & vbCrLf & " " & vbCrLf & "Press ';' to continue." Else out += " " & vbCrLf & " " & vbCrLf & "Click a combat button to continue."
-        If Not lblEvent.Visible Then lblEvent.Text = out Else lblEvent.Text = vbCrLf & "---------------------------------------------------------------------------" & vbCrLf & out
+        If 1 = 1 Then lblEvent.Text = out Else lblEvent.Text = vbCrLf & "---------------------------------------------------------------------------" & vbCrLf & out
         lblEvent.BringToFront()
         lblEvent.Location = New Point((265 * (Me.Size.Width / 688)) - (lblEvent.Size.Width / 2), (65 * (Me.Size.Width / 688)))
         lblEvent.Visible = True

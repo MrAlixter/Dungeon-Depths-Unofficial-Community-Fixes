@@ -34,7 +34,7 @@
         Select Case porm
             Case True
                 transform(Game.player)
-                Game.player.health *= hRatio
+                Game.player.health = Game.player.maxHealth * hRatio
             Case False
                 If target.GetType() Is GetType(NPC) Then transformN(target) Else transform(target)
         End Select
