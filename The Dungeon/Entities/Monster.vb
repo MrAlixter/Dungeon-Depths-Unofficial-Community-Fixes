@@ -136,7 +136,7 @@
     End Sub
     Public Sub Die()
         If name = "Explorer" Then
-            If MessageBox.Show("Would you like to take the Explorer's body?", "Body Swap?", MessageBoxButtons.YesNo) = Windows.Forms.DialogResult.Yes Then
+            If Int(Rnd() * 3) = 0 Then 'MessageBox.Show("Would you like to take the Explorer's body?", "Body Swap?", MessageBoxButtons.YesNo) = Windows.Forms.DialogResult.Yes Then
                 bodySwap(Game.player)
             End If
         End If
@@ -308,6 +308,7 @@
         Dim c1 As Chest
         c1 = Game.baseChest.Create(inventory, pos)
         If totalSum > 0 Then c1.open()
+        If name = "Explorer" Then Game.pushLblEvent("As the explorer is defeated, they mumble some arcane poem and make a hand gesture which causes the two of you to begin glowing.  With a flash, you suddenly find yourself looking at the dungeon from a slightly different angle.  As you black out and collapse, the last thing you see is your grinning face standing over you." & vbCrLf & "The Explorer has taken your body!")
         Game.npcList.Remove(Me)
         Game.lstLog.Items.Add("You've deafeated the " & name & "!")
         Game.player.perks("nekocurse") = -1
@@ -333,8 +334,8 @@
         p.sex = "Female"
         p.sexBool = True
 
-        p.health = 70 + Int(Rnd() * 50)
-        p.maxHealth = p.health
+        p.health = 10
+        p.maxHealth = 70 + Int(Rnd() * 50)
         p.attack = 5 + Int(Rnd() * 7)
         p.defence = 5 + Int(Rnd() * 7)
         p.discipline = 5 + Int(Rnd() * 7)
