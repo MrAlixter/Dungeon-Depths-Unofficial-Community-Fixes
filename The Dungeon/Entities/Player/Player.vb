@@ -375,7 +375,7 @@
 
         sState.load(Me)
 
-        health = tHth * hRatio
+        health = getmaxHealth() * hRatio
         mana = tMna
         gold = tGold
         equippedArmor = tEarm
@@ -416,7 +416,7 @@
         If tEarm.getName = "Goddess_Gown" Or tEarm.getName = "Succubus_Garb" Then tEarm = New NormalClothes
         pState.load(Me)
 
-        health = tHth * hRatio
+        health = getmaxHealth() * hRatio
         mana = tMna
         gold = tGold
         If Not tEarm.getName.Equals("Magic_Girl_Outfit") Then equippedArmor = tEarm
