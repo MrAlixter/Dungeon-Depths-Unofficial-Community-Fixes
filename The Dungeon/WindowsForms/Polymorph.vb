@@ -4,6 +4,7 @@
     Shared fList() As String = {"Succubus", "Slime", "Goddess"}
     Public bimboyellow As Color = Color.FromArgb(255, 255, 230, 160)
     Public tfForm As Boolean = False
+    Dim hRatio As Double = 1
     Private Sub Form4_Load(sender As Object, e As EventArgs) Handles MyBase.Load
         Dim newFont As Font = New System.Drawing.Font("Consolas", CInt(8 * Me.Size.Width / 210))
         For i = 0 To Me.Controls.Count - 1
@@ -22,6 +23,7 @@
                     cboxPMorph.Items.Add(Game.tFormList.Item(i))
                 Next
         End Select
+        hRatio = Game.player.health / Game.player.getmaxHealth
     End Sub
     Private Sub Button1_Click(sender As Object, e As EventArgs) Handles Button1.Click
         If cboxPMorph.Text = "-- Select --" Or Not tfForm Then
@@ -32,21 +34,23 @@
         Select Case porm
             Case True
                 transform(Game.player)
+                Game.player.health *= hRatio
             Case False
                 If target.GetType() Is GetType(NPC) Then transformN(target) Else transform(target)
         End Select
+
         Me.Close()
     End Sub
 
     Sub hpreset(ByVal h As Integer)
-        Dim p As Player = Game.player
-        If p.health - h <= 0 And p.health > p.maxHealth Then
-            p.health = p.maxHealth
-        ElseIf p.health - h <= 0 Then
+        'Dim p As Player = Game.player
+        'If p.health - h <= 0 And p.health > p.maxHealth Then
+        '    p.health = p.maxHealth
+        'ElseIf p.health - h <= 0 Then
 
-        Else
-            p.health -= h
-        End If
+        'Else
+        '    p.health -= h
+        'End If
 
     End Sub
 
