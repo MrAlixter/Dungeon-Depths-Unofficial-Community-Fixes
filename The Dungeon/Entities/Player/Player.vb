@@ -499,8 +499,8 @@
         bsizeroute()
         If hunger >= 100 Then
             perks("hunger") = 0
-        ElseIf perks("hunger") > -1 Then
-            perks("hunger") = 0
+        ElseIf hunger < 100 Then
+            perks("hunger") = -1
         ElseIf Game.turn Mod 35 = 0 Then
             hunger += 1
         End If
