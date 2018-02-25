@@ -1,4 +1,4 @@
-﻿Public Class BlackHairPotion
+﻿Public Class RandomHairPotion
     Inherits MysteryPotion
     'BlackHairPotions change hair color to black
     Sub New()
@@ -14,9 +14,9 @@
         Game.pushLblEvent("You now have randomly colored hair!")
 
         p.haircolor = Color.FromArgb(255, Int(Rnd() * 125) + 100, Int(Rnd() * 125) + 100, Int(Rnd() * 125) + 100)
-            p.createP()
-            If Not Game.player.perks("polymorphed") > -1 And Not Game.player.title.Equals("Magic Girl") Then
-                Game.player.pState.save(Game.player)
-            End If
+        p.createP()
+        If Not Game.player.perks("polymorphed") > -1 And Not Game.player.title.Equals("Magic Girl") Then
+            Game.player.pState.save(Game.player)
+        End If
     End Sub
 End Class

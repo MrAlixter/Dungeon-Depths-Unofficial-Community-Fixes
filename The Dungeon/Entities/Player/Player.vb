@@ -534,7 +534,7 @@
         inventory.Add(New TargaxSword())    '24
 
         inventory.Add(New BlondePotion())    '25
-        inventory.Add(New BlackHairPotion())    '26
+        inventory.Add(New RandomHairPotion())    '26
         inventory.Add(New RedHairPotion())    '27
         inventory.Add(New FemininePotion())    '28
         inventory.Add(New BEPotion())    '29
