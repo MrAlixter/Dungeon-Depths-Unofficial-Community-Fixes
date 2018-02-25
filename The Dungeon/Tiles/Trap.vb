@@ -11,7 +11,7 @@
         iD = CInt(cArray(2))
     End Sub
 
-    Public Sub activate()
+    Public Sub activate(ByVal i As Integer)
         Game.lstLog.Items.Add("Trap activated!")
         Select Case iD
             Case 0
@@ -70,7 +70,7 @@
         End Select
 
         pos = New Point(-1, -1)
-        Game.trapList.Remove(Me)
+        Game.trapList.RemoveAt(i)
         Game.lstLog.TopIndex = Game.lstLog.Items.Count - 1
     End Sub
 

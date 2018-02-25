@@ -369,12 +369,13 @@
         Dim tGold As Integer = gold
         Dim tEweap As Weapon = equippedWeapon
         Dim tEarm As Armor = equippedArmor
+        Dim hRatio As Double = health / getmaxHealth()
         If tEweap.getName = "Magic_Girl_Wand" Then tEweap = New BareFists()
         If tEarm.getName = "Magic_Girl_Outfit" Then tEarm = New Naked()
 
         sState.load(Me)
 
-        health = tHth
+        health = tHth * hRatio
         mana = tMna
         gold = tGold
         equippedArmor = tEarm
@@ -391,7 +392,7 @@
             Game.lstLog.TopIndex = Game.lstLog.Items.Count - 1
         End If
 
-        If health > maxHealth + hBuff Then health = maxHealth + hBuff
+        If health > maxHealth + hBuff Then health = (maxHealth + hBuff) * hRatio
         If mana > maxMana + mBuff Then mana = maxMana + mBuff
 
         Game.pushLblEvent("With a poof of smoke, you return to your original self!")
@@ -410,11 +411,12 @@
         Dim tGold As Integer = gold
         Dim tEweap As Weapon = equippedWeapon
         Dim tEarm As Armor = equippedArmor
+        Dim hRatio As Double = health / getmaxHealth()
         If tEweap.getName = "Magic_Girl_Wand" Then tEweap = New BareFists()
         If tEarm.getName = "Goddess_Gown" Or tEarm.getName = "Succubus_Garb" Then tEarm = New NormalClothes
         pState.load(Me)
 
-        health = tHth
+        health = tHth * hRatio
         mana = tMna
         gold = tGold
         If Not tEarm.getName.Equals("Magic_Girl_Outfit") Then equippedArmor = tEarm
@@ -428,7 +430,7 @@
             Game.lstLog.TopIndex = Game.lstLog.Items.Count - 1
         End If
 
-        If health > maxHealth + hBuff Then health = maxHealth + hBuff
+        If health > maxHealth + hBuff Then health = (maxHealth + hBuff) * hRatio
         If mana > maxMana + mBuff Then mana = maxMana + mBuff
         Game.pushLblEvent("You return to your former form!")
         Game.pImage = pImage

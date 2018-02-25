@@ -12,7 +12,7 @@
         id = 63
         tier = 3
         MyBase.count = 0
-        MyBase.value = 250
+        MyBase.value = 900
     End Sub
 
     Overrides Sub discard()

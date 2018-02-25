@@ -30,7 +30,7 @@ Public Class Game
     Public npcIndex As Integer = 0  'indicates which npc is encountered (NOT SAVED)
     'a list containing all valid cheats
     Public cheatList() As String = {"girl", "nude", "blue", "catc", "bmbo", "bigr", "slut", "kill", "dick", "lust", "form", "tfme",
-                                    "gogo", "mana", "fuse", "rock", "doll"} 'list of cheats (NOT SAVES)
+                                    "gogo", "mana", "fuse", "rock", "doll", "seee"} 'list of cheats (NOT SAVES)
     Public isMark As Boolean = False    'indicates if the 'mark' cheat code has been used. (NOT SAVED)
     Dim keyspresed As String = ""   'records last 4 keys pressed (NOT SAVED)
     'variables related to the mystery potions
@@ -52,7 +52,7 @@ Public Class Game
     Public beatboss() As Boolean = {False, False, False, False, False, False}  'which bosses have been beat?
     Public floorboss() As String = {"Floor0", "Marissa the Enchantress", "Targax the Brutal", "Key", "Key", "Medusa"} 'boss names (NOT SAVED)
     Dim floorLayouts As ArrayList = New ArrayList()
-    Public version As Double = 0.5      'the save file version
+    Public version As Double = 0.4      'the save file version
     Public lblEventOnClose As Action    'the event method preformed when lblEvent closes (NOT SAVED)
     Public invFilters() As Boolean = {True, True, True, True, True, True}
     Dim eClock As Integer = 15
@@ -274,7 +274,7 @@ Public Class Game
         For yInd = 0 To mBoardHeight - 1
             For xInd = 0 To mBoardWidth - 1
                 mBoard(yInd, xInd) = New mTile(0, "", Color.Black)
-                If xInd <= 23 And yInd <= 15 Then
+                If (xInd <= 23 And yInd <= 15) Then
                     Dim newPicture As PictureBox = New PictureBox()
                     newPicture.BackgroundImageLayout = ImageLayout.Stretch
                     newPicture.Size = New Point(YSize * 1.25, XSize * 1.25)
@@ -283,7 +283,6 @@ Public Class Game
                     Me.Controls.Add(newPicture)
                     mPics(yInd, xInd) = newPicture
                 End If
-
                 Dim progress As Double = (xInd + (yInd * mBoardWidth)) / numTiles
                 boardWorker.ReportProgress(40 + (progress * 60))
                 Application.DoEvents()
@@ -610,7 +609,7 @@ Public Class Game
             For i = 0 To trapList.Count - 1
                 If trapList(i).pos = player.pos Then
                     Try
-                        trapList(i).activate()
+                        trapList(i).activate(i)
                     Catch ex As Exception
                         pushLblEvent("As you wander forward, your foot falls on a pressure plate.  As soon as you hear it click, you snap to attention.  Looking around, you see that nothing seems to have happened." & vbCrLf & "𝘚𝘰𝘮𝘦𝘵𝘩𝘪𝘯𝘨 𝘮𝘶𝘴𝘵 𝘩𝘢𝘷𝘦 𝘨𝘰𝘯𝘦 𝘸𝘳𝘰𝘯𝘨 𝘸𝘪𝘵𝘩 𝘵𝘩𝘦 𝘵𝘳𝘢𝘱'𝘴 𝘢𝘤𝘵𝘪𝘷𝘢𝘵𝘪𝘰𝘯...")
                     End Try
@@ -913,6 +912,28 @@ Public Class Game
                         Dim p As Polymorph = New Polymorph
                         p.ShowDialog()
                         p.Dispose()
+                    ElseIf keyspresed = "seee" Then
+                        For indY = -mBoardHeight To mBoardHeight
+                            For indX = -mBoardWidth To mBoardWidth
+                                If player.pos.Y + indY < mBoardHeight And player.pos.Y + indY >= 0 And player.pos.X + indX < mBoardWidth And player.pos.X + indX >= 0 Then
+                                    If mBoard(player.pos.Y + indY, player.pos.X + indX).Text = "@" Then mBoard(player.pos.Y + indY, player.pos.X + indX).Text = ""
+                                    If mBoard(player.pos.Y + indY, player.pos.X + indX).Text = "H" And mBoard(player.pos.Y + indY, player.pos.X + indX).Tag < 2 Then
+                                        mBoard(player.pos.Y + indY, player.pos.X + indX).ForeColor = Color.Black
+                                        lstLog.Items.Add("Floor " & floor & ": Staircase Discovered")
+                                    End If
+                                    If mBoard(player.pos.Y + indY, player.pos.X + indX).Text = "#" And mBoard(player.pos.Y + indY, player.pos.X + indX).Tag < 2 Then
+                                        mBoard(player.pos.Y + indY, player.pos.X + indX).ForeColor = Color.Black
+                                        lstLog.Items.Add("Chest discovered!")
+                                    End If
+                                    If mBoard(player.pos.Y + indY, player.pos.X + indX).Text = "$" And mBoard(player.pos.Y + indY, player.pos.X + indX).Tag < 2 Then
+                                        mBoard(player.pos.Y + indY, player.pos.X + indX).ForeColor = Color.Navy
+                                        lstLog.Items.Add("Shop discovered!")
+                                    End If
+                                    If mBoard(player.pos.Y + indY, player.pos.X + indX).Tag = 1 Then mBoard(player.pos.Y + indY, player.pos.X + indX).Tag = 2
+                                End If
+                            Next
+                        Next
+                        lstLog.TopIndex = lstLog.Items.Count - 1
                     ElseIf keyspresed = "bigr" Then
                         player.be()
                     ElseIf keyspresed = "rock" Then
@@ -1263,7 +1284,11 @@ Public Class Game
             Catch ex As System.IO.FileNotFoundException
                 MsgBox("Error 004: No save detected!")
             Catch ex2 As Exception
-                MsgBox("Error 005: Error in loaded in save file!")
+                If MessageBox.Show("Error 005: Error in loaded in save file!" & vbCrLf & "Restart?", "Error 005", MessageBoxButtons.YesNo) = Windows.Forms.DialogResult.Yes Then
+                    Application.Restart()
+                Else
+                    Application.Exit()
+                End If
             End Try
         Else
             save("s1.ave")
@@ -1280,7 +1305,11 @@ Public Class Game
             Catch ex As System.IO.FileNotFoundException
                 MsgBox("Error 004: No save detected!")
             Catch ex2 As Exception
-                MsgBox("Error 005: Error in loaded in save file!")
+                If MessageBox.Show("Error 005: Error in loaded in save file!" & vbCrLf & "Restart?", "Error 005", MessageBoxButtons.YesNo) = Windows.Forms.DialogResult.Yes Then
+                    Application.Restart()
+                Else
+                    Application.Exit()
+                End If
             End Try
         Else
             save("s2.ave")
@@ -1297,7 +1326,11 @@ Public Class Game
             Catch ex As System.IO.FileNotFoundException
                 MsgBox("Error 004: No save detected!")
             Catch ex2 As Exception
-                MsgBox("Error 005: Error in loaded in save file!")
+                If MessageBox.Show("Error 005: Error in loaded in save file!" & vbCrLf & "Restart?", "Error 005", MessageBoxButtons.YesNo) = Windows.Forms.DialogResult.Yes Then
+                    Application.Restart()
+                Else
+                    Application.Exit()
+                End If
             End Try
         Else
             save("s3.ave")
@@ -1314,7 +1347,11 @@ Public Class Game
             Catch ex As System.IO.FileNotFoundException
                 MsgBox("Error 004: No save detected!")
             Catch ex2 As Exception
-                MsgBox("Error 005: Error in loaded in save file!")
+                If MessageBox.Show("Error 005: Error in loaded in save file!" & vbCrLf & "Restart?", "Error 005", MessageBoxButtons.YesNo) = Windows.Forms.DialogResult.Yes Then
+                    Application.Restart()
+                Else
+                    Application.Exit()
+                End If
             End Try
         Else
             save("s4.ave")
@@ -1331,7 +1368,11 @@ Public Class Game
             Catch ex As System.IO.FileNotFoundException
                 MsgBox("Error 004: No save detected!")
             Catch ex2 As Exception
-                MsgBox("Error 005: Error in loaded in save file!")
+                If MessageBox.Show("Error 005: Error in loaded in save file!" & vbCrLf & "Restart?", "Error 005", MessageBoxButtons.YesNo) = Windows.Forms.DialogResult.Yes Then
+                    Application.Restart()
+                Else
+                    Application.Exit()
+                End If
             End Try
         Else
             save("s5.ave")
@@ -1348,7 +1389,11 @@ Public Class Game
             Catch ex As System.IO.FileNotFoundException
                 MsgBox("Error 004: No save detected!")
             Catch ex2 As Exception
-                MsgBox("Error 005: Error in loaded in save file!")
+                If MessageBox.Show("Error 005: Error in loaded in save file!" & vbCrLf & "Restart?", "Error 005", MessageBoxButtons.YesNo) = Windows.Forms.DialogResult.Yes Then
+                    Application.Restart()
+                Else
+                    Application.Exit()
+                End If
             End Try
         Else
             save("s6.ave")
@@ -1365,7 +1410,11 @@ Public Class Game
             Catch ex As System.IO.FileNotFoundException
                 MsgBox("Error 004: No save detected!")
             Catch ex2 As Exception
-                MsgBox("Error 005: Error in loaded in save file!")
+                If MessageBox.Show("Error 005: Error in loaded in save file!" & vbCrLf & "Restart?", "Error 005", MessageBoxButtons.YesNo) = Windows.Forms.DialogResult.Yes Then
+                    Application.Restart()
+                Else
+                    Application.Exit()
+                End If
             End Try
         Else
             save("s7.ave")
@@ -1382,7 +1431,11 @@ Public Class Game
             Catch ex As System.IO.FileNotFoundException
                 MsgBox("Error 004: No save detected!")
             Catch ex2 As Exception
-                MsgBox("Error 005: Error in loaded in save file!")
+                If MessageBox.Show("Error 005: Error in loaded in save file!" & vbCrLf & "Restart?", "Error 005", MessageBoxButtons.YesNo) = Windows.Forms.DialogResult.Yes Then
+                    Application.Restart()
+                Else
+                    Application.Exit()
+                End If
             End Try
         Else
             save("s8.ave")
@@ -2401,7 +2454,7 @@ Public Class Game
         lblTurn.Text = "Turn: " & turn
         lblPName.Text = p.name
         lblEName.Text = t.getName
-        If t.getName.Length > 15 Then
+        If t.getName.Length > 20 Then
             Dim tRatio = 10 / t.getName.Length
             Dim newFont As Font = New System.Drawing.Font("Consolas", CInt(9 * 2 * tRatio * Me.Size.Width / 688))
             lblEName.Font = newFont
