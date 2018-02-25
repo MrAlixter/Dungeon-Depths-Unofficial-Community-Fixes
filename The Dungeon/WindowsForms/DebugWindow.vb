@@ -242,6 +242,9 @@ Public Class Debug_Window
         cd.ShowDialog()
         'REMOVED THE NEXT LINE BECAUSE IT'S NOT WORKING YET
         'CharacterGenerator.changeSC(cd.sc)
+
+        'FIXED
+        Game.player.changeSkinColor(cd.sc)
         CType(sender, Panel).BackColor = cd.sc
         cd.Dispose()
         picPreview.Image = CharacterGenerator.CreateBMP(Game.player.iArr)
@@ -253,6 +256,9 @@ Public Class Debug_Window
         cd.ShowDialog()
         'REMOVED THE NEXT LINE BECAUSE IT'S NOT WORKING YET
         'CharacterGenerator.changeHC(cd.Color)
+
+        'FIXED
+        Game.player.changeHairColor(cd.Color)
         CType(sender, Panel).BackColor = cd.Color
         'If currAtrButton.Equals(btnBHair) Then
         '    btnBHair_Click(sender, e)
@@ -286,7 +292,7 @@ Public Class Debug_Window
         Dim pic As Integer = sender.Name.Split(":")(1)
 
         Game.player.iArr(tab) = CType(sender, PictureBox).Image
-        Game.player.iArrInd(tab) = New Tuple(Of Integer, Boolean)(tab, Game.player.sexBool)
+        Game.player.iArrInd(tab) = New Tuple(Of Integer, Boolean)(pic, Game.player.sexBool)
 
         'picPreview.Image = CharacterGenerator.recolor(CharacterGenerator.CreateBMP(Game.player.iArr), Game.player.skincolor)
         picPreview.Image = CharacterGenerator.CreateBMP(Game.player.iArr)
