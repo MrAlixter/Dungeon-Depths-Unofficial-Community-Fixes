@@ -56,7 +56,7 @@ Public Class Game
     Public lblEventOnClose As Action    'the event method preformed when lblEvent closes (NOT SAVED)
     Public invFilters() As Boolean = {True, True, True, True, True, True}
     Dim eClock As Integer = 15
-    Public solFlag As Boolean = False
+    Public solFlag As Boolean = True
     Private trd As Thread
     Dim imagesWorker As BackgroundWorker
     Dim boardWorker As BackgroundWorker
@@ -1817,6 +1817,7 @@ Public Class Game
 
     'button click methods
     Private Sub btnUse_Click(sender As Object, e As EventArgs) Handles btnUse.Click
+        lblEvent.Visible = False
         If player.iArrInd(8).Equals(New Tuple(Of Integer, Boolean)(6, False)) Or player.iArrInd(8).Equals(New Tuple(Of Integer, Boolean)(12, True)) Then
             pushLblEvent("You can't use items now!")
             Exit Sub
@@ -2226,7 +2227,7 @@ Public Class Game
             End If
         Loop
         If Not combatmode Then out += " " & vbCrLf & " " & vbCrLf & "Press ';' to continue." Else out += " " & vbCrLf & " " & vbCrLf & "Click a combat button to continue."
-        lblEvent.Text = out
+        If Not lblEvent.Visible Then lblEvent.Text = out Else lblEvent.Text = vbCrLf & "---------------------------------------------------------------------------" & vbCrLf & out
         lblEvent.BringToFront()
         lblEvent.Location = New Point((265 * (Me.Size.Width / 688)) - (lblEvent.Size.Width / 2), (65 * (Me.Size.Width / 688)))
         lblEvent.Visible = True
