@@ -257,9 +257,10 @@ Public Class Debug_Window
         'REMOVED THE NEXT LINE BECAUSE IT'S NOT WORKING YET
         'CharacterGenerator.changeHC(cd.Color)
 
-        'FIXED
-        Game.player.changeHairColor(cd.Color)
-        CType(sender, Panel).BackColor = cd.Color
+        'NOT FIXED, REMOVED TEMPORARILY
+        'Game.player.changeHairColor(cd.Color)
+        'CType(sender, Panel).BackColor = cd.Color
+
         'If currAtrButton.Equals(btnBHair) Then
         '    btnBHair_Click(sender, e)
         '    currAttribute = mRearHair2
