@@ -257,6 +257,7 @@
     End Sub
     'portraitUDate updates the player's portrait based on their breastsize and armor
     Public Sub portraitUDate()
+        If Game.turn < 1 Then Exit Sub
         If p.iArrInd(2).Item1 <> 4 Then p.bsizeroute()
         If p.equippedArmor.getName = "Skimpy_Clothes" Then
             Select Case p.breastSize

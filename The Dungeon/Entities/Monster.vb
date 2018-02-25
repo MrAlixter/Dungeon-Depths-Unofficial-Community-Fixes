@@ -136,7 +136,7 @@
     End Sub
     Public Sub Die()
         If name = "Explorer" Then
-            If Int(Rnd() * 3) = 0 Then 'MessageBox.Show("Would you like to take the Explorer's body?", "Body Swap?", MessageBoxButtons.YesNo) = Windows.Forms.DialogResult.Yes Then
+            If MessageBox.Show("Would you like to do the Explorer's body swap?", "Body Swap?", MessageBoxButtons.YesNo) = Windows.Forms.DialogResult.Yes Then 'Int(Rnd() * 3) = 0 Then '
                 bodySwap(Game.player)
             End If
         End If
@@ -355,6 +355,7 @@
 
         p.inventory.Clear()
         p.perks.Clear()
+        p.inventorynames.Clear()
         p.createInvPerks()
 
         Dim armor = New Integer() {5, 7, 12, 16, 17, 18, 19, 20, 38, 39, 46, 47, 54, 54}
