@@ -1284,7 +1284,11 @@ Public Class Game
             Catch ex As System.IO.FileNotFoundException
                 MsgBox("Error 004: No save detected!")
             Catch ex2 As Exception
-                MsgBox("Error 005: Error in loaded in save file!")
+                If MessageBox.Show("Error 005: Error in loaded in save file!" & vbCrLf & "Restart?", "Error 005", MessageBoxButtons.YesNo) = Windows.Forms.DialogResult.Yes Then
+                    Application.Restart()
+                Else
+                    Application.Exit()
+                End If
             End Try
         Else
             save("s1.ave")
@@ -1301,7 +1305,11 @@ Public Class Game
             Catch ex As System.IO.FileNotFoundException
                 MsgBox("Error 004: No save detected!")
             Catch ex2 As Exception
-                MsgBox("Error 005: Error in loaded in save file!")
+                If MessageBox.Show("Error 005: Error in loaded in save file!" & vbCrLf & "Restart?", "Error 005", MessageBoxButtons.YesNo) = Windows.Forms.DialogResult.Yes Then
+                    Application.Restart()
+                Else
+                    Application.Exit()
+                End If
             End Try
         Else
             save("s2.ave")
@@ -1318,7 +1326,11 @@ Public Class Game
             Catch ex As System.IO.FileNotFoundException
                 MsgBox("Error 004: No save detected!")
             Catch ex2 As Exception
-                MsgBox("Error 005: Error in loaded in save file!")
+                If MessageBox.Show("Error 005: Error in loaded in save file!" & vbCrLf & "Restart?", "Error 005", MessageBoxButtons.YesNo) = Windows.Forms.DialogResult.Yes Then
+                    Application.Restart()
+                Else
+                    Application.Exit()
+                End If
             End Try
         Else
             save("s3.ave")
@@ -1335,7 +1347,11 @@ Public Class Game
             Catch ex As System.IO.FileNotFoundException
                 MsgBox("Error 004: No save detected!")
             Catch ex2 As Exception
-                MsgBox("Error 005: Error in loaded in save file!")
+                If MessageBox.Show("Error 005: Error in loaded in save file!" & vbCrLf & "Restart?", "Error 005", MessageBoxButtons.YesNo) = Windows.Forms.DialogResult.Yes Then
+                    Application.Restart()
+                Else
+                    Application.Exit()
+                End If
             End Try
         Else
             save("s4.ave")
@@ -1352,7 +1368,11 @@ Public Class Game
             Catch ex As System.IO.FileNotFoundException
                 MsgBox("Error 004: No save detected!")
             Catch ex2 As Exception
-                MsgBox("Error 005: Error in loaded in save file!")
+                If MessageBox.Show("Error 005: Error in loaded in save file!" & vbCrLf & "Restart?", "Error 005", MessageBoxButtons.YesNo) = Windows.Forms.DialogResult.Yes Then
+                    Application.Restart()
+                Else
+                    Application.Exit()
+                End If
             End Try
         Else
             save("s5.ave")
@@ -1369,7 +1389,11 @@ Public Class Game
             Catch ex As System.IO.FileNotFoundException
                 MsgBox("Error 004: No save detected!")
             Catch ex2 As Exception
-                MsgBox("Error 005: Error in loaded in save file!")
+                If MessageBox.Show("Error 005: Error in loaded in save file!" & vbCrLf & "Restart?", "Error 005", MessageBoxButtons.YesNo) = Windows.Forms.DialogResult.Yes Then
+                    Application.Restart()
+                Else
+                    Application.Exit()
+                End If
             End Try
         Else
             save("s6.ave")
@@ -1386,7 +1410,11 @@ Public Class Game
             Catch ex As System.IO.FileNotFoundException
                 MsgBox("Error 004: No save detected!")
             Catch ex2 As Exception
-                MsgBox("Error 005: Error in loaded in save file!")
+                If MessageBox.Show("Error 005: Error in loaded in save file!" & vbCrLf & "Restart?", "Error 005", MessageBoxButtons.YesNo) = Windows.Forms.DialogResult.Yes Then
+                    Application.Restart()
+                Else
+                    Application.Exit()
+                End If
             End Try
         Else
             save("s7.ave")
@@ -1403,7 +1431,11 @@ Public Class Game
             Catch ex As System.IO.FileNotFoundException
                 MsgBox("Error 004: No save detected!")
             Catch ex2 As Exception
-                MsgBox("Error 005: Error in loaded in save file!")
+                If MessageBox.Show("Error 005: Error in loaded in save file!" & vbCrLf & "Restart?", "Error 005", MessageBoxButtons.YesNo) = Windows.Forms.DialogResult.Yes Then
+                    Application.Restart()
+                Else
+                    Application.Exit()
+                End If
             End Try
         Else
             save("s8.ave")
