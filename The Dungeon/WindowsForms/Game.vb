@@ -2422,7 +2422,7 @@ Public Class Game
         lblTurn.Text = "Turn: " & turn
         lblPName.Text = p.name
         lblEName.Text = t.getName
-        If t.getName.Length > 15 Then
+        If t.getName.Length > 20 Then
             Dim tRatio = 10 / t.getName.Length
             Dim newFont As Font = New System.Drawing.Font("Consolas", CInt(9 * 2 * tRatio * Me.Size.Width / 688))
             lblEName.Font = newFont
