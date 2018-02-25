@@ -4,7 +4,7 @@
   <description asmv2:iconFile="favicon.ico" xmlns="urn:schemas-microsoft-com:asm.v1" />
   <application />
   <entryPoint>
-    <assemblyIdentity name="Dungeon_Depths" version="0.5.0.0" language="neutral" processorArchitecture="msil" />
+    <assemblyIdentity name="Dungeon_Depths" version="0.4.0.0" language="neutral" processorArchitecture="msil" />
     <commandLine file="Dungeon_Depths.exe" parameters="" />
   </entryPoint>
   <trustInfo>
@@ -44,13 +44,13 @@
   </dependency>
   <dependency>
     <dependentAssembly dependencyType="install" allowDelayedBinding="true" codebase="Dungeon_Depths.exe" size="720896">
-      <assemblyIdentity name="Dungeon_Depths" version="0.5.0.0" language="neutral" processorArchitecture="msil" />
+      <assemblyIdentity name="Dungeon_Depths" version="0.4.0.0" language="neutral" processorArchitecture="msil" />
       <hash>
         <dsig:Transforms>
           <dsig:Transform Algorithm="urn:schemas-microsoft-com:HashTransforms.Identity" />
         </dsig:Transforms>
         <dsig:DigestMethod Algorithm="http://www.w3.org/2000/09/xmldsig#sha1" />
-        <dsig:DigestValue>Bmuq6GbQyLu3BQaH5BpyTrT3fo0=</dsig:DigestValue>
+        <dsig:DigestValue>qWl6hgqtPjuPRVlpCaRBzM+0Fe0=</dsig:DigestValue>
       </hash>
     </dependentAssembly>
   </dependency>
