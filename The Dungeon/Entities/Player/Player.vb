@@ -380,7 +380,7 @@
         gold = tGold
         equippedArmor = tEarm
         equippedWeapon = tEweap
-        perks("slutcurse") = False
+        perks("slutcurse") = -1
         currState.save(Me)
         pState.save(Me)
 
