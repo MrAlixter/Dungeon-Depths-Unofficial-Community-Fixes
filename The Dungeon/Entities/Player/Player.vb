@@ -1038,13 +1038,13 @@
                 Case 1
                     iArrInd(2) = New Tuple(Of Integer, Boolean)(0, True)
                 Case 2
-                    iArrInd(2) = New Tuple(Of Integer, Boolean)(12, True)
+                    iArrInd(2) = New Tuple(Of Integer, Boolean)(1, True)
                 Case 3
                     iArrInd(2) = New Tuple(Of Integer, Boolean)(2, True)
                 Case 4
-                    iArrInd(2) = New Tuple(Of Integer, Boolean)(13, True)
+                    iArrInd(2) = New Tuple(Of Integer, Boolean)(3, True)
                 Case 5
-                    iArrInd(2) = New Tuple(Of Integer, Boolean)(14, True)
+                    iArrInd(2) = New Tuple(Of Integer, Boolean)(4, True)
             End Select
             Game.lstLog.Items.Add("+ 1 cup size!")
             If iArrInd(3).Item2 = False Then iArrInd(3) = New Tuple(Of Integer, Boolean)(iArrInd(3).Item1, True)
@@ -1067,13 +1067,13 @@
                 Case 1
                     iArrInd(2) = New Tuple(Of Integer, Boolean)(0, True)
                 Case 2
-                    iArrInd(2) = New Tuple(Of Integer, Boolean)(12, True)
+                    iArrInd(2) = New Tuple(Of Integer, Boolean)(1, True)
                 Case 3
                     iArrInd(2) = New Tuple(Of Integer, Boolean)(2, True)
                 Case 4
-                    iArrInd(2) = New Tuple(Of Integer, Boolean)(13, True)
+                    iArrInd(2) = New Tuple(Of Integer, Boolean)(3, True)
                 Case 5
-                    iArrInd(2) = New Tuple(Of Integer, Boolean)(14, True)
+                    iArrInd(2) = New Tuple(Of Integer, Boolean)(4, True)
             End Select
             Game.lstLog.Items.Add("- 1 cup size!")
             If iArrInd(3).Item2 = False Then iArrInd(3) = New Tuple(Of Integer, Boolean)(iArrInd(3).Item1, True)

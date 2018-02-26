@@ -11,7 +11,6 @@
     Public Overrides Sub effect()
         Dim p As Player = Game.player
         p.inventorynames(60) = "Breast_Shrinking_Potion"
-        Equipment.portraitUDate()
         If p.breastSize > 0 Then
             p.bs()
             If Not Game.player.perks("polymorphed") > -1 And Not Game.player.title.Equals("Magic Girl") Then
@@ -21,5 +20,6 @@
         Else
             Game.pushLblEvent("Nothing happens")
         End If
+        Equipment.portraitUDate()
     End Sub
 End Class
