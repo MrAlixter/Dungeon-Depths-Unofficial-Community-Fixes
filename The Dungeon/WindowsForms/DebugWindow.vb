@@ -228,13 +228,21 @@ Public Class Debug_Window
     End Sub
 
     Private Sub boxSex_SelectedValueChanged(sender As Object, e As EventArgs) Handles boxSex.SelectedValueChanged
+        Dim before = Nothing
         If Game.player.sex = "Male" And boxSex.Items(boxSex.SelectedIndex) = "Female" Then
+            before = Game.player.sex
             Game.player.MtF()
         ElseIf Game.player.sex = "Female" And boxSex.Items(boxSex.SelectedIndex) = "Male" Then
+            before = Game.player.sex
             Game.player.FtM()
         End If
-        clearPortrait()
-        loadPortrait()
+        If (Not before = Nothing) And (Game.player.sex = before) Then
+            MessageBox.Show("Something prevents the player's sex from changing")
+            boxSex.SelectedItem = before
+        Else
+            clearPortrait()
+            loadPortrait()
+        End If
     End Sub
 
     Private Sub pnlSC_Paint(sender As Object, e As EventArgs) Handles pnlSC.Click
