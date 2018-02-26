@@ -1672,7 +1672,7 @@ Partial Class Game
         Me.lblCombatEvents.Multiline = True
         Me.lblCombatEvents.Name = "lblCombatEvents"
         Me.lblCombatEvents.ReadOnly = True
-        Me.lblCombatEvents.ScrollBars = System.Windows.Forms.ScrollBars.Horizontal
+        Me.lblCombatEvents.ScrollBars = System.Windows.Forms.ScrollBars.Vertical
         Me.lblCombatEvents.Size = New System.Drawing.Size(549, 205)
         Me.lblCombatEvents.TabIndex = 11
         '
