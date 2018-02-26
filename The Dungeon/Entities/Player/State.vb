@@ -38,7 +38,7 @@
         equippedWeapon = p.equippedWeapon
         equippedArmor = p.equippedArmor
         iArrInd = p.iArrInd.Clone
-        perks = p.perks
+        perks = New Dictionary(Of String, Integer)(p.perks)
         sexBool = p.sexBool
         invNeedsUDate = p.invNeedsUDate
         haircolor = p.haircolor

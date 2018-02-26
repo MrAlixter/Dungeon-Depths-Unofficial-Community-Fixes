@@ -56,7 +56,7 @@
 
     'player transform methods
     Sub transform(ByRef p As Player)
-        If Not p.perks("polymorphed") Or Not p.title.Equals("Magic Girl") Then
+        If Not p.perks("polymorphed") > -1 And Not p.title.Equals("Magic Girl") Then
             p.pState.save(p)
         End If
         If cboxPMorph.Text.Equals(p.title) Then
@@ -207,7 +207,7 @@
             out += " Your eyes burn with an awesome fury as golden flames engulf you.  Your opponent squints and covers their eyes, blinded by your new found vibrance.  Dialing back your personal light show, you give them a cocky grin.  They may not know it, but this battle is already over."
             color1 = Color.Goldenrod
         End If
-        p.perks("polymorphed") += (Int(Rnd() * 15) * 1.5) + 2
+        p.perks("polymorphed") += (Int(Rnd() * 15) * 1.5) + 5
         Equipment.portraitUDate()
         p.createP()
         Game.lblEvent.ForeColor = color1
@@ -222,7 +222,7 @@
         Game.lstLog.TopIndex = Game.lstLog.Items.Count - 1
     End Sub
     Public Sub transform(ByRef p As Player, ByVal form As String)
-        If p.perks("polymorphed") Then
+        If p.perks("polymorphed") > -1 Then
             Game.lstLog.Items.Add("Your form prevents you from being polymorphed.")
             Exit Sub
         End If

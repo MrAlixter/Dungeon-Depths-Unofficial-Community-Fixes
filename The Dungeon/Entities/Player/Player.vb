@@ -499,10 +499,10 @@
         bsizeroute()
         If hunger >= 100 Then
             perks("hunger") = 0
-        ElseIf hunger < 100 Then
-            perks("hunger") = -1
+        ElseIf hunger > 100 Then
+            hunger = 100
         ElseIf Game.turn Mod 35 = 0 Then
-            hunger += 1
+        hunger += 1
         End If
     End Sub
     Sub createInvPerks()
@@ -1271,7 +1271,7 @@
             Else
                 t(5) = CharacterGenerator.getImg("img/fTF/tfRearHair1")(iArrInd(5).Item1 - 5)
             End If
-            If iArrInd(15).Item1 < 5 Then
+            If iArrInd(15).Item1 < 6 Then
                 t(15) = CharacterGenerator.getImg("img/fFrontHair")(iArrInd(15).Item1)
             Else
                 t(15) = CharacterGenerator.getImg("img/fTF/tfFrontHair")(iArrInd(15).Item1 - 6)
@@ -1288,7 +1288,7 @@
             Else
                 t(5) = CharacterGenerator.getImg("img/mTF/tfRearHair1")(iArrInd(5).Item1 - 5)
             End If
-            If iArrInd(15).Item1 < 5 Then
+            If iArrInd(15).Item1 < 6 Then
                 t(15) = CharacterGenerator.getImg("img/mFrontHair")(iArrInd(15).Item1)
             Else
                 t(15) = CharacterGenerator.getImg("img/mTF/tfFrontHair")(iArrInd(15).Item1 - 6)

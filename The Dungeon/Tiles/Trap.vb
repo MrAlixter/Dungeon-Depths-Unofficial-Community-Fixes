@@ -61,7 +61,9 @@
                 Dim r As Integer = Game.player.skincolor.R + 50
                 If r > 255 Then r = 255
                 Game.player.skincolor = Color.FromArgb(Game.player.skincolor.A, r, Game.player.skincolor.G, Game.player.skincolor.B)
-                Game.player.pState.save(Game.player)
+                If Not Game.player.perks("polymorphed") > -1 And Not Game.player.title.Equals("Magic Girl") Then
+                    Game.player.pState.save(Game.player)
+                End If
                 Game.player.petrify(rubyTF)
                 Dim out As String = "As you walk through the dungeon, you see what looks like a valuable ruby on the ground, and you bend down to pick it up.  As soon as you touch it, a shock runs through your body, and starting with the hand you have on the gem your body is turned into ruby.  𝘚𝘩𝘪𝘵!  Looks like that ruby was probably cursed . . ."
                 Game.pushLblEvent(out, AddressOf Trap.rubyRevert)
