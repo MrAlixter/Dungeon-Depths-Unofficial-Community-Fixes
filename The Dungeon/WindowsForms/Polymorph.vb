@@ -207,7 +207,7 @@
             out += " Your eyes burn with an awesome fury as golden flames engulf you.  Your opponent squints and covers their eyes, blinded by your new found vibrance.  Dialing back your personal light show, you give them a cocky grin.  They may not know it, but this battle is already over."
             color1 = Color.Goldenrod
         End If
-        p.perks("polymorphed") += (Int(Rnd() * 15) * 1.5) + 2
+        p.perks("polymorphed") += (Int(Rnd() * 15) * 1.5) + 5
         Equipment.portraitUDate()
         p.createP()
         Game.lblEvent.ForeColor = color1

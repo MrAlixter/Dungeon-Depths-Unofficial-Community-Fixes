@@ -1269,7 +1269,7 @@
             If iArrInd(5).Item1 < 5 Then
                 t(5) = CharacterGenerator.getImg("img/fRearHair1")(iArrInd(5).Item1)
             Else
-                t(5) = CharacterGenerator.getImg("img/fTF/tfRearHair1")(iArrInd(5).Item1 - 6)
+                t(5) = CharacterGenerator.getImg("img/fTF/tfRearHair1")(iArrInd(5).Item1 - 5)
             End If
             If iArrInd(15).Item1 < 6 Then
                 t(15) = CharacterGenerator.getImg("img/fFrontHair")(iArrInd(15).Item1)
@@ -1291,7 +1291,7 @@
             If iArrInd(15).Item1 < 6 Then
                 t(15) = CharacterGenerator.getImg("img/mFrontHair")(iArrInd(15).Item1)
             Else
-                t(15) = CharacterGenerator.getImg("img/mTF/tfFrontHair")(iArrInd(15).Item1 - 5)
+                t(15) = CharacterGenerator.getImg("img/mTF/tfFrontHair")(iArrInd(15).Item1 - 6)
             End If
             CharacterGenerator.mFrontHair(0) = CharacterGenerator.picPort.Image
         End If
