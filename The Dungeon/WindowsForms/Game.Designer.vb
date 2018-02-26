@@ -444,7 +444,7 @@ Partial Class Game
         Me.btnLeave.BackColor = System.Drawing.Color.Black
         Me.btnLeave.Font = New System.Drawing.Font("Consolas", 8.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.btnLeave.ForeColor = System.Drawing.Color.White
-        Me.btnLeave.Location = New System.Drawing.Point(456, 458)
+        Me.btnLeave.Location = New System.Drawing.Point(584, 419)
         Me.btnLeave.Name = "btnLeave"
         Me.btnLeave.Size = New System.Drawing.Size(89, 36)
         Me.btnLeave.TabIndex = 186
@@ -1672,7 +1672,7 @@ Partial Class Game
         Me.lblCombatEvents.Multiline = True
         Me.lblCombatEvents.Name = "lblCombatEvents"
         Me.lblCombatEvents.ReadOnly = True
-        Me.lblCombatEvents.ScrollBars = System.Windows.Forms.ScrollBars.Horizontal
+        Me.lblCombatEvents.ScrollBars = System.Windows.Forms.ScrollBars.Vertical
         Me.lblCombatEvents.Size = New System.Drawing.Size(549, 205)
         Me.lblCombatEvents.TabIndex = 11
         '

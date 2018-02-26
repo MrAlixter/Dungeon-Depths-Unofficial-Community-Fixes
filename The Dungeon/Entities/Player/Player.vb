@@ -375,12 +375,12 @@
 
         sState.load(Me)
 
-        health = tHth * hRatio
+        health = getmaxHealth() * hRatio
         mana = tMna
         gold = tGold
         equippedArmor = tEarm
         equippedWeapon = tEweap
-        perks("slutcurse") = False
+        perks("slutcurse") = -1
         currState.save(Me)
         pState.save(Me)
 
@@ -416,7 +416,7 @@
         If tEarm.getName = "Goddess_Gown" Or tEarm.getName = "Succubus_Garb" Then tEarm = New NormalClothes
         pState.load(Me)
 
-        health = tHth * hRatio
+        health = getmaxHealth() * hRatio
         mana = tMna
         gold = tGold
         If Not tEarm.getName.Equals("Magic_Girl_Outfit") Then equippedArmor = tEarm
@@ -499,10 +499,14 @@
         bsizeroute()
         If hunger >= 100 Then
             perks("hunger") = 0
-        ElseIf perks("hunger") > -1 Then
-            perks("hunger") = 0
+        ElseIf hunger > 100 Then
+            hunger = 100
         ElseIf Game.turn Mod 35 = 0 Then
             hunger += 1
+        End If
+        If inventory(8).count > 0 Then
+            inventory(8).count = 0
+            Game.pushLblEvent("The chicken suit phases out of reality")
         End If
     End Sub
     Sub createInvPerks()
@@ -534,7 +538,7 @@
         inventory.Add(New TargaxSword())    '24
 
         inventory.Add(New BlondePotion())    '25
-        inventory.Add(New BlackHairPotion())    '26
+        inventory.Add(New RandomHairPotion())    '26
         inventory.Add(New RedHairPotion())    '27
         inventory.Add(New FemininePotion())    '28
         inventory.Add(New BEPotion())    '29
@@ -627,8 +631,12 @@
     Sub perkUpdate()
         'hunger
         If perks("hunger") > -1 And Game.turn Mod 5 = 0 Then
-            health -= 5
-            Game.lstLog.Items.Add("Your stomach aches... -5 health!")
+            If hunger < 100 Then
+                perks("hunger") = -1
+            Else
+                health -= 5
+                Game.lstLog.Items.Add("Your stomach aches... -5 health!")
+            End If
         End If
         'bimbo tf
         If perks("bimbotf") > -1 Then
@@ -759,17 +767,11 @@
         'targax sword tf
         If perks("swordpossess") > -1 Then
             If name <> "Targax" Then
-                If equippedWeapon.getName.Equals("Sword_of_the_Brutal") Then
-                    If perks("swordpossess") = 2 Then
-                        Polymorph.transform(Me, "targax", 0)
-                    ElseIf perks("swordpossess") = 4 Then
-                        Polymorph.transform(Me, "targax", 1)
-                    ElseIf perks("swordpossess") = 6 And name <> "Targax" Then
-                        Polymorph.transform(Me, "targax", 2)
-                    End If
-                Else
+                If Not equippedWeapon.getName.Equals("Sword_of_the_Brutal") Then
                     perks("swordpossess") = -1
                 End If
+            Else
+                perks("swordpossess") = -1
             End If
         End If
         'vial of slime hair bonus
@@ -860,6 +862,10 @@
         If health <= 0 Then
             Die()
             Exit Sub
+        End If
+        If inventory(8).count > 0 Then
+            inventory(8).count = 0
+            Game.pushLblEvent("The chicken suit phases out of reality")
         End If
         If Game.lblNameTitle.Text <> name & " the " & title Then Game.lblNameTitle.Text = name & " the " & title
         If Game.lblHealth.Text <> "Health = " & health & "/" & getmaxHealth() Then Game.lblHealth.Text = "Health = " & health & "/" & getmaxHealth()
@@ -1271,7 +1277,7 @@
             Else
                 t(5) = CharacterGenerator.getImg("img/fTF/tfRearHair1")(iArrInd(5).Item1 - 5)
             End If
-            If iArrInd(15).Item1 < 5 Then
+            If iArrInd(15).Item1 < 6 Then
                 t(15) = CharacterGenerator.getImg("img/fFrontHair")(iArrInd(15).Item1)
             Else
                 t(15) = CharacterGenerator.getImg("img/fTF/tfFrontHair")(iArrInd(15).Item1 - 6)
@@ -1288,7 +1294,7 @@
             Else
                 t(5) = CharacterGenerator.getImg("img/mTF/tfRearHair1")(iArrInd(5).Item1 - 5)
             End If
-            If iArrInd(15).Item1 < 5 Then
+            If iArrInd(15).Item1 < 6 Then
                 t(15) = CharacterGenerator.getImg("img/mFrontHair")(iArrInd(15).Item1)
             Else
                 t(15) = CharacterGenerator.getImg("img/mTF/tfFrontHair")(iArrInd(15).Item1 - 6)

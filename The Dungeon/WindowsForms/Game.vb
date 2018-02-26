@@ -50,13 +50,13 @@ Public Class Game
     Dim monsterTier4() As Integer = {0, 1, 2, 3, 4, 6, 7}
     Public turn As Integer = 0  '(NOT SAVED)
     Public beatboss() As Boolean = {False, False, False, False, False, False}  'which bosses have been beat?
-    Public floorboss() As String = {"Floor0", "Marissa the Enchantress", "Targax the Brutal", "Key", "Key", "Medusa"} 'boss names (NOT SAVED)
+    Public floorboss() As String = {"Floor0", "Marissa the Enchantress", "Targax the Brutal", "Key", "the Explorer", "Medusa"} 'boss names (NOT SAVED)
     Dim floorLayouts As ArrayList = New ArrayList()
     Public version As Double = 0.4      'the save file version
     Public lblEventOnClose As Action    'the event method preformed when lblEvent closes (NOT SAVED)
     Public invFilters() As Boolean = {True, True, True, True, True, True}
     Dim eClock As Integer = 15
-    Public solFlag As Boolean = False
+    Public solFlag As Boolean = True
     Private trd As Thread
     Dim imagesWorker As BackgroundWorker
     Dim boardWorker As BackgroundWorker
@@ -622,7 +622,7 @@ Public Class Game
 
         zoom()
 
-        If floor < 3 AndAlso beatboss(floor) = False And (floor <> 3 And floor <> 4) And combatmode = False AndAlso New Point(player.pos.Y, player.pos.X).Equals(New Point(stairs.Y, stairs.X)) Then btnChallengeBoss.Visible = True Else btnChallengeBoss.Visible = False
+        If floor < 5 AndAlso beatboss(floor) = False AndAlso Not floorboss.Equals("Key") And combatmode = False AndAlso New Point(player.pos.Y, player.pos.X).Equals(New Point(stairs.Y, stairs.X)) Then btnChallengeBoss.Visible = True Else btnChallengeBoss.Visible = False
         'If picNPC.Visible Then picNPC.BackgroundImage = NPCimgList(npcIndex)
 
         player.UIupdate()
@@ -1467,49 +1467,49 @@ Public Class Game
         If savePics(1) IsNot Nothing Then
             btnS1.BackgroundImage = savePics(1)
         Else
-            If solFlag Then btnS1.Enabled = False
+            If solFlag Then btnS1.Enabled = False Else btnS1.Enabled = True
         End If
 
         If savePics(2) IsNot Nothing Then
             btnS2.BackgroundImage = savePics(2)
         Else
-            If solFlag Then btnS2.Enabled = False
+            If solFlag Then btnS2.Enabled = False Else btnS2.Enabled = True
         End If
 
         If savePics(3) IsNot Nothing Then
             btnS3.BackgroundImage = savePics(3)
         Else
-            If solFlag Then btnS3.Enabled = False
+            If solFlag Then btnS3.Enabled = False Else btnS3.Enabled = True
         End If
 
         If savePics(4) IsNot Nothing Then
             btnS4.BackgroundImage = savePics(4)
         Else
-            If solFlag Then btnS4.Enabled = False
+            If solFlag Then btnS4.Enabled = False Else btnS4.Enabled = True
         End If
 
         If savePics(5) IsNot Nothing Then
             btnS5.BackgroundImage = savePics(5)
         Else
-            If solFlag Then btnS5.Enabled = False
+            If solFlag Then btnS5.Enabled = False Else btnS5.Enabled = True
         End If
 
         If savePics(6) IsNot Nothing Then
             btnS6.BackgroundImage = savePics(6)
         Else
-            If solFlag Then btnS6.Enabled = False
+            If solFlag Then btnS6.Enabled = False Else btnS6.Enabled = True
         End If
 
         If savePics(7) IsNot Nothing Then
             btnS7.BackgroundImage = savePics(7)
         Else
-            If solFlag Then btnS7.Enabled = False
+            If solFlag Then btnS7.Enabled = False Else btnS7.Enabled = True
         End If
 
         If savePics(8) IsNot Nothing Then
             btnS8.BackgroundImage = savePics(8)
         Else
-            If solFlag Then btnS8.Enabled = False
+            If solFlag Then btnS8.Enabled = False Else btnS8.Enabled = True
         End If
 
         Me.Update()
@@ -1817,6 +1817,8 @@ Public Class Game
 
     'button click methods
     Private Sub btnUse_Click(sender As Object, e As EventArgs) Handles btnUse.Click
+        lblEvent.Visible = False
+        If Not combatmode And Not npcmode Then player.canMoveFlag = True
         If player.iArrInd(8).Equals(New Tuple(Of Integer, Boolean)(6, False)) Or player.iArrInd(8).Equals(New Tuple(Of Integer, Boolean)(12, True)) Then
             pushLblEvent("You can't use items now!")
             Exit Sub
@@ -2226,7 +2228,7 @@ Public Class Game
             End If
         Loop
         If Not combatmode Then out += " " & vbCrLf & " " & vbCrLf & "Press ';' to continue." Else out += " " & vbCrLf & " " & vbCrLf & "Click a combat button to continue."
-        lblEvent.Text = out
+        If 1 = 1 Then lblEvent.Text = out Else lblEvent.Text = vbCrLf & "---------------------------------------------------------------------------" & vbCrLf & out
         lblEvent.BringToFront()
         lblEvent.Location = New Point((265 * (Me.Size.Width / 688)) - (lblEvent.Size.Width / 2), (65 * (Me.Size.Width / 688)))
         lblEvent.Visible = True

@@ -136,7 +136,7 @@
     End Sub
     Public Sub Die()
         If name = "Explorer" Then
-            If Int(Rnd() * 3) = 0 Then 'MessageBox.Show("Would you like to take the Explorer's body?", "Body Swap?", MessageBoxButtons.YesNo) = Windows.Forms.DialogResult.Yes Then
+            If MessageBox.Show("Would you like to do the Explorer's body swap?", "Body Swap?", MessageBoxButtons.YesNo) = Windows.Forms.DialogResult.Yes Then 'Int(Rnd() * 3) = 0 Then '
                 bodySwap(Game.player)
             End If
         End If
@@ -299,6 +299,7 @@
     Private Sub endBoss()
         If sName.Equals("Marissa the Enchantress") Then Game.beatboss(1) = True
         If sName.Equals("Targax the Brutal") Then Game.beatboss(2) = True
+        If sName.Equals("Explorer") Then Game.beatboss(4) = True
     End Sub
     Private Sub endMonster()
         Dim totalSum As Integer = 0
@@ -314,7 +315,17 @@
         Game.player.perks("nekocurse") = -1
         Game.player.currState.save(Game.player)
         Game.fromCombat()
-        If Game.player.perks("swordpossess") > -1 Then Game.player.perks("swordpossess") += 1
+        If Game.player.perks("swordpossess") > -1 Then
+            Game.player.perks("swordpossess") += 1
+            If Game.player.perks("swordpossess") = 2 Then
+                Polymorph.transform(Game.player, "targax", 0)
+            ElseIf Game.player.perks("swordpossess") = 4 Then
+                Polymorph.transform(Game.player, "targax", 1)
+            ElseIf Game.player.perks("swordpossess") = 6 And name <> "Targax" Then
+                Polymorph.transform(Game.player, "targax", 2)
+            End If
+        End If
+
         dead = True
         endBoss()
         Game.lstLog.TopIndex = Game.lstLog.Items.Count - 1
@@ -355,6 +366,7 @@
 
         p.inventory.Clear()
         p.perks.Clear()
+        p.inventorynames.Clear()
         p.createInvPerks()
 
         Dim armor = New Integer() {5, 7, 12, 16, 17, 18, 19, 20, 38, 39, 46, 47, 54, 54}

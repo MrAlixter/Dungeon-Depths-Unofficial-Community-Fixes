@@ -38,7 +38,7 @@
         equippedWeapon = p.equippedWeapon
         equippedArmor = p.equippedArmor
         iArrInd = p.iArrInd.Clone
-        perks = p.perks
+        perks = New Dictionary(Of String, Integer)(p.perks)
         sexBool = p.sexBool
         invNeedsUDate = p.invNeedsUDate
         haircolor = p.haircolor
@@ -87,9 +87,8 @@
         p.sex = sex
         p.title = title
         p.description = description
-        Dim hratio As Double = p.health / p.getmaxHealth
         p.maxHealth = maxHealth
-        If p.health > maxHealth + p.hBuff Then p.health = (maxHealth + p.hBuff) * hratio
+        If p.health > maxHealth + p.hBuff Then p.health = (maxHealth + p.hBuff)
         p.maxMana = maxMana
         If p.mana > maxMana + p.mBuff Then p.mana = maxMana + p.mBuff
         p.attack = attack

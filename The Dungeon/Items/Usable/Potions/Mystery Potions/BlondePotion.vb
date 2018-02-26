@@ -12,7 +12,7 @@
         Dim p As Player = Game.player
         p.inventorynames(25) = "Blonde_Dye"
         Game.pushLblEvent("You now have blonde hair!")
-        Dim c As Integer = Int(Rnd() * 155) + 100
+        Dim c As Integer = Int(Rnd() * 100) + 155
         p.haircolor = Color.FromArgb(p.haircolor.A, c, c - 35, 0)
             p.createP()
             If Not Game.player.perks("polymorphed") > -1 And Not Game.player.title.Equals("Magic Girl") Then

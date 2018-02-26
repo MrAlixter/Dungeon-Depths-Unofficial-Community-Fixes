@@ -14,7 +14,7 @@
             p.MtF()
             Game.pushLblEvent("You are now a woman!")
         ElseIf Not p.perks("slutcurse") > -1 Then
-            p.perks("slutcurse") = -1
+            p.perks("slutcurse") = 0
             p.iArrInd(1) = New Tuple(Of Integer, Boolean)(p.sState.iArrInd(1).Item1, True)
             p.iArrInd(5) = New Tuple(Of Integer, Boolean)(p.sState.iArrInd(5).Item1, True)
             p.iArrInd(15) = New Tuple(Of Integer, Boolean)(p.sState.iArrInd(15).Item1, True)

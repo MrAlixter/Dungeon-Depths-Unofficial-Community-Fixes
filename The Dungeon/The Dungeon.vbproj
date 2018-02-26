@@ -116,7 +116,7 @@
     <Compile Include="Items\Usable\Charms\AttackCharm.vb" />
     <Compile Include="Items\Weapons\BareFists.vb" />
     <Compile Include="Items\Usable\Potions\Mystery Potions\BEPotion.vb" />
-    <Compile Include="Items\Usable\Potions\Mystery Potions\BlackHairPotion.vb" />
+    <Compile Include="Items\Usable\Potions\Mystery Potions\RandomHairPotion.vb" />
     <Compile Include="Items\Usable\Potions\Mystery Potions\BlondePotion.vb" />
     <Compile Include="Entities\Boss.vb" />
     <Compile Include="Items\Armor\BrawlerCosplay.vb" />

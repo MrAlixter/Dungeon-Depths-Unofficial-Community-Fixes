@@ -34,7 +34,7 @@
         Select Case porm
             Case True
                 transform(Game.player)
-                Game.player.health *= hRatio
+                Game.player.health = Game.player.maxHealth * hRatio
             Case False
                 If target.GetType() Is GetType(NPC) Then transformN(target) Else transform(target)
         End Select
@@ -56,7 +56,7 @@
 
     'player transform methods
     Sub transform(ByRef p As Player)
-        If Not p.perks("polymorphed") Or Not p.title.Equals("Magic Girl") Then
+        If Not p.perks("polymorphed") > -1 And Not p.title.Equals("Magic Girl") Then
             p.pState.save(p)
         End If
         If cboxPMorph.Text.Equals(p.title) Then
@@ -207,7 +207,7 @@
             out += " Your eyes burn with an awesome fury as golden flames engulf you.  Your opponent squints and covers their eyes, blinded by your new found vibrance.  Dialing back your personal light show, you give them a cocky grin.  They may not know it, but this battle is already over."
             color1 = Color.Goldenrod
         End If
-        p.perks("polymorphed") += (Int(Rnd() * 15) * 1.5) + 2
+        p.perks("polymorphed") += (Int(Rnd() * 15) * 1.5) + 5
         Equipment.portraitUDate()
         p.createP()
         Game.lblEvent.ForeColor = color1
@@ -222,7 +222,7 @@
         Game.lstLog.TopIndex = Game.lstLog.Items.Count - 1
     End Sub
     Public Sub transform(ByRef p As Player, ByVal form As String)
-        If p.perks("polymorphed") Then
+        If p.perks("polymorphed") > -1 Then
             Game.lstLog.Items.Add("Your form prevents you from being polymorphed.")
             Exit Sub
         End If
@@ -750,8 +750,8 @@
                     Game.pushLblEvent("As you cut down your most recent foe, you take a second to examine the sword you pulled off of Targax.  No doubt, this is one of the most powerful weapons you have seen let alone handled, and as it glints crimson you grin at the potential power you could seize with it.")
                 End If
             Case 1
-                If (p.iArrInd(15).Item2 And p.iArrInd(15).Item1 <> 18) Or (Not p.iArrInd(15).Item2 And p.iArrInd(15).Item1 <> 7) Then
-                    If p.iArrInd(9).Item2 Then
+                If (p.iArrInd(15).Item2 And p.iArrInd(15).Item1 <> 12) Or (Not p.iArrInd(15).Item2 And p.iArrInd(15).Item1 <> 6) Then
+                    If p.iArrInd(2).Item2 Then
                         p.iArrInd(1) = New Tuple(Of Integer, Boolean)(13, True)
                         p.iArrInd(5) = New Tuple(Of Integer, Boolean)(15, True)
                         p.iArrInd(15) = New Tuple(Of Integer, Boolean)(12, True)
@@ -770,7 +770,7 @@
                 Game.pushLblEvent("You jolt out of the trance you've been in for a unknown period of time, and stare in awe at the ornate glyphs that you have apperantly carved in the ground.  ''What the hell did I ...'' when the voice in your head returns, asking ''Do you accept?''.  ''Do I accept what?'' you demand, to which the voice in your head simply repeats the question.  About to firmly decline whatever nonsense your mental passenger is getting at, you are cut short by a thundering ''DO YOU ACCEPT''.  Your eyes space out and you answer your master the only way you can." & vbCrLf & vbCrLf & "''Yes Master.''")
                 p.maxHealth = 300
                 p.attack = 75
-                p.iArrInd(8) = New Tuple(Of Integer, Boolean)(13, True)
+                p.iArrInd(8) = New Tuple(Of Integer, Boolean)(11, True)
                 p.sState.save(p)
                 p.pState.save(p)
         End Select
