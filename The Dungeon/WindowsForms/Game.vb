@@ -1818,6 +1818,7 @@ Public Class Game
     'button click methods
     Private Sub btnUse_Click(sender As Object, e As EventArgs) Handles btnUse.Click
         lblEvent.Visible = False
+        If Not combatmode And Not npcmode Then player.canMoveFlag = True
         If player.iArrInd(8).Equals(New Tuple(Of Integer, Boolean)(6, False)) Or player.iArrInd(8).Equals(New Tuple(Of Integer, Boolean)(12, True)) Then
             pushLblEvent("You can't use items now!")
             Exit Sub
