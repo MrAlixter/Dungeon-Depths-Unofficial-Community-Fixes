@@ -1467,49 +1467,49 @@ Public Class Game
         If savePics(1) IsNot Nothing Then
             btnS1.BackgroundImage = savePics(1)
         Else
-            If solFlag Then btnS1.Enabled = False
+            If solFlag Then btnS1.Enabled = False Else btnS1.Enabled = True
         End If
 
         If savePics(2) IsNot Nothing Then
             btnS2.BackgroundImage = savePics(2)
         Else
-            If solFlag Then btnS2.Enabled = False
+            If solFlag Then btnS2.Enabled = False Else btnS2.Enabled = True
         End If
 
         If savePics(3) IsNot Nothing Then
             btnS3.BackgroundImage = savePics(3)
         Else
-            If solFlag Then btnS3.Enabled = False
+            If solFlag Then btnS3.Enabled = False Else btnS3.Enabled = True
         End If
 
         If savePics(4) IsNot Nothing Then
             btnS4.BackgroundImage = savePics(4)
         Else
-            If solFlag Then btnS4.Enabled = False
+            If solFlag Then btnS4.Enabled = False Else btnS4.Enabled = True
         End If
 
         If savePics(5) IsNot Nothing Then
             btnS5.BackgroundImage = savePics(5)
         Else
-            If solFlag Then btnS5.Enabled = False
+            If solFlag Then btnS5.Enabled = False Else btnS5.Enabled = True
         End If
 
         If savePics(6) IsNot Nothing Then
             btnS6.BackgroundImage = savePics(6)
         Else
-            If solFlag Then btnS6.Enabled = False
+            If solFlag Then btnS6.Enabled = False Else btnS6.Enabled = True
         End If
 
         If savePics(7) IsNot Nothing Then
             btnS7.BackgroundImage = savePics(7)
         Else
-            If solFlag Then btnS7.Enabled = False
+            If solFlag Then btnS7.Enabled = False Else btnS7.Enabled = True
         End If
 
         If savePics(8) IsNot Nothing Then
             btnS8.BackgroundImage = savePics(8)
         Else
-            If solFlag Then btnS8.Enabled = False
+            If solFlag Then btnS8.Enabled = False Else btnS8.Enabled = True
         End If
 
         Me.Update()
@@ -1818,6 +1818,7 @@ Public Class Game
     'button click methods
     Private Sub btnUse_Click(sender As Object, e As EventArgs) Handles btnUse.Click
         lblEvent.Visible = False
+        If Not combatmode And Not npcmode Then player.canMoveFlag = True
         If player.iArrInd(8).Equals(New Tuple(Of Integer, Boolean)(6, False)) Or player.iArrInd(8).Equals(New Tuple(Of Integer, Boolean)(12, True)) Then
             pushLblEvent("You can't use items now!")
             Exit Sub

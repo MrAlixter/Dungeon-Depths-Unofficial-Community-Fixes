@@ -380,7 +380,7 @@
         gold = tGold
         equippedArmor = tEarm
         equippedWeapon = tEweap
-        perks("slutcurse") = False
+        perks("slutcurse") = -1
         currState.save(Me)
         pState.save(Me)
 
@@ -502,7 +502,11 @@
         ElseIf hunger > 100 Then
             hunger = 100
         ElseIf Game.turn Mod 35 = 0 Then
-        hunger += 1
+            hunger += 1
+        End If
+        If inventory(8).count > 0 Then
+            inventory(8).count = 0
+            Game.pushLblEvent("The chicken suit phases out of reality")
         End If
     End Sub
     Sub createInvPerks()
@@ -759,17 +763,11 @@
         'targax sword tf
         If perks("swordpossess") > -1 Then
             If name <> "Targax" Then
-                If equippedWeapon.getName.Equals("Sword_of_the_Brutal") Then
-                    If perks("swordpossess") = 2 Then
-                        Polymorph.transform(Me, "targax", 0)
-                    ElseIf perks("swordpossess") = 4 Then
-                        Polymorph.transform(Me, "targax", 1)
-                    ElseIf perks("swordpossess") = 6 And name <> "Targax" Then
-                        Polymorph.transform(Me, "targax", 2)
-                    End If
-                Else
+                If Not equippedWeapon.getName.Equals("Sword_of_the_Brutal") Then
                     perks("swordpossess") = -1
                 End If
+            Else
+                perks("swordpossess") = -1
             End If
         End If
         'vial of slime hair bonus
@@ -860,6 +858,10 @@
         If health <= 0 Then
             Die()
             Exit Sub
+        End If
+        If inventory(8).count > 0 Then
+            inventory(8).count = 0
+            Game.pushLblEvent("The chicken suit phases out of reality")
         End If
         If Game.lblNameTitle.Text <> name & " the " & title Then Game.lblNameTitle.Text = name & " the " & title
         If Game.lblHealth.Text <> "Health = " & health & "/" & getmaxHealth() Then Game.lblHealth.Text = "Health = " & health & "/" & getmaxHealth()
