@@ -240,10 +240,6 @@ Public Class Debug_Window
     Private Sub pnlSC_Paint(sender As Object, e As EventArgs) Handles pnlSC.Click
         Dim cd As New SCPicker
         cd.ShowDialog()
-        'REMOVED THE NEXT LINE BECAUSE IT'S NOT WORKING YET
-        'CharacterGenerator.changeSC(cd.sc)
-
-        'FIXED
         Game.player.changeSkinColor(cd.sc)
         CType(sender, Panel).BackColor = cd.sc
         cd.Dispose()
@@ -254,8 +250,7 @@ Public Class Debug_Window
         Dim cd As New ColorDialog()
         cd.Color = Game.player.haircolor
         cd.ShowDialog()
-        'REMOVED THE NEXT LINE BECAUSE IT'S NOT WORKING YET
-        'CharacterGenerator.changeHC(cd.Color)
+        Game.player.changeHairColor(cd.Color)
 
         'NOT FIXED, REMOVED TEMPORARILY
         'Game.player.changeHairColor(cd.Color)
