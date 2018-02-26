@@ -56,7 +56,7 @@
 
     'player transform methods
     Sub transform(ByRef p As Player)
-        If Not p.perks("polymorphed") Or Not p.title.Equals("Magic Girl") Then
+        If Not p.perks("polymorphed") > -1 And Not p.title.Equals("Magic Girl") Then
             p.pState.save(p)
         End If
         If cboxPMorph.Text.Equals(p.title) Then
@@ -222,7 +222,7 @@
         Game.lstLog.TopIndex = Game.lstLog.Items.Count - 1
     End Sub
     Public Sub transform(ByRef p As Player, ByVal form As String)
-        If p.perks("polymorphed") Then
+        If p.perks("polymorphed") > -1 Then
             Game.lstLog.Items.Add("Your form prevents you from being polymorphed.")
             Exit Sub
         End If
