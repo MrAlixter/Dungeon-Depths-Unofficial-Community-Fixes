@@ -631,8 +631,12 @@
     Sub perkUpdate()
         'hunger
         If perks("hunger") > -1 And Game.turn Mod 5 = 0 Then
-            health -= 5
-            Game.lstLog.Items.Add("Your stomach aches... -5 health!")
+            If hunger < 100 Then
+                perks("hunger") = -1
+            Else
+                health -= 5
+                Game.lstLog.Items.Add("Your stomach aches... -5 health!")
+            End If
         End If
         'bimbo tf
         If perks("bimbotf") > -1 Then
