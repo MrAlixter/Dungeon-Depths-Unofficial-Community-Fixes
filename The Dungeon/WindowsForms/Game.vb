@@ -2532,7 +2532,7 @@ Public Class Game
             Else
                 t(5) = CharacterGenerator.getImg("img/fTF/tfRearHair1")(iarrind(5).Item1 - 5)
             End If
-            If iarrind(15).Item1 < 5 Then
+            If iarrind(15).Item1 < 6 Then
                 t(15) = CharacterGenerator.getImg("img/fFrontHair")(iarrind(15).Item1)
             Else
                 t(15) = CharacterGenerator.getImg("img/fTF/tfFrontHair")(iarrind(15).Item1 - 6)
@@ -2549,7 +2549,7 @@ Public Class Game
             Else
                 t(5) = CharacterGenerator.getImg("img/mTF/tfRearHair1")(iarrind(5).Item1 - 5)
             End If
-            If iarrind(15).Item1 < 5 Then
+            If iarrind(15).Item1 < 6 Then
                 t(15) = CharacterGenerator.getImg("img/mFrontHair")(iarrind(15).Item1)
             Else
                 t(15) = CharacterGenerator.getImg("img/mTF/tfFrontHair")(iarrind(15).Item1 - 6)
