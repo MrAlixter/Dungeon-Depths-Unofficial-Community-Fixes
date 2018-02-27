@@ -26,5 +26,6 @@
         If Not Game.player.perks("polymorphed") > -1 And Not Game.player.title.Equals("Magic Girl") Then
             Game.player.pState.save(Game.player)
         End If
+        Equipment.portraitUDate()
     End Sub
 End Class

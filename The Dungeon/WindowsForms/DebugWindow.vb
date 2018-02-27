@@ -13,7 +13,7 @@ Public Class Debug_Window
         boxTurn.Value = Game.turn
 
         'MAP
-        Dim magnification As Integer = Math.Min( picBoard.Width/Game.mBoardWidth, picBoard.Height/Game.mBoardHeight)
+        Dim magnification As Integer = Math.Min(picBoard.Width / Game.mBoardWidth, picBoard.Height / Game.mBoardHeight)
         If magnification < 1 Then magnification = 1
         picBoard.Image = New Bitmap(Game.mBoardWidth * magnification, Game.mBoardHeight * magnification)
         For boardX = 0 To Game.mBoardWidth - 1
