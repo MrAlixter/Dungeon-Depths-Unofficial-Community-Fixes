@@ -24,9 +24,10 @@ Partial Class Debug_Window
     Private Sub InitializeComponent()
         Dim resources As System.ComponentModel.ComponentResourceManager = New System.ComponentModel.ComponentResourceManager(GetType(Debug_Window))
         Me.tabMain = New System.Windows.Forms.TabControl()
+        Me.tabInformation = New System.Windows.Forms.TabPage()
+        Me.boxNotes = New System.Windows.Forms.RichTextBox()
         Me.tabGeneral = New System.Windows.Forms.TabPage()
         Me.groupNotes = New System.Windows.Forms.GroupBox()
-        Me.boxNotes = New System.Windows.Forms.RichTextBox()
         Me.groupGeneral = New System.Windows.Forms.GroupBox()
         Me.boxTurn = New System.Windows.Forms.NumericUpDown()
         Me.boxFloor = New System.Windows.Forms.NumericUpDown()
@@ -93,7 +94,9 @@ Partial Class Debug_Window
         Me.lblInventory = New System.Windows.Forms.Label()
         Me.boxItems = New System.Windows.Forms.ListBox()
         Me.lblItems = New System.Windows.Forms.Label()
+        Me.picBoard = New System.Windows.Forms.PictureBox()
         Me.tabMain.SuspendLayout()
+        Me.tabInformation.SuspendLayout()
         Me.tabGeneral.SuspendLayout()
         Me.groupNotes.SuspendLayout()
         Me.groupGeneral.SuspendLayout()
@@ -115,10 +118,12 @@ Partial Class Debug_Window
         CType(Me.boxHealth, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.tabInventory.SuspendLayout()
         CType(Me.number, System.ComponentModel.ISupportInitialize).BeginInit()
+        CType(Me.picBoard, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.SuspendLayout()
         '
         'tabMain
         '
+        Me.tabMain.Controls.Add(Me.tabInformation)
         Me.tabMain.Controls.Add(Me.tabGeneral)
         Me.tabMain.Controls.Add(Me.tabPlayer)
         Me.tabMain.Controls.Add(Me.tabInventory)
@@ -129,6 +134,29 @@ Partial Class Debug_Window
         Me.tabMain.SelectedIndex = 0
         Me.tabMain.Size = New System.Drawing.Size(750, 576)
         Me.tabMain.TabIndex = 207
+        '
+        'tabInformation
+        '
+        Me.tabInformation.BackColor = System.Drawing.Color.Black
+        Me.tabInformation.Controls.Add(Me.boxNotes)
+        Me.tabInformation.ForeColor = System.Drawing.Color.White
+        Me.tabInformation.Location = New System.Drawing.Point(4, 24)
+        Me.tabInformation.Name = "tabInformation"
+        Me.tabInformation.Padding = New System.Windows.Forms.Padding(3)
+        Me.tabInformation.Size = New System.Drawing.Size(742, 548)
+        Me.tabInformation.TabIndex = 3
+        Me.tabInformation.Text = "INFORMATION"
+        '
+        'boxNotes
+        '
+        Me.boxNotes.BackColor = System.Drawing.Color.Black
+        Me.boxNotes.ForeColor = System.Drawing.Color.White
+        Me.boxNotes.Location = New System.Drawing.Point(135, 55)
+        Me.boxNotes.Name = "boxNotes"
+        Me.boxNotes.ReadOnly = True
+        Me.boxNotes.Size = New System.Drawing.Size(472, 439)
+        Me.boxNotes.TabIndex = 2
+        Me.boxNotes.Text = resources.GetString("boxNotes.Text")
         '
         'tabGeneral
         '
@@ -144,23 +172,12 @@ Partial Class Debug_Window
         '
         'groupNotes
         '
-        Me.groupNotes.Controls.Add(Me.boxNotes)
+        Me.groupNotes.Controls.Add(Me.picBoard)
         Me.groupNotes.Location = New System.Drawing.Point(197, 7)
         Me.groupNotes.Name = "groupNotes"
         Me.groupNotes.Size = New System.Drawing.Size(537, 535)
         Me.groupNotes.TabIndex = 4
         Me.groupNotes.TabStop = False
-        '
-        'boxNotes
-        '
-        Me.boxNotes.BackColor = System.Drawing.Color.Black
-        Me.boxNotes.ForeColor = System.Drawing.Color.White
-        Me.boxNotes.Location = New System.Drawing.Point(68, 67)
-        Me.boxNotes.Name = "boxNotes"
-        Me.boxNotes.ReadOnly = True
-        Me.boxNotes.Size = New System.Drawing.Size(400, 400)
-        Me.boxNotes.TabIndex = 1
-        Me.boxNotes.Text = resources.GetString("boxNotes.Text")
         '
         'groupGeneral
         '
@@ -944,6 +961,14 @@ Partial Class Debug_Window
         Me.lblItems.TabIndex = 7
         Me.lblItems.Text = "ITEMS"
         '
+        'picBoard
+        '
+        Me.picBoard.Location = New System.Drawing.Point(18, 17)
+        Me.picBoard.Name = "picBoard"
+        Me.picBoard.Size = New System.Drawing.Size(500, 500)
+        Me.picBoard.TabIndex = 0
+        Me.picBoard.TabStop = False
+        '
         'Debug_Window
         '
         Me.AutoScaleDimensions = New System.Drawing.SizeF(6.0!, 13.0!)
@@ -957,6 +982,7 @@ Partial Class Debug_Window
         Me.StartPosition = System.Windows.Forms.FormStartPosition.CenterParent
         Me.Text = "Debug Window"
         Me.tabMain.ResumeLayout(False)
+        Me.tabInformation.ResumeLayout(False)
         Me.tabGeneral.ResumeLayout(False)
         Me.groupNotes.ResumeLayout(False)
         Me.groupGeneral.ResumeLayout(False)
@@ -981,6 +1007,7 @@ Partial Class Debug_Window
         Me.tabInventory.ResumeLayout(False)
         Me.tabInventory.PerformLayout()
         CType(Me.number, System.ComponentModel.ISupportInitialize).EndInit()
+        CType(Me.picBoard, System.ComponentModel.ISupportInitialize).EndInit()
         Me.ResumeLayout(False)
 
     End Sub
@@ -1053,5 +1080,7 @@ Partial Class Debug_Window
     Friend WithEvents lblSC As Label
     Friend WithEvents pnlSC As Panel
     Friend WithEvents groupNotes As GroupBox
+    Friend WithEvents tabInformation As TabPage
     Friend WithEvents boxNotes As RichTextBox
+    Friend WithEvents picBoard As PictureBox
 End Class

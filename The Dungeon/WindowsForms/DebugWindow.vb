@@ -12,6 +12,64 @@ Public Class Debug_Window
         boxFloor.Value = Game.floor
         boxTurn.Value = Game.turn
 
+        'MAP
+        Dim magnification As Integer = Math.Min( picBoard.Width/Game.mBoardWidth, picBoard.Height/Game.mBoardHeight)
+        If magnification < 1 Then magnification = 1
+        picBoard.Image = New Bitmap(Game.mBoardWidth * magnification, Game.mBoardHeight * magnification)
+        For boardX = 0 To Game.mBoardWidth - 1
+            For boardY = 0 To Game.mBoardHeight - 1
+                If (Game.mBoard(boardY, boardX).Text = "#") Then 'Chest
+                    For x = 1 To magnification
+                        For y = 1 To magnification
+                            CType(picBoard.Image, Bitmap).SetPixel(boardX * magnification + x - 1, boardY * magnification + y - 1, Color.Yellow)
+                        Next
+                    Next
+                ElseIf (Game.mBoard(boardY, boardX).Text = "H") Then 'Stairs
+                    For x = 1 To magnification
+                        For y = 1 To magnification
+                            CType(picBoard.Image, Bitmap).SetPixel(boardX * magnification + x - 1, boardY * magnification + y - 1, Color.Brown)
+                        Next
+                    Next
+                ElseIf (Game.mBoard(boardY, boardX).Text = "@" And Game.player.pos.X = boardX And Game.player.pos.Y = boardY) Then 'Player
+                    For x = 1 To magnification
+                        For y = 1 To magnification
+                            CType(picBoard.Image, Bitmap).SetPixel(boardX * magnification + x - 1, boardY * magnification + y - 1, Color.LawnGreen)
+                        Next
+                    Next
+                ElseIf (Game.mBoard(boardY, boardX).Text = "@") Then 'Statue
+                    For x = 1 To magnification
+                        For y = 1 To magnification
+                            CType(picBoard.Image, Bitmap).SetPixel(boardX * magnification + x - 1, boardY * magnification + y - 1, Color.Gray)
+                        Next
+                    Next
+                ElseIf (Game.mBoard(boardY, boardX).Text = "$") Then 'NPC
+                    For x = 1 To magnification
+                        For y = 1 To magnification
+                            CType(picBoard.Image, Bitmap).SetPixel(boardX * magnification + x - 1, boardY * magnification + y - 1, Color.Blue)
+                        Next
+                    Next
+                ElseIf (Game.mBoard(boardY, boardX).Tag = 2) Then 'Seen
+                    For x = 1 To magnification
+                        For y = 1 To magnification
+                            CType(picBoard.Image, Bitmap).SetPixel(boardX * magnification + x - 1, boardY * magnification + y - 1, Color.White)
+                        Next
+                    Next
+                ElseIf (Game.mBoard(boardY, boardX).Tag = 1) Then 'Unseen
+                    For x = 1 To magnification
+                        For y = 1 To magnification
+                            CType(picBoard.Image, Bitmap).SetPixel(boardX * magnification + x - 1, boardY * magnification + y - 1, Color.Gray)
+                        Next
+                    Next
+                Else 'Nothing
+                    For x = 1 To magnification
+                        For y = 1 To magnification
+                            CType(picBoard.Image, Bitmap).SetPixel(boardX * magnification + x - 1, boardY * magnification + y - 1, Color.Black)
+                        Next
+                    Next
+                End If
+            Next
+        Next
+
         'PLAYER
         boxName.Text = Game.player.name
         boxSex.Items.Add("Male")
@@ -41,7 +99,6 @@ Public Class Debug_Window
 
         'PORTRAIT
         loadPortrait()
-
 
         'INVENTORY
         updateInventoryList()
