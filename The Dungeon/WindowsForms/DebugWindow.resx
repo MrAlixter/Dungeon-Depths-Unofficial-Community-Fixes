@@ -121,13 +121,11 @@
     <value>DISCLAIMER: 
 Editing things in here can break the game (especially since it is still in development). 
 Things that are read-only: 
- * Floor
+ * Floor Number
+ * Floor Layout
  * Class/Form/Title
 Things that are editable, with issues:
- * Portrait
-   * Skin Color
-   * Hair Color
-   * Portrait parts (body, clothes, hair, etc.)
+ * Portrait parts (body, clothes, hair, etc.)
 Things that are fully editable:
  * Turn
  * Stats
@@ -142,6 +140,8 @@ Things that are fully editable:
    * Speed
    * Evade
    * Gold
+ * Skin Color
+ * Hair Color
  * Inventory</value>
   </data>
   <assembly alias="System.Drawing" name="System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a" />
