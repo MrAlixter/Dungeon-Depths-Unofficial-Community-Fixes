@@ -573,6 +573,7 @@
                     End If
                 Else
                     p.be()
+                    Equipment.portraitUDate()
                 End If
                 If p.title.Equals("Magic Girl") Then
                     p.iArrInd(16) = New Tuple(Of Integer, Boolean)(CharacterGenerator.fHat.Count - 3, True)
@@ -616,6 +617,7 @@
                     p.iArrInd(2) = New Tuple(Of Integer, Boolean)(7, True)
                 Else
                     p.be()
+                    Equipment.portraitUDate()
                 End If
 
                 If Not p.equippedArmor.getName.Equals("Naked") And Not p.title.Equals("Magic Girl") And Game.isMark = False Then
