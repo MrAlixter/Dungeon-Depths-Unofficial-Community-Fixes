@@ -622,7 +622,7 @@ Public Class Game
 
         zoom()
 
-        If floor < 5 AndAlso beatboss(floor) = False AndAlso Not floorboss.Equals("Key") And combatmode = False AndAlso New Point(player.pos.Y, player.pos.X).Equals(New Point(stairs.Y, stairs.X)) Then btnChallengeBoss.Visible = True Else btnChallengeBoss.Visible = False
+        If floor < 5 AndAlso beatboss(floor) = False AndAlso Not floorboss(floor).Equals("Key") And combatmode = False AndAlso New Point(player.pos.Y, player.pos.X).Equals(New Point(stairs.Y, stairs.X)) Then btnChallengeBoss.Visible = True Else btnChallengeBoss.Visible = False
         'If picNPC.Visible Then picNPC.BackgroundImage = NPCimgList(npcIndex)
 
         player.UIupdate()
