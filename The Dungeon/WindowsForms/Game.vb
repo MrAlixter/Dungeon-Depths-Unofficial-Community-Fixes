@@ -995,6 +995,7 @@ Public Class Game
         If player.pos.Equals(shopkeeper.pos) Then
             npcEncounter(shopkeeper)
         End If
+        If pnlDescript.Visible = True Then pnlDescript.Visible = False
         If lblEvent.Visible = True And npcmode = False Then
             picNPC.Visible = False
             lblEvent.Visible = False
@@ -1525,6 +1526,114 @@ Public Class Game
         player.canMoveFlag = True
     End Sub
 
+    'combat UI methods
+    Sub pushLblCombatEvent(ByVal s As String)
+        Dim sSplit() As String = s.Split(" ")
+        Dim c As Integer = 0
+        Dim ct As Integer = 0
+        Dim out As String = ""
+        Do While c < sSplit.Length
+            If ct < 50 Then
+                If Not sSplit(c).Equals("fugoo") Then
+                    out += sSplit(c) & " "
+                    ct += sSplit(c).Length + 1
+                    c += 1
+                Else
+                    sSplit(c) = ""
+                    out += vbCrLf
+                    ct = 0
+                    c += 1
+                End If
+            Else
+                out += vbCrLf
+                ct = 0
+            End If
+        Loop
+        lblCombatEvents.Text += (out & vbCrLf &
+                                 "-------------------------------------------------" & vbCrLf)
+    End Sub
+    Sub updatePnlCombat(ByVal p As Player, ByVal t As Monster)
+        If lblTurn.Text.Equals("Turn: " & turn) Or t Is Nothing Then Exit Sub
+        If t.health <= 0 Then
+            t.Die()
+            Exit Sub
+        End If
+        lblPHealth.Text = p.health & "/" & p.getmaxHealth
+        lblEHealth.Text = t.health & "/" & t.maxHealth
+        lblTurn.Text = "Turn: " & turn
+        lblPName.Text = p.name
+        lblEName.Text = t.getName
+        If t.getName.Length > 20 Then
+            Dim tRatio = 10 / t.getName.Length
+            Dim newFont As Font = New System.Drawing.Font("Consolas", CInt(9 * 2 * tRatio * Me.Size.Width / 688))
+            lblEName.Font = newFont
+        Else
+            Dim newFont As Font = New System.Drawing.Font("Consolas", CInt(9 * Me.Size.Width / 688))
+            lblEName.Font = newFont
+        End If
+
+        If lblEHealthChange.Tag > 0 Then
+            lblEHealthChange.Text = "+" & lblEHealthChange.Tag
+            lblEHealthChange.ForeColor = Color.YellowGreen
+        Else
+            lblEHealthChange.Text = lblEHealthChange.Tag
+            lblEHealthChange.ForeColor = Color.Crimson
+        End If
+        If lblEHealthChange.Tag = 0 Then lblEHealthChange.Visible = False Else lblEHealthChange.Visible = True
+        lblEHealthChange.Tag = 0
+
+        If lblPHealtDiff.Tag > 0 Then
+            lblPHealtDiff.Text = "+" & lblPHealtDiff.Tag
+            lblPHealtDiff.ForeColor = Color.YellowGreen
+        Else
+            lblPHealtDiff.Text = lblPHealtDiff.Tag
+            lblPHealtDiff.ForeColor = Color.Crimson
+        End If
+        If lblPHealtDiff.Tag = 0 Then lblPHealtDiff.Visible = False Else lblPHealtDiff.Visible = True
+        lblPHealtDiff.Tag = 0
+
+        Dim ratioEH As Double = t.health / t.maxHealth
+        picEHbar.Size = New Size(ratioEH * 174, 15)
+        Dim x As Integer = picEHbar.Location.X + (ratioEH * 174) - 30
+        If x < picEHbar.Location.X Then x = picEHbar.Location.X
+        lblEHealthChange.Location = New Point(x, lblEHealthChange.Location.Y)
+        If healthCol Is Nothing = False Then
+            Dim place = Int(ratioEH * 100)
+            If place >= 100 Then place = 99
+            If place < 0 Then place = 0
+            picEHbar.BackColor = healthCol.GetPixel(place, 0)
+        Else
+            If ratioEH <= 0.2 Then picEHbar.BackColor = Color.Crimson Else picEHbar.BackColor = Color.YellowGreen
+        End If
+
+        Dim ratioPH As Double = p.health / p.getmaxHealth
+        picPHealth.Size = New Size(ratioPH * 174, 15)
+        x = picPHealth.Location.X + (ratioPH * 174) - 30
+        If x > picPHealth.Location.X + 174 - 30 Then x = picPHealth.Location.X + 174 - 30
+        lblPHealtDiff.Location = New Point(x, lblPHealtDiff.Location.Y)
+        If healthCol Is Nothing = False Then
+            Dim place = Int(ratioPH * 100)
+            If place >= 100 Then place = 99
+            If place < 0 Then place = 0
+            picPHealth.BackColor = healthCol.GetPixel(place, 0)
+        Else
+            If ratioPH <= 0.2 Then picPHealth.BackColor = Color.Crimson Else picPHealth.BackColor = Color.YellowGreen
+        End If
+
+        player.UIupdate()
+    End Sub
+    Sub pnlCombatClose()
+        pnlCombat.Visible = False
+        lblCombatEvents.Text = ""
+    End Sub
+
+    'description panel methods
+    Sub toDesc()
+        txtDescript.Text = player.genDescription
+        picDescPort.BackgroundImage = picPortrait.BackgroundImage
+        pnlDescript.Visible = True
+    End Sub
+
     'inventory functions
     'lstInventory_SelectedValueChanged handles the selecting of items from the inventory listbox
     Private Sub lstInventory_SelectedValueChanged(sender As Object, e As EventArgs) Handles lstInventory.SelectedValueChanged
@@ -1979,6 +2088,7 @@ Public Class Game
     End Sub
     Private Sub btnEXM_Click(sender As Object, e As EventArgs) Handles btnEXM.Click
         lstLog.Items.Add(player.description)
+        toDesc()
         lstLog.TopIndex = lstLog.Items.Count - 1
     End Sub
     Private Sub btnIns_Click(sender As Object, e As EventArgs) Handles btnIns.Click
@@ -2178,6 +2288,12 @@ Public Class Game
         player.invNeedsUDate = True
         player.UIupdate()
     End Sub
+
+    'timer methods
+    Private Sub tmrKeyCD_Tick(sender As Object, e As EventArgs) Handles tmrKeyCD.Tick
+        tmrKeyCD.Enabled = False
+    End Sub
+
     'utility methods/functions
     'ShuffleArray takes an array, and randomizes its order
     Public Sub ShuffleArray(ByRef A() As String)
@@ -2377,10 +2493,6 @@ Public Class Game
         Return Color.FromArgb(a, r, g, b)
     End Function
 
-    Private Sub tmrKeyCD_Tick(sender As Object, e As EventArgs) Handles tmrKeyCD.Tick
-        tmrKeyCD.Enabled = False
-    End Sub
-
     Private Sub ReportToolStripMenuItem_Click(sender As Object, e As EventArgs) Handles ReportToolStripMenuItem.Click
         Process.Start("https://bitbucket.org/VowelHeavyUsername/dungeon_depths/issues?status=new&status=open")
     End Sub
@@ -2419,105 +2531,6 @@ Public Class Game
         Dim worker As BackgroundWorker = CType(sender, BackgroundWorker)
         player.createP()
         Equipment.portraitUDate()
-    End Sub
-    Sub pushLblCombatEvent(ByVal s As String)
-        Dim sSplit() As String = s.Split(" ")
-        Dim c As Integer = 0
-        Dim ct As Integer = 0
-        Dim out As String = ""
-        Do While c < sSplit.Length
-            If ct < 50 Then
-                If Not sSplit(c).Equals("fugoo") Then
-                    out += sSplit(c) & " "
-                    ct += sSplit(c).Length + 1
-                    c += 1
-                Else
-                    sSplit(c) = ""
-                    out += vbCrLf
-                    ct = 0
-                    c += 1
-                End If
-            Else
-                out += vbCrLf
-                ct = 0
-            End If
-        Loop
-        lblCombatEvents.Text += (out & vbCrLf &
-                                 "-------------------------------------------------" & vbCrLf)
-    End Sub
-    Sub updatePnlCombat(ByVal p As Player, ByVal t As Monster)
-        If lblTurn.Text.Equals("Turn: " & turn) Or t Is Nothing Then Exit Sub
-        If t.health <= 0 Then
-            t.Die()
-            Exit Sub
-        End If
-        lblPHealth.Text = p.health & "/" & p.getmaxHealth
-        lblEHealth.Text = t.health & "/" & t.maxHealth
-        lblTurn.Text = "Turn: " & turn
-        lblPName.Text = p.name
-        lblEName.Text = t.getName
-        If t.getName.Length > 20 Then
-            Dim tRatio = 10 / t.getName.Length
-            Dim newFont As Font = New System.Drawing.Font("Consolas", CInt(9 * 2 * tRatio * Me.Size.Width / 688))
-            lblEName.Font = newFont
-        Else
-            Dim newFont As Font = New System.Drawing.Font("Consolas", CInt(9 * Me.Size.Width / 688))
-            lblEName.Font = newFont
-        End If
-
-        If lblEHealthChange.Tag > 0 Then
-            lblEHealthChange.Text = "+" & lblEHealthChange.Tag
-            lblEHealthChange.ForeColor = Color.YellowGreen
-        Else
-            lblEHealthChange.Text = lblEHealthChange.Tag
-            lblEHealthChange.ForeColor = Color.Crimson
-        End If
-        If lblEHealthChange.Tag = 0 Then lblEHealthChange.Visible = False Else lblEHealthChange.Visible = True
-        lblEHealthChange.Tag = 0
-
-        If lblPHealtDiff.Tag > 0 Then
-            lblPHealtDiff.Text = "+" & lblPHealtDiff.Tag
-            lblPHealtDiff.ForeColor = Color.YellowGreen
-        Else
-            lblPHealtDiff.Text = lblPHealtDiff.Tag
-            lblPHealtDiff.ForeColor = Color.Crimson
-        End If
-        If lblPHealtDiff.Tag = 0 Then lblPHealtDiff.Visible = False Else lblPHealtDiff.Visible = True
-        lblPHealtDiff.Tag = 0
-
-        Dim ratioEH As Double = t.health / t.maxHealth
-        picEHbar.Size = New Size(ratioEH * 174, 15)
-        Dim x As Integer = picEHbar.Location.X + (ratioEH * 174) - 30
-        If x < picEHbar.Location.X Then x = picEHbar.Location.X
-        lblEHealthChange.Location = New Point(x, lblEHealthChange.Location.Y)
-        If healthCol Is Nothing = False Then
-            Dim place = Int(ratioEH * 100)
-            If place >= 100 Then place = 99
-            If place < 0 Then place = 0
-            picEHbar.BackColor = healthCol.GetPixel(place, 0)
-        Else
-            If ratioEH <= 0.2 Then picEHbar.BackColor = Color.Crimson Else picEHbar.BackColor = Color.YellowGreen
-        End If
-
-        Dim ratioPH As Double = p.health / p.getmaxHealth
-        picPHealth.Size = New Size(ratioPH * 174, 15)
-        x = picPHealth.Location.X + (ratioPH * 174) - 30
-        If x > picPHealth.Location.X + 174 - 30 Then x = picPHealth.Location.X + 174 - 30
-        lblPHealtDiff.Location = New Point(x, lblPHealtDiff.Location.Y)
-        If healthCol Is Nothing = False Then
-            Dim place = Int(ratioPH * 100)
-            If place >= 100 Then place = 99
-            If place < 0 Then place = 0
-            picPHealth.BackColor = healthCol.GetPixel(place, 0)
-        Else
-            If ratioPH <= 0.2 Then picPHealth.BackColor = Color.Crimson Else picPHealth.BackColor = Color.YellowGreen
-        End If
-
-        player.UIupdate()
-    End Sub
-    Sub pnlCombatClose()
-        pnlCombat.Visible = False
-        lblCombatEvents.Text = ""
     End Sub
     Shared Sub changeHairColor(ByVal c As Color, ByVal iarrind() As Tuple(Of Integer, Boolean), ByRef iarr As Image())
         Dim t(16) As Image

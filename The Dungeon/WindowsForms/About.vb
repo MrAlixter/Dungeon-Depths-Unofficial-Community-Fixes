@@ -25,7 +25,8 @@
                                      "- Houdini111 for extensive contributions in debugging and development" & vbCrLf & " " & vbCrLf &
                                      "- undercoversam for advice on balancing" & vbCrLf & " " & vbCrLf &
                                      "- Rangorak for advice on Kisekae2.0 and for the design of the fourth default clothing options" & vbCrLf & " " & vbCrLf &
-                                     "- Storm for the ability to bodyswap with the explorer"
+                                     "- Storm for the ability to bodyswap with the explorer" & vbCrLf & " " & vbCrLf &
+                                     "- Arrhae Khellian for help cleaning up the BitBucket"
     End Sub
 
     Private Sub OKButton_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles OKButton.Click

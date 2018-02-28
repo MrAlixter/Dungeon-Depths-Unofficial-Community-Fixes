@@ -1500,4 +1500,76 @@
         Next
         Return output
     End Function
+
+    'description generation
+    Function getHairColor() As String
+        Dim c As Color
+        Dim cArr As Color() = {Color.Aqua, Color.Aquamarine, Color.Azure, _
+                               Color.Beige, Color.Black, Color.Blue, Color.BlueViolet, Color.Brown, _
+                               Color.Chartreuse, Color.Chocolate, Color.Coral, Color.CornflowerBlue, Color.Crimson, Color.Cyan, _
+                               Color.DarkBlue, Color.DarkCyan, Color.DarkGreen, Color.DarkMagenta, Color.DarkRed, Color.DarkSeaGreen, Color.DarkSlateBlue, Color.DarkTurquoise, Color.DarkViolet, _
+                               Color.Fuchsia, _
+                               Color.Gold, Color.Gray, Color.Green, Color.GreenYellow, _
+                               Color.Honeydew, Color.HotPink, _
+                               Color.Indigo, _
+                               Color.Lavender, Color.LawnGreen, Color.LightBlue, Color.LightGray, Color.LightGreen, Color.LightPink, Color.LightSeaGreen, Color.LightSkyBlue, Color.LightSteelBlue, Color.LightYellow, Color.Lime, _
+                               Color.Magenta, Color.Maroon, Color.MidnightBlue, Color.MintCream, Color.MediumPurple, Color.MediumOrchid, _
+                               Color.Navy, _
+                               Color.Orange, Color.OrangeRed, Color.Orchid, _
+                               Color.Pink, Color.Purple, Color.PowderBlue, Color.Plum, Color.PaleVioletRed, _
+                               Color.Red, Color.RosyBrown, _
+                               Color.SeaGreen, Color.Silver, Color.Sienna, Color.SteelBlue, _
+                               Color.Tan, Color.Teal, Color.Turquoise, _
+                               Color.Wheat, Color.White, _
+                               Color.Yellow}
+        Dim closest As Double = 99999999999999
+        For i = 0 To UBound(cArr)
+            Dim ratio = isShadeOf(haircolor.R, haircolor.G, haircolor.B, cArr(i))
+            If ratio < closest Then
+                closest = ratio
+                c = cArr(i)
+            End If
+        Next
+
+        Dim mc As System.Text.RegularExpressions.MatchCollection = System.Text.RegularExpressions.Regex.Matches(c.Name, "[A-Z][a-z]*")
+        Dim out = ""
+        For Each m As System.Text.RegularExpressions.Match In mc
+            out += m.ToString
+            out += " "
+        Next
+        Return out.ToLower
+    End Function
+    Function plusMinus(ByVal x, ByVal y, ByVal tol)
+        If x > y + tol Or x < y - tol Then Return False Else Return True
+    End Function
+    Function isShadeOf(ByVal r As Integer, ByVal g As Integer, ByVal b As Integer, ByVal c As Color) As Double
+        Dim ratio1, ratio2, ratio3
+        Dim totalDelta = 0
+        ratio1 = (Math.Abs(r - c.R) ^ 3) * 5
+        ratio2 = (Math.Abs(g - c.G) ^ 3) * 5
+        ratio3 = (Math.Abs(b - c.B) ^ 3) * 5
+        totalDelta += ratio1 + ratio2 + ratio3
+
+        Return totalDelta
+    End Function
+
+    Function genDescription()
+        Dim out As String = ""
+        'general statement
+        out = "You are " & name & ", a " & sex & " " & title & vbCrLf & " " & vbCrLf
+
+        'hair
+        out += "You have " & getHairColor()
+        If haircolor.A = 180 Then
+            out += "gelatinous"
+        End If
+        If iArrInd(1).Item2 Then
+            out += "hair, done in a feminine style." & vbCrLf & " " & vbCrLf
+        Else
+            out += "hair, done in a masculine style." & vbCrLf & " " & vbCrLf
+        End If
+
+
+        Return out
+    End Function
 End Class

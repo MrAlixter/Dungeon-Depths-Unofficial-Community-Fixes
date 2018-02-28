@@ -168,6 +168,10 @@ Partial Class Game
         Me.btnWait = New System.Windows.Forms.Button()
         Me.picSWiz = New System.Windows.Forms.PictureBox()
         Me.picSWizF = New System.Windows.Forms.PictureBox()
+        Me.pnlDescript = New System.Windows.Forms.Panel()
+        Me.txtDescript = New System.Windows.Forms.TextBox()
+        Me.picDescPort = New System.Windows.Forms.PictureBox()
+        Me.lblNext = New System.Windows.Forms.Label()
         CType(Me.picMarkBClothes, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me.picMarkBRearHair2, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me.picMarkBRearHair1, System.ComponentModel.ISupportInitialize).BeginInit()
@@ -223,6 +227,8 @@ Partial Class Game
         CType(Me.picLoadBar, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me.picSWiz, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me.picSWizF, System.ComponentModel.ISupportInitialize).BeginInit()
+        Me.pnlDescript.SuspendLayout()
+        CType(Me.picDescPort, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.SuspendLayout()
         '
         'btnUse1
@@ -1841,11 +1847,56 @@ Partial Class Game
         Me.picSWizF.TabStop = False
         Me.picSWizF.Visible = False
         '
+        'pnlDescript
+        '
+        Me.pnlDescript.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle
+        Me.pnlDescript.Controls.Add(Me.lblNext)
+        Me.pnlDescript.Controls.Add(Me.picDescPort)
+        Me.pnlDescript.Controls.Add(Me.txtDescript)
+        Me.pnlDescript.Location = New System.Drawing.Point(115, 50)
+        Me.pnlDescript.Name = "pnlDescript"
+        Me.pnlDescript.Size = New System.Drawing.Size(670, 461)
+        Me.pnlDescript.TabIndex = 275
+        Me.pnlDescript.Visible = False
+        '
+        'txtDescript
+        '
+        Me.txtDescript.BackColor = System.Drawing.Color.Black
+        Me.txtDescript.ForeColor = System.Drawing.Color.White
+        Me.txtDescript.Location = New System.Drawing.Point(24, 21)
+        Me.txtDescript.Multiline = True
+        Me.txtDescript.Name = "txtDescript"
+        Me.txtDescript.ScrollBars = System.Windows.Forms.ScrollBars.Vertical
+        Me.txtDescript.Size = New System.Drawing.Size(468, 395)
+        Me.txtDescript.TabIndex = 0
+        '
+        'picDescPort
+        '
+        Me.picDescPort.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch
+        Me.picDescPort.Location = New System.Drawing.Point(516, 21)
+        Me.picDescPort.Name = "picDescPort"
+        Me.picDescPort.Size = New System.Drawing.Size(125, 189)
+        Me.picDescPort.TabIndex = 276
+        Me.picDescPort.TabStop = False
+        '
+        'lblNext
+        '
+        Me.lblNext.AutoSize = True
+        Me.lblNext.BackColor = System.Drawing.Color.Black
+        Me.lblNext.Font = New System.Drawing.Font("Consolas", 9.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.lblNext.ForeColor = System.Drawing.Color.White
+        Me.lblNext.Location = New System.Drawing.Point(23, 426)
+        Me.lblNext.Name = "lblNext"
+        Me.lblNext.Size = New System.Drawing.Size(250, 22)
+        Me.lblNext.TabIndex = 277
+        Me.lblNext.Text = "Press ';' to continue..."
+        '
         'Game
         '
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Inherit
         Me.BackColor = System.Drawing.Color.Black
         Me.ClientSize = New System.Drawing.Size(1008, 690)
+        Me.Controls.Add(Me.pnlDescript)
         Me.Controls.Add(Me.picSWizF)
         Me.Controls.Add(Me.picSWiz)
         Me.Controls.Add(Me.picLoadBar)
@@ -2019,6 +2070,9 @@ Partial Class Game
         CType(Me.picLoadBar, System.ComponentModel.ISupportInitialize).EndInit()
         CType(Me.picSWiz, System.ComponentModel.ISupportInitialize).EndInit()
         CType(Me.picSWizF, System.ComponentModel.ISupportInitialize).EndInit()
+        Me.pnlDescript.ResumeLayout(False)
+        Me.pnlDescript.PerformLayout()
+        CType(Me.picDescPort, System.ComponentModel.ISupportInitialize).EndInit()
         Me.ResumeLayout(False)
         Me.PerformLayout()
 
@@ -2167,4 +2221,8 @@ Partial Class Game
     Friend WithEvents btnWait As System.Windows.Forms.Button
     Friend WithEvents picSWiz As System.Windows.Forms.PictureBox
     Friend WithEvents picSWizF As System.Windows.Forms.PictureBox
+    Friend WithEvents pnlDescript As System.Windows.Forms.Panel
+    Friend WithEvents lblNext As System.Windows.Forms.Label
+    Friend WithEvents picDescPort As System.Windows.Forms.PictureBox
+    Friend WithEvents txtDescript As System.Windows.Forms.TextBox
 End Class
