@@ -28,6 +28,7 @@ Partial Class Debug_Window
         Me.boxNotes = New System.Windows.Forms.RichTextBox()
         Me.tabGeneral = New System.Windows.Forms.TabPage()
         Me.groupNotes = New System.Windows.Forms.GroupBox()
+        Me.picBoard = New System.Windows.Forms.PictureBox()
         Me.groupGeneral = New System.Windows.Forms.GroupBox()
         Me.boxTurn = New System.Windows.Forms.NumericUpDown()
         Me.boxFloor = New System.Windows.Forms.NumericUpDown()
@@ -94,11 +95,18 @@ Partial Class Debug_Window
         Me.lblInventory = New System.Windows.Forms.Label()
         Me.boxItems = New System.Windows.Forms.ListBox()
         Me.lblItems = New System.Windows.Forms.Label()
-        Me.picBoard = New System.Windows.Forms.PictureBox()
+        Me.lblKeyHeader = New System.Windows.Forms.Label()
+        Me.lblSeen = New System.Windows.Forms.Label()
+        Me.lblUnseen = New System.Windows.Forms.Label()
+        Me.lblPlayer = New System.Windows.Forms.Label()
+        Me.lblNPC = New System.Windows.Forms.Label()
+        Me.lblChest = New System.Windows.Forms.Label()
+        Me.lblStairs = New System.Windows.Forms.Label()
         Me.tabMain.SuspendLayout()
         Me.tabInformation.SuspendLayout()
         Me.tabGeneral.SuspendLayout()
         Me.groupNotes.SuspendLayout()
+        CType(Me.picBoard, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.groupGeneral.SuspendLayout()
         CType(Me.boxTurn, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me.boxFloor, System.ComponentModel.ISupportInitialize).BeginInit()
@@ -118,7 +126,6 @@ Partial Class Debug_Window
         CType(Me.boxHealth, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.tabInventory.SuspendLayout()
         CType(Me.number, System.ComponentModel.ISupportInitialize).BeginInit()
-        CType(Me.picBoard, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.SuspendLayout()
         '
         'tabMain
@@ -179,9 +186,24 @@ Partial Class Debug_Window
         Me.groupNotes.TabIndex = 4
         Me.groupNotes.TabStop = False
         '
+        'picBoard
+        '
+        Me.picBoard.Location = New System.Drawing.Point(18, 17)
+        Me.picBoard.Name = "picBoard"
+        Me.picBoard.Size = New System.Drawing.Size(500, 500)
+        Me.picBoard.TabIndex = 0
+        Me.picBoard.TabStop = False
+        '
         'groupGeneral
         '
         Me.groupGeneral.BackColor = System.Drawing.Color.Black
+        Me.groupGeneral.Controls.Add(Me.lblStairs)
+        Me.groupGeneral.Controls.Add(Me.lblChest)
+        Me.groupGeneral.Controls.Add(Me.lblNPC)
+        Me.groupGeneral.Controls.Add(Me.lblPlayer)
+        Me.groupGeneral.Controls.Add(Me.lblUnseen)
+        Me.groupGeneral.Controls.Add(Me.lblSeen)
+        Me.groupGeneral.Controls.Add(Me.lblKeyHeader)
         Me.groupGeneral.Controls.Add(Me.boxTurn)
         Me.groupGeneral.Controls.Add(Me.boxFloor)
         Me.groupGeneral.Controls.Add(Me.lblTurn)
@@ -961,13 +983,80 @@ Partial Class Debug_Window
         Me.lblItems.TabIndex = 7
         Me.lblItems.Text = "ITEMS"
         '
-        'picBoard
+        'lblKeyHeader
         '
-        Me.picBoard.Location = New System.Drawing.Point(18, 17)
-        Me.picBoard.Name = "picBoard"
-        Me.picBoard.Size = New System.Drawing.Size(500, 500)
-        Me.picBoard.TabIndex = 0
-        Me.picBoard.TabStop = False
+        Me.lblKeyHeader.AutoSize = True
+        Me.lblKeyHeader.Font = New System.Drawing.Font("Consolas", 12.0!, System.Drawing.FontStyle.Underline)
+        Me.lblKeyHeader.Location = New System.Drawing.Point(56, 359)
+        Me.lblKeyHeader.Name = "lblKeyHeader"
+        Me.lblKeyHeader.Size = New System.Drawing.Size(72, 19)
+        Me.lblKeyHeader.TabIndex = 197
+        Me.lblKeyHeader.Text = "MAP KEY"
+        '
+        'lblSeen
+        '
+        Me.lblSeen.AutoSize = True
+        Me.lblSeen.Font = New System.Drawing.Font("Consolas", 12.0!, System.Drawing.FontStyle.Bold)
+        Me.lblSeen.Location = New System.Drawing.Point(70, 398)
+        Me.lblSeen.Name = "lblSeen"
+        Me.lblSeen.Size = New System.Drawing.Size(45, 19)
+        Me.lblSeen.TabIndex = 198
+        Me.lblSeen.Text = "SEEN"
+        '
+        'lblUnseen
+        '
+        Me.lblUnseen.AutoSize = True
+        Me.lblUnseen.Font = New System.Drawing.Font("Consolas", 12.0!, System.Drawing.FontStyle.Bold)
+        Me.lblUnseen.ForeColor = System.Drawing.Color.Gray
+        Me.lblUnseen.Location = New System.Drawing.Point(61, 417)
+        Me.lblUnseen.Name = "lblUnseen"
+        Me.lblUnseen.Size = New System.Drawing.Size(63, 19)
+        Me.lblUnseen.TabIndex = 199
+        Me.lblUnseen.Text = "UNSEEN"
+        '
+        'lblPlayer
+        '
+        Me.lblPlayer.AutoSize = True
+        Me.lblPlayer.Font = New System.Drawing.Font("Consolas", 12.0!, System.Drawing.FontStyle.Bold)
+        Me.lblPlayer.ForeColor = System.Drawing.Color.LawnGreen
+        Me.lblPlayer.Location = New System.Drawing.Point(61, 436)
+        Me.lblPlayer.Name = "lblPlayer"
+        Me.lblPlayer.Size = New System.Drawing.Size(63, 19)
+        Me.lblPlayer.TabIndex = 200
+        Me.lblPlayer.Text = "PLAYER"
+        '
+        'lblNPC
+        '
+        Me.lblNPC.AutoSize = True
+        Me.lblNPC.Font = New System.Drawing.Font("Consolas", 12.0!, System.Drawing.FontStyle.Bold)
+        Me.lblNPC.ForeColor = System.Drawing.Color.Blue
+        Me.lblNPC.Location = New System.Drawing.Point(74, 455)
+        Me.lblNPC.Name = "lblNPC"
+        Me.lblNPC.Size = New System.Drawing.Size(36, 19)
+        Me.lblNPC.TabIndex = 201
+        Me.lblNPC.Text = "NPC"
+        '
+        'lblChest
+        '
+        Me.lblChest.AutoSize = True
+        Me.lblChest.Font = New System.Drawing.Font("Consolas", 12.0!, System.Drawing.FontStyle.Bold)
+        Me.lblChest.ForeColor = System.Drawing.Color.Yellow
+        Me.lblChest.Location = New System.Drawing.Point(65, 474)
+        Me.lblChest.Name = "lblChest"
+        Me.lblChest.Size = New System.Drawing.Size(54, 19)
+        Me.lblChest.TabIndex = 202
+        Me.lblChest.Text = "CHEST"
+        '
+        'lblStairs
+        '
+        Me.lblStairs.AutoSize = True
+        Me.lblStairs.Font = New System.Drawing.Font("Consolas", 12.0!, System.Drawing.FontStyle.Bold)
+        Me.lblStairs.ForeColor = System.Drawing.Color.Brown
+        Me.lblStairs.Location = New System.Drawing.Point(61, 493)
+        Me.lblStairs.Name = "lblStairs"
+        Me.lblStairs.Size = New System.Drawing.Size(63, 19)
+        Me.lblStairs.TabIndex = 203
+        Me.lblStairs.Text = "STAIRS"
         '
         'Debug_Window
         '
@@ -985,6 +1074,7 @@ Partial Class Debug_Window
         Me.tabInformation.ResumeLayout(False)
         Me.tabGeneral.ResumeLayout(False)
         Me.groupNotes.ResumeLayout(False)
+        CType(Me.picBoard, System.ComponentModel.ISupportInitialize).EndInit()
         Me.groupGeneral.ResumeLayout(False)
         Me.groupGeneral.PerformLayout()
         CType(Me.boxTurn, System.ComponentModel.ISupportInitialize).EndInit()
@@ -1007,7 +1097,6 @@ Partial Class Debug_Window
         Me.tabInventory.ResumeLayout(False)
         Me.tabInventory.PerformLayout()
         CType(Me.number, System.ComponentModel.ISupportInitialize).EndInit()
-        CType(Me.picBoard, System.ComponentModel.ISupportInitialize).EndInit()
         Me.ResumeLayout(False)
 
     End Sub
@@ -1083,4 +1172,11 @@ Partial Class Debug_Window
     Friend WithEvents tabInformation As TabPage
     Friend WithEvents boxNotes As RichTextBox
     Friend WithEvents picBoard As PictureBox
+    Friend WithEvents lblUnseen As Label
+    Friend WithEvents lblSeen As Label
+    Friend WithEvents lblKeyHeader As Label
+    Friend WithEvents lblPlayer As Label
+    Friend WithEvents lblStairs As Label
+    Friend WithEvents lblChest As Label
+    Friend WithEvents lblNPC As Label
 End Class
