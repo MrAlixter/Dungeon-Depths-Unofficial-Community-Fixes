@@ -4,6 +4,8 @@ Imports System.Threading
 Public Class Debug_Window
     Dim inventoryList As List(Of String) = New List(Of String)
     Dim itemsList As List(Of String) = New List(Of String)
+    Dim magnification As Integer
+    Dim map As Bitmap
 
     Private Sub Debug_Window_Load(sender As Object, e As EventArgs) Handles MyBase.Load
         clear()
@@ -13,62 +15,9 @@ Public Class Debug_Window
         boxTurn.Value = Game.turn
 
         'MAP
-        Dim magnification As Integer = Math.Min(picBoard.Width / Game.mBoardWidth, picBoard.Height / Game.mBoardHeight)
-        If magnification < 1 Then magnification = 1
-        picBoard.Image = New Bitmap(Game.mBoardWidth * magnification, Game.mBoardHeight * magnification)
-        For boardX = 0 To Game.mBoardWidth - 1
-            For boardY = 0 To Game.mBoardHeight - 1
-                If (Game.mBoard(boardY, boardX).Text = "#") Then 'Chest
-                    For x = 1 To magnification
-                        For y = 1 To magnification
-                            CType(picBoard.Image, Bitmap).SetPixel(boardX * magnification + x - 1, boardY * magnification + y - 1, Color.Yellow)
-                        Next
-                    Next
-                ElseIf (Game.mBoard(boardY, boardX).Text = "H") Then 'Stairs
-                    For x = 1 To magnification
-                        For y = 1 To magnification
-                            CType(picBoard.Image, Bitmap).SetPixel(boardX * magnification + x - 1, boardY * magnification + y - 1, Color.Brown)
-                        Next
-                    Next
-                ElseIf (Game.mBoard(boardY, boardX).Text = "@" And Game.player.pos.X = boardX And Game.player.pos.Y = boardY) Then 'Player
-                    For x = 1 To magnification
-                        For y = 1 To magnification
-                            CType(picBoard.Image, Bitmap).SetPixel(boardX * magnification + x - 1, boardY * magnification + y - 1, Color.LawnGreen)
-                        Next
-                    Next
-                ElseIf (Game.mBoard(boardY, boardX).Text = "@") Then 'Statue
-                    For x = 1 To magnification
-                        For y = 1 To magnification
-                            CType(picBoard.Image, Bitmap).SetPixel(boardX * magnification + x - 1, boardY * magnification + y - 1, Color.Gray)
-                        Next
-                    Next
-                ElseIf (Game.mBoard(boardY, boardX).Text = "$") Then 'NPC
-                    For x = 1 To magnification
-                        For y = 1 To magnification
-                            CType(picBoard.Image, Bitmap).SetPixel(boardX * magnification + x - 1, boardY * magnification + y - 1, Color.Blue)
-                        Next
-                    Next
-                ElseIf (Game.mBoard(boardY, boardX).Tag = 2) Then 'Seen
-                    For x = 1 To magnification
-                        For y = 1 To magnification
-                            CType(picBoard.Image, Bitmap).SetPixel(boardX * magnification + x - 1, boardY * magnification + y - 1, Color.White)
-                        Next
-                    Next
-                ElseIf (Game.mBoard(boardY, boardX).Tag = 1) Then 'Unseen
-                    For x = 1 To magnification
-                        For y = 1 To magnification
-                            CType(picBoard.Image, Bitmap).SetPixel(boardX * magnification + x - 1, boardY * magnification + y - 1, Color.Gray)
-                        Next
-                    Next
-                Else 'Nothing
-                    For x = 1 To magnification
-                        For y = 1 To magnification
-                            CType(picBoard.Image, Bitmap).SetPixel(boardX * magnification + x - 1, boardY * magnification + y - 1, Color.Black)
-                        Next
-                    Next
-                End If
-            Next
-        Next
+        magnification = Math.Min(picBoard.Width / Game.mBoardWidth, picBoard.Height / Game.mBoardHeight)
+        createMap()
+        AddHandler picBoard.Paint, AddressOf Me.picBoard_Draw
 
         'PLAYER
         boxName.Text = Game.player.name
@@ -112,16 +61,6 @@ Public Class Debug_Window
         Dim PADDING = 0.1
         Dim w As Integer = 146
         Dim h As Integer = 216
-        'fillPages()
-        'Dim go As Boolean = True
-        'While go
-        '    For i = 0 To workers.Count - 1
-        '        If Not done(i) Then
-        '            Thread.Sleep(50)
-        '            Exit For
-        '        End If
-        '    Next
-        'End While
 
         Dim attr
         If Game.player.sexBool Then
@@ -157,38 +96,6 @@ Public Class Debug_Window
         Next
     End Sub
 
-    Private Sub fillPages(ByRef done As List(Of Boolean), place As Integer, first As Integer, last As Integer) '(Inclusive, exclusive)
-        Dim worker As New BackgroundWorker
-        worker.WorkerSupportsCancellation = True
-        AddHandler worker.DoWork, AddressOf bw_DoWork
-        AddHandler worker.RunWorkerCompleted, AddressOf bw_RunWorkerCompleted
-        worker.RunWorkerAsync()
-    End Sub
-
-    Private Sub bw_DoWork(ByVal sender As Object, ByVal e As DoWorkEventArgs)
-        Dim worker As BackgroundWorker = CType(sender, BackgroundWorker)
-
-        While worker.IsBusy
-            If worker.CancellationPending = True Then
-                e.Cancel = True
-                Exit While
-            Else
-                'Perform a time consuming operation
-                System.Threading.Thread.Sleep(100)
-            End If
-        End While
-    End Sub
-
-    Private Sub bw_RunWorkerCompleted(ByVal sender As Object, ByVal e As RunWorkerCompletedEventArgs)
-        If e.Cancelled = True Then
-            Close()
-            Application.DoEvents()
-        ElseIf e.Error IsNot Nothing Then
-            MsgBox("Error: " & e.Error.Message)
-        End If
-        'Player.canMoveFlag = True
-    End Sub
-
     Private Sub clear()
         Dim ctrl As Control = Me
         Do Until ctrl Is Nothing
@@ -203,6 +110,39 @@ Public Class Debug_Window
         Loop
         clearPortrait()
     End Sub
+
+    Private Sub createMap()
+        map = New Bitmap(Game.mBoardWidth, Game.mBoardHeight)
+        For boardX = 0 To map.Width - 1
+            For boardY = 0 To map.Height - 1
+                If (Game.mBoard(boardY, boardX).Text = "#") Then 'Chest
+                    map.SetPixel(boardX, boardY, Color.Yellow)
+                ElseIf (Game.mBoard(boardY, boardX).Text = "H") Then 'Stairs
+                    map.SetPixel(boardX, boardY, Color.Brown)
+                ElseIf (Game.mBoard(boardY, boardX).Text = "@" And Game.player.pos.X = boardX And Game.player.pos.Y = boardY) Then 'Player
+                    map.SetPixel(boardX, boardY, Color.LawnGreen)
+                ElseIf (Game.mBoard(boardY, boardX).Text = "@") Then 'Statue
+                    map.SetPixel(boardX, boardY, Color.LightSlateGray)
+                ElseIf (Game.mBoard(boardY, boardX).Text = "$") Then 'NPC
+                    map.SetPixel(boardX, boardY, Color.Blue)
+                ElseIf (Game.mBoard(boardY, boardX).Tag = 2) Then 'Seen
+                    map.SetPixel(boardX, boardY, Color.White)
+                ElseIf (Game.mBoard(boardY, boardX).Tag = 1) Then 'Unseen
+                    map.SetPixel(boardX, boardY, Color.Gray)
+                Else 'Nothing
+                    map.SetPixel(boardX, boardY, Color.Black)
+                End If
+            Next
+        Next
+        'picBoard.Image = map
+    End Sub
+
+    Private Sub picBoard_Draw(sender As Object, e As PaintEventArgs)
+        e.Graphics.InterpolationMode = Drawing2D.InterpolationMode.NearestNeighbor
+        e.Graphics.DrawImage(map, New Rectangle((picBoard.Width - (map.Width * magnification)) / 2, (picBoard.Width - (map.Width * magnification)) / 2, map.Width * magnification, map.Height * magnification))
+        'MessageBox.Show("!!!")
+    End Sub
+
 
     Private Sub updateInventoryList()
         inventoryList.Clear()
@@ -228,6 +168,15 @@ Public Class Debug_Window
         For i = 0 To itemsList.Count - 1
             boxItems.Items.Add(itemsList(i))
         Next
+    End Sub
+
+    Private Sub picBoard_MouseWheel(sender As Object, e As System.Windows.Forms.MouseEventArgs) Handles picBoard.MouseWheel
+        Dim scrollAmt As Integer = CInt(e.Delta * SystemInformation.MouseWheelScrollLines / 120)
+        magnification -= scrollAmt
+        If magnification < 1 Then magnification = 1
+        'drawMap()
+        picBoard.Refresh()
+        'MessageBox.Show(scrollAmt)
     End Sub
 
     Private Sub boxTurn_ValueChanged(sender As Object, e As EventArgs) Handles boxTurn.ValueChanged
@@ -316,34 +265,6 @@ Public Class Debug_Window
         cd.Color = Game.player.haircolor
         cd.ShowDialog()
         Game.player.changeHairColor(cd.Color)
-
-        'NOT FIXED, REMOVED TEMPORARILY
-        'Game.player.changeHairColor(cd.Color)
-        'CType(sender, Panel).BackColor = cd.Color
-
-        'If currAtrButton.Equals(btnBHair) Then
-        '    btnBHair_Click(sender, e)
-        '    currAttribute = mRearHair2
-        'End If
-        'If currAtrButton.Equals(btnFHair) Then
-        '    btnFHair_Click(sender, e)
-        '    currAttribute = mFrontHair
-        'End If
-        'If currAtrButton.Equals(btnEyebrows) Then
-        '    btnEyebrows_Click(sender, e)
-        '    currAttribute = mEyebrows
-        'End If
-        'For i = 0 To currAttribute.Count - 1
-        '    Dim x As Integer = (i * 71 * Me.Size.Width / 581)
-        '    Dim y As Integer = 0
-        '    Dim img As New PictureBox
-        '    img.BackgroundImage = currAttribute(i)
-        '    img.Location = New Point(x, y - 20)
-        '    img.Size = New Point(70 * Me.Size.Width / 581, 104 * Me.Size.Width / 581)
-        '    img.BackgroundImageLayout = ImageLayout.Stretch
-        '    AddHandler img.Click, AddressOf PicOnClick
-        '    pnlBody.Controls.Add(img)
-        'Next
         cd.Dispose()
         picPreview.Image = CharacterGenerator.CreateBMP(Game.player.iArr)
     End Sub
