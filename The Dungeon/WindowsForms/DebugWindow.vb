@@ -29,8 +29,8 @@ Public Class Debug_Window
         magnification = Math.Min(picBoard.Width / Game.mBoardWidth, picBoard.Height / Game.mBoardHeight)
         createMap()
         AddHandler picBoard.Paint, AddressOf Me.picBoard_Draw
-        AddHandler picBoard.MouseDown, AddressOf Me.startMapDrag
-        AddHandler picBoard.MouseUp, AddressOf Me.endMapDrag
+        AddHandler picBoard.MouseDown, AddressOf Me.mapMousePress
+        AddHandler picBoard.MouseUp, AddressOf Me.mapMouseRelease
 
         'PLAYER
         boxName.Text = Game.player.name
@@ -171,16 +171,20 @@ Public Class Debug_Window
         e.Graphics.DrawImage(map, CInt((picBoard.Width - (map.Width * magnification)) / 2) + xOffset, CInt((picBoard.Width - (map.Width * magnification)) / 2) + yOffset, map.Width * magnification, map.Height * magnification)
     End Sub
 
-    Private Sub startMapDrag(sender As Object, e As MouseEventArgs)
-        dragging = True
-        mouseMoveThread = New Thread(New ThreadStart(AddressOf mapMove))
-        mouseMoveThread.IsBackground = True
-        mouseMoveThread.Start()
+    Private Sub mapMousePress(sender As Object, e As MouseEventArgs)
+        If btnPan.Checked Then
+            dragging = True
+            mouseMoveThread = New Thread(New ThreadStart(AddressOf mapMove))
+            mouseMoveThread.IsBackground = True
+            mouseMoveThread.Start()
+        End If
     End Sub
 
-    Private Sub endMapDrag(sender As Object, e As MouseEventArgs)
-        dragging = False
-        mouseMoveThread.Abort()
+    Private Sub mapMouseRelease(sender As Object, e As MouseEventArgs)
+        If btnPan.Checked Then
+            dragging = False
+            mouseMoveThread.Abort()
+        End If
     End Sub
 
     Private Sub refreshMap()
