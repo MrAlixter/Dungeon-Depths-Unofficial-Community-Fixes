@@ -29,7 +29,7 @@
             Case 1
                 Dim x As Integer = -1
                 Dim n As String = Game.player.equippedArmor.getName()
-                For i = 0 To Game.player.inventorynames.Count
+                For i = 0 To Game.player.inventorynames.Count - 1
                     If Game.player.inventorynames(i).Equals(n) Then
                         x = i
                         Exit For
@@ -54,7 +54,6 @@
                     Game.player.pState.save(Game.player)
                 End If
                 Game.player.UIupdate()
-                Game.player.createP()
                 Game.pushLblEvent(out)
             Case 2
                 Dim rubyTF As Color = Color.FromArgb(185, 200, 55, 55)
