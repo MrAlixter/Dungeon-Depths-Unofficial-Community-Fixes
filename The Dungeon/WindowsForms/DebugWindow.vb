@@ -26,7 +26,7 @@ Public Class Debug_Window
         boxTurn.Value = Game.turn
 
         'MAP
-        magnification = Math.Min(picBoard.Width / Game.mBoardWidth, picBoard.Height / Game.mBoardHeight)
+        magnification = Math.Floor(Math.Min(picBoard.Width / Game.mBoardWidth, picBoard.Height / Game.mBoardHeight))
         createMap()
         AddHandler picBoard.Paint, AddressOf Me.picBoard_Draw
         AddHandler picBoard.MouseDown, AddressOf Me.mapMousePress
@@ -168,7 +168,7 @@ Public Class Debug_Window
 
     Private Sub picBoard_Draw(sender As Object, e As PaintEventArgs)
         e.Graphics.InterpolationMode = Drawing2D.InterpolationMode.NearestNeighbor
-        e.Graphics.DrawImage(map, CInt((picBoard.Width - (map.Width * magnification)) / 2) + xOffset, CInt((picBoard.Width - (map.Width * magnification)) / 2) + yOffset, map.Width * magnification, map.Height * magnification)
+        e.Graphics.DrawImage(map, CInt(Math.Floor((picBoard.Width - (map.Width * magnification)) / 2)) + xOffset, CInt(Math.Floor((picBoard.Width - (map.Width * magnification)) / 2)) + yOffset, map.Width * magnification, map.Height * magnification)
     End Sub
 
     Private Sub mapMousePress(sender As Object, e As MouseEventArgs)
@@ -177,6 +177,10 @@ Public Class Debug_Window
             mouseMoveThread = New Thread(New ThreadStart(AddressOf mapMove))
             mouseMoveThread.IsBackground = True
             mouseMoveThread.Start()
+        ElseIf btnSelect.Checked Then
+            Dim absX As Integer = CInt(Math.Floor((picBoard.Width - (map.Width * magnification)) / 2)) + xOffset
+            Dim absY As Integer = CInt(e.Y) - yOffset
+            MessageBox.Show(absX & " | " & absY)
         End If
     End Sub
 
@@ -184,6 +188,8 @@ Public Class Debug_Window
         If btnPan.Checked Then
             dragging = False
             mouseMoveThread.Abort()
+        ElseIf btnSelect.Checked Then
+
         End If
     End Sub
 
@@ -244,7 +250,7 @@ Public Class Debug_Window
     End Sub
 
     Private Sub picBoard_MouseWheel(sender As Object, e As System.Windows.Forms.MouseEventArgs) Handles picBoard.MouseWheel
-        Dim scrollAmt As Integer = CInt(e.Delta * SystemInformation.MouseWheelScrollLines / (120 * 6))
+        Dim scrollAmt As Integer = CInt(Math.Floor(e.Delta * SystemInformation.MouseWheelScrollLines / (120 * 6)))
         magnification -= scrollAmt
         If magnification < 1 Then magnification = 1
         updateDebugLabel()
