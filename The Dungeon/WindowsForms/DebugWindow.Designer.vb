@@ -30,6 +30,7 @@ Partial Class Debug_Window
         Me.groupNotes = New System.Windows.Forms.GroupBox()
         Me.picBoard = New System.Windows.Forms.PictureBox()
         Me.groupGeneral = New System.Windows.Forms.GroupBox()
+        Me.lblDebug = New System.Windows.Forms.Label()
         Me.lblStatue = New System.Windows.Forms.Label()
         Me.lblStairs = New System.Windows.Forms.Label()
         Me.lblChest = New System.Windows.Forms.Label()
@@ -103,7 +104,6 @@ Partial Class Debug_Window
         Me.lblInventory = New System.Windows.Forms.Label()
         Me.boxItems = New System.Windows.Forms.ListBox()
         Me.lblItems = New System.Windows.Forms.Label()
-        Me.lblDebug = New System.Windows.Forms.Label()
         Me.tabMain.SuspendLayout()
         Me.tabInformation.SuspendLayout()
         Me.tabGeneral.SuspendLayout()
@@ -190,9 +190,9 @@ Partial Class Debug_Window
         '
         'picBoard
         '
-        Me.picBoard.Location = New System.Drawing.Point(18, 17)
+        Me.picBoard.Location = New System.Drawing.Point(7, 15)
         Me.picBoard.Name = "picBoard"
-        Me.picBoard.Size = New System.Drawing.Size(500, 500)
+        Me.picBoard.Size = New System.Drawing.Size(524, 514)
         Me.picBoard.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom
         Me.picBoard.TabIndex = 0
         Me.picBoard.TabStop = False
@@ -221,6 +221,16 @@ Partial Class Debug_Window
         Me.groupGeneral.TabIndex = 3
         Me.groupGeneral.TabStop = False
         Me.groupGeneral.Text = "GENERAL"
+        '
+        'lblDebug
+        '
+        Me.lblDebug.AutoSize = True
+        Me.lblDebug.Location = New System.Drawing.Point(62, 192)
+        Me.lblDebug.Name = "lblDebug"
+        Me.lblDebug.Size = New System.Drawing.Size(63, 19)
+        Me.lblDebug.TabIndex = 1
+        Me.lblDebug.Text = "Label1"
+        Me.lblDebug.Visible = False
         '
         'lblStatue
         '
@@ -1073,16 +1083,6 @@ Partial Class Debug_Window
         Me.lblItems.Size = New System.Drawing.Size(54, 19)
         Me.lblItems.TabIndex = 7
         Me.lblItems.Text = "ITEMS"
-        '
-        'lblDebug
-        '
-        Me.lblDebug.AutoSize = True
-        Me.lblDebug.Location = New System.Drawing.Point(62, 192)
-        Me.lblDebug.Name = "lblDebug"
-        Me.lblDebug.Size = New System.Drawing.Size(63, 19)
-        Me.lblDebug.TabIndex = 1
-        Me.lblDebug.Text = "Label1"
-        Me.lblDebug.Visible = False
         '
         'Debug_Window
         '

@@ -1157,13 +1157,7 @@ Public Class Game
         boardWorker.RunWorkerAsync()
 
         Dim reader As IO.StreamReader
-        MessageBox.Show("BEFORE OPEN")
-        Try
-            reader = IO.File.OpenText(a)
-        Catch ex As Exception
-            MessageBox.Show(ex.ToString())
-        End Try
-        MessageBox.Show("AFTER OPEN")
+        reader = IO.File.OpenText(a)
         If CDbl(reader.ReadLine()) < version Then
             MsgBox("Error 003: Incorrect save file version!")
             picStart.Visible = True
