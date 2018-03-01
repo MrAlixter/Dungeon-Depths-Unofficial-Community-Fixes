@@ -18,6 +18,8 @@ Public Class Debug_Window
         dragging = False
         xOffset = 0
         yOffset = 0
+        unselectMapControlButtons()
+        btnPan.Checked = True
 
         'GENERAL
         boxFloor.Value = Game.floor
@@ -118,6 +120,24 @@ Public Class Debug_Window
             ctrl = GetNextControl(ctrl, True)
         Loop
         clearPortrait()
+    End Sub
+
+    Private Sub unselectMapControlButtons()
+        For i = 0 To boxMapControls.Controls.Count - 1
+            If TypeOf (boxMapControls.Controls(i)) Is RadioButton Then
+                CType(boxMapControls.Controls(i), RadioButton).Checked = False
+            End If
+        Next
+    End Sub
+
+    Private Sub btnPan_Click(sender As Object, e As EventArgs) Handles btnPan.Click
+        unselectMapControlButtons()
+        btnPan.Checked = True
+    End Sub
+
+    Private Sub btnSelect_Click(sender As Object, e As EventArgs) Handles btnSelect.Click
+        unselectMapControlButtons()
+        btnSelect.Checked = True
     End Sub
 
     Private Sub createMap()

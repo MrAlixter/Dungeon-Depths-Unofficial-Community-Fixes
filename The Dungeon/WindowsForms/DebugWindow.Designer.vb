@@ -104,6 +104,9 @@ Partial Class Debug_Window
         Me.lblInventory = New System.Windows.Forms.Label()
         Me.boxItems = New System.Windows.Forms.ListBox()
         Me.lblItems = New System.Windows.Forms.Label()
+        Me.btnPan = New System.Windows.Forms.RadioButton()
+        Me.boxMapControls = New System.Windows.Forms.GroupBox()
+        Me.btnSelect = New System.Windows.Forms.RadioButton()
         Me.tabMain.SuspendLayout()
         Me.tabInformation.SuspendLayout()
         Me.tabGeneral.SuspendLayout()
@@ -128,6 +131,7 @@ Partial Class Debug_Window
         CType(Me.boxHealth, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.tabInventory.SuspendLayout()
         CType(Me.number, System.ComponentModel.ISupportInitialize).BeginInit()
+        Me.boxMapControls.SuspendLayout()
         Me.SuspendLayout()
         '
         'tabMain
@@ -190,9 +194,9 @@ Partial Class Debug_Window
         '
         'picBoard
         '
-        Me.picBoard.Location = New System.Drawing.Point(7, 15)
+        Me.picBoard.Location = New System.Drawing.Point(3, 11)
         Me.picBoard.Name = "picBoard"
-        Me.picBoard.Size = New System.Drawing.Size(524, 514)
+        Me.picBoard.Size = New System.Drawing.Size(532, 522)
         Me.picBoard.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom
         Me.picBoard.TabIndex = 0
         Me.picBoard.TabStop = False
@@ -200,6 +204,7 @@ Partial Class Debug_Window
         'groupGeneral
         '
         Me.groupGeneral.BackColor = System.Drawing.Color.Black
+        Me.groupGeneral.Controls.Add(Me.boxMapControls)
         Me.groupGeneral.Controls.Add(Me.lblDebug)
         Me.groupGeneral.Controls.Add(Me.lblStatue)
         Me.groupGeneral.Controls.Add(Me.lblStairs)
@@ -225,7 +230,7 @@ Partial Class Debug_Window
         'lblDebug
         '
         Me.lblDebug.AutoSize = True
-        Me.lblDebug.Location = New System.Drawing.Point(62, 192)
+        Me.lblDebug.Location = New System.Drawing.Point(6, 80)
         Me.lblDebug.Name = "lblDebug"
         Me.lblDebug.Size = New System.Drawing.Size(63, 19)
         Me.lblDebug.TabIndex = 1
@@ -1084,6 +1089,40 @@ Partial Class Debug_Window
         Me.lblItems.TabIndex = 7
         Me.lblItems.Text = "ITEMS"
         '
+        'btnPan
+        '
+        Me.btnPan.AutoSize = True
+        Me.btnPan.Location = New System.Drawing.Point(17, 25)
+        Me.btnPan.Name = "btnPan"
+        Me.btnPan.Size = New System.Drawing.Size(54, 23)
+        Me.btnPan.TabIndex = 205
+        Me.btnPan.TabStop = True
+        Me.btnPan.Text = "PAN"
+        Me.btnPan.UseVisualStyleBackColor = True
+        '
+        'boxMapControls
+        '
+        Me.boxMapControls.Controls.Add(Me.btnSelect)
+        Me.boxMapControls.Controls.Add(Me.btnPan)
+        Me.boxMapControls.ForeColor = System.Drawing.Color.White
+        Me.boxMapControls.Location = New System.Drawing.Point(10, 114)
+        Me.boxMapControls.Name = "boxMapControls"
+        Me.boxMapControls.Size = New System.Drawing.Size(169, 202)
+        Me.boxMapControls.TabIndex = 1
+        Me.boxMapControls.TabStop = False
+        Me.boxMapControls.Text = "MAP CONTROLS"
+        '
+        'btnSelect
+        '
+        Me.btnSelect.AutoSize = True
+        Me.btnSelect.Location = New System.Drawing.Point(17, 54)
+        Me.btnSelect.Name = "btnSelect"
+        Me.btnSelect.Size = New System.Drawing.Size(81, 23)
+        Me.btnSelect.TabIndex = 206
+        Me.btnSelect.TabStop = True
+        Me.btnSelect.Text = "SELECT"
+        Me.btnSelect.UseVisualStyleBackColor = True
+        '
         'Debug_Window
         '
         Me.AutoScaleDimensions = New System.Drawing.SizeF(6.0!, 13.0!)
@@ -1123,6 +1162,8 @@ Partial Class Debug_Window
         Me.tabInventory.ResumeLayout(False)
         Me.tabInventory.PerformLayout()
         CType(Me.number, System.ComponentModel.ISupportInitialize).EndInit()
+        Me.boxMapControls.ResumeLayout(False)
+        Me.boxMapControls.PerformLayout()
         Me.ResumeLayout(False)
 
     End Sub
@@ -1207,4 +1248,7 @@ Partial Class Debug_Window
     Friend WithEvents lblStatue As Label
     Friend WithEvents picBoard As PictureBox
     Friend WithEvents lblDebug As Label
+    Friend WithEvents boxMapControls As GroupBox
+    Friend WithEvents btnPan As RadioButton
+    Friend WithEvents btnSelect As RadioButton
 End Class
