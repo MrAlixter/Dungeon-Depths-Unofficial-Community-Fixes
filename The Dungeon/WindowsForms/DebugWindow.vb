@@ -6,9 +6,18 @@ Public Class Debug_Window
     Dim itemsList As List(Of String) = New List(Of String)
     Dim magnification As Integer
     Dim map As Bitmap
+    Dim dragging As Boolean
+    Dim xOffset As Integer
+    Dim yOffset As Integer
+    Dim mouseMoveThread As Thread
+    Private Delegate Sub delegateExecute()
 
     Private Sub Debug_Window_Load(sender As Object, e As EventArgs) Handles MyBase.Load
         clear()
+
+        dragging = False
+        xOffset = 0
+        yOffset = 0
 
         'GENERAL
         boxFloor.Value = Game.floor
@@ -18,6 +27,8 @@ Public Class Debug_Window
         magnification = Math.Min(picBoard.Width / Game.mBoardWidth, picBoard.Height / Game.mBoardHeight)
         createMap()
         AddHandler picBoard.Paint, AddressOf Me.picBoard_Draw
+        AddHandler picBoard.MouseDown, AddressOf Me.startMapDrag
+        AddHandler picBoard.MouseUp, AddressOf Me.endMapDrag
 
         'PLAYER
         boxName.Text = Game.player.name
@@ -76,10 +87,8 @@ Public Class Debug_Window
                 img.Name = i.ToString() & ":" & j.ToString()
                 tabPortrait.TabPages(i).Controls.Add(img)
                 img.Image = attr(i)(j)
-                'REMOVED UNTIL THE NEXT UPDATE (when I'll be able to get around to figuring out how to make it work)
-                'CharacterGenerator.recolor2(img.Image, Game.player.skincolor)
                 img.BackgroundImage = attr(0)(0)
-                img.Location = New Point(x, y) 'y - 20)
+                img.Location = New Point(x, y)
                 img.Size = New Point(w, h)
                 'img.BackgroundImageLayout = ImageLayout.Stretch
                 AddHandler img.Click, AddressOf clickOnPic
@@ -139,10 +148,50 @@ Public Class Debug_Window
 
     Private Sub picBoard_Draw(sender As Object, e As PaintEventArgs)
         e.Graphics.InterpolationMode = Drawing2D.InterpolationMode.NearestNeighbor
-        e.Graphics.DrawImage(map, New Rectangle((picBoard.Width - (map.Width * magnification)) / 2, (picBoard.Width - (map.Width * magnification)) / 2, map.Width * magnification, map.Height * magnification))
-        'MessageBox.Show("!!!")
+        e.Graphics.DrawImage(map, CInt((picBoard.Width - (map.Width * magnification)) / 2) + xOffset, CInt((picBoard.Width - (map.Width * magnification)) / 2) + yOffset, map.Width * magnification, map.Height * magnification)
     End Sub
 
+    Private Sub startMapDrag(sender As Object, e As MouseEventArgs)
+        dragging = True
+        mouseMoveThread = New Thread(New ThreadStart(AddressOf mapMove))
+        mouseMoveThread.IsBackground = True
+        mouseMoveThread.Start()
+    End Sub
+
+    Private Sub endMapDrag(sender As Object, e As MouseEventArgs)
+        dragging = False
+        mouseMoveThread.Abort()
+    End Sub
+
+    Private Sub refreshMap()
+        If picBoard.InvokeRequired Then
+            picBoard.Invoke(New delegateExecute(AddressOf refreshMap))
+        Else
+            picBoard.Refresh()
+        End If
+    End Sub
+
+    Private Sub updateDebugLabel()
+        If lblDebug.InvokeRequired Then
+            lblDebug.Invoke(New delegateExecute(AddressOf updateDebugLabel))
+        Else
+            lblDebug.Text = magnification
+            lblDebug.Refresh()
+        End If
+    End Sub
+
+    Private Sub mapMove()
+        Dim lastX As Integer = Cursor.Position.X
+        Dim lastY As Integer = Cursor.Position.Y
+        While dragging
+            xOffset += Cursor.Position.X - lastX
+            yOffset += Cursor.Position.Y - lastY
+            refreshMap()
+            lastX = Cursor.Position.X
+            lastY = Cursor.Position.Y
+            Thread.Sleep(15)
+        End While
+    End Sub
 
     Private Sub updateInventoryList()
         inventoryList.Clear()
@@ -171,12 +220,11 @@ Public Class Debug_Window
     End Sub
 
     Private Sub picBoard_MouseWheel(sender As Object, e As System.Windows.Forms.MouseEventArgs) Handles picBoard.MouseWheel
-        Dim scrollAmt As Integer = CInt(e.Delta * SystemInformation.MouseWheelScrollLines / 120)
+        Dim scrollAmt As Integer = CInt(e.Delta * SystemInformation.MouseWheelScrollLines / (120 * 6))
         magnification -= scrollAmt
         If magnification < 1 Then magnification = 1
-        'drawMap()
+        updateDebugLabel()
         picBoard.Refresh()
-        'MessageBox.Show(scrollAmt)
     End Sub
 
     Private Sub boxTurn_ValueChanged(sender As Object, e As EventArgs) Handles boxTurn.ValueChanged

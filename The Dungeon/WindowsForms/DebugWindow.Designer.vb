@@ -28,7 +28,9 @@ Partial Class Debug_Window
         Me.boxNotes = New System.Windows.Forms.RichTextBox()
         Me.tabGeneral = New System.Windows.Forms.TabPage()
         Me.groupNotes = New System.Windows.Forms.GroupBox()
+        Me.picBoard = New System.Windows.Forms.PictureBox()
         Me.groupGeneral = New System.Windows.Forms.GroupBox()
+        Me.lblStatue = New System.Windows.Forms.Label()
         Me.lblStairs = New System.Windows.Forms.Label()
         Me.lblChest = New System.Windows.Forms.Label()
         Me.lblNPC = New System.Windows.Forms.Label()
@@ -101,12 +103,12 @@ Partial Class Debug_Window
         Me.lblInventory = New System.Windows.Forms.Label()
         Me.boxItems = New System.Windows.Forms.ListBox()
         Me.lblItems = New System.Windows.Forms.Label()
-        Me.lblStatue = New System.Windows.Forms.Label()
-        Me.picBoard = New System.Windows.Forms.PictureBox()
+        Me.lblDebug = New System.Windows.Forms.Label()
         Me.tabMain.SuspendLayout()
         Me.tabInformation.SuspendLayout()
         Me.tabGeneral.SuspendLayout()
         Me.groupNotes.SuspendLayout()
+        CType(Me.picBoard, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.groupGeneral.SuspendLayout()
         CType(Me.boxTurn, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me.boxFloor, System.ComponentModel.ISupportInitialize).BeginInit()
@@ -126,7 +128,6 @@ Partial Class Debug_Window
         CType(Me.boxHealth, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.tabInventory.SuspendLayout()
         CType(Me.number, System.ComponentModel.ISupportInitialize).BeginInit()
-        CType(Me.picBoard, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.SuspendLayout()
         '
         'tabMain
@@ -187,9 +188,19 @@ Partial Class Debug_Window
         Me.groupNotes.TabIndex = 4
         Me.groupNotes.TabStop = False
         '
+        'picBoard
+        '
+        Me.picBoard.Location = New System.Drawing.Point(18, 17)
+        Me.picBoard.Name = "picBoard"
+        Me.picBoard.Size = New System.Drawing.Size(500, 500)
+        Me.picBoard.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom
+        Me.picBoard.TabIndex = 0
+        Me.picBoard.TabStop = False
+        '
         'groupGeneral
         '
         Me.groupGeneral.BackColor = System.Drawing.Color.Black
+        Me.groupGeneral.Controls.Add(Me.lblDebug)
         Me.groupGeneral.Controls.Add(Me.lblStatue)
         Me.groupGeneral.Controls.Add(Me.lblStairs)
         Me.groupGeneral.Controls.Add(Me.lblChest)
@@ -210,6 +221,17 @@ Partial Class Debug_Window
         Me.groupGeneral.TabIndex = 3
         Me.groupGeneral.TabStop = False
         Me.groupGeneral.Text = "GENERAL"
+        '
+        'lblStatue
+        '
+        Me.lblStatue.AutoSize = True
+        Me.lblStatue.Font = New System.Drawing.Font("Consolas", 12.0!, System.Drawing.FontStyle.Bold)
+        Me.lblStatue.ForeColor = System.Drawing.Color.LightSlateGray
+        Me.lblStatue.Location = New System.Drawing.Point(61, 455)
+        Me.lblStatue.Name = "lblStatue"
+        Me.lblStatue.Size = New System.Drawing.Size(63, 19)
+        Me.lblStatue.TabIndex = 204
+        Me.lblStatue.Text = "STATUE"
         '
         'lblStairs
         '
@@ -1052,25 +1074,15 @@ Partial Class Debug_Window
         Me.lblItems.TabIndex = 7
         Me.lblItems.Text = "ITEMS"
         '
-        'lblStatue
+        'lblDebug
         '
-        Me.lblStatue.AutoSize = True
-        Me.lblStatue.Font = New System.Drawing.Font("Consolas", 12.0!, System.Drawing.FontStyle.Bold)
-        Me.lblStatue.ForeColor = System.Drawing.Color.LightSlateGray
-        Me.lblStatue.Location = New System.Drawing.Point(61, 455)
-        Me.lblStatue.Name = "lblStatue"
-        Me.lblStatue.Size = New System.Drawing.Size(63, 19)
-        Me.lblStatue.TabIndex = 204
-        Me.lblStatue.Text = "STATUE"
-        '
-        'picBoard
-        '
-        Me.picBoard.Location = New System.Drawing.Point(18, 17)
-        Me.picBoard.Name = "picBoard"
-        Me.picBoard.Size = New System.Drawing.Size(500, 500)
-        Me.picBoard.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom
-        Me.picBoard.TabIndex = 0
-        Me.picBoard.TabStop = False
+        Me.lblDebug.AutoSize = True
+        Me.lblDebug.Location = New System.Drawing.Point(62, 192)
+        Me.lblDebug.Name = "lblDebug"
+        Me.lblDebug.Size = New System.Drawing.Size(63, 19)
+        Me.lblDebug.TabIndex = 1
+        Me.lblDebug.Text = "Label1"
+        Me.lblDebug.Visible = False
         '
         'Debug_Window
         '
@@ -1088,6 +1100,7 @@ Partial Class Debug_Window
         Me.tabInformation.ResumeLayout(False)
         Me.tabGeneral.ResumeLayout(False)
         Me.groupNotes.ResumeLayout(False)
+        CType(Me.picBoard, System.ComponentModel.ISupportInitialize).EndInit()
         Me.groupGeneral.ResumeLayout(False)
         Me.groupGeneral.PerformLayout()
         CType(Me.boxTurn, System.ComponentModel.ISupportInitialize).EndInit()
@@ -1110,7 +1123,6 @@ Partial Class Debug_Window
         Me.tabInventory.ResumeLayout(False)
         Me.tabInventory.PerformLayout()
         CType(Me.number, System.ComponentModel.ISupportInitialize).EndInit()
-        CType(Me.picBoard, System.ComponentModel.ISupportInitialize).EndInit()
         Me.ResumeLayout(False)
 
     End Sub
@@ -1194,4 +1206,5 @@ Partial Class Debug_Window
     Friend WithEvents lblNPC As Label
     Friend WithEvents lblStatue As Label
     Friend WithEvents picBoard As PictureBox
+    Friend WithEvents lblDebug As Label
 End Class
