@@ -141,34 +141,33 @@ Public Class Debug_Window
     End Sub
 
     Private Sub createMap()
-        map = New Bitmap(Game.mBoardWidth, Game.mBoardHeight)
-        For boardX = 0 To map.Width - 1
-            For boardY = 0 To map.Height - 1
+        map = New Bitmap(Game.mBoardWidth + 2, Game.mBoardHeight + 2)
+        For boardX = 0 To map.Width - 3
+            For boardY = 0 To map.Height - 3
                 If (Game.mBoard(boardY, boardX).Text = "#") Then 'Chest
-                    map.SetPixel(boardX, boardY, Color.Yellow)
+                    map.SetPixel(boardX + 1, boardY + 1, Color.Yellow)
                 ElseIf (Game.mBoard(boardY, boardX).Text = "H") Then 'Stairs
-                    map.SetPixel(boardX, boardY, Color.Brown)
+                    map.SetPixel(boardX + 1, boardY + 1, Color.Brown)
                 ElseIf (Game.mBoard(boardY, boardX).Text = "@" And Game.player.pos.X = boardX And Game.player.pos.Y = boardY) Then 'Player
-                    map.SetPixel(boardX, boardY, Color.LawnGreen)
+                    map.SetPixel(boardX + 1, boardY + 1, Color.LawnGreen)
                 ElseIf (Game.mBoard(boardY, boardX).Text = "@") Then 'Statue
-                    map.SetPixel(boardX, boardY, Color.LightSlateGray)
+                    map.SetPixel(boardX + 1, boardY + 1, Color.LightSlateGray)
                 ElseIf (Game.mBoard(boardY, boardX).Text = "$") Then 'NPC
-                    map.SetPixel(boardX, boardY, Color.Blue)
+                    map.SetPixel(boardX + 1, boardY + 1, Color.Blue)
                 ElseIf (Game.mBoard(boardY, boardX).Tag = 2) Then 'Seen
-                    map.SetPixel(boardX, boardY, Color.White)
+                    map.SetPixel(boardX + 1, boardY + 1, Color.White)
                 ElseIf (Game.mBoard(boardY, boardX).Tag = 1) Then 'Unseen
-                    map.SetPixel(boardX, boardY, Color.Gray)
+                    map.SetPixel(boardX + 1, boardY + 1, Color.Gray)
                 Else 'Nothing
-                    map.SetPixel(boardX, boardY, Color.Black)
+                    map.SetPixel(boardX + 1, boardY + 1, Color.Black)
                 End If
             Next
         Next
-        'picBoard.Image = map
     End Sub
 
     Private Sub picBoard_Draw(sender As Object, e As PaintEventArgs)
         e.Graphics.InterpolationMode = Drawing2D.InterpolationMode.NearestNeighbor
-        e.Graphics.DrawImage(map, CInt(Math.Floor((picBoard.Width - (map.Width * magnification)) / 2)) + xOffset, CInt(Math.Floor((picBoard.Width - (map.Width * magnification)) / 2)) + yOffset, map.Width * magnification, map.Height * magnification)
+        e.Graphics.DrawImage(map, CInt(Math.Floor((picBoard.Width - (map.Width * magnification)) / 2)) + xOffset + 1, CInt(Math.Floor((picBoard.Width - (map.Width * magnification)) / 2)) + yOffset + 1, map.Width * magnification + 2, map.Height * magnification + 2)
     End Sub
 
     Private Sub mapMousePress(sender As Object, e As MouseEventArgs)
@@ -178,9 +177,13 @@ Public Class Debug_Window
             mouseMoveThread.IsBackground = True
             mouseMoveThread.Start()
         ElseIf btnSelect.Checked Then
-            Dim absX As Integer = CInt(Math.Floor((picBoard.Width - (map.Width * magnification)) / 2)) + xOffset
-            Dim absY As Integer = CInt(e.Y) - yOffset
-            MessageBox.Show(absX & " | " & absY)
+            Dim mapX = CInt(Math.Floor((picBoard.Width - (map.Width * magnification)) / 2)) + xOffset
+            Dim mapY = CInt(Math.Floor((picBoard.Width - (map.Width * magnification)) / 2)) + yOffset
+            Dim absX As Integer = Math.Floor((e.X - xOffset) / magnification)
+            Dim absY As Integer = Math.Floor((e.Y - yOffset) / magnification)
+            'MessageBox.Show(mapX & " | " & mapY)
+            'NEAREST NEIGHBOR ISN'T WORKING
+            'THE EDGES ARE BEING SKEWED
         End If
     End Sub
 
