@@ -785,6 +785,7 @@ Public Class Game
             oemSemiColon()
             Return True
         End If
+        If pnlDescript.Visible Then pnlDescript.Visible = False
         If lblEvent.Visible And Not (Keydata.Equals(Keys.Enter) Or Keydata.Equals(Keys.OemSemicolon) Or Keydata.Equals(Keys.E)) Then
             Return True
         End If
@@ -1156,8 +1157,10 @@ Public Class Game
         picLoadBar.Size = New Size(10, 17)
 
         If picLoadBar.Visible = False Then picLoadBar.Visible = True
-        Application.DoEvents()
+        picLoadBar.BringToFront()
+        System.Threading.Thread.Sleep(750)
 
+        Application.DoEvents()
         boardWorker.RunWorkerAsync()
 
         Dim reader As IO.StreamReader
@@ -1188,8 +1191,8 @@ Public Class Game
         Dim b2 As Integer = Int(reader.ReadLine())
         mBoardHeight = b2 + 1
         mBoardWidth = b1 + 1
-        newBoard()
         System.Threading.Thread.Sleep(750)
+        newBoard()
         For yInd = 0 To b2
             For xInd = 0 To b1
                 mBoard(yInd, xInd).Tag = reader.ReadLine()
@@ -1270,8 +1273,6 @@ Public Class Game
         lblHealth.Text = "Health = " & player.health & "/" & player.maxHealth
         lblMana.Text = "Mana = " & player.mana & "/" & player.maxMana
         lblHunger.Text = "Hunger = " & player.hunger & "/100"
-        'lblXP.Text = "XP = " & player.xp & "/" & player.nextLevelXp
-        'lblLevel.Text = "Level " & player.level
         lblATK.Text = "ATK = " & player.getAttack
         lblDEF.Text = "DEF = " & player.getDefence
         lblSKL.Text = "WIL = " & player.getWillpower
@@ -1894,7 +1895,7 @@ Public Class Game
             lblEvent.ForeColor = Color.White
             drawBoard()
         End If
-        m.despawn("npc")
+        If Not m Is Nothing Then m.despawn("npc")
         npcList.Clear()
         player.currTarget = Nothing
         npcmode = False
@@ -1937,15 +1938,20 @@ Public Class Game
             Exit Sub
         End If
         Dim tmpInd As Integer = lstInventory.TopIndex
+        Dim tind = lstInventory.SelectedIndex
         selectedItem.use()
         player.invNeedsUDate = True
         player.UIupdate()
         lstInventory.TopIndex = tmpInd
-        lstInventory.SelectedItem = Nothing
-        selectedItem = Nothing
-        btnUse.Enabled = False
-        btnDrop.Enabled = False
-        btnLook.Enabled = False
+        If selectedItem.count < 1 Then
+            lstInventory.SelectedItem = Nothing
+            selectedItem = Nothing
+            btnUse.Enabled = False
+            btnDrop.Enabled = False
+            btnLook.Enabled = False
+        Else
+            lstInventory.SelectedIndex = tind
+        End If
         If combatmode Then
             If npcList.Count > 0 Then
                 For i = 0 To npcList.Count - 1

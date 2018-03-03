@@ -36,6 +36,7 @@
                     End If
                 Next
                 If x <> -1 Then Game.player.inventory(x).count -= 1
+                Dim rng As Integer = Int(Rnd() * Game.chestList.Count)
                 Dim out As String = "A beam fires out of the wall to your left, striking you in the chest."
                 If n <> "Ropes" Then
                     If n <> "Naked" Then
