@@ -92,7 +92,7 @@ Partial Class Equipment
         Me.cmbobxWeapon.Size = New System.Drawing.Size(199, 27)
         Me.cmbobxWeapon.TabIndex = 11
         '
-        'Form3
+        'Equipment
         '
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Inherit
         Me.BackColor = System.Drawing.Color.Black
@@ -104,8 +104,8 @@ Partial Class Equipment
         Me.Controls.Add(Me.btnACPT)
         Me.Controls.Add(Me.cmbobxWeapon)
         Me.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle
-        Me.Name = "Form3"
-        Me.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen
+        Me.Name = "Equipment"
+        Me.StartPosition = System.Windows.Forms.FormStartPosition.CenterParent
         Me.Text = "Equip Menu"
         Me.ResumeLayout(False)
         Me.PerformLayout()

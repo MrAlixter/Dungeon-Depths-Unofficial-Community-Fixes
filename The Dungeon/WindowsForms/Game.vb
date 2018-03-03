@@ -130,6 +130,9 @@ Public Class Game
         For i = 0 To pnlCombat.Controls.Count - 1
             pnlCombat.Controls(i).Font = newFont
         Next
+        For i = 0 To pnlDescript.Controls.Count - 1
+            pnlDescript.Controls(i).Font = newFont
+        Next
         'creates the shopkeeper
         shopkeeper = New NPC(2)
 
@@ -1186,6 +1189,7 @@ Public Class Game
         mBoardHeight = b2 + 1
         mBoardWidth = b1 + 1
         newBoard()
+        System.Threading.Thread.Sleep(750)
         For yInd = 0 To b2
             For xInd = 0 To b1
                 mBoard(yInd, xInd).Tag = reader.ReadLine()

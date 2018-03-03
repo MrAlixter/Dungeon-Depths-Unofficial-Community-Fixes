@@ -1504,9 +1504,11 @@
     'description generation
     Function getHairColor() As String
         Dim c As Color
+
+
         Dim cArr As Color() = {Color.Aqua, Color.Aquamarine, Color.Azure, _
                                Color.Beige, Color.Black, Color.Blue, Color.BlueViolet, Color.Brown, _
-                               Color.Chartreuse, Color.Chocolate, Color.Coral, Color.CornflowerBlue, Color.Crimson, Color.Cyan, _
+                               Color.Chartreuse, Color.Coral, Color.CornflowerBlue, Color.Crimson, Color.Cyan, _
                                Color.DarkBlue, Color.DarkCyan, Color.DarkGreen, Color.DarkMagenta, Color.DarkRed, Color.DarkSeaGreen, Color.DarkSlateBlue, Color.DarkTurquoise, Color.DarkViolet, _
                                Color.Fuchsia, _
                                Color.Gold, Color.Gray, Color.Green, Color.GreenYellow, _
@@ -1537,6 +1539,7 @@
             out += m.ToString
             out += " "
         Next
+        If out.Equals("Beige ") Then out = "Platinum Blonde "
         Return out.ToLower
     End Function
     Function plusMinus(ByVal x, ByVal y, ByVal tol)

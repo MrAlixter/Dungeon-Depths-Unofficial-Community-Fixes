@@ -169,9 +169,9 @@ Partial Class Game
         Me.picSWiz = New System.Windows.Forms.PictureBox()
         Me.picSWizF = New System.Windows.Forms.PictureBox()
         Me.pnlDescript = New System.Windows.Forms.Panel()
-        Me.txtDescript = New System.Windows.Forms.TextBox()
-        Me.picDescPort = New System.Windows.Forms.PictureBox()
         Me.lblNext = New System.Windows.Forms.Label()
+        Me.picDescPort = New System.Windows.Forms.PictureBox()
+        Me.txtDescript = New System.Windows.Forms.TextBox()
         CType(Me.picMarkBClothes, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me.picMarkBRearHair2, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me.picMarkBRearHair1, System.ComponentModel.ISupportInitialize).BeginInit()
@@ -1859,26 +1859,6 @@ Partial Class Game
         Me.pnlDescript.TabIndex = 275
         Me.pnlDescript.Visible = False
         '
-        'txtDescript
-        '
-        Me.txtDescript.BackColor = System.Drawing.Color.Black
-        Me.txtDescript.ForeColor = System.Drawing.Color.White
-        Me.txtDescript.Location = New System.Drawing.Point(24, 21)
-        Me.txtDescript.Multiline = True
-        Me.txtDescript.Name = "txtDescript"
-        Me.txtDescript.ScrollBars = System.Windows.Forms.ScrollBars.Vertical
-        Me.txtDescript.Size = New System.Drawing.Size(468, 395)
-        Me.txtDescript.TabIndex = 0
-        '
-        'picDescPort
-        '
-        Me.picDescPort.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch
-        Me.picDescPort.Location = New System.Drawing.Point(516, 21)
-        Me.picDescPort.Name = "picDescPort"
-        Me.picDescPort.Size = New System.Drawing.Size(125, 189)
-        Me.picDescPort.TabIndex = 276
-        Me.picDescPort.TabStop = False
-        '
         'lblNext
         '
         Me.lblNext.AutoSize = True
@@ -1890,6 +1870,26 @@ Partial Class Game
         Me.lblNext.Size = New System.Drawing.Size(250, 22)
         Me.lblNext.TabIndex = 277
         Me.lblNext.Text = "Press ';' to continue..."
+        '
+        'picDescPort
+        '
+        Me.picDescPort.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch
+        Me.picDescPort.Location = New System.Drawing.Point(516, 21)
+        Me.picDescPort.Name = "picDescPort"
+        Me.picDescPort.Size = New System.Drawing.Size(125, 189)
+        Me.picDescPort.TabIndex = 276
+        Me.picDescPort.TabStop = False
+        '
+        'txtDescript
+        '
+        Me.txtDescript.BackColor = System.Drawing.Color.Black
+        Me.txtDescript.ForeColor = System.Drawing.Color.White
+        Me.txtDescript.Location = New System.Drawing.Point(24, 21)
+        Me.txtDescript.Multiline = True
+        Me.txtDescript.Name = "txtDescript"
+        Me.txtDescript.ScrollBars = System.Windows.Forms.ScrollBars.Vertical
+        Me.txtDescript.Size = New System.Drawing.Size(468, 395)
+        Me.txtDescript.TabIndex = 0
         '
         'Game
         '
