@@ -27,6 +27,7 @@ Public Class Debug_Window
 
         'MAP
         magnification = Math.Floor(Math.Min(picBoard.Width / Game.mBoardWidth, picBoard.Height / Game.mBoardHeight))
+        boxZoom.Value = magnification
         createMap()
         AddHandler picBoard.Paint, AddressOf Me.picBoard_Draw
         AddHandler picBoard.MouseDown, AddressOf Me.mapMousePress
@@ -167,7 +168,32 @@ Public Class Debug_Window
 
     Private Sub picBoard_Draw(sender As Object, e As PaintEventArgs)
         e.Graphics.InterpolationMode = Drawing2D.InterpolationMode.NearestNeighbor
-        e.Graphics.DrawImage(map, CInt(Math.Floor((picBoard.Width - (map.Width * magnification)) / 2)) + xOffset + 1, CInt(Math.Floor((picBoard.Width - (map.Width * magnification)) / 2)) + yOffset + 1, map.Width * magnification + 2, map.Height * magnification + 2)
+        e.Graphics.DrawImage(map, CInt((picBoard.Width - (map.Width * magnification)) / 2) + xOffset, CInt((picBoard.Height - (map.Height * magnification)) / 2) + yOffset, map.Width * magnification + 0, map.Height * magnification + 0)
+
+        ''DEBUG LINES
+        'Dim p As Pen
+        ''EDGE
+        'p = Pens.LimeGreen
+        'e.Graphics.DrawLine(p, 0, 0, picBoard.Width, 0)
+        'e.Graphics.DrawLine(p, 0, 0, 0, picBoard.Height)
+        'e.Graphics.DrawLine(p, picBoard.Width, picBoard.Height, 0, picBoard.Height)
+        'e.Graphics.DrawLine(p, picBoard.Width - 1, picBoard.Height - 1, picBoard.Width - 1, 0)
+        ''CENTER
+        'p = Pens.Maroon
+        'e.Graphics.DrawLine(p, CInt(picBoard.Width / 2), 0, CInt(picBoard.Width / 2), picBoard.Height)
+        'e.Graphics.DrawLine(p, 0, CInt(picBoard.Height / 2), picBoard.Width, CInt(picBoard.Height / 2))
+        ''EDGE OF MAP IMAGE
+        'p = Pens.Black
+        ''e.Graphics.DrawLine(p, CInt(0), CInt(picBoard.Height / 2 - map.Height * magnification / 2) + yOffset, CInt(picBoard.Width), CInt(picBoard.Height / 2 - map.Height * magnification / 2) + yOffset)
+        ''e.Graphics.DrawLine(p, CInt(0), CInt(picBoard.Height / 2 + map.Height * magnification / 2) + yOffset, CInt(picBoard.Width), CInt(picBoard.Height / 2 + map.Height * magnification / 2) + yOffset)
+        ''e.Graphics.DrawLine(p, CInt(picBoard.Width / 2 - map.Width * magnification / 2) + xOffset, CInt(0), CInt(picBoard.Width / 2 - map.Width * magnification / 2) + xOffset, CInt(picBoard.Height))
+        ''e.Graphics.DrawLine(p, CInt(picBoard.Width / 2 + map.Width * magnification / 2) + xOffset, CInt(0), CInt(picBoard.Width / 2 + map.Width * magnification / 2) + xOffset, CInt(picBoard.Height))
+        ''EDGE OF MAP
+        'p = Pens.Teal
+        'e.Graphics.DrawLine(p, CInt(0), CInt(Math.Floor(picBoard.Height / 2 - (map.Height - 1) * magnification / 2)) + yOffset, CInt(picBoard.Width), CInt(Math.Floor(picBoard.Height / 2 - (map.Height - 1) * magnification / 2)) + yOffset)
+        'e.Graphics.DrawLine(p, CInt(0), CInt(Math.Floor(picBoard.Height / 2 + (map.Height - 3) * magnification / 2)) + yOffset, CInt(picBoard.Width), CInt(Math.Floor(picBoard.Height / 2 + (map.Height - 3) * magnification / 2)) + yOffset)
+        'e.Graphics.DrawLine(p, CInt(Math.Floor(picBoard.Width / 2 - (map.Width - 1) * magnification / 2)) + xOffset, CInt(0), CInt(Math.Floor(picBoard.Width / 2 - (map.Width - 1) * magnification / 2)) + xOffset, CInt(picBoard.Height))
+        'e.Graphics.DrawLine(p, CInt(Math.Floor(picBoard.Width / 2 + (map.Width - 3) * magnification / 2)) + xOffset, CInt(0), CInt(Math.Floor(picBoard.Width / 2 + (map.Width - 3) * magnification / 2)) + xOffset, CInt(picBoard.Height))
     End Sub
 
     Private Sub mapMousePress(sender As Object, e As MouseEventArgs)
@@ -177,13 +203,7 @@ Public Class Debug_Window
             mouseMoveThread.IsBackground = True
             mouseMoveThread.Start()
         ElseIf btnSelect.Checked Then
-            Dim mapX = CInt(Math.Floor((picBoard.Width - (map.Width * magnification)) / 2)) + xOffset
-            Dim mapY = CInt(Math.Floor((picBoard.Width - (map.Width * magnification)) / 2)) + yOffset
-            Dim absX As Integer = Math.Floor((e.X - xOffset) / magnification)
-            Dim absY As Integer = Math.Floor((e.Y - yOffset) / magnification)
-            'MessageBox.Show(mapX & " | " & mapY)
-            'NEAREST NEIGHBOR ISN'T WORKING
-            'THE EDGES ARE BEING SKEWED
+
         End If
     End Sub
 
@@ -192,7 +212,15 @@ Public Class Debug_Window
             dragging = False
             mouseMoveThread.Abort()
         ElseIf btnSelect.Checked Then
-
+            Dim Top As Integer = CInt(Math.Floor(picBoard.Height / 2 - (map.Height - 1) * magnification / 2)) + yOffset
+            Dim Bottom As Integer = CInt(Math.Floor(picBoard.Height / 2 + (map.Height - 3) * magnification / 2)) + yOffset
+            Dim Left As Integer = CInt(Math.Floor(picBoard.Width / 2 - (map.Width - 1) * magnification / 2)) + xOffset
+            Dim Right As Integer = CInt(Math.Floor(picBoard.Width / 2 + (map.Width - 3) * magnification / 2)) + xOffset
+            If e.X > Left And e.X < Right And e.Y > Top And e.Y < Bottom Then
+                Dim _x As Integer = CInt(Math.Floor((e.X - Left) / magnification))
+                Dim _y As Integer = CInt(Math.Floor((e.Y - Top) / magnification))
+                MessageBox.Show(_x & ", " & _y)
+            End If
         End If
     End Sub
 
@@ -256,7 +284,13 @@ Public Class Debug_Window
         Dim scrollAmt As Integer = CInt(Math.Floor(e.Delta * SystemInformation.MouseWheelScrollLines / (120 * 6)))
         magnification -= scrollAmt
         If magnification < 1 Then magnification = 1
+        boxZoom.Value = magnification
         updateDebugLabel()
+        picBoard.Refresh()
+    End Sub
+
+    Private Sub boxZoom_ValueChanged(sender As Object, e As EventArgs) Handles boxZoom.ValueChanged
+        magnification = boxZoom.Value
         picBoard.Refresh()
     End Sub
 

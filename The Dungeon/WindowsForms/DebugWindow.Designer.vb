@@ -30,6 +30,9 @@ Partial Class Debug_Window
         Me.groupNotes = New System.Windows.Forms.GroupBox()
         Me.picBoard = New System.Windows.Forms.PictureBox()
         Me.groupGeneral = New System.Windows.Forms.GroupBox()
+        Me.boxMapControls = New System.Windows.Forms.GroupBox()
+        Me.btnSelect = New System.Windows.Forms.RadioButton()
+        Me.btnPan = New System.Windows.Forms.RadioButton()
         Me.lblDebug = New System.Windows.Forms.Label()
         Me.lblStatue = New System.Windows.Forms.Label()
         Me.lblStairs = New System.Windows.Forms.Label()
@@ -104,15 +107,15 @@ Partial Class Debug_Window
         Me.lblInventory = New System.Windows.Forms.Label()
         Me.boxItems = New System.Windows.Forms.ListBox()
         Me.lblItems = New System.Windows.Forms.Label()
-        Me.btnPan = New System.Windows.Forms.RadioButton()
-        Me.boxMapControls = New System.Windows.Forms.GroupBox()
-        Me.btnSelect = New System.Windows.Forms.RadioButton()
+        Me.boxZoom = New System.Windows.Forms.NumericUpDown()
+        Me.lblZoom = New System.Windows.Forms.Label()
         Me.tabMain.SuspendLayout()
         Me.tabInformation.SuspendLayout()
         Me.tabGeneral.SuspendLayout()
         Me.groupNotes.SuspendLayout()
         CType(Me.picBoard, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.groupGeneral.SuspendLayout()
+        Me.boxMapControls.SuspendLayout()
         CType(Me.boxTurn, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me.boxFloor, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.tabPlayer.SuspendLayout()
@@ -131,7 +134,7 @@ Partial Class Debug_Window
         CType(Me.boxHealth, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.tabInventory.SuspendLayout()
         CType(Me.number, System.ComponentModel.ISupportInitialize).BeginInit()
-        Me.boxMapControls.SuspendLayout()
+        CType(Me.boxZoom, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.SuspendLayout()
         '
         'tabMain
@@ -185,6 +188,7 @@ Partial Class Debug_Window
         '
         'groupNotes
         '
+        Me.groupNotes.BackColor = System.Drawing.Color.Black
         Me.groupNotes.Controls.Add(Me.picBoard)
         Me.groupNotes.Location = New System.Drawing.Point(197, 7)
         Me.groupNotes.Name = "groupNotes"
@@ -194,6 +198,7 @@ Partial Class Debug_Window
         '
         'picBoard
         '
+        Me.picBoard.BackColor = System.Drawing.Color.Black
         Me.picBoard.Location = New System.Drawing.Point(3, 11)
         Me.picBoard.Name = "picBoard"
         Me.picBoard.Size = New System.Drawing.Size(532, 522)
@@ -226,6 +231,42 @@ Partial Class Debug_Window
         Me.groupGeneral.TabIndex = 3
         Me.groupGeneral.TabStop = False
         Me.groupGeneral.Text = "GENERAL"
+        '
+        'boxMapControls
+        '
+        Me.boxMapControls.Controls.Add(Me.lblZoom)
+        Me.boxMapControls.Controls.Add(Me.boxZoom)
+        Me.boxMapControls.Controls.Add(Me.btnSelect)
+        Me.boxMapControls.Controls.Add(Me.btnPan)
+        Me.boxMapControls.ForeColor = System.Drawing.Color.White
+        Me.boxMapControls.Location = New System.Drawing.Point(10, 114)
+        Me.boxMapControls.Name = "boxMapControls"
+        Me.boxMapControls.Size = New System.Drawing.Size(169, 202)
+        Me.boxMapControls.TabIndex = 1
+        Me.boxMapControls.TabStop = False
+        Me.boxMapControls.Text = "MAP CONTROLS"
+        '
+        'btnSelect
+        '
+        Me.btnSelect.AutoSize = True
+        Me.btnSelect.Location = New System.Drawing.Point(17, 54)
+        Me.btnSelect.Name = "btnSelect"
+        Me.btnSelect.Size = New System.Drawing.Size(81, 23)
+        Me.btnSelect.TabIndex = 206
+        Me.btnSelect.TabStop = True
+        Me.btnSelect.Text = "SELECT"
+        Me.btnSelect.UseVisualStyleBackColor = True
+        '
+        'btnPan
+        '
+        Me.btnPan.AutoSize = True
+        Me.btnPan.Location = New System.Drawing.Point(17, 25)
+        Me.btnPan.Name = "btnPan"
+        Me.btnPan.Size = New System.Drawing.Size(54, 23)
+        Me.btnPan.TabIndex = 205
+        Me.btnPan.TabStop = True
+        Me.btnPan.Text = "PAN"
+        Me.btnPan.UseVisualStyleBackColor = True
         '
         'lblDebug
         '
@@ -1089,39 +1130,26 @@ Partial Class Debug_Window
         Me.lblItems.TabIndex = 7
         Me.lblItems.Text = "ITEMS"
         '
-        'btnPan
+        'boxZoom
         '
-        Me.btnPan.AutoSize = True
-        Me.btnPan.Location = New System.Drawing.Point(17, 25)
-        Me.btnPan.Name = "btnPan"
-        Me.btnPan.Size = New System.Drawing.Size(54, 23)
-        Me.btnPan.TabIndex = 205
-        Me.btnPan.TabStop = True
-        Me.btnPan.Text = "PAN"
-        Me.btnPan.UseVisualStyleBackColor = True
+        Me.boxZoom.BackColor = System.Drawing.Color.Black
+        Me.boxZoom.ForeColor = System.Drawing.Color.White
+        Me.boxZoom.Location = New System.Drawing.Point(109, 160)
+        Me.boxZoom.Minimum = New Decimal(New Integer() {1, 0, 0, 0})
+        Me.boxZoom.Name = "boxZoom"
+        Me.boxZoom.Size = New System.Drawing.Size(54, 26)
+        Me.boxZoom.TabIndex = 207
+        Me.boxZoom.TextAlign = System.Windows.Forms.HorizontalAlignment.Center
+        Me.boxZoom.Value = New Decimal(New Integer() {1, 0, 0, 0})
         '
-        'boxMapControls
+        'lblZoom
         '
-        Me.boxMapControls.Controls.Add(Me.btnSelect)
-        Me.boxMapControls.Controls.Add(Me.btnPan)
-        Me.boxMapControls.ForeColor = System.Drawing.Color.White
-        Me.boxMapControls.Location = New System.Drawing.Point(10, 114)
-        Me.boxMapControls.Name = "boxMapControls"
-        Me.boxMapControls.Size = New System.Drawing.Size(169, 202)
-        Me.boxMapControls.TabIndex = 1
-        Me.boxMapControls.TabStop = False
-        Me.boxMapControls.Text = "MAP CONTROLS"
-        '
-        'btnSelect
-        '
-        Me.btnSelect.AutoSize = True
-        Me.btnSelect.Location = New System.Drawing.Point(17, 54)
-        Me.btnSelect.Name = "btnSelect"
-        Me.btnSelect.Size = New System.Drawing.Size(81, 23)
-        Me.btnSelect.TabIndex = 206
-        Me.btnSelect.TabStop = True
-        Me.btnSelect.Text = "SELECT"
-        Me.btnSelect.UseVisualStyleBackColor = True
+        Me.lblZoom.AutoSize = True
+        Me.lblZoom.Location = New System.Drawing.Point(13, 162)
+        Me.lblZoom.Name = "lblZoom"
+        Me.lblZoom.Size = New System.Drawing.Size(45, 19)
+        Me.lblZoom.TabIndex = 208
+        Me.lblZoom.Text = "ZOOM"
         '
         'Debug_Window
         '
@@ -1142,6 +1170,8 @@ Partial Class Debug_Window
         CType(Me.picBoard, System.ComponentModel.ISupportInitialize).EndInit()
         Me.groupGeneral.ResumeLayout(False)
         Me.groupGeneral.PerformLayout()
+        Me.boxMapControls.ResumeLayout(False)
+        Me.boxMapControls.PerformLayout()
         CType(Me.boxTurn, System.ComponentModel.ISupportInitialize).EndInit()
         CType(Me.boxFloor, System.ComponentModel.ISupportInitialize).EndInit()
         Me.tabPlayer.ResumeLayout(False)
@@ -1162,8 +1192,7 @@ Partial Class Debug_Window
         Me.tabInventory.ResumeLayout(False)
         Me.tabInventory.PerformLayout()
         CType(Me.number, System.ComponentModel.ISupportInitialize).EndInit()
-        Me.boxMapControls.ResumeLayout(False)
-        Me.boxMapControls.PerformLayout()
+        CType(Me.boxZoom, System.ComponentModel.ISupportInitialize).EndInit()
         Me.ResumeLayout(False)
 
     End Sub
@@ -1251,4 +1280,6 @@ Partial Class Debug_Window
     Friend WithEvents boxMapControls As GroupBox
     Friend WithEvents btnPan As RadioButton
     Friend WithEvents btnSelect As RadioButton
+    Friend WithEvents boxZoom As NumericUpDown
+    Friend WithEvents lblZoom As Label
 End Class
