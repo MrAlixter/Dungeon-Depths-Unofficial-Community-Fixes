@@ -33,7 +33,6 @@ Partial Class Debug_Window
         Me.boxMapControls = New System.Windows.Forms.GroupBox()
         Me.btnSelect = New System.Windows.Forms.RadioButton()
         Me.btnPan = New System.Windows.Forms.RadioButton()
-        Me.lblDebug = New System.Windows.Forms.Label()
         Me.lblStatue = New System.Windows.Forms.Label()
         Me.lblStairs = New System.Windows.Forms.Label()
         Me.lblChest = New System.Windows.Forms.Label()
@@ -109,6 +108,8 @@ Partial Class Debug_Window
         Me.lblItems = New System.Windows.Forms.Label()
         Me.boxZoom = New System.Windows.Forms.NumericUpDown()
         Me.lblZoom = New System.Windows.Forms.Label()
+        Me.btnEditSelection = New System.Windows.Forms.Button()
+        Me.Label1 = New System.Windows.Forms.Label()
         Me.tabMain.SuspendLayout()
         Me.tabInformation.SuspendLayout()
         Me.tabGeneral.SuspendLayout()
@@ -209,8 +210,9 @@ Partial Class Debug_Window
         'groupGeneral
         '
         Me.groupGeneral.BackColor = System.Drawing.Color.Black
+        Me.groupGeneral.Controls.Add(Me.Label1)
+        Me.groupGeneral.Controls.Add(Me.btnEditSelection)
         Me.groupGeneral.Controls.Add(Me.boxMapControls)
-        Me.groupGeneral.Controls.Add(Me.lblDebug)
         Me.groupGeneral.Controls.Add(Me.lblStatue)
         Me.groupGeneral.Controls.Add(Me.lblStairs)
         Me.groupGeneral.Controls.Add(Me.lblChest)
@@ -241,7 +243,7 @@ Partial Class Debug_Window
         Me.boxMapControls.ForeColor = System.Drawing.Color.White
         Me.boxMapControls.Location = New System.Drawing.Point(10, 114)
         Me.boxMapControls.Name = "boxMapControls"
-        Me.boxMapControls.Size = New System.Drawing.Size(169, 202)
+        Me.boxMapControls.Size = New System.Drawing.Size(169, 114)
         Me.boxMapControls.TabIndex = 1
         Me.boxMapControls.TabStop = False
         Me.boxMapControls.Text = "MAP CONTROLS"
@@ -267,16 +269,6 @@ Partial Class Debug_Window
         Me.btnPan.TabStop = True
         Me.btnPan.Text = "PAN"
         Me.btnPan.UseVisualStyleBackColor = True
-        '
-        'lblDebug
-        '
-        Me.lblDebug.AutoSize = True
-        Me.lblDebug.Location = New System.Drawing.Point(6, 80)
-        Me.lblDebug.Name = "lblDebug"
-        Me.lblDebug.Size = New System.Drawing.Size(63, 19)
-        Me.lblDebug.TabIndex = 1
-        Me.lblDebug.Text = "Label1"
-        Me.lblDebug.Visible = False
         '
         'lblStatue
         '
@@ -358,7 +350,7 @@ Partial Class Debug_Window
         '
         Me.lblKeyHeader.AutoSize = True
         Me.lblKeyHeader.Font = New System.Drawing.Font("Consolas", 12.0!, System.Drawing.FontStyle.Underline)
-        Me.lblKeyHeader.Location = New System.Drawing.Point(56, 341)
+        Me.lblKeyHeader.Location = New System.Drawing.Point(56, 331)
         Me.lblKeyHeader.Name = "lblKeyHeader"
         Me.lblKeyHeader.Size = New System.Drawing.Size(72, 19)
         Me.lblKeyHeader.TabIndex = 197
@@ -1134,7 +1126,7 @@ Partial Class Debug_Window
         '
         Me.boxZoom.BackColor = System.Drawing.Color.Black
         Me.boxZoom.ForeColor = System.Drawing.Color.White
-        Me.boxZoom.Location = New System.Drawing.Point(109, 160)
+        Me.boxZoom.Location = New System.Drawing.Point(109, 81)
         Me.boxZoom.Minimum = New Decimal(New Integer() {1, 0, 0, 0})
         Me.boxZoom.Name = "boxZoom"
         Me.boxZoom.Size = New System.Drawing.Size(54, 26)
@@ -1145,11 +1137,32 @@ Partial Class Debug_Window
         'lblZoom
         '
         Me.lblZoom.AutoSize = True
-        Me.lblZoom.Location = New System.Drawing.Point(13, 162)
+        Me.lblZoom.Location = New System.Drawing.Point(13, 83)
         Me.lblZoom.Name = "lblZoom"
         Me.lblZoom.Size = New System.Drawing.Size(45, 19)
         Me.lblZoom.TabIndex = 208
         Me.lblZoom.Text = "ZOOM"
+        '
+        'btnEditSelection
+        '
+        Me.btnEditSelection.BackColor = System.Drawing.Color.Black
+        Me.btnEditSelection.Location = New System.Drawing.Point(41, 258)
+        Me.btnEditSelection.Name = "btnEditSelection"
+        Me.btnEditSelection.Size = New System.Drawing.Size(102, 46)
+        Me.btnEditSelection.TabIndex = 205
+        Me.btnEditSelection.Text = "EDIT SELECTION"
+        Me.btnEditSelection.UseVisualStyleBackColor = False
+        '
+        'Label1
+        '
+        Me.Label1.AutoSize = True
+        Me.Label1.Font = New System.Drawing.Font("Consolas", 12.0!, System.Drawing.FontStyle.Bold)
+        Me.Label1.ForeColor = System.Drawing.Color.PeachPuff
+        Me.Label1.Location = New System.Drawing.Point(52, 359)
+        Me.Label1.Name = "Label1"
+        Me.Label1.Size = New System.Drawing.Size(81, 19)
+        Me.Label1.TabIndex = 206
+        Me.Label1.Text = "SELECTED"
         '
         'Debug_Window
         '
@@ -1276,10 +1289,11 @@ Partial Class Debug_Window
     Friend WithEvents lblNPC As Label
     Friend WithEvents lblStatue As Label
     Friend WithEvents picBoard As PictureBox
-    Friend WithEvents lblDebug As Label
     Friend WithEvents boxMapControls As GroupBox
     Friend WithEvents btnPan As RadioButton
     Friend WithEvents btnSelect As RadioButton
     Friend WithEvents boxZoom As NumericUpDown
     Friend WithEvents lblZoom As Label
+    Friend WithEvents btnEditSelection As Button
+    Friend WithEvents Label1 As Label
 End Class

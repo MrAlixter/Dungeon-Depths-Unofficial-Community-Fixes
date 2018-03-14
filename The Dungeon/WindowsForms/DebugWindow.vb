@@ -6,6 +6,8 @@ Public Class Debug_Window
     Dim itemsList As List(Of String) = New List(Of String)
     Dim magnification As Integer
     Dim map As Bitmap
+    Dim prevSelectP As Point = New Point(-1, -1)
+    Dim prevSelectC As Color = Nothing
     Dim dragging As Boolean
     Dim xOffset As Integer
     Dim yOffset As Integer
@@ -32,6 +34,8 @@ Public Class Debug_Window
         AddHandler picBoard.Paint, AddressOf Me.picBoard_Draw
         AddHandler picBoard.MouseDown, AddressOf Me.mapMousePress
         AddHandler picBoard.MouseUp, AddressOf Me.mapMouseRelease
+
+        btnEditSelection.Enabled = False
 
         'PLAYER
         boxName.Text = Game.player.name
@@ -219,7 +223,15 @@ Public Class Debug_Window
             If e.X > Left And e.X < Right And e.Y > Top And e.Y < Bottom Then
                 Dim _x As Integer = CInt(Math.Floor((e.X - Left) / magnification))
                 Dim _y As Integer = CInt(Math.Floor((e.Y - Top) / magnification))
-                MessageBox.Show(_x & ", " & _y)
+                If Not (prevSelectP.X < 1 Or prevSelectP.Y < 1) Then
+                    map.SetPixel(prevSelectP.X + 1, prevSelectP.Y + 1, prevSelectC)
+                End If
+                prevSelectP = New Point(_x, _y)
+                prevSelectC = map.GetPixel(_x + 1, _y + 1)
+                map.SetPixel(_x + 1, _y + 1, Color.PeachPuff)
+                btnEditSelection.Enabled = True
+                'MessageBox.Show(_x & ", " & _y)
+                picBoard.Refresh()
             End If
         End If
     End Sub
@@ -229,15 +241,6 @@ Public Class Debug_Window
             picBoard.Invoke(New delegateExecute(AddressOf refreshMap))
         Else
             picBoard.Refresh()
-        End If
-    End Sub
-
-    Private Sub updateDebugLabel()
-        If lblDebug.InvokeRequired Then
-            lblDebug.Invoke(New delegateExecute(AddressOf updateDebugLabel))
-        Else
-            lblDebug.Text = magnification
-            lblDebug.Refresh()
         End If
     End Sub
 
@@ -285,13 +288,20 @@ Public Class Debug_Window
         magnification -= scrollAmt
         If magnification < 1 Then magnification = 1
         boxZoom.Value = magnification
-        updateDebugLabel()
         picBoard.Refresh()
     End Sub
 
     Private Sub boxZoom_ValueChanged(sender As Object, e As EventArgs) Handles boxZoom.ValueChanged
         magnification = boxZoom.Value
         picBoard.Refresh()
+    End Sub
+
+    Private Sub btnEditSelection_Click(sender As Object, e As EventArgs) Handles btnEditSelection.Click
+        If prevSelectP.X >= 0 And prevSelectP.Y >= 0 Then
+            Dim et As New EditTile()
+            et.SetLoc(prevSelectP)
+            et.ShowDialog()
+        End If
     End Sub
 
     Private Sub boxTurn_ValueChanged(sender As Object, e As EventArgs) Handles boxTurn.ValueChanged
