@@ -1,33 +1,28 @@
 ﻿Public Class EditTile
-    Dim x As Integer
-    Dim y As Integer
+    Dim p As Point
     Dim t As mTile
 
-    Public Sub SetLoc(p As Point)
-        x = p.X
-        y = p.Y
-
+    Public Sub SetLoc(_p As Point)
+        p = _p
         Reload()
     End Sub
 
     Public Sub SetLoc(_x As Integer, _y As Integer)
-        x = _x
-        y = _y
-
+        p = New Point(_x, _y)
         Reload()
     End Sub
 
     Private Sub Reload()
-        t = Game.mBoard(y, x)
+        t = Game.mBoard(p.Y, p.X)
 
-        lblPosition.Text = "POSITION: " & x & ", " & y
+        lblPosition.Text = "POSITION: " & p.X & ", " & p.Y
         lblText.Text = "TEXT: " & t.Text.ToString()
         lblCol.Text = "COL: " & t.ForeColor.ToString()
 
         boxOptions.Visible = False
-        If (Game.mBoard(y, x).Tag = 2) Then 'Seen
+        If (t.Tag = 2) Then 'Seen
             boxSeen.Checked = True
-        ElseIf (Game.mBoard(y, x).Tag = 1) Then 'Unseen
+        ElseIf (t.Tag = 1) Then 'Unseen
             boxSeen.Checked = False
         Else 'WALL
             boxSeen.Enabled = False
@@ -41,28 +36,44 @@
         boxType.Items.Add("@ (Player)")
         boxType.Items.Add("@ (Statue)")
         boxType.Items.Add("$ (NPC)")
-        If (Game.mBoard(y, x).Text = "#") Then 'Chest
+        'Temporarily removes handler so that the event doesn't trigger
+        RemoveHandler boxType.SelectedIndexChanged, AddressOf boxType_SelectedIndexChanged
+        If (t.Text = "#") Then 'Chest
             boxType.SelectedItem = "# (Chest)"
             boxType.Enabled = False
             boxOptions.Visible = True
-        ElseIf (Game.mBoard(y, x).Text = "H") Then 'Stairs
+
+            Dim btnEditContents As Button
+            btnEditContents = New System.Windows.Forms.Button()
+            boxOptions.Controls.Add(btnEditContents)
+            btnEditContents.BackColor = System.Drawing.Color.Black
+            btnEditContents.Location = New System.Drawing.Point(77, 32)
+            btnEditContents.Name = "btnEditContents"
+            btnEditContents.Size = New System.Drawing.Size(103, 48)
+            btnEditContents.TabIndex = 0
+            btnEditContents.Text = "Edit Contents"
+            btnEditContents.UseVisualStyleBackColor = False
+            AddHandler btnEditContents.Click, AddressOf btnEditContents_Clicked
+
+        ElseIf (t.Text = "H") Then 'Stairs
             boxType.SelectedItem = "H (Stairs)"
             boxType.Enabled = False
             boxOptions.Visible = True
-        ElseIf (Game.mBoard(y, x).Text = "@" And Game.player.pos.X = x And Game.player.pos.Y = y) Then 'Player
+        ElseIf (t.Text = "@" And Game.player.pos.X = p.X And Game.player.pos.Y = p.Y) Then 'Player
             boxType.SelectedItem = "@ (Player)"
             boxType.Enabled = False
-        ElseIf (Game.mBoard(y, x).Text = "@") Then 'Statue
+        ElseIf (t.Text = "@") Then 'Statue
             boxType.SelectedItem = "@ (Statue)"
             boxType.Enabled = False
-        ElseIf (Game.mBoard(y, x).Text = "$") Then 'NPC
+        ElseIf (t.Text = "$") Then 'NPC
             boxType.SelectedItem = "$ (NPC)"
             boxType.Enabled = False
-        ElseIf (Game.mBoard(y, x).Tag = 0) Then 'Wall
+        ElseIf (t.Tag = 0) Then 'Wall
             boxType.SelectedItem = "(Wall)"
         Else 'Walkable
             boxType.SelectedItem = "(Walkable)"
         End If
+        AddHandler boxType.SelectedIndexChanged, AddressOf boxType_SelectedIndexChanged
 
 
     End Sub
@@ -103,6 +114,11 @@
         End If
     End Sub
 
+    Private Sub btnEditContents_Clicked(sender As Object, e As EventArgs)
+        Dim ec As New EditContents(p)
+        ec.ShowDialog()
+    End Sub
+
     Private Sub EditTile_FormClosing(sender As Object, e As FormClosingEventArgs) Handles MyBase.FormClosing
         Dim tag As Integer
         If Not boxSeen.Enabled Then
@@ -112,8 +128,8 @@
         ElseIf Not boxSeen.Checked Then
             tag = 1
         End If
-        Game.mBoard(y, x).Tag = tag
-        Game.mBoard(y, x).Text = t.Text
-        Game.mBoard(y, x).ForeColor = t.ForeColor
+        Game.mBoard(p.Y, p.X).Tag = tag
+        Game.mBoard(p.Y, p.X).Text = t.Text
+        Game.mBoard(p.Y, p.X).ForeColor = t.ForeColor
     End Sub
 End Class

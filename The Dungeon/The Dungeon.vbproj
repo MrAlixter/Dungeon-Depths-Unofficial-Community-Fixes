@@ -137,16 +137,22 @@
     <Compile Include="Items\Usable\Food\Cupcake.vb" />
     <Compile Include="Items\Usable\Charms\DefenceCharm.vb" />
     <Compile Include="Items\Usable\Food\Food.vb" />
-    <Compile Include="WindowsForms\DebugWindow.Designer.vb">
+    <Compile Include="WindowsForms\Debug\DebugWindow.Designer.vb">
       <DependentUpon>DebugWindow.vb</DependentUpon>
     </Compile>
-    <Compile Include="WindowsForms\DebugWindow.vb">
+    <Compile Include="WindowsForms\Debug\DebugWindow.vb">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="WindowsForms\EditTile.Designer.vb">
+    <Compile Include="WindowsForms\Debug\EditContents.Designer.vb">
+      <DependentUpon>EditContents.vb</DependentUpon>
+    </Compile>
+    <Compile Include="WindowsForms\Debug\EditContents.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="WindowsForms\Debug\EditTile.Designer.vb">
       <DependentUpon>EditTile.vb</DependentUpon>
     </Compile>
-    <Compile Include="WindowsForms\EditTile.vb">
+    <Compile Include="WindowsForms\Debug\EditTile.vb">
       <SubType>Form</SubType>
     </Compile>
     <Compile Include="WindowsForms\Game.Designer.vb">
@@ -290,10 +296,13 @@
       <DependentUpon>CharacterGenerator.vb</DependentUpon>
       <SubType>Designer</SubType>
     </EmbeddedResource>
-    <EmbeddedResource Include="WindowsForms\DebugWindow.resx">
+    <EmbeddedResource Include="WindowsForms\Debug\DebugWindow.resx">
       <DependentUpon>DebugWindow.vb</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="WindowsForms\EditTile.resx">
+    <EmbeddedResource Include="WindowsForms\Debug\EditContents.resx">
+      <DependentUpon>EditContents.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="WindowsForms\Debug\EditTile.resx">
       <DependentUpon>EditTile.vb</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="WindowsForms\Game.resx">
