@@ -23,25 +23,8 @@
         lblPosition.Text = "POSITION: " & x & ", " & y
         lblText.Text = "TEXT: " & t.Text.ToString()
         lblCol.Text = "COL: " & t.ForeColor.ToString()
-        boxOptions.Visible = False
-        If (Game.mBoard(y, x).Text = "#") Then 'Chest
-            lblType.Text = "TYPE: Chest"
-            boxOptions.Visible = True
-        ElseIf (Game.mBoard(y, x).Text = "H") Then 'Stairs
-            lblType.Text = "TYPE: Stairs"
-            boxOptions.Visible = True
-        ElseIf (Game.mBoard(y, x).Text = "@" And Game.player.pos.X = x And Game.player.pos.Y = y) Then 'Player
-            lblType.Text = "TYPE: Player"
-        ElseIf (Game.mBoard(y, x).Text = "@") Then 'Statue
-            lblType.Text = "TYPE: Statue"
-        ElseIf (Game.mBoard(y, x).Text = "$") Then 'NPC
-            lblType.Text = "TYPE: NPC"
-        ElseIf (Game.mBoard(y, x).Tag = 0) Then 'Wall
-            lblType.Text = "TYPE: WALL"
-        Else 'Walkable
-            lblType.Text = "TYPE: WALKABLE"
-        End If
 
+        boxOptions.Visible = False
         If (Game.mBoard(y, x).Tag = 2) Then 'Seen
             boxSeen.Checked = True
             boxWall.Checked = False
@@ -53,6 +36,31 @@
             boxWall.Checked = True
         End If
         updateTagLbl()
+
+        If (Game.mBoard(y, x).Text = "#") Then 'Chest
+            lblType.Text = "TYPE: Chest"
+            boxWall.Enabled = False
+            boxOptions.Visible = True
+        ElseIf (Game.mBoard(y, x).Text = "H") Then 'Stairs
+            lblType.Text = "TYPE: Stairs"
+            boxWall.Enabled = False
+            boxOptions.Visible = True
+        ElseIf (Game.mBoard(y, x).Text = "@" And Game.player.pos.X = x And Game.player.pos.Y = y) Then 'Player
+            lblType.Text = "TYPE: Player"
+            boxWall.Enabled = False
+        ElseIf (Game.mBoard(y, x).Text = "@") Then 'Statue
+            lblType.Text = "TYPE: Statue"
+            boxWall.Enabled = False
+        ElseIf (Game.mBoard(y, x).Text = "$") Then 'NPC
+            lblType.Text = "TYPE: NPC"
+            boxWall.Enabled = False
+        ElseIf (Game.mBoard(y, x).Tag = 0) Then 'Wall
+            lblType.Text = "TYPE: WALL"
+        Else 'Walkable
+            lblType.Text = "TYPE: WALKABLE"
+        End If
+
+
     End Sub
 
     Private Sub boxSeen_CheckedChanged(sender As Object, e As EventArgs) Handles boxSeen.CheckedChanged
