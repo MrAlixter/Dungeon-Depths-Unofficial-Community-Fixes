@@ -30,7 +30,11 @@ Partial Class Debug_Window
         Me.groupNotes = New System.Windows.Forms.GroupBox()
         Me.picBoard = New System.Windows.Forms.PictureBox()
         Me.groupGeneral = New System.Windows.Forms.GroupBox()
+        Me.Label1 = New System.Windows.Forms.Label()
+        Me.btnEditSelection = New System.Windows.Forms.Button()
         Me.boxMapControls = New System.Windows.Forms.GroupBox()
+        Me.lblZoom = New System.Windows.Forms.Label()
+        Me.boxZoom = New System.Windows.Forms.NumericUpDown()
         Me.btnSelect = New System.Windows.Forms.RadioButton()
         Me.btnPan = New System.Windows.Forms.RadioButton()
         Me.lblStatue = New System.Windows.Forms.Label()
@@ -106,10 +110,6 @@ Partial Class Debug_Window
         Me.lblInventory = New System.Windows.Forms.Label()
         Me.boxItems = New System.Windows.Forms.ListBox()
         Me.lblItems = New System.Windows.Forms.Label()
-        Me.boxZoom = New System.Windows.Forms.NumericUpDown()
-        Me.lblZoom = New System.Windows.Forms.Label()
-        Me.btnEditSelection = New System.Windows.Forms.Button()
-        Me.Label1 = New System.Windows.Forms.Label()
         Me.tabMain.SuspendLayout()
         Me.tabInformation.SuspendLayout()
         Me.tabGeneral.SuspendLayout()
@@ -117,6 +117,7 @@ Partial Class Debug_Window
         CType(Me.picBoard, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.groupGeneral.SuspendLayout()
         Me.boxMapControls.SuspendLayout()
+        CType(Me.boxZoom, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me.boxTurn, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me.boxFloor, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.tabPlayer.SuspendLayout()
@@ -135,7 +136,6 @@ Partial Class Debug_Window
         CType(Me.boxHealth, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.tabInventory.SuspendLayout()
         CType(Me.number, System.ComponentModel.ISupportInitialize).BeginInit()
-        CType(Me.boxZoom, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.SuspendLayout()
         '
         'tabMain
@@ -234,6 +234,27 @@ Partial Class Debug_Window
         Me.groupGeneral.TabStop = False
         Me.groupGeneral.Text = "GENERAL"
         '
+        'Label1
+        '
+        Me.Label1.AutoSize = True
+        Me.Label1.Font = New System.Drawing.Font("Consolas", 12.0!, System.Drawing.FontStyle.Bold)
+        Me.Label1.ForeColor = System.Drawing.Color.PeachPuff
+        Me.Label1.Location = New System.Drawing.Point(52, 359)
+        Me.Label1.Name = "Label1"
+        Me.Label1.Size = New System.Drawing.Size(81, 19)
+        Me.Label1.TabIndex = 206
+        Me.Label1.Text = "SELECTED"
+        '
+        'btnEditSelection
+        '
+        Me.btnEditSelection.BackColor = System.Drawing.Color.Black
+        Me.btnEditSelection.Location = New System.Drawing.Point(41, 258)
+        Me.btnEditSelection.Name = "btnEditSelection"
+        Me.btnEditSelection.Size = New System.Drawing.Size(102, 46)
+        Me.btnEditSelection.TabIndex = 205
+        Me.btnEditSelection.Text = "EDIT SELECTION"
+        Me.btnEditSelection.UseVisualStyleBackColor = False
+        '
         'boxMapControls
         '
         Me.boxMapControls.Controls.Add(Me.lblZoom)
@@ -247,6 +268,27 @@ Partial Class Debug_Window
         Me.boxMapControls.TabIndex = 1
         Me.boxMapControls.TabStop = False
         Me.boxMapControls.Text = "MAP CONTROLS"
+        '
+        'lblZoom
+        '
+        Me.lblZoom.AutoSize = True
+        Me.lblZoom.Location = New System.Drawing.Point(13, 83)
+        Me.lblZoom.Name = "lblZoom"
+        Me.lblZoom.Size = New System.Drawing.Size(45, 19)
+        Me.lblZoom.TabIndex = 208
+        Me.lblZoom.Text = "ZOOM"
+        '
+        'boxZoom
+        '
+        Me.boxZoom.BackColor = System.Drawing.Color.Black
+        Me.boxZoom.ForeColor = System.Drawing.Color.White
+        Me.boxZoom.Location = New System.Drawing.Point(109, 81)
+        Me.boxZoom.Minimum = New Decimal(New Integer() {1, 0, 0, 0})
+        Me.boxZoom.Name = "boxZoom"
+        Me.boxZoom.Size = New System.Drawing.Size(54, 26)
+        Me.boxZoom.TabIndex = 207
+        Me.boxZoom.TextAlign = System.Windows.Forms.HorizontalAlignment.Center
+        Me.boxZoom.Value = New Decimal(New Integer() {1, 0, 0, 0})
         '
         'btnSelect
         '
@@ -1122,48 +1164,6 @@ Partial Class Debug_Window
         Me.lblItems.TabIndex = 7
         Me.lblItems.Text = "ITEMS"
         '
-        'boxZoom
-        '
-        Me.boxZoom.BackColor = System.Drawing.Color.Black
-        Me.boxZoom.ForeColor = System.Drawing.Color.White
-        Me.boxZoom.Location = New System.Drawing.Point(109, 81)
-        Me.boxZoom.Minimum = New Decimal(New Integer() {1, 0, 0, 0})
-        Me.boxZoom.Name = "boxZoom"
-        Me.boxZoom.Size = New System.Drawing.Size(54, 26)
-        Me.boxZoom.TabIndex = 207
-        Me.boxZoom.TextAlign = System.Windows.Forms.HorizontalAlignment.Center
-        Me.boxZoom.Value = New Decimal(New Integer() {1, 0, 0, 0})
-        '
-        'lblZoom
-        '
-        Me.lblZoom.AutoSize = True
-        Me.lblZoom.Location = New System.Drawing.Point(13, 83)
-        Me.lblZoom.Name = "lblZoom"
-        Me.lblZoom.Size = New System.Drawing.Size(45, 19)
-        Me.lblZoom.TabIndex = 208
-        Me.lblZoom.Text = "ZOOM"
-        '
-        'btnEditSelection
-        '
-        Me.btnEditSelection.BackColor = System.Drawing.Color.Black
-        Me.btnEditSelection.Location = New System.Drawing.Point(41, 258)
-        Me.btnEditSelection.Name = "btnEditSelection"
-        Me.btnEditSelection.Size = New System.Drawing.Size(102, 46)
-        Me.btnEditSelection.TabIndex = 205
-        Me.btnEditSelection.Text = "EDIT SELECTION"
-        Me.btnEditSelection.UseVisualStyleBackColor = False
-        '
-        'Label1
-        '
-        Me.Label1.AutoSize = True
-        Me.Label1.Font = New System.Drawing.Font("Consolas", 12.0!, System.Drawing.FontStyle.Bold)
-        Me.Label1.ForeColor = System.Drawing.Color.PeachPuff
-        Me.Label1.Location = New System.Drawing.Point(52, 359)
-        Me.Label1.Name = "Label1"
-        Me.Label1.Size = New System.Drawing.Size(81, 19)
-        Me.Label1.TabIndex = 206
-        Me.Label1.Text = "SELECTED"
-        '
         'Debug_Window
         '
         Me.AutoScaleDimensions = New System.Drawing.SizeF(6.0!, 13.0!)
@@ -1171,6 +1171,7 @@ Partial Class Debug_Window
         Me.BackColor = System.Drawing.Color.Black
         Me.ClientSize = New System.Drawing.Size(750, 576)
         Me.Controls.Add(Me.tabMain)
+        Me.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedToolWindow
         Me.Icon = CType(resources.GetObject("$this.Icon"), System.Drawing.Icon)
         Me.Name = "Debug_Window"
         Me.SizeGripStyle = System.Windows.Forms.SizeGripStyle.Hide
@@ -1185,6 +1186,7 @@ Partial Class Debug_Window
         Me.groupGeneral.PerformLayout()
         Me.boxMapControls.ResumeLayout(False)
         Me.boxMapControls.PerformLayout()
+        CType(Me.boxZoom, System.ComponentModel.ISupportInitialize).EndInit()
         CType(Me.boxTurn, System.ComponentModel.ISupportInitialize).EndInit()
         CType(Me.boxFloor, System.ComponentModel.ISupportInitialize).EndInit()
         Me.tabPlayer.ResumeLayout(False)
@@ -1205,7 +1207,6 @@ Partial Class Debug_Window
         Me.tabInventory.ResumeLayout(False)
         Me.tabInventory.PerformLayout()
         CType(Me.number, System.ComponentModel.ISupportInitialize).EndInit()
-        CType(Me.boxZoom, System.ComponentModel.ISupportInitialize).EndInit()
         Me.ResumeLayout(False)
 
     End Sub

@@ -26,6 +26,8 @@ Partial Class EditTile
         Me.lblTag = New System.Windows.Forms.Label()
         Me.lblText = New System.Windows.Forms.Label()
         Me.lblCol = New System.Windows.Forms.Label()
+        Me.lblType = New System.Windows.Forms.Label()
+        Me.boxSeen = New System.Windows.Forms.CheckBox()
         Me.SuspendLayout()
         '
         'lblPosition
@@ -72,17 +74,47 @@ Partial Class EditTile
         Me.lblCol.TabIndex = 3
         Me.lblCol.Text = "COL: "
         '
+        'lblType
+        '
+        Me.lblType.AutoSize = True
+        Me.lblType.Font = New System.Drawing.Font("Consolas", 12.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.lblType.ForeColor = System.Drawing.Color.White
+        Me.lblType.Location = New System.Drawing.Point(12, 85)
+        Me.lblType.Name = "lblType"
+        Me.lblType.Size = New System.Drawing.Size(63, 19)
+        Me.lblType.TabIndex = 4
+        Me.lblType.Text = "TYPE: "
+        '
+        'boxSeen
+        '
+        Me.boxSeen.AutoSize = True
+        Me.boxSeen.BackColor = System.Drawing.Color.Black
+        Me.boxSeen.Font = New System.Drawing.Font("Consolas", 12.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.boxSeen.ForeColor = System.Drawing.Color.White
+        Me.boxSeen.Location = New System.Drawing.Point(16, 107)
+        Me.boxSeen.Name = "boxSeen"
+        Me.boxSeen.Size = New System.Drawing.Size(64, 23)
+        Me.boxSeen.TabIndex = 5
+        Me.boxSeen.Text = "SEEN"
+        Me.boxSeen.TextAlign = System.Drawing.ContentAlignment.MiddleCenter
+        Me.boxSeen.UseVisualStyleBackColor = False
+        '
         'EditTile
         '
         Me.AutoScaleDimensions = New System.Drawing.SizeF(6.0!, 13.0!)
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font
         Me.BackColor = System.Drawing.Color.Black
         Me.ClientSize = New System.Drawing.Size(284, 261)
+        Me.Controls.Add(Me.boxSeen)
+        Me.Controls.Add(Me.lblType)
         Me.Controls.Add(Me.lblCol)
         Me.Controls.Add(Me.lblText)
         Me.Controls.Add(Me.lblTag)
         Me.Controls.Add(Me.lblPosition)
+        Me.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedToolWindow
         Me.Name = "EditTile"
+        Me.SizeGripStyle = System.Windows.Forms.SizeGripStyle.Hide
+        Me.StartPosition = System.Windows.Forms.FormStartPosition.CenterParent
         Me.Text = "Edit Tile"
         Me.ResumeLayout(False)
         Me.PerformLayout()
@@ -93,4 +125,6 @@ Partial Class EditTile
     Friend WithEvents lblTag As Label
     Friend WithEvents lblText As Label
     Friend WithEvents lblCol As Label
+    Friend WithEvents lblType As Label
+    Friend WithEvents boxSeen As CheckBox
 End Class

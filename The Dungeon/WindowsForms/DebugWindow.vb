@@ -214,7 +214,7 @@ Public Class Debug_Window
     Private Sub mapMouseRelease(sender As Object, e As MouseEventArgs)
         If btnPan.Checked Then
             dragging = False
-            mouseMoveThread.Abort()
+            'mouseMoveThread.Abort()
         ElseIf btnSelect.Checked Then
             Dim Top As Integer = CInt(Math.Floor(picBoard.Height / 2 - (map.Height - 1) * magnification / 2)) + yOffset
             Dim Bottom As Integer = CInt(Math.Floor(picBoard.Height / 2 + (map.Height - 3) * magnification / 2)) + yOffset
@@ -223,7 +223,7 @@ Public Class Debug_Window
             If e.X > Left And e.X < Right And e.Y > Top And e.Y < Bottom Then
                 Dim _x As Integer = CInt(Math.Floor((e.X - Left) / magnification))
                 Dim _y As Integer = CInt(Math.Floor((e.Y - Top) / magnification))
-                If Not (prevSelectP.X < 1 Or prevSelectP.Y < 1) Then
+                If Not (prevSelectP.X < 0 Or prevSelectP.Y < 0) Then
                     map.SetPixel(prevSelectP.X + 1, prevSelectP.Y + 1, prevSelectC)
                 End If
                 prevSelectP = New Point(_x, _y)
@@ -236,7 +236,7 @@ Public Class Debug_Window
         End If
     End Sub
 
-    Private Sub refreshMap()
+    Public Sub refreshMap()
         If picBoard.InvokeRequired Then
             picBoard.Invoke(New delegateExecute(AddressOf refreshMap))
         Else
@@ -301,6 +301,19 @@ Public Class Debug_Window
             Dim et As New EditTile()
             et.SetLoc(prevSelectP)
             et.ShowDialog()
+
+            Dim tempPoint As Point = prevSelectP
+            prevSelectC = Nothing
+            prevSelectP = New Point(-1, -1)
+
+            createMap()
+
+            prevSelectC = map.GetPixel(tempPoint.X + 1, tempPoint.Y + 1)
+            prevSelectP = tempPoint
+            map.SetPixel(tempPoint.X + 1, tempPoint.Y + 1, Color.PeachPuff)
+            btnEditSelection.Enabled = True
+            picBoard.Refresh()
+            Game.zoom()
         End If
     End Sub
 
