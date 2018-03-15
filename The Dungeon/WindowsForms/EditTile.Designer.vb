@@ -27,6 +27,8 @@ Partial Class EditTile
         Me.lblText = New System.Windows.Forms.Label()
         Me.lblCol = New System.Windows.Forms.Label()
         Me.lblType = New System.Windows.Forms.Label()
+        Me.boxWall = New System.Windows.Forms.CheckBox()
+        Me.boxOptions = New System.Windows.Forms.GroupBox()
         Me.boxSeen = New System.Windows.Forms.CheckBox()
         Me.SuspendLayout()
         '
@@ -57,7 +59,7 @@ Partial Class EditTile
         Me.lblText.AutoSize = True
         Me.lblText.Font = New System.Drawing.Font("Consolas", 12.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.lblText.ForeColor = System.Drawing.Color.White
-        Me.lblText.Location = New System.Drawing.Point(12, 47)
+        Me.lblText.Location = New System.Drawing.Point(12, 76)
         Me.lblText.Name = "lblText"
         Me.lblText.Size = New System.Drawing.Size(63, 19)
         Me.lblText.TabIndex = 2
@@ -68,7 +70,7 @@ Partial Class EditTile
         Me.lblCol.AutoSize = True
         Me.lblCol.Font = New System.Drawing.Font("Consolas", 12.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.lblCol.ForeColor = System.Drawing.Color.White
-        Me.lblCol.Location = New System.Drawing.Point(12, 66)
+        Me.lblCol.Location = New System.Drawing.Point(12, 95)
         Me.lblCol.Name = "lblCol"
         Me.lblCol.Size = New System.Drawing.Size(54, 19)
         Me.lblCol.TabIndex = 3
@@ -79,11 +81,36 @@ Partial Class EditTile
         Me.lblType.AutoSize = True
         Me.lblType.Font = New System.Drawing.Font("Consolas", 12.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.lblType.ForeColor = System.Drawing.Color.White
-        Me.lblType.Location = New System.Drawing.Point(12, 85)
+        Me.lblType.Location = New System.Drawing.Point(12, 114)
         Me.lblType.Name = "lblType"
         Me.lblType.Size = New System.Drawing.Size(63, 19)
         Me.lblType.TabIndex = 4
         Me.lblType.Text = "TYPE: "
+        '
+        'boxWall
+        '
+        Me.boxWall.AutoSize = True
+        Me.boxWall.BackColor = System.Drawing.Color.Black
+        Me.boxWall.Font = New System.Drawing.Font("Consolas", 12.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.boxWall.ForeColor = System.Drawing.Color.White
+        Me.boxWall.Location = New System.Drawing.Point(67, 50)
+        Me.boxWall.Name = "boxWall"
+        Me.boxWall.Size = New System.Drawing.Size(64, 23)
+        Me.boxWall.TabIndex = 5
+        Me.boxWall.Text = "WALL"
+        Me.boxWall.TextAlign = System.Drawing.ContentAlignment.MiddleCenter
+        Me.boxWall.UseVisualStyleBackColor = False
+        '
+        'boxOptions
+        '
+        Me.boxOptions.Font = New System.Drawing.Font("Consolas", 12.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.boxOptions.ForeColor = System.Drawing.Color.White
+        Me.boxOptions.Location = New System.Drawing.Point(16, 136)
+        Me.boxOptions.Name = "boxOptions"
+        Me.boxOptions.Size = New System.Drawing.Size(256, 113)
+        Me.boxOptions.TabIndex = 6
+        Me.boxOptions.TabStop = False
+        Me.boxOptions.Text = "OPTIONS"
         '
         'boxSeen
         '
@@ -91,10 +118,10 @@ Partial Class EditTile
         Me.boxSeen.BackColor = System.Drawing.Color.Black
         Me.boxSeen.Font = New System.Drawing.Font("Consolas", 12.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.boxSeen.ForeColor = System.Drawing.Color.White
-        Me.boxSeen.Location = New System.Drawing.Point(16, 107)
+        Me.boxSeen.Location = New System.Drawing.Point(153, 50)
         Me.boxSeen.Name = "boxSeen"
         Me.boxSeen.Size = New System.Drawing.Size(64, 23)
-        Me.boxSeen.TabIndex = 5
+        Me.boxSeen.TabIndex = 7
         Me.boxSeen.Text = "SEEN"
         Me.boxSeen.TextAlign = System.Drawing.ContentAlignment.MiddleCenter
         Me.boxSeen.UseVisualStyleBackColor = False
@@ -106,6 +133,8 @@ Partial Class EditTile
         Me.BackColor = System.Drawing.Color.Black
         Me.ClientSize = New System.Drawing.Size(284, 261)
         Me.Controls.Add(Me.boxSeen)
+        Me.Controls.Add(Me.boxOptions)
+        Me.Controls.Add(Me.boxWall)
         Me.Controls.Add(Me.lblType)
         Me.Controls.Add(Me.lblCol)
         Me.Controls.Add(Me.lblText)
@@ -126,5 +155,7 @@ Partial Class EditTile
     Friend WithEvents lblText As Label
     Friend WithEvents lblCol As Label
     Friend WithEvents lblType As Label
+    Friend WithEvents boxWall As CheckBox
+    Friend WithEvents boxOptions As GroupBox
     Friend WithEvents boxSeen As CheckBox
 End Class

@@ -4,6 +4,7 @@ Imports System.Threading
 Public Class Debug_Window
     Dim inventoryList As List(Of String) = New List(Of String)
     Dim itemsList As List(Of String) = New List(Of String)
+    'Dim tileTypes As List(Of mTile)
     Dim magnification As Integer
     Dim map As Bitmap
     Dim prevSelectP As Point = New Point(-1, -1)
