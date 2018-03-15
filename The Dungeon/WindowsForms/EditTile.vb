@@ -27,37 +27,41 @@
         boxOptions.Visible = False
         If (Game.mBoard(y, x).Tag = 2) Then 'Seen
             boxSeen.Checked = True
-            boxWall.Checked = False
         ElseIf (Game.mBoard(y, x).Tag = 1) Then 'Unseen
             boxSeen.Checked = False
-            boxWall.Checked = False
         Else 'WALL
             boxSeen.Enabled = False
-            boxWall.Checked = True
         End If
         updateTagLbl()
 
+        boxType.Items.Add("(Wall)")
+        boxType.Items.Add("(Walkable)")
+        boxType.Items.Add("# (Chest)")
+        boxType.Items.Add("H (Stairs)")
+        boxType.Items.Add("@ (Player)")
+        boxType.Items.Add("@ (Statue)")
+        boxType.Items.Add("$ (NPC)")
         If (Game.mBoard(y, x).Text = "#") Then 'Chest
-            lblType.Text = "TYPE: Chest"
-            boxWall.Enabled = False
+            boxType.SelectedItem = "# (Chest)"
+            boxType.Enabled = False
             boxOptions.Visible = True
         ElseIf (Game.mBoard(y, x).Text = "H") Then 'Stairs
-            lblType.Text = "TYPE: Stairs"
-            boxWall.Enabled = False
+            boxType.SelectedItem = "H (Stairs)"
+            boxType.Enabled = False
             boxOptions.Visible = True
         ElseIf (Game.mBoard(y, x).Text = "@" And Game.player.pos.X = x And Game.player.pos.Y = y) Then 'Player
-            lblType.Text = "TYPE: Player"
-            boxWall.Enabled = False
+            boxType.SelectedItem = "@ (Player)"
+            boxType.Enabled = False
         ElseIf (Game.mBoard(y, x).Text = "@") Then 'Statue
-            lblType.Text = "TYPE: Statue"
-            boxWall.Enabled = False
+            boxType.SelectedItem = "@ (Statue)"
+            boxType.Enabled = False
         ElseIf (Game.mBoard(y, x).Text = "$") Then 'NPC
-            lblType.Text = "TYPE: NPC"
-            boxWall.Enabled = False
+            boxType.SelectedItem = "$ (NPC)"
+            boxType.Enabled = False
         ElseIf (Game.mBoard(y, x).Tag = 0) Then 'Wall
-            lblType.Text = "TYPE: WALL"
+            boxType.SelectedItem = "(Wall)"
         Else 'Walkable
-            lblType.Text = "TYPE: WALKABLE"
+            boxType.SelectedItem = "(Walkable)"
         End If
 
 
@@ -74,18 +78,6 @@
         updateTagLbl()
     End Sub
 
-    Private Sub boxWall_CheckedChanged(sender As Object, e As EventArgs) Handles boxWall.CheckedChanged
-        If boxWall.Checked Then
-            t.Tag = 0
-            boxSeen.Enabled = False
-            boxSeen.Checked = False
-        Else
-            t.Tag = 1
-            boxSeen.Enabled = True
-            boxSeen.Checked = False
-        End If
-    End Sub
-
     Private Sub updateTagLbl()
         If t.Tag = 0 Then
             lblTag.Text = "TAG: 0 (WALL)"
@@ -93,6 +85,21 @@
             lblTag.Text = "TAG: 1 (UNSEEN)"
         ElseIf t.Tag = 2 Then
             lblTag.Text = "TAG: 2 (SEEN)"
+        End If
+    End Sub
+
+    Private Sub boxType_SelectedIndexChanged(sender As Object, e As EventArgs) Handles boxType.SelectedIndexChanged
+        If boxType.SelectedItem.ToString() = "(Wall)" Then
+            t.Tag = 0
+            boxSeen.Enabled = False
+            boxSeen.Checked = False
+        ElseIf boxType.SelectedItem.ToString() = "(Walkable)" Then
+            t.Tag = 1
+            boxSeen.Enabled = True
+            boxSeen.Checked = False
+        Else
+            MessageBox.Show("ERR: CURRENTLY NOT BUILD")
+            boxType.SelectedItem = "(Wall)"
         End If
     End Sub
 
