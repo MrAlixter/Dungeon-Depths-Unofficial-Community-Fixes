@@ -299,7 +299,7 @@
     Private Sub endBoss()
         If sName.Equals("Marissa the Enchantress") Then Game.beatboss(1) = True
         If sName.Equals("Targax the Brutal") Then Game.beatboss(2) = True
-        If sName.Equals("Explorer") Then Game.beatboss(3) = True
+        If sName.Equals("Explorer") Then Game.beatboss(Game.floor) = True
     End Sub
     Private Sub endMonster()
         Dim totalSum As Integer = 0

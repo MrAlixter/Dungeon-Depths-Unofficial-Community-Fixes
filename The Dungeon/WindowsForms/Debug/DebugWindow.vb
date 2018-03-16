@@ -27,7 +27,12 @@ Public Class Debug_Window
         'GENERAL
         boxFloor.Value = Game.floor
         boxTurn.Value = Game.turn
-        boxBeaten.Checked = Game.beatboss(Game.floor)
+        If Game.floor < Game.beatboss.Count Then
+            boxBeaten.Checked = Game.beatboss(Game.floor)
+        Else
+            boxBeaten.Enabled = False
+        End If
+
 
         'MAP
         magnification = Math.Floor(Math.Min(picBoard.Width / Game.mBoardWidth, picBoard.Height / Game.mBoardHeight))
