@@ -27,6 +27,7 @@ Public Class Debug_Window
         'GENERAL
         boxFloor.Value = Game.floor
         boxTurn.Value = Game.turn
+        boxBeaten.Checked = Game.beatboss(Game.floor)
 
         'MAP
         magnification = Math.Floor(Math.Min(picBoard.Width / Game.mBoardWidth, picBoard.Height / Game.mBoardHeight))
@@ -320,6 +321,10 @@ Public Class Debug_Window
 
     Private Sub boxTurn_ValueChanged(sender As Object, e As EventArgs) Handles boxTurn.ValueChanged
         Game.turn = boxTurn.Value
+    End Sub
+
+    Private Sub boxBeaten_CheckedChanged(sender As Object, e As EventArgs) Handles boxBeaten.CheckedChanged
+        Game.beatboss(Game.floor) = boxBeaten.Checked
     End Sub
 
     Private Sub boxName_TextChanged(sender As Object, e As EventArgs) Handles boxName.TextChanged

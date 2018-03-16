@@ -110,6 +110,7 @@ Partial Class Debug_Window
         Me.lblInventory = New System.Windows.Forms.Label()
         Me.boxItems = New System.Windows.Forms.ListBox()
         Me.lblItems = New System.Windows.Forms.Label()
+        Me.boxBeaten = New System.Windows.Forms.CheckBox()
         Me.tabMain.SuspendLayout()
         Me.tabInformation.SuspendLayout()
         Me.tabGeneral.SuspendLayout()
@@ -210,6 +211,7 @@ Partial Class Debug_Window
         'groupGeneral
         '
         Me.groupGeneral.BackColor = System.Drawing.Color.Black
+        Me.groupGeneral.Controls.Add(Me.boxBeaten)
         Me.groupGeneral.Controls.Add(Me.Label1)
         Me.groupGeneral.Controls.Add(Me.btnEditSelection)
         Me.groupGeneral.Controls.Add(Me.boxMapControls)
@@ -1164,6 +1166,16 @@ Partial Class Debug_Window
         Me.lblItems.TabIndex = 7
         Me.lblItems.Text = "ITEMS"
         '
+        'boxBeaten
+        '
+        Me.boxBeaten.AutoSize = True
+        Me.boxBeaten.Location = New System.Drawing.Point(7, 81)
+        Me.boxBeaten.Name = "boxBeaten"
+        Me.boxBeaten.Size = New System.Drawing.Size(127, 23)
+        Me.boxBeaten.TabIndex = 207
+        Me.boxBeaten.Text = "BOSS BEATEN"
+        Me.boxBeaten.UseVisualStyleBackColor = True
+        '
         'Debug_Window
         '
         Me.AutoScaleDimensions = New System.Drawing.SizeF(6.0!, 13.0!)
@@ -1297,4 +1309,5 @@ Partial Class Debug_Window
     Friend WithEvents lblZoom As Label
     Friend WithEvents btnEditSelection As Button
     Friend WithEvents Label1 As Label
+    Friend WithEvents boxBeaten As CheckBox
 End Class
