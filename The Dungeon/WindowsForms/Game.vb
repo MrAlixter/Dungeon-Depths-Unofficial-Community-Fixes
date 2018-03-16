@@ -11,6 +11,7 @@ Public Class Game
     Public mBoard(,) As mTile
     Public mPics(,) As PictureBox       '(NOT SAVED)
     Public floor As Integer = 0
+    Public floorCode As String
     Public stairs As Point
 
     Public player As Player = New Player()
@@ -302,6 +303,7 @@ Public Class Game
         Return output
     End Function
     Sub generateLevel(ByVal code As String)
+        floorCode = code
         Rnd(-1)
         If code.Equals("bossstage") Then
             genBossFloor()
@@ -1117,6 +1119,8 @@ Public Class Game
     End Sub
     'loadSave handles the loading of a game
     Sub loadSave(ByVal a As String)
+        Debug_Window.clear()
+        floorCode = ""
         cboxMG.Items.Clear()
         cboxMG.Text = "-- Select --"
         cboxNPCMG.Items.Clear()
@@ -1272,6 +1276,8 @@ Public Class Game
         lblSKL.Text = "WIL = " & player.getWillpower
         lblSPD.Text = "SPD = " & player.getSpeed
         lblEVD.Text = "EVD = " & player.evade
+
+        player.currState.save(player)
 
         pushLblEvent("Game successfully loaded!")
         player.solFlag = False

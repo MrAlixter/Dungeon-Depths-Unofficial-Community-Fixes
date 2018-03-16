@@ -25,6 +25,7 @@ Public Class Debug_Window
         btnPan.Checked = True
 
         'GENERAL
+        lblGenCode.Text = "CODE: " & Game.floorCode
         boxFloor.Value = Game.floor
         boxTurn.Value = Game.turn
         If Game.floor < Game.beatboss.Count Then
@@ -119,7 +120,8 @@ Public Class Debug_Window
         Next
     End Sub
 
-    Private Sub clear()
+    Public Sub clear()
+        lblGenCode.Text = "CODE: "
         Dim ctrl As Control = Me
         Do Until ctrl Is Nothing
             If ctrl.GetType() = GetType(TextBox) Then
