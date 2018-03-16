@@ -463,10 +463,14 @@ Public Class Debug_Window
     End Sub
 
     Private Sub boxInventory_SelectedIndexChanged(sender As Object, e As EventArgs) Handles boxInventory.SelectedIndexChanged
-        boxItems.SelectedIndex = -1
+        If boxItems.SelectedIndex <> -1 Then
+            boxItems.SelectedIndex = -1
+        End If
     End Sub
 
     Private Sub boxItems_SelectedIndexChanged(sender As Object, e As EventArgs) Handles boxItems.SelectedIndexChanged
-        boxInventory.SelectedIndex = -1
+        If boxInventory.SelectedIndex <> -1 Then
+            boxInventory.SelectedIndex = -1
+        End If
     End Sub
 End Class
