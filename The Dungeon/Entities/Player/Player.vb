@@ -1270,34 +1270,46 @@
             If iArrInd(1).Item1 < 5 Then
                 t(1) = CharacterGenerator.getImg("img/fRearHair2")(iArrInd(1).Item1)
             Else
-                t(1) = CharacterGenerator.getImg("img/fTF/tfRearHair2")(iArrInd(1).Item1 - 5)
+                Dim temp As Integer = iArrInd(1).Item1 - 5
+                If temp >= CharacterGenerator.getImg("img/fTF/tfRearHair2").Count Then temp = CharacterGenerator.getImg("img/fTF/tfRearHair2").Count - 1
+                t(1) = CharacterGenerator.getImg("img/fTF/tfRearHair2")(temp)
             End If
             If iArrInd(5).Item1 < 5 Then
                 t(5) = CharacterGenerator.getImg("img/fRearHair1")(iArrInd(5).Item1)
             Else
-                t(5) = CharacterGenerator.getImg("img/fTF/tfRearHair1")(iArrInd(5).Item1 - 5)
+                Dim temp As Integer = iArrInd(5).Item1 - 5
+                If temp >= CharacterGenerator.getImg("img/fTF/tfRearHair1").Count Then temp = CharacterGenerator.getImg("img/fTF/tfRearHair1").Count - 1
+                t(5) = CharacterGenerator.getImg("img/fTF/tfRearHair1")(temp)
             End If
             If iArrInd(15).Item1 < 6 Then
                 t(15) = CharacterGenerator.getImg("img/fFrontHair")(iArrInd(15).Item1)
             Else
-                t(15) = CharacterGenerator.getImg("img/fTF/tfFrontHair")(iArrInd(15).Item1 - 6)
+                Dim temp As Integer = iArrInd(15).Item1 - 6
+                If temp >= CharacterGenerator.getImg("img/fTF/tfFrontHair").Count Then temp = CharacterGenerator.getImg("img/fTF/tfFrontHair").Count - 1
+                t(15) = CharacterGenerator.getImg("img/fTF/tfFrontHair")(temp)
             End If
             CharacterGenerator.fFrontHair(0) = CharacterGenerator.picPort.Image
         Else
             If iArrInd(1).Item1 < 5 Then
                 t(1) = CharacterGenerator.getImg("img/mRearHair2")(iArrInd(1).Item1)
             Else
-                t(1) = CharacterGenerator.getImg("img/mTF/tfRearHair2")(iArrInd(1).Item1 - 5)
+                Dim temp As Integer = iArrInd(1).Item1 - 5
+                If temp >= CharacterGenerator.getImg("img/mTF/tfRearHair2").Count Then temp = CharacterGenerator.getImg("img/mTF/tfRearHair2").Count - 1
+                t(1) = CharacterGenerator.getImg("img/mTF/tfRearHair2")(temp)
             End If
             If iArrInd(5).Item1 < 5 Then
                 t(5) = CharacterGenerator.getImg("img/mRearHair1")(iArrInd(5).Item1)
             Else
-                t(5) = CharacterGenerator.getImg("img/mTF/tfRearHair1")(iArrInd(5).Item1 - 5)
+                Dim temp As Integer = iArrInd(5).Item1 - 5
+                If temp >= CharacterGenerator.getImg("img/mTF/tfRearHair1").Count Then temp = CharacterGenerator.getImg("img/mTF/tfRearHair1").Count - 1
+                t(5) = CharacterGenerator.getImg("img/mTF/tfRearHair1")(temp)
             End If
             If iArrInd(15).Item1 < 6 Then
                 t(15) = CharacterGenerator.getImg("img/mFrontHair")(iArrInd(15).Item1)
             Else
-                t(15) = CharacterGenerator.getImg("img/mTF/tfFrontHair")(iArrInd(15).Item1 - 6)
+                Dim temp As Integer = iArrInd(15).Item1 - 6
+                If temp >= CharacterGenerator.getImg("img/mTF/tfFrontHair").Count Then temp = CharacterGenerator.getImg("img/mTF/tfFrontHair").Count - 1
+                t(15) = CharacterGenerator.getImg("img/mTF/tfFrontHair")(temp)
             End If
             CharacterGenerator.mFrontHair(0) = CharacterGenerator.picPort.Image
         End If
