@@ -18,6 +18,13 @@
             Game.lstLog.Items.Add("The " & getName() & " was actually a " & realName)
             'Dim ind As Integer = Array.IndexOf(Game.HPotionNames, MyBase.getName)
             MyBase.setName(realName)
+            For i = 0 To Game.Potions.Count - 1
+                If Game.Potions(i).GetType() = Me.GetType() Then
+                    Game.Potions(i).setName(realName)
+                    Exit For
+                End If
+            Next
+
             'Game.HPotionNames(ind) = realName
         End If
         effect()
