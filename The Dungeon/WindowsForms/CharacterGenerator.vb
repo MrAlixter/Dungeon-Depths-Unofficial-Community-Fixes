@@ -1053,6 +1053,7 @@
     End Sub
     'btnSave_Click closes the form, finalizing the players choices
     Private Sub btnSave_Click(sender As Object, e As EventArgs) Handles btnSave.Click
+        Game.dialogOpen = False
         Me.Close()
     End Sub
     'Quits to main menu without starting the game

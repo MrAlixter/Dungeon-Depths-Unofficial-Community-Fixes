@@ -27,6 +27,7 @@
     End Sub
     Private Sub Button1_Click(sender As Object, e As EventArgs) Handles Button1.Click
         If cboxPMorph.Text = "-- Select --" Or Not tfForm Then
+            Game.dialogOpen = False
             Me.Close()
             Game.player.mana += 5
             Exit Sub
@@ -38,7 +39,7 @@
             Case False
                 If target.GetType() Is GetType(NPC) Then transformN(target) Else transform(target)
         End Select
-
+        Game.dialogOpen = False
         Me.Close()
     End Sub
 

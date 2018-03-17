@@ -113,6 +113,7 @@
         portraitUDate()
         p.UIupdate()
         Game.lstLog.TopIndex = Game.lstLog.Items.Count - 1
+        Game.dialogOpen = False
         Me.Close()
     End Sub
     'handles the loading of this form

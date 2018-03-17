@@ -61,6 +61,7 @@ Public Class Game
     Dim imagesWorker As BackgroundWorker
     Dim boardWorker As BackgroundWorker
     Public playerPortraitWorker As BackgroundWorker
+    Public dialogOpen As Boolean = False
     Private savePics As New List(Of Image)(9)
     Dim imagesWorkerArg = Nothing
     Dim savePicsReady As Boolean = False
@@ -182,6 +183,7 @@ Public Class Game
         Dim chargen As New CharacterGenerator
         chargen.currSex = player.sexBool
         chargen.ShowDialog()
+        dialogOpen = True
         If chargen.quit Then
             btnS.Visible = True
             btnL.Visible = True
@@ -892,6 +894,7 @@ Public Class Game
                         Polymorph.porm = True
                         Dim p As Polymorph = New Polymorph
                         p.ShowDialog()
+                        dialogOpen = True
                         p.Dispose()
                     ElseIf keyspresed = "seee" Then
                         For indY = -mBoardHeight To mBoardHeight
@@ -1029,7 +1032,7 @@ Public Class Game
     'save/loadSave methods
     'save handles the saving of the game
     Sub save(ByVal a As String)
-        If lblEvent.Visible = True Or combatmode Or npcmode Then
+        If lblEvent.Visible = True Or combatmode Or npcmode Or dialogOpen Then
             pushLblEvent("You can't save now!")
             Exit Sub
         End If
@@ -2066,6 +2069,7 @@ Public Class Game
     Private Sub btnEQP_Click(sender As Object, e As EventArgs) Handles btnEQP.Click
         Dim f3 As Equipment = New Equipment()
         f3.ShowDialog()
+        dialogOpen = True
         f3.Dispose()
     End Sub
     Private Sub btnEXM_Click(sender As Object, e As EventArgs) Handles btnEXM.Click
@@ -2120,6 +2124,7 @@ Public Class Game
     Private Sub btnControls_Click(sender As Object, e As EventArgs) Handles btnControls.Click
         Dim f6 As Controls = New Controls
         f6.ShowDialog()
+        dialogOpen = True
         f6.Dispose()
     End Sub
     Private Sub btnTalk_Click(sender As Object, e As EventArgs) Handles btnTalk.Click
@@ -2137,6 +2142,7 @@ Public Class Game
         End If
         Dim s As Shop = New Shop
         s.ShowDialog()
+        dialogOpen = True
         s.Dispose()
     End Sub
     Private Sub btnNPCMG_Click(sender As Object, e As EventArgs) Handles btnNPCMG.Click
@@ -2249,7 +2255,7 @@ Public Class Game
         Application.Restart()
     End Sub
     Private Sub LoadToolStripMenuItem_Click(sender As Object, e As EventArgs) Handles LoadToolStripMenuItem.Click
-        If lblEvent.Visible = True Or combatmode Or npcmode Then
+        If lblEvent.Visible = True Or combatmode Or npcmode Or dialogOpen Then
             pushLblEvent("You can't load now!")
             Exit Sub
         End If
@@ -2263,10 +2269,12 @@ Public Class Game
     Private Sub InfoToolStripMenuItem_Click(sender As Object, e As EventArgs) Handles InfoToolStripMenuItem.Click
         Dim ab1 As About = New About
         ab1.ShowDialog()
+        dialogOpen = True
         ab1.Dispose()
     End Sub
     Private Sub DebugToolStripMenuItem_Click(sender As Object, e As EventArgs) Handles DebugToolStripMenuItem.Click
         Debug_Window.ShowDialog()
+        dialogOpen = True
         player.invNeedsUDate = True
         player.UIupdate()
     End Sub

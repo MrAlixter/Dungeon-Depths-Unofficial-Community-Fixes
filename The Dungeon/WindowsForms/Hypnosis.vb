@@ -12,6 +12,7 @@
         ElseIf cboxComand.Text = "never come back" Then
             leaveForever(target)
         End If
+        Game.dialogOpen = False
         Me.Close()
     End Sub
     Private Sub Form5_Load(sender As Object, e As EventArgs) Handles MyBase.Load
