@@ -28,7 +28,24 @@ Partial Class Debug_Window
         Me.boxNotes = New System.Windows.Forms.RichTextBox()
         Me.tabGeneral = New System.Windows.Forms.TabPage()
         Me.groupNotes = New System.Windows.Forms.GroupBox()
+        Me.picBoard = New System.Windows.Forms.PictureBox()
         Me.groupGeneral = New System.Windows.Forms.GroupBox()
+        Me.boxBeaten = New System.Windows.Forms.CheckBox()
+        Me.lblSelected = New System.Windows.Forms.Label()
+        Me.btnEditSelection = New System.Windows.Forms.Button()
+        Me.boxMapControls = New System.Windows.Forms.GroupBox()
+        Me.lblZoom = New System.Windows.Forms.Label()
+        Me.boxZoom = New System.Windows.Forms.NumericUpDown()
+        Me.btnSelect = New System.Windows.Forms.RadioButton()
+        Me.btnPan = New System.Windows.Forms.RadioButton()
+        Me.lblStatue = New System.Windows.Forms.Label()
+        Me.lblStairs = New System.Windows.Forms.Label()
+        Me.lblChest = New System.Windows.Forms.Label()
+        Me.lblNPC = New System.Windows.Forms.Label()
+        Me.lblPlayer = New System.Windows.Forms.Label()
+        Me.lblUnseen = New System.Windows.Forms.Label()
+        Me.lblSeen = New System.Windows.Forms.Label()
+        Me.lblKeyHeader = New System.Windows.Forms.Label()
         Me.boxTurn = New System.Windows.Forms.NumericUpDown()
         Me.boxFloor = New System.Windows.Forms.NumericUpDown()
         Me.lblTurn = New System.Windows.Forms.Label()
@@ -94,12 +111,15 @@ Partial Class Debug_Window
         Me.lblInventory = New System.Windows.Forms.Label()
         Me.boxItems = New System.Windows.Forms.ListBox()
         Me.lblItems = New System.Windows.Forms.Label()
-        Me.picBoard = New System.Windows.Forms.PictureBox()
+        Me.lblGenCode = New System.Windows.Forms.Label()
         Me.tabMain.SuspendLayout()
         Me.tabInformation.SuspendLayout()
         Me.tabGeneral.SuspendLayout()
         Me.groupNotes.SuspendLayout()
+        CType(Me.picBoard, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.groupGeneral.SuspendLayout()
+        Me.boxMapControls.SuspendLayout()
+        CType(Me.boxZoom, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me.boxTurn, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me.boxFloor, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.tabPlayer.SuspendLayout()
@@ -118,7 +138,6 @@ Partial Class Debug_Window
         CType(Me.boxHealth, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.tabInventory.SuspendLayout()
         CType(Me.number, System.ComponentModel.ISupportInitialize).BeginInit()
-        CType(Me.picBoard, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.SuspendLayout()
         '
         'tabMain
@@ -172,6 +191,7 @@ Partial Class Debug_Window
         '
         'groupNotes
         '
+        Me.groupNotes.BackColor = System.Drawing.Color.Black
         Me.groupNotes.Controls.Add(Me.picBoard)
         Me.groupNotes.Location = New System.Drawing.Point(197, 7)
         Me.groupNotes.Name = "groupNotes"
@@ -179,13 +199,36 @@ Partial Class Debug_Window
         Me.groupNotes.TabIndex = 4
         Me.groupNotes.TabStop = False
         '
+        'picBoard
+        '
+        Me.picBoard.BackColor = System.Drawing.Color.Black
+        Me.picBoard.Location = New System.Drawing.Point(3, 11)
+        Me.picBoard.Name = "picBoard"
+        Me.picBoard.Size = New System.Drawing.Size(532, 522)
+        Me.picBoard.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom
+        Me.picBoard.TabIndex = 0
+        Me.picBoard.TabStop = False
+        '
         'groupGeneral
         '
         Me.groupGeneral.BackColor = System.Drawing.Color.Black
+        Me.groupGeneral.Controls.Add(Me.boxBeaten)
+        Me.groupGeneral.Controls.Add(Me.lblSelected)
+        Me.groupGeneral.Controls.Add(Me.btnEditSelection)
+        Me.groupGeneral.Controls.Add(Me.boxMapControls)
+        Me.groupGeneral.Controls.Add(Me.lblStatue)
+        Me.groupGeneral.Controls.Add(Me.lblStairs)
+        Me.groupGeneral.Controls.Add(Me.lblChest)
+        Me.groupGeneral.Controls.Add(Me.lblNPC)
+        Me.groupGeneral.Controls.Add(Me.lblPlayer)
+        Me.groupGeneral.Controls.Add(Me.lblUnseen)
+        Me.groupGeneral.Controls.Add(Me.lblSeen)
+        Me.groupGeneral.Controls.Add(Me.lblKeyHeader)
         Me.groupGeneral.Controls.Add(Me.boxTurn)
         Me.groupGeneral.Controls.Add(Me.boxFloor)
         Me.groupGeneral.Controls.Add(Me.lblTurn)
         Me.groupGeneral.Controls.Add(Me.lblFloor)
+        Me.groupGeneral.Controls.Add(Me.lblGenCode)
         Me.groupGeneral.Font = New System.Drawing.Font("Consolas", 12.0!)
         Me.groupGeneral.ForeColor = System.Drawing.Color.White
         Me.groupGeneral.Location = New System.Drawing.Point(6, 7)
@@ -195,11 +238,185 @@ Partial Class Debug_Window
         Me.groupGeneral.TabStop = False
         Me.groupGeneral.Text = "GENERAL"
         '
+        'boxBeaten
+        '
+        Me.boxBeaten.AutoSize = True
+        Me.boxBeaten.Location = New System.Drawing.Point(7, 110)
+        Me.boxBeaten.Name = "boxBeaten"
+        Me.boxBeaten.Size = New System.Drawing.Size(127, 23)
+        Me.boxBeaten.TabIndex = 207
+        Me.boxBeaten.Text = "BOSS BEATEN"
+        Me.boxBeaten.UseVisualStyleBackColor = True
+        '
+        'lblSelected
+        '
+        Me.lblSelected.AutoSize = True
+        Me.lblSelected.Font = New System.Drawing.Font("Consolas", 12.0!, System.Drawing.FontStyle.Bold)
+        Me.lblSelected.ForeColor = System.Drawing.Color.PeachPuff
+        Me.lblSelected.Location = New System.Drawing.Point(50, 374)
+        Me.lblSelected.Name = "lblSelected"
+        Me.lblSelected.Size = New System.Drawing.Size(81, 19)
+        Me.lblSelected.TabIndex = 206
+        Me.lblSelected.Text = "SELECTED"
+        '
+        'btnEditSelection
+        '
+        Me.btnEditSelection.BackColor = System.Drawing.Color.Black
+        Me.btnEditSelection.Location = New System.Drawing.Point(41, 292)
+        Me.btnEditSelection.Name = "btnEditSelection"
+        Me.btnEditSelection.Size = New System.Drawing.Size(102, 46)
+        Me.btnEditSelection.TabIndex = 205
+        Me.btnEditSelection.Text = "EDIT SELECTION"
+        Me.btnEditSelection.UseVisualStyleBackColor = False
+        '
+        'boxMapControls
+        '
+        Me.boxMapControls.Controls.Add(Me.lblZoom)
+        Me.boxMapControls.Controls.Add(Me.boxZoom)
+        Me.boxMapControls.Controls.Add(Me.btnSelect)
+        Me.boxMapControls.Controls.Add(Me.btnPan)
+        Me.boxMapControls.ForeColor = System.Drawing.Color.White
+        Me.boxMapControls.Location = New System.Drawing.Point(8, 160)
+        Me.boxMapControls.Name = "boxMapControls"
+        Me.boxMapControls.Size = New System.Drawing.Size(169, 114)
+        Me.boxMapControls.TabIndex = 1
+        Me.boxMapControls.TabStop = False
+        Me.boxMapControls.Text = "MAP CONTROLS"
+        '
+        'lblZoom
+        '
+        Me.lblZoom.AutoSize = True
+        Me.lblZoom.Location = New System.Drawing.Point(13, 83)
+        Me.lblZoom.Name = "lblZoom"
+        Me.lblZoom.Size = New System.Drawing.Size(45, 19)
+        Me.lblZoom.TabIndex = 208
+        Me.lblZoom.Text = "ZOOM"
+        '
+        'boxZoom
+        '
+        Me.boxZoom.BackColor = System.Drawing.Color.Black
+        Me.boxZoom.ForeColor = System.Drawing.Color.White
+        Me.boxZoom.Location = New System.Drawing.Point(109, 81)
+        Me.boxZoom.Minimum = New Decimal(New Integer() {1, 0, 0, 0})
+        Me.boxZoom.Name = "boxZoom"
+        Me.boxZoom.Size = New System.Drawing.Size(54, 26)
+        Me.boxZoom.TabIndex = 207
+        Me.boxZoom.TextAlign = System.Windows.Forms.HorizontalAlignment.Center
+        Me.boxZoom.Value = New Decimal(New Integer() {1, 0, 0, 0})
+        '
+        'btnSelect
+        '
+        Me.btnSelect.AutoSize = True
+        Me.btnSelect.Location = New System.Drawing.Point(17, 54)
+        Me.btnSelect.Name = "btnSelect"
+        Me.btnSelect.Size = New System.Drawing.Size(81, 23)
+        Me.btnSelect.TabIndex = 206
+        Me.btnSelect.TabStop = True
+        Me.btnSelect.Text = "SELECT"
+        Me.btnSelect.UseVisualStyleBackColor = True
+        '
+        'btnPan
+        '
+        Me.btnPan.AutoSize = True
+        Me.btnPan.Location = New System.Drawing.Point(17, 25)
+        Me.btnPan.Name = "btnPan"
+        Me.btnPan.Size = New System.Drawing.Size(54, 23)
+        Me.btnPan.TabIndex = 205
+        Me.btnPan.TabStop = True
+        Me.btnPan.Text = "PAN"
+        Me.btnPan.UseVisualStyleBackColor = True
+        '
+        'lblStatue
+        '
+        Me.lblStatue.AutoSize = True
+        Me.lblStatue.Font = New System.Drawing.Font("Consolas", 12.0!, System.Drawing.FontStyle.Bold)
+        Me.lblStatue.ForeColor = System.Drawing.Color.LightSlateGray
+        Me.lblStatue.Location = New System.Drawing.Point(59, 470)
+        Me.lblStatue.Name = "lblStatue"
+        Me.lblStatue.Size = New System.Drawing.Size(63, 19)
+        Me.lblStatue.TabIndex = 204
+        Me.lblStatue.Text = "STATUE"
+        '
+        'lblStairs
+        '
+        Me.lblStairs.AutoSize = True
+        Me.lblStairs.Font = New System.Drawing.Font("Consolas", 12.0!, System.Drawing.FontStyle.Bold)
+        Me.lblStairs.ForeColor = System.Drawing.Color.Brown
+        Me.lblStairs.Location = New System.Drawing.Point(59, 508)
+        Me.lblStairs.Name = "lblStairs"
+        Me.lblStairs.Size = New System.Drawing.Size(63, 19)
+        Me.lblStairs.TabIndex = 203
+        Me.lblStairs.Text = "STAIRS"
+        '
+        'lblChest
+        '
+        Me.lblChest.AutoSize = True
+        Me.lblChest.Font = New System.Drawing.Font("Consolas", 12.0!, System.Drawing.FontStyle.Bold)
+        Me.lblChest.ForeColor = System.Drawing.Color.Yellow
+        Me.lblChest.Location = New System.Drawing.Point(63, 489)
+        Me.lblChest.Name = "lblChest"
+        Me.lblChest.Size = New System.Drawing.Size(54, 19)
+        Me.lblChest.TabIndex = 202
+        Me.lblChest.Text = "CHEST"
+        '
+        'lblNPC
+        '
+        Me.lblNPC.AutoSize = True
+        Me.lblNPC.Font = New System.Drawing.Font("Consolas", 12.0!, System.Drawing.FontStyle.Bold)
+        Me.lblNPC.ForeColor = System.Drawing.Color.Blue
+        Me.lblNPC.Location = New System.Drawing.Point(72, 450)
+        Me.lblNPC.Name = "lblNPC"
+        Me.lblNPC.Size = New System.Drawing.Size(36, 19)
+        Me.lblNPC.TabIndex = 201
+        Me.lblNPC.Text = "NPC"
+        '
+        'lblPlayer
+        '
+        Me.lblPlayer.AutoSize = True
+        Me.lblPlayer.Font = New System.Drawing.Font("Consolas", 12.0!, System.Drawing.FontStyle.Bold)
+        Me.lblPlayer.ForeColor = System.Drawing.Color.LawnGreen
+        Me.lblPlayer.Location = New System.Drawing.Point(59, 431)
+        Me.lblPlayer.Name = "lblPlayer"
+        Me.lblPlayer.Size = New System.Drawing.Size(63, 19)
+        Me.lblPlayer.TabIndex = 200
+        Me.lblPlayer.Text = "PLAYER"
+        '
+        'lblUnseen
+        '
+        Me.lblUnseen.AutoSize = True
+        Me.lblUnseen.Font = New System.Drawing.Font("Consolas", 12.0!, System.Drawing.FontStyle.Bold)
+        Me.lblUnseen.ForeColor = System.Drawing.Color.Gray
+        Me.lblUnseen.Location = New System.Drawing.Point(59, 412)
+        Me.lblUnseen.Name = "lblUnseen"
+        Me.lblUnseen.Size = New System.Drawing.Size(63, 19)
+        Me.lblUnseen.TabIndex = 199
+        Me.lblUnseen.Text = "UNSEEN"
+        '
+        'lblSeen
+        '
+        Me.lblSeen.AutoSize = True
+        Me.lblSeen.Font = New System.Drawing.Font("Consolas", 12.0!, System.Drawing.FontStyle.Bold)
+        Me.lblSeen.Location = New System.Drawing.Point(68, 393)
+        Me.lblSeen.Name = "lblSeen"
+        Me.lblSeen.Size = New System.Drawing.Size(45, 19)
+        Me.lblSeen.TabIndex = 198
+        Me.lblSeen.Text = "SEEN"
+        '
+        'lblKeyHeader
+        '
+        Me.lblKeyHeader.AutoSize = True
+        Me.lblKeyHeader.Font = New System.Drawing.Font("Consolas", 12.0!, System.Drawing.FontStyle.Underline)
+        Me.lblKeyHeader.Location = New System.Drawing.Point(54, 346)
+        Me.lblKeyHeader.Name = "lblKeyHeader"
+        Me.lblKeyHeader.Size = New System.Drawing.Size(72, 19)
+        Me.lblKeyHeader.TabIndex = 197
+        Me.lblKeyHeader.Text = "MAP KEY"
+        '
         'boxTurn
         '
         Me.boxTurn.BackColor = System.Drawing.Color.Black
         Me.boxTurn.ForeColor = System.Drawing.Color.White
-        Me.boxTurn.Location = New System.Drawing.Point(66, 49)
+        Me.boxTurn.Location = New System.Drawing.Point(66, 78)
         Me.boxTurn.Maximum = New Decimal(New Integer() {999999, 0, 0, 0})
         Me.boxTurn.Name = "boxTurn"
         Me.boxTurn.Size = New System.Drawing.Size(113, 26)
@@ -211,7 +428,7 @@ Partial Class Debug_Window
         Me.boxFloor.BackColor = System.Drawing.Color.Black
         Me.boxFloor.Enabled = False
         Me.boxFloor.ForeColor = System.Drawing.Color.White
-        Me.boxFloor.Location = New System.Drawing.Point(66, 20)
+        Me.boxFloor.Location = New System.Drawing.Point(66, 49)
         Me.boxFloor.Maximum = New Decimal(New Integer() {999999, 0, 0, 0})
         Me.boxFloor.Name = "boxFloor"
         Me.boxFloor.Size = New System.Drawing.Size(113, 26)
@@ -224,7 +441,7 @@ Partial Class Debug_Window
         Me.lblTurn.Dock = System.Windows.Forms.DockStyle.Top
         Me.lblTurn.Font = New System.Drawing.Font("Consolas", 12.0!)
         Me.lblTurn.ForeColor = System.Drawing.Color.White
-        Me.lblTurn.Location = New System.Drawing.Point(3, 51)
+        Me.lblTurn.Location = New System.Drawing.Point(3, 80)
         Me.lblTurn.Name = "lblTurn"
         Me.lblTurn.Padding = New System.Windows.Forms.Padding(0, 0, 0, 10)
         Me.lblTurn.Size = New System.Drawing.Size(63, 29)
@@ -237,7 +454,7 @@ Partial Class Debug_Window
         Me.lblFloor.Dock = System.Windows.Forms.DockStyle.Top
         Me.lblFloor.Font = New System.Drawing.Font("Consolas", 12.0!)
         Me.lblFloor.ForeColor = System.Drawing.Color.White
-        Me.lblFloor.Location = New System.Drawing.Point(3, 22)
+        Me.lblFloor.Location = New System.Drawing.Point(3, 51)
         Me.lblFloor.Name = "lblFloor"
         Me.lblFloor.Padding = New System.Windows.Forms.Padding(0, 0, 0, 10)
         Me.lblFloor.Size = New System.Drawing.Size(72, 29)
@@ -961,13 +1178,18 @@ Partial Class Debug_Window
         Me.lblItems.TabIndex = 7
         Me.lblItems.Text = "ITEMS"
         '
-        'picBoard
+        'lblGenCode
         '
-        Me.picBoard.Location = New System.Drawing.Point(18, 17)
-        Me.picBoard.Name = "picBoard"
-        Me.picBoard.Size = New System.Drawing.Size(500, 500)
-        Me.picBoard.TabIndex = 0
-        Me.picBoard.TabStop = False
+        Me.lblGenCode.AutoSize = True
+        Me.lblGenCode.Dock = System.Windows.Forms.DockStyle.Top
+        Me.lblGenCode.Font = New System.Drawing.Font("Consolas", 12.0!)
+        Me.lblGenCode.ForeColor = System.Drawing.Color.White
+        Me.lblGenCode.Location = New System.Drawing.Point(3, 22)
+        Me.lblGenCode.Name = "lblGenCode"
+        Me.lblGenCode.Padding = New System.Windows.Forms.Padding(0, 0, 0, 10)
+        Me.lblGenCode.Size = New System.Drawing.Size(54, 29)
+        Me.lblGenCode.TabIndex = 208
+        Me.lblGenCode.Text = "CODE:"
         '
         'Debug_Window
         '
@@ -976,6 +1198,7 @@ Partial Class Debug_Window
         Me.BackColor = System.Drawing.Color.Black
         Me.ClientSize = New System.Drawing.Size(750, 576)
         Me.Controls.Add(Me.tabMain)
+        Me.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedToolWindow
         Me.Icon = CType(resources.GetObject("$this.Icon"), System.Drawing.Icon)
         Me.Name = "Debug_Window"
         Me.SizeGripStyle = System.Windows.Forms.SizeGripStyle.Hide
@@ -985,8 +1208,12 @@ Partial Class Debug_Window
         Me.tabInformation.ResumeLayout(False)
         Me.tabGeneral.ResumeLayout(False)
         Me.groupNotes.ResumeLayout(False)
+        CType(Me.picBoard, System.ComponentModel.ISupportInitialize).EndInit()
         Me.groupGeneral.ResumeLayout(False)
         Me.groupGeneral.PerformLayout()
+        Me.boxMapControls.ResumeLayout(False)
+        Me.boxMapControls.PerformLayout()
+        CType(Me.boxZoom, System.ComponentModel.ISupportInitialize).EndInit()
         CType(Me.boxTurn, System.ComponentModel.ISupportInitialize).EndInit()
         CType(Me.boxFloor, System.ComponentModel.ISupportInitialize).EndInit()
         Me.tabPlayer.ResumeLayout(False)
@@ -1007,7 +1234,6 @@ Partial Class Debug_Window
         Me.tabInventory.ResumeLayout(False)
         Me.tabInventory.PerformLayout()
         CType(Me.number, System.ComponentModel.ISupportInitialize).EndInit()
-        CType(Me.picBoard, System.ComponentModel.ISupportInitialize).EndInit()
         Me.ResumeLayout(False)
 
     End Sub
@@ -1082,5 +1308,22 @@ Partial Class Debug_Window
     Friend WithEvents groupNotes As GroupBox
     Friend WithEvents tabInformation As TabPage
     Friend WithEvents boxNotes As RichTextBox
+    Friend WithEvents lblUnseen As Label
+    Friend WithEvents lblSeen As Label
+    Friend WithEvents lblKeyHeader As Label
+    Friend WithEvents lblPlayer As Label
+    Friend WithEvents lblStairs As Label
+    Friend WithEvents lblChest As Label
+    Friend WithEvents lblNPC As Label
+    Friend WithEvents lblStatue As Label
     Friend WithEvents picBoard As PictureBox
+    Friend WithEvents boxMapControls As GroupBox
+    Friend WithEvents btnPan As RadioButton
+    Friend WithEvents btnSelect As RadioButton
+    Friend WithEvents boxZoom As NumericUpDown
+    Friend WithEvents lblZoom As Label
+    Friend WithEvents btnEditSelection As Button
+    Friend WithEvents lblSelected As Label
+    Friend WithEvents boxBeaten As CheckBox
+    Friend WithEvents lblGenCode As Label
 End Class

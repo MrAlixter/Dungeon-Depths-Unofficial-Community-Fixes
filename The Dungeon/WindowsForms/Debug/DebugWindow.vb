@@ -4,71 +4,46 @@ Imports System.Threading
 Public Class Debug_Window
     Dim inventoryList As List(Of String) = New List(Of String)
     Dim itemsList As List(Of String) = New List(Of String)
+    'Dim tileTypes As List(Of mTile)
+    Dim magnification As Integer
+    Dim map As Bitmap
+    Dim prevSelectP As Point = New Point(-1, -1)
+    Dim prevSelectC As Color = Nothing
+    Dim dragging As Boolean
+    Dim xOffset As Integer
+    Dim yOffset As Integer
+    Dim mouseMoveThread As Thread
+    Private Delegate Sub delegateExecute()
 
     Private Sub Debug_Window_Load(sender As Object, e As EventArgs) Handles MyBase.Load
         clear()
 
+        dragging = False
+        xOffset = 0
+        yOffset = 0
+        unselectMapControlButtons()
+        btnPan.Checked = True
+
         'GENERAL
+        lblGenCode.Text = "CODE: " & Game.floorCode
         boxFloor.Value = Game.floor
         boxTurn.Value = Game.turn
+        If Game.floor < Game.beatboss.Count Then
+            boxBeaten.Checked = Game.beatboss(Game.floor)
+        Else
+            boxBeaten.Enabled = False
+        End If
+
 
         'MAP
-        Dim magnification As Integer = Math.Min(picBoard.Width / Game.mBoardWidth, picBoard.Height / Game.mBoardHeight)
-        If magnification < 1 Then magnification = 1
-        picBoard.Image = New Bitmap(Game.mBoardWidth * magnification, Game.mBoardHeight * magnification)
-        For boardX = 0 To Game.mBoardWidth - 1
-            For boardY = 0 To Game.mBoardHeight - 1
-                If (Game.mBoard(boardY, boardX).Text = "#") Then 'Chest
-                    For x = 1 To magnification
-                        For y = 1 To magnification
-                            CType(picBoard.Image, Bitmap).SetPixel(boardX * magnification + x - 1, boardY * magnification + y - 1, Color.Yellow)
-                        Next
-                    Next
-                ElseIf (Game.mBoard(boardY, boardX).Text = "H") Then 'Stairs
-                    For x = 1 To magnification
-                        For y = 1 To magnification
-                            CType(picBoard.Image, Bitmap).SetPixel(boardX * magnification + x - 1, boardY * magnification + y - 1, Color.Brown)
-                        Next
-                    Next
-                ElseIf (Game.mBoard(boardY, boardX).Text = "@" And Game.player.pos.X = boardX And Game.player.pos.Y = boardY) Then 'Player
-                    For x = 1 To magnification
-                        For y = 1 To magnification
-                            CType(picBoard.Image, Bitmap).SetPixel(boardX * magnification + x - 1, boardY * magnification + y - 1, Color.LawnGreen)
-                        Next
-                    Next
-                ElseIf (Game.mBoard(boardY, boardX).Text = "@") Then 'Statue
-                    For x = 1 To magnification
-                        For y = 1 To magnification
-                            CType(picBoard.Image, Bitmap).SetPixel(boardX * magnification + x - 1, boardY * magnification + y - 1, Color.Gray)
-                        Next
-                    Next
-                ElseIf (Game.mBoard(boardY, boardX).Text = "$") Then 'NPC
-                    For x = 1 To magnification
-                        For y = 1 To magnification
-                            CType(picBoard.Image, Bitmap).SetPixel(boardX * magnification + x - 1, boardY * magnification + y - 1, Color.Blue)
-                        Next
-                    Next
-                ElseIf (Game.mBoard(boardY, boardX).Tag = 2) Then 'Seen
-                    For x = 1 To magnification
-                        For y = 1 To magnification
-                            CType(picBoard.Image, Bitmap).SetPixel(boardX * magnification + x - 1, boardY * magnification + y - 1, Color.White)
-                        Next
-                    Next
-                ElseIf (Game.mBoard(boardY, boardX).Tag = 1) Then 'Unseen
-                    For x = 1 To magnification
-                        For y = 1 To magnification
-                            CType(picBoard.Image, Bitmap).SetPixel(boardX * magnification + x - 1, boardY * magnification + y - 1, Color.Gray)
-                        Next
-                    Next
-                Else 'Nothing
-                    For x = 1 To magnification
-                        For y = 1 To magnification
-                            CType(picBoard.Image, Bitmap).SetPixel(boardX * magnification + x - 1, boardY * magnification + y - 1, Color.Black)
-                        Next
-                    Next
-                End If
-            Next
-        Next
+        magnification = Math.Floor(Math.Min(picBoard.Width / Game.mBoardWidth, picBoard.Height / Game.mBoardHeight))
+        boxZoom.Value = magnification
+        createMap()
+        AddHandler picBoard.Paint, AddressOf Me.picBoard_Draw
+        AddHandler picBoard.MouseDown, AddressOf Me.mapMousePress
+        AddHandler picBoard.MouseUp, AddressOf Me.mapMouseRelease
+
+        btnEditSelection.Enabled = False
 
         'PLAYER
         boxName.Text = Game.player.name
@@ -112,16 +87,6 @@ Public Class Debug_Window
         Dim PADDING = 0.1
         Dim w As Integer = 146
         Dim h As Integer = 216
-        'fillPages()
-        'Dim go As Boolean = True
-        'While go
-        '    For i = 0 To workers.Count - 1
-        '        If Not done(i) Then
-        '            Thread.Sleep(50)
-        '            Exit For
-        '        End If
-        '    Next
-        'End While
 
         Dim attr
         If Game.player.sexBool Then
@@ -137,10 +102,8 @@ Public Class Debug_Window
                 img.Name = i.ToString() & ":" & j.ToString()
                 tabPortrait.TabPages(i).Controls.Add(img)
                 img.Image = attr(i)(j)
-                'REMOVED UNTIL THE NEXT UPDATE (when I'll be able to get around to figuring out how to make it work)
-                'CharacterGenerator.recolor2(img.Image, Game.player.skincolor)
                 img.BackgroundImage = attr(0)(0)
-                img.Location = New Point(x, y) 'y - 20)
+                img.Location = New Point(x, y)
                 img.Size = New Point(w, h)
                 'img.BackgroundImageLayout = ImageLayout.Stretch
                 AddHandler img.Click, AddressOf clickOnPic
@@ -157,39 +120,8 @@ Public Class Debug_Window
         Next
     End Sub
 
-    Private Sub fillPages(ByRef done As List(Of Boolean), place As Integer, first As Integer, last As Integer) '(Inclusive, exclusive)
-        Dim worker As New BackgroundWorker
-        worker.WorkerSupportsCancellation = True
-        AddHandler worker.DoWork, AddressOf bw_DoWork
-        AddHandler worker.RunWorkerCompleted, AddressOf bw_RunWorkerCompleted
-        worker.RunWorkerAsync()
-    End Sub
-
-    Private Sub bw_DoWork(ByVal sender As Object, ByVal e As DoWorkEventArgs)
-        Dim worker As BackgroundWorker = CType(sender, BackgroundWorker)
-
-        While worker.IsBusy
-            If worker.CancellationPending = True Then
-                e.Cancel = True
-                Exit While
-            Else
-                'Perform a time consuming operation
-                System.Threading.Thread.Sleep(100)
-            End If
-        End While
-    End Sub
-
-    Private Sub bw_RunWorkerCompleted(ByVal sender As Object, ByVal e As RunWorkerCompletedEventArgs)
-        If e.Cancelled = True Then
-            Close()
-            Application.DoEvents()
-        ElseIf e.Error IsNot Nothing Then
-            MsgBox("Error: " & e.Error.Message)
-        End If
-        'Player.canMoveFlag = True
-    End Sub
-
-    Private Sub clear()
+    Public Sub clear()
+        lblGenCode.Text = "CODE: "
         Dim ctrl As Control = Me
         Do Until ctrl Is Nothing
             If ctrl.GetType() = GetType(TextBox) Then
@@ -202,6 +134,136 @@ Public Class Debug_Window
             ctrl = GetNextControl(ctrl, True)
         Loop
         clearPortrait()
+    End Sub
+
+    Private Sub unselectMapControlButtons()
+        For i = 0 To boxMapControls.Controls.Count - 1
+            If TypeOf (boxMapControls.Controls(i)) Is RadioButton Then
+                CType(boxMapControls.Controls(i), RadioButton).Checked = False
+            End If
+        Next
+    End Sub
+
+    Private Sub btnPan_Click(sender As Object, e As EventArgs) Handles btnPan.Click
+        unselectMapControlButtons()
+        btnPan.Checked = True
+    End Sub
+
+    Private Sub btnSelect_Click(sender As Object, e As EventArgs) Handles btnSelect.Click
+        unselectMapControlButtons()
+        btnSelect.Checked = True
+    End Sub
+
+    Private Sub createMap()
+        map = New Bitmap(Game.mBoardWidth + 2, Game.mBoardHeight + 2)
+        For boardX = 0 To map.Width - 3
+            For boardY = 0 To map.Height - 3
+                If (Game.mBoard(boardY, boardX).Text = "#") Then 'Chest
+                    map.SetPixel(boardX + 1, boardY + 1, Color.Yellow)
+                ElseIf (Game.mBoard(boardY, boardX).Text = "H") Then 'Stairs
+                    map.SetPixel(boardX + 1, boardY + 1, Color.Brown)
+                ElseIf (Game.mBoard(boardY, boardX).Text = "@" And Game.player.pos.X = boardX And Game.player.pos.Y = boardY) Then 'Player
+                    map.SetPixel(boardX + 1, boardY + 1, Color.LawnGreen)
+                ElseIf (Game.mBoard(boardY, boardX).Text = "@") Then 'Statue
+                    map.SetPixel(boardX + 1, boardY + 1, Color.LightSlateGray)
+                ElseIf (Game.mBoard(boardY, boardX).Text = "$") Then 'NPC
+                    map.SetPixel(boardX + 1, boardY + 1, Color.Blue)
+                ElseIf (Game.mBoard(boardY, boardX).Tag = 2) Then 'Seen
+                    map.SetPixel(boardX + 1, boardY + 1, Color.White)
+                ElseIf (Game.mBoard(boardY, boardX).Tag = 1) Then 'Unseen
+                    map.SetPixel(boardX + 1, boardY + 1, Color.Gray)
+                Else 'Nothing
+                    map.SetPixel(boardX + 1, boardY + 1, Color.Black)
+                End If
+            Next
+        Next
+    End Sub
+
+    Private Sub picBoard_Draw(sender As Object, e As PaintEventArgs)
+        e.Graphics.InterpolationMode = Drawing2D.InterpolationMode.NearestNeighbor
+        e.Graphics.DrawImage(map, CInt((picBoard.Width - (map.Width * magnification)) / 2) + xOffset, CInt((picBoard.Height - (map.Height * magnification)) / 2) + yOffset, map.Width * magnification + 0, map.Height * magnification + 0)
+
+        ''DEBUG LINES
+        'Dim p As Pen
+        ''EDGE
+        'p = Pens.LimeGreen
+        'e.Graphics.DrawLine(p, 0, 0, picBoard.Width, 0)
+        'e.Graphics.DrawLine(p, 0, 0, 0, picBoard.Height)
+        'e.Graphics.DrawLine(p, picBoard.Width, picBoard.Height, 0, picBoard.Height)
+        'e.Graphics.DrawLine(p, picBoard.Width - 1, picBoard.Height - 1, picBoard.Width - 1, 0)
+        ''CENTER
+        'p = Pens.Maroon
+        'e.Graphics.DrawLine(p, CInt(picBoard.Width / 2), 0, CInt(picBoard.Width / 2), picBoard.Height)
+        'e.Graphics.DrawLine(p, 0, CInt(picBoard.Height / 2), picBoard.Width, CInt(picBoard.Height / 2))
+        ''EDGE OF MAP IMAGE
+        'p = Pens.Black
+        ''e.Graphics.DrawLine(p, CInt(0), CInt(picBoard.Height / 2 - map.Height * magnification / 2) + yOffset, CInt(picBoard.Width), CInt(picBoard.Height / 2 - map.Height * magnification / 2) + yOffset)
+        ''e.Graphics.DrawLine(p, CInt(0), CInt(picBoard.Height / 2 + map.Height * magnification / 2) + yOffset, CInt(picBoard.Width), CInt(picBoard.Height / 2 + map.Height * magnification / 2) + yOffset)
+        ''e.Graphics.DrawLine(p, CInt(picBoard.Width / 2 - map.Width * magnification / 2) + xOffset, CInt(0), CInt(picBoard.Width / 2 - map.Width * magnification / 2) + xOffset, CInt(picBoard.Height))
+        ''e.Graphics.DrawLine(p, CInt(picBoard.Width / 2 + map.Width * magnification / 2) + xOffset, CInt(0), CInt(picBoard.Width / 2 + map.Width * magnification / 2) + xOffset, CInt(picBoard.Height))
+        ''EDGE OF MAP
+        'p = Pens.Teal
+        'e.Graphics.DrawLine(p, CInt(0), CInt(Math.Floor(picBoard.Height / 2 - (map.Height - 1) * magnification / 2)) + yOffset, CInt(picBoard.Width), CInt(Math.Floor(picBoard.Height / 2 - (map.Height - 1) * magnification / 2)) + yOffset)
+        'e.Graphics.DrawLine(p, CInt(0), CInt(Math.Floor(picBoard.Height / 2 + (map.Height - 3) * magnification / 2)) + yOffset, CInt(picBoard.Width), CInt(Math.Floor(picBoard.Height / 2 + (map.Height - 3) * magnification / 2)) + yOffset)
+        'e.Graphics.DrawLine(p, CInt(Math.Floor(picBoard.Width / 2 - (map.Width - 1) * magnification / 2)) + xOffset, CInt(0), CInt(Math.Floor(picBoard.Width / 2 - (map.Width - 1) * magnification / 2)) + xOffset, CInt(picBoard.Height))
+        'e.Graphics.DrawLine(p, CInt(Math.Floor(picBoard.Width / 2 + (map.Width - 3) * magnification / 2)) + xOffset, CInt(0), CInt(Math.Floor(picBoard.Width / 2 + (map.Width - 3) * magnification / 2)) + xOffset, CInt(picBoard.Height))
+    End Sub
+
+    Private Sub mapMousePress(sender As Object, e As MouseEventArgs)
+        If btnPan.Checked Then
+            dragging = True
+            mouseMoveThread = New Thread(New ThreadStart(AddressOf mapMove))
+            mouseMoveThread.IsBackground = True
+            mouseMoveThread.Start()
+        ElseIf btnSelect.Checked Then
+
+        End If
+    End Sub
+
+    Private Sub mapMouseRelease(sender As Object, e As MouseEventArgs)
+        If btnPan.Checked Then
+            dragging = False
+            'mouseMoveThread.Abort()
+        ElseIf btnSelect.Checked Then
+            Dim Top As Integer = CInt(Math.Floor(picBoard.Height / 2 - (map.Height - 1) * magnification / 2)) + yOffset
+            Dim Bottom As Integer = CInt(Math.Floor(picBoard.Height / 2 + (map.Height - 3) * magnification / 2)) + yOffset
+            Dim Left As Integer = CInt(Math.Floor(picBoard.Width / 2 - (map.Width - 1) * magnification / 2)) + xOffset
+            Dim Right As Integer = CInt(Math.Floor(picBoard.Width / 2 + (map.Width - 3) * magnification / 2)) + xOffset
+            If e.X > Left And e.X < Right And e.Y > Top And e.Y < Bottom Then
+                Dim _x As Integer = CInt(Math.Floor((e.X - Left) / magnification))
+                Dim _y As Integer = CInt(Math.Floor((e.Y - Top) / magnification))
+                If Not (prevSelectP.X < 0 Or prevSelectP.Y < 0) Then
+                    map.SetPixel(prevSelectP.X + 1, prevSelectP.Y + 1, prevSelectC)
+                End If
+                prevSelectP = New Point(_x, _y)
+                prevSelectC = map.GetPixel(_x + 1, _y + 1)
+                map.SetPixel(_x + 1, _y + 1, Color.PeachPuff)
+                btnEditSelection.Enabled = True
+                'MessageBox.Show(_x & ", " & _y)
+                picBoard.Refresh()
+            End If
+        End If
+    End Sub
+
+    Public Sub refreshMap()
+        If picBoard.InvokeRequired Then
+            picBoard.Invoke(New delegateExecute(AddressOf refreshMap))
+        Else
+            picBoard.Refresh()
+        End If
+    End Sub
+
+    Private Sub mapMove()
+        Dim lastX As Integer = Cursor.Position.X
+        Dim lastY As Integer = Cursor.Position.Y
+        While dragging
+            xOffset += Cursor.Position.X - lastX
+            yOffset += Cursor.Position.Y - lastY
+            refreshMap()
+            lastX = Cursor.Position.X
+            lastY = Cursor.Position.Y
+            Thread.Sleep(15)
+        End While
     End Sub
 
     Private Sub updateInventoryList()
@@ -230,8 +292,46 @@ Public Class Debug_Window
         Next
     End Sub
 
+    Private Sub picBoard_MouseWheel(sender As Object, e As System.Windows.Forms.MouseEventArgs) Handles picBoard.MouseWheel
+        Dim scrollAmt As Integer = CInt(Math.Floor(e.Delta * SystemInformation.MouseWheelScrollLines / (120 * 6)))
+        magnification -= scrollAmt
+        If magnification < 1 Then magnification = 1
+        boxZoom.Value = magnification
+        picBoard.Refresh()
+    End Sub
+
+    Private Sub boxZoom_ValueChanged(sender As Object, e As EventArgs) Handles boxZoom.ValueChanged
+        magnification = boxZoom.Value
+        picBoard.Refresh()
+    End Sub
+
+    Private Sub btnEditSelection_Click(sender As Object, e As EventArgs) Handles btnEditSelection.Click
+        If prevSelectP.X >= 0 And prevSelectP.Y >= 0 Then
+            Dim et As New EditTile()
+            et.SetLoc(prevSelectP)
+            et.ShowDialog()
+
+            Dim tempPoint As Point = prevSelectP
+            prevSelectC = Nothing
+            prevSelectP = New Point(-1, -1)
+
+            createMap()
+
+            prevSelectC = map.GetPixel(tempPoint.X + 1, tempPoint.Y + 1)
+            prevSelectP = tempPoint
+            map.SetPixel(tempPoint.X + 1, tempPoint.Y + 1, Color.PeachPuff)
+            btnEditSelection.Enabled = True
+            picBoard.Refresh()
+            Game.zoom()
+        End If
+    End Sub
+
     Private Sub boxTurn_ValueChanged(sender As Object, e As EventArgs) Handles boxTurn.ValueChanged
         Game.turn = boxTurn.Value
+    End Sub
+
+    Private Sub boxBeaten_CheckedChanged(sender As Object, e As EventArgs) Handles boxBeaten.CheckedChanged
+        Game.beatboss(Game.floor) = boxBeaten.Checked
     End Sub
 
     Private Sub boxName_TextChanged(sender As Object, e As EventArgs) Handles boxName.TextChanged
@@ -316,34 +416,6 @@ Public Class Debug_Window
         cd.Color = Game.player.haircolor
         cd.ShowDialog()
         Game.player.changeHairColor(cd.Color)
-
-        'NOT FIXED, REMOVED TEMPORARILY
-        'Game.player.changeHairColor(cd.Color)
-        'CType(sender, Panel).BackColor = cd.Color
-
-        'If currAtrButton.Equals(btnBHair) Then
-        '    btnBHair_Click(sender, e)
-        '    currAttribute = mRearHair2
-        'End If
-        'If currAtrButton.Equals(btnFHair) Then
-        '    btnFHair_Click(sender, e)
-        '    currAttribute = mFrontHair
-        'End If
-        'If currAtrButton.Equals(btnEyebrows) Then
-        '    btnEyebrows_Click(sender, e)
-        '    currAttribute = mEyebrows
-        'End If
-        'For i = 0 To currAttribute.Count - 1
-        '    Dim x As Integer = (i * 71 * Me.Size.Width / 581)
-        '    Dim y As Integer = 0
-        '    Dim img As New PictureBox
-        '    img.BackgroundImage = currAttribute(i)
-        '    img.Location = New Point(x, y - 20)
-        '    img.Size = New Point(70 * Me.Size.Width / 581, 104 * Me.Size.Width / 581)
-        '    img.BackgroundImageLayout = ImageLayout.Stretch
-        '    AddHandler img.Click, AddressOf PicOnClick
-        '    pnlBody.Controls.Add(img)
-        'Next
         cd.Dispose()
         picPreview.Image = CharacterGenerator.CreateBMP(Game.player.iArr)
     End Sub
@@ -403,10 +475,14 @@ Public Class Debug_Window
     End Sub
 
     Private Sub boxInventory_SelectedIndexChanged(sender As Object, e As EventArgs) Handles boxInventory.SelectedIndexChanged
-        boxItems.SelectedIndex = -1
+        If boxItems.SelectedIndex <> -1 Then
+            boxItems.SelectedIndex = -1
+        End If
     End Sub
 
     Private Sub boxItems_SelectedIndexChanged(sender As Object, e As EventArgs) Handles boxItems.SelectedIndexChanged
-        boxInventory.SelectedIndex = -1
+        If boxInventory.SelectedIndex <> -1 Then
+            boxInventory.SelectedIndex = -1
+        End If
     End Sub
 End Class
