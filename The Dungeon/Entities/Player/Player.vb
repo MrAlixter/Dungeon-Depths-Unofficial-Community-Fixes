@@ -402,6 +402,7 @@
 
         changeHairColor(haircolor)
         Equipment.portraitUDate()
+        setPImage()
         UIupdate()
     End Sub
     Public Sub revert2()
@@ -439,7 +440,23 @@
 
         changeHairColor(haircolor)
         Equipment.portraitUDate()
+        setPImage()
         UIupdate()
+    End Sub
+    Public Sub setPImage()
+        If title = "Bimbo" Then
+            If Game.floor > 5 Then
+                pImage = Game.picBimbof.BackgroundImage
+            Else
+                pImage = Game.picPlayerB.BackgroundImage
+            End If
+        Else
+            If Game.floor > 5 Then
+                pImage = Game.picPlayerf.BackgroundImage
+            Else
+                pImage = Game.picPlayer.BackgroundImage
+            End If
+        End If
     End Sub
     Public Sub genRandomPortrait(ByVal sb As Boolean)
         Randomize()
@@ -979,32 +996,10 @@
             Game.lstLog.Items.Add("Your form prevents you from being altered.")
             Exit Sub
         End If
-        If Not Game.isMark Then
-            sexBool = True
-            sex = "Female"
-            breastSize = 1
-            idRouteMF()
-        Else
-            sex = "Female"
-            sexBool = True
-            breastSize = 2
-            iArrInd(1) = New Tuple(Of Integer, Boolean)(CharacterGenerator.fRearHair2.Count - 1, True)
-            iArrInd(2) = New Tuple(Of Integer, Boolean)(9, True)
-            iArrInd(3) = New Tuple(Of Integer, Boolean)(CharacterGenerator.fClothing.Count - 1, True)
-            iArrInd(4) = New Tuple(Of Integer, Boolean)(0, True)
-            iArrInd(5) = New Tuple(Of Integer, Boolean)(CharacterGenerator.fRearHair1.Count - 1, True)
-            iArrInd(6) = New Tuple(Of Integer, Boolean)(0, True)
-            iArrInd(7) = New Tuple(Of Integer, Boolean)(0, True)
-            iArrInd(8) = New Tuple(Of Integer, Boolean)(4, True)
-            iArrInd(9) = New Tuple(Of Integer, Boolean)(2, True)
-            iArrInd(10) = New Tuple(Of Integer, Boolean)(0, True)
-            iArrInd(11) = New Tuple(Of Integer, Boolean)(0, True)
-            iArrInd(12) = New Tuple(Of Integer, Boolean)(0, True)
-            iArrInd(13) = New Tuple(Of Integer, Boolean)(0, True)
-            iArrInd(14) = New Tuple(Of Integer, Boolean)(0, True)
-            iArrInd(15) = New Tuple(Of Integer, Boolean)(CharacterGenerator.fFrontHair.Count - 1, True)
-            iArrInd(16) = New Tuple(Of Integer, Boolean)(0, True)
-        End If
+        sexBool = True
+        sex = "Female"
+        breastSize = 1
+        idRouteMF()
         changeSkinColor(skincolor)
         If perks("swordpossess") > -1 Then perks("swordpossess") = 0
         Game.lstLog.TopIndex = Game.lstLog.Items.Count - 1
@@ -1014,13 +1009,11 @@
             Game.lstLog.Items.Add("Your form prevents you from being altered.")
             Exit Sub
         End If
-        If Not Game.isMark Then
-            sexBool = False
-            sex = "Male"
-            breastSize = -1
-            perks(2) = False
-            idRouteFM()
-        End If
+        sexBool = False
+        sex = "Male"
+        breastSize = -1
+        perks(2) = False
+        idRouteFM()
         If perks("swordpossess") > -1 Then perks("swordpossess") = 0
         Game.lstLog.TopIndex = Game.lstLog.Items.Count - 1
     End Sub

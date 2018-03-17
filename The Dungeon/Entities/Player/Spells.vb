@@ -104,6 +104,7 @@
         Polymorph.porm = True
         Dim p As Polymorph = New Polymorph
         p.ShowDialog()
+        Game.dialogOpen = True
         p.Dispose()
         Game.lstLog.Items.Add(CStr("You turn yourself into a " & Game.player.title & "!"))
         Game.pushLblCombatEvent(CStr("You turn yourself into a " & Game.player.title & "!"))
@@ -121,6 +122,7 @@
         Dim p As Polymorph = New Polymorph
         p.target = target
         p.ShowDialog()
+        Game.dialogOpen = True
         p.Dispose()
         If target.GetType() Is GetType(NPC) Then
             target.update()
@@ -202,6 +204,7 @@
         Dim p As Hypnosis = New Hypnosis
         p.target = target
         p.ShowDialog()
+        Game.dialogOpen = True
         p.Dispose()
         Game.lstLog.Items.Add(CStr("You transform" & target.title & " " & target.name & "!"))
         Game.pushLblCombatEvent(CStr("You transform" & target.title & " " & target.name & "!"))

@@ -27,6 +27,7 @@
     End Sub
     Private Sub Button1_Click(sender As Object, e As EventArgs) Handles Button1.Click
         If cboxPMorph.Text = "-- Select --" Or Not tfForm Then
+            Game.dialogOpen = False
             Me.Close()
             Game.player.mana += 5
             Exit Sub
@@ -38,7 +39,7 @@
             Case False
                 If target.GetType() Is GetType(NPC) Then transformN(target) Else transform(target)
         End Select
-
+        Game.dialogOpen = False
         Me.Close()
     End Sub
 
@@ -603,43 +604,30 @@
                 p.defence -= 10
                 'final tf Stage
                 If Name.Equals("Targax") Then p.haircolor = Color.FromArgb(255, 20, 20, 20) Else p.haircolor = Color.FromArgb(255, 245, 231, 184)
-                If Game.isMark Then
-                    p.iArrInd(1) = New Tuple(Of Integer, Boolean)(CharacterGenerator.fRearHair2.Count - 2, True)
-                    p.iArrInd(2) = New Tuple(Of Integer, Boolean)(6, True)
-                    p.iArrInd(8) = New Tuple(Of Integer, Boolean)(6, True)
-                    p.iArrInd(9) = New Tuple(Of Integer, Boolean)(8, True)
-                    p.iArrInd(3) = New Tuple(Of Integer, Boolean)(CharacterGenerator.fClothing.Count - 2, True)
-                    p.iArrInd(5) = New Tuple(Of Integer, Boolean)(CharacterGenerator.fRearHair1.Count - 2, True)
-                    p.iArrInd(15) = New Tuple(Of Integer, Boolean)(CharacterGenerator.fFrontHair.Count - 2, True)
-                End If
-
-                If p.breastSize < 3 And Not p.title.Equals("Magic Girl") And Game.isMark = False Then
+                If p.breastSize < 3 And Not p.title.Equals("Magic Girl") Then
                     p.iArrInd(2) = New Tuple(Of Integer, Boolean)(7, True)
                 Else
                     p.be()
                     Equipment.portraitUDate()
                 End If
 
-                If Not p.equippedArmor.getName.Equals("Naked") And Not p.title.Equals("Magic Girl") And Game.isMark = False Then
+                If Not p.equippedArmor.getName.Equals("Naked") And Not p.title.Equals("Magic Girl") Then
                     Dim eAName As String = p.equippedArmor.getName.ToString
                     Equipment.clothingCurse1()
                     If eAName = p.equippedArmor.getName Then
                         Equipment.clothesChange("Skimpy_Clothes")
                     End If
                 End If
-
-                If Game.isMark = False Then
-                    If Name <> "Targax" Then
-                        p.haircolor = Color.FromArgb(255, 250, 250, 205)
-                        p.iArrInd(1) = New Tuple(Of Integer, Boolean)(6, True)
-                        p.iArrInd(5) = New Tuple(Of Integer, Boolean)(6, True)
-                        p.iArrInd(9) = New Tuple(Of Integer, Boolean)(8, True)
-                        p.iArrInd(15) = New Tuple(Of Integer, Boolean)(7, True)
-                    Else
-                        p.iArrInd(9) = New Tuple(Of Integer, Boolean)(16, True)
-                    End If
-                    p.iArrInd(8) = New Tuple(Of Integer, Boolean)(6, True)
+                If Name <> "Targax" Then
+                    p.haircolor = Color.FromArgb(255, 250, 250, 205)
+                    p.iArrInd(1) = New Tuple(Of Integer, Boolean)(6, True)
+                    p.iArrInd(5) = New Tuple(Of Integer, Boolean)(6, True)
+                    p.iArrInd(9) = New Tuple(Of Integer, Boolean)(8, True)
+                    p.iArrInd(15) = New Tuple(Of Integer, Boolean)(7, True)
+                Else
+                    p.iArrInd(9) = New Tuple(Of Integer, Boolean)(16, True)
                 End If
+                p.iArrInd(8) = New Tuple(Of Integer, Boolean)(6, True)
                 If Game.floor < 6 Then p.pImage = Game.picPlayerB.BackgroundImage Else p.pImage = Game.picBimbof.BackgroundImage
                 p.TextColor = Color.HotPink
                 p.perks("bimbotf") = -1

@@ -50,6 +50,7 @@
             fuPlay.sState.save(fuPlay)
             Dim f3 As New Equipment
             f3.ShowDialog()
+            Game.dialogOpen = True
             f3.Dispose()
             fuPlay.currState.save(fuPlay)
             fuPlay.pState.save(fuPlay)
