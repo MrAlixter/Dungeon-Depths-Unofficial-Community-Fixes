@@ -1594,41 +1594,53 @@
         End If
 
         'body
-        'skincolor
-        If haircolor.A = 200 Then
-            out += "Your body is made up of a " & getSkinColor() & "slime, and while you are technically formless, you still have enough control over the slime to form a bipedal, humanoid form.  "
-        Else
-            out += "You have a (relatively) normal human body with " & getSkinColor() & "skin.  "
-        End If
-        'breasts
-        Dim bAdj = ""
-        Select Case breastSize
-            Case -1
-                bAdj = "non-existant"
-            Case 1
-                bAdj = "medium"
-            Case 2
-                bAdj = "large"
-            Case 3
-                bAdj = "huge"
-            Case 4
-                bAdj = "massive"
-            Case 5
-                bAdj = "ridiculous"
+        Select Case title
+            Case "Dragon"
+                out += "You are a large dragon covered in emerald scales." & vbCrLf & " " & vbCrLf
+            Case "Blow-Up-Doll"
+                out += "You are a inflatable sex doll with " & getSkinColor() & "rubber skin.  "
+                If sexBool Then
+                    out += "You have a feminine body, with huge breasts and the matching female genetalia." & vbCrLf & " " & vbCrLf
+                Else
+                    out += "You have a feminine body, with huge breasts, though you have male genetalia." & vbCrLf & " " & vbCrLf
+                End If
+            Case Else
+                'skincolor
+                If haircolor.A = 200 Then
+                    out += "Your body is made up of a " & getSkinColor() & "slime, and while you are technically formless, you still have enough control over the slime to form a bipedal, humanoid form.  "
+                Else
+                    out += "You have a (relatively) normal human body with " & getSkinColor() & "skin.  "
+                End If
+                'breasts
+                Dim bAdj = ""
+                Select Case breastSize
+                    Case -1
+                        bAdj = "non-existant"
+                    Case 1
+                        bAdj = "medium"
+                    Case 2
+                        bAdj = "large"
+                    Case 3
+                        bAdj = "huge"
+                    Case 4
+                        bAdj = "massive"
+                    Case 5
+                        bAdj = "ridiculous"
+                End Select
+                If sexBool Then
+                    If iArrInd(2).Item2 Then
+                        out += "You have a feminine body, with " & bAdj & " breasts and the matching female genetalia." & vbCrLf & " " & vbCrLf
+                    Else
+                        out += "You have a a masculine body, with " & bAdj & " breasts, though you have female genetalia." & vbCrLf & " " & vbCrLf
+                    End If
+                Else
+                    If iArrInd(2).Item2 Then
+                        out += "You have a feminine body, with " & bAdj & " breasts, though you have male genetalia." & vbCrLf & " " & vbCrLf
+                    Else
+                        out += "You have a masculine body, with a toned chest and the matching male genetalia." & vbCrLf & " " & vbCrLf
+                    End If
+                End If
         End Select
-        If sexBool Then
-            If iArrInd(2).Item2 Then
-                out += "You have a feminine body, with " & bAdj & " breasts and the matching female genetalia." & vbCrLf & " " & vbCrLf
-            Else
-                out += "You have a a masculine body, with " & bAdj & " breasts, though you have female genetalia." & vbCrLf & " " & vbCrLf
-            End If
-        Else
-            If iArrInd(2).Item2 Then
-                out += "You have a feminine body, with " & bAdj & " breasts, though you have male genetalia." & vbCrLf & " " & vbCrLf
-            Else
-                out += "You have a masculine body, with a toned chest and the matching male genetalia." & vbCrLf & " " & vbCrLf
-            End If
-        End If
 
         'perks
         If perks("hunger") > -1 Then out += "You haven't eaten anything in a while and are starving." & vbCrLf & " " & vbCrLf
