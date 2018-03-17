@@ -265,7 +265,7 @@
                 Case 2
                     p.iArrInd(3) = p.equippedArmor.bsize2
                 Case 3
-                    If Game.isMark And (p.title = "Bimbo" Or p.perks("slutcurse")) Then p.iArrInd(3) = New Tuple(Of Integer, Boolean)(CharacterGenerator.fClothing.Count - 2, True) Else p.iArrInd(3) = p.equippedArmor.bsize3
+                    p.iArrInd(3) = p.equippedArmor.bsize3
                 Case 4
                     p.iArrInd(3) = p.equippedArmor.bsize4
                 Case Else
@@ -309,17 +309,12 @@
         ElseIf p.equippedArmor.getName = "Common_Clothes" Then
             Select Case p.breastSize
                 Case -1
-                    If Game.isMark Then
-                        p.iArrInd(3) = New Tuple(Of Integer, Boolean)(CharacterGenerator.mClothing.Count - 1, False)
-                    Else
+                    
                         p.iArrInd(3) = New Tuple(Of Integer, Boolean)(p.sState.iArrInd(3).Item1, p.iArrInd(2).Item2)
-                    End If
                 Case 1
                     p.iArrInd(3) = New Tuple(Of Integer, Boolean)(p.sState.iArrInd(3).Item1, p.iArrInd(2).Item2)
                 Case 2
-                    If Game.isMark Then
-                        p.iArrInd(3) = New Tuple(Of Integer, Boolean)(CharacterGenerator.fClothing.Count - 1, True)
-                    Else
+                    
                         clothesChange("Naked")
                         Game.lstLog.Items.Add("Your clothes don't fit!")
                         If p.sexBool Then
@@ -327,7 +322,6 @@
                         Else
                             p.iArrInd(3) = New Tuple(Of Integer, Boolean)(5, False)
                         End If
-                    End If
                 Case Else
                     clothesChange("Naked")
                     Game.lstLog.Items.Add("Your clothes don't fit!")

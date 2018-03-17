@@ -31,8 +31,7 @@ Public Class Game
     Public npcIndex As Integer = 0  'indicates which npc is encountered (NOT SAVED)
     'a list containing all valid cheats
     Public cheatList() As String = {"girl", "nude", "blue", "catc", "bmbo", "bigr", "slut", "kill", "dick", "lust", "form", "tfme",
-                                    "gogo", "mana", "fuse", "rock", "doll", "seee"} 'list of cheats (NOT SAVES)
-    Public isMark As Boolean = False    'indicates if the 'mark' cheat code has been used. (NOT SAVED)
+                                    "gogo", "mana", "fuse", "rock", "doll", "seee"} 'list of cheats (NOT SAVED)
     Dim keyspresed As String = ""   'records last 4 keys pressed (NOT SAVED)
     'variables related to the mystery potions
     Public Potions As New ArrayList()
@@ -860,31 +859,7 @@ Public Class Game
             Case Keys.Enter
                 If cheatList.Contains(keyspresed) Then
                     MsgBox(keyspresed)
-                    If keyspresed = "mark" Then
-                        player.sex = "Male"
-                        player.sexBool = False
-                        isMark = True
-                        player.iArrInd(1) = New Tuple(Of Integer, Boolean)(CharacterGenerator.mRearHair2.Count - 1, False)
-                        player.iArrInd(2) = New Tuple(Of Integer, Boolean)(0, False)
-                        player.iArrInd(3) = New Tuple(Of Integer, Boolean)(CharacterGenerator.mClothing.Count - 1, False)
-                        player.iArrInd(4) = New Tuple(Of Integer, Boolean)(0, False)
-                        player.iArrInd(5) = New Tuple(Of Integer, Boolean)(CharacterGenerator.mRearHair1.Count - 1, False)
-                        player.iArrInd(6) = New Tuple(Of Integer, Boolean)(0, False)
-                        player.iArrInd(7) = New Tuple(Of Integer, Boolean)(0, False)
-                        player.iArrInd(8) = New Tuple(Of Integer, Boolean)(2, False)
-                        player.iArrInd(9) = New Tuple(Of Integer, Boolean)(2, False)
-                        player.iArrInd(10) = New Tuple(Of Integer, Boolean)(0, False)
-                        player.iArrInd(11) = New Tuple(Of Integer, Boolean)(0, False)
-                        player.iArrInd(12) = New Tuple(Of Integer, Boolean)(0, False)
-                        player.iArrInd(13) = New Tuple(Of Integer, Boolean)(0, False)
-                        player.iArrInd(14) = New Tuple(Of Integer, Boolean)(0, False)
-                        player.iArrInd(15) = New Tuple(Of Integer, Boolean)(CharacterGenerator.mFrontHair.Count - 1, False)
-                        player.iArrInd(16) = New Tuple(Of Integer, Boolean)(0, False)
-                        player.haircolor = Color.FromArgb(255, 125, 94, 50)
-                        player.sState.save(player)
-                        player.pState.save(player)
-                        player.createP()
-                    ElseIf keyspresed = "girl" Then
+                    If keyspresed = "girl" Then
                         player.MtF()
                         player.createP()
                     ElseIf keyspresed = "dick" Then
@@ -1161,6 +1136,8 @@ Public Class Game
         picLoadBar.Size = New Size(10, 17)
 
         If picLoadBar.Visible = False Then picLoadBar.Visible = True
+        If picStart.Visible = False Then picStart.Visible = True
+        picStart.BringToFront()
         picLoadBar.BringToFront()
         System.Threading.Thread.Sleep(750)
 
@@ -1258,19 +1235,7 @@ Public Class Game
 
         Equipment.init()
         reader.Close()
-        If player.title = "Bimbo" Then
-            If floor > 5 Then
-                player.pImage = picBimbof.BackgroundImage
-            Else
-                player.pImage = picPlayerB.BackgroundImage
-            End If
-        Else
-            If floor > 5 Then
-                player.pImage = picPlayerf.BackgroundImage
-            Else
-                player.pImage = picPlayer.BackgroundImage
-            End If
-        End If
+        player.setPImage()
 
         drawBoard()
         lblNameTitle.Text = player.name & " the " & player.title
@@ -1284,6 +1249,7 @@ Public Class Game
         lblEVD.Text = "EVD = " & player.evade
 
         player.currState.save(player)
+        picStart.Visible = False
 
         pushLblEvent("Game successfully loaded!")
         player.solFlag = False
