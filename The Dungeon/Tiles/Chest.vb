@@ -85,7 +85,7 @@
             Else
                 mOdds = Int(Rnd() * 10)
             End If
-            If mOdds = 0 Then
+            If mOdds = 0 And Not contents(53) > 0 Then
                 Monster.createMimic(contents)
                 Exit Sub
             End If

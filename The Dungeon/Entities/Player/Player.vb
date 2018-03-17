@@ -1512,4 +1512,152 @@
         Next
         Return output
     End Function
+
+    'description generation
+    Function getColor(ByVal color As Color)
+        Dim c As Color
+
+
+        Dim cArr As Color() = {color.Aqua, color.Aquamarine, color.Azure, _
+                               color.Beige, color.Black, color.Blue, color.BlueViolet, color.Brown, _
+                               color.Chartreuse, color.Coral, color.CornflowerBlue, color.Crimson, color.Cyan, _
+                               color.DarkBlue, color.DarkCyan, color.DarkGreen, color.DarkMagenta, color.DarkRed, color.DarkSeaGreen, color.DarkSlateBlue, color.DarkTurquoise, color.DarkViolet, _
+                               color.Fuchsia, _
+                               color.Gold, color.Gray, color.Green, color.GreenYellow, _
+                               color.Honeydew, color.HotPink, _
+                               color.Indigo, _
+                               color.Lavender, color.LawnGreen, color.LightBlue, color.LightGray, color.LightGreen, color.LightPink, color.LightSeaGreen, color.LightSkyBlue, color.LightSteelBlue, color.LightYellow, color.Lime, _
+                               color.Magenta, color.Maroon, color.MidnightBlue, color.MintCream, color.MediumPurple, color.MediumOrchid, _
+                               color.Navy, _
+                               color.Orange, color.OrangeRed, color.Orchid, _
+                               color.Pink, color.Purple, color.PowderBlue, color.Plum, color.PaleVioletRed, _
+                               color.Red, color.RosyBrown, _
+                               color.SeaGreen, color.Silver, color.Sienna, color.SteelBlue, _
+                               color.Tan, color.Teal, color.Turquoise, _
+                               color.Wheat, color.White, _
+                               color.Yellow}
+        Dim closest As Double = 99999999999999
+        For i = 0 To UBound(cArr)
+            Dim ratio = isShadeOf(color.R, color.G, color.B, cArr(i))
+            If ratio < closest Then
+                closest = ratio
+                c = cArr(i)
+            End If
+        Next
+
+        Dim mc As System.Text.RegularExpressions.MatchCollection = System.Text.RegularExpressions.Regex.Matches(c.Name, "[A-Z][a-z]*")
+        Dim out = ""
+        For Each m As System.Text.RegularExpressions.Match In mc
+            out += m.ToString
+            out += " "
+        Next
+        If out.Equals("Beige ") Then out = "Platinum Blonde "
+        Return out.ToLower
+    End Function
+    Function getHairColor() As String
+        Return getColor(haircolor)
+    End Function
+    Function getSkinColor() As String
+        Select Case skincolor.GetHashCode
+            Case Color.AntiqueWhite.GetHashCode
+                Return "porcelain "
+            Case Color.FromArgb(255, 247, 219, 195).GetHashCode
+                Return "fair "
+            Case Color.FromArgb(255, 240, 184, 160).GetHashCode
+                Return "tan "
+            Case Color.FromArgb(255, 210, 161, 140).GetHashCode
+                Return "tan "
+            Case Color.FromArgb(255, 180, 138, 120).GetHashCode
+                Return "dark "
+            Case Color.FromArgb(255, 105, 80, 70).GetHashCode
+                Return "ebony "
+            Case Else
+                Return getColor(skincolor)
+        End Select
+    End Function
+    Function plusMinus(ByVal x, ByVal y, ByVal tol)
+        If x > y + tol Or x < y - tol Then Return False Else Return True
+    End Function
+    Function isShadeOf(ByVal r As Integer, ByVal g As Integer, ByVal b As Integer, ByVal c As Color) As Double
+        Dim ratio1, ratio2, ratio3
+        Dim totalDelta = 0
+        ratio1 = (Math.Abs(r - c.R) ^ 3) * 5
+        ratio2 = (Math.Abs(g - c.G) ^ 3) * 5
+        ratio3 = (Math.Abs(b - c.B) ^ 3) * 5
+        totalDelta += ratio1 + ratio2 + ratio3
+
+        Return totalDelta
+    End Function
+
+    Function genDescription()
+        Dim out As String = ""
+        'general statement
+        out = "You are " & name & ", a " & sex & " " & title & vbCrLf & " " & vbCrLf
+
+        'hair
+        out += "You have " & getHairColor()
+        If haircolor.A = 180 Then
+            out += "gelatinous "
+        End If
+        If iArrInd(1).Item2 Then
+            out += "hair, done in a feminine style." & vbCrLf & " " & vbCrLf
+        Else
+            out += "hair, done in a masculine style." & vbCrLf & " " & vbCrLf
+        End If
+
+        'body
+        Select Case title
+            Case "Dragon"
+                out += "You are a large dragon covered in emerald scales." & vbCrLf & " " & vbCrLf
+            Case "Blow-Up-Doll"
+                out += "You are a inflatable sex doll with " & getSkinColor() & "rubber skin.  "
+                If sexBool Then
+                    out += "You have a feminine body, with huge breasts and the matching female genetalia." & vbCrLf & " " & vbCrLf
+                Else
+                    out += "You have a feminine body, with huge breasts, though you have male genetalia." & vbCrLf & " " & vbCrLf
+                End If
+            Case Else
+                'skincolor
+                If haircolor.A = 200 Then
+                    out += "Your body is made up of a " & getSkinColor() & "slime, and while you are technically formless, you still have enough control over the slime to form a bipedal, humanoid form.  "
+                Else
+                    out += "You have a (relatively) normal human body with " & getSkinColor() & "skin.  "
+                End If
+                'breasts
+                Dim bAdj = ""
+                Select Case breastSize
+                    Case -1
+                        bAdj = "non-existant"
+                    Case 1
+                        bAdj = "medium"
+                    Case 2
+                        bAdj = "large"
+                    Case 3
+                        bAdj = "huge"
+                    Case 4
+                        bAdj = "massive"
+                    Case 5
+                        bAdj = "ridiculous"
+                End Select
+                If sexBool Then
+                    If iArrInd(2).Item2 Then
+                        out += "You have a feminine body, with " & bAdj & " breasts and the matching female genetalia." & vbCrLf & " " & vbCrLf
+                    Else
+                        out += "You have a a masculine body, with " & bAdj & " breasts, though you have female genetalia." & vbCrLf & " " & vbCrLf
+                    End If
+                Else
+                    If iArrInd(2).Item2 Then
+                        out += "You have a feminine body, with " & bAdj & " breasts, though you have male genetalia." & vbCrLf & " " & vbCrLf
+                    Else
+                        out += "You have a masculine body, with a toned chest and the matching male genetalia." & vbCrLf & " " & vbCrLf
+                    End If
+                End If
+        End Select
+
+        'perks
+        If perks("hunger") > -1 Then out += "You haven't eaten anything in a while and are starving." & vbCrLf & " " & vbCrLf
+        If perks("slutcurse") > -1 Then out += "You choose to dress very provokatively, showing as much skin as possible due to a curse."
+        If perks("polymorphed") > -1 Then out += "You are under the effects of a temporary polymorph, and will be for " & perks("polymorphed") & " more turns." & vbCrLf & " " & vbCrLf
+        Return out
+    End Function
 End Class

@@ -67,7 +67,7 @@ Partial Class Polymorph
         Me.cboxPMorph.TabIndex = 16
         Me.cboxPMorph.Text = "-- Select --"
         '
-        'Form4
+        'Polymorph
         '
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Inherit
         Me.BackColor = System.Drawing.Color.Black
@@ -77,8 +77,8 @@ Partial Class Polymorph
         Me.Controls.Add(Me.Button1)
         Me.Controls.Add(Me.cboxPMorph)
         Me.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle
-        Me.Name = "Form4"
-        Me.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen
+        Me.Name = "Polymorph"
+        Me.StartPosition = System.Windows.Forms.FormStartPosition.CenterParent
         Me.Text = "Polymorph"
         Me.ResumeLayout(False)
         Me.PerformLayout()

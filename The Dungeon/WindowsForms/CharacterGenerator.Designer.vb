@@ -408,7 +408,7 @@ Partial Class CharacterGenerator
         Me.Icon = CType(resources.GetObject("$this.Icon"), System.Drawing.Icon)
         Me.MaximizeBox = False
         Me.Name = "CharacterGenerator"
-        Me.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen
+        Me.StartPosition = System.Windows.Forms.FormStartPosition.CenterParent
         Me.Text = " "
         CType(Me.picPort, System.ComponentModel.ISupportInitialize).EndInit()
         Me.ResumeLayout(False)
