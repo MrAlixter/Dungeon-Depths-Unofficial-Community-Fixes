@@ -1,6 +1,7 @@
 ﻿Public Class EditTile
     Dim p As Point
     Dim t As mTile
+    Dim prevTypeSel
 
     Public Sub SetLoc(_p As Point)
         p = _p
@@ -17,9 +18,10 @@
 
         lblPosition.Text = "POSITION: " & p.X & ", " & p.Y
         lblText.Text = "TEXT: " & t.Text.ToString()
-        lblCol.Text = "COL: " & t.ForeColor.ToString()
+        lblColTxt.Text = t.ForeColor.ToString()
 
         boxOptions.Visible = False
+        boxSeen.Enabled = True
         If (t.Tag = 2) Then 'Seen
             boxSeen.Checked = True
         ElseIf (t.Tag = 1) Then 'Unseen
@@ -73,6 +75,7 @@
         Else 'Walkable
             boxType.SelectedItem = "(Walkable)"
         End If
+        prevTypeSel = boxType.SelectedItem
         AddHandler boxType.SelectedIndexChanged, AddressOf boxType_SelectedIndexChanged
 
 
@@ -109,9 +112,26 @@
             boxSeen.Enabled = True
             boxSeen.Checked = False
         Else
-            MessageBox.Show("ERR: CURRENTLY NOT BUILD")
-            boxType.SelectedItem = "(Wall)"
+            If prevTypeSel = "(Wall)" Or prevTypeSel = "(Walkable)" Then
+                If boxType.SelectedItem = "# (Chest)" Then
+                    Dim c As Chest = Game.baseChest.Create(p.X, p.Y)
+                    Game.chestList.Add(c)
+                    Game.mBoard(p.Y, p.X).ForeColor = Color.FromArgb(45, 45, 45)
+                    Game.mBoard(p.Y, p.X).Text = "#"
+                    If prevTypeSel = "(Wall)" Then
+                        Game.mBoard(p.Y, p.X).Tag = 1
+                        t.Tag = 1
+                    End If
+                    Reload()
+                    Debug_Window.refreshMap()
+                    Game.zoom()
+                End If
+            Else
+                MessageBox.Show("ERR: CURRENTLY NOT BUILD")
+                boxType.SelectedItem = "(Wall)"
+            End If
         End If
+        prevTypeSel = boxType.SelectedItem
     End Sub
 
     Private Sub btnEditContents_Clicked(sender As Object, e As EventArgs)

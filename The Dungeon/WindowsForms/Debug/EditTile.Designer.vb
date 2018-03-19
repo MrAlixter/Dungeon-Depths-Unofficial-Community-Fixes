@@ -30,6 +30,7 @@ Partial Class EditTile
         Me.boxOptions = New System.Windows.Forms.GroupBox()
         Me.boxSeen = New System.Windows.Forms.CheckBox()
         Me.boxType = New System.Windows.Forms.ComboBox()
+        Me.lblColTxt = New System.Windows.Forms.Label()
         Me.SuspendLayout()
         '
         'lblPosition
@@ -123,12 +124,24 @@ Partial Class EditTile
         Me.boxType.Size = New System.Drawing.Size(121, 23)
         Me.boxType.TabIndex = 8
         '
+        'lblColTxt
+        '
+        Me.lblColTxt.AutoSize = True
+        Me.lblColTxt.Font = New System.Drawing.Font("Consolas", 12.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.lblColTxt.ForeColor = System.Drawing.Color.White
+        Me.lblColTxt.Location = New System.Drawing.Point(55, 115)
+        Me.lblColTxt.Name = "lblColTxt"
+        Me.lblColTxt.Size = New System.Drawing.Size(54, 19)
+        Me.lblColTxt.TabIndex = 9
+        Me.lblColTxt.Text = "COLOR"
+        '
         'EditTile
         '
         Me.AutoScaleDimensions = New System.Drawing.SizeF(6.0!, 13.0!)
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font
         Me.BackColor = System.Drawing.Color.Black
         Me.ClientSize = New System.Drawing.Size(284, 261)
+        Me.Controls.Add(Me.lblColTxt)
         Me.Controls.Add(Me.boxType)
         Me.Controls.Add(Me.boxSeen)
         Me.Controls.Add(Me.boxOptions)
@@ -155,4 +168,5 @@ Partial Class EditTile
     Friend WithEvents boxOptions As GroupBox
     Friend WithEvents boxSeen As CheckBox
     Friend WithEvents boxType As ComboBox
+    Friend WithEvents lblColTxt As Label
 End Class
