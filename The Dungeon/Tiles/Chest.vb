@@ -61,6 +61,8 @@
         Return chest
     End Function
     Sub generateFromCode(ByRef chest As Chest, ByVal code As String)
+        Dim x As Integer = chest.pos.X
+        Dim y As Integer = chest.pos.Y
         Randomize(code.GetHashCode)
         Dim numC As Integer = CInt(Int(Rnd() * 5) + 1)
         For i = 0 To numC
