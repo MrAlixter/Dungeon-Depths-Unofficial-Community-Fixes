@@ -161,13 +161,15 @@ Public Class Debug_Window
                 If (Game.mBoard(boardY, boardX).Text = "#") Then 'Chest
                     map.SetPixel(boardX + 1, boardY + 1, Color.Yellow)
                 ElseIf (Game.mBoard(boardY, boardX).Text = "H") Then 'Stairs
-                    map.SetPixel(boardX + 1, boardY + 1, Color.Brown)
+                    map.SetPixel(boardX + 1, boardY + 1, Color.Sienna)
                 ElseIf (Game.mBoard(boardY, boardX).Text = "@" And Game.player.pos.X = boardX And Game.player.pos.Y = boardY) Then 'Player
                     map.SetPixel(boardX + 1, boardY + 1, Color.LawnGreen)
                 ElseIf (Game.mBoard(boardY, boardX).Text = "@") Then 'Statue
                     map.SetPixel(boardX + 1, boardY + 1, Color.LightSlateGray)
                 ElseIf (Game.mBoard(boardY, boardX).Text = "$") Then 'NPC
                     map.SetPixel(boardX + 1, boardY + 1, Color.Blue)
+                ElseIf (Game.mBoard(boardY, boardX).Text = "+") Then 'Trap
+                    map.SetPixel(boardX + 1, boardY + 1, Color.Red)
                 ElseIf (Game.mBoard(boardY, boardX).Tag = 2) Then 'Seen
                     map.SetPixel(boardX + 1, boardY + 1, Color.White)
                 ElseIf (Game.mBoard(boardY, boardX).Tag = 1) Then 'Unseen
@@ -237,7 +239,7 @@ Public Class Debug_Window
                 End If
                 prevSelectP = New Point(_x, _y)
                 prevSelectC = map.GetPixel(_x + 1, _y + 1)
-                map.SetPixel(_x + 1, _y + 1, Color.PeachPuff)
+                map.SetPixel(_x + 1, _y + 1, Color.HotPink)
                 btnEditSelection.Enabled = True
                 'MessageBox.Show(_x & ", " & _y)
                 picBoard.Refresh()

@@ -44,6 +44,7 @@
         boxType.Items.Add("@ (Player)")
         boxType.Items.Add("@ (Statue)")
         boxType.Items.Add("$ (NPC)")
+        boxType.Items.Add("+ (Trap)")
         'Temporarily removes handler so that the event doesn't trigger
         RemoveHandler boxType.SelectedIndexChanged, AddressOf boxType_SelectedIndexChanged
         If (t.Text = "#") Then 'Chest
@@ -75,6 +76,9 @@
             boxType.Enabled = False
         ElseIf (t.Text = "$") Then 'NPC
             boxType.SelectedItem = "$ (NPC)"
+            boxType.Enabled = False
+        ElseIf (t.Text = "+") Then 'Trap
+            boxType.SelectedItem = "+ (Trap)"
             boxType.Enabled = False
         ElseIf (t.Tag = 0) Then 'Wall
             boxType.SelectedItem = "(Wall)"
