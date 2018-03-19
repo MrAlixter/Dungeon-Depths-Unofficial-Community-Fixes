@@ -13,6 +13,12 @@
         Reload()
     End Sub
 
+    Private Sub Update()
+        Reload()
+        Debug_Window.refreshMap()
+        Game.zoom()
+    End Sub
+
     Private Sub Reload()
         t = Game.mBoard(p.Y, p.X)
 
@@ -42,7 +48,7 @@
         RemoveHandler boxType.SelectedIndexChanged, AddressOf boxType_SelectedIndexChanged
         If (t.Text = "#") Then 'Chest
             boxType.SelectedItem = "# (Chest)"
-            boxType.Enabled = False
+            boxType.Enabled = True
             boxOptions.Visible = True
 
             Dim btnEditContents As Button
@@ -104,11 +110,23 @@
 
     Private Sub boxType_SelectedIndexChanged(sender As Object, e As EventArgs) Handles boxType.SelectedIndexChanged
         If boxType.SelectedItem.ToString() = "(Wall)" Then
+            If prevTypeSel = "# (Chest)" Then
+                removeChest()
+            End If
             t.Tag = 0
+            t.Text = ""
+            t.ForeColor = Color.Black
             boxSeen.Enabled = False
             boxSeen.Checked = False
         ElseIf boxType.SelectedItem.ToString() = "(Walkable)" Then
-            t.Tag = 1
+            If prevTypeSel = "# (Chest)" Then
+                removeChest()
+            End If
+            If t.Tag = 0 Then
+                t.Tag = 1
+            End If
+            t.Text = ""
+            t.ForeColor = Color.Black
             boxSeen.Enabled = True
             boxSeen.Checked = False
         Else
@@ -122,16 +140,26 @@
                         Game.mBoard(p.Y, p.X).Tag = 1
                         t.Tag = 1
                     End If
-                    Reload()
-                    Debug_Window.refreshMap()
-                    Game.zoom()
+                Else
+                    MessageBox.Show("ERR: CURRENTLY NOT BUILD")
+                    boxType.SelectedItem = "(Wall)"
                 End If
             Else
                 MessageBox.Show("ERR: CURRENTLY NOT BUILD")
                 boxType.SelectedItem = "(Wall)"
             End If
         End If
+        Update()
         prevTypeSel = boxType.SelectedItem
+    End Sub
+
+    Private Sub removeChest()
+        For i = 0 To Game.chestList.Count - 1
+            If p = CType(Game.chestList(i), Chest).pos Then
+                Game.chestList.RemoveAt(i)
+                Exit Sub
+            End If
+        Next
     End Sub
 
     Private Sub btnEditContents_Clicked(sender As Object, e As EventArgs)
