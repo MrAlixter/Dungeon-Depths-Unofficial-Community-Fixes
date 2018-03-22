@@ -50,6 +50,7 @@ Partial Class Debug_Window
         Me.boxFloor = New System.Windows.Forms.NumericUpDown()
         Me.lblTurn = New System.Windows.Forms.Label()
         Me.lblFloor = New System.Windows.Forms.Label()
+        Me.lblGenCode = New System.Windows.Forms.Label()
         Me.tabPlayer = New System.Windows.Forms.TabPage()
         Me.lblHC = New System.Windows.Forms.Label()
         Me.pnlHC = New System.Windows.Forms.Panel()
@@ -111,7 +112,7 @@ Partial Class Debug_Window
         Me.lblInventory = New System.Windows.Forms.Label()
         Me.boxItems = New System.Windows.Forms.ListBox()
         Me.lblItems = New System.Windows.Forms.Label()
-        Me.lblGenCode = New System.Windows.Forms.Label()
+        Me.lblTrap = New System.Windows.Forms.Label()
         Me.tabMain.SuspendLayout()
         Me.tabInformation.SuspendLayout()
         Me.tabGeneral.SuspendLayout()
@@ -212,6 +213,7 @@ Partial Class Debug_Window
         'groupGeneral
         '
         Me.groupGeneral.BackColor = System.Drawing.Color.Black
+        Me.groupGeneral.Controls.Add(Me.lblTrap)
         Me.groupGeneral.Controls.Add(Me.boxBeaten)
         Me.groupGeneral.Controls.Add(Me.lblSelected)
         Me.groupGeneral.Controls.Add(Me.btnEditSelection)
@@ -252,8 +254,8 @@ Partial Class Debug_Window
         '
         Me.lblSelected.AutoSize = True
         Me.lblSelected.Font = New System.Drawing.Font("Consolas", 12.0!, System.Drawing.FontStyle.Bold)
-        Me.lblSelected.ForeColor = System.Drawing.Color.PeachPuff
-        Me.lblSelected.Location = New System.Drawing.Point(50, 374)
+        Me.lblSelected.ForeColor = System.Drawing.Color.HotPink
+        Me.lblSelected.Location = New System.Drawing.Point(52, 348)
         Me.lblSelected.Name = "lblSelected"
         Me.lblSelected.Size = New System.Drawing.Size(81, 19)
         Me.lblSelected.TabIndex = 206
@@ -262,7 +264,7 @@ Partial Class Debug_Window
         'btnEditSelection
         '
         Me.btnEditSelection.BackColor = System.Drawing.Color.Black
-        Me.btnEditSelection.Location = New System.Drawing.Point(41, 292)
+        Me.btnEditSelection.Location = New System.Drawing.Point(41, 271)
         Me.btnEditSelection.Name = "btnEditSelection"
         Me.btnEditSelection.Size = New System.Drawing.Size(102, 46)
         Me.btnEditSelection.TabIndex = 205
@@ -276,7 +278,7 @@ Partial Class Debug_Window
         Me.boxMapControls.Controls.Add(Me.btnSelect)
         Me.boxMapControls.Controls.Add(Me.btnPan)
         Me.boxMapControls.ForeColor = System.Drawing.Color.White
-        Me.boxMapControls.Location = New System.Drawing.Point(8, 160)
+        Me.boxMapControls.Location = New System.Drawing.Point(8, 148)
         Me.boxMapControls.Name = "boxMapControls"
         Me.boxMapControls.Size = New System.Drawing.Size(169, 114)
         Me.boxMapControls.TabIndex = 1
@@ -331,7 +333,7 @@ Partial Class Debug_Window
         Me.lblStatue.AutoSize = True
         Me.lblStatue.Font = New System.Drawing.Font("Consolas", 12.0!, System.Drawing.FontStyle.Bold)
         Me.lblStatue.ForeColor = System.Drawing.Color.LightSlateGray
-        Me.lblStatue.Location = New System.Drawing.Point(59, 470)
+        Me.lblStatue.Location = New System.Drawing.Point(61, 444)
         Me.lblStatue.Name = "lblStatue"
         Me.lblStatue.Size = New System.Drawing.Size(63, 19)
         Me.lblStatue.TabIndex = 204
@@ -341,8 +343,8 @@ Partial Class Debug_Window
         '
         Me.lblStairs.AutoSize = True
         Me.lblStairs.Font = New System.Drawing.Font("Consolas", 12.0!, System.Drawing.FontStyle.Bold)
-        Me.lblStairs.ForeColor = System.Drawing.Color.Brown
-        Me.lblStairs.Location = New System.Drawing.Point(59, 508)
+        Me.lblStairs.ForeColor = System.Drawing.Color.Sienna
+        Me.lblStairs.Location = New System.Drawing.Point(61, 482)
         Me.lblStairs.Name = "lblStairs"
         Me.lblStairs.Size = New System.Drawing.Size(63, 19)
         Me.lblStairs.TabIndex = 203
@@ -353,7 +355,7 @@ Partial Class Debug_Window
         Me.lblChest.AutoSize = True
         Me.lblChest.Font = New System.Drawing.Font("Consolas", 12.0!, System.Drawing.FontStyle.Bold)
         Me.lblChest.ForeColor = System.Drawing.Color.Yellow
-        Me.lblChest.Location = New System.Drawing.Point(63, 489)
+        Me.lblChest.Location = New System.Drawing.Point(65, 463)
         Me.lblChest.Name = "lblChest"
         Me.lblChest.Size = New System.Drawing.Size(54, 19)
         Me.lblChest.TabIndex = 202
@@ -364,7 +366,7 @@ Partial Class Debug_Window
         Me.lblNPC.AutoSize = True
         Me.lblNPC.Font = New System.Drawing.Font("Consolas", 12.0!, System.Drawing.FontStyle.Bold)
         Me.lblNPC.ForeColor = System.Drawing.Color.Blue
-        Me.lblNPC.Location = New System.Drawing.Point(72, 450)
+        Me.lblNPC.Location = New System.Drawing.Point(74, 424)
         Me.lblNPC.Name = "lblNPC"
         Me.lblNPC.Size = New System.Drawing.Size(36, 19)
         Me.lblNPC.TabIndex = 201
@@ -375,7 +377,7 @@ Partial Class Debug_Window
         Me.lblPlayer.AutoSize = True
         Me.lblPlayer.Font = New System.Drawing.Font("Consolas", 12.0!, System.Drawing.FontStyle.Bold)
         Me.lblPlayer.ForeColor = System.Drawing.Color.LawnGreen
-        Me.lblPlayer.Location = New System.Drawing.Point(59, 431)
+        Me.lblPlayer.Location = New System.Drawing.Point(61, 405)
         Me.lblPlayer.Name = "lblPlayer"
         Me.lblPlayer.Size = New System.Drawing.Size(63, 19)
         Me.lblPlayer.TabIndex = 200
@@ -386,7 +388,7 @@ Partial Class Debug_Window
         Me.lblUnseen.AutoSize = True
         Me.lblUnseen.Font = New System.Drawing.Font("Consolas", 12.0!, System.Drawing.FontStyle.Bold)
         Me.lblUnseen.ForeColor = System.Drawing.Color.Gray
-        Me.lblUnseen.Location = New System.Drawing.Point(59, 412)
+        Me.lblUnseen.Location = New System.Drawing.Point(61, 386)
         Me.lblUnseen.Name = "lblUnseen"
         Me.lblUnseen.Size = New System.Drawing.Size(63, 19)
         Me.lblUnseen.TabIndex = 199
@@ -396,7 +398,7 @@ Partial Class Debug_Window
         '
         Me.lblSeen.AutoSize = True
         Me.lblSeen.Font = New System.Drawing.Font("Consolas", 12.0!, System.Drawing.FontStyle.Bold)
-        Me.lblSeen.Location = New System.Drawing.Point(68, 393)
+        Me.lblSeen.Location = New System.Drawing.Point(70, 367)
         Me.lblSeen.Name = "lblSeen"
         Me.lblSeen.Size = New System.Drawing.Size(45, 19)
         Me.lblSeen.TabIndex = 198
@@ -406,7 +408,7 @@ Partial Class Debug_Window
         '
         Me.lblKeyHeader.AutoSize = True
         Me.lblKeyHeader.Font = New System.Drawing.Font("Consolas", 12.0!, System.Drawing.FontStyle.Underline)
-        Me.lblKeyHeader.Location = New System.Drawing.Point(54, 346)
+        Me.lblKeyHeader.Location = New System.Drawing.Point(56, 325)
         Me.lblKeyHeader.Name = "lblKeyHeader"
         Me.lblKeyHeader.Size = New System.Drawing.Size(72, 19)
         Me.lblKeyHeader.TabIndex = 197
@@ -460,6 +462,19 @@ Partial Class Debug_Window
         Me.lblFloor.Size = New System.Drawing.Size(72, 29)
         Me.lblFloor.TabIndex = 2
         Me.lblFloor.Text = "FLOOR: "
+        '
+        'lblGenCode
+        '
+        Me.lblGenCode.AutoSize = True
+        Me.lblGenCode.Dock = System.Windows.Forms.DockStyle.Top
+        Me.lblGenCode.Font = New System.Drawing.Font("Consolas", 12.0!)
+        Me.lblGenCode.ForeColor = System.Drawing.Color.White
+        Me.lblGenCode.Location = New System.Drawing.Point(3, 22)
+        Me.lblGenCode.Name = "lblGenCode"
+        Me.lblGenCode.Padding = New System.Windows.Forms.Padding(0, 0, 0, 10)
+        Me.lblGenCode.Size = New System.Drawing.Size(54, 29)
+        Me.lblGenCode.TabIndex = 208
+        Me.lblGenCode.Text = "CODE:"
         '
         'tabPlayer
         '
@@ -1178,18 +1193,16 @@ Partial Class Debug_Window
         Me.lblItems.TabIndex = 7
         Me.lblItems.Text = "ITEMS"
         '
-        'lblGenCode
+        'lblTrap
         '
-        Me.lblGenCode.AutoSize = True
-        Me.lblGenCode.Dock = System.Windows.Forms.DockStyle.Top
-        Me.lblGenCode.Font = New System.Drawing.Font("Consolas", 12.0!)
-        Me.lblGenCode.ForeColor = System.Drawing.Color.White
-        Me.lblGenCode.Location = New System.Drawing.Point(3, 22)
-        Me.lblGenCode.Name = "lblGenCode"
-        Me.lblGenCode.Padding = New System.Windows.Forms.Padding(0, 0, 0, 10)
-        Me.lblGenCode.Size = New System.Drawing.Size(54, 29)
-        Me.lblGenCode.TabIndex = 208
-        Me.lblGenCode.Text = "CODE:"
+        Me.lblTrap.AutoSize = True
+        Me.lblTrap.Font = New System.Drawing.Font("Consolas", 12.0!, System.Drawing.FontStyle.Bold)
+        Me.lblTrap.ForeColor = System.Drawing.Color.Red
+        Me.lblTrap.Location = New System.Drawing.Point(70, 501)
+        Me.lblTrap.Name = "lblTrap"
+        Me.lblTrap.Size = New System.Drawing.Size(45, 19)
+        Me.lblTrap.TabIndex = 209
+        Me.lblTrap.Text = "TRAP"
         '
         'Debug_Window
         '
@@ -1326,4 +1339,5 @@ Partial Class Debug_Window
     Friend WithEvents lblSelected As Label
     Friend WithEvents boxBeaten As CheckBox
     Friend WithEvents lblGenCode As Label
+    Friend WithEvents lblTrap As Label
 End Class

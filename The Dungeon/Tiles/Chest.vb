@@ -18,30 +18,24 @@
         Dim chest = Me.Clone()
 
         chest.pos = New Point(x, y)
-        Randomize(code.GetHashCode)
-        Dim numC As Integer = CInt(Int(Rnd() * 5) + 1)
-        For i = 0 To numC
-            Dim r As Integer = Int(Rnd() * 10)
-            Dim itemTier As Integer = 1
-            Select Case r
-                Case 0 To 4
-                    itemTier = 1
-                Case 9
-                    itemTier = 3
-                Case Else
-                    itemTier = 2
-            End Select
-            If itemTier < 1 Or itemTier > tiers.Length - 1 Then
-                MessageBox.Show("Chest @ (" & CStr(x) & ", " & CStr(y) & ") tried making an item out of tier range.\nDefaulting to tier 1.")
-                itemTier = 1
-            End If
+        generateFromCode(chest, code)
+        Return chest
+    End Function
+    Function Create(ByVal p As Point, ByVal code As String)
+        Dim chest = Me.Clone()
 
-            Dim rng As Integer = Int(Rnd() * tiers(itemTier).Count)
-            If rng > tiers(itemTier).Count - 1 Then rng = tiers(itemTier).Count - 1
-            Dim itemID As Integer = tiers(itemTier)(rng).id 'Int(Rnd() * tier.Length))
-            chest.add(itemID, 1)
-            If itemID = 43 Then contents(itemID) += Int(Rnd() * 150)
-        Next
+        chest.pos = p
+        generateFromCode(chest, code)
+        Return chest
+    End Function
+    Function Create(ByVal p As Point)
+        Dim chest = Me.Clone()
+        chest.pos = p
+        Return chest
+    End Function
+    Function Create(ByVal x As Integer, ByVal y As Integer)
+        Dim chest = Me.Clone()
+        chest.pos = New Point(x, y)
         Return chest
     End Function
     Function Create(ByVal i() As Integer, ByVal p As Point)
@@ -66,6 +60,34 @@
 
         Return chest
     End Function
+    Sub generateFromCode(ByRef chest As Chest, ByVal code As String)
+        Dim x As Integer = chest.pos.X
+        Dim y As Integer = chest.pos.Y
+        Randomize(code.GetHashCode)
+        Dim numC As Integer = CInt(Int(Rnd() * 5) + 1)
+        For i = 0 To numC
+            Dim r As Integer = Int(Rnd() * 10)
+            Dim itemTier As Integer = 1
+            Select Case r
+                Case 0 To 4
+                    itemTier = 1
+                Case 9
+                    itemTier = 3
+                Case Else
+                    itemTier = 2
+            End Select
+            If itemTier < 1 Or itemTier > tiers.Length - 1 Then
+                MessageBox.Show("Chest @ (" & CStr(x) & ", " & CStr(y) & ") tried making an item out of tier range.\nDefaulting to tier 1.")
+                itemTier = 1
+            End If
+
+            Dim rng As Integer = Int(Rnd() * tiers(itemTier).Count)
+            If rng > tiers(itemTier).Count - 1 Then rng = tiers(itemTier).Count - 1
+            Dim itemID As Integer = tiers(itemTier)(rng).id 'Int(Rnd() * tier.Length))
+            chest.add(itemID, 1)
+            If itemID = 43 Then contents(itemID) += Int(Rnd() * 150)
+        Next
+    End Sub
     Function Clone()
         Dim toReturn = New Chest()
         toReturn.tier1 = Me.tier1
