@@ -18,23 +18,34 @@
         Dim out As String = "No traps detected!"
         For indY = -1 To 1
             For indX = -1 To 1
-                If Game.player.pos.Y + indY < Game.mBoardHeight And Game.player.pos.Y + indY >= 0 And Game.player.pos.X + indX < Game.mBoardWidth And Game.player.pos.X + indX >= 0 Then
-                    If Game.mBoard(Game.player.pos.Y + indY, Game.player.pos.X + indX).Text = "+" Then
-                        Dim id As Integer
+                Dim y As Integer = Game.player.pos.Y + indY
+                Dim x As Integer = Game.player.pos.X + indX
+                If y < Game.mBoardHeight And y >= 0 And x < Game.mBoardWidth And x >= 0 Then
+                    If Game.mBoard(y, x).Text = "+" Then
+                        Dim id As Integer = -1
                         For i = 0 To Game.trapList.Count - 1
-                            If Game.trapList(i).pos = Game.player.pos Then
+                            If Game.trapList(i).pos.Equals(New Point(x, y)) Then
                                 Game.trapList(i).pos = New Point(-1, -1)
                                 id = Game.trapList(i).id
-                                Game.trapList.Remove(Game.trapList(i))
+                                Game.trapList.RemoveAt(i)
+                                Game.mBoard(y, x).Text = ""
+                                Exit For
                             End If
                         Next
+                        Game.drawBoard()
                         Dim outout As String
                         Select Case id
                             Case 0
-                                outout = "Trap disarmed!" & vbCrLf & "You have disarmed an aphrodisiac dart trap."
-                            Case Else
-                                outout = "Trap disarmed!" & vbCrLf & "You have disarmed an rope bondage trap. +1 Ropes"
+                                outout = "Trap disarmed! " & vbCrLf & " You have disarmed an aphrodisiac dart trap."
+                            Case 1
+                                outout = "Trap disarmed!" & vbCrLf & " You have disarmed an rope bondage trap. +1 Ropes"
                                 Game.player.inventory(54).add(1)
+                            Case 2
+                                outout = "Trap disarmed!" & vbCrLf & " You have disarmed an ruby trap."
+                            Case 3
+                                outout = "Trap disarmed!" & vbCrLf & "You have disarmed an blowup doll trap."
+                            Case Else
+                                outout = "Trap disarmed!" & vbCrLf & " You have disarmed an broken trap."
                         End Select
                         If out.Equals("No traps detected!") Then
                             out = outout
