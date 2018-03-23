@@ -2273,8 +2273,9 @@ Public Class Game
         ab1.Dispose()
     End Sub
     Private Sub DebugToolStripMenuItem_Click(sender As Object, e As EventArgs) Handles DebugToolStripMenuItem.Click
-        Debug_Window.ShowDialog()
         dialogOpen = True
+        Debug_Window.ShowDialog()
+        dialogOpen = False
         player.invNeedsUDate = True
         player.UIupdate()
     End Sub
@@ -2583,7 +2584,16 @@ Public Class Game
 
             For i = 1 To 8
                 If System.IO.File.Exists("s" & i.ToString() & ".ave") Then
-                    Dim pic As Image = getImgFromFile("s" & i.ToString() & ".ave")
+                    Dim pic As Image
+                    If System.IO.File.Exists("s" & i.ToString() & ".ave.png") Then
+                        Using fs As New FileStream("s" & i.ToString() & ".ave.png", FileMode.Open, FileAccess.Read)
+                            pic = Image.FromStream(fs)
+                        End Using
+                    Else
+                        pic = getImgFromFile("s" & i.ToString() & ".ave")
+                        'System.IO.File.Create("s" & i.ToString() & ".ave.png")
+                        pic.Save("s" & i.ToString() & ".ave.png")
+                    End If
                     Try
                         savePics(i) = pic
                     Catch ex As Exception
@@ -2606,6 +2616,7 @@ Public Class Game
                 Catch ex As Exception
                     savePics.Add(pic)
                 End Try
+                pic.Save("s" & imagesWorkerArg.ToString() & ".ave.png")
             Else
                 Try
                     savePics(imagesWorkerArg) = Nothing
