@@ -741,7 +741,9 @@
         End If
         'marissa's tf
         If perks("nekocurse") > -1 Then
-            If currTarget Is Nothing Or currTarget.dead Then
+            If currTarget Is Nothing Then
+                perks("nekocurse") = -1
+            ElseIf currTarget.dead Then
                 perks("nekocurse") = -1
             End If
             If Not perks("polymorphed") > -1 Then
