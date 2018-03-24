@@ -1640,6 +1640,8 @@
                     Else
                         out += "You have a a masculine body, with " & bAdj & " breasts, though you have female genetalia." & vbCrLf & " " & vbCrLf
                     End If
+
+                    out += "Your hips have womanly curves without being overly wide.  Overall, you have typical legs and feet for a humanoid woman."
                 Else
                     If iArrInd(2).Item2 Then
                         out += "You have a feminine body, with " & bAdj & " breasts, though you have male genetalia." & vbCrLf & " " & vbCrLf
@@ -1651,7 +1653,7 @@
 
         'perks
         If perks("hunger") > -1 Then out += "You haven't eaten anything in a while and are starving." & vbCrLf & " " & vbCrLf
-        If perks("slutcurse") > -1 Then out += "You choose to dress very provokatively, showing as much skin as possible due to a curse."
+        If perks("slutcurse") > -1 Then out += "You choose to dress very provocatively, showing as much skin as possible due to a curse."
         If perks("polymorphed") > -1 Then out += "You are under the effects of a temporary polymorph, and will be for " & perks("polymorphed") & " more turns." & vbCrLf & " " & vbCrLf
         Return out
     End Function

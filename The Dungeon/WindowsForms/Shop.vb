@@ -86,7 +86,7 @@
     Private Sub btnBuy_Click(sender As Object, e As EventArgs) Handles btnBuy.Click
         If cBoxBuy.Text = "-- Select --" Or cBoxBuyQTY.Text = "" Or cBoxBuyQTY.Text = "N/a" Then Exit Sub
         If ind <> -1 AndAlso p.gold >= (pCanBuy(ind).value * (CInt(cBoxBuyQTY.Text))) Then
-            pCanBuy(ind).count += (CInt(cBoxBuyQTY.Text))
+            pCanBuy(ind).add((CInt(cBoxBuyQTY.Text)))
             p.gold -= pCanBuy(ind).value * (CInt(cBoxBuyQTY.Text))
             sk.gold += pCanBuy(ind).value * (CInt(cBoxBuyQTY.Text))
         ElseIf p.gold < (pCanBuy(ind).value * (CInt(cBoxBuyQTY.Text))) Then
