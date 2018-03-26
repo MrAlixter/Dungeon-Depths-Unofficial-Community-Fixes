@@ -70,7 +70,8 @@ Public Class Debug_Window
         boxEvd.Value = Game.player.evade
         boxGold.Value = Game.player.gold
         pnlSC.BackColor = Game.player.skincolor
-        pnlHC.BackColor = Game.player.haircolor
+        pnlHC.BackColor = Color.FromArgb(255, Game.player.haircolor.R, Game.player.haircolor.G, Game.player.haircolor.B)
+        boxAlpha.Value = Game.player.haircolor.A
 
         'PORTRAIT
         loadPortrait()
@@ -417,8 +418,15 @@ Public Class Debug_Window
         Dim cd As New ColorDialog()
         cd.Color = Game.player.haircolor
         cd.ShowDialog()
-        Game.player.changeHairColor(cd.Color)
+        Dim c As Color = Color.FromArgb(boxAlpha.Value, cd.Color.R, cd.Color.G, cd.Color.B)
+        Game.player.changeHairColor(c)
         cd.Dispose()
+        picPreview.Image = CharacterGenerator.CreateBMP(Game.player.iArr)
+    End Sub
+
+    Private Sub boxAlpha_ValueChanged(sender As Object, e As EventArgs) Handles boxAlpha.ValueChanged
+        Dim c As Color = Color.FromArgb(boxAlpha.Value, Game.player.haircolor.R, Game.player.haircolor.G, Game.player.haircolor.B)
+        Game.player.changeHairColor(c)
         picPreview.Image = CharacterGenerator.CreateBMP(Game.player.iArr)
     End Sub
 

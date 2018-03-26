@@ -106,6 +106,8 @@ Partial Class Debug_Window
         Me.lblSex = New System.Windows.Forms.Label()
         Me.lblName = New System.Windows.Forms.Label()
         Me.tabInventory = New System.Windows.Forms.TabPage()
+        Me.boxInventoryFilter = New System.Windows.Forms.TextBox()
+        Me.boxItemsFilter = New System.Windows.Forms.TextBox()
         Me.number = New System.Windows.Forms.NumericUpDown()
         Me.btnRemove = New System.Windows.Forms.Button()
         Me.boxInventory = New System.Windows.Forms.ListBox()
@@ -113,8 +115,8 @@ Partial Class Debug_Window
         Me.lblInventory = New System.Windows.Forms.Label()
         Me.boxItems = New System.Windows.Forms.ListBox()
         Me.lblItems = New System.Windows.Forms.Label()
-        Me.boxItemsFilter = New System.Windows.Forms.TextBox()
-        Me.boxInventoryFilter = New System.Windows.Forms.TextBox()
+        Me.lblAlpha = New System.Windows.Forms.Label()
+        Me.boxAlpha = New System.Windows.Forms.NumericUpDown()
         Me.tabMain.SuspendLayout()
         Me.tabInformation.SuspendLayout()
         Me.tabGeneral.SuspendLayout()
@@ -141,6 +143,7 @@ Partial Class Debug_Window
         CType(Me.boxHealth, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.tabInventory.SuspendLayout()
         CType(Me.number, System.ComponentModel.ISupportInitialize).BeginInit()
+        CType(Me.boxAlpha, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.SuspendLayout()
         '
         'tabMain
@@ -492,6 +495,8 @@ Partial Class Debug_Window
         'tabPlayer
         '
         Me.tabPlayer.BackColor = System.Drawing.Color.Black
+        Me.tabPlayer.Controls.Add(Me.boxAlpha)
+        Me.tabPlayer.Controls.Add(Me.lblAlpha)
         Me.tabPlayer.Controls.Add(Me.lblHC)
         Me.tabPlayer.Controls.Add(Me.pnlHC)
         Me.tabPlayer.Controls.Add(Me.lblSC)
@@ -539,7 +544,7 @@ Partial Class Debug_Window
         Me.lblHC.AutoSize = True
         Me.lblHC.Font = New System.Drawing.Font("Consolas", 12.0!)
         Me.lblHC.ForeColor = System.Drawing.Color.White
-        Me.lblHC.Location = New System.Drawing.Point(250, 210)
+        Me.lblHC.Location = New System.Drawing.Point(172, 214)
         Me.lblHC.Name = "lblHC"
         Me.lblHC.Size = New System.Drawing.Size(99, 19)
         Me.lblHC.TabIndex = 266
@@ -547,9 +552,9 @@ Partial Class Debug_Window
         '
         'pnlHC
         '
-        Me.pnlHC.Location = New System.Drawing.Point(357, 211)
+        Me.pnlHC.Location = New System.Drawing.Point(277, 211)
         Me.pnlHC.Name = "pnlHC"
-        Me.pnlHC.Size = New System.Drawing.Size(134, 26)
+        Me.pnlHC.Size = New System.Drawing.Size(39, 26)
         Me.pnlHC.TabIndex = 265
         '
         'lblSC
@@ -557,7 +562,7 @@ Partial Class Debug_Window
         Me.lblSC.AutoSize = True
         Me.lblSC.Font = New System.Drawing.Font("Consolas", 12.0!)
         Me.lblSC.ForeColor = System.Drawing.Color.White
-        Me.lblSC.Location = New System.Drawing.Point(3, 210)
+        Me.lblSC.Location = New System.Drawing.Point(3, 214)
         Me.lblSC.Name = "lblSC"
         Me.lblSC.Size = New System.Drawing.Size(99, 19)
         Me.lblSC.TabIndex = 264
@@ -567,7 +572,7 @@ Partial Class Debug_Window
         '
         Me.pnlSC.Location = New System.Drawing.Point(110, 211)
         Me.pnlSC.Name = "pnlSC"
-        Me.pnlSC.Size = New System.Drawing.Size(134, 26)
+        Me.pnlSC.Size = New System.Drawing.Size(39, 26)
         Me.pnlSC.TabIndex = 263
         '
         'tabPortrait
@@ -782,7 +787,7 @@ Partial Class Debug_Window
         Me.playerDivider.Location = New System.Drawing.Point(248, 3)
         Me.playerDivider.Multiline = True
         Me.playerDivider.Name = "playerDivider"
-        Me.playerDivider.Size = New System.Drawing.Size(1, 225)
+        Me.playerDivider.Size = New System.Drawing.Size(1, 200)
         Me.playerDivider.TabIndex = 235
         '
         'lblGold
@@ -1123,6 +1128,26 @@ Partial Class Debug_Window
         Me.tabInventory.TabIndex = 2
         Me.tabInventory.Text = "INVENTORY"
         '
+        'boxInventoryFilter
+        '
+        Me.boxInventoryFilter.BackColor = System.Drawing.Color.Black
+        Me.boxInventoryFilter.Font = New System.Drawing.Font("Consolas", 12.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.boxInventoryFilter.ForeColor = System.Drawing.Color.White
+        Me.boxInventoryFilter.Location = New System.Drawing.Point(8, 12)
+        Me.boxInventoryFilter.Name = "boxInventoryFilter"
+        Me.boxInventoryFilter.Size = New System.Drawing.Size(278, 26)
+        Me.boxInventoryFilter.TabIndex = 185
+        '
+        'boxItemsFilter
+        '
+        Me.boxItemsFilter.BackColor = System.Drawing.Color.Black
+        Me.boxItemsFilter.Font = New System.Drawing.Font("Consolas", 12.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.boxItemsFilter.ForeColor = System.Drawing.Color.White
+        Me.boxItemsFilter.Location = New System.Drawing.Point(456, 12)
+        Me.boxItemsFilter.Name = "boxItemsFilter"
+        Me.boxItemsFilter.Size = New System.Drawing.Size(278, 26)
+        Me.boxItemsFilter.TabIndex = 184
+        '
         'number
         '
         Me.number.BackColor = System.Drawing.Color.Black
@@ -1208,25 +1233,27 @@ Partial Class Debug_Window
         Me.lblItems.TabIndex = 7
         Me.lblItems.Text = "ITEMS"
         '
-        'boxItemsFilter
+        'lblAlpha
         '
-        Me.boxItemsFilter.BackColor = System.Drawing.Color.Black
-        Me.boxItemsFilter.Font = New System.Drawing.Font("Consolas", 12.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.boxItemsFilter.ForeColor = System.Drawing.Color.White
-        Me.boxItemsFilter.Location = New System.Drawing.Point(456, 12)
-        Me.boxItemsFilter.Name = "boxItemsFilter"
-        Me.boxItemsFilter.Size = New System.Drawing.Size(278, 26)
-        Me.boxItemsFilter.TabIndex = 184
+        Me.lblAlpha.AutoSize = True
+        Me.lblAlpha.Font = New System.Drawing.Font("Consolas", 12.0!)
+        Me.lblAlpha.ForeColor = System.Drawing.Color.White
+        Me.lblAlpha.Location = New System.Drawing.Point(333, 214)
+        Me.lblAlpha.Name = "lblAlpha"
+        Me.lblAlpha.Size = New System.Drawing.Size(99, 19)
+        Me.lblAlpha.TabIndex = 267
+        Me.lblAlpha.Text = "HAIR ALPHA"
         '
-        'boxInventoryFilter
+        'boxAlpha
         '
-        Me.boxInventoryFilter.BackColor = System.Drawing.Color.Black
-        Me.boxInventoryFilter.Font = New System.Drawing.Font("Consolas", 12.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.boxInventoryFilter.ForeColor = System.Drawing.Color.White
-        Me.boxInventoryFilter.Location = New System.Drawing.Point(8, 12)
-        Me.boxInventoryFilter.Name = "boxInventoryFilter"
-        Me.boxInventoryFilter.Size = New System.Drawing.Size(278, 26)
-        Me.boxInventoryFilter.TabIndex = 185
+        Me.boxAlpha.BackColor = System.Drawing.Color.Black
+        Me.boxAlpha.Font = New System.Drawing.Font("Consolas", 12.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.boxAlpha.ForeColor = System.Drawing.Color.White
+        Me.boxAlpha.Location = New System.Drawing.Point(438, 211)
+        Me.boxAlpha.Maximum = New Decimal(New Integer() {255, 0, 0, 0})
+        Me.boxAlpha.Name = "boxAlpha"
+        Me.boxAlpha.Size = New System.Drawing.Size(53, 26)
+        Me.boxAlpha.TabIndex = 269
         '
         'Debug_Window
         '
@@ -1271,6 +1298,7 @@ Partial Class Debug_Window
         Me.tabInventory.ResumeLayout(False)
         Me.tabInventory.PerformLayout()
         CType(Me.number, System.ComponentModel.ISupportInitialize).EndInit()
+        CType(Me.boxAlpha, System.ComponentModel.ISupportInitialize).EndInit()
         Me.ResumeLayout(False)
 
     End Sub
@@ -1366,4 +1394,6 @@ Partial Class Debug_Window
     Friend WithEvents lblTrap As Label
     Friend WithEvents boxItemsFilter As TextBox
     Friend WithEvents boxInventoryFilter As TextBox
+    Friend WithEvents boxAlpha As NumericUpDown
+    Friend WithEvents lblAlpha As Label
 End Class
