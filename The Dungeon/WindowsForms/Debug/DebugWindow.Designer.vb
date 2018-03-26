@@ -30,6 +30,7 @@ Partial Class Debug_Window
         Me.groupNotes = New System.Windows.Forms.GroupBox()
         Me.picBoard = New System.Windows.Forms.PictureBox()
         Me.groupGeneral = New System.Windows.Forms.GroupBox()
+        Me.lblTrap = New System.Windows.Forms.Label()
         Me.boxBeaten = New System.Windows.Forms.CheckBox()
         Me.lblSelected = New System.Windows.Forms.Label()
         Me.btnEditSelection = New System.Windows.Forms.Button()
@@ -112,7 +113,8 @@ Partial Class Debug_Window
         Me.lblInventory = New System.Windows.Forms.Label()
         Me.boxItems = New System.Windows.Forms.ListBox()
         Me.lblItems = New System.Windows.Forms.Label()
-        Me.lblTrap = New System.Windows.Forms.Label()
+        Me.boxItemsFilter = New System.Windows.Forms.TextBox()
+        Me.boxInventoryFilter = New System.Windows.Forms.TextBox()
         Me.tabMain.SuspendLayout()
         Me.tabInformation.SuspendLayout()
         Me.tabGeneral.SuspendLayout()
@@ -239,6 +241,17 @@ Partial Class Debug_Window
         Me.groupGeneral.TabIndex = 3
         Me.groupGeneral.TabStop = False
         Me.groupGeneral.Text = "GENERAL"
+        '
+        'lblTrap
+        '
+        Me.lblTrap.AutoSize = True
+        Me.lblTrap.Font = New System.Drawing.Font("Consolas", 12.0!, System.Drawing.FontStyle.Bold)
+        Me.lblTrap.ForeColor = System.Drawing.Color.Red
+        Me.lblTrap.Location = New System.Drawing.Point(70, 501)
+        Me.lblTrap.Name = "lblTrap"
+        Me.lblTrap.Size = New System.Drawing.Size(45, 19)
+        Me.lblTrap.TabIndex = 209
+        Me.lblTrap.Text = "TRAP"
         '
         'boxBeaten
         '
@@ -1094,6 +1107,8 @@ Partial Class Debug_Window
         'tabInventory
         '
         Me.tabInventory.BackColor = System.Drawing.Color.Black
+        Me.tabInventory.Controls.Add(Me.boxInventoryFilter)
+        Me.tabInventory.Controls.Add(Me.boxItemsFilter)
         Me.tabInventory.Controls.Add(Me.number)
         Me.tabInventory.Controls.Add(Me.btnRemove)
         Me.tabInventory.Controls.Add(Me.boxInventory)
@@ -1139,10 +1154,10 @@ Partial Class Debug_Window
         Me.boxInventory.ForeColor = System.Drawing.Color.White
         Me.boxInventory.FormattingEnabled = True
         Me.boxInventory.ItemHeight = 19
-        Me.boxInventory.Location = New System.Drawing.Point(6, 6)
+        Me.boxInventory.Location = New System.Drawing.Point(6, 44)
         Me.boxInventory.Name = "boxInventory"
         Me.boxInventory.SelectionMode = System.Windows.Forms.SelectionMode.MultiExtended
-        Me.boxInventory.Size = New System.Drawing.Size(280, 536)
+        Me.boxInventory.Size = New System.Drawing.Size(280, 498)
         Me.boxInventory.Sorted = True
         Me.boxInventory.TabIndex = 8
         '
@@ -1176,10 +1191,10 @@ Partial Class Debug_Window
         Me.boxItems.ForeColor = System.Drawing.Color.White
         Me.boxItems.FormattingEnabled = True
         Me.boxItems.ItemHeight = 19
-        Me.boxItems.Location = New System.Drawing.Point(456, 6)
+        Me.boxItems.Location = New System.Drawing.Point(456, 44)
         Me.boxItems.Name = "boxItems"
         Me.boxItems.SelectionMode = System.Windows.Forms.SelectionMode.MultiExtended
-        Me.boxItems.Size = New System.Drawing.Size(280, 536)
+        Me.boxItems.Size = New System.Drawing.Size(280, 498)
         Me.boxItems.TabIndex = 9
         '
         'lblItems
@@ -1193,16 +1208,25 @@ Partial Class Debug_Window
         Me.lblItems.TabIndex = 7
         Me.lblItems.Text = "ITEMS"
         '
-        'lblTrap
+        'boxItemsFilter
         '
-        Me.lblTrap.AutoSize = True
-        Me.lblTrap.Font = New System.Drawing.Font("Consolas", 12.0!, System.Drawing.FontStyle.Bold)
-        Me.lblTrap.ForeColor = System.Drawing.Color.Red
-        Me.lblTrap.Location = New System.Drawing.Point(70, 501)
-        Me.lblTrap.Name = "lblTrap"
-        Me.lblTrap.Size = New System.Drawing.Size(45, 19)
-        Me.lblTrap.TabIndex = 209
-        Me.lblTrap.Text = "TRAP"
+        Me.boxItemsFilter.BackColor = System.Drawing.Color.Black
+        Me.boxItemsFilter.Font = New System.Drawing.Font("Consolas", 12.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.boxItemsFilter.ForeColor = System.Drawing.Color.White
+        Me.boxItemsFilter.Location = New System.Drawing.Point(456, 12)
+        Me.boxItemsFilter.Name = "boxItemsFilter"
+        Me.boxItemsFilter.Size = New System.Drawing.Size(278, 26)
+        Me.boxItemsFilter.TabIndex = 184
+        '
+        'boxInventoryFilter
+        '
+        Me.boxInventoryFilter.BackColor = System.Drawing.Color.Black
+        Me.boxInventoryFilter.Font = New System.Drawing.Font("Consolas", 12.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.boxInventoryFilter.ForeColor = System.Drawing.Color.White
+        Me.boxInventoryFilter.Location = New System.Drawing.Point(8, 12)
+        Me.boxInventoryFilter.Name = "boxInventoryFilter"
+        Me.boxInventoryFilter.Size = New System.Drawing.Size(278, 26)
+        Me.boxInventoryFilter.TabIndex = 185
         '
         'Debug_Window
         '
@@ -1340,4 +1364,6 @@ Partial Class Debug_Window
     Friend WithEvents boxBeaten As CheckBox
     Friend WithEvents lblGenCode As Label
     Friend WithEvents lblTrap As Label
+    Friend WithEvents boxItemsFilter As TextBox
+    Friend WithEvents boxInventoryFilter As TextBox
 End Class

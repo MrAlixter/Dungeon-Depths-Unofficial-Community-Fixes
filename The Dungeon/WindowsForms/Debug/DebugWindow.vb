@@ -433,6 +433,32 @@ Public Class Debug_Window
         picPreview.Image = CharacterGenerator.CreateBMP(Game.player.iArr)
     End Sub
 
+    Private Sub boxInventoryFilter_TextChanged(sender As Object, e As EventArgs) Handles boxInventoryFilter.TextChanged
+        inventoryFilterUpdate()
+    End Sub
+
+    Private Sub boxItemsFilter_TextChanged(sender As Object, e As EventArgs) Handles boxItemsFilter.TextChanged
+        itemFilterUpdate()
+    End Sub
+
+    Private Sub inventoryFilterUpdate()
+        boxInventory.Items.Clear()
+        For i As Integer = 0 To inventoryList.Count - 1
+            If inventoryList(i).IndexOf(boxInventoryFilter.Text, 0, StringComparison.CurrentCultureIgnoreCase) > -1 Then
+                boxInventory.Items.Add(inventoryList(i).ToString())
+            End If
+        Next
+    End Sub
+
+    Private Sub itemFilterUpdate()
+        boxItems.Items.Clear()
+        For i As Integer = 0 To itemsList.Count - 1
+            If itemsList(i).IndexOf(boxItemsFilter.Text, 0, StringComparison.CurrentCultureIgnoreCase) > -1 Then
+                boxItems.Items.Add(itemsList(i).ToString())
+            End If
+        Next
+    End Sub
+
     Private Sub btnRemove_Click(sender As Object, e As EventArgs) Handles btnRemove.Click
         If boxInventory.SelectedIndices.Count < 1 Then Exit Sub
         Dim selected As ListBox.SelectedIndexCollection = boxInventory.SelectedIndices
@@ -450,8 +476,8 @@ Public Class Debug_Window
                 boxInventory.Items.Insert(temp, Game.player.inventorynames(itemInd) & " x" & CType(Game.player.inventory(itemInd), Item).count)
             End If
         Loop
+        inventoryFilterUpdate()
     End Sub
-
 
     Private Sub btnAdd_Click(sender As Object, e As EventArgs) Handles btnAdd.Click
         If boxInventory.SelectedIndices.Count > 0 Then
@@ -474,6 +500,7 @@ Public Class Debug_Window
                 boxItems.SelectedIndices.Remove(boxItems.SelectedIndices(0))
             Loop
         End If
+        inventoryFilterUpdate()
     End Sub
 
     Private Sub boxInventory_SelectedIndexChanged(sender As Object, e As EventArgs) Handles boxInventory.SelectedIndexChanged
