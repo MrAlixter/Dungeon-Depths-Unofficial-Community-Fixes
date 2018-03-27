@@ -1245,7 +1245,7 @@ Public Class Game
         chestList.Clear()
         chestList = tCL.Clone()
 
-        If chestList.Count = 0 Then placeChest(floorLayouts(floor))
+        If chestList.Count = 0 And uOchests.Count <> 0 Then placeChest(floorLayouts(floor))
         combatmode = False
 
         Equipment.init()
