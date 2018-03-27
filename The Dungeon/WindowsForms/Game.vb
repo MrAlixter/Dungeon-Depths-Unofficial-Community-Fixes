@@ -518,6 +518,7 @@ Public Class Game
         mBoard(stairsY, stairsX).Text = "H"
     End Sub
     Sub placeChest(ByVal code As String)
+        Rnd(-1)
         Randomize(code.GetHashCode)
         Dim numChests As Integer = CInt(Int(Rnd() * 8) + 3) * Int(mBoardWidth / 30)
         Dim r As Integer
@@ -536,7 +537,7 @@ Public Class Game
             If r = i Then chest.add(53, 1)
             chestList.Add(chest)
             mBoard(chestY, chestX).ForeColor = Color.FromArgb(45, 45, 45)
-            mBoard(chestY, chestX).Text = "#"
+            'mBoard(chestY, chestX).Text = "#"
         Next
     End Sub
     Sub placeTraps()
@@ -1178,8 +1179,11 @@ Public Class Game
         zoom()
 
         stairs = New Point(reader.ReadLine(), reader.ReadLine())
+        Dim uOchests As ArrayList = New ArrayList()
         For i = 0 To CInt(reader.ReadLine())
-            chestList.Add(baseChest.Create(reader.ReadLine()))
+            Dim newChest = baseChest.Create(reader.ReadLine())
+            chestList.Add(newChest)
+            uOchests.Add(newChest.pos)
         Next
 
         For i = 0 To CInt(reader.ReadLine())
@@ -1227,6 +1231,19 @@ Public Class Game
         For i = 0 To CInt(reader.ReadLine())
             floorLayouts.Add(reader.ReadLine())
         Next
+        chestList.Clear()
+        placeChest(floorLayouts(floor))
+        Dim tCL As ArrayList = New ArrayList()
+        For i = 0 To uOchests.Count - 1
+            For j = 0 To chestList.Count - 1
+                If chestList(j).pos.x.Equals(uOchests(i).x) And chestList(j).pos.y.Equals(uOchests(i).y) Then
+                    tCL.Add(chestList(j))
+                    Exit For
+                End If
+            Next
+        Next
+        chestList.Clear()
+        chestList = tCL.Clone()
         combatmode = False
 
         Equipment.init()

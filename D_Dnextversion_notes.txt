@@ -39,7 +39,7 @@ New Features:
   - WIL
     - Killing monsters and bossed can raise will
     - Running from monsters, traps, and lust lower will
-    - WIL will affect tf speed, and WIL checks will determine some TFs
+    - WIL will affect tf speed, and WIL checks will determine some       TFs
   - EVD 
     - Evade influances the likelyhood of a player avoiding an attack
   - More dynamic enemies
@@ -213,7 +213,6 @@ New Features:
   - Holy Cow
 - inspect items in shop
 - Non-combat armor benefits
-- Armor reduces spell accuracy
 - breakdown of stats on hover
 - [done] re-value all items
 - unselect items by clicking again
