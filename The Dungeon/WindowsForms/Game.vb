@@ -1002,9 +1002,12 @@ Public Class Game
             Next
         End If
         If floor < 5 Then
+            If floorboss(floor).Equals("Key") And player.inventory(53).count > 0 Then beatboss(floor) = True
             If player.pos = stairs And beatboss(floor) Then
                 If floor < 5 Then
                     If floorboss(floor).Equals("Key") Then player.inventory(53).add(-1)
+                    player.invNeedsUDate = True
+                    player.UIupdate()
                     initializeBoard()
                     If combatmode Then fromCombat()
                 Else
