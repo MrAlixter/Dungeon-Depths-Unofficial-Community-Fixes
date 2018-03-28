@@ -172,6 +172,7 @@ Partial Class Game
         Me.lblNext = New System.Windows.Forms.Label()
         Me.picDescPort = New System.Windows.Forms.PictureBox()
         Me.txtDescript = New System.Windows.Forms.TextBox()
+        Me.ttCosts = New System.Windows.Forms.ToolTip(Me.components)
         CType(Me.picMarkBClothes, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me.picMarkBRearHair2, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me.picMarkBRearHair1, System.ComponentModel.ISupportInitialize).BeginInit()
@@ -645,7 +646,7 @@ Partial Class Game
         Me.picStart.BackgroundImage = CType(resources.GetObject("picStart.BackgroundImage"), System.Drawing.Image)
         Me.picStart.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch
         Me.picStart.Cursor = System.Windows.Forms.Cursors.Arrow
-        Me.picStart.Location = New System.Drawing.Point(2, -12)
+        Me.picStart.Location = New System.Drawing.Point(900, -12)
         Me.picStart.Name = "picStart"
         Me.picStart.Size = New System.Drawing.Size(1000, 701)
         Me.picStart.TabIndex = 160
@@ -1526,7 +1527,7 @@ Partial Class Game
         Me.pnlSaveLoad.Controls.Add(Me.btnS3)
         Me.pnlSaveLoad.Controls.Add(Me.btnS5)
         Me.pnlSaveLoad.Controls.Add(Me.btnS4)
-        Me.pnlSaveLoad.Location = New System.Drawing.Point(188, 143)
+        Me.pnlSaveLoad.Location = New System.Drawing.Point(900, 143)
         Me.pnlSaveLoad.Name = "pnlSaveLoad"
         Me.pnlSaveLoad.Size = New System.Drawing.Size(568, 458)
         Me.pnlSaveLoad.TabIndex = 258
@@ -1661,7 +1662,7 @@ Partial Class Game
         Me.pnlCombat.Controls.Add(Me.lblEName)
         Me.pnlCombat.Controls.Add(Me.picPHealth)
         Me.pnlCombat.Controls.Add(Me.picEHbar)
-        Me.pnlCombat.Location = New System.Drawing.Point(115, 50)
+        Me.pnlCombat.Location = New System.Drawing.Point(900, 50)
         Me.pnlCombat.Name = "pnlCombat"
         Me.pnlCombat.Size = New System.Drawing.Size(568, 362)
         Me.pnlCombat.TabIndex = 270
@@ -1853,7 +1854,7 @@ Partial Class Game
         Me.pnlDescript.Controls.Add(Me.lblNext)
         Me.pnlDescript.Controls.Add(Me.picDescPort)
         Me.pnlDescript.Controls.Add(Me.txtDescript)
-        Me.pnlDescript.Location = New System.Drawing.Point(115, 50)
+        Me.pnlDescript.Location = New System.Drawing.Point(900, 50)
         Me.pnlDescript.Name = "pnlDescript"
         Me.pnlDescript.Size = New System.Drawing.Size(670, 461)
         Me.pnlDescript.TabIndex = 275
@@ -1890,6 +1891,11 @@ Partial Class Game
         Me.txtDescript.ScrollBars = System.Windows.Forms.ScrollBars.Vertical
         Me.txtDescript.Size = New System.Drawing.Size(468, 395)
         Me.txtDescript.TabIndex = 0
+        '
+        'ttCosts
+        '
+        Me.ttCosts.BackColor = System.Drawing.Color.Black
+        Me.ttCosts.ForeColor = System.Drawing.Color.Firebrick
         '
         'Game
         '
@@ -2225,4 +2231,5 @@ Partial Class Game
     Friend WithEvents lblNext As System.Windows.Forms.Label
     Friend WithEvents picDescPort As System.Windows.Forms.PictureBox
     Friend WithEvents txtDescript As System.Windows.Forms.TextBox
+    Friend WithEvents ttCosts As System.Windows.Forms.ToolTip
 End Class

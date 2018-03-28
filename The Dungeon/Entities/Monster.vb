@@ -99,7 +99,7 @@
                 attack = 50
                 defence = 15
                 speed = 60
-                setInventory({63})
+                setInventory({63, 64})
             Case Else
                 name = "Some Guy"
                 health = 66

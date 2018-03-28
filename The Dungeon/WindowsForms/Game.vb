@@ -135,7 +135,10 @@ Public Class Game
         Next
         'creates the shopkeeper
         shopkeeper = New NPC(2)
-
+        pnlCombat.Location = New Point(115, pnlCombat.Location.Y)
+        pnlDescript.Location = New Point(115, pnlDescript.Location.Y)
+        pnlSaveLoad.Location = New Point(188, pnlSaveLoad.Location.Y)
+        picStart.Location = New Point(2, picStart.Location.Y)
         If Not System.IO.File.Exists("dis.cla") Then
             If MessageBox.Show("This game features adult content sexual in nature, and is not for anyone under the age of 18 or otherwise of legal age in their country. By clicking 'Yes' below, you confirm that you are legally an adult in your country.", "Obligatory Disclaimer", MessageBoxButtons.YesNo) = Windows.Forms.DialogResult.Yes Then
                 System.IO.File.CreateText("dis.cla")
@@ -748,7 +751,7 @@ Public Class Game
         If floor = 5 Then Exit Sub
         Randomize()
         If eClock > 0 Then eClock -= 1
-        If combatmode = True Or npcmode = True Or eClock <> 0 Then Exit Sub
+        If combatmode = True Or npcmode = True Or eClock <> 0 Or Not player.canMoveFlag Then Exit Sub
         Dim rand As Integer = CInt(Int(Rnd() * 200))
         Dim currTier As Integer() = monsterTier1
         Select Case floor
@@ -1767,6 +1770,7 @@ Public Class Game
             player.revert2()
         End If
         npcList.Clear()
+        ttCosts.RemoveAll()
     End Sub
     'the NPC versions of from and to combat
     Sub NPCtoCombat(ByRef m As Monster)
@@ -2022,8 +2026,12 @@ Public Class Game
             End If
         Next
         Specials.goSpecial(m, player, cmboxSpec.Text)
-        cmboxSpec.Visible = False
-        btnSpec.Visible = False
+        If Specials.SPCCost(cmboxSpec.Text).Equals("Useable only once per combat.") Then cmboxSpec.Items.Remove(cmboxSpec.Text)
+        If cmboxSpec.Items.Count = 0 Then
+            cmboxSpec.Visible = False
+            btnSpec.Visible = False
+        End If
+        cmboxSpec.Text = "-- Select --"
         If npcList.Count > 0 Then
             For i = 0 To npcList.Count - 1
                 Dim int1 As Integer = 100 - npcList.Item(i).speed
@@ -2040,6 +2048,7 @@ Public Class Game
         Loop
         'updates the combat banner
         updatePnlCombat(player, player.currTarget)
+        ttCosts.RemoveAll()
     End Sub
     Private Sub btnRUN_Click(sender As Object, e As EventArgs) Handles btnRUN.Click
         If lblEvent.Visible = True Then
@@ -2082,6 +2091,7 @@ Public Class Game
         Loop
         'updates the combat banner
         updatePnlCombat(player, player.currTarget)
+        ttCosts.RemoveAll()
     End Sub
     Private Sub btnEQP_Click(sender As Object, e As EventArgs) Handles btnEQP.Click
         Dim f3 As Equipment = New Equipment()
@@ -2683,5 +2693,15 @@ Public Class Game
         updatelist.add(player, int)
         drawBoard()
         pushLblCombatEvent("You wait for a bit...")
+    End Sub
+
+    Private Sub cboxMG_SelectedIndexChanged(sender As Object, e As EventArgs) Handles cboxMG.SelectedIndexChanged
+
+    End Sub
+    Private Sub cboxNPCMG_SelectedIndexChanged(sender As Object, e As EventArgs) Handles cboxNPCMG.SelectedIndexChanged
+
+    End Sub
+    Private Sub cmboxSpec_SelectedIndexChanged(sender As Object, e As EventArgs) Handles cmboxSpec.SelectedIndexChanged
+        If Not cmboxSpec.Text.Equals("-- Select --") And Not cmboxSpec.Text = "" Then ttCosts.SetToolTip(Me.cmboxSpec, Specials.SPCCost(cmboxSpec.Text))
     End Sub
 End Class
