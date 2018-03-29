@@ -234,4 +234,16 @@ New Features:
 
 
 
+- Houdini111 Tasks
+  - Finish Debug Menu
+    - Finish Tile Editing
+      - Move uniques (NPC(s), Stairs, etc.)
+    - View/Edit perks/curses
+    - Edit Class
+    - ?Edit current clothes/form/perks via portrait editor?
+  - Dungeon generation settings
+  - Change save (include seed in save for future debugging reference)
+  - Character creation preset saving/loading
+
+
 
