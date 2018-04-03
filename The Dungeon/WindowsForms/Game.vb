@@ -75,7 +75,6 @@ Public Class Game
         AddHandler imagesWorker.DoWork, AddressOf prefetchImages
         imagesWorkerArg = Nothing
         imagesWorker.RunWorkerAsync()
-
         loadPotionList()
         titleList.Add("Warrior")
         titleList.Add("Mage")
@@ -785,12 +784,13 @@ Public Class Game
     End Sub
     'handleKeyPress handles the players pressed keys, and is the driver function for each turn
     Function HandleKeyPress(ByVal Keydata As Keys) As Boolean
+        If picStart.Visible = True Then Return True
         If tmrKeyCD.Enabled Then Return True Else tmrKeyCD.Enabled = True
         If lblEvent.Visible And npcmode = True Then
             oemSemiColon()
             Return True
         End If
-        If pnlDescript.Visible Then pnlDescript.Visible = False
+        If pnlDescript.Visible And Not lblEvent.Visible Then pnlDescript.Visible = False
         If lblEvent.Visible And Not (Keydata.Equals(Keys.Enter) Or Keydata.Equals(Keys.OemSemicolon) Or Keydata.Equals(Keys.E)) Then
             Return True
         End If
@@ -980,7 +980,6 @@ Public Class Game
         If player.pos.Equals(shopkeeper.pos) Then
             npcEncounter(shopkeeper)
         End If
-        If pnlDescript.Visible = True Then pnlDescript.Visible = False
         If lblEvent.Visible = True And npcmode = False Then
             picNPC.Visible = False
             lblEvent.Visible = False
@@ -993,6 +992,9 @@ Public Class Game
             drawBoard()
             If btnEQP.Enabled = False Then btnEQP.Enabled = True
             Throw New Exception
+        End If
+        If pnlDescript.Visible = True Then
+            pnlDescript.Visible = False
         End If
         If btnEQP.Enabled = False Then btnEQP.Enabled = True
         If chestList.Count > 0 Then
@@ -2695,6 +2697,7 @@ Public Class Game
         pushLblCombatEvent("You wait for a bit...")
     End Sub
 
+    'cost display for spells and abilities
     Private Sub cboxMG_SelectedIndexChanged(sender As Object, e As EventArgs) Handles cboxMG.SelectedIndexChanged
 
     End Sub
@@ -2703,5 +2706,43 @@ Public Class Game
     End Sub
     Private Sub cmboxSpec_SelectedIndexChanged(sender As Object, e As EventArgs) Handles cmboxSpec.SelectedIndexChanged
         If Not cmboxSpec.Text.Equals("-- Select --") And Not cmboxSpec.Text = "" Then ttCosts.SetToolTip(Me.cmboxSpec, Specials.SPCCost(cmboxSpec.Text))
+    End Sub
+
+    'btnStettings
+    Private Sub btnSettings_Click_1(sender As Object, e As EventArgs) Handles btnSettings.Click
+
+    End Sub
+
+    Private Sub Game_Resize(sender As Object, e As EventArgs) Handles Me.Resize
+        Dim ratio = Me.Size.Width / 777
+        Dim newFont As Font = New System.Drawing.Font("Consolas", CInt(8 * ratio))
+        For i = 0 To Me.Controls.Count - 1
+            Dim x = Me.Controls(i).Size.Width * ratio
+            Dim y = Me.Controls(i).Size.Height * ratio
+            Me.Controls(i).Size = New Size(x, y)
+            x = Me.Controls(i).Location.X * ratio
+            y = Me.Controls(i).Location.Y * ratio
+            Me.Controls(i).Location = New Point(x, y)
+            Me.Controls(i).Font = newFont
+        Next
+        FileToolStripMenuItem.Font = newFont
+        SaveToolStripMenuItem.Font = newFont
+        LoadToolStripMenuItem.Font = newFont
+        HelpToolStripMenuItem.Font = newFont
+        HelpToolStripMenuItem1.Font = newFont
+        InfoToolStripMenuItem.Font = newFont
+        newFont = New System.Drawing.Font("Consolas", CInt(9.25 * Me.Size.Width / 688), FontStyle.Underline)
+        lblNameTitle.Font = newFont
+        newFont = New System.Drawing.Font("Consolas", CInt(7 * Me.Size.Width / 688))
+        btnDrop.Font = newFont
+        btnLook.Font = newFont
+        newFont = New System.Drawing.Font("Consolas", CInt(9 * Me.Size.Width / 688))
+        MenuStrip1.Font = newFont
+        For i = 0 To pnlCombat.Controls.Count - 1
+            pnlCombat.Controls(i).Font = newFont
+        Next
+        For i = 0 To pnlDescript.Controls.Count - 1
+            pnlDescript.Controls(i).Font = newFont
+        Next
     End Sub
 End Class

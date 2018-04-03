@@ -2013,7 +2013,7 @@ Partial Class Game
         Me.Controls.Add(Me.picPortrait)
         Me.Controls.Add(Me.lblEvent)
         Me.Controls.Add(Me.btnWait)
-        Me.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle
+        Me.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedToolWindow
         Me.Icon = CType(resources.GetObject("$this.Icon"), System.Drawing.Icon)
         Me.MaximizeBox = False
         Me.Name = "Game"

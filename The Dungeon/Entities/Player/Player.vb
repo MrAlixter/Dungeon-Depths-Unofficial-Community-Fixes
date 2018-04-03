@@ -188,13 +188,26 @@
         Game.lstLog.TopIndex = Game.lstLog.Items.Count - 1
     End Sub
     Public Sub takeDMG(ByVal dmg As Integer)
-        'If Form1.combatmode = False Then Exit Sub
-        Dim actualDMG As Integer = dmg - ((getDefence() / 100) * dmg)
-        If actualDMG < 1 Then actualDMG = 1
-        health -= actualDMG
-        Game.lblPHealtDiff.Tag -= actualDMG
-        Game.lstLog.Items.Add(CStr("You got hit! -" & actualDMG & " health!"))
-        Game.pushLblCombatEvent(CStr("You got hit! -" & actualDMG & " health!"))
+        If dmg > 0 Then dmg += Int(Rnd() * 3) + -1
+        If dmg = -2 Then
+            dmg = currTarget.attack * 2
+            Dim actualDMG As Integer = dmg - ((getDefence() / 100) * dmg)
+            health -= actualDMG
+            Game.lblPHealtDiff.Tag -= actualDMG
+            Game.lstLog.Items.Add(CStr("You got hit! Critical hit! -" & actualDMG & " health!"))
+            Game.pushLblCombatEvent(CStr("You got hit! Critical hit! -" & actualDMG & " health!"))
+        ElseIf dmg = -1 Then
+            Game.lblPHealtDiff.Tag -= 0
+            Game.lstLog.Items.Add(CStr("You are able to evade your opponent!"))
+            Game.pushLblCombatEvent(CStr("You are able to evade your opponent!"))
+        Else
+            Dim actualDMG As Integer = dmg - ((getDefence() / 100) * dmg)
+            If actualDMG < 1 Then actualDMG = 1
+            health -= actualDMG
+            Game.lblPHealtDiff.Tag -= actualDMG
+            Game.lstLog.Items.Add(CStr("You got hit! -" & actualDMG & " health!"))
+            Game.pushLblCombatEvent(CStr("You got hit! -" & actualDMG & " health!"))
+        End If
         Game.lstLog.TopIndex = Game.lstLog.Items.Count - 1
     End Sub
 
@@ -1605,10 +1618,26 @@
         'general statement
         out = "You are " & name & ", a " & sex & " " & title & vbCrLf & " " & vbCrLf
 
+        'check for single image forms
+        Select Case title
+            Case "Dragon"
+            Case "Blob"
+            Case "Chicken"
+            Case "Frog"
+            Case "Sheep"
+            Case "Bunny"
+            Case "Magic Girl​"
+                out += "You are currently in the middle of a magical girl transformation!"
+                Return out
+        End Select
+
         'hair
         out += "You have " & getHairColor()
         If haircolor.A = 180 Then
             out += "gelatinous "
+        End If
+        If title.Equals("Blow-Up Doll") Then
+            out += "rubber "
         End If
         If iArrInd(1).Item2 Then
             out += "hair, done in a feminine style." & vbCrLf & " " & vbCrLf
@@ -1618,9 +1647,7 @@
 
         'body
         Select Case title
-            Case "Dragon"
-                out += "You are a large dragon covered in emerald scales." & vbCrLf & " " & vbCrLf
-            Case "Blow-Up-Doll"
+            Case "Blow-Up Doll"
                 out += "You are a inflatable sex doll with " & getSkinColor() & "rubber skin.  "
                 If sexBool Then
                     out += "You have a feminine body, with huge breasts and the matching female genetalia." & vbCrLf & " " & vbCrLf
@@ -1639,6 +1666,8 @@
                 Select Case breastSize
                     Case -1
                         bAdj = "non-existant"
+                    Case 0
+                        bAdj = "small"
                     Case 1
                         bAdj = "medium"
                     Case 2
@@ -1649,6 +1678,10 @@
                         bAdj = "massive"
                     Case 5
                         bAdj = "ridiculous"
+                    Case 6
+                        bAdj = "vast"
+                    Case 7
+                        bAdj = "immense"
                 End Select
                 If sexBool Then
                     If iArrInd(2).Item2 Then

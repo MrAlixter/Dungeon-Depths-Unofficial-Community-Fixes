@@ -300,6 +300,7 @@
             p.speed = 60
             p.mana = 99
             p.maxMana = 99
+            form = "Magic Girl​"
             out = out & "Swinging your wand, you are engulfed in a rain of stars. As the light around your body grows blinding and your clothes disolve into the aether, you become a buxom young woman wearing a skimpy uniform!"
             If p.sex = "Male" Then
                 p.sex = "Female"
@@ -561,6 +562,7 @@
         End If
         Game.cboxMG.Items.Add("Heartblast Starcannon")
         p.inventory.Item(10).addOne()
+        p.title = "Magic Girl"
         Equipment.clothesChange("Magic_Girl_Outfit")
         p.equippedArmor = New MagGirlOutfit
         Game.lstLog.Items.Add("'Heartblast Starcannon' spell learned!")
