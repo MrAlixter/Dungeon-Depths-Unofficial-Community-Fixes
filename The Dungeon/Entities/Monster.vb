@@ -99,7 +99,7 @@
                 attack = 50
                 defence = 15
                 speed = 60
-                setInventory({63})
+                setInventory({63, 64})
             Case Else
                 name = "Some Guy"
                 health = 66
@@ -128,7 +128,29 @@
     End Sub
     Public Overridable Sub attackCMD(ByVal target As Player)
         Game.player.currTarget = Me
-        target.takeDMG(attack)
+        Dim crit = Int(Rnd() * 20)
+        Dim dmg = attack
+        Select Case crit
+            Case 19
+                dmg = -2
+            Case Else
+                If target.getSpeed <= 20 Then
+                    If crit < 1 Then dmg = -1
+                ElseIf target.getSpeed <= 40 Then
+                    If crit < 2 Then dmg = -1
+                ElseIf target.getSpeed <= 60 Then
+                    If crit < 3 Then dmg = -1
+                ElseIf target.getSpeed <= 80 Then
+                    If crit < 4 Then dmg = -1
+                ElseIf target.getSpeed <= 100 Then
+                    If crit < 5 Then dmg = -1
+                Else
+                    Dim ebound = 5 + ((target.getSpeed / 9999) * 5)
+                    If ebound > 12 Then ebound = 12
+                    If crit < ebound Then dmg = -1
+                End If
+        End Select
+        target.takeDMG(dmg)
     End Sub
     Public Sub takeDMG(ByVal dmg As Integer)
         health -= dmg
@@ -185,7 +207,6 @@
             Die()
             Exit Sub
         End If
-        If dead = True Then Exit Sub
         If tfCt > 0 Then
             tfCt += 1
         ElseIf tfCt > tfEnd Then
@@ -313,22 +334,22 @@
         Game.npcList.Remove(Me)
         Game.lstLog.Items.Add("You've deafeated the " & name & "!")
         Game.player.perks("nekocurse") = -1
-        Game.player.currState.save(Game.player)
-        Game.fromCombat()
-        If Game.player.perks("swordpossess") > -1 Then
-            Game.player.perks("swordpossess") += 1
-            If Game.player.perks("swordpossess") = 2 Then
-                Polymorph.transform(Game.player, "targax", 0)
-            ElseIf Game.player.perks("swordpossess") = 4 Then
-                Polymorph.transform(Game.player, "targax", 1)
-            ElseIf Game.player.perks("swordpossess") = 6 And name <> "Targax" Then
-                Polymorph.transform(Game.player, "targax", 2)
+            Game.player.currState.save(Game.player)
+            Game.fromCombat()
+            If Game.player.perks("swordpossess") > -1 Then
+                Game.player.perks("swordpossess") += 1
+                If Game.player.perks("swordpossess") = 2 Then
+                    Polymorph.transform(Game.player, "targax", 0)
+                ElseIf Game.player.perks("swordpossess") = 4 Then
+                    Polymorph.transform(Game.player, "targax", 1)
+                ElseIf Game.player.perks("swordpossess") = 6 And name <> "Targax" Then
+                    Polymorph.transform(Game.player, "targax", 2)
+                End If
             End If
-        End If
 
-        dead = True
-        endBoss()
-        Game.lstLog.TopIndex = Game.lstLog.Items.Count - 1
+            dead = True
+            endBoss()
+            Game.lstLog.TopIndex = Game.lstLog.Items.Count - 1
     End Sub
     Public Function getName() As String
         If form = "" Then

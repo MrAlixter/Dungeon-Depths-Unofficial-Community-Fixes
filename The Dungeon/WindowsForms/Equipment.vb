@@ -309,8 +309,9 @@
         ElseIf p.equippedArmor.getName = "Common_Clothes" Then
             Select Case p.breastSize
                 Case -1
-                    
                         p.iArrInd(3) = New Tuple(Of Integer, Boolean)(p.sState.iArrInd(3).Item1, p.iArrInd(2).Item2)
+                Case 0
+                    p.iArrInd(3) = New Tuple(Of Integer, Boolean)(p.sState.iArrInd(3).Item1, p.iArrInd(2).Item2)
                 Case 1
                     p.iArrInd(3) = New Tuple(Of Integer, Boolean)(p.sState.iArrInd(3).Item1, p.iArrInd(2).Item2)
                 Case 2
@@ -334,6 +335,8 @@
         Else
             Select Case p.breastSize
                 Case -1
+                    p.iArrInd(3) = p.equippedArmor.bsizeneg1
+                Case 0
                     p.iArrInd(3) = p.equippedArmor.bsizeneg1
                 Case 1
                     p.iArrInd(3) = p.equippedArmor.bsize1
@@ -361,6 +364,8 @@
                 Select Case p.breastSize
                     Case -1
                         p.iArrInd(2) = New Tuple(Of Integer, Boolean)(0, False)
+                    Case 0
+                        p.iArrInd(2) = New Tuple(Of Integer, Boolean)(2, False)
                     Case 1
                         p.iArrInd(2) = New Tuple(Of Integer, Boolean)(5, True)
                     Case 2
@@ -371,6 +376,10 @@
                         p.iArrInd(2) = New Tuple(Of Integer, Boolean)(8, True)
                     Case 5
                         p.iArrInd(2) = New Tuple(Of Integer, Boolean)(9, True)
+                    Case 6
+                        p.iArrInd(2) = New Tuple(Of Integer, Boolean)(18, True)
+                    Case 7
+                        p.iArrInd(2) = New Tuple(Of Integer, Boolean)(20, True)
                 End Select
             End If
         ElseIf p.equippedArmor.getName.Equals("Naked") Then
@@ -378,6 +387,8 @@
                 Select Case p.breastSize
                     Case -1
                         p.iArrInd(2) = New Tuple(Of Integer, Boolean)(0, False)
+                    Case 0
+                        p.iArrInd(2) = New Tuple(Of Integer, Boolean)(2, False)
                     Case 1
                         p.iArrInd(2) = New Tuple(Of Integer, Boolean)(0, True)
                     Case 2
@@ -388,6 +399,10 @@
                         p.iArrInd(2) = New Tuple(Of Integer, Boolean)(3, True)
                     Case 5
                         p.iArrInd(2) = New Tuple(Of Integer, Boolean)(4, True)
+                    Case 6
+                        p.iArrInd(2) = New Tuple(Of Integer, Boolean)(17, True)
+                    Case 7
+                        p.iArrInd(2) = New Tuple(Of Integer, Boolean)(19, True)
                 End Select
             End If
         End If

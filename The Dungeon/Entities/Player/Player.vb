@@ -188,13 +188,26 @@
         Game.lstLog.TopIndex = Game.lstLog.Items.Count - 1
     End Sub
     Public Sub takeDMG(ByVal dmg As Integer)
-        'If Form1.combatmode = False Then Exit Sub
-        Dim actualDMG As Integer = dmg - ((getDefence() / 100) * dmg)
-        If actualDMG < 1 Then actualDMG = 1
-        health -= actualDMG
-        Game.lblPHealtDiff.Tag -= actualDMG
-        Game.lstLog.Items.Add(CStr("You got hit! -" & actualDMG & " health!"))
-        Game.pushLblCombatEvent(CStr("You got hit! -" & actualDMG & " health!"))
+        If dmg > 0 Then dmg += Int(Rnd() * 3) + -1
+        If dmg = -2 Then
+            dmg = currTarget.attack * 2
+            Dim actualDMG As Integer = dmg - ((getDefence() / 100) * dmg)
+            health -= actualDMG
+            Game.lblPHealtDiff.Tag -= actualDMG
+            Game.lstLog.Items.Add(CStr("You got hit! Critical hit! -" & actualDMG & " health!"))
+            Game.pushLblCombatEvent(CStr("You got hit! Critical hit! -" & actualDMG & " health!"))
+        ElseIf dmg = -1 Then
+            Game.lblPHealtDiff.Tag -= 0
+            Game.lstLog.Items.Add(CStr("You are able to evade your opponent!"))
+            Game.pushLblCombatEvent(CStr("You are able to evade your opponent!"))
+        Else
+            Dim actualDMG As Integer = dmg - ((getDefence() / 100) * dmg)
+            If actualDMG < 1 Then actualDMG = 1
+            health -= actualDMG
+            Game.lblPHealtDiff.Tag -= actualDMG
+            Game.lstLog.Items.Add(CStr("You got hit! -" & actualDMG & " health!"))
+            Game.pushLblCombatEvent(CStr("You got hit! -" & actualDMG & " health!"))
+        End If
         Game.lstLog.TopIndex = Game.lstLog.Items.Count - 1
     End Sub
 
@@ -594,6 +607,7 @@
         inventory.Add(New HyperHealPotion()) '61
         inventory.Add(New HyperManaPotion()) '62
         inventory.Add(New SpidersilkWhip()) '63
+        inventory.Add(New ChitArmor()) '64
 
         For i = 0 To inventory.Count - 1
             If inventory(i).GetType().IsSubclassOf(GetType(MysteryPotion)) Then
@@ -609,7 +623,7 @@
                  inventory(12), inventory(16), inventory(17), inventory(18),
                  inventory(19), inventory(20), inventory(38), inventory(39),
                  inventory(46), inventory(47), inventory(54), inventory(55),
-                 inventory(56)}
+                 inventory(56), inventory(64)}
 
         weapons = {New BareFists(),
                    inventory(6), inventory(9), inventory(11), inventory(21),
@@ -1024,12 +1038,13 @@
             Game.lstLog.Items.Add("Your form prevents you from being altered.")
             Exit Sub
         End If
-        If breastSize = -1 Then breastSize = 0
-        If breastSize >= 0 And breastSize < 6 Then
+        If breastSize >= -1 And breastSize < 8 Then
             breastSize += 1
             Select Case breastSize
                 Case -1
                     iArrInd(2) = New Tuple(Of Integer, Boolean)(0, False)
+                Case 0
+                    iArrInd(2) = New Tuple(Of Integer, Boolean)(2, False)
                 Case 1
                     iArrInd(2) = New Tuple(Of Integer, Boolean)(0, True)
                 Case 2
@@ -1040,6 +1055,10 @@
                     iArrInd(2) = New Tuple(Of Integer, Boolean)(3, True)
                 Case 5
                     iArrInd(2) = New Tuple(Of Integer, Boolean)(4, True)
+                Case 6
+                    iArrInd(2) = New Tuple(Of Integer, Boolean)(17, True)
+                Case 7
+                    iArrInd(2) = New Tuple(Of Integer, Boolean)(19, True)
             End Select
             Game.lstLog.Items.Add("+ 1 cup size!")
             If iArrInd(3).Item2 = False Then iArrInd(3) = New Tuple(Of Integer, Boolean)(iArrInd(3).Item1, True)
@@ -1052,13 +1071,13 @@
             Game.lstLog.Items.Add("Your form prevents you from being altered.")
             Exit Sub
         End If
-        'If breastSize = -1 Then breastSize = 0
         If breastSize > -1 And breastSize <= 6 Then
             breastSize -= 1
-            If breastSize = 0 Then breastSize = -1
             Select Case breastSize
                 Case -1
                     iArrInd(2) = New Tuple(Of Integer, Boolean)(0, False)
+                Case 0
+                    iArrInd(2) = New Tuple(Of Integer, Boolean)(2, False)
                 Case 1
                     iArrInd(2) = New Tuple(Of Integer, Boolean)(0, True)
                 Case 2
@@ -1069,6 +1088,10 @@
                     iArrInd(2) = New Tuple(Of Integer, Boolean)(3, True)
                 Case 5
                     iArrInd(2) = New Tuple(Of Integer, Boolean)(4, True)
+                Case 6
+                    iArrInd(2) = New Tuple(Of Integer, Boolean)(17, True)
+                Case 7
+                    iArrInd(2) = New Tuple(Of Integer, Boolean)(19, True)
             End Select
             Game.lstLog.Items.Add("- 1 cup size!")
             If iArrInd(3).Item2 = False Then iArrInd(3) = New Tuple(Of Integer, Boolean)(iArrInd(3).Item1, True)
@@ -1081,12 +1104,18 @@
             breastSize = 1
         ElseIf iArrInd(2).Item1 = 1 Or iArrInd(2).Item1 = 6 And breastSize <> 2 Then
             breastSize = 2
-        ElseIf (iArrInd(2).Item1 = 2 Or iArr(2).Equals(CharacterGenerator.fTFBody(10)) Or iArr(2).Equals(Game.picFMarkBody.BackgroundImage)) Or iArrInd(2).Item1 = 7 And breastSize <> 3 Then
+        ElseIf ((iArrInd(2).Item1 = 2 And iArrInd(2).Item2) Or iArr(2).Equals(CharacterGenerator.fTFBody(10)) Or iArr(2).Equals(Game.picFMarkBody.BackgroundImage)) Or iArrInd(2).Item1 = 7 And breastSize <> 3 Then
             breastSize = 3
         ElseIf iArrInd(2).Item1 = 3 Or iArrInd(2).Item1 = 8 And breastSize <> 4 Then
             breastSize = 4
         ElseIf iArrInd(2).Item1 = 4 Or iArrInd(2).Item1 = 9 And breastSize <> 5 Then
             breastSize = 5
+        ElseIf iArrInd(2).Item1 = 17 Or iArrInd(2).Item1 = 18 And breastSize <> 6 Then
+            breastSize = 6
+        ElseIf iArrInd(2).Item1 = 19 Or iArrInd(2).Item1 = 20 And breastSize <> 7 Then
+            breastSize = 7
+        ElseIf iArrInd(2).Item1 = 2 And Not iArrInd(2).Item2 And breastSize <> 0 Then
+            breastSize = 0
         ElseIf iArrInd(2).Item1 = 0 And Not iArrInd(2).Item2 And breastSize <> -1 Then
             breastSize = -1
         End If
@@ -1589,10 +1618,26 @@
         'general statement
         out = "You are " & name & ", a " & sex & " " & title & vbCrLf & " " & vbCrLf
 
+        'check for single image forms
+        Select Case title
+            Case "Dragon"
+            Case "Blob"
+            Case "Chicken"
+            Case "Frog"
+            Case "Sheep"
+            Case "Bunny"
+            Case "Magic Girl​"
+                out += "You are currently in the middle of a magical girl transformation!"
+                Return out
+        End Select
+
         'hair
         out += "You have " & getHairColor()
         If haircolor.A = 180 Then
             out += "gelatinous "
+        End If
+        If title.Equals("Blow-Up Doll") Then
+            out += "rubber "
         End If
         If iArrInd(1).Item2 Then
             out += "hair, done in a feminine style." & vbCrLf & " " & vbCrLf
@@ -1602,9 +1647,7 @@
 
         'body
         Select Case title
-            Case "Dragon"
-                out += "You are a large dragon covered in emerald scales." & vbCrLf & " " & vbCrLf
-            Case "Blow-Up-Doll"
+            Case "Blow-Up Doll"
                 out += "You are a inflatable sex doll with " & getSkinColor() & "rubber skin.  "
                 If sexBool Then
                     out += "You have a feminine body, with huge breasts and the matching female genetalia." & vbCrLf & " " & vbCrLf
@@ -1623,6 +1666,8 @@
                 Select Case breastSize
                     Case -1
                         bAdj = "non-existant"
+                    Case 0
+                        bAdj = "small"
                     Case 1
                         bAdj = "medium"
                     Case 2
@@ -1633,6 +1678,10 @@
                         bAdj = "massive"
                     Case 5
                         bAdj = "ridiculous"
+                    Case 6
+                        bAdj = "vast"
+                    Case 7
+                        bAdj = "immense"
                 End Select
                 If sexBool Then
                     If iArrInd(2).Item2 Then
@@ -1640,6 +1689,8 @@
                     Else
                         out += "You have a a masculine body, with " & bAdj & " breasts, though you have female genetalia." & vbCrLf & " " & vbCrLf
                     End If
+
+                    out += "Your hips have womanly curves without being overly wide.  Overall, you have typical legs and feet for a humanoid woman."
                 Else
                     If iArrInd(2).Item2 Then
                         out += "You have a feminine body, with " & bAdj & " breasts, though you have male genetalia." & vbCrLf & " " & vbCrLf
@@ -1651,7 +1702,7 @@
 
         'perks
         If perks("hunger") > -1 Then out += "You haven't eaten anything in a while and are starving." & vbCrLf & " " & vbCrLf
-        If perks("slutcurse") > -1 Then out += "You choose to dress very provokatively, showing as much skin as possible due to a curse."
+        If perks("slutcurse") > -1 Then out += "You choose to dress very provocatively, showing as much skin as possible due to a curse."
         If perks("polymorphed") > -1 Then out += "You are under the effects of a temporary polymorph, and will be for " & perks("polymorphed") & " more turns." & vbCrLf & " " & vbCrLf
         Return out
     End Function

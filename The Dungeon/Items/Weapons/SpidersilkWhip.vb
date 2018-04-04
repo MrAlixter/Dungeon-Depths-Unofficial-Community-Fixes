@@ -5,8 +5,6 @@
         MyBase.setName("Spidersilk_Whip")
         MyBase.setDesc("A white silk whip that critically hits more often than a standard sword." & vbCrLf & _
                        "+25 ATK")
-        id = Nothing
-        tier = Nothing
         MyBase.setUsable(False)
         MyBase.aBoost = 25
         id = 63

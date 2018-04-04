@@ -101,6 +101,7 @@
     <Import Include="System.Threading.Tasks" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Items\Armor\ChitArmor.vb" />
     <Compile Include="Items\Usable\Potions\Mystery Potions\BSPotion.vb" />
     <Compile Include="Items\Usable\Potions\Mystery Potions\HyperManaPotion.vb" />
     <Compile Include="Items\Weapons\SpidersilkWhip.vb" />
@@ -250,6 +251,12 @@
       <SubType>Form</SubType>
     </Compile>
     <Compile Include="PriorityQue\Segment.vb" />
+    <Compile Include="WindowsForms\Settings.Designer.vb">
+      <DependentUpon>Settings.vb</DependentUpon>
+    </Compile>
+    <Compile Include="WindowsForms\Settings.vb">
+      <SubType>Form</SubType>
+    </Compile>
     <Compile Include="WindowsForms\Shop.Designer.vb">
       <DependentUpon>Shop.vb</DependentUpon>
     </Compile>
@@ -327,6 +334,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="WindowsForms\SCPicker.resx">
       <DependentUpon>SCPicker.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="WindowsForms\Settings.resx">
+      <DependentUpon>Settings.vb</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="WindowsForms\Shop.resx">
       <DependentUpon>Shop.vb</DependentUpon>

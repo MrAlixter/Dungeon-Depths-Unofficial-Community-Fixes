@@ -10,6 +10,10 @@
         MyBase.count = 0
         MyBase.value = 100
     End Sub
+    Overrides Sub use()
+        Game.player.gold += MyBase.count
+        MyBase.count = 0
+    End Sub
     Public Overrides Sub add(i As Integer)
         Game.player.gold += i
     End Sub

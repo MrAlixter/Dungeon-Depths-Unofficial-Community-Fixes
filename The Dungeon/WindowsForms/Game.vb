@@ -75,7 +75,6 @@ Public Class Game
         AddHandler imagesWorker.DoWork, AddressOf prefetchImages
         imagesWorkerArg = Nothing
         imagesWorker.RunWorkerAsync()
-
         loadPotionList()
         titleList.Add("Warrior")
         titleList.Add("Mage")
@@ -135,7 +134,10 @@ Public Class Game
         Next
         'creates the shopkeeper
         shopkeeper = New NPC(2)
-
+        pnlCombat.Location = New Point(115, pnlCombat.Location.Y)
+        pnlDescript.Location = New Point(115, pnlDescript.Location.Y)
+        pnlSaveLoad.Location = New Point(188, pnlSaveLoad.Location.Y)
+        picStart.Location = New Point(2, picStart.Location.Y)
         If Not System.IO.File.Exists("dis.cla") Then
             If MessageBox.Show("This game features adult content sexual in nature, and is not for anyone under the age of 18 or otherwise of legal age in their country. By clicking 'Yes' below, you confirm that you are legally an adult in your country.", "Obligatory Disclaimer", MessageBoxButtons.YesNo) = Windows.Forms.DialogResult.Yes Then
                 System.IO.File.CreateText("dis.cla")
@@ -518,6 +520,7 @@ Public Class Game
         mBoard(stairsY, stairsX).Text = "H"
     End Sub
     Sub placeChest(ByVal code As String)
+        Rnd(-1)
         Randomize(code.GetHashCode)
         Dim numChests As Integer = CInt(Int(Rnd() * 8) + 3) * Int(mBoardWidth / 30)
         Dim r As Integer
@@ -536,7 +539,7 @@ Public Class Game
             If r = i Then chest.add(53, 1)
             chestList.Add(chest)
             mBoard(chestY, chestX).ForeColor = Color.FromArgb(45, 45, 45)
-            mBoard(chestY, chestX).Text = "#"
+            'mBoard(chestY, chestX).Text = "#"
         Next
     End Sub
     Sub placeTraps()
@@ -668,6 +671,8 @@ Public Class Game
         '6 = shopkeeper
         '7 = statue
         '8 = trap
+        '9 = locked stairs
+        '10 = boss stairs
         Dim viewArray(15, 23) As Integer
         Dim x As Integer = 0
         Dim y As Integer = 0
@@ -678,7 +683,15 @@ Public Class Game
                     viewArray(y, x) = mBoard(player.pos.Y + indY, player.pos.X + indX).Tag
                     If mBoard(player.pos.Y + indY, player.pos.X + indX).Tag = 2 Then
                         If mBoard(player.pos.Y + indY, player.pos.X + indX).Text = "" Then viewArray(y, x) = 2
-                        If mBoard(player.pos.Y + indY, player.pos.X + indX).Text = "H" Then viewArray(y, x) = 3
+                        If mBoard(player.pos.Y + indY, player.pos.X + indX).Text = "H" Then
+                            If beatboss(floor) Then
+                                viewArray(y, x) = 3
+                            ElseIf floorboss(floor).Equals("Key") Then
+                                viewArray(y, x) = 9
+                            Else
+                                viewArray(y, x) = 10
+                            End If
+                        End If
                         If mBoard(player.pos.Y + indY, player.pos.X + indX).Text = "#" Then viewArray(y, x) = 5
                         If mBoard(player.pos.Y + indY, player.pos.X + indX).Text = "$" Then viewArray(y, x) = 6
                         If mBoard(player.pos.Y + indY, player.pos.X + indX).Text = "+" Then viewArray(y, x) = 8
@@ -711,6 +724,10 @@ Public Class Game
                             mPics(y, x).BackgroundImage = picStatue.BackgroundImage
                         Case 8
                             mPics(y, x).BackgroundImage = picTrap.BackgroundImage
+                        Case 9
+                            mPics(y, x).BackgroundImage = picStairsLock.BackgroundImage
+                        Case 10
+                            mPics(y, x).BackgroundImage = picStairsBoss.BackgroundImage
                     End Select
                 Else
                     Select Case viewArray(y, x)
@@ -747,7 +764,7 @@ Public Class Game
         If floor = 5 Then Exit Sub
         Randomize()
         If eClock > 0 Then eClock -= 1
-        If combatmode = True Or npcmode = True Or eClock <> 0 Then Exit Sub
+        If combatmode = True Or npcmode = True Or eClock <> 0 Or Not player.canMoveFlag Then Exit Sub
         Dim rand As Integer = CInt(Int(Rnd() * 200))
         Dim currTier As Integer() = monsterTier1
         Select Case floor
@@ -781,12 +798,13 @@ Public Class Game
     End Sub
     'handleKeyPress handles the players pressed keys, and is the driver function for each turn
     Function HandleKeyPress(ByVal Keydata As Keys) As Boolean
+        If picStart.Visible = True Then Return True
         If tmrKeyCD.Enabled Then Return True Else tmrKeyCD.Enabled = True
         If lblEvent.Visible And npcmode = True Then
             oemSemiColon()
             Return True
         End If
-        If pnlDescript.Visible Then pnlDescript.Visible = False
+        If pnlDescript.Visible And Not lblEvent.Visible Then pnlDescript.Visible = False
         If lblEvent.Visible And Not (Keydata.Equals(Keys.Enter) Or Keydata.Equals(Keys.OemSemicolon) Or Keydata.Equals(Keys.E)) Then
             Return True
         End If
@@ -976,7 +994,6 @@ Public Class Game
         If player.pos.Equals(shopkeeper.pos) Then
             npcEncounter(shopkeeper)
         End If
-        If pnlDescript.Visible = True Then pnlDescript.Visible = False
         If lblEvent.Visible = True And npcmode = False Then
             picNPC.Visible = False
             lblEvent.Visible = False
@@ -990,6 +1007,9 @@ Public Class Game
             If btnEQP.Enabled = False Then btnEQP.Enabled = True
             Throw New Exception
         End If
+        If pnlDescript.Visible = True Then
+            pnlDescript.Visible = False
+        End If
         If btnEQP.Enabled = False Then btnEQP.Enabled = True
         If chestList.Count > 0 Then
             For i = 0 To chestList.Count - 1
@@ -1001,9 +1021,12 @@ Public Class Game
             Next
         End If
         If floor < 5 Then
+            If floorboss(floor).Equals("Key") And player.inventory(53).count > 0 Then beatboss(floor) = True
             If player.pos = stairs And beatboss(floor) Then
                 If floor < 5 Then
                     If floorboss(floor).Equals("Key") Then player.inventory(53).add(-1)
+                    player.invNeedsUDate = True
+                    player.UIupdate()
                     initializeBoard()
                     If combatmode Then fromCombat()
                 Else
@@ -1178,8 +1201,11 @@ Public Class Game
         zoom()
 
         stairs = New Point(reader.ReadLine(), reader.ReadLine())
+        Dim uOchests As ArrayList = New ArrayList()
         For i = 0 To CInt(reader.ReadLine())
-            chestList.Add(baseChest.Create(reader.ReadLine()))
+            Dim newChest = baseChest.Create(reader.ReadLine())
+            chestList.Add(newChest)
+            uOchests.Add(newChest.pos)
         Next
 
         For i = 0 To CInt(reader.ReadLine())
@@ -1227,6 +1253,21 @@ Public Class Game
         For i = 0 To CInt(reader.ReadLine())
             floorLayouts.Add(reader.ReadLine())
         Next
+        chestList.Clear()
+        placeChest(floorLayouts(floor))
+        Dim tCL As ArrayList = New ArrayList()
+        For i = 0 To uOchests.Count - 1
+            For j = 0 To chestList.Count - 1
+                If chestList(j).pos.x.Equals(uOchests(i).x) And chestList(j).pos.y.Equals(uOchests(i).y) Then
+                    tCL.Add(chestList(j))
+                    Exit For
+                End If
+            Next
+        Next
+        chestList.Clear()
+        chestList = tCL.Clone()
+
+        If chestList.Count = 0 And uOchests.Count <> 0 Then placeChest(floorLayouts(floor))
         combatmode = False
 
         Equipment.init()
@@ -1745,6 +1786,7 @@ Public Class Game
             player.revert2()
         End If
         npcList.Clear()
+        ttCosts.RemoveAll()
     End Sub
     'the NPC versions of from and to combat
     Sub NPCtoCombat(ByRef m As Monster)
@@ -2000,8 +2042,12 @@ Public Class Game
             End If
         Next
         Specials.goSpecial(m, player, cmboxSpec.Text)
-        cmboxSpec.Visible = False
-        btnSpec.Visible = False
+        If Specials.SPCCost(cmboxSpec.Text).Equals("Useable only once per combat.") Then cmboxSpec.Items.Remove(cmboxSpec.Text)
+        If cmboxSpec.Items.Count = 0 Then
+            cmboxSpec.Visible = False
+            btnSpec.Visible = False
+        End If
+        cmboxSpec.Text = "-- Select --"
         If npcList.Count > 0 Then
             For i = 0 To npcList.Count - 1
                 Dim int1 As Integer = 100 - npcList.Item(i).speed
@@ -2018,6 +2064,7 @@ Public Class Game
         Loop
         'updates the combat banner
         updatePnlCombat(player, player.currTarget)
+        ttCosts.RemoveAll()
     End Sub
     Private Sub btnRUN_Click(sender As Object, e As EventArgs) Handles btnRUN.Click
         If lblEvent.Visible = True Then
@@ -2060,6 +2107,7 @@ Public Class Game
         Loop
         'updates the combat banner
         updatePnlCombat(player, player.currTarget)
+        ttCosts.RemoveAll()
     End Sub
     Private Sub btnEQP_Click(sender As Object, e As EventArgs) Handles btnEQP.Click
         Dim f3 As Equipment = New Equipment()
@@ -2661,5 +2709,54 @@ Public Class Game
         updatelist.add(player, int)
         drawBoard()
         pushLblCombatEvent("You wait for a bit...")
+    End Sub
+
+    'cost display for spells and abilities
+    Private Sub cboxMG_SelectedIndexChanged(sender As Object, e As EventArgs) Handles cboxMG.SelectedIndexChanged
+
+    End Sub
+    Private Sub cboxNPCMG_SelectedIndexChanged(sender As Object, e As EventArgs) Handles cboxNPCMG.SelectedIndexChanged
+
+    End Sub
+    Private Sub cmboxSpec_SelectedIndexChanged(sender As Object, e As EventArgs) Handles cmboxSpec.SelectedIndexChanged
+        If Not cmboxSpec.Text.Equals("-- Select --") And Not cmboxSpec.Text = "" Then ttCosts.SetToolTip(Me.cmboxSpec, Specials.SPCCost(cmboxSpec.Text))
+    End Sub
+
+    'btnStettings
+    Private Sub btnSettings_Click_1(sender As Object, e As EventArgs) Handles btnSettings.Click
+
+    End Sub
+
+    Private Sub Game_Resize(sender As Object, e As EventArgs) Handles Me.Resize
+        Dim ratio = Me.Size.Width / 777
+        Dim newFont As Font = New System.Drawing.Font("Consolas", CInt(8 * ratio))
+        For i = 0 To Me.Controls.Count - 1
+            Dim x = Me.Controls(i).Size.Width * ratio
+            Dim y = Me.Controls(i).Size.Height * ratio
+            Me.Controls(i).Size = New Size(x, y)
+            x = Me.Controls(i).Location.X * ratio
+            y = Me.Controls(i).Location.Y * ratio
+            Me.Controls(i).Location = New Point(x, y)
+            Me.Controls(i).Font = newFont
+        Next
+        FileToolStripMenuItem.Font = newFont
+        SaveToolStripMenuItem.Font = newFont
+        LoadToolStripMenuItem.Font = newFont
+        HelpToolStripMenuItem.Font = newFont
+        HelpToolStripMenuItem1.Font = newFont
+        InfoToolStripMenuItem.Font = newFont
+        newFont = New System.Drawing.Font("Consolas", CInt(9.25 * Me.Size.Width / 688), FontStyle.Underline)
+        lblNameTitle.Font = newFont
+        newFont = New System.Drawing.Font("Consolas", CInt(7 * Me.Size.Width / 688))
+        btnDrop.Font = newFont
+        btnLook.Font = newFont
+        newFont = New System.Drawing.Font("Consolas", CInt(9 * Me.Size.Width / 688))
+        MenuStrip1.Font = newFont
+        For i = 0 To pnlCombat.Controls.Count - 1
+            pnlCombat.Controls(i).Font = newFont
+        Next
+        For i = 0 To pnlDescript.Controls.Count - 1
+            pnlDescript.Controls(i).Font = newFont
+        Next
     End Sub
 End Class
