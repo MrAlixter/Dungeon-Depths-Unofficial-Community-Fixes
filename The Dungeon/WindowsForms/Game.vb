@@ -1,6 +1,7 @@
 ﻿Imports System.ComponentModel
 Imports System.IO
 Imports System.Threading
+Imports DDTooltip
 
 Public Class Game
     'Form1 is the main driver form that runs the game
@@ -65,6 +66,10 @@ Public Class Game
     Dim imagesWorkerArg = Nothing
     Dim savePicsReady As Boolean = False
     Dim boardReady As Boolean = False
+
+    Dim tooltip As Panel
+    Dim tooltipFollowThread As Thread
+    Private Delegate Sub delegateExecute()
 
     Dim healthCol As Bitmap = Nothing
 
@@ -143,7 +148,6 @@ Public Class Game
                 Me.Close()
             End If
         End If
-
     End Sub
     Sub loadPotionList()
         Randomize()
@@ -2633,6 +2637,87 @@ Public Class Game
 
     Private Sub btnSettings_Click(sender As Object, e As EventArgs)
         MsgBox("This will be where the settings are changed eventually")
+    End Sub
+
+    Private Sub statEnter(sender As Object, e As EventArgs) Handles lblATK.MouseEnter, lblDEF.MouseEnter, lblHealth.MouseEnter, lblEVD.MouseEnter, lblHunger.MouseEnter, lblMana.MouseEnter, lblSKL.MouseEnter, lblSPD.MouseEnter, lblGold.MouseEnter
+        If tooltip Is Nothing Then
+            tooltip = New Panel()
+            Me.Controls.Add(tooltip)
+            tooltip.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle
+            tooltip.Name = "tooltip"
+            tooltip.Size = New System.Drawing.Size(200, 50)
+            tooltip.Visible = True
+            tooltip.BackColor = Color.Black
+            tooltip.ForeColor = Color.White
+        End If
+        tooltip.Enabled = True
+        tooltip.Visible = True
+        tooltip.BringToFront()
+
+        tooltipFollowThread = New Thread(AddressOf tooltipFollow)
+        tooltipFollowThread.Start()
+
+        If tooltip.Controls.Count > 0 Then
+            For i As Integer = 0 To tooltip.Controls.Count - 1
+                Dim c As Control = tooltip.Controls(i)
+                If c.GetType() Is GetType(Label) Then
+                    tooltipText(sender, tooltip, c)
+                End If
+            Next
+        Else
+            Dim text As Label = New Label()
+            tooltip.Controls.Add(text)
+            tooltipText(sender, tooltip, text)
+            text.ForeColor = Color.White
+            text.Font = New Font("Consolas", 12)
+            text.AutoSize = False
+        End If
+
+        tooltipRelocate()
+    End Sub
+
+    Private Sub tooltipText(sender As Label, tooltip As Panel, toSet As Label)
+        If sender.Name = "lblATK" Then
+            toSet.Text = "ATK is physical damage" + vbCrLf + "dmg = weaponATK + pATK - " + vbCrLf + "  (eDEF * pATK / 100) + " + vbCrLf + "  (12 + pATK + weaponBonus) * 2"
+        Else
+            toSet.Text = "THIS LABEL HAS NOT YET BEEN HANDLED"
+        End If
+        tooltip.Size = TextRenderer.MeasureText(toSet.Text, toSet.Font)
+        toSet.Size = tooltip.Size
+    End Sub
+
+    Private Sub statLeave(sender As Object, e As EventArgs) Handles lblATK.MouseLeave, lblDEF.MouseLeave, lblHealth.MouseLeave, lblEVD.MouseLeave, lblHunger.MouseLeave, lblMana.MouseLeave, lblSKL.MouseLeave, lblSPD.MouseLeave, lblGold.MouseLeave
+        If tooltip IsNot Nothing Then
+            tooltip.Visible = False
+            tooltip.Enabled = False
+        End If
+    End Sub
+
+    Private Sub tooltipFollow()
+        Dim mouseLast As Point = Cursor.Position
+        While tooltip IsNot Nothing And tooltip.Enabled And tooltip.Disposing = False
+            If mouseLast <> Cursor.Position Then
+                tooltipPositionChange()
+                mouseLast = Cursor.Position
+            End If
+        End While
+    End Sub
+
+    Private Sub tooltipPositionChange()
+        If tooltip IsNot Nothing And tooltip.Enabled And tooltip.Disposing = False Then
+            If tooltip.InvokeRequired() Then
+                tooltip.Invoke(New delegateExecute(AddressOf tooltipPositionChange))
+            Else
+                tooltipRelocate()
+            End If
+        End If
+    End Sub
+
+    Private Sub tooltipRelocate()
+        tooltip.Location = PointToClient(Cursor.Position) + New Point(5, 5)
+        If tooltip.Location.X + tooltip.Width > Me.Width Then
+            tooltip.Location = New Point(Me.Width - tooltip.Width, tooltip.Location.Y) - New Point(5, 0)
+        End If
     End Sub
 
     Private Sub btnWait_Click(sender As Object, e As EventArgs) Handles btnWait.Click
