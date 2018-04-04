@@ -3,7 +3,7 @@
 
     Sub New()
         MyBase.setName("Key")
-        MyBase.setDesc("TFng")
+        MyBase.setDesc("A key to open a lock.")
         id = 53
         tier = Nothing
         MyBase.setUsable(False)
@@ -14,6 +14,6 @@
         If i > 0 And Game.floor < 6 AndAlso Game.floorboss(Game.floor).Equals("Key") Then
             Game.beatboss(Game.floor) = True
         End If
-        count += 1
+        count += i
     End Sub
 End Class

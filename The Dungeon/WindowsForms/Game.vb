@@ -671,6 +671,8 @@ Public Class Game
         '6 = shopkeeper
         '7 = statue
         '8 = trap
+        '9 = locked stairs
+        '10 = boss stairs
         Dim viewArray(15, 23) As Integer
         Dim x As Integer = 0
         Dim y As Integer = 0
@@ -681,7 +683,15 @@ Public Class Game
                     viewArray(y, x) = mBoard(player.pos.Y + indY, player.pos.X + indX).Tag
                     If mBoard(player.pos.Y + indY, player.pos.X + indX).Tag = 2 Then
                         If mBoard(player.pos.Y + indY, player.pos.X + indX).Text = "" Then viewArray(y, x) = 2
-                        If mBoard(player.pos.Y + indY, player.pos.X + indX).Text = "H" Then viewArray(y, x) = 3
+                        If mBoard(player.pos.Y + indY, player.pos.X + indX).Text = "H" Then
+                            If beatboss(floor) Then
+                                viewArray(y, x) = 3
+                            ElseIf floorboss(floor).Equals("Key") Then
+                                viewArray(y, x) = 9
+                            Else
+                                viewArray(y, x) = 10
+                            End If
+                        End If
                         If mBoard(player.pos.Y + indY, player.pos.X + indX).Text = "#" Then viewArray(y, x) = 5
                         If mBoard(player.pos.Y + indY, player.pos.X + indX).Text = "$" Then viewArray(y, x) = 6
                         If mBoard(player.pos.Y + indY, player.pos.X + indX).Text = "+" Then viewArray(y, x) = 8
@@ -714,6 +724,10 @@ Public Class Game
                             mPics(y, x).BackgroundImage = picStatue.BackgroundImage
                         Case 8
                             mPics(y, x).BackgroundImage = picTrap.BackgroundImage
+                        Case 9
+                            mPics(y, x).BackgroundImage = picStairsLock.BackgroundImage
+                        Case 10
+                            mPics(y, x).BackgroundImage = picStairsBoss.BackgroundImage
                     End Select
                 Else
                     Select Case viewArray(y, x)

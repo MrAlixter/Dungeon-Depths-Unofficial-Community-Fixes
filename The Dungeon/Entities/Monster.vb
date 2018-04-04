@@ -334,22 +334,22 @@
         Game.npcList.Remove(Me)
         Game.lstLog.Items.Add("You've deafeated the " & name & "!")
         Game.player.perks("nekocurse") = -1
-        Game.player.currState.save(Game.player)
-        Game.fromCombat()
-        If Game.player.perks("swordpossess") > -1 Then
-            Game.player.perks("swordpossess") += 1
-            If Game.player.perks("swordpossess") = 2 Then
-                Polymorph.transform(Game.player, "targax", 0)
-            ElseIf Game.player.perks("swordpossess") = 4 Then
-                Polymorph.transform(Game.player, "targax", 1)
-            ElseIf Game.player.perks("swordpossess") = 6 And name <> "Targax" Then
-                Polymorph.transform(Game.player, "targax", 2)
+            Game.player.currState.save(Game.player)
+            Game.fromCombat()
+            If Game.player.perks("swordpossess") > -1 Then
+                Game.player.perks("swordpossess") += 1
+                If Game.player.perks("swordpossess") = 2 Then
+                    Polymorph.transform(Game.player, "targax", 0)
+                ElseIf Game.player.perks("swordpossess") = 4 Then
+                    Polymorph.transform(Game.player, "targax", 1)
+                ElseIf Game.player.perks("swordpossess") = 6 And name <> "Targax" Then
+                    Polymorph.transform(Game.player, "targax", 2)
+                End If
             End If
-        End If
 
-        dead = True
-        endBoss()
-        Game.lstLog.TopIndex = Game.lstLog.Items.Count - 1
+            dead = True
+            endBoss()
+            Game.lstLog.TopIndex = Game.lstLog.Items.Count - 1
     End Sub
     Public Function getName() As String
         If form = "" Then
