@@ -684,9 +684,9 @@ Public Class Game
                     If mBoard(player.pos.Y + indY, player.pos.X + indX).Tag = 2 Then
                         If mBoard(player.pos.Y + indY, player.pos.X + indX).Text = "" Then viewArray(y, x) = 2
                         If mBoard(player.pos.Y + indY, player.pos.X + indX).Text = "H" Then
-                            If floor > 5 Or (floor < 5 And beatboss(floor)) Then
+                            If floor > 5 Or (floor < 5 AndAlso beatboss(floor)) Then
                                 viewArray(y, x) = 3
-                            ElseIf floor > 5 Or (floor < 5 And floorboss(floor).Equals("Key")) Then
+                            ElseIf floor > 5 Or (floor < 5 AndAlso floorboss(floor).Equals("Key")) Then
                                 viewArray(y, x) = 9
                             Else
                                 viewArray(y, x) = 10
