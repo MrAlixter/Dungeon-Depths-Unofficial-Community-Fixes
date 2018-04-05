@@ -60,12 +60,14 @@
                 Dim rubyTF As Color = Color.FromArgb(185, 200, 55, 55)
                 Dim r As Integer = Game.player.skincolor.R + 50
                 Dim g = Game.player.skincolor.G
+                Dim b = Game.player.skincolor.B
                 If r > 255 Then
                     r = 255
-                    If g > 100 Then g -= 50
+                    If g > 50 Then g -= 10
+                    If g < 200 Then b -= 10
                 End If
 
-                Game.player.skincolor = Color.FromArgb(Game.player.skincolor.A, r, g, Game.player.skincolor.B)
+                Game.player.skincolor = Color.FromArgb(Game.player.skincolor.A, r, g, b)
                 If Not Game.player.perks("polymorphed") > -1 And Not Game.player.title.Equals("Magic Girl") Then
                     Game.player.pState.save(Game.player)
                 End If
@@ -79,7 +81,6 @@
         End Select
 
         pos = New Point(-1, -1)
-        Game.trapList.RemoveAt(i)
         Game.lstLog.TopIndex = Game.lstLog.Items.Count - 1
     End Sub
 
