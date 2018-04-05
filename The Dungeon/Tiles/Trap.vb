@@ -59,8 +59,13 @@
             Case 2
                 Dim rubyTF As Color = Color.FromArgb(185, 200, 55, 55)
                 Dim r As Integer = Game.player.skincolor.R + 50
-                If r > 255 Then r = 255
-                Game.player.skincolor = Color.FromArgb(Game.player.skincolor.A, r, Game.player.skincolor.G, Game.player.skincolor.B)
+                Dim g = Game.player.skincolor.G
+                If r > 255 Then
+                    r = 255
+                    If g > 100 Then g -= 50
+                End If
+
+                Game.player.skincolor = Color.FromArgb(Game.player.skincolor.A, r, g, Game.player.skincolor.B)
                 If Not Game.player.perks("polymorphed") > -1 And Not Game.player.title.Equals("Magic Girl") Then
                     Game.player.pState.save(Game.player)
                 End If
