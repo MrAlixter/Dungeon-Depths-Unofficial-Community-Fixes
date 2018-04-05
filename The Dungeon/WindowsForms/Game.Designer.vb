@@ -1624,7 +1624,7 @@ Partial Class Game
         'picStatuef
         '
         Me.picStatuef.BackgroundImage = CType(resources.GetObject("picStatuef.BackgroundImage"), System.Drawing.Image)
-        Me.picStatuef.Location = New System.Drawing.Point(539, 114)
+        Me.picStatuef.Location = New System.Drawing.Point(539, 115)
         Me.picStatuef.Name = "picStatuef"
         Me.picStatuef.Size = New System.Drawing.Size(15, 15)
         Me.picStatuef.TabIndex = 268
@@ -1829,7 +1829,7 @@ Partial Class Game
         'picSWiz
         '
         Me.picSWiz.BackgroundImage = CType(resources.GetObject("picSWiz.BackgroundImage"), System.Drawing.Image)
-        Me.picSWiz.Location = New System.Drawing.Point(497, 133)
+        Me.picSWiz.Location = New System.Drawing.Point(453, 72)
         Me.picSWiz.Name = "picSWiz"
         Me.picSWiz.Size = New System.Drawing.Size(15, 15)
         Me.picSWiz.TabIndex = 273
@@ -1839,7 +1839,7 @@ Partial Class Game
         'picSWizF
         '
         Me.picSWizF.BackgroundImage = CType(resources.GetObject("picSWizF.BackgroundImage"), System.Drawing.Image)
-        Me.picSWizF.Location = New System.Drawing.Point(518, 133)
+        Me.picSWizF.Location = New System.Drawing.Point(453, 93)
         Me.picSWizF.Name = "picSWizF"
         Me.picSWizF.Size = New System.Drawing.Size(15, 15)
         Me.picSWizF.TabIndex = 274
@@ -2067,10 +2067,9 @@ Partial Class Game
         Me.Controls.Add(Me.btnWait)
         Me.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedToolWindow
         Me.Icon = CType(resources.GetObject("$this.Icon"), System.Drawing.Icon)
-        Me.MaximizeBox = False
         Me.Name = "Game"
         Me.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen
-        Me.Text = "The_Dungeon"
+        Me.Text = "Dungeon_Depths"
         CType(Me.picMarkBClothes, System.ComponentModel.ISupportInitialize).EndInit()
         CType(Me.picMarkBRearHair2, System.ComponentModel.ISupportInitialize).EndInit()
         CType(Me.picMarkBRearHair1, System.ComponentModel.ISupportInitialize).EndInit()
