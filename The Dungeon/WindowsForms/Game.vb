@@ -68,9 +68,13 @@ Public Class Game
 
     Dim healthCol As Bitmap = Nothing
 
+    Dim cKeys As List(Of System.Windows.Forms.Keys) = New List(Of Keys)
+
     'startup/new level methods
     'Form1_Load handles the loading of the form
     Private Sub Form1_Load(sender As Object, e As EventArgs) Handles Me.Load
+        loadcKeys()
+
         imagesWorker = New BackgroundWorker
         AddHandler imagesWorker.DoWork, AddressOf prefetchImages
         imagesWorkerArg = Nothing
@@ -167,6 +171,19 @@ Public Class Game
                 Potions.RemoveAt(0)
             End If
         Next
+    End Sub
+    Sub loadcKeys()
+        cKeys.Clear()
+        Dim sr As StreamReader
+        Dim kc As KeysConverter = New KeysConverter()
+        sr = IO.File.OpenText("configs.ave")
+        Dim nextKey As String = sr.ReadLine()
+        While nextKey <> ""
+            cKeys.Add(kc.ConvertFromString(nextKey))
+            nextKey = sr.ReadLine()
+        End While
+        cKeys.Reverse()
+        sr.Close()
     End Sub
     'newGame prepares the application at the start of a new game
     Sub newGame()
@@ -796,8 +813,8 @@ Public Class Game
         End If
         lstLog.TopIndex = lstLog.Items.Count - 1
     End Sub
-    'handleKeyPress handles the players pressed keys, and is the driver function for each turn
-    Function HandleKeyPress(ByVal Keydata As Keys) As Boolean
+    'handleKeyPress handles the players pressed keys, and is the driver function for each 
+    Function shouldReturnEarly(ByVal Keydata As Keys)
         If picStart.Visible = True Then Return True
         If tmrKeyCD.Enabled Then Return True Else tmrKeyCD.Enabled = True
         If lblEvent.Visible And npcmode = True Then
@@ -805,7 +822,20 @@ Public Class Game
             Return True
         End If
         If pnlDescript.Visible And Not lblEvent.Visible Then pnlDescript.Visible = False
-        If lblEvent.Visible And Not (Keydata.Equals(Keys.Enter) Or Keydata.Equals(Keys.OemSemicolon) Or Keydata.Equals(Keys.E)) Then
+        If lblEvent.Visible And Not (Keydata.Equals(Keys.Enter)) Then
+            If npcmode = False Then
+                picNPC.Visible = False
+                lblEvent.Visible = False
+                lblEvent.ForeColor = Color.White
+                If Not combatmode Then player.canMoveFlag = True
+                If Not lblEventOnClose Is Nothing Then
+                    lblEventOnClose()
+                    lblEventOnClose = Nothing
+                End If
+                drawBoard()
+                If btnEQP.Enabled = False Then btnEQP.Enabled = True
+                Throw New Exception
+            End If
             Return True
         End If
         If keyspresed.Length > 4 Then
@@ -821,138 +851,33 @@ Public Class Game
                 updatelist.add(npcList.Item(i), (int1))
             Next
         End If
+        Return False
+    End Function
+    Function isALetter(ByVal s As String)
+        Dim letters = "qwertyuiopasdfghjklzxcvbnm".ToList
+        If s.Length > 1 Then Return False
+        If letters.Contains(s) Then Return True
+        Return False
+    End Function
+    Function HandleKeyPress(ByVal Keydata As Keys) As Boolean
+        If shouldReturnEarly(Keydata) Then Return True
         Dim spos As Point = player.pos
+        If isALetter(Keydata.ToString.ToLower) Then keyspresed += Keydata.ToString.ToLower
         Select Case Keydata
-            Case Keys.W
-                keyspresed += "w"
+            Case cKeys(0)
                 player.moveUp()
                 randomEvents()
-            Case Keys.S
-                keyspresed += "s"
+            Case cKeys(1)
                 player.moveDown()
                 randomEvents()
-            Case Keys.A
-                keyspresed += "a"
+            Case cKeys(2)
                 player.moveLeft()
                 randomEvents()
-            Case Keys.D
-                keyspresed += "d"
+            Case cKeys(3)
                 player.moveRight()
                 randomEvents()
-            Case Keys.M
-                keyspresed += "m"
-            Case Keys.R
-                keyspresed += "r"
-            Case Keys.K
-                keyspresed += "k"
-            Case Keys.G
-                keyspresed += "g"
-            Case Keys.I
-                keyspresed += "i"
-            Case Keys.L
-                keyspresed += "l"
-            Case Keys.N
-                keyspresed += "n"
-            Case Keys.U
-                keyspresed += "u"
-            Case Keys.F
-                keyspresed += "f"
-            Case Keys.D
-                keyspresed += "d"
-            Case Keys.E
-                keyspresed += "e"
-                Try
-                    oemSemiColon()
-                Catch ex As Exception
-                    Return True
-                End Try
-            Case Keys.B
-                keyspresed += "b"
-            Case Keys.O
-                keyspresed += "o"
-            Case Keys.C
-                keyspresed += "c"
-            Case Keys.T
-                keyspresed += "t"
             Case Keys.Enter
-                If cheatList.Contains(keyspresed) Then
-                    MsgBox(keyspresed)
-                    If keyspresed = "girl" Then
-                        player.MtF()
-                        player.createP()
-                    ElseIf keyspresed = "dick" Then
-                        player.FtM()
-                        player.createP()
-                    ElseIf keyspresed = "blue" Then
-                        player.haircolor = Color.Cyan
-                        player.createP()
-                    ElseIf keyspresed = "blue" Then
-                        player.haircolor = Color.Cyan
-                        player.createP()
-                    ElseIf keyspresed = "bmbo" Then
-                        player.perks("bimbotf") = True
-                    ElseIf keyspresed = "catc" Then
-                        player.perks("nekocurse") = True
-                    ElseIf keyspresed = "mana" Then
-                        player.inventory(49).add(1)
-                        player.invNeedsUDate = True
-                        player.UIupdate()
-                    ElseIf keyspresed = "form" Then
-                        formList.Add("Slime")
-                        formList.Add("Goddess")
-                        formList.Add("Succubus")
-                        formList.Add("Dragon")
-                    ElseIf keyspresed = "fuse" Then
-                        player.inventory(58).add(1)
-                        player.invNeedsUDate = True
-                        player.UIupdate()
-                    ElseIf keyspresed = "tfme" Then
-                        Polymorph.porm = True
-                        Dim p As Polymorph = New Polymorph
-                        p.ShowDialog()
-                        p.Dispose()
-                    ElseIf keyspresed = "seee" Then
-                        For indY = -mBoardHeight To mBoardHeight
-                            For indX = -mBoardWidth To mBoardWidth
-                                If player.pos.Y + indY < mBoardHeight And player.pos.Y + indY >= 0 And player.pos.X + indX < mBoardWidth And player.pos.X + indX >= 0 Then
-                                    If mBoard(player.pos.Y + indY, player.pos.X + indX).Text = "@" Then mBoard(player.pos.Y + indY, player.pos.X + indX).Text = ""
-                                    If mBoard(player.pos.Y + indY, player.pos.X + indX).Text = "H" And mBoard(player.pos.Y + indY, player.pos.X + indX).Tag < 2 Then
-                                        mBoard(player.pos.Y + indY, player.pos.X + indX).ForeColor = Color.Black
-                                        lstLog.Items.Add("Floor " & floor & ": Staircase Discovered")
-                                    End If
-                                    If mBoard(player.pos.Y + indY, player.pos.X + indX).Text = "#" And mBoard(player.pos.Y + indY, player.pos.X + indX).Tag < 2 Then
-                                        mBoard(player.pos.Y + indY, player.pos.X + indX).ForeColor = Color.Black
-                                        lstLog.Items.Add("Chest discovered!")
-                                    End If
-                                    If mBoard(player.pos.Y + indY, player.pos.X + indX).Text = "$" And mBoard(player.pos.Y + indY, player.pos.X + indX).Tag < 2 Then
-                                        mBoard(player.pos.Y + indY, player.pos.X + indX).ForeColor = Color.Navy
-                                        lstLog.Items.Add("Shop discovered!")
-                                    End If
-                                    If mBoard(player.pos.Y + indY, player.pos.X + indX).Tag = 1 Then mBoard(player.pos.Y + indY, player.pos.X + indX).Tag = 2
-                                End If
-                            Next
-                        Next
-                        lstLog.TopIndex = lstLog.Items.Count - 1
-                    ElseIf keyspresed = "bigr" Then
-                        player.be()
-                    ElseIf keyspresed = "rock" Then
-                        player.petrify(Color.Gray)
-                    ElseIf keyspresed = "doll" Then
-                        Polymorph.transform(player, "doll", 0)
-                    ElseIf keyspresed = "gogo" Then
-                        Dim f As Integer = CInt(InputBox("Which floor?"))
-                        floor = f - 1
-                        initializeBoard()
-                    ElseIf keyspresed = "slut" Then
-                        player.perks("slutcurse") = True
-                        player.inventory(1).add(1)
-                        player.lust += 20
-                        player.createP()
-                    ElseIf keyspresed = "kill" Then
-                        player.currTarget.takeDMG("9999")
-                    End If
-                End If
-                keyspresed = ""
+                oemReturn()
             Case Keys.Up
                 player.moveUp()
                 randomEvents()
@@ -994,22 +919,6 @@ Public Class Game
         If player.pos.Equals(shopkeeper.pos) Then
             npcEncounter(shopkeeper)
         End If
-        If lblEvent.Visible = True And npcmode = False Then
-            picNPC.Visible = False
-            lblEvent.Visible = False
-            lblEvent.ForeColor = Color.White
-            If Not combatmode Then player.canMoveFlag = True
-            If Not lblEventOnClose Is Nothing Then
-                lblEventOnClose()
-                lblEventOnClose = Nothing
-            End If
-            drawBoard()
-            If btnEQP.Enabled = False Then btnEQP.Enabled = True
-            Throw New Exception
-        End If
-        If pnlDescript.Visible = True Then
-            pnlDescript.Visible = False
-        End If
         If btnEQP.Enabled = False Then btnEQP.Enabled = True
         If chestList.Count > 0 Then
             For i = 0 To chestList.Count - 1
@@ -1047,6 +956,86 @@ Public Class Game
                 End If
             Next
         End If
+    End Sub
+    Sub oemReturn()
+        If cheatList.Contains(keyspresed) Then
+            MsgBox(keyspresed)
+            If keyspresed = "girl" Then
+                player.MtF()
+                player.createP()
+            ElseIf keyspresed = "dick" Then
+                player.FtM()
+                player.createP()
+            ElseIf keyspresed = "blue" Then
+                player.haircolor = Color.Cyan
+                player.createP()
+            ElseIf keyspresed = "blue" Then
+                player.haircolor = Color.Cyan
+                player.createP()
+            ElseIf keyspresed = "bmbo" Then
+                player.perks("bimbotf") = True
+            ElseIf keyspresed = "catc" Then
+                player.perks("nekocurse") = True
+            ElseIf keyspresed = "mana" Then
+                player.inventory(49).add(1)
+                player.invNeedsUDate = True
+                player.UIupdate()
+            ElseIf keyspresed = "form" Then
+                formList.Add("Slime")
+                formList.Add("Goddess")
+                formList.Add("Succubus")
+                formList.Add("Dragon")
+            ElseIf keyspresed = "fuse" Then
+                player.inventory(58).add(1)
+                player.invNeedsUDate = True
+                player.UIupdate()
+            ElseIf keyspresed = "tfme" Then
+                Polymorph.porm = True
+                Dim p As Polymorph = New Polymorph
+                p.ShowDialog()
+                p.Dispose()
+            ElseIf keyspresed = "seee" Then
+                For indY = -mBoardHeight To mBoardHeight
+                    For indX = -mBoardWidth To mBoardWidth
+                        If player.pos.Y + indY < mBoardHeight And player.pos.Y + indY >= 0 And player.pos.X + indX < mBoardWidth And player.pos.X + indX >= 0 Then
+                            If mBoard(player.pos.Y + indY, player.pos.X + indX).Text = "@" Then mBoard(player.pos.Y + indY, player.pos.X + indX).Text = ""
+                            If mBoard(player.pos.Y + indY, player.pos.X + indX).Text = "H" And mBoard(player.pos.Y + indY, player.pos.X + indX).Tag < 2 Then
+                                mBoard(player.pos.Y + indY, player.pos.X + indX).ForeColor = Color.Black
+                                lstLog.Items.Add("Floor " & floor & ": Staircase Discovered")
+                            End If
+                            If mBoard(player.pos.Y + indY, player.pos.X + indX).Text = "#" And mBoard(player.pos.Y + indY, player.pos.X + indX).Tag < 2 Then
+                                mBoard(player.pos.Y + indY, player.pos.X + indX).ForeColor = Color.Black
+                                lstLog.Items.Add("Chest discovered!")
+                            End If
+                            If mBoard(player.pos.Y + indY, player.pos.X + indX).Text = "$" And mBoard(player.pos.Y + indY, player.pos.X + indX).Tag < 2 Then
+                                mBoard(player.pos.Y + indY, player.pos.X + indX).ForeColor = Color.Navy
+                                lstLog.Items.Add("Shop discovered!")
+                            End If
+                            If mBoard(player.pos.Y + indY, player.pos.X + indX).Tag = 1 Then mBoard(player.pos.Y + indY, player.pos.X + indX).Tag = 2
+                        End If
+                    Next
+                Next
+                lstLog.TopIndex = lstLog.Items.Count - 1
+            ElseIf keyspresed = "bigr" Then
+                player.be()
+            ElseIf keyspresed = "rock" Then
+                player.petrify(Color.Gray)
+            ElseIf keyspresed = "doll" Then
+                Polymorph.transform(player, "doll", 0)
+            ElseIf keyspresed = "gogo" Then
+                Dim f As Integer = CInt(InputBox("Which floor?"))
+                floor = f - 1
+                initializeBoard()
+            ElseIf keyspresed = "slut" Then
+                player.perks("slutcurse") = True
+                player.inventory(1).add(1)
+                player.lust += 20
+                player.createP()
+            ElseIf keyspresed = "kill" Then
+                player.currTarget.takeDMG("9999")
+            End If
+        End If
+        keyspresed = ""
     End Sub
 
     'save/loadSave methods
@@ -2207,6 +2196,7 @@ Public Class Game
         Dim f6 As Controls = New Controls
         f6.ShowDialog()
         f6.Dispose()
+        loadcKeys()
     End Sub
     Private Sub btnTalk_Click(sender As Object, e As EventArgs) Handles btnTalk.Click
         If Not lblEventOnClose Is Nothing Then
@@ -2435,7 +2425,7 @@ Public Class Game
                 ct = 0
             End If
         Loop
-        If Not combatmode Then out += " " & vbCrLf & " " & vbCrLf & "Press ';' to continue." Else out += " " & vbCrLf & " " & vbCrLf & "Click a combat button to continue."
+        If Not combatmode Then out += " " & vbCrLf & " " & vbCrLf & "Press any key to continue." Else out += " " & vbCrLf & " " & vbCrLf & "Click a combat button to continue."
         If 1 = 1 Then lblEvent.Text = out Else lblEvent.Text = vbCrLf & "---------------------------------------------------------------------------" & vbCrLf & out
         lblEvent.BringToFront()
         lblEvent.Location = New Point((265 * (Me.Size.Width / 688)) - (lblEvent.Size.Width / 2), (65 * (Me.Size.Width / 688)))
@@ -2463,7 +2453,7 @@ Public Class Game
                 ct = 0
             End If
         Loop
-        If Not combatmode Then out += " " & vbCrLf & " " & vbCrLf & "Press ';' to continue." Else out += " " & vbCrLf & " " & vbCrLf & "Click a combat button to continue."
+        If Not combatmode Then out += " " & vbCrLf & " " & vbCrLf & "Press any key to continue." Else out += " " & vbCrLf & " " & vbCrLf & "Click a combat button to continue."
         lblEvent.Text = out
         lblEvent.BringToFront()
         lblEvent.Location = New Point((265 * (Me.Size.Width / 688)) - (lblEvent.Size.Width / 2), 65 * (Me.Size.Width / 688))
@@ -2819,5 +2809,12 @@ Public Class Game
         For i = 0 To pnlDescript.Controls.Count - 1
             pnlDescript.Controls(i).Font = newFont
         Next
+    End Sub
+
+    Private Sub HelpToolStripMenuItem1_Click(sender As Object, e As EventArgs) Handles HelpToolStripMenuItem1.Click
+        Dim f6 As Controls = New Controls
+        f6.ShowDialog()
+        f6.Dispose()
+        loadcKeys()
     End Sub
 End Class

@@ -139,6 +139,12 @@
     <Compile Include="Items\Usable\Food\Cupcake.vb" />
     <Compile Include="Items\Usable\Charms\DefenceCharm.vb" />
     <Compile Include="Items\Usable\Food\Food.vb" />
+    <Compile Include="WindowsForms\Controls.Designer.vb">
+      <DependentUpon>Controls.vb</DependentUpon>
+    </Compile>
+    <Compile Include="WindowsForms\Controls.vb">
+      <SubType>Form</SubType>
+    </Compile>
     <Compile Include="WindowsForms\Debug\DebugWindow.Designer.vb">
       <DependentUpon>DebugWindow.vb</DependentUpon>
     </Compile>
@@ -180,12 +186,6 @@
       <DependentUpon>Hypnosis.vb</DependentUpon>
     </Compile>
     <Compile Include="WindowsForms\Hypnosis.vb">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="WindowsForms\Controls.Designer.vb">
-      <DependentUpon>Controls.vb</DependentUpon>
-    </Compile>
-    <Compile Include="WindowsForms\Controls.vb">
       <SubType>Form</SubType>
     </Compile>
     <Compile Include="Items\Usable\FusionCrystal.vb" />
@@ -304,6 +304,9 @@
       <DependentUpon>CharacterGenerator.vb</DependentUpon>
       <SubType>Designer</SubType>
     </EmbeddedResource>
+    <EmbeddedResource Include="WindowsForms\Controls.resx">
+      <DependentUpon>Controls.vb</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="WindowsForms\Debug\DebugWindow.resx">
       <DependentUpon>DebugWindow.vb</DependentUpon>
     </EmbeddedResource>
@@ -324,10 +327,6 @@
     </EmbeddedResource>
     <EmbeddedResource Include="WindowsForms\Hypnosis.resx">
       <DependentUpon>Hypnosis.vb</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="WindowsForms\Controls.resx">
-      <DependentUpon>Controls.vb</DependentUpon>
-      <SubType>Designer</SubType>
     </EmbeddedResource>
     <EmbeddedResource Include="My Project\Resources.resx">
       <Generator>ResXFileCodeGenerator</Generator>

@@ -88,8 +88,6 @@ Partial Class Game
         Me.NewGameToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
         Me.HelpToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
         Me.HelpToolStripMenuItem1 = New System.Windows.Forms.ToolStripMenuItem()
-        Me.WASDArrowsMoveToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
-        Me.InteractstairschestsToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
         Me.StatInfoToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
         Me.ReportToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
         Me.DebugToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
@@ -904,7 +902,7 @@ Partial Class Game
         Me.FileToolStripMenuItem.Font = New System.Drawing.Font("Consolas", 9.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.FileToolStripMenuItem.ForeColor = System.Drawing.Color.White
         Me.FileToolStripMenuItem.Name = "FileToolStripMenuItem"
-        Me.FileToolStripMenuItem.Size = New System.Drawing.Size(62, 26)
+        Me.FileToolStripMenuItem.Size = New System.Drawing.Size(62, 28)
         Me.FileToolStripMenuItem.Text = "File"
         '
         'SaveToolStripMenuItem
@@ -943,34 +941,17 @@ Partial Class Game
         'HelpToolStripMenuItem1
         '
         Me.HelpToolStripMenuItem1.BackColor = System.Drawing.Color.Black
-        Me.HelpToolStripMenuItem1.DropDownItems.AddRange(New System.Windows.Forms.ToolStripItem() {Me.WASDArrowsMoveToolStripMenuItem, Me.InteractstairschestsToolStripMenuItem})
         Me.HelpToolStripMenuItem1.ForeColor = System.Drawing.Color.White
         Me.HelpToolStripMenuItem1.Name = "HelpToolStripMenuItem1"
-        Me.HelpToolStripMenuItem1.Size = New System.Drawing.Size(182, 30)
+        Me.HelpToolStripMenuItem1.Size = New System.Drawing.Size(210, 30)
         Me.HelpToolStripMenuItem1.Text = "Controls"
-        '
-        'WASDArrowsMoveToolStripMenuItem
-        '
-        Me.WASDArrowsMoveToolStripMenuItem.BackColor = System.Drawing.Color.Black
-        Me.WASDArrowsMoveToolStripMenuItem.ForeColor = System.Drawing.Color.White
-        Me.WASDArrowsMoveToolStripMenuItem.Name = "WASDArrowsMoveToolStripMenuItem"
-        Me.WASDArrowsMoveToolStripMenuItem.Size = New System.Drawing.Size(402, 30)
-        Me.WASDArrowsMoveToolStripMenuItem.Text = "w, a, s, d / arrows = move"
-        '
-        'InteractstairschestsToolStripMenuItem
-        '
-        Me.InteractstairschestsToolStripMenuItem.BackColor = System.Drawing.Color.Black
-        Me.InteractstairschestsToolStripMenuItem.ForeColor = System.Drawing.Color.White
-        Me.InteractstairschestsToolStripMenuItem.Name = "InteractstairschestsToolStripMenuItem"
-        Me.InteractstairschestsToolStripMenuItem.Size = New System.Drawing.Size(402, 30)
-        Me.InteractstairschestsToolStripMenuItem.Text = "e / ; = interact(stairs/chests)"
         '
         'StatInfoToolStripMenuItem
         '
         Me.StatInfoToolStripMenuItem.BackColor = System.Drawing.Color.Black
         Me.StatInfoToolStripMenuItem.ForeColor = System.Drawing.Color.White
         Me.StatInfoToolStripMenuItem.Name = "StatInfoToolStripMenuItem"
-        Me.StatInfoToolStripMenuItem.Size = New System.Drawing.Size(182, 30)
+        Me.StatInfoToolStripMenuItem.Size = New System.Drawing.Size(210, 30)
         Me.StatInfoToolStripMenuItem.Text = "Stat Info"
         Me.StatInfoToolStripMenuItem.Visible = False
         '
@@ -979,7 +960,7 @@ Partial Class Game
         Me.ReportToolStripMenuItem.BackColor = System.Drawing.Color.Black
         Me.ReportToolStripMenuItem.ForeColor = System.Drawing.Color.White
         Me.ReportToolStripMenuItem.Name = "ReportToolStripMenuItem"
-        Me.ReportToolStripMenuItem.Size = New System.Drawing.Size(182, 30)
+        Me.ReportToolStripMenuItem.Size = New System.Drawing.Size(210, 30)
         Me.ReportToolStripMenuItem.Text = "Report"
         '
         'DebugToolStripMenuItem
@@ -987,7 +968,7 @@ Partial Class Game
         Me.DebugToolStripMenuItem.BackColor = System.Drawing.Color.Black
         Me.DebugToolStripMenuItem.ForeColor = System.Drawing.Color.White
         Me.DebugToolStripMenuItem.Name = "DebugToolStripMenuItem"
-        Me.DebugToolStripMenuItem.Size = New System.Drawing.Size(182, 30)
+        Me.DebugToolStripMenuItem.Size = New System.Drawing.Size(210, 30)
         Me.DebugToolStripMenuItem.Text = "Debug"
         '
         'InfoToolStripMenuItem
@@ -996,7 +977,7 @@ Partial Class Game
         Me.InfoToolStripMenuItem.Font = New System.Drawing.Font("Consolas", 9.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.InfoToolStripMenuItem.ForeColor = System.Drawing.Color.White
         Me.InfoToolStripMenuItem.Name = "InfoToolStripMenuItem"
-        Me.InfoToolStripMenuItem.Size = New System.Drawing.Size(182, 30)
+        Me.InfoToolStripMenuItem.Size = New System.Drawing.Size(210, 30)
         Me.InfoToolStripMenuItem.Text = "Info"
         '
         'SettingsToolStripMenuItem
@@ -1004,7 +985,7 @@ Partial Class Game
         Me.SettingsToolStripMenuItem.Font = New System.Drawing.Font("Consolas", 9.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.SettingsToolStripMenuItem.ForeColor = System.Drawing.Color.White
         Me.SettingsToolStripMenuItem.Name = "SettingsToolStripMenuItem"
-        Me.SettingsToolStripMenuItem.Size = New System.Drawing.Size(102, 26)
+        Me.SettingsToolStripMenuItem.Size = New System.Drawing.Size(102, 28)
         Me.SettingsToolStripMenuItem.Text = "Settings"
         Me.SettingsToolStripMenuItem.Visible = False
         '
@@ -1866,9 +1847,9 @@ Partial Class Game
         Me.lblNext.ForeColor = System.Drawing.Color.White
         Me.lblNext.Location = New System.Drawing.Point(23, 426)
         Me.lblNext.Name = "lblNext"
-        Me.lblNext.Size = New System.Drawing.Size(250, 22)
+        Me.lblNext.Size = New System.Drawing.Size(290, 22)
         Me.lblNext.TabIndex = 277
-        Me.lblNext.Text = "Press ';' to continue..."
+        Me.lblNext.Text = "Press any key to continue..."
         '
         'picDescPort
         '
@@ -2202,8 +2183,6 @@ Partial Class Game
     Friend WithEvents NewGameToolStripMenuItem As System.Windows.Forms.ToolStripMenuItem
     Friend WithEvents HelpToolStripMenuItem As System.Windows.Forms.ToolStripMenuItem
     Friend WithEvents HelpToolStripMenuItem1 As System.Windows.Forms.ToolStripMenuItem
-    Friend WithEvents WASDArrowsMoveToolStripMenuItem As System.Windows.Forms.ToolStripMenuItem
-    Friend WithEvents InteractstairschestsToolStripMenuItem As System.Windows.Forms.ToolStripMenuItem
     Friend WithEvents picPortrait As System.Windows.Forms.PictureBox
     Friend WithEvents btnEXM As System.Windows.Forms.Button
     Friend WithEvents lblGold As System.Windows.Forms.Label
