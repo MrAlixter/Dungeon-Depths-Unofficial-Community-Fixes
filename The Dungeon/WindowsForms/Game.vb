@@ -1944,6 +1944,10 @@ Public Class Game
     'button click methods
     Private Sub btnUse_Click(sender As Object, e As EventArgs) Handles btnUse.Click
         lblEvent.Visible = False
+        If Not lblEventOnClose Is Nothing Then
+            lblEventOnClose()
+            lblEventOnClose = Nothing
+        End If
         If Not combatmode And Not npcmode Then player.canMoveFlag = True
         If player.iArrInd(8).Equals(New Tuple(Of Integer, Boolean)(6, False)) Or player.iArrInd(8).Equals(New Tuple(Of Integer, Boolean)(12, True)) Then
             pushLblEvent("You can't use items now!")
@@ -1982,6 +1986,10 @@ Public Class Game
         lblPHealth.Text = player.health & "/" & player.getmaxHealth
     End Sub
     Private Sub btnDrop_Click(sender As Object, e As EventArgs) Handles btnDrop.Click
+        If Not lblEventOnClose Is Nothing Then
+            lblEventOnClose()
+            lblEventOnClose = Nothing
+        End If
         selectedItem.discard()
         player.UIupdate()
         player.invNeedsUDate = True
@@ -1992,6 +2000,10 @@ Public Class Game
         btnLook.Enabled = False
     End Sub
     Private Sub btnLook_Click(sender As Object, e As EventArgs) Handles btnLook.Click
+        If Not lblEventOnClose Is Nothing Then
+            lblEventOnClose()
+            lblEventOnClose = Nothing
+        End If
         selectedItem.examine()
         lstInventory.SelectedItem = Nothing
         selectedItem = Nothing
@@ -2001,6 +2013,10 @@ Public Class Game
     End Sub
     Private Sub btnATK_Click(sender As Object, e As EventArgs) Handles btnATK.Click
         turn += 1
+        If Not lblEventOnClose Is Nothing Then
+            lblEventOnClose()
+            lblEventOnClose = Nothing
+        End If
         If lblEvent.Visible = True Then
             lblEvent.Visible = False
             lblEvent.ForeColor = Color.White
@@ -2028,6 +2044,10 @@ Public Class Game
     End Sub
     Private Sub btnSpec_Click(sender As Object, e As EventArgs) Handles btnSpec.Click
         turn += 1
+        If Not lblEventOnClose Is Nothing Then
+            lblEventOnClose()
+            lblEventOnClose = Nothing
+        End If
         lblCombatEvents.Text = ""
         If lblEvent.Visible = True Then
             lblEvent.Visible = False
@@ -2072,11 +2092,19 @@ Public Class Game
             lblEvent.ForeColor = Color.White
             drawBoard()
         End If
+        If Not lblEventOnClose Is Nothing Then
+            lblEventOnClose()
+            lblEventOnClose = Nothing
+        End If
         turn += 1
         run()
     End Sub
     Private Sub btnMG_Click(sender As Object, e As EventArgs) Handles btnMG.Click
         turn += 1
+        If Not lblEventOnClose Is Nothing Then
+            lblEventOnClose()
+            lblEventOnClose = Nothing
+        End If
         lblCombatEvents.Text = ""
         If lblEvent.Visible = True Then
             lblEvent.Visible = False
@@ -2111,15 +2139,27 @@ Public Class Game
     End Sub
     Private Sub btnEQP_Click(sender As Object, e As EventArgs) Handles btnEQP.Click
         Dim f3 As Equipment = New Equipment()
+        If Not lblEventOnClose Is Nothing Then
+            lblEventOnClose()
+            lblEventOnClose = Nothing
+        End If
         f3.ShowDialog()
         f3.Dispose()
     End Sub
     Private Sub btnEXM_Click(sender As Object, e As EventArgs) Handles btnEXM.Click
+        If Not lblEventOnClose Is Nothing Then
+            lblEventOnClose()
+            lblEventOnClose = Nothing
+        End If
         lstLog.Items.Add(player.description)
         toDesc()
         lstLog.TopIndex = lstLog.Items.Count - 1
     End Sub
     Private Sub btnIns_Click(sender As Object, e As EventArgs) Handles btnIns.Click
+        If Not lblEventOnClose Is Nothing Then
+            lblEventOnClose()
+            lblEventOnClose = Nothing
+        End If
         HandleKeyPress(Keys.OemSemicolon)
     End Sub
     Private Sub BtnD_Click(sender As Object, e As EventArgs) Handles BtnD.Click
@@ -2169,6 +2209,10 @@ Public Class Game
         f6.Dispose()
     End Sub
     Private Sub btnTalk_Click(sender As Object, e As EventArgs) Handles btnTalk.Click
+        If Not lblEventOnClose Is Nothing Then
+            lblEventOnClose()
+            lblEventOnClose = Nothing
+        End If
         If lblEvent.Visible = True Then
             lblEvent.Visible = False
             lblEvent.ForeColor = Color.White
@@ -2176,6 +2220,10 @@ Public Class Game
         End If
     End Sub
     Private Sub btnShop_Click(sender As Object, e As EventArgs) Handles btnShop.Click
+        If Not lblEventOnClose Is Nothing Then
+            lblEventOnClose()
+            lblEventOnClose = Nothing
+        End If
         If lblEvent.Visible = True Then
             lblEvent.Visible = False
             lblEvent.ForeColor = Color.White
@@ -2186,6 +2234,10 @@ Public Class Game
         s.Dispose()
     End Sub
     Private Sub btnNPCMG_Click(sender As Object, e As EventArgs) Handles btnNPCMG.Click
+        If Not lblEventOnClose Is Nothing Then
+            lblEventOnClose()
+            lblEventOnClose = Nothing
+        End If
         If MessageBox.Show("This is probably a really bad idea, are you sure?", "Bad Idea", MessageBoxButtons.YesNo) = Windows.Forms.DialogResult.Yes Then
             If lblEvent.Visible = True Then
                 lblEvent.Visible = False
@@ -2234,6 +2286,10 @@ Public Class Game
         End If
     End Sub
     Private Sub btnFight_Click(sender As Object, e As EventArgs) Handles btnFight.Click
+        If Not lblEventOnClose Is Nothing Then
+            lblEventOnClose()
+            lblEventOnClose = Nothing
+        End If
         If MessageBox.Show("This is probably a really bad idea, are you sure?", "Bad Idea", MessageBoxButtons.YesNo) = Windows.Forms.DialogResult.Yes Then
             If lblEvent.Visible = True Then
                 lblEvent.Visible = False
@@ -2273,6 +2329,10 @@ Public Class Game
     End Sub
     Private Sub btnLeave_Click(sender As Object, e As EventArgs) Handles btnLeave.Click
         leaveNPC()
+        If Not lblEventOnClose Is Nothing Then
+            lblEventOnClose()
+            lblEventOnClose = Nothing
+        End If
     End Sub
     Private Sub btnChallengeBoss_Click(sender As Object, e As EventArgs) Handles btnChallengeBoss.Click
         Dim m As Monster
@@ -2385,6 +2445,7 @@ Public Class Game
     'This pushLblEvent is identical to the first, but takes an additional action that it executes on close.
     Sub pushLblEvent(ByVal s As String, ByRef effect As Action)
         If combatmode Then
+            lblEventOnClose = effect
             pushLblCombatEvent(s)
             Exit Sub
         End If

@@ -17,4 +17,11 @@
         Game.lstLog.TopIndex = Game.lstLog.Items.Count - 1
         count -= 1
     End Sub
+    Public Overrides Sub onEquip()
+        MyBase.onEquip()
+    End Sub
+    Public Overrides Sub onUnequip()
+        MyBase.onUnequip()
+
+    End Sub
 End Class

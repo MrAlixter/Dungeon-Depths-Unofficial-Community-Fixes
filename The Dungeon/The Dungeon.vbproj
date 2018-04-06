@@ -125,6 +125,7 @@
     <Compile Include="Items\Armor\BunnySuit.vb" />
     <Compile Include="Items\Usable\CatEars.vb" />
     <Compile Include="Items\Armor\CatLingerie.vb" />
+    <Compile Include="Items\Unimplemented\AnniverseryClothes.vb" />
     <Compile Include="WindowsForms\CharacterGenerator.Designer.vb">
       <DependentUpon>CharacterGenerator.vb</DependentUpon>
     </Compile>

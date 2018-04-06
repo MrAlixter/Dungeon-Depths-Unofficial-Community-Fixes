@@ -50,6 +50,12 @@
                 Game.pushLblEvent("You deftly take off your clothes, despite the resistance they put up.")
             End If
         End If
+        If Not p.equippedArmor.getName.Equals(cmbobxArmor.SelectedItem) Then
+            p.equippedArmor.onUnequip()
+        End If
+        If Not p.equippedWeapon.getName.Equals(cmbobxWeapon.SelectedItem) Then
+            p.equippedWeapon.onUnequip()
+        End If
 
         'this handles the revert from the magical girl form, if needed
         Dim revertFlag As Boolean = False
@@ -315,14 +321,7 @@
                 Case 1
                     p.iArrInd(3) = New Tuple(Of Integer, Boolean)(p.sState.iArrInd(3).Item1, p.iArrInd(2).Item2)
                 Case 2
-                    
-                        clothesChange("Naked")
-                        Game.lstLog.Items.Add("Your clothes don't fit!")
-                        If p.sexBool Then
-                            p.iArrInd(3) = New Tuple(Of Integer, Boolean)(47, True)
-                        Else
-                            p.iArrInd(3) = New Tuple(Of Integer, Boolean)(5, False)
-                        End If
+                    p.iArrInd(3) = New Tuple(Of Integer, Boolean)(p.sState.iArrInd(3).Item1 + 99, p.iArrInd(2).Item2)
                 Case Else
                     clothesChange("Naked")
                     Game.lstLog.Items.Add("Your clothes don't fit!")

@@ -8,4 +8,8 @@
     Overridable Function attack(ByRef p As Player, ByRef m As Monster) As Integer
         Return p.attack - ((m.defence / 100) * p.attack)
     End Function
+    Overridable Sub onEquip()
+    End Sub
+    Overridable Sub onUnequip()
+    End Sub
 End Class

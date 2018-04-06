@@ -52,10 +52,13 @@
         'End If
 
     End Sub
-
+    Function canBeTFed(ByRef p As Player) As Boolean
+        If Not p.perks("polymorphed") > -1 And Not p.title.Equals("Magic Girl") Then Return False
+        Return True
+    End Function
     'player transform methods
     Sub transform(ByRef p As Player)
-        If Not p.perks("polymorphed") > -1 And Not p.title.Equals("Magic Girl") Then
+        If canBeTFed(p) Then
             p.pState.save(p)
         End If
         If cboxPMorph.Text.Equals(p.title) Then
@@ -225,7 +228,7 @@
             Game.lstLog.Items.Add("Your form prevents you from being polymorphed.")
             Exit Sub
         End If
-        If Not p.perks("polymorphed") > -1 And Not p.title.Equals("Magic Girl") Then
+        If canBeTFed(p) Then
             p.pState.save(p)
         End If
         Dim color1 As Color = Color.White
@@ -311,7 +314,7 @@
         p.title = form
         Game.lblEvent.ForeColor = color1
         Game.lblNameTitle.ForeColor = color1
-        If form.Equals("Magic Girl") Then Game.pushLblEvent(out, AddressOf Polymorph.magicGSub2) Else Game.pushLblEvent(out)
+        If form.Equals("Magic Girl​") Then Game.pushLblEvent(out, AddressOf Polymorph.magicGSub2) Else Game.pushLblEvent(out)
         Game.lstLog.TopIndex = Game.lstLog.Items.Count - 1
         p.TextColor = Game.lblEvent.ForeColor
         p.pImage = Game.pImage
@@ -325,7 +328,7 @@
             Game.lstLog.Items.Add("Your form prevents you from being polymorphed.")
             Exit Sub
         End If
-        If Not p.perks("polymorphed") > -1 And Not p.title.Equals("Magic Girl") Then
+        If canBeTFed(p) Then
             p.pState.save(p)
         End If
         If form = "bimbo" Then
@@ -352,7 +355,7 @@
             p.iArrInd(5) = New Tuple(Of Integer, Boolean)(8, True)
             p.iArrInd(15) = New Tuple(Of Integer, Boolean)(3, True)
             p.iArrInd(16) = New Tuple(Of Integer, Boolean)(2, True)
-            If Not Game.player.perks("polymorphed") > -1 And Not Game.player.title.Equals("Magic Girl") Then
+            If canBeTFed(p) Then
                 Game.player.pState.save(Game.player)
             End If
         ElseIf form = "princess" Then
@@ -383,7 +386,7 @@
                     p.iArrInd(9) = New Tuple(Of Integer, Boolean)(p.pState.iArrInd(9).Item1, True)
                     p.iArrInd(15) = New Tuple(Of Integer, Boolean)(10, True)
                     p.iArrInd(16) = New Tuple(Of Integer, Boolean)(6, True)
-                    If Not Game.player.perks("polymorphed") > -1 And Not Game.player.title.Equals("Magic Girl") Then
+                    If canBeTFed(p) Then
                         Game.player.pState.save(Game.player)
                     End If
                 Case 2
@@ -405,7 +408,7 @@
                     p.iArrInd(9) = New Tuple(Of Integer, Boolean)(p.pState.iArrInd(9).Item1, True)
                     p.iArrInd(15) = New Tuple(Of Integer, Boolean)(10, True)
                     p.iArrInd(16) = New Tuple(Of Integer, Boolean)(6, True)
-                    If Not Game.player.perks("polymorphed") > -1 And Not Game.player.title.Equals("Magic Girl") Then
+                    If canBeTFed(p) Then
                         Game.player.pState.save(Game.player)
                     End If
             End Select
@@ -804,7 +807,7 @@
                     Game.player.createP()
                     Game.player.perks("vsslimehair") = 0
                 End If
-                If Not Game.player.perks("polymorphed") > -1 And Not Game.player.title.Equals("Magic Girl") Then
+                If canBeTFed(p) Then
                     Game.player.pState.save(Game.player)
                 End If
         End Select
