@@ -831,7 +831,10 @@ Public Class Game
             oemSemiColon()
             Return True
         End If
-        If pnlDescript.Visible And Not lblEvent.Visible Then pnlDescript.Visible = False
+        If pnlDescript.Visible And Not lblEvent.Visible Then
+            pnlDescript.Visible = False
+            Return True
+        End If
         If lblEvent.Visible And Not (Keydata.Equals(Keys.Enter)) Then
             If npcmode = False Then
                 picNPC.Visible = False
@@ -899,12 +902,32 @@ Public Class Game
                 Case cKeys(7)
                     magicKey()
                     Return True
+                Case cKeys(8)
+                    'special
                 Case cKeys(9)
                     waitKey()
                 Case cKeys(10)
                     runKey()
                 Case cKeys(11)
                     drinkKey()
+                Case cKeys(12)
+                    useKey()
+                Case cKeys(13)
+                    'pay
+                Case cKeys(14)
+                    'armor
+                Case cKeys(15)
+                    'accessory
+                Case cKeys(16)
+                    'weapon
+                Case cKeys(17)
+                    selfinpKey()
+                Case cKeys(18)
+                    eatKey()
+                Case cKeys(19)
+                    yesKey()
+                Case cKeys(20)
+                    noKey()
                 Case Keys.Enter
                     oemReturn()
                 Case Keys.Up
@@ -1155,7 +1178,18 @@ Public Class Game
         turn += 1
         If combatmode Then run() Else pushLblEvent("You have nothing to run from!")
     End Sub
+    Sub useKey()
+        toPNLSelec("Useable")
+    End Sub
 
+    Sub selfinpKey()
+        If turn < 2 Then Exit Sub
+        lstLog.Items.Add(player.description)
+        toDesc()
+    End Sub
+    Sub eatKey()
+        toPNLSelec("Food")
+    End Sub
     Sub yesKey()
 
     End Sub
@@ -1174,7 +1208,7 @@ Public Class Game
                 lblInstruc.Text = "Invalid selection:" & vbCrLf & "Please select another letter."
                 Exit Sub
             End If
-            If selectionType.Equals("Potion") Or selectionType.Equals("Useable") Then
+            If selectionType.Equals("Potion") Or selectionType.Equals("Useable") Or selectionType.Equals("Food") Then
                 selectItem(index)
             ElseIf selectionType = "Magic" Then
                 selectMagic(index)
@@ -1254,6 +1288,22 @@ Public Class Game
                 For i = 0 To UBound(player.potions)
                     If player.potions(i).count > 0 Then
                         lstSelec.Items.Add(indexes(count) & " - " & player.potions(i).getName)
+                        count += 1
+                    End If
+                Next
+            Case "Useable"
+                lblWhat.Text = "Use what?"
+                For i = 0 To UBound(player.useable)
+                    If player.useable(i).count > 0 Then
+                        lstSelec.Items.Add(indexes(count) & " - " & player.useable(i).getName)
+                        count += 1
+                    End If
+                Next
+            Case "Food"
+                lblWhat.Text = "Eat what?"
+                For i = 0 To UBound(player.food)
+                    If player.food(i).count > 0 Then
+                        lstSelec.Items.Add(indexes(count) & " - " & player.food(i).getName)
                         count += 1
                     End If
                 Next
