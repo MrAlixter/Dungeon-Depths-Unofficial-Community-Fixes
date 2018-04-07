@@ -175,6 +175,11 @@ Partial Class Game
         Me.picChicken = New System.Windows.Forms.PictureBox()
         Me.picstairsbossf = New System.Windows.Forms.PictureBox()
         Me.PictureBox2 = New System.Windows.Forms.PictureBox()
+        Me.pnlSelection = New System.Windows.Forms.Panel()
+        Me.lblWhat = New System.Windows.Forms.Label()
+        Me.Label3 = New System.Windows.Forms.Label()
+        Me.lstSelec = New System.Windows.Forms.ListBox()
+        Me.lblInstruc = New System.Windows.Forms.Label()
         CType(Me.picMarkBClothes, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me.picMarkBRearHair2, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me.picMarkBRearHair1, System.ComponentModel.ISupportInitialize).BeginInit()
@@ -236,6 +241,7 @@ Partial Class Game
         CType(Me.picChicken, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me.picstairsbossf, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me.PictureBox2, System.ComponentModel.ISupportInitialize).BeginInit()
+        Me.pnlSelection.SuspendLayout()
         Me.SuspendLayout()
         '
         'btnUse1
@@ -902,7 +908,7 @@ Partial Class Game
         Me.FileToolStripMenuItem.Font = New System.Drawing.Font("Consolas", 9.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.FileToolStripMenuItem.ForeColor = System.Drawing.Color.White
         Me.FileToolStripMenuItem.Name = "FileToolStripMenuItem"
-        Me.FileToolStripMenuItem.Size = New System.Drawing.Size(62, 28)
+        Me.FileToolStripMenuItem.Size = New System.Drawing.Size(62, 26)
         Me.FileToolStripMenuItem.Text = "File"
         '
         'SaveToolStripMenuItem
@@ -943,7 +949,7 @@ Partial Class Game
         Me.HelpToolStripMenuItem1.BackColor = System.Drawing.Color.Black
         Me.HelpToolStripMenuItem1.ForeColor = System.Drawing.Color.White
         Me.HelpToolStripMenuItem1.Name = "HelpToolStripMenuItem1"
-        Me.HelpToolStripMenuItem1.Size = New System.Drawing.Size(210, 30)
+        Me.HelpToolStripMenuItem1.Size = New System.Drawing.Size(182, 30)
         Me.HelpToolStripMenuItem1.Text = "Controls"
         '
         'StatInfoToolStripMenuItem
@@ -951,7 +957,7 @@ Partial Class Game
         Me.StatInfoToolStripMenuItem.BackColor = System.Drawing.Color.Black
         Me.StatInfoToolStripMenuItem.ForeColor = System.Drawing.Color.White
         Me.StatInfoToolStripMenuItem.Name = "StatInfoToolStripMenuItem"
-        Me.StatInfoToolStripMenuItem.Size = New System.Drawing.Size(210, 30)
+        Me.StatInfoToolStripMenuItem.Size = New System.Drawing.Size(182, 30)
         Me.StatInfoToolStripMenuItem.Text = "Stat Info"
         Me.StatInfoToolStripMenuItem.Visible = False
         '
@@ -960,7 +966,7 @@ Partial Class Game
         Me.ReportToolStripMenuItem.BackColor = System.Drawing.Color.Black
         Me.ReportToolStripMenuItem.ForeColor = System.Drawing.Color.White
         Me.ReportToolStripMenuItem.Name = "ReportToolStripMenuItem"
-        Me.ReportToolStripMenuItem.Size = New System.Drawing.Size(210, 30)
+        Me.ReportToolStripMenuItem.Size = New System.Drawing.Size(182, 30)
         Me.ReportToolStripMenuItem.Text = "Report"
         '
         'DebugToolStripMenuItem
@@ -968,7 +974,7 @@ Partial Class Game
         Me.DebugToolStripMenuItem.BackColor = System.Drawing.Color.Black
         Me.DebugToolStripMenuItem.ForeColor = System.Drawing.Color.White
         Me.DebugToolStripMenuItem.Name = "DebugToolStripMenuItem"
-        Me.DebugToolStripMenuItem.Size = New System.Drawing.Size(210, 30)
+        Me.DebugToolStripMenuItem.Size = New System.Drawing.Size(182, 30)
         Me.DebugToolStripMenuItem.Text = "Debug"
         '
         'InfoToolStripMenuItem
@@ -977,7 +983,7 @@ Partial Class Game
         Me.InfoToolStripMenuItem.Font = New System.Drawing.Font("Consolas", 9.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.InfoToolStripMenuItem.ForeColor = System.Drawing.Color.White
         Me.InfoToolStripMenuItem.Name = "InfoToolStripMenuItem"
-        Me.InfoToolStripMenuItem.Size = New System.Drawing.Size(210, 30)
+        Me.InfoToolStripMenuItem.Size = New System.Drawing.Size(182, 30)
         Me.InfoToolStripMenuItem.Text = "Info"
         '
         'SettingsToolStripMenuItem
@@ -985,7 +991,7 @@ Partial Class Game
         Me.SettingsToolStripMenuItem.Font = New System.Drawing.Font("Consolas", 9.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.SettingsToolStripMenuItem.ForeColor = System.Drawing.Color.White
         Me.SettingsToolStripMenuItem.Name = "SettingsToolStripMenuItem"
-        Me.SettingsToolStripMenuItem.Size = New System.Drawing.Size(102, 28)
+        Me.SettingsToolStripMenuItem.Size = New System.Drawing.Size(102, 26)
         Me.SettingsToolStripMenuItem.Text = "Settings"
         Me.SettingsToolStripMenuItem.Visible = False
         '
@@ -1595,7 +1601,7 @@ Partial Class Game
         'picShopkeeperf
         '
         Me.picShopkeeperf.BackgroundImage = CType(resources.GetObject("picShopkeeperf.BackgroundImage"), System.Drawing.Image)
-        Me.picShopkeeperf.Location = New System.Drawing.Point(432, 91)
+        Me.picShopkeeperf.Location = New System.Drawing.Point(497, 136)
         Me.picShopkeeperf.Name = "picShopkeeperf"
         Me.picShopkeeperf.Size = New System.Drawing.Size(15, 15)
         Me.picShopkeeperf.TabIndex = 267
@@ -1810,7 +1816,7 @@ Partial Class Game
         'picSWiz
         '
         Me.picSWiz.BackgroundImage = CType(resources.GetObject("picSWiz.BackgroundImage"), System.Drawing.Image)
-        Me.picSWiz.Location = New System.Drawing.Point(453, 72)
+        Me.picSWiz.Location = New System.Drawing.Point(518, 71)
         Me.picSWiz.Name = "picSWiz"
         Me.picSWiz.Size = New System.Drawing.Size(15, 15)
         Me.picSWiz.TabIndex = 273
@@ -1820,7 +1826,7 @@ Partial Class Game
         'picSWizF
         '
         Me.picSWizF.BackgroundImage = CType(resources.GetObject("picSWizF.BackgroundImage"), System.Drawing.Image)
-        Me.picSWizF.Location = New System.Drawing.Point(453, 93)
+        Me.picSWizF.Location = New System.Drawing.Point(518, 136)
         Me.picSWizF.Name = "picSWizF"
         Me.picSWizF.Size = New System.Drawing.Size(15, 15)
         Me.picSWizF.TabIndex = 274
@@ -1899,7 +1905,7 @@ Partial Class Game
         'picChicken
         '
         Me.picChicken.BackgroundImage = CType(resources.GetObject("picChicken.BackgroundImage"), System.Drawing.Image)
-        Me.picChicken.Location = New System.Drawing.Point(432, 71)
+        Me.picChicken.Location = New System.Drawing.Point(413, 78)
         Me.picChicken.Name = "picChicken"
         Me.picChicken.Size = New System.Drawing.Size(15, 15)
         Me.picChicken.TabIndex = 278
@@ -1926,11 +1932,73 @@ Partial Class Game
         Me.PictureBox2.TabStop = False
         Me.PictureBox2.Visible = False
         '
+        'pnlSelection
+        '
+        Me.pnlSelection.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle
+        Me.pnlSelection.Controls.Add(Me.lblInstruc)
+        Me.pnlSelection.Controls.Add(Me.lblWhat)
+        Me.pnlSelection.Controls.Add(Me.Label3)
+        Me.pnlSelection.Controls.Add(Me.lstSelec)
+        Me.pnlSelection.Location = New System.Drawing.Point(1000, 190)
+        Me.pnlSelection.Name = "pnlSelection"
+        Me.pnlSelection.Size = New System.Drawing.Size(560, 293)
+        Me.pnlSelection.TabIndex = 281
+        Me.pnlSelection.Visible = False
+        '
+        'lblWhat
+        '
+        Me.lblWhat.AutoSize = True
+        Me.lblWhat.BackColor = System.Drawing.Color.Black
+        Me.lblWhat.Font = New System.Drawing.Font("Consolas", 9.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.lblWhat.ForeColor = System.Drawing.Color.White
+        Me.lblWhat.Location = New System.Drawing.Point(8, 8)
+        Me.lblWhat.Name = "lblWhat"
+        Me.lblWhat.Size = New System.Drawing.Size(110, 22)
+        Me.lblWhat.TabIndex = 279
+        Me.lblWhat.Text = "Verb what?"
+        '
+        'Label3
+        '
+        Me.Label3.AutoSize = True
+        Me.Label3.BackColor = System.Drawing.Color.Black
+        Me.Label3.Font = New System.Drawing.Font("Consolas", 9.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.Label3.ForeColor = System.Drawing.Color.White
+        Me.Label3.Location = New System.Drawing.Point(7, 262)
+        Me.Label3.Name = "Label3"
+        Me.Label3.Size = New System.Drawing.Size(270, 22)
+        Me.Label3.TabIndex = 278
+        Me.Label3.Text = "Press backspace to cancel."
+        '
+        'lstSelec
+        '
+        Me.lstSelec.BackColor = System.Drawing.Color.Black
+        Me.lstSelec.Font = New System.Drawing.Font("Consolas", 7.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.lstSelec.ForeColor = System.Drawing.Color.White
+        Me.lstSelec.FormattingEnabled = True
+        Me.lstSelec.ItemHeight = 17
+        Me.lstSelec.Location = New System.Drawing.Point(352, 25)
+        Me.lstSelec.Name = "lstSelec"
+        Me.lstSelec.Size = New System.Drawing.Size(198, 242)
+        Me.lstSelec.TabIndex = 142
+        '
+        'lblInstruc
+        '
+        Me.lblInstruc.AutoSize = True
+        Me.lblInstruc.BackColor = System.Drawing.Color.Black
+        Me.lblInstruc.Font = New System.Drawing.Font("Consolas", 9.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.lblInstruc.ForeColor = System.Drawing.Color.White
+        Me.lblInstruc.Location = New System.Drawing.Point(6, 61)
+        Me.lblInstruc.Name = "lblInstruc"
+        Me.lblInstruc.Size = New System.Drawing.Size(310, 22)
+        Me.lblInstruc.TabIndex = 280
+        Me.lblInstruc.Text = "Type the corresponding letter:"
+        '
         'Game
         '
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Inherit
         Me.BackColor = System.Drawing.Color.Black
         Me.ClientSize = New System.Drawing.Size(1008, 690)
+        Me.Controls.Add(Me.pnlSelection)
         Me.Controls.Add(Me.PictureBox2)
         Me.Controls.Add(Me.picstairsbossf)
         Me.Controls.Add(Me.picChicken)
@@ -2115,6 +2183,8 @@ Partial Class Game
         CType(Me.picChicken, System.ComponentModel.ISupportInitialize).EndInit()
         CType(Me.picstairsbossf, System.ComponentModel.ISupportInitialize).EndInit()
         CType(Me.PictureBox2, System.ComponentModel.ISupportInitialize).EndInit()
+        Me.pnlSelection.ResumeLayout(False)
+        Me.pnlSelection.PerformLayout()
         Me.ResumeLayout(False)
         Me.PerformLayout()
 
@@ -2270,4 +2340,9 @@ Partial Class Game
     Friend WithEvents picChicken As System.Windows.Forms.PictureBox
     Friend WithEvents picstairsbossf As System.Windows.Forms.PictureBox
     Friend WithEvents PictureBox2 As System.Windows.Forms.PictureBox
+    Friend WithEvents pnlSelection As System.Windows.Forms.Panel
+    Friend WithEvents lblWhat As System.Windows.Forms.Label
+    Friend WithEvents Label3 As System.Windows.Forms.Label
+    Friend WithEvents lstSelec As System.Windows.Forms.ListBox
+    Friend WithEvents lblInstruc As System.Windows.Forms.Label
 End Class

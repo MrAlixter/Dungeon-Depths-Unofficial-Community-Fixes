@@ -68,6 +68,9 @@ Public Class Game
 
     Dim healthCol As Bitmap = Nothing
 
+    Dim selecting As Boolean = False
+    Dim selectionType As String = ""
+
     Dim cKeys As List(Of System.Windows.Forms.Keys) = New List(Of Keys)
 
     'startup/new level methods
@@ -117,6 +120,9 @@ Public Class Game
         For i = 0 To Me.Controls.Count - 1
             Me.Controls(i).Font = newFont
         Next
+        For i = 0 To pnlSelection.Controls.Count - 1
+            pnlSelection.Controls(i).Font = newFont
+        Next
         FileToolStripMenuItem.Font = newFont
         SaveToolStripMenuItem.Font = newFont
         LoadToolStripMenuItem.Font = newFont
@@ -141,6 +147,7 @@ Public Class Game
         pnlCombat.Location = New Point(115, pnlCombat.Location.Y)
         pnlDescript.Location = New Point(115, pnlDescript.Location.Y)
         pnlSaveLoad.Location = New Point(188, pnlSaveLoad.Location.Y)
+        pnlSelection.Location = New Point(115, pnlSelection.Location.Y)
         picStart.Location = New Point(2, picStart.Location.Y)
         If Not System.IO.File.Exists("dis.cla") Then
             If MessageBox.Show("This game features adult content sexual in nature, and is not for anyone under the age of 18 or otherwise of legal age in their country. By clicking 'Yes' below, you confirm that you are legally an adult in your country.", "Obligatory Disclaimer", MessageBoxButtons.YesNo) = Windows.Forms.DialogResult.Yes Then
@@ -816,6 +823,9 @@ Public Class Game
     'handleKeyPress handles the players pressed keys, and is the driver function for each 
     Function shouldReturnEarly(ByVal Keydata As Keys)
         If picStart.Visible = True Then Return True
+        If combatmode And (Keydata.Equals(cKeys(0)) Or Keydata.Equals(cKeys(1)) Or Keydata.Equals(cKeys(2)) Or Keydata.Equals(cKeys(3))) Then
+            Return True
+        End If
         If tmrKeyCD.Enabled Then Return True Else tmrKeyCD.Enabled = True
         If lblEvent.Visible And npcmode = True Then
             oemSemiColon()
@@ -834,15 +844,14 @@ Public Class Game
                 End If
                 drawBoard()
                 If btnEQP.Enabled = False Then btnEQP.Enabled = True
-                Throw New Exception
             End If
             Return True
         End If
         If keyspresed.Length > 4 Then
             keyspresed = keyspresed.Substring(1, 3)
         End If
-        If combatmode = True And Not (Keydata.Equals(Keys.Enter) Or Keydata.Equals(Keys.K) Or Keydata.Equals(Keys.I) Or Keydata.Equals(Keys.L)) Then Return True
-        If npcmode = True Then Return True
+        'If combatmode = True And Not (Keydata.Equals(Keys.Enter) Or Keydata.Equals(Keys.K) Or Keydata.Equals(Keys.I) Or Keydata.Equals(Keys.L)) Then Return True
+        'If npcmode = True Then Return True
         If player.mana < player.getmaxMana And turn Mod 3 = 0 Then player.mana += 1
         If npcList.Count > 0 Then
             For i = 0 To npcList.Count - 1
@@ -860,50 +869,72 @@ Public Class Game
         Return False
     End Function
     Function HandleKeyPress(ByVal Keydata As Keys) As Boolean
-        If shouldReturnEarly(Keydata) Then Return True
-        Dim spos As Point = player.pos
-        If isALetter(Keydata.ToString.ToLower) Then keyspresed += Keydata.ToString.ToLower
-        Select Case Keydata
-            Case cKeys(0)
-                player.moveUp()
-                randomEvents()
-            Case cKeys(1)
-                player.moveDown()
-                randomEvents()
-            Case cKeys(2)
-                player.moveLeft()
-                randomEvents()
-            Case cKeys(3)
-                player.moveRight()
-                randomEvents()
-            Case Keys.Enter
-                oemReturn()
-            Case Keys.Up
-                player.moveUp()
-                randomEvents()
-            Case Keys.Down
-                player.moveDown()
-                randomEvents()
-            Case Keys.Left
-                player.moveLeft()
-                randomEvents()
-            Case Keys.Right
-                player.moveRight()
-                randomEvents()
-            Case Keys.OemSemicolon
-                Try
-                    oemSemiColon()
-                Catch ex As Exception
+        If Not selecting Then
+            If shouldReturnEarly(Keydata) Then Return True
+            Dim spos As Point = player.pos
+            If isALetter(Keydata.ToString.ToLower) Then keyspresed += Keydata.ToString.ToLower
+            Select Case Keydata
+                Case cKeys(0)
+                    player.moveUp()
+                    randomEvents()
+                Case cKeys(1)
+                    player.moveDown()
+                    randomEvents()
+                Case cKeys(2)
+                    player.moveLeft()
+                    randomEvents()
+                Case cKeys(3)
+                    player.moveRight()
+                    randomEvents()
+                Case cKeys(4)
+                    Try
+                        oemSemiColon()
+                    Catch ex As Exception
+                        Return True
+                    End Try
+                Case cKeys(5)
+                    talkKey()
+                Case cKeys(6)
+                    attackKey()
+                Case cKeys(7)
+                    magicKey()
                     Return True
-                End Try
-        End Select
-        Dim int As Integer = 100 - player.getSpeed
-        If int < 1 Then int = 1
-        updatelist.add(player, (int))
-        turn += 1
-        drawBoard()
-        lstLog.TopIndex = lstLog.Items.Count - 1
-        Return True
+                Case cKeys(9)
+                    waitKey()
+                Case cKeys(10)
+                    runKey()
+                Case cKeys(11)
+                    drinkKey()
+                Case Keys.Enter
+                    oemReturn()
+                Case Keys.Up
+                    player.moveUp()
+                    randomEvents()
+                Case Keys.Down
+                    player.moveDown()
+                    randomEvents()
+                Case Keys.Left
+                    player.moveLeft()
+                    randomEvents()
+                Case Keys.Right
+                    player.moveRight()
+                    randomEvents()
+            End Select
+            Dim int As Integer = 100 - player.getSpeed
+            If int < 1 Then int = 1
+            updatelist.add(player, (int))
+            turn += 1
+            drawBoard()
+            lstLog.TopIndex = lstLog.Items.Count - 1
+            Return True
+        Else
+            If Keydata.Equals(Keys.Back) Then
+                selecting = False
+                pnlSelection.Visible = False
+            End If
+            selection(Keydata)
+        End If
+            Return True
     End Function
     'processCmdKey is a leftover from an earlier version, and may not be needed anymore
     Protected Overrides Function ProcessCmdKey(ByRef msg As System.Windows.Forms.Message, ByVal keyData As System.Windows.Forms.Keys) As Boolean
@@ -1037,6 +1068,218 @@ Public Class Game
         End If
         keyspresed = ""
     End Sub
+    Sub talkKey()
+        If Not npcmode Then
+            If player.pos.Equals(shopkeeper.pos) Then
+                npcEncounter(shopkeeper)
+            End If
+        Else
+            If Not lblEventOnClose Is Nothing Then
+                lblEventOnClose()
+                lblEventOnClose = Nothing
+            End If
+            If lblEvent.Visible = True Then
+                lblEvent.Visible = False
+                lblEvent.ForeColor = Color.White
+                drawBoard()
+            End If
+        End If
+    End Sub
+    Sub attackKey()
+        If combatmode Then
+            turn += 1
+            If Not lblEventOnClose Is Nothing Then
+                lblEventOnClose()
+                lblEventOnClose = Nothing
+            End If
+            If lblEvent.Visible = True Then
+                lblEvent.Visible = False
+                lblEvent.ForeColor = Color.White
+            End If
+            Dim m As Monster = Nothing
+            For i = 0 To npcList.Count() - 1
+                If npcList.Item(i).GetType().IsSubclassOf(GetType(Monster)) Or npcList.Item(i).GetType() Is GetType(Monster) Then
+                    m = npcList.Item(i)
+                    Exit For
+                End If
+            Next
+            player.setTarg(m)
+            If npcList.Count > 0 Then
+                For i = 0 To npcList.Count - 1
+                    Dim int1 As Integer = 100 - npcList.Item(i).speed
+                    If int1 < 1 Then int1 = 1
+                    updatelist.add(npcList.Item(i), (int1))
+                Next
+            End If
+            Dim int As Integer = 100 - player.getSpeed
+            If int < 1 Then int = 1
+            player.isAttacking = True
+            updatelist.add(player, int)
+        Else
+            pushLblEvent("You swing your " & player.equippedWeapon.getName & " at the air.")
+        End If
+    End Sub
+    Sub magicKey()
+        toPNLSelec("Magic")
+    End Sub
+    Sub drinkKey()
+        toPNLSelec("Potion")
+    End Sub
+    Sub waitKey()
+        turn += 1
+        If lblEvent.Visible = True Then
+            lblEvent.Visible = False
+            lblEvent.ForeColor = Color.White
+        End If
+        Dim m As Monster = Nothing
+        For i = 0 To npcList.Count() - 1
+            If npcList.Item(i).GetType().IsSubclassOf(GetType(Monster)) Or npcList.Item(i).GetType() Is GetType(Monster) Then
+                m = npcList.Item(i)
+                Exit For
+            End If
+        Next
+        player.setTarg(m)
+        If npcList.Count > 0 Then
+            For i = 0 To npcList.Count - 1
+                Dim int1 As Integer = 100 - npcList.Item(i).speed
+                If int1 < 1 Then int1 = 1
+                updatelist.add(npcList.Item(i), (int1))
+            Next
+        End If
+        Dim int As Integer = 100 - player.getSpeed
+        If int < 1 Then int = 1
+        updatelist.add(player, int)
+        pushLblCombatEvent("You wait for a bit...")
+    End Sub
+    Sub runKey()
+        turn += 1
+        If combatmode Then run() Else pushLblEvent("You have nothing to run from!")
+    End Sub
+
+    Sub yesKey()
+
+    End Sub
+    Sub noKey()
+
+    End Sub
+
+    Sub selection(ByVal Keydata As Keys)
+        If Keydata.Equals(Keys.Up) Or Keydata.Equals(Keys.Down) Then
+            Exit Sub
+        End If
+        Dim indexes = "abcdefghijklmnopqrstuvwxyz123456789".ToCharArray.ToList
+        If indexes.Contains(Keydata.ToString.ToLower) Then
+            Dim index = indexes.IndexOf(Keydata.ToString.ToLower)
+            If index > lstSelec.Items.Count - 1 Then
+                lblInstruc.Text = "Invalid selection:" & vbCrLf & "Please select another letter."
+                Exit Sub
+            End If
+            If selectionType.Equals("Potion") Or selectionType.Equals("Useable") Then
+                selectItem(index)
+            ElseIf selectionType = "Magic" Then
+                selectMagic(index)
+            End If
+            player.invNeedsUDate = True
+            player.UIupdate()
+            selecting = False
+            pnlSelection.Visible = False
+            selectedItem = Nothing
+        End If
+    End Sub
+    Sub selectItem(ByVal index As Integer)
+        Dim subString As String = lstSelec.Items(index).ToString.Split(" (")(2)
+        Dim aInd As Integer = player.inventorynames.IndexOf(subString)
+        If aInd < 0 Then
+            For i = 0 To Potions.Count - 1
+                If CType(Potions(i), MysteryPotion).getName() = subString Then
+                    aInd = player.inventorynames.IndexOf(CType(Potions(i), MysteryPotion).getRealName())
+                    Exit For
+                End If
+            Next
+        End If
+        If aInd >= 0 Then
+            selectedItem = player.inventory.Item(aInd)
+            If selectedItem.getUsable Then selectedItem.use()
+        End If
+    End Sub
+    Sub selectMagic(ByVal index As Integer)
+        turn += 1
+        If Not lblEventOnClose Is Nothing Then
+            lblEventOnClose()
+            lblEventOnClose = Nothing
+        End If
+        lblCombatEvents.Text = ""
+        If lblEvent.Visible = True Then
+            lblEvent.Visible = False
+            lblEvent.ForeColor = Color.White
+        End If
+        If player.mana <= 0 Then Exit Sub
+        Dim m As Monster = Nothing
+        For i = 0 To npcList.Count() - 1
+            If npcList.Item(i).GetType().IsSubclassOf(GetType(Monster)) Or npcList.Item(i).GetType() Is GetType(Monster) Then
+                m = npcList.Item(i)
+                Exit For
+            End If
+        Next
+        Spells.spellCast(m, player, cboxMG.Items(index))
+        If npcList.Count > 0 Then
+            For i = 0 To npcList.Count - 1
+                Dim int1 As Integer = 100 - npcList.Item(i).speed
+                If int1 < 1 Then int1 = 1
+                updatelist.add(npcList.Item(i), (int1))
+            Next
+        End If
+        Dim int As Integer = 100 - player.getSpeed
+        If int < 1 Then int = 1
+        updatelist.add(player, int)
+        Do While updatelist.isEmpty() = False
+            Dim u As Updatable = updatelist.remove()
+            u.update()
+        Loop
+        'updates the combat banner
+        updatePnlCombat(player, player.currTarget)
+        ttCosts.RemoveAll()
+    End Sub
+    Sub toPNLSelec(ByVal mode As String)
+        selecting = True
+        pnlSelection.BringToFront()
+        lstSelec.Items.Clear()
+        lstInventory.Focus()
+        lblInstruc.Text = "Type the corresponding letter," & vbCrLf & "and use the arrows to scroll"
+        Dim indexes = "abcdefghijklmnopqrstuvwxyz123456789".ToCharArray
+        Dim count = 0
+        Select Case mode
+            Case "Potion"
+                lblWhat.Text = "Drink what?"
+                For i = 0 To UBound(player.potions)
+                    If player.potions(i).count > 0 Then
+                        lstSelec.Items.Add(indexes(count) & " - " & player.potions(i).getName)
+                        count += 1
+                    End If
+                Next
+            Case "Magic"
+                If Not combatmode And Not npcmode Then
+                    pushLblEvent("You don't have a target at the moment..." & vbCrLf & "[Self casting will be added eventually]")
+                    selecting = False
+                    Exit Sub
+                End If
+                lblWhat.Text = "Cast what?"
+                If combatmode Then
+                    For i = 0 To cboxMG.Items.Count - 1
+                        lstSelec.Items.Add(indexes(count) & " - " & cboxMG.Items(i).ToString)
+                        count += 1
+                    Next
+                ElseIf npcmode Then
+                    For i = 0 To cboxNPCMG.Items.Count - 1
+                        lstSelec.Items.Add(indexes(count) & " - " & cboxNPCMG.Items(i).ToString)
+                        count += 1
+                    Next
+                End If
+        End Select
+        selectionType = mode
+        pnlSelection.Visible = True
+    End Sub
+
 
     'save/loadSave methods
     'save handles the saving of the game

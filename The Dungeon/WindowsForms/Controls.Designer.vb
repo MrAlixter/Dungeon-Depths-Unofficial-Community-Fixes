@@ -87,9 +87,9 @@ Partial Class Controls
         Me.Label1.ForeColor = System.Drawing.Color.White
         Me.Label1.Location = New System.Drawing.Point(13, 13)
         Me.Label1.Name = "Label1"
-        Me.Label1.Size = New System.Drawing.Size(99, 19)
+        Me.Label1.Size = New System.Drawing.Size(162, 19)
         Me.Label1.TabIndex = 2
-        Me.Label1.Text = "Move up - "
+        Me.Label1.Text = "Move up ---------"
         '
         'txtUp
         '
@@ -122,9 +122,9 @@ Partial Class Controls
         Me.Label2.ForeColor = System.Drawing.Color.White
         Me.Label2.Location = New System.Drawing.Point(13, 39)
         Me.Label2.Name = "Label2"
-        Me.Label2.Size = New System.Drawing.Size(117, 19)
+        Me.Label2.Size = New System.Drawing.Size(162, 19)
         Me.Label2.TabIndex = 4
-        Me.Label2.Text = "Move down - "
+        Me.Label2.Text = "Move down -------"
         '
         'txtLeft
         '
@@ -145,9 +145,9 @@ Partial Class Controls
         Me.Label3.ForeColor = System.Drawing.Color.White
         Me.Label3.Location = New System.Drawing.Point(13, 65)
         Me.Label3.Name = "Label3"
-        Me.Label3.Size = New System.Drawing.Size(117, 19)
+        Me.Label3.Size = New System.Drawing.Size(162, 19)
         Me.Label3.TabIndex = 6
-        Me.Label3.Text = "Move left - "
+        Me.Label3.Text = "Move left -------"
         '
         'txtRight
         '
@@ -168,9 +168,9 @@ Partial Class Controls
         Me.Label4.ForeColor = System.Drawing.Color.White
         Me.Label4.Location = New System.Drawing.Point(13, 91)
         Me.Label4.Name = "Label4"
-        Me.Label4.Size = New System.Drawing.Size(126, 19)
+        Me.Label4.Size = New System.Drawing.Size(162, 19)
         Me.Label4.TabIndex = 8
-        Me.Label4.Text = "Move right - "
+        Me.Label4.Text = "Move right ------"
         '
         'Button2
         '
@@ -201,9 +201,9 @@ Partial Class Controls
         Me.Label5.ForeColor = System.Drawing.Color.White
         Me.Label5.Location = New System.Drawing.Point(13, 195)
         Me.Label5.Name = "Label5"
-        Me.Label5.Size = New System.Drawing.Size(81, 19)
+        Me.Label5.Size = New System.Drawing.Size(162, 19)
         Me.Label5.TabIndex = 17
-        Me.Label5.Text = "Magic - "
+        Me.Label5.Text = "Magic -----------"
         '
         'txtAttack
         '
@@ -224,9 +224,9 @@ Partial Class Controls
         Me.Label6.ForeColor = System.Drawing.Color.White
         Me.Label6.Location = New System.Drawing.Point(13, 169)
         Me.Label6.Name = "Label6"
-        Me.Label6.Size = New System.Drawing.Size(90, 19)
+        Me.Label6.Size = New System.Drawing.Size(162, 19)
         Me.Label6.TabIndex = 15
-        Me.Label6.Text = "Attack - "
+        Me.Label6.Text = "Attack ----------"
         '
         'txtTalk
         '
@@ -247,9 +247,9 @@ Partial Class Controls
         Me.Label7.ForeColor = System.Drawing.Color.White
         Me.Label7.Location = New System.Drawing.Point(13, 143)
         Me.Label7.Name = "Label7"
-        Me.Label7.Size = New System.Drawing.Size(135, 19)
+        Me.Label7.Size = New System.Drawing.Size(162, 19)
         Me.Label7.TabIndex = 13
-        Me.Label7.Text = "Talk to NPC - "
+        Me.Label7.Text = "Talk to NPC -----"
         '
         'txtInpect
         '
@@ -270,9 +270,9 @@ Partial Class Controls
         Me.Label8.ForeColor = System.Drawing.Color.White
         Me.Label8.Location = New System.Drawing.Point(13, 117)
         Me.Label8.Name = "Label8"
-        Me.Label8.Size = New System.Drawing.Size(108, 19)
+        Me.Label8.Size = New System.Drawing.Size(162, 19)
         Me.Label8.TabIndex = 11
-        Me.Label8.Text = "Interact - "
+        Me.Label8.Text = "Interact --------"
         '
         'txtWear2
         '
@@ -293,9 +293,9 @@ Partial Class Controls
         Me.Label9.ForeColor = System.Drawing.Color.White
         Me.Label9.Location = New System.Drawing.Point(13, 402)
         Me.Label9.Name = "Label9"
-        Me.Label9.Size = New System.Drawing.Size(144, 19)
+        Me.Label9.Size = New System.Drawing.Size(162, 19)
         Me.Label9.TabIndex = 33
-        Me.Label9.Text = "Wear (Other) - "
+        Me.Label9.Text = "Wear (Other) ----"
         '
         'txtWear1
         '
@@ -316,9 +316,9 @@ Partial Class Controls
         Me.Label10.ForeColor = System.Drawing.Color.White
         Me.Label10.Location = New System.Drawing.Point(13, 376)
         Me.Label10.Name = "Label10"
-        Me.Label10.Size = New System.Drawing.Size(144, 19)
+        Me.Label10.Size = New System.Drawing.Size(162, 19)
         Me.Label10.TabIndex = 31
-        Me.Label10.Text = "Wear (Armor) - "
+        Me.Label10.Text = "Wear (Armor) ----"
         '
         'txtShop
         '
@@ -339,9 +339,9 @@ Partial Class Controls
         Me.Label11.ForeColor = System.Drawing.Color.White
         Me.Label11.Location = New System.Drawing.Point(13, 350)
         Me.Label11.Name = "Label11"
-        Me.Label11.Size = New System.Drawing.Size(72, 19)
+        Me.Label11.Size = New System.Drawing.Size(162, 19)
         Me.Label11.TabIndex = 29
-        Me.Label11.Text = "Shop - "
+        Me.Label11.Text = "Shop ------------"
         '
         'txtUse
         '
@@ -362,9 +362,9 @@ Partial Class Controls
         Me.Label12.ForeColor = System.Drawing.Color.White
         Me.Label12.Location = New System.Drawing.Point(13, 324)
         Me.Label12.Name = "Label12"
-        Me.Label12.Size = New System.Drawing.Size(63, 19)
+        Me.Label12.Size = New System.Drawing.Size(162, 19)
         Me.Label12.TabIndex = 27
-        Me.Label12.Text = "Use - "
+        Me.Label12.Text = "Use -------------"
         '
         'txtDrink
         '
@@ -385,9 +385,9 @@ Partial Class Controls
         Me.Label13.ForeColor = System.Drawing.Color.White
         Me.Label13.Location = New System.Drawing.Point(13, 298)
         Me.Label13.Name = "Label13"
-        Me.Label13.Size = New System.Drawing.Size(81, 19)
+        Me.Label13.Size = New System.Drawing.Size(162, 19)
         Me.Label13.TabIndex = 25
-        Me.Label13.Text = "Drink - "
+        Me.Label13.Text = "Drink -----------"
         '
         'txtRun
         '
@@ -408,9 +408,9 @@ Partial Class Controls
         Me.Label14.ForeColor = System.Drawing.Color.White
         Me.Label14.Location = New System.Drawing.Point(13, 272)
         Me.Label14.Name = "Label14"
-        Me.Label14.Size = New System.Drawing.Size(144, 19)
+        Me.Label14.Size = New System.Drawing.Size(171, 19)
         Me.Label14.TabIndex = 23
-        Me.Label14.Text = "Run (Combat) - "
+        Me.Label14.Text = "Run (Combat) ---- "
         '
         'txtWait
         '
@@ -431,9 +431,9 @@ Partial Class Controls
         Me.Label15.ForeColor = System.Drawing.Color.White
         Me.Label15.Location = New System.Drawing.Point(13, 246)
         Me.Label15.Name = "Label15"
-        Me.Label15.Size = New System.Drawing.Size(72, 19)
+        Me.Label15.Size = New System.Drawing.Size(162, 19)
         Me.Label15.TabIndex = 21
-        Me.Label15.Text = "Wait - "
+        Me.Label15.Text = "Wait ------------"
         '
         'txtSpec
         '
@@ -454,9 +454,9 @@ Partial Class Controls
         Me.Label16.ForeColor = System.Drawing.Color.White
         Me.Label16.Location = New System.Drawing.Point(13, 220)
         Me.Label16.Name = "Label16"
-        Me.Label16.Size = New System.Drawing.Size(99, 19)
+        Me.Label16.Size = New System.Drawing.Size(162, 19)
         Me.Label16.TabIndex = 19
-        Me.Label16.Text = "Special - "
+        Me.Label16.Text = "Special ---------"
         '
         'txtYes
         '
@@ -477,9 +477,9 @@ Partial Class Controls
         Me.Label17.ForeColor = System.Drawing.Color.White
         Me.Label17.Location = New System.Drawing.Point(13, 528)
         Me.Label17.Name = "Label17"
-        Me.Label17.Size = New System.Drawing.Size(63, 19)
+        Me.Label17.Size = New System.Drawing.Size(162, 19)
         Me.Label17.TabIndex = 41
-        Me.Label17.Text = "Yes - "
+        Me.Label17.Text = "Yes -------------"
         '
         'txtEat
         '
@@ -500,9 +500,9 @@ Partial Class Controls
         Me.Label18.ForeColor = System.Drawing.Color.White
         Me.Label18.Location = New System.Drawing.Point(13, 503)
         Me.Label18.Name = "Label18"
-        Me.Label18.Size = New System.Drawing.Size(63, 19)
+        Me.Label18.Size = New System.Drawing.Size(162, 19)
         Me.Label18.TabIndex = 39
-        Me.Label18.Text = "Eat - "
+        Me.Label18.Text = "Eat -------------"
         '
         'txtSInspect
         '
@@ -523,9 +523,9 @@ Partial Class Controls
         Me.Label19.ForeColor = System.Drawing.Color.White
         Me.Label19.Location = New System.Drawing.Point(13, 453)
         Me.Label19.Name = "Label19"
-        Me.Label19.Size = New System.Drawing.Size(144, 19)
+        Me.Label19.Size = New System.Drawing.Size(162, 19)
         Me.Label19.TabIndex = 37
-        Me.Label19.Text = "Self Inspect - "
+        Me.Label19.Text = "Self Inspect ----"
         '
         'txtEquip
         '
@@ -546,9 +546,9 @@ Partial Class Controls
         Me.Label20.ForeColor = System.Drawing.Color.White
         Me.Label20.Location = New System.Drawing.Point(13, 427)
         Me.Label20.Name = "Label20"
-        Me.Label20.Size = New System.Drawing.Size(162, 19)
+        Me.Label20.Size = New System.Drawing.Size(171, 19)
         Me.Label20.TabIndex = 35
-        Me.Label20.Text = "Equip (Weapon) - "
+        Me.Label20.Text = "Equip (Weapon) -- "
         '
         'txtNo
         '
@@ -569,9 +569,9 @@ Partial Class Controls
         Me.Label21.ForeColor = System.Drawing.Color.White
         Me.Label21.Location = New System.Drawing.Point(13, 553)
         Me.Label21.Name = "Label21"
-        Me.Label21.Size = New System.Drawing.Size(54, 19)
+        Me.Label21.Size = New System.Drawing.Size(162, 19)
         Me.Label21.TabIndex = 43
-        Me.Label21.Text = "No - "
+        Me.Label21.Text = "No --------------"
         '
         'txtIInspect
         '
@@ -592,9 +592,9 @@ Partial Class Controls
         Me.Label22.ForeColor = System.Drawing.Color.White
         Me.Label22.Location = New System.Drawing.Point(13, 478)
         Me.Label22.Name = "Label22"
-        Me.Label22.Size = New System.Drawing.Size(144, 19)
+        Me.Label22.Size = New System.Drawing.Size(162, 19)
         Me.Label22.TabIndex = 45
-        Me.Label22.Text = "Inspect Item - "
+        Me.Label22.Text = "Inspect Item ----"
         '
         'Controls
         '
