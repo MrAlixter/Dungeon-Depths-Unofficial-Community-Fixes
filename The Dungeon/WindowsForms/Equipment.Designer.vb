@@ -22,6 +22,7 @@ Partial Class Equipment
     'Do not modify it using the code editor.
     <System.Diagnostics.DebuggerStepThrough()> _
     Private Sub InitializeComponent()
+        Dim resources As System.ComponentModel.ComponentResourceManager = New System.ComponentModel.ComponentResourceManager(GetType(Equipment))
         Me.Label2 = New System.Windows.Forms.Label()
         Me.cmbobxArmor = New System.Windows.Forms.ComboBox()
         Me.Label1 = New System.Windows.Forms.Label()
@@ -133,6 +134,7 @@ Partial Class Equipment
         Me.Controls.Add(Me.btnACPT)
         Me.Controls.Add(Me.cmbobxWeapon)
         Me.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle
+        Me.Icon = CType(resources.GetObject("$this.Icon"), System.Drawing.Icon)
         Me.Name = "Equipment"
         Me.StartPosition = System.Windows.Forms.FormStartPosition.CenterParent
         Me.Text = "Equip Menu"

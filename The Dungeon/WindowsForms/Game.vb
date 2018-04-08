@@ -916,11 +916,11 @@ Public Class Game
                 Case cKeys(13)
                     toShopKey()
                 Case cKeys(14)
-                    'armor
+                    eArmorKey()
                 Case cKeys(15)
                     'accessory
                 Case cKeys(16)
-                    'weapon
+                    eWeaponKey()
                 Case cKeys(17)
                     selfinpKey()
                 Case cKeys(18)
@@ -952,10 +952,19 @@ Public Class Game
             lstLog.TopIndex = lstLog.Items.Count - 1
             Return True
         Else
+            If Keydata.Equals(Keys.Up) Then
+                lstSelec.TopIndex -= 1
+                Return True
+            End If
+            If Keydata.Equals(Keys.Down) Then
+                lstSelec.TopIndex += 1
+                Return True
+            End If
             If Keydata.Equals(Keys.Back) Then
                 selecting = False
                 pnlSelection.Location = New Point(1000, pnlSelection.Location.Y)
                 pnlSelection.Visible = False
+                Return True
             End If
             selection(Keydata)
         End If
@@ -1145,7 +1154,6 @@ Public Class Game
         End If
     End Sub
     Sub magicKey()
-
         toPNLSelec("Magic")
     End Sub
     Sub specialKey()
@@ -1205,7 +1213,12 @@ Public Class Game
             pushLblEvent("There's no shop here.")
         End If
     End Sub
-
+    Sub eArmorKey()
+        toPNLSelec("Armor")
+    End Sub
+    Sub eWeaponKey()
+        toPNLSelec("Weapon")
+    End Sub
     Sub selfinpKey()
         If turn < 2 Then Exit Sub
         lstLog.Items.Add(player.description)
@@ -1251,6 +1264,10 @@ Public Class Game
                 selectMagic(index)
             ElseIf selectionType = "Spec" Then
                 selectSpec(index)
+            ElseIf selectionType = "Armor" Then
+                selectArmor(index)
+            ElseIf selectionType = "Weapon" Then
+                selectWeapon(index)
             End If
             player.invNeedsUDate = True
             player.UIupdate()
@@ -1358,6 +1375,99 @@ Public Class Game
         updatePnlCombat(player, player.currTarget)
         ttCosts.RemoveAll()
     End Sub
+    Sub selectArmor(ByVal index As Integer)
+        Dim subString As String = lstSelec.Items(index).ToString.Split(" (")(2)
+
+        'if clothes offer resistance on the way off, this handles that
+        If (player.equippedArmor.getName.Equals("Ropes") And subString <> "Ropes") Or (player.equippedArmor.getName.Equals("Living_Armor") _
+            And subString <> "Living_Armor") Or (player.equippedArmor.getName.Equals("Living_Lingerie") And subString <> "Living_Lingerie") Then
+            If Int(Rnd() * 2) = 0 Then
+                pushLblEvent("Despite a struggle agaisnt your bonds, you are unable to escape!  Oh well, maybe next time...")
+                Me.Close()
+                Exit Sub
+            Else
+                pushLblEvent("You deftly take off your clothes, despite the resistance they put up.")
+            End If
+        End If
+        If Not player.equippedArmor.getName.Equals(subString) Then
+            player.equippedArmor.onUnequip()
+        End If
+
+        'equip the new armor
+        Equipment.clothesChange(subString)
+        If player.equippedArmor.mBoost > 0 Then player.mana += player.equippedArmor.mBoost
+
+        If player.mana > player.getmaxMana Then player.mana = player.getmaxMana
+
+        'if the player has the slutty dress curse, this takes care of it
+        If player.perks("slutcurse") > -1 Then
+            Equipment.clothingCurse1()
+        End If
+
+        'handles any tfs or triggers triggered by equipping of certain weapons
+        If player.title.Equals("Magic Girl") And player.equippedArmor.getName.Equals("Magic_Girl_Outfit") Then
+            player.equippedArmor = player.inventory.Item(10)
+            lstLog.Items.Add("A magic girl needs her uniform!")
+        End If
+
+        If player.title.Equals("Blow-Up Doll") Then
+            player.equippedArmor = New Naked
+        End If
+
+        'handles any tfs or triggers triggered by equipping of certain armors
+        If player.equippedArmor.getName = "Living_Armor" And Not player.perks("livearm") > -1 Then
+            player.perks("livearm") = 0
+        ElseIf player.equippedArmor.getName = "Living_Lingerie" And Not player.perks("livelinge") > -1 Then
+            player.perks("livelinge") = 0
+        End If
+
+        'updates the player, the stat display, and the portrait before the form closes
+        Equipment.portraitUDate()
+        player.UIupdate()
+        lstLog.TopIndex = lstLog.Items.Count - 1
+    End Sub
+    Sub selectWeapon(ByVal index As Integer)
+        Dim subString As String = lstSelec.Items(index).ToString.Split(" (")(2)
+
+        If Not player.equippedWeapon.getName.Equals(subString) Then
+            player.equippedWeapon.onUnequip()
+        End If
+
+        'this handles the revert from the magical girl form, if needed
+        If player.equippedWeapon.getName.Equals("Magic_Girl_Wand") And player.title.Equals("Magic Girl") And Not subString.Equals("Magic_Girl_Wand") Then
+            lstLog.Items.Add("Putting away your wand causes you to change into your regular self!")
+            player.inventory.Item(10).add(-1)
+            player.magGState.save(player)
+            player.revert2()
+        End If
+
+        'handles the equiping of weapons
+        Dim sWeapon As Weapon = Nothing
+        If subString <> "" Then
+            For i = 0 To UBound(Equipment.wNameList)
+                If subString.ToString().Split()(0) = Equipment.wNameList(i) Then
+                    sWeapon = Equipment.wList(i)
+                    Exit For
+                End If
+            Next
+            If sWeapon Is Nothing Then Exit Sub
+            player.equippedWeapon = sWeapon
+        End If
+        If player.equippedWeapon.mBoost > 0 Then player.mana += player.equippedWeapon.mBoost
+        If player.mana > player.getmaxMana Then player.mana = player.getmaxMana
+
+        'handles any tfs or triggers triggered by equipping of certain weapons
+        If player.equippedWeapon.getName = "Magic_Girl_Wand" And Not player.title.Equals("Magic Girl") Then
+            Polymorph.transform(player, "Magic Girl")
+        ElseIf player.equippedWeapon.getName = "Sword_of_the_Brutal" And Not player.perks("swordpossess") > -1 Then
+            player.perks("swordpossess") = 0
+        End If
+
+        'updates the player, the stat display, and the portrait before the form closes
+        Equipment.portraitUDate()
+        player.UIupdate()
+        lstLog.TopIndex = lstLog.Items.Count - 1
+    End Sub
     Sub toPNLSelec(ByVal mode As String)
         selecting = True
         pnlSelection.BringToFront()
@@ -1422,6 +1532,40 @@ Public Class Game
                         count += 1
                     Next
                 End If
+            Case "Armor"
+                lblWhat.Text = "Equip what?"
+                lstSelec.Items.Add("a - Naked")
+                count += 1
+                If player.title = "Bimbo" Or player.perks("slutcurse") > -1 Then
+                    lstSelec.Items.Add("b - Skimpy_Clothes")
+                ElseIf player.title = "Princess" Then
+                    lstSelec.Items.Add("b - Regal_Gown")
+                ElseIf player.title = "Maid" Then
+                    lstSelec.Items.Add("b - Maid_Outfit")
+                ElseIf player.title = "Succubus" Then
+                    lstSelec.Items.Add("b - Succubus_Garb")
+                ElseIf player.title = "Goddess" Then
+                    lstSelec.Items.Add("b - Goddess_Gown")
+                Else
+                    lstSelec.Items.Add("b - Common_Clothes")
+                End If
+                count += 1
+                For i = 0 To UBound(player.getArmors.Item2)
+                    If player.getArmors.Item2(i).count > 0 Then
+                        lstSelec.Items.Add(indexes(count) & " - " & player.getArmors.Item2(i).getName)
+                        count += 1
+                    End If
+                Next
+            Case "Weapon"
+                lblWhat.Text = "Equip what?"
+                lstSelec.Items.Add("a - Fists")
+                count += 1
+                For i = 0 To UBound(player.getWeapons.Item2)
+                    If player.getWeapons.Item2(i).count > 0 Then
+                        lstSelec.Items.Add(indexes(count) & " - " & player.getWeapons.Item2(i).getName)
+                        count += 1
+                    End If
+                Next
         End Select
         selectionType = mode
         pnlSelection.Location = New Point(115, pnlSelection.Location.Y)
@@ -3183,36 +3327,6 @@ Public Class Game
     End Sub
 
     Private Sub Game_Resize(sender As Object, e As EventArgs) Handles Me.Resize
-        Dim ratio = Me.Size.Width / 777
-        Dim newFont As Font = New System.Drawing.Font("Consolas", CInt(8 * ratio))
-        For i = 0 To Me.Controls.Count - 1
-            Dim x = Me.Controls(i).Size.Width * ratio
-            Dim y = Me.Controls(i).Size.Height * ratio
-            Me.Controls(i).Size = New Size(x, y)
-            x = Me.Controls(i).Location.X * ratio
-            y = Me.Controls(i).Location.Y * ratio
-            Me.Controls(i).Location = New Point(x, y)
-            Me.Controls(i).Font = newFont
-        Next
-        FileToolStripMenuItem.Font = newFont
-        SaveToolStripMenuItem.Font = newFont
-        LoadToolStripMenuItem.Font = newFont
-        HelpToolStripMenuItem.Font = newFont
-        HelpToolStripMenuItem1.Font = newFont
-        InfoToolStripMenuItem.Font = newFont
-        newFont = New System.Drawing.Font("Consolas", CInt(9.25 * Me.Size.Width / 688), FontStyle.Underline)
-        lblNameTitle.Font = newFont
-        newFont = New System.Drawing.Font("Consolas", CInt(7 * Me.Size.Width / 688))
-        btnDrop.Font = newFont
-        btnLook.Font = newFont
-        newFont = New System.Drawing.Font("Consolas", CInt(9 * Me.Size.Width / 688))
-        MenuStrip1.Font = newFont
-        For i = 0 To pnlCombat.Controls.Count - 1
-            pnlCombat.Controls(i).Font = newFont
-        Next
-        For i = 0 To pnlDescript.Controls.Count - 1
-            pnlDescript.Controls(i).Font = newFont
-        Next
     End Sub
 
     Private Sub HelpToolStripMenuItem1_Click(sender As Object, e As EventArgs) Handles HelpToolStripMenuItem1.Click
