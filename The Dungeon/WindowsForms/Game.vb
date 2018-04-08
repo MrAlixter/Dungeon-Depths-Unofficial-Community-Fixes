@@ -832,6 +832,7 @@ Public Class Game
             Return True
         End If
         If pnlDescript.Visible And Not lblEvent.Visible Then
+            pnlDescript.Location = New Point(1000, pnlDescript.Location.Y)
             pnlDescript.Visible = False
             Return True
         End If
@@ -903,7 +904,7 @@ Public Class Game
                     magicKey()
                     Return True
                 Case cKeys(8)
-                    'special
+                    specialKey()
                 Case cKeys(9)
                     waitKey()
                 Case cKeys(10)
@@ -913,7 +914,7 @@ Public Class Game
                 Case cKeys(12)
                     useKey()
                 Case cKeys(13)
-                    'pay
+                    toShopKey()
                 Case cKeys(14)
                     'armor
                 Case cKeys(15)
@@ -953,6 +954,7 @@ Public Class Game
         Else
             If Keydata.Equals(Keys.Back) Then
                 selecting = False
+                pnlSelection.Location = New Point(1000, pnlSelection.Location.Y)
                 pnlSelection.Visible = False
             End If
             selection(Keydata)
@@ -1143,7 +1145,11 @@ Public Class Game
         End If
     End Sub
     Sub magicKey()
+
         toPNLSelec("Magic")
+    End Sub
+    Sub specialKey()
+        toPNLSelec("Spec")
     End Sub
     Sub drinkKey()
         toPNLSelec("Potion")
@@ -1172,7 +1178,7 @@ Public Class Game
         Dim int As Integer = 100 - player.getSpeed
         If int < 1 Then int = 1
         updatelist.add(player, int)
-        pushLblCombatEvent("You wait for a bit...")
+        pushLblEvent("You wait for a bit...")
     End Sub
     Sub runKey()
         turn += 1
@@ -1180,6 +1186,24 @@ Public Class Game
     End Sub
     Sub useKey()
         toPNLSelec("Useable")
+    End Sub
+    Sub toShopKey()
+        If player.pos.Equals(shopkeeper.pos) Then
+            If Not lblEventOnClose Is Nothing Then
+                lblEventOnClose()
+                lblEventOnClose = Nothing
+            End If
+            If lblEvent.Visible = True Then
+                lblEvent.Visible = False
+                lblEvent.ForeColor = Color.White
+                drawBoard()
+            End If
+            Dim s As Shop = New Shop
+            s.ShowDialog()
+            s.Dispose()
+        Else
+            pushLblEvent("There's no shop here.")
+        End If
     End Sub
 
     Sub selfinpKey()
@@ -1191,7 +1215,20 @@ Public Class Game
         toPNLSelec("Food")
     End Sub
     Sub yesKey()
-
+        If btnChallengeBoss.Visible Then
+            Dim m As Monster
+            If floor Mod 5 = 0 Then
+                m = New Boss(floor)
+            Else
+                m = New MiniBoss(floor)
+            End If
+            player.currTarget = m
+            npcList.Add(m)
+            lstLog.Items.Add((m.getName & " attacks!"))
+            toCombat()
+            btnChallengeBoss.Visible = False
+            lstLog.TopIndex = lstLog.Items.Count - 1
+        End If
     End Sub
     Sub noKey()
 
@@ -1212,10 +1249,14 @@ Public Class Game
                 selectItem(index)
             ElseIf selectionType = "Magic" Then
                 selectMagic(index)
+            ElseIf selectionType = "Spec" Then
+                selectSpec(index)
             End If
             player.invNeedsUDate = True
             player.UIupdate()
             selecting = False
+
+            pnlSelection.Location = New Point(1000, pnlSelection.Location.Y)
             pnlSelection.Visible = False
             selectedItem = Nothing
         End If
@@ -1256,6 +1297,49 @@ Public Class Game
             End If
         Next
         Spells.spellCast(m, player, cboxMG.Items(index))
+        If npcList.Count > 0 Then
+            For i = 0 To npcList.Count - 1
+                Dim int1 As Integer = 100 - npcList.Item(i).speed
+                If int1 < 1 Then int1 = 1
+                updatelist.add(npcList.Item(i), (int1))
+            Next
+        End If
+        Dim int As Integer = 100 - player.getSpeed
+        If int < 1 Then int = 1
+        updatelist.add(player, int)
+        Do While updatelist.isEmpty() = False
+            Dim u As Updatable = updatelist.remove()
+            u.update()
+        Loop
+        'updates the combat banner
+        updatePnlCombat(player, player.currTarget)
+        ttCosts.RemoveAll()
+    End Sub
+    Sub selectSpec(ByVal index As Integer)
+        turn += 1
+        If Not lblEventOnClose Is Nothing Then
+            lblEventOnClose()
+            lblEventOnClose = Nothing
+        End If
+        lblCombatEvents.Text = ""
+        If lblEvent.Visible = True Then
+            lblEvent.Visible = False
+            lblEvent.ForeColor = Color.White
+        End If
+        Dim m As Monster = Nothing
+        For i = 0 To npcList.Count() - 1
+            If npcList.Item(i).GetType().IsSubclassOf(GetType(Monster)) Or npcList.Item(i).GetType() Is GetType(Monster) Then
+                m = npcList.Item(i)
+                Exit For
+            End If
+        Next
+        Specials.goSpecial(m, player, cmboxSpec.Items(index))
+        If Specials.SPCCost(cmboxSpec.Text).Equals("Useable only once per combat.") Then cmboxSpec.Items.Remove(cmboxSpec.Text)
+        If cmboxSpec.Items.Count = 0 Then
+            cmboxSpec.Visible = False
+            btnSpec.Visible = False
+        End If
+        cmboxSpec.Text = "-- Select --"
         If npcList.Count > 0 Then
             For i = 0 To npcList.Count - 1
                 Dim int1 As Integer = 100 - npcList.Item(i).speed
@@ -1325,8 +1409,22 @@ Public Class Game
                         count += 1
                     Next
                 End If
+            Case "Spec"
+                If Not combatmode And Not npcmode Then
+                    pushLblEvent("You don't have a target at the moment...")
+                    selecting = False
+                    Exit Sub
+                End If
+                lblWhat.Text = "Perform what?"
+                If combatmode Then
+                    For i = 0 To cmboxSpec.Items.Count - 1
+                        lstSelec.Items.Add(indexes(count) & " - " & cmboxSpec.Items(i).ToString)
+                        count += 1
+                    Next
+                End If
         End Select
         selectionType = mode
+        pnlSelection.Location = New Point(115, pnlSelection.Location.Y)
         pnlSelection.Visible = True
     End Sub
 
@@ -1592,6 +1690,7 @@ Public Class Game
             imagesWorkerArg = 1
             imagesWorker.RunWorkerAsync()
         End If
+        pnlSaveLoad.Location = New Point(1000, pnlSaveLoad.Location.Y)
         pnlSaveLoad.Visible = False
         If picStart.Visible Then closesol()
     End Sub
@@ -1613,6 +1712,7 @@ Public Class Game
             imagesWorkerArg = 2
             imagesWorker.RunWorkerAsync()
         End If
+        pnlSaveLoad.Location = New Point(1000, pnlSaveLoad.Location.Y)
         pnlSaveLoad.Visible = False
         If picStart.Visible Then closesol()
     End Sub
@@ -1634,6 +1734,7 @@ Public Class Game
             imagesWorkerArg = 3
             imagesWorker.RunWorkerAsync()
         End If
+        pnlSaveLoad.Location = New Point(1000, pnlSaveLoad.Location.Y)
         pnlSaveLoad.Visible = False
         If picStart.Visible Then closesol()
     End Sub
@@ -1655,6 +1756,7 @@ Public Class Game
             imagesWorkerArg = 4
             imagesWorker.RunWorkerAsync()
         End If
+        pnlSaveLoad.Location = New Point(1000, pnlSaveLoad.Location.Y)
         pnlSaveLoad.Visible = False
         If picStart.Visible Then closesol()
     End Sub
@@ -1676,6 +1778,7 @@ Public Class Game
             imagesWorkerArg = 5
             imagesWorker.RunWorkerAsync()
         End If
+        pnlSaveLoad.Location = New Point(1000, pnlSaveLoad.Location.Y)
         pnlSaveLoad.Visible = False
         If picStart.Visible Then closesol()
     End Sub
@@ -1697,6 +1800,7 @@ Public Class Game
             imagesWorkerArg = 6
             imagesWorker.RunWorkerAsync()
         End If
+        pnlSaveLoad.Location = New Point(1000, pnlSaveLoad.Location.Y)
         pnlSaveLoad.Visible = False
         If picStart.Visible Then closesol()
     End Sub
@@ -1718,6 +1822,7 @@ Public Class Game
             imagesWorkerArg = 7
             imagesWorker.RunWorkerAsync()
         End If
+        pnlSaveLoad.Location = New Point(1000, pnlSaveLoad.Location.Y)
         pnlSaveLoad.Visible = False
         If picStart.Visible Then closesol()
     End Sub
@@ -1739,10 +1844,12 @@ Public Class Game
             imagesWorkerArg = 8
             imagesWorker.RunWorkerAsync()
         End If
+        pnlSaveLoad.Location = New Point(1000, pnlSaveLoad.Location.Y)
         pnlSaveLoad.Visible = False
         If picStart.Visible Then closesol()
     End Sub
     Private Sub btnCancel_Click(sender As Object, e As EventArgs) Handles btnCancel.Click
+        pnlSaveLoad.Location = New Point(1000, pnlSaveLoad.Location.Y)
         pnlSaveLoad.Visible = False
         If picStart.Visible = True Then
             btnS.Visible = True
@@ -1754,6 +1861,7 @@ Public Class Game
     End Sub
     Sub toSOL()
         fromCombat()
+        pnlSaveLoad.Location = New Point(188, pnlSaveLoad.Location.Y)
         pnlSaveLoad.Visible = True
         'CharacterGenerator.init()
         While Not savePicsReady
@@ -1919,6 +2027,7 @@ Public Class Game
         player.UIupdate()
     End Sub
     Sub pnlCombatClose()
+        pnlCombat.Location = New Point(1000, pnlCombat.Location.Y)
         pnlCombat.Visible = False
         lblCombatEvents.Text = ""
     End Sub
@@ -1927,6 +2036,7 @@ Public Class Game
     Sub toDesc()
         txtDescript.Text = player.genDescription
         picDescPort.BackgroundImage = picPortrait.BackgroundImage
+        pnlDescript.Location = New Point(115, pnlDescript.Location.Y)
         pnlDescript.Visible = True
     End Sub
 
@@ -2033,6 +2143,7 @@ Public Class Game
         lblEHealthChange.Tag = 0
         lblPHealtDiff.Tag = 0
         updatePnlCombat(player, player.currTarget)
+        pnlCombat.Location = New Point(115, pnlCombat.Location.Y)
         pnlCombat.Visible = True
         combatmode = True
         player.canMoveFlag = False

@@ -176,10 +176,10 @@ Partial Class Game
         Me.picstairsbossf = New System.Windows.Forms.PictureBox()
         Me.PictureBox2 = New System.Windows.Forms.PictureBox()
         Me.pnlSelection = New System.Windows.Forms.Panel()
+        Me.lblInstruc = New System.Windows.Forms.Label()
         Me.lblWhat = New System.Windows.Forms.Label()
         Me.Label3 = New System.Windows.Forms.Label()
         Me.lstSelec = New System.Windows.Forms.ListBox()
-        Me.lblInstruc = New System.Windows.Forms.Label()
         CType(Me.picMarkBClothes, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me.picMarkBRearHair2, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me.picMarkBRearHair1, System.ComponentModel.ISupportInitialize).BeginInit()
@@ -1503,6 +1503,7 @@ Partial Class Game
         '
         'pnlSaveLoad
         '
+        Me.pnlSaveLoad.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle
         Me.pnlSaveLoad.Controls.Add(Me.btnS1)
         Me.pnlSaveLoad.Controls.Add(Me.btnCancel)
         Me.pnlSaveLoad.Controls.Add(Me.btnS8)
@@ -1630,7 +1631,7 @@ Partial Class Game
         '
         'tmrKeyCD
         '
-        Me.tmrKeyCD.Interval = 40
+        Me.tmrKeyCD.Interval = 50
         '
         'pnlCombat
         '
@@ -1939,11 +1940,23 @@ Partial Class Game
         Me.pnlSelection.Controls.Add(Me.lblWhat)
         Me.pnlSelection.Controls.Add(Me.Label3)
         Me.pnlSelection.Controls.Add(Me.lstSelec)
-        Me.pnlSelection.Location = New System.Drawing.Point(1000, 190)
+        Me.pnlSelection.Location = New System.Drawing.Point(1000, 72)
         Me.pnlSelection.Name = "pnlSelection"
         Me.pnlSelection.Size = New System.Drawing.Size(560, 293)
         Me.pnlSelection.TabIndex = 281
         Me.pnlSelection.Visible = False
+        '
+        'lblInstruc
+        '
+        Me.lblInstruc.AutoSize = True
+        Me.lblInstruc.BackColor = System.Drawing.Color.Black
+        Me.lblInstruc.Font = New System.Drawing.Font("Consolas", 9.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.lblInstruc.ForeColor = System.Drawing.Color.White
+        Me.lblInstruc.Location = New System.Drawing.Point(6, 61)
+        Me.lblInstruc.Name = "lblInstruc"
+        Me.lblInstruc.Size = New System.Drawing.Size(310, 22)
+        Me.lblInstruc.TabIndex = 280
+        Me.lblInstruc.Text = "Type the corresponding letter:"
         '
         'lblWhat
         '
@@ -1980,18 +1993,6 @@ Partial Class Game
         Me.lstSelec.Name = "lstSelec"
         Me.lstSelec.Size = New System.Drawing.Size(198, 242)
         Me.lstSelec.TabIndex = 142
-        '
-        'lblInstruc
-        '
-        Me.lblInstruc.AutoSize = True
-        Me.lblInstruc.BackColor = System.Drawing.Color.Black
-        Me.lblInstruc.Font = New System.Drawing.Font("Consolas", 9.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.lblInstruc.ForeColor = System.Drawing.Color.White
-        Me.lblInstruc.Location = New System.Drawing.Point(6, 61)
-        Me.lblInstruc.Name = "lblInstruc"
-        Me.lblInstruc.Size = New System.Drawing.Size(310, 22)
-        Me.lblInstruc.TabIndex = 280
-        Me.lblInstruc.Text = "Type the corresponding letter:"
         '
         'Game
         '
