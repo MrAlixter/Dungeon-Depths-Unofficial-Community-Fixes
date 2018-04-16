@@ -2678,7 +2678,23 @@ Public Class Game
 
     Private Sub tooltipText(sender As Label, tooltip As Panel, toSet As Label)
         If sender.Name = "lblATK" Then
-            toSet.Text = "ATK is physical damage" + vbCrLf + "dmg = weaponATK + pATK - " + vbCrLf + "  (eDEF * pATK / 100) + " + vbCrLf + "  (12 + pATK + weaponBonus) * 2"
+            toSet.Text = "ATK determines physical damage given" + vbCrLf + "(click for more)"  '"dmg = weaponATK + pATK - " + vbCrLf + "  (eDEF * pATK / 100) + " + vbCrLf + "  (12 + pATK + weaponBonus) * 2"
+        ElseIf sender.Name = "lblDEF" Then
+            toSet.Text = "DEF determines physical damage taken" + vbCrLf + "(click for more)"
+        ElseIf sender.Name = "lblHealth" Then
+            toSet.Text = "Heatlh determines damage that can be taken before dying" + vbCrLf + "(click for more)"
+        ElseIf sender.Name = "lblEVD" Then
+            toSet.Text = "EVD determines chance of avoiding attacks" + vbCrLf + "(click for more)"
+        ElseIf sender.Name = "lblHunger" Then
+            toSet.Text = "When hunger is maxed, player will take healllth damage" + vbCrLf + "(click for more)"
+        ElseIf sender.Name = "lblMana" Then
+            toSet.Text = "Mana is used to cast magic" + vbCrLf + "(click for more)"
+        ElseIf sender.Name = "lblSKL" Then
+            toSet.Text = "WIL (will) affects TF speed" + vbCrLf + "(click for more)"
+        ElseIf sender.Name = "lblSPD" Then
+            toSet.Text = "SPD currently does nothing" + vbCrLf + "(click for more)"
+        ElseIf sender.Name = "lblGold" Then
+            toSet.Text = "Gold can be used to buy items from merchants" + vbCrLf + "(click for more)"
         Else
             toSet.Text = "THIS LABEL HAS NOT YET BEEN HANDLED"
         End If
