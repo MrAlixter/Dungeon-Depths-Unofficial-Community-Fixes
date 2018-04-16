@@ -68,6 +68,18 @@
             boxType.SelectedItem = "H (Stairs)"
             boxType.Enabled = False
             boxOptions.Visible = True
+
+            Dim btnMove As Button
+            btnMove = New System.Windows.Forms.Button()
+            boxOptions.Controls.Add(btnMove)
+            btnMove.BackColor = System.Drawing.Color.Black
+            btnMove.Location = New System.Drawing.Point(77, 32)
+            btnMove.Name = "btnMove"
+            btnMove.Size = New System.Drawing.Size(103, 48)
+            btnMove.TabIndex = 0
+            btnMove.Text = "Move"
+            btnMove.UseVisualStyleBackColor = False
+            AddHandler btnMove.Click, AddressOf btnMove_Clicked
         ElseIf (t.Text = "@" And Game.player.pos.X = p.X And Game.player.pos.Y = p.Y) Then 'Player
             boxType.SelectedItem = "@ (Player)"
             boxType.Enabled = False
@@ -169,6 +181,32 @@
     Private Sub btnEditContents_Clicked(sender As Object, e As EventArgs)
         Dim ec As New EditContents(p)
         ec.ShowDialog()
+    End Sub
+
+    Private Sub btnMove_Clicked(sender As Object, e As EventArgs)
+        Dim ts As New TileSelector()
+        ts.ShowDialog()
+        If ts.saveChoice AndAlso ts.selected <> Nothing Then
+            'MessageBox.Show("SELECTED " & ts.selected.ToString())
+            Dim toReplace As mTile = Game.mBoard(ts.selected.Y, ts.selected.X)
+            If toReplace.Tag = 0 Or toReplace.Text = "" Then
+                'MessageBox.Show("REPLACE WOULD BE SUCCESSFUL")
+                'Dim newLoc As Point = ts.selected
+                'Dim oldLoc As Point = p
+                Dim tag As Integer = t.Tag
+
+                t.Tag = toReplace.Tag
+                t.Text = toReplace.Text
+                t.ForeColor = toReplace.ForeColor
+                toReplace.Tag = tag
+                toReplace.Text = "H"
+                toReplace.ForeColor = Color.FromArgb(45, 45, 45)
+                Game.stairs = ts.selected
+                Game.zoom()
+            Else
+                MessageBox.Show("TILE OCCUPIED")
+            End If
+        End If
     End Sub
 
     Private Sub EditTile_FormClosing(sender As Object, e As FormClosingEventArgs) Handles MyBase.FormClosing
