@@ -56,7 +56,7 @@
             btnEditContents = New System.Windows.Forms.Button()
             boxOptions.Controls.Add(btnEditContents)
             btnEditContents.BackColor = System.Drawing.Color.Black
-            btnEditContents.Location = New System.Drawing.Point(77, 32)
+            btnEditContents.Location = New System.Drawing.Point(25, 32)
             btnEditContents.Name = "btnEditContents"
             btnEditContents.Size = New System.Drawing.Size(103, 48)
             btnEditContents.TabIndex = 0
@@ -64,34 +64,32 @@
             btnEditContents.UseVisualStyleBackColor = False
             AddHandler btnEditContents.Click, AddressOf btnEditContents_Clicked
 
+            addMoveButton(boxOptions.Controls.Count)
         ElseIf (t.Text = "H") Then 'Stairs
             boxType.SelectedItem = "H (Stairs)"
             boxType.Enabled = False
             boxOptions.Visible = True
-
-            Dim btnMove As Button
-            btnMove = New System.Windows.Forms.Button()
-            boxOptions.Controls.Add(btnMove)
-            btnMove.BackColor = System.Drawing.Color.Black
-            btnMove.Location = New System.Drawing.Point(77, 32)
-            btnMove.Name = "btnMove"
-            btnMove.Size = New System.Drawing.Size(103, 48)
-            btnMove.TabIndex = 0
-            btnMove.Text = "Move"
-            btnMove.UseVisualStyleBackColor = False
-            AddHandler btnMove.Click, AddressOf btnMove_Clicked
+            addMoveButton(boxOptions.Controls.Count)
         ElseIf (t.Text = "@" And Game.player.pos.X = p.X And Game.player.pos.Y = p.Y) Then 'Player
             boxType.SelectedItem = "@ (Player)"
             boxType.Enabled = False
+            boxOptions.Visible = True
+            addMoveButton(boxOptions.Controls.Count)
         ElseIf (t.Text = "@") Then 'Statue
             boxType.SelectedItem = "@ (Statue)"
             boxType.Enabled = False
+            boxOptions.Visible = True
+            addMoveButton(boxOptions.Controls.Count)
         ElseIf (t.Text = "$") Then 'NPC
             boxType.SelectedItem = "$ (NPC)"
             boxType.Enabled = False
+            boxOptions.Visible = True
+            addMoveButton(boxOptions.Controls.Count)
         ElseIf (t.Text = "+") Then 'Trap
             boxType.SelectedItem = "+ (Trap)"
             boxType.Enabled = False
+            boxOptions.Visible = True
+            addMoveButton(boxOptions.Controls.Count)
         ElseIf (t.Tag = 0) Then 'Wall
             boxType.SelectedItem = "(Wall)"
         Else 'Walkable
@@ -101,6 +99,25 @@
         AddHandler boxType.SelectedIndexChanged, AddressOf boxType_SelectedIndexChanged
 
 
+    End Sub
+
+    Private Sub addMoveButton(Optional others As Integer = 0)
+        Dim btnMove As Button
+        btnMove = New System.Windows.Forms.Button()
+        boxOptions.Controls.Add(btnMove)
+        btnMove.BackColor = System.Drawing.Color.Black
+        If others = 0 Then
+            btnMove.Location = New System.Drawing.Point(77, 32)
+        ElseIf others = 1 Then
+            btnMove.Location = New System.Drawing.Point(129, 32)
+        End If
+
+        btnMove.Name = "btnMove"
+        btnMove.Size = New System.Drawing.Size(103, 48)
+        btnMove.TabIndex = 0
+        btnMove.Text = "Move"
+        btnMove.UseVisualStyleBackColor = False
+        AddHandler btnMove.Click, AddressOf btnMove_Clicked
     End Sub
 
     Private Sub boxSeen_CheckedChanged(sender As Object, e As EventArgs) Handles boxSeen.CheckedChanged
@@ -157,11 +174,11 @@
                         t.Tag = 1
                     End If
                 Else
-                    MessageBox.Show("ERR: CURRENTLY NOT BUILD")
+                    MessageBox.Show("ERR: CURRENTLY NOT BUILT")
                     boxType.SelectedItem = "(Wall)"
                 End If
             Else
-                MessageBox.Show("ERR: CURRENTLY NOT BUILD")
+                MessageBox.Show("ERR: CURRENTLY NOT BUILT")
                 boxType.SelectedItem = "(Wall)"
             End If
         End If
@@ -189,23 +206,53 @@
         If ts.saveChoice AndAlso ts.selected <> Nothing Then
             'MessageBox.Show("SELECTED " & ts.selected.ToString())
             Dim toReplace As mTile = Game.mBoard(ts.selected.Y, ts.selected.X)
-            If toReplace.Tag = 0 Or toReplace.Text = "" Then
-                'MessageBox.Show("REPLACE WOULD BE SUCCESSFUL")
-                'Dim newLoc As Point = ts.selected
-                'Dim oldLoc As Point = p
+            If toReplace.Text = "" Then
                 Dim tag As Integer = t.Tag
+                Dim col As Color = t.ForeColor
+
+                Dim item As String = boxType.SelectedItem.ToString()
+                If item.IndexOf("Stairs") <> -1 Then
+                    toReplace.Text = "H"
+                    Game.stairs = ts.selected
+                ElseIf item.IndexOf("NPC") <> -1 Then
+                    MessageBox.Show("NOT DONE WITH NPC RELOCATE")
+                    Exit Sub
+                    toReplace.Text = "$"
+                ElseIf item.IndexOf("Chest") <> -1 Then
+                    MessageBox.Show("NOT DONE WITH CHEST RELOCATE")
+                    Exit Sub
+                    toReplace.Text = "#"
+                ElseIf item.IndexOf("Player") <> -1 Then
+                    MessageBox.Show("NOT DONE WITH PLAYER RELOCATE")
+                    Exit Sub
+                    toReplace.Text = "@"
+                ElseIf item.IndexOf("Statue") <> -1 Then
+                    toReplace.Text = "@"
+                ElseIf item.IndexOf("Trap") <> -1 Then
+                    MessageBox.Show("NOT DONE WITH TRAP RELOCATE")
+                    Exit Sub
+                    toReplace.Text = "+"
+                Else
+                    toReplace.Text = ""
+                End If
+
 
                 t.Tag = toReplace.Tag
                 t.Text = toReplace.Text
                 t.ForeColor = toReplace.ForeColor
                 toReplace.Tag = tag
-                toReplace.Text = "H"
-                toReplace.ForeColor = Color.FromArgb(45, 45, 45)
-                Game.stairs = ts.selected
+                toReplace.ForeColor = col
+
+
+
+                Reload()
+
                 Game.zoom()
             Else
                 MessageBox.Show("TILE OCCUPIED")
             End If
+            Game.mBoard(ts.selected.Y, ts.selected.X) = toReplace
+            Game.mBoard(p.Y, p.X) = t
         End If
     End Sub
 
