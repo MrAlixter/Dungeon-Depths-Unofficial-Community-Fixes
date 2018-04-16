@@ -174,12 +174,15 @@ Partial Class Game
         Me.picStairsBoss = New System.Windows.Forms.PictureBox()
         Me.picChicken = New System.Windows.Forms.PictureBox()
         Me.picstairsbossf = New System.Windows.Forms.PictureBox()
-        Me.PictureBox2 = New System.Windows.Forms.PictureBox()
+        Me.picstairslockf = New System.Windows.Forms.PictureBox()
         Me.pnlSelection = New System.Windows.Forms.Panel()
         Me.lblInstruc = New System.Windows.Forms.Label()
         Me.lblWhat = New System.Windows.Forms.Label()
         Me.Label3 = New System.Windows.Forms.Label()
         Me.lstSelec = New System.Windows.Forms.ListBox()
+        Me.picSW = New System.Windows.Forms.PictureBox()
+        Me.PicSWPrin = New System.Windows.Forms.PictureBox()
+        Me.picSWb = New System.Windows.Forms.PictureBox()
         CType(Me.picMarkBClothes, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me.picMarkBRearHair2, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me.picMarkBRearHair1, System.ComponentModel.ISupportInitialize).BeginInit()
@@ -240,8 +243,11 @@ Partial Class Game
         CType(Me.picStairsBoss, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me.picChicken, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me.picstairsbossf, System.ComponentModel.ISupportInitialize).BeginInit()
-        CType(Me.PictureBox2, System.ComponentModel.ISupportInitialize).BeginInit()
+        CType(Me.picstairslockf, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.pnlSelection.SuspendLayout()
+        CType(Me.picSW, System.ComponentModel.ISupportInitialize).BeginInit()
+        CType(Me.PicSWPrin, System.ComponentModel.ISupportInitialize).BeginInit()
+        CType(Me.picSWb, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.SuspendLayout()
         '
         'btnUse1
@@ -1631,7 +1637,7 @@ Partial Class Game
         '
         'tmrKeyCD
         '
-        Me.tmrKeyCD.Interval = 50
+        Me.tmrKeyCD.Interval = 40
         '
         'pnlCombat
         '
@@ -1923,15 +1929,15 @@ Partial Class Game
         Me.picstairsbossf.TabStop = False
         Me.picstairsbossf.Visible = False
         '
-        'PictureBox2
+        'picstairslockf
         '
-        Me.PictureBox2.BackgroundImage = CType(resources.GetObject("PictureBox2.BackgroundImage"), System.Drawing.Image)
-        Me.PictureBox2.Location = New System.Drawing.Point(602, 95)
-        Me.PictureBox2.Name = "PictureBox2"
-        Me.PictureBox2.Size = New System.Drawing.Size(15, 15)
-        Me.PictureBox2.TabIndex = 280
-        Me.PictureBox2.TabStop = False
-        Me.PictureBox2.Visible = False
+        Me.picstairslockf.BackgroundImage = CType(resources.GetObject("picstairslockf.BackgroundImage"), System.Drawing.Image)
+        Me.picstairslockf.Location = New System.Drawing.Point(602, 95)
+        Me.picstairslockf.Name = "picstairslockf"
+        Me.picstairslockf.Size = New System.Drawing.Size(15, 15)
+        Me.picstairslockf.TabIndex = 280
+        Me.picstairslockf.TabStop = False
+        Me.picstairslockf.Visible = False
         '
         'pnlSelection
         '
@@ -1994,14 +2000,47 @@ Partial Class Game
         Me.lstSelec.Size = New System.Drawing.Size(198, 242)
         Me.lstSelec.TabIndex = 142
         '
+        'picSW
+        '
+        Me.picSW.BackgroundImage = CType(resources.GetObject("picSW.BackgroundImage"), System.Drawing.Image)
+        Me.picSW.Location = New System.Drawing.Point(233, 70)
+        Me.picSW.Name = "picSW"
+        Me.picSW.Size = New System.Drawing.Size(15, 15)
+        Me.picSW.TabIndex = 282
+        Me.picSW.TabStop = False
+        Me.picSW.Visible = False
+        '
+        'PicSWPrin
+        '
+        Me.PicSWPrin.BackgroundImage = CType(resources.GetObject("PicSWPrin.BackgroundImage"), System.Drawing.Image)
+        Me.PicSWPrin.Location = New System.Drawing.Point(254, 70)
+        Me.PicSWPrin.Name = "PicSWPrin"
+        Me.PicSWPrin.Size = New System.Drawing.Size(15, 15)
+        Me.PicSWPrin.TabIndex = 283
+        Me.PicSWPrin.TabStop = False
+        Me.PicSWPrin.Visible = False
+        '
+        'picSWb
+        '
+        Me.picSWb.BackgroundImage = CType(resources.GetObject("picSWb.BackgroundImage"), System.Drawing.Image)
+        Me.picSWb.Location = New System.Drawing.Point(317, 70)
+        Me.picSWb.Name = "picSWb"
+        Me.picSWb.Size = New System.Drawing.Size(15, 15)
+        Me.picSWb.TabIndex = 284
+        Me.picSWb.TabStop = False
+        Me.picSWb.Visible = False
+        '
         'Game
         '
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Inherit
         Me.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink
         Me.BackColor = System.Drawing.Color.Black
         Me.ClientSize = New System.Drawing.Size(1008, 690)
+        Me.Controls.Add(Me.picSWb)
+        Me.Controls.Add(Me.PicSWPrin)
+        Me.Controls.Add(Me.picSW)
         Me.Controls.Add(Me.pnlSelection)
-        Me.Controls.Add(Me.PictureBox2)
+        Me.Controls.Add(Me.picstairslockf)
         Me.Controls.Add(Me.picstairsbossf)
         Me.Controls.Add(Me.picChicken)
         Me.Controls.Add(Me.picStairsBoss)
@@ -2185,9 +2224,12 @@ Partial Class Game
         CType(Me.picStairsBoss, System.ComponentModel.ISupportInitialize).EndInit()
         CType(Me.picChicken, System.ComponentModel.ISupportInitialize).EndInit()
         CType(Me.picstairsbossf, System.ComponentModel.ISupportInitialize).EndInit()
-        CType(Me.PictureBox2, System.ComponentModel.ISupportInitialize).EndInit()
+        CType(Me.picstairslockf, System.ComponentModel.ISupportInitialize).EndInit()
         Me.pnlSelection.ResumeLayout(False)
         Me.pnlSelection.PerformLayout()
+        CType(Me.picSW, System.ComponentModel.ISupportInitialize).EndInit()
+        CType(Me.PicSWPrin, System.ComponentModel.ISupportInitialize).EndInit()
+        CType(Me.picSWb, System.ComponentModel.ISupportInitialize).EndInit()
         Me.ResumeLayout(False)
         Me.PerformLayout()
 
@@ -2342,10 +2384,13 @@ Partial Class Game
     Friend WithEvents picStairsBoss As System.Windows.Forms.PictureBox
     Friend WithEvents picChicken As System.Windows.Forms.PictureBox
     Friend WithEvents picstairsbossf As System.Windows.Forms.PictureBox
-    Friend WithEvents PictureBox2 As System.Windows.Forms.PictureBox
+    Friend WithEvents picstairslockf As System.Windows.Forms.PictureBox
     Friend WithEvents pnlSelection As System.Windows.Forms.Panel
     Friend WithEvents lblWhat As System.Windows.Forms.Label
     Friend WithEvents Label3 As System.Windows.Forms.Label
     Friend WithEvents lstSelec As System.Windows.Forms.ListBox
     Friend WithEvents lblInstruc As System.Windows.Forms.Label
+    Friend WithEvents picSW As System.Windows.Forms.PictureBox
+    Friend WithEvents PicSWPrin As System.Windows.Forms.PictureBox
+    Friend WithEvents picSWb As System.Windows.Forms.PictureBox
 End Class

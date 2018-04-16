@@ -15,16 +15,16 @@
             Game.pushLblEvent("You are now a man!")
             Equipment.antiClothingCurse()
             Equipment.portraitUDate()
-        ElseIf p.perks("slutcurse") > -1 Then
+        ElseIf p.perks("slutcurse") > -1 Or p.iArrInd(1).Item2 = True Then
             p.iArrInd(1) = New Tuple(Of Integer, Boolean)(p.sState.iArrInd(1).Item1, False)
             p.iArrInd(2) = New Tuple(Of Integer, Boolean)(0, True)
             p.iArrInd(4) = New Tuple(Of Integer, Boolean)(p.sState.iArrInd(4).Item1, False)
             p.iArrInd(5) = New Tuple(Of Integer, Boolean)(p.sState.iArrInd(5).Item1, False)
             p.iArrInd(10) = New Tuple(Of Integer, Boolean)(p.sState.iArrInd(10).Item1, False)
             p.iArrInd(15) = New Tuple(Of Integer, Boolean)(p.sState.iArrInd(15).Item1, False)
-            Game.pushLblEvent("You are now a man!")
             p.perks("slutcurse") = -1
             Equipment.antiClothingCurse()
+            Game.pushLblEvent("You are now a man!")
             Equipment.portraitUDate()
         Else
             Game.pushLblEvent("Nothing happened!")

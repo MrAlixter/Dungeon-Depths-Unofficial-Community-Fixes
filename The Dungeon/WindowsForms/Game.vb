@@ -22,7 +22,7 @@ Public Class Game
     Public trapList As ArrayList = New ArrayList()
     'player instance variables
     Public updatelist As PQ = New PQ
-    Public shopkeeper As NPC
+    Public shopkeeper, swiz As NPC
     Public npcList As ArrayList = New ArrayList()     'list of non-player updatables (NOT SAVED)
     Public currNPC As NPC   'the current npc the player is talking to (NOT SAVED)
     Public pImage As Image  'which tile is used for the player (NOT SAVED)
@@ -144,6 +144,7 @@ Public Class Game
         Next
         'creates the shopkeeper
         shopkeeper = New NPC(2)
+        swiz = New NPC(3)
         pnlCombat.Location = New Point(115, pnlCombat.Location.Y)
         pnlDescript.Location = New Point(115, pnlDescript.Location.Y)
         pnlSaveLoad.Location = New Point(188, pnlSaveLoad.Location.Y)
@@ -583,8 +584,11 @@ Public Class Game
         Next
     End Sub
     Sub placeNPCs()
-        Dim numNpc As Integer = CInt(Int(Rnd() * 1))
-        For i = 0 To numNpc
+        shopkeeper.pos = New Point(-1, -1)
+        swiz.pos = New Point(-1, -1)
+        Dim numNpc As Integer = CInt(Int(Rnd() * 2))
+        If floor = 1 Then numNpc = 0
+        For i = 0 To 0 'numNpc
             Dim npcX As Integer = CInt(Int(Rnd() * mBoardWidth))
             Dim npcY As Integer = CInt(Int(Rnd() * mBoardHeight))
             Do While (mBoard(npcY, npcX).Tag <> 1 Or mBoard(npcY, npcX).Text <> "")
@@ -595,6 +599,8 @@ Public Class Game
                 Case 0
                     shopkeeper.pos = New Point(npcX, npcY)
                     If floor = 3 Then shopkeeper.inventory(53) += 1 Else shopkeeper.inventory(53) = 0
+                Case 1
+                    swiz.pos = New Point(npcX, npcY)
             End Select
             mBoard(npcY, npcX).ForeColor = Color.FromArgb(45, 45, 45)
             mBoard(npcY, npcX).Text = "$"
@@ -635,6 +641,9 @@ Public Class Game
         End If
         If Not shopkeeper.dead And shopkeeper.pos.X > 0 And shopkeeper.pos.Y > 0 Then
             mBoard(shopkeeper.pos.Y, shopkeeper.pos.X).Text = "$"
+        End If
+        If Not swiz.dead And swiz.pos.X > 0 And swiz.pos.Y > 0 Then
+            mBoard(swiz.pos.Y, swiz.pos.X).Text = "$"
         End If
         If mBoard(player.pos.Y, player.pos.X).Text = "+" Then
             For i = 0 To trapList.Count - 1
@@ -697,6 +706,7 @@ Public Class Game
         '8 = trap
         '9 = locked stairs
         '10 = boss stairs
+        '11 = shady wizard
         Dim viewArray(15, 23) As Integer
         Dim x As Integer = 0
         Dim y As Integer = 0
@@ -717,7 +727,8 @@ Public Class Game
                             End If
                         End If
                         If mBoard(player.pos.Y + indY, player.pos.X + indX).Text = "#" Then viewArray(y, x) = 5
-                        If mBoard(player.pos.Y + indY, player.pos.X + indX).Text = "$" Then viewArray(y, x) = 6
+                        If mBoard(player.pos.Y + indY, player.pos.X + indX).Text = "$" And player.pos.Y + indY = shopkeeper.pos.Y And player.pos.X + indX = shopkeeper.pos.X Then viewArray(y, x) = 6
+                        If mBoard(player.pos.Y + indY, player.pos.X + indX).Text = "$" And player.pos.Y + indY = swiz.pos.Y And player.pos.X + indX = swiz.pos.X Then viewArray(y, x) = 11
                         If mBoard(player.pos.Y + indY, player.pos.X + indX).Text = "+" Then viewArray(y, x) = 8
                     End If
                     If mBoard(player.pos.Y + indY, player.pos.X + indX).Text = "@" Then
@@ -752,6 +763,8 @@ Public Class Game
                             mPics(y, x).BackgroundImage = picStairsLock.BackgroundImage
                         Case 10
                             mPics(y, x).BackgroundImage = picStairsBoss.BackgroundImage
+                        Case 11
+                            mPics(y, x).BackgroundImage = picSWiz.BackgroundImage
                     End Select
                 Else
                     Select Case viewArray(y, x)
@@ -774,6 +787,12 @@ Public Class Game
                             mPics(y, x).BackgroundImage = picStatuef.BackgroundImage
                         Case 8
                             mPics(y, x).BackgroundImage = picTrapf.BackgroundImage
+                        Case 9
+                            mPics(y, x).BackgroundImage = picstairslockf.BackgroundImage
+                        Case 10
+                            mPics(y, x).BackgroundImage = picstairsbossf.BackgroundImage
+                        Case 11
+                            mPics(y, x).BackgroundImage = picSWizF.BackgroundImage
                     End Select
                 End If
                 x += 1
@@ -823,13 +842,16 @@ Public Class Game
     'handleKeyPress handles the players pressed keys, and is the driver function for each 
     Function shouldReturnEarly(ByVal Keydata As Keys)
         If picStart.Visible = True Then Return True
-        If combatmode And (Keydata.Equals(cKeys(0)) Or Keydata.Equals(cKeys(1)) Or Keydata.Equals(cKeys(2)) Or Keydata.Equals(cKeys(3))) Then
+        If combatmode And (Keydata.Equals(cKeys(0)) Or Keydata.Equals(cKeys(1)) Or Keydata.Equals(cKeys(2)) Or Keydata.Equals(cKeys(3)) Or Keydata.Equals(Keys.Left) Or Keydata.Equals(Keys.Right) Or Keydata.Equals(Keys.Down) Or Keydata.Equals(Keys.Up)) And Not selecting Then
             Return True
         End If
         If tmrKeyCD.Enabled Then Return True Else tmrKeyCD.Enabled = True
-        If lblEvent.Visible And npcmode = True Then
+        If lblEvent.Visible And npcmode = True And Not Keydata.Equals(cKeys(13)) Then
             oemSemiColon()
             Return True
+        End If
+        If lblEvent.Visible And npcmode = True And Keydata.Equals(cKeys(13)) Then
+            Return False
         End If
         If pnlDescript.Visible And Not lblEvent.Visible Then
             pnlDescript.Location = New Point(1000, pnlDescript.Location.Y)
@@ -948,7 +970,7 @@ Public Class Game
             If int < 1 Then int = 1
             updatelist.add(player, (int))
             turn += 1
-            drawBoard()
+            If Not Keydata.Equals(cKeys(10)) Then drawBoard()
             lstLog.TopIndex = lstLog.Items.Count - 1
             Return True
         Else
@@ -983,6 +1005,9 @@ Public Class Game
     Sub oemSemiColon()
         If player.pos.Equals(shopkeeper.pos) Then
             npcEncounter(shopkeeper)
+        End If
+        If player.pos.Equals(swiz.pos) Then
+            npcEncounter(swiz)
         End If
         If btnEQP.Enabled = False Then btnEQP.Enabled = True
         If chestList.Count > 0 Then
@@ -1107,6 +1132,9 @@ Public Class Game
             If player.pos.Equals(shopkeeper.pos) Then
                 npcEncounter(shopkeeper)
             End If
+            If player.pos.Equals(swiz.pos) Then
+                npcEncounter(swiz)
+            End If
         Else
             If Not lblEventOnClose Is Nothing Then
                 lblEventOnClose()
@@ -1190,28 +1218,40 @@ Public Class Game
     End Sub
     Sub runKey()
         turn += 1
-        If combatmode Then run() Else pushLblEvent("You have nothing to run from!")
+        If combatmode Then
+            run()
+            'drawBoard()
+        Else
+            pushLblEvent("You have nothing to run from!")
+        End If
+
     End Sub
     Sub useKey()
         toPNLSelec("Useable")
     End Sub
     Sub toShopKey()
+        If Not lblEventOnClose Is Nothing Then
+            lblEventOnClose()
+            lblEventOnClose = Nothing
+        End If
+        If lblEvent.Visible = True Then
+            lblEvent.Visible = False
+            lblEvent.ForeColor = Color.White
+            drawBoard()
+        End If
+
         If player.pos.Equals(shopkeeper.pos) Then
-            If Not lblEventOnClose Is Nothing Then
-                lblEventOnClose()
-                lblEventOnClose = Nothing
-            End If
-            If lblEvent.Visible = True Then
-                lblEvent.Visible = False
-                lblEvent.ForeColor = Color.White
-                drawBoard()
-            End If
-            Dim s As Shop = New Shop
-            s.ShowDialog()
-            s.Dispose()
+            currNPC = shopkeeper
+        ElseIf player.pos.Equals(swiz.pos) Then
+            currNPC = swiz
         Else
             pushLblEvent("There's no shop here.")
+            Exit Sub
         End If
+
+        Dim s As Shop = New Shop
+        s.ShowDialog()
+        s.Dispose()
     End Sub
     Sub eArmorKey()
         toPNLSelec("Armor")
@@ -1633,6 +1673,8 @@ Public Class Game
         For i = 0 To floorLayouts.Count - 1
             writer.WriteLine(floorLayouts(i))
         Next
+        writer.WriteLine(swiz.pos.X)
+        writer.WriteLine(swiz.pos.Y)
 
         writer.Flush()
         writer.Close()
@@ -1777,6 +1819,11 @@ Public Class Game
         For i = 0 To CInt(reader.ReadLine())
             floorLayouts.Add(reader.ReadLine())
         Next
+
+        swiz = New NPC(3)
+        swiz.pos.X = reader.ReadLine()
+        swiz.pos.Y = reader.ReadLine()
+
         chestList.Clear()
         placeChest(floorLayouts(floor))
         Dim tCL As ArrayList = New ArrayList()
@@ -2383,7 +2430,6 @@ Public Class Game
             player.revert2()
         End If
         npcList.Clear()
-        player.currTarget = Nothing
     End Sub
     'run handles the player choice to run from combat
     Sub run()
@@ -2403,7 +2449,10 @@ Public Class Game
                 End If
                 If run <> 1 Then
                     npcList.Item(i).despawn("run")
+                    updatelist = New PQ
                 Else
+                    'updates the combat banner
+                    updatePnlCombat(player, player.currTarget)
                     pushLblCombatEvent("You can't get away!")
                     If npcList.Count > 0 Then
                         For x = 0 To npcList.Count - 1
@@ -2419,8 +2468,6 @@ Public Class Game
                         Dim u As Updatable = updatelist.remove()
                         u.update()
                     Loop
-                    'updates the combat banner
-                    updatePnlCombat(player, player.currTarget)
                     Exit Sub
                 End If
 
@@ -2670,6 +2717,7 @@ Public Class Game
             Dim u As Updatable = updatelist.remove()
             u.update()
         Loop
+        If npcmode Then picNPC.BackgroundImage = currNPC.picNCP(currNPC.npcIndex)
         'updates the combat banner
         updatePnlCombat(player, player.currTarget)
         ttCosts.RemoveAll()
@@ -2819,6 +2867,7 @@ Public Class Game
             End If
             Dim int As Integer = 100 - player.getSpeed
             If int < 1 Then int = 1
+            picNPC.BackgroundImage = currNPC.picNCP(currNPC.npcIndex)
             updatelist.add(player, int)
             drawBoard()
         End If
