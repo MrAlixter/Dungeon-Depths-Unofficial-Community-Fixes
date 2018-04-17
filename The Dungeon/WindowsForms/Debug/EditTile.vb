@@ -209,14 +209,25 @@
             If toReplace.Text = "" Then
                 Dim tag As Integer = t.Tag
                 Dim col As Color = t.ForeColor
+                t.Tag = toReplace.Tag
+                t.Text = toReplace.Text
+                t.ForeColor = toReplace.ForeColor
 
                 Dim item As String = boxType.SelectedItem.ToString()
                 If item.IndexOf("Stairs") <> -1 Then
                     toReplace.Text = "H"
                     Game.stairs = ts.selected
                 ElseIf item.IndexOf("NPC") <> -1 Then
-                    MessageBox.Show("NOT DONE WITH NPC RELOCATE")
-                    Exit Sub
+                    'MessageBox.Show("NOT DONE WITH NPC RELOCATE")
+                    For Each npc As NPC In Game.npcList
+                        If npc.pos = p Then
+                            npc.pos = ts.selected
+                        End If
+                    Next
+                    If p = Game.shopkeeper.pos Then
+                        Game.shopkeeper.pos = ts.selected
+                    End If
+                    'Exit Sub
                     toReplace.Text = "$"
                 ElseIf item.IndexOf("Chest") <> -1 Then
                     MessageBox.Show("NOT DONE WITH CHEST RELOCATE")
@@ -236,10 +247,6 @@
                     toReplace.Text = ""
                 End If
 
-
-                t.Tag = toReplace.Tag
-                t.Text = toReplace.Text
-                t.ForeColor = toReplace.ForeColor
                 toReplace.Tag = tag
                 toReplace.ForeColor = col
 
