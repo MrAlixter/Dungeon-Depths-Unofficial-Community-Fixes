@@ -219,6 +219,7 @@
                     Game.stairs = ts.selected
                 ElseIf item.IndexOf("NPC") <> -1 Then
                     'MessageBox.Show("NOT DONE WITH NPC RELOCATE")
+                    'Exit Sub
                     For Each npc As NPC In Game.npcList
                         If npc.pos = p Then
                             npc.pos = ts.selected
@@ -227,11 +228,15 @@
                     If p = Game.shopkeeper.pos Then
                         Game.shopkeeper.pos = ts.selected
                     End If
-                    'Exit Sub
                     toReplace.Text = "$"
                 ElseIf item.IndexOf("Chest") <> -1 Then
-                    MessageBox.Show("NOT DONE WITH CHEST RELOCATE")
-                    Exit Sub
+                    'MessageBox.Show("NOT DONE WITH CHEST RELOCATE")
+                    'Exit Sub
+                    For Each chest As Chest In Game.chestList
+                        If chest.pos = p Then
+                            chest.pos = ts.selected
+                        End If
+                    Next
                     toReplace.Text = "#"
                 ElseIf item.IndexOf("Player") <> -1 Then
                     MessageBox.Show("NOT DONE WITH PLAYER RELOCATE")
