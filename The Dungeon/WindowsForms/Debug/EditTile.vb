@@ -27,6 +27,7 @@
         lblColTxt.Text = t.ForeColor.ToString()
 
         boxOptions.Visible = False
+        boxOptions.Controls.Clear()
         boxSeen.Enabled = True
         If (t.Tag = 2) Then 'Seen
             boxSeen.Checked = True
@@ -218,11 +219,10 @@
                     toReplace.Text = "H"
                     Game.stairs = ts.selected
                 ElseIf item.IndexOf("NPC") <> -1 Then
-                    'MessageBox.Show("NOT DONE WITH NPC RELOCATE")
-                    'Exit Sub
                     For Each npc As NPC In Game.npcList
                         If npc.pos = p Then
                             npc.pos = ts.selected
+                            Exit For
                         End If
                     Next
                     If p = Game.shopkeeper.pos Then
@@ -230,23 +230,25 @@
                     End If
                     toReplace.Text = "$"
                 ElseIf item.IndexOf("Chest") <> -1 Then
-                    'MessageBox.Show("NOT DONE WITH CHEST RELOCATE")
-                    'Exit Sub
                     For Each chest As Chest In Game.chestList
                         If chest.pos = p Then
                             chest.pos = ts.selected
+                            Exit For
                         End If
                     Next
                     toReplace.Text = "#"
                 ElseIf item.IndexOf("Player") <> -1 Then
-                    MessageBox.Show("NOT DONE WITH PLAYER RELOCATE")
-                    Exit Sub
+                    Game.player.pos = ts.selected
                     toReplace.Text = "@"
                 ElseIf item.IndexOf("Statue") <> -1 Then
                     toReplace.Text = "@"
                 ElseIf item.IndexOf("Trap") <> -1 Then
-                    MessageBox.Show("NOT DONE WITH TRAP RELOCATE")
-                    Exit Sub
+                    For Each trap As Trap In Game.trapList
+                        If trap.pos = p Then
+                            trap.pos = ts.selected
+                            Exit For
+                        End If
+                    Next
                     toReplace.Text = "+"
                 Else
                     toReplace.Text = ""
