@@ -2607,7 +2607,8 @@ Public Class Game
             savePicsReady = True
         Else
             If System.IO.File.Exists("s" & imagesWorkerArg.ToString() & ".ave") Then
-                Dim pic As Image = getImgFromFile("s" & imagesWorkerArg.ToString() & ".ave")
+                'Dim pic As Image = getImgFromFile("s" & imagesWorkerArg.ToString() & ".ave")
+                Dim pic As Image = picPortrait.BackgroundImage.Clone()
                 Try
                     savePics(imagesWorkerArg) = pic
                 Catch ex As Exception
