@@ -38,6 +38,7 @@
         End If
         updateTagLbl()
 
+        boxType.Items.Clear()
         boxType.Items.Add("(Wall)")
         boxType.Items.Add("(Walkable)")
         boxType.Items.Add("# (Chest)")
@@ -78,7 +79,7 @@
             addMoveButton(boxOptions.Controls.Count)
         ElseIf (t.Text = "@") Then 'Statue
             boxType.SelectedItem = "@ (Statue)"
-            boxType.Enabled = False
+            boxType.Enabled = True
             boxOptions.Visible = True
             addMoveButton(boxOptions.Controls.Count)
         ElseIf (t.Text = "$") Then 'NPC
@@ -88,7 +89,7 @@
             addMoveButton(boxOptions.Controls.Count)
         ElseIf (t.Text = "+") Then 'Trap
             boxType.SelectedItem = "+ (Trap)"
-            boxType.Enabled = False
+            boxType.Enabled = True
             boxOptions.Visible = True
             addMoveButton(boxOptions.Controls.Count)
         ElseIf (t.Tag = 0) Then 'Wall
@@ -143,57 +144,125 @@
     End Sub
 
     Private Sub boxType_SelectedIndexChanged(sender As Object, e As EventArgs) Handles boxType.SelectedIndexChanged
-        If boxType.SelectedItem.ToString() = "(Wall)" Then
-            If prevTypeSel = "# (Chest)" Then
-                removeChest()
-            End If
+        'HANDLE THE "FROM" 
+        'If prevTypeSel = "(Wall)" Or prevTypeSel = "(Walkable)" Or prevTypeSel = "@ (Statue)" Then 'No extra work
+        'Else
+        Dim removeFlag As Boolean = False
+        If prevTypeSel = "H (Stairs)" Or prevTypeSel = "@ (Player)" Or prevTypeSel = "$ (NPC)" Then 'DENY! Cannot remove stairs, player, or NPC
+            MessageBox.Show("ERR: CANNOT CHANGE THIS TYPE OF TILE")
+            Exit Sub
+        ElseIf prevTypeSel = "# (Chest)" Or prevTypeSel = "+ (Trap)" Then 'Say to remove chest/trap from list
+            removeFlag = True
+        End If
+
+        'HANDLE THE "TO"
+        Dim name = boxType.SelectedItem.ToString()
+        If name = "H (Stairs)" Or name = "@ (Player)" Or name = "$ (NPC)" Then 'DENY! Cannot duplicatre stairs, player, or NPC
+            MessageBox.Show("ERR: CANNOT ADD TILES OF THIS TYPE")
+            Exit Sub
+        ElseIf name = "(Wall)" Then
             t.Tag = 0
             t.Text = ""
             t.ForeColor = Color.Black
             boxSeen.Enabled = False
             boxSeen.Checked = False
-        ElseIf boxType.SelectedItem.ToString() = "(Walkable)" Then
-            If prevTypeSel = "# (Chest)" Then
-                removeChest()
+            If removeFlag Then removeItem()
+        ElseIf name = "(Walkable)" Or name = "@ (Statue)" Then
+            If t.Tag = 0 Then t.Tag = 1
+            If name = "(Walkable)" Then
+                t.Text = ""
+            Else
+                t.Text = "@"
             End If
-            If t.Tag = 0 Then
-                t.Tag = 1
-            End If
-            t.Text = ""
             t.ForeColor = Color.Black
             boxSeen.Enabled = True
-            boxSeen.Checked = False
-        Else
-            If prevTypeSel = "(Wall)" Or prevTypeSel = "(Walkable)" Then
-                If boxType.SelectedItem = "# (Chest)" Then
-                    Dim c As Chest = Game.baseChest.Create(p.X, p.Y)
-                    Game.chestList.Add(c)
-                    Game.mBoard(p.Y, p.X).ForeColor = Color.FromArgb(45, 45, 45)
-                    Game.mBoard(p.Y, p.X).Text = "#"
-                    If prevTypeSel = "(Wall)" Then
-                        Game.mBoard(p.Y, p.X).Tag = 1
-                        t.Tag = 1
-                    End If
-                Else
-                    MessageBox.Show("ERR: CURRENTLY NOT BUILT")
-                    boxType.SelectedItem = "(Wall)"
-                End If
-            Else
-                MessageBox.Show("ERR: CURRENTLY NOT BUILT")
-                boxType.SelectedItem = "(Wall)"
+            If t.Tag = 1 Then
+                boxSeen.Checked = False
+            ElseIf t.Tag = 2 Then
+                boxSeen.Checked = True
             End If
+            If removeFlag Then removeItem()
+        ElseIf name = "# (Chest)" Then
+            If t.Tag = 0 Then t.Tag = 1
+            t.Text = "#"
+            t.ForeColor = Color.FromArgb(45, 45, 45)
+            If removeFlag Then removeItem()
+            Game.mBoard(p.Y, p.X).ForeColor = Color.FromArgb(45, 45, 45)
+            Dim c As Chest = Game.baseChest.Create(p.X, p.Y)
+            Game.chestList.Add(c)
+        ElseIf name = "+ (Trap)" Then
+            If t.Tag = 0 Then t.Tag = 1
+            t.Text = "+"
+            t.ForeColor = Color.FromArgb(45, 45, 45)
+            If removeFlag Then removeItem()
+            Game.mBoard(p.Y, p.X).ForeColor = Color.FromArgb(45, 45, 45)
+            Dim trap As New Trap(New Point(p.X, p.Y), Int(Rnd() * 4))
+            Game.trapList.Add(trap)
         End If
+
+
+
+        'If boxType.SelectedItem.ToString() = "(Wall)" Then
+        '    If prevTypeSel = "# (Chest)" Then
+        '        removeChest()
+        '    End If
+        '    t.Tag = 0
+        '    t.Text = ""
+        '    t.ForeColor = Color.Black
+        '    boxSeen.Enabled = False
+        '    boxSeen.Checked = False
+        'ElseIf boxType.SelectedItem.ToString() = "(Walkable)" Then
+        '    If prevTypeSel = "# (Chest)" Then
+        '        removeChest()
+        '    End If
+        '    If t.Tag = 0 Then
+        '        t.Tag = 1
+        '    End If
+        '    t.Text = ""
+        '    t.ForeColor = Color.Black
+        '    boxSeen.Enabled = True
+        '    boxSeen.Checked = False
+        'Else
+        '    If prevTypeSel = "(Wall)" Or prevTypeSel = "(Walkable)" Then
+        '        If boxType.SelectedItem = "# (Chest)" Then
+        '            Dim c As Chest = Game.baseChest.Create(p.X, p.Y)
+        '            Game.chestList.Add(c)
+        '            Game.mBoard(p.Y, p.X).ForeColor = Color.FromArgb(45, 45, 45)
+        '            Game.mBoard(p.Y, p.X).Text = "#"
+        '            If prevTypeSel = "(Wall)" Then
+        '                Game.mBoard(p.Y, p.X).Tag = 1
+        '                t.Tag = 1
+        '            End If
+        '        Else
+        '            MessageBox.Show("CANNOT CHANGE TO THIS TYPE")
+        '            boxType.SelectedItem = prevTypeSel
+        '        End If
+        '    Else
+        '        MessageBox.Show("ERR: CURRENTLY NOT BUILT")
+        '        boxType.SelectedItem = prevTypeSel
+        '    End If
+        'End If
         Update()
         prevTypeSel = boxType.SelectedItem
+        Reload()
     End Sub
 
-    Private Sub removeChest()
-        For i = 0 To Game.chestList.Count - 1
-            If p = CType(Game.chestList(i), Chest).pos Then
-                Game.chestList.RemoveAt(i)
-                Exit Sub
-            End If
-        Next
+    Private Sub removeItem()
+        If t.Text = "#" Then
+            For i = 0 To Game.chestList.Count - 1
+                If p = CType(Game.chestList(i), Chest).pos Then
+                    Game.chestList.RemoveAt(i)
+                    Exit Sub
+                End If
+            Next
+        ElseIf t.Text = "+" Then
+            For i = 0 To Game.trapList.Count - 1
+                If p = CType(Game.trapList(i), Trap).pos Then
+                    Game.trapList.RemoveAt(i)
+                    Exit Sub
+                End If
+            Next
+        End If
     End Sub
 
     Private Sub btnEditContents_Clicked(sender As Object, e As EventArgs)

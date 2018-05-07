@@ -239,12 +239,14 @@ New Features:
     - Finish Tile Editing
       - [Done] Move uniques (NPC(s), Stairs, etc.)
       - Handle all change of tile types in EditTile
-    - View/Edit perks/curses
+        - Handle Mimics
+    - [Done] View/Edit perks/curses
     - Edit Class
     - ?Edit current clothes/form/perks via portrait editor?
   - Dungeon generation settings
   - Change save (include seed in save for future debugging reference)
   - Character creation preset saving/loading
+  - Edit traps to store the number of effects (to allow a constructor that only uses a point)
 
 
 
