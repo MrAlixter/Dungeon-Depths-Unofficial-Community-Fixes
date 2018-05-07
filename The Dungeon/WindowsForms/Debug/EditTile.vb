@@ -42,6 +42,7 @@
         boxType.Items.Add("(Wall)")
         boxType.Items.Add("(Walkable)")
         boxType.Items.Add("# (Chest)")
+        boxType.Items.Add("# (Mimic)")
         boxType.Items.Add("H (Stairs)")
         boxType.Items.Add("@ (Player)")
         boxType.Items.Add("@ (Statue)")
@@ -150,6 +151,7 @@
         Dim removeFlag As Boolean = False
         If prevTypeSel = "H (Stairs)" Or prevTypeSel = "@ (Player)" Or prevTypeSel = "$ (NPC)" Then 'DENY! Cannot remove stairs, player, or NPC
             MessageBox.Show("ERR: CANNOT CHANGE THIS TYPE OF TILE")
+            boxType.SelectedItem = prevTypeSel
             Exit Sub
         ElseIf prevTypeSel = "# (Chest)" Or prevTypeSel = "+ (Trap)" Then 'Say to remove chest/trap from list
             removeFlag = True
@@ -159,15 +161,17 @@
         Dim name = boxType.SelectedItem.ToString()
         If name = "H (Stairs)" Or name = "@ (Player)" Or name = "$ (NPC)" Then 'DENY! Cannot duplicatre stairs, player, or NPC
             MessageBox.Show("ERR: CANNOT ADD TILES OF THIS TYPE")
+            boxType.SelectedItem = prevTypeSel
             Exit Sub
         ElseIf name = "(Wall)" Then
+            If removeFlag Then removeItem()
             t.Tag = 0
             t.Text = ""
             t.ForeColor = Color.Black
             boxSeen.Enabled = False
             boxSeen.Checked = False
-            If removeFlag Then removeItem()
         ElseIf name = "(Walkable)" Or name = "@ (Statue)" Then
+            If removeFlag Then removeItem()
             If t.Tag = 0 Then t.Tag = 1
             If name = "(Walkable)" Then
                 t.Text = ""
@@ -181,20 +185,19 @@
             ElseIf t.Tag = 2 Then
                 boxSeen.Checked = True
             End If
-            If removeFlag Then removeItem()
         ElseIf name = "# (Chest)" Then
+            If removeFlag Then removeItem()
             If t.Tag = 0 Then t.Tag = 1
             t.Text = "#"
             t.ForeColor = Color.FromArgb(45, 45, 45)
-            If removeFlag Then removeItem()
             Game.mBoard(p.Y, p.X).ForeColor = Color.FromArgb(45, 45, 45)
             Dim c As Chest = Game.baseChest.Create(p.X, p.Y)
             Game.chestList.Add(c)
         ElseIf name = "+ (Trap)" Then
+            If removeFlag Then removeItem()
             If t.Tag = 0 Then t.Tag = 1
             t.Text = "+"
             t.ForeColor = Color.FromArgb(45, 45, 45)
-            If removeFlag Then removeItem()
             Game.mBoard(p.Y, p.X).ForeColor = Color.FromArgb(45, 45, 45)
             Dim trap As New Trap(New Point(p.X, p.Y), Int(Rnd() * 4))
             Game.trapList.Add(trap)
@@ -242,8 +245,6 @@
         '        boxType.SelectedItem = prevTypeSel
         '    End If
         'End If
-        Update()
-        prevTypeSel = boxType.SelectedItem
         Reload()
     End Sub
 
