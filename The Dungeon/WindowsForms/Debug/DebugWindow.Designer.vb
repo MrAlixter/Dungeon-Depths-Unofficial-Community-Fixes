@@ -53,6 +53,8 @@ Partial Class Debug_Window
         Me.lblFloor = New System.Windows.Forms.Label()
         Me.lblGenCode = New System.Windows.Forms.Label()
         Me.tabPlayer = New System.Windows.Forms.TabPage()
+        Me.boxAlpha = New System.Windows.Forms.NumericUpDown()
+        Me.lblAlpha = New System.Windows.Forms.Label()
         Me.lblHC = New System.Windows.Forms.Label()
         Me.pnlHC = New System.Windows.Forms.Panel()
         Me.lblSC = New System.Windows.Forms.Label()
@@ -105,6 +107,7 @@ Partial Class Debug_Window
         Me.lblTitle = New System.Windows.Forms.Label()
         Me.lblSex = New System.Windows.Forms.Label()
         Me.lblName = New System.Windows.Forms.Label()
+        Me.tabPerks = New System.Windows.Forms.TabPage()
         Me.tabInventory = New System.Windows.Forms.TabPage()
         Me.boxInventoryFilter = New System.Windows.Forms.TextBox()
         Me.boxItemsFilter = New System.Windows.Forms.TextBox()
@@ -115,8 +118,6 @@ Partial Class Debug_Window
         Me.lblInventory = New System.Windows.Forms.Label()
         Me.boxItems = New System.Windows.Forms.ListBox()
         Me.lblItems = New System.Windows.Forms.Label()
-        Me.lblAlpha = New System.Windows.Forms.Label()
-        Me.boxAlpha = New System.Windows.Forms.NumericUpDown()
         Me.tabMain.SuspendLayout()
         Me.tabInformation.SuspendLayout()
         Me.tabGeneral.SuspendLayout()
@@ -128,6 +129,7 @@ Partial Class Debug_Window
         CType(Me.boxTurn, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me.boxFloor, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.tabPlayer.SuspendLayout()
+        CType(Me.boxAlpha, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.tabPortrait.SuspendLayout()
         CType(Me.picPreview, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me.boxEvd, System.ComponentModel.ISupportInitialize).BeginInit()
@@ -141,9 +143,9 @@ Partial Class Debug_Window
         CType(Me.boxMana, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me.boxMaxHealth, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me.boxHealth, System.ComponentModel.ISupportInitialize).BeginInit()
+        Me.tabPerks.SuspendLayout()
         Me.tabInventory.SuspendLayout()
         CType(Me.number, System.ComponentModel.ISupportInitialize).BeginInit()
-        CType(Me.boxAlpha, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.SuspendLayout()
         '
         'tabMain
@@ -151,6 +153,7 @@ Partial Class Debug_Window
         Me.tabMain.Controls.Add(Me.tabInformation)
         Me.tabMain.Controls.Add(Me.tabGeneral)
         Me.tabMain.Controls.Add(Me.tabPlayer)
+        Me.tabMain.Controls.Add(Me.tabPerks)
         Me.tabMain.Controls.Add(Me.tabInventory)
         Me.tabMain.Dock = System.Windows.Forms.DockStyle.Fill
         Me.tabMain.Font = New System.Drawing.Font("Consolas", 10.0!)
@@ -538,6 +541,28 @@ Partial Class Debug_Window
         Me.tabPlayer.Size = New System.Drawing.Size(742, 548)
         Me.tabPlayer.TabIndex = 1
         Me.tabPlayer.Text = "PLAYER"
+        '
+        'boxAlpha
+        '
+        Me.boxAlpha.BackColor = System.Drawing.Color.Black
+        Me.boxAlpha.Font = New System.Drawing.Font("Consolas", 12.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.boxAlpha.ForeColor = System.Drawing.Color.White
+        Me.boxAlpha.Location = New System.Drawing.Point(438, 211)
+        Me.boxAlpha.Maximum = New Decimal(New Integer() {255, 0, 0, 0})
+        Me.boxAlpha.Name = "boxAlpha"
+        Me.boxAlpha.Size = New System.Drawing.Size(53, 26)
+        Me.boxAlpha.TabIndex = 269
+        '
+        'lblAlpha
+        '
+        Me.lblAlpha.AutoSize = True
+        Me.lblAlpha.Font = New System.Drawing.Font("Consolas", 12.0!)
+        Me.lblAlpha.ForeColor = System.Drawing.Color.White
+        Me.lblAlpha.Location = New System.Drawing.Point(333, 214)
+        Me.lblAlpha.Name = "lblAlpha"
+        Me.lblAlpha.Size = New System.Drawing.Size(99, 19)
+        Me.lblAlpha.TabIndex = 267
+        Me.lblAlpha.Text = "HAIR ALPHA"
         '
         'lblHC
         '
@@ -1109,6 +1134,18 @@ Partial Class Debug_Window
         Me.lblName.TabIndex = 209
         Me.lblName.Text = "NAME"
         '
+        'tabPerks
+        '
+        Me.tabPerks.BackColor = System.Drawing.Color.Black
+        Me.tabPerks.Font = New System.Drawing.Font("Consolas", 12.0!)
+        Me.tabPerks.ForeColor = System.Drawing.Color.White
+        Me.tabPerks.Location = New System.Drawing.Point(4, 24)
+        Me.tabPerks.Name = "tabPerks"
+        Me.tabPerks.Padding = New System.Windows.Forms.Padding(3)
+        Me.tabPerks.Size = New System.Drawing.Size(742, 548)
+        Me.tabPerks.TabIndex = 4
+        Me.tabPerks.Text = "PERKS"
+        '
         'tabInventory
         '
         Me.tabInventory.BackColor = System.Drawing.Color.Black
@@ -1233,28 +1270,6 @@ Partial Class Debug_Window
         Me.lblItems.TabIndex = 7
         Me.lblItems.Text = "ITEMS"
         '
-        'lblAlpha
-        '
-        Me.lblAlpha.AutoSize = True
-        Me.lblAlpha.Font = New System.Drawing.Font("Consolas", 12.0!)
-        Me.lblAlpha.ForeColor = System.Drawing.Color.White
-        Me.lblAlpha.Location = New System.Drawing.Point(333, 214)
-        Me.lblAlpha.Name = "lblAlpha"
-        Me.lblAlpha.Size = New System.Drawing.Size(99, 19)
-        Me.lblAlpha.TabIndex = 267
-        Me.lblAlpha.Text = "HAIR ALPHA"
-        '
-        'boxAlpha
-        '
-        Me.boxAlpha.BackColor = System.Drawing.Color.Black
-        Me.boxAlpha.Font = New System.Drawing.Font("Consolas", 12.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.boxAlpha.ForeColor = System.Drawing.Color.White
-        Me.boxAlpha.Location = New System.Drawing.Point(438, 211)
-        Me.boxAlpha.Maximum = New Decimal(New Integer() {255, 0, 0, 0})
-        Me.boxAlpha.Name = "boxAlpha"
-        Me.boxAlpha.Size = New System.Drawing.Size(53, 26)
-        Me.boxAlpha.TabIndex = 269
-        '
         'Debug_Window
         '
         Me.AutoScaleDimensions = New System.Drawing.SizeF(6.0!, 13.0!)
@@ -1282,6 +1297,7 @@ Partial Class Debug_Window
         CType(Me.boxFloor, System.ComponentModel.ISupportInitialize).EndInit()
         Me.tabPlayer.ResumeLayout(False)
         Me.tabPlayer.PerformLayout()
+        CType(Me.boxAlpha, System.ComponentModel.ISupportInitialize).EndInit()
         Me.tabPortrait.ResumeLayout(False)
         CType(Me.picPreview, System.ComponentModel.ISupportInitialize).EndInit()
         CType(Me.boxEvd, System.ComponentModel.ISupportInitialize).EndInit()
@@ -1295,10 +1311,10 @@ Partial Class Debug_Window
         CType(Me.boxMana, System.ComponentModel.ISupportInitialize).EndInit()
         CType(Me.boxMaxHealth, System.ComponentModel.ISupportInitialize).EndInit()
         CType(Me.boxHealth, System.ComponentModel.ISupportInitialize).EndInit()
+        Me.tabPerks.ResumeLayout(False)
         Me.tabInventory.ResumeLayout(False)
         Me.tabInventory.PerformLayout()
         CType(Me.number, System.ComponentModel.ISupportInitialize).EndInit()
-        CType(Me.boxAlpha, System.ComponentModel.ISupportInitialize).EndInit()
         Me.ResumeLayout(False)
 
     End Sub
@@ -1396,4 +1412,5 @@ Partial Class Debug_Window
     Friend WithEvents boxInventoryFilter As TextBox
     Friend WithEvents boxAlpha As NumericUpDown
     Friend WithEvents lblAlpha As Label
+    Friend WithEvents tabPerks As TabPage
 End Class

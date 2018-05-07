@@ -80,6 +80,26 @@ Public Class Debug_Window
         updateInventoryList()
         number.Value = 0
         updateItemsList()
+
+        'PERKS
+        Dim row = 0
+        Dim col = 0
+        Dim test = 0
+        For Each perk In Game.player.perks
+            addPerk(perk, col, row)
+            row += 1
+            Dim control As Control = tabPerks.Controls.Item(tabPerks.Controls.Count - 1)
+            Console.Write(test & ": " & perk.Key & " # " & perk.Value & " ! ")
+            Console.Write(control.Location.Y + control.Size.Height)
+            Console.WriteLine("  |  " & tabPerks.Size.Height)
+            If (control.Location.Y + control.Size.Height) > tabPerks.Size.Height Then
+                row = 0
+                col += 1
+                movePerkControl(control, col, row)
+                row += 1
+            End If
+            test += 1
+        Next
     End Sub
 
     Private Sub loadPortrait()
@@ -521,5 +541,73 @@ Public Class Debug_Window
         If boxInventory.SelectedIndex <> -1 Then
             boxInventory.SelectedIndex = -1
         End If
+    End Sub
+
+    Private Sub addPerk(p As KeyValuePair(Of String, Integer), col As Integer, row As Integer)
+        Dim group = New System.Windows.Forms.GroupBox()
+        Me.tabPerks.Controls.Add(group)
+
+        Dim box = New System.Windows.Forms.NumericUpDown()
+        Dim lbl = New System.Windows.Forms.Label()
+        CType(box, System.ComponentModel.ISupportInitialize).BeginInit()
+        group.SuspendLayout()
+
+        lbl.Location = New System.Drawing.Point(10, 10)
+        lbl.Name = p.Key & "Lbl"
+        lbl.Size = New System.Drawing.Size(125, 25)
+        lbl.TabStop = False
+        lbl.Text = p.Key
+
+        box.BackColor = System.Drawing.Color.Black
+        box.ForeColor = System.Drawing.Color.White
+        box.Name = p.Key & "Box"
+        box.Location = New System.Drawing.Point(lbl.Location.X + lbl.Size.Width + 10, lbl.Location.Y)
+        box.Minimum = -1
+        box.Value = p.Value
+        box.Size = New System.Drawing.Size(63, 26)
+        box.TabIndex = 1
+        box.TabStop = True
+        AddHandler box.ValueChanged, AddressOf numericUpDownChanged
+
+        group.Controls.Add(box)
+        group.Controls.Add(lbl)
+
+        movePerkControl(group, col, row)
+
+        Dim w As Integer = box.Size.Width + lbl.Size.Width + 10 * 3
+        Dim h As Integer = Math.Max(box.Size.Height, lbl.Size.Height) + 10 * 2
+        group.Name = "groupTest"
+        group.Size = New System.Drawing.Size(w, h)
+        group.TabIndex = 1
+        group.TabStop = False
+
+        group.ResumeLayout()
+        tabPerks.Controls.Add(group)
+    End Sub
+
+    Private Sub movePerkControl(c As Control, col As Integer, row As Integer)
+        Dim box
+        Dim lbl
+        For Each Control In c.Controls
+            If Control.Name.Substring(Control.Name.Length - 3) = "Box" Then
+                box = Control
+            ElseIf Control.Name.Substring(Control.Name.Length - 3) = "Lbl" Then
+                lbl = Control
+            End If
+        Next
+
+        Dim w As Integer = box.Size.Width + lbl.Size.Width + 10 * 3
+        Dim h As Integer = Math.Max(box.Size.Height, lbl.Size.Height) + 10 * 2
+        Dim pad As Decimal = 0.05
+        Dim x As Integer = w * pad + (w * pad * 2 + w) * col
+        Dim y As Integer = h * pad + (h * pad * 2 + h) * row
+
+        c.Location = New System.Drawing.Point(x, y)
+    End Sub
+
+    Private Sub numericUpDownChanged(ByVal sender As Object, ByVal e As EventArgs)
+        Dim name As String = sender.Name.Substring(0, sender.Name.Length - 3)
+        Console.WriteLine(name & " : " & sender.Value)
+        Game.player.perks(name) = sender.Value
     End Sub
 End Class
