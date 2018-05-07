@@ -549,8 +549,8 @@ Public Class Debug_Window
 
         Dim box = New System.Windows.Forms.NumericUpDown()
         Dim lbl = New System.Windows.Forms.Label()
-        CType(box, System.ComponentModel.ISupportInitialize).BeginInit()
-        group.SuspendLayout()
+        'CType(box, System.ComponentModel.ISupportInitialize).BeginInit()
+        'group.SuspendLayout()
 
         lbl.Location = New System.Drawing.Point(10, 10)
         lbl.Name = p.Key & "Lbl"
@@ -565,8 +565,6 @@ Public Class Debug_Window
         box.Minimum = -1
         box.Value = p.Value
         box.Size = New System.Drawing.Size(63, 26)
-        box.TabIndex = 1
-        box.TabStop = True
         AddHandler box.ValueChanged, AddressOf numericUpDownChanged
 
         group.Controls.Add(box)
@@ -581,7 +579,7 @@ Public Class Debug_Window
         group.TabIndex = 1
         group.TabStop = False
 
-        group.ResumeLayout()
+        'group.ResumeLayout()
         tabPerks.Controls.Add(group)
     End Sub
 
