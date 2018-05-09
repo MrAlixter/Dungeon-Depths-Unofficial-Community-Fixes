@@ -281,25 +281,46 @@ Public Class Game
         End If
         'create all of  the board lables dynamacly at runtime
         ReDim mBoard(mBoardHeight - 1, mBoardWidth - 1)
-        ReDim mPics(15, 23)
+
+        Dim viewWidth = 23
+        Dim viewHeight = 15
+        ReDim mPics(viewHeight, viewWidth)
         Dim numTiles = mBoardHeight * mBoardWidth
         For yInd = 0 To mBoardHeight - 1
             For xInd = 0 To mBoardWidth - 1
                 mBoard(yInd, xInd) = New mTile(0, "", Color.Black)
-                If (xInd <= 23 And yInd <= 15) Then
-                    Dim newPicture As PictureBox = New PictureBox()
-                    newPicture.BackgroundImageLayout = ImageLayout.Stretch
-                    newPicture.Size = New Point(YSize * 1.25, XSize * 1.25)
-                    newPicture.Location = New Point(60 + xInd * (XSize * 1.25), 75 + yInd * (YSize * 1.25))
-                    newPicture.Visible = True
-                    Me.Controls.Add(newPicture)
-                    mPics(yInd, xInd) = newPicture
-                End If
+                'If (xInd < viewWidth And yInd < viewHeight) Then
+                '    Dim newPicture As PictureBox = New PictureBox()
+                '    newPicture.Name = "boardBox|" & xInd & "_" & yInd
+                '    newPicture.BackgroundImageLayout = ImageLayout.Stretch
+                '    newPicture.Size = New Point(YSize * 1.25, XSize * 1.25)
+                '    newPicture.Location = New Point(60 + xInd * (XSize * 1.25), 75 + yInd * (YSize * 1.25))
+                '    newPicture.Visible = True
+                '    Me.Controls.Add(newPicture)
+                '    mPics(yInd, xInd) = newPicture
+                'End If
                 Dim progress As Double = (xInd + (yInd * mBoardWidth)) / numTiles
-                boardWorker.ReportProgress(40 + (progress * 60))
+                boardWorker.ReportProgress(40 + (progress * 40))
                 Application.DoEvents()
             Next xInd
         Next yInd
+        Dim viewPicsDone As Integer = 0
+        For y As Integer = 0 To viewHeight - 1
+            For x As Integer = 0 To viewWidth - 1
+                Dim newPicture As PictureBox = New PictureBox()
+                newPicture.Name = "boardBox|" & x & "_" & y
+                newPicture.BackgroundImageLayout = ImageLayout.Stretch
+                newPicture.Size = New Point(YSize * 1.25, XSize * 1.25)
+                newPicture.Location = New Point(60 + x * (XSize * 1.25), 75 + y * (YSize * 1.25))
+                newPicture.Visible = True
+                Me.Controls.Add(newPicture)
+                mPics(y, x) = newPicture
+
+                viewPicsDone += 1
+                Dim progress As Double = (viewPicsDone / (viewHeight * viewWidth))
+                boardWorker.ReportProgress(80 + (progress * 20))
+            Next
+        Next
         boardWorker.ReportProgress(99)
         boardWorker.CancelAsync()
     End Sub
