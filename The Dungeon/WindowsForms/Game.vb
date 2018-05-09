@@ -178,7 +178,6 @@ Public Class Game
         floorLayouts.Add(genRNDLVLCode())
         floorLayouts.Add(genRNDLVLCode())
         floorLayouts.Add("bossstage")
-        floor = 1
 
         combatmode = False
         btnS.Visible = False
@@ -199,7 +198,7 @@ Public Class Game
         If int < 1 Then int = 1
         updatelist.add(player, int)
 
-        Dim genSet As New GeneratorSettings(floorLayouts(floor))
+        Dim genSet As New GeneratorSettings(floorLayouts(1))
         genSet.ShowDialog()
         mBoardWidth = genSet.boxWidth.Value
         mBoardHeight = genSet.boxHeight.Value
