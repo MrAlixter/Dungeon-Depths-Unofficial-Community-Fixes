@@ -202,6 +202,19 @@ Public Class Game
         genSet.ShowDialog()
         mBoardWidth = genSet.boxWidth.Value
         mBoardHeight = genSet.boxHeight.Value
+        If mBoardWidth * mBoardHeight < 4 Then
+            Do While mBoardWidth * mBoardHeight < 4
+                If mBoardHeight < mBoardWidth Then
+                    mBoardHeight += 1
+                Else
+                    mBoardWidth += 1
+                End If
+            Loop
+            MessageBox.Show("TOO SMALL. FORCED TO " & mBoardWidth & " WIDE AND " & mBoardHeight & " TALL")
+        End If
+
+
+
 
         initializeBoard(False)
         drawBoard()
@@ -404,6 +417,64 @@ Public Class Game
                 End If
             End If
         End While
+
+        Dim tileCount As Integer = 0
+        For yInd As Integer = 0 To mBoardHeight - 1
+            For xInd As Integer = 0 To mBoardWidth - 1
+                If mBoard(yInd, xInd).Tag > 0 AndAlso mBoard(yInd, xInd).Text = "" Then
+                    tileCount += 1
+                End If
+            Next
+        Next
+        Console.WriteLine("IMPOSSIBLE START. " & tileCount & " SPOTS AVAILABLE.")
+        If tileCount < 4 Then
+            Dim timesDug As Integer = 0
+            Do While tileCount < 4 'To handle if it needs to keep "digging", in case it couldn't make it big enough with just one iteration
+                timesDug += 1
+                If timesDug > 5 Then 'If a map was created without any walkable space, get it started
+                    Dim tilesBefore As Integer = tileCount
+                    For yInd As Integer = 0 To mBoardHeight - 1
+                        For xInd As Integer = 0 To mBoardWidth - 1
+                            If mBoard(yInd, xInd).Tag = 0 Then
+                                mBoard(yInd, xInd).Tag = 1
+                                timesDug = 0
+                                tileCount += 1
+                                Exit For
+                            End If
+                        Next
+                        If tilesBefore < tileCount Then
+                            Exit For
+                        End If
+                    Next
+                    timesDug = 0
+                    Console.WriteLine("SEEDED")
+                End If
+                For yInd As Integer = 0 AndAlso tileCount < 4 To mBoardHeight - 1
+                    For xInd As Integer = 0 AndAlso tileCount < 4 To mBoardWidth - 1
+                        If mBoard(yInd, xInd).Tag > 0 AndAlso mBoard(yInd, xInd).Text = "" Then
+                            If yInd - 1 > 0 AndAlso mBoard(yInd - 1, xInd).Tag = 0 Then
+                                mBoard(yInd - 1, xInd).Tag = 1
+                                tileCount += 1
+                                Console.WriteLine("DUG 1")
+                            ElseIf yInd + 1 < mBoardHeight AndAlso mBoard(yInd + 1, xInd).Tag = 0 Then
+                                mBoard(yInd + 1, xInd).Tag = 1
+                                tileCount += 1
+                                Console.WriteLine("DUG 1")
+                            ElseIf xInd - 1 > 0 AndAlso mBoard(yInd, xInd - 1).Tag = 0 Then
+                                mBoard(yInd, xInd - 1).Tag = 1
+                                tileCount += 1
+                                Console.WriteLine("DUG 1")
+                            ElseIf xInd + 1 < mBoardWidth AndAlso mBoard(yInd, xInd + 1).Tag = 0 Then
+                                mBoard(yInd, xInd + 1).Tag = 1
+                                tileCount += 1
+                                Console.WriteLine("DUG 1")
+                            End If
+                        End If
+                    Next
+                Next
+            Loop
+        End If
+
         Dim playerX As Integer
         Dim playerY As Integer
         Do While (mBoard(playerY, playerX).Tag <> 1)
