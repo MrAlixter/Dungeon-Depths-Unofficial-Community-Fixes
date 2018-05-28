@@ -159,11 +159,14 @@
     Public Sub Die()
         If name = "Explorer" Then
             If MessageBox.Show("Would you like to do the Explorer's body swap?", "Body Swap?", MessageBoxButtons.YesNo) = Windows.Forms.DialogResult.Yes Then 'Int(Rnd() * 3) = 0 Then '
-                bodySwap(Game.player)
+                Try
+                    bodySwap(Game.player)
+                Catch ex As Exception
+                    Game.pushLblEvent("The body swap fails!")
+                End Try
             End If
         End If
         endMonster()
-        Game.npcList.Remove(Me)
         If mindex = 2 And Not name.Equals("Enslaved Thrall") Then
             Dim writer As IO.StreamWriter
             writer = IO.File.CreateText("gho.sts")
@@ -320,7 +323,7 @@
     Private Sub endBoss()
         If sName.Equals("Marissa the Enchantress") Then Game.beatboss(1) = True
         If sName.Equals("Targax the Brutal") Then Game.beatboss(2) = True
-        If sName.Equals("Explorer") Then Game.beatboss(Game.floor) = True
+        If sName.Equals("Explorer") And Game.floor < 6 Then Game.beatboss(Game.floor) = True
     End Sub
     Private Sub endMonster()
         Dim totalSum As Integer = 0
