@@ -426,8 +426,9 @@ Public Class Game
                 End If
             Next
         Next
-        Console.WriteLine("IMPOSSIBLE START. " & tileCount & " SPOTS AVAILABLE.")
+
         If tileCount < 4 Then
+            Console.WriteLine("IMPOSSIBLE START. " & tileCount & " SPOTS AVAILABLE.")
             Dim timesDug As Integer = 0
             Do While tileCount < 4 'To handle if it needs to keep "digging", in case it couldn't make it big enough with just one iteration
                 timesDug += 1
@@ -452,7 +453,7 @@ Public Class Game
                 For yInd As Integer = 0 AndAlso tileCount < 4 To mBoardHeight - 1
                     For xInd As Integer = 0 AndAlso tileCount < 4 To mBoardWidth - 1
                         If mBoard(yInd, xInd).Tag > 0 AndAlso mBoard(yInd, xInd).Text = "" Then
-                            If yInd - 1 > 0 AndAlso mBoard(yInd - 1, xInd).Tag = 0 Then
+                            If yInd - 1 >= 0 AndAlso mBoard(yInd - 1, xInd).Tag = 0 Then
                                 mBoard(yInd - 1, xInd).Tag = 1
                                 tileCount += 1
                                 Console.WriteLine("DUG 1")
@@ -460,7 +461,7 @@ Public Class Game
                                 mBoard(yInd + 1, xInd).Tag = 1
                                 tileCount += 1
                                 Console.WriteLine("DUG 1")
-                            ElseIf xInd - 1 > 0 AndAlso mBoard(yInd, xInd - 1).Tag = 0 Then
+                            ElseIf xInd - 1 >= 0 AndAlso mBoard(yInd, xInd - 1).Tag = 0 Then
                                 mBoard(yInd, xInd - 1).Tag = 1
                                 tileCount += 1
                                 Console.WriteLine("DUG 1")
