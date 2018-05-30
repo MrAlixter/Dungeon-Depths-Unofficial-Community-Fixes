@@ -1181,6 +1181,8 @@
         End Select
         'eyes
         Select Case iArrInd(9).Item1
+            Case 5
+                iArrInd(9) = New Tuple(Of Integer, Boolean)(11, True)
             Case 7
                 iArrInd(9) = New Tuple(Of Integer, Boolean)(14, True)
             Case 8
@@ -1262,6 +1264,8 @@
         End Select
         'eyes
         Select Case iArrInd(9).Item1
+            Case 11
+                iArrInd(9) = New Tuple(Of Integer, Boolean)(5, False)
             Case 14
                 iArrInd(9) = New Tuple(Of Integer, Boolean)(7, False)
             Case 15
