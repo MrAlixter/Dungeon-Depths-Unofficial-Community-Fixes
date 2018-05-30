@@ -49,6 +49,9 @@
 
     'CharGen1_Load handles the loading of the character generator
     Private Sub CharGen1_Load(sender As Object, e As EventArgs) Handles MyBase.Load
+        Game.player.skincolor = skincolor
+        Game.player.haircolor = hairColor
+
         Dim newFont As Font = New System.Drawing.Font("Consolas", CInt(8 * Me.Size.Width / 581))
         For i = 0 To Me.Controls.Count - 1
             Me.Controls(i).Font = newFont
@@ -336,6 +339,7 @@
 
         NormalClothes.bsizeneg1 = New Tuple(Of Integer, Boolean)(CInt(Game.player.iArrInd(3).Item1), False)
         NormalClothes.bsize1 = New Tuple(Of Integer, Boolean)(CInt(Game.player.iArrInd(3).Item1), True)
+        NormalClothes.bsize2 = New Tuple(Of Integer, Boolean)(CInt(Game.player.iArrInd(3).Item1) + 99, True)
         If Game.player.name = "Mark" Then NormalClothes.bsize2 = New Tuple(Of Integer, Boolean)(CharacterGenerator.fClothing.Count - 1, True)
     End Sub
 
@@ -612,6 +616,7 @@
     End Function
     'PicOnClick handles the selecting of images via click
     Sub PicOnClick(ByVal sender As Object, ByVal e As EventArgs)
+        If currAttribute.Count = 1 Then Exit Sub
         If currAttribute.Equals(fRearHair2) Or currAttribute.Equals(mRearHair2) Then
             Dim ind As Integer = pnlBody.Controls.IndexOf(sender)
             iArr(1) = currAttribute(ind)

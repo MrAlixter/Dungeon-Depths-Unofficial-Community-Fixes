@@ -243,7 +243,7 @@
         End If
         Game.lstLog.Items.Add("Cast Turn to Blade!")
         caster.inventory.Item(9).addOne()
-        If caster.inventory.Item(9).count <> 1 Then caster.inventory.Item(9).remove()
+        If caster.inventory.Item(9).count < 1 Then caster.inventory.Item(9).remove()
         caster.UIupdate()
         caster.inventory.Item(9).absorb(target)
         caster.mana -= 9

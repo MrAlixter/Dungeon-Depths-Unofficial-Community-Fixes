@@ -88,8 +88,6 @@ Partial Class Game
         Me.NewGameToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
         Me.HelpToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
         Me.HelpToolStripMenuItem1 = New System.Windows.Forms.ToolStripMenuItem()
-        Me.WASDArrowsMoveToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
-        Me.InteractstairschestsToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
         Me.StatInfoToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
         Me.ReportToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
         Me.DebugToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
@@ -176,7 +174,15 @@ Partial Class Game
         Me.picStairsBoss = New System.Windows.Forms.PictureBox()
         Me.picChicken = New System.Windows.Forms.PictureBox()
         Me.picstairsbossf = New System.Windows.Forms.PictureBox()
-        Me.PictureBox2 = New System.Windows.Forms.PictureBox()
+        Me.picstairslockf = New System.Windows.Forms.PictureBox()
+        Me.pnlSelection = New System.Windows.Forms.Panel()
+        Me.lblInstruc = New System.Windows.Forms.Label()
+        Me.lblWhat = New System.Windows.Forms.Label()
+        Me.Label3 = New System.Windows.Forms.Label()
+        Me.lstSelec = New System.Windows.Forms.ListBox()
+        Me.picSW = New System.Windows.Forms.PictureBox()
+        Me.PicSWPrin = New System.Windows.Forms.PictureBox()
+        Me.picSWb = New System.Windows.Forms.PictureBox()
         CType(Me.picMarkBClothes, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me.picMarkBRearHair2, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me.picMarkBRearHair1, System.ComponentModel.ISupportInitialize).BeginInit()
@@ -237,7 +243,11 @@ Partial Class Game
         CType(Me.picStairsBoss, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me.picChicken, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me.picstairsbossf, System.ComponentModel.ISupportInitialize).BeginInit()
-        CType(Me.PictureBox2, System.ComponentModel.ISupportInitialize).BeginInit()
+        CType(Me.picstairslockf, System.ComponentModel.ISupportInitialize).BeginInit()
+        Me.pnlSelection.SuspendLayout()
+        CType(Me.picSW, System.ComponentModel.ISupportInitialize).BeginInit()
+        CType(Me.PicSWPrin, System.ComponentModel.ISupportInitialize).BeginInit()
+        CType(Me.picSWb, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.SuspendLayout()
         '
         'btnUse1
@@ -943,27 +953,10 @@ Partial Class Game
         'HelpToolStripMenuItem1
         '
         Me.HelpToolStripMenuItem1.BackColor = System.Drawing.Color.Black
-        Me.HelpToolStripMenuItem1.DropDownItems.AddRange(New System.Windows.Forms.ToolStripItem() {Me.WASDArrowsMoveToolStripMenuItem, Me.InteractstairschestsToolStripMenuItem})
         Me.HelpToolStripMenuItem1.ForeColor = System.Drawing.Color.White
         Me.HelpToolStripMenuItem1.Name = "HelpToolStripMenuItem1"
         Me.HelpToolStripMenuItem1.Size = New System.Drawing.Size(182, 30)
         Me.HelpToolStripMenuItem1.Text = "Controls"
-        '
-        'WASDArrowsMoveToolStripMenuItem
-        '
-        Me.WASDArrowsMoveToolStripMenuItem.BackColor = System.Drawing.Color.Black
-        Me.WASDArrowsMoveToolStripMenuItem.ForeColor = System.Drawing.Color.White
-        Me.WASDArrowsMoveToolStripMenuItem.Name = "WASDArrowsMoveToolStripMenuItem"
-        Me.WASDArrowsMoveToolStripMenuItem.Size = New System.Drawing.Size(402, 30)
-        Me.WASDArrowsMoveToolStripMenuItem.Text = "w, a, s, d / arrows = move"
-        '
-        'InteractstairschestsToolStripMenuItem
-        '
-        Me.InteractstairschestsToolStripMenuItem.BackColor = System.Drawing.Color.Black
-        Me.InteractstairschestsToolStripMenuItem.ForeColor = System.Drawing.Color.White
-        Me.InteractstairschestsToolStripMenuItem.Name = "InteractstairschestsToolStripMenuItem"
-        Me.InteractstairschestsToolStripMenuItem.Size = New System.Drawing.Size(402, 30)
-        Me.InteractstairschestsToolStripMenuItem.Text = "e / ; = interact(stairs/chests)"
         '
         'StatInfoToolStripMenuItem
         '
@@ -1516,6 +1509,7 @@ Partial Class Game
         '
         'pnlSaveLoad
         '
+        Me.pnlSaveLoad.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle
         Me.pnlSaveLoad.Controls.Add(Me.btnS1)
         Me.pnlSaveLoad.Controls.Add(Me.btnCancel)
         Me.pnlSaveLoad.Controls.Add(Me.btnS8)
@@ -1614,7 +1608,7 @@ Partial Class Game
         'picShopkeeperf
         '
         Me.picShopkeeperf.BackgroundImage = CType(resources.GetObject("picShopkeeperf.BackgroundImage"), System.Drawing.Image)
-        Me.picShopkeeperf.Location = New System.Drawing.Point(432, 91)
+        Me.picShopkeeperf.Location = New System.Drawing.Point(497, 136)
         Me.picShopkeeperf.Name = "picShopkeeperf"
         Me.picShopkeeperf.Size = New System.Drawing.Size(15, 15)
         Me.picShopkeeperf.TabIndex = 267
@@ -1829,7 +1823,7 @@ Partial Class Game
         'picSWiz
         '
         Me.picSWiz.BackgroundImage = CType(resources.GetObject("picSWiz.BackgroundImage"), System.Drawing.Image)
-        Me.picSWiz.Location = New System.Drawing.Point(453, 72)
+        Me.picSWiz.Location = New System.Drawing.Point(518, 71)
         Me.picSWiz.Name = "picSWiz"
         Me.picSWiz.Size = New System.Drawing.Size(15, 15)
         Me.picSWiz.TabIndex = 273
@@ -1839,7 +1833,7 @@ Partial Class Game
         'picSWizF
         '
         Me.picSWizF.BackgroundImage = CType(resources.GetObject("picSWizF.BackgroundImage"), System.Drawing.Image)
-        Me.picSWizF.Location = New System.Drawing.Point(453, 93)
+        Me.picSWizF.Location = New System.Drawing.Point(518, 136)
         Me.picSWizF.Name = "picSWizF"
         Me.picSWizF.Size = New System.Drawing.Size(15, 15)
         Me.picSWizF.TabIndex = 274
@@ -1866,9 +1860,9 @@ Partial Class Game
         Me.lblNext.ForeColor = System.Drawing.Color.White
         Me.lblNext.Location = New System.Drawing.Point(23, 426)
         Me.lblNext.Name = "lblNext"
-        Me.lblNext.Size = New System.Drawing.Size(250, 22)
+        Me.lblNext.Size = New System.Drawing.Size(290, 22)
         Me.lblNext.TabIndex = 277
-        Me.lblNext.Text = "Press ';' to continue..."
+        Me.lblNext.Text = "Press any key to continue..."
         '
         'picDescPort
         '
@@ -1918,7 +1912,7 @@ Partial Class Game
         'picChicken
         '
         Me.picChicken.BackgroundImage = CType(resources.GetObject("picChicken.BackgroundImage"), System.Drawing.Image)
-        Me.picChicken.Location = New System.Drawing.Point(432, 71)
+        Me.picChicken.Location = New System.Drawing.Point(413, 78)
         Me.picChicken.Name = "picChicken"
         Me.picChicken.Size = New System.Drawing.Size(15, 15)
         Me.picChicken.TabIndex = 278
@@ -1935,22 +1929,118 @@ Partial Class Game
         Me.picstairsbossf.TabStop = False
         Me.picstairsbossf.Visible = False
         '
-        'PictureBox2
+        'picstairslockf
         '
-        Me.PictureBox2.BackgroundImage = CType(resources.GetObject("PictureBox2.BackgroundImage"), System.Drawing.Image)
-        Me.PictureBox2.Location = New System.Drawing.Point(602, 95)
-        Me.PictureBox2.Name = "PictureBox2"
-        Me.PictureBox2.Size = New System.Drawing.Size(15, 15)
-        Me.PictureBox2.TabIndex = 280
-        Me.PictureBox2.TabStop = False
-        Me.PictureBox2.Visible = False
+        Me.picstairslockf.BackgroundImage = CType(resources.GetObject("picstairslockf.BackgroundImage"), System.Drawing.Image)
+        Me.picstairslockf.Location = New System.Drawing.Point(602, 95)
+        Me.picstairslockf.Name = "picstairslockf"
+        Me.picstairslockf.Size = New System.Drawing.Size(15, 15)
+        Me.picstairslockf.TabIndex = 280
+        Me.picstairslockf.TabStop = False
+        Me.picstairslockf.Visible = False
+        '
+        'pnlSelection
+        '
+        Me.pnlSelection.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle
+        Me.pnlSelection.Controls.Add(Me.lblInstruc)
+        Me.pnlSelection.Controls.Add(Me.lblWhat)
+        Me.pnlSelection.Controls.Add(Me.Label3)
+        Me.pnlSelection.Controls.Add(Me.lstSelec)
+        Me.pnlSelection.Location = New System.Drawing.Point(1000, 72)
+        Me.pnlSelection.Name = "pnlSelection"
+        Me.pnlSelection.Size = New System.Drawing.Size(560, 293)
+        Me.pnlSelection.TabIndex = 281
+        Me.pnlSelection.Visible = False
+        '
+        'lblInstruc
+        '
+        Me.lblInstruc.AutoSize = True
+        Me.lblInstruc.BackColor = System.Drawing.Color.Black
+        Me.lblInstruc.Font = New System.Drawing.Font("Consolas", 9.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.lblInstruc.ForeColor = System.Drawing.Color.White
+        Me.lblInstruc.Location = New System.Drawing.Point(6, 61)
+        Me.lblInstruc.Name = "lblInstruc"
+        Me.lblInstruc.Size = New System.Drawing.Size(310, 22)
+        Me.lblInstruc.TabIndex = 280
+        Me.lblInstruc.Text = "Type the corresponding letter:"
+        '
+        'lblWhat
+        '
+        Me.lblWhat.AutoSize = True
+        Me.lblWhat.BackColor = System.Drawing.Color.Black
+        Me.lblWhat.Font = New System.Drawing.Font("Consolas", 9.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.lblWhat.ForeColor = System.Drawing.Color.White
+        Me.lblWhat.Location = New System.Drawing.Point(8, 8)
+        Me.lblWhat.Name = "lblWhat"
+        Me.lblWhat.Size = New System.Drawing.Size(110, 22)
+        Me.lblWhat.TabIndex = 279
+        Me.lblWhat.Text = "Verb what?"
+        '
+        'Label3
+        '
+        Me.Label3.AutoSize = True
+        Me.Label3.BackColor = System.Drawing.Color.Black
+        Me.Label3.Font = New System.Drawing.Font("Consolas", 9.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.Label3.ForeColor = System.Drawing.Color.White
+        Me.Label3.Location = New System.Drawing.Point(7, 262)
+        Me.Label3.Name = "Label3"
+        Me.Label3.Size = New System.Drawing.Size(270, 22)
+        Me.Label3.TabIndex = 278
+        Me.Label3.Text = "Press backspace to cancel."
+        '
+        'lstSelec
+        '
+        Me.lstSelec.BackColor = System.Drawing.Color.Black
+        Me.lstSelec.Font = New System.Drawing.Font("Consolas", 7.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.lstSelec.ForeColor = System.Drawing.Color.White
+        Me.lstSelec.FormattingEnabled = True
+        Me.lstSelec.ItemHeight = 17
+        Me.lstSelec.Location = New System.Drawing.Point(352, 25)
+        Me.lstSelec.Name = "lstSelec"
+        Me.lstSelec.Size = New System.Drawing.Size(198, 242)
+        Me.lstSelec.TabIndex = 142
+        '
+        'picSW
+        '
+        Me.picSW.BackgroundImage = CType(resources.GetObject("picSW.BackgroundImage"), System.Drawing.Image)
+        Me.picSW.Location = New System.Drawing.Point(233, 70)
+        Me.picSW.Name = "picSW"
+        Me.picSW.Size = New System.Drawing.Size(15, 15)
+        Me.picSW.TabIndex = 282
+        Me.picSW.TabStop = False
+        Me.picSW.Visible = False
+        '
+        'PicSWPrin
+        '
+        Me.PicSWPrin.BackgroundImage = CType(resources.GetObject("PicSWPrin.BackgroundImage"), System.Drawing.Image)
+        Me.PicSWPrin.Location = New System.Drawing.Point(254, 70)
+        Me.PicSWPrin.Name = "PicSWPrin"
+        Me.PicSWPrin.Size = New System.Drawing.Size(15, 15)
+        Me.PicSWPrin.TabIndex = 283
+        Me.PicSWPrin.TabStop = False
+        Me.PicSWPrin.Visible = False
+        '
+        'picSWb
+        '
+        Me.picSWb.BackgroundImage = CType(resources.GetObject("picSWb.BackgroundImage"), System.Drawing.Image)
+        Me.picSWb.Location = New System.Drawing.Point(317, 70)
+        Me.picSWb.Name = "picSWb"
+        Me.picSWb.Size = New System.Drawing.Size(15, 15)
+        Me.picSWb.TabIndex = 284
+        Me.picSWb.TabStop = False
+        Me.picSWb.Visible = False
         '
         'Game
         '
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Inherit
+        Me.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink
         Me.BackColor = System.Drawing.Color.Black
         Me.ClientSize = New System.Drawing.Size(1008, 690)
-        Me.Controls.Add(Me.PictureBox2)
+        Me.Controls.Add(Me.picSWb)
+        Me.Controls.Add(Me.PicSWPrin)
+        Me.Controls.Add(Me.picSW)
+        Me.Controls.Add(Me.pnlSelection)
+        Me.Controls.Add(Me.picstairslockf)
         Me.Controls.Add(Me.picstairsbossf)
         Me.Controls.Add(Me.picChicken)
         Me.Controls.Add(Me.picStairsBoss)
@@ -2065,8 +2155,9 @@ Partial Class Game
         Me.Controls.Add(Me.picPortrait)
         Me.Controls.Add(Me.lblEvent)
         Me.Controls.Add(Me.btnWait)
-        Me.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedToolWindow
+        Me.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedDialog
         Me.Icon = CType(resources.GetObject("$this.Icon"), System.Drawing.Icon)
+        Me.MaximizeBox = False
         Me.Name = "Game"
         Me.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen
         Me.Text = "Dungeon_Depths"
@@ -2133,7 +2224,12 @@ Partial Class Game
         CType(Me.picStairsBoss, System.ComponentModel.ISupportInitialize).EndInit()
         CType(Me.picChicken, System.ComponentModel.ISupportInitialize).EndInit()
         CType(Me.picstairsbossf, System.ComponentModel.ISupportInitialize).EndInit()
-        CType(Me.PictureBox2, System.ComponentModel.ISupportInitialize).EndInit()
+        CType(Me.picstairslockf, System.ComponentModel.ISupportInitialize).EndInit()
+        Me.pnlSelection.ResumeLayout(False)
+        Me.pnlSelection.PerformLayout()
+        CType(Me.picSW, System.ComponentModel.ISupportInitialize).EndInit()
+        CType(Me.PicSWPrin, System.ComponentModel.ISupportInitialize).EndInit()
+        CType(Me.picSWb, System.ComponentModel.ISupportInitialize).EndInit()
         Me.ResumeLayout(False)
         Me.PerformLayout()
 
@@ -2202,8 +2298,6 @@ Partial Class Game
     Friend WithEvents NewGameToolStripMenuItem As System.Windows.Forms.ToolStripMenuItem
     Friend WithEvents HelpToolStripMenuItem As System.Windows.Forms.ToolStripMenuItem
     Friend WithEvents HelpToolStripMenuItem1 As System.Windows.Forms.ToolStripMenuItem
-    Friend WithEvents WASDArrowsMoveToolStripMenuItem As System.Windows.Forms.ToolStripMenuItem
-    Friend WithEvents InteractstairschestsToolStripMenuItem As System.Windows.Forms.ToolStripMenuItem
     Friend WithEvents picPortrait As System.Windows.Forms.PictureBox
     Friend WithEvents btnEXM As System.Windows.Forms.Button
     Friend WithEvents lblGold As System.Windows.Forms.Label
@@ -2290,5 +2384,13 @@ Partial Class Game
     Friend WithEvents picStairsBoss As System.Windows.Forms.PictureBox
     Friend WithEvents picChicken As System.Windows.Forms.PictureBox
     Friend WithEvents picstairsbossf As System.Windows.Forms.PictureBox
-    Friend WithEvents PictureBox2 As System.Windows.Forms.PictureBox
+    Friend WithEvents picstairslockf As System.Windows.Forms.PictureBox
+    Friend WithEvents pnlSelection As System.Windows.Forms.Panel
+    Friend WithEvents lblWhat As System.Windows.Forms.Label
+    Friend WithEvents Label3 As System.Windows.Forms.Label
+    Friend WithEvents lstSelec As System.Windows.Forms.ListBox
+    Friend WithEvents lblInstruc As System.Windows.Forms.Label
+    Friend WithEvents picSW As System.Windows.Forms.PictureBox
+    Friend WithEvents PicSWPrin As System.Windows.Forms.PictureBox
+    Friend WithEvents picSWb As System.Windows.Forms.PictureBox
 End Class

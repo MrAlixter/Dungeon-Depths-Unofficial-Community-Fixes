@@ -78,6 +78,26 @@
             Case 3
                 Polymorph.transform(Game.player, "doll", 0)
             Case 4
+                Dim out = "As your foot touches down on what looks to be the same ground that you have been walking on, you find that it is not met with any resistance.  Unable to keep your balance, you fall face first into the shiny waterlike facsimile of the floor and are thrown, flipping, into a another room.  As you regain your senses, you notice that you actually just ahead of where you were.  Turning around, you tap the floor you presumably fell out through, only to find it as solid as any other patch of floor you have come across.  Not able to find anything else abnormal with your surroundings, you write your expirience off as some failed illusion and set off on your way."
+                If Game.player.sexBool Then
+                    Game.player.iArrInd(1) = New Tuple(Of Integer, Boolean)(Game.player.sState.iArrInd(1).Item1, False)
+                    Game.player.iArrInd(2) = New Tuple(Of Integer, Boolean)(0, True)
+                    Game.player.iArrInd(4) = New Tuple(Of Integer, Boolean)(Game.player.sState.iArrInd(4).Item1, False)
+                    Game.player.iArrInd(5) = New Tuple(Of Integer, Boolean)(Game.player.sState.iArrInd(5).Item1, False)
+                    Game.player.iArrInd(8) = New Tuple(Of Integer, Boolean)(Game.player.sState.iArrInd(8).Item1, False)
+                    Game.player.iArrInd(10) = New Tuple(Of Integer, Boolean)(Game.player.sState.iArrInd(10).Item1, False)
+                    Game.player.iArrInd(15) = New Tuple(Of Integer, Boolean)(Game.player.sState.iArrInd(15).Item1, False)
+                    Game.player.FtM()
+                Else
+                    Game.player.iArrInd(1) = New Tuple(Of Integer, Boolean)(Game.player.sState.iArrInd(1).Item1, True)
+                    Game.player.iArrInd(5) = New Tuple(Of Integer, Boolean)(Game.player.sState.iArrInd(5).Item1, True)
+                    Game.player.iArrInd(8) = New Tuple(Of Integer, Boolean)(Game.player.sState.iArrInd(8).Item1, True)
+                    Game.player.iArrInd(15) = New Tuple(Of Integer, Boolean)(Game.player.sState.iArrInd(15).Item1, True)
+                    Game.player.MtF()
+                End If
+                Game.player.createP()
+                Game.player.UIupdate()
+                Game.pushLblEvent(out)
         End Select
 
         pos = New Point(-1, -1)

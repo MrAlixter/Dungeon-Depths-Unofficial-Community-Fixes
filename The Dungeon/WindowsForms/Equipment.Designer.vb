@@ -22,11 +22,14 @@ Partial Class Equipment
     'Do not modify it using the code editor.
     <System.Diagnostics.DebuggerStepThrough()> _
     Private Sub InitializeComponent()
+        Dim resources As System.ComponentModel.ComponentResourceManager = New System.ComponentModel.ComponentResourceManager(GetType(Equipment))
         Me.Label2 = New System.Windows.Forms.Label()
         Me.cmbobxArmor = New System.Windows.Forms.ComboBox()
         Me.Label1 = New System.Windows.Forms.Label()
         Me.btnACPT = New System.Windows.Forms.Button()
         Me.cmbobxWeapon = New System.Windows.Forms.ComboBox()
+        Me.Label3 = New System.Windows.Forms.Label()
+        Me.cboxAccessory = New System.Windows.Forms.ComboBox()
         Me.SuspendLayout()
         '
         'Label2
@@ -72,7 +75,7 @@ Partial Class Equipment
         Me.btnACPT.BackColor = System.Drawing.SystemColors.ButtonFace
         Me.btnACPT.Font = New System.Drawing.Font("Consolas", 8.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.btnACPT.ForeColor = System.Drawing.Color.Black
-        Me.btnACPT.Location = New System.Drawing.Point(105, 148)
+        Me.btnACPT.Location = New System.Drawing.Point(105, 224)
         Me.btnACPT.Margin = New System.Windows.Forms.Padding(4, 5, 4, 5)
         Me.btnACPT.Name = "btnACPT"
         Me.btnACPT.Size = New System.Drawing.Size(89, 32)
@@ -92,18 +95,46 @@ Partial Class Equipment
         Me.cmbobxWeapon.Size = New System.Drawing.Size(199, 27)
         Me.cmbobxWeapon.TabIndex = 11
         '
+        'Label3
+        '
+        Me.Label3.AutoSize = True
+        Me.Label3.BackColor = System.Drawing.Color.Black
+        Me.Label3.Font = New System.Drawing.Font("Consolas", 8.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.Label3.ForeColor = System.Drawing.Color.White
+        Me.Label3.Location = New System.Drawing.Point(48, 153)
+        Me.Label3.Margin = New System.Windows.Forms.Padding(4, 0, 4, 0)
+        Me.Label3.Name = "Label3"
+        Me.Label3.Size = New System.Drawing.Size(171, 19)
+        Me.Label3.TabIndex = 17
+        Me.Label3.Text = "Equiped Accessory:"
+        '
+        'cboxAccessory
+        '
+        Me.cboxAccessory.BackColor = System.Drawing.Color.Black
+        Me.cboxAccessory.Font = New System.Drawing.Font("Consolas", 8.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.cboxAccessory.ForeColor = System.Drawing.Color.White
+        Me.cboxAccessory.FormattingEnabled = True
+        Me.cboxAccessory.Location = New System.Drawing.Point(50, 178)
+        Me.cboxAccessory.Margin = New System.Windows.Forms.Padding(4, 5, 4, 5)
+        Me.cboxAccessory.Name = "cboxAccessory"
+        Me.cboxAccessory.Size = New System.Drawing.Size(199, 27)
+        Me.cboxAccessory.TabIndex = 16
+        '
         'Equipment
         '
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Inherit
         Me.BackColor = System.Drawing.Color.Black
-        Me.ClientSize = New System.Drawing.Size(291, 203)
+        Me.ClientSize = New System.Drawing.Size(291, 268)
         Me.ControlBox = False
+        Me.Controls.Add(Me.Label3)
+        Me.Controls.Add(Me.cboxAccessory)
         Me.Controls.Add(Me.Label2)
         Me.Controls.Add(Me.cmbobxArmor)
         Me.Controls.Add(Me.Label1)
         Me.Controls.Add(Me.btnACPT)
         Me.Controls.Add(Me.cmbobxWeapon)
         Me.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle
+        Me.Icon = CType(resources.GetObject("$this.Icon"), System.Drawing.Icon)
         Me.Name = "Equipment"
         Me.StartPosition = System.Windows.Forms.FormStartPosition.CenterParent
         Me.Text = "Equip Menu"
@@ -116,4 +147,6 @@ Partial Class Equipment
     Friend WithEvents Label1 As System.Windows.Forms.Label
     Friend WithEvents btnACPT As System.Windows.Forms.Button
     Friend WithEvents cmbobxWeapon As System.Windows.Forms.ComboBox
+    Friend WithEvents Label3 As System.Windows.Forms.Label
+    Friend WithEvents cboxAccessory As System.Windows.Forms.ComboBox
 End Class
