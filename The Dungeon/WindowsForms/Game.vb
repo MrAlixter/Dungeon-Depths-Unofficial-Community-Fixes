@@ -1825,7 +1825,7 @@ Public Class Game
         swiz.pos.Y = reader.ReadLine()
 
         chestList.Clear()
-        placeChest(floorLayouts(floor))
+        If floor < 5 Then placeChest(floorLayouts(floor)) Else placeChest(genRNDLVLCode)
         Dim tCL As ArrayList = New ArrayList()
         For i = 0 To uOchests.Count - 1
             For j = 0 To chestList.Count - 1
@@ -1838,30 +1838,37 @@ Public Class Game
         chestList.Clear()
         chestList = tCL.Clone()
 
-        If chestList.Count = 0 And uOchests.Count <> 0 Then placeChest(floorLayouts(floor))
-        combatmode = False
+        If chestList.Count = 0 And uOchests.Count <> 0 Then
+            If floor < 5 Then
+                placeChest(floorLayouts(floor))
+            Else
+                placeChest(genRNDLVLCode)
+            End If
+        End If
 
-        Equipment.init()
-        reader.Close()
-        player.setPImage()
+            combatmode = False
 
-        drawBoard()
-        lblNameTitle.Text = player.name & " the " & player.title
-        lblHealth.Text = "Health = " & player.health & "/" & player.maxHealth
-        lblMana.Text = "Mana = " & player.mana & "/" & player.maxMana
-        lblHunger.Text = "Hunger = " & player.hunger & "/100"
-        lblATK.Text = "ATK = " & player.getAttack
-        lblDEF.Text = "DEF = " & player.getDefence
-        lblSKL.Text = "WIL = " & player.getWillpower
-        lblSPD.Text = "SPD = " & player.getSpeed
-        lblEVD.Text = "EVD = " & player.evade
+            Equipment.init()
+            reader.Close()
+            player.setPImage()
 
-        player.currState.save(player)
-        picStart.Visible = False
+            drawBoard()
+            lblNameTitle.Text = player.name & " the " & player.title
+            lblHealth.Text = "Health = " & player.health & "/" & player.maxHealth
+            lblMana.Text = "Mana = " & player.mana & "/" & player.maxMana
+            lblHunger.Text = "Hunger = " & player.hunger & "/100"
+            lblATK.Text = "ATK = " & player.getAttack
+            lblDEF.Text = "DEF = " & player.getDefence
+            lblSKL.Text = "WIL = " & player.getWillpower
+            lblSPD.Text = "SPD = " & player.getSpeed
+            lblEVD.Text = "EVD = " & player.evade
 
-        pushLblEvent("Game successfully loaded!")
-        player.solFlag = False
-        player.createP()
+            player.currState.save(player)
+            picStart.Visible = False
+
+            pushLblEvent("Game successfully loaded!")
+            player.solFlag = False
+            player.createP()
     End Sub
     Private Sub btnS1_Click(sender As Object, e As EventArgs) Handles btnS1.Click
         If solFlag Then

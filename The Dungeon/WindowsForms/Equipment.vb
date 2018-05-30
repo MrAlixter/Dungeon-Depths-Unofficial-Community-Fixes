@@ -295,6 +295,16 @@
                     p.iArrInd(16) = New Tuple(Of Integer, Boolean)(CharacterGenerator.fHat.Count - 2, True)
             End Select
         ElseIf p.equippedArmor.getName = "Magic_Girl_Outfit" Then
+            If Not p.title.Equals("Magic_Girl") Then
+                clothesChange("Naked")
+                Game.pushLblEvent("Your clothes don't fit!")
+                Game.lstLog.Items.Add("Your clothes don't fit!")
+                If p.sexBool Then
+                    p.iArrInd(3) = New Tuple(Of Integer, Boolean)(47, True)
+                Else
+                    p.iArrInd(3) = New Tuple(Of Integer, Boolean)(5, False)
+                End If
+            End If
             Select Case p.breastSize
                 Case 1
                     p.iArrInd(3) = p.equippedArmor.bsize1
