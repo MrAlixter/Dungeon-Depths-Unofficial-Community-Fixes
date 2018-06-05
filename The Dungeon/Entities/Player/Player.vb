@@ -608,6 +608,7 @@
         inventory.Add(New HyperManaPotion()) '62
         inventory.Add(New SpidersilkWhip()) '63
         inventory.Add(New ChitArmor()) '64
+        inventory.Add(New ASpellbook()) '65
 
         For i = 0 To inventory.Count - 1
             If inventory(i).GetType().IsSubclassOf(GetType(MysteryPotion)) Then
@@ -631,9 +632,9 @@
                    inventory(41), inventory(42), inventory(45), inventory(63)}
 
         useable = {inventory(0), inventory(1), inventory(3), inventory(4),
-                   inventory(15), inventory(36), inventory(37), inventory(45),
-                   inventory(48), inventory(49), inventory(50), inventory(51),
-                   inventory(52), inventory(57), inventory(58)}
+                   inventory(65), inventory(15), inventory(36), inventory(37),
+                   inventory(45), inventory(48), inventory(49), inventory(50),
+                   inventory(51), inventory(52), inventory(57), inventory(58)}
 
         food = {inventory(30), inventory(31), inventory(32), inventory(33),
                 inventory(34), inventory(35), inventory(44)}
@@ -641,6 +642,7 @@
         potions = {inventory(2), inventory(13), inventory(14), inventory(25),
                    inventory(26), inventory(27), inventory(28), inventory(29),
                    inventory(59), inventory(60), inventory(61), inventory(62)}
+        Array.Sort(potions)
 
         misc = {inventory(43), inventory(53)}
 
@@ -931,6 +933,7 @@
         If Game.invFilters(1) Then
             tArr(ct) = "-POTIONS:"
             ct += 1
+            Array.Sort(potions)
             For i = 0 To UBound(potions)
                 If potions(i).getCount > 0 Then
                     tArr(ct) = " " & potions(i).getName() & " x" & potions(i).count

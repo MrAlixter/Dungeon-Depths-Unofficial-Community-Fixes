@@ -1,4 +1,5 @@
 ﻿Public Class Item
+    Implements IComparable
     Dim name As String = ""
     Dim description As String
     Dim isUsable As Boolean
@@ -7,6 +8,13 @@
     Public tier As Integer = Nothing
     Public id As Integer = Nothing
 
+    Overloads Function CompareTo(ByVal obj As Object) As Integer Implements IComparable.CompareTo
+        If obj.GetHashCode < Me.GetHashCode Then
+            Return obj.GetHashCode / Me.GetHashCode
+        Else
+            Return -1 * (Me.GetHashCode / obj.GetHashCode)
+        End If
+    End Function
     'getters/setters
     Function getName()
         Return name

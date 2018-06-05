@@ -116,6 +116,7 @@
     <Compile Include="Items\Armor\ChitArmor.vb" />
     <Compile Include="Items\Usable\Potions\Mystery Potions\BSPotion.vb" />
     <Compile Include="Items\Usable\Potions\Mystery Potions\HyperManaPotion.vb" />
+    <Compile Include="Items\Usable\Spellbooks\ASpellbook.vb" />
     <Compile Include="Items\Weapons\SpidersilkWhip.vb" />
     <Compile Include="WindowsForms\About.Designer.vb">
       <DependentUpon>About.vb</DependentUpon>
@@ -283,7 +284,7 @@
     <Compile Include="Items\Weapons\SoulBlade.vb" />
     <Compile Include="Entities\Player\Specials.vb" />
     <Compile Include="Items\Usable\Charms\SpeedCharm.vb" />
-    <Compile Include="Items\Usable\Spellbook.vb" />
+    <Compile Include="Items\Usable\Spellbooks\Spellbook.vb" />
     <Compile Include="Entities\Player\Spells\Spells.vb" />
     <Compile Include="Items\Armor\SportBra.vb" />
     <Compile Include="Items\Weapons\Staff.vb" />

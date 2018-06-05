@@ -5,7 +5,7 @@
         MyBase.setName("Spellbook")
         MyBase.setDesc("A simple, leather-bound book that likely contains something cool and magic.")
         id = 4
-        tier = 1
+        tier = 2
         MyBase.setUsable(True)
         MyBase.count = 0
         MyBase.value = 500
@@ -31,7 +31,7 @@
                     Dim c As Integer = 0
                     While c < 1 Or Game.formList.Contains(form)
                         c += 1
-                        Dim learnForm As Integer = CInt(Int(Rnd() * 4))
+                        Dim learnForm As Integer = CInt(Int(Rnd() * 3))
                         Select Case learnForm
                             Case 0
                                 form = "Dragon"
@@ -39,11 +39,9 @@
                                 form = "Succubus"
                             Case 2
                                 form = "Slime"
-                            Case 3
-                                form = "Goddess"
                         End Select
                         If c > 40 Then
-                            out = "All self polymorph forms learned!"
+                            out = "All self polymorph forms learned from spellbooks!"
                             Exit Select
                         End If
                     End While
@@ -70,7 +68,7 @@
                                 form = "Bunny"
                         End Select
                         If c > 40 Then
-                            out = "All polymorph enemy forms learned!"
+                            out = "All polymorph enemy forms learned from spellbooks!"
                             Exit Select
                         End If
                     End While
@@ -91,7 +89,7 @@
                     '    sName = "Freeze"
             End Select
             If ct > 60 Then
-                Game.lstLog.Items.Add("You know all the spells already!")
+                Game.lstLog.Items.Add("You know all the spells in spellbooks already!")
                 count -= 1
                 Exit Sub
             End If
