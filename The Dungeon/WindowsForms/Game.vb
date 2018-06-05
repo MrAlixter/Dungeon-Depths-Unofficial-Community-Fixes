@@ -1353,7 +1353,7 @@ Public Class Game
                 Exit For
             End If
         Next
-        Spells.spellCast(m, player, cboxMG.Items(index))
+        Spell.spellCast(m, player, cboxMG.Items(index))
         If npcList.Count > 0 Then
             For i = 0 To npcList.Count - 1
                 Dim int1 As Integer = 100 - npcList.Item(i).speed
@@ -2709,7 +2709,7 @@ Public Class Game
                 Exit For
             End If
         Next
-        Spells.spellCast(m, player, cboxMG.Text)
+        Spell.spellCast(m, player, cboxMG.Text)
         If npcList.Count > 0 Then
             For i = 0 To npcList.Count - 1
                 Dim int1 As Integer = 100 - npcList.Item(i).speed
@@ -2846,9 +2846,7 @@ Public Class Game
                 End If
             Next
             'MsgBox("B")
-            If cboxNPCMG.Text = "Turn to Frog" Then Spells.turnToFrogN(m, player)
-            If cboxNPCMG.Text = "Petrify" Then Spells.Petrify(m, player)
-            If cboxNPCMG.Text = "Polymorph Enemy" Then Spells.EnemyPolymorph(m, player)
+            If cboxNPCMG.Text = "Turn to Frog" Then Spells.turnToFrogN(m, player) Else Spell.spellCast(m, player, cboxNPCMG.Text)
 
             If npcList.Count > 0 Then
                 For i = 0 To npcList.Count - 1

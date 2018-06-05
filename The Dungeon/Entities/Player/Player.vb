@@ -988,8 +988,31 @@
         invNeedsUDate = False
         If Game.turn < 2 AndAlso Not CharacterGenerator.CreateBMP(iArr).Equals(Game.picPortrait.BackgroundImage) Then createP() 'Form3.portraitUDate()
     End Sub
+    Function oneLayerImgCheck() As Boolean
+        If title.Equals("Dragon") Then
+            Game.picPortrait.BackgroundImage = CharacterGenerator.fAttributes(16)(CharacterGenerator.fHat.Count - 2)
+            Return True
+        ElseIf title.Equals("Magic Girl​") Then
+            Game.picPortrait.BackgroundImage = CharacterGenerator.fAttributes(16)(CharacterGenerator.fHat.Count - 3)
+            Return True
+        ElseIf title.Equals("Sheep") Then
+            Game.picPortrait.BackgroundImage = Game.picSheep.BackgroundImage
+            Return True
+        ElseIf title.Equals("Frog") Then
+            Game.picPortrait.BackgroundImage = Game.picFrog.BackgroundImage
+            Return True
+        ElseIf title.Equals("Princess​") Then
+            Game.picPortrait.BackgroundImage = Game.picPrin.BackgroundImage
+            Return True
+        ElseIf title.Equals("Bunny Girl​") Then
+            Game.picPortrait.BackgroundImage = Game.picBun.BackgroundImage
+            Return True
+        End If
+        Return False
+    End Function
     Public Sub createP()
         If Not Game.picPortrait.BackgroundImage Is Nothing Then Game.picPortrait.BackgroundImage.Dispose()
+        If oneLayerImgCheck() Then Exit Sub
         For i = 0 To 16
             If iArrInd(i).Item2 Then
                 iArr(i) = CharacterGenerator.fAttributes(i)(iArrInd(i).Item1)

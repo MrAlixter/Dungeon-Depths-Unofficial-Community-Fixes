@@ -310,18 +310,42 @@
                 p.sexBool = True
             End If
             p.iArrInd(16) = New Tuple(Of Integer, Boolean)(CharacterGenerator.fHat.Count - 3, True)
+        ElseIf form = "Princess​" Then
+            p.health = 75
+            p.maxHealth = 75
+            p.attack = 5
+            p.defence = 10
+            p.speed = 10
+            p.mana = 3
+            p.maxMana = 3
+        ElseIf form = "Bunny Girl​" Then
+            p.health = 70
+            p.maxHealth = 70
+            p.attack = 5
+            p.defence = 5
+            p.speed = 15
+            p.mana = 5
+            p.maxMana = 5
+        ElseIf form = "Sheep" Then
+            p.health = 80
+            p.maxHealth = 80
+            p.attack = 5
+            p.defence = 15
+            p.speed = 5
+            p.mana = 0
+            p.maxMana = 0
         End If
-        p.title = form
-        Game.lblEvent.ForeColor = color1
-        Game.lblNameTitle.ForeColor = color1
-        If form.Equals("Magic Girl​") Then Game.pushLblEvent(out, AddressOf Polymorph.magicGSub2) Else Game.pushLblEvent(out)
-        Game.lstLog.TopIndex = Game.lstLog.Items.Count - 1
-        p.TextColor = Game.lblEvent.ForeColor
-        p.pImage = Game.pImage
-        p.health += p.hBuff
-        Game.cmboxSpec.Items.Clear()
-        Game.specialRoute()
-        p.createP()
+            p.title = form
+            Game.lblEvent.ForeColor = color1
+            Game.lblNameTitle.ForeColor = color1
+            If form.Equals("Magic Girl​") Then Game.pushLblEvent(out, AddressOf Polymorph.magicGSub2) Else Game.pushLblEvent(out)
+            Game.lstLog.TopIndex = Game.lstLog.Items.Count - 1
+            p.TextColor = Game.lblEvent.ForeColor
+            p.pImage = Game.pImage
+            p.health += p.hBuff
+            Game.cmboxSpec.Items.Clear()
+            Game.specialRoute()
+            p.createP()
     End Sub
     Public Sub transform(ByRef p As Player, ByVal form As String, ByVal ind As Integer)
         If p.perks("polymorphed") > -1 Then
@@ -483,6 +507,34 @@
             t.tfCt = 1
             t.tfEnd = 6
             t.form = "Cow"
+        End If
+    End Sub
+    Sub transform(ByRef t As Monster, ByVal s As String)
+        Dim title As String = s
+        If title = "Slime​" Then
+            t.health = 150
+            t.maxHealth = 150
+            t.attack = 10
+            t.defence = 15
+            t.tfCt = 1
+            t.tfEnd = 2
+            t.form = "Slime"
+        ElseIf title = "Succubus​" Then
+            t.health = 125
+            t.maxHealth = 125
+            t.attack = 20
+            t.defence = 5
+            t.tfCt = 1
+            t.tfEnd = 2
+            t.form = "Succubus"
+        ElseIf title = "Dragon​" Then
+            t.health = 200
+            t.maxHealth = 200
+            t.attack = 15
+            t.defence = 30
+            t.tfCt = 1
+            t.tfEnd = 2
+            t.form = "Dragon"
         End If
     End Sub
     'npc transform method

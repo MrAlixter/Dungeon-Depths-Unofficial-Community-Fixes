@@ -183,6 +183,8 @@ Partial Class Game
         Me.picSW = New System.Windows.Forms.PictureBox()
         Me.PicSWPrin = New System.Windows.Forms.PictureBox()
         Me.picSWb = New System.Windows.Forms.PictureBox()
+        Me.picBun = New System.Windows.Forms.PictureBox()
+        Me.picPrin = New System.Windows.Forms.PictureBox()
         CType(Me.picMarkBClothes, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me.picMarkBRearHair2, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me.picMarkBRearHair1, System.ComponentModel.ISupportInitialize).BeginInit()
@@ -248,6 +250,8 @@ Partial Class Game
         CType(Me.picSW, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me.PicSWPrin, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me.picSWb, System.ComponentModel.ISupportInitialize).BeginInit()
+        CType(Me.picBun, System.ComponentModel.ISupportInitialize).BeginInit()
+        CType(Me.picPrin, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.SuspendLayout()
         '
         'btnUse1
@@ -2030,12 +2034,34 @@ Partial Class Game
         Me.picSWb.TabStop = False
         Me.picSWb.Visible = False
         '
+        'picBun
+        '
+        Me.picBun.BackgroundImage = CType(resources.GetObject("picBun.BackgroundImage"), System.Drawing.Image)
+        Me.picBun.Location = New System.Drawing.Point(275, 70)
+        Me.picBun.Name = "picBun"
+        Me.picBun.Size = New System.Drawing.Size(15, 15)
+        Me.picBun.TabIndex = 285
+        Me.picBun.TabStop = False
+        Me.picBun.Visible = False
+        '
+        'picPrin
+        '
+        Me.picPrin.BackgroundImage = CType(resources.GetObject("picPrin.BackgroundImage"), System.Drawing.Image)
+        Me.picPrin.Location = New System.Drawing.Point(296, 70)
+        Me.picPrin.Name = "picPrin"
+        Me.picPrin.Size = New System.Drawing.Size(15, 15)
+        Me.picPrin.TabIndex = 286
+        Me.picPrin.TabStop = False
+        Me.picPrin.Visible = False
+        '
         'Game
         '
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Inherit
         Me.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink
         Me.BackColor = System.Drawing.Color.Black
         Me.ClientSize = New System.Drawing.Size(1008, 690)
+        Me.Controls.Add(Me.picPrin)
+        Me.Controls.Add(Me.picBun)
         Me.Controls.Add(Me.picSWb)
         Me.Controls.Add(Me.PicSWPrin)
         Me.Controls.Add(Me.picSW)
@@ -2230,6 +2256,8 @@ Partial Class Game
         CType(Me.picSW, System.ComponentModel.ISupportInitialize).EndInit()
         CType(Me.PicSWPrin, System.ComponentModel.ISupportInitialize).EndInit()
         CType(Me.picSWb, System.ComponentModel.ISupportInitialize).EndInit()
+        CType(Me.picBun, System.ComponentModel.ISupportInitialize).EndInit()
+        CType(Me.picPrin, System.ComponentModel.ISupportInitialize).EndInit()
         Me.ResumeLayout(False)
         Me.PerformLayout()
 
@@ -2393,4 +2421,6 @@ Partial Class Game
     Friend WithEvents picSW As System.Windows.Forms.PictureBox
     Friend WithEvents PicSWPrin As System.Windows.Forms.PictureBox
     Friend WithEvents picSWb As System.Windows.Forms.PictureBox
+    Friend WithEvents picBun As System.Windows.Forms.PictureBox
+    Friend WithEvents picPrin As System.Windows.Forms.PictureBox
 End Class

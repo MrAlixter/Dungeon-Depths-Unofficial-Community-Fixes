@@ -293,4 +293,32 @@
         End If
         Game.lstLog.TopIndex = Game.lstLog.Items.Count - 1
     End Sub
+    Shared Function spellCost(ByVal s As String)
+        Select Case s
+            Case "Dragon's Breath"
+                If Game.player.title.Equals("Dragon") Then Return "No cost." Else Return "-10 mana."
+            Case "Fireball"
+                Return "-5 mana."
+            Case "Super Fireball"
+                Return "-8 mana."
+            Case "Icicle Spear"
+                Return "-6 mana."
+            Case "Heartblast Starcannon"
+                Return "-5 mana."
+            Case "Petrify"
+                Return "-5 mana."
+            Case "Self Polymorph"
+                Return "-5 mana."
+            Case "Polymorph Enemy"
+                Return "-5 mana."
+            Case "Turn to Frog"
+                Return "-9 mana."
+            Case "Mindshrink"
+                Return "-3 mana."
+            Case "Turn to Blade"
+                Return "-9 mana."
+            Case Else
+                Return "This costs some degree of mana."
+        End Select
+    End Function
 End Class

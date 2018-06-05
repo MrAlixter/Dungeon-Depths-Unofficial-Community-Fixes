@@ -101,6 +101,18 @@
     <Import Include="System.Threading.Tasks" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Entities\Player\Spells\DragonsBreath.vb" />
+    <Compile Include="Entities\Player\Spells\EnemyPolymorph.vb" />
+    <Compile Include="Entities\Player\Spells\Fireball.vb" />
+    <Compile Include="Entities\Player\Spells\HBSC.vb" />
+    <Compile Include="Entities\Player\Spells\IcicleSpear.vb" />
+    <Compile Include="Entities\Player\Spells\Petrify.vb" />
+    <Compile Include="Entities\Player\Spells\SelfPolymorph.vb" />
+    <Compile Include="Entities\Player\Spells\Spell.vb" />
+    <Compile Include="Entities\Player\Spells\SuperFireball.vb" />
+    <Compile Include="Entities\Player\Spells\turnToBlade.vb" />
+    <Compile Include="Entities\Player\Spells\turnToCupcake.vb" />
+    <Compile Include="Entities\Player\Spells\turnToFrog.vb" />
     <Compile Include="Items\Armor\ChitArmor.vb" />
     <Compile Include="Items\Usable\Potions\Mystery Potions\BSPotion.vb" />
     <Compile Include="Items\Usable\Potions\Mystery Potions\HyperManaPotion.vb" />
@@ -272,7 +284,7 @@
     <Compile Include="Entities\Player\Specials.vb" />
     <Compile Include="Items\Usable\Charms\SpeedCharm.vb" />
     <Compile Include="Items\Usable\Spellbook.vb" />
-    <Compile Include="Entities\Player\Spells.vb" />
+    <Compile Include="Entities\Player\Spells\Spells.vb" />
     <Compile Include="Items\Armor\SportBra.vb" />
     <Compile Include="Items\Weapons\Staff.vb" />
     <Compile Include="Entities\Player\State.vb" />
