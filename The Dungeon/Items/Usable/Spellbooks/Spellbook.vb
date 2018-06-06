@@ -31,7 +31,7 @@
                     Dim c As Integer = 0
                     While c < 1 Or Game.formList.Contains(form)
                         c += 1
-                        Dim learnForm As Integer = CInt(Int(Rnd() * 3))
+                        Dim learnForm As Integer = CInt(Int(Rnd() * 4))
                         Select Case learnForm
                             Case 0
                                 form = "Dragon"
@@ -39,6 +39,8 @@
                                 form = "Succubus"
                             Case 2
                                 form = "Slime"
+                            Case 3
+                                form = "Tigress"
                         End Select
                         If c > 40 Then
                             out = "All self polymorph forms learned from spellbooks!"

@@ -47,6 +47,11 @@
     Public magGState As State = New State()
     Public maidState As State = New State()
     Public prinState As State = New State()
+    Public tigState As State = New State()
+
+    Dim formStates = {succState, slimState, goddState, dragState,
+                      bimbState, magGState, maidState, prinState,
+                      tigState}
 
     Public solFlag = False
     Public wingInd = 0
@@ -78,36 +83,40 @@
         inventory.Item(2).add(1)
     End Sub
     'This New is used in the loading of a player from file
-    Sub New(ByVal s As String)
+    Sub New(ByVal s As String, ByVal v As Integer)
         createInvPerks()
         Dim playArray() As String = s.Split("#")
 
         currState = New State(Me)
         sState = New State(Me)
         pState = New State(Me)
-        succState = New State()
-        slimState = New State()
-        goddState = New State()
-        dragState = New State()
-        bimbState = New State()
-        magGState = New State()
-        maidState = New State()
-        prinState = New State()
+        For i = 0 To UBound(formStates)
+            formStates(i) = New State()
+        Next
+
 
         currState.read(playArray(0))
         sState.read(playArray(1))
         pState.read(playArray(2))
-        succState.read(playArray(3))
-        slimState.read(playArray(4))
-        goddState.read(playArray(5))
-        dragState.read(playArray(6))
-        bimbState.read(playArray(7))
-        magGState.read(playArray(8))
-        maidState.read(playArray(9))
-        prinState.read(playArray(10))
+
+        Dim ind As Integer
+        If v > 0.4 Then
+            ind = CInt(playArray(3))
+            For i = 0 To ind
+                formStates(i).read(playArray(4 + i))
+            Next
+            playArray = playArray(5 + ind).Split("*")
+        Else
+            ind = 7
+            For i = 0 To 7
+                formStates(i).read(playArray(3 + i))
+            Next
+            playArray = playArray(4 + ind).Split("*")
+        End If
+
         currState.load(Me)
 
-        playArray = playArray(11).Split("*")
+
         pos.X = playArray(0)
         pos.Y = playArray(1)
         health = playArray(2)
@@ -1419,7 +1428,7 @@
             If iArrInd(6).Item1 = 0 Or iArrInd(6).Item1 = 3 Then
                 t(6) = CharacterGenerator.getImg("img/fEars")(iArrInd(6).Item1)
                 iArr(6) = CharacterGenerator.recolor2(t(6), c)
-            ElseIf iArrInd(6).Item1 = 6 Then
+            ElseIf iArrInd(6).Item1 = 6 Or iArrInd(6).Item1 = 7 Then
                 t(6) = CharacterGenerator.getImg("img/fTF/tfEars")(iArrInd(6).Item1 - 5)
                 iArr(6) = CharacterGenerator.recolor2(t(6), c)
             End If
@@ -1529,14 +1538,11 @@
         output += currState.write()
         output += sState.write()
         output += pState.write()
-        output += succState.write()
-        output += slimState.write()
-        output += goddState.write()
-        output += dragState.write()
-        output += bimbState.write()
-        output += magGState.write()
-        output += maidState.write()
-        output += prinState.write()
+
+        output += formStates.Count - 1 & "*"
+        For i = 0 To UBound(formStates)
+            output += formStates(i).write()
+        Next
         output += pos.X & "*"
         output += pos.Y & "*"
         output += health & "*"
@@ -1553,6 +1559,7 @@
         For i = 0 To inventory.Count - 1
             output += (inventory.Item(i).count & "*")
         Next
+
         Return output
     End Function
     Public Function toGhost() As String

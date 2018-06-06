@@ -1731,7 +1731,8 @@ Public Class Game
 
         Dim reader As IO.StreamReader
         reader = IO.File.OpenText(a)
-        If CDbl(reader.ReadLine()) < version Then
+        Dim v = CDbl(reader.ReadLine())
+        If v < version Then
             MsgBox("Error 003: Incorrect save file version!")
             picStart.Visible = True
             btnS.Visible = True
@@ -1740,7 +1741,7 @@ Public Class Game
             Exit Sub
         End If
 
-        player = New Player(reader.ReadLine())
+        player = New Player(reader.ReadLine(), v)
 
         If Not mBoard Is Nothing Then
             For i = 0 To mBoardHeight - 1
@@ -3125,13 +3126,13 @@ Public Class Game
         Dim reader As IO.StreamReader
         reader = IO.File.OpenText(a)
         Dim vers As Double = CDbl(reader.ReadLine())
-        Dim player = New Player(reader.ReadLine)
+        Dim player = New Player(reader.ReadLine, vers)
         reader.Close()
         Return New Tuple(Of Player, Double)(player, vers)
     End Function
     Shared Sub convertSave(ByVal a As String)
         Dim lines() As String = System.IO.File.ReadAllLines(a)
-        Dim player As Player = New Player(lines(UBound(lines)))
+        Dim player As Player = New Player(lines(UBound(lines)), CDbl(lines(0)))
         Dim writer As IO.StreamWriter
         System.IO.File.Delete(a)
         writer = IO.File.CreateText("s1.ave")

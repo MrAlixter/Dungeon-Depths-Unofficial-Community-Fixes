@@ -369,7 +369,7 @@
             End If
         End If
         If Not p.equippedArmor.getName.Equals("Naked") And Not p.title.Equals("Magic Girl") Then
-            If p.iArrInd(2).Item1 <> 10 And p.iArrInd(2).Item1 <> 16 Then
+            If p.iArrInd(2).Item1 <> 10 And p.iArrInd(2).Item1 <> 16 And p.iArrInd(2).Item1 <> 21 Then
                 Select Case p.breastSize
                     Case -1
                         p.iArrInd(2) = New Tuple(Of Integer, Boolean)(0, False)
@@ -392,7 +392,7 @@
                 End Select
             End If
         ElseIf p.equippedArmor.getName.Equals("Naked") Then
-            If p.iArrInd(2).Item1 <> 4 And p.iArrInd(2).Item1 <> 16 Then
+            If p.iArrInd(2).Item1 <> 4 And p.iArrInd(2).Item1 <> 16 And p.iArrInd(2).Item1 <> 21 Then
                 Select Case p.breastSize
                     Case -1
                         p.iArrInd(2) = New Tuple(Of Integer, Boolean)(0, False)

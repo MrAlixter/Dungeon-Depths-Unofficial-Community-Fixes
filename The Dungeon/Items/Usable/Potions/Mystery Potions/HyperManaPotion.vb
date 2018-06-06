@@ -10,9 +10,8 @@
     Public Overrides Sub effect()
         Game.player.mana += 25
         If Game.player.mana > Game.player.getmaxMana Then Game.player.mana = Game.player.getmaxMana
-        Game.player.mBuff += 25
-        Game.player.mana += 25
+        Game.player.mBuff += 15
         Game.player.UIupdate()
-        Game.pushLblEvent("+50 Mana," & vbCrLf & "+25 Max Mana")
+        Game.pushLblEvent("+25 Mana," & vbCrLf & "+15 Max Mana")
     End Sub
 End Class
