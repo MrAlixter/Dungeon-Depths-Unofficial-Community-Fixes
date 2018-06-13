@@ -1539,7 +1539,7 @@
         output += sState.write()
         output += pState.write()
 
-        output += formStates.Count - 1 & "*"
+        output += formStates.length & "*"
         For i = 0 To UBound(formStates)
             output += formStates(i).write()
         Next
