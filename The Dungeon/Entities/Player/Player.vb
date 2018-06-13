@@ -83,7 +83,7 @@
         inventory.Item(2).add(1)
     End Sub
     'This New is used in the loading of a player from file
-    Sub New(ByVal s As String, ByVal v As Integer)
+    Sub New(ByVal s As String, ByVal v As Double)
         createInvPerks()
         Dim playArray() As String = s.Split("#")
 
@@ -101,7 +101,7 @@
 
         Dim ind As Integer
         If v > 0.4 Then
-            ind = CInt(playArray(3))
+            ind = CInt(playArray(3)) - 1
             For i = 0 To ind
                 formStates(i).read(playArray(4 + i))
             Next
@@ -1539,7 +1539,7 @@
         output += sState.write()
         output += pState.write()
 
-        output += formStates.length & "*"
+        output += formStates.length & "#"
         For i = 0 To UBound(formStates)
             output += formStates(i).write()
         Next

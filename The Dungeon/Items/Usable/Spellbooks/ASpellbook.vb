@@ -2,7 +2,7 @@
     Inherits Item
 
     Sub New()
-        MyBase.setName("Advanced Spellbook")
+        MyBase.setName("Advanced_Spellbook")
         MyBase.setDesc("An ornate, gilded book that likely contains something outside of the standard magic curriculum.")
         id = 4
         tier = 1
@@ -19,13 +19,12 @@
         Dim out As String = ""
         While ct < 1 Or Game.cboxMG.Items.Contains(sName)
             ct += 1
-            Dim spell As Integer = CInt(Int(Rnd() * 2))
+            Dim spell As Integer = CInt(Int(Rnd() * 3))
             Select Case spell
                 Case 0
                     sName = "Turn to Blade"
                 Case 1
                     sName = "Turn to Cupcake"
-                Case 2
                 Case 2
                     sName = "Self Polymorph"
                     Dim form As String = "Err"
@@ -38,7 +37,7 @@
                                 form = "Goddess"
                         End Select
                         If c > 40 Then
-                            out = "All self polymorph forms learned from adv. spellbooks!"
+                            out = "All self polymorph forms learned from advanced spellbooks!"
                             Exit Select
                         End If
                     End While
@@ -49,7 +48,7 @@
                     End If
             End Select
             If ct > 60 Then
-                Game.lstLog.Items.Add("You know all the spells in adv. spellbooks already!")
+                Game.lstLog.Items.Add("You know all the spells in advanced spellbooks already!")
                 count -= 1
                 Exit Sub
             End If

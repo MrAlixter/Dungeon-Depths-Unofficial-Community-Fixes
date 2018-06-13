@@ -52,7 +52,7 @@ Public Class Game
     Public beatboss() As Boolean = {False, False, False, False, False, False}  'which bosses have been beat?
     Public floorboss() As String = {"Floor0", "Marissa the Enchantress", "Targax the Brutal", "Key", "the Explorer", "Medusa"} 'boss names (NOT SAVED)
     Dim floorLayouts As ArrayList = New ArrayList()
-    Public version As Double = 0.4      'the save file version
+    Public version As Double = 0.5     'the save file version
     Public lblEventOnClose As Action    'the event method preformed when lblEvent closes (NOT SAVED)
     Public invFilters() As Boolean = {True, True, True, True, True, True}
     Dim eClock As Integer = 15
@@ -556,10 +556,19 @@ Public Class Game
         For i = 1 To numChests
             Dim chestX As Integer = CInt(Int(Rnd() * mBoardWidth))
             Dim chestY As Integer = CInt(Int(Rnd() * mBoardHeight))
-            Do While (mBoard(chestY, chestX).Tag <> 1 Or mBoard(chestY, chestX).Text <> "")
-                chestX = CInt(Int(Rnd() * mBoardWidth))
-                chestY = CInt(Int(Rnd() * mBoardHeight))
-            Loop
+
+            If floor > 0 Then
+                Do While ((mBoard(chestY, chestX).Tag <> 1 And mBoard(chestY, chestX).Tag <> 2) Or mBoard(chestY, chestX).Text <> "")
+                    chestX = CInt(Int(Rnd() * mBoardWidth))
+                    chestY = CInt(Int(Rnd() * mBoardHeight))
+                Loop
+            Else
+                Do While (mBoard(chestY, chestX).Tag <> 1 Or mBoard(chestY, chestX).Text <> "")
+                    chestX = CInt(Int(Rnd() * mBoardWidth))
+                    chestY = CInt(Int(Rnd() * mBoardHeight))
+                Loop
+            End If
+
             Dim chest As Chest = baseChest.Create(chestX, chestY, code)
             If r = i Then chest.add(53, 1)
             chestList.Add(chest)
@@ -1732,7 +1741,7 @@ Public Class Game
         Dim reader As IO.StreamReader
         reader = IO.File.OpenText(a)
         Dim v = CDbl(reader.ReadLine())
-        If v < version Then
+        If v < 0.4 Then
             MsgBox("Error 003: Incorrect save file version!")
             picStart.Visible = True
             btnS.Visible = True
@@ -1740,7 +1749,6 @@ Public Class Game
             boardWorker.CancelAsync()
             Exit Sub
         End If
-
         player = New Player(reader.ReadLine(), v)
 
         If Not mBoard Is Nothing Then
@@ -1775,8 +1783,14 @@ Public Class Game
             uOchests.Add(newChest.pos)
         Next
 
-        For i = 0 To CInt(reader.ReadLine())
-            trapList.Add(New Trap(reader.ReadLine()))
+        Dim ind = CInt(reader.ReadLine())
+        For i = 0 To ind
+            Dim t = New Trap(reader.ReadLine())
+            If Not t.pos.Equals(New Point(-1, -1)) Then
+                trapList.Add(t)
+            End If
+        Next
+        For i = 0 To trapList.Count - 1
             mBoard(trapList(i).pos.Y, trapList(i).pos.X).Text = "+"
         Next
         For i = 0 To CInt(reader.ReadLine())
@@ -1826,7 +1840,12 @@ Public Class Game
         swiz.pos.Y = reader.ReadLine()
 
         chestList.Clear()
-        If floor < 5 Then placeChest(floorLayouts(floor)) Else placeChest(genRNDLVLCode)
+        If floor < 5 Then
+            placeChest(floorLayouts(floor))
+        Else
+            placeChest(genRNDLVLCode)
+        End If
+
         Dim tCL As ArrayList = New ArrayList()
         For i = 0 To uOchests.Count - 1
             For j = 0 To chestList.Count - 1
@@ -1840,36 +1859,37 @@ Public Class Game
         chestList = tCL.Clone()
 
         If chestList.Count = 0 And uOchests.Count <> 0 Then
-            If floor < 5 Then
+            If floor < 4 Then
                 placeChest(floorLayouts(floor))
             Else
                 placeChest(genRNDLVLCode)
             End If
         End If
 
-            combatmode = False
+        combatmode = False
 
-            Equipment.init()
-            reader.Close()
-            player.setPImage()
+        Equipment.init()
+        reader.Close()
+        player.setPImage()
 
-            drawBoard()
-            lblNameTitle.Text = player.name & " the " & player.title
-            lblHealth.Text = "Health = " & player.health & "/" & player.maxHealth
-            lblMana.Text = "Mana = " & player.mana & "/" & player.maxMana
-            lblHunger.Text = "Hunger = " & player.hunger & "/100"
-            lblATK.Text = "ATK = " & player.getAttack
-            lblDEF.Text = "DEF = " & player.getDefence
-            lblSKL.Text = "WIL = " & player.getWillpower
-            lblSPD.Text = "SPD = " & player.getSpeed
-            lblEVD.Text = "EVD = " & player.evade
+        drawBoard()
+        lblNameTitle.Text = player.name & " the " & player.title
+        lblHealth.Text = "Health = " & player.health & "/" & player.maxHealth
+        lblMana.Text = "Mana = " & player.mana & "/" & player.maxMana
+        lblHunger.Text = "Hunger = " & player.hunger & "/100"
+        lblATK.Text = "ATK = " & player.getAttack
+        lblDEF.Text = "DEF = " & player.getDefence
+        lblSKL.Text = "WIL = " & player.getWillpower
+        lblSPD.Text = "SPD = " & player.getSpeed
+        lblEVD.Text = "EVD = " & player.evade
 
-            player.currState.save(player)
-            picStart.Visible = False
+        player.currState.save(player)
+        picStart.Visible = False
 
-            pushLblEvent("Game successfully loaded!")
-            player.solFlag = False
-            player.createP()
+        pushLblEvent("Game successfully loaded!")
+        player.solFlag = False
+        player.createP()
+
     End Sub
     Private Sub btnS1_Click(sender As Object, e As EventArgs) Handles btnS1.Click
         If solFlag Then
@@ -2063,7 +2083,15 @@ Public Class Game
         pnlSaveLoad.Location = New Point(188, pnlSaveLoad.Location.Y)
         pnlSaveLoad.Visible = True
         'CharacterGenerator.init()
+        Dim loops = 0
         While Not savePicsReady
+            If loops = 100 Then
+                closesol()
+                MsgBox("Error: Missing one or more save images")
+                Exit While
+                Exit Sub
+            End If
+            loops += 1
             Threading.Thread.Sleep(50)
         End While
         If System.IO.File.Exists("s.ave") Then convertSave("s.ave")
