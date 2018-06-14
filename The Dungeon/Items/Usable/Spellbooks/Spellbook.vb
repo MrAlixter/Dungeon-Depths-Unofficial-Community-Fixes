@@ -19,7 +19,7 @@
         Dim out As String = ""
         While ct < 1 Or Game.cboxMG.Items.Contains(sName)
             ct += 1
-            Dim spell As Integer = CInt(Int(Rnd() * 7))
+            Dim spell As Integer = CInt(Int(Rnd() * 9))
             Select Case spell
                 Case 0
                     sName = "Super Fireball"
@@ -82,7 +82,11 @@
                 Case 5
                     sName = "Petrify"
                 Case 6
-                    sName = "Turn to Blade"
+                    sName = "Heal"
+                Case 7
+                    sName = "Dowse"
+                Case 8
+                    sName = "Illuminate"
                     'Case 7
                     '    sName = "Arcane Hypnosis"
                     'Case 8

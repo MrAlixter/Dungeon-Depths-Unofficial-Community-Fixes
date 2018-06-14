@@ -97,10 +97,11 @@
         p.title = cboxPMorph.Text
         If p.title = "Dragon" Then
             If Not p.dragState.initFlag Then
-                p.health = 500
-                p.maxHealth = 500
-                p.attack = 100
-                p.defence = 100
+                p.health = 200
+                p.maxHealth = 200
+                p.attack = 30
+                p.defence = 40
+                p.speed = 5
                 Equipment.clothesChange("Naked")
                 p.equippedWeapon = New BareFists()
                 p.iArrInd(16) = New Tuple(Of Integer, Boolean)(CharacterGenerator.fHat.Count - 2, True)
@@ -139,8 +140,8 @@
         ElseIf p.title = "Succubus" Then
             If Not p.succState.initFlag Then
                 p.attack = 25
-                p.defence = 25
-                p.speed = 50
+                p.defence = 5
+                p.speed = 20
                 p.mana = 75
                 p.maxMana = 75
                 p.TextColor = Color.FromArgb(231, 126, 245)
@@ -350,6 +351,7 @@
             p.speed = 10
             p.mana = 3
             p.maxMana = 3
+            p.perks("polymorphed") += (Int(Rnd() * 7) * 1.5)
         ElseIf form = "Bunny Girl​" Then
             p.health = 70
             p.maxHealth = 70
@@ -358,6 +360,7 @@
             p.speed = 15
             p.mana = 5
             p.maxMana = 5
+            p.perks("polymorphed") += (Int(Rnd() * 7) * 1.5)
         ElseIf form = "Sheep" Then
             p.health = 80
             p.maxHealth = 80
@@ -366,6 +369,7 @@
             p.speed = 5
             p.mana = 0
             p.maxMana = 0
+            p.perks("polymorphed") += (Int(Rnd() * 7) * 1.5)
         End If
             p.title = form
             Game.lblEvent.ForeColor = color1
@@ -838,6 +842,10 @@
                 End If
                 p.title = "Kitty"
                 p.be()
+
+                Equipment.clothesChange("Cat_Lingerie")
+                Equipment.portraitUDate()
+
                 Game.pushLblCombatEvent("As the last of your resistance drains away, all you can find yourself doing is focusing on your new mistress's voice as she orders you down onto all fours.  You happily oblige, purring softly, and she giggles.  ''Come on kitty, lets go!'' she orders and the two of you, with her leading, wander off into the darkness.  GAME OVER!")
                 MsgBox(Game.lblCombatEvents.Text)
                 p.Die()

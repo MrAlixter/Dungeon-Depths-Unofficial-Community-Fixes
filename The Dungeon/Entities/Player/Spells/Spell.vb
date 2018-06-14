@@ -3,6 +3,9 @@
     Dim name As String
     Dim caster As Player
     Dim target As Monster
+
+    Dim useableOutOfCombat As Boolean = False
+
     Sub New(ByRef c As Player, ByRef t As Monster)
         caster = c
         target = t
@@ -11,6 +14,12 @@
         If caster.mana < cost Then
             Game.pushLblEvent("You don't have enough mana!")
             Game.lstLog.Items.Add("You don't have enough mana!")
+            Game.lstLog.TopIndex = Game.lstLog.Items.Count - 1
+            Exit Sub
+        End If
+        If Not Game.combatmode And Not Game.npcmode And Not useableOutOfCombat Then
+            Game.pushLblEvent("You don't have a target for that spell!")
+            Game.lstLog.Items.Add("You don't have a target for that spell!")
             Game.lstLog.TopIndex = Game.lstLog.Items.Count - 1
             Exit Sub
         End If
@@ -94,6 +103,9 @@
     Sub settier(ByVal i As Integer)
         tier = i
     End Sub
+    Sub setUOC(ByVal b As Boolean)
+        useableOutOfCombat = b
+    End Sub
 
     Function getCaster() As Player
         Return caster
@@ -107,23 +119,28 @@
     End Sub
 
     Shared Sub spellCast(ByRef t As Monster, ByRef c As Player, ByVal s As String)
-        If Not t.sName = "Targax the Brutal" Then
-            spellroute(c, t, s)
-        ElseIf t.getName = "Shopkeeper" Then
-            If Rnd() < (0.01) Then
+        If Game.combatmode Or Game.npcmode Then
+            If Not t.sName = "Targax the Brutal" Then
                 spellroute(c, t, s)
+            ElseIf t.getName = "Shopkeeper" Then
+                If Rnd() < (0.01) Then
+                    spellroute(c, t, s)
+                Else
+                    Game.lstLog.Items.Add("The spell bounces off the Shopkeeper!")
+                    Game.pushLblCombatEvent("The spell bounces off the Shopkeeper!")
+                End If
             Else
-                Game.lstLog.Items.Add("The spell bounces off the Shopkeeper!")
-                Game.pushLblCombatEvent("The spell bounces off the Shopkeeper!")
+                If Rnd() < (0.6) Then
+                    spellroute(c, t, s)
+                Else
+                    Game.lstLog.Items.Add("The spell bounces off Targax!")
+                    Game.pushLblCombatEvent("The spell bounces off Targax!")
+                End If
             End If
         Else
-            If Rnd() < (0.6) Then
-                spellroute(c, t, s)
-            Else
-                Game.lstLog.Items.Add("The spell bounces off Targax!")
-                Game.pushLblCombatEvent("The spell bounces off Targax!")
-            End If
+            spellroute(c, t, s)
         End If
+
         Game.lstLog.TopIndex = Game.lstLog.Items.Count - 1
     End Sub
     Shared Sub spellroute(ByRef c As Player, ByRef t As Monster, ByRef s As String)
@@ -153,6 +170,12 @@
             spell = New turnToBlade(c, t)
         ElseIf s = "Turn to Cupcake" Then
             spell = New turnToCupcake(c, t)
+        ElseIf s = "Heal" Then
+            spell = New Heal(c, t)
+        ElseIf s = "Dowse" Then
+            spell = New Dowse(c, t)
+        ElseIf s = "Illuminate" Then
+            spell = New Illumiate(c, t)
         End If
         spell.cast()
         spell.Dispose()

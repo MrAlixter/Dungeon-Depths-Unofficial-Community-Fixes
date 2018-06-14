@@ -101,11 +101,14 @@
     <Import Include="System.Threading.Tasks" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Entities\Player\Spells\Dowse.vb" />
     <Compile Include="Entities\Player\Spells\DragonsBreath.vb" />
     <Compile Include="Entities\Player\Spells\EnemyPolymorph.vb" />
     <Compile Include="Entities\Player\Spells\Fireball.vb" />
     <Compile Include="Entities\Player\Spells\HBSC.vb" />
+    <Compile Include="Entities\Player\Spells\Heal.vb" />
     <Compile Include="Entities\Player\Spells\IcicleSpear.vb" />
+    <Compile Include="Entities\Player\Spells\Illumiate.vb" />
     <Compile Include="Entities\Player\Spells\Petrify.vb" />
     <Compile Include="Entities\Player\Spells\SelfPolymorph.vb" />
     <Compile Include="Entities\Player\Spells\Spell.vb" />

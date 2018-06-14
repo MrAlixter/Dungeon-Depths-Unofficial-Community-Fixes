@@ -1551,20 +1551,15 @@ Public Class Game
                     End If
                 Next
             Case "Magic"
-                If Not combatmode And Not npcmode Then
-                    pushLblEvent("You don't have a target at the moment..." & vbCrLf & "[Self casting will be added eventually]")
-                    selecting = False
-                    Exit Sub
-                End If
                 lblWhat.Text = "Cast what?"
-                If combatmode Then
-                    For i = 0 To cboxMG.Items.Count - 1
-                        lstSelec.Items.Add(indexes(count) & " - " & cboxMG.Items(i).ToString)
-                        count += 1
-                    Next
-                ElseIf npcmode Then
+                If npcmode Then
                     For i = 0 To cboxNPCMG.Items.Count - 1
                         lstSelec.Items.Add(indexes(count) & " - " & cboxNPCMG.Items(i).ToString)
+                        count += 1
+                    Next
+                Else
+                    For i = 0 To cboxMG.Items.Count - 1
+                        lstSelec.Items.Add(indexes(count) & " - " & cboxMG.Items(i).ToString)
                         count += 1
                     Next
                 End If
@@ -3139,9 +3134,7 @@ Public Class Game
                 If i = 6 And (id.Item1 = 0 Or id.Item1 = 3) Then iarr(6) = CharacterGenerator.recolor2(iarr(6), skincolor)
             Next
             changeHairColor(haircolor, ids, iarr)
-            iarr(2) = CharacterGenerator.recolor2(iarr(2), skincolor)
-            iarr(4) = CharacterGenerator.recolor2(iarr(4), skincolor)
-            iarr(7) = CharacterGenerator.recolor2(iarr(7), skincolor)
+            changeSkinColor(skincolor, ids, iarr)
 
             img = CharacterGenerator.CreateBMP(iarr)
         Catch ex As Exception
@@ -3293,6 +3286,61 @@ Public Class Game
         iarr(5) = CharacterGenerator.recolor(t(5), c)
         If Not iarr(15).Equals(CharacterGenerator.picPort.Image) Then iarr(15) = CharacterGenerator.recolor(t(15), c)
         If iarrind(10).Item1 < 3 Then iarr(10) = CharacterGenerator.recolor(t(10), c)
+    End Sub
+    Shared Sub changeSkinColor(ByVal c As Color, ByVal iarrind() As Tuple(Of Integer, Boolean), ByRef iarr As Image())
+        Dim t(16) As Image
+        If iArrInd(2).Item2 Then
+            If iArrInd(2).Item1 = 0 Then
+                t(2) = CharacterGenerator.getImg("img/fBody")(iArrInd(2).Item1)
+                iArr(2) = CharacterGenerator.recolor2(t(2), c)
+            Else
+                Dim range As List(Of Image)
+                Dim offset As Integer
+
+                Dim fTFBody As List(Of Image) = CharacterGenerator.getImg("img/fTF/tfBody")
+                offset = fTFBody.Count - 5
+                range = fTFBody.GetRange(offset, 5)
+                fTFBody = fTFBody.GetRange(0, offset)
+                fTFBody.InsertRange(4, range)
+
+                t(2) = fTFBody(iArrInd(2).Item1 - 1)
+                iArr(2) = CharacterGenerator.recolor2(t(2), c)
+            End If
+        Else
+            If iArrInd(2).Item1 = 0 Then
+                t(2) = CharacterGenerator.getImg("img/mBody")(iArrInd(2).Item1)
+                iArr(2) = CharacterGenerator.recolor2(t(2), c)
+            Else
+                t(2) = CharacterGenerator.getImg("img/mTF/tfBody")(iArrInd(2).Item1 - 1)
+                iArr(2) = CharacterGenerator.recolor2(t(2), c)
+            End If
+        End If
+        If iArrInd(4).Item2 Then
+            t(4) = CharacterGenerator.getImg("img/fFace")(iArrInd(4).Item1)
+            iArr(4) = CharacterGenerator.recolor2(t(4), c)
+            If iArrInd(7).Item1 = 0 Then
+                t(7) = CharacterGenerator.getImg("img/fNose")(iArrInd(7).Item1)
+                iArr(7) = CharacterGenerator.recolor2(t(7), c)
+            End If
+            If iArrInd(6).Item1 = 0 Or iArrInd(6).Item1 = 3 Then
+                t(6) = CharacterGenerator.getImg("img/fEars")(iArrInd(6).Item1)
+                iArr(6) = CharacterGenerator.recolor2(t(6), c)
+            ElseIf iArrInd(6).Item1 = 6 Or iArrInd(6).Item1 = 7 Then
+                t(6) = CharacterGenerator.getImg("img/fTF/tfEars")(iArrInd(6).Item1 - 5)
+                iArr(6) = CharacterGenerator.recolor2(t(6), c)
+            End If
+        Else
+            t(4) = CharacterGenerator.getImg("img/mFace")(iArrInd(4).Item1)
+            iArr(4) = CharacterGenerator.recolor2(t(4), c)
+            If iArrInd(6).Item1 = 0 Or iArrInd(6).Item1 = 3 Then
+                t(6) = CharacterGenerator.getImg("img/mEars")(iArrInd(6).Item1)
+                iArr(6) = CharacterGenerator.recolor2(t(6), c)
+            End If
+            If iArrInd(7).Item1 = 0 Then
+                t(7) = CharacterGenerator.getImg("img/mNose")(iArrInd(7).Item1)
+                iArr(7) = CharacterGenerator.recolor2(t(7), c)
+            End If
+        End If
     End Sub
     Private Sub prefetchImages()
         If imagesWorkerArg Is Nothing Then

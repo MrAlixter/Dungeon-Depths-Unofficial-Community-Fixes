@@ -3,6 +3,7 @@
     Sub New(ByRef c As Player, ByRef t As Monster)
         MyBase.New(c, t)
         MyBase.setName("Self Polymorph")
+        MyBase.setUOC(True)
         MyBase.settier(4)
         MyBase.setcost(7)
     End Sub
@@ -16,6 +17,10 @@
         Game.lstLog.TopIndex = Game.lstLog.Items.Count - 1
     End Sub
     Public Overrides Sub backfire()
+        If MyBase.getTarget Is Nothing Then
+            Game.pushLblEvent("You have no target for this to backfire on!")
+            Exit Sub
+        End If
         Dim n As String
         Select Case Int(Rnd() * 3)
             Case 0
