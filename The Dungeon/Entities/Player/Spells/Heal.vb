@@ -9,7 +9,7 @@
     End Sub
     Public Overrides Sub effect()
         Dim hdif = 50
-        If Game.player.health >= Game.player.getmaxHealth Then hdif = Game.player.getmaxHealth - Game.player.health
+        If Game.player.health + hdif >= Game.player.getmaxHealth Then hdif = Game.player.getmaxHealth - Game.player.health
 
         Game.player.health += hdif
 
