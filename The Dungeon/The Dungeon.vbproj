@@ -104,6 +104,7 @@
     <Import Include="System.Threading.Tasks" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Entities\Player\Spells\ArcaneCompass.vb" />
     <Compile Include="Entities\Player\Spells\Dowse.vb" />
     <Compile Include="Entities\Player\Spells\DragonsBreath.vb" />
     <Compile Include="Entities\Player\Spells\EnemyPolymorph.vb" />

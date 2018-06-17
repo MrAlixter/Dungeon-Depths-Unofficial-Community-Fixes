@@ -77,7 +77,6 @@ Public Class Game
     'Form1_Load handles the loading of the form
     Private Sub Form1_Load(sender As Object, e As EventArgs) Handles Me.Load
         loadcKeys()
-
         imagesWorker = New BackgroundWorker
         AddHandler imagesWorker.DoWork, AddressOf prefetchImages
         imagesWorkerArg = Nothing
@@ -414,6 +413,12 @@ Public Class Game
         placeChest(code)
         If floor > 2 Then placeTraps()
         placeNPCs()
+
+        'Dim p = route(player.pos, stairs, "n/a", New List(Of Point))
+        'For i = 0 To UBound(p)
+        '    mBoard(p(i).Y, p(i).X).Tag = 2
+        'Next
+
     End Sub
     Sub connectRooms(ByVal p1 As Point, ByVal p2 As Point)
         Dim cursor As Point = p1
@@ -615,6 +620,47 @@ Public Class Game
             mBoard(npcY, npcX).Text = "$"
         Next
     End Sub
+
+    Function route(ByVal p1 As Point, ByVal p2 As Point, ByVal dir As String, ByVal path As List(Of Point)) As Point()
+        Dim cons As List(Of Point) = New List(Of Point)
+        If p1.Equals(p2) Then
+            Return path.ToArray
+        Else
+            Dim u, d, l, r As Point
+            u = New Point(p1.X - 1, p1.Y)
+            d = New Point(p1.X + 1, p1.Y)
+            l = New Point(p1.X, p1.Y - 1)
+            r = New Point(p1.X, p1.Y + 1)
+            For Each p In {u, d, l, r}
+                If Not (p.Equals(u) And dir = "d") And Not (p.Equals(d) And dir = "u") And Not (p.Equals(r) And dir = "l") And Not (p.Equals(l) And dir = "r") Then
+                    If Not (p.X < 0 Or p.X > mBoardWidth - 1 Or p.Y < 0 Or p.Y > mBoardHeight - 1) AndAlso Not mBoard(p.Y, p.X).Tag = 0 Then
+                        cons.Add(p)
+                    End If
+                End If
+            Next
+
+            Dim min As Point = cons(0)
+            For i = 0 To cons.Count - 1
+                If dist(cons(i), p2) < dist(min, p2) Then min = cons(i)
+            Next
+
+            path.Add(min)
+
+            If min.Equals(u) Then
+                dir = "u"
+            ElseIf min.Equals(d) Then
+                dir = "d"
+            ElseIf min.Equals(l) Then
+                dir = "l"
+            ElseIf min.Equals(r) Then
+                dir = "r"
+            End If
+            Return route(min, p2, dir, path)
+        End If
+    End Function
+    Function dist(ByVal x As Point, ByVal y As Point) As Double
+        Return Math.Abs(Math.Sqrt(CDbl((y.X - x.X) ^ 2) + CDbl((y.Y - x.Y) ^ 2)))
+    End Function
 
     'board draw methods
     'drawBoard updates the board with the players action
@@ -999,7 +1045,7 @@ Public Class Game
             End If
             selection(Keydata)
         End If
-            Return True
+        Return True
     End Function
     'processCmdKey is a leftover from an earlier version, and may not be needed anymore
     Protected Overrides Function ProcessCmdKey(ByRef msg As System.Windows.Forms.Message, ByVal keyData As System.Windows.Forms.Keys) As Boolean
@@ -3211,7 +3257,6 @@ Public Class Game
     Private Sub ReportToolStripMenuItem_Click(sender As Object, e As EventArgs) Handles ReportToolStripMenuItem.Click
         Process.Start("https://bitbucket.org/VowelHeavyUsername/dungeon_depths/issues?status=new&status=open")
     End Sub
-
     Private Sub bw_DoWork(ByVal sender As Object, ByVal e As DoWorkEventArgs)
         Dim worker As BackgroundWorker = CType(sender, BackgroundWorker)
 
@@ -3297,10 +3342,10 @@ Public Class Game
     End Sub
     Shared Sub changeSkinColor(ByVal c As Color, ByVal iarrind() As Tuple(Of Integer, Boolean), ByRef iarr As Image())
         Dim t(16) As Image
-        If iArrInd(2).Item2 Then
-            If iArrInd(2).Item1 = 0 Then
-                t(2) = CharacterGenerator.getImg("img/fBody")(iArrInd(2).Item1)
-                iArr(2) = CharacterGenerator.recolor2(t(2), c)
+        If iarrind(2).Item2 Then
+            If iarrind(2).Item1 = 0 Then
+                t(2) = CharacterGenerator.getImg("img/fBody")(iarrind(2).Item1)
+                iarr(2) = CharacterGenerator.recolor2(t(2), c)
             Else
                 Dim range As List(Of Image)
                 Dim offset As Integer
@@ -3311,42 +3356,42 @@ Public Class Game
                 fTFBody = fTFBody.GetRange(0, offset)
                 fTFBody.InsertRange(4, range)
 
-                t(2) = fTFBody(iArrInd(2).Item1 - 1)
-                iArr(2) = CharacterGenerator.recolor2(t(2), c)
+                t(2) = fTFBody(iarrind(2).Item1 - 1)
+                iarr(2) = CharacterGenerator.recolor2(t(2), c)
             End If
         Else
-            If iArrInd(2).Item1 = 0 Then
-                t(2) = CharacterGenerator.getImg("img/mBody")(iArrInd(2).Item1)
-                iArr(2) = CharacterGenerator.recolor2(t(2), c)
+            If iarrind(2).Item1 = 0 Then
+                t(2) = CharacterGenerator.getImg("img/mBody")(iarrind(2).Item1)
+                iarr(2) = CharacterGenerator.recolor2(t(2), c)
             Else
-                t(2) = CharacterGenerator.getImg("img/mTF/tfBody")(iArrInd(2).Item1 - 1)
-                iArr(2) = CharacterGenerator.recolor2(t(2), c)
+                t(2) = CharacterGenerator.getImg("img/mTF/tfBody")(iarrind(2).Item1 - 1)
+                iarr(2) = CharacterGenerator.recolor2(t(2), c)
             End If
         End If
-        If iArrInd(4).Item2 Then
-            t(4) = CharacterGenerator.getImg("img/fFace")(iArrInd(4).Item1)
-            iArr(4) = CharacterGenerator.recolor2(t(4), c)
-            If iArrInd(7).Item1 = 0 Then
-                t(7) = CharacterGenerator.getImg("img/fNose")(iArrInd(7).Item1)
-                iArr(7) = CharacterGenerator.recolor2(t(7), c)
+        If iarrind(4).Item2 Then
+            t(4) = CharacterGenerator.getImg("img/fFace")(iarrind(4).Item1)
+            iarr(4) = CharacterGenerator.recolor2(t(4), c)
+            If iarrind(7).Item1 = 0 Then
+                t(7) = CharacterGenerator.getImg("img/fNose")(iarrind(7).Item1)
+                iarr(7) = CharacterGenerator.recolor2(t(7), c)
             End If
-            If iArrInd(6).Item1 = 0 Or iArrInd(6).Item1 = 3 Then
-                t(6) = CharacterGenerator.getImg("img/fEars")(iArrInd(6).Item1)
-                iArr(6) = CharacterGenerator.recolor2(t(6), c)
-            ElseIf iArrInd(6).Item1 = 6 Or iArrInd(6).Item1 = 7 Then
-                t(6) = CharacterGenerator.getImg("img/fTF/tfEars")(iArrInd(6).Item1 - 5)
-                iArr(6) = CharacterGenerator.recolor2(t(6), c)
+            If iarrind(6).Item1 = 0 Or iarrind(6).Item1 = 3 Then
+                t(6) = CharacterGenerator.getImg("img/fEars")(iarrind(6).Item1)
+                iarr(6) = CharacterGenerator.recolor2(t(6), c)
+            ElseIf iarrind(6).Item1 = 6 Or iarrind(6).Item1 = 7 Then
+                t(6) = CharacterGenerator.getImg("img/fTF/tfEars")(iarrind(6).Item1 - 5)
+                iarr(6) = CharacterGenerator.recolor2(t(6), c)
             End If
         Else
-            t(4) = CharacterGenerator.getImg("img/mFace")(iArrInd(4).Item1)
-            iArr(4) = CharacterGenerator.recolor2(t(4), c)
-            If iArrInd(6).Item1 = 0 Or iArrInd(6).Item1 = 3 Then
-                t(6) = CharacterGenerator.getImg("img/mEars")(iArrInd(6).Item1)
-                iArr(6) = CharacterGenerator.recolor2(t(6), c)
+            t(4) = CharacterGenerator.getImg("img/mFace")(iarrind(4).Item1)
+            iarr(4) = CharacterGenerator.recolor2(t(4), c)
+            If iarrind(6).Item1 = 0 Or iarrind(6).Item1 = 3 Then
+                t(6) = CharacterGenerator.getImg("img/mEars")(iarrind(6).Item1)
+                iarr(6) = CharacterGenerator.recolor2(t(6), c)
             End If
-            If iArrInd(7).Item1 = 0 Then
-                t(7) = CharacterGenerator.getImg("img/mNose")(iArrInd(7).Item1)
-                iArr(7) = CharacterGenerator.recolor2(t(7), c)
+            If iarrind(7).Item1 = 0 Then
+                t(7) = CharacterGenerator.getImg("img/mNose")(iarrind(7).Item1)
+                iarr(7) = CharacterGenerator.recolor2(t(7), c)
             End If
         End If
     End Sub
@@ -3406,7 +3451,6 @@ Public Class Game
             imagesWorkerArg = Nothing
         End If
     End Sub
-
     Sub formReset()
         Application.Exit()
         'fromCombat()
@@ -3416,11 +3460,9 @@ Public Class Game
         'btnControls.Visible = True
         'player.canMoveFlag = False
     End Sub
-
     Private Sub btnSettings_Click(sender As Object, e As EventArgs)
         MsgBox("This will be where the settings are changed eventually")
     End Sub
-
     Private Sub btnWait_Click(sender As Object, e As EventArgs) Handles btnWait.Click
         turn += 1
         If lblEvent.Visible = True Then
