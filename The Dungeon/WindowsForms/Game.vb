@@ -54,7 +54,7 @@ Public Class Game
     Dim floorLayouts As ArrayList = New ArrayList()
     Public version As Double = 0.5     'the save file version
     Public lblEventOnClose As Action    'the event method preformed when lblEvent closes (NOT SAVED)
-    Public invFilters() As Boolean = {True, True, True, True, True, True}
+    Public invFilters() As Boolean = {True, True, True, True, True, True, True}
     Dim eClock As Integer = 15
     Public solFlag As Boolean = True
     Private trd As Thread
@@ -2299,6 +2299,7 @@ Public Class Game
         fArmor.Visible = True
         fWeapon.Visible = True
         fMisc.Visible = True
+        chkAcc.Visible = True
         lstInventory.Items.Clear()
         btnOk.Visible = True
         btnAll.Visible = True
@@ -2310,6 +2311,7 @@ Public Class Game
         If fArmor.Checked Then invFilters(3) = True Else invFilters(3) = False
         If fWeapon.Checked Then invFilters(4) = True Else invFilters(4) = False
         If fMisc.Checked Then invFilters(5) = True Else invFilters(5) = False
+        If chkAcc.Checked Then invFilters(6) = True Else invFilters(6) = False
     End Sub
     Private Sub btnOk_Click(sender As Object, e As EventArgs) Handles btnOk.Click
         fUseable.Visible = False
@@ -2318,6 +2320,7 @@ Public Class Game
         fArmor.Visible = False
         fWeapon.Visible = False
         fMisc.Visible = False
+        chkAcc.Visible = False
         btnOk.Visible = False
         btnAll.Visible = False
         btnNone.Visible = False
@@ -2342,6 +2345,9 @@ Public Class Game
     Private Sub fMisc_CheckedChanged(sender As Object, e As EventArgs) Handles fMisc.CheckedChanged
         If fMisc.Checked Then invFilters(5) = True Else invFilters(5) = False
     End Sub
+    Private Sub chkAcc_CheckedChanged(sender As Object, e As EventArgs) Handles chkAcc.CheckedChanged
+        If chkAcc.Checked Then invFilters(6) = True Else invFilters(6) = False
+    End Sub
     Private Sub btnAll_Click(sender As Object, e As EventArgs) Handles btnAll.Click
         fUseable.Checked = True
         fPotion.Checked = True
@@ -2349,6 +2355,7 @@ Public Class Game
         fArmor.Checked = True
         fWeapon.Checked = True
         fMisc.Checked = True
+        chkAcc.Checked = True
     End Sub
     Private Sub btnNone_Click(sender As Object, e As EventArgs) Handles btnNone.Click
         fUseable.Checked = False
@@ -2357,6 +2364,7 @@ Public Class Game
         fArmor.Checked = False
         fWeapon.Checked = False
         fMisc.Checked = False
+        chkAcc.Checked = False
     End Sub
 
     'combat functions

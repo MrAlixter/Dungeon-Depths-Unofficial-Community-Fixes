@@ -11,10 +11,10 @@ Imports System.Runtime.InteropServices
 ' Review the values of the assembly attributes
 
 <Assembly: AssemblyTitle("Dungeon_Depths")> 
-<Assembly: AssemblyDescription("Dungeon_Depths is a 2D dungeon crawler with art made in Kisekae2.0 featuring TF fetish content, made for adults.")> 
+<Assembly: AssemblyDescription("Dungeon Depths is a 2D dungeon crawler with art made in Kisekae2.0 featuring TF fetish content, made for adults.")> 
 <Assembly: AssemblyCompany("VowelHeavyUsername")> 
-<Assembly: AssemblyProduct("Dungeon_Depths")> 
-<Assembly: AssemblyCopyright("Copyright ©  2017")> 
+<Assembly: AssemblyProduct("Dungeon Depths")> 
+<Assembly: AssemblyCopyright("Copyright ©  2018")> 
 <Assembly: AssemblyTrademark("")> 
 
 <Assembly: ComVisible(False)> 

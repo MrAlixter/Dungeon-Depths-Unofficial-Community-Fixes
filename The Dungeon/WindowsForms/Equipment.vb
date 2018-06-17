@@ -8,6 +8,9 @@
     'weapons
     Public wNameList() As String = {"Fists", "Steel_Sword", "SoulBlade", "Magic_Girl_Wand"}
     Public wList() As Weapon = {New BareFists(), New SteelSword(), Game.player.inventory.Item(9)}
+    'accessories
+    Public acNameList() As String = {"Nothing"}
+    Public acList() As Accessory = {New noAcce()}
 
     'define a shorthand representation of the main player
     Dim p As Player = Game.player
@@ -19,8 +22,11 @@
 
         Dim a As Tuple(Of String(), Armor())
         Dim w As Tuple(Of String(), Weapon())
+        Dim ac As Tuple(Of String(), Accessory())
+
         a = p.getArmors
         w = p.getWeapons
+        ac = p.getAccesories
 
 
         aNameList = a.Item1
@@ -28,6 +34,9 @@
 
         wNameList = w.Item1
         wList = w.Item2
+
+        acNameList = ac.Item1
+        acList = ac.Item2
     End Sub
 
     'handles the click of the 'ok' button
@@ -50,11 +59,15 @@
                 Game.pushLblEvent("You deftly take off your clothes, despite the resistance they put up.")
             End If
         End If
+
         If Not p.equippedArmor.getName.Equals(cmbobxArmor.SelectedItem) Then
             p.equippedArmor.onUnequip()
         End If
         If Not p.equippedWeapon.getName.Equals(cmbobxWeapon.SelectedItem) Then
             p.equippedWeapon.onUnequip()
+        End If
+        If Not p.equippedAcce.getName.Equals(cboxAccessory.SelectedItem) Then
+            p.equippedAcce.onUnequip()
         End If
 
         'this handles the revert from the magical girl form, if needed
@@ -68,22 +81,16 @@
         End If
 
         'handles the equiping of weapons
-        Dim sWeapon As Weapon = Nothing
-        If cmbobxWeapon.SelectedItem <> "" Then
-            For i = 0 To UBound(wNameList)
-                If cmbobxWeapon.SelectedItem.ToString().Split()(0) = wNameList(i) Then
-                    sWeapon = wList(i)
-                    Exit For
-                End If
-            Next
-            If sWeapon Is Nothing Then Exit Sub
-            p.equippedWeapon = sWeapon
-        End If
+        weaponChange(cmbobxArmor.Text)
         If p.equippedWeapon.mBoost > 0 Then p.mana += p.equippedWeapon.mBoost
 
         'equip the new armor
         If Not revertFlag Then clothesChange(cmbobxArmor.Text)
         If p.equippedArmor.mBoost > 0 Then p.mana += p.equippedArmor.mBoost
+
+        'equip the new accessory
+        If Not revertFlag Then accChange(cboxAccessory.Text)
+        If p.equippedAcce.mBoost > 0 Then p.mana += p.equippedAcce.mBoost
 
         If p.mana > p.getmaxMana Then p.mana = p.getmaxMana
 
@@ -95,8 +102,6 @@
         'handles any tfs or triggers triggered by equipping of certain weapons
         If p.equippedWeapon.getName = "Magic_Girl_Wand" And Not p.title.Equals("Magic Girl") Then
             Polymorph.transform(p, "Magic Girl")
-        ElseIf p.equippedWeapon.getName = "Sword_of_the_Brutal" And Not p.perks("swordpossess") > -1 Then
-            p.perks("swordpossess") = 0
         End If
 
         If p.title.Equals("Magic Girl") And p.equippedArmor.getName.Equals("Magic_Girl_Outfit") And Not revertFlag Then
@@ -108,11 +113,14 @@
             p.equippedArmor = New Naked
         End If
 
-        'handles any tfs or triggers triggered by equipping of certain armors
-        If p.equippedArmor.getName = "Living_Armor" And Not p.perks("livearm") > -1 Then
-            p.perks("livearm") = 0
-        ElseIf p.equippedArmor.getName = "Living_Lingerie" And Not p.perks("livelinge") > -1 Then
-            p.perks("livelinge") = 0
+        If Not p.equippedArmor.getName.Equals(cmbobxArmor.SelectedItem) Then
+            p.equippedArmor.onEquip()
+        End If
+        If Not p.equippedWeapon.getName.Equals(cmbobxWeapon.SelectedItem) Then
+            p.equippedWeapon.onEquip()
+        End If
+        If Not p.equippedAcce.getName.Equals(cboxAccessory.SelectedItem) Then
+            p.equippedAcce.onEquip()
         End If
 
         'updates the player, the stat display, and the portrait before the form closes
@@ -151,11 +159,17 @@
         'adds the default weapon (fists)
         cmbobxWeapon.Items.Add("Fists")
 
+        'adds the default accessory (nothing)
+        cboxAccessory.Items.Add("Nothing")
+
         'adds all weapons and armors that the player posesses to their respective menus
         Dim a As Armor()
         Dim w As Weapon()
+        Dim ac As Accessory()
+
         a = p.getArmors.Item2
         w = p.getWeapons.Item2
+        ac = p.getAccesories.Item2
 
         For i = 5 To UBound(a)
             If a(i).count > 0 Then cmbobxArmor.Items.Add(a(i).getName())
@@ -163,10 +177,14 @@
         For i = 1 To UBound(w)
             If w(i).count > 0 Then cmbobxWeapon.Items.Add(w(i).getName())
         Next
+        For i = 1 To UBound(ac)
+            If ac(i).count > 0 Then cboxAccessory.Items.Add(ac(i).getName())
+        Next
 
         'sets the text of the drop-downs to the player's equipment
         cmbobxWeapon.SelectedItem = p.equippedWeapon.getName()
         cmbobxArmor.SelectedItem = p.equippedArmor.getName()
+        cboxAccessory.SelectedItem = p.equippedAcce.getName()
     End Sub
 
     'clothingCurse1 routes the normal versions of armors to their slut forms, if they have them.
@@ -259,6 +277,36 @@
             If sArmor Is Nothing Then Exit Sub
             If clothes = "Chicken_Suit" Then Polymorph.transform(p, "Chicken2")
             p.equippedArmor = sArmor
+        End If
+    End Sub
+    'clothesChange handles the equipping and unequipping of weapon
+    Public Sub weaponChange(ByVal weapon As String)
+        Dim sWeapon As Weapon = Nothing
+        If weapon <> "" Then
+            For i = 0 To UBound(wNameList)
+                If weapon.Split()(0) = wNameList(i) Then
+                    sWeapon = wList(i)
+                    Exit For
+                End If
+            Next
+            If sWeapon Is Nothing Then Exit Sub
+            p.equippedWeapon = sWeapon
+        End If
+    End Sub
+    'accChange handles the equipping and unequipping of accessories
+    Public Sub accChange(ByVal acc As String)
+        If acNameList.Count < 1 Then init()
+        Dim sAcc As Accessory = Nothing
+        If acc <> "" Then
+            For i = 0 To UBound(acNameList)
+                If acc = acNameList(i) Then
+                    'MsgBox("{" & cmbobxArmor.SelectedItem & "}&[" & aNameList(i) & "]")
+                    sAcc = acList(i)
+                    Exit For
+                End If
+            Next
+            If sAcc Is Nothing Then Exit Sub
+            p.equippedAcce = sAcc
         End If
     End Sub
     'portraitUDate updates the player's portrait based on their breastsize and armor
@@ -415,9 +463,19 @@
                 End Select
             End If
         End If
+
+        If p.equippedAcce Is Nothing Or (p.equippedAcce.fInd Is Nothing And p.equippedAcce.mInd Is Nothing) Then
+            p.equippedAcce = New noAcce()
+        Else
+            If p.sexBool Then
+                If Not p.equippedAcce.fInd Is Nothing Then p.iArrInd(14) = p.equippedAcce.fInd Else p.iArrInd(4) = p.equippedAcce.mInd
+            Else
+                If Not p.equippedAcce.mInd Is Nothing Then p.iArrInd(14) = p.equippedAcce.mInd Else p.iArrInd(4) = p.equippedAcce.fInd
+            End If
+        End If
+
         Game.lstLog.TopIndex = Game.lstLog.Items.Count - 1
         p.createP()
         'Form1.picPortrait.BackgroundImage = CharacterGenerator1.CreateBMP(p.iArr)
-        Game.picPortrait.Update()
     End Sub
 End Class

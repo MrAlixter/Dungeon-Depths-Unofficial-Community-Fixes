@@ -24,4 +24,11 @@
         Game.lstLog.TopIndex = Game.lstLog.Items.Count - 1
         count -= 1
     End Sub
+
+    Public Overrides Sub onEquip()
+        If Not Game.player.perks("livearm") > -1 Then Game.player.perks("livearm") = 0
+    End Sub
+    Public Overrides Sub onUnequip()
+        If Not Game.player.perks("livearm") > -1 Then Game.player.perks("livearm") = -1
+    End Sub
 End Class

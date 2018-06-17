@@ -17,6 +17,7 @@
     Public hunger As Integer
     Public equippedWeapon As Weapon
     Public equippedArmor As Armor
+    Public equippedAcce As Accessory = New noAcce
     Public currTarget As Monster
     Public pos As Point
     Public canMoveFlag As Boolean = True
@@ -35,6 +36,7 @@
     Public inventorynames As New ArrayList()
     Dim armor() As Armor
     Dim weapons() As Weapon
+    Dim acce() As Accessory
     Public useable(), food(), potions(), misc() As Item
     Public invNeedsUDate As Boolean = False
     'player & form states
@@ -320,9 +322,37 @@
         Game.formReset()
     End Sub
     'setClass sets the player stats at the beginning of the game
+    Sub setACCA()
+        If iArrInd(14).Item2 Then
+            Select Case iArrInd(14).Item1
+                Case 1
+                    equippedAcce = inventory(66)
+                Case 2
+                    equippedAcce = inventory(67)
+                Case 3
+                    equippedAcce = inventory(68)
+                Case Else
+                    equippedAcce = New noAcce
+                    equippedAcce.count -= 1
+            End Select
+        Else
+            Select Case iArrInd(14).Item1
+                Case 1
+                    equippedAcce = inventory(67)
+                Case 2
+                    equippedAcce = inventory(68)
+                Case Else
+                    equippedAcce = New noAcce
+                    equippedAcce.add(-1)
+            End Select
+        End If
+        equippedAcce.add(1)
+    End Sub
     Public Sub setClass(ByVal s As String)
         equippedArmor = New NormalClothes
         equippedWeapon = New BareFists
+        setACCA()
+
         If s = "Warrior" Then
             health += 50
             maxHealth += 50
@@ -550,6 +580,7 @@
     End Sub
     Sub createInvPerks()
         'create inventory
+        '0.1 - 0.4
         inventory.Add(New Compass())    '0
         inventory.Add(New StickOfGum()) '1
         inventory.Add(New HealthPotion())   '2
@@ -575,13 +606,11 @@
         inventory.Add(New WizardStaff())    '22
         inventory.Add(New BronzeXiphos())    '23
         inventory.Add(New TargaxSword())    '24
-
         inventory.Add(New BlondePotion())    '25
         inventory.Add(New RandomHairPotion())    '26
         inventory.Add(New RedHairPotion())    '27
         inventory.Add(New FemininePotion())    '28
         inventory.Add(New BEPotion())    '29
-
         inventory.Add(New ChickenLeg()) '30
         inventory.Add(New Apple()) '31
         inventory.Add(New PApple()) '32
@@ -617,7 +646,12 @@
         inventory.Add(New HyperManaPotion()) '62
         inventory.Add(New SpidersilkWhip()) '63
         inventory.Add(New ChitArmor()) '64
+        '0.5
         inventory.Add(New ASpellbook()) '65
+        '0.6
+        inventory.Add(New HeartNecklace()) '66
+        inventory.Add(New RedHeadband()) '67
+        inventory.Add(New RubyCirclet()) '68
 
         For i = 0 To inventory.Count - 1
             If inventory(i).GetType().IsSubclassOf(GetType(MysteryPotion)) Then
@@ -647,6 +681,8 @@
 
         food = {inventory(30), inventory(31), inventory(32), inventory(33),
                 inventory(34), inventory(35), inventory(44)}
+
+        acce = {New noAcce(), inventory(66), inventory(67), inventory(68)}
 
         potions = {inventory(2), inventory(13), inventory(14), inventory(25),
                    inventory(26), inventory(27), inventory(28), inventory(29),
@@ -748,7 +784,7 @@
             If Not haircolor.A = 180 Then
                 perks("slimehair") = -1
             Else
-                If health < maxHealth + hBuff And Game.turn Mod 2 = 0 Then
+                If health < maxHealth + hBuff And Game.turn Mod 4 = 0 Then
                     health += 25
                     Game.lstLog.Items.Add("Your gel body heals some of the damage done to it. +5 health")
                     If health > getmaxHealth() Then health = getmaxHealth()
@@ -823,7 +859,7 @@
             If Not haircolor.A = 180 Then
                 perks("vsslimehair") = -1
             Else
-                If health < maxHealth + hBuff And Game.turn Mod 4 = 0 Then
+                If health < maxHealth + hBuff And Game.turn Mod 7 = 0 Then
                     Dim h As Integer = Int(Rnd() * 15) + 1
                     health += h
                     Game.lstLog.Items.Add("The gel portion of your body is able to heal some of your wounds! +" & h & " health")
@@ -980,6 +1016,16 @@
                 End If
             Next
         End If
+        If Game.invFilters(6) Then
+            tArr(ct) = "-ACCESSORIES:"
+            ct += 1
+            For i = 0 To UBound(acce)
+                If acce(i).getCount > 0 Then
+                    tArr(ct) = " " & acce(i).getName() & " x" & acce(i).count
+                    ct += 1
+                End If
+            Next
+        End If
         If Game.invFilters(5) Then
             tArr(ct) = "-MISC:"
             ct += 1
@@ -1000,47 +1046,52 @@
         invNeedsUDate = False
         If Game.turn < 2 AndAlso Not CharacterGenerator.CreateBMP(iArr).Equals(Game.picPortrait.BackgroundImage) Then createP() 'Form3.portraitUDate()
     End Sub
-    Function oneLayerImgCheck() As Boolean
+    Sub oneLayerImgCheck(ByRef b As Boolean)
         If title.Equals("Dragon") Then
-            Game.picPortrait.BackgroundImage = CharacterGenerator.fAttributes(16)(CharacterGenerator.fHat.Count - 2)
-            Return True
+            Game.picPortrait.BackgroundImage = CharacterGenerator.CreateBMP({Game.picDragon.BackgroundImage})
+            b = True
         ElseIf title.Equals("Magic Girl​") Then
-            Game.picPortrait.BackgroundImage = CharacterGenerator.fAttributes(16)(CharacterGenerator.fHat.Count - 3)
-            Return True
+            Game.picPortrait.BackgroundImage = CharacterGenerator.CreateBMP({Game.picmgp1.BackgroundImage})
+            b = True
         ElseIf title.Equals("Sheep") Then
-            Game.picPortrait.BackgroundImage = Game.picSheep.BackgroundImage
-            Return True
+            Game.picPortrait.BackgroundImage = CharacterGenerator.CreateBMP({Game.picSheep.BackgroundImage})
+            b = True
         ElseIf title.Equals("Frog") Then
-            Game.picPortrait.BackgroundImage = Game.picFrog.BackgroundImage
-            Return True
+            Game.picPortrait.BackgroundImage = CharacterGenerator.CreateBMP({Game.picFrog.BackgroundImage})
+            b = True
         ElseIf title.Equals("Princess​") Then
-            Game.picPortrait.BackgroundImage = Game.picPrin.BackgroundImage
-            Return True
+            Game.picPortrait.BackgroundImage = CharacterGenerator.CreateBMP({Game.picPrin.BackgroundImage})
+            b = True
         ElseIf title.Equals("Bunny Girl​") Then
-            Game.picPortrait.BackgroundImage = Game.picBun.BackgroundImage
-            Return True
+            Game.picPortrait.BackgroundImage = CharacterGenerator.CreateBMP({Game.picBun.BackgroundImage})
+            b = True
         End If
-        Return False
-    End Function
+    End Sub
     Public Sub createP()
         If Not Game.picPortrait.BackgroundImage Is Nothing Then Game.picPortrait.BackgroundImage.Dispose()
-        If oneLayerImgCheck() Then Exit Sub
-        For i = 0 To 16
-            If iArrInd(i).Item2 Then
-                iArr(i) = CharacterGenerator.fAttributes(i)(iArrInd(i).Item1)
-            Else
-                iArr(i) = CharacterGenerator.mAttributes(i)(iArrInd(i).Item1)
-            End If
-        Next
-        changeHairColor(haircolor)
-        changeSkinColor(skincolor)
-        Game.lstLog.TopIndex = Game.lstLog.Items.Count - 1
-        If lust > 0 Then lustUpdate()
+
+        Dim chk = False
+
+            For i = 0 To 16
+                If iArrInd(i).Item2 Then
+                    iArr(i) = CharacterGenerator.fAttributes(i)(iArrInd(i).Item1)
+                Else
+                    iArr(i) = CharacterGenerator.mAttributes(i)(iArrInd(i).Item1)
+                End If
+            Next
+            changeHairColor(haircolor)
+            changeSkinColor(skincolor)
+            Game.lstLog.TopIndex = Game.lstLog.Items.Count - 1
+            If lust > 0 Then lustUpdate()
         If wingInd > 0 Then addWings(wingInd)
+
+        If Not solFlag And Not chk Then Game.picPortrait.BackgroundImage = CharacterGenerator.CreateBMP(iArr)
+        oneLayerImgCheck(chk)
+        Game.picPortrait.Update()
+
         currState.save(Me)
         Game.lblEvent.ForeColor = TextColor
         Game.lblNameTitle.ForeColor = TextColor
-        If Not solFlag Then Game.picPortrait.BackgroundImage = CharacterGenerator.CreateBMP(iArr)
     End Sub
     Public Sub MtF()
         If perks("polymorphed") > -1 Or title.Equals("Magic Girl") Then
@@ -1388,7 +1439,6 @@
         If iArrInd(10).Item1 < 3 Then iArr(10) = CharacterGenerator.recolor(t(10), c)
         If Not solFlag Then Game.picPortrait.BackgroundImage = CharacterGenerator.CreateBMP(iArr)
     End Sub
-
     Public Sub changeSkinColor(ByVal c As Color)
         skincolor = c
         Dim t(16) As Image
@@ -1496,19 +1546,19 @@
     End Function
     Function getmaxMana()
         If equippedArmor Is Nothing Or equippedWeapon Is Nothing Then Return maxMana + mBuff
-        Return maxMana + mBuff + equippedArmor.mBoost + equippedWeapon.mBoost
+        Return maxMana + mBuff + equippedArmor.mBoost + equippedWeapon.mBoost + equippedAcce.mBoost
     End Function
     Function getAttack()
         If equippedArmor Is Nothing Or equippedWeapon Is Nothing Then Return attack + aBuff
-        Return attack + aBuff + equippedArmor.aBoost
+        Return attack + aBuff + equippedArmor.aBoost + equippedAcce.aBoost
     End Function
     Function getDefence()
         If equippedArmor Is Nothing Or equippedWeapon Is Nothing Then Return defence + dBuff
-        Return defence + dBuff + equippedArmor.dBoost
+        Return defence + dBuff + equippedArmor.dBoost + equippedAcce.dBoost
     End Function
     Function getSpeed()
         If equippedArmor Is Nothing Or equippedWeapon Is Nothing Then Return speed + sBuff
-        Return speed + sBuff + equippedArmor.sBoost
+        Return speed + sBuff + equippedArmor.sBoost + equippedAcce.sBoost
     End Function
     Function getWillpower()
         Return discipline + wBuff
@@ -1528,6 +1578,13 @@
             s(i) = weapons(i).getName
         Next
         Return New Tuple(Of String(), Weapon())(s, weapons)
+    End Function
+    Function getAccesories() As Tuple(Of String(), Accessory())
+        Dim s(UBound(acce)) As String
+        For i = 0 To UBound(acce)
+            s(i) = acce(i).getName
+        Next
+        Return New Tuple(Of String(), Accessory())(s, acce)
     End Function
 
     'toString

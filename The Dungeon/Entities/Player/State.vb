@@ -8,6 +8,7 @@
     Dim breastSize, hunger As Integer
     Dim equippedWeapon As Weapon
     Dim equippedArmor As Armor
+    Dim equippedAcce As Accessory
     Public iArrInd(16) As Tuple(Of Integer, Boolean)
     Dim perks As Dictionary(Of String, Integer)
     Dim sexBool, invNeedsUDate As Boolean
@@ -37,6 +38,7 @@
         hunger = p.hunger
         equippedWeapon = p.equippedWeapon
         equippedArmor = p.equippedArmor
+        equippedAcce = p.equippedAcce
         iArrInd = p.iArrInd.Clone
         perks = New Dictionary(Of String, Integer)(p.perks)
         sexBool = p.sexBool
@@ -70,6 +72,7 @@
         hunger = 0
         equippedWeapon = New BareFists
         equippedArmor = New Naked
+        equippedAcce = New noAcce
         iArrInd = {New Tuple(Of Integer, Boolean)(2, False), New Tuple(Of Integer, Boolean)(2, False), New Tuple(Of Integer, Boolean)(2, False), New Tuple(Of Integer, Boolean)(2, False), New Tuple(Of Integer, Boolean)(2, False), New Tuple(Of Integer, Boolean)(2, False), New Tuple(Of Integer, Boolean)(2, False), New Tuple(Of Integer, Boolean)(2, False), New Tuple(Of Integer, Boolean)(2, False), New Tuple(Of Integer, Boolean)(2, False), New Tuple(Of Integer, Boolean)(2, False), New Tuple(Of Integer, Boolean)(2, False), New Tuple(Of Integer, Boolean)(2, False), New Tuple(Of Integer, Boolean)(2, False), New Tuple(Of Integer, Boolean)(2, False), New Tuple(Of Integer, Boolean)(2, False), New Tuple(Of Integer, Boolean)(2, False), New Tuple(Of Integer, Boolean)(2, False), New Tuple(Of Integer, Boolean)(2, False), New Tuple(Of Integer, Boolean)(2, False)}
         perks = New Dictionary(Of String, Integer)()
         sexBool = False
@@ -101,7 +104,9 @@
         p.breastSize = breastSize
         p.equippedWeapon = equippedWeapon
         Equipment.clothesChange(equippedArmor.getName)
+        Equipment.accChange(equippedArmor.getName)
         p.equippedArmor = equippedArmor
+        p.equippedAcce = equippedAcce
         p.iArrInd = iArrInd.Clone
         p.perks = New Dictionary(Of String, Integer)(perks)
         p.sexBool = sexBool
@@ -141,6 +146,7 @@
         hunger = p.hunger
         equippedWeapon = p.equippedWeapon
         equippedArmor = p.equippedArmor
+        equippedAcce = p.equippedAcce
         iArrInd = p.iArrInd.Clone
         perks = New Dictionary(Of String, Integer)(p.perks)
         sexBool = p.sexBool
@@ -240,6 +246,14 @@
             iArrInd(i) = New Tuple(Of Integer, Boolean)(CInt(arr(0)), CBool(arr(1)))
         Next
         pImage = pimg(readArray(32 + b1 + 17))
+
+        For i = 0 To UBound(Equipment.acNameList)
+            If readArray(32 + b1 + 18) = Equipment.acNameList(i) Then
+                equippedAcce = Equipment.acList(i)
+                Exit For
+            End If
+        Next
+
         initFlag = True
     End Sub
     'write converts a state into a string to be put into a save file
@@ -258,6 +272,7 @@
             Next
             If Not initFlag Then pImage = Game.picChicken.BackgroundImage
             output += Array.IndexOf({Game.picPlayer.BackgroundImage, Game.picPlayerB.BackgroundImage, Game.picChicken.BackgroundImage, Game.picBimbof.BackgroundImage, Game.picPlayerf.BackgroundImage}, pImage).ToString & "*"
+            output += Game.player.equippedAcce.getName & "*"
             Return output + "#"
         Else
             Return "N/A#"
