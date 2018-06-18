@@ -5,7 +5,7 @@
         MyBase.setName("Arcane Compass")
         MyBase.setUOC(True)
         MyBase.settier(1)
-        MyBase.setcost(6)
+        MyBase.setcost(5)
     End Sub
     Public Overrides Sub effect()
         Game.pushLblEvent("With a blinding flash, your magic cuts a glowing path straight to the stairs!")

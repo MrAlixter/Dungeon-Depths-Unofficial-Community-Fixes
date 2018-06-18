@@ -19,7 +19,7 @@
         Dim out As String = ""
         While ct < 1 Or Game.cboxMG.Items.Contains(sName)
             ct += 1
-            Dim spell As Integer = CInt(Int(Rnd() * 3))
+            Dim spell As Integer = CInt(Int(Rnd() * 4))
             Select Case spell
                 Case 0
                     sName = "Turn to Blade"
@@ -46,6 +46,8 @@
                         out = "You learn how to turn yourself into a " & form & "!"
                         Exit While
                     End If
+                Case 3
+                    sName = "Arcane Compass"
             End Select
             If ct > 60 Then
                 Game.lstLog.Items.Add("You know all the spells in advanced spellbooks already!")

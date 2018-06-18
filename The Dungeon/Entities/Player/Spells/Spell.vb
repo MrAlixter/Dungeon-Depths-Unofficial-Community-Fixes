@@ -176,6 +176,8 @@
             spell = New Dowse(c, t)
         ElseIf s = "Illuminate" Then
             spell = New Illumiate(c, t)
+        ElseIf s = "Arcane Compass" Then
+            spell = New ArcaneCompass(c, t)
         End If
         spell.cast()
         spell.Dispose()
