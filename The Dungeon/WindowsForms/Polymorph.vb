@@ -12,8 +12,6 @@
         Next
         Select Case porm
             Case True
-                cboxPMorph.Items.Add("Warrior")
-                cboxPMorph.Items.Add("Mage")
                 For i = 0 To Game.formList.Count - 1
                     cboxPMorph.Items.Add(Game.formList.Item(i))
                 Next
@@ -99,10 +97,11 @@
         p.title = cboxPMorph.Text
         If p.title = "Dragon" Then
             If Not p.dragState.initFlag Then
-                p.health = 500
-                p.maxHealth = 500
-                p.attack = 100
-                p.defence = 100
+                p.health = 200
+                p.maxHealth = 200
+                p.attack = 30
+                p.defence = 40
+                p.speed = 5
                 Equipment.clothesChange("Naked")
                 p.equippedWeapon = New BareFists()
                 p.iArrInd(16) = New Tuple(Of Integer, Boolean)(CharacterGenerator.fHat.Count - 2, True)
@@ -141,8 +140,8 @@
         ElseIf p.title = "Succubus" Then
             If Not p.succState.initFlag Then
                 p.attack = 25
-                p.defence = 25
-                p.speed = 50
+                p.defence = 5
+                p.speed = 20
                 p.mana = 75
                 p.maxMana = 75
                 p.TextColor = Color.FromArgb(231, 126, 245)
@@ -173,13 +172,13 @@
             out += " As hellfire engulfs you, you ponder over what you should do to your opponent.  Maybe flay them, mabye just go for a quick clean decapitation, or maybe tie them up and use them as a fucktoy until you get bored?  'Well,' you tell them with a sinister grin, '... whatever I decide on ...' you do a pirouette, showing off your new body in all its glory '... will certainly be more fun for me ...' you lock eyes with your prey and bare your fangs in a vicious sneer '... than for you.'"
         ElseIf p.title = "Goddess" Then
             If Not p.goddState.initFlag Then
-                p.health = 9999
-                p.maxHealth = 9999
-                p.attack = 9999
-                p.defence = 9999
-                p.speed = 9999
-                p.mana = 9999
-                p.maxMana = 9999
+                p.health = 999
+                p.maxHealth = 999
+                p.attack = 999
+                p.defence = 999
+                p.speed = 999
+                p.mana = 999
+                p.maxMana = 999
                 p.TextColor = Color.Goldenrod
                 If p.sex = "Male" Then
                     p.MtF()
@@ -208,6 +207,40 @@
             End If
             out += " Your eyes burn with an awesome fury as golden flames engulf you.  Your opponent squints and covers their eyes, blinded by your new found vibrance.  Dialing back your personal light show, you give them a cocky grin.  They may not know it, but this battle is already over."
             color1 = Color.Goldenrod
+        ElseIf p.title = "Tigress" Then
+            If Not p.tigState.initFlag Then
+                p.attack = 40
+                p.defence = 10
+                p.speed = 35
+                p.mana = 0
+                p.maxMana = 0
+                p.TextColor = Color.FromArgb(255, 171, 17)
+                If p.sex = "Male" Then
+                    p.MtF()
+                    out += " Your body becomes daintier, and you are soon fully female."
+                End If
+                Equipment.clothesChange("Naked")
+                p.equippedWeapon = New BareFists()
+                If p.skincolor = Color.FromArgb(255, 255, 105, 180) Then p.haircolor = Color.FromArgb(255, 155, 0, 0)
+                If p.skincolor = Color.FromArgb(200, 0, 255, 255) Then p.haircolor = Color.FromArgb(180, 5, 245, 198)
+                p.iArrInd(1) = New Tuple(Of Integer, Boolean)(15, True)
+                p.iArrInd(2) = New Tuple(Of Integer, Boolean)(21, True)
+                p.iArrInd(4) = New Tuple(Of Integer, Boolean)(0, True)
+                p.iArrInd(5) = New Tuple(Of Integer, Boolean)(19, True)
+                p.iArrInd(6) = New Tuple(Of Integer, Boolean)(7, True)
+                p.iArrInd(7) = New Tuple(Of Integer, Boolean)(0, True)
+                p.iArrInd(8) = New Tuple(Of Integer, Boolean)(11, True)
+                p.iArrInd(9) = New Tuple(Of Integer, Boolean)(18, True)
+                p.iArrInd(10) = New Tuple(Of Integer, Boolean)(0, True)
+                p.iArrInd(13) = New Tuple(Of Integer, Boolean)(0, True)
+                p.iArrInd(15) = New Tuple(Of Integer, Boolean)(15, True)
+                p.iArrInd(16) = New Tuple(Of Integer, Boolean)(0, True)
+                p.tigState.save(p)
+            Else
+                p.tigState.load(p)
+            End If
+            out += " [Transformation decription pending]"
+            color1 = p.TextColor
         End If
         p.perks("polymorphed") += (Int(Rnd() * 15) * 1.5) + 5
         Equipment.portraitUDate()
@@ -310,18 +343,45 @@
                 p.sexBool = True
             End If
             p.iArrInd(16) = New Tuple(Of Integer, Boolean)(CharacterGenerator.fHat.Count - 3, True)
+        ElseIf form = "Princess​" Then
+            p.health = 75
+            p.maxHealth = 75
+            p.attack = 5
+            p.defence = 10
+            p.speed = 10
+            p.mana = 3
+            p.maxMana = 3
+            p.perks("polymorphed") += (Int(Rnd() * 7) * 1.5)
+        ElseIf form = "Bunny Girl​" Then
+            p.health = 70
+            p.maxHealth = 70
+            p.attack = 5
+            p.defence = 5
+            p.speed = 15
+            p.mana = 5
+            p.maxMana = 5
+            p.perks("polymorphed") += (Int(Rnd() * 7) * 1.5)
+        ElseIf form = "Sheep" Then
+            p.health = 80
+            p.maxHealth = 80
+            p.attack = 5
+            p.defence = 15
+            p.speed = 5
+            p.mana = 0
+            p.maxMana = 0
+            p.perks("polymorphed") += (Int(Rnd() * 7) * 1.5)
         End If
-        p.title = form
-        Game.lblEvent.ForeColor = color1
-        Game.lblNameTitle.ForeColor = color1
-        If form.Equals("Magic Girl​") Then Game.pushLblEvent(out, AddressOf Polymorph.magicGSub2) Else Game.pushLblEvent(out)
-        Game.lstLog.TopIndex = Game.lstLog.Items.Count - 1
-        p.TextColor = Game.lblEvent.ForeColor
-        p.pImage = Game.pImage
-        p.health += p.hBuff
-        Game.cmboxSpec.Items.Clear()
-        Game.specialRoute()
-        p.createP()
+            p.title = form
+            Game.lblEvent.ForeColor = color1
+            Game.lblNameTitle.ForeColor = color1
+            If form.Equals("Magic Girl​") Then Game.pushLblEvent(out, AddressOf Polymorph.magicGSub2) Else Game.pushLblEvent(out)
+            Game.lstLog.TopIndex = Game.lstLog.Items.Count - 1
+            p.TextColor = Game.lblEvent.ForeColor
+            p.pImage = Game.pImage
+            p.health += p.hBuff
+            Game.cmboxSpec.Items.Clear()
+            Game.specialRoute()
+            p.createP()
     End Sub
     Public Sub transform(ByRef p As Player, ByVal form As String, ByVal ind As Integer)
         If p.perks("polymorphed") > -1 Then
@@ -483,6 +543,34 @@
             t.tfCt = 1
             t.tfEnd = 6
             t.form = "Cow"
+        End If
+    End Sub
+    Sub transform(ByRef t As Monster, ByVal s As String)
+        Dim title As String = s
+        If title = "Slime​" Then
+            t.health = 150
+            t.maxHealth = 150
+            t.attack = 10
+            t.defence = 15
+            t.tfCt = 1
+            t.tfEnd = 2
+            t.form = "Slime"
+        ElseIf title = "Succubus​" Then
+            t.health = 125
+            t.maxHealth = 125
+            t.attack = 20
+            t.defence = 5
+            t.tfCt = 1
+            t.tfEnd = 2
+            t.form = "Succubus"
+        ElseIf title = "Dragon​" Then
+            t.health = 200
+            t.maxHealth = 200
+            t.attack = 15
+            t.defence = 30
+            t.tfCt = 1
+            t.tfEnd = 2
+            t.form = "Dragon"
         End If
     End Sub
     'npc transform method
@@ -754,6 +842,10 @@
                 End If
                 p.title = "Kitty"
                 p.be()
+
+                Equipment.clothesChange("Cat_Lingerie")
+                Equipment.portraitUDate()
+
                 Game.pushLblCombatEvent("As the last of your resistance drains away, all you can find yourself doing is focusing on your new mistress's voice as she orders you down onto all fours.  You happily oblige, purring softly, and she giggles.  ''Come on kitty, lets go!'' she orders and the two of you, with her leading, wander off into the darkness.  GAME OVER!")
                 MsgBox(Game.lblCombatEvents.Text)
                 p.Die()

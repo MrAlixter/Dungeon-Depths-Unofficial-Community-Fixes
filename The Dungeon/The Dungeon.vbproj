@@ -12,6 +12,8 @@
     <FileAlignment>512</FileAlignment>
     <MyType>WindowsForms</MyType>
     <TargetFrameworkVersion>v4.0</TargetFrameworkVersion>
+    <IsWebBootstrapper>false</IsWebBootstrapper>
+    <TargetFrameworkProfile />
     <PublishUrl>publish\</PublishUrl>
     <Install>true</Install>
     <InstallFrom>Disk</InstallFrom>
@@ -23,11 +25,9 @@
     <UpdateRequired>false</UpdateRequired>
     <MapFileExtensions>true</MapFileExtensions>
     <ApplicationRevision>0</ApplicationRevision>
-    <ApplicationVersion>1.0.0.%2a</ApplicationVersion>
-    <IsWebBootstrapper>false</IsWebBootstrapper>
+    <ApplicationVersion>0.5.0.%2a</ApplicationVersion>
     <UseApplicationTrust>false</UseApplicationTrust>
     <BootstrapperEnabled>true</BootstrapperEnabled>
-    <TargetFrameworkProfile />
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <PlatformTarget>AnyCPU</PlatformTarget>
@@ -76,6 +76,9 @@
   <PropertyGroup>
     <ApplicationManifest>My Project\app.manifest</ApplicationManifest>
   </PropertyGroup>
+  <PropertyGroup>
+    <AssemblyOriginatorKeyFile>VowelHeavyUsername.pfx</AssemblyOriginatorKeyFile>
+  </PropertyGroup>
   <ItemGroup>
     <Reference Include="System" />
     <Reference Include="System.Data" />
@@ -101,9 +104,31 @@
     <Import Include="System.Threading.Tasks" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Entities\Player\Spells\ArcaneCompass.vb" />
+    <Compile Include="Entities\Player\Spells\Dowse.vb" />
+    <Compile Include="Entities\Player\Spells\DragonsBreath.vb" />
+    <Compile Include="Entities\Player\Spells\EnemyPolymorph.vb" />
+    <Compile Include="Entities\Player\Spells\Fireball.vb" />
+    <Compile Include="Entities\Player\Spells\HBSC.vb" />
+    <Compile Include="Entities\Player\Spells\Heal.vb" />
+    <Compile Include="Entities\Player\Spells\IcicleSpear.vb" />
+    <Compile Include="Entities\Player\Spells\Illumiate.vb" />
+    <Compile Include="Entities\Player\Spells\Petrify.vb" />
+    <Compile Include="Entities\Player\Spells\SelfPolymorph.vb" />
+    <Compile Include="Entities\Player\Spells\Spell.vb" />
+    <Compile Include="Entities\Player\Spells\SuperFireball.vb" />
+    <Compile Include="Entities\Player\Spells\turnToBlade.vb" />
+    <Compile Include="Entities\Player\Spells\turnToCupcake.vb" />
+    <Compile Include="Entities\Player\Spells\turnToFrog.vb" />
+    <Compile Include="Items\Accesories\Accessory.vb" />
+    <Compile Include="Items\Accesories\HeartNecklace.vb" />
+    <Compile Include="Items\Accesories\noAcce.vb" />
+    <Compile Include="Items\Accesories\RedHeadband.vb" />
+    <Compile Include="Items\Accesories\RubyCirclet.vb" />
     <Compile Include="Items\Armor\ChitArmor.vb" />
     <Compile Include="Items\Usable\Potions\Mystery Potions\BSPotion.vb" />
     <Compile Include="Items\Usable\Potions\Mystery Potions\HyperManaPotion.vb" />
+    <Compile Include="Items\Usable\Spellbooks\ASpellbook.vb" />
     <Compile Include="Items\Weapons\SpidersilkWhip.vb" />
     <Compile Include="WindowsForms\About.Designer.vb">
       <DependentUpon>About.vb</DependentUpon>
@@ -271,8 +296,8 @@
     <Compile Include="Items\Weapons\SoulBlade.vb" />
     <Compile Include="Entities\Player\Specials.vb" />
     <Compile Include="Items\Usable\Charms\SpeedCharm.vb" />
-    <Compile Include="Items\Usable\Spellbook.vb" />
-    <Compile Include="Entities\Player\Spells.vb" />
+    <Compile Include="Items\Usable\Spellbooks\Spellbook.vb" />
+    <Compile Include="Entities\Player\Spells\Spells.vb" />
     <Compile Include="Items\Armor\SportBra.vb" />
     <Compile Include="Items\Weapons\Staff.vb" />
     <Compile Include="Entities\Player\State.vb" />
@@ -357,6 +382,7 @@
       <LastGenOutput>Settings.Designer.vb</LastGenOutput>
     </None>
     <None Include="App.config" />
+    <None Include="VowelHeavyUsername.pfx" />
   </ItemGroup>
   <ItemGroup>
     <BootstrapperPackage Include=".NETFramework,Version=v4.5">
@@ -1453,6 +1479,7 @@
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
   </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.VisualBasic.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.

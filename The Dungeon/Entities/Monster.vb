@@ -191,6 +191,19 @@
             If Me.GetType() Is GetType(Monster) Then output += "The "
             output += name & " runs away in fear!"
             Game.lstLog.Items.Add(output)
+        ElseIf reason = "cupcake" Then
+            Dim totalSum As Integer = 0
+            For i = 0 To UBound(inventory)
+                totalSum += inventory(i)
+            Next
+            Dim c1 As Chest
+            c1 = Game.baseChest.Create(inventory, pos)
+            If totalSum > 0 Then c1.open()
+            Game.npcList.Remove(Me)
+            Game.lstLog.Items.Add("You've deafeated the " & name & "!")
+            Game.player.currState.save(Game.player)
+            dead = True
+            endBoss()
         End If
         If UBound(inventory) >= 53 AndAlso inventory(53) > 0 And name <> "Shopkeeper" Then
             Game.pushLblEvent("Your foe drops a key!")

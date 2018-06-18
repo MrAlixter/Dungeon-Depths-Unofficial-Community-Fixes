@@ -183,6 +183,11 @@ Partial Class Game
         Me.picSW = New System.Windows.Forms.PictureBox()
         Me.PicSWPrin = New System.Windows.Forms.PictureBox()
         Me.picSWb = New System.Windows.Forms.PictureBox()
+        Me.picBun = New System.Windows.Forms.PictureBox()
+        Me.picPrin = New System.Windows.Forms.PictureBox()
+        Me.picmgp1 = New System.Windows.Forms.PictureBox()
+        Me.picDragon = New System.Windows.Forms.PictureBox()
+        Me.chkAcc = New System.Windows.Forms.CheckBox()
         CType(Me.picMarkBClothes, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me.picMarkBRearHair2, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me.picMarkBRearHair1, System.ComponentModel.ISupportInitialize).BeginInit()
@@ -248,6 +253,10 @@ Partial Class Game
         CType(Me.picSW, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me.PicSWPrin, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me.picSWb, System.ComponentModel.ISupportInitialize).BeginInit()
+        CType(Me.picBun, System.ComponentModel.ISupportInitialize).BeginInit()
+        CType(Me.picPrin, System.ComponentModel.ISupportInitialize).BeginInit()
+        CType(Me.picmgp1, System.ComponentModel.ISupportInitialize).BeginInit()
+        CType(Me.picDragon, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.SuspendLayout()
         '
         'btnUse1
@@ -880,7 +889,7 @@ Partial Class Game
         Me.lstInventory.ItemHeight = 19
         Me.lstInventory.Location = New System.Drawing.Point(734, 419)
         Me.lstInventory.Name = "lstInventory"
-        Me.lstInventory.Size = New System.Drawing.Size(262, 156)
+        Me.lstInventory.Size = New System.Drawing.Size(262, 175)
         Me.lstInventory.TabIndex = 142
         '
         'lstLog
@@ -1217,7 +1226,7 @@ Partial Class Game
         '
         Me.btnOk.BackColor = System.Drawing.SystemColors.Window
         Me.btnOk.Font = New System.Drawing.Font("Consolas", 8.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.btnOk.Location = New System.Drawing.Point(820, 557)
+        Me.btnOk.Location = New System.Drawing.Point(815, 574)
         Me.btnOk.Name = "btnOk"
         Me.btnOk.Size = New System.Drawing.Size(108, 29)
         Me.btnOk.TabIndex = 235
@@ -1307,7 +1316,7 @@ Partial Class Game
         Me.fMisc.CheckState = System.Windows.Forms.CheckState.Checked
         Me.fMisc.Font = New System.Drawing.Font("Consolas", 8.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.fMisc.ForeColor = System.Drawing.Color.White
-        Me.fMisc.Location = New System.Drawing.Point(738, 532)
+        Me.fMisc.Location = New System.Drawing.Point(738, 554)
         Me.fMisc.Name = "fMisc"
         Me.fMisc.Size = New System.Drawing.Size(71, 23)
         Me.fMisc.TabIndex = 241
@@ -2030,12 +2039,72 @@ Partial Class Game
         Me.picSWb.TabStop = False
         Me.picSWb.Visible = False
         '
+        'picBun
+        '
+        Me.picBun.BackgroundImage = CType(resources.GetObject("picBun.BackgroundImage"), System.Drawing.Image)
+        Me.picBun.Location = New System.Drawing.Point(275, 70)
+        Me.picBun.Name = "picBun"
+        Me.picBun.Size = New System.Drawing.Size(15, 15)
+        Me.picBun.TabIndex = 285
+        Me.picBun.TabStop = False
+        Me.picBun.Visible = False
+        '
+        'picPrin
+        '
+        Me.picPrin.BackgroundImage = CType(resources.GetObject("picPrin.BackgroundImage"), System.Drawing.Image)
+        Me.picPrin.Location = New System.Drawing.Point(296, 70)
+        Me.picPrin.Name = "picPrin"
+        Me.picPrin.Size = New System.Drawing.Size(15, 15)
+        Me.picPrin.TabIndex = 286
+        Me.picPrin.TabStop = False
+        Me.picPrin.Visible = False
+        '
+        'picmgp1
+        '
+        Me.picmgp1.BackgroundImage = CType(resources.GetObject("picmgp1.BackgroundImage"), System.Drawing.Image)
+        Me.picmgp1.Location = New System.Drawing.Point(102, 50)
+        Me.picmgp1.Name = "picmgp1"
+        Me.picmgp1.Size = New System.Drawing.Size(15, 15)
+        Me.picmgp1.TabIndex = 287
+        Me.picmgp1.TabStop = False
+        Me.picmgp1.Visible = False
+        '
+        'picDragon
+        '
+        Me.picDragon.BackgroundImage = CType(resources.GetObject("picDragon.BackgroundImage"), System.Drawing.Image)
+        Me.picDragon.Location = New System.Drawing.Point(123, 50)
+        Me.picDragon.Name = "picDragon"
+        Me.picDragon.Size = New System.Drawing.Size(15, 15)
+        Me.picDragon.TabIndex = 288
+        Me.picDragon.TabStop = False
+        Me.picDragon.Visible = False
+        '
+        'chkAcc
+        '
+        Me.chkAcc.AutoSize = True
+        Me.chkAcc.Checked = True
+        Me.chkAcc.CheckState = System.Windows.Forms.CheckState.Checked
+        Me.chkAcc.Font = New System.Drawing.Font("Consolas", 8.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.chkAcc.ForeColor = System.Drawing.Color.White
+        Me.chkAcc.Location = New System.Drawing.Point(738, 532)
+        Me.chkAcc.Name = "chkAcc"
+        Me.chkAcc.Size = New System.Drawing.Size(134, 23)
+        Me.chkAcc.TabIndex = 289
+        Me.chkAcc.Text = "Accessories"
+        Me.chkAcc.UseVisualStyleBackColor = True
+        Me.chkAcc.Visible = False
+        '
         'Game
         '
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Inherit
         Me.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink
         Me.BackColor = System.Drawing.Color.Black
         Me.ClientSize = New System.Drawing.Size(1008, 690)
+        Me.Controls.Add(Me.chkAcc)
+        Me.Controls.Add(Me.picDragon)
+        Me.Controls.Add(Me.picmgp1)
+        Me.Controls.Add(Me.picPrin)
+        Me.Controls.Add(Me.picBun)
         Me.Controls.Add(Me.picSWb)
         Me.Controls.Add(Me.PicSWPrin)
         Me.Controls.Add(Me.picSW)
@@ -2230,6 +2299,10 @@ Partial Class Game
         CType(Me.picSW, System.ComponentModel.ISupportInitialize).EndInit()
         CType(Me.PicSWPrin, System.ComponentModel.ISupportInitialize).EndInit()
         CType(Me.picSWb, System.ComponentModel.ISupportInitialize).EndInit()
+        CType(Me.picBun, System.ComponentModel.ISupportInitialize).EndInit()
+        CType(Me.picPrin, System.ComponentModel.ISupportInitialize).EndInit()
+        CType(Me.picmgp1, System.ComponentModel.ISupportInitialize).EndInit()
+        CType(Me.picDragon, System.ComponentModel.ISupportInitialize).EndInit()
         Me.ResumeLayout(False)
         Me.PerformLayout()
 
@@ -2393,4 +2466,9 @@ Partial Class Game
     Friend WithEvents picSW As System.Windows.Forms.PictureBox
     Friend WithEvents PicSWPrin As System.Windows.Forms.PictureBox
     Friend WithEvents picSWb As System.Windows.Forms.PictureBox
+    Friend WithEvents picBun As System.Windows.Forms.PictureBox
+    Friend WithEvents picPrin As System.Windows.Forms.PictureBox
+    Friend WithEvents picmgp1 As System.Windows.Forms.PictureBox
+    Friend WithEvents picDragon As System.Windows.Forms.PictureBox
+    Friend WithEvents chkAcc As System.Windows.Forms.CheckBox
 End Class

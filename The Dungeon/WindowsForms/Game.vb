@@ -52,9 +52,9 @@ Public Class Game
     Public beatboss() As Boolean = {False, False, False, False, False, False}  'which bosses have been beat?
     Public floorboss() As String = {"Floor0", "Marissa the Enchantress", "Targax the Brutal", "Key", "the Explorer", "Medusa"} 'boss names (NOT SAVED)
     Dim floorLayouts As ArrayList = New ArrayList()
-    Public version As Double = 0.4      'the save file version
+    Public version As Double = 0.5     'the save file version
     Public lblEventOnClose As Action    'the event method preformed when lblEvent closes (NOT SAVED)
-    Public invFilters() As Boolean = {True, True, True, True, True, True}
+    Public invFilters() As Boolean = {True, True, True, True, True, True, True}
     Dim eClock As Integer = 15
     Public solFlag As Boolean = True
     Private trd As Thread
@@ -77,7 +77,6 @@ Public Class Game
     'Form1_Load handles the loading of the form
     Private Sub Form1_Load(sender As Object, e As EventArgs) Handles Me.Load
         loadcKeys()
-
         imagesWorker = New BackgroundWorker
         AddHandler imagesWorker.DoWork, AddressOf prefetchImages
         imagesWorkerArg = Nothing
@@ -414,6 +413,12 @@ Public Class Game
         placeChest(code)
         If floor > 2 Then placeTraps()
         placeNPCs()
+
+        'Dim p = route(player.pos, stairs, "n/a", New List(Of Point))
+        'For i = 0 To UBound(p)
+        '    mBoard(p(i).Y, p(i).X).Tag = 2
+        'Next
+
     End Sub
     Sub connectRooms(ByVal p1 As Point, ByVal p2 As Point)
         Dim cursor As Point = p1
@@ -556,10 +561,19 @@ Public Class Game
         For i = 1 To numChests
             Dim chestX As Integer = CInt(Int(Rnd() * mBoardWidth))
             Dim chestY As Integer = CInt(Int(Rnd() * mBoardHeight))
-            Do While (mBoard(chestY, chestX).Tag <> 1 Or mBoard(chestY, chestX).Text <> "")
-                chestX = CInt(Int(Rnd() * mBoardWidth))
-                chestY = CInt(Int(Rnd() * mBoardHeight))
-            Loop
+
+            If floor > 0 Then
+                Do While ((mBoard(chestY, chestX).Tag <> 1 And mBoard(chestY, chestX).Tag <> 2) Or mBoard(chestY, chestX).Text <> "")
+                    chestX = CInt(Int(Rnd() * mBoardWidth))
+                    chestY = CInt(Int(Rnd() * mBoardHeight))
+                Loop
+            Else
+                Do While (mBoard(chestY, chestX).Tag <> 1 Or mBoard(chestY, chestX).Text <> "")
+                    chestX = CInt(Int(Rnd() * mBoardWidth))
+                    chestY = CInt(Int(Rnd() * mBoardHeight))
+                Loop
+            End If
+
             Dim chest As Chest = baseChest.Create(chestX, chestY, code)
             If r = i Then chest.add(53, 1)
             chestList.Add(chest)
@@ -606,6 +620,47 @@ Public Class Game
             mBoard(npcY, npcX).Text = "$"
         Next
     End Sub
+
+    Function route(ByVal p1 As Point, ByVal p2 As Point, ByVal dir As String, ByVal path As List(Of Point)) As Point()
+        Dim cons As List(Of Point) = New List(Of Point)
+        If p1.Equals(p2) Then
+            Return path.ToArray
+        Else
+            Dim u, d, l, r As Point
+            u = New Point(p1.X - 1, p1.Y)
+            d = New Point(p1.X + 1, p1.Y)
+            l = New Point(p1.X, p1.Y - 1)
+            r = New Point(p1.X, p1.Y + 1)
+            For Each p In {u, d, l, r}
+                If Not (p.Equals(u) And dir = "d") And Not (p.Equals(d) And dir = "u") And Not (p.Equals(r) And dir = "l") And Not (p.Equals(l) And dir = "r") Then
+                    If Not (p.X < 0 Or p.X > mBoardWidth - 1 Or p.Y < 0 Or p.Y > mBoardHeight - 1) AndAlso Not mBoard(p.Y, p.X).Tag = 0 Then
+                        cons.Add(p)
+                    End If
+                End If
+            Next
+
+            Dim min As Point = cons(0)
+            For i = 0 To cons.Count - 1
+                If dist(cons(i), p2) < dist(min, p2) Then min = cons(i)
+            Next
+
+            path.Add(min)
+
+            If min.Equals(u) Then
+                dir = "u"
+            ElseIf min.Equals(d) Then
+                dir = "d"
+            ElseIf min.Equals(l) Then
+                dir = "l"
+            ElseIf min.Equals(r) Then
+                dir = "r"
+            End If
+            Return route(min, p2, dir, path)
+        End If
+    End Function
+    Function dist(ByVal x As Point, ByVal y As Point) As Double
+        Return Math.Abs(Math.Sqrt(CDbl((y.X - x.X) ^ 2) + CDbl((y.Y - x.Y) ^ 2)))
+    End Function
 
     'board draw methods
     'drawBoard updates the board with the players action
@@ -990,7 +1045,7 @@ Public Class Game
             End If
             selection(Keydata)
         End If
-            Return True
+        Return True
     End Function
     'processCmdKey is a leftover from an earlier version, and may not be needed anymore
     Protected Overrides Function ProcessCmdKey(ByRef msg As System.Windows.Forms.Message, ByVal keyData As System.Windows.Forms.Keys) As Boolean
@@ -1353,7 +1408,7 @@ Public Class Game
                 Exit For
             End If
         Next
-        Spells.spellCast(m, player, cboxMG.Items(index))
+        Spell.spellCast(m, player, cboxMG.Items(index))
         If npcList.Count > 0 Then
             For i = 0 To npcList.Count - 1
                 Dim int1 As Integer = 100 - npcList.Item(i).speed
@@ -1542,20 +1597,15 @@ Public Class Game
                     End If
                 Next
             Case "Magic"
-                If Not combatmode And Not npcmode Then
-                    pushLblEvent("You don't have a target at the moment..." & vbCrLf & "[Self casting will be added eventually]")
-                    selecting = False
-                    Exit Sub
-                End If
                 lblWhat.Text = "Cast what?"
-                If combatmode Then
-                    For i = 0 To cboxMG.Items.Count - 1
-                        lstSelec.Items.Add(indexes(count) & " - " & cboxMG.Items(i).ToString)
-                        count += 1
-                    Next
-                ElseIf npcmode Then
+                If npcmode Then
                     For i = 0 To cboxNPCMG.Items.Count - 1
                         lstSelec.Items.Add(indexes(count) & " - " & cboxNPCMG.Items(i).ToString)
+                        count += 1
+                    Next
+                Else
+                    For i = 0 To cboxMG.Items.Count - 1
+                        lstSelec.Items.Add(indexes(count) & " - " & cboxMG.Items(i).ToString)
                         count += 1
                     Next
                 End If
@@ -1731,7 +1781,8 @@ Public Class Game
 
         Dim reader As IO.StreamReader
         reader = IO.File.OpenText(a)
-        If CDbl(reader.ReadLine()) < version Then
+        Dim v = CDbl(reader.ReadLine())
+        If v < 0.4 Then
             MsgBox("Error 003: Incorrect save file version!")
             picStart.Visible = True
             btnS.Visible = True
@@ -1739,8 +1790,7 @@ Public Class Game
             boardWorker.CancelAsync()
             Exit Sub
         End If
-
-        player = New Player(reader.ReadLine())
+        player = New Player(reader.ReadLine(), v)
 
         If Not mBoard Is Nothing Then
             For i = 0 To mBoardHeight - 1
@@ -1774,8 +1824,14 @@ Public Class Game
             uOchests.Add(newChest.pos)
         Next
 
-        For i = 0 To CInt(reader.ReadLine())
-            trapList.Add(New Trap(reader.ReadLine()))
+        Dim ind = CInt(reader.ReadLine())
+        For i = 0 To ind
+            Dim t = New Trap(reader.ReadLine())
+            If Not t.pos.Equals(New Point(-1, -1)) Then
+                trapList.Add(t)
+            End If
+        Next
+        For i = 0 To trapList.Count - 1
             mBoard(trapList(i).pos.Y, trapList(i).pos.X).Text = "+"
         Next
         For i = 0 To CInt(reader.ReadLine())
@@ -1825,7 +1881,12 @@ Public Class Game
         swiz.pos.Y = reader.ReadLine()
 
         chestList.Clear()
-        If floor < 5 Then placeChest(floorLayouts(floor)) Else placeChest(genRNDLVLCode)
+        If floor < 5 Then
+            placeChest(floorLayouts(floor))
+        Else
+            placeChest(genRNDLVLCode)
+        End If
+
         Dim tCL As ArrayList = New ArrayList()
         For i = 0 To uOchests.Count - 1
             For j = 0 To chestList.Count - 1
@@ -1839,36 +1900,37 @@ Public Class Game
         chestList = tCL.Clone()
 
         If chestList.Count = 0 And uOchests.Count <> 0 Then
-            If floor < 5 Then
+            If floor < 4 Then
                 placeChest(floorLayouts(floor))
             Else
                 placeChest(genRNDLVLCode)
             End If
         End If
 
-            combatmode = False
+        combatmode = False
 
-            Equipment.init()
-            reader.Close()
-            player.setPImage()
+        Equipment.init()
+        reader.Close()
+        player.setPImage()
 
-            drawBoard()
-            lblNameTitle.Text = player.name & " the " & player.title
-            lblHealth.Text = "Health = " & player.health & "/" & player.maxHealth
-            lblMana.Text = "Mana = " & player.mana & "/" & player.maxMana
-            lblHunger.Text = "Hunger = " & player.hunger & "/100"
-            lblATK.Text = "ATK = " & player.getAttack
-            lblDEF.Text = "DEF = " & player.getDefence
-            lblSKL.Text = "WIL = " & player.getWillpower
-            lblSPD.Text = "SPD = " & player.getSpeed
-            lblEVD.Text = "EVD = " & player.evade
+        drawBoard()
+        lblNameTitle.Text = player.name & " the " & player.title
+        lblHealth.Text = "Health = " & player.health & "/" & player.maxHealth
+        lblMana.Text = "Mana = " & player.mana & "/" & player.maxMana
+        lblHunger.Text = "Hunger = " & player.hunger & "/100"
+        lblATK.Text = "ATK = " & player.getAttack
+        lblDEF.Text = "DEF = " & player.getDefence
+        lblSKL.Text = "WIL = " & player.getWillpower
+        lblSPD.Text = "SPD = " & player.getSpeed
+        lblEVD.Text = "EVD = " & player.evade
 
-            player.currState.save(player)
-            picStart.Visible = False
+        player.currState.save(player)
+        picStart.Visible = False
 
-            pushLblEvent("Game successfully loaded!")
-            player.solFlag = False
-            player.createP()
+        pushLblEvent("Game successfully loaded!")
+        player.solFlag = False
+        player.createP()
+
     End Sub
     Private Sub btnS1_Click(sender As Object, e As EventArgs) Handles btnS1.Click
         If solFlag Then
@@ -2062,7 +2124,15 @@ Public Class Game
         pnlSaveLoad.Location = New Point(188, pnlSaveLoad.Location.Y)
         pnlSaveLoad.Visible = True
         'CharacterGenerator.init()
+        Dim loops = 0
         While Not savePicsReady
+            If loops = 100 Then
+                closesol()
+                MsgBox("Error: Missing one or more save images")
+                Exit While
+                Exit Sub
+            End If
+            loops += 1
             Threading.Thread.Sleep(50)
         End While
         If System.IO.File.Exists("s.ave") Then convertSave("s.ave")
@@ -2275,6 +2345,7 @@ Public Class Game
         fArmor.Visible = True
         fWeapon.Visible = True
         fMisc.Visible = True
+        chkAcc.Visible = True
         lstInventory.Items.Clear()
         btnOk.Visible = True
         btnAll.Visible = True
@@ -2286,6 +2357,7 @@ Public Class Game
         If fArmor.Checked Then invFilters(3) = True Else invFilters(3) = False
         If fWeapon.Checked Then invFilters(4) = True Else invFilters(4) = False
         If fMisc.Checked Then invFilters(5) = True Else invFilters(5) = False
+        If chkAcc.Checked Then invFilters(6) = True Else invFilters(6) = False
     End Sub
     Private Sub btnOk_Click(sender As Object, e As EventArgs) Handles btnOk.Click
         fUseable.Visible = False
@@ -2294,6 +2366,7 @@ Public Class Game
         fArmor.Visible = False
         fWeapon.Visible = False
         fMisc.Visible = False
+        chkAcc.Visible = False
         btnOk.Visible = False
         btnAll.Visible = False
         btnNone.Visible = False
@@ -2318,6 +2391,9 @@ Public Class Game
     Private Sub fMisc_CheckedChanged(sender As Object, e As EventArgs) Handles fMisc.CheckedChanged
         If fMisc.Checked Then invFilters(5) = True Else invFilters(5) = False
     End Sub
+    Private Sub chkAcc_CheckedChanged(sender As Object, e As EventArgs) Handles chkAcc.CheckedChanged
+        If chkAcc.Checked Then invFilters(6) = True Else invFilters(6) = False
+    End Sub
     Private Sub btnAll_Click(sender As Object, e As EventArgs) Handles btnAll.Click
         fUseable.Checked = True
         fPotion.Checked = True
@@ -2325,6 +2401,7 @@ Public Class Game
         fArmor.Checked = True
         fWeapon.Checked = True
         fMisc.Checked = True
+        chkAcc.Checked = True
     End Sub
     Private Sub btnNone_Click(sender As Object, e As EventArgs) Handles btnNone.Click
         fUseable.Checked = False
@@ -2333,6 +2410,7 @@ Public Class Game
         fArmor.Checked = False
         fWeapon.Checked = False
         fMisc.Checked = False
+        chkAcc.Checked = False
     End Sub
 
     'combat functions
@@ -2709,7 +2787,7 @@ Public Class Game
                 Exit For
             End If
         Next
-        Spells.spellCast(m, player, cboxMG.Text)
+        Spell.spellCast(m, player, cboxMG.Text)
         If npcList.Count > 0 Then
             For i = 0 To npcList.Count - 1
                 Dim int1 As Integer = 100 - npcList.Item(i).speed
@@ -2846,9 +2924,7 @@ Public Class Game
                 End If
             Next
             'MsgBox("B")
-            If cboxNPCMG.Text = "Turn to Frog" Then Spells.turnToFrogN(m, player)
-            If cboxNPCMG.Text = "Petrify" Then Spells.Petrify(m, player)
-            If cboxNPCMG.Text = "Polymorph Enemy" Then Spells.EnemyPolymorph(m, player)
+            If cboxNPCMG.Text = "Turn to Frog" Then Spells.turnToFrogN(m, player) Else Spell.spellCast(m, player, cboxNPCMG.Text)
 
             If npcList.Count > 0 Then
                 For i = 0 To npcList.Count - 1
@@ -3112,9 +3188,7 @@ Public Class Game
                 If i = 6 And (id.Item1 = 0 Or id.Item1 = 3) Then iarr(6) = CharacterGenerator.recolor2(iarr(6), skincolor)
             Next
             changeHairColor(haircolor, ids, iarr)
-            iarr(2) = CharacterGenerator.recolor2(iarr(2), skincolor)
-            iarr(4) = CharacterGenerator.recolor2(iarr(4), skincolor)
-            iarr(7) = CharacterGenerator.recolor2(iarr(7), skincolor)
+            changeSkinColor(skincolor, ids, iarr)
 
             img = CharacterGenerator.CreateBMP(iarr)
         Catch ex As Exception
@@ -3127,13 +3201,13 @@ Public Class Game
         Dim reader As IO.StreamReader
         reader = IO.File.OpenText(a)
         Dim vers As Double = CDbl(reader.ReadLine())
-        Dim player = New Player(reader.ReadLine)
+        Dim player = New Player(reader.ReadLine, vers)
         reader.Close()
         Return New Tuple(Of Player, Double)(player, vers)
     End Function
     Shared Sub convertSave(ByVal a As String)
         Dim lines() As String = System.IO.File.ReadAllLines(a)
-        Dim player As Player = New Player(lines(UBound(lines)))
+        Dim player As Player = New Player(lines(UBound(lines)), CDbl(lines(0)))
         Dim writer As IO.StreamWriter
         System.IO.File.Delete(a)
         writer = IO.File.CreateText("s1.ave")
@@ -3183,7 +3257,6 @@ Public Class Game
     Private Sub ReportToolStripMenuItem_Click(sender As Object, e As EventArgs) Handles ReportToolStripMenuItem.Click
         Process.Start("https://bitbucket.org/VowelHeavyUsername/dungeon_depths/issues?status=new&status=open")
     End Sub
-
     Private Sub bw_DoWork(ByVal sender As Object, ByVal e As DoWorkEventArgs)
         Dim worker As BackgroundWorker = CType(sender, BackgroundWorker)
 
@@ -3267,6 +3340,61 @@ Public Class Game
         If Not iarr(15).Equals(CharacterGenerator.picPort.Image) Then iarr(15) = CharacterGenerator.recolor(t(15), c)
         If iarrind(10).Item1 < 3 Then iarr(10) = CharacterGenerator.recolor(t(10), c)
     End Sub
+    Shared Sub changeSkinColor(ByVal c As Color, ByVal iarrind() As Tuple(Of Integer, Boolean), ByRef iarr As Image())
+        Dim t(16) As Image
+        If iarrind(2).Item2 Then
+            If iarrind(2).Item1 = 0 Then
+                t(2) = CharacterGenerator.getImg("img/fBody")(iarrind(2).Item1)
+                iarr(2) = CharacterGenerator.recolor2(t(2), c)
+            Else
+                Dim range As List(Of Image)
+                Dim offset As Integer
+
+                Dim fTFBody As List(Of Image) = CharacterGenerator.getImg("img/fTF/tfBody")
+                offset = fTFBody.Count - 5
+                range = fTFBody.GetRange(offset, 5)
+                fTFBody = fTFBody.GetRange(0, offset)
+                fTFBody.InsertRange(4, range)
+
+                t(2) = fTFBody(iarrind(2).Item1 - 1)
+                iarr(2) = CharacterGenerator.recolor2(t(2), c)
+            End If
+        Else
+            If iarrind(2).Item1 = 0 Then
+                t(2) = CharacterGenerator.getImg("img/mBody")(iarrind(2).Item1)
+                iarr(2) = CharacterGenerator.recolor2(t(2), c)
+            Else
+                t(2) = CharacterGenerator.getImg("img/mTF/tfBody")(iarrind(2).Item1 - 1)
+                iarr(2) = CharacterGenerator.recolor2(t(2), c)
+            End If
+        End If
+        If iarrind(4).Item2 Then
+            t(4) = CharacterGenerator.getImg("img/fFace")(iarrind(4).Item1)
+            iarr(4) = CharacterGenerator.recolor2(t(4), c)
+            If iarrind(7).Item1 = 0 Then
+                t(7) = CharacterGenerator.getImg("img/fNose")(iarrind(7).Item1)
+                iarr(7) = CharacterGenerator.recolor2(t(7), c)
+            End If
+            If iarrind(6).Item1 = 0 Or iarrind(6).Item1 = 3 Then
+                t(6) = CharacterGenerator.getImg("img/fEars")(iarrind(6).Item1)
+                iarr(6) = CharacterGenerator.recolor2(t(6), c)
+            ElseIf iarrind(6).Item1 = 6 Or iarrind(6).Item1 = 7 Then
+                t(6) = CharacterGenerator.getImg("img/fTF/tfEars")(iarrind(6).Item1 - 5)
+                iarr(6) = CharacterGenerator.recolor2(t(6), c)
+            End If
+        Else
+            t(4) = CharacterGenerator.getImg("img/mFace")(iarrind(4).Item1)
+            iarr(4) = CharacterGenerator.recolor2(t(4), c)
+            If iarrind(6).Item1 = 0 Or iarrind(6).Item1 = 3 Then
+                t(6) = CharacterGenerator.getImg("img/mEars")(iarrind(6).Item1)
+                iarr(6) = CharacterGenerator.recolor2(t(6), c)
+            End If
+            If iarrind(7).Item1 = 0 Then
+                t(7) = CharacterGenerator.getImg("img/mNose")(iarrind(7).Item1)
+                iarr(7) = CharacterGenerator.recolor2(t(7), c)
+            End If
+        End If
+    End Sub
     Private Sub prefetchImages()
         If imagesWorkerArg Is Nothing Then
             savePicsReady = False
@@ -3323,7 +3451,6 @@ Public Class Game
             imagesWorkerArg = Nothing
         End If
     End Sub
-
     Sub formReset()
         Application.Exit()
         'fromCombat()
@@ -3333,11 +3460,9 @@ Public Class Game
         'btnControls.Visible = True
         'player.canMoveFlag = False
     End Sub
-
     Private Sub btnSettings_Click(sender As Object, e As EventArgs)
         MsgBox("This will be where the settings are changed eventually")
     End Sub
-
     Private Sub btnWait_Click(sender As Object, e As EventArgs) Handles btnWait.Click
         turn += 1
         If lblEvent.Visible = True Then
