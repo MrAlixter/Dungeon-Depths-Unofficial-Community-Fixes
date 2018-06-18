@@ -188,6 +188,8 @@ Partial Class Game
         Me.picmgp1 = New System.Windows.Forms.PictureBox()
         Me.picDragon = New System.Windows.Forms.PictureBox()
         Me.chkAcc = New System.Windows.Forms.CheckBox()
+        Me.picCrystal = New System.Windows.Forms.PictureBox()
+        Me.picCrystalf = New System.Windows.Forms.PictureBox()
         CType(Me.picMarkBClothes, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me.picMarkBRearHair2, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me.picMarkBRearHair1, System.ComponentModel.ISupportInitialize).BeginInit()
@@ -257,6 +259,8 @@ Partial Class Game
         CType(Me.picPrin, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me.picmgp1, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me.picDragon, System.ComponentModel.ISupportInitialize).BeginInit()
+        CType(Me.picCrystal, System.ComponentModel.ISupportInitialize).BeginInit()
+        CType(Me.picCrystalf, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.SuspendLayout()
         '
         'btnUse1
@@ -2094,12 +2098,34 @@ Partial Class Game
         Me.chkAcc.UseVisualStyleBackColor = True
         Me.chkAcc.Visible = False
         '
+        'picCrystal
+        '
+        Me.picCrystal.BackgroundImage = CType(resources.GetObject("picCrystal.BackgroundImage"), System.Drawing.Image)
+        Me.picCrystal.Location = New System.Drawing.Point(560, 50)
+        Me.picCrystal.Name = "picCrystal"
+        Me.picCrystal.Size = New System.Drawing.Size(15, 15)
+        Me.picCrystal.TabIndex = 290
+        Me.picCrystal.TabStop = False
+        Me.picCrystal.Visible = False
+        '
+        'picCrystalf
+        '
+        Me.picCrystalf.BackgroundImage = CType(resources.GetObject("picCrystalf.BackgroundImage"), System.Drawing.Image)
+        Me.picCrystalf.Location = New System.Drawing.Point(560, 115)
+        Me.picCrystalf.Name = "picCrystalf"
+        Me.picCrystalf.Size = New System.Drawing.Size(15, 15)
+        Me.picCrystalf.TabIndex = 291
+        Me.picCrystalf.TabStop = False
+        Me.picCrystalf.Visible = False
+        '
         'Game
         '
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Inherit
         Me.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink
         Me.BackColor = System.Drawing.Color.Black
         Me.ClientSize = New System.Drawing.Size(1008, 690)
+        Me.Controls.Add(Me.picCrystalf)
+        Me.Controls.Add(Me.picCrystal)
         Me.Controls.Add(Me.chkAcc)
         Me.Controls.Add(Me.picDragon)
         Me.Controls.Add(Me.picmgp1)
@@ -2303,6 +2329,8 @@ Partial Class Game
         CType(Me.picPrin, System.ComponentModel.ISupportInitialize).EndInit()
         CType(Me.picmgp1, System.ComponentModel.ISupportInitialize).EndInit()
         CType(Me.picDragon, System.ComponentModel.ISupportInitialize).EndInit()
+        CType(Me.picCrystal, System.ComponentModel.ISupportInitialize).EndInit()
+        CType(Me.picCrystalf, System.ComponentModel.ISupportInitialize).EndInit()
         Me.ResumeLayout(False)
         Me.PerformLayout()
 
@@ -2471,4 +2499,6 @@ Partial Class Game
     Friend WithEvents picmgp1 As System.Windows.Forms.PictureBox
     Friend WithEvents picDragon As System.Windows.Forms.PictureBox
     Friend WithEvents chkAcc As System.Windows.Forms.CheckBox
+    Friend WithEvents picCrystal As System.Windows.Forms.PictureBox
+    Friend WithEvents picCrystalf As System.Windows.Forms.PictureBox
 End Class

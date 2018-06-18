@@ -121,10 +121,12 @@
     <Compile Include="Entities\Player\Spells\turnToCupcake.vb" />
     <Compile Include="Entities\Player\Spells\turnToFrog.vb" />
     <Compile Include="Items\Accesories\Accessory.vb" />
+    <Compile Include="Items\Accesories\Cowbell.vb" />
     <Compile Include="Items\Accesories\HeartNecklace.vb" />
     <Compile Include="Items\Accesories\noAcce.vb" />
     <Compile Include="Items\Accesories\RedHeadband.vb" />
     <Compile Include="Items\Accesories\RubyCirclet.vb" />
+    <Compile Include="Items\Accesories\SlaveCollar.vb" />
     <Compile Include="Items\Armor\ChitArmor.vb" />
     <Compile Include="Items\Usable\Potions\Mystery Potions\BSPotion.vb" />
     <Compile Include="Items\Usable\Potions\Mystery Potions\HyperManaPotion.vb" />

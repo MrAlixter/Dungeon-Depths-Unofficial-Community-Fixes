@@ -59,6 +59,8 @@
     Public wingInd = 0
     Public isAttacking = False
 
+    Public forcedPath() As Point = Nothing
+
     'New takes no parameters and sets all of the inst. variables to temp variables.
     'Variables will be set at the start of a game
     Sub New()
@@ -136,6 +138,13 @@
             inventory.Item(i).add(playArray(12 + i))
         Next
 
+        Dim y = CInt(playArray(13 + x)) * 2
+        Dim tfp As List(Of Point) = New List(Of Point)
+        For i = 0 To y Step 2
+            tfp.Add(New Point(CInt(playArray(14 + x + i)), playArray(15 + x + i)))
+        Next
+        forcedPath = tfp.ToArray
+
         solFlag = True
         ReDim iArr(16)
         createP()
@@ -150,22 +159,56 @@
 
     'commands
     'movement commands
+    Sub reachedFPathDest()
+
+    End Sub
+    Sub followPath()
+        If forcedPath(0).X = 0 And forcedPath(0).Y = 0 Then
+            reachedFPathDest()
+            forcedPath = Nothing
+        Else
+            Dim t(UBound(forcedPath)) As Point
+            pos = forcedPath(0)
+            For i = 1 To UBound(forcedPath)
+                t(i - 1) = forcedPath(i)
+            Next
+
+            forcedPath = t
+        End If
+    End Sub
+
     Public Sub moveUp()
+        If Not forcedPath Is Nothing Then
+            followPath()
+            Exit Sub
+        End If
         If (pos.Y - 1) < 0 Or canMoveFlag = False Then Exit Sub
         If Game.mBoard(pos.Y - 1, pos.X).Tag = 0 Then Exit Sub
         pos.Y -= 1
     End Sub
     Public Sub moveDown()
+        If Not forcedPath Is Nothing Then
+            followPath()
+            Exit Sub
+        End If
         If (pos.Y + 1) > Game.mBoardHeight - 1 Or canMoveFlag = False Then Exit Sub
         If Game.mBoard(pos.Y + 1, pos.X).Tag = 0 Then Exit Sub
         pos.Y += 1
     End Sub
     Public Sub moveLeft()
+        If Not forcedPath Is Nothing Then
+            followPath()
+            Exit Sub
+        End If
         If (pos.X - 1) < 0 Or canMoveFlag = False Then Exit Sub
         If Game.mBoard(pos.Y, pos.X - 1).Tag = 0 Then Exit Sub
         pos.X -= 1
     End Sub
     Public Sub moveRight()
+        If Not forcedPath Is Nothing Then
+            followPath()
+            Exit Sub
+        End If
         If (pos.X + 1) > Game.mBoardWidth - 1 Or canMoveFlag = False Then Exit Sub
         If Game.mBoard(pos.Y, pos.X + 1).Tag = 0 Then Exit Sub
         pos.X += 1
@@ -652,6 +695,7 @@
         inventory.Add(New HeartNecklace()) '66
         inventory.Add(New RedHeadband()) '67
         inventory.Add(New RubyCirclet()) '68
+        inventory.Add(New SlaveCollar()) '69
 
         For i = 0 To inventory.Count - 1
             If inventory(i).GetType().IsSubclassOf(GetType(MysteryPotion)) Then
@@ -682,7 +726,8 @@
         food = {inventory(30), inventory(31), inventory(32), inventory(33),
                 inventory(34), inventory(35), inventory(44)}
 
-        acce = {New noAcce(), inventory(66), inventory(67), inventory(68)}
+        acce = {New noAcce(), inventory(66), inventory(67), inventory(68),
+                inventory(69)}
 
         potions = {inventory(2), inventory(13), inventory(14), inventory(25),
                    inventory(26), inventory(27), inventory(28), inventory(29),
@@ -705,6 +750,7 @@
         perks.Add("ihfury", -1) '11
         perks.Add("livearm", -1) '12
         perks.Add("livelinge", -1) '13
+        perks.Add("thrall", -1) '14
     End Sub
     Sub perkUpdate()
         'hunger
@@ -1072,17 +1118,17 @@
 
         Dim chk = False
 
-            For i = 0 To 16
-                If iArrInd(i).Item2 Then
-                    iArr(i) = CharacterGenerator.fAttributes(i)(iArrInd(i).Item1)
-                Else
-                    iArr(i) = CharacterGenerator.mAttributes(i)(iArrInd(i).Item1)
-                End If
-            Next
-            changeHairColor(haircolor)
-            changeSkinColor(skincolor)
-            Game.lstLog.TopIndex = Game.lstLog.Items.Count - 1
-            If lust > 0 Then lustUpdate()
+        For i = 0 To 16
+            If iArrInd(i).Item2 Then
+                iArr(i) = CharacterGenerator.fAttributes(i)(iArrInd(i).Item1)
+            Else
+                iArr(i) = CharacterGenerator.mAttributes(i)(iArrInd(i).Item1)
+            End If
+        Next
+        changeHairColor(haircolor)
+        changeSkinColor(skincolor)
+        Game.lstLog.TopIndex = Game.lstLog.Items.Count - 1
+        If lust > 0 Then lustUpdate()
         If wingInd > 0 Then addWings(wingInd)
 
         If Not solFlag And Not chk Then Game.picPortrait.BackgroundImage = CharacterGenerator.CreateBMP(iArr)
@@ -1615,6 +1661,12 @@
         output += inventory.Count - 1 & "*"
         For i = 0 To inventory.Count - 1
             output += (inventory.Item(i).count & "*")
+        Next
+
+        output += UBound(forcedPath) & "*"
+        For i = 0 To UBound(forcedPath)
+            output += (forcedPath(i).X & "*")
+            output += (forcedPath(i).Y & "*")
         Next
 
         Return output

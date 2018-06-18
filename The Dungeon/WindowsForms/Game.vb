@@ -418,6 +418,8 @@ Public Class Game
         'For i = 0 To UBound(p)
         '    mBoard(p(i).Y, p(i).X).Tag = 2
         'Next
+        'Dim sc = New SlaveCollar
+        'sc.onEquip()
 
     End Sub
     Sub connectRooms(ByVal p1 As Point, ByVal p2 As Point)
@@ -539,6 +541,7 @@ Public Class Game
 
     'placeStairs, placeChest, placeTraps, and placeNPCs place their respective entities on mBoard
     Sub placeStairs()
+
         Dim stairsX As Integer
         Dim stairsY As Integer
         Do While (mBoard(stairsY, stairsX).Tag <> 1 Or mBoard(stairsY, stairsX).Text <> "")
@@ -762,6 +765,8 @@ Public Class Game
         '9 = locked stairs
         '10 = boss stairs
         '11 = shady wizard
+        '12 = crystal
+
         Dim viewArray(15, 23) As Integer
         Dim x As Integer = 0
         Dim y As Integer = 0
@@ -785,6 +790,7 @@ Public Class Game
                         If mBoard(player.pos.Y + indY, player.pos.X + indX).Text = "$" And player.pos.Y + indY = shopkeeper.pos.Y And player.pos.X + indX = shopkeeper.pos.X Then viewArray(y, x) = 6
                         If mBoard(player.pos.Y + indY, player.pos.X + indX).Text = "$" And player.pos.Y + indY = swiz.pos.Y And player.pos.X + indX = swiz.pos.X Then viewArray(y, x) = 11
                         If mBoard(player.pos.Y + indY, player.pos.X + indX).Text = "+" Then viewArray(y, x) = 8
+                        If mBoard(player.pos.Y + indY, player.pos.X + indX).Text = "c" Then viewArray(y, x) = 12
                     End If
                     If mBoard(player.pos.Y + indY, player.pos.X + indX).Text = "@" Then
                         If indY = 0 And indX = 0 Then viewArray(y, x) = 4 Else viewArray(y, x) = 7
@@ -820,6 +826,8 @@ Public Class Game
                             mPics(y, x).BackgroundImage = picStairsBoss.BackgroundImage
                         Case 11
                             mPics(y, x).BackgroundImage = picSWiz.BackgroundImage
+                        Case 12
+                            mPics(y, x).BackgroundImage = picCrystal.BackgroundImage
                     End Select
                 Else
                     Select Case viewArray(y, x)
@@ -848,6 +856,8 @@ Public Class Game
                             mPics(y, x).BackgroundImage = picstairsbossf.BackgroundImage
                         Case 11
                             mPics(y, x).BackgroundImage = picSWizF.BackgroundImage
+                        Case 12
+                            mPics(y, x).BackgroundImage = picCrystalf.BackgroundImage
                     End Select
                 End If
                 x += 1
