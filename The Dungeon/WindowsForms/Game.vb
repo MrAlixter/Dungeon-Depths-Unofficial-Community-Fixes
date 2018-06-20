@@ -9,6 +9,8 @@ Public Class Game
     'board instance variables
     Public mBoardWidth As Integer = 50
     Public mBoardHeight As Integer = 40
+    Public chestFreqMin As Integer = 3
+    Public chestFreqRange As Integer = 8
     Public mBoard(,) As mTile
     Public mPics(,) As PictureBox       '(NOT SAVED)
     Public floor As Integer = 0
@@ -202,6 +204,8 @@ Public Class Game
         genSet.ShowDialog()
         mBoardWidth = genSet.boxWidth.Value
         mBoardHeight = genSet.boxHeight.Value
+        chestFreqMin = genSet.boxChestFreqMin.Value
+        chestFreqRange = genSet.boxChestFreqRange.Value
         If mBoardWidth * mBoardHeight < 4 Then
             Do While mBoardWidth * mBoardHeight < 4
                 If mBoardHeight < mBoardWidth Then
@@ -428,7 +432,6 @@ Public Class Game
         Next
 
         If tileCount < 4 Then
-            Console.WriteLine("IMPOSSIBLE START. " & tileCount & " SPOTS AVAILABLE.")
             Dim timesDug As Integer = 0
             Do While tileCount < 4 'To handle if it needs to keep "digging", in case it couldn't make it big enough with just one iteration
                 timesDug += 1
@@ -448,7 +451,6 @@ Public Class Game
                         End If
                     Next
                     timesDug = 0
-                    Console.WriteLine("SEEDED")
                 End If
                 For yInd As Integer = 0 AndAlso tileCount < 4 To mBoardHeight - 1
                     For xInd As Integer = 0 AndAlso tileCount < 4 To mBoardWidth - 1
@@ -456,19 +458,15 @@ Public Class Game
                             If yInd - 1 >= 0 AndAlso mBoard(yInd - 1, xInd).Tag = 0 Then
                                 mBoard(yInd - 1, xInd).Tag = 1
                                 tileCount += 1
-                                Console.WriteLine("DUG 1")
                             ElseIf yInd + 1 < mBoardHeight AndAlso mBoard(yInd + 1, xInd).Tag = 0 Then
                                 mBoard(yInd + 1, xInd).Tag = 1
                                 tileCount += 1
-                                Console.WriteLine("DUG 1")
                             ElseIf xInd - 1 >= 0 AndAlso mBoard(yInd, xInd - 1).Tag = 0 Then
                                 mBoard(yInd, xInd - 1).Tag = 1
                                 tileCount += 1
-                                Console.WriteLine("DUG 1")
                             ElseIf xInd + 1 < mBoardWidth AndAlso mBoard(yInd, xInd + 1).Tag = 0 Then
                                 mBoard(yInd, xInd + 1).Tag = 1
                                 tileCount += 1
-                                Console.WriteLine("DUG 1")
                             End If
                         End If
                     Next
@@ -621,7 +619,8 @@ Public Class Game
     End Sub
     Sub placeChest(ByVal code As String)
         Randomize(code.GetHashCode)
-        Dim numChests As Integer = CInt(Int(Rnd() * 8) + 3) * Int(mBoardWidth / 30)
+        'Dim numChests As Integer = CInt(Int(Rnd() * 8) + 3) * Int((mBoardWidth / 30) + (mBoardHeight / 30) / 2)
+        Dim numChests As Integer = CInt(Int(Rnd() * chestFreqRange) + chestFreqMin) * Int(Math.Sqrt((mBoardWidth / 30) * (mBoardHeight / 30)))
         Dim r As Integer
         If floor = 3 Then
             numChests *= 1.5
