@@ -140,12 +140,33 @@
             inventory.Item(i).add(playArray(12 + i))
         Next
 
-        Dim y = CInt(playArray(13 + x)) * 2
-        Dim tfp As List(Of Point) = New List(Of Point)
-        For i = 0 To y Step 2
-            tfp.Add(New Point(CInt(playArray(14 + x + i)), playArray(15 + x + i)))
-        Next
-        forcedPath = tfp.ToArray
+        If Game.version >= 0.6 Then
+            Dim y = 0
+            Dim tfp As List(Of Point) = New List(Of Point)
+            If Not playArray(14 + x).Equals("N/a") Then
+                y = CInt(playArray(13 + x)) * 2
+                For i = 0 To y Step 2
+                    tfp.Add(New Point(CInt(playArray(14 + x + i)), playArray(15 + x + i)))
+                Next
+                forcedPath = tfp.ToArray
+            Else
+                tfp = Nothing
+            End If
+
+            Dim currentIndex = 15 + x + y
+            If Not playArray(14 + x).Equals("N/a") Then currentIndex += 1
+
+            Dim stuff() As String = playArray(currentIndex).Split("$")
+
+            If Not stuff(0).Equals("N/a") Then
+                prefForm = New preferedForm(Color.FromArgb(CInt(stuff(0)), CInt(stuff(1)), CInt(stuff(2)), CInt(stuff(3))), _
+                                            Color.FromArgb(CInt(stuff(4)), CInt(stuff(5)), CInt(stuff(6)), CInt(stuff(7))), _
+                                            CBool(stuff(8)), CBool(stuff(9)), CInt(stuff(10)), CBool(stuff(11)), CInt(stuff(12)))
+                inventory(69).setFormerLife(stuff(13), New Tuple(Of Integer, Boolean)(CInt(stuff(14)), stuff(15)))
+            Else
+                inventory(69).setFormerLife(stuff(1), New Tuple(Of Integer, Boolean)(CInt(stuff(2)), stuff(3)))
+            End If
+        End If
 
         solFlag = True
         ReDim iArr(16)
@@ -162,7 +183,11 @@
     'commands
     'movement commands
     Sub reachedFPathDest()
-
+        If title = "Thrall" Then
+            'toDo:  roll a d2 
+            '       if 1, then the player has the option to break free of the collar and fight a "Demonic Sorcerer/Sorceress"
+            '       otherwise, they check in with their controller who informs them that they haven't found the right array.
+        End If
     End Sub
     Sub followPath()
         If forcedPath(0).X = 0 And forcedPath(0).Y = 0 Then
@@ -1733,14 +1758,22 @@
             output += (inventory.Item(i).count & "*")
         Next
 
-        output += UBound(forcedPath) & "*"
-        For i = 0 To UBound(forcedPath)
-            output += (forcedPath(i).X & "*")
-            output += (forcedPath(i).Y & "*")
-        Next
+        If forcedPath Is Nothing Then
+            output += "N/a*"
+        Else
+            output += UBound(forcedPath) & "*"
+            For i = 0 To UBound(forcedPath)
+                output += (forcedPath(i).X & "*")
+                output += (forcedPath(i).Y & "*")
+            Next
+        End If
 
-        output += prefForm.ToString
-        output += inventory(69)
+        If Not prefForm Is Nothing Then
+            output += prefForm.ToString
+        Else
+            output += "N/a$"
+        End If
+        output += inventory(69).ToString
 
         Return output
     End Function

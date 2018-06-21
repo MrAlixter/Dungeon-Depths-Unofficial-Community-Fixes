@@ -1,8 +1,8 @@
 ﻿Public Class SlaveCollar
     Inherits Accessory
     'The the slave collar handles the thrall tf
-    Dim formerTitle As String
-    Dim formerEyeType As Tuple(Of Integer, Boolean)
+    Dim formerTitle As String = ""
+    Dim formerEyeType As Tuple(Of Integer, Boolean) = New Tuple(Of Integer, Boolean)(0, False)
 
     Sub New()
         MyBase.setName("Slave_Collar")
@@ -38,6 +38,9 @@
         Game.player.iArrInd(9) = formerEyeType
     End Sub
 
+    Public Overrides Function ToString() As String
+        Return formerTitle & "$" & formerEyeType.Item1 & "$" & formerEyeType.Item2
+    End Function
     Public Sub setFormerLife(ft As String, fet As Tuple(Of Integer, Boolean))
         formerTitle = ft
         formerEyeType = fet
