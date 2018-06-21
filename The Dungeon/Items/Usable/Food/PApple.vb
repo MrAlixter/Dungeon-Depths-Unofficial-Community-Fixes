@@ -14,7 +14,7 @@
 
     Public Overrides Sub Effect()
         Dim p As Player = Game.player
-        If Not p.perks("polymorphed") > -1 And Not p.title.Equals("Magic Girl") Then
+        If Polymorph.canBeTFed(Game.player) Then
             If Game.combatmode = True Or Game.npcmode = True Or Not p.canMoveFlag Then
                 Polymorph.transform(p, "princess", 2)
             Else

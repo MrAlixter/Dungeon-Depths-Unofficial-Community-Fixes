@@ -212,6 +212,8 @@
         ComboBox2.Items.Add("Warrior")
         ComboBox2.Items.Add("Mage")
         picPort.BackgroundImage = CreateBMP(iArr)
+
+        init()
     End Sub
     'CharacterGenerator1_FormClosing handles the finalization of the in game image library
     Private Sub CharacterGenerator1_FormClosing(sender As Object, e As FormClosingEventArgs) Handles Me.FormClosing
@@ -565,11 +567,11 @@
         fTFEars = getImg("img/fTF/tfEars")
 
         fTFEyes = getImg("img/fTF/tfEyes")
-        offset = fTFEyes.Count - 3
-        range = fTFEyes.GetRange(offset, 3)
-        temp = fTFEyes.GetRange(0, offset)
-        range.AddRange(temp)
-        fTFEyes = range
+        'offset = fTFEyes.Count - 3
+        'range = fTFEyes.GetRange(offset, 3)
+        'temp = fTFEyes.GetRange(0, offset)
+        'range.AddRange(temp)
+        'fTFEyes = range
 
         fTFface = getImg("img/fTF/tfFace")
         fTfFrontHair = getImg("img/fTF/tfFrontHair")

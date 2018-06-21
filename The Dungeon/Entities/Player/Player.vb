@@ -61,6 +61,8 @@
 
     Public forcedPath() As Point = Nothing
 
+    Public prefForm As preferedForm
+
     'New takes no parameters and sets all of the inst. variables to temp variables.
     'Variables will be set at the start of a game
     Sub New()
@@ -176,6 +178,9 @@
             forcedPath = t
         End If
     End Sub
+    Function resistPath()
+        Return (Int(Rnd() * 3) = 0) And getWillpower() > 7
+    End Function
 
     Public Sub moveUp()
         If Not forcedPath Is Nothing Then
@@ -292,11 +297,29 @@
                 Game.pushLblEvent(out)
                 health = 10
                 Exit Sub
-            ElseIf currTarget.name.Equals("Enslaved Thrall") Then
-                Dim out As String = "Despite your fatigue, you are able to roll out of the way of the thrall's attempt to restrain you, and make a clumsy escape." & vbCrLf & " " & vbCrLf & "[Insert a TF here (eventually)]"
+            ElseIf currTarget.name.Equals("Mesmerized Thrall") Then
+                Dim out As String = ""
+                Dim ln1 As String
+                If title = "Thrall" Then
+                    out = "Despite your fatigue, you are able to roll out of the way of the thrall's attempt to restrain you, and make a clumsy escape."
+                    health = 10
+                Else
+                    ln1 = "As you collapse, you see the thrall pull a small metal collar out of their bag.  Lacking the strength to resist, you are powerless as they secure it firmly around your neck, all the while murmuring whispers of the joys of submission into your ear.  Once they have the collar fitted properly, they place a small glowing gem into a slot on the collar, igniting a small array of runes.  Your mind goes blank in an instant, and while at first an ammnesia-fueled panic sets in it is quickly replaced by a booming disembodied voice."
+                    inventory(69).addone()
+                    If Not equippedAcce.getName.Equals("Nothing") Then equippedAcce.onUnequip()
+                    equippedAcce = inventory(69)
+                    equippedAcce.onEquip()
+                    health = getmaxHealth()
+                    mana = getmaxMana()
+                End If
+
                 currTarget.despawn("run")
-                Game.pushLblEvent(out)
-                health = 10
+                If Not ln1 Is Nothing Then
+                    Game.pushLblEvent(ln1, AddressOf thrallLN2)
+                Else
+                    Game.pushLblEvent(out)
+                End If
+
                 Exit Sub
             ElseIf currTarget.name.Equals("Slime") Or currTarget.name.Equals("Goo Girl") Then
                 Dim out As String = "As the " & currTarget.name & " closes in on you, you push yourself off the ground, sidestep it, and make a hasty retreat." & vbCrLf & " " & vbCrLf & "[Insert a TF here (eventually)]"
@@ -363,6 +386,13 @@
             End Try
         End If
         Game.formReset()
+    End Sub
+    Sub thrallLN2()
+        Dim ptype = "sister"
+        If Int(Rnd() * 2) = 0 Then
+            ptype = "brother"
+        End If
+        Game.pushLblEvent("""LISTEN UP, NEW SLAVE!  I have need of your services."" your new master begins, ""In this dungeon, there are several high-power mana arrays.  Only one of them, however, is capable of bestowing the power of a demon lord onto a mortal such as I.  Your task is to find and inspect these arrays, and report back to me with your findings.""  They snicker,  ""I'm sure you won't let me down, but I'm going to need to make a few changes to make you more ... uniform ... with the rest of your collegues.""" & vbCrLf & vbCrLf & "        .....       " & vbCrLf & vbCrLf & "With a final warning not to fail them, the foreign presence leaves your mind and you are once again alone with your thoughts, your new " & ptype & ", and your task.")
     End Sub
     'setClass sets the player stats at the beginning of the game
     Sub setACCA()
@@ -980,6 +1010,41 @@
                 perks("livelinge") = -1
             End If
         End If
+        'thrall tf
+        If perks("thrall") > -1 Then
+            If Game.turn Mod 10 = 0 And Not prefForm.playerMeetsForm(Game.player) Then
+                prefForm.shiftTowards(Game.player)
+            End If
+            If prefForm.playerMeetsForm(Game.player) Then
+                If Game.turn Mod 10 And Int(Rnd() * 75) = 0 And forcedPath Is Nothing And Not Game.combatmode And Not Game.npcmode Then
+                    Dim crystalX As Integer
+                    Dim crystalY As Integer
+                    Do While (Game.mBoard(crystalY, crystalX).Tag <> 1 Or Game.mBoard(crystalY, crystalX).Text <> "")
+                        crystalX = CInt(Int(Rnd() * Game.mBoardWidth))
+                        crystalY = CInt(Int(Rnd() * Game.mBoardHeight))
+                    Loop
+                    Dim crystal = New Point(crystalX, crystalY)
+                    Game.mBoard(crystalY, crystalX).Tag = 2
+                    Game.mBoard(crystalY, crystalX).Text = "c"
+
+                    forcedPath = Game.route(Game.player.pos, crystal, "n/a", New List(Of Point))
+
+                    Dim s As String = ""
+                    If getWillpower() > 10 Then
+                        s = "you mock your instructions under your breath, before stiffly moving towards the crystal." + vbCrLf + "𝘐𝘧 𝘰𝘯𝘭𝘺 𝘐 𝘤𝘰𝘶𝘭𝘥 𝘨𝘦𝘵 𝘵𝘩𝘪𝘴 𝘥𝘢𝘮𝘯 𝘤𝘰𝘭𝘭𝘢𝘳 𝘰𝘧𝘧..."
+                    ElseIf getWillpower() > 7 Then
+                        s = "you reluctantly start off towards the crystal." + vbCrLf + "𝘖𝘩 𝘸𝘦𝘭𝘭, 𝘣𝘦𝘵𝘵𝘦𝘳 𝘮𝘦 𝘵𝘩𝘢𝘯 𝘰𝘯𝘦 𝘰𝘧 𝘵𝘩𝘦𝘪𝘳 𝘰𝘵𝘩𝘦𝘳 𝘪𝘥𝘪𝘰𝘵𝘴."
+                    ElseIf getWillpower() > 4 Then
+                        s = "you jump immediatly into action, happy to help the voice in your head with whatever it may need." + vbCrLf + "𝘐'𝘮 𝘨𝘰𝘪𝘯𝘨 𝘵𝘰 𝘮𝘢𝘬𝘦 𝘲𝘶𝘪𝘤𝘬 𝘸𝘰𝘳𝘬 𝘰𝘧 𝘵𝘩𝘪𝘴 𝘵𝘢𝘴𝘬!"
+                    Else
+                        s = "you mindlessly obey, moving towards the crystal with a vacant grin."
+                    End If
+                    Game.pushLblEvent("As your collar flares to life, you grimace as the location of a large mana crystal becomes clear in your mind." & _
+                                      "'SERVANT!', your controller's voice booms in your head, 'This is another of the crystals!  Recover it immediately!'" & vbCrLf & _
+                                      "As their voice leaves your head, " & s)
+                End If
+            End If
+        End If
         Game.lstLog.TopIndex = Game.lstLog.Items.Count - 1
         description = CStr(name & " is a " & sex & " " & title)
     End Sub
@@ -1315,17 +1380,20 @@
         Select Case iArrInd(9).Item1
             Case 5
                 iArrInd(9) = New Tuple(Of Integer, Boolean)(11, True)
-            Case 7
+            Case 6
                 iArrInd(9) = New Tuple(Of Integer, Boolean)(14, True)
-            Case 8
+            Case 7
                 iArrInd(9) = New Tuple(Of Integer, Boolean)(15, True)
+            Case 8
+                MsgBox(77)
+                iArrInd(9) = New Tuple(Of Integer, Boolean)(19, True)
             Case Else
                 iArrInd(9) = New Tuple(Of Integer, Boolean)(iArrInd(9).Item1, True)
         End Select
         'eyebrows
         Select Case iArrInd(10).Item1
             Case Else
-                iArrInd(9) = New Tuple(Of Integer, Boolean)(iArrInd(10).Item1, True)
+                iArrInd(10) = New Tuple(Of Integer, Boolean)(iArrInd(10).Item1, True)
         End Select
         'accesory
         Select Case iArrInd(14).Item1
@@ -1399,8 +1467,10 @@
             Case 11
                 iArrInd(9) = New Tuple(Of Integer, Boolean)(5, False)
             Case 14
-                iArrInd(9) = New Tuple(Of Integer, Boolean)(7, False)
+                iArrInd(9) = New Tuple(Of Integer, Boolean)(6, False)
             Case 15
+                iArrInd(9) = New Tuple(Of Integer, Boolean)(7, False)
+            Case 19
                 iArrInd(9) = New Tuple(Of Integer, Boolean)(8, False)
             Case Else
                 If iArrInd(9).Item1 < 5 Then iArrInd(9) = New Tuple(Of Integer, Boolean)(iArrInd(9).Item1, False)
@@ -1408,7 +1478,7 @@
         'eyebrows
         Select Case iArrInd(10).Item1
             Case Else
-                iArrInd(9) = New Tuple(Of Integer, Boolean)(iArrInd(10).Item1, False)
+                iArrInd(10) = New Tuple(Of Integer, Boolean)(iArrInd(10).Item1, False)
         End Select
         'accesory
         Select Case iArrInd(14).Item1
@@ -1668,6 +1738,9 @@
             output += (forcedPath(i).X & "*")
             output += (forcedPath(i).Y & "*")
         Next
+
+        output += prefForm.ToString
+        output += inventory(69)
 
         Return output
     End Function

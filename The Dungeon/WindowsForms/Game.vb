@@ -3099,6 +3099,7 @@ Public Class Game
         Dim ct As Integer = 0
         Dim out As String = ""
         Do While c < sSplit.Length
+            If sSplit(c).Equals(vbCrLf) Then ct = 0
             If ct < 70 Then
                 If Not sSplit(c).Equals("fugoo") Then
                     out += sSplit(c) & " "
@@ -3134,6 +3135,7 @@ Public Class Game
         Dim ct As Integer = 0
         Dim out As String = ""
         Do While c < sSplit.Length
+            If sSplit(c).Equals(vbCrLf) Then ct = 0
             If ct < 70 Then
                 out += sSplit(c) & " "
                 ct += sSplit(c).Length + 1
@@ -3251,15 +3253,27 @@ Public Class Game
         r = oC.R
         g = oC.G
         b = oC.B
-        If a > c.A Then a -= inc Else a += inc
-        If r > c.R Then r -= inc Else r += inc
-        If g > c.G Then g -= inc Else g += inc
-        If b > c.B Then b -= inc Else b += inc
 
-        If Math.Abs(a - c.A) < inc Or a > 255 Then a = c.A
-        If Math.Abs(r - c.R) < inc Or r > 255 Then r = c.R
-        If Math.Abs(g - c.G) < inc Or g > 255 Then g = c.G
-        If Math.Abs(b - c.B) < inc Or b > 255 Then b = c.B
+        If Math.Abs(a - c.A) < inc Or a > 255 Then
+            a = c.A
+        Else
+            If a > c.A Then a -= inc Else a += inc
+        End If
+        If Math.Abs(r - c.R) < inc Or r > 255 Then
+            r = c.R
+        Else
+            If r > c.R Then r -= inc Else r += inc
+        End If
+        If Math.Abs(g - c.G) < inc Or g > 255 Then
+            g = c.G
+        Else
+            If g > c.G Then g -= inc Else g += inc
+        End If
+        If Math.Abs(b - c.B) < inc Or b > 255 Then
+            b = c.B
+        Else
+            If b > c.B Then b -= inc Else b += inc
+        End If
 
         Return Color.FromArgb(a, r, g, b)
     End Function

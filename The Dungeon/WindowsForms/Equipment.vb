@@ -50,7 +50,8 @@
 
         'if clothes offer resistance on the way off, this handles that
         If (p.equippedArmor.getName.Equals("Ropes") And cmbobxArmor.SelectedItem <> "Ropes") Or (p.equippedArmor.getName.Equals("Living_Armor") _
-            And cmbobxArmor.SelectedItem <> "Living_Armor") Or (p.equippedArmor.getName.Equals("Living_Lingerie") And cmbobxArmor.SelectedItem <> "Living_Lingerie") Then
+            And cmbobxArmor.SelectedItem <> "Living_Armor") Or (p.equippedArmor.getName.Equals("Living_Lingerie") And cmbobxArmor.SelectedItem <> "Living_Lingerie") _
+            Or (p.equippedAcce.getName.Equals("Slave_Collar") And cboxAccessory.SelectedItem <> "Slave_Collar") Then
             If Int(Rnd() * 2) = 0 Then
                 Game.pushLblEvent("Despite a struggle agaisnt your bonds, you are unable to escape!  Oh well, maybe next time...")
                 Me.Close()
@@ -69,6 +70,11 @@
         If Not p.equippedAcce.getName.Equals(cboxAccessory.SelectedItem) Then
             p.equippedAcce.onUnequip()
         End If
+
+        Dim oW, oA, oAc As String
+        oW = p.equippedWeapon.getName
+        oA = p.equippedArmor.getName
+        oAc = p.equippedAcce.getName
 
         'this handles the revert from the magical girl form, if needed
         Dim revertFlag As Boolean = False
@@ -113,13 +119,13 @@
             p.equippedArmor = New Naked
         End If
 
-        If Not p.equippedArmor.getName.Equals(cmbobxArmor.SelectedItem) Then
+        If Not oA.Equals(cmbobxArmor.SelectedItem) Then
             p.equippedArmor.onEquip()
         End If
-        If Not p.equippedWeapon.getName.Equals(cmbobxWeapon.SelectedItem) Then
+        If Not oW.Equals(cmbobxWeapon.SelectedItem) Then
             p.equippedWeapon.onEquip()
         End If
-        If Not p.equippedAcce.getName.Equals(cboxAccessory.SelectedItem) Then
+        If Not oAc.Equals(cboxAccessory.SelectedItem) Then
             p.equippedAcce.onEquip()
         End If
 

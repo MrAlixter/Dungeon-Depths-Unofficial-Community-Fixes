@@ -28,7 +28,7 @@
                 name = "Explorer"
                 setInventory({0})
             Case 0
-                name = "Enslaved Thrall"
+                name = "Mesmerized Thrall"
                 health = 75
                 maxHealth = 75
                 attack = 15
@@ -47,7 +47,7 @@
                 Try
                     loadGhost()
                 Catch ex As Exception
-                    name = "Enslaved Thrall"
+                    name = "Mesmerized Thrall"
                     health = 75
                     maxHealth = 75
                     attack = 15
@@ -167,7 +167,7 @@
             End If
         End If
         endMonster()
-        If mindex = 2 And Not name.Equals("Enslaved Thrall") Then
+        If mindex = 2 And Not name.Equals("Mesmerized Thrall") Then
             Dim writer As IO.StreamWriter
             writer = IO.File.CreateText("gho.sts")
             writer.WriteLine("MTGRAVE")
@@ -179,43 +179,53 @@
         Game.npcList.Remove(Me)
         If reason = "run" Then
             Game.lstLog.Items.Add("You ran from the " & name & "!")
-        ElseIf reason = "npc" Then
-            Game.lstLog.Items.Add("You walk away from " & name & "!")
-        ElseIf reason = "animaltf" Then
-            Dim output As String = ""
-            If Me.GetType() Is GetType(Monster) Then output += "The "
-            output += name & ", seeing that you are no longer human, wanders off."
-            Game.lstLog.Items.Add(output)
-        ElseIf reason = "flee" Then
-            Dim output As String = ""
-            If Me.GetType() Is GetType(Monster) Then output += "The "
-            output += name & " runs away in fear!"
-            Game.lstLog.Items.Add(output)
-        ElseIf reason = "cupcake" Then
-            Dim totalSum As Integer = 0
-            For i = 0 To UBound(inventory)
-                totalSum += inventory(i)
-            Next
-            Dim c1 As Chest
-            c1 = Game.baseChest.Create(inventory, pos)
-            If totalSum > 0 Then c1.open()
-            Game.npcList.Remove(Me)
-            Game.lstLog.Items.Add("You've deafeated the " & name & "!")
+        ElseIf reason = "friend" Then
+            If Int(Rnd() * 3) = 0 Then
+                Game.lstLog.Items.Add("The " & name & " gives you some supplies before leaving!")
+                Game.player.inventory(2).addone()
+                Game.player.inventory(13).addone()
+                Game.player.inventory(31).addone()
+                Game.pushLblEvent("+1 Health_Potion" & vbCrLf & "+1 Mana_Potion" & vbCrLf & "+1 Apple_Potion")
+            Else
+                Game.lstLog.Items.Add("The " & name & " is friendly, and you chat a bit before setting back out!")
+            End If
+            ElseIf reason = "npc" Then
+                Game.lstLog.Items.Add("You walk away from " & name & "!")
+            ElseIf reason = "animaltf" Then
+                Dim output As String = ""
+                If Me.GetType() Is GetType(Monster) Then output += "The "
+                output += name & ", seeing that you are no longer human, wanders off."
+                Game.lstLog.Items.Add(output)
+            ElseIf reason = "flee" Then
+                Dim output As String = ""
+                If Me.GetType() Is GetType(Monster) Then output += "The "
+                output += name & " runs away in fear!"
+                Game.lstLog.Items.Add(output)
+            ElseIf reason = "cupcake" Then
+                Dim totalSum As Integer = 0
+                For i = 0 To UBound(inventory)
+                    totalSum += inventory(i)
+                Next
+                Dim c1 As Chest
+                c1 = Game.baseChest.Create(inventory, pos)
+                If totalSum > 0 Then c1.open()
+                Game.npcList.Remove(Me)
+                Game.lstLog.Items.Add("You've deafeated the " & name & "!")
+                Game.player.currState.save(Game.player)
+                dead = True
+                endBoss()
+            End If
+            If UBound(inventory) >= 53 AndAlso inventory(53) > 0 And name <> "Shopkeeper" Then
+                Game.pushLblEvent("Your foe drops a key!")
+                Dim inv(53) As Integer
+                inv(53) = 1
+                Dim c1 As Chest = Game.baseChest.Create(inventory, pos)
+                Game.chestList.Add(c1)
+            End If
+            Game.player.perks("nekocurse") = -1
             Game.player.currState.save(Game.player)
-            dead = True
-            endBoss()
-        End If
-        If UBound(inventory) >= 53 AndAlso inventory(53) > 0 And name <> "Shopkeeper" Then
-            Game.pushLblEvent("Your foe drops a key!")
-            Dim inv(53) As Integer
-            inv(53) = 1
-            Dim c1 As Chest = Game.baseChest.Create(inventory, pos)
-            Game.chestList.Add(c1)
-        End If
-        Game.player.perks("nekocurse") = -1
-        Game.player.currState.save(Game.player)
-        Game.fromCombat()
-        Game.lstLog.TopIndex = Game.lstLog.Items.Count - 1
+            Game.fromCombat()
+            Game.lstLog.TopIndex = Game.lstLog.Items.Count - 1
     End Sub
     Public Overridable Sub update() Implements Updatable.update
         Game.player.currTarget = Me
@@ -228,6 +238,10 @@
         ElseIf tfCt > tfEnd Then
             tfCt = 0
             revert()
+        End If
+        If Game.player.title = "Thrall" And Me.name.Contains("Thrall") Then
+            despawn("friend")
+            Exit Sub
         End If
         If Not isStunned Then
             If Game.player.title = "Black Cat" Or Game.player.title = "Chicken" And Me.GetType() = GetType(Monster) Then despawn("animaltf")
