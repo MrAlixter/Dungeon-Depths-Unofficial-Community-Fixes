@@ -32,6 +32,22 @@
 
         Equipment.portraitUDate()
     End Sub
+    Sub forceEquip()
+        Game.player.perks("thrall") = 0
+        formerTitle = Game.player.title
+        formerEyeType = Game.player.iArrInd(9)
+        If Polymorph.canBeTFed(Game.player) Then Game.player.pState.save(Game.player)
+        Game.player.title = "Thrall"
+        If Game.player.sexBool Then
+            Game.player.iArrInd(9) = New Tuple(Of Integer, Boolean)(19, True)
+        Else
+            Game.player.iArrInd(9) = New Tuple(Of Integer, Boolean)(8, False)
+        End If
+
+        Game.player.prefForm = New preferedForm()
+
+        Equipment.portraitUDate()
+    End Sub
     Public Overrides Sub onUnequip()
         Game.player.perks("thrall") = -1
         Game.player.title = formerTitle

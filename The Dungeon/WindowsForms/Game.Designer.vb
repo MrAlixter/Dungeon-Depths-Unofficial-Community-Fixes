@@ -1374,7 +1374,6 @@ Partial Class Game
         Me.btnSettings.TabIndex = 246
         Me.btnSettings.Text = "Settings"
         Me.btnSettings.UseVisualStyleBackColor = False
-        Me.btnSettings.Visible = False
         '
         'btnT
         '
@@ -2250,10 +2249,11 @@ Partial Class Game
         Me.Controls.Add(Me.picPortrait)
         Me.Controls.Add(Me.lblEvent)
         Me.Controls.Add(Me.btnWait)
-        Me.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedDialog
+        Me.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle
         Me.Icon = CType(resources.GetObject("$this.Icon"), System.Drawing.Icon)
         Me.MaximizeBox = False
         Me.Name = "Game"
+        Me.SizeGripStyle = System.Windows.Forms.SizeGripStyle.Hide
         Me.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen
         Me.Text = "Dungeon_Depths"
         CType(Me.picMarkBClothes, System.ComponentModel.ISupportInitialize).EndInit()

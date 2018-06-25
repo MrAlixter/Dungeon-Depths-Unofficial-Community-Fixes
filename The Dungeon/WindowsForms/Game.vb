@@ -73,9 +73,15 @@ Public Class Game
 
     Dim cKeys As List(Of System.Windows.Forms.Keys) = New List(Of Keys)
 
+    Dim startingHeight As Integer = 0
+    Dim startingWidth As Integer = 0
+
     'startup/new level methods
     'Form1_Load handles the loading of the form
     Private Sub Form1_Load(sender As Object, e As EventArgs) Handles Me.Load
+        startingHeight = Me.Size.Height
+        startingWidth = Me.Size.Width
+
         loadcKeys()
         imagesWorker = New BackgroundWorker
         AddHandler imagesWorker.DoWork, AddressOf prefetchImages
@@ -205,6 +211,7 @@ Public Class Game
         btnS.Visible = False
         btnL.Visible = False
         btnControls.Visible = False
+        btnSettings.Visible = False
         Dim chargen As New CharacterGenerator
         chargen.currSex = player.sexBool
         chargen.ShowDialog()
@@ -212,6 +219,7 @@ Public Class Game
             btnS.Visible = True
             btnL.Visible = True
             btnControls.Visible = True
+            btnSettings.Visible = True
             Exit Sub
         End If
         picPortrait.BackgroundImage = chargen.ExportIMG()
@@ -277,8 +285,8 @@ Public Class Game
         npcList.Clear()
         Dim yInd, xInd As Integer
         Dim Margin As Integer = 3
-        Dim XSize As Integer = 15 * (Me.Size.Width / 688)
-        Dim YSize As Integer = 15 * (Me.Size.Width / 688)
+        Dim XSize As Double = 15.0 * (CDbl(Me.Size.Width) / 688.0)
+        Dim YSize As Double = 15.0 * (CDbl(Me.Size.Width) / 688.0)
         'clear the old board
         If Not mBoard Is Nothing Then
             For i = 0 To mBoardHeight - 1
@@ -307,8 +315,9 @@ Public Class Game
                     Dim newPicture As PictureBox = New PictureBox()
                     newPicture.BackgroundImageLayout = ImageLayout.Stretch
                     newPicture.Size = New Point(YSize * 1.25, XSize * 1.25)
-                    newPicture.Location = New Point(60 + xInd * (XSize * 1.25), 75 + yInd * (YSize * 1.25))
+                    newPicture.Location = New Point(40.0 + CDbl(xInd) * (XSize * 1.23), 55 + CDbl(yInd) * (YSize * 1.23))
                     newPicture.Visible = True
+                    'newPicture.BorderStyle = BorderStyle.FixedSingle
                     Me.Controls.Add(newPicture)
                     mPics(yInd, xInd) = newPicture
                 End If
@@ -2125,6 +2134,7 @@ Public Class Game
             btnS.Visible = True
             btnL.Visible = True
             btnControls.Visible = True
+            btnSettings.Visible = True
         End If
         player.canMoveFlag = True
         If player.isDead Then formReset()
@@ -2863,6 +2873,7 @@ Public Class Game
         btnS.Visible = False
         btnL.Visible = False
         btnControls.Visible = False
+        btnSettings.Visible = False
         Application.DoEvents()
         Try
             CharacterGenerator.init()
@@ -2876,11 +2887,13 @@ Public Class Game
             btnS.Visible = True
             btnL.Visible = True
             btnControls.Visible = True
+            btnSettings.Visible = True
         Catch ex2 As Exception
             MsgBox("Error 005: Error in loaded in save file!")
             btnS.Visible = True
             btnL.Visible = True
             btnControls.Visible = True
+            btnSettings.Visible = True
         End Try
     End Sub
     Private Sub btnControls_Click(sender As Object, e As EventArgs) Handles btnControls.Click
@@ -3283,7 +3296,6 @@ Public Class Game
     End Sub
     Private Sub bw_DoWork(ByVal sender As Object, ByVal e As DoWorkEventArgs)
         Dim worker As BackgroundWorker = CType(sender, BackgroundWorker)
-
         While boardWorker.IsBusy
             If boardWorker.CancellationPending = True Then
                 e.Cancel = True
@@ -3295,7 +3307,8 @@ Public Class Game
         End While
     End Sub
     Private Sub bw_ProgressChanged(ByVal sender As Object, ByVal e As ProgressChangedEventArgs)
-        picLoadBar.Size = New Size((e.ProgressPercentage / 100) * 395, 17)
+        Dim ratio As Double = Me.Size.Width / 1024
+        picLoadBar.Size = New Size(((e.ProgressPercentage / 100) * 395) * ratio, 17 * ratio)
     End Sub
     Private Sub bw_RunWorkerCompleted(ByVal sender As Object, ByVal e As RunWorkerCompletedEventArgs)
         If e.Cancelled = True Then
@@ -3484,9 +3497,6 @@ Public Class Game
         'btnControls.Visible = True
         'player.canMoveFlag = False
     End Sub
-    Private Sub btnSettings_Click(sender As Object, e As EventArgs)
-        MsgBox("This will be where the settings are changed eventually")
-    End Sub
     Private Sub btnWait_Click(sender As Object, e As EventArgs) Handles btnWait.Click
         turn += 1
         If lblEvent.Visible = True Then
@@ -3527,11 +3537,70 @@ Public Class Game
     End Sub
 
     'btnStettings
-    Private Sub btnSettings_Click_1(sender As Object, e As EventArgs) Handles btnSettings.Click
-
+    Private Sub btnSettings_Click(sender As Object, e As EventArgs) Handles btnSettings.Click
+        MsgBox("This will be where the settings are changed eventually")
+        Size = New Size(Me.Size.Width * 0.8, Me.Size.Height * 0.8)
+        Game_Resize()
     End Sub
 
-    Private Sub Game_Resize(sender As Object, e As EventArgs) Handles Me.Resize
+    Private Sub Game_Resize()
+        Dim RW As Double = (Me.Width - startingWidth) / startingWidth ' Ratio change of width
+        Dim RH As Double = (Me.Height - startingHeight) / startingHeight ' Ratio change of height
+
+        'scales the font size to that of the window
+        Dim newFont As Font = New System.Drawing.Font("Consolas", CInt(8 * Me.Size.Width / 688))
+        For i = 0 To Me.Controls.Count - 1
+            Me.Controls(i).Width += CDbl(Me.Controls(i).Width * RW)
+            Me.Controls(i).Height += CDbl(Me.Controls(i).Height * RH)
+            Me.Controls(i).Left += CDbl(Me.Controls(i).Left * RW)
+            Me.Controls(i).Top += CDbl(Me.Controls(i).Top * RH)
+            Me.Controls(i).Font = newFont
+        Next
+        For i = 0 To pnlSelection.Controls.Count - 1
+            pnlSelection.Controls(i).Width += CDbl(pnlSelection.Controls(i).Width * RW)
+            pnlSelection.Controls(i).Height += CDbl(pnlSelection.Controls(i).Height * RH)
+            pnlSelection.Controls(i).Left += CDbl(pnlSelection.Controls(i).Left * RW)
+            pnlSelection.Controls(i).Top += CDbl(pnlSelection.Controls(i).Top * RH)
+            pnlSelection.Controls(i).Font = newFont
+        Next
+        FileToolStripMenuItem.Font = newFont
+        SaveToolStripMenuItem.Font = newFont
+        LoadToolStripMenuItem.Font = newFont
+        HelpToolStripMenuItem.Font = newFont
+        HelpToolStripMenuItem1.Font = newFont
+        InfoToolStripMenuItem.Font = newFont
+        newFont = New System.Drawing.Font("Consolas", CInt(9.25 * Me.Size.Width / 688), FontStyle.Underline)
+        lblNameTitle.Font = newFont
+        newFont = New System.Drawing.Font("Consolas", CDbl(7 * Me.Size.Width / 688))
+        btnDrop.Font = newFont
+        btnControls.Font = newFont
+        btnSettings.Font = newFont
+        btnLook.Font = newFont
+        newFont = New System.Drawing.Font("Consolas", CDbl(9 * Me.Size.Width / 688))
+        MenuStrip1.Font = newFont
+        For i = 0 To pnlCombat.Controls.Count - 1
+            pnlCombat.Controls(i).Width += CDbl(pnlCombat.Controls(i).Width * RW)
+            pnlCombat.Controls(i).Height += CDbl(pnlCombat.Controls(i).Height * RH)
+            pnlCombat.Controls(i).Left += CDbl(pnlCombat.Controls(i).Left * RW)
+            pnlCombat.Controls(i).Top += CDbl(pnlCombat.Controls(i).Top * RH)
+            pnlCombat.Controls(i).Font = newFont
+        Next
+        For i = 0 To pnlDescript.Controls.Count - 1
+            pnlDescript.Controls(i).Width += CDbl(pnlDescript.Controls(i).Width * RW)
+            pnlDescript.Controls(i).Height += CDbl(pnlDescript.Controls(i).Height * RH)
+            pnlDescript.Controls(i).Left += CDbl(pnlDescript.Controls(i).Left * RW)
+            pnlDescript.Controls(i).Top += CDbl(pnlDescript.Controls(i).Top * RH)
+            pnlDescript.Controls(i).Font = newFont
+        Next
+        For i = 0 To pnlSaveLoad.Controls.Count - 1
+            pnlSaveLoad.Controls(i).Width += CDbl(pnlSaveLoad.Controls(i).Width * RW)
+            pnlSaveLoad.Controls(i).Height += CDbl(pnlSaveLoad.Controls(i).Height * RH)
+            pnlSaveLoad.Controls(i).Left += CDbl(pnlSaveLoad.Controls(i).Left * RW)
+            pnlSaveLoad.Controls(i).Top += CDbl(pnlSaveLoad.Controls(i).Top * RH)
+        Next
+
+        Dim ratio As Double = Me.Size.Width / 1024
+        picLoadBar.Location = New Point(picLoadBar.Location.X * ratio, picLoadBar.Location.Y * ratio)
     End Sub
 
     Private Sub HelpToolStripMenuItem1_Click(sender As Object, e As EventArgs) Handles HelpToolStripMenuItem1.Click

@@ -80,8 +80,9 @@
         If Not p.skincolor.Equals(skinColor) Then p.changeSkinColor(Game.cShift(p.skincolor, skinColor, 8))
 
         If Not p.iArrInd(1).Item2 = hasFemaleHair And Int(Rnd() * 3) = 0 Then
-                p.iArrInd(1) = New Tuple(Of Integer, Boolean)(Int(Rnd() * 5), hasFemaleHair)
-                p.iArrInd(5) = New Tuple(Of Integer, Boolean)(Int(Rnd() * 5), hasFemaleHair)
+            Dim r = Int(Rnd() * 5)
+            p.iArrInd(1) = New Tuple(Of Integer, Boolean)(r, hasFemaleHair)
+            p.iArrInd(5) = New Tuple(Of Integer, Boolean)(r, hasFemaleHair)
         End If
             If Not p.iArrInd(15).Item2 = hasFemaleHair And Int(Rnd() * 3) = 0 Then
                 p.iArrInd(15) = New Tuple(Of Integer, Boolean)(Int(Rnd() * 5) + 1, hasFemaleHair)
@@ -117,10 +118,57 @@
 
             Equipment.portraitUDate()
     End Sub
+    Public Sub snapShift(ByRef p As Player)
+        Randomize()
+        If playerMeetsForm(p) Then Exit Sub
+
+        p.changeHairColor(hairColor)
+        p.changeSkinColor(skinColor)
+
+        Dim r = Int(Rnd() * 5)
+        p.iArrInd(1) = New Tuple(Of Integer, Boolean)(r, hasFemaleHair)
+        p.iArrInd(5) = New Tuple(Of Integer, Boolean)(r, hasFemaleHair)
+
+        p.iArrInd(15) = New Tuple(Of Integer, Boolean)(Int(Rnd() * 5) + 1, hasFemaleHair)
+
+        If p.sexBool <> isFemale Then
+            If p.sexBool Then
+                p.FtM()
+            Else
+                p.MtF()
+            End If
+        End If
+
+        If p.breastSize > breastSize Then
+            While p.breastSize > breastSize
+                p.bs()
+            End While
+        ElseIf p.breastSize < breastSize Then
+            While p.breastSize < breastSize
+                p.be()
+            End While
+        End If
+
+        If isFemale And ((p.perks("slutcurse") = -1 And isSlut) Or (p.perks("slutcurse") > -1 And Not isSlut)) Then
+            If (p.perks("slutcurse") = -1 And isSlut) Then
+                p.perks("slutcurse") = 0
+                Equipment.clothingCurse1()
+            Else
+                p.perks("slutcurse") = -1
+                Equipment.antiClothingCurse()
+            End If
+        End If
+
+        If Not p.iArrInd(6).Item1 = earType Then
+            p.iArrInd(6) = New Tuple(Of Integer, Boolean)(earType, isFemale)
+        End If
+
+        Equipment.portraitUDate()
+    End Sub
 
     Public Overrides Function ToString() As String
-        Return (hairColor.A & "$" & hairColor.R & "$" & hairColor.G & "$" & hairColor.B & _
-                hairColor.A & "$" & hairColor.R & "$" & hairColor.G & "$" & hairColor.B & _
+        Return (hairColor.A & "$" & hairColor.R & "$" & hairColor.G & "$" & hairColor.B & "$" & _
+                hairColor.A & "$" & hairColor.R & "$" & hairColor.G & "$" & hairColor.B & "$" & _
                 hasFemaleHair & "$" & isFemale & "$" & breastSize & "$" & isSlut & "$" & earType)
     End Function
 End Class
