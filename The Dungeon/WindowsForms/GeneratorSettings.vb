@@ -5,6 +5,7 @@
     Dim chestFreqMin As Integer
     Dim chestFreqRange As Integer
     Dim chestSizeDependence As Integer
+    Dim encounterRate As Integer
 
     Sub New(fc As String)
         InitializeComponent()
@@ -21,6 +22,7 @@
         boxChestFreqMin.Value = chestFreqMin
         boxChestFreqRange.Value = chestFreqRange
         boxChestFreqRange.Value = chestSizeDependence
+        boxEncounterRate.Value = encounterRate
     End Sub
 
     Sub reset()
@@ -29,9 +31,6 @@
         chestFreqMin = 3
         chestFreqRange = 8
         chestSizeDependence = 30
-    End Sub
-
-    Private Sub GeneratorSettings_Load(sender As Object, e As EventArgs) Handles MyBase.Load
-
+        encounterRate = 25
     End Sub
 End Class

@@ -35,11 +35,15 @@ Partial Class GeneratorSettings
         Me.lblChestSize = New System.Windows.Forms.Label()
         Me.separator1 = New System.Windows.Forms.GroupBox()
         Me.GroupBox1 = New System.Windows.Forms.GroupBox()
+        Me.GroupBox2 = New System.Windows.Forms.GroupBox()
+        Me.boxEncounterRate = New System.Windows.Forms.NumericUpDown()
+        Me.lblEncounterRate = New System.Windows.Forms.Label()
         CType(Me.boxWidth, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me.boxHeight, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me.boxChestFreqRange, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me.boxChestFreqMin, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me.boxChestSizeDependence, System.ComponentModel.ISupportInitialize).BeginInit()
+        CType(Me.boxEncounterRate, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.SuspendLayout()
         '
         'lblFC
@@ -159,12 +163,43 @@ Partial Class GeneratorSettings
         Me.GroupBox1.TabIndex = 12
         Me.GroupBox1.TabStop = False
         '
+        'GroupBox2
+        '
+        Me.GroupBox2.FlatStyle = System.Windows.Forms.FlatStyle.Popup
+        Me.GroupBox2.Location = New System.Drawing.Point(16, 239)
+        Me.GroupBox2.Name = "GroupBox2"
+        Me.GroupBox2.Size = New System.Drawing.Size(325, 10)
+        Me.GroupBox2.TabIndex = 13
+        Me.GroupBox2.TabStop = False
+        '
+        'boxEncounterRate
+        '
+        Me.boxEncounterRate.BackColor = System.Drawing.Color.Black
+        Me.boxEncounterRate.ForeColor = System.Drawing.Color.White
+        Me.boxEncounterRate.Location = New System.Drawing.Point(220, 259)
+        Me.boxEncounterRate.Maximum = New Decimal(New Integer() {1000, 0, 0, 0})
+        Me.boxEncounterRate.Name = "boxEncounterRate"
+        Me.boxEncounterRate.Size = New System.Drawing.Size(120, 26)
+        Me.boxEncounterRate.TabIndex = 15
+        '
+        'lblEncounterRate
+        '
+        Me.lblEncounterRate.AutoSize = True
+        Me.lblEncounterRate.Location = New System.Drawing.Point(12, 261)
+        Me.lblEncounterRate.Name = "lblEncounterRate"
+        Me.lblEncounterRate.Size = New System.Drawing.Size(198, 19)
+        Me.lblEncounterRate.TabIndex = 14
+        Me.lblEncounterRate.Text = "Encounter Rate (.x%):"
+        '
         'GeneratorSettings
         '
         Me.AutoScaleDimensions = New System.Drawing.SizeF(9.0!, 19.0!)
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font
         Me.BackColor = System.Drawing.Color.Black
         Me.ClientSize = New System.Drawing.Size(784, 461)
+        Me.Controls.Add(Me.boxEncounterRate)
+        Me.Controls.Add(Me.lblEncounterRate)
+        Me.Controls.Add(Me.GroupBox2)
         Me.Controls.Add(Me.GroupBox1)
         Me.Controls.Add(Me.separator1)
         Me.Controls.Add(Me.boxChestSizeDependence)
@@ -188,6 +223,7 @@ Partial Class GeneratorSettings
         CType(Me.boxChestFreqRange, System.ComponentModel.ISupportInitialize).EndInit()
         CType(Me.boxChestFreqMin, System.ComponentModel.ISupportInitialize).EndInit()
         CType(Me.boxChestSizeDependence, System.ComponentModel.ISupportInitialize).EndInit()
+        CType(Me.boxEncounterRate, System.ComponentModel.ISupportInitialize).EndInit()
         Me.ResumeLayout(False)
         Me.PerformLayout()
 
@@ -206,4 +242,7 @@ Partial Class GeneratorSettings
     Friend WithEvents lblChestSize As Label
     Friend WithEvents separator1 As GroupBox
     Friend WithEvents GroupBox1 As GroupBox
+    Friend WithEvents GroupBox2 As GroupBox
+    Friend WithEvents boxEncounterRate As NumericUpDown
+    Friend WithEvents lblEncounterRate As Label
 End Class

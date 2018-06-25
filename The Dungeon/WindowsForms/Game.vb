@@ -9,14 +9,17 @@ Public Class Game
     'board instance variables
     Public mBoardWidth As Integer = 50
     Public mBoardHeight As Integer = 40
-    Public chestFreqMin As Integer = 3
-    Public chestFreqRange As Integer = 8
-    Public chestSizeDependence As Integer = 30
+
     Public mBoard(,) As mTile
     Public mPics(,) As PictureBox       '(NOT SAVED)
     Public floor As Integer = 0
     Public floorCode As String
     Public stairs As Point
+
+    Public chestFreqMin As Integer = 3
+    Public chestFreqRange As Integer = 8
+    Public chestSizeDependence As Integer = 30
+    Public encounterRate As Integer = 25
 
     Public player As Player = New Player()
 
@@ -208,6 +211,7 @@ Public Class Game
         chestFreqMin = genSet.boxChestFreqMin.Value
         chestFreqRange = genSet.boxChestFreqRange.Value
         chestSizeDependence = genSet.boxChestSizeDependence.Value
+        encounterRate = genSet.boxEncounterRate.Value
         If mBoardWidth * mBoardHeight < 4 Then
             Do While mBoardWidth * mBoardHeight < 4
                 If mBoardHeight < mBoardWidth Then
@@ -850,7 +854,6 @@ Public Class Game
         Randomize()
         If eClock > 0 Then eClock -= 1
         If combatmode = True Or npcmode = True Or eClock <> 0 Then Exit Sub
-        Dim rand As Integer = CInt(Int(Rnd() * 200))
         Dim currTier As Integer() = monsterTier1
         Select Case floor
             Case 1
@@ -864,9 +867,12 @@ Public Class Game
             Case Else
                 currTier = monsterTier4
         End Select
+
+        Dim rand As Integer = CInt(Int(Rnd() * 1000))
         Dim r As Integer = Int(Rnd() * (UBound(currTier) + 1))
         Dim r2 As Integer = Int(Rnd() * (UBound(currTier) + 1))
-        If rand < 5 Then
+
+        If rand < encounterRate Then
             Dim m As Monster
             If r2 = UBound(currTier) And r2 = r And ((floor < 5 AndAlso Not beatboss(floor)) Or floor >= 5) And Not floor = 3 Then
                 m = New MiniBoss(floor)
@@ -1182,6 +1188,7 @@ Public Class Game
         writer.WriteLine(turn)
         writer.WriteLine(floor)
         writer.WriteLine(floorCode)
+        writer.WriteLine(encounterRate)
         writer.WriteLine(shopkeeper.pos.X)
         writer.WriteLine(shopkeeper.pos.Y)
 
@@ -1323,6 +1330,7 @@ Public Class Game
         turn = reader.ReadLine()
         floor = reader.ReadLine()
         floorCode = reader.ReadLine()
+        encounterRate = Int(reader.ReadLine())
         shopkeeper = New NPC(2)
         shopkeeper.pos.X = reader.ReadLine()
         shopkeeper.pos.Y = reader.ReadLine()
