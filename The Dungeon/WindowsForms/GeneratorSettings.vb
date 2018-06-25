@@ -6,6 +6,7 @@
     Dim chestFreqRange As Integer
     Dim chestSizeDependence As Integer
     Dim encounterRate As Integer
+    Dim eClockResetVal As Integer
 
     Sub New(fc As String)
         InitializeComponent()
@@ -23,6 +24,7 @@
         boxChestFreqRange.Value = chestFreqRange
         boxChestFreqRange.Value = chestSizeDependence
         boxEncounterRate.Value = encounterRate
+        boxEClockResetVal.Value = eClockResetVal
     End Sub
 
     Sub reset()
@@ -32,5 +34,6 @@
         chestFreqRange = 8
         chestSizeDependence = 30
         encounterRate = 25
+        eClockResetVal = 5
     End Sub
 End Class

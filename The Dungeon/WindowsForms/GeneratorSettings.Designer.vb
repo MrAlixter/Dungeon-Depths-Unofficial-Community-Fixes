@@ -38,12 +38,15 @@ Partial Class GeneratorSettings
         Me.GroupBox2 = New System.Windows.Forms.GroupBox()
         Me.boxEncounterRate = New System.Windows.Forms.NumericUpDown()
         Me.lblEncounterRate = New System.Windows.Forms.Label()
+        Me.boxEClockResetVal = New System.Windows.Forms.NumericUpDown()
+        Me.lblEClockResetVal = New System.Windows.Forms.Label()
         CType(Me.boxWidth, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me.boxHeight, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me.boxChestFreqRange, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me.boxChestFreqMin, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me.boxChestSizeDependence, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me.boxEncounterRate, System.ComponentModel.ISupportInitialize).BeginInit()
+        CType(Me.boxEClockResetVal, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.SuspendLayout()
         '
         'lblFC
@@ -191,12 +194,33 @@ Partial Class GeneratorSettings
         Me.lblEncounterRate.TabIndex = 14
         Me.lblEncounterRate.Text = "Encounter Rate (.x%):"
         '
+        'boxEClockResetVal
+        '
+        Me.boxEClockResetVal.BackColor = System.Drawing.Color.Black
+        Me.boxEClockResetVal.ForeColor = System.Drawing.Color.White
+        Me.boxEClockResetVal.Location = New System.Drawing.Point(220, 291)
+        Me.boxEClockResetVal.Maximum = New Decimal(New Integer() {1000, 0, 0, 0})
+        Me.boxEClockResetVal.Name = "boxEClockResetVal"
+        Me.boxEClockResetVal.Size = New System.Drawing.Size(120, 26)
+        Me.boxEClockResetVal.TabIndex = 17
+        '
+        'lblEClockResetVal
+        '
+        Me.lblEClockResetVal.AutoSize = True
+        Me.lblEClockResetVal.Location = New System.Drawing.Point(12, 293)
+        Me.lblEClockResetVal.Name = "lblEClockResetVal"
+        Me.lblEClockResetVal.Size = New System.Drawing.Size(153, 19)
+        Me.lblEClockResetVal.TabIndex = 16
+        Me.lblEClockResetVal.Text = "Encounter Timer:"
+        '
         'GeneratorSettings
         '
         Me.AutoScaleDimensions = New System.Drawing.SizeF(9.0!, 19.0!)
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font
         Me.BackColor = System.Drawing.Color.Black
         Me.ClientSize = New System.Drawing.Size(784, 461)
+        Me.Controls.Add(Me.boxEClockResetVal)
+        Me.Controls.Add(Me.lblEClockResetVal)
         Me.Controls.Add(Me.boxEncounterRate)
         Me.Controls.Add(Me.lblEncounterRate)
         Me.Controls.Add(Me.GroupBox2)
@@ -224,6 +248,7 @@ Partial Class GeneratorSettings
         CType(Me.boxChestFreqMin, System.ComponentModel.ISupportInitialize).EndInit()
         CType(Me.boxChestSizeDependence, System.ComponentModel.ISupportInitialize).EndInit()
         CType(Me.boxEncounterRate, System.ComponentModel.ISupportInitialize).EndInit()
+        CType(Me.boxEClockResetVal, System.ComponentModel.ISupportInitialize).EndInit()
         Me.ResumeLayout(False)
         Me.PerformLayout()
 
@@ -245,4 +270,6 @@ Partial Class GeneratorSettings
     Friend WithEvents GroupBox2 As GroupBox
     Friend WithEvents boxEncounterRate As NumericUpDown
     Friend WithEvents lblEncounterRate As Label
+    Friend WithEvents boxEClockResetVal As NumericUpDown
+    Friend WithEvents lblEClockResetVal As Label
 End Class

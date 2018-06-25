@@ -20,6 +20,7 @@ Public Class Game
     Public chestFreqRange As Integer = 8
     Public chestSizeDependence As Integer = 30
     Public encounterRate As Integer = 25
+    Public eClockResetVal As Integer = 5
 
     Public player As Player = New Player()
 
@@ -62,7 +63,8 @@ Public Class Game
     Public version As Double = 0.4      'the save file version
     Public lblEventOnClose As Action    'the event method preformed when lblEvent closes (NOT SAVED)
     Public invFilters() As Boolean = {True, True, True, True, True, True}
-    Dim eClock As Integer = 15
+    'Dim eClock As Integer = 15
+    Dim eClock As Integer = eClockResetVal * 3
     Public solFlag As Boolean = True
     Private trd As Thread
     Dim imagesWorker As BackgroundWorker
@@ -211,6 +213,7 @@ Public Class Game
         chestFreqMin = genSet.boxChestFreqMin.Value
         chestFreqRange = genSet.boxChestFreqRange.Value
         chestSizeDependence = genSet.boxChestSizeDependence.Value
+        eClockResetVal = genSet.boxEClockResetVal.Value
         encounterRate = genSet.boxEncounterRate.Value
         If mBoardWidth * mBoardHeight < 4 Then
             Do While mBoardWidth * mBoardHeight < 4
@@ -230,6 +233,8 @@ Public Class Game
         player.currState = New State(player)
         player.sState = New State(player)
         player.pState = New State(player)
+
+        eClock = eClockResetVal * 3
 
         turn = 0
         lstLog.Items.Add("You see before you a dungeon.")
@@ -883,7 +888,7 @@ Public Class Game
             player.currTarget = m
             toCombat()
             lstLog.Items.Add((m.getName() & " attacks!"))
-            eClock = 5
+            eClock = eClockResetVal
         End If
         lstLog.TopIndex = lstLog.Items.Count - 1
     End Sub
@@ -1189,6 +1194,7 @@ Public Class Game
         writer.WriteLine(floor)
         writer.WriteLine(floorCode)
         writer.WriteLine(encounterRate)
+        writer.WriteLine(eClockResetVal)
         writer.WriteLine(shopkeeper.pos.X)
         writer.WriteLine(shopkeeper.pos.Y)
 
@@ -1331,6 +1337,7 @@ Public Class Game
         floor = reader.ReadLine()
         floorCode = reader.ReadLine()
         encounterRate = Int(reader.ReadLine())
+        eClockResetVal = Int(reader.ReadLine())
         shopkeeper = New NPC(2)
         shopkeeper.pos.X = reader.ReadLine()
         shopkeeper.pos.Y = reader.ReadLine()
