@@ -11,6 +11,7 @@ Public Class Game
     Public mBoardHeight As Integer = 40
     Public chestFreqMin As Integer = 3
     Public chestFreqRange As Integer = 8
+    Public chestSizeDependence As Integer = 30
     Public mBoard(,) As mTile
     Public mPics(,) As PictureBox       '(NOT SAVED)
     Public floor As Integer = 0
@@ -206,6 +207,7 @@ Public Class Game
         mBoardHeight = genSet.boxHeight.Value
         chestFreqMin = genSet.boxChestFreqMin.Value
         chestFreqRange = genSet.boxChestFreqRange.Value
+        chestSizeDependence = genSet.boxChestSizeDependence.Value
         If mBoardWidth * mBoardHeight < 4 Then
             Do While mBoardWidth * mBoardHeight < 4
                 If mBoardHeight < mBoardWidth Then
@@ -214,7 +216,6 @@ Public Class Game
                     mBoardWidth += 1
                 End If
             Loop
-            MessageBox.Show("TOO SMALL. FORCED TO " & mBoardWidth & " WIDE AND " & mBoardHeight & " TALL")
         End If
 
 
@@ -620,7 +621,7 @@ Public Class Game
     Sub placeChest(ByVal code As String)
         Randomize(code.GetHashCode)
         'Dim numChests As Integer = CInt(Int(Rnd() * 8) + 3) * Int((mBoardWidth / 30) + (mBoardHeight / 30) / 2)
-        Dim numChests As Integer = CInt(Int(Rnd() * chestFreqRange) + chestFreqMin) * Int(Math.Sqrt((mBoardWidth / 30) * (mBoardHeight / 30)))
+        Dim numChests As Integer = CInt(Int(Rnd() * chestFreqRange) + chestFreqMin) * (Int(chestSizeDependence / Math.Sqrt(mBoardWidth * mBoardHeight)) + 1)
         Dim r As Integer
         If floor = 3 Then
             numChests *= 1.5
@@ -1180,6 +1181,7 @@ Public Class Game
         Next
         writer.WriteLine(turn)
         writer.WriteLine(floor)
+        writer.WriteLine(floorCode)
         writer.WriteLine(shopkeeper.pos.X)
         writer.WriteLine(shopkeeper.pos.Y)
 
@@ -1320,6 +1322,7 @@ Public Class Game
         Next
         turn = reader.ReadLine()
         floor = reader.ReadLine()
+        floorCode = reader.ReadLine()
         shopkeeper = New NPC(2)
         shopkeeper.pos.X = reader.ReadLine()
         shopkeeper.pos.Y = reader.ReadLine()
