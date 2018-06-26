@@ -73,14 +73,30 @@ Public Class Game
 
     Dim cKeys As List(Of System.Windows.Forms.Keys) = New List(Of Keys)
 
+    Dim iHeight, iWidth As Integer
+
     Dim startingHeight As Integer = 0
     Dim startingWidth As Integer = 0
+    Public screenSize As String
 
     'startup/new level methods
     'Form1_Load handles the loading of the form
     Private Sub Form1_Load(sender As Object, e As EventArgs) Handles Me.Load
-        startingHeight = Me.Size.Height
-        startingWidth = Me.Size.Width
+        Dim r As System.IO.StreamReader
+        r = IO.File.OpenText("sett.ing")
+        screenSize = r.ReadLine
+        r.Close()
+
+        iHeight = Size.Height
+        iWidth = Size.Width
+
+        startingHeight = CInt(Size.Height.ToString)
+        startingWidth = CInt(Size.Width.ToString)
+        If screenSize = "Small" Then
+            Size = New Size(Size.Width * 0.8, Size.Height * 0.8)
+        ElseIf screenSize = "Medium" Then
+            Size = New Size(Size.Width * 0.9, Size.Height * 0.9)
+        End If
 
         loadcKeys()
         imagesWorker = New BackgroundWorker
@@ -163,6 +179,7 @@ Public Class Game
             End If
         End If
 
+        Game_Resize()
     End Sub
     Sub loadPotionList()
         Randomize()
@@ -2284,11 +2301,16 @@ Public Class Game
         If lblPHealtDiff.Tag = 0 Then lblPHealtDiff.Visible = False Else lblPHealtDiff.Visible = True
         lblPHealtDiff.Tag = 0
 
-        Dim ratioEH As Double = t.health / t.maxHealth
-        picEHbar.Size = New Size(ratioEH * 174, 15)
-        Dim x As Integer = picEHbar.Location.X + (ratioEH * 174) - 30
+        Dim ratio As Double = Me.Size.Width / 1024
+
+        Dim ratioEH As Double = (t.health / t.maxHealth) * ratio
+        picEHbar.Size = New Size(ratioEH * 174, 15 * ratio)
+
+        Dim x As Integer = (picEHbar.Location.X * ratio) + (ratioEH * 174) - (30 * ratio)
         If x < picEHbar.Location.X Then x = picEHbar.Location.X
         lblEHealthChange.Location = New Point(x, lblEHealthChange.Location.Y)
+
+
         If healthCol Is Nothing = False Then
             Dim place = Int(ratioEH * 100)
             If place >= 100 Then place = 99
@@ -2298,10 +2320,10 @@ Public Class Game
             If ratioEH <= 0.2 Then picEHbar.BackColor = Color.Crimson Else picEHbar.BackColor = Color.YellowGreen
         End If
 
-        Dim ratioPH As Double = p.health / p.getmaxHealth
-        picPHealth.Size = New Size(ratioPH * 174, 15)
-        x = picPHealth.Location.X + (ratioPH * 174) - 30
-        If x > picPHealth.Location.X + 174 - 30 Then x = picPHealth.Location.X + 174 - 30
+        Dim ratioPH As Double = p.health / p.getmaxHealth * ratio
+        picPHealth.Size = New Size(ratioPH * 174, 15 * ratio)
+        x = picPHealth.Location.X + (ratioPH * 174) - (30 * ratio)
+        If x > picPHealth.Location.X + (174 * ratio) - (30 * ratio) Then x = picPHealth.Location.X + (174 * ratio) - (30 * ratio)
         lblPHealtDiff.Location = New Point(x, lblPHealtDiff.Location.Y)
         If healthCol Is Nothing = False Then
             Dim place = Int(ratioPH * 100)
@@ -3538,8 +3560,16 @@ Public Class Game
 
     'btnStettings
     Private Sub btnSettings_Click(sender As Object, e As EventArgs) Handles btnSettings.Click
-        MsgBox("This will be where the settings are changed eventually")
-        Size = New Size(Me.Size.Width * 0.8, Me.Size.Height * 0.8)
+        Dim s As Settings = New Settings
+        s.ShowDialog()
+        s.Dispose()
+        If screenSize = "Small" Then
+            Size = New Size(iWidth * 0.8, iHeight * 0.8)
+        ElseIf screenSize = "Medium" Then
+            Size = New Size(iWidth * 0.9, iHeight * 0.9)
+        Else
+            Size = New Size(iWidth, iHeight)
+        End If
         Game_Resize()
     End Sub
 
@@ -3599,6 +3629,8 @@ Public Class Game
             pnlSaveLoad.Controls(i).Top += CDbl(pnlSaveLoad.Controls(i).Top * RH)
         Next
 
+        startingHeight = Height
+        startingWidth = Width
         Dim ratio As Double = Me.Size.Width / 1024
         picLoadBar.Location = New Point(picLoadBar.Location.X * ratio, picLoadBar.Location.Y * ratio)
     End Sub

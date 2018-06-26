@@ -1,10 +1,27 @@
 ﻿Public NotInheritable Class About
 
     Private Sub AboutBox1_Load(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles MyBase.Load
+
+        'scale to the screen size
+        'Dim startingWidth = Me.Width
+        'Dim startingHeight = Me.Height
+        'If Game.screenSize = "Small" Then
+        '    Size = New Size(Size.Width * 0.8, Size.Height * 0.8)
+        'ElseIf Game.screenSize = "Medium" Then
+        '    Size = New Size(Size.Width * 0.9, Size.Height * 0.9)
+        'End If
+        'Dim RW As Double = (Me.Width - startingWidth) / startingWidth ' Ratio change of width
+        'Dim RH As Double = (Me.Height - startingHeight) / startingHeight ' Ratio change of height
         Dim newFont As Font = New System.Drawing.Font("Consolas", CInt(8 * Me.Size.Width / 381))
         For i = 0 To Me.Controls.Count - 1
             Me.Controls(i).Font = newFont
+            'Me.Controls(i).Width += CDbl(Me.Controls(i).Width * RW)
+            'Me.Controls(i).Height += CDbl(Me.Controls(i).Height * RH)
+            'Me.Controls(i).Left += CDbl(Me.Controls(i).Left * RW)
+            'Me.Controls(i).Top += CDbl(Me.Controls(i).Top * RH)
         Next
+
+
         ' Set the title of the form.
         Dim ApplicationTitle As String
         If My.Application.Info.Title <> "" Then

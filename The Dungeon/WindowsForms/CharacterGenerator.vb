@@ -52,10 +52,25 @@
         Game.player.skincolor = skincolor
         Game.player.haircolor = hairColor
 
+        'scale to the screen size
+        Dim startingWidth = Me.Width
+        Dim startingHeight = Me.Height
+        If Game.screenSize = "Small" Then
+            Size = New Size(Size.Width * 0.8, Size.Height * 0.8)
+        ElseIf Game.screenSize = "Medium" Then
+            Size = New Size(Size.Width * 0.9, Size.Height * 0.9)
+        End If
+        Dim RW As Double = (Me.Width - startingWidth) / startingWidth ' Ratio change of width
+        Dim RH As Double = (Me.Height - startingHeight) / startingHeight ' Ratio change of height
         Dim newFont As Font = New System.Drawing.Font("Consolas", CInt(8 * Me.Size.Width / 581))
         For i = 0 To Me.Controls.Count - 1
             Me.Controls(i).Font = newFont
+            Me.Controls(i).Width += CDbl(Me.Controls(i).Width * RW)
+            Me.Controls(i).Height += CDbl(Me.Controls(i).Height * RH)
+            Me.Controls(i).Left += CDbl(Me.Controls(i).Left * RW)
+            Me.Controls(i).Top += CDbl(Me.Controls(i).Top * RH)
         Next
+
         currAtrButton = btnBody
         fGlasses = getImg("img/fGlasses")
         fAccA = getImg("img/fAccA")
