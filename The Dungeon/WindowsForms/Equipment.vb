@@ -87,7 +87,7 @@
         End If
 
         'handles the equiping of weapons
-        weaponChange(cmbobxArmor.Text)
+        weaponChange(cmbobxWeapon.Text)
         If p.equippedWeapon.mBoost > 0 Then p.mana += p.equippedWeapon.mBoost
 
         'equip the new armor
@@ -104,28 +104,22 @@
         If p.perks("slutcurse") > -1 Then
             clothingCurse1()
         End If
-
         'handles any tfs or triggers triggered by equipping of certain weapons
-        If p.equippedWeapon.getName = "Magic_Girl_Wand" And Not p.title.Equals("Magic Girl") Then
-            Polymorph.transform(p, "Magic Girl")
-        End If
-
         If p.title.Equals("Magic Girl") And p.equippedArmor.getName.Equals("Magic_Girl_Outfit") And Not revertFlag Then
             p.equippedArmor = p.inventory.Item(10)
             Game.lstLog.Items.Add("A magic girl needs her uniform!")
         End If
-
         If p.title.Equals("Blow-Up Doll") Then
             p.equippedArmor = New Naked
         End If
 
-        If Not oA.Equals(cmbobxArmor.SelectedItem) Then
+        If Not oA.Equals(cmbobxArmor.Text) Then
             p.equippedArmor.onEquip()
         End If
-        If Not oW.Equals(cmbobxWeapon.SelectedItem) Then
+        If Not oW.Equals(cmbobxWeapon.Text) Then
             p.equippedWeapon.onEquip()
         End If
-        If Not oAc.Equals(cboxAccessory.SelectedItem) Then
+        If Not oAc.Equals(cboxAccessory.Text) Then
             p.equippedAcce.onEquip()
         End If
 

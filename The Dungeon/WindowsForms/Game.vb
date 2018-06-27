@@ -74,9 +74,10 @@ Public Class Game
     Dim cKeys As List(Of System.Windows.Forms.Keys) = New List(Of Keys)
 
     Dim iHeight, iWidth As Integer
-
     Dim startingHeight As Integer = 0
     Dim startingWidth As Integer = 0
+
+    'settings
     Public screenSize As String
 
     'startup/new level methods
@@ -1572,6 +1573,8 @@ Public Class Game
             player.revert2()
         End If
 
+        Dim owName = player.equippedWeapon.getName
+
         'handles the equiping of weapons
         Dim sWeapon As Weapon = Nothing
         If subString <> "" Then
@@ -1588,10 +1591,8 @@ Public Class Game
         If player.mana > player.getmaxMana Then player.mana = player.getmaxMana
 
         'handles any tfs or triggers triggered by equipping of certain weapons
-        If player.equippedWeapon.getName = "Magic_Girl_Wand" And Not player.title.Equals("Magic Girl") Then
-            Polymorph.transform(player, "Magic Girl")
-        ElseIf player.equippedWeapon.getName = "Sword_of_the_Brutal" And Not player.perks("swordpossess") > -1 Then
-            player.perks("swordpossess") = 0
+        If Not player.equippedWeapon.getName.Equals(owName) Then
+            player.equippedWeapon.onEquip()
         End If
 
         'updates the player, the stat display, and the portrait before the form closes

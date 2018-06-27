@@ -1410,7 +1410,6 @@
             Case 7
                 iArrInd(9) = New Tuple(Of Integer, Boolean)(15, True)
             Case 8
-                MsgBox(77)
                 iArrInd(9) = New Tuple(Of Integer, Boolean)(19, True)
             Case Else
                 iArrInd(9) = New Tuple(Of Integer, Boolean)(iArrInd(9).Item1, True)
@@ -1769,7 +1768,7 @@
         End If
 
         If Not prefForm Is Nothing Then
-            output += prefForm.ToString
+            output += prefForm.ToString & "$"
         Else
             output += "N/a$"
         End If

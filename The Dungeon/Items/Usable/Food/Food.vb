@@ -13,7 +13,7 @@
         If getName() = "Medicinal_Tea" Then Game.lstLog.Items.Add("You drink the " & getName()) Else Game.lstLog.Items.Add("You eat the " & getName())
         Game.lstLog.TopIndex = Game.lstLog.Items.Count - 1
         Game.player.hunger -= calories
-        If Game.player.hunger < 0 Then Game.player.hunger = -1
+        If Game.player.hunger < 0 Then Game.player.hunger = 0
         Effect()
         count -= 1
     End Sub
