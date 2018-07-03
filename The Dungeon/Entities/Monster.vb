@@ -178,6 +178,12 @@
     Public Overridable Sub despawn(ByVal reason As String)
         Game.npcList.Remove(Me)
         If reason = "run" Then
+            If Int(Rnd() * 30) < 2 Then
+                Game.lstLog.Items.Add("Running away makes you less confident.")
+                Game.player.discipline -= 1
+                If Game.player.discipline < 1 Then Game.player.discipline = 0
+                Game.player.UIupdate()
+            End If
             Game.lstLog.Items.Add("You ran from the " & name & "!")
         ElseIf reason = "friend" Then
             If Int(Rnd() * 3) = 0 Then
@@ -189,32 +195,32 @@
             Else
                 Game.lstLog.Items.Add("The " & name & " is friendly, and you chat a bit before setting back out!")
             End If
-            ElseIf reason = "npc" Then
-                Game.lstLog.Items.Add("You walk away from " & name & "!")
-            ElseIf reason = "animaltf" Then
-                Dim output As String = ""
-                If Me.GetType() Is GetType(Monster) Then output += "The "
-                output += name & ", seeing that you are no longer human, wanders off."
-                Game.lstLog.Items.Add(output)
-            ElseIf reason = "flee" Then
-                Dim output As String = ""
-                If Me.GetType() Is GetType(Monster) Then output += "The "
-                output += name & " runs away in fear!"
-                Game.lstLog.Items.Add(output)
-            ElseIf reason = "cupcake" Then
-                Dim totalSum As Integer = 0
-                For i = 0 To UBound(inventory)
-                    totalSum += inventory(i)
-                Next
-                Dim c1 As Chest
-                c1 = Game.baseChest.Create(inventory, pos)
-                If totalSum > 0 Then c1.open()
-                Game.npcList.Remove(Me)
-                Game.lstLog.Items.Add("You've deafeated the " & name & "!")
-                Game.player.currState.save(Game.player)
-                dead = True
-                endBoss()
-            End If
+        ElseIf reason = "npc" Then
+            Game.lstLog.Items.Add("You walk away from " & name & "!")
+        ElseIf reason = "animaltf" Then
+            Dim output As String = ""
+            If Me.GetType() Is GetType(Monster) Then output += "The "
+            output += name & ", seeing that you are no longer human, wanders off."
+            Game.lstLog.Items.Add(output)
+        ElseIf reason = "flee" Then
+            Dim output As String = ""
+            If Me.GetType() Is GetType(Monster) Then output += "The "
+            output += name & " runs away in fear!"
+            Game.lstLog.Items.Add(output)
+        ElseIf reason = "cupcake" Then
+            Dim totalSum As Integer = 0
+            For i = 0 To UBound(inventory)
+                totalSum += inventory(i)
+            Next
+            Dim c1 As Chest
+            c1 = Game.baseChest.Create(inventory, pos)
+            If totalSum > 0 Then c1.open()
+            Game.npcList.Remove(Me)
+            Game.lstLog.Items.Add("You've deafeated the " & name & "!")
+            Game.player.currState.save(Game.player)
+            dead = True
+            endBoss()
+        End If
             If UBound(inventory) >= 53 AndAlso inventory(53) > 0 And name <> "Shopkeeper" Then
                 Game.pushLblEvent("Your foe drops a key!")
                 Dim inv(53) As Integer
@@ -357,6 +363,13 @@
         For i = 0 To UBound(inventory)
             totalSum += inventory(i)
         Next
+
+        If Int(Rnd() * 30) < 2 Then
+            Game.lstLog.Items.Add("Your victory makes you feel more confident.")
+            Game.player.discipline += 1
+            Game.player.UIupdate()
+        End If
+
         Dim c1 As Chest
         c1 = Game.baseChest.Create(inventory, pos)
         If totalSum > 0 Then c1.open()

@@ -303,15 +303,15 @@
             If currTarget.name.Equals("Shopkeeper") Then
                 Dim n As NPC = Game.currNPC
                 petrify(Color.Goldenrod)
-                Dim out As String = "'You should have known better than to try and rob a shop keeper,' the shopkeep says," & vbCrLf &
-                    " glaring down at you, '...and if its gold you're after, I guess I've got some good news for you.'" & vbCrLf &
+                Dim out As String = """You should have known better than to try and rob a shop keeper,"" the shopkeep says," & vbCrLf &
+                    " glaring down at you, ""...and if its gold you're after, I guess I've got some good news for you.""" & vbCrLf &
                     "  With that, " & n.pronoun & " reaches into " & n.pPronoun & " bag and puts on a gaudy gauntlet " & vbCrLf &
                     "that begins glowing with a golden light. You lack the strength to fight back as " & n.pronoun & " places" & vbCrLf &
-                    " his thumb on your forhead, and suddenly everything just seems so heavy. 'Noooo...' you moan, " & vbCrLf &
+                    " his thumb on your forhead, and suddenly everything just seems so heavy. ""Noooo..."" you moan, " & vbCrLf &
                     "as the area around where he touched turns to gold, and that gold turns your flesh and blood " & vbCrLf &
                     "around it to gold as well. In a matter of seconds, all that is left of " & Me.name & " the " & vbCrLf &
                     Me.title & " is a solid gold statue. The shopkeeper sighs, muttering to no one in particular, " & vbCrLf &
-                    vbCrLf & vbCrLf & "'Now how am I going to get you back to the refinery?'"
+                    vbCrLf & vbCrLf & """Now how am I going to get you back to the refinery?"""
                 'Game.pushLblEvent(out)
                 title = "Trophy"
                 MsgBox(out)
@@ -324,7 +324,7 @@
                 Exit Sub
             ElseIf currTarget.name.Equals("Mesmerized Thrall") Then
                 Dim out As String = ""
-                Dim ln1 As String
+                Dim ln1 As String = Nothing
                 If title = "Thrall" Then
                     out = "Despite your fatigue, you are able to roll out of the way of the thrall's attempt to restrain you, and make a clumsy escape."
                     health = 10
@@ -344,7 +344,27 @@
                 Else
                     Game.pushLblEvent(out)
                 End If
+                Exit Sub
+            ElseIf currTarget.name.Equals("Enthralling Sorcerer") Or currTarget.name.Equals("Enthralling Sorceress") Then
+                Dim out As String = ""
+                If title = "Thrall" Then
+                    out = "Despite your fatigue, you are able to roll out of the way of the thrall's attempt to restrain you, and make a clumsy escape."
+                    health = 10
+                Else
+                    out = """Wonderful!"", your opponent exclaims as you collapse, ""You'll make a perfect thrall!""" & vbCrLf & _
+                          "𝘛𝘩𝘳𝘢𝘭𝘭!? you think moments before a small metal collar finds its way around your neck and a network of runes inscribed on it begin glowing with your new master's magic.  𝘞𝘢𝘪𝘵 ... 𝘕𝘦𝘸 𝘔𝘈𝘚𝘛𝘌𝘙?!  You don't have a momment to rest before your mind is filled with a booming voice." & vbCrLf & _
+                          """LISTEN UP, NEW SLAVE!  I have need of your services."" your new master begins, ""In this dungeon, there are several high-power mana arrays.  Only one of them, however, is capable of bestowing the power of a demon lord onto a mortal such as I.  Your task is to find and inspect these arrays, and report back to me with your findings.""  They snicker,  ""I'm sure you won't let me down, but I'm going to need to make a few changes to make you more ... uniform ... with the rest of your collegues.""" & vbCrLf & vbCrLf & "        .....       " & vbCrLf & vbCrLf & "With a final warning not to fail them, the foreign presence leaves your mind and you are once again alone with your thoughts and your task."
+                    inventory(69).addone()
+                    If Not equippedAcce.getName.Equals("Nothing") Then equippedAcce.onUnequip()
+                    equippedAcce = inventory(69)
+                    equippedAcce.onEquip()
+                    health = getmaxHealth()
+                    mana = getmaxMana()
+                    prefForm.snapShift(Me)
+                End If
 
+                currTarget.despawn("run")
+                Game.pushLblEvent(out)
                 Exit Sub
             ElseIf currTarget.name.Equals("Slime") Or currTarget.name.Equals("Goo Girl") Then
                 Dim out As String = "As the " & currTarget.name & " closes in on you, you push yourself off the ground, sidestep it, and make a hasty retreat." & vbCrLf & " " & vbCrLf & "[Insert a TF here (eventually)]"
@@ -352,7 +372,7 @@
                 Game.pushLblEvent(out)
                 health = 10
                 Exit Sub
-            ElseIf currTarget.name.Equals("Spider") Or currTarget.name.Equals("Arachne Huntress") Or currTarget.name.Equals("Enthralling Sorcerer") Or currTarget.name.Equals("Enthralling Sorceress") Then
+            ElseIf currTarget.name.Equals("Spider") Or currTarget.name.Equals("Arachne Huntress") Then
                 Dim out As String = "As the " & currTarget.name & " closes in on you, you push yourself off the ground, sidestep it, and make a hasty retreat." & vbCrLf & " " & vbCrLf & "[Insert a TF here (eventually)]"
                 currTarget.despawn("run")
                 Game.pushLblEvent(out)
