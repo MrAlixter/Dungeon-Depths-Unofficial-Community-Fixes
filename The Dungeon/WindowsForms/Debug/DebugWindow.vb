@@ -614,7 +614,6 @@ Public Class Debug_Window
 
     Private Sub numericUpDownChanged(ByVal sender As Object, ByVal e As EventArgs)
         Dim name As String = sender.Name.Substring(0, sender.Name.Length - 3)
-        Console.WriteLine(name & " : " & sender.Value)
         Game.player.perks(name) = sender.Value
     End Sub
 
