@@ -44,6 +44,8 @@ Partial Class GeneratorSettings
         Me.lblChestRichnessBase = New System.Windows.Forms.Label()
         Me.boxChestRichnessRange = New System.Windows.Forms.NumericUpDown()
         Me.lblChestRichnessRange = New System.Windows.Forms.Label()
+        Me.btnReset = New System.Windows.Forms.Button()
+        Me.btnConfirm = New System.Windows.Forms.Button()
         CType(Me.boxWidth, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me.boxHeight, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me.boxChestFreqRange, System.ComponentModel.ISupportInitialize).BeginInit()
@@ -255,12 +257,38 @@ Partial Class GeneratorSettings
         Me.lblChestRichnessRange.TabIndex = 20
         Me.lblChestRichnessRange.Text = "Chest Richness Range:"
         '
+        'btnReset
+        '
+        Me.btnReset.BackColor = System.Drawing.Color.DimGray
+        Me.btnReset.Font = New System.Drawing.Font("Consolas", 8.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.btnReset.ForeColor = System.Drawing.Color.White
+        Me.btnReset.Location = New System.Drawing.Point(12, 418)
+        Me.btnReset.Name = "btnReset"
+        Me.btnReset.Size = New System.Drawing.Size(75, 31)
+        Me.btnReset.TabIndex = 22
+        Me.btnReset.Text = "RESET"
+        Me.btnReset.UseVisualStyleBackColor = False
+        '
+        'btnConfirm
+        '
+        Me.btnConfirm.BackColor = System.Drawing.Color.DimGray
+        Me.btnConfirm.Font = New System.Drawing.Font("Consolas", 8.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.btnConfirm.ForeColor = System.Drawing.Color.White
+        Me.btnConfirm.Location = New System.Drawing.Point(697, 418)
+        Me.btnConfirm.Name = "btnConfirm"
+        Me.btnConfirm.Size = New System.Drawing.Size(75, 31)
+        Me.btnConfirm.TabIndex = 23
+        Me.btnConfirm.Text = "CONFIRM"
+        Me.btnConfirm.UseVisualStyleBackColor = False
+        '
         'GeneratorSettings
         '
         Me.AutoScaleDimensions = New System.Drawing.SizeF(9.0!, 19.0!)
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font
         Me.BackColor = System.Drawing.Color.Black
         Me.ClientSize = New System.Drawing.Size(784, 461)
+        Me.Controls.Add(Me.btnConfirm)
+        Me.Controls.Add(Me.btnReset)
         Me.Controls.Add(Me.boxChestRichnessRange)
         Me.Controls.Add(Me.lblChestRichnessRange)
         Me.Controls.Add(Me.boxChestRichnessBase)
@@ -324,4 +352,6 @@ Partial Class GeneratorSettings
     Friend WithEvents lblChestRichnessBase As Label
     Friend WithEvents boxChestRichnessRange As NumericUpDown
     Friend WithEvents lblChestRichnessRange As Label
+    Friend WithEvents btnReset As Button
+    Friend WithEvents btnConfirm As Button
 End Class

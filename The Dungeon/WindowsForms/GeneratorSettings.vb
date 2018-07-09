@@ -20,15 +20,7 @@
         reset()
 
         lblFC.Text = "Floorcode: " & floorcode
-        boxWidth.Value = width
-        boxHeight.Value = height
-        boxChestFreqMin.Value = chestFreqMin
-        boxChestFreqRange.Value = chestFreqRange
-        boxChestFreqRange.Value = chestSizeDependence
-        boxChestRichnessBase.Value = chestRichnessBase
-        boxChestRichnessRange.Value = chestRichnessRange
-        boxEncounterRate.Value = encounterRate
-        boxEClockResetVal.Value = eClockResetVal
+        refreshBoxes()
     End Sub
 
     Sub reset()
@@ -41,5 +33,26 @@
         chestRichnessRange = 5
         encounterRate = 25
         eClockResetVal = 5
+    End Sub
+
+    Sub refreshBoxes()
+        boxWidth.Value = width
+        boxHeight.Value = height
+        boxChestFreqMin.Value = chestFreqMin
+        boxChestFreqRange.Value = chestFreqRange
+        boxChestFreqRange.Value = chestSizeDependence
+        boxChestRichnessBase.Value = chestRichnessBase
+        boxChestRichnessRange.Value = chestRichnessRange
+        boxEncounterRate.Value = encounterRate
+        boxEClockResetVal.Value = eClockResetVal
+    End Sub
+
+    Private Sub btnConfirm_Click(sender As Object, e As EventArgs) Handles btnConfirm.Click
+        Me.Close()
+    End Sub
+
+    Private Sub btnReset_Click(sender As Object, e As EventArgs) Handles btnReset.Click
+        reset()
+        refreshBoxes()
     End Sub
 End Class
