@@ -64,7 +64,7 @@
         Dim x As Integer = chest.pos.X
         Dim y As Integer = chest.pos.Y
         Randomize(code.GetHashCode)
-        Dim numC As Integer = CInt(Int(Rnd() * 5) + 1)
+        Dim numC As Integer = CInt(Int(Rnd() * Game.chestRichnessRange) + Game.chestRichnessBase)
         For i = 0 To numC
             Dim r As Integer = Int(Rnd() * 10)
             Dim itemTier As Integer = 1
@@ -84,8 +84,11 @@
             Dim rng As Integer = Int(Rnd() * tiers(itemTier).Count)
             If rng > tiers(itemTier).Count - 1 Then rng = tiers(itemTier).Count - 1
             Dim itemID As Integer = tiers(itemTier)(rng).id 'Int(Rnd() * tier.Length))
-            chest.add(itemID, 1)
-            If itemID = 43 Then contents(itemID) += Int(Rnd() * 150)
+            If itemID = 43 Then
+                contents(itemID) += Int(Rnd() * 150)
+            Else
+                chest.add(itemID, 1)
+            End If
         Next
     End Sub
     Function Clone()

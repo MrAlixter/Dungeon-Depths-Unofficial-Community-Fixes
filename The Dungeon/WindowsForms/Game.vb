@@ -19,6 +19,8 @@ Public Class Game
     Public chestFreqMin As Integer = 3
     Public chestFreqRange As Integer = 8
     Public chestSizeDependence As Integer = 30
+    Public chestRichnessBase As Integer = 1
+    Public chestRichnessRange As Integer = 5
     Public encounterRate As Integer = 25
     Public eClockResetVal As Integer = 5
 
@@ -213,6 +215,8 @@ Public Class Game
         chestFreqMin = genSet.boxChestFreqMin.Value
         chestFreqRange = genSet.boxChestFreqRange.Value
         chestSizeDependence = genSet.boxChestSizeDependence.Value
+        chestRichnessBase = genSet.boxChestRichnessBase.Value
+        chestRichnessRange = genSet.boxChestRichnessRange.Value
         eClockResetVal = genSet.boxEClockResetVal.Value
         encounterRate = genSet.boxEncounterRate.Value
         If mBoardWidth * mBoardHeight < 4 Then

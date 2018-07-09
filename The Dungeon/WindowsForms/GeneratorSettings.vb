@@ -5,6 +5,8 @@
     Dim chestFreqMin As Integer
     Dim chestFreqRange As Integer
     Dim chestSizeDependence As Integer
+    Dim chestRichnessBase As Integer
+    Dim chestRichnessRange As Integer
     Dim encounterRate As Integer
     Dim eClockResetVal As Integer
 
@@ -23,6 +25,8 @@
         boxChestFreqMin.Value = chestFreqMin
         boxChestFreqRange.Value = chestFreqRange
         boxChestFreqRange.Value = chestSizeDependence
+        boxChestRichnessBase.Value = chestRichnessBase
+        boxChestRichnessRange.Value = chestRichnessRange
         boxEncounterRate.Value = encounterRate
         boxEClockResetVal.Value = eClockResetVal
     End Sub
@@ -33,6 +37,8 @@
         chestFreqMin = 3
         chestFreqRange = 8
         chestSizeDependence = 30
+        chestRichnessBase = 1
+        chestRichnessRange = 5
         encounterRate = 25
         eClockResetVal = 5
     End Sub
