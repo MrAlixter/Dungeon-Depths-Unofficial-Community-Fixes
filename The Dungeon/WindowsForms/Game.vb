@@ -1159,6 +1159,11 @@ Public Class Game
         Next
         writer.WriteLine(stairs.X)
         writer.WriteLine(stairs.Y)
+        writer.WriteLine(chestFreqMin)
+        writer.WriteLine(chestFreqRange)
+        writer.WriteLine(chestSizeDependence)
+        writer.WriteLine(chestRichnessBase)
+        writer.WriteLine(chestRichnessRange)
         writer.WriteLine(chestList.Count - 1)
         For i = 0 To chestList.Count - 1
             writer.WriteLine(chestList.Item(i).ToString())
@@ -1298,6 +1303,12 @@ Public Class Game
         zoom()
 
         stairs = New Point(reader.ReadLine(), reader.ReadLine())
+
+        chestFreqMin = reader.ReadLine()
+        chestFreqRange = reader.ReadLine()
+        chestSizeDependence = reader.ReadLine()
+        chestRichnessBase = reader.ReadLine()
+        chestRichnessRange = reader.ReadLine()
         For i = 0 To CInt(reader.ReadLine())
             chestList.Add(baseChest.Create(reader.ReadLine()))
         Next
