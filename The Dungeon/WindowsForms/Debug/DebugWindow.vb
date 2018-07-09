@@ -25,7 +25,6 @@ Public Class Debug_Window
         btnPan.Checked = True
 
         'GENERAL
-        lblGenCode.Text = "CODE: " & Game.floorCode
         boxFloor.Value = Game.floor
         boxTurn.Value = Game.turn
         If Game.floor < Game.beatboss.Count Then
@@ -100,6 +99,17 @@ Public Class Debug_Window
             End If
             test += 1
         Next
+
+        lblFC.Text = "Floorcode: " & Game.floorCode
+        boxWidth.Value = Game.mBoardWidth
+        boxHeight.Value = Game.mBoardHeight
+        boxChestFreqMin.Value = Game.chestFreqMin
+        boxChestFreqRange.Value = Game.chestFreqRange
+        boxChestSizeDependence.Value = Game.chestSizeDependence
+        boxChestRichnessBase.Value = Game.chestRichnessBase
+        boxChestRichnessRange.Value = Game.chestRichnessRange
+        boxEncounterRate.Value = Game.encounterRate
+        boxEClockResetVal.Value = Game.eClockResetVal
     End Sub
 
     Private Sub loadPortrait()
@@ -142,7 +152,6 @@ Public Class Debug_Window
     End Sub
 
     Public Sub clear()
-        lblGenCode.Text = "CODE: "
         Dim ctrl As Control = Me
         Do Until ctrl Is Nothing
             If ctrl.GetType() = GetType(TextBox) Then
@@ -607,5 +616,46 @@ Public Class Debug_Window
         Dim name As String = sender.Name.Substring(0, sender.Name.Length - 3)
         Console.WriteLine(name & " : " & sender.Value)
         Game.player.perks(name) = sender.Value
+    End Sub
+
+    Private Sub btnReset_Click(sender As Object, e As EventArgs) Handles btnGenerationReset.Click
+        reset()
+        refreshBoxes()
+    End Sub
+
+    Sub reset()
+        Game.mBoardWidth = 50
+        Game.mBoardHeight = 40
+        Game.chestFreqMin = 3
+        Game.chestFreqRange = 8
+        Game.chestSizeDependence = 30
+        Game.chestRichnessBase = 1
+        Game.chestRichnessRange = 5
+        Game.encounterRate = 25
+        Game.eClockResetVal = 5
+    End Sub
+
+    Sub refreshBoxes()
+        boxWidth.Value = Game.mBoardWidth
+        boxHeight.Value = Game.mBoardHeight
+        boxChestFreqMin.Value = Game.chestFreqMin
+        boxChestFreqRange.Value = Game.chestFreqRange
+        boxChestFreqRange.Value = Game.chestSizeDependence
+        boxChestRichnessBase.Value = Game.chestRichnessBase
+        boxChestRichnessRange.Value = Game.chestRichnessRange
+        boxEncounterRate.Value = Game.encounterRate
+        boxEClockResetVal.Value = Game.eClockResetVal
+    End Sub
+
+    Private Sub btnSaveGeneration_Click(sender As Object, e As EventArgs) Handles btnSaveGeneration.Click
+        Game.mBoardWidth = boxWidth.Value
+        Game.mBoardHeight = boxHeight.Value
+        Game.chestFreqMin = boxChestFreqMin.Value
+        Game.chestFreqRange = boxChestFreqRange.Value
+        Game.chestSizeDependence = boxChestSizeDependence.Value
+        Game.chestRichnessBase = boxChestRichnessBase.Value
+        Game.chestRichnessRange = boxChestRichnessRange.Value
+        Game.encounterRate = boxEncounterRate.Value
+        Game.eClockResetVal = boxEClockResetVal.Value
     End Sub
 End Class

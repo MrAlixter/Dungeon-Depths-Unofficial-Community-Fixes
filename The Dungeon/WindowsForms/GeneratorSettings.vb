@@ -1,7 +1,7 @@
 ﻿Public Class GeneratorSettings
     Dim floorcode As String
-    Dim width As Integer
-    Dim height As Integer
+    Dim w As Integer
+    Dim h As Integer
     Dim chestFreqMin As Integer
     Dim chestFreqRange As Integer
     Dim chestSizeDependence As Integer
@@ -24,8 +24,8 @@
     End Sub
 
     Sub reset()
-        width = 50
-        height = 40
+        w = 50
+        h = 40
         chestFreqMin = 3
         chestFreqRange = 8
         chestSizeDependence = 30
@@ -36,8 +36,8 @@
     End Sub
 
     Sub refreshBoxes()
-        boxWidth.Value = width
-        boxHeight.Value = height
+        boxWidth.Value = w
+        boxHeight.Value = h
         boxChestFreqMin.Value = chestFreqMin
         boxChestFreqRange.Value = chestFreqRange
         boxChestFreqRange.Value = chestSizeDependence
