@@ -315,6 +315,7 @@ Partial Class GeneratorSettings
         Me.ForeColor = System.Drawing.Color.White
         Me.Margin = New System.Windows.Forms.Padding(4)
         Me.Name = "GeneratorSettings"
+        Me.StartPosition = System.Windows.Forms.FormStartPosition.CenterParent
         Me.Text = "Generation Settings"
         CType(Me.boxWidth, System.ComponentModel.ISupportInitialize).EndInit()
         CType(Me.boxHeight, System.ComponentModel.ISupportInitialize).EndInit()

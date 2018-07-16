@@ -33,6 +33,7 @@
     'inventory variables
     Public inventory As New ArrayList()
     Public inventorynames As New ArrayList()
+    Public mysteryPotionDisplayOrder As New List(Of String)
     Dim armor() As Armor
     Dim weapons() As Weapon
     Public useable(), food(), potions(), misc() As Item
