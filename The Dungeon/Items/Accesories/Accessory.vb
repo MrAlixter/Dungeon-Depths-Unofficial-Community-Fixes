@@ -3,9 +3,10 @@
     'Accessories are equippable items that provide small passive buffs
     Public aBoost As Integer = 0
     Public dBoost As Integer = 0
+    Public hBoost As Integer = 0
     Public mBoost As Integer = 0
     Public sBoost As Integer = 0
-    Public eBoost As Integer = 0
+    Public wBoost As Integer = 0
     Public fInd As Tuple(Of Integer, Boolean)
     Public mInd As Tuple(Of Integer, Boolean)
 

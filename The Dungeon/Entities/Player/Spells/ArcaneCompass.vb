@@ -9,7 +9,7 @@
     End Sub
     Public Overrides Sub effect()
         Game.pushLblEvent("With a blinding flash, your magic cuts a glowing path straight to the stairs!")
-        Dim p = Game.route(Game.player.pos, Game.stairs, "n/a", New List(Of Point))
+        Dim p = Game.route(Game.player.pos, Game.stairs, "n/a", New List(Of Point), 0)
         For i = 0 To UBound(p)
             Game.mBoard(p(i).Y, p(i).X).Tag = 2
         Next

@@ -3,6 +3,7 @@
     Sub New()
         MyBase.setName("Ropes")
         MyBase.setDesc("A tightened set of ropes that both reduces mobility and leaves one nearly naked." & vbCrLf & _
+                       "Fits sizes -1 through 5" & vbCrLf & _
                        "-5 DEF" & vbCrLf & _
                        "-5 ATK" & vbCrLf & _
                        "-5 SPD" & vbCrLf & _

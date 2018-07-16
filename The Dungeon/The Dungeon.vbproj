@@ -104,6 +104,8 @@
     <Import Include="System.Threading.Tasks" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Entities\Player\pClass.vb" />
+    <Compile Include="Entities\Player\pForm.vb" />
     <Compile Include="Entities\Player\Spells\ArcaneCompass.vb" />
     <Compile Include="Entities\Player\Spells\Dowse.vb" />
     <Compile Include="Entities\Player\Spells\DragonsBreath.vb" />
@@ -122,7 +124,7 @@
     <Compile Include="Entities\Player\Spells\turnToFrog.vb" />
     <Compile Include="Entities\preferedForm.vb" />
     <Compile Include="Items\Accesories\Accessory.vb" />
-    <Compile Include="Items\Accesories\Cowbell.vb" />
+    <Compile Include="Items\Unimplemented\Cowbell.vb" />
     <Compile Include="Items\Accesories\HeartNecklace.vb" />
     <Compile Include="Items\Accesories\noAcce.vb" />
     <Compile Include="Items\Accesories\RedHeadband.vb" />
@@ -162,7 +164,7 @@
     </Compile>
     <Compile Include="Tiles\Chest.vb" />
     <Compile Include="Items\Usable\Food\ChickenLeg.vb" />
-    <Compile Include="Items\Unimplemented\ChickenSuit.vb" />
+    <Compile Include="Items\Unimplemented\Removed\ChickenSuit.vb" />
     <Compile Include="Items\Usable\Compass.vb" />
     <Compile Include="Items\Usable\Food\Cupcake.vb" />
     <Compile Include="Items\Usable\Charms\DefenceCharm.vb" />

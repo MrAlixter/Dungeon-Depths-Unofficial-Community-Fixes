@@ -4,7 +4,7 @@
     'instance data for a state
     Dim name, sex, title, description As String
     Dim health, maxHealth, mana, maxMana, attack, defence As Integer
-    Dim discipline, speed, evade, gold, lust As Integer
+    Dim will, speed, evade, gold, lust As Integer
     Dim breastSize, hunger As Integer
     Dim equippedWeapon As Weapon
     Dim equippedArmor As Armor
@@ -29,7 +29,7 @@
         maxMana = p.mana
         attack = p.attack
         defence = p.defence
-        discipline = p.discipline
+        will = p.will
         speed = p.speed
         evade = p.evade
         gold = p.gold
@@ -63,7 +63,7 @@
         maxMana = 0
         attack = 0
         defence = 0
-        discipline = 0
+        will = 0
         speed = 0
         evade = 0
         gold = 0
@@ -96,7 +96,7 @@
         If p.mana > maxMana + p.mBuff Then p.mana = maxMana + p.mBuff
         p.attack = attack
         p.defence = defence
-        p.discipline = discipline
+        p.will = will
         p.speed = speed
         p.evade = evade
         p.gold = gold
@@ -135,8 +135,8 @@
         'attack += p.aBuff
         defence = p.defence
         'defence += p.dBuff
-        discipline = p.discipline
-        'discipline += p.wBuff
+        will = p.will
+        'will += p.wBuff
         speed = p.speed
         'speed += p.sBuff
         evade = p.evade
@@ -174,7 +174,7 @@
             maxMana = 0
             attack = 0
             defence = 0
-            discipline = 0
+            will = 0
             speed = 0
             evade = 0
             gold = 0
@@ -203,7 +203,7 @@
         If Not readArray(7).Equals("placehold") Then wingIndex = CInt(readArray(7)) Else wingIndex = 0
         attack = CInt(readArray(10))
         defence = CInt(readArray(11))
-        discipline = CInt(readArray(12))
+        will = CInt(readArray(12))
         speed = CInt(readArray(13))
         evade = CInt(readArray(14))
         hunger = CInt(readArray(15))
@@ -260,7 +260,7 @@
     Public Function write() As String
         If initFlag Then
             Dim output As String = CStr(name & "*" & title & "*" & description & "*" & health & "*" & maxHealth & "*" & mana & "*" & maxMana & "*" & wingIndex & "*" & haircolor.A & "*" & skincolor.A & "*" & _
-               attack & "*" & defence & "*" & discipline & "*" & speed & "*" & evade & "*" & hunger & "*" & gold & "*" & equippedArmor.getName() & "*" & equippedWeapon.getName() & "*" & _
+               attack & "*" & defence & "*" & will & "*" & speed & "*" & evade & "*" & hunger & "*" & gold & "*" & equippedArmor.getName() & "*" & equippedWeapon.getName() & "*" & _
                sex & "*" & "placeholder" & "*" & breastSize & "*" & haircolor.R & "*" & haircolor.G & "*" & haircolor.B & "*" & skincolor.R & "*" & skincolor.G & "*" & skincolor.B & "*" & _
                textColor.R & "*" & textColor.G & "*" & textColor.B & "*")
             output += perks.Count & "*"

@@ -54,6 +54,9 @@
         Game.player.iArrInd(9) = formerEyeType
     End Sub
 
+    Public Function getFT() As String
+        Return formerTitle
+    End Function
     Public Overrides Function ToString() As String
         Return formerTitle & "$" & formerEyeType.Item1 & "$" & formerEyeType.Item2
     End Function

@@ -53,7 +53,11 @@ Public Class Game
     Public floorboss() As String = {"Floor0", "Marissa the Enchantress", "Targax the Brutal", "Key", "the Explorer", "Medusa"} 'boss names (NOT SAVED)
     Dim floorLayouts As ArrayList = New ArrayList()
     Public version As Double = 0.6     'the save file version
+
     Public lblEventOnClose As Action    'the event method preformed when lblEvent closes (NOT SAVED)
+    Public lastKey As String
+    Public yesAction, noAction As Action
+
     Public invFilters() As Boolean = {True, True, True, True, True, True, True}
     Dim eClock As Integer = 15
     Public solFlag As Boolean = True
@@ -97,6 +101,8 @@ Public Class Game
             Size = New Size(Size.Width * 0.8, Size.Height * 0.8)
         ElseIf screenSize = "Medium" Then
             Size = New Size(Size.Width * 0.9, Size.Height * 0.9)
+        ElseIf screenSize = "XLarge" Then
+            Size = New Size(iWidth * 1.3, iHeight * 1.3)
         End If
 
         loadcKeys()
@@ -651,9 +657,9 @@ Public Class Game
         Next
     End Sub
 
-    Function route(ByVal p1 As Point, ByVal p2 As Point, ByVal dir As String, ByVal path As List(Of Point)) As Point()
+    Function route(ByVal p1 As Point, ByVal p2 As Point, ByVal dir As String, ByVal path As List(Of Point), ByVal counts As Integer) As Point()
         Dim cons As List(Of Point) = New List(Of Point)
-        If p1.Equals(p2) Then
+        If p1.Equals(p2) Or counts > 300 Then
             Return path.ToArray
         Else
             Dim u, d, l, r As Point
@@ -663,7 +669,7 @@ Public Class Game
             r = New Point(p1.X, p1.Y + 1)
             For Each p In {u, d, l, r}
                 If Not (p.Equals(u) And dir = "d") And Not (p.Equals(d) And dir = "u") And Not (p.Equals(r) And dir = "l") And Not (p.Equals(l) And dir = "r") Then
-                    If Not (p.X < 0 Or p.X > mBoardWidth - 1 Or p.Y < 0 Or p.Y > mBoardHeight - 1) AndAlso Not mBoard(p.Y, p.X).Tag = 0 Then
+                    If Not (p.X < 0 Or p.X > mBoardWidth - 1 Or p.Y < 0 Or p.Y > mBoardHeight - 1) AndAlso Not mBoard(p.Y, p.X).Tag = 0 AndAlso Not path.Contains(p) Then
                         cons.Add(p)
                     End If
                 End If
@@ -685,7 +691,7 @@ Public Class Game
             ElseIf min.Equals(r) Then
                 dir = "r"
             End If
-            Return route(min, p2, dir, path)
+            Return route(min, p2, dir, path, counts + 1)
         End If
     End Function
     Function dist(ByVal x As Point, ByVal y As Point) As Double
@@ -957,8 +963,10 @@ Public Class Game
                 lblEvent.ForeColor = Color.White
                 If Not combatmode Then player.canMoveFlag = True
                 If Not lblEventOnClose Is Nothing Then
-                    lblEventOnClose()
-                    lblEventOnClose = Nothing
+                        lblEvent.Visible = True
+                        If Not combatmode Then player.canMoveFlag = False
+                        lblEventOnClose()
+                        lblEventOnClose = Nothing
                 End If
                 drawBoard()
                 If btnEQP.Enabled = False Then btnEQP.Enabled = True
@@ -987,6 +995,7 @@ Public Class Game
         Return False
     End Function
     Function HandleKeyPress(ByVal Keydata As Keys) As Boolean
+        lastKey = Keydata.ToString.ToLower
         If Not selecting Then
             If shouldReturnEarly(Keydata) Then Return True
             Dim spos As Point = player.pos
@@ -1400,11 +1409,13 @@ Public Class Game
                 selectArmor(index)
             ElseIf selectionType = "Weapon" Then
                 selectWeapon(index)
+            ElseIf selectionType = "yesNo" Then
+                selectYesNo(index)
             End If
             player.invNeedsUDate = True
             player.UIupdate()
             selecting = False
-
+            player.canMoveFlag = True
             pnlSelection.Location = New Point(1000, pnlSelection.Location.Y)
             pnlSelection.Visible = False
             selectedItem = Nothing
@@ -1600,6 +1611,17 @@ Public Class Game
         player.UIupdate()
         lstLog.TopIndex = lstLog.Items.Count - 1
     End Sub
+    Sub selectYesNo(ByVal index As Integer)
+        If index = 0 Then
+            yesAction()
+        Else
+            noAction()
+        End If
+        yesAction = Nothing
+        noAction = Nothing
+        lblEvent.Visible = False
+        lblEventOnClose = Nothing
+    End Sub
     Sub toPNLSelec(ByVal mode As String)
         selecting = True
         pnlSelection.BringToFront()
@@ -1693,6 +1715,10 @@ Public Class Game
                         count += 1
                     End If
                 Next
+            Case "yesNo"
+                lblWhat.Text = "Do you accept?"
+                lstSelec.Items.Add("a - Yes") 'cKeys(19).ToString.ToLower & " - Yes")
+                lstSelec.Items.Add("b - No") 'cKeys(20).ToString.ToLower & " - No")
         End Select
         selectionType = mode
         pnlSelection.Location = New Point(115, pnlSelection.Location.Y)
@@ -3190,6 +3216,43 @@ Public Class Game
         lblEventOnClose = effect
         btnEQP.Enabled = False
     End Sub
+    'This pushLblEvent is identical to the second, but to be used in situations where a choice is made.
+    Sub pushLblEvent(ByVal s As String, ByRef yes As Action, ByVal no As Action)
+        If combatmode Then
+            pushLblCombatEvent("Error, choice to be made during combat.")
+            Exit Sub
+        End If
+        Dim sSplit() As String = s.Split(" ")
+        Dim c As Integer = 0
+        Dim ct As Integer = 0
+        Dim out As String = ""
+        Do While c < sSplit.Length
+            If sSplit(c).Equals(vbCrLf) Then ct = 0
+            If ct < 70 Then
+                out += sSplit(c) & " "
+                ct += sSplit(c).Length + 1
+                c += 1
+            Else
+                out += vbCrLf
+                ct = 0
+            End If
+        Loop
+
+        out += " " & vbCrLf & " " & vbCrLf & "Press any key to continue."
+
+        lblEvent.Text = out
+        lblEvent.BringToFront()
+        lblEvent.Location = New Point((265 * (Me.Size.Width / 688)) - (lblEvent.Size.Width / 2), 65 * (Me.Size.Width / 688))
+        lblEvent.Visible = True
+        player.canMoveFlag = False
+        lblEventOnClose = AddressOf makeChoice
+        yesAction = yes
+        noAction = no
+        btnEQP.Enabled = False
+    End Sub
+    Sub makeChoice()
+        toPNLSelec("yesNo")
+    End Sub
     'pushNPCDialog is a variant of pushLblEvent that pushes the string into an NPC dialog box
     Sub pushNPCDialog(ByVal s As String)
         Dim sSplit() As String = s.Split(" ")
@@ -3568,6 +3631,8 @@ Public Class Game
             Size = New Size(iWidth * 0.8, iHeight * 0.8)
         ElseIf screenSize = "Medium" Then
             Size = New Size(iWidth * 0.9, iHeight * 0.9)
+        ElseIf screenSize = "XLarge" Then
+            Size = New Size(iWidth * 1.3, iHeight * 1.3)
         Else
             Size = New Size(iWidth, iHeight)
         End If

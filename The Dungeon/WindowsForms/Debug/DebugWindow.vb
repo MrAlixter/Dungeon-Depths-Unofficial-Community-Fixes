@@ -65,7 +65,7 @@ Public Class Debug_Window
         boxHunger.Value = Game.player.hunger
         boxAtk.Value = Game.player.attack
         boxDef.Value = Game.player.defence
-        boxWil.Value = Game.player.discipline
+        boxWil.Value = Game.player.will
         boxSpd.Value = Game.player.speed
         boxEvd.Value = Game.player.evade
         boxGold.Value = Game.player.gold
@@ -371,7 +371,7 @@ Public Class Debug_Window
     End Sub
 
     Private Sub boxWil_ValueChanged(sender As Object, e As EventArgs) Handles boxWil.ValueChanged
-        Game.player.discipline = boxWil.Value
+        Game.player.will = boxWil.Value
     End Sub
 
     Private Sub boxSpd_ValueChanged(sender As Object, e As EventArgs) Handles boxSpd.ValueChanged

@@ -4,6 +4,7 @@
     Sub New()
         MyBase.setName("Warrior's_Cuirass")
         MyBase.setDesc("A protective garment made more for elite fighters rather than fashion-minded common folk." & vbCrLf & _
+                       "Fits sizes -1 through 3" & vbCrLf & _
                        "+12 DEF" & vbCrLf & _
                        "+5 ATK")
         id = 19

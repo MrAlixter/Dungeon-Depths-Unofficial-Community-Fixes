@@ -15,6 +15,8 @@
             Size = New Size(Size.Width * 0.8, Size.Height * 0.8)
         ElseIf Game.screenSize = "Medium" Then
             Size = New Size(Size.Width * 0.9, Size.Height * 0.9)
+        ElseIf Game.screenSize = "XLarge" Then
+            Size = New Size(Size.Width * 1.3, Size.Height * 1.3)
         End If
         Dim RW As Double = (Me.Width - startingWidth) / startingWidth ' Ratio change of width
         Dim RH As Double = (Me.Height - startingHeight) / startingHeight ' Ratio change of height

@@ -4,6 +4,7 @@
     Sub New()
         MyBase.setName("Magic_Girl_Outfit")
         MyBase.setDesc("A mysterious uniform worn by a mysterious protector." & vbCrLf & _
+                       "Fits magic girls" & vbCrLf & _
                        "+10 DEF" & vbCrLf & _
                        "Magical girls can not remove this uniform.")
         id = 10

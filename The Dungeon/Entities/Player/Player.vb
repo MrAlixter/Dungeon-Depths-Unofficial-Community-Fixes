@@ -5,8 +5,10 @@
 
     'Player Instance variables
     Public name, sex, title, description As String
+    Public pClass As pClass = New pClass(1, 1, 1, 1, 1, 1, "Classless")
+    Public pForm As pForm = New pForm(1, 1, 1, 1, 1, 1, "Human")
     'Public level, xp, nextLevelXp As Integer
-    Public health, maxHealth, mana, maxMana, attack, defence, discipline, speed, evade, gold, lust As Integer
+    Public health, maxHealth, mana, maxMana, attack, defence, will, speed, evade, gold, lust As Integer
     Public hBuff As Integer = 0     'buffs that apply across forms (from charms, etc)
     Public mBuff As Integer = 0
     Public aBuff As Integer = 0
@@ -68,12 +70,11 @@
     Sub New()
         name = "TEMP_NAME"
         sex = "TEMP_SEX"
-        title = "TEMP_TITLE"
         health = 100
         maxHealth = health
         attack = 10
         defence = 10
-        discipline = 10
+        will = 10
         speed = 10
         evade = 10
         gold = 200
@@ -81,7 +82,8 @@
         'level = 1
         'xp = 0
         'nextLevelXp = 100
-        mana = 0
+        mana = 3
+        maxMana = mana
         hunger = 0
 
         createInvPerks()
@@ -184,11 +186,66 @@
     'movement commands
     Sub reachedFPathDest()
         If title = "Thrall" Then
+            If 1 = 1 Then 'Int(Rnd() * 2) = 1 Then
+                Dim out = "You've found one of the crystals your controller is seeking!  As you circle it, you feel a familiar presence enter your mind.  " & _
+                    """Yes!  You've found it!"" your overseer states exitedly, ""I'll be over shortly, don't go anywhere and don't touch that crystal.""" & vbCrLf & _
+                    "Obeying, you take a seat and wait for a few minutes before a violet portal opens up near the crystal and your master steps out."
+                If will > 7 Then
+
+                Else
+                    out += "Despite your excitement, they don't seem to notice you, instead focusing all their attention on the crystalline array.  As they fiddle with it, you notice a slight purple aura beginning to form around them and wait, are those horns sprouting out of their hair that seems to catch a non-existant wind?  With a flourish, they complete ... something ... and a blinding flash engulfs them.  Where once stood your human controller now stands a half-demon who only now seems to have taken notice of you." & _
+                        """Well... It looks like you succeeded.  For that, I will give you an ultimatium.  Join me as my general, or die in these dungeons as my slave."
+                    Game.pushLblEvent(out, AddressOf acceptSorc, AddressOf fightSorc)
+                End If
+
+            Else
+                Game.pushLblEvent("You've found one of the crystals your controller is seeking!  As you circle it, you feel a familiar presence enter your mind.  " & _
+                    """No, that isn't it."" your overseer states disappointedly, ""Well, I guess you can go back to your buisness now.""")
+            End If
             'toDo:  roll a d2 
             '       if 1, then the player has the option to break free of the collar and fight a "Demonic Sorcerer/Sorceress"
             '       otherwise, they check in with their controller who informs them that they haven't found the right array.
         End If
     End Sub
+    Sub fightSorc()
+        Dim m As Monster
+        m = New Monster(9)
+        Game.npcList.Add(m)
+        currTarget = m
+        Game.toCombat()
+        Game.lstLog.Items.Add((m.getName() & " attacks!"))
+        Game.lstLog.TopIndex = Game.lstLog.Items.Count - 1
+    End Sub
+    Sub fightSorc2()
+        Dim m As Monster
+        m = New Monster(8)
+        Game.npcList.Add(m)
+        currTarget = m
+        Game.toCombat()
+        Game.lstLog.Items.Add((m.getName() & " attacks!"))
+        Game.lstLog.TopIndex = Game.lstLog.Items.Count - 1
+    End Sub
+    Sub acceptSorc()
+        perks("thrall") = -1
+        Polymorph.transform(Me, "Half-Succubus")
+        Game.pushLblEvent("""Then I deem your task concluded as a success.  Go now, and take care not to fall under the spell of any others,"" your controller states.")
+    End Sub
+    Sub betraySorc()
+        Game.pushLblEvent("Brushing past you, your ""boss"" heads straight for the array.  As they begin fiddling with it, you take notice of their distraction and begin creeping into a position behind them.  As they chant over the array, you prepare to make your move.  " & _
+                          "As their raving reaches its zenith and the runes enscribed on the crystal begin to glow you strike out, disrupting their ritual.  ""YOU!  DO YOU HAVE ANY IDEA ..."" screams the mage, and while they shout you realize you couldn't care less about them.  " & _
+                          "Looking down, you see that your collar has gone dark and dangles open from your neck.  Grinning, your prepare to fight for your life.", AddressOf fightSorc2)
+        equippedAcce.onUnequip()
+        equippedAcce = New noAcce
+        inventory(69).count -= 1
+
+        Equipment.portraitUDate()
+    End Sub
+    Sub waitSorc()
+        Dim out = "You decide against making a move now, instead waiting to see what happens next.  Your controller doesn't seem to notice you, instead focusing all their attention on the crystalline array.  As they fiddle with it, you notice a slight purple aura beginning to form around them and wait, are those horns sprouting out of their hair that seems to catch a non-existant wind?  With a flourish, they complete ... something ... and a blinding flash engulfs them.  Where once stood your human controller now stands a half-demon who only now seems to have taken notice of you." & _
+                        """Well... It looks like you succeeded.  For that, I will give you an ultimatium.  Join me as my general, or die in these dungeons as my slave."
+        Game.pushLblEvent(out, AddressOf acceptSorc, AddressOf fightSorc)
+    End Sub
+
     Sub followPath()
         If forcedPath(0).X = 0 And forcedPath(0).Y = 0 Then
             reachedFPathDest()
@@ -336,8 +393,9 @@
                     equippedAcce.onEquip()
                     health = getmaxHealth()
                     mana = getmaxMana()
+                    Game.player.will -= 3
+                    If Game.player.will < 1 Then Game.player.will = 0
                 End If
-
                 currTarget.despawn("run")
                 If Not ln1 Is Nothing Then
                     Game.pushLblEvent(ln1, AddressOf thrallLN2)
@@ -348,7 +406,7 @@
             ElseIf currTarget.name.Equals("Enthralling Sorcerer") Or currTarget.name.Equals("Enthralling Sorceress") Then
                 Dim out As String = ""
                 If title = "Thrall" Then
-                    out = "Despite your fatigue, you are able to roll out of the way of the thrall's attempt to restrain you, and make a clumsy escape."
+                    out = "Despite your fatigue, you are able to roll out of the way of the mage's attempt to restrain you, and make a clumsy escape."
                     health = 10
                 Else
                     out = """Wonderful!"", your opponent exclaims as you collapse, ""You'll make a perfect thrall!""" & vbCrLf & _
@@ -361,8 +419,9 @@
                     health = getmaxHealth()
                     mana = getmaxMana()
                     prefForm.snapShift(Me)
+                    Game.player.will -= 3
+                    If Game.player.will < 1 Then Game.player.will = 0
                 End If
-
                 currTarget.despawn("run")
                 Game.pushLblEvent(out)
                 Exit Sub
@@ -929,13 +988,13 @@
                 perks("nekocurse") = -1
             End If
             If Not perks("polymorphed") > -1 Then
-                If perks("nekocurse") < (discipline * 1.2) Then
+                If perks("nekocurse") < (will * 1.2) Then
                     Select Case perks("nekocurse")
-                        Case Int((discipline * 1.2) * 0.1)
+                        Case Int((will * 1.2) * 0.1)
                             Polymorph.transform(Me, "neko", 0)
-                        Case Int((discipline * 1.2) * 0.3)
+                        Case Int((will * 1.2) * 0.3)
                             Polymorph.transform(Me, "neko", 1)
-                        Case Int((discipline * 1.2) * 0.5)
+                        Case Int((will * 1.2) * 0.5)
                             If Not title.Equals("Magic Girl") Then
                                 Polymorph.transform(Me, "neko", 2)
                             Else
@@ -943,11 +1002,11 @@
                                 Game.pushLblEvent("Your hair becomes a shiny black!")
                                 lust += 5
                             End If
-                        Case Int((discipline * 1.2) * 0.7)
+                        Case Int((will * 1.2) * 0.7)
                             Polymorph.transform(Me, "neko", 3)
-                        Case Int((discipline * 1.2) * 0.9)
+                        Case Int((will * 1.2) * 0.9)
                             Polymorph.transform(Me, "neko", 4)
-                        Case Int((discipline * 1.2) * 1.1)
+                        Case Int((will * 1.2) * 1.1)
                             If title.Equals("Magic Girl") Then
                                 Polymorph.transform(Me, "neko", 6)
                             Else
@@ -956,7 +1015,7 @@
                             inventory.Item(12).addOne()
                             lust += 5
                             Equipment.clothesChange("Cat_Lingerie")
-                        Case Int((discipline * 1.2))
+                        Case Int((will * 1.2))
                             Polymorph.transform(Me, "neko", 7)
                     End Select
                     perks("nekocurse") += 1
@@ -1059,9 +1118,14 @@
         If perks("thrall") > -1 Then
             If Game.turn Mod 10 = 0 And Not prefForm.playerMeetsForm(Game.player) Then
                 prefForm.shiftTowards(Game.player)
+                perks("thrall") += 1
+                If perks("thrall") > 30 Then
+                    prefForm.snapShift(Game.player)
+                End If
             End If
+
             If prefForm.playerMeetsForm(Game.player) Then
-                If Game.turn Mod 10 And Int(Rnd() * 75) = 0 And forcedPath Is Nothing And Not Game.combatmode And Not Game.npcmode Then
+                If Game.turn Mod 10 And Int(Rnd() * 40) = 0 And forcedPath Is Nothing And Not Game.combatmode And Not Game.npcmode Then
                     Dim crystalX As Integer
                     Dim crystalY As Integer
                     Do While (Game.mBoard(crystalY, crystalX).Tag <> 1 Or Game.mBoard(crystalY, crystalX).Text <> "")
@@ -1072,7 +1136,7 @@
                     Game.mBoard(crystalY, crystalX).Tag = 2
                     Game.mBoard(crystalY, crystalX).Text = "c"
 
-                    forcedPath = Game.route(Game.player.pos, crystal, "n/a", New List(Of Point))
+                    forcedPath = Game.route(Game.player.pos, crystal, "n/a", New List(Of Point), 0)
 
                     Dim s As String = ""
                     If getWillpower() > 10 Then
@@ -1721,7 +1785,7 @@
         Return speed + sBuff + equippedArmor.sBoost + equippedAcce.sBoost
     End Function
     Function getWillpower()
-        Return discipline + wBuff
+        Return will + wBuff
     End Function
 
     'getter for inventory sub catagories

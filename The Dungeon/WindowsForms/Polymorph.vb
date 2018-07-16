@@ -14,6 +14,8 @@
             Size = New Size(Size.Width * 0.8, Size.Height * 0.8)
         ElseIf Game.screenSize = "Medium" Then
             Size = New Size(Size.Width * 0.9, Size.Height * 0.9)
+        ElseIf Game.screenSize = "XLarge" Then
+            Size = New Size(Size.Width * 1.3, Size.Height * 1.3)
         End If
         Dim RW As Double = (Me.Width - startingWidth) / startingWidth ' Ratio change of width
         Dim RH As Double = (Me.Height - startingHeight) / startingHeight ' Ratio change of height
@@ -385,6 +387,30 @@
             p.mana = 0
             p.maxMana = 0
             p.perks("polymorphed") += (Int(Rnd() * 7) * 1.5)
+        ElseIf form = "Half-Succubus" Then
+            p.attack = 25
+            p.defence = 5
+            p.speed = 20
+            p.mana = 75
+            p.maxMana = 75
+            p.TextColor = Color.FromArgb(231, 126, 245)
+            If p.sex = "Male" Then
+                p.sexBool = True
+                p.MtF()
+                out += " Your body becomes daintier, and you are soon fully female."
+            End If
+            Equipment.clothesChange("Succubus_Garb")
+            Equipment.accChange("Nothing")
+            p.equippedWeapon = New BareFists()
+            p.iArrInd(1) = New Tuple(Of Integer, Boolean)(9, True)
+            p.iArrInd(4) = New Tuple(Of Integer, Boolean)(0, True)
+            p.iArrInd(5) = New Tuple(Of Integer, Boolean)(9, True)
+            p.iArrInd(7) = New Tuple(Of Integer, Boolean)(0, True)
+            p.iArrInd(10) = New Tuple(Of Integer, Boolean)(0, True)
+            p.iArrInd(13) = New Tuple(Of Integer, Boolean)(0, True)
+            p.iArrInd(15) = New Tuple(Of Integer, Boolean)(13, True)
+            p.iArrInd(16) = New Tuple(Of Integer, Boolean)(0, True)
+            p.wingInd = 2
         End If
             p.title = form
             Game.lblEvent.ForeColor = color1
@@ -396,7 +422,7 @@
             p.health += p.hBuff
             Game.cmboxSpec.Items.Clear()
             Game.specialRoute()
-            p.createP()
+        Equipment.portraitUDate()
     End Sub
     Public Sub transform(ByRef p As Player, ByVal form As String, ByVal ind As Integer)
         If p.perks("polymorphed") > -1 Then
@@ -839,7 +865,7 @@
                 p.haircolor = Color.FromArgb(255, 20, 20, 20)
                 Game.pushLblCombatEvent("Your hair grows down to your ass, and darkens to a shade of shiny black.  You now have long black hair!  Your tits expand, your clothes shift, and you feel your will grow weaker. You are now a cat girl!  Soon you will be Marissa's pet! ")
             Case 7
-                If p.discipline < 5 Then
+                If p.will < 5 Then
                     If p.sex = "Male" Then
                         p.MtF()
                         p.be()

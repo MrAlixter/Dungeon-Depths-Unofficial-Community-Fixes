@@ -100,6 +100,32 @@
                 defence = 15
                 speed = 60
                 setInventory({63, 64})
+            Case 8
+                Dim rng = Int(Rnd() * 2)
+                If rng = 0 Then
+                    name = "Enraged Sorcerer"
+                Else
+                    name = "Enraged Sorceress"
+                End If
+                health = 125
+                maxHealth = 125
+                attack = 35
+                defence = 5
+                speed = 25
+                setInventory({})
+            Case 9
+                Dim rng = Int(Rnd() * 2)
+                If rng = 0 Then
+                    name = "Enthralling Half-Demon"
+                Else
+                    name = "Enthralling Half-Demoness"
+                End If
+                health = 200
+                maxHealth = 200
+                attack = 40
+                defence = 7
+                speed = 30
+                setInventory({})
             Case Else
                 name = "Some Guy"
                 health = 66
@@ -180,8 +206,8 @@
         If reason = "run" Then
             If Int(Rnd() * 30) < 2 Then
                 Game.lstLog.Items.Add("Running away makes you less confident.")
-                Game.player.discipline -= 1
-                If Game.player.discipline < 1 Then Game.player.discipline = 0
+                Game.player.will -= 1
+                If Game.player.will < 1 Then Game.player.will = 0
                 Game.player.UIupdate()
             End If
             Game.lstLog.Items.Add("You ran from the " & name & "!")
@@ -221,17 +247,17 @@
             dead = True
             endBoss()
         End If
-            If UBound(inventory) >= 53 AndAlso inventory(53) > 0 And name <> "Shopkeeper" Then
-                Game.pushLblEvent("Your foe drops a key!")
-                Dim inv(53) As Integer
-                inv(53) = 1
-                Dim c1 As Chest = Game.baseChest.Create(inventory, pos)
-                Game.chestList.Add(c1)
-            End If
-            Game.player.perks("nekocurse") = -1
-            Game.player.currState.save(Game.player)
-            Game.fromCombat()
-            Game.lstLog.TopIndex = Game.lstLog.Items.Count - 1
+        If UBound(inventory) >= 53 AndAlso inventory(53) > 0 And name <> "Shopkeeper" Then
+            Game.pushLblEvent("Your foe drops a key!")
+            Dim inv(53) As Integer
+            inv(53) = 1
+            Dim c1 As Chest = Game.baseChest.Create(inventory, pos)
+            Game.chestList.Add(c1)
+        End If
+        Game.player.perks("nekocurse") = -1
+        Game.player.currState.save(Game.player)
+        Game.fromCombat()
+        Game.lstLog.TopIndex = Game.lstLog.Items.Count - 1
     End Sub
     Public Overridable Sub update() Implements Updatable.update
         Game.player.currTarget = Me
@@ -366,7 +392,7 @@
 
         If Int(Rnd() * 30) < 2 Then
             Game.lstLog.Items.Add("Your victory makes you feel more confident.")
-            Game.player.discipline += 1
+            Game.player.will += 1
             Game.player.UIupdate()
         End If
 
@@ -377,22 +403,22 @@
         Game.npcList.Remove(Me)
         Game.lstLog.Items.Add("You've deafeated the " & name & "!")
         Game.player.perks("nekocurse") = -1
-            Game.player.currState.save(Game.player)
-            Game.fromCombat()
-            If Game.player.perks("swordpossess") > -1 Then
-                Game.player.perks("swordpossess") += 1
-                If Game.player.perks("swordpossess") = 2 Then
-                    Polymorph.transform(Game.player, "targax", 0)
-                ElseIf Game.player.perks("swordpossess") = 4 Then
-                    Polymorph.transform(Game.player, "targax", 1)
-                ElseIf Game.player.perks("swordpossess") = 6 And name <> "Targax" Then
-                    Polymorph.transform(Game.player, "targax", 2)
-                End If
+        Game.player.currState.save(Game.player)
+        Game.fromCombat()
+        If Game.player.perks("swordpossess") > -1 Then
+            Game.player.perks("swordpossess") += 1
+            If Game.player.perks("swordpossess") = 2 Then
+                Polymorph.transform(Game.player, "targax", 0)
+            ElseIf Game.player.perks("swordpossess") = 4 Then
+                Polymorph.transform(Game.player, "targax", 1)
+            ElseIf Game.player.perks("swordpossess") = 6 And name <> "Targax" Then
+                Polymorph.transform(Game.player, "targax", 2)
             End If
+        End If
 
-            dead = True
-            endBoss()
-            Game.lstLog.TopIndex = Game.lstLog.Items.Count - 1
+        dead = True
+        endBoss()
+        Game.lstLog.TopIndex = Game.lstLog.Items.Count - 1
     End Sub
     Public Function getName() As String
         If form = "" Then
@@ -413,7 +439,7 @@
         p.maxHealth = 70 + Int(Rnd() * 50)
         p.attack = 5 + Int(Rnd() * 7)
         p.defence = 5 + Int(Rnd() * 7)
-        p.discipline = 5 + Int(Rnd() * 7)
+        p.will = 5 + Int(Rnd() * 7)
         p.speed = 5 + Int(Rnd() * 7)
         p.evade = 5 + Int(Rnd() * 7)
         p.gold = 25 + Int(Rnd() * 200)
@@ -438,7 +464,7 @@
         Dim armor = New Integer() {5, 7, 12, 16, 17, 18, 19, 20, 38, 39, 46, 47, 54, 54}
         Dim armorIndex = armor(Int(Rnd() * (armor.Length)))
         Dim weapon = New Integer() {6, 9, 21, 22}
-        Dim weaponIndex = weapon(Int(Rnd() * (weapon.Length )))
+        Dim weaponIndex = weapon(Int(Rnd() * (weapon.Length)))
         p.inventory(armorIndex).addOne()
         p.inventory(weaponIndex).addOne()
         p.equippedArmor = p.inventory(armorIndex)
