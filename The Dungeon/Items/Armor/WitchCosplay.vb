@@ -4,6 +4,7 @@
     Sub New()
         MyBase.setName("Witch_Cosplay")
         MyBase.setDesc("A glamourous garment made more to show off one's body than to show off any magical ability." & vbCrLf & _
+                       "Fits sizes 1 through 4" & vbCrLf & _
                        "+7 DEF" & vbCrLf & _
                        "+10 MANA")
         id = 18

@@ -3,6 +3,7 @@
     Sub New()
         MyBase.setName("Living_Armor")
         MyBase.setDesc("A suit of living armor embued with a the soul of a mimic." & vbCrLf & _
+                       "Fits sizes -1 through 4" & vbCrLf & _
                        "+6 DEF" & vbCrLf & _
                        "The mimic's movment continually raises lust" & vbCrLf & _
                        "May not be easy to remove")

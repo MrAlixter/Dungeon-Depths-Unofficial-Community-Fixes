@@ -4,7 +4,9 @@
     Sub New()
         MyBase.setName("Chitin_Armor")
         MyBase.setDesc("A set of armor built out of discarded chitin, commonly made and used by arachne huntresses." & vbCrLf & _
-                       "+15 DEF, +10 SPD")
+                       "Fits sizes -1 through 3" & vbCrLf & _
+                       "+15 DEF" & vbCrLf & _
+                       " +10 SPD")
         id = 64
         tier = 3
         MyBase.setUsable(False)

@@ -11,7 +11,7 @@
         MyBase.mBoost = 2
         MyBase.count = 0
         MyBase.value = 0
-        MyBase.fInd = New Tuple(Of Integer, Boolean)(2, True)
-        MyBase.mInd = New Tuple(Of Integer, Boolean)(1, False)
+        MyBase.fInd = New Tuple(Of Integer, Boolean)(3, True)
+        MyBase.mInd = New Tuple(Of Integer, Boolean)(2, False)
     End Sub
 End Class

@@ -4,6 +4,7 @@
     Sub New()
         MyBase.setName("Sorcerer's_Robes")
         MyBase.setDesc("A protective garment made more for pratical funtion than for fashion. " & vbCrLf & _
+                       "Fits sizes -1 through 4" & vbCrLf & _
                        "+7 DEF" & vbCrLf & _
                        "+10 MANA")
         id = 17

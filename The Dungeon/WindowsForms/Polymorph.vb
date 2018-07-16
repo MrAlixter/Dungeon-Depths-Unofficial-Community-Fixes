@@ -6,9 +6,26 @@
     Public tfForm As Boolean = False
     Dim hRatio As Double = 1
     Private Sub Form4_Load(sender As Object, e As EventArgs) Handles MyBase.Load
+
+        'scale to the screen size
+        Dim startingWidth = Me.Width
+        Dim startingHeight = Me.Height
+        If Game.screenSize = "Small" Then
+            Size = New Size(Size.Width * 0.8, Size.Height * 0.8)
+        ElseIf Game.screenSize = "Medium" Then
+            Size = New Size(Size.Width * 0.9, Size.Height * 0.9)
+        ElseIf Game.screenSize = "XLarge" Then
+            Size = New Size(Size.Width * 1.3, Size.Height * 1.3)
+        End If
+        Dim RW As Double = (Me.Width - startingWidth) / startingWidth ' Ratio change of width
+        Dim RH As Double = (Me.Height - startingHeight) / startingHeight ' Ratio change of height
         Dim newFont As Font = New System.Drawing.Font("Consolas", CInt(8 * Me.Size.Width / 210))
         For i = 0 To Me.Controls.Count - 1
             Me.Controls(i).Font = newFont
+            Me.Controls(i).Width += CDbl(Me.Controls(i).Width * RW)
+            Me.Controls(i).Height += CDbl(Me.Controls(i).Height * RH)
+            Me.Controls(i).Left += CDbl(Me.Controls(i).Left * RW)
+            Me.Controls(i).Top += CDbl(Me.Controls(i).Top * RH)
         Next
         Select Case porm
             Case True
@@ -51,7 +68,7 @@
 
     End Sub
     Function canBeTFed(ByRef p As Player) As Boolean
-        If Not p.perks("polymorphed") > -1 And Not p.title.Equals("Magic Girl") Then Return True
+        If Not p.perks("polymorphed") > -1 And Not p.title.Equals("Magic Girl") And Not p.title.Equals("Unconscious") Then Return True
         Return False
     End Function
     'player transform methods
@@ -124,7 +141,7 @@
                 p.haircolor = Color.FromArgb(180, 5, 245, 198)
                 p.skincolor = Color.FromArgb(200, 0, 255, 255)
                 p.iArrInd(6) = New Tuple(Of Integer, Boolean)(5, True)
-                p.iArrInd(9) = New Tuple(Of Integer, Boolean)(5, True)
+                p.iArrInd(9) = New Tuple(Of Integer, Boolean)(9, True)
                 p.iArrInd(10) = New Tuple(Of Integer, Boolean)(0, True)
                 p.iArrInd(13) = New Tuple(Of Integer, Boolean)(0, True)
                 p.iArrInd(16) = New Tuple(Of Integer, Boolean)(0, True)
@@ -370,6 +387,30 @@
             p.mana = 0
             p.maxMana = 0
             p.perks("polymorphed") += (Int(Rnd() * 7) * 1.5)
+        ElseIf form = "Half-Succubus" Then
+            p.attack = 25
+            p.defence = 5
+            p.speed = 20
+            p.mana = 75
+            p.maxMana = 75
+            p.TextColor = Color.FromArgb(231, 126, 245)
+            If p.sex = "Male" Then
+                p.sexBool = True
+                p.MtF()
+                out += " Your body becomes daintier, and you are soon fully female."
+            End If
+            Equipment.clothesChange("Succubus_Garb")
+            Equipment.accChange("Nothing")
+            p.equippedWeapon = New BareFists()
+            p.iArrInd(1) = New Tuple(Of Integer, Boolean)(9, True)
+            p.iArrInd(4) = New Tuple(Of Integer, Boolean)(0, True)
+            p.iArrInd(5) = New Tuple(Of Integer, Boolean)(9, True)
+            p.iArrInd(7) = New Tuple(Of Integer, Boolean)(0, True)
+            p.iArrInd(10) = New Tuple(Of Integer, Boolean)(0, True)
+            p.iArrInd(13) = New Tuple(Of Integer, Boolean)(0, True)
+            p.iArrInd(15) = New Tuple(Of Integer, Boolean)(13, True)
+            p.iArrInd(16) = New Tuple(Of Integer, Boolean)(0, True)
+            p.wingInd = 2
         End If
             p.title = form
             Game.lblEvent.ForeColor = color1
@@ -381,7 +422,7 @@
             p.health += p.hBuff
             Game.cmboxSpec.Items.Clear()
             Game.specialRoute()
-            p.createP()
+        Equipment.portraitUDate()
     End Sub
     Public Sub transform(ByRef p As Player, ByVal form As String, ByVal ind As Integer)
         If p.perks("polymorphed") > -1 Then
@@ -421,6 +462,7 @@
         ElseIf form = "princess" Then
             Select Case ind
                 Case 0
+                    p.title = "Unconscious"
                     Game.pushLblEvent("As you bite into the apple, your mind starts to get foggy.  You yawn, " &
                                                    "and lay down on the floor.  As you nod off, you realize that that apple" &
                                                    " probably was probably either enchanted or poisoned, and as you black out" &
@@ -823,7 +865,7 @@
                 p.haircolor = Color.FromArgb(255, 20, 20, 20)
                 Game.pushLblCombatEvent("Your hair grows down to your ass, and darkens to a shade of shiny black.  You now have long black hair!  Your tits expand, your clothes shift, and you feel your will grow weaker. You are now a cat girl!  Soon you will be Marissa's pet! ")
             Case 7
-                If p.discipline < 5 Then
+                If p.will < 5 Then
                     If p.sex = "Male" Then
                         p.MtF()
                         p.be()

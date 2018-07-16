@@ -28,7 +28,7 @@
                 name = "Explorer"
                 setInventory({0})
             Case 0
-                name = "Enslaved Thrall"
+                name = "Mesmerized Thrall"
                 health = 75
                 maxHealth = 75
                 attack = 15
@@ -47,7 +47,7 @@
                 Try
                     loadGhost()
                 Catch ex As Exception
-                    name = "Enslaved Thrall"
+                    name = "Mesmerized Thrall"
                     health = 75
                     maxHealth = 75
                     attack = 15
@@ -100,6 +100,32 @@
                 defence = 15
                 speed = 60
                 setInventory({63, 64})
+            Case 8
+                Dim rng = Int(Rnd() * 2)
+                If rng = 0 Then
+                    name = "Enraged Sorcerer"
+                Else
+                    name = "Enraged Sorceress"
+                End If
+                health = 125
+                maxHealth = 125
+                attack = 35
+                defence = 5
+                speed = 25
+                setInventory({})
+            Case 9
+                Dim rng = Int(Rnd() * 2)
+                If rng = 0 Then
+                    name = "Enthralling Half-Demon"
+                Else
+                    name = "Enthralling Half-Demoness"
+                End If
+                health = 200
+                maxHealth = 200
+                attack = 40
+                defence = 7
+                speed = 30
+                setInventory({})
             Case Else
                 name = "Some Guy"
                 health = 66
@@ -167,7 +193,7 @@
             End If
         End If
         endMonster()
-        If mindex = 2 And Not name.Equals("Enslaved Thrall") Then
+        If mindex = 2 And Not name.Equals("Mesmerized Thrall") Then
             Dim writer As IO.StreamWriter
             writer = IO.File.CreateText("gho.sts")
             writer.WriteLine("MTGRAVE")
@@ -178,7 +204,23 @@
     Public Overridable Sub despawn(ByVal reason As String)
         Game.npcList.Remove(Me)
         If reason = "run" Then
+            If Int(Rnd() * 30) < 2 Then
+                Game.lstLog.Items.Add("Running away makes you less confident.")
+                Game.player.will -= 1
+                If Game.player.will < 1 Then Game.player.will = 0
+                Game.player.UIupdate()
+            End If
             Game.lstLog.Items.Add("You ran from the " & name & "!")
+        ElseIf reason = "friend" Then
+            If Int(Rnd() * 3) = 0 Then
+                Game.lstLog.Items.Add("The " & name & " gives you some supplies before leaving!")
+                Game.player.inventory(2).addone()
+                Game.player.inventory(13).addone()
+                Game.player.inventory(31).addone()
+                Game.pushLblEvent("+1 Health_Potion" & vbCrLf & "+1 Mana_Potion" & vbCrLf & "+1 Apple_Potion")
+            Else
+                Game.lstLog.Items.Add("The " & name & " is friendly, and you chat a bit before setting back out!")
+            End If
         ElseIf reason = "npc" Then
             Game.lstLog.Items.Add("You walk away from " & name & "!")
         ElseIf reason = "animaltf" Then
@@ -228,6 +270,10 @@
         ElseIf tfCt > tfEnd Then
             tfCt = 0
             revert()
+        End If
+        If Game.player.title = "Thrall" And Me.name.Contains("Thrall") Then
+            despawn("friend")
+            Exit Sub
         End If
         If Not isStunned Then
             If Game.player.title = "Black Cat" Or Game.player.title = "Chicken" And Me.GetType() = GetType(Monster) Then despawn("animaltf")
@@ -343,6 +389,13 @@
         For i = 0 To UBound(inventory)
             totalSum += inventory(i)
         Next
+
+        If Int(Rnd() * 30) < 2 Then
+            Game.lstLog.Items.Add("Your victory makes you feel more confident.")
+            Game.player.will += 1
+            Game.player.UIupdate()
+        End If
+
         Dim c1 As Chest
         c1 = Game.baseChest.Create(inventory, pos)
         If totalSum > 0 Then c1.open()
@@ -350,22 +403,22 @@
         Game.npcList.Remove(Me)
         Game.lstLog.Items.Add("You've deafeated the " & name & "!")
         Game.player.perks("nekocurse") = -1
-            Game.player.currState.save(Game.player)
-            Game.fromCombat()
-            If Game.player.perks("swordpossess") > -1 Then
-                Game.player.perks("swordpossess") += 1
-                If Game.player.perks("swordpossess") = 2 Then
-                    Polymorph.transform(Game.player, "targax", 0)
-                ElseIf Game.player.perks("swordpossess") = 4 Then
-                    Polymorph.transform(Game.player, "targax", 1)
-                ElseIf Game.player.perks("swordpossess") = 6 And name <> "Targax" Then
-                    Polymorph.transform(Game.player, "targax", 2)
-                End If
+        Game.player.currState.save(Game.player)
+        Game.fromCombat()
+        If Game.player.perks("swordpossess") > -1 Then
+            Game.player.perks("swordpossess") += 1
+            If Game.player.perks("swordpossess") = 2 Then
+                Polymorph.transform(Game.player, "targax", 0)
+            ElseIf Game.player.perks("swordpossess") = 4 Then
+                Polymorph.transform(Game.player, "targax", 1)
+            ElseIf Game.player.perks("swordpossess") = 6 And name <> "Targax" Then
+                Polymorph.transform(Game.player, "targax", 2)
             End If
+        End If
 
-            dead = True
-            endBoss()
-            Game.lstLog.TopIndex = Game.lstLog.Items.Count - 1
+        dead = True
+        endBoss()
+        Game.lstLog.TopIndex = Game.lstLog.Items.Count - 1
     End Sub
     Public Function getName() As String
         If form = "" Then
@@ -386,7 +439,7 @@
         p.maxHealth = 70 + Int(Rnd() * 50)
         p.attack = 5 + Int(Rnd() * 7)
         p.defence = 5 + Int(Rnd() * 7)
-        p.discipline = 5 + Int(Rnd() * 7)
+        p.will = 5 + Int(Rnd() * 7)
         p.speed = 5 + Int(Rnd() * 7)
         p.evade = 5 + Int(Rnd() * 7)
         p.gold = 25 + Int(Rnd() * 200)
@@ -411,7 +464,7 @@
         Dim armor = New Integer() {5, 7, 12, 16, 17, 18, 19, 20, 38, 39, 46, 47, 54, 54}
         Dim armorIndex = armor(Int(Rnd() * (armor.Length)))
         Dim weapon = New Integer() {6, 9, 21, 22}
-        Dim weaponIndex = weapon(Int(Rnd() * (weapon.Length )))
+        Dim weaponIndex = weapon(Int(Rnd() * (weapon.Length)))
         p.inventory(armorIndex).addOne()
         p.inventory(weaponIndex).addOne()
         p.equippedArmor = p.inventory(armorIndex)

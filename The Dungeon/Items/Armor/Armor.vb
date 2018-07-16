@@ -3,9 +3,10 @@
     'Armor is an Item subtype that provides a defencive boost, and has artworks for each breast size
     Public aBoost As Integer = 0
     Public dBoost As Integer = 0
+    Public hBoost As Integer = 0
     Public mBoost As Integer = 0
     Public sBoost As Integer = 0
-    Public eBoost As Integer = 0
+    Public wboost As Integer = 0
     Public bsizeneg1 As Tuple(Of Integer, Boolean)
     Public bsize0 As Tuple(Of Integer, Boolean)
     Public bsize1 As Tuple(Of Integer, Boolean)

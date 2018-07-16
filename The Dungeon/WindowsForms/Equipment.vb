@@ -50,7 +50,8 @@
 
         'if clothes offer resistance on the way off, this handles that
         If (p.equippedArmor.getName.Equals("Ropes") And cmbobxArmor.SelectedItem <> "Ropes") Or (p.equippedArmor.getName.Equals("Living_Armor") _
-            And cmbobxArmor.SelectedItem <> "Living_Armor") Or (p.equippedArmor.getName.Equals("Living_Lingerie") And cmbobxArmor.SelectedItem <> "Living_Lingerie") Then
+            And cmbobxArmor.SelectedItem <> "Living_Armor") Or (p.equippedArmor.getName.Equals("Living_Lingerie") And cmbobxArmor.SelectedItem <> "Living_Lingerie") _
+            Or (p.equippedAcce.getName.Equals("Slave_Collar") And cboxAccessory.SelectedItem <> "Slave_Collar") Then
             If Int(Rnd() * 2) = 0 Then
                 Game.pushLblEvent("Despite a struggle agaisnt your bonds, you are unable to escape!  Oh well, maybe next time...")
                 Me.Close()
@@ -70,6 +71,11 @@
             p.equippedAcce.onUnequip()
         End If
 
+        Dim oW, oA, oAc As String
+        oW = p.equippedWeapon.getName
+        oA = p.equippedArmor.getName
+        oAc = p.equippedAcce.getName
+
         'this handles the revert from the magical girl form, if needed
         Dim revertFlag As Boolean = False
         If p.equippedWeapon.getName.Equals("Magic_Girl_Wand") And p.title.Equals("Magic Girl") And Not cmbobxWeapon.Text.Equals("Magic_Girl_Wand") Then
@@ -81,7 +87,7 @@
         End If
 
         'handles the equiping of weapons
-        weaponChange(cmbobxArmor.Text)
+        weaponChange(cmbobxWeapon.Text)
         If p.equippedWeapon.mBoost > 0 Then p.mana += p.equippedWeapon.mBoost
 
         'equip the new armor
@@ -98,28 +104,22 @@
         If p.perks("slutcurse") > -1 Then
             clothingCurse1()
         End If
-
         'handles any tfs or triggers triggered by equipping of certain weapons
-        If p.equippedWeapon.getName = "Magic_Girl_Wand" And Not p.title.Equals("Magic Girl") Then
-            Polymorph.transform(p, "Magic Girl")
-        End If
-
         If p.title.Equals("Magic Girl") And p.equippedArmor.getName.Equals("Magic_Girl_Outfit") And Not revertFlag Then
             p.equippedArmor = p.inventory.Item(10)
             Game.lstLog.Items.Add("A magic girl needs her uniform!")
         End If
-
         If p.title.Equals("Blow-Up Doll") Then
             p.equippedArmor = New Naked
         End If
 
-        If Not p.equippedArmor.getName.Equals(cmbobxArmor.SelectedItem) Then
+        If Not oA.Equals(cmbobxArmor.Text) Then
             p.equippedArmor.onEquip()
         End If
-        If Not p.equippedWeapon.getName.Equals(cmbobxWeapon.SelectedItem) Then
+        If Not oW.Equals(cmbobxWeapon.Text) Then
             p.equippedWeapon.onEquip()
         End If
-        If Not p.equippedAcce.getName.Equals(cboxAccessory.SelectedItem) Then
+        If Not oAc.Equals(cboxAccessory.Text) Then
             p.equippedAcce.onEquip()
         End If
 
@@ -133,11 +133,25 @@
     Private Sub Form3_Load(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles MyBase.Load
         'initializes all variables in case this is the first time it is loaded
         init()
-
-        'scales the text size of the form to the display size
+        'scale to the screen size
+        Dim startingWidth = Me.Width
+        Dim startingHeight = Me.Height
+        If Game.screenSize = "Small" Then
+            Size = New Size(Size.Width * 0.8, Size.Height * 0.8)
+        ElseIf Game.screenSize = "Medium" Then
+            Size = New Size(Size.Width * 0.9, Size.Height * 0.9)
+        ElseIf Game.screenSize = "XLarge" Then
+            Size = New Size(Size.Width * 1.3, Size.Height * 1.3)
+        End If
+        Dim RW As Double = (Me.Width - startingWidth) / startingWidth ' Ratio change of width
+        Dim RH As Double = (Me.Height - startingHeight) / startingHeight ' Ratio change of height
         Dim newFont As Font = New System.Drawing.Font("Consolas", CInt(8 * Me.Size.Width / 210))
         For i = 0 To Me.Controls.Count - 1
             Me.Controls(i).Font = newFont
+            Me.Controls(i).Width += CDbl(Me.Controls(i).Width * RW)
+            Me.Controls(i).Height += CDbl(Me.Controls(i).Height * RH)
+            Me.Controls(i).Left += CDbl(Me.Controls(i).Left * RW)
+            Me.Controls(i).Top += CDbl(Me.Controls(i).Top * RH)
         Next
 
         'adds the default clothes for various forms

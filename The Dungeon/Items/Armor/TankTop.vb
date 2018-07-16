@@ -3,6 +3,7 @@
     Sub New()
         MyBase.setName("Tanktop")
         MyBase.setDesc("A grey tanktop made of a breathable fabric for the athletic." & vbCrLf & _
+                       "Fits sizes -1 through 3" & vbCrLf & _
                        "+1 DEF" & vbCrLf & _
                        "+5 SPD")
         id = 46
