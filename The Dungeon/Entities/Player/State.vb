@@ -2,8 +2,11 @@
     'the State class contains all relevent data unique to a player's form at any given time
 
     'instance data for a state
-    Dim name, sex, title, description As String
-    Dim health, maxHealth, mana, maxMana, attack, defence As Integer
+    Dim name, sex, description As String
+    Public pClass As pClass = New pClass(1, 1, 1, 1, 1, 1, "Classless")
+    Public pForm As pForm = New pForm(1, 1, 1, 1, 1, 1, "Human")
+    Dim health As Double
+    Dim maxHealth, mana, maxMana, attack, defence As Integer
     Dim will, speed, evade, gold, lust As Integer
     Dim breastSize, hunger As Integer
     Dim equippedWeapon As Weapon
@@ -21,7 +24,8 @@
     Sub New(ByRef p As Player)
         name = p.name
         sex = p.sex
-        title = p.title
+        pClass = p.classes(p.pClass.name)
+        pForm = p.forms(p.pForm.name)
         description = p.description
         health = p.health
         maxHealth = p.maxHealth
@@ -55,7 +59,8 @@
     Sub New()
         name = ""
         sex = ""
-        title = ""
+        pClass = New pClass(1, 1, 1, 1, 1, 1, "Classless")
+        pForm = New pForm(1, 1, 1, 1, 1, 1, "Human")
         description = ""
         health = 0
         maxHealth = 0
@@ -88,10 +93,11 @@
     Public Sub load(ByRef p As Player)
         p.name = name
         p.sex = sex
-        p.title = title
+        p.pClass = p.classes(pClass.name)
+        p.pForm = p.forms(pForm.name)
         p.description = description
         p.maxHealth = maxHealth
-        If p.health > maxHealth + p.hBuff Then p.health = (maxHealth + p.hBuff)
+        If p.health > 1 Then p.health = 1
         p.maxMana = maxMana
         If p.mana > maxMana + p.mBuff Then p.mana = maxMana + p.mBuff
         p.attack = attack
@@ -121,7 +127,8 @@
     Public Sub save(ByRef p As Player)
         name = p.name
         sex = p.sex
-        title = p.title
+        pClass = p.classes(p.pClass.name)
+        pForm = p.forms(p.pForm.name)
         description = p.description
         health = p.health
         'health += p.hBuff
@@ -166,7 +173,8 @@
         If readArray(0) = "N/A" Then
             name = ""
             sex = ""
-            title = ""
+            pClass = New pClass(1, 1, 1, 1, 1, 1, "Classless")
+            pForm = New pForm(1, 1, 1, 1, 1, 1, "Human")
             description = ""
             health = 0
             maxHealth = 0
@@ -194,9 +202,10 @@
         End If
 
         name = readArray(0)
-        title = readArray(1)
+        pClass = Game.player.classes(readArray(1).Split("~")(0))
+        pForm = Game.player.forms(readArray(1).Split("~")(1))
         description = readArray(2)
-        health = CInt(readArray(3))
+        health = CDbl(readArray(3))
         maxHealth = CInt(readArray(4))
         mana = CInt(readArray(5))
         maxMana = CInt(readArray(6))
@@ -259,7 +268,7 @@
     'write converts a state into a string to be put into a save file
     Public Function write() As String
         If initFlag Then
-            Dim output As String = CStr(name & "*" & title & "*" & description & "*" & health & "*" & maxHealth & "*" & mana & "*" & maxMana & "*" & wingIndex & "*" & haircolor.A & "*" & skincolor.A & "*" & _
+            Dim output As String = CStr(name & "*" & pClass.name & "~" & pForm.name & "*" & description & "*" & health & "*" & maxHealth & "*" & mana & "*" & maxMana & "*" & wingIndex & "*" & haircolor.A & "*" & skincolor.A & "*" & _
                attack & "*" & defence & "*" & will & "*" & speed & "*" & evade & "*" & hunger & "*" & gold & "*" & equippedArmor.getName() & "*" & equippedWeapon.getName() & "*" & _
                sex & "*" & "placeholder" & "*" & breastSize & "*" & haircolor.R & "*" & haircolor.G & "*" & haircolor.B & "*" & skincolor.R & "*" & skincolor.G & "*" & skincolor.B & "*" & _
                textColor.R & "*" & textColor.G & "*" & textColor.B & "*")

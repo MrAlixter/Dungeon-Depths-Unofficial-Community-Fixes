@@ -51,7 +51,7 @@
                 Game.player.inventory(54).add(1)
                 Equipment.clothesChange("Ropes")
                 Equipment.portraitUDate()
-                If Not Game.player.perks("polymorphed") > -1 And Not Game.player.title.Equals("Magic Girl") Then
+                If Not Polymorph.canBeTFed(Game.player) Then
                     Game.player.pState.save(Game.player)
                 End If
                 Game.player.UIupdate()
@@ -68,7 +68,7 @@
                 End If
 
                 Game.player.skincolor = Color.FromArgb(Game.player.skincolor.A, r, g, b)
-                If Not Game.player.perks("polymorphed") > -1 And Not Game.player.title.Equals("Magic Girl") Then
+                If Not Polymorph.canBeTFed(Game.player) Then
                     Game.player.pState.save(Game.player)
                 End If
                 Game.player.petrify(rubyTF)

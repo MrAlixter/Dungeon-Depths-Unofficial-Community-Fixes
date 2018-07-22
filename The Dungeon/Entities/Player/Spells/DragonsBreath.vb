@@ -4,7 +4,7 @@
         MyBase.New(c, t)
         MyBase.setName("Dragon's Breath")
         MyBase.settier(2)
-        If c.title.Equals("Dragon") Then MyBase.setcost(0) Else MyBase.setcost(6)
+        If c.pForm.name.Equals("Dragon") Then MyBase.setcost(0) Else MyBase.setcost(6)
     End Sub
     Public Overrides Sub effect()
         Dim dmg As Integer = 68

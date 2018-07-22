@@ -18,7 +18,7 @@
     End Sub
 
     Overrides Sub discard()
-        If Game.player.title.Equals("Magic Girl") Then
+        If Game.player.pClass.name.Equals("Magic Girl") Then
             Game.lstLog.Items.Add("You can't just drop your uniform!")
             Game.lstLog.TopIndex = Game.lstLog.Items.Count - 1
             Exit Sub

@@ -87,6 +87,9 @@ Public Class Game
     'startup/new level methods
     'Form1_Load handles the loading of the form
     Private Sub Form1_Load(sender As Object, e As EventArgs) Handles Me.Load
+        If Not IO.File.Exists("sett.ing") Then createSettings()
+        If Not IO.File.Exists("configs.ave") Then createConfigs()
+
         Dim r As System.IO.StreamReader
         r = IO.File.OpenText("sett.ing")
         screenSize = r.ReadLine
@@ -188,6 +191,40 @@ Public Class Game
 
         Game_Resize()
     End Sub
+    Sub createConfigs()
+        Dim w As StreamWriter
+        w = File.CreateText("configs.ave")
+        w.WriteLine("OemQuestion")
+        w.WriteLine("N")
+        w.WriteLine("Y")
+        w.WriteLine("M")
+        w.WriteLine("OemQuotes")
+        w.WriteLine("L")
+        w.WriteLine("K")
+        w.WriteLine("J")
+        w.WriteLine("P")
+        w.WriteLine("U")
+        w.WriteLine("Q")
+        w.WriteLine("B")
+        w.WriteLine("V")
+        w.WriteLine("C")
+        w.WriteLine("Z")
+        w.WriteLine("X")
+        w.WriteLine("T")
+        w.WriteLine("OemSemicolon")
+        w.WriteLine("D")
+        w.WriteLine("A")
+        w.WriteLine("S")
+        w.WriteLine("W")
+        w.Close()
+    End Sub
+    Sub createSettings()
+        Dim w As System.IO.StreamWriter
+        w = System.IO.File.CreateText("sett.ing")
+        w.WriteLine("Large")
+        w.Close()
+    End Sub
+
     Sub loadPotionList()
         Randomize()
         Dim HiddenNames As ArrayList = New ArrayList({"Red_Potion", "Green_Potion", "Blue_Potion", "Yellow_Potion", "Glowing_Potion", "Murky_Potion", "Purple_Potion", "Clear_Potion", "Smokey_Potion", "Rose_Potion", "Aqua_Potion", "Glittery_Potion"})
@@ -296,7 +333,7 @@ Public Class Game
     'newBoard disposes of the old board and its graphical representation
     Sub newBoard()
         If floor > 5 Then
-            If player.title.Equals("Bimbo") Then
+            If player.pClass.name.Equals("Bimbo") Then
                 player.pImage = picBimbof.BackgroundImage
             Else
                 player.pImage = picPlayerf.BackgroundImage
@@ -674,7 +711,7 @@ Public Class Game
                     End If
                 End If
             Next
-
+            If cons.Count - 1 < 1 Then Return path.ToArray
             Dim min As Point = cons(0)
             For i = 0 To cons.Count - 1
                 If dist(cons(i), p2) < dist(min, p2) Then min = cons(i)
@@ -1548,12 +1585,12 @@ Public Class Game
         End If
 
         'handles any tfs or triggers triggered by equipping of certain weapons
-        If player.title.Equals("Magic Girl") And player.equippedArmor.getName.Equals("Magic_Girl_Outfit") Then
+        If player.pClass.name.Equals("Magic Girl") And player.equippedArmor.getName.Equals("Magic_Girl_Outfit") Then
             player.equippedArmor = player.inventory.Item(10)
             lstLog.Items.Add("A magic girl needs her uniform!")
         End If
 
-        If player.title.Equals("Blow-Up Doll") Then
+        If player.pForm.name.Equals("Blow-Up Doll") Then
             player.equippedArmor = New Naked
         End If
 
@@ -1577,7 +1614,7 @@ Public Class Game
         End If
 
         'this handles the revert from the magical girl form, if needed
-        If player.equippedWeapon.getName.Equals("Magic_Girl_Wand") And player.title.Equals("Magic Girl") And Not subString.Equals("Magic_Girl_Wand") Then
+        If player.equippedWeapon.getName.Equals("Magic_Girl_Wand") And player.pClass.name.Equals("Magic Girl") And Not subString.Equals("Magic_Girl_Wand") Then
             lstLog.Items.Add("Putting away your wand causes you to change into your regular self!")
             player.inventory.Item(10).add(-1)
             player.magGState.save(player)
@@ -1685,15 +1722,15 @@ Public Class Game
                 lblWhat.Text = "Equip what?"
                 lstSelec.Items.Add("a - Naked")
                 count += 1
-                If player.title = "Bimbo" Or player.perks("slutcurse") > -1 Then
+                If player.pClass.name = "Bimbo" Or player.perks("slutcurse") > -1 Then
                     lstSelec.Items.Add("b - Skimpy_Clothes")
-                ElseIf player.title = "Princess" Then
+                ElseIf player.pClass.name = "Princess" Then
                     lstSelec.Items.Add("b - Regal_Gown")
-                ElseIf player.title = "Maid" Then
+                ElseIf player.pClass.name = "Maid" Then
                     lstSelec.Items.Add("b - Maid_Outfit")
-                ElseIf player.title = "Succubus" Then
+                ElseIf player.pForm.name = "Succubus" Then
                     lstSelec.Items.Add("b - Succubus_Garb")
-                ElseIf player.title = "Goddess" Then
+                ElseIf player.pClass.name = "Goddess" Then
                     lstSelec.Items.Add("b - Goddess_Gown")
                 Else
                     lstSelec.Items.Add("b - Common_Clothes")
@@ -1977,8 +2014,9 @@ Public Class Game
         player.setPImage()
 
         drawBoard()
-        lblNameTitle.Text = player.name & " the " & player.title
-        lblHealth.Text = "Health = " & player.health & "/" & player.maxHealth
+
+        lblNameTitle.Text = player.name & " the " & player.pClass.name
+        lblHealth.Text = "Health = " & CInt(player.health * player.getmaxHealth) & "/" & player.maxHealth
         lblMana.Text = "Mana = " & player.mana & "/" & player.maxMana
         lblHunger.Text = "Hunger = " & player.hunger & "/100"
         lblATK.Text = "ATK = " & player.getAttack
@@ -1988,6 +2026,7 @@ Public Class Game
         lblEVD.Text = "EVD = " & player.evade
 
         player.currState.save(player)
+
         picStart.Visible = False
 
         pushLblEvent("Game successfully loaded!")
@@ -1997,17 +2036,17 @@ Public Class Game
     End Sub
     Private Sub btnS1_Click(sender As Object, e As EventArgs) Handles btnS1.Click
         If solFlag Then
-            Try
-                loadSave("s1.ave")
-            Catch ex As System.IO.FileNotFoundException
-                MsgBox("Error 004: No save detected!")
-            Catch ex2 As Exception
-                If MessageBox.Show("Error 005: Error in loaded in save file!" & vbCrLf & "Restart?", "Error 005", MessageBoxButtons.YesNo) = Windows.Forms.DialogResult.Yes Then
-                    Application.Restart()
-                Else
-                    Application.Exit()
-                End If
-            End Try
+            'Try
+            loadSave("s1.ave")
+            'Catch ex As System.IO.FileNotFoundException
+            '    MsgBox("Error 004: No save detected!")
+            'Catch ex2 As Exception
+            '    If MessageBox.Show("Error 005: Error in loaded in save file!" & vbCrLf & "Restart?", "Error 005", MessageBoxButtons.YesNo) = Windows.Forms.DialogResult.Yes Then
+            '        Application.Restart()
+            '    Else
+            '        Application.Exit()
+            '    End If
+            'End Try
         Else
             save("s1.ave")
             imagesWorkerArg = 1
@@ -2294,7 +2333,7 @@ Public Class Game
             t.Die()
             Exit Sub
         End If
-        lblPHealth.Text = p.health & "/" & p.getmaxHealth
+        lblPHealth.Text = CInt(p.health * p.getmaxHealth) & "/" & p.getmaxHealth
         lblEHealth.Text = t.health & "/" & t.maxHealth
         lblTurn.Text = "Turn: " & turn
         lblPName.Text = p.name
@@ -2347,7 +2386,7 @@ Public Class Game
             If ratioEH <= 0.2 Then picEHbar.BackColor = Color.Crimson Else picEHbar.BackColor = Color.YellowGreen
         End If
 
-        Dim ratioPH As Double = p.health / p.getmaxHealth * ratio
+        Dim ratioPH As Double = p.health * ratio
         picPHealth.Size = New Size(ratioPH * 174, 15 * ratio)
         x = picPHealth.Location.X + (ratioPH * 174) - (30 * ratio)
         If x > picPHealth.Location.X + (174 * ratio) - (30 * ratio) Then x = picPHealth.Location.X + (174 * ratio) - (30 * ratio)
@@ -2671,12 +2710,12 @@ Public Class Game
     End Sub
     'special route
     Public Sub specialRoute()
-        If player.title = "Warrior" Or player.title = "Paladin" Then cmboxSpec.Items.Add("Berserker Rage")
-        If player.title = "Mage" Or player.title = "Paladin" Then cmboxSpec.Items.Add("Risky Decision")
+        If player.pClass.name = "Warrior" Or player.pClass.name = "Paladin" Then cmboxSpec.Items.Add("Berserker Rage")
+        If player.pClass.name = "Mage" Or player.pClass.name = "Paladin" Then cmboxSpec.Items.Add("Risky Decision")
         If player.breastSize > 3 Then cmboxSpec.Items.Add("Massive Mammaries")
-        If player.title = "Succubus" Then cmboxSpec.Items.Add("Unholy Seduction")
-        If player.title = "Slime" Then cmboxSpec.Items.Add("Absorbtion")
-        If player.title = "Dragon" Then cmboxSpec.Items.Add("Ironhide Fury")
+        If player.pForm.name = "Succubus" Then cmboxSpec.Items.Add("Unholy Seduction")
+        If player.pForm.name = "Slime" Then cmboxSpec.Items.Add("Absorbtion")
+        If player.pForm.name = "Dragon" Then cmboxSpec.Items.Add("Ironhide Fury")
     End Sub
 
     'button click methods
@@ -2996,7 +3035,8 @@ Public Class Game
                 End If
             Next
             'MsgBox("B")
-            If cboxNPCMG.Text = "Turn to Frog" Then Spells.turnToFrogN(m, player) Else Spell.spellCast(m, player, cboxNPCMG.Text)
+            'If cboxNPCMG.Text = "Turn to Frog" Then Spells.turnToFrogN(m, player) Else Spell.spellCast(m, player, cboxNPCMG.Text)
+            Spell.spellCast(m, player, cboxNPCMG.Text)
 
             If npcList.Count > 0 Then
                 For i = 0 To npcList.Count - 1

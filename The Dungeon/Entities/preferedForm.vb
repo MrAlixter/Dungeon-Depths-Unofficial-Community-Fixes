@@ -168,7 +168,7 @@
 
     Public Overrides Function ToString() As String
         Return (hairColor.A & "$" & hairColor.R & "$" & hairColor.G & "$" & hairColor.B & "$" & _
-                hairColor.A & "$" & hairColor.R & "$" & hairColor.G & "$" & hairColor.B & "$" & _
+                skinColor.A & "$" & skinColor.R & "$" & skinColor.G & "$" & skinColor.B & "$" & _
                 hasFemaleHair & "$" & isFemale & "$" & breastSize & "$" & isSlut & "$" & earType)
     End Function
 End Class
