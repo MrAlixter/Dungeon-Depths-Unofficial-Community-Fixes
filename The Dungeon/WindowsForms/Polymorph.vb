@@ -155,7 +155,8 @@
                 p.iArrInd(13) = New Tuple(Of Integer, Boolean)(0, True)
                 p.iArrInd(15) = New Tuple(Of Integer, Boolean)(13, True)
                 p.iArrInd(16) = New Tuple(Of Integer, Boolean)(0, True)
-                p.wingInd = 2
+            p.wingInd = 2
+            p.hornInd = 3
             color1 = Color.FromArgb(231, 126, 245)
             out += " As hellfire engulfs you, you ponder over what you should do to your opponent.  Maybe flay them, mabye just go for a quick clean decapitation, or maybe tie them up and use them as a fucktoy until you get bored?  'Well,' you tell them with a sinister grin, '... whatever I decide on ...' you do a pirouette, showing off your new body in all its glory '... will certainly be more fun for me ...' you lock eyes with your prey and bare your fangs in a vicious sneer '... than for you.'"
         ElseIf p.pClass.name = "Goddess" Then
@@ -274,7 +275,7 @@
             Else
                 p.iArrInd(16) = New Tuple(Of Integer, Boolean)(CharacterGenerator.mHat.Count - 2, False)
             End If
-            out = out & " You cluck nervously as you recall your recent encounter. Wait . . . cluck?!?  You start to notice that everything in the room is looking much bigger.  You flail your wings as panic sets in, while your nose and mouth shift into a beak.  As your white puffy featers come in, you can't help but think back to when the kids in your hometown used to call you ''chicken''. Looks like they were right."
+            out = out & " You cluck nervously as you recall your recent encounter. Wait . . . cluck?!?  You start to notice that everything in the room is looking much bigger.  You flail your wings as panic sets in, while your nose and mouth shift into a beak.  As your white puffy featers come in, you can't help but think back to when the kids in your hometown used to call you ""chicken"". Looks like they were right."
             color1 = Color.LightGoldenrodYellow
         ElseIf form = "Chicken2" Then
             form = "Chicken"
@@ -469,6 +470,8 @@
             p.iArrInd(13) = New Tuple(Of Integer, Boolean)(0, True)
             p.iArrInd(15) = New Tuple(Of Integer, Boolean)(14, True)
             p.iArrInd(16) = New Tuple(Of Integer, Boolean)(0, True)
+        ElseIf form = "Minotaur_F" Then
+            minoFTF(p, ind)
         End If
         Equipment.portraitUDate()
     End Sub
@@ -748,7 +751,7 @@
         Select Case ind
             Case 0
                 p.iArrInd(6) = New Tuple(Of Integer, Boolean)(1, p.sexBool)
-                Game.pushLblCombatEvent("Your ears twitch, becoming feline while Marissa gives you a malicious grin.  'I'm sure you tell where this is going,' she giggles.  You now have cat ears!")
+                Game.pushLblCombatEvent("Your ears twitch, becoming feline while Marissa gives you a malicious grin.  ""I'm sure you tell where this is going,"" she giggles." & vbCrLf & "  You now have cat ears!")
                 p.lust += 5
             Case 1
                 p.iArrInd(4) = New Tuple(Of Integer, Boolean)(0, True)
@@ -814,7 +817,7 @@
                 Equipment.clothesChange("Cat_Lingerie")
                 Equipment.portraitUDate()
 
-                Game.pushLblCombatEvent("As the last of your resistance drains away, all you can find yourself doing is focusing on your new mistress's voice as she orders you down onto all fours.  You happily oblige, purring softly, and she giggles.  ''Come on kitty, lets go!'' she orders and the two of you, with her leading, wander off into the darkness.  GAME OVER!")
+                Game.pushLblCombatEvent("As the last of your resistance drains away, all you can find yourself doing is focusing on your new mistress's voice as she orders you down onto all fours.  You happily oblige, purring softly, and she giggles.  ""Come on kitty, lets go!"" she orders and the two of you, with her leading, wander off into the darkness.  GAME OVER!")
                 MsgBox(Game.lblCombatEvents.Text)
                 p.Die()
                 p.perks("nekocurse") = -1
@@ -844,12 +847,12 @@
                     End If
                     p.haircolor = Color.FromArgb(255, 128, 0, 0)
                     p.pClass = p.classes("Targaxian")
-                    Game.pushLblEvent("As another foe meets its demise at your, no, Targax's blade, you have a brief sense of regret that you defeated him.  Who knows what you could have gained from an alliance with him. ''Oh well, back to the slaughter.''")
+                    Game.pushLblEvent("As another foe meets its demise at your, no, Targax's blade, you have a brief sense of regret that you defeated him.  Who knows what you could have gained from an alliance with him. ""Oh well, back to the slaughter.""")
                 End If
             Case 2
                 p.name = "Targax"
                 p.pClass = p.classes("Soul-Lord")
-                Game.pushLblEvent("You jolt out of the trance you've been in for a unknown period of time, and stare in awe at the ornate glyphs that you have apperantly carved in the ground.  ''What the hell did I ...'' when the voice in your head returns, asking ''Do you accept?''.  ''Do I accept what?'' you demand, to which the voice in your head simply repeats the question.  About to firmly decline whatever nonsense your mental passenger is getting at, you are cut short by a thundering ''DO YOU ACCEPT''.  Your eyes space out and you answer your master the only way you can." & vbCrLf & vbCrLf & "''Yes Master.''")
+                Game.pushLblEvent("You jolt out of the trance you've been in for a unknown period of time, and stare in awe at the ornate glyphs that you have apperantly carved in the ground.  ""What the hell did I ..."" when the voice in your head returns, asking ""Do you accept?"".  ""Do I accept what?"" you demand, to which the voice in your head simply repeats the question.  About to firmly decline whatever nonsense your mental passenger is getting at, you are cut short by a thundering ""DO YOU ACCEPT"".  Your eyes space out and you answer your master the only way you can." & vbCrLf & vbCrLf & """Yes Master.""")
                 p.iArrInd(8) = New Tuple(Of Integer, Boolean)(11, True)
                 p.sState.save(p)
                 p.pState.save(p)
@@ -868,6 +871,21 @@
                 If canBeTFed(p) Then
                     Game.player.pState.save(Game.player)
                 End If
+        End Select
+    End Sub
+    Sub minoFTF(ByRef p As Player, ByVal ind As Integer)
+        Select Case ind
+            Case 0
+                Dim black = Color.FromArgb(255, 30, 30, 30)
+                Dim brown = Color.FromArgb(255, 131, 81, 54)
+                Dim blonde = Color.FromArgb(255, 248, 189, 90)
+                Dim white = Color.FromArgb(255, 249, 249, 249)
+                Dim hcs = {black, brown, blonde, white}
+                Dim hcn = {"Black", "Brown", "Blonde", "White"}
+                Dim i = Int(Rnd() * hcs.Length)
+
+                p.haircolor = hcs(i)
+                Game.pushLblEvent("Your foot falls on an uneven patch of dungeon and you breifly lose your footing. As you lurch forward, catching your balance, your cowbell gives out a loud ring.  Looking franctically around, you are relived to see that nothing seems to have been attracted by the noise.  As you brush your shaken up hair back into place, you notice that at some point your hair color had changed to a shade of " & hcn(i) & ".  𝘔𝘢𝘺𝘣𝘦 𝘐 𝘴𝘵𝘦𝘱𝘱𝘦𝘥 𝘰𝘯 𝘢 𝘤𝘶𝘳𝘴𝘦𝘥 𝘣𝘳𝘪𝘤𝘬 𝘰𝘳 𝘴𝘰𝘮𝘦𝘵𝘩𝘪𝘯𝘨, you muse as you continue on." & vbCrLf & vbCrLf & "You now have " & hcn(i) & " hair!")
         End Select
     End Sub
 

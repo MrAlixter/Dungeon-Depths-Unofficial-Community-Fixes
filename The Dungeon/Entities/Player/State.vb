@@ -18,6 +18,7 @@
     Dim haircolor, skincolor, textColor As Color
     Dim pImage As Image
     Dim wingIndex As Integer
+    Dim hornIndex As Integer
     Public initFlag As Boolean = False
 
     'constructs a state from an instance of a player
@@ -52,6 +53,7 @@
         textColor = p.TextColor
         pImage = p.pImage
         wingIndex = p.wingInd
+        hornIndex = p.hornInd
         initFlag = True
     End Sub
     'constructs a state with placeholder values
@@ -86,6 +88,7 @@
         skincolor = Color.Black
         textColor = Color.Black
         wingIndex = 0
+        hornIndex = 0
         ReDim iArrInd(16)
     End Sub
 
@@ -121,6 +124,7 @@
         p.skincolor = skincolor
         p.TextColor = textColor
         p.wingInd = wingIndex
+        p.hornInd = hornIndex
         p.pImage = pImage
     End Sub
     'save applies a given instance of a player to a state
@@ -162,6 +166,7 @@
         skincolor = p.skincolor
         textColor = p.TextColor
         wingIndex = p.wingInd
+        hornIndex = p.hornInd
         pImage = p.pImage
     End Sub
 
@@ -210,6 +215,7 @@
         mana = CInt(readArray(5))
         maxMana = CInt(readArray(6))
         If Not readArray(7).Equals("placehold") Then wingIndex = CInt(readArray(7)) Else wingIndex = 0
+        If Not readArray(20).Equals("placeholder") Then hornIndex = CInt(readArray(20)) Else hornIndex = 0
         attack = CInt(readArray(10))
         defence = CInt(readArray(11))
         will = CInt(readArray(12))
@@ -270,7 +276,7 @@
         If initFlag Then
             Dim output As String = CStr(name & "*" & pClass.name & "~" & pForm.name & "*" & description & "*" & health & "*" & maxHealth & "*" & mana & "*" & maxMana & "*" & wingIndex & "*" & haircolor.A & "*" & skincolor.A & "*" & _
                attack & "*" & defence & "*" & will & "*" & speed & "*" & evade & "*" & hunger & "*" & gold & "*" & equippedArmor.getName() & "*" & equippedWeapon.getName() & "*" & _
-               sex & "*" & "placeholder" & "*" & breastSize & "*" & haircolor.R & "*" & haircolor.G & "*" & haircolor.B & "*" & skincolor.R & "*" & skincolor.G & "*" & skincolor.B & "*" & _
+               sex & "*" & hornIndex & "*" & breastSize & "*" & haircolor.R & "*" & haircolor.G & "*" & haircolor.B & "*" & skincolor.R & "*" & skincolor.G & "*" & skincolor.B & "*" & _
                textColor.R & "*" & textColor.G & "*" & textColor.B & "*")
             output += perks.Count & "*"
             For Each kvp As KeyValuePair(Of String, Integer) In perks

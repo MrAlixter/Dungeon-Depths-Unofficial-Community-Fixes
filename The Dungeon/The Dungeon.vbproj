@@ -125,7 +125,7 @@
     <Compile Include="Entities\Player\Spells\turnToFrog.vb" />
     <Compile Include="Entities\preferedForm.vb" />
     <Compile Include="Items\Accesories\Accessory.vb" />
-    <Compile Include="Items\Unimplemented\Cowbell.vb" />
+    <Compile Include="Items\Accesories\Cowbell.vb" />
     <Compile Include="Items\Accesories\HeartNecklace.vb" />
     <Compile Include="Items\Accesories\noAcce.vb" />
     <Compile Include="Items\Accesories\RedHeadband.vb" />
@@ -1009,6 +1009,9 @@
     <Content Include="img\fTF\tfClothes\gfClothes103.png">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
+    <Content Include="img\fTF\tfClothes\gfClothes104.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
     <Content Include="img\fTF\tfClothes\tfClothes5.png">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
@@ -1208,13 +1211,12 @@
     <Content Include="img\fTorso.png">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
-    <Content Include="img\Horns\horns0.png">
+    <Content Include="img\Horns\blank.png">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
-    <Content Include="img\Horns\horns1.png">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
-    <Content Include="img\Horns\horns2.png">
+    <Content Include="img\Horns\horns1.png" />
+    <Content Include="img\Horns\horns2.png" />
+    <Content Include="img\Horns\horns3.png">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
     <Content Include="img\icon.png">
@@ -1486,6 +1488,12 @@
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
     <Content Include="img\mTF\tfClothes\mClothes18.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="img\mTF\tfClothes\mClothes19.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="img\mTF\tfClothes\mClothes20.png">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
     <Content Include="img\mTF\tfClothes\mClothes5.png">

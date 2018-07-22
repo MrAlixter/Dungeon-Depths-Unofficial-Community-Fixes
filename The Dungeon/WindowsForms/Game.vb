@@ -2308,14 +2308,13 @@ Public Class Game
         Dim ct As Integer = 0
         Dim out As String = ""
         Do While c < sSplit.Length
-            If ct < 50 Then
-                If Not sSplit(c).Equals("fugoo") Then
+            If ct < 45 Then
+                If Not sSplit(c).Contains(vbCrLf) Then
                     out += sSplit(c) & " "
                     ct += sSplit(c).Length + 1
                     c += 1
                 Else
-                    sSplit(c) = ""
-                    out += vbCrLf
+                    out += sSplit(c) & " "
                     ct = 0
                     c += 1
                 End If
@@ -3203,13 +3202,12 @@ Public Class Game
         Do While c < sSplit.Length
             If sSplit(c).Equals(vbCrLf) Then ct = 0
             If ct < 70 Then
-                If Not sSplit(c).Equals("fugoo") Then
+                If Not sSplit(c).Contains(vbCrLf) Then
                     out += sSplit(c) & " "
                     ct += sSplit(c).Length + 1
                     c += 1
                 Else
-                    sSplit(c) = ""
-                    out += vbCrLf
+                    out += sSplit(c) & " "
                     ct = 0
                     c += 1
                 End If
@@ -3237,11 +3235,16 @@ Public Class Game
         Dim ct As Integer = 0
         Dim out As String = ""
         Do While c < sSplit.Length
-            If sSplit(c).Equals(vbCrLf) Then ct = 0
             If ct < 70 Then
-                out += sSplit(c) & " "
-                ct += sSplit(c).Length + 1
-                c += 1
+                If Not sSplit(c).Contains(vbCrLf) Then
+                    out += sSplit(c) & " "
+                    ct += sSplit(c).Length + 1
+                    c += 1
+                Else
+                    out += sSplit(c) & " "
+                    ct = 0
+                    c += 1
+                End If
             Else
                 out += vbCrLf
                 ct = 0
@@ -3267,11 +3270,16 @@ Public Class Game
         Dim ct As Integer = 0
         Dim out As String = ""
         Do While c < sSplit.Length
-            If sSplit(c).Equals(vbCrLf) Then ct = 0
             If ct < 70 Then
-                out += sSplit(c) & " "
-                ct += sSplit(c).Length + 1
-                c += 1
+                If Not sSplit(c).Contains(vbCrLf) Then
+                    out += sSplit(c) & " "
+                    ct += sSplit(c).Length + 1
+                    c += 1
+                Else
+                    out += sSplit(c) & " "
+                    ct = 0
+                    c += 1
+                End If
             Else
                 out += vbCrLf
                 ct = 0

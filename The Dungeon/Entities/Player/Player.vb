@@ -56,6 +56,7 @@
 
     Public solFlag = False
     Public wingInd = 0
+    Public hornInd = 0
     Public isAttacking = False
 
     Public forcedPath() As Point = Nothing
@@ -411,7 +412,7 @@
                 Else
                     out = """Wonderful!"", your opponent exclaims as you collapse, ""You'll make a perfect thrall!""" & vbCrLf & _
                           "𝘛𝘩𝘳𝘢𝘭𝘭!? you think moments before a small metal collar finds its way around your neck and a network of runes inscribed on it begin glowing with your new master's magic.  𝘞𝘢𝘪𝘵 ... 𝘕𝘦𝘸 𝘔𝘈𝘚𝘛𝘌𝘙?!  You don't have a momment to rest before your mind is filled with a booming voice." & vbCrLf & _
-                          """LISTEN UP, NEW SLAVE!  I have need of your services."" your new master begins, ""In this dungeon, there are several high-power mana arrays.  Only one of them, however, is capable of bestowing the power of a demon lord onto a mortal such as I.  Your task is to find and inspect these arrays, and report back to me with your findings.""  They snicker,  ""I'm sure you won't let me down, but I'm going to need to make a few changes to make you more ... uniform ... with the rest of your collegues.""" & vbCrLf & vbCrLf & "        .....       " & vbCrLf & vbCrLf & "With a final warning not to fail them, the foreign presence leaves your mind and you are once again alone with your thoughts and your task."
+                          """LISTEN UP, NEW SLAVE!  I have need of your services."" your new master begins, ""In this dungeon, there are several high-power mana arrays.  Only one of them, however, is capable of bestowing the power of a demon lord onto a mortal such as I.  Your task is to find and inspect these arrays, and report back to me with your findings.""  They snicker,  ""I'm sure you won't let me down, but I'm going to need to make a few changes to make you more ... uniform ... with the rest of your collegues.""" & vbCrLf & vbCrLf & "...       " & vbCrLf & vbCrLf & "With a final warning not to fail them, the foreign presence leaves your mind and you are once again alone with your thoughts and your task."
                     inventory(69).addone()
                     If Not equippedAcce.getName.Equals("Nothing") Then equippedAcce.onUnequip()
                     equippedAcce = inventory(69)
@@ -813,6 +814,7 @@
         inventory.Add(New RedHeadband()) '67
         inventory.Add(New RubyCirclet()) '68
         inventory.Add(New ThrallCollar()) '69
+        inventory.Add(New Cowbell()) '70
 
         For i = 0 To inventory.Count - 1
             If inventory(i).GetType().IsSubclassOf(GetType(MysteryPotion)) Then
@@ -844,7 +846,7 @@
                 inventory(34), inventory(35), inventory(44)}
 
         acce = {New noAcce(), inventory(66), inventory(67), inventory(68),
-                inventory(69)}
+                inventory(69), inventory(70)}
 
         potions = {inventory(2), inventory(13), inventory(14), inventory(25),
                    inventory(26), inventory(27), inventory(28), inventory(29),
@@ -869,6 +871,7 @@
         perks.Add("livearm", -1) '12
         perks.Add("livelinge", -1) '13
         perks.Add("thrall", -1) '14
+        perks.Add("cowbell", -1) '15
 
         'Creates the class dictionary
         classes.Add("Classless", New pClass(1, 1, 1, 1, 1, 1, "Classless"))
@@ -1183,6 +1186,41 @@
                 End If
             End If
         End If
+
+        'cowbell tf
+        If perks("cowbell") > -1 Then
+            Select Case perks("cowbell")
+                Case 0
+                    If Game.turn Mod 20 = 1 Then
+                        If Int(Rnd() * 2) Then
+                            Polymorph.transform(Me, "Minotaur_F", 0)
+                            perks("cowbell") += 1
+                        End If
+                    End If
+                Case 1
+
+                Case 2
+
+                Case 3
+
+                Case 4
+
+                Case 5
+
+                Case 6
+
+                Case 7
+
+                Case 8
+
+                Case 9
+
+                Case 10
+
+                Case Else
+                    perks("cowbell") = -1
+            End Select
+        End If
         Game.lstLog.TopIndex = Game.lstLog.Items.Count - 1
         description = CStr(name & " is a " & sex & " " & pForm.name & " " & pClass.name)
     End Sub
@@ -1333,6 +1371,7 @@
         Game.lstLog.TopIndex = Game.lstLog.Items.Count - 1
         If lust > 0 Then lustUpdate()
         If wingInd > 0 Then addWings(wingInd)
+        If hornInd > 0 Then addHorns(hornInd)
 
         If Not solFlag And Not chk Then Game.picPortrait.BackgroundImage = CharacterGenerator.CreateBMP(iArr)
         oneLayerImgCheck(chk)
@@ -1765,6 +1804,9 @@
     Sub addWings(ByVal i As Integer)
         iArr(1) = CharacterGenerator.CreateBMP({CharacterGenerator.wings(i), iArr(1)})
     End Sub
+    Sub addHorns(ByVal i As Integer)
+        iArr(6) = CharacterGenerator.CreateBMP({CharacterGenerator.horns(i), iArr(6)})
+    End Sub
     Public Sub petrify(ByVal c As Color)
         If pForm.name.Equals("Dragon") Then revert2()
         changeHairColor(c)
@@ -1786,7 +1828,7 @@
     Public Sub toStatue(ByVal c As Color, ByVal r As String)
         petrify(c)
         If r.Equals("midas") Then
-            Dim out As String = "As you reach out to touch your opponent, you clumsily swipe, missing them, and hit...yourself?  Already your legs are gold, and only have a moment to scream, your vocal cords quickly following suit. ''Well,'' you think, ''...at least I won't have to worry abou money anymore.'' " & vbCrLf & "And like that, the dungeon gains another decoration."
+            Dim out As String = "As you reach out to touch your opponent, you clumsily swipe, missing them, and hit...yourself?  Already your legs are gold, and only have a moment to scream, your vocal cords quickly following suit. ""Well,"" you think, ""...at least I won't have to worry abou money anymore."" " & vbCrLf & "And like that, the dungeon gains another decoration."
             Game.pushLblEvent(out)
             MsgBox(out)
             Die()
@@ -1939,7 +1981,7 @@
             out += m.ToString
             out += " "
         Next
-        If out.Equals("Beige ") Then out = "Platinum Blonde "
+        If out.Equals("Beige ") Or out.Equals("Wheat ") Then out = "Platinum Blonde "
         Return out.ToLower
     End Function
     Function getHairColor() As String
