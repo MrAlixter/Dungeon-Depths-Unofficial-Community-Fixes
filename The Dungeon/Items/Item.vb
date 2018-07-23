@@ -1,4 +1,5 @@
 ﻿Public Class Item
+    Implements IComparable
     Dim name As String = ""
     Dim description As String
     Dim isUsable As Boolean
@@ -7,8 +8,17 @@
     Public tier As Integer = Nothing
     Public id As Integer = Nothing
 
+    Overloads Function CompareTo(ByVal obj As Object) As Integer Implements IComparable.CompareTo
+        Dim r As Integer
+        Try
+            r = Me.getName.CompareTo(obj.getName.ToString)
+        Catch ex As Exception
+            r = 0
+        End Try
+        Return r
+    End Function
     'getters/setters
-    Function getName()
+    Function getName() As String
         Return name
     End Function
     Sub setName(ByVal s As String)

@@ -4,6 +4,7 @@
     Sub New()
         MyBase.setName("Brawler_Cosplay")
         MyBase.setDesc("A glamourous garment made more for the highlighting one's body than for any practical function. " & vbCrLf &
+                       "Fits sizes 1 through 4" & vbCrLf & _
                        "+12 DEF" & vbCrLf &
                        "+5 ATK")
         id = 20

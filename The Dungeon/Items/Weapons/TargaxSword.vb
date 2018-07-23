@@ -26,4 +26,11 @@
         dmg += (p.getAttack) + (Me.aBoost)
         Return dmg - ((m.defence / 100) * dmg)
     End Function
+
+    Public Overrides Sub onEquip()
+        If Not Game.player.perks("swordpossess") > -1 Then Game.player.perks("swordpossess") = 0
+    End Sub
+    Public Overrides Sub onUnequip()
+        If Not Game.player.perks("swordpossess") > -1 Then Game.player.perks("swordpossess") = -1
+    End Sub
 End Class

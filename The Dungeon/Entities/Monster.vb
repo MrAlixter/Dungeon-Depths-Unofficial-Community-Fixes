@@ -28,7 +28,7 @@
                 name = "Explorer"
                 setInventory({0})
             Case 0
-                name = "Enslaved Thrall"
+                name = "Mesmerized Thrall"
                 health = 75
                 maxHealth = 75
                 attack = 15
@@ -47,7 +47,7 @@
                 Try
                     loadGhost()
                 Catch ex As Exception
-                    name = "Enslaved Thrall"
+                    name = "Mesmerized Thrall"
                     health = 75
                     maxHealth = 75
                     attack = 15
@@ -99,7 +99,33 @@
                 attack = 50
                 defence = 15
                 speed = 60
-                setInventory({63})
+                setInventory({63, 64})
+            Case 8
+                Dim rng = Int(Rnd() * 2)
+                If rng = 0 Then
+                    name = "Enraged Sorcerer"
+                Else
+                    name = "Enraged Sorceress"
+                End If
+                health = 125
+                maxHealth = 125
+                attack = 35
+                defence = 5
+                speed = 25
+                setInventory({})
+            Case 9
+                Dim rng = Int(Rnd() * 2)
+                If rng = 0 Then
+                    name = "Enthralling Half-Demon"
+                Else
+                    name = "Enthralling Half-Demoness"
+                End If
+                health = 200
+                maxHealth = 200
+                attack = 40
+                defence = 7
+                speed = 30
+                setInventory({})
             Case Else
                 name = "Some Guy"
                 health = 66
@@ -128,7 +154,29 @@
     End Sub
     Public Overridable Sub attackCMD(ByVal target As Player)
         Game.player.currTarget = Me
-        target.takeDMG(attack)
+        Dim crit = Int(Rnd() * 20)
+        Dim dmg = attack
+        Select Case crit
+            Case 19
+                dmg = -2
+            Case Else
+                If target.getSpeed <= 20 Then
+                    If crit < 1 Then dmg = -1
+                ElseIf target.getSpeed <= 40 Then
+                    If crit < 2 Then dmg = -1
+                ElseIf target.getSpeed <= 60 Then
+                    If crit < 3 Then dmg = -1
+                ElseIf target.getSpeed <= 80 Then
+                    If crit < 4 Then dmg = -1
+                ElseIf target.getSpeed <= 100 Then
+                    If crit < 5 Then dmg = -1
+                Else
+                    Dim ebound = 5 + ((target.getSpeed / 9999) * 5)
+                    If ebound > 12 Then ebound = 12
+                    If crit < ebound Then dmg = -1
+                End If
+        End Select
+        target.takeDMG(dmg)
     End Sub
     Public Sub takeDMG(ByVal dmg As Integer)
         health -= dmg
@@ -137,12 +185,15 @@
     Public Sub Die()
         If name = "Explorer" Then
             If MessageBox.Show("Would you like to do the Explorer's body swap?", "Body Swap?", MessageBoxButtons.YesNo) = Windows.Forms.DialogResult.Yes Then 'Int(Rnd() * 3) = 0 Then '
-                bodySwap(Game.player)
+                Try
+                    bodySwap(Game.player)
+                Catch ex As Exception
+                    Game.pushLblEvent("The body swap fails!")
+                End Try
             End If
         End If
         endMonster()
-        Game.npcList.Remove(Me)
-        If mindex = 2 And Not name.Equals("Enslaved Thrall") Then
+        If mindex = 2 And Not name.Equals("Mesmerized Thrall") Then
             Dim writer As IO.StreamWriter
             writer = IO.File.CreateText("gho.sts")
             writer.WriteLine("MTGRAVE")
@@ -153,7 +204,23 @@
     Public Overridable Sub despawn(ByVal reason As String)
         Game.npcList.Remove(Me)
         If reason = "run" Then
+            If Int(Rnd() * 30) < 2 Then
+                Game.lstLog.Items.Add("Running away makes you less confident.")
+                Game.player.will -= 1
+                If Game.player.will < 1 Then Game.player.will = 0
+                Game.player.UIupdate()
+            End If
             Game.lstLog.Items.Add("You ran from the " & name & "!")
+        ElseIf reason = "friend" Then
+            If Int(Rnd() * 3) = 0 Then
+                Game.lstLog.Items.Add("The " & name & " gives you some supplies before leaving!")
+                Game.player.inventory(2).addone()
+                Game.player.inventory(13).addone()
+                Game.player.inventory(31).addone()
+                Game.pushLblEvent("+1 Health_Potion" & vbCrLf & "+1 Mana_Potion" & vbCrLf & "+1 Apple_Potion")
+            Else
+                Game.lstLog.Items.Add("The " & name & " is friendly, and you chat a bit before setting back out!")
+            End If
         ElseIf reason = "npc" Then
             Game.lstLog.Items.Add("You walk away from " & name & "!")
         ElseIf reason = "animaltf" Then
@@ -166,6 +233,19 @@
             If Me.GetType() Is GetType(Monster) Then output += "The "
             output += name & " runs away in fear!"
             Game.lstLog.Items.Add(output)
+        ElseIf reason = "cupcake" Then
+            Dim totalSum As Integer = 0
+            For i = 0 To UBound(inventory)
+                totalSum += inventory(i)
+            Next
+            Dim c1 As Chest
+            c1 = Game.baseChest.Create(inventory, pos)
+            If totalSum > 0 Then c1.open()
+            Game.npcList.Remove(Me)
+            Game.lstLog.Items.Add("You've deafeated the " & name & "!")
+            Game.player.currState.save(Game.player)
+            dead = True
+            endBoss()
         End If
         If UBound(inventory) >= 53 AndAlso inventory(53) > 0 And name <> "Shopkeeper" Then
             Game.pushLblEvent("Your foe drops a key!")
@@ -185,12 +265,15 @@
             Die()
             Exit Sub
         End If
-        If dead = True Then Exit Sub
         If tfCt > 0 Then
             tfCt += 1
         ElseIf tfCt > tfEnd Then
             tfCt = 0
             revert()
+        End If
+        If Game.player.title = "Thrall" And Me.name.Contains("Thrall") Then
+            despawn("friend")
+            Exit Sub
         End If
         If Not isStunned Then
             If Game.player.title = "Black Cat" Or Game.player.title = "Chicken" And Me.GetType() = GetType(Monster) Then despawn("animaltf")
@@ -299,13 +382,20 @@
     Private Sub endBoss()
         If sName.Equals("Marissa the Enchantress") Then Game.beatboss(1) = True
         If sName.Equals("Targax the Brutal") Then Game.beatboss(2) = True
-        If sName.Equals("Explorer") Then Game.beatboss(Game.floor) = True
+        If sName.Equals("Explorer") And Game.floor < 6 Then Game.beatboss(Game.floor) = True
     End Sub
     Private Sub endMonster()
         Dim totalSum As Integer = 0
         For i = 0 To UBound(inventory)
             totalSum += inventory(i)
         Next
+
+        If Int(Rnd() * 30) < 2 Then
+            Game.lstLog.Items.Add("Your victory makes you feel more confident.")
+            Game.player.will += 1
+            Game.player.UIupdate()
+        End If
+
         Dim c1 As Chest
         c1 = Game.baseChest.Create(inventory, pos)
         If totalSum > 0 Then c1.open()
@@ -349,7 +439,7 @@
         p.maxHealth = 70 + Int(Rnd() * 50)
         p.attack = 5 + Int(Rnd() * 7)
         p.defence = 5 + Int(Rnd() * 7)
-        p.discipline = 5 + Int(Rnd() * 7)
+        p.will = 5 + Int(Rnd() * 7)
         p.speed = 5 + Int(Rnd() * 7)
         p.evade = 5 + Int(Rnd() * 7)
         p.gold = 25 + Int(Rnd() * 200)
@@ -374,7 +464,7 @@
         Dim armor = New Integer() {5, 7, 12, 16, 17, 18, 19, 20, 38, 39, 46, 47, 54, 54}
         Dim armorIndex = armor(Int(Rnd() * (armor.Length)))
         Dim weapon = New Integer() {6, 9, 21, 22}
-        Dim weaponIndex = weapon(Int(Rnd() * (weapon.Length )))
+        Dim weaponIndex = weapon(Int(Rnd() * (weapon.Length)))
         p.inventory(armorIndex).addOne()
         p.inventory(weaponIndex).addOne()
         p.equippedArmor = p.inventory(armorIndex)

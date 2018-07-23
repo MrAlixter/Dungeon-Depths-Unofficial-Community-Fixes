@@ -4,6 +4,7 @@
     Sub New()
         MyBase.setName("Steel_Armor")
         MyBase.setDesc("A basic armor set forged from steel." & vbCrLf & _
+                       "Fits sizes -1 through 3" & vbCrLf & _
                        "+5 DEF")
         id = 5
         tier = Nothing

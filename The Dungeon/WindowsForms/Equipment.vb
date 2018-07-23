@@ -8,6 +8,9 @@
     'weapons
     Public wNameList() As String = {"Fists", "Steel_Sword", "SoulBlade", "Magic_Girl_Wand"}
     Public wList() As Weapon = {New BareFists(), New SteelSword(), Game.player.inventory.Item(9)}
+    'accessories
+    Public acNameList() As String = {"Nothing"}
+    Public acList() As Accessory = {New noAcce()}
 
     'define a shorthand representation of the main player
     Dim p As Player = Game.player
@@ -19,8 +22,11 @@
 
         Dim a As Tuple(Of String(), Armor())
         Dim w As Tuple(Of String(), Weapon())
+        Dim ac As Tuple(Of String(), Accessory())
+
         a = p.getArmors
         w = p.getWeapons
+        ac = p.getAccesories
 
 
         aNameList = a.Item1
@@ -28,6 +34,9 @@
 
         wNameList = w.Item1
         wList = w.Item2
+
+        acNameList = ac.Item1
+        acList = ac.Item2
     End Sub
 
     'handles the click of the 'ok' button
@@ -41,7 +50,8 @@
 
         'if clothes offer resistance on the way off, this handles that
         If (p.equippedArmor.getName.Equals("Ropes") And cmbobxArmor.SelectedItem <> "Ropes") Or (p.equippedArmor.getName.Equals("Living_Armor") _
-            And cmbobxArmor.SelectedItem <> "Living_Armor") Or (p.equippedArmor.getName.Equals("Living_Lingerie") And cmbobxArmor.SelectedItem <> "Living_Lingerie") Then
+            And cmbobxArmor.SelectedItem <> "Living_Armor") Or (p.equippedArmor.getName.Equals("Living_Lingerie") And cmbobxArmor.SelectedItem <> "Living_Lingerie") _
+            Or (p.equippedAcce.getName.Equals("Slave_Collar") And cboxAccessory.SelectedItem <> "Slave_Collar") Then
             If Int(Rnd() * 2) = 0 Then
                 Game.pushLblEvent("Despite a struggle agaisnt your bonds, you are unable to escape!  Oh well, maybe next time...")
                 Me.Close()
@@ -50,6 +60,21 @@
                 Game.pushLblEvent("You deftly take off your clothes, despite the resistance they put up.")
             End If
         End If
+
+        If Not p.equippedArmor.getName.Equals(cmbobxArmor.SelectedItem) Then
+            p.equippedArmor.onUnequip()
+        End If
+        If Not p.equippedWeapon.getName.Equals(cmbobxWeapon.SelectedItem) Then
+            p.equippedWeapon.onUnequip()
+        End If
+        If Not p.equippedAcce.getName.Equals(cboxAccessory.SelectedItem) Then
+            p.equippedAcce.onUnequip()
+        End If
+
+        Dim oW, oA, oAc As String
+        oW = p.equippedWeapon.getName
+        oA = p.equippedArmor.getName
+        oAc = p.equippedAcce.getName
 
         'this handles the revert from the magical girl form, if needed
         Dim revertFlag As Boolean = False
@@ -62,22 +87,16 @@
         End If
 
         'handles the equiping of weapons
-        Dim sWeapon As Weapon = Nothing
-        If cmbobxWeapon.SelectedItem <> "" Then
-            For i = 0 To UBound(wNameList)
-                If cmbobxWeapon.SelectedItem.ToString().Split()(0) = wNameList(i) Then
-                    sWeapon = wList(i)
-                    Exit For
-                End If
-            Next
-            If sWeapon Is Nothing Then Exit Sub
-            p.equippedWeapon = sWeapon
-        End If
+        weaponChange(cmbobxWeapon.Text)
         If p.equippedWeapon.mBoost > 0 Then p.mana += p.equippedWeapon.mBoost
 
         'equip the new armor
         If Not revertFlag Then clothesChange(cmbobxArmor.Text)
         If p.equippedArmor.mBoost > 0 Then p.mana += p.equippedArmor.mBoost
+
+        'equip the new accessory
+        If Not revertFlag Then accChange(cboxAccessory.Text)
+        If p.equippedAcce.mBoost > 0 Then p.mana += p.equippedAcce.mBoost
 
         If p.mana > p.getmaxMana Then p.mana = p.getmaxMana
 
@@ -85,28 +104,23 @@
         If p.perks("slutcurse") > -1 Then
             clothingCurse1()
         End If
-
         'handles any tfs or triggers triggered by equipping of certain weapons
-        If p.equippedWeapon.getName = "Magic_Girl_Wand" And Not p.title.Equals("Magic Girl") Then
-            Polymorph.transform(p, "Magic Girl")
-        ElseIf p.equippedWeapon.getName = "Sword_of_the_Brutal" And Not p.perks("swordpossess") > -1 Then
-            p.perks("swordpossess") = 0
-        End If
-
         If p.title.Equals("Magic Girl") And p.equippedArmor.getName.Equals("Magic_Girl_Outfit") And Not revertFlag Then
             p.equippedArmor = p.inventory.Item(10)
             Game.lstLog.Items.Add("A magic girl needs her uniform!")
         End If
-
         If p.title.Equals("Blow-Up Doll") Then
             p.equippedArmor = New Naked
         End If
 
-        'handles any tfs or triggers triggered by equipping of certain armors
-        If p.equippedArmor.getName = "Living_Armor" And Not p.perks("livearm") > -1 Then
-            p.perks("livearm") = 0
-        ElseIf p.equippedArmor.getName = "Living_Lingerie" And Not p.perks("livelinge") > -1 Then
-            p.perks("livelinge") = 0
+        If Not oA.Equals(cmbobxArmor.Text) Then
+            p.equippedArmor.onEquip()
+        End If
+        If Not oW.Equals(cmbobxWeapon.Text) Then
+            p.equippedWeapon.onEquip()
+        End If
+        If Not oAc.Equals(cboxAccessory.Text) Then
+            p.equippedAcce.onEquip()
         End If
 
         'updates the player, the stat display, and the portrait before the form closes
@@ -119,11 +133,25 @@
     Private Sub Form3_Load(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles MyBase.Load
         'initializes all variables in case this is the first time it is loaded
         init()
-
-        'scales the text size of the form to the display size
+        'scale to the screen size
+        Dim startingWidth = Me.Width
+        Dim startingHeight = Me.Height
+        If Game.screenSize = "Small" Then
+            Size = New Size(Size.Width * 0.8, Size.Height * 0.8)
+        ElseIf Game.screenSize = "Medium" Then
+            Size = New Size(Size.Width * 0.9, Size.Height * 0.9)
+        ElseIf Game.screenSize = "XLarge" Then
+            Size = New Size(Size.Width * 1.3, Size.Height * 1.3)
+        End If
+        Dim RW As Double = (Me.Width - startingWidth) / startingWidth ' Ratio change of width
+        Dim RH As Double = (Me.Height - startingHeight) / startingHeight ' Ratio change of height
         Dim newFont As Font = New System.Drawing.Font("Consolas", CInt(8 * Me.Size.Width / 210))
         For i = 0 To Me.Controls.Count - 1
             Me.Controls(i).Font = newFont
+            Me.Controls(i).Width += CDbl(Me.Controls(i).Width * RW)
+            Me.Controls(i).Height += CDbl(Me.Controls(i).Height * RH)
+            Me.Controls(i).Left += CDbl(Me.Controls(i).Left * RW)
+            Me.Controls(i).Top += CDbl(Me.Controls(i).Top * RH)
         Next
 
         'adds the default clothes for various forms
@@ -145,11 +173,17 @@
         'adds the default weapon (fists)
         cmbobxWeapon.Items.Add("Fists")
 
+        'adds the default accessory (nothing)
+        cboxAccessory.Items.Add("Nothing")
+
         'adds all weapons and armors that the player posesses to their respective menus
         Dim a As Armor()
         Dim w As Weapon()
+        Dim ac As Accessory()
+
         a = p.getArmors.Item2
         w = p.getWeapons.Item2
+        ac = p.getAccesories.Item2
 
         For i = 5 To UBound(a)
             If a(i).count > 0 Then cmbobxArmor.Items.Add(a(i).getName())
@@ -157,10 +191,14 @@
         For i = 1 To UBound(w)
             If w(i).count > 0 Then cmbobxWeapon.Items.Add(w(i).getName())
         Next
+        For i = 1 To UBound(ac)
+            If ac(i).count > 0 Then cboxAccessory.Items.Add(ac(i).getName())
+        Next
 
         'sets the text of the drop-downs to the player's equipment
         cmbobxWeapon.SelectedItem = p.equippedWeapon.getName()
         cmbobxArmor.SelectedItem = p.equippedArmor.getName()
+        cboxAccessory.SelectedItem = p.equippedAcce.getName()
     End Sub
 
     'clothingCurse1 routes the normal versions of armors to their slut forms, if they have them.
@@ -255,6 +293,36 @@
             p.equippedArmor = sArmor
         End If
     End Sub
+    'clothesChange handles the equipping and unequipping of weapon
+    Public Sub weaponChange(ByVal weapon As String)
+        Dim sWeapon As Weapon = Nothing
+        If weapon <> "" Then
+            For i = 0 To UBound(wNameList)
+                If weapon.Split()(0) = wNameList(i) Then
+                    sWeapon = wList(i)
+                    Exit For
+                End If
+            Next
+            If sWeapon Is Nothing Then Exit Sub
+            p.equippedWeapon = sWeapon
+        End If
+    End Sub
+    'accChange handles the equipping and unequipping of accessories
+    Public Sub accChange(ByVal acc As String)
+        If acNameList.Count < 1 Then init()
+        Dim sAcc As Accessory = Nothing
+        If acc <> "" Then
+            For i = 0 To UBound(acNameList)
+                If acc = acNameList(i) Then
+                    'MsgBox("{" & cmbobxArmor.SelectedItem & "}&[" & aNameList(i) & "]")
+                    sAcc = acList(i)
+                    Exit For
+                End If
+            Next
+            If sAcc Is Nothing Then Exit Sub
+            p.equippedAcce = sAcc
+        End If
+    End Sub
     'portraitUDate updates the player's portrait based on their breastsize and armor
     Public Sub portraitUDate()
         If p.iArrInd(2).Item1 <> 4 Then p.bsizeroute()
@@ -289,6 +357,16 @@
                     p.iArrInd(16) = New Tuple(Of Integer, Boolean)(CharacterGenerator.fHat.Count - 2, True)
             End Select
         ElseIf p.equippedArmor.getName = "Magic_Girl_Outfit" Then
+            If Not p.title.Equals("Magic_Girl") Then
+                clothesChange("Naked")
+                Game.pushLblEvent("Your clothes don't fit!")
+                Game.lstLog.Items.Add("Your clothes don't fit!")
+                If p.sexBool Then
+                    p.iArrInd(3) = New Tuple(Of Integer, Boolean)(47, True)
+                Else
+                    p.iArrInd(3) = New Tuple(Of Integer, Boolean)(5, False)
+                End If
+            End If
             Select Case p.breastSize
                 Case 1
                     p.iArrInd(3) = p.equippedArmor.bsize1
@@ -309,19 +387,13 @@
         ElseIf p.equippedArmor.getName = "Common_Clothes" Then
             Select Case p.breastSize
                 Case -1
-                    
                         p.iArrInd(3) = New Tuple(Of Integer, Boolean)(p.sState.iArrInd(3).Item1, p.iArrInd(2).Item2)
+                Case 0
+                    p.iArrInd(3) = New Tuple(Of Integer, Boolean)(p.sState.iArrInd(3).Item1, p.iArrInd(2).Item2)
                 Case 1
                     p.iArrInd(3) = New Tuple(Of Integer, Boolean)(p.sState.iArrInd(3).Item1, p.iArrInd(2).Item2)
                 Case 2
-                    
-                        clothesChange("Naked")
-                        Game.lstLog.Items.Add("Your clothes don't fit!")
-                        If p.sexBool Then
-                            p.iArrInd(3) = New Tuple(Of Integer, Boolean)(47, True)
-                        Else
-                            p.iArrInd(3) = New Tuple(Of Integer, Boolean)(5, False)
-                        End If
+                    p.iArrInd(3) = New Tuple(Of Integer, Boolean)(p.sState.iArrInd(3).Item1 + 99, p.iArrInd(2).Item2)
                 Case Else
                     clothesChange("Naked")
                     Game.lstLog.Items.Add("Your clothes don't fit!")
@@ -334,6 +406,8 @@
         Else
             Select Case p.breastSize
                 Case -1
+                    p.iArrInd(3) = p.equippedArmor.bsizeneg1
+                Case 0
                     p.iArrInd(3) = p.equippedArmor.bsizeneg1
                 Case 1
                     p.iArrInd(3) = p.equippedArmor.bsize1
@@ -357,10 +431,12 @@
             End If
         End If
         If Not p.equippedArmor.getName.Equals("Naked") And Not p.title.Equals("Magic Girl") Then
-            If p.iArrInd(2).Item1 <> 10 And p.iArrInd(2).Item1 <> 16 Then
+            If p.iArrInd(2).Item1 <> 10 And p.iArrInd(2).Item1 <> 16 And p.iArrInd(2).Item1 <> 21 Then
                 Select Case p.breastSize
                     Case -1
                         p.iArrInd(2) = New Tuple(Of Integer, Boolean)(0, False)
+                    Case 0
+                        p.iArrInd(2) = New Tuple(Of Integer, Boolean)(2, False)
                     Case 1
                         p.iArrInd(2) = New Tuple(Of Integer, Boolean)(5, True)
                     Case 2
@@ -371,13 +447,19 @@
                         p.iArrInd(2) = New Tuple(Of Integer, Boolean)(8, True)
                     Case 5
                         p.iArrInd(2) = New Tuple(Of Integer, Boolean)(9, True)
+                    Case 6
+                        p.iArrInd(2) = New Tuple(Of Integer, Boolean)(18, True)
+                    Case 7
+                        p.iArrInd(2) = New Tuple(Of Integer, Boolean)(20, True)
                 End Select
             End If
         ElseIf p.equippedArmor.getName.Equals("Naked") Then
-            If p.iArrInd(2).Item1 <> 4 And p.iArrInd(2).Item1 <> 16 Then
+            If p.iArrInd(2).Item1 <> 4 And p.iArrInd(2).Item1 <> 16 And p.iArrInd(2).Item1 <> 21 Then
                 Select Case p.breastSize
                     Case -1
                         p.iArrInd(2) = New Tuple(Of Integer, Boolean)(0, False)
+                    Case 0
+                        p.iArrInd(2) = New Tuple(Of Integer, Boolean)(2, False)
                     Case 1
                         p.iArrInd(2) = New Tuple(Of Integer, Boolean)(0, True)
                     Case 2
@@ -388,12 +470,26 @@
                         p.iArrInd(2) = New Tuple(Of Integer, Boolean)(3, True)
                     Case 5
                         p.iArrInd(2) = New Tuple(Of Integer, Boolean)(4, True)
+                    Case 6
+                        p.iArrInd(2) = New Tuple(Of Integer, Boolean)(17, True)
+                    Case 7
+                        p.iArrInd(2) = New Tuple(Of Integer, Boolean)(19, True)
                 End Select
             End If
         End If
+
+        If p.equippedAcce Is Nothing Or (p.equippedAcce.fInd Is Nothing And p.equippedAcce.mInd Is Nothing) Then
+            p.equippedAcce = New noAcce()
+        Else
+            If p.sexBool Then
+                If Not p.equippedAcce.fInd Is Nothing Then p.iArrInd(14) = p.equippedAcce.fInd Else p.iArrInd(4) = p.equippedAcce.mInd
+            Else
+                If Not p.equippedAcce.mInd Is Nothing Then p.iArrInd(14) = p.equippedAcce.mInd Else p.iArrInd(4) = p.equippedAcce.fInd
+            End If
+        End If
+
         Game.lstLog.TopIndex = Game.lstLog.Items.Count - 1
         p.createP()
         'Form1.picPortrait.BackgroundImage = CharacterGenerator1.CreateBMP(p.iArr)
-        Game.picPortrait.Update()
     End Sub
 End Class

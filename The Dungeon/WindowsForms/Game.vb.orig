@@ -62,13 +62,17 @@ Public Class Game
     Public beatboss() As Boolean = {False, False, False, False, False, False}  'which bosses have been beat?
     Public floorboss() As String = {"Floor0", "Marissa the Enchantress", "Targax the Brutal", "Key", "the Explorer", "Medusa"} 'boss names (NOT SAVED)
     Dim floorLayouts As ArrayList = New ArrayList()
-    Public version As Double = 0.5     'the save file version
+    Public version As Double = 0.6     'the save file version
+
     Public lblEventOnClose As Action    'the event method preformed when lblEvent closes (NOT SAVED)
 <<<<<<< HEAD
     Public invFilters() As Boolean = {True, True, True, True, True, True}
     'Dim eClock As Integer = 15
     Dim eClock As Integer = eClockResetVal * 3
 =======
+    Public lastKey As String
+    Public yesAction, noAction As Action
+
     Public invFilters() As Boolean = {True, True, True, True, True, True, True}
     Dim eClock As Integer = 15
 >>>>>>> master
@@ -93,9 +97,34 @@ Public Class Game
 
     Dim cKeys As List(Of System.Windows.Forms.Keys) = New List(Of Keys)
 
+    Dim iHeight, iWidth As Integer
+    Dim startingHeight As Integer = 0
+    Dim startingWidth As Integer = 0
+
+    'settings
+    Public screenSize As String
+
     'startup/new level methods
     'Form1_Load handles the loading of the form
     Private Sub Form1_Load(sender As Object, e As EventArgs) Handles Me.Load
+        Dim r As System.IO.StreamReader
+        r = IO.File.OpenText("sett.ing")
+        screenSize = r.ReadLine
+        r.Close()
+
+        iHeight = Size.Height
+        iWidth = Size.Width
+
+        startingHeight = CInt(Size.Height.ToString)
+        startingWidth = CInt(Size.Width.ToString)
+        If screenSize = "Small" Then
+            Size = New Size(Size.Width * 0.8, Size.Height * 0.8)
+        ElseIf screenSize = "Medium" Then
+            Size = New Size(Size.Width * 0.9, Size.Height * 0.9)
+        ElseIf screenSize = "XLarge" Then
+            Size = New Size(iWidth * 1.3, iHeight * 1.3)
+        End If
+
         loadcKeys()
         imagesWorker = New BackgroundWorker
         AddHandler imagesWorker.DoWork, AddressOf prefetchImages
@@ -176,6 +205,11 @@ Public Class Game
                 Me.Close()
             End If
         End If
+<<<<<<< HEAD
+=======
+
+        Game_Resize()
+>>>>>>> master
     End Sub
     Sub loadPotionList()
         Randomize()
@@ -224,6 +258,7 @@ Public Class Game
         btnS.Visible = False
         btnL.Visible = False
         btnControls.Visible = False
+        btnSettings.Visible = False
         Dim chargen As New CharacterGenerator
         chargen.currSex = player.sexBool
         chargen.ShowDialog()
@@ -231,6 +266,7 @@ Public Class Game
             btnS.Visible = True
             btnL.Visible = True
             btnControls.Visible = True
+            btnSettings.Visible = True
             Exit Sub
         End If
         picPortrait.BackgroundImage = chargen.ExportIMG()
@@ -322,8 +358,8 @@ Public Class Game
         npcList.Clear()
         Dim yInd, xInd As Integer
         Dim Margin As Integer = 3
-        Dim XSize As Integer = 15 * (Me.Size.Width / 688)
-        Dim YSize As Integer = 15 * (Me.Size.Width / 688)
+        Dim XSize As Double = 15.0 * (CDbl(Me.Size.Width) / 688.0)
+        Dim YSize As Double = 15.0 * (CDbl(Me.Size.Width) / 688.0)
         'clear the old board
         If Not mBoard Is Nothing Then
             For i = 0 To mBoardHeight - 1
@@ -351,6 +387,7 @@ Public Class Game
         For yInd = 0 To mBoardHeight - 1
             For xInd = 0 To mBoardWidth - 1
                 mBoard(yInd, xInd) = New mTile(0, "", Color.Black)
+<<<<<<< HEAD
                 'If (xInd < viewWidth And yInd < viewHeight) Then
                 '    Dim newPicture As PictureBox = New PictureBox()
                 '    newPicture.Name = "boardBox|" & xInd & "_" & yInd
@@ -361,6 +398,18 @@ Public Class Game
                 '    Me.Controls.Add(newPicture)
                 '    mPics(yInd, xInd) = newPicture
                 'End If
+=======
+                If (xInd <= 23 And yInd <= 15) Then
+                    Dim newPicture As PictureBox = New PictureBox()
+                    newPicture.BackgroundImageLayout = ImageLayout.Stretch
+                    newPicture.Size = New Point(YSize * 1.25, XSize * 1.25)
+                    newPicture.Location = New Point(40.0 + CDbl(xInd) * (XSize * 1.23), 55 + CDbl(yInd) * (YSize * 1.23))
+                    newPicture.Visible = True
+                    'newPicture.BorderStyle = BorderStyle.FixedSingle
+                    Me.Controls.Add(newPicture)
+                    mPics(yInd, xInd) = newPicture
+                End If
+>>>>>>> master
                 Dim progress As Double = (xInd + (yInd * mBoardWidth)) / numTiles
                 boardWorker.ReportProgress(40 + (progress * 40))
                 Application.DoEvents()
@@ -537,6 +586,8 @@ Public Class Game
         'For i = 0 To UBound(p)
         '    mBoard(p(i).Y, p(i).X).Tag = 2
         'Next
+        'Dim sc = New SlaveCollar
+        'sc.onEquip()
 
     End Sub
     Sub connectRooms(ByVal p1 As Point, ByVal p2 As Point)
@@ -658,6 +709,7 @@ Public Class Game
 
     'placeStairs, placeChest, placeTraps, and placeNPCs place their respective entities on mBoard
     Sub placeStairs()
+
         Dim stairsX As Integer
         Dim stairsY As Integer
         Do While (mBoard(stairsY, stairsX).Tag <> 1 Or mBoard(stairsY, stairsX).Text <> "")
@@ -741,9 +793,9 @@ Public Class Game
         Next
     End Sub
 
-    Function route(ByVal p1 As Point, ByVal p2 As Point, ByVal dir As String, ByVal path As List(Of Point)) As Point()
+    Function route(ByVal p1 As Point, ByVal p2 As Point, ByVal dir As String, ByVal path As List(Of Point), ByVal counts As Integer) As Point()
         Dim cons As List(Of Point) = New List(Of Point)
-        If p1.Equals(p2) Then
+        If p1.Equals(p2) Or counts > 300 Then
             Return path.ToArray
         Else
             Dim u, d, l, r As Point
@@ -753,7 +805,7 @@ Public Class Game
             r = New Point(p1.X, p1.Y + 1)
             For Each p In {u, d, l, r}
                 If Not (p.Equals(u) And dir = "d") And Not (p.Equals(d) And dir = "u") And Not (p.Equals(r) And dir = "l") And Not (p.Equals(l) And dir = "r") Then
-                    If Not (p.X < 0 Or p.X > mBoardWidth - 1 Or p.Y < 0 Or p.Y > mBoardHeight - 1) AndAlso Not mBoard(p.Y, p.X).Tag = 0 Then
+                    If Not (p.X < 0 Or p.X > mBoardWidth - 1 Or p.Y < 0 Or p.Y > mBoardHeight - 1) AndAlso Not mBoard(p.Y, p.X).Tag = 0 AndAlso Not path.Contains(p) Then
                         cons.Add(p)
                     End If
                 End If
@@ -775,7 +827,7 @@ Public Class Game
             ElseIf min.Equals(r) Then
                 dir = "r"
             End If
-            Return route(min, p2, dir, path)
+            Return route(min, p2, dir, path, counts + 1)
         End If
     End Function
     Function dist(ByVal x As Point, ByVal y As Point) As Double
@@ -882,6 +934,8 @@ Public Class Game
         '9 = locked stairs
         '10 = boss stairs
         '11 = shady wizard
+        '12 = crystal
+
         Dim viewArray(15, 23) As Integer
         Dim x As Integer = 0
         Dim y As Integer = 0
@@ -905,6 +959,7 @@ Public Class Game
                         If mBoard(player.pos.Y + indY, player.pos.X + indX).Text = "$" And player.pos.Y + indY = shopkeeper.pos.Y And player.pos.X + indX = shopkeeper.pos.X Then viewArray(y, x) = 6
                         If mBoard(player.pos.Y + indY, player.pos.X + indX).Text = "$" And player.pos.Y + indY = swiz.pos.Y And player.pos.X + indX = swiz.pos.X Then viewArray(y, x) = 11
                         If mBoard(player.pos.Y + indY, player.pos.X + indX).Text = "+" Then viewArray(y, x) = 8
+                        If mBoard(player.pos.Y + indY, player.pos.X + indX).Text = "c" Then viewArray(y, x) = 12
                     End If
                     If mBoard(player.pos.Y + indY, player.pos.X + indX).Text = "@" Then
                         If indY = 0 And indX = 0 Then viewArray(y, x) = 4 Else viewArray(y, x) = 7
@@ -940,6 +995,8 @@ Public Class Game
                             mPics(y, x).BackgroundImage = picStairsBoss.BackgroundImage
                         Case 11
                             mPics(y, x).BackgroundImage = picSWiz.BackgroundImage
+                        Case 12
+                            mPics(y, x).BackgroundImage = picCrystal.BackgroundImage
                     End Select
                 Else
                     Select Case viewArray(y, x)
@@ -968,6 +1025,8 @@ Public Class Game
                             mPics(y, x).BackgroundImage = picstairsbossf.BackgroundImage
                         Case 11
                             mPics(y, x).BackgroundImage = picSWizF.BackgroundImage
+                        Case 12
+                            mPics(y, x).BackgroundImage = picCrystalf.BackgroundImage
                     End Select
                 End If
                 x += 1
@@ -1047,8 +1106,10 @@ Public Class Game
                 lblEvent.ForeColor = Color.White
                 If Not combatmode Then player.canMoveFlag = True
                 If Not lblEventOnClose Is Nothing Then
-                    lblEventOnClose()
-                    lblEventOnClose = Nothing
+                        lblEvent.Visible = True
+                        If Not combatmode Then player.canMoveFlag = False
+                        lblEventOnClose()
+                        lblEventOnClose = Nothing
                 End If
                 drawBoard()
                 If btnEQP.Enabled = False Then btnEQP.Enabled = True
@@ -1077,6 +1138,7 @@ Public Class Game
         Return False
     End Function
     Function HandleKeyPress(ByVal Keydata As Keys) As Boolean
+        lastKey = Keydata.ToString.ToLower
         If Not selecting Then
             If shouldReturnEarly(Keydata) Then Return True
             Dim spos As Point = player.pos
@@ -1490,11 +1552,13 @@ Public Class Game
                 selectArmor(index)
             ElseIf selectionType = "Weapon" Then
                 selectWeapon(index)
+            ElseIf selectionType = "yesNo" Then
+                selectYesNo(index)
             End If
             player.invNeedsUDate = True
             player.UIupdate()
             selecting = False
-
+            player.canMoveFlag = True
             pnlSelection.Location = New Point(1000, pnlSelection.Location.Y)
             pnlSelection.Visible = False
             selectedItem = Nothing
@@ -1663,6 +1727,8 @@ Public Class Game
             player.revert2()
         End If
 
+        Dim owName = player.equippedWeapon.getName
+
         'handles the equiping of weapons
         Dim sWeapon As Weapon = Nothing
         If subString <> "" Then
@@ -1679,16 +1745,25 @@ Public Class Game
         If player.mana > player.getmaxMana Then player.mana = player.getmaxMana
 
         'handles any tfs or triggers triggered by equipping of certain weapons
-        If player.equippedWeapon.getName = "Magic_Girl_Wand" And Not player.title.Equals("Magic Girl") Then
-            Polymorph.transform(player, "Magic Girl")
-        ElseIf player.equippedWeapon.getName = "Sword_of_the_Brutal" And Not player.perks("swordpossess") > -1 Then
-            player.perks("swordpossess") = 0
+        If Not player.equippedWeapon.getName.Equals(owName) Then
+            player.equippedWeapon.onEquip()
         End If
 
         'updates the player, the stat display, and the portrait before the form closes
         Equipment.portraitUDate()
         player.UIupdate()
         lstLog.TopIndex = lstLog.Items.Count - 1
+    End Sub
+    Sub selectYesNo(ByVal index As Integer)
+        If index = 0 Then
+            yesAction()
+        Else
+            noAction()
+        End If
+        yesAction = Nothing
+        noAction = Nothing
+        lblEvent.Visible = False
+        lblEventOnClose = Nothing
     End Sub
     Sub toPNLSelec(ByVal mode As String)
         selecting = True
@@ -1783,6 +1858,10 @@ Public Class Game
                         count += 1
                     End If
                 Next
+            Case "yesNo"
+                lblWhat.Text = "Do you accept?"
+                lstSelec.Items.Add("a - Yes") 'cKeys(19).ToString.ToLower & " - Yes")
+                lstSelec.Items.Add("b - No") 'cKeys(20).ToString.ToLower & " - No")
         End Select
         selectionType = mode
         pnlSelection.Location = New Point(115, pnlSelection.Location.Y)
@@ -2262,6 +2341,7 @@ Public Class Game
             btnS.Visible = True
             btnL.Visible = True
             btnControls.Visible = True
+            btnSettings.Visible = True
         End If
         player.canMoveFlag = True
         If player.isDead Then formReset()
@@ -2411,11 +2491,16 @@ Public Class Game
         If lblPHealtDiff.Tag = 0 Then lblPHealtDiff.Visible = False Else lblPHealtDiff.Visible = True
         lblPHealtDiff.Tag = 0
 
-        Dim ratioEH As Double = t.health / t.maxHealth
-        picEHbar.Size = New Size(ratioEH * 174, 15)
-        Dim x As Integer = picEHbar.Location.X + (ratioEH * 174) - 30
+        Dim ratio As Double = Me.Size.Width / 1024
+
+        Dim ratioEH As Double = (t.health / t.maxHealth) * ratio
+        picEHbar.Size = New Size(ratioEH * 174, 15 * ratio)
+
+        Dim x As Integer = (picEHbar.Location.X * ratio) + (ratioEH * 174) - (30 * ratio)
         If x < picEHbar.Location.X Then x = picEHbar.Location.X
         lblEHealthChange.Location = New Point(x, lblEHealthChange.Location.Y)
+
+
         If healthCol Is Nothing = False Then
             Dim place = Int(ratioEH * 100)
             If place >= 100 Then place = 99
@@ -2425,10 +2510,10 @@ Public Class Game
             If ratioEH <= 0.2 Then picEHbar.BackColor = Color.Crimson Else picEHbar.BackColor = Color.YellowGreen
         End If
 
-        Dim ratioPH As Double = p.health / p.getmaxHealth
-        picPHealth.Size = New Size(ratioPH * 174, 15)
-        x = picPHealth.Location.X + (ratioPH * 174) - 30
-        If x > picPHealth.Location.X + 174 - 30 Then x = picPHealth.Location.X + 174 - 30
+        Dim ratioPH As Double = p.health / p.getmaxHealth * ratio
+        picPHealth.Size = New Size(ratioPH * 174, 15 * ratio)
+        x = picPHealth.Location.X + (ratioPH * 174) - (30 * ratio)
+        If x > picPHealth.Location.X + (174 * ratio) - (30 * ratio) Then x = picPHealth.Location.X + (174 * ratio) - (30 * ratio)
         lblPHealtDiff.Location = New Point(x, lblPHealtDiff.Location.Y)
         If healthCol Is Nothing = False Then
             Dim place = Int(ratioPH * 100)
@@ -3000,6 +3085,7 @@ Public Class Game
         btnS.Visible = False
         btnL.Visible = False
         btnControls.Visible = False
+        btnSettings.Visible = False
         Application.DoEvents()
         Try
             CharacterGenerator.init()
@@ -3013,11 +3099,13 @@ Public Class Game
             btnS.Visible = True
             btnL.Visible = True
             btnControls.Visible = True
+            btnSettings.Visible = True
         Catch ex2 As Exception
             MsgBox("Error 005: Error in loaded in save file!")
             btnS.Visible = True
             btnL.Visible = True
             btnControls.Visible = True
+            btnSettings.Visible = True
         End Try
     End Sub
     Private Sub btnControls_Click(sender As Object, e As EventArgs) Handles btnControls.Click
@@ -3236,6 +3324,7 @@ Public Class Game
         Dim ct As Integer = 0
         Dim out As String = ""
         Do While c < sSplit.Length
+            If sSplit(c).Equals(vbCrLf) Then ct = 0
             If ct < 70 Then
                 If Not sSplit(c).Equals("fugoo") Then
                     out += sSplit(c) & " "
@@ -3271,6 +3360,7 @@ Public Class Game
         Dim ct As Integer = 0
         Dim out As String = ""
         Do While c < sSplit.Length
+            If sSplit(c).Equals(vbCrLf) Then ct = 0
             If ct < 70 Then
                 out += sSplit(c) & " "
                 ct += sSplit(c).Length + 1
@@ -3288,6 +3378,43 @@ Public Class Game
         player.canMoveFlag = False
         lblEventOnClose = effect
         btnEQP.Enabled = False
+    End Sub
+    'This pushLblEvent is identical to the second, but to be used in situations where a choice is made.
+    Sub pushLblEvent(ByVal s As String, ByRef yes As Action, ByVal no As Action)
+        If combatmode Then
+            pushLblCombatEvent("Error, choice to be made during combat.")
+            Exit Sub
+        End If
+        Dim sSplit() As String = s.Split(" ")
+        Dim c As Integer = 0
+        Dim ct As Integer = 0
+        Dim out As String = ""
+        Do While c < sSplit.Length
+            If sSplit(c).Equals(vbCrLf) Then ct = 0
+            If ct < 70 Then
+                out += sSplit(c) & " "
+                ct += sSplit(c).Length + 1
+                c += 1
+            Else
+                out += vbCrLf
+                ct = 0
+            End If
+        Loop
+
+        out += " " & vbCrLf & " " & vbCrLf & "Press any key to continue."
+
+        lblEvent.Text = out
+        lblEvent.BringToFront()
+        lblEvent.Location = New Point((265 * (Me.Size.Width / 688)) - (lblEvent.Size.Width / 2), 65 * (Me.Size.Width / 688))
+        lblEvent.Visible = True
+        player.canMoveFlag = False
+        lblEventOnClose = AddressOf makeChoice
+        yesAction = yes
+        noAction = no
+        btnEQP.Enabled = False
+    End Sub
+    Sub makeChoice()
+        toPNLSelec("yesNo")
     End Sub
     'pushNPCDialog is a variant of pushLblEvent that pushes the string into an NPC dialog box
     Sub pushNPCDialog(ByVal s As String)
@@ -3388,15 +3515,27 @@ Public Class Game
         r = oC.R
         g = oC.G
         b = oC.B
-        If a > c.A Then a -= inc Else a += inc
-        If r > c.R Then r -= inc Else r += inc
-        If g > c.G Then g -= inc Else g += inc
-        If b > c.B Then b -= inc Else b += inc
 
-        If Math.Abs(a - c.A) < inc Or a > 255 Then a = c.A
-        If Math.Abs(r - c.R) < inc Or r > 255 Then r = c.R
-        If Math.Abs(g - c.G) < inc Or g > 255 Then g = c.G
-        If Math.Abs(b - c.B) < inc Or b > 255 Then b = c.B
+        If Math.Abs(a - c.A) < inc Or a > 255 Then
+            a = c.A
+        Else
+            If a > c.A Then a -= inc Else a += inc
+        End If
+        If Math.Abs(r - c.R) < inc Or r > 255 Then
+            r = c.R
+        Else
+            If r > c.R Then r -= inc Else r += inc
+        End If
+        If Math.Abs(g - c.G) < inc Or g > 255 Then
+            g = c.G
+        Else
+            If g > c.G Then g -= inc Else g += inc
+        End If
+        If Math.Abs(b - c.B) < inc Or b > 255 Then
+            b = c.B
+        Else
+            If b > c.B Then b -= inc Else b += inc
+        End If
 
         Return Color.FromArgb(a, r, g, b)
     End Function
@@ -3406,7 +3545,6 @@ Public Class Game
     End Sub
     Private Sub bw_DoWork(ByVal sender As Object, ByVal e As DoWorkEventArgs)
         Dim worker As BackgroundWorker = CType(sender, BackgroundWorker)
-
         While boardWorker.IsBusy
             If boardWorker.CancellationPending = True Then
                 e.Cancel = True
@@ -3418,7 +3556,8 @@ Public Class Game
         End While
     End Sub
     Private Sub bw_ProgressChanged(ByVal sender As Object, ByVal e As ProgressChangedEventArgs)
-        picLoadBar.Size = New Size((e.ProgressPercentage / 100) * 395, 17)
+        Dim ratio As Double = Me.Size.Width / 1024
+        picLoadBar.Size = New Size(((e.ProgressPercentage / 100) * 395) * ratio, 17 * ratio)
     End Sub
     Private Sub bw_RunWorkerCompleted(ByVal sender As Object, ByVal e As RunWorkerCompletedEventArgs)
         If e.Cancelled = True Then
@@ -3608,10 +3747,11 @@ Public Class Game
         'btnControls.Visible = True
         'player.canMoveFlag = False
     End Sub
+<<<<<<< HEAD
+
     Private Sub btnSettings_Click(sender As Object, e As EventArgs)
         MsgBox("This will be where the settings are changed eventually")
     End Sub
-<<<<<<< HEAD
 
     Private Sub statEnter(sender As Object, e As EventArgs) Handles lblATK.MouseEnter, lblDEF.MouseEnter, lblHealth.MouseEnter, lblEVD.MouseEnter, lblHunger.MouseEnter, lblMana.MouseEnter, lblSKL.MouseEnter, lblSPD.MouseEnter, lblGold.MouseEnter
         If tooltip Is Nothing Then
@@ -3752,11 +3892,82 @@ Public Class Game
     End Sub
 
     'btnStettings
-    Private Sub btnSettings_Click_1(sender As Object, e As EventArgs) Handles btnSettings.Click
-
+    Private Sub btnSettings_Click(sender As Object, e As EventArgs) Handles btnSettings.Click
+        Dim s As Settings = New Settings
+        s.ShowDialog()
+        s.Dispose()
+        If screenSize = "Small" Then
+            Size = New Size(iWidth * 0.8, iHeight * 0.8)
+        ElseIf screenSize = "Medium" Then
+            Size = New Size(iWidth * 0.9, iHeight * 0.9)
+        ElseIf screenSize = "XLarge" Then
+            Size = New Size(iWidth * 1.3, iHeight * 1.3)
+        Else
+            Size = New Size(iWidth, iHeight)
+        End If
+        Game_Resize()
     End Sub
 
-    Private Sub Game_Resize(sender As Object, e As EventArgs) Handles Me.Resize
+    Private Sub Game_Resize()
+        Dim RW As Double = (Me.Width - startingWidth) / startingWidth ' Ratio change of width
+        Dim RH As Double = (Me.Height - startingHeight) / startingHeight ' Ratio change of height
+
+        'scales the font size to that of the window
+        Dim newFont As Font = New System.Drawing.Font("Consolas", CInt(8 * Me.Size.Width / 688))
+        For i = 0 To Me.Controls.Count - 1
+            Me.Controls(i).Width += CDbl(Me.Controls(i).Width * RW)
+            Me.Controls(i).Height += CDbl(Me.Controls(i).Height * RH)
+            Me.Controls(i).Left += CDbl(Me.Controls(i).Left * RW)
+            Me.Controls(i).Top += CDbl(Me.Controls(i).Top * RH)
+            Me.Controls(i).Font = newFont
+        Next
+        For i = 0 To pnlSelection.Controls.Count - 1
+            pnlSelection.Controls(i).Width += CDbl(pnlSelection.Controls(i).Width * RW)
+            pnlSelection.Controls(i).Height += CDbl(pnlSelection.Controls(i).Height * RH)
+            pnlSelection.Controls(i).Left += CDbl(pnlSelection.Controls(i).Left * RW)
+            pnlSelection.Controls(i).Top += CDbl(pnlSelection.Controls(i).Top * RH)
+            pnlSelection.Controls(i).Font = newFont
+        Next
+        FileToolStripMenuItem.Font = newFont
+        SaveToolStripMenuItem.Font = newFont
+        LoadToolStripMenuItem.Font = newFont
+        HelpToolStripMenuItem.Font = newFont
+        HelpToolStripMenuItem1.Font = newFont
+        InfoToolStripMenuItem.Font = newFont
+        newFont = New System.Drawing.Font("Consolas", CInt(9.25 * Me.Size.Width / 688), FontStyle.Underline)
+        lblNameTitle.Font = newFont
+        newFont = New System.Drawing.Font("Consolas", CDbl(7 * Me.Size.Width / 688))
+        btnDrop.Font = newFont
+        btnControls.Font = newFont
+        btnSettings.Font = newFont
+        btnLook.Font = newFont
+        newFont = New System.Drawing.Font("Consolas", CDbl(9 * Me.Size.Width / 688))
+        MenuStrip1.Font = newFont
+        For i = 0 To pnlCombat.Controls.Count - 1
+            pnlCombat.Controls(i).Width += CDbl(pnlCombat.Controls(i).Width * RW)
+            pnlCombat.Controls(i).Height += CDbl(pnlCombat.Controls(i).Height * RH)
+            pnlCombat.Controls(i).Left += CDbl(pnlCombat.Controls(i).Left * RW)
+            pnlCombat.Controls(i).Top += CDbl(pnlCombat.Controls(i).Top * RH)
+            pnlCombat.Controls(i).Font = newFont
+        Next
+        For i = 0 To pnlDescript.Controls.Count - 1
+            pnlDescript.Controls(i).Width += CDbl(pnlDescript.Controls(i).Width * RW)
+            pnlDescript.Controls(i).Height += CDbl(pnlDescript.Controls(i).Height * RH)
+            pnlDescript.Controls(i).Left += CDbl(pnlDescript.Controls(i).Left * RW)
+            pnlDescript.Controls(i).Top += CDbl(pnlDescript.Controls(i).Top * RH)
+            pnlDescript.Controls(i).Font = newFont
+        Next
+        For i = 0 To pnlSaveLoad.Controls.Count - 1
+            pnlSaveLoad.Controls(i).Width += CDbl(pnlSaveLoad.Controls(i).Width * RW)
+            pnlSaveLoad.Controls(i).Height += CDbl(pnlSaveLoad.Controls(i).Height * RH)
+            pnlSaveLoad.Controls(i).Left += CDbl(pnlSaveLoad.Controls(i).Left * RW)
+            pnlSaveLoad.Controls(i).Top += CDbl(pnlSaveLoad.Controls(i).Top * RH)
+        Next
+
+        startingHeight = Height
+        startingWidth = Width
+        Dim ratio As Double = Me.Size.Width / 1024
+        picLoadBar.Location = New Point(picLoadBar.Location.X * ratio, picLoadBar.Location.Y * ratio)
     End Sub
 
     Private Sub HelpToolStripMenuItem1_Click(sender As Object, e As EventArgs) Handles HelpToolStripMenuItem1.Click

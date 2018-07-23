@@ -3,6 +3,7 @@
     Sub New()
         MyBase.setName("Sports_Bra")
         MyBase.setDesc("A sports bra made of a strechy matierial that allows it to fit many different bust sizes." & vbCrLf & _
+                       "Fits sizes 1 through 4" & vbCrLf & _
                        "+1 DEF" & vbCrLf & _
                        "+5 SPD")
         id = 47

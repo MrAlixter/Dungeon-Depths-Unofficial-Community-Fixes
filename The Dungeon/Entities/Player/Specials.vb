@@ -57,4 +57,8 @@
         Game.pushLblCombatEvent("Ironhide Fury!" & vbCrLf & "+50% ATK, +60% DEF for 3 turn.")
         Game.lstLog.TopIndex = Game.lstLog.Items.Count - 1
     End Sub
+
+    Shared Function SPCCost(ByVal s As String) As String
+        Return ("Useable only once per combat.")
+    End Function
 End Class

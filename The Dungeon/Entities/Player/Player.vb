@@ -5,8 +5,10 @@
 
     'Player Instance variables
     Public name, sex, title, description As String
+    Public pClass As pClass = New pClass(1, 1, 1, 1, 1, 1, "Classless")
+    Public pForm As pForm = New pForm(1, 1, 1, 1, 1, 1, "Human")
     'Public level, xp, nextLevelXp As Integer
-    Public health, maxHealth, mana, maxMana, attack, defence, discipline, speed, evade, gold, lust As Integer
+    Public health, maxHealth, mana, maxMana, attack, defence, will, speed, evade, gold, lust As Integer
     Public hBuff As Integer = 0     'buffs that apply across forms (from charms, etc)
     Public mBuff As Integer = 0
     Public aBuff As Integer = 0
@@ -17,6 +19,7 @@
     Public hunger As Integer
     Public equippedWeapon As Weapon
     Public equippedArmor As Armor
+    Public equippedAcce As Accessory = New noAcce
     Public currTarget As Monster
     Public pos As Point
     Public canMoveFlag As Boolean = True
@@ -36,6 +39,7 @@
     Public mysteryPotionDisplayOrder As New List(Of String)
     Dim armor() As Armor
     Dim weapons() As Weapon
+    Dim acce() As Accessory
     Public useable(), food(), potions(), misc() As Item
     Public invNeedsUDate As Boolean = False
     'player & form states
@@ -48,22 +52,30 @@
     Public magGState As State = New State()
     Public maidState As State = New State()
     Public prinState As State = New State()
+    Public tigState As State = New State()
+
+    Dim formStates = {succState, slimState, goddState, dragState,
+                      bimbState, magGState, maidState, prinState,
+                      tigState}
 
     Public solFlag = False
     Public wingInd = 0
     Public isAttacking = False
+
+    Public forcedPath() As Point = Nothing
+
+    Public prefForm As preferedForm
 
     'New takes no parameters and sets all of the inst. variables to temp variables.
     'Variables will be set at the start of a game
     Sub New()
         name = "TEMP_NAME"
         sex = "TEMP_SEX"
-        title = "TEMP_TITLE"
         health = 100
         maxHealth = health
         attack = 10
         defence = 10
-        discipline = 10
+        will = 10
         speed = 10
         evade = 10
         gold = 200
@@ -71,7 +83,8 @@
         'level = 1
         'xp = 0
         'nextLevelXp = 100
-        mana = 0
+        mana = 3
+        maxMana = mana
         hunger = 0
 
         createInvPerks()
@@ -79,36 +92,40 @@
         inventory.Item(2).add(1)
     End Sub
     'This New is used in the loading of a player from file
-    Sub New(ByVal s As String)
+    Sub New(ByVal s As String, ByVal v As Double)
         createInvPerks()
         Dim playArray() As String = s.Split("#")
 
         currState = New State(Me)
         sState = New State(Me)
         pState = New State(Me)
-        succState = New State()
-        slimState = New State()
-        goddState = New State()
-        dragState = New State()
-        bimbState = New State()
-        magGState = New State()
-        maidState = New State()
-        prinState = New State()
+        For i = 0 To UBound(formStates)
+            formStates(i) = New State()
+        Next
+
 
         currState.read(playArray(0))
         sState.read(playArray(1))
         pState.read(playArray(2))
-        succState.read(playArray(3))
-        slimState.read(playArray(4))
-        goddState.read(playArray(5))
-        dragState.read(playArray(6))
-        bimbState.read(playArray(7))
-        magGState.read(playArray(8))
-        maidState.read(playArray(9))
-        prinState.read(playArray(10))
+
+        Dim ind As Integer
+        If v > 0.4 Then
+            ind = CInt(playArray(3)) - 1
+            For i = 0 To ind
+                formStates(i).read(playArray(4 + i))
+            Next
+            playArray = playArray(5 + ind).Split("*")
+        Else
+            ind = 7
+            For i = 0 To 7
+                formStates(i).read(playArray(3 + i))
+            Next
+            playArray = playArray(4 + ind).Split("*")
+        End If
+
         currState.load(Me)
 
-        playArray = playArray(11).Split("*")
+
         pos.X = playArray(0)
         pos.Y = playArray(1)
         health = playArray(2)
@@ -126,6 +143,34 @@
             inventory.Item(i).add(playArray(12 + i))
         Next
 
+        If Game.version >= 0.6 Then
+            Dim y = 0
+            Dim tfp As List(Of Point) = New List(Of Point)
+            If Not playArray(14 + x).Equals("N/a") Then
+                y = CInt(playArray(13 + x)) * 2
+                For i = 0 To y Step 2
+                    tfp.Add(New Point(CInt(playArray(14 + x + i)), playArray(15 + x + i)))
+                Next
+                forcedPath = tfp.ToArray
+            Else
+                tfp = Nothing
+            End If
+
+            Dim currentIndex = 15 + x + y
+            If Not playArray(14 + x).Equals("N/a") Then currentIndex += 1
+
+            Dim stuff() As String = playArray(currentIndex).Split("$")
+
+            If Not stuff(0).Equals("N/a") Then
+                prefForm = New preferedForm(Color.FromArgb(CInt(stuff(0)), CInt(stuff(1)), CInt(stuff(2)), CInt(stuff(3))), _
+                                            Color.FromArgb(CInt(stuff(4)), CInt(stuff(5)), CInt(stuff(6)), CInt(stuff(7))), _
+                                            CBool(stuff(8)), CBool(stuff(9)), CInt(stuff(10)), CBool(stuff(11)), CInt(stuff(12)))
+                inventory(69).setFormerLife(stuff(13), New Tuple(Of Integer, Boolean)(CInt(stuff(14)), stuff(15)))
+            Else
+                inventory(69).setFormerLife(stuff(1), New Tuple(Of Integer, Boolean)(CInt(stuff(2)), stuff(3)))
+            End If
+        End If
+
         solFlag = True
         ReDim iArr(16)
         createP()
@@ -140,22 +185,118 @@
 
     'commands
     'movement commands
+    Sub reachedFPathDest()
+        If title = "Thrall" Then
+            If 1 = 1 Then 'Int(Rnd() * 2) = 1 Then
+                Dim out = "You've found one of the crystals your controller is seeking!  As you circle it, you feel a familiar presence enter your mind.  " & _
+                    """Yes!  You've found it!"" your overseer states exitedly, ""I'll be over shortly, don't go anywhere and don't touch that crystal.""" & vbCrLf & _
+                    "Obeying, you take a seat and wait for a few minutes before a violet portal opens up near the crystal and your master steps out."
+                If will > 7 Then
+
+                Else
+                    out += "Despite your excitement, they don't seem to notice you, instead focusing all their attention on the crystalline array.  As they fiddle with it, you notice a slight purple aura beginning to form around them and wait, are those horns sprouting out of their hair that seems to catch a non-existant wind?  With a flourish, they complete ... something ... and a blinding flash engulfs them.  Where once stood your human controller now stands a half-demon who only now seems to have taken notice of you." & _
+                        """Well... It looks like you succeeded.  For that, I will give you an ultimatium.  Join me as my general, or die in these dungeons as my slave."
+                    Game.pushLblEvent(out, AddressOf acceptSorc, AddressOf fightSorc)
+                End If
+
+            Else
+                Game.pushLblEvent("You've found one of the crystals your controller is seeking!  As you circle it, you feel a familiar presence enter your mind.  " & _
+                    """No, that isn't it."" your overseer states disappointedly, ""Well, I guess you can go back to your buisness now.""")
+            End If
+            'toDo:  roll a d2 
+            '       if 1, then the player has the option to break free of the collar and fight a "Demonic Sorcerer/Sorceress"
+            '       otherwise, they check in with their controller who informs them that they haven't found the right array.
+        End If
+    End Sub
+    Sub fightSorc()
+        Dim m As Monster
+        m = New Monster(9)
+        Game.npcList.Add(m)
+        currTarget = m
+        Game.toCombat()
+        Game.lstLog.Items.Add((m.getName() & " attacks!"))
+        Game.lstLog.TopIndex = Game.lstLog.Items.Count - 1
+    End Sub
+    Sub fightSorc2()
+        Dim m As Monster
+        m = New Monster(8)
+        Game.npcList.Add(m)
+        currTarget = m
+        Game.toCombat()
+        Game.lstLog.Items.Add((m.getName() & " attacks!"))
+        Game.lstLog.TopIndex = Game.lstLog.Items.Count - 1
+    End Sub
+    Sub acceptSorc()
+        perks("thrall") = -1
+        Polymorph.transform(Me, "Half-Succubus")
+        Game.pushLblEvent("""Then I deem your task concluded as a success.  Go now, and take care not to fall under the spell of any others,"" your controller states.")
+    End Sub
+    Sub betraySorc()
+        Game.pushLblEvent("Brushing past you, your ""boss"" heads straight for the array.  As they begin fiddling with it, you take notice of their distraction and begin creeping into a position behind them.  As they chant over the array, you prepare to make your move.  " & _
+                          "As their raving reaches its zenith and the runes enscribed on the crystal begin to glow you strike out, disrupting their ritual.  ""YOU!  DO YOU HAVE ANY IDEA ..."" screams the mage, and while they shout you realize you couldn't care less about them.  " & _
+                          "Looking down, you see that your collar has gone dark and dangles open from your neck.  Grinning, your prepare to fight for your life.", AddressOf fightSorc2)
+        equippedAcce.onUnequip()
+        equippedAcce = New noAcce
+        inventory(69).count -= 1
+
+        Equipment.portraitUDate()
+    End Sub
+    Sub waitSorc()
+        Dim out = "You decide against making a move now, instead waiting to see what happens next.  Your controller doesn't seem to notice you, instead focusing all their attention on the crystalline array.  As they fiddle with it, you notice a slight purple aura beginning to form around them and wait, are those horns sprouting out of their hair that seems to catch a non-existant wind?  With a flourish, they complete ... something ... and a blinding flash engulfs them.  Where once stood your human controller now stands a half-demon who only now seems to have taken notice of you." & _
+                        """Well... It looks like you succeeded.  For that, I will give you an ultimatium.  Join me as my general, or die in these dungeons as my slave."
+        Game.pushLblEvent(out, AddressOf acceptSorc, AddressOf fightSorc)
+    End Sub
+
+    Sub followPath()
+        If forcedPath(0).X = 0 And forcedPath(0).Y = 0 Then
+            reachedFPathDest()
+            forcedPath = Nothing
+        Else
+            Dim t(UBound(forcedPath)) As Point
+            pos = forcedPath(0)
+            For i = 1 To UBound(forcedPath)
+                t(i - 1) = forcedPath(i)
+            Next
+
+            forcedPath = t
+        End If
+    End Sub
+    Function resistPath()
+        Return (Int(Rnd() * 3) = 0) And getWillpower() > 7
+    End Function
+
     Public Sub moveUp()
+        If Not forcedPath Is Nothing Then
+            followPath()
+            Exit Sub
+        End If
         If (pos.Y - 1) < 0 Or canMoveFlag = False Then Exit Sub
         If Game.mBoard(pos.Y - 1, pos.X).Tag = 0 Then Exit Sub
         pos.Y -= 1
     End Sub
     Public Sub moveDown()
+        If Not forcedPath Is Nothing Then
+            followPath()
+            Exit Sub
+        End If
         If (pos.Y + 1) > Game.mBoardHeight - 1 Or canMoveFlag = False Then Exit Sub
         If Game.mBoard(pos.Y + 1, pos.X).Tag = 0 Then Exit Sub
         pos.Y += 1
     End Sub
     Public Sub moveLeft()
+        If Not forcedPath Is Nothing Then
+            followPath()
+            Exit Sub
+        End If
         If (pos.X - 1) < 0 Or canMoveFlag = False Then Exit Sub
         If Game.mBoard(pos.Y, pos.X - 1).Tag = 0 Then Exit Sub
         pos.X -= 1
     End Sub
     Public Sub moveRight()
+        If Not forcedPath Is Nothing Then
+            followPath()
+            Exit Sub
+        End If
         If (pos.X + 1) > Game.mBoardWidth - 1 Or canMoveFlag = False Then Exit Sub
         If Game.mBoard(pos.Y, pos.X + 1).Tag = 0 Then Exit Sub
         pos.X += 1
@@ -189,13 +330,26 @@
         Game.lstLog.TopIndex = Game.lstLog.Items.Count - 1
     End Sub
     Public Sub takeDMG(ByVal dmg As Integer)
-        'If Form1.combatmode = False Then Exit Sub
-        Dim actualDMG As Integer = dmg - ((getDefence() / 100) * dmg)
-        If actualDMG < 1 Then actualDMG = 1
-        health -= actualDMG
-        Game.lblPHealtDiff.Tag -= actualDMG
-        Game.lstLog.Items.Add(CStr("You got hit! -" & actualDMG & " health!"))
-        Game.pushLblCombatEvent(CStr("You got hit! -" & actualDMG & " health!"))
+        If dmg > 0 Then dmg += Int(Rnd() * 3) + -1
+        If dmg = -2 Then
+            dmg = currTarget.attack * 2
+            Dim actualDMG As Integer = dmg - ((getDefence() / 100) * dmg)
+            health -= actualDMG
+            Game.lblPHealtDiff.Tag -= actualDMG
+            Game.lstLog.Items.Add(CStr("You got hit! Critical hit! -" & actualDMG & " health!"))
+            Game.pushLblCombatEvent(CStr("You got hit! Critical hit! -" & actualDMG & " health!"))
+        ElseIf dmg = -1 Then
+            Game.lblPHealtDiff.Tag -= 0
+            Game.lstLog.Items.Add(CStr("You are able to evade your opponent!"))
+            Game.pushLblCombatEvent(CStr("You are able to evade your opponent!"))
+        Else
+            Dim actualDMG As Integer = dmg - ((getDefence() / 100) * dmg)
+            If actualDMG < 1 Then actualDMG = 1
+            health -= actualDMG
+            Game.lblPHealtDiff.Tag -= actualDMG
+            Game.lstLog.Items.Add(CStr("You got hit! -" & actualDMG & " health!"))
+            Game.pushLblCombatEvent(CStr("You got hit! -" & actualDMG & " health!"))
+        End If
         Game.lstLog.TopIndex = Game.lstLog.Items.Count - 1
     End Sub
 
@@ -207,15 +361,15 @@
             If currTarget.name.Equals("Shopkeeper") Then
                 Dim n As NPC = Game.currNPC
                 petrify(Color.Goldenrod)
-                Dim out As String = "'You should have known better than to try and rob a shop keeper,' the shopkeep says," & vbCrLf &
-                    " glaring down at you, '...and if its gold you're after, I guess I've got some good news for you.'" & vbCrLf &
+                Dim out As String = """You should have known better than to try and rob a shop keeper,"" the shopkeep says," & vbCrLf &
+                    " glaring down at you, ""...and if its gold you're after, I guess I've got some good news for you.""" & vbCrLf &
                     "  With that, " & n.pronoun & " reaches into " & n.pPronoun & " bag and puts on a gaudy gauntlet " & vbCrLf &
                     "that begins glowing with a golden light. You lack the strength to fight back as " & n.pronoun & " places" & vbCrLf &
-                    " his thumb on your forhead, and suddenly everything just seems so heavy. 'Noooo...' you moan, " & vbCrLf &
+                    " his thumb on your forhead, and suddenly everything just seems so heavy. ""Noooo..."" you moan, " & vbCrLf &
                     "as the area around where he touched turns to gold, and that gold turns your flesh and blood " & vbCrLf &
                     "around it to gold as well. In a matter of seconds, all that is left of " & Me.name & " the " & vbCrLf &
                     Me.title & " is a solid gold statue. The shopkeeper sighs, muttering to no one in particular, " & vbCrLf &
-                    vbCrLf & vbCrLf & "'Now how am I going to get you back to the refinery?'"
+                    vbCrLf & vbCrLf & """Now how am I going to get you back to the refinery?"""
                 'Game.pushLblEvent(out)
                 title = "Trophy"
                 MsgBox(out)
@@ -226,11 +380,51 @@
                 Game.pushLblEvent(out)
                 health = 10
                 Exit Sub
-            ElseIf currTarget.name.Equals("Enslaved Thrall") Then
-                Dim out As String = "Despite your fatigue, you are able to roll out of the way of the thrall's attempt to restrain you, and make a clumsy escape." & vbCrLf & " " & vbCrLf & "[Insert a TF here (eventually)]"
+            ElseIf currTarget.name.Equals("Mesmerized Thrall") Then
+                Dim out As String = ""
+                Dim ln1 As String = Nothing
+                If title = "Thrall" Then
+                    out = "Despite your fatigue, you are able to roll out of the way of the thrall's attempt to restrain you, and make a clumsy escape."
+                    health = 10
+                Else
+                    ln1 = "As you collapse, you see the thrall pull a small metal collar out of their bag.  Lacking the strength to resist, you are powerless as they secure it firmly around your neck, all the while murmuring whispers of the joys of submission into your ear.  Once they have the collar fitted properly, they place a small glowing gem into a slot on the collar, igniting a small array of runes.  Your mind goes blank in an instant, and while at first an ammnesia-fueled panic sets in it is quickly replaced by a booming disembodied voice."
+                    inventory(69).addone()
+                    If Not equippedAcce.getName.Equals("Nothing") Then equippedAcce.onUnequip()
+                    equippedAcce = inventory(69)
+                    equippedAcce.onEquip()
+                    health = getmaxHealth()
+                    mana = getmaxMana()
+                    Game.player.will -= 3
+                    If Game.player.will < 1 Then Game.player.will = 0
+                End If
+                currTarget.despawn("run")
+                If Not ln1 Is Nothing Then
+                    Game.pushLblEvent(ln1, AddressOf thrallLN2)
+                Else
+                    Game.pushLblEvent(out)
+                End If
+                Exit Sub
+            ElseIf currTarget.name.Equals("Enthralling Sorcerer") Or currTarget.name.Equals("Enthralling Sorceress") Then
+                Dim out As String = ""
+                If title = "Thrall" Then
+                    out = "Despite your fatigue, you are able to roll out of the way of the mage's attempt to restrain you, and make a clumsy escape."
+                    health = 10
+                Else
+                    out = """Wonderful!"", your opponent exclaims as you collapse, ""You'll make a perfect thrall!""" & vbCrLf & _
+                          "𝘛𝘩𝘳𝘢𝘭𝘭!? you think moments before a small metal collar finds its way around your neck and a network of runes inscribed on it begin glowing with your new master's magic.  𝘞𝘢𝘪𝘵 ... 𝘕𝘦𝘸 𝘔𝘈𝘚𝘛𝘌𝘙?!  You don't have a momment to rest before your mind is filled with a booming voice." & vbCrLf & _
+                          """LISTEN UP, NEW SLAVE!  I have need of your services."" your new master begins, ""In this dungeon, there are several high-power mana arrays.  Only one of them, however, is capable of bestowing the power of a demon lord onto a mortal such as I.  Your task is to find and inspect these arrays, and report back to me with your findings.""  They snicker,  ""I'm sure you won't let me down, but I'm going to need to make a few changes to make you more ... uniform ... with the rest of your collegues.""" & vbCrLf & vbCrLf & "        .....       " & vbCrLf & vbCrLf & "With a final warning not to fail them, the foreign presence leaves your mind and you are once again alone with your thoughts and your task."
+                    inventory(69).addone()
+                    If Not equippedAcce.getName.Equals("Nothing") Then equippedAcce.onUnequip()
+                    equippedAcce = inventory(69)
+                    equippedAcce.onEquip()
+                    health = getmaxHealth()
+                    mana = getmaxMana()
+                    prefForm.snapShift(Me)
+                    Game.player.will -= 3
+                    If Game.player.will < 1 Then Game.player.will = 0
+                End If
                 currTarget.despawn("run")
                 Game.pushLblEvent(out)
-                health = 10
                 Exit Sub
             ElseIf currTarget.name.Equals("Slime") Or currTarget.name.Equals("Goo Girl") Then
                 Dim out As String = "As the " & currTarget.name & " closes in on you, you push yourself off the ground, sidestep it, and make a hasty retreat." & vbCrLf & " " & vbCrLf & "[Insert a TF here (eventually)]"
@@ -238,7 +432,7 @@
                 Game.pushLblEvent(out)
                 health = 10
                 Exit Sub
-            ElseIf currTarget.name.Equals("Spider") Or currTarget.name.Equals("Arachne Huntress") Or currTarget.name.Equals("Enthralling Sorcerer") Or currTarget.name.Equals("Enthralling Sorceress") Then
+            ElseIf currTarget.name.Equals("Spider") Or currTarget.name.Equals("Arachne Huntress") Then
                 Dim out As String = "As the " & currTarget.name & " closes in on you, you push yourself off the ground, sidestep it, and make a hasty retreat." & vbCrLf & " " & vbCrLf & "[Insert a TF here (eventually)]"
                 currTarget.despawn("run")
                 Game.pushLblEvent(out)
@@ -298,10 +492,45 @@
         End If
         Game.formReset()
     End Sub
+    Sub thrallLN2()
+        Dim ptype = "sister"
+        If Int(Rnd() * 2) = 0 Then
+            ptype = "brother"
+        End If
+        Game.pushLblEvent("""LISTEN UP, NEW SLAVE!  I have need of your services."" your new master begins, ""In this dungeon, there are several high-power mana arrays.  Only one of them, however, is capable of bestowing the power of a demon lord onto a mortal such as I.  Your task is to find and inspect these arrays, and report back to me with your findings.""  They snicker,  ""I'm sure you won't let me down, but I'm going to need to make a few changes to make you more ... uniform ... with the rest of your collegues.""" & vbCrLf & vbCrLf & "        .....       " & vbCrLf & vbCrLf & "With a final warning not to fail them, the foreign presence leaves your mind and you are once again alone with your thoughts, your new " & ptype & ", and your task.")
+    End Sub
     'setClass sets the player stats at the beginning of the game
+    Sub setACCA()
+        If iArrInd(14).Item2 Then
+            Select Case iArrInd(14).Item1
+                Case 1
+                    equippedAcce = inventory(66)
+                Case 2
+                    equippedAcce = inventory(67)
+                Case 3
+                    equippedAcce = inventory(68)
+                Case Else
+                    equippedAcce = New noAcce
+                    equippedAcce.count -= 1
+            End Select
+        Else
+            Select Case iArrInd(14).Item1
+                Case 1
+                    equippedAcce = inventory(67)
+                Case 2
+                    equippedAcce = inventory(68)
+                Case Else
+                    equippedAcce = New noAcce
+                    equippedAcce.add(-1)
+            End Select
+        End If
+        equippedAcce.add(1)
+    End Sub
     Public Sub setClass(ByVal s As String)
         equippedArmor = New NormalClothes
         equippedWeapon = New BareFists
+        setACCA()
+
         If s = "Warrior" Then
             health += 50
             maxHealth += 50
@@ -529,6 +758,7 @@
     End Sub
     Sub createInvPerks()
         'create inventory
+        '0.1 - 0.4
         inventory.Add(New Compass())    '0
         inventory.Add(New StickOfGum()) '1
         inventory.Add(New HealthPotion())   '2
@@ -554,13 +784,11 @@
         inventory.Add(New WizardStaff())    '22
         inventory.Add(New BronzeXiphos())    '23
         inventory.Add(New TargaxSword())    '24
-
         inventory.Add(New BlondePotion())    '25
         inventory.Add(New RandomHairPotion())    '26
         inventory.Add(New RedHairPotion())    '27
         inventory.Add(New FemininePotion())    '28
         inventory.Add(New BEPotion())    '29
-
         inventory.Add(New ChickenLeg()) '30
         inventory.Add(New Apple()) '31
         inventory.Add(New PApple()) '32
@@ -595,6 +823,14 @@
         inventory.Add(New HyperHealPotion()) '61
         inventory.Add(New HyperManaPotion()) '62
         inventory.Add(New SpidersilkWhip()) '63
+        inventory.Add(New ChitArmor()) '64
+        '0.5
+        inventory.Add(New ASpellbook()) '65
+        '0.6
+        inventory.Add(New HeartNecklace()) '66
+        inventory.Add(New RedHeadband()) '67
+        inventory.Add(New RubyCirclet()) '68
+        inventory.Add(New SlaveCollar()) '69
 
         For i = 0 To inventory.Count - 1
             If inventory(i).GetType().IsSubclassOf(GetType(MysteryPotion)) Then
@@ -610,7 +846,7 @@
                  inventory(12), inventory(16), inventory(17), inventory(18),
                  inventory(19), inventory(20), inventory(38), inventory(39),
                  inventory(46), inventory(47), inventory(54), inventory(55),
-                 inventory(56)}
+                 inventory(56), inventory(64)}
 
         weapons = {New BareFists(),
                    inventory(6), inventory(9), inventory(11), inventory(21),
@@ -618,16 +854,20 @@
                    inventory(41), inventory(42), inventory(45), inventory(63)}
 
         useable = {inventory(0), inventory(1), inventory(3), inventory(4),
-                   inventory(15), inventory(36), inventory(37), inventory(45),
-                   inventory(48), inventory(49), inventory(50), inventory(51),
-                   inventory(52), inventory(57), inventory(58)}
+                   inventory(65), inventory(15), inventory(36), inventory(37),
+                   inventory(45), inventory(48), inventory(49), inventory(50),
+                   inventory(51), inventory(52), inventory(57), inventory(58)}
 
         food = {inventory(30), inventory(31), inventory(32), inventory(33),
                 inventory(34), inventory(35), inventory(44)}
 
+        acce = {New noAcce(), inventory(66), inventory(67), inventory(68),
+                inventory(69)}
+
         potions = {inventory(2), inventory(13), inventory(14), inventory(25),
                    inventory(26), inventory(27), inventory(28), inventory(29),
                    inventory(59), inventory(60), inventory(61), inventory(62)}
+        Array.Sort(potions)
 
         misc = {inventory(43), inventory(53)}
 
@@ -645,6 +885,7 @@
         perks.Add("ihfury", -1) '11
         perks.Add("livearm", -1) '12
         perks.Add("livelinge", -1) '13
+        perks.Add("thrall", -1) '14
     End Sub
     Sub perkUpdate()
         'hunger
@@ -724,7 +965,7 @@
             If Not haircolor.A = 180 Then
                 perks("slimehair") = -1
             Else
-                If health < maxHealth + hBuff And Game.turn Mod 2 = 0 Then
+                If health < maxHealth + hBuff And Game.turn Mod 4 = 0 Then
                     health += 25
                     Game.lstLog.Items.Add("Your gel body heals some of the damage done to it. +5 health")
                     If health > getmaxHealth() Then health = getmaxHealth()
@@ -748,13 +989,13 @@
                 perks("nekocurse") = -1
             End If
             If Not perks("polymorphed") > -1 Then
-                If perks("nekocurse") < (discipline * 1.2) Then
+                If perks("nekocurse") < (will * 1.2) Then
                     Select Case perks("nekocurse")
-                        Case Int((discipline * 1.2) * 0.1)
+                        Case Int((will * 1.2) * 0.1)
                             Polymorph.transform(Me, "neko", 0)
-                        Case Int((discipline * 1.2) * 0.3)
+                        Case Int((will * 1.2) * 0.3)
                             Polymorph.transform(Me, "neko", 1)
-                        Case Int((discipline * 1.2) * 0.5)
+                        Case Int((will * 1.2) * 0.5)
                             If Not title.Equals("Magic Girl") Then
                                 Polymorph.transform(Me, "neko", 2)
                             Else
@@ -762,11 +1003,11 @@
                                 Game.pushLblEvent("Your hair becomes a shiny black!")
                                 lust += 5
                             End If
-                        Case Int((discipline * 1.2) * 0.7)
+                        Case Int((will * 1.2) * 0.7)
                             Polymorph.transform(Me, "neko", 3)
-                        Case Int((discipline * 1.2) * 0.9)
+                        Case Int((will * 1.2) * 0.9)
                             Polymorph.transform(Me, "neko", 4)
-                        Case Int((discipline * 1.2) * 1.1)
+                        Case Int((will * 1.2) * 1.1)
                             If title.Equals("Magic Girl") Then
                                 Polymorph.transform(Me, "neko", 6)
                             Else
@@ -775,7 +1016,7 @@
                             inventory.Item(12).addOne()
                             lust += 5
                             Equipment.clothesChange("Cat_Lingerie")
-                        Case Int((discipline * 1.2))
+                        Case Int((will * 1.2))
                             Polymorph.transform(Me, "neko", 7)
                     End Select
                     perks("nekocurse") += 1
@@ -799,7 +1040,7 @@
             If Not haircolor.A = 180 Then
                 perks("vsslimehair") = -1
             Else
-                If health < maxHealth + hBuff And Game.turn Mod 4 = 0 Then
+                If health < maxHealth + hBuff And Game.turn Mod 7 = 0 Then
                     Dim h As Integer = Int(Rnd() * 15) + 1
                     health += h
                     Game.lstLog.Items.Add("The gel portion of your body is able to heal some of your wounds! +" & h & " health")
@@ -874,6 +1115,46 @@
                 perks("livelinge") = -1
             End If
         End If
+        'thrall tf
+        If perks("thrall") > -1 Then
+            If Game.turn Mod 10 = 0 And Not prefForm.playerMeetsForm(Game.player) Then
+                prefForm.shiftTowards(Game.player)
+                perks("thrall") += 1
+                If perks("thrall") > 30 Then
+                    prefForm.snapShift(Game.player)
+                End If
+            End If
+
+            If prefForm.playerMeetsForm(Game.player) Then
+                If Game.turn Mod 10 And Int(Rnd() * 40) = 0 And forcedPath Is Nothing And Not Game.combatmode And Not Game.npcmode Then
+                    Dim crystalX As Integer
+                    Dim crystalY As Integer
+                    Do While (Game.mBoard(crystalY, crystalX).Tag <> 1 Or Game.mBoard(crystalY, crystalX).Text <> "")
+                        crystalX = CInt(Int(Rnd() * Game.mBoardWidth))
+                        crystalY = CInt(Int(Rnd() * Game.mBoardHeight))
+                    Loop
+                    Dim crystal = New Point(crystalX, crystalY)
+                    Game.mBoard(crystalY, crystalX).Tag = 2
+                    Game.mBoard(crystalY, crystalX).Text = "c"
+
+                    forcedPath = Game.route(Game.player.pos, crystal, "n/a", New List(Of Point), 0)
+
+                    Dim s As String = ""
+                    If getWillpower() > 10 Then
+                        s = "you mock your instructions under your breath, before stiffly moving towards the crystal." + vbCrLf + "𝘐𝘧 𝘰𝘯𝘭𝘺 𝘐 𝘤𝘰𝘶𝘭𝘥 𝘨𝘦𝘵 𝘵𝘩𝘪𝘴 𝘥𝘢𝘮𝘯 𝘤𝘰𝘭𝘭𝘢𝘳 𝘰𝘧𝘧..."
+                    ElseIf getWillpower() > 7 Then
+                        s = "you reluctantly start off towards the crystal." + vbCrLf + "𝘖𝘩 𝘸𝘦𝘭𝘭, 𝘣𝘦𝘵𝘵𝘦𝘳 𝘮𝘦 𝘵𝘩𝘢𝘯 𝘰𝘯𝘦 𝘰𝘧 𝘵𝘩𝘦𝘪𝘳 𝘰𝘵𝘩𝘦𝘳 𝘪𝘥𝘪𝘰𝘵𝘴."
+                    ElseIf getWillpower() > 4 Then
+                        s = "you jump immediatly into action, happy to help the voice in your head with whatever it may need." + vbCrLf + "𝘐'𝘮 𝘨𝘰𝘪𝘯𝘨 𝘵𝘰 𝘮𝘢𝘬𝘦 𝘲𝘶𝘪𝘤𝘬 𝘸𝘰𝘳𝘬 𝘰𝘧 𝘵𝘩𝘪𝘴 𝘵𝘢𝘴𝘬!"
+                    Else
+                        s = "you mindlessly obey, moving towards the crystal with a vacant grin."
+                    End If
+                    Game.pushLblEvent("As your collar flares to life, you grimace as the location of a large mana crystal becomes clear in your mind." & _
+                                      "'SERVANT!', your controller's voice booms in your head, 'This is another of the crystals!  Recover it immediately!'" & vbCrLf & _
+                                      "As their voice leaves your head, " & s)
+                End If
+            End If
+        End If
         Game.lstLog.TopIndex = Game.lstLog.Items.Count - 1
         description = CStr(name & " is a " & sex & " " & title)
     End Sub
@@ -918,6 +1199,7 @@
         If Game.invFilters(1) Then
             tArr(ct) = "-POTIONS:"
             ct += 1
+            Array.Sort(potions)
             For i = 0 To UBound(potions)
                 If potions(i).getCount > 0 Then
                     tArr(ct) = " " & potions(i).getName() & " x" & potions(i).count
@@ -955,6 +1237,16 @@
                 End If
             Next
         End If
+        If Game.invFilters(6) Then
+            tArr(ct) = "-ACCESSORIES:"
+            ct += 1
+            For i = 0 To UBound(acce)
+                If acce(i).getCount > 0 Then
+                    tArr(ct) = " " & acce(i).getName() & " x" & acce(i).count
+                    ct += 1
+                End If
+            Next
+        End If
         If Game.invFilters(5) Then
             tArr(ct) = "-MISC:"
             ct += 1
@@ -975,8 +1267,32 @@
         invNeedsUDate = False
         If Game.turn < 2 AndAlso Not CharacterGenerator.CreateBMP(iArr).Equals(Game.picPortrait.BackgroundImage) Then createP() 'Form3.portraitUDate()
     End Sub
+    Sub oneLayerImgCheck(ByRef b As Boolean)
+        If title.Equals("Dragon") Then
+            Game.picPortrait.BackgroundImage = CharacterGenerator.CreateBMP({Game.picDragon.BackgroundImage})
+            b = True
+        ElseIf title.Equals("Magic Girl​") Then
+            Game.picPortrait.BackgroundImage = CharacterGenerator.CreateBMP({Game.picmgp1.BackgroundImage})
+            b = True
+        ElseIf title.Equals("Sheep") Then
+            Game.picPortrait.BackgroundImage = CharacterGenerator.CreateBMP({Game.picSheep.BackgroundImage})
+            b = True
+        ElseIf title.Equals("Frog") Then
+            Game.picPortrait.BackgroundImage = CharacterGenerator.CreateBMP({Game.picFrog.BackgroundImage})
+            b = True
+        ElseIf title.Equals("Princess​") Then
+            Game.picPortrait.BackgroundImage = CharacterGenerator.CreateBMP({Game.picPrin.BackgroundImage})
+            b = True
+        ElseIf title.Equals("Bunny Girl​") Then
+            Game.picPortrait.BackgroundImage = CharacterGenerator.CreateBMP({Game.picBun.BackgroundImage})
+            b = True
+        End If
+    End Sub
     Public Sub createP()
         If Not Game.picPortrait.BackgroundImage Is Nothing Then Game.picPortrait.BackgroundImage.Dispose()
+
+        Dim chk = False
+
         For i = 0 To 16
             If iArrInd(i).Item2 Then
                 iArr(i) = CharacterGenerator.fAttributes(i)(iArrInd(i).Item1)
@@ -989,10 +1305,14 @@
         Game.lstLog.TopIndex = Game.lstLog.Items.Count - 1
         If lust > 0 Then lustUpdate()
         If wingInd > 0 Then addWings(wingInd)
+
+        If Not solFlag And Not chk Then Game.picPortrait.BackgroundImage = CharacterGenerator.CreateBMP(iArr)
+        oneLayerImgCheck(chk)
+        Game.picPortrait.Update()
+
         currState.save(Me)
         Game.lblEvent.ForeColor = TextColor
         Game.lblNameTitle.ForeColor = TextColor
-        If Not solFlag Then Game.picPortrait.BackgroundImage = CharacterGenerator.CreateBMP(iArr)
     End Sub
     Public Sub MtF()
         If perks("polymorphed") > -1 Or title.Equals("Magic Girl") Then
@@ -1025,12 +1345,13 @@
             Game.lstLog.Items.Add("Your form prevents you from being altered.")
             Exit Sub
         End If
-        If breastSize = -1 Then breastSize = 0
-        If breastSize >= 0 And breastSize < 6 Then
+        If breastSize >= -1 And breastSize < 8 Then
             breastSize += 1
             Select Case breastSize
                 Case -1
                     iArrInd(2) = New Tuple(Of Integer, Boolean)(0, False)
+                Case 0
+                    iArrInd(2) = New Tuple(Of Integer, Boolean)(2, False)
                 Case 1
                     iArrInd(2) = New Tuple(Of Integer, Boolean)(0, True)
                 Case 2
@@ -1041,6 +1362,10 @@
                     iArrInd(2) = New Tuple(Of Integer, Boolean)(3, True)
                 Case 5
                     iArrInd(2) = New Tuple(Of Integer, Boolean)(4, True)
+                Case 6
+                    iArrInd(2) = New Tuple(Of Integer, Boolean)(17, True)
+                Case 7
+                    iArrInd(2) = New Tuple(Of Integer, Boolean)(19, True)
             End Select
             Game.lstLog.Items.Add("+ 1 cup size!")
             If iArrInd(3).Item2 = False Then iArrInd(3) = New Tuple(Of Integer, Boolean)(iArrInd(3).Item1, True)
@@ -1053,13 +1378,13 @@
             Game.lstLog.Items.Add("Your form prevents you from being altered.")
             Exit Sub
         End If
-        'If breastSize = -1 Then breastSize = 0
         If breastSize > -1 And breastSize <= 6 Then
             breastSize -= 1
-            If breastSize = 0 Then breastSize = -1
             Select Case breastSize
                 Case -1
                     iArrInd(2) = New Tuple(Of Integer, Boolean)(0, False)
+                Case 0
+                    iArrInd(2) = New Tuple(Of Integer, Boolean)(2, False)
                 Case 1
                     iArrInd(2) = New Tuple(Of Integer, Boolean)(0, True)
                 Case 2
@@ -1070,6 +1395,10 @@
                     iArrInd(2) = New Tuple(Of Integer, Boolean)(3, True)
                 Case 5
                     iArrInd(2) = New Tuple(Of Integer, Boolean)(4, True)
+                Case 6
+                    iArrInd(2) = New Tuple(Of Integer, Boolean)(17, True)
+                Case 7
+                    iArrInd(2) = New Tuple(Of Integer, Boolean)(19, True)
             End Select
             Game.lstLog.Items.Add("- 1 cup size!")
             If iArrInd(3).Item2 = False Then iArrInd(3) = New Tuple(Of Integer, Boolean)(iArrInd(3).Item1, True)
@@ -1082,12 +1411,18 @@
             breastSize = 1
         ElseIf iArrInd(2).Item1 = 1 Or iArrInd(2).Item1 = 6 And breastSize <> 2 Then
             breastSize = 2
-        ElseIf (iArrInd(2).Item1 = 2 Or iArr(2).Equals(CharacterGenerator.fTFBody(10)) Or iArr(2).Equals(Game.picFMarkBody.BackgroundImage)) Or iArrInd(2).Item1 = 7 And breastSize <> 3 Then
+        ElseIf ((iArrInd(2).Item1 = 2 And iArrInd(2).Item2) Or iArr(2).Equals(CharacterGenerator.fTFBody(10)) Or iArr(2).Equals(Game.picFMarkBody.BackgroundImage)) Or iArrInd(2).Item1 = 7 And breastSize <> 3 Then
             breastSize = 3
         ElseIf iArrInd(2).Item1 = 3 Or iArrInd(2).Item1 = 8 And breastSize <> 4 Then
             breastSize = 4
         ElseIf iArrInd(2).Item1 = 4 Or iArrInd(2).Item1 = 9 And breastSize <> 5 Then
             breastSize = 5
+        ElseIf iArrInd(2).Item1 = 17 Or iArrInd(2).Item1 = 18 And breastSize <> 6 Then
+            breastSize = 6
+        ElseIf iArrInd(2).Item1 = 19 Or iArrInd(2).Item1 = 20 And breastSize <> 7 Then
+            breastSize = 7
+        ElseIf iArrInd(2).Item1 = 2 And Not iArrInd(2).Item2 And breastSize <> 0 Then
+            breastSize = 0
         ElseIf iArrInd(2).Item1 = 0 And Not iArrInd(2).Item2 And breastSize <> -1 Then
             breastSize = -1
         End If
@@ -1153,17 +1488,21 @@
         End Select
         'eyes
         Select Case iArrInd(9).Item1
-            Case 7
+            Case 5
+                iArrInd(9) = New Tuple(Of Integer, Boolean)(11, True)
+            Case 6
                 iArrInd(9) = New Tuple(Of Integer, Boolean)(14, True)
-            Case 8
+            Case 7
                 iArrInd(9) = New Tuple(Of Integer, Boolean)(15, True)
+            Case 8
+                iArrInd(9) = New Tuple(Of Integer, Boolean)(19, True)
             Case Else
                 iArrInd(9) = New Tuple(Of Integer, Boolean)(iArrInd(9).Item1, True)
         End Select
         'eyebrows
         Select Case iArrInd(10).Item1
             Case Else
-                iArrInd(9) = New Tuple(Of Integer, Boolean)(iArrInd(10).Item1, True)
+                iArrInd(10) = New Tuple(Of Integer, Boolean)(iArrInd(10).Item1, True)
         End Select
         'accesory
         Select Case iArrInd(14).Item1
@@ -1234,9 +1573,13 @@
         End Select
         'eyes
         Select Case iArrInd(9).Item1
+            Case 11
+                iArrInd(9) = New Tuple(Of Integer, Boolean)(5, False)
             Case 14
-                iArrInd(9) = New Tuple(Of Integer, Boolean)(7, False)
+                iArrInd(9) = New Tuple(Of Integer, Boolean)(6, False)
             Case 15
+                iArrInd(9) = New Tuple(Of Integer, Boolean)(7, False)
+            Case 19
                 iArrInd(9) = New Tuple(Of Integer, Boolean)(8, False)
             Case Else
                 If iArrInd(9).Item1 < 5 Then iArrInd(9) = New Tuple(Of Integer, Boolean)(iArrInd(9).Item1, False)
@@ -1244,7 +1587,7 @@
         'eyebrows
         Select Case iArrInd(10).Item1
             Case Else
-                iArrInd(9) = New Tuple(Of Integer, Boolean)(iArrInd(10).Item1, False)
+                iArrInd(10) = New Tuple(Of Integer, Boolean)(iArrInd(10).Item1, False)
         End Select
         'accesory
         Select Case iArrInd(14).Item1
@@ -1321,7 +1664,6 @@
         If iArrInd(10).Item1 < 3 Then iArr(10) = CharacterGenerator.recolor(t(10), c)
         If Not solFlag Then Game.picPortrait.BackgroundImage = CharacterGenerator.CreateBMP(iArr)
     End Sub
-
     Public Sub changeSkinColor(ByVal c As Color)
         skincolor = c
         Dim t(16) As Image
@@ -1361,7 +1703,7 @@
             If iArrInd(6).Item1 = 0 Or iArrInd(6).Item1 = 3 Then
                 t(6) = CharacterGenerator.getImg("img/fEars")(iArrInd(6).Item1)
                 iArr(6) = CharacterGenerator.recolor2(t(6), c)
-            ElseIf iArrInd(6).Item1 = 6 Then
+            ElseIf iArrInd(6).Item1 = 6 Or iArrInd(6).Item1 = 7 Then
                 t(6) = CharacterGenerator.getImg("img/fTF/tfEars")(iArrInd(6).Item1 - 5)
                 iArr(6) = CharacterGenerator.recolor2(t(6), c)
             End If
@@ -1429,22 +1771,22 @@
     End Function
     Function getmaxMana()
         If equippedArmor Is Nothing Or equippedWeapon Is Nothing Then Return maxMana + mBuff
-        Return maxMana + mBuff + equippedArmor.mBoost + equippedWeapon.mBoost
+        Return maxMana + mBuff + equippedArmor.mBoost + equippedWeapon.mBoost + equippedAcce.mBoost
     End Function
     Function getAttack()
         If equippedArmor Is Nothing Or equippedWeapon Is Nothing Then Return attack + aBuff
-        Return attack + aBuff + equippedArmor.aBoost
+        Return attack + aBuff + equippedArmor.aBoost + equippedAcce.aBoost
     End Function
     Function getDefence()
         If equippedArmor Is Nothing Or equippedWeapon Is Nothing Then Return defence + dBuff
-        Return defence + dBuff + equippedArmor.dBoost
+        Return defence + dBuff + equippedArmor.dBoost + equippedAcce.dBoost
     End Function
     Function getSpeed()
         If equippedArmor Is Nothing Or equippedWeapon Is Nothing Then Return speed + sBuff
-        Return speed + sBuff + equippedArmor.sBoost
+        Return speed + sBuff + equippedArmor.sBoost + equippedAcce.sBoost
     End Function
     Function getWillpower()
-        Return discipline + wBuff
+        Return will + wBuff
     End Function
 
     'getter for inventory sub catagories
@@ -1462,6 +1804,13 @@
         Next
         Return New Tuple(Of String(), Weapon())(s, weapons)
     End Function
+    Function getAccesories() As Tuple(Of String(), Accessory())
+        Dim s(UBound(acce)) As String
+        For i = 0 To UBound(acce)
+            s(i) = acce(i).getName
+        Next
+        Return New Tuple(Of String(), Accessory())(s, acce)
+    End Function
 
     'toString
     Public Overrides Function ToString() As String
@@ -1471,14 +1820,11 @@
         output += currState.write()
         output += sState.write()
         output += pState.write()
-        output += succState.write()
-        output += slimState.write()
-        output += goddState.write()
-        output += dragState.write()
-        output += bimbState.write()
-        output += magGState.write()
-        output += maidState.write()
-        output += prinState.write()
+
+        output += formStates.length & "#"
+        For i = 0 To UBound(formStates)
+            output += formStates(i).write()
+        Next
         output += pos.X & "*"
         output += pos.Y & "*"
         output += health & "*"
@@ -1495,6 +1841,24 @@
         For i = 0 To inventory.Count - 1
             output += (inventory.Item(i).count & "*")
         Next
+
+        If forcedPath Is Nothing Then
+            output += "N/a*"
+        Else
+            output += UBound(forcedPath) & "*"
+            For i = 0 To UBound(forcedPath)
+                output += (forcedPath(i).X & "*")
+                output += (forcedPath(i).Y & "*")
+            Next
+        End If
+
+        If Not prefForm Is Nothing Then
+            output += prefForm.ToString & "$"
+        Else
+            output += "N/a$"
+        End If
+        output += inventory(69).ToString
+
         Return output
     End Function
     Public Function toGhost() As String
@@ -1590,10 +1954,26 @@
         'general statement
         out = "You are " & name & ", a " & sex & " " & title & vbCrLf & " " & vbCrLf
 
+        'check for single image forms
+        Select Case title
+            Case "Dragon"
+            Case "Blob"
+            Case "Chicken"
+            Case "Frog"
+            Case "Sheep"
+            Case "Bunny"
+            Case "Magic Girl​"
+                out += "You are currently in the middle of a magical girl transformation!"
+                Return out
+        End Select
+
         'hair
         out += "You have " & getHairColor()
         If haircolor.A = 180 Then
             out += "gelatinous "
+        End If
+        If title.Equals("Blow-Up Doll") Then
+            out += "rubber "
         End If
         If iArrInd(1).Item2 Then
             out += "hair, done in a feminine style." & vbCrLf & " " & vbCrLf
@@ -1603,9 +1983,7 @@
 
         'body
         Select Case title
-            Case "Dragon"
-                out += "You are a large dragon covered in emerald scales." & vbCrLf & " " & vbCrLf
-            Case "Blow-Up-Doll"
+            Case "Blow-Up Doll"
                 out += "You are a inflatable sex doll with " & getSkinColor() & "rubber skin.  "
                 If sexBool Then
                     out += "You have a feminine body, with huge breasts and the matching female genetalia." & vbCrLf & " " & vbCrLf
@@ -1624,6 +2002,8 @@
                 Select Case breastSize
                     Case -1
                         bAdj = "non-existant"
+                    Case 0
+                        bAdj = "small"
                     Case 1
                         bAdj = "medium"
                     Case 2
@@ -1634,6 +2014,10 @@
                         bAdj = "massive"
                     Case 5
                         bAdj = "ridiculous"
+                    Case 6
+                        bAdj = "vast"
+                    Case 7
+                        bAdj = "immense"
                 End Select
                 If sexBool Then
                     If iArrInd(2).Item2 Then
@@ -1641,6 +2025,8 @@
                     Else
                         out += "You have a a masculine body, with " & bAdj & " breasts, though you have female genetalia." & vbCrLf & " " & vbCrLf
                     End If
+
+                    out += "Your hips have womanly curves without being overly wide.  Overall, you have typical legs and feet for a humanoid woman."
                 Else
                     If iArrInd(2).Item2 Then
                         out += "You have a feminine body, with " & bAdj & " breasts, though you have male genetalia." & vbCrLf & " " & vbCrLf
@@ -1652,7 +2038,7 @@
 
         'perks
         If perks("hunger") > -1 Then out += "You haven't eaten anything in a while and are starving." & vbCrLf & " " & vbCrLf
-        If perks("slutcurse") > -1 Then out += "You choose to dress very provokatively, showing as much skin as possible due to a curse."
+        If perks("slutcurse") > -1 Then out += "You choose to dress very provocatively, showing as much skin as possible due to a curse."
         If perks("polymorphed") > -1 Then out += "You are under the effects of a temporary polymorph, and will be for " & perks("polymorphed") & " more turns." & vbCrLf & " " & vbCrLf
         Return out
     End Function
