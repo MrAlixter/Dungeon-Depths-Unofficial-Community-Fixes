@@ -630,6 +630,9 @@ Public Class Game
         mBoard(stairsY, stairsX).ForeColor = Color.FromArgb(45, 45, 45)
         mBoard(stairsY, stairsX).Text = "H"
     End Sub
+    Function chestSpotValid()
+
+    End Function
     Sub placeChest(ByVal code As String)
         Rnd(-1)
         Randomize(code.GetHashCode)
