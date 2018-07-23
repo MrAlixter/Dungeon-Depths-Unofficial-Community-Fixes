@@ -62,7 +62,7 @@ Partial Class GeneratorSettings
         Me.lblFC.AutoSize = True
         Me.lblFC.Location = New System.Drawing.Point(12, 9)
         Me.lblFC.Name = "lblFC"
-        Me.lblFC.Size = New System.Drawing.Size(108, 19)
+        Me.lblFC.Size = New System.Drawing.Size(155, 28)
         Me.lblFC.TabIndex = 0
         Me.lblFC.Text = "FloorCode: "
         '
@@ -71,7 +71,7 @@ Partial Class GeneratorSettings
         Me.lblWidth.AutoSize = True
         Me.lblWidth.Location = New System.Drawing.Point(12, 55)
         Me.lblWidth.Name = "lblWidth"
-        Me.lblWidth.Size = New System.Drawing.Size(126, 19)
+        Me.lblWidth.Size = New System.Drawing.Size(181, 28)
         Me.lblWidth.TabIndex = 1
         Me.lblWidth.Text = "Board Width: "
         '
@@ -80,7 +80,7 @@ Partial Class GeneratorSettings
         Me.lblHeight.AutoSize = True
         Me.lblHeight.Location = New System.Drawing.Point(12, 87)
         Me.lblHeight.Name = "lblHeight"
-        Me.lblHeight.Size = New System.Drawing.Size(135, 19)
+        Me.lblHeight.Size = New System.Drawing.Size(194, 28)
         Me.lblHeight.TabIndex = 2
         Me.lblHeight.Text = "Board Height: "
         '
@@ -90,7 +90,7 @@ Partial Class GeneratorSettings
         Me.boxWidth.ForeColor = System.Drawing.Color.White
         Me.boxWidth.Location = New System.Drawing.Point(220, 53)
         Me.boxWidth.Name = "boxWidth"
-        Me.boxWidth.Size = New System.Drawing.Size(120, 26)
+        Me.boxWidth.Size = New System.Drawing.Size(120, 36)
         Me.boxWidth.TabIndex = 3
         '
         'boxHeight
@@ -99,7 +99,7 @@ Partial Class GeneratorSettings
         Me.boxHeight.ForeColor = System.Drawing.Color.White
         Me.boxHeight.Location = New System.Drawing.Point(220, 85)
         Me.boxHeight.Name = "boxHeight"
-        Me.boxHeight.Size = New System.Drawing.Size(120, 26)
+        Me.boxHeight.Size = New System.Drawing.Size(120, 36)
         Me.boxHeight.TabIndex = 4
         '
         'boxChestFreqRange
@@ -108,7 +108,7 @@ Partial Class GeneratorSettings
         Me.boxChestFreqRange.ForeColor = System.Drawing.Color.White
         Me.boxChestFreqRange.Location = New System.Drawing.Point(220, 143)
         Me.boxChestFreqRange.Name = "boxChestFreqRange"
-        Me.boxChestFreqRange.Size = New System.Drawing.Size(120, 26)
+        Me.boxChestFreqRange.Size = New System.Drawing.Size(120, 36)
         Me.boxChestFreqRange.TabIndex = 6
         '
         'lblChestFreqRange
@@ -116,7 +116,7 @@ Partial Class GeneratorSettings
         Me.lblChestFreqRange.AutoSize = True
         Me.lblChestFreqRange.Location = New System.Drawing.Point(12, 145)
         Me.lblChestFreqRange.Name = "lblChestFreqRange"
-        Me.lblChestFreqRange.Size = New System.Drawing.Size(162, 19)
+        Me.lblChestFreqRange.Size = New System.Drawing.Size(233, 28)
         Me.lblChestFreqRange.TabIndex = 5
         Me.lblChestFreqRange.Text = "Chest Freq Range:"
         '
@@ -126,7 +126,7 @@ Partial Class GeneratorSettings
         Me.boxChestFreqMin.ForeColor = System.Drawing.Color.White
         Me.boxChestFreqMin.Location = New System.Drawing.Point(220, 175)
         Me.boxChestFreqMin.Name = "boxChestFreqMin"
-        Me.boxChestFreqMin.Size = New System.Drawing.Size(120, 26)
+        Me.boxChestFreqMin.Size = New System.Drawing.Size(120, 36)
         Me.boxChestFreqMin.TabIndex = 8
         '
         'lblChestFreqMin
@@ -134,7 +134,7 @@ Partial Class GeneratorSettings
         Me.lblChestFreqMin.AutoSize = True
         Me.lblChestFreqMin.Location = New System.Drawing.Point(12, 177)
         Me.lblChestFreqMin.Name = "lblChestFreqMin"
-        Me.lblChestFreqMin.Size = New System.Drawing.Size(144, 19)
+        Me.lblChestFreqMin.Size = New System.Drawing.Size(207, 28)
         Me.lblChestFreqMin.TabIndex = 7
         Me.lblChestFreqMin.Text = "Chest Freq Min:"
         '
@@ -144,7 +144,7 @@ Partial Class GeneratorSettings
         Me.boxChestSizeDependence.ForeColor = System.Drawing.Color.White
         Me.boxChestSizeDependence.Location = New System.Drawing.Point(220, 207)
         Me.boxChestSizeDependence.Name = "boxChestSizeDependence"
-        Me.boxChestSizeDependence.Size = New System.Drawing.Size(120, 26)
+        Me.boxChestSizeDependence.Size = New System.Drawing.Size(120, 36)
         Me.boxChestSizeDependence.TabIndex = 10
         '
         'lblChestSize
@@ -152,7 +152,7 @@ Partial Class GeneratorSettings
         Me.lblChestSize.AutoSize = True
         Me.lblChestSize.Location = New System.Drawing.Point(12, 209)
         Me.lblChestSize.Name = "lblChestSize"
-        Me.lblChestSize.Size = New System.Drawing.Size(207, 19)
+        Me.lblChestSize.Size = New System.Drawing.Size(298, 28)
         Me.lblChestSize.TabIndex = 9
         Me.lblChestSize.Text = "Chest Size Dependence:"
         '
@@ -190,7 +190,7 @@ Partial Class GeneratorSettings
         Me.boxEncounterRate.Location = New System.Drawing.Point(221, 323)
         Me.boxEncounterRate.Maximum = New Decimal(New Integer() {1000, 0, 0, 0})
         Me.boxEncounterRate.Name = "boxEncounterRate"
-        Me.boxEncounterRate.Size = New System.Drawing.Size(120, 26)
+        Me.boxEncounterRate.Size = New System.Drawing.Size(120, 36)
         Me.boxEncounterRate.TabIndex = 15
         '
         'lblEncounterRate
@@ -198,7 +198,7 @@ Partial Class GeneratorSettings
         Me.lblEncounterRate.AutoSize = True
         Me.lblEncounterRate.Location = New System.Drawing.Point(13, 325)
         Me.lblEncounterRate.Name = "lblEncounterRate"
-        Me.lblEncounterRate.Size = New System.Drawing.Size(198, 19)
+        Me.lblEncounterRate.Size = New System.Drawing.Size(285, 28)
         Me.lblEncounterRate.TabIndex = 14
         Me.lblEncounterRate.Text = "Encounter Rate (.x%):"
         '
@@ -209,7 +209,7 @@ Partial Class GeneratorSettings
         Me.boxEClockResetVal.Location = New System.Drawing.Point(221, 355)
         Me.boxEClockResetVal.Maximum = New Decimal(New Integer() {1000, 0, 0, 0})
         Me.boxEClockResetVal.Name = "boxEClockResetVal"
-        Me.boxEClockResetVal.Size = New System.Drawing.Size(120, 26)
+        Me.boxEClockResetVal.Size = New System.Drawing.Size(120, 36)
         Me.boxEClockResetVal.TabIndex = 17
         '
         'lblEClockResetVal
@@ -217,7 +217,7 @@ Partial Class GeneratorSettings
         Me.lblEClockResetVal.AutoSize = True
         Me.lblEClockResetVal.Location = New System.Drawing.Point(13, 357)
         Me.lblEClockResetVal.Name = "lblEClockResetVal"
-        Me.lblEClockResetVal.Size = New System.Drawing.Size(153, 19)
+        Me.lblEClockResetVal.Size = New System.Drawing.Size(220, 28)
         Me.lblEClockResetVal.TabIndex = 16
         Me.lblEClockResetVal.Text = "Encounter Timer:"
         '
@@ -227,7 +227,7 @@ Partial Class GeneratorSettings
         Me.boxChestRichnessBase.ForeColor = System.Drawing.Color.White
         Me.boxChestRichnessBase.Location = New System.Drawing.Point(220, 239)
         Me.boxChestRichnessBase.Name = "boxChestRichnessBase"
-        Me.boxChestRichnessBase.Size = New System.Drawing.Size(120, 26)
+        Me.boxChestRichnessBase.Size = New System.Drawing.Size(120, 36)
         Me.boxChestRichnessBase.TabIndex = 19
         '
         'lblChestRichnessBase
@@ -235,7 +235,7 @@ Partial Class GeneratorSettings
         Me.lblChestRichnessBase.AutoSize = True
         Me.lblChestRichnessBase.Location = New System.Drawing.Point(12, 241)
         Me.lblChestRichnessBase.Name = "lblChestRichnessBase"
-        Me.lblChestRichnessBase.Size = New System.Drawing.Size(189, 19)
+        Me.lblChestRichnessBase.Size = New System.Drawing.Size(272, 28)
         Me.lblChestRichnessBase.TabIndex = 18
         Me.lblChestRichnessBase.Text = "Chest Richness Base:"
         '
@@ -245,7 +245,7 @@ Partial Class GeneratorSettings
         Me.boxChestRichnessRange.ForeColor = System.Drawing.Color.White
         Me.boxChestRichnessRange.Location = New System.Drawing.Point(221, 271)
         Me.boxChestRichnessRange.Name = "boxChestRichnessRange"
-        Me.boxChestRichnessRange.Size = New System.Drawing.Size(120, 26)
+        Me.boxChestRichnessRange.Size = New System.Drawing.Size(120, 36)
         Me.boxChestRichnessRange.TabIndex = 21
         '
         'lblChestRichnessRange
@@ -253,7 +253,7 @@ Partial Class GeneratorSettings
         Me.lblChestRichnessRange.AutoSize = True
         Me.lblChestRichnessRange.Location = New System.Drawing.Point(13, 273)
         Me.lblChestRichnessRange.Name = "lblChestRichnessRange"
-        Me.lblChestRichnessRange.Size = New System.Drawing.Size(198, 19)
+        Me.lblChestRichnessRange.Size = New System.Drawing.Size(285, 28)
         Me.lblChestRichnessRange.TabIndex = 20
         Me.lblChestRichnessRange.Text = "Chest Richness Range:"
         '
@@ -283,7 +283,7 @@ Partial Class GeneratorSettings
         '
         'GeneratorSettings
         '
-        Me.AutoScaleDimensions = New System.Drawing.SizeF(9.0!, 19.0!)
+        Me.AutoScaleDimensions = New System.Drawing.SizeF(13.0!, 28.0!)
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font
         Me.BackColor = System.Drawing.Color.Black
         Me.ClientSize = New System.Drawing.Size(784, 461)
@@ -313,6 +313,7 @@ Partial Class GeneratorSettings
         Me.Controls.Add(Me.lblFC)
         Me.Font = New System.Drawing.Font("Consolas", 12.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.ForeColor = System.Drawing.Color.White
+        Me.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedToolWindow
         Me.Margin = New System.Windows.Forms.Padding(4)
         Me.Name = "GeneratorSettings"
         Me.StartPosition = System.Windows.Forms.FormStartPosition.CenterParent

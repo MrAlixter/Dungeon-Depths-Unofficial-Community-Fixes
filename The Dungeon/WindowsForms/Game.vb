@@ -1,6 +1,7 @@
 ﻿Imports System.ComponentModel
 Imports System.IO
 Imports System.Threading
+'Imports DDTooltip
 
 Public Class Game
     'Form1 is the main driver form that runs the game
@@ -64,12 +65,11 @@ Public Class Game
     Public version As Double = 0.6     'the save file version
 
     Public lblEventOnClose As Action    'the event method preformed when lblEvent closes (NOT SAVED)
-    Public invFilters() As Boolean = {True, True, True, True, True, True}
-    'Dim eClock As Integer = 15
-    Dim eClock As Integer = eClockResetVal * 3
     Public lastKey As String
     Public yesAction, noAction As Action
-
+    Public invFilters() As Boolean = {True, True, True, True, True, True, True}
+    'Dim eClock As Integer = 15
+    Dim eClock As Integer = eClockResetVal * 3
     Public solFlag As Boolean = True
     Private trd As Thread
     Dim imagesWorker As BackgroundWorker
@@ -79,10 +79,6 @@ Public Class Game
     Dim imagesWorkerArg = Nothing
     Dim savePicsReady As Boolean = False
     Dim boardReady As Boolean = False
-
-    Dim tooltip As Panel
-    Dim tooltipFollowThread As Thread
-    Private Delegate Sub delegateExecute()
 
     Dim healthCol As Bitmap = Nothing
 
@@ -388,16 +384,6 @@ Public Class Game
                 '    Me.Controls.Add(newPicture)
                 '    mPics(yInd, xInd) = newPicture
                 'End If
-                If (xInd <= 23 And yInd <= 15) Then
-                    Dim newPicture As PictureBox = New PictureBox()
-                    newPicture.BackgroundImageLayout = ImageLayout.Stretch
-                    newPicture.Size = New Point(YSize * 1.25, XSize * 1.25)
-                    newPicture.Location = New Point(40.0 + CDbl(xInd) * (XSize * 1.23), 55 + CDbl(yInd) * (YSize * 1.23))
-                    newPicture.Visible = True
-                    'newPicture.BorderStyle = BorderStyle.FixedSingle
-                    Me.Controls.Add(newPicture)
-                    mPics(yInd, xInd) = newPicture
-                End If
                 Dim progress As Double = (xInd + (yInd * mBoardWidth)) / numTiles
                 boardWorker.ReportProgress(40 + (progress * 40))
                 Application.DoEvents()
@@ -1029,9 +1015,7 @@ Public Class Game
         If floor = 5 Then Exit Sub
         Randomize()
         If eClock > 0 Then eClock -= 1
-        If combatmode = True Or npcmode = True Or eClock <> 0 Then Exit Sub
         If combatmode = True Or npcmode = True Or eClock <> 0 Or Not player.canMoveFlag Then Exit Sub
-        Dim rand As Integer = CInt(Int(Rnd() * 200))
         Dim currTier As Integer() = monsterTier1
         Select Case floor
             Case 1
@@ -1046,6 +1030,7 @@ Public Class Game
                 currTier = monsterTier4
         End Select
 
+        Dim rand As Integer = CInt(Int(Rnd() * 1000))
         Dim r As Integer = Int(Rnd() * (UBound(currTier) + 1))
         Dim r2 As Integer = Int(Rnd() * (UBound(currTier) + 1))
 
@@ -1090,10 +1075,10 @@ Public Class Game
                 lblEvent.ForeColor = Color.White
                 If Not combatmode Then player.canMoveFlag = True
                 If Not lblEventOnClose Is Nothing Then
-                        lblEvent.Visible = True
-                        If Not combatmode Then player.canMoveFlag = False
-                        lblEventOnClose()
-                        lblEventOnClose = Nothing
+                    lblEvent.Visible = True
+                    If Not combatmode Then player.canMoveFlag = False
+                    lblEventOnClose()
+                    lblEventOnClose = Nothing
                 End If
                 drawBoard()
                 If btnEQP.Enabled = False Then btnEQP.Enabled = True
@@ -2015,6 +2000,7 @@ Public Class Game
         zoom()
 
         stairs = New Point(reader.ReadLine(), reader.ReadLine())
+
         chestFreqMin = reader.ReadLine()
         chestFreqRange = reader.ReadLine()
         chestSizeDependence = reader.ReadLine()
@@ -3728,102 +3714,6 @@ Public Class Game
         'player.canMoveFlag = False
     End Sub
 
-    Private Sub statEnter(sender As Object, e As EventArgs) Handles lblATK.MouseEnter, lblDEF.MouseEnter, lblHealth.MouseEnter, lblEVD.MouseEnter, lblHunger.MouseEnter, lblMana.MouseEnter, lblSKL.MouseEnter, lblSPD.MouseEnter, lblGold.MouseEnter
-        If tooltip Is Nothing Then
-            tooltip = New Panel()
-            Me.Controls.Add(tooltip)
-            tooltip.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle
-            tooltip.Name = "tooltip"
-            tooltip.Size = New System.Drawing.Size(200, 50)
-            tooltip.Visible = True
-            tooltip.BackColor = Color.Black
-            tooltip.ForeColor = Color.White
-        End If
-        tooltip.Enabled = True
-        tooltip.Visible = True
-        tooltip.BringToFront()
-
-        tooltipFollowThread = New Thread(AddressOf tooltipFollow)
-        tooltipFollowThread.Start()
-
-        If tooltip.Controls.Count > 0 Then
-            For i As Integer = 0 To tooltip.Controls.Count - 1
-                Dim c As Control = tooltip.Controls(i)
-                If c.GetType() Is GetType(Label) Then
-                    tooltipText(sender, tooltip, c)
-                End If
-            Next
-        Else
-            Dim text As Label = New Label()
-            tooltip.Controls.Add(text)
-            tooltipText(sender, tooltip, text)
-            text.ForeColor = Color.White
-            text.Font = New Font("Consolas", 12)
-            text.AutoSize = False
-        End If
-
-        tooltipRelocate()
-    End Sub
-
-    Private Sub tooltipText(sender As Label, tooltip As Panel, toSet As Label)
-        If sender.Name = "lblATK" Then
-            toSet.Text = "ATK determines physical damage given" + vbCrLf + "(click for more)"  '"dmg = weaponATK + pATK - " + vbCrLf + "  (eDEF * pATK / 100) + " + vbCrLf + "  (12 + pATK + weaponBonus) * 2"
-        ElseIf sender.Name = "lblDEF" Then
-            toSet.Text = "DEF determines physical damage taken" + vbCrLf + "(click for more)"
-        ElseIf sender.Name = "lblHealth" Then
-            toSet.Text = "Heatlh determines damage that can be taken before dying" + vbCrLf + "(click for more)"
-        ElseIf sender.Name = "lblEVD" Then
-            toSet.Text = "EVD determines chance of avoiding attacks" + vbCrLf + "(click for more)"
-        ElseIf sender.Name = "lblHunger" Then
-            toSet.Text = "When hunger is maxed, player will take healllth damage" + vbCrLf + "(click for more)"
-        ElseIf sender.Name = "lblMana" Then
-            toSet.Text = "Mana is used to cast magic" + vbCrLf + "(click for more)"
-        ElseIf sender.Name = "lblSKL" Then
-            toSet.Text = "WIL (will) affects TF speed" + vbCrLf + "(click for more)"
-        ElseIf sender.Name = "lblSPD" Then
-            toSet.Text = "SPD currently does nothing" + vbCrLf + "(click for more)"
-        ElseIf sender.Name = "lblGold" Then
-            toSet.Text = "Gold can be used to buy items from merchants" + vbCrLf + "(click for more)"
-        Else
-            toSet.Text = "THIS LABEL HAS NOT YET BEEN HANDLED"
-        End If
-        tooltip.Size = TextRenderer.MeasureText(toSet.Text, toSet.Font)
-        toSet.Size = tooltip.Size
-    End Sub
-
-    Private Sub statLeave(sender As Object, e As EventArgs) Handles lblATK.MouseLeave, lblDEF.MouseLeave, lblHealth.MouseLeave, lblEVD.MouseLeave, lblHunger.MouseLeave, lblMana.MouseLeave, lblSKL.MouseLeave, lblSPD.MouseLeave, lblGold.MouseLeave
-        If tooltip IsNot Nothing Then
-            tooltip.Visible = False
-            tooltip.Enabled = False
-        End If
-    End Sub
-
-    Private Sub tooltipFollow()
-        Dim mouseLast As Point = Cursor.Position
-        While tooltip IsNot Nothing And tooltip.Enabled And tooltip.Disposing = False
-            If mouseLast <> Cursor.Position Then
-                tooltipPositionChange()
-                mouseLast = Cursor.Position
-            End If
-        End While
-    End Sub
-
-    Private Sub tooltipPositionChange()
-        If tooltip IsNot Nothing And tooltip.Enabled And tooltip.Disposing = False Then
-            If tooltip.InvokeRequired() Then
-                tooltip.Invoke(New delegateExecute(AddressOf tooltipPositionChange))
-            Else
-                tooltipRelocate()
-            End If
-        End If
-    End Sub
-
-    Private Sub tooltipRelocate()
-        tooltip.Location = PointToClient(Cursor.Position) + New Point(5, 5)
-        If tooltip.Location.X + tooltip.Width > Me.Width Then
-            tooltip.Location = New Point(Me.Width - tooltip.Width, tooltip.Location.Y) - New Point(5, 0)
-        End If
-    End Sub
     Private Sub btnWait_Click(sender As Object, e As EventArgs) Handles btnWait.Click
         turn += 1
         If lblEvent.Visible = True Then
