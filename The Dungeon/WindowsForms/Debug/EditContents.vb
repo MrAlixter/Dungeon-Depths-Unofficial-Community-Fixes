@@ -34,6 +34,7 @@
     End Sub
 
     Private Sub loadItems()
+        boxItems.Items.Clear()
         For i = 0 To Game.player.inventorynames.Count - 1
             boxItems.Items.Add(Game.player.inventorynames(i))
         Next
@@ -45,7 +46,34 @@
         For i = 0 To chest.contents.Count - 1
             If chest.contents(i) > 0 Then
                 boxContents.Items.Add(Game.player.inventorynames(i) & " x" & chest.contents(i).ToString())
-                inventoryList.Add(Game.player.inventorynames(i))
+                inventoryList.Add(Game.player.inventorynames(i) & " x" & chest.contents(i).ToString())
+            End If
+        Next
+        contentsFilterUpdate()
+    End Sub
+
+    Private Sub boxContentsFilter_TextChanged(sender As Object, e As EventArgs) Handles boxContentsFilter.TextChanged
+        contentsFilterUpdate()
+    End Sub
+
+    Private Sub boxItemsFilter_TextChanged(sender As Object, e As EventArgs) Handles boxItemsFilter.TextChanged
+        itemFilterUpdate()
+    End Sub
+
+    Private Sub contentsFilterUpdate()
+        boxContents.Items.Clear()
+        For i As Integer = 0 To inventoryList.Count - 1
+            If inventoryList(i).IndexOf(boxContentsFilter.Text, 0, StringComparison.CurrentCultureIgnoreCase) > -1 Then
+                boxContents.Items.Add(inventoryList(i).ToString())
+            End If
+        Next
+    End Sub
+
+    Private Sub itemFilterUpdate()
+        boxItems.Items.Clear()
+        For i As Integer = 0 To Game.player.inventorynames.Count - 1
+            If Game.player.inventorynames(i).IndexOf(boxItemsFilter.Text, 0, StringComparison.CurrentCultureIgnoreCase) > -1 Then
+                boxItems.Items.Add(Game.player.inventorynames(i).ToString())
             End If
         Next
     End Sub
@@ -72,7 +100,8 @@
     Private Sub btnAdd_Click(sender As Object, e As EventArgs) Handles btnAdd.Click
         If boxItems.SelectedIndices.Count <> 0 And boxAmt.Value > 0 Then
             For i = 0 To boxItems.SelectedIndices.Count - 1
-                chest.contents(boxItems.SelectedIndices(i)) += boxAmt.Value
+                Dim itemInd As Integer = Game.player.inventorynames.IndexOf(boxItems.SelectedItems(i))
+                chest.contents(itemInd) += boxAmt.Value
             Next
         End If
         refreshChest()

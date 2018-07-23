@@ -30,6 +30,7 @@ Partial Class Debug_Window
         Me.groupNotes = New System.Windows.Forms.GroupBox()
         Me.picBoard = New System.Windows.Forms.PictureBox()
         Me.groupGeneral = New System.Windows.Forms.GroupBox()
+        Me.lblTrap = New System.Windows.Forms.Label()
         Me.boxBeaten = New System.Windows.Forms.CheckBox()
         Me.lblSelected = New System.Windows.Forms.Label()
         Me.btnEditSelection = New System.Windows.Forms.Button()
@@ -50,8 +51,9 @@ Partial Class Debug_Window
         Me.boxFloor = New System.Windows.Forms.NumericUpDown()
         Me.lblTurn = New System.Windows.Forms.Label()
         Me.lblFloor = New System.Windows.Forms.Label()
-        Me.lblGenCode = New System.Windows.Forms.Label()
         Me.tabPlayer = New System.Windows.Forms.TabPage()
+        Me.boxAlpha = New System.Windows.Forms.NumericUpDown()
+        Me.lblAlpha = New System.Windows.Forms.Label()
         Me.lblHC = New System.Windows.Forms.Label()
         Me.pnlHC = New System.Windows.Forms.Panel()
         Me.lblSC = New System.Windows.Forms.Label()
@@ -104,7 +106,10 @@ Partial Class Debug_Window
         Me.lblTitle = New System.Windows.Forms.Label()
         Me.lblSex = New System.Windows.Forms.Label()
         Me.lblName = New System.Windows.Forms.Label()
+        Me.tabPerks = New System.Windows.Forms.TabPage()
         Me.tabInventory = New System.Windows.Forms.TabPage()
+        Me.boxInventoryFilter = New System.Windows.Forms.TextBox()
+        Me.boxItemsFilter = New System.Windows.Forms.TextBox()
         Me.number = New System.Windows.Forms.NumericUpDown()
         Me.btnRemove = New System.Windows.Forms.Button()
         Me.boxInventory = New System.Windows.Forms.ListBox()
@@ -112,7 +117,32 @@ Partial Class Debug_Window
         Me.lblInventory = New System.Windows.Forms.Label()
         Me.boxItems = New System.Windows.Forms.ListBox()
         Me.lblItems = New System.Windows.Forms.Label()
-        Me.lblTrap = New System.Windows.Forms.Label()
+        Me.tabGeneration = New System.Windows.Forms.TabPage()
+        Me.boxChestRichnessRange = New System.Windows.Forms.NumericUpDown()
+        Me.lblChestRichnessRange = New System.Windows.Forms.Label()
+        Me.boxChestRichnessBase = New System.Windows.Forms.NumericUpDown()
+        Me.lblChestRichnessBase = New System.Windows.Forms.Label()
+        Me.boxEClockResetVal = New System.Windows.Forms.NumericUpDown()
+        Me.lblEClockResetVal = New System.Windows.Forms.Label()
+        Me.boxEncounterRate = New System.Windows.Forms.NumericUpDown()
+        Me.lblEncounterRate = New System.Windows.Forms.Label()
+        Me.GroupBox2 = New System.Windows.Forms.GroupBox()
+        Me.GroupBox1 = New System.Windows.Forms.GroupBox()
+        Me.separator1 = New System.Windows.Forms.GroupBox()
+        Me.boxChestSizeDependence = New System.Windows.Forms.NumericUpDown()
+        Me.lblChestSize = New System.Windows.Forms.Label()
+        Me.boxChestFreqMin = New System.Windows.Forms.NumericUpDown()
+        Me.lblChestFreqMin = New System.Windows.Forms.Label()
+        Me.boxChestFreqRange = New System.Windows.Forms.NumericUpDown()
+        Me.lblChestFreqRange = New System.Windows.Forms.Label()
+        Me.boxHeight = New System.Windows.Forms.NumericUpDown()
+        Me.boxWidth = New System.Windows.Forms.NumericUpDown()
+        Me.lblHeight = New System.Windows.Forms.Label()
+        Me.lblWidth = New System.Windows.Forms.Label()
+        Me.lblFC = New System.Windows.Forms.Label()
+        Me.btnGenerationReset = New System.Windows.Forms.Button()
+        Me.btnSaveGeneration = New System.Windows.Forms.Button()
+        Me.lblInfo = New System.Windows.Forms.Label()
         Me.tabMain.SuspendLayout()
         Me.tabInformation.SuspendLayout()
         Me.tabGeneral.SuspendLayout()
@@ -124,6 +154,7 @@ Partial Class Debug_Window
         CType(Me.boxTurn, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me.boxFloor, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.tabPlayer.SuspendLayout()
+        CType(Me.boxAlpha, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.tabPortrait.SuspendLayout()
         CType(Me.picPreview, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me.boxEvd, System.ComponentModel.ISupportInitialize).BeginInit()
@@ -139,6 +170,16 @@ Partial Class Debug_Window
         CType(Me.boxHealth, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.tabInventory.SuspendLayout()
         CType(Me.number, System.ComponentModel.ISupportInitialize).BeginInit()
+        Me.tabGeneration.SuspendLayout()
+        CType(Me.boxChestRichnessRange, System.ComponentModel.ISupportInitialize).BeginInit()
+        CType(Me.boxChestRichnessBase, System.ComponentModel.ISupportInitialize).BeginInit()
+        CType(Me.boxEClockResetVal, System.ComponentModel.ISupportInitialize).BeginInit()
+        CType(Me.boxEncounterRate, System.ComponentModel.ISupportInitialize).BeginInit()
+        CType(Me.boxChestSizeDependence, System.ComponentModel.ISupportInitialize).BeginInit()
+        CType(Me.boxChestFreqMin, System.ComponentModel.ISupportInitialize).BeginInit()
+        CType(Me.boxChestFreqRange, System.ComponentModel.ISupportInitialize).BeginInit()
+        CType(Me.boxHeight, System.ComponentModel.ISupportInitialize).BeginInit()
+        CType(Me.boxWidth, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.SuspendLayout()
         '
         'tabMain
@@ -146,7 +187,9 @@ Partial Class Debug_Window
         Me.tabMain.Controls.Add(Me.tabInformation)
         Me.tabMain.Controls.Add(Me.tabGeneral)
         Me.tabMain.Controls.Add(Me.tabPlayer)
+        Me.tabMain.Controls.Add(Me.tabPerks)
         Me.tabMain.Controls.Add(Me.tabInventory)
+        Me.tabMain.Controls.Add(Me.tabGeneration)
         Me.tabMain.Dock = System.Windows.Forms.DockStyle.Fill
         Me.tabMain.Font = New System.Drawing.Font("Consolas", 10.0!)
         Me.tabMain.Location = New System.Drawing.Point(0, 0)
@@ -230,7 +273,6 @@ Partial Class Debug_Window
         Me.groupGeneral.Controls.Add(Me.boxFloor)
         Me.groupGeneral.Controls.Add(Me.lblTurn)
         Me.groupGeneral.Controls.Add(Me.lblFloor)
-        Me.groupGeneral.Controls.Add(Me.lblGenCode)
         Me.groupGeneral.Font = New System.Drawing.Font("Consolas", 12.0!)
         Me.groupGeneral.ForeColor = System.Drawing.Color.White
         Me.groupGeneral.Location = New System.Drawing.Point(6, 7)
@@ -240,10 +282,21 @@ Partial Class Debug_Window
         Me.groupGeneral.TabStop = False
         Me.groupGeneral.Text = "GENERAL"
         '
+        'lblTrap
+        '
+        Me.lblTrap.AutoSize = True
+        Me.lblTrap.Font = New System.Drawing.Font("Consolas", 12.0!, System.Drawing.FontStyle.Bold)
+        Me.lblTrap.ForeColor = System.Drawing.Color.Red
+        Me.lblTrap.Location = New System.Drawing.Point(70, 501)
+        Me.lblTrap.Name = "lblTrap"
+        Me.lblTrap.Size = New System.Drawing.Size(45, 19)
+        Me.lblTrap.TabIndex = 209
+        Me.lblTrap.Text = "TRAP"
+        '
         'boxBeaten
         '
         Me.boxBeaten.AutoSize = True
-        Me.boxBeaten.Location = New System.Drawing.Point(7, 110)
+        Me.boxBeaten.Location = New System.Drawing.Point(7, 99)
         Me.boxBeaten.Name = "boxBeaten"
         Me.boxBeaten.Size = New System.Drawing.Size(127, 23)
         Me.boxBeaten.TabIndex = 207
@@ -264,7 +317,7 @@ Partial Class Debug_Window
         'btnEditSelection
         '
         Me.btnEditSelection.BackColor = System.Drawing.Color.Black
-        Me.btnEditSelection.Location = New System.Drawing.Point(41, 271)
+        Me.btnEditSelection.Location = New System.Drawing.Point(41, 268)
         Me.btnEditSelection.Name = "btnEditSelection"
         Me.btnEditSelection.Size = New System.Drawing.Size(102, 46)
         Me.btnEditSelection.TabIndex = 205
@@ -278,7 +331,7 @@ Partial Class Debug_Window
         Me.boxMapControls.Controls.Add(Me.btnSelect)
         Me.boxMapControls.Controls.Add(Me.btnPan)
         Me.boxMapControls.ForeColor = System.Drawing.Color.White
-        Me.boxMapControls.Location = New System.Drawing.Point(8, 148)
+        Me.boxMapControls.Location = New System.Drawing.Point(8, 138)
         Me.boxMapControls.Name = "boxMapControls"
         Me.boxMapControls.Size = New System.Drawing.Size(169, 114)
         Me.boxMapControls.TabIndex = 1
@@ -418,7 +471,7 @@ Partial Class Debug_Window
         '
         Me.boxTurn.BackColor = System.Drawing.Color.Black
         Me.boxTurn.ForeColor = System.Drawing.Color.White
-        Me.boxTurn.Location = New System.Drawing.Point(66, 78)
+        Me.boxTurn.Location = New System.Drawing.Point(66, 49)
         Me.boxTurn.Maximum = New Decimal(New Integer() {999999, 0, 0, 0})
         Me.boxTurn.Name = "boxTurn"
         Me.boxTurn.Size = New System.Drawing.Size(113, 26)
@@ -430,7 +483,7 @@ Partial Class Debug_Window
         Me.boxFloor.BackColor = System.Drawing.Color.Black
         Me.boxFloor.Enabled = False
         Me.boxFloor.ForeColor = System.Drawing.Color.White
-        Me.boxFloor.Location = New System.Drawing.Point(66, 49)
+        Me.boxFloor.Location = New System.Drawing.Point(66, 20)
         Me.boxFloor.Maximum = New Decimal(New Integer() {999999, 0, 0, 0})
         Me.boxFloor.Name = "boxFloor"
         Me.boxFloor.Size = New System.Drawing.Size(113, 26)
@@ -443,7 +496,7 @@ Partial Class Debug_Window
         Me.lblTurn.Dock = System.Windows.Forms.DockStyle.Top
         Me.lblTurn.Font = New System.Drawing.Font("Consolas", 12.0!)
         Me.lblTurn.ForeColor = System.Drawing.Color.White
-        Me.lblTurn.Location = New System.Drawing.Point(3, 80)
+        Me.lblTurn.Location = New System.Drawing.Point(3, 51)
         Me.lblTurn.Name = "lblTurn"
         Me.lblTurn.Padding = New System.Windows.Forms.Padding(0, 0, 0, 10)
         Me.lblTurn.Size = New System.Drawing.Size(63, 29)
@@ -456,29 +509,18 @@ Partial Class Debug_Window
         Me.lblFloor.Dock = System.Windows.Forms.DockStyle.Top
         Me.lblFloor.Font = New System.Drawing.Font("Consolas", 12.0!)
         Me.lblFloor.ForeColor = System.Drawing.Color.White
-        Me.lblFloor.Location = New System.Drawing.Point(3, 51)
+        Me.lblFloor.Location = New System.Drawing.Point(3, 22)
         Me.lblFloor.Name = "lblFloor"
         Me.lblFloor.Padding = New System.Windows.Forms.Padding(0, 0, 0, 10)
         Me.lblFloor.Size = New System.Drawing.Size(72, 29)
         Me.lblFloor.TabIndex = 2
         Me.lblFloor.Text = "FLOOR: "
         '
-        'lblGenCode
-        '
-        Me.lblGenCode.AutoSize = True
-        Me.lblGenCode.Dock = System.Windows.Forms.DockStyle.Top
-        Me.lblGenCode.Font = New System.Drawing.Font("Consolas", 12.0!)
-        Me.lblGenCode.ForeColor = System.Drawing.Color.White
-        Me.lblGenCode.Location = New System.Drawing.Point(3, 22)
-        Me.lblGenCode.Name = "lblGenCode"
-        Me.lblGenCode.Padding = New System.Windows.Forms.Padding(0, 0, 0, 10)
-        Me.lblGenCode.Size = New System.Drawing.Size(54, 29)
-        Me.lblGenCode.TabIndex = 208
-        Me.lblGenCode.Text = "CODE:"
-        '
         'tabPlayer
         '
         Me.tabPlayer.BackColor = System.Drawing.Color.Black
+        Me.tabPlayer.Controls.Add(Me.boxAlpha)
+        Me.tabPlayer.Controls.Add(Me.lblAlpha)
         Me.tabPlayer.Controls.Add(Me.lblHC)
         Me.tabPlayer.Controls.Add(Me.pnlHC)
         Me.tabPlayer.Controls.Add(Me.lblSC)
@@ -521,12 +563,34 @@ Partial Class Debug_Window
         Me.tabPlayer.TabIndex = 1
         Me.tabPlayer.Text = "PLAYER"
         '
+        'boxAlpha
+        '
+        Me.boxAlpha.BackColor = System.Drawing.Color.Black
+        Me.boxAlpha.Font = New System.Drawing.Font("Consolas", 12.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.boxAlpha.ForeColor = System.Drawing.Color.White
+        Me.boxAlpha.Location = New System.Drawing.Point(438, 211)
+        Me.boxAlpha.Maximum = New Decimal(New Integer() {255, 0, 0, 0})
+        Me.boxAlpha.Name = "boxAlpha"
+        Me.boxAlpha.Size = New System.Drawing.Size(53, 26)
+        Me.boxAlpha.TabIndex = 269
+        '
+        'lblAlpha
+        '
+        Me.lblAlpha.AutoSize = True
+        Me.lblAlpha.Font = New System.Drawing.Font("Consolas", 12.0!)
+        Me.lblAlpha.ForeColor = System.Drawing.Color.White
+        Me.lblAlpha.Location = New System.Drawing.Point(333, 214)
+        Me.lblAlpha.Name = "lblAlpha"
+        Me.lblAlpha.Size = New System.Drawing.Size(99, 19)
+        Me.lblAlpha.TabIndex = 267
+        Me.lblAlpha.Text = "HAIR ALPHA"
+        '
         'lblHC
         '
         Me.lblHC.AutoSize = True
         Me.lblHC.Font = New System.Drawing.Font("Consolas", 12.0!)
         Me.lblHC.ForeColor = System.Drawing.Color.White
-        Me.lblHC.Location = New System.Drawing.Point(250, 210)
+        Me.lblHC.Location = New System.Drawing.Point(172, 214)
         Me.lblHC.Name = "lblHC"
         Me.lblHC.Size = New System.Drawing.Size(99, 19)
         Me.lblHC.TabIndex = 266
@@ -534,9 +598,9 @@ Partial Class Debug_Window
         '
         'pnlHC
         '
-        Me.pnlHC.Location = New System.Drawing.Point(357, 211)
+        Me.pnlHC.Location = New System.Drawing.Point(277, 211)
         Me.pnlHC.Name = "pnlHC"
-        Me.pnlHC.Size = New System.Drawing.Size(134, 26)
+        Me.pnlHC.Size = New System.Drawing.Size(39, 26)
         Me.pnlHC.TabIndex = 265
         '
         'lblSC
@@ -544,7 +608,7 @@ Partial Class Debug_Window
         Me.lblSC.AutoSize = True
         Me.lblSC.Font = New System.Drawing.Font("Consolas", 12.0!)
         Me.lblSC.ForeColor = System.Drawing.Color.White
-        Me.lblSC.Location = New System.Drawing.Point(3, 210)
+        Me.lblSC.Location = New System.Drawing.Point(3, 214)
         Me.lblSC.Name = "lblSC"
         Me.lblSC.Size = New System.Drawing.Size(99, 19)
         Me.lblSC.TabIndex = 264
@@ -554,7 +618,7 @@ Partial Class Debug_Window
         '
         Me.pnlSC.Location = New System.Drawing.Point(110, 211)
         Me.pnlSC.Name = "pnlSC"
-        Me.pnlSC.Size = New System.Drawing.Size(134, 26)
+        Me.pnlSC.Size = New System.Drawing.Size(39, 26)
         Me.pnlSC.TabIndex = 263
         '
         'tabPortrait
@@ -769,7 +833,7 @@ Partial Class Debug_Window
         Me.playerDivider.Location = New System.Drawing.Point(248, 3)
         Me.playerDivider.Multiline = True
         Me.playerDivider.Name = "playerDivider"
-        Me.playerDivider.Size = New System.Drawing.Size(1, 225)
+        Me.playerDivider.Size = New System.Drawing.Size(1, 200)
         Me.playerDivider.TabIndex = 235
         '
         'lblGold
@@ -1091,9 +1155,23 @@ Partial Class Debug_Window
         Me.lblName.TabIndex = 209
         Me.lblName.Text = "NAME"
         '
+        'tabPerks
+        '
+        Me.tabPerks.BackColor = System.Drawing.Color.Black
+        Me.tabPerks.Font = New System.Drawing.Font("Consolas", 12.0!)
+        Me.tabPerks.ForeColor = System.Drawing.Color.White
+        Me.tabPerks.Location = New System.Drawing.Point(4, 24)
+        Me.tabPerks.Name = "tabPerks"
+        Me.tabPerks.Padding = New System.Windows.Forms.Padding(3)
+        Me.tabPerks.Size = New System.Drawing.Size(742, 548)
+        Me.tabPerks.TabIndex = 4
+        Me.tabPerks.Text = "PERKS"
+        '
         'tabInventory
         '
         Me.tabInventory.BackColor = System.Drawing.Color.Black
+        Me.tabInventory.Controls.Add(Me.boxInventoryFilter)
+        Me.tabInventory.Controls.Add(Me.boxItemsFilter)
         Me.tabInventory.Controls.Add(Me.number)
         Me.tabInventory.Controls.Add(Me.btnRemove)
         Me.tabInventory.Controls.Add(Me.boxInventory)
@@ -1107,6 +1185,26 @@ Partial Class Debug_Window
         Me.tabInventory.Size = New System.Drawing.Size(742, 548)
         Me.tabInventory.TabIndex = 2
         Me.tabInventory.Text = "INVENTORY"
+        '
+        'boxInventoryFilter
+        '
+        Me.boxInventoryFilter.BackColor = System.Drawing.Color.Black
+        Me.boxInventoryFilter.Font = New System.Drawing.Font("Consolas", 12.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.boxInventoryFilter.ForeColor = System.Drawing.Color.White
+        Me.boxInventoryFilter.Location = New System.Drawing.Point(8, 12)
+        Me.boxInventoryFilter.Name = "boxInventoryFilter"
+        Me.boxInventoryFilter.Size = New System.Drawing.Size(278, 26)
+        Me.boxInventoryFilter.TabIndex = 185
+        '
+        'boxItemsFilter
+        '
+        Me.boxItemsFilter.BackColor = System.Drawing.Color.Black
+        Me.boxItemsFilter.Font = New System.Drawing.Font("Consolas", 12.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.boxItemsFilter.ForeColor = System.Drawing.Color.White
+        Me.boxItemsFilter.Location = New System.Drawing.Point(456, 12)
+        Me.boxItemsFilter.Name = "boxItemsFilter"
+        Me.boxItemsFilter.Size = New System.Drawing.Size(278, 26)
+        Me.boxItemsFilter.TabIndex = 184
         '
         'number
         '
@@ -1139,10 +1237,10 @@ Partial Class Debug_Window
         Me.boxInventory.ForeColor = System.Drawing.Color.White
         Me.boxInventory.FormattingEnabled = True
         Me.boxInventory.ItemHeight = 19
-        Me.boxInventory.Location = New System.Drawing.Point(6, 6)
+        Me.boxInventory.Location = New System.Drawing.Point(6, 44)
         Me.boxInventory.Name = "boxInventory"
         Me.boxInventory.SelectionMode = System.Windows.Forms.SelectionMode.MultiExtended
-        Me.boxInventory.Size = New System.Drawing.Size(280, 536)
+        Me.boxInventory.Size = New System.Drawing.Size(280, 498)
         Me.boxInventory.Sorted = True
         Me.boxInventory.TabIndex = 8
         '
@@ -1176,10 +1274,10 @@ Partial Class Debug_Window
         Me.boxItems.ForeColor = System.Drawing.Color.White
         Me.boxItems.FormattingEnabled = True
         Me.boxItems.ItemHeight = 19
-        Me.boxItems.Location = New System.Drawing.Point(456, 6)
+        Me.boxItems.Location = New System.Drawing.Point(456, 44)
         Me.boxItems.Name = "boxItems"
         Me.boxItems.SelectionMode = System.Windows.Forms.SelectionMode.MultiExtended
-        Me.boxItems.Size = New System.Drawing.Size(280, 536)
+        Me.boxItems.Size = New System.Drawing.Size(280, 498)
         Me.boxItems.TabIndex = 9
         '
         'lblItems
@@ -1193,16 +1291,275 @@ Partial Class Debug_Window
         Me.lblItems.TabIndex = 7
         Me.lblItems.Text = "ITEMS"
         '
-        'lblTrap
+        'tabGeneration
         '
-        Me.lblTrap.AutoSize = True
-        Me.lblTrap.Font = New System.Drawing.Font("Consolas", 12.0!, System.Drawing.FontStyle.Bold)
-        Me.lblTrap.ForeColor = System.Drawing.Color.Red
-        Me.lblTrap.Location = New System.Drawing.Point(70, 501)
-        Me.lblTrap.Name = "lblTrap"
-        Me.lblTrap.Size = New System.Drawing.Size(45, 19)
-        Me.lblTrap.TabIndex = 209
-        Me.lblTrap.Text = "TRAP"
+        Me.tabGeneration.BackColor = System.Drawing.Color.Black
+        Me.tabGeneration.Controls.Add(Me.lblInfo)
+        Me.tabGeneration.Controls.Add(Me.btnSaveGeneration)
+        Me.tabGeneration.Controls.Add(Me.btnGenerationReset)
+        Me.tabGeneration.Controls.Add(Me.boxChestRichnessRange)
+        Me.tabGeneration.Controls.Add(Me.lblChestRichnessRange)
+        Me.tabGeneration.Controls.Add(Me.boxChestRichnessBase)
+        Me.tabGeneration.Controls.Add(Me.lblChestRichnessBase)
+        Me.tabGeneration.Controls.Add(Me.boxEClockResetVal)
+        Me.tabGeneration.Controls.Add(Me.lblEClockResetVal)
+        Me.tabGeneration.Controls.Add(Me.boxEncounterRate)
+        Me.tabGeneration.Controls.Add(Me.lblEncounterRate)
+        Me.tabGeneration.Controls.Add(Me.GroupBox2)
+        Me.tabGeneration.Controls.Add(Me.GroupBox1)
+        Me.tabGeneration.Controls.Add(Me.separator1)
+        Me.tabGeneration.Controls.Add(Me.boxChestSizeDependence)
+        Me.tabGeneration.Controls.Add(Me.lblChestSize)
+        Me.tabGeneration.Controls.Add(Me.boxChestFreqMin)
+        Me.tabGeneration.Controls.Add(Me.lblChestFreqMin)
+        Me.tabGeneration.Controls.Add(Me.boxChestFreqRange)
+        Me.tabGeneration.Controls.Add(Me.lblChestFreqRange)
+        Me.tabGeneration.Controls.Add(Me.boxHeight)
+        Me.tabGeneration.Controls.Add(Me.boxWidth)
+        Me.tabGeneration.Controls.Add(Me.lblHeight)
+        Me.tabGeneration.Controls.Add(Me.lblWidth)
+        Me.tabGeneration.Controls.Add(Me.lblFC)
+        Me.tabGeneration.Font = New System.Drawing.Font("Consolas", 12.0!)
+        Me.tabGeneration.ForeColor = System.Drawing.Color.White
+        Me.tabGeneration.Location = New System.Drawing.Point(4, 24)
+        Me.tabGeneration.Name = "tabGeneration"
+        Me.tabGeneration.Padding = New System.Windows.Forms.Padding(3)
+        Me.tabGeneration.Size = New System.Drawing.Size(742, 548)
+        Me.tabGeneration.TabIndex = 5
+        Me.tabGeneration.Text = "GENERATION"
+        '
+        'boxChestRichnessRange
+        '
+        Me.boxChestRichnessRange.BackColor = System.Drawing.Color.Black
+        Me.boxChestRichnessRange.ForeColor = System.Drawing.Color.White
+        Me.boxChestRichnessRange.Location = New System.Drawing.Point(213, 268)
+        Me.boxChestRichnessRange.Name = "boxChestRichnessRange"
+        Me.boxChestRichnessRange.Size = New System.Drawing.Size(120, 26)
+        Me.boxChestRichnessRange.TabIndex = 43
+        '
+        'lblChestRichnessRange
+        '
+        Me.lblChestRichnessRange.AutoSize = True
+        Me.lblChestRichnessRange.Location = New System.Drawing.Point(5, 270)
+        Me.lblChestRichnessRange.Name = "lblChestRichnessRange"
+        Me.lblChestRichnessRange.Size = New System.Drawing.Size(198, 19)
+        Me.lblChestRichnessRange.TabIndex = 42
+        Me.lblChestRichnessRange.Text = "Chest Richness Range:"
+        '
+        'boxChestRichnessBase
+        '
+        Me.boxChestRichnessBase.BackColor = System.Drawing.Color.Black
+        Me.boxChestRichnessBase.ForeColor = System.Drawing.Color.White
+        Me.boxChestRichnessBase.Location = New System.Drawing.Point(212, 236)
+        Me.boxChestRichnessBase.Name = "boxChestRichnessBase"
+        Me.boxChestRichnessBase.Size = New System.Drawing.Size(120, 26)
+        Me.boxChestRichnessBase.TabIndex = 41
+        '
+        'lblChestRichnessBase
+        '
+        Me.lblChestRichnessBase.AutoSize = True
+        Me.lblChestRichnessBase.Location = New System.Drawing.Point(4, 238)
+        Me.lblChestRichnessBase.Name = "lblChestRichnessBase"
+        Me.lblChestRichnessBase.Size = New System.Drawing.Size(189, 19)
+        Me.lblChestRichnessBase.TabIndex = 40
+        Me.lblChestRichnessBase.Text = "Chest Richness Base:"
+        '
+        'boxEClockResetVal
+        '
+        Me.boxEClockResetVal.BackColor = System.Drawing.Color.Black
+        Me.boxEClockResetVal.ForeColor = System.Drawing.Color.White
+        Me.boxEClockResetVal.Location = New System.Drawing.Point(213, 352)
+        Me.boxEClockResetVal.Maximum = New Decimal(New Integer() {1000, 0, 0, 0})
+        Me.boxEClockResetVal.Name = "boxEClockResetVal"
+        Me.boxEClockResetVal.Size = New System.Drawing.Size(120, 26)
+        Me.boxEClockResetVal.TabIndex = 39
+        '
+        'lblEClockResetVal
+        '
+        Me.lblEClockResetVal.AutoSize = True
+        Me.lblEClockResetVal.Location = New System.Drawing.Point(5, 354)
+        Me.lblEClockResetVal.Name = "lblEClockResetVal"
+        Me.lblEClockResetVal.Size = New System.Drawing.Size(153, 19)
+        Me.lblEClockResetVal.TabIndex = 38
+        Me.lblEClockResetVal.Text = "Encounter Timer:"
+        '
+        'boxEncounterRate
+        '
+        Me.boxEncounterRate.BackColor = System.Drawing.Color.Black
+        Me.boxEncounterRate.ForeColor = System.Drawing.Color.White
+        Me.boxEncounterRate.Location = New System.Drawing.Point(213, 320)
+        Me.boxEncounterRate.Maximum = New Decimal(New Integer() {1000, 0, 0, 0})
+        Me.boxEncounterRate.Name = "boxEncounterRate"
+        Me.boxEncounterRate.Size = New System.Drawing.Size(120, 26)
+        Me.boxEncounterRate.TabIndex = 37
+        '
+        'lblEncounterRate
+        '
+        Me.lblEncounterRate.AutoSize = True
+        Me.lblEncounterRate.Location = New System.Drawing.Point(5, 322)
+        Me.lblEncounterRate.Name = "lblEncounterRate"
+        Me.lblEncounterRate.Size = New System.Drawing.Size(198, 19)
+        Me.lblEncounterRate.TabIndex = 36
+        Me.lblEncounterRate.Text = "Encounter Rate (.x%):"
+        '
+        'GroupBox2
+        '
+        Me.GroupBox2.FlatStyle = System.Windows.Forms.FlatStyle.Popup
+        Me.GroupBox2.Location = New System.Drawing.Point(9, 300)
+        Me.GroupBox2.Name = "GroupBox2"
+        Me.GroupBox2.Size = New System.Drawing.Size(325, 10)
+        Me.GroupBox2.TabIndex = 35
+        Me.GroupBox2.TabStop = False
+        '
+        'GroupBox1
+        '
+        Me.GroupBox1.FlatStyle = System.Windows.Forms.FlatStyle.Popup
+        Me.GroupBox1.Location = New System.Drawing.Point(8, 114)
+        Me.GroupBox1.Name = "GroupBox1"
+        Me.GroupBox1.Size = New System.Drawing.Size(325, 10)
+        Me.GroupBox1.TabIndex = 34
+        Me.GroupBox1.TabStop = False
+        '
+        'separator1
+        '
+        Me.separator1.FlatStyle = System.Windows.Forms.FlatStyle.Popup
+        Me.separator1.Location = New System.Drawing.Point(8, 28)
+        Me.separator1.Name = "separator1"
+        Me.separator1.Size = New System.Drawing.Size(325, 10)
+        Me.separator1.TabIndex = 33
+        Me.separator1.TabStop = False
+        '
+        'boxChestSizeDependence
+        '
+        Me.boxChestSizeDependence.BackColor = System.Drawing.Color.Black
+        Me.boxChestSizeDependence.ForeColor = System.Drawing.Color.White
+        Me.boxChestSizeDependence.Location = New System.Drawing.Point(212, 204)
+        Me.boxChestSizeDependence.Name = "boxChestSizeDependence"
+        Me.boxChestSizeDependence.Size = New System.Drawing.Size(120, 26)
+        Me.boxChestSizeDependence.TabIndex = 32
+        '
+        'lblChestSize
+        '
+        Me.lblChestSize.AutoSize = True
+        Me.lblChestSize.Location = New System.Drawing.Point(4, 206)
+        Me.lblChestSize.Name = "lblChestSize"
+        Me.lblChestSize.Size = New System.Drawing.Size(207, 19)
+        Me.lblChestSize.TabIndex = 31
+        Me.lblChestSize.Text = "Chest Size Dependence:"
+        '
+        'boxChestFreqMin
+        '
+        Me.boxChestFreqMin.BackColor = System.Drawing.Color.Black
+        Me.boxChestFreqMin.ForeColor = System.Drawing.Color.White
+        Me.boxChestFreqMin.Location = New System.Drawing.Point(212, 172)
+        Me.boxChestFreqMin.Name = "boxChestFreqMin"
+        Me.boxChestFreqMin.Size = New System.Drawing.Size(120, 26)
+        Me.boxChestFreqMin.TabIndex = 30
+        '
+        'lblChestFreqMin
+        '
+        Me.lblChestFreqMin.AutoSize = True
+        Me.lblChestFreqMin.Location = New System.Drawing.Point(4, 174)
+        Me.lblChestFreqMin.Name = "lblChestFreqMin"
+        Me.lblChestFreqMin.Size = New System.Drawing.Size(144, 19)
+        Me.lblChestFreqMin.TabIndex = 29
+        Me.lblChestFreqMin.Text = "Chest Freq Min:"
+        '
+        'boxChestFreqRange
+        '
+        Me.boxChestFreqRange.BackColor = System.Drawing.Color.Black
+        Me.boxChestFreqRange.ForeColor = System.Drawing.Color.White
+        Me.boxChestFreqRange.Location = New System.Drawing.Point(212, 140)
+        Me.boxChestFreqRange.Name = "boxChestFreqRange"
+        Me.boxChestFreqRange.Size = New System.Drawing.Size(120, 26)
+        Me.boxChestFreqRange.TabIndex = 28
+        '
+        'lblChestFreqRange
+        '
+        Me.lblChestFreqRange.AutoSize = True
+        Me.lblChestFreqRange.Location = New System.Drawing.Point(4, 142)
+        Me.lblChestFreqRange.Name = "lblChestFreqRange"
+        Me.lblChestFreqRange.Size = New System.Drawing.Size(162, 19)
+        Me.lblChestFreqRange.TabIndex = 27
+        Me.lblChestFreqRange.Text = "Chest Freq Range:"
+        '
+        'boxHeight
+        '
+        Me.boxHeight.BackColor = System.Drawing.Color.Black
+        Me.boxHeight.ForeColor = System.Drawing.Color.White
+        Me.boxHeight.Location = New System.Drawing.Point(212, 82)
+        Me.boxHeight.Name = "boxHeight"
+        Me.boxHeight.Size = New System.Drawing.Size(120, 26)
+        Me.boxHeight.TabIndex = 26
+        '
+        'boxWidth
+        '
+        Me.boxWidth.BackColor = System.Drawing.Color.Black
+        Me.boxWidth.ForeColor = System.Drawing.Color.White
+        Me.boxWidth.Location = New System.Drawing.Point(212, 50)
+        Me.boxWidth.Name = "boxWidth"
+        Me.boxWidth.Size = New System.Drawing.Size(120, 26)
+        Me.boxWidth.TabIndex = 25
+        '
+        'lblHeight
+        '
+        Me.lblHeight.AutoSize = True
+        Me.lblHeight.Location = New System.Drawing.Point(4, 84)
+        Me.lblHeight.Name = "lblHeight"
+        Me.lblHeight.Size = New System.Drawing.Size(135, 19)
+        Me.lblHeight.TabIndex = 24
+        Me.lblHeight.Text = "Board Height: "
+        '
+        'lblWidth
+        '
+        Me.lblWidth.AutoSize = True
+        Me.lblWidth.Location = New System.Drawing.Point(4, 52)
+        Me.lblWidth.Name = "lblWidth"
+        Me.lblWidth.Size = New System.Drawing.Size(126, 19)
+        Me.lblWidth.TabIndex = 23
+        Me.lblWidth.Text = "Board Width: "
+        '
+        'lblFC
+        '
+        Me.lblFC.AutoSize = True
+        Me.lblFC.Location = New System.Drawing.Point(4, 6)
+        Me.lblFC.Name = "lblFC"
+        Me.lblFC.Size = New System.Drawing.Size(108, 19)
+        Me.lblFC.TabIndex = 22
+        Me.lblFC.Text = "FloorCode: "
+        '
+        'btnGenerationReset
+        '
+        Me.btnGenerationReset.BackColor = System.Drawing.Color.DimGray
+        Me.btnGenerationReset.Font = New System.Drawing.Font("Consolas", 8.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.btnGenerationReset.ForeColor = System.Drawing.Color.White
+        Me.btnGenerationReset.Location = New System.Drawing.Point(9, 509)
+        Me.btnGenerationReset.Name = "btnGenerationReset"
+        Me.btnGenerationReset.Size = New System.Drawing.Size(75, 31)
+        Me.btnGenerationReset.TabIndex = 44
+        Me.btnGenerationReset.Text = "RESET"
+        Me.btnGenerationReset.UseVisualStyleBackColor = False
+        '
+        'btnSaveGeneration
+        '
+        Me.btnSaveGeneration.BackColor = System.Drawing.Color.DimGray
+        Me.btnSaveGeneration.Font = New System.Drawing.Font("Consolas", 8.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.btnSaveGeneration.ForeColor = System.Drawing.Color.White
+        Me.btnSaveGeneration.Location = New System.Drawing.Point(659, 509)
+        Me.btnSaveGeneration.Name = "btnSaveGeneration"
+        Me.btnSaveGeneration.Size = New System.Drawing.Size(75, 31)
+        Me.btnSaveGeneration.TabIndex = 45
+        Me.btnSaveGeneration.Text = "SAVE"
+        Me.btnSaveGeneration.UseVisualStyleBackColor = False
+        '
+        'lblInfo
+        '
+        Me.lblInfo.Location = New System.Drawing.Point(339, 322)
+        Me.lblInfo.Name = "lblInfo"
+        Me.lblInfo.Size = New System.Drawing.Size(395, 51)
+        Me.lblInfo.TabIndex = 46
+        Me.lblInfo.Text = "Only changes to this section will take effect immediately"
+        Me.lblInfo.TextAlign = System.Drawing.ContentAlignment.MiddleLeft
         '
         'Debug_Window
         '
@@ -1231,6 +1588,7 @@ Partial Class Debug_Window
         CType(Me.boxFloor, System.ComponentModel.ISupportInitialize).EndInit()
         Me.tabPlayer.ResumeLayout(False)
         Me.tabPlayer.PerformLayout()
+        CType(Me.boxAlpha, System.ComponentModel.ISupportInitialize).EndInit()
         Me.tabPortrait.ResumeLayout(False)
         CType(Me.picPreview, System.ComponentModel.ISupportInitialize).EndInit()
         CType(Me.boxEvd, System.ComponentModel.ISupportInitialize).EndInit()
@@ -1247,6 +1605,17 @@ Partial Class Debug_Window
         Me.tabInventory.ResumeLayout(False)
         Me.tabInventory.PerformLayout()
         CType(Me.number, System.ComponentModel.ISupportInitialize).EndInit()
+        Me.tabGeneration.ResumeLayout(False)
+        Me.tabGeneration.PerformLayout()
+        CType(Me.boxChestRichnessRange, System.ComponentModel.ISupportInitialize).EndInit()
+        CType(Me.boxChestRichnessBase, System.ComponentModel.ISupportInitialize).EndInit()
+        CType(Me.boxEClockResetVal, System.ComponentModel.ISupportInitialize).EndInit()
+        CType(Me.boxEncounterRate, System.ComponentModel.ISupportInitialize).EndInit()
+        CType(Me.boxChestSizeDependence, System.ComponentModel.ISupportInitialize).EndInit()
+        CType(Me.boxChestFreqMin, System.ComponentModel.ISupportInitialize).EndInit()
+        CType(Me.boxChestFreqRange, System.ComponentModel.ISupportInitialize).EndInit()
+        CType(Me.boxHeight, System.ComponentModel.ISupportInitialize).EndInit()
+        CType(Me.boxWidth, System.ComponentModel.ISupportInitialize).EndInit()
         Me.ResumeLayout(False)
 
     End Sub
@@ -1338,6 +1707,36 @@ Partial Class Debug_Window
     Friend WithEvents btnEditSelection As Button
     Friend WithEvents lblSelected As Label
     Friend WithEvents boxBeaten As CheckBox
-    Friend WithEvents lblGenCode As Label
     Friend WithEvents lblTrap As Label
+    Friend WithEvents boxItemsFilter As TextBox
+    Friend WithEvents boxInventoryFilter As TextBox
+    Friend WithEvents boxAlpha As NumericUpDown
+    Friend WithEvents lblAlpha As Label
+    Friend WithEvents tabPerks As TabPage
+    Friend WithEvents tabGeneration As TabPage
+    Friend WithEvents boxChestRichnessRange As NumericUpDown
+    Friend WithEvents lblChestRichnessRange As Label
+    Friend WithEvents boxChestRichnessBase As NumericUpDown
+    Friend WithEvents lblChestRichnessBase As Label
+    Friend WithEvents boxEClockResetVal As NumericUpDown
+    Friend WithEvents lblEClockResetVal As Label
+    Friend WithEvents boxEncounterRate As NumericUpDown
+    Friend WithEvents lblEncounterRate As Label
+    Friend WithEvents GroupBox2 As GroupBox
+    Friend WithEvents GroupBox1 As GroupBox
+    Friend WithEvents separator1 As GroupBox
+    Friend WithEvents boxChestSizeDependence As NumericUpDown
+    Friend WithEvents lblChestSize As Label
+    Friend WithEvents boxChestFreqMin As NumericUpDown
+    Friend WithEvents lblChestFreqMin As Label
+    Friend WithEvents boxChestFreqRange As NumericUpDown
+    Friend WithEvents lblChestFreqRange As Label
+    Friend WithEvents boxHeight As NumericUpDown
+    Friend WithEvents boxWidth As NumericUpDown
+    Friend WithEvents lblHeight As Label
+    Friend WithEvents lblWidth As Label
+    Friend WithEvents lblFC As Label
+    Friend WithEvents btnGenerationReset As Button
+    Friend WithEvents btnSaveGeneration As Button
+    Friend WithEvents lblInfo As Label
 End Class

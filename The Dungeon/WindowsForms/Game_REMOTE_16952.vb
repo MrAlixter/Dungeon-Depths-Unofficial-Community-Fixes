@@ -1,7 +1,6 @@
 ﻿Imports System.ComponentModel
 Imports System.IO
 Imports System.Threading
-'Imports DDTooltip
 
 Public Class Game
     'Form1 is the main driver form that runs the game
@@ -9,20 +8,11 @@ Public Class Game
     'board instance variables
     Public mBoardWidth As Integer = 50
     Public mBoardHeight As Integer = 40
-
     Public mBoard(,) As mTile
     Public mPics(,) As PictureBox       '(NOT SAVED)
     Public floor As Integer = 0
     Public floorCode As String
     Public stairs As Point
-
-    Public chestFreqMin As Integer = 3
-    Public chestFreqRange As Integer = 8
-    Public chestSizeDependence As Integer = 30
-    Public chestRichnessBase As Integer = 1
-    Public chestRichnessRange As Integer = 5
-    Public encounterRate As Integer = 25
-    Public eClockResetVal As Integer = 5
 
     Public player As Player = New Player()
 
@@ -67,9 +57,9 @@ Public Class Game
     Public lblEventOnClose As Action    'the event method preformed when lblEvent closes (NOT SAVED)
     Public lastKey As String
     Public yesAction, noAction As Action
+
     Public invFilters() As Boolean = {True, True, True, True, True, True, True}
-    'Dim eClock As Integer = 15
-    Dim eClock As Integer = eClockResetVal * 3
+    Dim eClock As Integer = 15
     Public solFlag As Boolean = True
     Private trd As Thread
     Dim imagesWorker As BackgroundWorker
@@ -97,9 +87,6 @@ Public Class Game
     'startup/new level methods
     'Form1_Load handles the loading of the form
     Private Sub Form1_Load(sender As Object, e As EventArgs) Handles Me.Load
-        If Not IO.File.Exists("sett.ing") Then createSettings()
-        If Not IO.File.Exists("configs.ave") Then createConfigs()
-
         Dim r As System.IO.StreamReader
         r = IO.File.OpenText("sett.ing")
         screenSize = r.ReadLine
@@ -201,40 +188,6 @@ Public Class Game
 
         Game_Resize()
     End Sub
-    Sub createConfigs()
-        Dim w As StreamWriter
-        w = File.CreateText("configs.ave")
-        w.WriteLine("OemQuestion")
-        w.WriteLine("N")
-        w.WriteLine("Y")
-        w.WriteLine("M")
-        w.WriteLine("OemQuotes")
-        w.WriteLine("L")
-        w.WriteLine("K")
-        w.WriteLine("J")
-        w.WriteLine("P")
-        w.WriteLine("U")
-        w.WriteLine("Q")
-        w.WriteLine("B")
-        w.WriteLine("V")
-        w.WriteLine("C")
-        w.WriteLine("Z")
-        w.WriteLine("X")
-        w.WriteLine("T")
-        w.WriteLine("OemSemicolon")
-        w.WriteLine("D")
-        w.WriteLine("A")
-        w.WriteLine("S")
-        w.WriteLine("W")
-        w.Close()
-    End Sub
-    Sub createSettings()
-        Dim w As System.IO.StreamWriter
-        w = System.IO.File.CreateText("sett.ing")
-        w.WriteLine("Large")
-        w.Close()
-    End Sub
-
     Sub loadPotionList()
         Randomize()
         Dim HiddenNames As ArrayList = New ArrayList({"Red_Potion", "Green_Potion", "Blue_Potion", "Yellow_Potion", "Glowing_Potion", "Murky_Potion", "Purple_Potion", "Clear_Potion", "Smokey_Potion", "Rose_Potion", "Aqua_Potion", "Glittery_Potion"})
@@ -299,37 +252,11 @@ Public Class Game
         If int < 1 Then int = 1
         updatelist.add(player, int)
 
-        Dim genSet As New GeneratorSettings(floorLayouts(1))
-        genSet.ShowDialog()
-        mBoardWidth = genSet.boxWidth.Value
-        mBoardHeight = genSet.boxHeight.Value
-        chestFreqMin = genSet.boxChestFreqMin.Value
-        chestFreqRange = genSet.boxChestFreqRange.Value
-        chestSizeDependence = genSet.boxChestSizeDependence.Value
-        chestRichnessBase = genSet.boxChestRichnessBase.Value
-        chestRichnessRange = genSet.boxChestRichnessRange.Value
-        eClockResetVal = genSet.boxEClockResetVal.Value
-        encounterRate = genSet.boxEncounterRate.Value
-        If mBoardWidth * mBoardHeight < 4 Then
-            Do While mBoardWidth * mBoardHeight < 4
-                If mBoardHeight < mBoardWidth Then
-                    mBoardHeight += 1
-                Else
-                    mBoardWidth += 1
-                End If
-            Loop
-        End If
-
-
-
-
         initializeBoard(False)
         drawBoard()
         player.currState = New State(player)
         player.sState = New State(player)
         player.pState = New State(player)
-
-        eClock = eClockResetVal * 3
 
         turn = 0
         lstLog.Items.Add("You see before you a dungeon.")
@@ -369,7 +296,7 @@ Public Class Game
     'newBoard disposes of the old board and its graphical representation
     Sub newBoard()
         If floor > 5 Then
-            If player.pClass.name.Equals("Bimbo") Then
+            If player.title.Equals("Bimbo") Then
                 player.pImage = picBimbof.BackgroundImage
             Else
                 player.pImage = picPlayerf.BackgroundImage
@@ -403,46 +330,26 @@ Public Class Game
         End If
         'create all of  the board lables dynamacly at runtime
         ReDim mBoard(mBoardHeight - 1, mBoardWidth - 1)
-
-        Dim viewWidth = 23
-        Dim viewHeight = 15
-        ReDim mPics(viewHeight, viewWidth)
+        ReDim mPics(15, 23)
         Dim numTiles = mBoardHeight * mBoardWidth
         For yInd = 0 To mBoardHeight - 1
             For xInd = 0 To mBoardWidth - 1
                 mBoard(yInd, xInd) = New mTile(0, "", Color.Black)
-                'If (xInd < viewWidth And yInd < viewHeight) Then
-                '    Dim newPicture As PictureBox = New PictureBox()
-                '    newPicture.Name = "boardBox|" & xInd & "_" & yInd
-                '    newPicture.BackgroundImageLayout = ImageLayout.Stretch
-                '    newPicture.Size = New Point(YSize * 1.25, XSize * 1.25)
-                '    newPicture.Location = New Point(60 + xInd * (XSize * 1.25), 75 + yInd * (YSize * 1.25))
-                '    newPicture.Visible = True
-                '    Me.Controls.Add(newPicture)
-                '    mPics(yInd, xInd) = newPicture
-                'End If
+                If (xInd <= 23 And yInd <= 15) Then
+                    Dim newPicture As PictureBox = New PictureBox()
+                    newPicture.BackgroundImageLayout = ImageLayout.Stretch
+                    newPicture.Size = New Point(YSize * 1.25, XSize * 1.25)
+                    newPicture.Location = New Point(40.0 + CDbl(xInd) * (XSize * 1.23), 55 + CDbl(yInd) * (YSize * 1.23))
+                    newPicture.Visible = True
+                    'newPicture.BorderStyle = BorderStyle.FixedSingle
+                    Me.Controls.Add(newPicture)
+                    mPics(yInd, xInd) = newPicture
+                End If
                 Dim progress As Double = (xInd + (yInd * mBoardWidth)) / numTiles
-                boardWorker.ReportProgress(40 + (progress * 40))
+                boardWorker.ReportProgress(40 + (progress * 60))
                 Application.DoEvents()
             Next xInd
         Next yInd
-        Dim viewPicsDone As Integer = 0
-        For y As Integer = 0 To viewHeight - 1
-            For x As Integer = 0 To viewWidth - 1
-                Dim newPicture As PictureBox = New PictureBox()
-                newPicture.Name = "boardBox|" & x & "_" & y
-                newPicture.BackgroundImageLayout = ImageLayout.Stretch
-                newPicture.Size = New Point(YSize * 1.25, XSize * 1.25)
-                newPicture.Location = New Point(60 + x * (XSize * 1.25), 75 + y * (YSize * 1.25))
-                newPicture.Visible = True
-                Me.Controls.Add(newPicture)
-                mPics(y, x) = newPicture
-
-                viewPicsDone += 1
-                Dim progress As Double = (viewPicsDone / (viewHeight * viewWidth))
-                boardWorker.ReportProgress(80 + (progress * 20))
-            Next
-        Next
         boardWorker.ReportProgress(99)
         boardWorker.CancelAsync()
     End Sub
@@ -478,29 +385,21 @@ Public Class Game
             If xBound >= mBoardWidth Then xBound = mBoardWidth - 1
             If xBound < 0 Then xBound = 0
 
-            If Int(Rnd() * 3) = 0 Then
-                For yP = pos.Y To yBound
-                    For xP = pos.X To xBound
-                        mBoard(yP, xP).Tag = 2
-                    Next
+            For yP = pos.Y To yBound
+                For xP = pos.X To xBound
+                    mBoard(yP, xP).Tag = 1
                 Next
-            Else
-                For yP = pos.Y To yBound
-                    For xP = pos.X To xBound
-                        mBoard(yP, xP).Tag = 1
-                    Next
-                Next
-            End If
+            Next
 
             Dim numExits As Integer = Int(Rnd() * 3)
             Dim mainExit As Point
             Select Case Int(Rnd() * 2)
                 Case 0
                     mainExit = (New Point(pos.X + 2, Int(Rnd() * (yBound - pos.Y)) + pos.Y))
-                    If mainExit.X - 1 < mBoardWidth And mainExit.X - 1 > 0 AndAlso Not mBoard(mainExit.Y, mainExit.X - 1).Tag = 2 Then mBoard(mainExit.Y, mainExit.X - 1).Tag = 1
+                    If mainExit.X - 1 < mBoardWidth And mainExit.X - 1 > 0 Then mBoard(mainExit.Y, mainExit.X - 1).Tag = 1
                 Case Else
                     mainExit = (New Point(Int(Rnd() * (xBound - pos.X)) + pos.X, pos.Y + 2))
-                    If mainExit.Y - 1 < mBoardHeight And mainExit.Y - 1 > 0 AndAlso Not mBoard(mainExit.Y - 1, mainExit.X).Tag = 2 Then mBoard(mainExit.Y - 1, mainExit.X).Tag = 1
+                    If mainExit.Y - 1 < mBoardHeight And mainExit.Y - 1 > 0 Then mBoard(mainExit.Y - 1, mainExit.X).Tag = 1
             End Select
             If i > 0 Then
                 connectRooms(mainExit, exits(exits.Count - 1))
@@ -511,10 +410,10 @@ Public Class Game
                 Select Case Int(Rnd() * 2)
                     Case 0
                         exits.Add(New Point(pos.X + 2, Int(Rnd() * (yBound - pos.Y)) + pos.Y))
-                        If exits.Last.X - 1 < mBoardWidth And exits.Last.X - 1 > 0 AndAlso Not mBoard(exits.Last.Y, exits.Last.X - 1).Tag = 2 Then mBoard(exits.Last.Y, exits.Last.X - 1).Tag = 1
+                        If exits.Last.X - 1 < mBoardWidth And exits.Last.X - 1 > 0 Then mBoard(exits.Last.Y, exits.Last.X - 1).Tag = 1
                     Case 1
                         exits.Add(New Point(Int(Rnd() * (xBound - pos.X)) + pos.X, pos.Y + 2))
-                        If exits.Last.Y - 1 < mBoardHeight And exits.Last.Y - 1 > 0 AndAlso Not mBoard(exits.Last.Y - 1, exits.Last.X).Tag = 2 Then mBoard(exits.Last.Y - 1, exits.Last.X).Tag = 1
+                        If exits.Last.Y - 1 < mBoardHeight And exits.Last.Y - 1 > 0 Then mBoard(exits.Last.Y - 1, exits.Last.X).Tag = 1
                 End Select
             Next
         Next
@@ -534,62 +433,9 @@ Public Class Game
                 End If
             End If
         End While
-
-        Dim tileCount As Integer = 0
-        For yInd As Integer = 0 To mBoardHeight - 1
-            For xInd As Integer = 0 To mBoardWidth - 1
-                If mBoard(yInd, xInd).Tag > 0 AndAlso mBoard(yInd, xInd).Text = "" Then
-                    tileCount += 1
-                End If
-            Next
-        Next
-
-        If tileCount < 4 Then
-            Dim timesDug As Integer = 0
-            Do While tileCount < 4 'To handle if it needs to keep "digging", in case it couldn't make it big enough with just one iteration
-                timesDug += 1
-                If timesDug > 5 Then 'If a map was created without any walkable space, get it started
-                    Dim tilesBefore As Integer = tileCount
-                    For yInd As Integer = 0 To mBoardHeight - 1
-                        For xInd As Integer = 0 To mBoardWidth - 1
-                            If mBoard(yInd, xInd).Tag = 0 Then
-                                mBoard(yInd, xInd).Tag = 1
-                                timesDug = 0
-                                tileCount += 1
-                                Exit For
-                            End If
-                        Next
-                        If tilesBefore < tileCount Then
-                            Exit For
-                        End If
-                    Next
-                    timesDug = 0
-                End If
-                For yInd As Integer = 0 AndAlso tileCount < 4 To mBoardHeight - 1
-                    For xInd As Integer = 0 AndAlso tileCount < 4 To mBoardWidth - 1
-                        If mBoard(yInd, xInd).Tag > 0 AndAlso mBoard(yInd, xInd).Text = "" Then
-                            If yInd - 1 >= 0 AndAlso mBoard(yInd - 1, xInd).Tag = 0 Then
-                                mBoard(yInd - 1, xInd).Tag = 1
-                                tileCount += 1
-                            ElseIf yInd + 1 < mBoardHeight AndAlso mBoard(yInd + 1, xInd).Tag = 0 Then
-                                mBoard(yInd + 1, xInd).Tag = 1
-                                tileCount += 1
-                            ElseIf xInd - 1 >= 0 AndAlso mBoard(yInd, xInd - 1).Tag = 0 Then
-                                mBoard(yInd, xInd - 1).Tag = 1
-                                tileCount += 1
-                            ElseIf xInd + 1 < mBoardWidth AndAlso mBoard(yInd, xInd + 1).Tag = 0 Then
-                                mBoard(yInd, xInd + 1).Tag = 1
-                                tileCount += 1
-                            End If
-                        End If
-                    Next
-                Next
-            Loop
-        End If
-
         Dim playerX As Integer
         Dim playerY As Integer
-        Do While (mBoard(playerY, playerX).Tag <> 1 And mBoard(playerY, playerX).Tag <> 2)
+        Do While (mBoard(playerY, playerX).Tag <> 1)
             playerX = CInt(Int(Rnd() * mBoardWidth))
             playerY = CInt(Int(Rnd() * mBoardHeight))
         Loop
@@ -615,39 +461,39 @@ Public Class Game
         If xOry Then
             If p1.Y < p2.Y Then
                 For y = p1.Y To p2.Y
-                    If y < mBoardHeight And y > 0 And p1.X < mBoardWidth And p1.X > 0 AndAlso Not mBoard(y, p1.X).Tag = 2 Then mBoard(y, p1.X).Tag = 1
+                    If y < mBoardHeight And y > 0 And p1.X < mBoardWidth And p1.X > 0 Then mBoard(y, p1.X).Tag = 1
                 Next
             Else
                 For y = p1.Y To p2.Y Step -1
-                    If y < mBoardHeight And y > 0 And p1.X < mBoardWidth And p1.X > 0 AndAlso Not mBoard(y, p1.X).Tag = 2 Then mBoard(y, p1.X).Tag = 1
+                    If y < mBoardHeight And y > 0 And p1.X < mBoardWidth And p1.X > 0 Then mBoard(y, p1.X).Tag = 1
                 Next
             End If
             If p1.X < p2.X Then
                 For x = p1.X To p2.X
-                    If x < mBoardWidth And x > 0 And p2.Y < mBoardHeight And p2.Y > 0 AndAlso Not mBoard(p2.Y, x).Tag = 2 Then mBoard(p2.Y, x).Tag = 1
+                    If x < mBoardWidth And x > 0 And p2.Y < mBoardHeight And p2.Y > 0 Then mBoard(p2.Y, x).Tag = 1
                 Next
             Else
                 For x = p1.X To p2.X Step -1
-                    If x < mBoardWidth And x > 0 And p2.Y < mBoardHeight And p2.Y > 0 AndAlso Not mBoard(p2.Y, x).Tag = 2 Then mBoard(p2.Y, x).Tag = 1
+                    If x < mBoardWidth And x > 0 And p2.Y < mBoardHeight And p2.Y > 0 Then mBoard(p2.Y, x).Tag = 1
                 Next
             End If
         Else
             If p1.X < p2.X Then
                 For x = p1.X To p2.X
-                    If x < mBoardWidth And x > 0 And p2.Y < mBoardHeight And p2.Y > 0 AndAlso Not mBoard(p2.Y, x).Tag = 2 Then mBoard(p2.Y, x).Tag = 1
+                    If x < mBoardWidth And x > 0 And p2.Y < mBoardHeight And p2.Y > 0 Then mBoard(p2.Y, x).Tag = 1
                 Next
             Else
                 For x = p1.X To p2.X Step -1
-                    If x < mBoardWidth And x > 0 And p2.Y < mBoardHeight And p2.Y > 0 AndAlso Not mBoard(p2.Y, x).Tag = 2 Then mBoard(p2.Y, x).Tag = 1
+                    If x < mBoardWidth And x > 0 And p2.Y < mBoardHeight And p2.Y > 0 Then mBoard(p2.Y, x).Tag = 1
                 Next
             End If
             If p1.Y < p2.Y Then
                 For y = p1.Y To p2.Y
-                    If y < mBoardHeight And y > 0 And p1.X < mBoardWidth And p1.X > 0 AndAlso Not mBoard(y, p1.X).Tag = 2 Then mBoard(y, p1.X).Tag = 1
+                    If y < mBoardHeight And y > 0 And p1.X < mBoardWidth And p1.X > 0 Then mBoard(y, p1.X).Tag = 1
                 Next
             Else
                 For y = p1.Y To p2.Y Step -1
-                    If y < mBoardHeight And y > 0 And p1.X < mBoardWidth And p1.X > 0 AndAlso Not mBoard(y, p1.X).Tag = 2 Then mBoard(y, p1.X).Tag = 1
+                    If y < mBoardHeight And y > 0 And p1.X < mBoardWidth And p1.X > 0 Then mBoard(y, p1.X).Tag = 1
                 Next
             End If
         End If
@@ -660,11 +506,11 @@ Public Class Game
                 Dim y As Integer
                 If dir Then
                     For y = p1.Y To Int(Rnd() * 8)
-                        If y < mBoardHeight And y > 0 And p1.X < mBoardWidth And p1.X > 0 AndAlso Not mBoard(y, p1.X).Tag = 2 Then mBoard(y, p1.X).Tag = 1
+                        If y < mBoardHeight And y > 0 And p1.X < mBoardWidth And p1.X > 0 Then mBoard(y, p1.X).Tag = 1
                     Next
                 Else
                     For y = p1.Y To Int(Rnd() * 8) Step -1
-                        If y < mBoardHeight And y > 0 And p1.X < mBoardWidth And p1.X > 0 AndAlso Not mBoard(y, p1.X).Tag = 2 Then mBoard(y, p1.X).Tag = 1
+                        If y < mBoardHeight And y > 0 And p1.X < mBoardWidth And p1.X > 0 Then mBoard(y, p1.X).Tag = 1
                     Next
                 End If
                 p1 = New Point(p1.X, y)
@@ -672,11 +518,11 @@ Public Class Game
                 Dim x As Integer
                 If dir Then
                     For x = p1.X To Int(Rnd() * 8)
-                        If x < mBoardWidth And x > 0 And p1.Y < mBoardHeight And p1.Y > 0 AndAlso Not mBoard(p1.Y, x).Tag = 2 Then mBoard(p1.Y, x).Tag = 1
+                        If x < mBoardWidth And x > 0 And p1.Y < mBoardHeight And p1.Y > 0 Then mBoard(p1.Y, x).Tag = 1
                     Next
                 Else
                     For x = p1.X To Int(Rnd() * 8) Step -1
-                        If x < mBoardWidth And x > 0 And p1.Y < mBoardHeight And p1.Y > 0 AndAlso Not mBoard(p1.Y, x).Tag = 2 Then mBoard(p1.Y, x).Tag = 1
+                        If x < mBoardWidth And x > 0 And p1.Y < mBoardHeight And p1.Y > 0 Then mBoard(p1.Y, x).Tag = 1
                     Next
                 End If
                 p1 = New Point(x, p1.Y)
@@ -739,14 +585,10 @@ Public Class Game
         mBoard(stairsY, stairsX).ForeColor = Color.FromArgb(45, 45, 45)
         mBoard(stairsY, stairsX).Text = "H"
     End Sub
-    Function chestSpotValid()
-        Return True
-    End Function
     Sub placeChest(ByVal code As String)
         Rnd(-1)
         Randomize(code.GetHashCode)
-        'Dim numChests As Integer = CInt(Int(Rnd() * 8) + 3) * Int((mBoardWidth / 30) + (mBoardHeight / 30) / 2)
-        Dim numChests As Integer = CInt(Int(Rnd() * chestFreqRange) + chestFreqMin) * (Int(chestSizeDependence / Math.Sqrt(mBoardWidth * mBoardHeight)) + 1)
+        Dim numChests As Integer = CInt(Int(Rnd() * 8) + 3) * Int(mBoardWidth / 30)
         Dim r As Integer
         If floor = 3 Then
             numChests *= 1.5
@@ -832,7 +674,7 @@ Public Class Game
                     End If
                 End If
             Next
-            If cons.Count - 1 < 1 Then Return path.ToArray
+
             Dim min As Point = cons(0)
             For i = 0 To cons.Count - 1
                 If dist(cons(i), p2) < dist(min, p2) Then min = cons(i)
@@ -1064,6 +906,7 @@ Public Class Game
         Randomize()
         If eClock > 0 Then eClock -= 1
         If combatmode = True Or npcmode = True Or eClock <> 0 Or Not player.canMoveFlag Then Exit Sub
+        Dim rand As Integer = CInt(Int(Rnd() * 200))
         Dim currTier As Integer() = monsterTier1
         Select Case floor
             Case 1
@@ -1077,12 +920,9 @@ Public Class Game
             Case Else
                 currTier = monsterTier4
         End Select
-
-        Dim rand As Integer = CInt(Int(Rnd() * 1000))
         Dim r As Integer = Int(Rnd() * (UBound(currTier) + 1))
         Dim r2 As Integer = Int(Rnd() * (UBound(currTier) + 1))
-
-        If rand < encounterRate Then
+        If rand < 5 Then
             Dim m As Monster
             If r2 = UBound(currTier) And r2 = r And ((floor < 5 AndAlso Not beatboss(floor)) Or floor >= 5) And Not floor = 3 Then
                 m = New MiniBoss(floor)
@@ -1093,7 +933,7 @@ Public Class Game
             player.currTarget = m
             toCombat()
             lstLog.Items.Add((m.getName() & " attacks!"))
-            eClock = eClockResetVal
+            eClock = 5
         End If
         lstLog.TopIndex = lstLog.Items.Count - 1
     End Sub
@@ -1123,10 +963,10 @@ Public Class Game
                 lblEvent.ForeColor = Color.White
                 If Not combatmode Then player.canMoveFlag = True
                 If Not lblEventOnClose Is Nothing Then
-                    lblEvent.Visible = True
-                    If Not combatmode Then player.canMoveFlag = False
-                    lblEventOnClose()
-                    lblEventOnClose = Nothing
+                        lblEvent.Visible = True
+                        If Not combatmode Then player.canMoveFlag = False
+                        lblEventOnClose()
+                        lblEventOnClose = Nothing
                 End If
                 drawBoard()
                 If btnEQP.Enabled = False Then btnEQP.Enabled = True
@@ -1708,12 +1548,12 @@ Public Class Game
         End If
 
         'handles any tfs or triggers triggered by equipping of certain weapons
-        If player.pClass.name.Equals("Magic Girl") And player.equippedArmor.getName.Equals("Magic_Girl_Outfit") Then
+        If player.title.Equals("Magic Girl") And player.equippedArmor.getName.Equals("Magic_Girl_Outfit") Then
             player.equippedArmor = player.inventory.Item(10)
             lstLog.Items.Add("A magic girl needs her uniform!")
         End If
 
-        If player.pForm.name.Equals("Blow-Up Doll") Then
+        If player.title.Equals("Blow-Up Doll") Then
             player.equippedArmor = New Naked
         End If
 
@@ -1737,7 +1577,7 @@ Public Class Game
         End If
 
         'this handles the revert from the magical girl form, if needed
-        If player.equippedWeapon.getName.Equals("Magic_Girl_Wand") And player.pClass.name.Equals("Magic Girl") And Not subString.Equals("Magic_Girl_Wand") Then
+        If player.equippedWeapon.getName.Equals("Magic_Girl_Wand") And player.title.Equals("Magic Girl") And Not subString.Equals("Magic_Girl_Wand") Then
             lstLog.Items.Add("Putting away your wand causes you to change into your regular self!")
             player.inventory.Item(10).add(-1)
             player.magGState.save(player)
@@ -1845,15 +1685,15 @@ Public Class Game
                 lblWhat.Text = "Equip what?"
                 lstSelec.Items.Add("a - Naked")
                 count += 1
-                If player.pClass.name = "Bimbo" Or player.perks("slutcurse") > -1 Then
+                If player.title = "Bimbo" Or player.perks("slutcurse") > -1 Then
                     lstSelec.Items.Add("b - Skimpy_Clothes")
-                ElseIf player.pClass.name = "Princess" Then
+                ElseIf player.title = "Princess" Then
                     lstSelec.Items.Add("b - Regal_Gown")
-                ElseIf player.pClass.name = "Maid" Then
+                ElseIf player.title = "Maid" Then
                     lstSelec.Items.Add("b - Maid_Outfit")
-                ElseIf player.pForm.name = "Succubus" Then
+                ElseIf player.title = "Succubus" Then
                     lstSelec.Items.Add("b - Succubus_Garb")
-                ElseIf player.pClass.name = "Goddess" Then
+                ElseIf player.title = "Goddess" Then
                     lstSelec.Items.Add("b - Goddess_Gown")
                 Else
                     lstSelec.Items.Add("b - Common_Clothes")
@@ -1902,11 +1742,6 @@ Public Class Game
         Next
         writer.WriteLine(stairs.X)
         writer.WriteLine(stairs.Y)
-        writer.WriteLine(chestFreqMin)
-        writer.WriteLine(chestFreqRange)
-        writer.WriteLine(chestSizeDependence)
-        writer.WriteLine(chestRichnessBase)
-        writer.WriteLine(chestRichnessRange)
         writer.WriteLine(chestList.Count - 1)
         For i = 0 To chestList.Count - 1
             writer.WriteLine(chestList.Item(i).ToString())
@@ -1944,9 +1779,6 @@ Public Class Game
         Next
         writer.WriteLine(turn)
         writer.WriteLine(floor)
-        writer.WriteLine(floorCode)
-        writer.WriteLine(encounterRate)
-        writer.WriteLine(eClockResetVal)
         writer.WriteLine(shopkeeper.pos.X)
         writer.WriteLine(shopkeeper.pos.Y)
 
@@ -2048,12 +1880,6 @@ Public Class Game
         zoom()
 
         stairs = New Point(reader.ReadLine(), reader.ReadLine())
-
-        chestFreqMin = reader.ReadLine()
-        chestFreqRange = reader.ReadLine()
-        chestSizeDependence = reader.ReadLine()
-        chestRichnessBase = reader.ReadLine()
-        chestRichnessRange = reader.ReadLine()
         Dim uOchests As ArrayList = New ArrayList()
         For i = 0 To CInt(reader.ReadLine())
             Dim newChest = baseChest.Create(reader.ReadLine())
@@ -2104,9 +1930,6 @@ Public Class Game
         Next
         turn = reader.ReadLine()
         floor = reader.ReadLine()
-        floorCode = reader.ReadLine()
-        encounterRate = Int(reader.ReadLine())
-        eClockResetVal = Int(reader.ReadLine())
         shopkeeper = New NPC(2)
         shopkeeper.pos.X = reader.ReadLine()
         shopkeeper.pos.Y = reader.ReadLine()
@@ -2154,9 +1977,8 @@ Public Class Game
         player.setPImage()
 
         drawBoard()
-
-        lblNameTitle.Text = player.name & " the " & player.pClass.name
-        lblHealth.Text = "Health = " & CInt(player.health * player.getmaxHealth) & "/" & player.maxHealth
+        lblNameTitle.Text = player.name & " the " & player.title
+        lblHealth.Text = "Health = " & player.health & "/" & player.maxHealth
         lblMana.Text = "Mana = " & player.mana & "/" & player.maxMana
         lblHunger.Text = "Hunger = " & player.hunger & "/100"
         lblATK.Text = "ATK = " & player.getAttack
@@ -2166,7 +1988,6 @@ Public Class Game
         lblEVD.Text = "EVD = " & player.evade
 
         player.currState.save(player)
-
         picStart.Visible = False
 
         pushLblEvent("Game successfully loaded!")
@@ -2176,17 +1997,17 @@ Public Class Game
     End Sub
     Private Sub btnS1_Click(sender As Object, e As EventArgs) Handles btnS1.Click
         If solFlag Then
-            'Try
-            loadSave("s1.ave")
-            'Catch ex As System.IO.FileNotFoundException
-            '    MsgBox("Error 004: No save detected!")
-            'Catch ex2 As Exception
-            '    If MessageBox.Show("Error 005: Error in loaded in save file!" & vbCrLf & "Restart?", "Error 005", MessageBoxButtons.YesNo) = Windows.Forms.DialogResult.Yes Then
-            '        Application.Restart()
-            '    Else
-            '        Application.Exit()
-            '    End If
-            'End Try
+            Try
+                loadSave("s1.ave")
+            Catch ex As System.IO.FileNotFoundException
+                MsgBox("Error 004: No save detected!")
+            Catch ex2 As Exception
+                If MessageBox.Show("Error 005: Error in loaded in save file!" & vbCrLf & "Restart?", "Error 005", MessageBoxButtons.YesNo) = Windows.Forms.DialogResult.Yes Then
+                    Application.Restart()
+                Else
+                    Application.Exit()
+                End If
+            End Try
         Else
             save("s1.ave")
             imagesWorkerArg = 1
@@ -2448,13 +2269,14 @@ Public Class Game
         Dim ct As Integer = 0
         Dim out As String = ""
         Do While c < sSplit.Length
-            If ct < 45 Then
-                If Not sSplit(c).Contains(vbCrLf) Then
+            If ct < 50 Then
+                If Not sSplit(c).Equals("fugoo") Then
                     out += sSplit(c) & " "
                     ct += sSplit(c).Length + 1
                     c += 1
                 Else
-                    out += sSplit(c) & " "
+                    sSplit(c) = ""
+                    out += vbCrLf
                     ct = 0
                     c += 1
                 End If
@@ -2472,7 +2294,7 @@ Public Class Game
             t.Die()
             Exit Sub
         End If
-        lblPHealth.Text = CInt(p.health * p.getmaxHealth) & "/" & p.getmaxHealth
+        lblPHealth.Text = p.health & "/" & p.getmaxHealth
         lblEHealth.Text = t.health & "/" & t.maxHealth
         lblTurn.Text = "Turn: " & turn
         lblPName.Text = p.name
@@ -2525,7 +2347,7 @@ Public Class Game
             If ratioEH <= 0.2 Then picEHbar.BackColor = Color.Crimson Else picEHbar.BackColor = Color.YellowGreen
         End If
 
-        Dim ratioPH As Double = p.health * ratio
+        Dim ratioPH As Double = p.health / p.getmaxHealth * ratio
         picPHealth.Size = New Size(ratioPH * 174, 15 * ratio)
         x = picPHealth.Location.X + (ratioPH * 174) - (30 * ratio)
         If x > picPHealth.Location.X + (174 * ratio) - (30 * ratio) Then x = picPHealth.Location.X + (174 * ratio) - (30 * ratio)
@@ -2849,12 +2671,12 @@ Public Class Game
     End Sub
     'special route
     Public Sub specialRoute()
-        If player.pClass.name = "Warrior" Or player.pClass.name = "Paladin" Then cmboxSpec.Items.Add("Berserker Rage")
-        If player.pClass.name = "Mage" Or player.pClass.name = "Paladin" Then cmboxSpec.Items.Add("Risky Decision")
+        If player.title = "Warrior" Or player.title = "Paladin" Then cmboxSpec.Items.Add("Berserker Rage")
+        If player.title = "Mage" Or player.title = "Paladin" Then cmboxSpec.Items.Add("Risky Decision")
         If player.breastSize > 3 Then cmboxSpec.Items.Add("Massive Mammaries")
-        If player.pForm.name = "Succubus" Then cmboxSpec.Items.Add("Unholy Seduction")
-        If player.pForm.name = "Slime" Then cmboxSpec.Items.Add("Absorbtion")
-        If player.pForm.name = "Dragon" Then cmboxSpec.Items.Add("Ironhide Fury")
+        If player.title = "Succubus" Then cmboxSpec.Items.Add("Unholy Seduction")
+        If player.title = "Slime" Then cmboxSpec.Items.Add("Absorbtion")
+        If player.title = "Dragon" Then cmboxSpec.Items.Add("Ironhide Fury")
     End Sub
 
     'button click methods
@@ -3174,8 +2996,7 @@ Public Class Game
                 End If
             Next
             'MsgBox("B")
-            'If cboxNPCMG.Text = "Turn to Frog" Then Spells.turnToFrogN(m, player) Else Spell.spellCast(m, player, cboxNPCMG.Text)
-            Spell.spellCast(m, player, cboxNPCMG.Text)
+            If cboxNPCMG.Text = "Turn to Frog" Then Spells.turnToFrogN(m, player) Else Spell.spellCast(m, player, cboxNPCMG.Text)
 
             If npcList.Count > 0 Then
                 For i = 0 To npcList.Count - 1
@@ -3342,12 +3163,13 @@ Public Class Game
         Do While c < sSplit.Length
             If sSplit(c).Equals(vbCrLf) Then ct = 0
             If ct < 70 Then
-                If Not sSplit(c).Contains(vbCrLf) Then
+                If Not sSplit(c).Equals("fugoo") Then
                     out += sSplit(c) & " "
                     ct += sSplit(c).Length + 1
                     c += 1
                 Else
-                    out += sSplit(c) & " "
+                    sSplit(c) = ""
+                    out += vbCrLf
                     ct = 0
                     c += 1
                 End If
@@ -3375,16 +3197,11 @@ Public Class Game
         Dim ct As Integer = 0
         Dim out As String = ""
         Do While c < sSplit.Length
+            If sSplit(c).Equals(vbCrLf) Then ct = 0
             If ct < 70 Then
-                If Not sSplit(c).Contains(vbCrLf) Then
-                    out += sSplit(c) & " "
-                    ct += sSplit(c).Length + 1
-                    c += 1
-                Else
-                    out += sSplit(c) & " "
-                    ct = 0
-                    c += 1
-                End If
+                out += sSplit(c) & " "
+                ct += sSplit(c).Length + 1
+                c += 1
             Else
                 out += vbCrLf
                 ct = 0
@@ -3410,16 +3227,11 @@ Public Class Game
         Dim ct As Integer = 0
         Dim out As String = ""
         Do While c < sSplit.Length
+            If sSplit(c).Equals(vbCrLf) Then ct = 0
             If ct < 70 Then
-                If Not sSplit(c).Contains(vbCrLf) Then
-                    out += sSplit(c) & " "
-                    ct += sSplit(c).Length + 1
-                    c += 1
-                Else
-                    out += sSplit(c) & " "
-                    ct = 0
-                    c += 1
-                End If
+                out += sSplit(c) & " "
+                ct += sSplit(c).Length + 1
+                c += 1
             Else
                 out += vbCrLf
                 ct = 0
@@ -3745,8 +3557,7 @@ Public Class Game
             savePicsReady = True
         Else
             If System.IO.File.Exists("s" & imagesWorkerArg.ToString() & ".ave") Then
-                'Dim pic As Image = getImgFromFile("s" & imagesWorkerArg.ToString() & ".ave")
-                Dim pic As Image = picPortrait.BackgroundImage.Clone()
+                Dim pic As Image = getImgFromFile("s" & imagesWorkerArg.ToString() & ".ave")
                 Try
                     savePics(imagesWorkerArg) = pic
                 Catch ex As Exception
@@ -3772,7 +3583,6 @@ Public Class Game
         'btnControls.Visible = True
         'player.canMoveFlag = False
     End Sub
-
     Private Sub btnWait_Click(sender As Object, e As EventArgs) Handles btnWait.Click
         turn += 1
         If lblEvent.Visible = True Then

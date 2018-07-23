@@ -22,7 +22,10 @@
             p.iArrInd(5) = New Tuple(Of Integer, Boolean)(p.sState.iArrInd(5).Item1, False)
             p.iArrInd(10) = New Tuple(Of Integer, Boolean)(p.sState.iArrInd(10).Item1, False)
             p.iArrInd(15) = New Tuple(Of Integer, Boolean)(p.sState.iArrInd(15).Item1, False)
+<<<<<<< HEAD
             Game.pushLblEvent("Thoughts of modesty return to your mind. You are free of the slut curse!")
+=======
+>>>>>>> master
             p.perks("slutcurse") = -1
             Equipment.antiClothingCurse()
             Game.pushLblEvent("You are now a man!")
@@ -30,7 +33,7 @@
         Else
             Game.pushLblEvent("Nothing happened!")
         End If
-        If Not Polymorph.canBeTFed(Game.player) Then
+        If Not Game.player.perks("polymorphed") > -1 And Not Game.player.title.Equals("Magic Girl") Then
             Game.player.pState.save(Game.player)
         End If
         Equipment.portraitUDate()

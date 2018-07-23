@@ -25,7 +25,6 @@ Public Class Debug_Window
         btnPan.Checked = True
 
         'GENERAL
-        lblGenCode.Text = "CODE: " & Game.floorCode
         boxFloor.Value = Game.floor
         boxTurn.Value = Game.turn
         If Game.floor < Game.beatboss.Count Then
@@ -70,7 +69,8 @@ Public Class Debug_Window
         boxEvd.Value = Game.player.evade
         boxGold.Value = Game.player.gold
         pnlSC.BackColor = Game.player.skincolor
-        pnlHC.BackColor = Game.player.haircolor
+        pnlHC.BackColor = Color.FromArgb(255, Game.player.haircolor.R, Game.player.haircolor.G, Game.player.haircolor.B)
+        boxAlpha.Value = Game.player.haircolor.A
 
         'PORTRAIT
         loadPortrait()
@@ -79,6 +79,37 @@ Public Class Debug_Window
         updateInventoryList()
         number.Value = 0
         updateItemsList()
+
+        'PERKS
+        Dim row = 0
+        Dim col = 0
+        Dim test = 0
+        For Each perk In Game.player.perks
+            addPerk(perk, col, row)
+            row += 1
+            Dim control As Control = tabPerks.Controls.Item(tabPerks.Controls.Count - 1)
+            Console.Write(test & ": " & perk.Key & " # " & perk.Value & " ! ")
+            Console.Write(control.Location.Y + control.Size.Height)
+            Console.WriteLine("  |  " & tabPerks.Size.Height)
+            If (control.Location.Y + control.Size.Height) > tabPerks.Size.Height Then
+                row = 0
+                col += 1
+                movePerkControl(control, col, row)
+                row += 1
+            End If
+            test += 1
+        Next
+
+        lblFC.Text = "Floorcode: " & Game.floorCode
+        boxWidth.Value = Game.mBoardWidth
+        boxHeight.Value = Game.mBoardHeight
+        boxChestFreqMin.Value = Game.chestFreqMin
+        boxChestFreqRange.Value = Game.chestFreqRange
+        boxChestSizeDependence.Value = Game.chestSizeDependence
+        boxChestRichnessBase.Value = Game.chestRichnessBase
+        boxChestRichnessRange.Value = Game.chestRichnessRange
+        boxEncounterRate.Value = Game.encounterRate
+        boxEClockResetVal.Value = Game.eClockResetVal
     End Sub
 
     Private Sub loadPortrait()
@@ -121,7 +152,6 @@ Public Class Debug_Window
     End Sub
 
     Public Sub clear()
-        lblGenCode.Text = "CODE: "
         Dim ctrl As Control = Me
         Do Until ctrl Is Nothing
             If ctrl.GetType() = GetType(TextBox) Then
@@ -417,8 +447,15 @@ Public Class Debug_Window
         Dim cd As New ColorDialog()
         cd.Color = Game.player.haircolor
         cd.ShowDialog()
-        Game.player.changeHairColor(cd.Color)
+        Dim c As Color = Color.FromArgb(boxAlpha.Value, cd.Color.R, cd.Color.G, cd.Color.B)
+        Game.player.changeHairColor(c)
         cd.Dispose()
+        picPreview.Image = CharacterGenerator.CreateBMP(Game.player.iArr)
+    End Sub
+
+    Private Sub boxAlpha_ValueChanged(sender As Object, e As EventArgs) Handles boxAlpha.ValueChanged
+        Dim c As Color = Color.FromArgb(boxAlpha.Value, Game.player.haircolor.R, Game.player.haircolor.G, Game.player.haircolor.B)
+        Game.player.changeHairColor(c)
         picPreview.Image = CharacterGenerator.CreateBMP(Game.player.iArr)
     End Sub
 
@@ -431,6 +468,32 @@ Public Class Debug_Window
 
         'picPreview.Image = CharacterGenerator.recolor(CharacterGenerator.CreateBMP(Game.player.iArr), Game.player.skincolor)
         picPreview.Image = CharacterGenerator.CreateBMP(Game.player.iArr)
+    End Sub
+
+    Private Sub boxInventoryFilter_TextChanged(sender As Object, e As EventArgs) Handles boxInventoryFilter.TextChanged
+        inventoryFilterUpdate()
+    End Sub
+
+    Private Sub boxItemsFilter_TextChanged(sender As Object, e As EventArgs) Handles boxItemsFilter.TextChanged
+        itemFilterUpdate()
+    End Sub
+
+    Private Sub inventoryFilterUpdate()
+        boxInventory.Items.Clear()
+        For i As Integer = 0 To inventoryList.Count - 1
+            If inventoryList(i).IndexOf(boxInventoryFilter.Text, 0, StringComparison.CurrentCultureIgnoreCase) > -1 Then
+                boxInventory.Items.Add(inventoryList(i).ToString())
+            End If
+        Next
+    End Sub
+
+    Private Sub itemFilterUpdate()
+        boxItems.Items.Clear()
+        For i As Integer = 0 To itemsList.Count - 1
+            If itemsList(i).IndexOf(boxItemsFilter.Text, 0, StringComparison.CurrentCultureIgnoreCase) > -1 Then
+                boxItems.Items.Add(itemsList(i).ToString())
+            End If
+        Next
     End Sub
 
     Private Sub btnRemove_Click(sender As Object, e As EventArgs) Handles btnRemove.Click
@@ -450,8 +513,8 @@ Public Class Debug_Window
                 boxInventory.Items.Insert(temp, Game.player.inventorynames(itemInd) & " x" & CType(Game.player.inventory(itemInd), Item).count)
             End If
         Loop
+        inventoryFilterUpdate()
     End Sub
-
 
     Private Sub btnAdd_Click(sender As Object, e As EventArgs) Handles btnAdd.Click
         If boxInventory.SelectedIndices.Count > 0 Then
@@ -474,6 +537,7 @@ Public Class Debug_Window
                 boxItems.SelectedIndices.Remove(boxItems.SelectedIndices(0))
             Loop
         End If
+        inventoryFilterUpdate()
     End Sub
 
     Private Sub boxInventory_SelectedIndexChanged(sender As Object, e As EventArgs) Handles boxInventory.SelectedIndexChanged
@@ -486,5 +550,111 @@ Public Class Debug_Window
         If boxInventory.SelectedIndex <> -1 Then
             boxInventory.SelectedIndex = -1
         End If
+    End Sub
+
+    Private Sub addPerk(p As KeyValuePair(Of String, Integer), col As Integer, row As Integer)
+        Dim group = New System.Windows.Forms.GroupBox()
+        Me.tabPerks.Controls.Add(group)
+
+        Dim box = New System.Windows.Forms.NumericUpDown()
+        Dim lbl = New System.Windows.Forms.Label()
+        'CType(box, System.ComponentModel.ISupportInitialize).BeginInit()
+        'group.SuspendLayout()
+
+        lbl.Location = New System.Drawing.Point(10, 10)
+        lbl.Name = p.Key & "Lbl"
+        lbl.Size = New System.Drawing.Size(125, 25)
+        lbl.TabStop = False
+        lbl.Text = p.Key
+
+        box.BackColor = System.Drawing.Color.Black
+        box.ForeColor = System.Drawing.Color.White
+        box.Name = p.Key & "Box"
+        box.Location = New System.Drawing.Point(lbl.Location.X + lbl.Size.Width + 10, lbl.Location.Y)
+        box.Minimum = -1
+        box.Value = p.Value
+        box.Size = New System.Drawing.Size(63, 26)
+        AddHandler box.ValueChanged, AddressOf numericUpDownChanged
+
+        group.Controls.Add(box)
+        group.Controls.Add(lbl)
+
+        movePerkControl(group, col, row)
+
+        Dim w As Integer = box.Size.Width + lbl.Size.Width + 10 * 3
+        Dim h As Integer = Math.Max(box.Size.Height, lbl.Size.Height) + 10 * 2
+        group.Name = "groupTest"
+        group.Size = New System.Drawing.Size(w, h)
+        group.TabIndex = 1
+        group.TabStop = False
+
+        'group.ResumeLayout()
+        tabPerks.Controls.Add(group)
+    End Sub
+
+    Private Sub movePerkControl(c As Control, col As Integer, row As Integer)
+        Dim box As Control = Nothing
+        Dim lbl As Control = Nothing
+        For Each Control In c.Controls
+            If Control.Name.Substring(Control.Name.Length - 3) = "Box" Then
+                box = Control
+            ElseIf Control.Name.Substring(Control.Name.Length - 3) = "Lbl" Then
+                lbl = Control
+            End If
+        Next
+
+        Dim w As Integer = box.Size.Width + lbl.Size.Width + 10 * 3
+        Dim h As Integer = Math.Max(box.Size.Height, lbl.Size.Height) + 10 * 2
+        Dim pad As Decimal = 0.05
+        Dim x As Integer = w * pad + (w * pad * 2 + w) * col
+        Dim y As Integer = h * pad + (h * pad * 2 + h) * row
+
+        c.Location = New System.Drawing.Point(x, y)
+    End Sub
+
+    Private Sub numericUpDownChanged(ByVal sender As Object, ByVal e As EventArgs)
+        Dim name As String = sender.Name.Substring(0, sender.Name.Length - 3)
+        Game.player.perks(name) = sender.Value
+    End Sub
+
+    Private Sub btnReset_Click(sender As Object, e As EventArgs) Handles btnGenerationReset.Click
+        reset()
+        refreshBoxes()
+    End Sub
+
+    Sub reset()
+        Game.mBoardWidth = 50
+        Game.mBoardHeight = 40
+        Game.chestFreqMin = 3
+        Game.chestFreqRange = 8
+        Game.chestSizeDependence = 30
+        Game.chestRichnessBase = 1
+        Game.chestRichnessRange = 5
+        Game.encounterRate = 25
+        Game.eClockResetVal = 5
+    End Sub
+
+    Sub refreshBoxes()
+        boxWidth.Value = Game.mBoardWidth
+        boxHeight.Value = Game.mBoardHeight
+        boxChestFreqMin.Value = Game.chestFreqMin
+        boxChestFreqRange.Value = Game.chestFreqRange
+        boxChestFreqRange.Value = Game.chestSizeDependence
+        boxChestRichnessBase.Value = Game.chestRichnessBase
+        boxChestRichnessRange.Value = Game.chestRichnessRange
+        boxEncounterRate.Value = Game.encounterRate
+        boxEClockResetVal.Value = Game.eClockResetVal
+    End Sub
+
+    Private Sub btnSaveGeneration_Click(sender As Object, e As EventArgs) Handles btnSaveGeneration.Click
+        Game.mBoardWidth = boxWidth.Value
+        Game.mBoardHeight = boxHeight.Value
+        Game.chestFreqMin = boxChestFreqMin.Value
+        Game.chestFreqRange = boxChestFreqRange.Value
+        Game.chestSizeDependence = boxChestSizeDependence.Value
+        Game.chestRichnessBase = boxChestRichnessBase.Value
+        Game.chestRichnessRange = boxChestRichnessRange.Value
+        Game.encounterRate = boxEncounterRate.Value
+        Game.eClockResetVal = boxEClockResetVal.Value
     End Sub
 End Class

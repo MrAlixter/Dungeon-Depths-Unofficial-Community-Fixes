@@ -29,6 +29,8 @@ Partial Class EditContents
         Me.btnAdd = New System.Windows.Forms.Button()
         Me.lblContents = New System.Windows.Forms.Label()
         Me.lblItems = New System.Windows.Forms.Label()
+        Me.boxContentsFilter = New System.Windows.Forms.TextBox()
+        Me.boxItemsFilter = New System.Windows.Forms.TextBox()
         CType(Me.boxAmt, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.SuspendLayout()
         '
@@ -39,10 +41,10 @@ Partial Class EditContents
         Me.boxContents.ForeColor = System.Drawing.Color.White
         Me.boxContents.FormattingEnabled = True
         Me.boxContents.ItemHeight = 19
-        Me.boxContents.Location = New System.Drawing.Point(12, 12)
+        Me.boxContents.Location = New System.Drawing.Point(12, 50)
         Me.boxContents.Name = "boxContents"
         Me.boxContents.SelectionMode = System.Windows.Forms.SelectionMode.MultiExtended
-        Me.boxContents.Size = New System.Drawing.Size(260, 384)
+        Me.boxContents.Size = New System.Drawing.Size(260, 346)
         Me.boxContents.TabIndex = 0
         '
         'boxItems
@@ -52,10 +54,10 @@ Partial Class EditContents
         Me.boxItems.ForeColor = System.Drawing.Color.White
         Me.boxItems.FormattingEnabled = True
         Me.boxItems.ItemHeight = 19
-        Me.boxItems.Location = New System.Drawing.Point(412, 15)
+        Me.boxItems.Location = New System.Drawing.Point(412, 53)
         Me.boxItems.Name = "boxItems"
         Me.boxItems.SelectionMode = System.Windows.Forms.SelectionMode.MultiExtended
-        Me.boxItems.Size = New System.Drawing.Size(260, 384)
+        Me.boxItems.Size = New System.Drawing.Size(260, 346)
         Me.boxItems.TabIndex = 1
         '
         'btnSub
@@ -111,12 +113,34 @@ Partial Class EditContents
         Me.lblItems.TabIndex = 6
         Me.lblItems.Text = "ITEMS"
         '
+        'boxContentsFilter
+        '
+        Me.boxContentsFilter.BackColor = System.Drawing.Color.Black
+        Me.boxContentsFilter.Font = New System.Drawing.Font("Consolas", 12.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.boxContentsFilter.ForeColor = System.Drawing.Color.White
+        Me.boxContentsFilter.Location = New System.Drawing.Point(12, 12)
+        Me.boxContentsFilter.Name = "boxContentsFilter"
+        Me.boxContentsFilter.Size = New System.Drawing.Size(260, 26)
+        Me.boxContentsFilter.TabIndex = 187
+        '
+        'boxItemsFilter
+        '
+        Me.boxItemsFilter.BackColor = System.Drawing.Color.Black
+        Me.boxItemsFilter.Font = New System.Drawing.Font("Consolas", 12.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.boxItemsFilter.ForeColor = System.Drawing.Color.White
+        Me.boxItemsFilter.Location = New System.Drawing.Point(412, 12)
+        Me.boxItemsFilter.Name = "boxItemsFilter"
+        Me.boxItemsFilter.Size = New System.Drawing.Size(260, 26)
+        Me.boxItemsFilter.TabIndex = 186
+        '
         'EditContents
         '
         Me.AutoScaleDimensions = New System.Drawing.SizeF(6.0!, 13.0!)
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font
         Me.BackColor = System.Drawing.Color.Black
         Me.ClientSize = New System.Drawing.Size(684, 411)
+        Me.Controls.Add(Me.boxContentsFilter)
+        Me.Controls.Add(Me.boxItemsFilter)
         Me.Controls.Add(Me.lblItems)
         Me.Controls.Add(Me.lblContents)
         Me.Controls.Add(Me.btnAdd)
@@ -142,4 +166,6 @@ Partial Class EditContents
     Friend WithEvents btnAdd As Button
     Friend WithEvents lblContents As Label
     Friend WithEvents lblItems As Label
+    Friend WithEvents boxContentsFilter As TextBox
+    Friend WithEvents boxItemsFilter As TextBox
 End Class
