@@ -433,7 +433,7 @@ Public Class Game
                 newPicture.Name = "boardBox|" & x & "_" & y
                 newPicture.BackgroundImageLayout = ImageLayout.Stretch
                 newPicture.Size = New Point(YSize * 1.25, XSize * 1.25)
-                newPicture.Location = New Point(60 + x * (XSize * 1.25), 75 + y * (YSize * 1.25))
+                newPicture.Location = New Point(60 + x * (XSize * 1.24), 75 + y * (YSize * 1.24))
                 newPicture.Visible = True
                 Me.Controls.Add(newPicture)
                 mPics(y, x) = newPicture

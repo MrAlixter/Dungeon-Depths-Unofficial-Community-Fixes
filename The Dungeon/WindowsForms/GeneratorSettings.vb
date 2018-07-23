@@ -40,7 +40,7 @@
         boxHeight.Value = h
         boxChestFreqMin.Value = chestFreqMin
         boxChestFreqRange.Value = chestFreqRange
-        boxChestFreqRange.Value = chestSizeDependence
+        boxChestSizeDependence.Value = chestSizeDependence
         boxChestRichnessBase.Value = chestRichnessBase
         boxChestRichnessRange.Value = chestRichnessRange
         boxEncounterRate.Value = encounterRate
