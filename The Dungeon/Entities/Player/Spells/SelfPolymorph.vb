@@ -10,10 +10,19 @@
     Public Overrides Sub effect()
         Polymorph.porm = True
         Dim p As Polymorph = New Polymorph
+        Dim fN = Game.player.pForm.name
+        Dim cN = Game.player.pClass.name
         p.ShowDialog()
         p.Dispose()
-        Game.lstLog.Items.Add(CStr("You turn yourself into a " & Game.player.title & "!"))
-        Game.pushLblCombatEvent(CStr("You turn yourself into a " & Game.player.title & "!"))
+
+        Dim delta As String
+        If Game.player.pForm.name.Equals(fN) Then
+            delta = cN
+        Else
+            delta = fN
+        End If
+        Game.lstLog.Items.Add(CStr("You turn yourself into a " & delta & "!"))
+        Game.pushLblCombatEvent(CStr("You turn yourself into a " & delta & "!"))
         Game.lstLog.TopIndex = Game.lstLog.Items.Count - 1
     End Sub
     Public Overrides Sub backfire()

@@ -12,7 +12,7 @@
         Dim p As Player = Game.player
         p.inventorynames(29) = "Breast_Enlarging_Potion"
         p.be()
-        If Not Game.player.perks("polymorphed") > -1 And Not Game.player.title.Equals("Magic Girl") Then
+        If Not Polymorph.canBeTFed(Game.player) Then
             Game.player.pState.save(Game.player)
         End If
         Game.pushLblEvent("You breasts tingle plesently . . .")

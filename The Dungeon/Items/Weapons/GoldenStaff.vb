@@ -8,6 +8,7 @@
         tier = Nothing
         MyBase.setUsable(False)
         MyBase.mBoost = 50
+        MyBase.aBoost = 10
         count = 0
         value = 1800
     End Sub

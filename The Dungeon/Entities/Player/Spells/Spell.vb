@@ -185,7 +185,7 @@
     Shared Function spellCost(ByVal s As String)
         Select Case s
             Case "Dragon's Breath"
-                If Game.player.title.Equals("Dragon") Then Return "No cost." Else Return "-6 mana."
+                If Game.player.pForm.name.Equals("Dragon") Then Return "No cost." Else Return "-6 mana."
             Case "Fireball"
                 Return "-3 mana."
             Case "Super Fireball"

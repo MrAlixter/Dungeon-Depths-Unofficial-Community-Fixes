@@ -4,11 +4,12 @@
     Implements Updatable
 
     'Player Instance variables
-    Public name, sex, title, description As String
+    Public name, sex, description As String
     Public pClass As pClass = New pClass(1, 1, 1, 1, 1, 1, "Classless")
     Public pForm As pForm = New pForm(1, 1, 1, 1, 1, 1, "Human")
     'Public level, xp, nextLevelXp As Integer
-    Public health, maxHealth, mana, maxMana, attack, defence, will, speed, evade, gold, lust As Integer
+    Public health As Double
+    Public maxHealth, mana, maxMana, attack, defence, will, speed, evade, gold, lust As Integer
     Public hBuff As Integer = 0     'buffs that apply across forms (from charms, etc)
     Public mBuff As Integer = 0
     Public aBuff As Integer = 0
@@ -24,6 +25,8 @@
     Public pos As Point
     Public canMoveFlag As Boolean = True
     Public perks As Dictionary(Of String, Integer) = New Dictionary(Of String, Integer)() 'perks also include triggers for events
+    Public classes As Dictionary(Of String, pClass) = New Dictionary(Of String, pClass)()
+    Public forms As Dictionary(Of String, pForm) = New Dictionary(Of String, pForm)()
     Public pImage As Image 'tile image of the player
     Public TextColor As Color
     Public isDead As Boolean = False
@@ -44,22 +47,17 @@
     Public invNeedsUDate As Boolean = False
     'player & form states
     Public currState, pState, sState As State
-    Public succState As State = New State()
-    Public slimState As State = New State()
-    Public goddState As State = New State()
-    Public dragState As State = New State()
     Public bimbState As State = New State()
     Public magGState As State = New State()
+    Public goddState As State = New State()
     Public maidState As State = New State()
     Public prinState As State = New State()
-    Public tigState As State = New State()
 
-    Dim formStates = {succState, slimState, goddState, dragState,
-                      bimbState, magGState, maidState, prinState,
-                      tigState}
+    Dim formStates = {goddState, bimbState, magGState, maidState, prinState}
 
     Public solFlag = False
     Public wingInd = 0
+    Public hornInd = 0
     Public isAttacking = False
 
     Public forcedPath() As Point = Nothing
@@ -71,8 +69,8 @@
     Sub New()
         name = "TEMP_NAME"
         sex = "TEMP_SEX"
-        health = 100
-        maxHealth = health
+        health = 1.0
+        maxHealth = 100
         attack = 10
         defence = 10
         will = 10
@@ -107,12 +105,14 @@
         currState.read(playArray(0))
         sState.read(playArray(1))
         pState.read(playArray(2))
-
+        pClass = classes(currState.pClass.name)
+        pForm = forms(currState.pForm.name)
         Dim ind As Integer
         If v > 0.4 Then
             ind = CInt(playArray(3)) - 1
             For i = 0 To ind
                 formStates(i).read(playArray(4 + i))
+                If i = UBound(formStates) Then Exit For
             Next
             playArray = playArray(5 + ind).Split("*")
         Else
@@ -171,6 +171,7 @@
             End If
         End If
 
+        currState.load(Me)
         solFlag = True
         ReDim iArr(16)
         createP()
@@ -186,7 +187,7 @@
     'commands
     'movement commands
     Sub reachedFPathDest()
-        If title = "Thrall" Then
+        If pClass.name.Equals("Thrall") Then
             If 1 = 1 Then 'Int(Rnd() * 2) = 1 Then
                 Dim out = "You've found one of the crystals your controller is seeking!  As you circle it, you feel a familiar presence enter your mind.  " & _
                     """Yes!  You've found it!"" your overseer states exitedly, ""I'll be over shortly, don't go anywhere and don't touch that crystal.""" & vbCrLf & _
@@ -334,7 +335,7 @@
         If dmg = -2 Then
             dmg = currTarget.attack * 2
             Dim actualDMG As Integer = dmg - ((getDefence() / 100) * dmg)
-            health -= actualDMG
+            health -= actualDMG / getmaxHealth()
             Game.lblPHealtDiff.Tag -= actualDMG
             Game.lstLog.Items.Add(CStr("You got hit! Critical hit! -" & actualDMG & " health!"))
             Game.pushLblCombatEvent(CStr("You got hit! Critical hit! -" & actualDMG & " health!"))
@@ -345,7 +346,7 @@
         Else
             Dim actualDMG As Integer = dmg - ((getDefence() / 100) * dmg)
             If actualDMG < 1 Then actualDMG = 1
-            health -= actualDMG
+            health -= actualDMG / getmaxHealth()
             Game.lblPHealtDiff.Tag -= actualDMG
             Game.lstLog.Items.Add(CStr("You got hit! -" & actualDMG & " health!"))
             Game.pushLblCombatEvent(CStr("You got hit! -" & actualDMG & " health!"))
@@ -368,31 +369,31 @@
                     " his thumb on your forhead, and suddenly everything just seems so heavy. ""Noooo..."" you moan, " & vbCrLf &
                     "as the area around where he touched turns to gold, and that gold turns your flesh and blood " & vbCrLf &
                     "around it to gold as well. In a matter of seconds, all that is left of " & Me.name & " the " & vbCrLf &
-                    Me.title & " is a solid gold statue. The shopkeeper sighs, muttering to no one in particular, " & vbCrLf &
+                    Me.pClass.name & " is a solid gold statue. The shopkeeper sighs, muttering to no one in particular, " & vbCrLf &
                     vbCrLf & vbCrLf & """Now how am I going to get you back to the refinery?"""
                 'Game.pushLblEvent(out)
-                title = "Trophy"
+                pClass = classes("Trophy")
                 MsgBox(out)
             ElseIf currTarget.name.Equals("Mindless Bimbo") Then
                 Game.player.perks("bimbotf") = 1
                 Dim out As String = "Exausted, you slump to the floor.  Glancing up, the horny mess attacking you seem to have gotten a running start, throwing herself on top of you, and pulling you into a sloppy kiss.  As she clumsily fumbles around, trying to remove your clothes, you roll out from underneath her and beat a hasty retreat, the faint sweetness of bubblegum lingering in your mouth."
                 currTarget.despawn("run")
                 Game.pushLblEvent(out)
-                health = 10
+                health = 0.1
                 Exit Sub
             ElseIf currTarget.name.Equals("Mesmerized Thrall") Then
                 Dim out As String = ""
                 Dim ln1 As String = Nothing
-                If title = "Thrall" Then
+                If pClass.name.Equals("Thrall") Then
                     out = "Despite your fatigue, you are able to roll out of the way of the thrall's attempt to restrain you, and make a clumsy escape."
-                    health = 10
+                    health = 0.1
                 Else
                     ln1 = "As you collapse, you see the thrall pull a small metal collar out of their bag.  Lacking the strength to resist, you are powerless as they secure it firmly around your neck, all the while murmuring whispers of the joys of submission into your ear.  Once they have the collar fitted properly, they place a small glowing gem into a slot on the collar, igniting a small array of runes.  Your mind goes blank in an instant, and while at first an ammnesia-fueled panic sets in it is quickly replaced by a booming disembodied voice."
                     inventory(69).addone()
                     If Not equippedAcce.getName.Equals("Nothing") Then equippedAcce.onUnequip()
                     equippedAcce = inventory(69)
                     equippedAcce.onEquip()
-                    health = getmaxHealth()
+                    health = 1
                     mana = getmaxMana()
                     Game.player.will -= 3
                     If Game.player.will < 1 Then Game.player.will = 0
@@ -406,18 +407,18 @@
                 Exit Sub
             ElseIf currTarget.name.Equals("Enthralling Sorcerer") Or currTarget.name.Equals("Enthralling Sorceress") Then
                 Dim out As String = ""
-                If title = "Thrall" Then
+                If pClass.name.Equals("Thrall") Then
                     out = "Despite your fatigue, you are able to roll out of the way of the mage's attempt to restrain you, and make a clumsy escape."
-                    health = 10
+                    health = 0.1
                 Else
                     out = """Wonderful!"", your opponent exclaims as you collapse, ""You'll make a perfect thrall!""" & vbCrLf & _
                           "𝘛𝘩𝘳𝘢𝘭𝘭!? you think moments before a small metal collar finds its way around your neck and a network of runes inscribed on it begin glowing with your new master's magic.  𝘞𝘢𝘪𝘵 ... 𝘕𝘦𝘸 𝘔𝘈𝘚𝘛𝘌𝘙?!  You don't have a momment to rest before your mind is filled with a booming voice." & vbCrLf & _
-                          """LISTEN UP, NEW SLAVE!  I have need of your services."" your new master begins, ""In this dungeon, there are several high-power mana arrays.  Only one of them, however, is capable of bestowing the power of a demon lord onto a mortal such as I.  Your task is to find and inspect these arrays, and report back to me with your findings.""  They snicker,  ""I'm sure you won't let me down, but I'm going to need to make a few changes to make you more ... uniform ... with the rest of your collegues.""" & vbCrLf & vbCrLf & "        .....       " & vbCrLf & vbCrLf & "With a final warning not to fail them, the foreign presence leaves your mind and you are once again alone with your thoughts and your task."
+                          """LISTEN UP, NEW SLAVE!  I have need of your services."" your new master begins, ""In this dungeon, there are several high-power mana arrays.  Only one of them, however, is capable of bestowing the power of a demon lord onto a mortal such as I.  Your task is to find and inspect these arrays, and report back to me with your findings.""  They snicker,  ""I'm sure you won't let me down, but I'm going to need to make a few changes to make you more ... uniform ... with the rest of your collegues.""" & vbCrLf & vbCrLf & "...       " & vbCrLf & vbCrLf & "With a final warning not to fail them, the foreign presence leaves your mind and you are once again alone with your thoughts and your task."
                     inventory(69).addone()
                     If Not equippedAcce.getName.Equals("Nothing") Then equippedAcce.onUnequip()
                     equippedAcce = inventory(69)
                     equippedAcce.onEquip()
-                    health = getmaxHealth()
+                    health = 1
                     mana = getmaxMana()
                     prefForm.snapShift(Me)
                     Game.player.will -= 3
@@ -430,13 +431,13 @@
                 Dim out As String = "As the " & currTarget.name & " closes in on you, you push yourself off the ground, sidestep it, and make a hasty retreat." & vbCrLf & " " & vbCrLf & "[Insert a TF here (eventually)]"
                 currTarget.despawn("run")
                 Game.pushLblEvent(out)
-                health = 10
+                health = 0.1
                 Exit Sub
             ElseIf currTarget.name.Equals("Spider") Or currTarget.name.Equals("Arachne Huntress") Then
                 Dim out As String = "As the " & currTarget.name & " closes in on you, you push yourself off the ground, sidestep it, and make a hasty retreat." & vbCrLf & " " & vbCrLf & "[Insert a TF here (eventually)]"
                 currTarget.despawn("run")
                 Game.pushLblEvent(out)
-                health = 10
+                health = 0.1
                 Exit Sub
             ElseIf currTarget.name.Equals("Mimic") Then
                 currTarget.despawn("run")
@@ -446,7 +447,7 @@
                     lust += 50
                     createP()
                     Game.pushLblEvent(out)
-                    health = 10
+                    health = 0.1
                     Exit Sub
                 End If
                 out += "  As you black out, you can see the mimic working its way into your armor.  As the darkness takes you, so does the orgasmic bliss of the mimic's magic touch."
@@ -464,7 +465,7 @@
                 perks(12) = True
                 Equipment.portraitUDate()
                 Game.pushLblEvent(out)
-                health = 10
+                health = 0.1
                 Exit Sub
             End If
         Catch ex As Exception
@@ -473,7 +474,7 @@
         isDead = True
         Dim r As Integer = CInt(Int(Rnd() * 2))
         If r = 0 Then
-            If Not Game.currNPC Is Nothing AndAlso Game.currNPC.name.Equals("Shopkeeper") Then title = "Golem (Gold)"
+            If Not Game.currNPC Is Nothing AndAlso Game.currNPC.name.Equals("Shopkeeper") Then pClass = classes("Trophy")
             Dim writer As IO.StreamWriter
             writer = IO.File.CreateText("gho.sts")
             writer.WriteLine(Me.toGhost())
@@ -532,42 +533,27 @@
         setACCA()
 
         If s = "Warrior" Then
-            health += 50
-            maxHealth += 50
-            attack += 10
-            defence += 10
             inventory.Item(5).addOne()
             inventory.Item(6).addOne()
             equippedArmor = inventory.Item(5)
             equippedWeapon = inventory.Item(6)
         ElseIf s = "Mage" Then
-            mana += 30
-            maxMana += 15
             Game.cboxMG.Items.Add("Fireball")
             inventory.Item(2).add(3)
             inventory.Item(4).add(1)
             inventory.Item(21).add(1)
             equippedWeapon = inventory.Item(21)
-        ElseIf s = "dev" Then
-            health += 250
-            maxHealth += 250
-            mana += 999
-            maxMana += 999
-            For i = 0 To inventory.Count - 1
-                inventory.Item(i).add(33)
-            Next
         End If
-        title = s
+        pClass = classes(s)
         Equipment.clothesChange(equippedArmor.getName)
         If equippedWeapon.GetType().IsSubclassOf(GetType(Staff)) Then
-            mana += equippedWeapon.aBoost
-            maxMana += equippedWeapon.aBoost
+            mana += equippedWeapon.mBoost
         End If
         If sex = "Female" Then sexBool = True
         If sex = "Male" Then sexBool = False
         pImage = Game.picPlayer.BackgroundImage
         TextColor = Color.White
-        description = CStr(name & " is a " & sex & " " & title)
+        description = CStr(name & " is a " & sex & " " & pForm.name & " " & pClass.name)
 
         currState = New State(Me)
         sState = New State(Me)
@@ -599,13 +585,11 @@
         Dim tGold As Integer = gold
         Dim tEweap As Weapon = equippedWeapon
         Dim tEarm As Armor = equippedArmor
-        Dim hRatio As Double = health / getmaxHealth()
         If tEweap.getName = "Magic_Girl_Wand" Then tEweap = New BareFists()
         If tEarm.getName = "Magic_Girl_Outfit" Then tEarm = New Naked()
 
         sState.load(Me)
 
-        health = getmaxHealth() * hRatio
         mana = tMna
         gold = tGold
         equippedArmor = tEarm
@@ -622,7 +606,7 @@
             Game.lstLog.TopIndex = Game.lstLog.Items.Count - 1
         End If
 
-        If health > maxHealth + hBuff Then health = (maxHealth + hBuff) * hRatio
+        If health > 1 Then health = 1
         If mana > maxMana + mBuff Then mana = maxMana + mBuff
 
         Game.pushLblEvent("With a poof of smoke, you return to your original self!")
@@ -642,12 +626,10 @@
         Dim tGold As Integer = gold
         Dim tEweap As Weapon = equippedWeapon
         Dim tEarm As Armor = equippedArmor
-        Dim hRatio As Double = health / getmaxHealth()
         If tEweap.getName = "Magic_Girl_Wand" Then tEweap = New BareFists()
         If tEarm.getName = "Goddess_Gown" Or tEarm.getName = "Succubus_Garb" Then tEarm = New NormalClothes
         pState.load(Me)
 
-        health = getmaxHealth() * hRatio
         mana = tMna
         gold = tGold
         If Not tEarm.getName.Equals("Magic_Girl_Outfit") Then equippedArmor = tEarm
@@ -661,7 +643,7 @@
             Game.lstLog.TopIndex = Game.lstLog.Items.Count - 1
         End If
 
-        If health > maxHealth + hBuff Then health = (maxHealth + hBuff) * hRatio
+        If health > 1 Then health = 1
         If mana > maxMana + mBuff Then mana = maxMana + mBuff
         Game.pushLblEvent("You return to your former form!")
         Game.pImage = pImage
@@ -674,7 +656,7 @@
         UIupdate()
     End Sub
     Public Sub setPImage()
-        If title = "Bimbo" Then
+        If pClass.name.Equals("Bimbo") Then
             If Game.floor > 5 Then
                 pImage = Game.picBimbof.BackgroundImage
             Else
@@ -751,6 +733,8 @@
         ElseIf Game.turn Mod 35 = 0 Then
             hunger += 1
         End If
+        If health > 1 Then health = 1
+        If mana > getmaxMana() Then mana = getmaxMana()
         If inventory(8).count > 0 Then
             inventory(8).count = 0
             Game.pushLblEvent("The chicken suit phases out of reality")
@@ -830,7 +814,8 @@
         inventory.Add(New HeartNecklace()) '66
         inventory.Add(New RedHeadband()) '67
         inventory.Add(New RubyCirclet()) '68
-        inventory.Add(New SlaveCollar()) '69
+        inventory.Add(New ThrallCollar()) '69
+        inventory.Add(New Cowbell()) '70
 
         For i = 0 To inventory.Count - 1
             If inventory(i).GetType().IsSubclassOf(GetType(MysteryPotion)) Then
@@ -862,7 +847,7 @@
                 inventory(34), inventory(35), inventory(44)}
 
         acce = {New noAcce(), inventory(66), inventory(67), inventory(68),
-                inventory(69)}
+                inventory(69), inventory(70)}
 
         potions = {inventory(2), inventory(13), inventory(14), inventory(25),
                    inventory(26), inventory(27), inventory(28), inventory(29),
@@ -871,6 +856,7 @@
 
         misc = {inventory(43), inventory(53)}
 
+        'Creates the dictionary of perks
         perks.Add("hunger", -1) '0
         perks.Add("bimbotf", -1) '1
         perks.Add("slutcurse", -1) '2
@@ -886,6 +872,52 @@
         perks.Add("livearm", -1) '12
         perks.Add("livelinge", -1) '13
         perks.Add("thrall", -1) '14
+        perks.Add("cowbell", -1) '15
+
+        'Creates the class dictionary
+        classes.Add("Classless", New pClass(1, 1, 1, 1, 1, 1, "Classless"))
+        classes.Add("Warrior", New pClass(1, 1.5, 0.75, 1.5, 0.75, 1, "Warrior"))
+        classes.Add("Mage", New pClass(1, 0.75, 1.5, 0.75, 1, 1.5, "Mage"))
+        classes.Add("Magic Girl", New pClass(1, 0.5, 1.5, 0.75, 1.5, 1.5, "Magic Girl"))
+        classes.Add("Magic Girl​", New pClass(1, 0.5, 1.5, 0.75, 1.5, 1.5, "Magic Girl​"))
+        classes.Add("Bimbo", New pClass(0.75, 0.5, 0.5, 0.75, 1, 0.5, "Bimbo"))
+        classes.Add("Princess", New pClass(0.75, 1, 1, 0.75, 0.75, 1.5, "Princess"))
+        classes.Add("Maid", New pClass(0.75, 0.5, 0.75, 0.75, 1.5, 0.5, "Maid"))
+        classes.Add("Goddess", New pClass(2, 2, 2, 2, 2, 2, "Goddess"))
+        classes.Add("Paladin", New pClass(1, 1.5, 1.5, 1.5, 0.75, 1.5, "Paladin"))
+        classes.Add("Thrall", New pClass(1, 1, 1, 1, 1, 0.5, "Thrall"))
+        classes.Add("Trophy", New pClass(0.1, 0.1, 0.1, 4, 0.1, 0.1, "Trophy"))
+        classes.Add("Princess​", New pClass(0.75, 1, 1, 0.75, 0.75, 1.5, "Princess​"))
+        classes.Add("Bunny Girl​", New pClass(0.75, 0.5, 0.5, 0.75, 1, 0.5, "Bunny Girl​"))
+        classes.Add("Kitty", New pClass(0.75, 0.5, 0.5, 0.75, 1, 0.5, "Kitty"))
+        classes.Add("Soul-Lord", New pClass(1.75, 1.75, 1.75, 1.75, 1.75, 1.75, "Soul-Lord"))
+        classes.Add("Targaxian", New pClass(1, 1, 1, 1, 1, 0.5, "Targaxian"))
+        classes.Add("Unconscious", New pClass(pClass.h, pClass.a, pClass.m, pClass.d, pClass.s, pClass.w, "Unconscious"))
+
+        'Creates the form dictionary
+        forms.Add("Human", New pForm(1, 1, 1, 1, 1, 1, "Human"))
+        forms.Add("Elf", New pForm(0.75, 1, 1.5, 1, 1, 1, "Elf"))
+        forms.Add("Android", New pForm(1, 1, 1, 1.5, 1, 0.75, "Android"))
+        forms.Add("Succubus", New pForm(1.5, 1.5, 1.5, 0.75, 1.5, 1, "Succubus"))
+        forms.Add("Half-Succubus", New pForm(1, 1.5, 1, 1, 1.5, 1, "Half-Succubus"))
+        forms.Add("Angel", New pForm(2, 1, 1, 1, 1.5, 1.5, "Angel"))
+        forms.Add("Slime", New pForm(0.4, 1, 1, 2.5, 0.75, 0.75, "Slime"))
+        forms.Add("Half-Slime", New pForm(0.75, 1, 1, 1.7, 1, 1, "Half-Slime"))
+        forms.Add("Tigress", New pForm(1, 1.5, 1, 0.75, 1.5, 1, "Tigress"))
+        forms.Add("Dragon", New pForm(1, 1.5, 1.5, 2, 0.5, 1, "Dragon"))
+        forms.Add("Half-Dragon", New pForm(1, 1.5, 1, 1.5, 0.75, 1, "Half-Dragon"))
+        forms.Add("Harpy", New pForm(1, 1.5, 1, 0.5, 2, 1, "Harpy"))
+        forms.Add("Djinn", New pForm(0.75, 0.75, 3, 0.5, 0.75, 0.5, "Djinn"))
+        forms.Add("Minotaur Cow", New pForm(2, 1, 0.75, 1.5, 0.75, 0.5, "Minotaur Cow"))
+        forms.Add("Minotaur Bull", New pForm(1.5, 1.5, 0.75, 1.5, 0.75, 0.5, "Minotaur Bull"))
+        forms.Add("Golem", New pForm(0.75, 1, 0.5, 2, 0.5, 0.5, "Golem"))
+        forms.Add("Elder-God", New pForm(3, 3, 3, 3, 3, 3, "Elder-God"))
+        forms.Add("Gynoid", New pForm(0.75, 0.75, 0.75, 1.5, 1.5, 0.5, "Gynoid"))
+        forms.Add("Cyborg", New pForm(1, 1.5, 1.5, 1.5, 1.5, 1, "Cyborg"))
+        forms.Add("Blowup Doll", New pForm(1, 1, 1, 0.5, 0.5, 0.75, "Blowup Doll"))
+        forms.Add("Cake", New pForm(1.5, 0.75, 1, 0.5, 0.5, 1, "Cake"))
+        forms.Add("Sheep", New pForm(1.5, 0.5, 0.5, 1.5, 0.5, 0.75, "Sheep"))
+        forms.Add("Frog", New pForm(0.75, 0.5, 0.5, 0.5, 2, 1, "Frog"))
     End Sub
     Sub perkUpdate()
         'hunger
@@ -893,7 +925,7 @@
             If hunger < 100 Then
                 perks("hunger") = -1
             Else
-                health -= 5
+                health -= 5 / getmaxHealth()
                 Game.lstLog.Items.Add("Your stomach aches... -5 health!")
             End If
         End If
@@ -901,16 +933,16 @@
         If perks("bimbotf") > -1 Then
             perks("chickentf") = -1
             If perks("polymorphed") > -1 Then perks("bimbotf") = -1
-            If Not title.Equals("Bimbo") Then
+            If Not pClass.name.Equals("Bimbo") Then
                 If perks("bimbotf") < 19 And perks("bimbotf") Mod 10 = 0 Then
                     haircolor = Game.cShift(haircolor, Polymorph.bimboyellow, 25)
                     createP()
                 End If
                 Select Case perks("bimbotf")
                     Case 0
-                        If Not title.Equals("Magic Girl") And Not perks("polymorphed") > -1 Then
+                        If Not pClass.name.Equals("Magic Girl") And Not perks("polymorphed") > -1 Then
                             pState.save(Me)
-                        ElseIf title.Equals("Magic Girl") Then
+                        ElseIf pClass.name.Equals("Magic Girl") Then
                             Polymorph.transform(Me, "bimbo", 2)
                         End If
                         lust += 10
@@ -931,7 +963,7 @@
                 End Select
                 perks("bimbotf") += 1
                 Dim outputln1 As String = "Chewing the gum causes a dizzy calm wash to over you."
-                If perks("bimbotf") = 1 And Not title.Equals("Magic Girl") Then Game.pushLblEvent(outputln1)
+                If perks("bimbotf") = 1 And Not pClass.name.Equals("Magic Girl") Then Game.pushLblEvent(outputln1)
             Else
                 Dim outputln1 As String = "Chewing the gum make your head feel warm and fuzzy and stuff. You like, totally, love this gum!"
                 Game.pushLblEvent(outputln1)
@@ -965,10 +997,10 @@
             If Not haircolor.A = 180 Then
                 perks("slimehair") = -1
             Else
-                If health < maxHealth + hBuff And Game.turn Mod 4 = 0 Then
-                    health += 25
+                If health < 1 And Game.turn Mod 4 = 0 Then
+                    health += 25 / getmaxHealth()
                     Game.lstLog.Items.Add("Your gel body heals some of the damage done to it. +5 health")
-                    If health > getmaxHealth() Then health = getmaxHealth()
+                    If health > 1 Then health = 1
                 End If
             End If
         End If
@@ -996,7 +1028,7 @@
                         Case Int((will * 1.2) * 0.3)
                             Polymorph.transform(Me, "neko", 1)
                         Case Int((will * 1.2) * 0.5)
-                            If Not title.Equals("Magic Girl") Then
+                            If Not pClass.name.Equals("Magic Girl") Then
                                 Polymorph.transform(Me, "neko", 2)
                             Else
                                 haircolor = Color.FromArgb(255, 20, 20, 20)
@@ -1008,7 +1040,7 @@
                         Case Int((will * 1.2) * 0.9)
                             Polymorph.transform(Me, "neko", 4)
                         Case Int((will * 1.2) * 1.1)
-                            If title.Equals("Magic Girl") Then
+                            If pClass.name.Equals("Magic Girl") Then
                                 Polymorph.transform(Me, "neko", 6)
                             Else
                                 Polymorph.transform(Me, "neko", 5)
@@ -1040,11 +1072,11 @@
             If Not haircolor.A = 180 Then
                 perks("vsslimehair") = -1
             Else
-                If health < maxHealth + hBuff And Game.turn Mod 7 = 0 Then
+                If health < 1 And Game.turn Mod 7 = 0 Then
                     Dim h As Integer = Int(Rnd() * 15) + 1
-                    health += h
+                    health += h / getmaxHealth()
                     Game.lstLog.Items.Add("The gel portion of your body is able to heal some of your wounds! +" & h & " health")
-                    If health > getmaxHealth() Then health = getmaxHealth()
+                    If health > 1 Then health = 1
                 End If
             End If
         End If
@@ -1155,8 +1187,63 @@
                 End If
             End If
         End If
+
+        'cowbell tf
+        If perks("cowbell") > -1 Then
+            If Polymorph.canBeTFed(Me) Then
+                Select Case perks("cowbell")
+                    Case 0
+                        If Game.turn Mod 20 = 1 Then
+                            If Int(Rnd() * 3) = 0 Then
+                                Polymorph.transform(Me, "Minotaur_F", 0)
+                                perks("cowbell") += 1
+                            End If
+                        End If
+                        Exit Select
+                    Case 1
+                        If Game.turn Mod 20 = 1 Then
+                            If Int(Rnd() * 4) = 0 Then
+                                Polymorph.transform(Me, "Minotaur_F", 1)
+                                perks("cowbell") += 1
+                            End If
+                        End If
+                        Exit Select
+                    Case 2
+                        If Game.turn Mod 20 = 1 Then
+                            If Int(Rnd() * 4) = 0 Then
+                                Polymorph.transform(Me, "Minotaur_F", 2)
+                                perks("cowbell") += 1
+                            End If
+                        End If
+                    Case 3
+                        If Game.turn Mod 20 = 1 Then
+                            If Int(Rnd() * 4) = 0 Then
+                                Polymorph.transform(Me, "Minotaur_F", 3)
+                                perks("cowbell") += 1
+                            End If
+                        End If
+                        Exit Select
+                    Case 4
+
+                    Case 5
+
+                    Case 6
+
+                    Case 7
+
+                    Case 8
+
+                    Case 9
+
+                    Case 10
+
+                    Case Else
+                        perks("cowbell") = -1
+                End Select
+            End If
+        End If
         Game.lstLog.TopIndex = Game.lstLog.Items.Count - 1
-        description = CStr(name & " is a " & sex & " " & title)
+        description = CStr(name & " is a " & sex & " " & pForm.name & " " & pClass.name)
     End Sub
     Sub UIupdate()
         perkUpdate()
@@ -1168,15 +1255,15 @@
             inventory(8).count = 0
             Game.pushLblEvent("The chicken suit phases out of reality")
         End If
-        If Game.lblNameTitle.Text <> name & " the " & title Then Game.lblNameTitle.Text = name & " the " & title
-        If Game.lblHealth.Text <> "Health = " & health & "/" & getmaxHealth() Then Game.lblHealth.Text = "Health = " & health & "/" & getmaxHealth()
+        If Game.lblNameTitle.Text <> name & " the " & pClass.name Then Game.lblNameTitle.Text = name & " the " & pClass.name
+        If Game.lblHealth.Text <> "Health = " & CInt(health * getmaxHealth()) & "/" & getmaxHealth() Then Game.lblHealth.Text = "Health = " & CInt(health * getmaxHealth()) & "/" & getmaxHealth()
         If Game.lblMana.Text <> "Mana = " & mana & "/" & getmaxMana() Then Game.lblMana.Text = "Mana = " & mana & "/" & getmaxMana()
         If Game.lblHunger.Text <> "Hunger = " & hunger & "/100" Then Game.lblHunger.Text = "Hunger = " & hunger & "/100"
         If Game.lblATK.Text <> "ATK = " & (getAttack()) + equippedWeapon.aBoost Then Game.lblATK.Text = "ATK = " & (getAttack()) + equippedWeapon.aBoost
         If Game.lblDEF.Text <> "DEF = " & getDefence() Then Game.lblDEF.Text = "DEF = " & getDefence()
         If Game.lblSKL.Text <> "WIL = " & getWillpower() Then Game.lblSKL.Text = "WIL = " & getWillpower()
         If Game.lblSPD.Text <> "SPD = " & getSpeed() Then Game.lblSPD.Text = "SPD = " & getSpeed()
-        If Game.lblEVD.Text <> "EVD = " & evade Then Game.lblEVD.Text = "EVD = " & evade
+        'If Game.lblEVD.Text <> "EVD = " & evade Then Game.lblEVD.Text = "EVD = " & evade
         If Game.lblGold.Text <> "GOLD = " & gold And gold <= 999999 Then
             Game.lblGold.Text = "GOLD = " & gold
         ElseIf Game.lblGold.Text <> "GOLD = " & gold And Game.lblGold.Text <> "GOLD = 999999+" Then
@@ -1268,22 +1355,22 @@
         If Game.turn < 2 AndAlso Not CharacterGenerator.CreateBMP(iArr).Equals(Game.picPortrait.BackgroundImage) Then createP() 'Form3.portraitUDate()
     End Sub
     Sub oneLayerImgCheck(ByRef b As Boolean)
-        If title.Equals("Dragon") Then
+        If pForm.name.Equals("Dragon") Then
             Game.picPortrait.BackgroundImage = CharacterGenerator.CreateBMP({Game.picDragon.BackgroundImage})
             b = True
-        ElseIf title.Equals("Magic Girl​") Then
+        ElseIf pClass.name.Equals("Magic Girl​") Then
             Game.picPortrait.BackgroundImage = CharacterGenerator.CreateBMP({Game.picmgp1.BackgroundImage})
             b = True
-        ElseIf title.Equals("Sheep") Then
+        ElseIf pForm.name.Equals("Sheep") Then
             Game.picPortrait.BackgroundImage = CharacterGenerator.CreateBMP({Game.picSheep.BackgroundImage})
             b = True
-        ElseIf title.Equals("Frog") Then
+        ElseIf pForm.name.Equals("Frog") Then
             Game.picPortrait.BackgroundImage = CharacterGenerator.CreateBMP({Game.picFrog.BackgroundImage})
             b = True
-        ElseIf title.Equals("Princess​") Then
+        ElseIf pClass.name.Equals("Princess​") Then
             Game.picPortrait.BackgroundImage = CharacterGenerator.CreateBMP({Game.picPrin.BackgroundImage})
             b = True
-        ElseIf title.Equals("Bunny Girl​") Then
+        ElseIf pClass.name.Equals("Bunny Girl​") Then
             Game.picPortrait.BackgroundImage = CharacterGenerator.CreateBMP({Game.picBun.BackgroundImage})
             b = True
         End If
@@ -1305,6 +1392,7 @@
         Game.lstLog.TopIndex = Game.lstLog.Items.Count - 1
         If lust > 0 Then lustUpdate()
         If wingInd > 0 Then addWings(wingInd)
+        If hornInd > 0 Then addHorns(hornInd)
 
         If Not solFlag And Not chk Then Game.picPortrait.BackgroundImage = CharacterGenerator.CreateBMP(iArr)
         oneLayerImgCheck(chk)
@@ -1315,7 +1403,7 @@
         Game.lblNameTitle.ForeColor = TextColor
     End Sub
     Public Sub MtF()
-        If perks("polymorphed") > -1 Or title.Equals("Magic Girl") Then
+        If perks("polymorphed") > -1 Or pClass.name.Equals("Magic Girl") Then
             Game.lstLog.Items.Add("Your form prevents you from being altered.")
             Exit Sub
         End If
@@ -1328,7 +1416,7 @@
         Game.lstLog.TopIndex = Game.lstLog.Items.Count - 1
     End Sub
     Public Sub FtM()
-        If perks("polymorphed") > -1 Or title.Equals("Magic Girl") Then
+        If perks("polymorphed") > -1 Or pClass.name.Equals("Magic Girl") Then
             Game.lstLog.Items.Add("Your form prevents you from being altered.")
             Exit Sub
         End If
@@ -1341,7 +1429,7 @@
         Game.lstLog.TopIndex = Game.lstLog.Items.Count - 1
     End Sub
     Public Sub be()
-        If perks("polymorphed") > -1 Or title.Equals("Magic Girl") Then
+        If Not Polymorph.canBeTFed(Me) Then
             Game.lstLog.Items.Add("Your form prevents you from being altered.")
             Exit Sub
         End If
@@ -1374,7 +1462,7 @@
         Game.lstLog.TopIndex = Game.lstLog.Items.Count - 1
     End Sub
     Friend Sub bs()
-        If perks("polymorphed") > -1 Or title.Equals("Magic Girl") Then
+        If Not Polymorph.canBeTFed(Me) Then
             Game.lstLog.Items.Add("Your form prevents you from being altered.")
             Exit Sub
         End If
@@ -1737,8 +1825,11 @@
     Sub addWings(ByVal i As Integer)
         iArr(1) = CharacterGenerator.CreateBMP({CharacterGenerator.wings(i), iArr(1)})
     End Sub
+    Sub addHorns(ByVal i As Integer)
+        iArr(6) = CharacterGenerator.CreateBMP({CharacterGenerator.horns(i), iArr(6)})
+    End Sub
     Public Sub petrify(ByVal c As Color)
-        If title = "Succubus" Or title = "Slime" Or title = "Dragon" Or title = "Chicken" Then revert2()
+        If pForm.name.Equals("Dragon") Then revert2()
         changeHairColor(c)
         If sexBool Then
             iArrInd(8) = New Tuple(Of Integer, Boolean)(10, True)
@@ -1758,7 +1849,7 @@
     Public Sub toStatue(ByVal c As Color, ByVal r As String)
         petrify(c)
         If r.Equals("midas") Then
-            Dim out As String = "As you reach out to touch your opponent, you clumsily swipe, missing them, and hit...yourself?  Already your legs are gold, and only have a moment to scream, your vocal cords quickly following suit. ''Well,'' you think, ''...at least I won't have to worry abou money anymore.'' " & vbCrLf & "And like that, the dungeon gains another decoration."
+            Dim out As String = "As you reach out to touch your opponent, you clumsily swipe, missing them, and hit...yourself?  Already your legs are gold, and only have a moment to scream, your vocal cords quickly following suit. ""Well,"" you think, ""...at least I won't have to worry abou money anymore."" " & vbCrLf & "And like that, the dungeon gains another decoration."
             Game.pushLblEvent(out)
             MsgBox(out)
             Die()
@@ -1767,26 +1858,26 @@
 
     'getter for buffable stats
     Function getmaxHealth()
-        Return maxHealth + hBuff
+        Return CInt(maxHealth * pClass.h * pForm.h) + hBuff + equippedArmor.hBoost + equippedAcce.hBoost
     End Function
     Function getmaxMana()
-        If equippedArmor Is Nothing Or equippedWeapon Is Nothing Then Return maxMana + mBuff
-        Return maxMana + mBuff + equippedArmor.mBoost + equippedWeapon.mBoost + equippedAcce.mBoost
+        If equippedArmor Is Nothing Or equippedWeapon Is Nothing Then Return CInt(maxMana * pForm.m * pForm.m) + mBuff
+        Return CInt(maxMana * pForm.m * pForm.m) + mBuff + equippedArmor.mBoost + equippedWeapon.mBoost + equippedAcce.mBoost
     End Function
     Function getAttack()
-        If equippedArmor Is Nothing Or equippedWeapon Is Nothing Then Return attack + aBuff
-        Return attack + aBuff + equippedArmor.aBoost + equippedAcce.aBoost
+        If equippedArmor Is Nothing Or equippedWeapon Is Nothing Then Return CInt(attack * pForm.a * pClass.a) + aBuff
+        Return CInt(attack * pForm.a * pClass.a) + aBuff + equippedArmor.aBoost + equippedAcce.aBoost
     End Function
     Function getDefence()
-        If equippedArmor Is Nothing Or equippedWeapon Is Nothing Then Return defence + dBuff
-        Return defence + dBuff + equippedArmor.dBoost + equippedAcce.dBoost
+        If equippedArmor Is Nothing Or equippedWeapon Is Nothing Then Return CInt(defence * pClass.d * pForm.d) + dBuff
+        Return CInt(defence * pClass.d * pForm.d) + dBuff + equippedArmor.dBoost + equippedAcce.dBoost
     End Function
     Function getSpeed()
-        If equippedArmor Is Nothing Or equippedWeapon Is Nothing Then Return speed + sBuff
-        Return speed + sBuff + equippedArmor.sBoost + equippedAcce.sBoost
+        If equippedArmor Is Nothing Or equippedWeapon Is Nothing Then Return CInt(speed * pClass.s * pForm.s) + sBuff
+        Return CInt(speed * pClass.s * pForm.s) + sBuff + equippedArmor.sBoost + equippedAcce.sBoost
     End Function
     Function getWillpower()
-        Return will + wBuff
+        Return CInt(will * pClass.w * pForm.w) + wBuff
     End Function
 
     'getter for inventory sub catagories
@@ -1862,7 +1953,7 @@
         Return output
     End Function
     Public Function toGhost() As String
-        Dim output = CStr(name & " the " & title & "*" & health & "*" & maxHealth &
+        Dim output = CStr(name & " the " & pForm.name & " " & pClass.name & "*" & health & "*" & maxHealth &
             "*" & getAttack() & "*" & getDefence() & "*" & getSpeed() & "*" & sexBool & "*" & haircolor.R & "*" & haircolor.G & "*" & haircolor.B & "*")
         For i = 0 To inventory.Count - 1
             output += (inventory.Item(i).count) & "*"
@@ -1911,7 +2002,7 @@
             out += m.ToString
             out += " "
         Next
-        If out.Equals("Beige ") Then out = "Platinum Blonde "
+        If out.Equals("Beige ") Or out.Equals("Wheat ") Then out = "Platinum Blonde "
         Return out.ToLower
     End Function
     Function getHairColor() As String
@@ -1952,16 +2043,18 @@
     Function genDescription()
         Dim out As String = ""
         'general statement
-        out = "You are " & name & ", a " & sex & " " & title & vbCrLf & " " & vbCrLf
+        out = "You are " & name & ", a " & sex & " " & pForm.name & " " & pClass.name & vbCrLf & " " & vbCrLf
 
         'check for single image forms
-        Select Case title
+        Select Case pForm.name
             Case "Dragon"
             Case "Blob"
             Case "Chicken"
             Case "Frog"
             Case "Sheep"
             Case "Bunny"
+        End Select
+        Select Case pClass.name
             Case "Magic Girl​"
                 out += "You are currently in the middle of a magical girl transformation!"
                 Return out
@@ -1972,7 +2065,7 @@
         If haircolor.A = 180 Then
             out += "gelatinous "
         End If
-        If title.Equals("Blow-Up Doll") Then
+        If pForm.name.Equals("Blowup Doll") Then
             out += "rubber "
         End If
         If iArrInd(1).Item2 Then
@@ -1982,8 +2075,8 @@
         End If
 
         'body
-        Select Case title
-            Case "Blow-Up Doll"
+        Select Case pForm.name
+            Case "Blowup Doll"
                 out += "You are a inflatable sex doll with " & getSkinColor() & "rubber skin.  "
                 If sexBool Then
                     out += "You have a feminine body, with huge breasts and the matching female genetalia." & vbCrLf & " " & vbCrLf

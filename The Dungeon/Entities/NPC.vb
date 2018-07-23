@@ -105,7 +105,7 @@
         End If
         If npcIndex = 1 Or npcIndex = 2 Then despawn("flee")
         Game.picNPC.BackgroundImage = picNCP(npcIndex)
-        If Game.player.title = "Black Cat" Or Game.player.title = "Chicken" Then despawn("animaltf")
+        If Game.player.pForm.name.Equals("Black Cat") Or Game.player.pForm.name.Equals("Chicken") Then despawn("animaltf")
         If Game.combatmode Then attackCMD(Game.player)
     End Sub
     Public Sub encounter()
@@ -121,7 +121,7 @@
             ElseIf npcIndex = 2 Then
                 Game.pushNPCDialog("*bleets*")
             ElseIf npcIndex = 3 Then
-                Game.pushNPCDialog("Hey, " & Game.player.title & ", how's it going?")
+                Game.pushNPCDialog("Hey, " & Game.player.pClass.name & ", how's it going?")
             ElseIf npcIndex = 4 Then
                 Game.pushNPCDialog("So are these real or fake?  My ears, I mean.")
             End If
@@ -133,7 +133,7 @@
             ElseIf npcIndex = 2 Then
                 Game.pushNPCDialog("Baaahhh.")
             ElseIf npcIndex = 3 Then
-                Game.pushNPCDialog("Hello, kind " & Game.player.title & ", how are you on this fine day?")
+                Game.pushNPCDialog("Hello, kind " & Game.player.pClass.name & ", how are you on this fine day?")
             ElseIf npcIndex = 4 Then
                 Game.pushNPCDialog("*giggle* Hey!")
             End If

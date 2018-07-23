@@ -15,8 +15,8 @@
         If Me.getUsable() = False Then Exit Sub
         Game.lstLog.Items.Add("You drink the " & getName())
         Game.lstLog.TopIndex = Game.lstLog.Items.Count - 1
-        Game.player.health += 75
-        If Game.player.health > Game.player.getmaxHealth Then Game.player.health = Game.player.getmaxHealth
+        Game.player.health += 75 / Game.player.getmaxHealth
+        If Game.player.health > 1 Then Game.player.health = 1
         count -= 1
     End Sub
     Overrides Sub discard()

@@ -8,7 +8,7 @@
     '3 = Clothes
     '4 = Face
     '5 = RearHair1
-    '6 = Ears
+    '6 = Ears / horns
     '7 = Nose
     '8 = Mouth
     '9 = Eyes
@@ -42,7 +42,7 @@
     Public Shared mGlasses, mEyes, mFace, mFacialMark, mMouth, mBody, mCloak, mClothing, mFrontHair, mEyebrows, mNose, mRearHair1, mEars, mAccA, mHat, mRearHair2 As List(Of Image)
     Public Shared fTFAccA, fTFBody, fTFClothes, fTFEars, fTFEyes, fTFface, fTfFrontHair, fTFMouth, fTFNose, fTFRearhair1, fTfRearhair2 As List(Of Image)
     Public Shared mTFAccA, mTFBody, mTFClothes, mTFEars, mTFEyes, mTFface, mTfFrontHair, mTFMouth, mTFNose, mTFRearhair1, mTfRearhair2 As List(Of Image)
-    Public Shared wings As List(Of Image)
+    Public Shared wings, horns, tails As List(Of Image)
 
     Public Shared mAttributes(16) As List(Of Image)
     Public Shared fAttributes(16) As List(Of Image)
@@ -244,6 +244,7 @@
         mRearHair2 = getImg("img/mRearHair2")
         mEyebrows = getImg("img/mEyebrows")
         wings = getImg("img/Wings")
+        horns = getImg("img/Horns")
 
         Game.player.iArrInd = iArrInd
         fFacialMark(0) = picPort.Image
@@ -453,6 +454,7 @@
         'worker.ReportProgress(70)
 
         wings = getImg("img/Wings")
+        horns = getImg("img/Horns")
         'worker.ReportProgress(75)
 
         fGlasses(0) = picPort.Image

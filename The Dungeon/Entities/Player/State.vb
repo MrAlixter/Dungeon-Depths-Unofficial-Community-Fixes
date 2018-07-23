@@ -2,8 +2,11 @@
     'the State class contains all relevent data unique to a player's form at any given time
 
     'instance data for a state
-    Dim name, sex, title, description As String
-    Dim health, maxHealth, mana, maxMana, attack, defence As Integer
+    Dim name, sex, description As String
+    Public pClass As pClass = New pClass(1, 1, 1, 1, 1, 1, "Classless")
+    Public pForm As pForm = New pForm(1, 1, 1, 1, 1, 1, "Human")
+    Dim health As Double
+    Dim maxHealth, mana, maxMana, attack, defence As Integer
     Dim will, speed, evade, gold, lust As Integer
     Dim breastSize, hunger As Integer
     Dim equippedWeapon As Weapon
@@ -15,13 +18,15 @@
     Dim haircolor, skincolor, textColor As Color
     Dim pImage As Image
     Dim wingIndex As Integer
+    Dim hornIndex As Integer
     Public initFlag As Boolean = False
 
     'constructs a state from an instance of a player
     Sub New(ByRef p As Player)
         name = p.name
         sex = p.sex
-        title = p.title
+        pClass = p.classes(p.pClass.name)
+        pForm = p.forms(p.pForm.name)
         description = p.description
         health = p.health
         maxHealth = p.maxHealth
@@ -48,6 +53,7 @@
         textColor = p.TextColor
         pImage = p.pImage
         wingIndex = p.wingInd
+        hornIndex = p.hornInd
         initFlag = True
     End Sub
     'constructs a state with placeholder values
@@ -55,7 +61,8 @@
     Sub New()
         name = ""
         sex = ""
-        title = ""
+        pClass = New pClass(1, 1, 1, 1, 1, 1, "Classless")
+        pForm = New pForm(1, 1, 1, 1, 1, 1, "Human")
         description = ""
         health = 0
         maxHealth = 0
@@ -81,6 +88,7 @@
         skincolor = Color.Black
         textColor = Color.Black
         wingIndex = 0
+        hornIndex = 0
         ReDim iArrInd(16)
     End Sub
 
@@ -88,10 +96,11 @@
     Public Sub load(ByRef p As Player)
         p.name = name
         p.sex = sex
-        p.title = title
+        p.pClass = p.classes(pClass.name)
+        p.pForm = p.forms(pForm.name)
         p.description = description
         p.maxHealth = maxHealth
-        If p.health > maxHealth + p.hBuff Then p.health = (maxHealth + p.hBuff)
+        If p.health > 1 Then p.health = 1
         p.maxMana = maxMana
         If p.mana > maxMana + p.mBuff Then p.mana = maxMana + p.mBuff
         p.attack = attack
@@ -115,13 +124,15 @@
         p.skincolor = skincolor
         p.TextColor = textColor
         p.wingInd = wingIndex
+        p.hornInd = hornIndex
         p.pImage = pImage
     End Sub
     'save applies a given instance of a player to a state
     Public Sub save(ByRef p As Player)
         name = p.name
         sex = p.sex
-        title = p.title
+        pClass = p.classes(p.pClass.name)
+        pForm = p.forms(p.pForm.name)
         description = p.description
         health = p.health
         'health += p.hBuff
@@ -155,6 +166,7 @@
         skincolor = p.skincolor
         textColor = p.TextColor
         wingIndex = p.wingInd
+        hornIndex = p.hornInd
         pImage = p.pImage
     End Sub
 
@@ -166,7 +178,8 @@
         If readArray(0) = "N/A" Then
             name = ""
             sex = ""
-            title = ""
+            pClass = New pClass(1, 1, 1, 1, 1, 1, "Classless")
+            pForm = New pForm(1, 1, 1, 1, 1, 1, "Human")
             description = ""
             health = 0
             maxHealth = 0
@@ -194,13 +207,15 @@
         End If
 
         name = readArray(0)
-        title = readArray(1)
+        pClass = Game.player.classes(readArray(1).Split("~")(0))
+        pForm = Game.player.forms(readArray(1).Split("~")(1))
         description = readArray(2)
-        health = CInt(readArray(3))
+        health = CDbl(readArray(3))
         maxHealth = CInt(readArray(4))
         mana = CInt(readArray(5))
         maxMana = CInt(readArray(6))
         If Not readArray(7).Equals("placehold") Then wingIndex = CInt(readArray(7)) Else wingIndex = 0
+        If Not readArray(20).Equals("placeholder") Then hornIndex = CInt(readArray(20)) Else hornIndex = 0
         attack = CInt(readArray(10))
         defence = CInt(readArray(11))
         will = CInt(readArray(12))
@@ -259,9 +274,9 @@
     'write converts a state into a string to be put into a save file
     Public Function write() As String
         If initFlag Then
-            Dim output As String = CStr(name & "*" & title & "*" & description & "*" & health & "*" & maxHealth & "*" & mana & "*" & maxMana & "*" & wingIndex & "*" & haircolor.A & "*" & skincolor.A & "*" & _
+            Dim output As String = CStr(name & "*" & pClass.name & "~" & pForm.name & "*" & description & "*" & health & "*" & maxHealth & "*" & mana & "*" & maxMana & "*" & wingIndex & "*" & haircolor.A & "*" & skincolor.A & "*" & _
                attack & "*" & defence & "*" & will & "*" & speed & "*" & evade & "*" & hunger & "*" & gold & "*" & equippedArmor.getName() & "*" & equippedWeapon.getName() & "*" & _
-               sex & "*" & "placeholder" & "*" & breastSize & "*" & haircolor.R & "*" & haircolor.G & "*" & haircolor.B & "*" & skincolor.R & "*" & skincolor.G & "*" & skincolor.B & "*" & _
+               sex & "*" & hornIndex & "*" & breastSize & "*" & haircolor.R & "*" & haircolor.G & "*" & haircolor.B & "*" & skincolor.R & "*" & skincolor.G & "*" & skincolor.B & "*" & _
                textColor.R & "*" & textColor.G & "*" & textColor.B & "*")
             output += perks.Count & "*"
             For Each kvp As KeyValuePair(Of String, Integer) In perks

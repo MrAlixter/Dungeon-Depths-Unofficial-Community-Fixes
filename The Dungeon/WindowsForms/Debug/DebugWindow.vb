@@ -56,8 +56,8 @@ Public Class Debug_Window
         For i = 0 To Game.titleList.Count - 1
             boxForm.Items.Add(Game.titleList(i).ToString())
         Next
-        boxForm.SelectedItem = Game.player.title
-        boxHealth.Value = Game.player.health
+        boxForm.SelectedItem = Game.player.pClass.name
+        boxHealth.Value = Game.player.health * Game.player.getmaxHealth
         boxMaxHealth.Value = Game.player.maxHealth
         boxMana.Value = Game.player.mana
         boxMaxMana.Value = Game.player.maxMana
@@ -373,7 +373,7 @@ Public Class Debug_Window
     End Sub
 
     Private Sub boxHealth_ValueChanged(sender As Object, e As EventArgs) Handles boxHealth.ValueChanged
-        Game.player.health = boxHealth.Value
+        Game.player.health = boxHealth.Value / Game.player.getmaxHealth
     End Sub
 
     Private Sub boxMaxHealth_ValueChanged(sender As Object, e As EventArgs) Handles boxMaxHealth.ValueChanged

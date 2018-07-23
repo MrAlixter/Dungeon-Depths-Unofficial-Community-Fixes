@@ -24,7 +24,7 @@
             End If
             Dim save = Game.getPlayerFromFile("s" & i & ".ave")
             Dim p2 As Player = save.Item1
-            If save.Item2 <> Game.version Or p2.perks("polymorphed") > -1 Or Game.player.perks("polymorphed") > -1 Or (Game.player.title.Equals("Magic Girl") Xor p2.title.Equals("Magic Girl")) Then
+            If save.Item2 <> Game.version Or p2.perks("polymorphed") > -1 Or Not Polymorph.canBeTFed(Game.player) Xor p2.pClass.name.Equals("Magic Girl") Then
                 Game.pushLblEvent("After talking it over, " & Game.player.name & " and " & p2.name & " decide that they are incompatable, and not to fuse.")
                 Exit Sub
             End If
@@ -94,18 +94,18 @@
         player.name = nameFusion(p1.name, p2.name)
 
         Dim r As Integer = Int(Rnd() * 2)
-        If r = 0 Then player.title = p1.title Else player.title = p2.title
-        If (p1.title = "Warrior" And p2.title = "Mage") Or (p2.title = "Warrior" And p1.title = "Mage") Then player.title = "Paladin"
+        If r = 0 Then player.pClass = p1.pClass Else player.pClass = p2.pClass
+        If (p1.pClass.name = "Warrior" And p2.pClass.name = "Mage") Or (p2.pClass.name = "Warrior" And p1.pClass.name = "Mage") Then player.pClass = player.classes("Paladin")
 
         r = Int(Rnd() * 2)
         If r = 0 Then player.sex = p1.sex Else player.sex = p2.sex
 
         If p1.maxHealth > p2.maxHealth Then
-            player.health = p1.maxHealth * 1.5
+            player.maxHealth = p1.maxHealth * 1.5
         Else
-            player.health = p2.maxHealth * 1.5
+            player.maxHealth = p2.maxHealth * 1.5
         End If
-        player.maxHealth = player.health
+        player.health = 1
 
         If p1.maxMana > p2.maxMana Then
             player.mana = p1.maxMana * 1.5

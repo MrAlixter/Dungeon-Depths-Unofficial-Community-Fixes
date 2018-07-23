@@ -271,12 +271,12 @@
             tfCt = 0
             revert()
         End If
-        If Game.player.title = "Thrall" And Me.name.Contains("Thrall") Then
+        If Game.player.pClass.name = "Thrall" And Me.name.Contains("Thrall") Then
             despawn("friend")
             Exit Sub
         End If
         If Not isStunned Then
-            If Game.player.title = "Black Cat" Or Game.player.title = "Chicken" And Me.GetType() = GetType(Monster) Then despawn("animaltf")
+            If Game.player.pForm.name.Equals("Black Cat") Or Game.player.pForm.name.Equals("Chicken") And Me.GetType() = GetType(Monster) Then despawn("animaltf")
             attackCMD(Game.player)
         Else
             If Me.GetType() Is GetType(Monster) Then
@@ -431,11 +431,11 @@
     Public Sub bodySwap(ByRef p As Player)
         Randomize()
 
-        p.title = "Explorer"
+        p.pClass = New pClass(((Rnd() * 1.5) + 0.5), ((Rnd() * 1.5) + 0.5), ((Rnd() * 1.5) + 0.5), ((Rnd() * 1.5) + 0.5), ((Rnd() * 1.5) + 0.5), ((Rnd() * 1.5) + 0.5), "Explorer")
         p.sex = "Female"
         p.sexBool = True
 
-        p.health = 10
+        p.health = 0.1
         p.maxHealth = 70 + Int(Rnd() * 50)
         p.attack = 5 + Int(Rnd() * 7)
         p.defence = 5 + Int(Rnd() * 7)

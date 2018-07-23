@@ -66,7 +66,6 @@ Partial Class Game
         Me.btnMG = New System.Windows.Forms.Button()
         Me.cboxMG = New System.Windows.Forms.ComboBox()
         Me.btnATK = New System.Windows.Forms.Button()
-        Me.lblEVD = New System.Windows.Forms.Label()
         Me.lblSPD = New System.Windows.Forms.Label()
         Me.lblSKL = New System.Windows.Forms.Label()
         Me.lblDEF = New System.Windows.Forms.Label()
@@ -190,6 +189,7 @@ Partial Class Game
         Me.chkAcc = New System.Windows.Forms.CheckBox()
         Me.picCrystal = New System.Windows.Forms.PictureBox()
         Me.picCrystalf = New System.Windows.Forms.PictureBox()
+        Me.lblEVD = New System.Windows.Forms.Label()
         CType(Me.picMarkBClothes, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me.picMarkBRearHair2, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me.picMarkBRearHair1, System.ComponentModel.ISupportInitialize).BeginInit()
@@ -736,23 +736,12 @@ Partial Class Game
         Me.btnATK.UseVisualStyleBackColor = False
         Me.btnATK.Visible = False
         '
-        'lblEVD
-        '
-        Me.lblEVD.AutoSize = True
-        Me.lblEVD.Font = New System.Drawing.Font("Consolas", 8.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.lblEVD.ForeColor = System.Drawing.Color.White
-        Me.lblEVD.Location = New System.Drawing.Point(736, 252)
-        Me.lblEVD.Name = "lblEVD"
-        Me.lblEVD.Size = New System.Drawing.Size(99, 19)
-        Me.lblEVD.TabIndex = 155
-        Me.lblEVD.Text = "EVD = TEMP"
-        '
         'lblSPD
         '
         Me.lblSPD.AutoSize = True
         Me.lblSPD.Font = New System.Drawing.Font("Consolas", 8.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.lblSPD.ForeColor = System.Drawing.Color.White
-        Me.lblSPD.Location = New System.Drawing.Point(736, 233)
+        Me.lblSPD.Location = New System.Drawing.Point(736, 221)
         Me.lblSPD.Name = "lblSPD"
         Me.lblSPD.Size = New System.Drawing.Size(99, 19)
         Me.lblSPD.TabIndex = 154
@@ -763,7 +752,7 @@ Partial Class Game
         Me.lblSKL.AutoSize = True
         Me.lblSKL.Font = New System.Drawing.Font("Consolas", 8.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.lblSKL.ForeColor = System.Drawing.Color.White
-        Me.lblSKL.Location = New System.Drawing.Point(736, 214)
+        Me.lblSKL.Location = New System.Drawing.Point(736, 202)
         Me.lblSKL.Name = "lblSKL"
         Me.lblSKL.Size = New System.Drawing.Size(99, 19)
         Me.lblSKL.TabIndex = 153
@@ -774,7 +763,7 @@ Partial Class Game
         Me.lblDEF.AutoSize = True
         Me.lblDEF.Font = New System.Drawing.Font("Consolas", 8.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.lblDEF.ForeColor = System.Drawing.Color.White
-        Me.lblDEF.Location = New System.Drawing.Point(736, 195)
+        Me.lblDEF.Location = New System.Drawing.Point(736, 183)
         Me.lblDEF.Name = "lblDEF"
         Me.lblDEF.Size = New System.Drawing.Size(99, 19)
         Me.lblDEF.TabIndex = 152
@@ -785,7 +774,7 @@ Partial Class Game
         Me.lblATK.AutoSize = True
         Me.lblATK.Font = New System.Drawing.Font("Consolas", 8.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.lblATK.ForeColor = System.Drawing.Color.White
-        Me.lblATK.Location = New System.Drawing.Point(736, 176)
+        Me.lblATK.Location = New System.Drawing.Point(736, 164)
         Me.lblATK.Name = "lblATK"
         Me.lblATK.Size = New System.Drawing.Size(99, 19)
         Me.lblATK.TabIndex = 151
@@ -796,7 +785,7 @@ Partial Class Game
         Me.lblLevel.AutoSize = True
         Me.lblLevel.Font = New System.Drawing.Font("Consolas", 8.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.lblLevel.ForeColor = System.Drawing.Color.White
-        Me.lblLevel.Location = New System.Drawing.Point(736, 157)
+        Me.lblLevel.Location = New System.Drawing.Point(736, 145)
         Me.lblLevel.Name = "lblLevel"
         Me.lblLevel.Size = New System.Drawing.Size(99, 19)
         Me.lblLevel.TabIndex = 150
@@ -1039,7 +1028,7 @@ Partial Class Game
         Me.lblGold.AutoSize = True
         Me.lblGold.Font = New System.Drawing.Font("Consolas", 8.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.lblGold.ForeColor = System.Drawing.Color.White
-        Me.lblGold.Location = New System.Drawing.Point(736, 271)
+        Me.lblGold.Location = New System.Drawing.Point(736, 240)
         Me.lblGold.Name = "lblGold"
         Me.lblGold.Size = New System.Drawing.Size(135, 19)
         Me.lblGold.TabIndex = 210
@@ -2117,6 +2106,18 @@ Partial Class Game
         Me.picCrystalf.TabStop = False
         Me.picCrystalf.Visible = False
         '
+        'lblEVD
+        '
+        Me.lblEVD.AutoSize = True
+        Me.lblEVD.Font = New System.Drawing.Font("Consolas", 8.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.lblEVD.ForeColor = System.Drawing.Color.White
+        Me.lblEVD.Location = New System.Drawing.Point(737, 290)
+        Me.lblEVD.Name = "lblEVD"
+        Me.lblEVD.Size = New System.Drawing.Size(99, 19)
+        Me.lblEVD.TabIndex = 155
+        Me.lblEVD.Text = "EVD = TEMP"
+        Me.lblEVD.Visible = False
+        '
         'Game
         '
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Inherit
@@ -2377,7 +2378,6 @@ Partial Class Game
     Friend WithEvents btnMG As System.Windows.Forms.Button
     Friend WithEvents cboxMG As System.Windows.Forms.ComboBox
     Friend WithEvents btnATK As System.Windows.Forms.Button
-    Friend WithEvents lblEVD As System.Windows.Forms.Label
     Friend WithEvents lblSPD As System.Windows.Forms.Label
     Friend WithEvents lblSKL As System.Windows.Forms.Label
     Friend WithEvents lblDEF As System.Windows.Forms.Label
@@ -2501,4 +2501,5 @@ Partial Class Game
     Friend WithEvents chkAcc As System.Windows.Forms.CheckBox
     Friend WithEvents picCrystal As System.Windows.Forms.PictureBox
     Friend WithEvents picCrystalf As System.Windows.Forms.PictureBox
+    Friend WithEvents lblEVD As System.Windows.Forms.Label
 End Class
