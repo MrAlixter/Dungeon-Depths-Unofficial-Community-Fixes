@@ -422,21 +422,29 @@ Public Class Game
             If xBound >= mBoardWidth Then xBound = mBoardWidth - 1
             If xBound < 0 Then xBound = 0
 
-            For yP = pos.Y To yBound
-                For xP = pos.X To xBound
-                    mBoard(yP, xP).Tag = 1
+            If Int(Rnd() * 3) = 0 Then
+                For yP = pos.Y To yBound
+                    For xP = pos.X To xBound
+                        mBoard(yP, xP).Tag = 2
+                    Next
                 Next
-            Next
+            Else
+                For yP = pos.Y To yBound
+                    For xP = pos.X To xBound
+                        mBoard(yP, xP).Tag = 1
+                    Next
+                Next
+            End If
 
             Dim numExits As Integer = Int(Rnd() * 3)
             Dim mainExit As Point
             Select Case Int(Rnd() * 2)
                 Case 0
                     mainExit = (New Point(pos.X + 2, Int(Rnd() * (yBound - pos.Y)) + pos.Y))
-                    If mainExit.X - 1 < mBoardWidth And mainExit.X - 1 > 0 Then mBoard(mainExit.Y, mainExit.X - 1).Tag = 1
+                    If mainExit.X - 1 < mBoardWidth And mainExit.X - 1 > 0 AndAlso Not mBoard(mainExit.Y, mainExit.X - 1).Tag = 2 Then mBoard(mainExit.Y, mainExit.X - 1).Tag = 1
                 Case Else
                     mainExit = (New Point(Int(Rnd() * (xBound - pos.X)) + pos.X, pos.Y + 2))
-                    If mainExit.Y - 1 < mBoardHeight And mainExit.Y - 1 > 0 Then mBoard(mainExit.Y - 1, mainExit.X).Tag = 1
+                    If mainExit.Y - 1 < mBoardHeight And mainExit.Y - 1 > 0 AndAlso Not mBoard(mainExit.Y - 1, mainExit.X).Tag = 2 Then mBoard(mainExit.Y - 1, mainExit.X).Tag = 1
             End Select
             If i > 0 Then
                 connectRooms(mainExit, exits(exits.Count - 1))
@@ -447,10 +455,10 @@ Public Class Game
                 Select Case Int(Rnd() * 2)
                     Case 0
                         exits.Add(New Point(pos.X + 2, Int(Rnd() * (yBound - pos.Y)) + pos.Y))
-                        If exits.Last.X - 1 < mBoardWidth And exits.Last.X - 1 > 0 Then mBoard(exits.Last.Y, exits.Last.X - 1).Tag = 1
+                        If exits.Last.X - 1 < mBoardWidth And exits.Last.X - 1 > 0 AndAlso Not mBoard(exits.Last.Y, exits.Last.X - 1).Tag = 2 Then mBoard(exits.Last.Y, exits.Last.X - 1).Tag = 1
                     Case 1
                         exits.Add(New Point(Int(Rnd() * (xBound - pos.X)) + pos.X, pos.Y + 2))
-                        If exits.Last.Y - 1 < mBoardHeight And exits.Last.Y - 1 > 0 Then mBoard(exits.Last.Y - 1, exits.Last.X).Tag = 1
+                        If exits.Last.Y - 1 < mBoardHeight And exits.Last.Y - 1 > 0 AndAlso Not mBoard(exits.Last.Y - 1, exits.Last.X).Tag = 2 Then mBoard(exits.Last.Y - 1, exits.Last.X).Tag = 1
                 End Select
             Next
         Next
@@ -472,7 +480,7 @@ Public Class Game
         End While
         Dim playerX As Integer
         Dim playerY As Integer
-        Do While (mBoard(playerY, playerX).Tag <> 1)
+        Do While (mBoard(playerY, playerX).Tag <> 1 And mBoard(playerY, playerX).Tag <> 2)
             playerX = CInt(Int(Rnd() * mBoardWidth))
             playerY = CInt(Int(Rnd() * mBoardHeight))
         Loop
@@ -498,39 +506,39 @@ Public Class Game
         If xOry Then
             If p1.Y < p2.Y Then
                 For y = p1.Y To p2.Y
-                    If y < mBoardHeight And y > 0 And p1.X < mBoardWidth And p1.X > 0 Then mBoard(y, p1.X).Tag = 1
+                    If y < mBoardHeight And y > 0 And p1.X < mBoardWidth And p1.X > 0 AndAlso Not mBoard(y, p1.X).Tag = 2 Then mBoard(y, p1.X).Tag = 1
                 Next
             Else
                 For y = p1.Y To p2.Y Step -1
-                    If y < mBoardHeight And y > 0 And p1.X < mBoardWidth And p1.X > 0 Then mBoard(y, p1.X).Tag = 1
+                    If y < mBoardHeight And y > 0 And p1.X < mBoardWidth And p1.X > 0 AndAlso Not mBoard(y, p1.X).Tag = 2 Then mBoard(y, p1.X).Tag = 1
                 Next
             End If
             If p1.X < p2.X Then
                 For x = p1.X To p2.X
-                    If x < mBoardWidth And x > 0 And p2.Y < mBoardHeight And p2.Y > 0 Then mBoard(p2.Y, x).Tag = 1
+                    If x < mBoardWidth And x > 0 And p2.Y < mBoardHeight And p2.Y > 0 AndAlso Not mBoard(p2.Y, x).Tag = 2 Then mBoard(p2.Y, x).Tag = 1
                 Next
             Else
                 For x = p1.X To p2.X Step -1
-                    If x < mBoardWidth And x > 0 And p2.Y < mBoardHeight And p2.Y > 0 Then mBoard(p2.Y, x).Tag = 1
+                    If x < mBoardWidth And x > 0 And p2.Y < mBoardHeight And p2.Y > 0 AndAlso Not mBoard(p2.Y, x).Tag = 2 Then mBoard(p2.Y, x).Tag = 1
                 Next
             End If
         Else
             If p1.X < p2.X Then
                 For x = p1.X To p2.X
-                    If x < mBoardWidth And x > 0 And p2.Y < mBoardHeight And p2.Y > 0 Then mBoard(p2.Y, x).Tag = 1
+                    If x < mBoardWidth And x > 0 And p2.Y < mBoardHeight And p2.Y > 0 AndAlso Not mBoard(p2.Y, x).Tag = 2 Then mBoard(p2.Y, x).Tag = 1
                 Next
             Else
                 For x = p1.X To p2.X Step -1
-                    If x < mBoardWidth And x > 0 And p2.Y < mBoardHeight And p2.Y > 0 Then mBoard(p2.Y, x).Tag = 1
+                    If x < mBoardWidth And x > 0 And p2.Y < mBoardHeight And p2.Y > 0 AndAlso Not mBoard(p2.Y, x).Tag = 2 Then mBoard(p2.Y, x).Tag = 1
                 Next
             End If
             If p1.Y < p2.Y Then
                 For y = p1.Y To p2.Y
-                    If y < mBoardHeight And y > 0 And p1.X < mBoardWidth And p1.X > 0 Then mBoard(y, p1.X).Tag = 1
+                    If y < mBoardHeight And y > 0 And p1.X < mBoardWidth And p1.X > 0 AndAlso Not mBoard(y, p1.X).Tag = 2 Then mBoard(y, p1.X).Tag = 1
                 Next
             Else
                 For y = p1.Y To p2.Y Step -1
-                    If y < mBoardHeight And y > 0 And p1.X < mBoardWidth And p1.X > 0 Then mBoard(y, p1.X).Tag = 1
+                    If y < mBoardHeight And y > 0 And p1.X < mBoardWidth And p1.X > 0 AndAlso Not mBoard(y, p1.X).Tag = 2 Then mBoard(y, p1.X).Tag = 1
                 Next
             End If
         End If
@@ -543,11 +551,11 @@ Public Class Game
                 Dim y As Integer
                 If dir Then
                     For y = p1.Y To Int(Rnd() * 8)
-                        If y < mBoardHeight And y > 0 And p1.X < mBoardWidth And p1.X > 0 Then mBoard(y, p1.X).Tag = 1
+                        If y < mBoardHeight And y > 0 And p1.X < mBoardWidth And p1.X > 0 AndAlso Not mBoard(y, p1.X).Tag = 2 Then mBoard(y, p1.X).Tag = 1
                     Next
                 Else
                     For y = p1.Y To Int(Rnd() * 8) Step -1
-                        If y < mBoardHeight And y > 0 And p1.X < mBoardWidth And p1.X > 0 Then mBoard(y, p1.X).Tag = 1
+                        If y < mBoardHeight And y > 0 And p1.X < mBoardWidth And p1.X > 0 AndAlso Not mBoard(y, p1.X).Tag = 2 Then mBoard(y, p1.X).Tag = 1
                     Next
                 End If
                 p1 = New Point(p1.X, y)
@@ -555,11 +563,11 @@ Public Class Game
                 Dim x As Integer
                 If dir Then
                     For x = p1.X To Int(Rnd() * 8)
-                        If x < mBoardWidth And x > 0 And p1.Y < mBoardHeight And p1.Y > 0 Then mBoard(p1.Y, x).Tag = 1
+                        If x < mBoardWidth And x > 0 And p1.Y < mBoardHeight And p1.Y > 0 AndAlso Not mBoard(p1.Y, x).Tag = 2 Then mBoard(p1.Y, x).Tag = 1
                     Next
                 Else
                     For x = p1.X To Int(Rnd() * 8) Step -1
-                        If x < mBoardWidth And x > 0 And p1.Y < mBoardHeight And p1.Y > 0 Then mBoard(p1.Y, x).Tag = 1
+                        If x < mBoardWidth And x > 0 And p1.Y < mBoardHeight And p1.Y > 0 AndAlso Not mBoard(p1.Y, x).Tag = 2 Then mBoard(p1.Y, x).Tag = 1
                     Next
                 End If
                 p1 = New Point(x, p1.Y)

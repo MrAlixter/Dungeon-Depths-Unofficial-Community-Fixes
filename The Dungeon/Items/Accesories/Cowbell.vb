@@ -6,8 +6,8 @@
         MyBase.setDesc("A large brass bell attached to a collar that rings steadily with its wearer's gait." & vbCrLf & _
                        "+20 Health." & vbCrLf & _
                        "-1 WIL")
-        id = -1
-        tier = Nothing
+        id = 70
+        tier = 2
         MyBase.setUsable(False)
         MyBase.hBoost = 20
         MyBase.wboost = -1

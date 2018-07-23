@@ -1189,37 +1189,57 @@
 
         'cowbell tf
         If perks("cowbell") > -1 Then
-            Select Case perks("cowbell")
-                Case 0
-                    If Game.turn Mod 20 = 1 Then
-                        If Int(Rnd() * 2) Then
-                            Polymorph.transform(Me, "Minotaur_F", 0)
-                            perks("cowbell") += 1
+            If Polymorph.canBeTFed(Me) Then
+                Select Case perks("cowbell")
+                    Case 0
+                        If Game.turn Mod 20 = 1 Then
+                            If Int(Rnd() * 3) = 0 Then
+                                Polymorph.transform(Me, "Minotaur_F", 0)
+                                perks("cowbell") += 1
+                            End If
                         End If
-                    End If
-                Case 1
+                        Exit Select
+                    Case 1
+                        If Game.turn Mod 20 = 1 Then
+                            If Int(Rnd() * 4) = 0 Then
+                                Polymorph.transform(Me, "Minotaur_F", 1)
+                                perks("cowbell") += 1
+                            End If
+                        End If
+                        Exit Select
+                    Case 2
+                        If Game.turn Mod 20 = 1 Then
+                            If Int(Rnd() * 4) = 0 Then
+                                Polymorph.transform(Me, "Minotaur_F", 2)
+                                perks("cowbell") += 1
+                            End If
+                        End If
+                    Case 3
+                        If Game.turn Mod 20 = 1 Then
+                            If Int(Rnd() * 4) = 0 Then
+                                Polymorph.transform(Me, "Minotaur_F", 3)
+                                perks("cowbell") += 1
+                            End If
+                        End If
+                        Exit Select
+                    Case 4
 
-                Case 2
+                    Case 5
 
-                Case 3
+                    Case 6
 
-                Case 4
+                    Case 7
 
-                Case 5
+                    Case 8
 
-                Case 6
+                    Case 9
 
-                Case 7
+                    Case 10
 
-                Case 8
-
-                Case 9
-
-                Case 10
-
-                Case Else
-                    perks("cowbell") = -1
-            End Select
+                    Case Else
+                        perks("cowbell") = -1
+                End Select
+            End If
         End If
         Game.lstLog.TopIndex = Game.lstLog.Items.Count - 1
         description = CStr(name & " is a " & sex & " " & pForm.name & " " & pClass.name)
@@ -1837,7 +1857,7 @@
 
     'getter for buffable stats
     Function getmaxHealth()
-        Return CInt(maxHealth * pClass.h * pForm.h) + hBuff
+        Return CInt(maxHealth * pClass.h * pForm.h) + hBuff + equippedArmor.hBoost + equippedAcce.hBoost
     End Function
     Function getmaxMana()
         If equippedArmor Is Nothing Or equippedWeapon Is Nothing Then Return CInt(maxMana * pForm.m * pForm.m) + mBuff
