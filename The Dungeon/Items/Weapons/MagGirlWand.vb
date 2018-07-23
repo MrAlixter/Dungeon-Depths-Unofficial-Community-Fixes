@@ -17,4 +17,13 @@
         Game.lstLog.TopIndex = Game.lstLog.Items.Count - 1
         count -= 1
     End Sub
+    Public Overrides Sub onEquip()
+        If Not Game.player.title.Equals("Magic Girl") Then
+            Polymorph.transform(Game.player, "Magic Girl")
+        End If
+    End Sub
+    Public Overrides Sub onUnequip()
+        MyBase.onUnequip()
+
+    End Sub
 End Class

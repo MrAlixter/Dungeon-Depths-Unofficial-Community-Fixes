@@ -16,7 +16,12 @@
         If Me.getUsable() = False Then Exit Sub
         Game.lstLog.Items.Add("You use the " & getName())
         Game.lstLog.TopIndex = Game.lstLog.Items.Count - 1
-        If Game.mBoard(Game.stairs.Y, Game.stairs.X).Tag = 1 Then Game.mBoard(Game.stairs.Y, Game.stairs.X).Tag = 2
+        Dim p = Game.route(Game.player.pos, Game.stairs, "n/a", New List(Of Point), 0)
+        For i = 0 To UBound(p) Step 3
+            Game.mBoard(p(i).Y, p(i).X).Tag = 2
+        Next
+        Game.mBoard(p(UBound(p)).Y, p(UBound(p)).X).Tag = 2
+        Game.drawBoard()
         count -= 1
     End Sub
     Overrides Sub discard()

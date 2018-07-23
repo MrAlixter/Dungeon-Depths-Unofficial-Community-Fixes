@@ -49,10 +49,30 @@
 
     'CharGen1_Load handles the loading of the character generator
     Private Sub CharGen1_Load(sender As Object, e As EventArgs) Handles MyBase.Load
+        Game.player.skincolor = skincolor
+        Game.player.haircolor = hairColor
+
+        'scale to the screen size
+        Dim startingWidth = Me.Width
+        Dim startingHeight = Me.Height
+        If Game.screenSize = "Small" Then
+            Size = New Size(Size.Width * 0.8, Size.Height * 0.8)
+        ElseIf Game.screenSize = "Medium" Then
+            Size = New Size(Size.Width * 0.9, Size.Height * 0.9)
+        ElseIf Game.screenSize = "XLarge" Then
+            Size = New Size(Size.Width * 1.3, Size.Height * 1.3)
+        End If
+        Dim RW As Double = (Me.Width - startingWidth) / startingWidth ' Ratio change of width
+        Dim RH As Double = (Me.Height - startingHeight) / startingHeight ' Ratio change of height
         Dim newFont As Font = New System.Drawing.Font("Consolas", CInt(8 * Me.Size.Width / 581))
         For i = 0 To Me.Controls.Count - 1
             Me.Controls(i).Font = newFont
+            Me.Controls(i).Width += CDbl(Me.Controls(i).Width * RW)
+            Me.Controls(i).Height += CDbl(Me.Controls(i).Height * RH)
+            Me.Controls(i).Left += CDbl(Me.Controls(i).Left * RW)
+            Me.Controls(i).Top += CDbl(Me.Controls(i).Top * RH)
         Next
+
         currAtrButton = btnBody
         fGlasses = getImg("img/fGlasses")
         fAccA = getImg("img/fAccA")
@@ -209,6 +229,8 @@
         ComboBox2.Items.Add("Warrior")
         ComboBox2.Items.Add("Mage")
         picPort.BackgroundImage = CreateBMP(iArr)
+
+        'init()
     End Sub
     'CharacterGenerator1_FormClosing handles the finalization of the in game image library
     Private Sub CharacterGenerator1_FormClosing(sender As Object, e As FormClosingEventArgs) Handles Me.FormClosing
@@ -336,6 +358,7 @@
 
         NormalClothes.bsizeneg1 = New Tuple(Of Integer, Boolean)(CInt(Game.player.iArrInd(3).Item1), False)
         NormalClothes.bsize1 = New Tuple(Of Integer, Boolean)(CInt(Game.player.iArrInd(3).Item1), True)
+        NormalClothes.bsize2 = New Tuple(Of Integer, Boolean)(CInt(Game.player.iArrInd(3).Item1) + 99, True)
         If Game.player.name = "Mark" Then NormalClothes.bsize2 = New Tuple(Of Integer, Boolean)(CharacterGenerator.fClothing.Count - 1, True)
     End Sub
 
@@ -561,11 +584,11 @@
         fTFEars = getImg("img/fTF/tfEars")
 
         fTFEyes = getImg("img/fTF/tfEyes")
-        offset = fTFEyes.Count - 3
-        range = fTFEyes.GetRange(offset, 3)
-        temp = fTFEyes.GetRange(0, offset)
-        range.AddRange(temp)
-        fTFEyes = range
+        'offset = fTFEyes.Count - 3
+        'range = fTFEyes.GetRange(offset, 3)
+        'temp = fTFEyes.GetRange(0, offset)
+        'range.AddRange(temp)
+        'fTFEyes = range
 
         fTFface = getImg("img/fTF/tfFace")
         fTfFrontHair = getImg("img/fTF/tfFrontHair")
@@ -612,6 +635,7 @@
     End Function
     'PicOnClick handles the selecting of images via click
     Sub PicOnClick(ByVal sender As Object, ByVal e As EventArgs)
+        If currAttribute.Count = 1 Then Exit Sub
         If currAttribute.Equals(fRearHair2) Or currAttribute.Equals(mRearHair2) Then
             Dim ind As Integer = pnlBody.Controls.IndexOf(sender)
             iArr(1) = currAttribute(ind)

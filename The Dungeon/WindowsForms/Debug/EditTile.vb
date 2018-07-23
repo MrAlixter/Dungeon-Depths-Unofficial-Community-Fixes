@@ -13,7 +13,7 @@
         Reload()
     End Sub
 
-    Private Sub Update()
+    Private Sub Update_Map()
         Reload()
         Debug_Window.refreshMap()
         Game.zoom()

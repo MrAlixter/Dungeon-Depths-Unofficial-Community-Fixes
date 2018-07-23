@@ -3,6 +3,7 @@
     Sub New()
         MyBase.setName("Living_Armor")
         MyBase.setDesc("A suit of living armor embued with a the soul of a mimic." & vbCrLf & _
+                       "Fits sizes -1 through 4" & vbCrLf & _
                        "+6 DEF" & vbCrLf & _
                        "The mimic's movment continually raises lust" & vbCrLf & _
                        "May not be easy to remove")
@@ -23,5 +24,12 @@
         Game.lstLog.Items.Add("You drop the " & getName())
         Game.lstLog.TopIndex = Game.lstLog.Items.Count - 1
         count -= 1
+    End Sub
+
+    Public Overrides Sub onEquip()
+        If Not Game.player.perks("livearm") > -1 Then Game.player.perks("livearm") = 0
+    End Sub
+    Public Overrides Sub onUnequip()
+        If Not Game.player.perks("livearm") > -1 Then Game.player.perks("livearm") = -1
     End Sub
 End Class

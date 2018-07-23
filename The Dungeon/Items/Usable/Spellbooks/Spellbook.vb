@@ -5,7 +5,7 @@
         MyBase.setName("Spellbook")
         MyBase.setDesc("A simple, leather-bound book that likely contains something cool and magic.")
         id = 4
-        tier = 1
+        tier = 2
         MyBase.setUsable(True)
         MyBase.count = 0
         MyBase.value = 500
@@ -19,7 +19,7 @@
         Dim out As String = ""
         While ct < 1 Or Game.cboxMG.Items.Contains(sName)
             ct += 1
-            Dim spell As Integer = CInt(Int(Rnd() * 7))
+            Dim spell As Integer = CInt(Int(Rnd() * 8))
             Select Case spell
                 Case 0
                     sName = "Super Fireball"
@@ -40,10 +40,10 @@
                             Case 2
                                 form = "Slime"
                             Case 3
-                                form = "Goddess"
+                                form = "Tigress"
                         End Select
                         If c > 40 Then
-                            out = "All self polymorph forms learned!"
+                            out = "All self polymorph forms learned from spellbooks!"
                             Exit Select
                         End If
                     End While
@@ -70,7 +70,7 @@
                                 form = "Bunny"
                         End Select
                         If c > 40 Then
-                            out = "All polymorph enemy forms learned!"
+                            out = "All polymorph enemy forms learned from spellbooks!"
                             Exit Select
                         End If
                     End While
@@ -82,7 +82,9 @@
                 Case 5
                     sName = "Petrify"
                 Case 6
-                    sName = "Turn to Blade"
+                    sName = "Heal"
+                Case 7
+                    sName = "Illuminate"
                     'Case 7
                     '    sName = "Arcane Hypnosis"
                     'Case 8
@@ -91,12 +93,12 @@
                     '    sName = "Freeze"
             End Select
             If ct > 60 Then
-                Game.lstLog.Items.Add("You know all the spells already!")
+                Game.lstLog.Items.Add("You know all the spells in spellbooks already!")
                 count -= 1
                 Exit Sub
             End If
         End While
-        If sName = "Turn to Frog" Or sName = "Polymorph Enemy" Or sName = "Arcane Hypnosis" Or sName = "Freeze" Or sName = "Petrify" Then Game.cboxNPCMG.Items.Add(sName)
+        If (sName = "Turn to Frog" Or sName = "Polymorph Enemy" Or sName = "Arcane Hypnosis" Or sName = "Freeze" Or sName = "Petrify") And Not Game.cboxNPCMG.Items.Contains(sName) Then Game.cboxNPCMG.Items.Add(sName)
         If Not Game.cboxMG.Items.Contains(sName) Then Game.cboxMG.Items.Add(sName)
         Game.lstLog.Items.Add("You read the " & getName() & ". " & sName & " learned!")
         If Not out.Equals("") Then Game.lstLog.Items.Add(out)

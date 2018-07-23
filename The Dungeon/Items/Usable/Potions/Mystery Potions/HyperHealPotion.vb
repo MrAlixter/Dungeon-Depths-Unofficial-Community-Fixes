@@ -10,9 +10,8 @@
     Public Overrides Sub effect()
         Game.player.health += 100
         If Game.player.health > Game.player.getmaxHealth Then Game.player.health = Game.player.getmaxHealth
-        Game.player.hBuff += 50
-        Game.player.health += 50
+        Game.player.hBuff += 25
         Game.player.UIupdate()
-        Game.pushLblEvent("+150 Health," & vbCrLf & "+50 Max Health")
+        Game.pushLblEvent("+100 Health," & vbCrLf & "+25 Max Health")
     End Sub
 End Class

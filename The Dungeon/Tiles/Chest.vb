@@ -128,7 +128,7 @@
             End If
         Next
 
-        c += " " & vbCrLf & " " & vbCrLf & "Press ';' to continue."
+        c += " " & vbCrLf & " " & vbCrLf & "Press any key to continue."
         Game.lblEvent.Text = c
         Game.lblEvent.BringToFront()
         Game.lblEvent.Location = New Point((250 * Game.Size.Width / 688) - (Game.lblEvent.Size.Width / 2), 65 * Game.Size.Width / 688)

@@ -4,6 +4,7 @@
     Sub New()
         MyBase.setName("Cat_Lingerie")
         MyBase.setDesc("A skimpy, pink, cat themed set of underwear. Nya." & vbCrLf & _
+                       "Fits sizes 1 through 4" & vbCrLf & _
                        "+0 DEF")
         id = 12
         tier = Nothing

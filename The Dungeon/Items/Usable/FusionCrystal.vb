@@ -126,10 +126,10 @@
             player.defence = p2.defence * 1.5
         End If
 
-        If p1.discipline > p2.discipline Then
-            player.discipline = p1.discipline * 1.5
+        If p1.will > p2.will Then
+            player.will = p1.will * 1.5
         Else
-            player.discipline = p2.discipline * 1.5
+            player.will = p2.will * 1.5
         End If
 
         If p1.speed > p2.speed Then

@@ -4,10 +4,11 @@
     'instance data for a state
     Dim name, sex, title, description As String
     Dim health, maxHealth, mana, maxMana, attack, defence As Integer
-    Dim discipline, speed, evade, gold, lust As Integer
+    Dim will, speed, evade, gold, lust As Integer
     Dim breastSize, hunger As Integer
     Dim equippedWeapon As Weapon
     Dim equippedArmor As Armor
+    Dim equippedAcce As Accessory
     Public iArrInd(16) As Tuple(Of Integer, Boolean)
     Dim perks As Dictionary(Of String, Integer)
     Dim sexBool, invNeedsUDate As Boolean
@@ -28,7 +29,7 @@
         maxMana = p.mana
         attack = p.attack
         defence = p.defence
-        discipline = p.discipline
+        will = p.will
         speed = p.speed
         evade = p.evade
         gold = p.gold
@@ -37,6 +38,7 @@
         hunger = p.hunger
         equippedWeapon = p.equippedWeapon
         equippedArmor = p.equippedArmor
+        equippedAcce = p.equippedAcce
         iArrInd = p.iArrInd.Clone
         perks = New Dictionary(Of String, Integer)(p.perks)
         sexBool = p.sexBool
@@ -61,7 +63,7 @@
         maxMana = 0
         attack = 0
         defence = 0
-        discipline = 0
+        will = 0
         speed = 0
         evade = 0
         gold = 0
@@ -70,6 +72,7 @@
         hunger = 0
         equippedWeapon = New BareFists
         equippedArmor = New Naked
+        equippedAcce = New noAcce
         iArrInd = {New Tuple(Of Integer, Boolean)(2, False), New Tuple(Of Integer, Boolean)(2, False), New Tuple(Of Integer, Boolean)(2, False), New Tuple(Of Integer, Boolean)(2, False), New Tuple(Of Integer, Boolean)(2, False), New Tuple(Of Integer, Boolean)(2, False), New Tuple(Of Integer, Boolean)(2, False), New Tuple(Of Integer, Boolean)(2, False), New Tuple(Of Integer, Boolean)(2, False), New Tuple(Of Integer, Boolean)(2, False), New Tuple(Of Integer, Boolean)(2, False), New Tuple(Of Integer, Boolean)(2, False), New Tuple(Of Integer, Boolean)(2, False), New Tuple(Of Integer, Boolean)(2, False), New Tuple(Of Integer, Boolean)(2, False), New Tuple(Of Integer, Boolean)(2, False), New Tuple(Of Integer, Boolean)(2, False), New Tuple(Of Integer, Boolean)(2, False), New Tuple(Of Integer, Boolean)(2, False), New Tuple(Of Integer, Boolean)(2, False)}
         perks = New Dictionary(Of String, Integer)()
         sexBool = False
@@ -93,7 +96,7 @@
         If p.mana > maxMana + p.mBuff Then p.mana = maxMana + p.mBuff
         p.attack = attack
         p.defence = defence
-        p.discipline = discipline
+        p.will = will
         p.speed = speed
         p.evade = evade
         p.gold = gold
@@ -101,7 +104,9 @@
         p.breastSize = breastSize
         p.equippedWeapon = equippedWeapon
         Equipment.clothesChange(equippedArmor.getName)
+        Equipment.accChange(equippedArmor.getName)
         p.equippedArmor = equippedArmor
+        p.equippedAcce = equippedAcce
         p.iArrInd = iArrInd.Clone
         p.perks = New Dictionary(Of String, Integer)(perks)
         p.sexBool = sexBool
@@ -130,8 +135,8 @@
         'attack += p.aBuff
         defence = p.defence
         'defence += p.dBuff
-        discipline = p.discipline
-        'discipline += p.wBuff
+        will = p.will
+        'will += p.wBuff
         speed = p.speed
         'speed += p.sBuff
         evade = p.evade
@@ -141,6 +146,7 @@
         hunger = p.hunger
         equippedWeapon = p.equippedWeapon
         equippedArmor = p.equippedArmor
+        equippedAcce = p.equippedAcce
         iArrInd = p.iArrInd.Clone
         perks = New Dictionary(Of String, Integer)(p.perks)
         sexBool = p.sexBool
@@ -168,7 +174,7 @@
             maxMana = 0
             attack = 0
             defence = 0
-            discipline = 0
+            will = 0
             speed = 0
             evade = 0
             gold = 0
@@ -197,7 +203,7 @@
         If Not readArray(7).Equals("placehold") Then wingIndex = CInt(readArray(7)) Else wingIndex = 0
         attack = CInt(readArray(10))
         defence = CInt(readArray(11))
-        discipline = CInt(readArray(12))
+        will = CInt(readArray(12))
         speed = CInt(readArray(13))
         evade = CInt(readArray(14))
         hunger = CInt(readArray(15))
@@ -240,13 +246,21 @@
             iArrInd(i) = New Tuple(Of Integer, Boolean)(CInt(arr(0)), CBool(arr(1)))
         Next
         pImage = pimg(readArray(32 + b1 + 17))
+
+        For i = 0 To UBound(Equipment.acNameList)
+            If readArray(32 + b1 + 18) = Equipment.acNameList(i) Then
+                equippedAcce = Equipment.acList(i)
+                Exit For
+            End If
+        Next
+
         initFlag = True
     End Sub
     'write converts a state into a string to be put into a save file
     Public Function write() As String
         If initFlag Then
             Dim output As String = CStr(name & "*" & title & "*" & description & "*" & health & "*" & maxHealth & "*" & mana & "*" & maxMana & "*" & wingIndex & "*" & haircolor.A & "*" & skincolor.A & "*" & _
-               attack & "*" & defence & "*" & discipline & "*" & speed & "*" & evade & "*" & hunger & "*" & gold & "*" & equippedArmor.getName() & "*" & equippedWeapon.getName() & "*" & _
+               attack & "*" & defence & "*" & will & "*" & speed & "*" & evade & "*" & hunger & "*" & gold & "*" & equippedArmor.getName() & "*" & equippedWeapon.getName() & "*" & _
                sex & "*" & "placeholder" & "*" & breastSize & "*" & haircolor.R & "*" & haircolor.G & "*" & haircolor.B & "*" & skincolor.R & "*" & skincolor.G & "*" & skincolor.B & "*" & _
                textColor.R & "*" & textColor.G & "*" & textColor.B & "*")
             output += perks.Count & "*"
@@ -258,6 +272,7 @@
             Next
             If Not initFlag Then pImage = Game.picChicken.BackgroundImage
             output += Array.IndexOf({Game.picPlayer.BackgroundImage, Game.picPlayerB.BackgroundImage, Game.picChicken.BackgroundImage, Game.picBimbof.BackgroundImage, Game.picPlayerf.BackgroundImage}, pImage).ToString & "*"
+            output += Game.player.equippedAcce.getName & "*"
             Return output + "#"
         Else
             Return "N/A#"

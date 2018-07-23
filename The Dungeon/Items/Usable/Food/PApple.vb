@@ -2,7 +2,7 @@
     Inherits Food
 
     Sub New()
-        MyBase.setName("Ap̵ple")
+        MyBase.setName("Apple​")
         MyBase.setDesc("An normal green apple. -15 Hunger")
         id = 32
         tier = 3
@@ -14,8 +14,12 @@
 
     Public Overrides Sub Effect()
         Dim p As Player = Game.player
-        If Not p.perks("polymorphed") > -1 And Not p.title.Equals("Magic Girl") Then
-            Polymorph.transform(p, "princess", 0)
+        If Polymorph.canBeTFed(Game.player) Then
+            If Game.combatmode = True Or Game.npcmode = True Or Not p.canMoveFlag Then
+                Polymorph.transform(p, "princess", 2)
+            Else
+                Polymorph.transform(p, "princess", 0)
+            End If
         End If
     End Sub
     Shared Sub princessTF()
