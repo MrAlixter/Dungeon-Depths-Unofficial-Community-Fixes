@@ -1471,7 +1471,8 @@ Public Class Game
             Exit Sub
         End If
 
-        Dim s As Shop = New Shop
+        'Dim s As Shop = New Shop
+        Dim s As ShopV2 = New ShopV2
         s.ShowDialog()
         s.Dispose()
     End Sub
@@ -2963,7 +2964,8 @@ Public Class Game
             lblEvent.ForeColor = Color.White
             drawBoard()
         End If
-        Dim s As Shop = New Shop
+        'Dim s As Shop = New Shop
+        Dim s As ShopV2 = New ShopV2
         s.ShowDialog()
         s.Dispose()
     End Sub
