@@ -246,6 +246,7 @@ Public Class Game
         btnL.Visible = False
         btnControls.Visible = False
         btnSettings.Visible = False
+        btnAbout.Visible = False
         Dim chargen As New CharacterGenerator
         chargen.currSex = player.sexBool
         chargen.ShowDialog()
@@ -254,6 +255,7 @@ Public Class Game
             btnL.Visible = True
             btnControls.Visible = True
             btnSettings.Visible = True
+            btnAbout.Visible = True
             Exit Sub
         End If
         picPortrait.BackgroundImage = chargen.ExportIMG()
@@ -1970,6 +1972,7 @@ Public Class Game
             picStart.Visible = True
             btnS.Visible = True
             btnL.Visible = True
+            btnAbout.Visible = True
             boardWorker.CancelAsync()
             Exit Sub
         End If
@@ -2148,182 +2151,6 @@ Public Class Game
         pnlSaveLoad.Visible = False
         If picStart.Visible Then closesol()
     End Sub
-    'Private Sub btnS1_Click(sender As Object, e As EventArgs) Handles btnS1.Click
-    '    If solFlag Then
-    '        Try
-    '            loadSave("s1.ave")
-    '        Catch ex As System.IO.FileNotFoundException
-    '            MsgBox("Error 004: No save detected!")
-    '        Catch ex2 As Exception
-    '            If MessageBox.Show("Error 005: Error in loaded in save file!" & vbCrLf & "Restart?", "Error 005", MessageBoxButtons.YesNo) = Windows.Forms.DialogResult.Yes Then
-    '                Application.Restart()
-    '            Else
-    '                Application.Exit()
-    '            End If
-    '        End Try
-    '    Else
-    '        save("s1.ave")
-    '        imagesWorkerArg = 1
-    '        imagesWorker.RunWorkerAsync()
-    '    End If
-    '    pnlSaveLoad.Location = New Point(1000, pnlSaveLoad.Location.Y)
-    '    pnlSaveLoad.Visible = False
-    '    If picStart.Visible Then closesol()
-    'End Sub
-    'Private Sub btnS2_Click(sender As Object, e As EventArgs) Handles btnS2.Click
-    '    If solFlag Then
-    '        Try
-    '            loadSave("s2.ave")
-    '        Catch ex As System.IO.FileNotFoundException
-    '            MsgBox("Error 004: No save detected!")
-    '        Catch ex2 As Exception
-    '            If MessageBox.Show("Error 005: Error in loaded in save file!" & vbCrLf & "Restart?", "Error 005", MessageBoxButtons.YesNo) = Windows.Forms.DialogResult.Yes Then
-    '                Application.Restart()
-    '            Else
-    '                Application.Exit()
-    '            End If
-    '        End Try
-    '    Else
-    '        save("s2.ave")
-    '        imagesWorkerArg = 2
-    '        imagesWorker.RunWorkerAsync()
-    '    End If
-    '    pnlSaveLoad.Location = New Point(1000, pnlSaveLoad.Location.Y)
-    '    pnlSaveLoad.Visible = False
-    '    If picStart.Visible Then closesol()
-    'End Sub
-    'Private Sub btnS3_Click(sender As Object, e As EventArgs) Handles btnS3.Click
-    '    If solFlag Then
-    '        Try
-    '            loadSave("s3.ave")
-    '        Catch ex As System.IO.FileNotFoundException
-    '            MsgBox("Error 004: No save detected!")
-    '        Catch ex2 As Exception
-    '            If MessageBox.Show("Error 005: Error in loaded in save file!" & vbCrLf & "Restart?", "Error 005", MessageBoxButtons.YesNo) = Windows.Forms.DialogResult.Yes Then
-    '                Application.Restart()
-    '            Else
-    '                Application.Exit()
-    '            End If
-    '        End Try
-    '    Else
-    '        save("s3.ave")
-    '        imagesWorkerArg = 3
-    '        imagesWorker.RunWorkerAsync()
-    '    End If
-    '    pnlSaveLoad.Location = New Point(1000, pnlSaveLoad.Location.Y)
-    '    pnlSaveLoad.Visible = False
-    '    If picStart.Visible Then closesol()
-    'End Sub
-    'Private Sub btnS4_Click(sender As Object, e As EventArgs) Handles btnS4.Click
-    '    If solFlag Then
-    '        Try
-    '            loadSave("s4.ave")
-    '        Catch ex As System.IO.FileNotFoundException
-    '            MsgBox("Error 004: No save detected!")
-    '        Catch ex2 As Exception
-    '            If MessageBox.Show("Error 005: Error in loaded in save file!" & vbCrLf & "Restart?", "Error 005", MessageBoxButtons.YesNo) = Windows.Forms.DialogResult.Yes Then
-    '                Application.Restart()
-    '            Else
-    '                Application.Exit()
-    '            End If
-    '        End Try
-    '    Else
-    '        save("s4.ave")
-    '        imagesWorkerArg = 4
-    '        imagesWorker.RunWorkerAsync()
-    '    End If
-    '    pnlSaveLoad.Location = New Point(1000, pnlSaveLoad.Location.Y)
-    '    pnlSaveLoad.Visible = False
-    '    If picStart.Visible Then closesol()
-    'End Sub
-    'Private Sub btnS5_Click(sender As Object, e As EventArgs) Handles btnS5.Click
-    '    If solFlag Then
-    '        Try
-    '            loadSave("s5.ave")
-    '        Catch ex As System.IO.FileNotFoundException
-    '            MsgBox("Error 004: No save detected!")
-    '        Catch ex2 As Exception
-    '            If MessageBox.Show("Error 005: Error in loaded in save file!" & vbCrLf & "Restart?", "Error 005", MessageBoxButtons.YesNo) = Windows.Forms.DialogResult.Yes Then
-    '                Application.Restart()
-    '            Else
-    '                Application.Exit()
-    '            End If
-    '        End Try
-    '    Else
-    '        save("s5.ave")
-    '        imagesWorkerArg = 5
-    '        imagesWorker.RunWorkerAsync()
-    '    End If
-    '    pnlSaveLoad.Location = New Point(1000, pnlSaveLoad.Location.Y)
-    '    pnlSaveLoad.Visible = False
-    '    If picStart.Visible Then closesol()
-    'End Sub
-    'Private Sub btnS6_Click(sender As Object, e As EventArgs) Handles btnS6.Click
-    '    If solFlag Then
-    '        Try
-    '            loadSave("s6.ave")
-    '        Catch ex As System.IO.FileNotFoundException
-    '            MsgBox("Error 004: No save detected!")
-    '        Catch ex2 As Exception
-    '            If MessageBox.Show("Error 005: Error in loaded in save file!" & vbCrLf & "Restart?", "Error 005", MessageBoxButtons.YesNo) = Windows.Forms.DialogResult.Yes Then
-    '                Application.Restart()
-    '            Else
-    '                Application.Exit()
-    '            End If
-    '        End Try
-    '    Else
-    '        save("s6.ave")
-    '        imagesWorkerArg = 6
-    '        imagesWorker.RunWorkerAsync()
-    '    End If
-    '    pnlSaveLoad.Location = New Point(1000, pnlSaveLoad.Location.Y)
-    '    pnlSaveLoad.Visible = False
-    '    If picStart.Visible Then closesol()
-    'End Sub
-    'Private Sub btnS7_Click(sender As Object, e As EventArgs) Handles btnS7.Click
-    '    If solFlag Then
-    '        Try
-    '            loadSave("s7.ave")
-    '        Catch ex As System.IO.FileNotFoundException
-    '            MsgBox("Error 004: No save detected!")
-    '        Catch ex2 As Exception
-    '            If MessageBox.Show("Error 005: Error in loaded in save file!" & vbCrLf & "Restart?", "Error 005", MessageBoxButtons.YesNo) = Windows.Forms.DialogResult.Yes Then
-    '                Application.Restart()
-    '            Else
-    '                Application.Exit()
-    '            End If
-    '        End Try
-    '    Else
-    '        save("s7.ave")
-    '        imagesWorkerArg = 7
-    '        imagesWorker.RunWorkerAsync()
-    '    End If
-    '    pnlSaveLoad.Location = New Point(1000, pnlSaveLoad.Location.Y)
-    '    pnlSaveLoad.Visible = False
-    '    If picStart.Visible Then closesol()
-    'End Sub
-    'Private Sub btnS8_Click(sender As Object, e As EventArgs) Handles btnS8.Click
-    '    If solFlag Then
-    '        Try
-    '            loadSave("s8.ave")
-    '        Catch ex As System.IO.FileNotFoundException
-    '            MsgBox("Error 004: No save detected!")
-    '        Catch ex2 As Exception
-    '            If MessageBox.Show("Error 005: Error in loaded in save file!" & vbCrLf & "Restart?", "Error 005", MessageBoxButtons.YesNo) = Windows.Forms.DialogResult.Yes Then
-    '                Application.Restart()
-    '            Else
-    '                Application.Exit()
-    '            End If
-    '        End Try
-    '    Else
-    '        save("s8.ave")
-    '        imagesWorkerArg = 8
-    '        imagesWorker.RunWorkerAsync()
-    '    End If
-    '    pnlSaveLoad.Location = New Point(1000, pnlSaveLoad.Location.Y)
-    '    pnlSaveLoad.Visible = False
-    '    If picStart.Visible Then closesol()
-    'End Sub
     Private Sub btnCancel_Click(sender As Object, e As EventArgs) Handles btnCancel.Click
         pnlSaveLoad.Location = New Point(1000, pnlSaveLoad.Location.Y)
         pnlSaveLoad.Visible = False
@@ -2332,6 +2159,7 @@ Public Class Game
             btnL.Visible = True
             btnControls.Visible = True
             btnSettings.Visible = True
+            btnAbout.Visible = True
         End If
         player.canMoveFlag = True
         If player.isDead Then formReset()
@@ -3076,6 +2904,7 @@ Public Class Game
         btnL.Visible = False
         btnControls.Visible = False
         btnSettings.Visible = False
+        btnAbout.Visible = False
         Application.DoEvents()
         Try
             CharacterGenerator.init()
@@ -3090,12 +2919,14 @@ Public Class Game
             btnL.Visible = True
             btnControls.Visible = True
             btnSettings.Visible = True
+            btnAbout.Visible = True
         Catch ex2 As Exception
             MsgBox("Error 005: Error in loaded in save file!")
             btnS.Visible = True
             btnL.Visible = True
             btnControls.Visible = True
             btnSettings.Visible = True
+            btnAbout.Visible = True
         End Try
     End Sub
     Private Sub btnControls_Click(sender As Object, e As EventArgs) Handles btnControls.Click
