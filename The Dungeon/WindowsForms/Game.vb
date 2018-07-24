@@ -24,6 +24,10 @@ Public Class Game
     Public encounterRate As Integer = 25
     Public eClockResetVal As Integer = 5
 
+    Public trapFreqMin As Integer = 3
+    Public trapFreqRange As Integer = 5
+    Public trapSizeDependence As Integer = 30
+
     Public player As Player = New Player()
 
     Public baseChest As Chest = New Chest(player.inventory.Count - 1)
@@ -275,6 +279,9 @@ Public Class Game
         chestRichnessRange = genSet.boxChestRichnessRange.Value
         eClockResetVal = genSet.boxEClockResetVal.Value
         encounterRate = genSet.boxEncounterRate.Value
+        trapFreqMin = genSet.boxTrapFreqMin.Value
+        trapFreqRange = genSet.boxTrapFreqRange.Value
+        trapSizeDependence = genSet.boxTrapSizeDependence.Value
         If mBoardWidth * mBoardHeight < 4 Then
             Do While mBoardWidth * mBoardHeight < 4
                 If mBoardHeight < mBoardWidth Then
@@ -731,7 +738,7 @@ Public Class Game
     End Sub
     Sub placeTraps()
         trapList.Clear()
-        Dim numtrap As Integer = CInt(Int(Rnd() * 5) + 3) * Int(mBoardWidth / 30)
+        Dim numtrap As Integer = CInt(Int(Rnd() * trapFreqRange) + trapFreqMin) * Int(mBoardWidth / trapSizeDependence)
         For i = 1 To numtrap
             Dim trapX As Integer = CInt(Int(Rnd() * mBoardWidth))
             Dim trapY As Integer = CInt(Int(Rnd() * mBoardHeight))
