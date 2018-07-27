@@ -3,13 +3,16 @@
 Public Class ShopV2
     Dim sk As NPC = Game.currNPC
     Dim p As Player = Game.player
-    Dim skInventory As ArrayList = Nothing
-    'Dim ind As Integer = -1
+    Dim skInventory As List(Of String) = Nothing
+    Dim pInventory As List(Of String) = Nothing
+
     Private Sub Done_Click(sender As Object, e As EventArgs) Handles btnDone.Click
         Me.Close()
     End Sub
+
     Private Sub Shop_Load(sender As Object, e As EventArgs) Handles MyBase.Load
-        skInventory = New ArrayList()
+        skInventory = New List(Of String)
+        pInventory = New List(Of String)
 
         'scale to the screen size
         Dim startingWidth = Me.Width
@@ -31,6 +34,7 @@ Public Class ShopV2
             Me.Controls(i).Left += CDbl(Me.Controls(i).Left * RW)
             Me.Controls(i).Top += CDbl(Me.Controls(i).Top * RH)
         Next
+
         RefreshScreen()
         lblShopkeeper.Text = sk.name
         lblShopkeeper.Left = boxShopFilter.Left - (6 * RW) - lblShopkeeper.Width 'To keep it right aligned with the shopkeeper filter inventory box
@@ -39,27 +43,31 @@ Public Class ShopV2
     Private Sub RefreshScreen()
         lblYG.Text = "Gold: " & p.gold
         lblSKG.Text = "Gold: " & sk.gold
+        pInventory.Clear()
         boxInventory.Items.Clear()
         skInventory.Clear()
         boxShop.Items.Clear()
         For i = 0 To p.inventory.Count - 1
-            ' If p.inventory(i).count > 0 And (Not (p.inventory(i).getName.Equals(p.equippedArmor.getName) Or p.inventory(i).getName.Equals(p.equippedWeapon.getName))) Then
             If p.inventory(i).count > 0 Then
                 If p.inventory(i).getName().Equals(p.equippedArmor.getName()) Or p.inventory(i).getName().Equals(p.equippedWeapon.getName()) Then
                     If p.inventory(i).count > 1 Then
                         boxInventory.Items.Add(lineup(p.inventory(i).getName(), Int(p.inventory(i).value / 2), p.inventory(i).count - 1))
+                        pInventory.Add(p.inventory(i).getName())
                     End If
                 Else
                     boxInventory.Items.Add(lineup(p.inventory(i).getName(), Int(p.inventory(i).value / 2), p.inventory(i).count))
+                    pInventory.Add(p.inventory(i).getName())
                 End If
             End If
         Next
         For i = 0 To sk.inventory.Count - 1
             If sk.inventory(i) > 0 Then
                 boxShop.Items.Add(lineup(p.inventory(i).getName(), p.inventory(i).value))
-                skInventory.Add(p.inventory(i))
+                skInventory.Add(p.inventory(i).getName())
             End If
         Next
+        inventoryFilterUpdate()
+        shopFilterUpdate()
     End Sub
 
     'sell
@@ -153,52 +161,49 @@ Public Class ShopV2
         boxInventory.SelectedIndex = -1
     End Sub
 
-    ''buy
-    'Private Sub cBoxBuy_SelectedValueChanged(sender As Object, e As EventArgs)
-    '    Try
-    '        ind = cBoxBuy.Items.IndexOf(cBoxBuy.Text)
-    '        cBoxBuyQTY.Items.Clear()
-    '        Dim numCanBuy As Integer = Math.Floor(p.gold / pCanBuy(ind).value)
-    '        If numCanBuy < 1 Then
-    '            cBoxBuyQTY.Text = "N/a"
-    '            cBoxBuyQTY.Items.Add("N/a")
-    '            Exit Sub
-    '        End If
-    '        If numCanBuy >= 1 Then cBoxBuyQTY.Items.Add(1)
-    '        If numCanBuy >= 2 Then cBoxBuyQTY.Items.Add(2)
-    '        If numCanBuy >= 3 Then cBoxBuyQTY.Items.Add(3)
-    '        If numCanBuy >= 5 Then cBoxBuyQTY.Items.Add(5)
-    '        If numCanBuy >= 10 Then cBoxBuyQTY.Items.Add(10)
-    '        cBoxBuyQTY.Text = 1
-    '    Catch ex As NullReferenceException
+    Private Sub boxInventoryFilter_TextChanged(sender As Object, e As EventArgs) Handles boxInventoryFilter.TextChanged
+        inventoryFilterUpdate()
+    End Sub
 
-    '    End Try
-    'End Sub
-    'Private Sub btnBuy_Click(sender As Object, e As EventArgs)
-    '    If cBoxBuy.Text = "-- Select --" Or cBoxBuyQTY.Text = "" Or cBoxBuyQTY.Text = "N/a" Then Exit Sub
-    '    If ind <> -1 AndAlso p.gold >= (pCanBuy(ind).value * (CInt(cBoxBuyQTY.Text))) Then
-    '        pCanBuy(ind).add((CInt(cBoxBuyQTY.Text)))
-    '        p.gold -= pCanBuy(ind).value * (CInt(cBoxBuyQTY.Text))
-    '        sk.gold += pCanBuy(ind).value * (CInt(cBoxBuyQTY.Text))
-    '    ElseIf p.gold < (pCanBuy(ind).value * (CInt(cBoxBuyQTY.Text))) Then
-    '        Game.lstLog.Items.Add("You don't have the money!")
-    '        Game.lstLog.TopIndex = Game.lstLog.Items.Count - 1
-    '    End If
-    '    cBoxSell.Items.Clear()
-    '    pCanSell.Clear()
-    '    For i = 0 To p.inventory.Count - 1
-    '        If p.inventory(i).count > 0 And (Not (p.inventory(i).getName.Equals(p.equippedArmor.getName) Or p.inventory(i).getName.Equals(p.equippedWeapon.getName))) Then
-    '            cBoxSell.Items.Add(lineup(p.inventory(i).getName(), Int(p.inventory(i).value / 2)))
-    '            pCanSell.Add(p.inventory(i))
-    '        End If
-    '    Next
-    '    lblYG.Text = "Your Gold = " & p.gold
-    '    lblSKG.Text = sk.name & "'s Gold = " & sk.gold
-    '    cBoxBuy.Text = "-- Select --"
-    '    cBoxBuyQTY.Text = ""
-    '    Game.player.invNeedsUDate = True
-    '    Game.player.UIupdate()
-    'End Sub
+    Private Sub boxItemsFilter_TextChanged(sender As Object, e As EventArgs) Handles boxShopFilter.TextChanged
+        shopFilterUpdate()
+    End Sub
+
+    Private Sub inventoryFilterUpdate()
+        boxInventory.Items.Clear()
+        For i As Integer = 0 To pInventory.Count - 1
+            If pInventory(i).IndexOf(boxInventoryFilter.Text, 0, StringComparison.CurrentCultureIgnoreCase) > -1 Then
+                Dim ind As Integer
+                For ind = 0 To p.inventory.Count - 1
+                    If CType(p.inventory(ind), Item).getName() = pInventory(i) Then
+                        Exit For
+                    End If
+                Next
+                If pInventory(i).Equals(p.equippedArmor.getName()) Or pInventory(i).Equals(p.equippedWeapon.getName()) Then
+                    If p.inventory(ind).count > 1 Then
+                        boxInventory.Items.Add(lineup(p.inventory(ind).getName(), Int(p.inventory(ind).value / 2), p.inventory(ind).count - 1))
+                    End If
+                Else
+                    boxInventory.Items.Add(lineup(p.inventory(ind).getName(), Int(p.inventory(ind).value / 2), p.inventory(ind).count))
+                End If
+            End If
+        Next
+    End Sub
+
+    Private Sub shopFilterUpdate()
+        boxShop.Items.Clear()
+        For i As Integer = 0 To skInventory.Count - 1
+            Dim ind As Integer
+            For ind = 0 To p.inventory.Count - 1
+                If CType(p.inventory(ind), Item).getName() = skInventory(i) Then
+                    Exit For
+                End If
+            Next
+            If skInventory(i).IndexOf(boxShopFilter.Text, 0, StringComparison.CurrentCultureIgnoreCase) > -1 Then
+                boxShop.Items.Add(lineup(p.inventory(ind).getName(), p.inventory(ind).value))
+            End If
+        Next
+    End Sub
 
     Function lineup(ByVal s As String, ByVal i As Integer, Optional ByVal j As Integer = -1)
         If s.Length > 14 Then s = s.Substring(0, 13) & "."
