@@ -25,11 +25,12 @@
             Game.pushLblEvent("Thoughts of modesty return to your mind. You are free of the slut curse!")
             p.perks("slutcurse") = -1
             Equipment.antiClothingCurse()
+            Game.pushLblEvent("You are now a man!")
             Equipment.portraitUDate()
         Else
             Game.pushLblEvent("Nothing happened!")
         End If
-        If Not Game.player.perks("polymorphed") > -1 And Not Game.player.title.Equals("Magic Girl") Then
+        If Not Polymorph.canBeTFed(Game.player) Then
             Game.player.pState.save(Game.player)
         End If
         Equipment.portraitUDate()

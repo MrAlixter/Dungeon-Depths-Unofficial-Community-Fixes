@@ -22,7 +22,7 @@
     End Sub
     Shared Sub rdec(ByRef p As Player)
         Dim mBoost As Integer = (p.maxHealth / 3)
-        If p.health <= mBoost Then p.Die() Else p.health -= mBoost
+        If p.health <= mBoost Then p.Die() Else p.health -= mBoost / p.getmaxHealth
         p.mana += mBoost
         Game.lstLog.Items.Add("Risky Decision!")
         Game.pushLblCombatEvent("Risky Decision!" & vbCrLf & "Convert 33% Max Health into mana.")
@@ -46,7 +46,7 @@
         Dim rcv As Integer = dmg * 2
         m.takeDMG(dmg)
         p.health += rcv
-        If p.health > p.maxHealth + p.hBuff Then p.health = p.maxHealth + p.hBuff
+        If p.health * p.getmaxHealth > p.maxHealth + p.hBuff Then p.health = 1
         Game.lstLog.Items.Add("Absorbtion!")
         Game.pushLblCombatEvent("Absorbtion!" & vbCrLf & "Deals " & dmg & " damage and heals you for " & rcv)
         Game.lstLog.TopIndex = Game.lstLog.Items.Count - 1

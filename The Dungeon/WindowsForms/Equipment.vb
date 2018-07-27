@@ -78,7 +78,7 @@
 
         'this handles the revert from the magical girl form, if needed
         Dim revertFlag As Boolean = False
-        If p.equippedWeapon.getName.Equals("Magic_Girl_Wand") And p.title.Equals("Magic Girl") And Not cmbobxWeapon.Text.Equals("Magic_Girl_Wand") Then
+        If p.equippedWeapon.getName.Equals("Magic_Girl_Wand") And p.pClass.name.Equals("Magic Girl") And Not cmbobxWeapon.Text.Equals("Magic_Girl_Wand") Then
             Game.lstLog.Items.Add("Putting away your wand causes you to change into your regular self!")
             p.inventory.Item(10).add(-1)
             p.magGState.save(p)
@@ -105,11 +105,11 @@
             clothingCurse1()
         End If
         'handles any tfs or triggers triggered by equipping of certain weapons
-        If p.title.Equals("Magic Girl") And p.equippedArmor.getName.Equals("Magic_Girl_Outfit") And Not revertFlag Then
+        If p.pClass.name.Equals("Magic Girl") And p.equippedArmor.getName.Equals("Magic_Girl_Outfit") And Not revertFlag Then
             p.equippedArmor = p.inventory.Item(10)
             Game.lstLog.Items.Add("A magic girl needs her uniform!")
         End If
-        If p.title.Equals("Blow-Up Doll") Then
+        If p.pForm.name.Equals("Blow-Up Doll") Then
             p.equippedArmor = New Naked
         End If
 
@@ -156,15 +156,15 @@
 
         'adds the default clothes for various forms
         cmbobxArmor.Items.Add("Naked")
-        If p.title = "Bimbo" Or p.perks("slutcurse") > -1 Then
+        If p.pClass.name = "Bimbo" Or p.perks("slutcurse") > -1 Then
             cmbobxArmor.Items.Add("Skimpy_Clothes")
-        ElseIf p.title = "Princess" Then
+        ElseIf p.pClass.name = "Princess" Then
             cmbobxArmor.Items.Add("Regal_Gown")
-        ElseIf p.title = "Maid" Then
+        ElseIf p.pClass.name = "Maid" Then
             cmbobxArmor.Items.Add("Maid_Outfit")
-        ElseIf p.title = "Succubus" Then
+        ElseIf p.pForm.name = "Succubus" Then
             cmbobxArmor.Items.Add("Succubus_Garb")
-        ElseIf p.title = "Goddess" Then
+        ElseIf p.pClass.name = "Goddess" Then
             cmbobxArmor.Items.Add("Goddess_Gown")
         Else
             cmbobxArmor.Items.Add("Common_Clothes")
@@ -357,7 +357,7 @@
                     p.iArrInd(16) = New Tuple(Of Integer, Boolean)(CharacterGenerator.fHat.Count - 2, True)
             End Select
         ElseIf p.equippedArmor.getName = "Magic_Girl_Outfit" Then
-            If Not p.title.Equals("Magic_Girl") Then
+            If Not p.pClass.name.Equals("Magic_Girl") Then
                 clothesChange("Naked")
                 Game.pushLblEvent("Your clothes don't fit!")
                 Game.lstLog.Items.Add("Your clothes don't fit!")
@@ -430,7 +430,7 @@
                 End If
             End If
         End If
-        If Not p.equippedArmor.getName.Equals("Naked") And Not p.title.Equals("Magic Girl") Then
+        If Not p.equippedArmor.getName.Equals("Naked") And Not p.pClass.name.Equals("Magic Girl") Then
             If p.iArrInd(2).Item1 <> 10 And p.iArrInd(2).Item1 <> 16 And p.iArrInd(2).Item1 <> 21 Then
                 Select Case p.breastSize
                     Case -1

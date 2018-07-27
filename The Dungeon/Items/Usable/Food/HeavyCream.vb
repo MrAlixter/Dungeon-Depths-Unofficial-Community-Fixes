@@ -23,7 +23,7 @@
     Public Overrides Sub Effect()
         Dim r As Integer = Int(Rnd() * 3)
         If r = 0 Then Game.player.be()
-        If Not Game.player.perks("polymorphed") > -1 And Not Game.player.title.Equals("Magic Girl") Then
+        If Polymorph.canBeTFed(Game.player) Then
             Game.player.pState.save(Game.player)
         End If
         Equipment.portraitUDate()

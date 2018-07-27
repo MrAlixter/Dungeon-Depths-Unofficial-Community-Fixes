@@ -16,7 +16,7 @@
         Game.lstLog.Items.Add("You use the " & getName() & ". +10 Health!")
         Game.lstLog.TopIndex = Game.lstLog.Items.Count - 1
         Game.player.hBuff += 10
-        Game.player.health += 10
+        Game.player.health += 10 / Game.player.getmaxHealth
         Game.player.UIupdate()
         count -= 1
     End Sub

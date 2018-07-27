@@ -13,7 +13,7 @@
     End Sub
 
     Public Overrides Sub Effect()
-        Game.player.health += 50
-        If Game.player.health > Game.player.getmaxHealth Then Game.player.health = Game.player.getmaxHealth
+        Game.player.health += 50 / Game.player.getmaxHealth
+        If Game.player.health > 1 Then Game.player.health = 1
     End Sub
 End Class

@@ -7,7 +7,8 @@
         id = 11
         tier = 3
         MyBase.setUsable(False)
-        MyBase.aBoost = 10
+        MyBase.mBoost = 20
+        MyBase.aBoost = 7
         MyBase.count = 0
         MyBase.value = 1000
     End Sub
@@ -18,7 +19,7 @@
         count -= 1
     End Sub
     Public Overrides Sub onEquip()
-        If Not Game.player.title.Equals("Magic Girl") Then
+        If Not Game.player.pClass.name.Equals("Magic Girl") Then
             Polymorph.transform(Game.player, "Magic Girl")
         End If
     End Sub

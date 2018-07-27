@@ -15,7 +15,7 @@
 
         p.haircolor = Color.FromArgb(255, Int(Rnd() * 125) + 100, Int(Rnd() * 125) + 100, Int(Rnd() * 125) + 100)
         p.createP()
-        If Not Game.player.perks("polymorphed") > -1 And Not Game.player.title.Equals("Magic Girl") Then
+        If Not Polymorph.canBeTFed(Game.player) Then
             Game.player.pState.save(Game.player)
         End If
     End Sub
