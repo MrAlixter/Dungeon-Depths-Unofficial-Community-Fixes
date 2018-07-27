@@ -137,7 +137,7 @@ Partial Class ShopV2
         Me.btnBuy.Name = "btnBuy"
         Me.btnBuy.Size = New System.Drawing.Size(89, 36)
         Me.btnBuy.TabIndex = 190
-        Me.btnBuy.Text = "<-- Add"
+        Me.btnBuy.Text = "<-- Buy"
         Me.btnBuy.UseVisualStyleBackColor = False
         '
         'lblInventory

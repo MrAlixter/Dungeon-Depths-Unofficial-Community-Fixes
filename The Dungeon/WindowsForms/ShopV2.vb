@@ -1,13 +1,16 @@
-﻿Public Class ShopV2
+﻿Imports System.Text.RegularExpressions
+
+Public Class ShopV2
     Dim sk As NPC = Game.currNPC
     Dim p As Player = Game.player
-    Dim pCanBuy As ArrayList = New ArrayList
-    Dim pCanSell As ArrayList = New ArrayList
-    Dim ind As Integer = -1
+    Dim skInventory As ArrayList = Nothing
+    'Dim ind As Integer = -1
     Private Sub Done_Click(sender As Object, e As EventArgs) Handles btnDone.Click
         Me.Close()
     End Sub
     Private Sub Shop_Load(sender As Object, e As EventArgs) Handles MyBase.Load
+        skInventory = New ArrayList()
+
         'scale to the screen size
         Dim startingWidth = Me.Width
         Dim startingHeight = Me.Height
@@ -28,57 +31,127 @@
             Me.Controls(i).Left += CDbl(Me.Controls(i).Left * RW)
             Me.Controls(i).Top += CDbl(Me.Controls(i).Top * RH)
         Next
-        lblYG.Text = "Gold: " & p.gold
+        RefreshScreen()
         lblShopkeeper.Text = sk.name
         lblShopkeeper.Left = boxShopFilter.Left - (6 * RW) - lblShopkeeper.Width 'To keep it right aligned with the shopkeeper filter inventory box
+    End Sub
+
+    Private Sub RefreshScreen()
+        lblYG.Text = "Gold: " & p.gold
         lblSKG.Text = "Gold: " & sk.gold
+        boxInventory.Items.Clear()
+        skInventory.Clear()
+        boxShop.Items.Clear()
         For i = 0 To p.inventory.Count - 1
-            If p.inventory(i).count > 0 And (Not (p.inventory(i).getName.Equals(p.equippedArmor.getName) Or p.inventory(i).getName.Equals(p.equippedWeapon.getName))) Then
-                boxInventory.Items.Add(lineup(p.inventory(i).getName(), Int(p.inventory(i).value / 2), p.inventory(i).count))
-                pCanSell.Add(p.inventory(i))
+            ' If p.inventory(i).count > 0 And (Not (p.inventory(i).getName.Equals(p.equippedArmor.getName) Or p.inventory(i).getName.Equals(p.equippedWeapon.getName))) Then
+            If p.inventory(i).count > 0 Then
+                If p.inventory(i).getName().Equals(p.equippedArmor.getName()) Or p.inventory(i).getName().Equals(p.equippedWeapon.getName()) Then
+                    If p.inventory(i).count > 1 Then
+                        boxInventory.Items.Add(lineup(p.inventory(i).getName(), Int(p.inventory(i).value / 2), p.inventory(i).count - 1))
+                    End If
+                Else
+                    boxInventory.Items.Add(lineup(p.inventory(i).getName(), Int(p.inventory(i).value / 2), p.inventory(i).count))
+                End If
             End If
         Next
-        For i = 0 To UBound(sk.inventory)
+        For i = 0 To sk.inventory.Count - 1
             If sk.inventory(i) > 0 Then
                 boxShop.Items.Add(lineup(p.inventory(i).getName(), p.inventory(i).value))
-                pCanBuy.Add(p.inventory(i))
+                skInventory.Add(p.inventory(i))
             End If
         Next
     End Sub
 
     'sell
-    'Private Sub cBoxSell_SelectedValueChanged(sender As Object, e As EventArgs)
-    '    Try
-    '        ind = cBoxSell.Items.IndexOf(cBoxSell.Text)
-    '        cBoxSellQTY.Items.Clear()
-    '        For i = 1 To pCanSell(ind).getCount()
-    '            cBoxSellQTY.Items.Add(i)
-    '        Next
-    '        cBoxSellQTY.Text = 1
-    '    Catch ex As NullReferenceException
+    Private Sub btnSell_Click(sender As Object, e As EventArgs) Handles btnSell.Click
+        Dim items = boxInventory.SelectedItems
+        Dim cost As Integer = 0
+        Dim indexes As List(Of Integer) = New List(Of Integer)
+        For i As Integer = 0 To items.Count - 1
+            Dim name As String = Regex.Split(items(i), "\s*?[0-9]*?g")(0)
+            Dim ind As Integer
+            For j As Integer = 0 To p.inventory.Count - 1
+                If CType(p.inventory(j), Item).getName() = name Then
+                    ind = j
+                    indexes.Add(ind)
+                    Exit For
+                End If
+            Next
+            Dim item As Item = p.inventory(ind)
+            If item.count >= number.Value Then
+                cost += (item.value) / 2 * number.Value
+            Else
+                cost += (CType(p.inventory(ind), Item).value) / 2 * item.count
+            End If
+        Next
 
-    '    End Try
-    'End Sub
-    'Private Sub btnSell_Click(sender As Object, e As EventArgs)
-    '    If ind <> -1 Then
-    '        pCanSell(ind).sell(CInt(cBoxSellQTY.Text))
-    '    End If
-    '    lblYG.Text = "Your Gold = " & p.gold
-    '    lblSKG.Text = sk.name & "'s Gold = " & sk.gold
-    '    ind = -1
-    '    cBoxSell.Items.Clear()
-    '    pCanSell.Clear()
-    '    For i = 0 To p.inventory.Count - 1
-    '        If p.inventory(i).count > 0 And (Not (p.inventory(i).getName.Equals(p.equippedArmor.getName) Or p.inventory(i).getName.Equals(p.equippedWeapon.getName))) Then
-    '            cBoxSell.Items.Add(lineup(p.inventory(i).getName(), Int(p.inventory(i).value / 2)))
-    '            pCanSell.Add(p.inventory(i))
-    '        End If
-    '    Next
-    '    cBoxSell.Text = "-- Select --"
-    '    cBoxSellQTY.Text = ""
-    '    Game.player.invNeedsUDate = True
-    '    Game.player.UIupdate()
-    'End Sub
+        If cost <= sk.gold Then
+            For i As Integer = 0 To indexes.Count - 1
+                Dim item As Item = p.inventory(indexes(i))
+                If item.getName().Equals(p.equippedArmor.getName()) Or item.getName().Equals(p.equippedWeapon.getName()) Then
+                    If item.count - number.Value >= 1 Then
+                        item.count -= number.Value
+                    Else
+                        item.count = 1
+                    End If
+                Else
+                    If item.count >= number.Value Then
+                        item.count -= number.Value
+                    Else
+                        item.count = 0
+                    End If
+                End If
+            Next
+            p.gold += cost
+            sk.gold -= cost
+        End If
+
+        RefreshScreen()
+
+        Game.player.invNeedsUDate = True
+        Game.player.UIupdate()
+    End Sub
+
+    'buy
+    Private Sub btnBuy_Click(sender As Object, e As EventArgs) Handles btnBuy.Click
+        Dim items = boxShop.SelectedItems
+        Dim cost As Integer = 0
+        Dim indexes As List(Of Integer) = New List(Of Integer)
+        For i As Integer = 0 To items.Count - 1
+            Dim name As String = Regex.Split(items(i), "\s*?[0-9]*?g")(0)
+            Dim ind As Integer
+            For j As Integer = 0 To p.inventory.Count - 1
+                If CType(p.inventory(j), Item).getName() = name Then
+                    ind = j
+                    indexes.Add(ind)
+                    Exit For
+                End If
+            Next
+            Dim item As Item = p.inventory(ind)
+            cost += (item.value) * number.Value
+        Next
+
+        If cost <= p.gold Then
+            For i As Integer = 0 To indexes.Count - 1
+                p.inventory(indexes(i)).count += number.Value
+            Next
+            p.gold -= cost
+            sk.gold += cost
+        End If
+
+        RefreshScreen()
+
+        Game.player.invNeedsUDate = True
+        Game.player.UIupdate()
+    End Sub
+
+    Private Sub boxInventory_SelectedIndexChanged(sender As Object, e As EventArgs) Handles boxInventory.SelectedIndexChanged
+        boxShop.SelectedIndex = -1
+    End Sub
+
+    Private Sub boxShop_SelectedIndexChange(sender As Object, e As EventArgs) Handles boxShop.SelectedIndexChanged
+        boxInventory.SelectedIndex = -1
+    End Sub
 
     ''buy
     'Private Sub cBoxBuy_SelectedValueChanged(sender As Object, e As EventArgs)
