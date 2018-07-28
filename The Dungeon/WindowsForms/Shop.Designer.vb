@@ -23,31 +23,18 @@ Partial Class Shop
     <System.Diagnostics.DebuggerStepThrough()> _
     Private Sub InitializeComponent()
         Dim resources As System.ComponentModel.ComponentResourceManager = New System.ComponentModel.ComponentResourceManager(GetType(Shop))
-        Me.Label1 = New System.Windows.Forms.Label()
         Me.Button1 = New System.Windows.Forms.Button()
-        Me.cBoxBuy = New System.Windows.Forms.ComboBox()
-        Me.Label2 = New System.Windows.Forms.Label()
-        Me.cBoxSell = New System.Windows.Forms.ComboBox()
         Me.lblSKG = New System.Windows.Forms.Label()
         Me.lblYG = New System.Windows.Forms.Label()
+        Me.cBoxBuy = New System.Windows.Forms.ComboBox()
+        Me.Label1 = New System.Windows.Forms.Label()
+        Me.cBoxSell = New System.Windows.Forms.ComboBox()
+        Me.Label2 = New System.Windows.Forms.Label()
         Me.btnBuy = New System.Windows.Forms.Button()
         Me.btnSell = New System.Windows.Forms.Button()
         Me.cBoxBuyQTY = New System.Windows.Forms.ComboBox()
         Me.cBoxSellQTY = New System.Windows.Forms.ComboBox()
         Me.SuspendLayout()
-        '
-        'Label1
-        '
-        Me.Label1.AutoSize = True
-        Me.Label1.BackColor = System.Drawing.Color.Black
-        Me.Label1.Font = New System.Drawing.Font("Consolas", 8.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.Label1.ForeColor = System.Drawing.Color.White
-        Me.Label1.Location = New System.Drawing.Point(36, 94)
-        Me.Label1.Margin = New System.Windows.Forms.Padding(4, 0, 4, 0)
-        Me.Label1.Name = "Label1"
-        Me.Label1.Size = New System.Drawing.Size(45, 19)
-        Me.Label1.TabIndex = 21
-        Me.Label1.Text = "Buy:"
         '
         'Button1
         '
@@ -63,45 +50,6 @@ Partial Class Shop
         Me.Button1.Text = "Done"
         Me.Button1.UseVisualStyleBackColor = False
         '
-        'cBoxBuy
-        '
-        Me.cBoxBuy.BackColor = System.Drawing.Color.Black
-        Me.cBoxBuy.Font = New System.Drawing.Font("Consolas", 8.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.cBoxBuy.ForeColor = System.Drawing.Color.White
-        Me.cBoxBuy.FormattingEnabled = True
-        Me.cBoxBuy.Location = New System.Drawing.Point(40, 118)
-        Me.cBoxBuy.Margin = New System.Windows.Forms.Padding(4, 5, 4, 5)
-        Me.cBoxBuy.Name = "cBoxBuy"
-        Me.cBoxBuy.Size = New System.Drawing.Size(206, 27)
-        Me.cBoxBuy.TabIndex = 19
-        Me.cBoxBuy.Text = "-- Select --"
-        '
-        'Label2
-        '
-        Me.Label2.AutoSize = True
-        Me.Label2.BackColor = System.Drawing.Color.Black
-        Me.Label2.Font = New System.Drawing.Font("Consolas", 8.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.Label2.ForeColor = System.Drawing.Color.White
-        Me.Label2.Location = New System.Drawing.Point(36, 168)
-        Me.Label2.Margin = New System.Windows.Forms.Padding(4, 0, 4, 0)
-        Me.Label2.Name = "Label2"
-        Me.Label2.Size = New System.Drawing.Size(54, 19)
-        Me.Label2.TabIndex = 23
-        Me.Label2.Text = "Sell:"
-        '
-        'cBoxSell
-        '
-        Me.cBoxSell.BackColor = System.Drawing.Color.Black
-        Me.cBoxSell.Font = New System.Drawing.Font("Consolas", 8.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.cBoxSell.ForeColor = System.Drawing.Color.White
-        Me.cBoxSell.FormattingEnabled = True
-        Me.cBoxSell.Location = New System.Drawing.Point(40, 192)
-        Me.cBoxSell.Margin = New System.Windows.Forms.Padding(4, 5, 4, 5)
-        Me.cBoxSell.Name = "cBoxSell"
-        Me.cBoxSell.Size = New System.Drawing.Size(206, 27)
-        Me.cBoxSell.TabIndex = 22
-        Me.cBoxSell.Text = "-- Select --"
-        '
         'lblSKG
         '
         Me.lblSKG.AutoSize = True
@@ -111,7 +59,7 @@ Partial Class Shop
         Me.lblSKG.Location = New System.Drawing.Point(36, 21)
         Me.lblSKG.Margin = New System.Windows.Forms.Padding(4, 0, 4, 0)
         Me.lblSKG.Name = "lblSKG"
-        Me.lblSKG.Size = New System.Drawing.Size(234, 19)
+        Me.lblSKG.Size = New System.Drawing.Size(157, 13)
         Me.lblSKG.TabIndex = 24
         Me.lblSKG.Text = "Shopkeeper Gold: = 999999"
         '
@@ -124,9 +72,61 @@ Partial Class Shop
         Me.lblYG.Location = New System.Drawing.Point(36, 53)
         Me.lblYG.Margin = New System.Windows.Forms.Padding(4, 0, 4, 0)
         Me.lblYG.Name = "lblYG"
-        Me.lblYG.Size = New System.Drawing.Size(180, 19)
+        Me.lblYG.Size = New System.Drawing.Size(121, 13)
         Me.lblYG.TabIndex = 25
         Me.lblYG.Text = "Your Gold: = 999999"
+        '
+        'cBoxBuy
+        '
+        Me.cBoxBuy.BackColor = System.Drawing.Color.Black
+        Me.cBoxBuy.Font = New System.Drawing.Font("Consolas", 8.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.cBoxBuy.ForeColor = System.Drawing.Color.White
+        Me.cBoxBuy.FormattingEnabled = True
+        Me.cBoxBuy.Location = New System.Drawing.Point(40, 118)
+        Me.cBoxBuy.Margin = New System.Windows.Forms.Padding(4, 5, 4, 5)
+        Me.cBoxBuy.Name = "cBoxBuy"
+        Me.cBoxBuy.Size = New System.Drawing.Size(206, 21)
+        Me.cBoxBuy.TabIndex = 19
+        Me.cBoxBuy.Text = "-- Select --"
+        '
+        'Label1
+        '
+        Me.Label1.AutoSize = True
+        Me.Label1.BackColor = System.Drawing.Color.Black
+        Me.Label1.Font = New System.Drawing.Font("Consolas", 8.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.Label1.ForeColor = System.Drawing.Color.White
+        Me.Label1.Location = New System.Drawing.Point(36, 94)
+        Me.Label1.Margin = New System.Windows.Forms.Padding(4, 0, 4, 0)
+        Me.Label1.Name = "Label1"
+        Me.Label1.Size = New System.Drawing.Size(31, 13)
+        Me.Label1.TabIndex = 21
+        Me.Label1.Text = "Buy:"
+        '
+        'cBoxSell
+        '
+        Me.cBoxSell.BackColor = System.Drawing.Color.Black
+        Me.cBoxSell.Font = New System.Drawing.Font("Consolas", 8.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.cBoxSell.ForeColor = System.Drawing.Color.White
+        Me.cBoxSell.FormattingEnabled = True
+        Me.cBoxSell.Location = New System.Drawing.Point(40, 192)
+        Me.cBoxSell.Margin = New System.Windows.Forms.Padding(4, 5, 4, 5)
+        Me.cBoxSell.Name = "cBoxSell"
+        Me.cBoxSell.Size = New System.Drawing.Size(206, 21)
+        Me.cBoxSell.TabIndex = 22
+        Me.cBoxSell.Text = "-- Select --"
+        '
+        'Label2
+        '
+        Me.Label2.AutoSize = True
+        Me.Label2.BackColor = System.Drawing.Color.Black
+        Me.Label2.Font = New System.Drawing.Font("Consolas", 8.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.Label2.ForeColor = System.Drawing.Color.White
+        Me.Label2.Location = New System.Drawing.Point(36, 168)
+        Me.Label2.Margin = New System.Windows.Forms.Padding(4, 0, 4, 0)
+        Me.Label2.Name = "Label2"
+        Me.Label2.Size = New System.Drawing.Size(37, 13)
+        Me.Label2.TabIndex = 23
+        Me.Label2.Text = "Sell:"
         '
         'btnBuy
         '
@@ -162,7 +162,7 @@ Partial Class Shop
         Me.cBoxBuyQTY.FormattingEnabled = True
         Me.cBoxBuyQTY.Location = New System.Drawing.Point(330, 117)
         Me.cBoxBuyQTY.Name = "cBoxBuyQTY"
-        Me.cBoxBuyQTY.Size = New System.Drawing.Size(55, 28)
+        Me.cBoxBuyQTY.Size = New System.Drawing.Size(55, 21)
         Me.cBoxBuyQTY.TabIndex = 28
         '
         'cBoxSellQTY
@@ -171,7 +171,7 @@ Partial Class Shop
         Me.cBoxSellQTY.FormattingEnabled = True
         Me.cBoxSellQTY.Location = New System.Drawing.Point(330, 191)
         Me.cBoxSellQTY.Name = "cBoxSellQTY"
-        Me.cBoxSellQTY.Size = New System.Drawing.Size(55, 28)
+        Me.cBoxSellQTY.Size = New System.Drawing.Size(55, 21)
         Me.cBoxSellQTY.TabIndex = 29
         '
         'Shop
@@ -200,15 +200,15 @@ Partial Class Shop
         Me.PerformLayout()
 
     End Sub
-    Friend WithEvents Label1 As System.Windows.Forms.Label
     Friend WithEvents Button1 As System.Windows.Forms.Button
-    Friend WithEvents cBoxBuy As System.Windows.Forms.ComboBox
-    Friend WithEvents Label2 As System.Windows.Forms.Label
-    Friend WithEvents cBoxSell As System.Windows.Forms.ComboBox
     Friend WithEvents lblSKG As System.Windows.Forms.Label
     Friend WithEvents lblYG As System.Windows.Forms.Label
-    Friend WithEvents btnBuy As System.Windows.Forms.Button
-    Friend WithEvents btnSell As System.Windows.Forms.Button
-    Friend WithEvents cBoxBuyQTY As System.Windows.Forms.ComboBox
-    Friend WithEvents cBoxSellQTY As System.Windows.Forms.ComboBox
+    Friend WithEvents cBoxBuy As ComboBox
+    Friend WithEvents Label1 As Label
+    Friend WithEvents cBoxSell As ComboBox
+    Friend WithEvents Label2 As Label
+    Friend WithEvents btnBuy As Button
+    Friend WithEvents btnSell As Button
+    Friend WithEvents cBoxBuyQTY As ComboBox
+    Friend WithEvents cBoxSellQTY As ComboBox
 End Class

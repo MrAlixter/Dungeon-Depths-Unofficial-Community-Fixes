@@ -302,6 +302,12 @@
     <Compile Include="WindowsForms\Settings.vb">
       <SubType>Form</SubType>
     </Compile>
+    <Compile Include="WindowsForms\ShopV2.Designer.vb">
+      <DependentUpon>ShopV2.vb</DependentUpon>
+    </Compile>
+    <Compile Include="WindowsForms\ShopV2.vb">
+      <SubType>Form</SubType>
+    </Compile>
     <Compile Include="WindowsForms\Shop.Designer.vb">
       <DependentUpon>Shop.vb</DependentUpon>
     </Compile>
@@ -386,6 +392,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="WindowsForms\Settings.resx">
       <DependentUpon>Settings.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="WindowsForms\ShopV2.resx">
+      <DependentUpon>ShopV2.vb</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="WindowsForms\Shop.resx">
       <DependentUpon>Shop.vb</DependentUpon>

@@ -9,6 +9,9 @@
     Dim chestRichnessRange As Integer
     Dim encounterRate As Integer
     Dim eClockResetVal As Integer
+    Dim trapFreqMin As Integer
+    Dim trapFreqRange As Integer
+    Dim trapSizeDependence As Integer
 
     Sub New(fc As String)
         InitializeComponent()
@@ -53,6 +56,9 @@
         chestRichnessRange = 5
         encounterRate = 25
         eClockResetVal = 5
+        trapFreqMin = 3
+        trapFreqRange = 5
+        trapSizeDependence = 30
     End Sub
 
     Sub refreshBoxes()
@@ -65,6 +71,9 @@
         boxChestRichnessRange.Value = chestRichnessRange
         boxEncounterRate.Value = encounterRate
         boxEClockResetVal.Value = eClockResetVal
+        boxTrapFreqMin.Value = trapFreqMin
+        boxTrapFreqRange.Value = trapFreqRange
+        boxTrapSizeDependence.Value = trapSizeDependence
     End Sub
 
     Private Sub btnConfirm_Click(sender As Object, e As EventArgs) Handles btnConfirm.Click

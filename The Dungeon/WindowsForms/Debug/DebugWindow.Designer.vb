@@ -118,6 +118,9 @@ Partial Class Debug_Window
         Me.boxItems = New System.Windows.Forms.ListBox()
         Me.lblItems = New System.Windows.Forms.Label()
         Me.tabGeneration = New System.Windows.Forms.TabPage()
+        Me.lblInfo = New System.Windows.Forms.Label()
+        Me.btnSaveGeneration = New System.Windows.Forms.Button()
+        Me.btnGenerationReset = New System.Windows.Forms.Button()
         Me.boxChestRichnessRange = New System.Windows.Forms.NumericUpDown()
         Me.lblChestRichnessRange = New System.Windows.Forms.Label()
         Me.boxChestRichnessBase = New System.Windows.Forms.NumericUpDown()
@@ -140,9 +143,13 @@ Partial Class Debug_Window
         Me.lblHeight = New System.Windows.Forms.Label()
         Me.lblWidth = New System.Windows.Forms.Label()
         Me.lblFC = New System.Windows.Forms.Label()
-        Me.btnGenerationReset = New System.Windows.Forms.Button()
-        Me.btnSaveGeneration = New System.Windows.Forms.Button()
-        Me.lblInfo = New System.Windows.Forms.Label()
+        Me.boxTrapSizeDependence = New System.Windows.Forms.NumericUpDown()
+        Me.lblTrapSizeDependence = New System.Windows.Forms.Label()
+        Me.boxTrapFreqMin = New System.Windows.Forms.NumericUpDown()
+        Me.boxTrapFreqRange = New System.Windows.Forms.NumericUpDown()
+        Me.lblTrapFreqMin = New System.Windows.Forms.Label()
+        Me.lblTrapFreqRange = New System.Windows.Forms.Label()
+        Me.divider = New System.Windows.Forms.TextBox()
         Me.tabMain.SuspendLayout()
         Me.tabInformation.SuspendLayout()
         Me.tabGeneral.SuspendLayout()
@@ -180,6 +187,9 @@ Partial Class Debug_Window
         CType(Me.boxChestFreqRange, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me.boxHeight, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me.boxWidth, System.ComponentModel.ISupportInitialize).BeginInit()
+        CType(Me.boxTrapSizeDependence, System.ComponentModel.ISupportInitialize).BeginInit()
+        CType(Me.boxTrapFreqMin, System.ComponentModel.ISupportInitialize).BeginInit()
+        CType(Me.boxTrapFreqRange, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.SuspendLayout()
         '
         'tabMain
@@ -1294,6 +1304,13 @@ Partial Class Debug_Window
         'tabGeneration
         '
         Me.tabGeneration.BackColor = System.Drawing.Color.Black
+        Me.tabGeneration.Controls.Add(Me.boxTrapSizeDependence)
+        Me.tabGeneration.Controls.Add(Me.lblTrapSizeDependence)
+        Me.tabGeneration.Controls.Add(Me.boxTrapFreqMin)
+        Me.tabGeneration.Controls.Add(Me.boxTrapFreqRange)
+        Me.tabGeneration.Controls.Add(Me.lblTrapFreqMin)
+        Me.tabGeneration.Controls.Add(Me.lblTrapFreqRange)
+        Me.tabGeneration.Controls.Add(Me.divider)
         Me.tabGeneration.Controls.Add(Me.lblInfo)
         Me.tabGeneration.Controls.Add(Me.btnSaveGeneration)
         Me.tabGeneration.Controls.Add(Me.btnGenerationReset)
@@ -1327,6 +1344,40 @@ Partial Class Debug_Window
         Me.tabGeneration.Size = New System.Drawing.Size(742, 548)
         Me.tabGeneration.TabIndex = 5
         Me.tabGeneration.Text = "GENERATION"
+        '
+        'lblInfo
+        '
+        Me.lblInfo.Location = New System.Drawing.Point(8, 381)
+        Me.lblInfo.Name = "lblInfo"
+        Me.lblInfo.Size = New System.Drawing.Size(324, 66)
+        Me.lblInfo.TabIndex = 46
+        Me.lblInfo.Text = "Only changes to the section immediately above will take effect immediately before" &
+    " a floor change"
+        Me.lblInfo.TextAlign = System.Drawing.ContentAlignment.MiddleLeft
+        '
+        'btnSaveGeneration
+        '
+        Me.btnSaveGeneration.BackColor = System.Drawing.Color.DimGray
+        Me.btnSaveGeneration.Font = New System.Drawing.Font("Consolas", 8.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.btnSaveGeneration.ForeColor = System.Drawing.Color.White
+        Me.btnSaveGeneration.Location = New System.Drawing.Point(659, 509)
+        Me.btnSaveGeneration.Name = "btnSaveGeneration"
+        Me.btnSaveGeneration.Size = New System.Drawing.Size(75, 31)
+        Me.btnSaveGeneration.TabIndex = 45
+        Me.btnSaveGeneration.Text = "SAVE"
+        Me.btnSaveGeneration.UseVisualStyleBackColor = False
+        '
+        'btnGenerationReset
+        '
+        Me.btnGenerationReset.BackColor = System.Drawing.Color.DimGray
+        Me.btnGenerationReset.Font = New System.Drawing.Font("Consolas", 8.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.btnGenerationReset.ForeColor = System.Drawing.Color.White
+        Me.btnGenerationReset.Location = New System.Drawing.Point(9, 509)
+        Me.btnGenerationReset.Name = "btnGenerationReset"
+        Me.btnGenerationReset.Size = New System.Drawing.Size(75, 31)
+        Me.btnGenerationReset.TabIndex = 44
+        Me.btnGenerationReset.Text = "RESET"
+        Me.btnGenerationReset.UseVisualStyleBackColor = False
         '
         'boxChestRichnessRange
         '
@@ -1425,7 +1476,7 @@ Partial Class Debug_Window
         Me.separator1.FlatStyle = System.Windows.Forms.FlatStyle.Popup
         Me.separator1.Location = New System.Drawing.Point(8, 28)
         Me.separator1.Name = "separator1"
-        Me.separator1.Size = New System.Drawing.Size(325, 10)
+        Me.separator1.Size = New System.Drawing.Size(725, 10)
         Me.separator1.TabIndex = 33
         Me.separator1.TabStop = False
         '
@@ -1528,38 +1579,67 @@ Partial Class Debug_Window
         Me.lblFC.TabIndex = 22
         Me.lblFC.Text = "FloorCode: "
         '
-        'btnGenerationReset
+        'boxTrapSizeDependence
         '
-        Me.btnGenerationReset.BackColor = System.Drawing.Color.DimGray
-        Me.btnGenerationReset.Font = New System.Drawing.Font("Consolas", 8.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.btnGenerationReset.ForeColor = System.Drawing.Color.White
-        Me.btnGenerationReset.Location = New System.Drawing.Point(9, 509)
-        Me.btnGenerationReset.Name = "btnGenerationReset"
-        Me.btnGenerationReset.Size = New System.Drawing.Size(75, 31)
-        Me.btnGenerationReset.TabIndex = 44
-        Me.btnGenerationReset.Text = "RESET"
-        Me.btnGenerationReset.UseVisualStyleBackColor = False
+        Me.boxTrapSizeDependence.BackColor = System.Drawing.Color.Black
+        Me.boxTrapSizeDependence.ForeColor = System.Drawing.Color.White
+        Me.boxTrapSizeDependence.Location = New System.Drawing.Point(555, 114)
+        Me.boxTrapSizeDependence.Name = "boxTrapSizeDependence"
+        Me.boxTrapSizeDependence.Size = New System.Drawing.Size(120, 26)
+        Me.boxTrapSizeDependence.TabIndex = 249
         '
-        'btnSaveGeneration
+        'lblTrapSizeDependence
         '
-        Me.btnSaveGeneration.BackColor = System.Drawing.Color.DimGray
-        Me.btnSaveGeneration.Font = New System.Drawing.Font("Consolas", 8.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.btnSaveGeneration.ForeColor = System.Drawing.Color.White
-        Me.btnSaveGeneration.Location = New System.Drawing.Point(659, 509)
-        Me.btnSaveGeneration.Name = "btnSaveGeneration"
-        Me.btnSaveGeneration.Size = New System.Drawing.Size(75, 31)
-        Me.btnSaveGeneration.TabIndex = 45
-        Me.btnSaveGeneration.Text = "SAVE"
-        Me.btnSaveGeneration.UseVisualStyleBackColor = False
+        Me.lblTrapSizeDependence.AutoSize = True
+        Me.lblTrapSizeDependence.Location = New System.Drawing.Point(347, 116)
+        Me.lblTrapSizeDependence.Name = "lblTrapSizeDependence"
+        Me.lblTrapSizeDependence.Size = New System.Drawing.Size(198, 19)
+        Me.lblTrapSizeDependence.TabIndex = 248
+        Me.lblTrapSizeDependence.Text = "Trap Size Dependence:"
         '
-        'lblInfo
+        'boxTrapFreqMin
         '
-        Me.lblInfo.Location = New System.Drawing.Point(339, 322)
-        Me.lblInfo.Name = "lblInfo"
-        Me.lblInfo.Size = New System.Drawing.Size(395, 51)
-        Me.lblInfo.TabIndex = 46
-        Me.lblInfo.Text = "Only changes to this section will take effect immediately"
-        Me.lblInfo.TextAlign = System.Drawing.ContentAlignment.MiddleLeft
+        Me.boxTrapFreqMin.BackColor = System.Drawing.Color.Black
+        Me.boxTrapFreqMin.ForeColor = System.Drawing.Color.White
+        Me.boxTrapFreqMin.Location = New System.Drawing.Point(555, 82)
+        Me.boxTrapFreqMin.Name = "boxTrapFreqMin"
+        Me.boxTrapFreqMin.Size = New System.Drawing.Size(120, 26)
+        Me.boxTrapFreqMin.TabIndex = 247
+        '
+        'boxTrapFreqRange
+        '
+        Me.boxTrapFreqRange.BackColor = System.Drawing.Color.Black
+        Me.boxTrapFreqRange.ForeColor = System.Drawing.Color.White
+        Me.boxTrapFreqRange.Location = New System.Drawing.Point(555, 50)
+        Me.boxTrapFreqRange.Name = "boxTrapFreqRange"
+        Me.boxTrapFreqRange.Size = New System.Drawing.Size(120, 26)
+        Me.boxTrapFreqRange.TabIndex = 246
+        '
+        'lblTrapFreqMin
+        '
+        Me.lblTrapFreqMin.AutoSize = True
+        Me.lblTrapFreqMin.Location = New System.Drawing.Point(347, 84)
+        Me.lblTrapFreqMin.Name = "lblTrapFreqMin"
+        Me.lblTrapFreqMin.Size = New System.Drawing.Size(135, 19)
+        Me.lblTrapFreqMin.TabIndex = 245
+        Me.lblTrapFreqMin.Text = "Trap Freq Min:"
+        '
+        'lblTrapFreqRange
+        '
+        Me.lblTrapFreqRange.AutoSize = True
+        Me.lblTrapFreqRange.Location = New System.Drawing.Point(347, 52)
+        Me.lblTrapFreqRange.Name = "lblTrapFreqRange"
+        Me.lblTrapFreqRange.Size = New System.Drawing.Size(162, 19)
+        Me.lblTrapFreqRange.TabIndex = 244
+        Me.lblTrapFreqRange.Text = "Trap Freq Range: "
+        '
+        'divider
+        '
+        Me.divider.Location = New System.Drawing.Point(340, 52)
+        Me.divider.Multiline = True
+        Me.divider.Name = "divider"
+        Me.divider.Size = New System.Drawing.Size(1, 325)
+        Me.divider.TabIndex = 243
         '
         'Debug_Window
         '
@@ -1616,6 +1696,9 @@ Partial Class Debug_Window
         CType(Me.boxChestFreqRange, System.ComponentModel.ISupportInitialize).EndInit()
         CType(Me.boxHeight, System.ComponentModel.ISupportInitialize).EndInit()
         CType(Me.boxWidth, System.ComponentModel.ISupportInitialize).EndInit()
+        CType(Me.boxTrapSizeDependence, System.ComponentModel.ISupportInitialize).EndInit()
+        CType(Me.boxTrapFreqMin, System.ComponentModel.ISupportInitialize).EndInit()
+        CType(Me.boxTrapFreqRange, System.ComponentModel.ISupportInitialize).EndInit()
         Me.ResumeLayout(False)
 
     End Sub
@@ -1739,4 +1822,11 @@ Partial Class Debug_Window
     Friend WithEvents btnGenerationReset As Button
     Friend WithEvents btnSaveGeneration As Button
     Friend WithEvents lblInfo As Label
+    Friend WithEvents boxTrapSizeDependence As NumericUpDown
+    Friend WithEvents lblTrapSizeDependence As Label
+    Friend WithEvents boxTrapFreqMin As NumericUpDown
+    Friend WithEvents boxTrapFreqRange As NumericUpDown
+    Friend WithEvents lblTrapFreqMin As Label
+    Friend WithEvents lblTrapFreqRange As Label
+    Friend WithEvents divider As TextBox
 End Class
