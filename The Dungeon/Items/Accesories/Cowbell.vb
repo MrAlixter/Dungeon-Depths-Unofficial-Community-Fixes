@@ -18,12 +18,13 @@
     End Sub
 
     Overrides Sub onEquip()
+        If Polymorph.canBeTFed(Game.player) Then Game.player.pState.save(Game.player)
         Game.player.health += 20 / Game.player.getmaxHealth
-        Game.player.perks("cowbell") = 0
+        If Game.player.perks("cowbell") = -1 Then Game.player.perks("cowbell") = 0
         If Game.player.health > 1 Then Game.player.health = 1
     End Sub
     Public Overrides Sub onUnequip()
-        Game.player.perks("cowbell") = -1
-        If Game.player.health > 1 Then Game.player.health = 1
+        If Game.player.perks("cowbell") > -1 Then Game.player.perks("cowbell") = -1
+            If Game.player.health > 1 Then Game.player.health = 1
     End Sub
 End Class

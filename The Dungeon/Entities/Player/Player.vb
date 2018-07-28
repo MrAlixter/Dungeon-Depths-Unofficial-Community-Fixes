@@ -816,6 +816,7 @@
         inventory.Add(New RubyCirclet()) '68
         inventory.Add(New ThrallCollar()) '69
         inventory.Add(New Cowbell()) '70
+        inventory.Add(New CowBra()) '71
 
         For i = 0 To inventory.Count - 1
             If inventory(i).GetType().IsSubclassOf(GetType(MysteryPotion)) Then
@@ -831,7 +832,7 @@
                  inventory(12), inventory(16), inventory(17), inventory(18),
                  inventory(19), inventory(20), inventory(38), inventory(39),
                  inventory(46), inventory(47), inventory(54), inventory(55),
-                 inventory(56), inventory(64)}
+                 inventory(56), inventory(64), inventory(71)}
 
         weapons = {New BareFists(),
                    inventory(6), inventory(9), inventory(11), inventory(21),
@@ -1193,7 +1194,7 @@
             If Polymorph.canBeTFed(Me) Then
                 Select Case perks("cowbell")
                     Case 0
-                        If Game.turn Mod 20 = 1 Then
+                        If Game.turn Mod 20 = 5 Then
                             If Int(Rnd() * 3) = 0 Then
                                 Polymorph.transform(Me, "Minotaur_F", 0)
                                 perks("cowbell") += 1
@@ -1215,6 +1216,7 @@
                                 perks("cowbell") += 1
                             End If
                         End If
+                        Exit Select
                     Case 3
                         If Game.turn Mod 20 = 1 Then
                             If Int(Rnd() * 4) = 0 Then
@@ -1224,19 +1226,45 @@
                         End If
                         Exit Select
                     Case 4
-
+                        If Game.turn Mod 20 = 1 Then
+                            If Int(Rnd() * 4) = 0 Then
+                                Polymorph.transform(Me, "Minotaur_F", 4)
+                                perks("cowbell") += 1
+                            End If
+                        End If
+                        Exit Select
                     Case 5
-
+                        If Game.turn Mod 20 = 1 Then
+                            If Int(Rnd() * 3) = 0 Then
+                                Polymorph.transform(Me, "Minotaur_F", 5)
+                                perks("cowbell") += 1
+                            End If
+                        End If
+                        Exit Select
                     Case 6
-
+                        If Game.turn Mod 20 = 1 Then
+                            If Int(Rnd() * 3) = 0 Then
+                                Polymorph.transform(Me, "Minotaur_F", 6)
+                                perks("cowbell") += 1
+                            End If
+                        End If
+                        Exit Select
                     Case 7
-
+                        If Game.turn Mod 20 = 1 Then
+                            If Int(Rnd() * 2) = 0 Then
+                                Polymorph.transform(Me, "Minotaur_F", 7)
+                                perks("cowbell") += 1
+                            End If
+                        End If
+                        Exit Select
                     Case 8
-
-                    Case 9
-
-                    Case 10
-
+                        If Game.turn Mod 20 = 1 Then
+                            If Int(Rnd() * 2) = 0 Then
+                                Polymorph.transform(Me, "Minotaur_F", 8)
+                                perks("cowbell") += 1
+                            End If
+                        End If
+                        Exit Select
                     Case Else
                         perks("cowbell") = -1
                 End Select

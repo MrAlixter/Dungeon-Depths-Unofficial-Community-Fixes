@@ -464,7 +464,7 @@ Public Class Game
             Exit Sub
         End If
         Randomize(code.GetHashCode)
-        Dim numRooms As Integer = CInt(Int(Rnd() * 15) + 1) * Int(2.25 * mBoardWidth / 30)
+        Dim numRooms As Integer = CInt(Int(Rnd() * 15) + 1) + Int(2.25 * mBoardWidth / 30)
         Dim exits As List(Of Point) = New List(Of Point)
         For i = 0 To numRooms
             Dim roomsizecurve As Integer() = {3, 3, 4, 4, 4, 5, 5, 5, 5, 6, 6, 6, 6, 7, 7, 7, 8, 8, 9, 12}
