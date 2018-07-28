@@ -24,6 +24,10 @@ Public Class Game
     Public encounterRate As Integer = 25
     Public eClockResetVal As Integer = 5
 
+    Public trapFreqMin As Integer = 3
+    Public trapFreqRange As Integer = 5
+    Public trapSizeDependence As Integer = 30
+
     Public player As Player = New Player()
 
     Public baseChest As Chest = New Chest(player.inventory.Count - 1)
@@ -283,6 +287,7 @@ Public Class Game
         btnL.Visible = False
         btnControls.Visible = False
         btnSettings.Visible = False
+        btnAbout.Visible = False
         Dim chargen As New CharacterGenerator
         chargen.currSex = player.sexBool
         chargen.ShowDialog()
@@ -291,6 +296,7 @@ Public Class Game
             btnL.Visible = True
             btnControls.Visible = True
             btnSettings.Visible = True
+            btnAbout.Visible = True
             Exit Sub
         End If
         picPortrait.BackgroundImage = chargen.ExportIMG()
@@ -310,6 +316,9 @@ Public Class Game
         chestRichnessRange = genSet.boxChestRichnessRange.Value
         eClockResetVal = genSet.boxEClockResetVal.Value
         encounterRate = genSet.boxEncounterRate.Value
+        trapFreqMin = genSet.boxTrapFreqMin.Value
+        trapFreqRange = genSet.boxTrapFreqRange.Value
+        trapSizeDependence = genSet.boxTrapSizeDependence.Value
         If mBoardWidth * mBoardHeight < 4 Then
             Do While mBoardWidth * mBoardHeight < 4
                 If mBoardHeight < mBoardWidth Then
@@ -777,7 +786,7 @@ Public Class Game
     End Sub
     Sub placeTraps()
         trapList.Clear()
-        Dim numtrap As Integer = CInt(Int(Rnd() * 5) + 3) * Int(mBoardWidth / 30)
+        Dim numtrap As Integer = CInt(Int(Rnd() * trapFreqRange) + trapFreqMin) * Int(mBoardWidth / trapSizeDependence)
         For i = 1 To numtrap
             Dim trapX As Integer = CInt(Int(Rnd() * mBoardWidth))
             Dim trapY As Integer = CInt(Int(Rnd() * mBoardHeight))
@@ -1510,7 +1519,8 @@ Public Class Game
             Exit Sub
         End If
 
-        Dim s As Shop = New Shop
+        'Dim s As Shop = New Shop
+        Dim s As ShopV2 = New ShopV2
         s.ShowDialog()
         s.Dispose()
     End Sub
@@ -2018,6 +2028,7 @@ Public Class Game
             picStart.Visible = True
             btnS.Visible = True
             btnL.Visible = True
+            btnAbout.Visible = True
             boardWorker.CancelAsync()
             Exit Sub
         End If
@@ -2027,7 +2038,7 @@ Public Class Game
             For i = 0 To mBoardHeight - 1
                 For j = 0 To mBoardWidth - 1
                     mBoard(i, j).Dispose()
-                    If j <= 23 And i <= 15 Then
+                    If j < 23 And i < 15 Then
                         mPics(i, j).Dispose()
                     End If
                 Next
@@ -2174,32 +2185,12 @@ Public Class Game
         player.createP()
 
     End Sub
-    Private Sub btnS1_Click(sender As Object, e As EventArgs) Handles btnS1.Click
-        If solFlag Then
-            'Try
-            loadSave("s1.ave")
-            'Catch ex As System.IO.FileNotFoundException
-            '    MsgBox("Error 004: No save detected!")
-            'Catch ex2 As Exception
-            '    If MessageBox.Show("Error 005: Error in loaded in save file!" & vbCrLf & "Restart?", "Error 005", MessageBoxButtons.YesNo) = Windows.Forms.DialogResult.Yes Then
-            '        Application.Restart()
-            '    Else
-            '        Application.Exit()
-            '    End If
-            'End Try
-        Else
-            save("s1.ave")
-            imagesWorkerArg = 1
-            imagesWorker.RunWorkerAsync()
-        End If
-        pnlSaveLoad.Location = New Point(1000, pnlSaveLoad.Location.Y)
-        pnlSaveLoad.Visible = False
-        If picStart.Visible Then closesol()
-    End Sub
-    Private Sub btnS2_Click(sender As Object, e As EventArgs) Handles btnS2.Click
+    Private Sub btnSavePic_Click(sender As Object, e As EventArgs) Handles btnS1.Click, btnS2.Click, btnS3.Click, btnS3.Click, btnS4.Click, btnS5.Click, btnS6.Click, btnS7.Click, btnS8.Click
+        Dim name As String = CType(sender, Button).Name
+        Dim fileNum As String = name(name.Length - 1)
         If solFlag Then
             Try
-                loadSave("s2.ave")
+                loadSave("s" & fileNum & ".ave")
             Catch ex As System.IO.FileNotFoundException
                 MsgBox("Error 004: No save detected!")
             Catch ex2 As Exception
@@ -2210,140 +2201,8 @@ Public Class Game
                 End If
             End Try
         Else
-            save("s2.ave")
-            imagesWorkerArg = 2
-            imagesWorker.RunWorkerAsync()
-        End If
-        pnlSaveLoad.Location = New Point(1000, pnlSaveLoad.Location.Y)
-        pnlSaveLoad.Visible = False
-        If picStart.Visible Then closesol()
-    End Sub
-    Private Sub btnS3_Click(sender As Object, e As EventArgs) Handles btnS3.Click
-        If solFlag Then
-            Try
-                loadSave("s3.ave")
-            Catch ex As System.IO.FileNotFoundException
-                MsgBox("Error 004: No save detected!")
-            Catch ex2 As Exception
-                If MessageBox.Show("Error 005: Error in loaded in save file!" & vbCrLf & "Restart?", "Error 005", MessageBoxButtons.YesNo) = Windows.Forms.DialogResult.Yes Then
-                    Application.Restart()
-                Else
-                    Application.Exit()
-                End If
-            End Try
-        Else
-            save("s3.ave")
-            imagesWorkerArg = 3
-            imagesWorker.RunWorkerAsync()
-        End If
-        pnlSaveLoad.Location = New Point(1000, pnlSaveLoad.Location.Y)
-        pnlSaveLoad.Visible = False
-        If picStart.Visible Then closesol()
-    End Sub
-    Private Sub btnS4_Click(sender As Object, e As EventArgs) Handles btnS4.Click
-        If solFlag Then
-            Try
-                loadSave("s4.ave")
-            Catch ex As System.IO.FileNotFoundException
-                MsgBox("Error 004: No save detected!")
-            Catch ex2 As Exception
-                If MessageBox.Show("Error 005: Error in loaded in save file!" & vbCrLf & "Restart?", "Error 005", MessageBoxButtons.YesNo) = Windows.Forms.DialogResult.Yes Then
-                    Application.Restart()
-                Else
-                    Application.Exit()
-                End If
-            End Try
-        Else
-            save("s4.ave")
-            imagesWorkerArg = 4
-            imagesWorker.RunWorkerAsync()
-        End If
-        pnlSaveLoad.Location = New Point(1000, pnlSaveLoad.Location.Y)
-        pnlSaveLoad.Visible = False
-        If picStart.Visible Then closesol()
-    End Sub
-    Private Sub btnS5_Click(sender As Object, e As EventArgs) Handles btnS5.Click
-        If solFlag Then
-            Try
-                loadSave("s5.ave")
-            Catch ex As System.IO.FileNotFoundException
-                MsgBox("Error 004: No save detected!")
-            Catch ex2 As Exception
-                If MessageBox.Show("Error 005: Error in loaded in save file!" & vbCrLf & "Restart?", "Error 005", MessageBoxButtons.YesNo) = Windows.Forms.DialogResult.Yes Then
-                    Application.Restart()
-                Else
-                    Application.Exit()
-                End If
-            End Try
-        Else
-            save("s5.ave")
-            imagesWorkerArg = 5
-            imagesWorker.RunWorkerAsync()
-        End If
-        pnlSaveLoad.Location = New Point(1000, pnlSaveLoad.Location.Y)
-        pnlSaveLoad.Visible = False
-        If picStart.Visible Then closesol()
-    End Sub
-    Private Sub btnS6_Click(sender As Object, e As EventArgs) Handles btnS6.Click
-        If solFlag Then
-            Try
-                loadSave("s6.ave")
-            Catch ex As System.IO.FileNotFoundException
-                MsgBox("Error 004: No save detected!")
-            Catch ex2 As Exception
-                If MessageBox.Show("Error 005: Error in loaded in save file!" & vbCrLf & "Restart?", "Error 005", MessageBoxButtons.YesNo) = Windows.Forms.DialogResult.Yes Then
-                    Application.Restart()
-                Else
-                    Application.Exit()
-                End If
-            End Try
-        Else
-            save("s6.ave")
-            imagesWorkerArg = 6
-            imagesWorker.RunWorkerAsync()
-        End If
-        pnlSaveLoad.Location = New Point(1000, pnlSaveLoad.Location.Y)
-        pnlSaveLoad.Visible = False
-        If picStart.Visible Then closesol()
-    End Sub
-    Private Sub btnS7_Click(sender As Object, e As EventArgs) Handles btnS7.Click
-        If solFlag Then
-            Try
-                loadSave("s7.ave")
-            Catch ex As System.IO.FileNotFoundException
-                MsgBox("Error 004: No save detected!")
-            Catch ex2 As Exception
-                If MessageBox.Show("Error 005: Error in loaded in save file!" & vbCrLf & "Restart?", "Error 005", MessageBoxButtons.YesNo) = Windows.Forms.DialogResult.Yes Then
-                    Application.Restart()
-                Else
-                    Application.Exit()
-                End If
-            End Try
-        Else
-            save("s7.ave")
-            imagesWorkerArg = 7
-            imagesWorker.RunWorkerAsync()
-        End If
-        pnlSaveLoad.Location = New Point(1000, pnlSaveLoad.Location.Y)
-        pnlSaveLoad.Visible = False
-        If picStart.Visible Then closesol()
-    End Sub
-    Private Sub btnS8_Click(sender As Object, e As EventArgs) Handles btnS8.Click
-        If solFlag Then
-            Try
-                loadSave("s8.ave")
-            Catch ex As System.IO.FileNotFoundException
-                MsgBox("Error 004: No save detected!")
-            Catch ex2 As Exception
-                If MessageBox.Show("Error 005: Error in loaded in save file!" & vbCrLf & "Restart?", "Error 005", MessageBoxButtons.YesNo) = Windows.Forms.DialogResult.Yes Then
-                    Application.Restart()
-                Else
-                    Application.Exit()
-                End If
-            End Try
-        Else
-            save("s8.ave")
-            imagesWorkerArg = 8
+            save("s" & fileNum & ".ave")
+            imagesWorkerArg = Convert.ToInt32(fileNum)
             imagesWorker.RunWorkerAsync()
         End If
         pnlSaveLoad.Location = New Point(1000, pnlSaveLoad.Location.Y)
@@ -2358,6 +2217,7 @@ Public Class Game
             btnL.Visible = True
             btnControls.Visible = True
             btnSettings.Visible = True
+            btnAbout.Visible = True
         End If
         player.canMoveFlag = True
         If player.isDead Then formReset()
@@ -3101,6 +2961,7 @@ Public Class Game
         btnL.Visible = False
         btnControls.Visible = False
         btnSettings.Visible = False
+        btnAbout.Visible = False
         Application.DoEvents()
         Try
             CharacterGenerator.init()
@@ -3115,12 +2976,14 @@ Public Class Game
             btnL.Visible = True
             btnControls.Visible = True
             btnSettings.Visible = True
+            btnAbout.Visible = True
         Catch ex2 As Exception
             MsgBox("Error 005: Error in loaded in save file!")
             btnS.Visible = True
             btnL.Visible = True
             btnControls.Visible = True
             btnSettings.Visible = True
+            btnAbout.Visible = True
         End Try
     End Sub
     Private Sub btnControls_Click(sender As Object, e As EventArgs) Handles btnControls.Click
@@ -3150,7 +3013,8 @@ Public Class Game
             lblEvent.ForeColor = Color.White
             drawBoard()
         End If
-        Dim s As Shop = New Shop
+        'Dim s As Shop = New Shop
+        Dim s As ShopV2 = New ShopV2
         s.ShowDialog()
         s.Dispose()
     End Sub
@@ -3808,6 +3672,13 @@ Public Class Game
     Private Sub cboxNPCMG_SelectedIndexChanged(sender As Object, e As EventArgs) Handles cboxNPCMG.SelectedIndexChanged
 
     End Sub
+
+    Private Sub btnAbout_Click(sender As Object, e As EventArgs) Handles btnAbout.Click
+        Dim ab1 As About = New About
+        ab1.ShowDialog()
+        ab1.Dispose()
+    End Sub
+
     Private Sub cmboxSpec_SelectedIndexChanged(sender As Object, e As EventArgs) Handles cmboxSpec.SelectedIndexChanged
         If Not cmboxSpec.Text.Equals("-- Select --") And Not cmboxSpec.Text = "" Then ttCosts.SetToolTip(Me.cmboxSpec, Specials.SPCCost(cmboxSpec.Text))
     End Sub

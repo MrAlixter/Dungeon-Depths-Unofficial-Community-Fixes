@@ -656,5 +656,8 @@ Public Class Debug_Window
         Game.chestRichnessRange = boxChestRichnessRange.Value
         Game.encounterRate = boxEncounterRate.Value
         Game.eClockResetVal = boxEClockResetVal.Value
+        Game.trapFreqMin = boxTrapFreqMin.Value
+        Game.trapFreqRange = boxTrapFreqRange.Value
+        Game.trapSizeDependence = boxTrapSizeDependence.Value
     End Sub
 End Class
