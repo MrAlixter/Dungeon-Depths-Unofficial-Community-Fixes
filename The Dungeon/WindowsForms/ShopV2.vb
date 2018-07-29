@@ -36,8 +36,9 @@ Public Class ShopV2
         Next
 
         RefreshScreen()
+
         lblShopkeeper.Text = sk.name
-        lblShopkeeper.Left = boxShopFilter.Left - (6 * RW) - lblShopkeeper.Width 'To keep it right aligned with the shopkeeper filter inventory box
+        lblShopkeeper.Left = boxShopFilter.Left - (6 * RW) - lblShopkeeper.Width - 3 'To keep it right aligned with the shopkeeper filter inventory box
     End Sub
 
     Private Sub RefreshScreen()

@@ -11,7 +11,7 @@
         MyBase.setUsable(False)
         MyBase.dBoost = 1
         MyBase.count = 0
-        MyBase.value = 250
+        MyBase.value = 50
         MyBase.bsizeneg1 = New Tuple(Of Integer, Boolean)(19, False)
         MyBase.bsize0 = New Tuple(Of Integer, Boolean)(20, False)
         MyBase.bsize1 = New Tuple(Of Integer, Boolean)(104, True)
@@ -20,6 +20,7 @@
         MyBase.bsize4 = New Tuple(Of Integer, Boolean)(107, True)
         MyBase.bsize5 = New Tuple(Of Integer, Boolean)(108, True)
         MyBase.bsize6 = New Tuple(Of Integer, Boolean)(109, True)
-        'MyBase.bsize7 = New Tuple(Of Integer, Boolean)(110, True)
+        MyBase.bsize7 = New Tuple(Of Integer, Boolean)(110, True)
+        MyBase.compressesBreasts = True
     End Sub
 End Class

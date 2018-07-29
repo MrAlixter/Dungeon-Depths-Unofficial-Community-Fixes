@@ -189,11 +189,8 @@ Partial Class Game
         Me.chkAcc = New System.Windows.Forms.CheckBox()
         Me.picCrystal = New System.Windows.Forms.PictureBox()
         Me.picCrystalf = New System.Windows.Forms.PictureBox()
-<<<<<<< HEAD
         Me.btnAbout = New System.Windows.Forms.Button()
-=======
         Me.lblEVD = New System.Windows.Forms.Label()
->>>>>>> master
         CType(Me.picMarkBClothes, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me.picMarkBRearHair2, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me.picMarkBRearHair1, System.ComponentModel.ISupportInitialize).BeginInit()
@@ -740,7 +737,6 @@ Partial Class Game
         Me.btnATK.UseVisualStyleBackColor = False
         Me.btnATK.Visible = False
         '
-<<<<<<< HEAD
         'lblEVD
         '
         Me.lblEVD.AutoSize = True
@@ -752,8 +748,6 @@ Partial Class Game
         Me.lblEVD.TabIndex = 155
         Me.lblEVD.Text = "EVD = TEMP"
         '
-=======
->>>>>>> master
         'lblSPD
         '
         Me.lblSPD.AutoSize = True
@@ -1880,7 +1874,7 @@ Partial Class Game
         Me.lblNext.Name = "lblNext"
         Me.lblNext.Size = New System.Drawing.Size(203, 14)
         Me.lblNext.TabIndex = 277
-        Me.lblNext.Text = "Press any key to continue..."
+        Me.lblNext.Text = "Press any non-movement key to continue..."
         '
         'picDescPort
         '
@@ -2123,7 +2117,6 @@ Partial Class Game
         Me.picCrystalf.TabStop = False
         Me.picCrystalf.Visible = False
         '
-<<<<<<< HEAD
         'btnAbout
         '
         Me.btnAbout.BackColor = System.Drawing.Color.Black
@@ -2136,7 +2129,6 @@ Partial Class Game
         Me.btnAbout.TabIndex = 292
         Me.btnAbout.Text = "About"
         Me.btnAbout.UseVisualStyleBackColor = False
-=======
         'lblEVD
         '
         Me.lblEVD.AutoSize = True
@@ -2148,7 +2140,6 @@ Partial Class Game
         Me.lblEVD.TabIndex = 155
         Me.lblEVD.Text = "EVD = TEMP"
         Me.lblEVD.Visible = False
->>>>>>> master
         '
         'Game
         '
@@ -2534,9 +2525,6 @@ Partial Class Game
     Friend WithEvents chkAcc As System.Windows.Forms.CheckBox
     Friend WithEvents picCrystal As System.Windows.Forms.PictureBox
     Friend WithEvents picCrystalf As System.Windows.Forms.PictureBox
-<<<<<<< HEAD
     Friend WithEvents btnAbout As Button
-=======
     Friend WithEvents lblEVD As System.Windows.Forms.Label
->>>>>>> master
 End Class

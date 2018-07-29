@@ -16,6 +16,7 @@
     Public bsize5 As Tuple(Of Integer, Boolean)
     Public bsize6 As Tuple(Of Integer, Boolean)
     Public bsize7 As Tuple(Of Integer, Boolean)
+    Public compressesBreasts As Boolean
     Overridable Sub onEquip()
     End Sub
     Overridable Sub onUnequip()

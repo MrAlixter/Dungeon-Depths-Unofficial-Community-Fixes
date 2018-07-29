@@ -12,6 +12,7 @@
         MyBase.aBoost = 0
         MyBase.count = 0
         MyBase.value = 0
+        MyBase.compressesBreasts = True
         'MyBase.bsizeneg1 = New Tuple(Of Integer, Boolean)(Form1.player.sState.iArrInd(3).Item1, False)
         'MyBase.bsize1 = New Tuple(Of Integer, Boolean)(Form1.player.sState.iArrInd(3).Item1, True)
         'If Form1.player.name = "Mark" Then MyBase.bsize2 = New Tuple(Of Integer, Boolean)(CharacterGenerator1.fClothing.Count - 1, True)

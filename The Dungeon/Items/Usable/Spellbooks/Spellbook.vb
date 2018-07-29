@@ -12,7 +12,7 @@
     End Sub
 
     Overrides Sub use()
-        If Int(Rnd() * 10) = 0 Then
+        If Int(Rnd() * 10) = -1 Then
             'bimbo tf
         Else
             Randomize()
