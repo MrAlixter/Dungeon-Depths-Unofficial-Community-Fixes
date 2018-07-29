@@ -13,9 +13,9 @@
 
     Overrides Sub use()
         If Me.getUsable() = False Then Exit Sub
-        Game.lstLog.Items.Add("You use the " & getName() & ". +5 Speed!")
+        Game.lstLog.Items.Add("You use the " & getName() & ". +5 base SPD!")
         Game.lstLog.TopIndex = Game.lstLog.Items.Count - 1
-        Game.player.sBuff += 5
+        Game.player.speed += 5
         Game.player.UIupdate()
         count -= 1
     End Sub

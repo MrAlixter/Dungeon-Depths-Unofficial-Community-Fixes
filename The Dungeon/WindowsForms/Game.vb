@@ -7,8 +7,8 @@ Public Class Game
     'Form1 is the main driver form that runs the game
 
     'board instance variables
-    Public mBoardWidth As Integer = 50
-    Public mBoardHeight As Integer = 40
+    Public mBoardWidth As Integer = 60
+    Public mBoardHeight As Integer = 60
 
     Public mBoard(,) As mTile
     Public mPics(,) As PictureBox       '(NOT SAVED)
@@ -473,7 +473,7 @@ Public Class Game
             Exit Sub
         End If
         Randomize(code.GetHashCode)
-        Dim numRooms As Integer = CInt(Int(Rnd() * 15) + 1) * Int(2.25 * mBoardWidth / 30)
+        Dim numRooms As Integer = CInt(Int(Rnd() * 15) + 1) + Int(2.25 * mBoardWidth / 30)
         Dim exits As List(Of Point) = New List(Of Point)
         For i = 0 To numRooms
             Dim roomsizecurve As Integer() = {3, 3, 4, 4, 4, 5, 5, 5, 5, 6, 6, 6, 6, 7, 7, 7, 8, 8, 9, 12}
@@ -1125,11 +1125,12 @@ Public Class Game
             pnlDescript.Visible = False
             Return True
         End If
-        If lblEvent.Visible And Not (Keydata.Equals(Keys.Enter)) Then
+        If lblEvent.Visible And Not (Keydata.Equals(Keys.Enter)) And Not Keydata.Equals(cKeys(0)) And Not Keydata.Equals(cKeys(1)) And Not Keydata.Equals(cKeys(2)) And Not Keydata.Equals(cKeys(3)) Then
             If npcmode = False Then
                 picNPC.Visible = False
                 lblEvent.Visible = False
                 lblEvent.ForeColor = Color.White
+                player.canMoveFlag = True
                 If Not combatmode Then player.canMoveFlag = True
                 If Not lblEventOnClose Is Nothing Then
                     lblEvent.Visible = True
@@ -1140,6 +1141,9 @@ Public Class Game
                 drawBoard()
                 If btnEQP.Enabled = False Then btnEQP.Enabled = True
             End If
+            Return True
+        End If
+        If lblEvent.Visible And (Keydata.Equals(cKeys(0)) Or Keydata.Equals(cKeys(1)) Or Keydata.Equals(cKeys(2)) Or Keydata.Equals(cKeys(3))) Then
             Return True
         End If
         If keyspresed.Length > 4 Then
@@ -3220,7 +3224,7 @@ Public Class Game
                 ct = 0
             End If
         Loop
-        If Not combatmode Then out += " " & vbCrLf & " " & vbCrLf & "Press any key to continue." Else out += " " & vbCrLf & " " & vbCrLf & "Click a combat button to continue."
+        If Not combatmode Then out += " " & vbCrLf & " " & vbCrLf & "Press any non-movement key to continue." Else out += " " & vbCrLf & " " & vbCrLf & "Click a combat button to continue."
         If 1 = 1 Then lblEvent.Text = out Else lblEvent.Text = vbCrLf & "---------------------------------------------------------------------------" & vbCrLf & out
         lblEvent.BringToFront()
         lblEvent.Location = New Point((265 * (Me.Size.Width / 688)) - (lblEvent.Size.Width / 2), (65 * (Me.Size.Width / 688)))
@@ -3254,7 +3258,7 @@ Public Class Game
                 ct = 0
             End If
         Loop
-        If Not combatmode Then out += " " & vbCrLf & " " & vbCrLf & "Press any key to continue." Else out += " " & vbCrLf & " " & vbCrLf & "Click a combat button to continue."
+        If Not combatmode Then out += " " & vbCrLf & " " & vbCrLf & "Press any non-movement key to continue." Else out += " " & vbCrLf & " " & vbCrLf & "Click a combat button to continue."
         lblEvent.Text = out
         lblEvent.BringToFront()
         lblEvent.Location = New Point((265 * (Me.Size.Width / 688)) - (lblEvent.Size.Width / 2), 65 * (Me.Size.Width / 688))
@@ -3290,7 +3294,7 @@ Public Class Game
             End If
         Loop
 
-        out += " " & vbCrLf & " " & vbCrLf & "Press any key to continue."
+        out += " " & vbCrLf & " " & vbCrLf & "Press any non-movement key to continue."
 
         lblEvent.Text = out
         lblEvent.BringToFront()

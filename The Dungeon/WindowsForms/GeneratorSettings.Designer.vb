@@ -284,9 +284,9 @@ Partial Class GeneratorSettings
         Me.btnConfirm.BackColor = System.Drawing.Color.DimGray
         Me.btnConfirm.Font = New System.Drawing.Font("Consolas", 8.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.btnConfirm.ForeColor = System.Drawing.Color.White
-        Me.btnConfirm.Location = New System.Drawing.Point(697, 418)
+        Me.btnConfirm.Location = New System.Drawing.Point(680, 418)
         Me.btnConfirm.Name = "btnConfirm"
-        Me.btnConfirm.Size = New System.Drawing.Size(75, 31)
+        Me.btnConfirm.Size = New System.Drawing.Size(92, 31)
         Me.btnConfirm.TabIndex = 23
         Me.btnConfirm.Text = "CONFIRM"
         Me.btnConfirm.UseVisualStyleBackColor = False

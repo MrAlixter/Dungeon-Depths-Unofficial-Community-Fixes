@@ -18,6 +18,7 @@
         bsize2 = New Tuple(Of Integer, Boolean)(84, True)
         bsize3 = New Tuple(Of Integer, Boolean)(86, True)
         bsize4 = New Tuple(Of Integer, Boolean)(88, True)
+        MyBase.compressesBreasts = True
     End Sub
 
     Overrides Sub discard()

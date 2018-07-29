@@ -893,6 +893,7 @@
                 If p.iArrInd(1).Item2 Then
                     out += "  Looking at your reflection in the nearby pool of water, you see that you now have bovine ears!  Between these and the horns, you're pretty sure you're slowly turning into some sort of cow."
                     p.iArrInd(6) = New Tuple(Of Integer, Boolean)(8, True)
+                    p.wBuff -= 1
                 Else
                     out += "  You can feel the tickle of hair much further down on your back than you are used to, and a quick glance in a nearby puddle confirms that your hair has lengthened considerably."
                     p.iArrInd(1) = New Tuple(Of Integer, Boolean)(1, True)
@@ -900,14 +901,44 @@
                     If Not Int(Rnd() * 3) = 0 Then
                         out += "  Looking at your reflection in the nearby pool of water, you see that you now have bovine ears!  Between these and the horns, you're pretty sure you're slowly turning into some sort of cow."
                         p.iArrInd(6) = New Tuple(Of Integer, Boolean)(8, True)
+                        p.equippedAcce.wBoost -= 1
                     End If
                 End If
+                p.hBuff += 5
+                p.health += 5 / p.getmaxHealth
                 Game.pushLblEvent(out)
             Case 3
                 Dim out = "As you bend down to pick up a dropped item, your cowbell jangles as you stand back up.  Already used to this, you give yourself a quick once over.  You don't see that much different, though your hair seems to have styled itself since you last checked up on it."
                 p.iArrInd(1) = New Tuple(Of Integer, Boolean)(16, True)
                 p.iArrInd(5) = New Tuple(Of Integer, Boolean)(20, True)
                 p.iArrInd(15) = New Tuple(Of Integer, Boolean)(16, True)
+                Game.pushLblEvent(out)
+            Case 4
+                p.hornInd = 2
+                Game.pushLblEvent("As you trudge through a particularly dusty patch of dungeon, you feel a powerful sneeze coming on.  As the sneeze rocks your body, the cowbell on your neck rattles noisily, the loudest it has rung yet, and you need to take a few minutes to get your bearings back.  Your head feels slightly heavier, and as you feel around you can tell that your horns have gotten longer, and seem to have a more extreme curl.  Sweet!")
+            Case 5 Or 6 Or 7
+                Dim out = "Despite being out of the cloud of dust, another small sneeze rattles your bell slightly."
+                If Game.player.breastSize = 7 Then
+                    out += "  Nothing seems to have happened, and you go on your way."
+                ElseIf Game.player.breastSize = -1 Then
+                    out += "  Your breasts jiggle a little, and ..." & vbCrLf & vbCrLf & "Wait, BREASTS?!" & vbCrLf & vbCrLf & "You strip off your top and examine your chest and sure enough, you have two small breasts now."
+                    Game.player.be()
+                Else
+                    out += "  Your breasts jiggle a little, and it seems that you've gone up a cup size."
+                    Game.player.be()
+                End If
+                If Not Game.player.sexBool Then
+                    If Int(Rnd() * 2) = 0 Then
+                        out += "  You also notice that you feel a little ... breathier ... between your legs and a quick pat down confirms that you are now female.  Seems like this bell is turning you into a proper cow after all..."
+                        Game.player.MtF()
+                    End If
+                End If
+                Game.pushLblEvent(out)
+            Case 8
+                Game.pushLblEvent("You take another look at your cowbell.  Every time its rung thus far, you've progressed a little more into some form of bovine-human hybrid.  𝘔𝘪𝘯𝘰𝘵𝘢𝘶𝘳, you correct your self.  It's been turning you into a minotaur, and a female one at that.  Your transformation seems pretty far along, and you'd wager you're only one more chime away from completing the change.  With that in mind, you give the bell a hard shake, and the sound from its ring echos throughout the dungeon." & vbCrLf & vbCrLf & "You are now a female minotaur!")
+                Game.player.pForm = p.forms("Minotaur Cow")
+                p.inventory(71).add(1)
+                Equipment.clothesChange("Cow_Print_Bra")
         End Select
     End Sub
 

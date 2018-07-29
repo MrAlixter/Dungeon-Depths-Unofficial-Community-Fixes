@@ -4,7 +4,7 @@
     'instance data for a state
     Dim name, sex, description As String
     Public pClass As pClass = New pClass(1, 1, 1, 1, 1, 1, "Classless")
-    Public pForm As pForm = New pForm(1, 1, 1, 1, 1, 1, "Human")
+    Public pForm As pForm = New pForm(1, 1, 1, 1, 1, 1, "Human", True)
     Dim health As Double
     Dim maxHealth, mana, maxMana, attack, defence As Integer
     Dim will, speed, evade, gold, lust As Integer
@@ -62,7 +62,7 @@
         name = ""
         sex = ""
         pClass = New pClass(1, 1, 1, 1, 1, 1, "Classless")
-        pForm = New pForm(1, 1, 1, 1, 1, 1, "Human")
+        pForm = New pForm(1, 1, 1, 1, 1, 1, "Human", True)
         description = ""
         health = 0
         maxHealth = 0
@@ -179,7 +179,7 @@
             name = ""
             sex = ""
             pClass = New pClass(1, 1, 1, 1, 1, 1, "Classless")
-            pForm = New pForm(1, 1, 1, 1, 1, 1, "Human")
+            pForm = New pForm(1, 1, 1, 1, 1, 1, "Human", True)
             description = ""
             health = 0
             maxHealth = 0

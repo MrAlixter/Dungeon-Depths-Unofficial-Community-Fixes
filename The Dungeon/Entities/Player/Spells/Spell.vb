@@ -12,7 +12,7 @@
     End Sub
     Sub cast()
         If caster.mana < cost Then
-            Game.pushLblEvent("You don't have enough mana!")
+            Game.pushLblEvent("You don't have enough mana! (" & name & " costs " & cost & " mana)")
             Game.lstLog.Items.Add("You don't have enough mana!")
             Game.lstLog.TopIndex = Game.lstLog.Items.Count - 1
             Exit Sub

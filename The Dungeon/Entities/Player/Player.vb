@@ -6,7 +6,7 @@
     'Player Instance variables
     Public name, sex, description As String
     Public pClass As pClass = New pClass(1, 1, 1, 1, 1, 1, "Classless")
-    Public pForm As pForm = New pForm(1, 1, 1, 1, 1, 1, "Human")
+    Public pForm As pForm = New pForm(1, 1, 1, 1, 1, 1, "Human", True)
     'Public level, xp, nextLevelXp As Integer
     Public health As Double
     Public maxHealth, mana, maxMana, attack, defence, will, speed, evade, gold, lust As Integer
@@ -816,6 +816,7 @@
         inventory.Add(New RubyCirclet()) '68
         inventory.Add(New ThrallCollar()) '69
         inventory.Add(New Cowbell()) '70
+        inventory.Add(New CowBra()) '71
 
         For i = 0 To inventory.Count - 1
             If inventory(i).GetType().IsSubclassOf(GetType(MysteryPotion)) Then
@@ -831,7 +832,7 @@
                  inventory(12), inventory(16), inventory(17), inventory(18),
                  inventory(19), inventory(20), inventory(38), inventory(39),
                  inventory(46), inventory(47), inventory(54), inventory(55),
-                 inventory(56), inventory(64)}
+                 inventory(56), inventory(64), inventory(71)}
 
         weapons = {New BareFists(),
                    inventory(6), inventory(9), inventory(11), inventory(21),
@@ -895,29 +896,29 @@
         classes.Add("Unconscious", New pClass(pClass.h, pClass.a, pClass.m, pClass.d, pClass.s, pClass.w, "Unconscious"))
 
         'Creates the form dictionary
-        forms.Add("Human", New pForm(1, 1, 1, 1, 1, 1, "Human"))
-        forms.Add("Elf", New pForm(0.75, 1, 1.5, 1, 1, 1, "Elf"))
-        forms.Add("Android", New pForm(1, 1, 1, 1.5, 1, 0.75, "Android"))
-        forms.Add("Succubus", New pForm(1.5, 1.5, 1.5, 0.75, 1.5, 1, "Succubus"))
-        forms.Add("Half-Succubus", New pForm(1, 1.5, 1, 1, 1.5, 1, "Half-Succubus"))
-        forms.Add("Angel", New pForm(2, 1, 1, 1, 1.5, 1.5, "Angel"))
-        forms.Add("Slime", New pForm(0.4, 1, 1, 2.5, 0.75, 0.75, "Slime"))
-        forms.Add("Half-Slime", New pForm(0.75, 1, 1, 1.7, 1, 1, "Half-Slime"))
-        forms.Add("Tigress", New pForm(1, 1.5, 1, 0.75, 1.5, 1, "Tigress"))
-        forms.Add("Dragon", New pForm(1, 1.5, 1.5, 2, 0.5, 1, "Dragon"))
-        forms.Add("Half-Dragon", New pForm(1, 1.5, 1, 1.5, 0.75, 1, "Half-Dragon"))
-        forms.Add("Harpy", New pForm(1, 1.5, 1, 0.5, 2, 1, "Harpy"))
-        forms.Add("Djinn", New pForm(0.75, 0.75, 3, 0.5, 0.75, 0.5, "Djinn"))
-        forms.Add("Minotaur Cow", New pForm(2, 1, 0.75, 1.5, 0.75, 0.5, "Minotaur Cow"))
-        forms.Add("Minotaur Bull", New pForm(1.5, 1.5, 0.75, 1.5, 0.75, 0.5, "Minotaur Bull"))
-        forms.Add("Golem", New pForm(0.75, 1, 0.5, 2, 0.5, 0.5, "Golem"))
-        forms.Add("Elder-God", New pForm(3, 3, 3, 3, 3, 3, "Elder-God"))
-        forms.Add("Gynoid", New pForm(0.75, 0.75, 0.75, 1.5, 1.5, 0.5, "Gynoid"))
-        forms.Add("Cyborg", New pForm(1, 1.5, 1.5, 1.5, 1.5, 1, "Cyborg"))
-        forms.Add("Blowup Doll", New pForm(1, 1, 1, 0.5, 0.5, 0.75, "Blowup Doll"))
-        forms.Add("Cake", New pForm(1.5, 0.75, 1, 0.5, 0.5, 1, "Cake"))
-        forms.Add("Sheep", New pForm(1.5, 0.5, 0.5, 1.5, 0.5, 0.75, "Sheep"))
-        forms.Add("Frog", New pForm(0.75, 0.5, 0.5, 0.5, 2, 1, "Frog"))
+        forms.Add("Human", New pForm(1, 1, 1, 1, 1, 1, "Human", True))
+        forms.Add("Elf", New pForm(0.75, 1, 1.5, 1, 1, 1, "Elf", True))
+        forms.Add("Android", New pForm(1, 1, 1, 1.5, 1, 0.75, "Android", True))
+        forms.Add("Succubus", New pForm(1.5, 1.5, 1.5, 0.75, 1.5, 1, "Succubus", True))
+        forms.Add("Half-Succubus", New pForm(1, 1.5, 1, 1, 1.5, 1, "Half-Succubus", True))
+        forms.Add("Angel", New pForm(2, 1, 1, 1, 1.5, 1.5, "Angel", True))
+        forms.Add("Slime", New pForm(0.4, 1, 1, 2.5, 0.75, 0.75, "Slime", True))
+        forms.Add("Half-Slime", New pForm(0.75, 1, 1, 1.7, 1, 1, "Half-Slime", True))
+        forms.Add("Tigress", New pForm(1, 1.5, 1, 0.75, 1.5, 1, "Tigress", False))
+        forms.Add("Dragon", New pForm(1, 1.5, 1.5, 2, 0.5, 1, "Dragon", False))
+        forms.Add("Half-Dragon", New pForm(1, 1.5, 1, 1.5, 0.75, 1, "Half-Dragon", False))
+        forms.Add("Harpy", New pForm(1, 1.5, 1, 0.5, 2, 1, "Harpy", False))
+        forms.Add("Djinn", New pForm(0.75, 0.75, 3, 0.5, 0.75, 0.5, "Djinn", True))
+        forms.Add("Minotaur Cow", New pForm(2, 1, 0.75, 1.5, 0.75, 0.5, "Minotaur Cow", True))
+        forms.Add("Minotaur Bull", New pForm(1.5, 1.5, 0.75, 1.5, 0.75, 0.5, "Minotaur Bull", True))
+        forms.Add("Golem", New pForm(0.75, 1, 0.5, 2, 0.5, 0.5, "Golem", True))
+        forms.Add("Elder-God", New pForm(3, 3, 3, 3, 3, 3, "Elder-God", False))
+        forms.Add("Gynoid", New pForm(0.75, 0.75, 0.75, 1.5, 1.5, 0.5, "Gynoid", True))
+        forms.Add("Cyborg", New pForm(1, 1.5, 1.5, 1.5, 1.5, 1, "Cyborg", True))
+        forms.Add("Blowup Doll", New pForm(1, 1, 1, 0.5, 0.5, 0.75, "Blowup Doll", False))
+        forms.Add("Cake", New pForm(1.5, 0.75, 1, 0.5, 0.5, 1, "Cake", False))
+        forms.Add("Sheep", New pForm(1.5, 0.5, 0.5, 1.5, 0.5, 0.75, "Sheep", False))
+        forms.Add("Frog", New pForm(0.75, 0.5, 0.5, 0.5, 2, 1, "Frog", False))
     End Sub
     Sub perkUpdate()
         'hunger
@@ -1193,7 +1194,7 @@
             If Polymorph.canBeTFed(Me) Then
                 Select Case perks("cowbell")
                     Case 0
-                        If Game.turn Mod 20 = 1 Then
+                        If Game.turn Mod 20 = 5 Then
                             If Int(Rnd() * 3) = 0 Then
                                 Polymorph.transform(Me, "Minotaur_F", 0)
                                 perks("cowbell") += 1
@@ -1215,6 +1216,7 @@
                                 perks("cowbell") += 1
                             End If
                         End If
+                        Exit Select
                     Case 3
                         If Game.turn Mod 20 = 1 Then
                             If Int(Rnd() * 4) = 0 Then
@@ -1224,19 +1226,45 @@
                         End If
                         Exit Select
                     Case 4
-
+                        If Game.turn Mod 20 = 1 Then
+                            If Int(Rnd() * 4) = 0 Then
+                                Polymorph.transform(Me, "Minotaur_F", 4)
+                                perks("cowbell") += 1
+                            End If
+                        End If
+                        Exit Select
                     Case 5
-
+                        If Game.turn Mod 20 = 1 Then
+                            If Int(Rnd() * 3) = 0 Then
+                                Polymorph.transform(Me, "Minotaur_F", 5)
+                                perks("cowbell") += 1
+                            End If
+                        End If
+                        Exit Select
                     Case 6
-
+                        If Game.turn Mod 20 = 1 Then
+                            If Int(Rnd() * 3) = 0 Then
+                                Polymorph.transform(Me, "Minotaur_F", 6)
+                                perks("cowbell") += 1
+                            End If
+                        End If
+                        Exit Select
                     Case 7
-
+                        If Game.turn Mod 20 = 1 Then
+                            If Int(Rnd() * 2) = 0 Then
+                                Polymorph.transform(Me, "Minotaur_F", 7)
+                                perks("cowbell") += 1
+                            End If
+                        End If
+                        Exit Select
                     Case 8
-
-                    Case 9
-
-                    Case 10
-
+                        If Game.turn Mod 20 = 1 Then
+                            If Int(Rnd() * 2) = 0 Then
+                                Polymorph.transform(Me, "Minotaur_F", 8)
+                                perks("cowbell") += 1
+                            End If
+                        End If
+                        Exit Select
                     Case Else
                         perks("cowbell") = -1
                 End Select
