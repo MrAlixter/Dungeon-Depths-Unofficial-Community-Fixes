@@ -598,13 +598,13 @@
         currState.save(Me)
         pState.save(Me)
 
-
-
-        If Game.cboxMG.Items.Contains("Heartblast Starcannon") Then
-            Game.cboxMG.Items.Remove("Heartblast Starcannon")
-            Game.lstLog.Items.Add("'Heartblast Starcannon' spell forgotten!")
-            Game.lstLog.TopIndex = Game.lstLog.Items.Count - 1
+        If Game.cboxMG.SelectedItem = "Heartblast Starcannon" Then
+            Game.cboxMG.Items.Insert(0, "-- Select --")
+            Game.cboxMG.SelectedIndex = 0
         End If
+        Do While Game.cboxMG.Items.Contains("Heartblast Starcannon")
+            Game.cboxMG.Items.Remove("Heartblast Starcannon")
+        Loop
 
         If health > 1 Then health = 1
         If mana > maxMana + mBuff Then mana = maxMana + mBuff
@@ -637,11 +637,14 @@
         currState.save(Me)
         pState.save(Me)
 
-        If Game.cboxMG.Items.Contains("Heartblast Starcannon") Then
+        If Game.cboxMG.SelectedItem = "Heartblast Starcannon" Then
+            Game.cboxMG.Items.Insert(0, "-- Select --")
+            Game.cboxMG.SelectedIndex = 0
+        End If
+        Do While Game.cboxMG.Items.Contains("Heartblast Starcannon")
             Game.cboxMG.Items.Remove("Heartblast Starcannon")
             Game.lstLog.Items.Add("'Heartblast Starcannon' spell forgotten!")
-            Game.lstLog.TopIndex = Game.lstLog.Items.Count - 1
-        End If
+        Loop
 
         If health > 1 Then health = 1
         If mana > maxMana + mBuff Then mana = maxMana + mBuff
