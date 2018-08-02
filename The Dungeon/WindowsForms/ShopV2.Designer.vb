@@ -37,15 +37,16 @@ Partial Class ShopV2
         Me.boxShop = New System.Windows.Forms.ListBox()
         Me.lblPlayer = New System.Windows.Forms.Label()
         Me.lblShopkeeper = New System.Windows.Forms.Label()
+        Me.btnInspect = New System.Windows.Forms.Button()
         CType(Me.number, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.SuspendLayout()
         '
         'btnDone
         '
-        Me.btnDone.BackColor = System.Drawing.SystemColors.ButtonFace
+        Me.btnDone.BackColor = System.Drawing.Color.Black
         Me.btnDone.Cursor = System.Windows.Forms.Cursors.Hand
         Me.btnDone.Font = New System.Drawing.Font("Consolas", 8.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.btnDone.ForeColor = System.Drawing.Color.Black
+        Me.btnDone.ForeColor = System.Drawing.Color.White
         Me.btnDone.Location = New System.Drawing.Point(228, 446)
         Me.btnDone.Margin = New System.Windows.Forms.Padding(4, 5, 4, 5)
         Me.btnDone.Name = "btnDone"
@@ -212,12 +213,27 @@ Partial Class ShopV2
         Me.lblShopkeeper.TabIndex = 198
         Me.lblShopkeeper.Text = "Shopkeeper"
         '
+        'btnInspect
+        '
+        Me.btnInspect.BackColor = System.Drawing.Color.Black
+        Me.btnInspect.Cursor = System.Windows.Forms.Cursors.Hand
+        Me.btnInspect.Font = New System.Drawing.Font("Consolas", 8.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.btnInspect.ForeColor = System.Drawing.Color.White
+        Me.btnInspect.Location = New System.Drawing.Point(263, 369)
+        Me.btnInspect.Margin = New System.Windows.Forms.Padding(4, 5, 4, 5)
+        Me.btnInspect.Name = "btnInspect"
+        Me.btnInspect.Size = New System.Drawing.Size(89, 32)
+        Me.btnInspect.TabIndex = 199
+        Me.btnInspect.Text = "Inspect"
+        Me.btnInspect.UseVisualStyleBackColor = False
+        '
         'ShopV2
         '
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Inherit
         Me.BackColor = System.Drawing.Color.Black
         Me.ClientSize = New System.Drawing.Size(614, 491)
         Me.ControlBox = False
+        Me.Controls.Add(Me.btnInspect)
         Me.Controls.Add(Me.lblShopkeeper)
         Me.Controls.Add(Me.lblPlayer)
         Me.Controls.Add(Me.boxShopFilter)
@@ -256,4 +272,5 @@ Partial Class ShopV2
     Friend WithEvents boxShop As ListBox
     Friend WithEvents lblPlayer As Label
     Friend WithEvents lblShopkeeper As Label
+    Friend WithEvents btnInspect As Button
 End Class

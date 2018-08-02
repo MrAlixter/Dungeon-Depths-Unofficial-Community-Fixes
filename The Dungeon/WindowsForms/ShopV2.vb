@@ -220,4 +220,23 @@ Public Class ShopV2
             Return s & " " & i & "g" & "  x" & j
         End If
     End Function
+
+    Private Sub btnInspect_Click(sender As Object, e As EventArgs) Handles btnInspect.Click
+        Dim name As String = Nothing
+        If boxInventory.SelectedItems.Count > 0 Then
+            name = Regex.Split(boxInventory.SelectedItems(0), "\s*?[0-9]*?g\s*?x[0-9]*?")(0)
+        ElseIf boxShop.SelectedItems.Count > 0 Then
+            name = Regex.Split(boxShop.SelectedItems(0), "\s*?[0-9]*?g")(0)
+        End If
+
+        If name IsNot Nothing Then
+            For i As Integer = 0 To p.inventory.Count - 1
+                If p.inventory(i).getName() = name Then
+                    p.inventory(i).examine()
+                    Exit For
+                End If
+            Next
+        End If
+
+    End Sub
 End Class
