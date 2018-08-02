@@ -51,8 +51,8 @@
                 pPronoun = "his"
                 rPronoun = "him"
                 picNormal = Game.picSW.BackgroundImage
-                picPrincess = Game.picSWb.BackgroundImage
-                picBunny = Game.PicSWPrin.BackgroundImage
+                picPrincess = Game.PicSWPrin.BackgroundImage
+                picBunny = Game.picSWb.BackgroundImage
             Case Else
                 MyBase.name = "eRr0rH3Ro"
                 MyBase.health = 60
