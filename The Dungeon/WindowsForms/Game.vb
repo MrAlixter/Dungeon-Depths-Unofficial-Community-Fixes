@@ -399,7 +399,7 @@ Public Class Game
                 For j = 0 To mBoardWidth - 1
                     mBoard(i, j).Dispose()
                     If j <= 23 And i <= 15 Then
-                        mPics(i, j).Dispose()
+                        If Not mPics(i, j) Is Nothing Then mPics(i, j).Dispose()
                     End If
                 Next
             Next
@@ -442,7 +442,7 @@ Public Class Game
                 newPicture.Name = "boardBox|" & x & "_" & y
                 newPicture.BackgroundImageLayout = ImageLayout.Stretch
                 newPicture.Size = New Point(YSize * 1.25, XSize * 1.25)
-                newPicture.Location = New Point(60 + x * (XSize * 1.24), 75 + y * (YSize * 1.24))
+                newPicture.Location = New Point(60 + x * (XSize * 1.233), 75 + y * (YSize * 1.233))
                 newPicture.Visible = True
                 Me.Controls.Add(newPicture)
                 mPics(y, x) = newPicture
@@ -794,7 +794,7 @@ Public Class Game
                 trapX = CInt(Int(Rnd() * mBoardWidth))
                 trapY = CInt(Int(Rnd() * mBoardHeight))
             Loop
-            Dim trap As New Trap(New Point(trapX, trapY), Int(Rnd() * 4))
+            Dim trap As New Trap(New Point(trapX, trapY), 1) 'Int(Rnd() * 4))
             trapList.Add(trap)
             mBoard(trapY, trapX).ForeColor = Color.FromArgb(45, 45, 45)
             mBoard(trapY, trapX).Text = "+"

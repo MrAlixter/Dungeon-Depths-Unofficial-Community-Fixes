@@ -348,6 +348,10 @@
                     p.iArrInd(3) = p.equippedArmor.bsize4
                 Case 5
                     p.iArrInd(3) = p.equippedArmor.bsize5
+                Case 6
+                    p.iArrInd(3) = p.equippedArmor.bsize6
+                Case 7
+                    p.iArrInd(3) = p.equippedArmor.bsize7
             End Select
             If p.iArrInd(3) Is Nothing Then
                 clothesChange("Naked")
