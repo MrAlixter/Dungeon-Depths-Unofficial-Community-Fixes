@@ -81,24 +81,54 @@ Public Class Debug_Window
         updateItemsList()
 
         'PERKS
-        Dim row = 0
-        Dim col = 0
-        Dim test = 0
-        For Each perk In Game.player.perks
-            addPerk(perk, col, row)
-            row += 1
-            Dim control As Control = tabPerks.Controls.Item(tabPerks.Controls.Count - 1)
-            Console.Write(test & ": " & perk.Key & " # " & perk.Value & " ! ")
-            Console.Write(control.Location.Y + control.Size.Height)
-            Console.WriteLine("  |  " & tabPerks.Size.Height)
-            If (control.Location.Y + control.Size.Height) > tabPerks.Size.Height Then
-                row = 0
-                col += 1
-                movePerkControl(control, col, row)
-                row += 1
+        Dim groupBoxes As List(Of GroupBox) = New List(Of GroupBox)
+        For Each control In tabPerks.Controls
+            If TypeOf (control) Is GroupBox Then
+                groupBoxes.Add(control)
             End If
-            test += 1
         Next
+        If groupBoxes.Count <> Game.player.perks.Count Then
+            tabPerks.Controls.Clear()
+
+            Dim row = 0
+            Dim col = 0
+            Dim test = 0
+            For Each perk In Game.player.perks
+                addPerk(perk, col, row)
+                row += 1
+                Dim control As Control = tabPerks.Controls.Item(tabPerks.Controls.Count - 1)
+                'Console.Write(test & ": " & perk.Key & " # " & perk.Value & " ! ")
+                'Console.Write(control.Location.Y + control.Size.Height)
+                'Console.WriteLine("  |  " & tabPerks.Size.Height)
+                If (control.Location.Y + control.Size.Height) > tabPerks.Size.Height Then
+                    row = 0
+                    col += 1
+                    movePerkControl(control, col, row)
+                    row += 1
+                End If
+                test += 1
+            Next
+        Else
+            For i As Integer = 0 To groupBoxes.Count - 1
+                Dim box As GroupBox = groupBoxes(i)
+                Dim num As NumericUpDown = Nothing
+                Dim lbl As Label = Nothing
+                For j As Integer = 0 To box.Controls.Count - 1
+                    Dim c As Control = box.Controls(j)
+                    If TypeOf (c) Is NumericUpDown Then
+                        num = c
+                    ElseIf TypeOf (c) Is Label Then
+                        lbl = c
+                    End If
+
+                    If num IsNot Nothing AndAlso lbl IsNot Nothing Then
+                        num.Value = Game.player.perks(lbl.Text)
+                        Exit For
+                    End If
+                Next
+            Next
+        End If
+
 
         lblFC.Text = "Floorcode: " & Game.floorCode
         boxWidth.Value = Game.mBoardWidth

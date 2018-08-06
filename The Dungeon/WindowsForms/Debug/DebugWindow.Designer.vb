@@ -118,6 +118,13 @@ Partial Class Debug_Window
         Me.boxItems = New System.Windows.Forms.ListBox()
         Me.lblItems = New System.Windows.Forms.Label()
         Me.tabGeneration = New System.Windows.Forms.TabPage()
+        Me.boxTrapSizeDependence = New System.Windows.Forms.NumericUpDown()
+        Me.lblTrapSizeDependence = New System.Windows.Forms.Label()
+        Me.boxTrapFreqMin = New System.Windows.Forms.NumericUpDown()
+        Me.boxTrapFreqRange = New System.Windows.Forms.NumericUpDown()
+        Me.lblTrapFreqMin = New System.Windows.Forms.Label()
+        Me.lblTrapFreqRange = New System.Windows.Forms.Label()
+        Me.divider = New System.Windows.Forms.TextBox()
         Me.lblInfo = New System.Windows.Forms.Label()
         Me.btnSaveGeneration = New System.Windows.Forms.Button()
         Me.btnGenerationReset = New System.Windows.Forms.Button()
@@ -143,13 +150,6 @@ Partial Class Debug_Window
         Me.lblHeight = New System.Windows.Forms.Label()
         Me.lblWidth = New System.Windows.Forms.Label()
         Me.lblFC = New System.Windows.Forms.Label()
-        Me.boxTrapSizeDependence = New System.Windows.Forms.NumericUpDown()
-        Me.lblTrapSizeDependence = New System.Windows.Forms.Label()
-        Me.boxTrapFreqMin = New System.Windows.Forms.NumericUpDown()
-        Me.boxTrapFreqRange = New System.Windows.Forms.NumericUpDown()
-        Me.lblTrapFreqMin = New System.Windows.Forms.Label()
-        Me.lblTrapFreqRange = New System.Windows.Forms.Label()
-        Me.divider = New System.Windows.Forms.TextBox()
         Me.tabMain.SuspendLayout()
         Me.tabInformation.SuspendLayout()
         Me.tabGeneral.SuspendLayout()
@@ -178,6 +178,9 @@ Partial Class Debug_Window
         Me.tabInventory.SuspendLayout()
         CType(Me.number, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.tabGeneration.SuspendLayout()
+        CType(Me.boxTrapSizeDependence, System.ComponentModel.ISupportInitialize).BeginInit()
+        CType(Me.boxTrapFreqMin, System.ComponentModel.ISupportInitialize).BeginInit()
+        CType(Me.boxTrapFreqRange, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me.boxChestRichnessRange, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me.boxChestRichnessBase, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me.boxEClockResetVal, System.ComponentModel.ISupportInitialize).BeginInit()
@@ -187,9 +190,6 @@ Partial Class Debug_Window
         CType(Me.boxChestFreqRange, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me.boxHeight, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me.boxWidth, System.ComponentModel.ISupportInitialize).BeginInit()
-        CType(Me.boxTrapSizeDependence, System.ComponentModel.ISupportInitialize).BeginInit()
-        CType(Me.boxTrapFreqMin, System.ComponentModel.ISupportInitialize).BeginInit()
-        CType(Me.boxTrapFreqRange, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.SuspendLayout()
         '
         'tabMain
@@ -1345,6 +1345,68 @@ Partial Class Debug_Window
         Me.tabGeneration.TabIndex = 5
         Me.tabGeneration.Text = "GENERATION"
         '
+        'boxTrapSizeDependence
+        '
+        Me.boxTrapSizeDependence.BackColor = System.Drawing.Color.Black
+        Me.boxTrapSizeDependence.ForeColor = System.Drawing.Color.White
+        Me.boxTrapSizeDependence.Location = New System.Drawing.Point(555, 114)
+        Me.boxTrapSizeDependence.Name = "boxTrapSizeDependence"
+        Me.boxTrapSizeDependence.Size = New System.Drawing.Size(120, 26)
+        Me.boxTrapSizeDependence.TabIndex = 249
+        '
+        'lblTrapSizeDependence
+        '
+        Me.lblTrapSizeDependence.AutoSize = True
+        Me.lblTrapSizeDependence.Location = New System.Drawing.Point(347, 116)
+        Me.lblTrapSizeDependence.Name = "lblTrapSizeDependence"
+        Me.lblTrapSizeDependence.Size = New System.Drawing.Size(198, 19)
+        Me.lblTrapSizeDependence.TabIndex = 248
+        Me.lblTrapSizeDependence.Text = "Trap Size Dependence:"
+        '
+        'boxTrapFreqMin
+        '
+        Me.boxTrapFreqMin.BackColor = System.Drawing.Color.Black
+        Me.boxTrapFreqMin.ForeColor = System.Drawing.Color.White
+        Me.boxTrapFreqMin.Location = New System.Drawing.Point(555, 82)
+        Me.boxTrapFreqMin.Name = "boxTrapFreqMin"
+        Me.boxTrapFreqMin.Size = New System.Drawing.Size(120, 26)
+        Me.boxTrapFreqMin.TabIndex = 247
+        '
+        'boxTrapFreqRange
+        '
+        Me.boxTrapFreqRange.BackColor = System.Drawing.Color.Black
+        Me.boxTrapFreqRange.ForeColor = System.Drawing.Color.White
+        Me.boxTrapFreqRange.Location = New System.Drawing.Point(555, 50)
+        Me.boxTrapFreqRange.Name = "boxTrapFreqRange"
+        Me.boxTrapFreqRange.Size = New System.Drawing.Size(120, 26)
+        Me.boxTrapFreqRange.TabIndex = 246
+        '
+        'lblTrapFreqMin
+        '
+        Me.lblTrapFreqMin.AutoSize = True
+        Me.lblTrapFreqMin.Location = New System.Drawing.Point(347, 84)
+        Me.lblTrapFreqMin.Name = "lblTrapFreqMin"
+        Me.lblTrapFreqMin.Size = New System.Drawing.Size(135, 19)
+        Me.lblTrapFreqMin.TabIndex = 245
+        Me.lblTrapFreqMin.Text = "Trap Freq Min:"
+        '
+        'lblTrapFreqRange
+        '
+        Me.lblTrapFreqRange.AutoSize = True
+        Me.lblTrapFreqRange.Location = New System.Drawing.Point(347, 52)
+        Me.lblTrapFreqRange.Name = "lblTrapFreqRange"
+        Me.lblTrapFreqRange.Size = New System.Drawing.Size(162, 19)
+        Me.lblTrapFreqRange.TabIndex = 244
+        Me.lblTrapFreqRange.Text = "Trap Freq Range: "
+        '
+        'divider
+        '
+        Me.divider.Location = New System.Drawing.Point(340, 52)
+        Me.divider.Multiline = True
+        Me.divider.Name = "divider"
+        Me.divider.Size = New System.Drawing.Size(1, 325)
+        Me.divider.TabIndex = 243
+        '
         'lblInfo
         '
         Me.lblInfo.Location = New System.Drawing.Point(8, 381)
@@ -1579,68 +1641,6 @@ Partial Class Debug_Window
         Me.lblFC.TabIndex = 22
         Me.lblFC.Text = "FloorCode: "
         '
-        'boxTrapSizeDependence
-        '
-        Me.boxTrapSizeDependence.BackColor = System.Drawing.Color.Black
-        Me.boxTrapSizeDependence.ForeColor = System.Drawing.Color.White
-        Me.boxTrapSizeDependence.Location = New System.Drawing.Point(555, 114)
-        Me.boxTrapSizeDependence.Name = "boxTrapSizeDependence"
-        Me.boxTrapSizeDependence.Size = New System.Drawing.Size(120, 26)
-        Me.boxTrapSizeDependence.TabIndex = 249
-        '
-        'lblTrapSizeDependence
-        '
-        Me.lblTrapSizeDependence.AutoSize = True
-        Me.lblTrapSizeDependence.Location = New System.Drawing.Point(347, 116)
-        Me.lblTrapSizeDependence.Name = "lblTrapSizeDependence"
-        Me.lblTrapSizeDependence.Size = New System.Drawing.Size(198, 19)
-        Me.lblTrapSizeDependence.TabIndex = 248
-        Me.lblTrapSizeDependence.Text = "Trap Size Dependence:"
-        '
-        'boxTrapFreqMin
-        '
-        Me.boxTrapFreqMin.BackColor = System.Drawing.Color.Black
-        Me.boxTrapFreqMin.ForeColor = System.Drawing.Color.White
-        Me.boxTrapFreqMin.Location = New System.Drawing.Point(555, 82)
-        Me.boxTrapFreqMin.Name = "boxTrapFreqMin"
-        Me.boxTrapFreqMin.Size = New System.Drawing.Size(120, 26)
-        Me.boxTrapFreqMin.TabIndex = 247
-        '
-        'boxTrapFreqRange
-        '
-        Me.boxTrapFreqRange.BackColor = System.Drawing.Color.Black
-        Me.boxTrapFreqRange.ForeColor = System.Drawing.Color.White
-        Me.boxTrapFreqRange.Location = New System.Drawing.Point(555, 50)
-        Me.boxTrapFreqRange.Name = "boxTrapFreqRange"
-        Me.boxTrapFreqRange.Size = New System.Drawing.Size(120, 26)
-        Me.boxTrapFreqRange.TabIndex = 246
-        '
-        'lblTrapFreqMin
-        '
-        Me.lblTrapFreqMin.AutoSize = True
-        Me.lblTrapFreqMin.Location = New System.Drawing.Point(347, 84)
-        Me.lblTrapFreqMin.Name = "lblTrapFreqMin"
-        Me.lblTrapFreqMin.Size = New System.Drawing.Size(135, 19)
-        Me.lblTrapFreqMin.TabIndex = 245
-        Me.lblTrapFreqMin.Text = "Trap Freq Min:"
-        '
-        'lblTrapFreqRange
-        '
-        Me.lblTrapFreqRange.AutoSize = True
-        Me.lblTrapFreqRange.Location = New System.Drawing.Point(347, 52)
-        Me.lblTrapFreqRange.Name = "lblTrapFreqRange"
-        Me.lblTrapFreqRange.Size = New System.Drawing.Size(162, 19)
-        Me.lblTrapFreqRange.TabIndex = 244
-        Me.lblTrapFreqRange.Text = "Trap Freq Range: "
-        '
-        'divider
-        '
-        Me.divider.Location = New System.Drawing.Point(340, 52)
-        Me.divider.Multiline = True
-        Me.divider.Name = "divider"
-        Me.divider.Size = New System.Drawing.Size(1, 325)
-        Me.divider.TabIndex = 243
-        '
         'Debug_Window
         '
         Me.AutoScaleDimensions = New System.Drawing.SizeF(6.0!, 13.0!)
@@ -1687,6 +1687,9 @@ Partial Class Debug_Window
         CType(Me.number, System.ComponentModel.ISupportInitialize).EndInit()
         Me.tabGeneration.ResumeLayout(False)
         Me.tabGeneration.PerformLayout()
+        CType(Me.boxTrapSizeDependence, System.ComponentModel.ISupportInitialize).EndInit()
+        CType(Me.boxTrapFreqMin, System.ComponentModel.ISupportInitialize).EndInit()
+        CType(Me.boxTrapFreqRange, System.ComponentModel.ISupportInitialize).EndInit()
         CType(Me.boxChestRichnessRange, System.ComponentModel.ISupportInitialize).EndInit()
         CType(Me.boxChestRichnessBase, System.ComponentModel.ISupportInitialize).EndInit()
         CType(Me.boxEClockResetVal, System.ComponentModel.ISupportInitialize).EndInit()
@@ -1696,9 +1699,6 @@ Partial Class Debug_Window
         CType(Me.boxChestFreqRange, System.ComponentModel.ISupportInitialize).EndInit()
         CType(Me.boxHeight, System.ComponentModel.ISupportInitialize).EndInit()
         CType(Me.boxWidth, System.ComponentModel.ISupportInitialize).EndInit()
-        CType(Me.boxTrapSizeDependence, System.ComponentModel.ISupportInitialize).EndInit()
-        CType(Me.boxTrapFreqMin, System.ComponentModel.ISupportInitialize).EndInit()
-        CType(Me.boxTrapFreqRange, System.ComponentModel.ISupportInitialize).EndInit()
         Me.ResumeLayout(False)
 
     End Sub
