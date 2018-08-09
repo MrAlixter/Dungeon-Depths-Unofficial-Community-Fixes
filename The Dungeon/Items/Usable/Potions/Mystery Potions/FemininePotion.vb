@@ -10,6 +10,10 @@
     Public Overrides Sub effect()
         Dim p As Player = Game.player
         p.inventorynames(28) = "Feminine_Potion"
+        If p.pClass.name = "Magic Girl" Then
+            Game.pushLblEvent("Your form prevents you from being altered!")
+            Exit Sub
+        End If
         If p.sexBool = False Then
             p.MtF()
             Game.pushLblEvent("You are now a woman!")

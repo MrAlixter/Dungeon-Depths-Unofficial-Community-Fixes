@@ -45,6 +45,13 @@
                         out += "  Since you're already naked, the beam doesn't seem to have done much."
                     End If
                     out += "  Shortly after, a bundle of rope drops from the ceiling, ensnaring you, and as it is pulled taut, you find yourself in a rather unique, less mobile, position."
+                    If Game.player.breastSize > 5 Then
+                        out += "  However, the ropes are not able to contain your massive breasts, and they quickly burst apart leaving you naked."
+                        Equipment.clothesChange("Naked")
+                        pos = New Point(-1, -1)
+                        Game.lstLog.TopIndex = Game.lstLog.Items.Count - 1
+                        Exit Sub
+                    End If
                 Else
                     out += "  It doesn't seem to have done anything.  𝘞𝘦𝘪𝘳𝘥..."
                 End If
