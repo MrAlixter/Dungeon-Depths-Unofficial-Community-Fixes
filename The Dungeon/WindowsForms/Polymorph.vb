@@ -633,6 +633,7 @@
         p.equippedArmor = New MagGirlOutfit
         Game.lstLog.Items.Add("'Heartblast Starcannon' spell learned!")
         p.createP()
+        Game.lblEvent.Visible = False
     End Sub
     Sub bimboTF(ByRef p As Player, ByVal ind As Integer)
         Select Case ind

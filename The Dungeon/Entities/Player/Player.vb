@@ -480,6 +480,7 @@
             writer.WriteLine(Me.toGhost())
             writer.Flush()
             writer.Close()
+            Application.Exit()
         End If
         If MessageBox.Show("Game Over!  Reload the a save?", "Game Over . . .", MessageBoxButtons.YesNo) = Windows.Forms.DialogResult.Yes Then
             Try
