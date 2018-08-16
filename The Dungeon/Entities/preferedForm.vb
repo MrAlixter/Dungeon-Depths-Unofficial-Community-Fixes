@@ -2,6 +2,7 @@
     Public hairColor As Color
     Public skinColor As Color
     Public hasFemaleHair As Boolean
+    Public fHairInd, rHairInd As Integer
     Public isFemale As Boolean
     Public breastSize As Integer
     Public isSlut As Boolean
@@ -11,6 +12,8 @@
         hairColor = hc
         skinColor = sc
         hasFemaleHair = fh
+        fHairInd = Int(Rnd() * 5)
+        rHairInd = Int(Rnd() * 5)
         isFemale = f
         breastSize = bs
         isSlut = s
@@ -68,6 +71,7 @@
     Public Function playerMeetsForm(ByRef p As Player)
         Return p.haircolor.Equals(hairColor) And p.skincolor.Equals(skinColor) And
                p.sexBool = isFemale And p.iArrInd(1).Item2 = hasFemaleHair And
+               p.iArrInd(1).Item1 = rHairInd And p.iArrInd(15).Item1 = fHairInd And
                p.breastSize = breastSize And p.iArrInd(6).Item1 = earType And
                ((p.perks("slutcurse") > -1 And isSlut) Or (p.perks("slutcurse") = -1 And Not isSlut))
     End Function
@@ -80,12 +84,11 @@
         If Not p.skincolor.Equals(skinColor) Then p.changeSkinColor(Game.cShift(p.skincolor, skinColor, 8))
 
         If Not p.iArrInd(1).Item2 = hasFemaleHair And Int(Rnd() * 3) = 0 Then
-            Dim r = Int(Rnd() * 5)
-            p.iArrInd(1) = New Tuple(Of Integer, Boolean)(r, hasFemaleHair)
-            p.iArrInd(5) = New Tuple(Of Integer, Boolean)(r, hasFemaleHair)
+            p.iArrInd(1) = New Tuple(Of Integer, Boolean)(rHairInd, hasFemaleHair)
+            p.iArrInd(5) = New Tuple(Of Integer, Boolean)(rHairInd, hasFemaleHair)
         End If
             If Not p.iArrInd(15).Item2 = hasFemaleHair And Int(Rnd() * 3) = 0 Then
-                p.iArrInd(15) = New Tuple(Of Integer, Boolean)(Int(Rnd() * 5) + 1, hasFemaleHair)
+            p.iArrInd(15) = New Tuple(Of Integer, Boolean)(fHairInd + 1, hasFemaleHair)
             End If
 
             If p.sexBool <> isFemale And Int(Rnd() * 3) = 0 Then
@@ -125,11 +128,10 @@
         p.changeHairColor(hairColor)
         p.changeSkinColor(skinColor)
 
-        Dim r = Int(Rnd() * 5)
-        p.iArrInd(1) = New Tuple(Of Integer, Boolean)(r, hasFemaleHair)
-        p.iArrInd(5) = New Tuple(Of Integer, Boolean)(r, hasFemaleHair)
+        p.iArrInd(1) = New Tuple(Of Integer, Boolean)(rHairInd, hasFemaleHair)
+        p.iArrInd(5) = New Tuple(Of Integer, Boolean)(rHairInd, hasFemaleHair)
 
-        p.iArrInd(15) = New Tuple(Of Integer, Boolean)(Int(Rnd() * 5) + 1, hasFemaleHair)
+        p.iArrInd(15) = New Tuple(Of Integer, Boolean)(fHairInd + 1, hasFemaleHair)
 
         If p.sexBool <> isFemale Then
             If p.sexBool Then
