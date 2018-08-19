@@ -403,7 +403,7 @@
         End Select
     End Sub
     Public Sub mgoutfitUpdate()
-        If Not p.pClass.name.Equals("Magic_Girl") Then
+        If Not p.pClass.name.Equals("Magic Girl") And Not (p.pClass.name.Equals("Bimbo") And p.breastSize = 3) Then
             clothesChange("Naked")
             Game.pushLblEvent("Your clothes don't fit!")
             Game.lstLog.Items.Add("Your clothes don't fit!")

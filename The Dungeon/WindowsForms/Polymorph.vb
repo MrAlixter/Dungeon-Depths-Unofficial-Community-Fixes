@@ -721,9 +721,6 @@
             Case 2
                 p.iArrInd(16) = New Tuple(Of Integer, Boolean)(0, True)
                 p.iArrInd(2) = New Tuple(Of Integer, Boolean)(7, True)
-                Equipment.clothesChange("Magic_Girl_Outfit")
-                p.breastSize = 3
-                Equipment.portraitUDate()
                 p.haircolor = Color.FromArgb(255, 255, 250, 205)
                 p.iArrInd(1) = New Tuple(Of Integer, Boolean)(10, True)
                 p.iArrInd(5) = New Tuple(Of Integer, Boolean)(10, True)
@@ -732,13 +729,15 @@
                 p.iArrInd(8) = New Tuple(Of Integer, Boolean)(6, True)
                 p.iArrInd(9) = New Tuple(Of Integer, Boolean)(8, True)
                 p.iArrInd(13) = New Tuple(Of Integer, Boolean)(0, True)
-
+                Equipment.clothesChange("Magic_Girl_Outfit")
+                p.breastSize = 3
                 Game.pushLblEvent("You immediatly feel funny, the increased magic in your system reacting swiftly with the gum.  In your haze, you look down to see your clothes have become tight and pink. You giggle, all traces of intelect vanishing as your body becomes more curvy and feminine. Your hair lengthens, becoming a platinum blonde, and your clothes finish changing to match your new figure.")
                 p.pClass = p.classes("Bimbo")
                 p.lust += 10
                 If Game.floor < 6 Then p.pImage = Game.picPlayerB.BackgroundImage Else p.pImage = Game.picBimbof.BackgroundImage
                 p.TextColor = Color.HotPink
                 p.perks("bimbotf") = -1
+                Equipment.portraitUDate()
         End Select
     End Sub
     Sub nekoTF(ByRef p As Player, ByVal ind As Integer)
