@@ -2765,7 +2765,7 @@ Public Class Game
             'updates the combat banner
             updatePnlCombat(player, player.currTarget)
         End If
-        lblPHealth.Text = player.health & "/" & player.getmaxHealth
+        lblPHealth.Text = CInt(player.health * player.getmaxHealth) & "/" & player.getmaxHealth
     End Sub
     Private Sub btnDrop_Click(sender As Object, e As EventArgs) Handles btnDrop.Click
         If Not lblEventOnClose Is Nothing Then
