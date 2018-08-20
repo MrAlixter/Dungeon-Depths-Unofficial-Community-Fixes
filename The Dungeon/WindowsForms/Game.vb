@@ -2631,7 +2631,7 @@ Public Class Game
     End Sub
     'run handles the player choice to run from combat
     Sub run()
-        If player.health < 1 Then Exit Sub
+        If player.health < 1 / player.getmaxHealth Then Exit Sub
         If player.perks("swordpossess") > -1 Then
             lstLog.Items.Add("Something inside you decides that running away is cowardly, so you don't.")
             pushLblCombatEvent("Something inside you decides that running away is cowardly, so you don't.")
