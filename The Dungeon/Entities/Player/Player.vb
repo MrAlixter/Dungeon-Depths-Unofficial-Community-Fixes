@@ -877,6 +877,7 @@
         perks.Add("cowbell", -1) '15
 
         'Creates the class dictionary
+        classes.Clear()
         classes.Add("Classless", New pClass(1, 1, 1, 1, 1, 1, "Classless"))
         classes.Add("Warrior", New pClass(1, 1.5, 0.75, 1.5, 0.75, 1, "Warrior"))
         classes.Add("Mage", New pClass(1, 0.75, 1.5, 0.75, 1, 1.5, "Mage"))
@@ -897,6 +898,7 @@
         classes.Add("Unconscious", New pClass(pClass.h, pClass.a, pClass.m, pClass.d, pClass.s, pClass.w, "Unconscious"))
 
         'Creates the form dictionary
+        forms.Clear()
         forms.Add("Human", New pForm(1, 1, 1, 1, 1, 1, "Human", True))
         forms.Add("Elf", New pForm(0.75, 1, 1.5, 1, 1, 1, "Elf", True))
         forms.Add("Android", New pForm(1, 1, 1, 1.5, 1, 0.75, "Android", True))
