@@ -357,6 +357,7 @@
     'genral functions
     'Die handles a player death
     Public Sub Die()
+        initPerks()
         If Game.pnlSaveLoad.Visible = True Then Exit Sub
         Try
             If currTarget.name.Equals("Shopkeeper") Then
@@ -480,7 +481,6 @@
             writer.WriteLine(Me.toGhost())
             writer.Flush()
             writer.Close()
-            Application.Exit()
         End If
         If MessageBox.Show("Game Over!  Reload the a save?", "Game Over . . .", MessageBoxButtons.YesNo) = Windows.Forms.DialogResult.Yes Then
             Try
@@ -923,6 +923,26 @@
         forms.Add("Sheep", New pForm(1.5, 0.5, 0.5, 1.5, 0.5, 0.75, "Sheep", False))
         forms.Add("Frog", New pForm(0.75, 0.5, 0.5, 0.5, 2, 1, "Frog", False))
     End Sub
+    Sub initPerks()
+        perks.Clear()
+        'Creates the dictionary of perks
+        perks.Add("hunger", -1) '0
+        perks.Add("bimbotf", -1) '1
+        perks.Add("slutcurse", -1) '2
+        perks.Add("chickentf", -1) '3
+        perks.Add("slimehair", -1) '4
+        perks.Add("polymorphed", -1) '5
+        perks.Add("nekocurse", -1) '6
+        perks.Add("swordpossess", -1) '7
+        perks.Add("vsslimehair", -1) '8
+        perks.Add("brage", -1) '9
+        perks.Add("mmammaries", -1) '10
+        perks.Add("ihfury", -1) '11
+        perks.Add("livearm", -1) '12
+        perks.Add("livelinge", -1) '13
+        perks.Add("thrall", -1) '14
+        perks.Add("cowbell", -1) '15
+    End Sub
     Sub perkUpdate()
         'hunger
         If perks("hunger") > -1 And Game.turn Mod 5 = 0 Then
@@ -1025,7 +1045,7 @@
                 perks("nekocurse") = -1
             End If
             If Not perks("polymorphed") > -1 Then
-                If perks("nekocurse") < (will * 1.2) Then
+                If perks("nekocurse") < Int((will * 1.2) * 1.3) Then
                     Select Case perks("nekocurse")
                         Case Int((will * 1.2) * 0.1)
                             Polymorph.transform(Me, "neko", 0)
@@ -1051,12 +1071,16 @@
                             End If
                             inventory.Item(12).addOne()
                             lust += 5
+                            will -= 2
                             Equipment.clothesChange("Cat_Lingerie")
-                        Case Int((will * 1.2))
+                            Equipment.portraitUDate()
+                        Case Int((will * 1.2) * 1.3)
+                            will = 0
                             Polymorph.transform(Me, "neko", 7)
                     End Select
                     perks("nekocurse") += 1
                 Else
+                    will = 0
                     Polymorph.transform(Me, "neko", 7)
                 End If
             End If
