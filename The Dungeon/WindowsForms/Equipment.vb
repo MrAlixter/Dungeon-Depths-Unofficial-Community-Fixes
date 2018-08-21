@@ -162,7 +162,7 @@
             cmbobxArmor.Items.Add("Regal_Gown")
         ElseIf p.pClass.name = "Maid" Then
             cmbobxArmor.Items.Add("Maid_Outfit")
-        ElseIf p.pForm.name = "Succubus" Then
+        ElseIf p.pForm.name = "Succubus" Or p.pForm.name = "Half-Succubus" Then
             cmbobxArmor.Items.Add("Succubus_Garb")
         ElseIf p.pClass.name = "Goddess" Then
             cmbobxArmor.Items.Add("Goddess_Gown")
