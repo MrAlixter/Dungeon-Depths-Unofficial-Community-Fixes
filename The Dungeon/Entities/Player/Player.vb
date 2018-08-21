@@ -1183,7 +1183,6 @@
                 If perks("thrall") > 20 Then
                     prefForm.snapShift(Game.player)
                 End If
-                MsgBox(perks("thrall"))
             End If
 
             If prefForm.playerMeetsForm(Game.player) Then
