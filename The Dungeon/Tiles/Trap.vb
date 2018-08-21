@@ -16,7 +16,7 @@
         Select Case iD
             Case 0
                 Game.player.lust += 20
-                Game.player.health -= 2
+                Game.player.health -= 2 / Game.player.getmaxHealth
                 Dim out As String = "𝘱𝘸𝘩𝘪𝘱! You smack your neck, expecitng a bug, only to feel a sharp pain as your smack crushes a small dart and leaks its contents all over your neck.  Initially fearing some sort of poison, the blushing of your cheeks and "
                 If Game.player.sexBool Then
                     out += "warmth between your legs "

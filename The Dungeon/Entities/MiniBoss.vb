@@ -77,8 +77,8 @@
                 takeDMG(-35)
                 ' attack = 0
             ElseIf Game.player.health < 20 Then
-                Game.lstLog.Items.Add((getName() & " waits expectantly . . ."))
-                Game.pushLblCombatEvent((getName() & " waits expectantly . . ."))
+                Game.lstLog.Items.Add((getName() & " waits expectantly..."))
+                Game.pushLblCombatEvent((getName() & " waits expectantly..."))
             Else
                 MyBase.attackCMD(target)
                 'attack = 20
