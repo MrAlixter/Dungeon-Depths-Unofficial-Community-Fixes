@@ -645,6 +645,7 @@
         p.equippedArmor = New MagGirlOutfit
         Game.lstLog.Items.Add("'Heartblast Starcannon' spell learned!")
         p.createP()
+        Game.lblEvent.Visible = False
     End Sub
     Sub bimboTF(ByRef p As Player, ByVal ind As Integer)
         Select Case ind
@@ -732,9 +733,6 @@
             Case 2
                 p.iArrInd(16) = New Tuple(Of Integer, Boolean)(0, True)
                 p.iArrInd(2) = New Tuple(Of Integer, Boolean)(7, True)
-                Equipment.clothesChange("Magic_Girl_Outfit")
-                p.breastSize = 3
-                Equipment.portraitUDate()
                 p.haircolor = Color.FromArgb(255, 255, 250, 205)
                 p.iArrInd(1) = New Tuple(Of Integer, Boolean)(10, True)
                 p.iArrInd(5) = New Tuple(Of Integer, Boolean)(10, True)
@@ -743,13 +741,15 @@
                 p.iArrInd(8) = New Tuple(Of Integer, Boolean)(6, True)
                 p.iArrInd(9) = New Tuple(Of Integer, Boolean)(8, True)
                 p.iArrInd(13) = New Tuple(Of Integer, Boolean)(0, True)
-
+                Equipment.clothesChange("Magic_Girl_Outfit")
+                p.breastSize = 3
                 Game.pushLblEvent("You immediatly feel funny, the increased magic in your system reacting swiftly with the gum.  In your haze, you look down to see your clothes have become tight and pink. You giggle, all traces of intelect vanishing as your body becomes more curvy and feminine. Your hair lengthens, becoming a platinum blonde, and your clothes finish changing to match your new figure.")
                 p.pClass = p.classes("Bimbo")
                 p.lust += 10
                 If Game.floor < 6 Then p.pImage = Game.picPlayerB.BackgroundImage Else p.pImage = Game.picBimbof.BackgroundImage
                 p.TextColor = Color.HotPink
                 p.perks("bimbotf") = -1
+                Equipment.portraitUDate()
         End Select
     End Sub
     Sub nekoTF(ByRef p As Player, ByVal ind As Integer)
@@ -773,8 +773,7 @@
                 p.iArrInd(1) = New Tuple(Of Integer, Boolean)(12, True)
                 p.iArrInd(5) = New Tuple(Of Integer, Boolean)(17, True)
                 p.iArrInd(15) = New Tuple(Of Integer, Boolean)(1, True)
-                p.haircolor = Color.FromArgb(255, 20, 20, 20)
-                Game.pushLblCombatEvent("Your hair grows down to your ass, and darkens to a shade of shiny black.  You now have long black hair!")
+                Game.pushLblCombatEvent("Your hair grows down to your ass, straightening out as it lengthens.  You now have long, straight hair!")
             Case 3
                 p.iArrInd(7) = New Tuple(Of Integer, Boolean)(0, True)
                 p.iArrInd(9) = New Tuple(Of Integer, Boolean)(13, True)
@@ -792,19 +791,18 @@
                 End If
                 p.lust += 5
             Case 5
-                p.iArrInd(2) = New Tuple(Of Integer, Boolean)(6, True)
+                p.be()
                 p.iArrInd(3) = New Tuple(Of Integer, Boolean)(40, True)
                 p.iArrInd(8) = New Tuple(Of Integer, Boolean)(9, True)
                 Game.pushLblCombatEvent("Your tits expand, your clothes shift, and you feel your will grow weaker. You are now permenantly a cat girl!  Soon you will be Marissa's pet! ")
             Case 6
+                p.be()
                 p.iArrInd(1) = New Tuple(Of Integer, Boolean)(12, True)
                 p.iArrInd(5) = New Tuple(Of Integer, Boolean)(17, True)
                 p.iArrInd(15) = New Tuple(Of Integer, Boolean)(1, True)
-                p.iArrInd(2) = New Tuple(Of Integer, Boolean)(6, True)
                 p.iArrInd(3) = New Tuple(Of Integer, Boolean)(40, True)
                 p.iArrInd(8) = New Tuple(Of Integer, Boolean)(9, True)
-                p.haircolor = Color.FromArgb(255, 20, 20, 20)
-                Game.pushLblCombatEvent("Your hair grows down to your ass, and darkens to a shade of shiny black.  You now have long black hair!  Your tits expand, your clothes shift, and you feel your will grow weaker. You are now a cat girl!  Soon you will be Marissa's pet! ")
+                Game.pushLblCombatEvent("Your hair grows down to your ass, straightening out as it lengthens.  You now have long, straight hair!  Your tits expand, your clothes shift, and you feel your will grow weaker. You are now a cat girl!  Soon you will be Marissa's pet! ")
             Case 7
                 If p.will < 5 Then
                     If p.sex = "Male" Then
@@ -813,7 +811,6 @@
                         p.iArrInd(1) = New Tuple(Of Integer, Boolean)(12, True)
                         p.iArrInd(5) = New Tuple(Of Integer, Boolean)(17, True)
                         p.iArrInd(15) = New Tuple(Of Integer, Boolean)(1, True)
-                        p.haircolor = Color.FromArgb(255, 20, 20, 20)
                     End If
                     p.iArrInd(1) = New Tuple(Of Integer, Boolean)(12, True)
                     p.iArrInd(5) = New Tuple(Of Integer, Boolean)(17, True)
@@ -821,7 +818,6 @@
                     p.iArrInd(2) = New Tuple(Of Integer, Boolean)(6, True)
                     p.iArrInd(3) = New Tuple(Of Integer, Boolean)(40, True)
                     p.iArrInd(8) = New Tuple(Of Integer, Boolean)(9, True)
-                    p.haircolor = Color.FromArgb(255, 20, 20, 20)
                 End If
                 p.pClass = p.classes("Kitty")
                 p.be()

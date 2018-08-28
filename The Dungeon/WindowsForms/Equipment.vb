@@ -162,7 +162,7 @@
             cmbobxArmor.Items.Add("Regal_Gown")
         ElseIf p.pClass.name = "Maid" Then
             cmbobxArmor.Items.Add("Maid_Outfit")
-        ElseIf p.pForm.name = "Succubus" Then
+        ElseIf p.pForm.name = "Succubus" Or p.pForm.name = "Half-Succubus" Then
             cmbobxArmor.Items.Add("Succubus_Garb")
         ElseIf p.pClass.name = "Goddess" Then
             cmbobxArmor.Items.Add("Goddess_Gown")
@@ -348,6 +348,10 @@
                     p.iArrInd(3) = p.equippedArmor.bsize4
                 Case 5
                     p.iArrInd(3) = p.equippedArmor.bsize5
+                Case 6
+                    p.iArrInd(3) = p.equippedArmor.bsize6
+                Case 7
+                    p.iArrInd(3) = p.equippedArmor.bsize7
             End Select
             If p.iArrInd(3) Is Nothing Then
                 clothesChange("Naked")
@@ -399,7 +403,7 @@
         End Select
     End Sub
     Public Sub mgoutfitUpdate()
-        If Not p.pClass.name.Equals("Magic_Girl") Then
+        If Not p.pClass.name.Equals("Magic Girl") And Not (p.pClass.name.Equals("Bimbo") And p.breastSize = 3) Then
             clothesChange("Naked")
             Game.pushLblEvent("Your clothes don't fit!")
             Game.lstLog.Items.Add("Your clothes don't fit!")

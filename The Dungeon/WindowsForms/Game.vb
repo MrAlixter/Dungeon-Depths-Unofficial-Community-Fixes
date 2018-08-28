@@ -399,7 +399,7 @@ Public Class Game
                 For j = 0 To mBoardWidth - 1
                     mBoard(i, j).Dispose()
                     If j <= 23 And i <= 15 Then
-                        mPics(i, j).Dispose()
+                        If Not mPics(i, j) Is Nothing Then mPics(i, j).Dispose()
                     End If
                 Next
             Next
@@ -442,7 +442,7 @@ Public Class Game
                 newPicture.Name = "boardBox|" & x & "_" & y
                 newPicture.BackgroundImageLayout = ImageLayout.Stretch
                 newPicture.Size = New Point(YSize * 1.25, XSize * 1.25)
-                newPicture.Location = New Point(60 + x * (XSize * 1.24), 75 + y * (YSize * 1.24))
+                newPicture.Location = New Point(60 + x * (XSize * 1.233), 75 + y * (YSize * 1.233))
                 newPicture.Visible = True
                 Me.Controls.Add(newPicture)
                 mPics(y, x) = newPicture
@@ -1125,7 +1125,8 @@ Public Class Game
             pnlDescript.Visible = False
             Return True
         End If
-        If lblEvent.Visible And Not (Keydata.Equals(Keys.Enter)) And Not Keydata.Equals(cKeys(0)) And Not Keydata.Equals(cKeys(1)) And Not Keydata.Equals(cKeys(2)) And Not Keydata.Equals(cKeys(3)) Then
+        If lblEvent.Visible And Not (Keydata.Equals(Keys.Enter)) And Not Keydata.Equals(cKeys(0)) And Not Keydata.Equals(cKeys(1)) And Not Keydata.Equals(cKeys(2)) And Not Keydata.Equals(cKeys(3)) _
+            And Not Keydata.Equals(Keys.Left) And Not Keydata.Equals(Keys.Right) And Not Keydata.Equals(Keys.Down) And Not Keydata.Equals(Keys.Up) Then
             If npcmode = False Then
                 picNPC.Visible = False
                 lblEvent.Visible = False
@@ -1143,7 +1144,8 @@ Public Class Game
             End If
             Return True
         End If
-        If lblEvent.Visible And (Keydata.Equals(cKeys(0)) Or Keydata.Equals(cKeys(1)) Or Keydata.Equals(cKeys(2)) Or Keydata.Equals(cKeys(3))) Then
+        If lblEvent.Visible And (Keydata.Equals(cKeys(0)) Or Keydata.Equals(cKeys(1)) Or Keydata.Equals(cKeys(2)) Or Keydata.Equals(cKeys(3)) _
+            Or Keydata.Equals(Keys.Left) Or Keydata.Equals(Keys.Right) Or Keydata.Equals(Keys.Down) Or Keydata.Equals(Keys.Up)) Then
             Return True
         End If
         If keyspresed.Length > 4 Then
@@ -2629,7 +2631,7 @@ Public Class Game
     End Sub
     'run handles the player choice to run from combat
     Sub run()
-        If player.health < 1 Then Exit Sub
+        If player.health < 1 / player.getmaxHealth Then Exit Sub
         If player.perks("swordpossess") > -1 Then
             lstLog.Items.Add("Something inside you decides that running away is cowardly, so you don't.")
             pushLblCombatEvent("Something inside you decides that running away is cowardly, so you don't.")
@@ -2763,7 +2765,7 @@ Public Class Game
             'updates the combat banner
             updatePnlCombat(player, player.currTarget)
         End If
-        lblPHealth.Text = player.health & "/" & player.getmaxHealth
+        lblPHealth.Text = CInt(player.health * player.getmaxHealth) & "/" & player.getmaxHealth
     End Sub
     Private Sub btnDrop_Click(sender As Object, e As EventArgs) Handles btnDrop.Click
         If Not lblEventOnClose Is Nothing Then

@@ -431,7 +431,8 @@
     Public Sub bodySwap(ByRef p As Player)
         Randomize()
 
-        p.pClass = New pClass(((Rnd() * 1.5) + 0.5), ((Rnd() * 1.5) + 0.5), ((Rnd() * 1.5) + 0.5), ((Rnd() * 1.5) + 0.5), ((Rnd() * 1.5) + 0.5), ((Rnd() * 1.5) + 0.5), "Explorer")
+        Dim classes = {"Warrior", "Mage", "Paladin", "Warrior", "Mage", "Bimbo"}
+        p.pClass = p.classes(classes(Int(Rnd() * classes.Length)))
         p.sex = "Female"
         p.sexBool = True
 

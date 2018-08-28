@@ -13,6 +13,11 @@
     End Sub
 
     Overrides Sub effect()
-        Game.player.perks("bimbotf") = 0
+        If Game.player.pClass.name.Equals("Magic Girl") Then
+            Polymorph.bimboTF(Game.player, 2)
+        Else
+            Game.player.perks("bimbotf") = 0
+        End If
+
     End Sub
 End Class
