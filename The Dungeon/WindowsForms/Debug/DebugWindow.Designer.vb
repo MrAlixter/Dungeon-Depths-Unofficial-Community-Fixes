@@ -52,6 +52,7 @@ Partial Class Debug_Window
         Me.lblTurn = New System.Windows.Forms.Label()
         Me.lblFloor = New System.Windows.Forms.Label()
         Me.tabPlayer = New System.Windows.Forms.TabPage()
+        Me.boxSex = New System.Windows.Forms.CheckBox()
         Me.boxAlpha = New System.Windows.Forms.NumericUpDown()
         Me.lblAlpha = New System.Windows.Forms.Label()
         Me.lblHC = New System.Windows.Forms.Label()
@@ -102,7 +103,6 @@ Partial Class Debug_Window
         Me.lblHealth = New System.Windows.Forms.Label()
         Me.boxForm = New System.Windows.Forms.ComboBox()
         Me.boxName = New System.Windows.Forms.TextBox()
-        Me.boxSex = New System.Windows.Forms.ComboBox()
         Me.lblTitle = New System.Windows.Forms.Label()
         Me.lblSex = New System.Windows.Forms.Label()
         Me.lblName = New System.Windows.Forms.Label()
@@ -529,6 +529,7 @@ Partial Class Debug_Window
         'tabPlayer
         '
         Me.tabPlayer.BackColor = System.Drawing.Color.Black
+        Me.tabPlayer.Controls.Add(Me.boxSex)
         Me.tabPlayer.Controls.Add(Me.boxAlpha)
         Me.tabPlayer.Controls.Add(Me.lblAlpha)
         Me.tabPlayer.Controls.Add(Me.lblHC)
@@ -562,7 +563,6 @@ Partial Class Debug_Window
         Me.tabPlayer.Controls.Add(Me.lblHealth)
         Me.tabPlayer.Controls.Add(Me.boxForm)
         Me.tabPlayer.Controls.Add(Me.boxName)
-        Me.tabPlayer.Controls.Add(Me.boxSex)
         Me.tabPlayer.Controls.Add(Me.lblTitle)
         Me.tabPlayer.Controls.Add(Me.lblSex)
         Me.tabPlayer.Controls.Add(Me.lblName)
@@ -572,6 +572,16 @@ Partial Class Debug_Window
         Me.tabPlayer.Size = New System.Drawing.Size(742, 548)
         Me.tabPlayer.TabIndex = 1
         Me.tabPlayer.Text = "PLAYER"
+        '
+        'boxSex
+        '
+        Me.boxSex.CheckAlign = System.Drawing.ContentAlignment.MiddleRight
+        Me.boxSex.Location = New System.Drawing.Point(410, 9)
+        Me.boxSex.Name = "boxSex"
+        Me.boxSex.Size = New System.Drawing.Size(81, 17)
+        Me.boxSex.TabIndex = 270
+        Me.boxSex.Text = "CheckBox1"
+        Me.boxSex.UseVisualStyleBackColor = True
         '
         'boxAlpha
         '
@@ -1121,17 +1131,6 @@ Partial Class Debug_Window
         Me.boxName.Size = New System.Drawing.Size(134, 26)
         Me.boxName.TabIndex = 211
         '
-        'boxSex
-        '
-        Me.boxSex.BackColor = System.Drawing.Color.Black
-        Me.boxSex.Font = New System.Drawing.Font("Consolas", 12.0!)
-        Me.boxSex.ForeColor = System.Drawing.Color.White
-        Me.boxSex.FormattingEnabled = True
-        Me.boxSex.Location = New System.Drawing.Point(357, 3)
-        Me.boxSex.Name = "boxSex"
-        Me.boxSex.Size = New System.Drawing.Size(134, 27)
-        Me.boxSex.TabIndex = 207
-        '
         'lblTitle
         '
         Me.lblTitle.AutoSize = True
@@ -1150,9 +1149,9 @@ Partial Class Debug_Window
         Me.lblSex.ForeColor = System.Drawing.Color.White
         Me.lblSex.Location = New System.Drawing.Point(250, 7)
         Me.lblSex.Name = "lblSex"
-        Me.lblSex.Size = New System.Drawing.Size(36, 19)
+        Me.lblSex.Size = New System.Drawing.Size(144, 19)
         Me.lblSex.TabIndex = 208
-        Me.lblSex.Text = "SEX"
+        Me.lblSex.Text = "SEX (IS FEMALE)"
         '
         'lblName
         '
@@ -1739,7 +1738,6 @@ Partial Class Debug_Window
     Friend WithEvents lblHealth As Label
     Friend WithEvents boxForm As ComboBox
     Friend WithEvents boxName As TextBox
-    Friend WithEvents boxSex As ComboBox
     Friend WithEvents lblTitle As Label
     Friend WithEvents lblSex As Label
     Friend WithEvents lblName As Label
@@ -1829,4 +1827,5 @@ Partial Class Debug_Window
     Friend WithEvents lblTrapFreqMin As Label
     Friend WithEvents lblTrapFreqRange As Label
     Friend WithEvents divider As TextBox
+    Friend WithEvents boxSex As CheckBox
 End Class
