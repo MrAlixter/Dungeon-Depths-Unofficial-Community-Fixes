@@ -77,10 +77,11 @@ Public Class ShopV2
         Dim cost As Integer = 0
         Dim indexes As List(Of Integer) = New List(Of Integer)
         For i As Integer = 0 To items.Count - 1
-            Dim name As String = Regex.Split(items(i), "\s*?[0-9]*?g")(0)
+            '\s*?[0-9]*?g
+            Dim name As String = Regex.Split(items(i), ". ")(0)
             Dim ind As Integer
             For j As Integer = 0 To p.inventory.Count - 1
-                If CType(p.inventory(j), Item).getName() = name Then
+                If p.inventory(j).getName().Contains(name) Then
                     ind = j
                     indexes.Add(ind)
                     Exit For
@@ -97,7 +98,7 @@ Public Class ShopV2
         If cost <= sk.gold Then
             For i As Integer = 0 To indexes.Count - 1
                 Dim item As Item = p.inventory(indexes(i))
-                If item.getName().Equals(p.equippedArmor.getName()) Or item.getName().Equals(p.equippedWeapon.getName()) Then
+                If item.getName().Contains(p.equippedArmor.getName()) Or item.getName().Contains(p.equippedWeapon.getName()) Or item.getName().Contains(p.equippedAcce.getName()) Then
                     If item.count - number.Value >= 1 Then
                         item.count -= number.Value
                     Else
@@ -127,10 +128,10 @@ Public Class ShopV2
         Dim cost As Integer = 0
         Dim indexes As List(Of Integer) = New List(Of Integer)
         For i As Integer = 0 To items.Count - 1
-            Dim name As String = Regex.Split(items(i), "\s*?[0-9]*?g")(0)
+            Dim name As String = Regex.Split(items(i), " .")(0)
             Dim ind As Integer
             For j As Integer = 0 To p.inventory.Count - 1
-                If CType(p.inventory(j), Item).getName() = name Then
+                If CType(p.inventory(j), Item).getName().Contains(name) Then
                     ind = j
                     indexes.Add(ind)
                     Exit For
