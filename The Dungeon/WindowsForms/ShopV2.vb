@@ -81,7 +81,7 @@ Public Class ShopV2
             Dim name As String = Regex.Split(items(i), ". ")(0)
             Dim ind As Integer
             For j As Integer = 0 To p.inventory.Count - 1
-                If p.inventory(j).getName().Contains(name) Then
+                If CType(p.inventory(j), Item).getName().Contains(name) Then
                     ind = j
                     indexes.Add(ind)
                     Exit For
@@ -128,7 +128,7 @@ Public Class ShopV2
         Dim cost As Integer = 0
         Dim indexes As List(Of Integer) = New List(Of Integer)
         For i As Integer = 0 To items.Count - 1
-            Dim name As String = Regex.Split(items(i), " .")(0)
+            Dim name As String = Regex.Split(items(i), ". ")(0)
             Dim ind As Integer
             For j As Integer = 0 To p.inventory.Count - 1
                 If CType(p.inventory(j), Item).getName().Contains(name) Then
