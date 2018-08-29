@@ -77,10 +77,15 @@ Public Class ShopV2
         Dim cost As Integer = 0
         Dim indexes As List(Of Integer) = New List(Of Integer)
         For i As Integer = 0 To items.Count - 1
-            Dim name As String = Regex.Split(items(i), "\s*?[0-9]*?g")(0)
+            'Dim name As String = Regex.Split(items(i), "\s*?[0-9]*?g")(0)
+            Dim name As String = Regex.Split(items(i), ChrW(8203))(0).Trim() 'Read for the zero-width whitespace character
+            If name.Last = "." Then
+                name = name.Substring(0, name.Length - 1)
+            End If
             Dim ind As Integer
             For j As Integer = 0 To p.inventory.Count - 1
-                If CType(p.inventory(j), Item).getName() = name Then
+                'If CType(p.inventory(j), Item).getName() = name OrElse
+                If Regex.Match(CType(p.inventory(j), Item).getName(), name).Success Then 'Using Regex in case name got abbreviated
                     ind = j
                     indexes.Add(ind)
                     Exit For
@@ -127,10 +132,12 @@ Public Class ShopV2
         Dim cost As Integer = 0
         Dim indexes As List(Of Integer) = New List(Of Integer)
         For i As Integer = 0 To items.Count - 1
-            Dim name As String = Regex.Split(items(i), "\s*?[0-9]*?g")(0)
+            'Dim name As String = Regex.Split(items(i), "\s*?[0-9]*?g")(0)
+            Dim name As String = Regex.Split(items(i), ChrW(8203))(0).Trim() 'Read for the zero-width whitespace character
             Dim ind As Integer
             For j As Integer = 0 To p.inventory.Count - 1
-                If CType(p.inventory(j), Item).getName() = name Then
+                'If CType(p.inventory(j), Item).getName() = name OrElse
+                If Regex.Match(CType(p.inventory(j), Item).getName(), name).Success Then 'Using Regex in case name got abbreviated
                     ind = j
                     indexes.Add(ind)
                     Exit For
@@ -207,17 +214,18 @@ Public Class ShopV2
     End Sub
 
     Function lineup(ByVal s As String, ByVal i As Integer, Optional ByVal j As Integer = -1)
+        Dim c As Char = ChrW(8203)
         If s.Length > 14 Then s = s.Substring(0, 13) & "."
         If s.Length < 14 Then
             For x = s.Length To 14
                 s = s & " "
             Next
         End If
-        If s.Length = 14 Then s = s & " "
+        If s.Length = 14 Then s = s & c & " "
         If j = -1 Then
-            Return s & " " & i & "g"
+            Return s & c & " " & i & "g"
         Else
-            Return s & " " & i & "g" & "  x" & j
+            Return s & c & " " & i & "g" & "  x" & j
         End If
     End Function
 
