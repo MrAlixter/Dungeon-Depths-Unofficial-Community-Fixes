@@ -66,7 +66,7 @@
 
     End Sub
     Function canBeTFed(ByRef p As Player) As Boolean
-        If Not p.perks("polymorphed") > -1 And Not p.pClass.name.Equals("Magic Girl") And Not p.pClass.name.Equals("Unconscious") Then Return True
+        If Not p.perks("polymorphed") > -1 And Not p.pClass.name.Equals("Magic Girl") And Not p.pClass.name.Equals("Unconscious") And Not p.pForm.name.Equals("Blowup Doll") Then Return True
         Return False
     End Function
     'player transform methods

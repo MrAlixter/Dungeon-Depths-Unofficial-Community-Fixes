@@ -1183,7 +1183,7 @@
             If Game.turn Mod 10 = 0 And Not prefForm.playerMeetsForm(Game.player) Then
                 prefForm.shiftTowards(Game.player)
                 perks("thrall") += 1
-                If perks("thrall") > 30 Then
+                If perks("thrall") > 20 Then
                     prefForm.snapShift(Game.player)
                 End If
             End If

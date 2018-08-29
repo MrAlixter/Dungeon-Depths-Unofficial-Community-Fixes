@@ -77,6 +77,7 @@ Public Class ShopV2
         Dim cost As Integer = 0
         Dim indexes As List(Of Integer) = New List(Of Integer)
         For i As Integer = 0 To items.Count - 1
+<<<<<<< HEAD
             'Dim name As String = Regex.Split(items(i), "\s*?[0-9]*?g")(0)
             Dim name As String = Regex.Split(items(i), ChrW(8203))(0).Trim() 'Read for the zero-width whitespace character
             If name.Last = "." Then
@@ -84,7 +85,15 @@ Public Class ShopV2
             End If
             Dim ind As Integer
             For j As Integer = 0 To p.inventory.Count - 1
+                'If CType(p.inventory(j), Item).getName() = name OrElse
+                If Regex.Match(CType(p.inventory(j), Item).getName(), name).Success Then 'Using Regex in case name got abbreviated
+=======
+            '\s*?[0-9]*?g
+            Dim name As String = Regex.Split(items(i), ". ")(0)
+            Dim ind As Integer
+            For j As Integer = 0 To p.inventory.Count - 1
                 If CType(p.inventory(j), Item).getName().Contains(name) Then
+>>>>>>> master
                     ind = j
                     indexes.Add(ind)
                     Exit For
@@ -131,11 +140,19 @@ Public Class ShopV2
         Dim cost As Integer = 0
         Dim indexes As List(Of Integer) = New List(Of Integer)
         For i As Integer = 0 To items.Count - 1
+<<<<<<< HEAD
             'Dim name As String = Regex.Split(items(i), "\s*?[0-9]*?g")(0)
             Dim name As String = Regex.Split(items(i), ChrW(8203))(0).Trim() 'Read for the zero-width whitespace character
             Dim ind As Integer
             For j As Integer = 0 To p.inventory.Count - 1
+                'If CType(p.inventory(j), Item).getName() = name OrElse
+                If Regex.Match(CType(p.inventory(j), Item).getName(), name).Success Then 'Using Regex in case name got abbreviated
+=======
+            Dim name As String = Regex.Split(items(i), ". ")(0)
+            Dim ind As Integer
+            For j As Integer = 0 To p.inventory.Count - 1
                 If CType(p.inventory(j), Item).getName().Contains(name) Then
+>>>>>>> master
                     ind = j
                     indexes.Add(ind)
                     Exit For

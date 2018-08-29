@@ -796,7 +796,7 @@ Public Class Game
                 trapX = CInt(Int(Rnd() * mBoardWidth))
                 trapY = CInt(Int(Rnd() * mBoardHeight))
             Loop
-            Dim trap As New Trap(New Point(trapX, trapY), Int(Rnd() * 4))
+            Dim trap As New Trap(New Point(trapX, trapY), Int(Rnd() * 5))
             trapList.Add(trap)
             mBoard(trapY, trapX).ForeColor = Color.FromArgb(45, 45, 45)
             mBoard(trapY, trapX).Text = "+"
