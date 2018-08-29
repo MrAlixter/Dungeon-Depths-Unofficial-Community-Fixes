@@ -75,7 +75,7 @@
                 End If
 
                 Game.player.skincolor = Color.FromArgb(Game.player.skincolor.A, r, g, b)
-                If Not Polymorph.canBeTFed(Game.player) Then
+                If Polymorph.canBeTFed(Game.player) Then
                     Game.player.pState.save(Game.player)
                 End If
                 Game.player.petrify(rubyTF)

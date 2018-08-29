@@ -71,7 +71,7 @@
     Public Function playerMeetsForm(ByRef p As Player)
         Return p.haircolor.Equals(hairColor) And p.skincolor.Equals(skinColor) And
                p.sexBool = isFemale And p.iArrInd(1).Item2 = hasFemaleHair And
-               p.iArrInd(1).Item1 = rHairInd And p.iArrInd(15).Item1 = fHairInd And
+               p.iArrInd(1).Item1 = rHairInd And p.iArrInd(15).Item1 = fHairInd + 1 And
                p.breastSize = breastSize And p.iArrInd(6).Item1 = earType And
                ((p.perks("slutcurse") > -1 And isSlut) Or (p.perks("slutcurse") = -1 And Not isSlut))
     End Function
