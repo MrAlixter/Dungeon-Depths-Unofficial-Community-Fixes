@@ -133,6 +133,9 @@ Public Class ShopV2
         For i As Integer = 0 To items.Count - 1
             'Dim name As String = Regex.Split(items(i), "\s*?[0-9]*?g")(0)
             Dim name As String = Regex.Split(items(i), ChrW(8203))(0).Trim() 'Read for the zero-width whitespace character
+            If name.Last = "." Then
+                name = name.Substring(0, name.Length - 1)
+            End If
             Dim ind As Integer
             For j As Integer = 0 To p.inventory.Count - 1
                 If CType(p.inventory(j), Item).getName().Contains(name) Then
