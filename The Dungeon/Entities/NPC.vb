@@ -119,7 +119,7 @@
         If name.Equals("Traveling Wizard") Then
             If npcIndex = 0 Then
                 Game.pushNPCDialog("What are you buying?")
-                If Game.player.health = 69 Then
+                If Math.Truncate(Game.player.health * Game.player.getmaxHealth()) = 69 Then
                     Game.pushNPCDialog("Ehehe. Your health. Nice.")
                 End If
             ElseIf npcIndex = 1 Then
