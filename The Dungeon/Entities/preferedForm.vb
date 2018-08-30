@@ -87,23 +87,23 @@
             p.iArrInd(1) = New Tuple(Of Integer, Boolean)(rHairInd, hasFemaleHair)
             p.iArrInd(5) = New Tuple(Of Integer, Boolean)(rHairInd, hasFemaleHair)
         End If
-            If Not p.iArrInd(15).Item2 = hasFemaleHair And Int(Rnd() * 3) = 0 Then
+        If Not p.iArrInd(15).Item2 = hasFemaleHair And Int(Rnd() * 3) = 0 Then
             p.iArrInd(15) = New Tuple(Of Integer, Boolean)(fHairInd + 1, hasFemaleHair)
-            End If
+        End If
 
-            If p.sexBool <> isFemale And Int(Rnd() * 3) = 0 Then
-                If p.sexBool Then
-                    p.FtM()
-                Else
-                    p.MtF()
-                End If
+        If p.sexBool <> isFemale And Int(Rnd() * 3) = 0 Then
+            If p.sexBool Then
+                p.FtM()
+            Else
+                p.MtF()
             End If
+        End If
 
-            If p.breastSize > breastSize Then
-                p.bs()
-            ElseIf p.breastSize < breastSize Then
-                p.be()
-            End If
+        If p.breastSize > breastSize Then
+            p.bs()
+        ElseIf p.breastSize < breastSize Then
+            p.be()
+        End If
 
         If isFemale And ((p.perks("slutcurse") = -1 And isSlut) Or (p.perks("slutcurse") > -1 And Not isSlut)) And Int(Rnd() * 3) = 0 Then
             If (p.perks("slutcurse") = -1 And isSlut) Then
@@ -115,11 +115,11 @@
             End If
         End If
 
-            If Not p.iArrInd(6).Item1 = earType And Int(Rnd() * 3) = 0 Then
-                p.iArrInd(6) = New Tuple(Of Integer, Boolean)(earType, isFemale)
-            End If
+        If Not p.iArrInd(6).Item1 = earType And Int(Rnd() * 3) = 0 Then
+            p.iArrInd(6) = New Tuple(Of Integer, Boolean)(earType, isFemale)
+        End If
 
-            Equipment.portraitUDate()
+        Equipment.portraitUDate()
     End Sub
     Public Sub snapShift(ByRef p As Player)
         Randomize()
