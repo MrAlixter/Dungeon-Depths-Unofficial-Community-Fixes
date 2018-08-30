@@ -232,9 +232,9 @@ Partial Class ShopV2
         '
         Me.lblFeedback.Font = New System.Drawing.Font("Consolas", 8.0!)
         Me.lblFeedback.ForeColor = System.Drawing.Color.White
-        Me.lblFeedback.Location = New System.Drawing.Point(223, 61)
+        Me.lblFeedback.Location = New System.Drawing.Point(215, 39)
         Me.lblFeedback.Name = "lblFeedback"
-        Me.lblFeedback.Size = New System.Drawing.Size(191, 74)
+        Me.lblFeedback.Size = New System.Drawing.Size(199, 120)
         Me.lblFeedback.TabIndex = 200
         Me.lblFeedback.Text = "Label1"
         Me.lblFeedback.TextAlign = System.Drawing.ContentAlignment.MiddleCenter
