@@ -47,7 +47,7 @@ Partial Class ShopV2
         Me.btnDone.Cursor = System.Windows.Forms.Cursors.Hand
         Me.btnDone.Font = New System.Drawing.Font("Consolas", 8.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.btnDone.ForeColor = System.Drawing.Color.White
-        Me.btnDone.Location = New System.Drawing.Point(228, 446)
+        Me.btnDone.Location = New System.Drawing.Point(238, 446)
         Me.btnDone.Margin = New System.Windows.Forms.Padding(4, 5, 4, 5)
         Me.btnDone.Name = "btnDone"
         Me.btnDone.Size = New System.Drawing.Size(158, 32)
@@ -61,7 +61,7 @@ Partial Class ShopV2
         Me.lblSKG.BackColor = System.Drawing.Color.Black
         Me.lblSKG.Font = New System.Drawing.Font("Consolas", 8.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.lblSKG.ForeColor = System.Drawing.Color.White
-        Me.lblSKG.Location = New System.Drawing.Point(413, 469)
+        Me.lblSKG.Location = New System.Drawing.Point(417, 469)
         Me.lblSKG.Margin = New System.Windows.Forms.Padding(4, 0, 4, 0)
         Me.lblSKG.Name = "lblSKG"
         Me.lblSKG.Size = New System.Drawing.Size(79, 13)
@@ -88,7 +88,7 @@ Partial Class ShopV2
         Me.boxInventoryFilter.ForeColor = System.Drawing.Color.White
         Me.boxInventoryFilter.Location = New System.Drawing.Point(10, 10)
         Me.boxInventoryFilter.Name = "boxInventoryFilter"
-        Me.boxInventoryFilter.Size = New System.Drawing.Size(193, 23)
+        Me.boxInventoryFilter.Size = New System.Drawing.Size(203, 23)
         Me.boxInventoryFilter.TabIndex = 194
         '
         'number
@@ -96,7 +96,7 @@ Partial Class ShopV2
         Me.number.BackColor = System.Drawing.Color.Black
         Me.number.Font = New System.Drawing.Font("Consolas", 12.0!)
         Me.number.ForeColor = System.Drawing.Color.White
-        Me.number.Location = New System.Drawing.Point(263, 232)
+        Me.number.Location = New System.Drawing.Point(273, 232)
         Me.number.Maximum = New Decimal(New Integer() {999999, 0, 0, 0})
         Me.number.Name = "number"
         Me.number.Size = New System.Drawing.Size(89, 26)
@@ -108,7 +108,7 @@ Partial Class ShopV2
         Me.btnSell.BackColor = System.Drawing.Color.Black
         Me.btnSell.Font = New System.Drawing.Font("Consolas", 8.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.btnSell.ForeColor = System.Drawing.Color.White
-        Me.btnSell.Location = New System.Drawing.Point(209, 291)
+        Me.btnSell.Location = New System.Drawing.Point(218, 289)
         Me.btnSell.Name = "btnSell"
         Me.btnSell.Size = New System.Drawing.Size(89, 36)
         Me.btnSell.TabIndex = 191
@@ -125,7 +125,7 @@ Partial Class ShopV2
         Me.boxInventory.Location = New System.Drawing.Point(10, 39)
         Me.boxInventory.Name = "boxInventory"
         Me.boxInventory.SelectionMode = System.Windows.Forms.SelectionMode.MultiExtended
-        Me.boxInventory.Size = New System.Drawing.Size(193, 424)
+        Me.boxInventory.Size = New System.Drawing.Size(202, 424)
         Me.boxInventory.Sorted = True
         Me.boxInventory.TabIndex = 188
         '
@@ -134,7 +134,7 @@ Partial Class ShopV2
         Me.btnBuy.BackColor = System.Drawing.Color.Black
         Me.btnBuy.Font = New System.Drawing.Font("Consolas", 8.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.btnBuy.ForeColor = System.Drawing.Color.White
-        Me.btnBuy.Location = New System.Drawing.Point(321, 162)
+        Me.btnBuy.Location = New System.Drawing.Point(325, 162)
         Me.btnBuy.Name = "btnBuy"
         Me.btnBuy.Size = New System.Drawing.Size(89, 36)
         Me.btnBuy.TabIndex = 190
@@ -168,9 +168,9 @@ Partial Class ShopV2
         Me.boxShopFilter.BackColor = System.Drawing.Color.Black
         Me.boxShopFilter.Font = New System.Drawing.Font("Consolas", 10.0!)
         Me.boxShopFilter.ForeColor = System.Drawing.Color.White
-        Me.boxShopFilter.Location = New System.Drawing.Point(416, 10)
+        Me.boxShopFilter.Location = New System.Drawing.Point(420, 10)
         Me.boxShopFilter.Name = "boxShopFilter"
-        Me.boxShopFilter.Size = New System.Drawing.Size(192, 23)
+        Me.boxShopFilter.Size = New System.Drawing.Size(202, 23)
         Me.boxShopFilter.TabIndex = 196
         '
         'boxShop
@@ -180,10 +180,10 @@ Partial Class ShopV2
         Me.boxShop.ForeColor = System.Drawing.Color.White
         Me.boxShop.FormattingEnabled = True
         Me.boxShop.ItemHeight = 15
-        Me.boxShop.Location = New System.Drawing.Point(416, 39)
+        Me.boxShop.Location = New System.Drawing.Point(420, 39)
         Me.boxShop.Name = "boxShop"
         Me.boxShop.SelectionMode = System.Windows.Forms.SelectionMode.MultiExtended
-        Me.boxShop.Size = New System.Drawing.Size(192, 424)
+        Me.boxShop.Size = New System.Drawing.Size(202, 424)
         Me.boxShop.Sorted = True
         Me.boxShop.TabIndex = 195
         '
@@ -193,7 +193,7 @@ Partial Class ShopV2
         Me.lblPlayer.BackColor = System.Drawing.Color.Black
         Me.lblPlayer.Font = New System.Drawing.Font("Consolas", 8.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.lblPlayer.ForeColor = System.Drawing.Color.White
-        Me.lblPlayer.Location = New System.Drawing.Point(206, 15)
+        Me.lblPlayer.Location = New System.Drawing.Point(220, 15)
         Me.lblPlayer.Margin = New System.Windows.Forms.Padding(4, 0, 4, 0)
         Me.lblPlayer.Name = "lblPlayer"
         Me.lblPlayer.Size = New System.Drawing.Size(25, 13)
@@ -206,7 +206,7 @@ Partial Class ShopV2
         Me.lblShopkeeper.BackColor = System.Drawing.Color.Black
         Me.lblShopkeeper.Font = New System.Drawing.Font("Consolas", 8.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.lblShopkeeper.ForeColor = System.Drawing.Color.White
-        Me.lblShopkeeper.Location = New System.Drawing.Point(343, 15)
+        Me.lblShopkeeper.Location = New System.Drawing.Point(347, 15)
         Me.lblShopkeeper.Margin = New System.Windows.Forms.Padding(4, 0, 4, 0)
         Me.lblShopkeeper.Name = "lblShopkeeper"
         Me.lblShopkeeper.Size = New System.Drawing.Size(67, 13)
@@ -219,7 +219,7 @@ Partial Class ShopV2
         Me.btnInspect.Cursor = System.Windows.Forms.Cursors.Hand
         Me.btnInspect.Font = New System.Drawing.Font("Consolas", 8.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.btnInspect.ForeColor = System.Drawing.Color.White
-        Me.btnInspect.Location = New System.Drawing.Point(263, 369)
+        Me.btnInspect.Location = New System.Drawing.Point(273, 369)
         Me.btnInspect.Margin = New System.Windows.Forms.Padding(4, 5, 4, 5)
         Me.btnInspect.Name = "btnInspect"
         Me.btnInspect.Size = New System.Drawing.Size(89, 32)
@@ -231,7 +231,7 @@ Partial Class ShopV2
         '
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Inherit
         Me.BackColor = System.Drawing.Color.Black
-        Me.ClientSize = New System.Drawing.Size(614, 491)
+        Me.ClientSize = New System.Drawing.Size(634, 491)
         Me.ControlBox = False
         Me.Controls.Add(Me.btnInspect)
         Me.Controls.Add(Me.lblShopkeeper)
