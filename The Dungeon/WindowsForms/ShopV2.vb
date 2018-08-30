@@ -14,6 +14,8 @@ Public Class ShopV2
         skInventory = New List(Of String)
         pInventory = New List(Of String)
 
+        lblFeedback.Text = ""
+
         'scale to the screen size
         Dim startingWidth = Me.Width
         Dim startingHeight = Me.Height
@@ -117,6 +119,9 @@ Public Class ShopV2
             Next
             p.gold += cost
             sk.gold -= cost
+            lblFeedback.Text = "Selling successful. Acquired " & cost & " gold."
+        Else
+            lblFeedback.Text = "Shopkeeper does not have enough gold. They need " & cost - sk.gold & " more."
         End If
 
         RefreshScreen()
@@ -154,6 +159,9 @@ Public Class ShopV2
             Next
             p.gold -= cost
             sk.gold += cost
+            lblFeedback.Text = "Purchase successful. Spent " & cost & " gold."
+        Else
+            lblFeedback.Text = "Insufficient gold. Need " & cost - p.gold & " more."
         End If
 
         RefreshScreen()
@@ -232,16 +240,21 @@ Public Class ShopV2
 
     Private Sub btnInspect_Click(sender As Object, e As EventArgs) Handles btnInspect.Click
         Dim name As String = Nothing
+
         If boxInventory.SelectedItems.Count > 0 Then
-            name = Regex.Split(boxInventory.SelectedItems(0), "\s*?[0-9]*?g\s*?x[0-9]*?")(0)
+            name = Regex.Split(boxInventory.SelectedItems(0), ChrW(8203))(0).Trim()
         ElseIf boxShop.SelectedItems.Count > 0 Then
-            name = Regex.Split(boxShop.SelectedItems(0), "\s*?[0-9]*?g")(0)
+            name = Regex.Split(boxShop.SelectedItems(0), ChrW(8203))(0).Trim()
         End If
 
         If name IsNot Nothing Then
+            If name.Last = "." Then
+                name = name.Substring(0, name.Length - 1)
+            End If
+
             For i As Integer = 0 To p.inventory.Count - 1
-                If p.inventory(i).getName() = name Then
-                    p.inventory(i).examine()
+                If CType(p.inventory(i), Item).getName().Contains(name) Then
+                    lblFeedback.Text = p.inventory(i).getDescription()
                     Exit For
                 End If
             Next

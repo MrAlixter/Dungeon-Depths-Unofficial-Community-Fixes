@@ -38,6 +38,7 @@ Partial Class ShopV2
         Me.lblPlayer = New System.Windows.Forms.Label()
         Me.lblShopkeeper = New System.Windows.Forms.Label()
         Me.btnInspect = New System.Windows.Forms.Button()
+        Me.lblFeedback = New System.Windows.Forms.Label()
         CType(Me.number, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.SuspendLayout()
         '
@@ -227,12 +228,24 @@ Partial Class ShopV2
         Me.btnInspect.Text = "Inspect"
         Me.btnInspect.UseVisualStyleBackColor = False
         '
+        'lblFeedback
+        '
+        Me.lblFeedback.Font = New System.Drawing.Font("Consolas", 8.0!)
+        Me.lblFeedback.ForeColor = System.Drawing.Color.White
+        Me.lblFeedback.Location = New System.Drawing.Point(223, 61)
+        Me.lblFeedback.Name = "lblFeedback"
+        Me.lblFeedback.Size = New System.Drawing.Size(191, 74)
+        Me.lblFeedback.TabIndex = 200
+        Me.lblFeedback.Text = "Label1"
+        Me.lblFeedback.TextAlign = System.Drawing.ContentAlignment.MiddleCenter
+        '
         'ShopV2
         '
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Inherit
         Me.BackColor = System.Drawing.Color.Black
         Me.ClientSize = New System.Drawing.Size(634, 491)
         Me.ControlBox = False
+        Me.Controls.Add(Me.lblFeedback)
         Me.Controls.Add(Me.btnInspect)
         Me.Controls.Add(Me.lblShopkeeper)
         Me.Controls.Add(Me.lblPlayer)
@@ -273,4 +286,5 @@ Partial Class ShopV2
     Friend WithEvents lblPlayer As Label
     Friend WithEvents lblShopkeeper As Label
     Friend WithEvents btnInspect As Button
+    Friend WithEvents lblFeedback As Label
 End Class

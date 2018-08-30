@@ -74,6 +74,9 @@
     Public Sub examine()
         Game.pushLblEvent(description)
     End Sub
+    Public Function getDescription()
+        Return description
+    End Function
     Function getCount()
         Return count
     End Function
