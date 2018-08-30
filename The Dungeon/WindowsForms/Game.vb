@@ -98,6 +98,8 @@ Public Class Game
     'settings
     Public screenSize As String
 
+    Dim debugWindow As Debug_Window
+
     'startup/new level methods
     'Form1_Load handles the loading of the form
     Private Sub Form1_Load(sender As Object, e As EventArgs) Handles Me.Load
@@ -2191,7 +2193,7 @@ Public Class Game
         player.createP()
 
     End Sub
-    Private Sub btnSavePic_Click(sender As Object, e As EventArgs) Handles btnS1.Click, btnS2.Click, btnS3.Click, btnS3.Click, btnS4.Click, btnS5.Click, btnS6.Click, btnS7.Click, btnS8.Click
+    Private Sub btnSavePic_Click(sender As Object, e As EventArgs) Handles btnS1.Click, btnS2.Click, btnS3.Click, btnS4.Click, btnS5.Click, btnS6.Click, btnS7.Click, btnS8.Click
         Dim name As String = CType(sender, Button).Name
         Dim fileNum As String = name(name.Length - 1)
         If solFlag Then
@@ -3167,7 +3169,12 @@ Public Class Game
         ab1.Dispose()
     End Sub
     Private Sub DebugToolStripMenuItem_Click(sender As Object, e As EventArgs) Handles DebugToolStripMenuItem.Click
-        Debug_Window.ShowDialog()
+        Try
+            debugWindow.ToString() 'Try to do something to check if it exists
+        Catch ex As NullReferenceException
+            debugWindow = New Debug_Window
+        End Try
+        debugWindow.ShowDialog()
         player.invNeedsUDate = True
         player.UIupdate()
     End Sub

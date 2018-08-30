@@ -15,8 +15,9 @@
         If Me.getUsable() = False Then Exit Sub
         Game.lstLog.Items.Add("You use the " & getName() & ". +10 base health!")
         Game.lstLog.TopIndex = Game.lstLog.Items.Count - 1
-        Game.player.maxHealth += 10
-        Game.player.health += 10 / Game.player.getmaxHealth
+        Game.player.hBuff += 10
+        Game.player.health += 10 / Game.player.getmaxHealth()
+        If Game.player.health > 1 Then Game.player.health = 1
         Game.player.UIupdate()
         count -= 1
     End Sub

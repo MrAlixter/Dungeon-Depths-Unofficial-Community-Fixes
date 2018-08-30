@@ -15,7 +15,7 @@
         If Me.getUsable() = False Then Exit Sub
         Game.lstLog.Items.Add("You use the " & getName() & ". +5 base mana!")
         Game.lstLog.TopIndex = Game.lstLog.Items.Count - 1
-        Game.player.maxMana += 5
+        Game.player.mBuff += 5
         Game.player.mana += 5
         Game.player.UIupdate()
         count -= 1
