@@ -110,20 +110,26 @@
     End Sub
     Public Sub encounter()
         pos = Game.player.pos
-        If dead = True Then Exit Sub
+        If dead = True Then
+            Game.pushLblEvent("This NPC is dead.")
+            Exit Sub
+        End If
         If name = "Shopkeeper" Or name.Equals("Traveling Wizard") Then gold = 9999
         Game.npcIndex = npcIndex
         If name.Equals("Traveling Wizard") Then
             If npcIndex = 0 Then
                 Game.pushNPCDialog("What are you buying?")
+                If Game.player.health = 69 Then
+                    Game.pushNPCDialog("Ehehe. Your health. Nice.")
+                End If
             ElseIf npcIndex = 1 Then
-                Game.pushNPCDialog("Ribbit.  Ribbit!")
-            ElseIf npcIndex = 2 Then
-                Game.pushNPCDialog("*bleets*")
-            ElseIf npcIndex = 3 Then
-                Game.pushNPCDialog("Hey, " & Game.player.pClass.name & ", how's it going?")
-            ElseIf npcIndex = 4 Then
-                Game.pushNPCDialog("So are these real or fake?  My ears, I mean.")
+                    Game.pushNPCDialog("Ribbit.  Ribbit!")
+                ElseIf npcIndex = 2 Then
+                    Game.pushNPCDialog("*bleets*")
+                ElseIf npcIndex = 3 Then
+                    Game.pushNPCDialog("Hey, " & Game.player.pClass.name & ", how's it going?")
+                ElseIf npcIndex = 4 Then
+                    Game.pushNPCDialog("So are these real or fake?  My ears, I mean.")
             End If
         Else
             If npcIndex = 0 Then
