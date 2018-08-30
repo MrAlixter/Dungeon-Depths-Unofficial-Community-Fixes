@@ -141,6 +141,9 @@ Public Class Debug_Window
         boxChestRichnessRange.Value = Game.chestRichnessRange
         boxEncounterRate.Value = Game.encounterRate
         boxEClockResetVal.Value = Game.eClockResetVal
+        boxTrapFreqMin.Value = Game.trapFreqMin
+        boxTrapFreqRange.Value = Game.trapFreqRange
+        boxTrapSizeDependence.Value = Game.trapSizeDependence
     End Sub
 
     Private Sub loadPortrait()
