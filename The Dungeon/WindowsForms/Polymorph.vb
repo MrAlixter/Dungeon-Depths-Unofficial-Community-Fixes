@@ -98,7 +98,13 @@
         ElseIf p.pClass.name = "Goddess" Then
             out = out & "The golden aura leaves your body, and you once again join the world of the mortals."
         ElseIf p.pClass.name.Equals("Magic Girl") Then
-            Game.cboxMG.Items.Remove("Heartblast Starcannon")
+            If Game.cboxMG.SelectedItem = "Heartblast Starcannon" Then
+                Game.cboxMG.Items.Insert(0, "-- Select --")
+                Game.cboxMG.SelectedIndex = 0
+            End If
+            Do While Game.cboxMG.Items.Contains("Heartblast Starcannon")
+                Game.cboxMG.Items.Remove("Heartblast Starcannon")
+            Loop
             Game.lstLog.Items.Add("'Heartblast Starcannon' spell forgotten!")
             out = out & "As you stow your wand, the glow engulfing it fades and you return to your original form. Well, until you should be called on again, at least."
         End If
@@ -257,7 +263,13 @@
         ElseIf p.pClass.name = "Goddess" Then
             out = out & "The golden aura leaves your body, and you once again join the world of the mortals."
         ElseIf p.pClass.name.Equals("Magic Girl") Then
-            Game.cboxMG.Items.Remove("Heartblast Starcannon")
+            If Game.cboxMG.SelectedItem = "Heartblast Starcannon" Then
+                Game.cboxMG.Items.Insert(0, "-- Select --")
+                Game.cboxMG.SelectedIndex = 0
+            End If
+            Do While Game.cboxMG.Items.Contains("Heartblast Starcannon")
+                Game.cboxMG.Items.Remove("Heartblast Starcannon")
+            Loop
             Game.lstLog.Items.Add("'Heartblast Starcannon' spell forgotten!")
             out = out & "As you stow your wand, the glow engulfing it fades and you return to your original form. Well, until you should be called on again, at least."
         End If

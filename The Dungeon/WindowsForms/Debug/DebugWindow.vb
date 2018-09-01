@@ -14,9 +14,11 @@ Public Class Debug_Window
     Dim yOffset As Integer
     Dim mouseMoveThread As Thread
     Private Delegate Sub delegateExecute()
+    Dim tabPortraitsLoaded As Boolean
 
     Private Sub Debug_Window_Load(sender As Object, e As EventArgs) Handles MyBase.Load
         clear()
+        If tabPortraitsLoaded = Nothing Then tabPortraitsLoaded = False
 
         dragging = False
         xOffset = 0
@@ -33,7 +35,6 @@ Public Class Debug_Window
             boxBeaten.Enabled = False
         End If
 
-
         'MAP
         magnification = Math.Floor(Math.Min(picBoard.Width / Game.mBoardWidth, picBoard.Height / Game.mBoardHeight))
         boxZoom.Value = magnification
@@ -46,18 +47,19 @@ Public Class Debug_Window
 
         'PLAYER
         boxName.Text = Game.player.name
-        boxSex.Items.Add("Male")
-        boxSex.Items.Add("Female")
-        If Game.player.sexBool Then
-            boxSex.SelectedItem = "Female"
-        Else
-            boxSex.SelectedItem = "Male"
+        RemoveHandler boxSex.CheckedChanged, AddressOf boxSex_CheckedChanged
+        If Game.player.sexBool <> boxSex.Checked Then
+            clearPortrait()
         End If
+        boxSex.Checked = Game.player.sexBool
+        AddHandler boxSex.CheckedChanged, AddressOf boxSex_CheckedChanged
         For i = 0 To Game.titleList.Count - 1
             boxForm.Items.Add(Game.titleList(i).ToString())
         Next
+
         boxForm.SelectedItem = Game.player.pClass.name
-        boxHealth.Value = Game.player.health * Game.player.getmaxHealth
+
+        boxHealth.Value = Game.player.health * Game.player.getmaxHealth()
         boxMaxHealth.Value = Game.player.maxHealth
         boxMana.Value = Game.player.mana
         boxMaxMana.Value = Game.player.maxMana
@@ -68,6 +70,8 @@ Public Class Debug_Window
         boxSpd.Value = Game.player.speed
         boxEvd.Value = Game.player.evade
         boxGold.Value = Game.player.gold
+
+
         pnlSC.BackColor = Game.player.skincolor
         pnlHC.BackColor = Color.FromArgb(255, Game.player.haircolor.R, Game.player.haircolor.G, Game.player.haircolor.B)
         boxAlpha.Value = Game.player.haircolor.A
@@ -81,25 +85,52 @@ Public Class Debug_Window
         updateItemsList()
 
         'PERKS
-        Dim row = 0
-        Dim col = 0
-        Dim test = 0
-        For Each perk In Game.player.perks
-            addPerk(perk, col, row)
-            row += 1
-            Dim control As Control = tabPerks.Controls.Item(tabPerks.Controls.Count - 1)
-            Console.Write(test & ": " & perk.Key & " # " & perk.Value & " ! ")
-            Console.Write(control.Location.Y + control.Size.Height)
-            Console.WriteLine("  |  " & tabPerks.Size.Height)
-            If (control.Location.Y + control.Size.Height) > tabPerks.Size.Height Then
-                row = 0
-                col += 1
-                movePerkControl(control, col, row)
-                row += 1
+        Dim groupBoxes As List(Of GroupBox) = New List(Of GroupBox)
+        For Each control In tabPerks.Controls
+            If TypeOf (control) Is GroupBox Then
+                groupBoxes.Add(control)
             End If
-            test += 1
         Next
+        If groupBoxes.Count <> Game.player.perks.Count Then
+            tabPerks.Controls.Clear()
 
+            Dim row = 0
+            Dim col = 0
+            Dim test = 0
+            For Each perk In Game.player.perks
+                addPerk(perk, col, row)
+                row += 1
+                Dim control As Control = tabPerks.Controls.Item(tabPerks.Controls.Count - 1)
+                If (control.Location.Y + control.Size.Height) > tabPerks.Size.Height Then
+                    row = 0
+                    col += 1
+                    movePerkControl(control, col, row)
+                    row += 1
+                End If
+                test += 1
+            Next
+        Else
+            For i As Integer = 0 To groupBoxes.Count - 1
+                Dim box As GroupBox = groupBoxes(i)
+                Dim num As NumericUpDown = Nothing
+                Dim lbl As Label = Nothing
+                For j As Integer = 0 To box.Controls.Count - 1
+                    Dim c As Control = box.Controls(j)
+                    If TypeOf (c) Is NumericUpDown Then
+                        num = c
+                    ElseIf TypeOf (c) Is Label Then
+                        lbl = c
+                    End If
+
+                    If num IsNot Nothing AndAlso lbl IsNot Nothing Then
+                        num.Value = Game.player.perks(lbl.Text)
+                        Exit For
+                    End If
+                Next
+            Next
+        End If
+
+        'GENERATION SETTINGS
         lblFC.Text = "Floorcode: " & Game.floorCode
         boxWidth.Value = Game.mBoardWidth
         boxHeight.Value = Game.mBoardHeight
@@ -110,6 +141,9 @@ Public Class Debug_Window
         boxChestRichnessRange.Value = Game.chestRichnessRange
         boxEncounterRate.Value = Game.encounterRate
         boxEClockResetVal.Value = Game.eClockResetVal
+        boxTrapFreqMin.Value = Game.trapFreqMin
+        boxTrapFreqRange.Value = Game.trapFreqRange
+        boxTrapSizeDependence.Value = Game.trapSizeDependence
     End Sub
 
     Private Sub loadPortrait()
@@ -119,28 +153,35 @@ Public Class Debug_Window
         Dim w As Integer = 146
         Dim h As Integer = 216
 
-        Dim attr
+        Dim attr As List(Of Image)()
         If Game.player.sexBool Then
             attr = CharacterGenerator.fAttributes
         Else
             attr = CharacterGenerator.mAttributes
         End If
-        For i = 0 To tabPortrait.TabPages.Count - 1
-            Dim x As Integer = w * PADDING
-            Dim y As Integer = (tabPortrait.TabPages(i).Height - h) / 2
-            For j = 0 To attr(i).Count - 1
-                Dim img As New PictureBox
-                img.Name = i.ToString() & ":" & j.ToString()
-                tabPortrait.TabPages(i).Controls.Add(img)
-                img.Image = attr(i)(j)
-                img.BackgroundImage = attr(0)(0)
-                img.Location = New Point(x, y)
-                img.Size = New Point(w, h)
-                'img.BackgroundImageLayout = ImageLayout.Stretch
-                AddHandler img.Click, AddressOf clickOnPic
-                x += w * (1 + PADDING)
+
+        If tabPortraitsLoaded = False Then
+            Dim y As Integer = (tabPortrait.TabPages(0).Height - h) / 2
+            Dim bg As Image = attr(0)(0)
+            For i = 0 To tabPortrait.TabPages.Count - 1
+                Dim page As TabPage = tabPortrait.TabPages(i)
+                Dim x As Integer = w * PADDING
+                Dim att As List(Of Image) = attr(i)
+                For j As Integer = 0 To att.Count - 1
+                    Dim img As New PictureBox
+                    img.Name = i.ToString() & ":" & j.ToString()
+                    page.Controls.Add(img)
+                    img.Image = att(j)
+                    img.BackgroundImage = bg
+                    img.Location = New Point(x, y)
+                    img.Size = New Point(w, h)
+                    'img.BackgroundImageLayout = ImageLayout.Stretch
+                    AddHandler img.Click, AddressOf clickOnPic
+                    x += w * (1 + PADDING)
+                Next
             Next
-        Next
+            tabPortraitsLoaded = True
+        End If
     End Sub
 
     Private Sub clearPortrait()
@@ -149,6 +190,7 @@ Public Class Debug_Window
                 tabPortrait.TabPages(i).Controls(0).Dispose()
             Next
         Next
+        tabPortraitsLoaded = False
     End Sub
 
     Public Sub clear()
@@ -163,7 +205,7 @@ Public Class Debug_Window
             End If
             ctrl = GetNextControl(ctrl, True)
         Loop
-        clearPortrait()
+        'clearPortrait()
     End Sub
 
     Private Sub unselectMapControlButtons()
@@ -416,18 +458,18 @@ Public Class Debug_Window
         Game.player.gold = boxGold.Value
     End Sub
 
-    Private Sub boxSex_SelectedValueChanged(sender As Object, e As EventArgs) Handles boxSex.SelectedValueChanged
-        Dim before = Nothing
-        If Game.player.sex = "Male" And boxSex.Items(boxSex.SelectedIndex) = "Female" Then
-            before = Game.player.sex
+    Private Sub boxSex_CheckedChanged(sender As Object, e As EventArgs) Handles boxSex.CheckedChanged
+        Dim before As Boolean = Nothing
+        If Not Game.player.sexBool And boxSex.Checked Then
+            before = Game.player.sexBool
             Game.player.MtF()
-        ElseIf Game.player.sex = "Female" And boxSex.Items(boxSex.SelectedIndex) = "Male" Then
-            before = Game.player.sex
+        ElseIf Game.player.sexBool And Not boxSex.Checked Then
+            before = Game.player.sexBool
             Game.player.FtM()
         End If
-        If (Not before = Nothing) And (Game.player.sex = before) Then
+        If (Not before = Nothing) And (Game.player.sexBool = before) Then
             MessageBox.Show("Something prevents the player's sex from changing")
-            boxSex.SelectedItem = before
+            boxSex.Checked = before
         Else
             clearPortrait()
             loadPortrait()

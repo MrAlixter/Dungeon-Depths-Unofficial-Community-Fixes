@@ -14,6 +14,8 @@ Public Class ShopV2
         skInventory = New List(Of String)
         pInventory = New List(Of String)
 
+        lblFeedback.Text = ""
+
         'scale to the screen size
         Dim startingWidth = Me.Width
         Dim startingHeight = Me.Height
@@ -77,8 +79,11 @@ Public Class ShopV2
         Dim cost As Integer = 0
         Dim indexes As List(Of Integer) = New List(Of Integer)
         For i As Integer = 0 To items.Count - 1
-            '\s*?[0-9]*?g
-            Dim name As String = Regex.Split(items(i), ". ")(0)
+            'Dim name As String = Regex.Split(items(i), "\s*?[0-9]*?g")(0)
+            Dim name As String = Regex.Split(items(i), ChrW(8203))(0).Trim() 'Read for the zero-width whitespace character
+            If name.Last = "." Then
+                name = name.Substring(0, name.Length - 1)
+            End If
             Dim ind As Integer
             For j As Integer = 0 To p.inventory.Count - 1
                 If CType(p.inventory(j), Item).getName().Contains(name) Then
@@ -114,6 +119,9 @@ Public Class ShopV2
             Next
             p.gold += cost
             sk.gold -= cost
+            lblFeedback.Text = "Selling successful. Acquired " & cost & " gold."
+        Else
+            lblFeedback.Text = "Shopkeeper does not have enough gold. They need " & cost - sk.gold & " more."
         End If
 
         RefreshScreen()
@@ -128,7 +136,11 @@ Public Class ShopV2
         Dim cost As Integer = 0
         Dim indexes As List(Of Integer) = New List(Of Integer)
         For i As Integer = 0 To items.Count - 1
-            Dim name As String = Regex.Split(items(i), ". ")(0)
+            'Dim name As String = Regex.Split(items(i), "\s*?[0-9]*?g")(0)
+            Dim name As String = Regex.Split(items(i), ChrW(8203))(0).Trim() 'Read for the zero-width whitespace character
+            If name.Last = "." Then
+                name = name.Substring(0, name.Length - 1)
+            End If
             Dim ind As Integer
             For j As Integer = 0 To p.inventory.Count - 1
                 If CType(p.inventory(j), Item).getName().Contains(name) Then
@@ -147,6 +159,9 @@ Public Class ShopV2
             Next
             p.gold -= cost
             sk.gold += cost
+            lblFeedback.Text = "Purchase successful. Spent " & cost & " gold."
+        Else
+            lblFeedback.Text = "Insufficient gold. Need " & cost - p.gold & " more."
         End If
 
         RefreshScreen()
@@ -208,17 +223,42 @@ Public Class ShopV2
     End Sub
 
     Function lineup(ByVal s As String, ByVal i As Integer, Optional ByVal j As Integer = -1)
+        Dim c As Char = ChrW(8203)
         If s.Length > 14 Then s = s.Substring(0, 13) & "."
         If s.Length < 14 Then
             For x = s.Length To 14
                 s = s & " "
             Next
         End If
-        If s.Length = 14 Then s = s & " "
+        If s.Length = 14 Then s = s & c & " "
         If j = -1 Then
-            Return s & " " & i & "g"
+            Return s & c & " " & i & "g"
         Else
-            Return s & " " & i & "g" & "  x" & j
+            Return s & c & " " & i & "g" & "  x" & j
         End If
     End Function
+
+    Private Sub btnInspect_Click(sender As Object, e As EventArgs) Handles btnInspect.Click
+        Dim name As String = Nothing
+
+        If boxInventory.SelectedItems.Count > 0 Then
+            name = Regex.Split(boxInventory.SelectedItems(0), ChrW(8203))(0).Trim()
+        ElseIf boxShop.SelectedItems.Count > 0 Then
+            name = Regex.Split(boxShop.SelectedItems(0), ChrW(8203))(0).Trim()
+        End If
+
+        If name IsNot Nothing Then
+            If name.Last = "." Then
+                name = name.Substring(0, name.Length - 1)
+            End If
+
+            For i As Integer = 0 To p.inventory.Count - 1
+                If CType(p.inventory(i), Item).getName().Contains(name) Then
+                    lblFeedback.Text = p.inventory(i).getDescription()
+                    Exit For
+                End If
+            Next
+        End If
+
+    End Sub
 End Class

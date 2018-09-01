@@ -52,6 +52,7 @@ Partial Class Debug_Window
         Me.lblTurn = New System.Windows.Forms.Label()
         Me.lblFloor = New System.Windows.Forms.Label()
         Me.tabPlayer = New System.Windows.Forms.TabPage()
+        Me.boxSex = New System.Windows.Forms.CheckBox()
         Me.boxAlpha = New System.Windows.Forms.NumericUpDown()
         Me.lblAlpha = New System.Windows.Forms.Label()
         Me.lblHC = New System.Windows.Forms.Label()
@@ -102,7 +103,6 @@ Partial Class Debug_Window
         Me.lblHealth = New System.Windows.Forms.Label()
         Me.boxForm = New System.Windows.Forms.ComboBox()
         Me.boxName = New System.Windows.Forms.TextBox()
-        Me.boxSex = New System.Windows.Forms.ComboBox()
         Me.lblTitle = New System.Windows.Forms.Label()
         Me.lblSex = New System.Windows.Forms.Label()
         Me.lblName = New System.Windows.Forms.Label()
@@ -118,6 +118,13 @@ Partial Class Debug_Window
         Me.boxItems = New System.Windows.Forms.ListBox()
         Me.lblItems = New System.Windows.Forms.Label()
         Me.tabGeneration = New System.Windows.Forms.TabPage()
+        Me.boxTrapSizeDependence = New System.Windows.Forms.NumericUpDown()
+        Me.lblTrapSizeDependence = New System.Windows.Forms.Label()
+        Me.boxTrapFreqMin = New System.Windows.Forms.NumericUpDown()
+        Me.boxTrapFreqRange = New System.Windows.Forms.NumericUpDown()
+        Me.lblTrapFreqMin = New System.Windows.Forms.Label()
+        Me.lblTrapFreqRange = New System.Windows.Forms.Label()
+        Me.divider = New System.Windows.Forms.TextBox()
         Me.lblInfo = New System.Windows.Forms.Label()
         Me.btnSaveGeneration = New System.Windows.Forms.Button()
         Me.btnGenerationReset = New System.Windows.Forms.Button()
@@ -143,13 +150,6 @@ Partial Class Debug_Window
         Me.lblHeight = New System.Windows.Forms.Label()
         Me.lblWidth = New System.Windows.Forms.Label()
         Me.lblFC = New System.Windows.Forms.Label()
-        Me.boxTrapSizeDependence = New System.Windows.Forms.NumericUpDown()
-        Me.lblTrapSizeDependence = New System.Windows.Forms.Label()
-        Me.boxTrapFreqMin = New System.Windows.Forms.NumericUpDown()
-        Me.boxTrapFreqRange = New System.Windows.Forms.NumericUpDown()
-        Me.lblTrapFreqMin = New System.Windows.Forms.Label()
-        Me.lblTrapFreqRange = New System.Windows.Forms.Label()
-        Me.divider = New System.Windows.Forms.TextBox()
         Me.tabMain.SuspendLayout()
         Me.tabInformation.SuspendLayout()
         Me.tabGeneral.SuspendLayout()
@@ -178,6 +178,9 @@ Partial Class Debug_Window
         Me.tabInventory.SuspendLayout()
         CType(Me.number, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.tabGeneration.SuspendLayout()
+        CType(Me.boxTrapSizeDependence, System.ComponentModel.ISupportInitialize).BeginInit()
+        CType(Me.boxTrapFreqMin, System.ComponentModel.ISupportInitialize).BeginInit()
+        CType(Me.boxTrapFreqRange, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me.boxChestRichnessRange, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me.boxChestRichnessBase, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me.boxEClockResetVal, System.ComponentModel.ISupportInitialize).BeginInit()
@@ -187,9 +190,6 @@ Partial Class Debug_Window
         CType(Me.boxChestFreqRange, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me.boxHeight, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me.boxWidth, System.ComponentModel.ISupportInitialize).BeginInit()
-        CType(Me.boxTrapSizeDependence, System.ComponentModel.ISupportInitialize).BeginInit()
-        CType(Me.boxTrapFreqMin, System.ComponentModel.ISupportInitialize).BeginInit()
-        CType(Me.boxTrapFreqRange, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.SuspendLayout()
         '
         'tabMain
@@ -529,6 +529,7 @@ Partial Class Debug_Window
         'tabPlayer
         '
         Me.tabPlayer.BackColor = System.Drawing.Color.Black
+        Me.tabPlayer.Controls.Add(Me.boxSex)
         Me.tabPlayer.Controls.Add(Me.boxAlpha)
         Me.tabPlayer.Controls.Add(Me.lblAlpha)
         Me.tabPlayer.Controls.Add(Me.lblHC)
@@ -562,7 +563,6 @@ Partial Class Debug_Window
         Me.tabPlayer.Controls.Add(Me.lblHealth)
         Me.tabPlayer.Controls.Add(Me.boxForm)
         Me.tabPlayer.Controls.Add(Me.boxName)
-        Me.tabPlayer.Controls.Add(Me.boxSex)
         Me.tabPlayer.Controls.Add(Me.lblTitle)
         Me.tabPlayer.Controls.Add(Me.lblSex)
         Me.tabPlayer.Controls.Add(Me.lblName)
@@ -572,6 +572,16 @@ Partial Class Debug_Window
         Me.tabPlayer.Size = New System.Drawing.Size(742, 548)
         Me.tabPlayer.TabIndex = 1
         Me.tabPlayer.Text = "PLAYER"
+        '
+        'boxSex
+        '
+        Me.boxSex.CheckAlign = System.Drawing.ContentAlignment.MiddleRight
+        Me.boxSex.Location = New System.Drawing.Point(410, 9)
+        Me.boxSex.Name = "boxSex"
+        Me.boxSex.Size = New System.Drawing.Size(81, 17)
+        Me.boxSex.TabIndex = 270
+        Me.boxSex.Text = "CheckBox1"
+        Me.boxSex.UseVisualStyleBackColor = True
         '
         'boxAlpha
         '
@@ -1121,17 +1131,6 @@ Partial Class Debug_Window
         Me.boxName.Size = New System.Drawing.Size(134, 26)
         Me.boxName.TabIndex = 211
         '
-        'boxSex
-        '
-        Me.boxSex.BackColor = System.Drawing.Color.Black
-        Me.boxSex.Font = New System.Drawing.Font("Consolas", 12.0!)
-        Me.boxSex.ForeColor = System.Drawing.Color.White
-        Me.boxSex.FormattingEnabled = True
-        Me.boxSex.Location = New System.Drawing.Point(357, 3)
-        Me.boxSex.Name = "boxSex"
-        Me.boxSex.Size = New System.Drawing.Size(134, 27)
-        Me.boxSex.TabIndex = 207
-        '
         'lblTitle
         '
         Me.lblTitle.AutoSize = True
@@ -1150,9 +1149,9 @@ Partial Class Debug_Window
         Me.lblSex.ForeColor = System.Drawing.Color.White
         Me.lblSex.Location = New System.Drawing.Point(250, 7)
         Me.lblSex.Name = "lblSex"
-        Me.lblSex.Size = New System.Drawing.Size(36, 19)
+        Me.lblSex.Size = New System.Drawing.Size(144, 19)
         Me.lblSex.TabIndex = 208
-        Me.lblSex.Text = "SEX"
+        Me.lblSex.Text = "SEX (IS FEMALE)"
         '
         'lblName
         '
@@ -1344,6 +1343,68 @@ Partial Class Debug_Window
         Me.tabGeneration.Size = New System.Drawing.Size(742, 548)
         Me.tabGeneration.TabIndex = 5
         Me.tabGeneration.Text = "GENERATION"
+        '
+        'boxTrapSizeDependence
+        '
+        Me.boxTrapSizeDependence.BackColor = System.Drawing.Color.Black
+        Me.boxTrapSizeDependence.ForeColor = System.Drawing.Color.White
+        Me.boxTrapSizeDependence.Location = New System.Drawing.Point(555, 114)
+        Me.boxTrapSizeDependence.Name = "boxTrapSizeDependence"
+        Me.boxTrapSizeDependence.Size = New System.Drawing.Size(120, 26)
+        Me.boxTrapSizeDependence.TabIndex = 249
+        '
+        'lblTrapSizeDependence
+        '
+        Me.lblTrapSizeDependence.AutoSize = True
+        Me.lblTrapSizeDependence.Location = New System.Drawing.Point(347, 116)
+        Me.lblTrapSizeDependence.Name = "lblTrapSizeDependence"
+        Me.lblTrapSizeDependence.Size = New System.Drawing.Size(198, 19)
+        Me.lblTrapSizeDependence.TabIndex = 248
+        Me.lblTrapSizeDependence.Text = "Trap Size Dependence:"
+        '
+        'boxTrapFreqMin
+        '
+        Me.boxTrapFreqMin.BackColor = System.Drawing.Color.Black
+        Me.boxTrapFreqMin.ForeColor = System.Drawing.Color.White
+        Me.boxTrapFreqMin.Location = New System.Drawing.Point(555, 82)
+        Me.boxTrapFreqMin.Name = "boxTrapFreqMin"
+        Me.boxTrapFreqMin.Size = New System.Drawing.Size(120, 26)
+        Me.boxTrapFreqMin.TabIndex = 247
+        '
+        'boxTrapFreqRange
+        '
+        Me.boxTrapFreqRange.BackColor = System.Drawing.Color.Black
+        Me.boxTrapFreqRange.ForeColor = System.Drawing.Color.White
+        Me.boxTrapFreqRange.Location = New System.Drawing.Point(555, 50)
+        Me.boxTrapFreqRange.Name = "boxTrapFreqRange"
+        Me.boxTrapFreqRange.Size = New System.Drawing.Size(120, 26)
+        Me.boxTrapFreqRange.TabIndex = 246
+        '
+        'lblTrapFreqMin
+        '
+        Me.lblTrapFreqMin.AutoSize = True
+        Me.lblTrapFreqMin.Location = New System.Drawing.Point(347, 84)
+        Me.lblTrapFreqMin.Name = "lblTrapFreqMin"
+        Me.lblTrapFreqMin.Size = New System.Drawing.Size(135, 19)
+        Me.lblTrapFreqMin.TabIndex = 245
+        Me.lblTrapFreqMin.Text = "Trap Freq Min:"
+        '
+        'lblTrapFreqRange
+        '
+        Me.lblTrapFreqRange.AutoSize = True
+        Me.lblTrapFreqRange.Location = New System.Drawing.Point(347, 52)
+        Me.lblTrapFreqRange.Name = "lblTrapFreqRange"
+        Me.lblTrapFreqRange.Size = New System.Drawing.Size(162, 19)
+        Me.lblTrapFreqRange.TabIndex = 244
+        Me.lblTrapFreqRange.Text = "Trap Freq Range: "
+        '
+        'divider
+        '
+        Me.divider.Location = New System.Drawing.Point(340, 52)
+        Me.divider.Multiline = True
+        Me.divider.Name = "divider"
+        Me.divider.Size = New System.Drawing.Size(1, 325)
+        Me.divider.TabIndex = 243
         '
         'lblInfo
         '
@@ -1579,68 +1640,6 @@ Partial Class Debug_Window
         Me.lblFC.TabIndex = 22
         Me.lblFC.Text = "FloorCode: "
         '
-        'boxTrapSizeDependence
-        '
-        Me.boxTrapSizeDependence.BackColor = System.Drawing.Color.Black
-        Me.boxTrapSizeDependence.ForeColor = System.Drawing.Color.White
-        Me.boxTrapSizeDependence.Location = New System.Drawing.Point(555, 114)
-        Me.boxTrapSizeDependence.Name = "boxTrapSizeDependence"
-        Me.boxTrapSizeDependence.Size = New System.Drawing.Size(120, 26)
-        Me.boxTrapSizeDependence.TabIndex = 249
-        '
-        'lblTrapSizeDependence
-        '
-        Me.lblTrapSizeDependence.AutoSize = True
-        Me.lblTrapSizeDependence.Location = New System.Drawing.Point(347, 116)
-        Me.lblTrapSizeDependence.Name = "lblTrapSizeDependence"
-        Me.lblTrapSizeDependence.Size = New System.Drawing.Size(198, 19)
-        Me.lblTrapSizeDependence.TabIndex = 248
-        Me.lblTrapSizeDependence.Text = "Trap Size Dependence:"
-        '
-        'boxTrapFreqMin
-        '
-        Me.boxTrapFreqMin.BackColor = System.Drawing.Color.Black
-        Me.boxTrapFreqMin.ForeColor = System.Drawing.Color.White
-        Me.boxTrapFreqMin.Location = New System.Drawing.Point(555, 82)
-        Me.boxTrapFreqMin.Name = "boxTrapFreqMin"
-        Me.boxTrapFreqMin.Size = New System.Drawing.Size(120, 26)
-        Me.boxTrapFreqMin.TabIndex = 247
-        '
-        'boxTrapFreqRange
-        '
-        Me.boxTrapFreqRange.BackColor = System.Drawing.Color.Black
-        Me.boxTrapFreqRange.ForeColor = System.Drawing.Color.White
-        Me.boxTrapFreqRange.Location = New System.Drawing.Point(555, 50)
-        Me.boxTrapFreqRange.Name = "boxTrapFreqRange"
-        Me.boxTrapFreqRange.Size = New System.Drawing.Size(120, 26)
-        Me.boxTrapFreqRange.TabIndex = 246
-        '
-        'lblTrapFreqMin
-        '
-        Me.lblTrapFreqMin.AutoSize = True
-        Me.lblTrapFreqMin.Location = New System.Drawing.Point(347, 84)
-        Me.lblTrapFreqMin.Name = "lblTrapFreqMin"
-        Me.lblTrapFreqMin.Size = New System.Drawing.Size(135, 19)
-        Me.lblTrapFreqMin.TabIndex = 245
-        Me.lblTrapFreqMin.Text = "Trap Freq Min:"
-        '
-        'lblTrapFreqRange
-        '
-        Me.lblTrapFreqRange.AutoSize = True
-        Me.lblTrapFreqRange.Location = New System.Drawing.Point(347, 52)
-        Me.lblTrapFreqRange.Name = "lblTrapFreqRange"
-        Me.lblTrapFreqRange.Size = New System.Drawing.Size(162, 19)
-        Me.lblTrapFreqRange.TabIndex = 244
-        Me.lblTrapFreqRange.Text = "Trap Freq Range: "
-        '
-        'divider
-        '
-        Me.divider.Location = New System.Drawing.Point(340, 52)
-        Me.divider.Multiline = True
-        Me.divider.Name = "divider"
-        Me.divider.Size = New System.Drawing.Size(1, 325)
-        Me.divider.TabIndex = 243
-        '
         'Debug_Window
         '
         Me.AutoScaleDimensions = New System.Drawing.SizeF(6.0!, 13.0!)
@@ -1687,6 +1686,9 @@ Partial Class Debug_Window
         CType(Me.number, System.ComponentModel.ISupportInitialize).EndInit()
         Me.tabGeneration.ResumeLayout(False)
         Me.tabGeneration.PerformLayout()
+        CType(Me.boxTrapSizeDependence, System.ComponentModel.ISupportInitialize).EndInit()
+        CType(Me.boxTrapFreqMin, System.ComponentModel.ISupportInitialize).EndInit()
+        CType(Me.boxTrapFreqRange, System.ComponentModel.ISupportInitialize).EndInit()
         CType(Me.boxChestRichnessRange, System.ComponentModel.ISupportInitialize).EndInit()
         CType(Me.boxChestRichnessBase, System.ComponentModel.ISupportInitialize).EndInit()
         CType(Me.boxEClockResetVal, System.ComponentModel.ISupportInitialize).EndInit()
@@ -1696,9 +1698,6 @@ Partial Class Debug_Window
         CType(Me.boxChestFreqRange, System.ComponentModel.ISupportInitialize).EndInit()
         CType(Me.boxHeight, System.ComponentModel.ISupportInitialize).EndInit()
         CType(Me.boxWidth, System.ComponentModel.ISupportInitialize).EndInit()
-        CType(Me.boxTrapSizeDependence, System.ComponentModel.ISupportInitialize).EndInit()
-        CType(Me.boxTrapFreqMin, System.ComponentModel.ISupportInitialize).EndInit()
-        CType(Me.boxTrapFreqRange, System.ComponentModel.ISupportInitialize).EndInit()
         Me.ResumeLayout(False)
 
     End Sub
@@ -1739,7 +1738,6 @@ Partial Class Debug_Window
     Friend WithEvents lblHealth As Label
     Friend WithEvents boxForm As ComboBox
     Friend WithEvents boxName As TextBox
-    Friend WithEvents boxSex As ComboBox
     Friend WithEvents lblTitle As Label
     Friend WithEvents lblSex As Label
     Friend WithEvents lblName As Label
@@ -1829,4 +1827,5 @@ Partial Class Debug_Window
     Friend WithEvents lblTrapFreqMin As Label
     Friend WithEvents lblTrapFreqRange As Label
     Friend WithEvents divider As TextBox
+    Friend WithEvents boxSex As CheckBox
 End Class

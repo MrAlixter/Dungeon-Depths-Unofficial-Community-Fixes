@@ -43,7 +43,7 @@
                 MyBase.attack = 99999
                 MyBase.defence = 99999
                 MyBase.speed = 99  '0  1  2  3  4  5  6  7  8  9 10 11 12 13 14 15 16 17 18 19 20 21 22 23 24 25 26 27 28 29 30 31 32 33 34 35 36 37 38 39 40 41 42 43 44 45 46 47 48 49 50 51 52 53 54
-                MyBase.inventory = {0, 1, 0, 0, 1, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 1, 0, 1, 0, 0, 0, 0, 1, 1, 1, 1, 1, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1, 0, 1, 0, 0, 0, 0, 0, 0, 0, _
+                MyBase.inventory = {0, 1, 0, 0, 1, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 1, 0, 1, 0, 0, 0, 0, 1, 1, 1, 1, 1, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1, 0, 1, 0, 0, 0, 0, 0, 0, 0,
                                     0, 0, 0, 0, 0, 1, 1, 1, 1}
                 isShop = True
                 gold = 99999
@@ -51,8 +51,8 @@
                 pPronoun = "his"
                 rPronoun = "him"
                 picNormal = Game.picSW.BackgroundImage
-                picPrincess = Game.picSWb.BackgroundImage
-                picBunny = Game.PicSWPrin.BackgroundImage
+                picPrincess = Game.PicSWPrin.BackgroundImage
+                picBunny = Game.picSWb.BackgroundImage
             Case Else
                 MyBase.name = "eRr0rH3Ro"
                 MyBase.health = 60
@@ -110,12 +110,19 @@
     End Sub
     Public Sub encounter()
         pos = Game.player.pos
-        If dead = True Then Exit Sub
+        If dead = True Then
+            Game.pushLblEvent("This NPC is dead.")
+            Exit Sub
+        End If
         If name = "Shopkeeper" Or name.Equals("Traveling Wizard") Then gold = 9999
         Game.npcIndex = npcIndex
         If name.Equals("Traveling Wizard") Then
             If npcIndex = 0 Then
-                Game.pushNPCDialog("What are you buying?")
+                If CInt(Game.player.health * Game.player.getmaxHealth()) = 69 Then
+                    Game.pushNPCDialog("Ehehe. Your health. Nice." & vbCrLf & "Anyway, what are you buying?")
+                Else
+                    Game.pushNPCDialog("What are you buying?")
+                End If
             ElseIf npcIndex = 1 Then
                 Game.pushNPCDialog("Ribbit.  Ribbit!")
             ElseIf npcIndex = 2 Then

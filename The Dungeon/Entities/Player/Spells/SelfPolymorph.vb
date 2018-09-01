@@ -17,9 +17,9 @@
 
         Dim delta As String
         If Game.player.pForm.name.Equals(fN) Then
-            delta = cN
+            delta = Game.player.pClass.name
         Else
-            delta = fN
+            delta = Game.player.pForm.name
         End If
         Game.lstLog.Items.Add(CStr("You turn yourself into a " & delta & "!"))
         Game.pushLblCombatEvent(CStr("You turn yourself into a " & delta & "!"))
