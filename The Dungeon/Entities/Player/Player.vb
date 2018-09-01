@@ -1177,7 +1177,7 @@
         End If
         'thrall tf
         If perks("thrall") > -1 Then
-            If Game.turn Mod 10 = 0 And Not prefForm.playerMeetsForm(Game.player) Then
+            If Game.turn Mod 10 = 0 And Not prefForm.playerMeetsForm(Game.player) And perks("thrall") < 20 Then
                 prefForm.shiftTowards(Game.player)
                 perks("thrall") += 1
                 If perks("thrall") > 20 Then
@@ -1185,7 +1185,8 @@
                 End If
             End If
 
-            If prefForm.playerMeetsForm(Game.player) Then
+            If prefForm.playerMeetsForm(Game.player) And 4 = 0 Then
+                If perks("thrall") <> 21 Then perks("thrall") = 21
                 If Game.turn Mod 10 And Int(Rnd() * 40) = 0 And forcedPath Is Nothing And Not Game.combatmode And Not Game.npcmode Then
                     Dim crystalX As Integer
                     Dim crystalY As Integer
@@ -1214,6 +1215,11 @@
                                       "As their voice leaves your head, " & s)
                 End If
             End If
+        End If
+        'shift toward prefered form
+        If Not prefForm Is Nothing AndAlso (pClass.name = "Thrall" Xor equippedAcce.getName.Equals("Slave_Collar")) AndAlso Not prefForm.playerMeetsForm(Game.player) And Not perks("thrall") = 1 And Not perks("nekocurse") > -1 And Not perks("polymorphed") > -1 And Not perks("bimbotf") > -1 Then
+            prefForm.shiftTowards(Game.player)
+            perks("thrall") = 1
         End If
 
         'cowbell tf
