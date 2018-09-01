@@ -612,6 +612,13 @@ Public Class Game
         If floor > 2 Then placeTraps()
         placeNPCs()
 
+        'Dim l As List(Of Point()) = New List(Of Point())
+        'For x = 0 To mBoardWidth
+        '    For y = 0 To mBoardHeight
+        '        l.Add(route(player.pos, New Point(x, y), "n/a", New List(Of Point), 0))
+        '    Next
+        'Next
+
         'Dim p = route(player.pos, stairs, "n/a", New List(Of Point))
         'For i = 0 To UBound(p)
         '    mBoard(p(i).Y, p(i).X).Tag = 2
@@ -828,7 +835,7 @@ Public Class Game
 
     Function route(ByVal p1 As Point, ByVal p2 As Point, ByVal dir As String, ByVal path As List(Of Point), ByVal counts As Integer) As Point()
         Dim cons As List(Of Point) = New List(Of Point)
-        If p1.Equals(p2) Or counts > 300 Then
+        If p1.Equals(p2) Then
             Return path.ToArray
         Else
             Dim u, d, l, r As Point
@@ -3236,7 +3243,10 @@ Public Class Game
         If Not combatmode Then out += " " & vbCrLf & " " & vbCrLf & "Press any non-movement key to continue." Else out += " " & vbCrLf & " " & vbCrLf & "Click a combat button to continue."
         If 1 = 1 Then lblEvent.Text = out Else lblEvent.Text = vbCrLf & "---------------------------------------------------------------------------" & vbCrLf & out
         lblEvent.BringToFront()
-        lblEvent.Location = New Point((265 * (Me.Size.Width / 688)) - (lblEvent.Size.Width / 2), (65 * (Me.Size.Width / 688)))
+
+        Dim x = (265 * (Me.Size.Width / 688)) - (lblEvent.Size.Width / 2)
+        If x < 20 Then x = 20
+        lblEvent.Location = New Point(x, (65 * (Me.Size.Width / 688)))
         lblEvent.Visible = True
         player.canMoveFlag = False
     End Sub
@@ -3270,7 +3280,10 @@ Public Class Game
         If Not combatmode Then out += " " & vbCrLf & " " & vbCrLf & "Press any non-movement key to continue." Else out += " " & vbCrLf & " " & vbCrLf & "Click a combat button to continue."
         lblEvent.Text = out
         lblEvent.BringToFront()
-        lblEvent.Location = New Point((265 * (Me.Size.Width / 688)) - (lblEvent.Size.Width / 2), 65 * (Me.Size.Width / 688))
+
+        Dim x = (265 * (Me.Size.Width / 688)) - (lblEvent.Size.Width / 2)
+        If x < 20 Then x = 20
+        lblEvent.Location = New Point(x, (65 * (Me.Size.Width / 688)))
         lblEvent.Visible = True
         player.canMoveFlag = False
         lblEventOnClose = effect
@@ -3307,7 +3320,11 @@ Public Class Game
 
         lblEvent.Text = out
         lblEvent.BringToFront()
-        lblEvent.Location = New Point((265 * (Me.Size.Width / 688)) - (lblEvent.Size.Width / 2), 65 * (Me.Size.Width / 688))
+
+        Dim x = (265 * (Me.Size.Width / 688)) - (lblEvent.Size.Width / 2)
+        If x < 20 Then x = 20
+        lblEvent.Location = New Point(x, (65 * (Me.Size.Width / 688)))
+
         lblEvent.Visible = True
         player.canMoveFlag = False
         lblEventOnClose = AddressOf makeChoice
