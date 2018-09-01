@@ -737,17 +737,6 @@ Partial Class Game
         Me.btnATK.UseVisualStyleBackColor = False
         Me.btnATK.Visible = False
         '
-        'lblEVD
-        '
-        Me.lblEVD.AutoSize = True
-        Me.lblEVD.Font = New System.Drawing.Font("Consolas", 8.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.lblEVD.ForeColor = System.Drawing.Color.White
-        Me.lblEVD.Location = New System.Drawing.Point(736, 252)
-        Me.lblEVD.Name = "lblEVD"
-        Me.lblEVD.Size = New System.Drawing.Size(67, 13)
-        Me.lblEVD.TabIndex = 155
-        Me.lblEVD.Text = "EVD = TEMP"
-        '
         'lblSPD
         '
         Me.lblSPD.AutoSize = True
@@ -1872,7 +1861,7 @@ Partial Class Game
         Me.lblNext.ForeColor = System.Drawing.Color.White
         Me.lblNext.Location = New System.Drawing.Point(23, 426)
         Me.lblNext.Name = "lblNext"
-        Me.lblNext.Size = New System.Drawing.Size(203, 14)
+        Me.lblNext.Size = New System.Drawing.Size(294, 14)
         Me.lblNext.TabIndex = 277
         Me.lblNext.Text = "Press any non-movement key to continue..."
         '
@@ -2129,6 +2118,7 @@ Partial Class Game
         Me.btnAbout.TabIndex = 292
         Me.btnAbout.Text = "About"
         Me.btnAbout.UseVisualStyleBackColor = False
+        '
         'lblEVD
         '
         Me.lblEVD.AutoSize = True
@@ -2136,7 +2126,7 @@ Partial Class Game
         Me.lblEVD.ForeColor = System.Drawing.Color.White
         Me.lblEVD.Location = New System.Drawing.Point(737, 290)
         Me.lblEVD.Name = "lblEVD"
-        Me.lblEVD.Size = New System.Drawing.Size(99, 19)
+        Me.lblEVD.Size = New System.Drawing.Size(67, 13)
         Me.lblEVD.TabIndex = 155
         Me.lblEVD.Text = "EVD = TEMP"
         Me.lblEVD.Visible = False
@@ -2274,6 +2264,7 @@ Partial Class Game
         Me.Controls.Add(Me.picPortrait)
         Me.Controls.Add(Me.lblEvent)
         Me.Controls.Add(Me.btnWait)
+        Me.DoubleBuffered = True
         Me.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle
         Me.Icon = CType(resources.GetObject("$this.Icon"), System.Drawing.Icon)
         Me.MaximizeBox = False
