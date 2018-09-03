@@ -3,7 +3,7 @@
     Public iD As Integer
     Sub New(ByVal p As Point, ByVal i As Integer)
         pos = p
-        iD = 2
+        iD = i
     End Sub
     Sub New(ByVal s As String)
         Dim cArray() As String = s.Split("*")
