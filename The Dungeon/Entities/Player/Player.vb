@@ -1188,7 +1188,7 @@
                 End If
             End If
 
-            If prefForm.playerMeetsForm(Game.player) And 4 = 0 Then
+            If prefForm.playerMeetsForm(Game.player) Then
                 If perks("thrall") <> 21 Then perks("thrall") = 21
                 If Game.turn Mod 10 And Int(Rnd() * 40) = 0 And forcedPath Is Nothing And Not Game.combatmode And Not Game.npcmode Then
                     Dim crystalX As Integer
