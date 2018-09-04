@@ -145,6 +145,7 @@
                 Game.pushNPCDialog("*giggle* Hey!")
             End If
         End If
+        If Game.floorboss(Game.floor).Equals("Key") Then inventory(53) = 1 Else inventory(53) = 0
         picNCP = {picNormal, Game.picFrog.BackgroundImage, Game.picSheep.BackgroundImage, picPrincess, picBunny}
         Game.picNPC.BackgroundImage = picNCP(npcIndex)
         firstCTurn = True
