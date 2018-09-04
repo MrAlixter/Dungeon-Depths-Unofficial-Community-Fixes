@@ -2838,8 +2838,9 @@ Public Class Game
             lblEventOnClose = Nothing
         End If
         selectedItem.discard()
-        player.UIupdate()
         player.invNeedsUDate = True
+        player.UIupdate()
+
         lstInventory.SelectedItem = Nothing
         selectedItem = Nothing
         btnUse.Enabled = False
