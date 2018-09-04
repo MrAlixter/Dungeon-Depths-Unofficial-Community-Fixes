@@ -78,16 +78,17 @@
 
     Public Sub shiftTowards(ByRef p As Player)
         Randomize()
+        If Not p.pClass.name.Equals("Thrall") Then p.pClass = p.classes("Thrall")
         If playerMeetsForm(p) Then Exit Sub
 
         If Not p.haircolor.Equals(hairColor) Then p.changeHairColor(Game.cShift(p.haircolor, hairColor, 8))
         If Not p.skincolor.Equals(skinColor) Then p.changeSkinColor(Game.cShift(p.skincolor, skinColor, 8))
 
-        If Not p.iArrInd(1).Item2 = hasFemaleHair And Int(Rnd() * 3) = 0 Then
+        If Int(Rnd() * 3) = 0 Then
             p.iArrInd(1) = New Tuple(Of Integer, Boolean)(rHairInd, hasFemaleHair)
             p.iArrInd(5) = New Tuple(Of Integer, Boolean)(rHairInd, hasFemaleHair)
         End If
-        If Not p.iArrInd(15).Item2 = hasFemaleHair And Int(Rnd() * 3) = 0 Then
+        If Int(Rnd() * 3) = 0 Then
             p.iArrInd(15) = New Tuple(Of Integer, Boolean)(fHairInd + 1, hasFemaleHair)
         End If
 
@@ -123,6 +124,7 @@
     End Sub
     Public Sub snapShift(ByRef p As Player)
         Randomize()
+        If Not p.pClass.name.Equals("Thrall") Then p.pClass = p.classes("Thrall")
         If playerMeetsForm(p) Then Exit Sub
 
         p.changeHairColor(hairColor)

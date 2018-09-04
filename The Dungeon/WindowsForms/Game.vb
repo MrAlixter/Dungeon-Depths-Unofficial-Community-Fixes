@@ -833,44 +833,100 @@ Public Class Game
         Next
     End Sub
 
-    Function route(ByVal p1 As Point, ByVal p2 As Point, ByVal dir As String, ByVal path As List(Of Point), ByVal counts As Integer) As Point()
-        Dim cons As List(Of Point) = New List(Of Point)
-        If p1.Equals(p2) Then
-            Return path.ToArray
-        Else
+    Function route(ByVal p1 As Point, ByVal p2 As Point) As Point()
+        'iterative dijkstra's shortest path implementation
+        Dim dist(mBoardWidth, mBoardHeight) As Integer
+        Dim allPoints As List(Of Point) = New List(Of Point)
+        Dim prev(mBoardWidth, mBoardHeight) As Point
+        Dim path As List(Of Point) = New List(Of Point)
+        For i = 0 To mBoardHeight - 1
+            For j = 0 To mBoardWidth - 1
+                dist(i, j) = 99999
+                allPoints.Add(New Point(j, i))
+                prev(i, j) = Nothing
+            Next
+        Next
+        dist(p1.Y, p1.X) = 0
+        While allPoints.Count > 0
+                Dim min = allPoints(0)
+                For i = 0 To allPoints.Count - 1
+                    If dist(allPoints(i).Y, allPoints(i).X) < dist(min.X, min.Y) Then min = allPoints(i)
+                Next
+            allPoints.Remove(min)
             Dim u, d, l, r As Point
-            u = New Point(p1.X - 1, p1.Y)
-            d = New Point(p1.X + 1, p1.Y)
-            l = New Point(p1.X, p1.Y - 1)
-            r = New Point(p1.X, p1.Y + 1)
+                u = New Point(min.X - 1, min.Y)
+            d = New Point(min.X + 1, min.Y)
+                l = New Point(min.X, min.Y - 1)
+            r = New Point(min.X, min.Y + 1)
             For Each p In {u, d, l, r}
-                If Not (p.Equals(u) And dir = "d") And Not (p.Equals(d) And dir = "u") And Not (p.Equals(r) And dir = "l") And Not (p.Equals(l) And dir = "r") Then
-                    If Not (p.X < 0 Or p.X > mBoardWidth - 1 Or p.Y < 0 Or p.Y > mBoardHeight - 1) AndAlso Not mBoard(p.Y, p.X).Tag = 0 AndAlso Not path.Contains(p) Then
-                        cons.Add(p)
+                Dim tDist = dist(min.Y, min.X) + distance(min, p)
+                If Not (p.X < 0 Or p.X > mBoardWidth - 1 Or p.Y < 0 Or p.Y > mBoardHeight - 1) AndAlso Not mBoard(p.Y, p.X).Tag = 0 AndAlso Not path.Contains(p) AndAlso allPoints.Contains(p) Then
+                    If tDist < dist(p.Y, p.X) Then
+                        dist(p.Y, p.X) = tDist
+                        prev(p.Y, p.X) = min
                     End If
                 End If
+                If p.Equals(p2) Then
+                    Dim pp = p2
+                    While Not path.Contains(pp)
+                        path.Insert(0, pp)
+                        pp = prev(pp.Y, pp.X)
+                    End While
+                    Exit For
+                End If
             Next
-            If cons.Count - 1 < 1 Then Return path.ToArray
-            Dim min As Point = cons(0)
-            For i = 0 To cons.Count - 1
-                If dist(cons(i), p2) < dist(min, p2) Then min = cons(i)
-            Next
-
-            path.Add(min)
-
-            If min.Equals(u) Then
-                dir = "u"
-            ElseIf min.Equals(d) Then
-                dir = "d"
-            ElseIf min.Equals(l) Then
-                dir = "l"
-            ElseIf min.Equals(r) Then
-                dir = "r"
-            End If
-            Return route(min, p2, dir, path, counts + 1)
-        End If
+        End While
+        path.RemoveAt(0)
+        Return path.ToArray
     End Function
-    Function dist(ByVal x As Point, ByVal y As Point) As Double
+    Function route(ByVal p1 As Point, ByVal p2 As Point, ByVal endp As Point) As Point()
+        'iterative dijkstra's shortest path implementation
+        Dim dist(mBoardWidth, mBoardHeight) As Integer
+        Dim allPoints As List(Of Point) = New List(Of Point)
+        Dim prev(mBoardWidth, mBoardHeight) As Point
+        Dim path As List(Of Point) = New List(Of Point)
+        For i = 0 To mBoardHeight - 1
+            For j = 0 To mBoardWidth - 1
+                dist(i, j) = 99999
+                allPoints.Add(New Point(j, i))
+                prev(i, j) = Nothing
+            Next
+        Next
+        dist(p1.Y, p1.X) = 0
+        While allPoints.Count > 0
+            Dim min = allPoints(0)
+            For i = 0 To allPoints.Count - 1
+                If dist(allPoints(i).Y, allPoints(i).X) < dist(min.X, min.Y) Then min = allPoints(i)
+            Next
+            allPoints.Remove(min)
+            Dim u, d, l, r As Point
+            u = New Point(min.X - 1, min.Y)
+            d = New Point(min.X + 1, min.Y)
+            l = New Point(min.X, min.Y - 1)
+            r = New Point(min.X, min.Y + 1)
+            For Each p In {u, d, l, r}
+                Dim tDist = dist(min.Y, min.X) + distance(min, p)
+                If Not (p.X < 0 Or p.X > mBoardWidth - 1 Or p.Y < 0 Or p.Y > mBoardHeight - 1) AndAlso Not mBoard(p.Y, p.X).Tag = 0 AndAlso Not path.Contains(p) AndAlso allPoints.Contains(p) Then
+                    If tDist < dist(p.Y, p.X) Then
+                        dist(p.Y, p.X) = tDist
+                        prev(p.Y, p.X) = min
+                    End If
+                End If
+                If p.Equals(p2) Then
+                    Dim pp = p2
+                    While Not path.Contains(pp)
+                        path.Insert(0, pp)
+                        pp = prev(pp.Y, pp.X)
+                    End While
+                    Exit For
+                End If
+            Next
+        End While
+        path.RemoveAt(0)
+        path.Add(endp)
+        Return path.ToArray
+    End Function
+    Function distance(ByVal x As Point, ByVal y As Point) As Double
         Return Math.Abs(Math.Sqrt(CDbl((y.X - x.X) ^ 2) + CDbl((y.Y - x.Y) ^ 2)))
     End Function
 

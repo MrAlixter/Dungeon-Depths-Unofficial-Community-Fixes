@@ -191,6 +191,8 @@
                     Game.pushLblEvent("The body swap fails!")
                 End Try
             End If
+        ElseIf name.Contains("Enthralling Half-Dem") Then
+            Equipment.accChange("Nothing")
         End If
         endMonster()
         If mindex = 2 And Not name.Equals("Mesmerized Thrall") Then

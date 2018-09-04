@@ -221,6 +221,7 @@
     Sub fightSorc2()
         Dim m As Monster
         m = New Monster(8)
+        Equipment.accChange("Nothing")
         Game.npcList.Add(m)
         currTarget = m
         Game.toCombat()
@@ -258,7 +259,6 @@
             For i = 1 To UBound(forcedPath)
                 t(i - 1) = forcedPath(i)
             Next
-
             forcedPath = t
         End If
     End Sub
@@ -1179,8 +1179,8 @@
             End If
         End If
         'thrall tf
-        If perks("thrall") > -1 Then
-            If Game.turn Mod 10 = 0 And Not prefForm.playerMeetsForm(Game.player) And perks("thrall") < 20 Then
+        If perks("thrall") > -1 And Not pForm.name.Equals("Half-Succubus") And forcedPath Is Nothing And Not Game.lblEvent.Visible Then
+            If Game.turn Mod 10 = 0 And Not prefForm.playerMeetsForm(Game.player) And perks("thrall") < 21 Then
                 prefForm.shiftTowards(Game.player)
                 perks("thrall") += 1
                 If perks("thrall") > 20 Then
@@ -1189,8 +1189,7 @@
             End If
 
             If prefForm.playerMeetsForm(Game.player) Then
-                If perks("thrall") <> 21 Then perks("thrall") = 21
-                If Game.turn Mod 10 And Int(Rnd() * 40) = 0 And forcedPath Is Nothing And Not Game.combatmode And Not Game.npcmode Then
+                If forcedPath Is Nothing And Not Game.combatmode And Not Game.npcmode Then
                     Dim crystalX As Integer
                     Dim crystalY As Integer
                     Do While (Game.mBoard(crystalY, crystalX).Tag <> 1 Or Game.mBoard(crystalY, crystalX).Text <> "")
@@ -1198,10 +1197,12 @@
                         crystalY = CInt(Int(Rnd() * Game.mBoardHeight))
                     Loop
                     Dim crystal = New Point(crystalX, crystalY)
+
                     Game.mBoard(crystalY, crystalX).Tag = 2
                     Game.mBoard(crystalY, crystalX).Text = "c"
 
-                    forcedPath = Game.route(Game.player.pos, crystal, "n/a", New List(Of Point), 0)
+                    forcedPath = Game.route(Game.player.pos, crystal, New Point(0, 0))
+
 
                     Dim s As String = ""
                     If getWillpower() > 10 Then
@@ -1220,7 +1221,7 @@
             End If
         End If
         'shift toward prefered form
-        If Not prefForm Is Nothing AndAlso (pClass.name = "Thrall" Xor equippedAcce.getName.Equals("Slave_Collar")) AndAlso Not prefForm.playerMeetsForm(Game.player) And Not perks("thrall") = 1 And Not perks("nekocurse") > -1 And Not perks("polymorphed") > -1 And Not perks("bimbotf") > -1 Then
+        If Not prefForm Is Nothing AndAlso (pClass.name = "Thrall" Xor equippedAcce.getName.Equals("Slave_Collar")) AndAlso Not prefForm.playerMeetsForm(Game.player) And Not pForm.name.Equals("Half-Succubus") And Not perks("thrall") = 1 And Not perks("nekocurse") > -1 And Not perks("polymorphed") > -1 And Not perks("bimbotf") > -1 Then
             prefForm.shiftTowards(Game.player)
             perks("thrall") = 1
         End If
