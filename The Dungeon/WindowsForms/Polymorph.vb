@@ -356,15 +356,15 @@
             p.pClass = p.classes(form)
         End If
 
-            Game.lblEvent.ForeColor = color1
-            Game.lblNameTitle.ForeColor = color1
+        Game.lblEvent.ForeColor = color1
+        Game.lblNameTitle.ForeColor = color1
         If form.Equals("Magic Girl​") Then Game.pushLblEvent(out, AddressOf Polymorph.magicGSub2) Else Game.pushLblEvent(out)
-            Game.lstLog.TopIndex = Game.lstLog.Items.Count - 1
-            p.TextColor = Game.lblEvent.ForeColor
-            p.pImage = Game.pImage
-            p.health += p.hBuff
-            Game.cmboxSpec.Items.Clear()
-            Game.specialRoute()
+        Game.lstLog.TopIndex = Game.lstLog.Items.Count - 1
+        p.TextColor = Game.lblEvent.ForeColor
+        p.pImage = Game.pImage
+        p.health += p.hBuff
+        Game.cmboxSpec.Items.Clear()
+        Game.specialRoute()
         Equipment.portraitUDate()
     End Sub
     Public Sub transform(ByRef p As Player, ByVal form As String, ByVal ind As Integer)
@@ -647,6 +647,7 @@
         Game.lstLog.Items.Add("'Heartblast Starcannon' spell learned!")
         p.createP()
         Game.lblEvent.Visible = False
+        p.canMoveFlag = True
     End Sub
     Sub bimboTF(ByRef p As Player, ByVal ind As Integer)
         Select Case ind
