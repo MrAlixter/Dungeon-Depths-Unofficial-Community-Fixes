@@ -2679,7 +2679,7 @@ Public Class Game
         btnSpec.Visible = False
         player.canMoveFlag = True
 
-        btnTalk.Visible = True
+        'btnTalk.Visible = True
         btnNPCMG.Visible = True
         cboxNPCMG.Visible = True
         btnShop.Visible = True
@@ -2692,7 +2692,6 @@ Public Class Game
             player.perks("polymorphed") = 0
             player.revert2()
         End If
-        npcList.Clear()
     End Sub
     'run handles the player choice to run from combat
     Sub run()
