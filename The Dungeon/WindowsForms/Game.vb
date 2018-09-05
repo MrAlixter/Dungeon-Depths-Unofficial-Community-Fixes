@@ -2094,7 +2094,7 @@ Public Class Game
         Dim reader As IO.StreamReader
         reader = IO.File.OpenText(a)
         Dim v = CDbl(reader.ReadLine())
-        If v < 0.4 Then
+        If v < 0.6 Then
             MsgBox("Error 003: Incorrect save file version!")
             picStart.Visible = True
             btnS.Visible = True
@@ -2760,6 +2760,12 @@ Public Class Game
         npcmode = False
     End Sub
     Sub npcEncounter(ByRef m As NPC)
+        Dim validSpells() As String = {"Turn to Frog", "Polymorph Enemy", "Petrify"}
+        cboxNPCMG.Items.Clear()
+        For i = 0 To UBound(validSpells)
+            If cboxMG.Items.Contains(validSpells(i)) Then cboxNPCMG.Items.Add(validSpells(i))
+        Next
+
         If m.dead Then Exit Sub
         npcList.Clear()
         npcList.Add(m)

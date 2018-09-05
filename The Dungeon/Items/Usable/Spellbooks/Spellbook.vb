@@ -101,7 +101,6 @@
                     Exit Sub
                 End If
             End While
-            If (sName = "Turn to Frog" Or sName = "Polymorph Enemy" Or sName = "Arcane Hypnosis" Or sName = "Freeze" Or sName = "Petrify") And Not Game.cboxNPCMG.Items.Contains(sName) Then Game.cboxNPCMG.Items.Add(sName)
             If Not Game.cboxMG.Items.Contains(sName) Then Game.cboxMG.Items.Add(sName)
             Game.lstLog.Items.Add("You read the " & getName() & ". " & sName & " learned!")
             If Not out.Equals("") Then Game.lstLog.Items.Add(out)
