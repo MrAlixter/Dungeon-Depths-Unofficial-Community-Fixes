@@ -112,6 +112,7 @@
     <Compile Include="Entities\Player\Spells\DragonsBreath.vb" />
     <Compile Include="Entities\Player\Spells\EnemyPolymorph.vb" />
     <Compile Include="Entities\Player\Spells\Fireball.vb" />
+    <Compile Include="Entities\Player\Spells\Frazzle.vb" />
     <Compile Include="Entities\Player\Spells\HBSC.vb" />
     <Compile Include="Entities\Player\Spells\Heal.vb" />
     <Compile Include="Entities\Player\Spells\IcicleSpear.vb" />

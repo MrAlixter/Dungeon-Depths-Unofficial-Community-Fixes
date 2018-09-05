@@ -1,9 +1,9 @@
 ﻿Public Class Trap
     Public pos As Point
     Public iD As Integer
-    Sub New(ByVal p As Point, ByVal i As Integer)
+    Sub New(ByVal p As Point)
         pos = p
-        iD = 2
+        iD = Int(Rnd() * 5)
     End Sub
     Sub New(ByVal s As String)
         Dim cArray() As String = s.Split("*")
@@ -58,7 +58,7 @@
                 Game.player.inventory(54).add(1)
                 Equipment.clothesChange("Ropes")
                 Equipment.portraitUDate()
-                If Not Polymorph.canBeTFed(Game.player) Then
+                If Polymorph.canBeTFed(Game.player) Then
                     Game.player.pState.save(Game.player)
                 End If
                 Game.player.UIupdate()

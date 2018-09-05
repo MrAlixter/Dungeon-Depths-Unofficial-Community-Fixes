@@ -199,7 +199,7 @@
             t.Text = "+"
             t.ForeColor = Color.FromArgb(45, 45, 45)
             Game.mBoard(p.Y, p.X).ForeColor = Color.FromArgb(45, 45, 45)
-            Dim trap As New Trap(New Point(p.X, p.Y), Int(Rnd() * 4))
+            Dim trap As New Trap(New Point(p.X, p.Y))
             Game.trapList.Add(trap)
         End If
 
