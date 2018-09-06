@@ -799,7 +799,7 @@ Public Class Game
         For i = 1 To numtrap
             Dim trapX As Integer = CInt(Int(Rnd() * mBoardWidth))
             Dim trapY As Integer = CInt(Int(Rnd() * mBoardHeight))
-            Do While (mBoard(trapY, trapX).Tag <> 0 Or mBoard(trapY, trapX).Text <> "")
+            Do While (mBoard(trapY, trapX).Tag <> 1 Or mBoard(trapY, trapX).Text <> "")
                 trapX = CInt(Int(Rnd() * mBoardWidth))
                 trapY = CInt(Int(Rnd() * mBoardHeight))
             Loop
@@ -2679,7 +2679,7 @@ Public Class Game
         btnSpec.Visible = False
         player.canMoveFlag = True
 
-        btnTalk.Visible = True
+        'btnTalk.Visible = True
         btnNPCMG.Visible = True
         cboxNPCMG.Visible = True
         btnShop.Visible = True
@@ -2692,7 +2692,6 @@ Public Class Game
             player.perks("polymorphed") = 0
             player.revert2()
         End If
-        npcList.Clear()
     End Sub
     'run handles the player choice to run from combat
     Sub run()

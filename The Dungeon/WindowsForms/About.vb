@@ -37,9 +37,9 @@
         Me.LabelVersion.Text = String.Format("Version {0}", My.Application.Info.Version.ToString)
         Me.LabelCopyright.Text = My.Application.Info.Copyright
         Me.LabelCompanyName.Text = My.Application.Info.CompanyName
-        Me.TextBoxDescription.Text = "Dungeon_Depths is a 2D dungeon crawler with art made in Kisekae2.0 featuring TF fetish content, made for adults." & vbCrLf &
+        Me.TextBoxDescription.Text = "Dungeon_Depths is a 2D dungeon crawler with art made in Kisekae2.0 featuring TF fetish content, made for adults." & vbCrLf & " " & vbCrLf &
                                      "Special thanks to:" & vbCrLf &
-                                     "- Houdini111 for extensive contributions in debugging and development" & vbCrLf & " " & vbCrLf &
+                                     "- Houdini111 for extensive contributions in debugging and as a member of the development team, namely in the design and implementation of the debug menu, the current shop UI, and the dungeon customization menu." & vbCrLf & " " & vbCrLf &
                                      "- undercoversam for advice on balancing" & vbCrLf & " " & vbCrLf &
                                      "- Rangorak for advice on Kisekae2.0 and for the design of the fourth default clothing options" & vbCrLf & " " & vbCrLf &
                                      "- Storm for the ability to bodyswap with the explorer" & vbCrLf & " " & vbCrLf &
