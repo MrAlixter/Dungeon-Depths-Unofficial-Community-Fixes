@@ -799,7 +799,7 @@ Public Class Game
         For i = 1 To numtrap
             Dim trapX As Integer = CInt(Int(Rnd() * mBoardWidth))
             Dim trapY As Integer = CInt(Int(Rnd() * mBoardHeight))
-            Do While (mBoard(trapY, trapX).Tag <> 0 Or mBoard(trapY, trapX).Text <> "")
+            Do While (mBoard(trapY, trapX).Tag <> 1 Or mBoard(trapY, trapX).Text <> "")
                 trapX = CInt(Int(Rnd() * mBoardWidth))
                 trapY = CInt(Int(Rnd() * mBoardHeight))
             Loop
