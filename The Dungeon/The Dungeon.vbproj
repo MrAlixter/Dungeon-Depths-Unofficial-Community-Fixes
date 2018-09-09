@@ -1567,10 +1567,16 @@
     <Content Include="img\mTF\tfEars\blank.png">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
-    <Content Include="img\mTF\tfEyes\tfEyes6.png" />
-    <Content Include="img\mTF\tfEyes\tfEyes7.png" />
-    <Content Include="img\mTF\tfEyes\tfEyes8.png" />
-    <Content Include="img\mTF\tfEyes\tfEyes9.png">
+    <Content Include="img\mTF\tfEyes\tfEyes5.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="img\mTF\tfEyes\tfEyes6.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="img\mTF\tfEyes\tfEyes7.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="img\mTF\tfEyes\tfEyes8.png">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
     <Content Include="img\mTF\tfFace\blank.png">
