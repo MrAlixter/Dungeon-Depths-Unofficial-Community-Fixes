@@ -7,7 +7,7 @@
         id = 24
         tier = Nothing
         MyBase.setUsable(False)
-        MyBase.aBoost = 60
+        MyBase.aBoost = 40
         MyBase.count = 0
         MyBase.value = 1250
     End Sub

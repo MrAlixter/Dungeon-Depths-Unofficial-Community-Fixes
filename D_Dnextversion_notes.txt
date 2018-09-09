@@ -17,10 +17,19 @@ To-Do 1.0:
 	- player TFs into inaninmate items, left in chests behind
 
 ●Balance Modifications:
+	- Nerfs:
+		- Targax Sword:
+			- Reduce the attack buff to 40
+			- Reduce transformation time to 4 kills
+			- Once the transformation is complete, the player will not be able to:
+				- Run away
+				- Heal in most ways
+	- Buffs:
+		- 
 	- WIL
 		-[done] Killing monsters and bossed can raise will
 		-[done] Running from monsters, traps, and lust lower will
-		- WIL will affect tf speed, and WIL checks will determine some       TFs
+		- WIL will affect tf speed, and WIL checks will determine some TFs
 	- [7 / 14] Form Exclusive specials (used 1nce per combat)
 		- ...
 		- Goddess : ???
@@ -110,25 +119,24 @@ To-Do 1.0:
 
 ●New Items:
 	- FOOD:
-		- Fortune Cookie (Forsee's a random change at some point)
+		- Fortune Cookie (Foresee a random change at some point)
 			- Masculine / Feminine tfs 
 			- ...
 	- WEAPONS:
-		- Pickaxe			(weapon +3 ATK)
-		- Valkarie's Greatsword	(+25 ATK, +10 Mana, slow valkarie tf)
+		- Pickax			(weapon +3 ATK)
+		- Valkyrie's Great-sword	(+25 ATK, +10 Mana, slow Valkyrie tf)
 		- Cursed Sword		(weapon +10 ATK/sword tf) +1 img
-		- Spidersilk Whip		(weapon, +25 ATK, Critical hits more frequently)
+		-[done] Spidersilk Whip		(weapon, +25 ATK, Critical hits more frequently)
 		- Mesmeric scepter		(+25 Mana, Chance to stun)
 		- poisoned dagger		(+15 ATK, high chance to critical)
 	- ARMOR:
-		- Cursed Bustier      	(armor +10 DEF/slow manequin tf) +4 img
+		- Cursed Bustier      	(armor +10 DEF/slow mannequin tf) +4 img
 		- Cursed Tunic		(armor +5 DEF/slow maiden tf) +2 img
 		- Cursed Dirndl 		(armor +5 DEF) +4 img
-		- Cow Girl Outfit           (+7 DEF, +5 SPD)
-		- chitin armor
-		- slime chestplate
+		-[done] Cow Girl Outfit           (+7 DEF, +5 SPD)
+		-[done] chitin armor
 	- USEABLES:
-		- Ouiji Board		(Fights ghost enemies/allows possesion)
+		- Ouiji Board		(Fights ghost enemies/allows possession)
 		- Holy Water 		(Expels Ghost)
 		- Warp Orb 			(Teleports player, may cause tf to random body)
 		- Healing Milk 		(Heals)
@@ -151,7 +159,7 @@ To-Do 1.0:
 					-[done] Sheep
 					-[done] Bunny
 				-[done] Petrify
-				-[done] Luminate
+				-[done] Illuminate
 				-[done] Heal
 				- Center Soul (Reverts/halts some tfs
 			- Advanced Spellbook
@@ -173,12 +181,11 @@ To-Do 1.0:
 			- Smokey Potion / Shrink Potion (1/10 stats, but 10x evade for 30 turns)
 			- Clear Potion / Snake potion (50/50 chance between temporary snake tf and naga tf)
 	- ACCESSORIES:
-		- Cowbell			(cow tf/Creates heavy_cream) +9 img
-		- Mirror Shield 	(Accessory, needed to fight medusa)
-		- Slave Collar		(Thralls ignore, gradual tf by sorcerer/ess
+		-[done] Cowbell			(cow tf/Creates heavy_cream) +9 img
+		- Mirror Shield 	(Accessory, needed to fight Medusa)
+		-[done] Slave Collar		(Thralls ignore, gradual tf by sorcerer/ess
 	- HATS:
 		- Nurses Cap		(nurse tf/Fast healing) +4 img
-		- Slime helmet
 	- GLASSES:
 
 
