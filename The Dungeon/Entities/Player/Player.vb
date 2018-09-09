@@ -739,10 +739,10 @@
         End If
         If health > 1 Then health = 1
         If mana > getmaxMana() Then mana = getmaxMana()
-        If inventory(8).count > 0 Then
-            inventory(8).count = 0
-            Game.pushLblEvent("The chicken suit phases out of reality")
-        End If
+        'If inventory(8).count > 0 Then
+        '    inventory(8).count = 0
+        '    Game.pushLblEvent("The chicken suit phases out of reality")
+        'End If
     End Sub
     Sub createInvPerks()
         'create inventory
@@ -821,6 +821,8 @@
         inventory.Add(New ThrallCollar()) '69
         inventory.Add(New Cowbell()) '70
         inventory.Add(New CowBra()) '71
+        '0.6.3
+        inventory.Add(New PieceOfGum()) '72
 
         For i = 0 To inventory.Count - 1
             If inventory(i).GetType().IsSubclassOf(GetType(MysteryPotion)) Then
@@ -849,7 +851,7 @@
                    inventory(51), inventory(52), inventory(57), inventory(58)}
 
         food = {inventory(30), inventory(31), inventory(32), inventory(33),
-                inventory(34), inventory(35), inventory(44)}
+                inventory(34), inventory(35), inventory(44), inventory(72)}
 
         acce = {New noAcce(), inventory(66), inventory(67), inventory(68),
                 inventory(69), inventory(70)}
@@ -878,6 +880,7 @@
         perks.Add("livelinge", -1) '13
         perks.Add("thrall", -1) '14
         perks.Add("cowbell", -1) '15
+        perks.Add("rgum", -1) '16
 
         'Creates the class dictionary
         classes.Clear()
@@ -1316,10 +1319,10 @@
             Die()
             Exit Sub
         End If
-        If inventory(8).count > 0 Then
-            inventory(8).count = 0
-            Game.pushLblEvent("The chicken suit phases out of reality")
-        End If
+        'If inventory(8).count > 0 Then
+        '    inventory(8).count = 0
+        '    Game.pushLblEvent("The chicken suit phases out of reality")
+        'End If
         If Game.lblNameTitle.Text <> name & " the " & pClass.name Then Game.lblNameTitle.Text = name & " the " & pClass.name
         If Game.lblHealth.Text <> "Health = " & CInt(health * getmaxHealth()) & "/" & getmaxHealth() Then Game.lblHealth.Text = "Health = " & CInt(health * getmaxHealth()) & "/" & getmaxHealth()
         If Game.lblMana.Text <> "Mana = " & mana & "/" & getmaxMana() Then Game.lblMana.Text = "Mana = " & mana & "/" & getmaxMana()
@@ -1564,7 +1567,7 @@
             breastSize = 1
         ElseIf iArrInd(2).Item1 = 1 Or iArrInd(2).Item1 = 6 And breastSize <> 2 Then
             breastSize = 2
-        ElseIf ((iArrInd(2).Item1 = 2 And iArrInd(2).Item2) Or iArr(2).Equals(CharacterGenerator.fTFBody(10)) Or iArr(2).Equals(Game.picFMarkBody.BackgroundImage)) Or iArrInd(2).Item1 = 7 And breastSize <> 3 Then
+        ElseIf ((iArrInd(2).Item1 = 2 And iArrInd(2).Item2) Or iArr(2).Equals(CharacterGenerator.fTFBody(10))) Or iArrInd(2).Item1 = 7 And breastSize <> 3 Then
             breastSize = 3
         ElseIf iArrInd(2).Item1 = 3 Or iArrInd(2).Item1 = 8 And breastSize <> 4 Then
             breastSize = 4

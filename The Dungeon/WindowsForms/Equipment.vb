@@ -61,16 +61,6 @@
             End If
         End If
 
-        If Not p.equippedArmor.getName.Equals(cmbobxArmor.SelectedItem) Then
-            p.equippedArmor.onUnequip()
-        End If
-        If Not p.equippedWeapon.getName.Equals(cmbobxWeapon.SelectedItem) Then
-            p.equippedWeapon.onUnequip()
-        End If
-        If Not p.equippedAcce.getName.Equals(cboxAccessory.SelectedItem) Then
-            p.equippedAcce.onUnequip()
-        End If
-
         Dim oW, oA, oAc As String
         oW = p.equippedWeapon.getName
         oA = p.equippedArmor.getName
@@ -111,16 +101,6 @@
         End If
         If p.pForm.name.Equals("Blow-Up Doll") Then
             p.equippedArmor = New Naked
-        End If
-
-        If Not oA.Equals(cmbobxArmor.Text) Then
-            p.equippedArmor.onEquip()
-        End If
-        If Not oW.Equals(cmbobxWeapon.Text) Then
-            p.equippedWeapon.onEquip()
-        End If
-        If Not oAc.Equals(cboxAccessory.Text) Then
-            p.equippedAcce.onEquip()
         End If
 
         'updates the player, the stat display, and the portrait before the form closes
@@ -291,7 +271,6 @@
                 End If
             Next
             If sArmor Is Nothing Then Exit Sub
-            If clothes = "Chicken_Suit" Then Polymorph.transform(p, "Chicken2")
             p.equippedArmor = sArmor
             p.equippedArmor.onEquip()
         End If

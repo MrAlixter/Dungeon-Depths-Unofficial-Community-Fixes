@@ -2736,9 +2736,7 @@ Public Class Game
                 Exit For
             End If
         Next
-        Dim chick As Integer = 1 'CInt(Int(Rnd() * 5))
-        'THIS LINE APPEARS REDUNDANT/BROKEN
-        'If chick = 4 And Not player.perks("chickentf") Then player.perks(3) = True
+        If player.perks("rgum") > -1 Then Polymorph.transform(player, "bimboC")
     End Sub
     Sub leaveNPC()
         Dim m As NPC = Nothing

@@ -18,6 +18,5 @@
         Else
             Game.player.perks("bimbotf") = 0
         End If
-
     End Sub
 End Class

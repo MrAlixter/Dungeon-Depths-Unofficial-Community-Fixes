@@ -348,6 +348,27 @@
             p.iArrInd(5) = New Tuple(Of Integer, Boolean)(20, True)
             p.iArrInd(6) = New Tuple(Of Integer, Boolean)(8, True)
             p.iArrInd(15) = New Tuple(Of Integer, Boolean)(16, True)
+        ElseIf form = "bimboC" Then
+            out += ""
+
+            If p.sex = "Male" Then
+                p.sexBool = True
+                p.MtF()
+                out += " Your body becomes daintier, and you are soon fully female."
+            End If
+            p.iArrInd(1) = New Tuple(Of Integer, Boolean)(11, True)
+            p.iArrInd(5) = New Tuple(Of Integer, Boolean)(11, True)
+            p.iArrInd(8) = New Tuple(Of Integer, Boolean)(6, True)
+            p.iArrInd(9) = New Tuple(Of Integer, Boolean)(8, True)
+            p.iArrInd(15) = New Tuple(Of Integer, Boolean)(17, True)
+            p.iArrInd(16) = New Tuple(Of Integer, Boolean)(0, True)
+            p.be()
+            p.be()
+            p.inventory(8).add(1)
+            Equipment.clothesChange("Chicken_Suit")
+            p.changeHairColor(Color.FromArgb(255, 187, 38, 43))
+            p.perks("rgum") = -1
+            form = "Bimbo"
         End If
 
         If p.forms.Keys.Contains(form) Then
