@@ -461,12 +461,14 @@ Public Class Game
     Function genRNDLVLCode() As String
         Dim numLetters As String = "abcdefghijklmnopqrstuvwxyz123456789"
         Dim output As String = ""
-        Randomize()
+        Randomize() 'initializes the randomizer
         For i = 0 To 8
             output += numLetters.Substring(Int(Rnd() * numLetters.Length), 1)
         Next
         Return output
     End Function
+    'Function 
+
     Sub generateLevel(ByVal code As String)
         floorCode = code
         Rnd(-1)
@@ -475,30 +477,103 @@ Public Class Game
             Exit Sub
         End If
         Randomize(code.GetHashCode)
-        Dim numRooms As Integer = CInt(Int(Rnd() * 15) + 1) + Int(2.25 * mBoardWidth / 30)
+        'Dump into area and agregate Map generator'
+        Dim numRooms As Integer = CInt(Int(Rnd() * 15) + 1) + Int(2.25 * mBoardWidth / 30) 'Create a random number of rooms
+        Dim radius As Integer = CInt(Int(Rnd() * ((mBoardWidth * mBoardHeight) / 2) + 1)) ' Set the randius to the average of the board hight & width
+        Dim lamda As Integer = 9 ' Can later change, but this is used to get the average room wall
+        Dim RoomXY As List(Of Point) = New List(Of Point)
+        Dim RoomWH As List(Of Point) = New List(Of Point)
+
+        For i = 0 To numRooms
+            Dim t = 2 * Math.PI * Rnd() 'a point around a circle
+            Dim u = Rnd() + Rnd() 'a points radius
+            Dim rad As Double = 0
+            If u > 1 Then 'make sure that it isn't 0
+                rad = 2 - u
+            End If
+            If u < 1 Then
+                rad = u
+            End If
+            Dim pos As Point = New Point(Int(radius * rad * Math.Cos(t)), Int(radius * rad * Math.Sin(t))) 'Place the point multiplied by given radius
+            RoomXY.Add(pos)
+            'look into generating a poison distribution
+            'Create a random width and lenth for each room
+            Dim dime As Point = New Point(Int(
+                                          (Rnd() * 9 + 9) / (Rnd() * 9)
+                                          ),
+                                          Int(
+                                            (Rnd() * 9 + 9) / (Rnd() * 9))
+                                            )
+            RoomWH.Add(dime)
+        Next
+        'Agregate the rooms so they aren't touching
+        Dim Touching As Boolean = True
+        While Touching = True
+            Touching = False
+            'Run through all the rooms and check if they overlap
+            For i = 0 To numRooms
+                Dim aPos As Point = RoomXY(i)
+                Dim aDime As Point = RoomWH(i)
+                For j = 0 To numRooms
+                    Dim bPos As Point = RoomXY(j)
+                    Dim bDime As Point = RoomWH(j)
+                    If aPos = bPos And aDime = bDime Then
+                        Continue For
+                    End If
+                    'Check for overlapping
+                    Dim H_Overlaps As Boolean = (aPos.X <= bPos.X + bDime.X) And (bPos.X <= aPos.X + aDime.X)
+                    Dim V_Overlaps As Boolean = (aPos.Y <= bPos.Y + bDime.Y) And (bPos.Y <= aPos.Y + aDime.Y)
+                    If H_Overlaps And V_Overlaps Then
+                        Touching = True
+                        'Find the minimum amount of movment that stops the squares from touching
+                        Dim dx = Math.Min(((aPos.X + aDime.X) - (bPos.X + 2)), (aPos.X - (bPos.X + bDime.X + 2)))
+                        Dim dy = Math.Min(((aPos.Y + aDime.Y) - (bPos.Y + 2)), (aPos.Y - (bPos.Y + bDime.Y + 2)))
+                        If Math.Abs(dx) <= Math.Abs(dy) Then dy = 0
+                        If Math.Abs(dx) > Math.Abs(dy) Then dx = 0
+                        'apply where neccesary
+                        If aPos.X >= bPos.X Then
+                            RoomXY(i) = New Point(RoomXY(i).X + dx / 2, RoomXY(i).Y)
+                            RoomXY(j) = New Point(RoomXY(j).X - dx / 2, RoomXY(i).Y)
+                        Else
+                            RoomXY(i) = New Point(RoomXY(i).X - dx / 2, RoomXY(i).Y)
+                            RoomXY(j) = New Point(RoomXY(j).X + dx / 2, RoomXY(i).Y)
+                        End If
+                        If aPos.Y >= bPos.Y Then
+                            RoomXY(i) = New Point(RoomXY(i).X, RoomXY(i).Y + dy / 2)
+                            RoomXY(j) = New Point(RoomXY(j).X, RoomXY(i).Y - dy / 2)
+                        Else
+                            RoomXY(i) = New Point(RoomXY(i).X, RoomXY(i).Y - dy / 2)
+                            RoomXY(j) = New Point(RoomXY(j).X, RoomXY(i).Y + dy / 2)
+                        End If
+
+
+                    End If
+
+                Next
+
+            Next
+
+        End While
+
         Dim exits As List(Of Point) = New List(Of Point)
         For i = 0 To numRooms
-            Dim roomsizecurve As Integer() = {3, 3, 4, 4, 4, 5, 5, 5, 5, 6, 6, 6, 6, 7, 7, 7, 8, 8, 9, 12}
-            Dim roomY As Integer = roomsizecurve(CInt(Int(Rnd() * roomsizecurve.Length)))
-            Dim roomX As Integer = roomsizecurve(CInt(Int(Rnd() * roomsizecurve.Length)))
-            Dim pos As Point = New Point(CInt(Int(Rnd() * mBoardWidth)), CInt(Int(Rnd() * (mBoardHeight - 1))))
-            Dim yBound As Integer = pos.Y + roomY
-            Dim xBound As Integer = pos.X + roomX
-            If yBound >= mBoardHeight - 1 Then yBound = mBoardHeight - 1
-            If yBound < 0 Then yBound = 0
-            If xBound >= mBoardWidth Then xBound = mBoardWidth - 1
-            If xBound < 0 Then xBound = 0
 
+            If RoomWH(i).Y >= mBoardHeight - 1 Then RoomWH(i) = New Point(RoomWH(i).X, mBoardHeight - 1)
+            If RoomWH(i).Y < 0 Then RoomWH(i) = New Point(RoomWH(i).X, 0)
+            If RoomWH(i).X >= mBoardWidth - 1 Then RoomWH(i) = New Point(mBoardWidth - 1, RoomWH(i).X)
+            If RoomWH(i).X < 0 Then RoomWH(i) = New Point(0, RoomWH(i).Y)
+
+            'Replace position and bound with RoomXY and RoomWH
             If Int(Rnd() * 3) = 0 Then
-                For yP = pos.Y To yBound
-                    For xP = pos.X To xBound
-                        mBoard(yP, xP).Tag = 2
+                For yP = RoomXY(i).Y To RoomWH(i).Y
+                    For xP = RoomXY(i).X To RoomWH(i).X
+                        mBoard(yP, xP).Tag = 2 'Colour in the square
                     Next
                 Next
             Else
-                For yP = pos.Y To yBound
-                    For xP = pos.X To xBound
-                        mBoard(yP, xP).Tag = 1
+                For yP = RoomXY(i).Y To RoomWH(i).Y
+                    For xP = RoomXY(i).X To RoomWH(i).X
+                        mBoard(yP, xP).Tag = 1 'Colour in the square
                     Next
                 Next
             End If
@@ -507,10 +582,10 @@ Public Class Game
             Dim mainExit As Point
             Select Case Int(Rnd() * 2)
                 Case 0
-                    mainExit = (New Point(pos.X + 2, Int(Rnd() * (yBound - pos.Y)) + pos.Y))
+                    mainExit = (New Point(RoomXY(i).X + 2, Int(Rnd() * (RoomWH(i).Y - RoomXY(i).Y)) + RoomXY(i).Y))
                     If mainExit.X - 1 < mBoardWidth And mainExit.X - 1 > 0 AndAlso Not mBoard(mainExit.Y, mainExit.X - 1).Tag = 2 Then mBoard(mainExit.Y, mainExit.X - 1).Tag = 1
                 Case Else
-                    mainExit = (New Point(Int(Rnd() * (xBound - pos.X)) + pos.X, pos.Y + 2))
+                    mainExit = (New Point(Int(Rnd() * (RoomWH(i).X - RoomXY(i).X)) + RoomXY(i).X, RoomXY(i).Y + 2))
                     If mainExit.Y - 1 < mBoardHeight And mainExit.Y - 1 > 0 AndAlso Not mBoard(mainExit.Y - 1, mainExit.X).Tag = 2 Then mBoard(mainExit.Y - 1, mainExit.X).Tag = 1
             End Select
             If i > 0 Then
@@ -521,10 +596,10 @@ Public Class Game
             For n = 1 To numExits
                 Select Case Int(Rnd() * 2)
                     Case 0
-                        exits.Add(New Point(pos.X + 2, Int(Rnd() * (yBound - pos.Y)) + pos.Y))
+                        exits.Add(New Point(RoomXY(i).X + 2, Int(Rnd() * (RoomWH(i).Y - RoomXY(i).Y)) + RoomXY(i).Y))
                         If exits.Last.X - 1 < mBoardWidth And exits.Last.X - 1 > 0 AndAlso Not mBoard(exits.Last.Y, exits.Last.X - 1).Tag = 2 Then mBoard(exits.Last.Y, exits.Last.X - 1).Tag = 1
                     Case 1
-                        exits.Add(New Point(Int(Rnd() * (xBound - pos.X)) + pos.X, pos.Y + 2))
+                        exits.Add(New Point(Int(Rnd() * (RoomWH(i).X - RoomXY(i).X)) + RoomXY(i).X, RoomXY(i).Y + 2))
                         If exits.Last.Y - 1 < mBoardHeight And exits.Last.Y - 1 > 0 AndAlso Not mBoard(exits.Last.Y - 1, exits.Last.X).Tag = 2 Then mBoard(exits.Last.Y - 1, exits.Last.X).Tag = 1
                 End Select
             Next
