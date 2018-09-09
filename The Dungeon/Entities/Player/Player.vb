@@ -392,8 +392,7 @@
                     ln1 = "As you collapse, you see the thrall pull a small metal collar out of their bag.  Lacking the strength to resist, you are powerless as they secure it firmly around your neck, all the while murmuring whispers of the joys of submission into your ear.  Once they have the collar fitted properly, they place a small glowing gem into a slot on the collar, igniting a small array of runes.  Your mind goes blank in an instant, and while at first an ammnesia-fueled panic sets in it is quickly replaced by a booming disembodied voice."
                     inventory(69).addone()
                     If Not equippedAcce.getName.Equals("Nothing") Then equippedAcce.onUnequip()
-                    equippedAcce = inventory(69)
-                    equippedAcce.onEquip()
+                    Equipment.accChange("Slave_Collar")
                     health = 1
                     mana = getmaxMana()
                     Game.player.will -= 3
@@ -734,7 +733,7 @@
             perks("hunger") = 0
         ElseIf hunger > 100 Then
             hunger = 100
-        ElseIf Game.turn Mod 35 = 0 Then
+        ElseIf Game.turn Mod 25 = 0 Then
             hunger += 1
         End If
         If health > 1 Then health = 1
@@ -821,8 +820,6 @@
         inventory.Add(New ThrallCollar()) '69
         inventory.Add(New Cowbell()) '70
         inventory.Add(New CowBra()) '71
-        '0.6.3
-        inventory.Add(New PieceOfGum()) '72
 
         For i = 0 To inventory.Count - 1
             If inventory(i).GetType().IsSubclassOf(GetType(MysteryPotion)) Then
@@ -851,7 +848,7 @@
                    inventory(51), inventory(52), inventory(57), inventory(58)}
 
         food = {inventory(30), inventory(31), inventory(32), inventory(33),
-                inventory(34), inventory(35), inventory(44), inventory(72)}
+                inventory(34), inventory(35), inventory(44)}
 
         acce = {New noAcce(), inventory(66), inventory(67), inventory(68),
                 inventory(69), inventory(70)}
@@ -863,24 +860,7 @@
 
         misc = {inventory(43), inventory(53)}
 
-        'Creates the dictionary of perks
-        perks.Add("hunger", -1) '0
-        perks.Add("bimbotf", -1) '1
-        perks.Add("slutcurse", -1) '2
-        perks.Add("chickentf", -1) '3
-        perks.Add("slimehair", -1) '4
-        perks.Add("polymorphed", -1) '5
-        perks.Add("nekocurse", -1) '6
-        perks.Add("swordpossess", -1) '7
-        perks.Add("vsslimehair", -1) '8
-        perks.Add("brage", -1) '9
-        perks.Add("mmammaries", -1) '10
-        perks.Add("ihfury", -1) '11
-        perks.Add("livearm", -1) '12
-        perks.Add("livelinge", -1) '13
-        perks.Add("thrall", -1) '14
-        perks.Add("cowbell", -1) '15
-        perks.Add("rgum", -1) '16
+        initPerks()
 
         'Creates the class dictionary
         classes.Clear()
@@ -909,8 +889,8 @@
         forms.Add("Elf", New pForm(0.75, 1, 1.5, 1, 1, 1, "Elf", True))
         forms.Add("Android", New pForm(1, 1, 1, 1.5, 1, 0.75, "Android", True))
         forms.Add("Succubus", New pForm(1.5, 1.5, 1.5, 0.75, 1.5, 1, "Succubus", True))
-        forms.Add("Half-Succubus", New pForm(1, 1.5, 1, 1, 1.5, 1, "Half-Succubus", True))
-        forms.Add("Angel", New pForm(2, 1, 1, 1, 1.5, 1.5, "Angel", True))
+        forms.Add("Half-Succubus", New pForm(1.1, 1.5, 1.1, 1.1, 1.5, 1, "Half-Succubus", True))
+        forms.Add("Angel", New pForm(2, 1.1, 0.9, 1.1, 1.5, 1.5, "Angel", True))
         forms.Add("Slime", New pForm(0.4, 1, 1, 2.5, 0.75, 0.75, "Slime", True))
         forms.Add("Half-Slime", New pForm(0.75, 1, 1, 1.7, 1, 1, "Half-Slime", True))
         forms.Add("Tigress", New pForm(1, 1.5, 1, 0.75, 1.5, 1, "Tigress", False))
@@ -924,7 +904,7 @@
         forms.Add("Elder-God", New pForm(3, 3, 3, 3, 3, 3, "Elder-God", False))
         forms.Add("Gynoid", New pForm(0.75, 0.75, 0.75, 1.5, 1.5, 0.5, "Gynoid", True))
         forms.Add("Cyborg", New pForm(1, 1.5, 1.5, 1.5, 1.5, 1, "Cyborg", True))
-        forms.Add("Blowup Doll", New pForm(1, 1, 1, 0.5, 0.5, 0.75, "Blowup Doll", False))
+        forms.Add("Blowup Doll", New pForm(0.7, 0.7, 0.7, 0.5, 0.5, 0.75, "Blowup Doll", False))
         forms.Add("Cake", New pForm(1.5, 0.75, 1, 0.5, 0.5, 1, "Cake", False))
         forms.Add("Sheep", New pForm(1.5, 0.5, 0.5, 1.5, 0.5, 0.75, "Sheep", False))
         forms.Add("Frog", New pForm(0.75, 0.5, 0.5, 0.5, 2, 1, "Frog", False))
@@ -1926,23 +1906,23 @@
 
     'getter for buffable stats
     Function getmaxHealth()
-        Return CInt(maxHealth * pClass.h * pForm.h) + hBuff + equippedArmor.hBoost + equippedAcce.hBoost
+        Return CInt((maxHealth + hBuff + equippedArmor.hBoost + equippedAcce.hBoost) * pClass.h * pForm.h)
     End Function
     Function getmaxMana()
         If equippedArmor Is Nothing Or equippedWeapon Is Nothing Then Return CInt(maxMana * pForm.m * pForm.m) + mBuff
-        Return CInt(maxMana * pForm.m * pForm.m) + mBuff + equippedArmor.mBoost + equippedWeapon.mBoost + equippedAcce.mBoost
+        Return CInt((maxMana + mBuff + equippedArmor.mBoost + equippedWeapon.mBoost + equippedAcce.mBoost) * pForm.m * pForm.m)
     End Function
     Function getAttack()
         If equippedArmor Is Nothing Or equippedWeapon Is Nothing Then Return CInt(attack * pForm.a * pClass.a) + aBuff
-        Return CInt(attack * pForm.a * pClass.a) + aBuff + equippedArmor.aBoost + equippedAcce.aBoost
+        Return CInt((attack + aBuff + equippedArmor.aBoost + equippedAcce.aBoost) * pForm.a * pClass.a)
     End Function
     Function getDefence()
         If equippedArmor Is Nothing Or equippedWeapon Is Nothing Then Return CInt(defence * pClass.d * pForm.d) + dBuff
-        Return CInt(defence * pClass.d * pForm.d) + dBuff + equippedArmor.dBoost + equippedAcce.dBoost
+        Return CInt((defence + dBuff + equippedArmor.dBoost + equippedAcce.dBoost) * pClass.d * pForm.d)
     End Function
     Function getSpeed()
         If equippedArmor Is Nothing Or equippedWeapon Is Nothing Then Return CInt(speed * pClass.s * pForm.s) + sBuff
-        Return CInt(speed * pClass.s * pForm.s) + sBuff + equippedArmor.sBoost + equippedAcce.sBoost
+        Return CInt((speed + sBuff + equippedArmor.sBoost + equippedAcce.sBoost) * pClass.s * pForm.s)
     End Function
     Function getWillpower()
         Return CInt(will * pClass.w * pForm.w) + wBuff

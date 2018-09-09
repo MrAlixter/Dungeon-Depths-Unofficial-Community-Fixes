@@ -1,4 +1,4 @@
-To-Do 1.0:
+﻿To-Do 1.0:
 
 ●Engine Improvements:
 	- Tutorial of some sort
@@ -14,7 +14,7 @@ To-Do 1.0:
 	- unselect items in inventory by clicking again
 	- possible custom item implementation
 	- stat description in about section
-	- player TFs into inaninmate items, left in chests behind
+	- player TFs into inanimate items, left in chests behind
 
 ●Balance Modifications:
 	- Nerfs:
@@ -24,8 +24,49 @@ To-Do 1.0:
 			- Once the transformation is complete, the player will not be able to:
 				- Run away
 				- Heal in most ways
-	- Buffs:
-		- 
+	- Balance issues to address:
+		- Items are too plentiful
+			- Reduce default chest richness
+		- Enemies are too weak
+			- Thrall
+			  HP = 90
+			  ATK = 20
+			  DEF = 7
+			  SPD = 9
+			- Slime
+			  HP = 30
+			  ATK = 15
+			  DEF = 50
+			  SPD = 6
+			- Goo-Girl
+			  HP = 90
+			  ATK = 30
+			  DEF = 65
+			  SPD = 10
+			- Enthralling
+			  HP = 150
+			  ATK = 40
+			  DEF = 17
+			  SPD = 20
+			- Mimic
+			  HP = 175
+			  ATK = 35
+			  DEF = 10
+			  SPD = 50
+			handiwork giggling 
+			  
+			  
+		- No consequence for losing to enemies
+		- Floors don't get harder
+			- Decrease enemy spawn rate
+			- Floor 2 = x1.15
+			- Floor 3 = x1.30
+			- Floor 4 = x1.5
+			- Floor 5+ = x[1 + 0.2(floor)]
+		- ruby / blow-up doll traps don't have much consequence
+		- Thrall tf doesn't have much consequence
+		
+
 	- WIL
 		-[done] Killing monsters and bossed can raise will
 		-[done] Running from monsters, traps, and lust lower will

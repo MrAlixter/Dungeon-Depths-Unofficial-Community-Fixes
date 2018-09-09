@@ -20,7 +20,7 @@
     End Sub
     Public Overrides Sub onEquip()
         If Not Game.player.pClass.name.Equals("Magic Girl") Then
-            Polymorph.transform(Game.player, "Magic Girl")
+                Polymorph.transform(Game.player, "Magic Girl")
         End If
     End Sub
     Public Overrides Sub onUnequip()

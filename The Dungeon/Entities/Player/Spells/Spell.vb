@@ -172,7 +172,12 @@
         ElseIf s.Equals("Turn to Cupcake") Then
             spell = New turnToCupcake(c, t)
         ElseIf s.Equals("Heal") Then
-            spell = New Heal(c, t)
+            If Game.player.pClass.name.Equals("Soul-Lord") Then
+                Game.pushLblEvent("You scoff at the thought of healing in this moment, instead firing off a much more agressive fireball.  As you go back to your buisness, you muse on what a waste of time a heal spell would be." & vbCrLf & vbCrLf & """Only someone who cares about their mortal vessel would bother to maintain it.")
+                spell = New Fireball(c, t)
+            Else
+                spell = New Heal(c, t)
+            End If
         ElseIf s.Equals("Dowse") Then
             spell = New Dowse(c, t)
         ElseIf s.Equals("Illuminate") Then

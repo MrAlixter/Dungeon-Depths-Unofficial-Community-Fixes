@@ -134,7 +134,6 @@
     <Compile Include="Items\Accesories\ThrallCollar.vb" />
     <Compile Include="Items\Armor\ChitArmor.vb" />
     <Compile Include="Items\Armor\CowBra.vb" />
-    <Compile Include="Items\Unimplemented\PieceOfGum.vb" />
     <Compile Include="Items\Usable\Potions\Mystery Potions\BSPotion.vb" />
     <Compile Include="Items\Usable\Potions\Mystery Potions\HyperManaPotion.vb" />
     <Compile Include="Items\Usable\Spellbooks\ASpellbook.vb" />

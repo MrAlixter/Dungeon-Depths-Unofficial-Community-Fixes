@@ -349,12 +349,11 @@
             p.iArrInd(6) = New Tuple(Of Integer, Boolean)(8, True)
             p.iArrInd(15) = New Tuple(Of Integer, Boolean)(16, True)
         ElseIf form = "bimboC" Then
-            out += ""
 
+            out += vbCrLf & vbCrLf & "As you don the chicken suit you found, part of you half expects to turn into some sort of bird.  You chuckle to yourself at the idea, and this quickly devolves into a giggling fit.  Parting your short, red hair off to one side, you adjust your large breasts in the suit, noting that no part of it provides nearly enough support.  You strip some parts of the outfit away and shift some other parts around, and soon you find yourself left with a pair of wings and a set of straps that provide all the support you think you're going to get out of it.  Proud of your handiwork, you strut back out into the dungeon still giggling at the noshun...notshi...""idea"" that some silly chicken costume could change you in any way."
             If p.sex = "Male" Then
                 p.sexBool = True
                 p.MtF()
-                out += " Your body becomes daintier, and you are soon fully female."
             End If
             p.iArrInd(1) = New Tuple(Of Integer, Boolean)(11, True)
             p.iArrInd(5) = New Tuple(Of Integer, Boolean)(11, True)
@@ -662,6 +661,7 @@
         End If
         Game.cboxMG.Items.Add("Heartblast Starcannon")
         p.inventory.Item(10).addOne()
+        'giveRNDFFName(p)
         p.pClass = p.classes("Magic Girl")
         Equipment.clothesChange("Magic_Girl_Outfit")
         p.equippedArmor = New MagGirlOutfit
@@ -705,6 +705,7 @@
                     p.perks("bimbotf") = 24
                 End If
                 If p.iArrInd(6).Item1 = 8 And p.iArrInd(6).Item2 Then p.iArrInd(6) = New Tuple(Of Integer, Boolean)(0, True)
+                giveRNDFFName(p)
                 p.iArrInd(8) = New Tuple(Of Integer, Boolean)(5, True)
                 p.iArrInd(9) = New Tuple(Of Integer, Boolean)(7, True)
                 p.iArrInd(13) = New Tuple(Of Integer, Boolean)(0, True)
@@ -855,6 +856,7 @@
         End Select
     End Sub
     Sub targaxTF(ByRef p As Player, ByVal ind As Integer)
+        MsgBox("")
         Select Case ind
             Case 0
                 If (p.iArrInd(9).Item2 And p.iArrInd(9).Item1 <> 15) Or (Not p.iArrInd(9).Item2 And p.iArrInd(9).Item1 <> 7) Then
@@ -971,6 +973,27 @@
                 p.inventory(71).add(1)
                 Equipment.clothesChange("Cow_Print_Bra")
         End Select
+    End Sub
+
+    Shared Sub giveRNDFFName(ByRef p As Player)
+        If Game.floor < 5 Then Randomize(Game.floorLayouts(Game.floor).GetHashCode) Else Randomize()
+        Dim fFNames() As String = {"Abigail", "Abby", "Anna", "Ann", "Ana", "Alexis", _
+                               "Becky", _
+                               "Christine", "Casandra", "Catherine", "Cassie", "Carol", "Caroline", "Cara", _
+                               "Danica", _
+                               "Ellen", "Erika", "Erica", _
+                               "Heather", _
+                               "Iliona", _
+                               "Janice", "Johanna", "Jenna", "Judy", "Jennifer", "Jo-Jo", _
+                               "Kerry", "Katherine", "Katja", _
+                               "Lana", _
+                               "Monica", "Mary", _
+                               "Nancy", "Nicole", "Nadja", _
+                               "Racheal", _
+                               "Samantha", "Sarah", "Sally", _
+                               "Tanja", "Trisha", _
+                               "Vanessa"}
+        p.name = fFNames(Int(Rnd() * fFNames.Length))
     End Sub
 
     Private Sub cboxPMorph_SelectedValueChanged(sender As Object, e As EventArgs) Handles cboxPMorph.SelectedValueChanged

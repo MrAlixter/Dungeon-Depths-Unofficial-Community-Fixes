@@ -293,4 +293,8 @@
             Return "N/A#"
         End If
     End Function
+
+    Public Function getName() As String
+        Return name
+    End Function
 End Class

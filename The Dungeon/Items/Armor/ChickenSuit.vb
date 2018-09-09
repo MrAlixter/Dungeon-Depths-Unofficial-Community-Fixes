@@ -7,7 +7,7 @@
                       "Fits all sizes" & vbCrLf & _
                       "+10 SPD")
         id = 8
-        tier = Nothing
+        If DateTime.Now.Month = 9 And DateTime.Now.Day = 10 Then tier = 2 Else tier = Nothing
         MyBase.setUsable(False)
         MyBase.sBoost = 10
         MyBase.count = 0
@@ -30,6 +30,7 @@
     End Sub
 
     Public Overrides Sub onEquip()
+        Polymorph.transform(Game.player, "bimboC")
         prevWingInd = CInt(CStr(Game.player.wingInd))
         Game.player.wingInd = 3
     End Sub

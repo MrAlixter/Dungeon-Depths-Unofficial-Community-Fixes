@@ -65,7 +65,7 @@ Public Class Game
     Public turn As Integer = 0  '(NOT SAVED)
     Public beatboss() As Boolean = {False, False, False, False, False, False}  'which bosses have been beat?
     Public floorboss() As String = {"Floor0", "Marissa the Enchantress", "Targax the Brutal", "Key", "the Explorer", "Medusa"} 'boss names (NOT SAVED)
-    Dim floorLayouts As ArrayList = New ArrayList()
+    Public floorLayouts As ArrayList = New ArrayList()
     Public version As Double = 0.6     'the save file version
 
     Public lblEventOnClose As Action    'the event method preformed when lblEvent closes (NOT SAVED)
@@ -2736,7 +2736,6 @@ Public Class Game
                 Exit For
             End If
         Next
-        If player.perks("rgum") > -1 Then Polymorph.transform(player, "bimboC")
     End Sub
     Sub leaveNPC()
         Dim m As NPC = Nothing

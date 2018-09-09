@@ -31,6 +31,7 @@
         Game.player.prefForm = New preferedForm()
 
         Equipment.portraitUDate()
+        MsgBox(Game.player.iArrInd(9).Item1)
     End Sub
     Sub forceEquip()
         Game.player.perks("thrall") = 0
