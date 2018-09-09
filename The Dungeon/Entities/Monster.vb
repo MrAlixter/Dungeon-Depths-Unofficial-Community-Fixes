@@ -96,7 +96,7 @@
                 name = "Arachne Huntress"
                 health = 110
                 maxHealth = 110
-                attack = 65
+                attack = 45
                 defence = 15
                 speed = 60
                 setInventory({63, 64})
@@ -209,7 +209,7 @@
                     If crit < ebound Then dmg = -1
                 End If
         End Select
-        target.takeDMG(dmg)
+        target.takeDMG(dmg, Me)
     End Sub
     Public Sub takeDMG(ByVal dmg As Integer)
         health -= dmg
@@ -366,7 +366,7 @@
                     Dim rng = (Int(Rnd() * 6))
                     If rng = 1 Then inventory(inv(i)) += 1
                 Case Else
-                    Dim rng = (Int(Rnd() * 6))
+                    Dim rng = (Int(Rnd() * 5))
                     If rng >= 3 Then rng = 0
                     inventory(inv(i)) += rng
             End Select

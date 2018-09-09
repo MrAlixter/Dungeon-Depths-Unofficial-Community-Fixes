@@ -330,7 +330,8 @@
         Game.pushLblCombatEvent(CStr("You hit" & target.title & " " & target.getName() & " for " & dmg & " damage!"))
         Game.lstLog.TopIndex = Game.lstLog.Items.Count - 1
     End Sub
-    Public Sub takeDMG(ByVal dmg As Integer)
+    Public Sub takeDMG(ByVal dmg As Integer, ByRef source As Updatable)
+        currTarget = source
         If dmg > 0 Then dmg += Int(Rnd() * 3) + -1
         If dmg = -2 Then
             dmg = currTarget.attack * 2
@@ -1884,7 +1885,7 @@
             iArrInd(9) = New Tuple(Of Integer, Boolean)(14, True)
         Else
             iArrInd(8) = New Tuple(Of Integer, Boolean)(5, False)
-            iArrInd(9) = New Tuple(Of Integer, Boolean)(6, False)
+            iArrInd(9) = New Tuple(Of Integer, Boolean)(7, False)
         End If
         createP()
         changeSkinColor(c)

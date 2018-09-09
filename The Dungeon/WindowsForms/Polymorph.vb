@@ -856,10 +856,9 @@
         End Select
     End Sub
     Sub targaxTF(ByRef p As Player, ByVal ind As Integer)
-        MsgBox("")
         Select Case ind
             Case 0
-                If (p.iArrInd(9).Item2 And p.iArrInd(9).Item1 <> 15) Or (Not p.iArrInd(9).Item2 And p.iArrInd(9).Item1 <> 7) Then
+                If (p.iArrInd(9).Item2 And p.iArrInd(9).Item1 <> 15) Or (Not p.iArrInd(9).Item2 And p.iArrInd(9).Item1 <> 8) Then
                     If p.iArrInd(9).Item2 Then
                         p.iArrInd(9) = New Tuple(Of Integer, Boolean)(15, True)
                     Else
