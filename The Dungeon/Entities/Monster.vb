@@ -96,7 +96,7 @@
                 name = "Arachne Huntress"
                 health = 110
                 maxHealth = 110
-                attack = 45
+                attack = 65
                 defence = 15
                 speed = 60
                 setInventory({63, 64})
@@ -126,6 +126,8 @@
                 defence = 7
                 speed = 30
                 setInventory({})
+            Case 10
+                name = "Hunger"
             Case Else
                 name = "Some Guy"
                 health = 66

@@ -468,6 +468,8 @@
                 Game.pushLblEvent(out)
                 health = 0.1
                 Exit Sub
+            ElseIf currTarget.name.Equals("Hunger") Then
+                Game.pushLblEvent("You starve to death!")
             End If
         Catch ex As Exception
             MsgBox("D_D Error 002: Unknown Cause of death")
@@ -938,6 +940,7 @@
             Else
                 health -= 5 / getmaxHealth()
                 Game.lstLog.Items.Add("Your stomach aches... -5 health!")
+                If health <= 0 Then setTarg(New Monster(10))
             End If
         End If
         'bimbo tf

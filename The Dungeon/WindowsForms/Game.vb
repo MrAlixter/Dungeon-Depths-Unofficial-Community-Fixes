@@ -2151,8 +2151,10 @@ Public Class Game
             End If
         Next
         For i = 0 To trapList.Count - 1
-            mBoard(trapList(i).pos.Y, trapList(i).pos.X).Text = "+"
-        Next
+            If trapList(i).pos.y > -1 And trapList(i).pos.y < mBoardHeight And trapList(i).pos.x > -1 And trapList(i).pos.x < mBoardWidth Then
+                mBoard(trapList(i).pos.Y, trapList(i).pos.X).Text = "+"
+            End If
+Next
         For i = 0 To CInt(reader.ReadLine())
             cboxMG.Items.Add(reader.ReadLine())
         Next
