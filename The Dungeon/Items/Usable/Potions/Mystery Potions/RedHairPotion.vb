@@ -14,7 +14,7 @@
         Dim r As Integer = Int(Rnd() * 100) + 155
         p.haircolor = Color.FromArgb(p.haircolor.A, r, 69, 0)
             p.createP()
-        If Not Polymorph.canBeTFed(Game.player) Then
+        If Polymorph.canBeTFed(Game.player) Then
             Game.player.pState.save(Game.player)
         End If
     End Sub
