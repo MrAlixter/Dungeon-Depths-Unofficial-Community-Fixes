@@ -56,7 +56,7 @@
                 Game.pushLblEvent("As you crack the glowstick to activate it, the tube cracks open slightly, spraying some fluid on your face.  You wipe it off, and while you don't feel any different, your hair seems a little more...vibrant than it was before.")
                 Game.player.haircolor = c
                 Game.player.createP()
-            If Not Polymorph.canBeTFed(Game.player) Then
+            If Polymorph.canBeTFed(Game.player) Then
                 Game.player.pState.save(Game.player)
             End If
         End If

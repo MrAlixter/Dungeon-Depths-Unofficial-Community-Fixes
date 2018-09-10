@@ -34,7 +34,7 @@
         Else
             Game.pushLblEvent("Nothing happened!")
         End If
-        If Not Polymorph.canBeTFed(Game.player) Then
+        If Polymorph.canBeTFed(Game.player) Then
             Game.player.pState.save(Game.player)
         End If
         Equipment.portraitUDate()
