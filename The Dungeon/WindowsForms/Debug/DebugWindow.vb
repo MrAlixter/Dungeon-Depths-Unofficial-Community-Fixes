@@ -81,7 +81,7 @@ Public Class Debug_Window
 
         'INVENTORY
         updateInventoryList()
-        number.Value = 0
+        number.Value = 1
         updateItemsList()
 
         'PERKS

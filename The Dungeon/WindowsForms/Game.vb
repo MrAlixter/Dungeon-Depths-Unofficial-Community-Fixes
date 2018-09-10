@@ -65,7 +65,7 @@ Public Class Game
     Public turn As Integer = 0  '(NOT SAVED)
     Public beatboss() As Boolean = {False, False, False, False, False, False}  'which bosses have been beat?
     Public floorboss() As String = {"Floor0", "Marissa the Enchantress", "Targax the Brutal", "Key", "the Explorer", "Medusa"} 'boss names (NOT SAVED)
-    Dim floorLayouts As ArrayList = New ArrayList()
+    Public floorLayouts As ArrayList = New ArrayList()
     Public version As Double = 0.6     'the save file version
 
     Public lblEventOnClose As Action    'the event method preformed when lblEvent closes (NOT SAVED)
@@ -2151,8 +2151,10 @@ Public Class Game
             End If
         Next
         For i = 0 To trapList.Count - 1
-            mBoard(trapList(i).pos.Y, trapList(i).pos.X).Text = "+"
-        Next
+            If trapList(i).pos.y > -1 And trapList(i).pos.y < mBoardHeight And trapList(i).pos.x > -1 And trapList(i).pos.x < mBoardWidth Then
+                mBoard(trapList(i).pos.Y, trapList(i).pos.X).Text = "+"
+            End If
+Next
         For i = 0 To CInt(reader.ReadLine())
             cboxMG.Items.Add(reader.ReadLine())
         Next
@@ -2736,9 +2738,6 @@ Public Class Game
                 Exit For
             End If
         Next
-        Dim chick As Integer = 1 'CInt(Int(Rnd() * 5))
-        'THIS LINE APPEARS REDUNDANT/BROKEN
-        'If chick = 4 And Not player.perks("chickentf") Then player.perks(3) = True
     End Sub
     Sub leaveNPC()
         Dim m As NPC = Nothing

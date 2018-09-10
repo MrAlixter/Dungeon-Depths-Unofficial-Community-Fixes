@@ -27,23 +27,9 @@ Partial Class Game
         Me.btnUse1 = New System.Windows.Forms.Button()
         Me.btnDrop = New System.Windows.Forms.Button()
         Me.btnLook = New System.Windows.Forms.Button()
-        Me.picMarkBClothes = New System.Windows.Forms.PictureBox()
-        Me.picMarkBRearHair2 = New System.Windows.Forms.PictureBox()
-        Me.picMarkBRearHair1 = New System.Windows.Forms.PictureBox()
-        Me.picMarkBFHair = New System.Windows.Forms.PictureBox()
         Me.btnControls = New System.Windows.Forms.Button()
         Me.btnChallengeBoss = New System.Windows.Forms.Button()
         Me.picEnemy = New System.Windows.Forms.PictureBox()
-        Me.picMarkEyebrows = New System.Windows.Forms.PictureBox()
-        Me.picFMarkBody = New System.Windows.Forms.PictureBox()
-        Me.picfMarkClothes = New System.Windows.Forms.PictureBox()
-        Me.picFMarkRHair2 = New System.Windows.Forms.PictureBox()
-        Me.picFMarkRHair1 = New System.Windows.Forms.PictureBox()
-        Me.picFMarkFHair = New System.Windows.Forms.PictureBox()
-        Me.picMarkClothes = New System.Windows.Forms.PictureBox()
-        Me.picMarkRHair2 = New System.Windows.Forms.PictureBox()
-        Me.picMarkRHair1 = New System.Windows.Forms.PictureBox()
-        Me.picMarkFHair = New System.Windows.Forms.PictureBox()
         Me.btnLeave = New System.Windows.Forms.Button()
         Me.btnFight = New System.Windows.Forms.Button()
         Me.btnNPCMG = New System.Windows.Forms.Button()
@@ -191,21 +177,7 @@ Partial Class Game
         Me.picCrystalf = New System.Windows.Forms.PictureBox()
         Me.btnAbout = New System.Windows.Forms.Button()
         Me.lblEVD = New System.Windows.Forms.Label()
-        CType(Me.picMarkBClothes, System.ComponentModel.ISupportInitialize).BeginInit()
-        CType(Me.picMarkBRearHair2, System.ComponentModel.ISupportInitialize).BeginInit()
-        CType(Me.picMarkBRearHair1, System.ComponentModel.ISupportInitialize).BeginInit()
-        CType(Me.picMarkBFHair, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me.picEnemy, System.ComponentModel.ISupportInitialize).BeginInit()
-        CType(Me.picMarkEyebrows, System.ComponentModel.ISupportInitialize).BeginInit()
-        CType(Me.picFMarkBody, System.ComponentModel.ISupportInitialize).BeginInit()
-        CType(Me.picfMarkClothes, System.ComponentModel.ISupportInitialize).BeginInit()
-        CType(Me.picFMarkRHair2, System.ComponentModel.ISupportInitialize).BeginInit()
-        CType(Me.picFMarkRHair1, System.ComponentModel.ISupportInitialize).BeginInit()
-        CType(Me.picFMarkFHair, System.ComponentModel.ISupportInitialize).BeginInit()
-        CType(Me.picMarkClothes, System.ComponentModel.ISupportInitialize).BeginInit()
-        CType(Me.picMarkRHair2, System.ComponentModel.ISupportInitialize).BeginInit()
-        CType(Me.picMarkRHair1, System.ComponentModel.ISupportInitialize).BeginInit()
-        CType(Me.picMarkFHair, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me.picNPC, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me.picStatue, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me.picPlayerB, System.ComponentModel.ISupportInitialize).BeginInit()
@@ -300,46 +272,6 @@ Partial Class Game
         Me.btnLook.Text = "Inspect"
         Me.btnLook.UseVisualStyleBackColor = False
         '
-        'picMarkBClothes
-        '
-        Me.picMarkBClothes.BackgroundImage = CType(resources.GetObject("picMarkBClothes.BackgroundImage"), System.Drawing.Image)
-        Me.picMarkBClothes.Location = New System.Drawing.Point(169, 94)
-        Me.picMarkBClothes.Name = "picMarkBClothes"
-        Me.picMarkBClothes.Size = New System.Drawing.Size(38, 39)
-        Me.picMarkBClothes.TabIndex = 207
-        Me.picMarkBClothes.TabStop = False
-        Me.picMarkBClothes.Visible = False
-        '
-        'picMarkBRearHair2
-        '
-        Me.picMarkBRearHair2.BackgroundImage = CType(resources.GetObject("picMarkBRearHair2.BackgroundImage"), System.Drawing.Image)
-        Me.picMarkBRearHair2.Location = New System.Drawing.Point(123, 94)
-        Me.picMarkBRearHair2.Name = "picMarkBRearHair2"
-        Me.picMarkBRearHair2.Size = New System.Drawing.Size(38, 39)
-        Me.picMarkBRearHair2.TabIndex = 206
-        Me.picMarkBRearHair2.TabStop = False
-        Me.picMarkBRearHair2.Visible = False
-        '
-        'picMarkBRearHair1
-        '
-        Me.picMarkBRearHair1.BackgroundImage = CType(resources.GetObject("picMarkBRearHair1.BackgroundImage"), System.Drawing.Image)
-        Me.picMarkBRearHair1.Location = New System.Drawing.Point(79, 94)
-        Me.picMarkBRearHair1.Name = "picMarkBRearHair1"
-        Me.picMarkBRearHair1.Size = New System.Drawing.Size(38, 39)
-        Me.picMarkBRearHair1.TabIndex = 205
-        Me.picMarkBRearHair1.TabStop = False
-        Me.picMarkBRearHair1.Visible = False
-        '
-        'picMarkBFHair
-        '
-        Me.picMarkBFHair.BackgroundImage = CType(resources.GetObject("picMarkBFHair.BackgroundImage"), System.Drawing.Image)
-        Me.picMarkBFHair.Location = New System.Drawing.Point(35, 93)
-        Me.picMarkBFHair.Name = "picMarkBFHair"
-        Me.picMarkBFHair.Size = New System.Drawing.Size(38, 39)
-        Me.picMarkBFHair.TabIndex = 204
-        Me.picMarkBFHair.TabStop = False
-        Me.picMarkBFHair.Visible = False
-        '
         'btnControls
         '
         Me.btnControls.BackColor = System.Drawing.Color.Black
@@ -377,106 +309,6 @@ Partial Class Game
         Me.picEnemy.TabIndex = 201
         Me.picEnemy.TabStop = False
         Me.picEnemy.Visible = False
-        '
-        'picMarkEyebrows
-        '
-        Me.picMarkEyebrows.BackgroundImage = CType(resources.GetObject("picMarkEyebrows.BackgroundImage"), System.Drawing.Image)
-        Me.picMarkEyebrows.Location = New System.Drawing.Point(210, 139)
-        Me.picMarkEyebrows.Name = "picMarkEyebrows"
-        Me.picMarkEyebrows.Size = New System.Drawing.Size(38, 39)
-        Me.picMarkEyebrows.TabIndex = 200
-        Me.picMarkEyebrows.TabStop = False
-        Me.picMarkEyebrows.Visible = False
-        '
-        'picFMarkBody
-        '
-        Me.picFMarkBody.BackgroundImage = CType(resources.GetObject("picFMarkBody.BackgroundImage"), System.Drawing.Image)
-        Me.picFMarkBody.Location = New System.Drawing.Point(210, 184)
-        Me.picFMarkBody.Name = "picFMarkBody"
-        Me.picFMarkBody.Size = New System.Drawing.Size(38, 39)
-        Me.picFMarkBody.TabIndex = 199
-        Me.picFMarkBody.TabStop = False
-        Me.picFMarkBody.Visible = False
-        '
-        'picfMarkClothes
-        '
-        Me.picfMarkClothes.BackgroundImage = CType(resources.GetObject("picfMarkClothes.BackgroundImage"), System.Drawing.Image)
-        Me.picfMarkClothes.Location = New System.Drawing.Point(166, 184)
-        Me.picfMarkClothes.Name = "picfMarkClothes"
-        Me.picfMarkClothes.Size = New System.Drawing.Size(38, 39)
-        Me.picfMarkClothes.TabIndex = 198
-        Me.picfMarkClothes.TabStop = False
-        Me.picfMarkClothes.Visible = False
-        '
-        'picFMarkRHair2
-        '
-        Me.picFMarkRHair2.BackgroundImage = CType(resources.GetObject("picFMarkRHair2.BackgroundImage"), System.Drawing.Image)
-        Me.picFMarkRHair2.Location = New System.Drawing.Point(123, 184)
-        Me.picFMarkRHair2.Name = "picFMarkRHair2"
-        Me.picFMarkRHair2.Size = New System.Drawing.Size(38, 39)
-        Me.picFMarkRHair2.TabIndex = 197
-        Me.picFMarkRHair2.TabStop = False
-        Me.picFMarkRHair2.Visible = False
-        '
-        'picFMarkRHair1
-        '
-        Me.picFMarkRHair1.BackgroundImage = CType(resources.GetObject("picFMarkRHair1.BackgroundImage"), System.Drawing.Image)
-        Me.picFMarkRHair1.Location = New System.Drawing.Point(79, 184)
-        Me.picFMarkRHair1.Name = "picFMarkRHair1"
-        Me.picFMarkRHair1.Size = New System.Drawing.Size(38, 39)
-        Me.picFMarkRHair1.TabIndex = 196
-        Me.picFMarkRHair1.TabStop = False
-        Me.picFMarkRHair1.Visible = False
-        '
-        'picFMarkFHair
-        '
-        Me.picFMarkFHair.BackgroundImage = CType(resources.GetObject("picFMarkFHair.BackgroundImage"), System.Drawing.Image)
-        Me.picFMarkFHair.Location = New System.Drawing.Point(35, 184)
-        Me.picFMarkFHair.Name = "picFMarkFHair"
-        Me.picFMarkFHair.Size = New System.Drawing.Size(38, 39)
-        Me.picFMarkFHair.TabIndex = 195
-        Me.picFMarkFHair.TabStop = False
-        Me.picFMarkFHair.Visible = False
-        '
-        'picMarkClothes
-        '
-        Me.picMarkClothes.BackgroundImage = CType(resources.GetObject("picMarkClothes.BackgroundImage"), System.Drawing.Image)
-        Me.picMarkClothes.Location = New System.Drawing.Point(166, 139)
-        Me.picMarkClothes.Name = "picMarkClothes"
-        Me.picMarkClothes.Size = New System.Drawing.Size(38, 39)
-        Me.picMarkClothes.TabIndex = 194
-        Me.picMarkClothes.TabStop = False
-        Me.picMarkClothes.Visible = False
-        '
-        'picMarkRHair2
-        '
-        Me.picMarkRHair2.BackgroundImage = CType(resources.GetObject("picMarkRHair2.BackgroundImage"), System.Drawing.Image)
-        Me.picMarkRHair2.Location = New System.Drawing.Point(122, 139)
-        Me.picMarkRHair2.Name = "picMarkRHair2"
-        Me.picMarkRHair2.Size = New System.Drawing.Size(38, 39)
-        Me.picMarkRHair2.TabIndex = 193
-        Me.picMarkRHair2.TabStop = False
-        Me.picMarkRHair2.Visible = False
-        '
-        'picMarkRHair1
-        '
-        Me.picMarkRHair1.BackgroundImage = CType(resources.GetObject("picMarkRHair1.BackgroundImage"), System.Drawing.Image)
-        Me.picMarkRHair1.Location = New System.Drawing.Point(79, 139)
-        Me.picMarkRHair1.Name = "picMarkRHair1"
-        Me.picMarkRHair1.Size = New System.Drawing.Size(38, 39)
-        Me.picMarkRHair1.TabIndex = 192
-        Me.picMarkRHair1.TabStop = False
-        Me.picMarkRHair1.Visible = False
-        '
-        'picMarkFHair
-        '
-        Me.picMarkFHair.BackgroundImage = CType(resources.GetObject("picMarkFHair.BackgroundImage"), System.Drawing.Image)
-        Me.picMarkFHair.Location = New System.Drawing.Point(35, 139)
-        Me.picMarkFHair.Name = "picMarkFHair"
-        Me.picMarkFHair.Size = New System.Drawing.Size(38, 39)
-        Me.picMarkFHair.TabIndex = 191
-        Me.picMarkFHair.TabStop = False
-        Me.picMarkFHair.Visible = False
         '
         'btnLeave
         '
@@ -2196,23 +2028,9 @@ Partial Class Game
         Me.Controls.Add(Me.picSKPrin)
         Me.Controls.Add(Me.picShopkeep)
         Me.Controls.Add(Me.picShopkeepTile)
-        Me.Controls.Add(Me.picMarkBClothes)
-        Me.Controls.Add(Me.picMarkBRearHair2)
-        Me.Controls.Add(Me.picMarkBRearHair1)
-        Me.Controls.Add(Me.picMarkBFHair)
         Me.Controls.Add(Me.btnControls)
         Me.Controls.Add(Me.btnChallengeBoss)
         Me.Controls.Add(Me.picEnemy)
-        Me.Controls.Add(Me.picMarkEyebrows)
-        Me.Controls.Add(Me.picFMarkBody)
-        Me.Controls.Add(Me.picfMarkClothes)
-        Me.Controls.Add(Me.picFMarkRHair2)
-        Me.Controls.Add(Me.picFMarkRHair1)
-        Me.Controls.Add(Me.picFMarkFHair)
-        Me.Controls.Add(Me.picMarkClothes)
-        Me.Controls.Add(Me.picMarkRHair2)
-        Me.Controls.Add(Me.picMarkRHair1)
-        Me.Controls.Add(Me.picMarkFHair)
         Me.Controls.Add(Me.btnLeave)
         Me.Controls.Add(Me.btnFight)
         Me.Controls.Add(Me.btnNPCMG)
@@ -2272,21 +2090,7 @@ Partial Class Game
         Me.SizeGripStyle = System.Windows.Forms.SizeGripStyle.Hide
         Me.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen
         Me.Text = "Dungeon_Depths"
-        CType(Me.picMarkBClothes, System.ComponentModel.ISupportInitialize).EndInit()
-        CType(Me.picMarkBRearHair2, System.ComponentModel.ISupportInitialize).EndInit()
-        CType(Me.picMarkBRearHair1, System.ComponentModel.ISupportInitialize).EndInit()
-        CType(Me.picMarkBFHair, System.ComponentModel.ISupportInitialize).EndInit()
         CType(Me.picEnemy, System.ComponentModel.ISupportInitialize).EndInit()
-        CType(Me.picMarkEyebrows, System.ComponentModel.ISupportInitialize).EndInit()
-        CType(Me.picFMarkBody, System.ComponentModel.ISupportInitialize).EndInit()
-        CType(Me.picfMarkClothes, System.ComponentModel.ISupportInitialize).EndInit()
-        CType(Me.picFMarkRHair2, System.ComponentModel.ISupportInitialize).EndInit()
-        CType(Me.picFMarkRHair1, System.ComponentModel.ISupportInitialize).EndInit()
-        CType(Me.picFMarkFHair, System.ComponentModel.ISupportInitialize).EndInit()
-        CType(Me.picMarkClothes, System.ComponentModel.ISupportInitialize).EndInit()
-        CType(Me.picMarkRHair2, System.ComponentModel.ISupportInitialize).EndInit()
-        CType(Me.picMarkRHair1, System.ComponentModel.ISupportInitialize).EndInit()
-        CType(Me.picMarkFHair, System.ComponentModel.ISupportInitialize).EndInit()
         CType(Me.picNPC, System.ComponentModel.ISupportInitialize).EndInit()
         CType(Me.picStatue, System.ComponentModel.ISupportInitialize).EndInit()
         CType(Me.picPlayerB, System.ComponentModel.ISupportInitialize).EndInit()
@@ -2354,23 +2158,9 @@ Partial Class Game
     Friend WithEvents btnUse1 As System.Windows.Forms.Button
     Friend WithEvents btnDrop As System.Windows.Forms.Button
     Friend WithEvents btnLook As System.Windows.Forms.Button
-    Friend WithEvents picMarkBClothes As System.Windows.Forms.PictureBox
-    Friend WithEvents picMarkBRearHair2 As System.Windows.Forms.PictureBox
-    Friend WithEvents picMarkBRearHair1 As System.Windows.Forms.PictureBox
-    Friend WithEvents picMarkBFHair As System.Windows.Forms.PictureBox
     Friend WithEvents btnControls As System.Windows.Forms.Button
     Friend WithEvents btnChallengeBoss As System.Windows.Forms.Button
     Friend WithEvents picEnemy As System.Windows.Forms.PictureBox
-    Friend WithEvents picMarkEyebrows As System.Windows.Forms.PictureBox
-    Friend WithEvents picFMarkBody As System.Windows.Forms.PictureBox
-    Friend WithEvents picfMarkClothes As System.Windows.Forms.PictureBox
-    Friend WithEvents picFMarkRHair2 As System.Windows.Forms.PictureBox
-    Friend WithEvents picFMarkRHair1 As System.Windows.Forms.PictureBox
-    Friend WithEvents picFMarkFHair As System.Windows.Forms.PictureBox
-    Friend WithEvents picMarkClothes As System.Windows.Forms.PictureBox
-    Friend WithEvents picMarkRHair2 As System.Windows.Forms.PictureBox
-    Friend WithEvents picMarkRHair1 As System.Windows.Forms.PictureBox
-    Friend WithEvents picMarkFHair As System.Windows.Forms.PictureBox
     Friend WithEvents btnLeave As System.Windows.Forms.Button
     Friend WithEvents btnFight As System.Windows.Forms.Button
     Friend WithEvents btnNPCMG As System.Windows.Forms.Button

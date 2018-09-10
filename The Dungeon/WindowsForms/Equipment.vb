@@ -61,16 +61,6 @@
             End If
         End If
 
-        If Not p.equippedArmor.getName.Equals(cmbobxArmor.SelectedItem) Then
-            p.equippedArmor.onUnequip()
-        End If
-        If Not p.equippedWeapon.getName.Equals(cmbobxWeapon.SelectedItem) Then
-            p.equippedWeapon.onUnequip()
-        End If
-        If Not p.equippedAcce.getName.Equals(cboxAccessory.SelectedItem) Then
-            p.equippedAcce.onUnequip()
-        End If
-
         Dim oW, oA, oAc As String
         oW = p.equippedWeapon.getName
         oA = p.equippedArmor.getName
@@ -111,16 +101,6 @@
         End If
         If p.pForm.name.Equals("Blow-Up Doll") Then
             p.equippedArmor = New Naked
-        End If
-
-        If Not oA.Equals(cmbobxArmor.Text) Then
-            p.equippedArmor.onEquip()
-        End If
-        If Not oW.Equals(cmbobxWeapon.Text) Then
-            p.equippedWeapon.onEquip()
-        End If
-        If Not oAc.Equals(cboxAccessory.Text) Then
-            p.equippedAcce.onEquip()
         End If
 
         'updates the player, the stat display, and the portrait before the form closes
@@ -279,19 +259,18 @@
     'clothesChange handles the equipping and unequipping of armors
     Public Sub clothesChange(ByVal clothes As String)
         If aNameList.Count < 5 Then init()
-        If clothes.Equals(p.equippedArmor.getName) Then Exit Sub
+        If Not p.equippedArmor Is Nothing AndAlso clothes.Equals(p.equippedArmor.getName) Then Exit Sub
         Dim sArmor As Armor = Nothing
         If clothes <> "" Then
             For i = 0 To UBound(aNameList)
                 If clothes = aNameList(i) Then
                     'MsgBox("{" & cmbobxArmor.SelectedItem & "}&[" & aNameList(i) & "]")
                     sArmor = aList(i)
-                    p.equippedArmor.onUnequip()
+                    If Not p.equippedArmor Is Nothing Then p.equippedArmor.onUnequip()
                     Exit For
                 End If
             Next
             If sArmor Is Nothing Then Exit Sub
-            If clothes = "Chicken_Suit" Then Polymorph.transform(p, "Chicken2")
             p.equippedArmor = sArmor
             p.equippedArmor.onEquip()
         End If
@@ -299,12 +278,12 @@
     'clothesChange handles the equipping and unequipping of weapon
     Public Sub weaponChange(ByVal weapon As String)
         Dim sWeapon As Weapon = Nothing
-        If weapon.Equals(p.equippedWeapon.getName) Then Exit Sub
+        If Not p.equippedWeapon Is Nothing AndAlso weapon.Equals(p.equippedWeapon.getName) Then Exit Sub
         If weapon <> "" Then
             For i = 0 To UBound(wNameList)
                 If weapon.Split()(0) = wNameList(i) Then
                     sWeapon = wList(i)
-                    p.equippedWeapon.onUnequip()
+                    If Not p.equippedWeapon Is Nothing Then p.equippedWeapon.onUnequip()
                     Exit For
                 End If
             Next
@@ -316,14 +295,14 @@
     'accChange handles the equipping and unequipping of accessories
     Public Sub accChange(ByVal acc As String)
         If acNameList.Count < 1 Then init()
-        If acc.Equals(p.equippedAcce.getName) Then Exit Sub
+        If Not p.equippedAcce Is Nothing AndAlso acc.Equals(p.equippedAcce.getName) Then Exit Sub
         Dim sAcc As Accessory = Nothing
         If acc <> "" Then
             For i = 0 To UBound(acNameList)
                 If acc = acNameList(i) Then
                     'MsgBox("{" & cmbobxArmor.SelectedItem & "}&[" & aNameList(i) & "]")
                     sAcc = acList(i)
-                    p.equippedAcce.onUnequip()
+                    If Not p.equippedAcce Is Nothing Then p.equippedAcce.onUnequip()
                     Exit For
                 End If
             Next

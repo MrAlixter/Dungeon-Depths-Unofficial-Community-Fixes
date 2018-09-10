@@ -26,7 +26,7 @@
     End Sub
     Public Overrides Sub backfire()
         Dim dmg = Int(Rnd() * 30) + 10
-        MyBase.getCaster.takeDMG(dmg)
+        MyBase.getCaster.takeDMG(dmg, MyBase.getCaster.currTarget)
         Game.lstLog.Items.Add(CStr("You hit yourself for " & dmg & " damage!"))
         Game.pushLblCombatEvent(CStr("You hit yourself for " & dmg & " damage!"))
         Game.lstLog.TopIndex = Game.lstLog.Items.Count - 1
