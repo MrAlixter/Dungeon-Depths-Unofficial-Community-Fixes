@@ -206,6 +206,11 @@ Public Class Game
         End If
 
         Game_Resize()
+        'Try
+        '    MsgBox("picStart is: " & picStart.BackgroundImage.Size.ToString)
+        'Catch ex As Exception
+        '    MsgBox("Error! picStart files missing")
+        'End Try
     End Sub
     Sub createConfigs()
         Dim w As StreamWriter
