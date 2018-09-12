@@ -3,12 +3,13 @@
 
 Public Class Transformation
     Implements Updatable
-    Dim currStep As Integer
-    Dim numSteps As Integer
-    Dim turnsTilNextStep As Integer
-    Dim nextStep As Action
-    Dim wilImpact As Double
-    Dim canBeStopped As Boolean
+    Protected currStep As Integer
+    Protected numSteps As Integer
+    Protected turnsTilNextStep As Integer
+    Protected nextStep As Action
+    Protected wilImpact As Double
+    Protected canBeStopped As Boolean
+    Protected revertText As Boolean
 
     Sub New(n As Integer, tts As Integer, wi As Double, cbs As Boolean)
         currStep = 0
@@ -26,11 +27,18 @@ Public Class Transformation
     End Sub
 
     Sub update() Implements Updatable.update
+        If nextStep Is Nothing Then
+            stopTF()
+            Exit Sub
+        End If
         If turnsTilNextStep = 0 Then
             nextStep()
             currStep += 1
             setWaitTime(currStep)
+
             If currStep > numSteps Then stopTF()
+        ElseIf turnsTilNextStep = -1 Then
+            Dim i = 1
         Else
             turnsTilNextStep -= 1
         End If
@@ -45,7 +53,9 @@ Public Class Transformation
     Function generatWILResistance()
         Return CInt(turnsTilNextStep * ((Game.player.getWillpower() * wilImpact) / (50 * wilImpact)))
     End Function
-
+    Function getNextStep(ByVal stage As Integer) As action
+        Return Nothing
+    End Function
     Public Overrides Function ToString() As String
         Return currStep & "#" & numSteps & "#" & turnsTilNextStep & "#" & wilImpact & "#" & canBeStopped
     End Function
