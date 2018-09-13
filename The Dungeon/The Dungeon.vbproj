@@ -124,7 +124,8 @@
     <Compile Include="Entities\Player\Spells\turnToBlade.vb" />
     <Compile Include="Entities\Player\Spells\turnToCupcake.vb" />
     <Compile Include="Entities\Player\Spells\turnToFrog.vb" />
-    <Compile Include="Entities\Player\Transformations\pMorph.vb" />
+    <Compile Include="Entities\Player\Transformations\BimboTF.vb" />
+    <Compile Include="Entities\Player\Transformations\NekoTF.vb" />
     <Compile Include="Entities\Player\Transformations\Transformation.vb" />
     <Compile Include="Entities\preferedForm.vb" />
     <Compile Include="Items\Accesories\Accessory.vb" />

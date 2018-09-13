@@ -1,5 +1,5 @@
 ﻿'The Transformation class will be used to handle a (sequence of) tranformation(s) of the player from one "permenant"
-'state to another, as well as a template for the Polymorph class which will handle temporary changes
+'state to another.
 
 Public Class Transformation
     Implements Updatable
@@ -9,33 +9,42 @@ Public Class Transformation
     Protected nextStep As Action
     Protected wilImpact As Double
     Protected canBeStopped As Boolean
-    Protected revertText As Boolean
+    Protected tfName As String
+    Protected tfDone As Boolean
 
+    'constuctors
     Sub New(n As Integer, tts As Integer, wi As Double, cbs As Boolean)
         currStep = 0
         numSteps = n
         turnsTilNextStep = tts
         wilImpact = wi
         canBeStopped = cbs
+        tfDone = False
     End Sub
-    Sub New(cs As Integer, n As Integer, tts As Integer, wi As Double, cbs As Boolean)
+    Sub New(cs As Integer, n As Integer, tts As Integer, wi As Double, cbs As Boolean, tfd As Boolean)
         currStep = cs
         numSteps = n
         turnsTilNextStep = tts
         wilImpact = wi
         canBeStopped = cbs
+        tfDone = tfd
     End Sub
+    Shared Function newTF(s() As String) As Transformation
+        Select Case s(5)
+            Case "Bimbo"
+                Return New BimboTF(CInt(s(0)), CInt(s(1)), CInt(s(2)), CDbl(s(3)), CBool(s(4)), CBool(s(6)))
+            Case Else
+                Return Nothing
+        End Select
+    End Function
 
+    'updateable implementation
     Sub update() Implements Updatable.update
-        If nextStep Is Nothing Then
-            stopTF()
-            Exit Sub
-        End If
         If turnsTilNextStep = 0 Then
             nextStep()
             currStep += 1
             setWaitTime(currStep)
-
+            nextStep = getNextStep(currStep)
             If currStep > numSteps Then stopTF()
         ElseIf turnsTilNextStep = -1 Then
             Dim i = 1
@@ -43,8 +52,10 @@ Public Class Transformation
             turnsTilNextStep -= 1
         End If
     End Sub
-    Overridable Sub stopTF()
 
+    'sequential tf methods
+    Overridable Sub stopTF()
+        tfDone = True
     End Sub
     Overridable Sub setWaitTime(ByVal stage As Integer)
         turnsTilNextStep = 1
@@ -53,17 +64,32 @@ Public Class Transformation
     Function generatWILResistance()
         Return CInt(turnsTilNextStep * ((Game.player.getWillpower() * wilImpact) / (50 * wilImpact)))
     End Function
-    Function getNextStep(ByVal stage As Integer) As action
-        Return Nothing
-    End Function
+
+    'polymorph tf methods
+    Overridable Sub revert()
+
+    End Sub
+
+    'toString for save / load
     Public Overrides Function ToString() As String
-        Return currStep & "#" & numSteps & "#" & turnsTilNextStep & "#" & wilImpact & "#" & canBeStopped
+        Return currStep & "$" & numSteps & "$" & turnsTilNextStep & "$" & _
+            wilImpact & "$" & canBeStopped & "$" & tfName & "$" & tfDone
     End Function
 
+    'accessor methods
     Public Function getcanBeStopped() As Boolean
         Return canBeStopped
     End Function
     Public Function getturnsTilNextStep() As Integer
         Return turnsTilNextStep
+    End Function
+    Public Function getTFDone() As Boolean
+        Return tfDone
+    End Function
+    Public Function getNextStep() As Action
+        Return nextStep
+    End Function
+    Overridable Function getNextStep(ByVal stage As Integer) As action
+        Return Nothing
     End Function
 End Class

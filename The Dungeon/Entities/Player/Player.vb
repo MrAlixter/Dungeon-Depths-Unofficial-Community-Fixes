@@ -61,8 +61,9 @@
     Public isAttacking = False
 
     Public forcedPath() As Point = Nothing
-
     Public prefForm As preferedForm
+
+    Public ongoingTFs As List(Of Transformation) = New List(Of Transformation)
 
     'New takes no parameters and sets all of the inst. variables to temp variables.
     'Variables will be set at the start of a game
@@ -143,33 +144,39 @@
             inventory.Item(i).add(playArray(12 + i))
         Next
 
-        If Game.version >= 0.6 Then
-            Dim y = 0
-            Dim tfp As List(Of Point) = New List(Of Point)
-            If Not playArray(14 + x).Equals("N/a") Then
-                y = CInt(playArray(13 + x)) * 2
-                For i = 0 To y Step 2
-                    tfp.Add(New Point(CInt(playArray(14 + x + i)), playArray(15 + x + i)))
-                Next
-                forcedPath = tfp.ToArray
-            Else
-                tfp = Nothing
-            End If
 
-            Dim currentIndex = 15 + x + y
-            If Not playArray(14 + x).Equals("N/a") Then currentIndex += 1
-
-            Dim stuff() As String = playArray(currentIndex).Split("$")
-
-            If Not stuff(0).Equals("N/a") Then
-                prefForm = New preferedForm(Color.FromArgb(CInt(stuff(0)), CInt(stuff(1)), CInt(stuff(2)), CInt(stuff(3))), _
-                                            Color.FromArgb(CInt(stuff(4)), CInt(stuff(5)), CInt(stuff(6)), CInt(stuff(7))), _
-                                            CBool(stuff(8)), CBool(stuff(9)), CInt(stuff(10)), CBool(stuff(11)), CInt(stuff(12)))
-                inventory(69).setFormerLife(stuff(13), New Tuple(Of Integer, Boolean)(CInt(stuff(14)), stuff(15)))
-            Else
-                inventory(69).setFormerLife(stuff(1), New Tuple(Of Integer, Boolean)(CInt(stuff(2)), stuff(3)))
-            End If
+        Dim y = 0
+        Dim tfp As List(Of Point) = New List(Of Point)
+        If Not playArray(14 + x).Equals("N/a") Then
+            y = CInt(playArray(13 + x)) * 2
+            For i = 0 To y Step 2
+                tfp.Add(New Point(CInt(playArray(14 + x + i)), playArray(15 + x + i)))
+            Next
+            forcedPath = tfp.ToArray
+        Else
+            tfp = Nothing
         End If
+
+        Dim currentIndex = 15 + x + y
+        If Not playArray(14 + x).Equals("N/a") Then currentIndex += 1
+
+        Dim stuff() As String = playArray(currentIndex).Split("$")
+
+        If Not stuff(0).Equals("N/a") Then
+            prefForm = New preferedForm(Color.FromArgb(CInt(stuff(0)), CInt(stuff(1)), CInt(stuff(2)), CInt(stuff(3))), _
+                                        Color.FromArgb(CInt(stuff(4)), CInt(stuff(5)), CInt(stuff(6)), CInt(stuff(7))), _
+                                        CBool(stuff(8)), CBool(stuff(9)), CInt(stuff(10)), CBool(stuff(11)), CInt(stuff(12)))
+            inventory(69).setFormerLife(stuff(13), New Tuple(Of Integer, Boolean)(CInt(stuff(14)), stuff(15)))
+        Else
+            inventory(69).setFormerLife(stuff(1), New Tuple(Of Integer, Boolean)(CInt(stuff(2)), stuff(3)))
+        End If
+
+        currentIndex += 1
+        'MsgBox(UBound(playArray) & "/" & currentIndex)
+        For i = 0 To CInt(playArray(currentIndex))
+            Dim tf As Transformation = Transformation.newTF(playArray(currentIndex + 1 + i).Split("$"))
+            ongoingTFs.Add(tf)
+        Next
 
         currState.load(Me)
         solFlag = True
@@ -741,6 +748,18 @@
         End If
         If health > 1 Then health = 1
         If mana > getmaxMana() Then mana = getmaxMana()
+
+        For i = 0 To ongoingTFs.Count - 1
+            If Not ongoingTFs(i) Is Nothing Then
+                If ongoingTFs(i).getTFDone Then
+                    ongoingTFs.RemoveAt(i)
+                Else
+                    ongoingTFs(i).update()
+                End If
+            Else
+                ongoingTFs.RemoveAt(i)
+            End If
+        Next
         'If inventory(8).count > 0 Then
         '    inventory(8).count = 0
         '    Game.pushLblEvent("The chicken suit phases out of reality")
@@ -943,48 +962,7 @@
                 If health <= 0 Then setTarg(New Monster(10))
             End If
         End If
-        'bimbo tf
-        If perks("bimbotf") > -1 Then
-            perks("chickentf") = -1
-            If perks("polymorphed") > -1 Then perks("bimbotf") = -1
-            If Not pClass.name.Equals("Bimbo") Then
-                If perks("bimbotf") < 19 And perks("bimbotf") Mod 10 = 0 Then
-                    haircolor = Game.cShift(haircolor, Polymorph.bimboyellow, 25)
-                    createP()
-                End If
-                Select Case perks("bimbotf")
-                    Case 0
-                        If Not pClass.name.Equals("Magic Girl") And Not perks("polymorphed") > -1 Then
-                            pState.save(Me)
-                        ElseIf pClass.name.Equals("Magic Girl") Then
-                            Polymorph.transform(Me, "bimbo", 2)
-                        End If
-                        lust += 10
-                        'tfstage1
-                        iArrInd(11) = New Tuple(Of Integer, Boolean)(0, sexBool)
-                    Case 9
-                        lust += 10
-                        'tfStage2
-                        If Not iArrInd(2).Item2 Or Not iArrInd(1).Item2 Or Not sexBool Or Not iArrInd(4).Item2 Then
-                            MtF()
-                        End If
-                    Case 19
-                        'tfStage3
-                        Polymorph.transform(Me, "bimbo", 0)
-                    Case 25
-                        Polymorph.transform(Me, "bimbo", 1)
-                        perks("bimbotf") -= 1
-                End Select
-                perks("bimbotf") += 1
-                Dim outputln1 As String = "Chewing the gum causes a dizzy calm wash to over you."
-                If perks("bimbotf") = 1 And Not pClass.name.Equals("Magic Girl") Then Game.pushLblEvent(outputln1)
-            Else
-                Dim outputln1 As String = "Chewing the gum make your head feel warm and fuzzy and stuff. You like, totally, love this gum!"
-                Game.pushLblEvent(outputln1)
-                Game.lblNameTitle.ForeColor = Color.HotPink
-                perks("bimbotf") = -1
-            End If
-        End If
+        
         'clothing curse
         If perks("slutcurse") > -1 Then
             Equipment.clothingCurse1()
@@ -2002,6 +1980,10 @@
         End If
         output += inventory(69).ToString
 
+        output += "*" & ongoingTFs.Count - 1 & "*"
+        For i = 0 To ongoingTFs.Count - 1
+            output += ongoingTFs(i).ToString
+        Next
         Return output
     End Function
     Public Function toGhost() As String
@@ -2170,8 +2152,7 @@
                     Else
                         out += "You have a a masculine body, with " & bAdj & " breasts, though you have female genetalia." & vbCrLf & " " & vbCrLf
                     End If
-
-                    out += "Your hips have womanly curves without being overly wide.  Overall, you have typical legs and feet for a humanoid woman."
+                    out += "Your hips have womanly curves without being overly wide.  Overall, you have typical legs and feet for a humanoid woman." & vbCrLf & " " & vbCrLf
                 Else
                     If iArrInd(2).Item2 Then
                         out += "You have a feminine body, with " & bAdj & " breasts, though you have male genetalia." & vbCrLf & " " & vbCrLf
@@ -2185,6 +2166,8 @@
         If perks("hunger") > -1 Then out += "You haven't eaten anything in a while and are starving." & vbCrLf & " " & vbCrLf
         If perks("slutcurse") > -1 Then out += "You choose to dress very provocatively, showing as much skin as possible due to a curse."
         If perks("polymorphed") > -1 Then out += "You are under the effects of a temporary polymorph, and will be for " & perks("polymorphed") & " more turns." & vbCrLf & " " & vbCrLf
+
+        If ongoingTFs.Count > 0 Then out += "You are under the effects of " & ongoingTFs.Count & " transformations"
         Return out
     End Function
 End Class

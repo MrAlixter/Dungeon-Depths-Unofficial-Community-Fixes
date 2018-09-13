@@ -2,7 +2,6 @@
     Public Shared porm As Boolean = True
     Public target As Monster
     Shared fList() As String = {"Succubus", "Slime", "Goddess"}
-    Public bimboyellow As Color = Color.FromArgb(255, 255, 230, 160)
     Public tfForm As Boolean = False
     Private Sub Form4_Load(sender As Object, e As EventArgs) Handles MyBase.Load
 
@@ -395,9 +394,7 @@
         If canBeTFed(p) Then
             p.pState.save(p)
         End If
-        If form = "bimbo" Then
-            bimboTF(p, ind)
-        ElseIf form = "neko" Then
+        If form = "neko" Then
             nekoTF(p, ind)
         ElseIf form = "targax" Then
             targaxTF(p, ind)
@@ -669,112 +666,6 @@
         p.createP()
         Game.lblEvent.Visible = False
         p.canMoveFlag = True
-    End Sub
-    Sub bimboTF(ByRef p As Player, ByVal ind As Integer)
-        Select Case ind
-            Case 0
-                'If p.title = "Chicken" Then
-                '    p.haircolor = Color.FromArgb(255, 230, 0, 0)
-                '    p.iArrInd(1) = New Tuple(Of Integer, Boolean)(12, True)
-                '    p.iArrInd(5) = New Tuple(Of Integer, Boolean)(12, True)
-                '    p.iArrInd(15) = New Tuple(Of Integer, Boolean)(13, True)
-                '    Form1.pushLblEvent("With a poof of smoke, you are no longer a chicken! Something seems off though . . . ")
-                If Name = "Targax" Then
-                    p.haircolor = Color.FromArgb(255, 255, 0, 147)
-                    p.iArrInd(1) = New Tuple(Of Integer, Boolean)(9, True)
-                    p.iArrInd(5) = New Tuple(Of Integer, Boolean)(9, True)
-                    p.iArrInd(15) = New Tuple(Of Integer, Boolean)(13, True)
-                Else
-                    p.haircolor = bimboyellow
-                    p.iArrInd(1) = New Tuple(Of Integer, Boolean)(1, True)
-                    p.iArrInd(5) = New Tuple(Of Integer, Boolean)(5, True)
-                    p.iArrInd(15) = New Tuple(Of Integer, Boolean)(6, True)
-                End If
-
-                If p.breastSize = 1 Then
-                    p.iArrInd(2) = New Tuple(Of Integer, Boolean)(6, True)
-                    If p.equippedArmor.getName.ToString() = "Common_Clothes" Then
-                        p.iArrInd(3) = New Tuple(Of Integer, Boolean)(5, True)
-                    End If
-                Else
-                    p.be()
-                    Equipment.portraitUDate()
-                End If
-                If p.pClass.name.Equals("Magic Girl") Then
-                    p.iArrInd(16) = New Tuple(Of Integer, Boolean)(CharacterGenerator.fHat.Count - 3, True)
-                    p.perks("bimbotf") = 24
-                End If
-                If p.iArrInd(6).Item1 = 8 And p.iArrInd(6).Item2 Then p.iArrInd(6) = New Tuple(Of Integer, Boolean)(0, True)
-                giveRNDFFName(p)
-                p.iArrInd(8) = New Tuple(Of Integer, Boolean)(5, True)
-                p.iArrInd(9) = New Tuple(Of Integer, Boolean)(7, True)
-                p.iArrInd(13) = New Tuple(Of Integer, Boolean)(0, True)
-                If Not p.pClass.name.Equals("Magic Girl") Then p.iArrInd(16) = New Tuple(Of Integer, Boolean)(0, True)
-                p.lust += 10
-            Case 1
-                Dim out As String = ""
-                If Not p.sexBool Then
-                    out += "In your haze, you look down to see breasts blossoming from your chest. You giggle, all traces of intelect vanishing as your body becomes more curvy and feminine. As your dainty hands move down your body, you discover that you no longer have a cock and balls, and insted have a tight moist cunt.  Your hair lengthens, becoming a platinum blonde, and your clothes change to match your new figure."
-                    p.sex = "Female"
-                    p.sexBool = True
-                ElseIf p.sexBool And p.breastSize < 3 Then
-                    out += "In your haze, you look down at your tits. You, like, never noticed how round and big they had got. You giggle, all traces of intelect vanishing as your body becomes more curvy and feminine. Your hair lengthens, becoming a platinum blonde, and your clothes change to match your new figure."
-                ElseIf p.sexBool And p.breastSize >= 3 Then
-                    out += "In your haze, you look down to see your clothes have become tight and pink. You giggle, all traces of intelect vanishing as your body becomes more curvy and feminine. Your hair lengthens, becoming a platinum blonde, and your clothes finish changing to match your new figure."
-                End If
-                If p.perks("bimbotf") = 25 Then Game.pushLblEvent(out)
-                p.pClass = p.classes("Bimbo")
-                p.lust += 10
-                'final tf Stage
-                If Name.Equals("Targax") Then p.haircolor = Color.FromArgb(255, 20, 20, 20) Else p.haircolor = Color.FromArgb(255, 245, 231, 184)
-                If p.breastSize < 3 And Not p.pClass.name.Equals("Magic Girl") Then
-                    p.iArrInd(2) = New Tuple(Of Integer, Boolean)(7, True)
-                Else
-                    p.be()
-                    Equipment.portraitUDate()
-                End If
-
-                If Not p.equippedArmor.getName.Equals("Naked") And Not p.pClass.name.Equals("Magic Girl") Then
-                    Dim eAName As String = p.equippedArmor.getName.ToString
-                    Equipment.clothingCurse1()
-                    If eAName = p.equippedArmor.getName Then
-                        Equipment.clothesChange("Skimpy_Clothes")
-                    End If
-                End If
-                If Name <> "Targax" Then
-                    p.haircolor = Color.FromArgb(255, 250, 250, 205)
-                    p.iArrInd(1) = New Tuple(Of Integer, Boolean)(6, True)
-                    p.iArrInd(5) = New Tuple(Of Integer, Boolean)(6, True)
-                    p.iArrInd(9) = New Tuple(Of Integer, Boolean)(8, True)
-                    p.iArrInd(15) = New Tuple(Of Integer, Boolean)(7, True)
-                Else
-                    p.iArrInd(9) = New Tuple(Of Integer, Boolean)(16, True)
-                End If
-                p.iArrInd(8) = New Tuple(Of Integer, Boolean)(6, True)
-                If Game.floor < 6 Then p.pImage = Game.picPlayerB.BackgroundImage Else p.pImage = Game.picBimbof.BackgroundImage
-                p.TextColor = Color.HotPink
-                p.perks("bimbotf") = -1
-            Case 2
-                p.iArrInd(16) = New Tuple(Of Integer, Boolean)(0, True)
-                p.iArrInd(2) = New Tuple(Of Integer, Boolean)(7, True)
-                p.haircolor = Color.FromArgb(255, 255, 250, 205)
-                p.iArrInd(1) = New Tuple(Of Integer, Boolean)(10, True)
-                p.iArrInd(5) = New Tuple(Of Integer, Boolean)(10, True)
-                p.iArrInd(15) = New Tuple(Of Integer, Boolean)(7, True)
-                p.iArrInd(6) = New Tuple(Of Integer, Boolean)(0, True)
-                p.iArrInd(8) = New Tuple(Of Integer, Boolean)(6, True)
-                p.iArrInd(9) = New Tuple(Of Integer, Boolean)(8, True)
-                p.iArrInd(13) = New Tuple(Of Integer, Boolean)(0, True)
-                Equipment.clothesChange("Magic_Girl_Outfit")
-                p.breastSize = 3
-                Game.pushLblEvent("You immediatly feel funny, the increased magic in your system reacting swiftly with the gum.  In your haze, you look down to see your clothes have become tight and pink. You giggle, all traces of intelect vanishing as your body becomes more curvy and feminine. Your hair lengthens, becoming a platinum blonde, and your clothes finish changing to match your new figure.")
-                p.pClass = p.classes("Bimbo")
-                p.lust += 10
-                If Game.floor < 6 Then p.pImage = Game.picPlayerB.BackgroundImage Else p.pImage = Game.picBimbof.BackgroundImage
-                p.TextColor = Color.HotPink
-                p.perks("bimbotf") = -1
-                Equipment.portraitUDate()
-        End Select
     End Sub
     Sub nekoTF(ByRef p As Player, ByVal ind As Integer)
         If p.currTarget Is Nothing Then
