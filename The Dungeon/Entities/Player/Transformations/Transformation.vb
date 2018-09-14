@@ -14,6 +14,10 @@ Public Class Transformation
 
     'constuctors
     Sub New(n As Integer, tts As Integer, wi As Double, cbs As Boolean)
+        Dim p = Game.player
+        If canBeTFed(p) Then
+            p.pState.save(p)
+        End If
         currStep = 0
         numSteps = n
         turnsTilNextStep = tts
@@ -29,6 +33,8 @@ Public Class Transformation
         canBeStopped = cbs
         tfDone = tfd
     End Sub
+
+    'shared methods
     Shared Function newTF(s() As String) As Transformation
         Select Case s(5)
             Case "Bimbo"
@@ -36,6 +42,10 @@ Public Class Transformation
             Case Else
                 Return Nothing
         End Select
+    End Function
+    Shared Function canBeTFed(ByRef p As Player) As Boolean
+        If Not p.perks("polymorphed") > -1 And Not Game.picPortrait.BackgroundImage.Equals(Game.picmgp1.BackgroundImage) And Not p.pClass.name.Equals("Magic Girl") And Not p.pClass.name.Equals("Unconscious") And Not p.pForm.name.Equals("Blowup Doll") Then Return True
+        Return False
     End Function
 
     'updateable implementation

@@ -69,7 +69,7 @@
             If r = 1 And Game.player.perks("nekocurse") = -1 Then
                 Game.lstLog.Items.Add((getName() & " casts a curse on you!"))
                 Game.pushLblCombatEvent((getName() & " casts a curse on you!"))
-                Game.player.perks("nekocurse") = 0
+                Game.player.ongoingTFs.Add(New NekoTF(7, 1, 0.3, True))
                 'attack = 0
             ElseIf Game.player.perks("nekocurse") > -1 And health < 45 Then
                 Game.lstLog.Items.Add((getName() & " heals herself!  +35 health!"))

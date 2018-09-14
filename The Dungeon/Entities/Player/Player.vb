@@ -608,6 +608,10 @@
         currState.save(Me)
         pState.save(Me)
 
+        For i = 0 To ongoingTFs.Count - 1
+            ongoingTFs.RemoveAt(i)
+        Next
+
         If Game.cboxMG.SelectedItem = "Heartblast Starcannon" Then
             Game.cboxMG.Items.Insert(0, "-- Select --")
             Game.cboxMG.SelectedIndex = 0
@@ -747,19 +751,26 @@
             hunger += 1
         End If
         If health > 1 Then health = 1
+        If will < 0 Then will = 0
         If mana > getmaxMana() Then mana = getmaxMana()
 
+        Dim pUpdateFlag As Boolean = False
         For i = 0 To ongoingTFs.Count - 1
             If Not ongoingTFs(i) Is Nothing Then
                 If ongoingTFs(i).getTFDone Then
                     ongoingTFs.RemoveAt(i)
                 Else
+                    Dim c = ongoingTFs(i).getturnsTilNextStep
+                    If c = 0 Then pUpdateFlag = True
                     ongoingTFs(i).update()
                 End If
             Else
                 ongoingTFs.RemoveAt(i)
             End If
         Next
+
+        If pUpdateFlag Then Equipment.portraitUDate()
+
         'If inventory(8).count > 0 Then
         '    inventory(8).count = 0
         '    Game.pushLblEvent("The chicken suit phases out of reality")
@@ -1006,53 +1017,53 @@
             End If
         End If
         'marissa's tf
-        If perks("nekocurse") > -1 Then
-            If currTarget Is Nothing Then
-                perks("nekocurse") = -1
-            ElseIf currTarget.dead Then
-                perks("nekocurse") = -1
-            End If
-            If Not perks("polymorphed") > -1 Then
-                If perks("nekocurse") < Int((will * 1.2) * 1.3) Then
-                    Select Case perks("nekocurse")
-                        Case Int((will * 1.2) * 0.1)
-                            Polymorph.transform(Me, "neko", 0)
-                        Case Int((will * 1.2) * 0.3)
-                            Polymorph.transform(Me, "neko", 1)
-                        Case Int((will * 1.2) * 0.5)
-                            If Not pClass.name.Equals("Magic Girl") Then
-                                Polymorph.transform(Me, "neko", 2)
-                            Else
-                                haircolor = Color.FromArgb(255, 20, 20, 20)
-                                Game.pushLblEvent("Your hair becomes a shiny black!")
-                                lust += 5
-                            End If
-                        Case Int((will * 1.2) * 0.7)
-                            Polymorph.transform(Me, "neko", 3)
-                        Case Int((will * 1.2) * 0.9)
-                            Polymorph.transform(Me, "neko", 4)
-                        Case Int((will * 1.2) * 1.1)
-                            If pClass.name.Equals("Magic Girl") Then
-                                Polymorph.transform(Me, "neko", 6)
-                            Else
-                                Polymorph.transform(Me, "neko", 5)
-                            End If
-                            inventory.Item(12).addOne()
-                            lust += 5
-                            will -= 2
-                            Equipment.clothesChange("Cat_Lingerie")
-                            Equipment.portraitUDate()
-                        Case Int((will * 1.2) * 1.3)
-                            will = 0
-                            Polymorph.transform(Me, "neko", 7)
-                    End Select
-                    perks("nekocurse") += 1
-                Else
-                    will = 0
-                    Polymorph.transform(Me, "neko", 7)
-                End If
-            End If
-        End If
+        'If perks("nekocurse") > -1 Then
+        '    If currTarget Is Nothing Then
+        '        perks("nekocurse") = -1
+        '    ElseIf currTarget.dead Then
+        '        perks("nekocurse") = -1
+        '    End If
+        '    If Not perks("polymorphed") > -1 Then
+        '        If perks("nekocurse") < Int((will * 1.2) * 1.3) Then
+        '            Select Case perks("nekocurse")
+        '                Case Int((will * 1.2) * 0.1)
+        '                    Polymorph.transform(Me, "neko", 0)
+        '                Case Int((will * 1.2) * 0.3)
+        '                    Polymorph.transform(Me, "neko", 1)
+        '                Case Int((will * 1.2) * 0.5)
+        '                    If Not pClass.name.Equals("Magic Girl") Then
+        '                        Polymorph.transform(Me, "neko", 2)
+        '                    Else
+        '                        haircolor = Color.FromArgb(255, 20, 20, 20)
+        '                        Game.pushLblEvent("Your hair becomes a shiny black!")
+        '                        lust += 5
+        '                    End If
+        '                Case Int((will * 1.2) * 0.7)
+        '                    Polymorph.transform(Me, "neko", 3)
+        '                Case Int((will * 1.2) * 0.9)
+        '                    Polymorph.transform(Me, "neko", 4)
+        '                Case Int((will * 1.2) * 1.1)
+        '                    If pClass.name.Equals("Magic Girl") Then
+        '                        Polymorph.transform(Me, "neko", 6)
+        '                    Else
+        '                        Polymorph.transform(Me, "neko", 5)
+        '                    End If
+        '                    inventory.Item(12).addOne()
+        '                    lust += 5
+        '                    will -= 2
+        '                    Equipment.clothesChange("Cat_Lingerie")
+        '                    Equipment.portraitUDate()
+        '                Case Int((will * 1.2) * 1.3)
+        '                    will = 0
+        '                    Polymorph.transform(Me, "neko", 7)
+        '            End Select
+        '            perks("nekocurse") += 1
+        '        Else
+        '            will = 0
+        '            Polymorph.transform(Me, "neko", 7)
+        '        End If
+        '    End If
+        'End If
         'targax sword tf
         If perks("swordpossess") > -1 Then
             If name <> "Targax" Then
@@ -1193,7 +1204,7 @@
 
         'cowbell tf
         If perks("cowbell") > -1 Then
-            If Polymorph.canBeTFed(Me) Then
+            If transformation.canbeTFed(Me) Then
                 Select Case perks("cowbell")
                     Case 0
                         If Game.turn Mod 20 = 5 Then
@@ -1459,7 +1470,7 @@
         Game.lstLog.TopIndex = Game.lstLog.Items.Count - 1
     End Sub
     Public Sub be()
-        If Not Polymorph.canBeTFed(Me) Then
+        If Not transformation.canbeTFed(Me) Then
             Game.lstLog.Items.Add("Your form prevents you from being altered.")
             Exit Sub
         End If
@@ -1492,7 +1503,7 @@
         Game.lstLog.TopIndex = Game.lstLog.Items.Count - 1
     End Sub
     Friend Sub bs()
-        If Not Polymorph.canBeTFed(Me) Then
+        If Not transformation.canbeTFed(Me) Then
             Game.lstLog.Items.Add("Your form prevents you from being altered.")
             Exit Sub
         End If

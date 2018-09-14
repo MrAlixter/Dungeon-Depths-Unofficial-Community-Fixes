@@ -45,7 +45,6 @@
             End If
         Else
             p.be()
-            Equipment.portraitUDate()
         End If
         If p.pClass.name.Equals("Magic Girl") Then
             p.iArrInd(16) = New Tuple(Of Integer, Boolean)(CharacterGenerator.fHat.Count - 3, True)
@@ -75,7 +74,6 @@
             p.iArrInd(2) = New Tuple(Of Integer, Boolean)(7, True)
         Else
             p.be()
-            Equipment.portraitUDate()
         End If
 
         If Not p.equippedArmor.getName.Equals("Naked") And Not p.pClass.name.Equals("Magic Girl") Then
@@ -97,7 +95,6 @@
         p.iArrInd(8) = New Tuple(Of Integer, Boolean)(6, True)
         If Game.floor < 6 Then p.pImage = Game.picPlayerB.BackgroundImage Else p.pImage = Game.picBimbof.BackgroundImage
         p.TextColor = Color.HotPink
-        Equipment.portraitUDate()
         p.perks("bimbotf") = -1
         stopTF()
     End Sub
@@ -121,7 +118,6 @@
         If Game.floor < 6 Then p.pImage = Game.picPlayerB.BackgroundImage Else p.pImage = Game.picBimbof.BackgroundImage
         p.TextColor = Color.HotPink
         p.perks("bimbotf") = -1
-        Equipment.portraitUDate()
         stopTF()
     End Sub
     Public Overrides Sub stopTF()
@@ -136,6 +132,10 @@
         If Game.player.pClass.name = "Magic Girl" Then
             Return AddressOf step2alt
         End If
+        If Game.player.perks("bimbotf") = -1 Then
+            Return AddressOf stopTF
+        End If
+
         Select Case stage
             Case 0
                 Return AddressOf step1

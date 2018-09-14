@@ -58,7 +58,7 @@
                 Game.player.inventory(54).add(1)
                 Equipment.clothesChange("Ropes")
                 Equipment.portraitUDate()
-                If Polymorph.canBeTFed(Game.player) Then
+                If transformation.canbeTFed(Game.player) Then
                     Game.player.pState.save(Game.player)
                 End If
                 Game.player.UIupdate()
@@ -75,7 +75,7 @@
                 End If
 
                 Game.player.skincolor = Color.FromArgb(Game.player.skincolor.A, r, g, b)
-                If Polymorph.canBeTFed(Game.player) Then
+                If transformation.canbeTFed(Game.player) Then
                     Game.player.pState.save(Game.player)
                 End If
                 Game.player.petrify(rubyTF)

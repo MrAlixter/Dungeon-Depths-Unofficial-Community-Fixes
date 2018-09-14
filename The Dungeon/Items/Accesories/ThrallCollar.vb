@@ -20,7 +20,7 @@
         Game.player.perks("thrall") = 0
         If Not Game.player.pClass.name.Equals("Thrall") Then formerClass = Game.player.pClass.name
         formerEyeType = Game.player.iArrInd(9)
-        If Polymorph.canBeTFed(Game.player) Then Game.player.pState.save(Game.player)
+        If transformation.canbeTFed(Game.player) Then Game.player.pState.save(Game.player)
         Game.player.pClass = Game.player.classes("Thrall")
         If Game.player.sexBool Then
             Game.player.iArrInd(9) = New Tuple(Of Integer, Boolean)(19, True)
@@ -36,7 +36,7 @@
         Game.player.perks("thrall") = 0
         formerClass = Game.player.pClass.name
         formerEyeType = Game.player.iArrInd(9)
-        If Polymorph.canBeTFed(Game.player) Then Game.player.pState.save(Game.player)
+        If transformation.canbeTFed(Game.player) Then Game.player.pState.save(Game.player)
         Game.player.pClass = Game.player.classes("Thrall")
         If Game.player.sexBool Then
             Game.player.iArrInd(9) = New Tuple(Of Integer, Boolean)(19, True)

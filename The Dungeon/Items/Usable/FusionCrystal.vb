@@ -24,7 +24,7 @@
             End If
             Dim save = Game.getPlayerFromFile("s" & i & ".ave")
             Dim p2 As Player = save.Item1
-            If save.Item2 <> Game.version Or p2.perks("polymorphed") > -1 Or Not Polymorph.canBeTFed(Game.player) Xor p2.pClass.name.Equals("Magic Girl") Then
+            If save.Item2 <> Game.version Or p2.perks("polymorphed") > -1 Or Not transformation.canbeTFed(Game.player) Xor p2.pClass.name.Equals("Magic Girl") Then
                 Game.pushLblEvent("After talking it over, " & Game.player.name & " and " & p2.name & " decide that they are incompatable, and not to fuse.")
                 Exit Sub
             End If

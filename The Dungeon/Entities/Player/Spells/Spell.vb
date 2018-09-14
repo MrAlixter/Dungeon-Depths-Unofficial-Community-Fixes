@@ -155,9 +155,9 @@
             spell = New IcicleSpear(c, t)
         ElseIf s.Equals("Heartblast Starcannon") Then
             spell = New HBSC(c, t)
-        ElseIf s.Equals("Self Polymorph") And (Polymorph.canBeTFed(c) Or c.perks("polymorphed") > -1) Then
+        ElseIf s.Equals("Self Polymorph") And (transformation.canbeTFed(c) Or c.perks("polymorphed") > -1) Then
             spell = New SelfPolymorph(c, t)
-        ElseIf s.Equals("Self Polymorph") And Not Polymorph.canBeTFed(c) Then
+        ElseIf s.Equals("Self Polymorph") And Not transformation.canbeTFed(c) Then
             Game.lstLog.Items.Add("You can't polymorph yourself!")
             Game.pushLblCombatEvent("You can't polymorph yourself!")
             Exit Sub
