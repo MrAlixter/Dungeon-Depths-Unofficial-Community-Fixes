@@ -662,7 +662,7 @@
 
         If health > 1 Then health = 1
         If mana > maxMana + mBuff Then mana = maxMana + mBuff
-        Game.pushLblEvent("You return to your former form!")
+        If Game.lblEvent.Visible = False Then Game.pushLblEvent("You return to your former form!")
         Game.pImage = pImage
         Game.lblEvent.ForeColor = TextColor
         Game.lblNameTitle.ForeColor = TextColor
@@ -741,7 +741,11 @@
 
     'updatable functions
     Sub update() Implements Updatable.update
+        '|COMBAT|
+        'attack if the player 1) has a target & 2) is attacking
         If Not (currTarget Is Nothing) And isAttacking Then attackCMD(currTarget)
+
+        '|PLAYER STAT UPKEEP|
         bsizeroute()
         If hunger >= 100 Then
             perks("hunger") = 0
@@ -754,7 +758,11 @@
         If will < 0 Then will = 0
         If mana > getmaxMana() Then mana = getmaxMana()
 
+        '|PERK AND TRANSFORMATION UPDATES|
         Dim pUpdateFlag As Boolean = False
+        'perks
+        pUpdateFlag = perkUpdate()
+        'transformations
         For i = 0 To ongoingTFs.Count - 1
             If Not ongoingTFs(i) Is Nothing Then
                 If ongoingTFs(i).getTFDone Then
@@ -770,11 +778,6 @@
         Next
 
         If pUpdateFlag Then Equipment.portraitUDate()
-
-        'If inventory(8).count > 0 Then
-        '    inventory(8).count = 0
-        '    Game.pushLblEvent("The chicken suit phases out of reality")
-        'End If
     End Sub
     Sub createInvPerks()
         'create inventory
@@ -962,332 +965,71 @@
         perks.Add("thrall", -1) '14
         perks.Add("cowbell", -1) '15
     End Sub
-    Sub perkUpdate()
+    Function perkUpdate() As Boolean
+        Dim needsToUpdatePortrait = False
+        '|GENERAL EFFECTS|
         'hunger
         If perks("hunger") > -1 And Game.turn Mod 5 = 0 Then
-            If hunger < 100 Then
-                perks("hunger") = -1
-            Else
-                health -= 5 / getmaxHealth()
-                Game.lstLog.Items.Add("Your stomach aches... -5 health!")
-                If health <= 0 Then setTarg(New Monster(10))
-            End If
+            PerkEffects.hungerEffect()
         End If
-        
         'clothing curse
         If perks("slutcurse") > -1 Then
-            Equipment.clothingCurse1()
+            needsToUpdatePortrait = Equipment.clothingCurse1()
         End If
-        'removed chicken tf
-        'If perks("chickentf") > -1 Then
-        '    If perks("chickentf") < 0 Then
-        '        perks("chickentf") = -1
-        '    Else
-        '        perks("chickentf") += 1
-        '        If perks("chickentf") <= 1 Then
-        '            Polymorph.transform(Me, "Chicken")
-        '        ElseIf perks("chickentf") < 10 Then
-        '        Else
-        '            revert2()
-        '            perks("chickentf") = -1
-        '        End If
-        '    End If
-        'ElseIf perks("chickentf") > 0 Then
-        '    perks("chickentf") += 1
-        'End If
-        'slime hair tf
+        'slime hair health regen
         If perks("slimehair") > -1 Then
-            If Not haircolor.A = 180 Then
-                perks("slimehair") = -1
-            Else
-                If health < 1 And Game.turn Mod 4 = 0 Then
-                    health += 25 / getmaxHealth()
-                    Game.lstLog.Items.Add("Your gel body heals some of the damage done to it. +5 health")
-                    If health > 1 Then health = 1
-                End If
-            End If
+            PerkEffects.slimeHairRegen()
         End If
-        'triggers timed polymorphs
-        If perks("polymorphed") > -1 Then
-            If perks("polymorphed") > 0 Then
-                perks("polymorphed") -= 1
-            Else
-                perks("polymorphed") = -1
-                revert2()
-            End If
-        End If
-        'marissa's tf
-        'If perks("nekocurse") > -1 Then
-        '    If currTarget Is Nothing Then
-        '        perks("nekocurse") = -1
-        '    ElseIf currTarget.dead Then
-        '        perks("nekocurse") = -1
-        '    End If
-        '    If Not perks("polymorphed") > -1 Then
-        '        If perks("nekocurse") < Int((will * 1.2) * 1.3) Then
-        '            Select Case perks("nekocurse")
-        '                Case Int((will * 1.2) * 0.1)
-        '                    Polymorph.transform(Me, "neko", 0)
-        '                Case Int((will * 1.2) * 0.3)
-        '                    Polymorph.transform(Me, "neko", 1)
-        '                Case Int((will * 1.2) * 0.5)
-        '                    If Not pClass.name.Equals("Magic Girl") Then
-        '                        Polymorph.transform(Me, "neko", 2)
-        '                    Else
-        '                        haircolor = Color.FromArgb(255, 20, 20, 20)
-        '                        Game.pushLblEvent("Your hair becomes a shiny black!")
-        '                        lust += 5
-        '                    End If
-        '                Case Int((will * 1.2) * 0.7)
-        '                    Polymorph.transform(Me, "neko", 3)
-        '                Case Int((will * 1.2) * 0.9)
-        '                    Polymorph.transform(Me, "neko", 4)
-        '                Case Int((will * 1.2) * 1.1)
-        '                    If pClass.name.Equals("Magic Girl") Then
-        '                        Polymorph.transform(Me, "neko", 6)
-        '                    Else
-        '                        Polymorph.transform(Me, "neko", 5)
-        '                    End If
-        '                    inventory.Item(12).addOne()
-        '                    lust += 5
-        '                    will -= 2
-        '                    Equipment.clothesChange("Cat_Lingerie")
-        '                    Equipment.portraitUDate()
-        '                Case Int((will * 1.2) * 1.3)
-        '                    will = 0
-        '                    Polymorph.transform(Me, "neko", 7)
-        '            End Select
-        '            perks("nekocurse") += 1
-        '        Else
-        '            will = 0
-        '            Polymorph.transform(Me, "neko", 7)
-        '        End If
-        '    End If
-        'End If
-        'targax sword tf
-        If perks("swordpossess") > -1 Then
-            If name <> "Targax" Then
-                If Not equippedWeapon.getName.Equals("Sword_of_the_Brutal") Then
-                    perks("swordpossess") = -1
-                End If
-            Else
-                perks("swordpossess") = -1
-            End If
-        End If
-        'vial of slime hair bonus
+        'vial of slime hair regen
         If perks("vsslimehair") > -1 Then
-            If Not haircolor.A = 180 Then
-                perks("vsslimehair") = -1
-            Else
-                If health < 1 And Game.turn Mod 7 = 0 Then
-                    Dim h As Integer = Int(Rnd() * 15) + 1
-                    health += h / getmaxHealth()
-                    Game.lstLog.Items.Add("The gel portion of your body is able to heal some of your wounds! +" & h & " health")
-                    If health > 1 Then health = 1
-                End If
-            End If
-        End If
-        'berserker rage special
-        If perks("brage") > -1 Then
-            If perks("brage") > 0 Then
-                aBuff = aBuff + (attack / 2)
-                dBuff = dBuff - (defence / 3)
-                perks("brage") -= 1
-            Else
-                aBuff = aBuff - attack * 1.5
-                dBuff = dBuff + (defence) + 1
-                perks("brage") = -1
-                Game.lstLog.Items.Add("Berserker rage has worn off.")
-                Game.lstLog.TopIndex = Game.lstLog.Items.Count - 1
-            End If
-        End If
-        'massive mammaries special
-        If perks("mmammaries") > -1 Then
-            If perks("mmammaries") = 1 Then
-                dBuff = dBuff + (defence * 0.8)
-                perks("mmammaries") -= 1
-            Else
-                dBuff = dBuff - (defence * 0.8)
-                perks("mmammaries") = -1
-                Game.lstLog.Items.Add("Massive mammaries has worn off.")
-                Game.lstLog.TopIndex = Game.lstLog.Items.Count - 1
-            End If
-        End If
-        If perks("ihfury") > -1 Then
-            If perks("ihfury") = 3 Then
-                aBuff = aBuff + (attack * 0.5)
-                dBuff = dBuff + (defence * 0.6)
-                perks("ihfury") -= 1
-            ElseIf perks("ihfury") > 0 Then
-                perks("ihfury") -= 1
-            Else
-                aBuff = aBuff - (attack * 0.5)
-                dBuff = dBuff - (defence * 0.6)
-                perks("ihfury") = -1
-                Game.lstLog.Items.Add("Ironhide Fury has worn off.")
-                Game.lstLog.TopIndex = Game.lstLog.Items.Count - 1
-            End If
+            PerkEffects.vslimeHairRegen()
         End If
         'living armor
         If perks("livearm") > -1 Then
-            If equippedArmor.getName.Equals("Living_Armor") Then
-                If Game.turn Mod 6 = 0 And lust < 100 Then
-                    Dim l As Integer = Int(Rnd() * 15) + 10
-                    lust += l
-                    Game.lstLog.Items.Add("Your living armor raises your lust!")
-                    createP()
-                End If
-            Else
-                perks("livearm") = -1
-            End If
+            needsToUpdatePortrait = PerkEffects.livingArmor()
         End If
         'living lingerie
         If perks("livelinge") > -1 Then
-            If equippedArmor.getName.Equals("Living_Lingerie") Then
-                If Game.turn Mod 4 = 0 And lust < 100 Then
-                    Dim l As Integer = Int(Rnd() * 15) + 10
-                    lust += l
-                    Game.lstLog.Items.Add("Your living lingerie raises your lust!")
-                    createP()
-                End If
-            Else
-                perks("livelinge") = -1
-            End If
+            needsToUpdatePortrait = PerkEffects.livingLingerie()
+        End If
+
+        '|TRANSFORMATION TRIGGERS|
+        'triggers timed polymorphs
+        If perks("polymorphed") > -1 Then
+            PerkEffects.timedPolymorphTrigger()
+        End If
+        'targax sword tf
+        If perks("swordpossess") > -1 Then
+            PerkEffects.targaxSwordTF()
         End If
         'thrall tf
         If perks("thrall") > -1 And Not pForm.name.Equals("Half-Succubus") And forcedPath Is Nothing And Not Game.lblEvent.Visible Then
-            If Game.turn Mod 10 = 0 And Not prefForm.playerMeetsForm(Game.player) And perks("thrall") < 21 Then
-                prefForm.shiftTowards(Game.player)
-                perks("thrall") += 1
-                If perks("thrall") > 20 Then
-                    prefForm.snapShift(Game.player)
-                End If
-            End If
-
-            If prefForm.playerMeetsForm(Game.player) Then
-                If forcedPath Is Nothing And Not Game.combatmode And Not Game.npcmode Then
-                    Dim crystalX As Integer
-                    Dim crystalY As Integer
-                    Do While (Game.mBoard(crystalY, crystalX).Tag <> 1 Or Game.mBoard(crystalY, crystalX).Text <> "")
-                        crystalX = CInt(Int(Rnd() * Game.mBoardWidth))
-                        crystalY = CInt(Int(Rnd() * Game.mBoardHeight))
-                    Loop
-                    Dim crystal = New Point(crystalX, crystalY)
-
-                    Game.mBoard(crystalY, crystalX).Tag = 2
-                    Game.mBoard(crystalY, crystalX).Text = "c"
-
-                    forcedPath = Game.route(Game.player.pos, crystal, New Point(0, 0))
-
-
-                    Dim s As String = ""
-                    If getWillpower() > 10 Then
-                        s = "you mock your instructions under your breath, before stiffly moving towards the crystal." + vbCrLf + "𝘐𝘧 𝘰𝘯𝘭𝘺 𝘐 𝘤𝘰𝘶𝘭𝘥 𝘨𝘦𝘵 𝘵𝘩𝘪𝘴 𝘥𝘢𝘮𝘯 𝘤𝘰𝘭𝘭𝘢𝘳 𝘰𝘧𝘧..."
-                    ElseIf getWillpower() > 7 Then
-                        s = "you reluctantly start off towards the crystal." + vbCrLf + "𝘖𝘩 𝘸𝘦𝘭𝘭, 𝘣𝘦𝘵𝘵𝘦𝘳 𝘮𝘦 𝘵𝘩𝘢𝘯 𝘰𝘯𝘦 𝘰𝘧 𝘵𝘩𝘦𝘪𝘳 𝘰𝘵𝘩𝘦𝘳 𝘪𝘥𝘪𝘰𝘵𝘴."
-                    ElseIf getWillpower() > 4 Then
-                        s = "you jump immediatly into action, happy to help the voice in your head with whatever it may need." + vbCrLf + "𝘐'𝘮 𝘨𝘰𝘪𝘯𝘨 𝘵𝘰 𝘮𝘢𝘬𝘦 𝘲𝘶𝘪𝘤𝘬 𝘸𝘰𝘳𝘬 𝘰𝘧 𝘵𝘩𝘪𝘴 𝘵𝘢𝘴𝘬!"
-                    Else
-                        s = "you mindlessly obey, moving towards the crystal with a vacant grin."
-                    End If
-                    Game.pushLblEvent("As your collar flares to life, you grimace as the location of a large mana crystal becomes clear in your mind." & _
-                                      "'SERVANT!', your controller's voice booms in your head, 'This is another of the crystals!  Recover it immediately!'" & vbCrLf & _
-                                      "As their voice leaves your head, " & s)
-                End If
-            End If
+            PerkEffects.thrallTF()
         End If
         'shift toward prefered form
         If Not prefForm Is Nothing AndAlso (pClass.name = "Thrall" Xor equippedAcce.getName.Equals("Slave_Collar")) AndAlso Not prefForm.playerMeetsForm(Game.player) And Not pForm.name.Equals("Half-Succubus") And Not perks("thrall") = 1 And Not perks("nekocurse") > -1 And Not perks("polymorphed") > -1 And Not perks("bimbotf") > -1 Then
-            prefForm.shiftTowards(Game.player)
-            perks("thrall") = 1
+            PerkEffects.thrallRestore()
         End If
 
-        'cowbell tf
-        If perks("cowbell") > -1 Then
-            If transformation.canbeTFed(Me) Then
-                Select Case perks("cowbell")
-                    Case 0
-                        If Game.turn Mod 20 = 5 Then
-                            If Int(Rnd() * 3) = 0 Then
-                                Polymorph.transform(Me, "Minotaur_F", 0)
-                                perks("cowbell") += 1
-                            End If
-                        End If
-                        Exit Select
-                    Case 1
-                        If Game.turn Mod 20 = 1 Then
-                            If Int(Rnd() * 4) = 0 Then
-                                Polymorph.transform(Me, "Minotaur_F", 1)
-                                perks("cowbell") += 1
-                            End If
-                        End If
-                        Exit Select
-                    Case 2
-                        If Game.turn Mod 20 = 1 Then
-                            If Int(Rnd() * 4) = 0 Then
-                                Polymorph.transform(Me, "Minotaur_F", 2)
-                                perks("cowbell") += 1
-                            End If
-                        End If
-                        Exit Select
-                    Case 3
-                        If Game.turn Mod 20 = 1 Then
-                            If Int(Rnd() * 4) = 0 Then
-                                Polymorph.transform(Me, "Minotaur_F", 3)
-                                perks("cowbell") += 1
-                            End If
-                        End If
-                        Exit Select
-                    Case 4
-                        If Game.turn Mod 20 = 1 Then
-                            If Int(Rnd() * 4) = 0 Then
-                                Polymorph.transform(Me, "Minotaur_F", 4)
-                                perks("cowbell") += 1
-                            End If
-                        End If
-                        Exit Select
-                    Case 5
-                        If Game.turn Mod 20 = 1 Then
-                            If Int(Rnd() * 3) = 0 Then
-                                Polymorph.transform(Me, "Minotaur_F", 5)
-                                perks("cowbell") += 1
-                            End If
-                        End If
-                        Exit Select
-                    Case 6
-                        If Game.turn Mod 20 = 1 Then
-                            If Int(Rnd() * 3) = 0 Then
-                                Polymorph.transform(Me, "Minotaur_F", 6)
-                                perks("cowbell") += 1
-                            End If
-                        End If
-                        Exit Select
-                    Case 7
-                        If Game.turn Mod 20 = 1 Then
-                            If Int(Rnd() * 2) = 0 Then
-                                Polymorph.transform(Me, "Minotaur_F", 7)
-                                perks("cowbell") += 1
-                            End If
-                        End If
-                        Exit Select
-                    Case 8
-                        If Game.turn Mod 20 = 1 Then
-                            If Int(Rnd() * 2) = 0 Then
-                                Polymorph.transform(Me, "Minotaur_F", 8)
-                                perks("cowbell") += 1
-                            End If
-                        End If
-                        Exit Select
-                    Case Else
-                        perks("cowbell") = -1
-                End Select
-            End If
+        '|SPECIAL MOVE HANDLERS|
+        'berserker rage special
+        If perks("brage") > -1 Then
+            PerkEffects.berserkerRage()
         End If
+        'massive mammaries special
+        If perks("mmammaries") > -1 Then
+            PerkEffects.massiveMammaries()
+        End If
+        'ironhide fury
+        If perks("ihfury") > -1 Then
+            PerkEffects.ironhideFury()
+        End If
+
         Game.lstLog.TopIndex = Game.lstLog.Items.Count - 1
         description = CStr(name & " is a " & sex & " " & pForm.name & " " & pClass.name)
-    End Sub
+        Return needsToUpdatePortrait
+    End Function
     Sub UIupdate()
-        perkUpdate()
         If health <= 0 Then
             Die()
             Exit Sub

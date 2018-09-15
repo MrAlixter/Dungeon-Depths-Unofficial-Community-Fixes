@@ -452,11 +452,11 @@
         If p.perks("swordpossess") > -1 Then
             p.perks("swordpossess") += 1
             If p.perks("swordpossess") = 2 Then
-                Polymorph.transform(p, "targax", 0)
+                TargaxTF.step1()
             ElseIf p.perks("swordpossess") = 3 Then
-                Polymorph.transform(p, "targax", 1)
+                TargaxTF.step2()
             ElseIf p.perks("swordpossess") = 4 And name <> "Targax" Then
-                Polymorph.transform(p, "targax", 2)
+                TargaxTF.step3()
             End If
         End If
 

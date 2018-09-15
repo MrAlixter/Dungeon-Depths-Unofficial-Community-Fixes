@@ -106,6 +106,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Entities\Player\pClass.vb" />
+    <Compile Include="Entities\Player\PerkEffects.vb" />
     <Compile Include="Entities\Player\pForm.vb" />
     <Compile Include="Entities\Player\Spells\ArcaneCompass.vb" />
     <Compile Include="Entities\Player\Spells\Dowse.vb" />
@@ -125,7 +126,10 @@
     <Compile Include="Entities\Player\Spells\turnToCupcake.vb" />
     <Compile Include="Entities\Player\Spells\turnToFrog.vb" />
     <Compile Include="Entities\Player\Transformations\BimboTF.vb" />
+    <Compile Include="Entities\Player\Transformations\MinoFTF.vb" />
     <Compile Include="Entities\Player\Transformations\NekoTF.vb" />
+    <Compile Include="Entities\Player\Transformations\TargaxTF.vb" />
+    <Compile Include="Entities\Player\Transformations\ThrallTF.vb" />
     <Compile Include="Entities\Player\Transformations\Transformation.vb" />
     <Compile Include="Entities\preferedForm.vb" />
     <Compile Include="Items\Accesories\Accessory.vb" />

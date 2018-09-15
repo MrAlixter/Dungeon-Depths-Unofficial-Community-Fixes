@@ -39,6 +39,10 @@ Public Class Transformation
         Select Case s(5)
             Case "Bimbo"
                 Return New BimboTF(CInt(s(0)), CInt(s(1)), CInt(s(2)), CDbl(s(3)), CBool(s(4)), CBool(s(6)))
+            Case "NekoTF"
+                Return New NekoTF(CInt(s(0)), CInt(s(1)), CInt(s(2)), CDbl(s(3)), CBool(s(4)), CBool(s(6)))
+            Case "MinoFTF"
+                Return New MinoFTF(CInt(s(0)), CInt(s(1)), CInt(s(2)), CDbl(s(3)), CBool(s(4)), CBool(s(6)))
             Case Else
                 Return Nothing
         End Select
@@ -51,6 +55,7 @@ Public Class Transformation
     'updateable implementation
     Sub update() Implements Updatable.update
         If turnsTilNextStep = 0 Then
+            nextStep = getNextStep(currStep)
             nextStep()
             currStep += 1
             setWaitTime(currStep)
@@ -72,7 +77,7 @@ Public Class Transformation
         turnsTilNextStep += generatWILResistance()
     End Sub
     Function generatWILResistance()
-        Return CInt(turnsTilNextStep * ((Game.player.getWillpower() * wilImpact) / (50 * wilImpact)))
+        Return CInt(turnsTilNextStep * (Game.player.getWillpower() / 20)) * wilImpact
     End Function
 
     'polymorph tf methods

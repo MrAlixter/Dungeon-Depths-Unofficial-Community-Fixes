@@ -31,7 +31,7 @@
             p.iArrInd(15) = New Tuple(Of Integer, Boolean)(6, True)
         End If
 
-        If p.iArrInd(6).Item1 = 8 And p.iArrInd(6).Item2 Then p.iArrInd(6) = New Tuple(Of Integer, Boolean)(0, True)
+        If p.iArrInd(6).Item1 = 6 And p.iArrInd(6).Item2 Then p.iArrInd(6) = New Tuple(Of Integer, Boolean)(0, True)
         Polymorph.giveRNDFFName(p)
         p.iArrInd(8) = New Tuple(Of Integer, Boolean)(5, True)
         p.iArrInd(9) = New Tuple(Of Integer, Boolean)(7, True)

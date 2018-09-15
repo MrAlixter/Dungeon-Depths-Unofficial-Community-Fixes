@@ -182,8 +182,8 @@
     End Sub
 
     'clothingCurse1 routes the normal versions of armors to their slut forms, if they have them.
-    Sub clothingCurse1()
-        If p.perks("polymorphed") > -1 Then Exit Sub
+    Function clothingCurse1() As Boolean
+        If p.perks("polymorphed") > -1 Then Return False
         Dim affectedFlag As Boolean = True
         Select Case p.equippedArmor.getName.GetHashCode
             Case "Steel_Armor".GetHashCode
@@ -215,10 +215,11 @@
             Game.lstLog.Items.Add("Your curse changes your clothes.")
             Game.lblEvent.ForeColor = Color.Pink
             If Not Game.Visible Then Game.pushLblEvent("As you don your new clothes, a shimmering light covers them, and they morph to better suit your style.")
-            portraitUDate()
+            Return True
         End If
         Game.lstLog.TopIndex = Game.lstLog.Items.Count - 1
-    End Sub
+        Return False
+    End Function
     Sub antiClothingCurse()
         If p.perks("polymorphed") > -1 Then Exit Sub
         Dim affectedFlag As Boolean = True

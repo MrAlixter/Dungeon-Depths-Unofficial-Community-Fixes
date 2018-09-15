@@ -394,11 +394,7 @@
         If canBeTFed(p) Then
             p.pState.save(p)
         End If
-        If form = "neko" Then
-            nekoTF(p, ind)
-        ElseIf form = "targax" Then
-            targaxTF(p, ind)
-        ElseIf form = "slime" Then
+        If form = "slime" Then
             slimeTF(p, ind)
         ElseIf form = "angel" Then
             p.pForm = p.forms("Angel")
@@ -666,120 +662,6 @@
         p.createP()
         Game.lblEvent.Visible = False
         p.canMoveFlag = True
-    End Sub
-    Sub nekoTF(ByRef p As Player, ByVal ind As Integer)
-        If p.currTarget Is Nothing Then
-            p.perks("nekocurse") = -1
-            Exit Sub
-        ElseIf p.currTarget.dead Then
-            p.perks("nekocurse") = -1
-            Exit Sub
-        End If
-        Select Case ind
-            Case 0
-                p.iArrInd(6) = New Tuple(Of Integer, Boolean)(1, p.sexBool)
-                Game.pushLblCombatEvent("Your ears twitch, becoming feline while Marissa gives you a malicious grin.  ""I'm sure you tell where this is going,"" she giggles." & vbCrLf & "  You now have cat ears!")
-                p.lust += 5
-            Case 1
-                p.iArrInd(4) = New Tuple(Of Integer, Boolean)(0, True)
-                Game.pushLblCombatEvent("Your facial structure softens, and now you have a feminine face!")
-                p.lust += 5
-            Case 2
-                p.iArrInd(1) = New Tuple(Of Integer, Boolean)(12, True)
-                p.iArrInd(5) = New Tuple(Of Integer, Boolean)(17, True)
-                p.iArrInd(15) = New Tuple(Of Integer, Boolean)(1, True)
-                Game.pushLblCombatEvent("Your hair grows down to your ass, straightening out as it lengthens.  You now have long, straight hair!")
-            Case 3
-                p.iArrInd(7) = New Tuple(Of Integer, Boolean)(0, True)
-                p.iArrInd(9) = New Tuple(Of Integer, Boolean)(13, True)
-                Game.pushLblCombatEvent("You wince and close your eye as a burning sensation flows through them. You now have kitten eyes!")
-                p.lust += 5
-            Case 4
-                If Not p.sexBool Then
-                    p.MtF()
-                    p.be()
-                    p.iArrInd(9) = New Tuple(Of Integer, Boolean)(13, True)
-                    Game.pushLblCombatEvent("Your body slims down, and your chest inlates, giving you average sized breasts.  Soon after, your cock and balls shift into a vagina. You are now female!")
-                Else
-                    p.be()
-                    p.perks("nekocurse") += 1
-                End If
-                p.lust += 5
-            Case 5
-                p.be()
-                p.iArrInd(3) = New Tuple(Of Integer, Boolean)(40, True)
-                p.iArrInd(8) = New Tuple(Of Integer, Boolean)(9, True)
-                Game.pushLblCombatEvent("Your tits expand, your clothes shift, and you feel your will grow weaker. You are now permenantly a cat girl!  Soon you will be Marissa's pet! ")
-            Case 6
-                p.be()
-                p.iArrInd(1) = New Tuple(Of Integer, Boolean)(12, True)
-                p.iArrInd(5) = New Tuple(Of Integer, Boolean)(17, True)
-                p.iArrInd(15) = New Tuple(Of Integer, Boolean)(1, True)
-                p.iArrInd(3) = New Tuple(Of Integer, Boolean)(40, True)
-                p.iArrInd(8) = New Tuple(Of Integer, Boolean)(9, True)
-                Game.pushLblCombatEvent("Your hair grows down to your ass, straightening out as it lengthens.  You now have long, straight hair!  Your tits expand, your clothes shift, and you feel your will grow weaker. You are now a cat girl!  Soon you will be Marissa's pet! ")
-            Case 7
-                If p.will < 5 Then
-                    If p.sex = "Male" Then
-                        p.MtF()
-                        p.be()
-                        p.iArrInd(1) = New Tuple(Of Integer, Boolean)(12, True)
-                        p.iArrInd(5) = New Tuple(Of Integer, Boolean)(17, True)
-                        p.iArrInd(15) = New Tuple(Of Integer, Boolean)(1, True)
-                    End If
-                    p.iArrInd(1) = New Tuple(Of Integer, Boolean)(12, True)
-                    p.iArrInd(5) = New Tuple(Of Integer, Boolean)(17, True)
-                    p.iArrInd(15) = New Tuple(Of Integer, Boolean)(1, True)
-                    p.iArrInd(2) = New Tuple(Of Integer, Boolean)(6, True)
-                    p.iArrInd(3) = New Tuple(Of Integer, Boolean)(40, True)
-                    p.iArrInd(8) = New Tuple(Of Integer, Boolean)(9, True)
-                End If
-                p.pClass = p.classes("Kitty")
-                p.be()
-
-                Equipment.clothesChange("Cat_Lingerie")
-                Equipment.portraitUDate()
-
-                Game.pushLblCombatEvent("As the last of your resistance drains away, all you can find yourself doing is focusing on your new mistress's voice as she orders you down onto all fours.  You happily oblige, purring softly, and she giggles.  ""Come on kitty, lets go!"" she orders and the two of you, with her leading, wander off into the darkness.  GAME OVER!")
-                MsgBox(Game.lblCombatEvents.Text)
-                p.Die()
-                p.perks("nekocurse") = -1
-        End Select
-    End Sub
-    Sub targaxTF(ByRef p As Player, ByVal ind As Integer)
-        Select Case ind
-            Case 0
-                If (p.iArrInd(9).Item2 And p.iArrInd(9).Item1 <> 15) Or (Not p.iArrInd(9).Item2 And p.iArrInd(9).Item1 <> 8) Then
-                    If p.iArrInd(9).Item2 Then
-                        p.iArrInd(9) = New Tuple(Of Integer, Boolean)(15, True)
-                    Else
-                        p.iArrInd(9) = New Tuple(Of Integer, Boolean)(7, False)
-                    End If
-                    Game.pushLblEvent("As you cut down your most recent foe, you take a second to examine the sword you pulled off of Targax.  No doubt, this is one of the most powerful weapons you have seen let alone handled, and as it glints crimson you grin at the potential power you could seize with it.")
-                End If
-            Case 1
-                If (p.iArrInd(15).Item2 And p.iArrInd(15).Item1 <> 12) Or (Not p.iArrInd(15).Item2 And p.iArrInd(15).Item1 <> 6) Then
-                    If p.iArrInd(2).Item2 Then
-                        p.iArrInd(1) = New Tuple(Of Integer, Boolean)(13, True)
-                        p.iArrInd(5) = New Tuple(Of Integer, Boolean)(15, True)
-                        p.iArrInd(15) = New Tuple(Of Integer, Boolean)(12, True)
-                    Else
-                        p.iArrInd(1) = New Tuple(Of Integer, Boolean)(5, False)
-                        p.iArrInd(5) = New Tuple(Of Integer, Boolean)(5, False)
-                        p.iArrInd(15) = New Tuple(Of Integer, Boolean)(6, False)
-                    End If
-                    p.haircolor = Color.FromArgb(255, 128, 0, 0)
-                    p.pClass = p.classes("Targaxian")
-                    Game.pushLblEvent("As another foe meets its demise at your, no, Targax's blade, you have a brief sense of regret that you defeated him.  Who knows what you could have gained from an alliance with him. ""Oh well, back to the slaughter.""")
-                End If
-            Case 2
-                p.name = "Targax"
-                p.pClass = p.classes("Soul-Lord")
-                Game.pushLblEvent("You jolt out of the trance you've been in for a unknown period of time, and stare in awe at the ornate glyphs that you have apperantly carved in the ground.  ""What the hell did I ..."" when the voice in your head returns, asking ""Do you accept?"".  ""Do I accept what?"" you demand, to which the voice in your head simply repeats the question.  About to firmly decline whatever nonsense your mental passenger is getting at, you are cut short by a thundering ""DO YOU ACCEPT"".  Your eyes space out and you answer your master the only way you can." & vbCrLf & vbCrLf & """Yes Master.""")
-                p.iArrInd(8) = New Tuple(Of Integer, Boolean)(11, True)
-                p.sState.save(p)
-                p.pState.save(p)
-        End Select
     End Sub
     Sub slimeTF(ByRef p As Player, ByVal ind As Integer)
         Select Case ind

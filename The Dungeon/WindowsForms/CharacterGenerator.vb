@@ -8,7 +8,7 @@
     '3 = Clothes
     '4 = Face
     '5 = RearHair1
-    '6 = Ears / horns
+    '6 = Ears / Horns
     '7 = Nose
     '8 = Mouth
     '9 = Eyes

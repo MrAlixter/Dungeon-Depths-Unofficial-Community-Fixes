@@ -18,9 +18,10 @@
     End Sub
 
     Overrides Sub onEquip()
-        If transformation.canbeTFed(Game.player) Then Game.player.pState.save(Game.player)
+        'If transformation.canbeTFed(Game.player) Then Game.player.pState.save(Game.player)
         Game.player.health += 20 / Game.player.getmaxHealth
-        If Game.player.perks("cowbell") = -1 Then Game.player.perks("cowbell") = 0
+        Game.player.ongoingTFs.Add(New MinoFTF(9, 15, 2.0, True))
+        'If Game.player.perks("cowbell") = -1 Then Game.player.perks("cowbell") = 0
         If Game.player.health > 1 Then Game.player.health = 1
     End Sub
     Public Overrides Sub onUnequip()
