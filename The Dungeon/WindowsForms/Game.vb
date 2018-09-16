@@ -71,6 +71,7 @@ Public Class Game
     Public lblEventOnClose As Action    'the event method preformed when lblEvent closes (NOT SAVED)
     Public lastKey As String
     Public yesAction, noAction As Action
+    Public choiceText As String
     Public invFilters() As Boolean = {True, True, True, True, True, True, True}
     'Dim eClock As Integer = 15
     Dim eClock As Integer = eClockResetVal * 3
@@ -853,52 +854,6 @@ Public Class Game
         Next
         dist(p1.Y, p1.X) = 0
         While allPoints.Count > 0
-                Dim min = allPoints(0)
-                For i = 0 To allPoints.Count - 1
-                    If dist(allPoints(i).Y, allPoints(i).X) < dist(min.X, min.Y) Then min = allPoints(i)
-                Next
-            allPoints.Remove(min)
-            Dim u, d, l, r As Point
-                u = New Point(min.X - 1, min.Y)
-            d = New Point(min.X + 1, min.Y)
-                l = New Point(min.X, min.Y - 1)
-            r = New Point(min.X, min.Y + 1)
-            For Each p In {u, d, l, r}
-                Dim tDist = dist(min.Y, min.X) + distance(min, p)
-                If Not (p.X < 0 Or p.X > mBoardWidth - 1 Or p.Y < 0 Or p.Y > mBoardHeight - 1) AndAlso Not mBoard(p.Y, p.X).Tag = 0 AndAlso Not path.Contains(p) AndAlso allPoints.Contains(p) Then
-                    If tDist < dist(p.Y, p.X) Then
-                        dist(p.Y, p.X) = tDist
-                        prev(p.Y, p.X) = min
-                    End If
-                End If
-                If p.Equals(p2) Then
-                    Dim pp = p2
-                    While Not path.Contains(pp)
-                        path.Insert(0, pp)
-                        pp = prev(pp.Y, pp.X)
-                    End While
-                    Exit For
-                End If
-            Next
-        End While
-        path.RemoveAt(0)
-        Return path.ToArray
-    End Function
-    Function route(ByVal p1 As Point, ByVal p2 As Point, ByVal endp As Point) As Point()
-        'iterative dijkstra's shortest path implementation
-        Dim dist(mBoardWidth, mBoardHeight) As Integer
-        Dim allPoints As List(Of Point) = New List(Of Point)
-        Dim prev(mBoardWidth, mBoardHeight) As Point
-        Dim path As List(Of Point) = New List(Of Point)
-        For i = 0 To mBoardHeight - 1
-            For j = 0 To mBoardWidth - 1
-                dist(i, j) = 99999
-                allPoints.Add(New Point(j, i))
-                prev(i, j) = Nothing
-            Next
-        Next
-        dist(p1.Y, p1.X) = 0
-        While allPoints.Count > 0
             Dim min = allPoints(0)
             For i = 0 To allPoints.Count - 1
                 If dist(allPoints(i).Y, allPoints(i).X) < dist(min.X, min.Y) Then min = allPoints(i)
@@ -928,7 +883,6 @@ Public Class Game
             Next
         End While
         path.RemoveAt(0)
-        path.Add(endp)
         Return path.ToArray
     End Function
     Function distance(ByVal x As Point, ByVal y As Point) As Double
@@ -1863,10 +1817,9 @@ Public Class Game
         Else
             noAction()
         End If
+        choiceText = Nothing
         yesAction = Nothing
         noAction = Nothing
-        lblEvent.Visible = False
-        lblEventOnClose = Nothing
     End Sub
     Sub toPNLSelec(ByVal mode As String)
         selecting = True
@@ -1962,7 +1915,7 @@ Public Class Game
                     End If
                 Next
             Case "yesNo"
-                lblWhat.Text = "Do you accept?"
+                lblWhat.Text = choiceText
                 lstSelec.Items.Add("a - Yes") 'cKeys(19).ToString.ToLower & " - Yes")
                 lstSelec.Items.Add("b - No") 'cKeys(20).ToString.ToLower & " - No")
         End Select
@@ -2709,6 +2662,12 @@ Next
             lstLog.TopIndex = lstLog.Items.Count - 1
             Exit Sub
         End If
+        If player.name.Equals("Targax") And player.pClass.name.Equals("Soul-Lord") Then
+            lstLog.Items.Add("You decide that running away is cowardly, so you don't.")
+            pushLblCombatEvent("You decide that running away is cowardly, so you don't.")
+            lstLog.TopIndex = lstLog.Items.Count - 1
+            Exit Sub
+        End If
         Dim run As Integer = Int(Rnd() * 3)
         For i = 0 To npcList.Count() - 1
             If (npcList.Item(i).GetType().IsSubclassOf(GetType(Monster)) Or npcList.Item(i).GetType() Is GetType(Monster)) AndAlso Not (npcList.Item(i).GetType() Is GetType(Boss)) Then
@@ -3356,7 +3315,7 @@ Next
         btnEQP.Enabled = False
     End Sub
     'This pushLblEvent is identical to the second, but to be used in situations where a choice is made.
-    Sub pushLblEvent(ByVal s As String, ByRef yes As Action, ByVal no As Action)
+    Sub pushLblEvent(ByVal s As String, ByRef yes As Action, ByVal no As Action, ByVal text As String)
         If combatmode Then
             pushLblCombatEvent("Error, choice to be made during combat.")
             Exit Sub
@@ -3396,6 +3355,7 @@ Next
         lblEventOnClose = AddressOf makeChoice
         yesAction = yes
         noAction = no
+        choiceText = text
         btnEQP.Enabled = False
     End Sub
     Sub makeChoice()

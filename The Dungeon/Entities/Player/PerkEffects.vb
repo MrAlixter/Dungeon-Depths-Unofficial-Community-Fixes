@@ -80,14 +80,6 @@
             p.perks("swordpossess") = -1
         End If
     End Sub
-    Shared Sub thrallTF()
-        If Game.turn Mod 10 = 0 And Not p.prefForm.playerMeetsForm(Game.player) And perks("thrall") < 21 Then
-            p.thrallTF.shiftTowardsPrefForm()
-        End If
-        If p.prefForm.playerMeetsForm(Game.player) Then
-            p.thrallTF.crystalSpawn()
-        End If
-    End Sub
     Shared Sub thrallRestore()
         p.prefForm.shiftTowards(Game.player)
         p.perks("thrall") = 1

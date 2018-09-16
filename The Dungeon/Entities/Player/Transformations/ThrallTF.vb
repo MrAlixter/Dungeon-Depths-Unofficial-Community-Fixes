@@ -12,20 +12,24 @@
         nextStep = getNextStep(cs)
     End Sub
 
-    Shared Sub shiftTowardsPrefForm()
+    Sub shiftTowardsPrefForm()
         Dim p = Game.player
         p.prefForm.shiftTowards(Game.player)
         p.perks("thrall") += 1
-        If p.perks("thrall") > 20 Then
+        'MsgBox("1")
+        If p.perks("thrall") > 11 Then
+            MsgBox("2")
             p.prefForm.snapShift(Game.player)
         End If
+        MyBase.currStep -= 1
     End Sub
-    Shared Sub crystalSpawn()
+    Sub crystalSpawn()
         Dim p = Game.player
         If p.forcedPath Is Nothing And Not Game.combatmode And Not Game.npcmode Then
             Dim crystalX As Integer
             Dim crystalY As Integer
-            Do While (Game.mBoard(crystalY, crystalX).Tag > 1 Or Game.mBoard(crystalY, crystalX).Text <> "")
+            Do While (Game.mBoard(crystalY, crystalX).Tag < 1 Or Game.mBoard(crystalY, crystalX).Text <> "" Or (crystalX.Equals(p.pos.X) And crystalY.Equals(p.pos.Y)))
+                'MsgBox(CBool(Game.mBoard(crystalY, crystalX).Tag < 1) & "-" & CBool(Game.mBoard(crystalY, crystalX).Text <> "") & "-" & CBool(crystalX.Equals(p.pos.X) And crystalY.Equals(p.pos.Y)))
                 crystalX = CInt(Int(Rnd() * Game.mBoardWidth))
                 crystalY = CInt(Int(Rnd() * Game.mBoardHeight))
             Loop
@@ -34,8 +38,7 @@
             Game.mBoard(crystalY, crystalX).Tag = 2
             Game.mBoard(crystalY, crystalX).Text = "c"
 
-            p.forcedPath = Game.route(Game.player.pos, crystal, New Point(0, 0))
-
+            p.forcedPath = Game.route(p.pos, crystal)
 
             Dim s As String = ""
             If p.getWillpower() > 10 Then
@@ -51,6 +54,8 @@
                               "'SERVANT!', your controller's voice booms in your head, 'This is another of the crystals!  Recover it immediately!'" & vbCrLf & _
                               "As their voice leaves your head, " & s)
         End If
+
+        stopTF()
     End Sub
 
     Public Overrides Sub stopTF()
@@ -59,10 +64,15 @@
     End Sub
 
     Public Overrides Function getNextStep(stage As Integer) As Action
-        If Game.player.perks("thrall") = -1 Then
+        Dim p = Game.player
+        If p.perks("thrall") = -1 Or p.pForm.name.Equals("Half-Succubus") Then
             Return AddressOf stopTF
+        ElseIf Not p.prefForm.playerMeetsForm(p) Then
+            Return AddressOf shiftTowardsPrefForm
+        ElseIf p.prefForm.playerMeetsForm(p) Or p.perks("thrall") > 10 Then
+            Return AddressOf crystalSpawn
         End If
-
+        Return Nothing
     End Function
     Public Overrides Sub setWaitTime(stage As Integer)
         turnsTilNextStep = 5

@@ -17,48 +17,60 @@
         MyBase.mInd = New Tuple(Of Integer, Boolean)(3, False)
     End Sub
     Overrides Sub onEquip()
-        Game.player.perks("thrall") = 0
-        If Not Game.player.pClass.name.Equals("Thrall") Then formerClass = Game.player.pClass.name
-        formerEyeType = Game.player.iArrInd(9)
-        If transformation.canbeTFed(Game.player) Then Game.player.pState.save(Game.player)
-        Game.player.pClass = Game.player.classes("Thrall")
-        If Game.player.sexBool Then
-            Game.player.iArrInd(9) = New Tuple(Of Integer, Boolean)(19, True)
+        Dim p = Game.player
+        p.perks("thrall") = 0
+        p.ongoingTFs.Add(New ThrallTF(2, 10, 3.0, True))
+
+        If Not p.pClass.name.Equals("Thrall") Then formerClass = p.pClass.name
+        formerEyeType = p.iArrInd(9)
+        If Transformation.canBeTFed(p) Then p.pState.save(p)
+        p.pClass = p.classes("Thrall")
+        If p.sexBool Then
+            p.iArrInd(9) = New Tuple(Of Integer, Boolean)(19, True)
         Else
-            Game.player.iArrInd(9) = New Tuple(Of Integer, Boolean)(8, False)
+            p.iArrInd(9) = New Tuple(Of Integer, Boolean)(8, False)
         End If
 
-        Game.player.prefForm = New preferedForm()
+        p.prefForm = New preferedForm()
 
         Equipment.portraitUDate()
     End Sub
     Sub forceEquip()
-        Game.player.perks("thrall") = 0
-        formerClass = Game.player.pClass.name
-        formerEyeType = Game.player.iArrInd(9)
-        If transformation.canbeTFed(Game.player) Then Game.player.pState.save(Game.player)
-        Game.player.pClass = Game.player.classes("Thrall")
-        If Game.player.sexBool Then
-            Game.player.iArrInd(9) = New Tuple(Of Integer, Boolean)(19, True)
+        Dim p = Game.player
+        p.perks("thrall") = 0
+        p.ongoingTFs.Add(New ThrallTF(2, 10, 3.0, True))
+
+        formerClass = p.pClass.name
+        formerEyeType = p.iArrInd(9)
+        If Transformation.canBeTFed(p) Then p.pState.save(p)
+        p.pClass = p.classes("Thrall")
+        If p.sexBool Then
+            p.iArrInd(9) = New Tuple(Of Integer, Boolean)(19, True)
         Else
-            Game.player.iArrInd(9) = New Tuple(Of Integer, Boolean)(8, False)
+            p.iArrInd(9) = New Tuple(Of Integer, Boolean)(8, False)
         End If
 
-        If Game.player.pClass.name.Equals("Magic Girl") Then
-            Game.player.breastSize = 2
-            Game.player.iArrInd(6) = New Tuple(Of Integer, Boolean)(0, True)
-            Game.player.iArrInd(15) = New Tuple(Of Integer, Boolean)(7, True)
+        If p.pClass.name.Equals("Magic Girl") Then
+            p.breastSize = 2
+            p.iArrInd(6) = New Tuple(Of Integer, Boolean)(0, True)
+            p.iArrInd(15) = New Tuple(Of Integer, Boolean)(7, True)
         End If
 
-        Game.player.prefForm = New preferedForm()
+        p.prefForm = New preferedForm()
 
         Equipment.portraitUDate()
     End Sub
     Public Overrides Sub onUnequip()
-        Game.player.perks("thrall") = -1
-        Game.player.pClass = Game.player.classes(formerClass)
-        Game.player.iArrInd(9) = formerEyeType
-        Game.player.prefForm = Nothing
+        Dim p = Game.player
+        For i = 0 To p.ongoingTFs.Count - 1
+            If p.ongoingTFs(i).GetType() Is GetType(ThrallTF) Then
+                p.ongoingTFs(i).stopTF()
+                p.ongoingTFs.RemoveAt(i)
+            End If
+        Next
+        p.pClass = Game.player.classes(formerClass)
+        p.iArrInd(9) = formerEyeType
+        p.prefForm = Nothing
     End Sub
 
     Public Function getFT() As String

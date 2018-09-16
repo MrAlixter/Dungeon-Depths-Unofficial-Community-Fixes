@@ -195,25 +195,25 @@
     'movement commands
     Sub reachedFPathDest()
         If pClass.name.Equals("Thrall") Then
-            If 1 = 1 Then 'Int(Rnd() * 2) = 1 Then
+            If Int(Rnd() * 2) = 1 Then
                 Dim out = "You've found one of the crystals your controller is seeking!  As you circle it, you feel a familiar presence enter your mind.  " & _
                     """Yes!  You've found it!"" your overseer states exitedly, ""I'll be over shortly, don't go anywhere and don't touch that crystal.""" & vbCrLf & _
                     "Obeying, you take a seat and wait for a few minutes before a violet portal opens up near the crystal and your master steps out."
                 If will > 7 Then
-
+                    out += "  In their attention to the crystal, they don't seem to notice you at all giving you a few minutes to yourself." & vbCrLf & vbCrLf & "Wait... if they aren't paying attention to you..." & vbCrLf & vbCrLf & "You fiddle around with your collar, and they still don't seem to notice your actions, so you leverage your thumb in the collars joint."
+                    Game.pushLblEvent(out, AddressOf betraySorc, AddressOf waitSorc, "Break off your collar?")
                 Else
-                    out += "Despite your excitement, they don't seem to notice you, instead focusing all their attention on the crystalline array.  As they fiddle with it, you notice a slight purple aura beginning to form around them and wait, are those horns sprouting out of their hair that seems to catch a non-existant wind?  With a flourish, they complete ... something ... and a blinding flash engulfs them.  Where once stood your human controller now stands a half-demon who only now seems to have taken notice of you." & _
+                    out += "  Despite your excitement, they don't seem to notice you, instead focusing all their attention on the crystalline array.  As they fiddle with it, you notice a slight purple aura beginning to form around them and wait, are those horns sprouting out of their hair that seems to catch a non-existant wind?  With a flourish, they complete ... something ... and a blinding flash engulfs them.  Where once stood your human controller now stands a half-demon who only now seems to have taken notice of you." & _
                         """Well... It looks like you succeeded.  For that, I will give you an ultimatium.  Join me as my general, or die in these dungeons as my slave."
-                    Game.pushLblEvent(out, AddressOf acceptSorc, AddressOf fightSorc)
+                    Game.pushLblEvent(out, AddressOf acceptSorc, AddressOf fightSorc, "Accept their offer?")
                 End If
 
             Else
                 Game.pushLblEvent("You've found one of the crystals your controller is seeking!  As you circle it, you feel a familiar presence enter your mind.  " & _
                     """No, that isn't it."" your overseer states disappointedly, ""Well, I guess you can go back to your buisness now.""")
+                ongoingTFs.Add(New ThrallTF(2, 2, Int(Rnd() * 7) + 7, 3.0, False, False))
             End If
-            'toDo:  roll a d2 
-            '       if 1, then the player has the option to break free of the collar and fight a "Demonic Sorcerer/Sorceress"
-            '       otherwise, they check in with their controller who informs them that they haven't found the right array.
+
         End If
     End Sub
     Sub fightSorc()
@@ -226,9 +226,9 @@
         Game.lstLog.TopIndex = Game.lstLog.Items.Count - 1
     End Sub
     Sub fightSorc2()
+        Game.lblEvent.Visible = False
         Dim m As Monster
         m = New Monster(8)
-        Equipment.accChange("Nothing")
         Game.npcList.Add(m)
         currTarget = m
         Game.toCombat()
@@ -244,8 +244,9 @@
         Game.pushLblEvent("Brushing past you, your ""boss"" heads straight for the array.  As they begin fiddling with it, you take notice of their distraction and begin creeping into a position behind them.  As they chant over the array, you prepare to make your move.  " & _
                           "As their raving reaches its zenith and the runes enscribed on the crystal begin to glow you strike out, disrupting their ritual.  ""YOU!  DO YOU HAVE ANY IDEA ..."" screams the mage, and while they shout you realize you couldn't care less about them.  " & _
                           "Looking down, you see that your collar has gone dark and dangles open from your neck.  Grinning, your prepare to fight for your life.", AddressOf fightSorc2)
-        equippedAcce.onUnequip()
-        equippedAcce = New noAcce
+
+
+        Equipment.accChange("Nothing")
         inventory(69).count -= 1
 
         Equipment.portraitUDate()
@@ -253,15 +254,15 @@
     Sub waitSorc()
         Dim out = "You decide against making a move now, instead waiting to see what happens next.  Your controller doesn't seem to notice you, instead focusing all their attention on the crystalline array.  As they fiddle with it, you notice a slight purple aura beginning to form around them and wait, are those horns sprouting out of their hair that seems to catch a non-existant wind?  With a flourish, they complete ... something ... and a blinding flash engulfs them.  Where once stood your human controller now stands a half-demon who only now seems to have taken notice of you." & _
                         """Well... It looks like you succeeded.  For that, I will give you an ultimatium.  Join me as my general, or die in these dungeons as my slave."
-        Game.pushLblEvent(out, AddressOf acceptSorc, AddressOf fightSorc)
+        Game.pushLblEvent(out, AddressOf acceptSorc, AddressOf fightSorc, "Do you accept?")
     End Sub
 
     Sub followPath()
-        If forcedPath(0).X = 0 And forcedPath(0).Y = 0 Then
+        If forcedPath.Length < 1 Then
             reachedFPathDest()
             forcedPath = Nothing
         Else
-            Dim t(UBound(forcedPath)) As Point
+            Dim t(UBound(forcedPath) - 1) As Point
             pos = forcedPath(0)
             For i = 1 To UBound(forcedPath)
                 t(i - 1) = forcedPath(i)
@@ -1001,10 +1002,6 @@
         'targax sword tf
         If perks("swordpossess") > -1 Then
             PerkEffects.targaxSwordTF()
-        End If
-        'thrall tf
-        If perks("thrall") > -1 And Not pForm.name.Equals("Half-Succubus") And forcedPath Is Nothing And Not Game.lblEvent.Visible Then
-            PerkEffects.thrallTF()
         End If
         'shift toward prefered form
         If Not prefForm Is Nothing AndAlso (pClass.name = "Thrall" Xor equippedAcce.getName.Equals("Slave_Collar")) AndAlso Not prefForm.playerMeetsForm(Game.player) And Not pForm.name.Equals("Half-Succubus") And Not perks("thrall") = 1 And Not perks("nekocurse") > -1 And Not perks("polymorphed") > -1 And Not perks("bimbotf") > -1 Then

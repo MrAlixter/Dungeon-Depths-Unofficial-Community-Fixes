@@ -441,6 +441,14 @@
             p.UIupdate()
         End If
 
+        'cleanup of the monster
+        dead = True
+        endBoss()
+        Game.fromCombat()
+        Game.npcList.Remove(Me)
+        Game.lstLog.Items.Add("You've deafeated the " & name & "!")
+        Game.lstLog.TopIndex = Game.lstLog.Items.Count - 1
+
         'monster transformations
         For i = 0 To p.ongoingTFs.Count - 1
             If p.ongoingTFs(i).GetType() Is GetType(NekoTF) Then
@@ -459,14 +467,6 @@
                 TargaxTF.step3()
             End If
         End If
-
-        'cleanup of the monster
-        dead = True
-        endBoss()
-        Game.fromCombat()
-        Game.npcList.Remove(Me)
-        Game.lstLog.Items.Add("You've deafeated the " & name & "!")
-        Game.lstLog.TopIndex = Game.lstLog.Items.Count - 1
     End Sub
     Public Function getName() As String
         If form = "" Then
