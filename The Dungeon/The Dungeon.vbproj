@@ -127,6 +127,7 @@
     <Compile Include="Entities\Player\Spells\turnToCupcake.vb" />
     <Compile Include="Entities\Player\Spells\turnToFrog.vb" />
     <Compile Include="Entities\Player\Transformations\BimboTF.vb" />
+    <Compile Include="Entities\Player\Transformations\MagGirlTF.vb" />
     <Compile Include="Entities\Player\Transformations\MinoFTF.vb" />
     <Compile Include="Entities\Player\Transformations\NekoTF.vb" />
     <Compile Include="Entities\Player\Transformations\TargaxTF.vb" />

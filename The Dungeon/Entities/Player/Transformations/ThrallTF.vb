@@ -8,7 +8,7 @@
     End Sub
     Sub New(cs As Integer, n As Integer, tts As Integer, wi As Double, cbs As Boolean, tfd As Boolean)
         MyBase.New(cs, n, tts, wi, cbs, tfd)
-        tfName = "thrall"
+        tfName = "ThrallTF"
         nextStep = getNextStep(cs)
     End Sub
 

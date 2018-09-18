@@ -300,14 +300,6 @@
                 p.iArrInd(16) = New Tuple(Of Integer, Boolean)(CharacterGenerator.mHat.Count - 2, False)
             End If
             color1 = Color.LightGoldenrodYellow
-        ElseIf form = "Magic Girl" Then
-            form = "Magic Girl​"
-            out = out & "Swinging your wand, you are engulfed in a rain of stars. As the light around your body grows blinding and your clothes disolve into the aether, you become a buxom young woman wearing a skimpy uniform!"
-            If p.sex = "Male" Then
-                p.sex = "Female"
-                p.sexBool = True
-            End If
-            p.iArrInd(16) = New Tuple(Of Integer, Boolean)(CharacterGenerator.fHat.Count - 3, True)
         ElseIf form = "Princess​" Then
             p.perks("polymorphed") += (Int(Rnd() * 7) * 1.5)
         ElseIf form = "Bunny Girl​" Then
@@ -348,7 +340,6 @@
             p.iArrInd(6) = New Tuple(Of Integer, Boolean)(8, True)
             p.iArrInd(15) = New Tuple(Of Integer, Boolean)(16, True)
         ElseIf form = "bimboC" Then
-
             out += vbCrLf & vbCrLf & "As you don the chicken suit you found, part of you half expects to turn into some sort of bird.  You chuckle to yourself at the idea, and this quickly devolves into a giggling fit.  Parting your short, red hair off to one side, you adjust your large breasts in the suit, noting that no part of it provides nearly enough support.  You strip some parts of the outfit away and shift some other parts around, and soon you find yourself left with a pair of wings and a set of straps that provide all the support you think you're going to get out of it.  Proud of your handiwork, you strut back out into the dungeon still giggling at the noshun...notshi...""idea"" that some silly chicken costume could change you in any way."
             If p.sex = "Male" Then
                 p.sexBool = True
@@ -630,39 +621,6 @@
     End Sub
 
     'auxilary methods for multiple step tfs
-    Shared Sub magicGSub2()
-        Dim p As Player = Game.player
-        If p.magGState.initFlag Then
-            p.magGState.load(p)
-        Else
-            p.breastSize = 1
-            p.iArrInd(1) = New Tuple(Of Integer, Boolean)(7, True)
-            p.iArrInd(2) = New Tuple(Of Integer, Boolean)(10, True)
-            p.iArrInd(3) = New Tuple(Of Integer, Boolean)(12, True)
-            p.iArrInd(4) = New Tuple(Of Integer, Boolean)(0, True)
-            p.iArrInd(5) = New Tuple(Of Integer, Boolean)(7, True)
-            p.iArrInd(6) = New Tuple(Of Integer, Boolean)(6, True)
-            p.iArrInd(7) = New Tuple(Of Integer, Boolean)(0, True)
-            p.iArrInd(8) = New Tuple(Of Integer, Boolean)(7, True)
-            p.iArrInd(9) = New Tuple(Of Integer, Boolean)(9, True)
-            p.iArrInd(10) = New Tuple(Of Integer, Boolean)(0, True)
-            p.iArrInd(13) = New Tuple(Of Integer, Boolean)(0, True)
-            p.iArrInd(15) = New Tuple(Of Integer, Boolean)(8, True)
-            p.iArrInd(16) = New Tuple(Of Integer, Boolean)(0, True)
-            p.magGState.save(p)
-            p.magGState.initFlag = True
-        End If
-        Game.cboxMG.Items.Add("Heartblast Starcannon")
-        p.inventory.Item(10).addOne()
-        'giveRNDFFName(p)
-        p.pClass = p.classes("Magic Girl")
-        Equipment.clothesChange("Magic_Girl_Outfit")
-        p.equippedArmor = New MagGirlOutfit
-        Game.lstLog.Items.Add("'Heartblast Starcannon' spell learned!")
-        p.createP()
-        Game.lblEvent.Visible = False
-        p.canMoveFlag = True
-    End Sub
     Sub slimeTF(ByRef p As Player, ByVal ind As Integer)
         Select Case ind
             Case 0
