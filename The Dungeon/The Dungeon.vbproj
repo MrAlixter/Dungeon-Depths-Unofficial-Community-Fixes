@@ -1617,6 +1617,7 @@
     </Content>
   </ItemGroup>
   <ItemGroup>
+    <Folder Include="bin\Debug\img\bkg\" />
     <Folder Include="img\Tails\" />
     <Folder Include="Items\Unimplemented\Removed\" />
   </ItemGroup>
