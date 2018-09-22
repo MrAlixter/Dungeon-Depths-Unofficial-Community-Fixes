@@ -20,7 +20,7 @@
             p.sexBool = True
         End If
         p.iArrInd(16) = New Tuple(Of Integer, Boolean)(CharacterGenerator.fHat.Count - 3, True)
-        Game.pushLblEvent(out, AddressOf Polymorph.magicGSub2)
+        Game.pushLblEvent(out, AddressOf step2)
         Game.lstLog.TopIndex = Game.lstLog.Items.Count - 1
         p.TextColor = Game.lblEvent.ForeColor
         Game.cmboxSpec.Items.Clear()

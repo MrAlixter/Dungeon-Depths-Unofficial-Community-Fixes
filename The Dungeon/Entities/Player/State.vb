@@ -3,8 +3,8 @@
 
     'instance data for a state
     Dim name, sex, description As String
-    Public pClass As pClass = New pClass(1, 1, 1, 1, 1, 1, "Classless")
-    Public pForm As pForm = New pForm(1, 1, 1, 1, 1, 1, "Human", True)
+    Public pClass As pClass = New Classless()
+    Public pForm As pForm = New Human()
     Dim health As Double
     Dim maxHealth, mana, maxMana, attack, defence As Integer
     Dim will, speed, evade, gold, lust As Integer
@@ -61,8 +61,8 @@
     Sub New()
         name = ""
         sex = ""
-        pClass = New pClass(1, 1, 1, 1, 1, 1, "Classless")
-        pForm = New pForm(1, 1, 1, 1, 1, 1, "Human", True)
+        pClass = New Classless()
+        pForm = New Human()
         description = ""
         health = 0
         maxHealth = 0
@@ -178,8 +178,8 @@
         If readArray(0) = "N/A" Then
             name = ""
             sex = ""
-            pClass = New pClass(1, 1, 1, 1, 1, 1, "Classless")
-            pForm = New pForm(1, 1, 1, 1, 1, 1, "Human", True)
+            pClass = New Classless()
+            pForm = New Human()
             description = ""
             health = 0
             maxHealth = 0

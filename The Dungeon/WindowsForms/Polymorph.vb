@@ -96,16 +96,6 @@
             out = out & "You roll your eyes as the purple tint leaves your skin, and your demonic features slowly shrink into nothingness."
         ElseIf p.pClass.name = "Goddess" Then
             out = out & "The golden aura leaves your body, and you once again join the world of the mortals."
-        ElseIf p.pClass.name.Equals("Magic Girl") Then
-            If Game.cboxMG.SelectedItem = "Heartblast Starcannon" Then
-                Game.cboxMG.Items.Insert(0, "-- Select --")
-                Game.cboxMG.SelectedIndex = 0
-            End If
-            Do While Game.cboxMG.Items.Contains("Heartblast Starcannon")
-                Game.cboxMG.Items.Remove("Heartblast Starcannon")
-            Loop
-            Game.lstLog.Items.Add("'Heartblast Starcannon' spell forgotten!")
-            out = out & "As you stow your wand, the glow engulfing it fades and you return to your original form. Well, until you should be called on again, at least."
         End If
 
         If p.forms.Keys.Contains(cboxPMorph.Text) Then
@@ -368,7 +358,7 @@
 
         Game.lblEvent.ForeColor = color1
         Game.lblNameTitle.ForeColor = color1
-        If form.Equals("Magic Girl​") Then Game.pushLblEvent(out, AddressOf Polymorph.magicGSub2) Else Game.pushLblEvent(out)
+        Game.pushLblEvent(out)
         Game.lstLog.TopIndex = Game.lstLog.Items.Count - 1
         p.TextColor = Game.lblEvent.ForeColor
         p.pImage = Game.pImage
@@ -410,7 +400,7 @@
         ElseIf form = "princess" Then
             Select Case ind
                 Case 0
-                    p.pClass = New pClass(p.pClass.h, p.pClass.a, p.pClass.m, p.pClass.d, p.pClass.s, p.pClass.w, "Unconscious")
+                    p.pClass = New Unconcious()
                     Game.pushLblEvent("As you bite into the apple, your mind starts to get foggy.  You yawn, " &
                                                    "and lay down on the floor.  As you nod off, you realize that that apple" &
                                                    " probably was probably either enchanted or poisoned, and as you black out" &
