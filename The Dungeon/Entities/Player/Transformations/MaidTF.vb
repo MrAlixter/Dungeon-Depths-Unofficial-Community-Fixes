@@ -34,10 +34,9 @@
 
             'transformation description push
             out += "As you shake the duster, the dust coming off of it seems to glow.  As you take a step back, it whips into a frenzy shrouding you in a radiant cloud.  As the glow dies down, your clothes seem to have become skimpy maid's attire to match the duster, and your hair seems to have become auburn.  Sneezing, you continue on your journey to clean this entire dungeon."
-            If Not Game.combatmode Then
-                out = Game.lblEvent.Text.Split(vbCrLf)(0) & vbCrLf & vbCrLf & out
-                Game.pushLblEvent(out)
-            End If
+        Dim revertText = Game.lblEvent.Text.Split(vbCrLf)(0)
+        If Not revertText.Equals("") Then out = revertText & vbCrLf & vbCrLf & out
+        Game.pushLblEvent(out)
     End Sub
 
     Public Overrides Sub stopTF()

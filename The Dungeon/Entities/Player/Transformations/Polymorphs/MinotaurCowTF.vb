@@ -34,5 +34,9 @@
         p.iArrInd(6) = New Tuple(Of Integer, Boolean)(8, True)
         p.iArrInd(15) = New Tuple(Of Integer, Boolean)(16, True)
         p.hornInd = 2
+
+        Dim revertText = Game.lblEvent.Text.Split(vbCrLf)(0)
+        If Not revertText.Equals("") Then out = revertText & vbCrLf & vbCrLf & out
+        Game.pushLblEvent(out)
     End Sub
 End Class

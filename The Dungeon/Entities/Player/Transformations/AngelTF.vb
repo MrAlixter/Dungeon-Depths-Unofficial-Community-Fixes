@@ -28,10 +28,9 @@
 
         'transformation description push
         out += "As you bite into the cake, you are lost in its sweet flavor.  So lost, in fact, that you miss the large white wings growing on you back.  You are now an angel!"
-        If Not Game.combatmode Then
-            out = Game.lblEvent.Text.Split(vbCrLf)(0) & vbCrLf & vbCrLf & out
-            Game.pushLblEvent(out)
-        End If
+        Dim revertText = Game.lblEvent.Text.Split(vbCrLf)(0)
+        If Not revertText.Equals("") Then out = revertText & vbCrLf & vbCrLf & out
+        Game.pushLblEvent(out)
     End Sub
 
     Public Overrides Sub stopTF()
