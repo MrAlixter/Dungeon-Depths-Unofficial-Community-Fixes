@@ -38,6 +38,7 @@
         Dim out = "Your skin feels wetter than it did a minute ago.  As you look down, you see that your body is slowly disolving into a aquamarine fluid! You melt down into a puddle, and find that while it is challenging, you can somewhat manipulate your body.  After some experimentation, you find yourself in a rough aproximation of your original form."
         If Not Game.combatmode Then
             Game.lblEvent.ForeColor = p.TextColor
+            out = Game.lblEvent.Text.Split(vbCrLf)(0) & vbCrLf & vbCrLf & out
             Game.pushLblEvent(out)
         End If
     End Sub

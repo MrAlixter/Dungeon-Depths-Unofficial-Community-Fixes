@@ -3,7 +3,6 @@
     Public target As Monster
     Public tfForm As Boolean = False
     Private Sub Form4_Load(sender As Object, e As EventArgs) Handles MyBase.Load
-
         'scale to the screen size
         Dim startingWidth = Me.Width
         Dim startingHeight = Me.Height
@@ -45,20 +44,15 @@
         End If
         Select Case porm
             Case True
-                transform(Game.player)
+                transform(Game.player, cboxPMorph.Text)
             Case False
                 If target.GetType() Is GetType(NPC) Then transformN(target) Else transform(target)
         End Select
         Me.Close()
     End Sub
 
-    Function canBeTFed(ByRef p As Player) As Boolean
-        If Not p.perks("polymorphed") > -1 And Not Game.picPortrait.BackgroundImage.Equals(Game.picmgp1.BackgroundImage) And Not p.pClass.name.Equals("Magic Girl") And Not p.pClass.name.Equals("Unconscious") And Not p.pForm.name.Equals("Blowup Doll") Then Return True
-        Return False
-    End Function
     'player transform methods
-    Sub transform(ByRef p As Player)
-        Dim form = cboxPMorph.Text
+    Sub transform(ByRef p As Player, ByVal form As String)
         If form.Equals(p.pClass.name) Or form.Equals(p.pForm.name) Or Not p.polymorphs.Keys.Contains(form) Then
             Exit Sub
         End If
@@ -71,11 +65,17 @@
         ElseIf Not form.Equals(p.pForm.name) Then
             p.pForm.revert()
             revertText = p.pForm.revertPassage & vbCrLf & vbCrLf
+        Else
+            MsgBox(form.Equals(p.pClass.name) & " | " & form.Equals(p.pForm.name))
         End If
 
         'performs the neccisary polymorph
+        Dim removeind = New List(Of Integer)
         For i = 0 To p.ongoingTFs.Count - 1
-            If p.ongoingTFs(i).GetType().IsSubclassOf(GetType(PolymorphTF)) Then p.ongoingTFs.RemoveAt(i)
+            If p.ongoingTFs(i).GetType().IsSubclassOf(GetType(PolymorphTF)) Then removeind.Add(i)
+        Next
+        For i = 0 To removeind.Count - 1
+            p.ongoingTFs.RemoveAt(removeind(i))
         Next
 
         p.polymorphs(form) = PolymorphTF.newPoly(form)
@@ -89,162 +89,16 @@
 
         'cleanup
         p.perks("polymorphed") = 1
+
         Game.lblEvent.Text = revertText & Game.lblEvent.Text
         Game.cmboxSpec.Items.Clear()
         Game.specialRoute()
         Game.lstLog.TopIndex = Game.lstLog.Items.Count - 1
     End Sub
-    Public Sub transform(ByRef p As Player, ByVal form As String)
-        If p.perks("polymorphed") > -1 Then
-            Game.lstLog.Items.Add("Your form prevents you from being polymorphed.")
-            Exit Sub
-        End If
-        If canBeTFed(p) Then
-            p.pState.save(p)
-        End If
-        Dim color1 As Color = Color.White
-        Dim out As String = ""
-        If p.pClass.name = "Warrior" Then
-            out = out & "You feel your muscle mass decrease slightly, and your physical strength becomes far more average."
-        ElseIf p.pClass.name = "Mage" Then
-            out = out & "Your mind feels slightly weaker, and your magical aptitude becomes far more average."
-        ElseIf p.pClass.name = "Bimbo" Then
-            out = out & "Your mind feels slightly more useful, and you pout sligthly as your tits and ass decrease in size.  While you are sad to see them go, you have become smart enough to realize that it is probably for the best."
-        ElseIf p.pForm.name = "Chicken" Then
-            Game.player.inventory(8).add(-1)
-            out = out & " With a poof of smoke, you turn back into your normal, human, self. You sigh a big sigh of relief. "
-        ElseIf p.pForm.name = "Dragon" Then
-            out = out & "Your scales slowly disappear into your skin as you slowly turn back into a biped. On the bright side, you are pretty sure you could still breath fire if you really wanted to."
-        ElseIf p.pForm.name = "Slime" Then
-            p.perks("slimehair") = False
-            out = out & "Your body is feeling much more solid than before. You get the feeling healing won't be as easy as it was when you were semi-liquid."
-        ElseIf p.pForm.name = "Succubus" Then
-            out = out & "You roll your eyes as the purple tint leaves your skin, and your demonic features slowly shrink into nothingness."
-        ElseIf p.pClass.name = "Goddess" Then
-            out = out & "The golden aura leaves your body, and you once again join the world of the mortals."
-        ElseIf p.pClass.name.Equals("Magic Girl") Then
-            If Game.cboxMG.SelectedItem = "Heartblast Starcannon" Then
-                Game.cboxMG.Items.Insert(0, "-- Select --")
-                Game.cboxMG.SelectedIndex = 0
-            End If
-            Do While Game.cboxMG.Items.Contains("Heartblast Starcannon")
-                Game.cboxMG.Items.Remove("Heartblast Starcannon")
-            Loop
-            Game.lstLog.Items.Add("'Heartblast Starcannon' spell forgotten!")
-            out = out & "As you stow your wand, the glow engulfing it fades and you return to your original form. Well, until you should be called on again, at least."
-        End If
-
-        If form = "Warrior" Then
-        ElseIf form = "Mage" Then
-        ElseIf form = "Chicken" Then
-            p.equippedArmor.add(-1)
-            p.inventory.Item(8).addOne()
-            p.equippedArmor = p.inventory.Item(8)
-            p.defence += p.equippedArmor.aBoost
-            Game.pImage = Game.picChicken.BackgroundImage
-            If p.sexBool Then
-                p.iArrInd(16) = New Tuple(Of Integer, Boolean)(CharacterGenerator.fHat.Count - 2, True)
-            Else
-                p.iArrInd(16) = New Tuple(Of Integer, Boolean)(CharacterGenerator.mHat.Count - 2, False)
-            End If
-            out = out & " You cluck nervously as you recall your recent encounter. Wait . . . cluck?!?  You start to notice that everything in the room is looking much bigger.  You flail your wings as panic sets in, while your nose and mouth shift into a beak.  As your white puffy featers come in, you can't help but think back to when the kids in your hometown used to call you ""chicken"". Looks like they were right."
-            color1 = Color.LightGoldenrodYellow
-        ElseIf form = "Chicken2" Then
-            form = "Chicken"
-            p.defence += p.equippedArmor.aBoost
-            Game.pImage = Game.picChicken.BackgroundImage
-            'Form1.pIndex = 2
-            out = out & " Putting on the chicken suit, you notice that once again everything in the room is looking much bigger.  You examine your wings closer, observing the changes as they happen.  As your nose and mouth shift into a beak, you feel the last of your white puffy featers come in. A chicken once again, you can't help but wonder if you actually might deserve to stay this way for your cowardice."
-            If p.sexBool Then
-                p.iArrInd(16) = New Tuple(Of Integer, Boolean)(CharacterGenerator.fHat.Count - 2, True)
-            Else
-                p.iArrInd(16) = New Tuple(Of Integer, Boolean)(CharacterGenerator.mHat.Count - 2, False)
-            End If
-            color1 = Color.LightGoldenrodYellow
-        ElseIf form = "Princess​" Then
-            p.perks("polymorphed") += (Int(Rnd() * 7) * 1.5)
-        ElseIf form = "Bunny Girl​" Then
-            p.perks("polymorphed") += (Int(Rnd() * 7) * 1.5)
-        ElseIf form = "Sheep" Then
-            p.perks("polymorphed") += (Int(Rnd() * 7) * 1.5)
-        ElseIf form = "Half-Succubus" Then
-            p.TextColor = Color.FromArgb(231, 126, 245)
-            If p.sex = "Male" Then
-                p.sexBool = True
-                p.MtF()
-                out += " Your body becomes daintier, and you are soon fully female."
-            End If
-            Equipment.clothesChange("Succubus_Garb")
-            Equipment.accChange("Nothing")
-            p.equippedWeapon = New BareFists()
-            p.iArrInd(1) = New Tuple(Of Integer, Boolean)(9, True)
-            p.iArrInd(4) = New Tuple(Of Integer, Boolean)(0, True)
-            p.iArrInd(5) = New Tuple(Of Integer, Boolean)(9, True)
-            p.iArrInd(7) = New Tuple(Of Integer, Boolean)(0, True)
-            p.iArrInd(9) = New Tuple(Of Integer, Boolean)(19, True)
-            p.iArrInd(10) = New Tuple(Of Integer, Boolean)(0, True)
-            p.iArrInd(13) = New Tuple(Of Integer, Boolean)(0, True)
-            p.iArrInd(15) = New Tuple(Of Integer, Boolean)(13, True)
-            p.iArrInd(16) = New Tuple(Of Integer, Boolean)(0, True)
-            p.wingInd = 2
-        ElseIf form = "Minotaur Cow" Then
-            If p.sex = "Male" Then
-                p.sexBool = True
-                p.MtF()
-                out += " Your body becomes daintier, and you are soon fully female."
-            End If
-            p.be()
-            p.be()
-            p.be()
-            p.iArrInd(1) = New Tuple(Of Integer, Boolean)(16, True)
-            p.iArrInd(5) = New Tuple(Of Integer, Boolean)(20, True)
-            p.iArrInd(6) = New Tuple(Of Integer, Boolean)(8, True)
-            p.iArrInd(15) = New Tuple(Of Integer, Boolean)(16, True)
-        ElseIf form = "bimboC" Then
-            out += vbCrLf & vbCrLf & "As you don the chicken suit you found, part of you half expects to turn into some sort of bird.  You chuckle to yourself at the idea, and this quickly devolves into a giggling fit.  Parting your short, red hair off to one side, you adjust your large breasts in the suit, noting that no part of it provides nearly enough support.  You strip some parts of the outfit away and shift some other parts around, and soon you find yourself left with a pair of wings and a set of straps that provide all the support you think you're going to get out of it.  Proud of your handiwork, you strut back out into the dungeon still giggling at the noshun...notshi...""idea"" that some silly chicken costume could change you in any way."
-            If p.sex = "Male" Then
-                p.sexBool = True
-                p.MtF()
-            End If
-            p.iArrInd(1) = New Tuple(Of Integer, Boolean)(11, True)
-            p.iArrInd(5) = New Tuple(Of Integer, Boolean)(11, True)
-            p.iArrInd(8) = New Tuple(Of Integer, Boolean)(6, True)
-            p.iArrInd(9) = New Tuple(Of Integer, Boolean)(8, True)
-            p.iArrInd(15) = New Tuple(Of Integer, Boolean)(17, True)
-            p.iArrInd(16) = New Tuple(Of Integer, Boolean)(0, True)
-            p.be()
-            p.be()
-            p.inventory(8).add(1)
-            Equipment.clothesChange("Chicken_Suit")
-            p.changeHairColor(Color.FromArgb(255, 187, 38, 43))
-            p.perks("rgum") = -1
-            form = "Bimbo"
-        End If
-
-        If p.forms.Keys.Contains(form) Then
-            p.pForm = p.forms(form)
-        Else
-            p.pClass = p.classes(form)
-        End If
-
-        Game.lblEvent.ForeColor = color1
-        Game.lblNameTitle.ForeColor = color1
-        Game.pushLblEvent(out)
-        Game.lstLog.TopIndex = Game.lstLog.Items.Count - 1
-        p.TextColor = Game.lblEvent.ForeColor
-        p.pImage = Game.pImage
-        p.health += p.hBuff
-        Game.cmboxSpec.Items.Clear()
-        Game.specialRoute()
-        Equipment.portraitUDate()
-    End Sub
     Public Sub transform(ByRef p As Player, ByVal form As String, ByVal ind As Integer)
         If p.perks("polymorphed") > -1 Then
             Game.lstLog.Items.Add("Your form prevents you from being polymorphed.")
             Exit Sub
-        End If
-        If canBeTFed(p) Then
-            p.pState.save(p)
         End If
         If form = "slime" Then
             slimeTF(p, ind)
@@ -265,9 +119,6 @@
             p.iArrInd(5) = New Tuple(Of Integer, Boolean)(8, True)
             p.iArrInd(15) = New Tuple(Of Integer, Boolean)(3, True)
             p.iArrInd(16) = New Tuple(Of Integer, Boolean)(2, True)
-            If canBeTFed(p) Then
-                Game.player.pState.save(Game.player)
-            End If
         ElseIf form = "princess" Then
             Select Case ind
                 Case 0
@@ -297,9 +148,7 @@
                     p.iArrInd(9) = New Tuple(Of Integer, Boolean)(p.pState.iArrInd(9).Item1, True)
                     p.iArrInd(15) = New Tuple(Of Integer, Boolean)(10, True)
                     p.iArrInd(16) = New Tuple(Of Integer, Boolean)(6, True)
-                    If canBeTFed(p) Then
-                        Game.player.pState.save(Game.player)
-                    End If
+
                 Case 2
                     Game.pushLblEvent("As you bite into the apple, your mind starts to get foggy.  You yawn, " &
                                                    "and lay down on the floor.  As you nod off, you realize that that apple" &
@@ -319,9 +168,6 @@
                     p.iArrInd(9) = New Tuple(Of Integer, Boolean)(p.pState.iArrInd(9).Item1, True)
                     p.iArrInd(15) = New Tuple(Of Integer, Boolean)(10, True)
                     p.iArrInd(16) = New Tuple(Of Integer, Boolean)(6, True)
-                    If canBeTFed(p) Then
-                        Game.player.pState.save(Game.player)
-                    End If
             End Select
         ElseIf form = "doll" Then
             Game.pushLblEvent("Looking down, you see some sort of coupon laying on the ground.  Picking it up, you read " & vbCrLf &
@@ -491,9 +337,6 @@
                     Game.player.haircolor = Color.FromArgb(180, 5, 245, 198)
                     Game.player.createP()
                     Game.player.perks("vsslimehair") = 0
-                End If
-                If canBeTFed(p) Then
-                    Game.player.pState.save(Game.player)
                 End If
         End Select
     End Sub

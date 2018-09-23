@@ -48,6 +48,7 @@
         out += "[Transformation decription pending]"
         If Not Game.combatmode Then
             Game.lblEvent.ForeColor = p.TextColor
+            out = Game.lblEvent.Text.Split(vbCrLf)(0) & vbCrLf & vbCrLf & out
             Game.pushLblEvent(out)
         End If
     End Sub

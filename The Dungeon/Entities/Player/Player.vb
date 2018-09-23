@@ -578,8 +578,13 @@
             pForm.revert()
             If pForm.revertPassage <> "" Then out += pForm.revertPassage & vbCrLf & vbCrLf
         End If
+
+        Dim removeind = New List(Of Integer)
         For i = 0 To Game.player.ongoingTFs.Count - 1
-            If Game.player.ongoingTFs(i).GetType().IsSubclassOf(GetType(PolymorphTF)) Then Game.player.ongoingTFs.RemoveAt(i)
+            If Game.player.ongoingTFs(i).GetType().IsSubclassOf(GetType(PolymorphTF)) Then removeind.Add(i)
+        Next
+        For i = 0 To removeind.Count - 1
+            ongoingTFs.RemoveAt(removeind(i))
         Next
 
         If Game.lblEvent.Visible = False Then Game.pushLblEvent(out & "You return to your former form!")
@@ -685,10 +690,11 @@
         pUpdateFlag = perkUpdate()
 
         'transformations
+        Dim removeind = New List(Of Integer)
         For i = 0 To ongoingTFs.Count - 1
             If Not ongoingTFs(i) Is Nothing Then
                 If ongoingTFs(i).getTFDone Then
-                    ongoingTFs.RemoveAt(i)
+                    removeind.Add(i)
                 Else
                     Dim c = ongoingTFs(i).getturnsTilNextStep
                     If c = 0 Then pUpdateFlag = True
@@ -697,6 +703,9 @@
             Else
                 ongoingTFs.RemoveAt(i)
             End If
+        Next
+        For i = 0 To removeind.Count - 1
+            ongoingTFs.RemoveAt(removeind(i))
         Next
         If pUpdateFlag Then Equipment.portraitUDate()
     End Sub
@@ -833,7 +842,7 @@
         classes.Add("Paladin", New Paladin())
         classes.Add("Thrall", New Thrall())
         classes.Add("Trophy", New Trophy())
-        classes.Add("Princess​", New Princess())
+        classes.Add("Princess​", New PrincessBackfire())
         classes.Add("Bunny Girl​", New BunnyGirl())
         classes.Add("Kitty", New Kitty())
         classes.Add("Soul-Lord", New SoulLord())
@@ -866,11 +875,17 @@
         forms.Add("Sheep", New Sheep())
         forms.Add("Frog", New Frog())
 
+        'compile list of polymorphs
         polymorphs.Add("Dragon", Nothing)
         polymorphs.Add("Goddess", Nothing)
         polymorphs.Add("Slime", Nothing)
         polymorphs.Add("Succubus", Nothing)
         polymorphs.Add("Tigress", Nothing)
+        polymorphs.Add("Half-Succubus", Nothing)
+        polymorphs.Add("Minotaur Cow", Nothing)
+        polymorphs.Add("Princess​", Nothing)
+        polymorphs.Add("Bunny Girl​", Nothing)
+        polymorphs.Add("Sheep", Nothing)
     End Sub
     Sub initPerks()
         perks.Clear()

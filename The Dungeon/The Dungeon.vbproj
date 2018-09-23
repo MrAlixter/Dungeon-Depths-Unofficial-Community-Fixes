@@ -171,9 +171,14 @@
     <Compile Include="Entities\Player\Transformations\MagGirlTF.vb" />
     <Compile Include="Entities\Player\Transformations\MinoFTF.vb" />
     <Compile Include="Entities\Player\Transformations\NekoTF.vb" />
+    <Compile Include="Entities\Player\Transformations\Polymorphs\BunnyGirlTFB.vb" />
     <Compile Include="Entities\Player\Transformations\Polymorphs\DragonTF.vb" />
     <Compile Include="Entities\Player\Transformations\Polymorphs\GoddessTF.vb" />
+    <Compile Include="Entities\Player\Transformations\Polymorphs\HalfSuccubusTF.vb" />
+    <Compile Include="Entities\Player\Transformations\Polymorphs\MinotaurCowTF.vb" />
     <Compile Include="Entities\Player\Transformations\Polymorphs\PolymorphTF.vb" />
+    <Compile Include="Entities\Player\Transformations\Polymorphs\PrincessTFB.vb" />
+    <Compile Include="Entities\Player\Transformations\Polymorphs\SheepTFB.vb" />
     <Compile Include="Entities\Player\Transformations\Polymorphs\SlimeTF.vb" />
     <Compile Include="Entities\Player\Transformations\Polymorphs\SuccubusTF.vb" />
     <Compile Include="Entities\Player\Transformations\Polymorphs\TigressTF.vb" />

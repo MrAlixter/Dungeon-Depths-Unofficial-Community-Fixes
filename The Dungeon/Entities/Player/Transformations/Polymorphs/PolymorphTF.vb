@@ -20,6 +20,16 @@
                 Return New SuccubusTF()
             Case "Tigress"
                 Return New TigressTF()
+            Case "Half-Succubus"
+                Return New HalfSuccubusTF()
+            Case "Minotaur Cow"
+                Return New MinotaurCowTF()
+            Case "Princess​"
+                Return New PrincessTFB()
+            Case "Bunny Girl​"
+                Return New BunnyGirlTFB()
+            Case "Sheep"
+                Return New SheepTFB()
             Case Else
                 Return Nothing
         End Select
