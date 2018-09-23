@@ -2588,10 +2588,6 @@ Next
         cmboxSpec.Visible = False
         btnSpec.Visible = False
 
-        If player.perks("polymorphed") > -1 Then
-            player.perks("polymorphed") = -1
-            player.revert2()
-        End If
         npcList.Clear()
         ttCosts.RemoveAll()
     End Sub

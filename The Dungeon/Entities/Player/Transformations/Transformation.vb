@@ -43,17 +43,33 @@ Public Class Transformation
                 Return New NekoTF(CInt(s(0)), CInt(s(1)), CInt(s(2)), CDbl(s(3)), CBool(s(4)), CBool(s(6)))
             Case "MinoFTF"
                 Return New MinoFTF(CInt(s(0)), CInt(s(1)), CInt(s(2)), CDbl(s(3)), CBool(s(4)), CBool(s(6)))
+            Case "Targax"
+                Return New TargaxTF(CInt(s(0)), CInt(s(1)), CInt(s(2)), CDbl(s(3)), CBool(s(4)), CBool(s(6)))
+            Case "ThrallTF"
+                Return New ThrallTF(CInt(s(0)), CInt(s(1)), CInt(s(2)), CDbl(s(3)), CBool(s(4)), CBool(s(6)))
+            Case "Magic Girl"
+                Return New MagGirlTF(CInt(s(0)), CInt(s(1)), CInt(s(2)), CDbl(s(3)), CBool(s(4)), CBool(s(6)))
+            Case "DragonTF"
+                Return New DragonTF(CInt(s(0)), CInt(s(1)), CInt(s(2)), CDbl(s(3)), CBool(s(4)), CBool(s(6)))
+            Case "GoddessTF"
+                Return New GoddessTF(CInt(s(0)), CInt(s(1)), CInt(s(2)), CDbl(s(3)), CBool(s(4)), CBool(s(6)))
+            Case "SlimeTF"
+                Return New SlimeTF(CInt(s(0)), CInt(s(1)), CInt(s(2)), CDbl(s(3)), CBool(s(4)), CBool(s(6)))
+            Case "SuccubusTF"
+                Return New SuccubusTF(CInt(s(0)), CInt(s(1)), CInt(s(2)), CDbl(s(3)), CBool(s(4)), CBool(s(6)))
+            Case "TigressTF"
+                Return New TigressTF(CInt(s(0)), CInt(s(1)), CInt(s(2)), CDbl(s(3)), CBool(s(4)), CBool(s(6)))
             Case Else
                 Return Nothing
         End Select
     End Function
     Shared Function canBeTFed(ByRef p As Player) As Boolean
-        If Not p.perks("polymorphed") > -1 And Not Game.picPortrait.BackgroundImage.Equals(Game.picmgp1.BackgroundImage) And Not p.pClass.name.Equals("Magic Girl") And Not p.pClass.name.Equals("Unconscious") And Not p.pForm.name.Equals("Blowup Doll") Then Return True
+        If Game.player.ongoingTFs.Count < 1 And (Not p.polymorphs.ContainsKey(p.pClass.name) And Not p.polymorphs.ContainsKey(p.pForm.name)) And Not p.pClass.name.Equals("Magic Girl") And Not p.pClass.name.Equals("Unconscious") And Not p.pForm.name.Equals("Blowup Doll") Then Return True
         Return False
     End Function
 
     'updateable implementation
-    Sub update() Implements Updatable.update
+    Overridable Sub update() Implements Updatable.update
         If turnsTilNextStep = 0 Then
             nextStep = getNextStep(currStep)
             nextStep()
@@ -79,11 +95,6 @@ Public Class Transformation
     Function generatWILResistance()
         Return CInt(turnsTilNextStep * (Game.player.getWillpower() / 20)) * wilImpact
     End Function
-
-    'polymorph tf methods
-    Overridable Sub revert()
-
-    End Sub
 
     'toString for save / load
     Public Overrides Function ToString() As String

@@ -1,7 +1,6 @@
 ﻿Public Class Polymorph
     Public Shared porm As Boolean = True
     Public target As Monster
-    Shared fList() As String = {"Succubus", "Slime", "Goddess"}
     Public tfForm As Boolean = False
     Private Sub Form4_Load(sender As Object, e As EventArgs) Handles MyBase.Load
 
@@ -53,172 +52,44 @@
         Me.Close()
     End Sub
 
-    Sub hpreset(ByVal h As Integer)
-        'Dim p As Player = Game.player
-        'If p.health - h <= 0 And p.health > p.maxHealth Then
-        '    p.health = p.maxHealth
-        'ElseIf p.health - h <= 0 Then
-
-        'Else
-        '    p.health -= h
-        'End If
-
-    End Sub
     Function canBeTFed(ByRef p As Player) As Boolean
         If Not p.perks("polymorphed") > -1 And Not Game.picPortrait.BackgroundImage.Equals(Game.picmgp1.BackgroundImage) And Not p.pClass.name.Equals("Magic Girl") And Not p.pClass.name.Equals("Unconscious") And Not p.pForm.name.Equals("Blowup Doll") Then Return True
         Return False
     End Function
     'player transform methods
     Sub transform(ByRef p As Player)
-        If canBeTFed(p) Then
-            p.pState.save(p)
-        End If
-        If cboxPMorph.Text.Equals(p.pClass.name) Or cboxPMorph.Text.Equals(p.pForm.name) Then
+        Dim form = cboxPMorph.Text
+        If form.Equals(p.pClass.name) Or form.Equals(p.pForm.name) Or Not p.polymorphs.Keys.Contains(form) Then
             Exit Sub
         End If
-        Dim color1 As Color = Color.White
-        Dim out As String = ""
-        If p.pClass.name = "Warrior" Then
-            out = out & "You feel your muscle mass decrease slightly, and your physical strength becomes far more average."
-        ElseIf p.pClass.name = "Mage" Then
-            out = out & "Your mind feels slightly weaker, and your magical aptitude becomes far more average."
-        ElseIf p.pClass.name = "Bimbo" Then
-            out = out & "Your mind feels slightly more useful, and you pout sligthly as your tits and ass decrease in size.  While you are sad to see them go, you have become smart enough to realize that it is probably for the best."
-        ElseIf p.pForm.name = "Chicken" Then
-            Game.player.inventory(8).add(-1)
-            out = out & " With a poof of smoke, you turn back into your normal, human, self. You sigh a big sigh of relief. "
-        ElseIf p.pForm.name = "Dragon" Then
-            out = out & "Your scales slowly disappear into your skin as you slowly turn back into a biped. On the bright side, you are pretty sure you could still breath fire if you really wanted to."
-        ElseIf p.pForm.name = "Slime" Then
-            p.perks("slimehair") = False
-            out = out & "Your body is feeling much more solid than before. You get the feeling healing won't be as easy as it was when you were semi-liquid."
-        ElseIf p.pForm.name = "Succubus" Then
-            out = out & "You roll your eyes as the purple tint leaves your skin, and your demonic features slowly shrink into nothingness."
-        ElseIf p.pClass.name = "Goddess" Then
-            out = out & "The golden aura leaves your body, and you once again join the world of the mortals."
+
+        'gets the revert text for whatever is being changed
+        Dim revertText = ""
+        If Not form.Equals(p.pClass.name) Then
+            p.pClass.revert()
+            revertText = p.pClass.revertPassage & vbCrLf & vbCrLf
+        ElseIf Not form.Equals(p.pForm.name) Then
+            p.pForm.revert()
+            revertText = p.pForm.revertPassage & vbCrLf & vbCrLf
         End If
 
-        If p.forms.Keys.Contains(cboxPMorph.Text) Then
-            p.pForm = p.forms(cboxPMorph.Text)
+        'performs the neccisary polymorph
+        For i = 0 To p.ongoingTFs.Count - 1
+            If p.ongoingTFs(i).GetType().IsSubclassOf(GetType(PolymorphTF)) Then p.ongoingTFs.RemoveAt(i)
+        Next
+
+        p.polymorphs(form) = PolymorphTF.newPoly(form)
+
+        p.ongoingTFs.Add(p.polymorphs(form))
+        If p.forms.Keys.Contains(form) Then
+            p.pForm = p.forms(form)
         Else
-            p.pClass = p.classes(cboxPMorph.Text)
+            p.pClass = p.classes(form)
         End If
 
-        If p.pForm.name = "Dragon" Then
-                Equipment.clothesChange("Naked")
-                p.equippedWeapon = New BareFists()
-                p.iArrInd(16) = New Tuple(Of Integer, Boolean)(CharacterGenerator.fHat.Count - 2, True)
-                p.TextColor = Color.Green
-              
-            If Not Game.cboxMG.Items.Contains("Dragon's Breath") Then Game.cboxMG.Items.Add("Dragon's Breath")
-            out = out & " You can feel green scales begin to cover most of your body, as another wave of mana washes over you.  As your new scales begin to thicken, you are forced down onto all fours, and a quick glance back confirms that you now have grown considerably, as well as now have a thick reptilian tail, an a proper set of dragon wings, colored the same color green as the rest of your body. After your face finishes extending into a snout, and you feel the last of the changes stop, it finally hits you. You are now a dragon."
-            color1 = Color.Green
-        ElseIf p.pForm.name = "Slime" Then
-                p.TextColor = Color.FromArgb(255, 2, 249, 200)
-                p.perks("slimehair") = True
-                Equipment.clothesChange("Naked")
-                p.equippedWeapon = New BareFists()
-                p.haircolor = Color.FromArgb(180, 5, 245, 198)
-                p.skincolor = Color.FromArgb(200, 0, 255, 255)
-                p.iArrInd(6) = New Tuple(Of Integer, Boolean)(5, True)
-                p.iArrInd(9) = New Tuple(Of Integer, Boolean)(9, True)
-                p.iArrInd(10) = New Tuple(Of Integer, Boolean)(0, True)
-                p.iArrInd(13) = New Tuple(Of Integer, Boolean)(0, True)
-                p.iArrInd(16) = New Tuple(Of Integer, Boolean)(0, True)
-                If Not p.sexBool Then
-                    p.idRouteFM()
-                End If
-            out += " Your skin feels wetter than it did a minute ago.  As you look down, you see that your body is slowly disolving into a aquamarine fluid! You melt down into a puddle, and find that while it is challenging, you can somewhat manipulate your body.  After some experimentation, you find yourself in a rough aproximation of your original form."
-            color1 = Color.FromArgb(2, 249, 200)
-        ElseIf p.pForm.name = "Succubus" Then
-                p.TextColor = Color.FromArgb(231, 126, 245)
-                If p.sex = "Male" Then
-                    p.sexBool = True
-                    p.MtF()
-                    out += " Your body becomes daintier, and you are soon fully female."
-                End If
-                Equipment.clothesChange("Succubus_Garb")
-                p.equippedWeapon = New BareFists()
-                p.haircolor = Color.FromArgb(255, 155, 0, 0)
-                p.skincolor = Color.FromArgb(255, 255, 105, 180)
-                p.iArrInd(1) = New Tuple(Of Integer, Boolean)(9, True)
-                p.iArrInd(4) = New Tuple(Of Integer, Boolean)(0, True)
-                p.iArrInd(5) = New Tuple(Of Integer, Boolean)(9, True)
-                p.iArrInd(7) = New Tuple(Of Integer, Boolean)(0, True)
-                p.iArrInd(9) = New Tuple(Of Integer, Boolean)(12, True)
-                p.iArrInd(10) = New Tuple(Of Integer, Boolean)(0, True)
-                p.iArrInd(13) = New Tuple(Of Integer, Boolean)(0, True)
-                p.iArrInd(15) = New Tuple(Of Integer, Boolean)(13, True)
-                p.iArrInd(16) = New Tuple(Of Integer, Boolean)(0, True)
-            p.wingInd = 2
-            p.hornInd = 3
-            color1 = Color.FromArgb(231, 126, 245)
-            out += " As hellfire engulfs you, you ponder over what you should do to your opponent.  Maybe flay them, mabye just go for a quick clean decapitation, or maybe tie them up and use them as a fucktoy until you get bored?  'Well,' you tell them with a sinister grin, '... whatever I decide on ...' you do a pirouette, showing off your new body in all its glory '... will certainly be more fun for me ...' you lock eyes with your prey and bare your fangs in a vicious sneer '... than for you.'"
-        ElseIf p.pClass.name = "Goddess" Then
-            If Not p.goddState.initFlag Then
-                p.TextColor = Color.Goldenrod
-                If p.sex = "Male" Then
-                    p.MtF()
-                    out += " Your body becomes daintier, and you are soon fully female."
-                End If
-                Equipment.clothesChange("Goddess_Gown")
-                p.equippedWeapon = New BareFists()
-                p.haircolor = Color.FromArgb(255, 210, 180, 140)
-                If p.skincolor = Color.FromArgb(255, 255, 105, 180) Then p.haircolor = Color.FromArgb(255, 155, 0, 0)
-                If p.skincolor = Color.FromArgb(200, 0, 255, 255) Then p.haircolor = Color.FromArgb(180, 5, 245, 198)
-                p.iArrInd(1) = New Tuple(Of Integer, Boolean)(8, True)
-                p.iArrInd(2) = New Tuple(Of Integer, Boolean)(1, True)
-                p.iArrInd(4) = New Tuple(Of Integer, Boolean)(0, True)
-                p.iArrInd(5) = New Tuple(Of Integer, Boolean)(8, True)
-                p.iArrInd(6) = New Tuple(Of Integer, Boolean)(0, True)
-                p.iArrInd(7) = New Tuple(Of Integer, Boolean)(0, True)
-                p.iArrInd(8) = New Tuple(Of Integer, Boolean)(8, True)
-                p.iArrInd(9) = New Tuple(Of Integer, Boolean)(10, True)
-                p.iArrInd(10) = New Tuple(Of Integer, Boolean)(0, True)
-                p.iArrInd(13) = New Tuple(Of Integer, Boolean)(0, True)
-                p.iArrInd(15) = New Tuple(Of Integer, Boolean)(9, True)
-                p.iArrInd(16) = New Tuple(Of Integer, Boolean)(0, True)
-                p.goddState.save(p)
-            Else
-                p.goddState.load(p)
-            End If
-            out += " Your eyes burn with an awesome fury as golden flames engulf you.  Your opponent squints and covers their eyes, blinded by your new found vibrance.  Dialing back your personal light show, you give them a cocky grin.  They may not know it, but this battle is already over."
-            color1 = Color.Goldenrod
-        ElseIf p.pForm.name = "Tigress" Then
-                p.TextColor = Color.FromArgb(255, 171, 17)
-                If p.sex = "Male" Then
-                    p.MtF()
-                    out += " Your body becomes daintier, and you are soon fully female."
-                End If
-                Equipment.clothesChange("Naked")
-                p.equippedWeapon = New BareFists()
-                If p.skincolor = Color.FromArgb(255, 255, 105, 180) Then p.haircolor = Color.FromArgb(255, 155, 0, 0)
-                If p.skincolor = Color.FromArgb(200, 0, 255, 255) Then p.haircolor = Color.FromArgb(180, 5, 245, 198)
-                p.iArrInd(1) = New Tuple(Of Integer, Boolean)(15, True)
-                p.iArrInd(2) = New Tuple(Of Integer, Boolean)(21, True)
-                p.iArrInd(4) = New Tuple(Of Integer, Boolean)(0, True)
-                p.iArrInd(5) = New Tuple(Of Integer, Boolean)(19, True)
-                p.iArrInd(6) = New Tuple(Of Integer, Boolean)(7, True)
-                p.iArrInd(7) = New Tuple(Of Integer, Boolean)(0, True)
-                p.iArrInd(8) = New Tuple(Of Integer, Boolean)(11, True)
-                p.iArrInd(9) = New Tuple(Of Integer, Boolean)(18, True)
-                p.iArrInd(10) = New Tuple(Of Integer, Boolean)(0, True)
-                p.iArrInd(13) = New Tuple(Of Integer, Boolean)(0, True)
-                p.iArrInd(15) = New Tuple(Of Integer, Boolean)(15, True)
-                p.iArrInd(16) = New Tuple(Of Integer, Boolean)(0, True)
-            out += " [Transformation decription pending]"
-            color1 = p.TextColor
-        End If
-        p.perks("polymorphed") += Int(Rnd() * 50) + Int(Rnd() * 50) + Int(Rnd() * p.getmaxMana) + Int(Rnd() * p.getWillpower)
-        Equipment.portraitUDate()
-        p.createP()
-        Game.lblEvent.ForeColor = color1
-        Game.lblNameTitle.ForeColor = color1
-        Game.pushLblEvent(out)
-        p.perks("polymorphed") -= 1
-        p.TextColor = Game.lblEvent.ForeColor
-        p.pImage = Game.pImage
-        p.health += p.hBuff
+        'cleanup
+        p.perks("polymorphed") = 1
+        Game.lblEvent.Text = revertText & Game.lblEvent.Text
         Game.cmboxSpec.Items.Clear()
         Game.specialRoute()
         Game.lstLog.TopIndex = Game.lstLog.Items.Count - 1

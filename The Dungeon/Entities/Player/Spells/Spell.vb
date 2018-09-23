@@ -157,7 +157,7 @@
             spell = New HBSC(c, t)
         ElseIf s.Equals("Self Polymorph") And (transformation.canbeTFed(c) Or c.perks("polymorphed") > -1) Then
             spell = New SelfPolymorph(c, t)
-        ElseIf s.Equals("Self Polymorph") And Not transformation.canbeTFed(c) Then
+        ElseIf s.Equals("Self Polymorph") And Not Transformation.canBeTFed(c) Then
             Game.lstLog.Items.Add("You can't polymorph yourself!")
             Game.pushLblCombatEvent("You can't polymorph yourself!")
             Exit Sub

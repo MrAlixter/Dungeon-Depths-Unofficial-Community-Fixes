@@ -63,14 +63,6 @@
     End Function
 
     '|TRANSFORMATION TRIGGERS|
-    Shared Sub timedPolymorphTrigger()
-        If p.perks("polymorphed") > 0 Then
-            p.perks("polymorphed") -= 1
-        Else
-            p.perks("polymorphed") = -1
-            p.revert2()
-        End If
-    End Sub
     Shared Sub targaxSwordTF()
         If p.name <> "Targax" Then
             If Not p.equippedWeapon.getName.Equals("Sword_of_the_Brutal") Then

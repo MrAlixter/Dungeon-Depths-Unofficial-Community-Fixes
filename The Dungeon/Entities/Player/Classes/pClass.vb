@@ -13,12 +13,5 @@
     End Sub
 
     Overridable Sub revert()
-        Dim out = ""
-        If Not Game.combatmode Then
-            out = revertPassage & vbCrLf & vbCrLf & Game.lblEvent.Text
-            If Game.lblEvent.Visible Then Game.lblEvent.Text = out Else Game.pushLblEvent(out)
-        Else
-            Game.pushLblCombatEvent(revertPassage)
-        End If
     End Sub
 End Class

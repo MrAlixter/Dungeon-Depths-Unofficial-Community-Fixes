@@ -27,6 +27,7 @@
     Public perks As Dictionary(Of String, Integer) = New Dictionary(Of String, Integer)() 'perks also include triggers for events
     Public classes As Dictionary(Of String, pClass) = New Dictionary(Of String, pClass)()
     Public forms As Dictionary(Of String, pForm) = New Dictionary(Of String, pForm)()
+    Public polymorphs As Dictionary(Of String, Transformation) = New Dictionary(Of String, Transformation)()
     Public pImage As Image 'tile image of the player
     Public TextColor As Color
     Public isDead As Boolean = False
@@ -501,7 +502,9 @@
         equippedWeapon = tEweap
         perks("slutcurse") = -1
         currState.save(Me)
-        pState.save(Me)
+        If Transformation.canBeTFed(Me) Then
+            pState.save(Me)
+        End If
 
         For i = 0 To ongoingTFs.Count - 1
             ongoingTFs.RemoveAt(i)
@@ -535,6 +538,12 @@
         Dim tGold As Integer = gold
         Dim tEweap As Weapon = equippedWeapon
         Dim tEarm As Armor = equippedArmor
+
+        Dim tpClassName As String = pClass.name
+        Dim tpFormName As String = pForm.name
+        Dim tpClassRP As String = pClass.revertPassage
+        Dim tpFormRP As String = pClass.revertPassage
+
         If tEweap.getName = "Magic_Girl_Wand" Then tEweap = New BareFists()
         If tEarm.getName = "Goddess_Gown" Or tEarm.getName = "Succubus_Garb" Then tEarm = New NormalClothes
         pState.load(Me)
@@ -544,7 +553,9 @@
         If Not tEarm.getName.Equals("Magic_Girl_Outfit") Then equippedArmor = tEarm
         equippedWeapon = tEweap
         currState.save(Me)
-        pState.save(Me)
+        If Transformation.canBeTFed(Me) Then
+            pState.save(Me)
+        End If
 
         If Game.cboxMG.SelectedItem = "Heartblast Starcannon" Then
             Game.cboxMG.Items.Insert(0, "-- Select --")
@@ -557,12 +568,27 @@
 
         If health > 1 Then health = 1
         If mana > maxMana + mBuff Then mana = maxMana + mBuff
-        If Game.lblEvent.Visible = False Then Game.pushLblEvent("You return to your former form!")
+
+        Dim out = ""
+        If Not tpClassName.Equals(pClass.name) Then
+            pClass.revert()
+            If pClass.revertPassage <> "" Then out += pClass.revertPassage & vbCrLf & vbCrLf
+        End If
+        If Not tpFormName.Equals(pForm.name) Then
+            pForm.revert()
+            If pForm.revertPassage <> "" Then out += pForm.revertPassage & vbCrLf & vbCrLf
+        End If
+        For i = 0 To Game.player.ongoingTFs.Count - 1
+            If Game.player.ongoingTFs(i).GetType().IsSubclassOf(GetType(PolymorphTF)) Then Game.player.ongoingTFs.RemoveAt(i)
+        Next
+
+        If Game.lblEvent.Visible = False Then Game.pushLblEvent(out & "You return to your former form!")
         Game.pImage = pImage
         Game.lblEvent.ForeColor = TextColor
         Game.lblNameTitle.ForeColor = TextColor
 
         changeHairColor(haircolor)
+
         Equipment.portraitUDate()
         setPImage()
         UIupdate()
@@ -657,6 +683,7 @@
         Dim pUpdateFlag As Boolean = False
         'perks
         pUpdateFlag = perkUpdate()
+
         'transformations
         For i = 0 To ongoingTFs.Count - 1
             If Not ongoingTFs(i) Is Nothing Then
@@ -671,7 +698,6 @@
                 ongoingTFs.RemoveAt(i)
             End If
         Next
-
         If pUpdateFlag Then Equipment.portraitUDate()
     End Sub
     Sub createInvPerks()
@@ -839,6 +865,12 @@
         forms.Add("Cake", New Cake())
         forms.Add("Sheep", New Sheep())
         forms.Add("Frog", New Frog())
+
+        polymorphs.Add("Dragon", Nothing)
+        polymorphs.Add("Goddess", Nothing)
+        polymorphs.Add("Slime", Nothing)
+        polymorphs.Add("Succubus", Nothing)
+        polymorphs.Add("Tigress", Nothing)
     End Sub
     Sub initPerks()
         perks.Clear()
@@ -889,10 +921,6 @@
         End If
 
         '|TRANSFORMATION TRIGGERS|
-        'triggers timed polymorphs
-        If perks("polymorphed") > -1 Then
-            PerkEffects.timedPolymorphTrigger()
-        End If
         'targax sword tf
         If perks("swordpossess") > -1 Then
             PerkEffects.targaxSwordTF()
@@ -1073,6 +1101,7 @@
         Game.picPortrait.Update()
 
         currState.save(Me)
+
         Game.lblEvent.ForeColor = TextColor
         Game.lblNameTitle.ForeColor = TextColor
     End Sub
