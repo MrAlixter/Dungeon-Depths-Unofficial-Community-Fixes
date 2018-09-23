@@ -13,6 +13,7 @@
     End Sub
     Public Overrides Sub Effect()
         Dim p As Player = Game.player
-        Polymorph.transform(p, "angel", 0)
+        p.ongoingTFs.Add(New AngelTF())
+        p.update()
     End Sub
 End Class

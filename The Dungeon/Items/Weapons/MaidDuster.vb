@@ -14,6 +14,7 @@
 
     Overrides Sub use()
         Dim p As Player = Game.player
-        Polymorph.transform(p, "maid", 0)
+        p.ongoingTFs.Add(New MaidTF())
+        p.update()
     End Sub
 End Class

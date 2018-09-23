@@ -1131,6 +1131,14 @@ Public Class Game
         lstLog.TopIndex = lstLog.Items.Count - 1
     End Sub
     'handleKeyPress handles the players pressed keys, and is the driver function for each 
+    Sub closeLblEvent()
+        If lblEvent.Visible = True Then
+            lblEvent.Visible = False
+            lblEvent.Text = ""
+            lblEvent.ForeColor = Color.White
+            drawBoard()
+        End If
+    End Sub
     Function shouldReturnEarly(ByVal Keydata As Keys)
         If picStart.Visible = True Then Return True
         If combatmode And (Keydata.Equals(cKeys(0)) Or Keydata.Equals(cKeys(1)) Or Keydata.Equals(cKeys(2)) Or Keydata.Equals(cKeys(3)) Or Keydata.Equals(Keys.Left) Or Keydata.Equals(Keys.Right) Or Keydata.Equals(Keys.Down) Or Keydata.Equals(Keys.Up)) And Not selecting Then
@@ -1153,8 +1161,7 @@ Public Class Game
             And Not Keydata.Equals(Keys.Left) And Not Keydata.Equals(Keys.Right) And Not Keydata.Equals(Keys.Down) And Not Keydata.Equals(Keys.Up) Then
             If npcmode = False Then
                 picNPC.Visible = False
-                lblEvent.Visible = False
-                lblEvent.ForeColor = Color.White
+                closeLblEvent()
                 player.canMoveFlag = True
                 If Not combatmode Then player.canMoveFlag = True
                 If Not lblEventOnClose Is Nothing Then
@@ -1411,7 +1418,8 @@ Public Class Game
             ElseIf keyspresed = "rock" Then
                 player.petrify(Color.Gray)
             ElseIf keyspresed = "doll" Then
-                Polymorph.transform(player, "doll", 0)
+                player.ongoingTFs.Add(New BUDollTF())
+                player.update()
             ElseIf keyspresed = "gogo" Then
                 Dim f As Integer = CInt(InputBox("Which floor?"))
                 floor = f - 1
@@ -1440,11 +1448,7 @@ Public Class Game
                 lblEventOnClose()
                 lblEventOnClose = Nothing
             End If
-            If lblEvent.Visible = True Then
-                lblEvent.Visible = False
-                lblEvent.ForeColor = Color.White
-                drawBoard()
-            End If
+            closeLblEvent()
         End If
     End Sub
     Sub attackKey()
@@ -1454,10 +1458,7 @@ Public Class Game
                 lblEventOnClose()
                 lblEventOnClose = Nothing
             End If
-            If lblEvent.Visible = True Then
-                lblEvent.Visible = False
-                lblEvent.ForeColor = Color.White
-            End If
+            closeLblEvent()
             Dim m As Monster = Nothing
             For i = 0 To npcList.Count() - 1
                 If npcList.Item(i).GetType().IsSubclassOf(GetType(Monster)) Or npcList.Item(i).GetType() Is GetType(Monster) Then
@@ -1492,10 +1493,7 @@ Public Class Game
     End Sub
     Sub waitKey()
         turn += 1
-        If lblEvent.Visible = True Then
-            lblEvent.Visible = False
-            lblEvent.ForeColor = Color.White
-        End If
+        closeLblEvent()
         Dim m As Monster = Nothing
         For i = 0 To npcList.Count() - 1
             If npcList.Item(i).GetType().IsSubclassOf(GetType(Monster)) Or npcList.Item(i).GetType() Is GetType(Monster) Then
@@ -1534,11 +1532,7 @@ Public Class Game
             lblEventOnClose()
             lblEventOnClose = Nothing
         End If
-        If lblEvent.Visible = True Then
-            lblEvent.Visible = False
-            lblEvent.ForeColor = Color.White
-            drawBoard()
-        End If
+       closeLblEvent()
 
         If player.pos.Equals(shopkeeper.pos) Then
             currNPC = shopkeeper
@@ -1644,10 +1638,7 @@ Public Class Game
             lblEventOnClose = Nothing
         End If
         lblCombatEvents.Text = ""
-        If lblEvent.Visible = True Then
-            lblEvent.Visible = False
-            lblEvent.ForeColor = Color.White
-        End If
+       closeLblEvent()
         If player.mana <= 0 Then Exit Sub
         Dim m As Monster = Nothing
         For i = 0 To npcList.Count() - 1
@@ -1682,10 +1673,7 @@ Public Class Game
             lblEventOnClose = Nothing
         End If
         lblCombatEvents.Text = ""
-        If lblEvent.Visible = True Then
-            lblEvent.Visible = False
-            lblEvent.ForeColor = Color.White
-        End If
+       closeLblEvent()
         Dim m As Monster = Nothing
         For i = 0 To npcList.Count() - 1
             If npcList.Item(i).GetType().IsSubclassOf(GetType(Monster)) Or npcList.Item(i).GetType() Is GetType(Monster) Then
@@ -2707,11 +2695,7 @@ Next
                 Exit For
             End If
         Next
-        If lblEvent.Visible = True Then
-            lblEvent.Visible = False
-            lblEvent.ForeColor = Color.White
-            drawBoard()
-        End If
+        closeLblEvent()
         If Not m Is Nothing Then m.despawn("npc")
         npcList.Clear()
         player.currTarget = Nothing
@@ -2754,7 +2738,7 @@ Next
 
     'button click methods
     Private Sub btnUse_Click(sender As Object, e As EventArgs) Handles btnUse.Click
-        lblEvent.Visible = False
+        closeLblEvent()
         If Not lblEventOnClose Is Nothing Then
             lblEventOnClose()
             lblEventOnClose = Nothing
@@ -2794,6 +2778,7 @@ Next
             'updates the combat banner
             updatePnlCombat(player, player.currTarget)
         End If
+
         lblPHealth.Text = CInt(player.health * player.getmaxHealth) & "/" & player.getmaxHealth
     End Sub
     Private Sub btnDrop_Click(sender As Object, e As EventArgs) Handles btnDrop.Click
@@ -2829,10 +2814,7 @@ Next
             lblEventOnClose()
             lblEventOnClose = Nothing
         End If
-        If lblEvent.Visible = True Then
-            lblEvent.Visible = False
-            lblEvent.ForeColor = Color.White
-        End If
+        closeLblEvent()
         Dim m As Monster = Nothing
         For i = 0 To npcList.Count() - 1
             If npcList.Item(i).GetType().IsSubclassOf(GetType(Monster)) Or npcList.Item(i).GetType() Is GetType(Monster) Then
@@ -2861,10 +2843,7 @@ Next
             lblEventOnClose = Nothing
         End If
         lblCombatEvents.Text = ""
-        If lblEvent.Visible = True Then
-            lblEvent.Visible = False
-            lblEvent.ForeColor = Color.White
-        End If
+        closeLblEvent()
         If cmboxSpec.Text = "-- Select --" Then Exit Sub
         Dim m As Monster = Nothing
         For i = 0 To npcList.Count() - 1
@@ -2899,11 +2878,7 @@ Next
         ttCosts.RemoveAll()
     End Sub
     Private Sub btnRUN_Click(sender As Object, e As EventArgs) Handles btnRUN.Click
-        If lblEvent.Visible = True Then
-            lblEvent.Visible = False
-            lblEvent.ForeColor = Color.White
-            drawBoard()
-        End If
+        closeLblEvent()
         If Not lblEventOnClose Is Nothing Then
             lblEventOnClose()
             lblEventOnClose = Nothing
@@ -2918,10 +2893,7 @@ Next
             lblEventOnClose = Nothing
         End If
         lblCombatEvents.Text = ""
-        If lblEvent.Visible = True Then
-            lblEvent.Visible = False
-            lblEvent.ForeColor = Color.White
-        End If
+        closeLblEvent()
         If cboxMG.Text = "-- Select --" Or player.mana <= 0 Then Exit Sub
         Dim m As Monster = Nothing
         For i = 0 To npcList.Count() - 1
@@ -3033,22 +3005,14 @@ Next
             lblEventOnClose()
             lblEventOnClose = Nothing
         End If
-        If lblEvent.Visible = True Then
-            lblEvent.Visible = False
-            lblEvent.ForeColor = Color.White
-            drawBoard()
-        End If
+        closeLblEvent()
     End Sub
     Private Sub btnShop_Click(sender As Object, e As EventArgs) Handles btnShop.Click
         If Not lblEventOnClose Is Nothing Then
             lblEventOnClose()
             lblEventOnClose = Nothing
         End If
-        If lblEvent.Visible = True Then
-            lblEvent.Visible = False
-            lblEvent.ForeColor = Color.White
-            drawBoard()
-        End If
+        closeLblEvent()
         'Dim s As Shop = New Shop
         Dim s As ShopV2 = New ShopV2
         s.ShowDialog()
@@ -3060,11 +3024,7 @@ Next
             lblEventOnClose = Nothing
         End If
         If MessageBox.Show("This is probably a really bad idea, are you sure?", "Bad Idea", MessageBoxButtons.YesNo) = Windows.Forms.DialogResult.Yes Then
-            If lblEvent.Visible = True Then
-                lblEvent.Visible = False
-                lblEvent.ForeColor = Color.White
-                drawBoard()
-            End If
+            closeLblEvent()
             If cboxNPCMG.Text = "-- Select --" Or player.mana <= 0 Then Exit Sub
             Dim m As NPC = Nothing
             For i = 0 To npcList.Count() - 1
@@ -3112,11 +3072,7 @@ Next
             lblEventOnClose = Nothing
         End If
         If MessageBox.Show("This is probably a really bad idea, are you sure?", "Bad Idea", MessageBoxButtons.YesNo) = Windows.Forms.DialogResult.Yes Then
-            If lblEvent.Visible = True Then
-                lblEvent.Visible = False
-                lblEvent.ForeColor = Color.White
-                drawBoard()
-            End If
+            closeLblEvent()
             If npcIndex = 0 Then
                 pushNPCDialog("So you want to fight, eh?  I'm ready whenever you are.")
             ElseIf npcIndex = 1 Then
@@ -3691,10 +3647,7 @@ Next
 
     Private Sub btnWait_Click(sender As Object, e As EventArgs) Handles btnWait.Click
         turn += 1
-        If lblEvent.Visible = True Then
-            lblEvent.Visible = False
-            lblEvent.ForeColor = Color.White
-        End If
+        closeLblEvent()
         Dim m As Monster = Nothing
         For i = 0 To npcList.Count() - 1
             If npcList.Item(i).GetType().IsSubclassOf(GetType(Monster)) Or npcList.Item(i).GetType() Is GetType(Monster) Then

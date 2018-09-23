@@ -14,16 +14,11 @@
 
     Public Overrides Sub Effect()
         Dim p As Player = Game.player
-        If transformation.canbeTFed(Game.player) Then
-            If Game.combatmode = True Or Game.npcmode = True Or Not p.canMoveFlag Then
-                Polymorph.transform(p, "princess", 2)
-            Else
-                Polymorph.transform(p, "princess", 0)
-            End If
+        If Game.combatmode = True Or Game.npcmode = True Or Not p.canMoveFlag Then
+            p.ongoingTFs.Add(New PrincessTF(False))
+        Else
+            p.ongoingTFs.Add(New PrincessTF())
         End If
-    End Sub
-    Shared Sub princessTF()
-        Dim p As Player = Game.player
-        Polymorph.transform(p, "princess", 1)
+        p.update()
     End Sub
 End Class
