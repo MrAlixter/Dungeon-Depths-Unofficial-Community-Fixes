@@ -20,8 +20,6 @@
                 Return New SuccubusTF()
             Case "Tigress"
                 Return New TigressTF()
-            Case "Half-Succubus"
-                Return New HalfSuccubusTF()
             Case "Minotaur Cow"
                 Return New MinotaurCowTF()
             Case "Princess​"
@@ -45,7 +43,7 @@
         MyBase.stopTF()
         tfDone = True
         Game.player.perks("polymorphed") = -1
-        Game.player.revert2()
+        Game.player.revertToPState()
     End Sub
 
     Public Overrides Function getNextStep(stage As Integer) As Action

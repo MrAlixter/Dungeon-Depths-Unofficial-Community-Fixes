@@ -186,6 +186,8 @@
     <Compile Include="Entities\Player\Transformations\Polymorphs\SuccubusTF.vb" />
     <Compile Include="Entities\Player\Transformations\Polymorphs\TigressTF.vb" />
     <Compile Include="Entities\Player\Transformations\PrincessTF.vb" />
+    <Compile Include="Entities\Player\Transformations\RandoSlimeTF.vb" />
+    <Compile Include="Entities\Player\Transformations\RandoTF.vb" />
     <Compile Include="Entities\Player\Transformations\VialOfSlimeTF.vb" />
     <Compile Include="Entities\Player\Transformations\TargaxTF.vb" />
     <Compile Include="Entities\Player\Transformations\ThrallTF.vb" />
@@ -204,6 +206,7 @@
     <Compile Include="Items\Usable\Potions\Mystery Potions\HyperManaPotion.vb" />
     <Compile Include="Items\Usable\Spellbooks\ASpellbook.vb" />
     <Compile Include="Items\Weapons\SpidersilkWhip.vb" />
+    <Compile Include="Tiles\LoadedChest.vb" />
     <Compile Include="WindowsForms\About.Designer.vb">
       <DependentUpon>About.vb</DependentUpon>
     </Compile>

@@ -7,7 +7,7 @@
     Public pForm As pForm = New Human()
     Dim health As Double
     Dim maxHealth, mana, maxMana, attack, defence As Integer
-    Dim will, speed, evade, gold, lust As Integer
+    Dim will, speed, gold, lust As Integer
     Dim breastSize, hunger As Integer
     Dim equippedWeapon As Weapon
     Dim equippedArmor As Armor
@@ -36,7 +36,6 @@
         defence = p.defence
         will = p.will
         speed = p.speed
-        evade = p.evade
         gold = p.gold
         lust = p.lust
         breastSize = p.breastSize
@@ -72,7 +71,6 @@
         defence = 0
         will = 0
         speed = 0
-        evade = 0
         gold = 0
         lust = 0
         breastSize = 0
@@ -107,7 +105,6 @@
         p.defence = defence
         p.will = will
         p.speed = speed
-        p.evade = evade
         p.gold = gold
         p.lust = lust
         p.breastSize = breastSize
@@ -135,22 +132,13 @@
         pForm = p.forms(p.pForm.name)
         description = p.description
         health = p.health
-        'health += p.hBuff
         maxHealth = p.maxHealth
-        'maxHealth += p.hBuff
         mana = p.mana
-        'mana += p.mBuff
         maxMana = p.maxMana
-        'maxMana += p.mBuff
         attack = p.attack
-        'attack += p.aBuff
         defence = p.defence
-        'defence += p.dBuff
         will = p.will
-        'will += p.wBuff
         speed = p.speed
-        'speed += p.sBuff
-        evade = p.evade
         gold = p.gold
         lust = p.lust
         breastSize = p.breastSize
@@ -189,7 +177,6 @@
             defence = 0
             will = 0
             speed = 0
-            evade = 0
             gold = 0
             lust = 0
             breastSize = 0
@@ -220,7 +207,6 @@
         defence = CInt(readArray(11))
         will = CInt(readArray(12))
         speed = CInt(readArray(13))
-        evade = CInt(readArray(14))
         hunger = CInt(readArray(15))
         gold = CInt(readArray(16))
 
@@ -275,7 +261,7 @@
     Public Function write() As String
         If initFlag Then
             Dim output As String = CStr(name & "*" & pClass.name & "~" & pForm.name & "*" & description & "*" & health & "*" & maxHealth & "*" & mana & "*" & maxMana & "*" & wingIndex & "*" & haircolor.A & "*" & skincolor.A & "*" & _
-               attack & "*" & defence & "*" & will & "*" & speed & "*" & evade & "*" & hunger & "*" & gold & "*" & equippedArmor.getName() & "*" & equippedWeapon.getName() & "*" & _
+               attack & "*" & defence & "*" & will & "*" & speed & "*" & "placeholder" & "*" & hunger & "*" & gold & "*" & equippedArmor.getName() & "*" & equippedWeapon.getName() & "*" & _
                sex & "*" & hornIndex & "*" & breastSize & "*" & haircolor.R & "*" & haircolor.G & "*" & haircolor.B & "*" & skincolor.R & "*" & skincolor.G & "*" & skincolor.B & "*" & _
                textColor.R & "*" & textColor.G & "*" & textColor.B & "*")
             output += perks.Count & "*"

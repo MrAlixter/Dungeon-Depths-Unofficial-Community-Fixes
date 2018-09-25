@@ -477,56 +477,9 @@
     End Function
 
     Public Sub bodySwap(ByRef p As Player)
-        Randomize()
-
-        Dim classes = {"Warrior", "Mage", "Paladin", "Warrior", "Mage", "Bimbo"}
-        p.pClass = p.classes(classes(Int(Rnd() * classes.Length)))
-        p.sex = "Female"
-        p.sexBool = True
-
+        p.ongoingTFs.Add(New RandoTF())
+        p.update()
         p.health = 0.1
-        p.maxHealth = 70 + Int(Rnd() * 50)
-        p.attack = 5 + Int(Rnd() * 7)
-        p.defence = 5 + Int(Rnd() * 7)
-        p.will = 5 + Int(Rnd() * 7)
-        p.speed = 5 + Int(Rnd() * 7)
-        p.evade = 5 + Int(Rnd() * 7)
-        p.gold = 25 + Int(Rnd() * 200)
-        p.lust = 0
-        p.mana = Int(Rnd() * 7)
-        p.hunger = 0
-        p.hBuff = 0
-        p.mBuff = 0
-        p.wBuff = 0
-        p.aBuff = 0
-        p.dBuff = 0
-
-        p.breastSize = Int(Rnd() * 3) + 1
-
-        p.inventory.Clear()
-        p.perks.Clear()
-        p.inventorynames.Clear()
-        Game.Potions.Clear()
-        p.createInvPerks()
-        Game.loadPotionList()
-
-        Dim armor = New Integer() {5, 7, 12, 16, 17, 18, 19, 20, 38, 39, 46, 47, 54, 54}
-        Dim armorIndex = armor(Int(Rnd() * (armor.Length)))
-        Dim weapon = New Integer() {6, 9, 21, 22}
-        Dim weaponIndex = weapon(Int(Rnd() * (weapon.Length)))
-        p.inventory(armorIndex).addOne()
-        p.inventory(weaponIndex).addOne()
-        p.equippedArmor = p.inventory(armorIndex)
-        p.equippedWeapon = p.inventory(weaponIndex)
-
-        p.genRandomPortrait(True)
-
-        Dim si As Integer = p.sState.iArrInd(3).Item1
-        p.currState.save(p)
-        p.pState.save(p)
-        p.sState.save(p)
-        p.sState.iArrInd(3) = New Tuple(Of Integer, Boolean)(si, True)
-
         Game.pushLblEvent("As the explorer is defeated, they mumble some arcane poem and make a hand gesture which causes the two of you to begin glowing.  With a flash, you suddenly find yourself looking at the dungeon from a slightly different angle.  As you black out and collapse, the last thing you see is your grinning face standing over you." & vbCrLf & "The Explorer has taken your body!")
     End Sub
 End Class

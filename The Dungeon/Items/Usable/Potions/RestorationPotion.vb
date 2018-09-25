@@ -21,7 +21,7 @@
         ' ElseIf Form1.player.iArrInd.Equals(Form1.player.sIArrInd) Then
         'Form1.lstLog.Items.Add( "You can't revert further!")
         'Else
-        Game.player.revert()
+        Game.player.revertToSState()
         'End If
         Game.lstLog.TopIndex = Game.lstLog.Items.Count - 1
         count -= 1

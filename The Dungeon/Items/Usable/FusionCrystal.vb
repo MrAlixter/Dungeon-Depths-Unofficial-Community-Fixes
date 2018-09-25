@@ -138,12 +138,6 @@
             player.speed = p2.speed * 1.5
         End If
 
-        If p1.evade > p2.evade Then
-            player.evade = p1.evade * 1.5
-        Else
-            player.evade = p2.evade * 1.5
-        End If
-
         If p1.lust > p2.lust Then
             player.lust = p1.lust * 1.5
         Else

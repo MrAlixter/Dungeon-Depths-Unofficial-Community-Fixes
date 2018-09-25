@@ -113,7 +113,7 @@
     End Sub
 
     Shared Sub rubyRevert()
-        Game.player.revert2()
+        Game.player.revertToPState()
         Game.player.canMoveFlag = True
         Dim tr As New Monster(-1)
         Game.statueList.Add(New Statue(tr))

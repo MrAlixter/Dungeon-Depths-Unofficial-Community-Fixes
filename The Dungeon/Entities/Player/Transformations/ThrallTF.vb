@@ -6,6 +6,12 @@
         Game.player.perks("thrall") = 0
         nextStep = AddressOf shiftTowardsPrefForm
     End Sub
+    Sub New()
+        MyBase.New(1, Int(Rnd() * 10) + 10, 0, False)
+        tfName = "ThrallTF"
+        Game.player.perks("thrall") = 11
+        nextStep = AddressOf crystalSpawn
+    End Sub
     Sub New(cs As Integer, n As Integer, tts As Integer, wi As Double, cbs As Boolean, tfd As Boolean)
         MyBase.New(cs, n, tts, wi, cbs, tfd)
         tfName = "ThrallTF"
@@ -16,10 +22,9 @@
         Dim p = Game.player
         p.prefForm.shiftTowards(Game.player)
         p.perks("thrall") += 1
-        'MsgBox("1")
         If p.perks("thrall") > 11 Then
-            MsgBox("2")
             p.prefForm.snapShift(Game.player)
+
         End If
         MyBase.currStep -= 1
     End Sub
@@ -58,6 +63,52 @@
         stopTF()
     End Sub
 
+    Shared Sub fightSorc()
+        Dim p = Game.player
+        Dim m As Monster
+        m = New Monster(9)
+        Game.npcList.Add(m)
+        p.currTarget = m
+        Game.toCombat()
+        Game.lstLog.Items.Add((m.getName() & " attacks!"))
+        Game.lstLog.TopIndex = Game.lstLog.Items.Count - 1
+    End Sub
+    Shared Sub fightSorc2()
+        Dim p = Game.player
+        Game.lblEvent.Visible = False
+        Dim m As Monster
+        m = New Monster(8)
+        Game.npcList.Add(m)
+        p.currTarget = m
+        Game.toCombat()
+        Game.lstLog.Items.Add((m.getName() & " attacks!"))
+        Game.lstLog.TopIndex = Game.lstLog.Items.Count - 1
+    End Sub
+    Shared Sub acceptSorc()
+        Dim p = Game.player
+        p.perks("thrall") = -1
+        p.ongoingTFs.Add(New HalfSuccubusTF())
+        p.update()
+        Game.pushLblEvent("""Then I deem your task concluded as a success.  Go now, and take care not to fall under the spell of any others,"" your controller states.")
+    End Sub
+    Shared Sub betraySorc()
+        Dim p = Game.player
+        Game.pushLblEvent("Brushing past you, your ""boss"" heads straight for the array.  As they begin fiddling with it, you take notice of their distraction and begin creeping into a position behind them.  As they chant over the array, you prepare to make your move.  " & _
+                          "As their raving reaches its zenith and the runes enscribed on the crystal begin to glow you strike out, disrupting their ritual.  ""YOU!  DO YOU HAVE ANY IDEA ..."" screams the mage, and while they shout you realize you couldn't care less about them.  " & _
+                          "Looking down, you see that your collar has gone dark and dangles open from your neck.  Grinning, your prepare to fight for your life.", AddressOf fightSorc2)
+
+
+        Equipment.accChange("Nothing")
+        p.inventory(69).count -= 1
+
+        Equipment.portraitUDate()
+    End Sub
+    Shared Sub waitSorc()
+        Dim out = "You decide against making a move now, instead waiting to see what happens next.  Your controller doesn't seem to notice you, instead focusing all their attention on the crystalline array.  As they fiddle with it, you notice a slight purple aura beginning to form around them and wait, are those horns sprouting out of their hair that seems to catch a non-existant wind?  With a flourish, they complete ... something ... and a blinding flash engulfs them.  Where once stood your human controller now stands a half-demon who only now seems to have taken notice of you." & _
+                        """Well... It looks like you succeeded.  For that, I will give you an ultimatium.  Join me as my general, or die in these dungeons as my slave."
+        Game.pushLblEvent(out, AddressOf acceptSorc, AddressOf fightSorc, "Do you accept?")
+    End Sub
+
     Public Overrides Sub stopTF()
         MyBase.stopTF()
         Game.player.perks("thrall") = -1
@@ -66,12 +117,16 @@
     Public Overrides Function getNextStep(stage As Integer) As Action
         Dim p = Game.player
         If p.perks("thrall") = -1 Or p.pForm.name.Equals("Half-Succubus") Then
+            'MsgBox("A")
             Return AddressOf stopTF
-        ElseIf Not p.prefForm.playerMeetsForm(p) Then
+        ElseIf Not p.prefForm.playerMeetsForm(p) And Not p.perks("thrall") > 10 Then
+            'MsgBox("B")
             Return AddressOf shiftTowardsPrefForm
         ElseIf p.prefForm.playerMeetsForm(p) Or p.perks("thrall") > 10 Then
+            'MsgBox("C")
             Return AddressOf crystalSpawn
         End If
+        'MsgBox("D")
         Return Nothing
     End Function
     Public Overrides Sub setWaitTime(stage As Integer)

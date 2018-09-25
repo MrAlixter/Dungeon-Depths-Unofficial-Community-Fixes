@@ -355,7 +355,7 @@
             Game.player.sexBool = False
             Game.player.sex = "Male"
         End If
-        Game.player.setClass(ComboBox2.Text)
+        Game.player.setClassLoadout(ComboBox2.Text)
 
         NormalClothes.bsizeneg1 = New Tuple(Of Integer, Boolean)(CInt(Game.player.iArrInd(3).Item1), False)
         NormalClothes.bsize1 = New Tuple(Of Integer, Boolean)(CInt(Game.player.iArrInd(3).Item1), True)

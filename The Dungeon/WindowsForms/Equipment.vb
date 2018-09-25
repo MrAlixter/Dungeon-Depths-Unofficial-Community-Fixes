@@ -72,7 +72,7 @@
             Game.lstLog.Items.Add("Putting away your wand causes you to change into your regular self!")
             p.inventory.Item(10).add(-1)
             p.magGState.save(p)
-            p.revert2()
+            p.revertToPState()
             revertFlag = True
         End If
 

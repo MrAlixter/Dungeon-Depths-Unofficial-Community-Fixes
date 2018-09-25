@@ -191,7 +191,7 @@
             t.Text = "#"
             t.ForeColor = Color.FromArgb(45, 45, 45)
             Game.mBoard(p.Y, p.X).ForeColor = Color.FromArgb(45, 45, 45)
-            Dim c As Chest = Game.baseChest.Create(p.X, p.Y)
+            Dim c As Chest = Game.baseChest.Create(New Point(p.X, p.Y))
             Game.chestList.Add(c)
         ElseIf name = "+ (Trap)" Then
             If removeFlag Then removeItem()

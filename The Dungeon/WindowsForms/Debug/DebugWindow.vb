@@ -68,7 +68,7 @@ Public Class Debug_Window
         boxDef.Value = Game.player.defence
         boxWil.Value = Game.player.will
         boxSpd.Value = Game.player.speed
-        boxEvd.Value = Game.player.evade
+        boxEvd.Value = -0
         boxGold.Value = Game.player.gold
 
 
@@ -451,7 +451,7 @@ Public Class Debug_Window
     End Sub
 
     Private Sub boxEvd_ValueChanged(sender As Object, e As EventArgs) Handles boxEvd.ValueChanged
-        Game.player.evade = boxEvd.Value
+        'evade removed
     End Sub
 
     Private Sub boxGold_ValueChanged(sender As Object, e As EventArgs) Handles boxGold.ValueChanged

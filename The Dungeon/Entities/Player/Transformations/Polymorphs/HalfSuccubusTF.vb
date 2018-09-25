@@ -1,11 +1,13 @@
 ﻿Public Class HalfSuccubusTF
-    Inherits PolymorphTF
+    Inherits Transformation
     Sub New()
-        MyBase.New()
+        MyBase.New(1, 0, 0, False)
         tfName = "HalfSuccubusTF"
+        nextStep = AddressOf step1
     End Sub
     Sub New(cs As Integer, n As Integer, tts As Integer, wi As Double, cbs As Boolean, tfd As Boolean)
         MyBase.New(cs, n, tts, wi, cbs, tfd)
+        tfName = "HalfSuccubusTF"
         nextStep = getNextStep(cs)
     End Sub
 
@@ -13,7 +15,7 @@
         stopTF()
     End Sub
 
-    Public Overrides Sub step1()
+    Public Sub step1()
         Dim p = Game.player
         Dim out = ""
 
@@ -42,4 +44,18 @@
         'transformation description push
         p.TextColor = Color.HotPink
     End Sub
+
+    Public Overrides Sub stopTF()
+        MyBase.stopTF()
+    End Sub
+
+    Public Overrides Function getNextStep(stage As Integer) As Action
+        Dim p = Game.player
+        Select Case stage
+            Case 0
+                Return AddressOf step1
+            Case Else
+                Return AddressOf stopTF
+        End Select
+    End Function
 End Class

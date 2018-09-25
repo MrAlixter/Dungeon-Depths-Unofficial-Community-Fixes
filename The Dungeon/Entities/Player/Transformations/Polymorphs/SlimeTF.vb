@@ -21,7 +21,7 @@
         Equipment.clothesChange("Naked")
 
         'slime transformation
-        p.perks("slimehair") = True
+        p.perks("slimehair") = 1
         p.haircolor = Color.FromArgb(180, 5, 245, 198)
         p.skincolor = Color.FromArgb(200, 0, 255, 255)
         p.iArrInd(6) = New Tuple(Of Integer, Boolean)(5, True)

@@ -613,25 +613,29 @@ Public Class Game
         mBoard(playerY, playerX).Text = "@"
         player.pos = New Point(playerX, playerY)
 
+        If floor = 4 Then
+            Dim possiblePoints = {New Point(playerX + 1, playerY), _
+                                  New Point(playerX - 1, playerY), _
+                                  New Point(playerX, playerY + 1), _
+                                  New Point(playerX, playerY - 1), _
+                                  New Point(playerX + 1, playerY + 1), _
+                                  New Point(playerX - 1, playerY - 1), _
+                                  New Point(playerX + 1, playerY - 1), _
+                                  New Point(playerX - 1, playerY + 1)}
+            Dim p As Point = possiblePoints(0)
+            Dim i = 0
+            Do While (mBoard(p.Y, p.X).Tag < 1 Or mBoard(p.Y, p.X).Text <> "") And i < possiblePoints.Count
+                i += 1
+                p = possiblePoints(i)
+            Loop
+            Dim c As Chest = New LoadedChest(p, 4)
+            chestList.Add(c)
+        End If
+
         placeStairs()
         placeChest(code)
         If floor > 2 Then placeTraps()
         placeNPCs()
-
-        'Dim l As List(Of Point()) = New List(Of Point())
-        'For x = 0 To mBoardWidth
-        '    For y = 0 To mBoardHeight
-        '        l.Add(route(player.pos, New Point(x, y), "n/a", New List(Of Point), 0))
-        '    Next
-        'Next
-
-        'Dim p = route(player.pos, stairs, "n/a", New List(Of Point))
-        'For i = 0 To UBound(p)
-        '    mBoard(p(i).Y, p(i).X).Tag = 2
-        'Next
-        'Dim sc = New SlaveCollar
-        'sc.onEquip()
-
     End Sub
     Sub connectRooms(ByVal p1 As Point, ByVal p2 As Point)
         Dim cursor As Point = p1
@@ -763,9 +767,6 @@ Public Class Game
         mBoard(stairsY, stairsX).ForeColor = Color.FromArgb(45, 45, 45)
         mBoard(stairsY, stairsX).Text = "H"
     End Sub
-    Function chestSpotValid()
-        Return True
-    End Function
     Sub placeChest(ByVal code As String)
         Rnd(-1)
         Randomize(code.GetHashCode)
@@ -792,7 +793,7 @@ Public Class Game
                 Loop
             End If
 
-            Dim chest As Chest = baseChest.Create(chestX, chestY, code)
+            Dim chest As Chest = baseChest.Create(New Point(chestX, chestY), code)
             If r = i Then chest.add(53, 1)
             chestList.Add(chest)
             mBoard(chestY, chestX).ForeColor = Color.FromArgb(45, 45, 45)
@@ -1769,7 +1770,7 @@ Public Class Game
             lstLog.Items.Add("Putting away your wand causes you to change into your regular self!")
             player.inventory.Item(10).add(-1)
             player.magGState.save(player)
-            player.revert2()
+            player.revertToPState()
         End If
 
         Dim owName = player.equippedWeapon.getName
@@ -2193,7 +2194,6 @@ Next
         lblDEF.Text = "DEF = " & player.getDefence
         lblSKL.Text = "WIL = " & player.getWillpower
         lblSPD.Text = "SPD = " & player.getSpeed
-        lblEVD.Text = "EVD = " & player.evade
 
         player.currState.save(player)
 
@@ -2631,11 +2631,6 @@ Next
         btnLeave.Visible = True
 
         lstLog.TopIndex = lstLog.Items.Count - 1
-
-        If player.perks("polymorphed") > -1 Then
-            player.perks("polymorphed") = 0
-            player.revert2()
-        End If
     End Sub
     'run handles the player choice to run from combat
     Sub run()
