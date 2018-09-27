@@ -52,7 +52,7 @@ Public Class ShopV2
         boxShop.Items.Clear()
         For i = 0 To p.inventory.Count - 1
             If p.inventory(i).count > 0 Then
-                If p.inventory(i).getName().Equals(p.equippedArmor.getName()) Or p.inventory(i).getName().Equals(p.equippedWeapon.getName()) Then
+                If p.inventory(i).getName().Equals(p.equippedArmor.getName()) Or p.inventory(i).getName().Equals(p.equippedWeapon.getName()) Or p.inventory(i).getName().Equals(p.equippedAcce.getName()) Then
                     If p.inventory(i).count > 1 Then
                         boxInventory.Items.Add(lineup(p.inventory(i).getName(), Int(p.inventory(i).value / 2), p.inventory(i).count - 1))
                         pInventory.Add(p.inventory(i).getName())
