@@ -335,7 +335,8 @@
         If dmg > 0 Then dmg += Int(Rnd() * 3) + -1
         If dmg = -2 Then
             dmg = currTarget.attack * 2
-            Dim actualDMG As Integer = dmg - ((getDefence() / 100) * dmg)
+            'Dim actualDMG As Integer = dmg - ((getDefence() / 100) * dmg)
+            Dim actualDMG As Integer = dmg * Math.Min(getDefence() / 100, 0.5)
             health -= actualDMG / getmaxHealth()
             Game.lblPHealtDiff.Tag -= actualDMG
             Game.lstLog.Items.Add(CStr("You got hit! Critical hit! -" & actualDMG & " health!"))
