@@ -103,6 +103,7 @@ Partial Class ShopV2
         Me.number.Size = New System.Drawing.Size(89, 26)
         Me.number.TabIndex = 192
         Me.number.TextAlign = System.Windows.Forms.HorizontalAlignment.Center
+        Me.number.Value = New Decimal(New Integer() {1, 0, 0, 0})
         '
         'btnSell
         '
