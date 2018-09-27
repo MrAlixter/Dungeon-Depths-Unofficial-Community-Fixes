@@ -1,250 +1,247 @@
-To-Do 1.0:
+﻿To-Do 1.0:
 
-Engine Improvements:
-- [done] multiple saves
-- [done] Combine character generator menus
-- [done] Wait during combat
-- Tutorial of some sort
-- cool down between encounters
-- Keyboard controls for mouse actions
-- better save forward compatibility
-- Out of combat actions
-  - Rest Funcion
-  - Lust managment
-  - Casting spells
-- Tails
-- Use panels instead of forms where possible
-- More detailed self inspect
+●Engine Improvements:
+	- Tutorial of some sort
+	- better save forward compatibility
+	- Out of combat actions
+		- Lust managment
+		- Casting spells
+	- Tails
+	- Replace Windows Forms menus with panel objects
+	- Re-write transformation and reversion passages
+		- ...
+	- breakdown of stats on hover over stat label
+	- unselect items in inventory by clicking again
+	- possible custom item implementation
+	- stat description in about section
+	- player TFs into inanimate items, left in chests behind
 
-New Features:
-- [done] Fusion Crystal
-- [done] info box with credits
-  - Houdini111 - Memeber of the development Team
-  - undercoversam - advice on balancing
-  - Rangorak - kisekae & art advice/created default clothing 4
-- [done] Finish level 3
-  - ...
-- [done?] magic armor
+●Balance Modifications:
+	- Nerfs:
+		- Targax Sword:
+			- Reduce the attack buff to 40
+			- Reduce transformation time to 4 kills
+			- Once the transformation is complete, the player will not be able to:
+				- Run away
+				- Heal in most ways
+	- Balance issues to address:
+		- Items are too plentiful
+			- Reduce default chest richness
+		- Enemies are too weak
+			- Thrall
+			  HP = 90
+			  ATK = 20
+			  DEF = 7
+			  SPD = 9
+			- Slime
+			  HP = 30
+			  ATK = 15
+			  DEF = 50
+			  SPD = 6
+			- Goo-Girl
+			  HP = 90
+			  ATK = 30
+			  DEF = 65
+			  SPD = 10
+			- Enthralling
+			  HP = 150
+			  ATK = 40
+			  DEF = 17
+			  SPD = 20
+			- Mimic
+			  HP = 175
+			  ATK = 35
+			  DEF = 10
+			  SPD = 50
+			handiwork giggling 
+			  
+			  
+		- No consequence for losing to enemies
+		- Floors don't get harder
+			- Decrease enemy spawn rate
+			- Floor 2 = x1.15
+			- Floor 3 = x1.30
+			- Floor 4 = x1.5
+			- Floor 5+ = x[1 + 0.2(floor)]
+		- ruby / blow-up doll traps don't have much consequence
+		- Thrall tf doesn't have much consequence
+		
 
+	- WIL
+		-[done] Killing monsters and bossed can raise will
+		-[done] Running from monsters, traps, and lust lower will
+		- WIL will affect tf speed, and WIL checks will determine some TFs
+	- [7 / 14] Form Exclusive specials (used 1nce per combat)
+		- ...
+		- Goddess : ???
+		- Maid : Dustscreen (Guranteed escape)
+		- Princess: Royal Decree (Enemy attack 1/2ed)
+		- Nurse : Medical knowlege (healing effects heal double for 1 turn)
+		- Blob : HyperAbsorb (
+		- Naga : Tail chokehold (Deals ATK + 25 damage)
+		- Cow Girl : Milk Cannon (deals superlight damage, creates healing milk)
 
-- Food [8/9]:
-  - Fortune Cookie (Forsee's a random change at some point)
-    - Masculine / Feminine tfs
-    - 
-    - ...
-- Re-write TFs
-  - ...
-- Tweaking Balance
-  - ...
-  - WIL
-    - Killing monsters and bossed can raise will
-    - Running from monsters, traps, and lust lower will
-    - WIL will affect tf speed, and WIL checks will determine some       TFs
-  - EVD 
-    - Evade influances the likelyhood of a player avoiding an attack
-  - More dynamic enemies
-    - Attack classes 
-    - Stuns (5%)
-    - Chance of charge attack (8%)
-    - Evade Stats have impact
-  - [done][5 / 5] Weapon Stuff
-    - ...
-  - [7 / 14] Form Exclusive specials (used 1nce per combat)
-    - ...
-    - Goddess : ???
-    - Maid : Dustscreen (Guranteed escape)
-    - Princess: Royal Decree (Enemy attack 1/2ed)
-    - Nurse : Medical knowlege (healing effects heal double for 1 turn)
-    - Blob : HyperAbsorb (
-    - Naga : Tail chokehold (Deals ATK + 25 damage)
-    - Cow Girl : Milk Cannon (deals superlight damage, creates healing milk)
-- Finish level 4 
-  - miniBoss: Bodystealing Goo
-  - Obvious chest with key
-  - goo takes body
-  - if key is taken, must get body back
-  - otherwise can choose whether to get body back
-  - steals body, needs to be found 
-- Finish level 5
-  - Boss: Medusa
-  - [done] Straight shot full of statues
+●New Dungeon Content:
+	- Finish level 4:
+		- miniBoss: Bodystealing Goo
+		- Obvious chest with key
+		- goo takes body
+		- if key is taken, must get body back
+		- otherwise can choose whether to get body back
+		- steals body, needs to be found 
+	- Finish level 5:
+		- Boss: Medusa
+		- [done] Straight shot full of statues
+		
+	- Rework monsters
+		- FLOOR 1:
+			- Enslaved Thrall
+				- bad end: become a thrall
+				- drops: stick of gum, chain collar, compass, mana potion
+			- Slime
+				- bad end: further slime tf
+					- [done] slime hair
+					- slime head
+					- full slime
+					- superior slime
+					- blob
+						- absorb common mobs with physical bodies, reshape them (re-create character)
+					-[done] drops: vial of slime, health potions
+			- Spider
+				- bad end: aphrodisiac spray
+				- drops: spidersilk whip, spider venom
+		- FLOOR 2
+			- Enthralling Necromancer
+				- bad end: become bimbo thrall
+				- drops: hypnotic scepte, spellbook, mana potion, necromancer robe
+		- FLOOR 3
+			- Arachne Huntress
+				- bad end: venom/half spider tf
+				- drops: widow's charm, poisoned dagger, chitin armor, widow egg
+		- FLOOR 4
+			- Goo Girl
+				- bad end: rapid slime tf
+				- drops: slime helmet, slime chestplate, health potion, vial of slime, sealed vial
+	
+		- Forest Area:
+			- Dryad
+			- Daughters of Circe Apprentince
+			- Pollenbearer
+			- Fairy
+			- Daughter of Circe
+			- Circe
 
-- [13 / 30] Add 30 more items
-  - ...
-  - WEAPONS
-    - Pickaxe			(weapon +3 ATK)
-    - Valkarie's Greatsword	(+25 ATK, +10 Mana, slow valkarie tf)
-    - Cursed Sword		(weapon +10 ATK/sword tf) +1 img
-    - Spidersilk Whip		(weapon, +25 ATK, Critical hits more frequently)
-    - Mesmeric scepter		(+25 Mana, Chance to stun)
-    - poisoned dagger		(+15 ATK, high chance to critical)
-  - ARMOR
-    - T-Shirt			(armor +2 DEF) +4 img
-    - Wet T-Shirt		(armor +1 DEF) +3 img
-    - Cursed Bustier      	(armor +10 DEF/slow manequin tf) +4 img
-    - Cursed Tunic		(armor +5 DEF/slow maiden tf) +2 img
-    - Cursed Dirndl 		(armor +5 DEF) +4 img
-    - Cow Girl Outfit           (+7 DEF, +5 SPD)
-    - chitin armor
-    - slime chestplate
-  - USEABLES
-    - Ouiji Board		(Fights ghost enemies/allows possesion)
-    - Holy Water 		(Expels Ghost)
-    - Warp Orb 			(Teleports player, may cause tf to random body)
-    - Healing Milk 		(Heals)
-    - Tentacle rune		(Triggers tentacles, related to the trap)
-    - spider venom		(+5 mana regardless of maximum, +10 lust)
-    - Widow's charm		(+5 ATK, +5 SPD, +5 lust)
-    - widow egg
-    - sealed vial (only blobs can use)
-    - Spellbook diversification / Outside of combat uses for magic
-    - Normal Spellbook
-      - [done] Icicle Spear
-      - Self Polymorph
-        -[done] Slime
-        -[done] Dragon
-        -[done] Succubus
-        - Tigress
-        - Harpy
-      - [done] Polymorph Enemy
-        -[done] Princess
-        - Frog
-        -[done] Sheep
-        -[done] Bunny
-      - [done] Petrify
-      - Luminate
-      - Heal
-      - Dowse
-      - Center Soul (Reverts/halts some tfs
-    - Advanced Spellbook
-      - Turn to Blade
-      - Major Heal
-      - Thaumatic Compass (Path to stairs)
-      - Teleport Enemy
-      - Turn to Cupcake
-      - Mass Freeze (Enemies approach stunned for 2 turns)
-      - Love Charm (50% chance to stun, npcs give discount, raises self lust)
-    - Banned Spellbook
-      - Polymorph Self
-        -Goddess
-      - Arcane Hypnosis
-    - POTIONS
-      - Perma-TF potion     	(makes tfstate the starting state)
-  - ACCESSORIES
-    - Cowbell			(cow tf/Creates heavy_cream) +9 img
-    - Mirror Shield 		(Accessory, needed to fight medusa)
-    - Slave Collar		(Thralls ignore, gradual tf by sorcerer/ess
-  - HATS
-    - Nurses Cap		(nurse tf/Fast healing) +4 img
-    - Slime helmet
-  - GLASSES
-- Vial of slime/slime tf
-  - [done] slime hair
-  - slime head
-  - full slime
-  - superior slime
-  - blob
-    - absorb common mobs with physical bodies, reshape them (re-create character)
+	-[1 / 4] Add 4 NPC's:
+		- Shady Wizard +3 img
+			- bad end: blowup doll tf
+			- sells magic/illicit stuff
+				- Mirrorshield
+				- Spellbook
+				- Advanced Spellbook
+				- Banned Spellbook
+		- Hypnotist Teacher +3 img
+		- Magic Items Shop +3 img
+		
+	- Traps
+		- hypnosis trap
+			- Female master
+			- male master
+			- no master
+		- Summoning Circle (Tentacles)
+		
+	- Combination TFs
+		- Demon Princess
+		- Bimbo Princess
+		- Dragon Maid
+		- Demonic Angel
+		- Nurse Cow
+		- Holy Cow
+	
 
-- [0 / 5] Seasonal outfit (won't make it on time for some)
-  - Christmas
-  - Valentines Day
-  - Summer
-  - Halloween
-  - 1-Year aniversery
-
-- Rework monsters
-  - FLOOR 1:
-    - Enslaved Thrall
-      - bad end: become a thrall
-      - drops: stick of gum, chain collar, compass, mana potion
-    - Slime
-      - bad end: further slime tf
-      - [done] drops: vial of slime, health potions
-    - Spider
-      - bad end: aphrodisiac spray
-      - drops: spidersilk whip, spider venom
-  - FLOOR 2
-    - Enthralling Necromancer
-    - bad end: become bimbo thrall
-    - drops: hypnotic scepte, spellbook, mana potion, necromancer robe
-  - FLOOR 3
-    - Arachne Huntress
-    - bad end: venom/half spider tf
-    - drops: widow's charm, poisoned dagger, chitin armor, widow egg
-  - FLOOR 4
-    - Goo Girl
-    - bad end: rapid slime tf
-    - drops: slime helmet, slime chestplate, health potion, vial of slime,
-             sealed vial
-
-- [1 / 4] Add 4 NPC's
-  - [done] Shopkeeper +3 img
-  - Shady Wizard +3 img
-    - bad end: blowup doll tf
-    - sells magic/illicit stuff
-      - Mirrorshield
-      - Spellbook
-      - Advanced Spellbook
-      - Banned Spellbook
-  - Hypnotist Teacher +3 img
-  - Magic Items Shop +3 img
-- [3 / 6] 6 Traps
-  - ...
-  - [done] Blow-Up doll coupon trap
-  - hypnosis trap
-     - Female master
-     - male master
-     - no master
-  - Summoning Circle (Tentacles)
-- [3 / 6] 6 more mystery potions
-  - Murky potion / Weakness Potion (-10% stats for 30 turns)
-  - Smokey Potion / Shrink Potion (1/10 stats, but 10x evade for 30 turns)
-  - Clear Potion / Snake potion (50/50 chance between temporary snake tf and naga tf)
-  - [done] Aqua Potion / Masculine potion (Gives dick/Grows Muscles?)
-  - [done] Rose Potion / HyperHeal Potion (Raises hp to full +10 max hp)
-  - [done] Glittery Potion / HyperMana Potion (Raises mana to full +5 max mana)
-- [0 / 6] 6 Combo TFs
-  - Demon Princess
-  - Bimbo Princess
-  - Dragon Maid
-  - Demonic Angel
-  - Nurse Cow
-  - Holy Cow
-- inspect items in shop
-- Non-combat armor benefits
-- breakdown of stats on hover
-- [done] re-value all items
-- unselect items by clicking again
-- [houdini] debug menu in the about section
-  - possible custom item implementation
-- character presets
-- a config file to save player presets and implemented items
-- stat description in about section
-- player TFs into inaninmate items, left in chests behind
-
-- Forest Area:
-  - Dryad
-  - Daughters of Circe Apprentince
-  - Pollenbearer
-  - Fairy
-  - Daughter of Circe
-  - Circe
-
+●New Items:
+	- FOOD:
+		- Fortune Cookie (Foresee a random change at some point)
+			- Masculine / Feminine tfs 
+			- ...
+	- WEAPONS:
+		- Pickax			(weapon +3 ATK)
+		- Valkyrie's Great-sword	(+25 ATK, +10 Mana, slow Valkyrie tf)
+		- Cursed Sword		(weapon +10 ATK/sword tf) +1 img
+		-[done] Spidersilk Whip		(weapon, +25 ATK, Critical hits more frequently)
+		- Mesmeric scepter		(+25 Mana, Chance to stun)
+		- poisoned dagger		(+15 ATK, high chance to critical)
+	- ARMOR:
+		- Cursed Bustier      	(armor +10 DEF/slow mannequin tf) +4 img
+		- Cursed Tunic		(armor +5 DEF/slow maiden tf) +2 img
+		- Cursed Dirndl 		(armor +5 DEF) +4 img
+		-[done] Cow Girl Outfit           (+7 DEF, +5 SPD)
+		-[done] chitin armor
+	- USEABLES:
+		- Ouiji Board		(Fights ghost enemies/allows possession)
+		- Holy Water 		(Expels Ghost)
+		- Warp Orb 			(Teleports player, may cause tf to random body)
+		- Healing Milk 		(Heals)
+		- Tentacle rune		(Triggers tentacles, related to the trap)
+		- spider venom		(+5 mana regardless of maximum, +10 lust)
+		- Widow's charm		(+5 ATK, +5 SPD, +5 lust)
+		- widow egg
+		- sealed vial (only blobs can use)
+		- Spellbook diversification / Outside of combat uses for magic
+			- Normal Spellbook
+				-[done] Icicle Spear
+				- Self Polymorph
+					-[done] Slime
+					-[done] Dragon
+					-[done] Succubus
+					-[done] Tigress
+					- Harpy
+				-[done] Polymorph Enemy
+					-[done] Princess
+					-[done] Sheep
+					-[done] Bunny
+				-[done] Petrify
+				-[done] Illuminate
+				-[done] Heal
+				- Center Soul (Reverts/halts some tfs
+			- Advanced Spellbook
+				- Turn to Blade
+				- Major Heal
+				- Thaumatic Compass (Path to stairs)
+				- Teleport Enemy
+				- Turn to Cupcake
+				- Mass Freeze (Enemies approach stunned for 2 turns)
+				- Love Charm (50% chance to stun, npcs give discount, raises self lust)
+			- Banned Spellbook
+				- Polymorph Self
+					- Goddess
+				- Arcane Hypnosis
+	- POTIONS:
+		- Perma-TF potion	(makes tfstate the starting state)
+		- Mystery potions
+			- Murky potion / Weakness Potion (-10% stats for 30 turns)
+			- Smokey Potion / Shrink Potion (1/10 stats, but 10x evade for 30 turns)
+			- Clear Potion / Snake potion (50/50 chance between temporary snake tf and naga tf)
+	- ACCESSORIES:
+		-[done] Cowbell			(cow tf/Creates heavy_cream) +9 img
+		- Mirror Shield 	(Accessory, needed to fight Medusa)
+		-[done] Slave Collar		(Thralls ignore, gradual tf by sorcerer/ess
+	- HATS:
+		- Nurses Cap		(nurse tf/Fast healing) +4 img
+	- GLASSES:
 
 
 - Houdini111 Tasks
-  - Finish Debug Menu
-    - [Done] Finish Tile Editing
-      - [Done] Move uniques (NPC(s), Stairs, etc.)
-      - [Done] Handle all change of tile types in EditTile
-    - [Done] View/Edit perks/curses
-    - Edit Class
-    - ?Edit current clothes/form/perks via portrait editor?
-  - Dungeon generation settings
-  - Change save (include seed in save for future debugging reference)
-  - Character creation preset saving/loading
-  - Edit traps to store the number of effects (to allow a constructor that only uses a point)
+	- Finish Debug Menu
+		- [Done] Finish Tile Editing
+		- [Done] Move uniques (NPC(s), Stairs, etc.)
+		- [Done] Handle all change of tile types in EditTile
+		- [Done] View/Edit perks/curses
+		- Edit Class
+		- ?Edit current clothes/form/perks via portrait editor?
+	- Dungeon generation settings
+	- Change save (include seed in save for future debugging reference)
+	- Character creation preset saving/loading
+	- Edit traps to store the number of effects (to allow a constructor that only uses a point)
 
 
 

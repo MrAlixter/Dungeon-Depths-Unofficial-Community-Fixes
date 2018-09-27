@@ -3,11 +3,11 @@
 
     Sub New()
         MyBase.setName("Sword_of_the_Brutal")
-        MyBase.setDesc("A suspicious sword owned by a brutal despot. +60 ATK")
+        MyBase.setDesc("A suspicious sword owned by a brutal despot. +50 ATK")
         id = 24
         tier = Nothing
         MyBase.setUsable(False)
-        MyBase.aBoost = 60
+        MyBase.aBoost = 50
         MyBase.count = 0
         MyBase.value = 1250
     End Sub
@@ -31,6 +31,6 @@
         If Not Game.player.perks("swordpossess") > -1 Then Game.player.perks("swordpossess") = 0
     End Sub
     Public Overrides Sub onUnequip()
-        If Not Game.player.perks("swordpossess") > -1 Then Game.player.perks("swordpossess") = -1
+        If Game.player.perks("swordpossess") > -1 Then Game.player.perks("swordpossess") = -1
     End Sub
 End Class

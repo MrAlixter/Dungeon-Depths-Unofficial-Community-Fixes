@@ -29,38 +29,38 @@
                 setInventory({0})
             Case 0
                 name = "Mesmerized Thrall"
-                health = 75
-                maxHealth = 75
-                attack = 15
-                defence = 5
-                speed = 5
+                health = 85
+                maxHealth = 85
+                attack = 20
+                defence = 7
+                speed = 9
                 setInventory({0, 1, 13})
             Case 1
                 name = "Slime"
-                health = 75
-                maxHealth = 75
+                health = 30
+                maxHealth = 30
                 attack = 15
-                defence = 2
-                speed = 7
+                defence = 60
+                speed = 6
                 setInventory({2, 3})
             Case 2
                 Try
                     loadGhost()
                 Catch ex As Exception
                     name = "Mesmerized Thrall"
-                    health = 75
-                    maxHealth = 75
-                    attack = 15
-                    defence = 5
-                    speed = 5
+                    health = 85
+                    maxHealth = 85
+                    attack = 20
+                    defence = 7
+                    speed = 9
                     setInventory({0, 1, 13})
                 End Try
             Case 3
                 name = "Goo Girl"
-                health = 200
-                maxHealth = 200
+                health = 90
+                maxHealth = 90
                 attack = 30
-                defence = 4
+                defence = 80
                 speed = 14
                 setInventory({3})
             Case 4
@@ -72,31 +72,31 @@
                 End If
                 health = 150
                 maxHealth = 150
-                attack = 25
-                defence = 10
+                attack = 40
+                defence = 17
                 speed = 20
                 setInventory({4, 13})
             Case 5
                 name = "Mimic"
-                health = 150
-                maxHealth = 150
-                attack = 25
-                defence = 10
+                health = 175
+                maxHealth = 175
+                attack = 35
+                defence = 20
                 speed = 50
                 setInventory({0})
             Case 6
                 name = "Spider"
-                health = 50
-                maxHealth = 50
+                health = 65
+                maxHealth = 65
                 attack = 35
-                defence = 8
+                defence = -3
                 speed = 45
                 setInventory({63})
             Case 7
                 name = "Arachne Huntress"
-                health = 100
-                maxHealth = 100
-                attack = 50
+                health = 110
+                maxHealth = 110
+                attack = 65
                 defence = 15
                 speed = 60
                 setInventory({63, 64})
@@ -107,9 +107,9 @@
                 Else
                     name = "Enraged Sorceress"
                 End If
-                health = 125
-                maxHealth = 125
-                attack = 35
+                health = 145
+                maxHealth = 145
+                attack = 50
                 defence = 5
                 speed = 25
                 setInventory({})
@@ -122,10 +122,12 @@
                 End If
                 health = 200
                 maxHealth = 200
-                attack = 40
+                attack = 60
                 defence = 7
                 speed = 30
                 setInventory({})
+            Case 10
+                name = "Hunger"
             Case Else
                 name = "Some Guy"
                 health = 66
@@ -137,6 +139,39 @@
                 For i = 0 To 2
                     inventory(Int(Rnd() * Game.player.inventorynames.Count)) = (Int(Rnd() * 2) + 1)
                 Next
+        End Select
+
+        Select Case Game.floor 'sets the multiplier for enemy stats based on floor
+            Case 1
+                health *= 1
+                maxHealth *= 1
+                attack *= 1
+                defence *= 1
+                speed *= 1
+            Case 2
+                health *= 1.15
+                maxHealth *= 1.15
+                attack *= 1.15
+                defence *= 1.15
+                speed *= 1.15
+            Case 3
+                health *= 1.3
+                maxHealth *= 1.3
+                attack *= 1.3
+                defence *= 1.3
+                speed *= 1.3
+            Case 4
+                health *= 1.5
+                maxHealth *= 1.5
+                attack *= 1.5
+                defence *= 1.5
+                speed *= 1.5
+            Case Else
+                health *= (1 + (0.2 * Game.floor))
+                maxHealth *= (1 + (0.2 * Game.floor))
+                attack *= (1 + (0.2 * Game.floor))
+                defence *= (1 + (0.2 * Game.floor))
+                speed *= (1 + (0.2 * Game.floor))
         End Select
 
         sName = name
@@ -176,7 +211,7 @@
                     If crit < ebound Then dmg = -1
                 End If
         End Select
-        target.takeDMG(dmg)
+        target.takeDMG(dmg, Me)
     End Sub
     Public Sub takeDMG(ByVal dmg As Integer)
         health -= dmg
@@ -191,6 +226,8 @@
                     Game.pushLblEvent("The body swap fails!")
                 End Try
             End If
+        ElseIf name.Contains("Enthralling Half-Dem") Then
+            Equipment.accChange("Nothing")
         End If
         endMonster()
         If mindex = 2 And Not name.Equals("Mesmerized Thrall") Then
@@ -325,14 +362,14 @@
         For i = 0 To UBound(inv)
             Select Case Game.player.inventory(inv(i)).tier
                 Case 3
-                    Dim rng = (Int(Rnd() * 5))
+                    Dim rng = (Int(Rnd() * 9))
                     If rng = 1 Then inventory(inv(i)) += 1
                 Case 2
-                    Dim rng = (Int(Rnd() * 3))
+                    Dim rng = (Int(Rnd() * 6))
                     If rng = 1 Then inventory(inv(i)) += 1
                 Case Else
                     Dim rng = (Int(Rnd() * 5))
-                    If rng = 3 Or rng = 4 Then rng = 0
+                    If rng >= 3 Then rng = 0
                     inventory(inv(i)) += rng
             End Select
         Next
@@ -409,9 +446,9 @@
             Game.player.perks("swordpossess") += 1
             If Game.player.perks("swordpossess") = 2 Then
                 Polymorph.transform(Game.player, "targax", 0)
-            ElseIf Game.player.perks("swordpossess") = 4 Then
+            ElseIf Game.player.perks("swordpossess") = 3 Then
                 Polymorph.transform(Game.player, "targax", 1)
-            ElseIf Game.player.perks("swordpossess") = 6 And name <> "Targax" Then
+            ElseIf Game.player.perks("swordpossess") = 4 And name <> "Targax" Then
                 Polymorph.transform(Game.player, "targax", 2)
             End If
         End If

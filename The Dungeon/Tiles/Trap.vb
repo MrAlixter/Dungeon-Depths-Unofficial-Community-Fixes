@@ -1,9 +1,9 @@
 ﻿Public Class Trap
     Public pos As Point
     Public iD As Integer
-    Sub New(ByVal p As Point, ByVal i As Integer)
+    Sub New(ByVal p As Point)
         pos = p
-        iD = i
+        iD = Int(Rnd() * 5)
     End Sub
     Sub New(ByVal s As String)
         Dim cArray() As String = s.Split("*")
@@ -58,7 +58,7 @@
                 Game.player.inventory(54).add(1)
                 Equipment.clothesChange("Ropes")
                 Equipment.portraitUDate()
-                If Not Polymorph.canBeTFed(Game.player) Then
+                If Polymorph.canBeTFed(Game.player) Then
                     Game.player.pState.save(Game.player)
                 End If
                 Game.player.UIupdate()
@@ -116,8 +116,10 @@
         Game.player.canMoveFlag = True
         Dim tr As New Monster(-1)
         Game.statueList.Add(New Statue(tr))
-        Game.pushLblEvent("𝑺𝒆𝒗𝒆𝒓𝒂𝒍 𝒅𝒂𝒚𝒔 𝒍𝒂𝒕𝒆𝒓..." & vbCrLf & _
-                           "As you stand frozen in the same position you've held since you touched the cursed stone, suddenly you fall flat faced onto the ground.  Springing to your feet, you are exited to find yourself as you were, albiet redder than before, and another explorer frozen in your place.  From their pose, it seems that they were going through your stuff, and must have accidently touched you.  What's more, the original ruby you touched is nowhere to be found.  You muse on the nature of the curse for a bit, before grabbing your things and moving on.  𝘘𝘶𝘦𝘴𝘵𝘪𝘰𝘯𝘴 𝘧𝘰𝘳 𝘢𝘯𝘰𝘵𝘩𝘦𝘳 𝘵𝘪𝘮𝘦...")
+        Game.pushLblEvent("𝑺𝒆𝒗𝒆𝒓𝒂𝒍 𝒅𝒂𝒚𝒔 𝒍𝒂𝒕𝒆𝒓..." & vbCrLf &
+                           "As you stand frozen in the same position you've held since you touched the cursed stone, suddenly you fall flat faced onto the ground.  Springing to your feet, you are exited to find yourself as you were, albiet redder than before, and another explorer frozen in your place.  From their pose, it seems that they were going through your stuff, and must have accidently touched you.  What's more, the original ruby you touched is nowhere to be found.  You muse on the nature of the curse for a bit, before grabbing your things and moving on." & vbCrLf & vbCrLf & "Your stomach rumbles loudly, and you can tell that your time as a statue hasn't been kind to you.")
+        Game.player.mana = 0
+        Game.player.hunger += 60
     End Sub
 
     Public Overrides Function ToString() As String

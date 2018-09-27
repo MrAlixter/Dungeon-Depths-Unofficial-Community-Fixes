@@ -66,7 +66,7 @@
 
     End Sub
     Function canBeTFed(ByRef p As Player) As Boolean
-        If Not p.perks("polymorphed") > -1 And Not p.pClass.name.Equals("Magic Girl") And Not p.pClass.name.Equals("Unconscious") And Not p.pForm.name.Equals("Blowup Doll") Then Return True
+        If Not p.perks("polymorphed") > -1 And Not Game.picPortrait.BackgroundImage.Equals(Game.picmgp1.BackgroundImage) And Not p.pClass.name.Equals("Magic Girl") And Not p.pClass.name.Equals("Unconscious") And Not p.pForm.name.Equals("Blowup Doll") Then Return True
         Return False
     End Function
     'player transform methods
@@ -329,6 +329,7 @@
             p.iArrInd(4) = New Tuple(Of Integer, Boolean)(0, True)
             p.iArrInd(5) = New Tuple(Of Integer, Boolean)(9, True)
             p.iArrInd(7) = New Tuple(Of Integer, Boolean)(0, True)
+            p.iArrInd(9) = New Tuple(Of Integer, Boolean)(19, True)
             p.iArrInd(10) = New Tuple(Of Integer, Boolean)(0, True)
             p.iArrInd(13) = New Tuple(Of Integer, Boolean)(0, True)
             p.iArrInd(15) = New Tuple(Of Integer, Boolean)(13, True)
@@ -347,6 +348,26 @@
             p.iArrInd(5) = New Tuple(Of Integer, Boolean)(20, True)
             p.iArrInd(6) = New Tuple(Of Integer, Boolean)(8, True)
             p.iArrInd(15) = New Tuple(Of Integer, Boolean)(16, True)
+        ElseIf form = "bimboC" Then
+
+            out += vbCrLf & vbCrLf & "As you don the chicken suit you found, part of you half expects to turn into some sort of bird.  You chuckle to yourself at the idea, and this quickly devolves into a giggling fit.  Parting your short, red hair off to one side, you adjust your large breasts in the suit, noting that no part of it provides nearly enough support.  You strip some parts of the outfit away and shift some other parts around, and soon you find yourself left with a pair of wings and a set of straps that provide all the support you think you're going to get out of it.  Proud of your handiwork, you strut back out into the dungeon still giggling at the noshun...notshi...""idea"" that some silly chicken costume could change you in any way."
+            If p.sex = "Male" Then
+                p.sexBool = True
+                p.MtF()
+            End If
+            p.iArrInd(1) = New Tuple(Of Integer, Boolean)(11, True)
+            p.iArrInd(5) = New Tuple(Of Integer, Boolean)(11, True)
+            p.iArrInd(8) = New Tuple(Of Integer, Boolean)(6, True)
+            p.iArrInd(9) = New Tuple(Of Integer, Boolean)(8, True)
+            p.iArrInd(15) = New Tuple(Of Integer, Boolean)(17, True)
+            p.iArrInd(16) = New Tuple(Of Integer, Boolean)(0, True)
+            p.be()
+            p.be()
+            p.inventory(8).add(1)
+            Equipment.clothesChange("Chicken_Suit")
+            p.changeHairColor(Color.FromArgb(255, 187, 38, 43))
+            p.perks("rgum") = -1
+            form = "Bimbo"
         End If
 
         If p.forms.Keys.Contains(form) Then
@@ -355,15 +376,15 @@
             p.pClass = p.classes(form)
         End If
 
-            Game.lblEvent.ForeColor = color1
-            Game.lblNameTitle.ForeColor = color1
+        Game.lblEvent.ForeColor = color1
+        Game.lblNameTitle.ForeColor = color1
         If form.Equals("Magic Girl​") Then Game.pushLblEvent(out, AddressOf Polymorph.magicGSub2) Else Game.pushLblEvent(out)
-            Game.lstLog.TopIndex = Game.lstLog.Items.Count - 1
-            p.TextColor = Game.lblEvent.ForeColor
-            p.pImage = Game.pImage
-            p.health += p.hBuff
-            Game.cmboxSpec.Items.Clear()
-            Game.specialRoute()
+        Game.lstLog.TopIndex = Game.lstLog.Items.Count - 1
+        p.TextColor = Game.lblEvent.ForeColor
+        p.pImage = Game.pImage
+        p.health += p.hBuff
+        Game.cmboxSpec.Items.Clear()
+        Game.specialRoute()
         Equipment.portraitUDate()
     End Sub
     Public Sub transform(ByRef p As Player, ByVal form As String, ByVal ind As Integer)
@@ -640,12 +661,14 @@
         End If
         Game.cboxMG.Items.Add("Heartblast Starcannon")
         p.inventory.Item(10).addOne()
+        'giveRNDFFName(p)
         p.pClass = p.classes("Magic Girl")
         Equipment.clothesChange("Magic_Girl_Outfit")
         p.equippedArmor = New MagGirlOutfit
         Game.lstLog.Items.Add("'Heartblast Starcannon' spell learned!")
         p.createP()
         Game.lblEvent.Visible = False
+        p.canMoveFlag = True
     End Sub
     Sub bimboTF(ByRef p As Player, ByVal ind As Integer)
         Select Case ind
@@ -682,6 +705,7 @@
                     p.perks("bimbotf") = 24
                 End If
                 If p.iArrInd(6).Item1 = 8 And p.iArrInd(6).Item2 Then p.iArrInd(6) = New Tuple(Of Integer, Boolean)(0, True)
+                giveRNDFFName(p)
                 p.iArrInd(8) = New Tuple(Of Integer, Boolean)(5, True)
                 p.iArrInd(9) = New Tuple(Of Integer, Boolean)(7, True)
                 p.iArrInd(13) = New Tuple(Of Integer, Boolean)(0, True)
@@ -834,7 +858,7 @@
     Sub targaxTF(ByRef p As Player, ByVal ind As Integer)
         Select Case ind
             Case 0
-                If (p.iArrInd(9).Item2 And p.iArrInd(9).Item1 <> 15) Or (Not p.iArrInd(9).Item2 And p.iArrInd(9).Item1 <> 7) Then
+                If (p.iArrInd(9).Item2 And p.iArrInd(9).Item1 <> 15) Or (Not p.iArrInd(9).Item2 And p.iArrInd(9).Item1 <> 8) Then
                     If p.iArrInd(9).Item2 Then
                         p.iArrInd(9) = New Tuple(Of Integer, Boolean)(15, True)
                     Else
@@ -948,6 +972,27 @@
                 p.inventory(71).add(1)
                 Equipment.clothesChange("Cow_Print_Bra")
         End Select
+    End Sub
+
+    Shared Sub giveRNDFFName(ByRef p As Player)
+        If Game.floor < 5 Then Randomize(Game.floorLayouts(Game.floor).GetHashCode) Else Randomize()
+        Dim fFNames() As String = {"Abigail", "Abby", "Anna", "Ann", "Ana", "Alexis", _
+                               "Becky", _
+                               "Christine", "Casandra", "Catherine", "Cassie", "Carol", "Caroline", "Cara", _
+                               "Danica", _
+                               "Ellen", "Erika", "Erica", _
+                               "Heather", _
+                               "Iliona", _
+                               "Janice", "Johanna", "Jenna", "Judy", "Jennifer", "Jo-Jo", _
+                               "Kerry", "Katherine", "Katja", _
+                               "Lana", _
+                               "Monica", "Mary", _
+                               "Nancy", "Nicole", "Nadja", _
+                               "Racheal", _
+                               "Samantha", "Sarah", "Sally", _
+                               "Tanja", "Trisha", _
+                               "Vanessa"}
+        p.name = fFNames(Int(Rnd() * fFNames.Length))
     End Sub
 
     Private Sub cboxPMorph_SelectedValueChanged(sender As Object, e As EventArgs) Handles cboxPMorph.SelectedValueChanged

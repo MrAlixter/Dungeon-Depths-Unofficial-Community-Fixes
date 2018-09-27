@@ -65,7 +65,7 @@ Public Class Game
     Public turn As Integer = 0  '(NOT SAVED)
     Public beatboss() As Boolean = {False, False, False, False, False, False}  'which bosses have been beat?
     Public floorboss() As String = {"Floor0", "Marissa the Enchantress", "Targax the Brutal", "Key", "the Explorer", "Medusa"} 'boss names (NOT SAVED)
-    Dim floorLayouts As ArrayList = New ArrayList()
+    Public floorLayouts As ArrayList = New ArrayList()
     Public version As Double = 0.6     'the save file version
 
     Public lblEventOnClose As Action    'the event method preformed when lblEvent closes (NOT SAVED)
@@ -461,12 +461,14 @@ Public Class Game
     Function genRNDLVLCode() As String
         Dim numLetters As String = "abcdefghijklmnopqrstuvwxyz123456789"
         Dim output As String = ""
-        Randomize()
+        Randomize() 'initializes the randomizer
         For i = 0 To 8
             output += numLetters.Substring(Int(Rnd() * numLetters.Length), 1)
         Next
         Return output
     End Function
+    'Function 
+
     Sub generateLevel(ByVal code As String)
         floorCode = code
         Rnd(-1)
@@ -475,30 +477,97 @@ Public Class Game
             Exit Sub
         End If
         Randomize(code.GetHashCode)
-        Dim numRooms As Integer = CInt(Int(Rnd() * 15) + 1) + Int(2.25 * mBoardWidth / 30)
-        Dim exits As List(Of Point) = New List(Of Point)
-        For i = 0 To numRooms
-            Dim roomsizecurve As Integer() = {3, 3, 4, 4, 4, 5, 5, 5, 5, 6, 6, 6, 6, 7, 7, 7, 8, 8, 9, 12}
-            Dim roomY As Integer = roomsizecurve(CInt(Int(Rnd() * roomsizecurve.Length)))
-            Dim roomX As Integer = roomsizecurve(CInt(Int(Rnd() * roomsizecurve.Length)))
-            Dim pos As Point = New Point(CInt(Int(Rnd() * mBoardWidth)), CInt(Int(Rnd() * (mBoardHeight - 1))))
-            Dim yBound As Integer = pos.Y + roomY
-            Dim xBound As Integer = pos.X + roomX
-            If yBound >= mBoardHeight - 1 Then yBound = mBoardHeight - 1
-            If yBound < 0 Then yBound = 0
-            If xBound >= mBoardWidth Then xBound = mBoardWidth - 1
-            If xBound < 0 Then xBound = 0
+        'Dump into area And agregate Map generator'
+        Dim numRooms As Integer = CInt(Int((Rnd() * 5) + 25)) 'Create a random number of rooms
+        Dim radius As Integer = CInt(20) ' Set the randius to the average of the board hight & width
+        Dim RoomXY As List(Of Point) = New List(Of Point)
+        Dim RoomWH As List(Of Point) = New List(Of Point)
 
+        For i = 0 To numRooms
+            Dim t = 2 * Math.PI * Rnd() 'a point around a circle
+            Dim u = Rnd() + Rnd() 'a points radius
+            Dim rad As Double = 0
+            If u > 1 Then 'make sure that it isn't 0
+                rad = 2 - u
+            End If
+            If u < 1 Then
+                rad = u
+            End If
+            Dim pos As Point = New Point(Int(radius * rad * Math.Cos(t)), Int(radius * rad * Math.Sin(t))) 'Place the point multiplied by given radius
+            RoomXY.Add(pos)
+            'look into generating a poison distribution
+            'Create a random width and lenth for each room
+            Dim dime As Point = New Point(Int((Rnd() * 5) + 3), CInt((Rnd() * 5) + 3))
+            RoomWH.Add(dime)
+        Next
+
+        'Run through all the rooms and check if they overlap
+        For i = 0 To numRooms - 1
+            Dim aPos As Point = RoomXY(i)
+            Dim aDime As Point = RoomWH(i)
+            For j = 0 To numRooms - 1
+                Dim bPos As Point = RoomXY(j)
+                Dim bDime As Point = RoomWH(j)
+                If Not (aPos = bPos) And Not (aDime = bDime) Then
+
+
+                    'Check for overlapping
+                    Dim H_Overlaps As Boolean = (aPos.X <= bPos.X + bDime.X) AndAlso (bPos.X <= aPos.X + aDime.X)
+                    Dim V_Overlaps As Boolean = (aPos.Y <= bPos.Y + bDime.Y) AndAlso (bPos.Y <= aPos.Y + aDime.Y)
+                    If H_Overlaps AndAlso V_Overlaps Then
+                        'Find the minimum amount of movment that stops the squares from touching
+                        Dim dx = Math.Min(Math.Abs((aPos.X + aDime.X) - (bPos.X + 3)), Math.Abs(aPos.X - (bPos.X + bDime.X + 3)))
+                        Dim dy = Math.Min(Math.Abs((aPos.Y + aDime.Y) - (bPos.Y + 3)), Math.Abs(aPos.Y - (bPos.Y + bDime.Y + 3)))
+                        If dx <= dy Then
+                            dy = 0
+                        Else
+                            dx = 0
+                        End If
+                        If aPos.X >= bPos.X Then
+                            RoomXY(i) = New Point(RoomXY(i).X + Int(dx / 2), RoomXY(i).Y)
+                            RoomXY(j) = New Point(RoomXY(j).X - Int(dx / 2), RoomXY(j).Y)
+                        Else
+                            RoomXY(i) = New Point(RoomXY(i).X - Int(dx / 2), RoomXY(i).Y)
+                            RoomXY(j) = New Point(RoomXY(j).X + Int(dx / 2), RoomXY(j).Y)
+                        End If
+                        If aPos.Y >= bPos.Y Then
+                            RoomXY(i) = New Point(RoomXY(i).X, RoomXY(i).Y + Int(dy / 2))
+                            RoomXY(j) = New Point(RoomXY(j).X, RoomXY(j).Y - (dy / 2))
+                        Else
+                            RoomXY(i) = New Point(RoomXY(i).X, RoomXY(i).Y - Int(dy / 2))
+                            RoomXY(j) = New Point(RoomXY(j).X, RoomXY(j).Y + Int(dy / 2))
+                        End If
+
+
+                    End If
+                End If
+
+            Next
+
+        Next
+
+        Dim exits As List(Of Point) = New List(Of Point)
+        For i = 0 To numRooms - 1
+
+            Dim RoomPos As Point = New Point(CInt(RoomXY(i).X + (mBoardWidth / 2)), CInt(Int(RoomXY(i).Y + (mBoardWidth / 2))))
+            Dim RoomSpanY As Integer = RoomPos.Y + CInt(RoomWH(i).Y)
+            Dim RoomSpanX As Integer = RoomPos.X + CInt(RoomWH(i).X)
+            If RoomSpanY >= mBoardHeight - 1 Then RoomSpanY = mBoardHeight - 1
+            If RoomSpanY < 0 Then RoomSpanY = 0
+            If RoomSpanX >= mBoardWidth Then RoomSpanX = mBoardWidth - 1
+            If RoomSpanX < 0 Then RoomSpanX = 0
+            'Randomly place a special tag
             If Int(Rnd() * 3) = 0 Then
-                For yP = pos.Y To yBound
-                    For xP = pos.X To xBound
-                        mBoard(yP, xP).Tag = 2
+                For yP = RoomPos.Y To RoomSpanY
+                    For xp = RoomPos.X To RoomSpanX
+                        mBoard(yP, xp).Tag = 2 'Colour in the square
                     Next
                 Next
+                'else just colour it
             Else
-                For yP = pos.Y To yBound
-                    For xP = pos.X To xBound
-                        mBoard(yP, xP).Tag = 1
+                For yP = RoomPos.Y To RoomSpanY
+                    For xp = RoomPos.X To RoomSpanX
+                        mBoard(yP, xp).Tag = 1 'Colour in the square
                     Next
                 Next
             End If
@@ -507,10 +576,10 @@ Public Class Game
             Dim mainExit As Point
             Select Case Int(Rnd() * 2)
                 Case 0
-                    mainExit = (New Point(pos.X + 2, Int(Rnd() * (yBound - pos.Y)) + pos.Y))
+                    mainExit = (New Point(RoomPos.X + 2, Int(Rnd() * (RoomSpanY - RoomPos.Y)) + RoomPos.Y))
                     If mainExit.X - 1 < mBoardWidth And mainExit.X - 1 > 0 AndAlso Not mBoard(mainExit.Y, mainExit.X - 1).Tag = 2 Then mBoard(mainExit.Y, mainExit.X - 1).Tag = 1
                 Case Else
-                    mainExit = (New Point(Int(Rnd() * (xBound - pos.X)) + pos.X, pos.Y + 2))
+                    mainExit = (New Point(Int(Rnd() * (RoomSpanX - RoomPos.X)) + RoomPos.X, RoomPos.Y + 2))
                     If mainExit.Y - 1 < mBoardHeight And mainExit.Y - 1 > 0 AndAlso Not mBoard(mainExit.Y - 1, mainExit.X).Tag = 2 Then mBoard(mainExit.Y - 1, mainExit.X).Tag = 1
             End Select
             If i > 0 Then
@@ -521,10 +590,10 @@ Public Class Game
             For n = 1 To numExits
                 Select Case Int(Rnd() * 2)
                     Case 0
-                        exits.Add(New Point(pos.X + 2, Int(Rnd() * (yBound - pos.Y)) + pos.Y))
+                        exits.Add(New Point(RoomPos.X + 2, Int(Rnd() * (RoomSpanY - RoomPos.Y)) + RoomPos.Y))
                         If exits.Last.X - 1 < mBoardWidth And exits.Last.X - 1 > 0 AndAlso Not mBoard(exits.Last.Y, exits.Last.X - 1).Tag = 2 Then mBoard(exits.Last.Y, exits.Last.X - 1).Tag = 1
                     Case 1
-                        exits.Add(New Point(Int(Rnd() * (xBound - pos.X)) + pos.X, pos.Y + 2))
+                        exits.Add(New Point(Int(Rnd() * (RoomSpanX - RoomPos.X)) + RoomPos.X, RoomPos.Y + 2))
                         If exits.Last.Y - 1 < mBoardHeight And exits.Last.Y - 1 > 0 AndAlso Not mBoard(exits.Last.Y - 1, exits.Last.X).Tag = 2 Then mBoard(exits.Last.Y - 1, exits.Last.X).Tag = 1
                 End Select
             Next
@@ -803,7 +872,7 @@ Public Class Game
                 trapX = CInt(Int(Rnd() * mBoardWidth))
                 trapY = CInt(Int(Rnd() * mBoardHeight))
             Loop
-            Dim trap As New Trap(New Point(trapX, trapY), Int(Rnd() * 5))
+            Dim trap As New Trap(New Point(trapX, trapY))
             trapList.Add(trap)
             mBoard(trapY, trapX).ForeColor = Color.FromArgb(45, 45, 45)
             mBoard(trapY, trapX).Text = "+"
@@ -833,44 +902,100 @@ Public Class Game
         Next
     End Sub
 
-    Function route(ByVal p1 As Point, ByVal p2 As Point, ByVal dir As String, ByVal path As List(Of Point), ByVal counts As Integer) As Point()
-        Dim cons As List(Of Point) = New List(Of Point)
-        If p1.Equals(p2) Then
-            Return path.ToArray
-        Else
+    Function route(ByVal p1 As Point, ByVal p2 As Point) As Point()
+        'iterative dijkstra's shortest path implementation
+        Dim dist(mBoardWidth, mBoardHeight) As Integer
+        Dim allPoints As List(Of Point) = New List(Of Point)
+        Dim prev(mBoardWidth, mBoardHeight) As Point
+        Dim path As List(Of Point) = New List(Of Point)
+        For i = 0 To mBoardHeight - 1
+            For j = 0 To mBoardWidth - 1
+                dist(i, j) = 99999
+                allPoints.Add(New Point(j, i))
+                prev(i, j) = Nothing
+            Next
+        Next
+        dist(p1.Y, p1.X) = 0
+        While allPoints.Count > 0
+                Dim min = allPoints(0)
+                For i = 0 To allPoints.Count - 1
+                    If dist(allPoints(i).Y, allPoints(i).X) < dist(min.X, min.Y) Then min = allPoints(i)
+                Next
+            allPoints.Remove(min)
             Dim u, d, l, r As Point
-            u = New Point(p1.X - 1, p1.Y)
-            d = New Point(p1.X + 1, p1.Y)
-            l = New Point(p1.X, p1.Y - 1)
-            r = New Point(p1.X, p1.Y + 1)
+                u = New Point(min.X - 1, min.Y)
+            d = New Point(min.X + 1, min.Y)
+                l = New Point(min.X, min.Y - 1)
+            r = New Point(min.X, min.Y + 1)
             For Each p In {u, d, l, r}
-                If Not (p.Equals(u) And dir = "d") And Not (p.Equals(d) And dir = "u") And Not (p.Equals(r) And dir = "l") And Not (p.Equals(l) And dir = "r") Then
-                    If Not (p.X < 0 Or p.X > mBoardWidth - 1 Or p.Y < 0 Or p.Y > mBoardHeight - 1) AndAlso Not mBoard(p.Y, p.X).Tag = 0 AndAlso Not path.Contains(p) Then
-                        cons.Add(p)
+                Dim tDist = dist(min.Y, min.X) + distance(min, p)
+                If Not (p.X < 0 Or p.X > mBoardWidth - 1 Or p.Y < 0 Or p.Y > mBoardHeight - 1) AndAlso Not mBoard(p.Y, p.X).Tag = 0 AndAlso Not path.Contains(p) AndAlso allPoints.Contains(p) Then
+                    If tDist < dist(p.Y, p.X) Then
+                        dist(p.Y, p.X) = tDist
+                        prev(p.Y, p.X) = min
                     End If
                 End If
+                If p.Equals(p2) Then
+                    Dim pp = p2
+                    While Not path.Contains(pp)
+                        path.Insert(0, pp)
+                        pp = prev(pp.Y, pp.X)
+                    End While
+                    Exit For
+                End If
             Next
-            If cons.Count - 1 < 1 Then Return path.ToArray
-            Dim min As Point = cons(0)
-            For i = 0 To cons.Count - 1
-                If dist(cons(i), p2) < dist(min, p2) Then min = cons(i)
-            Next
-
-            path.Add(min)
-
-            If min.Equals(u) Then
-                dir = "u"
-            ElseIf min.Equals(d) Then
-                dir = "d"
-            ElseIf min.Equals(l) Then
-                dir = "l"
-            ElseIf min.Equals(r) Then
-                dir = "r"
-            End If
-            Return route(min, p2, dir, path, counts + 1)
-        End If
+        End While
+        path.RemoveAt(0)
+        Return path.ToArray
     End Function
-    Function dist(ByVal x As Point, ByVal y As Point) As Double
+    Function route(ByVal p1 As Point, ByVal p2 As Point, ByVal endp As Point) As Point()
+        'iterative dijkstra's shortest path implementation
+        Dim dist(mBoardWidth, mBoardHeight) As Integer
+        Dim allPoints As List(Of Point) = New List(Of Point)
+        Dim prev(mBoardWidth, mBoardHeight) As Point
+        Dim path As List(Of Point) = New List(Of Point)
+        For i = 0 To mBoardHeight - 1
+            For j = 0 To mBoardWidth - 1
+                dist(i, j) = 99999
+                allPoints.Add(New Point(j, i))
+                prev(i, j) = Nothing
+            Next
+        Next
+        dist(p1.Y, p1.X) = 0
+        While allPoints.Count > 0
+            Dim min = allPoints(0)
+            For i = 0 To allPoints.Count - 1
+                If dist(allPoints(i).Y, allPoints(i).X) < dist(min.X, min.Y) Then min = allPoints(i)
+            Next
+            allPoints.Remove(min)
+            Dim u, d, l, r As Point
+            u = New Point(min.X - 1, min.Y)
+            d = New Point(min.X + 1, min.Y)
+            l = New Point(min.X, min.Y - 1)
+            r = New Point(min.X, min.Y + 1)
+            For Each p In {u, d, l, r}
+                Dim tDist = dist(min.Y, min.X) + distance(min, p)
+                If Not (p.X < 0 Or p.X > mBoardWidth - 1 Or p.Y < 0 Or p.Y > mBoardHeight - 1) AndAlso Not mBoard(p.Y, p.X).Tag = 0 AndAlso Not path.Contains(p) AndAlso allPoints.Contains(p) Then
+                    If tDist < dist(p.Y, p.X) Then
+                        dist(p.Y, p.X) = tDist
+                        prev(p.Y, p.X) = min
+                    End If
+                End If
+                If p.Equals(p2) Then
+                    Dim pp = p2
+                    While Not path.Contains(pp)
+                        path.Insert(0, pp)
+                        pp = prev(pp.Y, pp.X)
+                    End While
+                    Exit For
+                End If
+            Next
+        End While
+        path.RemoveAt(0)
+        path.Add(endp)
+        Return path.ToArray
+    End Function
+    Function distance(ByVal x As Point, ByVal y As Point) As Double
         Return Math.Abs(Math.Sqrt(CDbl((y.X - x.X) ^ 2) + CDbl((y.Y - x.Y) ^ 2)))
     End Function
 
@@ -2038,7 +2163,7 @@ Public Class Game
         Dim reader As IO.StreamReader
         reader = IO.File.OpenText(a)
         Dim v = CDbl(reader.ReadLine())
-        If v < 0.4 Then
+        If v < 0.6 Then
             MsgBox("Error 003: Incorrect save file version!")
             picStart.Visible = True
             btnS.Visible = True
@@ -2095,8 +2220,10 @@ Public Class Game
             End If
         Next
         For i = 0 To trapList.Count - 1
-            mBoard(trapList(i).pos.Y, trapList(i).pos.X).Text = "+"
-        Next
+            If trapList(i).pos.y > -1 And trapList(i).pos.y < mBoardHeight And trapList(i).pos.x > -1 And trapList(i).pos.x < mBoardWidth Then
+                mBoard(trapList(i).pos.Y, trapList(i).pos.X).Text = "+"
+            End If
+Next
         For i = 0 To CInt(reader.ReadLine())
             cboxMG.Items.Add(reader.ReadLine())
         Next
@@ -2623,7 +2750,7 @@ Public Class Game
         btnSpec.Visible = False
         player.canMoveFlag = True
 
-        btnTalk.Visible = True
+        'btnTalk.Visible = True
         btnNPCMG.Visible = True
         cboxNPCMG.Visible = True
         btnShop.Visible = True
@@ -2636,7 +2763,6 @@ Public Class Game
             player.perks("polymorphed") = 0
             player.revert2()
         End If
-        npcList.Clear()
     End Sub
     'run handles the player choice to run from combat
     Sub run()
@@ -2681,9 +2807,6 @@ Public Class Game
                 Exit For
             End If
         Next
-        Dim chick As Integer = 1 'CInt(Int(Rnd() * 5))
-        'THIS LINE APPEARS REDUNDANT/BROKEN
-        'If chick = 4 And Not player.perks("chickentf") Then player.perks(3) = True
     End Sub
     Sub leaveNPC()
         Dim m As NPC = Nothing
@@ -2704,6 +2827,12 @@ Public Class Game
         npcmode = False
     End Sub
     Sub npcEncounter(ByRef m As NPC)
+        Dim validSpells() As String = {"Turn to Frog", "Polymorph Enemy", "Petrify"}
+        cboxNPCMG.Items.Clear()
+        For i = 0 To UBound(validSpells)
+            If cboxMG.Items.Contains(validSpells(i)) Then cboxNPCMG.Items.Add(validSpells(i))
+        Next
+
         If m.dead Then Exit Sub
         npcList.Clear()
         npcList.Add(m)
@@ -2782,8 +2911,9 @@ Public Class Game
             lblEventOnClose = Nothing
         End If
         selectedItem.discard()
-        player.UIupdate()
         player.invNeedsUDate = True
+        player.UIupdate()
+
         lstInventory.SelectedItem = Nothing
         selectedItem = Nothing
         btnUse.Enabled = False

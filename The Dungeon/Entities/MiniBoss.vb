@@ -19,8 +19,8 @@
                 MyBase.name = "Targax the Brutal"
                 MyBase.health = 250
                 MyBase.maxHealth = 250
-                MyBase.attack = 60
-                MyBase.defence = 10
+                MyBase.attack = 50
+                MyBase.defence = 20
                 MyBase.speed = 5   '0  1  2  3  4  5  6  7  8  9 10 11 12 13 14 15 16 17 18 19 20 21 22 23 24
                 MyBase.inventory = {0, 0, 3, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1}
                 title = ""
@@ -80,6 +80,8 @@
                 Game.lstLog.Items.Add((getName() & " waits expectantly..."))
                 Game.pushLblCombatEvent((getName() & " waits expectantly..."))
             Else
+                Game.lstLog.Items.Add((getName() & " casts lightning bolt!"))
+                Game.pushLblCombatEvent((getName() & " casts lightning bolt!"))
                 MyBase.attackCMD(target)
                 'attack = 20
             End If

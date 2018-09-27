@@ -144,40 +144,48 @@
         Game.lstLog.TopIndex = Game.lstLog.Items.Count - 1
     End Sub
     Shared Sub spellroute(ByRef c As Player, ByRef t As Monster, ByRef s As String)
-        Dim spell As Spell = Nothing
-        If s = "Dragon's Breath" Then
+        Dim spell As Spell = New Frazzle(c, t)
+        If s.Equals("Dragon's Breath") Then
             spell = New DragonsBreath(c, t)
-        ElseIf s = "Fireball" Then
+        ElseIf s.Equals("Fireball") Then
             spell = New Fireball(c, t)
-        ElseIf s = "Super Fireball" Then
+        ElseIf s.Equals("Super Fireball") Then
             spell = New SuperFireball(c, t)
-        ElseIf s = "Icicle Spear" Then
+        ElseIf s.Equals("Icicle Spear") Then
             spell = New IcicleSpear(c, t)
-        ElseIf s = "Heartblast Starcannon" Then
+        ElseIf s.Equals("Heartblast Starcannon") Then
             spell = New HBSC(c, t)
-        ElseIf s = "Self Polymorph" And Polymorph.canBeTFed(c) Then
+        ElseIf s.Equals("Self Polymorph") And (Polymorph.canBeTFed(c) Or c.perks("polymorphed") > -1) Then
             spell = New SelfPolymorph(c, t)
-        ElseIf s = "Self Polymorph" And Not Polymorph.canBeTFed(c) Then
+        ElseIf s.Equals("Self Polymorph") And Not Polymorph.canBeTFed(c) Then
             Game.lstLog.Items.Add("You can't polymorph yourself!")
             Game.pushLblCombatEvent("You can't polymorph yourself!")
-        ElseIf s = "Polymorph Enemy" Then
+            Exit Sub
+        ElseIf s.Equals("Polymorph Enemy") Then
             spell = New EnemyPolymorph(c, t)
-        ElseIf s = "Turn to Frog" Then
+        ElseIf s.Equals("Turn to Frog") Then
             spell = New turnToFrog(c, t)
-        ElseIf s = "Petrify" Then
+        ElseIf s.Equals("Petrify") Then
             spell = New Petrify(c, t)
-        ElseIf s = "Turn to Blade" Then
+        ElseIf s.Equals("Turn to Blade") Then
             spell = New turnToBlade(c, t)
-        ElseIf s = "Turn to Cupcake" Then
+        ElseIf s.Equals("Turn to Cupcake") Then
             spell = New turnToCupcake(c, t)
-        ElseIf s = "Heal" Then
-            spell = New Heal(c, t)
-        ElseIf s = "Dowse" Then
+        ElseIf s.Equals("Heal") Then
+            If Game.player.pClass.name.Equals("Soul-Lord") Then
+                Game.pushLblEvent("You scoff at the thought of healing in this moment, instead firing off a much more agressive fireball.  As you go back to your buisness, you muse on what a waste of time a heal spell would be." & vbCrLf & vbCrLf & """Only someone who cares about their mortal vessel would bother to maintain it.")
+                spell = New Fireball(c, t)
+            Else
+                spell = New Heal(c, t)
+            End If
+        ElseIf s.Equals("Dowse") Then
             spell = New Dowse(c, t)
-        ElseIf s = "Illuminate" Then
+        ElseIf s.Equals("Illuminate") Then
             spell = New Illumiate(c, t)
-        ElseIf s = "Arcane Compass" Then
+        ElseIf s.Equals("Arcane Compass") Then
             spell = New ArcaneCompass(c, t)
+        Else
+            spell = New Frazzle(c, t)
         End If
         spell.cast()
         spell.Dispose()

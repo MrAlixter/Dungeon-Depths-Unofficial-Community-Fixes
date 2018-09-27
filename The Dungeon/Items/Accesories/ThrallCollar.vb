@@ -18,10 +18,10 @@
     End Sub
     Overrides Sub onEquip()
         Game.player.perks("thrall") = 0
-        formerClass = Game.player.pClass.name
+        If Not Game.player.pClass.name.Equals("Thrall") Then formerClass = Game.player.pClass.name
         formerEyeType = Game.player.iArrInd(9)
         If Polymorph.canBeTFed(Game.player) Then Game.player.pState.save(Game.player)
-        Game.player.pClass.name = "Thrall"
+        Game.player.pClass = Game.player.classes("Thrall")
         If Game.player.sexBool Then
             Game.player.iArrInd(9) = New Tuple(Of Integer, Boolean)(19, True)
         Else
@@ -58,6 +58,7 @@
         Game.player.perks("thrall") = -1
         Game.player.pClass = Game.player.classes(formerClass)
         Game.player.iArrInd(9) = formerEyeType
+        Game.player.prefForm = Nothing
     End Sub
 
     Public Function getFT() As String
@@ -69,5 +70,11 @@
     Public Sub setFormerLife(ft As String, fet As Tuple(Of Integer, Boolean))
         formerClass = ft
         formerEyeType = fet
+    End Sub
+
+    Overrides Sub discard()
+        Game.lstLog.Items.Add("You drop the " & getName())
+        Game.lstLog.TopIndex = Game.lstLog.Items.Count - 1
+        count -= 1
     End Sub
 End Class

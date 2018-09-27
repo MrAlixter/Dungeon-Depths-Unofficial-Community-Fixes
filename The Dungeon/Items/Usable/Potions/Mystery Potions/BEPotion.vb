@@ -16,7 +16,7 @@
             Exit Sub
         End If
         p.be()
-        If Not Polymorph.canBeTFed(Game.player) Then
+        If Polymorph.canBeTFed(Game.player) Then
             Game.player.pState.save(Game.player)
         End If
         Game.pushLblEvent("You breasts tingle plesently . . .")

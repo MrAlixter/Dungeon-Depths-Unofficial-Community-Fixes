@@ -221,6 +221,7 @@
     Sub fightSorc2()
         Dim m As Monster
         m = New Monster(8)
+        Equipment.accChange("Nothing")
         Game.npcList.Add(m)
         currTarget = m
         Game.toCombat()
@@ -258,7 +259,6 @@
             For i = 1 To UBound(forcedPath)
                 t(i - 1) = forcedPath(i)
             Next
-
             forcedPath = t
         End If
     End Sub
@@ -330,7 +330,8 @@
         Game.pushLblCombatEvent(CStr("You hit" & target.title & " " & target.getName() & " for " & dmg & " damage!"))
         Game.lstLog.TopIndex = Game.lstLog.Items.Count - 1
     End Sub
-    Public Sub takeDMG(ByVal dmg As Integer)
+    Public Sub takeDMG(ByVal dmg As Integer, ByRef source As Updatable)
+        currTarget = source
         If dmg > 0 Then dmg += Int(Rnd() * 3) + -1
         If dmg = -2 Then
             dmg = currTarget.attack * 2
@@ -392,8 +393,7 @@
                     ln1 = "As you collapse, you see the thrall pull a small metal collar out of their bag.  Lacking the strength to resist, you are powerless as they secure it firmly around your neck, all the while murmuring whispers of the joys of submission into your ear.  Once they have the collar fitted properly, they place a small glowing gem into a slot on the collar, igniting a small array of runes.  Your mind goes blank in an instant, and while at first an ammnesia-fueled panic sets in it is quickly replaced by a booming disembodied voice."
                     inventory(69).addone()
                     If Not equippedAcce.getName.Equals("Nothing") Then equippedAcce.onUnequip()
-                    equippedAcce = inventory(69)
-                    equippedAcce.onEquip()
+                    Equipment.accChange("Slave_Collar")
                     health = 1
                     mana = getmaxMana()
                     Game.player.will -= 3
@@ -468,6 +468,8 @@
                 Game.pushLblEvent(out)
                 health = 0.1
                 Exit Sub
+            ElseIf currTarget.name.Equals("Hunger") Then
+                Game.pushLblEvent("You starve to death!")
             End If
         Catch ex As Exception
             MsgBox("D_D Error 002: Unknown Cause of death")
@@ -734,15 +736,15 @@
             perks("hunger") = 0
         ElseIf hunger > 100 Then
             hunger = 100
-        ElseIf Game.turn Mod 35 = 0 Then
+        ElseIf Game.turn Mod 25 = 0 Then
             hunger += 1
         End If
         If health > 1 Then health = 1
         If mana > getmaxMana() Then mana = getmaxMana()
-        If inventory(8).count > 0 Then
-            inventory(8).count = 0
-            Game.pushLblEvent("The chicken suit phases out of reality")
-        End If
+        'If inventory(8).count > 0 Then
+        '    inventory(8).count = 0
+        '    Game.pushLblEvent("The chicken suit phases out of reality")
+        'End If
     End Sub
     Sub createInvPerks()
         'create inventory
@@ -861,23 +863,7 @@
 
         misc = {inventory(43), inventory(53)}
 
-        'Creates the dictionary of perks
-        perks.Add("hunger", -1) '0
-        perks.Add("bimbotf", -1) '1
-        perks.Add("slutcurse", -1) '2
-        perks.Add("chickentf", -1) '3
-        perks.Add("slimehair", -1) '4
-        perks.Add("polymorphed", -1) '5
-        perks.Add("nekocurse", -1) '6
-        perks.Add("swordpossess", -1) '7
-        perks.Add("vsslimehair", -1) '8
-        perks.Add("brage", -1) '9
-        perks.Add("mmammaries", -1) '10
-        perks.Add("ihfury", -1) '11
-        perks.Add("livearm", -1) '12
-        perks.Add("livelinge", -1) '13
-        perks.Add("thrall", -1) '14
-        perks.Add("cowbell", -1) '15
+        initPerks()
 
         'Creates the class dictionary
         classes.Clear()
@@ -906,8 +892,8 @@
         forms.Add("Elf", New pForm(0.75, 1, 1.5, 1, 1, 1, "Elf", True))
         forms.Add("Android", New pForm(1, 1, 1, 1.5, 1, 0.75, "Android", True))
         forms.Add("Succubus", New pForm(1.5, 1.5, 1.5, 0.75, 1.5, 1, "Succubus", True))
-        forms.Add("Half-Succubus", New pForm(1, 1.5, 1, 1, 1.5, 1, "Half-Succubus", True))
-        forms.Add("Angel", New pForm(2, 1, 1, 1, 1.5, 1.5, "Angel", True))
+        forms.Add("Half-Succubus", New pForm(1.1, 1.5, 1.1, 1.1, 1.5, 1, "Half-Succubus", True))
+        forms.Add("Angel", New pForm(2, 1.1, 0.9, 1.1, 1.5, 1.5, "Angel", True))
         forms.Add("Slime", New pForm(0.4, 1, 1, 2.5, 0.75, 0.75, "Slime", True))
         forms.Add("Half-Slime", New pForm(0.75, 1, 1, 1.7, 1, 1, "Half-Slime", True))
         forms.Add("Tigress", New pForm(1, 1.5, 1, 0.75, 1.5, 1, "Tigress", False))
@@ -921,7 +907,7 @@
         forms.Add("Elder-God", New pForm(3, 3, 3, 3, 3, 3, "Elder-God", False))
         forms.Add("Gynoid", New pForm(0.75, 0.75, 0.75, 1.5, 1.5, 0.5, "Gynoid", True))
         forms.Add("Cyborg", New pForm(1, 1.5, 1.5, 1.5, 1.5, 1, "Cyborg", True))
-        forms.Add("Blowup Doll", New pForm(1, 1, 1, 0.5, 0.5, 0.75, "Blowup Doll", False))
+        forms.Add("Blowup Doll", New pForm(0.7, 0.7, 0.7, 0.5, 0.5, 0.75, "Blowup Doll", False))
         forms.Add("Cake", New pForm(1.5, 0.75, 1, 0.5, 0.5, 1, "Cake", False))
         forms.Add("Sheep", New pForm(1.5, 0.5, 0.5, 1.5, 0.5, 0.75, "Sheep", False))
         forms.Add("Frog", New pForm(0.75, 0.5, 0.5, 0.5, 2, 1, "Frog", False))
@@ -954,6 +940,7 @@
             Else
                 health -= 5 / getmaxHealth()
                 Game.lstLog.Items.Add("Your stomach aches... -5 health!")
+                If health <= 0 Then setTarg(New Monster(10))
             End If
         End If
         'bimbo tf
@@ -1179,8 +1166,8 @@
             End If
         End If
         'thrall tf
-        If perks("thrall") > -1 Then
-            If Game.turn Mod 10 = 0 And Not prefForm.playerMeetsForm(Game.player) And perks("thrall") < 20 Then
+        If perks("thrall") > -1 And Not pForm.name.Equals("Half-Succubus") And forcedPath Is Nothing And Not Game.lblEvent.Visible Then
+            If Game.turn Mod 10 = 0 And Not prefForm.playerMeetsForm(Game.player) And perks("thrall") < 21 Then
                 prefForm.shiftTowards(Game.player)
                 perks("thrall") += 1
                 If perks("thrall") > 20 Then
@@ -1188,9 +1175,8 @@
                 End If
             End If
 
-            If prefForm.playerMeetsForm(Game.player) And 4 = 0 Then
-                If perks("thrall") <> 21 Then perks("thrall") = 21
-                If Game.turn Mod 10 And Int(Rnd() * 40) = 0 And forcedPath Is Nothing And Not Game.combatmode And Not Game.npcmode Then
+            If prefForm.playerMeetsForm(Game.player) Then
+                If forcedPath Is Nothing And Not Game.combatmode And Not Game.npcmode Then
                     Dim crystalX As Integer
                     Dim crystalY As Integer
                     Do While (Game.mBoard(crystalY, crystalX).Tag <> 1 Or Game.mBoard(crystalY, crystalX).Text <> "")
@@ -1198,10 +1184,12 @@
                         crystalY = CInt(Int(Rnd() * Game.mBoardHeight))
                     Loop
                     Dim crystal = New Point(crystalX, crystalY)
+
                     Game.mBoard(crystalY, crystalX).Tag = 2
                     Game.mBoard(crystalY, crystalX).Text = "c"
 
-                    forcedPath = Game.route(Game.player.pos, crystal, "n/a", New List(Of Point), 0)
+                    forcedPath = Game.route(Game.player.pos, crystal, New Point(0, 0))
+
 
                     Dim s As String = ""
                     If getWillpower() > 10 Then
@@ -1220,7 +1208,7 @@
             End If
         End If
         'shift toward prefered form
-        If Not prefForm Is Nothing AndAlso (pClass.name = "Thrall" Xor equippedAcce.getName.Equals("Slave_Collar")) AndAlso Not prefForm.playerMeetsForm(Game.player) And Not perks("thrall") = 1 And Not perks("nekocurse") > -1 And Not perks("polymorphed") > -1 And Not perks("bimbotf") > -1 Then
+        If Not prefForm Is Nothing AndAlso (pClass.name = "Thrall" Xor equippedAcce.getName.Equals("Slave_Collar")) AndAlso Not prefForm.playerMeetsForm(Game.player) And Not pForm.name.Equals("Half-Succubus") And Not perks("thrall") = 1 And Not perks("nekocurse") > -1 And Not perks("polymorphed") > -1 And Not perks("bimbotf") > -1 Then
             prefForm.shiftTowards(Game.player)
             perks("thrall") = 1
         End If
@@ -1315,10 +1303,10 @@
             Die()
             Exit Sub
         End If
-        If inventory(8).count > 0 Then
-            inventory(8).count = 0
-            Game.pushLblEvent("The chicken suit phases out of reality")
-        End If
+        'If inventory(8).count > 0 Then
+        '    inventory(8).count = 0
+        '    Game.pushLblEvent("The chicken suit phases out of reality")
+        'End If
         If Game.lblNameTitle.Text <> name & " the " & pClass.name Then Game.lblNameTitle.Text = name & " the " & pClass.name
         If Game.lblHealth.Text <> "Health = " & CInt(health * getmaxHealth()) & "/" & getmaxHealth() Then Game.lblHealth.Text = "Health = " & CInt(health * getmaxHealth()) & "/" & getmaxHealth()
         If Game.lblMana.Text <> "Mana = " & mana & "/" & getmaxMana() Then Game.lblMana.Text = "Mana = " & mana & "/" & getmaxMana()
@@ -1563,7 +1551,7 @@
             breastSize = 1
         ElseIf iArrInd(2).Item1 = 1 Or iArrInd(2).Item1 = 6 And breastSize <> 2 Then
             breastSize = 2
-        ElseIf ((iArrInd(2).Item1 = 2 And iArrInd(2).Item2) Or iArr(2).Equals(CharacterGenerator.fTFBody(10)) Or iArr(2).Equals(Game.picFMarkBody.BackgroundImage)) Or iArrInd(2).Item1 = 7 And breastSize <> 3 Then
+        ElseIf ((iArrInd(2).Item1 = 2 And iArrInd(2).Item2) Or iArr(2).Equals(CharacterGenerator.fTFBody(10))) Or iArrInd(2).Item1 = 7 And breastSize <> 3 Then
             breastSize = 3
         ElseIf iArrInd(2).Item1 = 3 Or iArrInd(2).Item1 = 8 And breastSize <> 4 Then
             breastSize = 4
@@ -1900,7 +1888,7 @@
             iArrInd(9) = New Tuple(Of Integer, Boolean)(14, True)
         Else
             iArrInd(8) = New Tuple(Of Integer, Boolean)(5, False)
-            iArrInd(9) = New Tuple(Of Integer, Boolean)(6, False)
+            iArrInd(9) = New Tuple(Of Integer, Boolean)(7, False)
         End If
         createP()
         changeSkinColor(c)
@@ -1922,23 +1910,23 @@
 
     'getter for buffable stats
     Function getmaxHealth()
-        Return CInt(maxHealth * pClass.h * pForm.h) + hBuff + equippedArmor.hBoost + equippedAcce.hBoost
+        Return CInt((maxHealth + hBuff + equippedArmor.hBoost + equippedAcce.hBoost) * pClass.h * pForm.h)
     End Function
     Function getmaxMana()
         If equippedArmor Is Nothing Or equippedWeapon Is Nothing Then Return CInt(maxMana * pForm.m * pForm.m) + mBuff
-        Return CInt(maxMana * pForm.m * pForm.m) + mBuff + equippedArmor.mBoost + equippedWeapon.mBoost + equippedAcce.mBoost
+        Return CInt((maxMana + mBuff + equippedArmor.mBoost + equippedWeapon.mBoost + equippedAcce.mBoost) * pForm.m * pForm.m)
     End Function
     Function getAttack()
         If equippedArmor Is Nothing Or equippedWeapon Is Nothing Then Return CInt(attack * pForm.a * pClass.a) + aBuff
-        Return CInt(attack * pForm.a * pClass.a) + aBuff + equippedArmor.aBoost + equippedAcce.aBoost
+        Return CInt((attack + aBuff + equippedArmor.aBoost + equippedAcce.aBoost) * pForm.a * pClass.a)
     End Function
     Function getDefence()
         If equippedArmor Is Nothing Or equippedWeapon Is Nothing Then Return CInt(defence * pClass.d * pForm.d) + dBuff
-        Return CInt(defence * pClass.d * pForm.d) + dBuff + equippedArmor.dBoost + equippedAcce.dBoost
+        Return CInt((defence + dBuff + equippedArmor.dBoost + equippedAcce.dBoost) * pClass.d * pForm.d)
     End Function
     Function getSpeed()
         If equippedArmor Is Nothing Or equippedWeapon Is Nothing Then Return CInt(speed * pClass.s * pForm.s) + sBuff
-        Return CInt(speed * pClass.s * pForm.s) + sBuff + equippedArmor.sBoost + equippedAcce.sBoost
+        Return CInt((speed + sBuff + equippedArmor.sBoost + equippedAcce.sBoost) * pClass.s * pForm.s)
     End Function
     Function getWillpower()
         Return CInt(will * pClass.w * pForm.w) + wBuff
