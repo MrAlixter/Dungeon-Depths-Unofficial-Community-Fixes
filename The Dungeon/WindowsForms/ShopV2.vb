@@ -113,7 +113,7 @@ Public Class ShopV2
                     If item.count >= number.Value Then
                         item.count -= number.Value
                     Else
-                        item.count = 1
+                        item.count = 0
                     End If
                 End If
             Next
