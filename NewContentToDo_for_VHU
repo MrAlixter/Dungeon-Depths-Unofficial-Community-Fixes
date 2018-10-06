@@ -1,0 +1,53 @@
+x = done
+*/| | = to-do
+
+NEW CONTENT TO-DO FOR VERSION 0.7:
+
+|x| - Update transformation system
+| | - Complete Level 4
+	x Add RandoTF/RandoSlimeTF (Also add for explorer bodyswap)
+	x Add loaded chest object
+		Class LoadedChest
+			new (pos as point, contentID as int)
+			new (str as string)
+			overrides open()
+			onOpen as action
+			toString()
+	x Add a loaded chest within 1 block of the player
+		onOpen does a RandoTF, and dialogs out the first encounter with the Ooze Empress
+	* Add Ooze Empress as a MiniBoss
+		STATS:
+			High HP
+			Low Attack
+			Low Speed
+			High DEF
+		Can not be polymorphed
+			"As you cast your polymorph, the Ooze at first is reduced to a gooey [form].  Its form begins to ripple though, and soon you find yourself facing the Empress again. ""Did you really think that would work on a shape-shifter, darling?"" she giggles, her entir body quivering with her laughter."
+		has 3 attacks
+			Swipe with goo tentacle (deals 10 + D15 damage)
+			Throws a ball of goo at you (Transforms a bodypart/hair or skin color and a stat by +- D2)
+			Slime Wave (Heals the player by 50%, performs another RandoTF)
+		Drops a key, vials of enhanced slime (performs a RandoSlimeTF), spellbook, and manual, in addition to the player's old possessions
+		On defeat, gives a choice to take back your old body
+			
+| | - Add spell and specialty lists to the player object
+| | - Create Classes for game and player aux methods
+| | - Illuminate stuns opponent in combat
+| | - Add purple, pink, white, blue, green, yellow, and red tile overlays
+	* arcane compass creates a blue path
+	* compass creates a yellow path
+	
+| | - Change default death
+	offer choice between load a new save or continue with new character
+		
+	Continue with new character opens a new char. create screen, but saves old dungeon seeds.
+		
+	spawns a large starter chest, but no new chests.
+		
+	ruby trap kills player, creates a special gravestone
+		interacting with the gravestone again swaps the player back to the one that died
+		
+	wherever a player dies, create a gravestone instance
+		Class Gravestone
+			implements LoadedChest
+			new(p as player, contentID)
