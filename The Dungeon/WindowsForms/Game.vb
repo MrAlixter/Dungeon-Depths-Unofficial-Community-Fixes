@@ -10,6 +10,9 @@ Public Class Game
     Public mBoardWidth As Integer = 60
     Public mBoardHeight As Integer = 60
 
+    Public boardPic As Bitmap
+    Public seenBoardPic As Bitmap
+
     Public mBoard(,) As mTile
     Public mPics(,) As PictureBox       '(NOT SAVED)
     Public floor As Integer = 0
@@ -332,8 +335,6 @@ Public Class Game
         End If
 
 
-
-
         initializeBoard(False)
         drawBoard()
         player.currState = New State(player)
@@ -379,6 +380,10 @@ Public Class Game
     End Sub
     'newBoard disposes of the old board and its graphical representation
     Sub newBoard()
+        Dim imgSize As Integer = picTile.BackgroundImage.PhysicalDimension.Height
+        boardPic = New Bitmap(mBoardWidth * imgSize, mBoardHeight * imgSize)
+        seenBoardPic = New Bitmap(mBoardWidth * imgSize, mBoardHeight * imgSize)
+
         If floor > 5 Then
             If player.pClass.name.Equals("Bimbo") Then
                 player.pImage = picBimbof.BackgroundImage
@@ -694,6 +699,46 @@ Public Class Game
         'Next
         'Dim sc = New SlaveCollar
         'sc.onEquip()
+
+        Dim imgSize As Integer = picTile.BackgroundImage.PhysicalDimension.Height
+        Using boardG As Graphics = Graphics.FromImage(boardPic), seenG As Graphics = Graphics.FromImage(seenBoardPic)
+            For x = 0 To mBoardWidth - 1
+                For y = 0 To mBoardHeight - 1
+                    Dim tile As mTile = mBoard(y, x)
+                    Dim img As Image = Nothing
+
+                    If tile.Text = "#" OrElse tile.ForeColor = Color.FromArgb(45, 45, 45) Then 'Chest
+                        img = picChest.BackgroundImage
+                    ElseIf tile.Text = "H" Then 'Stairs
+                        img = picStairs.BackgroundImage
+                    ElseIf tile.Text = "@" And player.pos.X = x And player.pos.Y = y Then 'Player
+                        'img = picChest.BackgroundImage
+                        img = picTile.BackgroundImage
+                    ElseIf tile.Text = "@" Then 'Statue
+                        img = picStatue.BackgroundImage
+                    ElseIf tile.Text = "$" Then 'NPC
+                        img = picNPC.BackgroundImage
+                    ElseIf tile.Text = "+" Then 'Trap
+                        img = picTrap.BackgroundImage
+                    ElseIf tile.Tag = 2 OrElse tile.Tag = 1 Then 'Seen or Unseen
+                        img = picTile.BackgroundImage
+                        'Else 'Nothing
+                        '    img = picChest.BackgroundImage
+                    End If
+
+                    If img IsNot Nothing Then
+                        boardG.DrawImage(img, x * imgSize, y * imgSize, imgSize, imgSize)
+                        If tile.Tag = 1 Then
+                            seenG.FillRectangle(New SolidBrush(Color.FromArgb(39, 39, 39)), x * imgSize, y * imgSize, imgSize, imgSize)
+                        End If
+                    Else
+                        boardG.FillRectangle(Brushes.Black, x * imgSize, y * imgSize, imgSize, imgSize)
+                    End If
+                Next
+            Next
+        End Using
+        boardPic.Save("BOARD.png")
+        seenBoardPic.Save("BOARD_SEEN.png")
 
     End Sub
     Sub connectRooms(ByVal p1 As Point, ByVal p2 As Point)
