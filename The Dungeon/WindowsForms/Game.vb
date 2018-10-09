@@ -12,6 +12,9 @@ Public Class Game
 
     Public boardPic As Bitmap
     Public seenBoardPic As Bitmap
+    Public savedBoardPic As Bitmap
+    Public boxBoard As PictureBox
+    Public testingImageBoard As Boolean = True
 
     Public mBoard(,) As mTile
     Public mPics(,) As PictureBox       '(NOT SAVED)
@@ -380,9 +383,25 @@ Public Class Game
     End Sub
     'newBoard disposes of the old board and its graphical representation
     Sub newBoard()
-        Dim imgSize As Integer = picTile.BackgroundImage.PhysicalDimension.Height
-        boardPic = New Bitmap(mBoardWidth * imgSize, mBoardHeight * imgSize)
-        seenBoardPic = New Bitmap(mBoardWidth * imgSize, mBoardHeight * imgSize)
+        If testingImageBoard Then
+            Dim imgSize As Integer = picTile.BackgroundImage.PhysicalDimension.Height
+            boardPic = New Bitmap(mBoardWidth * imgSize, mBoardHeight * imgSize)
+            seenBoardPic = New Bitmap(mBoardWidth * imgSize, mBoardHeight * imgSize)
+            boxBoard = New PictureBox()
+            boxBoard.Width = 500
+            boxBoard.Height = 500
+            boxBoard.Location = New Point(50, 50)
+            boxBoard.Visible = True
+            boxBoard.SizeMode = PictureBoxSizeMode.Zoom
+            AddHandler boxBoard.Paint, AddressOf boxBoard_Draw
+            Me.Controls.Add(boxBoard)
+            boxBoard.BringToFront()
+            savedBoardPic = boardPic.Clone()
+            Using g As Graphics = Graphics.FromImage(savedBoardPic)
+                g.DrawImageUnscaled(seenBoardPic, 0, 0)
+            End Using
+            boxBoard.Image = savedBoardPic
+        End If
 
         If floor > 5 Then
             If player.pClass.name.Equals("Bimbo") Then
@@ -700,47 +719,73 @@ Public Class Game
         'Dim sc = New SlaveCollar
         'sc.onEquip()
 
-        Dim imgSize As Integer = picTile.BackgroundImage.PhysicalDimension.Height
-        Using boardG As Graphics = Graphics.FromImage(boardPic), seenG As Graphics = Graphics.FromImage(seenBoardPic)
-            For x = 0 To mBoardWidth - 1
-                For y = 0 To mBoardHeight - 1
-                    Dim tile As mTile = mBoard(y, x)
-                    Dim img As Image = Nothing
+        If testingImageBoard Then
+            Dim imgSize As Integer = picTile.BackgroundImage.PhysicalDimension.Height
+            Using boardG As Graphics = Graphics.FromImage(boardPic), seenG As Graphics = Graphics.FromImage(seenBoardPic)
+                For x = 0 To mBoardWidth - 1
+                    For y = 0 To mBoardHeight - 1
+                        Dim tile As mTile = mBoard(y, x)
+                        Dim img As Image = Nothing
 
-                    If tile.Text = "#" OrElse tile.ForeColor = Color.FromArgb(45, 45, 45) Then 'Chest
-                        img = picChest.BackgroundImage
-                    ElseIf tile.Text = "H" Then 'Stairs
-                        img = picStairs.BackgroundImage
-                    ElseIf tile.Text = "@" And player.pos.X = x And player.pos.Y = y Then 'Player
-                        'img = picChest.BackgroundImage
-                        img = picTile.BackgroundImage
-                    ElseIf tile.Text = "@" Then 'Statue
-                        img = picStatue.BackgroundImage
-                    ElseIf tile.Text = "$" Then 'NPC
-                        img = picNPC.BackgroundImage
-                    ElseIf tile.Text = "+" Then 'Trap
-                        img = picTrap.BackgroundImage
-                    ElseIf tile.Tag = 2 OrElse tile.Tag = 1 Then 'Seen or Unseen
-                        img = picTile.BackgroundImage
-                        'Else 'Nothing
-                        '    img = picChest.BackgroundImage
-                    End If
-
-                    If img IsNot Nothing Then
-                        boardG.DrawImage(img, x * imgSize, y * imgSize, imgSize, imgSize)
-                        If tile.Tag = 1 Then
-                            seenG.FillRectangle(New SolidBrush(Color.FromArgb(39, 39, 39)), x * imgSize, y * imgSize, imgSize, imgSize)
+                        If tile.Text = "#" OrElse tile.ForeColor = Color.FromArgb(45, 45, 45) Then 'Chest
+                            img = picChest.BackgroundImage
+                        ElseIf tile.Text = "H" Then 'Stairs
+                            img = picStairs.BackgroundImage
+                        ElseIf tile.Text = "@" And player.pos.X = x And player.pos.Y = y Then 'Player
+                            'img = picChest.BackgroundImage
+                            img = picTile.BackgroundImage
+                        ElseIf tile.Text = "@" Then 'Statue
+                            img = picStatue.BackgroundImage
+                        ElseIf tile.Text = "$" Then 'NPC
+                            img = picNPC.BackgroundImage
+                        ElseIf tile.Text = "+" Then 'Trap
+                            img = picTrap.BackgroundImage
+                        ElseIf tile.Tag = 2 OrElse tile.Tag = 1 Then 'Seen or Unseen
+                            img = picTile.BackgroundImage
+                            'Else 'Nothing
+                            '    img = picChest.BackgroundImage
                         End If
-                    Else
-                        boardG.FillRectangle(Brushes.Black, x * imgSize, y * imgSize, imgSize, imgSize)
-                    End If
-                Next
-            Next
-        End Using
-        boardPic.Save("BOARD.png")
-        seenBoardPic.Save("BOARD_SEEN.png")
 
+                        If img IsNot Nothing Then
+                            boardG.DrawImage(img, x * imgSize, y * imgSize, imgSize, imgSize)
+                            If tile.Tag = 1 Then
+                                seenG.FillRectangle(New SolidBrush(Color.FromArgb(39, 39, 39)), x * imgSize, y * imgSize, imgSize, imgSize)
+                            End If
+                        Else
+                            boardG.FillRectangle(Brushes.Black, x * imgSize, y * imgSize, imgSize, imgSize)
+                        End If
+                    Next
+                Next
+            End Using
+            boardPic.Save("BOARD.png")
+            seenBoardPic.Save("BOARD_SEEN.png")
+
+
+            savedBoardPic = boardPic.Clone()
+            Using g As Graphics = Graphics.FromImage(savedBoardPic)
+                g.DrawImageUnscaled(seenBoardPic, 0, 0)
+            End Using
+            savedBoardPic.Save("BOARD_RENDERED.png")
+            boxBoard.Image = savedBoardPic
+        End If
     End Sub
+
+    Private Sub boxBoard_Draw(sender As Object, e As PaintEventArgs)
+        e.Graphics.InterpolationMode = Drawing2D.InterpolationMode.NearestNeighbor
+        'e.Graphics.DrawImage(map, CInt((picBoard.Width - (map.Width * magnification)) / 2) + xOffset, CInt((picBoard.Height - (map.Height * magnification)) / 2) + yOffset, map.Width * magnification + 0, map.Height * magnification + 0)
+        Dim magnification As Double = 25 / 60
+        Dim xOffSet As Integer, yOffset As Integer = 0
+        xOffSet = player.pos.X * -25
+        yOffset = player.pos.Y * -25
+        'xOffSet = 25
+        'yOffset = 25
+        e.Graphics.FillRectangle(Brushes.Black, 0, 0, boxBoard.Width, boxBoard.Height)
+        'e.Graphics.DrawImage(savedBoardPic, CInt((boxBoard.Width - (savedBoardPic.Width * magnification)) / 2) + xOffSet, CInt((boxBoard.Height - (savedBoardPic.Height * magnification)) / 2) + yOffset, CInt(savedBoardPic.Width * magnification), CInt(savedBoardPic.Height * magnification))
+        e.Graphics.DrawImage(savedBoardPic, CInt(boxBoard.Width / 2) + xOffSet, CInt(boxBoard.Height / 2) + yOffset, CInt(savedBoardPic.Width * magnification), CInt(savedBoardPic.Height * magnification))
+        '15 tall, 23 wide
+        e.Graphics.DrawImage(picPlayer.BackgroundImage, 10 * 25, 10 * 25, CInt(picPlayer.BackgroundImage.PhysicalDimension.Width * magnification), CInt(picPlayer.BackgroundImage.PhysicalDimension.Height * magnification))
+    End Sub
+
     Sub connectRooms(ByVal p1 As Point, ByVal p2 As Point)
         Dim cursor As Point = p1
         Dim xOry As Boolean = CBool(Int(Rnd() * 2))
@@ -1145,6 +1190,8 @@ Public Class Game
         '10 = boss stairs
         '11 = shady wizard
         '12 = crystal
+
+        boxBoard.Refresh()
 
         Dim viewArray(15, 23) As Integer
         Dim x As Integer = 0
@@ -2366,6 +2413,75 @@ Next
         player.currState.save(player)
 
         picStart.Visible = False
+
+        If testingImageBoard Then
+            Dim imgSize As Integer = picTile.BackgroundImage.PhysicalDimension.Height
+            boardPic = New Bitmap(mBoardWidth * imgSize, mBoardHeight * imgSize)
+            seenBoardPic = New Bitmap(mBoardWidth * imgSize, mBoardHeight * imgSize)
+            boxBoard = New PictureBox()
+            boxBoard.Width = 500
+            boxBoard.Height = 500
+            boxBoard.Location = New Point(50, 50)
+            boxBoard.Visible = True
+            boxBoard.SizeMode = PictureBoxSizeMode.Zoom
+            AddHandler boxBoard.Paint, AddressOf boxBoard_Draw
+            Me.Controls.Add(boxBoard)
+            boxBoard.BringToFront()
+            savedBoardPic = boardPic.Clone()
+            Using g As Graphics = Graphics.FromImage(savedBoardPic)
+                g.DrawImageUnscaled(seenBoardPic, 0, 0)
+            End Using
+            boxBoard.Image = savedBoardPic
+        End If
+        If testingImageBoard Then
+            Dim imgSize As Integer = picTile.BackgroundImage.PhysicalDimension.Height
+            Using boardG As Graphics = Graphics.FromImage(boardPic), seenG As Graphics = Graphics.FromImage(seenBoardPic)
+                For x = 0 To mBoardWidth - 1
+                    For y = 0 To mBoardHeight - 1
+                        Dim tile As mTile = mBoard(y, x)
+                        Dim img As Image = Nothing
+
+                        If tile.Text = "#" OrElse tile.ForeColor = Color.FromArgb(45, 45, 45) Then 'Chest
+                            img = picChest.BackgroundImage
+                        ElseIf tile.Text = "H" Then 'Stairs
+                            img = picStairs.BackgroundImage
+                        ElseIf tile.Text = "@" And player.pos.X = x And player.pos.Y = y Then 'Player
+                            'img = picChest.BackgroundImage
+                            img = picTile.BackgroundImage
+                        ElseIf tile.Text = "@" Then 'Statue
+                            img = picStatue.BackgroundImage
+                        ElseIf tile.Text = "$" Then 'NPC
+                            img = picNPC.BackgroundImage
+                        ElseIf tile.Text = "+" Then 'Trap
+                            img = picTrap.BackgroundImage
+                        ElseIf tile.Tag = 2 OrElse tile.Tag = 1 Then 'Seen or Unseen
+                            img = picTile.BackgroundImage
+                            'Else 'Nothing
+                            '    img = picChest.BackgroundImage
+                        End If
+
+                        If img IsNot Nothing Then
+                            boardG.DrawImage(img, x * imgSize, y * imgSize, imgSize, imgSize)
+                            If tile.Tag = 1 Then
+                                seenG.FillRectangle(New SolidBrush(Color.FromArgb(39, 39, 39)), x * imgSize, y * imgSize, imgSize, imgSize)
+                            End If
+                        Else
+                            boardG.FillRectangle(Brushes.Black, x * imgSize, y * imgSize, imgSize, imgSize)
+                        End If
+                    Next
+                Next
+            End Using
+            boardPic.Save("BOARD.png")
+            seenBoardPic.Save("BOARD_SEEN.png")
+
+
+            savedBoardPic = boardPic.Clone()
+            Using g As Graphics = Graphics.FromImage(savedBoardPic)
+                g.DrawImageUnscaled(seenBoardPic, 0, 0)
+            End Using
+            savedBoardPic.Save("BOARD_RENDERED.png")
+            boxBoard.Image = savedBoardPic
+        End If
 
         pushLblEvent("Game successfully loaded!")
         player.solFlag = False
