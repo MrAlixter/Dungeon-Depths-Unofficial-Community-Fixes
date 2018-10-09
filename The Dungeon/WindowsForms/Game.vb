@@ -384,23 +384,7 @@ Public Class Game
     'newBoard disposes of the old board and its graphical representation
     Sub newBoard()
         If testingImageBoard Then
-            Dim imgSize As Integer = picTile.BackgroundImage.PhysicalDimension.Height
-            boardPic = New Bitmap(mBoardWidth * imgSize, mBoardHeight * imgSize)
-            seenBoardPic = New Bitmap(mBoardWidth * imgSize, mBoardHeight * imgSize)
-            boxBoard = New PictureBox()
-            boxBoard.Width = 500
-            boxBoard.Height = 500
-            boxBoard.Location = New Point(50, 50)
-            boxBoard.Visible = True
-            boxBoard.SizeMode = PictureBoxSizeMode.Zoom
-            AddHandler boxBoard.Paint, AddressOf boxBoard_Draw
-            Me.Controls.Add(boxBoard)
-            boxBoard.BringToFront()
-            savedBoardPic = boardPic.Clone()
-            Using g As Graphics = Graphics.FromImage(savedBoardPic)
-                g.DrawImageUnscaled(seenBoardPic, 0, 0)
-            End Using
-            boxBoard.Image = savedBoardPic
+            CreateMapAndImages()
         End If
 
         If floor > 5 Then
@@ -720,53 +704,7 @@ Public Class Game
         'sc.onEquip()
 
         If testingImageBoard Then
-            Dim imgSize As Integer = picTile.BackgroundImage.PhysicalDimension.Height
-            Using boardG As Graphics = Graphics.FromImage(boardPic), seenG As Graphics = Graphics.FromImage(seenBoardPic)
-                For x = 0 To mBoardWidth - 1
-                    For y = 0 To mBoardHeight - 1
-                        Dim tile As mTile = mBoard(y, x)
-                        Dim img As Image = Nothing
-
-                        If tile.Text = "#" OrElse tile.ForeColor = Color.FromArgb(45, 45, 45) Then 'Chest
-                            img = picChest.BackgroundImage
-                        ElseIf tile.Text = "H" Then 'Stairs
-                            img = picStairs.BackgroundImage
-                        ElseIf tile.Text = "@" And player.pos.X = x And player.pos.Y = y Then 'Player
-                            'img = picChest.BackgroundImage
-                            img = picTile.BackgroundImage
-                        ElseIf tile.Text = "@" Then 'Statue
-                            img = picStatue.BackgroundImage
-                        ElseIf tile.Text = "$" Then 'NPC
-                            img = picNPC.BackgroundImage
-                        ElseIf tile.Text = "+" Then 'Trap
-                            img = picTrap.BackgroundImage
-                        ElseIf tile.Tag = 2 OrElse tile.Tag = 1 Then 'Seen or Unseen
-                            img = picTile.BackgroundImage
-                            'Else 'Nothing
-                            '    img = picChest.BackgroundImage
-                        End If
-
-                        If img IsNot Nothing Then
-                            boardG.DrawImage(img, x * imgSize, y * imgSize, imgSize, imgSize)
-                            If tile.Tag = 1 Then
-                                seenG.FillRectangle(New SolidBrush(Color.FromArgb(39, 39, 39)), x * imgSize, y * imgSize, imgSize, imgSize)
-                            End If
-                        Else
-                            boardG.FillRectangle(Brushes.Black, x * imgSize, y * imgSize, imgSize, imgSize)
-                        End If
-                    Next
-                Next
-            End Using
-            boardPic.Save("BOARD.png")
-            seenBoardPic.Save("BOARD_SEEN.png")
-
-
-            savedBoardPic = boardPic.Clone()
-            Using g As Graphics = Graphics.FromImage(savedBoardPic)
-                g.DrawImageUnscaled(seenBoardPic, 0, 0)
-            End Using
-            savedBoardPic.Save("BOARD_RENDERED.png")
-            boxBoard.Image = savedBoardPic
+            LoadMapAndImages()
         End If
     End Sub
 
@@ -783,7 +721,7 @@ Public Class Game
         'e.Graphics.DrawImage(savedBoardPic, CInt((boxBoard.Width - (savedBoardPic.Width * magnification)) / 2) + xOffSet, CInt((boxBoard.Height - (savedBoardPic.Height * magnification)) / 2) + yOffset, CInt(savedBoardPic.Width * magnification), CInt(savedBoardPic.Height * magnification))
         e.Graphics.DrawImage(savedBoardPic, CInt(boxBoard.Width / 2) + xOffSet, CInt(boxBoard.Height / 2) + yOffset, CInt(savedBoardPic.Width * magnification), CInt(savedBoardPic.Height * magnification))
         '15 tall, 23 wide
-        e.Graphics.DrawImage(picPlayer.BackgroundImage, 10 * 25, 10 * 25, CInt(picPlayer.BackgroundImage.PhysicalDimension.Width * magnification), CInt(picPlayer.BackgroundImage.PhysicalDimension.Height * magnification))
+        e.Graphics.DrawImage(picPlayer.BackgroundImage, CInt(Math.Floor(11.5 * 25)) - 1, CInt(Math.Floor(7.5 * 25)) - 1, CInt(picPlayer.BackgroundImage.PhysicalDimension.Width * magnification), CInt(picPlayer.BackgroundImage.PhysicalDimension.Height * magnification))
     End Sub
 
     Sub connectRooms(ByVal p1 As Point, ByVal p2 As Point)
@@ -2415,72 +2353,10 @@ Next
         picStart.Visible = False
 
         If testingImageBoard Then
-            Dim imgSize As Integer = picTile.BackgroundImage.PhysicalDimension.Height
-            boardPic = New Bitmap(mBoardWidth * imgSize, mBoardHeight * imgSize)
-            seenBoardPic = New Bitmap(mBoardWidth * imgSize, mBoardHeight * imgSize)
-            boxBoard = New PictureBox()
-            boxBoard.Width = 500
-            boxBoard.Height = 500
-            boxBoard.Location = New Point(50, 50)
-            boxBoard.Visible = True
-            boxBoard.SizeMode = PictureBoxSizeMode.Zoom
-            AddHandler boxBoard.Paint, AddressOf boxBoard_Draw
-            Me.Controls.Add(boxBoard)
-            boxBoard.BringToFront()
-            savedBoardPic = boardPic.Clone()
-            Using g As Graphics = Graphics.FromImage(savedBoardPic)
-                g.DrawImageUnscaled(seenBoardPic, 0, 0)
-            End Using
-            boxBoard.Image = savedBoardPic
+            CreateMapAndImages()
         End If
         If testingImageBoard Then
-            Dim imgSize As Integer = picTile.BackgroundImage.PhysicalDimension.Height
-            Using boardG As Graphics = Graphics.FromImage(boardPic), seenG As Graphics = Graphics.FromImage(seenBoardPic)
-                For x = 0 To mBoardWidth - 1
-                    For y = 0 To mBoardHeight - 1
-                        Dim tile As mTile = mBoard(y, x)
-                        Dim img As Image = Nothing
-
-                        If tile.Text = "#" OrElse tile.ForeColor = Color.FromArgb(45, 45, 45) Then 'Chest
-                            img = picChest.BackgroundImage
-                        ElseIf tile.Text = "H" Then 'Stairs
-                            img = picStairs.BackgroundImage
-                        ElseIf tile.Text = "@" And player.pos.X = x And player.pos.Y = y Then 'Player
-                            'img = picChest.BackgroundImage
-                            img = picTile.BackgroundImage
-                        ElseIf tile.Text = "@" Then 'Statue
-                            img = picStatue.BackgroundImage
-                        ElseIf tile.Text = "$" Then 'NPC
-                            img = picNPC.BackgroundImage
-                        ElseIf tile.Text = "+" Then 'Trap
-                            img = picTrap.BackgroundImage
-                        ElseIf tile.Tag = 2 OrElse tile.Tag = 1 Then 'Seen or Unseen
-                            img = picTile.BackgroundImage
-                            'Else 'Nothing
-                            '    img = picChest.BackgroundImage
-                        End If
-
-                        If img IsNot Nothing Then
-                            boardG.DrawImage(img, x * imgSize, y * imgSize, imgSize, imgSize)
-                            If tile.Tag = 1 Then
-                                seenG.FillRectangle(New SolidBrush(Color.FromArgb(39, 39, 39)), x * imgSize, y * imgSize, imgSize, imgSize)
-                            End If
-                        Else
-                            boardG.FillRectangle(Brushes.Black, x * imgSize, y * imgSize, imgSize, imgSize)
-                        End If
-                    Next
-                Next
-            End Using
-            boardPic.Save("BOARD.png")
-            seenBoardPic.Save("BOARD_SEEN.png")
-
-
-            savedBoardPic = boardPic.Clone()
-            Using g As Graphics = Graphics.FromImage(savedBoardPic)
-                g.DrawImageUnscaled(seenBoardPic, 0, 0)
-            End Using
-            savedBoardPic.Save("BOARD_RENDERED.png")
-            boxBoard.Image = savedBoardPic
+            LoadMapAndImages()
         End If
 
         pushLblEvent("Game successfully loaded!")
@@ -4088,5 +3964,81 @@ Next
         f6.ShowDialog()
         f6.Dispose()
         loadcKeys()
+    End Sub
+
+    Private Sub CreateMapAndImages()
+        Dim XSize As Double = 15.0 * (CDbl(Me.Size.Width) / 688.0)
+        Dim YSize As Double = 15.0 * (CDbl(Me.Size.Width) / 688.0)
+
+        Dim imgSize As Integer = picTile.BackgroundImage.PhysicalDimension.Height
+        boardPic = New Bitmap(mBoardWidth * imgSize, mBoardHeight * imgSize)
+        seenBoardPic = New Bitmap(mBoardWidth * imgSize, mBoardHeight * imgSize)
+        boxBoard = New PictureBox()
+        'boxBoard.Width = 23 * 25
+        'boxBoard.Height = 15 * 25
+        'boxBoard.Width = 500
+        'boxBoard.Height = 500
+        boxBoard.Size = New Point(YSize * 1.25 * 23, XSize * 1.25 * 15)
+        boxBoard.Location = New Point(60, 75)
+        'boxBoard.Location = New Point(50, 50)
+        boxBoard.Visible = True
+        boxBoard.SizeMode = PictureBoxSizeMode.Zoom
+        AddHandler boxBoard.Paint, AddressOf boxBoard_Draw
+        Me.Controls.Add(boxBoard)
+        boxBoard.BringToFront()
+        savedBoardPic = boardPic.Clone()
+        Using g As Graphics = Graphics.FromImage(savedBoardPic)
+            g.DrawImageUnscaled(seenBoardPic, 0, 0)
+        End Using
+        boxBoard.Image = savedBoardPic
+    End Sub
+    Private Sub LoadMapAndImages()
+        Dim imgSize As Integer = picTile.BackgroundImage.PhysicalDimension.Height
+        Using boardG As Graphics = Graphics.FromImage(boardPic), seenG As Graphics = Graphics.FromImage(seenBoardPic)
+            For x = 0 To mBoardWidth - 1
+                For y = 0 To mBoardHeight - 1
+                    Dim tile As mTile = mBoard(y, x)
+                    Dim img As Image = Nothing
+
+                    If tile.Text = "#" OrElse tile.ForeColor = Color.FromArgb(45, 45, 45) Then 'Chest
+                        img = picChest.BackgroundImage
+                    ElseIf tile.Text = "H" Then 'Stairs
+                        img = picStairs.BackgroundImage
+                    ElseIf tile.Text = "@" And player.pos.X = x And player.pos.Y = y Then 'Player
+                        'img = picChest.BackgroundImage
+                        img = picTile.BackgroundImage
+                    ElseIf tile.Text = "@" Then 'Statue
+                        img = picStatue.BackgroundImage
+                    ElseIf tile.Text = "$" Then 'NPC
+                        img = picNPC.BackgroundImage
+                    ElseIf tile.Text = "+" Then 'Trap
+                        img = picTrap.BackgroundImage
+                    ElseIf tile.Tag = 2 OrElse tile.Tag = 1 Then 'Seen or Unseen
+                        img = picTile.BackgroundImage
+                        'Else 'Nothing
+                        '    img = picChest.BackgroundImage
+                    End If
+
+                    If img IsNot Nothing Then
+                        boardG.DrawImage(img, x * imgSize, y * imgSize, imgSize, imgSize)
+                        If tile.Tag = 1 Then
+                            seenG.FillRectangle(New SolidBrush(Color.FromArgb(39, 39, 39)), x * imgSize, y * imgSize, imgSize, imgSize)
+                        End If
+                    Else
+                        boardG.FillRectangle(Brushes.Black, x * imgSize, y * imgSize, imgSize, imgSize)
+                    End If
+                Next
+            Next
+        End Using
+        boardPic.Save("BOARD.png")
+        seenBoardPic.Save("BOARD_SEEN.png")
+
+
+        savedBoardPic = boardPic.Clone()
+        Using g As Graphics = Graphics.FromImage(savedBoardPic)
+            g.DrawImageUnscaled(seenBoardPic, 0, 0)
+        End Using
+        savedBoardPic.Save("BOARD_RENDERED.png")
+        boxBoard.Image = savedBoardPic
     End Sub
 End Class
