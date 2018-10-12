@@ -14,7 +14,7 @@ Public Class Game
     Public seenBoardPic As Bitmap
     Public savedBoardPic As Bitmap
     Public boxBoard As PictureBox
-    Public testingImageBoard As Boolean = True
+    Public testingImageBoard As Boolean = False
 
     Public mBoard(,) As mTile
     Public mPics(,) As PictureBox       '(NOT SAVED)
@@ -383,10 +383,6 @@ Public Class Game
     End Sub
     'newBoard disposes of the old board and its graphical representation
     Sub newBoard()
-        If testingImageBoard Then
-            CreateMapAndImages()
-        End If
-
         If floor > 5 Then
             If player.pClass.name.Equals("Bimbo") Then
                 player.pImage = picBimbof.BackgroundImage
@@ -445,23 +441,31 @@ Public Class Game
                 Application.DoEvents()
             Next xInd
         Next yInd
-        Dim viewPicsDone As Integer = 0
-        For y As Integer = 0 To viewHeight - 1
-            For x As Integer = 0 To viewWidth - 1
-                Dim newPicture As PictureBox = New PictureBox()
-                newPicture.Name = "boardBox|" & x & "_" & y
-                newPicture.BackgroundImageLayout = ImageLayout.Stretch
-                newPicture.Size = New Point(YSize * 1.25, XSize * 1.25)
-                newPicture.Location = New Point(60 + x * (XSize * 1.233), 75 + y * (YSize * 1.233))
-                newPicture.Visible = True
-                Me.Controls.Add(newPicture)
-                mPics(y, x) = newPicture
 
-                viewPicsDone += 1
-                Dim progress As Double = (viewPicsDone / (viewHeight * viewWidth))
-                boardWorker.ReportProgress(80 + (progress * 20))
+        If Not testingImageBoard Then
+            Dim viewPicsDone As Integer = 0
+            For y As Integer = 0 To viewHeight - 1
+                For x As Integer = 0 To viewWidth - 1
+                    Dim newPicture As PictureBox = New PictureBox()
+                    newPicture.Name = "boardBox|" & x & "_" & y
+                    newPicture.BackgroundImageLayout = ImageLayout.Stretch
+                    newPicture.Size = New Point(YSize * 1.25, XSize * 1.25)
+                    newPicture.Location = New Point(60 + x * (XSize * 1.233), 75 + y * (YSize * 1.233))
+                    newPicture.Visible = True
+                    Me.Controls.Add(newPicture)
+                    mPics(y, x) = newPicture
+
+                    viewPicsDone += 1
+                    Dim progress As Double = (viewPicsDone / (viewHeight * viewWidth))
+                    boardWorker.ReportProgress(80 + (progress * 20))
+                Next
             Next
-        Next
+        End If
+
+        If testingImageBoard Then
+            CreateMapAndImages()
+        End If
+
         boardWorker.ReportProgress(99)
         boardWorker.CancelAsync()
     End Sub
@@ -707,8 +711,8 @@ Public Class Game
             LoadMapAndImages()
         End If
     End Sub
-
     Private Sub boxBoard_Draw(sender As Object, e As PaintEventArgs)
+        Dim startTime As Double = (DateTime.Now - New DateTime(1970, 1, 1)).TotalMilliseconds
         e.Graphics.InterpolationMode = Drawing2D.InterpolationMode.NearestNeighbor
         'e.Graphics.DrawImage(map, CInt((picBoard.Width - (map.Width * magnification)) / 2) + xOffset, CInt((picBoard.Height - (map.Height * magnification)) / 2) + yOffset, map.Width * magnification + 0, map.Height * magnification + 0)
         Dim magnification As Double = 25 / 60
@@ -717,11 +721,19 @@ Public Class Game
         yOffset = player.pos.Y * -25
         'xOffSet = 25
         'yOffset = 25
-        e.Graphics.FillRectangle(Brushes.Black, 0, 0, boxBoard.Width, boxBoard.Height)
-        'e.Graphics.DrawImage(savedBoardPic, CInt((boxBoard.Width - (savedBoardPic.Width * magnification)) / 2) + xOffSet, CInt((boxBoard.Height - (savedBoardPic.Height * magnification)) / 2) + yOffset, CInt(savedBoardPic.Width * magnification), CInt(savedBoardPic.Height * magnification))
-        e.Graphics.DrawImage(savedBoardPic, CInt(boxBoard.Width / 2) + xOffSet, CInt(boxBoard.Height / 2) + yOffset, CInt(savedBoardPic.Width * magnification), CInt(savedBoardPic.Height * magnification))
+        e.Graphics.FillRectangle(Brushes.Purple, 0, 0, boxBoard.Width, boxBoard.Height)
+        'e.Graphics.DrawImage(savedBoardPic, CInt(boxBoard.Width / 2) + xOffSet, CInt(boxBoard.Height / 2) + yOffset, CInt(savedBoardPic.Width * magnification), CInt(savedBoardPic.Height * magnification))
+
+        'e.Graphics.DrawImage(boardPic, CInt(boardPic.Width / 2) + xOffSet, CInt(boardPic.Height / 2) + yOffset, CInt(boardPic.Width * magnification), CInt(boardPic.Height * magnification))
+        'e.Graphics.DrawImage(seenBoardPic, CInt(seenBoardPic.Width / 2) + xOffSet, CInt(seenBoardPic.Height / 2) + yOffset, CInt(seenBoardPic.Width * magnification), CInt(seenBoardPic.Height * magnification))
+
+        e.Graphics.DrawImage(boardPic, CInt(boxBoard.Width / 2) + xOffSet, CInt(boxBoard.Height / 2) + yOffset, CInt(boardPic.Width * magnification), CInt(boardPic.Height * magnification))
+        e.Graphics.DrawImage(seenBoardPic, CInt(boxBoard.Width / 2) + xOffSet, CInt(boxBoard.Height / 2) + yOffset, CInt(boardPic.Width * magnification), CInt(boardPic.Height * magnification))
+
         '15 tall, 23 wide
         e.Graphics.DrawImage(picPlayer.BackgroundImage, CInt(Math.Floor(11.5 * 25)) - 1, CInt(Math.Floor(7.5 * 25)) - 1, CInt(picPlayer.BackgroundImage.PhysicalDimension.Width * magnification), CInt(picPlayer.BackgroundImage.PhysicalDimension.Height * magnification))
+        Dim endTime = (DateTime.Now - New DateTime(1970, 1, 1)).TotalMilliseconds
+        Console.WriteLine("DRAW TIME: " + (endTime - startTime).ToString())
     End Sub
 
     Sub connectRooms(ByVal p1 As Point, ByVal p2 As Point)
@@ -1090,27 +1102,73 @@ Public Class Game
     End Sub
     'viewBubble "discovers" the area around the player and erases the players previous location
     Sub viewBubble()
-        For indY = -1 To 1
-            For indX = -1 To 1
-                If player.pos.Y + indY < mBoardHeight And player.pos.Y + indY >= 0 And player.pos.X + indX < mBoardWidth And player.pos.X + indX >= 0 Then
-                    If mBoard(player.pos.Y + indY, player.pos.X + indX).Text = "@" Then mBoard(player.pos.Y + indY, player.pos.X + indX).Text = ""
-                    If mBoard(player.pos.Y + indY, player.pos.X + indX).Text = "H" And mBoard(player.pos.Y + indY, player.pos.X + indX).Tag < 2 Then
-                        mBoard(player.pos.Y + indY, player.pos.X + indX).ForeColor = Color.Black
-                        lstLog.Items.Add("Floor " & floor & ": Staircase Discovered")
+        If testingImageBoard Then
+            Dim startTime As Double = (DateTime.Now - New DateTime(1970, 1, 1)).TotalMilliseconds
+            Dim imgSize As Integer = picTile.BackgroundImage.PhysicalDimension.Height
+            Using g As Graphics = Graphics.FromImage(seenBoardPic)
+                For indY = -1 To 1
+                    For indX = -1 To 1
+                        If player.pos.Y + indY < mBoardHeight And player.pos.Y + indY >= 0 And player.pos.X + indX < mBoardWidth And player.pos.X + indX > 0 Then
+                            If (mBoard(player.pos.Y + indY, player.pos.X + indX).Tag = 1) Then
+                                'g.FillRectangle(Brushes.Purple, (player.pos.X + indX) * imgSize, (player.pos.Y + indY) * imgSize, imgSize, imgSize)
+                                For thisX As Integer = (player.pos.X + indX) * imgSize To (player.pos.X + indX + 1) * imgSize
+                                    For thisY As Integer = (player.pos.Y + indY) * imgSize To (player.pos.Y + indY + 1) * imgSize
+                                        seenBoardPic.SetPixel(thisX, thisY, Color.Transparent)
+                                    Next
+                                Next
+                                mBoard(player.pos.Y + indY, player.pos.X + indX).Tag = 2
+                            End If
+                            If mBoard(player.pos.Y + indY, player.pos.X + indX).Text = "@" Then mBoard(player.pos.Y + indY, player.pos.X + indX).Text = ""
+                            If mBoard(player.pos.Y + indY, player.pos.X + indX).Text = "H" And mBoard(player.pos.Y + indY, player.pos.X + indX).Tag < 2 Then
+                                mBoard(player.pos.Y + indY, player.pos.X + indX).ForeColor = Color.Black
+                                lstLog.Items.Add("Floor " & floor & ": Staircase Discovered")
+                            End If
+                            If mBoard(player.pos.Y + indY, player.pos.X + indX).Text = "#" And mBoard(player.pos.Y + indY, player.pos.X + indX).Tag < 2 Then
+                                mBoard(player.pos.Y + indY, player.pos.X + indX).ForeColor = Color.Black
+                                lstLog.Items.Add("Chest discovered!")
+                            End If
+                            If mBoard(player.pos.Y + indY, player.pos.X + indX).Text = "$" And mBoard(player.pos.Y + indY, player.pos.X + indX).Tag < 2 Then
+                                mBoard(player.pos.Y + indY, player.pos.X + indX).ForeColor = Color.Navy
+                                lstLog.Items.Add("Shop discovered!")
+                            End If
+                            If mBoard(player.pos.Y + indY, player.pos.X + indX).Tag = 1 Then mBoard(player.pos.Y + indY, player.pos.X + indX).Tag = 2
+                        End If
+                    Next
+                Next
+            End Using
+            'seenBoardPic.MakeTransparent(Color.Purple)
+            'Using g As Graphics = Graphics.FromImage(savedBoardPic)
+            '    g.DrawImageUnscaled(boardPic, 0, 0)
+            '    g.DrawImageUnscaled(seenBoardPic, 0, 0)
+            'End Using
+            Dim endTime = (DateTime.Now - New DateTime(1970, 1, 1)).TotalMilliseconds
+            Console.WriteLine("BUBBLE TIME: " + (endTime - startTime).ToString())
+        Else
+            Dim startTime As Double = (DateTime.Now - New DateTime(1970, 1, 1)).TotalMilliseconds
+            For indY = -1 To 1
+                For indX = -1 To 1
+                    If player.pos.Y + indY < mBoardHeight And player.pos.Y + indY >= 0 And player.pos.X + indX < mBoardWidth And player.pos.X + indX >= 0 Then
+                        If mBoard(player.pos.Y + indY, player.pos.X + indX).Text = "@" Then mBoard(player.pos.Y + indY, player.pos.X + indX).Text = ""
+                        If mBoard(player.pos.Y + indY, player.pos.X + indX).Text = "H" And mBoard(player.pos.Y + indY, player.pos.X + indX).Tag < 2 Then
+                            mBoard(player.pos.Y + indY, player.pos.X + indX).ForeColor = Color.Black
+                            lstLog.Items.Add("Floor " & floor & ": Staircase Discovered")
+                        End If
+                        If mBoard(player.pos.Y + indY, player.pos.X + indX).Text = "#" And mBoard(player.pos.Y + indY, player.pos.X + indX).Tag < 2 Then
+                            mBoard(player.pos.Y + indY, player.pos.X + indX).ForeColor = Color.Black
+                            lstLog.Items.Add("Chest discovered!")
+                        End If
+                        If mBoard(player.pos.Y + indY, player.pos.X + indX).Text = "$" And mBoard(player.pos.Y + indY, player.pos.X + indX).Tag < 2 Then
+                            mBoard(player.pos.Y + indY, player.pos.X + indX).ForeColor = Color.Navy
+                            lstLog.Items.Add("Shop discovered!")
+                        End If
+                        If mBoard(player.pos.Y + indY, player.pos.X + indX).Tag = 1 Then mBoard(player.pos.Y + indY, player.pos.X + indX).Tag = 2
                     End If
-                    If mBoard(player.pos.Y + indY, player.pos.X + indX).Text = "#" And mBoard(player.pos.Y + indY, player.pos.X + indX).Tag < 2 Then
-                        mBoard(player.pos.Y + indY, player.pos.X + indX).ForeColor = Color.Black
-                        lstLog.Items.Add("Chest discovered!")
-                    End If
-                    If mBoard(player.pos.Y + indY, player.pos.X + indX).Text = "$" And mBoard(player.pos.Y + indY, player.pos.X + indX).Tag < 2 Then
-                        mBoard(player.pos.Y + indY, player.pos.X + indX).ForeColor = Color.Navy
-                        lstLog.Items.Add("Shop discovered!")
-                    End If
-                    If mBoard(player.pos.Y + indY, player.pos.X + indX).Tag = 1 Then mBoard(player.pos.Y + indY, player.pos.X + indX).Tag = 2
-                End If
+                Next
             Next
-        Next
-        lstLog.TopIndex = lstLog.Items.Count - 1
+            lstLog.TopIndex = lstLog.Items.Count - 1
+            Dim endTime = (DateTime.Now - New DateTime(1970, 1, 1)).TotalMilliseconds
+            Console.WriteLine("BUBBLE TIME: " + (endTime - startTime).ToString())
+        End If
     End Sub
     'zoom interperates the data around the player from mBoard, and displays it on mPics
     Sub zoom()
@@ -1128,106 +1186,110 @@ Public Class Game
         '10 = boss stairs
         '11 = shady wizard
         '12 = crystal
-
-        boxBoard.Refresh()
-
-        Dim viewArray(15, 23) As Integer
-        Dim x As Integer = 0
-        Dim y As Integer = 0
-        For indY = -7 To 7
-            x = 0
-            For indX = -11 To 11
-                If (player.pos.Y + indY >= 0 And player.pos.Y + indY < mBoardHeight) And (player.pos.X + indX >= 0 And player.pos.X + indX < mBoardWidth) Then
-                    viewArray(y, x) = mBoard(player.pos.Y + indY, player.pos.X + indX).Tag
-                    If mBoard(player.pos.Y + indY, player.pos.X + indX).Tag = 2 Then
-                        If mBoard(player.pos.Y + indY, player.pos.X + indX).Text = "" Then viewArray(y, x) = 2
-                        If mBoard(player.pos.Y + indY, player.pos.X + indX).Text = "H" Then
-                            If floor > 5 Or (floor < 5 AndAlso beatboss(floor)) Then
-                                viewArray(y, x) = 3
-                            ElseIf floor > 5 Or (floor < 5 AndAlso floorboss(floor).Equals("Key")) Then
-                                viewArray(y, x) = 9
-                            Else
-                                viewArray(y, x) = 10
+        If testingImageBoard Then
+            boxBoard.Refresh()
+        Else
+            Dim startTime As Double = (DateTime.Now - New DateTime(1970, 1, 1)).TotalMilliseconds
+            Dim viewArray(15, 23) As Integer
+            Dim x As Integer = 0
+            Dim y As Integer = 0
+            For indY = -7 To 7
+                x = 0
+                For indX = -11 To 11
+                    If (player.pos.Y + indY >= 0 And player.pos.Y + indY < mBoardHeight) And (player.pos.X + indX >= 0 And player.pos.X + indX < mBoardWidth) Then
+                        viewArray(y, x) = mBoard(player.pos.Y + indY, player.pos.X + indX).Tag
+                        If mBoard(player.pos.Y + indY, player.pos.X + indX).Tag = 2 Then
+                            If mBoard(player.pos.Y + indY, player.pos.X + indX).Text = "" Then viewArray(y, x) = 2
+                            If mBoard(player.pos.Y + indY, player.pos.X + indX).Text = "H" Then
+                                If floor > 5 Or (floor < 5 AndAlso beatboss(floor)) Then
+                                    viewArray(y, x) = 3
+                                ElseIf floor > 5 Or (floor < 5 AndAlso floorboss(floor).Equals("Key")) Then
+                                    viewArray(y, x) = 9
+                                Else
+                                    viewArray(y, x) = 10
+                                End If
                             End If
+                            If mBoard(player.pos.Y + indY, player.pos.X + indX).Text = "#" Then viewArray(y, x) = 5
+                            If mBoard(player.pos.Y + indY, player.pos.X + indX).Text = "$" And player.pos.Y + indY = shopkeeper.pos.Y And player.pos.X + indX = shopkeeper.pos.X Then viewArray(y, x) = 6
+                            If mBoard(player.pos.Y + indY, player.pos.X + indX).Text = "$" And player.pos.Y + indY = swiz.pos.Y And player.pos.X + indX = swiz.pos.X Then viewArray(y, x) = 11
+                            If mBoard(player.pos.Y + indY, player.pos.X + indX).Text = "+" Then viewArray(y, x) = 8
+                            If mBoard(player.pos.Y + indY, player.pos.X + indX).Text = "c" Then viewArray(y, x) = 12
                         End If
-                        If mBoard(player.pos.Y + indY, player.pos.X + indX).Text = "#" Then viewArray(y, x) = 5
-                        If mBoard(player.pos.Y + indY, player.pos.X + indX).Text = "$" And player.pos.Y + indY = shopkeeper.pos.Y And player.pos.X + indX = shopkeeper.pos.X Then viewArray(y, x) = 6
-                        If mBoard(player.pos.Y + indY, player.pos.X + indX).Text = "$" And player.pos.Y + indY = swiz.pos.Y And player.pos.X + indX = swiz.pos.X Then viewArray(y, x) = 11
-                        If mBoard(player.pos.Y + indY, player.pos.X + indX).Text = "+" Then viewArray(y, x) = 8
-                        If mBoard(player.pos.Y + indY, player.pos.X + indX).Text = "c" Then viewArray(y, x) = 12
+                        If mBoard(player.pos.Y + indY, player.pos.X + indX).Text = "@" Then
+                            If indY = 0 And indX = 0 Then viewArray(y, x) = 4 Else viewArray(y, x) = 7
+                        End If
+                    Else
+                        viewArray(y, x) = 0
                     End If
-                    If mBoard(player.pos.Y + indY, player.pos.X + indX).Text = "@" Then
-                        If indY = 0 And indX = 0 Then viewArray(y, x) = 4 Else viewArray(y, x) = 7
+                    If floor < 6 Then
+                        Select Case viewArray(y, x)
+                            Case 0
+                                'MsgBox(x & " " & y)
+                                mPics(y, x).BackgroundImage = Nothing
+                                mPics(y, x).BackColor = Color.Black
+                            Case 1
+                                mPics(y, x).BackgroundImage = picFog.BackgroundImage
+                            Case 2
+                                mPics(y, x).BackgroundImage = picTile.BackgroundImage
+                            Case 3
+                                mPics(y, x).BackgroundImage = picStairs.BackgroundImage
+                            Case 4
+                                mPics(y, x).BackgroundImage = player.pImage
+                            Case 5
+                                mPics(y, x).BackgroundImage = picChest.BackgroundImage
+                            Case 6
+                                mPics(y, x).BackgroundImage = picShopkeepTile.BackgroundImage
+                            Case 7
+                                mPics(y, x).BackgroundImage = picStatue.BackgroundImage
+                            Case 8
+                                mPics(y, x).BackgroundImage = picTrap.BackgroundImage
+                            Case 9
+                                mPics(y, x).BackgroundImage = picStairsLock.BackgroundImage
+                            Case 10
+                                mPics(y, x).BackgroundImage = picStairsBoss.BackgroundImage
+                            Case 11
+                                mPics(y, x).BackgroundImage = picSWiz.BackgroundImage
+                            Case 12
+                                mPics(y, x).BackgroundImage = picCrystal.BackgroundImage
+                        End Select
+                    Else
+                        Select Case viewArray(y, x)
+                            Case 0
+                                mPics(y, x).BackgroundImage = picTree.BackgroundImage
+                            Case 1
+                                mPics(y, x).BackgroundImage = Nothing
+                                mPics(y, x).BackColor = Color.FromArgb(255, 19, 38, 22)
+                            Case 2
+                                mPics(y, x).BackgroundImage = picTileF.BackgroundImage
+                            Case 3
+                                mPics(y, x).BackgroundImage = picLadderf.BackgroundImage
+                            Case 4
+                                mPics(y, x).BackgroundImage = player.pImage
+                            Case 5
+                                mPics(y, x).BackgroundImage = picChestf.BackgroundImage
+                            Case 6
+                                mPics(y, x).BackgroundImage = picShopkeeperf.BackgroundImage
+                            Case 7
+                                mPics(y, x).BackgroundImage = picStatuef.BackgroundImage
+                            Case 8
+                                mPics(y, x).BackgroundImage = picTrapf.BackgroundImage
+                            Case 9
+                                mPics(y, x).BackgroundImage = picstairslockf.BackgroundImage
+                            Case 10
+                                mPics(y, x).BackgroundImage = picstairsbossf.BackgroundImage
+                            Case 11
+                                mPics(y, x).BackgroundImage = picSWizF.BackgroundImage
+                            Case 12
+                                mPics(y, x).BackgroundImage = picCrystalf.BackgroundImage
+                        End Select
                     End If
-                Else
-                    viewArray(y, x) = 0
-                End If
-                If floor < 6 Then
-                    Select Case viewArray(y, x)
-                        Case 0
-                            'MsgBox(x & " " & y)
-                            mPics(y, x).BackgroundImage = Nothing
-                            mPics(y, x).BackColor = Color.Black
-                        Case 1
-                            mPics(y, x).BackgroundImage = picFog.BackgroundImage
-                        Case 2
-                            mPics(y, x).BackgroundImage = picTile.BackgroundImage
-                        Case 3
-                            mPics(y, x).BackgroundImage = picStairs.BackgroundImage
-                        Case 4
-                            mPics(y, x).BackgroundImage = player.pImage
-                        Case 5
-                            mPics(y, x).BackgroundImage = picChest.BackgroundImage
-                        Case 6
-                            mPics(y, x).BackgroundImage = picShopkeepTile.BackgroundImage
-                        Case 7
-                            mPics(y, x).BackgroundImage = picStatue.BackgroundImage
-                        Case 8
-                            mPics(y, x).BackgroundImage = picTrap.BackgroundImage
-                        Case 9
-                            mPics(y, x).BackgroundImage = picStairsLock.BackgroundImage
-                        Case 10
-                            mPics(y, x).BackgroundImage = picStairsBoss.BackgroundImage
-                        Case 11
-                            mPics(y, x).BackgroundImage = picSWiz.BackgroundImage
-                        Case 12
-                            mPics(y, x).BackgroundImage = picCrystal.BackgroundImage
-                    End Select
-                Else
-                    Select Case viewArray(y, x)
-                        Case 0
-                            mPics(y, x).BackgroundImage = picTree.BackgroundImage
-                        Case 1
-                            mPics(y, x).BackgroundImage = Nothing
-                            mPics(y, x).BackColor = Color.FromArgb(255, 19, 38, 22)
-                        Case 2
-                            mPics(y, x).BackgroundImage = picTileF.BackgroundImage
-                        Case 3
-                            mPics(y, x).BackgroundImage = picLadderf.BackgroundImage
-                        Case 4
-                            mPics(y, x).BackgroundImage = player.pImage
-                        Case 5
-                            mPics(y, x).BackgroundImage = picChestf.BackgroundImage
-                        Case 6
-                            mPics(y, x).BackgroundImage = picShopkeeperf.BackgroundImage
-                        Case 7
-                            mPics(y, x).BackgroundImage = picStatuef.BackgroundImage
-                        Case 8
-                            mPics(y, x).BackgroundImage = picTrapf.BackgroundImage
-                        Case 9
-                            mPics(y, x).BackgroundImage = picstairslockf.BackgroundImage
-                        Case 10
-                            mPics(y, x).BackgroundImage = picstairsbossf.BackgroundImage
-                        Case 11
-                            mPics(y, x).BackgroundImage = picSWizF.BackgroundImage
-                        Case 12
-                            mPics(y, x).BackgroundImage = picCrystalf.BackgroundImage
-                    End Select
-                End If
-                x += 1
+                    x += 1
+                Next
+                y += 1
             Next
-            y += 1
-        Next
+            Dim endTime As Double = (DateTime.Now - New DateTime(1970, 1, 1)).TotalMilliseconds
+            Console.WriteLine("UPDATE TIME: " + (endTime - startTime).ToString())
+        End If
     End Sub
 
     'general functions
@@ -1334,6 +1396,8 @@ Public Class Game
         Return False
     End Function
     Function HandleKeyPress(ByVal Keydata As Keys) As Boolean
+        Dim startTime As Double = (DateTime.Now - New DateTime(1970, 1, 1)).TotalMilliseconds
+        Dim endTime As Double = startTime
         lastKey = Keydata.ToString.ToLower
         If Not selecting Then
             If shouldReturnEarly(Keydata) Then Return True
@@ -1412,24 +1476,34 @@ Public Class Game
             turn += 1
             If Not Keydata.Equals(cKeys(10)) Then drawBoard()
             lstLog.TopIndex = lstLog.Items.Count - 1
+            endTime = (DateTime.Now - New DateTime(1970, 1, 1)).TotalMilliseconds
+            Console.WriteLine("TOTAL TIME: " + (endTime - startTime).ToString())
             Return True
         Else
             If Keydata.Equals(Keys.Up) Then
                 lstSelec.TopIndex -= 1
+                endTime = (DateTime.Now - New DateTime(1970, 1, 1)).TotalMilliseconds
+                Console.WriteLine("TOTAL TIME: " + (endTime - startTime).ToString())
                 Return True
             End If
             If Keydata.Equals(Keys.Down) Then
                 lstSelec.TopIndex += 1
+                endTime = (DateTime.Now - New DateTime(1970, 1, 1)).TotalMilliseconds
+                Console.WriteLine("TOTAL TIME: " + (endTime - startTime).ToString())
                 Return True
             End If
             If Keydata.Equals(Keys.Back) Then
                 selecting = False
                 pnlSelection.Location = New Point(1000, pnlSelection.Location.Y)
                 pnlSelection.Visible = False
+                endTime = (DateTime.Now - New DateTime(1970, 1, 1)).TotalMilliseconds
+                Console.WriteLine("TOTAL TIME: " + (endTime - startTime).ToString())
                 Return True
             End If
             selection(Keydata)
         End If
+        endTime = (DateTime.Now - New DateTime(1970, 1, 1)).TotalMilliseconds
+        Console.WriteLine("TOTAL TIME: " + (endTime - startTime).ToString())
         Return True
     End Function
     'processCmdKey is a leftover from an earlier version, and may not be needed anymore
@@ -2253,7 +2327,7 @@ Public Class Game
             If trapList(i).pos.y > -1 And trapList(i).pos.y < mBoardHeight And trapList(i).pos.x > -1 And trapList(i).pos.x < mBoardWidth Then
                 mBoard(trapList(i).pos.Y, trapList(i).pos.X).Text = "+"
             End If
-Next
+        Next
         For i = 0 To CInt(reader.ReadLine())
             cboxMG.Items.Add(reader.ReadLine())
         Next
@@ -2362,7 +2436,6 @@ Next
         pushLblEvent("Game successfully loaded!")
         player.solFlag = False
         player.createP()
-
     End Sub
     Private Sub btnSavePic_Click(sender As Object, e As EventArgs) Handles btnS1.Click, btnS2.Click, btnS3.Click, btnS4.Click, btnS5.Click, btnS6.Click, btnS7.Click, btnS8.Click
         Dim name As String = CType(sender, Button).Name
@@ -3973,6 +4046,7 @@ Next
         Dim imgSize As Integer = picTile.BackgroundImage.PhysicalDimension.Height
         boardPic = New Bitmap(mBoardWidth * imgSize, mBoardHeight * imgSize)
         seenBoardPic = New Bitmap(mBoardWidth * imgSize, mBoardHeight * imgSize)
+        savedBoardPic = New Bitmap(mBoardWidth * imgSize, mBoardHeight * imgSize)
         boxBoard = New PictureBox()
         'boxBoard.Width = 23 * 25
         'boxBoard.Height = 15 * 25
@@ -3985,11 +4059,14 @@ Next
         boxBoard.SizeMode = PictureBoxSizeMode.Zoom
         AddHandler boxBoard.Paint, AddressOf boxBoard_Draw
         Me.Controls.Add(boxBoard)
-        boxBoard.BringToFront()
-        savedBoardPic = boardPic.Clone()
-        Using g As Graphics = Graphics.FromImage(savedBoardPic)
-            g.DrawImageUnscaled(seenBoardPic, 0, 0)
-        End Using
+        'Me.Controls.SetChildIndex(boxBoard, Me.Controls.GetChildIndex(mPics(0, 0)))
+        'boxBoard.BringToFront()
+
+        'savedBoardPic = boardPic.Clone()
+        'Using g As Graphics = Graphics.FromImage(savedBoardPic)
+        '    g.DrawImageUnscaled(seenBoardPic, 0, 0)
+        'End Using
+        'boxBoard.Image = savedBoardPic
         boxBoard.Image = savedBoardPic
     End Sub
     Private Sub LoadMapAndImages()
@@ -4000,13 +4077,13 @@ Next
                     Dim tile As mTile = mBoard(y, x)
                     Dim img As Image = Nothing
 
-                    If tile.Text = "#" OrElse tile.ForeColor = Color.FromArgb(45, 45, 45) Then 'Chest
-                        img = picChest.BackgroundImage
-                    ElseIf tile.Text = "H" Then 'Stairs
+                    If tile.Text = "H" Then 'Stairs
                         img = picStairs.BackgroundImage
+                    ElseIf tile.Text = "#" OrElse tile.ForeColor = Color.FromArgb(45, 45, 45) Then 'Chest
+                        img = picChest.BackgroundImage
                     ElseIf tile.Text = "@" And player.pos.X = x And player.pos.Y = y Then 'Player
                         'img = picChest.BackgroundImage
-                        img = picTile.BackgroundImage
+                        img = picTile.BackgroundImage 'Don't draw the player on the permanently saved background
                     ElseIf tile.Text = "@" Then 'Statue
                         img = picStatue.BackgroundImage
                     ElseIf tile.Text = "$" Then 'NPC
@@ -4030,15 +4107,15 @@ Next
                 Next
             Next
         End Using
-        boardPic.Save("BOARD.png")
-        seenBoardPic.Save("BOARD_SEEN.png")
+        'boardPic.Save("BOARD.png")
+        'seenBoardPic.Save("BOARD_SEEN.png")
+        Console.WriteLine("CREATED BOARD AND BOARD_SEEN")
 
-
-        savedBoardPic = boardPic.Clone()
-        Using g As Graphics = Graphics.FromImage(savedBoardPic)
-            g.DrawImageUnscaled(seenBoardPic, 0, 0)
-        End Using
-        savedBoardPic.Save("BOARD_RENDERED.png")
-        boxBoard.Image = savedBoardPic
+        'savedBoardPic = boardPic.Clone()
+        'Using g As Graphics = Graphics.FromImage(savedBoardPic)
+        '    g.DrawImageUnscaled(seenBoardPic, 0, 0)
+        'End Using
+        'savedBoardPic.Save("BOARD_RENDERED.png")
+        'boxBoard.Image = savedBoardPic
     End Sub
 End Class
