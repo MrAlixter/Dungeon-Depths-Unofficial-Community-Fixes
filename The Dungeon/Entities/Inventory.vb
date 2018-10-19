@@ -48,6 +48,10 @@
         items.Add(i.getName(), i)
     End Sub
 
+    Public Sub Clear()
+        items.Clear()
+    End Sub
+
     Public Function GetItemByIndex(i As Integer)
         Return items.ElementAt(i)
     End Function
