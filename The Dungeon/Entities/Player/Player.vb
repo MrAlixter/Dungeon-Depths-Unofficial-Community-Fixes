@@ -37,7 +37,7 @@
     Public haircolor As Color = Color.FromArgb(255, 204, 203, 213)
     Public skincolor As Color = Color.FromArgb(255, 247, 219, 195)
     'inventory variables
-    Public inventory As New ArrayList()
+    Public inventory As New Inventory()
     Public inventorynames As New ArrayList()
     Public mysteryPotionDisplayOrder As New List(Of String)
     Dim armor() As Armor
@@ -86,8 +86,8 @@
         hunger = 0
 
         createInvPerks()
-        inventory.Item(0).add(1)
-        inventory.Item(2).add(1)
+        inventory.item(0).add(1)
+        inventory.item(2).add(1)
     End Sub
     'This New is used in the loading of a player from file
     Sub New(ByVal s As String, ByVal v As Double)
@@ -140,7 +140,7 @@
 
         Dim x As Integer = CInt(playArray(11)) - 1
         For i = 0 To x
-            inventory.Item(i).add(playArray(12 + i))
+            inventory.item(i).add(playArray(12 + i))
         Next
 
         If Game.version >= 0.6 Then
@@ -162,8 +162,8 @@
             Dim stuff() As String = playArray(currentIndex).Split("$")
 
             If Not stuff(0).Equals("N/a") Then
-                prefForm = New preferedForm(Color.FromArgb(CInt(stuff(0)), CInt(stuff(1)), CInt(stuff(2)), CInt(stuff(3))), _
-                                            Color.FromArgb(CInt(stuff(4)), CInt(stuff(5)), CInt(stuff(6)), CInt(stuff(7))), _
+                prefForm = New preferedForm(Color.FromArgb(CInt(stuff(0)), CInt(stuff(1)), CInt(stuff(2)), CInt(stuff(3))),
+                                            Color.FromArgb(CInt(stuff(4)), CInt(stuff(5)), CInt(stuff(6)), CInt(stuff(7))),
                                             CBool(stuff(8)), CBool(stuff(9)), CInt(stuff(10)), CBool(stuff(11)), CInt(stuff(12)))
                 inventory(69).setFormerLife(stuff(13), New Tuple(Of Integer, Boolean)(CInt(stuff(14)), stuff(15)))
             Else

@@ -105,6 +105,7 @@
     <Import Include="System.Threading.Tasks" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Entities\Inventory.vb" />
     <Compile Include="Entities\Player\pClass.vb" />
     <Compile Include="Entities\Player\pForm.vb" />
     <Compile Include="Entities\Player\Spells\ArcaneCompass.vb" />
