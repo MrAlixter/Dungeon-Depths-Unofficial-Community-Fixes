@@ -37,7 +37,7 @@
     Public haircolor As Color = Color.FromArgb(255, 204, 203, 213)
     Public skincolor As Color = Color.FromArgb(255, 247, 219, 195)
     'inventory variables
-    Public inventory As New Inventory()
+    Public inventory As New ArrayList()
     Public inventorynames As New ArrayList()
     Public mysteryPotionDisplayOrder As New List(Of String)
     Dim armor() As Armor
