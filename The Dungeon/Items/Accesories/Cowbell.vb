@@ -3,14 +3,14 @@
     'The red headband provides a +1 attack buff
     Sub New()
         MyBase.setName("Cowbell")
-        MyBase.setDesc("A large brass bell attached to a collar that rings steadily with its wearer's gait." & vbCrLf & _
-                       "+20 Health." & vbCrLf & _
+        MyBase.setDesc("A large brass bell attached to a collar that rings steadily with its wearer's gait." & vbCrLf &
+                       "+20 Health." & vbCrLf &
                        "-1 WIL")
         id = 70
         tier = 2
         MyBase.setUsable(False)
         MyBase.hBoost = 20
-        MyBase.wboost = -1
+        MyBase.wBoost = -1
         MyBase.count = 0
         MyBase.value = 0
         MyBase.fInd = New Tuple(Of Integer, Boolean)(8, True)

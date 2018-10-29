@@ -44,6 +44,8 @@
     Public Shared mTFAccA, mTFBody, mTFClothes, mTFEars, mTFEyes, mTFface, mTfFrontHair, mTFMouth, mTFNose, mTFRearhair1, mTfRearhair2 As List(Of Image)
     Public Shared wings, horns, tails As List(Of Image)
 
+    Public Shared fFrontHairNonTFCount, fRearHair1NonTFCount, fRearHair2NonTFCount, mFrontHairNonTFCount, mRearHair1NonTFCount, mRearHair2NonTFCount As Integer
+
     Public Shared mAttributes(16) As List(Of Image)
     Public Shared fAttributes(16) As List(Of Image)
 
@@ -92,8 +94,6 @@
         fRearHair2 = getImg("img/fRearHair2")
         bkg = getImg("img/bkg")
 
-        initTF()
-
         mGlasses = getImg("img/mGlasses")
         mAccA = getImg("img/mAccA")
         mHat = getImg("img/mHat")
@@ -110,6 +110,15 @@
         mNose = getImg("img/mNose")
         mRearHair1 = getImg("img/mRearHair1")
         mRearHair2 = getImg("img/mRearHair2")
+
+        fFrontHairNonTFCount = fFrontHair.Count
+        fRearHair1NonTFCount = fRearHair1.Count
+        fRearHair2NonTFCount = fRearHair2.Count
+        mFrontHairNonTFCount = mFrontHair.Count
+        mRearHair1NonTFCount = mRearHair1.Count
+        mRearHair2NonTFCount = mRearHair2.Count
+
+        initTF()
 
         mTFAccA = getImg("img/mTF/tfAccA")
         mTFBody = getImg("img/mTF/tfBody")
@@ -418,6 +427,8 @@
         fRearHair1 = getImg("img/fRearHair1")
         fRearHair2 = getImg("img/fRearHair2")
         bkg = getImg("img/bkg")
+
+
 
         initTF()
         'worker.ReportProgress(50)
