@@ -150,6 +150,7 @@
     <Compile Include="Entities\Player\Forms\Succubus.vb" />
     <Compile Include="Entities\Player\PerkEffects.vb" />
     <Compile Include="Entities\Player\Forms\pForm.vb" />
+    <Compile Include="Entities\Inventory.vb" />
     <Compile Include="Entities\Player\Spells\ArcaneCompass.vb" />
     <Compile Include="Entities\Player\Spells\Dowse.vb" />
     <Compile Include="Entities\Player\Spells\DragonsBreath.vb" />
@@ -1686,6 +1687,7 @@
     </Content>
   </ItemGroup>
   <ItemGroup>
+    <Folder Include="bin\Debug\img\bkg\" />
     <Folder Include="img\Tails\" />
     <Folder Include="Items\Unimplemented\Removed\" />
   </ItemGroup>

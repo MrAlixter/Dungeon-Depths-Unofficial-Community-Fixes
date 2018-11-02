@@ -1959,7 +1959,7 @@ Partial Class Game
         Me.lblEVD.ForeColor = System.Drawing.Color.White
         Me.lblEVD.Location = New System.Drawing.Point(737, 290)
         Me.lblEVD.Name = "lblEVD"
-        Me.lblEVD.Size = New System.Drawing.Size(99, 19)
+        Me.lblEVD.Size = New System.Drawing.Size(67, 13)
         Me.lblEVD.TabIndex = 155
         Me.lblEVD.Text = "EVD = TEMP"
         Me.lblEVD.Visible = False
@@ -2083,6 +2083,7 @@ Partial Class Game
         Me.Controls.Add(Me.picPortrait)
         Me.Controls.Add(Me.lblEvent)
         Me.Controls.Add(Me.btnWait)
+        Me.DoubleBuffered = True
         Me.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle
         Me.Icon = CType(resources.GetObject("$this.Icon"), System.Drawing.Icon)
         Me.MaximizeBox = False

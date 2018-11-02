@@ -3,7 +3,11 @@
     Public iD As Integer
     Sub New(ByVal p As Point)
         pos = p
+<<<<<<< HEAD
+        iD = i
+=======
         iD = Int(Rnd() * 5)
+>>>>>>> master
     End Sub
     Sub New(ByVal s As String)
         Dim cArray() As String = s.Split("*")
@@ -58,7 +62,7 @@
                 Game.player.inventory(54).add(1)
                 Equipment.clothesChange("Ropes")
                 Equipment.portraitUDate()
-                If transformation.canbeTFed(Game.player) Then
+                If Polymorph.canBeTFed(Game.player) Then
                     Game.player.pState.save(Game.player)
                 End If
                 Game.player.UIupdate()
@@ -75,7 +79,7 @@
                 End If
 
                 Game.player.skincolor = Color.FromArgb(Game.player.skincolor.A, r, g, b)
-                If transformation.canbeTFed(Game.player) Then
+                If Polymorph.canBeTFed(Game.player) Then
                     Game.player.pState.save(Game.player)
                 End If
                 Game.player.petrify(rubyTF)
@@ -83,8 +87,7 @@
                 Game.pushLblEvent(out, AddressOf Trap.rubyRevert)
                 Game.player.createP()
             Case 3
-                Game.player.ongoingTFs.Add(New BUDollTF())
-                Game.player.update()
+                Polymorph.transform(Game.player, "doll", 0)
             Case 4
                 Dim out = "As your foot touches down on what looks to be the same ground that you have been walking on, you find that it is not met with any resistance.  Unable to keep your balance, you fall face first into the shiny waterlike facsimile of the floor and are thrown, flipping, into a another room.  As you regain your senses, you notice that you actually just ahead of where you were.  Turning around, you tap the floor you presumably fell out through, only to find it as solid as any other patch of floor you have come across.  Not able to find anything else abnormal with your surroundings, you write your expirience off as some failed illusion and set off on your way."
                 If Game.player.sexBool Then
@@ -113,11 +116,11 @@
     End Sub
 
     Shared Sub rubyRevert()
-        Game.player.revertToPState()
+        Game.player.revert2()
         Game.player.canMoveFlag = True
         Dim tr As New Monster(-1)
         Game.statueList.Add(New Statue(tr))
-        Game.pushLblEvent("𝑺𝒆𝒗𝒆𝒓𝒂𝒍 𝒅𝒂𝒚𝒔 𝒍𝒂𝒕𝒆𝒓..." & vbCrLf &
+        Game.pushLblEvent("𝑺𝒆𝒗𝒆𝒓𝒂𝒍 𝒅𝒂𝒚𝒔 𝒍𝒂𝒕𝒆𝒓..." & vbCrLf & _
                            "As you stand frozen in the same position you've held since you touched the cursed stone, suddenly you fall flat faced onto the ground.  Springing to your feet, you are exited to find yourself as you were, albiet redder than before, and another explorer frozen in your place.  From their pose, it seems that they were going through your stuff, and must have accidently touched you.  What's more, the original ruby you touched is nowhere to be found.  You muse on the nature of the curse for a bit, before grabbing your things and moving on." & vbCrLf & vbCrLf & "Your stomach rumbles loudly, and you can tell that your time as a statue hasn't been kind to you.")
         Game.player.mana = 0
         Game.player.hunger += 60

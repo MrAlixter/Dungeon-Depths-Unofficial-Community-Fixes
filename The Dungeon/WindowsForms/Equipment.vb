@@ -77,12 +77,18 @@
         End If
 
         'handles the equiping of weapons
+        If Not cmbobxWeapon.Text.Equals(p.equippedWeapon.getName) Then
+            If p.equippedWeapon.mBoost > 0 Then p.mana += p.equippedWeapon.mBoost
+        End If
         weaponChange(cmbobxWeapon.Text)
-        If p.equippedWeapon.mBoost > 0 Then p.mana += p.equippedWeapon.mBoost
 
         'equip the new armor
-        If Not revertFlag Then clothesChange(cmbobxArmor.Text)
-        If p.equippedArmor.mBoost > 0 Then p.mana += p.equippedArmor.mBoost
+        If Not revertFlag Then
+            If Not cmbobxArmor.Text.Equals(p.equippedArmor.getName) Then
+                If p.equippedArmor.mBoost > 0 Then p.mana += p.equippedArmor.mBoost
+            End If
+            clothesChange(cmbobxArmor.Text)
+        End If
 
         'equip the new accessory
         If Not revertFlag Then accChange(cboxAccessory.Text)

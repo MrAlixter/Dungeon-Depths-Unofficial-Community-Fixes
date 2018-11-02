@@ -86,8 +86,8 @@
         hunger = 0
 
         createInvPerks()
-        inventory.Item(0).add(1)
-        inventory.Item(2).add(1)
+        inventory.item(0).add(1)
+        inventory.item(2).add(1)
     End Sub
     'load from save constructors
     Public Sub New(ByVal s As String, ByVal v As Double)
@@ -140,7 +140,7 @@
 
         Dim x As Integer = CInt(playArray(11)) - 1
         For i = 0 To x
-            inventory.Item(i).add(playArray(12 + i))
+            inventory.item(i).add(playArray(12 + i))
         Next
 
 
@@ -160,7 +160,6 @@
         If Not playArray(14 + x).Equals("N/a") Then currentIndex += 1
 
         Dim stuff() As String = playArray(currentIndex).Split("$")
-
         If Not stuff(0).Equals("N/a") Then
             prefForm = New preferedForm(Color.FromArgb(CInt(stuff(0)), CInt(stuff(1)), CInt(stuff(2)), CInt(stuff(3))), _
                                         Color.FromArgb(CInt(stuff(4)), CInt(stuff(5)), CInt(stuff(6)), CInt(stuff(7))), _
@@ -168,6 +167,14 @@
             inventory(69).setFormerLife(stuff(13), New Tuple(Of Integer, Boolean)(CInt(stuff(14)), stuff(15)))
         Else
             inventory(69).setFormerLife(stuff(1), New Tuple(Of Integer, Boolean)(CInt(stuff(2)), stuff(3)))
+            If Not stuff(0).Equals("N/a") Then
+                prefForm = New preferedForm(Color.FromArgb(CInt(stuff(0)), CInt(stuff(1)), CInt(stuff(2)), CInt(stuff(3))),
+                                            Color.FromArgb(CInt(stuff(4)), CInt(stuff(5)), CInt(stuff(6)), CInt(stuff(7))),
+                                            CBool(stuff(8)), CBool(stuff(9)), CInt(stuff(10)), CBool(stuff(11)), CInt(stuff(12)))
+                inventory(69).setFormerLife(stuff(13), New Tuple(Of Integer, Boolean)(CInt(stuff(14)), stuff(15)))
+            Else
+                inventory(69).setFormerLife(stuff(1), New Tuple(Of Integer, Boolean)(CInt(stuff(2)), stuff(3)))
+            End If
         End If
 
         currentIndex += 1
@@ -568,7 +575,8 @@
         If dmg > 0 Then dmg += Int(Rnd() * 3) + -1
         If dmg = -2 Then
             dmg = currTarget.attack * 2
-            Dim actualDMG As Integer = dmg - ((getDefence() / 100) * dmg)
+            'Dim actualDMG As Integer = dmg - ((getDefence() / 100) * dmg)
+            Dim actualDMG As Integer = dmg * Math.Min(getDefence() / 100, 0.5)
             health -= actualDMG / getmaxHealth()
             Game.lblPHealtDiff.Tag -= actualDMG
             Game.lstLog.Items.Add(CStr("You got hit! Critical hit! -" & actualDMG & " health!"))
@@ -988,10 +996,25 @@
             Next
         End If
         invNeedsUDate = False
-        If Game.turn < 2 AndAlso Not CharacterGenerator.CreateBMP(iArr).Equals(Game.picPortrait.BackgroundImage) Then createP() 'Form3.portraitUDate()
+        'Dim t As Boolean = CharacterGenerator.CreateBMP(iArr).Equals(Game.picPortrait.BackgroundImage)
+        Dim t As Boolean = picsAreSame(CharacterGenerator.CreateBMP(iArr), Game.picPortrait.BackgroundImage)
+        'If Game.turn < 2 AndAlso Not CharacterGenerator.CreateBMP(iArr).Equals(Game.picPortrait.BackgroundImage) Then createP() 'Form3.portraitUDate()
+        If Game.turn < 2 AndAlso Not t Then createP() 'Form3.portraitUDate()
     End Sub
 
     '|PORTRAIT IMAGE RENDERING METHODS|
+    Function picsAreSame(a As Bitmap, b As Bitmap)
+        Dim BM1 As Bitmap = a
+        Dim BM2 As Bitmap = b
+        For x = 0 To BM1.Width - 1
+            For y = 0 To BM2.Height - 1
+                If BM1.GetPixel(x, y) <> BM2.GetPixel(x, y) Then
+                    Return False
+                End If
+            Next
+        Next
+        Return True
+    End Function
     Sub oneLayerImgCheck(ByRef b As Boolean)
         If pForm.name.Equals("Dragon") Then
             Game.picPortrait.BackgroundImage = CharacterGenerator.CreateBMP({Game.picDragon.BackgroundImage})
@@ -1369,6 +1392,22 @@
         End Select
         'accesory
         Select Case iArrInd(14).Item1
+            Case 2
+                iArrInd(14) = New Tuple(Of Integer, Boolean)(1, False)
+            Case 3
+                iArrInd(14) = New Tuple(Of Integer, Boolean)(2, False)
+        End Select
+        'fronthair
+        Select Case iArrInd(15).Item1
+            Case 12
+                iArrInd(15) = New Tuple(Of Integer, Boolean)(6, False)
+        End Select
+    End Sub
+    Public Sub lustUpdate()
+        Select Case Int(lust / 20)
+            Case 0
+            Case 1
+                iArr(4) = CharacterGenerator.CreateBMP({iArr(4), Game.picLust1.BackgroundImage})
             Case 2
                 iArrInd(14) = New Tuple(Of Integer, Boolean)(1, False)
             Case 3
