@@ -3,15 +3,11 @@
 
     'instance variables for Form3
     'armor
-    Public aNameList() As String = {"Common_Clothes", "Steel_Armor", "Skimpy_Clothes", "Steel_Bikini"}
-    Public aList() As Armor = {New NormalClothes(), Game.player.inventory(5), New SkimpyClothes()}
+    Public aList As Dictionary(Of String, Armor) = New Dictionary(Of String, Armor)
     'weapons
-    Public wNameList() As String = {"Fists", "Steel_Sword", "SoulBlade", "Magic_Girl_Wand"}
-    Public wList() As Weapon = {New BareFists(), New SteelSword(), Game.player.inventory.Item(9)}
+    Public wList As Dictionary(Of String, Weapon) = New Dictionary(Of String, Weapon)
     'accessories
-    Public acNameList() As String = {"Nothing"}
-    Public acList() As Accessory = {New noAcce()}
-
+    Public acList As Dictionary(Of String, Accessory) = New Dictionary(Of String, Accessory)
     'define a shorthand representation of the main player
     Dim p As Player = Game.player
 
@@ -28,15 +24,17 @@
         w = p.getWeapons
         ac = p.getAccesories
 
+        For i = 0 To UBound(a.Item1)
+            aList.Add(a.Item1(i), a.Item2(i))
+        Next
 
-        aNameList = a.Item1
-        aList = a.Item2
+        For i = 0 To UBound(w.Item1)
+            wList.Add(w.Item1(i), w.Item2(i))
+        Next
 
-        wNameList = w.Item1
-        wList = w.Item2
-
-        acNameList = ac.Item1
-        acList = ac.Item2
+        For i = 0 To UBound(ac.Item1)
+            acList.Add(ac.Item1(i), ac.Item2(i))
+        Next
     End Sub
 
     'handles the click of the 'ok' button
@@ -163,22 +161,14 @@
         cboxAccessory.Items.Add("Nothing")
 
         'adds all weapons and armors that the player posesses to their respective menus
-        Dim a As Armor()
-        Dim w As Weapon()
-        Dim ac As Accessory()
-
-        a = p.getArmors.Item2
-        w = p.getWeapons.Item2
-        ac = p.getAccesories.Item2
-
-        For i = 5 To UBound(a)
-            If a(i).count > 0 Then cmbobxArmor.Items.Add(a(i).getName())
+        For Each v In aList.Values
+            If v.count > 0 Then cmbobxArmor.Items.Add(v.getName())
         Next
-        For i = 1 To UBound(w)
-            If w(i).count > 0 Then cmbobxWeapon.Items.Add(w(i).getName())
+        For Each v In wList.Values
+            If v.count > 0 Then cmbobxWeapon.Items.Add(v.getName())
         Next
-        For i = 1 To UBound(ac)
-            If ac(i).count > 0 Then cboxAccessory.Items.Add(ac(i).getName())
+        For Each v In acList.Values
+            If v.count > 0 Then cboxAccessory.Items.Add(v.getName())
         Next
 
         'sets the text of the drop-downs to the player's equipment
@@ -265,14 +255,14 @@
     End Sub
     'clothesChange handles the equipping and unequipping of armors
     Public Sub clothesChange(ByVal clothes As String)
-        If aNameList.Count < 5 Then init()
+        If aList.Count < 1 Then init()
         If Not p.equippedArmor Is Nothing AndAlso clothes.Equals(p.equippedArmor.getName) Then Exit Sub
         Dim sArmor As Armor = Nothing
         If clothes <> "" Then
-            For i = 0 To UBound(aNameList)
-                If clothes = aNameList(i) Then
+            For Each k In aList.Keys
+                If clothes.Equals(k) Then
                     'MsgBox("{" & cmbobxArmor.SelectedItem & "}&[" & aNameList(i) & "]")
-                    sArmor = aList(i)
+                    sArmor = aList(k)
                     If Not p.equippedArmor Is Nothing Then p.equippedArmor.onUnequip()
                     Exit For
                 End If
@@ -284,12 +274,13 @@
     End Sub
     'clothesChange handles the equipping and unequipping of weapon
     Public Sub weaponChange(ByVal weapon As String)
+        If wList.Count < 1 Then init()
         Dim sWeapon As Weapon = Nothing
         If Not p.equippedWeapon Is Nothing AndAlso weapon.Equals(p.equippedWeapon.getName) Then Exit Sub
         If weapon <> "" Then
-            For i = 0 To UBound(wNameList)
-                If weapon.Split()(0) = wNameList(i) Then
-                    sWeapon = wList(i)
+            For Each k In acList.Keys
+                If weapon.Split()(0).Equals(k) Then
+                    sWeapon = wList(k)
                     If Not p.equippedWeapon Is Nothing Then p.equippedWeapon.onUnequip()
                     Exit For
                 End If
@@ -301,14 +292,14 @@
     End Sub
     'accChange handles the equipping and unequipping of accessories
     Public Sub accChange(ByVal acc As String)
-        If acNameList.Count < 1 Then init()
+        If acList.Count < 1 Then init()
         If Not p.equippedAcce Is Nothing AndAlso acc.Equals(p.equippedAcce.getName) Then Exit Sub
         Dim sAcc As Accessory = Nothing
         If acc <> "" Then
-            For i = 0 To UBound(acNameList)
-                If acc = acNameList(i) Then
-                    'MsgBox("{" & cmbobxArmor.SelectedItem & "}&[" & aNameList(i) & "]")
-                    sAcc = acList(i)
+            For Each k In acList.Keys
+                If acc.Equals(k) Then
+                    'MsgBox("{" & acList(i).getName & "}&[" & acNameList(i) & "]")
+                    sAcc = acList(k)
                     If Not p.equippedAcce Is Nothing Then p.equippedAcce.onUnequip()
                     Exit For
                 End If

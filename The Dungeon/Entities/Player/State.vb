@@ -210,15 +210,15 @@
         hunger = CInt(readArray(15))
         gold = CInt(readArray(16))
 
-        For i = 0 To UBound(Equipment.aNameList)
-            If readArray(17) = Equipment.aNameList(i) Then
-                equippedArmor = Equipment.aList(i)
+        For Each k In Equipment.aList.Keys
+            If readArray(17).Equals(k) Then
+                equippedArmor = Equipment.aList(k)
                 Exit For
             End If
         Next
-        For i = 0 To UBound(Equipment.wNameList)
-            If readArray(18) = Equipment.wNameList(i) Then
-                equippedWeapon = Equipment.wList(i)
+        For Each k In Equipment.wList.Keys
+            If readArray(18).Equals(k) Then
+                equippedWeapon = Equipment.wList(k)
                 Exit For
             End If
         Next
@@ -248,9 +248,9 @@
         Next
         pImage = pimg(readArray(32 + b1 + 17))
 
-        For i = 0 To UBound(Equipment.acNameList)
-            If readArray(32 + b1 + 18) = Equipment.acNameList(i) Then
-                equippedAcce = Equipment.acList(i)
+        For Each k In Equipment.acList.Keys
+            If readArray(32 + b1 + 18) = k Then
+                equippedAcce = Equipment.acList(k)
                 Exit For
             End If
         Next

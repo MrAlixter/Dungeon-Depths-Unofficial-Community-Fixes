@@ -1161,10 +1161,11 @@ Public Class Game
         '10 = boss stairs
         '11 = shady wizard
         '12 = crystal
+
         If testingImageBoard Then
             boxBoard.Refresh()
         Else
-            Dim startTime As Double = (DateTime.Now - New DateTime(1970, 1, 1)).TotalMilliseconds
+            'Dim startTime As Double = (DateTime.Now - New DateTime(1970, 1, 1)).TotalMilliseconds
             Dim viewArray(15, 23) As Integer
             Dim x As Integer = 0
             Dim y As Integer = 0
@@ -1262,8 +1263,8 @@ Public Class Game
                 Next
                 y += 1
             Next
-            Dim endTime As Double = (DateTime.Now - New DateTime(1970, 1, 1)).TotalMilliseconds
-            Console.WriteLine("UPDATE TIME: " + (endTime - startTime).ToString())
+            'Dim endTime As Double = (DateTime.Now - New DateTime(1970, 1, 1)).TotalMilliseconds
+            'Console.WriteLine("UPDATE TIME: " + (endTime - startTime).ToString())
         End If
     End Sub
 
@@ -1966,9 +1967,9 @@ Public Class Game
         'handles the equiping of weapons
         Dim sWeapon As Weapon = Nothing
         If subString <> "" Then
-            For i = 0 To UBound(Equipment.wNameList)
-                If subString.ToString().Split()(0) = Equipment.wNameList(i) Then
-                    sWeapon = Equipment.wList(i)
+            For Each k In Equipment.wList.Keys
+                If subString.ToString().Split()(0).Equals(k) Then
+                    sWeapon = Equipment.wList(k)
                     Exit For
                 End If
             Next

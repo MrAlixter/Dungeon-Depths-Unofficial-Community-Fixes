@@ -719,7 +719,7 @@
             iArrInd(9) = New Tuple(Of Integer, Boolean)(14, True)
         Else
             iArrInd(8) = New Tuple(Of Integer, Boolean)(5, False)
-            iArrInd(9) = New Tuple(Of Integer, Boolean)(7, False)
+            iArrInd(9) = New Tuple(Of Integer, Boolean)(6, False)
         End If
         createP()
         changeSkinColor(c)
@@ -1068,47 +1068,47 @@
         haircolor = c
         Dim t(16) As Image
         If iArrInd(1).Item2 Then
-            If iArrInd(1).Item1 < 5 Then
+            If iArrInd(1).Item1 < CharacterGenerator.fRearHair2NonTFCount Then
                 t(1) = CharacterGenerator.getImg("img/fRearHair2")(iArrInd(1).Item1)
             Else
-                Dim temp As Integer = iArrInd(1).Item1 - 5
+                Dim temp As Integer = iArrInd(1).Item1 - CharacterGenerator.fRearHair2NonTFCount
                 If temp >= CharacterGenerator.getImg("img/fTF/tfRearHair2").Count Then temp = CharacterGenerator.getImg("img/fTF/tfRearHair2").Count - 1
                 t(1) = CharacterGenerator.getImg("img/fTF/tfRearHair2")(temp)
             End If
-            If iArrInd(5).Item1 < 5 Then
+            If iArrInd(5).Item1 < CharacterGenerator.fRearHair1NonTFCount Then
                 t(5) = CharacterGenerator.getImg("img/fRearHair1")(iArrInd(5).Item1)
             Else
-                Dim temp As Integer = iArrInd(5).Item1 - 5
+                Dim temp As Integer = iArrInd(5).Item1 - CharacterGenerator.fRearHair1NonTFCount
                 If temp >= CharacterGenerator.getImg("img/fTF/tfRearHair1").Count Then temp = CharacterGenerator.getImg("img/fTF/tfRearHair1").Count - 1
                 t(5) = CharacterGenerator.getImg("img/fTF/tfRearHair1")(temp)
             End If
-            If iArrInd(15).Item1 < 6 Then
+            If iArrInd(15).Item1 < CharacterGenerator.fFrontHairNonTFCount Then
                 t(15) = CharacterGenerator.getImg("img/fFrontHair")(iArrInd(15).Item1)
             Else
-                Dim temp As Integer = iArrInd(15).Item1 - 6
+                Dim temp As Integer = iArrInd(15).Item1 - CharacterGenerator.fFrontHairNonTFCount
                 If temp >= CharacterGenerator.getImg("img/fTF/tfFrontHair").Count Then temp = CharacterGenerator.getImg("img/fTF/tfFrontHair").Count - 1
                 t(15) = CharacterGenerator.getImg("img/fTF/tfFrontHair")(temp)
             End If
             CharacterGenerator.fFrontHair(0) = CharacterGenerator.picPort.Image
         Else
-            If iArrInd(1).Item1 < 5 Then
+            If iArrInd(1).Item1 < CharacterGenerator.mRearHair2NonTFCount Then
                 t(1) = CharacterGenerator.getImg("img/mRearHair2")(iArrInd(1).Item1)
             Else
-                Dim temp As Integer = iArrInd(1).Item1 - 5
+                Dim temp As Integer = iArrInd(1).Item1 - CharacterGenerator.mRearHair2NonTFCount
                 If temp >= CharacterGenerator.getImg("img/mTF/tfRearHair2").Count Then temp = CharacterGenerator.getImg("img/mTF/tfRearHair2").Count - 1
                 t(1) = CharacterGenerator.getImg("img/mTF/tfRearHair2")(temp)
             End If
-            If iArrInd(5).Item1 < 5 Then
+            If iArrInd(5).Item1 < CharacterGenerator.mRearHair1NonTFCount Then
                 t(5) = CharacterGenerator.getImg("img/mRearHair1")(iArrInd(5).Item1)
             Else
-                Dim temp As Integer = iArrInd(5).Item1 - 5
+                Dim temp As Integer = iArrInd(5).Item1 - CharacterGenerator.mRearHair1NonTFCount
                 If temp >= CharacterGenerator.getImg("img/mTF/tfRearHair1").Count Then temp = CharacterGenerator.getImg("img/mTF/tfRearHair1").Count - 1
                 t(5) = CharacterGenerator.getImg("img/mTF/tfRearHair1")(temp)
             End If
-            If iArrInd(15).Item1 < 6 Then
+            If iArrInd(15).Item1 < CharacterGenerator.mFrontHairNonTFCount Then
                 t(15) = CharacterGenerator.getImg("img/mFrontHair")(iArrInd(15).Item1)
             Else
-                Dim temp As Integer = iArrInd(15).Item1 - 6
+                Dim temp As Integer = iArrInd(15).Item1 - CharacterGenerator.mFrontHairNonTFCount
                 If temp >= CharacterGenerator.getImg("img/mTF/tfFrontHair").Count Then temp = CharacterGenerator.getImg("img/mTF/tfFrontHair").Count - 1
                 t(15) = CharacterGenerator.getImg("img/mTF/tfFrontHair")(temp)
             End If

@@ -239,7 +239,7 @@
         ComboBox2.Items.Add("Mage")
         picPort.BackgroundImage = CreateBMP(iArr)
 
-        'init()
+        init()
     End Sub
     'CharacterGenerator1_FormClosing handles the finalization of the in game image library
     Private Sub CharacterGenerator1_FormClosing(sender As Object, e As FormClosingEventArgs) Handles Me.FormClosing

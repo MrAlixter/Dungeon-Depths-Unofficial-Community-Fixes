@@ -26,7 +26,7 @@
         End If
         p.currTarget.despawn("run")
         If Not ln1 Is Nothing Then
-            Game.pushLblEvent(ln1, AddressOf p.thrallLN2)
+            Game.pushLblEvent(ln1, AddressOf ThrallTF.thrallLN2)
         Else
             Game.pushLblEvent(out)
         End If

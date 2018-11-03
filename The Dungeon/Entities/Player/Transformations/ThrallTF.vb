@@ -109,6 +109,14 @@
         Game.pushLblEvent(out, AddressOf acceptSorc, AddressOf fightSorc, "Do you accept?")
     End Sub
 
+    Shared Sub thrallLN2()
+        Dim ptype = "sister"
+        If Int(Rnd() * 2) = 0 Then
+            ptype = "brother"
+        End If
+        Game.pushLblEvent("""LISTEN UP, NEW SLAVE!  I have need of your services."" your new master begins, ""In this dungeon, there are several high-power mana arrays.  Only one of them, however, is capable of bestowing the power of a demon lord onto a mortal such as I.  Your task is to find and inspect these arrays, and report back to me with your findings.""  They snicker,  ""I'm sure you won't let me down, but I'm going to need to make a few changes to make you more ... uniform ... with the rest of your collegues.""" & vbCrLf & vbCrLf & "        .....       " & vbCrLf & vbCrLf & "With a final warning not to fail them, the foreign presence leaves your mind and you are once again alone with your thoughts, your new " & ptype & ", and your task.")
+    End Sub
+
     Public Overrides Sub stopTF()
         MyBase.stopTF()
         Game.player.perks("thrall") = -1
