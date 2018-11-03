@@ -1,0 +1,61 @@
+﻿Public Class HalfSuccubusTF
+    Inherits Transformation
+    Sub New()
+        MyBase.New(1, 0, 0, False)
+        tfName = "HalfSuccubusTF"
+        nextStep = AddressOf step1
+    End Sub
+    Sub New(cs As Integer, n As Integer, tts As Integer, wi As Double, cbs As Boolean, tfd As Boolean)
+        MyBase.New(cs, n, tts, wi, cbs, tfd)
+        tfName = "HalfSuccubusTF"
+        nextStep = getNextStep(cs)
+    End Sub
+
+    Public Overrides Sub setWaitTime(stage As Integer)
+        stopTF()
+    End Sub
+
+    Public Sub step1()
+        Dim p = Game.player
+        Dim out = ""
+
+        'unequips
+        Equipment.clothesChange("Succubus_Garb")
+        Equipment.weaponChange("Fists")
+        Equipment.accChange("Nothing")
+
+        'succubus transformation
+        If p.sex = "Male" Then
+            p.sexBool = True
+            p.MtF()
+            out += " Your body becomes daintier, and you are soon fully female."
+        End If
+        p.iArrInd(1) = New Tuple(Of Integer, Boolean)(9, True)
+        p.iArrInd(4) = New Tuple(Of Integer, Boolean)(0, True)
+        p.iArrInd(5) = New Tuple(Of Integer, Boolean)(9, True)
+        p.iArrInd(7) = New Tuple(Of Integer, Boolean)(0, True)
+        p.iArrInd(9) = New Tuple(Of Integer, Boolean)(19, True)
+        p.iArrInd(10) = New Tuple(Of Integer, Boolean)(0, True)
+        p.iArrInd(13) = New Tuple(Of Integer, Boolean)(0, True)
+        p.iArrInd(15) = New Tuple(Of Integer, Boolean)(13, True)
+        p.iArrInd(16) = New Tuple(Of Integer, Boolean)(0, True)
+        p.wingInd = 2
+
+        'transformation description push
+        p.TextColor = Color.HotPink
+    End Sub
+
+    Public Overrides Sub stopTF()
+        MyBase.stopTF()
+    End Sub
+
+    Public Overrides Function getNextStep(stage As Integer) As Action
+        Dim p = Game.player
+        Select Case stage
+            Case 0
+                Return AddressOf step1
+            Case Else
+                Return AddressOf stopTF
+        End Select
+    End Function
+End Class

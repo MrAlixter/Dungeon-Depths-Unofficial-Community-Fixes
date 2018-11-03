@@ -17,7 +17,7 @@
         End If
         If p.breastSize > 0 Then
             p.bs()
-            If Polymorph.canBeTFed(Game.player) Then
+            If transformation.canbeTFed(Game.player) Then
                 Game.player.pState.save(Game.player)
             End If
             Game.pushLblEvent("You breasts squeeze painfully . . .")

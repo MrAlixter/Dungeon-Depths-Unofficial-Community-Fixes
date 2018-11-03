@@ -8,7 +8,7 @@
     '3 = Clothes
     '4 = Face
     '5 = RearHair1
-    '6 = Ears / horns
+    '6 = Ears / Horns
     '7 = Nose
     '8 = Mouth
     '9 = Eyes
@@ -239,7 +239,7 @@
         ComboBox2.Items.Add("Mage")
         picPort.BackgroundImage = CreateBMP(iArr)
 
-        'init()
+        init()
     End Sub
     'CharacterGenerator1_FormClosing handles the finalization of the in game image library
     Private Sub CharacterGenerator1_FormClosing(sender As Object, e As FormClosingEventArgs) Handles Me.FormClosing
@@ -364,7 +364,7 @@
             Game.player.sexBool = False
             Game.player.sex = "Male"
         End If
-        Game.player.setClass(ComboBox2.Text)
+        Game.player.setClassLoadout(ComboBox2.Text)
 
         NormalClothes.bsizeneg1 = New Tuple(Of Integer, Boolean)(CInt(Game.player.iArrInd(3).Item1), False)
         NormalClothes.bsize1 = New Tuple(Of Integer, Boolean)(CInt(Game.player.iArrInd(3).Item1), True)

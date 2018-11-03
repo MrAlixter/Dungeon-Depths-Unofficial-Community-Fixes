@@ -30,6 +30,7 @@
                 n = "Sheep"
         End Select
         Polymorph.transform(MyBase.getCaster, n)
+
         MyBase.getCaster.perks("polymorphed") = 1
         Game.lstLog.Items.Add(CStr("You turn yourself into a " & n & "!"))
         Game.pushLblCombatEvent(CStr("You turn yourself into a " & n & "!"))

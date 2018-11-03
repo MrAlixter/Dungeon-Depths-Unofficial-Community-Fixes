@@ -13,7 +13,8 @@
     Overrides Sub use()
         If Me.getUsable() = False Then Exit Sub
         Game.lstLog.Items.Add("You apply the " & getName())
-        Polymorph.transform(Game.player, "slime", 0)
+        Game.player.ongoingTFs.Add(New VialOfSlimeTF())
+        Game.player.update()
         count -= 1
         Game.lstLog.TopIndex = Game.lstLog.Items.Count - 1
     End Sub

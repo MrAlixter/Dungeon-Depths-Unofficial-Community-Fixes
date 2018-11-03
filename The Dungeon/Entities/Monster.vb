@@ -422,40 +422,51 @@
         If sName.Equals("Explorer") And Game.floor < 6 Then Game.beatboss(Game.floor) = True
     End Sub
     Private Sub endMonster()
+        'set temporary player pointer
+        Dim p = Game.player
+
+        'create the chest for the encounter
         Dim totalSum As Integer = 0
+        Dim c1 As Chest
         For i = 0 To UBound(inventory)
             totalSum += inventory(i)
         Next
-
-        If Int(Rnd() * 30) < 2 Then
-            Game.lstLog.Items.Add("Your victory makes you feel more confident.")
-            Game.player.will += 1
-            Game.player.UIupdate()
-        End If
-
-        Dim c1 As Chest
         c1 = Game.baseChest.Create(inventory, pos)
         If totalSum > 0 Then c1.open()
-        If name = "Explorer" Then Game.pushLblEvent("As the explorer is defeated, they mumble some arcane poem and make a hand gesture which causes the two of you to begin glowing.  With a flash, you suddenly find yourself looking at the dungeon from a slightly different angle.  As you black out and collapse, the last thing you see is your grinning face standing over you." & vbCrLf & "The Explorer has taken your body!")
-        Game.npcList.Remove(Me)
-        Game.lstLog.Items.Add("You've deafeated the " & name & "!")
-        Game.player.perks("nekocurse") = -1
-        Game.player.currState.save(Game.player)
-        Game.fromCombat()
-        If Game.player.perks("swordpossess") > -1 Then
-            Game.player.perks("swordpossess") += 1
-            If Game.player.perks("swordpossess") = 2 Then
-                Polymorph.transform(Game.player, "targax", 0)
-            ElseIf Game.player.perks("swordpossess") = 3 Then
-                Polymorph.transform(Game.player, "targax", 1)
-            ElseIf Game.player.perks("swordpossess") = 4 And name <> "Targax" Then
-                Polymorph.transform(Game.player, "targax", 2)
-            End If
+
+        'will update
+        If Int(Rnd() * 20) < 2 Then
+            Game.lstLog.Items.Add("Your victory makes you feel more confident.")
+            p.will += 1
+            p.UIupdate()
         End If
 
+        'cleanup of the monster
         dead = True
         endBoss()
+        Game.fromCombat()
+        Game.npcList.Remove(Me)
+        Game.lstLog.Items.Add("You've deafeated the " & name & "!")
         Game.lstLog.TopIndex = Game.lstLog.Items.Count - 1
+
+        'monster transformations
+        For i = 0 To p.ongoingTFs.Count - 1
+            If p.ongoingTFs(i).GetType() Is GetType(NekoTF) Then
+                p.ongoingTFs(i).stopTF()
+                p.ongoingTFs.RemoveAt(i)
+            End If
+        Next
+        p.perks("nekocurse") = -1
+        If p.perks("swordpossess") > -1 Then
+            p.perks("swordpossess") += 1
+            If p.perks("swordpossess") = 2 Then
+                TargaxTF.step1()
+            ElseIf p.perks("swordpossess") = 3 Then
+                TargaxTF.step2()
+            ElseIf p.perks("swordpossess") = 4 And name <> "Targax" Then
+                TargaxTF.step3()
+            End If
+        End If
     End Sub
     Public Function getName() As String
         If form = "" Then
@@ -466,54 +477,9 @@
     End Function
 
     Public Sub bodySwap(ByRef p As Player)
-        Randomize()
-
-        Dim classes = {"Warrior", "Mage", "Paladin", "Warrior", "Mage", "Bimbo"}
-        p.pClass = p.classes(classes(Int(Rnd() * classes.Length)))
-        p.sex = "Female"
-        p.sexBool = True
-
+        p.ongoingTFs.Add(New RandoTF())
+        p.update()
         p.health = 0.1
-        p.maxHealth = 70 + Int(Rnd() * 50)
-        p.attack = 5 + Int(Rnd() * 7)
-        p.defence = 5 + Int(Rnd() * 7)
-        p.will = 5 + Int(Rnd() * 7)
-        p.speed = 5 + Int(Rnd() * 7)
-        p.evade = 5 + Int(Rnd() * 7)
-        p.gold = 25 + Int(Rnd() * 200)
-        p.lust = 0
-        p.mana = Int(Rnd() * 7)
-        p.hunger = 0
-        p.hBuff = 0
-        p.mBuff = 0
-        p.wBuff = 0
-        p.aBuff = 0
-        p.dBuff = 0
-
-        p.breastSize = Int(Rnd() * 3) + 1
-
-        p.inventory.Clear()
-        p.perks.Clear()
-        p.inventorynames.Clear()
-        Game.Potions.Clear()
-        p.createInvPerks()
-        Game.loadPotionList()
-
-        Dim armor = New Integer() {5, 7, 12, 16, 17, 18, 19, 20, 38, 39, 46, 47, 54, 54}
-        Dim armorIndex = armor(Int(Rnd() * (armor.Length)))
-        Dim weapon = New Integer() {6, 9, 21, 22}
-        Dim weaponIndex = weapon(Int(Rnd() * (weapon.Length)))
-        p.inventory(armorIndex).addOne()
-        p.inventory(weaponIndex).addOne()
-        p.equippedArmor = p.inventory(armorIndex)
-        p.equippedWeapon = p.inventory(weaponIndex)
-
-        p.genRandomPortrait(True)
-
-        Dim si As Integer = p.sState.iArrInd(3).Item1
-        p.currState.save(p)
-        p.pState.save(p)
-        p.sState.save(p)
-        p.sState.iArrInd(3) = New Tuple(Of Integer, Boolean)(si, True)
+        Game.pushLblEvent("As the explorer is defeated, they mumble some arcane poem and make a hand gesture which causes the two of you to begin glowing.  With a flash, you suddenly find yourself looking at the dungeon from a slightly different angle.  As you black out and collapse, the last thing you see is your grinning face standing over you." & vbCrLf & "The Explorer has taken your body!")
     End Sub
 End Class

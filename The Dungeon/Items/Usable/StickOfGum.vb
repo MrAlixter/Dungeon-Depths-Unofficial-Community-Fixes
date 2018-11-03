@@ -13,10 +13,12 @@
     End Sub
 
     Overrides Sub effect()
-        If Game.player.pClass.name.Equals("Magic Girl") Then
-            Polymorph.bimboTF(Game.player, 2)
-        Else
-            Game.player.perks("bimbotf") = 0
-        End If
+            If Game.player.perks("bimbotf") = -1 Then
+                Game.pushLblEvent("Chewing the gum causes a dizzy calm wash to over you.")
+                Game.player.ongoingTFs.Add(New BimboTF(2, 5, 0.25, True))
+                Game.player.perks("bimbotf") = 0
+            ElseIf Game.player.pClass.name.Equals("Bimbo") Then
+                Game.pushLblEvent("Chewing the gum make your head feel warm and fuzzy and stuff. You like, totally, love this gum!")
+            End If
     End Sub
 End Class

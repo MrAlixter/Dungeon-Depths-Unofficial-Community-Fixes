@@ -77,6 +77,7 @@ Public Class Game
     Public lblEventOnClose As Action    'the event method preformed when lblEvent closes (NOT SAVED)
     Public lastKey As String
     Public yesAction, noAction As Action
+    Public choiceText As String
     Public invFilters() As Boolean = {True, True, True, True, True, True, True}
     'Dim eClock As Integer = 15
     Dim eClock As Integer = eClockResetVal * 3
@@ -212,6 +213,11 @@ Public Class Game
         End If
 
         Game_Resize()
+        'Try
+        '    MsgBox("picStart is: " & picStart.BackgroundImage.Size.ToString)
+        'Catch ex As Exception
+        '    MsgBox("Error! picStart files missing")
+        'End Try
     End Sub
     Sub createConfigs()
         Dim w As StreamWriter
@@ -688,6 +694,25 @@ Public Class Game
         mBoard(playerY, playerX).Text = "@"
         player.pos = New Point(playerX, playerY)
 
+        If floor = 4 Then
+            Dim possiblePoints = {New Point(playerX + 1, playerY), _
+                                  New Point(playerX - 1, playerY), _
+                                  New Point(playerX, playerY + 1), _
+                                  New Point(playerX, playerY - 1), _
+                                  New Point(playerX + 1, playerY + 1), _
+                                  New Point(playerX - 1, playerY - 1), _
+                                  New Point(playerX + 1, playerY - 1), _
+                                  New Point(playerX - 1, playerY + 1)}
+            Dim p As Point = possiblePoints(0)
+            Dim i = 0
+            Do While (mBoard(p.Y, p.X).Tag < 1 Or mBoard(p.Y, p.X).Text <> "") And i < possiblePoints.Count
+                i += 1
+                p = possiblePoints(i)
+            Loop
+            Dim c As Chest = New LoadedChest(p, 4)
+            chestList.Add(c)
+        End If
+
         placeStairs()
         placeChest(code)
         If floor > 2 Then placeTraps()
@@ -866,9 +891,6 @@ Public Class Game
         mBoard(stairsY, stairsX).ForeColor = Color.FromArgb(45, 45, 45)
         mBoard(stairsY, stairsX).Text = "H"
     End Sub
-    Function chestSpotValid()
-        Return True
-    End Function
     Sub placeChest(ByVal code As String)
         Rnd(-1)
         Randomize(code.GetHashCode)
@@ -895,7 +917,7 @@ Public Class Game
                 Loop
             End If
 
-            Dim chest As Chest = baseChest.Create(chestX, chestY, code)
+            Dim chest As Chest = baseChest.Create(New Point(chestX, chestY), code)
             If r = i Then chest.add(53, 1)
             chestList.Add(chest)
             mBoard(chestY, chestX).ForeColor = Color.FromArgb(45, 45, 45)
@@ -957,52 +979,6 @@ Public Class Game
         Next
         dist(p1.Y, p1.X) = 0
         While allPoints.Count > 0
-                Dim min = allPoints(0)
-                For i = 0 To allPoints.Count - 1
-                    If dist(allPoints(i).Y, allPoints(i).X) < dist(min.X, min.Y) Then min = allPoints(i)
-                Next
-            allPoints.Remove(min)
-            Dim u, d, l, r As Point
-                u = New Point(min.X - 1, min.Y)
-            d = New Point(min.X + 1, min.Y)
-                l = New Point(min.X, min.Y - 1)
-            r = New Point(min.X, min.Y + 1)
-            For Each p In {u, d, l, r}
-                Dim tDist = dist(min.Y, min.X) + distance(min, p)
-                If Not (p.X < 0 Or p.X > mBoardWidth - 1 Or p.Y < 0 Or p.Y > mBoardHeight - 1) AndAlso Not mBoard(p.Y, p.X).Tag = 0 AndAlso Not path.Contains(p) AndAlso allPoints.Contains(p) Then
-                    If tDist < dist(p.Y, p.X) Then
-                        dist(p.Y, p.X) = tDist
-                        prev(p.Y, p.X) = min
-                    End If
-                End If
-                If p.Equals(p2) Then
-                    Dim pp = p2
-                    While Not path.Contains(pp)
-                        path.Insert(0, pp)
-                        pp = prev(pp.Y, pp.X)
-                    End While
-                    Exit For
-                End If
-            Next
-        End While
-        path.RemoveAt(0)
-        Return path.ToArray
-    End Function
-    Function route(ByVal p1 As Point, ByVal p2 As Point, ByVal endp As Point) As Point()
-        'iterative dijkstra's shortest path implementation
-        Dim dist(mBoardWidth, mBoardHeight) As Integer
-        Dim allPoints As List(Of Point) = New List(Of Point)
-        Dim prev(mBoardWidth, mBoardHeight) As Point
-        Dim path As List(Of Point) = New List(Of Point)
-        For i = 0 To mBoardHeight - 1
-            For j = 0 To mBoardWidth - 1
-                dist(i, j) = 99999
-                allPoints.Add(New Point(j, i))
-                prev(i, j) = Nothing
-            Next
-        Next
-        dist(p1.Y, p1.X) = 0
-        While allPoints.Count > 0
             Dim min = allPoints(0)
             For i = 0 To allPoints.Count - 1
                 If dist(allPoints(i).Y, allPoints(i).X) < dist(min.X, min.Y) Then min = allPoints(i)
@@ -1032,7 +1008,6 @@ Public Class Game
             Next
         End While
         path.RemoveAt(0)
-        path.Add(endp)
         Return path.ToArray
     End Function
     Function distance(ByVal x As Point, ByVal y As Point) As Double
@@ -1186,10 +1161,11 @@ Public Class Game
         '10 = boss stairs
         '11 = shady wizard
         '12 = crystal
+
         If testingImageBoard Then
             boxBoard.Refresh()
         Else
-            Dim startTime As Double = (DateTime.Now - New DateTime(1970, 1, 1)).TotalMilliseconds
+            'Dim startTime As Double = (DateTime.Now - New DateTime(1970, 1, 1)).TotalMilliseconds
             Dim viewArray(15, 23) As Integer
             Dim x As Integer = 0
             Dim y As Integer = 0
@@ -1287,8 +1263,8 @@ Public Class Game
                 Next
                 y += 1
             Next
-            Dim endTime As Double = (DateTime.Now - New DateTime(1970, 1, 1)).TotalMilliseconds
-            Console.WriteLine("UPDATE TIME: " + (endTime - startTime).ToString())
+            'Dim endTime As Double = (DateTime.Now - New DateTime(1970, 1, 1)).TotalMilliseconds
+            'Console.WriteLine("UPDATE TIME: " + (endTime - startTime).ToString())
         End If
     End Sub
 
@@ -1333,6 +1309,14 @@ Public Class Game
         lstLog.TopIndex = lstLog.Items.Count - 1
     End Sub
     'handleKeyPress handles the players pressed keys, and is the driver function for each 
+    Sub closeLblEvent()
+        If lblEvent.Visible = True Then
+            lblEvent.Visible = False
+            lblEvent.Text = ""
+            lblEvent.ForeColor = Color.White
+            drawBoard()
+        End If
+    End Sub
     Function shouldReturnEarly(ByVal Keydata As Keys)
         If picStart.Visible = True Then Return True
         If combatmode And (Keydata.Equals(cKeys(0)) Or Keydata.Equals(cKeys(1)) Or Keydata.Equals(cKeys(2)) Or Keydata.Equals(cKeys(3)) Or Keydata.Equals(Keys.Left) Or Keydata.Equals(Keys.Right) Or Keydata.Equals(Keys.Down) Or Keydata.Equals(Keys.Up)) And Not selecting Then
@@ -1355,8 +1339,7 @@ Public Class Game
             And Not Keydata.Equals(Keys.Left) And Not Keydata.Equals(Keys.Right) And Not Keydata.Equals(Keys.Down) And Not Keydata.Equals(Keys.Up) Then
             If npcmode = False Then
                 picNPC.Visible = False
-                lblEvent.Visible = False
-                lblEvent.ForeColor = Color.White
+                closeLblEvent()
                 player.canMoveFlag = True
                 If Not combatmode Then player.canMoveFlag = True
                 If Not lblEventOnClose Is Nothing Then
@@ -1625,7 +1608,8 @@ Public Class Game
             ElseIf keyspresed = "rock" Then
                 player.petrify(Color.Gray)
             ElseIf keyspresed = "doll" Then
-                Polymorph.transform(player, "doll", 0)
+                player.ongoingTFs.Add(New BUDollTF())
+                player.update()
             ElseIf keyspresed = "gogo" Then
                 Dim f As Integer = CInt(InputBox("Which floor?"))
                 floor = f - 1
@@ -1654,11 +1638,7 @@ Public Class Game
                 lblEventOnClose()
                 lblEventOnClose = Nothing
             End If
-            If lblEvent.Visible = True Then
-                lblEvent.Visible = False
-                lblEvent.ForeColor = Color.White
-                drawBoard()
-            End If
+            closeLblEvent()
         End If
     End Sub
     Sub attackKey()
@@ -1668,10 +1648,7 @@ Public Class Game
                 lblEventOnClose()
                 lblEventOnClose = Nothing
             End If
-            If lblEvent.Visible = True Then
-                lblEvent.Visible = False
-                lblEvent.ForeColor = Color.White
-            End If
+            closeLblEvent()
             Dim m As Monster = Nothing
             For i = 0 To npcList.Count() - 1
                 If npcList.Item(i).GetType().IsSubclassOf(GetType(Monster)) Or npcList.Item(i).GetType() Is GetType(Monster) Then
@@ -1706,10 +1683,7 @@ Public Class Game
     End Sub
     Sub waitKey()
         turn += 1
-        If lblEvent.Visible = True Then
-            lblEvent.Visible = False
-            lblEvent.ForeColor = Color.White
-        End If
+        closeLblEvent()
         Dim m As Monster = Nothing
         For i = 0 To npcList.Count() - 1
             If npcList.Item(i).GetType().IsSubclassOf(GetType(Monster)) Or npcList.Item(i).GetType() Is GetType(Monster) Then
@@ -1748,11 +1722,7 @@ Public Class Game
             lblEventOnClose()
             lblEventOnClose = Nothing
         End If
-        If lblEvent.Visible = True Then
-            lblEvent.Visible = False
-            lblEvent.ForeColor = Color.White
-            drawBoard()
-        End If
+       closeLblEvent()
 
         If player.pos.Equals(shopkeeper.pos) Then
             currNPC = shopkeeper
@@ -1858,10 +1828,7 @@ Public Class Game
             lblEventOnClose = Nothing
         End If
         lblCombatEvents.Text = ""
-        If lblEvent.Visible = True Then
-            lblEvent.Visible = False
-            lblEvent.ForeColor = Color.White
-        End If
+       closeLblEvent()
         If player.mana <= 0 Then Exit Sub
         Dim m As Monster = Nothing
         For i = 0 To npcList.Count() - 1
@@ -1896,10 +1863,7 @@ Public Class Game
             lblEventOnClose = Nothing
         End If
         lblCombatEvents.Text = ""
-        If lblEvent.Visible = True Then
-            lblEvent.Visible = False
-            lblEvent.ForeColor = Color.White
-        End If
+       closeLblEvent()
         Dim m As Monster = Nothing
         For i = 0 To npcList.Count() - 1
             If npcList.Item(i).GetType().IsSubclassOf(GetType(Monster)) Or npcList.Item(i).GetType() Is GetType(Monster) Then
@@ -1995,7 +1959,7 @@ Public Class Game
             lstLog.Items.Add("Putting away your wand causes you to change into your regular self!")
             player.inventory.Item(10).add(-1)
             player.magGState.save(player)
-            player.revert2()
+            player.revertToPState()
         End If
 
         Dim owName = player.equippedWeapon.getName
@@ -2003,9 +1967,9 @@ Public Class Game
         'handles the equiping of weapons
         Dim sWeapon As Weapon = Nothing
         If subString <> "" Then
-            For i = 0 To UBound(Equipment.wNameList)
-                If subString.ToString().Split()(0) = Equipment.wNameList(i) Then
-                    sWeapon = Equipment.wList(i)
+            For Each k In Equipment.wList.Keys
+                If subString.ToString().Split()(0).Equals(k) Then
+                    sWeapon = Equipment.wList(k)
                     Exit For
                 End If
             Next
@@ -2031,10 +1995,9 @@ Public Class Game
         Else
             noAction()
         End If
+        choiceText = Nothing
         yesAction = Nothing
         noAction = Nothing
-        lblEvent.Visible = False
-        lblEventOnClose = Nothing
     End Sub
     Sub toPNLSelec(ByVal mode As String)
         selecting = True
@@ -2130,7 +2093,7 @@ Public Class Game
                     End If
                 Next
             Case "yesNo"
-                lblWhat.Text = "Do you accept?"
+                lblWhat.Text = choiceText
                 lstSelec.Items.Add("a - Yes") 'cKeys(19).ToString.ToLower & " - Yes")
                 lstSelec.Items.Add("b - No") 'cKeys(20).ToString.ToLower & " - No")
         End Select
@@ -2420,7 +2383,6 @@ Public Class Game
         lblDEF.Text = "DEF = " & player.getDefence
         lblSKL.Text = "WIL = " & player.getWillpower
         lblSPD.Text = "SPD = " & player.getSpeed
-        lblEVD.Text = "EVD = " & player.evade
 
         player.currState.save(player)
 
@@ -2809,10 +2771,6 @@ Public Class Game
         cmboxSpec.Visible = False
         btnSpec.Visible = False
 
-        If player.perks("polymorphed") > -1 Then
-            player.perks("polymorphed") = -1
-            player.revert2()
-        End If
         npcList.Clear()
         ttCosts.RemoveAll()
     End Sub
@@ -2868,11 +2826,6 @@ Public Class Game
         btnLeave.Visible = True
 
         lstLog.TopIndex = lstLog.Items.Count - 1
-
-        If player.perks("polymorphed") > -1 Then
-            player.perks("polymorphed") = 0
-            player.revert2()
-        End If
     End Sub
     'run handles the player choice to run from combat
     Sub run()
@@ -2880,6 +2833,12 @@ Public Class Game
         If player.perks("swordpossess") > -1 Then
             lstLog.Items.Add("Something inside you decides that running away is cowardly, so you don't.")
             pushLblCombatEvent("Something inside you decides that running away is cowardly, so you don't.")
+            lstLog.TopIndex = lstLog.Items.Count - 1
+            Exit Sub
+        End If
+        If player.name.Equals("Targax") And player.pClass.name.Equals("Soul-Lord") Then
+            lstLog.Items.Add("You decide that running away is cowardly, so you don't.")
+            pushLblCombatEvent("You decide that running away is cowardly, so you don't.")
             lstLog.TopIndex = lstLog.Items.Count - 1
             Exit Sub
         End If
@@ -2926,11 +2885,7 @@ Public Class Game
                 Exit For
             End If
         Next
-        If lblEvent.Visible = True Then
-            lblEvent.Visible = False
-            lblEvent.ForeColor = Color.White
-            drawBoard()
-        End If
+        closeLblEvent()
         If Not m Is Nothing Then m.despawn("npc")
         npcList.Clear()
         player.currTarget = Nothing
@@ -2973,7 +2928,7 @@ Public Class Game
 
     'button click methods
     Private Sub btnUse_Click(sender As Object, e As EventArgs) Handles btnUse.Click
-        lblEvent.Visible = False
+        closeLblEvent()
         If Not lblEventOnClose Is Nothing Then
             lblEventOnClose()
             lblEventOnClose = Nothing
@@ -3013,6 +2968,7 @@ Public Class Game
             'updates the combat banner
             updatePnlCombat(player, player.currTarget)
         End If
+
         lblPHealth.Text = CInt(player.health * player.getmaxHealth) & "/" & player.getmaxHealth
     End Sub
     Private Sub btnDrop_Click(sender As Object, e As EventArgs) Handles btnDrop.Click
@@ -3048,10 +3004,7 @@ Public Class Game
             lblEventOnClose()
             lblEventOnClose = Nothing
         End If
-        If lblEvent.Visible = True Then
-            lblEvent.Visible = False
-            lblEvent.ForeColor = Color.White
-        End If
+        closeLblEvent()
         Dim m As Monster = Nothing
         For i = 0 To npcList.Count() - 1
             If npcList.Item(i).GetType().IsSubclassOf(GetType(Monster)) Or npcList.Item(i).GetType() Is GetType(Monster) Then
@@ -3080,10 +3033,7 @@ Public Class Game
             lblEventOnClose = Nothing
         End If
         lblCombatEvents.Text = ""
-        If lblEvent.Visible = True Then
-            lblEvent.Visible = False
-            lblEvent.ForeColor = Color.White
-        End If
+        closeLblEvent()
         If cmboxSpec.Text = "-- Select --" Then Exit Sub
         Dim m As Monster = Nothing
         For i = 0 To npcList.Count() - 1
@@ -3118,11 +3068,7 @@ Public Class Game
         ttCosts.RemoveAll()
     End Sub
     Private Sub btnRUN_Click(sender As Object, e As EventArgs) Handles btnRUN.Click
-        If lblEvent.Visible = True Then
-            lblEvent.Visible = False
-            lblEvent.ForeColor = Color.White
-            drawBoard()
-        End If
+        closeLblEvent()
         If Not lblEventOnClose Is Nothing Then
             lblEventOnClose()
             lblEventOnClose = Nothing
@@ -3137,10 +3083,7 @@ Public Class Game
             lblEventOnClose = Nothing
         End If
         lblCombatEvents.Text = ""
-        If lblEvent.Visible = True Then
-            lblEvent.Visible = False
-            lblEvent.ForeColor = Color.White
-        End If
+        closeLblEvent()
         If cboxMG.Text = "-- Select --" Or player.mana <= 0 Then Exit Sub
         Dim m As Monster = Nothing
         For i = 0 To npcList.Count() - 1
@@ -3252,22 +3195,14 @@ Public Class Game
             lblEventOnClose()
             lblEventOnClose = Nothing
         End If
-        If lblEvent.Visible = True Then
-            lblEvent.Visible = False
-            lblEvent.ForeColor = Color.White
-            drawBoard()
-        End If
+        closeLblEvent()
     End Sub
     Private Sub btnShop_Click(sender As Object, e As EventArgs) Handles btnShop.Click
         If Not lblEventOnClose Is Nothing Then
             lblEventOnClose()
             lblEventOnClose = Nothing
         End If
-        If lblEvent.Visible = True Then
-            lblEvent.Visible = False
-            lblEvent.ForeColor = Color.White
-            drawBoard()
-        End If
+        closeLblEvent()
         'Dim s As Shop = New Shop
         Dim s As ShopV2 = New ShopV2
         s.ShowDialog()
@@ -3279,11 +3214,7 @@ Public Class Game
             lblEventOnClose = Nothing
         End If
         If MessageBox.Show("This is probably a really bad idea, are you sure?", "Bad Idea", MessageBoxButtons.YesNo) = Windows.Forms.DialogResult.Yes Then
-            If lblEvent.Visible = True Then
-                lblEvent.Visible = False
-                lblEvent.ForeColor = Color.White
-                drawBoard()
-            End If
+            closeLblEvent()
             If cboxNPCMG.Text = "-- Select --" Or player.mana <= 0 Then Exit Sub
             Dim m As NPC = Nothing
             For i = 0 To npcList.Count() - 1
@@ -3331,11 +3262,7 @@ Public Class Game
             lblEventOnClose = Nothing
         End If
         If MessageBox.Show("This is probably a really bad idea, are you sure?", "Bad Idea", MessageBoxButtons.YesNo) = Windows.Forms.DialogResult.Yes Then
-            If lblEvent.Visible = True Then
-                lblEvent.Visible = False
-                lblEvent.ForeColor = Color.White
-                drawBoard()
-            End If
+            closeLblEvent()
             If npcIndex = 0 Then
                 pushNPCDialog("So you want to fight, eh?  I'm ready whenever you are.")
             ElseIf npcIndex = 1 Then
@@ -3530,7 +3457,7 @@ Public Class Game
         btnEQP.Enabled = False
     End Sub
     'This pushLblEvent is identical to the second, but to be used in situations where a choice is made.
-    Sub pushLblEvent(ByVal s As String, ByRef yes As Action, ByVal no As Action)
+    Sub pushLblEvent(ByVal s As String, ByRef yes As Action, ByVal no As Action, ByVal text As String)
         If combatmode Then
             pushLblCombatEvent("Error, choice to be made during combat.")
             Exit Sub
@@ -3570,6 +3497,7 @@ Public Class Game
         lblEventOnClose = AddressOf makeChoice
         yesAction = yes
         noAction = no
+        choiceText = text
         btnEQP.Enabled = False
     End Sub
     Sub makeChoice()
@@ -3909,10 +3837,7 @@ Public Class Game
 
     Private Sub btnWait_Click(sender As Object, e As EventArgs) Handles btnWait.Click
         turn += 1
-        If lblEvent.Visible = True Then
-            lblEvent.Visible = False
-            lblEvent.ForeColor = Color.White
-        End If
+        closeLblEvent()
         Dim m As Monster = Nothing
         For i = 0 To npcList.Count() - 1
             If npcList.Item(i).GetType().IsSubclassOf(GetType(Monster)) Or npcList.Item(i).GetType() Is GetType(Monster) Then

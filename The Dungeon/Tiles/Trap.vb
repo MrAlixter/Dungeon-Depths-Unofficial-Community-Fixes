@@ -58,7 +58,7 @@
                 Game.player.inventory(54).add(1)
                 Equipment.clothesChange("Ropes")
                 Equipment.portraitUDate()
-                If Polymorph.canBeTFed(Game.player) Then
+                If transformation.canbeTFed(Game.player) Then
                     Game.player.pState.save(Game.player)
                 End If
                 Game.player.UIupdate()
@@ -75,7 +75,7 @@
                 End If
 
                 Game.player.skincolor = Color.FromArgb(Game.player.skincolor.A, r, g, b)
-                If Polymorph.canBeTFed(Game.player) Then
+                If transformation.canbeTFed(Game.player) Then
                     Game.player.pState.save(Game.player)
                 End If
                 Game.player.petrify(rubyTF)
@@ -83,7 +83,8 @@
                 Game.pushLblEvent(out, AddressOf Trap.rubyRevert)
                 Game.player.createP()
             Case 3
-                Polymorph.transform(Game.player, "doll", 0)
+                Game.player.ongoingTFs.Add(New BUDollTF())
+                Game.player.update()
             Case 4
                 Dim out = "As your foot touches down on what looks to be the same ground that you have been walking on, you find that it is not met with any resistance.  Unable to keep your balance, you fall face first into the shiny waterlike facsimile of the floor and are thrown, flipping, into a another room.  As you regain your senses, you notice that you actually just ahead of where you were.  Turning around, you tap the floor you presumably fell out through, only to find it as solid as any other patch of floor you have come across.  Not able to find anything else abnormal with your surroundings, you write your expirience off as some failed illusion and set off on your way."
                 If Game.player.sexBool Then
@@ -112,7 +113,7 @@
     End Sub
 
     Shared Sub rubyRevert()
-        Game.player.revert2()
+        Game.player.revertToPState()
         Game.player.canMoveFlag = True
         Dim tr As New Monster(-1)
         Game.statueList.Add(New Statue(tr))

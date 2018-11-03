@@ -23,7 +23,7 @@
     Public Overrides Sub Effect()
         Dim r As Integer = Int(Rnd() * 3)
         If r = 0 Then Game.player.be()
-        If Polymorph.canBeTFed(Game.player) Then
+        If transformation.canbeTFed(Game.player) Then
             Game.player.pState.save(Game.player)
         End If
         Equipment.portraitUDate()
