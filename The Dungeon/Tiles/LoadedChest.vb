@@ -31,9 +31,12 @@
     End Sub
 
     Sub floor4StartChest()
-        Dim p = Game.player
-        p.ongoingTFs.Add(New RandoTF())
-        p.update()
+        Game.preBSBody = Nothing
+        Game.preBSStartState = New State()
+        Game.preBSStartState.save(Game.player)
+        Game.player.forcedPath = Game.route(Game.player.pos, Game.player.pos)
+        Game.player.forcedPath = {Game.player.forcedPath(0)}
+        Game.pushLblEvent("Upon opening the chest, you find a familiar key.  Well, that was easy.")
     End Sub
 
 End Class

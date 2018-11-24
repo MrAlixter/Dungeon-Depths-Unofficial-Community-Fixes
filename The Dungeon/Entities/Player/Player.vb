@@ -471,6 +471,10 @@
 
     '|MOVEMENT COMMANDS|
     Private Sub reachedFPathDest()
+        If Game.floor = 4 And Game.preBSBody Is Nothing And Not Game.preBSStartState Is Nothing Then
+            RandoTF.floor4FirstBossEncounter()
+            Exit Sub
+        End If
         If pClass.name.Equals("Thrall") Then
             If Int(Rnd() * 2) = 1 Then
                 Dim out = "You've found one of the crystals your controller is seeking!  As you circle it, you feel a familiar presence enter your mind.  " & _
@@ -493,7 +497,7 @@
         End If
     End Sub
     Private Sub followPath()
-        If forcedPath.Length < 1 Then
+        If forcedPath.Length <= 1 Then
             reachedFPathDest()
             forcedPath = Nothing
         Else

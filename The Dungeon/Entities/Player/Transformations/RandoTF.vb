@@ -123,6 +123,13 @@
         p.sState.save(p)
         p.sState.iArrInd(3) = New Tuple(Of Integer, Boolean)(si, True)
     End Sub
+    Shared Sub floor4FirstBossEncounter()
+        Dim p = Game.player
+        Game.preBSBody = New State()
+        Game.preBSBody.save(p)
+        p.ongoingTFs.Add(New RandoTF())
+        p.update()
+    End Sub
 
     Public Overrides Sub stopTF()
         MyBase.stopTF()

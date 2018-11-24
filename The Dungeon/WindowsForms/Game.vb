@@ -91,6 +91,10 @@ Public Class Game
     Dim savePicsReady As Boolean = False
     Dim boardReady As Boolean = False
 
+    'for floor 4 body swap
+    Public preBSBody As State
+    Public preBSStartState As State
+
     Dim healthCol As Bitmap = Nothing
 
     Dim selecting As Boolean = False
@@ -2110,6 +2114,10 @@ Public Class Game
         writer = IO.File.CreateText(a)
         writer.WriteLine(version)
         writer.WriteLine(player.ToString)
+        If floor = 4 And Not preBSBody Is Nothing And Not preBSStartState Is Nothing Then
+            writer.WriteLine(preBSBody.write)
+            writer.WriteLine(preBSStartState.write)
+        End If
         writer.WriteLine(mBoardWidth - 1)
         writer.WriteLine(mBoardHeight - 1)
         For yInd = 0 To mBoardHeight - 1
@@ -2240,6 +2248,12 @@ Public Class Game
             Exit Sub
         End If
         player = New Player(reader.ReadLine(), v)
+        If floor = 4 And Not preBSBody Is Nothing And Not preBSStartState Is Nothing Then
+            preBSBody = New State()
+            preBSStartState = New State()
+            preBSBody.read(reader.ReadLine)
+            preBSStartState.read(reader.ReadLine)
+        End If
 
         If Not mBoard Is Nothing Then
             For i = 0 To mBoardHeight - 1
