@@ -94,6 +94,24 @@
         p.health = 0.1
     End Sub
 
+    '|BOSS / MINIBOSS DEATHS|
+    Shared Sub oozeEmpDeath()
+        p.ongoingTFs.Add(New RandoTF())
+        p.update()
+        p.sState.save(p)
+        p.pState.save(p)
+        p.currTarget.despawn("run")
+        Game.pushLblEvent("""Aww, sweetie, if you wanted another go you should have just asked!"", the Ooze Empress chuckles, her aphrodesiac-laced tendrils wrapping you in their arousing embrace.  ""You really do need to relax more.  Lucky for you, I have just the thing..."" she states, plunging your entire body deeper into her slime.  As the pleasure once again overtakes you, you resign yourself to needing to try again.  Well, maybe not right away...")
+        Dim posX As Integer
+        Dim posY As Integer
+        Do While (Game.mBoard(posY, posX).Tag <> 1 Or Game.mBoard(posY, posX).Text <> "")
+            posX = CInt(Int(Rnd() * Game.mBoardWidth))
+            posY = CInt(Int(Rnd() * Game.mBoardHeight))
+        Loop
+        p.pos = New Point(posX, posY)
+        p.health = 0.1
+    End Sub
+
     '|NPC DEATHS|
     Shared Sub ShopkeeperDeath()
         Dim n As NPC = Game.currNPC

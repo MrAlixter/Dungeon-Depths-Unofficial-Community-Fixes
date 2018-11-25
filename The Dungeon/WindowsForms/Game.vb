@@ -70,7 +70,7 @@ Public Class Game
     Dim monsterTier4() As Integer = {0, 1, 2, 3, 4, 6, 7}
     Public turn As Integer = 0  '(NOT SAVED)
     Public beatboss() As Boolean = {False, False, False, False, False, False}  'which bosses have been beat?
-    Public floorboss() As String = {"Floor0", "Marissa the Enchantress", "Targax the Brutal", "Key", "the Explorer", "Medusa"} 'boss names (NOT SAVED)
+    Public floorboss() As String = {"Floor0", "Marissa the Enchantress", "Targax the Brutal", "Key", "Key", "Medusa"} 'boss names (NOT SAVED)
     Public floorLayouts As ArrayList = New ArrayList()
     Public version As Double = 0.6     'the save file version
 
@@ -90,6 +90,11 @@ Public Class Game
     Dim imagesWorkerArg = Nothing
     Dim savePicsReady As Boolean = False
     Dim boardReady As Boolean = False
+
+    'for floor 4 body swap
+    Public preBSBody As State
+    Public preBSStartState As State
+    Public preBSInventory As New ArrayList()
 
     Dim healthCol As Bitmap = Nothing
 
@@ -2109,7 +2114,16 @@ Public Class Game
         Dim writer As IO.StreamWriter
         writer = IO.File.CreateText(a)
         writer.WriteLine(version)
+        writer.WriteLine(floor)
         writer.WriteLine(player.ToString)
+        If floor = 4 And Not preBSBody Is Nothing And Not preBSStartState Is Nothing Then
+            writer.WriteLine(preBSBody.write)
+            writer.WriteLine(preBSStartState.write)
+            writer.WriteLine(preBSInventory.Count - 1)
+            For i = 0 To preBSInventory.Count - 1
+                writer.WriteLine(preBSInventory.Item(i))
+            Next
+        End If
         writer.WriteLine(mBoardWidth - 1)
         writer.WriteLine(mBoardHeight - 1)
         For yInd = 0 To mBoardHeight - 1
@@ -2160,7 +2174,6 @@ Public Class Game
             writer.WriteLine(beatboss(i))
         Next
         writer.WriteLine(turn)
-        writer.WriteLine(floor)
         writer.WriteLine(floorCode)
         writer.WriteLine(encounterRate)
         writer.WriteLine(eClockResetVal)
@@ -2239,7 +2252,20 @@ Public Class Game
             boardWorker.CancelAsync()
             Exit Sub
         End If
+
+        floor = reader.ReadLine()
         player = New Player(reader.ReadLine(), v)
+        If floor = 4 Then
+            floorboss(4) = "Ooze Empress"
+            preBSBody = New State()
+            preBSStartState = New State()
+            preBSBody.read(reader.ReadLine)
+            preBSStartState.read(reader.ReadLine)
+            preBSInventory = New ArrayList
+            For i As Integer = 0 To reader.ReadLine()
+                preBSInventory.Add(reader.ReadLine())
+            Next
+        End If
 
         If Not mBoard Is Nothing Then
             For i = 0 To mBoardHeight - 1
@@ -2274,7 +2300,12 @@ Public Class Game
         chestRichnessRange = reader.ReadLine()
         Dim uOchests As ArrayList = New ArrayList()
         For i = 0 To CInt(reader.ReadLine())
-            Dim newChest = baseChest.Create(reader.ReadLine())
+            Dim newChest
+            Try
+                newChest = baseChest.Create(reader.ReadLine())
+            Catch ex As Exception
+                MsgBox(i)
+            End Try
             chestList.Add(newChest)
             uOchests.Add(newChest.pos)
         Next
@@ -2323,7 +2354,6 @@ Public Class Game
             beatboss(i) = CBool(reader.ReadLine)
         Next
         turn = reader.ReadLine()
-        floor = reader.ReadLine()
         floorCode = reader.ReadLine()
         encounterRate = Int(reader.ReadLine())
         eClockResetVal = Int(reader.ReadLine())
@@ -2403,17 +2433,17 @@ Public Class Game
         Dim name As String = CType(sender, Button).Name
         Dim fileNum As String = name(name.Length - 1)
         If solFlag Then
-            Try
-                loadSave("s" & fileNum & ".ave")
-            Catch ex As System.IO.FileNotFoundException
-                MsgBox("Error 004: No save detected!")
-            Catch ex2 As Exception
-                If MessageBox.Show("Error 005: Error in loaded in save file!" & vbCrLf & "Restart?", "Error 005", MessageBoxButtons.YesNo) = Windows.Forms.DialogResult.Yes Then
-                    Application.Restart()
-                Else
-                    Application.Exit()
-                End If
-            End Try
+            'Try
+            loadSave("s" & fileNum & ".ave")
+            'Catch ex As System.IO.FileNotFoundException
+            '    MsgBox("Error 004: No save detected!")
+            'Catch ex2 As Exception
+            '    If MessageBox.Show("Error 005: Error in loaded in save file!" & vbCrLf & "Restart?", "Error 005", MessageBoxButtons.YesNo) = Windows.Forms.DialogResult.Yes Then
+            '        Application.Restart()
+            '    Else
+            '        Application.Exit()
+            '    End If
+            'End Try
         Else
             save("s" & fileNum & ".ave")
             imagesWorkerArg = Convert.ToInt32(fileNum)
@@ -3312,6 +3342,10 @@ Public Class Game
         npcList.Add(m)
         lstLog.Items.Add((m.getName & " attacks!"))
         toCombat()
+        If floor = 4 Then
+            pushLblEvent("As you approach the staircase, you spot the Ooze Empress, hanging over the stairs.  As you wave to get her attention, she plops off the celing to come and greet you.  As you explain your situation to her, she chuckles, catching you off guard.  ""You know, I was placed on this floor as kind of a buffer.  Mistress Medusa isn't interested in weaklings, and if you even want to have a chance at beating her, you need to have a stronger will."".  You notice a shift in her previously bubbly personality, and when the rest of her tentacles drop down, you take a leap back and prepare for combat." & vbCrLf & vbCrLf &
+                               """Let's see if you've learned anthing since the last time you tried this,"" she says with an somewhat mencing grin, ""... though I'm sure neither of us would mind a repeat either.""")
+        End If
         btnChallengeBoss.Visible = False
         lstLog.TopIndex = lstLog.Items.Count - 1
     End Sub

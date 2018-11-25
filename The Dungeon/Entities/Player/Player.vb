@@ -471,6 +471,10 @@
 
     '|MOVEMENT COMMANDS|
     Private Sub reachedFPathDest()
+        If Game.floor = 4 And Game.preBSBody Is Nothing And Not Game.preBSStartState Is Nothing And Game.floorboss(4) = "Ooze Empress" Then
+            RandoTF.floor4FirstBossEncounter()
+            Exit Sub
+        End If
         If pClass.name.Equals("Thrall") Then
             If Int(Rnd() * 2) = 1 Then
                 Dim out = "You've found one of the crystals your controller is seeking!  As you circle it, you feel a familiar presence enter your mind.  " & _
@@ -493,7 +497,7 @@
         End If
     End Sub
     Private Sub followPath()
-        If forcedPath.Length < 1 Then
+        If forcedPath.Length <= 1 Then
             reachedFPathDest()
             forcedPath = Nothing
         Else
@@ -765,6 +769,9 @@
             ElseIf currTarget.name.Equals("Mimic") Then
                 DeathEffects.mimicDeath()
                 Exit Sub
+            ElseIf currTarget.name.Equals("Ooze Empress") Then
+                DeathEffects.oozeEmpDeath()
+                Exit Sub
             ElseIf currTarget.name.Equals("Hunger") Then
                 Game.pushLblEvent("You starve to death!")
             End If
@@ -1004,6 +1011,7 @@
 
     '|PORTRAIT IMAGE RENDERING METHODS|
     Function picsAreSame(a As Bitmap, b As Bitmap)
+        If a Is Nothing Or b Is Nothing Then Return False
         Dim BM1 As Bitmap = a
         Dim BM2 As Bitmap = b
         For x = 0 To BM1.Width - 1

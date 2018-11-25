@@ -27,6 +27,18 @@
                 pronoun = "he"
                 pPronoun = "his"
                 rPronoun = "him"
+            Case 4
+                MyBase.name = "Ooze Empress"
+                MyBase.health = 100
+                MyBase.maxHealth = 100
+                MyBase.attack = 30
+                MyBase.defence = 70
+                MyBase.speed = 1
+                setInventory({3, 58, 65})
+                title = ""
+                pronoun = "she"
+                pPronoun = "her"
+                rPronoun = "her"
             Case Else
                 MyBase.name = "Explorer"
                 MyBase.health = 300
@@ -85,6 +97,7 @@
                 MyBase.attackCMD(target)
                 'attack = 20
             End If
+            'ElseIf name.Equals("Ooze Empress") Then
         Else
             MyBase.attackCMD(target)
         End If

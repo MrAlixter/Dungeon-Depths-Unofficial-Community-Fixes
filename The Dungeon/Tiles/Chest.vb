@@ -49,7 +49,6 @@
         'functions as a pseudo constructor for a chest object
         'loads a chest from a saved string
         Dim chest = Me.Clone()
-
         Dim cArray() As String = s.Split("*")
         chest.pos = New Point(cArray(0), cArray(1))
         For i = 2 To UBound(contents)
