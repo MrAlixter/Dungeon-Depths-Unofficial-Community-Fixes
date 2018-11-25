@@ -11,9 +11,9 @@
         MyBase.value = 2500
     End Sub
     Public Overrides Sub add(i As Integer)
-        If i > 0 And Game.floor < 6 AndAlso Game.floorboss(Game.floor).Equals("Key") Then
-            Game.beatboss(Game.floor) = True
-        End If
+        'If i > 0 And Game.floor < 6 AndAlso Game.floorboss(Game.floor).Equals("Key") Then
+        '    Game.beatboss(Game.floor) = True
+        'End If
         count += i
     End Sub
 End Class

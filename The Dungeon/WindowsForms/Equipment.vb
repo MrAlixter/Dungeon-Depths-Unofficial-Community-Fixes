@@ -24,6 +24,10 @@
         w = p.getWeapons
         ac = p.getAccesories
 
+        aList.Clear()
+        wList.Clear()
+        acList.Clear()
+
         For i = 0 To UBound(a.Item1)
             aList.Add(a.Item1(i), a.Item2(i))
         Next

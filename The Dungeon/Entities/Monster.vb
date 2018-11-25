@@ -360,18 +360,22 @@
     Public Sub setInventory(ByVal inv() As Integer)
         ReDim inventory(Game.player.inventory.Count - 1)
         For i = 0 To UBound(inv)
-            Select Case Game.player.inventory(inv(i)).tier
-                Case 3
-                    Dim rng = (Int(Rnd() * 9))
-                    If rng = 1 Then inventory(inv(i)) += 1
-                Case 2
-                    Dim rng = (Int(Rnd() * 6))
-                    If rng = 1 Then inventory(inv(i)) += 1
-                Case Else
-                    Dim rng = (Int(Rnd() * 5))
-                    If rng >= 3 Then rng = 0
-                    inventory(inv(i)) += rng
-            End Select
+            If Me.GetType() Is GetType(MiniBoss) Then
+                inventory(inv(i)) += 1
+            Else
+                Select Case Game.player.inventory(inv(i)).tier
+                    Case 3
+                        Dim rng = (Int(Rnd() * 9))
+                        If rng = 1 Then inventory(inv(i)) += 1
+                    Case 2
+                        Dim rng = (Int(Rnd() * 6))
+                        If rng = 1 Then inventory(inv(i)) += 1
+                    Case Else
+                        Dim rng = (Int(Rnd() * 5))
+                        If rng >= 3 Then rng = 0
+                        inventory(inv(i)) += rng
+                End Select
+            End If
         Next
         inventory(43) = Int(Rnd() * 250) 'Add some amount of gold
     End Sub
@@ -420,6 +424,10 @@
         If sName.Equals("Marissa the Enchantress") Then Game.beatboss(1) = True
         If sName.Equals("Targax the Brutal") Then Game.beatboss(2) = True
         If sName.Equals("Explorer") And Game.floor < 6 Then Game.beatboss(Game.floor) = True
+        If sName.Equals("Ooze Empress") Then
+            'Game.beatboss(4) = True
+            Game.floorboss(4) = "Key"
+        End If
     End Sub
     Private Sub endMonster()
         'set temporary player pointer
@@ -450,6 +458,9 @@
         Game.lstLog.TopIndex = Game.lstLog.Items.Count - 1
 
         'monster transformations
+        If sName.Equals("Ooze Empress") Then
+            Game.pushLblEvent(Game.lblEvent.Text.Split("Press")(0), AddressOf RandoTF.floor4revert, AddressOf RandoTF.floor4keep, "Take your body back?")
+        End If
         For i = 0 To p.ongoingTFs.Count - 1
             If p.ongoingTFs(i).GetType() Is GetType(NekoTF) Then
                 p.ongoingTFs(i).stopTF()

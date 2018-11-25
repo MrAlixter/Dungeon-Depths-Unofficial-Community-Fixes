@@ -31,9 +31,11 @@
     End Sub
 
     Sub floor4StartChest()
+        Game.player.inventory(53).add(1)
+        Game.beatboss(4) = False
         Game.preBSBody = Nothing
-        Game.preBSStartState = New State()
-        Game.preBSStartState.save(Game.player)
+        Game.floorboss(4) = "Ooze Empress"
+        Game.preBSStartState = New State(Game.player)
         Game.player.forcedPath = Game.route(Game.player.pos, Game.player.pos)
         Game.player.forcedPath = {Game.player.forcedPath(0)}
         Game.pushLblEvent("Upon opening the chest, you find a familiar key.  Well, that was easy.")

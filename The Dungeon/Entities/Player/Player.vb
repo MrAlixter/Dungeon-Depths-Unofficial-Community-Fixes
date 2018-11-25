@@ -471,7 +471,7 @@
 
     '|MOVEMENT COMMANDS|
     Private Sub reachedFPathDest()
-        If Game.floor = 4 And Game.preBSBody Is Nothing And Not Game.preBSStartState Is Nothing Then
+        If Game.floor = 4 And Game.preBSBody Is Nothing And Not Game.preBSStartState Is Nothing And Game.floorboss(4) = "Ooze Empress" Then
             RandoTF.floor4FirstBossEncounter()
             Exit Sub
         End If
@@ -769,6 +769,9 @@
             ElseIf currTarget.name.Equals("Mimic") Then
                 DeathEffects.mimicDeath()
                 Exit Sub
+            ElseIf currTarget.name.Equals("Ooze Empress") Then
+                DeathEffects.oozeEmpDeath()
+                Exit Sub
             ElseIf currTarget.name.Equals("Hunger") Then
                 Game.pushLblEvent("You starve to death!")
             End If
@@ -1008,6 +1011,7 @@
 
     '|PORTRAIT IMAGE RENDERING METHODS|
     Function picsAreSame(a As Bitmap, b As Bitmap)
+        If a Is Nothing Or b Is Nothing Then Return False
         Dim BM1 As Bitmap = a
         Dim BM2 As Bitmap = b
         For x = 0 To BM1.Width - 1
