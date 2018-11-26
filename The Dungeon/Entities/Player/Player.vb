@@ -1012,6 +1012,7 @@
     '|PORTRAIT IMAGE RENDERING METHODS|
     Function picsAreSame(a As Bitmap, b As Bitmap)
         If a Is Nothing Or b Is Nothing Then Return False
+        If Not a.Size.Equals(b.Size) Then Return False
         Dim BM1 As Bitmap = a
         Dim BM2 As Bitmap = b
         For x = 0 To BM1.Width - 1
@@ -1045,6 +1046,7 @@
         End If
     End Sub
     Public Sub createP()
+        'If Game.noImg Then Exit Sub
         If Not Game.picPortrait.BackgroundImage Is Nothing Then Game.picPortrait.BackgroundImage.Dispose()
 
         Dim chk = False

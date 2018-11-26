@@ -25,6 +25,7 @@ Partial Class Settings
         Me.Button1 = New System.Windows.Forms.Button()
         Me.Label1 = New System.Windows.Forms.Label()
         Me.cboxScreenSize = New System.Windows.Forms.ComboBox()
+        Me.chkNoImg = New System.Windows.Forms.CheckBox()
         Me.SuspendLayout()
         '
         'Button1
@@ -62,12 +63,25 @@ Partial Class Settings
         Me.cboxScreenSize.TabIndex = 19
         Me.cboxScreenSize.Text = "-- Select --"
         '
+        'chkNoImg
+        '
+        Me.chkNoImg.AutoSize = True
+        Me.chkNoImg.Font = New System.Drawing.Font("Consolas", 8.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.chkNoImg.ForeColor = System.Drawing.Color.White
+        Me.chkNoImg.Location = New System.Drawing.Point(33, 79)
+        Me.chkNoImg.Name = "chkNoImg"
+        Me.chkNoImg.Size = New System.Drawing.Size(206, 23)
+        Me.chkNoImg.TabIndex = 21
+        Me.chkNoImg.Text = "Load without images"
+        Me.chkNoImg.UseVisualStyleBackColor = True
+        '
         'Settings
         '
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Inherit
         Me.BackColor = System.Drawing.Color.Black
         Me.ClientSize = New System.Drawing.Size(260, 244)
         Me.ControlBox = False
+        Me.Controls.Add(Me.chkNoImg)
         Me.Controls.Add(Me.Label1)
         Me.Controls.Add(Me.cboxScreenSize)
         Me.Controls.Add(Me.Button1)
@@ -82,4 +96,5 @@ Partial Class Settings
     Friend WithEvents Button1 As System.Windows.Forms.Button
     Friend WithEvents Label1 As System.Windows.Forms.Label
     Friend WithEvents cboxScreenSize As System.Windows.Forms.ComboBox
+    Friend WithEvents chkNoImg As System.Windows.Forms.CheckBox
 End Class

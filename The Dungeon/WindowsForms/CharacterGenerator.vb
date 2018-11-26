@@ -239,7 +239,7 @@
         ComboBox2.Items.Add("Mage")
         picPort.BackgroundImage = CreateBMP(iArr)
 
-        init()
+        'init()
     End Sub
     'CharacterGenerator1_FormClosing handles the finalization of the in game image library
     Private Sub CharacterGenerator1_FormClosing(sender As Object, e As FormClosingEventArgs) Handles Me.FormClosing
@@ -352,7 +352,7 @@
         mFacialMark(0) = picPort.Image
 
         If (ComboBox2.Text <> "Warrior" And ComboBox2.Text <> "Mage") Then
-            If MessageBox.Show("Woah there buddy! One of your choices was a bit of a write in, eh?  You sure you want to do that?", "Sneeky sneek", MessageBoxButtons.YesNo) = Windows.Forms.DialogResult.No Then
+            If MessageBox.Show("Woah there! You entered in a non recognized class.  You sure you want to do that?", "Sneeky sneek", MessageBoxButtons.YesNo) = Windows.Forms.DialogResult.No Then
                 Exit Sub
             End If
         End If
@@ -404,11 +404,8 @@
         Return iArr
     End Function
     'initializes and orders the image libraries without launching a CharacterGenerator1
-    Public Sub init() '(ByVal sender As Object, ByVal e As System.ComponentModel.DoWorkEventArgs)
-        'Dim worker As System.ComponentModel.BackgroundWorker = CType(sender, System.ComponentModel.BackgroundWorker)
-
-        currAtrButton = btnBody
-        'worker.ReportProgress(1)
+    Public Sub init()
+        'get the basic libraries for all attributes
         fGlasses = getImg("img/fGlasses")
         fAccA = getImg("img/fAccA")
         fHat = getImg("img/fHat")
@@ -416,7 +413,6 @@
         fCloak = getImg("img/fCloakF")
         fClothing = getImg("img/fClothing")
         fEars = getImg("img/fEars")
-        'worker.ReportProgress(15)
         fEyebrows = getImg("img/fEyebrows")
         fEyes = getImg("img/fEyes")
         fFace = getImg("img/fFace")
@@ -427,11 +423,6 @@
         fRearHair1 = getImg("img/fRearHair1")
         fRearHair2 = getImg("img/fRearHair2")
         bkg = getImg("img/bkg")
-
-
-
-        initTF()
-        'worker.ReportProgress(50)
 
         mGlasses = getImg("img/mGlasses")
         mAccA = getImg("img/mAccA")
@@ -449,25 +440,29 @@
         mNose = getImg("img/mNose")
         mRearHair1 = getImg("img/mRearHair1")
         mRearHair2 = getImg("img/mRearHair2")
-        'worker.ReportProgress(60)
 
-        mTFAccA = getImg("img/mTf/tfAccA")
-        mTFBody = getImg("img/mTf/tfBody")
-        mTFEars = getImg("img/mTf/tfEars")
-        mTFEyes = getImg("img/mTf/tfEyes")
-        mTFface = getImg("img/mTf/tfFace")
-        'worker.ReportProgress(65)
-        mTfFrontHair = getImg("img/mTf/tfFrontHair")
-        mTFMouth = getImg("img/mTf/tfMouth")
-        mTFNose = getImg("img/mTf/tfNose")
-        mTFRearhair1 = getImg("img/mTf/tfRearHair1")
-        mTfRearhair2 = getImg("img/mTf/tfRearHair2")
-        'worker.ReportProgress(70)
+        'set the default hair offsets
+        fFrontHairNonTFCount = fFrontHair.Count
+        fRearHair1NonTFCount = fRearHair1.Count
+        fRearHair2NonTFCount = fRearHair2.Count
+        mFrontHairNonTFCount = mFrontHair.Count
+        mRearHair1NonTFCount = mRearHair1.Count
+        mRearHair2NonTFCount = mRearHair2.Count
 
-        wings = getImg("img/Wings")
-        horns = getImg("img/Horns")
-        'worker.ReportProgress(75)
+        'initialize the transformation image libraries
+        initTF()
+        mTFAccA = getImg("img/mTF/tfAccA")
+        mTFBody = getImg("img/mTF/tfBody")
+        mTFEars = getImg("img/mTF/tfEars")
+        mTFEyes = getImg("img/mTF/tfEyes")
+        mTFface = getImg("img/mTF/tfFace")
+        mTfFrontHair = getImg("img/mTF/tfFrontHair")
+        mTFMouth = getImg("img/mTF/tfMouth")
+        mTFNose = getImg("img/mTF/tfNose")
+        mTFRearhair1 = getImg("img/mTF/tfRearHair1")
+        mTfRearhair2 = getImg("img/mTF/tfRearHair2")
 
+        'replace the red "no image" images with transparent images
         fGlasses(0) = picPort.Image
         fCloak(0) = picPort.Image
         fAccA(0) = picPort.Image
@@ -480,8 +475,8 @@
         mHat(0) = picPort.Image
         mFrontHair(0) = picPort.Image
         mFacialMark(0) = picPort.Image
-        'worker.ReportProgress(78)
 
+        'merge the image libraries
         fAccA.AddRange(fTFAccA)
         fBody.AddRange(fTFBody)
         fClothing.AddRange(fTFClothes)
@@ -496,18 +491,6 @@
         fHat.Add(fTFBody(10))
         fHat.Add(fTFBody(12))
         fHat.Add(fTFBody(13))
-        'worker.ReportProgress(80)
-
-        'fFrontHair.Add(Game.picMarkBFHair.BackgroundImage)
-        'fRearHair1.Add(Game.picMarkBRearHair1.BackgroundImage)
-        'fRearHair2.Add(Game.picMarkBRearHair2.BackgroundImage)
-        'fClothing.Add(Game.picMarkBClothes.BackgroundImage)
-        'fFrontHair.Add(Game.picFMarkFHair.BackgroundImage)
-        'fRearHair1.Add(Game.picFMarkRHair1.BackgroundImage)
-        'fRearHair2.Add(Game.picFMarkRHair2.BackgroundImage)
-        'fClothing.Add(Game.picfMarkClothes.BackgroundImage)
-        'fBody.Add(Game.picFMarkBody.BackgroundImage)
-        'worker.ReportProgress(85)
 
         mAccA.AddRange(mTFAccA)
         mBody.AddRange(mTFBody)
@@ -522,13 +505,8 @@
         mRearHair2.AddRange(mTfRearhair2)
         mHat.Add(fTFBody(5))
         mHat.Add(fTFBody(7))
-        'mFrontHair.Add(Game.picMarkFHair.BackgroundImage)
-        'mEyebrows.Add(Game.picMarkEyebrows.BackgroundImage)
-        'mRearHair1.Add(Game.picMarkRHair1.BackgroundImage)
-        'mRearHair2.Add(Game.picMarkRHair2.BackgroundImage)
-        'mClothing.Add(Game.picMarkClothes.BackgroundImage)
-        'worker.ReportProgress(90)
 
+        'set the attribute libraries
         fAttributes(0) = bkg
         fAttributes(1) = fRearHair2
         fAttributes(2) = fBody
@@ -547,8 +525,6 @@
         fAttributes(15) = fFrontHair
         fAttributes(16) = fHat
 
-        'worker.ReportProgress(95)
-
         mAttributes(0) = bkg
         mAttributes(1) = mRearHair2
         mAttributes(2) = mBody
@@ -566,7 +542,6 @@
         mAttributes(14) = mAccA
         mAttributes(15) = mFrontHair
         mAttributes(16) = mHat
-        'worker.ReportProgress(100)
     End Sub
     'orders the image libraries by number, not name
     Sub initTF()
@@ -662,39 +637,44 @@
             picPort.BackgroundImage = CreateBMP(iArr)
             Exit Sub
         End If
-        Try
-            For i = 0 To currAttribute.Count - 1
-                If currAttribute(i).Equals(sender.BackgroundImage) Then
-                    Dim ind As Integer = Array.IndexOf(attrOrder, currAttribute)
-                    If Not ((ind >= 11)) And i <> 0 Then
+        'Try
+        For i = 0 To currAttribute.Count - 1
+            If currAttribute(i).Equals(sender.BackgroundImage) Then
+                Dim ind As Integer = Array.IndexOf(attrOrder, currAttribute)
+                If Not ((ind >= 11)) And i <> 0 Then
+                    Try
                         iArr(ind) = currAttribute(i)
-                        iArrInd(ind) = New Tuple(Of Integer, Boolean)(i, currSex)
-                    ElseIf ((ind >= 11)) And i = 0 Then
-                        iArr(ind) = picPort.Image
-                        iArrInd(ind) = New Tuple(Of Integer, Boolean)(0, currSex)
-                    Else
-                        iArr(ind) = currAttribute(i)
-                        iArrInd(ind) = New Tuple(Of Integer, Boolean)(i, currSex)
-                    End If
-                    If currAttribute.Equals(fRearHair2) Then
-                        iArr(5) = fRearHair1(i)
-                        iArrInd(ind) = New Tuple(Of Integer, Boolean)(i, currSex)
-                    ElseIf currAttribute.Equals(mRearHair2) Then
-                        iArr(5) = mRearHair1(i)
-                        iArrInd(ind) = New Tuple(Of Integer, Boolean)(i, currSex)
-                    End If
-                    picPort.BackgroundImage = CreateBMP(iArr)
-                    Exit For
+                    Catch ex As Exception
+                        MsgBox(ind & "|" & i)
+                        MsgBox(attrOrder.Count)
+                    End Try
+                    iArrInd(ind) = New Tuple(Of Integer, Boolean)(i, currSex)
+                ElseIf ((ind >= 11)) And i = 0 Then
+                    iArr(ind) = picPort.Image
+                    iArrInd(ind) = New Tuple(Of Integer, Boolean)(0, currSex)
+                Else
+                    iArr(ind) = currAttribute(i)
+                    iArrInd(ind) = New Tuple(Of Integer, Boolean)(i, currSex)
                 End If
-            Next
-        Catch ex As Exception
-            If MessageBox.Show("Error! Exeption thrown in character creation.  Restart application?", "D_D Error 001", MessageBoxButtons.YesNo) = Windows.Forms.DialogResult.Yes Then
-                Application.Restart()
-            Else
-                Game.Close()
-                Application.Exit()
+                If currAttribute.Equals(fRearHair2) Then
+                    iArr(5) = fRearHair1(i)
+                    iArrInd(ind) = New Tuple(Of Integer, Boolean)(i, currSex)
+                ElseIf currAttribute.Equals(mRearHair2) Then
+                    iArr(5) = mRearHair1(i)
+                    iArrInd(ind) = New Tuple(Of Integer, Boolean)(i, currSex)
+                End If
+                picPort.BackgroundImage = CreateBMP(iArr)
+                Exit For
             End If
-        End Try
+        Next
+        'Catch ex As Exception
+        '    If MessageBox.Show("Error! Exeption thrown in character creation.  Restart application?", "D_D Error 001", MessageBoxButtons.YesNo) = Windows.Forms.DialogResult.Yes Then
+        '        Application.Restart()
+        '    Else
+        '        Application.Exit()
+        '        End
+        '    End If
+        'End Try
     End Sub
     'recolor changes the color of an image, assumed to be of the same color as the players hair 
     Shared Function recolor(ByRef img As Bitmap, ByVal c As Color)
