@@ -1050,14 +1050,18 @@
         If Not Game.picPortrait.BackgroundImage Is Nothing Then Game.picPortrait.BackgroundImage.Dispose()
 
         Dim chk = False
-
-        For i = 0 To 16
-            If iArrInd(i).Item2 Then
-                iArr(i) = CharacterGenerator.fAttributes(i)(iArrInd(i).Item1)
-            Else
-                iArr(i) = CharacterGenerator.mAttributes(i)(iArrInd(i).Item1)
-            End If
-        Next
+        Try
+            For i = 0 To 16
+                If iArrInd(i).Item2 Then
+                    iArr(i) = CharacterGenerator.fAttributes(i)(iArrInd(i).Item1)
+                Else
+                    iArr(i) = CharacterGenerator.mAttributes(i)(iArrInd(i).Item1)
+                End If
+            Next
+        Catch e As Exception
+            MsgBox("Error!  Exception thrown in portrait creation.  The player character will now revert to default.")
+            revertToSState()
+        End Try
         changeHairColor(haircolor)
         changeSkinColor(skincolor)
         Game.lstLog.TopIndex = Game.lstLog.Items.Count - 1
@@ -1372,7 +1376,7 @@
         Select Case iArrInd(6).Item1
             Case 5
                 iArrInd(6) = New Tuple(Of Integer, Boolean)(5, False)
-            Case Else
+            Case Is < 5
                 iArrInd(6) = New Tuple(Of Integer, Boolean)(iArrInd(6).Item1, False)
         End Select
         'mouth
