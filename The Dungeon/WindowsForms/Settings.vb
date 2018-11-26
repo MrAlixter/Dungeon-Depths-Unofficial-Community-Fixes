@@ -5,10 +5,11 @@
         Dim w As System.IO.StreamWriter
         w = System.IO.File.CreateText("sett.ing")
         w.WriteLine(ssize)
+        w.WriteLine(chkNoImg.Checked)
         w.Flush()
         w.Close()
         Game.screenSize = ssize
-
+        Game.noImg = chkNoImg.Checked
         Me.Close()
     End Sub
 
@@ -37,6 +38,7 @@
         Dim r As System.IO.StreamReader
         r = IO.File.OpenText("sett.ing")
         ssize = r.ReadLine
+        chkNoImg.Checked = r.ReadLine
 
         r.Close()
 
@@ -45,5 +47,15 @@
         cboxScreenSize.Items.Add("Large")
         cboxScreenSize.Items.Add("XLarge")
         cboxScreenSize.Text = ssize
+    End Sub
+
+    Private Sub chkNoImg_CheckedChanged(sender As Object, e As EventArgs) Handles chkNoImg.CheckedChanged
+        If chkNoImg.Checked Then
+            Game.picPortrait.Visible = False
+            Game.picDescPort.Visible = False
+        Else
+            Game.picPortrait.Visible = True
+            Game.picDescPort.Visible = True
+        End If
     End Sub
 End Class

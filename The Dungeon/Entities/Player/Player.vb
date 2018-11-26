@@ -1012,6 +1012,7 @@
     '|PORTRAIT IMAGE RENDERING METHODS|
     Function picsAreSame(a As Bitmap, b As Bitmap)
         If a Is Nothing Or b Is Nothing Then Return False
+        If Not a.Size.Equals(b.Size) Then Return False
         Dim BM1 As Bitmap = a
         Dim BM2 As Bitmap = b
         For x = 0 To BM1.Width - 1
@@ -1045,17 +1046,22 @@
         End If
     End Sub
     Public Sub createP()
+        'If Game.noImg Then Exit Sub
         If Not Game.picPortrait.BackgroundImage Is Nothing Then Game.picPortrait.BackgroundImage.Dispose()
 
         Dim chk = False
-
-        For i = 0 To 16
-            If iArrInd(i).Item2 Then
-                iArr(i) = CharacterGenerator.fAttributes(i)(iArrInd(i).Item1)
-            Else
-                iArr(i) = CharacterGenerator.mAttributes(i)(iArrInd(i).Item1)
-            End If
-        Next
+        Try
+            For i = 0 To 16
+                If iArrInd(i).Item2 Then
+                    iArr(i) = CharacterGenerator.fAttributes(i)(iArrInd(i).Item1)
+                Else
+                    iArr(i) = CharacterGenerator.mAttributes(i)(iArrInd(i).Item1)
+                End If
+            Next
+        Catch e As Exception
+            MsgBox("Error!  Exception thrown in portrait creation.  The player character will now revert to default.")
+            revertToSState()
+        End Try
         changeHairColor(haircolor)
         changeSkinColor(skincolor)
         Game.lstLog.TopIndex = Game.lstLog.Items.Count - 1
@@ -1370,7 +1376,7 @@
         Select Case iArrInd(6).Item1
             Case 5
                 iArrInd(6) = New Tuple(Of Integer, Boolean)(5, False)
-            Case Else
+            Case Is < 5
                 iArrInd(6) = New Tuple(Of Integer, Boolean)(iArrInd(6).Item1, False)
         End Select
         'mouth
