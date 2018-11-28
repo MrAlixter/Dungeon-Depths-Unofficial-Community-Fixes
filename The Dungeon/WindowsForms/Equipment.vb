@@ -10,8 +10,6 @@
     Public acList As Dictionary(Of String, Accessory) = New Dictionary(Of String, Accessory)
     'define a shorthand representation of the main player
     Dim p As Player = Game.player
-
-
     'init triggers an initialion Form3's global variables
     Public Sub init()
         p = Game.player
@@ -43,13 +41,6 @@
 
     'handles the click of the 'ok' button
     Private Sub btnACPT_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles btnACPT.Click
-        'checks if the player is a chicken (the chicken tf is not in the game at the moment)
-        'If p.perks(3) Then
-        '    Form1.lstLog.Items.Add("Chickens can't change clothes!")
-        '    Me.Close()
-        '    Exit Sub
-        'End If
-
         'if clothes offer resistance on the way off, this handles that
         If (p.equippedArmor.getName.Equals("Ropes") And cmbobxArmor.SelectedItem <> "Ropes") Or (p.equippedArmor.getName.Equals("Living_Armor") _
             And cmbobxArmor.SelectedItem <> "Living_Armor") Or (p.equippedArmor.getName.Equals("Living_Lingerie") And cmbobxArmor.SelectedItem <> "Living_Lingerie") _
@@ -282,7 +273,7 @@
         Dim sWeapon As Weapon = Nothing
         If Not p.equippedWeapon Is Nothing AndAlso weapon.Equals(p.equippedWeapon.getName) Then Exit Sub
         If weapon <> "" Then
-            For Each k In acList.Keys
+            For Each k In wList.Keys
                 If weapon.Split()(0).Equals(k) Then
                     sWeapon = wList(k)
                     If Not p.equippedWeapon Is Nothing Then p.equippedWeapon.onUnequip()

@@ -50,7 +50,7 @@ Public Class Game
     Public npcmode As Boolean = False   'indicates if the player is talking to an npc (NOT SAVED)
     Public npcIndex As Integer = 0  'indicates which npc is encountered (NOT SAVED)
     'a list containing all valid cheats
-    Public cheatList() As String = {"girl", "nude", "blue", "catc", "bmbo", "bigr", "slut", "kill", "dick", "lust", "form", "tfme",
+    Public cheatList() As String = {"girl", "nude", "blue", "catc", "bmbo", "bigr", "slut", "dies", "dick", "lust", "form", "tfme",
                                     "gogo", "mana", "fuse", "rock", "doll", "seee"} 'list of cheats (NOT SAVED)
     Dim keyspresed As String = ""   'records last 4 keys pressed (NOT SAVED)
     'variables related to the mystery potions
@@ -72,7 +72,7 @@ Public Class Game
     Public beatboss() As Boolean = {False, False, False, False, False, False}  'which bosses have been beat?
     Public floorboss() As String = {"Floor0", "Marissa the Enchantress", "Targax the Brutal", "Key", "Key", "Medusa"} 'boss names (NOT SAVED)
     Public floorLayouts As ArrayList = New ArrayList()
-    Public version As Double = 0.6     'the save file version
+    Public version As Double = 0.65     'the save file version
 
     Public lblEventOnClose As Action    'the event method preformed when lblEvent closes (NOT SAVED)
     Public lastKey As String
@@ -385,6 +385,7 @@ Public Class Game
     'End Sub
     'initializeBoard increments the floor count, and generates the next level
     Private Sub initializeBoard(Optional Draw As Boolean = True)
+        lblEvent.Visible = False
         floor += 1
         player.canMoveFlag = False
         boardWorker = New BackgroundWorker
@@ -400,8 +401,12 @@ Public Class Game
 
         boardWorker.RunWorkerAsync()
         newBoard()
-        If floor < 6 Then
+        If floor < 6 And floor >= 0 Then
             generateLevel(floorLayouts(floor))
+        ElseIf floor < 0 Then
+            Dim negWorldSeeds = {"666", "69", "whyareyouhere", "warpzone", "squarerootofnegone", "hentai",
+                                 "boob"}
+            generateLevel(negWorldSeeds(Int(Rnd() * negWorldSeeds.Length)))
         Else
             generateLevel(genRNDLVLCode())
         End If
@@ -1089,7 +1094,7 @@ Public Class Game
 
         zoom()
 
-        If floor < 5 AndAlso beatboss(floor) = False AndAlso Not floorboss(floor).Equals("Key") And combatmode = False AndAlso New Point(player.pos.Y, player.pos.X).Equals(New Point(stairs.Y, stairs.X)) Then btnChallengeBoss.Visible = True Else btnChallengeBoss.Visible = False
+        If floor < 5 And floor >= 0 AndAlso beatboss(floor) = False AndAlso Not floorboss(floor).Equals("Key") And combatmode = False AndAlso New Point(player.pos.Y, player.pos.X).Equals(New Point(stairs.Y, stairs.X)) Then btnChallengeBoss.Visible = True Else btnChallengeBoss.Visible = False
         'If picNPC.Visible Then picNPC.BackgroundImage = NPCimgList(npcIndex)
 
         player.UIupdate()
@@ -1631,16 +1636,20 @@ Public Class Game
                 player.ongoingTFs.Add(New BUDollTF())
                 player.update()
             ElseIf keyspresed = "gogo" Then
-                Dim f As Integer = CInt(InputBox("Which floor?"))
-                floor = f - 1
-                initializeBoard()
+                Try
+                    Dim f As Integer = CInt(InputBox("Which floor?"))
+                    floor = f - 1
+                    pushLblEvent("You draw a circle on the floor, and think hard about floor " & f & ".  A portal opens to it, and you jump through, skipping every floor in between.", AddressOf initializeBoard)
+                Catch e As Exception
+                    pushLblEvent("Your attempted teleportation fails in a less than spectacular fashion, the portal you created simply fizzling away to nothingness.")
+                End Try
             ElseIf keyspresed = "slut" Then
                 player.perks("slutcurse") = True
                 player.inventory(1).add(1)
                 player.lust += 20
                 player.createP()
-            ElseIf keyspresed = "kill" Then
-                player.currTarget.takeDMG("9999")
+            ElseIf keyspresed = "dies" Then
+                If player.currTarget IsNot Nothing Then player.currTarget.takeDMG("9999")
             End If
         End If
         keyspresed = ""

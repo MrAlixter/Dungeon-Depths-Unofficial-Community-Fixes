@@ -27,9 +27,9 @@ Public Class Debug_Window
         btnPan.Checked = True
 
         'GENERAL
-        boxFloor.Value = Game.floor
+        If Game.floor > -1 Then boxFloor.Value = Game.floor Else boxFloor.Value = boxFloor.Maximum
         boxTurn.Value = Game.turn
-        If Game.floor < Game.beatboss.Count Then
+        If Game.floor < Game.beatboss.Count And Game.floor > 0 Then
             boxBeaten.Checked = Game.beatboss(Game.floor)
         Else
             boxBeaten.Enabled = False

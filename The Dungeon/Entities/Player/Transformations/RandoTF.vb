@@ -26,7 +26,7 @@
         p.pClass = p.classes(classes(Int(Rnd() * classes.Length)))
 
         'assign a random sex
-        If Int(Rnd() * 2) = 0 Then
+        If Int(Rnd() * 2) = 0 Or p.pClass.Equals("Bimbo") Then
             p.sex = "Female"
             p.sexBool = True
             p.breastSize = Int(Rnd() * 3) + 1
@@ -112,6 +112,28 @@
         p.inventory(weaponIndex).addOne()
         p.equippedArmor = p.inventory(armorIndex)
         p.equippedWeapon = p.inventory(weaponIndex)
+
+        'set class stats
+        If p.pClass.Equals("Warrior") Or p.pClass.Equals("Paladin") Then
+            p.attack += 10 + Int(Rnd() * 5)
+            p.defence += 5 + Int(Rnd() * 5)
+            p.speed -= Int(Rnd() * 5)
+        ElseIf p.pClass.Equals("Mage") Or p.pClass.Equals("Paladin") Then
+            p.attack -= Int(Rnd() * 5)
+            p.defence -= Int(Rnd() * 5)
+            p.speed += Int(Rnd() * 5)
+            p.mana += 8 + Int(Rnd() * 5)
+            If Int(Rnd() * 10) = 7 Then
+                p.inventory(65).add(1)
+            Else
+                p.inventory(4).add(1)
+            End If
+        ElseIf p.pClass.Equals("Bimbo") Then
+            p.changeHairColor(BimboTF.bimboyellow)
+            p.will = 1
+            p.perks("slutcurse") = 1
+            If Int(Rnd() * 10) = 7 Then p.inventory(45).add(1)
+        End If
 
         'set other player stuff
         p.TextColor = Color.White
