@@ -122,8 +122,8 @@
             "that begins glowing with a golden light. You lack the strength to fight back as " & n.pronoun & " places" & vbCrLf &
             " his thumb on your forhead, and suddenly everything just seems so heavy. ""Noooo..."" you moan, " & vbCrLf &
             "as the area around where he touched turns to gold, and that gold turns your flesh and blood " & vbCrLf &
-            "around it to gold as well. In a matter of seconds, all that is left of " & p.Me.name & " the " & vbCrLf &
-            p.Me.pClass.name & " is a solid gold statue. The shopkeeper sighs, muttering to no one in particular, " & vbCrLf &
+            "around it to gold as well. In a matter of seconds, all that is left of " & p.name & " the " & vbCrLf &
+            p.pClass.name & " is a solid gold statue. The shopkeeper sighs, muttering to no one in particular, " & vbCrLf &
             vbCrLf & vbCrLf & """Now how am I going to get you back to the refinery?"""
         'Game.pushLblEvent(out)
         p.pClass = p.classes("Trophy")

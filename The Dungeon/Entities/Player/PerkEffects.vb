@@ -18,7 +18,7 @@
         Else
             If p.health < 1 And Game.turn Mod 4 = 0 Then
                 p.health += 25 / p.getmaxHealth()
-                p.Game.lstLog.Items.Add("Your gel body heals some of the damage done to it. +5 health")
+                Game.lstLog.Items.Add("Your gel body heals some of the damage done to it. +5 health")
                 If p.health > 1 Then p.health = 1
             End If
         End If
