@@ -28,6 +28,8 @@
                 Return New BunnyGirlTFB()
             Case "Sheep"
                 Return New SheepTFB()
+            Case "Blowup Doll"
+                Return New BUDollTF()
             Case Else
                 Return Nothing
         End Select
