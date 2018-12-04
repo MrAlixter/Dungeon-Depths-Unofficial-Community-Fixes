@@ -1,13 +1,12 @@
 ﻿Public Class BUDollTF
-    Inherits Transformation
+    Inherits PolymorphTF
     Sub New()
-        MyBase.New(1, 0, 0, False)
+        MyBase.New()
         tfName = "BUDollTF"
         nextStep = AddressOf step1
     End Sub
     Sub New(cs As Integer, n As Integer, tts As Integer, wi As Double, cbs As Boolean, tfd As Boolean)
         MyBase.New(cs, n, tts, wi, cbs, tfd)
-        tfName = "BUDollTF"
         nextStep = getNextStep(cs)
     End Sub
 
@@ -15,7 +14,7 @@
         turnsTilNextStep = Int(Rnd() * 25) + 25
     End Sub
 
-    Public Sub step1()
+    Public Overrides Sub step1()
         Dim p = Game.player
         Dim out = ""
 

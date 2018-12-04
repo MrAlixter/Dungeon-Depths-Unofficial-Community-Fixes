@@ -18,7 +18,7 @@
         Else
             If p.health < 1 And Game.turn Mod 4 = 0 Then
                 p.health += 25 / p.getmaxHealth()
-                p.Game.lstLog.Items.Add("Your gel body heals some of the damage done to it. +5 health")
+                Game.lstLog.Items.Add("Your gel body heals some of the damage done to it. +5 health")
                 If p.health > 1 Then p.health = 1
             End If
         End If
@@ -80,12 +80,12 @@
     '|SPECIAL MOVE HANDLERS|
     Shared Sub berserkerRage()
         If p.perks("brage") > 0 Then
-            p.aBuff = p.aBuff + ((p.getattack - p.abuff) / 2)
-            p.dBuff = p.dBuff - ((p.getdefence - p.dbuff) / 3)
+            p.aBuff = p.aBuff + ((p.attack) / 2)
+            p.dBuff = p.dBuff - ((p.defence) / 3)
             p.perks("brage") -= 1
         Else
-            p.aBuff = p.aBuff - (p.getattack - p.abuff) * 1.5
-            p.dBuff = p.dBuff + (p.getdefence - p.dbuff) + 1
+            p.aBuff = 0
+            p.dBuff = 0
             p.perks("brage") = -1
             Game.lstLog.Items.Add("Berserker rage has worn off.")
             Game.lstLog.TopIndex = Game.lstLog.Items.Count - 1
@@ -96,7 +96,7 @@
             p.dBuff = p.dBuff + ((p.getdefence - p.dbuff) * 0.8)
             p.perks("mmammaries") -= 1
         Else
-            p.dBuff = p.dBuff - ((p.getdefence - p.dbuff) * 0.8)
+            p.dBuff = 0
             p.perks("mmammaries") = -1
             Game.lstLog.Items.Add("Massive mammaries has worn off.")
             Game.lstLog.TopIndex = Game.lstLog.Items.Count - 1
@@ -110,8 +110,8 @@
         ElseIf p.perks("ihfury") > 0 Then
             p.perks("ihfury") -= 1
         Else
-            p.aBuff = p.aBuff - ((p.getattack - p.abuff) * 0.5)
-            p.dBuff = p.dBuff - ((p.getdefence - p.dbuff) * 0.6)
+            p.aBuff = 0
+            p.dBuff = 0
             p.perks("ihfury") = -1
             Game.lstLog.Items.Add("Ironhide Fury has worn off.")
             Game.lstLog.TopIndex = Game.lstLog.Items.Count - 1

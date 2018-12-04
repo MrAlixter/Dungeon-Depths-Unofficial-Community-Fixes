@@ -814,13 +814,13 @@
         End If
         If health > 1 Then health = 1
         If will < 0 Then will = 0
-        If mana > getmaxMana() Then mana = getmaxMana()
+        If mana > getmaxMana() And Not Game.combatmode Then mana = getmaxMana()
 
         '|PERK AND TRANSFORMATION UPDATES|
         Dim pUpdateFlag As Boolean = False
         'perks
         pUpdateFlag = perkUpdate()
-
+        UIupdate()
         'transformations
         Dim removeind = New List(Of Integer)
         For i = 0 To ongoingTFs.Count - 1
@@ -1004,15 +1004,16 @@
         End If
         invNeedsUDate = False
         'Dim t As Boolean = CharacterGenerator.CreateBMP(iArr).Equals(Game.picPortrait.BackgroundImage)
-        Dim t As Boolean = picsAreSame(CharacterGenerator.CreateBMP(iArr), Game.picPortrait.BackgroundImage)
-        'If Game.turn < 2 AndAlso Not CharacterGenerator.CreateBMP(iArr).Equals(Game.picPortrait.BackgroundImage) Then createP() 'Form3.portraitUDate()
-        If Game.turn < 2 AndAlso Not t Then createP() 'Form3.portraitUDate()
+        'Dim t As Boolean = picsAreSame(CharacterGenerator.CreateBMP(iArr), New Bitmap(Game.picPortrait.BackgroundImage))
+        ''If Game.turn < 2 AndAlso Not CharacterGenerator.CreateBMP(iArr).Equals(Game.picPortrait.BackgroundImage) Then createP() 'Form3.portraitUDate()
+        'If Game.turn < 2 AndAlso Not t Then createP() 'Form3.portraitUDate()
     End Sub
 
     '|PORTRAIT IMAGE RENDERING METHODS|
     Function picsAreSame(a As Bitmap, b As Bitmap)
         If a Is Nothing Or b Is Nothing Then Return False
         If Not a.Size.Equals(b.Size) Then Return False
+
         Dim BM1 As Bitmap = a
         Dim BM2 As Bitmap = b
         For x = 0 To BM1.Width - 1
@@ -1050,18 +1051,24 @@
         If Not Game.picPortrait.BackgroundImage Is Nothing Then Game.picPortrait.BackgroundImage.Dispose()
 
         Dim chk = False
-        Try
             For i = 0 To 16
-                If iArrInd(i).Item2 Then
+            If iArrInd(i).Item2 Then
+                If iArrInd(i).Item1 < CharacterGenerator.fAttributes(i).Count Then
                     iArr(i) = CharacterGenerator.fAttributes(i)(iArrInd(i).Item1)
                 Else
-                    iArr(i) = CharacterGenerator.mAttributes(i)(iArrInd(i).Item1)
+                    MsgBox("Error!  Exception thrown in portrait creation (specifically in layer " & i & ").  The player character will now revert to default.")
+                    revertToSState()
                 End If
-            Next
-        Catch e As Exception
-            MsgBox("Error!  Exception thrown in portrait creation.  The player character will now revert to default.")
-            revertToSState()
-        End Try
+            Else
+                If iArrInd(i).Item1 < CharacterGenerator.mAttributes(i).Count Then
+                    iArr(i) = CharacterGenerator.mAttributes(i)(iArrInd(i).Item1)
+                Else
+                    MsgBox("Error!  Exception thrown in portrait creation (specifically in layer " & i & ").  The player character will now revert to default.")
+                    revertToSState()
+                End If
+            End If
+        Next
+
         changeHairColor(haircolor)
         changeSkinColor(skincolor)
         Game.lstLog.TopIndex = Game.lstLog.Items.Count - 1

@@ -1,6 +1,6 @@
 ﻿Public Class BimboTF
     Inherits Transformation
-    Dim bimboyellow As Color = Color.FromArgb(255, 255, 230, 160)
+    Public Shared bimboyellow As Color = Color.FromArgb(255, 255, 230, 160)
     Sub New(n As Integer, tts As Integer, wi As Double, cbs As Boolean)
         MyBase.New(n, tts, wi, cbs)
         tfName = "Bimbo"
