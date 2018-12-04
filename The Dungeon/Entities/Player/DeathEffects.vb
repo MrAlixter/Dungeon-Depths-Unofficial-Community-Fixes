@@ -46,7 +46,7 @@
             p.equippedAcce.onEquip()
             p.health = 1
             p.mana = p.getmaxMana()
-            p.prefForm.snapShift(p.Me)
+            p.prefForm.snapShift(p)
             Game.player.will -= 3
             If Game.player.will < 1 Then Game.player.will = 0
         End If

@@ -820,7 +820,7 @@
         Dim pUpdateFlag As Boolean = False
         'perks
         pUpdateFlag = perkUpdate()
-
+        UIupdate()
         'transformations
         Dim removeind = New List(Of Integer)
         For i = 0 To ongoingTFs.Count - 1
