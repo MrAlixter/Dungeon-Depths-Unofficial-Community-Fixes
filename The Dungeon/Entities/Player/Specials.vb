@@ -15,17 +15,17 @@
         End If
     End Sub
     Shared Sub brage(ByRef p As Player)
-        p.perks("brage") = 3
+        p.perks("brage") = 2
         Game.lstLog.Items.Add("BERSERKER RAGE!")
-        Game.pushLblCombatEvent("BERSERKER RAGE!" & vbCrLf & "+50% ATK, -25% DEF for 3 turns.")
+        Game.pushLblCombatEvent("BERSERKER RAGE!" & vbCrLf & "+50% ATK, -25% DEF for 2 turns.")
         Game.lstLog.TopIndex = Game.lstLog.Items.Count - 1
     End Sub
     Shared Sub rdec(ByRef p As Player)
-        Dim mBoost As Integer = (p.maxHealth / 3)
-        If p.health <= mBoost Then p.Die() Else p.health -= mBoost / p.getmaxHealth
+        Dim mBoost As Integer = (p.getmaxHealth / 4)
+        If (p.health * p.getmaxHealth) <= mBoost Then p.Die() Else p.health -= mBoost / p.getmaxHealth
         p.mana += mBoost
         Game.lstLog.Items.Add("Risky Decision!")
-        Game.pushLblCombatEvent("Risky Decision!" & vbCrLf & "Convert 33% Max Health into mana.")
+        Game.pushLblCombatEvent("Risky Decision!" & vbCrLf & "Convert 25% Max Health into mana.")
         Game.lstLog.TopIndex = Game.lstLog.Items.Count - 1
     End Sub
     Shared Sub mamm(ByRef p As Player)

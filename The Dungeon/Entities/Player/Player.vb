@@ -814,7 +814,7 @@
         End If
         If health > 1 Then health = 1
         If will < 0 Then will = 0
-        If mana > getmaxMana() Then mana = getmaxMana()
+        If mana > getmaxMana() And Not Game.combatmode Then mana = getmaxMana()
 
         '|PERK AND TRANSFORMATION UPDATES|
         Dim pUpdateFlag As Boolean = False
