@@ -3632,6 +3632,7 @@ Public Class Game
         Dim reader As IO.StreamReader
         reader = IO.File.OpenText(a)
         Dim vers As Double = CDbl(reader.ReadLine())
+        reader.ReadLine()
         Dim player = New Player(reader.ReadLine, vers)
         reader.Close()
         Return New Tuple(Of Player, Double)(player, vers)

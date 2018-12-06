@@ -11,7 +11,7 @@
     End Sub
 
     Public Overrides Sub setWaitTime(stage As Integer)
-        turnsTilNextStep = Int(Rnd() * 25) + 25
+        turnsTilNextStep = Int(Rnd() * 25) + 5
     End Sub
 
     Public Overrides Sub step1()

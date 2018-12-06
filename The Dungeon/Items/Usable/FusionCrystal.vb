@@ -16,15 +16,22 @@
     Overrides Sub use()
         If Me.getUsable() = False Then Exit Sub
         If MessageBox.Show("This will rewrite your current player permenantly (Restore potions will restore to the fusion). Continue?", "Fusion", MessageBoxButtons.YesNo) = Windows.Forms.DialogResult.Yes Then
-            Dim i As Integer = InputBox("Which save slot?   1 2 3 4" & vbCrLf & _
-                                        "                              5 6 7 8")
+            Dim i As Integer
+            Try
+                i = InputBox("Which save slot?   1 2 3 4" & vbCrLf & _
+                                            "                              5 6 7 8")
+            Catch e As Exception
+                Game.pushLblEvent("The fusion crystal does not react.  It seems that an improper slot was selected.")
+                count += 1
+                Exit Sub
+            End Try
             If Not System.IO.File.Exists("s" & i & ".ave") Then
                 Game.pushLblEvent("Despite looking for someone to fuse with, you can't find anyone at that location")
                 Exit Sub
             End If
             Dim save = Game.getPlayerFromFile("s" & i & ".ave")
             Dim p2 As Player = save.Item1
-            If save.Item2 <> Game.version Or p2.perks("polymorphed") > -1 Or Not transformation.canbeTFed(Game.player) Xor p2.pClass.name.Equals("Magic Girl") Then
+            If save.Item2 <> Game.version Or p2.perks("polymorphed") > -1 Or Not Transformation.canBeTFed(Game.player) Xor p2.pClass.name.Equals("Magic Girl") Then
                 Game.pushLblEvent("After talking it over, " & Game.player.name & " and " & p2.name & " decide that they are incompatable, and not to fuse.")
                 Exit Sub
             End If
