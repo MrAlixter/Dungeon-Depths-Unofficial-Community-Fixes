@@ -86,10 +86,10 @@
                 setInventory({0})
             Case 6
                 name = "Spider"
-                health = 65
+                health = 55
                 maxHealth = 65
                 attack = 35
-                defence = -3
+                defence = 1
                 speed = 45
                 setInventory({63})
             Case 7
@@ -97,7 +97,7 @@
                 health = 110
                 maxHealth = 110
                 attack = 65
-                defence = 15
+                defence = 10
                 speed = 60
                 setInventory({63, 64})
             Case 8
@@ -149,29 +149,29 @@
                 defence *= 1
                 speed *= 1
             Case 2
-                health *= 1.15
-                maxHealth *= 1.15
-                attack *= 1.15
-                defence *= 1.15
-                speed *= 1.15
+                health *= 1.05
+                maxHealth *= 1.05
+                attack *= 1.05
+                defence *= 1.05
+                speed *= 1.05
             Case 3
-                health *= 1.3
-                maxHealth *= 1.3
-                attack *= 1.3
-                defence *= 1.3
-                speed *= 1.3
+                health *= 1.1
+                maxHealth *= 1.1
+                attack *= 1.1
+                defence *= 1.1
+                speed *= 1.1
             Case 4
-                health *= 1.5
-                maxHealth *= 1.5
-                attack *= 1.5
-                defence *= 1.5
-                speed *= 1.5
+                health *= 1.2
+                maxHealth *= 1.2
+                attack *= 1.2
+                defence *= 1.2
+                speed *= 1.2
             Case Else
-                health *= (1 + (0.2 * Game.floor))
-                maxHealth *= (1 + (0.2 * Game.floor))
-                attack *= (1 + (0.2 * Game.floor))
-                defence *= (1 + (0.2 * Game.floor))
-                speed *= (1 + (0.2 * Game.floor))
+                health *= (1 + (0.05 * Game.floor))
+                maxHealth *= (1 + (0.05 * Game.floor))
+                attack *= (1 + (0.05 * Game.floor))
+                defence *= (1 + (0.05 * Game.floor))
+                speed *= (1 + (0.05 * Game.floor))
         End Select
 
         sName = name
@@ -190,7 +190,7 @@
     Public Overridable Sub attackCMD(ByVal target As Player)
         Game.player.currTarget = Me
         Dim crit = Int(Rnd() * 20)
-        Dim dmg = attack
+        Dim dmg = attack - (attack * 0.05) + Int(Rnd() * attack * 0.25)
         Select Case crit
             Case 19
                 dmg = -2
@@ -248,6 +248,7 @@
                 Game.player.UIupdate()
             End If
             Game.lstLog.Items.Add("You ran from the " & name & "!")
+        ElseIf reason = "p-death" Then
         ElseIf reason = "friend" Then
             If Int(Rnd() * 3) = 0 Then
                 Game.lstLog.Items.Add("The " & name & " gives you some supplies before leaving!")

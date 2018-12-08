@@ -33,7 +33,7 @@
 
         p.prefForm = New preferedForm()
 
-        Equipment.portraitUDate()
+        p.createP()
     End Sub
     Sub forceEquip()
         Dim p = Game.player
@@ -58,7 +58,7 @@
 
         p.prefForm = New preferedForm()
 
-        Equipment.portraitUDate()
+        p.createP()
     End Sub
     Public Overrides Sub onUnequip()
         Dim p = Game.player
@@ -71,6 +71,7 @@
         p.pClass = Game.player.classes(formerClass)
         p.iArrInd(9) = formerEyeType
         p.prefForm = Nothing
+        p.forcedPath = Nothing
     End Sub
 
     Public Function getFT() As String

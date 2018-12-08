@@ -57,7 +57,7 @@
                 End If
                 Game.player.inventory(54).add(1)
                 Equipment.clothesChange("Ropes")
-                Equipment.portraitUDate()
+                Game.player.createP()
                 If transformation.canbeTFed(Game.player) Then
                     Game.player.pState.save(Game.player)
                 End If

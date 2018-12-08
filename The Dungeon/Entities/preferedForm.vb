@@ -119,7 +119,7 @@
             p.iArrInd(6) = New Tuple(Of Integer, Boolean)(earType, isFemale)
         End If
 
-        Equipment.portraitUDate()
+        p.createP()
     End Sub
     Public Sub snapShift(ByRef p As Player)
         Randomize()
@@ -166,7 +166,7 @@
             p.iArrInd(6) = New Tuple(Of Integer, Boolean)(earType, isFemale)
         End If
 
-        Equipment.portraitUDate()
+        p.createP()
     End Sub
 
     Public Overrides Function ToString() As String

@@ -24,7 +24,7 @@
             Return -1
         End If
         dmg += (p.getAttack) + (Me.aBoost)
-        Return dmg - ((m.defence / 100) * dmg)
+        Return Player.calcDamage(dmg, m.defence)
     End Function
 
     Public Overrides Sub onEquip()

@@ -24,6 +24,6 @@
         Else
             Game.pushLblEvent("Nothing happens")
         End If
-        Equipment.portraitUDate()
+        p.createP()
     End Sub
 End Class

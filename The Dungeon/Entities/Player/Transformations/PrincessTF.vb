@@ -70,7 +70,7 @@
         Dim revertText = Game.lblEvent.Text.Split(vbCrLf)(0)
         If Not revertText.Equals("") Then out = revertText & vbCrLf & vbCrLf & out
         Game.pushLblEvent(out)
-        Equipment.portraitUDate()
+        p.createP()
         stopTF()
     End Sub
     Public Sub step3()

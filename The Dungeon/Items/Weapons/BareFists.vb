@@ -24,8 +24,7 @@
             Return -1
         End If
         dmg += p.getAttack
-        dmg -= ((m.defence / 100) * dmg)
-        If dmg < 0 Then dmg = 0
+        dmg = Player.calcDamage(dmg, m.defence)
         Return dmg
     End Function
 End Class

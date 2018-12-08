@@ -20,6 +20,6 @@
             Game.player.pState.save(Game.player)
         End If
         Game.pushLblEvent("You breasts tingle plesently . . .")
-        Equipment.portraitUDate()
+        p.createP()
     End Sub
 End Class

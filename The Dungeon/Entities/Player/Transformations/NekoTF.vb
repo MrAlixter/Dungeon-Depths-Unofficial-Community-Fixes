@@ -103,9 +103,9 @@
 
         Equipment.clothesChange("Cat_Lingerie")
 
-        Game.pushLblCombatEvent("As the last of your resistance drains away, all you can find yourself doing is focusing on your new mistress's voice as she orders you down onto all fours.  You happily oblige, purring softly, and she giggles.  ""Come on kitty, lets go!"" she orders and the two of you, with her leading, wander off into the darkness.  GAME OVER!")
-        'MsgBox(Game.lblCombatEvents.Text)
-        p.Die()
+        Game.fromCombat()
+        p.setTarg(New MiniBoss(1))
+        Game.pushLblEvent("As the last of your resistance drains away, all you can find yourself doing is focusing on your new mistress's voice as she orders you down onto all fours.  You happily oblige, purring softly, and she giggles.  ""Come on kitty, lets go!"" she orders and the two of you, with her leading, wander off into the darkness.  GAME OVER!", AddressOf p.Die)
         p.perks("nekocurse") = -1
     End Sub
 

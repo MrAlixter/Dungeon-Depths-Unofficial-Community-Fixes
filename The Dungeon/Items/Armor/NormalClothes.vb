@@ -9,7 +9,7 @@
         id = Nothing
         tier = Nothing
         MyBase.setUsable(False)
-        MyBase.aBoost = 0
+        MyBase.dBoost = 2
         MyBase.count = 0
         MyBase.value = 0
         MyBase.compressesBreasts = True

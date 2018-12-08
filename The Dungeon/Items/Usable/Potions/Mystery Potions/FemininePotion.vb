@@ -31,6 +31,6 @@
         If transformation.canbeTFed(Game.player) Then
             Game.player.pState.save(Game.player)
         End If
-        Equipment.portraitUDate()
+        p.createP()
     End Sub
 End Class

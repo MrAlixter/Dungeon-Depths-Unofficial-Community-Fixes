@@ -637,44 +637,44 @@
             picPort.BackgroundImage = CreateBMP(iArr)
             Exit Sub
         End If
-        'Try
-        For i = 0 To currAttribute.Count - 1
-            If currAttribute(i).Equals(sender.BackgroundImage) Then
-                Dim ind As Integer = Array.IndexOf(attrOrder, currAttribute)
-                If Not ((ind >= 11)) And i <> 0 Then
-                    Try
+        Try
+            For i = 0 To currAttribute.Count - 1
+                If currAttribute(i).Equals(sender.BackgroundImage) Then
+                    Dim ind As Integer = Array.IndexOf(attrOrder, currAttribute)
+                    If Not ((ind >= 11)) And i <> 0 Then
+                        Try
+                            iArr(ind) = currAttribute(i)
+                        Catch ex As Exception
+                            MsgBox(ind & "|" & i)
+                            MsgBox(attrOrder.Count)
+                        End Try
+                        iArrInd(ind) = New Tuple(Of Integer, Boolean)(i, currSex)
+                    ElseIf ((ind >= 11)) And i = 0 Then
+                        iArr(ind) = picPort.Image
+                        iArrInd(ind) = New Tuple(Of Integer, Boolean)(0, currSex)
+                    Else
                         iArr(ind) = currAttribute(i)
-                    Catch ex As Exception
-                        MsgBox(ind & "|" & i)
-                        MsgBox(attrOrder.Count)
-                    End Try
-                    iArrInd(ind) = New Tuple(Of Integer, Boolean)(i, currSex)
-                ElseIf ((ind >= 11)) And i = 0 Then
-                    iArr(ind) = picPort.Image
-                    iArrInd(ind) = New Tuple(Of Integer, Boolean)(0, currSex)
-                Else
-                    iArr(ind) = currAttribute(i)
-                    iArrInd(ind) = New Tuple(Of Integer, Boolean)(i, currSex)
+                        iArrInd(ind) = New Tuple(Of Integer, Boolean)(i, currSex)
+                    End If
+                    If currAttribute.Equals(fRearHair2) Then
+                        iArr(5) = fRearHair1(i)
+                        iArrInd(ind) = New Tuple(Of Integer, Boolean)(i, currSex)
+                    ElseIf currAttribute.Equals(mRearHair2) Then
+                        iArr(5) = mRearHair1(i)
+                        iArrInd(ind) = New Tuple(Of Integer, Boolean)(i, currSex)
+                    End If
+                    picPort.BackgroundImage = CreateBMP(iArr)
+                    Exit For
                 End If
-                If currAttribute.Equals(fRearHair2) Then
-                    iArr(5) = fRearHair1(i)
-                    iArrInd(ind) = New Tuple(Of Integer, Boolean)(i, currSex)
-                ElseIf currAttribute.Equals(mRearHair2) Then
-                    iArr(5) = mRearHair1(i)
-                    iArrInd(ind) = New Tuple(Of Integer, Boolean)(i, currSex)
-                End If
-                picPort.BackgroundImage = CreateBMP(iArr)
-                Exit For
+            Next
+        Catch ex As Exception
+            If MessageBox.Show("Error! Exeption thrown in character creation.  Restart application?", "D_D Error 001", MessageBoxButtons.YesNo) = Windows.Forms.DialogResult.Yes Then
+                Application.Restart()
+            Else
+                Application.Exit()
+                End
             End If
-        Next
-        'Catch ex As Exception
-        '    If MessageBox.Show("Error! Exeption thrown in character creation.  Restart application?", "D_D Error 001", MessageBoxButtons.YesNo) = Windows.Forms.DialogResult.Yes Then
-        '        Application.Restart()
-        '    Else
-        '        Application.Exit()
-        '        End
-        '    End If
-        'End Try
+        End Try
     End Sub
     'recolor changes the color of an image, assumed to be of the same color as the players hair 
     Shared Function recolor(ByRef img As Bitmap, ByVal c As Color)

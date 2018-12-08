@@ -30,6 +30,6 @@
             Return -2
         End If
         dmg += (p.getAttack) + (Me.aBoost)
-        Return dmg - ((m.defence / 100) * dmg)
+        Return Player.calcDamage(dmg, m.defence)
     End Function
 End Class

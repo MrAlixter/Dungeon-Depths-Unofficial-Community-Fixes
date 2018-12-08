@@ -25,9 +25,10 @@
         Equipment.accChange("Nothing")
 
         'succubus transformation
-        If p.sex = "Male" Then
+        If p.sex = "Male" Or Not p.sexBool Then
             p.sexBool = True
             p.MtF()
+            p.breastSize = Int(Rnd() * 3) + 1
             out += " Your body becomes daintier, and you are soon fully female."
         End If
         p.iArrInd(1) = New Tuple(Of Integer, Boolean)(9, True)

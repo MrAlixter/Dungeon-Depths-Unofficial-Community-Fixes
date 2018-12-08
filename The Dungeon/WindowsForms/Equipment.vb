@@ -103,7 +103,7 @@
         End If
 
         'updates the player, the stat display, and the portrait before the form closes
-        portraitUDate()
+        p.createP()
         p.UIupdate()
         Game.lstLog.TopIndex = Game.lstLog.Items.Count - 1
         Me.Close()
@@ -361,7 +361,6 @@
         End If
 
         Game.lstLog.TopIndex = Game.lstLog.Items.Count - 1
-        p.createP()
         'Form1.picPortrait.BackgroundImage = CharacterGenerator1.CreateBMP(p.iArr)
     End Sub
     Public Sub skimpyClothesUpdate()

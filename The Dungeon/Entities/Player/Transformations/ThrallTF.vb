@@ -101,7 +101,7 @@
         Equipment.accChange("Nothing")
         p.inventory(69).count -= 1
 
-        Equipment.portraitUDate()
+        p.createP()
     End Sub
     Shared Sub waitSorc()
         Dim out = "You decide against making a move now, instead waiting to see what happens next.  Your controller doesn't seem to notice you, instead focusing all their attention on the crystalline array.  As they fiddle with it, you notice a slight purple aura beginning to form around them and wait, are those horns sprouting out of their hair that seems to catch a non-existant wind?  With a flourish, they complete ... something ... and a blinding flash engulfs them.  Where once stood your human controller now stands a half-demon who only now seems to have taken notice of you." & _

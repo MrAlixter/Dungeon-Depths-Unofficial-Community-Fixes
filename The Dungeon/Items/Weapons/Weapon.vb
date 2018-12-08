@@ -6,7 +6,7 @@
     Public sBoost As Integer = 0
     Public wboost As Integer = 0
     Overridable Function attack(ByRef p As Player, ByRef m As Monster) As Integer
-        Return p.attack - ((m.defence / 100) * p.attack)
+        Return Player.calcDamage(p.attack, m.defence)
     End Function
     Overridable Sub onEquip()
     End Sub

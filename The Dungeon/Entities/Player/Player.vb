@@ -559,7 +559,7 @@
             Game.pushLblCombatEvent(CStr("You miss" & target.title & " " & target.getName() & "!"))
             Exit Sub
         ElseIf dmg = -2 Then
-            dmg += (12 + (getAttack()) + (equippedWeapon.aBoost)) * 2
+            dmg = calcDamage(Me.getAttack * 3.0, target.defence * 0.5)
             Game.lstLog.Items.Add(CStr("You hit" & target.title & " " & target.getName() & " for " & dmg & " damage!" & ".  Critical hit!"))
             Game.pushLblCombatEvent("You hit" & target.title & " " & target.getName() & " for " & dmg & " damage!" & ".  Critical hit!")
             target.takeDMG(dmg)
@@ -580,7 +580,7 @@
         If dmg = -2 Then
             dmg = currTarget.attack * 2
             'Dim actualDMG As Integer = dmg - ((getDefence() / 100) * dmg)
-            Dim actualDMG As Integer = dmg * Math.Min(getDefence() / 100, 0.5)
+            Dim actualDMG As Integer = calcDamage(2 * dmg, getDefence)
             health -= actualDMG / getmaxHealth()
             Game.lblPHealtDiff.Tag -= actualDMG
             Game.lstLog.Items.Add(CStr("You got hit! Critical hit! -" & actualDMG & " health!"))
@@ -590,8 +590,7 @@
             Game.lstLog.Items.Add(CStr("You are able to evade your opponent!"))
             Game.pushLblCombatEvent(CStr("You are able to evade your opponent!"))
         Else
-            Dim actualDMG As Integer = dmg - ((getDefence() / 100) * dmg)
-            If actualDMG < 1 Then actualDMG = 1
+            Dim actualDMG As Integer = calcDamage(dmg, getDefence)
             health -= actualDMG / getmaxHealth()
             Game.lblPHealtDiff.Tag -= actualDMG
             Game.lstLog.Items.Add(CStr("You got hit! -" & actualDMG & " health!"))
@@ -599,7 +598,11 @@
         End If
         Game.lstLog.TopIndex = Game.lstLog.Items.Count - 1
     End Sub
-
+    Public Shared Function calcDamage(atk As Integer, def As Integer) As Integer
+        If atk <= 0 Then Return 1
+        If def <= 0 Then Return atk
+        Return atk * (atk / (atk + def))
+    End Function
     '|TRANSFORMATION METHODS|
     Public Sub revertToSState()
         Dim tHth As Integer = health + hBuff
@@ -644,7 +647,7 @@
         Game.lblNameTitle.ForeColor = TextColor
 
         changeHairColor(haircolor)
-        Equipment.portraitUDate()
+        createP()
         setPImage()
         UIupdate()
     End Sub
@@ -711,7 +714,7 @@
 
         changeHairColor(haircolor)
 
-        Equipment.portraitUDate()
+        createP()
         setPImage()
         UIupdate()
     End Sub
@@ -747,6 +750,7 @@
     Public Sub Die()
         initPerks()
         If Game.pnlSaveLoad.Visible = True Then Exit Sub
+        Game.npcList.Clear()
         Try
             If currTarget.name.Equals("Shopkeeper") Then
                 DeathEffects.ShopkeeperDeath()
@@ -812,6 +816,12 @@
         ElseIf Game.turn Mod 25 = 0 Then
             hunger += 1
         End If
+
+        If health <= 0 Then
+            Die()
+            Exit Sub
+        End If
+
         If health > 1 Then health = 1
         If will < 0 Then will = 0
         If mana > getmaxMana() And Not Game.combatmode Then mana = getmaxMana()
@@ -839,7 +849,7 @@
         For i = 0 To removeind.Count - 1
             ongoingTFs.RemoveAt(removeind(i))
         Next
-        If pUpdateFlag Then Equipment.portraitUDate()
+        If pUpdateFlag Then createP()
     End Sub
     Function perkUpdate() As Boolean
         Dim needsToUpdatePortrait = False
@@ -1051,22 +1061,23 @@
         If Not Game.picPortrait.BackgroundImage Is Nothing Then Game.picPortrait.BackgroundImage.Dispose()
 
         Dim chk = False
-            For i = 0 To 16
-            If iArrInd(i).Item2 Then
-                If iArrInd(i).Item1 < CharacterGenerator.fAttributes(i).Count Then
-                    iArr(i) = CharacterGenerator.fAttributes(i)(iArrInd(i).Item1)
+        If Not solFlag Then Equipment.portraitUDate()
+        For i = 0 To 16
+                If iArrInd(i).Item2 Then
+                    If iArrInd(i).Item1 < CharacterGenerator.fAttributes(i).Count Then
+                        iArr(i) = CharacterGenerator.fAttributes(i)(iArrInd(i).Item1)
+                    Else
+                        MsgBox("Error!  Exception thrown in portrait creation (specifically in layer " & i & ").  The player character will now revert to default.")
+                        revertToSState()
+                    End If
                 Else
-                    MsgBox("Error!  Exception thrown in portrait creation (specifically in layer " & i & ").  The player character will now revert to default.")
-                    revertToSState()
+                    If iArrInd(i).Item1 < CharacterGenerator.mAttributes(i).Count Then
+                        iArr(i) = CharacterGenerator.mAttributes(i)(iArrInd(i).Item1)
+                    Else
+                        MsgBox("Error!  Exception thrown in portrait creation (specifically in layer " & i & ").  The player character will now revert to default.")
+                        revertToSState()
+                    End If
                 End If
-            Else
-                If iArrInd(i).Item1 < CharacterGenerator.mAttributes(i).Count Then
-                    iArr(i) = CharacterGenerator.mAttributes(i)(iArrInd(i).Item1)
-                Else
-                    MsgBox("Error!  Exception thrown in portrait creation (specifically in layer " & i & ").  The player character will now revert to default.")
-                    revertToSState()
-                End If
-            End If
         Next
 
         changeHairColor(haircolor)

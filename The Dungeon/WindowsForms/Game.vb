@@ -375,7 +375,7 @@ Public Class Game
         turn = 0
         lstLog.Items.Add("You see before you a dungeon.")
         picStart.Visible = False
-        Equipment.portraitUDate()
+        player.createP()
         player.UIupdate()
         lstLog.TopIndex = lstLog.Items.Count - 1
     End Sub
@@ -1190,6 +1190,7 @@ Public Class Game
         '10 = boss stairs
         '11 = shady wizard
         '12 = crystal
+        '13 = crystal
 
         If testingImageBoard Then
             boxBoard.Refresh()
@@ -1205,6 +1206,7 @@ Public Class Game
                         viewArray(y, x) = mBoard(player.pos.Y + indY, player.pos.X + indX).Tag
                         If mBoard(player.pos.Y + indY, player.pos.X + indX).Tag = 2 Then
                             If mBoard(player.pos.Y + indY, player.pos.X + indX).Text = "" Then viewArray(y, x) = 2
+                            If mBoard(player.pos.Y + indY, player.pos.X + indX).Text = "x" Then viewArray(y, x) = 13
                             If mBoard(player.pos.Y + indY, player.pos.X + indX).Text = "H" Then
                                 If floor > 5 Or (floor < 5 AndAlso beatboss(floor)) Then
                                     viewArray(y, x) = 3
@@ -1256,6 +1258,8 @@ Public Class Game
                                 mPics(y, x).BackgroundImage = picSWiz.BackgroundImage
                             Case 12
                                 mPics(y, x).BackgroundImage = picCrystal.BackgroundImage
+                            Case 13
+                                mPics(y, x).BackgroundImage = picPath.BackgroundImage
                         End Select
                     Else
                         Select Case viewArray(y, x)
@@ -1286,6 +1290,8 @@ Public Class Game
                                 mPics(y, x).BackgroundImage = picSWizF.BackgroundImage
                             Case 12
                                 mPics(y, x).BackgroundImage = picCrystalf.BackgroundImage
+                            Case 13
+                                mPics(y, x).BackgroundImage = picPathf.BackgroundImage
                         End Select
                     End If
                     x += 1
@@ -1976,7 +1982,7 @@ Public Class Game
         End If
 
         'updates the player, the stat display, and the portrait before the form closes
-        Equipment.portraitUDate()
+        player.createP()
         player.UIupdate()
         lstLog.TopIndex = lstLog.Items.Count - 1
     End Sub
@@ -2018,7 +2024,7 @@ Public Class Game
         End If
 
         'updates the player, the stat display, and the portrait before the form closes
-        Equipment.portraitUDate()
+        player.createP()
         player.UIupdate()
         lstLog.TopIndex = lstLog.Items.Count - 1
     End Sub
@@ -2156,7 +2162,11 @@ Public Class Game
         writer.WriteLine(mBoardHeight - 1)
         For yInd = 0 To mBoardHeight - 1
             For xInd = 0 To mBoardWidth - 1
-                writer.WriteLine(mBoard(yInd, xInd).Tag)
+                If mBoard(yInd, xInd).Text = "x" Then
+                    writer.WriteLine("x")
+                Else
+                    writer.WriteLine(mBoard(yInd, xInd).Tag)
+                End If
             Next
         Next
         writer.WriteLine(stairs.X)
@@ -2314,7 +2324,14 @@ Public Class Game
         newBoard()
         For yInd = 0 To b2
             For xInd = 0 To b1
-                mBoard(yInd, xInd).Tag = reader.ReadLine()
+                Dim r = reader.ReadLine()
+                If r.Equals("x") Then
+                    mBoard(yInd, xInd).Text = "x"
+                    mBoard(yInd, xInd).Tag = 2
+                Else
+                    mBoard(yInd, xInd).Tag = r
+                End If
+
             Next
         Next
         zoom()
@@ -3734,7 +3751,6 @@ Public Class Game
     Public Sub ppw_DoWork(ByVal sender As Object, ByVal e As DoWorkEventArgs)
         Dim worker As BackgroundWorker = CType(sender, BackgroundWorker)
         player.createP()
-        Equipment.portraitUDate()
     End Sub
     Shared Sub changeHairColor(ByVal c As Color, ByVal iarrind() As Tuple(Of Integer, Boolean), ByRef iarr As Image())
         Dim t(16) As Image

@@ -5,7 +5,7 @@
     Shared Sub MBimboDeath()
         p.perks("bimbotf") = 1
         Dim out As String = "Exausted, you slump to the floor.  Glancing up, the horny mess attacking you seem to have gotten a running start, throwing herself on top of you, and pulling you into a sloppy kiss.  As she clumsily fumbles around, trying to remove your clothes, you roll out from underneath her and beat a hasty retreat, the faint sweetness of bubblegum lingering in your mouth."
-        p.currTarget.despawn("run")
+        p.currTarget.despawn("p-death")
         Game.pushLblEvent(out)
         p.health = 0.1
     End Sub
@@ -24,7 +24,7 @@
             Game.player.will -= 3
             If Game.player.will < 1 Then Game.player.will = 0
         End If
-        p.currTarget.despawn("run")
+        p.currTarget.despawn("p-death")
         If Not ln1 Is Nothing Then
             Game.pushLblEvent(ln1, AddressOf ThrallTF.thrallLN2)
         Else
@@ -50,23 +50,23 @@
             Game.player.will -= 3
             If Game.player.will < 1 Then Game.player.will = 0
         End If
-        p.currTarget.despawn("run")
+        p.currTarget.despawn("p-death")
         Game.pushLblEvent(out)
     End Sub
     Shared Sub slimeDeath()
         Dim out As String = "As the " & p.currTarget.name & " closes in on you, you push yourself off the ground, sidestep it, and make a hasty retreat." & vbCrLf & " " & vbCrLf & "[Insert a TF here (eventually)]"
-        p.currTarget.despawn("run")
+        p.currTarget.despawn("p-death")
         Game.pushLblEvent(out)
         p.health = 0.1
     End Sub
     Shared Sub spiderDeath()
         Dim out As String = "As the " & p.currTarget.name & " closes in on you, you push yourself off the ground, sidestep it, and make a hasty retreat." & vbCrLf & " " & vbCrLf & "[Insert a TF here (eventually)]"
-        p.currTarget.despawn("run")
+        p.currTarget.despawn("p-death")
         Game.pushLblEvent(out)
         p.health = 0.1
     End Sub
     Shared Sub mimicDeath()
-        p.currTarget.despawn("run")
+        p.currTarget.despawn("p-death")
         Dim out As String = "As you collapse, out of the corner of your eye you can see thick tendrils flowing out of the chest that could only be the body of the mimic.  Some of the tendrils wrap around your wrist and ankles, while others work their way up your thighs, aggressively groping your thighs."
         If p.equippedArmor.getName.Equals("Naked") Then
             out += "  As you black out, you can feel the tendrils writhing around you crotch.  As the darkness takes you, so does the orgasmic bliss of the mimic's magic touch."
@@ -89,7 +89,7 @@
         p.equippedArmor = New LiveArmor
         p.inventory(55).add(1)
         p.perks(12) = True
-        Equipment.portraitUDate()
+        p.createP()
         Game.pushLblEvent(out)
         p.health = 0.1
     End Sub
@@ -97,10 +97,9 @@
     '|BOSS / MINIBOSS DEATHS|
     Shared Sub oozeEmpDeath()
         p.ongoingTFs.Add(New RandoTF())
-        p.update()
         p.sState.save(p)
         p.pState.save(p)
-        p.currTarget.despawn("run")
+        p.currTarget.despawn("p-death")
         Game.pushLblEvent("""Aww, sweetie, if you wanted another go you should have just asked!"", the Ooze Empress chuckles, her aphrodesiac-laced tendrils wrapping you in their arousing embrace.  ""You really do need to relax more.  Lucky for you, I have just the thing..."" she states, plunging your entire body deeper into her slime.  As the pleasure once again overtakes you, you resign yourself to needing to try again.  Well, maybe not right away...")
         Dim posX As Integer
         Dim posY As Integer
@@ -110,6 +109,7 @@
         Loop
         p.pos = New Point(posX, posY)
         p.health = 0.1
+        p.update()
     End Sub
 
     '|NPC DEATHS|
