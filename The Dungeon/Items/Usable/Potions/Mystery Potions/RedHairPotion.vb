@@ -9,7 +9,6 @@
     End Sub
     Public Overrides Sub effect()
         Dim p As Player = Game.player
-        p.inventorynames(27) = "Red_Hair_Dye"
         Game.pushLblEvent("You now have red hair!")
         Dim r As Integer = Int(Rnd() * 100) + 155
         p.haircolor = Color.FromArgb(p.haircolor.A, r, 69, 0)

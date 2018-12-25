@@ -18,9 +18,9 @@
         Dim w As Tuple(Of String(), Weapon())
         Dim ac As Tuple(Of String(), Accessory())
 
-        a = p.getArmors
-        w = p.getWeapons
-        ac = p.getAccesories
+        a = p.p_inventory.getArmors
+        w = p.p_inventory.getWeapons
+        ac = p.p_inventory.getAccesories
 
         aList.Clear()
         wList.Clear()
@@ -63,7 +63,7 @@
         Dim revertFlag As Boolean = False
         If p.equippedWeapon.getName.Equals("Magic_Girl_Wand") And p.pClass.name.Equals("Magic Girl") And Not cmbobxWeapon.Text.Equals("Magic_Girl_Wand") Then
             Game.lstLog.Items.Add("Putting away your wand causes you to change into your regular self!")
-            p.inventory.Item(10).add(-1)
+            p.p_inventory.add(10, -1)
             p.magGState.save(p)
             p.revertToPState()
             revertFlag = True
@@ -95,7 +95,7 @@
         End If
         'handles any tfs or triggers triggered by equipping of certain weapons
         If p.pClass.name.Equals("Magic Girl") And p.equippedArmor.getName.Equals("Magic_Girl_Outfit") And Not revertFlag Then
-            p.equippedArmor = p.inventory.Item(10)
+            p.equippedArmor = p.p_inventory.item(10)
             Game.lstLog.Items.Add("A magic girl needs her uniform!")
         End If
         If p.pForm.name.Equals("Blow-Up Doll") Then
@@ -178,25 +178,25 @@
         Dim affectedFlag As Boolean = True
         Select Case p.equippedArmor.getName.GetHashCode
             Case "Steel_Armor".GetHashCode
-                p.inventory.Item(5).count -= 1
+                p.p_inventory.add(5, -1)
                 p.equippedArmor = New SteelBikini
-                p.inventory.Item(7).addOne()
+                p.p_inventory.add(7, 1)
             Case "Sorcerer's_Robes".GetHashCode
-                p.inventory.Item(17).count -= 1
+                p.p_inventory.add(17, -1)
                 p.equippedArmor = New WitchCosplay
-                p.inventory.Item(18).addOne()
+                p.p_inventory.add(18, 1)
             Case "Warrior's_Cuirass".GetHashCode
-                p.inventory.Item(19).count -= 1
+                p.p_inventory.add(19, -1)
                 p.equippedArmor = New BrawlerCosplay
-                p.inventory.Item(20).addOne()
+                p.p_inventory.add(20, 1)
             Case "Gold_Armor".GetHashCode
-                p.inventory.Item(38).count -= 1
+                p.p_inventory.add(38, -1)
                 p.equippedArmor = New GoldAdornment
-                p.inventory.Item(39).add(1)
+                p.p_inventory.add(39, 1)
             Case "Living_Armor".GetHashCode
-                p.inventory.Item(55).count -= 1
+                p.p_inventory.add(55, -1)
                 p.equippedArmor = New LiveLingerie
-                p.inventory.Item(56).add(1)
+                p.p_inventory.add(56, 1)
             Case "Common_Clothes".GetHashCode
                 p.equippedArmor = New SkimpyClothes
             Case Else
@@ -216,25 +216,25 @@
         Dim affectedFlag As Boolean = True
         Select Case p.equippedArmor.getName.GetHashCode
             Case "Steel_Bikini".GetHashCode
-                p.inventory.Item(7).count -= 1
+                p.p_inventory.add(7, -1)
                 p.equippedArmor = New SteelArmor
-                p.inventory.Item(5).addOne()
+                p.p_inventory.add(5, 1)
             Case "Witch_Cosplay".GetHashCode
-                p.inventory.Item(18).count -= 1
+                p.p_inventory.add(18, -1)
                 p.equippedArmor = New SorcerersRobes
-                p.inventory.Item(17).addOne()
+                p.p_inventory.add(17, -1)
             Case "Brawler_Cosplay".GetHashCode
-                p.inventory.Item(20).count -= 1
+                p.p_inventory.add(20, -1)
                 p.equippedArmor = New WarriorsCuirass
-                p.inventory.Item(19).addOne()
+                p.p_inventory.add(19, 1)
             Case "Gold_Adornment".GetHashCode
-                p.inventory.Item(39).count -= 1
+                p.p_inventory.add(39, -1)
                 p.equippedArmor = New GoldArmor
-                p.inventory.Item(38).add(1)
+                p.p_inventory.add(38, 1)
             Case "Living_Lingerie".GetHashCode
-                p.inventory.Item(56).count -= 1
+                p.p_inventory.add(56, -1)
                 p.equippedArmor = New LiveArmor
-                p.inventory.Item(55).add(1)
+                p.p_inventory.add(55, 1)
             Case "Skimpy_Clothes".GetHashCode
                 p.equippedArmor = New NormalClothes
             Case Else

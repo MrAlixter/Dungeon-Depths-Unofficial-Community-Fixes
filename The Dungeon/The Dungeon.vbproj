@@ -150,7 +150,6 @@
     <Compile Include="Entities\Player\Forms\Succubus.vb" />
     <Compile Include="Entities\Player\PerkEffects.vb" />
     <Compile Include="Entities\Player\Forms\pForm.vb" />
-    <Compile Include="Entities\Inventory.vb" />
     <Compile Include="Entities\Player\Spells\ArcaneCompass.vb" />
     <Compile Include="Entities\Player\Spells\Dowse.vb" />
     <Compile Include="Entities\Player\Spells\DragonsBreath.vb" />
@@ -193,6 +192,7 @@
     <Compile Include="Entities\Player\Transformations\TargaxTF.vb" />
     <Compile Include="Entities\Player\Transformations\ThrallTF.vb" />
     <Compile Include="Entities\Player\Transformations\Transformation.vb" />
+    <Compile Include="Entities\Player\Unimplemented\Inventory.vb" />
     <Compile Include="Entities\preferedForm.vb" />
     <Compile Include="Items\Accesories\Accessory.vb" />
     <Compile Include="Items\Accesories\Cowbell.vb" />
@@ -207,6 +207,7 @@
     <Compile Include="Items\Usable\Potions\Mystery Potions\HyperManaPotion.vb" />
     <Compile Include="Items\Usable\Spellbooks\ASpellbook.vb" />
     <Compile Include="Items\Weapons\SpidersilkWhip.vb" />
+    <Compile Include="Testing.vb" />
     <Compile Include="Tiles\LoadedChest.vb" />
     <Compile Include="WindowsForms\About.Designer.vb">
       <DependentUpon>About.vb</DependentUpon>
@@ -379,12 +380,6 @@
     <Compile Include="WindowsForms\ShopV2.vb">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="WindowsForms\Shop.Designer.vb">
-      <DependentUpon>Shop.vb</DependentUpon>
-    </Compile>
-    <Compile Include="WindowsForms\Shop.vb">
-      <SubType>Form</SubType>
-    </Compile>
     <Compile Include="Items\Unimplemented\ShrinkPotion.vb" />
     <Compile Include="Items\Armor\SkimpyClothes.vb" />
     <Compile Include="Items\Unimplemented\SnakePotion.vb" />
@@ -429,6 +424,7 @@
     </EmbeddedResource>
     <EmbeddedResource Include="WindowsForms\Debug\DebugWindow.resx">
       <DependentUpon>DebugWindow.vb</DependentUpon>
+      <SubType>Designer</SubType>
     </EmbeddedResource>
     <EmbeddedResource Include="WindowsForms\Debug\EditContents.resx">
       <DependentUpon>EditContents.vb</DependentUpon>
@@ -466,9 +462,6 @@
     </EmbeddedResource>
     <EmbeddedResource Include="WindowsForms\ShopV2.resx">
       <DependentUpon>ShopV2.vb</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="WindowsForms\Shop.resx">
-      <DependentUpon>Shop.vb</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>

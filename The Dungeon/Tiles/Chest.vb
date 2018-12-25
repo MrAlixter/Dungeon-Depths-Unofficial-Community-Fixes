@@ -127,13 +127,14 @@
         Dim c As String = "Chest Contents: " & vbCrLf
 
         For i = 0 To UBound(contents)
-            Game.player.inventory.Item(i).add(contents(i))
+            Game.player.p_inventory.add(i, contents(i))
 
+            Dim content = Game.player.p_inventory.item(i)
             If contents(i) > 0 Then
-                If Game.player.inventory(i).GetType().IsSubclassOf(GetType(MysteryPotion)) Then
-                    c += " " & vbCrLf & "+" & contents(i) & " " & Game.player.inventory(i).getName() & " "
+                If content.GetType().IsSubclassOf(GetType(MysteryPotion)) Then
+                    c += " " & vbCrLf & "+" & contents(i) & " " & content.getName() & " "
                 Else
-                    c += " " & vbCrLf & "+" & contents(i) & " " & Game.player.inventory(i).getName() & " "
+                    c += " " & vbCrLf & "+" & contents(i) & " " & content.getName() & " "
                 End If
             End If
         Next
@@ -142,7 +143,7 @@
         Game.lblEvent.BringToFront()
         Game.lblEvent.Location = New Point((250 * Game.Size.Width / 688) - (Game.lblEvent.Size.Width / 2), 65 * Game.Size.Width / 688)
         Game.lblEvent.Visible = True
-        Game.player.invNeedsUDate = True
+        Game.player.p_inventory.invNeedsUDate = True
     End Sub
     Public Sub add(ByVal i As Integer, ByVal c As Integer)
         'adds a quantity "c" to inventory slot "i"

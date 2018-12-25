@@ -91,7 +91,7 @@
         Dim p = Game.player
         Game.pushLblEvent("You take another look at your cowbell.  Every time its rung thus far, you've progressed a little more into some form of bovine-human hybrid.  𝘔𝘪𝘯𝘰𝘵𝘢𝘶𝘳, you correct your self.  It's been turning you into a minotaur, and a female one at that.  Your transformation seems pretty far along, and you'd wager you're only one more chime away from completing the change.  With that in mind, you give the bell a hard shake, and the sound from its ring echos throughout the dungeon." & vbCrLf & vbCrLf & "You are now a female minotaur!")
         Game.player.pForm = p.forms("Minotaur Cow")
-        p.inventory(71).add(1)
+        p.p_inventory.add(71, 1)
         Equipment.clothesChange("Cow_Print_Bra")
     End Sub
 

@@ -46,12 +46,12 @@
                 MyBase.attack = 15
                 MyBase.defence = 15
                 MyBase.speed = 15
-                ReDim MyBase.inventory(Game.player.inventorynames.Count - 1)
+                ReDim MyBase.inventory(Game.player.p_inventory.upperBound)
                 Randomize()
                 For i = 0 To 5
                     Dim invInd As Integer = 8
                     While invInd = 8 Or invInd = 10 Or invInd = 24 Or invInd = 53
-                        invInd = Int(Rnd() * Game.player.inventorynames.Count)
+                        invInd = Int(Rnd() * (Game.player.p_inventory.upperBound + 1))
                     End While
                     MyBase.inventory(invInd) = (Int(Rnd() * 2) + 1)
                 Next

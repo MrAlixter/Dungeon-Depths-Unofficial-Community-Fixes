@@ -52,7 +52,7 @@
 
             Game.player = fuPlay
             fuPlay.createP()
-            fuPlay.invNeedsUDate = True
+            fuPlay.p_inventory.invNeedsUDate = True
             fuPlay.UIupdate()
             fuPlay.sState.save(fuPlay)
             Dim f3 As New Equipment
@@ -159,16 +159,14 @@
 
         player.gold = p1.gold + p2.gold
 
-        player.inventorynames = p1.inventorynames.Clone
-
-        For i = 0 To player.inventory.Count - 1
-            player.inventory(i).setname(p1.inventory(i).getname)
-            player.inventory(i).add(p1.inventory(i).count + p2.inventory(i).count)
+        For i = 0 To player.p_inventory.upperBound
+            player.p_inventory.item(i).setName(p1.p_inventory.item(i).getName)
+            player.p_inventory.item(i).add(p1.p_inventory.item(i).count + p2.p_inventory.item(i).count)
         Next
 
-        player.inventory(0).add(-1)
-        player.inventory(2).add(-1)
-        player.inventory(58).add(-1)
+        player.p_inventory.add(0, -1)
+        player.p_inventory.add(2, -1)
+        player.p_inventory.add(58, -1)
 
         player.iArr = p1.iArr.Clone
         player.iArrInd = p1.iArrInd.Clone
@@ -209,7 +207,7 @@
         player.equippedWeapon = New BareFists
         player.equippedArmor = New Naked
 
-        player.invNeedsUDate = True
+        player.p_inventory.invNeedsUDate = True
         player.UIupdate()
 
         Return player

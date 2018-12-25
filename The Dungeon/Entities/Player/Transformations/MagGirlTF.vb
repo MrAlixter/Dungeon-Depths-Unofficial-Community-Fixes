@@ -50,7 +50,7 @@
             p.magGState.initFlag = True
         End If
         Game.cboxMG.Items.Add("Heartblast Starcannon")
-        p.inventory.Item(10).addOne()
+        p.p_inventory.add(10, 1)
         p.pClass = p.classes("Magic Girl")
         Equipment.clothesChange("Magic_Girl_Outfit")
         p.equippedArmor = New MagGirlOutfit

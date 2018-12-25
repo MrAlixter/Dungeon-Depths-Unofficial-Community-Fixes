@@ -109,21 +109,21 @@
         Dim armorIndex = armor(Int(Rnd() * (armor.Length)))
         Dim weapon = New Integer() {6, 6, 9, 9, 21, 21, 22, 22, 23, 63}
         Dim weaponIndex = weapon(Int(Rnd() * (weapon.Length)))
-        p.inventory(armorIndex).addOne()
-        p.inventory(weaponIndex).addOne()
-        p.equippedArmor = p.inventory(armorIndex)
-        p.equippedWeapon = p.inventory(weaponIndex)
+        p.p_inventory.add(armorIndex, 1)
+        p.p_inventory.add(weaponIndex, 1)
+        p.equippedArmor = p.p_inventory.item(armorIndex)
+        p.equippedWeapon = p.p_inventory.item(weaponIndex)
 
         For i = 0 To 4
             Dim invInd As Integer = 8
             While invInd = 8 Or invInd = 10 Or invInd = 24 Or invInd = 53
-                invInd = Int(Rnd() * Game.player.inventorynames.Count)
+                invInd = Int(Rnd() * (Game.player.p_inventory.upperBound + 1))
             End While
-            p.inventory(invInd).add(Int(Rnd() * 2) + 1)
+            p.p_inventory.add(invInd, CInt(Int(Rnd() * 2) + 1))
         Next
 
-        p.inventory(2).add(1)
-        p.inventory(13).add(1)
+        p.p_inventory.add(2, 1)
+        p.p_inventory.add(13, 1)
 
         'set class stats
         If p.pClass.Equals("Warrior") Or p.pClass.Equals("Paladin") Then
@@ -135,12 +135,12 @@
             p.defence -= Int(Rnd() * 5)
             p.speed += Int(Rnd() * 5)
             p.mana += 8 + Int(Rnd() * 5)
-            p.inventory(4).add(1)
+            p.p_inventory.add(4, 1)
         ElseIf p.pClass.Equals("Bimbo") Then
             p.changeHairColor(BimboTF.bimboyellow)
             p.will = 1
             p.perks("slutcurse") = 1
-            If Int(Rnd() * 10) = 7 Then p.inventory(45).add(1)
+            If Int(Rnd() * 10) = 7 Then p.p_inventory.add(4, 1)
         End If
 
         'set other player stuff
@@ -148,7 +148,7 @@
         If Game.floor < 6 Then p.pImage = Game.picPlayer.BackgroundImage Else p.pImage = Game.picPlayerf.BackgroundImage
         p.bsizeroute()
 
-        p.invNeedsUDate = p.sexbool
+        p.p_inventory.invNeedsUDate = True
         p.UIupdate()
 
         Dim si As Integer = p.sState.iArrInd(3).Item1
@@ -193,8 +193,8 @@
         Dim p = Game.player
         Game.preBSBody = New State(p)
         Game.preBSInventory = New ArrayList()
-        For Each i In p.inventory
-            Game.preBSInventory.Add(i.count)
+        For i = 0 To p.p_inventory.upperBound
+            Game.preBSInventory.Add(p.p_inventory.getCountAt(i))
         Next
         p.ongoingTFs.Add(New RandoTF())
         p.update()
@@ -237,7 +237,7 @@
         p.pState.save(p)
         p.revertToPState()
         For i = 0 To Game.preBSInventory.Count - 1
-            p.inventory(i).add(Game.preBSInventory(i))
+            p.p_inventory.add(i, Game.preBSInventory(i))
         Next
         p.canMoveFlag = p.sexbool
         Game.lblEvent.Visible = False
@@ -247,7 +247,7 @@
     Shared Sub floor4keep()
         Dim p = Game.player
         For i = 0 To Game.preBSInventory.Count - 1
-            p.inventory(i).add(Game.preBSInventory(i))
+            p.p_inventory.add(i, Game.preBSInventory(i))
         Next
         p.canMoveFlag = p.sexbool
         Game.lblEvent.Visible = False

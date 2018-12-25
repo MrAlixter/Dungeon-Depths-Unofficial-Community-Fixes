@@ -38,14 +38,7 @@
     Public haircolor As Color = Color.FromArgb(255, 204, 203, 213)
     Public skincolor As Color = Color.FromArgb(255, 247, 219, 195)
     'inventory variables
-    Public inventory As New ArrayList()
-    Public inventorynames As New ArrayList()
-    Public mysteryPotionDisplayOrder As New List(Of String)
-    Dim armor() As Armor
-    Dim weapons() As Weapon
-    Dim acce() As Accessory
-    Public useable(), food(), potions(), misc() As Item
-    Public invNeedsUDate As Boolean = False
+    Public p_inventory As Inventory
     'player & form states
     Public currState, pState, sState As State
     Public bimbState As State = New State()
@@ -86,8 +79,8 @@
         hunger = 0
 
         createInvPerks()
-        inventory.item(0).add(1)
-        inventory.item(2).add(1)
+        p_inventory.add(0, 1)
+        p_inventory.add(2, 1)
     End Sub
     'load from save constructors
     Public Sub New(ByVal s As String, ByVal v As Double)
@@ -138,42 +131,39 @@
         wBuff = playArray(9)
         sBuff = playArray(10)
 
-        Dim x As Integer = CInt(playArray(11)) - 1
-        For i = 0 To x
-            inventory.item(i).add(playArray(12 + i))
-        Next
+        p_inventory.load(playArray(11))
 
 
         Dim y = 0
         Dim tfp As List(Of Point) = New List(Of Point)
-        If Not playArray(14 + x).Equals("N/a") Then
-            y = CInt(playArray(13 + x)) * 2
+        If Not playArray(15).Equals("N/a") Then
+            y = CInt(playArray(14)) * 2
             For i = 0 To y Step 2
-                tfp.Add(New Point(CInt(playArray(14 + x + i)), playArray(15 + x + i)))
+                tfp.Add(New Point(CInt(playArray(15 + i)), playArray(16 + i)))
             Next
             forcedPath = tfp.ToArray
         Else
             tfp = Nothing
         End If
 
-        Dim currentIndex = 15 + x + y
-        If Not playArray(14 + x).Equals("N/a") Then currentIndex += 1
+        Dim currentIndex = 16 + y
+        If Not playArray(15).Equals("N/a") Then currentIndex += 1
 
         Dim stuff() As String = playArray(currentIndex).Split("$")
         If Not stuff(0).Equals("N/a") Then
             prefForm = New preferedForm(Color.FromArgb(CInt(stuff(0)), CInt(stuff(1)), CInt(stuff(2)), CInt(stuff(3))), _
                                         Color.FromArgb(CInt(stuff(4)), CInt(stuff(5)), CInt(stuff(6)), CInt(stuff(7))), _
                                         CBool(stuff(8)), CBool(stuff(9)), CInt(stuff(10)), CBool(stuff(11)), CInt(stuff(12)))
-            inventory(69).setFormerLife(stuff(13), New Tuple(Of Integer, Boolean)(CInt(stuff(14)), stuff(15)))
+            CType(p_inventory.item(69), ThrallCollar).setFormerLife(stuff(13), New Tuple(Of Integer, Boolean)(CInt(stuff(14)), stuff(15)))
         Else
-            inventory(69).setFormerLife(stuff(1), New Tuple(Of Integer, Boolean)(CInt(stuff(2)), stuff(3)))
+            CType(p_inventory.item(69), ThrallCollar).setFormerLife(stuff(1), New Tuple(Of Integer, Boolean)(CInt(stuff(2)), stuff(3)))
             If Not stuff(0).Equals("N/a") Then
                 prefForm = New preferedForm(Color.FromArgb(CInt(stuff(0)), CInt(stuff(1)), CInt(stuff(2)), CInt(stuff(3))),
                                             Color.FromArgb(CInt(stuff(4)), CInt(stuff(5)), CInt(stuff(6)), CInt(stuff(7))),
                                             CBool(stuff(8)), CBool(stuff(9)), CInt(stuff(10)), CBool(stuff(11)), CInt(stuff(12)))
-                inventory(69).setFormerLife(stuff(13), New Tuple(Of Integer, Boolean)(CInt(stuff(14)), stuff(15)))
+                CType(p_inventory.item(69), ThrallCollar).setFormerLife(stuff(13), New Tuple(Of Integer, Boolean)(CInt(stuff(14)), stuff(15)))
             Else
-                inventory(69).setFormerLife(stuff(1), New Tuple(Of Integer, Boolean)(CInt(stuff(2)), stuff(3)))
+                CType(p_inventory.item(69), ThrallCollar).setFormerLife(stuff(1), New Tuple(Of Integer, Boolean)(CInt(stuff(2)), stuff(3)))
             End If
         End If
 
@@ -203,11 +193,11 @@
         If iArrInd(14).Item2 Then
             Select Case iArrInd(14).Item1
                 Case 1
-                    equippedAcce = inventory(66)
+                    equippedAcce = p_inventory.item(66)
                 Case 2
-                    equippedAcce = inventory(67)
+                    equippedAcce = p_inventory.item(67)
                 Case 3
-                    equippedAcce = inventory(68)
+                    equippedAcce = p_inventory.item(68)
                 Case Else
                     equippedAcce = New noAcce
                     equippedAcce.count -= 1
@@ -215,9 +205,9 @@
         Else
             Select Case iArrInd(14).Item1
                 Case 1
-                    equippedAcce = inventory(67)
+                    equippedAcce = p_inventory.item(67)
                 Case 2
-                    equippedAcce = inventory(68)
+                    equippedAcce = p_inventory.item(68)
                 Case Else
                     equippedAcce = New noAcce
                     equippedAcce.add(-1)
@@ -232,16 +222,16 @@
         setStartingAccessory()
         'sets loadout based on selected class
         If s = "Warrior" Then
-            inventory.Item(5).addOne()
-            inventory.Item(6).addOne()
-            equippedArmor = inventory.Item(5)
-            equippedWeapon = inventory.Item(6)
+            p_inventory.add(5, 1)
+            p_inventory.add(6, 1)
+            equippedArmor = p_inventory.item(5)
+            equippedWeapon = p_inventory.item(6)
         ElseIf s = "Mage" Then
             Game.cboxMG.Items.Add("Fireball")
-            inventory.Item(2).add(3)
-            inventory.Item(4).add(1)
-            inventory.Item(21).add(1)
-            equippedWeapon = inventory.Item(21)
+            p_inventory.add(2, 3)
+            p_inventory.add(4, 1)
+            p_inventory.add(21, 1)
+            equippedWeapon = p_inventory.item(21)
         End If
         'set class
         pClass = classes(s)
@@ -261,130 +251,11 @@
         sState = New State(Me)
     End Sub
     Public Sub createInvPerks()
-        initInventory()
+        p_inventory = New Inventory
         initPerks()
         initClasses()
         initForms()
         initPolymorphs()
-    End Sub
-    Private Sub initInventory()
-        'create inventory
-        inventory.Clear()
-        inventorynames.Clear()
-        '0.1 - 0.4
-        inventory.Add(New Compass())    '0
-        inventory.Add(New StickOfGum()) '1
-        inventory.Add(New HealthPotion())   '2
-        inventory.Add(New VialOfSlime())    '3
-        inventory.Add(New Spellbook())  '4
-        inventory.Add(New SteelArmor()) '5
-        inventory.Add(New SteelSword()) '6
-        inventory.Add(New SteelBikini())    '7
-        inventory.Add(New ChickenSuit())    '8
-        inventory.Add(New SoulBlade())  '9
-        inventory.Add(New MagGirlOutfit())  '10
-        inventory.Add(New MagGirlWand())    '11
-        inventory.Add(New CatLingerie())    '12
-        inventory.Add(New ManaPotion())    '13
-        inventory.Add(New RestorationPotion())    '14
-        inventory.Add(New CatEars())    '15
-        inventory.Add(New BunnySuit())    '16
-        inventory.Add(New SorcerersRobes())    '17
-        inventory.Add(New WitchCosplay())    '18
-        inventory.Add(New WarriorsCuirass())    '19
-        inventory.Add(New BrawlerCosplay())    '20
-        inventory.Add(New OakStaff())    '21
-        inventory.Add(New WizardStaff())    '22
-        inventory.Add(New BronzeXiphos())    '23
-        inventory.Add(New TargaxSword())    '24
-        inventory.Add(New BlondePotion())    '25
-        inventory.Add(New RandomHairPotion())    '26
-        inventory.Add(New RedHairPotion())    '27
-        inventory.Add(New FemininePotion())    '28
-        inventory.Add(New BEPotion())    '29
-        inventory.Add(New ChickenLeg()) '30
-        inventory.Add(New Apple()) '31
-        inventory.Add(New PApple()) '32
-        inventory.Add(New Herbs()) '33
-        inventory.Add(New HeavyCream()) '34
-        inventory.Add(New Cupcake()) '35
-        inventory.Add(New Mirror()) '36
-        inventory.Add(New Glowstick()) '37
-        inventory.Add(New GoldArmor()) '38
-        inventory.Add(New GoldAdornment()) '39
-        inventory.Add(New GoldSword()) '40
-        inventory.Add(New GoldenStaff()) '41
-        inventory.Add(New MidasGuantlet()) '42
-        inventory.Add(New Gold()) '43
-        inventory.Add(New AngelFood()) '44
-        inventory.Add(New MaidDuster()) '45
-        inventory.Add(New TankTop()) '46
-        inventory.Add(New SportBra()) '47
-        inventory.Add(New HealthCharm()) '48
-        inventory.Add(New ManaCharm()) '49
-        inventory.Add(New AttackCharm()) '50
-        inventory.Add(New DefenceCharm()) '51
-        inventory.Add(New SpeedCharm()) '52
-        inventory.Add(New Key()) '53
-        inventory.Add(New Ropes()) '54
-        inventory.Add(New LiveArmor()) '55
-        inventory.Add(New LiveLingerie()) '56
-        inventory.Add(New RigWrench()) '57
-        inventory.Add(New FusionCrystal()) '58
-        inventory.Add(New MasculinePotion()) '59
-        inventory.Add(New BSPotion()) '60
-        inventory.Add(New HyperHealPotion()) '61
-        inventory.Add(New HyperManaPotion()) '62
-        inventory.Add(New SpidersilkWhip()) '63
-        inventory.Add(New ChitArmor()) '64
-        '0.5
-        inventory.Add(New ASpellbook()) '65
-        '0.6
-        inventory.Add(New HeartNecklace()) '66
-        inventory.Add(New RedHeadband()) '67
-        inventory.Add(New RubyCirclet()) '68
-        inventory.Add(New ThrallCollar()) '69
-        inventory.Add(New Cowbell()) '70
-        inventory.Add(New CowBra()) '71
-
-        For i = 0 To inventory.Count - 1
-            If inventory(i).GetType().IsSubclassOf(GetType(MysteryPotion)) Then
-                inventorynames.Insert(i, CType(inventory(i), MysteryPotion).getRealName())
-            Else
-                inventorynames.Insert(i, inventory(i).getName())
-            End If
-            'MsgBox(inventory(i).getName())
-        Next
-        armor = {New NormalClothes, New SkimpyClothes, New Naked, New PrincessGown,
-                 New MaidOutfit, New GoddessGown, New SuccubusGarb,
-                 inventory(5), inventory(7), inventory(8), inventory(10),
-                 inventory(12), inventory(16), inventory(17), inventory(18),
-                 inventory(19), inventory(20), inventory(38), inventory(39),
-                 inventory(46), inventory(47), inventory(54), inventory(55),
-                 inventory(56), inventory(64), inventory(71)}
-
-        weapons = {New BareFists(),
-                   inventory(6), inventory(9), inventory(11), inventory(21),
-                   inventory(22), inventory(23), inventory(24), inventory(40),
-                   inventory(41), inventory(42), inventory(45), inventory(63)}
-
-        useable = {inventory(0), inventory(1), inventory(3), inventory(4),
-                   inventory(65), inventory(15), inventory(36), inventory(37),
-                   inventory(45), inventory(48), inventory(49), inventory(50),
-                   inventory(51), inventory(52), inventory(57), inventory(58)}
-
-        food = {inventory(30), inventory(31), inventory(32), inventory(33),
-                inventory(34), inventory(35), inventory(44)}
-
-        acce = {New noAcce(), inventory(66), inventory(67), inventory(68),
-                inventory(69), inventory(70)}
-
-        potions = {inventory(2), inventory(13), inventory(14), inventory(25),
-                   inventory(26), inventory(27), inventory(28), inventory(29),
-                   inventory(59), inventory(60), inventory(61), inventory(62)}
-        Array.Sort(potions)
-
-        misc = {inventory(43), inventory(53)}
     End Sub
     Private Sub initPerks()
         perks.Clear()
@@ -927,15 +798,16 @@
         End If
 
         Dim numItems As Integer = Game.lstInventory.Items.Count
-        Dim tArr(inventory.Count + 5) As String
+        Dim tArr(p_inventory.Count + 5) As String
         Dim ct As Integer = 0
         If Game.invFilters(0) Then
             tArr(ct) = "-USEABLES:"
             ct += 1
-            Array.Sort(useable)
-            For i = 0 To UBound(useable)
-                If useable(i).getCount > 0 Then
-                    tArr(ct) = " " & useable(i).getName() & " x" & useable(i).count
+            Dim u_list = p_inventory.getUseable
+            Array.Sort(u_list)
+            For i = 0 To UBound(u_list)
+                If u_list(i).getCount > 0 Then
+                    tArr(ct) = " " & u_list(i).getName() & " x" & u_list(i).count
                     ct += 1
                 End If
             Next
@@ -943,10 +815,11 @@
         If Game.invFilters(1) Then
             tArr(ct) = "-POTIONS:"
             ct += 1
-            Array.Sort(potions)
-            For i = 0 To UBound(potions)
-                If potions(i).getCount > 0 Then
-                    tArr(ct) = " " & potions(i).getName() & " x" & potions(i).count
+            Dim p_list = p_inventory.getPotions
+            Array.Sort(p_list)
+            For i = 0 To UBound(p_list)
+                If p_list(i).getCount > 0 Then
+                    tArr(ct) = " " & p_list(i).getName() & " x" & p_list(i).count
                     ct += 1
                 End If
             Next
@@ -954,10 +827,11 @@
         If Game.invFilters(2) Then
             tArr(ct) = "-FOOD:"
             ct += 1
-            Array.Sort(food)
-            For i = 0 To UBound(food)
-                If food(i).getCount > 0 Then
-                    tArr(ct) = " " & food(i).getName() & " x" & food(i).count
+            Dim f_list = p_inventory.getFood
+            Array.Sort(f_list)
+            For i = 0 To UBound(f_list)
+                If f_list(i).getCount > 0 Then
+                    tArr(ct) = " " & f_list(i).getName() & " x" & f_list(i).count
                     ct += 1
                 End If
             Next
@@ -965,10 +839,11 @@
         If Game.invFilters(3) Then
             tArr(ct) = "-ARMOR:"
             ct += 1
-            Array.Sort(armor)
-            For i = 0 To UBound(armor)
-                If armor(i).getCount > 0 Then
-                    tArr(ct) = " " & armor(i).getName() & " x" & armor(i).count
+            Dim a_list = p_inventory.getArmors.Item2
+            Array.Sort(a_list)
+            For i = 0 To UBound(a_list)
+                If a_list(i).getCount > 0 Then
+                    tArr(ct) = " " & a_list(i).getName() & " x" & a_list(i).count
                     ct += 1
                 End If
             Next
@@ -976,10 +851,11 @@
         If Game.invFilters(4) Then
             tArr(ct) = "-WEAPONS:"
             ct += 1
-            Array.Sort(weapons)
-            For i = 0 To UBound(weapons)
-                If weapons(i).getCount > 0 Then
-                    tArr(ct) = " " & weapons(i).getName() & " x" & weapons(i).count
+            Dim w_list = p_inventory.getWeapons.Item2
+            Array.Sort(w_list)
+            For i = 0 To UBound(w_list)
+                If w_list(i).getCount > 0 Then
+                    tArr(ct) = " " & w_list(i).getName() & " x" & w_list(i).count
                     ct += 1
                 End If
             Next
@@ -987,10 +863,11 @@
         If Game.invFilters(6) Then
             tArr(ct) = "-ACCESSORIES:"
             ct += 1
-            Array.Sort(acce)
-            For i = 0 To UBound(acce)
-                If acce(i).getCount > 0 Then
-                    tArr(ct) = " " & acce(i).getName() & " x" & acce(i).count
+            Dim ac_list = p_inventory.getAccesories.Item2
+            Array.Sort(ac_list)
+            For i = 0 To UBound(ac_list)
+                If ac_list(i).getCount > 0 Then
+                    tArr(ct) = " " & ac_list(i).getName() & " x" & ac_list(i).count
                     ct += 1
                 End If
             Next
@@ -998,21 +875,22 @@
         If Game.invFilters(5) Then
             tArr(ct) = "-MISC:"
             ct += 1
-            Array.Sort(misc)
-            For i = 0 To UBound(misc)
-                If misc(i).getCount > 0 Then
-                    tArr(ct) = " " & misc(i).getName() & " x" & misc(i).count
+            Dim m_list = p_inventory.getMisc
+            Array.Sort(m_list)
+            For i = 0 To UBound(m_list)
+                If m_list(i).getCount > 0 Then
+                    tArr(ct) = " " & m_list(i).getName() & " x" & m_list(i).count
                     ct += 1
                 End If
             Next
         End If
-        If ct <> numItems Or invNeedsUDate Then
+        If ct <> numItems Or p_inventory.invNeedsUDate Then
             Game.lstInventory.Items.Clear()
             For i = 0 To UBound(tArr)
                 If Not tArr(i) Is Nothing Then Game.lstInventory.Items.Add(tArr(i))
             Next
         End If
-        invNeedsUDate = False
+        p_inventory.invNeedsUDate = False
         'Dim t As Boolean = CharacterGenerator.CreateBMP(iArr).Equals(Game.picPortrait.BackgroundImage)
         'Dim t As Boolean = picsAreSame(CharacterGenerator.CreateBMP(iArr), New Bitmap(Game.picPortrait.BackgroundImage))
         ''If Game.turn < 2 AndAlso Not CharacterGenerator.CreateBMP(iArr).Equals(Game.picPortrait.BackgroundImage) Then createP() 'Form3.portraitUDate()
@@ -1566,10 +1444,7 @@
         output += wBuff & "*"
         output += sBuff & "*"
 
-        output += inventory.Count - 1 & "*"
-        For i = 0 To inventory.Count - 1
-            output += (inventory.Item(i).count & "*")
-        Next
+        output += p_inventory.save()
 
         If forcedPath Is Nothing Then
             output += "N/a*"
@@ -1586,7 +1461,7 @@
         Else
             output += "N/a$"
         End If
-        output += inventory(69).ToString
+        output += p_inventory.item(69).ToString
 
         output += "*" & ongoingTFs.Count - 1 & "*"
         For i = 0 To ongoingTFs.Count - 1
@@ -1597,8 +1472,8 @@
     Public Function toGhost() As String
         Dim output = CStr(name & " the " & pForm.name & " " & pClass.name & "*" & health & "*" & maxHealth &
             "*" & getAttack() & "*" & getDefence() & "*" & getSpeed() & "*" & sexBool & "*" & haircolor.R & "*" & haircolor.G & "*" & haircolor.B & "*")
-        For i = 0 To inventory.Count - 1
-            output += (inventory.Item(i).count) & "*"
+        For i = 0 To p_inventory.upperBound
+            output += (p_inventory.item(i).count) & "*"
         Next
         For i = 0 To UBound(iArrInd)
             output += (iArrInd(i).Item1 & "%" & iArrInd(i).Item2 & "*")
@@ -1628,27 +1503,6 @@
     End Function
     Function getWillpower()
         Return CInt(will * pClass.w * pForm.w) + wBuff
-    End Function
-    Function getArmors() As Tuple(Of String(), Armor())
-        Dim s(UBound(armor)) As String
-        For i = 0 To UBound(armor)
-            s(i) = armor(i).getName
-        Next
-        Return New Tuple(Of String(), Armor())(s, armor)
-    End Function
-    Function getWeapons() As Tuple(Of String(), Weapon())
-        Dim s(UBound(weapons)) As String
-        For i = 0 To UBound(weapons)
-            s(i) = weapons(i).getName
-        Next
-        Return New Tuple(Of String(), Weapon())(s, weapons)
-    End Function
-    Function getAccesories() As Tuple(Of String(), Accessory())
-        Dim s(UBound(acce)) As String
-        For i = 0 To UBound(acce)
-            s(i) = acce(i).getName
-        Next
-        Return New Tuple(Of String(), Accessory())(s, acce)
     End Function
 
     '|DESCRIPTION GENERATION METHODS|

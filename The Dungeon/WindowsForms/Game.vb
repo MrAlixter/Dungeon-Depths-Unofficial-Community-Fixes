@@ -36,7 +36,7 @@ Public Class Game
 
     Public player As Player = New Player()
 
-    Public baseChest As Chest = New Chest(player.inventory.Count - 1)
+    Public baseChest As Chest = New Chest(player.p_inventory.upperBound)
     Public chestList As ArrayList = New ArrayList()
     Public statueList As ArrayList = New ArrayList()    '(NOT SAVED)
     Public trapList As ArrayList = New ArrayList()
@@ -72,7 +72,7 @@ Public Class Game
     Public beatboss() As Boolean = {False, False, False, False, False, False}  'which bosses have been beat?
     Public floorboss() As String = {"Floor0", "Marissa the Enchantress", "Targax the Brutal", "Key", "Key", "Medusa"} 'boss names (NOT SAVED)
     Public floorLayouts As ArrayList = New ArrayList()
-    Public version As Double = 0.65     'the save file version
+    Public version As Double = 0.7     'the save file version
 
     Public lblEventOnClose As Action    'the event method preformed when lblEvent closes (NOT SAVED)
     Public lastKey As String
@@ -116,6 +116,13 @@ Public Class Game
     'startup/new level methods
     'Form1_Load handles the loading of the form
     Private Sub Form1_Load(sender As Object, e As EventArgs) Handles Me.Load
+
+        ' RUNNING TESTS
+        'Testing.runTests()
+        'MsgBox("Tests ran!  Check TestLog.txt for their results.")
+        'Close()
+        ' END OF RUNNING TESTS
+
         If Not IO.File.Exists("sett.ing") Then createSettings()
         If Not IO.File.Exists("configs.ave") Then createConfigs()
 
@@ -175,9 +182,10 @@ Public Class Game
         End If
 
         'Fill Chest Tier List
-        For i = 0 To player.inventory.Count - 1
-            If player.inventory(i).tier <> Nothing Then
-                baseChest.tiers(player.inventory(i).tier).Add(player.inventory(i))
+        For i = 0 To player.p_inventory.upperBound
+            Dim c_item = player.p_inventory.item(i)
+            If c_item.tier <> Nothing Then
+                baseChest.tiers(c_item.tier).Add(c_item)
             End If
         Next
 
@@ -272,19 +280,26 @@ Public Class Game
         Randomize()
         Dim HiddenNames As ArrayList = New ArrayList({"Red_Potion", "Green_Potion", "Blue_Potion", "Yellow_Potion", "Glowing_Potion", "Murky_Potion", "Purple_Potion", "Clear_Potion", "Smokey_Potion", "Rose_Potion", "Aqua_Potion", "Glittery_Potion"})
         Dim index As Integer = 0
-        For i = 0 To player.inventory.Count - 1
-            If player.inventory(i).GetType().IsSubclassOf(GetType(MysteryPotion)) Then
-                Potions.Add(player.inventory(i))
+
+        Dim p_inv = player.p_inventory
+        Dim potion_list = p_inv.getPotions
+        For i = 0 To UBound(potion_list)
+            If potion_list(i).GetType().IsSubclassOf(GetType(MysteryPotion)) Then
+                Dim mpotionid = CType(potion_list(i), MysteryPotion).id
+                Potions.Add(p_inv.item(mpotionid))
                 index = Int(Rnd() * (HiddenNames.Count - 1))
-                CType(player.inventory(i), MysteryPotion).setName(HiddenNames(index))
+                CType(p_inv.item(mpotionid), MysteryPotion).setName(HiddenNames(index))
                 HiddenNames.RemoveAt(index)
             End If
         Next
     End Sub
     Sub loadPotionListFromFile()
-        For i = 0 To player.inventory.Count - 1
-            If player.inventory(i).GetType().IsSubclassOf(GetType(MysteryPotion)) Then
-                CType(player.inventory(i), MysteryPotion).setName(Potions(0).getName())
+        Dim p_inv = player.p_inventory
+        Dim potion_list = p_inv.getPotions
+        For i = 0 To UBound(potion_list)
+            If potion_list(i).GetType().IsSubclassOf(GetType(MysteryPotion)) Then
+                Dim mpotionid = CType(potion_list(i), MysteryPotion).id
+                CType(p_inv.item(mpotionid), MysteryPotion).setName(Potions(0).getName())
                 Potions.RemoveAt(0)
             End If
         Next
@@ -1552,11 +1567,11 @@ Public Class Game
             Next
         End If
         If floor < 5 Then
-            If floorboss(floor).Equals("Key") And player.inventory(53).count > 0 Then beatboss(floor) = True
+            If floorboss(floor).Equals("Key") And player.p_inventory.getCountAt("Key") > 0 Then beatboss(floor) = True
             If player.pos = stairs And beatboss(floor) Then
                 If floor < 5 Then
-                    If floorboss(floor).Equals("Key") Then player.inventory(53).add(-1)
-                    player.invNeedsUDate = True
+                    If floorboss(floor).Equals("Key") Then player.p_inventory.add("Key", -1)
+                    player.p_inventory.invNeedsUDate = True
                     player.UIupdate()
                     initializeBoard()
                     If combatmode Then fromCombat()
@@ -1599,8 +1614,8 @@ Public Class Game
             ElseIf keyspresed = "catc" Then
                 player.perks("nekocurse") = True
             ElseIf keyspresed = "mana" Then
-                player.inventory(49).add(1)
-                player.invNeedsUDate = True
+                player.p_inventory.add(49, 1)
+                player.p_inventory.invNeedsUDate = True
                 player.UIupdate()
             ElseIf keyspresed = "form" Then
                 formList.Add("Slime")
@@ -1608,8 +1623,8 @@ Public Class Game
                 formList.Add("Succubus")
                 formList.Add("Dragon")
             ElseIf keyspresed = "fuse" Then
-                player.inventory(58).add(1)
-                player.invNeedsUDate = True
+                player.p_inventory.add(58, 1)
+                player.p_inventory.invNeedsUDate = True
                 player.UIupdate()
             ElseIf keyspresed = "tfme" Then
                 Polymorph.porm = True
@@ -1655,7 +1670,7 @@ Public Class Game
                 End Try
             ElseIf keyspresed = "slut" Then
                 player.perks("slutcurse") = True
-                player.inventory(1).add(1)
+                player.p_inventory.add(1, 1)
                 player.lust += 20
                 player.createP()
             ElseIf keyspresed = "dies" Then
@@ -1761,7 +1776,7 @@ Public Class Game
             lblEventOnClose()
             lblEventOnClose = Nothing
         End If
-       closeLblEvent()
+        closeLblEvent()
 
         If player.pos.Equals(shopkeeper.pos) Then
             currNPC = shopkeeper
@@ -1835,7 +1850,7 @@ Public Class Game
             ElseIf selectionType = "yesNo" Then
                 selectYesNo(index)
             End If
-            player.invNeedsUDate = True
+            player.p_inventory.invNeedsUDate = True
             player.UIupdate()
             selecting = False
             player.canMoveFlag = True
@@ -1846,19 +1861,9 @@ Public Class Game
     End Sub
     Sub selectItem(ByVal index As Integer)
         Dim subString As String = lstSelec.Items(index).ToString.Split(" (")(2)
-        Dim aInd As Integer = player.inventorynames.IndexOf(subString)
-        If aInd < 0 Then
-            For i = 0 To Potions.Count - 1
-                If CType(Potions(i), MysteryPotion).getName() = subString Then
-                    aInd = player.inventorynames.IndexOf(CType(Potions(i), MysteryPotion).getRealName())
-                    Exit For
-                End If
-            Next
-        End If
-        If aInd >= 0 Then
-            selectedItem = player.inventory.Item(aInd)
-            If selectedItem.getUsable Then selectedItem.use()
-        End If
+        selectedItem = player.p_inventory.item(subString)
+
+        If Not selectedItem Is Nothing AndAlso selectedItem.getUsable Then selectedItem.use()
     End Sub
     Sub selectMagic(ByVal index As Integer)
         turn += 1
@@ -1867,7 +1872,7 @@ Public Class Game
             lblEventOnClose = Nothing
         End If
         lblCombatEvents.Text = ""
-       closeLblEvent()
+        closeLblEvent()
         If player.mana <= 0 Then Exit Sub
         Dim m As Monster = Nothing
         For i = 0 To npcList.Count() - 1
@@ -1902,7 +1907,7 @@ Public Class Game
             lblEventOnClose = Nothing
         End If
         lblCombatEvents.Text = ""
-       closeLblEvent()
+        closeLblEvent()
         Dim m As Monster = Nothing
         For i = 0 To npcList.Count() - 1
             If npcList.Item(i).GetType().IsSubclassOf(GetType(Monster)) Or npcList.Item(i).GetType() Is GetType(Monster) Then
@@ -1966,7 +1971,7 @@ Public Class Game
 
         'handles any tfs or triggers triggered by equipping of certain weapons
         If player.pClass.name.Equals("Magic Girl") And player.equippedArmor.getName.Equals("Magic_Girl_Outfit") Then
-            player.equippedArmor = player.inventory.Item(10)
+            player.equippedArmor = player.p_inventory.item(10)
             lstLog.Items.Add("A magic girl needs her uniform!")
         End If
 
@@ -1996,7 +2001,7 @@ Public Class Game
         'this handles the revert from the magical girl form, if needed
         If player.equippedWeapon.getName.Equals("Magic_Girl_Wand") And player.pClass.name.Equals("Magic Girl") And Not subString.Equals("Magic_Girl_Wand") Then
             lstLog.Items.Add("Putting away your wand causes you to change into your regular self!")
-            player.inventory.Item(10).add(-1)
+            player.p_inventory.add(10, -1)
             player.magGState.save(player)
             player.revertToPState()
         End If
@@ -2049,25 +2054,28 @@ Public Class Game
         Select Case mode
             Case "Potion"
                 lblWhat.Text = "Drink what?"
-                For i = 0 To UBound(player.potions)
-                    If player.potions(i).count > 0 Then
-                        lstSelec.Items.Add(indexes(count) & " - " & player.potions(i).getName)
+                Dim potion_list = player.p_inventory.getPotions
+                For i = 0 To UBound(potion_list)
+                    If potion_list(i).count > 0 Then
+                        lstSelec.Items.Add(indexes(count) & " - " & potion_list(i).getName)
                         count += 1
                     End If
                 Next
             Case "Useable"
                 lblWhat.Text = "Use what?"
-                For i = 0 To UBound(player.useable)
-                    If player.useable(i).count > 0 Then
-                        lstSelec.Items.Add(indexes(count) & " - " & player.useable(i).getName)
+                Dim useable_list = player.p_inventory.getUseable
+                For i = 0 To UBound(useable_list)
+                    If useable_list(i).count > 0 Then
+                        lstSelec.Items.Add(indexes(count) & " - " & useable_list(i).getName)
                         count += 1
                     End If
                 Next
             Case "Food"
                 lblWhat.Text = "Eat what?"
-                For i = 0 To UBound(player.food)
-                    If player.food(i).count > 0 Then
-                        lstSelec.Items.Add(indexes(count) & " - " & player.food(i).getName)
+                Dim food_list = player.p_inventory.getFood
+                For i = 0 To UBound(food_list)
+                    If food_list(i).count > 0 Then
+                        lstSelec.Items.Add(indexes(count) & " - " & food_list(i).getName)
                         count += 1
                     End If
                 Next
@@ -2115,9 +2123,9 @@ Public Class Game
                     lstSelec.Items.Add("b - Common_Clothes")
                 End If
                 count += 1
-                For i = 0 To UBound(player.getArmors.Item2)
-                    If player.getArmors.Item2(i).count > 0 Then
-                        lstSelec.Items.Add(indexes(count) & " - " & player.getArmors.Item2(i).getName)
+                For i = 0 To UBound(player.p_inventory.getArmors.Item2)
+                    If player.p_inventory.getArmors.Item2(i).count > 0 Then
+                        lstSelec.Items.Add(indexes(count) & " - " & player.p_inventory.getArmors.Item2(i).getName)
                         count += 1
                     End If
                 Next
@@ -2125,9 +2133,9 @@ Public Class Game
                 lblWhat.Text = "Equip what?"
                 lstSelec.Items.Add("a - Fists")
                 count += 1
-                For i = 0 To UBound(player.getWeapons.Item2)
-                    If player.getWeapons.Item2(i).count > 0 Then
-                        lstSelec.Items.Add(indexes(count) & " - " & player.getWeapons.Item2(i).getName)
+                For i = 0 To UBound(player.p_inventory.getWeapons.Item2)
+                    If player.p_inventory.getWeapons.Item2(i).count > 0 Then
+                        lstSelec.Items.Add(indexes(count) & " - " & player.p_inventory.getWeapons.Item2(i).getName)
                         count += 1
                     End If
                 Next
@@ -2718,19 +2726,10 @@ Public Class Game
         Try
             If lstInventory.SelectedItem.ToString.Substring(0, 1) = "-" Then Throw New NullReferenceException
             Dim subString As String = lstInventory.SelectedItem.ToString.Split(" (")(1)
-            Dim aInd As Integer = player.inventorynames.IndexOf(subString)
-            If aInd < 0 Then
-                For i = 0 To Potions.Count - 1
-                    If CType(Potions(i), MysteryPotion).getName() = subString Then
-                        aInd = player.inventorynames.IndexOf(CType(Potions(i), MysteryPotion).getRealName())
-                        Exit For
-                    End If
-                Next
-            End If
-            If aInd >= 0 Then
+            selectedItem = player.p_inventory.item(subString)
+            If Not selectedItem Is Nothing Then
                 'MsgBox(aInd & ", " & subString)
                 'MsgBox(player.inventorynames(32))
-                selectedItem = player.inventory.Item(aInd)
                 If selectedItem.getUsable() Then btnUse.Enabled = True Else btnUse.Enabled = False
                 btnDrop.Enabled = True
                 btnLook.Enabled = True
@@ -2774,7 +2773,7 @@ Public Class Game
         btnOk.Visible = False
         btnAll.Visible = False
         btnNone.Visible = False
-        player.invNeedsUDate = True
+        player.p_inventory.invNeedsUDate = True
         player.UIupdate()
     End Sub
     Private Sub fUseable_CheckedChanged(sender As Object, e As EventArgs) Handles fUseable.CheckedChanged
@@ -3024,7 +3023,7 @@ Public Class Game
         Dim tmpInd As Integer = lstInventory.TopIndex
         Dim tind = lstInventory.SelectedIndex
         selectedItem.use()
-        player.invNeedsUDate = True
+        player.p_inventory.invNeedsUDate = True
         player.UIupdate()
         lstInventory.TopIndex = tmpInd
         If selectedItem.count < 1 Then
@@ -3060,7 +3059,7 @@ Public Class Game
             lblEventOnClose = Nothing
         End If
         selectedItem.discard()
-        player.invNeedsUDate = True
+        player.p_inventory.invNeedsUDate = True
         player.UIupdate()
 
         lstInventory.SelectedItem = Nothing
@@ -3436,7 +3435,7 @@ Public Class Game
             debugWindow = New Debug_Window
         End Try
         debugWindow.ShowDialog()
-        player.invNeedsUDate = True
+        player.p_inventory.invNeedsUDate = True
         player.UIupdate()
     End Sub
 

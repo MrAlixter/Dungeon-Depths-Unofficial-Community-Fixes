@@ -2,8 +2,8 @@
     Inherits Armor
     Sub New()
         MyBase.setName("Succubus_Garb")
-        MyBase.setDesc("DO NOT SEE THIS EVER")
-        id = Nothing
+        MyBase.setDesc("The scanty clothes of a succubus." & vbCrLf & "+2 ATK")
+        id = 74
         tier = Nothing
         MyBase.setUsable(False)
         MyBase.aBoost = 2

@@ -10,7 +10,7 @@
     End Sub
     Public Overrides Sub effect()
         Dim p As Player = Game.player
-        p.inventorynames(29) = "Breast_Enlarging_Potion"
+
         If p.pClass.name = "Magic Girl" Then
             Game.pushLblEvent("Your form prevents you from being altered!")
             Exit Sub

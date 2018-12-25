@@ -96,10 +96,10 @@
         Dim armorIndex = armor(Int(Rnd() * (armor.Length)))
         Dim weapon = New Integer() {6, 9, 21, 22}
         Dim weaponIndex = weapon(Int(Rnd() * (weapon.Length)))
-        p.inventory(armorIndex).addOne()
-        p.inventory(weaponIndex).addOne()
-        p.equippedArmor = p.inventory(armorIndex)
-        p.equippedWeapon = p.inventory(weaponIndex)
+        p.p_inventory.add(armorIndex, 1)
+        p.p_inventory.add(weaponIndex, 1)
+        p.equippedArmor = CType(p.p_inventory.item(armorIndex), Armor)
+        p.equippedWeapon = CType(p.p_inventory.item(weaponIndex), Weapon)
 
         'set other player stuff
         p.TextColor = Color.FromArgb(255, 2, 249, 200)

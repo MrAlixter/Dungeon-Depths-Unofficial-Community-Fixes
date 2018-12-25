@@ -135,9 +135,9 @@
                 attack = 1
                 defence = 1
                 speed = 1
-                ReDim inventory(Game.player.inventorynames.Count - 1)
+                ReDim inventory(Game.player.p_inventory.upperBound)
                 For i = 0 To 2
-                    inventory(Int(Rnd() * Game.player.inventorynames.Count)) = (Int(Rnd() * 2) + 1)
+                    inventory(Int(Rnd() * (Game.player.p_inventory.upperBound + 1))) = (Int(Rnd() * 2) + 1)
                 Next
         End Select
 
@@ -252,9 +252,9 @@
         ElseIf reason = "friend" Then
             If Int(Rnd() * 3) = 0 Then
                 Game.lstLog.Items.Add("The " & name & " gives you some supplies before leaving!")
-                Game.player.inventory(2).addone()
-                Game.player.inventory(13).addone()
-                Game.player.inventory(31).addone()
+                Game.player.p_inventory.add(2, 1)
+                Game.player.p_inventory.add(13, 1)
+                Game.player.p_inventory.add(31, 1)
                 Game.pushLblEvent("+1 Health_Potion" & vbCrLf & "+1 Mana_Potion" & vbCrLf & "+1 Apple_Potion")
             Else
                 Game.lstLog.Items.Add("The " & name & " is friendly, and you chat a bit before setting back out!")
@@ -359,12 +359,13 @@
         Game.pushLblEvent("The " & name & " return to " & pPronoun & " original self!")
     End Sub
     Public Sub setInventory(ByVal inv() As Integer)
-        ReDim inventory(Game.player.inventory.Count - 1)
+        ReDim inventory(Game.player.p_inventory.upperBound)
         For i = 0 To UBound(inv)
             If Me.GetType() Is GetType(MiniBoss) Then
                 inventory(inv(i)) += 1
             Else
-                Select Case Game.player.inventory(inv(i)).tier
+                Dim content = Game.player.p_inventory.item(inv(i))
+                Select Case content.tier
                     Case 3
                         Dim rng = (Int(Rnd() * 9))
                         If rng = 1 Then inventory(inv(i)) += 1
@@ -414,7 +415,7 @@
         Dim sexBool As Boolean = CBool(ghostArray(6))
         Dim haircolor As Color = Color.FromArgb(255, ghostArray(7), ghostArray(8), ghostArray(9))
 
-        ReDim inventory(Game.player.inventorynames.Count)
+        ReDim inventory(Game.player.p_inventory.upperBound + 1)
         For i = 0 To UBound(inventory)
             inventory(i) = ghostArray(10 + i)
         Next

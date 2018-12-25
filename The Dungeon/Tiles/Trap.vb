@@ -29,13 +29,8 @@
             Case 1
                 Dim x As Integer = -1
                 Dim n As String = Game.player.equippedArmor.getName()
-                For i = 0 To Game.player.inventorynames.Count - 1
-                    If Game.player.inventorynames(i).Equals(n) Then
-                        x = i
-                        Exit For
-                    End If
-                Next
-                If x <> -1 Then Game.player.inventory(x).count -= 1
+                x = Game.player.p_inventory.idOfKey(n)
+                If x <> -1 Then Game.player.p_inventory.add(x, -1)
                 Dim rng As Integer = Int(Rnd() * Game.chestList.Count)
                 Dim out As String = "A beam fires out of the wall to your left, striking you in the chest."
                 If n <> "Ropes" Then
@@ -55,7 +50,7 @@
                 Else
                     out += "  It doesn't seem to have done anything.  𝘞𝘦𝘪𝘳𝘥..."
                 End If
-                Game.player.inventory(54).add(1)
+                Game.player.p_inventory.add(54, 1)
                 Equipment.clothesChange("Ropes")
                 Game.player.createP()
                 If transformation.canbeTFed(Game.player) Then

@@ -99,7 +99,7 @@
 
 
         Equipment.accChange("Nothing")
-        p.inventory(69).count -= 1
+        p.p_inventory.add(69, -1)
 
         p.createP()
     End Sub
