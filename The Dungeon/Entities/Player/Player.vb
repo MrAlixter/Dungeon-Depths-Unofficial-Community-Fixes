@@ -1,44 +1,36 @@
 ﻿Public Class Player
     'Player is the representation of a player controlled entity (the main player, any teammates)
     'METHODS AND VARIABLES RELATED TO LEVELING HAVE BEEN COMMENTED OUT.
-    Implements Updatable
+    Inherits Entity
 
     'Player Instance variables
-    Public name, sex, description As String
+    Public sex, description As String
     Public pClass As pClass = New Classless()
     Public pForm As pForm = New Human()
     'Public level, xp, nextLevelXp As Integer
-    Public health As Double
-    Public maxHealth, mana, maxMana, attack, defence, will, speed, gold, lust As Integer
-    Public hBuff As Integer = 0     'buffs that apply across forms (from charms, etc)
-    Public mBuff As Integer = 0
-    Public aBuff As Integer = 0
-    Public dBuff As Integer = 0
-    Public wBuff As Integer = 0
-    Public sBuff As Integer = 0
+  
     Public breastSize As Integer = -1
     Public hunger As Integer
     Public equippedWeapon As Weapon
     Public equippedArmor As Armor
     Public equippedAcce As Accessory = New noAcce
-    Public currTarget As Monster
-    Public pos As Point
-    Public canMoveFlag As Boolean = True
+
+    Public Shadows currTarget As NPC = Nothing
+
     Public perks As Dictionary(Of String, Integer) = New Dictionary(Of String, Integer)() 'perks also include triggers for events
     Public classes As Dictionary(Of String, pClass) = New Dictionary(Of String, pClass)()
     Public forms As Dictionary(Of String, pForm) = New Dictionary(Of String, pForm)()
     Public polymorphs As Dictionary(Of String, Transformation) = New Dictionary(Of String, Transformation)()
     Public pImage As Image 'tile image of the player
     Public TextColor As Color
-    Public isDead As Boolean = False
+
     'portrait variables
     Public sexBool As Boolean
     Public iArr As Image()
     Public iArrInd(16) As Tuple(Of Integer, Boolean)
     Public haircolor As Color = Color.FromArgb(255, 204, 203, 213)
     Public skincolor As Color = Color.FromArgb(255, 247, 219, 195)
-    'inventory variables
-    Public p_inventory As Inventory
+
     'player & form states
     Public currState, pState, sState As State
     Public bimbState As State = New State()
@@ -52,9 +44,6 @@
     Public solFlag = False
     Public wingInd = 0
     Public hornInd = 0
-    Public isAttacking = False
-
-    Public forcedPath() As Point = Nothing
     Public prefForm As preferedForm
 
     Public ongoingTFs As List(Of Transformation) = New List(Of Transformation)
@@ -79,8 +68,8 @@
         hunger = 0
 
         createInvPerks()
-        p_inventory.add(0, 1)
-        p_inventory.add(2, 1)
+        inv.add(0, 1)
+        inv.add(2, 1)
     End Sub
     'load from save constructors
     Public Sub New(ByVal s As String, ByVal v As Double)
@@ -131,39 +120,40 @@
         wBuff = playArray(9)
         sBuff = playArray(10)
 
-        p_inventory.load(playArray(11))
 
+        inv.load(playArray(11))
+        Dim x As Integer = -2
 
         Dim y = 0
         Dim tfp As List(Of Point) = New List(Of Point)
-        If Not playArray(15).Equals("N/a") Then
-            y = CInt(playArray(14)) * 2
+        If Not playArray(14 + x).Equals("N/a") Then
+            y = CInt(playArray(14 + x)) * 2
             For i = 0 To y Step 2
-                tfp.Add(New Point(CInt(playArray(15 + i)), playArray(16 + i)))
+                tfp.Add(New Point(CInt(playArray(14 + x + i)), playArray(15 + x + i)))
             Next
             forcedPath = tfp.ToArray
         Else
             tfp = Nothing
         End If
 
-        Dim currentIndex = 16 + y
-        If Not playArray(15).Equals("N/a") Then currentIndex += 1
+        Dim currentIndex = 15 + x + y
+        If Not playArray(14 + x).Equals("N/a") Then currentIndex += 1
 
         Dim stuff() As String = playArray(currentIndex).Split("$")
         If Not stuff(0).Equals("N/a") Then
             prefForm = New preferedForm(Color.FromArgb(CInt(stuff(0)), CInt(stuff(1)), CInt(stuff(2)), CInt(stuff(3))), _
                                         Color.FromArgb(CInt(stuff(4)), CInt(stuff(5)), CInt(stuff(6)), CInt(stuff(7))), _
                                         CBool(stuff(8)), CBool(stuff(9)), CInt(stuff(10)), CBool(stuff(11)), CInt(stuff(12)))
-            CType(p_inventory.item(69), ThrallCollar).setFormerLife(stuff(13), New Tuple(Of Integer, Boolean)(CInt(stuff(14)), stuff(15)))
+            CType(inv.item(69), ThrallCollar).setFormerLife(stuff(13), New Tuple(Of Integer, Boolean)(CInt(stuff(14)), stuff(15)))
         Else
-            CType(p_inventory.item(69), ThrallCollar).setFormerLife(stuff(1), New Tuple(Of Integer, Boolean)(CInt(stuff(2)), stuff(3)))
+            CType(inv.item(69), ThrallCollar).setFormerLife(stuff(1), New Tuple(Of Integer, Boolean)(CInt(stuff(2)), stuff(3)))
             If Not stuff(0).Equals("N/a") Then
                 prefForm = New preferedForm(Color.FromArgb(CInt(stuff(0)), CInt(stuff(1)), CInt(stuff(2)), CInt(stuff(3))),
                                             Color.FromArgb(CInt(stuff(4)), CInt(stuff(5)), CInt(stuff(6)), CInt(stuff(7))),
                                             CBool(stuff(8)), CBool(stuff(9)), CInt(stuff(10)), CBool(stuff(11)), CInt(stuff(12)))
-                CType(p_inventory.item(69), ThrallCollar).setFormerLife(stuff(13), New Tuple(Of Integer, Boolean)(CInt(stuff(14)), stuff(15)))
+                CType(inv.item(69), ThrallCollar).setFormerLife(stuff(13), New Tuple(Of Integer, Boolean)(CInt(stuff(14)), stuff(15)))
             Else
-                CType(p_inventory.item(69), ThrallCollar).setFormerLife(stuff(1), New Tuple(Of Integer, Boolean)(CInt(stuff(2)), stuff(3)))
+                CType(inv.item(69), ThrallCollar).setFormerLife(stuff(1), New Tuple(Of Integer, Boolean)(CInt(stuff(2)), stuff(3)))
             End If
         End If
 
@@ -193,11 +183,11 @@
         If iArrInd(14).Item2 Then
             Select Case iArrInd(14).Item1
                 Case 1
-                    equippedAcce = p_inventory.item(66)
+                    equippedAcce = inv.item(66)
                 Case 2
-                    equippedAcce = p_inventory.item(67)
+                    equippedAcce = inv.item(67)
                 Case 3
-                    equippedAcce = p_inventory.item(68)
+                    equippedAcce = inv.item(68)
                 Case Else
                     equippedAcce = New noAcce
                     equippedAcce.count -= 1
@@ -205,9 +195,9 @@
         Else
             Select Case iArrInd(14).Item1
                 Case 1
-                    equippedAcce = p_inventory.item(67)
+                    equippedAcce = inv.item(67)
                 Case 2
-                    equippedAcce = p_inventory.item(68)
+                    equippedAcce = inv.item(68)
                 Case Else
                     equippedAcce = New noAcce
                     equippedAcce.add(-1)
@@ -222,16 +212,16 @@
         setStartingAccessory()
         'sets loadout based on selected class
         If s = "Warrior" Then
-            p_inventory.add(5, 1)
-            p_inventory.add(6, 1)
-            equippedArmor = p_inventory.item(5)
-            equippedWeapon = p_inventory.item(6)
+            inv.add(5, 1)
+            inv.add(6, 1)
+            equippedArmor = inv.item(5)
+            equippedWeapon = inv.item(6)
         ElseIf s = "Mage" Then
             Game.cboxMG.Items.Add("Fireball")
-            p_inventory.add(2, 3)
-            p_inventory.add(4, 1)
-            p_inventory.add(21, 1)
-            equippedWeapon = p_inventory.item(21)
+            inv.add(2, 3)
+            inv.add(4, 1)
+            inv.add(21, 1)
+            equippedWeapon = inv.item(21)
         End If
         'set class
         pClass = classes(s)
@@ -251,7 +241,7 @@
         sState = New State(Me)
     End Sub
     Public Sub createInvPerks()
-        p_inventory = New Inventory
+        inv = New Inventory
         initPerks()
         initClasses()
         initForms()
@@ -341,7 +331,7 @@
     End Sub
 
     '|MOVEMENT COMMANDS|
-    Private Sub reachedFPathDest()
+    Public Overrides Sub reachedFPathDest()
         If Game.floor = 4 And Game.preBSBody Is Nothing And Not Game.preBSStartState Is Nothing And Game.floorboss(4) = "Ooze Empress" Then
             RandoTF.floor4FirstBossEncounter()
             Exit Sub
@@ -367,113 +357,81 @@
             End If
         End If
     End Sub
-    Private Sub followPath()
-        If forcedPath.Length <= 1 Then
-            reachedFPathDest()
-            forcedPath = Nothing
-        Else
-            Dim t(UBound(forcedPath) - 1) As Point
-            pos = forcedPath(0)
-            For i = 1 To UBound(forcedPath)
-                t(i - 1) = forcedPath(i)
-            Next
-            forcedPath = t
-        End If
-    End Sub
-    Public Sub moveUp()
-        If Not forcedPath Is Nothing Then
-            followPath()
-            Exit Sub
-        End If
-        If (pos.Y - 1) < 0 Or canMoveFlag = False Then Exit Sub
-        If Game.mBoard(pos.Y - 1, pos.X).Tag = 0 Then Exit Sub
-        pos.Y -= 1
-    End Sub
-    Public Sub moveDown()
-        If Not forcedPath Is Nothing Then
-            followPath()
-            Exit Sub
-        End If
-        If (pos.Y + 1) > Game.mBoardHeight - 1 Or canMoveFlag = False Then Exit Sub
-        If Game.mBoard(pos.Y + 1, pos.X).Tag = 0 Then Exit Sub
-        pos.Y += 1
-    End Sub
-    Public Sub moveLeft()
-        If Not forcedPath Is Nothing Then
-            followPath()
-            Exit Sub
-        End If
-        If (pos.X - 1) < 0 Or canMoveFlag = False Then Exit Sub
-        If Game.mBoard(pos.Y, pos.X - 1).Tag = 0 Then Exit Sub
-        pos.X -= 1
-    End Sub
-    Public Sub moveRight()
-        If Not forcedPath Is Nothing Then
-            followPath()
-            Exit Sub
-        End If
-        If (pos.X + 1) > Game.mBoardWidth - 1 Or canMoveFlag = False Then Exit Sub
-        If Game.mBoard(pos.Y, pos.X + 1).Tag = 0 Then Exit Sub
-        pos.X += 1
-    End Sub
 
     '|COMBAT COMMANDS|
-    Public Sub setTarg(ByVal m As Monster)
-        currTarget = m
+    Public Sub setTarget(ByRef t As NPC)
+        currTarget = t
+        MyBase.currTarget = t
     End Sub
-    Public Sub attackCMD(ByVal target As Monster)
-        isAttacking = False
+    Public Sub clearTarget()
+        currTarget = Nothing
+        MyBase.currTarget = Nothing
+    End Sub
+    Public Overrides Sub attackCMD(ByRef target As Entity)
         Randomize()
         Dim dmg As Integer = equippedWeapon.attack(Me, target)
         If dmg = -1 Then
-            Game.lstLog.Items.Add(CStr("You miss" & target.title & " " & target.getName() & "!"))
-            Game.pushLblCombatEvent(CStr("You miss" & target.title & " " & target.getName() & "!"))
-            Exit Sub
+            miss(target)
         ElseIf dmg = -2 Then
-            dmg = calcDamage(Me.getAttack * 3.0, target.defence * 0.5)
-            Game.lstLog.Items.Add(CStr("You hit" & target.title & " " & target.getName() & " for " & dmg & " damage!" & ".  Critical hit!"))
-            Game.pushLblCombatEvent("You hit" & target.title & " " & target.getName() & " for " & dmg & " damage!" & ".  Critical hit!")
-            target.takeDMG(dmg)
-            target.isStunned = True
-            target.stunct = 0
-            Exit Sub
-        ElseIf dmg < 1 Then
-            dmg = 1
-        End If
-        Game.lstLog.Items.Add(CStr("You hit" & target.title & " " & target.getName() & " for " & dmg & " damage!"))
-        target.takeDMG(dmg)
-        Game.pushLblCombatEvent(CStr("You hit" & target.title & " " & target.getName() & " for " & dmg & " damage!"))
-        Game.lstLog.TopIndex = Game.lstLog.Items.Count - 1
-    End Sub
-    Public Sub takeDMG(ByVal dmg As Integer, ByRef source As Updatable)
-        currTarget = source
-        If dmg > 0 Then dmg += Int(Rnd() * 3) + -1
-        If dmg = -2 Then
-            dmg = currTarget.attack * 2
-            'Dim actualDMG As Integer = dmg - ((getDefence() / 100) * dmg)
-            Dim actualDMG As Integer = calcDamage(2 * dmg, getDefence)
-            health -= actualDMG / getmaxHealth()
-            Game.lblPHealtDiff.Tag -= actualDMG
-            Game.lstLog.Items.Add(CStr("You got hit! Critical hit! -" & actualDMG & " health!"))
-            Game.pushLblCombatEvent(CStr("You got hit! Critical hit! -" & actualDMG & " health!"))
-        ElseIf dmg = -1 Then
-            Game.lblPHealtDiff.Tag -= 0
-            Game.lstLog.Items.Add(CStr("You are able to evade your opponent!"))
-            Game.pushLblCombatEvent(CStr("You are able to evade your opponent!"))
+            cHit(Me.getATK, target)
         Else
-            Dim actualDMG As Integer = calcDamage(dmg, getDefence)
-            health -= actualDMG / getmaxHealth()
-            Game.lblPHealtDiff.Tag -= actualDMG
-            Game.lstLog.Items.Add(CStr("You got hit! -" & actualDMG & " health!"))
-            Game.pushLblCombatEvent(CStr("You got hit! -" & actualDMG & " health!"))
+            hit(dmg, target)
         End If
         Game.lstLog.TopIndex = Game.lstLog.Items.Count - 1
     End Sub
-    Public Shared Function calcDamage(atk As Integer, def As Integer) As Integer
-        If atk <= 0 Then Return 1
-        If def <= 0 Then Return atk
-        Return atk * (atk / (atk + def))
-    End Function
+    'attacking a npc
+    Private Sub miss(target As NPC)
+        Game.lstLog.Items.Add(CStr("You miss" & target.title & " " & target.getName() & "!"))
+        Game.pushLblCombatEvent(CStr("You miss" & target.title & " " & target.getName() & "!"))
+    End Sub
+    Private Sub hit(dmg As Integer, target As NPC)
+        target.takeDMG(dmg, Me)
+        Game.lstLog.Items.Add(CStr("You hit" & target.title & " " & target.getName() & " for " & dmg & " damage!"))
+        Game.pushLblCombatEvent(CStr("You hit" & target.title & " " & target.getName() & " for " & dmg & " damage!"))
+    End Sub
+    Private Sub cHit(dmg As Integer, target As NPC)
+        target.takeDMG(dmg * 3, Me)
+        Game.lstLog.Items.Add(CStr("You hit" & target.title & " " & target.getName() & " for " & dmg * 3 & " damage!  Critical hit!"))
+        Game.pushLblCombatEvent(CStr("You hit" & target.title & " " & target.getName() & " for " & dmg * 3 & " damage!  Critical hit!"))
+        target.isStunned = True
+        target.stunct = 0
+    End Sub
+    'attacking a non npc
+    Private Sub miss(target As Entity)
+        If target.GetType() Is GetType(NPC) Or target.GetType.IsSubclassOf(GetType(NPC)) Then
+            miss(CType(target, NPC))
+            Exit Sub
+        End If
+
+        Game.lstLog.Items.Add(CStr("You miss " & target.getName() & "!"))
+        Game.pushLblCombatEvent(CStr("You miss " & target.getName() & "!"))
+    End Sub
+    Private Sub hit(dmg As Integer, target As Entity)
+        If target.GetType() Is GetType(NPC) Or target.GetType.IsSubclassOf(GetType(NPC)) Then
+            hit(dmg, CType(target, NPC))
+            Exit Sub
+        End If
+
+        target.takeDMG(dmg, Me)
+        Game.lstLog.Items.Add(CStr("You hit " & target.getName() & " for " & dmg & " damage!"))
+        Game.pushLblCombatEvent(CStr("You hit " & target.getName() & " for " & dmg & " damage!"))
+    End Sub
+    Private Sub cHit(dmg As Integer, target As Entity)
+        If target.GetType() Is GetType(NPC) Or target.GetType.IsSubclassOf(GetType(NPC)) Then
+            cHit(dmg, CType(target, NPC))
+            Exit Sub
+        End If
+
+        target.takeDMG(dmg * 3, Me)
+        Game.lstLog.Items.Add(CStr("You hit " & target.getName() & " for " & dmg * 3 & " damage!  Critical hit!"))
+        Game.pushLblCombatEvent("You hit " & target.getName() & " for " & dmg * 3 & " damage!  Critical hit!")
+    End Sub
+    'taking damage
+    Public Overrides Sub takeDMG(ByVal dmg As Integer, ByRef source As Entity)
+        MyBase.takeDMG(dmg, source)
+        Game.lblPHealtDiff.Tag -= dmg
+    End Sub
+
     '|TRANSFORMATION METHODS|
     Public Sub revertToSState()
         Dim tHth As Integer = health + hBuff
@@ -613,47 +571,50 @@
             Dim out As String = "As you reach out to touch your opponent, you clumsily swipe, missing them, and hit...yourself?  Already your legs are gold, and only have a moment to scream, your vocal cords quickly following suit. ""Well,"" you think, ""...at least I won't have to worry abou money anymore."" " & vbCrLf & "And like that, the dungeon gains another decoration."
             Game.pushLblEvent(out)
             MsgBox(out)
-            Die()
+            die()
         End If
     End Sub
 
     '|GENERAL METHODS|
-    Public Sub Die()
+    Public Overrides Sub die(ByRef source As Entity)
         initPerks()
         If Game.pnlSaveLoad.Visible = True Then Exit Sub
-        Game.npcList.Clear()
-        Try
-            If currTarget.name.Equals("Shopkeeper") Then
-                DeathEffects.ShopkeeperDeath()
-                Exit Sub
-            ElseIf currTarget.name.Equals("Mindless Bimbo") Then
-                DeathEffects.MBimboDeath()
-                Exit Sub
-            ElseIf currTarget.name.Equals("Mesmerized Thrall") Then
-                DeathEffects.thrallDeath()
-                Exit Sub
-            ElseIf currTarget.name.Equals("Enthralling Sorcerer") Or currTarget.name.Equals("Enthralling Sorceress") Then
-                DeathEffects.sorcererDeath()
-                Exit Sub
-            ElseIf currTarget.name.Equals("Slime") Or currTarget.name.Equals("Goo Girl") Then
-                DeathEffects.slimeDeath()
-                Exit Sub
-            ElseIf currTarget.name.Equals("Spider") Or currTarget.name.Equals("Arachne Huntress") Then
-                DeathEffects.spiderDeath()
-                Exit Sub
-            ElseIf currTarget.name.Equals("Mimic") Then
-                DeathEffects.mimicDeath()
-                Exit Sub
-            ElseIf currTarget.name.Equals("Ooze Empress") Then
-                DeathEffects.oozeEmpDeath()
-                Exit Sub
-            ElseIf currTarget.name.Equals("Hunger") Then
-                Game.pushLblEvent("You starve to death!")
-            End If
-        Catch ex As Exception
-            MsgBox("D_D Error 002: Unknown Cause of death")
-        End Try
+        If source Is Nothing Then
+            DeathEffects.hardDeath()
+            Game.npcList.Clear()
+            Exit Sub
+        End If
+
+        If source.getName.Equals("Shopkeeper") Then
+            DeathEffects.ShopkeeperDeath()
+            Exit Sub
+        ElseIf source.getName.Equals("Mindless Bimbo") Then
+            DeathEffects.MBimboDeath()
+            Exit Sub
+        ElseIf source.getName.Equals("Mesmerized Thrall") Then
+            DeathEffects.thrallDeath()
+            Exit Sub
+        ElseIf source.getName.Equals("Enthralling Sorcerer") Or source.getName.Equals("Enthralling Sorceress") Then
+            DeathEffects.sorcererDeath()
+            Exit Sub
+        ElseIf source.getName.Equals("Slime") Or source.getName.Equals("Goo Girl") Then
+            DeathEffects.slimeDeath()
+            Exit Sub
+        ElseIf source.getName.Equals("Spider") Or source.getName.Equals("Arachne Huntress") Then
+            DeathEffects.spiderDeath()
+            Exit Sub
+        ElseIf source.getName.Equals("Mimic") Then
+            DeathEffects.mimicDeath()
+            Exit Sub
+        ElseIf source.getName.Equals("Ooze Empress") Then
+            DeathEffects.oozeEmpDeath()
+            Exit Sub
+        ElseIf source.getName.Equals("Hunger") Then
+            Game.pushLblEvent("You starve to death!")
+        End If
+
         DeathEffects.hardDeath()
+        Game.npcList.Clear()
     End Sub
     Public Sub setPImage()
         'sets the player call
@@ -673,10 +634,9 @@
     End Sub
 
     '|UPDATE METHODS|
-    Sub update() Implements Updatable.update
+    Public Overrides Sub update()
         '|COMBAT|
-        'attack if the player 1) has a target & 2) is attacking
-        If Not (currTarget Is Nothing) And isAttacking Then attackCMD(currTarget)
+        MyBase.update()
 
         '|PLAYER STAT UPKEEP|
         bsizeroute()
@@ -688,14 +648,9 @@
             hunger += 1
         End If
 
-        If health <= 0 Then
-            Die()
-            Exit Sub
-        End If
-
         If health > 1 Then health = 1
         If will < 0 Then will = 0
-        If mana > getmaxMana() And Not Game.combatmode Then mana = getmaxMana()
+        If mana > getMaxMana() And Not Game.combatmode Then mana = getMaxMana()
 
         '|PERK AND TRANSFORMATION UPDATES|
         Dim pUpdateFlag As Boolean = False
@@ -780,17 +735,17 @@
     End Function
     Sub UIupdate()
         If health <= 0 Then
-            Die()
+            die()
             Exit Sub
         End If
         If Game.lblNameTitle.Text <> name & " the " & pClass.name Then Game.lblNameTitle.Text = name & " the " & pClass.name
-        If Game.lblHealth.Text <> "Health = " & CInt(health * getmaxHealth()) & "/" & getmaxHealth() Then Game.lblHealth.Text = "Health = " & CInt(health * getmaxHealth()) & "/" & getmaxHealth()
-        If Game.lblMana.Text <> "Mana = " & mana & "/" & getmaxMana() Then Game.lblMana.Text = "Mana = " & mana & "/" & getmaxMana()
+        If Game.lblHealth.Text <> "Health = " & CInt(health * getMaxHealth()) & "/" & getMaxHealth() Then Game.lblHealth.Text = "Health = " & CInt(health * getMaxHealth()) & "/" & getMaxHealth()
+        If Game.lblMana.Text <> "Mana = " & mana & "/" & getMaxMana() Then Game.lblMana.Text = "Mana = " & mana & "/" & getMaxMana()
         If Game.lblHunger.Text <> "Hunger = " & hunger & "/100" Then Game.lblHunger.Text = "Hunger = " & hunger & "/100"
-        If Game.lblATK.Text <> "ATK = " & (getAttack()) + equippedWeapon.aBoost Then Game.lblATK.Text = "ATK = " & (getAttack()) + equippedWeapon.aBoost
-        If Game.lblDEF.Text <> "DEF = " & getDefence() Then Game.lblDEF.Text = "DEF = " & getDefence()
-        If Game.lblSKL.Text <> "WIL = " & getWillpower() Then Game.lblSKL.Text = "WIL = " & getWillpower()
-        If Game.lblSPD.Text <> "SPD = " & getSpeed() Then Game.lblSPD.Text = "SPD = " & getSpeed()
+        If Game.lblATK.Text <> "ATK = " & (getATK()) + equippedWeapon.aBoost Then Game.lblATK.Text = "ATK = " & (getATK()) + equippedWeapon.aBoost
+        If Game.lblDEF.Text <> "DEF = " & getDEF() Then Game.lblDEF.Text = "DEF = " & getDEF()
+        If Game.lblSKL.Text <> "WIL = " & getWIL() Then Game.lblSKL.Text = "WIL = " & getWIL()
+        If Game.lblSPD.Text <> "SPD = " & getSPD() Then Game.lblSPD.Text = "SPD = " & getSPD()
         If Game.lblGold.Text <> "GOLD = " & gold And gold <= 999999 Then
             Game.lblGold.Text = "GOLD = " & gold
         ElseIf Game.lblGold.Text <> "GOLD = " & gold And Game.lblGold.Text <> "GOLD = 999999+" Then
@@ -798,12 +753,12 @@
         End If
 
         Dim numItems As Integer = Game.lstInventory.Items.Count
-        Dim tArr(p_inventory.Count + 5) As String
+        Dim tArr(inv.count + 5) As String
         Dim ct As Integer = 0
         If Game.invFilters(0) Then
             tArr(ct) = "-USEABLES:"
             ct += 1
-            Dim u_list = p_inventory.getUseable
+            Dim u_list = inv.getUseable
             Array.Sort(u_list)
             For i = 0 To UBound(u_list)
                 If u_list(i).getCount > 0 Then
@@ -815,7 +770,7 @@
         If Game.invFilters(1) Then
             tArr(ct) = "-POTIONS:"
             ct += 1
-            Dim p_list = p_inventory.getPotions
+            Dim p_list = inv.getPotions
             Array.Sort(p_list)
             For i = 0 To UBound(p_list)
                 If p_list(i).getCount > 0 Then
@@ -827,7 +782,7 @@
         If Game.invFilters(2) Then
             tArr(ct) = "-FOOD:"
             ct += 1
-            Dim f_list = p_inventory.getFood
+            Dim f_list = inv.getFood
             Array.Sort(f_list)
             For i = 0 To UBound(f_list)
                 If f_list(i).getCount > 0 Then
@@ -839,7 +794,7 @@
         If Game.invFilters(3) Then
             tArr(ct) = "-ARMOR:"
             ct += 1
-            Dim a_list = p_inventory.getArmors.Item2
+            Dim a_list = inv.getArmors.Item2
             Array.Sort(a_list)
             For i = 0 To UBound(a_list)
                 If a_list(i).getCount > 0 Then
@@ -851,7 +806,7 @@
         If Game.invFilters(4) Then
             tArr(ct) = "-WEAPONS:"
             ct += 1
-            Dim w_list = p_inventory.getWeapons.Item2
+            Dim w_list = inv.getWeapons.Item2
             Array.Sort(w_list)
             For i = 0 To UBound(w_list)
                 If w_list(i).getCount > 0 Then
@@ -863,7 +818,7 @@
         If Game.invFilters(6) Then
             tArr(ct) = "-ACCESSORIES:"
             ct += 1
-            Dim ac_list = p_inventory.getAccesories.Item2
+            Dim ac_list = inv.getAccesories.Item2
             Array.Sort(ac_list)
             For i = 0 To UBound(ac_list)
                 If ac_list(i).getCount > 0 Then
@@ -875,7 +830,7 @@
         If Game.invFilters(5) Then
             tArr(ct) = "-MISC:"
             ct += 1
-            Dim m_list = p_inventory.getMisc
+            Dim m_list = inv.getMisc
             Array.Sort(m_list)
             For i = 0 To UBound(m_list)
                 If m_list(i).getCount > 0 Then
@@ -884,13 +839,13 @@
                 End If
             Next
         End If
-        If ct <> numItems Or p_inventory.invNeedsUDate Then
+        If ct <> numItems Or inv.invNeedsUDate Then
             Game.lstInventory.Items.Clear()
             For i = 0 To UBound(tArr)
                 If Not tArr(i) Is Nothing Then Game.lstInventory.Items.Add(tArr(i))
             Next
         End If
-        p_inventory.invNeedsUDate = False
+        inv.invNeedsUDate = False
         'Dim t As Boolean = CharacterGenerator.CreateBMP(iArr).Equals(Game.picPortrait.BackgroundImage)
         'Dim t As Boolean = picsAreSame(CharacterGenerator.CreateBMP(iArr), New Bitmap(Game.picPortrait.BackgroundImage))
         ''If Game.turn < 2 AndAlso Not CharacterGenerator.CreateBMP(iArr).Equals(Game.picPortrait.BackgroundImage) Then createP() 'Form3.portraitUDate()
@@ -941,21 +896,21 @@
         Dim chk = False
         If Not solFlag Then Equipment.portraitUDate()
         For i = 0 To 16
-                If iArrInd(i).Item2 Then
-                    If iArrInd(i).Item1 < CharacterGenerator.fAttributes(i).Count Then
-                        iArr(i) = CharacterGenerator.fAttributes(i)(iArrInd(i).Item1)
-                    Else
-                        MsgBox("Error!  Exception thrown in portrait creation (specifically in layer " & i & ").  The player character will now revert to default.")
-                        revertToSState()
-                    End If
+            If iArrInd(i).Item2 Then
+                If iArrInd(i).Item1 < CharacterGenerator.fAttributes(i).Count Then
+                    iArr(i) = CharacterGenerator.fAttributes(i)(iArrInd(i).Item1)
                 Else
-                    If iArrInd(i).Item1 < CharacterGenerator.mAttributes(i).Count Then
-                        iArr(i) = CharacterGenerator.mAttributes(i)(iArrInd(i).Item1)
-                    Else
-                        MsgBox("Error!  Exception thrown in portrait creation (specifically in layer " & i & ").  The player character will now revert to default.")
-                        revertToSState()
-                    End If
+                    MsgBox("Error!  Exception thrown in portrait creation (specifically in layer " & i & ").  The player character will now revert to default.")
+                    revertToSState()
                 End If
+            Else
+                If iArrInd(i).Item1 < CharacterGenerator.mAttributes(i).Count Then
+                    iArr(i) = CharacterGenerator.mAttributes(i)(iArrInd(i).Item1)
+                Else
+                    MsgBox("Error!  Exception thrown in portrait creation (specifically in layer " & i & ").  The player character will now revert to default.")
+                    revertToSState()
+                End If
+            End If
         Next
 
         changeHairColor(haircolor)
@@ -1444,7 +1399,7 @@
         output += wBuff & "*"
         output += sBuff & "*"
 
-        output += p_inventory.save()
+        output += inv.save()
 
         If forcedPath Is Nothing Then
             output += "N/a*"
@@ -1461,7 +1416,7 @@
         Else
             output += "N/a$"
         End If
-        output += p_inventory.item(69).ToString
+        output += inv.item(69).ToString
 
         output += "*" & ongoingTFs.Count - 1 & "*"
         For i = 0 To ongoingTFs.Count - 1
@@ -1471,10 +1426,8 @@
     End Function
     Public Function toGhost() As String
         Dim output = CStr(name & " the " & pForm.name & " " & pClass.name & "*" & health & "*" & maxHealth &
-            "*" & getAttack() & "*" & getDefence() & "*" & getSpeed() & "*" & sexBool & "*" & haircolor.R & "*" & haircolor.G & "*" & haircolor.B & "*")
-        For i = 0 To p_inventory.upperBound
-            output += (p_inventory.item(i).count) & "*"
-        Next
+            "*" & getATK() & "*" & getDEF() & "*" & getSPD() & "*" & sexBool & "*" & haircolor.R & "*" & haircolor.G & "*" & haircolor.B & "*")
+        output += inv.save
         For i = 0 To UBound(iArrInd)
             output += (iArrInd(i).Item1 & "%" & iArrInd(i).Item2 & "*")
         Next
@@ -1482,26 +1435,26 @@
     End Function
 
     '|GETTER/SETTER METHODS|
-    Function getmaxHealth()
+    Overrides Function getMaxHealth() As Integer
         Return CInt((maxHealth + hBuff + equippedArmor.hBoost + equippedAcce.hBoost) * pClass.h * pForm.h)
     End Function
-    Function getmaxMana()
+    Overrides Function getMaxMana() As Integer
         If equippedArmor Is Nothing Or equippedWeapon Is Nothing Then Return CInt(maxMana * pForm.m * pForm.m) + mBuff
         Return CInt((maxMana + mBuff + equippedArmor.mBoost + equippedWeapon.mBoost + equippedAcce.mBoost) * pForm.m * pForm.m)
     End Function
-    Function getAttack()
+    Overrides Function getATK() As Integer
         If equippedArmor Is Nothing Or equippedWeapon Is Nothing Then Return CInt(attack * pForm.a * pClass.a) + aBuff
         Return CInt((attack + aBuff + equippedArmor.aBoost + equippedAcce.aBoost) * pForm.a * pClass.a)
     End Function
-    Function getDefence()
+    Overrides Function getDEF() As Integer
         If equippedArmor Is Nothing Or equippedWeapon Is Nothing Then Return CInt(defence * pClass.d * pForm.d) + dBuff
         Return CInt((defence + dBuff + equippedArmor.dBoost + equippedAcce.dBoost) * pClass.d * pForm.d)
     End Function
-    Function getSpeed()
+    Overrides Function getSPD() As Integer
         If equippedArmor Is Nothing Or equippedWeapon Is Nothing Then Return CInt(speed * pClass.s * pForm.s) + sBuff
         Return CInt((speed + sBuff + equippedArmor.sBoost + equippedAcce.sBoost) * pClass.s * pForm.s)
     End Function
-    Function getWillpower()
+    Overrides Function getWIL() As Integer
         Return CInt(will * pClass.w * pForm.w) + wBuff
     End Function
 

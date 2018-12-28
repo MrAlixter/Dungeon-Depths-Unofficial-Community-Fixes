@@ -35,7 +35,7 @@
 
     Private Sub loadItems()
         boxItems.Items.Clear()
-        Dim p_inv = Game.player.p_inventory
+        Dim p_inv = Game.player.inv
         For i = 0 To p_inv.upperBound
             boxItems.Items.Add(p_inv.getKeyByID(i))
         Next
@@ -44,11 +44,11 @@
     Private Sub refreshChest()
         boxContents.Items.Clear()
         inventoryList.Clear()
-        Dim p_inv = Game.player.p_inventory
-        For i = 0 To chest.contents.Count - 1
-            If chest.contents(i) > 0 Then
-                boxContents.Items.Add(p_inv.getKeyByID(i) & " x" & chest.contents(i).ToString())
-                inventoryList.Add(p_inv.getKeyByID(i) & " x" & chest.contents(i).ToString())
+        Dim c_inv = chest.contents
+        For i = 0 To chest.contents.upperBound
+            If chest.contents.getCountAt(i) > 0 Then
+                boxContents.Items.Add(c_inv.getKeyByID(i) & " x" & c_inv.getCountAt(i).ToString())
+                inventoryList.Add(c_inv.getKeyByID(i) & " x" & c_inv.getCountAt(i).ToString())
             End If
         Next
         contentsFilterUpdate()
@@ -73,8 +73,8 @@
 
     Private Sub itemFilterUpdate()
         boxItems.Items.Clear()
-        Dim p_inv = Game.player.p_inventory
-        For i As Integer = 0 To game.player.p_inventory.upperbound
+        Dim p_inv = Game.player.inv
+        For i As Integer = 0 To game.player.inv.upperbound
             If p_inv.getKeyByID(i).IndexOf(boxItemsFilter.Text, 0, StringComparison.CurrentCultureIgnoreCase) > -1 Then
                 boxItems.Items.Add(p_inv.getKeyByID(i).ToString())
             End If
@@ -87,14 +87,14 @@
         Do Until selected.Count = 0
             Dim temp As Integer = selected(0)
             Dim name As String = inventoryList(temp)
-            Dim itemInd As Integer = Game.player.p_inventory.idOfKey(name)
-            If boxAmt.Value >= chest.contents(itemInd) Then
-                chest.contents(itemInd) = 0
+            Dim itemInd As Integer = chest.contents.idOfKey(name)
+            If boxAmt.Value >= chest.contents.getCountAt(itemInd) Then
+                chest.contents.setCount(itemInd, 0)
                 boxContents.Items.RemoveAt(temp) 'This will automatically remove that selected index
                 inventoryList.RemoveAt(temp)
             Else
-                chest.contents(itemInd) -= boxAmt.Value
-                boxContents.Items(temp) = Game.player.p_inventory.getKeyByID(itemInd) & " x" & chest.contents(itemInd)
+                chest.contents.add(itemInd, CInt(-boxAmt.Value))
+                boxContents.Items(temp) = chest.contents.getKeyByID(itemInd) & " x" & chest.contents.getCountAt(itemInd)
                 selected.Remove(0)
             End If
         Loop
@@ -103,8 +103,8 @@
     Private Sub btnAdd_Click(sender As Object, e As EventArgs) Handles btnAdd.Click
         If boxItems.SelectedIndices.Count <> 0 And boxAmt.Value > 0 Then
             For i = 0 To boxItems.SelectedIndices.Count - 1
-                Dim itemInd As Integer = Game.player.p_inventory.idOfKey(boxItems.SelectedItems(i))
-                chest.contents(itemInd) += boxAmt.Value
+                Dim itemInd As Integer = chest.contents.idOfKey(boxItems.SelectedItems(i))
+                chest.contents.add(itemInd, CInt(boxAmt.Value))
             Next
         End If
         refreshChest()

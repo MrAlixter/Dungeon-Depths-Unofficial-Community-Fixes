@@ -343,7 +343,7 @@ Public Class Debug_Window
     Private Sub updateInventoryList()
         inventoryList.Clear()
         boxInventory.Items.Clear()
-        Dim p_inv = Game.player.p_inventory
+        Dim p_inv = Game.player.inv
         For i = 0 To p_inv.upperBound
             If p_inv.item(i).count > 0 Then
                 inventoryList.Add(p_inv.getKeyByID(i) & " x" & p_inv.item(i).count)
@@ -358,7 +358,7 @@ Public Class Debug_Window
     Private Sub updateItemsList()
         itemsList.Clear()
         boxItems.Items.Clear()
-        Dim p_inv = Game.player.p_inventory
+        Dim p_inv = Game.player.inv
         For i = 0 To p_inv.upperBound
             itemsList.Add(p_inv.getKeyByID(i))
         Next
@@ -547,7 +547,7 @@ Public Class Debug_Window
             Dim name As String = boxInventory.Items(selected(0)).ToString()
             name = name.Substring(0, name.IndexOf(" x")).Trim()
 
-            Dim p_inv = Game.player.p_inventory
+            Dim p_inv = Game.player.inv
 
             Dim itemInd As Integer = p_inv.idOfKey(name)
             If number.Value >= p_inv.item(itemInd).count Then
@@ -569,15 +569,15 @@ Public Class Debug_Window
             Do Until selected.Count = 0
                 Dim name As String = boxInventory.Items(selected(0)).ToString()
                 name = name.Substring(0, name.IndexOf(" x")).Trim()
-                Game.player.p_inventory.add(name, CInt(number.Value))
+                Game.player.inv.add(name, CInt(number.Value))
                 Dim temp As Integer = selected(0)
                 boxInventory.Items.RemoveAt(selected(0))
-                boxInventory.Items.Insert(temp, name & " x" & Game.player.p_inventory.item(name).count)
+                boxInventory.Items.Insert(temp, name & " x" & Game.player.inv.item(name).count)
             Loop
         ElseIf boxItems.SelectedIndices.Count > 0 Then
             Do Until boxItems.SelectedIndices.Count = 0
                 Dim name As String = boxItems.Items(boxItems.SelectedIndices(0))
-                Game.player.p_inventory.add(name, CInt(number.Value))
+                Game.player.inv.add(name, CInt(number.Value))
                 updateInventoryList()
                 boxItems.SelectedIndices.Remove(boxItems.SelectedIndices(0))
             Loop

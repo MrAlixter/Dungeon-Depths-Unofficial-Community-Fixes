@@ -1,8 +1,8 @@
 ﻿Public Class NormalClothes
     Inherits Armor
-    Public Shared bsizeneg1 As Tuple(Of Integer, Boolean)
-    Public Shared bsize1 As Tuple(Of Integer, Boolean)
-    Public Shared bsize2 As Tuple(Of Integer, Boolean)
+    Public Shared Shadows bsizeneg1 As Tuple(Of Integer, Boolean)
+    Public Shared Shadows bsize1 As Tuple(Of Integer, Boolean)
+    Public Shared Shadows bsize2 As Tuple(Of Integer, Boolean)
     Sub New()
         MyBase.setName("Common_Clothes")
         MyBase.setDesc("DO NOT SEE THIS EVER")

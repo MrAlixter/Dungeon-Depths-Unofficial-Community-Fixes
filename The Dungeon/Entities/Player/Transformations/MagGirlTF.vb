@@ -12,7 +12,7 @@
     End Sub
 
     Sub step1()
-        Dim p = Game.player
+        Dim p As player = game.player
         p.pClass = p.classes("Magic Girl​")
         Dim out = "Swinging your wand, you are engulfed in a rain of stars. As the light around your body grows blinding and your clothes disolve into the aether, you become a buxom young woman wearing a skimpy uniform!"
         If p.sex = "Male" Then
@@ -50,7 +50,7 @@
             p.magGState.initFlag = True
         End If
         Game.cboxMG.Items.Add("Heartblast Starcannon")
-        p.p_inventory.add(10, 1)
+        p.inv.add(10, 1)
         p.pClass = p.classes("Magic Girl")
         Equipment.clothesChange("Magic_Girl_Outfit")
         p.equippedArmor = New MagGirlOutfit
@@ -64,7 +64,7 @@
     End Sub
 
     Public Overrides Function getNextStep(stage As Integer) As Action
-        Dim p = Game.player
+        Dim p As player = game.player
         If p.pClass.name.Equals("Magic Girl​") Then
             Return AddressOf step2
         ElseIf p.pClass.name.Equals("Magic Girl") Then

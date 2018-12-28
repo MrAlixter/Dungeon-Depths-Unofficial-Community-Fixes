@@ -105,6 +105,8 @@
     <Import Include="System.Threading.Tasks" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Entities\Entity.vb" />
+    <Compile Include="Entities\NPC\NPC.vb" />
     <Compile Include="Entities\Player\Classes\Bimbo.vb" />
     <Compile Include="Entities\Player\Classes\Classless.vb" />
     <Compile Include="Entities\Player\Classes\Goddess.vb" />
@@ -192,7 +194,7 @@
     <Compile Include="Entities\Player\Transformations\TargaxTF.vb" />
     <Compile Include="Entities\Player\Transformations\ThrallTF.vb" />
     <Compile Include="Entities\Player\Transformations\Transformation.vb" />
-    <Compile Include="Entities\Player\Unimplemented\Inventory.vb" />
+    <Compile Include="Entities\Inventory.vb" />
     <Compile Include="Entities\preferedForm.vb" />
     <Compile Include="Items\Accesories\Accessory.vb" />
     <Compile Include="Items\Accesories\Cowbell.vb" />
@@ -223,7 +225,7 @@
     <Compile Include="Items\Usable\Potions\Mystery Potions\BEPotion.vb" />
     <Compile Include="Items\Usable\Potions\Mystery Potions\RandomHairPotion.vb" />
     <Compile Include="Items\Usable\Potions\Mystery Potions\BlondePotion.vb" />
-    <Compile Include="Entities\Boss.vb" />
+    <Compile Include="Entities\NPC\Boss.vb" />
     <Compile Include="Items\Armor\BrawlerCosplay.vb" />
     <Compile Include="Items\Weapons\BronzeXiphos.vb" />
     <Compile Include="Items\Armor\BunnySuit.vb" />
@@ -298,12 +300,6 @@
     <Compile Include="WindowsForms\Polymorph.vb">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="WindowsForms\Hypnosis.Designer.vb">
-      <DependentUpon>Hypnosis.vb</DependentUpon>
-    </Compile>
-    <Compile Include="WindowsForms\Hypnosis.vb">
-      <SubType>Form</SubType>
-    </Compile>
     <Compile Include="Items\Usable\FusionCrystal.vb" />
     <Compile Include="Items\Usable\Glowstick.vb" />
     <Compile Include="Items\Armor\GoddessGown.vb" />
@@ -317,7 +313,7 @@
     <Compile Include="Items\Usable\Food\HeavyCream.vb" />
     <Compile Include="Items\Usable\Food\Herbs.vb" />
     <Compile Include="Items\Usable\Potions\Mystery Potions\MasculinePotion.vb" />
-    <Compile Include="Entities\MiniBoss.vb" />
+    <Compile Include="Entities\NPC\MiniBoss.vb" />
     <Compile Include="Items\Item.vb" />
     <Compile Include="Items\Misc\Key.vb" />
     <Compile Include="Items\Unimplemented\LeatherWhip.vb" />
@@ -329,7 +325,7 @@
     <Compile Include="Items\Usable\Potions\ManaPotion.vb" />
     <Compile Include="Items\Weapons\MidasGuantlet.vb" />
     <Compile Include="Items\Usable\Mirror.vb" />
-    <Compile Include="Entities\Monster.vb" />
+    <Compile Include="Entities\NPC\Monster.vb" />
     <Compile Include="Tiles\mTile.vb" />
     <Compile Include="My Project\AssemblyInfo.vb" />
     <Compile Include="My Project\Application.Designer.vb">
@@ -348,7 +344,7 @@
     </Compile>
     <Compile Include="Items\Armor\Naked.vb" />
     <Compile Include="Items\Armor\NormalClothes.vb" />
-    <Compile Include="Entities\NPC.vb" />
+    <Compile Include="Entities\NPC\Shopkeep.vb" />
     <Compile Include="Items\Weapons\OakStaff.vb" />
     <Compile Include="Items\Usable\Food\PApple.vb" />
     <Compile Include="Entities\Player\Player.vb" />
@@ -446,9 +442,6 @@
     </EmbeddedResource>
     <EmbeddedResource Include="WindowsForms\Polymorph.resx">
       <DependentUpon>Polymorph.vb</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="WindowsForms\Hypnosis.resx">
-      <DependentUpon>Hypnosis.vb</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="My Project\Resources.resx">
       <Generator>ResXFileCodeGenerator</Generator>

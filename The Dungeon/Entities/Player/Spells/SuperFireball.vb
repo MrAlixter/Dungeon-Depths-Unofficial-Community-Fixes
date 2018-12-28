@@ -12,13 +12,13 @@
         Dim d52 = Int(Rnd() * 5)
         If d51 = d52 And d52 = 2 Then
             'critical hit
-            MyBase.getTarget.takeDMG(2 * (dmg + d51 + d52))
+            MyBase.getTarget.takeDMG(2 * (dmg + d51 + d52), MyBase.getCaster)
             Game.lstLog.Items.Add(CStr("Critical hit!  You hit the " & MyBase.getTarget.name & " for " & 2 * (dmg + d51 + d52) & " damage!"))
             Game.pushLblCombatEvent(CStr("Critical hit!  You hit the " & MyBase.getTarget.name & " for " & 2 * (dmg + d51 + d52) & " damage!"))
             Game.lstLog.TopIndex = Game.lstLog.Items.Count - 1
         Else
             'non critical hit
-            MyBase.getTarget.takeDMG(dmg + d51 + d52)
+            MyBase.getTarget.takeDMG(dmg + d51 + d52, MyBase.getCaster)
             Game.lstLog.Items.Add(CStr("You hit the " & MyBase.getTarget.name & " for " & dmg + d51 + d52 & " damage!"))
             Game.pushLblCombatEvent(CStr("You hit the " & MyBase.getTarget.name & " for " & dmg + d51 + d52 & " damage!"))
             Game.lstLog.TopIndex = Game.lstLog.Items.Count - 1
@@ -26,7 +26,7 @@
     End Sub
     Public Overrides Sub backfire()
         Dim dmg = Int(Rnd() * 30) + 10
-        MyBase.getCaster.takeDMG(dmg, MyBase.getCaster.currTarget)
+        MyBase.getCaster.takeDMG(dmg, Nothing)
         Game.lstLog.Items.Add(CStr("You hit yourself for " & dmg & " damage!"))
         Game.pushLblCombatEvent(CStr("You hit yourself for " & dmg & " damage!"))
         Game.lstLog.TopIndex = Game.lstLog.Items.Count - 1

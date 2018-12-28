@@ -18,9 +18,9 @@
         Dim w As Tuple(Of String(), Weapon())
         Dim ac As Tuple(Of String(), Accessory())
 
-        a = p.p_inventory.getArmors
-        w = p.p_inventory.getWeapons
-        ac = p.p_inventory.getAccesories
+        a = p.inv.getArmors
+        w = p.inv.getWeapons
+        ac = p.inv.getAccesories
 
         aList.Clear()
         wList.Clear()
@@ -63,7 +63,7 @@
         Dim revertFlag As Boolean = False
         If p.equippedWeapon.getName.Equals("Magic_Girl_Wand") And p.pClass.name.Equals("Magic Girl") And Not cmbobxWeapon.Text.Equals("Magic_Girl_Wand") Then
             Game.lstLog.Items.Add("Putting away your wand causes you to change into your regular self!")
-            p.p_inventory.add(10, -1)
+            p.inv.add(10, -1)
             p.magGState.save(p)
             p.revertToPState()
             revertFlag = True
@@ -95,7 +95,7 @@
         End If
         'handles any tfs or triggers triggered by equipping of certain weapons
         If p.pClass.name.Equals("Magic Girl") And p.equippedArmor.getName.Equals("Magic_Girl_Outfit") And Not revertFlag Then
-            p.equippedArmor = p.p_inventory.item(10)
+            p.equippedArmor = p.inv.item(10)
             Game.lstLog.Items.Add("A magic girl needs her uniform!")
         End If
         If p.pForm.name.Equals("Blow-Up Doll") Then
@@ -178,25 +178,25 @@
         Dim affectedFlag As Boolean = True
         Select Case p.equippedArmor.getName.GetHashCode
             Case "Steel_Armor".GetHashCode
-                p.p_inventory.add(5, -1)
+                p.inv.add(5, -1)
                 p.equippedArmor = New SteelBikini
-                p.p_inventory.add(7, 1)
+                p.inv.add(7, 1)
             Case "Sorcerer's_Robes".GetHashCode
-                p.p_inventory.add(17, -1)
+                p.inv.add(17, -1)
                 p.equippedArmor = New WitchCosplay
-                p.p_inventory.add(18, 1)
+                p.inv.add(18, 1)
             Case "Warrior's_Cuirass".GetHashCode
-                p.p_inventory.add(19, -1)
+                p.inv.add(19, -1)
                 p.equippedArmor = New BrawlerCosplay
-                p.p_inventory.add(20, 1)
+                p.inv.add(20, 1)
             Case "Gold_Armor".GetHashCode
-                p.p_inventory.add(38, -1)
+                p.inv.add(38, -1)
                 p.equippedArmor = New GoldAdornment
-                p.p_inventory.add(39, 1)
+                p.inv.add(39, 1)
             Case "Living_Armor".GetHashCode
-                p.p_inventory.add(55, -1)
+                p.inv.add(55, -1)
                 p.equippedArmor = New LiveLingerie
-                p.p_inventory.add(56, 1)
+                p.inv.add(56, 1)
             Case "Common_Clothes".GetHashCode
                 p.equippedArmor = New SkimpyClothes
             Case Else
@@ -216,25 +216,25 @@
         Dim affectedFlag As Boolean = True
         Select Case p.equippedArmor.getName.GetHashCode
             Case "Steel_Bikini".GetHashCode
-                p.p_inventory.add(7, -1)
+                p.inv.add(7, -1)
                 p.equippedArmor = New SteelArmor
-                p.p_inventory.add(5, 1)
+                p.inv.add(5, 1)
             Case "Witch_Cosplay".GetHashCode
-                p.p_inventory.add(18, -1)
+                p.inv.add(18, -1)
                 p.equippedArmor = New SorcerersRobes
-                p.p_inventory.add(17, -1)
+                p.inv.add(17, -1)
             Case "Brawler_Cosplay".GetHashCode
-                p.p_inventory.add(20, -1)
+                p.inv.add(20, -1)
                 p.equippedArmor = New WarriorsCuirass
-                p.p_inventory.add(19, 1)
+                p.inv.add(19, 1)
             Case "Gold_Adornment".GetHashCode
-                p.p_inventory.add(39, -1)
+                p.inv.add(39, -1)
                 p.equippedArmor = New GoldArmor
-                p.p_inventory.add(38, 1)
+                p.inv.add(38, 1)
             Case "Living_Lingerie".GetHashCode
-                p.p_inventory.add(56, -1)
+                p.inv.add(56, -1)
                 p.equippedArmor = New LiveArmor
-                p.p_inventory.add(55, 1)
+                p.inv.add(55, 1)
             Case "Skimpy_Clothes".GetHashCode
                 p.equippedArmor = New NormalClothes
             Case Else

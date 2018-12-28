@@ -18,7 +18,7 @@
     Public Sub step1()
 
         'assign a pointer to the player character
-        Dim p = Game.player
+        Dim p As player = game.player
 
         'assign a random starter class
         Dim classes = {"Warrior", "Mage", "Paladin", "Warrior", "Mage", "Bimbo"}
@@ -109,21 +109,21 @@
         Dim armorIndex = armor(Int(Rnd() * (armor.Length)))
         Dim weapon = New Integer() {6, 6, 9, 9, 21, 21, 22, 22, 23, 63}
         Dim weaponIndex = weapon(Int(Rnd() * (weapon.Length)))
-        p.p_inventory.add(armorIndex, 1)
-        p.p_inventory.add(weaponIndex, 1)
-        p.equippedArmor = p.p_inventory.item(armorIndex)
-        p.equippedWeapon = p.p_inventory.item(weaponIndex)
+        p.inv.add(armorIndex, 1)
+        p.inv.add(weaponIndex, 1)
+        p.equippedArmor = p.inv.item(armorIndex)
+        p.equippedWeapon = p.inv.item(weaponIndex)
 
         For i = 0 To 4
             Dim invInd As Integer = 8
             While invInd = 8 Or invInd = 10 Or invInd = 24 Or invInd = 53
-                invInd = Int(Rnd() * (Game.player.p_inventory.upperBound + 1))
+                invInd = Int(Rnd() * (Game.player.inv.upperBound + 1))
             End While
-            p.p_inventory.add(invInd, CInt(Int(Rnd() * 2) + 1))
+            p.inv.add(invInd, CInt(Int(Rnd() * 2) + 1))
         Next
 
-        p.p_inventory.add(2, 1)
-        p.p_inventory.add(13, 1)
+        p.inv.add(2, 1)
+        p.inv.add(13, 1)
 
         'set class stats
         If p.pClass.Equals("Warrior") Or p.pClass.Equals("Paladin") Then
@@ -135,12 +135,12 @@
             p.defence -= Int(Rnd() * 5)
             p.speed += Int(Rnd() * 5)
             p.mana += 8 + Int(Rnd() * 5)
-            p.p_inventory.add(4, 1)
+            p.inv.add(4, 1)
         ElseIf p.pClass.Equals("Bimbo") Then
             p.changeHairColor(BimboTF.bimboyellow)
             p.will = 1
             p.perks("slutcurse") = 1
-            If Int(Rnd() * 10) = 7 Then p.p_inventory.add(4, 1)
+            If Int(Rnd() * 10) = 7 Then p.inv.add(4, 1)
         End If
 
         'set other player stuff
@@ -148,7 +148,7 @@
         If Game.floor < 6 Then p.pImage = Game.picPlayer.BackgroundImage Else p.pImage = Game.picPlayerf.BackgroundImage
         p.bsizeroute()
 
-        p.p_inventory.invNeedsUDate = True
+        p.inv.invNeedsUDate = True
         p.UIupdate()
 
         Dim si As Integer = p.sState.iArrInd(3).Item1
@@ -190,11 +190,11 @@
                           " every inch of it is flushing with arousal.", AddressOf floor4FirstBossEncounterP2)
     End Sub
     Shared Sub floor4FirstBossEncounterP2()
-        Dim p = Game.player
+        Dim p As player = game.player
         Game.preBSBody = New State(p)
         Game.preBSInventory = New ArrayList()
-        For i = 0 To p.p_inventory.upperBound
-            Game.preBSInventory.Add(p.p_inventory.getCountAt(i))
+        For i = 0 To p.inv.upperBound
+            Game.preBSInventory.Add(p.inv.getCountAt(i))
         Next
         p.ongoingTFs.Add(New RandoTF())
         p.update()
@@ -230,14 +230,14 @@
                           "maybe if you can find her again you can straighten this out.")
     End Sub
     Shared Sub floor4revert()
-        Dim p = Game.player
+        Dim p As player = game.player
         Game.preBSStartState.load(p)
         p.sState.save(p)
         Game.preBSBody.load(p)
         p.pState.save(p)
         p.revertToPState()
         For i = 0 To Game.preBSInventory.Count - 1
-            p.p_inventory.add(i, Game.preBSInventory(i))
+            p.inv.add(i, Game.preBSInventory(i))
         Next
         p.canMoveFlag = p.sexbool
         Game.lblEvent.Visible = False
@@ -245,9 +245,9 @@
         p.UIupdate()
     End Sub
     Shared Sub floor4keep()
-        Dim p = Game.player
+        Dim p As player = game.player
         For i = 0 To Game.preBSInventory.Count - 1
-            p.p_inventory.add(i, Game.preBSInventory(i))
+            p.inv.add(i, Game.preBSInventory(i))
         Next
         p.canMoveFlag = p.sexbool
         Game.lblEvent.Visible = False
@@ -260,7 +260,7 @@
     End Sub
 
     Public Overrides Function getNextStep(stage As Integer) As Action
-        Dim p = Game.player
+        Dim p As player = game.player
         Select Case stage
             Case 0
                 Return AddressOf step1

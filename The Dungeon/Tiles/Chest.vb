@@ -1,5 +1,5 @@
 ﻿Public Class Chest
-    Public contents() As Integer
+    Public contents As Inventory
     Public pos As Point
     Public tier1 = New ArrayList()
     Public tier2 = New ArrayList()
@@ -7,13 +7,7 @@
     Public tiers() = {Nothing, tier1, tier2, tier3}
     '|CONSTRUCTORS|
     Sub New()
-        'Empty. 
-        'For duplication of baseChest (to later be filled)
-    End Sub
-    Sub New(size As Integer)
-        contents = New Integer(size) {}
-        'This should be used for creating the baseChest
-        'This should be the only constructor used for the baseChest
+        contents = New Inventory
     End Sub
 
     '|PSEUDOCONSTRUCTORS|
@@ -32,16 +26,16 @@
         chest.pos = p
         Return chest
     End Function
-    Function Create(ByVal i() As Integer, ByVal p As Point) As Chest
+    Function Create(ByVal i As Inventory, ByVal p As Point) As Chest
         'functions as a pseudo constructor for a chest object
         'creates a chest from an inventory array and a point
         Dim chest = Me.Clone()
 
-        For ind = 0 To UBound(i)
-            chest.contents(ind) += i(ind)
+        For x = 0 To contents.upperBound
+            contents.setCount(x, i.getCountAt(x))
         Next
 
-        If chest.contents(43) < 1 Then chest.contents(43) = Int(Rnd() * 250)
+        If chest.contents.getCountAt(43) < 1 Then chest.contents.setCount(43, CInt(Rnd() * 250))
         chest.pos = p
         Return chest
     End Function
@@ -51,9 +45,7 @@
         Dim chest = Me.Clone()
         Dim cArray() As String = s.Split("*")
         chest.pos = New Point(cArray(0), cArray(1))
-        For i = 2 To UBound(contents)
-            chest.contents(i) = cArray(i)
-        Next
+        contents.load(cArray(2))
 
         Return chest
     End Function
@@ -85,7 +77,7 @@
             If rng > tiers(itemTier).Count - 1 Then rng = tiers(itemTier).Count - 1
             Dim itemID As Integer = tiers(itemTier)(rng).id 'Int(Rnd() * tier.Length))
             If itemID = 43 Then
-                contents(itemID) += Int(Rnd() * 150)
+                contents.setCount(itemID, CInt(Rnd() * 150))
             Else
                 chest.add(itemID, 1)
             End If
@@ -100,7 +92,7 @@
         toReturn.tier2 = Me.tier2
         toReturn.tier3 = Me.tier3
         toReturn.tiers = Me.tiers
-        toReturn.contents = New Integer(Me.contents.Length - 1) {}
+        toReturn.contents = New Inventory
         Return toReturn
     End Function
     Public Overridable Sub open()
@@ -113,7 +105,7 @@
             Else
                 mOdds = Int(Rnd() * 10)
             End If
-            If mOdds = 0 And Not contents(53) > 0 Then
+            If mOdds = 0 And Not contents.getCountAt(53) > 0 Then
                 Monster.createMimic(contents)
                 Exit Sub
             End If
@@ -126,16 +118,11 @@
     Public Sub pushLblEventChest()
         Dim c As String = "Chest Contents: " & vbCrLf
 
-        For i = 0 To UBound(contents)
-            Game.player.p_inventory.add(i, contents(i))
-
-            Dim content = Game.player.p_inventory.item(i)
-            If contents(i) > 0 Then
-                If content.GetType().IsSubclassOf(GetType(MysteryPotion)) Then
-                    c += " " & vbCrLf & "+" & contents(i) & " " & content.getName() & " "
-                Else
-                    c += " " & vbCrLf & "+" & contents(i) & " " & content.getName() & " "
-                End If
+        Game.player.inv.merge(contents)
+        For i = 0 To contents.upperBound
+            Dim content As Item = contents.item(i)
+            If contents.getCountAt(i) > 0 Then
+                c += " " & vbCrLf & "+" & content.count & " " & content.getName() & " "
             End If
         Next
         c += " " & vbCrLf & " " & vbCrLf & "Press any non-movement key to continue."
@@ -143,11 +130,11 @@
         Game.lblEvent.BringToFront()
         Game.lblEvent.Location = New Point((250 * Game.Size.Width / 688) - (Game.lblEvent.Size.Width / 2), 65 * Game.Size.Width / 688)
         Game.lblEvent.Visible = True
-        Game.player.p_inventory.invNeedsUDate = True
+        Game.player.inv.invNeedsUDate = True
     End Sub
     Public Sub add(ByVal i As Integer, ByVal c As Integer)
         'adds a quantity "c" to inventory slot "i"
-        contents(i) += c
+        contents.add(i, c)
     End Sub
 
     '|SAVE METHOD|
@@ -155,9 +142,7 @@
         Dim output As String = ""
         output += CStr(pos.X & "*")
         output += CStr(pos.Y & "*")
-        For i = 0 To UBound(contents)
-            output += (contents(i) & "*")
-        Next
+        output += contents.save()
         Return output
     End Function
 End Class

@@ -18,7 +18,7 @@
         count -= 1
     End Sub
 
-    Overrides Function attack(ByRef p As Player, ByRef m As Monster) As Integer
+    Overrides Function attack(ByRef p As Player, ByRef m As Entity) As Integer
         Dim dmg As Integer = Int(Rnd() * 3 + 1) + Int(Rnd() * 3 + 1) + Int(Rnd() * 3 + 1) + Int(Rnd() * 3 + 1)
         If dmg <= 5 Then
             Return -1

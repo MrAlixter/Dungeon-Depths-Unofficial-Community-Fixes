@@ -36,15 +36,15 @@ Public Class Game
 
     Public player As Player = New Player()
 
-    Public baseChest As Chest = New Chest(player.p_inventory.upperBound)
+    Public baseChest As Chest = New Chest()
     Public chestList As ArrayList = New ArrayList()
     Public statueList As ArrayList = New ArrayList()    '(NOT SAVED)
     Public trapList As ArrayList = New ArrayList()
     'player instance variables
-    Public updatelist As PQ = New PQ
-    Public shopkeeper, swiz As NPC
-    Public npcList As ArrayList = New ArrayList()     'list of non-player updatables (NOT SAVED)
-    Public currNPC As NPC   'the current npc the player is talking to (NOT SAVED)
+    Public updateList As PQ = New PQ
+    Public shopkeeper, swiz As Shopkeep
+    Public npcList As List(Of NPC) = New List(Of NPC)     'list of non-player updatables (NOT SAVED)
+    Public currNPC As Shopkeep   'the current npc the player is talking to (NOT SAVED)
     Public pImage As Image  'which tile is used for the player (NOT SAVED)
     Public combatmode As Boolean = True 'indicates if the player is in combat (NOT SAVED)
     Public npcmode As Boolean = False   'indicates if the player is talking to an npc (NOT SAVED)
@@ -55,11 +55,6 @@ Public Class Game
     Dim keyspresed As String = ""   'records last 4 keys pressed (NOT SAVED)
     'variables related to the mystery potions
     Public Potions As New ArrayList()
-    'Public OHPotionNames() As String = {"Red_Potion", "Green_Potion", "Blue_Potion", "Yellow_Potion", "Glowing_Potion", "Murky_Potion", "Purple_Potion"} '"Clear_Potion", "Smokey_Potion"}
-    'Public HPotionNames() As String = OHPotionNames.Clone()
-    'Dim APotionNames() As String = {"Blonde_Potion", "Red_Hair_Potion", "Black_Hair_Potion", "Feminine_Potion", "Breast_Enlarging_Potion", "Masculine_Potion", "Breast_Shrinking_Potion"} '"Weakness_Potion", "Shrink_Potion", "Snake_Potion"}
-    'save lists of the players polymorph forms
-    '      self      enemy
     Public formList, tFormList As New ArrayList()
     Public titleList = New List(Of String)
     'other misc form1 instance variables
@@ -113,16 +108,9 @@ Public Class Game
 
     Dim debugWindow As Debug_Window
 
-    'startup/new level methods
-    'Form1_Load handles the loading of the form
+    '|STARTUP|
     Private Sub Form1_Load(sender As Object, e As EventArgs) Handles Me.Load
-
-        ' RUNNING TESTS
-        'Testing.runTests()
-        'MsgBox("Tests ran!  Check TestLog.txt for their results.")
-        'Close()
-        ' END OF RUNNING TESTS
-
+        'Form1_Load handles the loading of the form
         If Not IO.File.Exists("sett.ing") Then createSettings()
         If Not IO.File.Exists("configs.ave") Then createConfigs()
 
@@ -182,8 +170,8 @@ Public Class Game
         End If
 
         'Fill Chest Tier List
-        For i = 0 To player.p_inventory.upperBound
-            Dim c_item = player.p_inventory.item(i)
+        For i = 0 To player.inv.upperBound
+            Dim c_item = player.inv.item(i)
             If c_item.tier <> Nothing Then
                 baseChest.tiers(c_item.tier).Add(c_item)
             End If
@@ -219,8 +207,8 @@ Public Class Game
             pnlDescript.Controls(i).Font = newFont
         Next
         'creates the shopkeeper
-        shopkeeper = New NPC(2)
-        swiz = New NPC(3)
+        shopkeeper = New Shopkeep(2)
+        swiz = New Shopkeep(3)
         pnlCombat.Location = New Point(115, pnlCombat.Location.Y)
         pnlDescript.Location = New Point(115, pnlDescript.Location.Y)
         pnlSaveLoad.Location = New Point(188, pnlSaveLoad.Location.Y)
@@ -275,50 +263,8 @@ Public Class Game
         w.WriteLine(False)
         w.Close()
     End Sub
-
-    Sub loadPotionList()
-        Randomize()
-        Dim HiddenNames As ArrayList = New ArrayList({"Red_Potion", "Green_Potion", "Blue_Potion", "Yellow_Potion", "Glowing_Potion", "Murky_Potion", "Purple_Potion", "Clear_Potion", "Smokey_Potion", "Rose_Potion", "Aqua_Potion", "Glittery_Potion"})
-        Dim index As Integer = 0
-
-        Dim p_inv = player.p_inventory
-        Dim potion_list = p_inv.getPotions
-        For i = 0 To UBound(potion_list)
-            If potion_list(i).GetType().IsSubclassOf(GetType(MysteryPotion)) Then
-                Dim mpotionid = CType(potion_list(i), MysteryPotion).id
-                Potions.Add(p_inv.item(mpotionid))
-                index = Int(Rnd() * (HiddenNames.Count - 1))
-                CType(p_inv.item(mpotionid), MysteryPotion).setName(HiddenNames(index))
-                HiddenNames.RemoveAt(index)
-            End If
-        Next
-    End Sub
-    Sub loadPotionListFromFile()
-        Dim p_inv = player.p_inventory
-        Dim potion_list = p_inv.getPotions
-        For i = 0 To UBound(potion_list)
-            If potion_list(i).GetType().IsSubclassOf(GetType(MysteryPotion)) Then
-                Dim mpotionid = CType(potion_list(i), MysteryPotion).id
-                CType(p_inv.item(mpotionid), MysteryPotion).setName(Potions(0).getName())
-                Potions.RemoveAt(0)
-            End If
-        Next
-    End Sub
-    Sub loadcKeys()
-        cKeys.Clear()
-        Dim sr As StreamReader
-        Dim kc As KeysConverter = New KeysConverter()
-        sr = IO.File.OpenText("configs.ave")
-        Dim nextKey As String = sr.ReadLine()
-        While nextKey <> ""
-            cKeys.Add(kc.ConvertFromString(nextKey))
-            nextKey = sr.ReadLine()
-        End While
-        cKeys.Reverse()
-        sr.Close()
-    End Sub
-    'newGame prepares the application at the start of a new game
     Sub newGame()
+        'newGame prepares the application at the start of a new game
         floorLayouts.Add("placeholder")
         floorLayouts.Add(genRNDLVLCode())
         floorLayouts.Add(genRNDLVLCode())
@@ -350,9 +296,9 @@ Public Class Game
         End If
         picPortrait.BackgroundImage = chargen.ExportIMG()
         chargen.Dispose()
-        Dim int As Integer = 100 - player.getSpeed
+        Dim int As Integer = 100 - player.getSPD
         If int < 1 Then int = 1
-        updatelist.add(player, int)
+        updateList.add(player, int)
 
         Dim genSet As New GeneratorSettings(floorLayouts(1))
         genSet.ShowDialog()
@@ -394,12 +340,51 @@ Public Class Game
         player.UIupdate()
         lstLog.TopIndex = lstLog.Items.Count - 1
     End Sub
-    'Private Sub workerPrepareBoard(sender As Object, e As DoWorkEventArgs)
-    '    Dim arg = e.Argument
-    '    initializeBoard(arg)
-    'End Sub
-    'initializeBoard increments the floor count, and generates the next level
+    Sub loadPotionList()
+        Randomize()
+        Dim HiddenNames As ArrayList = New ArrayList({"Red_Potion", "Green_Potion", "Blue_Potion", "Yellow_Potion", "Glowing_Potion", "Murky_Potion", "Purple_Potion", "Clear_Potion", "Smokey_Potion", "Rose_Potion", "Aqua_Potion", "Glittery_Potion"})
+        Dim index As Integer = 0
+
+        Dim p_inv = player.inv
+        Dim potion_list = p_inv.getPotions
+        For i = 0 To UBound(potion_list)
+            If potion_list(i).GetType().IsSubclassOf(GetType(MysteryPotion)) Then
+                Dim mpotionid = CType(potion_list(i), MysteryPotion).id
+                Potions.Add(p_inv.item(mpotionid))
+                index = Int(Rnd() * (HiddenNames.Count - 1))
+                CType(p_inv.item(mpotionid), MysteryPotion).setName(HiddenNames(index))
+                HiddenNames.RemoveAt(index)
+            End If
+        Next
+    End Sub
+    Sub loadPotionListFromFile()
+        Dim p_inv = player.inv
+        Dim potion_list = p_inv.getPotions
+        For i = 0 To UBound(potion_list)
+            If potion_list(i).GetType().IsSubclassOf(GetType(MysteryPotion)) Then
+                Dim mpotionid = CType(potion_list(i), MysteryPotion).id
+                CType(p_inv.item(mpotionid), MysteryPotion).setName(Potions(0).getName())
+                Potions.RemoveAt(0)
+            End If
+        Next
+    End Sub
+    Sub loadCKeys()
+        cKeys.Clear()
+        Dim sr As StreamReader
+        Dim kc As KeysConverter = New KeysConverter()
+        sr = IO.File.OpenText("configs.ave")
+        Dim nextKey As String = sr.ReadLine()
+        While nextKey <> ""
+            cKeys.Add(kc.ConvertFromString(nextKey))
+            nextKey = sr.ReadLine()
+        End While
+        cKeys.Reverse()
+        sr.Close()
+    End Sub
+
+    '|LEVEL GENERATION|
     Private Sub initializeBoard(Optional Draw As Boolean = True)
+        'initializeBoard increments the floor count, and generates the next level
         lblEvent.Visible = False
         floor += 1
         player.canMoveFlag = False
@@ -427,8 +412,8 @@ Public Class Game
         End If
         If Draw Then drawBoard()
     End Sub
-    'newBoard disposes of the old board and its graphical representation
     Sub newBoard()
+        'newBoard disposes of the old board and its graphical representation
         If floor > 5 Then
             If player.pClass.name.Equals("Bimbo") Then
                 player.pImage = picBimbof.BackgroundImage
@@ -515,8 +500,8 @@ Public Class Game
         boardWorker.ReportProgress(99)
         boardWorker.CancelAsync()
     End Sub
-    'generateLevel creates the random rooms and corridors of each level
     Function genRNDLVLCode() As String
+        'returns a randomized seed to be used in level generation
         Dim numLetters As String = "abcdefghijklmnopqrstuvwxyz123456789"
         Dim output As String = ""
         Randomize() 'initializes the randomizer
@@ -525,9 +510,8 @@ Public Class Game
         Next
         Return output
     End Function
-    'Function 
-
     Sub generateLevel(ByVal code As String)
+        'generateLevel creates the random rooms and corridors of each level
         floorCode = code
         Rnd(-1)
         If code.Equals("bossstage") Then
@@ -802,8 +786,8 @@ Public Class Game
         Dim endTime = (DateTime.Now - New DateTime(1970, 1, 1)).TotalMilliseconds
         Console.WriteLine("DRAW TIME: " + (endTime - startTime).ToString())
     End Sub
-
     Sub connectRooms(ByVal p1 As Point, ByVal p2 As Point)
+        'Connects the entrances/exits of the rooms
         Dim cursor As Point = p1
         Dim xOry As Boolean = CBool(Int(Rnd() * 2))
         If xOry Then
@@ -847,6 +831,7 @@ Public Class Game
         End If
     End Sub
     Sub makeDeadEnd(ByVal p1 As Point, ByRef exits As List(Of Point))
+        'Creates a path from a room to a dead end
         Dim xOry As Boolean = CBool(Int(Rnd() * 2))
         Dim dir As Boolean = CBool(Int(Rnd() * 2))
         For i = 0 To 6
@@ -881,6 +866,7 @@ Public Class Game
         Next
     End Sub
     Sub genBossFloor()
+        'Creates a straight hallway of a floor for a boss floor
         If mBoardHeight < 30 Then mBoardHeight = 30
         If mBoardWidth < 10 Then mBoardWidth = 10
         For y = 0 To 25
@@ -893,6 +879,7 @@ Public Class Game
         If floor = 5 Then genMedusaStatues()
     End Sub
     Sub genMedusaStatues()
+        'places the statues on floor 5 for ambience
         Randomize()
         Dim numStatues As Integer = Int((Rnd() * 5) + 6)
         For i = 0 To numStatues
@@ -904,6 +891,7 @@ Public Class Game
         Next
     End Sub
     Sub printBoard()
+        'Outputs a file creating a text version of the board
         Dim writer As IO.StreamWriter
         writer = IO.File.CreateText("bo.ard")
         For y = 0 To mBoardHeight - 1
@@ -921,7 +909,6 @@ Public Class Game
         writer.Flush()
         writer.Close()
     End Sub
-
     'placeStairs, placeChest, placeTraps, and placeNPCs place their respective entities on mBoard
     Sub placeStairs()
 
@@ -999,7 +986,7 @@ Public Class Game
             Select Case numNpc
                 Case 0
                     shopkeeper.pos = New Point(npcX, npcY)
-                    If floor = 3 Then shopkeeper.inventory(53) += 1 Else shopkeeper.inventory(53) = 0
+                    If floor = 3 Then shopkeeper.inv.add(53, 1) Else shopkeeper.inv.item(53).count = 0
                 Case 1
                     swiz.pos = New Point(npcX, npcY)
             End Select
@@ -1007,8 +994,10 @@ Public Class Game
             mBoard(npcY, npcX).Text = "$"
         Next
     End Sub
-
     Function route(ByVal p1 As Point, ByVal p2 As Point) As Point()
+        'Generates a path between two points.  This is not always the shortest path
+        'between the two points, but they will always be connected.
+
         'iterative dijkstra's shortest path implementation
         Dim dist(mBoardWidth, mBoardHeight) As Integer
         Dim allPoints As List(Of Point) = New List(Of Point)
@@ -1055,22 +1044,26 @@ Public Class Game
         Return path.ToArray
     End Function
     Function distance(ByVal x As Point, ByVal y As Point) As Double
+        'the straight-line distance between two points
         Return Math.Abs(Math.Sqrt(CDbl((y.X - x.X) ^ 2) + CDbl((y.Y - x.Y) ^ 2)))
     End Function
 
-    'board draw methods
-    'drawBoard updates the board with the players action
+    '|DRAW|
     Sub drawBoard()
+        'drawBoard updates the board with the players actions
+
         '"discover" any hidden tiles adjacent to the player and erase the players last location
         viewBubble()
         'moves down the priority que by the updatable's speed
         If pnlCombat.Visible = True Then lblCombatEvents.Text = ""
-        Do While updatelist.isEmpty() = False
-            Dim u As Updatable = updatelist.remove()
+        Do While updateList.isEmpty() = False
+            Dim u As Updatable = updateList.remove()
             u.update()
         Loop
         'updates the combat banner
-        If combatmode Then updatePnlCombat(player, player.currTarget)
+        If combatmode Then
+            updatePnlCombat(player, player.currTarget)
+        End If
 
         'fills in any missing spaces
         If mBoard(stairs.Y, stairs.X).Text <> "H" Then
@@ -1090,10 +1083,10 @@ Public Class Game
                 End If
             Next
         End If
-        If Not shopkeeper.dead And shopkeeper.pos.X > 0 And shopkeeper.pos.Y > 0 Then
+        If Not shopkeeper.isDead And shopkeeper.pos.X > 0 And shopkeeper.pos.Y > 0 Then
             mBoard(shopkeeper.pos.Y, shopkeeper.pos.X).Text = "$"
         End If
-        If Not swiz.dead And swiz.pos.X > 0 And swiz.pos.Y > 0 Then
+        If Not swiz.isDead And swiz.pos.X > 0 And swiz.pos.Y > 0 Then
             mBoard(swiz.pos.Y, swiz.pos.X).Text = "$"
         End If
         If mBoard(player.pos.Y, player.pos.X).Text = "+" Then
@@ -1119,8 +1112,8 @@ Public Class Game
         player.UIupdate()
         lstLog.TopIndex = lstLog.Items.Count - 1
     End Sub
-    'viewBubble "discovers" the area around the player and erases the players previous location
     Sub viewBubble()
+        'viewBubble "discovers" the area around the player and erases the players previous location
         If testingImageBoard Then
             Dim startTime As Double = (DateTime.Now - New DateTime(1970, 1, 1)).TotalMilliseconds
             Dim imgSize As Integer = picTile.BackgroundImage.PhysicalDimension.Height
@@ -1189,8 +1182,9 @@ Public Class Game
             Console.WriteLine("BUBBLE TIME: " + (endTime - startTime).ToString())
         End If
     End Sub
-    'zoom interperates the data around the player from mBoard, and displays it on mPics
     Sub zoom()
+        'zoom interperates the data around the player from mBoard, and displays it on mPics
+
         'tile IDs
         '0 = Wall/Empty tile
         '1 = Undiscovered tile
@@ -1318,117 +1312,9 @@ Public Class Game
         End If
     End Sub
 
-    'general functions
-    'randomEvents decides whether random encounters will occur, and handles what will be encountered
-    Sub randomEvents()
-        If floor = 5 Then Exit Sub
-        Randomize()
-        If eClock > 0 Then eClock -= 1
-        If combatmode = True Or npcmode = True Or eClock <> 0 Or Not player.canMoveFlag Then Exit Sub
-        Dim currTier As Integer() = monsterTier1
-        Select Case floor
-            Case 1
-                currTier = monsterTier1
-            Case 2
-                currTier = monsterTier2
-            Case 3
-                currTier = monsterTier3
-            Case 4
-                currTier = monsterTier4
-            Case Else
-                currTier = monsterTier4
-        End Select
-
-        Dim rand As Integer = CInt(Int(Rnd() * 1000))
-        Dim r As Integer = Int(Rnd() * (UBound(currTier) + 1))
-        Dim r2 As Integer = Int(Rnd() * (UBound(currTier) + 1))
-
-        If rand < encounterRate Then
-            Dim m As Monster
-            If r2 = UBound(currTier) And r2 = r And ((floor < 5 AndAlso Not beatboss(floor)) Or floor >= 5) And Not floor = 3 Then
-                m = New MiniBoss(floor)
-            Else
-                m = New Monster(currTier(r))
-            End If
-            npcList.Add(m)
-            player.currTarget = m
-            toCombat()
-            lstLog.Items.Add((m.getName() & " attacks!"))
-            eClock = eClockResetVal
-        End If
-        lstLog.TopIndex = lstLog.Items.Count - 1
-    End Sub
-    'handleKeyPress handles the players pressed keys, and is the driver function for each 
-    Sub closeLblEvent()
-        If lblEvent.Visible = True Then
-            lblEvent.Visible = False
-            lblEvent.Text = ""
-            lblEvent.ForeColor = Color.White
-            drawBoard()
-        End If
-    End Sub
-    Function shouldReturnEarly(ByVal Keydata As Keys)
-        If picStart.Visible = True Then Return True
-        If combatmode And (Keydata.Equals(cKeys(0)) Or Keydata.Equals(cKeys(1)) Or Keydata.Equals(cKeys(2)) Or Keydata.Equals(cKeys(3)) Or Keydata.Equals(Keys.Left) Or Keydata.Equals(Keys.Right) Or Keydata.Equals(Keys.Down) Or Keydata.Equals(Keys.Up)) And Not selecting Then
-            Return True
-        End If
-        If tmrKeyCD.Enabled Then Return True Else tmrKeyCD.Enabled = True
-        If lblEvent.Visible And npcmode = True And Not Keydata.Equals(cKeys(13)) Then
-            oemSemiColon()
-            Return True
-        End If
-        If lblEvent.Visible And npcmode = True And Keydata.Equals(cKeys(13)) Then
-            Return False
-        End If
-        If pnlDescript.Visible And Not lblEvent.Visible Then
-            pnlDescript.Location = New Point(1000, pnlDescript.Location.Y)
-            pnlDescript.Visible = False
-            Return True
-        End If
-        If lblEvent.Visible And Not (Keydata.Equals(Keys.Enter)) And Not Keydata.Equals(cKeys(0)) And Not Keydata.Equals(cKeys(1)) And Not Keydata.Equals(cKeys(2)) And Not Keydata.Equals(cKeys(3)) _
-            And Not Keydata.Equals(Keys.Left) And Not Keydata.Equals(Keys.Right) And Not Keydata.Equals(Keys.Down) And Not Keydata.Equals(Keys.Up) Then
-            If npcmode = False Then
-                picNPC.Visible = False
-                closeLblEvent()
-                player.canMoveFlag = True
-                If Not combatmode Then player.canMoveFlag = True
-                If Not lblEventOnClose Is Nothing Then
-                    lblEvent.Visible = True
-                    If Not combatmode Then player.canMoveFlag = False
-                    lblEventOnClose()
-                    lblEventOnClose = Nothing
-                End If
-                drawBoard()
-                If btnEQP.Enabled = False Then btnEQP.Enabled = True
-            End If
-            Return True
-        End If
-        If lblEvent.Visible And (Keydata.Equals(cKeys(0)) Or Keydata.Equals(cKeys(1)) Or Keydata.Equals(cKeys(2)) Or Keydata.Equals(cKeys(3)) _
-            Or Keydata.Equals(Keys.Left) Or Keydata.Equals(Keys.Right) Or Keydata.Equals(Keys.Down) Or Keydata.Equals(Keys.Up)) Then
-            Return True
-        End If
-        If keyspresed.Length > 4 Then
-            keyspresed = keyspresed.Substring(1, 3)
-        End If
-        'If combatmode = True And Not (Keydata.Equals(Keys.Enter) Or Keydata.Equals(Keys.K) Or Keydata.Equals(Keys.I) Or Keydata.Equals(Keys.L)) Then Return True
-        'If npcmode = True Then Return True
-        If player.mana < player.getmaxMana And turn Mod 3 = 0 Then player.mana += 1
-        If npcList.Count > 0 Then
-            For i = 0 To npcList.Count - 1
-                Dim int1 As Integer = 100 - npcList.Item(i).speed
-                If int1 < 1 Then int1 = 1
-                updatelist.add(npcList.Item(i), (int1))
-            Next
-        End If
-        Return False
-    End Function
-    Function isALetter(ByVal s As String)
-        Dim letters = "qwertyuiopasdfghjklzxcvbnm".ToList
-        If s.Length > 1 Then Return False
-        If letters.Contains(s) Then Return True
-        Return False
-    End Function
+    '|COMMAND DRIVERS|
     Function HandleKeyPress(ByVal Keydata As Keys) As Boolean
+        'handleKeyPress handles the players pressed keys, and is the driver function for each one
         Dim startTime As Double = (DateTime.Now - New DateTime(1970, 1, 1)).TotalMilliseconds
         Dim endTime As Double = startTime
         lastKey = Keydata.ToString.ToLower
@@ -1503,9 +1389,9 @@ Public Class Game
                     player.moveRight()
                     randomEvents()
             End Select
-            Dim int As Integer = 100 - player.getSpeed
+            Dim int As Integer = 100 - player.getSPD
             If int < 1 Then int = 1
-            updatelist.add(player, (int))
+            updateList.add(player, (int))
             turn += 1
             If Not Keydata.Equals(cKeys(10)) Then drawBoard()
             lstLog.TopIndex = lstLog.Items.Count - 1
@@ -1539,293 +1425,15 @@ Public Class Game
         Console.WriteLine("TOTAL TIME: " + (endTime - startTime).ToString())
         Return True
     End Function
-    'processCmdKey is a leftover from an earlier version, and may not be needed anymore
     Protected Overrides Function ProcessCmdKey(ByRef msg As System.Windows.Forms.Message, ByVal keyData As System.Windows.Forms.Keys) As Boolean
-        ' Return MyBase.ProcessCmdKey(msg, keyData)
+        'processCmdKey is a leftover from an earlier version, and may not be needed anymore
         Const WM_KEYDOWN As Integer = &H100
         If msg.Msg = WM_KEYDOWN Then
             If HandleKeyPress(keyData) Then Return True
         End If
         Return MyBase.ProcessCmdKey(msg, keyData)
     End Function
-    'oemSemicolon triggers when a player hits the semicolon key, or any of its equivalents
-    Sub oemSemiColon()
-        If player.pos.Equals(shopkeeper.pos) Then
-            npcEncounter(shopkeeper)
-        End If
-        If player.pos.Equals(swiz.pos) Then
-            npcEncounter(swiz)
-        End If
-        If btnEQP.Enabled = False Then btnEQP.Enabled = True
-        If chestList.Count > 0 Then
-            For i = 0 To chestList.Count - 1
-                If player.pos = chestList.Item(i).pos Then
-                    chestList.Item(i).open()
-                    chestList.RemoveAt(i)
-                    Exit For
-                End If
-            Next
-        End If
-        If floor < 5 Then
-            If floorboss(floor).Equals("Key") And player.p_inventory.getCountAt("Key") > 0 Then beatboss(floor) = True
-            If player.pos = stairs And beatboss(floor) Then
-                If floor < 5 Then
-                    If floorboss(floor).Equals("Key") Then player.p_inventory.add("Key", -1)
-                    player.p_inventory.invNeedsUDate = True
-                    player.UIupdate()
-                    initializeBoard()
-                    If combatmode Then fromCombat()
-                Else
-                    MsgBox("END OF CONTENT")
-                End If
-            ElseIf player.pos = stairs Then
-                If floorboss(floor).Equals("Key") Then pushLblEvent("The stairs are behind a locked gate!  Perhaps the key is in a chest..." & vbCrLf & "[while this game is in development it can also be bought from the shop for 2500]") Else pushLblEvent("You must defeat " & floorboss(floor) & "!")
-            End If
-        ElseIf player.pos = stairs Then
-            initializeBoard()
-            If combatmode Then fromCombat()
-        End If
-        If statueList.Count > 0 Then
-            For i = 0 To statueList.Count - 1
-                If player.pos = statueList.Item(i).pos Then
-                    statueList.Item(i).examine()
-                    Exit For
-                End If
-            Next
-        End If
-    End Sub
-    Sub oemReturn()
-        If cheatList.Contains(keyspresed) Then
-            MsgBox(keyspresed)
-            If keyspresed = "girl" Then
-                player.MtF()
-                player.createP()
-            ElseIf keyspresed = "dick" Then
-                player.FtM()
-                player.createP()
-            ElseIf keyspresed = "blue" Then
-                player.haircolor = Color.Cyan
-                player.createP()
-            ElseIf keyspresed = "blue" Then
-                player.haircolor = Color.Cyan
-                player.createP()
-            ElseIf keyspresed = "bmbo" Then
-                player.perks("bimbotf") = True
-            ElseIf keyspresed = "catc" Then
-                player.perks("nekocurse") = True
-            ElseIf keyspresed = "mana" Then
-                player.p_inventory.add(49, 1)
-                player.p_inventory.invNeedsUDate = True
-                player.UIupdate()
-            ElseIf keyspresed = "form" Then
-                formList.Add("Slime")
-                formList.Add("Goddess")
-                formList.Add("Succubus")
-                formList.Add("Dragon")
-            ElseIf keyspresed = "fuse" Then
-                player.p_inventory.add(58, 1)
-                player.p_inventory.invNeedsUDate = True
-                player.UIupdate()
-            ElseIf keyspresed = "tfme" Then
-                Polymorph.porm = True
-                Dim p As Polymorph = New Polymorph
-                p.ShowDialog()
-                p.Dispose()
-            ElseIf keyspresed = "seee" Then
-                For indY = -mBoardHeight To mBoardHeight
-                    For indX = -mBoardWidth To mBoardWidth
-                        If player.pos.Y + indY < mBoardHeight And player.pos.Y + indY >= 0 And player.pos.X + indX < mBoardWidth And player.pos.X + indX >= 0 Then
-                            If mBoard(player.pos.Y + indY, player.pos.X + indX).Text = "@" Then mBoard(player.pos.Y + indY, player.pos.X + indX).Text = ""
-                            If mBoard(player.pos.Y + indY, player.pos.X + indX).Text = "H" And mBoard(player.pos.Y + indY, player.pos.X + indX).Tag < 2 Then
-                                mBoard(player.pos.Y + indY, player.pos.X + indX).ForeColor = Color.Black
-                                lstLog.Items.Add("Floor " & floor & ": Staircase Discovered")
-                            End If
-                            If mBoard(player.pos.Y + indY, player.pos.X + indX).Text = "#" And mBoard(player.pos.Y + indY, player.pos.X + indX).Tag < 2 Then
-                                mBoard(player.pos.Y + indY, player.pos.X + indX).ForeColor = Color.Black
-                                lstLog.Items.Add("Chest discovered!")
-                            End If
-                            If mBoard(player.pos.Y + indY, player.pos.X + indX).Text = "$" And mBoard(player.pos.Y + indY, player.pos.X + indX).Tag < 2 Then
-                                mBoard(player.pos.Y + indY, player.pos.X + indX).ForeColor = Color.Navy
-                                lstLog.Items.Add("Shop discovered!")
-                            End If
-                            If mBoard(player.pos.Y + indY, player.pos.X + indX).Tag = 1 Then mBoard(player.pos.Y + indY, player.pos.X + indX).Tag = 2
-                        End If
-                    Next
-                Next
-                lstLog.TopIndex = lstLog.Items.Count - 1
-            ElseIf keyspresed = "bigr" Then
-                player.be()
-            ElseIf keyspresed = "rock" Then
-                player.petrify(Color.Gray)
-            ElseIf keyspresed = "doll" Then
-                player.ongoingTFs.Add(New BUDollTF())
-                player.update()
-            ElseIf keyspresed = "gogo" Then
-                Try
-                    Dim f As Integer = CInt(InputBox("Which floor?"))
-                    floor = f - 1
-                    pushLblEvent("You draw a circle on the floor, and think hard about floor " & f & ".  A portal opens to it, and you jump through, skipping every floor in between.", AddressOf initializeBoard)
-                Catch e As Exception
-                    pushLblEvent("Your attempted teleportation fails in a less than spectacular fashion, the portal you created simply fizzling away to nothingness.")
-                End Try
-            ElseIf keyspresed = "slut" Then
-                player.perks("slutcurse") = True
-                player.p_inventory.add(1, 1)
-                player.lust += 20
-                player.createP()
-            ElseIf keyspresed = "dies" Then
-                If player.currTarget IsNot Nothing Then player.currTarget.takeDMG("9999")
-            End If
-        End If
-        keyspresed = ""
-    End Sub
-    Sub talkKey()
-        If Not npcmode Then
-            If player.pos.Equals(shopkeeper.pos) Then
-                npcEncounter(shopkeeper)
-            End If
-            If player.pos.Equals(swiz.pos) Then
-                npcEncounter(swiz)
-            End If
-        Else
-            If Not lblEventOnClose Is Nothing Then
-                lblEventOnClose()
-                lblEventOnClose = Nothing
-            End If
-            closeLblEvent()
-        End If
-    End Sub
-    Sub attackKey()
-        If combatmode Then
-            turn += 1
-            If Not lblEventOnClose Is Nothing Then
-                lblEventOnClose()
-                lblEventOnClose = Nothing
-            End If
-            closeLblEvent()
-            Dim m As Monster = Nothing
-            For i = 0 To npcList.Count() - 1
-                If npcList.Item(i).GetType().IsSubclassOf(GetType(Monster)) Or npcList.Item(i).GetType() Is GetType(Monster) Then
-                    m = npcList.Item(i)
-                    Exit For
-                End If
-            Next
-            player.setTarg(m)
-            If npcList.Count > 0 Then
-                For i = 0 To npcList.Count - 1
-                    Dim int1 As Integer = 100 - npcList.Item(i).speed
-                    If int1 < 1 Then int1 = 1
-                    updatelist.add(npcList.Item(i), (int1))
-                Next
-            End If
-            Dim int As Integer = 100 - player.getSpeed
-            If int < 1 Then int = 1
-            player.isAttacking = True
-            updatelist.add(player, int)
-        Else
-            pushLblEvent("You swing your " & player.equippedWeapon.getName & " at the air.")
-        End If
-    End Sub
-    Sub magicKey()
-        toPNLSelec("Magic")
-    End Sub
-    Sub specialKey()
-        toPNLSelec("Spec")
-    End Sub
-    Sub drinkKey()
-        toPNLSelec("Potion")
-    End Sub
-    Sub waitKey()
-        turn += 1
-        closeLblEvent()
-        Dim m As Monster = Nothing
-        For i = 0 To npcList.Count() - 1
-            If npcList.Item(i).GetType().IsSubclassOf(GetType(Monster)) Or npcList.Item(i).GetType() Is GetType(Monster) Then
-                m = npcList.Item(i)
-                Exit For
-            End If
-        Next
-        player.setTarg(m)
-        If npcList.Count > 0 Then
-            For i = 0 To npcList.Count - 1
-                Dim int1 As Integer = 100 - npcList.Item(i).speed
-                If int1 < 1 Then int1 = 1
-                updatelist.add(npcList.Item(i), (int1))
-            Next
-        End If
-        Dim int As Integer = 100 - player.getSpeed
-        If int < 1 Then int = 1
-        updatelist.add(player, int)
-        pushLblEvent("You wait for a bit...")
-    End Sub
-    Sub runKey()
-        turn += 1
-        If combatmode Then
-            run()
-            'drawBoard()
-        Else
-            pushLblEvent("You have nothing to run from!")
-        End If
-
-    End Sub
-    Sub useKey()
-        toPNLSelec("Useable")
-    End Sub
-    Sub toShopKey()
-        If Not lblEventOnClose Is Nothing Then
-            lblEventOnClose()
-            lblEventOnClose = Nothing
-        End If
-        closeLblEvent()
-
-        If player.pos.Equals(shopkeeper.pos) Then
-            currNPC = shopkeeper
-        ElseIf player.pos.Equals(swiz.pos) Then
-            currNPC = swiz
-        Else
-            pushLblEvent("There's no shop here.")
-            Exit Sub
-        End If
-
-        'Dim s As Shop = New Shop
-        Dim s As ShopV2 = New ShopV2
-        s.ShowDialog()
-        s.Dispose()
-    End Sub
-    Sub eArmorKey()
-        toPNLSelec("Armor")
-    End Sub
-    Sub eWeaponKey()
-        toPNLSelec("Weapon")
-    End Sub
-    Sub selfinpKey()
-        If turn < 2 Then Exit Sub
-        lstLog.Items.Add(player.description)
-        toDesc()
-    End Sub
-    Sub eatKey()
-        toPNLSelec("Food")
-    End Sub
-    Sub yesKey()
-        If btnChallengeBoss.Visible Then
-            Dim m As Monster
-            If floor Mod 5 = 0 Then
-                m = New Boss(floor)
-            Else
-                m = New MiniBoss(floor)
-            End If
-            player.currTarget = m
-            npcList.Add(m)
-            lstLog.Items.Add((m.getName & " attacks!"))
-            toCombat()
-            btnChallengeBoss.Visible = False
-            lstLog.TopIndex = lstLog.Items.Count - 1
-        End If
-    End Sub
-    Sub noKey()
-
-    End Sub
-
+    'selection drivers
     Sub selection(ByVal Keydata As Keys)
         If Keydata.Equals(Keys.Up) Or Keydata.Equals(Keys.Down) Then
             Exit Sub
@@ -1850,7 +1458,7 @@ Public Class Game
             ElseIf selectionType = "yesNo" Then
                 selectYesNo(index)
             End If
-            player.p_inventory.invNeedsUDate = True
+            player.inv.invNeedsUDate = True
             player.UIupdate()
             selecting = False
             player.canMoveFlag = True
@@ -1861,7 +1469,7 @@ Public Class Game
     End Sub
     Sub selectItem(ByVal index As Integer)
         Dim subString As String = lstSelec.Items(index).ToString.Split(" (")(2)
-        selectedItem = player.p_inventory.item(subString)
+        selectedItem = player.inv.item(subString)
 
         If Not selectedItem Is Nothing AndAlso selectedItem.getUsable Then selectedItem.use()
     End Sub
@@ -1881,17 +1489,8 @@ Public Class Game
                 Exit For
             End If
         Next
-        Spell.spellCast(m, player, cboxMG.Items(index))
-        If npcList.Count > 0 Then
-            For i = 0 To npcList.Count - 1
-                Dim int1 As Integer = 100 - npcList.Item(i).speed
-                If int1 < 1 Then int1 = 1
-                updatelist.add(npcList.Item(i), (int1))
-            Next
-        End If
-        Dim int As Integer = 100 - player.getSpeed
-        If int < 1 Then int = 1
-        updatelist.add(player, int)
+        player.nextCombatAction = Sub(t As Entity) Spell.spellCast(t, player, cboxMG.Text)
+        queueSetup()
         Do While updatelist.isEmpty() = False
             Dim u As Updatable = updatelist.remove()
             u.update()
@@ -1922,16 +1521,7 @@ Public Class Game
             btnSpec.Visible = False
         End If
         cmboxSpec.Text = "-- Select --"
-        If npcList.Count > 0 Then
-            For i = 0 To npcList.Count - 1
-                Dim int1 As Integer = 100 - npcList.Item(i).speed
-                If int1 < 1 Then int1 = 1
-                updatelist.add(npcList.Item(i), (int1))
-            Next
-        End If
-        Dim int As Integer = 100 - player.getSpeed
-        If int < 1 Then int = 1
-        updatelist.add(player, int)
+        queueSetup()
         Do While updatelist.isEmpty() = False
             Dim u As Updatable = updatelist.remove()
             u.update()
@@ -1971,7 +1561,7 @@ Public Class Game
 
         'handles any tfs or triggers triggered by equipping of certain weapons
         If player.pClass.name.Equals("Magic Girl") And player.equippedArmor.getName.Equals("Magic_Girl_Outfit") Then
-            player.equippedArmor = player.p_inventory.item(10)
+            player.equippedArmor = player.inv.item(10)
             lstLog.Items.Add("A magic girl needs her uniform!")
         End If
 
@@ -2001,7 +1591,7 @@ Public Class Game
         'this handles the revert from the magical girl form, if needed
         If player.equippedWeapon.getName.Equals("Magic_Girl_Wand") And player.pClass.name.Equals("Magic Girl") And Not subString.Equals("Magic_Girl_Wand") Then
             lstLog.Items.Add("Putting away your wand causes you to change into your regular self!")
-            player.p_inventory.add(10, -1)
+            player.inv.add(10, -1)
             player.magGState.save(player)
             player.revertToPState()
         End If
@@ -2054,7 +1644,7 @@ Public Class Game
         Select Case mode
             Case "Potion"
                 lblWhat.Text = "Drink what?"
-                Dim potion_list = player.p_inventory.getPotions
+                Dim potion_list = player.inv.getPotions
                 For i = 0 To UBound(potion_list)
                     If potion_list(i).count > 0 Then
                         lstSelec.Items.Add(indexes(count) & " - " & potion_list(i).getName)
@@ -2063,7 +1653,7 @@ Public Class Game
                 Next
             Case "Useable"
                 lblWhat.Text = "Use what?"
-                Dim useable_list = player.p_inventory.getUseable
+                Dim useable_list = player.inv.getUseable
                 For i = 0 To UBound(useable_list)
                     If useable_list(i).count > 0 Then
                         lstSelec.Items.Add(indexes(count) & " - " & useable_list(i).getName)
@@ -2072,7 +1662,7 @@ Public Class Game
                 Next
             Case "Food"
                 lblWhat.Text = "Eat what?"
-                Dim food_list = player.p_inventory.getFood
+                Dim food_list = player.inv.getFood
                 For i = 0 To UBound(food_list)
                     If food_list(i).count > 0 Then
                         lstSelec.Items.Add(indexes(count) & " - " & food_list(i).getName)
@@ -2123,9 +1713,9 @@ Public Class Game
                     lstSelec.Items.Add("b - Common_Clothes")
                 End If
                 count += 1
-                For i = 0 To UBound(player.p_inventory.getArmors.Item2)
-                    If player.p_inventory.getArmors.Item2(i).count > 0 Then
-                        lstSelec.Items.Add(indexes(count) & " - " & player.p_inventory.getArmors.Item2(i).getName)
+                For i = 0 To UBound(player.inv.getArmors.Item2)
+                    If player.inv.getArmors.Item2(i).count > 0 Then
+                        lstSelec.Items.Add(indexes(count) & " - " & player.inv.getArmors.Item2(i).getName)
                         count += 1
                     End If
                 Next
@@ -2133,9 +1723,9 @@ Public Class Game
                 lblWhat.Text = "Equip what?"
                 lstSelec.Items.Add("a - Fists")
                 count += 1
-                For i = 0 To UBound(player.p_inventory.getWeapons.Item2)
-                    If player.p_inventory.getWeapons.Item2(i).count > 0 Then
-                        lstSelec.Items.Add(indexes(count) & " - " & player.p_inventory.getWeapons.Item2(i).getName)
+                For i = 0 To UBound(player.inv.getWeapons.Item2)
+                    If player.inv.getWeapons.Item2(i).count > 0 Then
+                        lstSelec.Items.Add(indexes(count) & " - " & player.inv.getWeapons.Item2(i).getName)
                         count += 1
                     End If
                 Next
@@ -2148,11 +1738,648 @@ Public Class Game
         pnlSelection.Location = New Point(115, pnlSelection.Location.Y)
         pnlSelection.Visible = True
     End Sub
+    Sub makeChoice()
+        toPNLSelec("yesNo")
+    End Sub
+    'utility functions for the command drivers
+    Sub queueSetup()
+        'This sets up the update list
+        If npcList.Count > 0 Then
+            For i = 0 To npcList.Count - 1
+                Dim int1 As Integer = 999 - npcList.Item(i).speed
+                If int1 < 1 Then int1 = 1
+                updateList.add(npcList.Item(i), (int1))
+            Next
+        End If
+        Dim int As Integer = 999 - player.getSPD
+        If int < 1 Then int = 1
+        updateList.add(player, int)
+    End Sub
+    Sub randomEvents()
+        'randomEvents decides whether random encounters will occur, and handles what will be encountered
+        If floor = 5 Then Exit Sub
+        Randomize()
+        If eClock > 0 Then eClock -= 1
+        If combatmode = True Or npcmode = True Or eClock <> 0 Or Not player.canMoveFlag Then Exit Sub
+        Dim currTier As Integer() = monsterTier1
+        Select Case floor
+            Case 1
+                currTier = monsterTier1
+            Case 2
+                currTier = monsterTier2
+            Case 3
+                currTier = monsterTier3
+            Case 4
+                currTier = monsterTier4
+            Case Else
+                currTier = monsterTier4
+        End Select
 
+        Dim rand As Integer = CInt(Int(Rnd() * 1000))
+        Dim r As Integer = Int(Rnd() * (UBound(currTier) + 1))
+        Dim r2 As Integer = Int(Rnd() * (UBound(currTier) + 1))
 
-    'save/loadSave methods
-    'save handles the saving of the game
+        If rand < encounterRate Then
+            Dim m As Monster
+            If r2 = UBound(currTier) And r2 = r And ((floor < 5 AndAlso Not beatboss(floor)) Or floor >= 5) And Not floor = 3 Then
+                m = New MiniBoss(floor)
+            Else
+                m = New Monster(currTier(r))
+            End If
+            npcList.Add(m)
+
+            player.setTarget(m)
+            m.currTarget = player
+            toCombat()
+            lstLog.Items.Add((m.getName() & " attacks!"))
+            eClock = eClockResetVal
+        End If
+        lstLog.TopIndex = lstLog.Items.Count - 1
+    End Sub
+    Sub closeLblEvent()
+        If lblEvent.Visible = True Then
+            lblEvent.Visible = False
+            lblEvent.Text = ""
+            lblEvent.ForeColor = Color.White
+            drawBoard()
+        End If
+    End Sub
+    Function shouldReturnEarly(ByVal Keydata As Keys)
+        'This function determines if the key input should be ignored.
+        'If it returns true, HandleKeyPress returns false before anything is done
+        If picStart.Visible = True Then Return True
+        If combatmode And (Keydata.Equals(cKeys(0)) Or Keydata.Equals(cKeys(1)) Or Keydata.Equals(cKeys(2)) Or Keydata.Equals(cKeys(3)) Or Keydata.Equals(Keys.Left) Or Keydata.Equals(Keys.Right) Or Keydata.Equals(Keys.Down) Or Keydata.Equals(Keys.Up)) And Not selecting Then
+            Return True
+        End If
+        If tmrKeyCD.Enabled Then Return True Else tmrKeyCD.Enabled = True
+        If lblEvent.Visible And npcmode = True And Not Keydata.Equals(cKeys(13)) Then
+            oemSemiColon()
+            Return True
+        End If
+        If lblEvent.Visible And npcmode = True And Keydata.Equals(cKeys(13)) Then
+            Return False
+        End If
+        If pnlDescript.Visible And Not lblEvent.Visible Then
+            pnlDescript.Location = New Point(1000, pnlDescript.Location.Y)
+            pnlDescript.Visible = False
+            Return True
+        End If
+        If lblEvent.Visible And Not (Keydata.Equals(Keys.Enter)) And Not Keydata.Equals(cKeys(0)) And Not Keydata.Equals(cKeys(1)) And Not Keydata.Equals(cKeys(2)) And Not Keydata.Equals(cKeys(3)) _
+            And Not Keydata.Equals(Keys.Left) And Not Keydata.Equals(Keys.Right) And Not Keydata.Equals(Keys.Down) And Not Keydata.Equals(Keys.Up) Then
+            If npcmode = False Then
+                picNPC.Visible = False
+                closeLblEvent()
+                player.canMoveFlag = True
+                If Not combatmode Then player.canMoveFlag = True
+                If Not lblEventOnClose Is Nothing Then
+                    lblEvent.Visible = True
+                    If Not combatmode Then player.canMoveFlag = False
+                    lblEventOnClose()
+                    lblEventOnClose = Nothing
+                End If
+                drawBoard()
+                If btnEQP.Enabled = False Then btnEQP.Enabled = True
+            End If
+            Return True
+        End If
+        If lblEvent.Visible And (Keydata.Equals(cKeys(0)) Or Keydata.Equals(cKeys(1)) Or Keydata.Equals(cKeys(2)) Or Keydata.Equals(cKeys(3)) _
+            Or Keydata.Equals(Keys.Left) Or Keydata.Equals(Keys.Right) Or Keydata.Equals(Keys.Down) Or Keydata.Equals(Keys.Up)) Then
+            Return True
+        End If
+        If keyspresed.Length > 4 Then
+            keyspresed = keyspresed.Substring(1, 3)
+        End If
+        'If combatmode = True And Not (Keydata.Equals(Keys.Enter) Or Keydata.Equals(Keys.K) Or Keydata.Equals(Keys.I) Or Keydata.Equals(Keys.L)) Then Return True
+        'If npcmode = True Then Return True
+        If player.mana < player.getMaxMana And turn Mod 3 = 0 Then player.mana += 1
+        queueSetup()
+        Return False
+    End Function
+    Function isALetter(ByVal s As String)
+        Dim letters = "qwertyuiopasdfghjklzxcvbnm".ToList
+        If s.Length > 1 Then Return False
+        If letters.Contains(s) Then Return True
+        Return False
+    End Function
+
+    '|COMMANDS|
+    Sub oemSemiColon()
+        'oemSemicolon triggers when a player hits the semicolon key, or any of its equivalents
+        If player.pos.Equals(shopkeeper.pos) Then
+            npcEncounter(shopkeeper)
+        End If
+        If player.pos.Equals(swiz.pos) Then
+            npcEncounter(swiz)
+        End If
+        If btnEQP.Enabled = False Then btnEQP.Enabled = True
+        If chestList.Count > 0 Then
+            For i = 0 To chestList.Count - 1
+                If player.pos = chestList.Item(i).pos Then
+                    chestList.Item(i).open()
+                    chestList.RemoveAt(i)
+                    Exit For
+                End If
+            Next
+        End If
+        If floor < 5 Then
+            If floorboss(floor).Equals("Key") And player.inv.getCountAt("Key") > 0 Then beatboss(floor) = True
+            If player.pos = stairs And beatboss(floor) Then
+                If floor < 5 Then
+                    If floorboss(floor).Equals("Key") Then player.inv.add("Key", -1)
+                    player.inv.invNeedsUDate = True
+                    player.UIupdate()
+                    initializeBoard()
+                    If combatmode Then fromCombat()
+                Else
+                    MsgBox("END OF CONTENT")
+                End If
+            ElseIf player.pos = stairs Then
+                If floorboss(floor).Equals("Key") Then pushLblEvent("The stairs are behind a locked gate!  Perhaps the key is in a chest..." & vbCrLf & "[while this game is in development it can also be bought from the shop for 2500]") Else pushLblEvent("You must defeat " & floorboss(floor) & "!")
+            End If
+        ElseIf player.pos = stairs Then
+            initializeBoard()
+            If combatmode Then fromCombat()
+        End If
+        If statueList.Count > 0 Then
+            For i = 0 To statueList.Count - 1
+                If player.pos = statueList.Item(i).pos Then
+                    statueList.Item(i).examine()
+                    Exit For
+                End If
+            Next
+        End If
+    End Sub
+    Sub oemReturn()
+        'oemReturn triggers when the player hits the enter (return) key
+        If cheatList.Contains(keyspresed) Then
+            MsgBox(keyspresed)
+            If keyspresed = "girl" Then
+                player.MtF()
+                player.createP()
+            ElseIf keyspresed = "dick" Then
+                player.FtM()
+                player.createP()
+            ElseIf keyspresed = "blue" Then
+                player.haircolor = Color.Cyan
+                player.createP()
+            ElseIf keyspresed = "blue" Then
+                player.haircolor = Color.Cyan
+                player.createP()
+            ElseIf keyspresed = "bmbo" Then
+                player.perks("bimbotf") = True
+            ElseIf keyspresed = "catc" Then
+                player.perks("nekocurse") = True
+            ElseIf keyspresed = "mana" Then
+                player.inv.add(49, 1)
+                player.inv.invNeedsUDate = True
+                player.UIupdate()
+            ElseIf keyspresed = "form" Then
+                formList.Add("Slime")
+                formList.Add("Goddess")
+                formList.Add("Succubus")
+                formList.Add("Dragon")
+            ElseIf keyspresed = "fuse" Then
+                player.inv.add(58, 1)
+                player.inv.invNeedsUDate = True
+                player.UIupdate()
+            ElseIf keyspresed = "tfme" Then
+                Polymorph.porm = True
+                Dim p As Polymorph = New Polymorph
+                p.ShowDialog()
+                p.Dispose()
+            ElseIf keyspresed = "seee" Then
+                For indY = -mBoardHeight To mBoardHeight
+                    For indX = -mBoardWidth To mBoardWidth
+                        If player.pos.Y + indY < mBoardHeight And player.pos.Y + indY >= 0 And player.pos.X + indX < mBoardWidth And player.pos.X + indX >= 0 Then
+                            If mBoard(player.pos.Y + indY, player.pos.X + indX).Text = "@" Then mBoard(player.pos.Y + indY, player.pos.X + indX).Text = ""
+                            If mBoard(player.pos.Y + indY, player.pos.X + indX).Text = "H" And mBoard(player.pos.Y + indY, player.pos.X + indX).Tag < 2 Then
+                                mBoard(player.pos.Y + indY, player.pos.X + indX).ForeColor = Color.Black
+                                lstLog.Items.Add("Floor " & floor & ": Staircase Discovered")
+                            End If
+                            If mBoard(player.pos.Y + indY, player.pos.X + indX).Text = "#" And mBoard(player.pos.Y + indY, player.pos.X + indX).Tag < 2 Then
+                                mBoard(player.pos.Y + indY, player.pos.X + indX).ForeColor = Color.Black
+                                lstLog.Items.Add("Chest discovered!")
+                            End If
+                            If mBoard(player.pos.Y + indY, player.pos.X + indX).Text = "$" And mBoard(player.pos.Y + indY, player.pos.X + indX).Tag < 2 Then
+                                mBoard(player.pos.Y + indY, player.pos.X + indX).ForeColor = Color.Navy
+                                lstLog.Items.Add("Shop discovered!")
+                            End If
+                            If mBoard(player.pos.Y + indY, player.pos.X + indX).Tag = 1 Then mBoard(player.pos.Y + indY, player.pos.X + indX).Tag = 2
+                        End If
+                    Next
+                Next
+                lstLog.TopIndex = lstLog.Items.Count - 1
+            ElseIf keyspresed = "bigr" Then
+                player.be()
+            ElseIf keyspresed = "rock" Then
+                player.petrify(Color.Gray)
+            ElseIf keyspresed = "doll" Then
+                player.ongoingTFs.Add(New BUDollTF())
+                player.update()
+            ElseIf keyspresed = "gogo" Then
+                Try
+                    Dim f As Integer = CInt(InputBox("Which floor?"))
+                    floor = f - 1
+                    pushLblEvent("You draw a circle on the floor, and think hard about floor " & f & ".  A portal opens to it, and you jump through, skipping every floor in between.", AddressOf initializeBoard)
+                Catch e As Exception
+                    pushLblEvent("Your attempted teleportation fails in a less than spectacular fashion, the portal you created simply fizzling away to nothingness.")
+                End Try
+            ElseIf keyspresed = "slut" Then
+                player.perks("slutcurse") = True
+                player.inv.add(1, 1)
+                player.lust += 20
+                player.createP()
+            ElseIf keyspresed = "dies" Then
+                If player.currTarget IsNot Nothing Then player.currTarget.takeDMG(9999, Nothing)
+            End If
+        End If
+        keyspresed = ""
+    End Sub
+    'talk
+    Sub talkKey()
+        If Not npcmode Then
+            If player.pos.Equals(shopkeeper.pos) Then
+                npcEncounter(shopkeeper)
+            End If
+            If player.pos.Equals(swiz.pos) Then
+                npcEncounter(swiz)
+            End If
+        Else
+            If Not lblEventOnClose Is Nothing Then
+                lblEventOnClose()
+                lblEventOnClose = Nothing
+            End If
+            closeLblEvent()
+        End If
+    End Sub
+    Private Sub btnTalk_Click(sender As Object, e As EventArgs) Handles btnTalk.Click
+        If Not lblEventOnClose Is Nothing Then
+            lblEventOnClose()
+            lblEventOnClose = Nothing
+        End If
+        closeLblEvent()
+    End Sub
+    'attack
+    Sub attackKey()
+        If combatmode Then
+            turn += 1
+            If Not lblEventOnClose Is Nothing Then
+                lblEventOnClose()
+                lblEventOnClose = Nothing
+            End If
+            closeLblEvent()
+            Dim m As Monster = Nothing
+            For i = 0 To npcList.Count() - 1
+                If npcList.Item(i).GetType().IsSubclassOf(GetType(Monster)) Or npcList.Item(i).GetType() Is GetType(Monster) Then
+                    m = npcList.Item(i)
+                    Exit For
+                End If
+            Next
+            player.setTarget(m)
+            queueSetup()
+        Else
+            pushLblEvent("You swing your " & player.equippedWeapon.getName & " at the air.")
+        End If
+    End Sub
+    Private Sub btnATK_Click(sender As Object, e As EventArgs) Handles btnATK.Click
+        turn += 1
+        If Not lblEventOnClose Is Nothing Then
+            lblEventOnClose()
+            lblEventOnClose = Nothing
+        End If
+        closeLblEvent()
+        player.nextCombatAction = Sub(t As Entity) player.attackCMD(t)
+        queueSetup()
+        drawBoard()
+    End Sub
+    'magic
+    Sub magicKey()
+        toPNLSelec("Magic")
+    End Sub
+    Private Sub btnMG_Click(sender As Object, e As EventArgs) Handles btnMG.Click
+        turn += 1
+        If Not lblEventOnClose Is Nothing Then
+            lblEventOnClose()
+            lblEventOnClose = Nothing
+        End If
+        lblCombatEvents.Text = ""
+        closeLblEvent()
+        If cboxMG.Text = "-- Select --" Or player.mana <= 0 Then Exit Sub
+
+        player.nextCombatAction = Sub(t As Entity) Spell.spellCast(t, player, cboxMG.Text)
+        queueSetup()
+        Do While updatelist.isEmpty() = False
+            Dim u As Updatable = updatelist.remove()
+            u.update()
+        Loop
+        If npcmode Then picNPC.BackgroundImage = currNPC.picNCP(currNPC.npcIndex)
+        'updates the combat banner
+        updatePnlCombat(player, player.currTarget)
+        ttCosts.RemoveAll()
+    End Sub
+    'specials
+    Sub specialKey()
+        toPNLSelec("Spec")
+    End Sub
+    Public Sub specialRoute()
+        'special route
+        If player.pClass.name = "Warrior" Or player.pClass.name = "Paladin" Then cmboxSpec.Items.Add("Berserker Rage")
+        If player.pClass.name = "Mage" Or player.pClass.name = "Paladin" Then cmboxSpec.Items.Add("Risky Decision")
+        If player.breastSize > 3 Then cmboxSpec.Items.Add("Massive Mammaries")
+        If player.pForm.name = "Succubus" Then cmboxSpec.Items.Add("Unholy Seduction")
+        If player.pForm.name = "Slime" Then cmboxSpec.Items.Add("Absorbtion")
+        If player.pForm.name = "Dragon" Then cmboxSpec.Items.Add("Ironhide Fury")
+    End Sub
+    Private Sub btnSpec_Click(sender As Object, e As EventArgs) Handles btnSpec.Click
+        turn += 1
+        If Not lblEventOnClose Is Nothing Then
+            lblEventOnClose()
+            lblEventOnClose = Nothing
+        End If
+        lblCombatEvents.Text = ""
+        closeLblEvent()
+        If cmboxSpec.Text = "-- Select --" Then Exit Sub
+        Dim m As Monster = Nothing
+        For i = 0 To npcList.Count() - 1
+            If npcList.Item(i).GetType().IsSubclassOf(GetType(Monster)) Or npcList.Item(i).GetType() Is GetType(Monster) Then
+                m = npcList.Item(i)
+                Exit For
+            End If
+        Next
+        Specials.goSpecial(m, player, cmboxSpec.Text)
+        If Specials.SPCCost(cmboxSpec.Text).Equals("Useable only once per combat.") Then cmboxSpec.Items.Remove(cmboxSpec.Text)
+        If cmboxSpec.Items.Count = 0 Then
+            cmboxSpec.Visible = False
+            btnSpec.Visible = False
+        End If
+        cmboxSpec.Text = "-- Select --"
+        queueSetup()
+        Do While updatelist.isEmpty() = False
+            Dim u As Updatable = updatelist.remove()
+            u.update()
+        Loop
+        'updates the combat banner
+        updatePnlCombat(player, player.currTarget)
+        ttCosts.RemoveAll()
+    End Sub
+    'drink
+    Sub drinkKey()
+        toPNLSelec("Potion")
+    End Sub
+    'wait
+    Sub waitKey()
+        turn += 1
+        closeLblEvent()
+        Dim m As Monster = Nothing
+        For i = 0 To npcList.Count() - 1
+            If npcList.Item(i).GetType().IsSubclassOf(GetType(Monster)) Or npcList.Item(i).GetType() Is GetType(Monster) Then
+                m = npcList.Item(i)
+                Exit For
+            End If
+        Next
+        player.setTarget(m)
+        queueSetup()
+        pushLblEvent("You wait for a bit...")
+    End Sub
+    Private Sub btnWait_Click(sender As Object, e As EventArgs) Handles btnWait.Click
+        turn += 1
+        closeLblEvent()
+        Dim m As Monster = Nothing
+        For i = 0 To npcList.Count() - 1
+            If npcList.Item(i).GetType().IsSubclassOf(GetType(Monster)) Or npcList.Item(i).GetType() Is GetType(Monster) Then
+                m = npcList.Item(i)
+                Exit For
+            End If
+        Next
+        queueSetup()
+        drawBoard()
+        pushLblCombatEvent("You wait for a bit...")
+    End Sub
+    'run
+    Sub runKey()
+        turn += 1
+        If combatmode Then
+            run()
+            'drawBoard()
+        Else
+            pushLblEvent("You have nothing to run from!")
+        End If
+
+    End Sub
+    Sub run()
+        'run handles the player choice to run from combat
+        If player.health < 1 / player.getMaxHealth Then Exit Sub
+        If player.perks("swordpossess") > -1 Then
+            lstLog.Items.Add("Something inside you decides that running away is cowardly, so you don't.")
+            pushLblCombatEvent("Something inside you decides that running away is cowardly, so you don't.")
+            lstLog.TopIndex = lstLog.Items.Count - 1
+            Exit Sub
+        End If
+        If player.name.Equals("Targax") And player.pClass.name.Equals("Soul-Lord") Then
+            lstLog.Items.Add("You decide that running away is cowardly, so you don't.")
+            pushLblCombatEvent("You decide that running away is cowardly, so you don't.")
+            lstLog.TopIndex = lstLog.Items.Count - 1
+            Exit Sub
+        End If
+        Dim run As Integer = Int(Rnd() * 3)
+        For i = 0 To npcList.Count() - 1
+            If Not (npcList.Item(i).GetType() Is GetType(Boss)) Then
+                If npcList.Item(i).inv.getCountAt(53) > 0 Then
+                    pushLblCombatEvent("The glimmer of a key can be seen with your opponent!")
+                    Exit For
+                End If
+                If run <> 1 Then
+                    npcList.Item(i).despawn("run")
+                    updateList = New PQ
+                Else
+                    'updates the combat banner
+                    updatePnlCombat(player, player.currTarget)
+                    pushLblCombatEvent("You can't get away!")
+                    queueSetup()
+                    Do While updateList.isEmpty() = False
+                        Dim u As Updatable = updateList.remove()
+                        u.update()
+                    Loop
+                    Exit Sub
+                End If
+
+                Exit For
+            End If
+        Next
+    End Sub
+    Private Sub btnRUN_Click(sender As Object, e As EventArgs) Handles btnRUN.Click
+        closeLblEvent()
+        If Not lblEventOnClose Is Nothing Then
+            lblEventOnClose()
+            lblEventOnClose = Nothing
+        End If
+        turn += 1
+        run()
+    End Sub
+    'use
+    Sub useKey()
+        toPNLSelec("Useable")
+    End Sub
+    Private Sub btnUse_Click(sender As Object, e As EventArgs) Handles btnUse.Click
+        closeLblEvent()
+        If Not lblEventOnClose Is Nothing Then
+            lblEventOnClose()
+            lblEventOnClose = Nothing
+        End If
+        If Not combatmode And Not npcmode Then player.canMoveFlag = True
+        If player.iArrInd(8).Equals(New Tuple(Of Integer, Boolean)(6, False)) Or player.iArrInd(8).Equals(New Tuple(Of Integer, Boolean)(12, True)) Then
+            pushLblEvent("You can't use items now!")
+            Exit Sub
+        End If
+        Dim tmpInd As Integer = lstInventory.TopIndex
+        Dim tind = lstInventory.SelectedIndex
+        selectedItem.use()
+        player.inv.invNeedsUDate = True
+        player.UIupdate()
+        lstInventory.TopIndex = tmpInd
+        If selectedItem.count < 1 Then
+            lstInventory.SelectedItem = Nothing
+            selectedItem = Nothing
+            btnUse.Enabled = False
+            btnDrop.Enabled = False
+            btnLook.Enabled = False
+        Else
+            lstInventory.SelectedIndex = tind
+        End If
+        If combatmode Then
+            queueSetup()
+            Do While updatelist.isEmpty() = False
+                Dim u As Updatable = updatelist.remove()
+                u.update()
+            Loop
+            'updates the combat banner
+            updatePnlCombat(player, player.currTarget)
+        End If
+
+        lblPHealth.Text = CInt(player.health * player.getmaxHealth) & "/" & player.getmaxHealth
+    End Sub
+    'shop
+    Sub toShopKey()
+        If Not lblEventOnClose Is Nothing Then
+            lblEventOnClose()
+            lblEventOnClose = Nothing
+        End If
+        closeLblEvent()
+
+        If player.pos.Equals(shopkeeper.pos) Then
+            currNPC = shopkeeper
+        ElseIf player.pos.Equals(swiz.pos) Then
+            currNPC = swiz
+        Else
+            pushLblEvent("There's no shop here.")
+            Exit Sub
+        End If
+
+        'Dim s As Shop = New Shop
+        Dim s As ShopV2 = New ShopV2
+        s.ShowDialog()
+        s.Dispose()
+    End Sub
+    Private Sub btnShop_Click(sender As Object, e As EventArgs) Handles btnShop.Click
+        If Not lblEventOnClose Is Nothing Then
+            lblEventOnClose()
+            lblEventOnClose = Nothing
+        End If
+        closeLblEvent()
+        'Dim s As Shop = New Shop
+        Dim s As ShopV2 = New ShopV2
+        s.ShowDialog()
+        s.Dispose()
+    End Sub
+    'equip
+    Sub eArmorKey()
+        toPNLSelec("Armor")
+    End Sub
+    Sub eWeaponKey()
+        toPNLSelec("Weapon")
+    End Sub
+    Private Sub btnEQP_Click(sender As Object, e As EventArgs) Handles btnEQP.Click
+        Dim f3 As Equipment = New Equipment()
+        If Not lblEventOnClose Is Nothing Then
+            lblEventOnClose()
+            lblEventOnClose = Nothing
+        End If
+        f3.ShowDialog()
+        f3.Dispose()
+    End Sub
+    'self inspect
+    Sub selfinpKey()
+        If turn < 2 Then Exit Sub
+        lstLog.Items.Add(player.description)
+        toDesc()
+    End Sub
+    Sub toDesc()
+        txtDescript.Text = player.genDescription
+        picDescPort.BackgroundImage = picPortrait.BackgroundImage
+        pnlDescript.Location = New Point(115, pnlDescript.Location.Y)
+        pnlDescript.Visible = True
+    End Sub
+    'eat
+    Sub eatKey()
+        toPNLSelec("Food")
+    End Sub
+    'yes/no
+    Sub yesKey()
+        If btnChallengeBoss.Visible Then
+            Dim m As Monster
+            If floor Mod 5 = 0 Then
+                m = New Boss(floor)
+            Else
+                m = New MiniBoss(floor)
+            End If
+            player.setTarget(m)
+            m.currTarget = player
+            npcList.Add(m)
+            lstLog.Items.Add((m.getName & " attacks!"))
+            toCombat()
+            btnChallengeBoss.Visible = False
+            lstLog.TopIndex = lstLog.Items.Count - 1
+        End If
+    End Sub
+    Sub noKey()
+
+    End Sub
+    Private Sub btnChallengeBoss_Click(sender As Object, e As EventArgs) Handles btnChallengeBoss.Click
+        Dim m As Monster
+        If floor Mod 5 = 0 Then
+            m = New Boss(floor)
+        Else
+            m = New MiniBoss(floor)
+        End If
+        player.setTarget(m)
+        m.currTarget = player
+        npcList.Add(m)
+        lstLog.Items.Add((m.getName & " attacks!"))
+        toCombat()
+        If floor = 4 Then
+            pushLblEvent("As you approach the staircase, you spot the Ooze Empress, hanging over the stairs.  As you wave to get her attention, she plops off the celing to come and greet you.  As you explain your situation to her, she chuckles, catching you off guard.  ""You know, I was placed on this floor as kind of a buffer.  Mistress Medusa isn't interested in weaklings, and if you even want to have a chance at beating her, you need to have a stronger will."".  You notice a shift in her previously bubbly personality, and when the rest of her tentacles drop down, you take a leap back and prepare for combat." & vbCrLf & vbCrLf &
+                               """Let's see if you've learned anthing since the last time you tried this,"" she says with an somewhat mencing grin, ""... though I'm sure neither of us would mind a repeat either.""")
+        End If
+        btnChallengeBoss.Visible = False
+        lstLog.TopIndex = lstLog.Items.Count - 1
+    End Sub
+    'movement
+    Private Sub BtnD_Click(sender As Object, e As EventArgs) Handles BtnD.Click
+        HandleKeyPress(Keys.S)
+    End Sub
+    Private Sub btnU_Click(sender As Object, e As EventArgs) Handles btnU.Click
+        HandleKeyPress(Keys.W)
+    End Sub
+    Private Sub btnR_Click(sender As Object, e As EventArgs) Handles btnR.Click
+        HandleKeyPress(Keys.D)
+    End Sub
+    Private Sub btnLft_Click(sender As Object, e As EventArgs) Handles btnLft.Click
+        HandleKeyPress(Keys.A)
+    End Sub
+
+    '|SAVE/LOAD|
     Sub save(ByVal a As String)
+        'save handles the saving of the game
         Dim writer As IO.StreamWriter
         writer = IO.File.CreateText(a)
         writer.WriteLine(version)
@@ -2239,8 +2466,8 @@ Public Class Game
         player.solFlag = False
         player.createP()
     End Sub
-    'loadSave handles the loading of a game
     Sub loadSave(ByVal a As String)
+        'loadSave handles the loading of a game
         Debug_Window.clear()
         floorCode = ""
         cboxMG.Items.Clear()
@@ -2252,8 +2479,8 @@ Public Class Game
         lstLog.Items.Clear()
         formList.Clear()
         tFormList.Clear()
-        npcList = New ArrayList()
-        updatelist = New PQ()
+        npcList = New List(Of NPC)
+        updateList = New PQ()
         pImage = picPlayer.BackgroundImage
         lblNameTitle.ForeColor = Color.White
         If Not picPortrait.BackgroundImage Is Nothing Then picPortrait.BackgroundImage.Dispose()
@@ -2353,7 +2580,7 @@ Public Class Game
         chestRichnessRange = reader.ReadLine()
         Dim uOchests As ArrayList = New ArrayList()
         For i = 0 To CInt(reader.ReadLine())
-            Dim newChest
+            Dim newChest As Chest = Nothing
             Try
                 newChest = baseChest.Create(reader.ReadLine())
             Catch ex As Exception
@@ -2410,7 +2637,7 @@ Public Class Game
         floorCode = reader.ReadLine()
         encounterRate = Int(reader.ReadLine())
         eClockResetVal = Int(reader.ReadLine())
-        shopkeeper = New NPC(2)
+        shopkeeper = New Shopkeep(2)
         shopkeeper.pos.X = reader.ReadLine()
         shopkeeper.pos.Y = reader.ReadLine()
 
@@ -2419,7 +2646,7 @@ Public Class Game
             floorLayouts.Add(reader.ReadLine())
         Next
 
-        swiz = New NPC(3)
+        swiz = New Shopkeep(3)
         swiz.pos.X = reader.ReadLine()
         swiz.pos.Y = reader.ReadLine()
 
@@ -2459,13 +2686,13 @@ Public Class Game
         drawBoard()
 
         lblNameTitle.Text = player.name & " the " & player.pClass.name
-        lblHealth.Text = "Health = " & CInt(player.health * player.getmaxHealth) & "/" & player.maxHealth
+        lblHealth.Text = "Health = " & CInt(player.health * player.getMaxHealth) & "/" & player.maxHealth
         lblMana.Text = "Mana = " & player.mana & "/" & player.maxMana
         lblHunger.Text = "Hunger = " & player.hunger & "/100"
-        lblATK.Text = "ATK = " & player.getAttack
-        lblDEF.Text = "DEF = " & player.getDefence
-        lblSKL.Text = "WIL = " & player.getWillpower
-        lblSPD.Text = "SPD = " & player.getSpeed
+        lblATK.Text = "ATK = " & player.getATK
+        lblDEF.Text = "DEF = " & player.getDEF
+        lblSKL.Text = "WIL = " & player.getWIL
+        lblSPD.Text = "SPD = " & player.getSPD
 
         player.currState.save(player)
 
@@ -2482,6 +2709,7 @@ Public Class Game
         player.solFlag = False
         player.createP()
     End Sub
+    'save/load drivers
     Private Sub btnSavePic_Click(sender As Object, e As EventArgs) Handles btnS1.Click, btnS2.Click, btnS3.Click, btnS4.Click, btnS5.Click, btnS6.Click, btnS7.Click, btnS8.Click
         Dim name As String = CType(sender, Button).Name
         Dim fileNum As String = name(name.Length - 1)
@@ -2597,1018 +2825,13 @@ Public Class Game
         player.canMoveFlag = False
     End Sub
     Sub closesol()
-        Dim int As Integer = 100 - player.getSpeed
+        Dim int As Integer = 100 - player.getSPD
         If int < 1 Then int = 1
         updatelist.add(player, int)
         combatmode = False
         picStart.Visible = False
         If player.isDead Then formReset()
         player.canMoveFlag = True
-    End Sub
-
-    'combat UI methods
-    Sub pushLblCombatEvent(ByVal s As String)
-        Dim sSplit() As String = s.Split(" ")
-        Dim c As Integer = 0
-        Dim ct As Integer = 0
-        Dim out As String = ""
-        Do While c < sSplit.Length
-            If ct < 45 Then
-                If Not sSplit(c).Contains(vbCrLf) Then
-                    out += sSplit(c) & " "
-                    ct += sSplit(c).Length + 1
-                    c += 1
-                Else
-                    out += sSplit(c) & " "
-                    ct = 0
-                    c += 1
-                End If
-            Else
-                out += vbCrLf
-                ct = 0
-            End If
-        Loop
-        lblCombatEvents.Text += (out & vbCrLf &
-                                 "-------------------------------------------------" & vbCrLf)
-    End Sub
-    Sub updatePnlCombat(ByVal p As Player, ByVal t As Monster)
-        If lblTurn.Text.Equals("Turn: " & turn) Or t Is Nothing Then Exit Sub
-        If t.health <= 0 Then
-            t.Die()
-            Exit Sub
-        End If
-        lblPHealth.Text = CInt(p.health * p.getmaxHealth) & "/" & p.getmaxHealth
-        lblEHealth.Text = t.health & "/" & t.maxHealth
-        lblTurn.Text = "Turn: " & turn
-        lblPName.Text = p.name
-        lblEName.Text = t.getName
-        If t.getName.Length > 20 Then
-            Dim tRatio = 10 / t.getName.Length
-            Dim newFont As Font = New System.Drawing.Font("Consolas", CInt(9 * 2 * tRatio * Me.Size.Width / 688))
-            lblEName.Font = newFont
-        Else
-            Dim newFont As Font = New System.Drawing.Font("Consolas", CInt(9 * Me.Size.Width / 688))
-            lblEName.Font = newFont
-        End If
-
-        If lblEHealthChange.Tag > 0 Then
-            lblEHealthChange.Text = "+" & lblEHealthChange.Tag
-            lblEHealthChange.ForeColor = Color.YellowGreen
-        Else
-            lblEHealthChange.Text = lblEHealthChange.Tag
-            lblEHealthChange.ForeColor = Color.Crimson
-        End If
-        If lblEHealthChange.Tag = 0 Then lblEHealthChange.Visible = False Else lblEHealthChange.Visible = True
-        lblEHealthChange.Tag = 0
-
-        If lblPHealtDiff.Tag > 0 Then
-            lblPHealtDiff.Text = "+" & lblPHealtDiff.Tag
-            lblPHealtDiff.ForeColor = Color.YellowGreen
-        Else
-            lblPHealtDiff.Text = lblPHealtDiff.Tag
-            lblPHealtDiff.ForeColor = Color.Crimson
-        End If
-        If lblPHealtDiff.Tag = 0 Then lblPHealtDiff.Visible = False Else lblPHealtDiff.Visible = True
-        lblPHealtDiff.Tag = 0
-
-        Dim ratio As Double = Me.Size.Width / 1024
-
-        Dim ratioEH As Double = (t.health / t.maxHealth) * ratio
-        picEHbar.Size = New Size(ratioEH * 174, 15 * ratio)
-
-        Dim x As Integer = (picEHbar.Location.X * ratio) + (ratioEH * 174) - (30 * ratio)
-        If x < picEHbar.Location.X Then x = picEHbar.Location.X
-        lblEHealthChange.Location = New Point(x, lblEHealthChange.Location.Y)
-
-
-        If healthCol Is Nothing = False Then
-            Dim place = Int(ratioEH * 100)
-            If place >= 100 Then place = 99
-            If place < 0 Then place = 0
-            picEHbar.BackColor = healthCol.GetPixel(place, 0)
-        Else
-            If ratioEH <= 0.2 Then picEHbar.BackColor = Color.Crimson Else picEHbar.BackColor = Color.YellowGreen
-        End If
-
-        Dim ratioPH As Double = p.health * ratio
-        picPHealth.Size = New Size(ratioPH * 174, 15 * ratio)
-        x = picPHealth.Location.X + (ratioPH * 174) - (30 * ratio)
-        If x > picPHealth.Location.X + (174 * ratio) - (30 * ratio) Then x = picPHealth.Location.X + (174 * ratio) - (30 * ratio)
-        lblPHealtDiff.Location = New Point(x, lblPHealtDiff.Location.Y)
-        If healthCol Is Nothing = False Then
-            Dim place = Int(ratioPH * 100)
-            If place >= 100 Then place = 99
-            If place < 0 Then place = 0
-            picPHealth.BackColor = healthCol.GetPixel(place, 0)
-        Else
-            If ratioPH <= 0.2 Then picPHealth.BackColor = Color.Crimson Else picPHealth.BackColor = Color.YellowGreen
-        End If
-
-        player.UIupdate()
-    End Sub
-    Sub pnlCombatClose()
-        pnlCombat.Location = New Point(1000, pnlCombat.Location.Y)
-        pnlCombat.Visible = False
-        lblCombatEvents.Text = ""
-    End Sub
-
-    'description panel methods
-    Sub toDesc()
-        txtDescript.Text = player.genDescription
-        picDescPort.BackgroundImage = picPortrait.BackgroundImage
-        pnlDescript.Location = New Point(115, pnlDescript.Location.Y)
-        pnlDescript.Visible = True
-    End Sub
-
-    'inventory functions
-    'lstInventory_SelectedValueChanged handles the selecting of items from the inventory listbox
-    Private Sub lstInventory_SelectedValueChanged(sender As Object, e As EventArgs) Handles lstInventory.SelectedValueChanged
-        Try
-            If lstInventory.SelectedItem.ToString.Substring(0, 1) = "-" Then Throw New NullReferenceException
-            Dim subString As String = lstInventory.SelectedItem.ToString.Split(" (")(1)
-            selectedItem = player.p_inventory.item(subString)
-            If Not selectedItem Is Nothing Then
-                'MsgBox(aInd & ", " & subString)
-                'MsgBox(player.inventorynames(32))
-                If selectedItem.getUsable() Then btnUse.Enabled = True Else btnUse.Enabled = False
-                btnDrop.Enabled = True
-                btnLook.Enabled = True
-            End If
-        Catch ex As NullReferenceException
-            btnUse.Enabled = False
-            btnDrop.Enabled = False
-            btnLook.Enabled = False
-        End Try
-    End Sub
-    'inventory filter methods
-    Private Sub btnFilter_Click(sender As Object, e As EventArgs) Handles btnFilter.Click
-        fUseable.Visible = True
-        fPotion.Visible = True
-        fFood.Visible = True
-        fArmor.Visible = True
-        fWeapon.Visible = True
-        fMisc.Visible = True
-        chkAcc.Visible = True
-        lstInventory.Items.Clear()
-        btnOk.Visible = True
-        btnAll.Visible = True
-        btnNone.Visible = True
-
-        If fUseable.Checked Then invFilters(0) = True Else invFilters(0) = False
-        If fPotion.Checked Then invFilters(1) = True Else invFilters(1) = False
-        If fFood.Checked Then invFilters(2) = True Else invFilters(2) = False
-        If fArmor.Checked Then invFilters(3) = True Else invFilters(3) = False
-        If fWeapon.Checked Then invFilters(4) = True Else invFilters(4) = False
-        If fMisc.Checked Then invFilters(5) = True Else invFilters(5) = False
-        If chkAcc.Checked Then invFilters(6) = True Else invFilters(6) = False
-    End Sub
-    Private Sub btnOk_Click(sender As Object, e As EventArgs) Handles btnOk.Click
-        fUseable.Visible = False
-        fPotion.Visible = False
-        fFood.Visible = False
-        fArmor.Visible = False
-        fWeapon.Visible = False
-        fMisc.Visible = False
-        chkAcc.Visible = False
-        btnOk.Visible = False
-        btnAll.Visible = False
-        btnNone.Visible = False
-        player.p_inventory.invNeedsUDate = True
-        player.UIupdate()
-    End Sub
-    Private Sub fUseable_CheckedChanged(sender As Object, e As EventArgs) Handles fUseable.CheckedChanged
-        If fUseable.Checked Then invFilters(0) = True Else invFilters(0) = False
-    End Sub
-    Private Sub fPotion_CheckedChanged(sender As Object, e As EventArgs) Handles fPotion.CheckedChanged
-        If fPotion.Checked Then invFilters(1) = True Else invFilters(1) = False
-    End Sub
-    Private Sub fFood_CheckedChanged(sender As Object, e As EventArgs) Handles fFood.CheckedChanged
-        If fFood.Checked Then invFilters(2) = True Else invFilters(2) = False
-    End Sub
-    Private Sub fArmor_CheckedChanged(sender As Object, e As EventArgs) Handles fArmor.CheckedChanged
-        If fArmor.Checked Then invFilters(3) = True Else invFilters(3) = False
-    End Sub
-    Private Sub fWeapon_CheckedChanged(sender As Object, e As EventArgs) Handles fWeapon.CheckedChanged
-        If fWeapon.Checked Then invFilters(4) = True Else invFilters(4) = False
-    End Sub
-    Private Sub fMisc_CheckedChanged(sender As Object, e As EventArgs) Handles fMisc.CheckedChanged
-        If fMisc.Checked Then invFilters(5) = True Else invFilters(5) = False
-    End Sub
-    Private Sub chkAcc_CheckedChanged(sender As Object, e As EventArgs) Handles chkAcc.CheckedChanged
-        If chkAcc.Checked Then invFilters(6) = True Else invFilters(6) = False
-    End Sub
-    Private Sub btnAll_Click(sender As Object, e As EventArgs) Handles btnAll.Click
-        fUseable.Checked = True
-        fPotion.Checked = True
-        fFood.Checked = True
-        fArmor.Checked = True
-        fWeapon.Checked = True
-        fMisc.Checked = True
-        chkAcc.Checked = True
-    End Sub
-    Private Sub btnNone_Click(sender As Object, e As EventArgs) Handles btnNone.Click
-        fUseable.Checked = False
-        fPotion.Checked = False
-        fFood.Checked = False
-        fArmor.Checked = False
-        fWeapon.Checked = False
-        fMisc.Checked = False
-        chkAcc.Checked = False
-    End Sub
-
-    'combat functions
-    'toCombat displays the players combat menus
-    Sub toCombat()
-        lblEHealthChange.Tag = 0
-        lblPHealtDiff.Tag = 0
-        updatePnlCombat(player, player.currTarget)
-        pnlCombat.Location = New Point(115, pnlCombat.Location.Y)
-        pnlCombat.Visible = True
-        combatmode = True
-        player.canMoveFlag = False
-        btnATK.Visible = True
-        btnMG.Visible = True
-        btnWait.Visible = True
-        btnRUN.Visible = True
-        cboxMG.Visible = True
-        cmboxSpec.Visible = True
-        btnSpec.Visible = True
-        cmboxSpec.Items.Clear()
-        cmboxSpec.Text = "-- Select --"
-        specialRoute()
-    End Sub
-    'fromCombat hides the players combat menus
-    Public Sub fromCombat()
-        pnlCombatClose()
-        btnATK.Visible = False
-        btnMG.Visible = False
-        btnRUN.Visible = False
-        cboxMG.Visible = False
-        picEnemy.Visible = False
-        combatmode = False
-        picNPC.Visible = False
-        btnWait.Visible = False
-        player.canMoveFlag = True
-        player.currTarget = Nothing
-        cmboxSpec.Visible = False
-        btnSpec.Visible = False
-
-        npcList.Clear()
-        ttCosts.RemoveAll()
-    End Sub
-    'the NPC versions of from and to combat
-    Sub NPCtoCombat(ByRef m As Monster)
-        lblEHealthChange.Tag = 0
-        lblPHealtDiff.Tag = 0
-        updatePnlCombat(player, m)
-        pnlCombat.Visible = True
-        combatmode = True
-        npcmode = False
-        lstLog.Items.Add((m.getName() & " attacks!"))
-        btnATK.Visible = True
-        btnMG.Visible = True
-        btnRUN.Visible = True
-        cboxMG.Visible = True
-        btnWait.Visible = True
-        cmboxSpec.Visible = True
-        btnSpec.Visible = True
-        cmboxSpec.Items.Clear()
-        specialRoute()
-        player.canMoveFlag = False
-
-        btnTalk.Visible = False
-        btnNPCMG.Visible = False
-        cboxNPCMG.Visible = False
-        btnShop.Visible = False
-        btnFight.Visible = False
-        btnLeave.Visible = False
-
-        lstLog.TopIndex = lstLog.Items.Count - 1
-    End Sub
-    Sub NPCfromCombat(ByRef m As Monster)
-        pnlCombatClose()
-        combatmode = False
-        npcmode = True
-        pushLblEvent((m.getName() & " stops fighting!"))
-        lstLog.Items.Add((m.getName() & " stops fighting!"))
-        btnATK.Visible = False
-        btnMG.Visible = False
-        btnRUN.Visible = False
-        btnWait.Visible = False
-        cboxMG.Visible = False
-        cmboxSpec.Visible = False
-        btnSpec.Visible = False
-        player.canMoveFlag = True
-
-        'btnTalk.Visible = True
-        btnNPCMG.Visible = True
-        cboxNPCMG.Visible = True
-        btnShop.Visible = True
-        btnFight.Visible = True
-        btnLeave.Visible = True
-
-        lstLog.TopIndex = lstLog.Items.Count - 1
-    End Sub
-    'run handles the player choice to run from combat
-    Sub run()
-        If player.health < 1 / player.getmaxHealth Then Exit Sub
-        If player.perks("swordpossess") > -1 Then
-            lstLog.Items.Add("Something inside you decides that running away is cowardly, so you don't.")
-            pushLblCombatEvent("Something inside you decides that running away is cowardly, so you don't.")
-            lstLog.TopIndex = lstLog.Items.Count - 1
-            Exit Sub
-        End If
-        If player.name.Equals("Targax") And player.pClass.name.Equals("Soul-Lord") Then
-            lstLog.Items.Add("You decide that running away is cowardly, so you don't.")
-            pushLblCombatEvent("You decide that running away is cowardly, so you don't.")
-            lstLog.TopIndex = lstLog.Items.Count - 1
-            Exit Sub
-        End If
-        Dim run As Integer = Int(Rnd() * 3)
-        For i = 0 To npcList.Count() - 1
-            If (npcList.Item(i).GetType().IsSubclassOf(GetType(Monster)) Or npcList.Item(i).GetType() Is GetType(Monster)) AndAlso Not (npcList.Item(i).GetType() Is GetType(Boss)) Then
-                If UBound(npcList.Item(i).inventory) >= 53 AndAlso npcList.Item(i).inventory(53) > 0 Then
-                    pushLblCombatEvent("The glimmer of a key can be seen with your opponent!")
-                    Exit For
-                End If
-                If run <> 1 Then
-                    npcList.Item(i).despawn("run")
-                    updatelist = New PQ
-                Else
-                    'updates the combat banner
-                    updatePnlCombat(player, player.currTarget)
-                    pushLblCombatEvent("You can't get away!")
-                    If npcList.Count > 0 Then
-                        For x = 0 To npcList.Count - 1
-                            Dim int1 As Integer = 100 - npcList.Item(x).speed
-                            If int1 < 1 Then int1 = 1
-                            updatelist.add(npcList.Item(i), (int1))
-                        Next
-                    End If
-                    Dim int As Integer = 100 - player.getSpeed
-                    If int < 1 Then int = 1
-                    updatelist.add(player, int)
-                    Do While updatelist.isEmpty() = False
-                        Dim u As Updatable = updatelist.remove()
-                        u.update()
-                    Loop
-                    Exit Sub
-                End If
-
-                Exit For
-            End If
-        Next
-    End Sub
-    Sub leaveNPC()
-        Dim m As NPC = Nothing
-        For i = 0 To npcList.Count() - 1
-            If npcList.Item(i).GetType() Is GetType(NPC) Then
-                m = npcList.Item(i)
-                Exit For
-            End If
-        Next
-        closeLblEvent()
-        If Not m Is Nothing Then m.despawn("npc")
-        npcList.Clear()
-        player.currTarget = Nothing
-        npcmode = False
-    End Sub
-    Sub npcEncounter(ByRef m As NPC)
-        Dim validSpells() As String = {"Turn to Frog", "Polymorph Enemy", "Petrify"}
-        cboxNPCMG.Items.Clear()
-        For i = 0 To UBound(validSpells)
-            If cboxMG.Items.Contains(validSpells(i)) Then cboxNPCMG.Items.Add(validSpells(i))
-        Next
-
-        If m.dead Then Exit Sub
-        npcList.Clear()
-        npcList.Add(m)
-        npcmode = True
-        currNPC = m
-        m.encounter()
-        lstLog.Items.Add(("You walk up to " & m.getName & "!"))
-        player.canMoveFlag = False
-        picNPC.Visible = True
-        'btnTalk.Visible = True
-        btnNPCMG.Visible = True
-        cboxNPCMG.Visible = True
-        btnShop.Visible = True
-        If m.isShop Then btnShop.Enabled = True Else btnShop.Enabled = False
-        btnFight.Visible = True
-        btnLeave.Visible = True
-        lstLog.TopIndex = lstLog.Items.Count - 1
-    End Sub
-    'special route
-    Public Sub specialRoute()
-        If player.pClass.name = "Warrior" Or player.pClass.name = "Paladin" Then cmboxSpec.Items.Add("Berserker Rage")
-        If player.pClass.name = "Mage" Or player.pClass.name = "Paladin" Then cmboxSpec.Items.Add("Risky Decision")
-        If player.breastSize > 3 Then cmboxSpec.Items.Add("Massive Mammaries")
-        If player.pForm.name = "Succubus" Then cmboxSpec.Items.Add("Unholy Seduction")
-        If player.pForm.name = "Slime" Then cmboxSpec.Items.Add("Absorbtion")
-        If player.pForm.name = "Dragon" Then cmboxSpec.Items.Add("Ironhide Fury")
-    End Sub
-
-    'button click methods
-    Private Sub btnUse_Click(sender As Object, e As EventArgs) Handles btnUse.Click
-        closeLblEvent()
-        If Not lblEventOnClose Is Nothing Then
-            lblEventOnClose()
-            lblEventOnClose = Nothing
-        End If
-        If Not combatmode And Not npcmode Then player.canMoveFlag = True
-        If player.iArrInd(8).Equals(New Tuple(Of Integer, Boolean)(6, False)) Or player.iArrInd(8).Equals(New Tuple(Of Integer, Boolean)(12, True)) Then
-            pushLblEvent("You can't use items now!")
-            Exit Sub
-        End If
-        Dim tmpInd As Integer = lstInventory.TopIndex
-        Dim tind = lstInventory.SelectedIndex
-        selectedItem.use()
-        player.p_inventory.invNeedsUDate = True
-        player.UIupdate()
-        lstInventory.TopIndex = tmpInd
-        If selectedItem.count < 1 Then
-            lstInventory.SelectedItem = Nothing
-            selectedItem = Nothing
-            btnUse.Enabled = False
-            btnDrop.Enabled = False
-            btnLook.Enabled = False
-        Else
-            lstInventory.SelectedIndex = tind
-        End If
-        If combatmode Then
-            If npcList.Count > 0 Then
-                For i = 0 To npcList.Count - 1
-                    Dim int1 As Integer = 100 - npcList.Item(i).speed
-                    If int1 < 1 Then int1 = 1
-                    updatelist.add(npcList.Item(i), (int1))
-                Next
-            End If
-            Do While updatelist.isEmpty() = False
-                Dim u As Updatable = updatelist.remove()
-                u.update()
-            Loop
-            'updates the combat banner
-            updatePnlCombat(player, player.currTarget)
-        End If
-
-        lblPHealth.Text = CInt(player.health * player.getmaxHealth) & "/" & player.getmaxHealth
-    End Sub
-    Private Sub btnDrop_Click(sender As Object, e As EventArgs) Handles btnDrop.Click
-        If Not lblEventOnClose Is Nothing Then
-            lblEventOnClose()
-            lblEventOnClose = Nothing
-        End If
-        selectedItem.discard()
-        player.p_inventory.invNeedsUDate = True
-        player.UIupdate()
-
-        lstInventory.SelectedItem = Nothing
-        selectedItem = Nothing
-        btnUse.Enabled = False
-        btnDrop.Enabled = False
-        btnLook.Enabled = False
-    End Sub
-    Private Sub btnLook_Click(sender As Object, e As EventArgs) Handles btnLook.Click
-        If Not lblEventOnClose Is Nothing Then
-            lblEventOnClose()
-            lblEventOnClose = Nothing
-        End If
-        selectedItem.examine()
-        lstInventory.SelectedItem = Nothing
-        selectedItem = Nothing
-        btnUse.Enabled = False
-        btnDrop.Enabled = False
-        btnLook.Enabled = False
-    End Sub
-    Private Sub btnATK_Click(sender As Object, e As EventArgs) Handles btnATK.Click
-        turn += 1
-        If Not lblEventOnClose Is Nothing Then
-            lblEventOnClose()
-            lblEventOnClose = Nothing
-        End If
-        closeLblEvent()
-        Dim m As Monster = Nothing
-        For i = 0 To npcList.Count() - 1
-            If npcList.Item(i).GetType().IsSubclassOf(GetType(Monster)) Or npcList.Item(i).GetType() Is GetType(Monster) Then
-                m = npcList.Item(i)
-                Exit For
-            End If
-        Next
-        player.setTarg(m)
-        If npcList.Count > 0 Then
-            For i = 0 To npcList.Count - 1
-                Dim int1 As Integer = 100 - npcList.Item(i).speed
-                If int1 < 1 Then int1 = 1
-                updatelist.add(npcList.Item(i), (int1))
-            Next
-        End If
-        Dim int As Integer = 100 - player.getSpeed
-        If int < 1 Then int = 1
-        player.isAttacking = True
-        updatelist.add(player, int)
-        drawBoard()
-    End Sub
-    Private Sub btnSpec_Click(sender As Object, e As EventArgs) Handles btnSpec.Click
-        turn += 1
-        If Not lblEventOnClose Is Nothing Then
-            lblEventOnClose()
-            lblEventOnClose = Nothing
-        End If
-        lblCombatEvents.Text = ""
-        closeLblEvent()
-        If cmboxSpec.Text = "-- Select --" Then Exit Sub
-        Dim m As Monster = Nothing
-        For i = 0 To npcList.Count() - 1
-            If npcList.Item(i).GetType().IsSubclassOf(GetType(Monster)) Or npcList.Item(i).GetType() Is GetType(Monster) Then
-                m = npcList.Item(i)
-                Exit For
-            End If
-        Next
-        Specials.goSpecial(m, player, cmboxSpec.Text)
-        If Specials.SPCCost(cmboxSpec.Text).Equals("Useable only once per combat.") Then cmboxSpec.Items.Remove(cmboxSpec.Text)
-        If cmboxSpec.Items.Count = 0 Then
-            cmboxSpec.Visible = False
-            btnSpec.Visible = False
-        End If
-        cmboxSpec.Text = "-- Select --"
-        If npcList.Count > 0 Then
-            For i = 0 To npcList.Count - 1
-                Dim int1 As Integer = 100 - npcList.Item(i).speed
-                If int1 < 1 Then int1 = 1
-                updatelist.add(npcList.Item(i), (int1))
-            Next
-        End If
-        Dim int As Integer = 100 - player.getSpeed
-        If int < 1 Then int = 1
-        updatelist.add(player, int)
-        Do While updatelist.isEmpty() = False
-            Dim u As Updatable = updatelist.remove()
-            u.update()
-        Loop
-        'updates the combat banner
-        updatePnlCombat(player, player.currTarget)
-        ttCosts.RemoveAll()
-    End Sub
-    Private Sub btnRUN_Click(sender As Object, e As EventArgs) Handles btnRUN.Click
-        closeLblEvent()
-        If Not lblEventOnClose Is Nothing Then
-            lblEventOnClose()
-            lblEventOnClose = Nothing
-        End If
-        turn += 1
-        run()
-    End Sub
-    Private Sub btnMG_Click(sender As Object, e As EventArgs) Handles btnMG.Click
-        turn += 1
-        If Not lblEventOnClose Is Nothing Then
-            lblEventOnClose()
-            lblEventOnClose = Nothing
-        End If
-        lblCombatEvents.Text = ""
-        closeLblEvent()
-        If cboxMG.Text = "-- Select --" Or player.mana <= 0 Then Exit Sub
-        Dim m As Monster = Nothing
-        For i = 0 To npcList.Count() - 1
-            If npcList.Item(i).GetType().IsSubclassOf(GetType(Monster)) Or npcList.Item(i).GetType() Is GetType(Monster) Then
-                m = npcList.Item(i)
-                Exit For
-            End If
-        Next
-        Spell.spellCast(m, player, cboxMG.Text)
-        If npcList.Count > 0 Then
-            For i = 0 To npcList.Count - 1
-                Dim int1 As Integer = 100 - npcList.Item(i).speed
-                If int1 < 1 Then int1 = 1
-                updatelist.add(npcList.Item(i), (int1))
-            Next
-        End If
-        Dim int As Integer = 100 - player.getSpeed
-        If int < 1 Then int = 1
-        updatelist.add(player, int)
-        Do While updatelist.isEmpty() = False
-            Dim u As Updatable = updatelist.remove()
-            u.update()
-        Loop
-        If npcmode Then picNPC.BackgroundImage = currNPC.picNCP(currNPC.npcIndex)
-        'updates the combat banner
-        updatePnlCombat(player, player.currTarget)
-        ttCosts.RemoveAll()
-    End Sub
-    Private Sub btnEQP_Click(sender As Object, e As EventArgs) Handles btnEQP.Click
-        Dim f3 As Equipment = New Equipment()
-        If Not lblEventOnClose Is Nothing Then
-            lblEventOnClose()
-            lblEventOnClose = Nothing
-        End If
-        f3.ShowDialog()
-        f3.Dispose()
-    End Sub
-    Private Sub btnEXM_Click(sender As Object, e As EventArgs) Handles btnEXM.Click
-        If Not lblEventOnClose Is Nothing Then
-            lblEventOnClose()
-            lblEventOnClose = Nothing
-        End If
-        lstLog.Items.Add(player.description)
-        toDesc()
-        lstLog.TopIndex = lstLog.Items.Count - 1
-    End Sub
-    Private Sub btnIns_Click(sender As Object, e As EventArgs) Handles btnIns.Click
-        If Not lblEventOnClose Is Nothing Then
-            lblEventOnClose()
-            lblEventOnClose = Nothing
-        End If
-        HandleKeyPress(Keys.OemSemicolon)
-    End Sub
-    Private Sub BtnD_Click(sender As Object, e As EventArgs) Handles BtnD.Click
-        HandleKeyPress(Keys.S)
-    End Sub
-    Private Sub btnU_Click(sender As Object, e As EventArgs) Handles btnU.Click
-        HandleKeyPress(Keys.W)
-    End Sub
-    Private Sub btnR_Click(sender As Object, e As EventArgs) Handles btnR.Click
-        HandleKeyPress(Keys.D)
-    End Sub
-    Private Sub btnLft_Click(sender As Object, e As EventArgs) Handles btnLft.Click
-        HandleKeyPress(Keys.A)
-    End Sub
-    'btnS is the new game button on the start menu
-    Private Sub btnS_Click(sender As Object, e As EventArgs) Handles btnS.Click
-        newGame()
-    End Sub
-    'btnL is the loadSave button on the start menu
-    Private Sub btnL_Click(sender As Object, e As EventArgs) Handles btnL.Click
-        btnS.Visible = False
-        btnL.Visible = False
-        btnControls.Visible = False
-        btnSettings.Visible = False
-        btnAbout.Visible = False
-        Application.DoEvents()
-        Try
-            CharacterGenerator.init()
-
-            CharacterGenerator.fFrontHair(0) = CharacterGenerator.picPort.Image
-            CharacterGenerator.mFrontHair(0) = CharacterGenerator.picPort.Image
-            solFlag = True
-            toSOL()
-        Catch ex As System.IO.FileNotFoundException
-            MsgBox("Error 004: No save detected!")
-            btnS.Visible = True
-            btnL.Visible = True
-            btnControls.Visible = True
-            btnSettings.Visible = True
-            btnAbout.Visible = True
-        Catch ex2 As Exception
-            MsgBox("Error 005: Error in loaded in save file!")
-            btnS.Visible = True
-            btnL.Visible = True
-            btnControls.Visible = True
-            btnSettings.Visible = True
-            btnAbout.Visible = True
-        End Try
-    End Sub
-    Private Sub btnControls_Click(sender As Object, e As EventArgs) Handles btnControls.Click
-        Dim f6 As Controls = New Controls
-        f6.ShowDialog()
-        f6.Dispose()
-        loadcKeys()
-    End Sub
-    Private Sub btnTalk_Click(sender As Object, e As EventArgs) Handles btnTalk.Click
-        If Not lblEventOnClose Is Nothing Then
-            lblEventOnClose()
-            lblEventOnClose = Nothing
-        End If
-        closeLblEvent()
-    End Sub
-    Private Sub btnShop_Click(sender As Object, e As EventArgs) Handles btnShop.Click
-        If Not lblEventOnClose Is Nothing Then
-            lblEventOnClose()
-            lblEventOnClose = Nothing
-        End If
-        closeLblEvent()
-        'Dim s As Shop = New Shop
-        Dim s As ShopV2 = New ShopV2
-        s.ShowDialog()
-        s.Dispose()
-    End Sub
-    Private Sub btnNPCMG_Click(sender As Object, e As EventArgs) Handles btnNPCMG.Click
-        If Not lblEventOnClose Is Nothing Then
-            lblEventOnClose()
-            lblEventOnClose = Nothing
-        End If
-        If MessageBox.Show("This is probably a really bad idea, are you sure?", "Bad Idea", MessageBoxButtons.YesNo) = Windows.Forms.DialogResult.Yes Then
-            closeLblEvent()
-            If cboxNPCMG.Text = "-- Select --" Or player.mana <= 0 Then Exit Sub
-            Dim m As NPC = Nothing
-            For i = 0 To npcList.Count() - 1
-                If npcList.Item(i).GetType() Is GetType(NPC) Then
-                    m = npcList.Item(i)
-                    Exit For
-                End If
-            Next
-            'MsgBox("B")
-            'If cboxNPCMG.Text = "Turn to Frog" Then Spells.turnToFrogN(m, player) Else Spell.spellCast(m, player, cboxNPCMG.Text)
-            Spell.spellCast(m, player, cboxNPCMG.Text)
-
-            If npcList.Count > 0 Then
-                For i = 0 To npcList.Count - 1
-                    Dim int1 As Integer = 100 - npcList.Item(i).speed
-                    If int1 < 1 Then int1 = 1
-                    updatelist.add(npcList.Item(i), int1)
-                Next
-            End If
-            If m.npcIndex = 0 Then
-                pushNPCDialog("Did . . . did you just cast a spell on me?  You know I have to kill you now, right?")
-                NPCtoCombat(m)
-            ElseIf m.npcIndex = 1 Then
-                pushNPCDialog("Ribbit!!!")
-                NPCtoCombat(m)
-            ElseIf npcIndex = 2 Then
-                pushNPCDialog("[angry bleets]!")
-                NPCtoCombat(m)
-            ElseIf npcIndex = 3 Then
-                pushNPCDialog("Casting spells on royalty is genrally not a good idea.")
-                NPCtoCombat(m)
-            ElseIf m.npcIndex = 4 Then
-                pushNPCDialog("*giggle* Was that magic?")
-            End If
-            Dim int As Integer = 100 - player.getSpeed
-            If int < 1 Then int = 1
-            picNPC.BackgroundImage = currNPC.picNCP(currNPC.npcIndex)
-            updatelist.add(player, int)
-            drawBoard()
-        End If
-    End Sub
-    Private Sub btnFight_Click(sender As Object, e As EventArgs) Handles btnFight.Click
-        If Not lblEventOnClose Is Nothing Then
-            lblEventOnClose()
-            lblEventOnClose = Nothing
-        End If
-        If MessageBox.Show("This is probably a really bad idea, are you sure?", "Bad Idea", MessageBoxButtons.YesNo) = Windows.Forms.DialogResult.Yes Then
-            closeLblEvent()
-            If npcIndex = 0 Then
-                pushNPCDialog("So you want to fight, eh?  I'm ready whenever you are.")
-            ElseIf npcIndex = 1 Then
-                pushNPCDialog("Ribbit . . .")
-            ElseIf npcIndex = 2 Then
-                pushNPCDialog("BAAAAAHHHH!")
-            ElseIf npcIndex = 3 Then
-                pushNPCDialog("You would dare to challenge me? If you wish to die, you could just say so.")
-            ElseIf npcIndex = 4 Then
-                pushNPCDialog("I might not be the best fighter any more, but I can definitely give it my best!")
-            End If
-            Dim m As Monster = Nothing
-            For i = 0 To npcList.Count() - 1
-                If npcList.Item(i).GetType().IsSubclassOf(GetType(Monster)) Or npcList.Item(i).GetType() Is GetType(Monster) Then
-                    m = npcList.Item(i)
-                    Exit For
-                End If
-            Next
-            If npcList.Count > 0 Then
-                For i = 0 To npcList.Count - 1
-                    Dim int1 As Integer = 100 - npcList.Item(i).speed
-                    If int1 < 1 Then int1 = 1
-                    updatelist.add(npcList.Item(i), int1)
-                Next
-            End If
-            Dim int As Integer = 100 - player.getSpeed
-            If int < 1 Then int = 1
-            updatelist.add(player, int)
-            NPCtoCombat(m)
-        End If
-    End Sub
-    Private Sub btnLeave_Click(sender As Object, e As EventArgs) Handles btnLeave.Click
-        leaveNPC()
-        If Not lblEventOnClose Is Nothing Then
-            lblEventOnClose()
-            lblEventOnClose = Nothing
-        End If
-    End Sub
-    Private Sub btnChallengeBoss_Click(sender As Object, e As EventArgs) Handles btnChallengeBoss.Click
-        Dim m As Monster
-        If floor Mod 5 = 0 Then
-            m = New Boss(floor)
-        Else
-            m = New MiniBoss(floor)
-        End If
-        player.currTarget = m
-        npcList.Add(m)
-        lstLog.Items.Add((m.getName & " attacks!"))
-        toCombat()
-        If floor = 4 Then
-            pushLblEvent("As you approach the staircase, you spot the Ooze Empress, hanging over the stairs.  As you wave to get her attention, she plops off the celing to come and greet you.  As you explain your situation to her, she chuckles, catching you off guard.  ""You know, I was placed on this floor as kind of a buffer.  Mistress Medusa isn't interested in weaklings, and if you even want to have a chance at beating her, you need to have a stronger will."".  You notice a shift in her previously bubbly personality, and when the rest of her tentacles drop down, you take a leap back and prepare for combat." & vbCrLf & vbCrLf &
-                               """Let's see if you've learned anthing since the last time you tried this,"" she says with an somewhat mencing grin, ""... though I'm sure neither of us would mind a repeat either.""")
-        End If
-        btnChallengeBoss.Visible = False
-        lstLog.TopIndex = lstLog.Items.Count - 1
-    End Sub
-
-    'toolstrip methods
-    'NewGameToolStripMenuItem_Click restarts the application
-    Private Sub NewGameToolStripMenuItem_Click(sender As Object, e As EventArgs) Handles NewGameToolStripMenuItem.Click
-        Application.Restart()
-    End Sub
-    Private Sub LoadToolStripMenuItem_Click(sender As Object, e As EventArgs) Handles LoadToolStripMenuItem.Click
-        If lblEvent.Visible = True Or combatmode Or npcmode Or Me.MdiChildren.Length > 0 Then
-            pushLblEvent("You can't load now!")
-            Exit Sub
-        End If
-        solFlag = True
-        toSOL()
-    End Sub
-    Private Sub SaveToolStripMenuItem_Click(sender As Object, e As EventArgs) Handles SaveToolStripMenuItem.Click
-        solFlag = False
-        If lblEvent.Visible = True Or combatmode Or npcmode Or Me.MdiChildren.Length > 0 Then
-            pushLblEvent("You can't save now!")
-            Exit Sub
-        End If
-        toSOL()
-    End Sub
-    Private Sub InfoToolStripMenuItem_Click(sender As Object, e As EventArgs) Handles InfoToolStripMenuItem.Click
-        Dim ab1 As About = New About
-        ab1.ShowDialog()
-        ab1.Dispose()
-    End Sub
-    Private Sub DebugToolStripMenuItem_Click(sender As Object, e As EventArgs) Handles DebugToolStripMenuItem.Click
-        Try
-            debugWindow.ToString() 'Try to do something to check if it exists
-        Catch ex As NullReferenceException
-            debugWindow = New Debug_Window
-        End Try
-        debugWindow.ShowDialog()
-        player.p_inventory.invNeedsUDate = True
-        player.UIupdate()
-    End Sub
-
-    'timer methods
-    Private Sub tmrKeyCD_Tick(sender As Object, e As EventArgs) Handles tmrKeyCD.Tick
-        tmrKeyCD.Enabled = False
-    End Sub
-
-    'utility methods/functions
-    'ShuffleArray takes an array, and randomizes its order
-    Public Sub ShuffleArray(ByRef A() As String)
-        Randomize()
-        Dim ct As Integer = UBound(A)   'last index of A
-        Dim B(ct) As String             'creates the array to put the shuffled values in
-        Dim order(ct) As Integer        'creates the array the order should go in
-        Dim n As Integer
-        For i = 0 To UBound(order) - 1  'puts each number between 0 and ct randomly in "order", with no duplication
-            Do
-                n = Int(Rnd() * (ct + 1))
-            Loop Until Not order.Contains(n)
-            order(i) = n
-        Next
-        n = Int(Rnd() * (ct + 1))       'swaps the last index with a random index
-        order(ct) = n
-        order(Array.IndexOf(order, n)) = 0
-        For i = 0 To UBound(order)      'organizes B according to order
-            B(i) = A(order(i))
-        Next
-        A = B                       'sets A to B, the shuffled array.
-    End Sub
-    'pushLblEvent takes a string, formats it to wrap, and pushes a dialog box containing it
-    Sub pushLblEvent(ByVal s As String)
-        If combatmode Then
-            pushLblCombatEvent(s)
-            Exit Sub
-        End If
-        Dim sSplit() As String = s.Split(" ")
-        Dim c As Integer = 0
-        Dim ct As Integer = 0
-        Dim out As String = ""
-        Do While c < sSplit.Length
-            If sSplit(c).Equals(vbCrLf) Then ct = 0
-            If ct < 70 Then
-                If Not sSplit(c).Contains(vbCrLf) Then
-                    out += sSplit(c) & " "
-                    ct += sSplit(c).Length + 1
-                    c += 1
-                Else
-                    out += sSplit(c) & " "
-                    ct = 0
-                    c += 1
-                End If
-            Else
-                out += vbCrLf
-                ct = 0
-            End If
-        Loop
-        If Not combatmode Then out += " " & vbCrLf & " " & vbCrLf & "Press any non-movement key to continue." Else out += " " & vbCrLf & " " & vbCrLf & "Click a combat button to continue."
-        If 1 = 1 Then lblEvent.Text = out Else lblEvent.Text = vbCrLf & "---------------------------------------------------------------------------" & vbCrLf & out
-        lblEvent.BringToFront()
-
-        Dim x = (265 * (Me.Size.Width / 688)) - (lblEvent.Size.Width / 2)
-        If x < 20 Then x = 20
-        lblEvent.Location = New Point(x, (65 * (Me.Size.Width / 688)))
-        lblEvent.Visible = True
-        player.canMoveFlag = False
-    End Sub
-    'This pushLblEvent is identical to the first, but takes an additional action that it executes on close.
-    Sub pushLblEvent(ByVal s As String, ByRef effect As Action)
-        If combatmode Then
-            lblEventOnClose = effect
-            pushLblCombatEvent(s)
-            Exit Sub
-        End If
-        Dim sSplit() As String = s.Split(" ")
-        Dim c As Integer = 0
-        Dim ct As Integer = 0
-        Dim out As String = ""
-        Do While c < sSplit.Length
-            If ct < 70 Then
-                If Not sSplit(c).Contains(vbCrLf) Then
-                    out += sSplit(c) & " "
-                    ct += sSplit(c).Length + 1
-                    c += 1
-                Else
-                    out += sSplit(c) & " "
-                    ct = 0
-                    c += 1
-                End If
-            Else
-                out += vbCrLf
-                ct = 0
-            End If
-        Loop
-        If Not combatmode Then out += " " & vbCrLf & " " & vbCrLf & "Press any non-movement key to continue." Else out += " " & vbCrLf & " " & vbCrLf & "Click a combat button to continue."
-        lblEvent.Text = out
-        lblEvent.BringToFront()
-
-        Dim x = (265 * (Me.Size.Width / 688)) - (lblEvent.Size.Width / 2)
-        If x < 20 Then x = 20
-        lblEvent.Location = New Point(x, (65 * (Me.Size.Width / 688)))
-        lblEvent.Visible = True
-        player.canMoveFlag = False
-        lblEventOnClose = effect
-        btnEQP.Enabled = False
-    End Sub
-    'This pushLblEvent is identical to the second, but to be used in situations where a choice is made.
-    Sub pushLblEvent(ByVal s As String, ByRef yes As Action, ByVal no As Action, ByVal text As String)
-        If combatmode Then
-            pushLblCombatEvent("Error, choice to be made during combat.")
-            Exit Sub
-        End If
-        Dim sSplit() As String = s.Split(" ")
-        Dim c As Integer = 0
-        Dim ct As Integer = 0
-        Dim out As String = ""
-        Do While c < sSplit.Length
-            If ct < 70 Then
-                If Not sSplit(c).Contains(vbCrLf) Then
-                    out += sSplit(c) & " "
-                    ct += sSplit(c).Length + 1
-                    c += 1
-                Else
-                    out += sSplit(c) & " "
-                    ct = 0
-                    c += 1
-                End If
-            Else
-                out += vbCrLf
-                ct = 0
-            End If
-        Loop
-
-        out += " " & vbCrLf & " " & vbCrLf & "Press any non-movement key to continue."
-
-        lblEvent.Text = out
-        lblEvent.BringToFront()
-
-        Dim x = (265 * (Me.Size.Width / 688)) - (lblEvent.Size.Width / 2)
-        If x < 20 Then x = 20
-        lblEvent.Location = New Point(x, (65 * (Me.Size.Width / 688)))
-
-        lblEvent.Visible = True
-        player.canMoveFlag = False
-        lblEventOnClose = AddressOf makeChoice
-        yesAction = yes
-        noAction = no
-        choiceText = text
-        btnEQP.Enabled = False
-    End Sub
-    Sub makeChoice()
-        toPNLSelec("yesNo")
-    End Sub
-    'pushNPCDialog is a variant of pushLblEvent that pushes the string into an NPC dialog box
-    Sub pushNPCDialog(ByVal s As String)
-        Dim sSplit() As String = s.Split(" ")
-        Dim c As Integer = 0
-        Dim ct As Integer = 0
-        Dim out As String = ""
-        Do While c < sSplit.Length
-            If ct < 65 Then
-                out += sSplit(c) & " "
-                ct += sSplit(c).Length + 1
-                c += 1
-            Else
-                out += vbCrLf
-                ct = 0
-            End If
-        Loop
-        lblEvent.Text = out
-        lblEvent.Location = New Point(160 * Me.Size.Width / 688, 120 * Me.Size.Width / 688)
-        lblEvent.Visible = True
-        picNPC.Visible = True
     End Sub
     'save access files
     Shared Function getImgFromFile(ByVal a As String) As Image
@@ -3681,7 +2904,748 @@ Public Class Game
         Return save
     End Function
 
-    'color shift function
+    '|COMBAT|
+    Sub toCombat()
+        'toCombat displays the players combat menus
+        lblEHealthChange.Tag = 0
+        lblPHealtDiff.Tag = 0
+        updatePnlCombat(player, player.currTarget)
+        pnlCombat.Location = New Point(115, pnlCombat.Location.Y)
+        pnlCombat.Visible = True
+        combatmode = True
+        player.canMoveFlag = False
+        btnATK.Visible = True
+        btnMG.Visible = True
+        btnWait.Visible = True
+        btnRUN.Visible = True
+        cboxMG.Visible = True
+        cmboxSpec.Visible = True
+        btnSpec.Visible = True
+        cmboxSpec.Items.Clear()
+        cmboxSpec.Text = "-- Select --"
+        specialRoute()
+    End Sub
+    Public Sub fromCombat()
+        'fromCombat hides the players combat menus
+        pnlCombatClose()
+        btnATK.Visible = False
+        btnMG.Visible = False
+        btnRUN.Visible = False
+        cboxMG.Visible = False
+        picEnemy.Visible = False
+        combatmode = False
+        picNPC.Visible = False
+        btnWait.Visible = False
+        player.canMoveFlag = True
+        player.clearTarget()
+        cmboxSpec.Visible = False
+        btnSpec.Visible = False
+
+        npcList.Clear()
+        ttCosts.RemoveAll()
+    End Sub
+    Sub NPCtoCombat(ByRef m As NPC)
+        'the NPC versions of from and to combat
+        lblEHealthChange.Tag = 0
+        lblPHealtDiff.Tag = 0
+        updatePnlCombat(player, m)
+        pnlCombat.Visible = True
+        combatmode = True
+        npcmode = False
+        lstLog.Items.Add((m.getName() & " attacks!"))
+        btnATK.Visible = True
+        btnMG.Visible = True
+        btnRUN.Visible = True
+        cboxMG.Visible = True
+        btnWait.Visible = True
+        cmboxSpec.Visible = True
+        btnSpec.Visible = True
+        cmboxSpec.Items.Clear()
+        specialRoute()
+        player.canMoveFlag = False
+
+        btnTalk.Visible = False
+        btnNPCMG.Visible = False
+        cboxNPCMG.Visible = False
+        btnShop.Visible = False
+        btnFight.Visible = False
+        btnLeave.Visible = False
+
+        lstLog.TopIndex = lstLog.Items.Count - 1
+    End Sub
+    Sub NPCfromCombat(ByRef m As Monster)
+        pnlCombatClose()
+        combatmode = False
+        npcmode = True
+        pushLblEvent((m.getName() & " stops fighting!"))
+        lstLog.Items.Add((m.getName() & " stops fighting!"))
+        btnATK.Visible = False
+        btnMG.Visible = False
+        btnRUN.Visible = False
+        btnWait.Visible = False
+        cboxMG.Visible = False
+        cmboxSpec.Visible = False
+        btnSpec.Visible = False
+        player.canMoveFlag = True
+
+        'btnTalk.Visible = True
+        btnNPCMG.Visible = True
+        cboxNPCMG.Visible = True
+        btnShop.Visible = True
+        btnFight.Visible = True
+        btnLeave.Visible = True
+
+        lstLog.TopIndex = lstLog.Items.Count - 1
+    End Sub
+    'combat pannel
+    Sub pushLblCombatEvent(ByVal s As String)
+        Dim sSplit() As String = s.Split(" ")
+        Dim c As Integer = 0
+        Dim ct As Integer = 0
+        Dim out As String = ""
+        Do While c < sSplit.Length
+            If ct < 45 Then
+                If Not sSplit(c).Contains(vbCrLf) Then
+                    out += sSplit(c) & " "
+                    ct += sSplit(c).Length + 1
+                    c += 1
+                Else
+                    out += sSplit(c) & " "
+                    ct = 0
+                    c += 1
+                End If
+            Else
+                out += vbCrLf
+                ct = 0
+            End If
+        Loop
+        lblCombatEvents.Text += (out & vbCrLf &
+                                 "-------------------------------------------------" & vbCrLf)
+    End Sub
+    Sub updatePnlCombat(ByVal p As Player, ByVal t As Entity)
+        If lblTurn.Text.Equals("Turn: " & turn) Or t Is Nothing Then Exit Sub
+        If t.health <= 0 Then
+            t.Die()
+            Exit Sub
+        End If
+        lblPHealth.Text = CInt(p.health * p.getMaxHealth) & "/" & p.getMaxHealth
+        lblEHealth.Text = CInt(t.getHealth * t.getMaxHealth) & "/" & t.getMaxHealth
+        lblTurn.Text = "Turn: " & turn
+        lblPName.Text = p.name
+        lblEName.Text = t.getName
+        If t.getName.Length > 20 Then
+            Dim tRatio = 10 / t.getName.Length
+            Dim newFont As Font = New System.Drawing.Font("Consolas", CInt(9 * 2 * tRatio * Me.Size.Width / 688))
+            lblEName.Font = newFont
+        Else
+            Dim newFont As Font = New System.Drawing.Font("Consolas", CInt(9 * Me.Size.Width / 688))
+            lblEName.Font = newFont
+        End If
+
+        If lblEHealthChange.Tag > 0 Then
+            lblEHealthChange.Text = "+" & lblEHealthChange.Tag
+            lblEHealthChange.ForeColor = Color.YellowGreen
+        Else
+            lblEHealthChange.Text = lblEHealthChange.Tag
+            lblEHealthChange.ForeColor = Color.Crimson
+        End If
+        If lblEHealthChange.Tag = 0 Then lblEHealthChange.Visible = False Else lblEHealthChange.Visible = True
+        lblEHealthChange.Tag = 0
+
+        If lblPHealtDiff.Tag > 0 Then
+            lblPHealtDiff.Text = "+" & lblPHealtDiff.Tag
+            lblPHealtDiff.ForeColor = Color.YellowGreen
+        Else
+            lblPHealtDiff.Text = lblPHealtDiff.Tag
+            lblPHealtDiff.ForeColor = Color.Crimson
+        End If
+        If lblPHealtDiff.Tag = 0 Then lblPHealtDiff.Visible = False Else lblPHealtDiff.Visible = True
+        lblPHealtDiff.Tag = 0
+
+        Dim ratio As Double = Me.Size.Width / 1024
+
+        Dim ratioEH As Double = (t.health) * ratio
+        picEHbar.Size = New Size(ratioEH * 174, 15 * ratio)
+
+        Dim x As Integer = (picEHbar.Location.X * ratio) + (ratioEH * 174) - (30 * ratio)
+        If x < picEHbar.Location.X Then x = picEHbar.Location.X
+        lblEHealthChange.Location = New Point(x, lblEHealthChange.Location.Y)
+
+
+        If healthCol Is Nothing = False Then
+            Dim place = Int(ratioEH * 100)
+            If place >= 100 Then place = 99
+            If place < 0 Then place = 0
+            picEHbar.BackColor = healthCol.GetPixel(place, 0)
+        Else
+            If ratioEH <= 0.2 Then picEHbar.BackColor = Color.Crimson Else picEHbar.BackColor = Color.YellowGreen
+        End If
+
+        Dim ratioPH As Double = p.health * ratio
+        picPHealth.Size = New Size(ratioPH * 174, 15 * ratio)
+        x = picPHealth.Location.X + (ratioPH * 174) - (30 * ratio)
+        If x > picPHealth.Location.X + (174 * ratio) - (30 * ratio) Then x = picPHealth.Location.X + (174 * ratio) - (30 * ratio)
+        lblPHealtDiff.Location = New Point(x, lblPHealtDiff.Location.Y)
+        If healthCol Is Nothing = False Then
+            Dim place = Int(ratioPH * 100)
+            If place >= 100 Then place = 99
+            If place < 0 Then place = 0
+            picPHealth.BackColor = healthCol.GetPixel(place, 0)
+        Else
+            If ratioPH <= 0.2 Then picPHealth.BackColor = Color.Crimson Else picPHealth.BackColor = Color.YellowGreen
+        End If
+
+        player.UIupdate()
+    End Sub
+    Sub pnlCombatClose()
+        pnlCombat.Location = New Point(1000, pnlCombat.Location.Y)
+        pnlCombat.Visible = False
+        lblCombatEvents.Text = ""
+    End Sub
+
+    '|INVENTORY|
+    Private Sub lstInventory_SelectedValueChanged(sender As Object, e As EventArgs) Handles lstInventory.SelectedValueChanged
+        'lstInventory_SelectedValueChanged handles the selecting of items from the inventory listbox
+        Try
+            If lstInventory.SelectedItem.ToString.Substring(0, 1) = "-" Then Throw New NullReferenceException
+            Dim subString As String = lstInventory.SelectedItem.ToString.Split(" (")(1)
+            selectedItem = player.inv.item(subString)
+            If Not selectedItem Is Nothing Then
+                'MsgBox(aInd & ", " & subString)
+                'MsgBox(player.inventorynames(32))
+                If selectedItem.getUsable() Then btnUse.Enabled = True Else btnUse.Enabled = False
+                btnDrop.Enabled = True
+                btnLook.Enabled = True
+            End If
+        Catch ex As NullReferenceException
+            btnUse.Enabled = False
+            btnDrop.Enabled = False
+            btnLook.Enabled = False
+        End Try
+    End Sub
+    'inventory filter methods
+    Private Sub btnFilter_Click(sender As Object, e As EventArgs) Handles btnFilter.Click
+        fUseable.Visible = True
+        fPotion.Visible = True
+        fFood.Visible = True
+        fArmor.Visible = True
+        fWeapon.Visible = True
+        fMisc.Visible = True
+        chkAcc.Visible = True
+        lstInventory.Items.Clear()
+        btnOk.Visible = True
+        btnAll.Visible = True
+        btnNone.Visible = True
+
+        If fUseable.Checked Then invFilters(0) = True Else invFilters(0) = False
+        If fPotion.Checked Then invFilters(1) = True Else invFilters(1) = False
+        If fFood.Checked Then invFilters(2) = True Else invFilters(2) = False
+        If fArmor.Checked Then invFilters(3) = True Else invFilters(3) = False
+        If fWeapon.Checked Then invFilters(4) = True Else invFilters(4) = False
+        If fMisc.Checked Then invFilters(5) = True Else invFilters(5) = False
+        If chkAcc.Checked Then invFilters(6) = True Else invFilters(6) = False
+    End Sub
+    Private Sub btnOk_Click(sender As Object, e As EventArgs) Handles btnOk.Click
+        fUseable.Visible = False
+        fPotion.Visible = False
+        fFood.Visible = False
+        fArmor.Visible = False
+        fWeapon.Visible = False
+        fMisc.Visible = False
+        chkAcc.Visible = False
+        btnOk.Visible = False
+        btnAll.Visible = False
+        btnNone.Visible = False
+        player.inv.invNeedsUDate = True
+        player.UIupdate()
+    End Sub
+    Private Sub fUseable_CheckedChanged(sender As Object, e As EventArgs) Handles fUseable.CheckedChanged
+        If fUseable.Checked Then invFilters(0) = True Else invFilters(0) = False
+    End Sub
+    Private Sub fPotion_CheckedChanged(sender As Object, e As EventArgs) Handles fPotion.CheckedChanged
+        If fPotion.Checked Then invFilters(1) = True Else invFilters(1) = False
+    End Sub
+    Private Sub fFood_CheckedChanged(sender As Object, e As EventArgs) Handles fFood.CheckedChanged
+        If fFood.Checked Then invFilters(2) = True Else invFilters(2) = False
+    End Sub
+    Private Sub fArmor_CheckedChanged(sender As Object, e As EventArgs) Handles fArmor.CheckedChanged
+        If fArmor.Checked Then invFilters(3) = True Else invFilters(3) = False
+    End Sub
+    Private Sub fWeapon_CheckedChanged(sender As Object, e As EventArgs) Handles fWeapon.CheckedChanged
+        If fWeapon.Checked Then invFilters(4) = True Else invFilters(4) = False
+    End Sub
+    Private Sub fMisc_CheckedChanged(sender As Object, e As EventArgs) Handles fMisc.CheckedChanged
+        If fMisc.Checked Then invFilters(5) = True Else invFilters(5) = False
+    End Sub
+    Private Sub chkAcc_CheckedChanged(sender As Object, e As EventArgs) Handles chkAcc.CheckedChanged
+        If chkAcc.Checked Then invFilters(6) = True Else invFilters(6) = False
+    End Sub
+    Private Sub btnAll_Click(sender As Object, e As EventArgs) Handles btnAll.Click
+        fUseable.Checked = True
+        fPotion.Checked = True
+        fFood.Checked = True
+        fArmor.Checked = True
+        fWeapon.Checked = True
+        fMisc.Checked = True
+        chkAcc.Checked = True
+    End Sub
+    Private Sub btnNone_Click(sender As Object, e As EventArgs) Handles btnNone.Click
+        fUseable.Checked = False
+        fPotion.Checked = False
+        fFood.Checked = False
+        fArmor.Checked = False
+        fWeapon.Checked = False
+        fMisc.Checked = False
+        chkAcc.Checked = False
+    End Sub
+
+    '|NPC|
+    Sub leaveNPC()
+        Dim m As Shopkeep = Nothing
+        For i = 0 To npcList.Count() - 1
+            If npcList.Item(i).GetType() Is GetType(Shopkeep) Then
+                m = npcList.Item(i)
+                Exit For
+            End If
+        Next
+        closeLblEvent()
+        If Not m Is Nothing Then m.despawn("npc")
+        npcList.Clear()
+        player.clearTarget()
+        npcmode = False
+    End Sub
+    Sub npcEncounter(ByRef m As Shopkeep)
+        Dim validSpells() As String = {"Turn to Frog", "Polymorph Enemy", "Petrify"}
+        cboxNPCMG.Items.Clear()
+        For i = 0 To UBound(validSpells)
+            If cboxMG.Items.Contains(validSpells(i)) Then cboxNPCMG.Items.Add(validSpells(i))
+        Next
+
+        If m.isDead Then Exit Sub
+        npcList.Clear()
+        npcList.Add(m)
+        npcmode = True
+        currNPC = m
+        m.encounter()
+        lstLog.Items.Add(("You walk up to " & m.getName & "!"))
+        player.canMoveFlag = False
+        picNPC.Visible = True
+        'btnTalk.Visible = True
+        btnNPCMG.Visible = True
+        cboxNPCMG.Visible = True
+        btnShop.Visible = True
+        If m.isShop Then btnShop.Enabled = True Else btnShop.Enabled = False
+        btnFight.Visible = True
+        btnLeave.Visible = True
+        lstLog.TopIndex = lstLog.Items.Count - 1
+    End Sub
+    Private Sub btnNPCMG_Click(sender As Object, e As EventArgs) Handles btnNPCMG.Click
+        If Not lblEventOnClose Is Nothing Then
+            lblEventOnClose()
+            lblEventOnClose = Nothing
+        End If
+        If MessageBox.Show("This is probably a really bad idea, are you sure?", "Bad Idea", MessageBoxButtons.YesNo) = Windows.Forms.DialogResult.Yes Then
+            closeLblEvent()
+            If cboxNPCMG.Text = "-- Select --" Or player.mana <= 0 Then Exit Sub
+            Dim m As Shopkeep = Nothing
+            For i = 0 To npcList.Count() - 1
+                If npcList.Item(i).GetType() Is GetType(Shopkeep) Then
+                    m = npcList.Item(i)
+                    Exit For
+                End If
+            Next
+            'MsgBox("B")
+            'If cboxNPCMG.Text = "Turn to Frog" Then Spells.turnToFrogN(m, player) Else Spell.spellCast(m, player, cboxNPCMG.Text)
+            Spell.spellCast(m, player, cboxNPCMG.Text)
+
+            queueSetup()
+            If m.npcIndex = 0 Then
+                pushNPCDialog("Did . . . did you just cast a spell on me?  You know I have to kill you now, right?")
+                NPCtoCombat(m)
+            ElseIf m.npcIndex = 1 Then
+                pushNPCDialog("Ribbit!!!")
+                NPCtoCombat(m)
+            ElseIf npcIndex = 2 Then
+                pushNPCDialog("[angry bleets]!")
+                NPCtoCombat(m)
+            ElseIf npcIndex = 3 Then
+                pushNPCDialog("Casting spells on royalty is genrally not a good idea.")
+                NPCtoCombat(m)
+            ElseIf m.npcIndex = 4 Then
+                pushNPCDialog("*giggle* Was that magic?")
+            End If
+            Dim int As Integer = 100 - player.getSPD
+            If int < 1 Then int = 1
+            picNPC.BackgroundImage = currNPC.picNCP(currNPC.npcIndex)
+            updatelist.add(player, int)
+            drawBoard()
+        End If
+    End Sub
+    Private Sub btnFight_Click(sender As Object, e As EventArgs) Handles btnFight.Click
+        If Not lblEventOnClose Is Nothing Then
+            lblEventOnClose()
+            lblEventOnClose = Nothing
+        End If
+        If MessageBox.Show("This is probably a really bad idea, are you sure?", "Bad Idea", MessageBoxButtons.YesNo) = Windows.Forms.DialogResult.Yes Then
+            closeLblEvent()
+            If npcIndex = 0 Then
+                pushNPCDialog("So you want to fight, eh?  I'm ready whenever you are.")
+            ElseIf npcIndex = 1 Then
+                pushNPCDialog("Ribbit . . .")
+            ElseIf npcIndex = 2 Then
+                pushNPCDialog("BAAAAAHHHH!")
+            ElseIf npcIndex = 3 Then
+                pushNPCDialog("You would dare to challenge me? If you wish to die, you could just say so.")
+            ElseIf npcIndex = 4 Then
+                pushNPCDialog("I might not be the best fighter any more, but I can definitely give it my best!")
+            End If
+            Dim m As Monster = Nothing
+            For i = 0 To npcList.Count() - 1
+                If npcList.Item(i).GetType().IsSubclassOf(GetType(Monster)) Or npcList.Item(i).GetType() Is GetType(Monster) Then
+                    m = npcList.Item(i)
+                    Exit For
+                End If
+            Next
+            queueSetup()
+            NPCtoCombat(m)
+        End If
+    End Sub
+    Private Sub btnLeave_Click(sender As Object, e As EventArgs) Handles btnLeave.Click
+        leaveNPC()
+        If Not lblEventOnClose Is Nothing Then
+            lblEventOnClose()
+            lblEventOnClose = Nothing
+        End If
+    End Sub
+
+    '|UI BUTTONS|
+    Private Sub btnDrop_Click(sender As Object, e As EventArgs) Handles btnDrop.Click
+        If Not lblEventOnClose Is Nothing Then
+            lblEventOnClose()
+            lblEventOnClose = Nothing
+        End If
+        selectedItem.discard()
+        player.inv.invNeedsUDate = True
+        player.UIupdate()
+
+        lstInventory.SelectedItem = Nothing
+        selectedItem = Nothing
+        btnUse.Enabled = False
+        btnDrop.Enabled = False
+        btnLook.Enabled = False
+    End Sub
+    Private Sub btnLook_Click(sender As Object, e As EventArgs) Handles btnLook.Click
+        If Not lblEventOnClose Is Nothing Then
+            lblEventOnClose()
+            lblEventOnClose = Nothing
+        End If
+        selectedItem.examine()
+        lstInventory.SelectedItem = Nothing
+        selectedItem = Nothing
+        btnUse.Enabled = False
+        btnDrop.Enabled = False
+        btnLook.Enabled = False
+    End Sub
+    Private Sub btnEXM_Click(sender As Object, e As EventArgs) Handles btnEXM.Click
+        If Not lblEventOnClose Is Nothing Then
+            lblEventOnClose()
+            lblEventOnClose = Nothing
+        End If
+        lstLog.Items.Add(player.description)
+        toDesc()
+        lstLog.TopIndex = lstLog.Items.Count - 1
+    End Sub
+    Private Sub btnIns_Click(sender As Object, e As EventArgs) Handles btnIns.Click
+        If Not lblEventOnClose Is Nothing Then
+            lblEventOnClose()
+            lblEventOnClose = Nothing
+        End If
+        HandleKeyPress(Keys.OemSemicolon)
+    End Sub
+    Private Sub btnS_Click(sender As Object, e As EventArgs) Handles btnS.Click
+        'btnS is the new game button on the start menu
+        newGame()
+    End Sub
+    Private Sub btnL_Click(sender As Object, e As EventArgs) Handles btnL.Click
+        'btnL is the loadSave button on the start menu
+        btnS.Visible = False
+        btnL.Visible = False
+        btnControls.Visible = False
+        btnSettings.Visible = False
+        btnAbout.Visible = False
+        Application.DoEvents()
+        Try
+            CharacterGenerator.init()
+
+            CharacterGenerator.fFrontHair(0) = CharacterGenerator.picPort.Image
+            CharacterGenerator.mFrontHair(0) = CharacterGenerator.picPort.Image
+            solFlag = True
+            toSOL()
+        Catch ex As System.IO.FileNotFoundException
+            MsgBox("Error 004: No save detected!")
+            btnS.Visible = True
+            btnL.Visible = True
+            btnControls.Visible = True
+            btnSettings.Visible = True
+            btnAbout.Visible = True
+        Catch ex2 As Exception
+            MsgBox("Error 005: Error in loaded in save file!")
+            btnS.Visible = True
+            btnL.Visible = True
+            btnControls.Visible = True
+            btnSettings.Visible = True
+            btnAbout.Visible = True
+        End Try
+    End Sub
+    Private Sub btnControls_Click(sender As Object, e As EventArgs) Handles btnControls.Click
+        Dim f6 As Controls = New Controls
+        f6.ShowDialog()
+        f6.Dispose()
+        loadcKeys()
+    End Sub
+    Private Sub btnSettings_Click(sender As Object, e As EventArgs) Handles btnSettings.Click
+        Dim s As Settings = New Settings
+        s.ShowDialog()
+        s.Dispose()
+        If screenSize = "Small" Then
+            Size = New Size(iWidth * 0.8, iHeight * 0.8)
+        ElseIf screenSize = "Medium" Then
+            Size = New Size(iWidth * 0.9, iHeight * 0.9)
+        ElseIf screenSize = "XLarge" Then
+            Size = New Size(iWidth * 1.3, iHeight * 1.3)
+        Else
+            Size = New Size(iWidth, iHeight)
+        End If
+        Game_Resize()
+    End Sub
+    Private Sub btnAbout_Click(sender As Object, e As EventArgs) Handles btnAbout.Click
+        Dim ab1 As About = New About
+        ab1.ShowDialog()
+        ab1.Dispose()
+    End Sub
+
+    '|UI TOOLSTRIP|
+    Private Sub NewGameToolStripMenuItem_Click(sender As Object, e As EventArgs) Handles NewGameToolStripMenuItem.Click
+        'NewGameToolStripMenuItem_Click restarts the application
+        Application.Restart()
+    End Sub
+    Private Sub LoadToolStripMenuItem_Click(sender As Object, e As EventArgs) Handles LoadToolStripMenuItem.Click
+        If lblEvent.Visible = True Or combatmode Or npcmode Or Me.MdiChildren.Length > 0 Then
+            pushLblEvent("You can't load now!")
+            Exit Sub
+        End If
+        solFlag = True
+        toSOL()
+    End Sub
+    Private Sub SaveToolStripMenuItem_Click(sender As Object, e As EventArgs) Handles SaveToolStripMenuItem.Click
+        solFlag = False
+        If lblEvent.Visible = True Or combatmode Or npcmode Or Me.MdiChildren.Length > 0 Then
+            pushLblEvent("You can't save now!")
+            Exit Sub
+        End If
+        toSOL()
+    End Sub
+    Private Sub InfoToolStripMenuItem_Click(sender As Object, e As EventArgs) Handles InfoToolStripMenuItem.Click
+        Dim ab1 As About = New About
+        ab1.ShowDialog()
+        ab1.Dispose()
+    End Sub
+    Private Sub DebugToolStripMenuItem_Click(sender As Object, e As EventArgs) Handles DebugToolStripMenuItem.Click
+        Try
+            debugWindow.ToString() 'Try to do something to check if it exists
+        Catch ex As NullReferenceException
+            debugWindow = New Debug_Window
+        End Try
+        debugWindow.ShowDialog()
+        player.inv.invNeedsUDate = True
+        player.UIupdate()
+    End Sub
+    Private Sub ReportToolStripMenuItem_Click(sender As Object, e As EventArgs) Handles ReportToolStripMenuItem.Click
+        Process.Start("https://bitbucket.org/VowelHeavyUsername/dungeon_depths/issues?status=new&status=open")
+    End Sub
+    Private Sub HelpToolStripMenuItem1_Click(sender As Object, e As EventArgs) Handles HelpToolStripMenuItem1.Click
+        Dim f6 As Controls = New Controls
+        f6.ShowDialog()
+        f6.Dispose()
+        loadcKeys()
+    End Sub
+    Private Sub RunAutomatedTestsToolStripMenuItem_Click(sender As Object, e As EventArgs) Handles RunAutomatedTestsToolStripMenuItem.Click
+        ' RUNNING TESTS
+        Testing.runTests()
+        MsgBox("Tests ran!  Check TestLog.txt for their results.")
+        ' END OF RUNNING TESTS
+    End Sub
+
+    '|TIMERS|
+    Private Sub tmrKeyCD_Tick(sender As Object, e As EventArgs) Handles tmrKeyCD.Tick
+        tmrKeyCD.Enabled = False
+    End Sub
+
+    '|GENERAL USE/UTILITY
+    Public Sub ShuffleArray(ByRef A() As String)
+        'ShuffleArray takes an array, and randomizes its order
+        Randomize()
+        Dim ct As Integer = UBound(A)   'last index of A
+        Dim B(ct) As String             'creates the array to put the shuffled values in
+        Dim order(ct) As Integer        'creates the array the order should go in
+        Dim n As Integer
+        For i = 0 To UBound(order) - 1  'puts each number between 0 and ct randomly in "order", with no duplication
+            Do
+                n = Int(Rnd() * (ct + 1))
+            Loop Until Not order.Contains(n)
+            order(i) = n
+        Next
+        n = Int(Rnd() * (ct + 1))       'swaps the last index with a random index
+        order(ct) = n
+        order(Array.IndexOf(order, n)) = 0
+        For i = 0 To UBound(order)      'organizes B according to order
+            B(i) = A(order(i))
+        Next
+        A = B                       'sets A to B, the shuffled array.
+    End Sub
+    'pushLblEvent family of functions
+    Sub pushLblEvent(ByVal s As String)
+        'pushLblEvent takes a string, formats it to wrap, and pushes a dialog box containing it
+        If combatmode Then
+            pushLblCombatEvent(s)
+            Exit Sub
+        End If
+        Dim sSplit() As String = s.Split(" ")
+        Dim c As Integer = 0
+        Dim ct As Integer = 0
+        Dim out As String = ""
+        Do While c < sSplit.Length
+            If sSplit(c).Equals(vbCrLf) Then ct = 0
+            If ct < 70 Then
+                If Not sSplit(c).Contains(vbCrLf) Then
+                    out += sSplit(c) & " "
+                    ct += sSplit(c).Length + 1
+                    c += 1
+                Else
+                    out += sSplit(c) & " "
+                    ct = 0
+                    c += 1
+                End If
+            Else
+                out += vbCrLf
+                ct = 0
+            End If
+        Loop
+        If Not combatmode Then out += " " & vbCrLf & " " & vbCrLf & "Press any non-movement key to continue." Else out += " " & vbCrLf & " " & vbCrLf & "Click a combat button to continue."
+        If 1 = 1 Then lblEvent.Text = out Else lblEvent.Text = vbCrLf & "---------------------------------------------------------------------------" & vbCrLf & out
+        lblEvent.BringToFront()
+
+        Dim x = (265 * (Me.Size.Width / 688)) - (lblEvent.Size.Width / 2)
+        If x < 20 Then x = 20
+        lblEvent.Location = New Point(x, (65 * (Me.Size.Width / 688)))
+        lblEvent.Visible = True
+        player.canMoveFlag = False
+    End Sub
+    Sub pushLblEvent(ByVal s As String, ByRef effect As Action)
+        'This pushLblEvent is identical to the first, but takes an additional action that it executes on close.
+        If combatmode Then
+            lblEventOnClose = effect
+            pushLblCombatEvent(s)
+            Exit Sub
+        End If
+        Dim sSplit() As String = s.Split(" ")
+        Dim c As Integer = 0
+        Dim ct As Integer = 0
+        Dim out As String = ""
+        Do While c < sSplit.Length
+            If ct < 70 Then
+                If Not sSplit(c).Contains(vbCrLf) Then
+                    out += sSplit(c) & " "
+                    ct += sSplit(c).Length + 1
+                    c += 1
+                Else
+                    out += sSplit(c) & " "
+                    ct = 0
+                    c += 1
+                End If
+            Else
+                out += vbCrLf
+                ct = 0
+            End If
+        Loop
+        If Not combatmode Then out += " " & vbCrLf & " " & vbCrLf & "Press any non-movement key to continue." Else out += " " & vbCrLf & " " & vbCrLf & "Click a combat button to continue."
+        lblEvent.Text = out
+        lblEvent.BringToFront()
+
+        Dim x = (265 * (Me.Size.Width / 688)) - (lblEvent.Size.Width / 2)
+        If x < 20 Then x = 20
+        lblEvent.Location = New Point(x, (65 * (Me.Size.Width / 688)))
+        lblEvent.Visible = True
+        player.canMoveFlag = False
+        lblEventOnClose = effect
+        btnEQP.Enabled = False
+    End Sub
+    Sub pushLblEvent(ByVal s As String, ByRef yes As Action, ByVal no As Action, ByVal text As String)
+        'This pushLblEvent is identical to the second, but to be used in situations where a choice is made.
+        If combatmode Then
+            pushLblCombatEvent("Error, choice to be made during combat.")
+            Exit Sub
+        End If
+        Dim sSplit() As String = s.Split(" ")
+        Dim c As Integer = 0
+        Dim ct As Integer = 0
+        Dim out As String = ""
+        Do While c < sSplit.Length
+            If ct < 70 Then
+                If Not sSplit(c).Contains(vbCrLf) Then
+                    out += sSplit(c) & " "
+                    ct += sSplit(c).Length + 1
+                    c += 1
+                Else
+                    out += sSplit(c) & " "
+                    ct = 0
+                    c += 1
+                End If
+            Else
+                out += vbCrLf
+                ct = 0
+            End If
+        Loop
+
+        out += " " & vbCrLf & " " & vbCrLf & "Press any non-movement key to continue."
+
+        lblEvent.Text = out
+        lblEvent.BringToFront()
+
+        Dim x = (265 * (Me.Size.Width / 688)) - (lblEvent.Size.Width / 2)
+        If x < 20 Then x = 20
+        lblEvent.Location = New Point(x, (65 * (Me.Size.Width / 688)))
+
+        lblEvent.Visible = True
+        player.canMoveFlag = False
+        lblEventOnClose = AddressOf makeChoice
+        yesAction = yes
+        noAction = no
+        choiceText = text
+        btnEQP.Enabled = False
+    End Sub
+    Sub pushNPCDialog(ByVal s As String)
+        'pushNPCDialog is a variant of pushLblEvent that pushes the string into an NPC dialog box
+        Dim sSplit() As String = s.Split(" ")
+        Dim c As Integer = 0
+        Dim ct As Integer = 0
+        Dim out As String = ""
+        Do While c < sSplit.Length
+            If ct < 65 Then
+                out += sSplit(c) & " "
+                ct += sSplit(c).Length + 1
+                c += 1
+            Else
+                out += vbCrLf
+                ct = 0
+            End If
+        Loop
+        lblEvent.Text = out
+        lblEvent.Location = New Point(160 * Me.Size.Width / 688, 120 * Me.Size.Width / 688)
+        lblEvent.Visible = True
+        picNPC.Visible = True
+    End Sub
+    'color shift functions
     Shared Function cShift(ByVal oC As Color, ByVal c As Color, ByVal inc As Integer)
         If oC.Equals(c) Then Return c
         Dim a, r, g, b As Integer
@@ -3713,44 +3677,6 @@ Public Class Game
 
         Return Color.FromArgb(a, r, g, b)
     End Function
-
-    Private Sub ReportToolStripMenuItem_Click(sender As Object, e As EventArgs) Handles ReportToolStripMenuItem.Click
-        Process.Start("https://bitbucket.org/VowelHeavyUsername/dungeon_depths/issues?status=new&status=open")
-    End Sub
-    Private Sub bw_DoWork(ByVal sender As Object, ByVal e As DoWorkEventArgs)
-        Dim worker As BackgroundWorker = CType(sender, BackgroundWorker)
-        While boardWorker.IsBusy
-            If boardWorker.CancellationPending = True Then
-                e.Cancel = True
-                Exit While
-            Else
-                'Perform a time consuming operation
-                System.Threading.Thread.Sleep(500)
-            End If
-        End While
-    End Sub
-    Private Sub bw_ProgressChanged(ByVal sender As Object, ByVal e As ProgressChangedEventArgs)
-        Dim ratio As Double = Me.Size.Width / 1024
-        picLoadBar.Size = New Size(((e.ProgressPercentage / 100) * 395) * ratio, 17 * ratio)
-    End Sub
-    Private Sub bw_RunWorkerCompleted(ByVal sender As Object, ByVal e As RunWorkerCompletedEventArgs)
-        If e.Cancelled = True Then
-            picLoadBar.Size = New Size(395, 17)
-            Application.DoEvents()
-            picLoadBar.Visible = False
-        ElseIf e.Error IsNot Nothing Then
-            MsgBox("Error: " & e.Error.Message)
-        Else
-            picLoadBar.Size = New Size(395, 17)
-            Application.DoEvents()
-            picLoadBar.Visible = False
-        End If
-        player.canMoveFlag = True
-    End Sub
-    Public Sub ppw_DoWork(ByVal sender As Object, ByVal e As DoWorkEventArgs)
-        Dim worker As BackgroundWorker = CType(sender, BackgroundWorker)
-        player.createP()
-    End Sub
     Shared Sub changeHairColor(ByVal c As Color, ByVal iarrind() As Tuple(Of Integer, Boolean), ByRef iarr As Image())
         Dim t(16) As Image
         If iarrind(1).Item2 Then
@@ -3854,6 +3780,52 @@ Public Class Game
             End If
         End If
     End Sub
+    'load bar functions
+    Private Sub bw_DoWork(ByVal sender As Object, ByVal e As DoWorkEventArgs)
+        Dim worker As BackgroundWorker = CType(sender, BackgroundWorker)
+        While boardWorker.IsBusy
+            If boardWorker.CancellationPending = True Then
+                e.Cancel = True
+                Exit While
+            Else
+                'Perform a time consuming operation
+                System.Threading.Thread.Sleep(500)
+            End If
+        End While
+    End Sub
+    Private Sub bw_ProgressChanged(ByVal sender As Object, ByVal e As ProgressChangedEventArgs)
+        Dim ratio As Double = Me.Size.Width / 1024
+        picLoadBar.Size = New Size(((e.ProgressPercentage / 100) * 395) * ratio, 17 * ratio)
+    End Sub
+    Private Sub bw_RunWorkerCompleted(ByVal sender As Object, ByVal e As RunWorkerCompletedEventArgs)
+        If e.Cancelled = True Then
+            picLoadBar.Size = New Size(395, 17)
+            Application.DoEvents()
+            picLoadBar.Visible = False
+        ElseIf e.Error IsNot Nothing Then
+            MsgBox("Error: " & e.Error.Message)
+        Else
+            picLoadBar.Size = New Size(395, 17)
+            Application.DoEvents()
+            picLoadBar.Visible = False
+        End If
+        player.canMoveFlag = True
+    End Sub
+    Public Sub ppw_DoWork(ByVal sender As Object, ByVal e As DoWorkEventArgs)
+        Dim worker As BackgroundWorker = CType(sender, BackgroundWorker)
+        player.createP()
+    End Sub
+    'cost display for spells and abilities
+    Private Sub cboxMG_SelectedIndexChanged(sender As Object, e As EventArgs) Handles cboxMG.SelectedIndexChanged
+
+    End Sub
+    Private Sub cboxNPCMG_SelectedIndexChanged(sender As Object, e As EventArgs) Handles cboxNPCMG.SelectedIndexChanged
+
+    End Sub
+    Private Sub cmboxSpec_SelectedIndexChanged(sender As Object, e As EventArgs) Handles cmboxSpec.SelectedIndexChanged
+        If Not cmboxSpec.Text.Equals("-- Select --") And Not cmboxSpec.Text = "" Then ttCosts.SetToolTip(Me.cmboxSpec, Specials.SPCCost(cmboxSpec.Text))
+    End Sub
+    'other
     Private Sub prefetchImages()
         If imagesWorkerArg Is Nothing Then
             savePicsReady = False
@@ -3920,67 +3892,6 @@ Public Class Game
         'btnControls.Visible = True
         'player.canMoveFlag = False
     End Sub
-
-    Private Sub btnWait_Click(sender As Object, e As EventArgs) Handles btnWait.Click
-        turn += 1
-        closeLblEvent()
-        Dim m As Monster = Nothing
-        For i = 0 To npcList.Count() - 1
-            If npcList.Item(i).GetType().IsSubclassOf(GetType(Monster)) Or npcList.Item(i).GetType() Is GetType(Monster) Then
-                m = npcList.Item(i)
-                Exit For
-            End If
-        Next
-        player.setTarg(m)
-        If npcList.Count > 0 Then
-            For i = 0 To npcList.Count - 1
-                Dim int1 As Integer = 100 - npcList.Item(i).speed
-                If int1 < 1 Then int1 = 1
-                updatelist.add(npcList.Item(i), (int1))
-            Next
-        End If
-        Dim int As Integer = 100 - player.getSpeed
-        If int < 1 Then int = 1
-        updatelist.add(player, int)
-        drawBoard()
-        pushLblCombatEvent("You wait for a bit...")
-    End Sub
-
-    'cost display for spells and abilities
-    Private Sub cboxMG_SelectedIndexChanged(sender As Object, e As EventArgs) Handles cboxMG.SelectedIndexChanged
-
-    End Sub
-    Private Sub cboxNPCMG_SelectedIndexChanged(sender As Object, e As EventArgs) Handles cboxNPCMG.SelectedIndexChanged
-
-    End Sub
-
-    Private Sub btnAbout_Click(sender As Object, e As EventArgs) Handles btnAbout.Click
-        Dim ab1 As About = New About
-        ab1.ShowDialog()
-        ab1.Dispose()
-    End Sub
-
-    Private Sub cmboxSpec_SelectedIndexChanged(sender As Object, e As EventArgs) Handles cmboxSpec.SelectedIndexChanged
-        If Not cmboxSpec.Text.Equals("-- Select --") And Not cmboxSpec.Text = "" Then ttCosts.SetToolTip(Me.cmboxSpec, Specials.SPCCost(cmboxSpec.Text))
-    End Sub
-
-    'btnStettings
-    Private Sub btnSettings_Click(sender As Object, e As EventArgs) Handles btnSettings.Click
-        Dim s As Settings = New Settings
-        s.ShowDialog()
-        s.Dispose()
-        If screenSize = "Small" Then
-            Size = New Size(iWidth * 0.8, iHeight * 0.8)
-        ElseIf screenSize = "Medium" Then
-            Size = New Size(iWidth * 0.9, iHeight * 0.9)
-        ElseIf screenSize = "XLarge" Then
-            Size = New Size(iWidth * 1.3, iHeight * 1.3)
-        Else
-            Size = New Size(iWidth, iHeight)
-        End If
-        Game_Resize()
-    End Sub
-
     Private Sub Game_Resize()
         Dim RW As Double = (Me.Width - startingWidth) / startingWidth ' Ratio change of width
         Dim RH As Double = (Me.Height - startingHeight) / startingHeight ' Ratio change of height
@@ -4042,14 +3953,6 @@ Public Class Game
         Dim ratio As Double = Me.Size.Width / 1024
         picLoadBar.Location = New Point(picLoadBar.Location.X * ratio, picLoadBar.Location.Y * ratio)
     End Sub
-
-    Private Sub HelpToolStripMenuItem1_Click(sender As Object, e As EventArgs) Handles HelpToolStripMenuItem1.Click
-        Dim f6 As Controls = New Controls
-        f6.ShowDialog()
-        f6.Dispose()
-        loadcKeys()
-    End Sub
-
     Private Sub CreateMapAndImages()
         Dim XSize As Double = 15.0 * (CDbl(Me.Size.Width) / 688.0)
         Dim YSize As Double = 15.0 * (CDbl(Me.Size.Width) / 688.0)

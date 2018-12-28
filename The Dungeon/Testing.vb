@@ -138,11 +138,12 @@ Public Class Testing
         Dim testInventory1 = New Inventory
 
         testInventory1.add("Compass", 2)
+        testInventory1.add(0, 2)
         testInventory1.add("Spellbook", 3)
         testInventory1.add(45, 1)
         testInventory1.add(56, 6)
 
-        Dim test1 As Tuple(Of Boolean, String) = expectEQ("Inventory.item(0)", 2, testInventory1.item(0).count)
+        Dim test1 As Tuple(Of Boolean, String) = expectEQ("Inventory.item(0)", 4, testInventory1.item(0).count)
         If Not test1.Item1 Then Return test1
         Dim test2 As Tuple(Of Boolean, String) = expectEQ("Inventory.item(4)", 3, testInventory1.item(4).count)
         If Not test2.Item1 Then Return test2

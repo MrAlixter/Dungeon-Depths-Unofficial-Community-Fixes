@@ -1,8 +1,7 @@
-﻿Public Class NPC
+﻿Public Class Shopkeep
     Inherits Monster
     Public firstCTurn As Boolean = True
     Public isShop = False
-    Public gold As Integer = 0
     Public picNormal, picPrincess, picBunny As Image
     Public picNCP() As Image
 
@@ -10,26 +9,36 @@
         MyBase.New(-1)
         Select Case mIndex
             Case 1
-                MyBase.name = "Mark"
-                MyBase.health = 999
-                MyBase.maxHealth = 999
-                MyBase.attack = 99
-                MyBase.defence = 99
-                MyBase.speed = 99
-                MyBase.inventory = {0, 0, 3, 0, 2}
-                pronoun = "he"
-                pPronoun = "his"
-                rPronoun = "him"
+               
             Case 2
-                MyBase.name = "Shopkeeper"
-                MyBase.health = 99999
-                MyBase.maxHealth = 99999
-                MyBase.attack = 99999
-                MyBase.defence = 99999
-                MyBase.speed = 99  '0  1  2  3  4  5  6  7  8  9 10 11 12 13 14 15 16 17 18 19 20 21 22 23 24 25 26 27 28 29 30 31 32 33 34 35 36 37 38 39 40 41 42 43 44 45 46 47 48 49 50 51 52 53
-                MyBase.inventory = {1, 0, 1, 0, 1, 1, 1, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 1, 1, 1, 0, 0, 0, 0, 0, 1, 1, 0, 0, 0, 0}
+                MyBase.setName("Shopkeeper")
+                MyBase.setHealth(1.0)
+                MyBase.setMaxHealth(99999)
+                MyBase.setATK(99999)
+                MyBase.setDEF(99999)
+                MyBase.setSPD(99)
+
+                'Define the inventory
+                'Useables
+                MyBase.inv.setCount("Compass", 1)
+                MyBase.inv.setCount("Spellbook", 1)
+                'Potions
+                MyBase.inv.setCount("Health_Potion", 1)
+                MyBase.inv.setCount("Mana_Potion", 1)
+                'Food
+                MyBase.inv.setCount("Chicken_Leg", 1)
+                'Armor/Accesories
+                MyBase.inv.setCount("Steel_Armor", 1)
+                MyBase.inv.setCount("Gold_Armor", 1)
+                'Weapons
+                MyBase.inv.setCount("Steel_Sword", 1)
+                MyBase.inv.setCount("Oak_Staff", 1)
+                MyBase.inv.setCount("Gold_Sword", 1)
+                MyBase.inv.setCount("Golden_Staff", 1)
+                MyBase.inv.setCount("Midas_Gauntlet", 1)
+
                 isShop = True
-                gold = 99999
+                setGold(99999)
                 pronoun = "he"
                 pPronoun = "his"
                 rPronoun = "him"
@@ -37,16 +46,39 @@
                 picPrincess = Game.picSKPrin.BackgroundImage
                 picBunny = Game.picSKBunny.BackgroundImage
             Case 3
-                MyBase.name = "Traveling Wizard"
-                MyBase.health = 99999
-                MyBase.maxHealth = 99999
-                MyBase.attack = 99999
-                MyBase.defence = 99999
-                MyBase.speed = 99  '0  1  2  3  4  5  6  7  8  9 10 11 12 13 14 15 16 17 18 19 20 21 22 23 24 25 26 27 28 29 30 31 32 33 34 35 36 37 38 39 40 41 42 43 44 45 46 47 48 49 50 51 52 53 54
-                MyBase.inventory = {0, 1, 0, 0, 1, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 1, 0, 1, 0, 0, 0, 0, 1, 1, 1, 1, 1, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1, 0, 1, 0, 0, 0, 0, 0, 0, 0,
-                                    0, 0, 0, 0, 0, 1, 1, 1, 1}
+                MyBase.setName("Traveling Wizard")
+                MyBase.setHealth(1.0)
+                MyBase.setMaxHealth(99999)
+                MyBase.setATK(99999)
+                MyBase.setDEF(99999)
+                MyBase.setSPD(99)
+
+                'Define the inventory
+                'Useables
+                MyBase.inv.setCount("Spellbook", 1)
+                MyBase.inv.setCount("Mana_Charm", 1)
+                'Potions
+                MyBase.inv.setCount("Mana_Potion", 1)
+                MyBase.inv.setCount("Feminine_Potion", 1)
+                MyBase.inv.setCount("Breast_Enlarging_Potion", 1)
+                MyBase.inv.setCount("Masculine_Potion", 1)
+                MyBase.inv.setCount("Breast_Shrinking_Potion", 1)
+                MyBase.inv.setCount("Restore_Potion", 1)
+                'Foods
+                MyBase.inv.setCount("Apple​", 1)
+                MyBase.inv.setCount("Angel_Food_Cake", 1)
+                MyBase.inv.setCount("Stick_of_Gum", 1)
+                'Armors
+                MyBase.inv.setCount("Steel_Bikini", 1)
+                MyBase.inv.setCount("Bunny_Suit", 1)
+                MyBase.inv.setCount("Witch_Cosplay", 1)
+                MyBase.inv.setCount("Cowbell", 1)
+                MyBase.inv.setCount("Gold_Adornment", 1)
+                'Weapons
+                MyBase.inv.setCount("Duster", 1)
+
                 isShop = True
-                gold = 99999
+                setGold(99999)
                 pronoun = "he"
                 pPronoun = "his"
                 rPronoun = "him"
@@ -54,13 +86,13 @@
                 picPrincess = Game.PicSWPrin.BackgroundImage
                 picBunny = Game.picSWb.BackgroundImage
             Case Else
-                MyBase.name = "eRr0rH3Ro"
-                MyBase.health = 60
-                MyBase.maxHealth = 60
-                MyBase.attack = 1
-                MyBase.defence = 1
-                MyBase.speed = 1
-                MyBase.inventory = {1}
+                MyBase.setName("BadShopkeeper")
+                MyBase.setHealth(1.0)
+                MyBase.setMaxHealth(9)
+                MyBase.setATK(9)
+                MyBase.setDEF(9)
+                MyBase.setSPD(9)
+                MyBase.inv.setCount("Compass", 1)
         End Select
         If speed = Game.player.speed Then speed -= 1
         MyBase.title = ""
@@ -68,23 +100,18 @@
     Sub New(ByVal s As String)
         MyBase.New(-1)
         Dim playArray() As String = s.Split("*")
-        MyBase.name = playArray(0) & " the " & playArray(1)
+        MyBase.setName(playArray(0) & " the " & playArray(1))
         MyBase.health = playArray(3)
         MyBase.maxHealth = playArray(4)
         MyBase.attack = playArray(5)
         MyBase.defence = playArray(6)
         MyBase.speed = playArray(7)
-        ReDim MyBase.inventory(UBound(playArray) - 8)
-        For i = 0 To (UBound(playArray) - 8)
-            MyBase.inventory(i) = playArray(8 + i)
-        Next
+        inv.load(playArray(8))
         MyBase.title = ""
     End Sub
-    Public Overrides Sub attackCMD(target As Player)
-        MyBase.attackCMD(target)
-    End Sub
+
     Public Overrides Sub update()
-        If dead = True Then Exit Sub
+        If isDead = True Then Exit Sub
         If health <= 0 Then
             Die()
             Exit Sub
@@ -110,15 +137,15 @@
     End Sub
     Public Sub encounter()
         pos = Game.player.pos
-        If dead = True Then
+        If isDead = True Then
             Game.pushLblEvent("This NPC is dead.")
             Exit Sub
         End If
-        If name = "Shopkeeper" Or name.Equals("Traveling Wizard") Then gold = 9999
+        If getName() = "Shopkeeper" Or getName.Equals("Traveling Wizard") Then setGold(9999)
         Game.npcIndex = npcIndex
-        If name.Equals("Traveling Wizard") Then
+        If getName.Equals("Traveling Wizard") Then
             If npcIndex = 0 Then
-                If CInt(Game.player.health * Game.player.getmaxHealth()) = 69 Then
+                If CInt(Game.player.health * Game.player.getMaxHealth()) = 69 Then
                     Game.pushNPCDialog("Ehehe. Your health. Nice." & vbCrLf & "Anyway, what are you buying?")
                 Else
                     Game.pushNPCDialog("What are you buying?")
@@ -145,7 +172,7 @@
                 Game.pushNPCDialog("*giggle* Hey!")
             End If
         End If
-        If Game.floor < 5 AndAlso Game.floorboss(Game.floor).Equals("Key") Then inventory(53) = 1 Else inventory(53) = 0
+        If Game.floor < 5 AndAlso Game.floorboss(Game.floor).Equals("Key") Then inv.setCount(53, 1) Else inv.setCount(53, 0)
         picNCP = {picNormal, Game.picFrog.BackgroundImage, Game.picSheep.BackgroundImage, picPrincess, picBunny}
         Game.picNPC.BackgroundImage = picNCP(npcIndex)
         firstCTurn = True
@@ -153,15 +180,12 @@
     End Sub
     Public Sub toFemale(ByVal form As String)
         Dim out As String = ""
-        If form = "bunny" Then out += "As you are about to turn " & name & " into an adorable bunny rabbit, another idea crosses your mind. Oh, " & pronoun & " will be a cute bunny alright. "
+        If form = "bunny" Then out += "As you are about to turn " & getName() & " into an adorable bunny rabbit, another idea crosses your mind. Oh, " & pronoun & " will be a cute bunny alright. "
         pronoun = "she"
         pPronoun = "her"
         rPronoun = "her"
-        out += name & " looks suprised as his muscle mass shrinks down, his physique gained over years of training becoming slim and feminine. She is thrown off balance as her hips puff out, giving her a hour glass figure. The shock of her sudden transormation is evident on her now unmistakably female face, a rosy blush coming to her cheeks. As ringlets of her now much longer hair fall in font of her eyes, her suprised expression replaced with an expression of consignment."
-        If name.Equals("Traveling Wizard") Then name = "Traveling Witch"
-        'If name = "Mark" Then name = "Maria"
-        'If form = "bunny" Then out += " Her hair lightens to an almost white shade of pink, and two hot pink bunny ears pop out of her head. While at first the new bunny girl looks like she might be angry, her rage gives was to a look of confusion, and that is quickly replaced by a bubbly smile. You return the smile, proud of you spellwork."
-        'If form = "prin" Then out += " Her hair lightens slightly, and a tiara appears on her head. She stops slouching, adopting a regal pose as her clothes become a ballgown. She gives you a quick grin, the look in her eyes indicating that she has abandoned her former life, embracing her new royal lineage."
+        out += getName() & " looks suprised as his muscle mass shrinks down, his physique gained over years of training becoming slim and feminine. She is thrown off balance as her hips puff out, giving her a hour glass figure. The shock of her sudden transormation is evident on her now unmistakably female face, a rosy blush coming to her cheeks. As ringlets of her now much longer hair fall in font of her eyes, her suprised expression replaced with an expression of consignment."
+        If getName.Equals("Traveling Wizard") Then setName("Traveling Witch")
         Game.pushLblEvent(out)
     End Sub
     Public Sub toMale(ByVal form As String)
@@ -169,9 +193,7 @@
         pronoun = "he"
         pPronoun = "his"
         rPronoun = "him"
-        'out += name & " looks suprised as her breasts begin to shrink, her muscles growing more defined at first, and quickly gaining mass."
-        'If name = "Maria" Then name = "Mark"
-        If name.Equals("Traveling Witch") Then name = "Traveling Wizard"
+        If getName.Equals("Traveling Witch") Then setName("Traveling Wizard")
         Game.pushLblEvent(out)
     End Sub
     Public Overrides Sub despawn(reason As String)

@@ -39,7 +39,7 @@
                                 outout = "Trap disarmed! " & vbCrLf & " You have disarmed an aphrodisiac dart trap."
                             Case 1
                                 outout = "Trap disarmed!" & vbCrLf & " You have disarmed an rope bondage trap. +1 Ropes"
-                                Game.player.p_inventory.add(54, 1)
+                                Game.player.inv.add(54, 1)
                             Case 2
                                 outout = "Trap disarmed!" & vbCrLf & " You have disarmed an ruby trap."
                             Case 3

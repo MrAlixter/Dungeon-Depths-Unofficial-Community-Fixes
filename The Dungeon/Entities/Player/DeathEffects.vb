@@ -1,5 +1,5 @@
 ﻿Public Class DeathEffects
-    Shared p = Game.player
+    Shared p As Player = Game.player
 
     '|MONSTER DEATHS|
     Shared Sub MBimboDeath()
@@ -17,7 +17,7 @@
             p.health = 0.1
         Else
             ln1 = "As you collapse, you see the thrall pull a small metal collar out of their bag.  Lacking the strength to resist, you are powerless as they secure it firmly around your neck, all the while murmuring whispers of the joys of submission into your ear.  Once they have the collar fitted properly, they place a small glowing gem into a slot on the collar, igniting a small array of runes.  Your mind goes blank in an instant, and while at first an ammnesia-fueled panic sets in it is quickly replaced by a booming disembodied voice."
-            p.inventory(69).addone()
+            p.inv.add(69, 1)
             Equipment.accChange("Slave_Collar")
             p.health = 1
             p.mana = p.getmaxMana()
@@ -40,9 +40,9 @@
             out = """Wonderful!"", your opponent exclaims as you collapse, ""You'll make a perfect thrall!""" & vbCrLf & _
                   "𝘛𝘩𝘳𝘢𝘭𝘭!? you think moments before a small metal collar finds its way around your neck and a network of runes inscribed on it begin glowing with your new master's magic.  𝘞𝘢𝘪𝘵 ... 𝘕𝘦𝘸 𝘔𝘈𝘚𝘛𝘌𝘙?!  You don't have a momment to rest before your mind is filled with a booming voice." & vbCrLf & _
                   """LISTEN UP, NEW SLAVE!  I have need of your services."" your new master begins, ""In this dungeon, there are several high-power mana arrays.  Only one of them, however, is capable of bestowing the power of a demon lord onto a mortal such as I.  Your task is to find and inspect these arrays, and report back to me with your findings.""  They snicker,  ""I'm sure you won't let me down, but I'm going to need to make a few changes to make you more ... uniform ... with the rest of your collegues.""" & vbCrLf & vbCrLf & "...       " & vbCrLf & vbCrLf & "With a final warning not to fail them, the foreign presence leaves your mind and you are once again alone with your thoughts and your task."
-            p.inventory(69).addone()
+            p.inv.add(69, 1)
             If Not p.equippedAcce.getName.Equals("Nothing") Then p.equippedAcce.onUnequip()
-            p.equippedAcce = p.inventory(69)
+            p.equippedAcce = p.inv.item(69)
             p.equippedAcce.onEquip()
             p.health = 1
             p.mana = p.getmaxMana()
@@ -77,17 +77,10 @@
             Exit Sub
         End If
         out += "  As you black out, you can see the mimic working its way into your armor.  As the darkness takes you, so does the orgasmic bliss of the mimic's magic touch."
-        Dim x As Integer = -1
-        Dim n As String = p.equippedArmor.getName()
-        For i = 0 To p.inventorynames.Count - 1
-            If p.inventorynames(i).Equals(n) Then
-                x = i
-                Exit For
-            End If
-        Next
-        If x <> -1 Then p.inventory(x).count -= 1
+        Dim x As Integer = p.equippedArmor.getId
+        p.inv.add(x, -1)
         p.equippedArmor = New LiveArmor
-        p.inventory(55).add(1)
+        p.inv.add(55, 1)
         p.perks(12) = True
         p.createP()
         Game.pushLblEvent(out)
@@ -114,7 +107,7 @@
 
     '|NPC DEATHS|
     Shared Sub ShopkeeperDeath()
-        Dim n As NPC = Game.currNPC
+        Dim n As Shopkeep = Game.currNPC
         p.Petrify(Color.Goldenrod)
         Dim out As String = """You should have known better than to try and rob a shop keeper,"" the shopkeep says," & vbCrLf &
             " glaring down at you, ""...and if its gold you're after, I guess I've got some good news for you.""" & vbCrLf &

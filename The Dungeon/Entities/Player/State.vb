@@ -46,7 +46,7 @@
         iArrInd = p.iArrInd.Clone
         perks = New Dictionary(Of String, Integer)(p.perks)
         sexBool = p.sexBool
-        invNeedsUDate = p.p_inventory.invNeedsUDate
+        invNeedsUDate = p.inv.invNeedsUDate
         haircolor = p.haircolor
         skincolor = p.skincolor
         textColor = p.TextColor
@@ -116,7 +116,7 @@
         p.iArrInd = iArrInd.Clone
         p.perks = New Dictionary(Of String, Integer)(perks)
         p.sexBool = sexBool
-        p.p_inventory.invNeedsUDate = invNeedsUDate
+        p.inv.invNeedsUDate = invNeedsUDate
         p.haircolor = haircolor
         p.skincolor = skincolor
         p.TextColor = textColor
@@ -149,7 +149,7 @@
         iArrInd = p.iArrInd.Clone
         perks = New Dictionary(Of String, Integer)(p.perks)
         sexBool = p.sexBool
-        invNeedsUDate = p.p_inventory.invNeedsUDate
+        invNeedsUDate = p.inv.invNeedsUDate
         haircolor = p.haircolor
         skincolor = p.skincolor
         textColor = p.TextColor

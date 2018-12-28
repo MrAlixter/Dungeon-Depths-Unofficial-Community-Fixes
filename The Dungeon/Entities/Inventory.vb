@@ -6,6 +6,7 @@
     Dim acce() As Accessory
     Dim useable(), food(), potions(), misc() As Item
     Public invNeedsUDate As Boolean = False
+    Dim sum As Integer = 0
 
     '|CONSTUCTOR|
     Sub New()
@@ -132,13 +133,26 @@
         If internal_inventory.Keys.Contains(key) Then
             internal_inventory(key).add(count)
         End If
+        sum += count
     End Sub
     Sub add(ByVal id As Integer, ByVal count As Integer)
-        If id > 0 And id < upperBound() Then
+        If id >= 0 And id < upperBound() Then
             Dim key = internal_inventory.Keys(id)
             internal_inventory(key).add(count)
         End If
+        sum += count
     End Sub
+    Sub setCount(k As String, v As Integer)
+        sum -= item(k).count
+        item(k).count = v
+        sum += v
+    End Sub
+    Sub setCount(i As Integer, v As Integer)
+        sum -= item(i).count
+        item(i).count = v
+        sum += v
+    End Sub
+
 
     '|SAVE/LOAD|
     Function save() As String
@@ -155,6 +169,7 @@
             Dim subParse As String() = parse(i).Split("~")
             add(subParse(0), CInt(subParse(1)))
         Next
+        sum = calcSum()
     End Sub
 
     '|GETTERS|
@@ -181,6 +196,13 @@
     End Function
     Public Function getCountAt(ByVal n As String) As Integer
         Return item(n).getCount
+    End Function
+    Private Function calcSum() As Integer
+        Dim totalSum As Integer = 0
+        For i = 0 To upperBound()
+            totalSum += getCountAt(i)
+        Next
+        Return totalSum
     End Function
 
     Function getArmors() As Tuple(Of String(), Armor())
@@ -215,6 +237,9 @@
     End Function
     Function getMisc() As Item()
         Return misc
+    End Function
+    Public Function getSum() As Integer
+        Return sum
     End Function
 
     Function upperBound()

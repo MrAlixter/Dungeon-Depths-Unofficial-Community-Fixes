@@ -18,7 +18,7 @@
         Game.pushLblEvent("Your hair becomes slightly lighter, trending toward a platinum blonde.")
     End Sub
     Sub step1()
-        Dim p = Game.player
+        Dim p As player = game.player
         If p.name = "Targax" Then
             p.haircolor = Color.FromArgb(255, 255, 0, 147)
             p.iArrInd(1) = New Tuple(Of Integer, Boolean)(9, True)
@@ -54,7 +54,7 @@
         Game.pushLblEvent("You pause to rub your temples, a massive headache comming down on you like a ton of bricks.  As you take a few minutes to recover, you notice that your center of balance is off and more disturbingly, that you can't seem to focus enough to figure out why." & vbCrLf & vbCrLf & "Maybe you can just walk this off...")
     End Sub
     Sub step2()
-        Dim p = Game.player
+        Dim p As player = game.player
         Dim out As String = ""
         If Not p.sexBool Then
             out += "In your haze, you look down to see breasts blossoming from your chest. You giggle, all traces of intelect vanishing as your body becomes more curvy and feminine. As your dainty hands move down your body, you discover that you no longer have a cock and balls, and insted have a tight moist cunt.  Your hair lengthens, becoming a platinum blonde, and your clothes change to match your new figure."
@@ -99,7 +99,7 @@
         stopTF()
     End Sub
     Sub step2alt()
-        Dim p = Game.player
+        Dim p As player = game.player
         p.iArrInd(16) = New Tuple(Of Integer, Boolean)(0, True)
         p.iArrInd(2) = New Tuple(Of Integer, Boolean)(7, True)
         p.haircolor = Color.FromArgb(255, 255, 250, 205)

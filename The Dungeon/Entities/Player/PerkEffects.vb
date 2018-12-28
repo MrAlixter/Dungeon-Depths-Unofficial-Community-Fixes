@@ -1,14 +1,13 @@
 ﻿Public Class PerkEffects
-    Shared p = Game.player
+    Shared p As Player = Game.player
     '|GENERAL EFFECTS|
     Shared Sub hungerEffect()
         If p.perks("hunger") > -1 And Game.turn Mod 5 = 0 Then
-            If p.Hunger() < 100 Then
+            If p.hunger < 100 Then
                 p.perks("hunger") = -1
             Else
-                p.health -= 5 / p.getmaxHealth()
                 Game.lstLog.Items.Add("Your stomach aches... -5 health!")
-                If p.health <= 0 Then p.setTarg(New Monster(10))
+                p.takeDMG(5, New Monster(10))
             End If
         End If
     End Sub
@@ -93,7 +92,7 @@
     End Sub
     Shared Sub massiveMammaries()
         If p.perks("mmammaries") = 1 Then
-            p.dBuff = p.dBuff + ((p.getdefence - p.dbuff) * 0.8)
+            p.dBuff = p.dBuff + ((p.getDEF - p.dbuff) * 0.8)
             p.perks("mmammaries") -= 1
         Else
             p.dBuff = 0
@@ -104,8 +103,8 @@
     End Sub
     Shared Sub ironhideFury()
         If p.perks("ihfury") = 3 Then
-            p.aBuff = p.aBuff + ((p.getattack - p.abuff) * 0.5)
-            p.dBuff = p.dBuff + ((p.getdefence - p.dbuff) * 0.6)
+            p.aBuff = p.aBuff + ((p.getATK - p.abuff) * 0.5)
+            p.dBuff = p.dBuff + ((p.getDEF - p.dbuff) * 0.6)
             p.perks("ihfury") -= 1
         ElseIf p.perks("ihfury") > 0 Then
             p.perks("ihfury") -= 1

@@ -19,7 +19,7 @@
     End Sub
 
     Sub shiftTowardsPrefForm()
-        Dim p = Game.player
+        Dim p As player = game.player
         p.prefForm.shiftTowards(Game.player)
         p.perks("thrall") += 1
         If p.perks("thrall") > 11 Then
@@ -29,7 +29,7 @@
         MyBase.currStep -= 1
     End Sub
     Sub crystalSpawn()
-        Dim p = Game.player
+        Dim p As player = game.player
         If p.forcedPath Is Nothing And Not Game.combatmode And Not Game.npcmode Then
             Dim crystalX As Integer
             Dim crystalY As Integer
@@ -46,11 +46,11 @@
             p.forcedPath = Game.route(p.pos, crystal)
 
             Dim s As String = ""
-            If p.getWillpower() > 10 Then
+            If p.getWIL() > 10 Then
                 s = "you mock your instructions under your breath, before stiffly moving towards the crystal." + vbCrLf + "𝘐𝘧 𝘰𝘯𝘭𝘺 𝘐 𝘤𝘰𝘶𝘭𝘥 𝘨𝘦𝘵 𝘵𝘩𝘪𝘴 𝘥𝘢𝘮𝘯 𝘤𝘰𝘭𝘭𝘢𝘳 𝘰𝘧𝘧..."
-            ElseIf p.getWillpower() > 7 Then
+            ElseIf p.getWIL() > 7 Then
                 s = "you reluctantly start off towards the crystal." + vbCrLf + "𝘖𝘩 𝘸𝘦𝘭𝘭, 𝘣𝘦𝘵𝘵𝘦𝘳 𝘮𝘦 𝘵𝘩𝘢𝘯 𝘰𝘯𝘦 𝘰𝘧 𝘵𝘩𝘦𝘪𝘳 𝘰𝘵𝘩𝘦𝘳 𝘪𝘥𝘪𝘰𝘵𝘴."
-            ElseIf p.getWillpower() > 4 Then
+            ElseIf p.getWIL() > 4 Then
                 s = "you jump immediatly into action, happy to help the voice in your head with whatever it may need." + vbCrLf + "𝘐'𝘮 𝘨𝘰𝘪𝘯𝘨 𝘵𝘰 𝘮𝘢𝘬𝘦 𝘲𝘶𝘪𝘤𝘬 𝘸𝘰𝘳𝘬 𝘰𝘧 𝘵𝘩𝘪𝘴 𝘵𝘢𝘴𝘬!"
             Else
                 s = "you mindlessly obey, moving towards the crystal with a vacant grin."
@@ -64,42 +64,39 @@
     End Sub
 
     Shared Sub fightSorc()
-        Dim p = Game.player
+        Dim p As player = game.player
         Dim m As Monster
         m = New Monster(9)
-        Game.npcList.Add(m)
-        p.currTarget = m
         Game.toCombat()
         Game.lstLog.Items.Add((m.getName() & " attacks!"))
         Game.lstLog.TopIndex = Game.lstLog.Items.Count - 1
     End Sub
     Shared Sub fightSorc2()
-        Dim p = Game.player
+        Dim p As player = game.player
         Game.lblEvent.Visible = False
         Dim m As Monster
         m = New Monster(8)
         Game.npcList.Add(m)
-        p.currTarget = m
         Game.toCombat()
         Game.lstLog.Items.Add((m.getName() & " attacks!"))
         Game.lstLog.TopIndex = Game.lstLog.Items.Count - 1
     End Sub
     Shared Sub acceptSorc()
-        Dim p = Game.player
+        Dim p As player = game.player
         p.perks("thrall") = -1
         p.ongoingTFs.Add(New HalfSuccubusTF())
         p.update()
         Game.pushLblEvent("""Then I deem your task concluded as a success.  Go now, and take care not to fall under the spell of any others,"" your controller states.")
     End Sub
     Shared Sub betraySorc()
-        Dim p = Game.player
+        Dim p As player = game.player
         Game.pushLblEvent("Brushing past you, your ""boss"" heads straight for the array.  As they begin fiddling with it, you take notice of their distraction and begin creeping into a position behind them.  As they chant over the array, you prepare to make your move.  " & _
                           "As their raving reaches its zenith and the runes enscribed on the crystal begin to glow you strike out, disrupting their ritual.  ""YOU!  DO YOU HAVE ANY IDEA ..."" screams the mage, and while they shout you realize you couldn't care less about them.  " & _
                           "Looking down, you see that your collar has gone dark and dangles open from your neck.  Grinning, your prepare to fight for your life.", AddressOf fightSorc2)
 
 
         Equipment.accChange("Nothing")
-        p.p_inventory.add(69, -1)
+        p.inv.add(69, -1)
 
         p.createP()
     End Sub
@@ -123,7 +120,7 @@
     End Sub
 
     Public Overrides Function getNextStep(stage As Integer) As Action
-        Dim p = Game.player
+        Dim p As player = game.player
         If p.perks("thrall") = -1 Or p.pForm.name.Equals("Half-Succubus") Then
             'MsgBox("A")
             Return AddressOf stopTF

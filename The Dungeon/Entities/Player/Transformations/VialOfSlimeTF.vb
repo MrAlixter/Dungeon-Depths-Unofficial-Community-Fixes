@@ -12,7 +12,7 @@
     End Sub
 
     Sub step1()
-        Dim p = Game.player
+        Dim p As player = game.player
         If p.iArrInd(5).Item1 = 7 And p.iArrInd(5).Item2 Then
             Game.lstLog.Items.Add("Your hair resists being altered!")
         Else
@@ -27,7 +27,7 @@
     End Sub
 
     Public Overrides Function getNextStep(stage As Integer) As Action
-        Dim p = Game.player
+        Dim p As player = game.player
         If p.perks("vsslimehair") < 0 Then
             Return AddressOf step1
         Else

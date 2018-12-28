@@ -14,7 +14,7 @@ Public Class Transformation
 
     'constuctors
     Sub New(n As Integer, tts As Integer, wi As Double, cbs As Boolean)
-        Dim p = Game.player
+        Dim p As player = game.player
         If canBeTFed(p) Then
             p.pState.save(p)
         End If
@@ -113,7 +113,7 @@ Public Class Transformation
         turnsTilNextStep += generatWILResistance()
     End Sub
     Function generatWILResistance()
-        Return CInt(turnsTilNextStep * (Game.player.getWillpower() / 20)) * wilImpact
+        Return CInt(turnsTilNextStep * (Game.player.getWIL() / 20)) * wilImpact
     End Function
 
     'toString for save / load
