@@ -54,6 +54,10 @@
         If isDead Then Exit Sub
         currTarget = Nothing
         nextCombatAction = Nothing
+
+        cause.currTarget = Nothing
+        cause.nextCombatAction = Nothing
+
         Game.player.clearTarget()
         If getName() = "Explorer" Then
             If MessageBox.Show("Would you like to do the Explorer's body swap?", "Body Swap?", MessageBoxButtons.YesNo) = Windows.Forms.DialogResult.Yes Then 'Int(Rnd() * 3) = 0 Then '
@@ -148,7 +152,6 @@
         End If
     End Sub
     Private Sub endMonster()
-        MsgBox("a")
         'set temporary player pointer
         Dim p As Player = Game.player
 
@@ -227,18 +230,18 @@
             If Me.GetType() Is GetType(MiniBoss) Then
                 inv.add(contents(i), 1)
             Else
-                Dim content = Game.player.inv.item(contents(i))
+                Dim content = inv.item(contents(i))
                 Select Case content.tier
                     Case 3
                         Dim rng = (Int(Rnd() * 9))
-                        If rng = 1 Then inv.add(contents(i), 1)
+                        If rng = 1 Then content.addOne()
                     Case 2
                         Dim rng = (Int(Rnd() * 6))
-                        If rng = 1 Then inv.add(contents(i), 1)
+                        If rng = 1 Then content.addOne()
                     Case Else
                         Dim rng = (CInt(Rnd() * 5))
                         If rng >= 3 Then rng = 0
-                        inv.add(contents(i), rng)
+                        content.add(rng)
                 End Select
             End If
         Next

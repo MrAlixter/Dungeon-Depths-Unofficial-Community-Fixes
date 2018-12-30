@@ -5,7 +5,6 @@
         Select Case mIndex
             Case 1
                 MyBase.name = "Marissa the Enchantress"
-                MyBase.setHealth(150)
                 MyBase.setMaxHealth(150)
                 MyBase.setATK(25)
                 MyBase.setDEF(-5)
@@ -24,7 +23,6 @@
                 rPronoun = "her"
             Case 2
                 MyBase.setName("Targax the Brutal")
-                MyBase.setHealth(250)
                 MyBase.setMaxHealth(250)
                 MyBase.setATK(50)
                 MyBase.setDEF(20)
@@ -39,7 +37,6 @@
                 rPronoun = "him"
             Case 4
                 MyBase.setName("Ooze Empress")
-                MyBase.setHealth(100)
                 MyBase.setMaxHealth(100)
                 MyBase.setATK(30)
                 MyBase.setDEF(70)
@@ -51,7 +48,6 @@
                 rPronoun = "her"
             Case Else
                 MyBase.setName("Explorer")
-                MyBase.setHealth(300)
                 MyBase.setMaxHealth(300)
                 MyBase.setATK(15)
                 MyBase.setDEF(15)
@@ -65,6 +61,7 @@
                     MyBase.inv.add(invInd, CInt(Rnd() * 2) + 1)
                 Next
         End Select
+        MyBase.setHealth(1.0)
         If speed = Game.player.speed Then speed -= 1
         MyBase.sName = getName()
         MyBase.pos = Game.player.pos

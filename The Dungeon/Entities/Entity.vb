@@ -76,7 +76,6 @@
 
     '|UPDATE|
     Public Overridable Sub update() Implements Updatable.update
-        If getIntHealth() <= 0 Then die(Nothing)
         If Not nextCombatAction Is Nothing And Not currTarget Is Nothing Then
             nextCombatAction(currTarget)
             nextCombatAction = Nothing
@@ -92,8 +91,11 @@
     '|COMBAT|
     Public MustOverride Sub attackCMD(ByRef target As Entity)
     Public Overridable Sub takeDMG(ByVal dmg As Integer, ByRef source As Entity)
-        If dmg >= getIntHealth() Then die(source)
-        health -= dmg / getMaxHealth()
+        If dmg >= getIntHealth() Then
+            die(source)
+        Else
+            health -= dmg / getMaxHealth()
+        End If
     End Sub
     Public Shared Function calcDamage(atk As Integer, def As Integer) As Integer
         If atk <= 0 Then Return 1

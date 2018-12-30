@@ -32,7 +32,7 @@
         Dim chest = Me.Clone()
 
         For x = 0 To contents.upperBound
-            contents.setCount(x, i.getCountAt(x))
+            chest.contents.setCount(x, i.getCountAt(x))
         Next
 
         If chest.contents.getCountAt(43) < 1 Then chest.contents.setCount(43, CInt(Rnd() * 250))

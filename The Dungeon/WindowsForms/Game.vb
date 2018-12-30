@@ -3025,7 +3025,7 @@ Public Class Game
     Sub updatePnlCombat(ByVal p As Player, ByVal t As Entity)
         If lblTurn.Text.Equals("Turn: " & turn) Or t Is Nothing Then Exit Sub
         If t.health <= 0 Then
-            t.Die()
+            t.die()
             Exit Sub
         End If
         lblPHealth.Text = CInt(p.health * p.getMaxHealth) & "/" & p.getMaxHealth

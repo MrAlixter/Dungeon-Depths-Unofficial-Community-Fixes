@@ -359,10 +359,6 @@
     End Sub
 
     '|COMBAT COMMANDS|
-    Public Sub setTarget(ByRef t As NPC)
-        currTarget = t
-        MyBase.currTarget = t
-    End Sub
     Public Sub clearTarget()
         currTarget = Nothing
         MyBase.currTarget = Nothing
@@ -388,6 +384,10 @@
         target.takeDMG(dmg, Me)
         Game.lstLog.Items.Add(CStr("You hit" & target.title & " " & target.getName() & " for " & dmg & " damage!"))
         Game.pushLblCombatEvent(CStr("You hit" & target.title & " " & target.getName() & " for " & dmg & " damage!"))
+    End Sub
+    Public Sub setTarget(ByRef t As NPC)
+        currTarget = t
+        MyBase.currTarget = t
     End Sub
     Private Sub cHit(dmg As Integer, target As NPC)
         target.takeDMG(dmg * 3, Me)
@@ -585,13 +585,18 @@
             Exit Sub
         End If
 
+        source.currTarget = Nothing
+        source.nextCombatAction = Nothing
+
+        setHealth(0.1)
+
         If source.getName.Equals("Shopkeeper") Then
             DeathEffects.ShopkeeperDeath()
             Exit Sub
         ElseIf source.getName.Equals("Mindless Bimbo") Then
             DeathEffects.MBimboDeath()
             Exit Sub
-        ElseIf source.getName.Equals("Mesmerized Thrall") Then
+        ElseIf source.getName.Equals("Mesmerized Thrall") Or source.getName.Equals("Mesmerized Thrall​") Then
             DeathEffects.thrallDeath()
             Exit Sub
         ElseIf source.getName.Equals("Enthralling Sorcerer") Or source.getName.Equals("Enthralling Sorceress") Then
@@ -734,10 +739,6 @@
         Return needsToUpdatePortrait
     End Function
     Sub UIupdate()
-        If health <= 0 Then
-            die()
-            Exit Sub
-        End If
         If Game.lblNameTitle.Text <> name & " the " & pClass.name Then Game.lblNameTitle.Text = name & " the " & pClass.name
         If Game.lblHealth.Text <> "Health = " & CInt(health * getMaxHealth()) & "/" & getMaxHealth() Then Game.lblHealth.Text = "Health = " & CInt(health * getMaxHealth()) & "/" & getMaxHealth()
         If Game.lblMana.Text <> "Mana = " & mana & "/" & getMaxMana() Then Game.lblMana.Text = "Mana = " & mana & "/" & getMaxMana()

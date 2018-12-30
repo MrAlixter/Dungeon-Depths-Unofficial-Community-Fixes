@@ -7,14 +7,14 @@
         Dim out As String = "Exausted, you slump to the floor.  Glancing up, the horny mess attacking you seem to have gotten a running start, throwing herself on top of you, and pulling you into a sloppy kiss.  As she clumsily fumbles around, trying to remove your clothes, you roll out from underneath her and beat a hasty retreat, the faint sweetness of bubblegum lingering in your mouth."
         p.currTarget.despawn("p-death")
         Game.pushLblEvent(out)
-        p.health = 0.1
+
     End Sub
     Shared Sub thrallDeath()
         Dim out As String = ""
         Dim ln1 As String = Nothing
         If p.pClass.name.Equals("Thrall") Then
             out = "Despite your fatigue, you are able to roll out of the way of the thrall's attempt to restrain you, and make a clumsy escape."
-            p.health = 0.1
+
         Else
             ln1 = "As you collapse, you see the thrall pull a small metal collar out of their bag.  Lacking the strength to resist, you are powerless as they secure it firmly around your neck, all the while murmuring whispers of the joys of submission into your ear.  Once they have the collar fitted properly, they place a small glowing gem into a slot on the collar, igniting a small array of runes.  Your mind goes blank in an instant, and while at first an ammnesia-fueled panic sets in it is quickly replaced by a booming disembodied voice."
             p.inv.add(69, 1)
@@ -35,7 +35,7 @@
         Dim out As String = ""
         If p.pClass.name.Equals("Thrall") Then
             out = "Despite your fatigue, you are able to roll out of the way of the mage's attempt to restrain you, and make a clumsy escape."
-            p.health = 0.1
+
         Else
             out = """Wonderful!"", your opponent exclaims as you collapse, ""You'll make a perfect thrall!""" & vbCrLf & _
                   "𝘛𝘩𝘳𝘢𝘭𝘭!? you think moments before a small metal collar finds its way around your neck and a network of runes inscribed on it begin glowing with your new master's magic.  𝘞𝘢𝘪𝘵 ... 𝘕𝘦𝘸 𝘔𝘈𝘚𝘛𝘌𝘙?!  You don't have a momment to rest before your mind is filled with a booming voice." & vbCrLf & _
@@ -57,13 +57,13 @@
         Dim out As String = "As the " & p.currTarget.name & " closes in on you, you push yourself off the ground, sidestep it, and make a hasty retreat." & vbCrLf & " " & vbCrLf & "[Insert a TF here (eventually)]"
         p.currTarget.despawn("p-death")
         Game.pushLblEvent(out)
-        p.health = 0.1
+
     End Sub
     Shared Sub spiderDeath()
         Dim out As String = "As the " & p.currTarget.name & " closes in on you, you push yourself off the ground, sidestep it, and make a hasty retreat." & vbCrLf & " " & vbCrLf & "[Insert a TF here (eventually)]"
         p.currTarget.despawn("p-death")
         Game.pushLblEvent(out)
-        p.health = 0.1
+
     End Sub
     Shared Sub mimicDeath()
         p.currTarget.despawn("p-death")
@@ -73,7 +73,7 @@
             p.lust += 50
             p.createP()
             Game.pushLblEvent(out)
-            p.health = 0.1
+
             Exit Sub
         End If
         out += "  As you black out, you can see the mimic working its way into your armor.  As the darkness takes you, so does the orgasmic bliss of the mimic's magic touch."
@@ -84,7 +84,7 @@
         p.perks(12) = True
         p.createP()
         Game.pushLblEvent(out)
-        p.health = 0.1
+
     End Sub
 
     '|BOSS / MINIBOSS DEATHS|
@@ -101,7 +101,7 @@
             posY = CInt(Int(Rnd() * Game.mBoardHeight))
         Loop
         p.pos = New Point(posX, posY)
-        p.health = 0.1
+
         p.update()
     End Sub
 

@@ -112,10 +112,6 @@
 
     Public Overrides Sub update()
         If isDead = True Then Exit Sub
-        If health <= 0 Then
-            Die()
-            Exit Sub
-        End If
         If firstTurn = True Then
             firstTurn = False
             Exit Sub
