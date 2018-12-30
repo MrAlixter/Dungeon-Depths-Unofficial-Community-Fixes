@@ -21,7 +21,7 @@
     End Sub
 
     Public Sub step1()
-        Dim p = Game.player
+        Dim p As player = game.player
         Dim out = ""
 
         'equip clothes
@@ -46,7 +46,7 @@
         Game.pushLblEvent(out, AddressOf step2)
     End Sub
     Public Sub step2()
-        Dim p = Game.player
+        Dim p As player = game.player
         Dim out = ""
 
         'equip clothes
@@ -70,11 +70,11 @@
         Dim revertText = Game.lblEvent.Text.Split(vbCrLf)(0)
         If Not revertText.Equals("") Then out = revertText & vbCrLf & vbCrLf & out
         Game.pushLblEvent(out)
-        Equipment.portraitUDate()
+        p.createP()
         stopTF()
     End Sub
     Public Sub step3()
-        Dim p = Game.player
+        Dim p As player = game.player
         Dim out = ""
 
         'equip clothes
@@ -111,7 +111,7 @@
     End Sub
 
     Public Overrides Function getNextStep(stage As Integer) As Action
-        Dim p = Game.player
+        Dim p As player = game.player
         Select Case stage
             Case 0
                 Return AddressOf step1

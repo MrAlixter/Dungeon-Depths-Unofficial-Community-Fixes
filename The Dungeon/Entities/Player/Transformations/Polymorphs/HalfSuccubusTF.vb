@@ -16,7 +16,7 @@
     End Sub
 
     Public Sub step1()
-        Dim p = Game.player
+        Dim p As player = game.player
         Dim out = ""
 
         'unequips
@@ -25,9 +25,10 @@
         Equipment.accChange("Nothing")
 
         'succubus transformation
-        If p.sex = "Male" Then
+        If p.sex = "Male" Or Not p.sexBool Then
             p.sexBool = True
             p.MtF()
+            p.breastSize = Int(Rnd() * 3) + 1
             out += " Your body becomes daintier, and you are soon fully female."
         End If
         p.iArrInd(1) = New Tuple(Of Integer, Boolean)(9, True)
@@ -50,7 +51,7 @@
     End Sub
 
     Public Overrides Function getNextStep(stage As Integer) As Action
-        Dim p = Game.player
+        Dim p As player = game.player
         Select Case stage
             Case 0
                 Return AddressOf step1

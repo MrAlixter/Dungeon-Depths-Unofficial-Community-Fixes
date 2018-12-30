@@ -12,13 +12,13 @@
         Dim d32 = Int(Rnd() * 6)
         If d31 = d32 And d31 = 3 Then
             'critical hit
-            MyBase.getTarget.takeDMG(1.75 * (dmg + d31 + d32))
+            MyBase.getTarget.takeDMG(1.75 * (dmg + d31 + d32), MyBase.getCaster)
             Game.lstLog.Items.Add(CStr("Critical hit! You hit the " & MyBase.getTarget.name & " for " & 1.75 * (dmg + d31 + d32) & " damage!"))
             Game.pushLblCombatEvent(CStr("Critical hit! You hit the " & MyBase.getTarget.name & " for " & 1.75 * (dmg + d31 + d32) & " damage!"))
             Game.lstLog.TopIndex = Game.lstLog.Items.Count - 1
         Else
             'non critical hit
-            MyBase.getTarget.takeDMG(dmg + d31 + d32)
+            MyBase.getTarget.takeDMG(dmg + d31 + d32, MyBase.getCaster)
             Game.lstLog.Items.Add(CStr("You hit the " & MyBase.getTarget.name & " for " & dmg + d31 + d32 & " damage!"))
             Game.pushLblCombatEvent(CStr("You hit the " & MyBase.getTarget.name & " for " & dmg + d31 + d32 & " damage!"))
             Game.lstLog.TopIndex = Game.lstLog.Items.Count - 1

@@ -18,15 +18,15 @@
         count -= 1
     End Sub
 
-    Overrides Function attack(ByRef p As Player, ByRef m As Monster) As Integer
+    Overrides Function attack(ByRef p As Player, ByRef m As Entity) As Integer
         Dim dmg As Integer = 4 * Int(Rnd() * 3 + 1)
         If dmg <= 5 Then
             Return -1
         End If
-        If Int(Rnd() * 3) = 0 Then
+        If Int(Rnd() * 3) = 0 Or Not (m.GetType() Is GetType(NPC) Or m.GetType.IsSubclassOf(GetType(NPC))) Then
             Game.player.toStatue(Color.Goldenrod, "midas")
         Else
-            m.toGold()
+            CType(m, NPC).toGold()
         End If
         Return 0
     End Function

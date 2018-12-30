@@ -5,13 +5,13 @@
         MyBase.New(-1)
         Select Case mIndex
             Case Else
-                name = "3Rr0rBaU5"
+                name = "A Boss"
                 health = 60
                 maxHealth = 60
                 attack = 1
                 defence = 1
                 speed = 1
-                inventory = {1}
+                inv.add(1, 1)
         End Select
         pos = Game.player.pos
     End Sub

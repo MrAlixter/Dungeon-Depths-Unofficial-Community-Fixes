@@ -44,7 +44,7 @@
     Shared Sub habs(ByRef p As Player, ByRef m As Monster)
         Dim dmg As Integer = p.attack * 0.75
         Dim rcv As Integer = dmg * 2
-        m.takeDMG(dmg)
+        m.takeDMG(dmg, p)
         p.health += rcv
         If p.health * p.getmaxHealth > p.maxHealth + p.hBuff Then p.health = 1
         Game.lstLog.Items.Add("Absorbtion!")

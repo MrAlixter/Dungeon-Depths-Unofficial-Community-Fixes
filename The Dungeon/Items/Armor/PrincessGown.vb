@@ -2,8 +2,8 @@
     Inherits Armor
     Sub New()
         MyBase.setName("Regal_Gown")
-        MyBase.setDesc("DO NOT SEE THIS EVER")
-        id = Nothing
+        MyBase.setDesc("The frilly ballgown of a bonafide princess." & vbCrLf & "+2 MaxMana")
+        id = 75
         tier = Nothing
         MyBase.setUsable(False)
         MyBase.mBoost = 2

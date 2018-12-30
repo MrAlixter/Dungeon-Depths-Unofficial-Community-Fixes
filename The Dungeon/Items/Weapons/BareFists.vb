@@ -18,14 +18,13 @@
         Game.lstLog.TopIndex = Game.lstLog.Items.Count - 1
         count -= 1
     End Sub
-    Overrides Function attack(ByRef p As Player, ByRef m As Monster) As Integer
+    Overrides Function attack(ByRef p As Player, ByRef m As Entity) As Integer
         Dim dmg As Integer = Int(Rnd() * 3 + 1) + Int(Rnd() * 3 + 1) + Int(Rnd() * 3 + 1) + Int(Rnd() * 3 + 1)
         If dmg <= 5 Then
             Return -1
         End If
-        dmg += p.getAttack
-        dmg -= ((m.defence / 100) * dmg)
-        If dmg < 0 Then dmg = 0
+        dmg += p.getATK
+        dmg = Player.calcDamage(dmg, m.defence)
         Return dmg
     End Function
 End Class

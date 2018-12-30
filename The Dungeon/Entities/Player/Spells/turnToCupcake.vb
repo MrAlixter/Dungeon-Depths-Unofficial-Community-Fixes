@@ -7,8 +7,8 @@
         MyBase.setcost(9)
     End Sub
     Public Overrides Sub effect()
-        MyBase.getCaster.inventory.Item(35).addOne()
-        MyBase.getCaster.invNeedsUDate = True
+        MyBase.getCaster.inv.add(35, 1)
+        MyBase.getCaster.inv.invNeedsUDate = True
         MyBase.getCaster.UIupdate()
         MyBase.getTarget.despawn("cupcake")
         Game.lstLog.Items.Add(CStr("Your spell hits the " & MyBase.getTarget.name & ", turning " & MyBase.getTarget.rPronoun & " into a sword!"))

@@ -16,19 +16,20 @@
     End Sub
 
     Public Sub step1()
-        Randomize()
 
         'assign a pointer to the player character
-        Dim p = Game.player
+        Dim p As player = game.player
 
         'assign a random starter class
         Dim classes = {"Warrior", "Mage", "Paladin", "Warrior", "Mage", "Bimbo"}
         p.pClass = p.classes(classes(Int(Rnd() * classes.Length)))
 
         'assign a random sex
-        If Int(Rnd() * 2) = 0 Or p.pClass.Equals("Bimbo") Then
+        Randomize()
+        Dim r = Int(Rnd() * 2)
+        If r = 0 Or p.pClass.Equals("Bimbo") Then
             p.sex = "Female"
-            p.sexBool = True
+            p.sexBool = p.sexbool
             p.breastSize = Int(Rnd() * 3) + 1
         Else
             p.sex = "Male"
@@ -41,10 +42,10 @@
         p.maxHealth = 70 + Int(Rnd() * 50)
         p.mana = Int(Rnd() * 7)
         p.maxMana = CInt(p.mana.ToString)
-        p.attack = 5 + Int(Rnd() * 7)
-        p.defence = 5 + Int(Rnd() * 7)
+        p.attack = 10 + Int(Rnd() * 7)
+        p.defence = 7 + Int(Rnd() * 7)
         p.will = 5 + Int(Rnd() * 7)
-        p.speed = 5 + Int(Rnd() * 7)
+        p.speed = 9 + Int(Rnd() * 7)
         p.gold = 25 + Int(Rnd() * 200)
         p.lust = 0
         p.hunger = 0
@@ -74,29 +75,29 @@
         End Select
 
         'set the rest of the portrait randomly
-        Dim r As Integer = Int(Rnd() * 5)
-        p.iArrInd(1) = New Tuple(Of Integer, Boolean)(r, True)
-        p.iArrInd(2) = New Tuple(Of Integer, Boolean)(0, True)
-        p.iArrInd(4) = New Tuple(Of Integer, Boolean)(0, True)
-        p.iArrInd(5) = New Tuple(Of Integer, Boolean)(r, True)
         r = Int(Rnd() * 5)
-        p.iArrInd(3) = New Tuple(Of Integer, Boolean)(r, True)
+        p.iArrInd(1) = New Tuple(Of Integer, Boolean)(r, p.sexBool)
+        p.iArrInd(2) = New Tuple(Of Integer, Boolean)(0, p.sexbool)
+        p.iArrInd(4) = New Tuple(Of Integer, Boolean)(0, p.sexbool)
+        p.iArrInd(5) = New Tuple(Of Integer, Boolean)(r, p.sexbool)
+        r = Int(Rnd() * 5)
+        p.iArrInd(3) = New Tuple(Of Integer, Boolean)(r, p.sexbool)
         r = Int(Rnd() * 4)
-        p.iArrInd(6) = New Tuple(Of Integer, Boolean)(r, True)
-        p.iArrInd(7) = New Tuple(Of Integer, Boolean)(0, True)
+        p.iArrInd(6) = New Tuple(Of Integer, Boolean)(r, p.sexbool)
+        p.iArrInd(7) = New Tuple(Of Integer, Boolean)(0, p.sexbool)
         r = Int(Rnd() * 3)
         If r = 1 Then r = 4
-        p.iArrInd(8) = New Tuple(Of Integer, Boolean)(r, True)
+        p.iArrInd(8) = New Tuple(Of Integer, Boolean)(r, p.sexbool)
         r = Int(Rnd() * 3)
-        p.iArrInd(9) = New Tuple(Of Integer, Boolean)(r, True)
-        p.iArrInd(10) = New Tuple(Of Integer, Boolean)(0, True)
-        p.iArrInd(11) = New Tuple(Of Integer, Boolean)(0, True)
-        p.iArrInd(12) = New Tuple(Of Integer, Boolean)(0 + (2 * Int(Rnd() * 3)), True)
-        p.iArrInd(13) = New Tuple(Of Integer, Boolean)(0, True)
-        p.iArrInd(14) = New Tuple(Of Integer, Boolean)(0, True)
+        p.iArrInd(9) = New Tuple(Of Integer, Boolean)(r, p.sexbool)
+        p.iArrInd(10) = New Tuple(Of Integer, Boolean)(0, p.sexbool)
+        p.iArrInd(11) = New Tuple(Of Integer, Boolean)(0, p.sexbool)
+        p.iArrInd(12) = New Tuple(Of Integer, Boolean)(0 + (2 * Int(Rnd() * 3)), p.sexbool)
+        p.iArrInd(13) = New Tuple(Of Integer, Boolean)(0, p.sexbool)
+        p.iArrInd(14) = New Tuple(Of Integer, Boolean)(0, p.sexbool)
         r = Int(Rnd() * 4) + 1
-        p.iArrInd(15) = New Tuple(Of Integer, Boolean)(r, True)
-        p.iArrInd(16) = New Tuple(Of Integer, Boolean)(0, True)
+        p.iArrInd(15) = New Tuple(Of Integer, Boolean)(r, p.sexbool)
+        p.iArrInd(16) = New Tuple(Of Integer, Boolean)(0, p.sexbool)
 
         'clear all player associated lists
         Game.Potions.Clear()
@@ -104,14 +105,25 @@
         Game.loadPotionList()
 
         'assign random equipment
-        Dim armor = New Integer() {5, 7, 12, 16, 17, 18, 19, 20, 38, 39, 46, 47, 54, 54}
+        Dim armor = New Integer() {5, 5, 5, 7, 12, 16, 17, 17, 17, 18, 19, 19, 19, 20, 38, 38, 39, 46, 47, 64, 71}
         Dim armorIndex = armor(Int(Rnd() * (armor.Length)))
-        Dim weapon = New Integer() {6, 9, 21, 22}
+        Dim weapon = New Integer() {6, 6, 9, 9, 21, 21, 22, 22, 23, 63}
         Dim weaponIndex = weapon(Int(Rnd() * (weapon.Length)))
-        p.inventory(armorIndex).addOne()
-        p.inventory(weaponIndex).addOne()
-        p.equippedArmor = p.inventory(armorIndex)
-        p.equippedWeapon = p.inventory(weaponIndex)
+        p.inv.add(armorIndex, 1)
+        p.inv.add(weaponIndex, 1)
+        p.equippedArmor = p.inv.item(armorIndex)
+        p.equippedWeapon = p.inv.item(weaponIndex)
+
+        For i = 0 To 4
+            Dim invInd As Integer = 8
+            While invInd = 8 Or invInd = 10 Or invInd = 24 Or invInd = 53
+                invInd = Int(Rnd() * (Game.player.inv.upperBound + 1))
+            End While
+            p.inv.add(invInd, CInt(Int(Rnd() * 2) + 1))
+        Next
+
+        p.inv.add(2, 1)
+        p.inv.add(13, 1)
 
         'set class stats
         If p.pClass.Equals("Warrior") Or p.pClass.Equals("Paladin") Then
@@ -123,27 +135,27 @@
             p.defence -= Int(Rnd() * 5)
             p.speed += Int(Rnd() * 5)
             p.mana += 8 + Int(Rnd() * 5)
-            If Int(Rnd() * 10) = 7 Then
-                p.inventory(65).add(1)
-            Else
-                p.inventory(4).add(1)
-            End If
+            p.inv.add(4, 1)
         ElseIf p.pClass.Equals("Bimbo") Then
             p.changeHairColor(BimboTF.bimboyellow)
             p.will = 1
             p.perks("slutcurse") = 1
-            If Int(Rnd() * 10) = 7 Then p.inventory(45).add(1)
+            If Int(Rnd() * 10) = 7 Then p.inv.add(4, 1)
         End If
 
         'set other player stuff
         p.TextColor = Color.White
         If Game.floor < 6 Then p.pImage = Game.picPlayer.BackgroundImage Else p.pImage = Game.picPlayerf.BackgroundImage
         p.bsizeroute()
+
+        p.inv.invNeedsUDate = True
+        p.UIupdate()
+
         Dim si As Integer = p.sState.iArrInd(3).Item1
         p.currState.save(p)
         p.pState.save(p)
         p.sState.save(p)
-        p.sState.iArrInd(3) = New Tuple(Of Integer, Boolean)(si, True)
+        p.sState.iArrInd(3) = New Tuple(Of Integer, Boolean)(si, p.sexbool)
     End Sub
     Shared Sub floor4FirstBossEncounter()
         Game.pushLblEvent("Turning around, you are about to move on when a " & _
@@ -178,11 +190,11 @@
                           " every inch of it is flushing with arousal.", AddressOf floor4FirstBossEncounterP2)
     End Sub
     Shared Sub floor4FirstBossEncounterP2()
-        Dim p = Game.player
+        Dim p As player = game.player
         Game.preBSBody = New State(p)
         Game.preBSInventory = New ArrayList()
-        For Each i In p.inventory
-            Game.preBSInventory.Add(i.count)
+        For i = 0 To p.inv.upperBound
+            Game.preBSInventory.Add(p.inv.getCountAt(i))
         Next
         p.ongoingTFs.Add(New RandoTF())
         p.update()
@@ -218,26 +230,26 @@
                           "maybe if you can find her again you can straighten this out.")
     End Sub
     Shared Sub floor4revert()
-        Dim p = Game.player
+        Dim p As player = game.player
         Game.preBSStartState.load(p)
         p.sState.save(p)
         Game.preBSBody.load(p)
         p.pState.save(p)
         p.revertToPState()
         For i = 0 To Game.preBSInventory.Count - 1
-            p.inventory(i).add(Game.preBSInventory(i))
+            p.inv.add(i, Game.preBSInventory(i))
         Next
-        p.canMoveFlag = True
+        p.canMoveFlag = p.sexbool
         Game.lblEvent.Visible = False
         Game.player = p
         p.UIupdate()
     End Sub
     Shared Sub floor4keep()
-        Dim p = Game.player
+        Dim p As player = game.player
         For i = 0 To Game.preBSInventory.Count - 1
-            p.inventory(i).add(Game.preBSInventory(i))
+            p.inv.add(i, Game.preBSInventory(i))
         Next
-        p.canMoveFlag = True
+        p.canMoveFlag = p.sexbool
         Game.lblEvent.Visible = False
         Game.player = p
         p.UIupdate()
@@ -248,7 +260,7 @@
     End Sub
 
     Public Overrides Function getNextStep(stage As Integer) As Action
-        Dim p = Game.player
+        Dim p As player = game.player
         Select Case stage
             Case 0
                 Return AddressOf step1

@@ -14,20 +14,20 @@
     End Sub
 
     Sub step1()
-        Dim p = Game.player
+        Dim p As player = game.player
         p.iArrInd(6) = New Tuple(Of Integer, Boolean)(1, p.sexBool)
         Game.pushLblCombatEvent("Your ears twitch, becoming feline while Marissa gives you a malicious grin.  ""I'm sure you tell where this is going,"" she giggles." & vbCrLf & "  You now have cat ears!")
         p.lust += 5
         p.will -= 1
     End Sub
     Sub step2()
-        Dim p = Game.player
+        Dim p As player = game.player
         p.iArrInd(4) = New Tuple(Of Integer, Boolean)(0, True)
         Game.pushLblCombatEvent("Your facial structure softens, and now you have a feminine face!")
         p.lust += 5
     End Sub
     Sub step3()
-        Dim p = Game.player
+        Dim p As player = game.player
         p.iArrInd(1) = New Tuple(Of Integer, Boolean)(12, True)
         p.iArrInd(5) = New Tuple(Of Integer, Boolean)(17, True)
         p.iArrInd(15) = New Tuple(Of Integer, Boolean)(1, True)
@@ -35,14 +35,14 @@
         Game.pushLblCombatEvent("Your hair grows down to your ass, straightening out as it lengthens.  You now have long, straight hair!")
     End Sub
     Sub step4()
-        Dim p = Game.player
+        Dim p As player = game.player
         p.iArrInd(7) = New Tuple(Of Integer, Boolean)(0, True)
         p.iArrInd(9) = New Tuple(Of Integer, Boolean)(13, True)
         Game.pushLblCombatEvent("You wince and close your eye as a burning sensation flows through them. You now have kitten eyes!")
         p.lust += 5
     End Sub
     Sub step5()
-        Dim p = Game.player
+        Dim p As player = game.player
         If Not p.sexBool Then
             p.MtF()
             p.be()
@@ -55,7 +55,7 @@
         p.lust += 5
     End Sub
     Sub step6()
-        Dim p = Game.player
+        Dim p As player = game.player
 
         If p.pClass.name.Equals("Magic Girl") Then
             step6alt()
@@ -70,7 +70,7 @@
         Game.pushLblCombatEvent("Your tits expand, your clothes shift, and you feel your will grow weaker. You are now permenantly a cat girl!  Soon you will be Marissa's pet! ")
     End Sub
     Sub step6alt()
-        Dim p = Game.player
+        Dim p As player = game.player
         Equipment.weaponChange("Fists")
         Equipment.clothesChange("Cat_Lingerie")
         p.be()
@@ -82,7 +82,7 @@
         Game.pushLblCombatEvent("Your hair grows down to your ass, straightening out as it lengthens.  You now have long, straight hair!  Your tits expand, your clothes shift, and you feel your will grow weaker. You are now a cat girl!  Soon you will be Marissa's pet! ")
     End Sub
     Sub step7()
-        Dim p = Game.player
+        Dim p As player = game.player
         If p.will < 5 Then
             If p.sex = "Male" Then
                 p.MtF()
@@ -103,9 +103,8 @@
 
         Equipment.clothesChange("Cat_Lingerie")
 
-        Game.pushLblCombatEvent("As the last of your resistance drains away, all you can find yourself doing is focusing on your new mistress's voice as she orders you down onto all fours.  You happily oblige, purring softly, and she giggles.  ""Come on kitty, lets go!"" she orders and the two of you, with her leading, wander off into the darkness.  GAME OVER!")
-        'MsgBox(Game.lblCombatEvents.Text)
-        p.Die()
+        Game.fromCombat()
+        Game.pushLblEvent("As the last of your resistance drains away, all you can find yourself doing is focusing on your new mistress's voice as she orders you down onto all fours.  You happily oblige, purring softly, and she giggles.  ""Come on kitty, lets go!"" she orders and the two of you, with her leading, wander off into the darkness.  GAME OVER!", AddressOf p.die)
         p.perks("nekocurse") = -1
     End Sub
 
@@ -119,11 +118,7 @@
     End Sub
 
     Public Overrides Function getNextStep(stage As Integer) As Action
-        If Game.player.currTarget Is Nothing Then
-            Return AddressOf stopTF
-        ElseIf Game.player.currTarget.dead Then
-            Return AddressOf stopTF
-        ElseIf Game.player.perks("nekocurse") = -1 Then
+        If Game.player.perks("nekocurse") = -1 Then
             Return AddressOf stopTF
         ElseIf Game.player.pClass.name.Equals("Magic Girl") And stage < 6 Then
             Return AddressOf resist

@@ -4,7 +4,7 @@
     Dim onOpen As Action
 
     Sub New(ByVal p As Point, ByVal contentID As Integer)
-        MyBase.New(Game.player.inventory.Count - 1)
+        MyBase.New()
         pos = p
         setInv(contentID)
         onOpen = getOnOpen(contentID)
@@ -31,7 +31,7 @@
     End Sub
 
     Sub floor4StartChest()
-        Game.player.inventory(53).add(1)
+        Game.player.inv.add(53, 1)
         Game.beatboss(4) = False
         Game.preBSBody = Nothing
         Game.floorboss(4) = "Ooze Empress"

@@ -46,7 +46,7 @@
             Case True
                 transform(Game.player, cboxPMorph.Text)
             Case False
-                If target.GetType() Is GetType(NPC) Then transformN(target) Else transform(target, cboxPMorph.Text)
+                If target.GetType() Is GetType(Shopkeep) Then transformN(target) Else transform(target, cboxPMorph.Text)
         End Select
         Me.Close()
     End Sub
@@ -165,7 +165,7 @@
         End If
     End Sub
     'npc transform methodF:\dungeon_depths\The Dungeon\img\
-    Sub transformN(ByRef t As NPC)
+    Sub transformN(ByRef t As Shopkeep)
         Dim title As String = cboxPMorph.Text
         If title = "Sheep" Then
             t.health = 50

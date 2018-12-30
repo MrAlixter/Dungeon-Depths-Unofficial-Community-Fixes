@@ -19,7 +19,7 @@
         count -= 1
     End Sub
 
-    Overrides Function attack(ByRef p As Player, ByRef m As Monster) As Integer
+    Overrides Function attack(ByRef p As Player, ByRef m As Entity) As Integer
         Dim dmg As Integer = Int(Rnd() * 3 + 1) + Int(Rnd() * 3 + 1) + Int(Rnd() * 3 + 1) + Int(Rnd() * 3 + 1)
         If dmg <= 5 Then
             Return -1
@@ -27,6 +27,6 @@
             Return -2
         End If
         dmg += (p.attack) + (Me.aBoost)
-        Return dmg - ((m.defence / 100) * dmg)
+        Return Player.calcDamage(dmg, m.defence)
     End Function
 End Class

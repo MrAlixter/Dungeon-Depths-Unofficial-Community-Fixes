@@ -16,15 +16,22 @@
     Overrides Sub use()
         If Me.getUsable() = False Then Exit Sub
         If MessageBox.Show("This will rewrite your current player permenantly (Restore potions will restore to the fusion). Continue?", "Fusion", MessageBoxButtons.YesNo) = Windows.Forms.DialogResult.Yes Then
-            Dim i As Integer = InputBox("Which save slot?   1 2 3 4" & vbCrLf & _
-                                        "                              5 6 7 8")
+            Dim i As Integer
+            Try
+                i = InputBox("Which save slot?   1 2 3 4" & vbCrLf & _
+                                            "                              5 6 7 8")
+            Catch e As Exception
+                Game.pushLblEvent("The fusion crystal does not react.  It seems that an improper slot was selected.")
+                count += 1
+                Exit Sub
+            End Try
             If Not System.IO.File.Exists("s" & i & ".ave") Then
                 Game.pushLblEvent("Despite looking for someone to fuse with, you can't find anyone at that location")
                 Exit Sub
             End If
             Dim save = Game.getPlayerFromFile("s" & i & ".ave")
             Dim p2 As Player = save.Item1
-            If save.Item2 <> Game.version Or p2.perks("polymorphed") > -1 Or Not transformation.canbeTFed(Game.player) Xor p2.pClass.name.Equals("Magic Girl") Then
+            If save.Item2 <> Game.version Or p2.perks("polymorphed") > -1 Or Not Transformation.canBeTFed(Game.player) Xor p2.pClass.name.Equals("Magic Girl") Then
                 Game.pushLblEvent("After talking it over, " & Game.player.name & " and " & p2.name & " decide that they are incompatable, and not to fuse.")
                 Exit Sub
             End If
@@ -45,7 +52,7 @@
 
             Game.player = fuPlay
             fuPlay.createP()
-            fuPlay.invNeedsUDate = True
+            fuPlay.inv.invNeedsUDate = True
             fuPlay.UIupdate()
             fuPlay.sState.save(fuPlay)
             Dim f3 As New Equipment
@@ -152,16 +159,14 @@
 
         player.gold = p1.gold + p2.gold
 
-        player.inventorynames = p1.inventorynames.Clone
-
-        For i = 0 To player.inventory.Count - 1
-            player.inventory(i).setname(p1.inventory(i).getname)
-            player.inventory(i).add(p1.inventory(i).count + p2.inventory(i).count)
+        For i = 0 To player.inv.upperBound
+            player.inv.item(i).setName(p1.inv.item(i).getName)
+            player.inv.item(i).add(p1.inv.item(i).count + p2.inv.item(i).count)
         Next
 
-        player.inventory(0).add(-1)
-        player.inventory(2).add(-1)
-        player.inventory(58).add(-1)
+        player.inv.add(0, -1)
+        player.inv.add(2, -1)
+        player.inv.add(58, -1)
 
         player.iArr = p1.iArr.Clone
         player.iArrInd = p1.iArrInd.Clone
@@ -202,7 +207,7 @@
         player.equippedWeapon = New BareFists
         player.equippedArmor = New Naked
 
-        player.invNeedsUDate = True
+        player.inv.invNeedsUDate = True
         player.UIupdate()
 
         Return player

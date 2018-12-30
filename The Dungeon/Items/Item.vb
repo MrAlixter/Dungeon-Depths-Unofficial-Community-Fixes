@@ -80,4 +80,5 @@
     Function getCount()
         Return count
     End Function
+
 End Class

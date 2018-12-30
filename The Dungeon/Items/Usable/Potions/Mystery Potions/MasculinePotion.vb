@@ -9,7 +9,6 @@
     End Sub
     Public Overrides Sub effect()
         Dim p As Player = Game.player
-        p.inventorynames(59) = "Masculine_Potion"
         If p.pClass.name = "Magic Girl" Then
             Game.pushLblEvent("Your form prevents you from being altered!")
             Exit Sub
@@ -18,7 +17,7 @@
             p.FtM()
             Game.pushLblEvent("You are now a man!")
             Equipment.antiClothingCurse()
-            Equipment.portraitUDate()
+            p.createP()
         ElseIf p.perks("slutcurse") > -1 Or p.iArrInd(1).Item2 = True Then
             p.iArrInd(1) = New Tuple(Of Integer, Boolean)(p.sState.iArrInd(1).Item1, False)
             p.iArrInd(2) = New Tuple(Of Integer, Boolean)(0, True)
@@ -30,13 +29,13 @@
             p.perks("slutcurse") = -1
             Equipment.antiClothingCurse()
             Game.pushLblEvent("You are now a man!")
-            Equipment.portraitUDate()
+            p.createP()
         Else
             Game.pushLblEvent("Nothing happened!")
         End If
         If transformation.canbeTFed(Game.player) Then
             Game.player.pState.save(Game.player)
         End If
-        Equipment.portraitUDate()
+        p.createP()
     End Sub
 End Class

@@ -19,7 +19,7 @@
         Randomize()
 
         'assign a pointer to the player character
-        Dim p = Game.player
+        Dim p As player = game.player
 
         'assign a random starter class
         Dim classes = {"Warrior", "Mage", "Paladin", "Warrior", "Mage", "Bimbo"}
@@ -96,10 +96,10 @@
         Dim armorIndex = armor(Int(Rnd() * (armor.Length)))
         Dim weapon = New Integer() {6, 9, 21, 22}
         Dim weaponIndex = weapon(Int(Rnd() * (weapon.Length)))
-        p.inventory(armorIndex).addOne()
-        p.inventory(weaponIndex).addOne()
-        p.equippedArmor = p.inventory(armorIndex)
-        p.equippedWeapon = p.inventory(weaponIndex)
+        p.inv.add(armorIndex, 1)
+        p.inv.add(weaponIndex, 1)
+        p.equippedArmor = CType(p.inv.item(armorIndex), Armor)
+        p.equippedWeapon = CType(p.inv.item(weaponIndex), Weapon)
 
         'set other player stuff
         p.TextColor = Color.FromArgb(255, 2, 249, 200)
@@ -117,7 +117,7 @@
     End Sub
 
     Public Overrides Function getNextStep(stage As Integer) As Action
-        Dim p = Game.player
+        Dim p As player = game.player
         Select Case stage
             Case 0
                 Return AddressOf step1

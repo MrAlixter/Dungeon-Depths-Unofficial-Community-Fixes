@@ -1,7 +1,7 @@
 ﻿Imports System.Text.RegularExpressions
 
 Public Class ShopV2
-    Dim sk As NPC = Game.currNPC
+    Dim sk As Shopkeep = Game.currNPC
     Dim p As Player = Game.player
     Dim skInventory As List(Of String) = Nothing
     Dim pInventory As List(Of String) = Nothing
@@ -50,23 +50,25 @@ Public Class ShopV2
         boxInventory.Items.Clear()
         skInventory.Clear()
         boxShop.Items.Clear()
-        For i = 0 To p.inventory.Count - 1
-            If p.inventory(i).count > 0 Then
-                If p.inventory(i).getName().Equals(p.equippedArmor.getName()) Or p.inventory(i).getName().Equals(p.equippedWeapon.getName()) Or p.inventory(i).getName().Equals(p.equippedAcce.getName()) Then
-                    If p.inventory(i).count > 1 Then
-                        boxInventory.Items.Add(lineup(p.inventory(i).getName(), Int(p.inventory(i).value / 2), p.inventory(i).count - 1))
-                        pInventory.Add(p.inventory(i).getName())
+        For i = 0 To p.inv.upperBound
+            Dim p_inv_i As Item = p.inv.item(i)
+            If p.inv.getCountAt(i) > 0 Then
+                If p_inv_i.getName().Equals(p.equippedArmor.getName()) Or p.inv.item(i).getName().Equals(p.equippedWeapon.getName()) Or p_inv_i.getName().Equals(p.equippedAcce.getName()) Then
+                    If p_inv_i.count > 1 Then
+                        boxInventory.Items.Add(lineup(p_inv_i.getName(), Int(p_inv_i.value / 2), p_inv_i.count - 1))
+                        pInventory.Add(p_inv_i.getName())
                     End If
                 Else
-                    boxInventory.Items.Add(lineup(p.inventory(i).getName(), Int(p.inventory(i).value / 2), p.inventory(i).count))
-                    pInventory.Add(p.inventory(i).getName())
+                    boxInventory.Items.Add(lineup(p_inv_i.getName(), Int(p_inv_i.value / 2), p_inv_i.count))
+                    pInventory.Add(p_inv_i.getName())
                 End If
             End If
         Next
-        For i = 0 To sk.inventory.Count - 1
-            If sk.inventory(i) > 0 Then
-                boxShop.Items.Add(lineup(p.inventory(i).getName(), p.inventory(i).value))
-                skInventory.Add(p.inventory(i).getName())
+        For i = 0 To sk.inv.upperBound
+            If sk.inv.getCountAt(i) > 0 Then
+                Dim sk_inv_i As Item = sk.inv.item(i)
+                boxShop.Items.Add(lineup(sk_inv_i.getName(), sk_inv_i.value))
+                skInventory.Add(sk_inv_i.getName())
             End If
         Next
         inventoryFilterUpdate()
@@ -85,24 +87,24 @@ Public Class ShopV2
                 name = name.Substring(0, name.Length - 1)
             End If
             Dim ind As Integer
-            For j As Integer = 0 To p.inventory.Count - 1
-                If CType(p.inventory(j), Item).getName().Contains(name) Then
+            For j As Integer = 0 To p.inv.upperBound
+                If p.inv.item(j).getName().Contains(name) Then
                     ind = j
                     indexes.Add(ind)
                     Exit For
                 End If
             Next
-            Dim item As Item = p.inventory(ind)
+            Dim item As Item = p.inv.item(ind)
             If item.count >= number.Value Then
                 cost += (item.value) / 2 * number.Value
             Else
-                cost += (CType(p.inventory(ind), Item).value) / 2 * item.count
+                cost += p.inv.item(ind).value / 2 * item.count
             End If
         Next
 
         If cost <= sk.gold Then
             For i As Integer = 0 To indexes.Count - 1
-                Dim item As Item = p.inventory(indexes(i))
+                Dim item As Item = p.inv.item(indexes(i))
                 If item.getName().Contains(p.equippedArmor.getName()) Or item.getName().Contains(p.equippedWeapon.getName()) Or item.getName().Contains(p.equippedAcce.getName()) Then
                     If item.count - number.Value >= 1 Then
                         item.count -= number.Value
@@ -126,7 +128,7 @@ Public Class ShopV2
 
         RefreshScreen()
 
-        Game.player.invNeedsUDate = True
+        Game.player.inv.invNeedsUDate = True
         Game.player.UIupdate()
     End Sub
 
@@ -142,20 +144,20 @@ Public Class ShopV2
                 name = name.Substring(0, name.Length - 1)
             End If
             Dim ind As Integer
-            For j As Integer = 0 To p.inventory.Count - 1
-                If CType(p.inventory(j), Item).getName().Contains(name) Then
+            For j As Integer = 0 To p.inv.upperBound
+                If p.inv.item(j).getName().Contains(name) Then
                     ind = j
                     indexes.Add(ind)
                     Exit For
                 End If
             Next
-            Dim item As Item = p.inventory(ind)
+            Dim item As Item = p.inv.item(ind)
             cost += (item.value) * number.Value
         Next
 
         If cost <= p.gold Then
             For i As Integer = 0 To indexes.Count - 1
-                p.inventory(indexes(i)).count += number.Value
+                p.inv.add(indexes(i), CInt(number.Value))
             Next
             p.gold -= cost
             sk.gold += cost
@@ -166,7 +168,7 @@ Public Class ShopV2
 
         RefreshScreen()
 
-        Game.player.invNeedsUDate = True
+        Game.player.inv.invNeedsUDate = True
         Game.player.UIupdate()
     End Sub
 
@@ -191,17 +193,17 @@ Public Class ShopV2
         For i As Integer = 0 To pInventory.Count - 1
             If pInventory(i).IndexOf(boxInventoryFilter.Text, 0, StringComparison.CurrentCultureIgnoreCase) > -1 Then
                 Dim ind As Integer
-                For ind = 0 To p.inventory.Count - 1
-                    If CType(p.inventory(ind), Item).getName() = pInventory(i) Then
+                For ind = 0 To p.inv.upperBound
+                    If p.inv.item(ind).getName() = pInventory(i) Then
                         Exit For
                     End If
                 Next
                 If pInventory(i).Equals(p.equippedArmor.getName()) Or pInventory(i).Equals(p.equippedWeapon.getName()) Then
-                    If p.inventory(ind).count > 1 Then
-                        boxInventory.Items.Add(lineup(p.inventory(ind).getName(), Int(p.inventory(ind).value / 2), p.inventory(ind).count - 1))
+                    If p.inv.item(ind).count > 1 Then
+                        boxInventory.Items.Add(lineup(p.inv.item(ind).getName(), Int(p.inv.item(ind).value / 2), p.inv.item(ind).count - 1))
                     End If
                 Else
-                    boxInventory.Items.Add(lineup(p.inventory(ind).getName(), Int(p.inventory(ind).value / 2), p.inventory(ind).count))
+                    boxInventory.Items.Add(lineup(p.inv.item(ind).getName(), Int(p.inv.item(ind).value / 2), p.inv.item(ind).count))
                 End If
             End If
         Next
@@ -211,13 +213,13 @@ Public Class ShopV2
         boxShop.Items.Clear()
         For i As Integer = 0 To skInventory.Count - 1
             Dim ind As Integer
-            For ind = 0 To p.inventory.Count - 1
-                If CType(p.inventory(ind), Item).getName() = skInventory(i) Then
+            For ind = 0 To p.inv.upperBound
+                If p.inv.item(ind).getName() = skInventory(i) Then
                     Exit For
                 End If
             Next
             If skInventory(i).IndexOf(boxShopFilter.Text, 0, StringComparison.CurrentCultureIgnoreCase) > -1 Then
-                boxShop.Items.Add(lineup(p.inventory(ind).getName(), p.inventory(ind).value))
+                boxShop.Items.Add(lineup(p.inv.item(ind).getName(), p.inv.item(ind).value))
             End If
         Next
     End Sub
@@ -252,9 +254,9 @@ Public Class ShopV2
                 name = name.Substring(0, name.Length - 1)
             End If
 
-            For i As Integer = 0 To p.inventory.Count - 1
-                If CType(p.inventory(i), Item).getName().Contains(name) Then
-                    lblFeedback.Text = p.inventory(i).getDescription()
+            For i As Integer = 0 To p.inv.upperBound
+                If p.inv.item(i).getName().Contains(name) Then
+                    lblFeedback.Text = p.inv.item(i).getDescription()
                     Exit For
                 End If
             Next

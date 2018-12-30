@@ -17,7 +17,7 @@
         MyBase.mInd = New Tuple(Of Integer, Boolean)(3, False)
     End Sub
     Overrides Sub onEquip()
-        Dim p = Game.player
+        Dim p As player = game.player
         p.perks("thrall") = 0
         p.ongoingTFs.Add(New ThrallTF(2, 10, 3.0, True))
 
@@ -33,10 +33,10 @@
 
         p.prefForm = New preferedForm()
 
-        Equipment.portraitUDate()
+        p.createP()
     End Sub
     Sub forceEquip()
-        Dim p = Game.player
+        Dim p As player = game.player
         p.perks("thrall") = 0
         p.ongoingTFs.Add(New ThrallTF(2, 10, 3.0, True))
 
@@ -58,10 +58,10 @@
 
         p.prefForm = New preferedForm()
 
-        Equipment.portraitUDate()
+        p.createP()
     End Sub
     Public Overrides Sub onUnequip()
-        Dim p = Game.player
+        Dim p As player = game.player
         For i = 0 To p.ongoingTFs.Count - 1
             If p.ongoingTFs(i).GetType() Is GetType(ThrallTF) Then
                 p.ongoingTFs(i).stopTF()
@@ -71,6 +71,7 @@
         p.pClass = Game.player.classes(formerClass)
         p.iArrInd(9) = formerEyeType
         p.prefForm = Nothing
+        p.forcedPath = Nothing
     End Sub
 
     Public Function getFT() As String

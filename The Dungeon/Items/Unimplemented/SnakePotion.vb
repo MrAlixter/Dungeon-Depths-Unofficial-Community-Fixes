@@ -9,7 +9,6 @@
     End Sub
     Public Overrides Sub effect()
         Dim p As Player = Game.player
-        p.inventorynames(26) = "Snake_Potion"
 
         Dim D2 As Integer = (Int(Rnd() * 2))
         Select Case D2

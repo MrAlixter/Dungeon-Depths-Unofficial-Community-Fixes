@@ -12,7 +12,7 @@
         p.target = MyBase.getTarget
         p.ShowDialog()
         p.Dispose()
-        If MyBase.getTarget.GetType() Is GetType(NPC) Then
+        If MyBase.getTarget.GetType() Is GetType(Shopkeep) Then
             MyBase.getTarget.update()
         End If
         Game.lstLog.Items.Add(CStr("You transform" & MyBase.getTarget.title & " " & MyBase.getTarget.name & "!"))

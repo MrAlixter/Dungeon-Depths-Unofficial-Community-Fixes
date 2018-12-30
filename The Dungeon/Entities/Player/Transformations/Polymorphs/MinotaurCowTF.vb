@@ -14,7 +14,7 @@
     End Sub
 
     Public Overrides Sub step1()
-        Dim p = Game.player
+        Dim p As player = game.player
         Dim out = ""
 
         'unequips
