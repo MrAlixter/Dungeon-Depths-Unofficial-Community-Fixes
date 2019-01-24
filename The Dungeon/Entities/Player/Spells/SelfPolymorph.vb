@@ -21,9 +21,9 @@
         Else
             delta = Game.player.pForm.name
         End If
-        Game.lstLog.Items.Add(CStr("You turn yourself into a " & delta & "!"))
+        Game.pushLstLog(CStr("You turn yourself into a " & delta & "!"))
         Game.pushLblCombatEvent(CStr("You turn yourself into a " & delta & "!"))
-        Game.lstLog.TopIndex = Game.lstLog.Items.Count - 1
+        
     End Sub
     Public Overrides Sub backfire()
         If MyBase.getTarget Is Nothing Then
@@ -40,8 +40,8 @@
                 n = "Dragon​"
         End Select
         Polymorph.transform(MyBase.getTarget, n)
-        Game.lstLog.Items.Add(CStr("You turn your opponent into a " & n & "!"))
+        Game.pushLstLog(CStr("You turn your opponent into a " & n & "!"))
         Game.pushLblCombatEvent(CStr("You turn your opponent into a " & n & "!"))
-        Game.lstLog.TopIndex = Game.lstLog.Items.Count - 1
+        
     End Sub
 End Class

@@ -60,12 +60,12 @@
             f3.Dispose()
             fuPlay.currState.save(fuPlay)
             fuPlay.pState.save(fuPlay)
-            Game.lstLog.TopIndex = Game.lstLog.Items.Count - 1
+            
         End If
     End Sub
     Overrides Sub discard()
-        Game.lstLog.Items.Add("You drop the " & getName())
-        Game.lstLog.TopIndex = Game.lstLog.Items.Count - 1
+        Game.pushLstLog("You drop the " & getName())
+        
         count -= 1
     End Sub
 

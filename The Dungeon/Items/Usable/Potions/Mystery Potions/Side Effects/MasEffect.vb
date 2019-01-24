@@ -1,14 +1,7 @@
-﻿Public Class MasculinePotion
-    Inherits MysteryPotion
-    Sub New()
-        MyBase.setRealName("Masculine_Potion")
-        MyBase.setDesc("A chancy looking potion")
-        id = 59
-        tier = 2
-        MyBase.value = 300
-    End Sub
-    Public Overrides Sub effect()
-        Dim p As Player = Game.player
+﻿Public Class MasEffect
+    Inherits PEffect
+
+    Public Overrides Sub apply(ByRef p As Player)
         If p.pClass.name = "Magic Girl" Then
             Game.pushLblEvent("Your form prevents you from being altered!")
             Exit Sub
@@ -33,8 +26,8 @@
         Else
             Game.pushLblEvent("Nothing happened!")
         End If
-        If transformation.canbeTFed(Game.player) Then
-            Game.player.pState.save(Game.player)
+        If Transformation.canBeTFed(p) Then
+            p.pState.save(p)
         End If
         p.createP()
     End Sub

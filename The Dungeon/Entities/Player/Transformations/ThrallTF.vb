@@ -68,8 +68,8 @@
         Dim m As Monster
         m = New Monster(9)
         Game.toCombat()
-        Game.lstLog.Items.Add((m.getName() & " attacks!"))
-        Game.lstLog.TopIndex = Game.lstLog.Items.Count - 1
+        Game.pushLstLog((m.getName() & " attacks!"))
+        
     End Sub
     Shared Sub fightSorc2()
         Dim p As player = game.player
@@ -78,8 +78,8 @@
         m = New Monster(8)
         Game.npcList.Add(m)
         Game.toCombat()
-        Game.lstLog.Items.Add((m.getName() & " attacks!"))
-        Game.lstLog.TopIndex = Game.lstLog.Items.Count - 1
+        Game.pushLstLog((m.getName() & " attacks!"))
+        
     End Sub
     Shared Sub acceptSorc()
         Dim p As player = game.player

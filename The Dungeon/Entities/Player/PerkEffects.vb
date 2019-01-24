@@ -6,7 +6,7 @@
             If p.hunger < 100 Then
                 p.perks("hunger") = -1
             Else
-                Game.lstLog.Items.Add("Your stomach aches... -5 health!")
+                Game.pushLstLog("Your stomach aches... -5 health!")
                 p.takeDMG(5, New Monster(10))
             End If
         End If
@@ -17,7 +17,7 @@
         Else
             If p.health < 1 And Game.turn Mod 4 = 0 Then
                 p.health += 25 / p.getmaxHealth()
-                Game.lstLog.Items.Add("Your gel body heals some of the damage done to it. +5 health")
+                Game.pushLstLog("Your gel body heals some of the damage done to it. +5 health")
                 If p.health > 1 Then p.health = 1
             End If
         End If
@@ -29,7 +29,7 @@
             If p.health < 1 And Game.turn Mod 7 = 0 Then
                 Dim h As Integer = Int(Rnd() * 15) + 1
                 p.health += h / p.getmaxHealth()
-                Game.lstLog.Items.Add("The gel portion of your body is able to heal some of your wounds! +" & h & " health")
+                Game.pushLstLog("The gel portion of your body is able to heal some of your wounds! +" & h & " health")
                 If p.health > 1 Then p.health = 1
             End If
         End If
@@ -39,7 +39,7 @@
             If Game.turn Mod 6 = 0 And p.lust < 100 Then
                 Dim l As Integer = Int(Rnd() * 15) + 10
                 p.lust += l
-                Game.lstLog.Items.Add("Your living armor raises your lust!")
+                Game.pushLstLog("Your living armor raises your lust!")
                 Return True
             End If
         Else
@@ -52,7 +52,7 @@
             If Game.turn Mod 4 = 0 And p.lust < 100 Then
                 Dim l As Integer = Int(Rnd() * 15) + 10
                 p.lust += l
-                Game.lstLog.Items.Add("Your living lingerie raises your lust!")
+                Game.pushLstLog("Your living lingerie raises your lust!")
                 Return True
             End If
         Else
@@ -86,8 +86,8 @@
             p.aBuff = 0
             p.dBuff = 0
             p.perks("brage") = -1
-            Game.lstLog.Items.Add("Berserker rage has worn off.")
-            Game.lstLog.TopIndex = Game.lstLog.Items.Count - 1
+            Game.pushLstLog("Berserker rage has worn off.")
+            
         End If
     End Sub
     Shared Sub massiveMammaries()
@@ -97,8 +97,8 @@
         Else
             p.dBuff = 0
             p.perks("mmammaries") = -1
-            Game.lstLog.Items.Add("Massive mammaries has worn off.")
-            Game.lstLog.TopIndex = Game.lstLog.Items.Count - 1
+            Game.pushLstLog("Massive mammaries has worn off.")
+            
         End If
     End Sub
     Shared Sub ironhideFury()
@@ -112,8 +112,8 @@
             p.aBuff = 0
             p.dBuff = 0
             p.perks("ihfury") = -1
-            Game.lstLog.Items.Add("Ironhide Fury has worn off.")
-            Game.lstLog.TopIndex = Game.lstLog.Items.Count - 1
+            Game.pushLstLog("Ironhide Fury has worn off.")
+            
         End If
     End Sub
 End Class

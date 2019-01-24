@@ -15,8 +15,8 @@
         MyBase.mInd = New Tuple(Of Integer, Boolean)(2, False)
     End Sub
     Overrides Sub discard()
-        Game.lstLog.Items.Add("You drop the " & getName())
-        Game.lstLog.TopIndex = Game.lstLog.Items.Count - 1
+        Game.pushLstLog("You drop the " & getName())
+        
         count -= 1
     End Sub
 End Class

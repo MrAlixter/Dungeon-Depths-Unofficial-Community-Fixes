@@ -21,7 +21,7 @@
     End Sub
 
     Sub examine()
-        Game.lstLog.Items.Add(desc)
-        Game.lstLog.TopIndex = Game.lstLog.Items.Count - 1
+        Game.pushLstLog(desc)
+        
     End Sub
 End Class

@@ -96,21 +96,21 @@
                         '    sName = "Freeze"
                 End Select
                 If ct > 60 Then
-                    Game.lstLog.Items.Add("You know all the spells in spellbooks already!")
+                    Game.pushLstLog("You know all the spells in spellbooks already!")
                     count -= 1
                     Exit Sub
                 End If
             End While
             If Not Game.cboxMG.Items.Contains(sName) Then Game.cboxMG.Items.Add(sName)
-            Game.lstLog.Items.Add("You read the " & getName() & ". " & sName & " learned!")
-            If Not out.Equals("") Then Game.lstLog.Items.Add(out)
+            Game.pushLstLog("You read the " & getName() & ". " & sName & " learned!")
+            If Not out.Equals("") Then Game.pushLstLog(out)
         End If
         count -= 1
-        Game.lstLog.TopIndex = Game.lstLog.Items.Count - 1
+        
     End Sub
     Overrides Sub discard()
-        Game.lstLog.Items.Add("You drop the " & getName())
-        Game.lstLog.TopIndex = Game.lstLog.Items.Count - 1
+        Game.pushLstLog("You drop the " & getName())
+        
         count -= 1
     End Sub
 End Class

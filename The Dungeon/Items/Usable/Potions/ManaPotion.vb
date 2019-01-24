@@ -12,16 +12,18 @@
     End Sub
 
     Overrides Sub use()
-        If Me.getUsable() = False Then Exit Sub
-        Game.lstLog.Items.Add("You drink the " & getName())
-        Game.lstLog.TopIndex = Game.lstLog.Items.Count - 1
-        Game.player.mana += 25
-        If Game.player.mana > Game.player.getmaxMana Then Game.player.mana = Game.player.getmaxMana
+        Game.pushLstLog("You drink the " & getName())
+        Dim phMana = Game.player.mana
+
+        Dim meffect As ManaEffect = New ManaEffect
+        meffect.apply(Game.player)
+
+        Game.pushLblEvent("You drink the " & getName() & ".  +" & (Game.player.mana - phMana) & " mana!")
         count -= 1
     End Sub
     Overrides Sub discard()
-        Game.lstLog.Items.Add("You drop the " & getName())
-        Game.lstLog.TopIndex = Game.lstLog.Items.Count - 1
+        Game.pushLstLog("You drop the " & getName())
+
         count -= 1
     End Sub
 End Class

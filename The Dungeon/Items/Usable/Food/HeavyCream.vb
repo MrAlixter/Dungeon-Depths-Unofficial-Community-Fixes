@@ -13,11 +13,11 @@
     End Sub
     Overrides Sub use()
         If Me.getUsable() = False Then Exit Sub
-        Game.lstLog.Items.Add("You drink the " & getName())
+        Game.pushLstLog("You drink the " & getName())
         Game.player.hunger -= getCalories()
         If Game.player.hunger < 0 Then Game.player.hunger = 0
         Effect()
-        Game.lstLog.TopIndex = Game.lstLog.Items.Count - 1
+        
         count -= 1
     End Sub
     Public Overrides Sub Effect()

@@ -53,8 +53,6 @@ Public Class Game
     Public cheatList() As String = {"girl", "nude", "blue", "catc", "bmbo", "bigr", "slut", "dies", "dick", "lust", "form", "tfme",
                                     "gogo", "mana", "fuse", "rock", "doll", "seee"} 'list of cheats (NOT SAVED)
     Dim keyspresed As String = ""   'records last 4 keys pressed (NOT SAVED)
-    'variables related to the mystery potions
-    Public Potions As New ArrayList()
     Public formList, tFormList As New ArrayList()
     Public titleList = New List(Of String)
     'other misc form1 instance variables
@@ -145,7 +143,6 @@ Public Class Game
         AddHandler imagesWorker.DoWork, AddressOf prefetchImages
         imagesWorkerArg = Nothing
         imagesWorker.RunWorkerAsync()
-        loadPotionList()
         titleList.Add("Warrior")
         titleList.Add("Mage")
         titleList.Add("Dragon")
@@ -334,39 +331,11 @@ Public Class Game
         eClock = eClockResetVal * 3
 
         turn = 0
-        lstLog.Items.Add("You see before you a dungeon.")
+        pushLstLog("You see before you a dungeon.")
         picStart.Visible = False
         player.createP()
         player.UIupdate()
-        lstLog.TopIndex = lstLog.Items.Count - 1
-    End Sub
-    Sub loadPotionList()
-        Randomize()
-        Dim HiddenNames As ArrayList = New ArrayList({"Red_Potion", "Green_Potion", "Blue_Potion", "Yellow_Potion", "Glowing_Potion", "Murky_Potion", "Purple_Potion", "Clear_Potion", "Smokey_Potion", "Rose_Potion", "Aqua_Potion", "Glittery_Potion"})
-        Dim index As Integer = 0
 
-        Dim p_inv = player.inv
-        Dim potion_list = p_inv.getPotions
-        For i = 0 To UBound(potion_list)
-            If potion_list(i).GetType().IsSubclassOf(GetType(MysteryPotion)) Then
-                Dim mpotionid = CType(potion_list(i), MysteryPotion).id
-                Potions.Add(p_inv.item(mpotionid))
-                index = Int(Rnd() * (HiddenNames.Count - 1))
-                CType(p_inv.item(mpotionid), MysteryPotion).setName(HiddenNames(index))
-                HiddenNames.RemoveAt(index)
-            End If
-        Next
-    End Sub
-    Sub loadPotionListFromFile()
-        Dim p_inv = player.inv
-        Dim potion_list = p_inv.getPotions
-        For i = 0 To UBound(potion_list)
-            If potion_list(i).GetType().IsSubclassOf(GetType(MysteryPotion)) Then
-                Dim mpotionid = CType(potion_list(i), MysteryPotion).id
-                CType(p_inv.item(mpotionid), MysteryPotion).setName(Potions(0).getName())
-                Potions.RemoveAt(0)
-            End If
-        Next
     End Sub
     Sub loadCKeys()
         cKeys.Clear()
@@ -1110,7 +1079,7 @@ Public Class Game
         'If picNPC.Visible Then picNPC.BackgroundImage = NPCimgList(npcIndex)
 
         player.UIupdate()
-        lstLog.TopIndex = lstLog.Items.Count - 1
+
     End Sub
     Sub viewBubble()
         'viewBubble "discovers" the area around the player and erases the players previous location
@@ -1133,15 +1102,15 @@ Public Class Game
                             If mBoard(player.pos.Y + indY, player.pos.X + indX).Text = "@" Then mBoard(player.pos.Y + indY, player.pos.X + indX).Text = ""
                             If mBoard(player.pos.Y + indY, player.pos.X + indX).Text = "H" And mBoard(player.pos.Y + indY, player.pos.X + indX).Tag < 2 Then
                                 mBoard(player.pos.Y + indY, player.pos.X + indX).ForeColor = Color.Black
-                                lstLog.Items.Add("Floor " & floor & ": Staircase Discovered")
+                                pushLstLog("Floor " & floor & ": Staircase Discovered")
                             End If
                             If mBoard(player.pos.Y + indY, player.pos.X + indX).Text = "#" And mBoard(player.pos.Y + indY, player.pos.X + indX).Tag < 2 Then
                                 mBoard(player.pos.Y + indY, player.pos.X + indX).ForeColor = Color.Black
-                                lstLog.Items.Add("Chest discovered!")
+                                pushLstLog("Chest discovered!")
                             End If
                             If mBoard(player.pos.Y + indY, player.pos.X + indX).Text = "$" And mBoard(player.pos.Y + indY, player.pos.X + indX).Tag < 2 Then
                                 mBoard(player.pos.Y + indY, player.pos.X + indX).ForeColor = Color.Navy
-                                lstLog.Items.Add("Shop discovered!")
+                                pushLstLog("Shop discovered!")
                             End If
                             If mBoard(player.pos.Y + indY, player.pos.X + indX).Tag = 1 Then mBoard(player.pos.Y + indY, player.pos.X + indX).Tag = 2
                         End If
@@ -1163,21 +1132,21 @@ Public Class Game
                         If mBoard(player.pos.Y + indY, player.pos.X + indX).Text = "@" Then mBoard(player.pos.Y + indY, player.pos.X + indX).Text = ""
                         If mBoard(player.pos.Y + indY, player.pos.X + indX).Text = "H" And mBoard(player.pos.Y + indY, player.pos.X + indX).Tag < 2 Then
                             mBoard(player.pos.Y + indY, player.pos.X + indX).ForeColor = Color.Black
-                            lstLog.Items.Add("Floor " & floor & ": Staircase Discovered")
+                            pushLstLog("Floor " & floor & ": Staircase Discovered")
                         End If
                         If mBoard(player.pos.Y + indY, player.pos.X + indX).Text = "#" And mBoard(player.pos.Y + indY, player.pos.X + indX).Tag < 2 Then
                             mBoard(player.pos.Y + indY, player.pos.X + indX).ForeColor = Color.Black
-                            lstLog.Items.Add("Chest discovered!")
+                            pushLstLog("Chest discovered!")
                         End If
                         If mBoard(player.pos.Y + indY, player.pos.X + indX).Text = "$" And mBoard(player.pos.Y + indY, player.pos.X + indX).Tag < 2 Then
                             mBoard(player.pos.Y + indY, player.pos.X + indX).ForeColor = Color.Navy
-                            lstLog.Items.Add("Shop discovered!")
+                            pushLstLog("Shop discovered!")
                         End If
                         If mBoard(player.pos.Y + indY, player.pos.X + indX).Tag = 1 Then mBoard(player.pos.Y + indY, player.pos.X + indX).Tag = 2
                     End If
                 Next
             Next
-            lstLog.TopIndex = lstLog.Items.Count - 1
+
             Dim endTime = (DateTime.Now - New DateTime(1970, 1, 1)).TotalMilliseconds
             Console.WriteLine("BUBBLE TIME: " + (endTime - startTime).ToString())
         End If
@@ -1394,7 +1363,7 @@ Public Class Game
             updateList.add(player, (int))
             turn += 1
             If Not Keydata.Equals(cKeys(10)) Then drawBoard()
-            lstLog.TopIndex = lstLog.Items.Count - 1
+
             endTime = (DateTime.Now - New DateTime(1970, 1, 1)).TotalMilliseconds
             Console.WriteLine("TOTAL TIME: " + (endTime - startTime).ToString())
             Return True
@@ -1562,7 +1531,7 @@ Public Class Game
         'handles any tfs or triggers triggered by equipping of certain weapons
         If player.pClass.name.Equals("Magic Girl") And player.equippedArmor.getName.Equals("Magic_Girl_Outfit") Then
             player.equippedArmor = player.inv.item(10)
-            lstLog.Items.Add("A magic girl needs her uniform!")
+            pushLstLog("A magic girl needs her uniform!")
         End If
 
         If player.pForm.name.Equals("Blow-Up Doll") Then
@@ -1579,7 +1548,7 @@ Public Class Game
         'updates the player, the stat display, and the portrait before the form closes
         player.createP()
         player.UIupdate()
-        lstLog.TopIndex = lstLog.Items.Count - 1
+
     End Sub
     Sub selectWeapon(ByVal index As Integer)
         Dim subString As String = lstSelec.Items(index).ToString.Split(" (")(2)
@@ -1590,7 +1559,7 @@ Public Class Game
 
         'this handles the revert from the magical girl form, if needed
         If player.equippedWeapon.getName.Equals("Magic_Girl_Wand") And player.pClass.name.Equals("Magic Girl") And Not subString.Equals("Magic_Girl_Wand") Then
-            lstLog.Items.Add("Putting away your wand causes you to change into your regular self!")
+            pushLstLog("Putting away your wand causes you to change into your regular self!")
             player.inv.add(10, -1)
             player.magGState.save(player)
             player.revertToPState()
@@ -1621,7 +1590,7 @@ Public Class Game
         'updates the player, the stat display, and the portrait before the form closes
         player.createP()
         player.UIupdate()
-        lstLog.TopIndex = lstLog.Items.Count - 1
+
     End Sub
     Sub selectYesNo(ByVal index As Integer)
         If index = 0 Then
@@ -1791,10 +1760,10 @@ Public Class Game
             player.setTarget(m)
             m.currTarget = player
             toCombat()
-            lstLog.Items.Add((m.getName() & " attacks!"))
+            pushLstLog((m.getName() & " attacks!"))
             eClock = eClockResetVal
         End If
-        lstLog.TopIndex = lstLog.Items.Count - 1
+
     End Sub
     Sub closeLblEvent()
         If lblEvent.Visible = True Then
@@ -1954,21 +1923,21 @@ Public Class Game
                             If mBoard(player.pos.Y + indY, player.pos.X + indX).Text = "@" Then mBoard(player.pos.Y + indY, player.pos.X + indX).Text = ""
                             If mBoard(player.pos.Y + indY, player.pos.X + indX).Text = "H" And mBoard(player.pos.Y + indY, player.pos.X + indX).Tag < 2 Then
                                 mBoard(player.pos.Y + indY, player.pos.X + indX).ForeColor = Color.Black
-                                lstLog.Items.Add("Floor " & floor & ": Staircase Discovered")
+                                pushLstLog("Floor " & floor & ": Staircase Discovered")
                             End If
                             If mBoard(player.pos.Y + indY, player.pos.X + indX).Text = "#" And mBoard(player.pos.Y + indY, player.pos.X + indX).Tag < 2 Then
                                 mBoard(player.pos.Y + indY, player.pos.X + indX).ForeColor = Color.Black
-                                lstLog.Items.Add("Chest discovered!")
+                                pushLstLog("Chest discovered!")
                             End If
                             If mBoard(player.pos.Y + indY, player.pos.X + indX).Text = "$" And mBoard(player.pos.Y + indY, player.pos.X + indX).Tag < 2 Then
                                 mBoard(player.pos.Y + indY, player.pos.X + indX).ForeColor = Color.Navy
-                                lstLog.Items.Add("Shop discovered!")
+                                pushLstLog("Shop discovered!")
                             End If
                             If mBoard(player.pos.Y + indY, player.pos.X + indX).Tag = 1 Then mBoard(player.pos.Y + indY, player.pos.X + indX).Tag = 2
                         End If
                     Next
                 Next
-                lstLog.TopIndex = lstLog.Items.Count - 1
+
             ElseIf keyspresed = "bigr" Then
                 player.be()
             ElseIf keyspresed = "rock" Then
@@ -2170,15 +2139,15 @@ Public Class Game
         'run handles the player choice to run from combat
         If player.health < 1 / player.getMaxHealth Then Exit Sub
         If player.perks("swordpossess") > -1 Then
-            lstLog.Items.Add("Something inside you decides that running away is cowardly, so you don't.")
+            pushLstLog("Something inside you decides that running away is cowardly, so you don't.")
             pushLblCombatEvent("Something inside you decides that running away is cowardly, so you don't.")
-            lstLog.TopIndex = lstLog.Items.Count - 1
+
             Exit Sub
         End If
         If player.name.Equals("Targax") And player.pClass.name.Equals("Soul-Lord") Then
-            lstLog.Items.Add("You decide that running away is cowardly, so you don't.")
+            pushLstLog("You decide that running away is cowardly, so you don't.")
             pushLblCombatEvent("You decide that running away is cowardly, so you don't.")
-            lstLog.TopIndex = lstLog.Items.Count - 1
+
             Exit Sub
         End If
         Dim run As Integer = Int(Rnd() * 3)
@@ -2310,7 +2279,7 @@ Public Class Game
     'self inspect
     Sub selfinpKey()
         If turn < 2 Then Exit Sub
-        lstLog.Items.Add(player.description)
+        pushLstLog(player.description)
         toDesc()
     End Sub
     Sub toDesc()
@@ -2335,10 +2304,10 @@ Public Class Game
             player.setTarget(m)
             m.currTarget = player
             npcList.Add(m)
-            lstLog.Items.Add((m.getName & " attacks!"))
+            pushLstLog((m.getName & " attacks!"))
             toCombat()
             btnChallengeBoss.Visible = False
-            lstLog.TopIndex = lstLog.Items.Count - 1
+
         End If
     End Sub
     Sub noKey()
@@ -2354,14 +2323,14 @@ Public Class Game
         player.setTarget(m)
         m.currTarget = player
         npcList.Add(m)
-        lstLog.Items.Add((m.getName & " attacks!"))
+        pushLstLog((m.getName & " attacks!"))
         toCombat()
         If floor = 4 Then
             pushLblEvent("As you approach the staircase, you spot the Ooze Empress, hanging over the stairs.  As you wave to get her attention, she plops off the celing to come and greet you.  As you explain your situation to her, she chuckles, catching you off guard.  ""You know, I was placed on this floor as kind of a buffer.  Mistress Medusa isn't interested in weaklings, and if you even want to have a chance at beating her, you need to have a stronger will."".  You notice a shift in her previously bubbly personality, and when the rest of her tentacles drop down, you take a leap back and prepare for combat." & vbCrLf & vbCrLf &
                                """Let's see if you've learned anthing since the last time you tried this,"" she says with an somewhat mencing grin, ""... though I'm sure neither of us would mind a repeat either.""")
         End If
         btnChallengeBoss.Visible = False
-        lstLog.TopIndex = lstLog.Items.Count - 1
+
     End Sub
     'movement
     Private Sub BtnD_Click(sender As Object, e As EventArgs) Handles BtnD.Click
@@ -2435,13 +2404,7 @@ Public Class Game
         For i = 0 To cmboxSpec.Items.Count - 1
             writer.WriteLine(cmboxSpec.Items(i))
         Next
-        For i = 0 To Potions.Count - 1
-            writer.WriteLine(Potions(i).getName)
-            writer.WriteLine(Potions(i).getRealName)
-        Next
-        'For i = 0 To UBound(HPotionNames)
-        '    writer.WriteLine(HPotionNames(i))
-        'Next
+
         writer.WriteLine(UBound(beatboss))
         For i = 0 To UBound(beatboss)
             writer.WriteLine(beatboss(i))
@@ -2614,22 +2577,7 @@ Public Class Game
         For i = 0 To CInt(reader.ReadLine())
             cmboxSpec.Items.Add(reader.ReadLine())
         Next
-        For i = 0 To Potions.Count - 1
-            Dim nextKnownName = reader.ReadLine()
-            Dim nextRealPotionName = reader.ReadLine()
-            For j = 0 To Potions.Count - 1
-                If CType(Potions(j), MysteryPotion).getRealName = nextRealPotionName Then
-                    Potions(j).setName(nextKnownName)
-                    j = Potions.Count
-                End If
-            Next
-        Next
-        Dim tempPotions As ArrayList = Potions.Clone()
-        loadPotionListFromFile()
-        Potions = tempPotions
-        'For i = 0 To UBound(HPotionNames)
-        '    HPotionNames(i) = reader.ReadLine()
-        'Next
+        
         For i = 0 To CInt(reader.ReadLine())
             beatboss(i) = CBool(reader.ReadLine)
         Next
@@ -2952,7 +2900,7 @@ Public Class Game
         pnlCombat.Visible = True
         combatmode = True
         npcmode = False
-        lstLog.Items.Add((m.getName() & " attacks!"))
+        pushLstLog((m.getName() & " attacks!"))
         btnATK.Visible = True
         btnMG.Visible = True
         btnRUN.Visible = True
@@ -2971,14 +2919,14 @@ Public Class Game
         btnFight.Visible = False
         btnLeave.Visible = False
 
-        lstLog.TopIndex = lstLog.Items.Count - 1
+
     End Sub
     Sub NPCfromCombat(ByRef m As Monster)
         pnlCombatClose()
         combatmode = False
         npcmode = True
         pushLblEvent((m.getName() & " stops fighting!"))
-        lstLog.Items.Add((m.getName() & " stops fighting!"))
+        pushLstLog((m.getName() & " stops fighting!"))
         btnATK.Visible = False
         btnMG.Visible = False
         btnRUN.Visible = False
@@ -2995,7 +2943,7 @@ Public Class Game
         btnFight.Visible = True
         btnLeave.Visible = True
 
-        lstLog.TopIndex = lstLog.Items.Count - 1
+
     End Sub
     'combat pannel
     Sub pushLblCombatEvent(ByVal s As String)
@@ -3227,7 +3175,7 @@ Public Class Game
         npcmode = True
         currNPC = m
         m.encounter()
-        lstLog.Items.Add(("You walk up to " & m.getName & "!"))
+        pushLstLog(("You walk up to " & m.getName & "!"))
         player.canMoveFlag = False
         picNPC.Visible = True
         'btnTalk.Visible = True
@@ -3237,7 +3185,7 @@ Public Class Game
         If m.isShop Then btnShop.Enabled = True Else btnShop.Enabled = False
         btnFight.Visible = True
         btnLeave.Visible = True
-        lstLog.TopIndex = lstLog.Items.Count - 1
+
     End Sub
     Private Sub btnNPCMG_Click(sender As Object, e As EventArgs) Handles btnNPCMG.Click
         If Not lblEventOnClose Is Nothing Then
@@ -3351,9 +3299,9 @@ Public Class Game
             lblEventOnClose()
             lblEventOnClose = Nothing
         End If
-        lstLog.Items.Add(player.description)
+        pushLstLog(player.description)
         toDesc()
-        lstLog.TopIndex = lstLog.Items.Count - 1
+
     End Sub
     Private Sub btnIns_Click(sender As Object, e As EventArgs) Handles btnIns.Click
         If Not lblEventOnClose Is Nothing Then
@@ -3644,6 +3592,10 @@ Public Class Game
         lblEvent.Location = New Point(160 * Me.Size.Width / 688, 120 * Me.Size.Width / 688)
         lblEvent.Visible = True
         picNPC.Visible = True
+    End Sub
+    Sub pushLstLog(ByVal s As String)
+        lstLog.Items.Add(s)
+        lstLog.TopIndex = lstLog.Items.Count - 1
     End Sub
     'color shift functions
     Shared Function cShift(ByVal oC As Color, ByVal c As Color, ByVal inc As Integer)

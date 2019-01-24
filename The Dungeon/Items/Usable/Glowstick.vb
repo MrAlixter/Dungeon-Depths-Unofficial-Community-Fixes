@@ -13,22 +13,22 @@
 
     Overrides Sub use()
         If Me.getUsable() = False Then Exit Sub
-        Game.lstLog.Items.Add("You use the " & getName())
+        Game.pushLstLog("You use the " & getName())
 
         For indY = -3 To 3
             For indX = -3 To 3
                 If Game.player.pos.Y + indY < Game.mBoardHeight And Game.player.pos.Y + indY >= 0 And Game.player.pos.X + indX < Game.mBoardWidth And Game.player.pos.X + indX >= 0 Then
                     If Game.mBoard(Game.player.pos.Y + indY, Game.player.pos.X + indX).Text = "H" And Game.mBoard(Game.player.pos.Y + indY, Game.player.pos.X + indX).Tag < 2 Then
                         Game.mBoard(Game.player.pos.Y + indY, Game.player.pos.X + indX).ForeColor = Color.Black
-                        Game.lstLog.Items.Add("Floor " & Game.floor & ": Staircase Discovered")
+                        Game.pushLstLog("Floor " & Game.floor & ": Staircase Discovered")
                     End If
                     If Game.mBoard(Game.player.pos.Y + indY, Game.player.pos.X + indX).Text = "#" And Game.mBoard(Game.player.pos.Y + indY, Game.player.pos.X + indX).Tag < 2 Then
                         Game.mBoard(Game.player.pos.Y + indY, Game.player.pos.X + indX).ForeColor = Color.Black
-                        Game.lstLog.Items.Add("Chest discovered!")
+                        Game.pushLstLog("Chest discovered!")
                     End If
                     If Game.mBoard(Game.player.pos.Y + indY, Game.player.pos.X + indX).Text = "$" And Game.mBoard(Game.player.pos.Y + indY, Game.player.pos.X + indX).Tag < 2 Then
                         Game.mBoard(Game.player.pos.Y + indY, Game.player.pos.X + indX).ForeColor = Color.Navy
-                        Game.lstLog.Items.Add("Shop discovered!")
+                        Game.pushLstLog("Shop discovered!")
                     End If
                     If Game.mBoard(Game.player.pos.Y + indY, Game.player.pos.X + indX).Tag = 1 Then Game.mBoard(Game.player.pos.Y + indY, Game.player.pos.X + indX).Tag = 2
                 End If
@@ -62,11 +62,11 @@
         End If
         Game.drawBoard()
         count -= 1
-        Game.lstLog.TopIndex = Game.lstLog.Items.Count - 1
+        
     End Sub
     Overrides Sub discard()
-        Game.lstLog.Items.Add("You drop the " & getName())
-        Game.lstLog.TopIndex = Game.lstLog.Items.Count - 1
+        Game.pushLstLog("You drop the " & getName())
+        
         count -= 1
     End Sub
 End Class

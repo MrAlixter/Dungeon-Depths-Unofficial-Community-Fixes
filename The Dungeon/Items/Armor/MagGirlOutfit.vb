@@ -20,12 +20,12 @@
 
     Overrides Sub discard()
         If Game.player.pClass.name.Equals("Magic Girl") Then
-            Game.lstLog.Items.Add("You can't just drop your uniform!")
-            Game.lstLog.TopIndex = Game.lstLog.Items.Count - 1
+            Game.pushLstLog("You can't just drop your uniform!")
+            
             Exit Sub
         End If
-        Game.lstLog.Items.Add("You drop the " & getName())
-        Game.lstLog.TopIndex = Game.lstLog.Items.Count - 1
+        Game.pushLstLog("You drop the " & getName())
+        
         count -= 1
     End Sub
 End Class

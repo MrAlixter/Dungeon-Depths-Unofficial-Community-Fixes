@@ -87,9 +87,7 @@
         End If
 
         'clear all player associated lists
-        Game.Potions.Clear()
         p.createInvPerks()
-        Game.loadPotionList()
 
         'assign random equipment
         Dim armor = New Integer() {5, 7, 12, 16, 17, 18, 19, 20, 38, 39, 46, 47, 54, 54}

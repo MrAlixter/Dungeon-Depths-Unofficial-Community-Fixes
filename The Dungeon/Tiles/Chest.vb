@@ -112,8 +112,8 @@
         End If
         pushLblEventChest()
         Game.player.UIupdate()
-        Game.lstLog.Items.Add("You open a chest!")
-        Game.lstLog.TopIndex = Game.lstLog.Items.Count - 1
+        Game.pushLstLog("You open a chest!")
+        
     End Sub
     Public Sub pushLblEventChest()
         Dim c As String = "Chest Contents: " & vbCrLf

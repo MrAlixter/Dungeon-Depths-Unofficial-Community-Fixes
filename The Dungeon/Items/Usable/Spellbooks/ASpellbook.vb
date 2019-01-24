@@ -50,16 +50,16 @@
                     sName = "Arcane Compass"
             End Select
             If ct > 60 Then
-                Game.lstLog.Items.Add("You know all the spells in advanced spellbooks already!")
+                Game.pushLstLog("You know all the spells in advanced spellbooks already!")
                 count -= 1
                 Exit Sub
             End If
         End While
         If sName = "placeholder" And Not Game.cboxNPCMG.Items.Contains(sName) Then Game.cboxNPCMG.Items.Add(sName)
         If Not Game.cboxMG.Items.Contains(sName) Then Game.cboxMG.Items.Add(sName)
-        Game.lstLog.Items.Add("You read the " & getName() & ". " & sName & " learned!")
-        If Not out.Equals("") Then Game.lstLog.Items.Add(out)
+        Game.pushLstLog("You read the " & getName() & ". " & sName & " learned!")
+        If Not out.Equals("") Then Game.pushLstLog(out)
         count -= 1
-        Game.lstLog.TopIndex = Game.lstLog.Items.Count - 1
+        
     End Sub
 End Class

@@ -159,8 +159,8 @@
         Game.npcList.Add(m)
 
         Game.toCombat()
-        Game.lstLog.Items.Add((m.getName() & " attacks!"))
-        Game.lstLog.TopIndex = Game.lstLog.Items.Count - 1
+        Game.pushLstLog((m.getName() & " attacks!"))
+        
         Game.drawBoard()
     End Sub
     Private Function loadGhost() As Boolean

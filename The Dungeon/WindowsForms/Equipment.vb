@@ -62,7 +62,7 @@
         'this handles the revert from the magical girl form, if needed
         Dim revertFlag As Boolean = False
         If p.equippedWeapon.getName.Equals("Magic_Girl_Wand") And p.pClass.name.Equals("Magic Girl") And Not cmbobxWeapon.Text.Equals("Magic_Girl_Wand") Then
-            Game.lstLog.Items.Add("Putting away your wand causes you to change into your regular self!")
+            Game.pushLstLog("Putting away your wand causes you to change into your regular self!")
             p.inv.add(10, -1)
             p.magGState.save(p)
             p.revertToPState()
@@ -96,7 +96,7 @@
         'handles any tfs or triggers triggered by equipping of certain weapons
         If p.pClass.name.Equals("Magic Girl") And p.equippedArmor.getName.Equals("Magic_Girl_Outfit") And Not revertFlag Then
             p.equippedArmor = p.inv.item(10)
-            Game.lstLog.Items.Add("A magic girl needs her uniform!")
+            Game.pushLstLog("A magic girl needs her uniform!")
         End If
         If p.pForm.name.Equals("Blow-Up Doll") Then
             p.equippedArmor = New Naked
@@ -105,7 +105,7 @@
         'updates the player, the stat display, and the portrait before the form closes
         p.createP()
         p.UIupdate()
-        Game.lstLog.TopIndex = Game.lstLog.Items.Count - 1
+        
         Me.Close()
     End Sub
     'handles the loading of this form
@@ -203,12 +203,12 @@
                 affectedFlag = False
         End Select
         If affectedFlag Then
-            Game.lstLog.Items.Add("Your curse changes your clothes.")
+            Game.pushLstLog("Your curse changes your clothes.")
             Game.lblEvent.ForeColor = Color.Pink
             If Not Game.Visible Then Game.pushLblEvent("As you don your new clothes, a shimmering light covers them, and they morph to better suit your style.")
             Return True
         End If
-        Game.lstLog.TopIndex = Game.lstLog.Items.Count - 1
+        
         Return False
     End Function
     Sub antiClothingCurse()
@@ -241,12 +241,12 @@
                 affectedFlag = False
         End Select
         If affectedFlag Then
-            Game.lstLog.Items.Add("Your curse is broken!")
+            Game.pushLstLog("Your curse is broken!")
             Game.lblEvent.ForeColor = Color.Pink
             Game.pushLblEvent("Your curse is broken! Unfortunatly, nothing can be done about the clothes in your inventory that have been affected.")
             portraitUDate()
         End If
-        Game.lstLog.TopIndex = Game.lstLog.Items.Count - 1
+        
     End Sub
     'clothesChange handles the equipping and unequipping of armors
     Public Sub clothesChange(ByVal clothes As String)
@@ -336,7 +336,7 @@
             End Select
             If p.iArrInd(3) Is Nothing Then
                 clothesChange("Naked")
-                Game.lstLog.Items.Add("Your clothes don't fit!")
+                Game.pushLstLog("Your clothes don't fit!")
                 If p.sexBool Then
                     p.iArrInd(3) = New Tuple(Of Integer, Boolean)(47, True)
                 Else
@@ -360,7 +360,7 @@
             End If
         End If
 
-        Game.lstLog.TopIndex = Game.lstLog.Items.Count - 1
+        
         'Form1.picPortrait.BackgroundImage = CharacterGenerator1.CreateBMP(p.iArr)
     End Sub
     Public Sub skimpyClothesUpdate()
@@ -386,7 +386,7 @@
         If Not p.pClass.name.Equals("Magic Girl") And Not (p.pClass.name.Equals("Bimbo") And p.breastSize = 3) Then
             clothesChange("Naked")
             Game.pushLblEvent("Your clothes don't fit!")
-            Game.lstLog.Items.Add("Your clothes don't fit!")
+            Game.pushLstLog("Your clothes don't fit!")
             If p.sexBool Then
                 p.iArrInd(3) = New Tuple(Of Integer, Boolean)(47, True)
             Else
@@ -423,7 +423,7 @@
                 p.iArrInd(3) = New Tuple(Of Integer, Boolean)(p.sState.iArrInd(3).Item1 + 99, p.iArrInd(2).Item2)
             Case Else
                 clothesChange("Naked")
-                Game.lstLog.Items.Add("Your clothes don't fit!")
+                Game.pushLstLog("Your clothes don't fit!")
                 If p.sexBool Then
                     p.iArrInd(3) = New Tuple(Of Integer, Boolean)(47, True)
                 Else

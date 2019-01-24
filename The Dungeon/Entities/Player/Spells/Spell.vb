@@ -13,14 +13,14 @@
     Sub cast()
         If caster.mana < cost Then
             Game.pushLblEvent("You don't have enough mana! (" & name & " costs " & cost & " mana)")
-            Game.lstLog.Items.Add("You don't have enough mana!")
-            Game.lstLog.TopIndex = Game.lstLog.Items.Count - 1
+            Game.pushLstLog("You don't have enough mana!")
+            
             Exit Sub
         End If
         If Not Game.combatmode And Not Game.npcmode And Not useableOutOfCombat Then
             Game.pushLblEvent("You don't have a target for that spell!")
-            Game.lstLog.Items.Add("You don't have a target for that spell!")
-            Game.lstLog.TopIndex = Game.lstLog.Items.Count - 1
+            Game.pushLstLog("You don't have a target for that spell!")
+            
             Exit Sub
         End If
         Randomize()
@@ -28,64 +28,64 @@
         Select Case tier
             Case 1
                 Game.pushLblEvent("You cast " & name & "!")
-                Game.lstLog.Items.Add("You cast " & name & "!")
+                Game.pushLstLog("You cast " & name & "!")
                 effect()
             Case 2
                 If Rnd() < 0.9 Then
                     Game.pushLblEvent("You cast " & name & "!")
-                    Game.lstLog.Items.Add("You cast " & name & "!")
+                    Game.pushLstLog("You cast " & name & "!")
                     effect()
                 Else
                     Game.pushLblEvent("You try to cast " & name & ", but it fizzles into nothing!")
-                    Game.lstLog.Items.Add("You try to cast " & name & ", but it fizzles into nothing!")
+                    Game.pushLstLog("You try to cast " & name & ", but it fizzles into nothing!")
                 End If
             Case 3
                 If Rnd() < 0.8 Then
                     Game.pushLblEvent("You cast " & name & "!")
-                    Game.lstLog.Items.Add("You cast " & name & "!")
+                    Game.pushLstLog("You cast " & name & "!")
                     effect()
                 Else
                     If Rnd() < 0.5 Then
                         Game.pushLblEvent("You try to cast " & name & ", but it fizzles into nothing!")
-                        Game.lstLog.Items.Add("You try to cast " & name & ", but it fizzles into nothing!")
+                        Game.pushLstLog("You try to cast " & name & ", but it fizzles into nothing!")
                     Else
                         Game.pushLblEvent("You try to cast " & name & ", but it backfires!")
-                        Game.lstLog.Items.Add("You try to cast " & name & ", but it backfires!")
+                        Game.pushLstLog("You try to cast " & name & ", but it backfires!")
                         backfire()
                     End If
                 End If
             Case 4
                 If Rnd() < 0.7 Then
                     Game.pushLblEvent("You cast " & name & "!")
-                    Game.lstLog.Items.Add("You cast " & name & "!")
+                    Game.pushLstLog("You cast " & name & "!")
                     effect()
                 Else
                     If Rnd() < 0.35 Then
                         Game.pushLblEvent("You try to cast " & name & ", but it fizzles into nothing!")
-                        Game.lstLog.Items.Add("You try to cast " & name & ", but it fizzles into nothing!")
+                        Game.pushLstLog("You try to cast " & name & ", but it fizzles into nothing!")
                     Else
                         Game.pushLblEvent("You try to cast " & name & ", but it backfires!")
-                        Game.lstLog.Items.Add("You try to cast " & name & ", but it backfires!")
+                        Game.pushLstLog("You try to cast " & name & ", but it backfires!")
                         backfire()
                     End If
                 End If
             Case Else
                 If Rnd() < 0.6 Then
                     Game.pushLblEvent("You cast " & name & "!")
-                    Game.lstLog.Items.Add("You cast " & name & "!")
+                    Game.pushLstLog("You cast " & name & "!")
                     effect()
                 Else
                     If Rnd() < 0.2 Then
                         Game.pushLblEvent("You try to cast " & name & ", but it fizzles into nothing!")
-                        Game.lstLog.Items.Add("You try to cast " & name & ", but it fizzles into nothing!")
+                        Game.pushLstLog("You try to cast " & name & ", but it fizzles into nothing!")
                     Else
                         Game.pushLblEvent("You try to cast " & name & ", but it backfires!")
-                        Game.lstLog.Items.Add("You try to cast " & name & ", but it backfires!")
+                        Game.pushLstLog("You try to cast " & name & ", but it backfires!")
                         backfire()
                     End If
                 End If
         End Select
-        Game.lstLog.TopIndex = Game.lstLog.Items.Count - 1
+        
     End Sub
     Overridable Sub effect()
         Game.pushLblEvent("No effects.")
@@ -126,14 +126,14 @@
                 If Rnd() < (0.01) Then
                     spellroute(c, t, s)
                 Else
-                    Game.lstLog.Items.Add("The spell bounces off the Shopkeeper!")
+                    Game.pushLstLog("The spell bounces off the Shopkeeper!")
                     Game.pushLblCombatEvent("The spell bounces off the Shopkeeper!")
                 End If
             Else
                 If Rnd() < (0.6) Then
                     spellroute(c, t, s)
                 Else
-                    Game.lstLog.Items.Add("The spell bounces off Targax!")
+                    Game.pushLstLog("The spell bounces off Targax!")
                     Game.pushLblCombatEvent("The spell bounces off Targax!")
                 End If
             End If
@@ -141,7 +141,7 @@
             spellroute(c, t, s)
         End If
 
-        Game.lstLog.TopIndex = Game.lstLog.Items.Count - 1
+        
     End Sub
     Shared Sub spellroute(ByRef c As Player, ByRef t As Monster, ByRef s As String)
         Dim spell As Spell = New Frazzle(c, t)
@@ -158,7 +158,7 @@
         ElseIf s.Equals("Self Polymorph") And (transformation.canbeTFed(c) Or c.perks("polymorphed") > -1) Then
             spell = New SelfPolymorph(c, t)
         ElseIf s.Equals("Self Polymorph") And Not Transformation.canBeTFed(c) Then
-            Game.lstLog.Items.Add("You can't polymorph yourself!")
+            Game.pushLstLog("You can't polymorph yourself!")
             Game.pushLblCombatEvent("You can't polymorph yourself!")
             Exit Sub
         ElseIf s.Equals("Polymorph Enemy") Then

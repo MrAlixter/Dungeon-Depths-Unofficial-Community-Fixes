@@ -15,8 +15,8 @@
         MyBase.getTarget.speed = 1
         If MyBase.getTarget.health > 70 Then MyBase.getTarget.health = 70
         MyBase.getTarget.maxHealth = 70
-        Game.lstLog.Items.Add(CStr("Your spell hits the " & MyBase.getTarget.name & ", turning " & MyBase.getTarget.rPronoun & " into a giant frog!"))
+        Game.pushLstLog(CStr("Your spell hits the " & MyBase.getTarget.name & ", turning " & MyBase.getTarget.rPronoun & " into a giant frog!"))
         Game.pushLblCombatEvent(CStr("Your spell hits the " & MyBase.getTarget.name & ", turning " & MyBase.getTarget.rPronoun & " into a giant frog!"))
-        Game.lstLog.TopIndex = Game.lstLog.Items.Count - 1
+        
     End Sub
 End Class

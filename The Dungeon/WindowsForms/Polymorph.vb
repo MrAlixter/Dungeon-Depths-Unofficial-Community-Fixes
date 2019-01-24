@@ -93,7 +93,7 @@
         Game.lblEvent.Text = revertText & Game.lblEvent.Text
         Game.cmboxSpec.Items.Clear()
         Game.specialRoute()
-        Game.lstLog.TopIndex = Game.lstLog.Items.Count - 1
+        
     End Sub
     'monster transform method
     Sub transform(ByRef t As Monster, ByVal s As String)

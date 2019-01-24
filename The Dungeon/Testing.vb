@@ -19,6 +19,7 @@ Public Class Testing
         testQueue.Add(AddressOf inventoryAddTests)
         testQueue.Add(AddressOf inventorySaveTests)
         testQueue.Add(AddressOf inventoryLoadTests)
+        testQueue.Add(AddressOf playerMoveTests)
 
         Dim successes = 0
         Dim failures = 0
@@ -162,7 +163,7 @@ Public Class Testing
         testInventory1.add("Duster", 1)
         testInventory1.add("Living_Lingerie", 6)
 
-        Dim output1 = "75:Compass~2:Stick_of_Gum~0:Health_Potion~0:Vial_of_Slime~0:Spellbook~3:Steel_Armor~0:Steel_Sword~0:Steel_Bikini~0:Chicken_Suit~0:SoulBlade~0:Magic_Girl_Outfit~0:Magic_Girl_Wand~0:Cat_Lingerie~0:Mana_Potion~0:Restore_Potion~0:Cat_Ears~0:Bunny_Suit~0:Sorcerer's_Robes~0:Witch_Cosplay~0:Warrior's_Cuirass~0:Brawler_Cosplay~0:Oak_Staff~0:Wizard_Staff~0:Bronze_Xiphos~0:Sword_of_the_Brutal~0:Blonde_Dye~0:Random_Hair_Dye~0:Red_Hair_Dye~0:Feminine_Potion~0:Breast_Enlarging_Potion~0:Chicken_Leg~0:Apple~0:Apple​~0:Medicinal_Tea~0:Heavy_Cream~0:Cupcake~0:Mirror~0:Glowstick~0:Gold_Armor~0:Gold_Adornment~0:Gold_Sword~0:Golden_Staff~0:Midas_Gauntlet~0:Gold~0:Angel_Food_Cake~0:Duster~1:Tanktop~0:Sports_Bra~0:Health_Charm~0:Mana_Charm~0:Attack_Charm~0:Defence_Charm~0:Speed_Charm~0:Key~0:Ropes~0:Living_Armor~0:Living_Lingerie~6:Disarment_Kit~0:Fusion_Crystal~0:Masculine_Potion~0:Breast_Shrinking_Potion~0:HyperHeal_Potion~0:HyperMana_Potion~0:Spidersilk_Whip~0:Chitin_Armor~0:Advanced_Spellbook~0:Heart_Necklace~0:Red_Headband~0:Ruby_Circlet~0:Slave_Collar~0:Cowbell~0:Cow_Print_Bra~0:Maid_Outfit~0:Goddess_Gown~0:Succubus_Garb~0:Regal_Gown~0:*"
+        Dim output1 = "75:Compass~2:Stick_of_Gum~0:Health_Potion~0:Vial_of_Slime~0:Spellbook~3:Steel_Armor~0:Steel_Sword~0:Steel_Bikini~0:Chicken_Suit~0:SoulBlade~0:Magic_Girl_Outfit~0:Magic_Girl_Wand~0:Cat_Lingerie~0:Mana_Potion~0:Restore_Potion~0:Cat_Ears~0:Bunny_Suit~0:Sorcerer's_Robes~0:Witch_Cosplay~0:Warrior's_Cuirass~0:Brawler_Cosplay~0:Oak_Staff~0:Wizard_Staff~0:Bronze_Xiphos~0:Sword_of_the_Brutal~0:Golden_Potion~0:Red_Potion~0:Green_Potion~0:Mauve_Potion~0:Rose_Potion~0:Chicken_Leg~0:Apple~0:Apple​~0:Medicinal_Tea~0:Heavy_Cream~0:Cupcake~0:Mirror~0:Glowstick~0:Gold_Armor~0:Gold_Adornment~0:Gold_Sword~0:Golden_Staff~0:Midas_Gauntlet~0:Gold~0:Angel_Food_Cake~0:Duster~1:Tanktop~0:Sports_Bra~0:Health_Charm~0:Mana_Charm~0:Attack_Charm~0:Defence_Charm~0:Speed_Charm~0:Key~0:Ropes~0:Living_Armor~0:Living_Lingerie~6:Disarment_Kit~0:Fusion_Crystal~0:Blue_Potion~0:Murky_Potion~0:Azure_Potion~0:Glittery_Potion~0:Spidersilk_Whip~0:Chitin_Armor~0:Advanced_Spellbook~0:Heart_Necklace~0:Red_Headband~0:Ruby_Circlet~0:Slave_Collar~0:Cowbell~0:Cow_Print_Bra~0:Maid_Outfit~0:Goddess_Gown~0:Succubus_Garb~0:Regal_Gown~0:*"
 
         Dim test1 As Tuple(Of Boolean, String) = expectEQ("Inventory.save", output1, testInventory1.save)
         If Not test1.Item1 Then Return test1
@@ -201,5 +202,32 @@ Public Class Testing
         Next
 
         Return New Tuple(Of Boolean, String)(True, "Inventory.load tests successful.")
+    End Function
+    '|PLAYER UNIT TESTS|
+    Shared Function playerMoveTests()
+        'Dim p = New Player()
+        'p.pos = New Point(3, 3)
+        'p.moveUp()
+        'p.moveUp()
+        'p.moveLeft()
+        'Dim test1 As Tuple(Of Boolean, String) = expectEQ("Player.moveUp(); Player.moveUp(); Player.moveLeft()", New Point(2, 1), p.pos)
+        'If Not test1.Item1 Then Return test1
+
+        'p.pos = New Point(3, 3)
+        'p.moveDown()
+        'p.moveLeft()
+        'p.moveRight()
+        'Dim test2 As Tuple(Of Boolean, String) = expectEQ("Player.moveDown(); Player.moveLeft(); Player.moveRight()", New Point(3, 4), p.pos)
+        'If Not test2.Item1 Then Return test2
+
+        'p.pos = New Point(3, 3)
+        'p.moveDown()
+        'p.moveRight()
+        'p.moveRight()
+        'Dim test3 As Tuple(Of Boolean, String) = expectEQ("Player.moveUp(); Player.moveUp(); Player.moveLeft()", New Point(5, 4), p.pos)
+        'If Not test3.Item1 Then Return test3
+
+
+        Return New Tuple(Of Boolean, String)(True, "Player.Move tests successful.")
     End Function
 End Class

@@ -12,7 +12,7 @@
     End Sub
 
     Public Sub activate(ByVal i As Integer)
-        Game.lstLog.Items.Add("Trap activated!")
+        Game.pushLstLog("Trap activated!")
         Select Case iD
             Case 0
                 Game.player.lust += 20
@@ -44,7 +44,7 @@
                         out += "  However, the ropes are not able to contain your massive breasts, and they quickly burst apart leaving you naked."
                         Equipment.clothesChange("Naked")
                         pos = New Point(-1, -1)
-                        Game.lstLog.TopIndex = Game.lstLog.Items.Count - 1
+                        
                         Exit Sub
                     End If
                 Else
@@ -104,7 +104,7 @@
         End Select
 
         pos = New Point(-1, -1)
-        Game.lstLog.TopIndex = Game.lstLog.Items.Count - 1
+        
     End Sub
 
     Shared Sub rubyRevert()

@@ -12,21 +12,22 @@
     End Sub
 
     Overrides Sub use()
-        If Me.getUsable() = False Then Exit Sub
         If Game.player.pClass.name.Equals("Soul-Lord") Then
             Game.pushLblEvent("You spike the health potion on the ground, shattering it all over the dungeon floor.  As you go back to your buisness, you muse on how cowardly healing is." & vbCrLf & vbCrLf & """Only someone who cares about their mortal vessel would bother to maintain it.")
             Game.player.UIupdate()
             Exit Sub
         End If
-        Game.lstLog.Items.Add("You drink the " & getName())
-        Game.lstLog.TopIndex = Game.lstLog.Items.Count - 1
-        Game.player.health += 75 / Game.player.getmaxHealth
-        If Game.player.health > 1 Then Game.player.health = 1
+        Game.pushLstLog("You drink the " & getName())
+        Dim phHealth = Game.player.health
+        Dim heffect As HealthEffect = New HealthEffect
+        heffect.apply(Game.player)
+
+        Game.pushLblEvent("You drink the " & getName() & ".  +" & (Game.player.health - phHealth) * Game.player.getMaxHealth & " health!")
         count -= 1
     End Sub
     Overrides Sub discard()
-        Game.lstLog.Items.Add("You drop the " & getName())
-        Game.lstLog.TopIndex = Game.lstLog.Items.Count - 1
+        Game.pushLstLog("You drop the " & getName())
+        
         count -= 1
     End Sub
 End Class

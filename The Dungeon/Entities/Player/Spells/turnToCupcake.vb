@@ -11,8 +11,8 @@
         MyBase.getCaster.inv.invNeedsUDate = True
         MyBase.getCaster.UIupdate()
         MyBase.getTarget.despawn("cupcake")
-        Game.lstLog.Items.Add(CStr("Your spell hits the " & MyBase.getTarget.name & ", turning " & MyBase.getTarget.rPronoun & " into a sword!"))
+        Game.pushLstLog(CStr("Your spell hits the " & MyBase.getTarget.name & ", turning " & MyBase.getTarget.rPronoun & " into a sword!"))
         Game.pushLblCombatEvent(CStr("Your spell hits the " & MyBase.getTarget.name & ", turning " & MyBase.getTarget.rPronoun & " into a sword!"))
-        Game.lstLog.TopIndex = Game.lstLog.Items.Count - 1
+        
     End Sub
 End Class

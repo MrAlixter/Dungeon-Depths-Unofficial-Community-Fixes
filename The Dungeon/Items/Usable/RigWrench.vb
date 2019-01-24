@@ -13,7 +13,7 @@
 
     Overrides Sub use()
         If Me.getUsable() = False Then Exit Sub
-        Game.lstLog.Items.Add("You use the " & getName())
+        Game.pushLstLog("You use the " & getName())
 
         Dim out As String = "No traps detected!"
         For indY = -1 To 1
@@ -54,18 +54,18 @@
                             out += outout
                         End If
                         Game.pushLblEvent(out)
-                        Game.lstLog.Items.Add("Trap disarmed!")
+                        Game.pushLstLog("Trap disarmed!")
                     End If
                 End If
             Next
         Next
         Game.drawBoard()
         count -= 1
-        Game.lstLog.TopIndex = Game.lstLog.Items.Count - 1
+        
     End Sub
     Overrides Sub discard()
-        Game.lstLog.Items.Add("You drop the " & getName())
-        Game.lstLog.TopIndex = Game.lstLog.Items.Count - 1
+        Game.pushLstLog("You drop the " & getName())
+        
         count -= 1
     End Sub
 End Class

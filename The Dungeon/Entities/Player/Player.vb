@@ -373,16 +373,16 @@
         Else
             hit(dmg, target)
         End If
-        Game.lstLog.TopIndex = Game.lstLog.Items.Count - 1
+        
     End Sub
     'attacking a npc
     Private Sub miss(target As NPC)
-        Game.lstLog.Items.Add(CStr("You miss" & target.title & " " & target.getName() & "!"))
+        Game.pushLstLog(CStr("You miss" & target.title & " " & target.getName() & "!"))
         Game.pushLblCombatEvent(CStr("You miss" & target.title & " " & target.getName() & "!"))
     End Sub
     Private Sub hit(dmg As Integer, target As NPC)
         target.takeDMG(dmg, Me)
-        Game.lstLog.Items.Add(CStr("You hit" & target.title & " " & target.getName() & " for " & dmg & " damage!"))
+        Game.pushLstLog(CStr("You hit" & target.title & " " & target.getName() & " for " & dmg & " damage!"))
         Game.pushLblCombatEvent(CStr("You hit" & target.title & " " & target.getName() & " for " & dmg & " damage!"))
     End Sub
     Public Sub setTarget(ByRef t As NPC)
@@ -391,7 +391,7 @@
     End Sub
     Private Sub cHit(dmg As Integer, target As NPC)
         target.takeDMG(dmg * 3, Me)
-        Game.lstLog.Items.Add(CStr("You hit" & target.title & " " & target.getName() & " for " & dmg * 3 & " damage!  Critical hit!"))
+        Game.pushLstLog(CStr("You hit" & target.title & " " & target.getName() & " for " & dmg * 3 & " damage!  Critical hit!"))
         Game.pushLblCombatEvent(CStr("You hit" & target.title & " " & target.getName() & " for " & dmg * 3 & " damage!  Critical hit!"))
         target.isStunned = True
         target.stunct = 0
@@ -403,7 +403,7 @@
             Exit Sub
         End If
 
-        Game.lstLog.Items.Add(CStr("You miss " & target.getName() & "!"))
+        Game.pushLstLog(CStr("You miss " & target.getName() & "!"))
         Game.pushLblCombatEvent(CStr("You miss " & target.getName() & "!"))
     End Sub
     Private Sub hit(dmg As Integer, target As Entity)
@@ -413,7 +413,7 @@
         End If
 
         target.takeDMG(dmg, Me)
-        Game.lstLog.Items.Add(CStr("You hit " & target.getName() & " for " & dmg & " damage!"))
+        Game.pushLstLog(CStr("You hit " & target.getName() & " for " & dmg & " damage!"))
         Game.pushLblCombatEvent(CStr("You hit " & target.getName() & " for " & dmg & " damage!"))
     End Sub
     Private Sub cHit(dmg As Integer, target As Entity)
@@ -423,7 +423,7 @@
         End If
 
         target.takeDMG(dmg * 3, Me)
-        Game.lstLog.Items.Add(CStr("You hit " & target.getName() & " for " & dmg * 3 & " damage!  Critical hit!"))
+        Game.pushLstLog(CStr("You hit " & target.getName() & " for " & dmg * 3 & " damage!  Critical hit!"))
         Game.pushLblCombatEvent("You hit " & target.getName() & " for " & dmg * 3 & " damage!  Critical hit!")
     End Sub
     'taking damage
@@ -480,6 +480,38 @@
         setPImage()
         UIupdate()
     End Sub
+    Public Function revertToSState(ByVal numtorevert As Integer) As String
+        Randomize()
+        Dim loopct = 0
+        Dim revertct = 0
+        While numtorevert > 0
+            If loopct > 15 Then
+                revertToSState()
+                Exit While
+            End If
+
+            Dim layer = Int(Rnd() * 18) + 1
+            If layer > 16 Then
+                If layer = 18 Then
+                    skincolor = sState.getSkinColor
+                ElseIf layer = 17 Then
+                    haircolor = sState.getHairColor
+                End If
+            Else
+                If iArrInd(layer).Item1 <> sState.iArrInd(layer).Item1 And
+                               iArrInd(layer).Item2 <> sState.iArrInd(layer).Item2 Then
+                    iArrInd(layer) = New Tuple(Of Integer, Boolean)(sState.iArrInd(layer).Item1, sState.iArrInd(layer).Item2)
+                    If layer = 15 Then MsgBox(sState.iArrInd(layer).Item2 & " " & sState.iArrInd(layer).Item1)
+                    revertct += 1
+                    numtorevert -= 1
+                End If
+            End If
+
+            loopct += 1
+        End While
+        createP()
+        Return revertct & " changes were reverted."
+    End Function
     Public Sub revertToPState()
         Dim tHth As Integer = health + hBuff
         Dim tMna As Integer = mana + mBuff
@@ -512,7 +544,7 @@
         End If
         Do While Game.cboxMG.Items.Contains("Heartblast Starcannon")
             Game.cboxMG.Items.Remove("Heartblast Starcannon")
-            Game.lstLog.Items.Add("'Heartblast Starcannon' spell forgotten!")
+            Game.pushLstLog("'Heartblast Starcannon' spell forgotten!")
         Loop
 
         If health > 1 Then health = 1
@@ -547,6 +579,37 @@
         setPImage()
         UIupdate()
     End Sub
+    Public Function revertToPState(ByVal numtorevert As Integer) As String
+        Randomize()
+        Dim loopct = 0
+        Dim revertct = 0
+        While numtorevert > 0
+            If loopct > 15 Then
+                revertToPState()
+                Exit While
+            End If
+
+            Dim layer = Int(Rnd() * 18) + 1
+            If layer > 16 Then
+                If layer = 18 Then
+                    skincolor = pState.getSkinColor
+                ElseIf layer = 17 Then
+                    haircolor = pState.getHairColor
+                End If
+            Else
+                If iArrInd(layer).Item1 <> pState.iArrInd(layer).Item1 And
+                               iArrInd(layer).Item2 <> pState.iArrInd(layer).Item2 Then
+                    iArrInd(layer) = New Tuple(Of Integer, Boolean)(pState.iArrInd(layer).Item1, pState.iArrInd(layer).Item2)
+                    revertct += 1
+                    numtorevert -= 1
+                End If
+            End If
+
+            loopct += 1
+        End While
+        createP()
+        Return revertct & " changes were reverted."
+    End Function
     Public Sub petrify(ByVal c As Color)
         If pForm.name.Equals("Dragon") Then revertToPState()
         changeHairColor(c)
@@ -734,7 +797,7 @@
             PerkEffects.ironhideFury()
         End If
 
-        Game.lstLog.TopIndex = Game.lstLog.Items.Count - 1
+        
         description = CStr(name & " is a " & sex & " " & pForm.name & " " & pClass.name)
         Return needsToUpdatePortrait
     End Function
@@ -916,7 +979,7 @@
 
         changeHairColor(haircolor)
         changeSkinColor(skincolor)
-        Game.lstLog.TopIndex = Game.lstLog.Items.Count - 1
+        
         If lust > 0 Then lustBlushUpdate()
         If wingInd > 0 Then addWings(wingInd)
         If hornInd > 0 Then addHorns(hornInd)
@@ -1071,7 +1134,7 @@
     'sex change methods
     Public Sub MtF()
         If perks("polymorphed") > -1 Or pClass.name.Equals("Magic Girl") Then
-            Game.lstLog.Items.Add("Your form prevents you from being altered.")
+            Game.pushLstLog("Your form prevents you from being altered.")
             Exit Sub
         End If
         sexBool = True
@@ -1080,11 +1143,11 @@
         idRouteMF()
         changeSkinColor(skincolor)
         If perks("swordpossess") > -1 Then perks("swordpossess") = 0
-        Game.lstLog.TopIndex = Game.lstLog.Items.Count - 1
+        
     End Sub
     Public Sub FtM()
         If perks("polymorphed") > -1 Or pClass.name.Equals("Magic Girl") Then
-            Game.lstLog.Items.Add("Your form prevents you from being altered.")
+            Game.pushLstLog("Your form prevents you from being altered.")
             Exit Sub
         End If
         sexBool = False
@@ -1093,7 +1156,7 @@
         perks(2) = False
         idRouteFM()
         If perks("swordpossess") > -1 Then perks("swordpossess") = 0
-        Game.lstLog.TopIndex = Game.lstLog.Items.Count - 1
+        
     End Sub
     Sub idRouteMF()
         'rearHair2
@@ -1288,7 +1351,7 @@
     'breast enlargement/reduction methods
     Public Sub be()
         If Not Transformation.canBeTFed(Me) And Not pClass.name.Equals("Thrall") Then
-            Game.lstLog.Items.Add("Your form prevents you from being altered.")
+            Game.pushLstLog("Your form prevents you from being altered.")
             Exit Sub
         End If
         If breastSize >= -1 And breastSize < 8 Then
@@ -1313,15 +1376,15 @@
                 Case 7
                     iArrInd(2) = New Tuple(Of Integer, Boolean)(19, True)
             End Select
-            Game.lstLog.Items.Add("+ 1 cup size!")
+            Game.pushLstLog("+ 1 cup size!")
             If iArrInd(3).Item2 = False Then iArrInd(3) = New Tuple(Of Integer, Boolean)(iArrInd(3).Item1, True)
         End If
         bsizeroute()
-        Game.lstLog.TopIndex = Game.lstLog.Items.Count - 1
+        
     End Sub
     Friend Sub bs()
         If Not Transformation.canBeTFed(Me) And Not pClass.name.Equals("Thrall") Then
-            Game.lstLog.Items.Add("Your form prevents you from being altered.")
+            Game.pushLstLog("Your form prevents you from being altered.")
             Exit Sub
         End If
         If breastSize > -1 And breastSize <= 6 Then
@@ -1346,11 +1409,11 @@
                 Case 7
                     iArrInd(2) = New Tuple(Of Integer, Boolean)(19, True)
             End Select
-            Game.lstLog.Items.Add("- 1 cup size!")
+            Game.pushLstLog("- 1 cup size!")
             If iArrInd(3).Item2 = False Then iArrInd(3) = New Tuple(Of Integer, Boolean)(iArrInd(3).Item1, True)
         End If
         bsizeroute()
-        Game.lstLog.TopIndex = Game.lstLog.Items.Count - 1
+        
     End Sub
     Sub bsizeroute()
         If (iArrInd(2).Item1 = 0 Or iArrInd(2).Item1 = 5) And iArrInd(2).Item2 And breastSize <> 1 Then
@@ -1636,7 +1699,7 @@
         '    level += 1
         '    xp -= nextLevelXp
         '    nextLevelXp = nextLevelXp * 1.66
-        '    Form1.lstLog.Items.Add("Level up!  " & name & " is now level " & level)
+        '    Form1.pushLstLog("Level up!  " & name & " is now level " & level)
         '    If xp > nextLevelXp Then levelUp()
         '    health += 3
         '    maxHealth += 3

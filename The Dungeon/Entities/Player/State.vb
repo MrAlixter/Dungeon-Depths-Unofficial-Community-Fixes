@@ -283,4 +283,10 @@
     Public Function getName() As String
         Return name
     End Function
+    Public Function getSkinColor() As Color
+        Return skincolor
+    End Function
+    Public Function getHairColor() As Color
+        Return haircolor
+    End Function
 End Class

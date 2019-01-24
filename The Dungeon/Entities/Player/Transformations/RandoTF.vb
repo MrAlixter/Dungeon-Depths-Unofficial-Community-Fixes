@@ -100,9 +100,7 @@
         p.iArrInd(16) = New Tuple(Of Integer, Boolean)(0, p.sexbool)
 
         'clear all player associated lists
-        Game.Potions.Clear()
         p.createInvPerks()
-        Game.loadPotionList()
 
         'assign random equipment
         Dim armor = New Integer() {5, 5, 5, 7, 12, 16, 17, 17, 17, 18, 19, 19, 19, 20, 38, 38, 39, 46, 47, 64, 71}

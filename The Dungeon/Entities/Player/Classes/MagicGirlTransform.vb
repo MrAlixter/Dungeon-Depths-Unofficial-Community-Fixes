@@ -14,6 +14,6 @@
         Do While Game.cboxMG.Items.Contains("Heartblast Starcannon")
             Game.cboxMG.Items.Remove("Heartblast Starcannon")
         Loop
-        Game.lstLog.Items.Add("'Heartblast Starcannon' spell forgotten!")
+        Game.pushLstLog("'Heartblast Starcannon' spell forgotten!")
     End Sub
 End Class

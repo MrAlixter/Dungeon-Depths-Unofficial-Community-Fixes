@@ -21,7 +21,7 @@
         End If
         p.iArrInd(16) = New Tuple(Of Integer, Boolean)(CharacterGenerator.fHat.Count - 3, True)
         Game.pushLblEvent(out, AddressOf step2)
-        Game.lstLog.TopIndex = Game.lstLog.Items.Count - 1
+        
         p.TextColor = Game.lblEvent.ForeColor
         Game.cmboxSpec.Items.Clear()
         Game.specialRoute()
@@ -54,7 +54,7 @@
         p.pClass = p.classes("Magic Girl")
         Equipment.clothesChange("Magic_Girl_Outfit")
         p.equippedArmor = New MagGirlOutfit
-        Game.lstLog.Items.Add("'Heartblast Starcannon' spell learned!")
+        Game.pushLstLog("'Heartblast Starcannon' spell learned!")
         Game.lblEvent.Visible = False
         p.canMoveFlag = True
     End Sub

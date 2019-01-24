@@ -1,6 +1,5 @@
 ﻿Public Class Inventory
     Dim internal_inventory As New Dictionary(Of String, Item)
-    Public mysteryPotionDisplayOrder As New List(Of String)
     Dim armor() As Armor
     Dim weapons() As Weapon
     Dim acce() As Accessory
@@ -36,11 +35,11 @@
         internal_Inventory.Add("Wizard_Staff", New WizardStaff())           '22
         internal_Inventory.Add("Bronze_Xiphos", New BronzeXiphos())         '23
         internal_Inventory.Add("Sword_of_the_Brutal", New TargaxSword())    '24
-        internal_inventory.Add("Blonde_Dye", New BlondePotion())            '25
-        internal_Inventory.Add("Random_Hair_Dye", New RandomHairPotion())   '26
-        internal_Inventory.Add("Red_Hair_Dye", New RedHairPotion())         '27
-        internal_Inventory.Add("Feminine_Potion", New FemininePotion())     '28
-        internal_Inventory.Add("Breast_Enlarging_Potion", New BEPotion())   '29
+        internal_inventory.Add("Golden_Potion", New GoldenPotion())         '25
+        internal_inventory.Add("Red_Potion", New RedPotion())               '26
+        internal_inventory.Add("Green_Potion", New GreenPotion())           '27
+        internal_inventory.Add("Mauve_Potion", New MauvePotion())           '28
+        internal_inventory.Add("Rose_Potion", New RosePotion())             '29
         internal_Inventory.Add("Chicken_Leg", New ChickenLeg())             '30
         internal_Inventory.Add("Apple", New Apple())                        '31
         internal_Inventory.Add("Apple​", New PApple())                       '32
@@ -70,10 +69,10 @@
         internal_Inventory.Add("Living_Lingerie", New LiveLingerie())       '56
         internal_Inventory.Add("Disarment_Kit", New RigWrench())            '57
         internal_Inventory.Add("Fusion_Crystal", New FusionCrystal())       '58
-        internal_Inventory.Add("Masculine_Potion", New MasculinePotion())   '59
-        internal_Inventory.Add("Breast_Shrinking_Potion", New BSPotion())   '60
-        internal_Inventory.Add("HyperHeal_Potion", New HyperHealPotion())   '61
-        internal_Inventory.Add("HyperMana_Potion", New HyperManaPotion())   '62
+        internal_inventory.Add("Blue_Potion", New BluePotion())             '59
+        internal_inventory.Add("Murky_Potion", New MurkyPotion())           '60
+        internal_inventory.Add("Azure_Potion", New AzurePotion())           '61
+        internal_inventory.Add("Glittery_Potion", New GlitteryPotion())     '62
         internal_Inventory.Add("Spidersilk_Whip", New SpidersilkWhip())     '63
         internal_Inventory.Add("Chitin_Armor", New ChitArmor())             '64
         '0.5
@@ -89,7 +88,8 @@
         internal_Inventory.Add("Maid_Outfit", New MaidOutfit())             '72
         internal_Inventory.Add("Goddess_Gown", New GoddessGown())           '73
         internal_Inventory.Add("Succubus_Garb", New SuccubusGarb())         '74
-        internal_Inventory.Add("Regal_Gown", New PrincessGown())            '75
+        internal_inventory.Add("Regal_Gown", New PrincessGown())            '75
+        internal_inventory.Add("Clear_Potion", New ClearPotion())           '76
 
         armor = {New NormalClothes, New SkimpyClothes, New Naked,
                  Me.item(5), Me.item(7), Me.item(8), Me.item(10),
@@ -117,7 +117,8 @@
 
         potions = {Me.item(2), Me.item(13), Me.item(14), Me.item(25),
                    Me.item(26), Me.item(27), Me.item(28), Me.item(29),
-                   Me.item(59), Me.item(60), Me.item(61), Me.item(62)}
+                   Me.item(59), Me.item(60), Me.item(61), Me.item(62),
+                   Me.item(76)}
         Array.Sort(potions)
 
         misc = {Me.item(43), Me.item(53)}
@@ -143,7 +144,7 @@
         sum += count
     End Sub
     Sub setCount(k As String, v As Integer)
-        sum -= item(k).count
+            sum -= item(k).count
         item(k).count = v
         sum += v
     End Sub

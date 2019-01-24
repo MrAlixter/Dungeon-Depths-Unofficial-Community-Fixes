@@ -196,6 +196,7 @@
     <Compile Include="Entities\Player\Transformations\Transformation.vb" />
     <Compile Include="Entities\Inventory.vb" />
     <Compile Include="Entities\preferedForm.vb" />
+    <Compile Include="ImageCollection.vb" />
     <Compile Include="Items\Accesories\Accessory.vb" />
     <Compile Include="Items\Accesories\Cowbell.vb" />
     <Compile Include="Items\Accesories\HeartNecklace.vb" />
@@ -205,8 +206,23 @@
     <Compile Include="Items\Accesories\ThrallCollar.vb" />
     <Compile Include="Items\Armor\ChitArmor.vb" />
     <Compile Include="Items\Armor\CowBra.vb" />
-    <Compile Include="Items\Usable\Potions\Mystery Potions\BSPotion.vb" />
-    <Compile Include="Items\Usable\Potions\Mystery Potions\HyperManaPotion.vb" />
+    <Compile Include="Items\Usable\Potions\ClearPotion.vb" />
+    <Compile Include="Items\Usable\Potions\Mystery Potions\Main Effects\HealthEffect.vb" />
+    <Compile Include="Items\Usable\Potions\Mystery Potions\Main Effects\MinHungerEffect.vb" />
+    <Compile Include="Items\Usable\Potions\Mystery Potions\Main Effects\RestEffect.vb" />
+    <Compile Include="Items\Usable\Potions\Mystery Potions\MurkyPotion.vb" />
+    <Compile Include="Items\Usable\Potions\Mystery Potions\GlitteryPotion.vb" />
+    <Compile Include="Items\Usable\Potions\Mystery Potions\Main Effects\HHealthEffect.vb" />
+    <Compile Include="Items\Usable\Potions\Mystery Potions\Main Effects\HManaEffect.vb" />
+    <Compile Include="Items\Usable\Potions\Mystery Potions\Main Effects\ManaEffect.vb" />
+    <Compile Include="Items\Usable\Potions\Mystery Potions\PEffect.vb" />
+    <Compile Include="Items\Usable\Potions\Mystery Potions\Side Effects\BEEffect.vb" />
+    <Compile Include="Items\Usable\Potions\Mystery Potions\Side Effects\BlondeDyeEffect.vb" />
+    <Compile Include="Items\Usable\Potions\Mystery Potions\Side Effects\BSEffect.vb" />
+    <Compile Include="Items\Usable\Potions\Mystery Potions\Side Effects\FemEffect.vb" />
+    <Compile Include="Items\Usable\Potions\Mystery Potions\Side Effects\MasEffect.vb" />
+    <Compile Include="Items\Usable\Potions\Mystery Potions\Side Effects\RandDyeEffect.vb" />
+    <Compile Include="Items\Usable\Potions\Mystery Potions\Side Effects\RedDyeEffect.vb" />
     <Compile Include="Items\Usable\Spellbooks\ASpellbook.vb" />
     <Compile Include="Items\Weapons\SpidersilkWhip.vb" />
     <Compile Include="Testing.vb" />
@@ -222,9 +238,9 @@
     <Compile Include="Items\Armor\Armor.vb" />
     <Compile Include="Items\Usable\Charms\AttackCharm.vb" />
     <Compile Include="Items\Weapons\BareFists.vb" />
-    <Compile Include="Items\Usable\Potions\Mystery Potions\BEPotion.vb" />
-    <Compile Include="Items\Usable\Potions\Mystery Potions\RandomHairPotion.vb" />
-    <Compile Include="Items\Usable\Potions\Mystery Potions\BlondePotion.vb" />
+    <Compile Include="Items\Usable\Potions\Mystery Potions\RosePotion.vb" />
+    <Compile Include="Items\Usable\Potions\Mystery Potions\RedPotion.vb" />
+    <Compile Include="Items\Usable\Potions\Mystery Potions\GoldenPotion.vb" />
     <Compile Include="Entities\NPC\Boss.vb" />
     <Compile Include="Items\Armor\BrawlerCosplay.vb" />
     <Compile Include="Items\Weapons\BronzeXiphos.vb" />
@@ -287,13 +303,14 @@
     <Compile Include="WindowsForms\Equipment.vb">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="Items\Usable\Potions\Mystery Potions\HyperHealPotion.vb" />
+    <Compile Include="Items\Usable\Potions\Mystery Potions\AzurePotion.vb" />
     <Compile Include="WindowsForms\GeneratorSettings.Designer.vb">
       <DependentUpon>GeneratorSettings.vb</DependentUpon>
     </Compile>
     <Compile Include="WindowsForms\GeneratorSettings.vb">
       <SubType>Form</SubType>
     </Compile>
+    <Compile Include="ImageDump.vb" />
     <Compile Include="WindowsForms\Polymorph.Designer.vb">
       <DependentUpon>Polymorph.vb</DependentUpon>
     </Compile>
@@ -312,7 +329,7 @@
     <Compile Include="Items\Usable\Potions\HealthPotion.vb" />
     <Compile Include="Items\Usable\Food\HeavyCream.vb" />
     <Compile Include="Items\Usable\Food\Herbs.vb" />
-    <Compile Include="Items\Usable\Potions\Mystery Potions\MasculinePotion.vb" />
+    <Compile Include="Items\Usable\Potions\Mystery Potions\BluePotion.vb" />
     <Compile Include="Entities\NPC\MiniBoss.vb" />
     <Compile Include="Items\Item.vb" />
     <Compile Include="Items\Misc\Key.vb" />
@@ -348,12 +365,12 @@
     <Compile Include="Items\Weapons\OakStaff.vb" />
     <Compile Include="Items\Usable\Food\PApple.vb" />
     <Compile Include="Entities\Player\Player.vb" />
-    <Compile Include="Items\Usable\Potions\MysteryPotion.vb" />
+    <Compile Include="Items\Usable\Potions\Mystery Potions\MysteryPotion.vb" />
     <Compile Include="PriorityQue\PQ.vb" />
     <Compile Include="PriorityQue\PQInterface.vb" />
     <Compile Include="Items\Armor\PrincessGown.vb" />
     <Compile Include="PriorityQue\Q.vb" />
-    <Compile Include="Items\Usable\Potions\Mystery Potions\RedHairPotion.vb" />
+    <Compile Include="Items\Usable\Potions\Mystery Potions\GreenPotion.vb" />
     <Compile Include="Items\Usable\Potions\RestorationPotion.vb" />
     <Compile Include="Items\Usable\RigWrench.vb" />
     <Compile Include="Items\Armor\Ropes.vb" />
@@ -376,9 +393,7 @@
     <Compile Include="WindowsForms\ShopV2.vb">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="Items\Unimplemented\ShrinkPotion.vb" />
     <Compile Include="Items\Armor\SkimpyClothes.vb" />
-    <Compile Include="Items\Unimplemented\SnakePotion.vb" />
     <Compile Include="Items\Armor\SorcerersRobes.vb" />
     <Compile Include="Items\Weapons\SoulBlade.vb" />
     <Compile Include="Entities\Player\Specials.vb" />
@@ -397,12 +412,11 @@
     <Compile Include="Items\Armor\SuccubusGarb.vb" />
     <Compile Include="Items\Armor\TankTop.vb" />
     <Compile Include="Items\Weapons\TargaxSword.vb" />
-    <Compile Include="Items\Usable\Potions\Mystery Potions\FemininePotion.vb" />
+    <Compile Include="Items\Usable\Potions\Mystery Potions\MauvePotion.vb" />
     <Compile Include="Tiles\Trap.vb" />
     <Compile Include="Entities\Updatable.vb" />
     <Compile Include="Items\Usable\VialOfSlime.vb" />
     <Compile Include="Items\Armor\WarriorsCuirass.vb" />
-    <Compile Include="Items\Unimplemented\WeaknessPotion.vb" />
     <Compile Include="Items\Weapons\Weapon.vb" />
     <Compile Include="Items\Armor\WitchCosplay.vb" />
     <Compile Include="Items\Weapons\WizardStaff.vb" />
