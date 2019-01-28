@@ -19,7 +19,7 @@
             p.sex = "Female"
             p.sexBool = True
         End If
-        p.iArrInd(16) = New Tuple(Of Integer, Boolean)(CharacterGenerator.fHat.Count - 3, True)
+        p.iArrInd(16) = New Tuple(Of Integer, Boolean)(CharacterGenerator.imgLib.atrs("Hat").getF.Count - 3, True)
         Game.pushLblEvent(out, AddressOf step2)
         
         p.TextColor = Game.lblEvent.ForeColor

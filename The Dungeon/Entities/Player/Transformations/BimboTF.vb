@@ -47,7 +47,7 @@
             p.be()
         End If
         If p.pClass.name.Equals("Magic Girl") Then
-            p.iArrInd(16) = New Tuple(Of Integer, Boolean)(CharacterGenerator.fHat.Count - 3, True)
+            p.iArrInd(16) = New Tuple(Of Integer, Boolean)(CharacterGenerator.imgLib.atrs("Hat").getF.Count - 3, True)
             p.perks("bimbotf") = 24
         End If
         p.lust += 10

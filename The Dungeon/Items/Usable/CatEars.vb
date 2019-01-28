@@ -13,9 +13,9 @@
 
     Overrides Sub use()
         If Me.getUsable() = False Then Exit Sub
-        Game.player.iArr(6) = CharacterGenerator.fAttributes(6)(1)
         Game.player.iArrInd(6) = New Tuple(Of Integer, Boolean)(1, Game.player.sexBool)
         Game.picPortrait.BackgroundImage = CharacterGenerator.CreateBMP(Game.player.iArr)
+        Game.player.createP()
         count -= 1
     End Sub
     Overrides Sub discard()

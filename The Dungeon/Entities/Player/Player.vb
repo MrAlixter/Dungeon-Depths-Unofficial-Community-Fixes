@@ -958,23 +958,15 @@
         If Not Game.picPortrait.BackgroundImage Is Nothing Then Game.picPortrait.BackgroundImage.Dispose()
 
         Dim chk = False
+        Dim imgLib As ImageCollection = CharacterGenerator.imgLib
         If Not solFlag Then Equipment.portraitUDate()
         For i = 0 To 16
-            If iArrInd(i).Item2 Then
-                If iArrInd(i).Item1 < CharacterGenerator.fAttributes(i).Count Then
-                    iArr(i) = CharacterGenerator.fAttributes(i)(iArrInd(i).Item1)
-                Else
-                    MsgBox("Error!  Exception thrown in portrait creation (specifically in layer " & i & ").  The player character will now revert to default.")
-                    revertToSState()
-                End If
-            Else
-                If iArrInd(i).Item1 < CharacterGenerator.mAttributes(i).Count Then
-                    iArr(i) = CharacterGenerator.mAttributes(i)(iArrInd(i).Item1)
-                Else
-                    MsgBox("Error!  Exception thrown in portrait creation (specifically in layer " & i & ").  The player character will now revert to default.")
-                    revertToSState()
-                End If
-            End If
+            Try
+iArr(i) = imgLib.atrs(imgLib.atrs.Keys(i)).getAt(iArrInd(i))
+            Catch ex As Exception
+                MsgBox("Error!  Exception thrown in portrait creation (specifically in the " & imgLib.atrs.Keys(i) & " layer).  The player character will now revert to default.")
+                revertToSState()
+            End Try
         Next
 
         changeHairColor(haircolor)
@@ -995,121 +987,22 @@
     End Sub
     Public Sub changeHairColor(ByVal c As Color)
         haircolor = c
-        Dim t(16) As Image
-        If iArrInd(1).Item2 Then
-            If iArrInd(1).Item1 < CharacterGenerator.fRearHair2NonTFCount Then
-                t(1) = CharacterGenerator.getImg("img/fRearHair2")(iArrInd(1).Item1)
-            Else
-                Dim temp As Integer = iArrInd(1).Item1 - CharacterGenerator.fRearHair2NonTFCount
-                If temp >= CharacterGenerator.getImg("img/fTF/tfRearHair2").Count Then temp = CharacterGenerator.getImg("img/fTF/tfRearHair2").Count - 1
-                t(1) = CharacterGenerator.getImg("img/fTF/tfRearHair2")(temp)
-            End If
-            If iArrInd(5).Item1 < CharacterGenerator.fRearHair1NonTFCount Then
-                t(5) = CharacterGenerator.getImg("img/fRearHair1")(iArrInd(5).Item1)
-            Else
-                Dim temp As Integer = iArrInd(5).Item1 - CharacterGenerator.fRearHair1NonTFCount
-                If temp >= CharacterGenerator.getImg("img/fTF/tfRearHair1").Count Then temp = CharacterGenerator.getImg("img/fTF/tfRearHair1").Count - 1
-                t(5) = CharacterGenerator.getImg("img/fTF/tfRearHair1")(temp)
-            End If
-            If iArrInd(15).Item1 < CharacterGenerator.fFrontHairNonTFCount Then
-                t(15) = CharacterGenerator.getImg("img/fFrontHair")(iArrInd(15).Item1)
-            Else
-                Dim temp As Integer = iArrInd(15).Item1 - CharacterGenerator.fFrontHairNonTFCount
-                If temp >= CharacterGenerator.getImg("img/fTF/tfFrontHair").Count Then temp = CharacterGenerator.getImg("img/fTF/tfFrontHair").Count - 1
-                t(15) = CharacterGenerator.getImg("img/fTF/tfFrontHair")(temp)
-            End If
-            CharacterGenerator.fFrontHair(0) = CharacterGenerator.picPort.Image
-        Else
-            If iArrInd(1).Item1 < CharacterGenerator.mRearHair2NonTFCount Then
-                t(1) = CharacterGenerator.getImg("img/mRearHair2")(iArrInd(1).Item1)
-            Else
-                Dim temp As Integer = iArrInd(1).Item1 - CharacterGenerator.mRearHair2NonTFCount
-                If temp >= CharacterGenerator.getImg("img/mTF/tfRearHair2").Count Then temp = CharacterGenerator.getImg("img/mTF/tfRearHair2").Count - 1
-                t(1) = CharacterGenerator.getImg("img/mTF/tfRearHair2")(temp)
-            End If
-            If iArrInd(5).Item1 < CharacterGenerator.mRearHair1NonTFCount Then
-                t(5) = CharacterGenerator.getImg("img/mRearHair1")(iArrInd(5).Item1)
-            Else
-                Dim temp As Integer = iArrInd(5).Item1 - CharacterGenerator.mRearHair1NonTFCount
-                If temp >= CharacterGenerator.getImg("img/mTF/tfRearHair1").Count Then temp = CharacterGenerator.getImg("img/mTF/tfRearHair1").Count - 1
-                t(5) = CharacterGenerator.getImg("img/mTF/tfRearHair1")(temp)
-            End If
-            If iArrInd(15).Item1 < CharacterGenerator.mFrontHairNonTFCount Then
-                t(15) = CharacterGenerator.getImg("img/mFrontHair")(iArrInd(15).Item1)
-            Else
-                Dim temp As Integer = iArrInd(15).Item1 - CharacterGenerator.mFrontHairNonTFCount
-                If temp >= CharacterGenerator.getImg("img/mTF/tfFrontHair").Count Then temp = CharacterGenerator.getImg("img/mTF/tfFrontHair").Count - 1
-                t(15) = CharacterGenerator.getImg("img/mTF/tfFrontHair")(temp)
-            End If
-            CharacterGenerator.mFrontHair(0) = CharacterGenerator.picPort.Image
-        End If
-        If iArrInd(10).Item2 Then
-            t(10) = CharacterGenerator.getImg("img/fEyebrows")(iArrInd(10).Item1)
-        Else
-            If iArrInd(10).Item1 < 3 Then t(10) = CharacterGenerator.getImg("img/mEyebrows")(iArrInd(10).Item1)
-        End If
-        If iArrInd(15).Item1 = 0 Then iArr(15) = CharacterGenerator.picPort.Image
-        iArr(1) = CharacterGenerator.recolor(t(1), c)
-        iArr(5) = CharacterGenerator.recolor(t(5), c)
-        If Not iArr(15).Equals(CharacterGenerator.picPort.Image) Then iArr(15) = CharacterGenerator.recolor(t(15), c)
-        If iArrInd(10).Item1 < 3 Then iArr(10) = CharacterGenerator.recolor(t(10), c)
+
+        iArr(1) = CharacterGenerator.recolor(CharacterGenerator.imgLib.atrs("RearHair2").getAt(iArrInd(1)), c)
+        iArr(5) = CharacterGenerator.recolor(CharacterGenerator.imgLib.atrs("RearHair1").getAt(iArrInd(5)), c)
+        iArr(10) = CharacterGenerator.recolor(CharacterGenerator.imgLib.atrs("Eyebrows").getAt(iArrInd(10)), c)
+        iArr(15) = CharacterGenerator.recolor(CharacterGenerator.imgLib.atrs("FrontHair").getAt(iArrInd(15)), c)
+
         If Not solFlag Then Game.picPortrait.BackgroundImage = CharacterGenerator.CreateBMP(iArr)
     End Sub
     Public Sub changeSkinColor(ByVal c As Color)
         skincolor = c
-        Dim t(16) As Image
-        If iArrInd(2).Item2 Then
-            If iArrInd(2).Item1 = 0 Then
-                t(2) = CharacterGenerator.getImg("img/fBody")(iArrInd(2).Item1)
-                iArr(2) = CharacterGenerator.recolor2(t(2), c)
-            Else
-                Dim range As List(Of Image)
-                Dim offset As Integer
 
-                Dim fTFBody As List(Of Image) = CharacterGenerator.getImg("img/fTF/tfBody")
-                offset = fTFBody.Count - 5
-                range = fTFBody.GetRange(offset, 5)
-                fTFBody = fTFBody.GetRange(0, offset)
-                fTFBody.InsertRange(4, range)
+        iArr(2) = CharacterGenerator.recolor2(CharacterGenerator.imgLib.atrs("Body").getAt(iArrInd(2)), c)
+        iArr(4) = CharacterGenerator.recolor2(CharacterGenerator.imgLib.atrs("Face").getAt(iArrInd(4)), c)
+        iArr(6) = CharacterGenerator.recolor2(CharacterGenerator.imgLib.atrs("Ears").getAt(iArrInd(6)), c)
+        iArr(7) = CharacterGenerator.recolor2(CharacterGenerator.imgLib.atrs("Nose").getAt(iArrInd(7)), c)
 
-                t(2) = fTFBody(iArrInd(2).Item1 - 1)
-                iArr(2) = CharacterGenerator.recolor2(t(2), c)
-            End If
-        Else
-            If iArrInd(2).Item1 = 0 Then
-                t(2) = CharacterGenerator.getImg("img/mBody")(iArrInd(2).Item1)
-                iArr(2) = CharacterGenerator.recolor2(t(2), c)
-            Else
-                t(2) = CharacterGenerator.getImg("img/mTF/tfBody")(iArrInd(2).Item1 - 1)
-                iArr(2) = CharacterGenerator.recolor2(t(2), c)
-            End If
-        End If
-        If iArrInd(4).Item2 Then
-            t(4) = CharacterGenerator.getImg("img/fFace")(iArrInd(4).Item1)
-            iArr(4) = CharacterGenerator.recolor2(t(4), c)
-            If iArrInd(7).Item1 = 0 Then
-                t(7) = CharacterGenerator.getImg("img/fNose")(iArrInd(7).Item1)
-                iArr(7) = CharacterGenerator.recolor2(t(7), c)
-            End If
-            If iArrInd(6).Item1 = 0 Or iArrInd(6).Item1 = 3 Then
-                t(6) = CharacterGenerator.getImg("img/fEars")(iArrInd(6).Item1)
-                iArr(6) = CharacterGenerator.recolor2(t(6), c)
-            ElseIf iArrInd(6).Item1 = 6 Or iArrInd(6).Item1 = 7 Then
-                t(6) = CharacterGenerator.getImg("img/fTF/tfEars")(iArrInd(6).Item1 - 5)
-                iArr(6) = CharacterGenerator.recolor2(t(6), c)
-            End If
-        Else
-            t(4) = CharacterGenerator.getImg("img/mFace")(iArrInd(4).Item1)
-            iArr(4) = CharacterGenerator.recolor2(t(4), c)
-            If iArrInd(6).Item1 = 0 Or iArrInd(6).Item1 = 3 Then
-                t(6) = CharacterGenerator.getImg("img/mEars")(iArrInd(6).Item1)
-                iArr(6) = CharacterGenerator.recolor2(t(6), c)
-            End If
-            If iArrInd(7).Item1 = 0 Then
-                t(7) = CharacterGenerator.getImg("img/mNose")(iArrInd(7).Item1)
-                iArr(7) = CharacterGenerator.recolor2(t(7), c)
-            End If
-        End If
         If Not solFlag Then Game.picPortrait.BackgroundImage = CharacterGenerator.CreateBMP(iArr)
     End Sub
     Public Sub lustBlushUpdate()
@@ -1126,10 +1019,10 @@
         End Select
     End Sub
     Sub addWings(ByVal i As Integer)
-        iArr(1) = CharacterGenerator.CreateBMP({CharacterGenerator.wings(i), iArr(1)})
+        iArr(1) = CharacterGenerator.CreateBMP({CharacterGenerator.imgLib.atrs("Wings").getM(i), iArr(1)})
     End Sub
     Sub addHorns(ByVal i As Integer)
-        iArr(6) = CharacterGenerator.CreateBMP({CharacterGenerator.horns(i), iArr(6)})
+        iArr(6) = CharacterGenerator.CreateBMP({CharacterGenerator.imgLib.atrs("Horns").getM(i), iArr(6)})
     End Sub
     'sex change methods
     Public Sub MtF()
@@ -1420,7 +1313,7 @@
             breastSize = 1
         ElseIf iArrInd(2).Item1 = 1 Or iArrInd(2).Item1 = 6 And breastSize <> 2 Then
             breastSize = 2
-        ElseIf ((iArrInd(2).Item1 = 2 And iArrInd(2).Item2) Or iArr(2).Equals(CharacterGenerator.fTFBody(10))) Or iArrInd(2).Item1 = 7 And breastSize <> 3 Then
+        ElseIf ((iArrInd(2).Item1 = 2 And iArrInd(2).Item2) Or iArr(2).Equals(CharacterGenerator.imgLib.atrs("Body").getF(10))) Or iArrInd(2).Item1 = 7 And breastSize <> 3 Then
             breastSize = 3
         ElseIf iArrInd(2).Item1 = 3 Or iArrInd(2).Item1 = 8 And breastSize <> 4 Then
             breastSize = 4

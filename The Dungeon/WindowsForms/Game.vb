@@ -2798,9 +2798,9 @@ Public Class Game
                 Dim id = New Tuple(Of Integer, Boolean)(CInt(arr(0)), CBool(arr(1)))
 
                 If id.Item2 Then
-                    iarr(i) = CharacterGenerator.fAttributes(i)(id.Item1)
+                    iarr(i) = CharacterGenerator.imgLib.fAttributes(i)(id.Item1)
                 Else
-                    iarr(i) = CharacterGenerator.mAttributes(i)(id.Item1)
+                    iarr(i) = CharacterGenerator.imgLib.mAttributes(i)(id.Item1)
                 End If
                 ids(i) = id
                 If i = 6 And (id.Item1 = 0 Or id.Item1 = 3) Then iarr(6) = CharacterGenerator.recolor2(iarr(6), skincolor)
@@ -3325,8 +3325,6 @@ Public Class Game
         Try
             CharacterGenerator.init()
 
-            CharacterGenerator.fFrontHair(0) = CharacterGenerator.picPort.Image
-            CharacterGenerator.mFrontHair(0) = CharacterGenerator.picPort.Image
             solFlag = True
             toSOL()
         Catch ex As System.IO.FileNotFoundException
@@ -3630,107 +3628,16 @@ Public Class Game
         Return Color.FromArgb(a, r, g, b)
     End Function
     Shared Sub changeHairColor(ByVal c As Color, ByVal iarrind() As Tuple(Of Integer, Boolean), ByRef iarr As Image())
-        Dim t(16) As Image
-        If iarrind(1).Item2 Then
-            If iarrind(1).Item1 < 5 Then
-                t(1) = CharacterGenerator.getImg("img/fRearHair2")(iarrind(1).Item1)
-            Else
-                t(1) = CharacterGenerator.getImg("img/fTF/tfRearHair2")(iarrind(1).Item1 - 5)
-            End If
-            If iarrind(5).Item1 < 5 Then
-                t(5) = CharacterGenerator.getImg("img/fRearHair1")(iarrind(5).Item1)
-            Else
-                t(5) = CharacterGenerator.getImg("img/fTF/tfRearHair1")(iarrind(5).Item1 - 5)
-            End If
-            If iarrind(15).Item1 < 6 Then
-                t(15) = CharacterGenerator.getImg("img/fFrontHair")(iarrind(15).Item1)
-            Else
-                t(15) = CharacterGenerator.getImg("img/fTF/tfFrontHair")(iarrind(15).Item1 - 6)
-            End If
-            CharacterGenerator.fFrontHair(0) = CharacterGenerator.picPort.Image
-        Else
-            If iarrind(1).Item1 < 5 Then
-                t(1) = CharacterGenerator.getImg("img/mRearHair2")(iarrind(1).Item1)
-            Else
-                t(1) = CharacterGenerator.getImg("img/mTF/tfRearHair2")(iarrind(1).Item1 - 5)
-            End If
-            If iarrind(5).Item1 < 5 Then
-                t(5) = CharacterGenerator.getImg("img/mRearHair1")(iarrind(5).Item1)
-            Else
-                t(5) = CharacterGenerator.getImg("img/mTF/tfRearHair1")(iarrind(5).Item1 - 5)
-            End If
-            If iarrind(15).Item1 < 6 Then
-                t(15) = CharacterGenerator.getImg("img/mFrontHair")(iarrind(15).Item1)
-            Else
-                t(15) = CharacterGenerator.getImg("img/mTF/tfFrontHair")(iarrind(15).Item1 - 6)
-            End If
-            CharacterGenerator.mFrontHair(0) = CharacterGenerator.picPort.Image
-        End If
-        If iarrind(10).Item2 Then
-            t(10) = CharacterGenerator.getImg("img/fEyebrows")(iarrind(10).Item1)
-        Else
-            If iarrind(10).Item1 < 3 Then t(10) = CharacterGenerator.getImg("img/mEyebrows")(iarrind(10).Item1)
-        End If
-        If iarrind(15).Item1 = 0 Then iarr(15) = CharacterGenerator.picPort.Image
-        iarr(1) = CharacterGenerator.recolor(t(1), c)
-        iarr(5) = CharacterGenerator.recolor(t(5), c)
-        If Not iarr(15).Equals(CharacterGenerator.picPort.Image) Then iarr(15) = CharacterGenerator.recolor(t(15), c)
-        If iarrind(10).Item1 < 3 Then iarr(10) = CharacterGenerator.recolor(t(10), c)
+        iarr(1) = CharacterGenerator.recolor(CharacterGenerator.imgLib.atrs("RearHair2").getAt(iarrind(1)), c)
+        iarr(5) = CharacterGenerator.recolor(CharacterGenerator.imgLib.atrs("RearHair1").getAt(iarrind(5)), c)
+        iarr(10) = CharacterGenerator.recolor(CharacterGenerator.imgLib.atrs("Eyebrows").getAt(iarrind(10)), c)
+        iarr(15) = CharacterGenerator.recolor(CharacterGenerator.imgLib.atrs("FrontHair").getAt(iarrind(15)), c)
     End Sub
     Shared Sub changeSkinColor(ByVal c As Color, ByVal iarrind() As Tuple(Of Integer, Boolean), ByRef iarr As Image())
-        Dim t(16) As Image
-        If iarrind(2).Item2 Then
-            If iarrind(2).Item1 = 0 Then
-                t(2) = CharacterGenerator.getImg("img/fBody")(iarrind(2).Item1)
-                iarr(2) = CharacterGenerator.recolor2(t(2), c)
-            Else
-                Dim range As List(Of Image)
-                Dim offset As Integer
-
-                Dim fTFBody As List(Of Image) = CharacterGenerator.getImg("img/fTF/tfBody")
-                offset = fTFBody.Count - 5
-                range = fTFBody.GetRange(offset, 5)
-                fTFBody = fTFBody.GetRange(0, offset)
-                fTFBody.InsertRange(4, range)
-
-                t(2) = fTFBody(iarrind(2).Item1 - 1)
-                iarr(2) = CharacterGenerator.recolor2(t(2), c)
-            End If
-        Else
-            If iarrind(2).Item1 = 0 Then
-                t(2) = CharacterGenerator.getImg("img/mBody")(iarrind(2).Item1)
-                iarr(2) = CharacterGenerator.recolor2(t(2), c)
-            Else
-                t(2) = CharacterGenerator.getImg("img/mTF/tfBody")(iarrind(2).Item1 - 1)
-                iarr(2) = CharacterGenerator.recolor2(t(2), c)
-            End If
-        End If
-        If iarrind(4).Item2 Then
-            t(4) = CharacterGenerator.getImg("img/fFace")(iarrind(4).Item1)
-            iarr(4) = CharacterGenerator.recolor2(t(4), c)
-            If iarrind(7).Item1 = 0 Then
-                t(7) = CharacterGenerator.getImg("img/fNose")(iarrind(7).Item1)
-                iarr(7) = CharacterGenerator.recolor2(t(7), c)
-            End If
-            If iarrind(6).Item1 = 0 Or iarrind(6).Item1 = 3 Then
-                t(6) = CharacterGenerator.getImg("img/fEars")(iarrind(6).Item1)
-                iarr(6) = CharacterGenerator.recolor2(t(6), c)
-            ElseIf iarrind(6).Item1 = 6 Or iarrind(6).Item1 = 7 Then
-                t(6) = CharacterGenerator.getImg("img/fTF/tfEars")(iarrind(6).Item1 - 5)
-                iarr(6) = CharacterGenerator.recolor2(t(6), c)
-            End If
-        Else
-            t(4) = CharacterGenerator.getImg("img/mFace")(iarrind(4).Item1)
-            iarr(4) = CharacterGenerator.recolor2(t(4), c)
-            If iarrind(6).Item1 = 0 Or iarrind(6).Item1 = 3 Then
-                t(6) = CharacterGenerator.getImg("img/mEars")(iarrind(6).Item1)
-                iarr(6) = CharacterGenerator.recolor2(t(6), c)
-            End If
-            If iarrind(7).Item1 = 0 Then
-                t(7) = CharacterGenerator.getImg("img/mNose")(iarrind(7).Item1)
-                iarr(7) = CharacterGenerator.recolor2(t(7), c)
-            End If
-        End If
+       iArr(2) = CharacterGenerator.recolor2(CharacterGenerator.imgLib.atrs("Body").getAt(iArrInd(2)), c)
+        iarr(4) = CharacterGenerator.recolor2(CharacterGenerator.imgLib.atrs("Face").getAt(iarrind(4)), c)
+        iarr(6) = CharacterGenerator.recolor2(CharacterGenerator.imgLib.atrs("Ears").getAt(iarrind(6)), c)
+        iarr(7) = CharacterGenerator.recolor2(CharacterGenerator.imgLib.atrs("Nose").getAt(iarrind(7)), c)
     End Sub
     'load bar functions
     Private Sub bw_DoWork(ByVal sender As Object, ByVal e As DoWorkEventArgs)

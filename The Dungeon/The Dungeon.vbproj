@@ -196,6 +196,7 @@
     <Compile Include="Entities\Player\Transformations\Transformation.vb" />
     <Compile Include="Entities\Inventory.vb" />
     <Compile Include="Entities\preferedForm.vb" />
+    <Compile Include="ImageAttribute.vb" />
     <Compile Include="ImageCollection.vb" />
     <Compile Include="Items\Accesories\Accessory.vb" />
     <Compile Include="Items\Accesories\Cowbell.vb" />
@@ -504,13 +505,7 @@
   <ItemGroup>
     <Content Include="favicon %281%29.ico" />
     <Content Include="favicon.ico" />
-    <Content Include="img\bkg\back.bmp">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
     <Content Include="img\bkg\back.png" />
-    <Content Include="img\bkg\back1.bmp">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
     <Content Include="img\blank.png">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
@@ -811,19 +806,19 @@
     <Content Include="img\fTF\tfBody\tfBody21.png">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
-    <Content Include="img\fTF\tfBody\tfBody5.png">
+    <Content Include="img\fTF\tfBody\fBody5.png">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
-    <Content Include="img\fTF\tfBody\tfBody6.png">
+    <Content Include="img\fTF\tfBody\fBody6.png">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
-    <Content Include="img\fTF\tfBody\tfBody7.png">
+    <Content Include="img\fTF\tfBody\fBody7.png">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
-    <Content Include="img\fTF\tfBody\tfBody8.png">
+    <Content Include="img\fTF\tfBody\fBody8.png">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
-    <Content Include="img\fTF\tfBody\tfBody9.png">
+    <Content Include="img\fTF\tfBody\fBody9.png">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
     <Content Include="img\fTF\tfClothes\fClothes10.png">

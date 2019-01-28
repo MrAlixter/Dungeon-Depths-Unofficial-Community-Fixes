@@ -155,9 +155,9 @@ Public Class Debug_Window
 
         Dim attr As List(Of Image)()
         If Game.player.sexBool Then
-            attr = CharacterGenerator.fAttributes
+            attr = CharacterGenerator.imgLib.fAttributes
         Else
-            attr = CharacterGenerator.mAttributes
+            attr = CharacterGenerator.imgLib.mAttributes
         End If
 
         If tabPortraitsLoaded = False Then
