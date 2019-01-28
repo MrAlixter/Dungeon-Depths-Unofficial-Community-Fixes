@@ -201,7 +201,7 @@
     End Sub
     'recolor changes the color of an image, assumed to be of the same color as the players hair 
     Shared Function recolor(ByVal img As Bitmap, ByVal c As Color)
-        Dim cImg As Bitmap = img
+        Dim cImg As Bitmap = img.Clone
         For x = 0 To img.Width - 1
             For y = 0 To img.Height - 1
                 If Not img.GetPixel(x, y).A = 0 Then
@@ -225,7 +225,7 @@
     End Function
     'recolor2 changes the color of an image, assumed to be of the same color as the players skin
     Shared Function recolor2(ByVal img As Bitmap, ByVal c As Color)
-        Dim cImg As Bitmap = img
+        Dim cImg As Bitmap = img.Clone
         For x = 0 To img.Width - 1
             For y = 0 To img.Height - 1
                 If Not img.GetPixel(x, y).A = 0 Then 'And img.GetPixel(x, y).GetBrightness() > 0.5 Then
