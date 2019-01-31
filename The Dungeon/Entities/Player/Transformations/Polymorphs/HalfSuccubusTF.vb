@@ -31,15 +31,15 @@
             p.breastSize = Int(Rnd() * 3) + 1
             out += " Your body becomes daintier, and you are soon fully female."
         End If
-        p.iArrInd(1) = New Tuple(Of Integer, Boolean)(9, True)
-        p.iArrInd(4) = New Tuple(Of Integer, Boolean)(0, True)
-        p.iArrInd(5) = New Tuple(Of Integer, Boolean)(9, True)
-        p.iArrInd(7) = New Tuple(Of Integer, Boolean)(0, True)
-        p.iArrInd(9) = New Tuple(Of Integer, Boolean)(19, True)
-        p.iArrInd(10) = New Tuple(Of Integer, Boolean)(0, True)
-        p.iArrInd(13) = New Tuple(Of Integer, Boolean)(0, True)
-        p.iArrInd(15) = New Tuple(Of Integer, Boolean)(13, True)
-        p.iArrInd(16) = New Tuple(Of Integer, Boolean)(0, True)
+        p.iArrInd(1) = New Tuple(Of Integer, Boolean, Boolean)(9, True, True)
+        p.iArrInd(4) = New Tuple(Of Integer, Boolean, Boolean)(0, True, False)
+        p.iArrInd(5) = New Tuple(Of Integer, Boolean, Boolean)(9, True, True)
+        p.iArrInd(7) = New Tuple(Of Integer, Boolean, Boolean)(0, True, False)
+        p.iArrInd(9) = New Tuple(Of Integer, Boolean, Boolean)(19, True, True)
+        p.iArrInd(10) = New Tuple(Of Integer, Boolean, Boolean)(0, True, False)
+        p.iArrInd(13) = New Tuple(Of Integer, Boolean, Boolean)(0, True, False)
+        p.iArrInd(15) = New Tuple(Of Integer, Boolean, Boolean)(13, True, True)
+        p.iArrInd(16) = New Tuple(Of Integer, Boolean, Boolean)(0, True, False)
         p.wingInd = 2
 
         'transformation description push

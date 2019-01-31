@@ -11,8 +11,8 @@
         MyBase.mBoost = 2
         MyBase.count = 0
         MyBase.value = 0
-        MyBase.fInd = New Tuple(Of Integer, Boolean)(3, True)
-        MyBase.mInd = New Tuple(Of Integer, Boolean)(2, False)
+        MyBase.fInd = New Tuple(Of Integer, Boolean, Boolean)(3, True, False)
+        MyBase.mInd = New Tuple(Of Integer, Boolean, Boolean)(2, False, False)
     End Sub
     Overrides Sub discard()
         Game.pushLstLog("You drop the " & getName())

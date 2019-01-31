@@ -24,11 +24,11 @@
         p.perks("slimehair") = 1
         p.haircolor = Color.FromArgb(180, 5, 245, 198)
         p.skincolor = Color.FromArgb(200, 0, 255, 255)
-        p.iArrInd(6) = New Tuple(Of Integer, Boolean)(5, True)
-        p.iArrInd(9) = New Tuple(Of Integer, Boolean)(9, True)
-        p.iArrInd(10) = New Tuple(Of Integer, Boolean)(0, True)
-        p.iArrInd(13) = New Tuple(Of Integer, Boolean)(0, True)
-        p.iArrInd(16) = New Tuple(Of Integer, Boolean)(0, True)
+        p.iArrInd(6) = New Tuple(Of Integer, Boolean, Boolean)(5, True, True)
+        p.iArrInd(9) = New Tuple(Of Integer, Boolean, Boolean)(9, True, True)
+        p.iArrInd(10) = New Tuple(Of Integer, Boolean, Boolean)(0, True, False)
+        p.iArrInd(13) = New Tuple(Of Integer, Boolean, Boolean)(0, True, False)
+        p.iArrInd(16) = New Tuple(Of Integer, Boolean, Boolean)(0, True, False)
         If Not p.sexBool Then
             p.idRouteFM()
         End If

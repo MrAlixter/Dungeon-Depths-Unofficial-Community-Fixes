@@ -2,7 +2,7 @@
     Inherits Accessory
     'The the slave collar handles the thrall tf
     Dim formerClass As String = ""
-    Dim formerEyeType As Tuple(Of Integer, Boolean) = New Tuple(Of Integer, Boolean)(0, False)
+    Dim formerEyeType As Tuple(Of Integer, Boolean, Boolean) = New Tuple(Of Integer, Boolean, Boolean)(0, False, False)
 
     Sub New()
         MyBase.setName("Slave_Collar")
@@ -13,8 +13,8 @@
         MyBase.setUsable(False)
         MyBase.count = 0
         MyBase.value = 200
-        MyBase.fInd = New Tuple(Of Integer, Boolean)(7, True)
-        MyBase.mInd = New Tuple(Of Integer, Boolean)(3, False)
+        MyBase.fInd = New Tuple(Of Integer, Boolean, Boolean)(7, True, True)
+        MyBase.mInd = New Tuple(Of Integer, Boolean, Boolean)(3, False, True)
     End Sub
     Overrides Sub onEquip()
         Dim p As player = game.player
@@ -26,9 +26,9 @@
         If Transformation.canBeTFed(p) Then p.pState.save(p)
         p.pClass = p.classes("Thrall")
         If p.sexBool Then
-            p.iArrInd(9) = New Tuple(Of Integer, Boolean)(19, True)
+            p.iArrInd(9) = New Tuple(Of Integer, Boolean, Boolean)(19, True, True)
         Else
-            p.iArrInd(9) = New Tuple(Of Integer, Boolean)(8, False)
+            p.iArrInd(9) = New Tuple(Of Integer, Boolean, Boolean)(8, False, True)
         End If
 
         p.prefForm = New preferedForm()
@@ -45,15 +45,15 @@
         If Transformation.canBeTFed(p) Then p.pState.save(p)
         p.pClass = p.classes("Thrall")
         If p.sexBool Then
-            p.iArrInd(9) = New Tuple(Of Integer, Boolean)(19, True)
+            p.iArrInd(9) = New Tuple(Of Integer, Boolean, Boolean)(19, True, True)
         Else
-            p.iArrInd(9) = New Tuple(Of Integer, Boolean)(8, False)
+            p.iArrInd(9) = New Tuple(Of Integer, Boolean, Boolean)(8, False, True)
         End If
 
         If p.pClass.name.Equals("Magic Girl") Then
             p.breastSize = 2
-            p.iArrInd(6) = New Tuple(Of Integer, Boolean)(0, True)
-            p.iArrInd(15) = New Tuple(Of Integer, Boolean)(7, True)
+            p.iArrInd(6) = New Tuple(Of Integer, Boolean, Boolean)(0, True, False)
+            p.iArrInd(15) = New Tuple(Of Integer, Boolean, Boolean)(7, True, False)
         End If
 
         p.prefForm = New preferedForm()
@@ -78,9 +78,9 @@
         Return formerClass
     End Function
     Public Overrides Function ToString() As String
-        Return formerClass & "$" & formerEyeType.Item1 & "$" & formerEyeType.Item2
+        Return formerClass & "$" & formerEyeType.Item1 & "$" & formerEyeType.Item2 & "$" & formerEyeType.Item3
     End Function
-    Public Sub setFormerLife(ft As String, fet As Tuple(Of Integer, Boolean))
+    Public Sub setFormerLife(ft As String, fet As Tuple(Of Integer, Boolean, Boolean))
         formerClass = ft
         formerEyeType = fet
     End Sub

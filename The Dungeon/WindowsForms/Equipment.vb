@@ -306,7 +306,8 @@
     End Sub
     'portraitUDate updates the player's portrait based on their breastsize and armor
     Public Sub portraitUDate()
-        If p.iArrInd(2).Item1 <> 4 Then p.bsizeroute()
+        If p.solFlag Then Exit Sub
+        p.bsizeroute()
         If p.equippedArmor.getName = "Skimpy_Clothes" Then
             skimpyClothesUpdate()
         ElseIf p.equippedArmor.getName = "Magic_Girl_Outfit" Then
@@ -338,9 +339,9 @@
                 clothesChange("Naked")
                 Game.pushLstLog("Your clothes don't fit!")
                 If p.sexBool Then
-                    p.iArrInd(3) = New Tuple(Of Integer, Boolean)(47, True)
+                    p.iArrInd(3) = New Tuple(Of Integer, Boolean, Boolean)(47, True, True)
                 Else
-                    p.iArrInd(3) = New Tuple(Of Integer, Boolean)(5, False)
+                    p.iArrInd(3) = New Tuple(Of Integer, Boolean, Boolean)(5, False, True)
                 End If
             End If
         End If
@@ -360,7 +361,7 @@
             End If
         End If
 
-        
+
         'Form1.picPortrait.BackgroundImage = CharacterGenerator1.CreateBMP(p.iArr)
     End Sub
     Public Sub skimpyClothesUpdate()
@@ -376,9 +377,9 @@
             Case Else
                 clothesChange("Naked")
                 If p.sexBool Then
-                    p.iArrInd(3) = New Tuple(Of Integer, Boolean)(47, True)
+                    p.iArrInd(3) = New Tuple(Of Integer, Boolean, Boolean)(47, True, True)
                 Else
-                    p.iArrInd(3) = New Tuple(Of Integer, Boolean)(5, False)
+                    p.iArrInd(3) = New Tuple(Of Integer, Boolean, Boolean)(5, False, True)
                 End If
         End Select
     End Sub
@@ -388,9 +389,9 @@
             Game.pushLblEvent("Your clothes don't fit!")
             Game.pushLstLog("Your clothes don't fit!")
             If p.sexBool Then
-                p.iArrInd(3) = New Tuple(Of Integer, Boolean)(47, True)
+                p.iArrInd(3) = New Tuple(Of Integer, Boolean, Boolean)(47, True, True)
             Else
-                p.iArrInd(3) = New Tuple(Of Integer, Boolean)(5, False)
+                p.iArrInd(3) = New Tuple(Of Integer, Boolean, Boolean)(5, False, True)
             End If
         End If
         Select Case p.breastSize
@@ -398,60 +399,60 @@
                 p.iArrInd(3) = p.equippedArmor.bsize1
             Case 3
                 p.haircolor = Color.FromArgb(255, 255, 250, 205)
-                p.iArrInd(1) = New Tuple(Of Integer, Boolean)(10, True)
-                p.iArrInd(5) = New Tuple(Of Integer, Boolean)(10, True)
-                p.iArrInd(15) = New Tuple(Of Integer, Boolean)(7, True)
+                p.iArrInd(1) = New Tuple(Of Integer, Boolean, Boolean)(10, True, True)
+                p.iArrInd(5) = New Tuple(Of Integer, Boolean, Boolean)(10, True, True)
+                p.iArrInd(15) = New Tuple(Of Integer, Boolean, Boolean)(7, True, True)
                 p.iArrInd(3) = p.equippedArmor.bsize3
             Case Else
                 clothesChange("Naked")
                 If p.sexBool Then
-                    p.iArrInd(3) = New Tuple(Of Integer, Boolean)(47, True)
+                    p.iArrInd(3) = New Tuple(Of Integer, Boolean, Boolean)(47, True, True)
                 Else
-                    p.iArrInd(3) = New Tuple(Of Integer, Boolean)(5, False)
+                    p.iArrInd(3) = New Tuple(Of Integer, Boolean, Boolean)(5, False, True)
                 End If
         End Select
     End Sub
     Public Sub cclothesUpdate()
         Select Case p.breastSize
             Case -1
-                p.iArrInd(3) = New Tuple(Of Integer, Boolean)(p.sState.iArrInd(3).Item1, p.iArrInd(2).Item2)
+                p.iArrInd(3) = New Tuple(Of Integer, Boolean, Boolean)(p.sState.iArrInd(3).Item1, p.iArrInd(2).Item2, False)
             Case 0
-                p.iArrInd(3) = New Tuple(Of Integer, Boolean)(p.sState.iArrInd(3).Item1, p.iArrInd(2).Item2)
+                p.iArrInd(3) = New Tuple(Of Integer, Boolean, Boolean)(p.sState.iArrInd(3).Item1, p.iArrInd(2).Item2, False)
             Case 1
-                p.iArrInd(3) = New Tuple(Of Integer, Boolean)(p.sState.iArrInd(3).Item1, p.iArrInd(2).Item2)
+                p.iArrInd(3) = New Tuple(Of Integer, Boolean, Boolean)(p.sState.iArrInd(3).Item1, p.iArrInd(2).Item2, False)
             Case 2
-                p.iArrInd(3) = New Tuple(Of Integer, Boolean)(p.sState.iArrInd(3).Item1 + 99, p.iArrInd(2).Item2)
+                p.iArrInd(3) = New Tuple(Of Integer, Boolean, Boolean)(p.sState.iArrInd(3).Item1 + 99, p.iArrInd(2).Item2, False)
             Case Else
                 clothesChange("Naked")
                 Game.pushLstLog("Your clothes don't fit!")
                 If p.sexBool Then
-                    p.iArrInd(3) = New Tuple(Of Integer, Boolean)(47, True)
+                    p.iArrInd(3) = New Tuple(Of Integer, Boolean, Boolean)(47, True, True)
                 Else
-                    p.iArrInd(3) = New Tuple(Of Integer, Boolean)(5, False)
+                    p.iArrInd(3) = New Tuple(Of Integer, Boolean, Boolean)(5, False, True)
                 End If
         End Select
     End Sub
     Public Sub compressBreasts()
-        If p.iArrInd(2).Item1 <> 10 And p.iArrInd(2).Item1 <> 16 And p.iArrInd(2).Item1 <> 21 Then
+        If Not p.checkNDefFemInd(2, 10) And Not p.checkNDefFemInd(2, 16) And Not p.checkNDefFemInd(2, 21) Then
             Select Case p.breastSize
                 Case -1
-                    p.iArrInd(2) = New Tuple(Of Integer, Boolean)(0, False)
+                    p.iArrInd(2) = New Tuple(Of Integer, Boolean, Boolean)(0, False, False)
                 Case 0
-                    p.iArrInd(2) = New Tuple(Of Integer, Boolean)(2, False)
+                    p.iArrInd(2) = New Tuple(Of Integer, Boolean, Boolean)(2, False, True)
                 Case 1
-                    p.iArrInd(2) = New Tuple(Of Integer, Boolean)(5, True)
+                    p.iArrInd(2) = New Tuple(Of Integer, Boolean, Boolean)(5, True, True)
                 Case 2
-                    p.iArrInd(2) = New Tuple(Of Integer, Boolean)(6, True)
+                    p.iArrInd(2) = New Tuple(Of Integer, Boolean, Boolean)(6, True, True)
                 Case 3
-                    p.iArrInd(2) = New Tuple(Of Integer, Boolean)(7, True)
+                    p.iArrInd(2) = New Tuple(Of Integer, Boolean, Boolean)(7, True, True)
                 Case 4
-                    p.iArrInd(2) = New Tuple(Of Integer, Boolean)(8, True)
+                    p.iArrInd(2) = New Tuple(Of Integer, Boolean, Boolean)(8, True, True)
                 Case 5
-                    p.iArrInd(2) = New Tuple(Of Integer, Boolean)(9, True)
+                    p.iArrInd(2) = New Tuple(Of Integer, Boolean, Boolean)(9, True, True)
                 Case 6
-                    p.iArrInd(2) = New Tuple(Of Integer, Boolean)(18, True)
+                    p.iArrInd(2) = New Tuple(Of Integer, Boolean, Boolean)(18, True, True)
                 Case 7
-                    p.iArrInd(2) = New Tuple(Of Integer, Boolean)(20, True)
+                    p.iArrInd(2) = New Tuple(Of Integer, Boolean, Boolean)(20, True, True)
             End Select
         End If
     End Sub
@@ -459,23 +460,23 @@
         If p.iArrInd(2).Item1 <> 4 And p.iArrInd(2).Item1 <> 16 And p.iArrInd(2).Item1 <> 21 Then
             Select Case p.breastSize
                 Case -1
-                    p.iArrInd(2) = New Tuple(Of Integer, Boolean)(0, False)
+                    p.iArrInd(2) = New Tuple(Of Integer, Boolean, Boolean)(0, False, False)
                 Case 0
-                    p.iArrInd(2) = New Tuple(Of Integer, Boolean)(2, False)
+                    p.iArrInd(2) = New Tuple(Of Integer, Boolean, Boolean)(2, False, True)
                 Case 1
-                    p.iArrInd(2) = New Tuple(Of Integer, Boolean)(0, True)
+                    p.iArrInd(2) = New Tuple(Of Integer, Boolean, Boolean)(0, True, False)
                 Case 2
-                    p.iArrInd(2) = New Tuple(Of Integer, Boolean)(1, True)
+                    p.iArrInd(2) = New Tuple(Of Integer, Boolean, Boolean)(1, True, True)
                 Case 3
-                    p.iArrInd(2) = New Tuple(Of Integer, Boolean)(2, True)
+                    p.iArrInd(2) = New Tuple(Of Integer, Boolean, Boolean)(2, True, True)
                 Case 4
-                    p.iArrInd(2) = New Tuple(Of Integer, Boolean)(3, True)
+                    p.iArrInd(2) = New Tuple(Of Integer, Boolean, Boolean)(3, True, True)
                 Case 5
-                    p.iArrInd(2) = New Tuple(Of Integer, Boolean)(4, True)
+                    p.iArrInd(2) = New Tuple(Of Integer, Boolean, Boolean)(4, True, True)
                 Case 6
-                    p.iArrInd(2) = New Tuple(Of Integer, Boolean)(17, True)
+                    p.iArrInd(2) = New Tuple(Of Integer, Boolean, Boolean)(17, True, True)
                 Case 7
-                    p.iArrInd(2) = New Tuple(Of Integer, Boolean)(19, True)
+                    p.iArrInd(2) = New Tuple(Of Integer, Boolean, Boolean)(19, True, True)
             End Select
         End If
     End Sub

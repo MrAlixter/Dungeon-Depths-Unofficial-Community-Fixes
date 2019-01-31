@@ -30,15 +30,15 @@
         End If
         p.haircolor = Color.FromArgb(255, 155, 0, 0)
         p.skincolor = Color.FromArgb(255, 255, 105, 180)
-        p.iArrInd(1) = New Tuple(Of Integer, Boolean)(9, True)
-        p.iArrInd(4) = New Tuple(Of Integer, Boolean)(0, True)
-        p.iArrInd(5) = New Tuple(Of Integer, Boolean)(9, True)
-        p.iArrInd(7) = New Tuple(Of Integer, Boolean)(0, True)
-        p.iArrInd(9) = New Tuple(Of Integer, Boolean)(12, True)
-        p.iArrInd(10) = New Tuple(Of Integer, Boolean)(0, True)
-        p.iArrInd(13) = New Tuple(Of Integer, Boolean)(0, True)
-        p.iArrInd(15) = New Tuple(Of Integer, Boolean)(13, True)
-        p.iArrInd(16) = New Tuple(Of Integer, Boolean)(0, True)
+        p.iArrInd(1) = New Tuple(Of Integer, Boolean, Boolean)(9, True, True)
+        p.iArrInd(4) = New Tuple(Of Integer, Boolean, Boolean)(0, True, False)
+        p.iArrInd(5) = New Tuple(Of Integer, Boolean, Boolean)(9, True, True)
+        p.iArrInd(7) = New Tuple(Of Integer, Boolean, Boolean)(0, True, False)
+        p.iArrInd(9) = New Tuple(Of Integer, Boolean, Boolean)(12, True, True)
+        p.iArrInd(10) = New Tuple(Of Integer, Boolean, Boolean)(0, True, False)
+        p.iArrInd(13) = New Tuple(Of Integer, Boolean, Boolean)(0, True, False)
+        p.iArrInd(15) = New Tuple(Of Integer, Boolean, Boolean)(13, True, True)
+        p.iArrInd(16) = New Tuple(Of Integer, Boolean, Boolean)(0, True, False)
         p.wingInd = 2
         p.hornInd = 3
 

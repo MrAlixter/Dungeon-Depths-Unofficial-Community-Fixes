@@ -14,10 +14,10 @@
         MyBase.sBoost = 10
         MyBase.count = 0
         MyBase.value = 125
-        MyBase.bsizeneg1 = New Tuple(Of Integer, Boolean)(17, False)
-        MyBase.bsize1 = New Tuple(Of Integer, Boolean)(93, True)
-        MyBase.bsize2 = New Tuple(Of Integer, Boolean)(94, True)
-        MyBase.bsize3 = New Tuple(Of Integer, Boolean)(95, True)
+        MyBase.bsizeneg1 = New Tuple(Of Integer, Boolean, Boolean)(17, False, True)
+        MyBase.bsize1 = New Tuple(Of Integer, Boolean, Boolean)(93, True, True)
+        MyBase.bsize2 = New Tuple(Of Integer, Boolean, Boolean)(94, True, True)
+        MyBase.bsize3 = New Tuple(Of Integer, Boolean, Boolean)(95, True, True)
         MyBase.compressesBreasts = True
     End Sub
 

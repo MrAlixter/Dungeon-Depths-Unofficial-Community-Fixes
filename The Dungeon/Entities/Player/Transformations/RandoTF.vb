@@ -76,28 +76,28 @@
 
         'set the rest of the portrait randomly
         r = Int(Rnd() * 5)
-        p.iArrInd(1) = New Tuple(Of Integer, Boolean)(r, p.sexBool)
-        p.iArrInd(2) = New Tuple(Of Integer, Boolean)(0, p.sexbool)
-        p.iArrInd(4) = New Tuple(Of Integer, Boolean)(0, p.sexbool)
-        p.iArrInd(5) = New Tuple(Of Integer, Boolean)(r, p.sexbool)
+        p.iArrInd(1) = New Tuple(Of Integer, Boolean, Boolean)(r, p.sexBool, False)
+        p.iArrInd(2) = New Tuple(Of Integer, Boolean, Boolean)(0, p.sexBool, False)
+        p.iArrInd(4) = New Tuple(Of Integer, Boolean, Boolean)(0, p.sexBool, False)
+        p.iArrInd(5) = New Tuple(Of Integer, Boolean, Boolean)(r, p.sexBool, False)
         r = Int(Rnd() * 5)
-        p.iArrInd(3) = New Tuple(Of Integer, Boolean)(r, p.sexbool)
+        p.iArrInd(3) = New Tuple(Of Integer, Boolean, Boolean)(r, p.sexBool, False)
         r = Int(Rnd() * 4)
-        p.iArrInd(6) = New Tuple(Of Integer, Boolean)(r, p.sexbool)
-        p.iArrInd(7) = New Tuple(Of Integer, Boolean)(0, p.sexbool)
+        p.iArrInd(6) = New Tuple(Of Integer, Boolean, Boolean)(r, p.sexBool, False)
+        p.iArrInd(7) = New Tuple(Of Integer, Boolean, Boolean)(0, p.sexBool, False)
         r = Int(Rnd() * 3)
         If r = 1 Then r = 4
-        p.iArrInd(8) = New Tuple(Of Integer, Boolean)(r, p.sexbool)
+        p.iArrInd(8) = New Tuple(Of Integer, Boolean, Boolean)(r, p.sexBool, False)
         r = Int(Rnd() * 3)
-        p.iArrInd(9) = New Tuple(Of Integer, Boolean)(r, p.sexbool)
-        p.iArrInd(10) = New Tuple(Of Integer, Boolean)(0, p.sexbool)
-        p.iArrInd(11) = New Tuple(Of Integer, Boolean)(0, p.sexbool)
-        p.iArrInd(12) = New Tuple(Of Integer, Boolean)(0 + (2 * Int(Rnd() * 3)), p.sexbool)
-        p.iArrInd(13) = New Tuple(Of Integer, Boolean)(0, p.sexbool)
-        p.iArrInd(14) = New Tuple(Of Integer, Boolean)(0, p.sexbool)
+        p.iArrInd(9) = New Tuple(Of Integer, Boolean, Boolean)(r, p.sexBool, False)
+        p.iArrInd(10) = New Tuple(Of Integer, Boolean, Boolean)(0, p.sexBool, False)
+        p.iArrInd(11) = New Tuple(Of Integer, Boolean, Boolean)(0, p.sexBool, False)
+        p.iArrInd(12) = New Tuple(Of Integer, Boolean, Boolean)(0 + (2 * Int(Rnd() * 3)), p.sexBool, False)
+        p.iArrInd(13) = New Tuple(Of Integer, Boolean, Boolean)(0, p.sexBool, False)
+        p.iArrInd(14) = New Tuple(Of Integer, Boolean, Boolean)(0, p.sexBool, False)
         r = Int(Rnd() * 4) + 1
-        p.iArrInd(15) = New Tuple(Of Integer, Boolean)(r, p.sexbool)
-        p.iArrInd(16) = New Tuple(Of Integer, Boolean)(0, p.sexbool)
+        p.iArrInd(15) = New Tuple(Of Integer, Boolean, Boolean)(r, p.sexBool, False)
+        p.iArrInd(16) = New Tuple(Of Integer, Boolean, Boolean)(0, p.sexBool, False)
 
         'clear all player associated lists
         p.createInvPerks()
@@ -153,7 +153,7 @@
         p.currState.save(p)
         p.pState.save(p)
         p.sState.save(p)
-        p.sState.iArrInd(3) = New Tuple(Of Integer, Boolean)(si, p.sexbool)
+        p.sState.iArrInd(3) = New Tuple(Of Integer, Boolean, Boolean)(si, p.sexBool, False)
     End Sub
     Shared Sub floor4FirstBossEncounter()
         Game.pushLblEvent("Turning around, you are about to move on when a " & _

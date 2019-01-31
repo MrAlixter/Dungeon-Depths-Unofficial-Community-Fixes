@@ -1,5 +1,18 @@
 ﻿Public Class ImageDump
     Dim images As List(Of Image)
+
+    Shared Function imgEQ(ByVal a As Bitmap, ByVal b As Bitmap) As Boolean
+        Return a Is b
+        If a.Size.Equals(b.Size) Then
+            For y = 0 To a.Size.Height - 1 Step 12
+                For x = 0 To a.Size.Width - 1 Step 12
+                    If Not a.GetPixel(x, y).Equals(b.GetPixel(x, y)) Then Return False
+                Next
+            Next
+            Return True
+        End If
+        Return False
+    End Function
     Sub New(ByVal path As String)
         images = getImg(path)
     End Sub
@@ -15,7 +28,7 @@
     Sub add(ByRef img As Image)
         images.Add(img)
     End Sub
-    Sub setAt(ByVal imgInd As Integer, ByRef img As Image)
+    Sub setAt(ByVal imgInd As Integer, ByVal img As Image)
         images(imgInd) = img
     End Sub
     Public Sub merge(ByRef b As ImageDump)

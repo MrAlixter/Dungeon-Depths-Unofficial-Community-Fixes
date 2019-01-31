@@ -19,7 +19,7 @@
             p.sex = "Female"
             p.sexBool = True
         End If
-        p.iArrInd(16) = New Tuple(Of Integer, Boolean)(CharacterGenerator.imgLib.atrs("Hat").getF.Count - 3, True)
+        p.iArrInd(16) = New Tuple(Of Integer, Boolean, Boolean)(Game.imgLib.atrs("Hat").getF.Count - 3, True, False)
         Game.pushLblEvent(out, AddressOf step2)
         
         p.TextColor = Game.lblEvent.ForeColor
@@ -33,19 +33,19 @@
             p.magGState.load(p)
         Else
             p.breastSize = 1
-            p.iArrInd(1) = New Tuple(Of Integer, Boolean)(7, True)
-            p.iArrInd(2) = New Tuple(Of Integer, Boolean)(10, True)
-            p.iArrInd(3) = New Tuple(Of Integer, Boolean)(12, True)
-            p.iArrInd(4) = New Tuple(Of Integer, Boolean)(0, True)
-            p.iArrInd(5) = New Tuple(Of Integer, Boolean)(7, True)
-            p.iArrInd(6) = New Tuple(Of Integer, Boolean)(6, True)
-            p.iArrInd(7) = New Tuple(Of Integer, Boolean)(0, True)
-            p.iArrInd(8) = New Tuple(Of Integer, Boolean)(7, True)
-            p.iArrInd(9) = New Tuple(Of Integer, Boolean)(9, True)
-            p.iArrInd(10) = New Tuple(Of Integer, Boolean)(0, True)
-            p.iArrInd(13) = New Tuple(Of Integer, Boolean)(0, True)
-            p.iArrInd(15) = New Tuple(Of Integer, Boolean)(8, True)
-            p.iArrInd(16) = New Tuple(Of Integer, Boolean)(0, True)
+            p.iArrInd(1) = New Tuple(Of Integer, Boolean, Boolean)(7, True, True)
+            p.iArrInd(2) = New Tuple(Of Integer, Boolean, Boolean)(10, True, True)
+            p.iArrInd(3) = New Tuple(Of Integer, Boolean, Boolean)(12, True, True)
+            p.iArrInd(4) = New Tuple(Of Integer, Boolean, Boolean)(0, True, False)
+            p.iArrInd(5) = New Tuple(Of Integer, Boolean, Boolean)(7, True, True)
+            p.iArrInd(6) = New Tuple(Of Integer, Boolean, Boolean)(6, True, True)
+            p.iArrInd(7) = New Tuple(Of Integer, Boolean, Boolean)(0, True, False)
+            p.iArrInd(8) = New Tuple(Of Integer, Boolean, Boolean)(7, True, True)
+            p.iArrInd(9) = New Tuple(Of Integer, Boolean, Boolean)(9, True, True)
+            p.iArrInd(10) = New Tuple(Of Integer, Boolean, Boolean)(0, True, False)
+            p.iArrInd(13) = New Tuple(Of Integer, Boolean, Boolean)(0, True, False)
+            p.iArrInd(15) = New Tuple(Of Integer, Boolean, Boolean)(8, True, True)
+            p.iArrInd(16) = New Tuple(Of Integer, Boolean, Boolean)(0, True, False)
             p.magGState.save(p)
             p.magGState.initFlag = True
         End If

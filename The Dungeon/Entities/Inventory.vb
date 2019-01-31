@@ -90,6 +90,7 @@
         internal_Inventory.Add("Succubus_Garb", New SuccubusGarb())         '74
         internal_inventory.Add("Regal_Gown", New PrincessGown())            '75
         internal_inventory.Add("Clear_Potion", New ClearPotion())           '76
+        internal_inventory.Add("Minor_Ring_of_Regen.", New ROfMinRegen())       '77
 
         armor = {New NormalClothes, New SkimpyClothes, New Naked,
                  Me.item(5), Me.item(7), Me.item(8), Me.item(10),
@@ -113,7 +114,7 @@
                 Me.item(34), Me.item(35), Me.item(44)}
 
         acce = {New noAcce(), Me.item(66), Me.item(67), Me.item(68),
-                Me.item(69), Me.item(70)}
+                Me.item(69), Me.item(70), Me.item(77)}
 
         potions = {Me.item(2), Me.item(13), Me.item(14), Me.item(25),
                    Me.item(26), Me.item(27), Me.item(28), Me.item(29),

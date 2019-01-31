@@ -23,17 +23,17 @@
         p.pForm = p.forms("Blowup Doll")
 
         'maid transformation
-        p.iArrInd(1) = New Tuple(Of Integer, Boolean)(14, True)
-        p.iArrInd(2) = New Tuple(Of Integer, Boolean)(16, True)
-        p.iArrInd(4) = New Tuple(Of Integer, Boolean)(1, True)
-        p.iArrInd(5) = New Tuple(Of Integer, Boolean)(18, True)
-        p.iArrInd(7) = New Tuple(Of Integer, Boolean)(1, True)
-        p.iArrInd(8) = New Tuple(Of Integer, Boolean)(12, True)
-        p.iArrInd(9) = New Tuple(Of Integer, Boolean)(17, True)
-        p.iArrInd(10) = New Tuple(Of Integer, Boolean)(2, False)
-        p.iArrInd(13) = New Tuple(Of Integer, Boolean)(0, True)
-        p.iArrInd(15) = New Tuple(Of Integer, Boolean)(14, True)
-        p.iArrInd(16) = New Tuple(Of Integer, Boolean)(0, True)
+        p.setIAInd(1, 14, True, True)
+        p.setIAInd(2, 16, True, True)
+        p.setIAInd(4, 1, True, True)
+        p.setIAInd(5, 18, True, True)
+        p.setIAInd(7, 1, True, True)
+        p.setIAInd(8, 12, True, True)
+        p.setIAInd(9, 17, True, True)
+        p.setIAInd(10, 2, False, True)
+        p.setIAInd(13, 0, True, True)
+        p.setIAInd(15, 14, True, True)
+        p.setIAInd(16, 0, True, True)
 
         'transformation description push
         out += "Looking down, you see some sort of coupon laying on the ground.  Picking it up, you read " & vbCrLf &

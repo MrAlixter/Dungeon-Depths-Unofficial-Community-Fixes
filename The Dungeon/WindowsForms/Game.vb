@@ -105,6 +105,7 @@ Public Class Game
     Public noImg As Boolean
 
     Dim debugWindow As Debug_Window
+    Public imgLib As ImageCollection
 
     '|STARTUP|
     Private Sub Form1_Load(sender As Object, e As EventArgs) Handles Me.Load
@@ -220,6 +221,8 @@ Public Class Game
         End If
 
         Game_Resize()
+
+        imgLib = New ImageCollection(1)
         'Try
         '    MsgBox("picStart is: " & picStart.BackgroundImage.Size.ToString)
         'Catch ex As Exception
@@ -324,6 +327,7 @@ Public Class Game
 
         initializeBoard(False)
         drawBoard()
+
         player.currState = New State(player)
         player.sState = New State(player)
         player.pState = New State(player)
@@ -331,11 +335,12 @@ Public Class Game
         eClock = eClockResetVal * 3
 
         turn = 0
-        pushLstLog("You see before you a dungeon.")
-        picStart.Visible = False
-        player.createP()
-        player.UIupdate()
 
+        pushLstLog("You see before you a dungeon.")
+
+        picStart.Visible = False
+
+        player.UIupdate()
     End Sub
     Sub loadCKeys()
         cKeys.Clear()
@@ -2196,7 +2201,7 @@ Public Class Game
             lblEventOnClose = Nothing
         End If
         If Not combatmode And Not npcmode Then player.canMoveFlag = True
-        If player.iArrInd(8).Equals(New Tuple(Of Integer, Boolean)(6, False)) Or player.iArrInd(8).Equals(New Tuple(Of Integer, Boolean)(12, True)) Then
+        If player.iArrInd(8).Equals(New Tuple(Of Integer, Boolean, Boolean)(6, False, True)) Or player.iArrInd(8).Equals(New Tuple(Of Integer, Boolean, Boolean)(12, True, True)) Then
             pushLblEvent("You can't use items now!")
             Exit Sub
         End If
@@ -2654,7 +2659,6 @@ Public Class Game
         End If
 
         pushLblEvent("Game successfully loaded!")
-        player.solFlag = False
         player.createP()
     End Sub
     'save/load drivers
@@ -2663,7 +2667,9 @@ Public Class Game
         Dim fileNum As String = name(name.Length - 1)
         If solFlag Then
             Try
+                player.solFlag = True
                 loadSave("s" & fileNum & ".ave")
+                player.solFlag = False
             Catch ex As System.IO.FileNotFoundException
                 MsgBox("Error 004: No save detected!")
             Catch ex2 As Exception
@@ -2792,15 +2798,15 @@ Public Class Game
             Dim pState As String() = reader.ReadLine().Split("#")(0).Split("*")
             Dim haircolor = Color.FromArgb(255, CInt(pState(22)), CInt(pState(23)), CInt(pState(24)))
             Dim skincolor = Color.FromArgb(255, CInt(pState(25)), CInt(pState(26)), CInt(pState(27)))
-            Dim ids(16) As Tuple(Of Integer, Boolean)
+            Dim ids(16) As Tuple(Of Integer, Boolean, Boolean)
             For i = 0 To 16
                 Dim arr() As String = pState(32 + CInt(pState(31)) + i).Split("%")
-                Dim id = New Tuple(Of Integer, Boolean)(CInt(arr(0)), CBool(arr(1)))
+                Dim id = New Tuple(Of Integer, Boolean, Boolean)(CInt(arr(0)), CBool(arr(1)), CBool(arr(2)))
 
                 If id.Item2 Then
-                    iarr(i) = CharacterGenerator.imgLib.fAttributes(i)(id.Item1)
+                    iarr(i) = Game.imgLib.fAttributes(i)(id.Item1)
                 Else
-                    iarr(i) = CharacterGenerator.imgLib.mAttributes(i)(id.Item1)
+                    iarr(i) = Game.imgLib.mAttributes(i)(id.Item1)
                 End If
                 ids(i) = id
                 If i = 6 And (id.Item1 = 0 Or id.Item1 = 3) Then iarr(6) = CharacterGenerator.recolor2(iarr(6), skincolor)
@@ -3627,17 +3633,17 @@ Public Class Game
 
         Return Color.FromArgb(a, r, g, b)
     End Function
-    Shared Sub changeHairColor(ByVal c As Color, ByVal iarrind() As Tuple(Of Integer, Boolean), ByRef iarr As Image())
-        iarr(1) = CharacterGenerator.recolor(CharacterGenerator.imgLib.atrs("RearHair2").getAt(iarrind(1)), c)
-        iarr(5) = CharacterGenerator.recolor(CharacterGenerator.imgLib.atrs("RearHair1").getAt(iarrind(5)), c)
-        iarr(10) = CharacterGenerator.recolor(CharacterGenerator.imgLib.atrs("Eyebrows").getAt(iarrind(10)), c)
-        iarr(15) = CharacterGenerator.recolor(CharacterGenerator.imgLib.atrs("FrontHair").getAt(iarrind(15)), c)
+    Shared Sub changeHairColor(ByVal c As Color, ByVal iarrind() As Tuple(Of Integer, Boolean, Boolean), ByRef iarr As Image())
+        iarr(1) = CharacterGenerator.recolor(Game.imgLib.atrs("RearHair2").getAt(iarrind(1)), c)
+        iarr(5) = CharacterGenerator.recolor(Game.imgLib.atrs("RearHair1").getAt(iarrind(5)), c)
+        iarr(10) = CharacterGenerator.recolor(Game.imgLib.atrs("Eyebrows").getAt(iarrind(10)), c)
+        iarr(15) = CharacterGenerator.recolor(Game.imgLib.atrs("FrontHair").getAt(iarrind(15)), c)
     End Sub
-    Shared Sub changeSkinColor(ByVal c As Color, ByVal iarrind() As Tuple(Of Integer, Boolean), ByRef iarr As Image())
-       iArr(2) = CharacterGenerator.recolor2(CharacterGenerator.imgLib.atrs("Body").getAt(iArrInd(2)), c)
-        iarr(4) = CharacterGenerator.recolor2(CharacterGenerator.imgLib.atrs("Face").getAt(iarrind(4)), c)
-        iarr(6) = CharacterGenerator.recolor2(CharacterGenerator.imgLib.atrs("Ears").getAt(iarrind(6)), c)
-        iarr(7) = CharacterGenerator.recolor2(CharacterGenerator.imgLib.atrs("Nose").getAt(iarrind(7)), c)
+    Shared Sub changeSkinColor(ByVal c As Color, ByVal iarrind() As Tuple(Of Integer, Boolean, Boolean), ByRef iarr As Image())
+        iarr(2) = CharacterGenerator.recolor2(Game.imgLib.atrs("Body").getAt(iarrind(2)), c)
+        iarr(4) = CharacterGenerator.recolor2(Game.imgLib.atrs("Face").getAt(iarrind(4)), c)
+        iarr(6) = CharacterGenerator.recolor2(Game.imgLib.atrs("Ears").getAt(iarrind(6)), c)
+        iarr(7) = CharacterGenerator.recolor2(Game.imgLib.atrs("Nose").getAt(iarrind(7)), c)
     End Sub
     'load bar functions
     Private Sub bw_DoWork(ByVal sender As Object, ByVal e As DoWorkEventArgs)
@@ -3657,6 +3663,7 @@ Public Class Game
         picLoadBar.Size = New Size(((e.ProgressPercentage / 100) * 395) * ratio, 17 * ratio)
     End Sub
     Private Sub bw_RunWorkerCompleted(ByVal sender As Object, ByVal e As RunWorkerCompletedEventArgs)
+        'System.Threading.Thread.Sleep(100)
         If e.Cancelled = True Then
             picLoadBar.Size = New Size(395, 17)
             Application.DoEvents()
@@ -3669,6 +3676,7 @@ Public Class Game
             picLoadBar.Visible = False
         End If
         player.canMoveFlag = True
+        player.createP()
     End Sub
     Public Sub ppw_DoWork(ByVal sender As Object, ByVal e As DoWorkEventArgs)
         Dim worker As BackgroundWorker = CType(sender, BackgroundWorker)

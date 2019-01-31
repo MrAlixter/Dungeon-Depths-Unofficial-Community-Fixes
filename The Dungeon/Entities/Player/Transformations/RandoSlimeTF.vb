@@ -62,26 +62,26 @@
 
         'set the rest of the portrait randomly
         Dim r As Integer = Int(Rnd() * 5)
-        p.iArrInd(1) = New Tuple(Of Integer, Boolean)(r, True)
-        p.iArrInd(2) = New Tuple(Of Integer, Boolean)(0, True)
-        p.iArrInd(4) = New Tuple(Of Integer, Boolean)(0, True)
-        p.iArrInd(5) = New Tuple(Of Integer, Boolean)(r, True)
+        p.iArrInd(1) = New Tuple(Of Integer, Boolean, Boolean)(r, True, False)
+        p.iArrInd(2) = New Tuple(Of Integer, Boolean, Boolean)(0, True, False)
+        p.iArrInd(4) = New Tuple(Of Integer, Boolean, Boolean)(0, True, False)
+        p.iArrInd(5) = New Tuple(Of Integer, Boolean, Boolean)(r, True, False)
         r = Int(Rnd() * 5)
-        p.iArrInd(3) = New Tuple(Of Integer, Boolean)(r, True)
-        p.iArrInd(6) = New Tuple(Of Integer, Boolean)(5, True)
-        p.iArrInd(7) = New Tuple(Of Integer, Boolean)(0, True)
+        p.iArrInd(3) = New Tuple(Of Integer, Boolean, Boolean)(r, True, False)
+        p.iArrInd(6) = New Tuple(Of Integer, Boolean, Boolean)(5, True, False)
+        p.iArrInd(7) = New Tuple(Of Integer, Boolean, Boolean)(0, True, False)
         r = Int(Rnd() * 3)
         If r = 1 Then r = 4
-        p.iArrInd(8) = New Tuple(Of Integer, Boolean)(r, True)
-        p.iArrInd(9) = New Tuple(Of Integer, Boolean)(9, True)
-        p.iArrInd(10) = New Tuple(Of Integer, Boolean)(0, True)
-        p.iArrInd(11) = New Tuple(Of Integer, Boolean)(0, True)
-        p.iArrInd(12) = New Tuple(Of Integer, Boolean)(0 + (2 * Int(Rnd() * 3)), True)
-        p.iArrInd(13) = New Tuple(Of Integer, Boolean)(0, True)
-        p.iArrInd(14) = New Tuple(Of Integer, Boolean)(0, True)
+        p.iArrInd(8) = New Tuple(Of Integer, Boolean, Boolean)(r, True, False)
+        p.iArrInd(9) = New Tuple(Of Integer, Boolean, Boolean)(9, True, True)
+        p.iArrInd(10) = New Tuple(Of Integer, Boolean, Boolean)(0, True, False)
+        p.iArrInd(11) = New Tuple(Of Integer, Boolean, Boolean)(0, True, False)
+        p.iArrInd(12) = New Tuple(Of Integer, Boolean, Boolean)(0 + (2 * Int(Rnd() * 3)), True, False)
+        p.iArrInd(13) = New Tuple(Of Integer, Boolean, Boolean)(0, True, False)
+        p.iArrInd(14) = New Tuple(Of Integer, Boolean, Boolean)(0, True, False)
         r = Int(Rnd() * 4) + 1
-        p.iArrInd(15) = New Tuple(Of Integer, Boolean)(r, True)
-        p.iArrInd(16) = New Tuple(Of Integer, Boolean)(0, True)
+        p.iArrInd(15) = New Tuple(Of Integer, Boolean, Boolean)(r, True, False)
+        p.iArrInd(16) = New Tuple(Of Integer, Boolean, Boolean)(0, True, False)
         If Not p.sexBool Then
             p.idRouteFM()
         End If
@@ -107,7 +107,7 @@
         p.currState.save(p)
         p.pState.save(p)
         p.sState.save(p)
-        p.sState.iArrInd(3) = New Tuple(Of Integer, Boolean)(si, True)
+        p.sState.iArrInd(3) = New Tuple(Of Integer, Boolean, Boolean)(si, True, p.sState.iArrInd(3).Item3)
     End Sub
 
     Public Overrides Sub stopTF()

@@ -12,12 +12,12 @@
             Equipment.antiClothingCurse()
             p.createP()
         ElseIf p.perks("slutcurse") > -1 Or p.iArrInd(1).Item2 = True Then
-            p.iArrInd(1) = New Tuple(Of Integer, Boolean)(p.sState.iArrInd(1).Item1, False)
-            p.iArrInd(2) = New Tuple(Of Integer, Boolean)(0, True)
-            p.iArrInd(4) = New Tuple(Of Integer, Boolean)(p.sState.iArrInd(4).Item1, False)
-            p.iArrInd(5) = New Tuple(Of Integer, Boolean)(p.sState.iArrInd(5).Item1, False)
-            p.iArrInd(10) = New Tuple(Of Integer, Boolean)(p.sState.iArrInd(10).Item1, False)
-            p.iArrInd(15) = New Tuple(Of Integer, Boolean)(p.sState.iArrInd(15).Item1, False)
+            p.iArrInd(1) = New Tuple(Of Integer, Boolean, Boolean)(p.sState.iArrInd(1).Item1, False, False)
+            p.iArrInd(2) = New Tuple(Of Integer, Boolean, Boolean)(0, True, False)
+            p.iArrInd(4) = New Tuple(Of Integer, Boolean, Boolean)(p.sState.iArrInd(4).Item1, False, False)
+            p.iArrInd(5) = New Tuple(Of Integer, Boolean, Boolean)(p.sState.iArrInd(5).Item1, False, False)
+            p.iArrInd(10) = New Tuple(Of Integer, Boolean, Boolean)(p.sState.iArrInd(10).Item1, False, False)
+            p.iArrInd(15) = New Tuple(Of Integer, Boolean, Boolean)(p.sState.iArrInd(15).Item1, False, False)
             Game.pushLblEvent("Thoughts of modesty return to your mind. You are free of the slut curse!")
             p.perks("slutcurse") = -1
             Equipment.antiClothingCurse()

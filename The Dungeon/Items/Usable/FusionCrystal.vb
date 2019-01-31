@@ -171,7 +171,7 @@
         player.iArr = p1.iArr.Clone
         player.iArrInd = p1.iArrInd.Clone
         For i = 0 To 16
-            If i <> 1 And i <> 5 And i <> 3 Then
+            If i <> 1 And i <> 15 And i <> 3 Then
                 r = Int(Rnd() * 2)
                 If r = 0 Then player.iArrInd(i) = p1.iArrInd(i) Else player.iArrInd(i) = p2.iArrInd(i)
             ElseIf i = 3 Then
@@ -180,7 +180,7 @@
             ElseIf i = 1 Then
                 r = Int(Rnd() * 2)
                 If r = 0 Then player.iArrInd(i) = p1.iArrInd(i) Else player.iArrInd(i) = p2.iArrInd(i)
-                If r = 0 Then player.iArrInd(15) = p1.iArrInd(15) Else player.iArrInd(15) = p2.iArrInd(15)
+                If r = 0 Then player.iArrInd(15) = p2.iArrInd(15) Else player.iArrInd(15) = p1.iArrInd(15)
             End If
         Next
 

@@ -34,15 +34,15 @@
         Dim out = "Through the sway of your motion your cowbell rings out quietly, but repeatedly.  After a while of this, you take a rest and check yourself for any changes that may have taken place."
         If p.iArrInd(1).Item2 Then
             out += "  Looking at your reflection in the nearby pool of water, you see that you now have bovine ears!  Between these and the horns, you're pretty sure you're slowly turning into some sort of cow."
-            p.iArrInd(6) = New Tuple(Of Integer, Boolean)(8, True)
+            p.iArrInd(6) = New Tuple(Of Integer, Boolean, Boolean)(8, True, True)
             p.wBuff -= 1
         Else
             out += "  You can feel the tickle of hair much further down on your back than you are used to, and a quick glance in a nearby puddle confirms that your hair has lengthened considerably."
-            p.iArrInd(1) = New Tuple(Of Integer, Boolean)(1, True)
-            p.iArrInd(5) = New Tuple(Of Integer, Boolean)(0, True)
+            p.iArrInd(1) = New Tuple(Of Integer, Boolean, Boolean)(1, True, False)
+            p.iArrInd(5) = New Tuple(Of Integer, Boolean, Boolean)(0, True, False)
             If Not Int(Rnd() * 3) = 0 Then
                 out += "  Looking at your reflection in the nearby pool of water, you see that you now have bovine ears!  Between these and the horns, you're pretty sure you're slowly turning into some sort of cow."
-                p.iArrInd(6) = New Tuple(Of Integer, Boolean)(8, True)
+                p.iArrInd(6) = New Tuple(Of Integer, Boolean, Boolean)(8, True, True)
                 p.equippedAcce.wBoost -= 1
             End If
         End If
@@ -57,9 +57,9 @@
             out += "  You loose hold of your weapon dropping it and reverting your transformation."
             Equipment.weaponChange("Fists")
         End If
-        p.iArrInd(1) = New Tuple(Of Integer, Boolean)(16, True)
-        p.iArrInd(5) = New Tuple(Of Integer, Boolean)(20, True)
-        p.iArrInd(15) = New Tuple(Of Integer, Boolean)(16, True)
+        p.iArrInd(1) = New Tuple(Of Integer, Boolean, Boolean)(16, True, True)
+        p.iArrInd(5) = New Tuple(Of Integer, Boolean, Boolean)(20, True, True)
+        p.iArrInd(15) = New Tuple(Of Integer, Boolean, Boolean)(16, True, True)
         Game.pushLblEvent(out)
     End Sub
     Sub step5()

@@ -1,10 +1,13 @@
 ﻿Public Class ImageCollection
+    Inherits Object
     Public atrs As Dictionary(Of String, ImageAttribute) = New Dictionary(Of String, ImageAttribute)
 
     Sub New(ByVal libID As Integer)
         Select Case libID
             Case 0
                 createDefaultImageLib()
+            Case 1
+                createAllImageLib()
             Case Else
                 createAllImageLib()
         End Select
@@ -126,8 +129,8 @@
         '-index 15 (front hair)
         fFrontHair = New ImageDump("img/fFrontHair")
         mFrontHair = New ImageDump("img/mFrontHair")
-        ndoF = fAccA.Count
-        ndoM = mAccA.Count
+        ndoF = fFrontHair.Count
+        ndoM = mFrontHair.Count
         atrs.Add("FrontHair", New ImageAttribute(fFrontHair, mFrontHair, ndoF, ndoM))
 
         '-index 16 (hat)
@@ -194,7 +197,7 @@
         fTFClothes = New ImageDump("img/fTF/tfClothes")
         mTFClothes = New ImageDump("img/mTF/tfClothes")
         fClothing.merge(fTFClothes)
-        mClothing.merge(fTFClothes)
+        mClothing.merge(mTFClothes)
         atrs.Add("Clothes", New ImageAttribute(fClothing, mClothing, ndoF, ndoM))
 
         '-index 4 (face)
@@ -305,8 +308,8 @@
         '-index 15 (front hair)
         fFrontHair = New ImageDump("img/fFrontHair")
         mFrontHair = New ImageDump("img/mFrontHair")
-        ndoF = fAccA.Count
-        ndoM = mAccA.Count
+        ndoF = fFrontHair.Count
+        ndoM = mFrontHair.Count
         fTfFrontHair = New ImageDump("img/fTF/tfFrontHair")
         mTfFrontHair = New ImageDump("img/mTF/tfFrontHair")
         fFrontHair.merge(fTfFrontHair)
@@ -330,26 +333,32 @@
 
         horns = New ImageDump("img/Horns")
         atrs.Add("Horns", New ImageAttribute(horns, horns.Count))
+
+        For i = 0 To atrs.Keys.Count - 1
+            atrs(atrs.Keys(i)).key = atrs.Keys(i)
+        Next
+
+        removePlaceholderNullImg(Nothing)
     End Sub
     Sub removePlaceholderNullImg(ByVal null As Image)
         'replace the red "no image" images with transparent images
-        atrs("Glasses").setAt(New Tuple(Of Integer, Boolean)(0, True), null)
-        atrs("Glasses").setAt(New Tuple(Of Integer, Boolean)(0, False), null)
+        atrs("Glasses").setAt(New Tuple(Of Integer, Boolean, Boolean)(0, True, False), null)
+        atrs("Glasses").setAt(New Tuple(Of Integer, Boolean, Boolean)(0, False, False), null)
 
-        atrs("Cloak").setAt(New Tuple(Of Integer, Boolean)(0, True), null)
-        atrs("Cloak").setAt(New Tuple(Of Integer, Boolean)(0, False), null)
+        atrs("Cloak").setAt(New Tuple(Of Integer, Boolean, Boolean)(0, True, False), null)
+        atrs("Cloak").setAt(New Tuple(Of Integer, Boolean, Boolean)(0, False, False), null)
 
-        atrs("AccA").setAt(New Tuple(Of Integer, Boolean)(0, True), null)
-        atrs("AccA").setAt(New Tuple(Of Integer, Boolean)(0, False), null)
+        atrs("AccA").setAt(New Tuple(Of Integer, Boolean, Boolean)(0, True, False), null)
+        atrs("AccA").setAt(New Tuple(Of Integer, Boolean, Boolean)(0, False, False), null)
 
-        atrs("Hat").setAt(New Tuple(Of Integer, Boolean)(0, True), null)
-        atrs("Hat").setAt(New Tuple(Of Integer, Boolean)(0, False), null)
+        atrs("Hat").setAt(New Tuple(Of Integer, Boolean, Boolean)(0, True, False), null)
+        atrs("Hat").setAt(New Tuple(Of Integer, Boolean, Boolean)(0, False, False), null)
 
-        atrs("FacialMark").setAt(New Tuple(Of Integer, Boolean)(0, True), null)
-        atrs("FacialMark").setAt(New Tuple(Of Integer, Boolean)(0, False), null)
+        atrs("FacialMark").setAt(New Tuple(Of Integer, Boolean, Boolean)(0, True, False), null)
+        atrs("FacialMark").setAt(New Tuple(Of Integer, Boolean, Boolean)(0, False, False), null)
 
-        atrs("FrontHair").setAt(New Tuple(Of Integer, Boolean)(0, True), null)
-        atrs("FrontHair").setAt(New Tuple(Of Integer, Boolean)(0, False), null)
+        atrs("FrontHair").setAt(New Tuple(Of Integer, Boolean, Boolean)(0, True, False), null)
+        atrs("FrontHair").setAt(New Tuple(Of Integer, Boolean, Boolean)(0, False, False), null)
     End Sub
 
     Public Function fAttributes() As List(Of Image)()
@@ -365,5 +374,9 @@
             out.Add(atrs(atrs.Keys(i)).getM)
         Next
         Return out.ToArray
+    End Function
+
+    Public Overrides Function ToString() As String
+        Return "bing"
     End Function
 End Class

@@ -219,9 +219,9 @@
         Game.npcIndex = t.npcIndex
     End Sub
 
-    Shared Sub giveRNDFFName(ByRef p As Player)
+    Shared Sub giveRNDFName(ByRef p As Player)
         If Game.floor < 5 Then Randomize(Game.floorLayouts(Game.floor).GetHashCode) Else Randomize()
-        Dim fFNames() As String = {"Abigail", "Abby", "Anna", "Ann", "Ana", "Alexis", _
+        Dim fFNames() As String = {"Abigail", "Abby", "Anna", "Ann", "Ana", "Alexis", "Allie", _
                                "Becky", _
                                "Christine", "Casandra", "Catherine", "Cassie", "Carol", "Caroline", "Cara", _
                                "Danica", _
@@ -234,9 +234,50 @@
                                "Monica", "Mary", _
                                "Nancy", "Nicole", "Nadja", _
                                "Racheal", _
-                               "Samantha", "Sarah", "Sally", _
+                               "Samantha", "Sarah", "Sally", "Sophie", _
                                "Tanja", "Trisha", _
                                "Vanessa"}
+        p.name = fFNames(Int(Rnd() * fFNames.Length))
+    End Sub
+    Shared Sub giveRNDMName(ByRef p As Player)
+        If Game.floor < 5 Then Randomize(Game.floorLayouts(Game.floor).GetHashCode) Else Randomize()
+        Dim fFNames() As String = {"Aaron", "Alan", "Alexander", _
+                               "Bob", "Bruce", "Brandon", "Bailey", _
+                               "Chris", "Ciaran", _
+                               "Daniel", "Dave", "David", _
+                               "Eric", _
+                               "Gerry", _
+                               "Hank", _
+                               "Issac", "Ian", _
+                               "James", "Jimmy", "Jim", "Josh", "John", "Jackson", _
+                               "Ken", _
+                               "Lorenzo", "Leonard", "Leo", "Lawrence", _
+                               "Mark", _
+                               "Nathan", "Nick", _
+                               "Oliver", _
+                               "Richard", "Ryan", _
+                               "Samuel", "Stanley", "Stan", "Scott", _
+                               "Tanner", "Tristan", "Travis", _
+                               "Vance", _
+                               "Zachary", "Zack"}
+        p.name = fFNames(Int(Rnd() * fFNames.Length))
+    End Sub
+    Shared Sub giveRNDBimName(ByRef p As Player)
+        If Game.floor < 5 Then Randomize(Game.floorLayouts(Game.floor).GetHashCode) Else Randomize()
+        Dim fFNames() As String = {"Anna", "Ann", "Ana", "Alexis", "Allie", "Amber", "Ali", _
+                               "Becky", _
+                               "Christine", "Casandra", "Cassie", "Cara", "Chloe", _
+                               "Danica", "Dani", _
+                                "Erika", "Emmy", _
+                               "Heather", "Hailey", _
+                               "Johanna", "Jenna", "Jenni", "Jo-Jo", _
+                               "Kelli", _
+                               "Lana", "Leora", _
+                               "Monica", "Mia", _
+                               "Nancy", "Nicole", _
+                               "Racheal", _
+                               "Sammi", "Sam", "Sally", "Sara", "Sofi", _
+                               "Trisha", "Trixie"}
         p.name = fFNames(Int(Rnd() * fFNames.Length))
     End Sub
 

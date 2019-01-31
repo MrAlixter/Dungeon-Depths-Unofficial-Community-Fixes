@@ -10,7 +10,7 @@
         MyBase.setUsable(False)
         MyBase.count = 0
         MyBase.value = 0
-        MyBase.fInd = New Tuple(Of Integer, Boolean)(1, True)
+        MyBase.fInd = New Tuple(Of Integer, Boolean, Boolean)(1, True, False)
     End Sub
     Overrides Sub discard()
         Game.pushLstLog("You drop the " & getName())

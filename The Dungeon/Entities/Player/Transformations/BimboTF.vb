@@ -15,39 +15,39 @@
     Sub hairColorShift()
         Game.player.changeHairColor(Game.cShift(Game.player.haircolor, bimboyellow, 25))
         If Not Game.player.getHairColor.Equals(bimboyellow) Then currStep -= 1
-        Game.pushLblEvent("Your hair becomes slightly lighter, trending toward a platinum blonde.")
+        Game.pushLblEvent("Your hair becomes slightly lighter, brightening to a light blonde.")
     End Sub
     Sub step1()
         Dim p As player = game.player
         If p.name = "Targax" Then
             p.haircolor = Color.FromArgb(255, 255, 0, 147)
-            p.iArrInd(1) = New Tuple(Of Integer, Boolean)(9, True)
-            p.iArrInd(5) = New Tuple(Of Integer, Boolean)(9, True)
-            p.iArrInd(15) = New Tuple(Of Integer, Boolean)(13, True)
+            p.setIAInd(1, 9, True, True)
+            p.setIAInd(5, 9, True, True)
+            p.setIAInd(15, 13, True, True)
         Else
             p.haircolor = bimboyellow
-            p.iArrInd(1) = New Tuple(Of Integer, Boolean)(1, True)
-            p.iArrInd(5) = New Tuple(Of Integer, Boolean)(5, True)
-            p.iArrInd(15) = New Tuple(Of Integer, Boolean)(6, True)
+            p.setIAInd(1, 1, True, True)
+            p.setIAInd(5, 5, True, True)
+            p.setIAInd(15, 6, True, True)
         End If
 
-        If p.iArrInd(6).Item1 = 6 And p.iArrInd(6).Item2 Then p.iArrInd(6) = New Tuple(Of Integer, Boolean)(0, True)
-        Polymorph.giveRNDFFName(p)
-        p.iArrInd(8) = New Tuple(Of Integer, Boolean)(5, True)
-        p.iArrInd(9) = New Tuple(Of Integer, Boolean)(7, True)
-        p.iArrInd(13) = New Tuple(Of Integer, Boolean)(0, True)
-        If Not p.pClass.name.Equals("Magic Girl") Then p.iArrInd(16) = New Tuple(Of Integer, Boolean)(0, True)
+        If p.checkNDefFemInd(6, 6) Then p.setIAInd(6, 0, True, True)
+        Polymorph.giveRNDBimName(p)
+        p.setIAInd(8, 5, True, True)
+        p.setIAInd(9, 7, True, True)
+        p.setIAInd(13, 0, True, False)
+        If Not p.pClass.name.Equals("Magic Girl") Then p.setIAInd(16, 0, True, True)
 
         If p.breastSize = 1 Then
-            p.iArrInd(2) = New Tuple(Of Integer, Boolean)(6, True)
+            p.setIAInd(2, 6, True, True)
             If p.equippedArmor.getName.ToString() = "Common_Clothes" Then
-                p.iArrInd(3) = New Tuple(Of Integer, Boolean)(5, True)
+                p.setIAInd(3, 5, True, True)
             End If
         Else
             p.be()
         End If
         If p.pClass.name.Equals("Magic Girl") Then
-            p.iArrInd(16) = New Tuple(Of Integer, Boolean)(CharacterGenerator.imgLib.atrs("Hat").getF.Count - 3, True)
+            p.setIAInd(16, Game.imgLib.atrs("Hat").getF.Count - 3, True, True)
             p.perks("bimbotf") = 24
         End If
         p.lust += 10
@@ -71,7 +71,7 @@
         'final tf Stage
         If p.name.Equals("Targax") Then p.haircolor = Color.FromArgb(255, 20, 20, 20) Else p.haircolor = Color.FromArgb(255, 245, 231, 184)
         If p.breastSize < 3 And Not p.pClass.name.Equals("Magic Girl") Then
-            p.iArrInd(2) = New Tuple(Of Integer, Boolean)(7, True)
+            p.setIAInd(2, 7, True, True)
         Else
             p.be()
         End If
@@ -85,14 +85,14 @@
         End If
         If p.name <> "Targax" Then
             p.haircolor = Color.FromArgb(255, 250, 250, 205)
-            p.iArrInd(1) = New Tuple(Of Integer, Boolean)(6, True)
-            p.iArrInd(5) = New Tuple(Of Integer, Boolean)(6, True)
-            p.iArrInd(9) = New Tuple(Of Integer, Boolean)(8, True)
-            p.iArrInd(15) = New Tuple(Of Integer, Boolean)(7, True)
+            p.setIAInd(1, 6, True, True)
+            p.setIAInd(5, 6, True, True)
+            p.setIAInd(9, 8, True, True)
+            p.setIAInd(15, 7, True, True)
         Else
-            p.iArrInd(9) = New Tuple(Of Integer, Boolean)(16, True)
+            p.setIAInd(9, 16, True, True)
         End If
-        p.iArrInd(8) = New Tuple(Of Integer, Boolean)(6, True)
+        p.setIAInd(8, 6, True, True)
         If Game.floor < 6 Then p.pImage = Game.picPlayerB.BackgroundImage Else p.pImage = Game.picBimbof.BackgroundImage
         p.TextColor = Color.HotPink
         p.perks("bimbotf") = -1
@@ -100,16 +100,16 @@
     End Sub
     Sub step2alt()
         Dim p As player = game.player
-        p.iArrInd(16) = New Tuple(Of Integer, Boolean)(0, True)
-        p.iArrInd(2) = New Tuple(Of Integer, Boolean)(7, True)
+        p.setIAInd(16, 0, True, True)
+        p.setIAInd(2, 7, True, True)
         p.haircolor = Color.FromArgb(255, 255, 250, 205)
-        p.iArrInd(1) = New Tuple(Of Integer, Boolean)(10, True)
-        p.iArrInd(5) = New Tuple(Of Integer, Boolean)(10, True)
-        p.iArrInd(15) = New Tuple(Of Integer, Boolean)(7, True)
-        p.iArrInd(6) = New Tuple(Of Integer, Boolean)(0, True)
-        p.iArrInd(8) = New Tuple(Of Integer, Boolean)(6, True)
-        p.iArrInd(9) = New Tuple(Of Integer, Boolean)(8, True)
-        p.iArrInd(13) = New Tuple(Of Integer, Boolean)(0, True)
+        p.setIAInd(1, 10, True, True)
+        p.setIAInd(5, 10, True, True)
+        p.setIAInd(15, 7, True, True)
+        p.setIAInd(6, 0, True, True)
+        p.setIAInd(8, 6, True, True)
+        p.setIAInd(9, 8, True, True)
+        p.setIAInd(13, 0, True, True)
         Equipment.clothesChange("Magic_Girl_Outfit")
         p.breastSize = 3
         Game.pushLblEvent("You immediatly feel funny, the increased magic in your system reacting swiftly with the gum.  In your haze, you look down to see your clothes have become tight and pink. You giggle, all traces of intelect vanishing as your body becomes more curvy and feminine. Your hair lengthens, becoming a platinum blonde, and your clothes finish changing to match your new figure.")

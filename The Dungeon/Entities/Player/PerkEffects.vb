@@ -16,7 +16,7 @@
             p.perks("slimehair") = -1
         Else
             If p.health < 1 And Game.turn Mod 4 = 0 Then
-                p.health += 25 / p.getmaxHealth()
+                p.health += 5 / p.getMaxHealth()
                 Game.pushLstLog("Your gel body heals some of the damage done to it. +5 health")
                 If p.health > 1 Then p.health = 1
             End If
@@ -27,12 +27,33 @@
             p.perks("vsslimehair") = -1
         Else
             If p.health < 1 And Game.turn Mod 7 = 0 Then
-                Dim h As Integer = Int(Rnd() * 15) + 1
+                Dim h As Integer = Int(Rnd() * 5) + 1
                 p.health += h / p.getmaxHealth()
                 Game.pushLstLog("The gel portion of your body is able to heal some of your wounds! +" & h & " health")
                 If p.health > 1 Then p.health = 1
             End If
         End If
+    End Sub
+
+    Shared Sub minorRegen()
+        If p.health < 1 And Game.turn Mod 7 = 0 Then
+            Dim h As Integer = Int(Rnd() * 8) + 1
+            p.health += h / p.getMaxHealth()
+            Game.pushLstLog("A slight glowing aura heals some of your wounds! +" & h & " health")
+            If p.health > 1 Then p.health = 1
+
+            If Int(Rnd() * 20) = 0 Then
+                Game.pushLstLog(Game.lblEvent.Text.Split(vbCrLf)(0) & vbCrLf & "Your ring of regeneration goes dim, before shattering into dust.")
+            End If
+        End If
+    End Sub
+    Shared Sub Regen()
+            If p.health < 1 And Game.turn Mod 7 = 0 Then
+            Dim h As Integer = Int(Rnd() * 15) + 1
+                p.health += h / p.getMaxHealth()
+            Game.pushLstLog("A glowing aura heals some of your wounds! +" & h & " health")
+                If p.health > 1 Then p.health = 1
+            End If
     End Sub
     Shared Function livingArmor() As Boolean
         If p.equippedArmor.getName.Equals("Living_Armor") Then

@@ -12,11 +12,11 @@
         MyBase.dBoost = 5
         MyBase.count = 0
         MyBase.value = 250
-        MyBase.bsize1 = New Tuple(Of Integer, Boolean)(16, True)
-        MyBase.bsize2 = New Tuple(Of Integer, Boolean)(17, True)
-        MyBase.bsize3 = New Tuple(Of Integer, Boolean)(18, True)
-        MyBase.bsize4 = New Tuple(Of Integer, Boolean)(19, True)
-        MyBase.bsize5 = New Tuple(Of Integer, Boolean)(20, True)
+        MyBase.bsize1 = New Tuple(Of Integer, Boolean, Boolean)(16, True, True)
+        MyBase.bsize2 = New Tuple(Of Integer, Boolean, Boolean)(17, True, True)
+        MyBase.bsize3 = New Tuple(Of Integer, Boolean, Boolean)(18, True, True)
+        MyBase.bsize4 = New Tuple(Of Integer, Boolean, Boolean)(19, True, True)
+        MyBase.bsize5 = New Tuple(Of Integer, Boolean, Boolean)(20, True, True)
         MyBase.compressesBreasts = True
     End Sub
 

@@ -9,9 +9,9 @@
         MyBase.mBoost = 2
         MyBase.count = 0
         MyBase.value = 0
-        MyBase.bsize1 = New Tuple(Of Integer, Boolean)(48, True)
-        MyBase.bsize2 = New Tuple(Of Integer, Boolean)(49, True)
-        MyBase.bsize3 = New Tuple(Of Integer, Boolean)(50, True)
+        MyBase.bsize1 = New Tuple(Of Integer, Boolean, Boolean)(48, True, True)
+        MyBase.bsize2 = New Tuple(Of Integer, Boolean, Boolean)(49, True, True)
+        MyBase.bsize3 = New Tuple(Of Integer, Boolean, Boolean)(50, True, True)
         MyBase.compressesBreasts = True
     End Sub
 

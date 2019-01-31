@@ -23,7 +23,7 @@
         Equipment.weaponChange("Fists")
 
         'dragon transformation
-        p.iArrInd(16) = New Tuple(Of Integer, Boolean)(CharacterGenerator.imgLib.atrs("Hat").getF.Count - 2, True)
+        p.setIAInd(16, Game.imgLib.atrs("Hat").getF.Count - 2, True, False)
         If Not Game.cboxMG.Items.Contains("Dragon's Breath") Then Game.cboxMG.Items.Add("Dragon's Breath")
 
         'transformation description push

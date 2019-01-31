@@ -9,12 +9,12 @@
         MyBase.aBoost = 0
         MyBase.count = 0
         MyBase.value = 100
-        bsizeneg1 = New Tuple(Of Integer, Boolean)(5, False)
-        bsize1 = New Tuple(Of Integer, Boolean)(47, True)
-        bsize2 = New Tuple(Of Integer, Boolean)(47, True)
-        bsize3 = New Tuple(Of Integer, Boolean)(47, True)
-        bsize4 = New Tuple(Of Integer, Boolean)(47, True)
-        bsize5 = New Tuple(Of Integer, Boolean)(47, True)
+        bsizeneg1 = New Tuple(Of Integer, Boolean, Boolean)(5, False, True)
+        bsize1 = New Tuple(Of Integer, Boolean, Boolean)(47, True, True)
+        bsize2 = New Tuple(Of Integer, Boolean, Boolean)(47, True, True)
+        bsize3 = New Tuple(Of Integer, Boolean, Boolean)(47, True, True)
+        bsize4 = New Tuple(Of Integer, Boolean, Boolean)(47, True, True)
+        bsize5 = New Tuple(Of Integer, Boolean, Boolean)(47, True, True)
         MyBase.compressesBreasts = False
     End Sub
 

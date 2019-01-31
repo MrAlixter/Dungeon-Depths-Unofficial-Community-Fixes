@@ -11,9 +11,9 @@
             Game.pushLblEvent("You are now a woman!")
         ElseIf Not p.perks("slutcurse") > -1 Then
             p.perks("slutcurse") = 0
-            p.iArrInd(1) = New Tuple(Of Integer, Boolean)(p.sState.iArrInd(1).Item1, True)
-            p.iArrInd(5) = New Tuple(Of Integer, Boolean)(p.sState.iArrInd(5).Item1, True)
-            p.iArrInd(15) = New Tuple(Of Integer, Boolean)(p.sState.iArrInd(15).Item1, True)
+            p.setIAInd(1, p.sState.iArrInd(1).Item1, True, False)
+            p.setIAInd(5, p.sState.iArrInd(5).Item1, True, False)
+            p.setIAInd(15, p.sState.iArrInd(15).Item1, True, False)
             Equipment.clothingCurse1()
             p.be()
             Game.pushLblEvent("All thoughts of modesty vanish from your brain.  You will now dress sluttier!")

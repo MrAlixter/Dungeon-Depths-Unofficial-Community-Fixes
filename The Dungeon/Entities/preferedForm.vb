@@ -84,11 +84,11 @@
         If Not p.skincolor.Equals(skinColor) Then p.changeSkinColor(Game.cShift(p.skincolor, skinColor, 8))
 
         If Int(Rnd() * 3) = 0 Then
-            p.iArrInd(1) = New Tuple(Of Integer, Boolean)(rHairInd, hasFemaleHair)
-            p.iArrInd(5) = New Tuple(Of Integer, Boolean)(rHairInd, hasFemaleHair)
+            p.iArrInd(1) = New Tuple(Of Integer, Boolean, Boolean)(rHairInd, hasFemaleHair, False)
+            p.iArrInd(5) = New Tuple(Of Integer, Boolean, Boolean)(rHairInd, hasFemaleHair, False)
         End If
         If Int(Rnd() * 3) = 0 Then
-            p.iArrInd(15) = New Tuple(Of Integer, Boolean)(fHairInd + 1, hasFemaleHair)
+            p.iArrInd(15) = New Tuple(Of Integer, Boolean, Boolean)(fHairInd + 1, hasFemaleHair, False)
         End If
 
         If p.sexBool <> isFemale And Int(Rnd() * 3) = 0 Then
@@ -116,7 +116,7 @@
         End If
 
         If Not p.iArrInd(6).Item1 = earType And Int(Rnd() * 3) = 0 Then
-            p.iArrInd(6) = New Tuple(Of Integer, Boolean)(earType, isFemale)
+            p.iArrInd(6) = New Tuple(Of Integer, Boolean, Boolean)(earType, isFemale, False)
         End If
 
         p.createP()
@@ -129,10 +129,10 @@
         p.changeHairColor(hairColor)
         p.changeSkinColor(skinColor)
 
-        p.iArrInd(1) = New Tuple(Of Integer, Boolean)(rHairInd, hasFemaleHair)
-        p.iArrInd(5) = New Tuple(Of Integer, Boolean)(rHairInd, hasFemaleHair)
+        p.iArrInd(1) = New Tuple(Of Integer, Boolean, Boolean)(rHairInd, hasFemaleHair, False)
+        p.iArrInd(5) = New Tuple(Of Integer, Boolean, Boolean)(rHairInd, hasFemaleHair, False)
 
-        p.iArrInd(15) = New Tuple(Of Integer, Boolean)(fHairInd + 1, hasFemaleHair)
+        p.iArrInd(15) = New Tuple(Of Integer, Boolean, Boolean)(fHairInd + 1, hasFemaleHair, False)
 
         If p.sexBool <> isFemale Then
             If p.sexBool Then
@@ -163,7 +163,7 @@
         End If
 
         If Not p.iArrInd(6).Item1 = earType Then
-            p.iArrInd(6) = New Tuple(Of Integer, Boolean)(earType, isFemale)
+            p.iArrInd(6) = New Tuple(Of Integer, Boolean, Boolean)(earType, isFemale, False)
         End If
 
         p.createP()

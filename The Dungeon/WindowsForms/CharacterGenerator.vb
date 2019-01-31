@@ -31,14 +31,13 @@
 
     Public quit As Boolean = False
 
-    Dim iArrInd(16) As Tuple(Of Integer, Boolean)
+    Dim iArrInd(16) As Tuple(Of Integer, Boolean, Boolean)
     Dim sInts() As Integer = {0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0} 'the starting indexes of each catagory
 
     Dim hairColor As Color = Color.FromArgb(255, 204, 203, 213)
     Dim skincolor As Color = Color.FromArgb(255, 247, 219, 195)
 
     Dim defImgLib As ImageCollection = New ImageCollection(0)
-    Public imgLib As ImageCollection = New ImageCollection(-1)
 
     'CharGen1_Load handles the loading of the character generator
     Private Sub CharGen1_Load(sender As Object, e As EventArgs) Handles MyBase.Load
@@ -101,9 +100,6 @@
     Private Sub CharacterGenerator1_FormClosing(sender As Object, e As FormClosingEventArgs) Handles Me.FormClosing
         Game.player.iArr = iArr
         Game.player.iArrInd = iArrInd
-
-        imgLib.removePlaceholderNullImg(picPort.Image)
-
         If (ComboBox2.Text <> "Warrior" And ComboBox2.Text <> "Mage") Then
             If MessageBox.Show("Woah there! You entered in a non recognized class.  You sure you want to do that?", "Sneeky sneek", MessageBoxButtons.YesNo) = Windows.Forms.DialogResult.No Then
                 Exit Sub
@@ -119,9 +115,9 @@
         End If
         Game.player.setClassLoadout(ComboBox2.Text)
 
-        NormalClothes.bsizeneg1 = New Tuple(Of Integer, Boolean)(CInt(Game.player.iArrInd(3).Item1), False)
-        NormalClothes.bsize1 = New Tuple(Of Integer, Boolean)(CInt(Game.player.iArrInd(3).Item1), True)
-        NormalClothes.bsize2 = New Tuple(Of Integer, Boolean)(CInt(Game.player.iArrInd(3).Item1) + 99, True)
+        NormalClothes.bsizeneg1 = New Tuple(Of Integer, Boolean, Boolean)(CInt(Game.player.iArrInd(3).Item1), False, False)
+        NormalClothes.bsize1 = New Tuple(Of Integer, Boolean, Boolean)(CInt(Game.player.iArrInd(3).Item1), True, False)
+        NormalClothes.bsize2 = New Tuple(Of Integer, Boolean, Boolean)(CInt(Game.player.iArrInd(3).Item1) + 99, True, False)
     End Sub
 
     'displays the assembled portrait image
@@ -137,6 +133,7 @@
         Dim g As Graphics = Graphics.FromImage(bmp)
         If img(0).Size.Height <> 144 Then g.DrawImage(img(0), 0, 0, 146, 216) Else g.DrawImage(img(0), 0, 0, 144, 144)
         For i = 1 To UBound(img)
+            If img(i) Is Nothing Then img(i) = CharacterGenerator.picPort.Image
             If img(i).Size.Height <= 144 Then g.DrawImage(img(i), 1, 1, 144, 144) Else g.DrawImage(img(i), 1, 1, 144, 216)
         Next
         Return bmp
@@ -175,9 +172,9 @@
     Sub PicOnClick(ByVal sender As Object, ByVal e As EventArgs)
         Try
             If currAttribute.Equals(defImgLib.atrs("RearHair2")) Then
-                Dim ind As Tuple(Of Integer, Boolean) = New Tuple(Of Integer, Boolean)(pnlBody.Controls.IndexOf(sender), currSex)
-                iArr(1) = imgLib.atrs("RearHair2").getAt(ind)
-                iArr(5) = imgLib.atrs("RearHair1").getAt(ind)
+                Dim ind As Tuple(Of Integer, Boolean, Boolean) = New Tuple(Of Integer, Boolean, Boolean)(pnlBody.Controls.IndexOf(sender), currSex, False)
+                iArr(1) = Game.imgLib.atrs("RearHair2").getAt(ind)
+                iArr(5) = Game.imgLib.atrs("RearHair1").getAt(ind)
 
                 iArrInd(1) = ind
                 iArrInd(5) = ind
@@ -185,9 +182,9 @@
                 Exit Sub
             Else
                 Dim i As Integer = defImgLib.atrs.Values.ToList.IndexOf(currAttribute)
-                Dim ind As Tuple(Of Integer, Boolean) = New Tuple(Of Integer, Boolean)(pnlBody.Controls.IndexOf(sender), currSex)
-                iArr(1) = imgLib.atrs("RearHair2").getAt(ind)
-                iArrInd(1) = ind
+                Dim ind As Tuple(Of Integer, Boolean, Boolean) = New Tuple(Of Integer, Boolean, Boolean)(pnlBody.Controls.IndexOf(sender), currSex, False)
+                iArr(i) = Game.imgLib.atrs(Game.imgLib.atrs.Keys(i)).getAt(ind)
+                iArrInd(i) = ind
                 picPort.BackgroundImage = CreateBMP(iArr)
             End If
         Catch ex As Exception
@@ -201,6 +198,7 @@
     End Sub
     'recolor changes the color of an image, assumed to be of the same color as the players hair 
     Shared Function recolor(ByVal img As Bitmap, ByVal c As Color)
+        If img Is Nothing Then Return Nothing
         Dim cImg As Bitmap = img.Clone
         For x = 0 To img.Width - 1
             For y = 0 To img.Height - 1
@@ -225,6 +223,7 @@
     End Function
     'recolor2 changes the color of an image, assumed to be of the same color as the players skin
     Shared Function recolor2(ByVal img As Bitmap, ByVal c As Color)
+        If img Is Nothing Then Return Nothing
         Dim cImg As Bitmap = img.Clone
         For x = 0 To img.Width - 1
             For y = 0 To img.Height - 1
@@ -366,7 +365,7 @@
     End Sub
     Private Sub btnMark_Click(sender As Object, e As EventArgs) Handles btnMark.Click
         pnlBody.Controls.Clear()
-        
+
         currAtrButton.Enabled = True
         currAtrButton = btnMark
         currAtrButton.Enabled = False
@@ -393,7 +392,7 @@
     End Sub
     Private Sub btnAcca_Click(sender As Object, e As EventArgs) Handles btnAcca.Click
         pnlBody.Controls.Clear()
-        
+
         currAtrButton.Enabled = True
         currAtrButton = btnAcca
         currAtrButton.Enabled = False
@@ -454,9 +453,9 @@
         Dim sexAttrList1, sexAttrList2 As List(Of Image)
         If currSex Then
             sexAttrList1 = defImgLib.atrs("RearHair2").getF
-            sexAttrList2 = defImgLib.atrs("RearHair2").getF
+            sexAttrList2 = defImgLib.atrs("RearHair1").getF
         Else
-            sexAttrList1 = defImgLib.atrs("RearHair1").getM
+            sexAttrList1 = defImgLib.atrs("RearHair2").getM
             sexAttrList2 = defImgLib.atrs("RearHair1").getM
         End If
         For i = 0 To sexAttrList1.Count - 1
@@ -503,7 +502,7 @@
     End Sub
     Private Sub btnEars_Click(sender As Object, e As EventArgs) Handles btnEars.Click
         pnlBody.Controls.Clear()
-       
+
         currAtrButton.Enabled = True
         currAtrButton = btnEars
         currAtrButton.Enabled = False
@@ -529,7 +528,7 @@
     End Sub
     Private Sub btnClothes_Click(sender As Object, e As EventArgs) Handles btnClothes.Click
         pnlBody.Controls.Clear()
-        
+
         currAtrButton.Enabled = True
         currAtrButton = btnClothes
         currAtrButton.Enabled = False
@@ -538,23 +537,23 @@
         Dim sexAttrList As List(Of Image)
         If currSex Then
             sexAttrList = defImgLib.atrs("Clothes").getF
-            iArr(2) = imgLib.atrs("Body").getF(4)
+            iArr(2) = Game.imgLib.atrs("Body").getF(Game.imgLib.atrs("Body").osf(5))
             recolor2(iArr(2), skincolor)
             picPort.BackgroundImage = CreateBMP(iArr)
         Else
             sexAttrList = defImgLib.atrs("Clothes").getM
         End If
         For i = 0 To sexAttrList.Count - 1
-                Dim x As Integer = (i * 71 * Me.Size.Width / 581)
-                Dim y As Integer = 0
-                Dim img As New PictureBox
+            Dim x As Integer = (i * 71 * Me.Size.Width / 581)
+            Dim y As Integer = 0
+            Dim img As New PictureBox
             img.BackgroundImage = sexAttrList(i)
-                img.Location = New Point(x, y - 20)
-                img.Size = New Point(70 * Me.Size.Width / 581, 104 * Me.Size.Width / 581)
-                img.BackgroundImageLayout = ImageLayout.Stretch
-                AddHandler img.Click, AddressOf PicOnClick
-                pnlBody.Controls.Add(img)
-            Next
+            img.Location = New Point(x, y - 20)
+            img.Size = New Point(70 * Me.Size.Width / 581, 104 * Me.Size.Width / 581)
+            img.BackgroundImageLayout = ImageLayout.Stretch
+            AddHandler img.Click, AddressOf PicOnClick
+            pnlBody.Controls.Add(img)
+        Next
     End Sub
     Private Sub btnGlasses_Click(sender As Object, e As EventArgs) Handles btnGlasses.Click
         pnlBody.Controls.Clear()
@@ -645,8 +644,8 @@
     End Sub
     'sets the default profile image based on the current sex
     Sub setDefaultProfilePic()
-        Dim defInd0 = New Tuple(Of Integer, Boolean)(0, currSex)
-        Dim defInd1 = New Tuple(Of Integer, Boolean)(1, currSex)
+        Dim defInd0 = New Tuple(Of Integer, Boolean, Boolean)(0, currSex, False)
+        Dim defInd1 = New Tuple(Of Integer, Boolean, Boolean)(1, currSex, False)
         iArr(0) = defImgLib.atrs("bkg").getAt(defInd0)
         iArr(1) = defImgLib.atrs("RearHair2").getAt(defInd0)
         iArr(2) = defImgLib.atrs("Body").getAt(defInd0)
@@ -666,7 +665,7 @@
         iArr(16) = picPort.Image
 
         For i = 0 To 16
-            iArrInd(i) = New Tuple(Of Integer, Boolean)(sInts(i), currSex)
+            iArrInd(i) = New Tuple(Of Integer, Boolean, Boolean)(sInts(i), currSex, False)
         Next
     End Sub
     'sex Selection buttons
@@ -688,7 +687,7 @@
     Private Sub btnFemale_Click(sender As Object, e As EventArgs) Handles btnFemale.Click
         currSex = True
         Game.player.sexBool = True
-        
+
         btnBody_Click(sender, e)
 
         btnMale.Enabled = True
@@ -720,11 +719,11 @@
     Sub changeHC(ByVal c As Color)
         Game.player.haircolor = c
         hairColor = c
-        
-        iArr(1) = recolor(imgLib.atrs("RearHair2").getAt(iArrInd(1)), c)
-        iArr(5) = recolor(imgLib.atrs("RearHair1").getAt(iArrInd(5)), c)
-        iArr(10) = recolor(imgLib.atrs("Eyebrows").getAt(iArrInd(10)), c)
-        iArr(15) = recolor(imgLib.atrs("FrontHair").getAt(iArrInd(15)), c)
+
+        iArr(1) = recolor(Game.imgLib.atrs("RearHair2").getAt(iArrInd(1)), c)
+        iArr(5) = recolor(Game.imgLib.atrs("RearHair1").getAt(iArrInd(5)), c)
+        iArr(10) = recolor(Game.imgLib.atrs("Eyebrows").getAt(iArrInd(10)), c)
+        iArr(15) = recolor(Game.imgLib.atrs("FrontHair").getAt(iArrInd(15)), c)
 
         picPort.BackgroundImage = CreateBMP(iArr)
     End Sub
@@ -739,39 +738,39 @@
     Sub changeSC(ByVal c As Color)
         Game.player.skincolor = c
         skincolor = c
-        
-        iArr(2) = recolor2(imgLib.atrs("Body").getAt(iArrInd(2)), c)
-        iArr(4) = recolor2(imgLib.atrs("Face").getAt(iArrInd(4)), c)
-        iArr(6) = recolor2(imgLib.atrs("Ears").getAt(iArrInd(6)), c)
-        iArr(7) = recolor2(imgLib.atrs("Nose").getAt(iArrInd(7)), c)
-        
+
+        iArr(2) = recolor2(Game.imgLib.atrs("Body").getAt(iArrInd(2)), c)
+        iArr(4) = recolor2(Game.imgLib.atrs("Face").getAt(iArrInd(4)), c)
+        iArr(6) = recolor2(Game.imgLib.atrs("Ears").getAt(iArrInd(6)), c)
+        iArr(7) = recolor2(Game.imgLib.atrs("Nose").getAt(iArrInd(7)), c)
+
         picPort.BackgroundImage = CreateBMP(iArr)
     End Sub
     'randomizes the players portrait
     Private Sub btnRandom_Click(sender As Object, e As EventArgs) Handles btnRandom.Click
         Randomize()
 
-            Dim r As Integer = Int(Rnd() * 5)
-            iArrInd(1) = New Tuple(Of Integer, Boolean)(r, currSex)
-        iArr(1) = imgLib.atrs("RearHair2").getAt(iArrInd(1))
-            iArrInd(5) = New Tuple(Of Integer, Boolean)(r, currSex)
-        iArr(5) = imgLib.atrs("RearHair1").getAt(iArrInd(5))
-            r = Int(Rnd() * 5)
-            iArrInd(3) = New Tuple(Of Integer, Boolean)(r, currSex)
-        iArr(3) = imgLib.atrs("Clothes").getAt(iArrInd(3))
-            r = Int(Rnd() * 4)
-            iArrInd(6) = New Tuple(Of Integer, Boolean)(r, currSex)
-        iArr(6) = imgLib.atrs("Ears").getAt(iArrInd(6))
-            r = Int(Rnd() * 3)
-            If r = 1 Then r = 4
-            iArrInd(8) = New Tuple(Of Integer, Boolean)(r, currSex)
-        iArr(8) = imgLib.atrs("Mouth").getAt(iArrInd(8))
-            r = Int(Rnd() * 3)
-            iArrInd(9) = New Tuple(Of Integer, Boolean)(r, currSex)
-        iArr(9) = imgLib.atrs("Eyes").getAt(iArrInd(9))
-            r = Int(Rnd() * 4) + 1
-            iArrInd(15) = New Tuple(Of Integer, Boolean)(r, currSex)
-        iArr(15) = imgLib.atrs("FrontHair").getAt(iArrInd(15))
+        Dim r As Integer = Int(Rnd() * 5)
+        iArrInd(1) = New Tuple(Of Integer, Boolean, Boolean)(r, currSex, False)
+        iArr(1) = Game.imgLib.atrs("RearHair2").getAt(iArrInd(1))
+        iArrInd(5) = New Tuple(Of Integer, Boolean, Boolean)(r, currSex, False)
+        iArr(5) = Game.imgLib.atrs("RearHair1").getAt(iArrInd(5))
+        r = Int(Rnd() * 5)
+        iArrInd(3) = New Tuple(Of Integer, Boolean, Boolean)(r, currSex, False)
+        iArr(3) = Game.imgLib.atrs("Clothes").getAt(iArrInd(3))
+        r = Int(Rnd() * 4)
+        iArrInd(6) = New Tuple(Of Integer, Boolean, Boolean)(r, currSex, False)
+        iArr(6) = Game.imgLib.atrs("Ears").getAt(iArrInd(6))
+        r = Int(Rnd() * 3)
+        If r = 1 Then r = 4
+        iArrInd(8) = New Tuple(Of Integer, Boolean, Boolean)(r, currSex, False)
+        iArr(8) = Game.imgLib.atrs("Mouth").getAt(iArrInd(8))
+        r = Int(Rnd() * 3)
+        iArrInd(9) = New Tuple(Of Integer, Boolean, Boolean)(r, currSex, False)
+        iArr(9) = Game.imgLib.atrs("Eyes").getAt(iArrInd(9))
+        r = Int(Rnd() * 4) + 1
+        iArrInd(15) = New Tuple(Of Integer, Boolean, Boolean)(r, currSex, False)
+        iArr(15) = Game.imgLib.atrs("FrontHair").getAt(iArrInd(15))
 
         changeHC(Color.FromArgb(255, Int(Rnd() * 125) + 100, Int(Rnd() * 125) + 100, Int(Rnd() * 125) + 100))
 
