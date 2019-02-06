@@ -7,6 +7,8 @@
     Public mBoost As Integer = 0
     Public sBoost As Integer = 0
     Public wboost As Integer = 0
+    Public slutVarInd As Integer = -1
+    Public antiSlutVarInd As Integer = -1
     Public bsizeneg1 As Tuple(Of Integer, Boolean, Boolean)
     Public bsize0 As Tuple(Of Integer, Boolean, Boolean)
     Public bsize1 As Tuple(Of Integer, Boolean, Boolean)

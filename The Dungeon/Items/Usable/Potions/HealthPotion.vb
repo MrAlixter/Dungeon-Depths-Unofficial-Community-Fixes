@@ -21,7 +21,6 @@
         Dim phHealth = Game.player.health
         Dim heffect As HealthEffect = New HealthEffect
         heffect.apply(Game.player)
-
         Game.pushLblEvent("You drink the " & getName() & ".  +" & (Game.player.health - phHealth) * Game.player.getMaxHealth & " health!")
         count -= 1
     End Sub

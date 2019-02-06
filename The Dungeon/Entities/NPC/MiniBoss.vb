@@ -73,11 +73,12 @@
                     Game.pushLstLog((getName() & " casts a curse on you!"))
                     Game.pushLblCombatEvent((getName() & " casts a curse on you!"))
                     Game.player.ongoingTFs.Add(New NekoTF(7, 1, 0.3, True))
-                ElseIf Game.player.perks("nekocurse") > -1 And health < 45 Then
-                    Game.pushLstLog((getName() & " heals herself!  +35 health!"))
-                    Game.pushLblCombatEvent((getName() & " heals herself for 35 health!"))
-                    takeDMG(-35, Nothing)
-                ElseIf Game.player.health < 20 Then
+                ElseIf Game.player.perks("nekocurse") > -1 And getHealth() < 45 / getMaxHealth() Then
+                    Dim healvalue = Int(Rnd() * 4) + Int(Rnd() * 2) + 30
+                    Game.pushLstLog((getName() & " heals herself!  +" & healvalue & " health!"))
+                    Game.pushLblCombatEvent((getName() & " heals herself for " & healvalue & " health!"))
+                    takeDMG(-healvalue, Nothing)
+                ElseIf Game.player.getIntHealth < 20 Then
                     Game.pushLstLog((getName() & " waits expectantly..."))
                     Game.pushLblCombatEvent((getName() & " waits expectantly..."))
                 Else

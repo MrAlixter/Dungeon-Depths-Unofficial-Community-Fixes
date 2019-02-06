@@ -13,7 +13,7 @@
         MyBase.getTarget.attack = 1
         MyBase.getTarget.defence = 1
         MyBase.getTarget.speed = 1
-        If MyBase.getTarget.health > 70 Then MyBase.getTarget.health = 70
+        If MyBase.getTarget.getIntHealth > 70 Then MyBase.getTarget.health = 1
         MyBase.getTarget.maxHealth = 70
         Game.pushLstLog(CStr("Your spell hits the " & MyBase.getTarget.name & ", turning " & MyBase.getTarget.rPronoun & " into a giant frog!"))
         Game.pushLblCombatEvent(CStr("Your spell hits the " & MyBase.getTarget.name & ", turning " & MyBase.getTarget.rPronoun & " into a giant frog!"))

@@ -22,7 +22,7 @@
             Dim out As String = ""
             While ct < 1 Or Game.cboxMG.Items.Contains(sName)
                 ct += 1
-                Dim spell As Integer = CInt(Int(Rnd() * 8))
+                Dim spell As Integer = CInt(Int(Rnd() * 9))
                 Select Case spell
                     Case 0
                         sName = "Super Fireball"
@@ -88,6 +88,8 @@
                         sName = "Heal"
                     Case 7
                         sName = "Illuminate"
+                    Case 8
+                        sName = "Fireball"
                         'Case 7
                         '    sName = "Arcane Hypnosis"
                         'Case 8
@@ -103,7 +105,12 @@
             End While
             If Not Game.cboxMG.Items.Contains(sName) Then Game.cboxMG.Items.Add(sName)
             Game.pushLstLog("You read the " & getName() & ". " & sName & " learned!")
-            If Not out.Equals("") Then Game.pushLstLog(out)
+            If Not out.Equals("") Then
+                Game.pushLstLog(out)
+                Game.pushLblEvent("You read the " & getName() & ". " & sName & " learned!" & vbCrLf & vbCrLf & out)
+            Else
+                Game.pushLblEvent("You read the " & getName() & ". " & sName & " learned!")
+            End If
         End If
         count -= 1
         

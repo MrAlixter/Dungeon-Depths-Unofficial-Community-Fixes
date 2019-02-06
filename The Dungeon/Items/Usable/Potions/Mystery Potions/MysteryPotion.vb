@@ -18,12 +18,11 @@
     End Sub
 
     Public Sub pushLblEventEffects(ByRef appliedEffects As List(Of PEffect))
-        Dim e As String = "Potion Effects: " & vbCrLf
-
+        Dim e As String = "Potion Effects: " & vbCrLf & "~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~" & vbCrLf
         For Each effect In appliedEffects
             e += getEffectName(effect) & " applied." & vbCrLf
         Next
-        e += " " & vbCrLf & "Press any non-movement key to continue."
+        e += "~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~" & vbCrLf & "Press any non-movement key to continue."
         Game.lblEvent.Text = e
         Game.lblEvent.BringToFront()
         Game.lblEvent.Location = New Point((250 * Game.Size.Width / 688) - (Game.lblEvent.Size.Width / 2), 65 * Game.Size.Width / 688)

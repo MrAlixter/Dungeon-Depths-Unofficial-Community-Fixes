@@ -48,8 +48,7 @@
         'transformation description push
         p.TextColor = Color.LightGoldenrodYellow
         out += "Your eyes burn with an awesome fury as golden flames engulf you.  Your opponent squints and covers their eyes, blinded by your new found vibrance.  Dialing back your personal light show, you give them a cocky grin.  They may not know it, but this battle is already over."
-        Dim revertText = Game.lblEvent.Text.Split(vbCrLf)(0)
-        If Not revertText.Equals("") Then out = revertText & vbCrLf & vbCrLf & out
+        
         Game.pushLblEvent(out)
     End Sub
 End Class

@@ -36,8 +36,7 @@
         'transformation description push
         p.TextColor = Color.FromArgb(255, 2, 249, 200)
         Dim out = "Your skin feels wetter than it did a minute ago.  As you look down, you see that your body is slowly disolving into a aquamarine fluid! You melt down into a puddle, and find that while it is challenging, you can somewhat manipulate your body.  After some experimentation, you find yourself in a rough aproximation of your original form."
-        Dim revertText = Game.lblEvent.Text.Split(vbCrLf)(0)
-        If Not revertText.Equals("") Then out = revertText & vbCrLf & vbCrLf & out
+        
         Game.pushLblEvent(out)
     End Sub
 End Class

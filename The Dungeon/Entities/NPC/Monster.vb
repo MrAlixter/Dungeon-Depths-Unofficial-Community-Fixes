@@ -156,12 +156,21 @@
     Shared Sub createMimic(ByRef contents As Inventory)
         Dim m As Monster = New Monster(5)
         m.inv.merge(contents)
-        Game.npcList.Add(m)
+
+        'adds the mimmic to combat queues
+        targetRoute(m)
 
         Game.toCombat()
+        Game.pushLblCombatEvent((m.getName() & " attacks!"))
         Game.pushLstLog((m.getName() & " attacks!"))
         
         Game.drawBoard()
+    End Sub
+    Shared Sub targetRoute(ByRef m As Monster)
+        Game.npcList.Add(m)
+        Game.player.setTarget(m)
+        m.currTarget = Game.player
+        Game.toCombat()
     End Sub
     Private Function loadGhost() As Boolean
         Dim reader As IO.StreamReader
@@ -188,12 +197,11 @@
 
         inv.load(ghostArray(10))
         reader.Close()
-        Return True
 
-        Dim writer As IO.StreamWriter = IO.File.CreateText("gho.sts")
+        Dim writer = IO.File.CreateText("gho.sts")
         writer.WriteLine("MTGRAVE")
         writer.Flush()
         writer.Close()
-
+        Return True
     End Function
 End Class

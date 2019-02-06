@@ -14,9 +14,9 @@
             Game.pushLstLog(CStr("Your magic strikes " & MyBase.getTarget.name & " in the chest, turning " & MyBase.getTarget.rPronoun & " to stone"))
             Game.pushLblCombatEvent(CStr("Your magic strikes " & MyBase.getTarget.name & " in the chest, turning " & MyBase.getTarget.rPronoun & " to stone"))
         End If
-        If MyBase.getTarget.speed Mod 5 > 0 Then
-            Game.pushLstLog(CStr(MyBase.getTarget.speed Mod 5 & " more until they become a statue!"))
-            Game.pushLblCombatEvent(CStr(MyBase.getTarget.speed Mod 5 & " more until they become a statue!"))
+        If MyBase.getTarget.speed / 5 > 0 Then
+            Game.pushLstLog(CStr(MyBase.getTarget.speed / 5 & " more until they become a statue!"))
+            Game.pushLblCombatEvent(CStr(MyBase.getTarget.speed / 5 & " more until they become a statue!"))
         End If
 
         If MyBase.getTarget.speed > 0 Then

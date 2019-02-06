@@ -109,17 +109,24 @@
         If currSex Then
             Game.player.sexBool = True
             Game.player.sex = "Female"
+            Game.player.breastSize = 1
         Else
             Game.player.sexBool = False
             Game.player.sex = "Male"
+            Game.player.breastSize = -1
         End If
         Game.player.setClassLoadout(ComboBox2.Text)
 
-        NormalClothes.bsizeneg1 = New Tuple(Of Integer, Boolean, Boolean)(CInt(Game.player.iArrInd(3).Item1), False, False)
-        NormalClothes.bsize1 = New Tuple(Of Integer, Boolean, Boolean)(CInt(Game.player.iArrInd(3).Item1), True, False)
-        NormalClothes.bsize2 = New Tuple(Of Integer, Boolean, Boolean)(CInt(Game.player.iArrInd(3).Item1) + 99, True, False)
-    End Sub
-
+        CommonClothes.bsizeneg1 = New Tuple(Of Integer, Boolean, Boolean)(CInt(Game.player.iArrInd(3).Item1), False, False)
+        CommonClothes.bsize1 = New Tuple(Of Integer, Boolean, Boolean)(CInt(Game.player.iArrInd(3).Item1), True, False)
+        If Game.player.iArrInd(3).Item1 < 5 Then
+            CommonClothes.bsize2 = New Tuple(Of Integer, Boolean, Boolean)(Game.imgLib.atrs("Clothes").osf(CInt(Game.player.iArrInd(3).Item1) + 99), True, False)
+        ElseIf Game.player.iArrInd(3).Item1 = 5 Then
+            CommonClothes.bsize2 = New Tuple(Of Integer, Boolean, Boolean)(Game.imgLib.atrs("Clothes").osf(123), True, True)
+        ElseIf Game.player.iArrInd(3).Item1 = 6 Then
+            CommonClothes.bsize2 = New Tuple(Of Integer, Boolean, Boolean)(Game.imgLib.atrs("Clothes").osf(124), True, True)
+        End If
+    end sub
     'displays the assembled portrait image
     Sub drawImg()
         graph.DrawImage(iArr(0), picPort.Location)
@@ -154,7 +161,7 @@
     End Function
     'initializes and orders the image libraries without launching a CharacterGenerator1
     Public Sub init()
-        
+
     End Sub
     'getImg reads all .png files in a directory into a List data structure
     Shared Function getImg(ByVal direct As String) As List(Of Image)
@@ -173,8 +180,8 @@
         Try
             If currAttribute.Equals(defImgLib.atrs("RearHair2")) Then
                 Dim ind As Tuple(Of Integer, Boolean, Boolean) = New Tuple(Of Integer, Boolean, Boolean)(pnlBody.Controls.IndexOf(sender), currSex, False)
-                iArr(1) = Game.imgLib.atrs("RearHair2").getAt(ind)
-                iArr(5) = Game.imgLib.atrs("RearHair1").getAt(ind)
+                iArr(1) = recolor(Game.imgLib.atrs("RearHair2").getAt(ind), hairColor)
+                iArr(5) = recolor(Game.imgLib.atrs("RearHair1").getAt(ind), hairColor)
 
                 iArrInd(1) = ind
                 iArrInd(5) = ind
@@ -185,6 +192,8 @@
                 Dim ind As Tuple(Of Integer, Boolean, Boolean) = New Tuple(Of Integer, Boolean, Boolean)(pnlBody.Controls.IndexOf(sender), currSex, False)
                 iArr(i) = Game.imgLib.atrs(Game.imgLib.atrs.Keys(i)).getAt(ind)
                 iArrInd(i) = ind
+                changeHC(hairColor)
+                changeSC(skincolor)
                 picPort.BackgroundImage = CreateBMP(iArr)
             End If
         Catch ex As Exception
@@ -277,7 +286,7 @@
             Dim x As Integer = (i * 71 * Me.Size.Width / 581)
             Dim y As Integer = 0
             Dim img As New PictureBox
-            img.BackgroundImage = sexAttrList(i)
+            img.BackgroundImage = recolor2(sexAttrList(i), skincolor)
             img.Location = New Point(x, y - 20)
             img.Size = New Point(70 * Me.Size.Width / 581, 104 * Me.Size.Width / 581)
             img.BackgroundImageLayout = ImageLayout.Stretch
@@ -303,7 +312,7 @@
             Dim x As Integer = (i * 71 * Me.Size.Width / 581)
             Dim y As Integer = 0
             Dim img As New PictureBox
-            img.BackgroundImage = sexAttrList(i)
+            img.BackgroundImage = recolor(sexAttrList(i), hairColor)
             img.Location = New Point(x, y)
             img.Size = New Point(70 * Me.Size.Width / 581, 70 * Me.Size.Width / 581)
             img.BackgroundImageLayout = ImageLayout.Stretch
@@ -434,7 +443,7 @@
             Dim x As Integer = (i * 71 * Me.Size.Width / 581)
             Dim y As Integer = 0
             Dim img As New PictureBox
-            img.BackgroundImage = sexAttrList(i)
+            img.BackgroundImage = recolor2(sexAttrList(i), skincolor)
             img.Location = New Point(x, y)
             img.Size = New Point(70 * Me.Size.Width / 581, 70 * Me.Size.Width / 581)
             img.BackgroundImageLayout = ImageLayout.Stretch
@@ -466,7 +475,7 @@
             hairArr(0) = sexAttrList1(i)
             hairArr(1) = sexAttrList2(i)
 
-            img.BackgroundImage = CreateBMP(hairArr)
+            img.BackgroundImage = recolor(CreateBMP(hairArr), hairColor)
             img.Location = New Point(x, y)
             img.Size = New Point(70 * Me.Size.Width / 581, 104 * Me.Size.Width / 581)
             img.BackgroundImageLayout = ImageLayout.Stretch
@@ -518,7 +527,7 @@
             Dim x As Integer = (i * 71 * Me.Size.Width / 581)
             Dim y As Integer = 0
             Dim img As New PictureBox
-            img.BackgroundImage = sexAttrList(i)
+            img.BackgroundImage = recolor2(sexAttrList(i), skincolor)
             img.Location = New Point(x, y)
             img.Size = New Point(70 * Me.Size.Width / 581, 70 * Me.Size.Width / 581)
             img.BackgroundImageLayout = ImageLayout.Stretch
@@ -750,25 +759,24 @@
     Private Sub btnRandom_Click(sender As Object, e As EventArgs) Handles btnRandom.Click
         Randomize()
 
-        Dim r As Integer = Int(Rnd() * 5)
+        Dim r As Integer = Int(Rnd() * 7)
         iArrInd(1) = New Tuple(Of Integer, Boolean, Boolean)(r, currSex, False)
         iArr(1) = Game.imgLib.atrs("RearHair2").getAt(iArrInd(1))
         iArrInd(5) = New Tuple(Of Integer, Boolean, Boolean)(r, currSex, False)
         iArr(5) = Game.imgLib.atrs("RearHair1").getAt(iArrInd(5))
-        r = Int(Rnd() * 5)
+        r = Int(Rnd() * 7)
         iArrInd(3) = New Tuple(Of Integer, Boolean, Boolean)(r, currSex, False)
         iArr(3) = Game.imgLib.atrs("Clothes").getAt(iArrInd(3))
         r = Int(Rnd() * 4)
         iArrInd(6) = New Tuple(Of Integer, Boolean, Boolean)(r, currSex, False)
         iArr(6) = Game.imgLib.atrs("Ears").getAt(iArrInd(6))
-        r = Int(Rnd() * 3)
-        If r = 1 Then r = 4
+        r = Int(Rnd() * 11)
         iArrInd(8) = New Tuple(Of Integer, Boolean, Boolean)(r, currSex, False)
         iArr(8) = Game.imgLib.atrs("Mouth").getAt(iArrInd(8))
-        r = Int(Rnd() * 3)
+        r = Int(Rnd() * 9)
         iArrInd(9) = New Tuple(Of Integer, Boolean, Boolean)(r, currSex, False)
         iArr(9) = Game.imgLib.atrs("Eyes").getAt(iArrInd(9))
-        r = Int(Rnd() * 4) + 1
+        r = Int(Rnd() * 8) + 1
         iArrInd(15) = New Tuple(Of Integer, Boolean, Boolean)(r, currSex, False)
         iArr(15) = Game.imgLib.atrs("FrontHair").getAt(iArrInd(15))
 

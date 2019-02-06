@@ -45,11 +45,10 @@
         Dim p As player = game.player
         If Not p.sexBool Then
             p.MtF()
-            p.be()
             p.iArrInd(9) = New Tuple(Of Integer, Boolean, Boolean)(13, True, True)
             Game.pushLblCombatEvent("Your body slims down, and your chest inlates, giving you average sized breasts.  Soon after, your cock and balls shift into a vagina. You are now female!")
         Else
-            p.be()
+            be()
             currStep += 1
         End If
         p.lust += 5
@@ -62,7 +61,7 @@
             Exit Sub
         End If
 
-        p.be()
+        be()
         p.iArrInd(3) = New Tuple(Of Integer, Boolean, Boolean)(40, True, True)
         p.iArrInd(8) = New Tuple(Of Integer, Boolean, Boolean)(9, True, True)
         p.will -= 2
@@ -73,7 +72,7 @@
         Dim p As player = game.player
         Equipment.weaponChange("Fists")
         Equipment.clothesChange("Cat_Lingerie")
-        p.be()
+        be()
         p.iArrInd(1) = New Tuple(Of Integer, Boolean, Boolean)(12, True, True)
         p.iArrInd(5) = New Tuple(Of Integer, Boolean, Boolean)(17, True, True)
         p.iArrInd(15) = New Tuple(Of Integer, Boolean, Boolean)(1, True, False)
@@ -86,7 +85,7 @@
         If p.will < 5 Then
             If p.sex = "Male" Then
                 p.MtF()
-                p.be()
+                be()
                 p.iArrInd(1) = New Tuple(Of Integer, Boolean, Boolean)(12, True, True)
                 p.iArrInd(5) = New Tuple(Of Integer, Boolean, Boolean)(17, True, True)
                 p.iArrInd(15) = New Tuple(Of Integer, Boolean, Boolean)(1, True, False)
@@ -99,7 +98,7 @@
             p.iArrInd(8) = New Tuple(Of Integer, Boolean, Boolean)(9, True, True)
         End If
         p.pClass = p.classes("Kitty")
-        p.be()
+        be()
 
         Equipment.clothesChange("Cat_Lingerie")
 
@@ -146,5 +145,13 @@
     Public Overrides Sub setWaitTime(stage As Integer)
         turnsTilNextStep = 1
         turnsTilNextStep += generatWILResistance()
+    End Sub
+
+    Sub be()
+        Dim p = Game.player
+        If p.breastSize < 7 Then
+            p.breastSize += 1
+            p.reverseBSRoute()
+        End If
     End Sub
 End Class

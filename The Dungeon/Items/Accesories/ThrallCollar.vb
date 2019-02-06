@@ -17,7 +17,13 @@
         MyBase.mInd = New Tuple(Of Integer, Boolean, Boolean)(3, False, True)
     End Sub
     Overrides Sub onEquip()
-        Dim p As player = game.player
+        Dim p As Player = Game.player
+
+        If p.pClass.name = "Magic Girl" Then
+            Game.pushLblEvent("Your form prevents you from being altered!")
+            Exit Sub
+        End If
+
         p.perks("thrall") = 0
         p.ongoingTFs.Add(New ThrallTF(2, 10, 3.0, True))
 
@@ -36,7 +42,13 @@
         p.createP()
     End Sub
     Sub forceEquip()
-        Dim p As player = game.player
+        Dim p As Player = Game.player
+
+        If p.pClass.name = "Magic Girl" Then
+            Game.pushLblEvent("Your form prevents you from being altered!")
+            Exit Sub
+        End If
+
         p.perks("thrall") = 0
         p.ongoingTFs.Add(New ThrallTF(2, 10, 3.0, True))
 
@@ -63,11 +75,14 @@
     Public Overrides Sub onUnequip()
         Dim p As player = game.player
         For i = 0 To p.ongoingTFs.Count - 1
-            If p.ongoingTFs(i).GetType() Is GetType(ThrallTF) Then
-                p.ongoingTFs(i).stopTF()
-                p.ongoingTFs.RemoveAt(i)
+            If i < p.ongoingTFs.Count Then
+                If p.ongoingTFs(i).GetType() Is GetType(ThrallTF) Then
+                    p.ongoingTFs(i).stopTF()
+                    p.ongoingTFs.RemoveAt(i)
+                End If
             End If
         Next
+        p.perks("thrall") = 1
         p.pClass = Game.player.classes(formerClass)
         p.iArrInd(9) = formerEyeType
         p.prefForm = Nothing

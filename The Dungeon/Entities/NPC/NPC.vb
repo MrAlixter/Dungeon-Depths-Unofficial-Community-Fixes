@@ -55,10 +55,6 @@
         currTarget = Nothing
         nextCombatAction = Nothing
 
-        cause.currTarget = Nothing
-        cause.nextCombatAction = Nothing
-
-        Game.player.clearTarget()
         If getName() = "Explorer" Then
             If MessageBox.Show("Would you like to do the Explorer's body swap?", "Body Swap?", MessageBoxButtons.YesNo) = Windows.Forms.DialogResult.Yes Then 'Int(Rnd() * 3) = 0 Then '
                 Try
@@ -71,6 +67,12 @@
             Equipment.accChange("Nothing")
         End If
         endMonster()
+
+        Game.player.clearTarget()
+        cause.currTarget = Nothing
+        cause.nextCombatAction = Nothing
+
+        Game.Drawboard
     End Sub
     Public Overridable Sub toStatue()
         endMonster()
@@ -143,7 +145,10 @@
         
     End Sub
     Private Sub endBoss()
-        If sName.Equals("Marissa the Enchantress") Then Game.beatboss(1) = True
+        If sName.Equals("Marissa the Enchantress") Then
+            Game.beatboss(1) = True
+            Game.player.perks("nekocurse") = -1
+        End If
         If sName.Equals("Targax the Brutal") Then Game.beatboss(2) = True
         If sName.Equals("Explorer") And Game.floor < 6 Then Game.beatboss(Game.floor) = True
         If sName.Equals("Ooze Empress") Then

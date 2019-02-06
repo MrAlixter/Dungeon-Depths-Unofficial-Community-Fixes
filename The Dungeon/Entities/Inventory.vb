@@ -90,15 +90,20 @@
         internal_Inventory.Add("Succubus_Garb", New SuccubusGarb())         '74
         internal_inventory.Add("Regal_Gown", New PrincessGown())            '75
         internal_inventory.Add("Clear_Potion", New ClearPotion())           '76
-        internal_inventory.Add("Minor_Ring_of_Regen.", New ROfMinRegen())       '77
+        internal_inventory.Add("Minor_Ring_of_Regen.", New ROfMinRegen())   '77
+        internal_inventory.Add("Val._Night_Lingerie", New VNightLingerie()) '78
+        internal_inventory.Add("Val._Day_Suit", New VDayClothes())          '79
+        internal_inventory.Add("BE_Potion", New BEPotion())                 '80
+        internal_inventory.Add("Ring_of_the_L._Goddess", New ROTLGoddess()) '81
 
-        armor = {New NormalClothes, New SkimpyClothes, New Naked,
+        armor = {New CommonClothes, New SkimpyClothes, New Naked,
                  Me.item(5), Me.item(7), Me.item(8), Me.item(10),
                  Me.item(12), Me.item(16), Me.item(17), Me.item(18),
                  Me.item(19), Me.item(20), Me.item(38), Me.item(39),
                  Me.item(46), Me.item(47), Me.item(54), Me.item(55),
                  Me.item(56), Me.item(64), Me.item(71), Me.item(72),
-                 Me.item(73), Me.item(74), Me.item(75)}
+                 Me.item(73), Me.item(74), Me.item(75), Me.item(78),
+                 Me.item(79)}
 
         weapons = {New BareFists(),
                    Me.item(6), Me.item(9), Me.item(11), Me.item(21),
@@ -108,18 +113,19 @@
         useable = {Me.item(0), Me.item(1), Me.item(3), Me.item(4),
                    Me.item(65), Me.item(15), Me.item(36), Me.item(37),
                    Me.item(45), Me.item(48), Me.item(49), Me.item(50),
-                   Me.item(51), Me.item(52), Me.item(57), Me.item(58)}
+                   Me.item(51), Me.item(52), Me.item(57), Me.item(58),
+                   Me.item(81)}
 
         food = {Me.item(30), Me.item(31), Me.item(32), Me.item(33),
                 Me.item(34), Me.item(35), Me.item(44)}
 
         acce = {New noAcce(), Me.item(66), Me.item(67), Me.item(68),
-                Me.item(69), Me.item(70), Me.item(77)}
+                Me.item(69), Me.item(70), Me.item(77), Me.item(81)}
 
         potions = {Me.item(2), Me.item(13), Me.item(14), Me.item(25),
                    Me.item(26), Me.item(27), Me.item(28), Me.item(29),
                    Me.item(59), Me.item(60), Me.item(61), Me.item(62),
-                   Me.item(76)}
+                   Me.item(76), Me.item(80)}
         Array.Sort(potions)
 
         misc = {Me.item(43), Me.item(53)}

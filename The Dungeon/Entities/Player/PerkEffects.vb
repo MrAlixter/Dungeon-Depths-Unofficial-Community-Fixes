@@ -34,7 +34,6 @@
             End If
         End If
     End Sub
-
     Shared Sub minorRegen()
         If p.health < 1 And Game.turn Mod 7 = 0 Then
             Dim h As Integer = Int(Rnd() * 8) + 1
@@ -43,7 +42,9 @@
             If p.health > 1 Then p.health = 1
 
             If Int(Rnd() * 20) = 0 Then
-                Game.pushLstLog(Game.lblEvent.Text.Split(vbCrLf)(0) & vbCrLf & "Your ring of regeneration goes dim, before shattering into dust.")
+                Game.pushLblEvent(Game.lblEvent.Text.Split(vbCrLf)(0) & vbCrLf & "Your ring of regeneration goes dim, before shattering into dust.")
+                p.inv.item(77).count -= 1
+                Equipment.accChange("Nothing")
             End If
         End If
     End Sub
@@ -82,6 +83,28 @@
         Return False
     End Function
 
+    Shared Sub ROTLGRoute()
+        Dim rotlg = CType(p.inv.item(81), ROTLGoddess)
+        rotlg.sBoost = CInt(2.2222 * p.breastSize)
+
+        rotlg.dBoost = 0
+        rotlg.aBoost = 0
+        rotlg.mBoost = 0
+
+        If p.equippedArmor.slutVarInd <> -1 Then
+            rotlg.dBoost = -p.equippedArmor.dBoost
+        Else
+            Dim buff = p.equippedArmor.dBoost
+            If buff < 5 Then buff = 5
+            buff *= 4
+            rotlg.dBoost = buff
+            rotlg.aBoost = p.equippedArmor.aBoost * 1.5
+            rotlg.mBoost = p.equippedArmor.mBoost * 1.5
+        End If
+
+        p.UIupdate()
+    End Sub
+
     '|TRANSFORMATION TRIGGERS|
     Shared Sub targaxSwordTF()
         If p.name <> "Targax" Then
@@ -93,6 +116,11 @@
         End If
     End Sub
     Shared Sub thrallRestore()
+        If p.pClass.name = "Magic Girl" Then
+            Game.pushLblEvent("Your form prevents you from being altered!")
+            Exit Sub
+        End If
+
         p.prefForm.shiftTowards(Game.player)
         p.perks("thrall") = 1
     End Sub
@@ -108,24 +136,24 @@
             p.dBuff = 0
             p.perks("brage") = -1
             Game.pushLstLog("Berserker rage has worn off.")
-            
+
         End If
     End Sub
     Shared Sub massiveMammaries()
         If p.perks("mmammaries") = 1 Then
-            p.dBuff = p.dBuff + ((p.getDEF - p.dbuff) * 0.8)
+            p.dBuff = p.dBuff + ((p.getDEF - p.dBuff) * 0.8)
             p.perks("mmammaries") -= 1
         Else
             p.dBuff = 0
             p.perks("mmammaries") = -1
             Game.pushLstLog("Massive mammaries has worn off.")
-            
+
         End If
     End Sub
     Shared Sub ironhideFury()
         If p.perks("ihfury") = 3 Then
-            p.aBuff = p.aBuff + ((p.getATK - p.abuff) * 0.5)
-            p.dBuff = p.dBuff + ((p.getDEF - p.dbuff) * 0.6)
+            p.aBuff = p.aBuff + ((p.getATK - p.aBuff) * 0.5)
+            p.dBuff = p.dBuff + ((p.getDEF - p.dBuff) * 0.6)
             p.perks("ihfury") -= 1
         ElseIf p.perks("ihfury") > 0 Then
             p.perks("ihfury") -= 1
@@ -134,7 +162,7 @@
             p.dBuff = 0
             p.perks("ihfury") = -1
             Game.pushLstLog("Ironhide Fury has worn off.")
-            
+
         End If
     End Sub
 End Class

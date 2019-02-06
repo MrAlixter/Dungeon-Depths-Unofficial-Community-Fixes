@@ -46,8 +46,7 @@
         'transformation description push
         p.TextColor = Color.Orange
         out += "[Transformation decription pending]"
-        Dim revertText = Game.lblEvent.Text.Split(vbCrLf)(0)
-        If Not revertText.Equals("") Then out = revertText & vbCrLf & vbCrLf & out
+        
         Game.pushLblEvent(out)
     End Sub
 End Class

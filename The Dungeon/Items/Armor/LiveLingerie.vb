@@ -13,6 +13,7 @@
         MyBase.dBoost = 6
         MyBase.count = 0
         MyBase.value = 450
+        MyBase.antiSlutVarInd = 55
         bsizeneg1 = New Tuple(Of Integer, Boolean, Boolean)(16, False, True)
         bsize1 = New Tuple(Of Integer, Boolean, Boolean)(82, True, True)
         bsize2 = New Tuple(Of Integer, Boolean, Boolean)(84, True, True)

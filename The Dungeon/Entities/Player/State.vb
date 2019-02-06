@@ -6,11 +6,11 @@
     Public pClass As pClass = New Classless()
     Public pForm As pForm = New Human()
     Dim health As Double
-    Dim maxHealth, mana, maxMana, attack, defence As Integer
+    Public maxHealth, mana, maxMana, attack, defence As Integer
     Dim will, speed, gold, lust As Integer
     Dim breastSize, hunger As Integer
     Dim equippedWeapon As Weapon
-    Dim equippedArmor As Armor
+    Public equippedArmor As Armor
     Dim equippedAcce As Accessory
     Public iArrInd(16) As Tuple(Of Integer, Boolean, Boolean)
     Dim perks As Dictionary(Of String, Integer)
@@ -100,7 +100,6 @@
         p.maxHealth = maxHealth
         If p.health > 1 Then p.health = 1
         p.maxMana = maxMana
-        If p.mana > maxMana + p.mBuff Then p.mana = maxMana + p.mBuff
         p.attack = attack
         p.defence = defence
         p.will = will

@@ -137,6 +137,9 @@ Public Class Game
             Size = New Size(Size.Width * 0.9, Size.Height * 0.9)
         ElseIf screenSize = "XLarge" Then
             Size = New Size(iWidth * 1.3, iHeight * 1.3)
+        ElseIf screenSize = "Maximized" Then
+            Me.FormBorderStyle = Windows.Forms.FormBorderStyle.None
+            Me.WindowState = FormWindowState.Maximized
         End If
 
         loadcKeys()
@@ -324,6 +327,13 @@ Public Class Game
             Loop
         End If
 
+        'lblLoadMsg.Visible = True
+        Select Case CInt(Rnd() * 2)
+            Case Else
+                lblLoadMsg.Text = "You can challenge a floor boss at any time by finding the stairs " & vbCrLf &
+                                  "and either clicking the ""Challenge Boss?"" button, or hitting the " & vbCrLf &
+                                  "yes key (y by default)."
+        End Select
 
         initializeBoard(False)
         drawBoard()
@@ -931,6 +941,7 @@ Public Class Game
     End Sub
     Sub placeTraps()
         trapList.Clear()
+        If trapSizeDependence <= 0 Then trapSizeDependence = 1
         Dim numtrap As Integer = CInt(Int(Rnd() * trapFreqRange) + trapFreqMin) * Int(mBoardWidth / trapSizeDependence)
         For i = 1 To numtrap
             Dim trapX As Integer = CInt(Int(Rnd() * mBoardWidth))
@@ -1456,21 +1467,28 @@ Public Class Game
         lblCombatEvents.Text = ""
         closeLblEvent()
         If player.mana <= 0 Then Exit Sub
-        Dim m As Monster = Nothing
-        For i = 0 To npcList.Count() - 1
-            If npcList.Item(i).GetType().IsSubclassOf(GetType(Monster)) Or npcList.Item(i).GetType() Is GetType(Monster) Then
-                m = npcList.Item(i)
-                Exit For
-            End If
-        Next
-        player.nextCombatAction = Sub(t As Entity) Spell.spellCast(t, player, cboxMG.Text)
-        queueSetup()
-        Do While updatelist.isEmpty() = False
-            Dim u As Updatable = updatelist.remove()
-            u.update()
-        Loop
-        'updates the combat banner
-        updatePnlCombat(player, player.currTarget)
+        Dim subString As String = lstSelec.Items(index).ToString.Split("-")(1)
+        subString = subString.Substring(1, subString.Count - 1)
+
+        If combatmode Then
+            Dim m As Monster = Nothing
+            For i = 0 To npcList.Count() - 1
+                If npcList.Item(i).GetType().IsSubclassOf(GetType(Monster)) Or npcList.Item(i).GetType() Is GetType(Monster) Then
+                    m = npcList.Item(i)
+                    Exit For
+                End If
+            Next
+            player.nextCombatAction = Sub(t As Entity) Spell.spellCast(t, player, subString)
+            queueSetup()
+            Do While updateList.isEmpty() = False
+                Dim u As Updatable = updateList.remove()
+                u.update()
+            Loop
+            'updates the combat banner
+            updatePnlCombat(player, player.currTarget)
+        Else
+            Spell.spellCast(Nothing, player, subString)
+        End If
         ttCosts.RemoveAll()
     End Sub
     Sub selectSpec(ByVal index As Integer)
@@ -2009,7 +2027,7 @@ Public Class Game
                     Exit For
                 End If
             Next
-            player.setTarget(m)
+            player.nextCombatAction = Sub(t As Entity) player.attackCMD(t)
             queueSetup()
         Else
             pushLblEvent("You swing your " & player.equippedWeapon.getName & " at the air.")
@@ -2648,6 +2666,7 @@ Public Class Game
         lblSPD.Text = "SPD = " & player.getSPD
 
         player.currState.save(player)
+        If Not player.nextCombatAction Is Nothing Then player.nextCombatAction(Nothing)
 
         picStart.Visible = False
 
@@ -2666,19 +2685,19 @@ Public Class Game
         Dim name As String = CType(sender, Button).Name
         Dim fileNum As String = name(name.Length - 1)
         If solFlag Then
-            Try
-                player.solFlag = True
-                loadSave("s" & fileNum & ".ave")
-                player.solFlag = False
-            Catch ex As System.IO.FileNotFoundException
-                MsgBox("Error 004: No save detected!")
-            Catch ex2 As Exception
-                If MessageBox.Show("Error 005: Error in loaded in save file!" & vbCrLf & "Restart?", "Error 005", MessageBoxButtons.YesNo) = Windows.Forms.DialogResult.Yes Then
-                    Application.Restart()
-                Else
-                    Application.Exit()
-                End If
-            End Try
+            'Try
+            player.solFlag = True
+            loadSave("s" & fileNum & ".ave")
+            player.solFlag = False
+            'Catch ex As System.IO.FileNotFoundException
+            '    MsgBox("Error 004: No save detected!")
+            'Catch ex2 As Exception
+            '    If MessageBox.Show("Error 005: Error in loaded in save file!" & vbCrLf & "Restart?", "Error 005", MessageBoxButtons.YesNo) = Windows.Forms.DialogResult.Yes Then
+            '        Application.Restart()
+            '    Else
+            '        Application.Exit()
+            '    End If
+            'End Try
         Else
             save("s" & fileNum & ".ave")
             imagesWorkerArg = Convert.ToInt32(fileNum)
@@ -2977,6 +2996,7 @@ Public Class Game
                                  "-------------------------------------------------" & vbCrLf)
     End Sub
     Sub updatePnlCombat(ByVal p As Player, ByVal t As Entity)
+        lblTurn.Text.Equals("Turn: " & turn)
         If lblTurn.Text.Equals("Turn: " & turn) Or t Is Nothing Then Exit Sub
         If t.health <= 0 Then
             t.die()
@@ -3365,6 +3385,9 @@ Public Class Game
             Size = New Size(iWidth * 0.9, iHeight * 0.9)
         ElseIf screenSize = "XLarge" Then
             Size = New Size(iWidth * 1.3, iHeight * 1.3)
+        ElseIf screenSize = "Maximized" Then
+            Me.FormBorderStyle = Windows.Forms.FormBorderStyle.None
+            Me.WindowState = FormWindowState.Maximized
         Else
             Size = New Size(iWidth, iHeight)
         End If
@@ -3675,6 +3698,7 @@ Public Class Game
             Application.DoEvents()
             picLoadBar.Visible = False
         End If
+        lblLoadMsg.Visible = False
         player.canMoveFlag = True
         player.createP()
     End Sub

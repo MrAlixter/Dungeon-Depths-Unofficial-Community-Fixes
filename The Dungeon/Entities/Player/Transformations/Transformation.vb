@@ -1,4 +1,5 @@
-﻿'The Transformation class will be used to handle a (sequence of) tranformation(s) of the player from one "permenant"
+﻿
+'The Transformation class will be used to handle a (sequence of) tranformation(s) of the player from one "permenant"
 'state to another.
 
 Public Class Transformation
@@ -11,6 +12,7 @@ Public Class Transformation
     Protected canBeStopped As Boolean
     Protected tfName As String
     Protected tfDone As Boolean
+    Protected updateDuringCombat As Boolean = True
 
     'constuctors
     Sub New(n As Integer, tts As Integer, wi As Double, cbs As Boolean)
@@ -90,6 +92,7 @@ Public Class Transformation
 
     'updateable implementation
     Overridable Sub update() Implements Updatable.update
+        If Not updateDuringCombat And Game.combatmode Then Exit Sub
         If turnsTilNextStep = 0 Then
             nextStep = getNextStep(currStep)
             nextStep()

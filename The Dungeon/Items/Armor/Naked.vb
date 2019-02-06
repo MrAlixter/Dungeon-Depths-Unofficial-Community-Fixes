@@ -15,6 +15,8 @@
         bsize3 = New Tuple(Of Integer, Boolean, Boolean)(47, True, True)
         bsize4 = New Tuple(Of Integer, Boolean, Boolean)(47, True, True)
         bsize5 = New Tuple(Of Integer, Boolean, Boolean)(47, True, True)
+        bsize6 = New Tuple(Of Integer, Boolean, Boolean)(47, True, True)
+        bsize7 = New Tuple(Of Integer, Boolean, Boolean)(47, True, True)
         MyBase.compressesBreasts = False
     End Sub
 

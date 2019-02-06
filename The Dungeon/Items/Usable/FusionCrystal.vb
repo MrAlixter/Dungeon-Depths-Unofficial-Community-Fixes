@@ -47,17 +47,20 @@
                                "'s known spells and forms are lost.")
 
             Dim fuPlay As Player = Fusion(Game.player, p2)
-            fuPlay.solFlag = False
+
             Game.updatelist = New PQ
 
             Game.player = fuPlay
-            fuPlay.createP()
+            Equipment.setP(Game.player)
+
             fuPlay.inv.invNeedsUDate = True
             fuPlay.UIupdate()
             fuPlay.sState.save(fuPlay)
             Dim f3 As New Equipment
             f3.ShowDialog()
             f3.Dispose()
+
+            fuPlay.createP()
             fuPlay.currState.save(fuPlay)
             fuPlay.pState.save(fuPlay)
             
@@ -96,7 +99,7 @@
         Return out
     End Function
     Shared Function Fusion(ByVal p1 As Player, ByVal p2 As Player) As Player
-        Randomize()
+        Randomize(p1.name.GetHashCode)
         Dim player As Player = New Player()
         player.name = nameFusion(p1.name, p2.name)
 
@@ -193,8 +196,14 @@
             player.haircolor = p1.haircolor
         End If
 
-        player.TextColor = Color.White
+        finalizeFusion(player, p1, p2)
 
+        Return player
+    End Function
+
+    Shared Sub finalizeFusion(ByRef player As Player, ByRef p1 As Player, ByRef p2 As Player)
+
+        player.TextColor = Color.White
 
         player.pos = p1.pos
 
@@ -210,6 +219,6 @@
         player.inv.invNeedsUDate = True
         player.UIupdate()
 
-        Return player
-    End Function
+        player.solFlag = False
+    End Sub
 End Class

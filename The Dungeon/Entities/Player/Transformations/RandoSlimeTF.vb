@@ -61,17 +61,16 @@
 
 
         'set the rest of the portrait randomly
-        Dim r As Integer = Int(Rnd() * 5)
+        Dim r As Integer = Int(Rnd() * 7)
         p.iArrInd(1) = New Tuple(Of Integer, Boolean, Boolean)(r, True, False)
         p.iArrInd(2) = New Tuple(Of Integer, Boolean, Boolean)(0, True, False)
         p.iArrInd(4) = New Tuple(Of Integer, Boolean, Boolean)(0, True, False)
         p.iArrInd(5) = New Tuple(Of Integer, Boolean, Boolean)(r, True, False)
-        r = Int(Rnd() * 5)
+        r = Int(Rnd() * 7)
         p.iArrInd(3) = New Tuple(Of Integer, Boolean, Boolean)(r, True, False)
         p.iArrInd(6) = New Tuple(Of Integer, Boolean, Boolean)(5, True, False)
         p.iArrInd(7) = New Tuple(Of Integer, Boolean, Boolean)(0, True, False)
-        r = Int(Rnd() * 3)
-        If r = 1 Then r = 4
+        r = Int(Rnd() * 11)
         p.iArrInd(8) = New Tuple(Of Integer, Boolean, Boolean)(r, True, False)
         p.iArrInd(9) = New Tuple(Of Integer, Boolean, Boolean)(9, True, True)
         p.iArrInd(10) = New Tuple(Of Integer, Boolean, Boolean)(0, True, False)
@@ -79,7 +78,7 @@
         p.iArrInd(12) = New Tuple(Of Integer, Boolean, Boolean)(0 + (2 * Int(Rnd() * 3)), True, False)
         p.iArrInd(13) = New Tuple(Of Integer, Boolean, Boolean)(0, True, False)
         p.iArrInd(14) = New Tuple(Of Integer, Boolean, Boolean)(0, True, False)
-        r = Int(Rnd() * 4) + 1
+        r = Int(Rnd() * 8) + 1
         p.iArrInd(15) = New Tuple(Of Integer, Boolean, Boolean)(r, True, False)
         p.iArrInd(16) = New Tuple(Of Integer, Boolean, Boolean)(0, True, False)
         If Not p.sexBool Then

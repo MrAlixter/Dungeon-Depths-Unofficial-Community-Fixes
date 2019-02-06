@@ -21,7 +21,8 @@
         End If
         p.iArrInd(16) = New Tuple(Of Integer, Boolean, Boolean)(Game.imgLib.atrs("Hat").getF.Count - 3, True, False)
         Game.pushLblEvent(out, AddressOf step2)
-        
+
+
         p.TextColor = Game.lblEvent.ForeColor
         Game.cmboxSpec.Items.Clear()
         Game.specialRoute()
@@ -51,6 +52,7 @@
         End If
         Game.cboxMG.Items.Add("Heartblast Starcannon")
         p.inv.add(10, 1)
+        Equipment.accChange("Nothing")
         p.pClass = p.classes("Magic Girl")
         Equipment.clothesChange("Magic_Girl_Outfit")
         p.equippedArmor = New MagGirlOutfit

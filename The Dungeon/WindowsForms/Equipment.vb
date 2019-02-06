@@ -104,6 +104,10 @@
 
         'updates the player, the stat display, and the portrait before the form closes
         p.createP()
+        'ring of the love goddess
+        If p.perks("rotlg") > -1 Then
+            PerkEffects.ROTLGRoute()
+        End If
         p.UIupdate()
         
         Me.Close()
@@ -135,7 +139,7 @@
 
         'adds the default clothes for various forms
         cmbobxArmor.Items.Add("Naked")
-        If p.pClass.name = "Bimbo" Or p.perks("slutcurse") > -1 Then
+        If p.pClass.name = "Bimbo" Or p.perks("slutcurse") > -1 Or p.equippedArmor.getName.Equals("Skimpy_Clothes") Then
             cmbobxArmor.Items.Add("Skimpy_Clothes")
         ElseIf p.pClass.name = "Princess" Then
             cmbobxArmor.Items.Add("Regal_Gown")
@@ -174,80 +178,38 @@
 
     'clothingCurse1 routes the normal versions of armors to their slut forms, if they have them.
     Function clothingCurse1() As Boolean
-        If p.perks("polymorphed") > -1 Then Return False
-        Dim affectedFlag As Boolean = True
-        Select Case p.equippedArmor.getName.GetHashCode
-            Case "Steel_Armor".GetHashCode
-                p.inv.add(5, -1)
-                p.equippedArmor = New SteelBikini
-                p.inv.add(7, 1)
-            Case "Sorcerer's_Robes".GetHashCode
-                p.inv.add(17, -1)
-                p.equippedArmor = New WitchCosplay
-                p.inv.add(18, 1)
-            Case "Warrior's_Cuirass".GetHashCode
-                p.inv.add(19, -1)
-                p.equippedArmor = New BrawlerCosplay
-                p.inv.add(20, 1)
-            Case "Gold_Armor".GetHashCode
-                p.inv.add(38, -1)
-                p.equippedArmor = New GoldAdornment
-                p.inv.add(39, 1)
-            Case "Living_Armor".GetHashCode
-                p.inv.add(55, -1)
-                p.equippedArmor = New LiveLingerie
-                p.inv.add(56, 1)
-            Case "Common_Clothes".GetHashCode
-                p.equippedArmor = New SkimpyClothes
-            Case Else
-                affectedFlag = False
-        End Select
-        If affectedFlag Then
-            Game.pushLstLog("Your curse changes your clothes.")
-            Game.lblEvent.ForeColor = Color.Pink
-            If Not Game.Visible Then Game.pushLblEvent("As you don your new clothes, a shimmering light covers them, and they morph to better suit your style.")
-            Return True
+        If p.equippedArmor.slutVarInd = -1 Then Return False
+
+        If p.equippedArmor.getName.Equals("Common_Clothes") Then
+            p.equippedArmor = New SkimpyClothes
+        Else
+            Dim equippedArmorIndex = p.equippedArmor.id
+            Dim slutVarIndex = p.equippedArmor.slutVarInd
+            p.inv.add(equippedArmorIndex, -1)
+            p.inv.add(slutVarIndex, 1)
+            p.equippedArmor = p.inv.item(slutVarIndex)
         End If
-        
-        Return False
+        Game.pushLstLog("Your curse changes your clothes.")
+        If Not Game.lblEvent.Visible Then Game.pushLblEvent("As you adust your clothes, a crackling pink lightning coats them and they begin to shift across your body.  As the flashes of magic intensify, and despite your panic, you find yourself forced to close your eyes at the risk of being overwhelmed by the blaze erupting from your equipment.  As soon as it started, the curse finishes its work and you hesitantly open your eyes only to find nothing seems to be amiss after all.  You take off and inspect the outfit which, as far as you can tell, doesn't seem any different after all.  Unconcerned by your brief nudity, you get dressed again and with a twirl you set back out on your adventure.")
+        Return True
     End Function
-    Sub antiClothingCurse()
-        If p.perks("polymorphed") > -1 Then Exit Sub
-        Dim affectedFlag As Boolean = True
-        Select Case p.equippedArmor.getName.GetHashCode
-            Case "Steel_Bikini".GetHashCode
-                p.inv.add(7, -1)
-                p.equippedArmor = New SteelArmor
-                p.inv.add(5, 1)
-            Case "Witch_Cosplay".GetHashCode
-                p.inv.add(18, -1)
-                p.equippedArmor = New SorcerersRobes
-                p.inv.add(17, -1)
-            Case "Brawler_Cosplay".GetHashCode
-                p.inv.add(20, -1)
-                p.equippedArmor = New WarriorsCuirass
-                p.inv.add(19, 1)
-            Case "Gold_Adornment".GetHashCode
-                p.inv.add(39, -1)
-                p.equippedArmor = New GoldArmor
-                p.inv.add(38, 1)
-            Case "Living_Lingerie".GetHashCode
-                p.inv.add(56, -1)
-                p.equippedArmor = New LiveArmor
-                p.inv.add(55, 1)
-            Case "Skimpy_Clothes".GetHashCode
-                p.equippedArmor = New NormalClothes
-            Case Else
-                affectedFlag = False
-        End Select
-        If affectedFlag Then
-            Game.pushLstLog("Your curse is broken!")
-            Game.lblEvent.ForeColor = Color.Pink
-            Game.pushLblEvent("Your curse is broken! Unfortunatly, nothing can be done about the clothes in your inventory that have been affected.")
-            portraitUDate()
+    Function antiClothingCurse() As Boolean
+        If p.equippedArmor.antiSlutVarInd = -1 Then Return False
+
+        If p.equippedArmor.getName.Equals("Skimpy_Clothes") Then
+            p.equippedArmor = New CommonClothes
+        Else
+            Dim equippedArmorIndex = p.equippedArmor.id
+            Dim antiSlutVarIndex = p.equippedArmor.antiSlutVarInd
+            p.inv.add(equippedArmorIndex, -1)
+            p.inv.add(antiSlutVarIndex, 1)
+            p.equippedArmor = p.inv.item(antiSlutVarIndex)
         End If
-        
-    End Sub
+
+        Game.pushLstLog("Your curse changes your clothes.")
+        If Not Game.lblEvent.Visible Then Game.pushLblEvent("Suddenly, something seems off.  You look down to see a golden glow beginning to form on your outfit.  You pop off your top, mesmerised by the shimmering light that seems to be getting brighter by the second.  As the light becomes blinding, your top seems to be gaining mass and you drop it to cover your eyes.  Peeking out a few seconds later, you see that your gear is no longer glowing, and pick it back up.  As far as you can tell, it looks the same as it always had, and annoyed at yourself for getting sidetracked, you set back out on your adventure.")
+        Return True
+    End Function
     'clothesChange handles the equipping and unequipping of armors
     Public Sub clothesChange(ByVal clothes As String)
         If aList.Count < 1 Then init()
@@ -307,7 +269,6 @@
     'portraitUDate updates the player's portrait based on their breastsize and armor
     Public Sub portraitUDate()
         If p.solFlag Then Exit Sub
-        p.bsizeroute()
         If p.equippedArmor.getName = "Skimpy_Clothes" Then
             skimpyClothesUpdate()
         ElseIf p.equippedArmor.getName = "Magic_Girl_Outfit" Then
@@ -319,7 +280,11 @@
                 Case -1
                     p.iArrInd(3) = p.equippedArmor.bsizeneg1
                 Case 0
-                    p.iArrInd(3) = p.equippedArmor.bsizeneg1
+                    If p.equippedArmor.bsize0 Is Nothing Then
+                        p.iArrInd(3) = p.equippedArmor.bsizeneg1
+                    Else
+                        p.iArrInd(3) = p.equippedArmor.bsize0
+                    End If
                 Case 1
                     p.iArrInd(3) = p.equippedArmor.bsize1
                 Case 2
@@ -366,6 +331,10 @@
     End Sub
     Public Sub skimpyClothesUpdate()
         Select Case p.breastSize
+            Case -1
+                p.iArrInd(3) = p.equippedArmor.bsizeneg1
+            Case 0
+                p.iArrInd(3) = p.equippedArmor.bsize0
             Case 1
                 p.iArrInd(3) = p.equippedArmor.bsize1
             Case 2
@@ -421,7 +390,14 @@
             Case 1
                 p.iArrInd(3) = New Tuple(Of Integer, Boolean, Boolean)(p.sState.iArrInd(3).Item1, p.iArrInd(2).Item2, False)
             Case 2
-                p.iArrInd(3) = New Tuple(Of Integer, Boolean, Boolean)(p.sState.iArrInd(3).Item1 + 99, p.iArrInd(2).Item2, False)
+                Select Case p.sState.iArrInd(3).Item1
+                    Case 0 Or 1 Or 2 Or 3 Or 4
+                        p.iArrInd(3) = New Tuple(Of Integer, Boolean, Boolean)(Game.imgLib.atrs("Clothes").osf(CInt(p.sState.iArrInd(3).Item1) + 99), True, False)
+                    Case 5
+                        p.iArrInd(3) = New Tuple(Of Integer, Boolean, Boolean)(Game.imgLib.atrs("Clothes").osf(123), True, False)
+                    Case 6
+                        p.iArrInd(3) = New Tuple(Of Integer, Boolean, Boolean)(Game.imgLib.atrs("Clothes").osf(124), True, False)
+                End Select
             Case Else
                 clothesChange("Naked")
                 Game.pushLstLog("Your clothes don't fit!")
@@ -479,5 +455,8 @@
                     p.iArrInd(2) = New Tuple(Of Integer, Boolean, Boolean)(19, True, True)
             End Select
         End If
+    End Sub
+    Public Sub setP(ByRef ply As Player)
+        p = ply
     End Sub
 End Class

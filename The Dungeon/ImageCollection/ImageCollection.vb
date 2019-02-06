@@ -20,7 +20,7 @@
             mClothing, mFrontHair, mEyebrows, mNose, mRearHair1, mEars, mAccA,
             mHat, mRearHair2 As ImageDump
 
-        Dim wings, horns, tails As ImageDump
+        Dim wings, horns As ImageDump
 
         Dim ndoM, ndoF As Integer
 
@@ -159,7 +159,7 @@
         Dim mTFAccA, mTFBody, mTFClothes, mTFEars, mTFEyes, mTFface,
             mTfFrontHair, mTFMouth, mTFNose, mTFRearhair1, mTfRearhair2 As ImageDump
 
-        Dim wings, horns, tails As ImageDump
+        Dim wings, horns As ImageDump
 
         Dim ndoM, ndoF As Integer
 

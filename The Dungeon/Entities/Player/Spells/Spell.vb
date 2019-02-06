@@ -120,7 +120,7 @@
 
     Shared Sub spellCast(ByRef t As Monster, ByRef c As Player, ByVal s As String)
         If Game.combatmode Or Game.npcmode Then
-            If Not t.sName = "Targax the Brutal" Then
+            If Not t.sName = "Targax the Brutal" Or s = "Heal" Then
                 spellroute(c, t, s)
             ElseIf t.getName = "Shopkeeper" Then
                 If Rnd() < (0.01) Then

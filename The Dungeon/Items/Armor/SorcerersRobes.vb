@@ -14,6 +14,7 @@
         MyBase.mBoost = 10
         MyBase.count = 0
         MyBase.value = 950
+        MyBase.slutVarInd = 18
         MyBase.bsizeneg1 = New Tuple(Of Integer, Boolean, Boolean)(7, False, True)
         MyBase.bsize1 = New Tuple(Of Integer, Boolean, Boolean)(21, True, True)
         MyBase.bsize2 = New Tuple(Of Integer, Boolean, Boolean)(22, True, True)
