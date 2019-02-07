@@ -24,7 +24,7 @@
     Public polymorphs As Dictionary(Of String, Transformation) = New Dictionary(Of String, Transformation)()
     Public pImage As Image 'tile image of the player
     Public TextColor As Color
-
+    Public isPetrified = False
     'portrait variables
     Public sexBool As Boolean
     Public iArr As Image()
@@ -206,10 +206,10 @@
         setStartingAccessory()
         'sets loadout based on selected class
         If s = "Warrior" Then
-            inv.add(5, 1)
-            inv.add(6, 1)
-            equippedArmor = inv.item(5)
-            equippedWeapon = inv.item(6)
+            inv.add(83, 1)
+            inv.add(84, 1)
+            equippedArmor = inv.item(83)
+            equippedWeapon = inv.item(84)
         ElseIf s = "Mage" Then
             Game.cboxMG.Items.Add("Fireball")
             inv.add(2, 3)
@@ -262,6 +262,7 @@
         perks.Add("cowbell", -1) '15
         perks.Add("minRegen", -1) '16
         perks.Add("rotlg", -1) '17
+        perks.Add("astatue", -1) '18
     End Sub
     Private Sub initClasses()
         'creates the class dictionary
@@ -320,10 +321,10 @@
         polymorphs.Add("Slime", Nothing)
         polymorphs.Add("Succubus", Nothing)
         polymorphs.Add("Tigress", Nothing)
-        polymorphs.Add("Minotaur Cow", Nothing)
         polymorphs.Add("Princess​", Nothing)
         polymorphs.Add("Bunny Girl​", Nothing)
         polymorphs.Add("Sheep", Nothing)
+        polymorphs.Add("Cake", Nothing)
     End Sub
 
     '|MOVEMENT COMMANDS|
@@ -663,21 +664,23 @@
             iArrInd(8) = New Tuple(Of Integer, Boolean, Boolean)(5, False, True)
             iArrInd(9) = New Tuple(Of Integer, Boolean, Boolean)(6, False, True)
         End If
-        createP()
         changeSkinColor(c)
+
         iArr(8) = CharacterGenerator.recolor(iArr(8), c)
         iArr(9) = CharacterGenerator.recolor(iArr(9), c)
+        isPetrified = True
+        createP()
 
         canMoveFlag = False
         Game.picPortrait.BackgroundImage = CharacterGenerator.CreateBMP(iArr)
     End Sub
     Public Sub toStatue(ByVal c As Color, ByVal r As String)
+        Game.fromCombat()
+
         petrify(c)
         If r.Equals("midas") Then
             Dim out As String = "As you reach out to touch your opponent, you clumsily swipe, missing them, and hit...yourself?  Already your legs are gold, and only have a moment to scream, your vocal cords quickly following suit. ""Well,"" you think, ""...at least I won't have to worry abou money anymore."" " & vbCrLf & "And like that, the dungeon gains another decoration."
-            Game.pushLblEvent(out)
-            MsgBox(out)
-            die()
+            Game.pushLblEvent(out, AddressOf die)
         End If
     End Sub
 
@@ -747,6 +750,7 @@
     '|UPDATE METHODS|
     Public Overrides Sub update()
         '|COMBAT|
+        If perks("astatue") > -1 Then nextCombatAction = AddressOf PerkEffects.statueMove
         MyBase.update()
 
         '|PLAYER STAT UPKEEP|
@@ -803,61 +807,64 @@
         If perks("slutcurse") > -1 Then
             needsToUpdatePortrait = Equipment.clothingCurse1()
         End If
-        'slime hair health regen
-        If perks("slimehair") > -1 Then
-            PerkEffects.slimeHairRegen()
-        End If
-        'vial of slime hair regen
-        If perks("vsslimehair") > -1 Then
-            PerkEffects.vslimeHairRegen()
-        End If
+            'slime hair health regen
+            If perks("slimehair") > -1 Then
+                PerkEffects.slimeHairRegen()
+            End If
+            'vial of slime hair regen
+            If perks("vsslimehair") > -1 Then
+                PerkEffects.vslimeHairRegen()
+            End If
 
-        'ring of min. regen
-        If perks("minRegen") > -1 Then
-            PerkEffects.minorRegen()
-        End If
+            'ring of min. regen
+            If perks("minRegen") > -1 Then
+                PerkEffects.minorRegen()
+            End If
 
-        'living armor
-        If perks("livearm") > -1 Then
-            needsToUpdatePortrait = PerkEffects.livingArmor()
-        End If
-        'living lingerie
-        If perks("livelinge") > -1 Then
-            needsToUpdatePortrait = PerkEffects.livingLingerie()
-        End If
+            'living armor
+            If perks("livearm") > -1 Then
+                needsToUpdatePortrait = PerkEffects.livingArmor()
+            End If
+            'living lingerie
+            If perks("livelinge") > -1 Then
+                needsToUpdatePortrait = PerkEffects.livingLingerie()
+            End If
 
-        'rotlg
-        If perks("rotlg") > -1 Then
-            PerkEffects.ROTLGRoute()
-        End If
+            'rotlg
+            If perks("rotlg") > -1 Then
+                PerkEffects.ROTLGRoute()
+            End If
 
-        '|TRANSFORMATION TRIGGERS|
-        'targax sword tf
-        If perks("swordpossess") > -1 Then
-            PerkEffects.targaxSwordTF()
-        End If
-        'shift toward prefered form
-        If Not prefForm Is Nothing AndAlso (pClass.name = "Thrall" Xor equippedAcce.getName.Equals("Slave_Collar")) AndAlso Not prefForm.playerMeetsForm(Game.player) And Not pForm.name.Equals("Half-Succubus") And Not perks("thrall") = 1 And Not perks("nekocurse") > -1 And Not perks("polymorphed") > -1 And Not perks("bimbotf") > -1 Then
-            PerkEffects.thrallRestore()
-        End If
+            '|TRANSFORMATION TRIGGERS|
+            'targax sword tf
+            If perks("swordpossess") > -1 Then
+                PerkEffects.targaxSwordTF()
+            End If
+            'shift toward prefered form
+            If Not prefForm Is Nothing AndAlso (pClass.name = "Thrall" Xor equippedAcce.getName.Equals("Slave_Collar")) AndAlso Not prefForm.playerMeetsForm(Game.player) And Not pForm.name.Equals("Half-Succubus") And Not perks("thrall") = 1 And Not perks("nekocurse") > -1 And Not perks("polymorphed") > -1 And Not perks("bimbotf") > -1 Then
+                PerkEffects.thrallRestore()
+            End If
+            If perks("astatue") > -1 Then
+                PerkEffects.aStatue()
+            End If
 
-        '|SPECIAL MOVE HANDLERS|
-        'berserker rage special
-        If perks("brage") > -1 Then
-            PerkEffects.berserkerRage()
-        End If
-        'massive mammaries special
-        If perks("mmammaries") > -1 Then
-            PerkEffects.massiveMammaries()
-        End If
-        'ironhide fury
-        If perks("ihfury") > -1 Then
-            PerkEffects.ironhideFury()
-        End If
+            '|SPECIAL MOVE HANDLERS|
+            'berserker rage special
+            If perks("brage") > -1 Then
+                PerkEffects.berserkerRage()
+            End If
+            'massive mammaries special
+            If perks("mmammaries") > -1 Then
+                PerkEffects.massiveMammaries()
+            End If
+            'ironhide fury
+            If perks("ihfury") > -1 Then
+                PerkEffects.ironhideFury()
+            End If
 
-        
-        description = CStr(name & " is a " & sex & " " & pForm.name & " " & pClass.name)
-        Return needsToUpdatePortrait
+
+            description = CStr(name & " is a " & sex & " " & pForm.name & " " & pClass.name)
+            Return needsToUpdatePortrait
     End Function
     Sub UIupdate()
         If Game.lblNameTitle.Text <> name & " the " & pClass.name Then Game.lblNameTitle.Text = name & " the " & pClass.name
@@ -1000,6 +1007,9 @@
         ElseIf pForm.name.Equals("Sheep") Then
             Game.picPortrait.BackgroundImage = CharacterGenerator.CreateBMP({Game.picSheep.BackgroundImage})
             b = True
+        ElseIf pForm.name.Equals("Cake") Then
+            Game.picPortrait.BackgroundImage = CharacterGenerator.CreateBMP({Game.picCake.BackgroundImage})
+            b = True
         ElseIf pForm.name.Equals("Frog") Then
             Game.picPortrait.BackgroundImage = CharacterGenerator.CreateBMP({Game.picFrog.BackgroundImage})
             b = True
@@ -1032,6 +1042,11 @@
 
         changeHairColor(haircolor)
         changeSkinColor(skincolor)
+
+        If isPetrified Then
+            iArr(8) = CharacterGenerator.recolor(iArr(8), skincolor)
+            iArr(9) = CharacterGenerator.recolor(iArr(9), skincolor)
+        End If
 
         If lust > 0 Then lustBlushUpdate()
         If wingInd > 0 Then addWings(wingInd)

@@ -111,7 +111,7 @@
 
         For i = 0 To 4
             Dim invInd As Integer = 8
-            While invInd = 8 Or invInd = 10 Or invInd = 24 Or invInd = 53
+            While invInd = 8 Or invInd = 10 Or invInd = 24 Or invInd = 53 Or invInd = 69 Or invInd = 78 Or invInd = 79 Or invInd = 81
                 invInd = Int(Rnd() * (Game.player.inv.upperBound + 1))
             End While
             p.inv.add(invInd, CInt(Int(Rnd() * 2) + 1))

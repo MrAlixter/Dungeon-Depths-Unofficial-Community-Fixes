@@ -184,6 +184,12 @@
             spell = New Illumiate(c, t)
         ElseIf s.Equals("Arcane Compass") Then
             spell = New ArcaneCompass(c, t)
+        ElseIf s.Equals("Magma Spear") Then
+            spell = New MagmaSpear(c, t)
+        ElseIf s.Equals("Petrify II") Then
+            spell = New Petrify2(c, t)
+        ElseIf s.Equals("Major Heal") Then
+            spell = New MajorHeal(c, t)
         Else
             spell = New Frazzle(c, t)
         End If
@@ -195,27 +201,33 @@
             Case "Dragon's Breath"
                 If Game.player.pForm.name.Equals("Dragon") Then Return "No cost." Else Return "-6 mana."
             Case "Fireball"
-                Return "-3 mana."
+                Return "-4 mana."
             Case "Super Fireball"
-                Return "-6 mana."
+                Return "-8 mana."
             Case "Icicle Spear"
                 Return "-5 mana."
             Case "Heartblast Starcannon"
                 Return "-5 mana."
             Case "Petrify"
-                Return "-6 mana."
+                Return "-9 mana."
             Case "Self Polymorph"
-                Return "-7 mana."
+                Return "-12 mana."
             Case "Polymorph Enemy"
-                Return "-7 mana."
+                Return "-12 mana."
             Case "Turn to Frog"
                 Return "-5 mana."
             Case "Mindshrink"
                 Return "-5 mana."
             Case "Turn to Blade"
-                Return "-9 mana."
+                Return "-28 mana."
             Case "Turn to Cupcake"
-                Return "-9 mana."
+                Return "-17 mana."
+            Case "Magma Spear"
+                Return "-22 mana."
+            Case "Petrify II"
+                Return "-14 mana."
+            Case "Major Heal"
+                Return "-5 mana."
             Case Else
                 Return "This costs some degree of mana."
         End Select

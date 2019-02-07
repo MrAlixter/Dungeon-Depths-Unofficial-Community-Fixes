@@ -71,6 +71,9 @@
     Function ndoF() As Integer
         Return fNonDefOffset
     End Function
+    Function Count() As Integer
+        Return fImages.Count + mImages.Count
+    End Function
     Shared Function get0pt7DefaultImageOffsetM(ByVal key As String)
 
         If key = "AccA" Or key = "Cloak" Or key = "Eyebrows" Or key = "FacialMark" Then

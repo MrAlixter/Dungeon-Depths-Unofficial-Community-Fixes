@@ -8,7 +8,7 @@
         tier = 1
         MyBase.setUsable(True)
         MyBase.count = 0
-        MyBase.value = 100
+        MyBase.value = 125
     End Sub
 
     Overrides Sub use()
@@ -21,7 +21,7 @@
         Dim phHealth = Game.player.health
         Dim heffect As HealthEffect = New HealthEffect
         heffect.apply(Game.player)
-        Game.pushLblEvent("You drink the " & getName() & ".  +" & (Game.player.health - phHealth) * Game.player.getMaxHealth & " health!")
+        Game.pushLblEvent("You drink the " & getName() & ".  +" & CInt((Game.player.health - phHealth) * Game.player.getMaxHealth) & " health!")
         count -= 1
     End Sub
     Overrides Sub discard()

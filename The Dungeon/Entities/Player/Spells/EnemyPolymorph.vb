@@ -4,7 +4,7 @@
         MyBase.New(c, t)
         MyBase.setName("Polymorph Enemy")
         MyBase.settier(4)
-        MyBase.setcost(7)
+        MyBase.setcost(12)
     End Sub
     Public Overrides Sub effect()
         Polymorph.porm = False

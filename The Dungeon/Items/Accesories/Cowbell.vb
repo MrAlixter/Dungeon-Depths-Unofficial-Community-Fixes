@@ -12,7 +12,7 @@
         MyBase.hBoost = 20
         MyBase.wBoost = -1
         MyBase.count = 0
-        MyBase.value = 0
+        MyBase.value = 434
         MyBase.fInd = New Tuple(Of Integer, Boolean, Boolean)(8, True, True)
         MyBase.mInd = New Tuple(Of Integer, Boolean, Boolean)(4, False, True)
     End Sub

@@ -174,7 +174,7 @@
         player.iArr = p1.iArr.Clone
         player.iArrInd = p1.iArrInd.Clone
         For i = 0 To 16
-            If i <> 1 And i <> 15 And i <> 3 Then
+            If i <> 1 And i <> 15 And i <> 3 And i <> 5 Then
                 r = Int(Rnd() * 2)
                 If r = 0 Then player.iArrInd(i) = p1.iArrInd(i) Else player.iArrInd(i) = p2.iArrInd(i)
             ElseIf i = 3 Then
@@ -182,7 +182,8 @@
                 If r = 0 Then player.iArrInd(i) = p1.sState.iArrInd(i) Else player.iArrInd(i) = p2.sState.iArrInd(i)
             ElseIf i = 1 Then
                 r = Int(Rnd() * 2)
-                If r = 0 Then player.iArrInd(i) = p1.iArrInd(i) Else player.iArrInd(i) = p2.iArrInd(i)
+                If r = 0 Then player.iArrInd(1) = p1.iArrInd(1) Else player.iArrInd(1) = p2.iArrInd(1)
+                If r = 0 Then player.iArrInd(5) = p1.iArrInd(5) Else player.iArrInd(5) = p2.iArrInd(5)
                 If r = 0 Then player.iArrInd(15) = p2.iArrInd(15) Else player.iArrInd(15) = p1.iArrInd(15)
             End If
         Next
@@ -218,7 +219,7 @@
 
         player.inv.invNeedsUDate = True
         player.UIupdate()
-
+        player.description = CStr(player.name & " is a " & player.sex & " " & player.pClass.name)
         player.solFlag = False
     End Sub
 End Class

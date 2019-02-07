@@ -125,6 +125,8 @@
             CommonClothes.bsize2 = New Tuple(Of Integer, Boolean, Boolean)(Game.imgLib.atrs("Clothes").osf(123), True, True)
         ElseIf Game.player.iArrInd(3).Item1 = 6 Then
             CommonClothes.bsize2 = New Tuple(Of Integer, Boolean, Boolean)(Game.imgLib.atrs("Clothes").osf(124), True, True)
+        Else
+            CommonClothes.bsize2 = Nothing
         End If
     end sub
     'displays the assembled portrait image

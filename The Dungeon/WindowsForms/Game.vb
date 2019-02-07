@@ -1373,6 +1373,14 @@ Public Class Game
                 Case Keys.Right
                     player.moveRight()
                     randomEvents()
+                Case Keys.Escape
+                    If screenSize.Equals("Maximized") Then
+                        screenSize = "Large"
+                        Me.FormBorderStyle = Windows.Forms.FormBorderStyle.FixedSingle
+                        Me.WindowState = FormWindowState.Normal
+                        Size = New Size(iWidth, iHeight)
+                        Game_Resize()
+                    End If
             End Select
             Dim int As Integer = 100 - player.getSPD
             If int < 1 Then int = 1
@@ -1466,7 +1474,11 @@ Public Class Game
         End If
         lblCombatEvents.Text = ""
         closeLblEvent()
-        If player.mana <= 0 Then Exit Sub
+        If player.mana <= 0 Then
+            pushLblEvent("You don't have enough mana!")
+            pushLstLog("You don't have enough mana!")
+            Exit Sub
+        End If
         Dim subString As String = lstSelec.Items(index).ToString.Split("-")(1)
         subString = subString.Substring(1, subString.Count - 1)
 
@@ -1843,7 +1855,7 @@ Public Class Game
         End If
         'If combatmode = True And Not (Keydata.Equals(Keys.Enter) Or Keydata.Equals(Keys.K) Or Keydata.Equals(Keys.I) Or Keydata.Equals(Keys.L)) Then Return True
         'If npcmode = True Then Return True
-        If player.mana < player.getMaxMana And turn Mod 3 = 0 Then player.mana += 1
+        If player.mana < player.getMaxMana And turn Mod 7 = 0 Then player.mana += 1
         queueSetup()
         Return False
     End Function
@@ -2056,8 +2068,12 @@ Public Class Game
         End If
         lblCombatEvents.Text = ""
         closeLblEvent()
-        If cboxMG.Text = "-- Select --" Or player.mana <= 0 Then Exit Sub
-
+        If cboxMG.Text = "-- Select --" Then Exit Sub
+        If player.mana <= 0 Then
+            pushLblEvent("You don't have enough mana!")
+            pushLstLog("You don't have enough mana!")
+            Exit Sub
+        End If
         player.nextCombatAction = Sub(t As Entity) Spell.spellCast(t, player, cboxMG.Text)
         queueSetup()
         Do While updatelist.isEmpty() = False
@@ -2343,17 +2359,20 @@ Public Class Game
         Else
             m = New MiniBoss(floor)
         End If
-        player.setTarget(m)
-        m.currTarget = player
-        npcList.Add(m)
+
+        Monster.targetRoute(m)
+        Dim oSpeed = m.getSPD
+        m.setSPD(1)
         pushLstLog((m.getName & " attacks!"))
         toCombat()
+
+        queueSetup()
+        m.setSPD(oSpeed)
         If floor = 4 Then
             pushLblEvent("As you approach the staircase, you spot the Ooze Empress, hanging over the stairs.  As you wave to get her attention, she plops off the celing to come and greet you.  As you explain your situation to her, she chuckles, catching you off guard.  ""You know, I was placed on this floor as kind of a buffer.  Mistress Medusa isn't interested in weaklings, and if you even want to have a chance at beating her, you need to have a stronger will."".  You notice a shift in her previously bubbly personality, and when the rest of her tentacles drop down, you take a leap back and prepare for combat." & vbCrLf & vbCrLf &
                                """Let's see if you've learned anthing since the last time you tried this,"" she says with an somewhat mencing grin, ""... though I'm sure neither of us would mind a repeat either.""")
         End If
         btnChallengeBoss.Visible = False
-
     End Sub
     'movement
     Private Sub BtnD_Click(sender As Object, e As EventArgs) Handles BtnD.Click
@@ -2685,19 +2704,19 @@ Public Class Game
         Dim name As String = CType(sender, Button).Name
         Dim fileNum As String = name(name.Length - 1)
         If solFlag Then
-            'Try
-            player.solFlag = True
-            loadSave("s" & fileNum & ".ave")
-            player.solFlag = False
-            'Catch ex As System.IO.FileNotFoundException
-            '    MsgBox("Error 004: No save detected!")
-            'Catch ex2 As Exception
-            '    If MessageBox.Show("Error 005: Error in loaded in save file!" & vbCrLf & "Restart?", "Error 005", MessageBoxButtons.YesNo) = Windows.Forms.DialogResult.Yes Then
-            '        Application.Restart()
-            '    Else
-            '        Application.Exit()
-            '    End If
-            'End Try
+            Try
+                player.solFlag = True
+                loadSave("s" & fileNum & ".ave")
+                player.solFlag = False
+            Catch ex As System.IO.FileNotFoundException
+                MsgBox("Error 004: No save detected!")
+            Catch ex2 As Exception
+                If MessageBox.Show("Error 005: Error in loaded in save file!" & vbCrLf & "Restart?", "Error 005", MessageBoxButtons.YesNo) = Windows.Forms.DialogResult.Yes Then
+                    Application.Restart()
+                Else
+                    Application.Exit()
+                End If
+            End Try
         Else
             save("s" & fileNum & ".ave")
             imagesWorkerArg = Convert.ToInt32(fileNum)
@@ -2880,6 +2899,7 @@ Public Class Game
     '|COMBAT|
     Sub toCombat()
         'toCombat displays the players combat menus
+        lblCombatEvents.Text = ""
         lblEHealthChange.Tag = 0
         lblPHealtDiff.Tag = 0
         updatePnlCombat(player, player.currTarget)
@@ -3922,5 +3942,9 @@ Public Class Game
         'End Using
         'savedBoardPic.Save("BOARD_RENDERED.png")
         'boxBoard.Image = savedBoardPic
+    End Sub
+
+    Private Sub ExitToolStripMenuItem_Click(sender As Object, e As EventArgs) Handles ExitToolStripMenuItem.Click
+        Me.Close()
     End Sub
 End Class

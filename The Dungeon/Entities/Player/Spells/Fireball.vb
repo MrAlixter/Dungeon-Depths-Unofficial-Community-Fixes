@@ -4,7 +4,7 @@
         MyBase.New(c, t)
         MyBase.setName("Fireball")
         MyBase.settier(1)
-        MyBase.setcost(3)
+        MyBase.setcost(4)
     End Sub
     Public Overrides Sub effect()
         Dim dmg As Integer = 40

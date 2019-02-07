@@ -301,13 +301,7 @@
                     p.iArrInd(3) = p.equippedArmor.bsize7
             End Select
             If p.iArrInd(3) Is Nothing Then
-                clothesChange("Naked")
-                Game.pushLstLog("Your clothes don't fit!")
-                If p.sexBool Then
-                    p.iArrInd(3) = New Tuple(Of Integer, Boolean, Boolean)(47, True, True)
-                Else
-                    p.iArrInd(3) = New Tuple(Of Integer, Boolean, Boolean)(5, False, True)
-                End If
+                getNaked()
             End If
         End If
         If Not p.equippedArmor.getName.Equals("Naked") And p.equippedArmor.compressesBreasts And Not p.pClass.name.Equals("Magic Girl") Then
@@ -344,24 +338,12 @@
             Case 4
                 p.iArrInd(3) = p.equippedArmor.bsize4
             Case Else
-                clothesChange("Naked")
-                If p.sexBool Then
-                    p.iArrInd(3) = New Tuple(Of Integer, Boolean, Boolean)(47, True, True)
-                Else
-                    p.iArrInd(3) = New Tuple(Of Integer, Boolean, Boolean)(5, False, True)
-                End If
+                getNaked()
         End Select
     End Sub
     Public Sub mgoutfitUpdate()
         If Not p.pClass.name.Equals("Magic Girl") And Not (p.pClass.name.Equals("Bimbo") And p.breastSize = 3) Then
-            clothesChange("Naked")
-            Game.pushLblEvent("Your clothes don't fit!")
-            Game.pushLstLog("Your clothes don't fit!")
-            If p.sexBool Then
-                p.iArrInd(3) = New Tuple(Of Integer, Boolean, Boolean)(47, True, True)
-            Else
-                p.iArrInd(3) = New Tuple(Of Integer, Boolean, Boolean)(5, False, True)
-            End If
+            getNaked()
         End If
         Select Case p.breastSize
             Case 1
@@ -373,12 +355,7 @@
                 p.iArrInd(15) = New Tuple(Of Integer, Boolean, Boolean)(7, True, True)
                 p.iArrInd(3) = p.equippedArmor.bsize3
             Case Else
-                clothesChange("Naked")
-                If p.sexBool Then
-                    p.iArrInd(3) = New Tuple(Of Integer, Boolean, Boolean)(47, True, True)
-                Else
-                    p.iArrInd(3) = New Tuple(Of Integer, Boolean, Boolean)(5, False, True)
-                End If
+                getNaked()
         End Select
     End Sub
     Public Sub cclothesUpdate()
@@ -391,21 +368,17 @@
                 p.iArrInd(3) = New Tuple(Of Integer, Boolean, Boolean)(p.sState.iArrInd(3).Item1, p.iArrInd(2).Item2, False)
             Case 2
                 Select Case p.sState.iArrInd(3).Item1
-                    Case 0 Or 1 Or 2 Or 3 Or 4
+                    Case 0, 1, 2, 3, 4
                         p.iArrInd(3) = New Tuple(Of Integer, Boolean, Boolean)(Game.imgLib.atrs("Clothes").osf(CInt(p.sState.iArrInd(3).Item1) + 99), True, False)
                     Case 5
                         p.iArrInd(3) = New Tuple(Of Integer, Boolean, Boolean)(Game.imgLib.atrs("Clothes").osf(123), True, False)
                     Case 6
                         p.iArrInd(3) = New Tuple(Of Integer, Boolean, Boolean)(Game.imgLib.atrs("Clothes").osf(124), True, False)
+                    Case Else
+                        getNaked()
                 End Select
             Case Else
-                clothesChange("Naked")
-                Game.pushLstLog("Your clothes don't fit!")
-                If p.sexBool Then
-                    p.iArrInd(3) = New Tuple(Of Integer, Boolean, Boolean)(47, True, True)
-                Else
-                    p.iArrInd(3) = New Tuple(Of Integer, Boolean, Boolean)(5, False, True)
-                End If
+                getNaked()
         End Select
     End Sub
     Public Sub compressBreasts()
@@ -430,6 +403,15 @@
                 Case 7
                     p.iArrInd(2) = New Tuple(Of Integer, Boolean, Boolean)(20, True, True)
             End Select
+        End If
+    End Sub
+    Public Sub getNaked()
+        clothesChange("Naked")
+        Game.pushLstLog("Your clothes don't fit!")
+        If p.sexBool Then
+            p.iArrInd(3) = New Tuple(Of Integer, Boolean, Boolean)(47, True, True)
+        Else
+            p.iArrInd(3) = New Tuple(Of Integer, Boolean, Boolean)(5, False, True)
         End If
     End Sub
     Public Sub notcompress()

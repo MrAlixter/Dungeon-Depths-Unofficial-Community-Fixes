@@ -86,7 +86,11 @@ Public Class Transformation
         End Select
     End Function
     Shared Function canBeTFed(ByRef p As Player) As Boolean
-        If Game.player.ongoingTFs.Count < 1 And (Not p.polymorphs.ContainsKey(p.pClass.name) And Not p.polymorphs.ContainsKey(p.pForm.name)) And Not p.pClass.name.Equals("Magic Girl") And Not p.pClass.name.Equals("Unconscious") And Not p.pForm.name.Equals("Blowup Doll") Then Return True
+        If Game.player.ongoingTFs.Count < 1 And
+            (Not p.polymorphs.ContainsKey(p.pClass.name) And Not p.polymorphs.ContainsKey(p.pForm.name)) And
+            Not p.pClass.name.Equals("Magic Girl") And
+            Not p.pClass.name.Equals("Unconscious") And
+            Not p.pForm.name.Equals("Blowup Doll") Then Return True
         Return False
     End Function
 

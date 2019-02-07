@@ -4,8 +4,8 @@
     Sub New()
         MyBase.setName("Advanced_Spellbook")
         MyBase.setDesc("An ornate, gilded book that likely contains something outside of the standard magic curriculum.")
-        id = 4
-        tier = 1
+        id = 65
+        tier = 3
         MyBase.setUsable(True)
         MyBase.count = 0
         MyBase.value = 1000
@@ -19,7 +19,7 @@
         Dim out As String = ""
         While ct < 1 Or Game.cboxMG.Items.Contains(sName)
             ct += 1
-            Dim spell As Integer = CInt(Int(Rnd() * 4))
+            Dim spell As Integer = CInt(Int(Rnd() * 7))
             Select Case spell
                 Case 0
                     sName = "Turn to Blade"
@@ -48,6 +48,12 @@
                     End If
                 Case 3
                     sName = "Arcane Compass"
+                Case 4
+                    sName = "Magma Spear"
+                Case 5
+                    sName = "Petrify II"
+                Case 6
+                    sName = "Major Heal"
             End Select
             If ct > 60 Then
                 Game.pushLstLog("You know all the spells in advanced spellbooks already!")

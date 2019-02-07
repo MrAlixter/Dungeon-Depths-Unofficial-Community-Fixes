@@ -71,6 +71,7 @@ Partial Class Game
         Me.SaveToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
         Me.LoadToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
         Me.NewGameToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
+        Me.ExitToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
         Me.HelpToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
         Me.HelpToolStripMenuItem1 = New System.Windows.Forms.ToolStripMenuItem()
         Me.StatInfoToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
@@ -181,6 +182,7 @@ Partial Class Game
         Me.picPath = New System.Windows.Forms.PictureBox()
         Me.picPathf = New System.Windows.Forms.PictureBox()
         Me.lblLoadMsg = New System.Windows.Forms.Label()
+        Me.picCake = New System.Windows.Forms.PictureBox()
         CType(Me.picEnemy, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me.picNPC, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me.picStatue, System.ComponentModel.ISupportInitialize).BeginInit()
@@ -240,6 +242,7 @@ Partial Class Game
         CType(Me.picCrystalf, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me.picPath, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me.picPathf, System.ComponentModel.ISupportInitialize).BeginInit()
+        CType(Me.picCake, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.SuspendLayout()
         '
         'btnUse1
@@ -751,7 +754,7 @@ Partial Class Game
         'FileToolStripMenuItem
         '
         Me.FileToolStripMenuItem.BackColor = System.Drawing.Color.Black
-        Me.FileToolStripMenuItem.DropDownItems.AddRange(New System.Windows.Forms.ToolStripItem() {Me.SaveToolStripMenuItem, Me.LoadToolStripMenuItem, Me.NewGameToolStripMenuItem})
+        Me.FileToolStripMenuItem.DropDownItems.AddRange(New System.Windows.Forms.ToolStripItem() {Me.SaveToolStripMenuItem, Me.LoadToolStripMenuItem, Me.NewGameToolStripMenuItem, Me.ExitToolStripMenuItem})
         Me.FileToolStripMenuItem.Font = New System.Drawing.Font("Consolas", 9.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.FileToolStripMenuItem.ForeColor = System.Drawing.Color.White
         Me.FileToolStripMenuItem.Name = "FileToolStripMenuItem"
@@ -781,6 +784,14 @@ Partial Class Game
         Me.NewGameToolStripMenuItem.Name = "NewGameToolStripMenuItem"
         Me.NewGameToolStripMenuItem.Size = New System.Drawing.Size(146, 26)
         Me.NewGameToolStripMenuItem.Text = "New Game"
+        '
+        'ExitToolStripMenuItem
+        '
+        Me.ExitToolStripMenuItem.BackColor = System.Drawing.Color.Black
+        Me.ExitToolStripMenuItem.ForeColor = System.Drawing.Color.White
+        Me.ExitToolStripMenuItem.Name = "ExitToolStripMenuItem"
+        Me.ExitToolStripMenuItem.Size = New System.Drawing.Size(146, 26)
+        Me.ExitToolStripMenuItem.Text = "Exit"
         '
         'HelpToolStripMenuItem
         '
@@ -2011,12 +2022,23 @@ Partial Class Game
         Me.lblLoadMsg.TextAlign = System.Drawing.ContentAlignment.MiddleCenter
         Me.lblLoadMsg.Visible = False
         '
+        'picCake
+        '
+        Me.picCake.BackgroundImage = CType(resources.GetObject("picCake.BackgroundImage"), System.Drawing.Image)
+        Me.picCake.Location = New System.Drawing.Point(144, 50)
+        Me.picCake.Name = "picCake"
+        Me.picCake.Size = New System.Drawing.Size(15, 15)
+        Me.picCake.TabIndex = 296
+        Me.picCake.TabStop = False
+        Me.picCake.Visible = False
+        '
         'Game
         '
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Inherit
         Me.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink
         Me.BackColor = System.Drawing.Color.Black
         Me.ClientSize = New System.Drawing.Size(1008, 690)
+        Me.Controls.Add(Me.picCake)
         Me.Controls.Add(Me.lblLoadMsg)
         Me.Controls.Add(Me.picPathf)
         Me.Controls.Add(Me.picPath)
@@ -2204,6 +2226,7 @@ Partial Class Game
         CType(Me.picCrystalf, System.ComponentModel.ISupportInitialize).EndInit()
         CType(Me.picPath, System.ComponentModel.ISupportInitialize).EndInit()
         CType(Me.picPathf, System.ComponentModel.ISupportInitialize).EndInit()
+        CType(Me.picCake, System.ComponentModel.ISupportInitialize).EndInit()
         Me.ResumeLayout(False)
         Me.PerformLayout()
 
@@ -2365,4 +2388,6 @@ Partial Class Game
     Friend WithEvents picPathf As System.Windows.Forms.PictureBox
     Friend WithEvents RunAutomatedTestsToolStripMenuItem As System.Windows.Forms.ToolStripMenuItem
     Friend WithEvents lblLoadMsg As System.Windows.Forms.Label
+    Friend WithEvents ExitToolStripMenuItem As System.Windows.Forms.ToolStripMenuItem
+    Friend WithEvents picCake As System.Windows.Forms.PictureBox
 End Class

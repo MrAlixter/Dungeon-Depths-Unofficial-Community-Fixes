@@ -1,7 +1,7 @@
 ﻿Public Class PerkEffects
-    Shared p As Player = Game.player
     '|GENERAL EFFECTS|
     Shared Sub hungerEffect()
+        Dim p As Player = Game.player
         If p.perks("hunger") > -1 And Game.turn Mod 5 = 0 Then
             If p.hunger < 100 Then
                 p.perks("hunger") = -1
@@ -12,6 +12,7 @@
         End If
     End Sub
     Shared Sub slimeHairRegen()
+        Dim p As Player = Game.player
         If Not p.haircolor.A = 180 Then
             p.perks("slimehair") = -1
         Else
@@ -23,6 +24,7 @@
         End If
     End Sub
     Shared Sub vslimeHairRegen()
+        Dim p As Player = Game.player
         If Not p.haircolor.A = 180 Then
             p.perks("vsslimehair") = -1
         Else
@@ -35,6 +37,7 @@
         End If
     End Sub
     Shared Sub minorRegen()
+        Dim p As Player = Game.player
         If p.health < 1 And Game.turn Mod 7 = 0 Then
             Dim h As Integer = Int(Rnd() * 8) + 1
             p.health += h / p.getMaxHealth()
@@ -49,14 +52,16 @@
         End If
     End Sub
     Shared Sub Regen()
-            If p.health < 1 And Game.turn Mod 7 = 0 Then
+        Dim p As Player = Game.player
+        If p.health < 1 And Game.turn Mod 7 = 0 Then
             Dim h As Integer = Int(Rnd() * 15) + 1
-                p.health += h / p.getMaxHealth()
+            p.health += h / p.getMaxHealth()
             Game.pushLstLog("A glowing aura heals some of your wounds! +" & h & " health")
-                If p.health > 1 Then p.health = 1
-            End If
+            If p.health > 1 Then p.health = 1
+        End If
     End Sub
     Shared Function livingArmor() As Boolean
+        Dim p As Player = Game.player
         If p.equippedArmor.getName.Equals("Living_Armor") Then
             If Game.turn Mod 6 = 0 And p.lust < 100 Then
                 Dim l As Integer = Int(Rnd() * 15) + 10
@@ -70,6 +75,7 @@
         Return False
     End Function
     Shared Function livingLingerie() As Boolean
+        Dim p As Player = Game.player
         If p.equippedArmor.getName.Equals("Living_Lingerie") Then
             If Game.turn Mod 4 = 0 And p.lust < 100 Then
                 Dim l As Integer = Int(Rnd() * 15) + 10
@@ -84,6 +90,7 @@
     End Function
 
     Shared Sub ROTLGRoute()
+        Dim p As Player = Game.player
         Dim rotlg = CType(p.inv.item(81), ROTLGoddess)
         rotlg.sBoost = CInt(2.2222 * p.breastSize)
 
@@ -95,7 +102,11 @@
             rotlg.dBoost = -p.equippedArmor.dBoost
         Else
             Dim buff = p.equippedArmor.dBoost
-            If buff < 5 Then buff = 5
+            If buff = 0 Then
+                buff = 3
+            ElseIf buff < 5 Then
+                buff = 5
+            End If
             buff *= 4
             rotlg.dBoost = buff
             rotlg.aBoost = p.equippedArmor.aBoost * 1.5
@@ -107,6 +118,7 @@
 
     '|TRANSFORMATION TRIGGERS|
     Shared Sub targaxSwordTF()
+        Dim p As Player = Game.player
         If p.name <> "Targax" Then
             If Not p.equippedWeapon.getName.Equals("Sword_of_the_Brutal") Then
                 p.perks("swordpossess") = -1
@@ -116,6 +128,7 @@
         End If
     End Sub
     Shared Sub thrallRestore()
+        Dim p As Player = Game.player
         If p.pClass.name = "Magic Girl" Then
             Game.pushLblEvent("Your form prevents you from being altered!")
             Exit Sub
@@ -124,9 +137,21 @@
         p.prefForm.shiftTowards(Game.player)
         p.perks("thrall") = 1
     End Sub
-
+    Shared Sub aStatue()
+        Dim p As Player = Game.player
+        If p.perks("astatue") > 1 Then
+            p.perks("astatue") -= 1
+        ElseIf p.perks("astatue") <= 1 Then
+            p.perks("astatue") = -1
+            p.revertToPState()
+        End If
+    End Sub
+    Shared Sub statueMove(obj As Entity)
+        Game.pushLblEvent("You, being a statue, can not do anything.")
+    End Sub
     '|SPECIAL MOVE HANDLERS|
     Shared Sub berserkerRage()
+        Dim p As Player = Game.player
         If p.perks("brage") > 0 Then
             p.aBuff = p.aBuff + ((p.attack) / 2)
             p.dBuff = p.dBuff - ((p.defence) / 3)
@@ -140,6 +165,7 @@
         End If
     End Sub
     Shared Sub massiveMammaries()
+        Dim p As Player = Game.player
         If p.perks("mmammaries") = 1 Then
             p.dBuff = p.dBuff + ((p.getDEF - p.dBuff) * 0.8)
             p.perks("mmammaries") -= 1
@@ -151,6 +177,7 @@
         End If
     End Sub
     Shared Sub ironhideFury()
+        Dim p As Player = Game.player
         If p.perks("ihfury") = 3 Then
             p.aBuff = p.aBuff + ((p.getATK - p.aBuff) * 0.5)
             p.dBuff = p.dBuff + ((p.getDEF - p.dBuff) * 0.6)

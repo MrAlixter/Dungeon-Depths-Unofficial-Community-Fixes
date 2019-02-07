@@ -10,7 +10,7 @@
         MyBase.mBoost = 50
         MyBase.aBoost = 10
         count = 0
-        value = 1800
+        value = 3200
     End Sub
 
     Overrides Sub discard()

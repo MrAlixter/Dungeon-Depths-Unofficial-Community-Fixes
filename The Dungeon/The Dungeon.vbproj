@@ -14,7 +14,7 @@
     <TargetFrameworkVersion>v4.0</TargetFrameworkVersion>
     <IsWebBootstrapper>false</IsWebBootstrapper>
     <TargetFrameworkProfile />
-    <PublishUrl>publish\</PublishUrl>
+    <PublishUrl>F:\d_d\</PublishUrl>
     <Install>true</Install>
     <InstallFrom>Disk</InstallFrom>
     <UpdateEnabled>false</UpdateEnabled>
@@ -24,9 +24,10 @@
     <UpdatePeriodically>false</UpdatePeriodically>
     <UpdateRequired>false</UpdateRequired>
     <MapFileExtensions>true</MapFileExtensions>
-    <ApplicationRevision>0</ApplicationRevision>
+    <ApplicationRevision>1</ApplicationRevision>
     <ApplicationVersion>0.5.0.%2a</ApplicationVersion>
     <UseApplicationTrust>false</UseApplicationTrust>
+    <PublishWizardCompleted>true</PublishWizardCompleted>
     <BootstrapperEnabled>true</BootstrapperEnabled>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
@@ -79,6 +80,15 @@
   <PropertyGroup>
     <AssemblyOriginatorKeyFile>
     </AssemblyOriginatorKeyFile>
+  </PropertyGroup>
+  <PropertyGroup>
+    <ManifestCertificateThumbprint>05B2FBCE288F78CA36CA6E65E2519367BDE08B5C</ManifestCertificateThumbprint>
+  </PropertyGroup>
+  <PropertyGroup>
+    <ManifestKeyFile>The Dungeon_TemporaryKey.pfx</ManifestKeyFile>
+  </PropertyGroup>
+  <PropertyGroup>
+    <SignManifests>true</SignManifests>
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="System" />
@@ -162,7 +172,10 @@
     <Compile Include="Entities\Player\Spells\Heal.vb" />
     <Compile Include="Entities\Player\Spells\IcicleSpear.vb" />
     <Compile Include="Entities\Player\Spells\Illumiate.vb" />
+    <Compile Include="Entities\Player\Spells\MagmaSpear.vb" />
+    <Compile Include="Entities\Player\Spells\MajorHeal.vb" />
     <Compile Include="Entities\Player\Spells\Petrify.vb" />
+    <Compile Include="Entities\Player\Spells\Petrify2.vb" />
     <Compile Include="Entities\Player\Spells\SelfPolymorph.vb" />
     <Compile Include="Entities\Player\Spells\Spell.vb" />
     <Compile Include="Entities\Player\Spells\SuperFireball.vb" />
@@ -187,6 +200,7 @@
     <Compile Include="Entities\Player\Transformations\Polymorphs\SlimeTF.vb" />
     <Compile Include="Entities\Player\Transformations\Polymorphs\SuccubusTF.vb" />
     <Compile Include="Entities\Player\Transformations\Polymorphs\TigressTF.vb" />
+    <Compile Include="Entities\Player\Transformations\Polymorphs\TTCCBF.vb" />
     <Compile Include="Entities\Player\Transformations\PrincessTF.vb" />
     <Compile Include="Entities\Player\Transformations\RandoSlimeTF.vb" />
     <Compile Include="Entities\Player\Transformations\RandoTF.vb" />
@@ -207,12 +221,15 @@
     <Compile Include="Items\Accesories\ROTLGoddess.vb" />
     <Compile Include="Items\Accesories\RubyCirclet.vb" />
     <Compile Include="Items\Accesories\ThrallCollar.vb" />
+    <Compile Include="Items\Armor\BronzeArmor.vb" />
+    <Compile Include="Items\Armor\BronzeBikini.vb" />
     <Compile Include="Items\Armor\ChitArmor.vb" />
     <Compile Include="Items\Armor\CowBra.vb" />
     <Compile Include="Items\Armor\VDayClothes.vb" />
     <Compile Include="Items\Armor\VNightLingerie.vb" />
     <Compile Include="Items\Usable\Potions\BEPotion.vb" />
     <Compile Include="Items\Usable\Potions\ClearPotion.vb" />
+    <Compile Include="Items\Usable\Potions\MajHealthPotion.vb" />
     <Compile Include="Items\Usable\Potions\Mystery Potions\Side Effects\HairBleachEffect.vb" />
     <Compile Include="Items\Usable\Potions\Mystery Potions\Main Effects\HealthEffect.vb" />
     <Compile Include="Items\Usable\Potions\Mystery Potions\Main Effects\HungerEffect.vb" />
@@ -254,6 +271,7 @@
     <Compile Include="Items\Usable\Potions\Mystery Potions\Side Effects\RedDyeEffect.vb" />
     <Compile Include="Items\Usable\Potions\Mystery Potions\Side Effects\RHairChangeEffect.vb" />
     <Compile Include="Items\Usable\Spellbooks\ASpellbook.vb" />
+    <Compile Include="Items\Weapons\BronzeAxe.vb" />
     <Compile Include="Items\Weapons\SpidersilkWhip.vb" />
     <Compile Include="Testing.vb" />
     <Compile Include="Tiles\LoadedChest.vb" />
@@ -513,6 +531,7 @@
       <LastGenOutput>Settings.Designer.vb</LastGenOutput>
     </None>
     <None Include="App.config" />
+    <None Include="The Dungeon_TemporaryKey.pfx" />
   </ItemGroup>
   <ItemGroup>
     <BootstrapperPackage Include=".NETFramework,Version=v4.5">
@@ -535,6 +554,24 @@
     <Content Include="favicon %281%29.ico" />
     <Content Include="favicon.ico" />
     <Content Include="img\bkg\back.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="img\fTF\tfClothes\gfClothes125.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="img\fTF\tfClothes\gfClothes126.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="img\fTF\tfClothes\gfClothes127.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="img\fTF\tfClothes\gfClothes128.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="img\fTF\tfClothes\gfClothes129.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="img\fTF\tfClothes\gfClothes130.png">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
     <Content Include="img\misc-unimplemented\blank.png">
@@ -1843,6 +1880,18 @@
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
     <Content Include="img\mTF\tfClothes\mClothes27.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="img\mTF\tfClothes\mClothes28.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="img\mTF\tfClothes\mClothes29.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="img\mTF\tfClothes\mClothes30.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="img\mTF\tfClothes\mClothes31.png">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
     <Content Include="img\mTF\tfEars\blank.png">

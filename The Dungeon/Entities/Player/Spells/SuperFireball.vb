@@ -4,12 +4,12 @@
         MyBase.New(c, t)
         MyBase.setName("Super Fireball")
         MyBase.settier(3)
-        MyBase.setcost(6)
+        MyBase.setcost(8)
     End Sub
     Public Overrides Sub effect()
         Dim dmg As Integer = 60
-        Dim d51 = Int(Rnd() * 5)
-        Dim d52 = Int(Rnd() * 5)
+        Dim d51 = Int(Rnd() * 6)
+        Dim d52 = Int(Rnd() * 6)
         If d51 = d52 And d52 = 2 Then
             'critical hit
             MyBase.getTarget.takeDMG(2 * (dmg + d51 + d52), MyBase.getCaster)

@@ -61,7 +61,7 @@
             Dim r As Integer = Int(Rnd() * 10)
             Dim itemTier As Integer = 1
             Select Case r
-                Case 0 To 4
+                Case 0, 1, 2, 3, 4
                     itemTier = 1
                 Case 9
                     itemTier = 3

@@ -95,6 +95,10 @@
         internal_inventory.Add("Val._Day_Suit", New VDayClothes())          '79
         internal_inventory.Add("BE_Potion", New BEPotion())                 '80
         internal_inventory.Add("Ring_of_the_L._Goddess", New ROTLGoddess()) '81
+        internal_inventory.Add("Major_Health_Potion", New MajHealthPotion()) '82
+        internal_inventory.Add("Bronze_Armor", New BronzeArmor())           '83
+        internal_inventory.Add("Bronze_Battle_Axe", New BronzeAxe())        '84
+        internal_inventory.Add("Bronze_Bikini", New BronzeBikini())         '85
 
         armor = {New CommonClothes, New SkimpyClothes, New Naked,
                  Me.item(5), Me.item(7), Me.item(8), Me.item(10),
@@ -103,12 +107,13 @@
                  Me.item(46), Me.item(47), Me.item(54), Me.item(55),
                  Me.item(56), Me.item(64), Me.item(71), Me.item(72),
                  Me.item(73), Me.item(74), Me.item(75), Me.item(78),
-                 Me.item(79)}
+                 Me.item(79), Me.item(83), Me.item(85)}
 
         weapons = {New BareFists(),
                    Me.item(6), Me.item(9), Me.item(11), Me.item(21),
                    Me.item(22), Me.item(23), Me.item(24), Me.item(40),
-                   Me.item(41), Me.item(42), Me.item(45), Me.item(63)}
+                   Me.item(41), Me.item(42), Me.item(45), Me.item(63),
+                   Me.item(84)}
 
         useable = {Me.item(0), Me.item(1), Me.item(3), Me.item(4),
                    Me.item(65), Me.item(15), Me.item(36), Me.item(37),
@@ -125,7 +130,7 @@
         potions = {Me.item(2), Me.item(13), Me.item(14), Me.item(25),
                    Me.item(26), Me.item(27), Me.item(28), Me.item(29),
                    Me.item(59), Me.item(60), Me.item(61), Me.item(62),
-                   Me.item(76), Me.item(80)}
+                   Me.item(76), Me.item(80), Me.item(82)}
         Array.Sort(potions)
 
         misc = {Me.item(43), Me.item(53)}

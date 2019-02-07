@@ -48,7 +48,7 @@
 
         MyBase.update()
         Game.pushLstLog(getName() & " has " & getIntHealth() & " life.")
-        
+
     End Sub
     Public Overloads Overrides Sub die(ByRef cause As Entity)
         If isDead Then Exit Sub
@@ -75,15 +75,26 @@
         Game.Drawboard
     End Sub
     Public Overridable Sub toStatue()
-        endMonster()
-        Game.pushLblEvent(title & name & "'s chest slowly turns to stone where the spell hits " & rPronoun & ". The petrification spreads out over " & pPronoun & " body, and as more of " & pPronoun & " body turns to a fine gray stone " & pPronoun & " struggling becomes less and less intense. As the last of the life drains out of " & pPronoun & " eyes, all that is left of the once dangerous " & name & " is a lifeless stone statue. It doesn't seem like " & pronoun & " will be needing " & pPronoun & " personal items anymore.")
+        Game.fromCombat()
+        Me.nextCombatAction = Nothing
+
+        Game.pushLblEvent(title & name & "'s chest slowly turns to stone where the spell hits " & rPronoun &
+                          ". The petrification spreads out over " & pPronoun & " body, and as more of " & pPronoun &
+                          " body turns to a fine gray stone " & pPronoun &
+                          " struggling becomes less and less intense. As the last of the life drains out of " &
+                          pPronoun & " eyes, all that is left of the once dangerous " & name &
+                          " is a lifeless stone statue. It doesn't seem like " & pronoun & " will be needing " &
+                          pPronoun & " personal items anymore.", AddressOf Me.endMonster)
+
         Game.statueList.Add(New Statue(Me))
     End Sub
     Public Overridable Sub toGold()
         Dim gd As Integer = (maxHealth + attack + defence) * 7
         inv.setCount(43, inv.getCountAt(43) + gd)
-        endMonster()
-        Game.pushLblEvent(title & name & "'s chest slowly turns to solid gold where you poked " & rPronoun & ". The gilded surface spreads out over " & pPronoun & " body, and as more of " & pPronoun & " body turns to the precious metal " & pPronoun & " struggling becomes less and less intense. As the last of the life drains out of " & pPronoun & " eyes, all that is left of the once dangerous " & name & " is a lifeless gold statue, which you then topple over, shattering it into tiny pieces.   " & vbCrLf & "+" & gd & " gold.")
+        Game.fromCombat()
+        Me.nextCombatAction = Nothing
+
+        Game.pushLblEvent(title & name & "'s chest slowly turns to solid gold where you poked " & rPronoun & ". The gilded surface spreads out over " & pPronoun & " body, and as more of " & pPronoun & " body turns to the precious metal " & pPronoun & " struggling becomes less and less intense. As the last of the life drains out of " & pPronoun & " eyes, all that is left of the once dangerous " & name & " is a lifeless gold statue, which you then topple over, shattering it into tiny pieces.   " & vbCrLf & "+" & gd & " gold.", AddressOf endMonster)
     End Sub
     Public Overridable Sub toBlade()
         endMonster()

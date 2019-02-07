@@ -1,15 +1,15 @@
 ﻿Public Class DeathEffects
-    Shared p As Player = Game.player
-
     '|MONSTER DEATHS|
     Shared Sub MBimboDeath()
+        Dim p As Player = Game.player
+
         p.perks("bimbotf") = 1
         Dim out As String = "Exausted, you slump to the floor.  Glancing up, the horny mess attacking you seem to have gotten a running start, throwing herself on top of you, and pulling you into a sloppy kiss.  As she clumsily fumbles around, trying to remove your clothes, you roll out from underneath her and beat a hasty retreat, the faint sweetness of bubblegum lingering in your mouth."
         p.currTarget.despawn("p-death")
         Game.pushLblEvent(out)
-
     End Sub
     Shared Sub thrallDeath()
+        Dim p As Player = Game.player
         Dim out As String = ""
         Dim ln1 As String = Nothing
         If p.pClass.name.Equals("Thrall") Then
@@ -32,6 +32,7 @@
         End If
     End Sub
     Shared Sub sorcererDeath()
+        Dim p As Player = Game.player
         Dim out As String = ""
         If p.pClass.name.Equals("Thrall") Then
             out = "Despite your fatigue, you are able to roll out of the way of the mage's attempt to restrain you, and make a clumsy escape."
@@ -54,18 +55,19 @@
         Game.pushLblEvent(out)
     End Sub
     Shared Sub slimeDeath()
+        Dim p As Player = Game.player
         Dim out As String = "As the " & p.currTarget.name & " closes in on you, you push yourself off the ground, sidestep it, and make a hasty retreat." & vbCrLf & " " & vbCrLf & "[Insert a TF here (eventually)]"
         p.currTarget.despawn("p-death")
         Game.pushLblEvent(out)
-
     End Sub
     Shared Sub spiderDeath()
+        Dim p As Player = Game.player
         Dim out As String = "As the " & p.currTarget.name & " closes in on you, you push yourself off the ground, sidestep it, and make a hasty retreat." & vbCrLf & " " & vbCrLf & "[Insert a TF here (eventually)]"
         p.currTarget.despawn("p-death")
         Game.pushLblEvent(out)
-
     End Sub
     Shared Sub mimicDeath()
+        Dim p As Player = Game.player
         p.currTarget.despawn("p-death")
         Dim out As String = "As you collapse, out of the corner of your eye you can see thick tendrils flowing out of the chest that could only be the body of the mimic.  Some of the tendrils wrap around your wrist and ankles, while others work their way up your thighs, aggressively groping your thighs."
         If p.equippedArmor.getName.Equals("Naked") Then
@@ -89,6 +91,7 @@
 
     '|BOSS / MINIBOSS DEATHS|
     Shared Sub oozeEmpDeath()
+        Dim p As Player = Game.player
         p.ongoingTFs.Add(New RandoTF())
         p.sState.save(p)
         p.pState.save(p)
@@ -107,24 +110,26 @@
 
     '|NPC DEATHS|
     Shared Sub ShopkeeperDeath()
+        Dim p As Player = Game.player
         Dim n As Shopkeep = Game.currNPC
+        Game.fromCombat()
         p.Petrify(Color.Goldenrod)
-        Dim out As String = """You should have known better than to try and rob a shop keeper,"" the shopkeep says," & vbCrLf &
-            " glaring down at you, ""...and if its gold you're after, I guess I've got some good news for you.""" & vbCrLf &
-            "  With that, " & n.pronoun & " reaches into " & n.pPronoun & " bag and puts on a gaudy gauntlet " & vbCrLf &
-            "that begins glowing with a golden light. You lack the strength to fight back as " & n.pronoun & " places" & vbCrLf &
-            " his thumb on your forhead, and suddenly everything just seems so heavy. ""Noooo..."" you moan, " & vbCrLf &
-            "as the area around where he touched turns to gold, and that gold turns your flesh and blood " & vbCrLf &
-            "around it to gold as well. In a matter of seconds, all that is left of " & p.name & " the " & vbCrLf &
+        Dim out As String = """You should have known better than to try and rob a shop keeper,"" the shopkeep says," &
+            " glaring down at you, ""...and if its gold you're after, I guess I've got some good news for you.""" &
+            "  With that, " & n.pronoun & " reaches into " & n.pPronoun & " bag and puts on a gaudy gauntlet " &
+            "that begins glowing with a golden light. You lack the strength to fight back as " & n.pronoun & " places" &
+            " his thumb on your forhead, and suddenly everything just seems so heavy. ""Noooo..."" you moan, " &
+            "as the area around where he touched turns to gold, and that gold turns your flesh and blood " &
+            "around it to gold as well. In a matter of seconds, all that is left of " & p.name & " the " &
             p.pClass.name & " is a solid gold statue. The shopkeeper sighs, muttering to no one in particular, " & vbCrLf &
-            vbCrLf & vbCrLf & """Now how am I going to get you back to the refinery?"""
-        'Game.pushLblEvent(out)
+         """Now how am I going to get you back to the refinery?""" & vbCrLf & vbCrLf & "GAME OVER!"
+        Game.pushLblEvent(out, AddressOf p.die)
         p.pClass = p.classes("Trophy")
-        MsgBox(out)
     End Sub
 
     '|MISC DEATH|
     Shared Sub hardDeath()
+        Dim p As Player = Game.player
         p.isDead = True
         Dim r As Integer = CInt(Int(Rnd() * 2))
         If r = 0 Then
@@ -134,7 +139,7 @@
             writer.Flush()
             writer.Close()
         End If
-        If MessageBox.Show("Game Over!  Reload the a save?", "Game Over . . .", MessageBoxButtons.YesNo) = Windows.Forms.DialogResult.Yes Then
+        If MessageBox.Show("Game Over!  Reload a save?", "Game Over . . .", MessageBoxButtons.YesNo) = Windows.Forms.DialogResult.Yes Then
             Try
                 Game.combatmode = False
                 Game.solFlag = True

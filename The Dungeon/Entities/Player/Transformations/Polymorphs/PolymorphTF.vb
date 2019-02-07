@@ -30,6 +30,8 @@
                 Return New SheepTFB()
             Case "Blowup Doll"
                 Return New BUDollTF()
+            Case "Cake"
+                Return New TTCCBF()
             Case Else
                 Return Nothing
         End Select
@@ -44,6 +46,7 @@
     Public Overrides Sub stopTF()
         MyBase.stopTF()
         tfDone = True
+
         Game.player.revertToPState()
         Game.player.perks("polymorphed") = -1
     End Sub

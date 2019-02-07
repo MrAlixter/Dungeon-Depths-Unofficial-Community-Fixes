@@ -8,10 +8,10 @@
     End Sub
     Public Overrides Sub effect()
         MyBase.getTarget.tfCt = 1
-        MyBase.getTarget.tfEnd = 15
+        MyBase.getTarget.tfEnd = 5
         MyBase.getTarget.form = "Giant Frog"
-        MyBase.getTarget.attack = 1
-        MyBase.getTarget.defence = 1
+        MyBase.getTarget.attack = 5
+        MyBase.getTarget.defence = 5
         MyBase.getTarget.speed = 1
         If MyBase.getTarget.getIntHealth > 70 Then MyBase.getTarget.health = 1
         MyBase.getTarget.maxHealth = 70

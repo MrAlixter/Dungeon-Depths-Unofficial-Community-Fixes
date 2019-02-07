@@ -27,7 +27,8 @@
                 MyBase.setATK(50)
                 MyBase.setDEF(20)
                 MyBase.setSPD(5)
-                MyBase.inv.setCount("Health_Potion", 5)
+                MyBase.inv.setCount("Health_Potion", 2)
+                MyBase.inv.setCount("Major_Health_Potion", 3)
                 MyBase.inv.setCount("Sword_of_the_Brutal", 1)
                 MyBase.inv.setCount("Warrior's_Cuirass", CInt(Rnd() * 2))
 
@@ -94,6 +95,6 @@
         Else
             MyBase.attackCMD(target)
         End If
-        
+
     End Sub
 End Class

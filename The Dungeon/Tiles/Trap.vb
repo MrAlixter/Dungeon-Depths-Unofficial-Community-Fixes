@@ -30,12 +30,11 @@
                 Dim x As Integer = -1
                 Dim n As String = Game.player.equippedArmor.getName()
                 x = Game.player.inv.idOfKey(n)
-                If x <> -1 Then Game.player.inv.add(x, -1)
                 Dim rng As Integer = Int(Rnd() * Game.chestList.Count)
                 Dim out As String = "A beam fires out of the wall to your left, striking you in the chest."
                 If n <> "Ropes" Then
                     If n <> "Naked" Then
-                        out += "  Your clothes glow a bright purple, before vanishing into the Æther, leaving you naked.  You look around frantically, before accepting that they probably aren't coming back."
+                        out += "  Your clothes glow a bright purple, before vanishing into the Æther, leaving you naked.  You look around frantically, before a quick check confirms that they are tucked away with your other gear."
                     Else
                         out += "  Since you're already naked, the beam doesn't seem to have done much."
                     End If
@@ -44,7 +43,7 @@
                         out += "  However, the ropes are not able to contain your massive breasts, and they quickly burst apart leaving you naked."
                         Equipment.clothesChange("Naked")
                         pos = New Point(-1, -1)
-                        
+                        Game.pushLblEvent(out)
                         Exit Sub
                     End If
                 Else

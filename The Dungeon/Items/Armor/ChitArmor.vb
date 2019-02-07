@@ -13,7 +13,7 @@
         MyBase.dBoost = 15
         MyBase.sBoost = 10
         MyBase.count = 0
-        MyBase.value = 125
+        MyBase.value = 346
         MyBase.bsizeneg1 = New Tuple(Of Integer, Boolean, Boolean)(17, False, True)
         MyBase.bsize1 = New Tuple(Of Integer, Boolean, Boolean)(93, True, True)
         MyBase.bsize2 = New Tuple(Of Integer, Boolean, Boolean)(94, True, True)

@@ -20,6 +20,7 @@
     Dim wingIndex As Integer
     Dim hornIndex As Integer
     Public initFlag As Boolean = False
+    Public isPetrified = False
 
     'constructs a state from an instance of a player
     Sub New(ByRef p As Player)
@@ -122,6 +123,7 @@
         p.wingInd = wingIndex
         p.hornInd = hornIndex
         p.pImage = pImage
+        p.isPetrified = isPetrified
     End Sub
     'save applies a given instance of a player to a state
     Public Sub save(ByRef p As Player)
@@ -155,6 +157,7 @@
         wingIndex = p.wingInd
         hornIndex = p.hornInd
         pImage = p.pImage
+        isPetrified = p.isPetrified
     End Sub
 
     'read converts a string given from a save file into a state
@@ -206,6 +209,7 @@
         defence = CInt(readArray(11))
         will = CInt(readArray(12))
         speed = CInt(readArray(13))
+        If Not readArray(14).Equals("placeholder") Then isPetrified = CBool(readArray(14))
         hunger = CInt(readArray(15))
         gold = CInt(readArray(16))
 
@@ -260,7 +264,7 @@
     Public Function write() As String
         If initFlag Then
             Dim output As String = CStr(name & "*" & pClass.name & "~" & pForm.name & "*" & description & "*" & health & "*" & maxHealth & "*" & mana & "*" & maxMana & "*" & wingIndex & "*" & haircolor.A & "*" & skincolor.A & "*" & _
-               attack & "*" & defence & "*" & will & "*" & speed & "*" & "placeholder" & "*" & hunger & "*" & gold & "*" & equippedArmor.getName() & "*" & equippedWeapon.getName() & "*" & _
+               attack & "*" & defence & "*" & will & "*" & speed & "*" & isPetrified & "*" & hunger & "*" & gold & "*" & equippedArmor.getName() & "*" & equippedWeapon.getName() & "*" & _
                sex & "*" & hornIndex & "*" & breastSize & "*" & haircolor.R & "*" & haircolor.G & "*" & haircolor.B & "*" & skincolor.R & "*" & skincolor.G & "*" & skincolor.B & "*" & _
                textColor.R & "*" & textColor.G & "*" & textColor.B & "*")
             output += perks.Count & "*"

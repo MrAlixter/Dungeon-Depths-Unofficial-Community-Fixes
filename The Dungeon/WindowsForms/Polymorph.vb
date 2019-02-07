@@ -88,12 +88,12 @@
         End If
 
         'cleanup
-        p.perks("polymorphed") = 1
+        p.perks("polymorphed") = p.polymorphs(form).getturnsTilNextStep
 
         Game.pushLblEvent(revertText & Game.lblEvent.Text.Split(vbCrLf)(0))
         Game.cmboxSpec.Items.Clear()
         Game.specialRoute()
-        
+        p.createP()
     End Sub
     'monster transform method
     Sub transform(ByRef t As Monster, ByVal s As String)

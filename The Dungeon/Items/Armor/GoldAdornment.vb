@@ -11,7 +11,7 @@
         MyBase.setUsable(False)
         MyBase.dBoost = 10
         MyBase.count = 0
-        MyBase.value = 2000
+        MyBase.value = 4100
         MyBase.antiSlutVarInd = 38
         bsize1 = New Tuple(Of Integer, Boolean, Boolean)(54, True, True)
         bsize2 = New Tuple(Of Integer, Boolean, Boolean)(55, True, True)

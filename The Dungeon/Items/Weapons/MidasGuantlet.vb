@@ -9,7 +9,7 @@
         MyBase.setUsable(False)
         MyBase.aBoost = 0
         MyBase.count = 0
-        MyBase.value = 4000
+        MyBase.value = 9999
     End Sub
 
     Overrides Sub discard()

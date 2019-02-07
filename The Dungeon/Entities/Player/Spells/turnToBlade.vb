@@ -4,7 +4,7 @@
         MyBase.New(c, t)
         MyBase.setName("Turn to Blade")
         MyBase.settier(2)
-        MyBase.setcost(9)
+        MyBase.setcost(28)
     End Sub
     Public Overrides Sub effect()
         MyBase.getCaster.inv.add(9, 1)
