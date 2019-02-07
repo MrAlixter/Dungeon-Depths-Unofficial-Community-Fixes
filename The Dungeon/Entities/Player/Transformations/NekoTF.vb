@@ -15,29 +15,29 @@
 
     Sub step1()
         Dim p As player = game.player
-        p.iArrInd(6) = New Tuple(Of Integer, Boolean)(1, p.sexBool)
+        p.iArrInd(6) = New Tuple(Of Integer, Boolean, Boolean)(1, p.sexBool, False)
         Game.pushLblCombatEvent("Your ears twitch, becoming feline while Marissa gives you a malicious grin.  ""I'm sure you tell where this is going,"" she giggles." & vbCrLf & "  You now have cat ears!")
         p.lust += 5
         p.will -= 1
     End Sub
     Sub step2()
         Dim p As player = game.player
-        p.iArrInd(4) = New Tuple(Of Integer, Boolean)(0, True)
+        p.iArrInd(4) = New Tuple(Of Integer, Boolean, Boolean)(0, True, False)
         Game.pushLblCombatEvent("Your facial structure softens, and now you have a feminine face!")
         p.lust += 5
     End Sub
     Sub step3()
         Dim p As player = game.player
-        p.iArrInd(1) = New Tuple(Of Integer, Boolean)(12, True)
-        p.iArrInd(5) = New Tuple(Of Integer, Boolean)(17, True)
-        p.iArrInd(15) = New Tuple(Of Integer, Boolean)(1, True)
+        p.iArrInd(1) = New Tuple(Of Integer, Boolean, Boolean)(12, True, True)
+        p.iArrInd(5) = New Tuple(Of Integer, Boolean, Boolean)(17, True, True)
+        p.iArrInd(15) = New Tuple(Of Integer, Boolean, Boolean)(1, True, False)
         p.will -= 1
         Game.pushLblCombatEvent("Your hair grows down to your ass, straightening out as it lengthens.  You now have long, straight hair!")
     End Sub
     Sub step4()
         Dim p As player = game.player
-        p.iArrInd(7) = New Tuple(Of Integer, Boolean)(0, True)
-        p.iArrInd(9) = New Tuple(Of Integer, Boolean)(13, True)
+        p.iArrInd(7) = New Tuple(Of Integer, Boolean, Boolean)(0, True, False)
+        p.iArrInd(9) = New Tuple(Of Integer, Boolean, Boolean)(13, True, True)
         Game.pushLblCombatEvent("You wince and close your eye as a burning sensation flows through them. You now have kitten eyes!")
         p.lust += 5
     End Sub
@@ -45,11 +45,10 @@
         Dim p As player = game.player
         If Not p.sexBool Then
             p.MtF()
-            p.be()
-            p.iArrInd(9) = New Tuple(Of Integer, Boolean)(13, True)
+            p.iArrInd(9) = New Tuple(Of Integer, Boolean, Boolean)(13, True, True)
             Game.pushLblCombatEvent("Your body slims down, and your chest inlates, giving you average sized breasts.  Soon after, your cock and balls shift into a vagina. You are now female!")
         Else
-            p.be()
+            be()
             currStep += 1
         End If
         p.lust += 5
@@ -62,9 +61,9 @@
             Exit Sub
         End If
 
-        p.be()
-        p.iArrInd(3) = New Tuple(Of Integer, Boolean)(40, True)
-        p.iArrInd(8) = New Tuple(Of Integer, Boolean)(9, True)
+        be()
+        p.iArrInd(3) = New Tuple(Of Integer, Boolean, Boolean)(40, True, True)
+        p.iArrInd(8) = New Tuple(Of Integer, Boolean, Boolean)(9, True, True)
         p.will -= 2
         Equipment.clothesChange("Cat_Lingerie")
         Game.pushLblCombatEvent("Your tits expand, your clothes shift, and you feel your will grow weaker. You are now permenantly a cat girl!  Soon you will be Marissa's pet! ")
@@ -73,12 +72,12 @@
         Dim p As player = game.player
         Equipment.weaponChange("Fists")
         Equipment.clothesChange("Cat_Lingerie")
-        p.be()
-        p.iArrInd(1) = New Tuple(Of Integer, Boolean)(12, True)
-        p.iArrInd(5) = New Tuple(Of Integer, Boolean)(17, True)
-        p.iArrInd(15) = New Tuple(Of Integer, Boolean)(1, True)
-        p.iArrInd(3) = New Tuple(Of Integer, Boolean)(40, True)
-        p.iArrInd(8) = New Tuple(Of Integer, Boolean)(9, True)
+        be()
+        p.iArrInd(1) = New Tuple(Of Integer, Boolean, Boolean)(12, True, True)
+        p.iArrInd(5) = New Tuple(Of Integer, Boolean, Boolean)(17, True, True)
+        p.iArrInd(15) = New Tuple(Of Integer, Boolean, Boolean)(1, True, False)
+        p.iArrInd(3) = New Tuple(Of Integer, Boolean, Boolean)(40, True, True)
+        p.iArrInd(8) = New Tuple(Of Integer, Boolean, Boolean)(9, True, True)
         Game.pushLblCombatEvent("Your hair grows down to your ass, straightening out as it lengthens.  You now have long, straight hair!  Your tits expand, your clothes shift, and you feel your will grow weaker. You are now a cat girl!  Soon you will be Marissa's pet! ")
     End Sub
     Sub step7()
@@ -86,20 +85,20 @@
         If p.will < 5 Then
             If p.sex = "Male" Then
                 p.MtF()
-                p.be()
-                p.iArrInd(1) = New Tuple(Of Integer, Boolean)(12, True)
-                p.iArrInd(5) = New Tuple(Of Integer, Boolean)(17, True)
-                p.iArrInd(15) = New Tuple(Of Integer, Boolean)(1, True)
+                be()
+                p.iArrInd(1) = New Tuple(Of Integer, Boolean, Boolean)(12, True, True)
+                p.iArrInd(5) = New Tuple(Of Integer, Boolean, Boolean)(17, True, True)
+                p.iArrInd(15) = New Tuple(Of Integer, Boolean, Boolean)(1, True, False)
             End If
-            p.iArrInd(1) = New Tuple(Of Integer, Boolean)(12, True)
-            p.iArrInd(5) = New Tuple(Of Integer, Boolean)(17, True)
-            p.iArrInd(15) = New Tuple(Of Integer, Boolean)(1, True)
-            p.iArrInd(2) = New Tuple(Of Integer, Boolean)(6, True)
-            p.iArrInd(3) = New Tuple(Of Integer, Boolean)(40, True)
-            p.iArrInd(8) = New Tuple(Of Integer, Boolean)(9, True)
+            p.iArrInd(1) = New Tuple(Of Integer, Boolean, Boolean)(12, True, True)
+            p.iArrInd(5) = New Tuple(Of Integer, Boolean, Boolean)(17, True, True)
+            p.iArrInd(15) = New Tuple(Of Integer, Boolean, Boolean)(1, True, False)
+            p.iArrInd(2) = New Tuple(Of Integer, Boolean, Boolean)(6, True, True)
+            p.iArrInd(3) = New Tuple(Of Integer, Boolean, Boolean)(40, True, True)
+            p.iArrInd(8) = New Tuple(Of Integer, Boolean, Boolean)(9, True, True)
         End If
         p.pClass = p.classes("Kitty")
-        p.be()
+        be()
 
         Equipment.clothesChange("Cat_Lingerie")
 
@@ -146,5 +145,13 @@
     Public Overrides Sub setWaitTime(stage As Integer)
         turnsTilNextStep = 1
         turnsTilNextStep += generatWILResistance()
+    End Sub
+
+    Sub be()
+        Dim p = Game.player
+        If p.breastSize < 7 Then
+            p.breastSize += 1
+            p.reverseBSRoute()
+        End If
     End Sub
 End Class

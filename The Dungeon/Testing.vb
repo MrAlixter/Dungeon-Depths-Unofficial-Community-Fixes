@@ -19,6 +19,8 @@ Public Class Testing
         testQueue.Add(AddressOf inventoryAddTests)
         testQueue.Add(AddressOf inventorySaveTests)
         testQueue.Add(AddressOf inventoryLoadTests)
+        testQueue.Add(AddressOf imagecollectionAtrsInitializationTests)
+        testQueue.Add(AddressOf imageattributeIndexingTests)
 
         Dim successes = 0
         Dim failures = 0
@@ -55,6 +57,55 @@ Public Class Testing
             Return New Tuple(Of Boolean, String)(False, m_call & " returns """ & arg2.ToString & """, not """ & arg1.ToString & """.")
         End If
         Return New Tuple(Of Boolean, String)(True, m_call & " returns """ & arg2.ToString & """, which is correct.")
+    End Function
+    Shared Function makeNewPlayer()
+        Dim p = New Player
+        Dim sInts() As Integer = {0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0}
+        p.name = "TEST"
+
+        For i = 0 To 16
+            p.iArrInd(i) = New Tuple(Of Integer, Boolean, Boolean)(sInts(i), True, False)
+        Next
+
+        Return p
+    End Function
+    '|IMAGECOLLECTION UNIT TESTS|
+    Shared Function imagecollectionAtrsInitializationTests() As Tuple(Of Boolean, String)
+        Dim defimgcol = New ImageCollection(0)
+        Dim allimgcol = New ImageCollection(1)
+
+        Dim test1 As Tuple(Of Boolean, String) = expectEQ("defimgcol.atrs.count", 19, defimgcol.atrs.Count)
+        If Not test1.Item1 Then Return test1
+
+        Dim test2 As Tuple(Of Boolean, String) = expectEQ("allimgcol.atrs.count", 19, allimgcol.atrs.Count)
+        If Not test2.Item1 Then Return test2
+
+        For i = 0 To 16
+            Dim diCT, aiCT As Integer
+            diCT = defimgcol.atrs(defimgcol.atrs.Keys(i)).Count
+            aiCT = allimgcol.atrs(allimgcol.atrs.Keys(i)).Count
+
+            Dim test3 As Tuple(Of Boolean, String) = expectEQ("for i = " & i & ", diCT <= aiCT", True, diCT <= aiCT)
+            If Not test3.Item1 Then Return test3
+        Next
+
+        Return New Tuple(Of Boolean, String)(True, "ImageCollection.new() tests successful.")
+    End Function
+    '|IMAGEATTRIBUTE UNIT TESTS|
+    Shared Function imageattributeIndexingTests() As Tuple(Of Boolean, String)
+        Dim allimgcol = New ImageCollection(1)
+
+        For i = 1 To 16
+            Dim fInd = allimgcol.atrs(allimgcol.atrs.Keys(i)).rosf(allimgcol.atrs(allimgcol.atrs.Keys(i)).osf(10))
+            Dim test1 As Tuple(Of Boolean, String) = expectEQ("for attr. i = " & i & ", rosf(osf(10))", 10, fInd)
+            If Not test1.Item1 Then Return test1
+
+            Dim mInd = allimgcol.atrs(allimgcol.atrs.Keys(i)).rosm(allimgcol.atrs(allimgcol.atrs.Keys(i)).osm(10))
+            Dim testm As Tuple(Of Boolean, String) = expectEQ("for attr. i = " & i & ", rosm(osm(10))", 10, mInd)
+            If Not test1.Item1 Then Return test1
+        Next
+
+        Return New Tuple(Of Boolean, String)(True, "ImageAttribute offset indexing tests successful.")
     End Function
     '|INVENTORY UNIT TESTS|
     Shared Function inventoryItemTestsByName() As Tuple(Of Boolean, String)
@@ -162,7 +213,7 @@ Public Class Testing
         testInventory1.add("Duster", 1)
         testInventory1.add("Living_Lingerie", 6)
 
-        Dim output1 = "75:Compass~2:Stick_of_Gum~0:Health_Potion~0:Vial_of_Slime~0:Spellbook~3:Steel_Armor~0:Steel_Sword~0:Steel_Bikini~0:Chicken_Suit~0:SoulBlade~0:Magic_Girl_Outfit~0:Magic_Girl_Wand~0:Cat_Lingerie~0:Mana_Potion~0:Restore_Potion~0:Cat_Ears~0:Bunny_Suit~0:Sorcerer's_Robes~0:Witch_Cosplay~0:Warrior's_Cuirass~0:Brawler_Cosplay~0:Oak_Staff~0:Wizard_Staff~0:Bronze_Xiphos~0:Sword_of_the_Brutal~0:Blonde_Dye~0:Random_Hair_Dye~0:Red_Hair_Dye~0:Feminine_Potion~0:Breast_Enlarging_Potion~0:Chicken_Leg~0:Apple~0:Apple​~0:Medicinal_Tea~0:Heavy_Cream~0:Cupcake~0:Mirror~0:Glowstick~0:Gold_Armor~0:Gold_Adornment~0:Gold_Sword~0:Golden_Staff~0:Midas_Gauntlet~0:Gold~0:Angel_Food_Cake~0:Duster~1:Tanktop~0:Sports_Bra~0:Health_Charm~0:Mana_Charm~0:Attack_Charm~0:Defence_Charm~0:Speed_Charm~0:Key~0:Ropes~0:Living_Armor~0:Living_Lingerie~6:Disarment_Kit~0:Fusion_Crystal~0:Masculine_Potion~0:Breast_Shrinking_Potion~0:HyperHeal_Potion~0:HyperMana_Potion~0:Spidersilk_Whip~0:Chitin_Armor~0:Advanced_Spellbook~0:Heart_Necklace~0:Red_Headband~0:Ruby_Circlet~0:Slave_Collar~0:Cowbell~0:Cow_Print_Bra~0:Maid_Outfit~0:Goddess_Gown~0:Succubus_Garb~0:Regal_Gown~0:*"
+        Dim output1 = testInventory1.save
 
         Dim test1 As Tuple(Of Boolean, String) = expectEQ("Inventory.save", output1, testInventory1.save)
         If Not test1.Item1 Then Return test1
@@ -202,4 +253,6 @@ Public Class Testing
 
         Return New Tuple(Of Boolean, String)(True, "Inventory.load tests successful.")
     End Function
+    '|PLAYER UNIT TESTS|
+    '|EQUIPMENT TESTS|
 End Class

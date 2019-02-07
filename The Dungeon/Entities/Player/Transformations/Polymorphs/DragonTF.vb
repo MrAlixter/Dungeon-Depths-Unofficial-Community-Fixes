@@ -23,14 +23,13 @@
         Equipment.weaponChange("Fists")
 
         'dragon transformation
-        p.iArrInd(16) = New Tuple(Of Integer, Boolean)(CharacterGenerator.fHat.Count - 2, True)
+        p.setIAInd(16, Game.imgLib.atrs("Hat").getF.Count - 2, True, False)
         If Not Game.cboxMG.Items.Contains("Dragon's Breath") Then Game.cboxMG.Items.Add("Dragon's Breath")
 
         'transformation description push
         p.TextColor = Color.LightGreen
         out += "You can feel green scales begin to cover most of your body, as another wave of mana washes over you.  As your new scales begin to thicken, you are forced down onto all fours, and a quick glance back confirms that you now have grown considerably, as well as now have a thick reptilian tail, an a proper set of dragon wings, colored the same color green as the rest of your body. After your face finishes extending into a snout, and you feel the last of the changes stop, it finally hits you. You are now a dragon."
-        Dim revertText = Game.lblEvent.Text.Split(vbCrLf)(0)
-        If Not revertText.Equals("") Then out = revertText & vbCrLf & vbCrLf & out
+        
         Game.pushLblEvent(out)
     End Sub
 End Class

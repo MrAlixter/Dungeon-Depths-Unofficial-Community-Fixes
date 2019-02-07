@@ -1,6 +1,5 @@
 ﻿Public Class Inventory
     Dim internal_inventory As New Dictionary(Of String, Item)
-    Public mysteryPotionDisplayOrder As New List(Of String)
     Dim armor() As Armor
     Dim weapons() As Weapon
     Dim acce() As Accessory
@@ -36,11 +35,11 @@
         internal_Inventory.Add("Wizard_Staff", New WizardStaff())           '22
         internal_Inventory.Add("Bronze_Xiphos", New BronzeXiphos())         '23
         internal_Inventory.Add("Sword_of_the_Brutal", New TargaxSword())    '24
-        internal_inventory.Add("Blonde_Dye", New BlondePotion())            '25
-        internal_Inventory.Add("Random_Hair_Dye", New RandomHairPotion())   '26
-        internal_Inventory.Add("Red_Hair_Dye", New RedHairPotion())         '27
-        internal_Inventory.Add("Feminine_Potion", New FemininePotion())     '28
-        internal_Inventory.Add("Breast_Enlarging_Potion", New BEPotion())   '29
+        internal_inventory.Add("Golden_Potion", New GoldenPotion())         '25
+        internal_inventory.Add("Red_Potion", New RedPotion())               '26
+        internal_inventory.Add("Green_Potion", New GreenPotion())           '27
+        internal_inventory.Add("Mauve_Potion", New MauvePotion())           '28
+        internal_inventory.Add("Rose_Potion", New RosePotion())             '29
         internal_Inventory.Add("Chicken_Leg", New ChickenLeg())             '30
         internal_Inventory.Add("Apple", New Apple())                        '31
         internal_Inventory.Add("Apple​", New PApple())                       '32
@@ -70,10 +69,10 @@
         internal_Inventory.Add("Living_Lingerie", New LiveLingerie())       '56
         internal_Inventory.Add("Disarment_Kit", New RigWrench())            '57
         internal_Inventory.Add("Fusion_Crystal", New FusionCrystal())       '58
-        internal_Inventory.Add("Masculine_Potion", New MasculinePotion())   '59
-        internal_Inventory.Add("Breast_Shrinking_Potion", New BSPotion())   '60
-        internal_Inventory.Add("HyperHeal_Potion", New HyperHealPotion())   '61
-        internal_Inventory.Add("HyperMana_Potion", New HyperManaPotion())   '62
+        internal_inventory.Add("Blue_Potion", New BluePotion())             '59
+        internal_inventory.Add("Murky_Potion", New MurkyPotion())           '60
+        internal_inventory.Add("Azure_Potion", New AzurePotion())           '61
+        internal_inventory.Add("Glittery_Potion", New GlitteryPotion())     '62
         internal_Inventory.Add("Spidersilk_Whip", New SpidersilkWhip())     '63
         internal_Inventory.Add("Chitin_Armor", New ChitArmor())             '64
         '0.5
@@ -89,35 +88,49 @@
         internal_Inventory.Add("Maid_Outfit", New MaidOutfit())             '72
         internal_Inventory.Add("Goddess_Gown", New GoddessGown())           '73
         internal_Inventory.Add("Succubus_Garb", New SuccubusGarb())         '74
-        internal_Inventory.Add("Regal_Gown", New PrincessGown())            '75
+        internal_inventory.Add("Regal_Gown", New PrincessGown())            '75
+        internal_inventory.Add("Clear_Potion", New ClearPotion())           '76
+        internal_inventory.Add("Minor_Ring_of_Regen.", New ROfMinRegen())   '77
+        internal_inventory.Add("Val._Night_Lingerie", New VNightLingerie()) '78
+        internal_inventory.Add("Val._Day_Suit", New VDayClothes())          '79
+        internal_inventory.Add("BE_Potion", New BEPotion())                 '80
+        internal_inventory.Add("Ring_of_the_L._Goddess", New ROTLGoddess()) '81
+        internal_inventory.Add("Major_Health_Potion", New MajHealthPotion()) '82
+        internal_inventory.Add("Bronze_Armor", New BronzeArmor())           '83
+        internal_inventory.Add("Bronze_Battle_Axe", New BronzeAxe())        '84
+        internal_inventory.Add("Bronze_Bikini", New BronzeBikini())         '85
 
-        armor = {New NormalClothes, New SkimpyClothes, New Naked,
+        armor = {New CommonClothes, New SkimpyClothes, New Naked,
                  Me.item(5), Me.item(7), Me.item(8), Me.item(10),
                  Me.item(12), Me.item(16), Me.item(17), Me.item(18),
                  Me.item(19), Me.item(20), Me.item(38), Me.item(39),
                  Me.item(46), Me.item(47), Me.item(54), Me.item(55),
                  Me.item(56), Me.item(64), Me.item(71), Me.item(72),
-                 Me.item(73), Me.item(74), Me.item(75)}
+                 Me.item(73), Me.item(74), Me.item(75), Me.item(78),
+                 Me.item(79), Me.item(83), Me.item(85)}
 
         weapons = {New BareFists(),
                    Me.item(6), Me.item(9), Me.item(11), Me.item(21),
                    Me.item(22), Me.item(23), Me.item(24), Me.item(40),
-                   Me.item(41), Me.item(42), Me.item(45), Me.item(63)}
+                   Me.item(41), Me.item(42), Me.item(45), Me.item(63),
+                   Me.item(84)}
 
         useable = {Me.item(0), Me.item(1), Me.item(3), Me.item(4),
                    Me.item(65), Me.item(15), Me.item(36), Me.item(37),
                    Me.item(45), Me.item(48), Me.item(49), Me.item(50),
-                   Me.item(51), Me.item(52), Me.item(57), Me.item(58)}
+                   Me.item(51), Me.item(52), Me.item(57), Me.item(58),
+                   Me.item(81)}
 
         food = {Me.item(30), Me.item(31), Me.item(32), Me.item(33),
                 Me.item(34), Me.item(35), Me.item(44)}
 
         acce = {New noAcce(), Me.item(66), Me.item(67), Me.item(68),
-                Me.item(69), Me.item(70)}
+                Me.item(69), Me.item(70), Me.item(77), Me.item(81)}
 
         potions = {Me.item(2), Me.item(13), Me.item(14), Me.item(25),
                    Me.item(26), Me.item(27), Me.item(28), Me.item(29),
-                   Me.item(59), Me.item(60), Me.item(61), Me.item(62)}
+                   Me.item(59), Me.item(60), Me.item(61), Me.item(62),
+                   Me.item(76), Me.item(80), Me.item(82)}
         Array.Sort(potions)
 
         misc = {Me.item(43), Me.item(53)}
@@ -143,7 +156,7 @@
         sum += count
     End Sub
     Sub setCount(k As String, v As Integer)
-        sum -= item(k).count
+            sum -= item(k).count
         item(k).count = v
         sum += v
     End Sub

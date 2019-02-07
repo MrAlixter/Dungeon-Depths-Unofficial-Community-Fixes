@@ -27,7 +27,8 @@
                 MyBase.setATK(50)
                 MyBase.setDEF(20)
                 MyBase.setSPD(5)
-                MyBase.inv.setCount("Health_Potion", 5)
+                MyBase.inv.setCount("Health_Potion", 2)
+                MyBase.inv.setCount("Major_Health_Potion", 3)
                 MyBase.inv.setCount("Sword_of_the_Brutal", 1)
                 MyBase.inv.setCount("Warrior's_Cuirass", CInt(Rnd() * 2))
 
@@ -70,29 +71,30 @@
         If name.Equals("Marissa the Enchantress") Then
             If target.GetType() Is GetType(Player) Then
                 If Game.player.perks("nekocurse") = -1 Then
-                    Game.lstLog.Items.Add((getName() & " casts a curse on you!"))
+                    Game.pushLstLog((getName() & " casts a curse on you!"))
                     Game.pushLblCombatEvent((getName() & " casts a curse on you!"))
                     Game.player.ongoingTFs.Add(New NekoTF(7, 1, 0.3, True))
-                ElseIf Game.player.perks("nekocurse") > -1 And health < 45 Then
-                    Game.lstLog.Items.Add((getName() & " heals herself!  +35 health!"))
-                    Game.pushLblCombatEvent((getName() & " heals herself for 35 health!"))
-                    takeDMG(-35, Nothing)
-                ElseIf Game.player.health < 20 Then
-                    Game.lstLog.Items.Add((getName() & " waits expectantly..."))
+                ElseIf Game.player.perks("nekocurse") > -1 And getHealth() < 45 / getMaxHealth() Then
+                    Dim healvalue = Int(Rnd() * 4) + Int(Rnd() * 2) + 30
+                    Game.pushLstLog((getName() & " heals herself!  +" & healvalue & " health!"))
+                    Game.pushLblCombatEvent((getName() & " heals herself for " & healvalue & " health!"))
+                    takeDMG(-healvalue, Nothing)
+                ElseIf Game.player.getIntHealth < 20 Then
+                    Game.pushLstLog((getName() & " waits expectantly..."))
                     Game.pushLblCombatEvent((getName() & " waits expectantly..."))
                 Else
-                    Game.lstLog.Items.Add((getName() & " casts lightning bolt!"))
+                    Game.pushLstLog((getName() & " casts lightning bolt!"))
                     Game.pushLblCombatEvent((getName() & " casts lightning bolt!"))
                     MyBase.attackCMD(target)
                 End If
             Else
-                Game.lstLog.Items.Add((getName() & " casts lightning bolt!"))
+                Game.pushLstLog((getName() & " casts lightning bolt!"))
                 Game.pushLblCombatEvent((getName() & " casts lightning bolt!"))
                 MyBase.attackCMD(target)
             End If
         Else
             MyBase.attackCMD(target)
         End If
-        Game.lstLog.TopIndex = Game.lstLog.Items.Count - 1
+
     End Sub
 End Class

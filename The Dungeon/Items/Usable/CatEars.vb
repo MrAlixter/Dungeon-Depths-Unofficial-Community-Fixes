@@ -13,14 +13,14 @@
 
     Overrides Sub use()
         If Me.getUsable() = False Then Exit Sub
-        Game.player.iArr(6) = CharacterGenerator.fAttributes(6)(1)
-        Game.player.iArrInd(6) = New Tuple(Of Integer, Boolean)(1, Game.player.sexBool)
+        Game.player.setIAInd(6, 1, Game.player.sexBool, False)
         Game.picPortrait.BackgroundImage = CharacterGenerator.CreateBMP(Game.player.iArr)
+        Game.player.createP()
         count -= 1
     End Sub
     Overrides Sub discard()
-        Game.lstLog.Items.Add("You drop the " & getName())
-        Game.lstLog.TopIndex = Game.lstLog.Items.Count - 1
+        Game.pushLstLog("You drop the " & getName())
+        
         count -= 1
     End Sub
 End Class

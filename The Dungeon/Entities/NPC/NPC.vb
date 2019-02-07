@@ -32,10 +32,10 @@
             nextCombatAction = Sub(t As Entity) attackCMD(t)
         Else
             If Me.GetType() Is GetType(Monster) Then
-                Game.lstLog.Items.Add("The " & getName() & " is too stunned to react!")
+                Game.pushLstLog("The " & getName() & " is too stunned to react!")
                 Game.pushLblCombatEvent("The " & getName() & " is too stunned to react!")
             Else
-                Game.lstLog.Items.Add(getName() & " is too stunned to react!")
+                Game.pushLstLog(getName() & " is too stunned to react!")
                 Game.pushLblCombatEvent(getName() & " is too stunned to react!")
             End If
             If stunct <= 0 Then
@@ -47,18 +47,14 @@
         End If
 
         MyBase.update()
-        Game.lstLog.Items.Add(getName() & " has " & getIntHealth() & " life.")
-        Game.lstLog.TopIndex = Game.lstLog.Items.Count - 1
+        Game.pushLstLog(getName() & " has " & getIntHealth() & " life.")
+
     End Sub
     Public Overloads Overrides Sub die(ByRef cause As Entity)
         If isDead Then Exit Sub
         currTarget = Nothing
         nextCombatAction = Nothing
 
-        cause.currTarget = Nothing
-        cause.nextCombatAction = Nothing
-
-        Game.player.clearTarget()
         If getName() = "Explorer" Then
             If MessageBox.Show("Would you like to do the Explorer's body swap?", "Body Swap?", MessageBoxButtons.YesNo) = Windows.Forms.DialogResult.Yes Then 'Int(Rnd() * 3) = 0 Then '
                 Try
@@ -71,17 +67,34 @@
             Equipment.accChange("Nothing")
         End If
         endMonster()
+
+        Game.player.clearTarget()
+        cause.currTarget = Nothing
+        cause.nextCombatAction = Nothing
+
+        Game.Drawboard
     End Sub
     Public Overridable Sub toStatue()
-        endMonster()
-        Game.pushLblEvent(title & name & "'s chest slowly turns to stone where the spell hits " & rPronoun & ". The petrification spreads out over " & pPronoun & " body, and as more of " & pPronoun & " body turns to a fine gray stone " & pPronoun & " struggling becomes less and less intense. As the last of the life drains out of " & pPronoun & " eyes, all that is left of the once dangerous " & name & " is a lifeless stone statue. It doesn't seem like " & pronoun & " will be needing " & pPronoun & " personal items anymore.")
+        Game.fromCombat()
+        Me.nextCombatAction = Nothing
+
+        Game.pushLblEvent(title & name & "'s chest slowly turns to stone where the spell hits " & rPronoun &
+                          ". The petrification spreads out over " & pPronoun & " body, and as more of " & pPronoun &
+                          " body turns to a fine gray stone " & pPronoun &
+                          " struggling becomes less and less intense. As the last of the life drains out of " &
+                          pPronoun & " eyes, all that is left of the once dangerous " & name &
+                          " is a lifeless stone statue. It doesn't seem like " & pronoun & " will be needing " &
+                          pPronoun & " personal items anymore.", AddressOf Me.endMonster)
+
         Game.statueList.Add(New Statue(Me))
     End Sub
     Public Overridable Sub toGold()
         Dim gd As Integer = (maxHealth + attack + defence) * 7
         inv.setCount(43, inv.getCountAt(43) + gd)
-        endMonster()
-        Game.pushLblEvent(title & name & "'s chest slowly turns to solid gold where you poked " & rPronoun & ". The gilded surface spreads out over " & pPronoun & " body, and as more of " & pPronoun & " body turns to the precious metal " & pPronoun & " struggling becomes less and less intense. As the last of the life drains out of " & pPronoun & " eyes, all that is left of the once dangerous " & name & " is a lifeless gold statue, which you then topple over, shattering it into tiny pieces.   " & vbCrLf & "+" & gd & " gold.")
+        Game.fromCombat()
+        Me.nextCombatAction = Nothing
+
+        Game.pushLblEvent(title & name & "'s chest slowly turns to solid gold where you poked " & rPronoun & ". The gilded surface spreads out over " & pPronoun & " body, and as more of " & pPronoun & " body turns to the precious metal " & pPronoun & " struggling becomes less and less intense. As the last of the life drains out of " & pPronoun & " eyes, all that is left of the once dangerous " & name & " is a lifeless gold statue, which you then topple over, shattering it into tiny pieces.   " & vbCrLf & "+" & gd & " gold.", AddressOf endMonster)
     End Sub
     Public Overridable Sub toBlade()
         endMonster()
@@ -91,42 +104,42 @@
         Game.player.clearTarget()
         If reason = "run" Then
             If Int(Rnd() * 30) < 2 Then
-                Game.lstLog.Items.Add("Running away makes you less confident.")
+                Game.pushLstLog("Running away makes you less confident.")
                 Game.player.will -= 1
                 If Game.player.will < 1 Then Game.player.will = 0
                 Game.player.UIupdate()
             End If
-            Game.lstLog.Items.Add("You ran from the " & name & "!")
+            Game.pushLstLog("You ran from the " & name & "!")
         ElseIf reason = "p-death" Then
         ElseIf reason = "friend" Then
             If Int(Rnd() * 3) = 0 Then
-                Game.lstLog.Items.Add("The " & name & " gives you some supplies before leaving!")
+                Game.pushLstLog("The " & name & " gives you some supplies before leaving!")
                 Game.player.inv.add(2, 1)
                 Game.player.inv.add(13, 1)
                 Game.player.inv.add(31, 1)
                 Game.pushLblEvent("+1 Health_Potion" & vbCrLf & "+1 Mana_Potion" & vbCrLf & "+1 Apple_Potion")
             Else
-                Game.lstLog.Items.Add("The " & name & " is friendly, and you chat a bit before setting back out!")
+                Game.pushLstLog("The " & name & " is friendly, and you chat a bit before setting back out!")
             End If
         ElseIf reason = "npc" Then
-            Game.lstLog.Items.Add("You walk away from " & name & "!")
+            Game.pushLstLog("You walk away from " & name & "!")
         ElseIf reason = "animaltf" Then
             Dim output As String = ""
             If Me.GetType() Is GetType(Monster) Then output += "The "
             output += name & ", seeing that you are no longer human, wanders off."
-            Game.lstLog.Items.Add(output)
+            Game.pushLstLog(output)
         ElseIf reason = "flee" Then
             Dim output As String = ""
             If Me.GetType() Is GetType(Monster) Then output += "The "
             output += name & " runs away in fear!"
-            Game.lstLog.Items.Add(output)
+            Game.pushLstLog(output)
         ElseIf reason = "cupcake" Then
             Dim c1 As Chest
             c1 = Game.baseChest.Create(inv, pos)
             If inv.getSum > 0 Then c1.open()
 
             Game.npcList.Remove(Me)
-            Game.lstLog.Items.Add("You've deafeated the " & name & "!")
+            Game.pushLstLog("You've deafeated the " & name & "!")
             Game.player.currState.save(Game.player)
             isDead = True
             endBoss()
@@ -140,10 +153,13 @@
         Game.player.perks("nekocurse") = -1
         Game.player.currState.save(Game.player)
         Game.fromCombat()
-        Game.lstLog.TopIndex = Game.lstLog.Items.Count - 1
+        
     End Sub
     Private Sub endBoss()
-        If sName.Equals("Marissa the Enchantress") Then Game.beatboss(1) = True
+        If sName.Equals("Marissa the Enchantress") Then
+            Game.beatboss(1) = True
+            Game.player.perks("nekocurse") = -1
+        End If
         If sName.Equals("Targax the Brutal") Then Game.beatboss(2) = True
         If sName.Equals("Explorer") And Game.floor < 6 Then Game.beatboss(Game.floor) = True
         If sName.Equals("Ooze Empress") Then
@@ -162,7 +178,7 @@
 
         'will update
         If Int(Rnd() * 20) < 2 Then
-            Game.lstLog.Items.Add("Your victory makes you feel more confident.")
+            Game.pushLstLog("Your victory makes you feel more confident.")
             p.will += 1
             p.UIupdate()
         End If
@@ -172,8 +188,8 @@
         endBoss()
         Game.fromCombat()
         Game.npcList.Remove(Me)
-        Game.lstLog.Items.Add("You've deafeated the " & name & "!")
-        Game.lstLog.TopIndex = Game.lstLog.Items.Count - 1
+        Game.pushLstLog("You've deafeated the " & name & "!")
+        
 
         'monster transformations
         If sName.Equals("Ooze Empress") Then
@@ -274,21 +290,21 @@
                     If crit < ebound Then miss(target) Else hit(dmg, target)
                 End If
         End Select
-        Game.lstLog.TopIndex = Game.lstLog.Items.Count - 1
+        
     End Sub
     'attacking a player
     Private Sub miss(target As Player)
-        Game.lstLog.Items.Add(CStr("You are able to evade your opponent!"))
+        Game.pushLstLog(CStr("You are able to evade your opponent!"))
         Game.pushLblCombatEvent(CStr("You are able to evade your opponent!"))
     End Sub
     Private Sub hit(dmg As Integer, target As Player)
         target.takeDMG(dmg, Me)
-        Game.lstLog.Items.Add(CStr("You got hit! -" & dmg & " health!"))
+        Game.pushLstLog(CStr("You got hit! -" & dmg & " health!"))
         Game.pushLblCombatEvent(CStr("You got hit! -" & dmg & " health!"))
     End Sub
     Private Sub cHit(dmg As Integer, target As Player)
         target.takeDMG(dmg * 2, Me)
-        Game.lstLog.Items.Add(CStr("You got hit! Critical hit! -" & dmg * 2 & " health!"))
+        Game.pushLstLog(CStr("You got hit! Critical hit! -" & dmg * 2 & " health!"))
         Game.pushLblCombatEvent(CStr("You got hit! Critical hit! -" & dmg * 2 & " health!"))
     End Sub
     'attacking a non-player entity
@@ -298,7 +314,7 @@
             Exit Sub
         End If
 
-        Game.lstLog.Items.Add(CStr(target.getName & " is able to evade their opponent!"))
+        Game.pushLstLog(CStr(target.getName & " is able to evade their opponent!"))
         Game.pushLblCombatEvent(CStr(target.getName & " is are able to evade their opponent!"))
     End Sub
     Private Sub hit(dmg As Integer, target As Entity)
@@ -308,7 +324,7 @@
         End If
 
         target.takeDMG(dmg, Me)
-        Game.lstLog.Items.Add(CStr(target.getName & " got hit! -" & dmg & " health!"))
+        Game.pushLstLog(CStr(target.getName & " got hit! -" & dmg & " health!"))
         Game.pushLblCombatEvent(CStr(target.getName & " got hit! -" & dmg & " health!"))
     End Sub
     Private Sub cHit(dmg As Integer, target As Entity)
@@ -318,7 +334,7 @@
         End If
 
         target.takeDMG(dmg * 2, Me)
-        Game.lstLog.Items.Add(CStr(target.getName & " got hit! Critical hit! -" & dmg * 2 & " health!"))
+        Game.pushLstLog(CStr(target.getName & " got hit! Critical hit! -" & dmg * 2 & " health!"))
         Game.pushLblCombatEvent(CStr(target.getName & " got hit! Critical hit! -" & dmg * 2 & " health!"))
     End Sub
     'taking damage

@@ -31,25 +31,24 @@
         p.haircolor = Color.FromArgb(255, 210, 180, 140)
         If p.skincolor = Color.FromArgb(255, 255, 105, 180) Then p.haircolor = Color.FromArgb(255, 155, 0, 0)
         If p.skincolor = Color.FromArgb(200, 0, 255, 255) Then p.haircolor = Color.FromArgb(180, 5, 245, 198)
-        p.iArrInd(1) = New Tuple(Of Integer, Boolean)(8, True)
-        p.iArrInd(2) = New Tuple(Of Integer, Boolean)(1, True)
-        p.iArrInd(4) = New Tuple(Of Integer, Boolean)(0, True)
-        p.iArrInd(5) = New Tuple(Of Integer, Boolean)(8, True)
-        p.iArrInd(6) = New Tuple(Of Integer, Boolean)(0, True)
-        p.iArrInd(7) = New Tuple(Of Integer, Boolean)(0, True)
-        p.iArrInd(8) = New Tuple(Of Integer, Boolean)(8, True)
-        p.iArrInd(9) = New Tuple(Of Integer, Boolean)(10, True)
-        p.iArrInd(10) = New Tuple(Of Integer, Boolean)(0, True)
-        p.iArrInd(13) = New Tuple(Of Integer, Boolean)(0, True)
-        p.iArrInd(15) = New Tuple(Of Integer, Boolean)(9, True)
-        p.iArrInd(16) = New Tuple(Of Integer, Boolean)(0, True)
+        p.iArrInd(1) = New Tuple(Of Integer, Boolean, Boolean)(8, True, True)
+        p.iArrInd(2) = New Tuple(Of Integer, Boolean, Boolean)(1, True, True)
+        p.iArrInd(4) = New Tuple(Of Integer, Boolean, Boolean)(0, True, False)
+        p.iArrInd(5) = New Tuple(Of Integer, Boolean, Boolean)(8, True, True)
+        p.iArrInd(6) = New Tuple(Of Integer, Boolean, Boolean)(0, True, False)
+        p.iArrInd(7) = New Tuple(Of Integer, Boolean, Boolean)(0, True, False)
+        p.iArrInd(8) = New Tuple(Of Integer, Boolean, Boolean)(8, True, True)
+        p.iArrInd(9) = New Tuple(Of Integer, Boolean, Boolean)(10, True, True)
+        p.iArrInd(10) = New Tuple(Of Integer, Boolean, Boolean)(0, True, False)
+        p.iArrInd(13) = New Tuple(Of Integer, Boolean, Boolean)(0, True, False)
+        p.iArrInd(15) = New Tuple(Of Integer, Boolean, Boolean)(9, True, False)
+        p.iArrInd(16) = New Tuple(Of Integer, Boolean, Boolean)(0, True, False)
         p.goddState.save(p)
 
         'transformation description push
         p.TextColor = Color.LightGoldenrodYellow
         out += "Your eyes burn with an awesome fury as golden flames engulf you.  Your opponent squints and covers their eyes, blinded by your new found vibrance.  Dialing back your personal light show, you give them a cocky grin.  They may not know it, but this battle is already over."
-        Dim revertText = Game.lblEvent.Text.Split(vbCrLf)(0)
-        If Not revertText.Equals("") Then out = revertText & vbCrLf & vbCrLf & out
+        
         Game.pushLblEvent(out)
     End Sub
 End Class

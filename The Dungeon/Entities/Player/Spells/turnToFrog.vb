@@ -8,15 +8,15 @@
     End Sub
     Public Overrides Sub effect()
         MyBase.getTarget.tfCt = 1
-        MyBase.getTarget.tfEnd = 15
+        MyBase.getTarget.tfEnd = 5
         MyBase.getTarget.form = "Giant Frog"
-        MyBase.getTarget.attack = 1
-        MyBase.getTarget.defence = 1
+        MyBase.getTarget.attack = 5
+        MyBase.getTarget.defence = 5
         MyBase.getTarget.speed = 1
-        If MyBase.getTarget.health > 70 Then MyBase.getTarget.health = 70
+        If MyBase.getTarget.getIntHealth > 70 Then MyBase.getTarget.health = 1
         MyBase.getTarget.maxHealth = 70
-        Game.lstLog.Items.Add(CStr("Your spell hits the " & MyBase.getTarget.name & ", turning " & MyBase.getTarget.rPronoun & " into a giant frog!"))
+        Game.pushLstLog(CStr("Your spell hits the " & MyBase.getTarget.name & ", turning " & MyBase.getTarget.rPronoun & " into a giant frog!"))
         Game.pushLblCombatEvent(CStr("Your spell hits the " & MyBase.getTarget.name & ", turning " & MyBase.getTarget.rPronoun & " into a giant frog!"))
-        Game.lstLog.TopIndex = Game.lstLog.Items.Count - 1
+        
     End Sub
 End Class

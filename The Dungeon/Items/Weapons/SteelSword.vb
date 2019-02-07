@@ -3,18 +3,18 @@
 
     Sub New()
         MyBase.setName("Steel_Sword")
-        MyBase.setDesc("A simple sword forged from steel. +10 ATK")
+        MyBase.setDesc("A simple sword forged from steel. +17 ATK")
         id = 6
         tier = Nothing
         MyBase.setUsable(False)
-        MyBase.aBoost = 10
+        MyBase.aBoost = 17
         MyBase.count = 0
-        MyBase.value = 125
+        MyBase.value = 235
     End Sub
 
     Overrides Sub discard()
-        Game.lstLog.Items.Add("You drop the " & getName())
-        Game.lstLog.TopIndex = Game.lstLog.Items.Count - 1
+        Game.pushLstLog("You drop the " & getName())
+        
         count -= 1
     End Sub
 

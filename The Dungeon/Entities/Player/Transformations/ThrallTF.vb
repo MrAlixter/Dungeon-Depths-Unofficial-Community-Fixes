@@ -3,18 +3,21 @@
     Sub New(n As Integer, tts As Integer, wi As Double, cbs As Boolean)
         MyBase.New(n, tts, wi, cbs)
         tfName = "ThrallTF"
+        MyBase.updateDuringCombat = False
         Game.player.perks("thrall") = 0
         nextStep = AddressOf shiftTowardsPrefForm
     End Sub
     Sub New()
         MyBase.New(1, Int(Rnd() * 10) + 10, 0, False)
         tfName = "ThrallTF"
+        MyBase.updateDuringCombat = False
         Game.player.perks("thrall") = 11
         nextStep = AddressOf crystalSpawn
     End Sub
     Sub New(cs As Integer, n As Integer, tts As Integer, wi As Double, cbs As Boolean, tfd As Boolean)
         MyBase.New(cs, n, tts, wi, cbs, tfd)
         tfName = "ThrallTF"
+        MyBase.updateDuringCombat = False
         nextStep = getNextStep(cs)
     End Sub
 
@@ -62,24 +65,36 @@
 
         stopTF()
     End Sub
+    Shared Sub postLoadCrystalSpawn(ByVal e As Entity)
+        Dim p = Game.player
+        Dim crystal As Point = New Point(p.forcedPath(0).X, p.forcedPath(0).Y)
+        Game.mBoard(crystal.Y, crystal.X).Text = "c"
+        p.forcedPath = Game.route(p.pos, crystal)
+        p.nextCombatAction = Nothing
+    End Sub
 
     Shared Sub fightSorc()
         Dim p As player = game.player
         Dim m As Monster
         m = New Monster(9)
+
+        Monster.targetRoute(m)
+
         Game.toCombat()
-        Game.lstLog.Items.Add((m.getName() & " attacks!"))
-        Game.lstLog.TopIndex = Game.lstLog.Items.Count - 1
+        Game.pushLstLog((m.getName() & " attacks!"))
+        Game.turn += 1
     End Sub
     Shared Sub fightSorc2()
         Dim p As player = game.player
         Game.lblEvent.Visible = False
         Dim m As Monster
         m = New Monster(8)
-        Game.npcList.Add(m)
+
+        Monster.targetRoute(m)
+
         Game.toCombat()
-        Game.lstLog.Items.Add((m.getName() & " attacks!"))
-        Game.lstLog.TopIndex = Game.lstLog.Items.Count - 1
+        Game.pushLstLog((m.getName() & " attacks!"))
+        Game.turn += 1
     End Sub
     Shared Sub acceptSorc()
         Dim p As player = game.player

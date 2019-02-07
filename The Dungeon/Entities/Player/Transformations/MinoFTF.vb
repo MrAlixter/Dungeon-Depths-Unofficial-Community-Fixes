@@ -3,21 +3,23 @@
     Sub New(n As Integer, tts As Integer, wi As Double, cbs As Boolean)
         MyBase.New(n, tts, wi, cbs)
         tfName = "MinoFTF"
+        MyBase.updateDuringCombat = False
         Game.player.perks("cowbell") = 0
         nextStep = AddressOf step1
     End Sub
     Sub New(cs As Integer, n As Integer, tts As Integer, wi As Double, cbs As Boolean, tfd As Boolean)
         MyBase.New(cs, n, tts, wi, cbs, tfd)
+        MyBase.updateDuringCombat = False
         tfName = "MinoFTF"
         nextStep = getNextStep(cs)
     End Sub
 
     Sub step1()
         Dim p As player = game.player
-        Dim black = Color.FromArgb(255, 50, 50, 50)
-        Dim brown = Color.FromArgb(255, 131, 81, 54)
-        Dim blonde = Color.FromArgb(255, 248, 189, 90)
-        Dim white = Color.FromArgb(255, 249, 249, 249)
+        Dim black = Color.FromArgb(p.haircolor.A, 50, 50, 50)
+        Dim brown = Color.FromArgb(p.haircolor.A, 131, 81, 54)
+        Dim blonde = Color.FromArgb(p.haircolor.A, 248, 189, 90)
+        Dim white = Color.FromArgb(p.haircolor.A, 249, 249, 249)
         Dim hcs = {black, brown, blonde, white}
         Dim hcn = {"Black", "Brown", "Blonde", "White"}
         Dim i = Int(Rnd() * hcs.Length)
@@ -34,15 +36,15 @@
         Dim out = "Through the sway of your motion your cowbell rings out quietly, but repeatedly.  After a while of this, you take a rest and check yourself for any changes that may have taken place."
         If p.iArrInd(1).Item2 Then
             out += "  Looking at your reflection in the nearby pool of water, you see that you now have bovine ears!  Between these and the horns, you're pretty sure you're slowly turning into some sort of cow."
-            p.iArrInd(6) = New Tuple(Of Integer, Boolean)(8, True)
+            p.iArrInd(6) = New Tuple(Of Integer, Boolean, Boolean)(8, True, True)
             p.wBuff -= 1
         Else
             out += "  You can feel the tickle of hair much further down on your back than you are used to, and a quick glance in a nearby puddle confirms that your hair has lengthened considerably."
-            p.iArrInd(1) = New Tuple(Of Integer, Boolean)(1, True)
-            p.iArrInd(5) = New Tuple(Of Integer, Boolean)(0, True)
+            p.iArrInd(1) = New Tuple(Of Integer, Boolean, Boolean)(1, True, False)
+            p.iArrInd(5) = New Tuple(Of Integer, Boolean, Boolean)(0, True, False)
             If Not Int(Rnd() * 3) = 0 Then
                 out += "  Looking at your reflection in the nearby pool of water, you see that you now have bovine ears!  Between these and the horns, you're pretty sure you're slowly turning into some sort of cow."
-                p.iArrInd(6) = New Tuple(Of Integer, Boolean)(8, True)
+                p.iArrInd(6) = New Tuple(Of Integer, Boolean, Boolean)(8, True, True)
                 p.equippedAcce.wBoost -= 1
             End If
         End If
@@ -57,9 +59,9 @@
             out += "  You loose hold of your weapon dropping it and reverting your transformation."
             Equipment.weaponChange("Fists")
         End If
-        p.iArrInd(1) = New Tuple(Of Integer, Boolean)(16, True)
-        p.iArrInd(5) = New Tuple(Of Integer, Boolean)(20, True)
-        p.iArrInd(15) = New Tuple(Of Integer, Boolean)(16, True)
+        p.iArrInd(1) = New Tuple(Of Integer, Boolean, Boolean)(16, True, True)
+        p.iArrInd(5) = New Tuple(Of Integer, Boolean, Boolean)(20, True, True)
+        p.iArrInd(15) = New Tuple(Of Integer, Boolean, Boolean)(16, True, True)
         Game.pushLblEvent(out)
     End Sub
     Sub step5()
@@ -70,16 +72,20 @@
     Sub step678()
         Dim p As player = game.player
         Dim out = "Despite being out of the cloud of dust, another small sneeze rattles your bell slightly."
-        If Game.player.breastSize = 7 Then
+        If p.breastSize = 7 Then
             out += "  Nothing seems to have happened, and you go on your way."
-        ElseIf Game.player.breastSize = -1 Then
+        ElseIf p.breastSize = -1 Then
             out += "  Your breasts jiggle a little, and ..." & vbCrLf & vbCrLf & "Wait, BREASTS?!" & vbCrLf & vbCrLf & "You strip off your top and examine your chest and sure enough, you have two small breasts now."
-            Game.player.be()
+            p.breastSize += 1
+            p.reverseBSRoute()
         Else
             out += "  Your breasts jiggle a little, and it seems that you've gone up a cup size."
-            Game.player.be()
+            If p.breastSize < 7 Then
+                p.breastSize += 1
+                p.reverseBSRoute()
+            End If
         End If
-        If Not Game.player.sexBool Then
+        If Not p.sexBool Then
             If Int(Rnd() * 2) = 0 Then
                 out += "  You also notice that you feel a little ... breathier ... between your legs and a quick pat down confirms that you are now female.  Seems like this bell is turning you into a proper cow after all..."
                 Game.player.MtF()
@@ -108,7 +114,6 @@
         If Game.player.perks("cowbell") = -1 Then
             Return AddressOf stopTF
         End If
-
         Select Case stage
             Case 0
                 Return AddressOf step1
@@ -120,7 +125,7 @@
                 Return AddressOf step4
             Case 4
                 Return AddressOf step5
-            Case 5 Or 6 Or 7
+            Case 5, 6, 7
                 Return AddressOf step678
             Case 8
                 Return AddressOf step9

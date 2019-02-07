@@ -8,7 +8,7 @@
         tier = 2
         MyBase.setUsable(True)
         MyBase.count = 0
-        MyBase.value = 100
+        MyBase.value = 2
     End Sub
     Overrides Sub use()
         Game.player.gold += MyBase.count

@@ -10,12 +10,12 @@
         MyBase.mBoost = 50
         MyBase.aBoost = 10
         count = 0
-        value = 1800
+        value = 3200
     End Sub
 
     Overrides Sub discard()
-        Game.lstLog.Items.Add("You drop the " & getName())
-        Game.lstLog.TopIndex = Game.lstLog.Items.Count - 1
+        Game.pushLstLog("You drop the " & getName())
+        
         count -= 1
     End Sub
 End Class

@@ -30,24 +30,23 @@
         End If
         If p.skincolor = Color.FromArgb(255, 255, 105, 180) Then p.haircolor = Color.FromArgb(255, 155, 0, 0)
         If p.skincolor = Color.FromArgb(200, 0, 255, 255) Then p.haircolor = Color.FromArgb(180, 5, 245, 198)
-        p.iArrInd(1) = New Tuple(Of Integer, Boolean)(15, True)
-        p.iArrInd(2) = New Tuple(Of Integer, Boolean)(21, True)
-        p.iArrInd(4) = New Tuple(Of Integer, Boolean)(0, True)
-        p.iArrInd(5) = New Tuple(Of Integer, Boolean)(19, True)
-        p.iArrInd(6) = New Tuple(Of Integer, Boolean)(7, True)
-        p.iArrInd(7) = New Tuple(Of Integer, Boolean)(0, True)
-        p.iArrInd(8) = New Tuple(Of Integer, Boolean)(11, True)
-        p.iArrInd(9) = New Tuple(Of Integer, Boolean)(18, True)
-        p.iArrInd(10) = New Tuple(Of Integer, Boolean)(0, True)
-        p.iArrInd(13) = New Tuple(Of Integer, Boolean)(0, True)
-        p.iArrInd(15) = New Tuple(Of Integer, Boolean)(15, True)
-        p.iArrInd(16) = New Tuple(Of Integer, Boolean)(0, True)
+        p.iArrInd(1) = New Tuple(Of Integer, Boolean, Boolean)(15, True, True)
+        p.iArrInd(2) = New Tuple(Of Integer, Boolean, Boolean)(21, True, True)
+        p.iArrInd(4) = New Tuple(Of Integer, Boolean, Boolean)(0, True, False)
+        p.iArrInd(5) = New Tuple(Of Integer, Boolean, Boolean)(19, True, True)
+        p.iArrInd(6) = New Tuple(Of Integer, Boolean, Boolean)(7, True, True)
+        p.iArrInd(7) = New Tuple(Of Integer, Boolean, Boolean)(0, True, False)
+        p.iArrInd(8) = New Tuple(Of Integer, Boolean, Boolean)(11, True, True)
+        p.iArrInd(9) = New Tuple(Of Integer, Boolean, Boolean)(18, True, True)
+        p.iArrInd(10) = New Tuple(Of Integer, Boolean, Boolean)(0, True, False)
+        p.iArrInd(13) = New Tuple(Of Integer, Boolean, Boolean)(0, True, False)
+        p.iArrInd(15) = New Tuple(Of Integer, Boolean, Boolean)(15, True, True)
+        p.iArrInd(16) = New Tuple(Of Integer, Boolean, Boolean)(0, True, False)
 
         'transformation description push
         p.TextColor = Color.Orange
         out += "[Transformation decription pending]"
-        Dim revertText = Game.lblEvent.Text.Split(vbCrLf)(0)
-        If Not revertText.Equals("") Then out = revertText & vbCrLf & vbCrLf & out
+        
         Game.pushLblEvent(out)
     End Sub
 End Class

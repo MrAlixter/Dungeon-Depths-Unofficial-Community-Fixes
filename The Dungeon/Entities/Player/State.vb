@@ -6,13 +6,13 @@
     Public pClass As pClass = New Classless()
     Public pForm As pForm = New Human()
     Dim health As Double
-    Dim maxHealth, mana, maxMana, attack, defence As Integer
+    Public maxHealth, mana, maxMana, attack, defence As Integer
     Dim will, speed, gold, lust As Integer
     Dim breastSize, hunger As Integer
     Dim equippedWeapon As Weapon
-    Dim equippedArmor As Armor
+    Public equippedArmor As Armor
     Dim equippedAcce As Accessory
-    Public iArrInd(16) As Tuple(Of Integer, Boolean)
+    Public iArrInd(16) As Tuple(Of Integer, Boolean, Boolean)
     Dim perks As Dictionary(Of String, Integer)
     Dim sexBool, invNeedsUDate As Boolean
     Dim haircolor, skincolor, textColor As Color
@@ -20,6 +20,7 @@
     Dim wingIndex As Integer
     Dim hornIndex As Integer
     Public initFlag As Boolean = False
+    Public isPetrified = False
 
     'constructs a state from an instance of a player
     Sub New(ByRef p As Player)
@@ -78,7 +79,7 @@
         equippedWeapon = New BareFists
         equippedArmor = New Naked
         equippedAcce = New noAcce
-        iArrInd = {New Tuple(Of Integer, Boolean)(2, False), New Tuple(Of Integer, Boolean)(2, False), New Tuple(Of Integer, Boolean)(2, False), New Tuple(Of Integer, Boolean)(2, False), New Tuple(Of Integer, Boolean)(2, False), New Tuple(Of Integer, Boolean)(2, False), New Tuple(Of Integer, Boolean)(2, False), New Tuple(Of Integer, Boolean)(2, False), New Tuple(Of Integer, Boolean)(2, False), New Tuple(Of Integer, Boolean)(2, False), New Tuple(Of Integer, Boolean)(2, False), New Tuple(Of Integer, Boolean)(2, False), New Tuple(Of Integer, Boolean)(2, False), New Tuple(Of Integer, Boolean)(2, False), New Tuple(Of Integer, Boolean)(2, False), New Tuple(Of Integer, Boolean)(2, False), New Tuple(Of Integer, Boolean)(2, False), New Tuple(Of Integer, Boolean)(2, False), New Tuple(Of Integer, Boolean)(2, False), New Tuple(Of Integer, Boolean)(2, False)}
+        iArrInd = {New Tuple(Of Integer, Boolean, Boolean)(2, False, False), New Tuple(Of Integer, Boolean, Boolean)(2, False, False), New Tuple(Of Integer, Boolean, Boolean)(2, False, False), New Tuple(Of Integer, Boolean, Boolean)(2, False, False), New Tuple(Of Integer, Boolean, Boolean)(2, False, False), New Tuple(Of Integer, Boolean, Boolean)(2, False, False), New Tuple(Of Integer, Boolean, Boolean)(2, False, False), New Tuple(Of Integer, Boolean, Boolean)(2, False, False), New Tuple(Of Integer, Boolean, Boolean)(2, False, False), New Tuple(Of Integer, Boolean, Boolean)(2, False, False), New Tuple(Of Integer, Boolean, Boolean)(2, False, False), New Tuple(Of Integer, Boolean, Boolean)(2, False, False), New Tuple(Of Integer, Boolean, Boolean)(2, False, False), New Tuple(Of Integer, Boolean, Boolean)(2, False, False), New Tuple(Of Integer, Boolean, Boolean)(2, False, False), New Tuple(Of Integer, Boolean, Boolean)(2, False, False), New Tuple(Of Integer, Boolean, Boolean)(2, False, False), New Tuple(Of Integer, Boolean, Boolean)(2, False, False), New Tuple(Of Integer, Boolean, Boolean)(2, False, False), New Tuple(Of Integer, Boolean, Boolean)(2, False, False)}
         perks = New Dictionary(Of String, Integer)()
         sexBool = False
         invNeedsUDate = False
@@ -100,7 +101,6 @@
         p.maxHealth = maxHealth
         If p.health > 1 Then p.health = 1
         p.maxMana = maxMana
-        If p.mana > maxMana + p.mBuff Then p.mana = maxMana + p.mBuff
         p.attack = attack
         p.defence = defence
         p.will = will
@@ -123,6 +123,7 @@
         p.wingInd = wingIndex
         p.hornInd = hornIndex
         p.pImage = pImage
+        p.isPetrified = isPetrified
     End Sub
     'save applies a given instance of a player to a state
     Public Sub save(ByRef p As Player)
@@ -156,6 +157,7 @@
         wingIndex = p.wingInd
         hornIndex = p.hornInd
         pImage = p.pImage
+        isPetrified = p.isPetrified
     End Sub
 
     'read converts a string given from a save file into a state
@@ -183,7 +185,7 @@
             hunger = 0
             equippedWeapon = New BareFists
             equippedArmor = New Naked
-            iArrInd = {New Tuple(Of Integer, Boolean)(2, False), New Tuple(Of Integer, Boolean)(2, False), New Tuple(Of Integer, Boolean)(2, False), New Tuple(Of Integer, Boolean)(2, False), New Tuple(Of Integer, Boolean)(2, False), New Tuple(Of Integer, Boolean)(2, False), New Tuple(Of Integer, Boolean)(2, False), New Tuple(Of Integer, Boolean)(2, False), New Tuple(Of Integer, Boolean)(2, False), New Tuple(Of Integer, Boolean)(2, False), New Tuple(Of Integer, Boolean)(2, False), New Tuple(Of Integer, Boolean)(2, False), New Tuple(Of Integer, Boolean)(2, False), New Tuple(Of Integer, Boolean)(2, False), New Tuple(Of Integer, Boolean)(2, False), New Tuple(Of Integer, Boolean)(2, False), New Tuple(Of Integer, Boolean)(2, False), New Tuple(Of Integer, Boolean)(2, False), New Tuple(Of Integer, Boolean)(2, False), New Tuple(Of Integer, Boolean)(2, False)}
+            iArrInd = {New Tuple(Of Integer, Boolean, Boolean)(2, False, False), New Tuple(Of Integer, Boolean, Boolean)(2, False, False), New Tuple(Of Integer, Boolean, Boolean)(2, False, False), New Tuple(Of Integer, Boolean, Boolean)(2, False, False), New Tuple(Of Integer, Boolean, Boolean)(2, False, False), New Tuple(Of Integer, Boolean, Boolean)(2, False, False), New Tuple(Of Integer, Boolean, Boolean)(2, False, False), New Tuple(Of Integer, Boolean, Boolean)(2, False, False), New Tuple(Of Integer, Boolean, Boolean)(2, False, False), New Tuple(Of Integer, Boolean, Boolean)(2, False, False), New Tuple(Of Integer, Boolean, Boolean)(2, False, False), New Tuple(Of Integer, Boolean, Boolean)(2, False, False), New Tuple(Of Integer, Boolean, Boolean)(2, False, False), New Tuple(Of Integer, Boolean, Boolean)(2, False, False), New Tuple(Of Integer, Boolean, Boolean)(2, False, False), New Tuple(Of Integer, Boolean, Boolean)(2, False, False), New Tuple(Of Integer, Boolean, Boolean)(2, False, False), New Tuple(Of Integer, Boolean, Boolean)(2, False, False), New Tuple(Of Integer, Boolean, Boolean)(2, False, False), New Tuple(Of Integer, Boolean, Boolean)(2, False, False)}
             perks = New Dictionary(Of String, Integer)()
             sexBool = False
             invNeedsUDate = False
@@ -207,6 +209,7 @@
         defence = CInt(readArray(11))
         will = CInt(readArray(12))
         speed = CInt(readArray(13))
+        If Not readArray(14).Equals("placeholder") Then isPetrified = CBool(readArray(14))
         hunger = CInt(readArray(15))
         gold = CInt(readArray(16))
 
@@ -244,7 +247,7 @@
         Next
         For i = 0 To UBound(iArrInd)
             Dim arr() As String = readArray(32 + b1 + i).Split("%")
-            iArrInd(i) = New Tuple(Of Integer, Boolean)(CInt(arr(0)), CBool(arr(1)))
+            iArrInd(i) = New Tuple(Of Integer, Boolean, Boolean)(CInt(arr(0)), CBool(arr(1)), CBool(arr(2)))
         Next
         pImage = pimg(readArray(32 + b1 + 17))
 
@@ -261,7 +264,7 @@
     Public Function write() As String
         If initFlag Then
             Dim output As String = CStr(name & "*" & pClass.name & "~" & pForm.name & "*" & description & "*" & health & "*" & maxHealth & "*" & mana & "*" & maxMana & "*" & wingIndex & "*" & haircolor.A & "*" & skincolor.A & "*" & _
-               attack & "*" & defence & "*" & will & "*" & speed & "*" & "placeholder" & "*" & hunger & "*" & gold & "*" & equippedArmor.getName() & "*" & equippedWeapon.getName() & "*" & _
+               attack & "*" & defence & "*" & will & "*" & speed & "*" & isPetrified & "*" & hunger & "*" & gold & "*" & equippedArmor.getName() & "*" & equippedWeapon.getName() & "*" & _
                sex & "*" & hornIndex & "*" & breastSize & "*" & haircolor.R & "*" & haircolor.G & "*" & haircolor.B & "*" & skincolor.R & "*" & skincolor.G & "*" & skincolor.B & "*" & _
                textColor.R & "*" & textColor.G & "*" & textColor.B & "*")
             output += perks.Count & "*"
@@ -269,7 +272,7 @@
                 output += (kvp.Key & "!" & kvp.Value & "*")
             Next
             For i = 0 To UBound(iArrInd)
-                output += (iArrInd(i).Item1 & "%" & iArrInd(i).Item2 & "*")
+                output += (iArrInd(i).Item1 & "%" & iArrInd(i).Item2 & "%" & iArrInd(i).Item3 & "*")
             Next
             If Not initFlag Then pImage = Game.picChicken.BackgroundImage
             output += Array.IndexOf({Game.picPlayer.BackgroundImage, Game.picPlayerB.BackgroundImage, Game.picChicken.BackgroundImage, Game.picBimbof.BackgroundImage, Game.picPlayerf.BackgroundImage}, pImage).ToString & "*"
@@ -282,5 +285,11 @@
 
     Public Function getName() As String
         Return name
+    End Function
+    Public Function getSkinColor() As Color
+        Return skincolor
+    End Function
+    Public Function getHairColor() As Color
+        Return haircolor
     End Function
 End Class

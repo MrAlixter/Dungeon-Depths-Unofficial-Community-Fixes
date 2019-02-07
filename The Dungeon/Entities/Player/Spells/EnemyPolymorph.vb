@@ -4,7 +4,7 @@
         MyBase.New(c, t)
         MyBase.setName("Polymorph Enemy")
         MyBase.settier(4)
-        MyBase.setcost(7)
+        MyBase.setcost(12)
     End Sub
     Public Overrides Sub effect()
         Polymorph.porm = False
@@ -15,9 +15,9 @@
         If MyBase.getTarget.GetType() Is GetType(Shopkeep) Then
             MyBase.getTarget.update()
         End If
-        Game.lstLog.Items.Add(CStr("You transform" & MyBase.getTarget.title & " " & MyBase.getTarget.name & "!"))
+        Game.pushLstLog(CStr("You transform" & MyBase.getTarget.title & " " & MyBase.getTarget.name & "!"))
         Game.pushLblCombatEvent(CStr("You transform" & MyBase.getTarget.title & " " & MyBase.getTarget.name & "!"))
-        Game.lstLog.TopIndex = Game.lstLog.Items.Count - 1
+        
     End Sub
     Public Overrides Sub backfire()
         Dim n As String
@@ -32,8 +32,8 @@
         Polymorph.transform(MyBase.getCaster, n)
 
         MyBase.getCaster.perks("polymorphed") = 1
-        Game.lstLog.Items.Add(CStr("You turn yourself into a " & n & "!"))
+        Game.pushLstLog(CStr("You turn yourself into a " & n & "!"))
         Game.pushLblCombatEvent(CStr("You turn yourself into a " & n & "!"))
-        Game.lstLog.TopIndex = Game.lstLog.Items.Count - 1
+        
     End Sub
 End Class

@@ -14,8 +14,8 @@
         MyBase.value = 0
     End Sub
     Overrides Sub discard()
-        Game.lstLog.Items.Add("You drop the " & getName())
-        Game.lstLog.TopIndex = Game.lstLog.Items.Count - 1
+        Game.pushLstLog("You drop the " & getName())
+        
         count -= 1
     End Sub
     Overrides Function attack(ByRef p As Player, ByRef m As Entity) As Integer

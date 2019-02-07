@@ -4,8 +4,8 @@
     Sub New()
         MyBase.setName("Advanced_Spellbook")
         MyBase.setDesc("An ornate, gilded book that likely contains something outside of the standard magic curriculum.")
-        id = 4
-        tier = 1
+        id = 65
+        tier = 3
         MyBase.setUsable(True)
         MyBase.count = 0
         MyBase.value = 1000
@@ -19,7 +19,7 @@
         Dim out As String = ""
         While ct < 1 Or Game.cboxMG.Items.Contains(sName)
             ct += 1
-            Dim spell As Integer = CInt(Int(Rnd() * 4))
+            Dim spell As Integer = CInt(Int(Rnd() * 7))
             Select Case spell
                 Case 0
                     sName = "Turn to Blade"
@@ -48,18 +48,24 @@
                     End If
                 Case 3
                     sName = "Arcane Compass"
+                Case 4
+                    sName = "Magma Spear"
+                Case 5
+                    sName = "Petrify II"
+                Case 6
+                    sName = "Major Heal"
             End Select
             If ct > 60 Then
-                Game.lstLog.Items.Add("You know all the spells in advanced spellbooks already!")
+                Game.pushLstLog("You know all the spells in advanced spellbooks already!")
                 count -= 1
                 Exit Sub
             End If
         End While
         If sName = "placeholder" And Not Game.cboxNPCMG.Items.Contains(sName) Then Game.cboxNPCMG.Items.Add(sName)
         If Not Game.cboxMG.Items.Contains(sName) Then Game.cboxMG.Items.Add(sName)
-        Game.lstLog.Items.Add("You read the " & getName() & ". " & sName & " learned!")
-        If Not out.Equals("") Then Game.lstLog.Items.Add(out)
+        Game.pushLstLog("You read the " & getName() & ". " & sName & " learned!")
+        If Not out.Equals("") Then Game.pushLstLog(out)
         count -= 1
-        Game.lstLog.TopIndex = Game.lstLog.Items.Count - 1
+        
     End Sub
 End Class

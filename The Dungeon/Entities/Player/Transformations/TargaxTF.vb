@@ -15,9 +15,9 @@
         Dim p As player = game.player
         If (p.iArrInd(9).Item2 And p.iArrInd(9).Item1 <> 15) Or (Not p.iArrInd(9).Item2 And p.iArrInd(9).Item1 <> 8) Then
             If p.iArrInd(9).Item2 Then
-                p.iArrInd(9) = New Tuple(Of Integer, Boolean)(15, True)
+                p.iArrInd(9) = New Tuple(Of Integer, Boolean, Boolean)(15, True, True)
             Else
-                p.iArrInd(9) = New Tuple(Of Integer, Boolean)(7, False)
+                p.iArrInd(9) = New Tuple(Of Integer, Boolean, Boolean)(7, False, True)
             End If
             Game.pushLblEvent("As you cut down your most recent foe, you take a second to examine the sword you pulled off of Targax.  No doubt, this is one of the most powerful weapons you have seen let alone handled, and as it glints crimson you grin at the potential power you could seize with it.")
         End If
@@ -27,13 +27,13 @@
         Dim p As player = game.player
         If (p.iArrInd(15).Item2 And p.iArrInd(15).Item1 <> 12) Or (Not p.iArrInd(15).Item2 And p.iArrInd(15).Item1 <> 6) Then
             If p.iArrInd(2).Item2 Then
-                p.iArrInd(1) = New Tuple(Of Integer, Boolean)(13, True)
-                p.iArrInd(5) = New Tuple(Of Integer, Boolean)(15, True)
-                p.iArrInd(15) = New Tuple(Of Integer, Boolean)(12, True)
+                p.iArrInd(1) = New Tuple(Of Integer, Boolean, Boolean)(13, True, True)
+                p.iArrInd(5) = New Tuple(Of Integer, Boolean, Boolean)(15, True, True)
+                p.iArrInd(15) = New Tuple(Of Integer, Boolean, Boolean)(12, True, True)
             Else
-                p.iArrInd(1) = New Tuple(Of Integer, Boolean)(5, False)
-                p.iArrInd(5) = New Tuple(Of Integer, Boolean)(5, False)
-                p.iArrInd(15) = New Tuple(Of Integer, Boolean)(6, False)
+                p.iArrInd(1) = New Tuple(Of Integer, Boolean, Boolean)(5, False, True)
+                p.iArrInd(5) = New Tuple(Of Integer, Boolean, Boolean)(5, False, True)
+                p.iArrInd(15) = New Tuple(Of Integer, Boolean, Boolean)(6, False, True)
             End If
             p.haircolor = Color.FromArgb(255, 128, 0, 0)
             p.pClass = p.classes("Targaxian")
@@ -46,7 +46,7 @@
         p.name = "Targax"
         p.pClass = p.classes("Soul-Lord")
         Game.pushLblEvent("You jolt out of the trance you've been in for a unknown period of time, and stare in awe at the ornate glyphs that you have apperantly carved in the ground.  ""What the hell did I ..."" when the voice in your head returns, asking ""Do you accept?"".  ""Do I accept what?"" you demand, to which the voice in your head simply repeats the question.  About to firmly decline whatever nonsense your mental passenger is getting at, you are cut short by a thundering ""DO YOU ACCEPT"".  Your eyes space out and you answer your master the only way you can." & vbCrLf & vbCrLf & """Yes Master.""")
-        p.iArrInd(8) = New Tuple(Of Integer, Boolean)(11, True)
+        p.iArrInd(8) = New Tuple(Of Integer, Boolean, Boolean)(11, True, True)
         p.createP()
         p.sState.save(p)
         p.pState.save(p)

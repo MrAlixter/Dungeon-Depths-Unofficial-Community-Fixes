@@ -30,6 +30,8 @@
                 Return New SheepTFB()
             Case "Blowup Doll"
                 Return New BUDollTF()
+            Case "Cake"
+                Return New TTCCBF()
             Case Else
                 Return Nothing
         End Select
@@ -39,13 +41,14 @@
 
     Public Overrides Sub update()
         MyBase.update()
-        Game.player.perks("polymorphed") = turnsTilNextStep
+        If Not tfDone Then Game.player.perks("polymorphed") = turnsTilNextStep
     End Sub
     Public Overrides Sub stopTF()
         MyBase.stopTF()
         tfDone = True
-        Game.player.perks("polymorphed") = -1
+
         Game.player.revertToPState()
+        Game.player.perks("polymorphed") = -1
     End Sub
 
     Public Overrides Function getNextStep(stage As Integer) As Action

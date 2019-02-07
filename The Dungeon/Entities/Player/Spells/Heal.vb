@@ -13,8 +13,8 @@
 
         Game.player.health += hdif
 
-        Game.lstLog.Items.Add("You heal yourself for " & hdif * Game.player.getmaxHealth & " health!")
+        Game.pushLstLog("You heal yourself for " & hdif * Game.player.getmaxHealth & " health!")
         Game.pushLblEvent("You heal yourself for " & hdif * Game.player.getmaxHealth & " health!")
-        Game.lstLog.TopIndex = Game.lstLog.Items.Count - 1
+        
     End Sub
 End Class

@@ -21,9 +21,9 @@
 
         'angel transformation
         p.changeHairColor(Color.FromArgb(255, 245, 231, 184))
-        p.iArrInd(1) = New Tuple(Of Integer, Boolean)(5, True)
-        p.iArrInd(5) = New Tuple(Of Integer, Boolean)(14, True)
-        p.iArrInd(15) = New Tuple(Of Integer, Boolean)(11, True)
+        p.setIAInd(1, 5, True, True)
+        p.setIAInd(5, 14, True, True)
+        p.setIAInd(15, 11, True, True)
         p.wingInd = 1
 
         'transformation description push

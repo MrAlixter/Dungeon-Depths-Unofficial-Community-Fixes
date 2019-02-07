@@ -12,15 +12,15 @@
         If d6 = 2 Or d6 = 3 Then
             'critical hit
             MyBase.getTarget.takeDMG(2 * (dmg + d6), MyBase.getCaster)
-            Game.lstLog.Items.Add(CStr("Critical hit!  You hit the " & MyBase.getTarget.name & " for " & 2 * (dmg + d6) & " damage!"))
+            Game.pushLstLog(CStr("Critical hit!  You hit the " & MyBase.getTarget.name & " for " & 2 * (dmg + d6) & " damage!"))
             Game.pushLblCombatEvent(CStr("Critical hit!  You hit the " & MyBase.getTarget.name & " for " & 2 * (dmg + d6) & " damage!"))
-            Game.lstLog.TopIndex = Game.lstLog.Items.Count - 1
+            
         Else
             'non critical hit
             MyBase.getTarget.takeDMG(dmg + d6, MyBase.getCaster)
-            Game.lstLog.Items.Add(CStr("You hit the " & MyBase.getTarget.name & " for " & dmg + d6 & " damage!"))
+            Game.pushLstLog(CStr("You hit the " & MyBase.getTarget.name & " for " & dmg + d6 & " damage!"))
             Game.pushLblCombatEvent(CStr("You hit the " & MyBase.getTarget.name & " for " & dmg + d6 & " damage!"))
-            Game.lstLog.TopIndex = Game.lstLog.Items.Count - 1
+            
         End If
     End Sub
 End Class

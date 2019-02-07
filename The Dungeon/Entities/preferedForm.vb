@@ -84,11 +84,11 @@
         If Not p.skincolor.Equals(skinColor) Then p.changeSkinColor(Game.cShift(p.skincolor, skinColor, 8))
 
         If Int(Rnd() * 3) = 0 Then
-            p.iArrInd(1) = New Tuple(Of Integer, Boolean)(rHairInd, hasFemaleHair)
-            p.iArrInd(5) = New Tuple(Of Integer, Boolean)(rHairInd, hasFemaleHair)
+            p.iArrInd(1) = New Tuple(Of Integer, Boolean, Boolean)(rHairInd, hasFemaleHair, False)
+            p.iArrInd(5) = New Tuple(Of Integer, Boolean, Boolean)(rHairInd, hasFemaleHair, False)
         End If
         If Int(Rnd() * 3) = 0 Then
-            p.iArrInd(15) = New Tuple(Of Integer, Boolean)(fHairInd + 1, hasFemaleHair)
+            p.iArrInd(15) = New Tuple(Of Integer, Boolean, Boolean)(fHairInd + 1, hasFemaleHair, False)
         End If
 
         If p.sexBool <> isFemale And Int(Rnd() * 3) = 0 Then
@@ -100,9 +100,11 @@
         End If
 
         If p.breastSize > breastSize Then
-            p.bs()
+            p.breastSize -= 1
+            p.reverseBSRoute()
         ElseIf p.breastSize < breastSize Then
-            p.be()
+            p.breastSize += 1
+            p.reverseBSRoute()
         End If
 
         If isFemale And ((p.perks("slutcurse") = -1 And isSlut) Or (p.perks("slutcurse") > -1 And Not isSlut)) And Int(Rnd() * 3) = 0 Then
@@ -116,7 +118,13 @@
         End If
 
         If Not p.iArrInd(6).Item1 = earType And Int(Rnd() * 3) = 0 Then
-            p.iArrInd(6) = New Tuple(Of Integer, Boolean)(earType, isFemale)
+            p.iArrInd(6) = New Tuple(Of Integer, Boolean, Boolean)(earType, isFemale, False)
+        End If
+
+        If p.sexBool Then
+            p.iArrInd(9) = New Tuple(Of Integer, Boolean, Boolean)(19, True, True)
+        Else
+            p.iArrInd(9) = New Tuple(Of Integer, Boolean, Boolean)(8, False, True)
         End If
 
         p.createP()
@@ -129,10 +137,10 @@
         p.changeHairColor(hairColor)
         p.changeSkinColor(skinColor)
 
-        p.iArrInd(1) = New Tuple(Of Integer, Boolean)(rHairInd, hasFemaleHair)
-        p.iArrInd(5) = New Tuple(Of Integer, Boolean)(rHairInd, hasFemaleHair)
+        p.iArrInd(1) = New Tuple(Of Integer, Boolean, Boolean)(rHairInd, hasFemaleHair, False)
+        p.iArrInd(5) = New Tuple(Of Integer, Boolean, Boolean)(rHairInd, hasFemaleHair, False)
 
-        p.iArrInd(15) = New Tuple(Of Integer, Boolean)(fHairInd + 1, hasFemaleHair)
+        p.iArrInd(15) = New Tuple(Of Integer, Boolean, Boolean)(fHairInd + 1, hasFemaleHair, False)
 
         If p.sexBool <> isFemale Then
             If p.sexBool Then
@@ -144,11 +152,13 @@
 
         If p.breastSize > breastSize Then
             While p.breastSize > breastSize
-                p.bs()
+                p.breastSize -= 1
+                p.reverseBSRoute()
             End While
         ElseIf p.breastSize < breastSize Then
             While p.breastSize < breastSize
-                p.be()
+                p.breastSize += 1
+                p.reverseBSRoute()
             End While
         End If
 
@@ -163,7 +173,13 @@
         End If
 
         If Not p.iArrInd(6).Item1 = earType Then
-            p.iArrInd(6) = New Tuple(Of Integer, Boolean)(earType, isFemale)
+            p.iArrInd(6) = New Tuple(Of Integer, Boolean, Boolean)(earType, isFemale, False)
+        End If
+
+        If p.sexBool Then
+            p.iArrInd(9) = New Tuple(Of Integer, Boolean, Boolean)(19, True, True)
+        Else
+            p.iArrInd(9) = New Tuple(Of Integer, Boolean, Boolean)(8, False, True)
         End If
 
         p.createP()

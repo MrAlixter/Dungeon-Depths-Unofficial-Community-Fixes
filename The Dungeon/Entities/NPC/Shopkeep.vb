@@ -22,12 +22,14 @@
                 'Useables
                 MyBase.inv.setCount("Compass", 1)
                 MyBase.inv.setCount("Spellbook", 1)
+                MyBase.inv.setCount("Major_Health_Potion", 1)
                 'Potions
                 MyBase.inv.setCount("Health_Potion", 1)
                 MyBase.inv.setCount("Mana_Potion", 1)
                 'Food
                 MyBase.inv.setCount("Chicken_Leg", 1)
                 'Armor/Accesories
+                MyBase.inv.setCount("Bronze_Armor", 1)
                 MyBase.inv.setCount("Steel_Armor", 1)
                 MyBase.inv.setCount("Gold_Armor", 1)
                 'Weapons
@@ -59,11 +61,12 @@
                 MyBase.inv.setCount("Mana_Charm", 1)
                 'Potions
                 MyBase.inv.setCount("Mana_Potion", 1)
-                MyBase.inv.setCount("Feminine_Potion", 1)
-                MyBase.inv.setCount("Breast_Enlarging_Potion", 1)
-                MyBase.inv.setCount("Masculine_Potion", 1)
-                MyBase.inv.setCount("Breast_Shrinking_Potion", 1)
-                MyBase.inv.setCount("Restore_Potion", 1)
+                MyBase.inv.setCount("Glittery_Potion", 1)
+                MyBase.inv.setCount("Azure_Potion", 1)
+                MyBase.inv.setCount("Rose_Potion", 1)
+                MyBase.inv.setCount("Mauve_Potion", 1)
+                MyBase.inv.setCount("Golden_Potion", 1)
+                MyBase.inv.setCount("Murky_Potion", 1)
                 'Foods
                 MyBase.inv.setCount("Apple​", 1)
                 MyBase.inv.setCount("Angel_Food_Cake", 1)

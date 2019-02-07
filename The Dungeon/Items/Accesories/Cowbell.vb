@@ -12,9 +12,9 @@
         MyBase.hBoost = 20
         MyBase.wBoost = -1
         MyBase.count = 0
-        MyBase.value = 0
-        MyBase.fInd = New Tuple(Of Integer, Boolean)(8, True)
-        MyBase.mInd = New Tuple(Of Integer, Boolean)(4, False)
+        MyBase.value = 434
+        MyBase.fInd = New Tuple(Of Integer, Boolean, Boolean)(8, True, True)
+        MyBase.mInd = New Tuple(Of Integer, Boolean, Boolean)(4, False, True)
     End Sub
 
     Overrides Sub onEquip()
@@ -29,8 +29,8 @@
             If Game.player.health > 1 Then Game.player.health = 1
     End Sub
     Overrides Sub discard()
-        Game.lstLog.Items.Add("You drop the " & getName())
-        Game.lstLog.TopIndex = Game.lstLog.Items.Count - 1
+        Game.pushLstLog("You drop the " & getName())
+        
         count -= 1
     End Sub
 End Class

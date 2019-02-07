@@ -12,20 +12,20 @@
         MyBase.sBoost = 10
         MyBase.count = 0
         MyBase.value = 300
-        bsizeneg1 = New Tuple(Of Integer, Boolean)(21, False)
-        bsize0 = New Tuple(Of Integer, Boolean)(22, False)
-        bsize1 = New Tuple(Of Integer, Boolean)(111, True)
-        bsize2 = New Tuple(Of Integer, Boolean)(112, True)
-        bsize3 = New Tuple(Of Integer, Boolean)(113, True)
-        bsize4 = New Tuple(Of Integer, Boolean)(114, True)
-        bsize5 = New Tuple(Of Integer, Boolean)(115, True)
-        bsize5 = New Tuple(Of Integer, Boolean)(116, True)
+        bsizeneg1 = New Tuple(Of Integer, Boolean, Boolean)(21, False, True)
+        bsize0 = New Tuple(Of Integer, Boolean, Boolean)(22, False, True)
+        bsize1 = New Tuple(Of Integer, Boolean, Boolean)(111, True, True)
+        bsize2 = New Tuple(Of Integer, Boolean, Boolean)(112, True, True)
+        bsize3 = New Tuple(Of Integer, Boolean, Boolean)(113, True, True)
+        bsize4 = New Tuple(Of Integer, Boolean, Boolean)(114, True, True)
+        bsize5 = New Tuple(Of Integer, Boolean, Boolean)(115, True, True)
+        bsize5 = New Tuple(Of Integer, Boolean, Boolean)(116, True, True)
         MyBase.compressesBreasts = False
     End Sub
 
     Overrides Sub discard()
-        Game.lstLog.Items.Add("You drop the " & getName())
-        Game.lstLog.TopIndex = Game.lstLog.Items.Count - 1
+        Game.pushLstLog("You drop the " & getName())
+        
         count -= 1
     End Sub
 

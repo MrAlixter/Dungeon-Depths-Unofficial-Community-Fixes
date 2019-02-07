@@ -145,6 +145,9 @@ Public Class Debug_Window
         boxTrapFreqRange.Value = Game.trapFreqRange
         boxTrapSizeDependence.Value = Game.trapSizeDependence
     End Sub
+    Private Sub OnClose(sender As Object, e As EventArgs) Handles MyBase.FormClosing
+        Game.player.createP()
+    End Sub
 
     Private Sub loadPortrait()
         picPreview.Image = Game.picPortrait.BackgroundImage
@@ -155,9 +158,9 @@ Public Class Debug_Window
 
         Dim attr As List(Of Image)()
         If Game.player.sexBool Then
-            attr = CharacterGenerator.fAttributes
+            attr = Game.imgLib.fAttributes
         Else
-            attr = CharacterGenerator.mAttributes
+            attr = Game.imgLib.mAttributes
         End If
 
         If tabPortraitsLoaded = False Then
@@ -508,7 +511,7 @@ Public Class Debug_Window
         Dim pic As Integer = sender.Name.Split(":")(1)
 
         Game.player.iArr(tab) = CType(sender, PictureBox).Image
-        Game.player.iArrInd(tab) = New Tuple(Of Integer, Boolean)(pic, Game.player.sexBool)
+        Game.player.setIAInd(tab, pic, Game.player.sexBool, False)
 
         'picPreview.Image = CharacterGenerator.recolor(CharacterGenerator.CreateBMP(Game.player.iArr), Game.player.skincolor)
         picPreview.Image = CharacterGenerator.CreateBMP(Game.player.iArr)

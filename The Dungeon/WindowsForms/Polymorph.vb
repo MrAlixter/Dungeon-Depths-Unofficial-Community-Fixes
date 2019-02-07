@@ -88,18 +88,18 @@
         End If
 
         'cleanup
-        p.perks("polymorphed") = 1
+        p.perks("polymorphed") = p.polymorphs(form).getturnsTilNextStep
 
-        Game.lblEvent.Text = revertText & Game.lblEvent.Text
+        Game.pushLblEvent(revertText & Game.lblEvent.Text.Split(vbCrLf)(0))
         Game.cmboxSpec.Items.Clear()
         Game.specialRoute()
-        Game.lstLog.TopIndex = Game.lstLog.Items.Count - 1
+        p.createP()
     End Sub
     'monster transform method
     Sub transform(ByRef t As Monster, ByVal s As String)
         Dim title As String = s
         If title = "Sheep" Then
-            t.health = 50
+            t.health = 1
             t.maxHealth = 50
             t.attack = 1
             t.defence = 1
@@ -107,7 +107,7 @@
             t.tfEnd = 6
             t.form = "Sheep"
         ElseIf title = "Princess" Then
-            t.health = 60
+            t.health = 1
             t.maxHealth = 60
             t.attack = 5
             t.defence = 1
@@ -115,7 +115,7 @@
             t.tfEnd = 6
             t.form = "Princess"
         ElseIf title = "Bunny" Then
-            t.health = 25
+            t.health = 1
             t.maxHealth = 25
             t.attack = 1
             t.defence = 1
@@ -123,7 +123,7 @@
             t.tfEnd = 6
             t.form = "Bunny"
         ElseIf title = "Chicken" Then
-            t.health = 45
+            t.health = 1
             t.maxHealth = 45
             t.attack = 5
             t.defence = 5
@@ -131,7 +131,7 @@
             t.tfEnd = 6
             t.form = "Chicken"
         ElseIf title = "Cow" Then
-            t.health = 75
+            t.health = 1
             t.maxHealth = 75
             t.attack = 0
             t.defence = 0
@@ -139,7 +139,7 @@
             t.tfEnd = 6
             t.form = "Cow"
         ElseIf title = "Slime​" Then
-            t.health = 150
+            t.health = 1
             t.maxHealth = 150
             t.attack = 10
             t.defence = 15
@@ -147,7 +147,7 @@
             t.tfEnd = 2
             t.form = "Slime"
         ElseIf title = "Succubus​" Then
-            t.health = 125
+            t.health = 1
             t.maxHealth = 125
             t.attack = 20
             t.defence = 5
@@ -155,7 +155,7 @@
             t.tfEnd = 2
             t.form = "Succubus"
         ElseIf title = "Dragon​" Then
-            t.health = 200
+            t.health = 1
             t.maxHealth = 200
             t.attack = 15
             t.defence = 30
@@ -219,9 +219,9 @@
         Game.npcIndex = t.npcIndex
     End Sub
 
-    Shared Sub giveRNDFFName(ByRef p As Player)
+    Shared Sub giveRNDFName(ByRef p As Player)
         If Game.floor < 5 Then Randomize(Game.floorLayouts(Game.floor).GetHashCode) Else Randomize()
-        Dim fFNames() As String = {"Abigail", "Abby", "Anna", "Ann", "Ana", "Alexis", _
+        Dim fFNames() As String = {"Abigail", "Abby", "Anna", "Ann", "Ana", "Alexis", "Allie", _
                                "Becky", _
                                "Christine", "Casandra", "Catherine", "Cassie", "Carol", "Caroline", "Cara", _
                                "Danica", _
@@ -234,9 +234,50 @@
                                "Monica", "Mary", _
                                "Nancy", "Nicole", "Nadja", _
                                "Racheal", _
-                               "Samantha", "Sarah", "Sally", _
+                               "Samantha", "Sarah", "Sally", "Sophie", _
                                "Tanja", "Trisha", _
                                "Vanessa"}
+        p.name = fFNames(Int(Rnd() * fFNames.Length))
+    End Sub
+    Shared Sub giveRNDMName(ByRef p As Player)
+        If Game.floor < 5 Then Randomize(Game.floorLayouts(Game.floor).GetHashCode) Else Randomize()
+        Dim fFNames() As String = {"Aaron", "Alan", "Alexander", _
+                               "Bob", "Bruce", "Brandon", "Bailey", _
+                               "Chris", "Ciaran", _
+                               "Daniel", "Dave", "David", _
+                               "Eric", _
+                               "Gerry", _
+                               "Hank", _
+                               "Issac", "Ian", _
+                               "James", "Jimmy", "Jim", "Josh", "John", "Jackson", _
+                               "Ken", _
+                               "Lorenzo", "Leonard", "Leo", "Lawrence", _
+                               "Mark", _
+                               "Nathan", "Nick", _
+                               "Oliver", _
+                               "Richard", "Ryan", _
+                               "Samuel", "Stanley", "Stan", "Scott", _
+                               "Tanner", "Tristan", "Travis", _
+                               "Vance", _
+                               "Zachary", "Zack"}
+        p.name = fFNames(Int(Rnd() * fFNames.Length))
+    End Sub
+    Shared Sub giveRNDBimName(ByRef p As Player)
+        If Game.floor < 5 Then Randomize(Game.floorLayouts(Game.floor).GetHashCode) Else Randomize()
+        Dim fFNames() As String = {"Anna", "Ann", "Ana", "Alexis", "Allie", "Amber", "Ali", _
+                               "Becky", _
+                               "Christine", "Casandra", "Cassie", "Cara", "Chloe", _
+                               "Danica", "Dani", _
+                                "Erika", "Emmy", _
+                               "Heather", "Hailey", _
+                               "Johanna", "Jenna", "Jenni", "Jo-Jo", _
+                               "Kelli", _
+                               "Lana", "Leora", _
+                               "Monica", "Mia", _
+                               "Nancy", "Nicole", _
+                               "Racheal", _
+                               "Sammi", "Sam", "Sally", "Sara", "Sofi", _
+                               "Trisha", "Trixie"}
         p.name = fFNames(Int(Rnd() * fFNames.Length))
     End Sub
 

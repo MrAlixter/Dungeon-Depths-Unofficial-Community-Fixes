@@ -7,8 +7,8 @@
     Public mBoost As Integer = 0
     Public sBoost As Integer = 0
     Public wBoost As Integer = 0
-    Public fInd As Tuple(Of Integer, Boolean)
-    Public mInd As Tuple(Of Integer, Boolean)
+    Public fInd As Tuple(Of Integer, Boolean, Boolean)
+    Public mInd As Tuple(Of Integer, Boolean, Boolean)
 
     Overridable Sub onEquip()
     End Sub

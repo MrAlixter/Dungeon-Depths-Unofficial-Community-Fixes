@@ -12,7 +12,7 @@
     End Sub
 
     Public Sub activate(ByVal i As Integer)
-        Game.lstLog.Items.Add("Trap activated!")
+        Game.pushLstLog("Trap activated!")
         Select Case iD
             Case 0
                 Game.player.lust += 20
@@ -30,12 +30,11 @@
                 Dim x As Integer = -1
                 Dim n As String = Game.player.equippedArmor.getName()
                 x = Game.player.inv.idOfKey(n)
-                If x <> -1 Then Game.player.inv.add(x, -1)
                 Dim rng As Integer = Int(Rnd() * Game.chestList.Count)
                 Dim out As String = "A beam fires out of the wall to your left, striking you in the chest."
                 If n <> "Ropes" Then
                     If n <> "Naked" Then
-                        out += "  Your clothes glow a bright purple, before vanishing into the Æther, leaving you naked.  You look around frantically, before accepting that they probably aren't coming back."
+                        out += "  Your clothes glow a bright purple, before vanishing into the Æther, leaving you naked.  You look around frantically, before a quick check confirms that they are tucked away with your other gear."
                     Else
                         out += "  Since you're already naked, the beam doesn't seem to have done much."
                     End If
@@ -44,7 +43,7 @@
                         out += "  However, the ropes are not able to contain your massive breasts, and they quickly burst apart leaving you naked."
                         Equipment.clothesChange("Naked")
                         pos = New Point(-1, -1)
-                        Game.lstLog.TopIndex = Game.lstLog.Items.Count - 1
+                        Game.pushLblEvent(out)
                         Exit Sub
                     End If
                 Else
@@ -83,19 +82,19 @@
             Case 4
                 Dim out = "As your foot touches down on what looks to be the same ground that you have been walking on, you find that it is not met with any resistance.  Unable to keep your balance, you fall face first into the shiny waterlike facsimile of the floor and are thrown, flipping, into a another room.  As you regain your senses, you notice that you actually just ahead of where you were.  Turning around, you tap the floor you presumably fell out through, only to find it as solid as any other patch of floor you have come across.  Not able to find anything else abnormal with your surroundings, you write your expirience off as some failed illusion and set off on your way."
                 If Game.player.sexBool Then
-                    Game.player.iArrInd(1) = New Tuple(Of Integer, Boolean)(Game.player.sState.iArrInd(1).Item1, False)
-                    Game.player.iArrInd(2) = New Tuple(Of Integer, Boolean)(0, True)
-                    Game.player.iArrInd(4) = New Tuple(Of Integer, Boolean)(Game.player.sState.iArrInd(4).Item1, False)
-                    Game.player.iArrInd(5) = New Tuple(Of Integer, Boolean)(Game.player.sState.iArrInd(5).Item1, False)
-                    Game.player.iArrInd(8) = New Tuple(Of Integer, Boolean)(Game.player.sState.iArrInd(8).Item1, False)
-                    Game.player.iArrInd(10) = New Tuple(Of Integer, Boolean)(Game.player.sState.iArrInd(10).Item1, False)
-                    Game.player.iArrInd(15) = New Tuple(Of Integer, Boolean)(Game.player.sState.iArrInd(15).Item1, False)
+                    Game.player.iArrInd(1) = New Tuple(Of Integer, Boolean, Boolean)(Game.player.sState.iArrInd(1).Item1, False, Game.player.sState.iArrInd(1).Item3)
+                    Game.player.iArrInd(2) = New Tuple(Of Integer, Boolean, Boolean)(0, True, False)
+                    Game.player.iArrInd(4) = New Tuple(Of Integer, Boolean, Boolean)(Game.player.sState.iArrInd(4).Item1, False, Game.player.sState.iArrInd(1).Item3)
+                    Game.player.iArrInd(5) = New Tuple(Of Integer, Boolean, Boolean)(Game.player.sState.iArrInd(5).Item1, False, Game.player.sState.iArrInd(1).Item3)
+                    Game.player.iArrInd(8) = New Tuple(Of Integer, Boolean, Boolean)(Game.player.sState.iArrInd(8).Item1, False, Game.player.sState.iArrInd(1).Item3)
+                    Game.player.iArrInd(10) = New Tuple(Of Integer, Boolean, Boolean)(Game.player.sState.iArrInd(10).Item1, False, Game.player.sState.iArrInd(1).Item3)
+                    Game.player.iArrInd(15) = New Tuple(Of Integer, Boolean, Boolean)(Game.player.sState.iArrInd(15).Item1, False, Game.player.sState.iArrInd(1).Item3)
                     Game.player.FtM()
                 Else
-                    Game.player.iArrInd(1) = New Tuple(Of Integer, Boolean)(Game.player.sState.iArrInd(1).Item1, True)
-                    Game.player.iArrInd(5) = New Tuple(Of Integer, Boolean)(Game.player.sState.iArrInd(5).Item1, True)
-                    Game.player.iArrInd(8) = New Tuple(Of Integer, Boolean)(Game.player.sState.iArrInd(8).Item1, True)
-                    Game.player.iArrInd(15) = New Tuple(Of Integer, Boolean)(Game.player.sState.iArrInd(15).Item1, True)
+                    Game.player.iArrInd(1) = New Tuple(Of Integer, Boolean, Boolean)(Game.player.sState.iArrInd(1).Item1, True, Game.player.sState.iArrInd(1).Item3)
+                    Game.player.iArrInd(5) = New Tuple(Of Integer, Boolean, Boolean)(Game.player.sState.iArrInd(5).Item1, True, Game.player.sState.iArrInd(1).Item3)
+                    Game.player.iArrInd(8) = New Tuple(Of Integer, Boolean, Boolean)(Game.player.sState.iArrInd(8).Item1, True, Game.player.sState.iArrInd(1).Item3)
+                    Game.player.iArrInd(15) = New Tuple(Of Integer, Boolean, Boolean)(Game.player.sState.iArrInd(15).Item1, True, Game.player.sState.iArrInd(1).Item3)
                     Game.player.MtF()
                 End If
                 Game.player.createP()
@@ -104,7 +103,7 @@
         End Select
 
         pos = New Point(-1, -1)
-        Game.lstLog.TopIndex = Game.lstLog.Items.Count - 1
+        
     End Sub
 
     Shared Sub rubyRevert()

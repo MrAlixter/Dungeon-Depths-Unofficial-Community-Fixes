@@ -14,7 +14,7 @@ Imports System.Runtime.InteropServices
 <Assembly: AssemblyDescription("Dungeon Depths is a 2D dungeon crawler with art made in Kisekae2.0 featuring TF fetish content, made for adults.")> 
 <Assembly: AssemblyCompany("VowelHeavyUsername")> 
 <Assembly: AssemblyProduct("Dungeon Depths")> 
-<Assembly: AssemblyCopyright("Copyright ©  2018")> 
+<Assembly: AssemblyCopyright("Copyright ©  2019")> 
 <Assembly: AssemblyTrademark("")> 
 
 <Assembly: ComVisible(False)> 

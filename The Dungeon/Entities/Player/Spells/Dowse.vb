@@ -14,17 +14,17 @@
                     If Game.mBoard(Game.player.pos.Y + indY, Game.player.pos.X + indX).Text = "H" And Game.mBoard(Game.player.pos.Y + indY, Game.player.pos.X + indX).Tag < 2 Then
                         Game.mBoard(Game.player.pos.Y + indY, Game.player.pos.X + indX).ForeColor = Color.Black
                         If Game.mBoard(Game.player.pos.Y + indY, Game.player.pos.X + indX).Tag = 1 Then Game.mBoard(Game.player.pos.Y + indY, Game.player.pos.X + indX).Tag = 2
-                        Game.lstLog.Items.Add("Floor " & Game.floor & ": Staircase Discovered")
+                        Game.pushLstLog("Floor " & Game.floor & ": Staircase Discovered")
                     End If
                     If Game.mBoard(Game.player.pos.Y + indY, Game.player.pos.X + indX).Text = "#" And Game.mBoard(Game.player.pos.Y + indY, Game.player.pos.X + indX).Tag < 2 Then
                         Game.mBoard(Game.player.pos.Y + indY, Game.player.pos.X + indX).ForeColor = Color.Black
                         If Game.mBoard(Game.player.pos.Y + indY, Game.player.pos.X + indX).Tag = 1 Then Game.mBoard(Game.player.pos.Y + indY, Game.player.pos.X + indX).Tag = 2
-                        Game.lstLog.Items.Add("Chest discovered!")
+                        Game.pushLstLog("Chest discovered!")
                     End If
                     If Game.mBoard(Game.player.pos.Y + indY, Game.player.pos.X + indX).Text = "+" And Game.mBoard(Game.player.pos.Y + indY, Game.player.pos.X + indX).Tag < 2 Then
                         Game.mBoard(Game.player.pos.Y + indY, Game.player.pos.X + indX).ForeColor = Color.Navy
                         If Game.mBoard(Game.player.pos.Y + indY, Game.player.pos.X + indX).Tag = 1 Then Game.mBoard(Game.player.pos.Y + indY, Game.player.pos.X + indX).Tag = 2
-                        Game.lstLog.Items.Add("Trap discovered!")
+                        Game.pushLstLog("Trap discovered!")
                     End If
                 End If
             Next

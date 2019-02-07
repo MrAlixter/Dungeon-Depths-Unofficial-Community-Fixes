@@ -47,25 +47,28 @@
                                "'s known spells and forms are lost.")
 
             Dim fuPlay As Player = Fusion(Game.player, p2)
-            fuPlay.solFlag = False
+
             Game.updatelist = New PQ
 
             Game.player = fuPlay
-            fuPlay.createP()
+            Equipment.setP(Game.player)
+
             fuPlay.inv.invNeedsUDate = True
             fuPlay.UIupdate()
             fuPlay.sState.save(fuPlay)
             Dim f3 As New Equipment
             f3.ShowDialog()
             f3.Dispose()
+
+            fuPlay.createP()
             fuPlay.currState.save(fuPlay)
             fuPlay.pState.save(fuPlay)
-            Game.lstLog.TopIndex = Game.lstLog.Items.Count - 1
+            
         End If
     End Sub
     Overrides Sub discard()
-        Game.lstLog.Items.Add("You drop the " & getName())
-        Game.lstLog.TopIndex = Game.lstLog.Items.Count - 1
+        Game.pushLstLog("You drop the " & getName())
+        
         count -= 1
     End Sub
 
@@ -96,7 +99,7 @@
         Return out
     End Function
     Shared Function Fusion(ByVal p1 As Player, ByVal p2 As Player) As Player
-        Randomize()
+        Randomize(p1.name.GetHashCode)
         Dim player As Player = New Player()
         player.name = nameFusion(p1.name, p2.name)
 
@@ -171,7 +174,7 @@
         player.iArr = p1.iArr.Clone
         player.iArrInd = p1.iArrInd.Clone
         For i = 0 To 16
-            If i <> 1 And i <> 5 And i <> 3 Then
+            If i <> 1 And i <> 15 And i <> 3 And i <> 5 Then
                 r = Int(Rnd() * 2)
                 If r = 0 Then player.iArrInd(i) = p1.iArrInd(i) Else player.iArrInd(i) = p2.iArrInd(i)
             ElseIf i = 3 Then
@@ -179,8 +182,9 @@
                 If r = 0 Then player.iArrInd(i) = p1.sState.iArrInd(i) Else player.iArrInd(i) = p2.sState.iArrInd(i)
             ElseIf i = 1 Then
                 r = Int(Rnd() * 2)
-                If r = 0 Then player.iArrInd(i) = p1.iArrInd(i) Else player.iArrInd(i) = p2.iArrInd(i)
-                If r = 0 Then player.iArrInd(15) = p1.iArrInd(15) Else player.iArrInd(15) = p2.iArrInd(15)
+                If r = 0 Then player.iArrInd(1) = p1.iArrInd(1) Else player.iArrInd(1) = p2.iArrInd(1)
+                If r = 0 Then player.iArrInd(5) = p1.iArrInd(5) Else player.iArrInd(5) = p2.iArrInd(5)
+                If r = 0 Then player.iArrInd(15) = p2.iArrInd(15) Else player.iArrInd(15) = p1.iArrInd(15)
             End If
         Next
 
@@ -193,8 +197,14 @@
             player.haircolor = p1.haircolor
         End If
 
-        player.TextColor = Color.White
+        finalizeFusion(player, p1, p2)
 
+        Return player
+    End Function
+
+    Shared Sub finalizeFusion(ByRef player As Player, ByRef p1 As Player, ByRef p2 As Player)
+
+        player.TextColor = Color.White
 
         player.pos = p1.pos
 
@@ -209,7 +219,7 @@
 
         player.inv.invNeedsUDate = True
         player.UIupdate()
-
-        Return player
-    End Function
+        player.description = CStr(player.name & " is a " & player.sex & " " & player.pClass.name)
+        player.solFlag = False
+    End Sub
 End Class

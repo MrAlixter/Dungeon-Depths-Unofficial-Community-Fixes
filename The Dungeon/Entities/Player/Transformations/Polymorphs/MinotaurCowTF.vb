@@ -29,10 +29,10 @@
         p.be()
         p.be()
         p.be()
-        p.iArrInd(1) = New Tuple(Of Integer, Boolean)(16, True)
-        p.iArrInd(5) = New Tuple(Of Integer, Boolean)(20, True)
-        p.iArrInd(6) = New Tuple(Of Integer, Boolean)(8, True)
-        p.iArrInd(15) = New Tuple(Of Integer, Boolean)(16, True)
+        p.iArrInd(1) = New Tuple(Of Integer, Boolean, Boolean)(16, True, True)
+        p.iArrInd(5) = New Tuple(Of Integer, Boolean, Boolean)(20, True, True)
+        p.iArrInd(6) = New Tuple(Of Integer, Boolean, Boolean)(8, True, True)
+        p.iArrInd(15) = New Tuple(Of Integer, Boolean, Boolean)(16, True, True)
         p.hornInd = 2
 
         Dim revertText = Game.lblEvent.Text.Split(vbCrLf)(0)

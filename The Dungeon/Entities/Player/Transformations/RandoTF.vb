@@ -75,34 +75,29 @@
         End Select
 
         'set the rest of the portrait randomly
-        r = Int(Rnd() * 5)
-        p.iArrInd(1) = New Tuple(Of Integer, Boolean)(r, p.sexBool)
-        p.iArrInd(2) = New Tuple(Of Integer, Boolean)(0, p.sexbool)
-        p.iArrInd(4) = New Tuple(Of Integer, Boolean)(0, p.sexbool)
-        p.iArrInd(5) = New Tuple(Of Integer, Boolean)(r, p.sexbool)
-        r = Int(Rnd() * 5)
-        p.iArrInd(3) = New Tuple(Of Integer, Boolean)(r, p.sexbool)
-        r = Int(Rnd() * 4)
-        p.iArrInd(6) = New Tuple(Of Integer, Boolean)(r, p.sexbool)
-        p.iArrInd(7) = New Tuple(Of Integer, Boolean)(0, p.sexbool)
-        r = Int(Rnd() * 3)
-        If r = 1 Then r = 4
-        p.iArrInd(8) = New Tuple(Of Integer, Boolean)(r, p.sexbool)
-        r = Int(Rnd() * 3)
-        p.iArrInd(9) = New Tuple(Of Integer, Boolean)(r, p.sexbool)
-        p.iArrInd(10) = New Tuple(Of Integer, Boolean)(0, p.sexbool)
-        p.iArrInd(11) = New Tuple(Of Integer, Boolean)(0, p.sexbool)
-        p.iArrInd(12) = New Tuple(Of Integer, Boolean)(0 + (2 * Int(Rnd() * 3)), p.sexbool)
-        p.iArrInd(13) = New Tuple(Of Integer, Boolean)(0, p.sexbool)
-        p.iArrInd(14) = New Tuple(Of Integer, Boolean)(0, p.sexbool)
-        r = Int(Rnd() * 4) + 1
-        p.iArrInd(15) = New Tuple(Of Integer, Boolean)(r, p.sexbool)
-        p.iArrInd(16) = New Tuple(Of Integer, Boolean)(0, p.sexbool)
+        r = Int(Rnd() * 7)
+        p.iArrInd(1) = New Tuple(Of Integer, Boolean, Boolean)(r, True, False)
+        p.iArrInd(2) = New Tuple(Of Integer, Boolean, Boolean)(0, True, False)
+        p.iArrInd(4) = New Tuple(Of Integer, Boolean, Boolean)(0, True, False)
+        p.iArrInd(5) = New Tuple(Of Integer, Boolean, Boolean)(r, True, False)
+        r = Int(Rnd() * 7)
+        p.iArrInd(3) = New Tuple(Of Integer, Boolean, Boolean)(r, True, False)
+        p.iArrInd(6) = New Tuple(Of Integer, Boolean, Boolean)(5, True, False)
+        p.iArrInd(7) = New Tuple(Of Integer, Boolean, Boolean)(0, True, False)
+        r = Int(Rnd() * 11)
+        p.iArrInd(8) = New Tuple(Of Integer, Boolean, Boolean)(r, True, False)
+        p.iArrInd(9) = New Tuple(Of Integer, Boolean, Boolean)(9, True, True)
+        p.iArrInd(10) = New Tuple(Of Integer, Boolean, Boolean)(0, True, False)
+        p.iArrInd(11) = New Tuple(Of Integer, Boolean, Boolean)(0, True, False)
+        p.iArrInd(12) = New Tuple(Of Integer, Boolean, Boolean)(0 + (2 * Int(Rnd() * 3)), True, False)
+        p.iArrInd(13) = New Tuple(Of Integer, Boolean, Boolean)(0, True, False)
+        p.iArrInd(14) = New Tuple(Of Integer, Boolean, Boolean)(0, True, False)
+        r = Int(Rnd() * 8) + 1
+        p.iArrInd(15) = New Tuple(Of Integer, Boolean, Boolean)(r, True, False)
+        p.iArrInd(16) = New Tuple(Of Integer, Boolean, Boolean)(0, True, False)
 
         'clear all player associated lists
-        Game.Potions.Clear()
         p.createInvPerks()
-        Game.loadPotionList()
 
         'assign random equipment
         Dim armor = New Integer() {5, 5, 5, 7, 12, 16, 17, 17, 17, 18, 19, 19, 19, 20, 38, 38, 39, 46, 47, 64, 71}
@@ -116,7 +111,7 @@
 
         For i = 0 To 4
             Dim invInd As Integer = 8
-            While invInd = 8 Or invInd = 10 Or invInd = 24 Or invInd = 53
+            While invInd = 8 Or invInd = 10 Or invInd = 24 Or invInd = 53 Or invInd = 69 Or invInd = 78 Or invInd = 79 Or invInd = 81
                 invInd = Int(Rnd() * (Game.player.inv.upperBound + 1))
             End While
             p.inv.add(invInd, CInt(Int(Rnd() * 2) + 1))
@@ -155,7 +150,7 @@
         p.currState.save(p)
         p.pState.save(p)
         p.sState.save(p)
-        p.sState.iArrInd(3) = New Tuple(Of Integer, Boolean)(si, p.sexbool)
+        p.sState.iArrInd(3) = New Tuple(Of Integer, Boolean, Boolean)(si, p.sexBool, False)
     End Sub
     Shared Sub floor4FirstBossEncounter()
         Game.pushLblEvent("Turning around, you are about to move on when a " & _
