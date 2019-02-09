@@ -59,4 +59,9 @@
             Game.picDescPort.Visible = True
         End If
     End Sub
+
+    Private Sub cboxScreenSize_TextChanged(sender As Object, e As EventArgs) Handles cboxScreenSize.TextChanged
+        If Not cboxScreenSize.Items.Contains(cboxScreenSize.Text) Then cboxScreenSize.Text = "Large"
+        Button1.Focus()
+    End Sub
 End Class

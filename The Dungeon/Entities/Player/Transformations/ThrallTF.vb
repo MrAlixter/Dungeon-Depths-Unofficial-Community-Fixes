@@ -137,16 +137,12 @@
     Public Overrides Function getNextStep(stage As Integer) As Action
         Dim p As player = game.player
         If p.perks("thrall") = -1 Or p.pForm.name.Equals("Half-Succubus") Then
-            'MsgBox("A")
             Return AddressOf stopTF
         ElseIf Not p.prefForm.playerMeetsForm(p) And Not p.perks("thrall") > 10 Then
-            'MsgBox("B")
             Return AddressOf shiftTowardsPrefForm
         ElseIf p.prefForm.playerMeetsForm(p) Or p.perks("thrall") > 10 Then
-            'MsgBox("C")
             Return AddressOf crystalSpawn
         End If
-        'MsgBox("D")
         Return Nothing
     End Function
     Public Overrides Sub setWaitTime(stage As Integer)

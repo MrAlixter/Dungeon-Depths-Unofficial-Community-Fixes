@@ -97,7 +97,7 @@
         p.iArrInd(8) = New Tuple(Of Integer, Boolean, Boolean)(0, True, False)
         p.iArrInd(9) = New Tuple(Of Integer, Boolean, Boolean)(p.pState.iArrInd(9).Item1, p.pState.iArrInd(9).Item2, p.pState.iArrInd(9).Item3)
         p.iArrInd(15) = New Tuple(Of Integer, Boolean, Boolean)(10, True, True)
-        p.iArrInd(16) = New Tuple(Of Integer, Boolean, Boolean)(6, True, True)
+        p.iArrInd(16) = New Tuple(Of Integer, Boolean, Boolean)(6, True, False)
 
         'transformation description push
         out += "As you bite into the apple, your mind starts to get foggy.  You yawn, " &

@@ -142,7 +142,7 @@ Public Class Game
             Me.WindowState = FormWindowState.Maximized
         End If
 
-        loadcKeys()
+        loadCKeys()
         imagesWorker = New BackgroundWorker
         AddHandler imagesWorker.DoWork, AddressOf prefetchImages
         imagesWorkerArg = Nothing
@@ -367,7 +367,7 @@ Public Class Game
     End Sub
 
     '|LEVEL GENERATION|
-    Private Sub initializeBoard(Optional Draw As Boolean = True)
+    Public Sub initializeBoard(Optional Draw As Boolean = True)
         'initializeBoard increments the floor count, and generates the next level
         lblEvent.Visible = False
         floor += 1
@@ -1380,6 +1380,7 @@ Public Class Game
                         Me.WindowState = FormWindowState.Normal
                         Size = New Size(iWidth, iHeight)
                         Game_Resize()
+                        Return True
                     End If
             End Select
             Dim int As Integer = 100 - player.getSPD
@@ -1628,14 +1629,19 @@ Public Class Game
 
     End Sub
     Sub selectYesNo(ByVal index As Integer)
+        Dim tempAct = yesAction.Clone
+
         If index = 0 Then
             yesAction()
         Else
             noAction()
         End If
-        choiceText = Nothing
-        yesAction = Nothing
-        noAction = Nothing
+
+        If tempAct Is yesAction Then
+            choiceText = Nothing
+            yesAction = Nothing
+            noAction = Nothing
+        End If
     End Sub
     Sub toPNLSelec(ByVal mode As String)
         selecting = True
@@ -1811,6 +1817,7 @@ Public Class Game
     Function shouldReturnEarly(ByVal Keydata As Keys)
         'This function determines if the key input should be ignored.
         'If it returns true, HandleKeyPress returns false before anything is done
+        If Keydata = Keys.Escape Then Return False
         If picStart.Visible = True Then Return True
         If combatmode And (Keydata.Equals(cKeys(0)) Or Keydata.Equals(cKeys(1)) Or Keydata.Equals(cKeys(2)) Or Keydata.Equals(cKeys(3)) Or Keydata.Equals(Keys.Left) Or Keydata.Equals(Keys.Right) Or Keydata.Equals(Keys.Down) Or Keydata.Equals(Keys.Up)) And Not selecting Then
             Return True
@@ -1976,7 +1983,7 @@ Public Class Game
             ElseIf keyspresed = "bigr" Then
                 player.be()
             ElseIf keyspresed = "rock" Then
-                player.petrify(Color.Gray)
+                player.petrify(Color.Gray, 10)
             ElseIf keyspresed = "doll" Then
                 player.ongoingTFs.Add(New BUDollTF())
                 player.update()
@@ -2301,12 +2308,15 @@ Public Class Game
     End Sub
     'equip
     Sub eArmorKey()
+        If checkIfCantEquip() Then Exit Sub
         toPNLSelec("Armor")
     End Sub
     Sub eWeaponKey()
+        If checkIfCantEquip() Then Exit Sub
         toPNLSelec("Weapon")
     End Sub
     Private Sub btnEQP_Click(sender As Object, e As EventArgs) Handles btnEQP.Click
+        If checkIfCantEquip() Then Exit Sub
         Dim f3 As Equipment = New Equipment()
         If Not lblEventOnClose Is Nothing Then
             lblEventOnClose()
@@ -2315,6 +2325,24 @@ Public Class Game
         f3.ShowDialog()
         f3.Dispose()
     End Sub
+    Function checkIfCantEquip() As Boolean
+        If player.pForm.name.Equals("Blowup Doll") Then
+            pushLblEvent("Any weapon you try to wield, and any armor or accessories you try to equip slide off.  It doesn't look like you'll be able to do this until you're not a blowup doll.")
+            Return True
+        ElseIf player.perks("astatue") > -1 Then
+            pushLblEvent("You can't move.")
+            Return True
+        End If
+
+        Dim b = False
+        player.oneLayerImgCheck(b)
+        If b Then
+            pushLblEvent("You can't change equipment now!")
+            Return True
+        End If
+
+        Return False
+    End Function
     'self inspect
     Sub selfinpKey()
         If turn < 2 Then Exit Sub
@@ -3401,15 +3429,23 @@ Public Class Game
         s.Dispose()
         If screenSize = "Small" Then
             Size = New Size(iWidth * 0.8, iHeight * 0.8)
+            Me.FormBorderStyle = Windows.Forms.FormBorderStyle.FixedSingle
+            Me.WindowState = FormWindowState.Normal
         ElseIf screenSize = "Medium" Then
             Size = New Size(iWidth * 0.9, iHeight * 0.9)
+            Me.FormBorderStyle = Windows.Forms.FormBorderStyle.FixedSingle
+            Me.WindowState = FormWindowState.Normal
         ElseIf screenSize = "XLarge" Then
             Size = New Size(iWidth * 1.3, iHeight * 1.3)
+            Me.FormBorderStyle = Windows.Forms.FormBorderStyle.FixedSingle
+            Me.WindowState = FormWindowState.Normal
         ElseIf screenSize = "Maximized" Then
             Me.FormBorderStyle = Windows.Forms.FormBorderStyle.None
             Me.WindowState = FormWindowState.Maximized
         Else
             Size = New Size(iWidth, iHeight)
+            Me.FormBorderStyle = Windows.Forms.FormBorderStyle.FixedSingle
+            Me.WindowState = FormWindowState.Normal
         End If
         Game_Resize()
     End Sub
@@ -3862,7 +3898,7 @@ Public Class Game
         startingHeight = Height
         startingWidth = Width
         Dim ratio As Double = Me.Size.Width / 1024
-        picLoadBar.Location = New Point(picLoadBar.Location.X * ratio, picLoadBar.Location.Y * ratio)
+        picLoadBar.Location = New Point(306 * ratio, 361 * ratio)
     End Sub
     Private Sub CreateMapAndImages()
         Dim XSize As Double = 15.0 * (CDbl(Me.Size.Width) / 688.0)

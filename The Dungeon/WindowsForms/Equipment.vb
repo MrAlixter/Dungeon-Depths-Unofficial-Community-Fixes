@@ -114,7 +114,6 @@
     End Sub
     'handles the loading of this form
     Private Sub Form3_Load(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles MyBase.Load
-        'initializes all variables in case this is the first time it is loaded
         init()
         'scale to the screen size
         Dim startingWidth = Me.Width

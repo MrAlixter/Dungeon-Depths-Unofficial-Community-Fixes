@@ -104,6 +104,39 @@ Public Class Controls
             Case "OemQuestion"
                 Return "OemQuestion"
                 '----------------------------------------'
+            Case "NumPad1"
+                Return "NumPad1"
+                '----------------------------------------'
+            Case "NumPad2"
+                Return "NumPad2"
+                '----------------------------------------'
+            Case "NumPad3"
+                Return "NumPad3"
+                '----------------------------------------'
+            Case "NumPad4"
+                Return "NumPad4"
+                '----------------------------------------'
+            Case "NumPad5"
+                Return "NumPad5"
+                '----------------------------------------'
+            Case "NumPad6"
+                Return "NumPad6"
+                '----------------------------------------'
+            Case "NumPad7"
+                Return "NumPad7"
+                '----------------------------------------'
+            Case "NumPad8"
+                Return "NumPad8"
+                '----------------------------------------'
+            Case "NumPad9"
+                Return "NumPad9"
+                '----------------------------------------'
+            Case "NumPad0"
+                Return "NumPad0"
+                '----------------------------------------'
+            Case "Back"
+                Return "Back"
+                '----------------------------------------'
             Case "D1"
                 Return "D1"
                 '----------------------------------------'

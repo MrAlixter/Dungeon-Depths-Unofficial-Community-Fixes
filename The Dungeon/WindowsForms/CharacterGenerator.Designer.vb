@@ -321,7 +321,7 @@ Partial Class CharacterGenerator
         Me.TextBox1.ForeColor = System.Drawing.Color.White
         Me.TextBox1.Location = New System.Drawing.Point(12, 31)
         Me.TextBox1.Name = "TextBox1"
-        Me.TextBox1.Size = New System.Drawing.Size(196, 26)
+        Me.TextBox1.Size = New System.Drawing.Size(196, 23)
         Me.TextBox1.TabIndex = 24
         Me.TextBox1.Text = "Alex"
         '
@@ -332,7 +332,7 @@ Partial Class CharacterGenerator
         Me.Label1.ForeColor = System.Drawing.Color.White
         Me.Label1.Location = New System.Drawing.Point(8, 9)
         Me.Label1.Name = "Label1"
-        Me.Label1.Size = New System.Drawing.Size(54, 19)
+        Me.Label1.Size = New System.Drawing.Size(48, 17)
         Me.Label1.TabIndex = 23
         Me.Label1.Text = "Name:"
         '
@@ -344,9 +344,8 @@ Partial Class CharacterGenerator
         Me.ComboBox2.FormattingEnabled = True
         Me.ComboBox2.Location = New System.Drawing.Point(12, 84)
         Me.ComboBox2.Name = "ComboBox2"
-        Me.ComboBox2.Size = New System.Drawing.Size(196, 27)
+        Me.ComboBox2.Size = New System.Drawing.Size(196, 23)
         Me.ComboBox2.TabIndex = 26
-        Me.ComboBox2.Text = "Warrior"
         '
         'Label3
         '
@@ -355,7 +354,7 @@ Partial Class CharacterGenerator
         Me.Label3.ForeColor = System.Drawing.Color.White
         Me.Label3.Location = New System.Drawing.Point(8, 62)
         Me.Label3.Name = "Label3"
-        Me.Label3.Size = New System.Drawing.Size(63, 19)
+        Me.Label3.Size = New System.Drawing.Size(56, 17)
         Me.Label3.TabIndex = 25
         Me.Label3.Text = "Class:"
         '

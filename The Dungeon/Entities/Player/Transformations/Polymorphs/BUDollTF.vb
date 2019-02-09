@@ -33,7 +33,7 @@
         p.setIAInd(10, 2, False, True)
         p.setIAInd(13, 0, True, True)
         p.setIAInd(15, 14, True, True)
-        p.setIAInd(16, 0, True, True)
+        p.setIAInd(16, 0, True, False)
 
         'transformation description push
         out += "Looking down, you see some sort of coupon laying on the ground.  Picking it up, you read " & vbCrLf &

@@ -91,7 +91,8 @@
         setDefaultProfilePic()
 
             ComboBox2.Items.Add("Warrior")
-            ComboBox2.Items.Add("Mage")
+        ComboBox2.Items.Add("Mage")
+        ComboBox2.Text = ComboBox2.Items(Int(Rnd() * ComboBox2.Items.Count))
             picPort.BackgroundImage = CreateBMP(iArr)
 
             'init()
@@ -187,7 +188,9 @@
 
                 iArrInd(1) = ind
                 iArrInd(5) = ind
+                hideEars()
                 picPort.BackgroundImage = CreateBMP(iArr)
+                hideEars()
                 Exit Sub
             Else
                 Dim i As Integer = defImgLib.atrs.Values.ToList.IndexOf(currAttribute)
@@ -196,7 +199,9 @@
                 iArrInd(i) = ind
                 changeHC(hairColor)
                 changeSC(skincolor)
+                If i = 6 Then hideEars()
                 picPort.BackgroundImage = CreateBMP(iArr)
+                If i = 6 Then hideEars()
             End If
         Catch ex As Exception
             If MessageBox.Show("Error! Exeption thrown in character creation.  Restart application?", "D_D Error 001", MessageBoxButtons.YesNo) = Windows.Forms.DialogResult.Yes Then
@@ -207,6 +212,14 @@
             End If
         End Try
     End Sub
+    Sub hideEars()
+        If iArrInd(6).Item1 = 1 Or iArrInd(6).Item1 = 2 Or (Not iArrInd(5).Item2 And iArrInd(5).Item1 <> 2) Then Exit Sub
+
+        Dim t = iArr(5).Clone
+        iArr(5) = iArr(6).Clone
+        iArr(6) = t
+    End Sub
+
     'recolor changes the color of an image, assumed to be of the same color as the players hair 
     Shared Function recolor(ByVal img As Bitmap, ByVal c As Color)
         If img Is Nothing Then Return Nothing
@@ -548,8 +561,11 @@
         Dim sexAttrList As List(Of Image)
         If currSex Then
             sexAttrList = defImgLib.atrs("Clothes").getF
-            iArr(2) = Game.imgLib.atrs("Body").getF(Game.imgLib.atrs("Body").osf(5))
+
+            iArr(2) = recolor2(Game.imgLib.atrs("Body").getAt(New Tuple(Of Integer, Boolean, Boolean)(5, True, True)), skincolor)
+
             recolor2(iArr(2), skincolor)
+
             picPort.BackgroundImage = CreateBMP(iArr)
         Else
             sexAttrList = defImgLib.atrs("Clothes").getM
@@ -693,7 +709,10 @@
 
         changeHC(hairColor)
         changeSC(skincolor)
+
+        hideEars()
         picPort.BackgroundImage = CreateBMP(iArr)
+        hideEars()
     End Sub
     Private Sub btnFemale_Click(sender As Object, e As EventArgs) Handles btnFemale.Click
         currSex = True
@@ -708,7 +727,9 @@
 
         changeHC(hairColor)
         changeSC(skincolor)
+        hideEars()
         picPort.BackgroundImage = CreateBMP(iArr)
+        hideEars()
     End Sub
     'haircolor change methods
     Private Sub btnHC_Click(sender As Object, e As EventArgs) Handles btnHC.Click
@@ -784,7 +805,6 @@
 
         changeHC(Color.FromArgb(255, Int(Rnd() * 125) + 100, Int(Rnd() * 125) + 100, Int(Rnd() * 125) + 100))
 
-
         Dim r1 As Integer = Int(Rnd() * 6)
         Select Case r1
             Case 0
@@ -800,5 +820,14 @@
             Case Else
                 changeSC(Color.FromArgb(255, 105, 80, 70))
         End Select
+
+        hideEars()
+        picPort.BackgroundImage = CreateBMP(iArr)
+        hideEars()
+    End Sub
+
+    Private Sub ComboBox2_TextChanged(sender As Object, e As EventArgs) Handles ComboBox2.TextChanged
+        If Not ComboBox2.Items.Contains(ComboBox2.Text) Then ComboBox2.Text = ComboBox2.Items(0)
+        btnSave.Focus()
     End Sub
 End Class

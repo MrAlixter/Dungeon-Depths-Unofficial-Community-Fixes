@@ -27,9 +27,7 @@
                 Game.pushLblEvent(out)
                 Game.player.createP()
             Case 1
-                Dim x As Integer = -1
                 Dim n As String = Game.player.equippedArmor.getName()
-                x = Game.player.inv.idOfKey(n)
                 Dim rng As Integer = Int(Rnd() * Game.chestList.Count)
                 Dim out As String = "A beam fires out of the wall to your left, striking you in the chest."
                 If n <> "Ropes" Then
@@ -72,7 +70,7 @@
                 If transformation.canbeTFed(Game.player) Then
                     Game.player.pState.save(Game.player)
                 End If
-                Game.player.petrify(rubyTF)
+                Game.player.petrify(rubyTF, 1)
                 Dim out As String = "As you walk through the dungeon, you see what looks like a valuable ruby on the ground, and you bend down to pick it up.  As soon as you touch it, a shock runs through your body, and starting with the hand you have on the gem your body is turned into ruby.  𝘚𝘩𝘪𝘵!  Looks like that ruby was probably cursed . . ."
                 Game.pushLblEvent(out, AddressOf Trap.rubyRevert)
                 Game.player.createP()

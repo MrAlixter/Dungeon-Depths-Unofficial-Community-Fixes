@@ -100,9 +100,9 @@
         p.createInvPerks()
 
         'assign random equipment
-        Dim armor = New Integer() {5, 5, 5, 7, 12, 16, 17, 17, 17, 18, 19, 19, 19, 20, 38, 38, 39, 46, 47, 64, 71}
+        Dim armor = New Integer() {5, 5, 5, 7, 12, 16, 17, 17, 17, 18, 19, 19, 19, 20, 38, 38, 39, 46, 47, 64, 71, 72, 73, 74, 83, 85}
         Dim armorIndex = armor(Int(Rnd() * (armor.Length)))
-        Dim weapon = New Integer() {6, 6, 9, 9, 21, 21, 22, 22, 23, 63}
+        Dim weapon = New Integer() {6, 6, 9, 9, 21, 21, 22, 22, 23, 63, 84}
         Dim weaponIndex = weapon(Int(Rnd() * (weapon.Length)))
         p.inv.add(armorIndex, 1)
         p.inv.add(weaponIndex, 1)
@@ -142,6 +142,7 @@
         p.TextColor = Color.White
         If Game.floor < 6 Then p.pImage = Game.picPlayer.BackgroundImage Else p.pImage = Game.picPlayerf.BackgroundImage
         p.bsizeroute()
+        p.sState.save(p)
 
         p.inv.invNeedsUDate = True
         p.UIupdate()
