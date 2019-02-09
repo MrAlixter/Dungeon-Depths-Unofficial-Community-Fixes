@@ -227,6 +227,7 @@
     <Compile Include="Items\Armor\CowBra.vb" />
     <Compile Include="Items\Armor\VDayClothes.vb" />
     <Compile Include="Items\Armor\VNightLingerie.vb" />
+    <Compile Include="Items\Usable\PortalChalk.vb" />
     <Compile Include="Items\Usable\Potions\BEPotion.vb" />
     <Compile Include="Items\Usable\Potions\ClearPotion.vb" />
     <Compile Include="Items\Usable\Potions\MajHealthPotion.vb" />

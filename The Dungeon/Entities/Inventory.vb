@@ -99,6 +99,7 @@
         internal_inventory.Add("Bronze_Armor", New BronzeArmor())           '83
         internal_inventory.Add("Bronze_Battle_Axe", New BronzeAxe())        '84
         internal_inventory.Add("Bronze_Bikini", New BronzeBikini())         '85
+        internal_inventory.Add("Portal_Chalk", New PortalChalk())           '86
 
         armor = {New CommonClothes, New SkimpyClothes, New Naked,
                  Me.item(5), Me.item(7), Me.item(8), Me.item(10),
@@ -119,7 +120,7 @@
                    Me.item(65), Me.item(15), Me.item(36), Me.item(37),
                    Me.item(45), Me.item(48), Me.item(49), Me.item(50),
                    Me.item(51), Me.item(52), Me.item(57), Me.item(58),
-                   Me.item(81)}
+                   Me.item(81), Me.item(86)}
 
         food = {Me.item(30), Me.item(31), Me.item(32), Me.item(33),
                 Me.item(34), Me.item(35), Me.item(44)}
@@ -202,6 +203,7 @@
         Return internal_inventory.Keys(id)
     End Function
     Public Function idOfKey(ByVal n As String) As Integer
+        If Not internal_inventory.Keys.Contains(n) Then Return -1
         Return item(n).id
     End Function
     Public Function getCountAt(ByVal i As Integer) As Integer

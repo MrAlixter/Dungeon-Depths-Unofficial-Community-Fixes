@@ -617,10 +617,9 @@
             End If
 
             Dim layer = Int(Rnd() * 18) + 1
-            MsgBox(layer)
-            If (layer <= 16 AndAlso iArrInd(layer).Item1 <> pState.iArrInd(layer).Item1 And
+            If (layer <= 16 AndAlso (iArrInd(layer).Item1 <> pState.iArrInd(layer).Item1 And
                                iArrInd(layer).Item2 <> pState.iArrInd(layer).Item2 And
-                               iArrInd(layer).Item2 <> pState.iArrInd(layer).Item3) Or
+                               iArrInd(layer).Item2 <> pState.iArrInd(layer).Item3)) Or
                            (layer = 17 And haircolor <> pState.getHairColor) Or
                             (layer = 18 And skincolor <> pState.getSkinColor) Then
 
@@ -654,8 +653,9 @@
         If revertedAttributes.Count > 0 Then out += vbCrLf & "~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~"
         Return out
     End Function
-    Public Sub petrify(ByVal c As Color)
+    Public Sub petrify(ByVal c As Color, ByVal dur As Integer)
         If pForm.name.Equals("Dragon") Then revertToPState()
+        perks("astatue") = dur
         changeHairColor(c)
         If sexBool Then
             iArrInd(8) = New Tuple(Of Integer, Boolean, Boolean)(10, True, True)
@@ -677,7 +677,7 @@
     Public Sub toStatue(ByVal c As Color, ByVal r As String)
         Game.fromCombat()
 
-        petrify(c)
+        petrify(c, 9999)
         If r.Equals("midas") Then
             Dim out As String = "As you reach out to touch your opponent, you clumsily swipe, missing them, and hit...yourself?  Already your legs are gold, and only have a moment to scream, your vocal cords quickly following suit. ""Well,"" you think, ""...at least I won't have to worry abou money anymore."" " & vbCrLf & "And like that, the dungeon gains another decoration."
             Game.pushLblEvent(out, AddressOf die)
@@ -1033,7 +1033,7 @@
         If Not solFlag Then Equipment.portraitUDate()
         For i = 0 To 16
             Try
-                iArr(i) = Game.imgLib.atrs(Game.imgLib.atrs.Keys(i)).getAt(iArrInd(i))
+                    iArr(i) = Game.imgLib.atrs(Game.imgLib.atrs.Keys(i)).getAt(iArrInd(i))
             Catch ex As Exception
                 MsgBox("Error!  Exception thrown in portrait creation (specifically in the " & Game.imgLib.atrs.Keys(i) & " layer).  The player character will now revert to default.")
                 revertToSState()
@@ -1048,6 +1048,7 @@
             iArr(9) = CharacterGenerator.recolor(iArr(9), skincolor)
         End If
 
+        hideEars()
         If lust > 0 Then lustBlushUpdate()
         If wingInd > 0 Then addWings(wingInd)
         If hornInd > 0 Then addHorns(hornInd)
@@ -1099,6 +1100,13 @@
     End Sub
     Sub addHorns(ByVal i As Integer)
         iArr(6) = CharacterGenerator.CreateBMP({Game.imgLib.atrs("Horns").getM(i), iArr(6)})
+    End Sub
+    Sub hideEars()
+        If iArrInd(6).Item1 = 1 Or iArrInd(6).Item1 = 2 Or (Not iArrInd(5).Item2 And iArrInd(5).Item1 <> 2) Then Exit Sub
+
+        Dim t = iArr(5).Clone
+        iArr(5) = iArr(6).Clone
+        iArr(6) = t
     End Sub
     Sub setIAInd(ByVal attrInd As Integer, ByVal i As Integer, ByVal b As Boolean, ByVal nonDefFlag As Boolean)
         iArrInd(attrInd) = New Tuple(Of Integer, Boolean, Boolean)(i, b, nonDefFlag)
@@ -1797,16 +1805,35 @@
         'check for single image forms
         Select Case pForm.name
             Case "Dragon"
+                out += "You are a large, green dragon.  Yay for you." & vbCrLf & vbCrLf
+                Return out + outPutPerkText()
             Case "Blob"
             Case "Chicken"
             Case "Frog"
+                out += "You are a lime green tiny frog.  Ribbit, ribbit." & vbCrLf & vbCrLf
+                Return out + outPutPerkText()
             Case "Sheep"
-            Case "Bunny"
+                out += "You are a fluffy, white sheep.  Bahh." & vbCrLf & vbCrLf
+                Return out + outPutPerkText()
+            Case "Cake"
+                out += "Your body is made of a rich, pink cake.  Despite this, be it through magic or sheer force of will, " &
+                    "you can keep yourself together enough to move and even fight.  That said, your form isn't exactly durable " &
+                    "and while you may be able to take a few hits, anything else might just end up leaving you splattered on the floor " &
+                    "of the dungeon." & vbCrLf & vbCrLf &
+                    "You look female, with massive breasts topped with dollops of whipped cream topping them.  Your ""hair"" is also made " &
+                    "of a similar frosting, done in a feminine style." & vbCrLf & vbCrLf
+                Return out + outPutPerkText()
         End Select
         Select Case pClass.name
             Case "Magic Girl​"
-                out += "You are currently in the middle of a magical girl transformation!"
-                Return out
+                out += "You are currently in the middle of a magical girl transformation!" & vbCrLf & vbCrLf
+                Return out + outPutPerkText()
+            Case "Princess​"
+                out += "Whatever you were before, you are now a princess in a yellow ballgown." & vbCrLf & vbCrLf
+                Return out + outPutPerkText()
+            Case "Bunny Girl​"
+                out += "Whatever you were before, you are now a small, blonde adult woman in a red bunny suit.  The suit, clinging to your suple body includes not just a crimzon leotard, but also a pair of fishnet stockings that highlight your toned legs, and end in a pair of platform heels.  Topping off your ensamble is a black headband with two bunny ears." & vbCrLf & vbCrLf
+                Return out + outPutPerkText()
         End Select
 
         'hair
@@ -1877,15 +1904,19 @@
                 End If
         End Select
 
-        'perks
+        out += outPutPerkText()
+
+        Return out
+    End Function
+    Function outPutPerkText() As String
+        Dim out = ""
         If perks("hunger") > -1 Then out += "You haven't eaten anything in a while and are starving." & vbCrLf & " " & vbCrLf
         If perks("slutcurse") > -1 Then out += "You choose to dress very provocatively, showing as much skin as possible due to a curse."
         If perks("polymorphed") > -1 Then out += "You are under the effects of a temporary polymorph, and will be for " & perks("polymorphed") & " more turns." & vbCrLf & " " & vbCrLf
-
-        'If ongoingTFs.Count > 0 Then out += "You are under the effects of " & ongoingTFs.Count & " transformations"
+        If perks("thrall") > -1 Then out += "You are under the thrall of a sorcerer/ess, and may not have full control over your body or mind." & vbCrLf & " " & vbCrLf
+        If perks("astatue") > -1 Then out += "You are currently a statue, and won't be able to do much for " & perks("astatue") & " turns." & vbCrLf & " " & vbCrLf
         Return out
     End Function
-
     '|UNIMPLEMENTED|
     Public Sub levelUp()
         '    level += 1

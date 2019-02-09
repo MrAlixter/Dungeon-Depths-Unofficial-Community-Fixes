@@ -65,7 +65,7 @@ Public Class ShopV2
             End If
         Next
         For i = 0 To sk.inv.upperBound
-            If sk.inv.getCountAt(i) > 0 Then
+            If sk.inv.getCountAt(i) > 0 And i <> 43 Then
                 Dim sk_inv_i As Item = sk.inv.item(i)
                 boxShop.Items.Add(lineup(sk_inv_i.getName(), sk_inv_i.value))
                 skInventory.Add(sk_inv_i.getName())

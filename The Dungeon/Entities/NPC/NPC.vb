@@ -55,6 +55,13 @@
         currTarget = Nothing
         nextCombatAction = Nothing
 
+        endMonster()
+
+        Game.player.clearTarget()
+        cause.currTarget = Nothing
+        cause.nextCombatAction = Nothing
+
+
         If getName() = "Explorer" Then
             If MessageBox.Show("Would you like to do the Explorer's body swap?", "Body Swap?", MessageBoxButtons.YesNo) = Windows.Forms.DialogResult.Yes Then 'Int(Rnd() * 3) = 0 Then '
                 Try
@@ -66,13 +73,8 @@
         ElseIf getName.Contains("Enthralling Half-Dem") Then
             Equipment.accChange("Nothing")
         End If
-        endMonster()
 
-        Game.player.clearTarget()
-        cause.currTarget = Nothing
-        cause.nextCombatAction = Nothing
-
-        Game.Drawboard
+        Game.drawBoard()
     End Sub
     Public Overridable Sub toStatue()
         Game.fromCombat()

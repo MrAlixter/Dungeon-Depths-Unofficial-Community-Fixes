@@ -92,14 +92,19 @@
     '|BOSS / MINIBOSS DEATHS|
     Shared Sub oozeEmpDeath()
         Dim p As Player = Game.player
+        p.currTarget.despawn("p-death")
+        Game.pushLblEvent("""Aww, sweetie, if you wanted another go you should have just asked!"", the Ooze Empress chuckles, her aphrodesiac-laced tendrils wrapping you in their arousing embrace.  ""You really do need to relax more.  Lucky for you, I have just the thing..."" she states, plunging your entire body deeper into her slime.  As the pleasure once again overtakes you, you resign yourself to needing to try again.  Well, maybe not right away...", AddressOf oEmpDeathPt2)
+    End Sub
+    Shared Sub oEmpDeathPt2()
+        Dim p As Player = Game.player
         p.ongoingTFs.Add(New RandoTF())
         p.sState.save(p)
         p.pState.save(p)
-        p.currTarget.despawn("p-death")
-        Game.pushLblEvent("""Aww, sweetie, if you wanted another go you should have just asked!"", the Ooze Empress chuckles, her aphrodesiac-laced tendrils wrapping you in their arousing embrace.  ""You really do need to relax more.  Lucky for you, I have just the thing..."" she states, plunging your entire body deeper into her slime.  As the pleasure once again overtakes you, you resign yourself to needing to try again.  Well, maybe not right away...")
+        Game.pushLblEvent("You awaken once again, in another body, in another part of the dungeon.")
         Dim posX As Integer
         Dim posY As Integer
-        Do While (Game.mBoard(posY, posX).Tag <> 1 Or Game.mBoard(posY, posX).Text <> "")
+        Do While (Game.mBoard(posY, posX).Tag < 1 Or Game.mBoard(posY, posX).Text <> "" Or (posX.Equals(p.pos.X) And posY.Equals(p.pos.Y)))
+            'MsgBox(CBool(Game.mBoard(posY, posX).Tag < 1) & "-" & CBool(Game.mBoard(posY, posX).Text <> "") & "-" & CBool(posX.Equals(p.pos.X) And posY.Equals(p.pos.Y)))
             posX = CInt(Int(Rnd() * Game.mBoardWidth))
             posY = CInt(Int(Rnd() * Game.mBoardHeight))
         Loop
@@ -113,7 +118,7 @@
         Dim p As Player = Game.player
         Dim n As Shopkeep = Game.currNPC
         Game.fromCombat()
-        p.Petrify(Color.Goldenrod)
+        p.petrify(Color.Goldenrod, 9999)
         Dim out As String = """You should have known better than to try and rob a shop keeper,"" the shopkeep says," &
             " glaring down at you, ""...and if its gold you're after, I guess I've got some good news for you.""" &
             "  With that, " & n.pronoun & " reaches into " & n.pPronoun & " bag and puts on a gaudy gauntlet " &

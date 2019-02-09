@@ -32,9 +32,9 @@
             p.pState.save(p)
         End If
         p.defence = 40
-        p.petrify(Color.LightGray)
+
         Dim pturns = Int(Rnd() * 5) + 3
-        p.perks("astatue") = pturns
+        p.petrify(Color.LightGray, pturns)
         Game.pushLstLog(CStr("You petrify yourself for " & pturns - 1 & " turns!"))
         Game.pushLblCombatEvent(CStr("You petrify yourself for " & pturns - 1 & " turns!"))
     End Sub
