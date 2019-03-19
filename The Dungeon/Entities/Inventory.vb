@@ -40,9 +40,9 @@
         internal_inventory.Add("Green_Potion", New GreenPotion())           '27
         internal_inventory.Add("Mauve_Potion", New MauvePotion())           '28
         internal_inventory.Add("Rose_Potion", New RosePotion())             '29
-        internal_Inventory.Add("Chicken_Leg", New ChickenLeg())             '30
-        internal_Inventory.Add("Apple", New Apple())                        '31
-        internal_Inventory.Add("Apple​", New PApple())                       '32
+        internal_inventory.Add("Chicken_Leg", New ChickenLeg())             '30
+        internal_inventory.Add("Apple​", New PApple())                       '31
+        internal_inventory.Add("Apple", New Apple())                        '32
         internal_Inventory.Add("Medicinal_Tea", New Herbs())                '33
         internal_Inventory.Add("Heavy_Cream", New HeavyCream())             '34
         internal_Inventory.Add("Cupcake", New Cupcake())                    '35
@@ -100,6 +100,8 @@
         internal_inventory.Add("Bronze_Battle_Axe", New BronzeAxe())        '84
         internal_inventory.Add("Bronze_Bikini", New BronzeBikini())         '85
         internal_inventory.Add("Portal_Chalk", New PortalChalk())           '86
+        '0.8
+        internal_inventory.Add("Bimbo_Lesson", New BimboLesson())           '87
 
         armor = {New CommonClothes, New SkimpyClothes, New Naked,
                  Me.item(5), Me.item(7), Me.item(8), Me.item(10),
@@ -143,6 +145,12 @@
             item(i).add(inv.item(i).count)
         Next
     End Sub
+    Sub mergeRevalue(ByRef inv As Inventory)
+        For i = 0 To upperBound()
+            item(i).value = inv.item(i).value
+            item(i).add(inv.item(i).count)
+        Next
+    End Sub
     Sub add(ByVal key As String, ByVal count As Integer)
         If internal_inventory.Keys.Contains(key) Then
             internal_inventory(key).add(count)
@@ -157,7 +165,7 @@
         sum += count
     End Sub
     Sub setCount(k As String, v As Integer)
-            sum -= item(k).count
+        sum -= item(k).count
         item(k).count = v
         sum += v
     End Sub
@@ -257,10 +265,10 @@
         Return sum
     End Function
 
-    Function upperBound()
+    Function upperBound() As Integer
         Return internal_inventory.Count - 1
     End Function
-    Function count()
+    Function count() As Integer
         Return internal_inventory.Count
     End Function
 End Class

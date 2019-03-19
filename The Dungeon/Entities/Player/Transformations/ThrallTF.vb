@@ -34,17 +34,11 @@
     Sub crystalSpawn()
         Dim p As player = game.player
         If p.forcedPath Is Nothing And Not Game.combatmode And Not Game.npcmode Then
-            Dim crystalX As Integer
-            Dim crystalY As Integer
-            Do While (Game.mBoard(crystalY, crystalX).Tag < 1 Or Game.mBoard(crystalY, crystalX).Text <> "" Or (crystalX.Equals(p.pos.X) And crystalY.Equals(p.pos.Y)))
-                'MsgBox(CBool(Game.mBoard(crystalY, crystalX).Tag < 1) & "-" & CBool(Game.mBoard(crystalY, crystalX).Text <> "") & "-" & CBool(crystalX.Equals(p.pos.X) And crystalY.Equals(p.pos.Y)))
-                crystalX = CInt(Int(Rnd() * Game.mBoardWidth))
-                crystalY = CInt(Int(Rnd() * Game.mBoardHeight))
-            Loop
-            Dim crystal = New Point(crystalX, crystalY)
 
-            Game.mBoard(crystalY, crystalX).Tag = 2
-            Game.mBoard(crystalY, crystalX).Text = "c"
+            Dim crystal = Game.randPoint
+
+            Game.mBoard(crystal.Y, crystal.X).Tag = 2
+            Game.mBoard(crystal.Y, crystal.X).Text = "c"
 
             p.forcedPath = Game.route(p.pos, crystal)
 

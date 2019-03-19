@@ -1,6 +1,6 @@
 ﻿Public Class Boss
     Inherits Monster
-    'The Bosses appear every 5 turns, can not be fled from, and guard the entrance to the next stage
+    'The Bosses appear every 5 floors, can not be fled from, and guard the entrance to the next stage
     Sub New(ByVal mIndex As Integer)
         MyBase.New(-1)
         Select Case mIndex

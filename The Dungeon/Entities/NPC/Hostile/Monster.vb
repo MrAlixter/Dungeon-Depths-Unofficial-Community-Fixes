@@ -1,7 +1,5 @@
 ﻿Public Class Monster
     Inherits NPC
-    Public firstTurn = True
-    Dim img As Image
 
     Sub New(ByVal mIndex As Integer)
         Select Case mIndex
@@ -106,7 +104,7 @@
                 defence = 1
                 speed = 1
                 For i = 0 To 2
-                    inv.setCount(Int(Rnd() * (Game.player.inv.upperBound + 1)), CInt(Rnd() * 2) + 1)
+                    inv.setCount(CInt(Rnd() * (Game.player.inv.upperBound + 1)), CInt(Rnd() * 2) + 1)
                 Next
         End Select
 

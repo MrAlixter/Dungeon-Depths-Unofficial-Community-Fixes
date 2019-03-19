@@ -1,6 +1,6 @@
 ﻿Public Class Heal
     Inherits Spell
-    Sub New(ByRef c As Player, ByRef t As Monster)
+    Sub New(ByRef c As Player, ByRef t As NPC)
         MyBase.New(c, t)
         MyBase.setName("Heal")
         MyBase.setUOC(True)

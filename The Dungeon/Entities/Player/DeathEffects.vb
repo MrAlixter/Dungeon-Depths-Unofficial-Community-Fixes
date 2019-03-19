@@ -101,14 +101,8 @@
         p.sState.save(p)
         p.pState.save(p)
         Game.pushLblEvent("You awaken once again, in another body, in another part of the dungeon.")
-        Dim posX As Integer
-        Dim posY As Integer
-        Do While (Game.mBoard(posY, posX).Tag < 1 Or Game.mBoard(posY, posX).Text <> "" Or (posX.Equals(p.pos.X) And posY.Equals(p.pos.Y)))
-            'MsgBox(CBool(Game.mBoard(posY, posX).Tag < 1) & "-" & CBool(Game.mBoard(posY, posX).Text <> "") & "-" & CBool(posX.Equals(p.pos.X) And posY.Equals(p.pos.Y)))
-            posX = CInt(Int(Rnd() * Game.mBoardWidth))
-            posY = CInt(Int(Rnd() * Game.mBoardHeight))
-        Loop
-        p.pos = New Point(posX, posY)
+        
+        p.pos = Game.randPoint
 
         p.update()
     End Sub
@@ -116,7 +110,7 @@
     '|NPC DEATHS|
     Shared Sub ShopkeeperDeath()
         Dim p As Player = Game.player
-        Dim n As Shopkeep = Game.currNPC
+        Dim n As ShopNPC = Game.currNPC
         Game.fromCombat()
         p.petrify(Color.Goldenrod, 9999)
         Dim out As String = """You should have known better than to try and rob a shop keeper,"" the shopkeep says," &
@@ -156,5 +150,4 @@
         End If
         Game.formReset()
     End Sub
-
 End Class

@@ -289,7 +289,7 @@
                     toReplace.Text = "H"
                     Game.stairs = ts.selected
                 ElseIf item.IndexOf("NPC") <> -1 Then
-                    For Each npc As Shopkeep In Game.npcList
+                    For Each npc As ShopNPC In Game.npcList
                         If npc.pos = p Then
                             npc.pos = ts.selected
                             Exit For

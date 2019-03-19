@@ -33,8 +33,8 @@
         'equip clothes
         p.pClass = New Unconcious()
 
-        'maid transformation
-        p.iArrInd(8) = New Tuple(Of Integer, Boolean, Boolean)(3, p.sexBool, False)
+        'princess transformation
+        p.iArrInd(8) = New Tuple(Of Integer, Boolean, Boolean)(6, p.sexBool, False)
         If p.sexBool Then
             p.iArrInd(9) = New Tuple(Of Integer, Boolean, Boolean)(5, True, False)
         Else

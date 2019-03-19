@@ -65,7 +65,7 @@ Partial Class ShopV2
         Me.lblSKG.Location = New System.Drawing.Point(417, 469)
         Me.lblSKG.Margin = New System.Windows.Forms.Padding(4, 0, 4, 0)
         Me.lblSKG.Name = "lblSKG"
-        Me.lblSKG.Size = New System.Drawing.Size(117, 19)
+        Me.lblSKG.Size = New System.Drawing.Size(104, 17)
         Me.lblSKG.TabIndex = 24
         Me.lblSKG.Text = "Gold: 999999"
         '
@@ -78,7 +78,7 @@ Partial Class ShopV2
         Me.lblYG.Location = New System.Drawing.Point(13, 469)
         Me.lblYG.Margin = New System.Windows.Forms.Padding(4, 0, 4, 0)
         Me.lblYG.Name = "lblYG"
-        Me.lblYG.Size = New System.Drawing.Size(117, 19)
+        Me.lblYG.Size = New System.Drawing.Size(104, 17)
         Me.lblYG.TabIndex = 25
         Me.lblYG.Text = "Gold: 999999"
         '
@@ -89,7 +89,7 @@ Partial Class ShopV2
         Me.boxInventoryFilter.ForeColor = System.Drawing.Color.White
         Me.boxInventoryFilter.Location = New System.Drawing.Point(10, 10)
         Me.boxInventoryFilter.Name = "boxInventoryFilter"
-        Me.boxInventoryFilter.Size = New System.Drawing.Size(203, 31)
+        Me.boxInventoryFilter.Size = New System.Drawing.Size(203, 27)
         Me.boxInventoryFilter.TabIndex = 194
         '
         'number
@@ -100,7 +100,7 @@ Partial Class ShopV2
         Me.number.Location = New System.Drawing.Point(273, 232)
         Me.number.Maximum = New Decimal(New Integer() {999999, 0, 0, 0})
         Me.number.Name = "number"
-        Me.number.Size = New System.Drawing.Size(89, 36)
+        Me.number.Size = New System.Drawing.Size(89, 31)
         Me.number.TabIndex = 192
         Me.number.TextAlign = System.Windows.Forms.HorizontalAlignment.Center
         Me.number.Value = New Decimal(New Integer() {1, 0, 0, 0})
@@ -123,11 +123,11 @@ Partial Class ShopV2
         Me.boxInventory.Font = New System.Drawing.Font("Consolas", 10.0!)
         Me.boxInventory.ForeColor = System.Drawing.Color.White
         Me.boxInventory.FormattingEnabled = True
-        Me.boxInventory.ItemHeight = 23
+        Me.boxInventory.ItemHeight = 20
         Me.boxInventory.Location = New System.Drawing.Point(10, 39)
         Me.boxInventory.Name = "boxInventory"
         Me.boxInventory.SelectionMode = System.Windows.Forms.SelectionMode.MultiExtended
-        Me.boxInventory.Size = New System.Drawing.Size(202, 418)
+        Me.boxInventory.Size = New System.Drawing.Size(202, 404)
         Me.boxInventory.Sorted = True
         Me.boxInventory.TabIndex = 188
         '
@@ -150,7 +150,7 @@ Partial Class ShopV2
         Me.lblInventory.ForeColor = System.Drawing.Color.White
         Me.lblInventory.Location = New System.Drawing.Point(248, -23)
         Me.lblInventory.Name = "lblInventory"
-        Me.lblInventory.Size = New System.Drawing.Size(129, 28)
+        Me.lblInventory.Size = New System.Drawing.Size(109, 23)
         Me.lblInventory.TabIndex = 186
         Me.lblInventory.Text = "INVENTORY"
         '
@@ -161,7 +161,7 @@ Partial Class ShopV2
         Me.lblItems.ForeColor = System.Drawing.Color.White
         Me.lblItems.Location = New System.Drawing.Point(356, 494)
         Me.lblItems.Name = "lblItems"
-        Me.lblItems.Size = New System.Drawing.Size(77, 28)
+        Me.lblItems.Size = New System.Drawing.Size(65, 23)
         Me.lblItems.TabIndex = 187
         Me.lblItems.Text = "ITEMS"
         '
@@ -172,7 +172,7 @@ Partial Class ShopV2
         Me.boxShopFilter.ForeColor = System.Drawing.Color.White
         Me.boxShopFilter.Location = New System.Drawing.Point(420, 10)
         Me.boxShopFilter.Name = "boxShopFilter"
-        Me.boxShopFilter.Size = New System.Drawing.Size(202, 31)
+        Me.boxShopFilter.Size = New System.Drawing.Size(202, 27)
         Me.boxShopFilter.TabIndex = 196
         '
         'boxShop
@@ -181,11 +181,11 @@ Partial Class ShopV2
         Me.boxShop.Font = New System.Drawing.Font("Consolas", 10.0!)
         Me.boxShop.ForeColor = System.Drawing.Color.White
         Me.boxShop.FormattingEnabled = True
-        Me.boxShop.ItemHeight = 23
+        Me.boxShop.ItemHeight = 20
         Me.boxShop.Location = New System.Drawing.Point(420, 39)
         Me.boxShop.Name = "boxShop"
         Me.boxShop.SelectionMode = System.Windows.Forms.SelectionMode.MultiExtended
-        Me.boxShop.Size = New System.Drawing.Size(202, 418)
+        Me.boxShop.Size = New System.Drawing.Size(202, 404)
         Me.boxShop.Sorted = True
         Me.boxShop.TabIndex = 195
         '
@@ -198,7 +198,7 @@ Partial Class ShopV2
         Me.lblPlayer.Location = New System.Drawing.Point(220, 15)
         Me.lblPlayer.Margin = New System.Windows.Forms.Padding(4, 0, 4, 0)
         Me.lblPlayer.Name = "lblPlayer"
-        Me.lblPlayer.Size = New System.Drawing.Size(36, 19)
+        Me.lblPlayer.Size = New System.Drawing.Size(32, 17)
         Me.lblPlayer.TabIndex = 197
         Me.lblPlayer.Text = "You"
         '
@@ -211,7 +211,7 @@ Partial Class ShopV2
         Me.lblShopkeeper.Location = New System.Drawing.Point(347, 15)
         Me.lblShopkeeper.Margin = New System.Windows.Forms.Padding(4, 0, 4, 0)
         Me.lblShopkeeper.Name = "lblShopkeeper"
-        Me.lblShopkeeper.Size = New System.Drawing.Size(99, 19)
+        Me.lblShopkeeper.Size = New System.Drawing.Size(88, 17)
         Me.lblShopkeeper.TabIndex = 198
         Me.lblShopkeeper.Text = "Shopkeeper"
         '
@@ -244,7 +244,7 @@ Partial Class ShopV2
         '
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Inherit
         Me.BackColor = System.Drawing.Color.Black
-        Me.ClientSize = New System.Drawing.Size(634, 491)
+        Me.ClientSize = New System.Drawing.Size(634, 500)
         Me.ControlBox = False
         Me.Controls.Add(Me.lblFeedback)
         Me.Controls.Add(Me.btnInspect)

@@ -3,7 +3,7 @@
     'transformation variables
     Public tfCt As Integer = 0
     Public tfEnd As Integer = 0
-    Public sName As String
+    Public sName As String = ""
     Public sMaxHealth, sMana, sMaxMana, sAttack, sDefence, sWill, sSpeed As Integer
     'dialog variables
     Public form As String = ""
@@ -15,6 +15,8 @@
     'stun variables
     Public isStunned As Boolean = False
     Public stunct As Integer = 0
+    Public firstTurn = True
+    Dim img As Image
 
     Public Overrides Sub update()
         If tfCt > 0 Then
@@ -146,7 +148,7 @@
             isDead = True
             endBoss()
         End If
-        If inv.getCountAt(53) > 0 And name <> "Shopkeeper" Then
+        If inv.getCountAt(53) > 0 And Me.GetType().IsSubclassOf(GetType(ShopNPC)) Then
             Game.pushLblEvent("Your foe drops a key!")
             inv.setCount(53, 1)
             Dim c1 As Chest = Game.baseChest.Create(inv, pos)
@@ -158,6 +160,7 @@
         
     End Sub
     Private Sub endBoss()
+        If Not Me.GetType().IsSubclassOf(GetType(MiniBoss)) Then Exit Sub
         If sName.Equals("Marissa the Enchantress") Then
             Game.beatboss(1) = True
             Game.player.perks("nekocurse") = -1

@@ -1,6 +1,6 @@
 ﻿Public Class Polymorph
     Public Shared porm As Boolean = True
-    Public target As Monster
+    Public target As NPC
     Public tfForm As Boolean = False
     Private Sub Form4_Load(sender As Object, e As EventArgs) Handles MyBase.Load
         'scale to the screen size
@@ -46,7 +46,7 @@
             Case True
                 transform(Game.player, cboxPMorph.Text)
             Case False
-                If target.GetType() Is GetType(Shopkeep) Then transformN(target) Else transform(target, cboxPMorph.Text)
+                If target.GetType().IsSubclassOf(GetType(ShopNPC)) Then transformN(target) Else transform(target, cboxPMorph.Text)
         End Select
         Me.Close()
     End Sub
@@ -95,8 +95,8 @@
         Game.specialRoute()
         p.createP()
     End Sub
-    'monster transform method
-    Sub transform(ByRef t As Monster, ByVal s As String)
+    'NPC transform method
+    Sub transform(ByRef t As NPC, ByVal s As String)
         Dim title As String = s
         If title = "Sheep" Then
             t.health = 1
@@ -165,56 +165,14 @@
         End If
     End Sub
     'npc transform methodF:\dungeon_depths\The Dungeon\img\
-    Sub transformN(ByRef t As Shopkeep)
+    Sub transformN(ByRef t As ShopNPC)
         Dim title As String = cboxPMorph.Text
         If title = "Sheep" Then
-            t.health = 50
-            t.maxHealth = 50
-            t.attack = 1
-            t.defence = 1
-            t.tfCt = 1
-            t.tfEnd = 6
-            t.npcIndex = 2
-            t.form = "Sheep"
+            t.toSheep()
         ElseIf title = "Princess" Then
-            t.health = 999
-            t.maxHealth = 999
-            t.attack = 50
-            t.defence = 1
-            t.tfCt = 1
-            t.tfEnd = 15
-            t.npcIndex = 3
-            t.toFemale("prin")
-            t.form = "Princess"
+            t.toPrincess()
         ElseIf title = "Bunny" Then
-            t.health = 500
-            t.maxHealth = 500
-            t.attack = 1
-            t.defence = 1
-            t.tfCt = 1
-            t.tfEnd = 15
-            t.npcIndex = 4
-            t.toFemale("bunny")
-            t.form = "Bunny Girl"
-            Game.NPCfromCombat(t)
-        ElseIf title = "Chicken" Then
-            t.health = 45
-            t.maxHealth = 45
-            t.attack = 5
-            t.defence = 5
-            t.tfCt = 1
-            t.tfEnd = 6
-            t.npcIndex = 6
-            t.form = "Chicken"
-        ElseIf title = "Cow" Then
-            t.health = 75
-            t.maxHealth = 75
-            t.attack = 0
-            t.defence = 0
-            t.tfCt = 1
-            t.tfEnd = 6
-            t.npcIndex = 7
-            t.form = "Cow"
+            t.toBunny()
         End If
         Game.npcIndex = t.npcIndex
     End Sub

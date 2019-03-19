@@ -35,16 +35,15 @@ Public Class Game
     Public trapSizeDependence As Integer = 30
 
     Public player As Player = New Player()
-
     Public baseChest As Chest = New Chest()
-    Public chestList As ArrayList = New ArrayList()
+    Public chestList As List(Of Chest) = New List(Of Chest)
     Public statueList As ArrayList = New ArrayList()    '(NOT SAVED)
     Public trapList As ArrayList = New ArrayList()
     'player instance variables
     Public updateList As PQ = New PQ
-    Public shopkeeper, swiz As Shopkeep
     Public npcList As List(Of NPC) = New List(Of NPC)     'list of non-player updatables (NOT SAVED)
-    Public currNPC As Shopkeep   'the current npc the player is talking to (NOT SAVED)
+    Public shopkeeper, swiz, hteach As ShopNPC
+    Public currNPC As ShopNPC   'the current npc the player is talking to (NOT SAVED)
     Public pImage As Image  'which tile is used for the player (NOT SAVED)
     Public combatmode As Boolean = True 'indicates if the player is in combat (NOT SAVED)
     Public npcmode As Boolean = False   'indicates if the player is talking to an npc (NOT SAVED)
@@ -57,10 +56,10 @@ Public Class Game
     Public titleList = New List(Of String)
     'other misc form1 instance variables
     Dim selectedItem As Item    'the item hilighted in the inventory (NOT SAVED)
-    Dim monsterTier1() As Integer = {0, 1, 2, 6}
-    Dim monsterTier2() As Integer = {0, 1, 2, 4, 6}
-    Dim monsterTier3() As Integer = {0, 1, 2, 4, 6, 7}
-    Dim monsterTier4() As Integer = {0, 1, 2, 3, 4, 6, 7}
+    Dim NPCTier1() As Integer = {0, 1, 2, 6}
+    Dim NPCTier2() As Integer = {0, 1, 2, 4, 6}
+    Dim NPCTier3() As Integer = {0, 1, 2, 4, 6, 7}
+    Dim NPCTier4() As Integer = {0, 1, 2, 3, 4, 6, 7}
     Public turn As Integer = 0  '(NOT SAVED)
     Public beatboss() As Boolean = {False, False, False, False, False, False}  'which bosses have been beat?
     Public floorboss() As String = {"Floor0", "Marissa the Enchantress", "Targax the Brutal", "Key", "Key", "Medusa"} 'boss names (NOT SAVED)
@@ -105,6 +104,7 @@ Public Class Game
     Public noImg As Boolean
 
     Dim debugWindow As Debug_Window
+    Public shopMenu As ShopV2
     Public imgLib As ImageCollection
 
     '|STARTUP|
@@ -208,8 +208,9 @@ Public Class Game
             pnlDescript.Controls(i).Font = newFont
         Next
         'creates the shopkeeper
-        shopkeeper = New Shopkeep(2)
-        swiz = New Shopkeep(3)
+        shopkeeper = ShopNPC.shopFactory(0)
+        swiz = ShopNPC.shopFactory(1)
+        hteach = ShopNPC.shopFactory(2)
         pnlCombat.Location = New Point(115, pnlCombat.Location.Y)
         pnlDescript.Location = New Point(115, pnlDescript.Location.Y)
         pnlSaveLoad.Location = New Point(188, pnlSaveLoad.Location.Y)
@@ -894,49 +895,41 @@ Public Class Game
         writer.Close()
     End Sub
     'placeStairs, placeChest, placeTraps, and placeNPCs place their respective entities on mBoard
-    Sub placeStairs()
-
-        Dim stairsX As Integer
-        Dim stairsY As Integer
-        Do While (mBoard(stairsY, stairsX).Tag <> 1 Or mBoard(stairsY, stairsX).Text <> "")
-            stairsX = CInt(Int(Rnd() * mBoardWidth))
-            stairsY = CInt(Int(Rnd() * mBoardHeight))
+    Function randPoint() As Point
+        Dim posX As Integer
+        Dim posY As Integer
+        Do While (mBoard(posY, posX).Tag < 1 Or mBoard(posY, posX).Text <> "")
+            posX = CInt(Int(Rnd() * mBoardWidth))
+            posY = CInt(Int(Rnd() * mBoardHeight))
         Loop
-        stairs = New Point(stairsX, stairsY)
-        mBoard(stairsY, stairsX).ForeColor = Color.FromArgb(45, 45, 45)
-        mBoard(stairsY, stairsX).Text = "H"
+        Return New Point(posX, posY)
+    End Function
+    Sub placeStairs()
+        stairs = randPoint()
+        mBoard(stairs.Y, stairs.X).ForeColor = Color.FromArgb(45, 45, 45)
+        mBoard(stairs.Y, stairs.X).Text = "H"
     End Sub
     Sub placeChest(ByVal code As String)
         Rnd(-1)
         Randomize(code.GetHashCode)
         'Dim numChests As Integer = CInt(Int(Rnd() * 8) + 3) * Int((mBoardWidth / 30) + (mBoardHeight / 30) / 2)
-        Dim numChests As Integer = CInt(Int(Rnd() * chestFreqRange) + chestFreqMin) * (Int(chestSizeDependence / Math.Sqrt(mBoardWidth * mBoardHeight)) + 1)
+        Dim numChests As Integer = CInt(Int(Rnd() * chestFreqRange) + chestFreqMin) *
+                             (Int(chestSizeDependence / Math.Sqrt(mBoardWidth * mBoardHeight)) + 1)
         Dim r As Integer
         If floor = 3 Then
             numChests *= 1.5
             r = Int(Rnd() * (numChests))
         End If
         For i = 1 To numChests
-            Dim chestX As Integer = CInt(Int(Rnd() * mBoardWidth))
-            Dim chestY As Integer = CInt(Int(Rnd() * mBoardHeight))
-
-            If floor > 0 Then
-                Do While ((mBoard(chestY, chestX).Tag <> 1 And mBoard(chestY, chestX).Tag <> 2) Or mBoard(chestY, chestX).Text <> "")
-                    chestX = CInt(Int(Rnd() * mBoardWidth))
-                    chestY = CInt(Int(Rnd() * mBoardHeight))
-                Loop
-            Else
-                Do While (mBoard(chestY, chestX).Tag <> 1 Or mBoard(chestY, chestX).Text <> "")
-                    chestX = CInt(Int(Rnd() * mBoardWidth))
-                    chestY = CInt(Int(Rnd() * mBoardHeight))
-                Loop
-            End If
-
-            Dim chest As Chest = baseChest.Create(New Point(chestX, chestY), code)
+            Dim chestPoint = randPoint()
+            Dim chest As Chest = baseChest.Create(chestPoint, code)
             If r = i Then chest.add(53, 1)
             chestList.Add(chest)
-            mBoard(chestY, chestX).ForeColor = Color.FromArgb(45, 45, 45)
-            'mBoard(chestY, chestX).Text = "#"
+            mBoard(chestPoint.Y, chestPoint.X).ForeColor = Color.FromArgb(45, 45, 45)
+            mBoard(chestPoint.Y, chestPoint.X).Text = "#"
+        Next
+        For Each c In chestList
+            mBoard(c.pos.Y, c.pos.X).Text = ""
         Next
     End Sub
     Sub placeTraps()
@@ -944,39 +937,41 @@ Public Class Game
         If trapSizeDependence <= 0 Then trapSizeDependence = 1
         Dim numtrap As Integer = CInt(Int(Rnd() * trapFreqRange) + trapFreqMin) * Int(mBoardWidth / trapSizeDependence)
         For i = 1 To numtrap
-            Dim trapX As Integer = CInt(Int(Rnd() * mBoardWidth))
-            Dim trapY As Integer = CInt(Int(Rnd() * mBoardHeight))
-            Do While (mBoard(trapY, trapX).Tag <> 1 Or mBoard(trapY, trapX).Text <> "")
-                trapX = CInt(Int(Rnd() * mBoardWidth))
-                trapY = CInt(Int(Rnd() * mBoardHeight))
-            Loop
-            Dim trap As New Trap(New Point(trapX, trapY))
+            Dim trapPoint = randPoint()
+            Dim trap As New Trap(trapPoint)
             trapList.Add(trap)
-            mBoard(trapY, trapX).ForeColor = Color.FromArgb(45, 45, 45)
-            mBoard(trapY, trapX).Text = "+"
+            mBoard(trapPoint.Y, trapPoint.X).ForeColor = Color.FromArgb(45, 45, 45)
+            mBoard(trapPoint.Y, trapPoint.X).Text = "+"
         Next
     End Sub
     Sub placeNPCs()
-        shopkeeper.pos = New Point(-1, -1)
-        swiz.pos = New Point(-1, -1)
-        Dim numNpc As Integer = CInt(Int(Rnd() * 2))
-        If floor = 1 Then numNpc = 0
-        For i = 0 To 0 'numNpc
-            Dim npcX As Integer = CInt(Int(Rnd() * mBoardWidth))
-            Dim npcY As Integer = CInt(Int(Rnd() * mBoardHeight))
-            Do While (mBoard(npcY, npcX).Tag <> 1 Or mBoard(npcY, npcX).Text <> "")
-                npcX = CInt(Int(Rnd() * mBoardWidth))
-                npcY = CInt(Int(Rnd() * mBoardHeight))
-            Loop
-            Select Case numNpc
-                Case 0
-                    shopkeeper.pos = New Point(npcX, npcY)
-                    If floor = 3 Then shopkeeper.inv.add(53, 1) Else shopkeeper.inv.item(53).count = 0
-                Case 1
-                    swiz.pos = New Point(npcX, npcY)
-            End Select
-            mBoard(npcY, npcX).ForeColor = Color.FromArgb(45, 45, 45)
-            mBoard(npcY, npcX).Text = "$"
+        Dim potentialShops As List(Of ShopNPC) = New List(Of ShopNPC)
+        potentialShops.Add(shopkeeper)
+        potentialShops.Add(swiz)
+        potentialShops.Add(hteach)
+
+        For Each n In potentialShops
+            n.pos = New Point(-1, -1)
+        Next
+
+        Dim numNpc As Integer = CInt(Int(Rnd() * potentialShops.Count)) + 1
+        If floor = 1 Then numNpc = 1
+
+        For i = 1 To numNpc
+            Dim npcPoint = randPoint()
+            Dim npcInd = Int(Rnd() * potentialShops.Count)
+            If floor = 1 Then npcInd = 0
+
+            Dim sNPC = potentialShops(npcInd)
+
+            sNPC.pos = npcPoint
+
+            If floor = 3 Then sNPC.inv.add(53, 1) Else sNPC.inv.item(53).count = 0
+
+            mBoard(npcPoint.Y, npcPoint.X).ForeColor = Color.FromArgb(45, 45, 45)
+            mBoard(npcPoint.Y, npcPoint.X).Text = "$"
+
+            potentialShops.RemoveAt(npcInd)
         Next
     End Sub
     Function route(ByVal p1 As Point, ByVal p2 As Point) As Point()
@@ -1074,6 +1069,10 @@ Public Class Game
         If Not swiz.isDead And swiz.pos.X > 0 And swiz.pos.Y > 0 Then
             mBoard(swiz.pos.Y, swiz.pos.X).Text = "$"
         End If
+        If Not hteach.isDead And hteach.pos.X > 0 And hteach.pos.Y > 0 Then
+            mBoard(hteach.pos.Y, hteach.pos.X).Text = "$"
+        End If
+
         If mBoard(player.pos.Y, player.pos.X).Text = "+" Then
             For i = 0 To trapList.Count - 1
                 If trapList(i).pos = player.pos Then
@@ -1184,7 +1183,8 @@ Public Class Game
         '10 = boss stairs
         '11 = shady wizard
         '12 = crystal
-        '13 = crystal
+        '13 = path
+        '14 = h. teacher
 
         If testingImageBoard Then
             boxBoard.Refresh()
@@ -1213,6 +1213,7 @@ Public Class Game
                             If mBoard(player.pos.Y + indY, player.pos.X + indX).Text = "#" Then viewArray(y, x) = 5
                             If mBoard(player.pos.Y + indY, player.pos.X + indX).Text = "$" And player.pos.Y + indY = shopkeeper.pos.Y And player.pos.X + indX = shopkeeper.pos.X Then viewArray(y, x) = 6
                             If mBoard(player.pos.Y + indY, player.pos.X + indX).Text = "$" And player.pos.Y + indY = swiz.pos.Y And player.pos.X + indX = swiz.pos.X Then viewArray(y, x) = 11
+                            If mBoard(player.pos.Y + indY, player.pos.X + indX).Text = "$" And player.pos.Y + indY = hteach.pos.Y And player.pos.X + indX = hteach.pos.X Then viewArray(y, x) = 14
                             If mBoard(player.pos.Y + indY, player.pos.X + indX).Text = "+" Then viewArray(y, x) = 8
                             If mBoard(player.pos.Y + indY, player.pos.X + indX).Text = "c" Then viewArray(y, x) = 12
                         End If
@@ -1254,6 +1255,8 @@ Public Class Game
                                 mPics(y, x).BackgroundImage = picCrystal.BackgroundImage
                             Case 13
                                 mPics(y, x).BackgroundImage = picPath.BackgroundImage
+                            Case 14
+                                mPics(y, x).BackgroundImage = picHT.BackgroundImage
                         End Select
                     Else
                         Select Case viewArray(y, x)
@@ -1286,6 +1289,8 @@ Public Class Game
                                 mPics(y, x).BackgroundImage = picCrystalf.BackgroundImage
                             Case 13
                                 mPics(y, x).BackgroundImage = picPathf.BackgroundImage
+                            Case 14
+                                mPics(y, x).BackgroundImage = picHTf.BackgroundImage
                         End Select
                     End If
                     x += 1
@@ -1484,9 +1489,9 @@ Public Class Game
         subString = subString.Substring(1, subString.Count - 1)
 
         If combatmode Then
-            Dim m As Monster = Nothing
+            Dim m As NPC = Nothing
             For i = 0 To npcList.Count() - 1
-                If npcList.Item(i).GetType().IsSubclassOf(GetType(Monster)) Or npcList.Item(i).GetType() Is GetType(Monster) Then
+                If npcList.Item(i).GetType().IsSubclassOf(GetType(NPC)) Or npcList.Item(i).GetType() Is GetType(NPC) Then
                     m = npcList.Item(i)
                     Exit For
                 End If
@@ -1512,9 +1517,9 @@ Public Class Game
         End If
         lblCombatEvents.Text = ""
         closeLblEvent()
-        Dim m As Monster = Nothing
+        Dim m As NPC = Nothing
         For i = 0 To npcList.Count() - 1
-            If npcList.Item(i).GetType().IsSubclassOf(GetType(Monster)) Or npcList.Item(i).GetType() Is GetType(Monster) Then
+            If npcList.Item(i).GetType().IsSubclassOf(GetType(NPC)) Or npcList.Item(i).GetType() Is GetType(NPC) Then
                 m = npcList.Item(i)
                 Exit For
             End If
@@ -1632,9 +1637,9 @@ Public Class Game
         Dim tempAct = yesAction.Clone
 
         If index = 0 Then
-            yesAction()
+            If Not yesAction Is Nothing Then yesAction()
         Else
-            noAction()
+            If Not noAction Is Nothing Then noAction()
         End If
 
         If tempAct Is yesAction Then
@@ -1771,18 +1776,18 @@ Public Class Game
         Randomize()
         If eClock > 0 Then eClock -= 1
         If combatmode = True Or npcmode = True Or eClock <> 0 Or Not player.canMoveFlag Then Exit Sub
-        Dim currTier As Integer() = monsterTier1
+        Dim currTier As Integer() = NPCTier1
         Select Case floor
             Case 1
-                currTier = monsterTier1
+                currTier = NPCTier1
             Case 2
-                currTier = monsterTier2
+                currTier = NPCTier2
             Case 3
-                currTier = monsterTier3
+                currTier = NPCTier3
             Case 4
-                currTier = monsterTier4
+                currTier = NPCTier4
             Case Else
-                currTier = monsterTier4
+                currTier = NPCTier4
         End Select
 
         Dim rand As Integer = CInt(Int(Rnd() * 1000))
@@ -1790,7 +1795,7 @@ Public Class Game
         Dim r2 As Integer = Int(Rnd() * (UBound(currTier) + 1))
 
         If rand < encounterRate Then
-            Dim m As Monster
+            Dim m As NPC
             If r2 = UBound(currTier) And r2 = r And ((floor < 5 AndAlso Not beatboss(floor)) Or floor >= 5) And Not floor = 3 Then
                 m = New MiniBoss(floor)
             Else
@@ -1838,10 +1843,13 @@ Public Class Game
         If lblEvent.Visible And Not (Keydata.Equals(Keys.Enter)) And Not Keydata.Equals(cKeys(0)) And Not Keydata.Equals(cKeys(1)) And Not Keydata.Equals(cKeys(2)) And Not Keydata.Equals(cKeys(3)) _
             And Not Keydata.Equals(Keys.Left) And Not Keydata.Equals(Keys.Right) And Not Keydata.Equals(Keys.Down) And Not Keydata.Equals(Keys.Up) Then
             If npcmode = False Then
-                picNPC.Visible = False
                 closeLblEvent()
                 player.canMoveFlag = True
-                If Not combatmode Then player.canMoveFlag = True
+                If Not combatmode Then
+                    player.canMoveFlag = True
+                    picNPC.Visible = False
+                End If
+
                 If Not lblEventOnClose Is Nothing Then
                     lblEvent.Visible = True
                     If Not combatmode Then player.canMoveFlag = False
@@ -1881,6 +1889,9 @@ Public Class Game
         End If
         If player.pos.Equals(swiz.pos) Then
             npcEncounter(swiz)
+        End If
+        If player.pos.Equals(hteach.pos) Then
+            npcEncounter(hteach)
         End If
         If btnEQP.Enabled = False Then btnEQP.Enabled = True
         If chestList.Count > 0 Then
@@ -2015,6 +2026,9 @@ Public Class Game
             If player.pos.Equals(swiz.pos) Then
                 npcEncounter(swiz)
             End If
+            If player.pos.Equals(hteach.pos) Then
+                npcEncounter(hteach)
+            End If
         Else
             If Not lblEventOnClose Is Nothing Then
                 lblEventOnClose()
@@ -2039,9 +2053,9 @@ Public Class Game
                 lblEventOnClose = Nothing
             End If
             closeLblEvent()
-            Dim m As Monster = Nothing
+            Dim m As NPC = Nothing
             For i = 0 To npcList.Count() - 1
-                If npcList.Item(i).GetType().IsSubclassOf(GetType(Monster)) Or npcList.Item(i).GetType() Is GetType(Monster) Then
+                If npcList.Item(i).GetType().IsSubclassOf(GetType(NPC)) Or npcList.Item(i).GetType() Is GetType(NPC) Then
                     m = npcList.Item(i)
                     Exit For
                 End If
@@ -2114,9 +2128,9 @@ Public Class Game
         lblCombatEvents.Text = ""
         closeLblEvent()
         If cmboxSpec.Text = "-- Select --" Then Exit Sub
-        Dim m As Monster = Nothing
+        Dim m As NPC = Nothing
         For i = 0 To npcList.Count() - 1
-            If npcList.Item(i).GetType().IsSubclassOf(GetType(Monster)) Or npcList.Item(i).GetType() Is GetType(Monster) Then
+            If npcList.Item(i).GetType().IsSubclassOf(GetType(NPC)) Or npcList.Item(i).GetType() Is GetType(NPC) Then
                 m = npcList.Item(i)
                 Exit For
             End If
@@ -2145,9 +2159,9 @@ Public Class Game
     Sub waitKey()
         turn += 1
         closeLblEvent()
-        Dim m As Monster = Nothing
+        Dim m As NPC = Nothing
         For i = 0 To npcList.Count() - 1
-            If npcList.Item(i).GetType().IsSubclassOf(GetType(Monster)) Or npcList.Item(i).GetType() Is GetType(Monster) Then
+            If npcList.Item(i).GetType().IsSubclassOf(GetType(NPC)) Or npcList.Item(i).GetType() Is GetType(NPC) Then
                 m = npcList.Item(i)
                 Exit For
             End If
@@ -2159,9 +2173,9 @@ Public Class Game
     Private Sub btnWait_Click(sender As Object, e As EventArgs) Handles btnWait.Click
         turn += 1
         closeLblEvent()
-        Dim m As Monster = Nothing
+        Dim m As NPC = Nothing
         For i = 0 To npcList.Count() - 1
-            If npcList.Item(i).GetType().IsSubclassOf(GetType(Monster)) Or npcList.Item(i).GetType() Is GetType(Monster) Then
+            If npcList.Item(i).GetType().IsSubclassOf(GetType(NPC)) Or npcList.Item(i).GetType() Is GetType(NPC) Then
                 m = npcList.Item(i)
                 Exit For
             End If
@@ -2285,6 +2299,8 @@ Public Class Game
             currNPC = shopkeeper
         ElseIf player.pos.Equals(swiz.pos) Then
             currNPC = swiz
+        ElseIf player.pos.Equals(hteach.pos) Then
+            currNPC = hteach
         Else
             pushLblEvent("There's no shop here.")
             Exit Sub
@@ -2302,9 +2318,9 @@ Public Class Game
         End If
         closeLblEvent()
         'Dim s As Shop = New Shop
-        Dim s As ShopV2 = New ShopV2
-        s.ShowDialog()
-        s.Dispose()
+        shopMenu = New ShopV2
+        shopmenu.ShowDialog()
+        shopmenu.Dispose()
     End Sub
     'equip
     Sub eArmorKey()
@@ -2362,7 +2378,7 @@ Public Class Game
     'yes/no
     Sub yesKey()
         If btnChallengeBoss.Visible Then
-            Dim m As Monster
+            Dim m As NPC
             If floor Mod 5 = 0 Then
                 m = New Boss(floor)
             Else
@@ -2381,7 +2397,7 @@ Public Class Game
 
     End Sub
     Private Sub btnChallengeBoss_Click(sender As Object, e As EventArgs) Handles btnChallengeBoss.Click
-        Dim m As Monster
+        Dim m As NPC
         If floor Mod 5 = 0 Then
             m = New Boss(floor)
         Else
@@ -2492,6 +2508,9 @@ Public Class Game
         Next
         writer.WriteLine(swiz.pos.X)
         writer.WriteLine(swiz.pos.Y)
+
+        writer.WriteLine(hteach.pos.X)
+        writer.WriteLine(hteach.pos.Y)
 
         writer.Flush()
         writer.Close()
@@ -2647,7 +2666,7 @@ Public Class Game
         For i = 0 To CInt(reader.ReadLine())
             cmboxSpec.Items.Add(reader.ReadLine())
         Next
-        
+
         For i = 0 To CInt(reader.ReadLine())
             beatboss(i) = CBool(reader.ReadLine)
         Next
@@ -2655,7 +2674,7 @@ Public Class Game
         floorCode = reader.ReadLine()
         encounterRate = Int(reader.ReadLine())
         eClockResetVal = Int(reader.ReadLine())
-        shopkeeper = New Shopkeep(2)
+        shopkeeper = ShopNPC.shopFactory(0)
         shopkeeper.pos.X = reader.ReadLine()
         shopkeeper.pos.Y = reader.ReadLine()
 
@@ -2664,9 +2683,13 @@ Public Class Game
             floorLayouts.Add(reader.ReadLine())
         Next
 
-        swiz = New Shopkeep(3)
+        swiz = ShopNPC.shopFactory(1)
         swiz.pos.X = reader.ReadLine()
         swiz.pos.Y = reader.ReadLine()
+
+        hteach = ShopNPC.shopFactory(2)
+        hteach.pos.X = reader.ReadLine()
+        hteach.pos.Y = reader.ReadLine()
 
         chestList.Clear()
         If floor < 5 Then
@@ -2675,7 +2698,7 @@ Public Class Game
             placeChest(genRNDLVLCode)
         End If
 
-        Dim tCL As ArrayList = New ArrayList()
+        Dim tCL As List(Of Chest) = New List(Of Chest)
         For i = 0 To uOchests.Count - 1
             For j = 0 To chestList.Count - 1
                 If chestList(j).pos.x.Equals(uOchests(i).x) And chestList(j).pos.y.Equals(uOchests(i).y) Then
@@ -2685,7 +2708,7 @@ Public Class Game
             Next
         Next
         chestList.Clear()
-        chestList = tCL.Clone()
+        chestList = tCL
 
         If chestList.Count = 0 And uOchests.Count <> 0 Then
             If floor < 4 Then
@@ -2880,7 +2903,7 @@ Public Class Game
             changeHairColor(haircolor, ids, iarr)
             changeSkinColor(skincolor, ids, iarr)
 
-            img = CharacterGenerator.CreateBMP(iarr)
+            img = portrait.createBMP(iarr)
         Catch ex As Exception
             Return Nothing
         End Try
@@ -2957,7 +2980,7 @@ Public Class Game
         combatmode = False
         picNPC.Visible = False
         btnWait.Visible = False
-        player.canMoveFlag = True
+        If player.perks("astatue") = -1 Then player.canMoveFlag = True
         player.clearTarget()
         cmboxSpec.Visible = False
         btnSpec.Visible = False
@@ -2967,9 +2990,12 @@ Public Class Game
     End Sub
     Sub NPCtoCombat(ByRef m As NPC)
         'the NPC versions of from and to combat
+        player.setTarget(m)
+        picNPC.Location = New Point(10, picPortrait.Location.Y)
         lblEHealthChange.Tag = 0
         lblPHealtDiff.Tag = 0
-        updatePnlCombat(player, m)
+        updatePnlCombat(player, player.currTarget)
+        pnlCombat.Location = New Point(115, pnlCombat.Location.Y)
         pnlCombat.Visible = True
         combatmode = True
         npcmode = False
@@ -2991,11 +3017,11 @@ Public Class Game
         btnShop.Visible = False
         btnFight.Visible = False
         btnLeave.Visible = False
-
-
     End Sub
-    Sub NPCfromCombat(ByRef m As Monster)
+    Sub NPCfromCombat(ByRef m As NPC)
         pnlCombatClose()
+        Dim ratio As Double = Me.Size.Width / 1024
+        picNPC.Location = New Point(82 * ratio, 179 * ratio)
         combatmode = False
         npcmode = True
         pushLblEvent((m.getName() & " stops fighting!"))
@@ -3007,7 +3033,7 @@ Public Class Game
         cboxMG.Visible = False
         cmboxSpec.Visible = False
         btnSpec.Visible = False
-        player.canMoveFlag = True
+        If player.perks("astatue") = -1 Then player.canMoveFlag = True
 
         'btnTalk.Visible = True
         btnNPCMG.Visible = True
@@ -3134,7 +3160,6 @@ Public Class Game
             selectedItem = player.inv.item(subString)
             If Not selectedItem Is Nothing Then
                 'MsgBox(aInd & ", " & subString)
-                'MsgBox(player.inventorynames(32))
                 If selectedItem.getUsable() Then btnUse.Enabled = True Else btnUse.Enabled = False
                 btnDrop.Enabled = True
                 btnLook.Enabled = True
@@ -3223,9 +3248,9 @@ Public Class Game
 
     '|NPC|
     Sub leaveNPC()
-        Dim m As Shopkeep = Nothing
+        Dim m As ShopNPC = Nothing
         For i = 0 To npcList.Count() - 1
-            If npcList.Item(i).GetType() Is GetType(Shopkeep) Then
+            If npcList.Item(i).GetType().IsSubclassOf(GetType(ShopNPC)) Then
                 m = npcList.Item(i)
                 Exit For
             End If
@@ -3236,7 +3261,7 @@ Public Class Game
         player.clearTarget()
         npcmode = False
     End Sub
-    Sub npcEncounter(ByRef m As Shopkeep)
+    Sub npcEncounter(ByRef m As ShopNPC)
         Dim validSpells() As String = {"Turn to Frog", "Polymorph Enemy", "Petrify"}
         cboxNPCMG.Items.Clear()
         For i = 0 To UBound(validSpells)
@@ -3261,76 +3286,57 @@ Public Class Game
         btnLeave.Visible = True
 
     End Sub
+    Sub npcMG()
+        closeLblEvent()
+        If cboxNPCMG.Text = "-- Select --" Or player.mana <= 0 Then Exit Sub
+        Dim m As ShopNPC = Nothing
+        For i = 0 To npcList.Count() - 1
+            If npcList.Item(i).GetType().IsSubclassOf(GetType(ShopNPC)) Then
+                m = npcList.Item(i)
+                Exit For
+            End If
+        Next
+
+        Spell.spellCast(m, player, cboxNPCMG.Text)
+
+        queueSetup()
+
+        pushNPCDialog(m.hitBySpell)
+
+        Dim int As Integer = 100 - player.getSPD
+        If int < 1 Then int = 1
+        picNPC.BackgroundImage = currNPC.picNCP(currNPC.npcIndex)
+        updateList.add(player, int)
+        drawBoard()
+    End Sub
+    Sub npcFight()
+        Dim m As ShopNPC = Nothing
+        For i = 0 To npcList.Count() - 1
+            If npcList.Item(i).GetType().IsSubclassOf(GetType(ShopNPC)) Then
+                m = npcList.Item(i)
+                Exit For
+            End If
+        Next
+        queueSetup()
+        NPCtoCombat(m)
+
+        closeLblEvent()
+
+        pushNPCDialog(m.tofight())
+    End Sub
     Private Sub btnNPCMG_Click(sender As Object, e As EventArgs) Handles btnNPCMG.Click
         If Not lblEventOnClose Is Nothing Then
             lblEventOnClose()
             lblEventOnClose = Nothing
         End If
-        If MessageBox.Show("This is probably a really bad idea, are you sure?", "Bad Idea", MessageBoxButtons.YesNo) = Windows.Forms.DialogResult.Yes Then
-            closeLblEvent()
-            If cboxNPCMG.Text = "-- Select --" Or player.mana <= 0 Then Exit Sub
-            Dim m As Shopkeep = Nothing
-            For i = 0 To npcList.Count() - 1
-                If npcList.Item(i).GetType() Is GetType(Shopkeep) Then
-                    m = npcList.Item(i)
-                    Exit For
-                End If
-            Next
-            'MsgBox("B")
-            'If cboxNPCMG.Text = "Turn to Frog" Then Spells.turnToFrogN(m, player) Else Spell.spellCast(m, player, cboxNPCMG.Text)
-            Spell.spellCast(m, player, cboxNPCMG.Text)
-
-            queueSetup()
-            If m.npcIndex = 0 Then
-                pushNPCDialog("Did . . . did you just cast a spell on me?  You know I have to kill you now, right?")
-                NPCtoCombat(m)
-            ElseIf m.npcIndex = 1 Then
-                pushNPCDialog("Ribbit!!!")
-                NPCtoCombat(m)
-            ElseIf npcIndex = 2 Then
-                pushNPCDialog("[angry bleets]!")
-                NPCtoCombat(m)
-            ElseIf npcIndex = 3 Then
-                pushNPCDialog("Casting spells on royalty is genrally not a good idea.")
-                NPCtoCombat(m)
-            ElseIf m.npcIndex = 4 Then
-                pushNPCDialog("*giggle* Was that magic?")
-            End If
-            Dim int As Integer = 100 - player.getSPD
-            If int < 1 Then int = 1
-            picNPC.BackgroundImage = currNPC.picNCP(currNPC.npcIndex)
-            updatelist.add(player, int)
-            drawBoard()
-        End If
+        pushPnlYesNo("Are you sure you want to do this?", AddressOf npcMG, Nothing)
     End Sub
     Private Sub btnFight_Click(sender As Object, e As EventArgs) Handles btnFight.Click
         If Not lblEventOnClose Is Nothing Then
             lblEventOnClose()
             lblEventOnClose = Nothing
         End If
-        If MessageBox.Show("This is probably a really bad idea, are you sure?", "Bad Idea", MessageBoxButtons.YesNo) = Windows.Forms.DialogResult.Yes Then
-            closeLblEvent()
-            If npcIndex = 0 Then
-                pushNPCDialog("So you want to fight, eh?  I'm ready whenever you are.")
-            ElseIf npcIndex = 1 Then
-                pushNPCDialog("Ribbit . . .")
-            ElseIf npcIndex = 2 Then
-                pushNPCDialog("BAAAAAHHHH!")
-            ElseIf npcIndex = 3 Then
-                pushNPCDialog("You would dare to challenge me? If you wish to die, you could just say so.")
-            ElseIf npcIndex = 4 Then
-                pushNPCDialog("I might not be the best fighter any more, but I can definitely give it my best!")
-            End If
-            Dim m As Monster = Nothing
-            For i = 0 To npcList.Count() - 1
-                If npcList.Item(i).GetType().IsSubclassOf(GetType(Monster)) Or npcList.Item(i).GetType() Is GetType(Monster) Then
-                    m = npcList.Item(i)
-                    Exit For
-                End If
-            Next
-            queueSetup()
-            NPCtoCombat(m)
-        End If
+        pushPnlYesNo("Are you sure you want to do this?", AddressOf npcFight, Nothing)
     End Sub
     Private Sub btnLeave_Click(sender As Object, e As EventArgs) Handles btnLeave.Click
         leaveNPC()
@@ -3656,16 +3662,27 @@ Public Class Game
         btnEQP.Enabled = False
     End Sub
     Sub pushNPCDialog(ByVal s As String)
+        If combatmode Then
+            pushLblCombatEvent("""" & s & """")
+            Exit Sub
+        End If
+        lblEvent.ForeColor = Color.White
         'pushNPCDialog is a variant of pushLblEvent that pushes the string into an NPC dialog box
         Dim sSplit() As String = s.Split(" ")
         Dim c As Integer = 0
         Dim ct As Integer = 0
         Dim out As String = ""
         Do While c < sSplit.Length
-            If ct < 65 Then
-                out += sSplit(c) & " "
-                ct += sSplit(c).Length + 1
-                c += 1
+            If ct < 50 Then
+                If Not sSplit(c).Contains(vbCrLf) Then
+                    out += sSplit(c) & " "
+                    ct += sSplit(c).Length + 1
+                    c += 1
+                Else
+                    out += sSplit(c) & " "
+                    ct = 0
+                    c += 1
+                End If
             Else
                 out += vbCrLf
                 ct = 0
@@ -3676,9 +3693,50 @@ Public Class Game
         lblEvent.Visible = True
         picNPC.Visible = True
     End Sub
+    Sub pushNPCDialog(ByVal s As String, ByVal effect As action)
+        If combatmode Then
+            pushLblCombatEvent("""" & s & """")
+            Exit Sub
+        End If
+        lblEvent.ForeColor = Color.White
+        'pushNPCDialog is a variant of pushLblEvent that pushes the string into an NPC dialog box
+        Dim sSplit() As String = s.Split(" ")
+        Dim c As Integer = 0
+        Dim ct As Integer = 0
+        Dim out As String = ""
+        Do While c < sSplit.Length
+            If ct < 50 Then
+                If Not sSplit(c).Contains(vbCrLf) Then
+                    out += sSplit(c) & " "
+                    ct += sSplit(c).Length + 1
+                    c += 1
+                Else
+                    out += sSplit(c) & " "
+                    ct = 0
+                    c += 1
+                End If
+            Else
+                out += vbCrLf
+                ct = 0
+            End If
+        Loop
+
+        out += " " & vbCrLf & " " & vbCrLf & "Press any non-movement key to continue."
+        lblEventOnClose = effect
+        lblEvent.Text = out
+        lblEvent.Location = New Point(160 * Me.Size.Width / 688, 120 * Me.Size.Width / 688)
+        lblEvent.Visible = True
+        picNPC.Visible = True
+    End Sub
     Sub pushLstLog(ByVal s As String)
         lstLog.Items.Add(s)
         lstLog.TopIndex = lstLog.Items.Count - 1
+    End Sub
+    Sub pushPnlYesNo(ByVal s As String, ByRef yes As Action, ByRef no As action)
+        yesAction = yes
+        noAction = no
+        choiceText = s
+        makeChoice()
     End Sub
     'color shift functions
     Shared Function cShift(ByVal oC As Color, ByVal c As Color, ByVal inc As Integer)

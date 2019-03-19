@@ -8,6 +8,10 @@
     Public tier As Integer = Nothing
     Public id As Integer = Nothing
 
+    Public saleLim As Integer = 999
+    Public onSell As Action = Nothing
+    Public onBuy As Action = Nothing
+
     Overloads Function CompareTo(ByVal obj As Object) As Integer Implements IComparable.CompareTo
         Dim r As Integer
         Try
@@ -61,16 +65,7 @@
         count -= 1
         
     End Sub
-    Overridable Sub sell(ByVal n As Integer)
-        If Game.currNPC.gold >= (value / 2) * n Then
-            Game.player.gold += (value / 2) * n
-            Game.currNPC.gold -= (value / 2) * n
-            count -= n
-        Else
-            Game.pushLstLog("The shopkeeper doesn't have the money!")
-        End If
-        
-    End Sub
+
     Public Sub examine()
         Game.pushLblEvent(description)
     End Sub

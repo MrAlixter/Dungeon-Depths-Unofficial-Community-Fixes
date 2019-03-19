@@ -14,7 +14,7 @@
     Overrides Sub use()
         If Me.getUsable() = False Then Exit Sub
         Game.player.setIAInd(6, 1, Game.player.sexBool, False)
-        Game.picPortrait.BackgroundImage = CharacterGenerator.CreateBMP(Game.player.iArr)
+        Game.picPortrait.BackgroundImage = portrait.createBMP(Game.player.iArr)
         Game.player.createP()
         count -= 1
     End Sub

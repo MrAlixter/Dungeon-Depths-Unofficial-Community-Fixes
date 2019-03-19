@@ -487,7 +487,7 @@ Public Class Debug_Window
         Game.player.changeSkinColor(cd.sc)
         CType(sender, Panel).BackColor = cd.sc
         cd.Dispose()
-        picPreview.Image = CharacterGenerator.CreateBMP(Game.player.iArr)
+        picPreview.Image = portrait.createBMP(Game.player.iArr)
     End Sub
 
     Private Sub pnlHC_Paint(sender As Object, e As EventArgs) Handles pnlHC.Click
@@ -497,13 +497,13 @@ Public Class Debug_Window
         Dim c As Color = Color.FromArgb(boxAlpha.Value, cd.Color.R, cd.Color.G, cd.Color.B)
         Game.player.changeHairColor(c)
         cd.Dispose()
-        picPreview.Image = CharacterGenerator.CreateBMP(Game.player.iArr)
+        picPreview.Image = portrait.createBMP(Game.player.iArr)
     End Sub
 
     Private Sub boxAlpha_ValueChanged(sender As Object, e As EventArgs) Handles boxAlpha.ValueChanged
         Dim c As Color = Color.FromArgb(boxAlpha.Value, Game.player.haircolor.R, Game.player.haircolor.G, Game.player.haircolor.B)
         Game.player.changeHairColor(c)
-        picPreview.Image = CharacterGenerator.CreateBMP(Game.player.iArr)
+        picPreview.Image = portrait.createBMP(Game.player.iArr)
     End Sub
 
     Private Sub clickOnPic(sender As Object, e As EventArgs)
@@ -513,8 +513,8 @@ Public Class Debug_Window
         Game.player.iArr(tab) = CType(sender, PictureBox).Image
         Game.player.setIAInd(tab, pic, Game.player.sexBool, False)
 
-        'picPreview.Image = CharacterGenerator.recolor(CharacterGenerator.CreateBMP(Game.player.iArr), Game.player.skincolor)
-        picPreview.Image = CharacterGenerator.CreateBMP(Game.player.iArr)
+        'picPreview.Image = CharacterGenerator.recolor(portrait.createBMP(Game.player.iArr), Game.player.skincolor)
+        picPreview.Image = portrait.createBMP(Game.player.iArr)
     End Sub
 
     Private Sub boxInventoryFilter_TextChanged(sender As Object, e As EventArgs) Handles boxInventoryFilter.TextChanged

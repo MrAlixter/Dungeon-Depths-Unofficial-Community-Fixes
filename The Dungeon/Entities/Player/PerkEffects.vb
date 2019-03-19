@@ -141,9 +141,11 @@
         Dim p As Player = Game.player
         If p.perks("astatue") > 1 Then
             p.perks("astatue") -= 1
+            p.canMoveFlag = False
         ElseIf p.perks("astatue") <= 1 Then
             p.perks("astatue") = -1
             p.revertToPState()
+            p.canMoveFlag = True
         End If
     End Sub
     Shared Sub statueMove(obj As Entity)

@@ -672,7 +672,7 @@
         createP()
 
         canMoveFlag = False
-        Game.picPortrait.BackgroundImage = CharacterGenerator.CreateBMP(iArr)
+        Game.picPortrait.BackgroundImage = portrait.createBMP(iArr)
     End Sub
     Public Sub toStatue(ByVal c As Color, ByVal r As String)
         Game.fromCombat()
@@ -807,64 +807,64 @@
         If perks("slutcurse") > -1 Then
             needsToUpdatePortrait = Equipment.clothingCurse1()
         End If
-            'slime hair health regen
-            If perks("slimehair") > -1 Then
-                PerkEffects.slimeHairRegen()
-            End If
-            'vial of slime hair regen
-            If perks("vsslimehair") > -1 Then
-                PerkEffects.vslimeHairRegen()
-            End If
+        'slime hair health regen
+        If perks("slimehair") > -1 Then
+            PerkEffects.slimeHairRegen()
+        End If
+        'vial of slime hair regen
+        If perks("vsslimehair") > -1 Then
+            PerkEffects.vslimeHairRegen()
+        End If
 
-            'ring of min. regen
-            If perks("minRegen") > -1 Then
-                PerkEffects.minorRegen()
-            End If
+        'ring of min. regen
+        If perks("minRegen") > -1 Then
+            PerkEffects.minorRegen()
+        End If
 
-            'living armor
-            If perks("livearm") > -1 Then
-                needsToUpdatePortrait = PerkEffects.livingArmor()
-            End If
-            'living lingerie
-            If perks("livelinge") > -1 Then
-                needsToUpdatePortrait = PerkEffects.livingLingerie()
-            End If
+        'living armor
+        If perks("livearm") > -1 Then
+            needsToUpdatePortrait = PerkEffects.livingArmor()
+        End If
+        'living lingerie
+        If perks("livelinge") > -1 Then
+            needsToUpdatePortrait = PerkEffects.livingLingerie()
+        End If
 
-            'rotlg
-            If perks("rotlg") > -1 Then
-                PerkEffects.ROTLGRoute()
-            End If
+        'rotlg
+        If perks("rotlg") > -1 Then
+            PerkEffects.ROTLGRoute()
+        End If
 
-            '|TRANSFORMATION TRIGGERS|
-            'targax sword tf
-            If perks("swordpossess") > -1 Then
-                PerkEffects.targaxSwordTF()
-            End If
-            'shift toward prefered form
-            If Not prefForm Is Nothing AndAlso (pClass.name = "Thrall" Xor equippedAcce.getName.Equals("Slave_Collar")) AndAlso Not prefForm.playerMeetsForm(Game.player) And Not pForm.name.Equals("Half-Succubus") And Not perks("thrall") = 1 And Not perks("nekocurse") > -1 And Not perks("polymorphed") > -1 And Not perks("bimbotf") > -1 Then
-                PerkEffects.thrallRestore()
-            End If
-            If perks("astatue") > -1 Then
-                PerkEffects.aStatue()
-            End If
+        '|TRANSFORMATION TRIGGERS|
+        'targax sword tf
+        If perks("swordpossess") > -1 Then
+            PerkEffects.targaxSwordTF()
+        End If
+        'shift toward prefered form
+        If Not prefForm Is Nothing AndAlso (pClass.name = "Thrall" Xor equippedAcce.getName.Equals("Slave_Collar")) AndAlso Not prefForm.playerMeetsForm(Game.player) And Not pForm.name.Equals("Half-Succubus") And Not perks("thrall") = 1 And Not perks("nekocurse") > -1 And Not perks("polymorphed") > -1 And Not perks("bimbotf") > -1 Then
+            PerkEffects.thrallRestore()
+        End If
+        If perks("astatue") > -1 Then
+            PerkEffects.aStatue()
+        End If
 
-            '|SPECIAL MOVE HANDLERS|
-            'berserker rage special
-            If perks("brage") > -1 Then
-                PerkEffects.berserkerRage()
-            End If
-            'massive mammaries special
-            If perks("mmammaries") > -1 Then
-                PerkEffects.massiveMammaries()
-            End If
-            'ironhide fury
-            If perks("ihfury") > -1 Then
-                PerkEffects.ironhideFury()
-            End If
+        '|SPECIAL MOVE HANDLERS|
+        'berserker rage special
+        If perks("brage") > -1 Then
+            PerkEffects.berserkerRage()
+        End If
+        'massive mammaries special
+        If perks("mmammaries") > -1 Then
+            PerkEffects.massiveMammaries()
+        End If
+        'ironhide fury
+        If perks("ihfury") > -1 Then
+            PerkEffects.ironhideFury()
+        End If
 
 
-            description = CStr(name & " is a " & sex & " " & pForm.name & " " & pClass.name)
-            Return needsToUpdatePortrait
+        description = CStr(name & " is a " & sex & " " & pForm.name & " " & pClass.name)
+        Return needsToUpdatePortrait
     End Function
     Sub UIupdate()
         If Game.lblNameTitle.Text <> name & " the " & pClass.name Then Game.lblNameTitle.Text = name & " the " & pClass.name
@@ -975,9 +975,9 @@
             Next
         End If
         inv.invNeedsUDate = False
-        'Dim t As Boolean = CharacterGenerator.CreateBMP(iArr).Equals(Game.picPortrait.BackgroundImage)
-        'Dim t As Boolean = picsAreSame(CharacterGenerator.CreateBMP(iArr), New Bitmap(Game.picPortrait.BackgroundImage))
-        ''If Game.turn < 2 AndAlso Not CharacterGenerator.CreateBMP(iArr).Equals(Game.picPortrait.BackgroundImage) Then createP() 'Form3.portraitUDate()
+        'Dim t As Boolean = portrait.createBMP(iArr).Equals(Game.picPortrait.BackgroundImage)
+        'Dim t As Boolean = picsAreSame(portrait.createBMP(iArr), New Bitmap(Game.picPortrait.BackgroundImage))
+        ''If Game.turn < 2 AndAlso Not portrait.createBMP(iArr).Equals(Game.picPortrait.BackgroundImage) Then createP() 'Form3.portraitUDate()
         'If Game.turn < 2 AndAlso Not t Then createP() 'Form3.portraitUDate()
     End Sub
 
@@ -999,25 +999,25 @@
     End Function
     Sub oneLayerImgCheck(ByRef b As Boolean)
         If pForm.name.Equals("Dragon") Then
-            Game.picPortrait.BackgroundImage = CharacterGenerator.CreateBMP({Game.picDragon.BackgroundImage})
+            Game.picPortrait.BackgroundImage = portrait.createBMP({Game.picDragon.BackgroundImage})
             b = True
         ElseIf pClass.name.Equals("Magic Girl​") Then
-            Game.picPortrait.BackgroundImage = CharacterGenerator.CreateBMP({Game.picmgp1.BackgroundImage})
+            Game.picPortrait.BackgroundImage = portrait.createBMP({Game.picmgp1.BackgroundImage})
             b = True
         ElseIf pForm.name.Equals("Sheep") Then
-            Game.picPortrait.BackgroundImage = CharacterGenerator.CreateBMP({Game.picSheep.BackgroundImage})
+            Game.picPortrait.BackgroundImage = portrait.createBMP({Game.picSheep.BackgroundImage})
             b = True
         ElseIf pForm.name.Equals("Cake") Then
-            Game.picPortrait.BackgroundImage = CharacterGenerator.CreateBMP({Game.picCake.BackgroundImage})
+            Game.picPortrait.BackgroundImage = portrait.createBMP({Game.picCake.BackgroundImage})
             b = True
         ElseIf pForm.name.Equals("Frog") Then
-            Game.picPortrait.BackgroundImage = CharacterGenerator.CreateBMP({Game.picFrog.BackgroundImage})
+            Game.picPortrait.BackgroundImage = portrait.createBMP({Game.picFrog.BackgroundImage})
             b = True
         ElseIf pClass.name.Equals("Princess​") Then
-            Game.picPortrait.BackgroundImage = CharacterGenerator.CreateBMP({Game.picPrin.BackgroundImage})
+            Game.picPortrait.BackgroundImage = portrait.createBMP({Game.picPrin.BackgroundImage})
             b = True
         ElseIf pClass.name.Equals("Bunny Girl​") Then
-            Game.picPortrait.BackgroundImage = CharacterGenerator.CreateBMP({Game.picBun.BackgroundImage})
+            Game.picPortrait.BackgroundImage = portrait.createBMP({Game.picBun.BackgroundImage})
             b = True
         End If
     End Sub
@@ -1033,7 +1033,7 @@
         If Not solFlag Then Equipment.portraitUDate()
         For i = 0 To 16
             Try
-                    iArr(i) = Game.imgLib.atrs(Game.imgLib.atrs.Keys(i)).getAt(iArrInd(i))
+                iArr(i) = Game.imgLib.atrs(Game.imgLib.atrs.Keys(i)).getAt(iArrInd(i))
             Catch ex As Exception
                 MsgBox("Error!  Exception thrown in portrait creation (specifically in the " & Game.imgLib.atrs.Keys(i) & " layer).  The player character will now revert to default.")
                 revertToSState()
@@ -1053,7 +1053,7 @@
         If wingInd > 0 Then addWings(wingInd)
         If hornInd > 0 Then addHorns(hornInd)
 
-        If Not solFlag And Not chk Then Game.picPortrait.BackgroundImage = CharacterGenerator.CreateBMP(iArr)
+        If Not solFlag And Not chk Then Game.picPortrait.BackgroundImage = portrait.createBMP(iArr)
         oneLayerImgCheck(chk)
         Game.picPortrait.Update()
 
@@ -1070,7 +1070,7 @@
         iArr(10) = CharacterGenerator.recolor(Game.imgLib.atrs("Eyebrows").getAt(iArrInd(10)), c)
         iArr(15) = CharacterGenerator.recolor(Game.imgLib.atrs("FrontHair").getAt(iArrInd(15)), c)
 
-        If Not solFlag Then Game.picPortrait.BackgroundImage = CharacterGenerator.CreateBMP(iArr)
+        If Not solFlag Then Game.picPortrait.BackgroundImage = portrait.createBMP(iArr)
     End Sub
     Public Sub changeSkinColor(ByVal c As Color)
         skincolor = c
@@ -1080,26 +1080,26 @@
         iArr(6) = CharacterGenerator.recolor2(Game.imgLib.atrs("Ears").getAt(iArrInd(6)), c)
         iArr(7) = CharacterGenerator.recolor2(Game.imgLib.atrs("Nose").getAt(iArrInd(7)), c)
 
-        If Not solFlag Then Game.picPortrait.BackgroundImage = CharacterGenerator.CreateBMP(iArr)
+        If Not solFlag Then Game.picPortrait.BackgroundImage = portrait.createBMP(iArr)
     End Sub
     Public Sub lustBlushUpdate()
         Select Case Int(lust / 20)
             Case 0
             Case 1
-                iArr(4) = CharacterGenerator.CreateBMP({iArr(4), Game.picLust1.BackgroundImage})
+                iArr(4) = portrait.createBMP({iArr(4), Game.picLust1.BackgroundImage})
             Case 2
-                iArr(4) = CharacterGenerator.CreateBMP({iArr(4), Game.picLust2.BackgroundImage})
+                iArr(4) = portrait.createBMP({iArr(4), Game.picLust2.BackgroundImage})
             Case 3
-                iArr(4) = CharacterGenerator.CreateBMP({iArr(4), Game.picLust3.BackgroundImage})
+                iArr(4) = portrait.createBMP({iArr(4), Game.picLust3.BackgroundImage})
             Case Else
-                iArr(4) = CharacterGenerator.CreateBMP({iArr(4), Game.picLust4.BackgroundImage})
+                iArr(4) = portrait.createBMP({iArr(4), Game.picLust4.BackgroundImage})
         End Select
     End Sub
     Sub addWings(ByVal i As Integer)
-        iArr(1) = CharacterGenerator.CreateBMP({Game.imgLib.atrs("Wings").getM(i), iArr(1)})
+        iArr(1) = portrait.createBMP({Game.imgLib.atrs("Wings").getM(i), iArr(1)})
     End Sub
     Sub addHorns(ByVal i As Integer)
-        iArr(6) = CharacterGenerator.CreateBMP({Game.imgLib.atrs("Horns").getM(i), iArr(6)})
+        iArr(6) = portrait.createBMP({Game.imgLib.atrs("Horns").getM(i), iArr(6)})
     End Sub
     Sub hideEars()
         If iArrInd(6).Item1 = 1 Or iArrInd(6).Item1 = 2 Or (Not iArrInd(5).Item2 And iArrInd(5).Item1 <> 2) Then Exit Sub
@@ -1554,7 +1554,7 @@
         Select Case Int(lust / 20)
             Case 0
             Case 1
-                iArr(4) = CharacterGenerator.CreateBMP({iArr(4), Game.picLust1.BackgroundImage})
+                iArr(4) = portrait.createBMP({iArr(4), Game.picLust1.BackgroundImage})
             Case 2
                 iArrInd(14) = New Tuple(Of Integer, Boolean, Boolean)(1, False, False)
             Case 3

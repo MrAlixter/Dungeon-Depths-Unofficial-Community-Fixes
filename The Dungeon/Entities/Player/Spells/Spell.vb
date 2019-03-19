@@ -2,11 +2,11 @@
     Dim cost, tier As Integer
     Dim name As String
     Dim caster As Player
-    Dim target As Monster
+    Dim target As NPC
 
     Dim useableOutOfCombat As Boolean = False
 
-    Sub New(ByRef c As Player, ByRef t As Monster)
+    Sub New(ByRef c As Player, ByRef t As NPC)
         caster = c
         target = t
     End Sub
@@ -14,13 +14,13 @@
         If caster.mana < cost Then
             Game.pushLblEvent("You don't have enough mana! (" & name & " costs " & cost & " mana)")
             Game.pushLstLog("You don't have enough mana!")
-            
+
             Exit Sub
         End If
         If Not Game.combatmode And Not Game.npcmode And Not useableOutOfCombat Then
             Game.pushLblEvent("You don't have a target for that spell!")
             Game.pushLstLog("You don't have a target for that spell!")
-            
+
             Exit Sub
         End If
         Randomize()
@@ -85,7 +85,7 @@
                     End If
                 End If
         End Select
-        
+
     End Sub
     Overridable Sub effect()
         Game.pushLblEvent("No effects.")
@@ -110,7 +110,7 @@
     Function getCaster() As Player
         Return caster
     End Function
-    Function getTarget() As Monster
+    Function getTarget() As NPC
         Return target
     End Function
 
@@ -118,7 +118,7 @@
         Me.Finalize()
     End Sub
 
-    Shared Sub spellCast(ByRef t As Monster, ByRef c As Player, ByVal s As String)
+    Shared Sub spellCast(ByRef t As NPC, ByRef c As Player, ByVal s As String)
         If Game.combatmode Or Game.npcmode Then
             If Not t.sName = "Targax the Brutal" Or s = "Heal" Then
                 spellroute(c, t, s)
@@ -141,9 +141,9 @@
             spellroute(c, t, s)
         End If
 
-        
+
     End Sub
-    Shared Sub spellroute(ByRef c As Player, ByRef t As Monster, ByRef s As String)
+    Shared Sub spellroute(ByRef c As Player, ByRef t As NPC, ByRef s As String)
         Dim spell As Spell = New Frazzle(c, t)
         If s.Equals("Dragon's Breath") Then
             spell = New DragonsBreath(c, t)

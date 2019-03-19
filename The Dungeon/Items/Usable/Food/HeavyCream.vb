@@ -3,7 +3,7 @@
 
     Sub New()
         MyBase.setName("Heavy_Cream")
-        MyBase.setDesc("An increadibly heavy cream that probably isn't the best for you. -30 Hunger")
+        MyBase.setDesc("An increadibly heavy cream that seems a bit fattening. -30 Hunger")
         id = 34
         tier = 2
         MyBase.setUsable(True)
