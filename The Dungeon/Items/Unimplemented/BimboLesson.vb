@@ -5,7 +5,7 @@
         MyBase.setName("Bimbo_Lesson")
         MyBase.setDesc("Won't do anything unless bought")
         id = 87
-        tier = 1
+        tier = Nothing
         MyBase.setUsable(True)
         MyBase.count = 0
         MyBase.value = 150
@@ -17,6 +17,6 @@
         bTF.step2()
         Game.player.createP()
 
-        CType(Game.hteach, HTeach).hypnotize("Alright, here you go!")
+        CType(Game.hteach, HTeach).hypnotize("Alright, here you go!" & vbCrLf & "[this is a placeholder to test the concept]")
     End Sub
 End Class

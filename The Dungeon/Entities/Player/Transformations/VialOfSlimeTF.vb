@@ -13,10 +13,10 @@
 
     Sub step1()
         Dim p As player = game.player
-        If p.iArrInd(5).Item1 = 7 And p.iArrInd(5).Item2 Then
+        If p.prt.checkNDefFemInd(5, 7) Then
             Game.pushLstLog("Your hair resists being altered!")
         Else
-            p.haircolor = Color.FromArgb(180, 5, 245, 198)
+            p.prt.haircolor = Color.FromArgb(180, 5, 245, 198)
             p.createP()
             p.perks("vsslimehair") = 0
         End If

@@ -46,7 +46,7 @@ Partial Class About
         Me.TableLayoutPanel.BackColor = System.Drawing.Color.Black
         Me.TableLayoutPanel.ColumnCount = 1
         Me.TableLayoutPanel.ColumnStyles.Add(New System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 100.0!))
-        Me.TableLayoutPanel.ColumnStyles.Add(New System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 20.0!))
+        Me.TableLayoutPanel.ColumnStyles.Add(New System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 17.0!))
         Me.TableLayoutPanel.Controls.Add(Me.LabelProductName, 0, 0)
         Me.TableLayoutPanel.Controls.Add(Me.LabelVersion, 0, 1)
         Me.TableLayoutPanel.Controls.Add(Me.LabelCopyright, 0, 2)
@@ -56,8 +56,7 @@ Partial Class About
         Me.TableLayoutPanel.Dock = System.Windows.Forms.DockStyle.Fill
         Me.TableLayoutPanel.Font = New System.Drawing.Font("Consolas", 8.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.TableLayoutPanel.ForeColor = System.Drawing.Color.White
-        Me.TableLayoutPanel.Location = New System.Drawing.Point(14, 14)
-        Me.TableLayoutPanel.Margin = New System.Windows.Forms.Padding(4)
+        Me.TableLayoutPanel.Location = New System.Drawing.Point(12, 12)
         Me.TableLayoutPanel.Name = "TableLayoutPanel"
         Me.TableLayoutPanel.RowCount = 6
         Me.TableLayoutPanel.RowStyles.Add(New System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 5.295316!))
@@ -66,17 +65,17 @@ Partial Class About
         Me.TableLayoutPanel.RowStyles.Add(New System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 7.535642!))
         Me.TableLayoutPanel.RowStyles.Add(New System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 66.39511!))
         Me.TableLayoutPanel.RowStyles.Add(New System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 10.0!))
-        Me.TableLayoutPanel.Size = New System.Drawing.Size(520, 491)
+        Me.TableLayoutPanel.Size = New System.Drawing.Size(433, 408)
         Me.TableLayoutPanel.TabIndex = 0
         '
         'LabelProductName
         '
         Me.LabelProductName.Dock = System.Windows.Forms.DockStyle.Fill
-        Me.LabelProductName.Location = New System.Drawing.Point(9, 0)
-        Me.LabelProductName.Margin = New System.Windows.Forms.Padding(9, 0, 4, 0)
-        Me.LabelProductName.MaximumSize = New System.Drawing.Size(0, 26)
+        Me.LabelProductName.Location = New System.Drawing.Point(7, 0)
+        Me.LabelProductName.Margin = New System.Windows.Forms.Padding(7, 0, 3, 0)
+        Me.LabelProductName.MaximumSize = New System.Drawing.Size(0, 22)
         Me.LabelProductName.Name = "LabelProductName"
-        Me.LabelProductName.Size = New System.Drawing.Size(507, 26)
+        Me.LabelProductName.Size = New System.Drawing.Size(423, 21)
         Me.LabelProductName.TabIndex = 0
         Me.LabelProductName.Text = "Product Name"
         Me.LabelProductName.TextAlign = System.Drawing.ContentAlignment.MiddleLeft
@@ -84,11 +83,11 @@ Partial Class About
         'LabelVersion
         '
         Me.LabelVersion.Dock = System.Windows.Forms.DockStyle.Fill
-        Me.LabelVersion.Location = New System.Drawing.Point(9, 26)
-        Me.LabelVersion.Margin = New System.Windows.Forms.Padding(9, 0, 4, 0)
-        Me.LabelVersion.MaximumSize = New System.Drawing.Size(0, 26)
+        Me.LabelVersion.Location = New System.Drawing.Point(7, 21)
+        Me.LabelVersion.Margin = New System.Windows.Forms.Padding(7, 0, 3, 0)
+        Me.LabelVersion.MaximumSize = New System.Drawing.Size(0, 22)
         Me.LabelVersion.Name = "LabelVersion"
-        Me.LabelVersion.Size = New System.Drawing.Size(507, 26)
+        Me.LabelVersion.Size = New System.Drawing.Size(423, 21)
         Me.LabelVersion.TabIndex = 0
         Me.LabelVersion.Text = "Version"
         Me.LabelVersion.TextAlign = System.Drawing.ContentAlignment.MiddleLeft
@@ -96,11 +95,11 @@ Partial Class About
         'LabelCopyright
         '
         Me.LabelCopyright.Dock = System.Windows.Forms.DockStyle.Fill
-        Me.LabelCopyright.Location = New System.Drawing.Point(9, 52)
-        Me.LabelCopyright.Margin = New System.Windows.Forms.Padding(9, 0, 4, 0)
-        Me.LabelCopyright.MaximumSize = New System.Drawing.Size(0, 26)
+        Me.LabelCopyright.Location = New System.Drawing.Point(7, 42)
+        Me.LabelCopyright.Margin = New System.Windows.Forms.Padding(7, 0, 3, 0)
+        Me.LabelCopyright.MaximumSize = New System.Drawing.Size(0, 22)
         Me.LabelCopyright.Name = "LabelCopyright"
-        Me.LabelCopyright.Size = New System.Drawing.Size(507, 26)
+        Me.LabelCopyright.Size = New System.Drawing.Size(423, 21)
         Me.LabelCopyright.TabIndex = 0
         Me.LabelCopyright.Text = "Copyright"
         Me.LabelCopyright.TextAlign = System.Drawing.ContentAlignment.MiddleLeft
@@ -108,11 +107,11 @@ Partial Class About
         'LabelCompanyName
         '
         Me.LabelCompanyName.Dock = System.Windows.Forms.DockStyle.Fill
-        Me.LabelCompanyName.Location = New System.Drawing.Point(9, 78)
-        Me.LabelCompanyName.Margin = New System.Windows.Forms.Padding(9, 0, 4, 0)
-        Me.LabelCompanyName.MaximumSize = New System.Drawing.Size(0, 26)
+        Me.LabelCompanyName.Location = New System.Drawing.Point(7, 63)
+        Me.LabelCompanyName.Margin = New System.Windows.Forms.Padding(7, 0, 3, 0)
+        Me.LabelCompanyName.MaximumSize = New System.Drawing.Size(0, 22)
         Me.LabelCompanyName.Name = "LabelCompanyName"
-        Me.LabelCompanyName.Size = New System.Drawing.Size(507, 26)
+        Me.LabelCompanyName.Size = New System.Drawing.Size(423, 22)
         Me.LabelCompanyName.TabIndex = 0
         Me.LabelCompanyName.Text = "Company Name"
         Me.LabelCompanyName.TextAlign = System.Drawing.ContentAlignment.MiddleLeft
@@ -122,13 +121,13 @@ Partial Class About
         Me.TextBoxDescription.BackColor = System.Drawing.Color.Black
         Me.TextBoxDescription.Dock = System.Windows.Forms.DockStyle.Fill
         Me.TextBoxDescription.ForeColor = System.Drawing.Color.White
-        Me.TextBoxDescription.Location = New System.Drawing.Point(9, 119)
-        Me.TextBoxDescription.Margin = New System.Windows.Forms.Padding(9, 4, 4, 4)
+        Me.TextBoxDescription.Location = New System.Drawing.Point(7, 96)
+        Me.TextBoxDescription.Margin = New System.Windows.Forms.Padding(7, 3, 3, 3)
         Me.TextBoxDescription.Multiline = True
         Me.TextBoxDescription.Name = "TextBoxDescription"
         Me.TextBoxDescription.ReadOnly = True
         Me.TextBoxDescription.ScrollBars = System.Windows.Forms.ScrollBars.Both
-        Me.TextBoxDescription.Size = New System.Drawing.Size(507, 318)
+        Me.TextBoxDescription.Size = New System.Drawing.Size(423, 265)
         Me.TextBoxDescription.TabIndex = 0
         Me.TextBoxDescription.TabStop = False
         Me.TextBoxDescription.Text = resources.GetString("TextBoxDescription.Text")
@@ -137,27 +136,25 @@ Partial Class About
         '
         Me.OKButton.Anchor = CType((System.Windows.Forms.AnchorStyles.Bottom Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
         Me.OKButton.DialogResult = System.Windows.Forms.DialogResult.Cancel
-        Me.OKButton.Location = New System.Drawing.Point(404, 454)
-        Me.OKButton.Margin = New System.Windows.Forms.Padding(4)
+        Me.OKButton.Location = New System.Drawing.Point(337, 378)
         Me.OKButton.Name = "OKButton"
-        Me.OKButton.Size = New System.Drawing.Size(112, 33)
+        Me.OKButton.Size = New System.Drawing.Size(93, 27)
         Me.OKButton.TabIndex = 0
         Me.OKButton.Text = "&OK"
         '
         'About
         '
-        Me.AutoScaleDimensions = New System.Drawing.SizeF(144.0!, 144.0!)
+        Me.AutoScaleDimensions = New System.Drawing.SizeF(120.0!, 120.0!)
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Dpi
         Me.BackColor = System.Drawing.Color.Black
         Me.CancelButton = Me.OKButton
-        Me.ClientSize = New System.Drawing.Size(548, 519)
+        Me.ClientSize = New System.Drawing.Size(457, 432)
         Me.Controls.Add(Me.TableLayoutPanel)
         Me.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedDialog
-        Me.Margin = New System.Windows.Forms.Padding(4)
         Me.MaximizeBox = False
         Me.MinimizeBox = False
         Me.Name = "About"
-        Me.Padding = New System.Windows.Forms.Padding(14)
+        Me.Padding = New System.Windows.Forms.Padding(12, 12, 12, 12)
         Me.ShowInTaskbar = False
         Me.StartPosition = System.Windows.Forms.FormStartPosition.CenterParent
         Me.Text = "About"

@@ -23,16 +23,18 @@
             Me.Controls(i).Left += CDbl(Me.Controls(i).Left * RW)
             Me.Controls(i).Top += CDbl(Me.Controls(i).Top * RH)
         Next
+
+        Dim p = Game.player
         Select Case porm
             Case True
-                For i = 0 To Game.formList.Count - 1
-                    cboxPMorph.Items.Add(Game.formList.Item(i))
+                For i = 0 To p.selfPolyForms.Count - 1
+                    cboxPMorph.Items.Add(p.selfPolyForms.Item(i))
                 Next
-                If cboxPMorph.Items.Contains(Game.player.pClass.name) Then cboxPMorph.Items.Remove(Game.player.pClass.name)
-                If cboxPMorph.Items.Contains(Game.player.pForm.name) Then cboxPMorph.Items.Remove(Game.player.pForm.name)
+                If cboxPMorph.Items.Contains(p.pClass.name) Then cboxPMorph.Items.Remove(p.pClass.name)
+                If cboxPMorph.Items.Contains(p.pForm.name) Then cboxPMorph.Items.Remove(p.pForm.name)
             Case False
-                For i = 0 To Game.tFormList.Count - 1
-                    cboxPMorph.Items.Add(Game.tFormList.Item(i))
+                For i = 0 To p.enemPolyForms.Count - 1
+                    cboxPMorph.Items.Add(p.enemPolyForms.Item(i))
                 Next
         End Select
     End Sub
@@ -79,11 +81,11 @@
         Next
 
         p.polymorphs(form) = PolymorphTF.newPoly(form)
-
         p.ongoingTFs.Add(p.polymorphs(form))
+
         If p.forms.Keys.Contains(form) Then
             p.pForm = p.forms(form)
-        Else
+        ElseIf p.classes.Keys.Contains(form) Then
             p.pClass = p.classes(form)
         End If
 
@@ -91,8 +93,8 @@
         p.perks("polymorphed") = p.polymorphs(form).getturnsTilNextStep
 
         Game.pushLblEvent(revertText & Game.lblEvent.Text.Split(vbCrLf)(0))
-        Game.cmboxSpec.Items.Clear()
-        Game.specialRoute()
+        p.specialRoute()
+        p.magicRoute()
         p.createP()
     End Sub
     'NPC transform method

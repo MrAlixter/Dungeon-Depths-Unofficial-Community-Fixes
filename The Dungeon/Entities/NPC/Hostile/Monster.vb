@@ -161,7 +161,7 @@
         Game.toCombat()
         Game.pushLblCombatEvent((m.getName() & " attacks!"))
         Game.pushLstLog((m.getName() & " attacks!"))
-        
+
         Game.drawBoard()
     End Sub
     Shared Sub targetRoute(ByRef m As Monster)

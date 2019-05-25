@@ -114,10 +114,6 @@
         Return target
     End Function
 
-    Sub Dispose()
-        Me.Finalize()
-    End Sub
-
     Shared Sub spellCast(ByRef t As NPC, ByRef c As Player, ByVal s As String)
         If Game.combatmode Or Game.npcmode Then
             If Not t.sName = "Targax the Brutal" Or s = "Heal" Then
@@ -194,42 +190,41 @@
             spell = New Frazzle(c, t)
         End If
         spell.cast()
-        spell.Dispose()
     End Sub
     Shared Function spellCost(ByVal s As String)
         Select Case s
             Case "Dragon's Breath"
-                If Game.player.pForm.name.Equals("Dragon") Then Return "No cost." Else Return "-6 mana."
+                If Game.player.pForm.name.Equals("Dragon") Then Return "No cost" Else Return "-6 mana"
             Case "Fireball"
-                Return "-4 mana."
+                Return "-4 mana"
             Case "Super Fireball"
-                Return "-8 mana."
+                Return "-8 mana"
             Case "Icicle Spear"
-                Return "-5 mana."
+                Return "-5 mana"
             Case "Heartblast Starcannon"
-                Return "-5 mana."
+                Return "-5 mana"
             Case "Petrify"
-                Return "-9 mana."
+                Return "-9 mana"
             Case "Self Polymorph"
-                Return "-12 mana."
+                Return "-12 mana"
             Case "Polymorph Enemy"
-                Return "-12 mana."
+                Return "-12 mana"
             Case "Turn to Frog"
-                Return "-5 mana."
+                Return "-5 mana"
             Case "Mindshrink"
-                Return "-5 mana."
+                Return "-5 mana"
             Case "Turn to Blade"
-                Return "-28 mana."
+                Return "-28 mana"
             Case "Turn to Cupcake"
-                Return "-17 mana."
+                Return "-17 mana"
             Case "Magma Spear"
-                Return "-22 mana."
+                Return "-22 mana"
             Case "Petrify II"
-                Return "-14 mana."
+                Return "-14 mana"
             Case "Major Heal"
-                Return "-5 mana."
+                Return "-5 mana"
             Case Else
-                Return "This costs some degree of mana."
+                Return "This costs some degree of mana"
         End Select
     End Function
 End Class

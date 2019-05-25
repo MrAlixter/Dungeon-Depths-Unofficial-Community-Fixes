@@ -29,11 +29,9 @@
         Dim r = Int(Rnd() * 2)
         If r = 0 Or p.pClass.Equals("Bimbo") Then
             p.sex = "Female"
-            p.sexBool = p.sexbool
             p.breastSize = Int(Rnd() * 3) + 1
         Else
             p.sex = "Male"
-            p.sexBool = False
             p.breastSize = -1
         End If
 
@@ -56,45 +54,45 @@
         p.dBuff = 0
 
         'set a random hair color
-        p.haircolor = Color.FromArgb(255, Int(Rnd() * 125) + 100, Int(Rnd() * 125) + 100, Int(Rnd() * 125) + 100)
+        p.prt.haircolor = Color.FromArgb(255, Int(Rnd() * 125) + 100, Int(Rnd() * 125) + 100, Int(Rnd() * 125) + 100)
 
         'set a random skin color
         Select Case Int(Rnd() * 6)
             Case 0
-                p.skincolor = (Color.AntiqueWhite)
+                p.prt.skincolor = (Color.AntiqueWhite)
             Case 1
-                p.skincolor = (Color.FromArgb(255, 247, 219, 195))
+                p.prt.skincolor = (Color.FromArgb(255, 247, 219, 195))
             Case 2
-                p.skincolor = (Color.FromArgb(255, 240, 184, 160))
+                p.prt.skincolor = (Color.FromArgb(255, 240, 184, 160))
             Case 3
-                p.skincolor = (Color.FromArgb(255, 210, 161, 140))
+                p.prt.skincolor = (Color.FromArgb(255, 210, 161, 140))
             Case 4
-                p.skincolor = (Color.FromArgb(255, 180, 138, 120))
+                p.prt.skincolor = (Color.FromArgb(255, 180, 138, 120))
             Case Else
-                p.skincolor = (Color.FromArgb(255, 105, 80, 70))
+                p.prt.skincolor = (Color.FromArgb(255, 105, 80, 70))
         End Select
 
         'set the rest of the portrait randomly
         r = Int(Rnd() * 7)
-        p.iArrInd(1) = New Tuple(Of Integer, Boolean, Boolean)(r, True, False)
-        p.iArrInd(2) = New Tuple(Of Integer, Boolean, Boolean)(0, True, False)
-        p.iArrInd(4) = New Tuple(Of Integer, Boolean, Boolean)(0, True, False)
-        p.iArrInd(5) = New Tuple(Of Integer, Boolean, Boolean)(r, True, False)
+        p.prt.setIAInd(1, r, True, False)
+        p.prt.setIAInd(2, 0, True, False)
+        p.prt.setIAInd(4, 0, True, False)
+        p.prt.setIAInd(5, r, True, False)
         r = Int(Rnd() * 7)
-        p.iArrInd(3) = New Tuple(Of Integer, Boolean, Boolean)(r, True, False)
-        p.iArrInd(6) = New Tuple(Of Integer, Boolean, Boolean)(5, True, False)
-        p.iArrInd(7) = New Tuple(Of Integer, Boolean, Boolean)(0, True, False)
+        p.prt.setIAInd(3, r, True, False)
+        p.prt.setIAInd(6, 5, True, False)
+        p.prt.setIAInd(7, 0, True, False)
         r = Int(Rnd() * 11)
-        p.iArrInd(8) = New Tuple(Of Integer, Boolean, Boolean)(r, True, False)
-        p.iArrInd(9) = New Tuple(Of Integer, Boolean, Boolean)(9, True, True)
-        p.iArrInd(10) = New Tuple(Of Integer, Boolean, Boolean)(0, True, False)
-        p.iArrInd(11) = New Tuple(Of Integer, Boolean, Boolean)(0, True, False)
-        p.iArrInd(12) = New Tuple(Of Integer, Boolean, Boolean)(0 + (2 * Int(Rnd() * 3)), True, False)
-        p.iArrInd(13) = New Tuple(Of Integer, Boolean, Boolean)(0, True, False)
-        p.iArrInd(14) = New Tuple(Of Integer, Boolean, Boolean)(0, True, False)
+        p.prt.setIAInd(8, r, True, False)
+        p.prt.setIAInd(9, 9, True, True)
+        p.prt.setIAInd(10, 0, True, False)
+        p.prt.setIAInd(11, 0, True, False)
+        p.prt.setIAInd(12, 0 + (2 * Int(Rnd() * 3)), True, False)
+        p.prt.setIAInd(13, 0, True, False)
+        p.prt.setIAInd(14, 0, True, False)
         r = Int(Rnd() * 8) + 1
-        p.iArrInd(15) = New Tuple(Of Integer, Boolean, Boolean)(r, True, False)
-        p.iArrInd(16) = New Tuple(Of Integer, Boolean, Boolean)(0, True, False)
+        p.prt.setIAInd(15, r, True, False)
+        p.prt.setIAInd(16, 0, True, False)
 
         'clear all player associated lists
         p.createInvPerks()
@@ -151,7 +149,7 @@
         p.currState.save(p)
         p.pState.save(p)
         p.sState.save(p)
-        p.sState.iArrInd(3) = New Tuple(Of Integer, Boolean, Boolean)(si, p.sexBool, False)
+        p.sState.iArrInd(3) = New Tuple(Of Integer, Boolean, Boolean)(si, p.prt.sexBool, False)
     End Sub
     Shared Sub floor4FirstBossEncounter()
         Game.pushLblEvent("Turning around, you are about to move on when a " & _
@@ -235,7 +233,7 @@
         For i = 0 To Game.preBSInventory.Count - 1
             p.inv.add(i, Game.preBSInventory(i))
         Next
-        p.canMoveFlag = p.sexbool
+        p.canMoveFlag = True
         Game.lblEvent.Visible = False
         Game.player = p
         p.UIupdate()
@@ -245,7 +243,7 @@
         For i = 0 To Game.preBSInventory.Count - 1
             p.inv.add(i, Game.preBSInventory(i))
         Next
-        p.canMoveFlag = p.sexbool
+        p.canMoveFlag = True
         Game.lblEvent.Visible = False
         Game.player = p
         p.UIupdate()

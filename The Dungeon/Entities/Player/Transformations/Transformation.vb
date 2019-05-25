@@ -81,6 +81,12 @@ Public Class Transformation
                 Return New BUDollTF(CInt(s(0)), CInt(s(1)), CInt(s(2)), CDbl(s(3)), CBool(s(4)), CBool(s(6)))
             Case "PrincessTF"
                 Return New PrincessTF(CInt(s(0)), CInt(s(1)), CInt(s(2)), CDbl(s(3)), CBool(s(4)), CBool(s(6)))
+            Case "Arachne"
+                Return New ArachneTF(CInt(s(0)), CInt(s(1)), CInt(s(2)), CDbl(s(3)), CBool(s(4)), CBool(s(6)))
+            Case "Blind"
+                Return New Blindness(CInt(s(0)), CInt(s(1)), CInt(s(2)), CDbl(s(3)), CBool(s(4)), CBool(s(6)))
+            Case "Valkyrie"
+                Return New ValkyrieTF2(CInt(s(0)), CInt(s(1)), CInt(s(2)), CDbl(s(3)), CBool(s(4)), CBool(s(6)))
             Case Else
                 Return Nothing
         End Select
@@ -89,6 +95,7 @@ Public Class Transformation
         If Game.player.ongoingTFs.Count < 1 And
             (Not p.polymorphs.ContainsKey(p.pClass.name) And Not p.polymorphs.ContainsKey(p.pForm.name)) And
             Not p.pClass.name.Equals("Magic Girl") And
+            Not p.pClass.name.Equals("Valkyrie") And
             Not p.pClass.name.Equals("Unconscious") And
             Not p.pForm.name.Equals("Blowup Doll") Then Return True
         Return False
@@ -112,6 +119,12 @@ Public Class Transformation
     End Sub
 
     'sequential tf methods
+    Sub setCurrStep(i As Integer)
+        currStep = i
+    End Sub
+    Sub setTurnsTilStep(i As Integer)
+        turnsTilNextStep = i
+    End Sub
     Overridable Sub stopTF()
         tfDone = True
     End Sub
@@ -120,7 +133,7 @@ Public Class Transformation
         turnsTilNextStep += generatWILResistance()
     End Sub
     Function generatWILResistance()
-        Return CInt(turnsTilNextStep * (Game.player.getWIL() / 20)) * wilImpact
+        Return CInt(turnsTilNextStep * (Game.player.getWIL() / 20) * wilImpact)
     End Function
 
     'toString for save / load

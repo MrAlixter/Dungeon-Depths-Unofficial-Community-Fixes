@@ -2,7 +2,7 @@
     Implements IComparable
     Dim name As String = ""
     Dim description As String
-    Dim isUsable As Boolean
+    Dim isUsable As Boolean = False
     Public count As Integer
     Public value As Integer
     Public tier As Integer = Nothing
@@ -22,7 +22,10 @@
         Return r
     End Function
     'getters/setters
-    Function getName() As String
+    Overridable Function getName() As String
+        Return name
+    End Function
+    Function getAName() As String
         Return name
     End Function
     Sub setName(ByVal s As String)
@@ -49,7 +52,7 @@
     Overridable Sub use()
         If Me.getUsable() = False Then Exit Sub
         Game.pushLstLog("You use the " & getName())
-        
+
     End Sub
     Sub addOne()
         count += 1
@@ -63,7 +66,7 @@
     Overridable Sub remove()
         Game.pushLstLog("The " & getName() & " fades into non-existance")
         count -= 1
-        
+
     End Sub
 
     Public Sub examine()

@@ -16,35 +16,35 @@
 
     Sub step1()
         Dim p As player = game.player
-        Dim black = Color.FromArgb(p.haircolor.A, 50, 50, 50)
-        Dim brown = Color.FromArgb(p.haircolor.A, 131, 81, 54)
-        Dim blonde = Color.FromArgb(p.haircolor.A, 248, 189, 90)
-        Dim white = Color.FromArgb(p.haircolor.A, 249, 249, 249)
+        Dim black = Color.FromArgb(p.prt.haircolor.A, 50, 50, 50)
+        Dim brown = Color.FromArgb(p.prt.haircolor.A, 131, 81, 54)
+        Dim blonde = Color.FromArgb(p.prt.haircolor.A, 248, 189, 90)
+        Dim white = Color.FromArgb(p.prt.haircolor.A, 249, 249, 249)
         Dim hcs = {black, brown, blonde, white}
         Dim hcn = {"Black", "Brown", "Blonde", "White"}
         Dim i = Int(Rnd() * hcs.Length)
-        p.haircolor = hcs(i)
+        p.prt.haircolor = hcs(i)
         Game.pushLblEvent("Your foot falls on an uneven patch of dungeon and you breifly lose your footing. As you lurch forward, catching your balance, your cowbell gives out a loud ring.  Looking franctically around, you are relived to see that nothing seems to have been attracted by the noise.  As you brush your shaken up hair back into place, you notice that at some point your hair color had changed to a shade of " & hcn(i) & ".  𝘔𝘢𝘺𝘣𝘦 𝘐 𝘴𝘵𝘦𝘱𝘱𝘦𝘥 𝘰𝘯 𝘢 𝘤𝘶𝘳𝘴𝘦𝘥 𝘣𝘳𝘪𝘤𝘬 𝘰𝘳 𝘴𝘰𝘮𝘦𝘵𝘩𝘪𝘯𝘨, you muse as you continue on." & vbCrLf & vbCrLf & "You now have " & hcn(i) & " hair!")
     End Sub
     Sub step2()
         Dim p As player = game.player
-        p.hornInd = 1
+        p.prt.hornInd = 1
         Game.pushLblEvent("Out of nowhere, you feel the tile beneath you depress slightly.  You instinctively roll left just in time for a projectile to fly through the air where you just to the left.  Breathing a sigh of relief, you take a couple of steps back only to step on another pressure plate.  Another dart fires straight for your neck and without any time to dodge it strikes you right ... in your cowbell.  The ding it lets out is louder than last time, but not by much.  After a nervous scan of your surroundings, you go to readjust your hair again only to find a small pair of horns.  As you size them up, you realize that they give you a slightly bovine appearance.")
     End Sub
     Sub step3()
         Dim p As player = game.player
         Dim out = "Through the sway of your motion your cowbell rings out quietly, but repeatedly.  After a while of this, you take a rest and check yourself for any changes that may have taken place."
-        If p.iArrInd(1).Item2 Then
+        If p.prt.iArrInd(1).Item2 Then
             out += "  Looking at your reflection in the nearby pool of water, you see that you now have bovine ears!  Between these and the horns, you're pretty sure you're slowly turning into some sort of cow."
-            p.iArrInd(6) = New Tuple(Of Integer, Boolean, Boolean)(8, True, True)
+            p.prt.setIAInd(6, 8, True, True)
             p.wBuff -= 1
         Else
             out += "  You can feel the tickle of hair much further down on your back than you are used to, and a quick glance in a nearby puddle confirms that your hair has lengthened considerably."
-            p.iArrInd(1) = New Tuple(Of Integer, Boolean, Boolean)(1, True, False)
-            p.iArrInd(5) = New Tuple(Of Integer, Boolean, Boolean)(0, True, False)
+            p.prt.setIAInd(1, 1, True, False)
+            p.prt.setIAInd(5, 0, True, False)
             If Not Int(Rnd() * 3) = 0 Then
                 out += "  Looking at your reflection in the nearby pool of water, you see that you now have bovine ears!  Between these and the horns, you're pretty sure you're slowly turning into some sort of cow."
-                p.iArrInd(6) = New Tuple(Of Integer, Boolean, Boolean)(8, True, True)
+                p.prt.setIAInd(6, 8, True, True)
                 p.equippedAcce.wBoost -= 1
             End If
         End If
@@ -55,18 +55,18 @@
     Sub step4()
         Dim p As player = game.player
         Dim out = "As you bend down to pick up a dropped item, your cowbell jangles as you stand back up.  Already used to this, you give yourself a quick once over.  You don't see that much different, though your hair seems to have styled itself since you last checked up on it."
-        If p.pClass.name.Equals("Magic Girl") Then
+        If p.pClass.name.Equals("Magic Girl") Or p.pClass.name.Equals("Valkyrie") Then
             out += "  You loose hold of your weapon dropping it and reverting your transformation."
             Equipment.weaponChange("Fists")
         End If
-        p.iArrInd(1) = New Tuple(Of Integer, Boolean, Boolean)(16, True, True)
-        p.iArrInd(5) = New Tuple(Of Integer, Boolean, Boolean)(20, True, True)
-        p.iArrInd(15) = New Tuple(Of Integer, Boolean, Boolean)(16, True, True)
+        p.prt.setIAInd(1, 16, True, True)
+        p.prt.setIAInd(5, 20, True, True)
+        p.prt.setIAInd(15, 16, True, True)
         Game.pushLblEvent(out)
     End Sub
     Sub step5()
         Dim p As player = game.player
-        p.hornInd = 2
+        p.prt.hornInd = 2
         Game.pushLblEvent("As you trudge through a particularly dusty patch of dungeon, you feel a powerful sneeze coming on.  As the sneeze rocks your body, the cowbell on your neck rattles noisily, the loudest it has rung yet, and you need to take a few minutes to get your bearings back.  Your head feels slightly heavier, and as you feel around you can tell that your horns have gotten longer, and seem to have a more extreme curl.  Sweet!")
     End Sub
     Sub step678()
@@ -85,7 +85,7 @@
                 p.reverseBSRoute()
             End If
         End If
-        If Not p.sexBool Then
+        If Not p.prt.sexBool Then
             If Int(Rnd() * 2) = 0 Then
                 out += "  You also notice that you feel a little ... breathier ... between your legs and a quick pat down confirms that you are now female.  Seems like this bell is turning you into a proper cow after all..."
                 Game.player.MtF()

@@ -25,22 +25,21 @@
         Equipment.accChange("Nothing")
 
         'succubus transformation
-        If p.sex = "Male" Or Not p.sexBool Then
-            p.sexBool = True
+        If p.sex = "Male" Or Not p.prt.sexBool Then
             p.MtF()
             p.breastSize = Int(Rnd() * 3) + 1
             out += " Your body becomes daintier, and you are soon fully female."
         End If
-        p.iArrInd(1) = New Tuple(Of Integer, Boolean, Boolean)(9, True, True)
-        p.iArrInd(4) = New Tuple(Of Integer, Boolean, Boolean)(0, True, False)
-        p.iArrInd(5) = New Tuple(Of Integer, Boolean, Boolean)(9, True, True)
-        p.iArrInd(7) = New Tuple(Of Integer, Boolean, Boolean)(0, True, False)
-        p.iArrInd(9) = New Tuple(Of Integer, Boolean, Boolean)(19, True, True)
-        p.iArrInd(10) = New Tuple(Of Integer, Boolean, Boolean)(0, True, False)
-        p.iArrInd(13) = New Tuple(Of Integer, Boolean, Boolean)(0, True, False)
-        p.iArrInd(15) = New Tuple(Of Integer, Boolean, Boolean)(13, True, True)
-        p.iArrInd(16) = New Tuple(Of Integer, Boolean, Boolean)(0, True, False)
-        p.wingInd = 2
+        p.prt.setIAInd(1, 9, True, True)
+        p.prt.setIAInd(4, 0, True, False)
+        p.prt.setIAInd(5, 9, True, True)
+        p.prt.setIAInd(7, 0, True, False)
+        p.prt.setIAInd(9, 19, True, True)
+        p.prt.setIAInd(10, 0, True, False)
+        p.prt.setIAInd(13, 0, True, False)
+        p.prt.setIAInd(15, 13, True, True)
+        p.prt.setIAInd(16, 0, True, False)
+        p.prt.wingInd = 2
 
         'transformation description push
         p.TextColor = Color.HotPink

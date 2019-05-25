@@ -1,38 +1,33 @@
 ﻿Public Class TravelingWizard
     Inherits ShopNPC
     Sub New()
-        MyBase.setName("Traveling Wizard")
-        MyBase.setHealth(1.0)
-        MyBase.setMaxHealth(9999)
-        MyBase.setATK(999)
-        MyBase.setDEF(99)
-        MyBase.setSPD(99)
+        setName("Traveling Wizard")
+        setHealth(1.0)
+        setMaxHealth(9999)
+        setATK(999)
+        setDEF(99)
+        setSPD(99)
 
         'Define the inventory
-        inv = New Inventory()
+        inv = New Inventory(False)
         'Useables
-        MyBase.inv.setCount("Spellbook", 1)
-        MyBase.inv.setCount("Mana_Charm", 1)
+        inv.setCount("Spellbook", 1)
+        inv.setCount("Mana_Charm", 1)
         'Potions
-        MyBase.inv.setCount("Mana_Potion", 1)
-        MyBase.inv.setCount("Glittery_Potion", 1)
-        MyBase.inv.setCount("Azure_Potion", 1)
-        MyBase.inv.setCount("Rose_Potion", 1)
-        MyBase.inv.setCount("Mauve_Potion", 1)
-        MyBase.inv.setCount("Golden_Potion", 1)
-        MyBase.inv.setCount("Murky_Potion", 1)
+        inv.setCount("Mana_Potion", 1)
+
         'Foods
-        MyBase.inv.setCount("Apple​", 1)
-        MyBase.inv.setCount("Angel_Food_Cake", 1)
-        MyBase.inv.setCount("Stick_of_Gum", 1)
+        inv.setCount("Apple​", 1)
+        inv.setCount("Angel_Food_Cake", 1)
+        inv.setCount("Stick_of_Gum", 1)
         'Armors
-        MyBase.inv.setCount("Steel_Bikini", 1)
-        MyBase.inv.setCount("Bunny_Suit", 1)
-        MyBase.inv.setCount("Witch_Cosplay", 1)
-        MyBase.inv.setCount("Cowbell", 1)
-        MyBase.inv.setCount("Gold_Adornment", 1)
+        inv.setCount("Steel_Bikini", 1)
+        inv.setCount("Bunny_Suit", 1)
+        inv.setCount("Witch_Cosplay", 1)
+        inv.setCount("Cowbell", 1)
+        inv.setCount("Gold_Adornment", 1)
         'Weapons
-        MyBase.inv.setCount("Duster", 1)
+        inv.setCount("Duster", 1)
 
         isShop = True
         setGold(99999)
@@ -40,11 +35,11 @@
         pPronoun = "his"
         rPronoun = "him"
         picNormal = Game.picSW.BackgroundImage
-        picPrincess = Game.PicSWPrin.BackgroundImage
+        picPrincess = Game.picSWPrin.BackgroundImage
         picBunny = Game.picSWb.BackgroundImage
 
         If speed = Game.player.speed Then speed -= 1
-        MyBase.title = ""
+        title = ""
     End Sub
 
     Public Overrides Sub encounter()

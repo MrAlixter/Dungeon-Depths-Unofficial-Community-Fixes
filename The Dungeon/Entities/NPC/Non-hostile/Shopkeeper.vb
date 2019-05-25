@@ -1,34 +1,34 @@
 ﻿Public Class Shopkeeper
     Inherits ShopNPC
     Sub New()
-        MyBase.setName("Shopkeeper")
-        MyBase.setHealth(1.0)
-        MyBase.setMaxHealth(9999)
-        MyBase.setATK(99)
-        MyBase.setDEF(999)
-        MyBase.setSPD(99)
+        setName("Shopkeeper")
+        setHealth(1.0)
+        setMaxHealth(9999)
+        setATK(99)
+        setDEF(999)
+        setSPD(99)
 
         'Define the inventory
-        inv = New Inventory()
+        inv = New Inventory(False)
         'Useables
-        MyBase.inv.setCount("Compass", 1)
-        MyBase.inv.setCount("Spellbook", 1)
-        MyBase.inv.setCount("Major_Health_Potion", 1)
+        inv.setCount("Compass", 1)
+        inv.setCount("Spellbook", 1)
+        inv.setCount("Major_Health_Potion", 1)
         'Potions
-        MyBase.inv.setCount("Health_Potion", 1)
-        MyBase.inv.setCount("Mana_Potion", 1)
+        inv.setCount("Health_Potion", 1)
+        inv.setCount("Mana_Potion", 1)
         'Food
-        MyBase.inv.setCount("Chicken_Leg", 1)
+        inv.setCount("Chicken_Leg", 1)
         'Armor/Accesories
-        MyBase.inv.setCount("Bronze_Armor", 1)
-        MyBase.inv.setCount("Steel_Armor", 1)
-        MyBase.inv.setCount("Gold_Armor", 1)
+        inv.setCount("Bronze_Armor", 1)
+        inv.setCount("Steel_Armor", 1)
+        inv.setCount("Gold_Armor", 1)
         'Weapons
-        MyBase.inv.setCount("Steel_Sword", 1)
-        MyBase.inv.setCount("Oak_Staff", 1)
-        MyBase.inv.setCount("Gold_Sword", 1)
-        MyBase.inv.setCount("Golden_Staff", 1)
-        MyBase.inv.setCount("Midas_Gauntlet", 1)
+        inv.setCount("Steel_Sword", 1)
+        inv.setCount("Oak_Staff", 1)
+        inv.setCount("Gold_Sword", 1)
+        inv.setCount("Golden_Staff", 1)
+        inv.setCount("Midas_Gauntlet", 1)
 
         isShop = True
         setGold(99999)
@@ -40,7 +40,7 @@
         picBunny = Game.picSKBunny.BackgroundImage
 
         If speed = Game.player.speed Then speed -= 1
-        MyBase.title = ""
+        title = ""
     End Sub
 
     Public Overrides Sub encounter()

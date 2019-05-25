@@ -28,13 +28,13 @@
         p.ongoingTFs.Add(New ThrallTF(2, 10, 3.0, True))
 
         If Not p.pClass.name.Equals("Thrall") Then formerClass = p.pClass.name
-        formerEyeType = p.iArrInd(9)
+        formerEyeType = p.prt.iArrInd(9)
         If Transformation.canBeTFed(p) Then p.pState.save(p)
         p.pClass = p.classes("Thrall")
-        If p.sexBool Then
-            p.iArrInd(9) = New Tuple(Of Integer, Boolean, Boolean)(19, True, True)
+        If p.prt.sexBool Then
+            p.prt.setIAInd(9, 19, True, True)
         Else
-            p.iArrInd(9) = New Tuple(Of Integer, Boolean, Boolean)(8, False, True)
+            p.prt.setIAInd(9, 8, False, True)
         End If
 
         p.prefForm = New preferedForm()
@@ -53,19 +53,19 @@
         p.ongoingTFs.Add(New ThrallTF(2, 10, 3.0, True))
 
         formerClass = p.pClass.name
-        formerEyeType = p.iArrInd(9)
+        formerEyeType = p.prt.iArrInd(9)
         If Transformation.canBeTFed(p) Then p.pState.save(p)
         p.pClass = p.classes("Thrall")
-        If p.sexBool Then
-            p.iArrInd(9) = New Tuple(Of Integer, Boolean, Boolean)(19, True, True)
+        If p.prt.sexBool Then
+            p.prt.setIAInd(9, 19, True, True)
         Else
-            p.iArrInd(9) = New Tuple(Of Integer, Boolean, Boolean)(8, False, True)
+            p.prt.setIAInd(9, 8, False, True)
         End If
 
         If p.pClass.name.Equals("Magic Girl") Then
             p.breastSize = 2
-            p.iArrInd(6) = New Tuple(Of Integer, Boolean, Boolean)(0, True, False)
-            p.iArrInd(15) = New Tuple(Of Integer, Boolean, Boolean)(7, True, False)
+            p.prt.setIAInd(6, 0, True, False)
+            p.prt.setIAInd(15, 7, True, False)
         End If
 
         p.prefForm = New preferedForm()
@@ -84,7 +84,7 @@
         Next
         p.perks("thrall") = 1
         p.pClass = Game.player.classes(formerClass)
-        p.iArrInd(9) = formerEyeType
+        p.prt.setIAInd(9, formerEyeType)
         p.prefForm = Nothing
         p.forcedPath = Nothing
     End Sub

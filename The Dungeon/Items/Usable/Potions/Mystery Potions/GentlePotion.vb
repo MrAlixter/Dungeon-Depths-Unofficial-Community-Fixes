@@ -1,31 +1,36 @@
-﻿Public Class RedPotion
+﻿Public Class GentlePotion
     Inherits MysteryPotion
     Sub New()
-        MyBase.setName("Red_Potion")
-        MyBase.setDesc("A strange looking potion")
-        id = 26
+        MyBase.setName("Gentle_Potion")
+        MyBase.setDesc("A curious looking potion")
+        id = 27
         tier = 2
         MyBase.setUsable(True)
         MyBase.count = 0
-        MyBase.value = 250
+        MyBase.value = 350
+        MyBase.onBuy = AddressOf reveal
     End Sub
 
     Public Overrides Sub setEffectList()
         MyBase.setEffectList()
         Dim mainEffects As List(Of PEffect) = New List(Of PEffect)
         Dim sideEffects As List(Of PEffect) = New List(Of PEffect)
-        mainEffects.AddRange({New MinPainEffect, New MinPainEffect, New MinPainEffect,
-                              New MinPainEffect, New PainEffect, New PainEffect})
 
-        mainEffects.AddRange({New MinHungerEffect, New HungerEffect, New MinHealthEffect,
-                              New MinHealthEffect, New MinManaEffect, New MinRestEffect,
-                              New MinRestEffect, New HealthEffect, New WeakRestEffect})
+        mainEffects.AddRange({New MinHealthEffect, New MinHealthEffect, New MinManaEffect,
+                              New MinHealthEffect, New HealthEffect, New HealthEffect,
+                              New MajHealthEffect})
+
+        mainEffects.AddRange({New MinHungerEffect, New HungerEffect, New MinPainEffect,
+                               New MinPainEffect, New MinManaEffect, New MinRestEffect,
+                               New MinRestEffect, New PainEffect, New WeakRestEffect,
+                               New MinFemEffect, New MinMasEffect, New MinFemEffect,
+                               New MinMasEffect})
 
         sideEffects.AddRange({New BEEffect, New BlondeDyeEffect, New BSEffect, New EarChangeEffect,
-                              New MinFemEffect, New RHairChangeEffect, New NameChangeEffect, New RandDyeEffect,
-                              New RedDyeEffect, New MinMasEffect, New BEEffect, New BlondeDyeEffect,
-                              New BSEffect, New EarChangeEffect, New MinFemEffect, New RHairChangeEffect,
-                              New NameChangeEffect, New RandDyeEffect, New RedDyeEffect, New MinMasEffect})
+                              New RHairChangeEffect, New NameChangeEffect, New RandDyeEffect,
+                              New RedDyeEffect, New BEEffect, New BlondeDyeEffect,
+                              New BSEffect, New EarChangeEffect, New RHairChangeEffect,
+                              New NameChangeEffect, New RandDyeEffect, New RedDyeEffect})
 
         Dim numMainEffects = mainEffectDistribution()
         Dim numSideEffects = sideEffectDistribution(numMainEffects)

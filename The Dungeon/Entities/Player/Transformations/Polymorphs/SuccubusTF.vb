@@ -24,26 +24,24 @@
 
         'succubus transformation
         If p.sex = "Male" Then
-            p.sexBool = True
             p.MtF()
-
             out += "Your body becomes daintier, and you are soon fully female.  "
         End If
-        p.haircolor = Color.FromArgb(255, 155, 0, 0)
-        p.skincolor = Color.FromArgb(255, 255, 105, 180)
-        p.iArrInd(1) = New Tuple(Of Integer, Boolean, Boolean)(9, True, True)
+        p.prt.haircolor = Color.FromArgb(255, 155, 0, 0)
+        p.prt.skincolor = Color.FromArgb(255, 255, 105, 180)
+        p.prt.setIAInd(1, 9, True, True)
         If p.breastSize < 2 Then p.breastSize = 2
         p.reverseBSRoute()
-        p.iArrInd(4) = New Tuple(Of Integer, Boolean, Boolean)(0, True, False)
-        p.iArrInd(5) = New Tuple(Of Integer, Boolean, Boolean)(9, True, True)
-        p.iArrInd(7) = New Tuple(Of Integer, Boolean, Boolean)(0, True, False)
-        p.iArrInd(9) = New Tuple(Of Integer, Boolean, Boolean)(12, True, True)
-        p.iArrInd(10) = New Tuple(Of Integer, Boolean, Boolean)(0, True, False)
-        p.iArrInd(13) = New Tuple(Of Integer, Boolean, Boolean)(0, True, False)
-        p.iArrInd(15) = New Tuple(Of Integer, Boolean, Boolean)(13, True, True)
-        p.iArrInd(16) = New Tuple(Of Integer, Boolean, Boolean)(0, True, False)
-        p.wingInd = 2
-        p.hornInd = 3
+        p.prt.setIAInd(4, 0, True, False)
+        p.prt.setIAInd(5, 9, True, True)
+        p.prt.setIAInd(7, 0, True, False)
+        p.prt.setIAInd(9, 12, True, True)
+        p.prt.setIAInd(10, 0, True, False)
+        p.prt.setIAInd(13, 0, True, False)
+        p.prt.setIAInd(15, 13, True, True)
+        p.prt.setIAInd(16, 0, True, False)
+        p.prt.wingInd = 2
+        p.prt.hornInd = 3
 
         'transformation description push
         p.TextColor = Color.HotPink

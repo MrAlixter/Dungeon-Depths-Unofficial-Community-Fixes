@@ -3,22 +3,23 @@
 
     Dim preHypnoID = 0
     Sub New()
-        MyBase.setName("Hypnotist Teacher")
-        MyBase.setHealth(1.0)
-        MyBase.setMaxHealth(9999)
-        MyBase.setATK(99)
-        MyBase.setDEF(999)
-        MyBase.setSPD(99)
+        setName("Hypnotist Teacher")
+        setHealth(1.0)
+        setMaxHealth(9999)
+        setATK(99)
+        setDEF(999)
+        setSPD(99)
 
         'Define the inventory
-        inv = New Inventory()
+        inv = New Inventory(False)
         'Useables
-        MyBase.inv.setCount("Advanced_Spellbook", 1)
-        MyBase.inv.item("Advanced_Spellbook").value -= 0.2 * MyBase.inv.item("Advanced_Spellbook").value
-        MyBase.inv.setCount("Spellbook", 1)
-        MyBase.inv.item("Spellbook").value -= 0.2 * MyBase.inv.item("Spellbook").value
-        MyBase.inv.setCount("Bimbo_Lesson", 1)
-
+        inv.setCount("Advanced_Spellbook", 1)
+        inv.item("Advanced_Spellbook").value -= 0.2 * MyBase.inv.item("Advanced_Spellbook").value
+        inv.setCount("Spellbook", 1)
+        inv.item("Spellbook").value -= 0.2 * MyBase.inv.item("Spellbook").value
+        inv.setCount("Bimbo_Lesson", 1)
+        inv.setCount("Utility_Manual", 1)
+        inv.item("Utility_Manual").value -= 0.2 * MyBase.inv.item("Utility_Manual").value
 
         isShop = True
         setGold(99999)
@@ -35,7 +36,7 @@
 
     Public Overrides Sub encounter()
         MyBase.encounter()
-        picNCP.AddRange({Game.picHTHypno.BackgroundImage, Game.picHTFV.BackgroundImage})
+        picNCP.AddRange({Game.picHTHypno.BackgroundImage, Game.picHTFV.BackgroundImage, Game.picHTCow.BackgroundImage})
 
         MyBase.discount = 0
 
@@ -45,12 +46,22 @@
                 npcIndex = 6
                 Game.pushNPCDialog("Like, hey!  I, like, totally just got back from negot...nagosh...trying to work " &
                                    "out a deal with that wizard guy, and it like, didn't go too well.  But hey, now I " &
-                                   "feel soooo gooood, and I'm even doing a I'm-having-fun sale!  I ran into the food guy, " &
-                                   "and he has that pance...pensi...special food thing that can get me back to normal!  " &
-                                   "But first, I'm like, totally gonna take a break and see what else he has that I can eat.")
+                                   "feel soooo gooood, and I'm even doing a I'm-having-fun sale!  I ran into Food Guy, " &
+                                   "and don't tell him I said this but he's toootally like my soulmate...  " &
+                                   "Anyway, like, he has that pance...pensi...special food thing that can get me back to my normal self!" &
+                                   "But first, I'm like, totally gonna take a break from being all serious and see what else he has that I can eat! ~🖤")
+            ElseIf Int(Rnd() * 20) = 1 Then
+                npcIndex = 7
+                Game.pushNPCDialog("Hello, potential customer!  I don't suppose you've seen Mr. Vendor around anywhere, have you?  " &
+                                   "He appears to have gotten the cream in my usual morning coffee mixed up with some other malarkey, " &
+                                   "and now, as I'm sure you can see, I've begun morphing into some sort of bovine.  I'm hoping he has " &
+                                   "some Pancea on hand, because otherwise I might be in a prediciment and if that is the case so help me " &
+                                   "I'm going to...*sigh* This isn't appropriate buisness talk.  I have spellbooks and manuals for sale, and if " &
+                                   "you're looking for something specific, I have some recorded hypnotic lessons on tape.  Take a look around, " &
+                                   "in the meantime I'm going to track down my idiot.")
             Else
                 Game.pushNPCDialog("Hello.  I can help you learn spells and abilities via my only somewhat experimental " &
-                                   "hypnosis System.  Don't worry, I've worked out most of the kinks thanks to some..." &
+                                   "hypnosis System.  Don't worry, I've worked out most of the kinks thanks to some " &
                                    "volunteering by the Food Vendor you may have seen around, and it's 100% effecive as " &
                                    "far as long term behavior modification goes.  If you're feeling a bit hesitant, I also " &
                                    "sell more...pedestrian books and manuals.  They won't provide as specific of an education though.")
@@ -68,9 +79,6 @@
         Game.picNPC.BackgroundImage = picNCP(npcIndex)
     End Sub
 
-    Public Overrides Function getShopInv() As Inventory
-        Return MyBase.getShopInv()
-    End Function
     Public Overrides Function toFight() As String
         If npcIndex = 0 Then
             Return "Seems like you need another type of lesson."
@@ -117,7 +125,6 @@
 
         Game.picNPC.BackgroundImage = picNCP(npcIndex)
     End Sub
-
     Public Sub back()
         npcIndex = preHypnoID
         Game.pushNPCDialog("So, anything else?")

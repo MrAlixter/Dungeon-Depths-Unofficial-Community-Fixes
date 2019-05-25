@@ -18,7 +18,7 @@
                 Game.player.lust += 20
                 Game.player.health -= 2 / Game.player.getmaxHealth
                 Dim out As String = "𝘱𝘸𝘩𝘪𝘱! You smack your neck, expecting a bug, only to feel a sharp pain as your smack crushes a small dart and leaks its contents all over your neck.  Initially fearing some sort of poison, the blushing of your cheeks and "
-                If Game.player.sexBool Then
+                If Game.player.prt.sexBool Then
                     out += "warmth between your legs "
                 Else
                     out += "stiffening your cock "
@@ -57,16 +57,16 @@
                 Game.pushLblEvent(out)
             Case 2
                 Dim rubyTF As Color = Color.FromArgb(185, 200, 55, 55)
-                Dim r As Integer = Game.player.skincolor.R + 50
-                Dim g = Game.player.skincolor.G
-                Dim b = Game.player.skincolor.B
+                Dim r As Integer = Game.player.prt.skincolor.R + 50
+                Dim g = Game.player.prt.skincolor.G
+                Dim b = Game.player.prt.skincolor.B
                 If r > 255 Then
                     r = 255
                     If g > 50 Then g -= 10
                     If g < 200 Then b -= 10
                 End If
 
-                Game.player.skincolor = Color.FromArgb(Game.player.skincolor.A, r, g, b)
+                Game.player.prt.skincolor = Color.FromArgb(Game.player.prt.skincolor.A, r, g, b)
                 If transformation.canbeTFed(Game.player) Then
                     Game.player.pState.save(Game.player)
                 End If
@@ -79,20 +79,20 @@
                 Game.player.update()
             Case 4
                 Dim out = "As your foot touches down on what looks to be the same ground that you have been walking on, you find that it is not met with any resistance.  Unable to keep your balance, you fall face first into the shiny waterlike facsimile of the floor and are thrown, flipping, into a another room.  As you regain your senses, you notice that you actually just ahead of where you were.  Turning around, you tap the floor you presumably fell out through, only to find it as solid as any other patch of floor you have come across.  Not able to find anything else abnormal with your surroundings, you write your expirience off as some failed illusion and set off on your way."
-                If Game.player.sexBool Then
-                    Game.player.iArrInd(1) = New Tuple(Of Integer, Boolean, Boolean)(Game.player.sState.iArrInd(1).Item1, False, Game.player.sState.iArrInd(1).Item3)
-                    Game.player.iArrInd(2) = New Tuple(Of Integer, Boolean, Boolean)(0, True, False)
-                    Game.player.iArrInd(4) = New Tuple(Of Integer, Boolean, Boolean)(Game.player.sState.iArrInd(4).Item1, False, Game.player.sState.iArrInd(1).Item3)
-                    Game.player.iArrInd(5) = New Tuple(Of Integer, Boolean, Boolean)(Game.player.sState.iArrInd(5).Item1, False, Game.player.sState.iArrInd(1).Item3)
-                    Game.player.iArrInd(8) = New Tuple(Of Integer, Boolean, Boolean)(Game.player.sState.iArrInd(8).Item1, False, Game.player.sState.iArrInd(1).Item3)
-                    Game.player.iArrInd(10) = New Tuple(Of Integer, Boolean, Boolean)(Game.player.sState.iArrInd(10).Item1, False, Game.player.sState.iArrInd(1).Item3)
-                    Game.player.iArrInd(15) = New Tuple(Of Integer, Boolean, Boolean)(Game.player.sState.iArrInd(15).Item1, False, Game.player.sState.iArrInd(1).Item3)
+                If Game.player.prt.sexBool Then
+                    Game.player.prt.setIAInd(1, Game.player.sState.iArrInd(1).Item1, False, Game.player.sState.iArrInd(1).Item3)
+                    Game.player.prt.setIAInd(2, 0, True, False)
+                    Game.player.prt.setIAInd(4, Game.player.sState.iArrInd(4).Item1, False, Game.player.sState.iArrInd(1).Item3)
+                    Game.player.prt.setIAInd(5, Game.player.sState.iArrInd(5).Item1, False, Game.player.sState.iArrInd(1).Item3)
+                    Game.player.prt.setIAInd(8, Game.player.sState.iArrInd(8).Item1, False, Game.player.sState.iArrInd(1).Item3)
+                    Game.player.prt.setIAInd(10, Game.player.sState.iArrInd(10).Item1, False, Game.player.sState.iArrInd(1).Item3)
+                    Game.player.prt.setIAInd(15, Game.player.sState.iArrInd(15).Item1, False, Game.player.sState.iArrInd(1).Item3)
                     Game.player.FtM()
                 Else
-                    Game.player.iArrInd(1) = New Tuple(Of Integer, Boolean, Boolean)(Game.player.sState.iArrInd(1).Item1, True, Game.player.sState.iArrInd(1).Item3)
-                    Game.player.iArrInd(5) = New Tuple(Of Integer, Boolean, Boolean)(Game.player.sState.iArrInd(5).Item1, True, Game.player.sState.iArrInd(1).Item3)
-                    Game.player.iArrInd(8) = New Tuple(Of Integer, Boolean, Boolean)(Game.player.sState.iArrInd(8).Item1, True, Game.player.sState.iArrInd(1).Item3)
-                    Game.player.iArrInd(15) = New Tuple(Of Integer, Boolean, Boolean)(Game.player.sState.iArrInd(15).Item1, True, Game.player.sState.iArrInd(1).Item3)
+                    Game.player.prt.setIAInd(1, Game.player.sState.iArrInd(1).Item1, True, Game.player.sState.iArrInd(1).Item3)
+                    Game.player.prt.setIAInd(5, Game.player.sState.iArrInd(5).Item1, True, Game.player.sState.iArrInd(1).Item3)
+                    Game.player.prt.setIAInd(8, Game.player.sState.iArrInd(8).Item1, True, Game.player.sState.iArrInd(1).Item3)
+                    Game.player.prt.setIAInd(15, Game.player.sState.iArrInd(15).Item1, True, Game.player.sState.iArrInd(1).Item3)
                     Game.player.MtF()
                 End If
                 Game.player.createP()

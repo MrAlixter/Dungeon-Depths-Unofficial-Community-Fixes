@@ -97,16 +97,16 @@ Partial Class Game
         Me.btnU = New System.Windows.Forms.Button()
         Me.BtnD = New System.Windows.Forms.Button()
         Me.btnLft = New System.Windows.Forms.Button()
-        Me.cmboxSpec = New System.Windows.Forms.ComboBox()
+        Me.cboxSpec = New System.Windows.Forms.ComboBox()
         Me.btnSpec = New System.Windows.Forms.Button()
         Me.btnFilter = New System.Windows.Forms.Button()
         Me.btnOk = New System.Windows.Forms.Button()
-        Me.fUseable = New System.Windows.Forms.CheckBox()
-        Me.fPotion = New System.Windows.Forms.CheckBox()
-        Me.fFood = New System.Windows.Forms.CheckBox()
-        Me.fArmor = New System.Windows.Forms.CheckBox()
-        Me.fWeapon = New System.Windows.Forms.CheckBox()
-        Me.fMisc = New System.Windows.Forms.CheckBox()
+        Me.chkUseable = New System.Windows.Forms.CheckBox()
+        Me.chkPotion = New System.Windows.Forms.CheckBox()
+        Me.chkFood = New System.Windows.Forms.CheckBox()
+        Me.chkArmor = New System.Windows.Forms.CheckBox()
+        Me.chkWeapon = New System.Windows.Forms.CheckBox()
+        Me.chkMisc = New System.Windows.Forms.CheckBox()
         Me.btnAll = New System.Windows.Forms.Button()
         Me.btnNone = New System.Windows.Forms.Button()
         Me.picTrap = New System.Windows.Forms.PictureBox()
@@ -168,7 +168,7 @@ Partial Class Game
         Me.Label3 = New System.Windows.Forms.Label()
         Me.lstSelec = New System.Windows.Forms.ListBox()
         Me.picSW = New System.Windows.Forms.PictureBox()
-        Me.PicSWPrin = New System.Windows.Forms.PictureBox()
+        Me.picSWPrin = New System.Windows.Forms.PictureBox()
         Me.picSWb = New System.Windows.Forms.PictureBox()
         Me.picBun = New System.Windows.Forms.PictureBox()
         Me.picPrin = New System.Windows.Forms.PictureBox()
@@ -196,6 +196,10 @@ Partial Class Game
         Me.picHTFV = New System.Windows.Forms.PictureBox()
         Me.picHT = New System.Windows.Forms.PictureBox()
         Me.picHTf = New System.Windows.Forms.PictureBox()
+        Me.picHTCow = New System.Windows.Forms.PictureBox()
+        Me.picFVf = New System.Windows.Forms.PictureBox()
+        Me.picFVtile = New System.Windows.Forms.PictureBox()
+        Me.picStaffEnd = New System.Windows.Forms.PictureBox()
         CType(Me.picEnemy, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me.picNPC, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me.picStatue, System.ComponentModel.ISupportInitialize).BeginInit()
@@ -245,7 +249,7 @@ Partial Class Game
         CType(Me.picstairslockf, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.pnlSelection.SuspendLayout()
         CType(Me.picSW, System.ComponentModel.ISupportInitialize).BeginInit()
-        CType(Me.PicSWPrin, System.ComponentModel.ISupportInitialize).BeginInit()
+        CType(Me.picSWPrin, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me.picSWb, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me.picBun, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me.picPrin, System.ComponentModel.ISupportInitialize).BeginInit()
@@ -269,6 +273,10 @@ Partial Class Game
         CType(Me.picHTFV, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me.picHT, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me.picHTf, System.ComponentModel.ISupportInitialize).BeginInit()
+        CType(Me.picHTCow, System.ComponentModel.ISupportInitialize).BeginInit()
+        CType(Me.picFVf, System.ComponentModel.ISupportInitialize).BeginInit()
+        CType(Me.picFVtile, System.ComponentModel.ISupportInitialize).BeginInit()
+        CType(Me.picStaffEnd, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.SuspendLayout()
         '
         'btnUse1
@@ -1062,18 +1070,18 @@ Partial Class Game
         Me.btnLft.Text = "<"
         Me.btnLft.UseVisualStyleBackColor = False
         '
-        'cmboxSpec
+        'cboxSpec
         '
-        Me.cmboxSpec.BackColor = System.Drawing.Color.Black
-        Me.cmboxSpec.Font = New System.Drawing.Font("Consolas", 8.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.cmboxSpec.ForeColor = System.Drawing.Color.White
-        Me.cmboxSpec.FormattingEnabled = True
-        Me.cmboxSpec.Location = New System.Drawing.Point(237, 461)
-        Me.cmboxSpec.Name = "cmboxSpec"
-        Me.cmboxSpec.Size = New System.Drawing.Size(149, 23)
-        Me.cmboxSpec.TabIndex = 231
-        Me.cmboxSpec.Text = "-- Select --"
-        Me.cmboxSpec.Visible = False
+        Me.cboxSpec.BackColor = System.Drawing.Color.Black
+        Me.cboxSpec.Font = New System.Drawing.Font("Consolas", 8.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.cboxSpec.ForeColor = System.Drawing.Color.White
+        Me.cboxSpec.FormattingEnabled = True
+        Me.cboxSpec.Location = New System.Drawing.Point(237, 461)
+        Me.cboxSpec.Name = "cboxSpec"
+        Me.cboxSpec.Size = New System.Drawing.Size(149, 23)
+        Me.cboxSpec.TabIndex = 231
+        Me.cboxSpec.Text = "-- Select --"
+        Me.cboxSpec.Visible = False
         '
         'btnSpec
         '
@@ -1111,95 +1119,95 @@ Partial Class Game
         Me.btnOk.UseVisualStyleBackColor = False
         Me.btnOk.Visible = False
         '
-        'fUseable
+        'chkUseable
         '
-        Me.fUseable.AutoSize = True
-        Me.fUseable.Checked = True
-        Me.fUseable.CheckState = System.Windows.Forms.CheckState.Checked
-        Me.fUseable.Font = New System.Drawing.Font("Consolas", 8.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.fUseable.ForeColor = System.Drawing.Color.White
-        Me.fUseable.Location = New System.Drawing.Point(738, 422)
-        Me.fUseable.Name = "fUseable"
-        Me.fUseable.Size = New System.Drawing.Size(86, 21)
-        Me.fUseable.TabIndex = 236
-        Me.fUseable.Text = "Useable"
-        Me.fUseable.UseVisualStyleBackColor = True
-        Me.fUseable.Visible = False
+        Me.chkUseable.AutoSize = True
+        Me.chkUseable.Checked = True
+        Me.chkUseable.CheckState = System.Windows.Forms.CheckState.Checked
+        Me.chkUseable.Font = New System.Drawing.Font("Consolas", 8.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.chkUseable.ForeColor = System.Drawing.Color.White
+        Me.chkUseable.Location = New System.Drawing.Point(738, 422)
+        Me.chkUseable.Name = "chkUseable"
+        Me.chkUseable.Size = New System.Drawing.Size(86, 21)
+        Me.chkUseable.TabIndex = 236
+        Me.chkUseable.Text = "Useable"
+        Me.chkUseable.UseVisualStyleBackColor = True
+        Me.chkUseable.Visible = False
         '
-        'fPotion
+        'chkPotion
         '
-        Me.fPotion.AutoSize = True
-        Me.fPotion.Checked = True
-        Me.fPotion.CheckState = System.Windows.Forms.CheckState.Checked
-        Me.fPotion.Font = New System.Drawing.Font("Consolas", 8.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.fPotion.ForeColor = System.Drawing.Color.White
-        Me.fPotion.Location = New System.Drawing.Point(738, 444)
-        Me.fPotion.Name = "fPotion"
-        Me.fPotion.Size = New System.Drawing.Size(86, 21)
-        Me.fPotion.TabIndex = 237
-        Me.fPotion.Text = "Potions"
-        Me.fPotion.UseVisualStyleBackColor = True
-        Me.fPotion.Visible = False
+        Me.chkPotion.AutoSize = True
+        Me.chkPotion.Checked = True
+        Me.chkPotion.CheckState = System.Windows.Forms.CheckState.Checked
+        Me.chkPotion.Font = New System.Drawing.Font("Consolas", 8.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.chkPotion.ForeColor = System.Drawing.Color.White
+        Me.chkPotion.Location = New System.Drawing.Point(738, 444)
+        Me.chkPotion.Name = "chkPotion"
+        Me.chkPotion.Size = New System.Drawing.Size(86, 21)
+        Me.chkPotion.TabIndex = 237
+        Me.chkPotion.Text = "Potions"
+        Me.chkPotion.UseVisualStyleBackColor = True
+        Me.chkPotion.Visible = False
         '
-        'fFood
+        'chkFood
         '
-        Me.fFood.AutoSize = True
-        Me.fFood.Checked = True
-        Me.fFood.CheckState = System.Windows.Forms.CheckState.Checked
-        Me.fFood.Font = New System.Drawing.Font("Consolas", 8.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.fFood.ForeColor = System.Drawing.Color.White
-        Me.fFood.Location = New System.Drawing.Point(738, 466)
-        Me.fFood.Name = "fFood"
-        Me.fFood.Size = New System.Drawing.Size(62, 21)
-        Me.fFood.TabIndex = 238
-        Me.fFood.Text = "Food"
-        Me.fFood.UseVisualStyleBackColor = True
-        Me.fFood.Visible = False
+        Me.chkFood.AutoSize = True
+        Me.chkFood.Checked = True
+        Me.chkFood.CheckState = System.Windows.Forms.CheckState.Checked
+        Me.chkFood.Font = New System.Drawing.Font("Consolas", 8.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.chkFood.ForeColor = System.Drawing.Color.White
+        Me.chkFood.Location = New System.Drawing.Point(738, 466)
+        Me.chkFood.Name = "chkFood"
+        Me.chkFood.Size = New System.Drawing.Size(62, 21)
+        Me.chkFood.TabIndex = 238
+        Me.chkFood.Text = "Food"
+        Me.chkFood.UseVisualStyleBackColor = True
+        Me.chkFood.Visible = False
         '
-        'fArmor
+        'chkArmor
         '
-        Me.fArmor.AutoSize = True
-        Me.fArmor.Checked = True
-        Me.fArmor.CheckState = System.Windows.Forms.CheckState.Checked
-        Me.fArmor.Font = New System.Drawing.Font("Consolas", 8.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.fArmor.ForeColor = System.Drawing.Color.White
-        Me.fArmor.Location = New System.Drawing.Point(738, 488)
-        Me.fArmor.Name = "fArmor"
-        Me.fArmor.Size = New System.Drawing.Size(70, 21)
-        Me.fArmor.TabIndex = 239
-        Me.fArmor.Text = "Armor"
-        Me.fArmor.UseVisualStyleBackColor = True
-        Me.fArmor.Visible = False
+        Me.chkArmor.AutoSize = True
+        Me.chkArmor.Checked = True
+        Me.chkArmor.CheckState = System.Windows.Forms.CheckState.Checked
+        Me.chkArmor.Font = New System.Drawing.Font("Consolas", 8.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.chkArmor.ForeColor = System.Drawing.Color.White
+        Me.chkArmor.Location = New System.Drawing.Point(738, 488)
+        Me.chkArmor.Name = "chkArmor"
+        Me.chkArmor.Size = New System.Drawing.Size(70, 21)
+        Me.chkArmor.TabIndex = 239
+        Me.chkArmor.Text = "Armor"
+        Me.chkArmor.UseVisualStyleBackColor = True
+        Me.chkArmor.Visible = False
         '
-        'fWeapon
+        'chkWeapon
         '
-        Me.fWeapon.AutoSize = True
-        Me.fWeapon.Checked = True
-        Me.fWeapon.CheckState = System.Windows.Forms.CheckState.Checked
-        Me.fWeapon.Font = New System.Drawing.Font("Consolas", 8.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.fWeapon.ForeColor = System.Drawing.Color.White
-        Me.fWeapon.Location = New System.Drawing.Point(738, 510)
-        Me.fWeapon.Name = "fWeapon"
-        Me.fWeapon.Size = New System.Drawing.Size(78, 21)
-        Me.fWeapon.TabIndex = 240
-        Me.fWeapon.Text = "Weapon"
-        Me.fWeapon.UseVisualStyleBackColor = True
-        Me.fWeapon.Visible = False
+        Me.chkWeapon.AutoSize = True
+        Me.chkWeapon.Checked = True
+        Me.chkWeapon.CheckState = System.Windows.Forms.CheckState.Checked
+        Me.chkWeapon.Font = New System.Drawing.Font("Consolas", 8.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.chkWeapon.ForeColor = System.Drawing.Color.White
+        Me.chkWeapon.Location = New System.Drawing.Point(738, 510)
+        Me.chkWeapon.Name = "chkWeapon"
+        Me.chkWeapon.Size = New System.Drawing.Size(78, 21)
+        Me.chkWeapon.TabIndex = 240
+        Me.chkWeapon.Text = "Weapon"
+        Me.chkWeapon.UseVisualStyleBackColor = True
+        Me.chkWeapon.Visible = False
         '
-        'fMisc
+        'chkMisc
         '
-        Me.fMisc.AutoSize = True
-        Me.fMisc.Checked = True
-        Me.fMisc.CheckState = System.Windows.Forms.CheckState.Checked
-        Me.fMisc.Font = New System.Drawing.Font("Consolas", 8.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.fMisc.ForeColor = System.Drawing.Color.White
-        Me.fMisc.Location = New System.Drawing.Point(738, 554)
-        Me.fMisc.Name = "fMisc"
-        Me.fMisc.Size = New System.Drawing.Size(62, 21)
-        Me.fMisc.TabIndex = 241
-        Me.fMisc.Text = "Misc"
-        Me.fMisc.UseVisualStyleBackColor = True
-        Me.fMisc.Visible = False
+        Me.chkMisc.AutoSize = True
+        Me.chkMisc.Checked = True
+        Me.chkMisc.CheckState = System.Windows.Forms.CheckState.Checked
+        Me.chkMisc.Font = New System.Drawing.Font("Consolas", 8.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.chkMisc.ForeColor = System.Drawing.Color.White
+        Me.chkMisc.Location = New System.Drawing.Point(738, 554)
+        Me.chkMisc.Name = "chkMisc"
+        Me.chkMisc.Size = New System.Drawing.Size(62, 21)
+        Me.chkMisc.TabIndex = 241
+        Me.chkMisc.Text = "Misc"
+        Me.chkMisc.UseVisualStyleBackColor = True
+        Me.chkMisc.Visible = False
         '
         'btnAll
         '
@@ -1895,15 +1903,15 @@ Partial Class Game
         Me.picSW.TabStop = False
         Me.picSW.Visible = False
         '
-        'PicSWPrin
+        'picSWPrin
         '
-        Me.PicSWPrin.BackgroundImage = CType(resources.GetObject("PicSWPrin.BackgroundImage"), System.Drawing.Image)
-        Me.PicSWPrin.Location = New System.Drawing.Point(197, 70)
-        Me.PicSWPrin.Name = "PicSWPrin"
-        Me.PicSWPrin.Size = New System.Drawing.Size(15, 15)
-        Me.PicSWPrin.TabIndex = 283
-        Me.PicSWPrin.TabStop = False
-        Me.PicSWPrin.Visible = False
+        Me.picSWPrin.BackgroundImage = CType(resources.GetObject("picSWPrin.BackgroundImage"), System.Drawing.Image)
+        Me.picSWPrin.Location = New System.Drawing.Point(197, 70)
+        Me.picSWPrin.Name = "picSWPrin"
+        Me.picSWPrin.Size = New System.Drawing.Size(15, 15)
+        Me.picSWPrin.TabIndex = 283
+        Me.picSWPrin.TabStop = False
+        Me.picSWPrin.Visible = False
         '
         'picSWb
         '
@@ -2188,12 +2196,56 @@ Partial Class Game
         Me.picHTf.TabStop = False
         Me.picHTf.Visible = False
         '
+        'picHTCow
+        '
+        Me.picHTCow.BackgroundImage = CType(resources.GetObject("picHTCow.BackgroundImage"), System.Drawing.Image)
+        Me.picHTCow.Location = New System.Drawing.Point(280, 91)
+        Me.picHTCow.Name = "picHTCow"
+        Me.picHTCow.Size = New System.Drawing.Size(15, 15)
+        Me.picHTCow.TabIndex = 310
+        Me.picHTCow.TabStop = False
+        Me.picHTCow.Visible = False
+        '
+        'picFVf
+        '
+        Me.picFVf.BackgroundImage = CType(resources.GetObject("picFVf.BackgroundImage"), System.Drawing.Image)
+        Me.picFVf.Location = New System.Drawing.Point(560, 136)
+        Me.picFVf.Name = "picFVf"
+        Me.picFVf.Size = New System.Drawing.Size(15, 15)
+        Me.picFVf.TabIndex = 311
+        Me.picFVf.TabStop = False
+        Me.picFVf.Visible = False
+        '
+        'picFVtile
+        '
+        Me.picFVtile.BackgroundImage = CType(resources.GetObject("picFVtile.BackgroundImage"), System.Drawing.Image)
+        Me.picFVtile.Location = New System.Drawing.Point(560, 70)
+        Me.picFVtile.Name = "picFVtile"
+        Me.picFVtile.Size = New System.Drawing.Size(15, 15)
+        Me.picFVtile.TabIndex = 312
+        Me.picFVtile.TabStop = False
+        Me.picFVtile.Visible = False
+        '
+        'picStaffEnd
+        '
+        Me.picStaffEnd.BackgroundImage = CType(resources.GetObject("picStaffEnd.BackgroundImage"), System.Drawing.Image)
+        Me.picStaffEnd.Location = New System.Drawing.Point(129, 91)
+        Me.picStaffEnd.Name = "picStaffEnd"
+        Me.picStaffEnd.Size = New System.Drawing.Size(15, 15)
+        Me.picStaffEnd.TabIndex = 313
+        Me.picStaffEnd.TabStop = False
+        Me.picStaffEnd.Visible = False
+        '
         'Game
         '
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Inherit
         Me.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink
         Me.BackColor = System.Drawing.Color.Black
         Me.ClientSize = New System.Drawing.Size(1008, 690)
+        Me.Controls.Add(Me.picStaffEnd)
+        Me.Controls.Add(Me.picFVtile)
+        Me.Controls.Add(Me.picFVf)
+        Me.Controls.Add(Me.picHTCow)
         Me.Controls.Add(Me.picHTf)
         Me.Controls.Add(Me.picHT)
         Me.Controls.Add(Me.picHTFV)
@@ -2220,7 +2272,7 @@ Partial Class Game
         Me.Controls.Add(Me.picPrin)
         Me.Controls.Add(Me.picBun)
         Me.Controls.Add(Me.picSWb)
-        Me.Controls.Add(Me.PicSWPrin)
+        Me.Controls.Add(Me.picSWPrin)
         Me.Controls.Add(Me.picSW)
         Me.Controls.Add(Me.pnlSelection)
         Me.Controls.Add(Me.picstairslockf)
@@ -2251,15 +2303,15 @@ Partial Class Game
         Me.Controls.Add(Me.picTrap)
         Me.Controls.Add(Me.btnNone)
         Me.Controls.Add(Me.btnAll)
-        Me.Controls.Add(Me.fMisc)
-        Me.Controls.Add(Me.fWeapon)
-        Me.Controls.Add(Me.fArmor)
-        Me.Controls.Add(Me.fFood)
-        Me.Controls.Add(Me.fPotion)
-        Me.Controls.Add(Me.fUseable)
+        Me.Controls.Add(Me.chkMisc)
+        Me.Controls.Add(Me.chkWeapon)
+        Me.Controls.Add(Me.chkArmor)
+        Me.Controls.Add(Me.chkFood)
+        Me.Controls.Add(Me.chkPotion)
+        Me.Controls.Add(Me.chkUseable)
         Me.Controls.Add(Me.btnOk)
         Me.Controls.Add(Me.btnSpec)
-        Me.Controls.Add(Me.cmboxSpec)
+        Me.Controls.Add(Me.cboxSpec)
         Me.Controls.Add(Me.picLust5)
         Me.Controls.Add(Me.picLust4)
         Me.Controls.Add(Me.picLust3)
@@ -2385,7 +2437,7 @@ Partial Class Game
         Me.pnlSelection.ResumeLayout(False)
         Me.pnlSelection.PerformLayout()
         CType(Me.picSW, System.ComponentModel.ISupportInitialize).EndInit()
-        CType(Me.PicSWPrin, System.ComponentModel.ISupportInitialize).EndInit()
+        CType(Me.picSWPrin, System.ComponentModel.ISupportInitialize).EndInit()
         CType(Me.picSWb, System.ComponentModel.ISupportInitialize).EndInit()
         CType(Me.picBun, System.ComponentModel.ISupportInitialize).EndInit()
         CType(Me.picPrin, System.ComponentModel.ISupportInitialize).EndInit()
@@ -2409,6 +2461,10 @@ Partial Class Game
         CType(Me.picHTFV, System.ComponentModel.ISupportInitialize).EndInit()
         CType(Me.picHT, System.ComponentModel.ISupportInitialize).EndInit()
         CType(Me.picHTf, System.ComponentModel.ISupportInitialize).EndInit()
+        CType(Me.picHTCow, System.ComponentModel.ISupportInitialize).EndInit()
+        CType(Me.picFVf, System.ComponentModel.ISupportInitialize).EndInit()
+        CType(Me.picFVtile, System.ComponentModel.ISupportInitialize).EndInit()
+        CType(Me.picStaffEnd, System.ComponentModel.ISupportInitialize).EndInit()
         Me.ResumeLayout(False)
         Me.PerformLayout()
 
@@ -2479,16 +2535,16 @@ Partial Class Game
     Friend WithEvents btnU As System.Windows.Forms.Button
     Friend WithEvents BtnD As System.Windows.Forms.Button
     Friend WithEvents btnLft As System.Windows.Forms.Button
-    Friend WithEvents cmboxSpec As System.Windows.Forms.ComboBox
+    Friend WithEvents cboxSpec As System.Windows.Forms.ComboBox
     Friend WithEvents btnSpec As System.Windows.Forms.Button
     Friend WithEvents btnFilter As System.Windows.Forms.Button
     Friend WithEvents btnOk As System.Windows.Forms.Button
-    Friend WithEvents fUseable As System.Windows.Forms.CheckBox
-    Friend WithEvents fPotion As System.Windows.Forms.CheckBox
-    Friend WithEvents fFood As System.Windows.Forms.CheckBox
-    Friend WithEvents fArmor As System.Windows.Forms.CheckBox
-    Friend WithEvents fWeapon As System.Windows.Forms.CheckBox
-    Friend WithEvents fMisc As System.Windows.Forms.CheckBox
+    Friend WithEvents chkUseable As System.Windows.Forms.CheckBox
+    Friend WithEvents chkPotion As System.Windows.Forms.CheckBox
+    Friend WithEvents chkFood As System.Windows.Forms.CheckBox
+    Friend WithEvents chkArmor As System.Windows.Forms.CheckBox
+    Friend WithEvents chkWeapon As System.Windows.Forms.CheckBox
+    Friend WithEvents chkMisc As System.Windows.Forms.CheckBox
     Friend WithEvents btnAll As System.Windows.Forms.Button
     Friend WithEvents btnNone As System.Windows.Forms.Button
     Friend WithEvents picTrap As System.Windows.Forms.PictureBox
@@ -2555,7 +2611,7 @@ Partial Class Game
     Friend WithEvents lstSelec As System.Windows.Forms.ListBox
     Friend WithEvents lblInstruc As System.Windows.Forms.Label
     Friend WithEvents picSW As System.Windows.Forms.PictureBox
-    Friend WithEvents PicSWPrin As System.Windows.Forms.PictureBox
+    Friend WithEvents picSWPrin As System.Windows.Forms.PictureBox
     Friend WithEvents picSWb As System.Windows.Forms.PictureBox
     Friend WithEvents picBun As System.Windows.Forms.PictureBox
     Friend WithEvents picPrin As System.Windows.Forms.PictureBox
@@ -2585,4 +2641,8 @@ Partial Class Game
     Friend WithEvents picHTFV As System.Windows.Forms.PictureBox
     Friend WithEvents picHT As System.Windows.Forms.PictureBox
     Friend WithEvents picHTf As System.Windows.Forms.PictureBox
+    Friend WithEvents picHTCow As System.Windows.Forms.PictureBox
+    Friend WithEvents picFVf As System.Windows.Forms.PictureBox
+    Friend WithEvents picFVtile As System.Windows.Forms.PictureBox
+    Friend WithEvents picStaffEnd As System.Windows.Forms.PictureBox
 End Class

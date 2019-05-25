@@ -24,24 +24,23 @@
 
         'goddess transformation
         If p.sex = "Male" Then
-            p.sexBool = True
             p.MtF()
             out += "Your body becomes daintier, and you are soon fully female.  "
         End If
-        If p.skincolor = Color.FromArgb(255, 255, 105, 180) Then p.haircolor = Color.FromArgb(255, 155, 0, 0)
-        If p.skincolor = Color.FromArgb(200, 0, 255, 255) Then p.haircolor = Color.FromArgb(180, 5, 245, 198)
-        p.iArrInd(1) = New Tuple(Of Integer, Boolean, Boolean)(15, True, True)
-        p.iArrInd(2) = New Tuple(Of Integer, Boolean, Boolean)(21, True, True)
-        p.iArrInd(4) = New Tuple(Of Integer, Boolean, Boolean)(0, True, False)
-        p.iArrInd(5) = New Tuple(Of Integer, Boolean, Boolean)(19, True, True)
-        p.iArrInd(6) = New Tuple(Of Integer, Boolean, Boolean)(7, True, True)
-        p.iArrInd(7) = New Tuple(Of Integer, Boolean, Boolean)(0, True, False)
-        p.iArrInd(8) = New Tuple(Of Integer, Boolean, Boolean)(11, True, True)
-        p.iArrInd(9) = New Tuple(Of Integer, Boolean, Boolean)(18, True, True)
-        p.iArrInd(10) = New Tuple(Of Integer, Boolean, Boolean)(0, True, False)
-        p.iArrInd(13) = New Tuple(Of Integer, Boolean, Boolean)(0, True, False)
-        p.iArrInd(15) = New Tuple(Of Integer, Boolean, Boolean)(15, True, True)
-        p.iArrInd(16) = New Tuple(Of Integer, Boolean, Boolean)(0, True, False)
+        If p.prt.skincolor = Color.FromArgb(255, 255, 105, 180) Then p.prt.haircolor = Color.FromArgb(255, 155, 0, 0)
+        If p.prt.skincolor = Color.FromArgb(200, 0, 255, 255) Then p.prt.haircolor = Color.FromArgb(180, 5, 245, 198)
+        p.prt.setIAInd(1, 15, True, True)
+        p.prt.setIAInd(2, 21, True, True)
+        p.prt.setIAInd(4, 0, True, False)
+        p.prt.setIAInd(5, 19, True, True)
+        p.prt.setIAInd(6, 7, True, True)
+        p.prt.setIAInd(7, 0, True, False)
+        p.prt.setIAInd(8, 11, True, True)
+        p.prt.setIAInd(9, 18, True, True)
+        p.prt.setIAInd(10, 0, True, False)
+        p.prt.setIAInd(13, 0, True, False)
+        p.prt.setIAInd(15, 15, True, True)
+        p.prt.setIAInd(16, 0, True, False)
 
         'transformation description push
         p.TextColor = Color.Orange

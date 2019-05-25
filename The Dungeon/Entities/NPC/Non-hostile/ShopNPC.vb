@@ -4,7 +4,7 @@
     Public isShop = False
     Public picNormal, picPrincess, picBunny As Image
     Public picNCP As List(Of Image)
-    Protected discount As Double = 0.5
+    Protected discount As Double = 0
 
     Shared Function shopFactory(ByVal nIndex As Integer)
         Select Case nIndex
@@ -12,6 +12,8 @@
                 Return New TravelingWizard
             Case 2
                 Return New HTeach
+            Case 3
+                Return New FVendor
             Case Else
                 Return New Shopkeeper
         End Select
@@ -68,15 +70,15 @@
     End Sub
 
     Public Overridable Function getShopInv() As Inventory
-        Dim tInv As Inventory = New Inventory
+        Dim tInv As Inventory = New Inventory(False)
         tInv.mergeRevalue(inv)
         If Game.floor < 5 AndAlso Game.floorboss(Game.floor).Equals("Key") Then tInv.setCount(53, 1) Else tInv.setCount(53, 0)
 
-        If discount <> 0 Then
-            For i = 0 To tInv.upperBound()
-                tInv.item(i).value -= (tInv.item(i).value * discount)
-            Next
-        End If
+        
+        For i = 0 To tInv.upperBound()
+            Dim n = tInv.item(i).value
+            tInv.item(i).value -= (n * discount)
+        Next
 
         Return tInv
     End Function

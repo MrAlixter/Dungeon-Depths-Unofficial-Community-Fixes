@@ -7,7 +7,7 @@
     Public tiers() = {Nothing, tier1, tier2, tier3}
     '|CONSTRUCTORS|
     Sub New()
-        contents = New Inventory
+        contents = New Inventory(False)
     End Sub
 
     '|PSEUDOCONSTRUCTORS|
@@ -92,7 +92,7 @@
         toReturn.tier2 = Me.tier2
         toReturn.tier3 = Me.tier3
         toReturn.tiers = Me.tiers
-        toReturn.contents = New Inventory
+        toReturn.contents = New Inventory(False)
         Return toReturn
     End Function
     Public Overridable Sub open()
@@ -122,7 +122,7 @@
         For i = 0 To contents.upperBound
             Dim content As Item = contents.item(i)
             If contents.getCountAt(i) > 0 Then
-                c += " " & vbCrLf & "+" & content.count & " " & content.getName() & " "
+                c += " " & vbCrLf & "+" & content.count & " " & Game.player.inv.item(i).getName() & " "
             End If
         Next
         c += " " & vbCrLf & " " & vbCrLf & "Press any non-movement key to continue."

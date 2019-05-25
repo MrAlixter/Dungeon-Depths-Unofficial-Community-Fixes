@@ -11,8 +11,8 @@
             Game.cboxMG.Items.Insert(0, "-- Select --")
             Game.cboxMG.SelectedIndex = 0
         End If
-        Do While Game.cboxMG.Items.Contains("Heartblast Starcannon")
-            Game.cboxMG.Items.Remove("Heartblast Starcannon")
+        Do While Game.player.knownSpells.Contains("Heartblast Starcannon")
+            Game.player.knownSpells.Remove("Heartblast Starcannon")
         Loop
         Game.pushLstLog("'Heartblast Starcannon' spell forgotten!")
     End Sub

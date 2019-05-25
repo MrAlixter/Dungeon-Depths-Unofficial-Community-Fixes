@@ -22,18 +22,17 @@
 
         'minotaur cow tf transformation
          If p.sex = "Male" Then
-            p.sexBool = True
             p.MtF()
             out += " Your body becomes daintier, and you are soon fully female."
         End If
         p.be()
         p.be()
         p.be()
-        p.iArrInd(1) = New Tuple(Of Integer, Boolean, Boolean)(16, True, True)
-        p.iArrInd(5) = New Tuple(Of Integer, Boolean, Boolean)(20, True, True)
-        p.iArrInd(6) = New Tuple(Of Integer, Boolean, Boolean)(8, True, True)
-        p.iArrInd(15) = New Tuple(Of Integer, Boolean, Boolean)(16, True, True)
-        p.hornInd = 2
+        p.prt.setIAInd(1, 16, True, True)
+        p.prt.setIAInd(5, 20, True, True)
+        p.prt.setIAInd(6, 8, True, True)
+        p.prt.setIAInd(15, 16, True, True)
+        p.prt.hornInd = 2
 
         Dim revertText = Game.lblEvent.Text.Split(vbCrLf)(0)
         If Not revertText.Equals("") Then out = revertText & vbCrLf & vbCrLf & out

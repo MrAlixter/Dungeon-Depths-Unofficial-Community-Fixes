@@ -31,11 +31,11 @@
 
     Public Overrides Sub onEquip()
         Polymorph.transform(Game.player, "bimboC")
-        prevWingInd = CInt(CStr(Game.player.wingInd))
-        Game.player.wingInd = 3
+        prevWingInd = CInt(CStr(Game.player.prt.wingInd))
+        Game.player.prt.wingInd = 3
     End Sub
 
     Public Overrides Sub onUnequip()
-        Game.player.wingInd = prevWingInd
+        Game.player.prt.wingInd = prevWingInd
     End Sub
 End Class

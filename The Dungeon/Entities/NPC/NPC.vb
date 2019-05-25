@@ -25,7 +25,8 @@
             tfCt = 0
             revert()
         End If
-        If Game.player.pClass.name = "Thrall" And Me.name.Contains("Thrall") Then
+        If (Game.player.pClass.name = "Thrall" And Me.name.Contains("Thrall")) Or
+           (Game.player.pForm.name = "Arachne" And Me.name.Contains("Arachne")) Then
             despawn("friend")
             Exit Sub
         End If
@@ -121,9 +122,11 @@
                 Game.player.inv.add(2, 1)
                 Game.player.inv.add(13, 1)
                 Game.player.inv.add(31, 1)
-                Game.pushLblEvent("+1 Health_Potion" & vbCrLf & "+1 Mana_Potion" & vbCrLf & "+1 Apple_Potion")
+                Game.pushLblEvent("The " & name & " gives you some supplies before leaving!" &
+                                  vbCrLf &
+                                  "+1 Health_Potion" & vbCrLf & "+1 Mana_Potion" & vbCrLf & "+1 Apple")
             Else
-                Game.pushLstLog("The " & name & " is friendly, and you chat a bit before setting back out!")
+                Game.pushLstLog("The " & name & " is friendly, and you chat briefly before setting out!")
             End If
         ElseIf reason = "npc" Then
             Game.pushLstLog("You walk away from " & name & "!")
@@ -148,7 +151,7 @@
             isDead = True
             endBoss()
         End If
-        If inv.getCountAt(53) > 0 And Me.GetType().IsSubclassOf(GetType(ShopNPC)) Then
+        If inv.getCountAt(53) > 0 And Not Me.GetType().IsSubclassOf(GetType(ShopNPC)) Then
             Game.pushLblEvent("Your foe drops a key!")
             inv.setCount(53, 1)
             Dim c1 As Chest = Game.baseChest.Create(inv, pos)
@@ -160,7 +163,7 @@
         
     End Sub
     Private Sub endBoss()
-        If Not Me.GetType().IsSubclassOf(GetType(MiniBoss)) Then Exit Sub
+        If Not Me.GetType() Is GetType(MiniBoss) Then Exit Sub
         If sName.Equals("Marissa the Enchantress") Then
             Game.beatboss(1) = True
             Game.player.perks("nekocurse") = -1
@@ -246,7 +249,7 @@
         Game.pushLblEvent("The " & name & " return to " & pPronoun & " original self!")
     End Sub
     Public Sub setInventory(ByVal contents() As Integer)
-        inv = New Inventory()
+        inv = New Inventory(False)
         For i = 0 To UBound(contents)
             If Me.GetType() Is GetType(MiniBoss) Then
                 inv.add(contents(i), 1)
@@ -304,8 +307,6 @@
     End Sub
     Private Sub hit(dmg As Integer, target As Player)
         target.takeDMG(dmg, Me)
-        Game.pushLstLog(CStr("You got hit! -" & dmg & " health!"))
-        Game.pushLblCombatEvent(CStr("You got hit! -" & dmg & " health!"))
     End Sub
     Private Sub cHit(dmg As Integer, target As Player)
         target.takeDMG(dmg * 2, Me)

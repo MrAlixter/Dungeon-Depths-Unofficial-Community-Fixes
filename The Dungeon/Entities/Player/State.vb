@@ -14,7 +14,7 @@
     Dim equippedAcce As Accessory
     Public iArrInd(16) As Tuple(Of Integer, Boolean, Boolean)
     Dim perks As Dictionary(Of String, Integer)
-    Dim sexBool, invNeedsUDate As Boolean
+    Dim invNeedsUDate As Boolean
     Dim haircolor, skincolor, textColor As Color
     Dim pImage As Image
     Dim wingIndex As Integer
@@ -44,16 +44,15 @@
         equippedWeapon = p.equippedWeapon
         equippedArmor = p.equippedArmor
         equippedAcce = p.equippedAcce
-        iArrInd = p.iArrInd.Clone
+        iArrInd = p.prt.iArrInd.Clone
         perks = New Dictionary(Of String, Integer)(p.perks)
-        sexBool = p.sexBool
         invNeedsUDate = p.inv.invNeedsUDate
-        haircolor = p.haircolor
-        skincolor = p.skincolor
+        haircolor = p.prt.haircolor
+        skincolor = p.prt.skincolor
         textColor = p.TextColor
         pImage = p.pImage
-        wingIndex = p.wingInd
-        hornIndex = p.hornInd
+        wingIndex = p.prt.wingInd
+        hornIndex = p.prt.hornInd
         initFlag = True
     End Sub
     'constructs a state with placeholder values
@@ -81,7 +80,6 @@
         equippedAcce = New noAcce
         iArrInd = {New Tuple(Of Integer, Boolean, Boolean)(2, False, False), New Tuple(Of Integer, Boolean, Boolean)(2, False, False), New Tuple(Of Integer, Boolean, Boolean)(2, False, False), New Tuple(Of Integer, Boolean, Boolean)(2, False, False), New Tuple(Of Integer, Boolean, Boolean)(2, False, False), New Tuple(Of Integer, Boolean, Boolean)(2, False, False), New Tuple(Of Integer, Boolean, Boolean)(2, False, False), New Tuple(Of Integer, Boolean, Boolean)(2, False, False), New Tuple(Of Integer, Boolean, Boolean)(2, False, False), New Tuple(Of Integer, Boolean, Boolean)(2, False, False), New Tuple(Of Integer, Boolean, Boolean)(2, False, False), New Tuple(Of Integer, Boolean, Boolean)(2, False, False), New Tuple(Of Integer, Boolean, Boolean)(2, False, False), New Tuple(Of Integer, Boolean, Boolean)(2, False, False), New Tuple(Of Integer, Boolean, Boolean)(2, False, False), New Tuple(Of Integer, Boolean, Boolean)(2, False, False), New Tuple(Of Integer, Boolean, Boolean)(2, False, False), New Tuple(Of Integer, Boolean, Boolean)(2, False, False), New Tuple(Of Integer, Boolean, Boolean)(2, False, False), New Tuple(Of Integer, Boolean, Boolean)(2, False, False)}
         perks = New Dictionary(Of String, Integer)()
-        sexBool = False
         invNeedsUDate = False
         haircolor = Color.Black
         skincolor = Color.Black
@@ -113,15 +111,14 @@
         Equipment.accChange(equippedArmor.getName)
         p.equippedArmor = equippedArmor
         p.equippedAcce = equippedAcce
-        p.iArrInd = iArrInd.Clone
+        p.prt.iArrInd = iArrInd.Clone
         p.perks = New Dictionary(Of String, Integer)(perks)
-        p.sexBool = sexBool
         p.inv.invNeedsUDate = invNeedsUDate
-        p.haircolor = haircolor
-        p.skincolor = skincolor
+        p.prt.haircolor = haircolor
+        p.prt.skincolor = skincolor
         p.TextColor = textColor
-        p.wingInd = wingIndex
-        p.hornInd = hornIndex
+        p.prt.wingInd = wingIndex
+        p.prt.hornInd = hornIndex
         p.pImage = pImage
         p.isPetrified = isPetrified
     End Sub
@@ -147,15 +144,14 @@
         equippedWeapon = p.equippedWeapon
         equippedArmor = p.equippedArmor
         equippedAcce = p.equippedAcce
-        iArrInd = p.iArrInd.Clone
+        iArrInd = p.prt.iArrInd.Clone
         perks = New Dictionary(Of String, Integer)(p.perks)
-        sexBool = p.sexBool
         invNeedsUDate = p.inv.invNeedsUDate
-        haircolor = p.haircolor
-        skincolor = p.skincolor
+        haircolor = p.prt.haircolor
+        skincolor = p.prt.skincolor
         textColor = p.TextColor
-        wingIndex = p.wingInd
-        hornIndex = p.hornInd
+        wingIndex = p.prt.wingInd
+        hornIndex = p.prt.hornInd
         pImage = p.pImage
         isPetrified = p.isPetrified
     End Sub
@@ -187,7 +183,6 @@
             equippedArmor = New Naked
             iArrInd = {New Tuple(Of Integer, Boolean, Boolean)(2, False, False), New Tuple(Of Integer, Boolean, Boolean)(2, False, False), New Tuple(Of Integer, Boolean, Boolean)(2, False, False), New Tuple(Of Integer, Boolean, Boolean)(2, False, False), New Tuple(Of Integer, Boolean, Boolean)(2, False, False), New Tuple(Of Integer, Boolean, Boolean)(2, False, False), New Tuple(Of Integer, Boolean, Boolean)(2, False, False), New Tuple(Of Integer, Boolean, Boolean)(2, False, False), New Tuple(Of Integer, Boolean, Boolean)(2, False, False), New Tuple(Of Integer, Boolean, Boolean)(2, False, False), New Tuple(Of Integer, Boolean, Boolean)(2, False, False), New Tuple(Of Integer, Boolean, Boolean)(2, False, False), New Tuple(Of Integer, Boolean, Boolean)(2, False, False), New Tuple(Of Integer, Boolean, Boolean)(2, False, False), New Tuple(Of Integer, Boolean, Boolean)(2, False, False), New Tuple(Of Integer, Boolean, Boolean)(2, False, False), New Tuple(Of Integer, Boolean, Boolean)(2, False, False), New Tuple(Of Integer, Boolean, Boolean)(2, False, False), New Tuple(Of Integer, Boolean, Boolean)(2, False, False), New Tuple(Of Integer, Boolean, Boolean)(2, False, False)}
             perks = New Dictionary(Of String, Integer)()
-            sexBool = False
             invNeedsUDate = False
             haircolor = Color.Black
             skincolor = Color.Black
@@ -227,7 +222,6 @@
         Next
 
         sex = readArray(19)
-        If sex = "Male" Then sexBool = False Else sexBool = True
 
         breastSize = CInt(readArray(21))
 

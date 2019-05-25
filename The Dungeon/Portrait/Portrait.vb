@@ -6,8 +6,8 @@
     Public skincolor As Color = Color.FromArgb(255, 247, 219, 195)
     Public wingInd = 0
     Public hornInd = 0
-    Public Shared imgLib As ImageCollection '= New ImageCollection(1)
-    Public Shared nullImg As Image '= imgLib.atrs("Clothes").getAt(New Tuple(Of Integer, Boolean, Boolean)(5, False, True))
+    Public Shared imgLib As ImageCollection = New ImageCollection(1)
+    Public Shared nullImg As Image = imgLib.atrs("Clothes").getAt(New Tuple(Of Integer, Boolean, Boolean)(5, False, True))
     Dim sInts() As Integer = {0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0} 'the starting indexes of each catagory
 
     Sub New(ByVal sex As Boolean, ByRef e As Entity)
@@ -90,12 +90,20 @@
     End Function
     Public Function draw()
         portraitUDate()
+        If ent Is Nothing Then
+            Select Case sexBool()
+                Case False
+                    setIAInd(2, 0, False, False)
+                Case True
+                    setIAInd(2, 5, True, True)
+            End Select
+        End If
 
         For i = 0 To 16
             Try
-                iArr(i) = Game.imgLib.atrs(Game.imgLib.atrs.Keys(i)).getAt(iArrInd(i))
+                iArr(i) = imgLib.atrs(imgLib.atrs.Keys(i)).getAt(iArrInd(i))
             Catch ex As Exception
-                MsgBox("Error!  Exception thrown in portrait creation (specifically in the " & Game.imgLib.atrs.Keys(i) & " layer).  The player character will now revert to default.")
+                MsgBox("Error!  Exception thrown in portrait creation (specifically in the " & imgLib.atrs.Keys(i) & " layer).  The player character will now revert to default.")
             End Try
         Next
 
@@ -103,7 +111,8 @@
         changeSkinColor(skincolor)
 
         hideEars()
-        If ent.lust > 0 Then lustBlushUpdate()
+
+        If Not ent Is Nothing AndAlso ent.lust > 0 Then lustBlushUpdate()
         If wingInd > 0 Then addWings(wingInd)
         If hornInd > 0 Then addHorns(hornInd)
 
@@ -118,9 +127,9 @@
 
         For i = 0 To 16
             Try
-                iArr(i) = Game.imgLib.atrs(Game.imgLib.atrs.Keys(i)).getAt(iArrInd(i))
+                iArr(i) = imgLib.atrs(imgLib.atrs.Keys(i)).getAt(iArrInd(i))
             Catch ex As Exception
-                MsgBox("Error!  Exception thrown in portrait creation (specifically in the " & Game.imgLib.atrs.Keys(i) & " layer).  The player character will now revert to default.")
+                MsgBox("Error!  Exception thrown in portrait creation (specifically in the " & imgLib.atrs.Keys(i) & " layer).  The player character will now revert to default.")
                 errorAction()
             End Try
         Next
@@ -140,41 +149,41 @@
 
         Return CreateBMP(iArr)
     End Function
-    
+
     Public Sub changeHairColor(ByVal c As Color)
         haircolor = c
 
-        iArr(1) = portrait.recolor(Game.imgLib.atrs("RearHair2").getAt(iArrInd(1)), c)
-        iArr(5) = portrait.recolor(Game.imgLib.atrs("RearHair1").getAt(iArrInd(5)), c)
-        iArr(10) = portrait.recolor(Game.imgLib.atrs("Eyebrows").getAt(iArrInd(10)), c)
-        iArr(15) = portrait.recolor(Game.imgLib.atrs("FrontHair").getAt(iArrInd(15)), c)
+        iArr(1) = portrait.recolor(imgLib.atrs("RearHair2").getAt(iArrInd(1)), c)
+        iArr(5) = portrait.recolor(imgLib.atrs("RearHair1").getAt(iArrInd(5)), c)
+        iArr(10) = portrait.recolor(imgLib.atrs("Eyebrows").getAt(iArrInd(10)), c)
+        iArr(15) = portrait.recolor(imgLib.atrs("FrontHair").getAt(iArrInd(15)), c)
     End Sub
     Public Sub changeSkinColor(ByVal c As Color)
         skincolor = c
 
-        iArr(2) = portrait.recolor2(Game.imgLib.atrs("Body").getAt(iArrInd(2)), c)
-        iArr(4) = portrait.recolor2(Game.imgLib.atrs("Face").getAt(iArrInd(4)), c)
-        iArr(6) = portrait.recolor2(Game.imgLib.atrs("Ears").getAt(iArrInd(6)), c)
-        iArr(7) = portrait.recolor2(Game.imgLib.atrs("Nose").getAt(iArrInd(7)), c)
+        iArr(2) = portrait.recolor2(imgLib.atrs("Body").getAt(iArrInd(2)), c)
+        iArr(4) = portrait.recolor2(imgLib.atrs("Face").getAt(iArrInd(4)), c)
+        iArr(6) = portrait.recolor2(imgLib.atrs("Ears").getAt(iArrInd(6)), c)
+        iArr(7) = portrait.recolor2(imgLib.atrs("Nose").getAt(iArrInd(7)), c)
     End Sub
     Public Sub lustBlushUpdate()
         Select Case Int(ent.lust / 20)
             Case 0
             Case 1
-                iArr(4) = CharacterGenerator.CreateBMP({iArr(4), Game.picLust1.BackgroundImage})
+                iArr(4) = CreateBMP({iArr(4), Game.picLust1.BackgroundImage})
             Case 2
-                iArr(4) = CharacterGenerator.CreateBMP({iArr(4), Game.picLust2.BackgroundImage})
+                iArr(4) = CreateBMP({iArr(4), Game.picLust2.BackgroundImage})
             Case 3
-                iArr(4) = CharacterGenerator.CreateBMP({iArr(4), Game.picLust3.BackgroundImage})
+                iArr(4) = CreateBMP({iArr(4), Game.picLust3.BackgroundImage})
             Case Else
-                iArr(4) = CharacterGenerator.CreateBMP({iArr(4), Game.picLust4.BackgroundImage})
+                iArr(4) = CreateBMP({iArr(4), Game.picLust4.BackgroundImage})
         End Select
     End Sub
     Sub addWings(ByVal i As Integer)
-        iArr(1) = CharacterGenerator.CreateBMP({Game.imgLib.atrs("Wings").getM(i), iArr(1)})
+        iArr(1) = CreateBMP({imgLib.atrs("Wings").getM(i), iArr(1)})
     End Sub
     Sub addHorns(ByVal i As Integer)
-        iArr(6) = CharacterGenerator.CreateBMP({Game.imgLib.atrs("Horns").getM(i), iArr(6)})
+        iArr(15) = CreateBMP({imgLib.atrs("Horns").getM(i), iArr(15)})
     End Sub
     Sub hideEars()
         If iArrInd(6).Item1 = 1 Or iArrInd(6).Item1 = 2 Or (Not iArrInd(5).Item2 And iArrInd(5).Item1 <> 2) Then Exit Sub
@@ -192,12 +201,12 @@
     Function checkNDefFemInd(ByVal attrInd As Integer, ByVal i As Integer) As Boolean
         Dim ind = iArrInd(attrInd)
         If Not ind.Item2 Or Not ind.Item3 Then Return False
-        If Game.imgLib.atrs(Game.imgLib.atrs.Keys(attrInd)).rosf(ind.Item1) = i Then Return True Else Return False
+        If imgLib.atrs(imgLib.atrs.Keys(attrInd)).rosf(ind.Item1) = i Then Return True Else Return False
     End Function
     Function checkNDefMalInd(ByVal attrInd As Integer, ByVal i As Integer) As Boolean
         Dim ind = iArrInd(attrInd)
         If ind.Item2 Or ind.Item3 Then Return False
-        If Game.imgLib.atrs(Game.imgLib.atrs.Keys(attrInd)).rosm(ind.Item1) = i Then Return True Else Return False
+        If imgLib.atrs(imgLib.atrs.Keys(attrInd)).rosm(ind.Item1) = i Then Return True Else Return False
     End Function
     Function checkFemInd(ByVal attrInd As Integer, ByVal i As Integer) As Boolean
         Dim ind = iArrInd(attrInd)
@@ -263,6 +272,7 @@
 
     'portraitUDate updates the player's portrait based on their breastsize and armor
     Public Sub portraitUDate()
+        If ent Is Nothing Then Exit Sub
         Dim p As Player
         If ent.GetType Is GetType(Player) Then
             p = CType(ent, Player)
@@ -280,29 +290,29 @@
         Else
             Select Case p.breastSize
                 Case -1
-                    p.iArrInd(3) = p.equippedArmor.bsizeneg1
+                    iArrInd(3) = p.equippedArmor.bsizeneg1
                 Case 0
                     If p.equippedArmor.bsize0 Is Nothing Then
-                        p.iArrInd(3) = p.equippedArmor.bsizeneg1
+                        iArrInd(3) = p.equippedArmor.bsizeneg1
                     Else
-                        p.iArrInd(3) = p.equippedArmor.bsize0
+                        iArrInd(3) = p.equippedArmor.bsize0
                     End If
                 Case 1
-                    p.iArrInd(3) = p.equippedArmor.bsize1
+                    iArrInd(3) = p.equippedArmor.bsize1
                 Case 2
-                    p.iArrInd(3) = p.equippedArmor.bsize2
+                    iArrInd(3) = p.equippedArmor.bsize2
                 Case 3
-                    p.iArrInd(3) = p.equippedArmor.bsize3
+                    iArrInd(3) = p.equippedArmor.bsize3
                 Case 4
-                    p.iArrInd(3) = p.equippedArmor.bsize4
+                    iArrInd(3) = p.equippedArmor.bsize4
                 Case 5
-                    p.iArrInd(3) = p.equippedArmor.bsize5
+                    iArrInd(3) = p.equippedArmor.bsize5
                 Case 6
-                    p.iArrInd(3) = p.equippedArmor.bsize6
+                    iArrInd(3) = p.equippedArmor.bsize6
                 Case 7
-                    p.iArrInd(3) = p.equippedArmor.bsize7
+                    iArrInd(3) = p.equippedArmor.bsize7
             End Select
-            If p.iArrInd(3) Is Nothing Then
+            If iArrInd(3) Is Nothing Then
                 getNaked()
             End If
         End If
@@ -315,10 +325,10 @@
         If p.equippedAcce Is Nothing Or (p.equippedAcce.fInd Is Nothing And p.equippedAcce.mInd Is Nothing) Then
             p.equippedAcce = New noAcce()
         Else
-            If p.sexBool Then
-                If Not p.equippedAcce.fInd Is Nothing Then p.iArrInd(14) = p.equippedAcce.fInd Else p.iArrInd(4) = p.equippedAcce.mInd
+            If sexBool() Then
+                If Not p.equippedAcce.fInd Is Nothing Then iArrInd(14) = p.equippedAcce.fInd Else iArrInd(4) = p.equippedAcce.mInd
             Else
-                If Not p.equippedAcce.mInd Is Nothing Then p.iArrInd(14) = p.equippedAcce.mInd Else p.iArrInd(4) = p.equippedAcce.fInd
+                If Not p.equippedAcce.mInd Is Nothing Then iArrInd(14) = p.equippedAcce.mInd Else iArrInd(4) = p.equippedAcce.fInd
             End If
         End If
 
@@ -335,17 +345,17 @@
 
         Select Case p.breastSize
             Case -1
-                p.iArrInd(3) = p.equippedArmor.bsizeneg1
+                iArrInd(3) = p.equippedArmor.bsizeneg1
             Case 0
-                p.iArrInd(3) = p.equippedArmor.bsize0
+                iArrInd(3) = p.equippedArmor.bsize0
             Case 1
-                p.iArrInd(3) = p.equippedArmor.bsize1
+                iArrInd(3) = p.equippedArmor.bsize1
             Case 2
-                p.iArrInd(3) = p.equippedArmor.bsize2
+                iArrInd(3) = p.equippedArmor.bsize2
             Case 3
-                p.iArrInd(3) = p.equippedArmor.bsize3
+                iArrInd(3) = p.equippedArmor.bsize3
             Case 4
-                p.iArrInd(3) = p.equippedArmor.bsize4
+                iArrInd(3) = p.equippedArmor.bsize4
             Case Else
                 getNaked()
         End Select
@@ -363,18 +373,19 @@
         End If
         Select Case p.breastSize
             Case 1
-                p.iArrInd(3) = p.equippedArmor.bsize1
+                iArrInd(3) = p.equippedArmor.bsize1
             Case 3
-                p.haircolor = Color.FromArgb(255, 255, 250, 205)
-                p.iArrInd(1) = New Tuple(Of Integer, Boolean, Boolean)(10, True, True)
-                p.iArrInd(5) = New Tuple(Of Integer, Boolean, Boolean)(10, True, True)
-                p.iArrInd(15) = New Tuple(Of Integer, Boolean, Boolean)(7, True, True)
-                p.iArrInd(3) = p.equippedArmor.bsize3
+                haircolor = Color.FromArgb(255, 255, 250, 205)
+                iArrInd(1) = New Tuple(Of Integer, Boolean, Boolean)(10, True, True)
+                iArrInd(5) = New Tuple(Of Integer, Boolean, Boolean)(10, True, True)
+                iArrInd(15) = New Tuple(Of Integer, Boolean, Boolean)(7, True, True)
+                iArrInd(3) = p.equippedArmor.bsize3
             Case Else
                 getNaked()
         End Select
     End Sub
     Public Sub cclothesUpdate()
+        If ent Is Nothing Then Exit Sub
         Dim p As Player
         If ent.GetType Is GetType(Player) Then
             p = CType(ent, Player)
@@ -384,19 +395,19 @@
 
         Select Case p.breastSize
             Case -1
-                p.iArrInd(3) = New Tuple(Of Integer, Boolean, Boolean)(p.sState.iArrInd(3).Item1, p.iArrInd(2).Item2, False)
+                iArrInd(3) = New Tuple(Of Integer, Boolean, Boolean)(p.sState.iArrInd(3).Item1, iArrInd(2).Item2, False)
             Case 0
-                p.iArrInd(3) = New Tuple(Of Integer, Boolean, Boolean)(p.sState.iArrInd(3).Item1, p.iArrInd(2).Item2, False)
+                iArrInd(3) = New Tuple(Of Integer, Boolean, Boolean)(p.sState.iArrInd(3).Item1, iArrInd(2).Item2, False)
             Case 1
-                p.iArrInd(3) = New Tuple(Of Integer, Boolean, Boolean)(p.sState.iArrInd(3).Item1, p.iArrInd(2).Item2, False)
+                iArrInd(3) = New Tuple(Of Integer, Boolean, Boolean)(p.sState.iArrInd(3).Item1, iArrInd(2).Item2, False)
             Case 2
                 Select Case p.sState.iArrInd(3).Item1
                     Case 0, 1, 2, 3, 4
-                        p.iArrInd(3) = New Tuple(Of Integer, Boolean, Boolean)(Game.imgLib.atrs("Clothes").osf(CInt(p.sState.iArrInd(3).Item1) + 99), True, False)
+                        iArrInd(3) = New Tuple(Of Integer, Boolean, Boolean)(imgLib.atrs("Clothes").osf(CInt(p.sState.iArrInd(3).Item1) + 99), True, False)
                     Case 5
-                        p.iArrInd(3) = New Tuple(Of Integer, Boolean, Boolean)(Game.imgLib.atrs("Clothes").osf(123), True, False)
+                        iArrInd(3) = New Tuple(Of Integer, Boolean, Boolean)(imgLib.atrs("Clothes").osf(123), True, False)
                     Case 6
-                        p.iArrInd(3) = New Tuple(Of Integer, Boolean, Boolean)(Game.imgLib.atrs("Clothes").osf(124), True, False)
+                        iArrInd(3) = New Tuple(Of Integer, Boolean, Boolean)(imgLib.atrs("Clothes").osf(124), True, False)
                     Case Else
                         getNaked()
                 End Select
@@ -412,26 +423,26 @@
             Exit Sub
         End If
 
-        If Not p.checkNDefFemInd(2, 10) And Not p.checkNDefFemInd(2, 16) And Not p.checkNDefFemInd(2, 21) Then
+        If Not checkNDefFemInd(2, 10) And Not checkNDefFemInd(2, 16) And Not checkNDefFemInd(2, 21) Then
             Select Case p.breastSize
                 Case -1
-                    p.iArrInd(2) = New Tuple(Of Integer, Boolean, Boolean)(0, False, False)
+                    setIAInd(2, 0, False, False)
                 Case 0
-                    p.iArrInd(2) = New Tuple(Of Integer, Boolean, Boolean)(2, False, True)
+                    setIAInd(2, 2, False, True)
                 Case 1
-                    p.iArrInd(2) = New Tuple(Of Integer, Boolean, Boolean)(5, True, True)
+                    setIAInd(2, 5, True, True)
                 Case 2
-                    p.iArrInd(2) = New Tuple(Of Integer, Boolean, Boolean)(6, True, True)
+                    setIAInd(2, 6, True, True)
                 Case 3
-                    p.iArrInd(2) = New Tuple(Of Integer, Boolean, Boolean)(7, True, True)
+                    setIAInd(2, 7, True, True)
                 Case 4
-                    p.iArrInd(2) = New Tuple(Of Integer, Boolean, Boolean)(8, True, True)
+                    setIAInd(2, 8, True, True)
                 Case 5
-                    p.iArrInd(2) = New Tuple(Of Integer, Boolean, Boolean)(9, True, True)
+                    setIAInd(2, 9, True, True)
                 Case 6
-                    p.iArrInd(2) = New Tuple(Of Integer, Boolean, Boolean)(18, True, True)
+                    setIAInd(2, 18, True, True)
                 Case 7
-                    p.iArrInd(2) = New Tuple(Of Integer, Boolean, Boolean)(20, True, True)
+                    setIAInd(2, 20, True, True)
             End Select
         End If
     End Sub
@@ -445,10 +456,10 @@
 
         Equipment.clothesChange("Naked")
         Game.pushLstLog("Your clothes don't fit!")
-        If p.sexBool Then
-            p.iArrInd(3) = New Tuple(Of Integer, Boolean, Boolean)(47, True, True)
+        If sexBool() Then
+            setIAInd(3, 47, True, True)
         Else
-            p.iArrInd(3) = New Tuple(Of Integer, Boolean, Boolean)(5, False, True)
+            setIAInd(3, 5, False, True)
         End If
     End Sub
     Public Sub notcompress()
@@ -459,27 +470,32 @@
             Exit Sub
         End If
 
-        If p.iArrInd(2).Item1 <> 4 And p.iArrInd(2).Item1 <> 16 And p.iArrInd(2).Item1 <> 21 Then
+        If checkNDefFemInd(2, 4) And checkNDefFemInd(2, 16) And checkNDefFemInd(2, 21) Then
             Select Case p.breastSize
                 Case -1
-                    p.iArrInd(2) = New Tuple(Of Integer, Boolean, Boolean)(0, False, False)
+                    setIAInd(2, 0, False, False)
                 Case 0
-                    p.iArrInd(2) = New Tuple(Of Integer, Boolean, Boolean)(2, False, True)
+                    setIAInd(2, 2, False, True)
                 Case 1
-                    p.iArrInd(2) = New Tuple(Of Integer, Boolean, Boolean)(0, True, False)
+                    setIAInd(2, 0, True, False)
                 Case 2
-                    p.iArrInd(2) = New Tuple(Of Integer, Boolean, Boolean)(1, True, True)
+                    setIAInd(2, 1, True, True)
                 Case 3
-                    p.iArrInd(2) = New Tuple(Of Integer, Boolean, Boolean)(2, True, True)
+                    setIAInd(2, 2, True, True)
                 Case 4
-                    p.iArrInd(2) = New Tuple(Of Integer, Boolean, Boolean)(3, True, True)
+                    setIAInd(2, 3, True, True)
                 Case 5
-                    p.iArrInd(2) = New Tuple(Of Integer, Boolean, Boolean)(4, True, True)
+                    setIAInd(2, 4, True, True)
                 Case 6
-                    p.iArrInd(2) = New Tuple(Of Integer, Boolean, Boolean)(17, True, True)
+                    setIAInd(2, 17, True, True)
                 Case 7
-                    p.iArrInd(2) = New Tuple(Of Integer, Boolean, Boolean)(19, True, True)
+                    setIAInd(2, 19, True, True)
             End Select
         End If
     End Sub
+
+    'gets the player's current sexBool
+    Public Function sexBool() As Boolean
+        Return iArrInd(2).Item2
+    End Function
 End Class

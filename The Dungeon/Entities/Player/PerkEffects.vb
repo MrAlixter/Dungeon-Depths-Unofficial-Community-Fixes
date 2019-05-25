@@ -13,7 +13,7 @@
     End Sub
     Shared Sub slimeHairRegen()
         Dim p As Player = Game.player
-        If Not p.haircolor.A = 180 Then
+        If Not p.prt.haircolor.A = 180 Then
             p.perks("slimehair") = -1
         Else
             If p.health < 1 And Game.turn Mod 4 = 0 Then
@@ -25,12 +25,12 @@
     End Sub
     Shared Sub vslimeHairRegen()
         Dim p As Player = Game.player
-        If Not p.haircolor.A = 180 Then
+        If Not p.prt.haircolor.A = 180 Then
             p.perks("vsslimehair") = -1
         Else
             If p.health < 1 And Game.turn Mod 7 = 0 Then
                 Dim h As Integer = Int(Rnd() * 5) + 1
-                p.health += h / p.getmaxHealth()
+                p.health += h / p.getMaxHealth()
                 Game.pushLstLog("The gel portion of your body is able to heal some of your wounds! +" & h & " health")
                 If p.health > 1 Then p.health = 1
             End If
@@ -194,4 +194,27 @@
 
         End If
     End Sub
+
+    '|TAKE DAMAGE PERKS|
+    Shared Function onDamage() As Boolean
+        Dim flag = False
+        flag = bowTieEffect() Or flag
+        Return flag
+    End Function
+    Shared Function bowTieEffect() As Boolean
+        Dim p = Game.player
+        If p.perks("bowtie") > -1 Then
+            Dim r = Int(Rnd() * 10)
+            If r > 8 And Not p.pClass.name.Equals("Bunny Girl") Then
+                Dim dTF = New DancerTF(1, 0, 0, False)
+                dTF.update()
+                p.createP()
+                Return True
+            ElseIf r > 5 Then
+                Game.pushLblEvent("Your bowtie begins glowing, and suddenly everything seems to slow down.  You deftly sidestep the oncomming blow!  Time returns to its normal speed shortly, and your bowtie returns to its inert state.")
+                Return True
+            End If
+        End If
+        Return False
+    End Function
 End Class

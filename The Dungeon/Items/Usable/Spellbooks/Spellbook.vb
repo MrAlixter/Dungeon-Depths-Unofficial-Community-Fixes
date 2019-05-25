@@ -20,7 +20,7 @@
             Dim sName As String = "ERROR"
             Dim ct As Integer = 0
             Dim out As String = ""
-            While ct < 1 Or Game.cboxMG.Items.Contains(sName)
+            While ct < 1 Or Game.player.knownSpells.Contains(sName)
                 ct += 1
                 Dim spell As Integer = CInt(Int(Rnd() * 9))
                 Select Case spell
@@ -32,7 +32,8 @@
                         sName = "Self Polymorph"
                         Dim form As String = "Err"
                         Dim c As Integer = 0
-                        While c < 1 Or Game.formList.Contains(form)
+                        Dim p = Game.player
+                        While c < 1 Or p.selfPolyForms.Contains(form)
                             c += 1
                             Dim learnForm As Integer = CInt(Int(Rnd() * 4))
                             Select Case learnForm
@@ -50,8 +51,8 @@
                                 Exit Select
                             End If
                         End While
-                        If Not Game.formList.Contains(form) Then
-                            Game.formList.Add(form)
+                        If Not p.selfPolyForms.Contains(form) Then
+                            p.selfPolyForms.Add(form)
                             out = "You learn how to turn yourself into a " & form & "!"
                             Exit While
                         End If
@@ -61,7 +62,8 @@
                         sName = "Polymorph Enemy"
                         Dim form As String = "Err"
                         Dim c As Integer = 0
-                        While c < 1 Or Game.formList.Contains(form)
+                        Dim p = Game.player
+                        While c < 1 Or p.enemPolyForms.Contains(form)
                             c += 1
                             Dim learnForm As Integer = CInt(Int(Rnd() * 3))
                             Select Case learnForm
@@ -77,8 +79,8 @@
                                 Exit Select
                             End If
                         End While
-                        If Not Game.tFormList.Contains(form) Then
-                            Game.tFormList.Add(form)
+                        If Not p.enemPolyForms.Contains(form) Then
+                            p.enemPolyForms.Add(form)
                             out = "You learn how to polymorph somthing into a " & form & "!"
                             Exit While
                         End If
@@ -103,7 +105,7 @@
                     Exit Sub
                 End If
             End While
-            If Not Game.cboxMG.Items.Contains(sName) Then Game.cboxMG.Items.Add(sName)
+            If Not Game.player.knownSpells.Contains(sName) Then Game.player.knownSpells.Add(sName)
             Game.pushLstLog("You read the " & getName() & ". " & sName & " learned!")
             If Not out.Equals("") Then
                 Game.pushLstLog(out)
