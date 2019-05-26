@@ -39,7 +39,7 @@
                 effectList.Add(sideEffects(r))
                 sideEffects.RemoveAt(r)
             End If
-            numMainEffects -= 1
+            numSideEffects -= 1
         Loop
     End Sub
 

@@ -114,6 +114,8 @@
         internal_inventory.Add("Valkyrie_Armor", New ValkyrieArmor())       '95
         internal_inventory.Add("Valkyrie_Sword", New ValkyrieSword())       '96
         internal_inventory.Add("Bowtie", New Bowtie())                      '97
+        internal_inventory.Add("Cursed_Heavy_Cream", New CHeavyCream())     '98
+        internal_inventory.Add("Amazonian_Attire", New AmaAttire())         '99
 
         armor = {New CommonClothes, New SkimpyClothes, New Naked,
                  Me.item(5), Me.item(7), Me.item(8), Me.item(10),
@@ -123,7 +125,7 @@
                  Me.item(56), Me.item(64), Me.item(71), Me.item(72),
                  Me.item(73), Me.item(74), Me.item(75), Me.item(78),
                  Me.item(79), Me.item(83), Me.item(85), Me.item(80),
-                 Me.item(94), Me.item(95)}
+                 Me.item(94), Me.item(95), Me.item(99)}
 
         weapons = {New BareFists(),
                    Me.item(6), Me.item(9), Me.item(11), Me.item(21),
@@ -139,7 +141,8 @@
                    Me.item(91)}
 
         food = {Me.item(30), Me.item(31), Me.item(32), Me.item(33),
-                Me.item(34), Me.item(35), Me.item(44), Me.item(90)}
+                Me.item(34), Me.item(35), Me.item(44), Me.item(90),
+                Me.item(98)}
 
         acce = {New noAcce(), Me.item(66), Me.item(67), Me.item(68),
                 Me.item(69), Me.item(70), Me.item(77), Me.item(81),

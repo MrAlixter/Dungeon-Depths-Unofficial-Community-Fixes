@@ -5,6 +5,7 @@
         MyBase.setDesc("A small glass bottle filled with an translucent golden ichor.")
         id = 91
         tier = 1
+        isMonsterDrop = True
         MyBase.setUsable(True)
         MyBase.count = 0
         MyBase.value = 100

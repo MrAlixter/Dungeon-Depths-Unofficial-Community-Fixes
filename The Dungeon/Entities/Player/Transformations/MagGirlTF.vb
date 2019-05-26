@@ -58,6 +58,7 @@
         Game.pushLstLog("'Heartblast Starcannon' spell learned!")
         Game.lblEvent.Visible = False
         p.canMoveFlag = True
+        p.createP()
     End Sub
 
     Public Overrides Sub stopTF()

@@ -9,7 +9,8 @@
         MyBase.setDesc("A collar commonly placed around the necks of the thralls." & vbCrLf & _
                        "Provides no bonus.")
         id = 69
-        tier = Nothing
+        tier = 3
+        isMonsterDrop = True
         MyBase.setUsable(False)
         MyBase.count = 0
         MyBase.value = 200

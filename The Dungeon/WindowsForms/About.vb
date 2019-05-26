@@ -41,7 +41,7 @@
                                      "-----------------------------------------------" & vbCrLf &
                                      "Outside of myself (VHU), there have been several people to join the game's development team.  I would like to recognize:" & vbCrLf & vbCrLf &
                                      "- Houdini111 for extensive contributions in debugging and game features, namely in the design and implementation of the debug menu, the current shop UI, and the dungeon customization menu." & vbCrLf & vbCrLf &
-                                     "- Lazerlite142 for the creation and management of the game's discord server, the creation of several image packs that signifiganty change up the game's visuals, and for the creation of in game art assets, such as the Slime dissolved shirt." & vbCrLf & vbCrLf &
+                                     "- Lazerlite142 for the creation and management of the game's discord server, the creation of several image packs that signifiganty change up the game's visuals, and for the creation of in-game art assets, such as the Slime dissolved shirt." & vbCrLf & vbCrLf &
                                      "These two have greatly improved our game through their being a part of it, and for that I am eternally grateful." & vbCrLf &
                                      "-----------------------------------------------" & vbCrLf &
                                      "I would also like to send a special thanks to:" & vbCrLf & vbCrLf &

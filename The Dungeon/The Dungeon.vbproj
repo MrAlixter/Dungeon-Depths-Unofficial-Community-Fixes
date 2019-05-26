@@ -235,9 +235,11 @@
     <Compile Include="Entities\preferedForm.vb" />
     <Compile Include="Items\Accesories\Bowtie.vb" />
     <Compile Include="Items\Armor\BunnySuitA.vb" />
+    <Compile Include="Items\Armor\AmaAttire.vb" />
     <Compile Include="Items\Armor\DissolvedClothes.vb" />
     <Compile Include="Items\Armor\ValkyrieArmor.vb" />
     <Compile Include="Items\Unimplemented\BimboLesson.vb" />
+    <Compile Include="Items\Usable\Food\CHeavyCream.vb" />
     <Compile Include="Items\Usable\Food\Pancea.vb" />
     <Compile Include="Items\Usable\Manuals\CombatManual.vb" />
     <Compile Include="Items\Usable\Manuals\UtilityManual.vb" />
@@ -633,6 +635,15 @@
     <Content Include="img\fTF\tfClothes\gfClothes135.png">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
+    <Content Include="img\fTF\tfClothes\gfClothes136.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="img\fTF\tfClothes\gfClothes137.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="img\fTF\tfClothes\gfClothes138.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
     <Content Include="img\fTF\tfEyes\tfEyes20.png">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
@@ -649,6 +660,15 @@
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
     <Content Include="img\fTF\tfFrontHair\tfFrontHair18.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="img\fTF\tfMouth\fMouth13.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="img\fTF\tfMouth\fMouth14.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="img\fTF\tfMouth\fMouth15.png">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
     <Content Include="img\fTF\tfRearHair1\tfRearHair21.png">
@@ -1990,6 +2010,9 @@
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
     <Content Include="img\mTF\tfClothes\mClothes35.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="img\mTF\tfClothes\mClothes36.png">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
     <Content Include="img\mTF\tfEars\blank.png">

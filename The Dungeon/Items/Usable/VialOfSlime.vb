@@ -5,6 +5,7 @@
         MyBase.setDesc("A glass bottle filled with an aquamarine non-newtonian gel.")
         id = 3
         tier = 1
+        isMonsterDrop = True
         MyBase.setUsable(True)
         MyBase.count = 0
         MyBase.value = 100

@@ -9,6 +9,7 @@
                        " +10 SPD")
         id = 64
         tier = 3
+        isMonsterDrop = True
         MyBase.setUsable(False)
         MyBase.dBoost = 15
         MyBase.sBoost = 10

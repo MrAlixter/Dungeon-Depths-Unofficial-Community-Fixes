@@ -171,7 +171,7 @@ Public Class Game
         'Fill Chest Tier List
         For i = 0 To player.inv.upperBound
             Dim c_item = player.inv.item(i)
-            If c_item.tier <> Nothing Then
+            If c_item.tier <> Nothing And Not c_item.isMonsterDrop Then
                 baseChest.tiers(c_item.tier).Add(c_item)
             End If
         Next
@@ -1438,8 +1438,11 @@ Public Class Game
         If Not lblEventOnClose Is Nothing Then
             Dim lastOnClose = lblEventOnClose.Method.Name
             lblEventOnClose()
-            If lblEventOnClose.Method.Name.Equals(lastOnClose) Then lblEventOnClose = Nothing
-            If Not combatmode Then player.canMoveFlag = False
+            If lblEventOnClose.Method.Name.Equals(lastOnClose) Then
+                lblEventOnClose = Nothing
+            End If
+
+            If Not combatmode Then player.canMoveFlag = True
         End If
     End Sub
 
