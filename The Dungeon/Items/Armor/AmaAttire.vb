@@ -1,4 +1,5 @@
-﻿Public Class AmaAttire
+﻿
+Public Class AmaAttire
     Inherits Armor
 
     Sub New()

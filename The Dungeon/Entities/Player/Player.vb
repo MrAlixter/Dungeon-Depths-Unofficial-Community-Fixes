@@ -278,6 +278,7 @@
         perks.Add("avenom", -1) '20
         perks.Add("blind", -1) '21
         perks.Add("bowtie", -1) '22
+        perks.Add("hardlight", -1) '22
     End Sub
     Private Sub initClasses()
         'creates the class dictionary
@@ -446,7 +447,7 @@
     End Sub
     'taking damage
     Public Overrides Sub takeDMG(ByVal dmg As Integer, ByRef source As Entity)
-        If PerkEffects.onDamage() Then Exit Sub
+        If PerkEffects.onDamage(dmg) Then Exit Sub
         MyBase.takeDMG(dmg, source)
         Game.lblPHealtDiff.Tag -= dmg
         Game.pushLstLog(CStr("You got hit! -" & dmg & " health!"))
@@ -783,14 +784,18 @@
     Public Sub setPImage()
         'sets the player call
         If pClass.name.Equals("Bimbo") Then
-            If Game.floor > 5 Then
+            If Game.floor > 5 And Not Game.floor = 9999 Then
                 pImage = Game.picBimbof.BackgroundImage
+            ElseIf Game.floor = 9999 Then
+                pImage = Game.picBimboSpace.BackgroundImage
             Else
                 pImage = Game.picPlayerB.BackgroundImage
             End If
         Else
-            If Game.floor > 5 Then
+            If Game.floor > 5 And Not Game.floor = 9999 Then
                 pImage = Game.picPlayerf.BackgroundImage
+            ElseIf Game.floor = 9999 Then
+                pImage = Game.picPlayerSpace.BackgroundImage
             Else
                 pImage = Game.picPlayer.BackgroundImage
             End If
@@ -1677,7 +1682,7 @@
     End Function
 
     '|DESCRIPTION GENERATION METHODS|
-    Function getColor(ByVal color As Color)
+    Function getColor(ByVal color As Color) As String
         Dim c As Color
 
 
@@ -1714,7 +1719,7 @@
             out += m.ToString
             out += " "
         Next
-        If out.Equals("Beige ") Or out.Equals("Wheat ") Then out = "Platinum Blonde "
+        If out.Equals("Beige ") Or out.Equals("Wheat ") Then out = "Light Blonde "
         Return out.ToLower
     End Function
     Function getHairColor() As String

@@ -20,6 +20,8 @@
         inv.setCount("Medicinal_Tea", 1)
         inv.item("Medicinal_Tea").value -= 0.2 * inv.item("Medicinal_Tea").value
         inv.setCount("Pancea", 1)
+        inv.setCount("Cherry_Stick_of_Gum", 1)
+        inv.setCount("Spatial_Shroom", 1)
 
         isShop = True
         setGold(99999)
@@ -77,7 +79,7 @@
                                "goes on around this place, you'd think I'd have more than just the mental defences.  But hey, variety is the spice of life, and I'm totally sizzlin' in this thing!  " &
                                "Don't, uh, tell Teach I said that though, she might end up keeping me like this...")
         End If
-
+        If npcIndex = 5 Then inv.setCount(98, 1) Else inv.setCount(98, 0)
         Game.picNPC.BackgroundImage = picNCP(npcIndex)
     End Sub
 

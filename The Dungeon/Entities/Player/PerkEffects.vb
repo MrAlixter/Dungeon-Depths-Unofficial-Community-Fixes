@@ -196,9 +196,10 @@
     End Sub
 
     '|TAKE DAMAGE PERKS|
-    Shared Function onDamage() As Boolean
+    Shared Function onDamage(ByVal dmg As Integer) As Boolean
         Dim flag = False
         flag = bowTieEffect() Or flag
+        flag = hardLightEffect(dmg) Or flag
         Return flag
     End Function
     Shared Function bowTieEffect() As Boolean
@@ -213,6 +214,23 @@
             ElseIf r > 5 Then
                 Game.pushLblEvent("Your bowtie begins glowing, and suddenly everything seems to slow down.  You deftly sidestep the oncomming blow!  Time returns to its normal speed shortly, and your bowtie returns to its inert state.")
                 Return True
+            End If
+        End If
+        Return False
+    End Function
+    Shared Function hardLightEffect(ByVal dmg As Integer) As Boolean
+        Dim p = Game.player
+        If p.perks("hardlight") > -1 Then
+            If Not p.equippedArmor.getName.Contains("Photon") Then
+                p.perks("hardlight") = -1
+                Return False
+            End If
+            If dmg / 2 <= p.mana Then
+                p.mana -= dmg / 2
+                Game.pushLblEvent("Your hardlight shields withstand the impact!")
+                Return True
+            Else
+                Game.pushLblEvent("Your hardlight shields are completely down!")
             End If
         End If
         Return False

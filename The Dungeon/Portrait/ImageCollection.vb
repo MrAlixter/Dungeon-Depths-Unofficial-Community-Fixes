@@ -155,7 +155,7 @@
             mHat, mRearHair2 As ImageDump
 
         Dim fTFAccA, fTFBody, fTFClothes, fTFEars, fTFEyes, fTFface,
-            fTfFrontHair, fTFMouth, fTFNose, fTFRearhair1, fTfRearhair2 As ImageDump
+            fTfFrontHair, fTFMouth, fTFNose, fTFRearhair1, fTfRearhair2, fTFGlasses As ImageDump
         Dim mTFAccA, mTFBody, mTFClothes, mTFEars, mTFEyes, mTFface,
             mTfFrontHair, mTFMouth, mTFNose, mTFRearhair1, mTfRearhair2 As ImageDump
 
@@ -282,9 +282,11 @@
 
         '-index 12 (glasses)
         fGlasses = New ImageDump("img/fGlasses")
+        fTFGlasses = New ImageDump("img/fTF/tfGlasses")
         mGlasses = New ImageDump("img/mGlasses")
         ndoF = fGlasses.Count
         ndoM = mGlasses.Count
+        fGlasses.merge(fTFGlasses)
         atrs.Add("Glasses", New ImageAttribute(fGlasses, mGlasses, ndoF, ndoM))
 
         '-index 13 (cloak)

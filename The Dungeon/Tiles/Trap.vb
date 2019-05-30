@@ -98,6 +98,10 @@
                 Game.player.createP()
                 Game.player.UIupdate()
                 Game.pushLblEvent(out)
+            Case 5
+                MsgBox("Lab memory trap")
+            Case 6
+                MsgBox("Gynoid Converter")
         End Select
 
         pos = New Point(-1, -1)

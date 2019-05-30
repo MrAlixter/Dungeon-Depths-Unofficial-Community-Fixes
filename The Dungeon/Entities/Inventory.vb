@@ -10,7 +10,7 @@
     Dim sum As Integer = 0
 
     '|CONSTUCTOR|
-    Sub New(ByVal shufflePotions As Boolean)
+    Sub New(Optional ByVal shufflePotions As Boolean = False)
         '0.1 - 0.4
         internal_inventory.Add("Compass", New Compass())                    '0
         internal_inventory.Add("Stick_of_Gum", New StickOfGum())            '1
@@ -116,6 +116,15 @@
         internal_inventory.Add("Bowtie", New Bowtie())                      '97
         internal_inventory.Add("Cursed_Heavy_Cream", New CHeavyCream())     '98
         internal_inventory.Add("Amazonian_Attire", New AmaAttire())         '99
+        internal_inventory.Add("Cherry_Stick_of_Gum", New CStickOfGum())    '100
+        internal_inventory.Add("Barbarian_Armor", New BarbArmor())          '101
+        internal_inventory.Add("Space_Age_Jumpsuit", New SAJumpsuit())      '102
+        internal_inventory.Add("Skin_Tight_Bodysuit", New STBodysuit())     '103
+        internal_inventory.Add("Photon_Armor", New PhotonArmor())           '104
+        internal_inventory.Add("Photon_Bikini", New PhotonBikini())         '105
+        internal_inventory.Add("Labcoat", New Labcoat())                    '106
+        internal_inventory.Add("Labcoat​", New LabcoatSV())                  '107
+        internal_inventory.Add("Spatial_Shroom", New SShroom())             '108
 
         armor = {New CommonClothes, New SkimpyClothes, New Naked,
                  Me.item(5), Me.item(7), Me.item(8), Me.item(10),
@@ -125,7 +134,9 @@
                  Me.item(56), Me.item(64), Me.item(71), Me.item(72),
                  Me.item(73), Me.item(74), Me.item(75), Me.item(78),
                  Me.item(79), Me.item(83), Me.item(85), Me.item(80),
-                 Me.item(94), Me.item(95), Me.item(99)}
+                 Me.item(94), Me.item(95), Me.item(99), Me.item(101),
+                 Me.item(102), Me.item(103), Me.item(104), Me.item(105),
+                 Me.item(106), Me.item(107)}
 
         weapons = {New BareFists(),
                    Me.item(6), Me.item(9), Me.item(11), Me.item(21),
@@ -142,7 +153,7 @@
 
         food = {Me.item(30), Me.item(31), Me.item(32), Me.item(33),
                 Me.item(34), Me.item(35), Me.item(44), Me.item(90),
-                Me.item(98)}
+                Me.item(98), Me.item(100), Me.item(108)}
 
         acce = {New noAcce(), Me.item(66), Me.item(67), Me.item(68),
                 Me.item(69), Me.item(70), Me.item(77), Me.item(81),

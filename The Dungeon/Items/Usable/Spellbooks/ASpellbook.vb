@@ -19,7 +19,7 @@
         Dim out As String = ""
         While ct < 1 Or Game.player.knownSpells.Contains(sName)
             ct += 1
-            Dim spell As Integer = CInt(Int(Rnd() * 7))
+            Dim spell As Integer = CInt(Int(Rnd() * 8))
             Select Case spell
                 Case 0
                     sName = "Turn to Blade"
@@ -38,8 +38,7 @@
                                 form = "Goddess"
                         End Select
                         If c > 40 Then
-                            out = "All self polymorph forms learned from advanced spellbooks!"
-                            Exit Select
+                          Exit Select
                         End If
                     End While
                     If Not p.selfPolyForms.Contains(form) Then
@@ -55,6 +54,8 @@
                     sName = "Petrify II"
                 Case 6
                     sName = "Major Heal"
+                Case 7
+                    sName = "Warp"
             End Select
             If ct > 60 Then
                 Game.pushLstLog("You know all the spells in advanced spellbooks already!")

@@ -105,6 +105,8 @@ Public Class Game
     Dim debugWindow As Debug_Window
     Public shopMenu As ShopV2
 
+    Public lastVisitedFloor As Integer = 0
+
     '|STARTUP|
     Private Sub Form1_Load(sender As Object, e As EventArgs) Handles Me.Load
         'Form1_Load handles the loading of the form
@@ -364,6 +366,7 @@ Public Class Game
         'initializeBoard increments the floor count, and generates the next level
         lblEvent.Visible = False
         floor += 1
+        If Not floor = 9999 Then lastVisitedFloor = floor
         player.canMoveFlag = False
         boardWorker = New BackgroundWorker
         boardWorker.WorkerReportsProgress = True
@@ -380,6 +383,8 @@ Public Class Game
         newBoard()
         If floor < 6 And floor >= 0 Then
             generateLevel(floorLayouts(floor))
+        ElseIf floor = 9999 Then
+            genSpaceFloor()
         ElseIf floor < 0 Then
             Dim negWorldSeeds = {"666", "69", "whyareyouhere", "warpzone", "squarerootofnegone"}
             generateLevel(negWorldSeeds(Int(Rnd() * negWorldSeeds.Length)))
@@ -390,15 +395,7 @@ Public Class Game
     End Sub
     Sub newBoard()
         'newBoard disposes of the old board and its graphical representation
-        If floor > 5 Then
-            If player.pClass.name.Equals("Bimbo") Then
-                player.pImage = picBimbof.BackgroundImage
-            Else
-                player.pImage = picPlayerf.BackgroundImage
-            End If
-            pImage = player.pImage
-            player.currState.save(player)
-        End If
+        player.setPImage()
         chestList.Clear()
         statueList.Clear()
         npcList.Clear()
@@ -433,16 +430,6 @@ Public Class Game
         For yInd = 0 To mBoardHeight - 1
             For xInd = 0 To mBoardWidth - 1
                 mBoard(yInd, xInd) = New mTile(0, "", Color.Black)
-                'If (xInd < viewWidth And yInd < viewHeight) Then
-                '    Dim newPicture As PictureBox = New PictureBox()
-                '    newPicture.Name = "boardBox|" & xInd & "_" & yInd
-                '    newPicture.BackgroundImageLayout = ImageLayout.Stretch
-                '    newPicture.Size = New Point(YSize * 1.25, XSize * 1.25)
-                '    newPicture.Location = New Point(60 + xInd * (XSize * 1.25), 75 + yInd * (YSize * 1.25))
-                '    newPicture.Visible = True
-                '    Me.Controls.Add(newPicture)
-                '    mPics(yInd, xInd) = newPicture
-                'End If
                 Dim progress As Double = (xInd + (yInd * mBoardWidth)) / numTiles
                 boardWorker.ReportProgress(40 + (progress * 40))
                 Application.DoEvents()
@@ -854,6 +841,66 @@ Public Class Game
         stairs = New Point(5, 2)
         If floor = 5 Then genMedusaStatues()
     End Sub
+    Sub genSpaceFloor()
+        Dim floorLayout As String() = {"___________#######___________",
+                                       "___________#######___________",
+                                       "___________###%###___________",
+                                       "___________#######___________",
+                                       "___________#######___________",
+                                       "__#^##________#______________",
+                                       "_######_______#______####____",
+                                       "#$#############_____##&###___",
+                                       "_######_______############___",
+                                       "__##^#________#_____###&##___",
+                                       "______________#______####____",
+                                       "______________#______________",
+                                       "_____________##!_____________",
+                                       "_____________#@#_____________",
+                                       "_____________###_____________"}
+
+        If mBoardHeight < 15 Then mBoardHeight = 15
+        If mBoardWidth < 30 Then mBoardWidth = 30
+
+        For y = 0 To 14
+            Dim line = floorLayout(y).ToCharArray
+            For x = 0 To UBound(line)
+                If Not line(x) = "_"c Then mBoard(y, x).Tag = 1
+                If line(x) = "%"c Then
+                    stairs = New Point(x, y)
+                ElseIf line(x) = "^"c Then
+                ElseIf line(x) = "&"c Then
+                    Dim chestPoint = New Point(x, y)
+                    genSpaceChest1(chestPoint)
+                ElseIf line(x) = "$"c Then
+                    Dim trapPoint = New Point(x, y)
+                    Dim trap As New Trap(CStr(x) & "*" & CStr(y) & "*" & CStr(6) & "*")
+                    trapList.Add(trap)
+                    mBoard(trapPoint.Y, trapPoint.X).ForeColor = Color.FromArgb(45, 45, 45)
+                    mBoard(trapPoint.Y, trapPoint.X).Text = "+"
+                ElseIf line(x) = "!"c Then
+                    Dim trapPoint = New Point(x, y)
+                    Dim trap As New Trap(CStr(x) & "*" & CStr(y) & "*" & CStr(5) & "*")
+                    trapList.Add(trap)
+                    mBoard(trapPoint.Y, trapPoint.X).ForeColor = Color.FromArgb(45, 45, 45)
+                    mBoard(trapPoint.Y, trapPoint.X).Text = "+"
+                ElseIf line(x) = "@"c Then
+                    player.pos = New Point(x, y)
+                End If
+            Next
+        Next
+    End Sub
+    Sub genSpaceChest1(ByVal p As Point)
+        Dim c1 As Chest
+        Dim inv = New Inventory(False)
+        inv.add("Photon_Armor", CInt(Rnd() * 2))
+        inv.add("Labcoat", CInt(Rnd() * 2))
+        inv.add("Space_Age_Jumpsuit", 1)
+        c1 = baseChest.Create(inv, p, False)
+
+        chestList.Add(c1)
+        mBoard(p.Y, p.X).ForeColor = Color.FromArgb(45, 45, 45)
+        mBoard(p.Y, p.X).Text = "#"
+    End Sub
     Sub genMedusaStatues()
         'places the statues on floor 5 for ambience
         Randomize()
@@ -1085,7 +1132,7 @@ Public Class Game
 
         zoom()
 
-        If floor < 5 And floor >= 0 AndAlso beatboss(floor) = False AndAlso Not floorboss(floor).Equals("Key") And combatmode = False AndAlso New Point(player.pos.Y, player.pos.X).Equals(New Point(stairs.Y, stairs.X)) Then btnChallengeBoss.Visible = True Else btnChallengeBoss.Visible = False
+        If floor < 5 And floor >= 0 AndAlso beatboss(floor) = False AndAlso Not floorboss(floor).Equals("Key") And combatmode = False And player.health > 0 AndAlso New Point(player.pos.Y, player.pos.X).Equals(New Point(stairs.Y, stairs.X)) Then pushPnlYesNo("Challenge the floor boss?", AddressOf ChallengeBoss, Nothing)
         'If picNPC.Visible Then picNPC.BackgroundImage = NPCimgList(npcIndex)
 
         player.UIupdate()
@@ -1222,78 +1269,11 @@ Public Class Game
                         viewArray(y, x) = 0
                     End If
                     If floor < 6 Then
-                        Select Case viewArray(y, x)
-                            Case 0
-                                'MsgBox(x & " " & y)
-                                mPics(y, x).BackgroundImage = Nothing
-                                mPics(y, x).BackColor = Color.Black
-                            Case 1
-                                mPics(y, x).BackgroundImage = picFog.BackgroundImage
-                            Case 2
-                                mPics(y, x).BackgroundImage = picTile.BackgroundImage
-                            Case 3
-                                mPics(y, x).BackgroundImage = picStairs.BackgroundImage
-                            Case 4
-                                mPics(y, x).BackgroundImage = player.pImage
-                            Case 5
-                                mPics(y, x).BackgroundImage = picChest.BackgroundImage
-                            Case 6
-                                mPics(y, x).BackgroundImage = picShopkeepTile.BackgroundImage
-                            Case 7
-                                mPics(y, x).BackgroundImage = picStatue.BackgroundImage
-                            Case 8
-                                mPics(y, x).BackgroundImage = picTrap.BackgroundImage
-                            Case 9
-                                mPics(y, x).BackgroundImage = picStairsLock.BackgroundImage
-                            Case 10
-                                mPics(y, x).BackgroundImage = picStairsBoss.BackgroundImage
-                            Case 11
-                                mPics(y, x).BackgroundImage = picSWiz.BackgroundImage
-                            Case 12
-                                mPics(y, x).BackgroundImage = picCrystal.BackgroundImage
-                            Case 13
-                                mPics(y, x).BackgroundImage = picPath.BackgroundImage
-                            Case 14
-                                mPics(y, x).BackgroundImage = picHT.BackgroundImage
-                            Case 15
-                                mPics(y, x).BackgroundImage = picFVtile.BackgroundImage
-                        End Select
+                        setDungeonTileImg(x, y, viewArray)
+                    ElseIf floor = 9999 Then
+                        setSpaceTileImg(x, y, viewArray)
                     Else
-                        Select Case viewArray(y, x)
-                            Case 0
-                                mPics(y, x).BackgroundImage = picTree.BackgroundImage
-                            Case 1
-                                mPics(y, x).BackgroundImage = Nothing
-                                mPics(y, x).BackColor = Color.FromArgb(255, 19, 38, 22)
-                            Case 2
-                                mPics(y, x).BackgroundImage = picTileF.BackgroundImage
-                            Case 3
-                                mPics(y, x).BackgroundImage = picLadderf.BackgroundImage
-                            Case 4
-                                mPics(y, x).BackgroundImage = player.pImage
-                            Case 5
-                                mPics(y, x).BackgroundImage = picChestf.BackgroundImage
-                            Case 6
-                                mPics(y, x).BackgroundImage = picShopkeeperf.BackgroundImage
-                            Case 7
-                                mPics(y, x).BackgroundImage = picStatuef.BackgroundImage
-                            Case 8
-                                mPics(y, x).BackgroundImage = picTrapf.BackgroundImage
-                            Case 9
-                                mPics(y, x).BackgroundImage = picstairslockf.BackgroundImage
-                            Case 10
-                                mPics(y, x).BackgroundImage = picstairsbossf.BackgroundImage
-                            Case 11
-                                mPics(y, x).BackgroundImage = picSWizF.BackgroundImage
-                            Case 12
-                                mPics(y, x).BackgroundImage = picCrystalf.BackgroundImage
-                            Case 13
-                                mPics(y, x).BackgroundImage = picPathf.BackgroundImage
-                            Case 14
-                                mPics(y, x).BackgroundImage = picHTf.BackgroundImage
-                            Case 15
-                                mPics(y, x).BackgroundImage = picFVf.BackgroundImage
-                        End Select
+                        setForestTileImg(x, y, viewArray)
                     End If
                     x += 1
                 Next
@@ -1303,7 +1283,110 @@ Public Class Game
             'Console.WriteLine("UPDATE TIME: " + (endTime - startTime).ToString())
         End If
     End Sub
-
+    Sub setDungeonTileImg(ByVal x As Integer, ByVal y As Integer, ByRef viewArray As Integer(,))
+        Select Case viewArray(y, x)
+            Case 0
+                'MsgBox(x & " " & y)
+                mPics(y, x).BackgroundImage = Nothing
+                mPics(y, x).BackColor = Color.Black
+            Case 1
+                mPics(y, x).BackgroundImage = picFog.BackgroundImage
+            Case 2
+                mPics(y, x).BackgroundImage = picTile.BackgroundImage
+            Case 3
+                mPics(y, x).BackgroundImage = picStairs.BackgroundImage
+            Case 4
+                mPics(y, x).BackgroundImage = player.pImage
+            Case 5
+                mPics(y, x).BackgroundImage = picChest.BackgroundImage
+            Case 6
+                mPics(y, x).BackgroundImage = picShopkeepTile.BackgroundImage
+            Case 7
+                mPics(y, x).BackgroundImage = picStatue.BackgroundImage
+            Case 8
+                mPics(y, x).BackgroundImage = picTrap.BackgroundImage
+            Case 9
+                mPics(y, x).BackgroundImage = picStairsLock.BackgroundImage
+            Case 10
+                mPics(y, x).BackgroundImage = picStairsBoss.BackgroundImage
+            Case 11
+                mPics(y, x).BackgroundImage = picSWiz.BackgroundImage
+            Case 12
+                mPics(y, x).BackgroundImage = picCrystal.BackgroundImage
+            Case 13
+                mPics(y, x).BackgroundImage = picPath.BackgroundImage
+            Case 14
+                mPics(y, x).BackgroundImage = picHT.BackgroundImage
+            Case 15
+                mPics(y, x).BackgroundImage = picFVtile.BackgroundImage
+        End Select
+    End Sub
+    Sub setForestTileImg(ByVal x As Integer, ByVal y As Integer, ByRef viewArray As Integer(,))
+        Select Case viewArray(y, x)
+            Case 0
+                mPics(y, x).BackgroundImage = picTree.BackgroundImage
+            Case 1
+                mPics(y, x).BackgroundImage = Nothing
+                mPics(y, x).BackColor = Color.FromArgb(255, 19, 38, 22)
+            Case 2
+                mPics(y, x).BackgroundImage = picTileF.BackgroundImage
+            Case 3
+                mPics(y, x).BackgroundImage = picLadderf.BackgroundImage
+            Case 4
+                mPics(y, x).BackgroundImage = player.pImage
+            Case 5
+                mPics(y, x).BackgroundImage = picChestf.BackgroundImage
+            Case 6
+                mPics(y, x).BackgroundImage = picShopkeeperf.BackgroundImage
+            Case 7
+                mPics(y, x).BackgroundImage = picStatuef.BackgroundImage
+            Case 8
+                mPics(y, x).BackgroundImage = picTrapf.BackgroundImage
+            Case 9
+                mPics(y, x).BackgroundImage = picstairslockf.BackgroundImage
+            Case 10
+                mPics(y, x).BackgroundImage = picstairsbossf.BackgroundImage
+            Case 11
+                mPics(y, x).BackgroundImage = picSWizF.BackgroundImage
+            Case 12
+                mPics(y, x).BackgroundImage = picCrystalf.BackgroundImage
+            Case 13
+                mPics(y, x).BackgroundImage = picPathf.BackgroundImage
+            Case 14
+                mPics(y, x).BackgroundImage = picHTf.BackgroundImage
+            Case 15
+                mPics(y, x).BackgroundImage = picFVf.BackgroundImage
+        End Select
+    End Sub
+    Sub setSpaceTileImg(ByVal x As Integer, ByVal y As Integer, ByRef viewArray As Integer(,))
+        Select Case viewArray(y, x)
+            Case 0
+                'MsgBox(x & " " & y)
+                mPics(y, x).BackgroundImage = Nothing
+                mPics(y, x).BackColor = Color.Black
+            Case 1
+                mPics(y, x).BackgroundImage = picFog.BackgroundImage
+            Case 2
+                mPics(y, x).BackgroundImage = picSpaceTile.BackgroundImage
+            Case 3
+                mPics(y, x).BackgroundImage = picSpaceStairs.BackgroundImage
+            Case 4
+                mPics(y, x).BackgroundImage = player.pImage
+            Case 5
+                mPics(y, x).BackgroundImage = picSpaceChest.BackgroundImage
+            Case 7
+                mPics(y, x).BackgroundImage = picSpaceCrystal.BackgroundImage
+            Case 8
+                mPics(y, x).BackgroundImage = picSpaceTrap.BackgroundImage
+            Case 12
+                mPics(y, x).BackgroundImage = picSpaceCrystal.BackgroundImage
+            Case 13
+                mPics(y, x).BackgroundImage = picSPacePath.BackgroundImage
+            Case Else
+                mPics(y, x).BackgroundImage = Nothing
+                mPics(y, x).BackColor = Color.Black
+        End Select
+    End Sub
     '|COMMAND DRIVERS|
     Function HandleKeyPress(ByVal Keydata As Keys) As Boolean
         'handleKeyPress handles the players pressed keys, and is the driver function for each one
@@ -1774,7 +1857,7 @@ Public Class Game
     End Sub
     Sub randomEvents()
         'randomEvents decides whether random encounters will occur, and handles what will be encountered
-        If floor = 5 Then Exit Sub
+        If floor = 5 Or floor = 9999 Then Exit Sub
         Randomize()
         If eClock > 0 Then eClock -= 1
         If combatmode = True Or npcmode = True Or eClock <> 0 Or Not player.canMoveFlag Then Exit Sub
@@ -1919,6 +2002,12 @@ Public Class Game
                 If floorboss(floor).Equals("Key") Then pushLblEvent("The stairs are behind a locked gate!  Perhaps the key is in a chest..." & vbCrLf & "[while this game is in development it can also be bought from the shop for 2500]") Else pushLblEvent("You must defeat " & floorboss(floor) & "!")
             End If
         ElseIf player.pos = stairs Then
+            If floor = 9999 Then
+                floor = lastVisitedFloor - 1
+                pushLblEvent("Spotting a gleaming terminal, you notice the rough layout of the dungeon floor you were previouly on.  Spotting a holographic button over this section of the map, and with a hesitant press you find yourself sucked through another tear in space-time.  Once again, you join the void.  When you pop back into the familiar surroundings of the dungeon, you notice that some things, namely traps and chests, seem to have never been touched.  Time stuff is weird...", AddressOf initializeBoard)
+                Exit Sub
+            End If
+
             initializeBoard()
             If combatmode Then fromCombat()
         End If
@@ -2330,26 +2419,12 @@ Public Class Game
     End Sub
     'yes/no
     Sub yesKey()
-        If btnChallengeBoss.Visible Then
-            Dim m As NPC
-            If floor Mod 5 = 0 Then
-                m = New Boss(floor)
-            Else
-                m = New MiniBoss(floor)
-            End If
-            player.setTarget(m)
-            m.currTarget = player
-            npcList.Add(m)
-            pushLstLog((m.getName & " attacks!"))
-            toCombat()
-            btnChallengeBoss.Visible = False
 
-        End If
     End Sub
     Sub noKey()
 
     End Sub
-    Private Sub btnChallengeBoss_Click(sender As Object, e As EventArgs) Handles btnChallengeBoss.Click
+    Private Sub ChallengeBoss()
         Dim m As NPC
         If floor Mod 5 = 0 Then
             m = New Boss(floor)
@@ -2369,7 +2444,6 @@ Public Class Game
             pushLblEvent("As you approach the staircase, you spot the Ooze Empress, hanging over the stairs.  As you wave to get her attention, she plops off the celing to come and greet you.  As you explain your situation to her, she chuckles, catching you off guard.  ""You know, I was placed on this floor as kind of a buffer.  Mistress Medusa isn't interested in weaklings, and if you even want to have a chance at beating her, you need to have a stronger will."".  You notice a shift in her previously bubbly personality, and when the rest of her tentacles drop down, you take a leap back and prepare for combat." & vbCrLf & vbCrLf &
                                """Let's see if you've learned anthing since the last time you tried this,"" she says with an somewhat mencing grin, ""... though I'm sure neither of us would mind a repeat either.""")
         End If
-        btnChallengeBoss.Visible = False
     End Sub
     'movement
     Private Sub BtnD_Click(sender As Object, e As EventArgs) Handles BtnD.Click
@@ -2389,6 +2463,7 @@ Public Class Game
     Sub save(ByVal a As String)
         'save handles the saving of the game
         Dim writer As IO.StreamWriter
+        IO.File.Delete(a)
         writer = IO.File.CreateText(a)
         writer.WriteLine(version)
         writer.WriteLine(floor)
@@ -2448,6 +2523,11 @@ Public Class Game
 
         writer.WriteLine(hteach.pos.X)
         writer.WriteLine(hteach.pos.Y)
+
+        writer.WriteLine(fvend.pos.X)
+        writer.WriteLine(fvend.pos.Y)
+
+        writer.WriteLine(lastVisitedFloor)
 
         writer.Flush()
         writer.Close()
@@ -2613,6 +2693,12 @@ Public Class Game
         hteach = ShopNPC.shopFactory(2)
         hteach.pos.X = reader.ReadLine()
         hteach.pos.Y = reader.ReadLine()
+
+        fvend = ShopNPC.shopFactory(3)
+        fvend.pos.X = reader.ReadLine()
+        fvend.pos.Y = reader.ReadLine()
+
+        lastVisitedFloor = CInt(reader.ReadLine())
 
         chestList.Clear()
         If floor < 5 Then

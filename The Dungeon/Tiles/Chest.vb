@@ -26,7 +26,7 @@
         chest.pos = p
         Return chest
     End Function
-    Function Create(ByVal i As Inventory, ByVal p As Point) As Chest
+    Function Create(ByVal i As Inventory, ByVal p As Point, Optional addGold As Boolean = True) As Chest
         'functions as a pseudo constructor for a chest object
         'creates a chest from an inventory array and a point
         Dim chest = Me.Clone()
@@ -35,7 +35,7 @@
             chest.contents.setCount(x, i.getCountAt(x))
         Next
 
-        If chest.contents.getCountAt(43) < 1 Then chest.contents.setCount(43, CInt(Rnd() * 250))
+        If addGold And chest.contents.getCountAt(43) < 1 Then chest.contents.setCount(43, CInt(Rnd() * 250))
         chest.pos = p
         Return chest
     End Function
@@ -105,7 +105,7 @@
             Else
                 mOdds = Int(Rnd() * 10)
             End If
-            If mOdds = 0 And Not contents.getCountAt(53) > 0 Then
+            If Game.floor <> 9999 And mOdds = 0 And Not contents.getCountAt(53) > 0 Then
                 Monster.createMimic(contents)
                 Exit Sub
             End If

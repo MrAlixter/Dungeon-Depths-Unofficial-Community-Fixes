@@ -4,7 +4,7 @@
     Sub New()
         MyBase.setName("Portal_Chalk")
         MyBase.setDesc("A debugging item that lets one teleport/reset floors.  Use your powers for good, ok?")
-        id = 57
+        id = 86
         tier = Nothing
         MyBase.setUsable(True)
         MyBase.count = 0

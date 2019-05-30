@@ -76,6 +76,7 @@
                     Game.player.ongoingTFs.Add(New NekoTF(7, 1, 0.3, True))
                 ElseIf Game.player.perks("nekocurse") > -1 And getHealth() < 45 / getMaxHealth() Then
                     Dim healvalue = Int(Rnd() * 4) + Int(Rnd() * 2) + 30
+                    If getIntHealth() + healvalue > getMaxHealth() Then healvalue = getMaxHealth() - getIntHealth()
                     Game.pushLstLog((getName() & " heals herself!  +" & healvalue & " health!"))
                     Game.pushLblCombatEvent((getName() & " heals herself for " & healvalue & " health!"))
                     takeDMG(-healvalue, Nothing)
@@ -85,15 +86,15 @@
                 Else
                     Game.pushLstLog((getName() & " casts lightning bolt!"))
                     Game.pushLblCombatEvent((getName() & " casts lightning bolt!"))
-                    attackCMD(target)
+                    MyBase.attackCMD(target)
                 End If
             Else
                 Game.pushLstLog((getName() & " casts lightning bolt!"))
                 Game.pushLblCombatEvent((getName() & " casts lightning bolt!"))
-                attackCMD(target)
+                MyBase.attackCMD(target)
             End If
         Else
-            attackCMD(target)
+            MyBase.attackCMD(target)
         End If
 
     End Sub

@@ -28,7 +28,6 @@ Partial Class Game
         Me.btnDrop = New System.Windows.Forms.Button()
         Me.btnLook = New System.Windows.Forms.Button()
         Me.btnControls = New System.Windows.Forms.Button()
-        Me.btnChallengeBoss = New System.Windows.Forms.Button()
         Me.picEnemy = New System.Windows.Forms.PictureBox()
         Me.btnLeave = New System.Windows.Forms.Button()
         Me.btnFight = New System.Windows.Forms.Button()
@@ -200,6 +199,14 @@ Partial Class Game
         Me.picFVf = New System.Windows.Forms.PictureBox()
         Me.picFVtile = New System.Windows.Forms.PictureBox()
         Me.picStaffEnd = New System.Windows.Forms.PictureBox()
+        Me.picSpaceStairs = New System.Windows.Forms.PictureBox()
+        Me.picSpaceTrap = New System.Windows.Forms.PictureBox()
+        Me.picSpaceChest = New System.Windows.Forms.PictureBox()
+        Me.picSpaceTile = New System.Windows.Forms.PictureBox()
+        Me.picPlayerSpace = New System.Windows.Forms.PictureBox()
+        Me.picBimboSpace = New System.Windows.Forms.PictureBox()
+        Me.picSPacePath = New System.Windows.Forms.PictureBox()
+        Me.picSpaceCrystal = New System.Windows.Forms.PictureBox()
         CType(Me.picEnemy, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me.picNPC, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me.picStatue, System.ComponentModel.ISupportInitialize).BeginInit()
@@ -277,6 +284,14 @@ Partial Class Game
         CType(Me.picFVf, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me.picFVtile, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me.picStaffEnd, System.ComponentModel.ISupportInitialize).BeginInit()
+        CType(Me.picSpaceStairs, System.ComponentModel.ISupportInitialize).BeginInit()
+        CType(Me.picSpaceTrap, System.ComponentModel.ISupportInitialize).BeginInit()
+        CType(Me.picSpaceChest, System.ComponentModel.ISupportInitialize).BeginInit()
+        CType(Me.picSpaceTile, System.ComponentModel.ISupportInitialize).BeginInit()
+        CType(Me.picPlayerSpace, System.ComponentModel.ISupportInitialize).BeginInit()
+        CType(Me.picBimboSpace, System.ComponentModel.ISupportInitialize).BeginInit()
+        CType(Me.picSPacePath, System.ComponentModel.ISupportInitialize).BeginInit()
+        CType(Me.picSpaceCrystal, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.SuspendLayout()
         '
         'btnUse1
@@ -327,21 +342,6 @@ Partial Class Game
         Me.btnControls.TabIndex = 203
         Me.btnControls.Text = "Controls"
         Me.btnControls.UseVisualStyleBackColor = False
-        '
-        'btnChallengeBoss
-        '
-        Me.btnChallengeBoss.AutoSize = True
-        Me.btnChallengeBoss.BackColor = System.Drawing.Color.Black
-        Me.btnChallengeBoss.Cursor = System.Windows.Forms.Cursors.Hand
-        Me.btnChallengeBoss.Font = New System.Drawing.Font("Consolas", 8.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.btnChallengeBoss.ForeColor = System.Drawing.Color.White
-        Me.btnChallengeBoss.Location = New System.Drawing.Point(254, 221)
-        Me.btnChallengeBoss.Name = "btnChallengeBoss"
-        Me.btnChallengeBoss.Size = New System.Drawing.Size(289, 39)
-        Me.btnChallengeBoss.TabIndex = 202
-        Me.btnChallengeBoss.Text = "Challenge Boss?"
-        Me.btnChallengeBoss.UseVisualStyleBackColor = False
-        Me.btnChallengeBoss.Visible = False
         '
         'picEnemy
         '
@@ -2236,12 +2236,100 @@ Partial Class Game
         Me.picStaffEnd.TabStop = False
         Me.picStaffEnd.Visible = False
         '
+        'picSpaceStairs
+        '
+        Me.picSpaceStairs.BackgroundImage = CType(resources.GetObject("picSpaceStairs.BackgroundImage"), System.Drawing.Image)
+        Me.picSpaceStairs.Location = New System.Drawing.Point(539, 159)
+        Me.picSpaceStairs.Name = "picSpaceStairs"
+        Me.picSpaceStairs.Size = New System.Drawing.Size(15, 15)
+        Me.picSpaceStairs.TabIndex = 317
+        Me.picSpaceStairs.TabStop = False
+        Me.picSpaceStairs.Visible = False
+        '
+        'picSpaceTrap
+        '
+        Me.picSpaceTrap.BackgroundImage = CType(resources.GetObject("picSpaceTrap.BackgroundImage"), System.Drawing.Image)
+        Me.picSpaceTrap.Location = New System.Drawing.Point(560, 159)
+        Me.picSpaceTrap.Name = "picSpaceTrap"
+        Me.picSpaceTrap.Size = New System.Drawing.Size(15, 15)
+        Me.picSpaceTrap.TabIndex = 316
+        Me.picSpaceTrap.TabStop = False
+        Me.picSpaceTrap.Visible = False
+        '
+        'picSpaceChest
+        '
+        Me.picSpaceChest.BackgroundImage = CType(resources.GetObject("picSpaceChest.BackgroundImage"), System.Drawing.Image)
+        Me.picSpaceChest.Location = New System.Drawing.Point(518, 159)
+        Me.picSpaceChest.Name = "picSpaceChest"
+        Me.picSpaceChest.Size = New System.Drawing.Size(15, 15)
+        Me.picSpaceChest.TabIndex = 315
+        Me.picSpaceChest.TabStop = False
+        Me.picSpaceChest.Visible = False
+        '
+        'picSpaceTile
+        '
+        Me.picSpaceTile.BackgroundImage = CType(resources.GetObject("picSpaceTile.BackgroundImage"), System.Drawing.Image)
+        Me.picSpaceTile.Location = New System.Drawing.Point(497, 158)
+        Me.picSpaceTile.Name = "picSpaceTile"
+        Me.picSpaceTile.Size = New System.Drawing.Size(15, 15)
+        Me.picSpaceTile.TabIndex = 314
+        Me.picSpaceTile.TabStop = False
+        Me.picSpaceTile.Visible = False
+        '
+        'picPlayerSpace
+        '
+        Me.picPlayerSpace.BackgroundImage = CType(resources.GetObject("picPlayerSpace.BackgroundImage"), System.Drawing.Image)
+        Me.picPlayerSpace.Location = New System.Drawing.Point(581, 159)
+        Me.picPlayerSpace.Name = "picPlayerSpace"
+        Me.picPlayerSpace.Size = New System.Drawing.Size(15, 15)
+        Me.picPlayerSpace.TabIndex = 319
+        Me.picPlayerSpace.TabStop = False
+        Me.picPlayerSpace.Visible = False
+        '
+        'picBimboSpace
+        '
+        Me.picBimboSpace.BackgroundImage = CType(resources.GetObject("picBimboSpace.BackgroundImage"), System.Drawing.Image)
+        Me.picBimboSpace.Location = New System.Drawing.Point(602, 159)
+        Me.picBimboSpace.Name = "picBimboSpace"
+        Me.picBimboSpace.Size = New System.Drawing.Size(15, 15)
+        Me.picBimboSpace.TabIndex = 318
+        Me.picBimboSpace.TabStop = False
+        Me.picBimboSpace.Visible = False
+        '
+        'picSPacePath
+        '
+        Me.picSPacePath.BackgroundImage = CType(resources.GetObject("picSPacePath.BackgroundImage"), System.Drawing.Image)
+        Me.picSPacePath.Location = New System.Drawing.Point(518, 180)
+        Me.picSPacePath.Name = "picSPacePath"
+        Me.picSPacePath.Size = New System.Drawing.Size(15, 15)
+        Me.picSPacePath.TabIndex = 321
+        Me.picSPacePath.TabStop = False
+        Me.picSPacePath.Visible = False
+        '
+        'picSpaceCrystal
+        '
+        Me.picSpaceCrystal.BackgroundImage = CType(resources.GetObject("picSpaceCrystal.BackgroundImage"), System.Drawing.Image)
+        Me.picSpaceCrystal.Location = New System.Drawing.Point(497, 179)
+        Me.picSpaceCrystal.Name = "picSpaceCrystal"
+        Me.picSpaceCrystal.Size = New System.Drawing.Size(15, 15)
+        Me.picSpaceCrystal.TabIndex = 320
+        Me.picSpaceCrystal.TabStop = False
+        Me.picSpaceCrystal.Visible = False
+        '
         'Game
         '
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Inherit
         Me.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink
         Me.BackColor = System.Drawing.Color.Black
         Me.ClientSize = New System.Drawing.Size(1008, 690)
+        Me.Controls.Add(Me.picSPacePath)
+        Me.Controls.Add(Me.picSpaceCrystal)
+        Me.Controls.Add(Me.picPlayerSpace)
+        Me.Controls.Add(Me.picBimboSpace)
+        Me.Controls.Add(Me.picSpaceStairs)
+        Me.Controls.Add(Me.picSpaceTrap)
+        Me.Controls.Add(Me.picSpaceChest)
+        Me.Controls.Add(Me.picSpaceTile)
         Me.Controls.Add(Me.picStaffEnd)
         Me.Controls.Add(Me.picFVtile)
         Me.Controls.Add(Me.picFVf)
@@ -2322,7 +2410,6 @@ Partial Class Game
         Me.Controls.Add(Me.picShopkeep)
         Me.Controls.Add(Me.picShopkeepTile)
         Me.Controls.Add(Me.btnControls)
-        Me.Controls.Add(Me.btnChallengeBoss)
         Me.Controls.Add(Me.picEnemy)
         Me.Controls.Add(Me.btnLeave)
         Me.Controls.Add(Me.btnFight)
@@ -2465,6 +2552,14 @@ Partial Class Game
         CType(Me.picFVf, System.ComponentModel.ISupportInitialize).EndInit()
         CType(Me.picFVtile, System.ComponentModel.ISupportInitialize).EndInit()
         CType(Me.picStaffEnd, System.ComponentModel.ISupportInitialize).EndInit()
+        CType(Me.picSpaceStairs, System.ComponentModel.ISupportInitialize).EndInit()
+        CType(Me.picSpaceTrap, System.ComponentModel.ISupportInitialize).EndInit()
+        CType(Me.picSpaceChest, System.ComponentModel.ISupportInitialize).EndInit()
+        CType(Me.picSpaceTile, System.ComponentModel.ISupportInitialize).EndInit()
+        CType(Me.picPlayerSpace, System.ComponentModel.ISupportInitialize).EndInit()
+        CType(Me.picBimboSpace, System.ComponentModel.ISupportInitialize).EndInit()
+        CType(Me.picSPacePath, System.ComponentModel.ISupportInitialize).EndInit()
+        CType(Me.picSpaceCrystal, System.ComponentModel.ISupportInitialize).EndInit()
         Me.ResumeLayout(False)
         Me.PerformLayout()
 
@@ -2473,7 +2568,6 @@ Partial Class Game
     Friend WithEvents btnDrop As System.Windows.Forms.Button
     Friend WithEvents btnLook As System.Windows.Forms.Button
     Friend WithEvents btnControls As System.Windows.Forms.Button
-    Friend WithEvents btnChallengeBoss As System.Windows.Forms.Button
     Friend WithEvents picEnemy As System.Windows.Forms.PictureBox
     Friend WithEvents btnLeave As System.Windows.Forms.Button
     Friend WithEvents btnFight As System.Windows.Forms.Button
@@ -2645,4 +2739,12 @@ Partial Class Game
     Friend WithEvents picFVf As System.Windows.Forms.PictureBox
     Friend WithEvents picFVtile As System.Windows.Forms.PictureBox
     Friend WithEvents picStaffEnd As System.Windows.Forms.PictureBox
+    Friend WithEvents picSpaceStairs As System.Windows.Forms.PictureBox
+    Friend WithEvents picSpaceTrap As System.Windows.Forms.PictureBox
+    Friend WithEvents picSpaceChest As System.Windows.Forms.PictureBox
+    Friend WithEvents picSpaceTile As System.Windows.Forms.PictureBox
+    Friend WithEvents picPlayerSpace As System.Windows.Forms.PictureBox
+    Friend WithEvents picBimboSpace As System.Windows.Forms.PictureBox
+    Friend WithEvents picSPacePath As System.Windows.Forms.PictureBox
+    Friend WithEvents picSpaceCrystal As System.Windows.Forms.PictureBox
 End Class

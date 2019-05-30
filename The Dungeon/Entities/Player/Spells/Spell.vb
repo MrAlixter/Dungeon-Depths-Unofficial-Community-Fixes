@@ -186,6 +186,8 @@
             spell = New Petrify2(c, t)
         ElseIf s.Equals("Major Heal") Then
             spell = New MajorHeal(c, t)
+        ElseIf s.Equals("Warp") Then
+            spell = New Warp(c, t)
         Else
             spell = New Frazzle(c, t)
         End If
@@ -222,6 +224,8 @@
             Case "Petrify II"
                 Return "-14 mana"
             Case "Major Heal"
+                Return "-5 mana"
+            Case "Warp"
                 Return "-5 mana"
             Case Else
                 Return "This costs some degree of mana"
