@@ -279,6 +279,7 @@
         perks.Add("blind", -1) '21
         perks.Add("bowtie", -1) '22
         perks.Add("hardlight", -1) '22
+        perks.Add("minmanregen", -1) '23
     End Sub
     Private Sub initClasses()
         'creates the class dictionary
@@ -452,6 +453,13 @@
         Game.lblPHealtDiff.Tag -= dmg
         Game.pushLstLog(CStr("You got hit! -" & dmg & " health!"))
         Game.pushLblCombatEvent(CStr("You got hit! -" & dmg & " health!"))
+    End Sub
+    Public Overrides Sub takeCritDMG(ByVal dmg As Integer, ByRef source As Entity)
+        If PerkEffects.onDamage(dmg) Then Exit Sub
+        MyBase.takeDMG(dmg, source)
+        Game.lblPHealtDiff.Tag -= dmg
+        Game.pushLstLog(CStr("You got hit!  Critical hit!  -" & dmg & " health!"))
+        Game.pushLblCombatEvent(CStr("You got hit!  Critical hit! -" & dmg & " health!"))
     End Sub
     'specials
     Public Sub specialRoute()
@@ -873,6 +881,9 @@
         'ring of min. regen
         If perks("minRegen") > -1 Then
             PerkEffects.minorRegen()
+        End If
+        If perks("minmanregen") > -1 Then
+            PerkEffects.minorManaRegen()
         End If
 
         'living armor

@@ -203,6 +203,7 @@
     <Compile Include="Entities\Player\Spells\turnToCupcake.vb" />
     <Compile Include="Entities\Player\Spells\turnToFrog.vb" />
     <Compile Include="Entities\Player\Transformations\ArachneTF.vb" />
+    <Compile Include="Entities\Player\Transformations\MBimboTF.vb" />
     <Compile Include="Entities\Player\Transformations\CBimboTF.vb" />
     <Compile Include="Entities\Player\Transformations\BimboTF.vb" />
     <Compile Include="Entities\Player\Transformations\Blindness.vb" />
@@ -235,6 +236,7 @@
     <Compile Include="Entities\Player\Transformations\Transformation.vb" />
     <Compile Include="Entities\Inventory.vb" />
     <Compile Include="Entities\preferedForm.vb" />
+    <Compile Include="Items\Accesories\Generator.vb" />
     <Compile Include="Items\Accesories\Bowtie.vb" />
     <Compile Include="Items\Armor\LabcoatSV.vb" />
     <Compile Include="Items\Armor\Labcoat.vb" />
@@ -248,6 +250,7 @@
     <Compile Include="Items\Armor\DissolvedClothes.vb" />
     <Compile Include="Items\Armor\ValkyrieArmor.vb" />
     <Compile Include="Items\Unimplemented\BimboLesson.vb" />
+    <Compile Include="Items\Usable\Food\MStickOfGum.vb" />
     <Compile Include="Items\Usable\Food\SShroom.vb" />
     <Compile Include="Items\Usable\Food\CHeavyCream.vb" />
     <Compile Include="Items\Usable\Food\Pancea.vb" />
@@ -259,6 +262,8 @@
     <Compile Include="Items\Usable\Potions\Mystery Potions\Main Effects\BlindEffect.vb" />
     <Compile Include="Items\Usable\Potions\Mystery Potions\Main Effects\AntiVenomEffect.vb" />
     <Compile Include="Items\Usable\VialOfVenom.vb" />
+    <Compile Include="Items\Weapons\PhotonBlade.vb" />
+    <Compile Include="Items\Weapons\ManaDischarge.vb" />
     <Compile Include="Items\Weapons\ValkyrieSword.vb" />
     <Compile Include="Portrait\ImageAttribute.vb" />
     <Compile Include="Portrait\ImageCollection.vb" />
@@ -613,6 +618,9 @@
     <Content Include="img\fTF\tfAccA\fAccA9.png">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
+    <Content Include="img\fTF\tfAccA\gfAccA10.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
     <Content Include="img\fTF\tfClothes\gfClothes125.png">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
@@ -754,6 +762,12 @@
     <Content Include="img\fTF\tfEyes\tfEyes27.png">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
+    <Content Include="img\fTF\tfEyes\tfEyes28.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="img\fTF\tfEyes\tfEyes29.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
     <Content Include="img\fTF\tfFace\fFace2.png">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
@@ -761,6 +775,9 @@
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
     <Content Include="img\fTF\tfFrontHair\tfFrontHair19.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="img\fTF\tfFrontHair\tfFrontHair20.png">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
     <Content Include="img\fTF\tfGlasses\fGlasses6.png">
@@ -781,10 +798,16 @@
     <Content Include="img\fTF\tfRearHair1\tfRearHair22.png">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
+    <Content Include="img\fTF\tfRearHair1\tfRearHair23.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
     <Content Include="img\fTF\tfRearHair2\tfRearHair217.png">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
     <Content Include="img\fTF\tfRearHair2\tfRearHair218.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="img\fTF\tfRearHair2\tfRearHair219.png">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
     <Content Include="img\misc-unimplemented\blank.png">

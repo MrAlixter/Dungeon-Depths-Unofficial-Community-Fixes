@@ -51,6 +51,19 @@
             End If
         End If
     End Sub
+    Shared Sub minorManaRegen()
+        Dim p As Player = Game.player
+        If p.equippedAcce.getId <> 110 Then
+            p.perks("minmanregen") = -1
+            Exit Sub
+        End If
+        If p.mana < p.getMaxMana And Game.turn Mod 5 = 0 Then
+            Dim m As Integer = 2
+            p.mana += m
+            Game.pushLstLog("A slight glowing aura imbues you with magical energy! +" & m & " mana")
+            If p.mana > p.getMaxMana Then p.mana = p.getMaxMana
+        End If
+    End Sub
     Shared Sub Regen()
         Dim p As Player = Game.player
         If p.health < 1 And Game.turn Mod 7 = 0 Then

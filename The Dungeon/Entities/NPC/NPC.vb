@@ -311,10 +311,8 @@
         target.takeDMG(dmg, Me)
     End Sub
     Private Sub cHit(dmg As Integer, target As Player)
-        target.takeDMG(dmg * 2, Me)
-        Game.pushLstLog(CStr("You got hit! Critical hit! -" & dmg * 2 & " health!"))
-        Game.pushLblCombatEvent(CStr("You got hit! Critical hit! -" & dmg * 2 & " health!"))
-    End Sub
+        target.takeCritDMG(dmg * 2, Me)
+      End Sub
     'attacking a non-player entity
     Private Sub miss(target As Entity)
         If target.GetType() Is GetType(Player) Then

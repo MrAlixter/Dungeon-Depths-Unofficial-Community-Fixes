@@ -125,6 +125,10 @@
         internal_inventory.Add("Labcoat", New Labcoat())                    '106
         internal_inventory.Add("Labcoat​", New LabcoatSV())                  '107
         internal_inventory.Add("Spatial_Shroom", New SShroom())             '108
+        internal_inventory.Add("Mint_Stick_of_Gum", New MStickOfGum())      '109
+        internal_inventory.Add("Mobile_Powerbank", New Generator())         '110
+        internal_inventory.Add("Discharge_Gauntlets", New ManaDisharge())   '111
+        internal_inventory.Add("Photon_Blade", New PhotonBlade())           '112
 
         armor = {New CommonClothes, New SkimpyClothes, New Naked,
                  Me.item(5), Me.item(7), Me.item(8), Me.item(10),
@@ -142,7 +146,7 @@
                    Me.item(6), Me.item(9), Me.item(11), Me.item(21),
                    Me.item(22), Me.item(23), Me.item(24), Me.item(40),
                    Me.item(41), Me.item(42), Me.item(45), Me.item(63),
-                   Me.item(84), Me.item(96)}
+                   Me.item(84), Me.item(96), Me.item(111), Me.item(112)}
 
         useable = {Me.item(0), Me.item(1), Me.item(3), Me.item(4),
                    Me.item(65), Me.item(15), Me.item(36), Me.item(37),
@@ -153,11 +157,11 @@
 
         food = {Me.item(30), Me.item(31), Me.item(32), Me.item(33),
                 Me.item(34), Me.item(35), Me.item(44), Me.item(90),
-                Me.item(98), Me.item(100), Me.item(108)}
+                Me.item(98), Me.item(100), Me.item(108), Me.item(109)}
 
         acce = {New noAcce(), Me.item(66), Me.item(67), Me.item(68),
                 Me.item(69), Me.item(70), Me.item(77), Me.item(81),
-                Me.item(97)}
+                Me.item(97), Me.item(110)}
 
         potions = {Me.item(2), Me.item(13), Me.item(14), Me.item(25),
                    Me.item(26), Me.item(27), Me.item(28), Me.item(29),

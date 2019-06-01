@@ -1844,15 +1844,19 @@ Public Class Game
     'utility functions for the command drivers
     Sub queueSetup()
         'This sets up the update list
+        Dim int As Integer = 999 - player.getSPD
+        If int < 1 Then int = 1
+
         If npcList.Count > 0 Then
             For i = 0 To npcList.Count - 1
                 Dim int1 As Integer = 999 - npcList.Item(i).speed
+                If int - int1 = 0 Then int1 -= 1
+
                 If int1 < 1 Then int1 = 1
                 updateList.add(npcList.Item(i), (int1))
             Next
         End If
-        Dim int As Integer = 999 - player.getSPD
-        If int < 1 Then int = 1
+
         updateList.add(player, int)
     End Sub
     Sub randomEvents()
