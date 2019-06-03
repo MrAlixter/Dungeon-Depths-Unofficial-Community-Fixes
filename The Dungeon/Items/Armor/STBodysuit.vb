@@ -13,6 +13,7 @@ Public Class STBodysuit
         MyBase.mBoost = 23
         MyBase.count = 0
         MyBase.value = 1375
+        MyBase.antiSlutVarInd = 102
         MyBase.bsizeneg1 = New Tuple(Of Integer, Boolean, Boolean)(44, False, True)
         MyBase.bsize0 = New Tuple(Of Integer, Boolean, Boolean)(45, False, True)
         MyBase.bsize1 = New Tuple(Of Integer, Boolean, Boolean)(159, True, True)

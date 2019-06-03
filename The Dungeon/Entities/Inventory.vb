@@ -106,7 +106,7 @@
         internal_inventory.Add("Bimbo_Lesson", New BimboLesson())           '87
         internal_inventory.Add("Combat_Manual", New CombatManual())         '88
         internal_inventory.Add("Utility_Manual", New UtilityManual())       '89
-        internal_inventory.Add("Pancea", New Pancea())                      '90
+        internal_inventory.Add("Panacea", New Panacea())                    '90
         internal_inventory.Add("Vial_of_Venom", New VialOfVenom())          '91
         internal_inventory.Add("Anti_Venom", New AntiVenom())               '92
         internal_inventory.Add("Blinding_Potion", New BlindPotion())        '93

@@ -27,7 +27,7 @@
                     Case 0
                         sName = "Ritual of Mana"
                     Case 1
-                        sName = "Clense"
+                        sName = "Cleanse"
                     Case 2
                         sName = "Spot Fusion"
                 End Select

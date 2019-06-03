@@ -157,17 +157,17 @@
             selfPolyForms.Add(playArray(currentIndex + 1 + i))
         Next
         'load the known self enemy forms
-        currentIndex += 2 + CInt(playArray(currentIndex))
+        currentIndex += 3 + CInt(playArray(currentIndex))
         For i = 0 To CInt(playArray(currentIndex))
             enemPolyForms.Add(playArray(currentIndex + 1 + i))
         Next
         'load the known spells
-        currentIndex += 2 + CInt(playArray(currentIndex))
+        currentIndex += 3 + CInt(playArray(currentIndex))
         For i = 0 To CInt(playArray(currentIndex))
             knownSpells.Add(playArray(currentIndex + 1 + i))
         Next
         'load the known specials
-        currentIndex += 2 + CInt(playArray(currentIndex))
+        currentIndex += 3 + CInt(playArray(currentIndex))
         For i = 0 To CInt(playArray(currentIndex))
             knownSpecials.Add(playArray(currentIndex + 1 + i))
         Next
@@ -1639,19 +1639,19 @@
             output += ongoingTFs(i).ToString
         Next
 
-        output += selfPolyForms.Count - 1 & "*"
+        output += "*" & selfPolyForms.Count - 1 & "*"
         For i = 0 To selfPolyForms.Count - 1
             output += selfPolyForms(i).ToString & "*"
         Next
-        output += enemPolyForms.Count - 1 & "*"
+        output += "*" & enemPolyForms.Count - 1 & "*"
         For i = 0 To enemPolyForms.Count - 1
             output += enemPolyForms(i).ToString & "*"
         Next
-        output += knownSpells.Count - 1 & "*"
+        output += "*" & knownSpells.Count - 1 & "*"
         For i = 0 To knownSpells.Count - 1
             output += knownSpells(i).ToString & "*"
         Next
-        output += knownSpecials.Count - 1 & "*"
+        output += "*" & knownSpecials.Count - 1 & "*"
         For i = 0 To knownSpecials.Count - 1
             output += knownSpecials(i).ToString & "*"
         Next

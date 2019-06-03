@@ -72,10 +72,14 @@
             spec = New IHFu(u, t)
         ElseIf s.Equals("Ritual of Mana") Then
             spec = New RitOfMana(u, t)
-        ElseIf s.Equals("Clense") Then
-            spec = New Clense(u, t)
+        ElseIf s.Equals("Cleanse") Then
+            spec = New Cleanse(u, t)
         ElseIf s.Equals("Spot Fusion") Then
             spec = New SpotFusion(u, t)
+        ElseIf s.Equals("Rapid Fire Jabs") Then
+            spec = New RapidFireJabs(u, t)
+        ElseIf s.Equals("Focused Roundhouse") Then
+            spec = New FocusedKick(u, t)
         End If
 
         spec.perform()
@@ -96,6 +100,14 @@
                 Else
                     Return "+120 hunger"
                 End If
+            Case "Cleanse"
+                Return "+15 hunger"
+            Case "Spot Fusion"
+                Return "+50 hunger "
+            Case "Rapid Fire Jabs"
+                Return "+9 hunger for the first jab, and +6 hunger for each additional jab"
+            Case "Focused Roundhouse"
+                Return "+16 hunger"
             Case Else
                 Return "Useable only once per combat"
         End Select

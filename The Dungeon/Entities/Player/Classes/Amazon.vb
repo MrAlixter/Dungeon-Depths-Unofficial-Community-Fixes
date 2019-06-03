@@ -1,8 +1,8 @@
-﻿Public Class Valkyrie
+﻿Public Class Amazon
     Inherits pClass
     Sub New()
-        MyBase.New(0.77, 2.0, 0.5, 1.2, 1.77, 1.5, "Valkyrie")
-        MyBase.revertPassage = "As you sheath your flaming blade, its fire fades to embers and you return to your original form. Well, until you should need its power again, at least."
+        MyBase.New(1, 5.0, 0.1, 1, 5, 2.5, "Amazon")
+        MyBase.revertPassage = ""
     End Sub
 
     Public Overrides Sub revert()

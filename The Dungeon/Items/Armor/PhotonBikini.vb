@@ -14,6 +14,7 @@ Public Class PhotonBikini
         MyBase.dBoost = 2
         MyBase.count = 0
         MyBase.value = 3331
+        MyBase.antiSlutVarInd = 105
         MyBase.bsizeneg1 = New Tuple(Of Integer, Boolean, Boolean)(46, False, True)
         MyBase.bsize1 = New Tuple(Of Integer, Boolean, Boolean)(155, True, True)
         MyBase.bsize2 = New Tuple(Of Integer, Boolean, Boolean)(156, True, True)

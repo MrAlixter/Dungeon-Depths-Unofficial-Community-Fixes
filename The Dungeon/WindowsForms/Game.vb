@@ -170,14 +170,6 @@ Public Class Game
             healthCol = Image.FromFile("img/LifeColors.png")
         End If
 
-        'Fill Chest Tier List
-        For i = 0 To player.inv.upperBound
-            Dim c_item = player.inv.item(i)
-            If c_item.tier <> Nothing And Not c_item.isMonsterDrop Then
-                baseChest.tiers(c_item.tier).Add(c_item)
-            End If
-        Next
-
         'sets the player tile image to the default @
         pImage = picPlayer.BackgroundImage
         'scales the font size to that of the window
@@ -892,8 +884,19 @@ Public Class Game
     Sub genSpaceChest1(ByVal p As Point)
         Dim c1 As Chest
         Dim inv = New Inventory(False)
-        inv.add("Photon_Armor", CInt(Rnd() * 2))
-        inv.add("Labcoat", CInt(Rnd() * 2))
+
+        Dim r = 0
+        If Int(Rnd() * 3) = 0 Then r = 1 Else r = 0
+        inv.add("Photon_Armor", r)
+        If Int(Rnd() * 3) = 0 Then r = 1 Else r = 0
+        inv.add("Labcoat", r)
+        If Int(Rnd() * 3) = 0 Then r = 1 Else r = 0
+        inv.add("Mobile_Powerbank", r)
+        If Int(Rnd() * 3) = 0 Then r = 1 Else r = 0
+        inv.add("Discharge_Gauntlets", r)
+        If Int(Rnd() * 3) = 0 Then r = 1 Else r = 0
+        inv.add("Photon_Blade", r)
+
         inv.add("Space_Age_Jumpsuit", 1)
         c1 = baseChest.Create(inv, p, False)
 
@@ -948,6 +951,17 @@ Public Class Game
         mBoard(stairs.Y, stairs.X).Text = "H"
     End Sub
     Sub placeChest(ByVal code As String)
+        'Fill Chest Tier List
+        For i = 1 To baseChest.tiers.Count - 1
+            baseChest.tiers(i).Clear()
+        Next
+        For i = 0 To player.inv.upperBound
+            Dim c_item = player.inv.item(i)
+            If c_item.tier <> Nothing And Not c_item.isMonsterDrop Then
+                baseChest.tiers(c_item.tier).Add(c_item)
+            End If
+        Next
+
         Rnd(-1)
         Randomize(code.GetHashCode)
         'Dim numChests As Integer = CInt(Int(Rnd() * 8) + 3) * Int((mBoardWidth / 30) + (mBoardHeight / 30) / 2)
@@ -1784,8 +1798,8 @@ Public Class Game
                         count += 1
                     Next
                 Else
-                    For i = 0 To cboxMG.Items.Count - 1
-                        lstSelec.Items.Add(indexes(count) & " - " & cboxMG.Items(i).ToString)
+                    For i = 0 To player.knownSpells.Count - 1
+                        lstSelec.Items.Add(indexes(count) & " - " & player.knownSpells(i).ToString)
                         count += 1
                     Next
                 End If
@@ -2155,6 +2169,7 @@ Public Class Game
     End Sub
     'magic
     Sub magicKey()
+        player.magicRoute()
         toPNLSelec("Magic")
     End Sub
     Private Sub btnMG_Click(sender As Object, e As EventArgs) Handles btnMG.Click
@@ -2181,6 +2196,7 @@ Public Class Game
     End Sub
     'specials
     Sub specialKey()
+        player.specialRoute()
         toPNLSelec("Spec")
     End Sub
     Private Sub btnSpec_Click(sender As Object, e As EventArgs) Handles btnSpec.Click
@@ -2771,19 +2787,19 @@ Public Class Game
             MsgBox("Right Button Clicked")
         Else
             If solFlag Then
-                'Try
-                player.solFlag = True
-                loadSave("s" & fileNum & ".ave")
-                player.solFlag = False
-                'Catch ex As System.IO.FileNotFoundException
-                '    MsgBox("Error 004: No save detected!")
-                'Catch ex2 As Exception
-                '    If MessageBox.Show("Error 005: Error in loaded in save file!" & vbCrLf & "Restart?", "Error 005", MessageBoxButtons.YesNo) = Windows.Forms.DialogResult.Yes Then
-                '        Application.Restart()
-                '    Else
-                '        Application.Exit()
-                '    End If
-                'End Try
+                Try
+                    player.solFlag = True
+                    loadSave("s" & fileNum & ".ave")
+                    player.solFlag = False
+                Catch ex As System.IO.FileNotFoundException
+                    MsgBox("Error 004: No save detected!")
+                Catch ex2 As Exception
+                    If MessageBox.Show("Error 005: Error in loaded in save file!" & vbCrLf & "Restart?", "Error 005", MessageBoxButtons.YesNo) = Windows.Forms.DialogResult.Yes Then
+                        Application.Restart()
+                    Else
+                        Application.Exit()
+                    End If
+                End Try
             Else
                 save("s" & fileNum & ".ave")
                 imagesWorkerArg = Convert.ToInt32(fileNum)

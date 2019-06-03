@@ -25,10 +25,12 @@
                 Dim spec As Integer = CInt(Int(Rnd() * 1))
                 Select Case spec
                     Case 0
-                        sName = "Ritual of Mana"
+                        sName = "Rapid Fire Jabs"
+                    Case 1
+                        sName = "Focused Roundhouse"
                 End Select
                 If ct > 60 Then
-                    Game.pushLstLog("You know all the specials in utility manuals already!")
+                    Game.pushLstLog("You know all the specials in combat manuals already!")
                     count -= 1
                     Exit Sub
                 End If

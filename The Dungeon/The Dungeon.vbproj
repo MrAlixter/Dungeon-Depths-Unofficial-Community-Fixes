@@ -121,11 +121,13 @@
     <Compile Include="Entities\NPC\Non-Hostile\Shopkeeper.vb" />
     <Compile Include="Entities\NPC\Non-Hostile\TravelingWizard.vb" />
     <Compile Include="Entities\NPC\NPC.vb" />
+    <Compile Include="Entities\Player\Classes\AmazonWeak.vb" />
     <Compile Include="Entities\Player\Classes\Bimbo.vb" />
     <Compile Include="Entities\Player\Classes\Classless.vb" />
     <Compile Include="Entities\Player\Classes\Goddess.vb" />
     <Compile Include="Entities\Player\Classes\Mage.vb" />
     <Compile Include="Entities\Player\Classes\needRevertPassage\Dancer.vb" />
+    <Compile Include="Entities\Player\Classes\Amazon.vb" />
     <Compile Include="Entities\Player\Classes\Valkyrie.vb" />
     <Compile Include="Entities\Player\Classes\MagicGirl.vb" />
     <Compile Include="Entities\Player\Classes\MagicGirlTransform.vb" />
@@ -171,9 +173,11 @@
     <Compile Include="Entities\Player\Forms\pForm.vb" />
     <Compile Include="Entities\Player\Specials\Abso.vb" />
     <Compile Include="Entities\Player\Specials\AFK.vb" />
+    <Compile Include="Entities\Player\Specials\RapidFireJabs.vb" />
+    <Compile Include="Entities\Player\Specials\FocusedKick.vb" />
     <Compile Include="Entities\Player\Specials\BAStrike.vb" />
     <Compile Include="Entities\Player\Specials\BRage.vb" />
-    <Compile Include="Entities\Player\Specials\Clense.vb" />
+    <Compile Include="Entities\Player\Specials\Cleanse.vb" />
     <Compile Include="Entities\Player\Specials\IHFu.vb" />
     <Compile Include="Entities\Player\Specials\MMam.vb" />
     <Compile Include="Entities\Player\Specials\RDesc.vb" />
@@ -249,7 +253,8 @@
     <Compile Include="Items\Armor\AmaAttire.vb" />
     <Compile Include="Items\Armor\DissolvedClothes.vb" />
     <Compile Include="Items\Armor\ValkyrieArmor.vb" />
-    <Compile Include="Items\Unimplemented\BimboLesson.vb" />
+    <Compile Include="Items\Lessons\AmazonLesson.vb" />
+    <Compile Include="Items\Lessons\BimboLesson.vb" />
     <Compile Include="Items\Usable\Food\MStickOfGum.vb" />
     <Compile Include="Items\Usable\Food\SShroom.vb" />
     <Compile Include="Items\Usable\Food\CHeavyCream.vb" />

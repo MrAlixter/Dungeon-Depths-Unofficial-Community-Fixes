@@ -55,7 +55,7 @@
                 Game.pushNPCDialog("Hello, potential customer!  I don't suppose you've seen Mr. Vendor around anywhere, have you?  " &
                                    "He appears to have gotten the cream in my usual morning coffee mixed up with some other malarkey, " &
                                    "and now, as I'm sure you can see, I've begun morphing into some sort of bovine.  I'm hoping he has " &
-                                   "some Pancea on hand, because otherwise I might be in a prediciment and if that is the case so help me " &
+                                   "some Panacea on hand, because otherwise I might be in a prediciment and if that is the case so help me " &
                                    "I'm going to...*sigh* This isn't appropriate buisness talk.  I have spellbooks and manuals for sale, and if " &
                                    "you're looking for something specific, I have some recorded hypnotic lessons on tape.  Take a look around, " &
                                    "in the meantime I'm going to track down my idiot.")

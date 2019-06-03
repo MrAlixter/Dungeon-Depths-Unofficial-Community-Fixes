@@ -19,8 +19,9 @@
         inv.item("Heavy_Cream").value -= 0.2 * inv.item("Heavy_Cream").value
         inv.setCount("Medicinal_Tea", 1)
         inv.item("Medicinal_Tea").value -= 0.2 * inv.item("Medicinal_Tea").value
-        inv.setCount("Pancea", 1)
+        inv.setCount("Panacea", 1)
         inv.setCount("Cherry_Stick_of_Gum", 1)
+        inv.setCount("Mint_Stick_of_Gum", 1)
         inv.setCount("Spatial_Shroom", 1)
 
         isShop = True

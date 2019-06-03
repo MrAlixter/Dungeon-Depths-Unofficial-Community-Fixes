@@ -18,6 +18,16 @@
 
         count -= 1
     End Sub
+
+    Overrides Function attack(ByRef p As Player, ByRef m As Entity) As Integer
+        Dim dmg As Integer = Int(Rnd() * 3 + 1) + Int(Rnd() * 3 + 1) + Int(Rnd() * 3 + 1) + Int(Rnd() * 3 + 1)
+        If dmg <= 4 Then '+ ((p.lust Mod 20)) Then
+            Return -1
+        End If
+        dmg += (p.getATK) + (Me.aBoost)
+        Return Player.calcDamage(dmg, m.defence)
+    End Function
+
     Public Overrides Sub onEquip()
         If Not Game.player.pClass.name.Equals("Valkyrie") Then
             Dim valkyrieTF = New ValkyrieTF2(1, 0, 0, False)

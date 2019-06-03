@@ -16,7 +16,6 @@
         Game.pushLstLog("You use the " & getName() & ". +5 base mana!")
         
         Game.player.mBuff += 5
-        Game.player.mana += 5
         Game.player.UIupdate()
         count -= 1
     End Sub

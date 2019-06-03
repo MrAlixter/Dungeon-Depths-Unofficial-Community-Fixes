@@ -1,10 +1,10 @@
 ﻿Public Class Chest
     Public contents As Inventory
     Public pos As Point
-    Public tier1 = New ArrayList()
-    Public tier2 = New ArrayList()
-    Public tier3 = New ArrayList()
-    Public tiers() = {Nothing, tier1, tier2, tier3}
+    Public tier1 = New List(Of Item)
+    Public tier2 = New List(Of Item)
+    Public tier3 = New List(Of Item)
+    Public tiers() As List(Of Item) = {Nothing, tier1, tier2, tier3}
     '|CONSTRUCTORS|
     Sub New()
         contents = New Inventory(False)

@@ -14,6 +14,7 @@ Public Class LabcoatSV
         MyBase.wboost = 20
         MyBase.count = 0
         MyBase.value = 450
+        MyBase.antiSlutVarInd = 106
         MyBase.bsize0 = New Tuple(Of Integer, Boolean, Boolean)(43, False, True)
         MyBase.bsize1 = New Tuple(Of Integer, Boolean, Boolean)(151, True, True)
         MyBase.bsize2 = New Tuple(Of Integer, Boolean, Boolean)(152, True, True)
