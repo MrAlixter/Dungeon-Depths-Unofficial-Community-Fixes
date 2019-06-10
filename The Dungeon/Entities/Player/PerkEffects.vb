@@ -101,6 +101,24 @@
         End If
         Return False
     End Function
+    Shared Sub amazon()
+        Dim p = Game.player
+        If p.pForm.name.Equals("Amazon") Or p.pForm.name.Equals("Amazon​") Then
+            If p.equippedWeapon.getName.Equals("Fists") And p.pForm.name.Equals("Amazon​") Then
+                p.pForm = p.forms("Amazon")
+            ElseIf Not p.equippedWeapon.getName.Equals("Fists") And p.pForm.name.Equals("Amazon") Then
+                Game.pushLblEvent("Your lack of familiarity with this weapon greatly lowers your attack potential!")
+                p.pForm = p.forms("Amazon​")
+            End If
+        Else
+            p.perks("amazon") = -1
+        End If
+    End Sub
+    Shared Sub barbarian()
+        If Not Game.player.pClass.name.Equals("barbarian") Then
+            Game.player.perks("barbarian") = -1
+        End If
+    End Sub
 
     Shared Sub ROTLGRoute()
         Dim p As Player = Game.player
@@ -213,6 +231,7 @@
         Dim flag = False
         flag = bowTieEffect() Or flag
         flag = hardLightEffect(dmg) Or flag
+        flag = bimboDodge() Or flag
         Return flag
     End Function
     Shared Function bowTieEffect() As Boolean
@@ -244,6 +263,17 @@
                 Return True
             Else
                 Game.pushLblEvent("Your hardlight shields are completely down!")
+            End If
+        End If
+        Return False
+    End Function
+    Shared Function bimboDodge() As Boolean
+        Dim p = Game.player
+        If p.pClass.name.Equals("Bimbo") Or p.pForm.name.Equals("Hyper Bimbo") Then
+            Dim r = Int(Rnd() * 3)
+            If r = 0 Then
+                Game.pushLblEvent("You, like, totally aren't feeling this right now.  Giving your best pout, you wimper ""Hey, stop it!  You're gonna, like, hurt me or something!"".  Squeezing your arms together to show off your cleavage, you look up at your opponent, making sure your lip is quivering just a little bit.  They stop their attack short, looking more confused than merciful.  You don't even consider this subtle distinction though, instead deciding that they, like, totally thought you were too cute to hit!")
+                Return True
             End If
         End If
         Return False

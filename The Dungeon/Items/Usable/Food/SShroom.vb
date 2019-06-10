@@ -4,7 +4,7 @@
     Sub New()
         MyBase.setName("Spatial_Shroom")
         MyBase.setDesc("An small white mushroom that gives off a subtle white glow.  Rumor has it that eating one has the potential to disrupt time and space. -25 Hunger.")
-        id = 32
+        id = 108
         tier = 1
         MyBase.setUsable(True)
         MyBase.count = 0

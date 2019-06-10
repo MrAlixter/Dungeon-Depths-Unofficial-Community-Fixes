@@ -1,14 +1,14 @@
-﻿Public Class AmazonLesson
+﻿Public Class BarbarianLesson
     Inherits Item
 
     Sub New()
-        MyBase.setName("Amazon_Lesson")
+        MyBase.setName("Barbarian_Lesson")
         MyBase.setDesc("""Are you disillusioned with all this magic and weapons malarchy?  Do you just want to smack things around with your bare hands like the powerful woman you are (or could be)?  Perhaps the Amazon life is for you...""")
-        id = 113
+        id = 114
         tier = Nothing
         MyBase.setUsable(False)
         MyBase.count = 0
-        MyBase.value = 6969
+        MyBase.value = 5900
         MyBase.onBuy = AddressOf teach
     End Sub
 
@@ -18,7 +18,7 @@
         CType(Game.hteach, HTeach).hideShopButtons()
     End Sub
     Sub warning()
-        Game.pushPnlYesNo("Are you sure you want to start over as an Amazon?", AddressOf tf, AddressOf cancel)
+        Game.pushPnlYesNo("Are you sure you want to start over as a Barbarian?", AddressOf tf, AddressOf cancel)
     End Sub
     Sub cancel()
         Game.player.gold += value
@@ -32,11 +32,19 @@
             """...and then we met!  You're a fair ways off from the Amazonian village though, right?"" the hypnotist teacher asks cheerfully." & vbCrLf & vbCrLf &
             "Right!  The Village!  You recall all the time you spent in that village; your childhood, your combat training, the first time you saw a man.  He, a lost traveller, had stumbled into the village one clear evening.  Before the sun rose, though, the shamans worked their magic, leaving a very confused woman in his place." & vbCrLf & vbCrLf &
             """Well then, it seems like my work here is done,"" the Hypnotist says, inturupting your reminissing.  ""If I can help you with anything else, don't hesitate to ask!"""
-        Dim aTF As AmazonTF = New AmazonTF()
-        aTF.step1()
 
         Dim p = Game.player
+
         p.setStatsToBeginning()
+
+        p.inv.add("Barbarian_Armor", 1)
+        Equipment.clothesChange("Barbarian_Armor")
+
+        If p.equippedWeapon.GetType.IsSubclassOf(GetType(Staff)) Then
+            Equipment.weaponChange("Fists")
+        End If
+
+        p.pClass = p.classes("Barbarian")
 
         Game.pushLblEvent(out, AddressOf CType(Game.hteach, HTeach).back)
         p.createP()

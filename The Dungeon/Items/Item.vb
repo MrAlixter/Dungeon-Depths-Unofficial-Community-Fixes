@@ -63,6 +63,7 @@
     End Sub
     Overridable Sub discard()
         Game.pushLstLog("You drop the " & getName())
+        count -= 1
     End Sub
     Overridable Sub remove()
         Game.pushLstLog("The " & getName() & " fades into non-existance")

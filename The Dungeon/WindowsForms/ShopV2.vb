@@ -13,7 +13,7 @@ Public Class ShopV2
         skInventory = New List(Of String)
         pInventory = New List(Of String)
 
-        lblFeedback.Text = ""
+        txtdesc.Text = ""
 
         'scale to the screen size
         Dim startingWidth = Me.Width
@@ -129,9 +129,9 @@ Public Class ShopV2
 
             p.gold += cost
             sk.gold -= cost
-            lblFeedback.Text = "Selling successful. Acquired " & cost & " gold."
+            txtDesc.Text = "Sale successful. Acquired " & cost & " gold."
         Else
-            lblFeedback.Text = "Shopkeeper does not have enough gold. They need " & cost - sk.gold & " more."
+            txtdesc.Text = "Shopkeeper does not have enough gold. They need " & cost - sk.gold & " more."
         End If
 
         RefreshScreen()
@@ -175,9 +175,9 @@ Public Class ShopV2
             Next
             p.gold -= cost
             sk.gold += cost
-            lblFeedback.Text = "Purchase successful. Spent " & cost & " gold."
+            txtdesc.Text = "Purchase successful. Spent " & cost & " gold."
         Else
-            lblFeedback.Text = "Insufficient gold. Need " & cost - p.gold & " more."
+            txtdesc.Text = "Insufficient gold. Need " & cost - p.gold & " more."
         End If
 
         RefreshScreen()
@@ -187,9 +187,41 @@ Public Class ShopV2
     End Sub
 
     Private Sub boxInventory_SelectedIndexChanged(sender As Object, e As EventArgs) Handles boxInventory.SelectedIndexChanged
+        Dim ind As Integer
+        Dim name As String = boxInventory.SelectedItem.ToString.Split({" "c, "("c, "."c})(0)
+        If p.inv.item(name) Is Nothing Then
+            For j As Integer = 0 To p.inv.upperBound
+                If p.inv.item(j).getAName().Contains(name) Then
+                    ind = j
+                    Exit For
+                End If
+            Next
+        Else
+            ind = p.inv.item(name).getId
+        End If
+
+        Dim item As Item = p.inv.item(ind)
+
+        txtDesc.Text = item.getDesc
         boxShop.SelectedIndex = -1
     End Sub
     Private Sub boxShop_SelectedIndexChange(sender As Object, e As EventArgs) Handles boxShop.SelectedIndexChanged
+        Dim ind As Integer
+        Dim name As String = boxShop.SelectedItem.ToString.Split({" "c, "("c, "."c})(0)
+        If p.inv.item(name) Is Nothing Then
+            For j As Integer = 0 To p.inv.upperBound
+                If p.inv.item(j).getAName().Contains(name) Then
+                    ind = j
+                    Exit For
+                End If
+            Next
+        Else
+            ind = p.inv.item(name).getId
+        End If
+
+        Dim item As Item = p.inv.item(ind)
+
+        txtDesc.Text = item.getDesc
         boxInventory.SelectedIndex = -1
     End Sub
 
@@ -270,7 +302,7 @@ Public Class ShopV2
 
             For i As Integer = 0 To p.inv.upperBound
                 If p.inv.item(i).getaname().Contains(name) Then
-                    lblFeedback.Text = p.inv.item(i).getDescription()
+                    txtdesc.Text = p.inv.item(i).getDescription()
                     Exit For
                 End If
             Next

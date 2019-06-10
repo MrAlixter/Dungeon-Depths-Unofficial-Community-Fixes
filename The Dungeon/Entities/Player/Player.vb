@@ -181,6 +181,15 @@
         specialRoute()
         bsizeroute()
     End Sub
+    Public Sub setStatsToBeginning()
+        maxHealth = 100
+        attack = 10
+        defence = 10
+        will = 10
+        speed = 10
+        mana = 3
+        maxMana = mana
+    End Sub
 
     '|CHARACTER CREATION/INITIALIZATION|
     Private Sub setStartingAccessory()
@@ -211,6 +220,13 @@
         equippedAcce.add(1)
     End Sub
     Public Sub setClassLoadout(ByVal s As String)
+        'set the player's form baced on their ears
+        If prt.iArrInd(6).Item1 = 3 Then
+            pForm = forms("Elf")
+        ElseIf prt.iArrInd(6).Item1 = 4 Then
+            pForm = forms("Android")
+        End If
+
         'sets default weapon/armor/accessory
         equippedArmor = New CommonClothes
         equippedWeapon = New BareFists
@@ -280,6 +296,8 @@
         perks.Add("bowtie", -1) '22
         perks.Add("hardlight", -1) '22
         perks.Add("minmanregen", -1) '23
+        perks.Add("amazon", -1) '23
+        perks.Add("barbarian", -1) '23
     End Sub
     Private Sub initClasses()
         'creates the class dictionary
@@ -304,6 +322,7 @@
         classes.Add("Unconscious", New Unconcious())
         classes.Add("Valkyrie", New Valkyrie())
         classes.Add("Bunny Girl", New Dancer())
+        classes.Add("Barbarian", New Barbarian())
     End Sub
     Private Sub initForms()
         'Creates the form dictionary
@@ -332,6 +351,9 @@
         forms.Add("Sheep", New Sheep())
         forms.Add("Frog", New Frog())
         forms.Add("Arachne", New Arachne())
+        forms.Add("Amazon", New Amazon())
+        forms.Add("Amazon​", New AmazonWeak())
+        forms.Add("Plantfolk", New Plantfolk())
     End Sub
     Private Sub initPolymorphs()
         'compile list of polymorphs
@@ -385,6 +407,12 @@
     End Sub
     Public Overrides Sub attackCMD(ByRef target As Entity)
         Randomize()
+
+        If pClass.name.Equals("Barbarian") Then
+            aBuff -= perks("barbarian")
+            perks("barbarian") = 0
+        End If
+
         Dim dmg As Integer = equippedWeapon.attack(Me, target)
         If dmg = -1 Then
             miss(target)
@@ -482,6 +510,13 @@
         For Each s In knownSpells
             Game.cboxMG.Items.Add(s)
         Next
+    End Sub
+    'wait
+    Public Sub wait()
+        If pClass.name.Equals("Barbarian") Then
+            aBuff += 5
+            perks("barbarian") += 5
+        End If
     End Sub
 
     '|TRANSFORMATION METHODS|
@@ -877,13 +912,21 @@
         If perks("vsslimehair") > -1 Then
             PerkEffects.vslimeHairRegen()
         End If
-
         'ring of min. regen
         If perks("minRegen") > -1 Then
             PerkEffects.minorRegen()
         End If
+        'mana generator
         If perks("minmanregen") > -1 Then
             PerkEffects.minorManaRegen()
+        End If
+        'amazon effect
+        If perks("amazon") > -1 Then
+            PerkEffects.amazon()
+        End If
+        'barbarian effect
+        If perks("barbarian") > -1 Then
+            PerkEffects.barbarian()
         End If
 
         'living armor
@@ -1142,6 +1185,8 @@
             Select Case prt.iArrInd(1).Item1
                 Case 5
                     prt.setIAInd(1, 13, True, True)
+                Case 6
+                    prt.setIAInd(1, 21, True, True)
             End Select
         End If
         'body
@@ -1172,6 +1217,8 @@
             Select Case prt.iArrInd(5).Item1
                 Case 5
                     prt.setIAInd(5, 15, True, True)
+                Case 6
+                    prt.setIAInd(5, 24, True, True)
             End Select
         End If
         'nose
@@ -1227,6 +1274,8 @@
         Select Case prt.iArrInd(1).Item1
             Case 13
                 prt.setIAInd(1, 5, False, True)
+            Case 21
+                prt.setIAInd(1, 6, False, True)
         End Select
         'body
         Select Case prt.iArrInd(2).Item1
@@ -1253,6 +1302,8 @@
         Select Case prt.iArrInd(5).Item1
             Case 15
                 prt.setIAInd(1, 5, False, True)
+            Case 24
+                prt.setIAInd(1, 6, False, True)
         End Select
         'nose
         Select Case prt.iArrInd(7).Item1
@@ -1670,23 +1721,23 @@
 
     '|GETTER/SETTER METHODS|
     Overrides Function getMaxHealth() As Integer
-        Return CInt((maxHealth + hBuff + equippedArmor.hBoost + equippedAcce.hBoost) * pClass.h * pForm.h)
+        Return CInt((maxHealth + hBuff) * pClass.h * pForm.h) + equippedArmor.hBoost + equippedAcce.hBoost
     End Function
     Overrides Function getMaxMana() As Integer
         If equippedArmor Is Nothing Or equippedWeapon Is Nothing Then Return CInt(maxMana * pForm.m * pForm.m) + mBuff
-        Return CInt((maxMana + mBuff + equippedArmor.mBoost + equippedWeapon.mBoost + equippedAcce.mBoost) * pForm.m * pForm.m)
+        Return CInt((maxMana + mBuff) * pForm.m * pForm.m) + equippedArmor.mBoost + equippedWeapon.mBoost + equippedAcce.mBoost
     End Function
     Overrides Function getATK() As Integer
         If equippedArmor Is Nothing Or equippedWeapon Is Nothing Then Return CInt(attack * pForm.a * pClass.a) + aBuff
-        Return CInt((attack + aBuff + equippedArmor.aBoost + equippedAcce.aBoost) * pForm.a * pClass.a)
+        Return CInt((attack + aBuff) * pForm.a * pClass.a) + equippedArmor.aBoost + equippedAcce.aBoost
     End Function
     Overrides Function getDEF() As Integer
         If equippedArmor Is Nothing Or equippedWeapon Is Nothing Then Return CInt(defence * pClass.d * pForm.d) + dBuff
-        Return CInt((defence + dBuff + equippedArmor.dBoost + equippedAcce.dBoost) * pClass.d * pForm.d)
+        Return CInt((defence + dBuff) * pClass.d * pForm.d) + equippedArmor.dBoost + equippedAcce.dBoost
     End Function
     Overrides Function getSPD() As Integer
         If equippedArmor Is Nothing Or equippedWeapon Is Nothing Then Return CInt(speed * pClass.s * pForm.s) + sBuff
-        Return CInt((speed + sBuff + equippedArmor.sBoost + equippedAcce.sBoost) * pClass.s * pForm.s)
+        Return CInt((speed + sBuff) * pClass.s * pForm.s) + equippedArmor.sBoost + equippedAcce.sBoost
     End Function
     Overrides Function getWIL() As Integer
         Return CInt(will * pClass.w * pForm.w) + wBuff
@@ -1864,7 +1915,6 @@
                     Else
                         out += "You have a a masculine body, with " & bAdj & " breasts, though you have female genetalia." & vbCrLf & " " & vbCrLf
                     End If
-                    out += "Your hips have womanly curves without being overly wide.  Overall, you have typical legs and feet for a humanoid woman." & vbCrLf & " " & vbCrLf
                 Else
                     If prt.sexBool Then
                         out += "You have a feminine body, with " & bAdj & " breasts, though you have male genetalia." & vbCrLf & " " & vbCrLf

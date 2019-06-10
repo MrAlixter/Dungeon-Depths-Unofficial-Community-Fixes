@@ -23,7 +23,6 @@
             Game.player.breastSize += 1
             Game.player.reverseBSRoute()
         End If
-
     End Sub
     Sub step1()
         Dim p As player = game.player

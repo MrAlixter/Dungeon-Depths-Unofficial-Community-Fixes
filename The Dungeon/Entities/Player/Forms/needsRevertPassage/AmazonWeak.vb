@@ -1,7 +1,7 @@
-﻿Public Class Gynoid
+﻿Public Class AmazonWeak
     Inherits pForm
     Sub New()
-        MyBase.New(0.7, 0.7, 1.6, 1.35, 1.5, 0.1, "Gynoid", True)
+        MyBase.New(1, 0.1, 0.1, 1, 1, 2.0, "Amazon​", True)
         MyBase.revertPassage = ""
     End Sub
 End Class

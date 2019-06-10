@@ -32,13 +32,12 @@ Partial Class ShopV2
         Me.boxInventory = New System.Windows.Forms.ListBox()
         Me.btnBuy = New System.Windows.Forms.Button()
         Me.lblInventory = New System.Windows.Forms.Label()
-        Me.lblItems = New System.Windows.Forms.Label()
         Me.boxShopFilter = New System.Windows.Forms.TextBox()
         Me.boxShop = New System.Windows.Forms.ListBox()
         Me.lblPlayer = New System.Windows.Forms.Label()
         Me.lblShopkeeper = New System.Windows.Forms.Label()
         Me.btnInspect = New System.Windows.Forms.Button()
-        Me.lblFeedback = New System.Windows.Forms.Label()
+        Me.txtDesc = New System.Windows.Forms.TextBox()
         CType(Me.number, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.SuspendLayout()
         '
@@ -154,17 +153,6 @@ Partial Class ShopV2
         Me.lblInventory.TabIndex = 186
         Me.lblInventory.Text = "INVENTORY"
         '
-        'lblItems
-        '
-        Me.lblItems.AutoSize = True
-        Me.lblItems.Font = New System.Drawing.Font("Consolas", 12.0!)
-        Me.lblItems.ForeColor = System.Drawing.Color.White
-        Me.lblItems.Location = New System.Drawing.Point(356, 494)
-        Me.lblItems.Name = "lblItems"
-        Me.lblItems.Size = New System.Drawing.Size(65, 23)
-        Me.lblItems.TabIndex = 187
-        Me.lblItems.Text = "ITEMS"
-        '
         'boxShopFilter
         '
         Me.boxShopFilter.BackColor = System.Drawing.Color.Black
@@ -208,7 +196,7 @@ Partial Class ShopV2
         Me.lblShopkeeper.BackColor = System.Drawing.Color.Black
         Me.lblShopkeeper.Font = New System.Drawing.Font("Consolas", 8.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.lblShopkeeper.ForeColor = System.Drawing.Color.White
-        Me.lblShopkeeper.Location = New System.Drawing.Point(347, 15)
+        Me.lblShopkeeper.Location = New System.Drawing.Point(326, 15)
         Me.lblShopkeeper.Margin = New System.Windows.Forms.Padding(4, 0, 4, 0)
         Me.lblShopkeeper.Name = "lblShopkeeper"
         Me.lblShopkeeper.Size = New System.Drawing.Size(88, 17)
@@ -229,16 +217,18 @@ Partial Class ShopV2
         Me.btnInspect.Text = "Inspect"
         Me.btnInspect.UseVisualStyleBackColor = False
         '
-        'lblFeedback
+        'txtDesc
         '
-        Me.lblFeedback.Font = New System.Drawing.Font("Consolas", 8.0!)
-        Me.lblFeedback.ForeColor = System.Drawing.Color.White
-        Me.lblFeedback.Location = New System.Drawing.Point(215, 39)
-        Me.lblFeedback.Name = "lblFeedback"
-        Me.lblFeedback.Size = New System.Drawing.Size(199, 120)
-        Me.lblFeedback.TabIndex = 200
-        Me.lblFeedback.Text = "Label1"
-        Me.lblFeedback.TextAlign = System.Drawing.ContentAlignment.MiddleCenter
+        Me.txtDesc.BackColor = System.Drawing.Color.Black
+        Me.txtDesc.Font = New System.Drawing.Font("Consolas", 7.8!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.txtDesc.ForeColor = System.Drawing.Color.White
+        Me.txtDesc.Location = New System.Drawing.Point(223, 39)
+        Me.txtDesc.Multiline = True
+        Me.txtDesc.Name = "txtDesc"
+        Me.txtDesc.ReadOnly = True
+        Me.txtDesc.ScrollBars = System.Windows.Forms.ScrollBars.Vertical
+        Me.txtDesc.Size = New System.Drawing.Size(191, 117)
+        Me.txtDesc.TabIndex = 200
         '
         'ShopV2
         '
@@ -246,7 +236,7 @@ Partial Class ShopV2
         Me.BackColor = System.Drawing.Color.Black
         Me.ClientSize = New System.Drawing.Size(634, 500)
         Me.ControlBox = False
-        Me.Controls.Add(Me.lblFeedback)
+        Me.Controls.Add(Me.txtDesc)
         Me.Controls.Add(Me.btnInspect)
         Me.Controls.Add(Me.lblShopkeeper)
         Me.Controls.Add(Me.lblPlayer)
@@ -258,7 +248,6 @@ Partial Class ShopV2
         Me.Controls.Add(Me.boxInventory)
         Me.Controls.Add(Me.btnBuy)
         Me.Controls.Add(Me.lblInventory)
-        Me.Controls.Add(Me.lblItems)
         Me.Controls.Add(Me.lblYG)
         Me.Controls.Add(Me.lblSKG)
         Me.Controls.Add(Me.btnDone)
@@ -281,11 +270,10 @@ Partial Class ShopV2
     Friend WithEvents boxInventory As ListBox
     Friend WithEvents btnBuy As Button
     Friend WithEvents lblInventory As Label
-    Friend WithEvents lblItems As Label
     Friend WithEvents boxShopFilter As TextBox
     Friend WithEvents boxShop As ListBox
     Friend WithEvents lblPlayer As Label
     Friend WithEvents lblShopkeeper As Label
     Friend WithEvents btnInspect As Button
-    Friend WithEvents lblFeedback As Label
+    Friend WithEvents txtDesc As System.Windows.Forms.TextBox
 End Class

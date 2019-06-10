@@ -18,6 +18,8 @@
         inv.setCount("Spellbook", 1)
         inv.item("Spellbook").value -= 0.2 * MyBase.inv.item("Spellbook").value
         inv.setCount("Bimbo_Lesson", 1)
+        inv.setCount("Amazon_Lesson", 1)
+        inv.setCount("Barbarian_Lesson", 1)
         inv.setCount("Utility_Manual", 1)
         inv.item("Utility_Manual").value -= 0.2 * MyBase.inv.item("Utility_Manual").value
 
@@ -48,7 +50,7 @@
                                    "out a deal with that wizard guy, and it like, didn't go too well.  But hey, now I " &
                                    "feel soooo gooood, and I'm even doing a I'm-having-fun sale!  I ran into Food Guy, " &
                                    "and don't tell him I said this but he's toootally like my soulmate...  " &
-                                   "Anyway, like, he has that pance...pensi...special food thing that can get me back to my normal self!" &
+                                   "Anyway, like, he has that panana...penasi...special food thing that can get me back to my normal self!" &
                                    "But first, I'm like, totally gonna take a break from being all serious and see what else he has that I can eat! ~🖤")
             ElseIf Int(Rnd() * 20) = 1 Then
                 npcIndex = 7
@@ -75,7 +77,7 @@
         ElseIf npcIndex = 4 Then
             Game.pushNPCDialog("HI!  I, like, don't know if it would be smart for me to try to hypno...hypotho...do my thing to you right now, but I totally have some tapes you can use!")
         End If
-
+        If Game.floor > 5 Then inv.setCount(113, 1) Else inv.setCount(113, 0)
         Game.picNPC.BackgroundImage = picNCP(npcIndex)
     End Sub
 
@@ -125,9 +127,38 @@
 
         Game.picNPC.BackgroundImage = picNCP(npcIndex)
     End Sub
+    Public Sub hypnotize(ByVal s As String, a As Action)
+        preHypnoID = npcIndex
+        npcIndex = 5
+
+        Game.pushNPCDialog(s, a)
+        Game.shopMenu.Close()
+
+        Game.picNPC.BackgroundImage = picNCP(npcIndex)
+    End Sub
     Public Sub back()
         npcIndex = preHypnoID
         Game.pushNPCDialog("So, anything else?")
         Game.picNPC.BackgroundImage = picNCP(npcIndex)
+        CType(Game.hteach, HTeach).showShopButtons()
+    End Sub
+
+    Sub hideShopButtons()
+        'btnTalk.Visible = False
+        Game.btnNPCMG.Visible = False
+        Game.cboxNPCMG.Visible = False
+        Game.btnShop.Visible = False
+        Game.btnShop.Enabled = False
+        Game.btnFight.Visible = False
+        Game.btnLeave.Visible = False
+    End Sub
+    Sub showShopButtons()
+        'btnTalk.Visible = True
+        Game.btnNPCMG.Visible = True
+        Game.cboxNPCMG.Visible = True
+        Game.btnShop.Visible = True
+        Game.btnShop.Enabled = True
+        Game.btnFight.Visible = True
+        Game.btnLeave.Visible = True
     End Sub
 End Class

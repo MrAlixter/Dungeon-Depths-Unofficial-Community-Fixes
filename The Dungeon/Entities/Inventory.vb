@@ -129,6 +129,11 @@
         internal_inventory.Add("Mobile_Powerbank", New Generator())         '110
         internal_inventory.Add("Discharge_Gauntlets", New ManaDisharge())   '111
         internal_inventory.Add("Photon_Blade", New PhotonBlade())           '112
+        internal_inventory.Add("Amazon_Lesson", New AmazonLesson())         '113
+        internal_inventory.Add("Barbarian_Lesson", New BarbarianLesson())   '114
+        internal_inventory.Add("Warlock's_Robe", New WarlockRobe())         '115
+        internal_inventory.Add("Gynoid_Uniform", New GCUniform())           '116
+        internal_inventory.Add("Garden_Salad", New GardenSalad())           '117
 
         armor = {New CommonClothes, New SkimpyClothes, New Naked,
                  Me.item(5), Me.item(7), Me.item(8), Me.item(10),
@@ -140,7 +145,7 @@
                  Me.item(79), Me.item(83), Me.item(85), Me.item(80),
                  Me.item(94), Me.item(95), Me.item(99), Me.item(101),
                  Me.item(102), Me.item(103), Me.item(104), Me.item(105),
-                 Me.item(106), Me.item(107)}
+                 Me.item(106), Me.item(107), Me.item(115), Me.item(116)}
 
         weapons = {New BareFists(),
                    Me.item(6), Me.item(9), Me.item(11), Me.item(21),
@@ -157,7 +162,8 @@
 
         food = {Me.item(30), Me.item(31), Me.item(32), Me.item(33),
                 Me.item(34), Me.item(35), Me.item(44), Me.item(90),
-                Me.item(98), Me.item(100), Me.item(108), Me.item(109)}
+                Me.item(98), Me.item(100), Me.item(108), Me.item(109),
+                Me.item(117)}
 
         acce = {New noAcce(), Me.item(66), Me.item(67), Me.item(68),
                 Me.item(69), Me.item(70), Me.item(77), Me.item(81),

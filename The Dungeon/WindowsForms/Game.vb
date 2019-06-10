@@ -1932,7 +1932,11 @@ Public Class Game
         End If
         If tmrKeyCD.Enabled Then Return True Else tmrKeyCD.Enabled = True
         If lblEvent.Visible And npcmode = True And Not Keydata.Equals(cKeys(13)) Then
-            oemSemiColon()
+            If Not lblEventOnClose Is Nothing Then
+                doLblEventOnClose()
+            Else
+                closeLblEvent()
+            End If
             Return True
         End If
         If lblEvent.Visible And npcmode = True And Keydata.Equals(cKeys(13)) Then
