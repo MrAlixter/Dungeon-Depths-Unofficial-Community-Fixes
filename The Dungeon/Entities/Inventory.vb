@@ -131,11 +131,24 @@
         internal_inventory.Add("Photon_Blade", New PhotonBlade())           '112
         internal_inventory.Add("Amazon_Lesson", New AmazonLesson())         '113
         internal_inventory.Add("Barbarian_Lesson", New BarbarianLesson())   '114
-        internal_inventory.Add("Warlock's_Robe", New WarlockRobe())         '115
+        internal_inventory.Add("Warlock's_Robes", New WarlockRobe())         '115
         internal_inventory.Add("Gynoid_Uniform", New GCUniform())           '116
         internal_inventory.Add("Garden_Salad", New GardenSalad())           '117
+        internal_inventory.Add("Corse_War_Axe", New CWarAxe())              '118
+        internal_inventory.Add("Broken_Remote", New TFTestRemote())         '119
+        internal_inventory.Add("Shrink_Ray", New ShrinkRay())               '120
+        internal_inventory.Add("Name_Change", New NameChange())             '121
+        internal_inventory.Add("Gorgon_Lesson", New HGorgonLesson())        '122
+        internal_inventory.Add("Ring_of_Uvona", New RingOfUvona())          '123
+        internal_inventory.Add("Warlock_Lesson", New WarlockLesson())       '124
+        internal_inventory.Add("Berry_Stick_of_Gum", New BBStickOfGum())    '125
+        internal_inventory.Add("Omni_Charm", New OmniCharm())               '126
+        internal_inventory.Add("Vial_of_BIM_II", New VialOfBimbo())         '127
+        internal_inventory.Add("CryoGrenade", New CryoGrenade())            '128
+        internal_inventory.Add("Bunny_Suit​", New SVBunnySuit())             '129
+        internal_inventory.Add("Galaxy_Dye​", New galaxyDye())             '130
 
-        armor = {New CommonClothes, New SkimpyClothes, New Naked,
+        armor = {New CommonClothes, New SkimpyClothes, New Naked, New VSkimpyClothes,
                  Me.item(5), Me.item(7), Me.item(8), Me.item(10),
                  Me.item(12), Me.item(16), Me.item(17), Me.item(18),
                  Me.item(19), Me.item(20), Me.item(38), Me.item(39),
@@ -145,29 +158,32 @@
                  Me.item(79), Me.item(83), Me.item(85), Me.item(80),
                  Me.item(94), Me.item(95), Me.item(99), Me.item(101),
                  Me.item(102), Me.item(103), Me.item(104), Me.item(105),
-                 Me.item(106), Me.item(107), Me.item(115), Me.item(116)}
+                 Me.item(106), Me.item(107), Me.item(115), Me.item(116),
+                 Me.item(129)}
 
         weapons = {New BareFists(),
                    Me.item(6), Me.item(9), Me.item(11), Me.item(21),
                    Me.item(22), Me.item(23), Me.item(24), Me.item(40),
                    Me.item(41), Me.item(42), Me.item(45), Me.item(63),
-                   Me.item(84), Me.item(96), Me.item(111), Me.item(112)}
+                   Me.item(84), Me.item(96), Me.item(111), Me.item(112),
+                   Me.item(118), Me.item(120)}
 
         useable = {Me.item(0), Me.item(1), Me.item(3), Me.item(4),
                    Me.item(65), Me.item(15), Me.item(36), Me.item(37),
                    Me.item(45), Me.item(48), Me.item(49), Me.item(50),
                    Me.item(51), Me.item(52), Me.item(57), Me.item(58),
                    Me.item(81), Me.item(86), Me.item(88), Me.item(89),
-                   Me.item(91)}
+                   Me.item(91), Me.item(119), Me.item(126), Me.item(127),
+                   Me.item(128), Me.item(130)}
 
         food = {Me.item(30), Me.item(31), Me.item(32), Me.item(33),
                 Me.item(34), Me.item(35), Me.item(44), Me.item(90),
                 Me.item(98), Me.item(100), Me.item(108), Me.item(109),
-                Me.item(117)}
+                Me.item(117), Me.item(125)}
 
         acce = {New noAcce(), Me.item(66), Me.item(67), Me.item(68),
                 Me.item(69), Me.item(70), Me.item(77), Me.item(81),
-                Me.item(97), Me.item(110)}
+                Me.item(97), Me.item(110), Me.item(123)}
 
         potions = {Me.item(2), Me.item(13), Me.item(14), Me.item(25),
                    Me.item(26), Me.item(27), Me.item(28), Me.item(29),

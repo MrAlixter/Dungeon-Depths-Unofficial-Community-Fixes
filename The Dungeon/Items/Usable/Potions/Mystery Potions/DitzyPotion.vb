@@ -23,7 +23,7 @@
                               New MajBEEffect, New RandDyeEffect, New MinBimFaceEffect,
                               New BimFaceEffect, New BimbNameEffect, New BimbHairEffect, New NameChangeEffect,
                               New FHairChangeEffect, New FHairChangeEffect, New RedDyeEffect, New RandDyeEffect,
-                              New RandDyeEffect})
+                              New RandDyeEffect, New GalaxyDyeEffect})
         Dim numMainEffects = mainEffectDistribution()
         Dim numSideEffects = sideEffectDistribution(numMainEffects)
         If numSideEffects < 0 Then numSideEffects = 0

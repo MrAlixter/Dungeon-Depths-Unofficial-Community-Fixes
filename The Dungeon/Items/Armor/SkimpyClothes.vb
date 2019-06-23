@@ -10,6 +10,7 @@
         MyBase.aBoost = 0
         MyBase.count = 0
         MyBase.value = 0
+        MyBase.slutVarInd = -4
         MyBase.antiSlutVarInd = -2
         MyBase.bsizeneg1 = New Tuple(Of Integer, Boolean, Boolean)(25, False, True)
         MyBase.bsize0 = New Tuple(Of Integer, Boolean, Boolean)(26, False, True)

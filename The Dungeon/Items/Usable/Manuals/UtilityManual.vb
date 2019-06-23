@@ -1,6 +1,6 @@
 ﻿Public Class UtilityManual
     Inherits Item
-
+    Public Shared specials() As String = {"Ritual of Mana", "Cleanse", "Spot Fusion", "Uvona's Blessing"}
     Sub New()
         MyBase.setName("Utility_Manual")
         MyBase.setDesc("A simple, leather-bound book that likely contains some helpful skills.")
@@ -22,14 +22,10 @@
             Dim out As String = ""
             While ct < 1 Or Game.player.knownSpecials.Contains(sName)
                 ct += 1
-                Dim spec As Integer = CInt(Int(Rnd() * 3))
+                Dim spec As Integer = CInt(Int(Rnd() * (specials.Length)))
                 Select Case spec
-                    Case 0
-                        sName = "Ritual of Mana"
-                    Case 1
-                        sName = "Cleanse"
-                    Case 2
-                        sName = "Spot Fusion"
+                    Case Else
+                        sName = specials(spec)
                 End Select
                 If ct > 60 Then
                     Game.pushLstLog("You know all the specials in utility manuals already!")

@@ -4,7 +4,8 @@
     Sub New()
         MyBase.setName("Bowtie")
         MyBase.setDesc("A high class necktie that improves agility and speed.  While it seems ordinary enough at a glance, every once and a while it sparks suspiciously." & vbCrLf & _
-                       "+5 Speed, Dodge Effect")
+                       "+5 Speed, Dodge Effect" & vbCrLf &
+                       "If equipped by a Bunny Girl, +Max Mana and ATK based on equipped clothing")
         id = 97
         tier = 3
         MyBase.setUsable(False)

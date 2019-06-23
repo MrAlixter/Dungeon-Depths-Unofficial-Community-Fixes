@@ -1,7 +1,7 @@
 ﻿Public Class Bimbo2
     Inherits pForm
     Sub New()
-        MyBase.New(0.75, 0.5, 0.5, 0.75, 1, 0.5, "Hyper Bimbo", True)
+        MyBase.New(0.75, 0.5, 0.5, 0.75, 1, 0.5, "Bimbo", True)
         MyBase.revertPassage = ""
     End Sub
 End Class

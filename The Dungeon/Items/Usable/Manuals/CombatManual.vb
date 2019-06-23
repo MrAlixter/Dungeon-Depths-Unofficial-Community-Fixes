@@ -1,6 +1,6 @@
 ﻿Public Class CombatManual
     Inherits Item
-
+    Public Shared specials() As String = {"Rapid Fire Jabs", "Focused Roundhouse", "Heavy Blow", "Focused Barrage", "Ki Wave Blast"}
     Sub New()
         MyBase.setName("Combat_Manual")
         MyBase.setDesc("A simple, leather-bound book that likely contains some skills specifically for combat.")
@@ -22,12 +22,10 @@
             Dim out As String = ""
             While ct < 1 Or Game.player.knownSpecials.Contains(sName)
                 ct += 1
-                Dim spec As Integer = CInt(Int(Rnd() * 1))
+                Dim spec As Integer = CInt(Int(Rnd() * (specials.Length)))
                 Select Case spec
-                    Case 0
-                        sName = "Rapid Fire Jabs"
-                    Case 1
-                        sName = "Focused Roundhouse"
+                    Case Else
+                        sName = specials(spec)
                 End Select
                 If ct > 60 Then
                     Game.pushLstLog("You know all the specials in combat manuals already!")

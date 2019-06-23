@@ -188,6 +188,8 @@
             spell = New MajorHeal(c, t)
         ElseIf s.Equals("Warp") Then
             spell = New Warp(c, t)
+        ElseIf s.Equals("Uvona's Fugue") Then
+            spell = New UvonasFugue(c, t)
         Else
             spell = New Frazzle(c, t)
         End If

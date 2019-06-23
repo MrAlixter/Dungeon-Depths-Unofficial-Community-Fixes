@@ -8,7 +8,7 @@
     End Sub
     Public Overrides Sub effect()
         Game.pushLstLog("Cleanse!")
-        Game.pushLblCombatEvent("Cleanse!" & vbCrLf & "Reverts between 3 and 5 changes.")
+        Game.pushLblEvent("Cleanse!" & vbCrLf & "Reverts between 3 and 5 changes.")
         Dim out = Game.player.revertToPState(Int(Rnd() * 3) + 3)
         out += Game.lblEvent.Text.Split(vbCrLf)(0)
         Game.pushLblCombatEvent(out)

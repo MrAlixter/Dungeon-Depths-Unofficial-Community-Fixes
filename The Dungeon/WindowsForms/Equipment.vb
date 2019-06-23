@@ -191,6 +191,8 @@
 
         If p.equippedArmor.getName.Equals("Common_Clothes") Then
             p.equippedArmor = New SkimpyClothes
+        ElseIf p.equippedArmor.getName.Equals("Skimpy_Clothes") Then
+            p.equippedArmor = New VSkimpyClothes
         Else
             Dim equippedArmorIndex = p.equippedArmor.id
             Dim slutVarIndex = p.equippedArmor.slutVarInd
@@ -207,6 +209,8 @@
 
         If p.equippedArmor.getName.Equals("Skimpy_Clothes") Then
             p.equippedArmor = New CommonClothes
+        ElseIf p.equippedArmor.getName.Equals("Very_Skimpy_Clothes") Then
+            p.equippedArmor = New SkimpyClothes
         Else
             Dim equippedArmorIndex = p.equippedArmor.id
             Dim antiSlutVarIndex = p.equippedArmor.antiSlutVarInd

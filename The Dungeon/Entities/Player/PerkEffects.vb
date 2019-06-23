@@ -36,6 +36,15 @@
             End If
         End If
     End Sub
+    Shared Sub plantRegen()
+        Dim p As Player = Game.player
+        If p.health < 1 And Game.turn Mod 7 = 0 Then
+            Dim h As Integer = 3
+            p.health += h / p.getMaxHealth()
+            Game.pushLstLog("You are able to absorb some nutrients through the ground. +" & h & " health")
+            If p.health > 1 Then p.health = 1
+        End If
+    End Sub
     Shared Sub minorRegen()
         Dim p As Player = Game.player
         If p.health < 1 And Game.turn Mod 7 = 0 Then
@@ -146,7 +155,27 @@
 
         p.UIupdate()
     End Sub
+    Shared Sub BowTieRoute()
+        Dim p As Player = Game.player
+        Dim btie = CType(p.inv.item(97), Bowtie)
 
+        btie.aBoost = 0
+        btie.mBoost = 0
+
+        If p.equippedArmor.slutVarInd = -1 And p.equippedArmor.antiSlutVarInd <> -1 Then
+            Dim buff = p.equippedArmor.dBoost
+            If buff = 0 Then
+                buff = 3
+            ElseIf buff < 5 Then
+                buff = 5
+            End If
+            buff *= 4
+            btie.aBoost = p.equippedArmor.aBoost * 1.2
+            btie.mBoost = p.equippedArmor.mBoost * 1.2
+        End If
+
+        p.UIupdate()
+    End Sub
     '|TRANSFORMATION TRIGGERS|
     Shared Sub targaxSwordTF()
         Dim p As Player = Game.player
@@ -269,12 +298,17 @@
     End Function
     Shared Function bimboDodge() As Boolean
         Dim p = Game.player
-        If p.pClass.name.Equals("Bimbo") Or p.pForm.name.Equals("Hyper Bimbo") Then
-            Dim r = Int(Rnd() * 3)
-            If r = 0 Then
-                Game.pushLblEvent("You, like, totally aren't feeling this right now.  Giving your best pout, you wimper ""Hey, stop it!  You're gonna, like, hurt me or something!"".  Squeezing your arms together to show off your cleavage, you look up at your opponent, making sure your lip is quivering just a little bit.  They stop their attack short, looking more confused than merciful.  You don't even consider this subtle distinction though, instead deciding that they, like, totally thought you were too cute to hit!")
-                Return True
-            End If
+        Dim out = "You, like, totally aren't feeling this right now.  Giving your best pout, you wimper ""Hey, stop it!  You're gonna, like, hurt me or something!"".  Squeezing your arms together to show off your cleavage, you look up at your opponent, making sure your lip is quivering just a little bit.  They stop their attack short, looking more confused than merciful.  You don't even consider this subtle distinction though, instead deciding that they, like, totally thought you were too cute to hit!"
+        Dim out2 = "You realize that you probably need to dodge this next attack.  Giving your best pout, you wimper ""Hey, stop it!  You're gonna, like, hurt me or something!"".  Squeezing your arms together to show off your cleavage, you look up at your opponent, making sure your lip is quivering just a little bit.  They stop their attack short, looking more confused than merciful.  Inwardly you groan to yourself.   It looks like you aren't out of the woods yet..."
+        If p.pClass.name.Contains("Bimbo") And Int(Rnd() * 3) = 0 Then
+            Game.pushLblEvent(out)
+            Return True
+        ElseIf p.pClass.name.Contains("Bimbo++") And Int(Rnd() * 3) = 0 Then
+            Game.pushLblEvent(out2)
+            Return True
+        ElseIf p.pForm.name.Contains("Bimbo") And Int(Rnd() * 3) = 0 Then
+            Game.pushLblEvent(out)
+            Return True
         End If
         Return False
     End Function

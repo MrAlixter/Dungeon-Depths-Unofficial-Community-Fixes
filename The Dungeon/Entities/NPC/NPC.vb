@@ -137,6 +137,11 @@
             If Me.GetType() Is GetType(Monster) Then output += "The "
             output += name & ", seeing that you are no longer human, wanders off."
             Game.pushLstLog(output)
+        ElseIf reason = "shrink" Then
+            Dim output As String = ""
+            If Me.GetType() Is GetType(Monster) Then output += "The "
+            output += name & ", losing track of you, wanders off."
+            Game.pushLstLog(output)
         ElseIf reason = "flee" Then
             Dim output As String = ""
             If Me.GetType() Is GetType(Monster) Then output += "The "

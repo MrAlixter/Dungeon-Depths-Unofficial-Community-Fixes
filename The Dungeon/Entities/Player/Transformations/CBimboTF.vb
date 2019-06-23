@@ -20,11 +20,6 @@
         Game.player.prt.haircolor = Game.cShift(Game.player.prt.haircolor, bimbored1, 25)
         If Not Game.player.getHairColor.Equals(bimbored1) Then currStep -= 1
         Game.pushLblEvent("Your hair becomes slightly lighter, brightening to a cherry red.")
-        If Game.player.breastSize < 1 And Int(Rnd() * 4) = 0 Then
-            Game.player.breastSize += 1
-            Game.player.reverseBSRoute()
-        End If
-
     End Sub
     Sub step1()
         Dim p As player = game.player

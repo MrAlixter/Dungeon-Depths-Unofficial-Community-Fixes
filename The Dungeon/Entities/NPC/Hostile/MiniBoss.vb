@@ -15,6 +15,8 @@
                 inv.setCount("Cat_Lingerie", 1)
                 inv.setCount("Restore_Potion", 1)
                 inv.setCount("Cat_Ears", 1)
+                inv.setCount("Mana_Charm", 1 + CInt(Rnd() * 2))
+                inv.setCount("Omni_Charm", 1)
                 inv.setCount("Sorcerer's_Robes", CInt(Rnd() * 2))
 
                 title = ""
@@ -31,6 +33,8 @@
                 inv.setCount("Major_Health_Potion", 3)
                 inv.setCount("Sword_of_the_Brutal", 1)
                 inv.setCount("Warrior's_Cuirass", CInt(Rnd() * 2))
+                inv.setCount("Attack_Charm", 1 + CInt(Rnd() * 2))
+                inv.setCount("Omni_Charm", 1)
 
                 title = ""
                 pronoun = "he"
@@ -43,6 +47,8 @@
                 setDEF(70)
                 setSPD(1)
                 setInventory({3, 58, 65})
+                inv.setCount("Defence_Charm", 1 + CInt(Rnd() * 2))
+                inv.setCount("Omni_Charm", 1)
                 title = ""
                 pronoun = "she"
                 pPronoun = "her"
@@ -56,7 +62,7 @@
                 Randomize()
                 For i = 0 To 5
                     Dim invInd As Integer = 8
-                    While invInd = 8 Or invInd = 10 Or invInd = 24 Or invInd = 53
+                    While invInd = 8 Or invInd = 10 Or invInd = 24 Or invInd = 53 Or invInd = 119
                         invInd = Int(Rnd() * (Game.player.inv.upperBound + 1))
                     End While
                     inv.add(invInd, CInt(Rnd() * 2) + 1)

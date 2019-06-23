@@ -34,6 +34,10 @@
                 Return New TTCCBF()
             Case "Fusion"
                 Return New SpotFuseTF()
+            Case "Mindless"
+                Return New MindlessTF()
+            Case "Shrunken"
+                Return New ShrunkenTF()
             Case Else
                 Return Nothing
         End Select

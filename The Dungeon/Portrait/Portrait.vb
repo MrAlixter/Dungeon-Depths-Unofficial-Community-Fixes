@@ -153,17 +153,17 @@
     Public Sub changeHairColor(ByVal c As Color)
         haircolor = c
 
-        iArr(1) = portrait.recolor(imgLib.atrs("RearHair2").getAt(iArrInd(1)), c)
-        iArr(5) = portrait.recolor(imgLib.atrs("RearHair1").getAt(iArrInd(5)), c)
-        iArr(10) = portrait.recolor(imgLib.atrs("Eyebrows").getAt(iArrInd(10)), c)
-        iArr(15) = portrait.recolor(imgLib.atrs("FrontHair").getAt(iArrInd(15)), c)
+        If Not checkNDefFemInd(1, 26) Then iArr(1) = Portrait.recolor(imgLib.atrs("RearHair2").getAt(iArrInd(1)), c)
+        If Not checkNDefFemInd(5, 29) Then iArr(5) = Portrait.recolor(imgLib.atrs("RearHair1").getAt(iArrInd(5)), c)
+        iArr(10) = Portrait.recolor(imgLib.atrs("Eyebrows").getAt(iArrInd(10)), c)
+        If Not checkNDefFemInd(15, 27) Then iArr(15) = Portrait.recolor(imgLib.atrs("FrontHair").getAt(iArrInd(15)), c)
     End Sub
     Public Sub changeSkinColor(ByVal c As Color)
         skincolor = c
 
         iArr(2) = portrait.recolor2(imgLib.atrs("Body").getAt(iArrInd(2)), c)
         iArr(4) = portrait.recolor2(imgLib.atrs("Face").getAt(iArrInd(4)), c)
-        iArr(6) = portrait.recolor2(imgLib.atrs("Ears").getAt(iArrInd(6)), c)
+        colorEars(c)
         iArr(7) = portrait.recolor2(imgLib.atrs("Nose").getAt(iArrInd(7)), c)
     End Sub
     Public Sub lustBlushUpdate()
@@ -186,11 +186,18 @@
         iArr(15) = CreateBMP({imgLib.atrs("Horns").getM(i), iArr(15)})
     End Sub
     Sub hideEars()
-        If iArrInd(6).Item1 = 1 Or iArrInd(6).Item1 = 2 Or (Not iArrInd(5).Item2 And iArrInd(5).Item1 <> 2) Then Exit Sub
+        If iArrInd(6).Item1 = 1 Or iArrInd(6).Item1 = 2 Or (Not iArrInd(5).Item2 And iArrInd(5).Item1 <> 2) Or (iArrInd(5).Item2 And checkNDefFemInd(5, 10)) Then Exit Sub
 
         Dim t = iArr(5).Clone
         iArr(5) = iArr(6).Clone
         iArr(6) = t
+    End Sub
+    Sub colorEars(ByVal c As Color)
+        If Not checkNDefMalInd(6, 4) And
+           Not checkNDefFemInd(6, 4) And
+           Not checkNDefFemInd(6, 9) Then
+            iArr(6) = Portrait.recolor2(imgLib.atrs("Ears").getAt(iArrInd(6)), c)
+        End If
     End Sub
     Sub setIAInd(ByVal attrInd As Integer, ByVal i As Integer, ByVal b As Boolean, ByVal nonDefFlag As Boolean)
         iArrInd(attrInd) = New Tuple(Of Integer, Boolean, Boolean)(i, b, nonDefFlag)
@@ -200,7 +207,7 @@
     End Sub
     Function checkNDefFemInd(ByVal attrInd As Integer, ByVal i As Integer) As Boolean
         Dim ind = iArrInd(attrInd)
-        If Not ind.Item2 Or Not ind.Item3 Then Return False
+        If Not ind.Item2 Then Return False
         If imgLib.atrs(imgLib.atrs.Keys(attrInd)).rosf(ind.Item1) = i Then Return True Else Return False
     End Function
     Function checkNDefMalInd(ByVal attrInd As Integer, ByVal i As Integer) As Boolean

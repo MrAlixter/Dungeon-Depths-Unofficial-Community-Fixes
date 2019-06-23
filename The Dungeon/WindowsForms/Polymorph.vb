@@ -140,6 +140,15 @@
             t.tfCt = 1
             t.tfEnd = 6
             t.form = "Cow"
+        ElseIf title = "Amnesiac" Then
+            t.health = 1
+            t.attack = 0
+            t.defence = 0
+            t.speed = 1
+            t.stunct = 1
+            t.tfCt = 1
+            t.tfEnd = 6
+            t.form = "Amnesiac"
         ElseIf title = "Slime​" Then
             t.health = 1
             t.maxHealth = 150

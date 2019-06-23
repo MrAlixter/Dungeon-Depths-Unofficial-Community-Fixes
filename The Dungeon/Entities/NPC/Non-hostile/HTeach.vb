@@ -18,10 +18,13 @@
         inv.setCount("Spellbook", 1)
         inv.item("Spellbook").value -= 0.2 * MyBase.inv.item("Spellbook").value
         inv.setCount("Bimbo_Lesson", 1)
-        inv.setCount("Amazon_Lesson", 1)
         inv.setCount("Barbarian_Lesson", 1)
+        inv.setCount("Warlock_Lesson", 1)
+        inv.setCount("Name_Change", 1)
         inv.setCount("Utility_Manual", 1)
         inv.item("Utility_Manual").value -= 0.2 * MyBase.inv.item("Utility_Manual").value
+        inv.setCount("Combat_Manual", 1)
+        inv.item("Combat_Manual").value -= 0.2 * MyBase.inv.item("Combat_Manual").value
 
         isShop = True
         setGold(99999)
@@ -78,6 +81,7 @@
             Game.pushNPCDialog("HI!  I, like, don't know if it would be smart for me to try to hypno...hypotho...do my thing to you right now, but I totally have some tapes you can use!")
         End If
         If Game.floor > 5 Then inv.setCount(113, 1) Else inv.setCount(113, 0)
+        If Game.floor < 5 Then inv.setCount(122, 1) Else inv.setCount(122, 0)
         Game.picNPC.BackgroundImage = picNCP(npcIndex)
     End Sub
 

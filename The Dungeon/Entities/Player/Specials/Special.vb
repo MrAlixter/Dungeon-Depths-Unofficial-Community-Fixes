@@ -80,6 +80,14 @@
             spec = New RapidFireJabs(u, t)
         ElseIf s.Equals("Focused Roundhouse") Then
             spec = New FocusedKick(u, t)
+        ElseIf s.Equals("Heavy Blow") Then
+            spec = New HeavyBlow(u, t)
+        ElseIf s.Equals("Focused Barrage") Then
+            spec = New FBarra(u, t)
+        ElseIf s.Equals("Ki Wave Blast") Then
+            spec = New KiWBlast(u, t)
+        ElseIf s.Equals("Uvona's Blessing") Then
+            spec = New UBlessing(u, t)
         End If
 
         spec.perform()
@@ -108,8 +116,12 @@
                 Return "+9 hunger for the first jab, and +6 hunger for each additional jab"
             Case "Focused Roundhouse"
                 Return "+16 hunger"
+            Case "Heavy Blow"
+                Return "+24 hunger"
+            Case "Focused Barrage"
+                Return "+6 hunger for the first hit, and +4 hunger for each additional hit"
             Case Else
-                Return "Useable only once per combat"
+                Return "Useable only once per combat, or consumes an amount of hunger"
         End Select
     End Function
 End Class

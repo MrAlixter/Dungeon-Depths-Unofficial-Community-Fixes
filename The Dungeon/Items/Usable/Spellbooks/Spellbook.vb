@@ -1,6 +1,7 @@
 ﻿Public Class Spellbook
     Inherits Item
-
+    Public Shared spells() As String = {"Super Fireball", "Icicle Spear", "Self Polymorph", "Turn to Frog", "Polymorph Enemy",
+                                        "Petrify", "Heal", "Illuminate", "Fireball"}
     Sub New()
         MyBase.setName("Spellbook")
         MyBase.setDesc("A simple, leather-bound book that likely contains something cool and magic.")
@@ -22,12 +23,8 @@
             Dim out As String = ""
             While ct < 1 Or Game.player.knownSpells.Contains(sName)
                 ct += 1
-                Dim spell As Integer = CInt(Int(Rnd() * 9))
+                Dim spell As Integer = CInt(Int(Rnd() * (spells.Length)))
                 Select Case spell
-                    Case 0
-                        sName = "Super Fireball"
-                    Case 1
-                        sName = "Icicle Spear"
                     Case 2
                         sName = "Self Polymorph"
                         Dim form As String = "Err"
@@ -56,8 +53,6 @@
                             out = "You learn how to turn yourself into a " & form & "!"
                             Exit While
                         End If
-                    Case 3
-                        sName = "Turn to Frog"
                     Case 4
                         sName = "Polymorph Enemy"
                         Dim form As String = "Err"
@@ -84,20 +79,8 @@
                             out = "You learn how to polymorph somthing into a " & form & "!"
                             Exit While
                         End If
-                    Case 5
-                        sName = "Petrify"
-                    Case 6
-                        sName = "Heal"
-                    Case 7
-                        sName = "Illuminate"
-                    Case 8
-                        sName = "Fireball"
-                        'Case 7
-                        '    sName = "Arcane Hypnosis"
-                        'Case 8
-                        '    sName = "Mindshrink"
-                        'Case 9
-                        '    sName = "Freeze"
+                    Case Else
+                        sName = spells(spell)
                 End Select
                 If ct > 60 Then
                     Game.pushLstLog("You know all the spells in spellbooks already!")

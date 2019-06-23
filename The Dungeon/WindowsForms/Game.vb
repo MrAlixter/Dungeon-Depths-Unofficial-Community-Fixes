@@ -860,6 +860,8 @@ Public Class Game
                 If line(x) = "%"c Then
                     stairs = New Point(x, y)
                 ElseIf line(x) = "^"c Then
+                    Dim chestPoint = New Point(x, y)
+                    genSpaceChest2(chestPoint)
                 ElseIf line(x) = "&"c Then
                     Dim chestPoint = New Point(x, y)
                     genSpaceChest1(chestPoint)
@@ -898,6 +900,25 @@ Public Class Game
         inv.add("Photon_Blade", r)
 
         inv.add("Space_Age_Jumpsuit", 1)
+        c1 = baseChest.Create(inv, p, False)
+
+        chestList.Add(c1)
+        mBoard(p.Y, p.X).ForeColor = Color.FromArgb(45, 45, 45)
+        mBoard(p.Y, p.X).Text = "#"
+    End Sub
+    Sub genSpaceChest2(ByVal p As Point)
+        Dim c1 As Chest
+        Dim inv = New Inventory(False)
+
+        Dim r = 0
+        If Int(Rnd() * 3) = 0 Then r = 1 Else r = 0
+        inv.add("Shrink_Ray", r)
+        If Int(Rnd() * 3) = 0 Then r = 1 Else r = 0
+        inv.add("Galaxy_Dye", r)
+        If Int(Rnd() * 3) = 0 Then r = 1 Else r = 0
+        inv.add("CryoGrenade", r)
+
+        inv.add("Vial_of_BIM_II", 1)
         c1 = baseChest.Create(inv, p, False)
 
         chestList.Add(c1)
@@ -1146,7 +1167,7 @@ Public Class Game
 
         zoom()
 
-        If floor < 5 And floor >= 0 AndAlso beatboss(floor) = False AndAlso Not floorboss(floor).Equals("Key") And combatmode = False And player.health > 0 AndAlso New Point(player.pos.Y, player.pos.X).Equals(New Point(stairs.Y, stairs.X)) Then pushPnlYesNo("Challenge the floor boss?", AddressOf ChallengeBoss, Nothing)
+        If floor < 5 And floor >= 0 AndAlso beatboss(floor) = False AndAlso Not floorboss(floor).Equals("Key") And combatmode = False And player.health > 0 And player.canMoveFlag = True AndAlso New Point(player.pos.Y, player.pos.X).Equals(New Point(stairs.Y, stairs.X)) Then pushPnlYesNo("Challenge the floor boss?", AddressOf ChallengeBoss, Nothing)
         'If picNPC.Visible Then picNPC.BackgroundImage = NPCimgList(npcIndex)
 
         player.UIupdate()
@@ -1413,16 +1434,33 @@ Public Class Game
             If isALetter(Keydata.ToString.ToLower) Then keyspresed += Keydata.ToString.ToLower
             Select Case Keydata
                 Case cKeys(0)
-                    player.moveUp()
+                    If player.pClass.name.Equals("Mindless") Then
+                        player.wander()
+                    Else
+                        player.moveUp()
+                    End If
+
                     randomEvents()
                 Case cKeys(1)
-                    player.moveDown()
+                    If player.pClass.name.Equals("Mindless") Then
+                        player.wander()
+                    Else
+                        player.moveDown()
+                    End If
                     randomEvents()
                 Case cKeys(2)
-                    player.moveLeft()
+                    If player.pClass.name.Equals("Mindless") Then
+                        player.wander()
+                    Else
+                        player.moveLeft()
+                    End If
                     randomEvents()
                 Case cKeys(3)
-                    player.moveRight()
+                    If player.pClass.name.Equals("Mindless") Then
+                        player.wander()
+                    Else
+                        player.moveRight()
+                    End If
                     randomEvents()
                 Case cKeys(4)
                     Try
@@ -1466,16 +1504,32 @@ Public Class Game
                 Case Keys.Enter
                     oemReturn()
                 Case Keys.Up
-                    player.moveUp()
+                    If player.pClass.name.Equals("Mindless") Then
+                        player.wander()
+                    Else
+                        player.moveUp()
+                    End If
                     randomEvents()
                 Case Keys.Down
-                    player.moveDown()
+                    If player.pClass.name.Equals("Mindless") Then
+                        player.wander()
+                    Else
+                        player.moveDown()
+                    End If
                     randomEvents()
                 Case Keys.Left
-                    player.moveLeft()
+                    If player.pClass.name.Equals("Mindless") Then
+                        player.wander()
+                    Else
+                        player.moveLeft()
+                    End If
                     randomEvents()
                 Case Keys.Right
-                    player.moveRight()
+                    If player.pClass.name.Equals("Mindless") Then
+                        player.wander()
+                    Else
+                        player.moveRight()
+                    End If
                     randomEvents()
                 Case Keys.Escape
                     If screenSize.Equals("Maximized") Then
@@ -3300,6 +3354,7 @@ Public Class Game
         If Not m Is Nothing Then m.despawn("npc")
         npcList.Clear()
         player.clearTarget()
+        btnEQP.Enabled = True
         npcmode = False
     End Sub
     Sub npcEncounter(ByRef m As ShopNPC)

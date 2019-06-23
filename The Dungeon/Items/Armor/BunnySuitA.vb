@@ -12,6 +12,9 @@
         MyBase.sBoost = 5
         MyBase.count = 0
         MyBase.value = 2534
+
+        MyBase.slutVarInd = 129
+
         bsizeneg1 = New Tuple(Of Integer, Boolean, Boolean)(35, False, True)
         bsize1 = New Tuple(Of Integer, Boolean, Boolean)(133, True, True)
         bsize2 = New Tuple(Of Integer, Boolean, Boolean)(134, True, True)

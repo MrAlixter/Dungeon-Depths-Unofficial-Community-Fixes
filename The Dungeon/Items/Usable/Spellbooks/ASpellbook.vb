@@ -1,5 +1,7 @@
 ﻿Public Class ASpellbook
     Inherits Item
+    Public Shared spells() As String = {"Turn to Blade", "Turn to Cupcake", "Self Polymorph", "Arcane Compass",
+                                        "Magma Spear", "Petrify II", "Major Heal", "Warp", "Uvona's Fugue"}
 
     Sub New()
         MyBase.setName("Advanced_Spellbook")
@@ -19,12 +21,8 @@
         Dim out As String = ""
         While ct < 1 Or Game.player.knownSpells.Contains(sName)
             ct += 1
-            Dim spell As Integer = CInt(Int(Rnd() * 8))
+            Dim spell As Integer = CInt(Int(Rnd() * (spells.Length)))
             Select Case spell
-                Case 0
-                    sName = "Turn to Blade"
-                Case 1
-                    sName = "Turn to Cupcake"
                 Case 2
                     sName = "Self Polymorph"
                     Dim form As String = "Err"
@@ -46,16 +44,8 @@
                         out = "You learn how to turn yourself into a " & form & "!"
                         Exit While
                     End If
-                Case 3
-                    sName = "Arcane Compass"
-                Case 4
-                    sName = "Magma Spear"
-                Case 5
-                    sName = "Petrify II"
-                Case 6
-                    sName = "Major Heal"
-                Case 7
-                    sName = "Warp"
+                Case Else
+                    sName = spells(spell)
             End Select
             If ct > 60 Then
                 Game.pushLstLog("You know all the spells in advanced spellbooks already!")

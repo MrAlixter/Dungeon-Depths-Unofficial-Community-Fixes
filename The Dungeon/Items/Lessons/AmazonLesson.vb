@@ -3,7 +3,7 @@
 
     Sub New()
         MyBase.setName("Amazon_Lesson")
-        MyBase.setDesc("""Are you disillusioned with all this magic and weapons malarchy?  Do you just want to smack things around with your bare hands like the powerful woman you are (or could be)?  Perhaps the Amazon life is for you...""")
+        MyBase.setDesc("More than just mental manipulation, this lesson offers a physical transformation as well as some mental changes.  ""Are you disillusioned with all this magic and weapons malarchy?  Do you just want to smack things around with your bare hands like the powerful woman you are (or could be)?  Perhaps the Amazon life is for you...""")
         id = 113
         tier = Nothing
         MyBase.setUsable(False)
@@ -18,7 +18,7 @@
         CType(Game.hteach, HTeach).hideShopButtons()
     End Sub
     Sub warning()
-        Game.pushPnlYesNo("Are you sure you want to start over as an Amazon?", AddressOf tf, AddressOf cancel)
+        Game.pushPnlYesNo("Start over as an Amazon?", AddressOf tf, AddressOf cancel)
     End Sub
     Sub cancel()
         Game.player.gold += value

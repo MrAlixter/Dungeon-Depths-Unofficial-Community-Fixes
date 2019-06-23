@@ -323,6 +323,10 @@
         classes.Add("Valkyrie", New Valkyrie())
         classes.Add("Bunny Girl", New Dancer())
         classes.Add("Barbarian", New Barbarian())
+        classes.Add("Warlock", New Warlock())
+        classes.Add("Mindless", New Mindless())
+        classes.Add("Bimbo++", New BimboPlusPlus())
+        classes.Add("Shrunken", New Shrunken())
     End Sub
     Private Sub initForms()
         'Creates the form dictionary
@@ -368,6 +372,7 @@
         polymorphs.Add("Sheep", Nothing)
         polymorphs.Add("Cake", Nothing)
         polymorphs.Add("Fusion", Nothing)
+        polymorphs.Add("Mindless", Nothing)
     End Sub
 
     '|MOVEMENT COMMANDS|
@@ -396,6 +401,18 @@
                 ongoingTFs.Add(New ThrallTF())
             End If
         End If
+    End Sub
+    Public Sub wander()
+        Select Case Int(Rnd() * 4) + 1
+            Case 1
+                moveUp()
+            Case 2
+                moveDown()
+            Case 3
+                moveLeft()
+            Case 4
+                moveRight()
+        End Select
     End Sub
 
     '|COMBAT COMMANDS|
@@ -606,6 +623,7 @@
                     prt.setIAInd(layer, sState.iArrInd(layer).Item1, sState.iArrInd(layer).Item2, sState.iArrInd(layer).Item3)
                 End If
                 numtorevert -= 1
+                layer -= 1
                 If Not revertedAttributes.Contains(attributes(layer)) Then revertedAttributes.Add(attributes(layer))
             End If
             loopct += 1
@@ -723,6 +741,7 @@
                     prt.setIAInd(layer, pState.iArrInd(layer).Item1, pState.iArrInd(layer).Item2, pState.iArrInd(layer).Item3)
                 End If
                 numtorevert -= 1
+                layer -= 1
                 If Not revertedAttributes.Contains(attributes(layer)) Then revertedAttributes.Add(attributes(layer))
             End If
             loopct += 1
@@ -912,6 +931,10 @@
         If perks("vsslimehair") > -1 Then
             PerkEffects.vslimeHairRegen()
         End If
+        'plant regen
+        If pForm.name.Equals("Plantfolk") Then
+            PerkEffects.plantRegen()
+        End If
         'ring of min. regen
         If perks("minRegen") > -1 Then
             PerkEffects.minorRegen()
@@ -941,6 +964,10 @@
         'rotlg
         If perks("rotlg") > -1 Then
             PerkEffects.ROTLGRoute()
+        End If
+        'bowtie
+        If perks("bowtie") > -1 And pClass.name.Equals("Bunny Girl") Then
+            PerkEffects.BowTieRoute()
         End If
 
         '|TRANSFORMATION TRIGGERS|
@@ -1117,25 +1144,25 @@
     End Function
     Sub oneLayerImgCheck(ByRef b As Boolean)
         If pForm.name.Equals("Dragon") Then
-            Game.picPortrait.BackgroundImage = portrait.createBMP({Game.picDragon.BackgroundImage})
+            Game.picPortrait.BackgroundImage = Portrait.CreateBMP({Game.picDragon.BackgroundImage})
             b = True
         ElseIf pClass.name.Equals("Magic Girl​") Then
-            Game.picPortrait.BackgroundImage = portrait.createBMP({Game.picmgp1.BackgroundImage})
+            Game.picPortrait.BackgroundImage = Portrait.CreateBMP({Game.picmgp1.BackgroundImage})
             b = True
         ElseIf pForm.name.Equals("Sheep") Then
-            Game.picPortrait.BackgroundImage = portrait.createBMP({Game.picSheep.BackgroundImage})
+            Game.picPortrait.BackgroundImage = Portrait.CreateBMP({Game.picSheep.BackgroundImage})
             b = True
         ElseIf pForm.name.Equals("Cake") Then
-            Game.picPortrait.BackgroundImage = portrait.createBMP({Game.picCake.BackgroundImage})
+            Game.picPortrait.BackgroundImage = Portrait.CreateBMP({Game.picCake.BackgroundImage})
             b = True
         ElseIf pForm.name.Equals("Frog") Then
-            Game.picPortrait.BackgroundImage = portrait.createBMP({Game.picFrog.BackgroundImage})
+            Game.picPortrait.BackgroundImage = Portrait.CreateBMP({Game.picFrog.BackgroundImage})
             b = True
         ElseIf pClass.name.Equals("Princess​") Then
-            Game.picPortrait.BackgroundImage = portrait.createBMP({Game.picPrin.BackgroundImage})
+            Game.picPortrait.BackgroundImage = Portrait.CreateBMP({Game.picPrin.BackgroundImage})
             b = True
         ElseIf pClass.name.Equals("Bunny Girl​") Then
-            Game.picPortrait.BackgroundImage = portrait.createBMP({Game.picBun.BackgroundImage})
+            Game.picPortrait.BackgroundImage = Portrait.CreateBMP({Game.picBun.BackgroundImage})
             b = True
         End If
     End Sub
@@ -1238,6 +1265,8 @@
         Select Case prt.iArrInd(8).Item1
             Case 5
                 prt.setIAInd(8, 10, True, True)
+            Case 6
+                prt.setIAInd(8, 16, True, True)
             Case Else
                 prt.setIAInd(8, prt.iArrInd(8).Item1, True, False)
         End Select
@@ -1253,6 +1282,8 @@
                 prt.setIAInd(9, 19, True, True)
             Case 9
                 prt.setIAInd(9, 20, True, True)
+            Case 10
+                prt.setIAInd(9, 33, True, True)
             Case Else
                 If prt.iArrInd(9).Item1 < 5 Then prt.setIAInd(9, prt.iArrInd(9).Item1, True, False)
         End Select
@@ -1322,6 +1353,8 @@
         Select Case prt.iArrInd(8).Item1
             Case 10
                 prt.setIAInd(8, 5, False, True)
+            Case 16
+                prt.setIAInd(8, 6, False, True)
             Case Else
                 If prt.iArrInd(8).Item1 < 5 Then prt.setIAInd(8, prt.iArrInd(8).Item1, False, False)
         End Select
@@ -1337,6 +1370,8 @@
                 prt.setIAInd(9, 8, False, True)
             Case 20
                 prt.setIAInd(9, 9, False, True)
+            Case 33
+                prt.setIAInd(9, 10, False, True)
             Case Else
                 If prt.iArrInd(9).Item1 < 5 Then prt.setIAInd(9, prt.iArrInd(9).Item1, False, False)
         End Select

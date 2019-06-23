@@ -3,7 +3,7 @@
 
     Sub New()
         MyBase.setName("Barbarian_Lesson")
-        MyBase.setDesc("""Are you disillusioned with all this magic and weapons malarchy?  Do you just want to smack things around with your bare hands like the powerful woman you are (or could be)?  Perhaps the Amazon life is for you...""")
+        MyBase.setDesc("""Are you a fan of the simple things in life, without the complications of magic?  Are you bored of the standard warrior class, and are you looking to shift things up a bit?  Perhaps the Barbarian life is for you...""")
         id = 114
         tier = Nothing
         MyBase.setUsable(False)
@@ -18,7 +18,7 @@
         CType(Game.hteach, HTeach).hideShopButtons()
     End Sub
     Sub warning()
-        Game.pushPnlYesNo("Are you sure you want to start over as a Barbarian?", AddressOf tf, AddressOf cancel)
+        Game.pushPnlYesNo("Start over as a Barbarian?", AddressOf tf, AddressOf cancel)
     End Sub
     Sub cancel()
         Game.player.gold += value
@@ -29,9 +29,9 @@
     End Sub
     Sub tf2()
         Dim out = "As soon as she snaps, your entire reality fades away.  You can't bother to recall who you are, or what you're doing, focusing instead solely on your mistresses voice, though in your haze you don't understand much of what she's saying.  You pass in and out of conciousness several times until gradually you begin to clearly hear what she's saying." & vbCrLf & vbCrLf &
-            """...and then we met!  You're a fair ways off from the Amazonian village though, right?"" the hypnotist teacher asks cheerfully." & vbCrLf & vbCrLf &
-            "Right!  The Village!  You recall all the time you spent in that village; your childhood, your combat training, the first time you saw a man.  He, a lost traveller, had stumbled into the village one clear evening.  Before the sun rose, though, the shamans worked their magic, leaving a very confused woman in his place." & vbCrLf & vbCrLf &
-            """Well then, it seems like my work here is done,"" the Hypnotist says, inturupting your reminissing.  ""If I can help you with anything else, don't hesitate to ask!"""
+            """...and then we met!  Are you sure you're feeling alright?  Ever you fought off that dragon you've been a little strange..."" the hypnotist teacher asks, sounding slightly concerned." & vbCrLf & vbCrLf &
+            "Fought a dragon!?  While that sounds like something you'd do, you don't remember it which is strange considering how much you savor combat.  All the same, you tell this strange, yet beautiful lady that you are fine.  Twirling your heavy weapon deftly, you remark that you've never felt better!  This actually isn't too far off, your well toned muscles are raring to give something a beatdown." & vbCrLf & vbCrLf &
+            """Well then, it seems like my work here is done,"" the Hypnotist says, inturupting your thoughts.  ""If I can help you with anything else, don't hesitate to ask!"""
 
         Dim p = Game.player
 
@@ -39,10 +39,9 @@
 
         p.inv.add("Barbarian_Armor", 1)
         Equipment.clothesChange("Barbarian_Armor")
+        p.inv.add("Corse_War_Axe", 1)
+        Equipment.weaponChange("Corse_War_Axe")
 
-        If p.equippedWeapon.GetType.IsSubclassOf(GetType(Staff)) Then
-            Equipment.weaponChange("Fists")
-        End If
 
         p.pClass = p.classes("Barbarian")
 
