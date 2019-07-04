@@ -156,6 +156,10 @@
             cmbobxArmor.Items.Add("Maid_Outfit")
         ElseIf p.pForm.name = "Succubus" Or p.pForm.name = "Half-Succubus" Then
             cmbobxArmor.Items.Add("Succubus_Garb")
+        ElseIf p.pForm.name = "Slime" Then
+            cmbobxArmor.Items.Add("Gelatinous_Shell")
+        ElseIf p.pForm.name = "Goo Girl" Then
+            cmbobxArmor.Items.Add("Gelatinous_Negligee")
         ElseIf p.pClass.name = "Goddess" Then
             cmbobxArmor.Items.Add("Goddess_Gown")
         Else

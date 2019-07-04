@@ -21,6 +21,7 @@
         inv.setCount("Barbarian_Lesson", 1)
         inv.setCount("Warlock_Lesson", 1)
         inv.setCount("Name_Change", 1)
+        inv.setCount("Base_Form_Reset", 1)
         inv.setCount("Utility_Manual", 1)
         inv.item("Utility_Manual").value -= 0.2 * MyBase.inv.item("Utility_Manual").value
         inv.setCount("Combat_Manual", 1)

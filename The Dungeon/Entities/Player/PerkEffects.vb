@@ -7,7 +7,8 @@
                 p.perks("hunger") = -1
             Else
                 Game.pushLstLog("Your stomach aches... -5 health!")
-                p.takeDMG(5, New Monster(10))
+                p.health -= 5 / p.getMaxHealth
+                If p.health <= 0 Then p.die(New Monster(10))
             End If
         End If
     End Sub

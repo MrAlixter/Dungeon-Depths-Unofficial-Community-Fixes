@@ -98,14 +98,14 @@
                 Game.player.createP()
                 Game.player.UIupdate()
                 Game.pushLblEvent(out)
+            Case 5
+                Game.pushLblEvent("""Hello again Doctor, "" a metallic voice chimes from a terminal to your right.  ""I was not aware of your return.  My appologies.  Would you like me to execute standard dress protocols at this time?""", AddressOf doctorAccept, AddressOf doctorCancel, "Give the command?")
             Case 6
                 Game.pushLblEvent("Before you, you see a person-sized metal canister with an opened pink glass lid.  Looking at the chamber, you spot the text ""G.C.U"" written on the side, and a holographic countdown timer projected from a chome pedistal next to it.  This timer seems to be counting down to something called ""ConvProccess.exe"".  You think that you can fit in the canister, but you have no clue what will happen if you do...", AddressOf gConvChamb, AddressOf gcuCancel, "Get in the G.C.U?")
-            Case 5
-                MsgBox("Memory Swap")
         End Select
 
-        pos = New Point(-1, -1)
-        
+                pos = New Point(-1, -1)
+
     End Sub
 
     Shared Sub rubyRevert()
@@ -117,6 +117,21 @@
                            "As you stand frozen in the same position you've held since you touched the cursed stone, suddenly you fall flat faced onto the ground.  Springing to your feet, you are exited to find yourself as you were, albiet redder than before, and another explorer frozen in your place.  From their pose, it seems that they were going through your stuff, and must have accidently touched you.  What's more, the original ruby you touched is nowhere to be found.  You muse on the nature of the curse for a bit, before grabbing your things and moving on." & vbCrLf & vbCrLf & "Your stomach rumbles loudly, and you can tell that your time as a statue hasn't been kind to you.")
         Game.player.mana = 0
         Game.player.hunger += 60
+    End Sub
+
+    Sub doctorAccept()
+        Game.pushLblEvent("""Very good.  Please step onto the equipping pad.""" & vbCrLf & vbCrLf &
+                          "Spotting a raised area of the floor that looks to be equipped with all sorts of fancy machinery, you step onto it." & vbCrLf & vbCrLf &
+                          """Thank you.  Please remain still.""" & vbCrLf & vbCrLf &
+                          """Suddenly, the pad's machinery whirs to life.  While some of its many mechanical arms quickly strip you, others prepare a clinical looking labcoat and begin dressing you in it.  Finally, one arm places a pair of small glasses carefully onto your face and the pad returns to its idle state." & vbCrLf & vbCrLf &
+                          """Have a nice day, doctor."" chimes the terminal, before darkening and going to sleep.")
+        Equipment.clothesChange("Labcoat")
+        Game.player.prt.setIAInd(12, 2, True, False)
+
+        Game.player.createP()
+    End Sub
+    Sub doctorCancel()
+        Game.pushLblEvent("""Very well.  Have a nice day, doctor."" chimes the terminal, before darkening and going to sleep.")
     End Sub
     Shared Sub gcuCancel()
         Game.pushLblEvent("The lid slams tightly shut, and the system begins whatever it was going to do.  You can not get in anymore.")

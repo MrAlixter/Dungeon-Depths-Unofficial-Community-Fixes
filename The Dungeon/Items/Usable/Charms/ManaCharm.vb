@@ -15,7 +15,9 @@
         If Me.getUsable() = False Then Exit Sub
         Game.pushLstLog("You use the " & getName() & ". +5 base mana!")
         
-        Game.player.mBuff += 5
+        Game.player.maxMana += 5
+        Game.player.mana += 5
+        If Game.player.mana > Game.player.getMaxMana Then Game.player.mana = Game.player.getMaxMana
         Game.player.UIupdate()
         count -= 1
     End Sub

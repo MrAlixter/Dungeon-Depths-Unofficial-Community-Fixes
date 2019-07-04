@@ -30,7 +30,8 @@
     End Sub
 
     Public Overrides Sub onEquip()
-        Polymorph.transform(Game.player, "bimboC")
+        Dim bTF As BimboTF = New BimboTF(2, 0, 0.25, True)
+        bTF.chickenTf()
         prevWingInd = CInt(CStr(Game.player.prt.wingInd))
         Game.player.prt.wingInd = 3
     End Sub

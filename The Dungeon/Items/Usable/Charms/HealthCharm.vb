@@ -20,7 +20,7 @@
         End If
         Game.pushLstLog("You use the " & getName() & ". +10 base health!")
         
-        Game.player.hBuff += 10
+        Game.player.maxHealth += 10
         Game.player.health += 10 / Game.player.getmaxHealth()
         If Game.player.health > 1 Then Game.player.health = 1
         Game.player.UIupdate()

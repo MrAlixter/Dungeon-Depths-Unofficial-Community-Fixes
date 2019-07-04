@@ -20,10 +20,14 @@
         inv.setCount("Apple​", 1)
         inv.setCount("Angel_Food_Cake", 1)
         inv.setCount("Stick_of_Gum", 1)
+        inv.setCount("Berry_Stick_of_Gum", 1)
+        inv.setCount("Melon_Stick_of_Gum", 1)
+
         'Armors
-        inv.setCount("Steel_Bikini", 1)
+        inv.setCount("Bronze_Bikini", 1)
         inv.setCount("Bunny_Suit", 1)
         inv.setCount("Witch_Cosplay", 1)
+        inv.setCount("Brawler_Cosplay", 1)
         inv.setCount("Cowbell", 1)
         inv.setCount("Gold_Adornment", 1)
         'Weapons

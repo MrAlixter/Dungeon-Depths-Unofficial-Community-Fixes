@@ -35,7 +35,7 @@
         End If
 
         If p.prt.checkNDefFemInd(6, 6) Then p.prt.setIAInd(6, 0, True, True)
-        Polymorph.giveRNDBimName(p)
+
         p.prt.setIAInd(8, 5, True, True)
         p.prt.setIAInd(9, 8, True, False)
         p.prt.setIAInd(13, 0, True, False)
@@ -103,8 +103,6 @@
 
         p.prt.setIAInd(8, 6, True, True)
         p.prt.setIAInd(12, 2, True, False)
-
-        If Game.floor < 6 Then p.pImage = Game.picPlayerB.BackgroundImage Else p.pImage = Game.picBimbof.BackgroundImage
         p.TextColor = Color.HotPink
         p.perks("bimbotf") = -1
         p.createP()
@@ -122,6 +120,7 @@
         p.prt.setIAInd(8, 6, True, True)
         p.prt.setIAInd(9, 34, True, True)
         p.prt.setIAInd(13, 0, True, True)
+        p.prt.setIAInd(12, 2, True, False)
         Equipment.clothesChange("Magic_Girl_Outfit")
         p.breastSize = 3
         Game.pushLblEvent("You immediatly feel funny, the increased magic in your system reacting swiftly with the gum.  Mind clearer than ever, you look down to see your clothes have become tight and pink. You smirk; while you look like a typical brainless bimbo, you're far more intellegent than you were before. Your hair lengthens, becoming a platinum blonde, and your clothes finish changing to match your new figure.  While the effects on your body confirm your hypothesis that BIM_II is likely the chemical used in those sticks of gum the increased IQ hints that there may be another compound involved.")

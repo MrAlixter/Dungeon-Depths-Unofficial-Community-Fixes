@@ -107,6 +107,93 @@
         p.createP()
         stopTF()
     End Sub
+    Sub doubleTf()
+        Dim p As Player = Game.player
+        Dim out As String = ""
+        If Not p.prt.sexBool Then
+            out += "In your haze, you look down to see breasts blossoming from your chest. You giggle, all traces of intellect vanishing as your body becomes more curvy and feminine. As your dainty hands move down your body, you discover that you no longer have a cock and balls, and insted have a tight moist cunt.  Your hair lengthens, becoming a platinum blonde, and your clothes change to match your new figure."
+            p.sex = "Female"
+        ElseIf p.prt.sexBool And p.breastSize < 3 Then
+            out += "In your haze, you look down at your tits. You, like, never noticed how round and big they had got. You giggle, all traces of intellect vanishing as your body becomes more curvy and feminine. Your hair lengthens, becoming a platinum blonde, and your clothes change to match your new figure."
+        ElseIf p.prt.sexBool And p.breastSize >= 3 Then
+            out += "In your haze, you look down to see your clothes have become tight and pink. You giggle, all traces of intellect vanishing as your body becomes more curvy and feminine. Your hair lengthens, becoming a platinum blonde, and your clothes finish changing to match your new figure."
+        End If
+        Game.pushLblEvent(out)
+        p.pClass = p.classes("Bimbo")
+        p.lust += 50
+        'final tf Stage
+        If p.prt.checkNDefFemInd(6, 6) Then p.prt.setIAInd(6, 0, True, True)
+        Polymorph.giveRNDBimName(p)
+        p.prt.setIAInd(13, 0, True, False)
+        p.prt.setIAInd(16, 0, True, False)
+
+        p.prt.haircolor = Color.FromArgb(255, 245, 231, 184)
+        If p.breastSize < 3 And Not p.pClass.name.Equals("Magic Girl") Then
+            p.prt.setIAInd(2, 7, True, True)
+            p.breastSize = 3
+        ElseIf p.breastSize < 7 Then
+            p.breastSize += 1
+            p.reverseBSRoute()
+        End If
+
+        If Not p.equippedArmor.getName.Equals("Naked") And Not p.pClass.name.Equals("Magic Girl") Then
+            If p.equippedArmor.slutVarInd = -1 Then
+                Equipment.clothesChange("Very_Skimpy_Clothes")
+            Else
+                Equipment.clothingCurse1()
+            End If
+        End If
+
+        p.prt.haircolor = Color.FromArgb(255, 250, 250, 205)
+        p.prt.setIAInd(1, 23, True, True)
+        p.prt.setIAInd(5, 26, True, True)
+        p.prt.setIAInd(9, 32, True, True)
+        p.prt.setIAInd(15, 24, True, True)
+        p.prt.setIAInd(8, 17, True, True)
+
+        p.setPImage()
+        p.TextColor = Color.FromArgb(255, 255, 235, 240)
+        p.perks("bimbotf") = -1
+        p.createP()
+        stopTF()
+    End Sub
+
+    Sub chickenTf()
+        Dim p As Player = Game.player
+        Dim cRed = Color.FromArgb(255, 215, 0, 4)
+        Dim out As String = "As you don the chicken suit you found, part of you half expects to turn into some sort of bird.  You chuckle to yourself at the idea, and this quickly devolves into a giggling fit.  Parting your short red bangs off to one side, you adjust your large breasts in the suit.  You note that despite covering most of your body, it doesn't even begin to provide enough support.  You strip some parts of the outfit away, shift other parts around, and soon you are left with a pair of wings and a set of straps that provide just about all the support you think you're going to get out of it.  Proud of your handiwork, you strut back out into the dungeon still giggling at the noshun...notshi...""idea"" that some silly chicken costume could change you in any way."
+        Game.pushLblEvent(out)
+        p.pClass = p.classes("Bimbo")
+        p.lust += 20
+
+        'final tf Stage
+        If p.prt.checkNDefFemInd(6, 6) Then p.prt.setIAInd(6, 0, True, True)
+        Polymorph.giveRNDBimName(p)
+        p.prt.setIAInd(13, 0, True, False) 'glasses
+        p.prt.setIAInd(16, 0, True, False) 'hat
+
+        p.prt.haircolor = cRed
+        If p.breastSize < 3 And Not p.pClass.name.Equals("Magic Girl") Then
+            p.prt.setIAInd(2, 7, True, True)
+            p.breastSize = 3
+        ElseIf p.breastSize < 7 Then
+            p.breastSize += 1
+            p.reverseBSRoute()
+        End If
+
+        p.prt.haircolor = cRed
+        p.prt.setIAInd(1, 11, True, True) 'rhair 2
+        p.prt.setIAInd(5, 11, True, True) 'rhair 1
+        p.prt.setIAInd(9, 8, True, True) 'eyes
+        p.prt.setIAInd(15, 17, True, True) 'fhair
+        p.prt.setIAInd(8, 6, True, True) 'mouth
+
+        p.setPImage()
+        p.perks("bimbotf") = -1
+        p.createP()
+        stopTF()
+    End Sub
+
     Sub step2alt()
         Dim p As player = game.player
         p.prt.setIAInd(16, 0, True, True)

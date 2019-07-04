@@ -56,9 +56,25 @@
     End Sub
     Shared Sub slimeDeath()
         Dim p As Player = Game.player
-        Dim out As String = "As the " & p.currTarget.name & " closes in on you, you push yourself off the ground, sidestep it, and make a hasty retreat." & vbCrLf & " " & vbCrLf & "[Insert a TF here (eventually)]"
+        Dim out As String = "As the " & p.currTarget.name & " closes in on you, you push yourself off the ground, sidestep it, and make a hasty retreat.  While your back is turned, the " & p.currTarget.name & " whips a ball of goo at you.  As soon as it makes contact, you can feel the familiar tingle of magic..."
         p.currTarget.despawn("p-death")
-        Game.pushLblEvent(out)
+        If p.perks("slimetf") = -1 Then
+            p.perks("slimetf") = 1
+        End If
+
+        p.ongoingTFs.Add(New VialOfSlimeTF(p.perks("slimetf")))
+        Game.pushLblEvent(out, AddressOf p.update)
+    End Sub
+    Shared Sub ggDeath()
+        Dim p As Player = Game.player
+        Dim out As String = "As the " & p.currTarget.name & " closes in on you, you push yourself off the ground, sidestep it, and make a hasty retreat.  While your back is turned, the " & p.currTarget.name & " whips a ball of goo at you.  As soon as it makes contact, you can feel the familiar tingle of magic..."
+        p.currTarget.despawn("p-death")
+        If p.perks("googirltf") = -1 Then
+            p.perks("googirltf") = 1
+        End If
+        p.ongoingTFs.Add(New GooGirlTF(p.perks("googirltf")))
+        p.perks("googirltf") += 1
+        Game.pushLblEvent(out, AddressOf p.update)
     End Sub
 
     Shared Sub spiderDeath()

@@ -1,7 +1,7 @@
 ﻿Public Class BBBimboTF
     Inherits Transformation
-    Public Shared bimbovi1 As Color = Color.FromArgb(255, 131, 58, 131)
-    Public Shared bimbovi2 As Color = Color.FromArgb(255, 157, 30, 251)
+    Public Shared bimbovi1 As Color = Color.FromArgb(255, 131, 58, 113)
+    Public Shared bimbovi2 As Color = Color.FromArgb(255, 111, 26, 79)
 
     Sub New(n As Integer, tts As Integer, wi As Double, cbs As Boolean)
         MyBase.New(n, tts, wi, cbs)
@@ -19,7 +19,7 @@
     Sub hairColorShift()
         Game.player.prt.haircolor = Game.cShift(Game.player.prt.haircolor, bimbovi1, 25)
         If Not Game.player.getHairColor.Equals(bimbovi1) Then currStep -= 1
-        Game.pushLblEvent("Your hair becomes slightly darker, depening towards a deep purple.")
+        Game.pushLblEvent("Your hair becomes slightly darker, deepening towards a deep purple.")
     End Sub
     Sub step1()
         Dim p As Player = Game.player
@@ -102,7 +102,7 @@
             p.prt.setIAInd(9, 16, True, True)
         End If
         p.prt.setIAInd(8, 14, True, True)  'mouth
-        If Game.floor < 6 Then p.pImage = Game.picPlayerB.BackgroundImage Else p.pImage = Game.picBimbof.BackgroundImage
+        p.setPImage()
         p.TextColor = Color.HotPink
         p.perks("bimbotf") = -1
         p.createP()

@@ -146,7 +146,20 @@
         internal_inventory.Add("Vial_of_BIM_II", New VialOfBimbo())         '127
         internal_inventory.Add("CryoGrenade", New CryoGrenade())            '128
         internal_inventory.Add("Bunny_Suit​", New SVBunnySuit())             '129
-        internal_inventory.Add("Galaxy_Dye​", New galaxyDye())             '130
+        internal_inventory.Add("Galaxy_Dye", New GalaxyDye())               '130
+        internal_inventory.Add("Base_Form_Reset", New BFormReset())         '131
+        internal_inventory.Add("Melon_Stick_of_Gum", New WStickOfGum())     '132
+        internal_inventory.Add("Warrior's_Feast", New WFeast())             '133
+        internal_inventory.Add("Mage's_Delicacy", New MDelicacy())          '134
+        internal_inventory.Add("Tavern_Special", New TSpecial())            '135
+        internal_inventory.Add("Vial_of_Pink_Slime", New VialOfPSlime())    '136
+        internal_inventory.Add("Gelatinous_Shell", New GelArmor())          '137
+        internal_inventory.Add("Gelatinous_Negligee", New GelLinge())       '138
+        internal_inventory.Add("Braced_Headband", New BracedHeadband())     '139
+        internal_inventory.Add("Emerald_Circlet", New EmeraldCirclet())     '140
+        internal_inventory.Add("Active_Camoflage", New ActiveCamoflage())   '141
+        internal_inventory.Add("Combat_Module", New CombatModule())         '142
+        internal_inventory.Add("Every_New_Item", New NewStuff())            '143
 
         armor = {New CommonClothes, New SkimpyClothes, New Naked, New VSkimpyClothes,
                  Me.item(5), Me.item(7), Me.item(8), Me.item(10),
@@ -159,7 +172,7 @@
                  Me.item(94), Me.item(95), Me.item(99), Me.item(101),
                  Me.item(102), Me.item(103), Me.item(104), Me.item(105),
                  Me.item(106), Me.item(107), Me.item(115), Me.item(116),
-                 Me.item(129)}
+                 Me.item(129), Me.item(137), Me.item(138)}
 
         weapons = {New BareFists(),
                    Me.item(6), Me.item(9), Me.item(11), Me.item(21),
@@ -168,28 +181,31 @@
                    Me.item(84), Me.item(96), Me.item(111), Me.item(112),
                    Me.item(118), Me.item(120)}
 
-        useable = {Me.item(0), Me.item(1), Me.item(3), Me.item(4),
+        useable = {Me.item(0), Me.item(3), Me.item(4),
                    Me.item(65), Me.item(15), Me.item(36), Me.item(37),
                    Me.item(45), Me.item(48), Me.item(49), Me.item(50),
                    Me.item(51), Me.item(52), Me.item(57), Me.item(58),
                    Me.item(81), Me.item(86), Me.item(88), Me.item(89),
                    Me.item(91), Me.item(119), Me.item(126), Me.item(127),
-                   Me.item(128), Me.item(130)}
+                   Me.item(128), Me.item(130), Me.item(136), Me.item(142),
+                   Me.item(143)}
 
-        food = {Me.item(30), Me.item(31), Me.item(32), Me.item(33),
+        food = {Me.item(1), Me.item(30), Me.item(31), Me.item(32), Me.item(33),
                 Me.item(34), Me.item(35), Me.item(44), Me.item(90),
                 Me.item(98), Me.item(100), Me.item(108), Me.item(109),
-                Me.item(117), Me.item(125)}
+                Me.item(117), Me.item(125), Me.item(132), Me.item(133),
+                Me.item(134), Me.item(135)}
 
         acce = {New noAcce(), Me.item(66), Me.item(67), Me.item(68),
                 Me.item(69), Me.item(70), Me.item(77), Me.item(81),
-                Me.item(97), Me.item(110), Me.item(123)}
+                Me.item(97), Me.item(110), Me.item(123), Me.item(139),
+                Me.item(140), Me.item(141)}
 
         potions = {Me.item(2), Me.item(13), Me.item(14), Me.item(25),
                    Me.item(26), Me.item(27), Me.item(28), Me.item(29),
                    Me.item(59), Me.item(60), Me.item(61), Me.item(62),
-                   Me.item(76), Me.item(80), Me.item(82), Me.item(92),
-                   Me.item(93)}
+                   Me.item(76), Me.item(82), Me.item(92), Me.item(93)}
+
         Array.Sort(potions)
 
         misc = {Me.item(43), Me.item(53)}

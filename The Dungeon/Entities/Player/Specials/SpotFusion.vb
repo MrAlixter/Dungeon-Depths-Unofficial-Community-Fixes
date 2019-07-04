@@ -51,6 +51,12 @@
         r = Int(Rnd() * 2)
         If r = 0 Then p1.sex = p2.sex
 
+        r = Int(Rnd() * 2)
+        If r = 0 Then p1.prt.wingInd = p2.prt.wingInd
+
+        r = Int(Rnd() * 2)
+        If r = 0 Then p1.prt.hornInd = p2.prt.hornInd
+
         If p1.maxHealth > p2.maxHealth Then
             p1.maxHealth = p1.maxHealth * 1.5
         Else

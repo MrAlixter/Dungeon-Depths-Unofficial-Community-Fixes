@@ -19,5 +19,7 @@
         Catch e As Exception
             Game.pushLblEvent("Your attempted teleportation fails in a less than spectacular fashion, the portal you created simply fizzling away to nothingness.")
         End Try
+
+        count -= 1
     End Sub
 End Class

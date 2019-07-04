@@ -25,7 +25,7 @@
         p.prt.haircolor = Color.FromArgb(180, 5, 245, 198)
         p.prt.skincolor = Color.FromArgb(200, 0, 255, 255)
         p.prt.setIAInd(6, 5, True, True)
-        p.prt.setIAInd(9, 9, True, True)
+        p.prt.setIAInd(9, 11, True, True)
         p.prt.setIAInd(10, 0, True, False)
         p.prt.setIAInd(13, 0, True, False)
         p.prt.setIAInd(16, 0, True, False)

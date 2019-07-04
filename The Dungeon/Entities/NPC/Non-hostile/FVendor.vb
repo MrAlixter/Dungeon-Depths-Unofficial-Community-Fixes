@@ -24,6 +24,9 @@
         inv.setCount("Mint_Stick_of_Gum", 1)
         inv.setCount("Spatial_Shroom", 1)
         inv.setCount("Garden_Salad", 1)
+        inv.setCount("Warrior's_Feast", 1)
+        inv.setCount("Mage's_Delicacy", 1)
+        inv.setCount("Tavern_Special", 1)
 
         isShop = True
         setGold(99999)

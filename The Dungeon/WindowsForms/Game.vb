@@ -917,6 +917,8 @@ Public Class Game
         inv.add("Galaxy_Dye", r)
         If Int(Rnd() * 3) = 0 Then r = 1 Else r = 0
         inv.add("CryoGrenade", r)
+        If Int(Rnd() * 3) = 0 Then r = 1 Else r = 0
+        inv.add("Combat_Module", r)
 
         inv.add("Vial_of_BIM_II", 1)
         c1 = baseChest.Create(inv, p, False)

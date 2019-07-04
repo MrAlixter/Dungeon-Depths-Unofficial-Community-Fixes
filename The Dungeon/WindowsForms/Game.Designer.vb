@@ -1684,9 +1684,8 @@ Partial Class Game
         Me.lblEvent.ForeColor = System.Drawing.Color.White
         Me.lblEvent.Location = New System.Drawing.Point(304, 120)
         Me.lblEvent.Name = "lblEvent"
-        Me.lblEvent.Size = New System.Drawing.Size(58, 20)
+        Me.lblEvent.Size = New System.Drawing.Size(2, 20)
         Me.lblEvent.TabIndex = 271
-        Me.lblEvent.Text = "Label2"
         Me.lblEvent.TextAlign = System.Drawing.ContentAlignment.MiddleLeft
         Me.lblEvent.Visible = False
         '

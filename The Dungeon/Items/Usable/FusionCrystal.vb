@@ -109,6 +109,12 @@
         r = Int(Rnd() * 2)
         If r = 0 Then player.sex = p1.sex Else player.sex = p2.sex
 
+        r = Int(Rnd() * 2)
+        If r = 0 Then player.prt.wingInd = p1.prt.wingInd Else player.prt.wingInd = p2.prt.wingInd
+
+        r = Int(Rnd() * 2)
+        If r = 0 Then player.prt.hornInd = p1.prt.hornInd Else player.prt.hornInd = p2.prt.hornInd
+
         If p1.maxHealth > p2.maxHealth Then
             player.maxHealth = p1.maxHealth * 1.5
         Else
@@ -170,6 +176,8 @@
         player.inv.add(2, -1)
         player.inv.add(58, -1)
 
+        player.breastSize = p1.breastSize + p2.breastSize / 2
+
         player.prt.iArr = p1.prt.iArr.Clone
         player.prt.iArrInd = p1.prt.iArrInd.Clone
         For i = 0 To 16
@@ -201,12 +209,21 @@
         Return player
     End Function
 
+    Shared Function alUnion(ByVal a As List(Of String), ByVal b As List(Of String)) As List(Of String)
+        Dim c = New List(Of String)
+
+        For i = 0 To Math.Max(a.Count, b.Count) - 1
+            If i < a.Count AndAlso Not c.Contains(a.Item(i)) Then c.Add(a.Item(i))
+            If i < b.Count AndAlso Not c.Contains(b.Item(i)) Then c.Add(b.Item(i))
+        Next
+        Return c
+    End Function
     Shared Sub finalizeFusion(ByRef player As Player, ByRef p1 As Player, ByRef p2 As Player)
 
-        player.knownSpells = p1.knownSpells.Union(p2.knownSpells)
-        player.knownSpecials = p1.knownSpecials.Union(p2.knownSpecials)
-        player.selfPolyForms = p1.selfPolyForms.Union(p2.selfPolyForms)
-        player.enemPolyForms = p1.enemPolyForms.Union(p2.enemPolyForms)
+        player.knownSpells = alUnion(p1.knownSpells, p2.knownSpells)
+        player.knownSpecials = alUnion(p1.knownSpecials, p2.knownSpecials)
+        player.selfPolyForms = alUnion(p1.selfPolyForms, p2.selfPolyForms)
+        player.enemPolyForms = alUnion(p1.enemPolyForms, p2.enemPolyForms)
 
         player.TextColor = Color.White
 

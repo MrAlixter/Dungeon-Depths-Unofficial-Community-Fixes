@@ -73,6 +73,7 @@
     End Sub
     'load from save constructors
     Public Sub New(ByVal s As String, ByVal v As Double)
+        solFlag = True
         createInvPerks()
         Dim playArray() As String = s.Split("#")
 
@@ -145,32 +146,46 @@
             CType(inv.item(69), ThrallCollar).setFormerLife(stuff(1), New Tuple(Of Integer, Boolean, Boolean)(CInt(stuff(2)), stuff(3), stuff(4)))
         End If
 
-        currentIndex += 1
-        For i = 0 To CInt(playArray(currentIndex))
-            Dim tf As Transformation = Transformation.newTF(playArray(currentIndex + 1 + i).Split("$"))
+        Dim knowlegebase = playArray(currentIndex + 1).Split("†")
+        currentIndex = 1
+        Dim subKB = knowlegebase(currentIndex).Split("Ͱ")
+
+        For i = 1 To CInt(subKB(0) + 1)
+            Dim tf As Transformation = Transformation.newTF(subKB(i).Split("$"))
             ongoingTFs.Add(tf)
         Next
+        currentIndex += 1
 
         'load the known self poly forms
-        currentIndex += 2 + CInt(playArray(currentIndex))
-        For i = 0 To CInt(playArray(currentIndex))
-            selfPolyForms.Add(playArray(currentIndex + 1 + i))
+        subKB = knowlegebase(currentIndex).Split("Ͱ")
+        For i = 1 To CInt(subKB(0) + 1)
+            selfPolyForms.Add(subKB(i))
+
         Next
+        currentIndex += 1
+
         'load the known self enemy forms
-        currentIndex += 3 + CInt(playArray(currentIndex))
-        For i = 0 To CInt(playArray(currentIndex))
-            enemPolyForms.Add(playArray(currentIndex + 1 + i))
+        subKB = knowlegebase(currentIndex).Split("Ͱ")
+        For i = 1 To CInt(subKB(0) + 1)
+            enemPolyForms.Add(subKB(i))
+
         Next
+        currentIndex += 1
+
         'load the known spells
-        currentIndex += 3 + CInt(playArray(currentIndex))
-        For i = 0 To CInt(playArray(currentIndex))
-            knownSpells.Add(playArray(currentIndex + 1 + i))
+        subKB = knowlegebase(currentIndex).Split("Ͱ")
+        For i = 1 To CInt(subKB(0) + 1)
+            knownSpells.Add(subKB(i))
+
         Next
+        currentIndex += 1
         'load the known specials
-        currentIndex += 3 + CInt(playArray(currentIndex))
-        For i = 0 To CInt(playArray(currentIndex))
-            knownSpecials.Add(playArray(currentIndex + 1 + i))
+        subKB = knowlegebase(currentIndex).Split("Ͱ")
+        For i = 1 To CInt(subKB(0) + 1)
+            knownSpecials.Add(subKB(i))
+
         Next
+        currentIndex += 1
 
         currState.load(Me)
 
@@ -180,6 +195,8 @@
         magicRoute()
         specialRoute()
         bsizeroute()
+
+        solFlag = False
     End Sub
     Public Sub setStatsToBeginning()
         maxHealth = 100
@@ -271,33 +288,35 @@
     Private Sub initPerks()
         perks.Clear()
         'Creates the dictionary of perks
-        perks.Add("hunger", -1) '0
-        perks.Add("bimbotf", -1) '1
-        perks.Add("slutcurse", -1) '2
-        perks.Add("chickentf", -1) '3
-        perks.Add("slimehair", -1) '4
-        perks.Add("polymorphed", -1) '5
-        perks.Add("nekocurse", -1) '6
-        perks.Add("swordpossess", -1) '7
-        perks.Add("vsslimehair", -1) '8
-        perks.Add("brage", -1) '9
-        perks.Add("mmammaries", -1) '10
-        perks.Add("ihfury", -1) '11
-        perks.Add("livearm", -1) '12
-        perks.Add("livelinge", -1) '13
-        perks.Add("thrall", -1) '14
-        perks.Add("cowbell", -1) '15
-        perks.Add("minRegen", -1) '16
-        perks.Add("rotlg", -1) '17
-        perks.Add("astatue", -1) '18
-        perks.Add("svenom", -1) '19
-        perks.Add("avenom", -1) '20
-        perks.Add("blind", -1) '21
-        perks.Add("bowtie", -1) '22
-        perks.Add("hardlight", -1) '22
-        perks.Add("minmanregen", -1) '23
-        perks.Add("amazon", -1) '23
-        perks.Add("barbarian", -1) '23
+        perks.Add("hunger", -1)         '0
+        perks.Add("bimbotf", -1)        '1
+        perks.Add("slutcurse", -1)      '2
+        perks.Add("chickentf", -1)      '3
+        perks.Add("slimehair", -1)      '4
+        perks.Add("polymorphed", -1)    '5
+        perks.Add("nekocurse", -1)      '6
+        perks.Add("swordpossess", -1)   '7
+        perks.Add("vsslimehair", -1)    '8
+        perks.Add("brage", -1)          '9
+        perks.Add("mmammaries", -1)     '10
+        perks.Add("ihfury", -1)         '11
+        perks.Add("livearm", -1)        '12
+        perks.Add("livelinge", -1)      '13
+        perks.Add("thrall", -1)         '14
+        perks.Add("cowbell", -1)        '15
+        perks.Add("minRegen", -1)       '16
+        perks.Add("rotlg", -1)          '17
+        perks.Add("astatue", -1)        '18
+        perks.Add("svenom", -1)         '19
+        perks.Add("avenom", -1)         '20
+        perks.Add("blind", -1)          '21
+        perks.Add("bowtie", -1)         '22 
+        perks.Add("hardlight", -1)      '23
+        perks.Add("minmanregen", -1)    '24
+        perks.Add("amazon", -1)         '25
+        perks.Add("barbarian", -1)      '26
+        perks.Add("slimetf", -1)        '27
+        perks.Add("googirltf", -1)      '28
     End Sub
     Private Sub initClasses()
         'creates the class dictionary
@@ -358,6 +377,8 @@
         forms.Add("Amazon", New Amazon())
         forms.Add("Amazon​", New AmazonWeak())
         forms.Add("Plantfolk", New Plantfolk())
+        forms.Add("Goo Girl", New GooGirl())
+        forms.Add("Combat Unit", New CombatUnit())
     End Sub
     Private Sub initPolymorphs()
         'compile list of polymorphs
@@ -447,8 +468,8 @@
     End Sub
     Private Sub hit(dmg As Integer, target As NPC)
         target.takeDMG(dmg, Me)
-        Game.pushLstLog(CStr("You hit" & target.title & " " & target.getName() & " for " & dmg & " damage!"))
-        Game.pushLblCombatEvent(CStr("You hit" & target.title & " " & target.getName() & " for " & dmg & " damage!"))
+        Game.pushLstLog(CStr("You hit" & target.title.ToLower & target.getName() & " for " & dmg & " damage!"))
+        Game.pushLblCombatEvent(CStr("You hit" & target.title.ToLower & target.getName() & " for " & dmg & " damage!"))
     End Sub
     Public Sub setTarget(ByRef t As NPC)
         currTarget = t
@@ -787,10 +808,14 @@
         Dim sv = perks("svenom")
         Dim av = perks("avenom")
 
+        Dim stf = perks("slimetf")
+        Dim ggtf = perks("googirltf")
         initPerks()
 
         perks("svenom") = sv
         perks("avenom") = av
+        perks("slimetf") = stf
+        perks("googirltf") = ggtf
     End Sub
     Public Overrides Sub die(ByRef source As Entity)
         resetPerks()
@@ -821,8 +846,11 @@
         ElseIf source.getName.Equals("Enthralling Sorcerer") Or source.getName.Equals("Enthralling Sorceress") Then
             DeathEffects.sorcererDeath()
             Exit Sub
-        ElseIf source.getName.Equals("Slime") Or source.getName.Equals("Goo Girl") Then
+        ElseIf source.getName.Equals("Slime") Then
             DeathEffects.slimeDeath()
+            Exit Sub
+        ElseIf source.getName.Equals("Goo Girl") Then
+            DeathEffects.ggDeath()
             Exit Sub
         ElseIf source.getName.Equals("Spider") Then
             DeathEffects.spiderDeath()
@@ -1253,11 +1281,12 @@
             Case Else
                 prt.setIAInd(7, 0, True, False)
         End Select
-
         'ears
         Select Case prt.iArrInd(6).Item1
             Case 5
                 prt.setIAInd(6, 5, True, True)
+            Case 6
+                prt.setIAInd(6, 11, True, True)
             Case Else
                 prt.setIAInd(6, prt.iArrInd(6).Item1, True, False)
         End Select
@@ -1284,6 +1313,8 @@
                 prt.setIAInd(9, 20, True, True)
             Case 10
                 prt.setIAInd(9, 33, True, True)
+            Case 11
+                prt.setIAInd(9, 36, True, True)
             Case Else
                 If prt.iArrInd(9).Item1 < 5 Then prt.setIAInd(9, prt.iArrInd(9).Item1, True, False)
         End Select
@@ -1341,11 +1372,12 @@
             Case Else
                 prt.setIAInd(7, 0, True, False)
         End Select
-
         'ears
         Select Case prt.iArrInd(6).Item1
             Case 5
                 prt.setIAInd(6, 5, False, True)
+            Case 11
+                prt.setIAInd(6, 6, False, True)
             Case Is < 5
                 prt.setIAInd(6, prt.iArrInd(6).Item1, False, False)
         End Select
@@ -1372,6 +1404,8 @@
                 prt.setIAInd(9, 9, False, True)
             Case 33
                 prt.setIAInd(9, 10, False, True)
+            Case 36
+                prt.setIAInd(9, 11, False, True)
             Case Else
                 If prt.iArrInd(9).Item1 < 5 Then prt.setIAInd(9, prt.iArrInd(9).Item1, False, False)
         End Select
@@ -1684,6 +1718,7 @@
         Dim output As String = ""
 
         currState.save(Me)
+
         output += currState.write()
         output += sState.write()
         output += pState.write()
@@ -1720,28 +1755,32 @@
         End If
         output += inv.item(69).ToString
 
-        output += "*" & ongoingTFs.Count - 1 & "*"
+        output += "*†"
+        output += ongoingTFs.Count - 1 & "Ͱ"
         For i = 0 To ongoingTFs.Count - 1
-            output += ongoingTFs(i).ToString
+            output += ongoingTFs(i).ToString & "Ͱ"
         Next
-
-        output += "*" & selfPolyForms.Count - 1 & "*"
+        output += "†"
+        output += selfPolyForms.Count - 1 & "Ͱ"
         For i = 0 To selfPolyForms.Count - 1
-            output += selfPolyForms(i).ToString & "*"
+            output += selfPolyForms(i).ToString & "Ͱ"
         Next
-        output += "*" & enemPolyForms.Count - 1 & "*"
+        output += "†"
+        output += enemPolyForms.Count - 1 & "Ͱ"
         For i = 0 To enemPolyForms.Count - 1
-            output += enemPolyForms(i).ToString & "*"
+            output += enemPolyForms(i).ToString & "Ͱ"
         Next
-        output += "*" & knownSpells.Count - 1 & "*"
+        output += "†"
+        output += knownSpells.Count - 1 & "Ͱ"
         For i = 0 To knownSpells.Count - 1
-            output += knownSpells(i).ToString & "*"
+            output += knownSpells(i).ToString & "Ͱ"
         Next
-        output += "*" & knownSpecials.Count - 1 & "*"
+        output += "†"
+        output += knownSpecials.Count - 1 & "Ͱ"
         For i = 0 To knownSpecials.Count - 1
-            output += knownSpecials(i).ToString & "*"
+            output += knownSpecials(i).ToString & "Ͱ"
         Next
-
+        output += "†"
         Return output
     End Function
     Public Function toGhost() As String

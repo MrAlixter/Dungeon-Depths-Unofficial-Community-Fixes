@@ -102,7 +102,7 @@
             p.prt.setIAInd(9, 16, True, True)
         End If
         p.prt.setIAInd(8, 6, True, True)  'mouth
-        If Game.floor < 6 Then p.pImage = Game.picPlayerB.BackgroundImage Else p.pImage = Game.picBimbof.BackgroundImage
+        p.setPImage()
         p.TextColor = Color.HotPink
         p.perks("bimbotf") = -1
         p.createP()

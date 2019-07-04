@@ -477,7 +477,7 @@
             Exit Sub
         End If
 
-        If checkNDefFemInd(2, 4) And checkNDefFemInd(2, 16) And checkNDefFemInd(2, 21) Then
+        If Not checkNDefFemInd(2, 10) And Not checkNDefFemInd(2, 16) And Not checkNDefFemInd(2, 21) Then
             Select Case p.breastSize
                 Case -1
                     setIAInd(2, 0, False, False)

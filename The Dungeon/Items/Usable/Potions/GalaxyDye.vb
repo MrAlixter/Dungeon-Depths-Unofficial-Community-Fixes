@@ -1,4 +1,4 @@
-﻿Public Class galaxydye
+﻿Public Class GalaxyDye
     Inherits Item
 
     Sub New()
