@@ -13,6 +13,7 @@
     End Sub
 
     Sub teach()
+        count = 0
         Dim newName = InputBox("What do you want for a name?")
         If newName = "" Then newName = "???"
         Game.player.name = newName

@@ -398,7 +398,7 @@
 
     '|MOVEMENT COMMANDS|
     Public Overrides Sub reachedFPathDest()
-        If Game.floor = 4 And Game.preBSBody Is Nothing And Not Game.preBSStartState Is Nothing And Game.floorboss(4) = "Ooze Empress" Then
+        If Game.floor = 4 And Not Game.preBSBody Is Nothing And Game.preBSStartState Is Nothing And Game.floorboss(4) = "Ooze Empress" Then
             RandoTF.floor4FirstBossEncounter()
             Exit Sub
         End If

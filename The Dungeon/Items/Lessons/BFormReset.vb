@@ -13,6 +13,7 @@
     End Sub
 
     Sub teach()
+        count = 0
         Dim p = Game.player
 
         If Not Transformation.canBeTFed(p) Then

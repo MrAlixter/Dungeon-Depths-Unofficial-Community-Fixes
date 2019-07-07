@@ -13,6 +13,7 @@
     End Sub
 
     Sub teach()
+        count = 0
         CType(Game.hteach, HTeach).hypnotize("*sigh* Fine, whatever.  You're very sleepy.  Very sleeeepy.  Here, a pendant.  Yayyyyy.", AddressOf display)
     End Sub
     Sub display()

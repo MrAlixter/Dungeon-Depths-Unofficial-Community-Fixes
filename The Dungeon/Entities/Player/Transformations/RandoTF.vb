@@ -19,6 +19,9 @@
 
         'assign a pointer to the player character
         Dim p As player = game.player
+        p.sState.load(p)
+
+        Game.preBSStartState = New State(p)
 
         'assign a random starter class
         Dim classes = {"Warrior", "Mage", "Paladin", "Warrior", "Mage", "Bimbo"}
