@@ -17,6 +17,7 @@
         Dim newName = InputBox("What do you want for a name?")
         If newName = "" Then newName = "???"
         Game.player.name = newName
+        Game.hideNPCButtons()
         CType(Game.hteach, HTeach).hypnotize("Have you seen my pendant?  I know it is a bit of a cliche, but doesn't seeing it swing back and forth just relax you so perfectly?  Back...and forth...watch it glisten in the light...feel yourself go deeper and deeper...deeper...and deeper...until you just...*SNAP*...drift away...", AddressOf wakeup)
     End Sub
     Sub wakeup()

@@ -3107,12 +3107,7 @@ Public Class Game
         cboxSpec.Items.Clear()
         player.canMoveFlag = False
 
-        btnTalk.Visible = False
-        btnNPCMG.Visible = False
-        cboxNPCMG.Visible = False
-        btnShop.Visible = False
-        btnFight.Visible = False
-        btnLeave.Visible = False
+        hideNPCButtons()
     End Sub
     Sub NPCfromCombat(ByRef m As NPC)
         pnlCombatClose()
@@ -3131,15 +3126,27 @@ Public Class Game
         btnSpec.Visible = False
         If player.perks("astatue") = -1 Then player.canMoveFlag = True
 
+        showNPCButtons()
+        player.specialRoute()
+        player.magicRoute()
+    End Sub
+    Sub hideNPCButtons()
+        'btnTalk.Visible = False
+        btnNPCMG.Visible = False
+        cboxNPCMG.Visible = False
+        btnShop.Visible = False
+        btnFight.Visible = False
+        btnLeave.Visible = False
+    End Sub
+    Sub showNPCButtons()
         'btnTalk.Visible = True
         btnNPCMG.Visible = True
         cboxNPCMG.Visible = True
         btnShop.Visible = True
         btnFight.Visible = True
         btnLeave.Visible = True
-        player.specialRoute()
-        player.magicRoute()
     End Sub
+
     'combat pannel
     Sub pushLblCombatEvent(ByVal s As String)
         Dim sSplit() As String = s.Split(" ")

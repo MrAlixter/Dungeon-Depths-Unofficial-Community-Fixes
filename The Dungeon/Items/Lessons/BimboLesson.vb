@@ -14,6 +14,7 @@
 
     Sub teach()
         count = 0
+        Game.hideNPCButtons()
         CType(Game.hteach, HTeach).hypnotize("*sigh* Fine, whatever.  You're very sleepy.  Very sleeeepy.  Here, a pendant.  Yayyyyy.", AddressOf display)
     End Sub
     Sub display()
@@ -28,5 +29,6 @@
         Dim bTF As BimboTF = New BimboTF(2, 0, 0.25, True)
         bTF.doubleTf()
         Game.player.createP()
+        CType(Game.hteach, HTeach).back()
     End Sub
 End Class

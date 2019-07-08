@@ -187,19 +187,21 @@ Public Class ShopV2
     End Sub
 
     Private Sub boxInventory_SelectedIndexChanged(sender As Object, e As EventArgs) Handles boxInventory.SelectedIndexChanged
-        Dim ind As Integer
-        Dim name As String = boxInventory.SelectedItem.ToString.Split({" "c, "("c, "."c})(0)
-        If p.inv.item(name) Is Nothing Then
-            For j As Integer = 0 To p.inv.upperBound
-                If p.inv.item(j).getAName().Contains(name) Then
-                    ind = j
-                    Exit For
-                End If
-            Next
-        Else
-            ind = p.inv.item(name).getId
+        Dim ind As Integer = 0
+        Dim name As String = ""
+        If Not boxInventory.SelectedItem.ToString.Split({" "c, "("c, "."c})(0) Is Nothing Then
+            name = boxInventory.SelectedItem.ToString.Split({" "c, "("c, "."c})(0) Is Nothing
+            If p.inv.item(name) Is Nothing Then
+                For j As Integer = 0 To p.inv.upperBound
+                    If p.inv.item(j).getAName().Contains(name) Then
+                        ind = j
+                        Exit For
+                    End If
+                Next
+            Else
+                ind = p.inv.item(name).getId
+            End If
         End If
-
         Dim item As Item = p.inv.item(ind)
 
         txtDesc.Text = item.getDesc

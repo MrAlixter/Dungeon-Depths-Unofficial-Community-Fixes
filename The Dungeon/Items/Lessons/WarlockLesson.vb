@@ -16,7 +16,7 @@
         count = 0
         Game.pushNPCDialog("Before we get started, I just want to make sure you really want this.  This lesson will completely change who you are forever, and you'll lose any stat boosts you might have gotten from charms.", AddressOf warning)
         Game.shopMenu.Close()
-        CType(Game.hteach, HTeach).hideShopButtons()
+        Game.hideNPCButtons()
     End Sub
     Sub warning()
         Game.pushPnlYesNo("Start over as a Warlock?", AddressOf tf, AddressOf cancel)

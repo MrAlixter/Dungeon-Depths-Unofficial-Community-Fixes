@@ -145,25 +145,6 @@
         npcIndex = preHypnoID
         Game.pushNPCDialog("So, anything else?")
         Game.picNPC.BackgroundImage = picNCP(npcIndex)
-        CType(Game.hteach, HTeach).showShopButtons()
-    End Sub
-
-    Sub hideShopButtons()
-        'btnTalk.Visible = False
-        Game.btnNPCMG.Visible = False
-        Game.cboxNPCMG.Visible = False
-        Game.btnShop.Visible = False
-        Game.btnShop.Enabled = False
-        Game.btnFight.Visible = False
-        Game.btnLeave.Visible = False
-    End Sub
-    Sub showShopButtons()
-        'btnTalk.Visible = True
-        Game.btnNPCMG.Visible = True
-        Game.cboxNPCMG.Visible = True
-        Game.btnShop.Visible = True
-        Game.btnShop.Enabled = True
-        Game.btnFight.Visible = True
-        Game.btnLeave.Visible = True
+        Game.showNPCButtons()
     End Sub
 End Class
