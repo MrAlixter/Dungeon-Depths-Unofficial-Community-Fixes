@@ -3,7 +3,7 @@
 
     Sub New()
         MyBase.setName("Valkyrie_Sword")
-        MyBase.setDesc("A mysterious wand used by a mysterious protector." & vbCrLf & "+22 ATK, +7 Max Mana")
+        MyBase.setDesc("A blazing sword used by a winged protector." & vbCrLf & "+22 ATK, +7 Max Mana")
         id = 96
         tier = 3
         MyBase.setUsable(False)
@@ -31,11 +31,12 @@
     Public Overrides Sub onEquip()
         If Not Game.player.pClass.name.Equals("Valkyrie") Then
             Dim valkyrieTF = New ValkyrieTF2(1, 0, 0, False)
-            Game.player.ongoingTFs.Add(valkyrieTF)
-            Game.player.update()
+            valkyrieTF.step1()
+            Game.player.createP()
         End If
     End Sub
     Public Overrides Sub onUnequip()
         MyBase.onUnequip()
+        Equipment.clothesChange("Naked")
     End Sub
 End Class

@@ -63,7 +63,7 @@
         Next
         Return bmp
     End Function
-    Public cropToIm
+
     Function oneLayerImgCheck(ByVal pForm As String, ByVal pClass As String) As Image
         If pForm.Equals("Dragon") Then
             Game.picPortrait.BackgroundImage = CreateBMP({Game.picDragon.BackgroundImage})

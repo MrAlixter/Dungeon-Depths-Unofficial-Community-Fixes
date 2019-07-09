@@ -789,7 +789,7 @@
     Public Sub petrify(ByVal c As Color, ByVal dur As Integer)
         If pForm.name.Equals("Dragon") Then revertToPState()
         perks("astatue") = dur
-        changeHairColor(c)
+        changeHairColor(c, True)
         If prt.sexBool Then
             prt.setIAInd(8, 10, True, True)
             prt.setIAInd(9, 14, True, True)
@@ -932,7 +932,7 @@
         'transformations
         Dim removeind = New List(Of Integer)
         For i = 0 To ongoingTFs.Count - 1
-            If i < ongoingTFs.Count - 1 AndAlso Not ongoingTFs(i) Is Nothing Then
+            If i < ongoingTFs.Count AndAlso Not ongoingTFs(i) Is Nothing Then
                 If ongoingTFs(i).getTFDone Then
                     removeind.Add(i)
                 Else
@@ -941,7 +941,7 @@
                     ongoingTFs(i).update()
                 End If
             Else
-                If i < ongoingTFs.Count - 1 Then ongoingTFs.RemoveAt(i)
+                If i < ongoingTFs.Count Then ongoingTFs.RemoveAt(i)
             End If
         Next
         For i = 0 To removeind.Count - 1
@@ -1213,8 +1213,13 @@
         Game.lblEvent.ForeColor = TextColor
         Game.lblNameTitle.ForeColor = TextColor
     End Sub
-    Public Sub changeHairColor(ByVal c As Color)
-        prt.haircolor = c
+    Public Sub changeHairColor(ByVal c As Color, Optional forceOpacity As Boolean = False)
+        If forceOpacity Then
+            prt.haircolor = c
+        Else
+            prt.haircolor = Color.FromArgb(prt.haircolor.A, c.R, c.G, c.B)
+        End If
+
         createP()
     End Sub
     Public Sub changeSkinColor(ByVal c As Color)

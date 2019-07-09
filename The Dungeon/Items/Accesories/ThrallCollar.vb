@@ -77,11 +77,12 @@
                 End If
             End If
         Next
-        p.perks("thrall") = 1
+        p.perks("thrall") = -1
         p.pClass = Game.player.classes(formerClass)
         p.prt.setIAInd(9, formerEyeType)
         p.prefForm = Nothing
         p.forcedPath = Nothing
+        p.genDescription()
     End Sub
 
     Public Function getFT() As String

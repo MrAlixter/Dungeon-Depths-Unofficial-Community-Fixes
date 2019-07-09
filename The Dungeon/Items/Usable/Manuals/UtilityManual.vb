@@ -29,7 +29,6 @@
                 End Select
                 If ct > 60 Then
                     Game.pushLstLog("You know all the specials in utility manuals already!")
-                    count -= 1
                     Exit Sub
                 End If
             End While

@@ -23,7 +23,6 @@
         End If
         Game.pushLstLog(CStr("You turn yourself into a " & delta & "!"))
         Game.pushLblCombatEvent(CStr("You turn yourself into a " & delta & "!"))
-        
     End Sub
     Public Overrides Sub backfire()
         If MyBase.getTarget Is Nothing Then

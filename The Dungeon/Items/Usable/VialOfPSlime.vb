@@ -22,7 +22,7 @@
             If p.health > 1 Then p.health = 1
             Exit Sub
         End If
-        If p.perks("googirltf") = -1 Then
+        If p.perks("googirltf") = -1 Or p.prt.haircolor.A = 255 Then
             p.perks("googirltf") = 2
         End If
 

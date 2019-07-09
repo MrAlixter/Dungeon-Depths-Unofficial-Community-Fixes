@@ -33,7 +33,7 @@
         p.prt.setIAInd(15, 18, True, True)
         p.prt.setIAInd(16, 8, True, False)
 
-        p.prt.changeHairColor(BimboTF.bimboyellow)
+        p.changeHairColor(BimboTF.bimboyellow)
 
         If p.equippedArmor.dBoost > 15 Then
             p.inv.add(94, 1)

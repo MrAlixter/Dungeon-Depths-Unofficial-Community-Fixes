@@ -22,7 +22,7 @@
             If p.health > 1 Then p.health = 1
             Exit Sub
         End If
-        If p.perks("slimetf") = -1 Then
+        If p.perks("slimetf") = -1 Or p.prt.haircolor.A = 255 Then
             p.perks("slimetf") = 2
         End If
 

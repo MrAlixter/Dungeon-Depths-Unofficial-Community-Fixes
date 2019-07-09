@@ -49,7 +49,6 @@
             End Select
             If ct > 60 Then
                 Game.pushLstLog("You know all the spells in advanced spellbooks already!")
-                count -= 1
                 Exit Sub
             End If
         End While
