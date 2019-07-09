@@ -2041,6 +2041,7 @@ Public Class Game
 
     '|COMMANDS|
     Sub oemSemiColon()
+        If combatmode Then Exit Sub
         'oemSemicolon triggers when a player hits the semicolon key, or any of its equivalents
         If player.pos.Equals(shopkeeper.pos) Then
             npcEncounter(shopkeeper)

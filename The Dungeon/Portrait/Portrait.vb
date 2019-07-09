@@ -48,7 +48,8 @@
         If img(0).Size.Height <> 144 Then g.DrawImage(img(0), 0, 0, 146, 216) Else g.DrawImage(img(0), 0, 0, 144, 144)
         For i = 1 To UBound(img)
             If img(i) Is Nothing Then img(i) = CharacterGenerator.picPort.Image
-            If img(i).Size.Height <= 144 Then g.DrawImage(img(i), 1, 1, 144, 144) Else g.DrawImage(img(i), 1, 1, 144, 216)
+            'If img(i).Size.Height <= 144 Then g.DrawImage(img(i), 1, 1, 144, 144) Else g.DrawImage(img(i), 1, 1, 144, 216)
+            If img(i).Size.Height <= 216 Then g.DrawImage(img(i), 1, 1) Else g.DrawImage(img(i), -9, -37)
         Next
         Return bmp
     End Function
@@ -62,7 +63,7 @@
         Next
         Return bmp
     End Function
-
+    Public cropToIm
     Function oneLayerImgCheck(ByVal pForm As String, ByVal pClass As String) As Image
         If pForm.Equals("Dragon") Then
             Game.picPortrait.BackgroundImage = CreateBMP({Game.picDragon.BackgroundImage})

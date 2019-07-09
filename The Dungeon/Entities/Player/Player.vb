@@ -477,50 +477,50 @@
         Game.pushLblCombatEvent(CStr("You miss" & target.title & " " & target.getName() & "!"))
     End Sub
     Private Sub hit(dmg As Integer, target As NPC)
-        target.takeDMG(dmg, Me)
         Game.pushLstLog(CStr("You hit" & target.title.ToLower & target.getName() & " for " & dmg & " damage!"))
         Game.pushLblCombatEvent(CStr("You hit" & target.title.ToLower & target.getName() & " for " & dmg & " damage!"))
+        target.takeDMG(dmg, Me)
     End Sub
     Public Sub setTarget(ByRef t As NPC)
         currTarget = t
         MyBase.currTarget = t
     End Sub
     Private Sub cHit(dmg As Integer, target As NPC)
-        target.takeDMG(dmg * 3, Me)
         Game.pushLstLog(CStr("You hit" & target.title & " " & target.getName() & " for " & dmg * 3 & " damage!  Critical hit!"))
         Game.pushLblCombatEvent(CStr("You hit" & target.title & " " & target.getName() & " for " & dmg * 3 & " damage!  Critical hit!"))
         target.isStunned = True
         target.stunct = 0
+        target.takeDMG(dmg * 3, Me)
     End Sub
     'attacking a non npc
     Private Sub miss(target As Entity)
+        Game.pushLstLog(CStr("You miss " & target.getName() & "!"))
+        Game.pushLblCombatEvent(CStr("You miss " & target.getName() & "!"))
         If target.GetType() Is GetType(NPC) Or target.GetType.IsSubclassOf(GetType(NPC)) Then
             miss(CType(target, NPC))
             Exit Sub
         End If
-
-        Game.pushLstLog(CStr("You miss " & target.getName() & "!"))
-        Game.pushLblCombatEvent(CStr("You miss " & target.getName() & "!"))
     End Sub
     Private Sub hit(dmg As Integer, target As Entity)
+        Game.pushLstLog(CStr("You hit " & target.getName() & " for " & dmg & " damage!"))
+        Game.pushLblCombatEvent(CStr("You hit " & target.getName() & " for " & dmg & " damage!"))
         If target.GetType() Is GetType(NPC) Or target.GetType.IsSubclassOf(GetType(NPC)) Then
             hit(dmg, CType(target, NPC))
             Exit Sub
         End If
 
         target.takeDMG(dmg, Me)
-        Game.pushLstLog(CStr("You hit " & target.getName() & " for " & dmg & " damage!"))
-        Game.pushLblCombatEvent(CStr("You hit " & target.getName() & " for " & dmg & " damage!"))
     End Sub
     Private Sub cHit(dmg As Integer, target As Entity)
+        Game.pushLstLog(CStr("You hit " & target.getName() & " for " & dmg * 3 & " damage!  Critical hit!"))
+        Game.pushLblCombatEvent("You hit " & target.getName() & " for " & dmg * 3 & " damage!  Critical hit!")
+
         If target.GetType() Is GetType(NPC) Or target.GetType.IsSubclassOf(GetType(NPC)) Then
             cHit(dmg, CType(target, NPC))
             Exit Sub
         End If
 
         target.takeDMG(dmg * 3, Me)
-        Game.pushLstLog(CStr("You hit " & target.getName() & " for " & dmg * 3 & " damage!  Critical hit!"))
-        Game.pushLblCombatEvent("You hit " & target.getName() & " for " & dmg * 3 & " damage!  Critical hit!")
     End Sub
     'taking damage
     Public Overrides Sub takeDMG(ByVal dmg As Integer, ByRef source As Entity)
@@ -932,7 +932,7 @@
         'transformations
         Dim removeind = New List(Of Integer)
         For i = 0 To ongoingTFs.Count - 1
-            If Not ongoingTFs(i) Is Nothing Then
+            If i < ongoingTFs.Count - 1 AndAlso Not ongoingTFs(i) Is Nothing Then
                 If ongoingTFs(i).getTFDone Then
                     removeind.Add(i)
                 Else
@@ -941,7 +941,7 @@
                     ongoingTFs(i).update()
                 End If
             Else
-                ongoingTFs.RemoveAt(i)
+                If i < ongoingTFs.Count - 1 Then ongoingTFs.RemoveAt(i)
             End If
         Next
         For i = 0 To removeind.Count - 1

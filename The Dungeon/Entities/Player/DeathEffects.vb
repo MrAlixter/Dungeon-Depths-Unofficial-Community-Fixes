@@ -143,12 +143,13 @@
         out += "  As you black out, you can see the mimic working its way into your armor.  As the darkness takes you, so does the orgasmic bliss of the mimic's magic touch."
         Dim x As Integer = p.equippedArmor.getId
         p.inv.add(x, -1)
-        p.equippedArmor = New LiveArmor
         p.inv.add(55, 1)
+        p.inv.invNeedsUDate = True
+        Equipment.clothesChange("Living_Armor")
         p.perks(12) = True
         p.createP()
         Game.pushLblEvent(out)
-
+        p.UIupdate()
     End Sub
 
     '|BOSS / MINIBOSS DEATHS|
