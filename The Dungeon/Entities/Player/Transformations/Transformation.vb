@@ -79,6 +79,8 @@ Public Class Transformation
                 Return New SheepTFB(CInt(s(0)), CInt(s(1)), CInt(s(2)), CDbl(s(3)), CBool(s(4)), CBool(s(6)))
             Case "VialOfSlimeTF"
                 Return New VialOfSlimeTF(CInt(s(0)), CInt(s(1)), CInt(s(2)), CDbl(s(3)), CBool(s(4)), CBool(s(6)))
+            Case "GooGirlTF"
+                Return New GooGirlTF(CInt(s(0)), CInt(s(1)), CInt(s(2)), CDbl(s(3)), CBool(s(4)), CBool(s(6)))
             Case "AngelTF"
                 Return New AngelTF(CInt(s(0)), CInt(s(1)), CInt(s(2)), CDbl(s(3)), CBool(s(4)), CBool(s(6)))
             Case "MaidTF"
@@ -117,6 +119,7 @@ Public Class Transformation
     Overridable Sub update() Implements Updatable.update
         If Not updateDuringCombat And Game.combatmode Then Exit Sub
         If turnsTilNextStep = 0 Then
+            MagGirlTF.chkForMagGirlRevert(Game.player)
             nextStep = getNextStep(currStep)
             nextStep()
             currStep += 1

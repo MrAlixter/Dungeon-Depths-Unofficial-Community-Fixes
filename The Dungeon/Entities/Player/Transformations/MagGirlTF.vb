@@ -59,7 +59,29 @@
         Game.lblEvent.Visible = False
         p.canMoveFlag = True
         p.createP()
+
+        stopTF()
     End Sub
+
+
+    Shared Sub halfRevert(ByRef p As Player)
+        p.pClass = p.classes("Mage")
+
+        p.breastSize = 2
+        p.reverseBSRoute()
+
+        Equipment.clothesChange("Naked")
+        p.prt.setIAInd(1, 7, True, True)
+        p.prt.setIAInd(6, 0, True, False)
+        p.prt.setIAInd(5, 7, True, True)
+        p.prt.setIAInd(15, 7, True, True)
+    End Sub
+    Shared Sub chkForMagGirlRevert(ByRef p As Player)
+        If Not p.pClass.name.Equals("Magic Girl") Then Exit Sub
+        pushLblEventWithoutLoss("Despite your protective aura, you feel your uniform fade away.  You can still mantain your magical girl transformation, but you are definitly tiring out.")
+        MagGirlTF.halfRevert(p)
+    End Sub
+
 
     Public Overrides Sub stopTF()
         MyBase.stopTF()
@@ -77,5 +99,11 @@
     End Function
     Public Overrides Sub setWaitTime(stage As Integer)
         turnsTilNextStep = 0
+    End Sub
+
+    Public Shared Sub pushLblEventWithoutLoss(ByRef out As String)
+        Dim revertText = Game.lblEvent.Text.Split(vbCrLf)(0)
+        If Not revertText.Equals("") Then out = revertText & vbCrLf & vbCrLf & out
+        Game.pushLblEvent(out)
     End Sub
 End Class

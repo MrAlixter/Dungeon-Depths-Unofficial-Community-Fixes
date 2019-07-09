@@ -20,10 +20,7 @@
     Overrides Sub onEquip()
         Dim p As Player = Game.player
 
-        If p.pClass.name = "Magic Girl" Then
-            Game.pushLblEvent("Your form prevents you from being altered!")
-            Exit Sub
-        End If
+        MagGirlTF.chkForMagGirlRevert(p)
 
         p.perks("thrall") = 0
         p.ongoingTFs.Add(New ThrallTF(2, 10, 3.0, True))
@@ -45,10 +42,7 @@
     Sub forceEquip()
         Dim p As Player = Game.player
 
-        If p.pClass.name = "Magic Girl" Then
-            Game.pushLblEvent("Your form prevents you from being altered!")
-            Exit Sub
-        End If
+        MagGirlTF.chkForMagGirlRevert(p)
 
         p.perks("thrall") = 0
         p.ongoingTFs.Add(New ThrallTF(2, 10, 3.0, True))

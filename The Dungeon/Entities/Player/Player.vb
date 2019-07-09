@@ -248,6 +248,8 @@
         equippedArmor = New CommonClothes
         equippedWeapon = New BareFists
         setStartingAccessory()
+        'set class
+        pClass = classes(s)
         'sets loadout based on selected class
         If s = "Warrior" Then
             inv.add(83, 1)
@@ -260,9 +262,17 @@
             inv.add(4, 1)
             inv.add(21, 1)
             equippedWeapon = inv.item(21)
+        ElseIf s = "Magic Girl" Then
+            pClass = classes("Mage")
+            maxHealth = 80
+            attack = 7
+            defence = 7
+            speed = 7
+            inv.add(2, 3)
+            inv.add(4, 1)
+            inv.add(11, 1)
+            Game.pushLstLog("You find a wand lodged in the entrance...Maybe you should equip it?")
         End If
-        'set class
-        pClass = classes(s)
         'equip armor, boost mana if a staff is equipped
         Equipment.clothesChange(equippedArmor.getName)
         If equippedWeapon.GetType().IsSubclassOf(GetType(Staff)) Then mana += equippedWeapon.mBoost

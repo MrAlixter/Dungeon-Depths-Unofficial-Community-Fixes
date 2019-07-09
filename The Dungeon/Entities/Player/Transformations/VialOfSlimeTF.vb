@@ -25,6 +25,7 @@
 
     Sub step2()
         Dim p As Player = Game.player
+
         If p.prt.checkNDefFemInd(5, 7) Then
             Game.pushLstLog("Your hair resists being altered!")
         Else
@@ -71,6 +72,10 @@
 
     Sub step4()
         Dim p As Player = Game.player
+        If p.equippedWeapon.getName.Equals("Magic_Girl_Wand") Or
+            p.equippedWeapon.getName.Equals("Valkyrie_Sword") Then
+            Equipment.weaponChange("Fists")
+        End If
 
         p.health = 1
 
@@ -94,12 +99,11 @@
 
         If Game.player.perks("slimetf") > -1 Then Game.player.perks("slimetf") = -1
 
-        p.pState.save(p)
         p.sState.save(p)
+        If Transformation.canBeTFed(p) Then p.pState.save(p)
     End Sub
     Shared Sub step4Alt()
         Dim p As Player = Game.player
-
 
         p.pForm = p.forms("Goo Girl")
 
@@ -131,8 +135,9 @@
         p.prt.skincolor = Color.FromArgb(200, p.prt.skincolor.R, p.prt.skincolor.G, p.prt.skincolor.B)
         p.createP()
 
-        p.pState.save(p)
         p.sState.save(p)
+        If Transformation.canBeTFed(p) Then p.pState.save(p)
+
         p.health = 1
         If Game.player.perks("googirltf") > -1 Then Game.player.perks("googirltf") = -1
     End Sub
@@ -157,7 +162,6 @@
                 Return AddressOf stopTF
         End Select
     End Function
-
 
     Public Shared Sub pushLblEventWithoutLoss(ByRef out As String)
         Dim revertText = Game.lblEvent.Text.Split(vbCrLf)(0)

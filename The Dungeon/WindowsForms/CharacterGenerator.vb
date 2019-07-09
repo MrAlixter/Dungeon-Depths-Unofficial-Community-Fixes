@@ -83,6 +83,7 @@
 
         ComboBox2.Items.Add("Warrior")
         ComboBox2.Items.Add("Mage")
+        ComboBox2.Items.Add("Magic Girl")
         ComboBox2.Text = ComboBox2.Items(Int(Rnd() * ComboBox2.Items.Count))
         picPort.BackgroundImage = portrait.draw()
 
@@ -95,7 +96,7 @@
         Game.player.prt.haircolor = portrait.haircolor
         Game.player.prt.skincolor = portrait.skincolor
 
-        If (ComboBox2.Text <> "Warrior" And ComboBox2.Text <> "Mage") Then
+        If Not ComboBox2.Items.Contains(ComboBox2.Text) Then
             If MessageBox.Show("Woah there! You entered in a non recognized class.  You sure you want to do that?", "Sneeky sneek", MessageBoxButtons.YesNo) = Windows.Forms.DialogResult.No Then
                 Exit Sub
             End If
