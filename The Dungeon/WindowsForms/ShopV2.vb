@@ -49,16 +49,16 @@ Public Class ShopV2
         skInventory.Clear()
         boxShop.Items.Clear()
         For i = 0 To p.inv.upperBound
-            Dim p_inv_i As Item = p.inv.item(i)
+            Dim p_inv_i = p.inv.item(i)
             If p.inv.getCountAt(i) > 0 Then
-                If p_inv_i.getaname().Equals(p.equippedArmor.getaname()) Or p.inv.item(i).getaname().Equals(p.equippedWeapon.getaname()) Or p_inv_i.getaname().Equals(p.equippedAcce.getaname()) Then
+                If p_inv_i.getAName().Equals(p.equippedArmor.getAName()) Or p.inv.item(i).getAName().Equals(p.equippedWeapon.getAName()) Or p_inv_i.getAName().Equals(p.equippedAcce.getAName()) Then
                     If p_inv_i.count > 1 Then
-                        boxInventory.Items.Add(lineup(p_inv_i.getaname(), Int(p_inv_i.value / 2), p_inv_i.count - 1))
-                        pInventory.Add(p_inv_i.getaname())
+                        boxInventory.Items.Add(lineup(p_inv_i.getName(), Int(p_inv_i.value / 2), p_inv_i.count - 1))
+                        pInventory.Add(p_inv_i.getAName())
                     End If
                 Else
-                    boxInventory.Items.Add(lineup(p_inv_i.getaname(), Int(p_inv_i.value / 2), p_inv_i.count))
-                    pInventory.Add(p_inv_i.getaname())
+                    boxInventory.Items.Add(lineup(p_inv_i.getName(), Int(p_inv_i.value / 2), p_inv_i.count))
+                    pInventory.Add(p_inv_i.getAName())
                 End If
             End If
         Next
@@ -88,7 +88,7 @@ Public Class ShopV2
 
             If p.inv.item(name) Is Nothing Then
                 For j As Integer = 0 To p.inv.upperBound
-                    If p.inv.item(j).getaname().Contains(name) Then
+                    If p.inv.item(j).getName().Contains(name) Then
                         ind = j
                         indexes.Add(ind)
                         Exit For
@@ -110,7 +110,7 @@ Public Class ShopV2
         If cost <= sk.gold Then
             For i As Integer = 0 To indexes.Count - 1
                 Dim item As Item = p.inv.item(indexes(i))
-                If item.getaname().Contains(p.equippedArmor.getaname()) Or item.getaname().Contains(p.equippedWeapon.getaname()) Or item.getaname().Contains(p.equippedAcce.getaname()) Then
+                If item.getName().Contains(p.equippedArmor.getName()) Or item.getName().Contains(p.equippedWeapon.getName()) Or item.getName().Contains(p.equippedAcce.getName()) Then
                     If item.count - number.Value >= 1 Then
                         item.count -= number.Value
                     Else
@@ -246,10 +246,10 @@ Public Class ShopV2
                 Next
                 If pInventory(i).Equals(p.equippedArmor.getaname()) Or pInventory(i).Equals(p.equippedWeapon.getaname()) Then
                     If p.inv.item(ind).count > 1 Then
-                        boxInventory.Items.Add(lineup(p.inv.item(ind).getaname(), Int(p.inv.item(ind).value / 2), p.inv.item(ind).count - 1))
+                        boxInventory.Items.Add(lineup(p.inv.item(ind).getName(), Int(p.inv.item(ind).value / 2), p.inv.item(ind).count - 1))
                     End If
                 Else
-                    boxInventory.Items.Add(lineup(p.inv.item(ind).getaname(), Int(p.inv.item(ind).value / 2), p.inv.item(ind).count))
+                    boxInventory.Items.Add(lineup(p.inv.item(ind).getName(), Int(p.inv.item(ind).value / 2), p.inv.item(ind).count))
                 End If
             End If
         Next

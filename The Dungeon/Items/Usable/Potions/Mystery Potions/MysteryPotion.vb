@@ -3,6 +3,7 @@
     Protected effectList As List(Of PEffect)
     Protected fakeName As String
     Public hasBeenUsed As Boolean = False
+    Public Shadows onBuy As Action = AddressOf reveal
 
     Overrides Sub use()
         If Not hasBeenUsed Then reveal()
