@@ -20,14 +20,14 @@
     Overrides Function attack(ByRef p As Player, ByRef m As Entity) As Integer
 
             Dim mP As NPC = CType(m, NPC)
-            If mP.maxHealth > (mP.sMaxHealth / 10) Then
-                m.maxHealth -= m.maxHealth / 10
-                m.attack -= m.attack / 10
-                m.defence -= m.defence / 10
-                m.speed += (m.speed / 10)
-                mP.tfEnd += Int(3 * m.maxHealth / mP.sMaxHealth)
-                Game.pushLblEvent("You zap your target with the shrink ray, and they get slightly smaller!")
-            Else
+        If mP.maxHealth > (mP.sMaxHealth / 10) Then
+            m.maxHealth -= m.maxHealth / 4
+            m.attack -= m.attack / 4
+            m.defence -= m.defence / 4
+            m.speed += (m.speed / 4)
+            mP.tfEnd += Int(3 * m.maxHealth / mP.sMaxHealth)
+            Game.pushLblEvent("You zap your target with the shrink ray, and they get slightly smaller!")
+        Else
             If Int(Rnd() * 2) = 0 And Not p.pClass.name.Equals("Shrunken") Then
                 'backfire
                 Polymorph.transform(p, "Shrunken")

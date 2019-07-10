@@ -19,7 +19,7 @@
                 inv.setCount("Omni_Charm", 1)
                 inv.setCount("Sorcerer's_Robes", CInt(Rnd() * 2))
 
-                title = ""
+                title = " "
                 pronoun = "she"
                 pPronoun = "her"
                 rPronoun = "her"
@@ -36,7 +36,7 @@
                 inv.setCount("Attack_Charm", 1 + CInt(Rnd() * 2))
                 inv.setCount("Omni_Charm", 1)
 
-                title = ""
+                title = " "
                 pronoun = "he"
                 pPronoun = "his"
                 rPronoun = "him"
@@ -49,7 +49,7 @@
                 setInventory({3, 58, 65})
                 inv.setCount("Defence_Charm", 1 + CInt(Rnd() * 2))
                 inv.setCount("Omni_Charm", 1)
-                title = ""
+                title = " "
                 pronoun = "she"
                 pPronoun = "her"
                 rPronoun = "her"

@@ -9,7 +9,7 @@
     Public pForm As pForm = New Human()
     Dim turnCt As Integer = 0
     'Public level, xp, nextLevelXp As Integer
-  
+
     Public breastSize As Integer = -1
     Public hunger As Integer
     Public equippedWeapon As Weapon = New BareFists
@@ -532,6 +532,7 @@
     End Sub
     Public Overrides Sub takeCritDMG(ByVal dmg As Integer, ByRef source As Entity)
         If PerkEffects.onDamage(dmg) Then Exit Sub
+        If dmg > getIntHealth() And dmg > 0.05 * getMaxHealth() Then dmg = getIntHealth() - 1
         MyBase.takeDMG(dmg, source)
         Game.lblPHealtDiff.Tag -= dmg
         Game.pushLstLog(CStr("You got hit!  Critical hit!  -" & dmg & " health!"))
@@ -550,6 +551,7 @@
         If pForm.name = "Succubus" Then Game.cboxSpec.Items.Add("Unholy Seduction")
         If pForm.name = "Slime" Then Game.cboxSpec.Items.Add("Absorbtion")
         If pForm.name = "Dragon" Then Game.cboxSpec.Items.Add("Ironhide Fury")
+        If inv.item("Shrink_Ray").count > 0 Then Game.cboxSpec.Items.Add("Shrink_Ray Shot")
     End Sub
     Public Sub magicRoute()
         Game.cboxMG.Items.Clear()
@@ -828,8 +830,11 @@
         perks("googirltf") = ggtf
     End Sub
     Public Overrides Sub die(ByRef source As Entity)
-        resetPerks()
         If Game.pnlSaveLoad.Visible = True Then Exit Sub
+
+        canMoveFlag = False
+
+        resetPerks()
         If source Is Nothing Then
             DeathEffects.hardDeath()
             Game.npcList.Clear()
@@ -1336,7 +1341,7 @@
         'eyebrows
         Select Case prt.iArrInd(10).Item1
             Case Else
-                prt.setIAInd(10, prt.iArrInd(10).Item1, True, False)
+                If prt.iArrInd(10).Item1 < 5 Then prt.setIAInd(10, prt.iArrInd(10).Item1, True, False)
         End Select
         'accesory
         Select Case prt.iArrInd(14).Item1
@@ -1427,7 +1432,7 @@
         'eyebrows
         Select Case prt.iArrInd(10).Item1
             Case Else
-                prt.setIAInd(10, prt.iArrInd(10).Item1, False, False)
+                If prt.iArrInd(10).Item1 < 5 Then prt.setIAInd(10, prt.iArrInd(10).Item1, False, False)
         End Select
         'accesory
         Select Case prt.iArrInd(14).Item1

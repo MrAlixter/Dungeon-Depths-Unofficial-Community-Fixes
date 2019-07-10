@@ -119,6 +119,7 @@ Public Class Debug_Window
                     Dim c As Control = box.Controls(j)
                     If TypeOf (c) Is NumericUpDown Then
                         num = c
+                        num.Maximum = 999999
                     ElseIf TypeOf (c) Is Label Then
                         lbl = c
                     End If

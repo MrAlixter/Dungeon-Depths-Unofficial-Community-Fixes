@@ -182,6 +182,7 @@
     <Compile Include="Entities\Player\Forms\pForm.vb" />
     <Compile Include="Entities\Player\Specials\Abso.vb" />
     <Compile Include="Entities\Player\Specials\AFK.vb" />
+    <Compile Include="Entities\Player\Specials\ShrinkRayShoot.vb" />
     <Compile Include="Entities\Player\Specials\KiWBlast.vb" />
     <Compile Include="Entities\Player\Specials\UBlessing.vb" />
     <Compile Include="Entities\Player\Specials\HeavyBlow.vb" />

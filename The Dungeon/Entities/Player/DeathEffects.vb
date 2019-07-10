@@ -10,6 +10,11 @@
     End Sub
     Shared Sub thrallDeath()
         Dim p As Player = Game.player
+        If p.pForm.name.Equals("Blowup Doll") Then
+            p.currTarget.despawn("p-death")
+            Game.pushLblEvent("Your enemy, seeing your current state, decides that you likely aren't useful and leaves you alone.")
+            Exit Sub
+        End If
         Dim out As String = ""
         Dim ln1 As String = Nothing
         If p.pClass.name.Equals("Thrall") Then
@@ -33,6 +38,11 @@
     End Sub
     Shared Sub sorcererDeath()
         Dim p As Player = Game.player
+        If p.pForm.name.Equals("Blowup Doll") Then
+            p.currTarget.despawn("p-death")
+            Game.pushLblEvent("Your enemy, seeing your current state, decides that you likely aren't useful and leaves you alone.")
+            Exit Sub
+        End If
         Dim out As String = ""
         If p.pClass.name.Equals("Thrall") Then
             out = "Despite your fatigue, you are able to roll out of the way of the mage's attempt to restrain you, and make a clumsy escape."

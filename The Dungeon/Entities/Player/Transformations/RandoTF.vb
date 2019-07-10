@@ -27,6 +27,7 @@
         Dim classes = {"Warrior", "Mage", "Paladin", "Warrior", "Mage", "Bimbo"}
         p.pClass = p.classes(classes(Int(Rnd() * classes.Length)))
 
+        p.pForm = p.forms("Human")
         'assign a random sex
         Randomize()
         Dim r = Int(Rnd() * 2)
@@ -138,6 +139,9 @@
             p.perks("slutcurse") = 1
             If Int(Rnd() * 10) = 7 Then p.inv.add(4, 1)
         End If
+
+        p.prt.wingInd = 0
+        p.prt.hornInd = 0
 
         'set other player stuff
         p.TextColor = Color.White

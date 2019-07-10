@@ -5,7 +5,7 @@
         MyBase.setDesc("An entire broasted chicken, served with mashed potatos and bread." & vbCrLf &
                        "-100 Hunger" & vbCrLf &
                        "Low chance to raise Max Health by 5")
-        id = 133
+        id = 135
         tier = Nothing
         MyBase.setUsable(True)
         MyBase.count = 0

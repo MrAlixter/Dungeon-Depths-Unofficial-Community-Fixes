@@ -13,11 +13,12 @@
     End Sub
 
     Sub teach()
-        Game.pushNPCDialog("Before we get started, I just want to make sure you really want this.  This lesson will completely change who you are forever, and you'll lose any stat boosts you might have gotten from charms.", AddressOf warning)
+        count = 0
+        Game.pushNPCDialog("Before we get started, I just want to make sure you really want this.  This lesson will completely change who you are and were, forever.", AddressOf warning)
         Game.shopMenu.Close()
-
         Game.hideNPCButtons()
     End Sub
+
     Sub warning()
         Game.pushPnlYesNo("Start over as an Amazon?", AddressOf tf, AddressOf cancel)
     End Sub
@@ -37,7 +38,6 @@
         aTF.step1()
 
         Dim p = Game.player
-        p.setStatsToBeginning()
 
         Game.pushLblEvent(out, AddressOf CType(Game.hteach, HTeach).back)
         p.createP()

@@ -88,6 +88,8 @@
             spec = New KiWBlast(u, t)
         ElseIf s.Equals("Uvona's Blessing") Then
             spec = New UBlessing(u, t)
+        ElseIf s.Equals("Shrink_Ray Shot") Then
+            spec = New ShrinkRayShoot(u, t)
         End If
 
         spec.perform()

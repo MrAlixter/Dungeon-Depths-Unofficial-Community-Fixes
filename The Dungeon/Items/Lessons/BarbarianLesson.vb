@@ -12,13 +12,13 @@
         MyBase.onBuy = AddressOf teach
     End Sub
 
-    Sub teach()
+  Sub teach()
         count = 0
-        Game.pushNPCDialog("Before we get started, I just want to make sure you really want this.  This lesson will completely change who you are forever, and you'll lose any stat boosts you might have gotten from charms.", AddressOf warning)
+        Game.pushNPCDialog("Before we get started, I just want to make sure you really want this.  This lesson will completely change who you are and were, forever.", AddressOf warning)
         Game.shopMenu.Close()
-
         Game.hideNPCButtons()
     End Sub
+
     Sub warning()
         Game.pushPnlYesNo("Start over as a Barbarian?", AddressOf tf, AddressOf cancel)
     End Sub
@@ -36,8 +36,6 @@
             """Well then, it seems like my work here is done,"" the Hypnotist says, inturupting your thoughts.  ""If I can help you with anything else, don't hesitate to ask!"""
 
         Dim p = Game.player
-
-        p.setStatsToBeginning()
 
         p.inv.add("Barbarian_Armor", 1)
         Equipment.clothesChange("Barbarian_Armor")
