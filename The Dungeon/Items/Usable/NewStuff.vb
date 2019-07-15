@@ -8,11 +8,13 @@
         MyBase.setUsable(True)
         MyBase.count = 0
         MyBase.value = 0
+
+        MyBase.isRandoTFAcceptable = False
     End Sub
     Public Overrides Sub use()
         Dim p As Player = Game.player
 
-        For i = 87 To 142
+        For i = 87 To 145
             p.inv.add(i, 1)
         Next
 

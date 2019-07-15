@@ -21,5 +21,7 @@ Public Class LabcoatSV
         MyBase.bsize3 = New Tuple(Of Integer, Boolean, Boolean)(153, True, True)
         MyBase.bsize4 = New Tuple(Of Integer, Boolean, Boolean)(154, True, True)
         MyBase.compressesBreasts = True
+
+        MyBase.isRandoTFAcceptable = False
     End Sub
 End Class

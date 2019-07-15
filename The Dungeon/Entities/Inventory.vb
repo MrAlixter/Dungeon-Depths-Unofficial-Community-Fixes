@@ -160,6 +160,8 @@
         internal_inventory.Add("Active_Camoflage", New ActiveCamoflage())   '141
         internal_inventory.Add("Combat_Module", New CombatModule())         '142
         internal_inventory.Add("Every_New_Item", New NewStuff())            '143
+        internal_inventory.Add("Crystalline_Armor", New CrystalArmor())     '144
+        internal_inventory.Add("Scepter_of_Ash", New ScepterOfAsh())        '145
 
         armor = {New CommonClothes, New SkimpyClothes, New Naked, New VSkimpyClothes,
                  Me.item(5), Me.item(7), Me.item(8), Me.item(10),
@@ -172,14 +174,14 @@
                  Me.item(94), Me.item(95), Me.item(99), Me.item(101),
                  Me.item(102), Me.item(103), Me.item(104), Me.item(105),
                  Me.item(106), Me.item(107), Me.item(115), Me.item(116),
-                 Me.item(129), Me.item(137), Me.item(138)}
+                 Me.item(129), Me.item(137), Me.item(138), Me.item(144)}
 
         weapons = {New BareFists(),
                    Me.item(6), Me.item(9), Me.item(11), Me.item(21),
                    Me.item(22), Me.item(23), Me.item(24), Me.item(40),
                    Me.item(41), Me.item(42), Me.item(45), Me.item(63),
                    Me.item(84), Me.item(96), Me.item(111), Me.item(112),
-                   Me.item(118), Me.item(120)}
+                   Me.item(118), Me.item(120), Me.item(145)}
 
         useable = {Me.item(0), Me.item(3), Me.item(4),
                    Me.item(65), Me.item(15), Me.item(36), Me.item(37),
@@ -254,7 +256,7 @@
         sum += count
     End Sub
     Sub add(ByVal id As Integer, ByVal count As Integer)
-        If id >= 0 And id < upperBound() Then
+        If id >= 0 And id <= upperBound() Then
             Dim key = internal_inventory.Keys(id)
             internal_inventory(key).add(count)
         End If

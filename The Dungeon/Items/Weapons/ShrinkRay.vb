@@ -9,6 +9,8 @@
         MyBase.setUsable(False)
         MyBase.count = 0
         MyBase.value = 7500
+
+        MyBase.isRandoTFAcceptable = False
     End Sub
 
     Overrides Sub discard()

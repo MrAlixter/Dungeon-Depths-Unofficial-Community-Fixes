@@ -10,6 +10,8 @@
         MyBase.count = 0
         MyBase.value = 6969
         MyBase.onBuy = AddressOf teach
+
+        MyBase.isRandoTFAcceptable = False
     End Sub
 
     Sub teach()

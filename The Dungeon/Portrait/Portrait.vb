@@ -49,7 +49,7 @@
         For i = 1 To UBound(img)
             If img(i) Is Nothing Then img(i) = CharacterGenerator.picPort.Image
             'If img(i).Size.Height <= 144 Then g.DrawImage(img(i), 1, 1, 144, 144) Else g.DrawImage(img(i), 1, 1, 144, 216)
-            If img(i).Size.Height <= 216 Then g.DrawImage(img(i), 1, 1) Else g.DrawImage(img(i), -9, -37)
+            If img(i).Size.Height <= 300 Then g.DrawImage(img(i), 1, 1) Else g.DrawImage(img(i), -9, -38)
         Next
         Return bmp
     End Function
@@ -194,8 +194,8 @@
         iArr(6) = t
     End Sub
     Sub colorEars(ByVal c As Color)
-        If Not checkNDefMalInd(6, 4) And
-           Not checkNDefFemInd(6, 4) And
+        If Not checkNDefMalInd(6, 3) And
+           Not checkNDefFemInd(6, 3) And
            Not checkNDefFemInd(6, 9) Then
             iArr(6) = Portrait.recolor2(imgLib.atrs("Ears").getAt(iArrInd(6)), c)
         End If

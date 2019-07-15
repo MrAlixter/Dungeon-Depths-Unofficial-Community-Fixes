@@ -301,10 +301,10 @@
         Dim p = Game.player
         Dim out = "You, like, totally aren't feeling this right now.  Giving your best pout, you wimper ""Hey, stop it!  You're gonna, like, hurt me or something!"".  Squeezing your arms together to show off your cleavage, you look up at your opponent, making sure your lip is quivering just a little bit.  They stop their attack short, looking more confused than merciful.  You don't even consider this subtle distinction though, instead deciding that they, like, totally thought you were too cute to hit!"
         Dim out2 = "You realize that you probably need to dodge this next attack.  Giving your best pout, you wimper ""Hey, stop it!  You're gonna, like, hurt me or something!"".  Squeezing your arms together to show off your cleavage, you look up at your opponent, making sure your lip is quivering just a little bit.  They stop their attack short, looking more confused than merciful.  Inwardly you groan to yourself.   It looks like you aren't out of the woods yet..."
-        If p.pClass.name.Contains("Bimbo") And Int(Rnd() * 3) = 0 Then
+        If p.pClass.name.Equals("Bimbo") And Int(Rnd() * 3) = 0 Then
             Game.pushLblEvent(out)
             Return True
-        ElseIf p.pClass.name.Contains("Bimbo++") And Int(Rnd() * 3) = 0 Then
+        ElseIf p.pClass.name.Equals("Bimbo++") And Int(Rnd() * 3) = 0 Then
             Game.pushLblEvent(out2)
             Return True
         ElseIf p.pForm.name.Contains("Bimbo") And Int(Rnd() * 3) = 0 Then

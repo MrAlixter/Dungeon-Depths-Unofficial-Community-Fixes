@@ -81,7 +81,7 @@
 
         p.prt.setIAInd(6, 5, True, True)
         If p.sex.Equals("Male") Then
-            p.prt.setIAInd(9, 5, True, True)
+            p.prt.setIAInd(9, 5, False, True)
         Else
             p.prt.setIAInd(9, 11, True, True)
         End If

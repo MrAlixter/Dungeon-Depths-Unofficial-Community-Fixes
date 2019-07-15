@@ -151,7 +151,7 @@ Public Class ShopV2
             Dim ind As Integer
             If p.inv.item(name) Is Nothing Then
                 For j As Integer = 0 To p.inv.upperBound
-                    If p.inv.item(j).getaname().Contains(name) Then
+                    If p.inv.item(j).getAName().Contains(name) Then
                         ind = j
                         indexes.Add(ind)
                         Exit For
@@ -188,7 +188,7 @@ Public Class ShopV2
 
     Private Sub boxInventory_SelectedIndexChanged(sender As Object, e As EventArgs) Handles boxInventory.SelectedIndexChanged
         Dim ind As Integer = 0
-        If boxShop.SelectedItem Is Nothing Then Exit Sub
+        If boxInventory.SelectedItem Is Nothing Then Exit Sub
         Dim name As String = boxInventory.SelectedItem.ToString.Split({" "c, "("c, "."c})(0)
         If p.inv.item(name) Is Nothing Then
             For j As Integer = 0 To p.inv.upperBound
@@ -275,14 +275,14 @@ Public Class ShopV2
     Function lineup(ByVal s As String, ByVal i As Integer, Optional ByVal j As Integer = -1)
         Dim c As Char = ChrW(8203)
 
-        If s.Length > 17 Then s = s.Substring(0, 16) & "."
-        If s.Length < 17 Then
-            For x = s.Length To 17
+        If s.Length > 16 Then s = s.Substring(0, 16) & "."
+        If s.Length < 16 Then
+            For x = s.Length To 16
                 If s.Last = "​" Then s = s & " "
                 s = s & " "
             Next
         End If
-        If s.Length = 17 Then s = s & c & " "
+        If s.Length = 16 Then s = s.Substring(0, 15) & "." & c & " "
         If j = -1 Then
             Return s & c & " " & i & "g"
         Else

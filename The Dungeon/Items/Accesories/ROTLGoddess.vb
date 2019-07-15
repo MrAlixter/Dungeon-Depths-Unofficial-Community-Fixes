@@ -21,6 +21,8 @@
         MyBase.value = 3333
         MyBase.fInd = New Tuple(Of Integer, Boolean, Boolean)(0, True, False)
         MyBase.mInd = New Tuple(Of Integer, Boolean, Boolean)(0, False, False)
+
+        MyBase.isRandoTFAcceptable = False
     End Sub
     Public Overrides Sub use()
         MyBase.use()

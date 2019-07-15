@@ -8,17 +8,20 @@
         MyBase.setUsable(True)
         MyBase.count = 0
         MyBase.value = 375
+
+        MyBase.isRandoTFAcceptable = False
     End Sub
     Public Overrides Sub use()
         Dim p As Player = Game.player
 
-        Dim form = InputBox("TF to... [Half-Gorgon, Gynoid, Amazon, Mindless]:")
+        Dim form = InputBox("TF to... [Half-Gorgon, Gynoid, Amazon, Mindless, Rando]:")
 
         Dim tfs As Dictionary(Of String, Transformation) = New Dictionary(Of String, Transformation)
         tfs.Add("Gynoid", New GynoidTF)
         tfs.Add("Half-Gorgon", New HGorgonTF)
         tfs.Add("Amazon", New AmazonTF)
         tfs.Add("Mindless", New MindlessTF)
+        tfs.Add("Rando", New RandoTF)
 
         If Not tfs.ContainsKey(form) Then Exit Sub
 
@@ -28,5 +31,7 @@
         End If
         p.ongoingTFs.Add(tfs(form))
         p.update()
+
+        count -= 1
     End Sub
 End Class

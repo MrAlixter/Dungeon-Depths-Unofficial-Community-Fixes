@@ -159,7 +159,7 @@
     'read converts a string given from a save file into a state
     Public Sub read(ByVal s As String)
         Equipment.init()
-        Dim pimg() As Image = {Game.picPlayer.BackgroundImage, Game.picPlayerB.BackgroundImage, Game.picChicken.BackgroundImage, Game.picBimbof.BackgroundImage, Game.picPlayerf.BackgroundImage}
+        Dim pimg() As Image = {Game.picPlayer.BackgroundImage, Game.picPlayerB.BackgroundImage, Game.picChicken.BackgroundImage, Game.picBimbof.BackgroundImage, Game.picPlayerf.BackgroundImage, Game.picBimboSpace.BackgroundImage, Game.picPlayerSpace.BackgroundImage}
         Dim readArray() As String = s.Split("*")
         If readArray(0) = "N/A" Then
             name = ""
@@ -269,7 +269,8 @@
                 output += (iArrInd(i).Item1 & "%" & iArrInd(i).Item2 & "%" & iArrInd(i).Item3 & "*")
             Next
             If Not initFlag Then pImage = Game.picChicken.BackgroundImage
-            output += Array.IndexOf({Game.picPlayer.BackgroundImage, Game.picPlayerB.BackgroundImage, Game.picChicken.BackgroundImage, Game.picBimbof.BackgroundImage, Game.picPlayerf.BackgroundImage}, pImage).ToString & "*"
+            Dim pimg() As Image = {Game.picPlayer.BackgroundImage, Game.picPlayerB.BackgroundImage, Game.picChicken.BackgroundImage, Game.picBimbof.BackgroundImage, Game.picPlayerf.BackgroundImage, Game.picBimboSpace.BackgroundImage, Game.picPlayerSpace.BackgroundImage}
+            output += Array.IndexOf(pimg, pImage).ToString & "*"
             output += Game.player.equippedAcce.getName & "*"
             Return output + "#"
         Else

@@ -21,5 +21,7 @@ Public Class STBodysuit
         MyBase.bsize3 = New Tuple(Of Integer, Boolean, Boolean)(161, True, True)
         MyBase.bsize4 = New Tuple(Of Integer, Boolean, Boolean)(162, True, True)
         MyBase.compressesBreasts = True
+
+        MyBase.isRandoTFAcceptable = False
     End Sub
 End Class

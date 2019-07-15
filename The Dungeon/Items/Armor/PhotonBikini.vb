@@ -21,6 +21,8 @@ Public Class PhotonBikini
         MyBase.bsize3 = New Tuple(Of Integer, Boolean, Boolean)(157, True, True)
         MyBase.bsize4 = New Tuple(Of Integer, Boolean, Boolean)(158, True, True)
         MyBase.compressesBreasts = True
+
+        MyBase.isRandoTFAcceptable = False
     End Sub
 
     Public Overrides Sub onEquip()

@@ -24,12 +24,12 @@
                 Try
                     loadGhost()
                 Catch ex As Exception
-                    name = "Mesmerized Thrall​"
-                    maxHealth = 85
-                    attack = 20
-                    defence = 7
-                    speed = 9
-                    setInventory({0, 1, 13})
+                    name = "Slime"
+                    maxHealth = 30
+                    attack = 15
+                    defence = 60
+                    speed = 6
+                    setInventory({2, 3})
                 End Try
             Case 3
                 name = "Goo Girl"

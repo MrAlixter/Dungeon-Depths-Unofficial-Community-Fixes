@@ -23,7 +23,7 @@
 
     Public Overrides Sub onEquip()
         MyBase.onEquip()
-        If Game.player.pForm.name.Equals("Cyborg") Or Game.player.pForm.name.Equals("Gynoid") Or Game.player.pForm.name.Equals("Android") Then
+        If Game.player.pForm.name.Equals("Cyborg") Or Game.player.pForm.name.Equals("Gynoid") Or Game.player.pForm.name.Equals("Android") Or Game.player.pForm.name.Equals("Combat Unit") Then
             MyBase.mBoost = 13
             MyBase.sBoost = 10
         Else

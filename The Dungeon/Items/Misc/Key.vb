@@ -9,6 +9,8 @@
         MyBase.setUsable(False)
         MyBase.count = 0
         MyBase.value = 2500
+
+        MyBase.isRandoTFAcceptable = False
     End Sub
     Public Overrides Sub add(i As Integer)
         'If i > 0 And Game.floor < 6 AndAlso Game.floorboss(Game.floor).Equals("Key") Then

@@ -30,8 +30,11 @@
         inv.setCount("Brawler_Cosplay", 1)
         inv.setCount("Cowbell", 1)
         inv.setCount("Gold_Adornment", 1)
+        inv.setCount("Crystalline_Armor", 1)
+
         'Weapons
         inv.setCount("Duster", 1)
+        inv.setCount("Scepter_of_Ash", 1)
 
         isShop = True
         setGold(99999)

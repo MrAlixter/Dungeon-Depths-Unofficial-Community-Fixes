@@ -14,5 +14,7 @@
         MyBase.bsizeneg1 = New Tuple(Of Integer, Boolean, Boolean)(32, False, True)
         MyBase.bsize1 = New Tuple(Of Integer, Boolean, Boolean)(131, True, True)
         MyBase.bsize2 = New Tuple(Of Integer, Boolean, Boolean)(132, True, True)
+
+        MyBase.isRandoTFAcceptable = False
     End Sub
 End Class

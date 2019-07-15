@@ -22,5 +22,6 @@ Public Class SAJumpsuit
         MyBase.bsize3 = New Tuple(Of Integer, Boolean, Boolean)(150, True, True)
         MyBase.compressesBreasts = True
 
+        MyBase.isRandoTFAcceptable = False
     End Sub
 End Class

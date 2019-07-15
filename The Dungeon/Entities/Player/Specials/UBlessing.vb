@@ -39,23 +39,21 @@
             End While
         End If
 
+
+        Dim allKnownSpellsAndSpecials = p.knownSpecials.Union(p.knownSpells)
+        Dim r = Int(Rnd() * p.knownSpells.Count)
+        forgottenS = allKnownSpellsAndSpecials(r)
+        If p.knownSpells.Contains(forgottenS) Then
+            p.knownSpells.RemoveAt(r)
+        Else
+            p.knownSpecials.RemoveAt(r)
+        End If
+
         If coin = 0 Then
             p.knownSpells.Add(learnedS)
         Else
             p.knownSpecials.Add(learnedS)
         End If
-
-        If Int(Rnd() * 2) = 0 Then
-            Dim r = Int(Rnd() * p.knownSpells.Count)
-            forgottenS = p.knownSpells(r)
-            p.knownSpells.RemoveAt(r)
-        Else
-            Dim r = Int(Rnd() * p.knownSpecials.Count)
-            forgottenS = p.knownSpecials(r)
-            p.knownSpecials.RemoveAt(r)
-        End If
-
-
 
         Game.pushLstLog("Uvona's Blessing!")
         Game.pushLblEvent("Uvona's Blessing!" & vbCrLf & "Praying to the goddess of fugue has caused you to forget " & forgottenS & ", and learn " & learnedS & "!")

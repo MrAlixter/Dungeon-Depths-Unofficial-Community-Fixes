@@ -20,6 +20,7 @@
         If p.pForm.name.Equals("Slime") Or p.pForm.name.Equals("Goo Girl") Then
             p.health += 0.45
             If p.health > 1 Then p.health = 1
+            count -= 1
             Exit Sub
         End If
         If p.perks("googirltf") = -1 Or p.prt.haircolor.A = 255 Then

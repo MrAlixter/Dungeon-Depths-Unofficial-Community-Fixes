@@ -274,6 +274,7 @@
     <Compile Include="Items\Accesories\EmeraldCirclet.vb" />
     <Compile Include="Items\Armor\GelLinge.vb" />
     <Compile Include="Items\Armor\GelArmor.vb" />
+    <Compile Include="Items\Armor\CrystalArmor.vb" />
     <Compile Include="Items\Armor\SVBunnySuit.vb" />
     <Compile Include="Items\Armor\LabcoatSV.vb" />
     <Compile Include="Items\Armor\Labcoat.vb" />
@@ -328,6 +329,7 @@
     <Compile Include="Items\Weapons\PhotonBlade.vb" />
     <Compile Include="Items\Weapons\ManaDischarge.vb" />
     <Compile Include="Items\Weapons\ValkyrieSword.vb" />
+    <Compile Include="Items\Weapons\ScepterOfAsh.vb" />
     <Compile Include="Portrait\ImageAttribute.vb" />
     <Compile Include="Portrait\ImageCollection.vb" />
     <Compile Include="Items\Accesories\Accessory.vb" />
@@ -937,6 +939,18 @@
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
     <Content Include="img\fTF\tfClothes\hfClothes206.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="img\fTF\tfClothes\hfClothes207.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="img\fTF\tfClothes\hfClothes208.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="img\fTF\tfClothes\hfClothes209.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="img\fTF\tfClothes\hfClothes210.png">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
     <Content Include="img\fTF\tfEars\fEars9.png">
@@ -2512,6 +2526,9 @@
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
     <Content Include="img\mTF\tfClothes\mClothes52.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="img\mTF\tfClothes\mClothes53.png">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
     <Content Include="img\mTF\tfEars\mEars6.png">

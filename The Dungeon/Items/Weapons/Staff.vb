@@ -17,4 +17,9 @@
         
         count -= 1
     End Sub
+
+    Public Overrides Sub onUnequip()
+        MyBase.onUnequip()
+        If Game.player.mana > Game.player.getMaxMana Then Game.player.mana = Game.player.getMaxMana
+    End Sub
 End Class

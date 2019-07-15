@@ -8,6 +8,7 @@
     Public tier As Integer = Nothing
     Public id As Integer = Nothing
     Public isMonsterDrop As Boolean = False
+    Public isRandoTFAcceptable = True
 
     Public saleLim As Integer = 999
     Public onSell As Action = Nothing

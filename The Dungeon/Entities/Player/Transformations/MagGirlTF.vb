@@ -78,7 +78,7 @@
     End Sub
     Shared Sub chkForMagGirlRevert(ByRef p As Player)
         If Not p.pClass.name.Equals("Magic Girl") Then Exit Sub
-        pushLblEventWithoutLoss("Despite your protective aura, you feel your uniform fade away.  You can still mantain your magical girl transformation, but you are definitly tiring out.")
+        pushLblEventWithoutLoss("Your form wavers, and while you can maintain it you are definitly tiring out.")
         MagGirlTF.halfRevert(p)
     End Sub
 

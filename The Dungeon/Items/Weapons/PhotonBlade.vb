@@ -9,6 +9,8 @@
         MyBase.aBoost = 37
         count = 0
         value = 2224
+
+        MyBase.isRandoTFAcceptable = False
     End Sub
 
     Overrides Sub discard()

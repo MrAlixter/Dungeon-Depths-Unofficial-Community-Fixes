@@ -20,6 +20,8 @@ Public Class PhotonArmor
         MyBase.bsize2 = New Tuple(Of Integer, Boolean, Boolean)(146, True, True)
         MyBase.bsize3 = New Tuple(Of Integer, Boolean, Boolean)(147, True, True)
         MyBase.compressesBreasts = True
+
+        MyBase.isRandoTFAcceptable = False
     End Sub
 
     Public Overrides Sub onEquip()
