@@ -1635,8 +1635,7 @@ Public Class Game
     End Sub
     Sub selectItem(ByVal index As Integer)
         Dim subString As String = lstSelec.Items(index).ToString.Split(" (")(2)
-        selectedItem = player.inv.item(subString)
-
+        selectedItem = player.inv.item(lstSelec.Items(index).ToString.Split(" (")(2))
         If Not selectedItem Is Nothing AndAlso selectedItem.getUsable Then selectedItem.use()
     End Sub
     Sub selectMagic(ByVal index As Integer)
@@ -2392,6 +2391,7 @@ Public Class Game
             pushLblEvent("You can't use items now!")
             Exit Sub
         End If
+        If selectedItem Is Nothing Then Exit Sub
         Dim tmpInd As Integer = lstInventory.TopIndex
         Dim tind = lstInventory.SelectedIndex
         selectedItem.use()

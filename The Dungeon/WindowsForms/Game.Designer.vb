@@ -1738,9 +1738,9 @@ Partial Class Game
         Me.pnlDescript.Controls.Add(Me.lblNext)
         Me.pnlDescript.Controls.Add(Me.picDescPort)
         Me.pnlDescript.Controls.Add(Me.txtDescript)
-        Me.pnlDescript.Location = New System.Drawing.Point(900, 50)
+        Me.pnlDescript.Location = New System.Drawing.Point(909, 36)
         Me.pnlDescript.Name = "pnlDescript"
-        Me.pnlDescript.Size = New System.Drawing.Size(670, 461)
+        Me.pnlDescript.Size = New System.Drawing.Size(694, 461)
         Me.pnlDescript.TabIndex = 275
         Me.pnlDescript.Visible = False
         '
@@ -1759,7 +1759,7 @@ Partial Class Game
         'picDescPort
         '
         Me.picDescPort.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch
-        Me.picDescPort.Location = New System.Drawing.Point(516, 21)
+        Me.picDescPort.Location = New System.Drawing.Point(536, 21)
         Me.picDescPort.Name = "picDescPort"
         Me.picDescPort.Size = New System.Drawing.Size(125, 189)
         Me.picDescPort.TabIndex = 276

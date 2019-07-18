@@ -46,6 +46,7 @@
                                      "-----------------------------------------------" & vbCrLf &
                                      "I would also like to send a special thanks to:" & vbCrLf & vbCrLf &
                                      "- undercoversam for advice on the balancing of weapons and armor through simulated dice" & vbCrLf & vbCrLf &
+                                     "- Marionette for writing the slime loss scenes" & vbCrLf & vbCrLf &
                                      "- Rangorak for advice on Kisekae2.0 and for the design of the fourth default clothing options, as well as extensive contributions to debugging." & vbCrLf & vbCrLf &
                                      "- Storm for the ability to bodyswap with the explorer" & vbCrLf & vbCrLf &
                                      "- Arrhae Khellian for help cleaning up the BitBucket"

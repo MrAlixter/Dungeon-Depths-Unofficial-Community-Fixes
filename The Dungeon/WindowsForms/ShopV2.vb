@@ -162,7 +162,7 @@ Public Class ShopV2
                 indexes.Add(ind)
             End If
 
-            Dim item As Item = sk.inv.item(ind)
+            Dim item As Item = sk.getShopInv.item(ind)
             If number.Value > item.saleLim Then number.Value = item.saleLim
             cost += (item.value) * number.Value
         Next

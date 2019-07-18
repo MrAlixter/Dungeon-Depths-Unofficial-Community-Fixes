@@ -317,6 +317,9 @@
         If internal_inventory.Keys.Contains(n) Then
             Return internal_inventory(n)
         Else
+            For Each p In potions
+                If p.getName = n Then Return p
+            Next
             Return Nothing
         End If
     End Function

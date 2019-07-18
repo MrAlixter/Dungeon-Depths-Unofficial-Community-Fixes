@@ -150,6 +150,8 @@
         cmbobxArmor.Items.Add("Naked")
         If p.pClass.name = "Bimbo" Or p.perks("slutcurse") > -1 Or p.equippedArmor.getName.Equals("Skimpy_Clothes") Then
             cmbobxArmor.Items.Add("Skimpy_Clothes")
+        ElseIf (p.perks("slutcurse") > -1 And p.equippedArmor.getName.Equals("Skimpy_Clothes")) Or p.equippedArmor.getName.Equals("Very_Skimpy_Clothes") Then
+            cmbobxArmor.Items.Add("Very_Skimpy_Clothes")
         ElseIf p.pClass.name = "Princess" Then
             cmbobxArmor.Items.Add("Regal_Gown")
         ElseIf p.pClass.name = "Maid" Then

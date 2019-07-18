@@ -146,5 +146,6 @@
         Game.pushNPCDialog("So, anything else?")
         Game.picNPC.BackgroundImage = picNCP(npcIndex)
         Game.showNPCButtons()
+        Game.player.canMoveFlag = False
     End Sub
 End Class

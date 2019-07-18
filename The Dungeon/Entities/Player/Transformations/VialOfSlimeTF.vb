@@ -145,7 +145,6 @@
     Public Overrides Sub stopTF()
         MyBase.stopTF()
     End Sub
-
     Public Overrides Function getNextStep(stage As Integer) As Action
         Dim p As Player = Game.player
 
@@ -162,7 +161,6 @@
                 Return AddressOf stopTF
         End Select
     End Function
-
     Public Shared Sub pushLblEventWithoutLoss(ByRef out As String)
         Dim revertText = Game.lblEvent.Text.Split(vbCrLf)(0)
         If Not revertText.Equals("") Then out = revertText & vbCrLf & vbCrLf & out

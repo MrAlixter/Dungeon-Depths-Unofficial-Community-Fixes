@@ -49,7 +49,7 @@
             p.magGState.save(p)
             p.magGState.initFlag = True
         End If
-        p.knownSpells.Add("Heartblast Starcannon")
+        If Not p.knownSpells.Contains("Heartblast Starcannon") Then p.knownSpells.Add("Heartblast Starcannon")
         p.inv.add(10, 1)
         Equipment.accChange("Nothing")
         p.pClass = p.classes("Magic Girl")

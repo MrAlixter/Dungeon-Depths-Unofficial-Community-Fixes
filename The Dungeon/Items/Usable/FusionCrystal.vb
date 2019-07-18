@@ -22,7 +22,6 @@
                                             "                              5 6 7 8")
             Catch e As Exception
                 Game.pushLblEvent("The fusion crystal does not react.  It seems that an improper slot was selected.")
-                count += 1
                 Exit Sub
             End Try
             If Not System.IO.File.Exists("s" & i & ".ave") Then

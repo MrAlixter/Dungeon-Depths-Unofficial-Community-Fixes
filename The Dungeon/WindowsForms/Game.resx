@@ -7767,17 +7767,16 @@
   </data>
   <data name="picBimboSpace.BackgroundImage" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
     <value>
-        iVBORw0KGgoAAAANSUhEUgAAADwAAAA8CAYAAAA6/NlyAAAAAXNSR0IArs4c6QAAAARnQU1BAACxjwv8
-        YQUAAAIHSURBVGhD7ZpLbsJQDEVZd3fCLxLL6IKAOUgMm8oDS87hui8hgaLWls4k9nPuidoMgNV+v+8j
-        z67b7Tbg1VXCz64SfnHdCZ9Op0U5n88DrtfrAPaXhlXCKvQc/MZfH5+ziBJTYJUwA18ul0VQElPgv0JG
-        CaOeJszAfl2FHAP3qRmjhFGr3W7XR54tTFRoBfepGaOEUYsJM5CaUajQCu5XM0YJo+6Ej8fjABUy4g+G
-        geJDi2TnHQZ2uF/JGjzHKuGxwgzA4ITzLRicfSVr8Bzr/wlvt9s+8i7Cfs6Ds69kjShrsEp4KeGszz2t
-        eQ/OvpI1oqzBKuF3E876StYoYVQJ/3nhw+HQRxgogwGm9klrPusr6Qg/+C/heJOfyAKM7ZPWfNZXkpES
-        3mw2feTRlxbPse8vH+7JXkp+Petzj9N8aZUwgqulBgPwHPsenHsyIb+e9bnHKWHUar1e9xEGV0sNBuA5
-        9j0492RCfj3rc4/Dc6wSZnC11GAAnnP8xpyfiu9RWSI+57BKmIHVUoOBeI5wfiouoLJEoqzBKmEGVUsN
-        BuK5DO5hwBY8TzjPKuFWQIfCauY3KGHUw8LkXR5ACaNKuITF0jHwAcxF3UNRwqim8KOo0HOgyFhYJazC
-        Lwn/BNVMRElMgVXCc+GHgoQf/PPLPP7IhvDHsC26rhtQwnNRkpESfqlw138DjgshC1rohScAAAAASUVO
-        RK5CYII=
+        iVBORw0KGgoAAAANSUhEUgAAADwAAAA8CAYAAAA6/NlyAAAABGdBTUEAALGPC/xhBQAAAgdJREFUaEPt
+        mktuwlAMRVl3d8IvEsvogoA5SAybygNLzuG6LyGBotaWziT2c+6J2gyA1X6/7yPPrtvtNuDVVcLPrhJ+
+        cd0Jn06nRTmfzwOu1+sA9peGVcIq9Bz8xl8fn7OIElNglTADXy6XRVASU+C/QkYJo54mzMB+XYUcA/ep
+        GaOEUavdbtdHni1MVGgF96kZo4RRiwkzkJpRqNAK7lczRgmj7oSPx+MAFTLiD4aB4kOLZOcdBna4X8ka
+        PMcq4bHCDMDghPMtGJx9JWvwHOv/CW+32z7yLsJ+zoOzr2SNKGuwSngp4azPPa15D86+kjWirMEq4XcT
+        zvpK1ihhVAn/eeHD4dBHGCiDAab2SWs+6yvpCD/4L+F4k5/IAoztk9Z81leSkRLebDZ95NGXFs+x7y8f
+        7sleSn4963OP03xplTCCq6UGA/Ac+x6cezIhv571uccpYdRqvV73EQZXSw0G4Dn2PTj3ZEJ+Petzj8Nz
+        rBJmcLXUYACec/zGnJ+K71FZIj7nsEqYgdVSg4F4jnB+Ki6gskSirMEqYQZVSw0G4rkM7mHAFjxPOM8q
+        4VZAh8Jq5jcoYdTDwuRdHkAJo0q4hMXSMfABzEXdQ1HCqKbwo6jQc6DIWFglrMIvCf8E1UxESUyBVcJz
+        4YeChB/888s8/siG8MewLbquG1DCc1GSkRJ+qXDXfwOOCyELWuiFJwAAAABJRU5ErkJggg==
 </value>
   </data>
   <data name="picSPacePath.BackgroundImage" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">

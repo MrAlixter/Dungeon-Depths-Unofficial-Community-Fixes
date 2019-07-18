@@ -48,8 +48,29 @@
         If img(0).Size.Height <> 144 Then g.DrawImage(img(0), 0, 0, 146, 216) Else g.DrawImage(img(0), 0, 0, 144, 144)
         For i = 1 To UBound(img)
             If img(i) Is Nothing Then img(i) = CharacterGenerator.picPort.Image
-            'If img(i).Size.Height <= 144 Then g.DrawImage(img(i), 1, 1, 144, 144) Else g.DrawImage(img(i), 1, 1, 144, 216)
-            If img(i).Size.Height <= 300 Then g.DrawImage(img(i), 1, 1) Else g.DrawImage(img(i), -9, -38)
+            If img(i).Size.Height <= 144 Then
+                g.DrawImage(img(i), 1, 1, 144, 144)
+            ElseIf img(i).Size.Height <= 300 Then
+                g.DrawImage(img(i), 1, 1, 144, 216)
+            Else
+                g.DrawImage(img(i), -9, -38)
+            End If
+        Next
+        Return bmp
+    End Function
+    Shared Function CreateFullBodyBMP(ByRef img() As Image) As Bitmap
+        Dim bmp As New Bitmap(164, 610)
+        Dim g As Graphics = Graphics.FromImage(bmp)
+        If img(0).Size.Height <> 144 Then g.DrawImage(img(0), 0, 0, 146, 216) Else g.DrawImage(img(0), 0, 0, 144, 144)
+        For i = 1 To UBound(img)
+            If img(i) Is Nothing Then img(i) = CharacterGenerator.picPort.Image
+            If img(i).Size.Height <= 144 Then
+                g.DrawImage(img(i), 1, 1, 144, 144)
+            ElseIf img(i).Size.Height <= 300 Then
+                g.DrawImage(img(i), 1, 1, 144, 216)
+            Else
+                g.DrawImage(img(i), -9, -38)
+            End If
         Next
         Return bmp
     End Function
@@ -104,7 +125,7 @@
             Try
                 iArr(i) = imgLib.atrs(imgLib.atrs.Keys(i)).getAt(iArrInd(i))
             Catch ex As Exception
-                MsgBox("Error!  Exception thrown in portrait creation (specifically in the " & imgLib.atrs.Keys(i) & " layer).  The player character will now revert to default.")
+                PrintLine("Error!  Exception thrown in portrait creation (specifically in the " & imgLib.atrs.Keys(i) & " layer).  The player character will now revert to default.")
             End Try
         Next
 
@@ -130,8 +151,8 @@
             Try
                 iArr(i) = imgLib.atrs(imgLib.atrs.Keys(i)).getAt(iArrInd(i))
             Catch ex As Exception
-                MsgBox("Error!  Exception thrown in portrait creation (specifically in the " & imgLib.atrs.Keys(i) & " layer).  The player character will now revert to default.")
-                errorAction()
+                PrintLine("Error!  Exception thrown in portrait creation (specifically in the " & imgLib.atrs.Keys(i) & " layer).  The player character will now revert to default.")
+                'errorAction()
             End Try
         Next
 

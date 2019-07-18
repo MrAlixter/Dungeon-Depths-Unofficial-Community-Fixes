@@ -580,7 +580,7 @@
         If tEweap.getName = "Magic_Girl_Wand" Then tEweap = New BareFists()
         If tEarm.getName = "Magic_Girl_Outfit" Then tEarm = New Naked()
 
-        sState.load(Me)
+        sState.load(Me, False)
 
         mana = tMna
         gold = tGold
@@ -685,7 +685,7 @@
 
         If tEweap.getName = "Magic_Girl_Wand" Then tEweap = New BareFists()
         If tEarm.getName = "Goddess_Gown" Or tEarm.getName = "Succubus_Garb" Then tEarm = New CommonClothes
-        pState.load(Me)
+        pState.load(Me, False)
 
         mana = tMna
         gold = tGold

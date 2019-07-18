@@ -90,21 +90,25 @@
     End Sub
 
     'load applies a state to a given instance of a player
-    Public Sub load(ByRef p As Player)
+    Public Sub load(ByRef p As Player, Optional overwriteStats As Boolean = True)
         p.name = name
         p.sex = sex
         p.pClass = p.classes(pClass.name)
         p.pForm = p.forms(pForm.name)
         p.description = description
-        p.maxHealth = maxHealth
-        If p.health > 1 Then p.health = 1
-        p.maxMana = maxMana
-        p.attack = attack
-        p.defence = defence
-        p.will = will
-        p.speed = speed
+
+        If overwriteStats Then
+            p.maxHealth = maxHealth
+            If p.health > 1 Then p.health = 1
+            p.maxMana = maxMana
+            p.attack = attack
+            p.defence = defence
+            p.will = will
+            p.speed = speed
+            p.lust = lust
+        End If
+
         p.gold = gold
-        p.lust = lust
         p.breastSize = breastSize
         p.equippedWeapon = equippedWeapon
         Equipment.clothesChange(equippedArmor.getName)
