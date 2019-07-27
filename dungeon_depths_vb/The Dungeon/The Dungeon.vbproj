@@ -290,13 +290,13 @@
     <Compile Include="Items\Armor\AmaAttire.vb" />
     <Compile Include="Items\Armor\DissolvedClothes.vb" />
     <Compile Include="Items\Armor\ValkyrieArmor.vb" />
-    <Compile Include="Items\Lessons\BFormReset.vb" />
-    <Compile Include="Items\Lessons\WarlockLesson.vb" />
-    <Compile Include="Items\Lessons\HGorgonLesson.vb" />
-    <Compile Include="Items\Lessons\BarbarianLesson.vb" />
-    <Compile Include="Items\Lessons\AmazonLesson.vb" />
-    <Compile Include="Items\Lessons\NameChange.vb" />
-    <Compile Include="Items\Lessons\BimboLesson.vb" />
+    <Compile Include="Items\Services\BFormReset.vb" />
+    <Compile Include="Items\Services\WarlockLesson.vb" />
+    <Compile Include="Items\Services\HGorgonLesson.vb" />
+    <Compile Include="Items\Services\BarbarianLesson.vb" />
+    <Compile Include="Items\Services\AmazonLesson.vb" />
+    <Compile Include="Items\Services\NameChange.vb" />
+    <Compile Include="Items\Services\BimboLesson.vb" />
     <Compile Include="Items\Usable\CryoGrenade.vb" />
     <Compile Include="Items\Usable\Food\WFeast.vb" />
     <Compile Include="Items\Usable\Food\MDelicacy.vb" />
@@ -461,6 +461,7 @@
     <Compile Include="WindowsForms\Debug\TileSelector.vb">
       <SubType>Form</SubType>
     </Compile>
+    <Compile Include="WindowsForms\EventBox.vb" />
     <Compile Include="WindowsForms\Game.Designer.vb">
       <DependentUpon>Game.vb</DependentUpon>
     </Compile>

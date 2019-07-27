@@ -66,6 +66,7 @@ Public Class Game
     Public version As Double = 0.7     'the save file version
 
     Public lblEventOnClose As Action    'the event method preformed when lblEvent closes (NOT SAVED)
+    Public eventDialogBox As EventBox
     Public lastKey As String
     Public yesAction, noAction As Action
     Public choiceText As String
@@ -101,6 +102,7 @@ Public Class Game
     'settings
     Public screenSize As String
     Public noImg As Boolean
+    Public pcUnwilling As Boolean
 
     Dim debugWindow As Debug_Window
     Public shopMenu As ShopV2
@@ -218,6 +220,7 @@ Public Class Game
             End If
         End If
 
+        eventDialogBox = New EventBox(txtPNLEvents, pnlEvent)
         Game_Resize()
     End Sub
     Sub createConfigs()
@@ -251,6 +254,7 @@ Public Class Game
         Dim w As System.IO.StreamWriter
         w = System.IO.File.CreateText("sett.ing")
         w.WriteLine("Large")
+        w.WriteLine(False)
         w.WriteLine(False)
         w.Close()
     End Sub
@@ -1589,6 +1593,13 @@ Public Class Game
     End Function
     Sub doLblEventOnClose()
         If Not lblEventOnClose Is Nothing Then
+            If pnlEvent.Visible Then
+                If Not eventDialogBox.hasHitEnd And eventDialogBox.getPageInd < eventDialogBox.getPageCt - 1 Then
+                    eventDialogBox.nextpageL()
+                    Exit Sub
+                End If
+            End If
+
             Dim lastOnClose = lblEventOnClose.Method.Name
             lblEventOnClose()
             If lblEventOnClose.Method.Name.Equals(lastOnClose) Then
@@ -1976,6 +1987,11 @@ Public Class Game
             lblEvent.ForeColor = Color.White
             drawBoard()
         End If
+        If pnlEvent.Visible = True Then
+            pnlEvent.Visible = False
+            txtPNLEvents.Text = ""
+            drawBoard()
+        End If
     End Sub
     Function shouldReturnEarly(ByVal Keydata As Keys)
         'This function determines if the key input should be ignored.
@@ -1986,7 +2002,7 @@ Public Class Game
             Return True
         End If
         If tmrKeyCD.Enabled Then Return True Else tmrKeyCD.Enabled = True
-        If lblEvent.Visible And npcmode = True And Not Keydata.Equals(cKeys(13)) Then
+        If (lblEvent.Visible Or pnlEvent.Visible) And npcmode = True And Not Keydata.Equals(cKeys(13)) Then
             If Not lblEventOnClose Is Nothing Then
                 doLblEventOnClose()
             Else
@@ -1994,7 +2010,7 @@ Public Class Game
             End If
             Return True
         End If
-        If lblEvent.Visible And npcmode = True And Keydata.Equals(cKeys(13)) Then
+        If (lblEvent.Visible Or pnlEvent.Visible) And npcmode = True And Keydata.Equals(cKeys(13)) Then
             Return False
         End If
         If pnlDescript.Visible And Not lblEvent.Visible Then
@@ -2002,7 +2018,7 @@ Public Class Game
             pnlDescript.Visible = False
             Return True
         End If
-        If lblEvent.Visible And Not (Keydata.Equals(Keys.Enter)) And Not Keydata.Equals(cKeys(0)) And Not Keydata.Equals(cKeys(1)) And Not Keydata.Equals(cKeys(2)) And Not Keydata.Equals(cKeys(3)) _
+        If (lblEvent.Visible Or pnlEvent.Visible) And Not (Keydata.Equals(Keys.Enter)) And Not Keydata.Equals(cKeys(0)) And Not Keydata.Equals(cKeys(1)) And Not Keydata.Equals(cKeys(2)) And Not Keydata.Equals(cKeys(3)) _
             And Not Keydata.Equals(Keys.Left) And Not Keydata.Equals(Keys.Right) And Not Keydata.Equals(Keys.Down) And Not Keydata.Equals(Keys.Up) Then
             If npcmode = False Then
                 closeLblEvent()
@@ -2018,7 +2034,7 @@ Public Class Game
             End If
             Return True
         End If
-        If lblEvent.Visible And (Keydata.Equals(cKeys(0)) Or Keydata.Equals(cKeys(1)) Or Keydata.Equals(cKeys(2)) Or Keydata.Equals(cKeys(3)) _
+        If (lblEvent.Visible Or pnlEvent.Visible) And (Keydata.Equals(cKeys(0)) Or Keydata.Equals(cKeys(1)) Or Keydata.Equals(cKeys(2)) Or Keydata.Equals(cKeys(3)) _
             Or Keydata.Equals(Keys.Left) Or Keydata.Equals(Keys.Right) Or Keydata.Equals(Keys.Down) Or Keydata.Equals(Keys.Up)) Then
             Return True
         End If
@@ -3150,6 +3166,7 @@ Public Class Game
 
     'combat pannel
     Sub pushLblCombatEvent(ByVal s As String)
+        cleanupPanels()
         Dim sSplit() As String = s.Split(" ")
         Dim c As Integer = 0
         Dim ct As Integer = 0
@@ -3432,11 +3449,15 @@ Public Class Game
     End Sub
     Private Sub btnNPCMG_Click(sender As Object, e As EventArgs) Handles btnNPCMG.Click
         doLblEventOnClose()
-        pushPnlYesNo("Are you sure you want to do this?", AddressOf npcMG, Nothing)
+        pushPnlYesNo("Are you sure you want to do this?", AddressOf npcMG, AddressOf nofight)
     End Sub
+
     Private Sub btnFight_Click(sender As Object, e As EventArgs) Handles btnFight.Click
         doLblEventOnClose()
-        pushPnlYesNo("Are you sure you want to do this?", AddressOf npcFight, Nothing)
+        pushPnlYesNo("Are you sure you want to do this?", AddressOf npcFight, AddressOf nofight)
+    End Sub
+    Sub nofight()
+        player.canMoveFlag = False
     End Sub
     Private Sub btnLeave_Click(sender As Object, e As EventArgs) Handles btnLeave.Click
         leaveNPC()
@@ -3552,7 +3573,7 @@ Public Class Game
         Application.Restart()
     End Sub
     Private Sub LoadToolStripMenuItem_Click(sender As Object, e As EventArgs) Handles LoadToolStripMenuItem.Click
-        If lblEvent.Visible = True Or combatmode Or npcmode Or Me.MdiChildren.Length > 0 Then
+        If (lblEvent.Visible Or pnlEvent.Visible) Or combatmode Or npcmode Or Me.MdiChildren.Length > 0 Then
             pushLblEvent("You can't load now!")
             Exit Sub
         End If
@@ -3561,7 +3582,7 @@ Public Class Game
     End Sub
     Private Sub SaveToolStripMenuItem_Click(sender As Object, e As EventArgs) Handles SaveToolStripMenuItem.Click
         solFlag = False
-        If lblEvent.Visible = True Or combatmode Or npcmode Or Me.MdiChildren.Length > 0 Then
+        If (lblEvent.Visible Or pnlEvent.Visible) Or combatmode Or npcmode Or Me.MdiChildren.Length > 0 Then
             pushLblEvent("You can't save now!")
             Exit Sub
         End If
@@ -3626,12 +3647,19 @@ Public Class Game
         A = B                       'sets A to B, the shuffled array.
     End Sub
     'pushLblEvent family of functions
-    Sub pushLblEvent(ByVal s As String)
+    Sub pushLblEvent(ByVal s As String, Optional effect As Action = Nothing)
         'pushLblEvent takes a string, formats it to wrap, and pushes a dialog box containing it
         If combatmode Then
             pushLblCombatEvent(s)
             Exit Sub
         End If
+        If s.Length > 250 Then
+            pushPnlEvent(s, effect)
+            Exit Sub
+        End If
+
+        cleanupPanels()
+
         Dim sSplit() As String = s.Split(" ")
         Dim c As Integer = 0
         Dim ct As Integer = 0
@@ -3661,45 +3689,24 @@ Public Class Game
         If x < 20 Then x = 20
         lblEvent.Location = New Point(x, (65 * (Me.Size.Width / 688)))
         lblEvent.Visible = True
+        If Not effect Is Nothing Then lblEventOnClose = effect
         player.canMoveFlag = False
     End Sub
-    Sub pushLblEvent(ByVal s As String, ByRef effect As Action)
-        'This pushLblEvent is identical to the first, but takes an additional action that it executes on close.
+    Sub pushPnlEvent(s As String, Optional onClose As Action = Nothing)
         If combatmode Then
-            lblEventOnClose = effect
             pushLblCombatEvent(s)
             Exit Sub
         End If
-        Dim sSplit() As String = s.Split(" ")
-        Dim c As Integer = 0
-        Dim ct As Integer = 0
-        Dim out As String = ""
-        Do While c < sSplit.Length
-            If ct < 70 Then
-                If Not sSplit(c).Contains(vbCrLf) Then
-                    out += sSplit(c) & " "
-                    ct += sSplit(c).Length + 1
-                    c += 1
-                Else
-                    out += sSplit(c) & " "
-                    ct = 0
-                    c += 1
-                End If
-            Else
-                out += vbCrLf
-                ct = 0
-            End If
-        Loop
-        If Not combatmode Then out += " " & vbCrLf & " " & vbCrLf & "Press any non-movement key to continue." Else out += " " & vbCrLf & " " & vbCrLf & "Click a combat button to continue."
-        lblEvent.Text = out
-        lblEvent.BringToFront()
 
-        Dim x = (265 * (Me.Size.Width / 688)) - (lblEvent.Size.Width / 2)
-        If x < 20 Then x = 20
-        lblEvent.Location = New Point(x, (65 * (Me.Size.Width / 688)))
-        lblEvent.Visible = True
+        cleanupPanels()
+
+        eventDialogBox.push(s, onClose)
+
+        pnlEvent.BringToFront()
+        pnlEvent.Location = New Point((15 * (Me.Size.Width / 688)), (33 * (Me.Size.Width / 688)))
+        pnlEvent.Visible = True
         player.canMoveFlag = False
-        lblEventOnClose = effect
+        If Not onClose Is Nothing Then lblEventOnClose = onClose
         btnEQP.Enabled = False
     End Sub
     Sub pushLblEvent(ByVal s As String, ByRef yes As Action, ByVal no As Action, ByVal text As String)
@@ -3708,6 +3715,8 @@ Public Class Game
             pushLblCombatEvent("Error, choice to be made during combat.")
             Exit Sub
         End If
+
+        cleanupPanels()
         Dim sSplit() As String = s.Split(" ")
         Dim c As Integer = 0
         Dim ct As Integer = 0
@@ -3746,69 +3755,38 @@ Public Class Game
         choiceText = text
         btnEQP.Enabled = False
     End Sub
-    Sub pushNPCDialog(ByVal s As String)
+    Sub pushNPCDialog(ByVal s As String, Optional ByRef effect As Action = Nothing)
         If combatmode Then
             pushLblCombatEvent("""" & s & """")
             Exit Sub
         End If
-        lblEvent.ForeColor = Color.White
-        'pushNPCDialog is a variant of pushLblEvent that pushes the string into an NPC dialog box
-        Dim sSplit() As String = s.Split(" ")
-        Dim c As Integer = 0
-        Dim ct As Integer = 0
-        Dim out As String = ""
-        Do While c < sSplit.Length
-            If ct < 50 Then
-                If Not sSplit(c).Contains(vbCrLf) Then
-                    out += sSplit(c) & " "
-                    ct += sSplit(c).Length + 1
-                    c += 1
-                Else
-                    out += sSplit(c) & " "
-                    ct = 0
-                    c += 1
-                End If
-            Else
-                out += vbCrLf
-                ct = 0
-            End If
-        Loop
-        lblEvent.Text = out
-        lblEvent.Location = New Point(160 * Me.Size.Width / 688, 120 * Me.Size.Width / 688)
-        lblEvent.Visible = True
-        picNPC.Visible = True
-    End Sub
-    Sub pushNPCDialog(ByVal s As String, ByVal effect As action)
-        If combatmode Then
-            pushLblCombatEvent("""" & s & """")
-            Exit Sub
-        End If
-        lblEvent.ForeColor = Color.White
-        'pushNPCDialog is a variant of pushLblEvent that pushes the string into an NPC dialog box
-        Dim sSplit() As String = s.Split(" ")
-        Dim c As Integer = 0
-        Dim ct As Integer = 0
-        Dim out As String = ""
-        Do While c < sSplit.Length
-            If ct < 50 Then
-                If Not sSplit(c).Contains(vbCrLf) Then
-                    out += sSplit(c) & " "
-                    ct += sSplit(c).Length + 1
-                    c += 1
-                Else
-                    out += sSplit(c) & " "
-                    ct = 0
-                    c += 1
-                End If
-            Else
-                out += vbCrLf
-                ct = 0
-            End If
-        Loop
 
-        out += " " & vbCrLf & " " & vbCrLf & "Press any non-movement key to continue."
-        lblEventOnClose = effect
+        cleanupPanels()
+
+        lblEvent.ForeColor = Color.White
+        'pushNPCDialog is a variant of pushLblEvent that pushes the string into an NPC dialog box
+        Dim sSplit() As String = s.Split(" ")
+        Dim c As Integer = 0
+        Dim ct As Integer = 0
+        Dim out As String = ""
+        Do While c < sSplit.Length
+            If ct < 50 Then
+                If Not sSplit(c).Contains(vbCrLf) Then
+                    out += sSplit(c) & " "
+                    ct += sSplit(c).Length + 1
+                    c += 1
+                Else
+                    out += sSplit(c) & " "
+                    ct = 0
+                    c += 1
+                End If
+            Else
+                out += vbCrLf
+                ct = 0
+            End If
+        Loop
         lblEvent.Text = out
+        If Not effect Is Nothing Then lblEventOnClose = effect
         lblEvent.Location = New Point(160 * Me.Size.Width / 688, 120 * Me.Size.Width / 688)
         lblEvent.Visible = True
         picNPC.Visible = True
@@ -4037,6 +4015,12 @@ Public Class Game
             pnlSaveLoad.Controls(i).Left += CDbl(pnlSaveLoad.Controls(i).Left * RW)
             pnlSaveLoad.Controls(i).Top += CDbl(pnlSaveLoad.Controls(i).Top * RH)
         Next
+        For i = 0 To pnlEvent.Controls.Count - 1
+            pnlEvent.Controls(i).Width += CDbl(pnlEvent.Controls(i).Width * RW)
+            pnlEvent.Controls(i).Height += CDbl(pnlEvent.Controls(i).Height * RH)
+            pnlEvent.Controls(i).Left += CDbl(pnlEvent.Controls(i).Left * RW)
+            pnlEvent.Controls(i).Top += CDbl(pnlEvent.Controls(i).Top * RH)
+        Next
 
         startingHeight = Height
         startingWidth = Width
@@ -4125,5 +4109,27 @@ Public Class Game
 
     Private Sub ExitToolStripMenuItem_Click(sender As Object, e As EventArgs) Handles ExitToolStripMenuItem.Click
         Me.Close()
+    End Sub
+
+
+    Public Sub cleanupPanels()
+        pnlDescript.Visible = False
+        pnlCombat.Visible = False
+        pnlEvent.Visible = False
+        pnlSaveLoad.Visible = False
+        pnlSelection.Visible = False
+        selecting = False
+        lblEvent.Visible = False
+    End Sub
+    Private Sub btnClosePnlEvent_Click(sender As Object, e As EventArgs) Handles btnClosePnlEvent.Click
+        doLblEventOnClose()
+        closeLblEvent()
+    End Sub
+
+    Private Sub btnNextLPnlEvent_Click(sender As Object, e As EventArgs) Handles btnNextLPnlEvent.Click
+        eventDialogBox.nextpageL()
+    End Sub
+    Private Sub btnNextRPnlEvent_Click(sender As Object, e As EventArgs) Handles btnNextRPnlEvent.Click
+        eventDialogBox.nextpageR()
     End Sub
 End Class

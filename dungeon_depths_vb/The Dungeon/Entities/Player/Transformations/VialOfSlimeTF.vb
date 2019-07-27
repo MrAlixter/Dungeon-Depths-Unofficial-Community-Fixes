@@ -32,7 +32,7 @@
             p.prt.haircolor = Color.FromArgb(180, 5, 245, 198)
             p.createP()
             p.perks("vsslimehair") = 0
-            pushLblEventWithoutLoss("Your hair is now made of a teal slime!")
+            pushLblEventWithoutLoss("The rogue slime starts moving upwards towards your head, your fingers unable to get a grip on the slippery goo as it works its way up your neck and into your hair. Despite your best attempts you just can’t get the bulk of the goo out. It almost feels like your trying to pull out your own hair... After a few more experimental tugs you confirm that the slime seems to have converted your hair to a much more gooey consistency. ")
         End If
         If Game.player.perks("slimetf") > -1 Then Game.player.perks("slimetf") += 1
     End Sub

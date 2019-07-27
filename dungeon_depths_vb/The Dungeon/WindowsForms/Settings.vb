@@ -6,10 +6,12 @@
         w = System.IO.File.CreateText("sett.ing")
         w.WriteLine(ssize)
         w.WriteLine(chkNoImg.Checked)
+        w.WriteLine(chkAlwaysUnwilling.Checked)
         w.Flush()
         w.Close()
         Game.screenSize = ssize
         Game.noImg = chkNoImg.Checked
+        Game.pcUnwilling = chkAlwaysUnwilling.Checked
         Me.Close()
     End Sub
 
@@ -39,6 +41,7 @@
         r = IO.File.OpenText("sett.ing")
         ssize = r.ReadLine
         chkNoImg.Checked = r.ReadLine
+        chkAlwaysUnwilling.Checked = r.ReadLine
 
         r.Close()
 

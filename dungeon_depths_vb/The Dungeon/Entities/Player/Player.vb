@@ -263,7 +263,7 @@
             inv.add(21, 1)
             equippedWeapon = inv.item(21)
         ElseIf s = "Magic Girl" Then
-            pClass = classes("Mage")
+            pClass = classes("Classless")
             maxHealth = 80
             attack = 7
             defence = 7
@@ -1911,6 +1911,10 @@
         totalDelta += ratio1 + ratio2 + ratio3
 
         Return totalDelta
+    End Function
+    Function isUnwilling() As Boolean
+        If will > 7 Then Return True
+        Return Game.pcUnwilling
     End Function
     Function genDescription()
         Dim out As String = ""
