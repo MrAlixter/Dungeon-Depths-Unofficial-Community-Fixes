@@ -207,6 +207,12 @@ Partial Class Game
         Me.picBimboSpace = New System.Windows.Forms.PictureBox()
         Me.picSPacePath = New System.Windows.Forms.PictureBox()
         Me.picSpaceCrystal = New System.Windows.Forms.PictureBox()
+        Me.pnlEvent = New System.Windows.Forms.Panel()
+        Me.Label4 = New System.Windows.Forms.Label()
+        Me.btnNextLPnlEvent = New System.Windows.Forms.Button()
+        Me.btnNextRPnlEvent = New System.Windows.Forms.Button()
+        Me.btnClosePnlEvent = New System.Windows.Forms.Button()
+        Me.txtPNLEvents = New System.Windows.Forms.TextBox()
         CType(Me.picEnemy, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me.picNPC, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me.picStatue, System.ComponentModel.ISupportInitialize).BeginInit()
@@ -292,6 +298,7 @@ Partial Class Game
         CType(Me.picBimboSpace, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me.picSPacePath, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me.picSpaceCrystal, System.ComponentModel.ISupportInitialize).BeginInit()
+        Me.pnlEvent.SuspendLayout()
         Me.SuspendLayout()
         '
         'btnUse1
@@ -1738,7 +1745,7 @@ Partial Class Game
         Me.pnlDescript.Controls.Add(Me.lblNext)
         Me.pnlDescript.Controls.Add(Me.picDescPort)
         Me.pnlDescript.Controls.Add(Me.txtDescript)
-        Me.pnlDescript.Location = New System.Drawing.Point(909, 36)
+        Me.pnlDescript.Location = New System.Drawing.Point(901, 36)
         Me.pnlDescript.Name = "pnlDescript"
         Me.pnlDescript.Size = New System.Drawing.Size(694, 461)
         Me.pnlDescript.TabIndex = 275
@@ -2315,16 +2322,95 @@ Partial Class Game
         Me.picSpaceCrystal.TabStop = False
         Me.picSpaceCrystal.Visible = False
         '
+        'pnlEvent
+        '
+        Me.pnlEvent.BackgroundImage = CType(resources.GetObject("pnlEvent.BackgroundImage"), System.Drawing.Image)
+        Me.pnlEvent.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch
+        Me.pnlEvent.Controls.Add(Me.Label4)
+        Me.pnlEvent.Controls.Add(Me.btnNextLPnlEvent)
+        Me.pnlEvent.Controls.Add(Me.btnNextRPnlEvent)
+        Me.pnlEvent.Controls.Add(Me.btnClosePnlEvent)
+        Me.pnlEvent.Controls.Add(Me.txtPNLEvents)
+        Me.pnlEvent.Location = New System.Drawing.Point(192, 29)
+        Me.pnlEvent.Name = "pnlEvent"
+        Me.pnlEvent.Size = New System.Drawing.Size(688, 447)
+        Me.pnlEvent.TabIndex = 322
+        Me.pnlEvent.Visible = False
+        '
+        'Label4
+        '
+        Me.Label4.AutoSize = True
+        Me.Label4.Font = New System.Drawing.Font("Consolas", 10.2!, System.Drawing.FontStyle.Italic, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.Label4.ForeColor = System.Drawing.Color.White
+        Me.Label4.Location = New System.Drawing.Point(13, 416)
+        Me.Label4.Name = "Label4"
+        Me.Label4.Size = New System.Drawing.Size(378, 20)
+        Me.Label4.TabIndex = 236
+        Me.Label4.Text = "Press any non-movement key to continue..."
+        '
+        'btnNextLPnlEvent
+        '
+        Me.btnNextLPnlEvent.BackColor = System.Drawing.Color.Black
+        Me.btnNextLPnlEvent.Font = New System.Drawing.Font("Consolas", 8.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.btnNextLPnlEvent.ForeColor = System.Drawing.Color.White
+        Me.btnNextLPnlEvent.Location = New System.Drawing.Point(467, 412)
+        Me.btnNextLPnlEvent.Name = "btnNextLPnlEvent"
+        Me.btnNextLPnlEvent.Size = New System.Drawing.Size(54, 28)
+        Me.btnNextLPnlEvent.TabIndex = 235
+        Me.btnNextLPnlEvent.Text = "<"
+        Me.btnNextLPnlEvent.UseVisualStyleBackColor = False
+        '
+        'btnNextRPnlEvent
+        '
+        Me.btnNextRPnlEvent.BackColor = System.Drawing.Color.Black
+        Me.btnNextRPnlEvent.Font = New System.Drawing.Font("Consolas", 8.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.btnNextRPnlEvent.ForeColor = System.Drawing.Color.White
+        Me.btnNextRPnlEvent.Location = New System.Drawing.Point(523, 412)
+        Me.btnNextRPnlEvent.Name = "btnNextRPnlEvent"
+        Me.btnNextRPnlEvent.Size = New System.Drawing.Size(54, 28)
+        Me.btnNextRPnlEvent.TabIndex = 234
+        Me.btnNextRPnlEvent.Text = ">"
+        Me.btnNextRPnlEvent.UseVisualStyleBackColor = False
+        '
+        'btnClosePnlEvent
+        '
+        Me.btnClosePnlEvent.BackColor = System.Drawing.Color.Black
+        Me.btnClosePnlEvent.Font = New System.Drawing.Font("Consolas", 8.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.btnClosePnlEvent.ForeColor = System.Drawing.Color.White
+        Me.btnClosePnlEvent.Location = New System.Drawing.Point(603, 412)
+        Me.btnClosePnlEvent.Name = "btnClosePnlEvent"
+        Me.btnClosePnlEvent.Size = New System.Drawing.Size(73, 28)
+        Me.btnClosePnlEvent.TabIndex = 233
+        Me.btnClosePnlEvent.Text = "Exit"
+        Me.btnClosePnlEvent.UseVisualStyleBackColor = False
+        '
+        'txtPNLEvents
+        '
+        Me.txtPNLEvents.BackColor = System.Drawing.Color.Black
+        Me.txtPNLEvents.BorderStyle = System.Windows.Forms.BorderStyle.None
+        Me.txtPNLEvents.Cursor = System.Windows.Forms.Cursors.Arrow
+        Me.txtPNLEvents.Font = New System.Drawing.Font("Consolas", 10.2!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.txtPNLEvents.ForeColor = System.Drawing.Color.White
+        Me.txtPNLEvents.Location = New System.Drawing.Point(11, 7)
+        Me.txtPNLEvents.Multiline = True
+        Me.txtPNLEvents.Name = "txtPNLEvents"
+        Me.txtPNLEvents.ReadOnly = True
+        Me.txtPNLEvents.Size = New System.Drawing.Size(665, 400)
+        Me.txtPNLEvents.TabIndex = 0
+        Me.txtPNLEvents.Text = resources.GetString("txtPNLEvents.Text")
+        '
         'Game
         '
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Inherit
         Me.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink
         Me.BackColor = System.Drawing.Color.Black
         Me.ClientSize = New System.Drawing.Size(1008, 690)
+        Me.Controls.Add(Me.pnlEvent)
         Me.Controls.Add(Me.picSPacePath)
         Me.Controls.Add(Me.picSpaceCrystal)
         Me.Controls.Add(Me.picPlayerSpace)
         Me.Controls.Add(Me.picBimboSpace)
+        Me.Controls.Add(Me.pnlDescript)
         Me.Controls.Add(Me.picSpaceStairs)
         Me.Controls.Add(Me.picSpaceTrap)
         Me.Controls.Add(Me.picSpaceChest)
@@ -2367,7 +2453,6 @@ Partial Class Game
         Me.Controls.Add(Me.picChicken)
         Me.Controls.Add(Me.picStairsBoss)
         Me.Controls.Add(Me.picStairsLock)
-        Me.Controls.Add(Me.pnlDescript)
         Me.Controls.Add(Me.picSWizF)
         Me.Controls.Add(Me.picSWiz)
         Me.Controls.Add(Me.picLoadBar)
@@ -2559,6 +2644,8 @@ Partial Class Game
         CType(Me.picBimboSpace, System.ComponentModel.ISupportInitialize).EndInit()
         CType(Me.picSPacePath, System.ComponentModel.ISupportInitialize).EndInit()
         CType(Me.picSpaceCrystal, System.ComponentModel.ISupportInitialize).EndInit()
+        Me.pnlEvent.ResumeLayout(False)
+        Me.pnlEvent.PerformLayout()
         Me.ResumeLayout(False)
         Me.PerformLayout()
 
@@ -2746,4 +2833,10 @@ Partial Class Game
     Friend WithEvents picBimboSpace As System.Windows.Forms.PictureBox
     Friend WithEvents picSPacePath As System.Windows.Forms.PictureBox
     Friend WithEvents picSpaceCrystal As System.Windows.Forms.PictureBox
+    Friend WithEvents pnlEvent As System.Windows.Forms.Panel
+    Friend WithEvents txtPNLEvents As System.Windows.Forms.TextBox
+    Friend WithEvents Label4 As System.Windows.Forms.Label
+    Friend WithEvents btnNextLPnlEvent As System.Windows.Forms.Button
+    Friend WithEvents btnNextRPnlEvent As System.Windows.Forms.Button
+    Friend WithEvents btnClosePnlEvent As System.Windows.Forms.Button
 End Class
