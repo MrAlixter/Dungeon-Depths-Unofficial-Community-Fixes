@@ -4,7 +4,7 @@
     Sub New()
         MyBase.setName("Minor_Ring_of_Regen.")
         MyBase.setDesc("A ring containing a glowing pink gem." & vbCrLf & _
-                       "+5 Health & Minor Regen Effect.")
+                       "+5 Health, Minor Regen Effect.")
         id = 77
         tier = 3
         MyBase.setUsable(False)

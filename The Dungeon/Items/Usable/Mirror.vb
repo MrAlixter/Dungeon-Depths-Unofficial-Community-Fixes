@@ -12,11 +12,11 @@
 
     Overrides Sub use()
         If Me.getUsable() = False Then Exit Sub
-        If Game.cboxMG.Items.Contains("Self Polymorph") Then
+        If Game.player.knownSpells.Contains("Self Polymorph") Then
             If MessageBox.Show("Do you want to cast Self Polymorph?", "Mirror", MessageBoxButtons.YesNo) = Windows.Forms.DialogResult.Yes Then Spell.spellCast(Nothing, Game.player, "Self Polymorph")
         Else
             Game.pushLstLog(Game.player.description)
-            
+
         End If
     End Sub
     Overrides Sub discard()

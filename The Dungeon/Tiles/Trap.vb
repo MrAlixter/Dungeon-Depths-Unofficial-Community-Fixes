@@ -18,7 +18,7 @@
                 Game.player.lust += 20
                 Game.player.health -= 2 / Game.player.getmaxHealth
                 Dim out As String = "𝘱𝘸𝘩𝘪𝘱! You smack your neck, expecting a bug, only to feel a sharp pain as your smack crushes a small dart and leaks its contents all over your neck.  Initially fearing some sort of poison, the blushing of your cheeks and "
-                If Game.player.sexBool Then
+                If Game.player.prt.sexBool Then
                     out += "warmth between your legs "
                 Else
                     out += "stiffening your cock "
@@ -57,16 +57,16 @@
                 Game.pushLblEvent(out)
             Case 2
                 Dim rubyTF As Color = Color.FromArgb(185, 200, 55, 55)
-                Dim r As Integer = Game.player.skincolor.R + 50
-                Dim g = Game.player.skincolor.G
-                Dim b = Game.player.skincolor.B
+                Dim r As Integer = Game.player.prt.skincolor.R + 50
+                Dim g = Game.player.prt.skincolor.G
+                Dim b = Game.player.prt.skincolor.B
                 If r > 255 Then
                     r = 255
                     If g > 50 Then g -= 10
                     If g < 200 Then b -= 10
                 End If
 
-                Game.player.skincolor = Color.FromArgb(Game.player.skincolor.A, r, g, b)
+                Game.player.prt.skincolor = Color.FromArgb(Game.player.prt.skincolor.A, r, g, b)
                 If transformation.canbeTFed(Game.player) Then
                     Game.player.pState.save(Game.player)
                 End If
@@ -79,29 +79,33 @@
                 Game.player.update()
             Case 4
                 Dim out = "As your foot touches down on what looks to be the same ground that you have been walking on, you find that it is not met with any resistance.  Unable to keep your balance, you fall face first into the shiny waterlike facsimile of the floor and are thrown, flipping, into a another room.  As you regain your senses, you notice that you actually just ahead of where you were.  Turning around, you tap the floor you presumably fell out through, only to find it as solid as any other patch of floor you have come across.  Not able to find anything else abnormal with your surroundings, you write your expirience off as some failed illusion and set off on your way."
-                If Game.player.sexBool Then
-                    Game.player.iArrInd(1) = New Tuple(Of Integer, Boolean, Boolean)(Game.player.sState.iArrInd(1).Item1, False, Game.player.sState.iArrInd(1).Item3)
-                    Game.player.iArrInd(2) = New Tuple(Of Integer, Boolean, Boolean)(0, True, False)
-                    Game.player.iArrInd(4) = New Tuple(Of Integer, Boolean, Boolean)(Game.player.sState.iArrInd(4).Item1, False, Game.player.sState.iArrInd(1).Item3)
-                    Game.player.iArrInd(5) = New Tuple(Of Integer, Boolean, Boolean)(Game.player.sState.iArrInd(5).Item1, False, Game.player.sState.iArrInd(1).Item3)
-                    Game.player.iArrInd(8) = New Tuple(Of Integer, Boolean, Boolean)(Game.player.sState.iArrInd(8).Item1, False, Game.player.sState.iArrInd(1).Item3)
-                    Game.player.iArrInd(10) = New Tuple(Of Integer, Boolean, Boolean)(Game.player.sState.iArrInd(10).Item1, False, Game.player.sState.iArrInd(1).Item3)
-                    Game.player.iArrInd(15) = New Tuple(Of Integer, Boolean, Boolean)(Game.player.sState.iArrInd(15).Item1, False, Game.player.sState.iArrInd(1).Item3)
+                If Game.player.prt.sexBool Then
+                    Game.player.prt.setIAInd(1, Game.player.sState.iArrInd(1).Item1, False, Game.player.sState.iArrInd(1).Item3)
+                    Game.player.prt.setIAInd(2, 0, True, False)
+                    Game.player.prt.setIAInd(4, Game.player.sState.iArrInd(4).Item1, False, Game.player.sState.iArrInd(1).Item3)
+                    Game.player.prt.setIAInd(5, Game.player.sState.iArrInd(5).Item1, False, Game.player.sState.iArrInd(1).Item3)
+                    Game.player.prt.setIAInd(8, Game.player.sState.iArrInd(8).Item1, False, Game.player.sState.iArrInd(1).Item3)
+                    Game.player.prt.setIAInd(10, Game.player.sState.iArrInd(10).Item1, False, Game.player.sState.iArrInd(1).Item3)
+                    Game.player.prt.setIAInd(15, Game.player.sState.iArrInd(15).Item1, False, Game.player.sState.iArrInd(1).Item3)
                     Game.player.FtM()
                 Else
-                    Game.player.iArrInd(1) = New Tuple(Of Integer, Boolean, Boolean)(Game.player.sState.iArrInd(1).Item1, True, Game.player.sState.iArrInd(1).Item3)
-                    Game.player.iArrInd(5) = New Tuple(Of Integer, Boolean, Boolean)(Game.player.sState.iArrInd(5).Item1, True, Game.player.sState.iArrInd(1).Item3)
-                    Game.player.iArrInd(8) = New Tuple(Of Integer, Boolean, Boolean)(Game.player.sState.iArrInd(8).Item1, True, Game.player.sState.iArrInd(1).Item3)
-                    Game.player.iArrInd(15) = New Tuple(Of Integer, Boolean, Boolean)(Game.player.sState.iArrInd(15).Item1, True, Game.player.sState.iArrInd(1).Item3)
+                    Game.player.prt.setIAInd(1, Game.player.sState.iArrInd(1).Item1, True, Game.player.sState.iArrInd(1).Item3)
+                    Game.player.prt.setIAInd(5, Game.player.sState.iArrInd(5).Item1, True, Game.player.sState.iArrInd(1).Item3)
+                    Game.player.prt.setIAInd(8, Game.player.sState.iArrInd(8).Item1, True, Game.player.sState.iArrInd(1).Item3)
+                    Game.player.prt.setIAInd(15, Game.player.sState.iArrInd(15).Item1, True, Game.player.sState.iArrInd(1).Item3)
                     Game.player.MtF()
                 End If
                 Game.player.createP()
                 Game.player.UIupdate()
                 Game.pushLblEvent(out)
+            Case 5
+                Game.pushLblEvent("""Hello again Doctor, "" a metallic voice chimes from a terminal to your right.  ""I was not aware of your return.  My appologies.  Would you like me to execute standard dress protocols at this time?""", AddressOf doctorAccept, AddressOf doctorCancel, "Give the command?")
+            Case 6
+                Game.pushLblEvent("Before you, you see a person-sized metal canister with an opened pink glass lid.  Looking at the chamber, you spot the text ""G.C.U"" written on the side, and a holographic countdown timer projected from a chome pedistal next to it.  This timer seems to be counting down to something called ""ConvProccess.exe"".  You think that you can fit in the canister, but you have no clue what will happen if you do...", AddressOf gConvChamb, AddressOf gcuCancel, "Get in the G.C.U?")
         End Select
 
-        pos = New Point(-1, -1)
-        
+                pos = New Point(-1, -1)
+
     End Sub
 
     Shared Sub rubyRevert()
@@ -115,6 +119,34 @@
         Game.player.hunger += 60
     End Sub
 
+    Sub doctorAccept()
+        Game.pushLblEvent("""Very good.  Please step onto the equipping pad.""" & vbCrLf & vbCrLf &
+                          "Spotting a raised area of the floor that looks to be equipped with all sorts of fancy machinery, you step onto it." & vbCrLf & vbCrLf &
+                          """Thank you.  Please remain still.""" & vbCrLf & vbCrLf &
+                          """Suddenly, the pad's machinery whirs to life.  While some of its many mechanical arms quickly strip you, others prepare a clinical looking labcoat and begin dressing you in it.  Finally, one arm places a pair of small glasses carefully onto your face and the pad returns to its idle state." & vbCrLf & vbCrLf &
+                          """Have a nice day, doctor."" chimes the terminal, before darkening and going to sleep.")
+        Equipment.clothesChange("Labcoat")
+        Game.player.prt.setIAInd(12, 2, True, False)
+
+        Game.player.createP()
+    End Sub
+    Sub doctorCancel()
+        Game.pushLblEvent("""Very well.  Have a nice day, doctor."" chimes the terminal, before darkening and going to sleep.")
+    End Sub
+    Shared Sub gcuCancel()
+        Game.pushLblEvent("The lid slams tightly shut, and the system begins whatever it was going to do.  You can not get in anymore.")
+    End Sub
+    Shared Sub gConvChamb()
+        Dim out = "You climb into the chamber, mere seconds until the timer hits zero.  Almost as soon as you are clear, the lid slams tightly shut.  While you aren't exactly familiar with this level of technology, a forceful 'CHNK' is probably a sign that you won't be getting out until it's hatch opens back up.  Suddenly, a pink visor drops down onto your face from above.  A log of information starts on the visor, and as two antennae are positioned on the sides of your head you notice that some of the information is...yours?  Name, sex, age...this machine is reading your mind!  While this has you slightly worried, the fact that it seems to be populating a ""DELETION QUEUE"" has you ready to attempt to escape.  As you squirm, the machine takes notice and soon ""SECOND THOUGHTS PROTOCOL"" is flashing on the visor.  Beginning to relax that at least this crazy device has a failsafe, you fail to notice until it's too late that the deletion queue has been re-arranged.  All of a sudden, both the visor and the chambers lid become flashing strobes, and with each flash one of your attributes is marked as ""[deleted]"".  ""MOTOR FUNCTION"" is the first to go, followed by ""NAME"", ""AGE"", and ""LANGUAGE"", and before long a list of your negative emotions fly by on the screen.  Unable to fear, or mourn your loss, you sit idly as your body's abilities to do, well, anything, are erased one by one.  Finally, after what could be a few seconds or a millenia ""CONSCIOUSNESS"" is at the head of the queue.  With a final flash, everything goes dark."
+        Dim p As Player = Game.player
+
+        p.prt.setIAInd(6, 9, True, True)
+        p.prt.setIAInd(12, 6, True, True)
+
+        p.ongoingTFs.Add(New GynoidTF)
+
+        Game.pushLblEvent(out, AddressOf p.update)
+    End Sub
     Public Overrides Function ToString() As String
         Return pos.X & "*" & pos.Y & "*" & iD
     End Function

@@ -14,19 +14,19 @@
         If r = 0 Then moF = False
 
         If moF Then
-            Dim r1 = Int(Rnd() * Game.imgLib.atrs("RearHair2").ndoF)
-            Dim r2 = Int(Rnd() * Game.imgLib.atrs("FrontHair").ndoF)
+            Dim r1 = Int(Rnd() * Portrait.imgLib.atrs("RearHair2").ndoF)
+            Dim r2 = Int(Rnd() * Portrait.imgLib.atrs("FrontHair").ndoF)
 
-            p.setIAInd(1, r1, True, False)
-            p.setIAInd(5, r1, True, False)
-            p.setIAInd(15, r2, True, False)
+            p.prt.setIAInd(1, r1, True, False)
+            p.prt.setIAInd(5, r1, True, False)
+            p.prt.setIAInd(15, r2, True, False)
         Else
-            Dim r1 = Int(Rnd() * Game.imgLib.atrs("RearHair2").ndoM)
-            Dim r2 = Int(Rnd() * Game.imgLib.atrs("FrontHair").ndoM)
+            Dim r1 = Int(Rnd() * Portrait.imgLib.atrs("RearHair2").ndoM)
+            Dim r2 = Int(Rnd() * Portrait.imgLib.atrs("FrontHair").ndoM)
 
-            p.setIAInd(1, r1, False, False)
-            p.setIAInd(5, r1, False, False)
-            p.setIAInd(15, r2, False, False)
+            p.prt.setIAInd(1, r1, False, False)
+            p.prt.setIAInd(5, r1, False, False)
+            p.prt.setIAInd(15, r2, False, False)
         End If
 
         p.createP()

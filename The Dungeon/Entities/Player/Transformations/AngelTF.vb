@@ -21,10 +21,10 @@
 
         'angel transformation
         p.changeHairColor(Color.FromArgb(255, 245, 231, 184))
-        p.setIAInd(1, 5, True, True)
-        p.setIAInd(5, 14, True, True)
-        p.setIAInd(15, 11, True, True)
-        p.wingInd = 1
+        p.prt.setIAInd(1, 5, True, True)
+        p.prt.setIAInd(5, 14, True, True)
+        p.prt.setIAInd(15, 11, True, True)
+        p.prt.wingInd = 1
 
         'transformation description push
         out += "As you bite into the cake, you are lost in its sweet flavor.  So lost, in fact, that you miss the large white wings growing on you back.  You are now an angel!"

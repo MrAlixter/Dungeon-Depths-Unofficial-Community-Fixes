@@ -9,32 +9,32 @@
         MyBase.setDesc("A collar commonly placed around the necks of the thralls." & vbCrLf & _
                        "Provides no bonus.")
         id = 69
-        tier = Nothing
+        tier = 3
+        isMonsterDrop = True
         MyBase.setUsable(False)
         MyBase.count = 0
         MyBase.value = 200
         MyBase.fInd = New Tuple(Of Integer, Boolean, Boolean)(7, True, True)
         MyBase.mInd = New Tuple(Of Integer, Boolean, Boolean)(3, False, True)
+
+        MyBase.isRandoTFAcceptable = False
     End Sub
     Overrides Sub onEquip()
         Dim p As Player = Game.player
 
-        If p.pClass.name = "Magic Girl" Then
-            Game.pushLblEvent("Your form prevents you from being altered!")
-            Exit Sub
-        End If
+        MagGirlTF.chkForMagGirlRevert(p)
 
         p.perks("thrall") = 0
         p.ongoingTFs.Add(New ThrallTF(2, 10, 3.0, True))
 
         If Not p.pClass.name.Equals("Thrall") Then formerClass = p.pClass.name
-        formerEyeType = p.iArrInd(9)
+        formerEyeType = p.prt.iArrInd(9)
         If Transformation.canBeTFed(p) Then p.pState.save(p)
         p.pClass = p.classes("Thrall")
-        If p.sexBool Then
-            p.iArrInd(9) = New Tuple(Of Integer, Boolean, Boolean)(19, True, True)
+        If p.prt.sexBool Then
+            p.prt.setIAInd(9, 19, True, True)
         Else
-            p.iArrInd(9) = New Tuple(Of Integer, Boolean, Boolean)(8, False, True)
+            p.prt.setIAInd(9, 8, False, True)
         End If
 
         p.prefForm = New preferedForm()
@@ -44,28 +44,25 @@
     Sub forceEquip()
         Dim p As Player = Game.player
 
-        If p.pClass.name = "Magic Girl" Then
-            Game.pushLblEvent("Your form prevents you from being altered!")
-            Exit Sub
-        End If
+        MagGirlTF.chkForMagGirlRevert(p)
 
         p.perks("thrall") = 0
         p.ongoingTFs.Add(New ThrallTF(2, 10, 3.0, True))
 
         formerClass = p.pClass.name
-        formerEyeType = p.iArrInd(9)
+        formerEyeType = p.prt.iArrInd(9)
         If Transformation.canBeTFed(p) Then p.pState.save(p)
         p.pClass = p.classes("Thrall")
-        If p.sexBool Then
-            p.iArrInd(9) = New Tuple(Of Integer, Boolean, Boolean)(19, True, True)
+        If p.prt.sexBool Then
+            p.prt.setIAInd(9, 19, True, True)
         Else
-            p.iArrInd(9) = New Tuple(Of Integer, Boolean, Boolean)(8, False, True)
+            p.prt.setIAInd(9, 8, False, True)
         End If
 
         If p.pClass.name.Equals("Magic Girl") Then
             p.breastSize = 2
-            p.iArrInd(6) = New Tuple(Of Integer, Boolean, Boolean)(0, True, False)
-            p.iArrInd(15) = New Tuple(Of Integer, Boolean, Boolean)(7, True, False)
+            p.prt.setIAInd(6, 0, True, False)
+            p.prt.setIAInd(15, 7, True, False)
         End If
 
         p.prefForm = New preferedForm()
@@ -82,11 +79,12 @@
                 End If
             End If
         Next
-        p.perks("thrall") = 1
+        p.perks("thrall") = -1
         p.pClass = Game.player.classes(formerClass)
-        p.iArrInd(9) = formerEyeType
+        p.prt.setIAInd(9, formerEyeType)
         p.prefForm = Nothing
         p.forcedPath = Nothing
+        p.genDescription()
     End Sub
 
     Public Function getFT() As String

@@ -23,17 +23,17 @@
         p.pForm = p.forms("Blowup Doll")
 
         'maid transformation
-        p.setIAInd(1, 14, True, True)
-        p.setIAInd(2, 16, True, True)
-        p.setIAInd(4, 1, True, True)
-        p.setIAInd(5, 18, True, True)
-        p.setIAInd(7, 1, True, True)
-        p.setIAInd(8, 12, True, True)
-        p.setIAInd(9, 17, True, True)
-        p.setIAInd(10, 2, False, True)
-        p.setIAInd(13, 0, True, True)
-        p.setIAInd(15, 14, True, True)
-        p.setIAInd(16, 0, True, False)
+        p.prt.setIAInd(1, 14, True, True)
+        p.prt.setIAInd(2, 16, True, True)
+        p.prt.setIAInd(4, 1, True, True)
+        p.prt.setIAInd(5, 18, True, True)
+        p.prt.setIAInd(7, 1, True, True)
+        p.prt.setIAInd(8, 12, True, True)
+        p.prt.setIAInd(9, 17, True, True)
+        p.prt.setIAInd(10, 2, False, True)
+        p.prt.setIAInd(13, 0, True, True)
+        p.prt.setIAInd(15, 14, True, True)
+        p.prt.setIAInd(16, 0, True, False)
 
         'transformation description push
         out += "Looking down, you see some sort of coupon laying on the ground.  Picking it up, you read " & vbCrLf &

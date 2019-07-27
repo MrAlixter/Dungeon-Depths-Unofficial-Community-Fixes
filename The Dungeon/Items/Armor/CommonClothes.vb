@@ -1,7 +1,7 @@
 ﻿Public Class CommonClothes
     Inherits Armor
-    Public Shared Shadows bsizeneg1 As Tuple(Of Integer, Boolean, Boolean)
-    Public Shared Shadows bsize1 As Tuple(Of Integer, Boolean, Boolean)
+    Public Shared Shadows bsizeneg1 As Tuple(Of Integer, Boolean, Boolean) = New Tuple(Of Integer, Boolean, Boolean)(0, False, False)
+    Public Shared Shadows bsize1 As Tuple(Of Integer, Boolean, Boolean) = New Tuple(Of Integer, Boolean, Boolean)(0, True, False)
     Public Shared Shadows bsize2 As Tuple(Of Integer, Boolean, Boolean)
     Sub New()
         MyBase.setName("Common_Clothes")
@@ -14,9 +14,6 @@
         MyBase.value = 0
         MyBase.compressesBreasts = True
         MyBase.slutVarInd = -3
-        'MyBase.bsizeneg1 = New Tuple(Of Integer, Boolean, Boolean)(Form1.player.sState.iArrInd(3).Item1, False)
-        'MyBase.bsize1 = New Tuple(Of Integer, Boolean, Boolean)(Form1.player.sState.iArrInd(3).Item1, True)
-        'If Form1.player.name = "Mark" Then MyBase.bsize2 = New Tuple(Of Integer, Boolean, Boolean)(CharacterGenerator1.fClothing.Count - 1, True)
     End Sub
 
     Overrides Sub discard()

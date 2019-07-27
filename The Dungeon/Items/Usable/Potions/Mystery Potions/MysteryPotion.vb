@@ -1,8 +1,12 @@
 ﻿Public MustInherit Class MysteryPotion
     Inherits Item
     Protected effectList As List(Of PEffect)
+    Protected fakeName As String
+    Public hasBeenUsed As Boolean = False
+    Public Shadows onBuy As Action = AddressOf reveal
 
     Overrides Sub use()
+        If Not hasBeenUsed Then reveal()
         If Me.getUsable() = False Then Exit Sub
         Game.pushLstLog("You drink the " & getName())
 
@@ -64,6 +68,8 @@
             Return "Weak restoration effect"
         ElseIf pe.GetType Is GetType(WeakMinRestEffect) Then
             Return "Weak minor restoration effect"
+        ElseIf pe.GetType Is GetType(BlindEffect) Then
+            Return "Blinding effect"
             '__________SIDE EFFECTS____________
         ElseIf pe.GetType Is GetType(BEEffect) Then
             Return "Breast enlargement effect"
@@ -115,7 +121,22 @@
         effectList = New List(Of PEffect)
         If effectList.Count <> 0 Then effectList.Clear()
     End Sub
-
+    Public Overrides Function getName() As String
+        If hasBeenUsed Then
+            Return MyBase.getName()
+        Else
+            Return fakeName
+        End If
+    End Function
+    Public Sub setFName(ByVal n As String)
+        fakeName = n
+    End Sub
     Public MustOverride Function mainEffectDistribution() As Integer
     Public MustOverride Function sideEffectDistribution(ByVal i As Integer) As Integer
+
+    Public Sub reveal()
+        fakeName = getName()
+        hasBeenUsed = True
+        Game.lstInventory.SelectedIndex = -1
+    End Sub
 End Class

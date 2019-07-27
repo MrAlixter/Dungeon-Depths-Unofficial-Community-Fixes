@@ -23,8 +23,8 @@
         Equipment.weaponChange("Fists")
 
         'dragon transformation
-        p.setIAInd(16, Game.imgLib.atrs("Hat").getF.Count - 2, True, False)
-        If Not Game.cboxMG.Items.Contains("Dragon's Breath") Then Game.cboxMG.Items.Add("Dragon's Breath")
+        p.prt.setIAInd(16, Portrait.imgLib.atrs("Hat").getF.Count - 2, True, False)
+        If Not p.knownSpells.Contains("Dragon's Breath") Then p.knownSpells.Add("Dragon's Breath")
 
         'transformation description push
         p.TextColor = Color.LightGreen

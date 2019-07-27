@@ -16,6 +16,8 @@
         bsize1 = New Tuple(Of Integer, Boolean, Boolean)(12, True, True)
         bsize3 = New Tuple(Of Integer, Boolean, Boolean)(37, True, True)
         MyBase.compressesBreasts = True
+
+        MyBase.isRandoTFAcceptable = False
     End Sub
 
     Overrides Sub discard()

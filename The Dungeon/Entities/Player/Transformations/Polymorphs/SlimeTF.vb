@@ -22,14 +22,14 @@
 
         'slime transformation
         p.perks("slimehair") = 1
-        p.haircolor = Color.FromArgb(180, 5, 245, 198)
-        p.skincolor = Color.FromArgb(200, 0, 255, 255)
-        p.iArrInd(6) = New Tuple(Of Integer, Boolean, Boolean)(5, True, True)
-        p.iArrInd(9) = New Tuple(Of Integer, Boolean, Boolean)(9, True, True)
-        p.iArrInd(10) = New Tuple(Of Integer, Boolean, Boolean)(0, True, False)
-        p.iArrInd(13) = New Tuple(Of Integer, Boolean, Boolean)(0, True, False)
-        p.iArrInd(16) = New Tuple(Of Integer, Boolean, Boolean)(0, True, False)
-        If Not p.sexBool Then
+        p.prt.haircolor = Color.FromArgb(180, 5, 245, 198)
+        p.prt.skincolor = Color.FromArgb(200, 0, 255, 255)
+        p.prt.setIAInd(6, 5, True, True)
+        p.prt.setIAInd(9, 11, True, True)
+        p.prt.setIAInd(10, 0, True, False)
+        p.prt.setIAInd(13, 0, True, False)
+        p.prt.setIAInd(16, 0, True, False)
+        If Not p.prt.sexBool Then
             p.idRouteFM()
         End If
 

@@ -14,7 +14,7 @@
     Dim equippedAcce As Accessory
     Public iArrInd(16) As Tuple(Of Integer, Boolean, Boolean)
     Dim perks As Dictionary(Of String, Integer)
-    Dim sexBool, invNeedsUDate As Boolean
+    Dim invNeedsUDate As Boolean
     Dim haircolor, skincolor, textColor As Color
     Dim pImage As Image
     Dim wingIndex As Integer
@@ -44,16 +44,15 @@
         equippedWeapon = p.equippedWeapon
         equippedArmor = p.equippedArmor
         equippedAcce = p.equippedAcce
-        iArrInd = p.iArrInd.Clone
+        iArrInd = p.prt.iArrInd.Clone
         perks = New Dictionary(Of String, Integer)(p.perks)
-        sexBool = p.sexBool
         invNeedsUDate = p.inv.invNeedsUDate
-        haircolor = p.haircolor
-        skincolor = p.skincolor
+        haircolor = p.prt.haircolor
+        skincolor = p.prt.skincolor
         textColor = p.TextColor
         pImage = p.pImage
-        wingIndex = p.wingInd
-        hornIndex = p.hornInd
+        wingIndex = p.prt.wingInd
+        hornIndex = p.prt.hornInd
         initFlag = True
     End Sub
     'constructs a state with placeholder values
@@ -81,7 +80,6 @@
         equippedAcce = New noAcce
         iArrInd = {New Tuple(Of Integer, Boolean, Boolean)(2, False, False), New Tuple(Of Integer, Boolean, Boolean)(2, False, False), New Tuple(Of Integer, Boolean, Boolean)(2, False, False), New Tuple(Of Integer, Boolean, Boolean)(2, False, False), New Tuple(Of Integer, Boolean, Boolean)(2, False, False), New Tuple(Of Integer, Boolean, Boolean)(2, False, False), New Tuple(Of Integer, Boolean, Boolean)(2, False, False), New Tuple(Of Integer, Boolean, Boolean)(2, False, False), New Tuple(Of Integer, Boolean, Boolean)(2, False, False), New Tuple(Of Integer, Boolean, Boolean)(2, False, False), New Tuple(Of Integer, Boolean, Boolean)(2, False, False), New Tuple(Of Integer, Boolean, Boolean)(2, False, False), New Tuple(Of Integer, Boolean, Boolean)(2, False, False), New Tuple(Of Integer, Boolean, Boolean)(2, False, False), New Tuple(Of Integer, Boolean, Boolean)(2, False, False), New Tuple(Of Integer, Boolean, Boolean)(2, False, False), New Tuple(Of Integer, Boolean, Boolean)(2, False, False), New Tuple(Of Integer, Boolean, Boolean)(2, False, False), New Tuple(Of Integer, Boolean, Boolean)(2, False, False), New Tuple(Of Integer, Boolean, Boolean)(2, False, False)}
         perks = New Dictionary(Of String, Integer)()
-        sexBool = False
         invNeedsUDate = False
         haircolor = Color.Black
         skincolor = Color.Black
@@ -92,36 +90,39 @@
     End Sub
 
     'load applies a state to a given instance of a player
-    Public Sub load(ByRef p As Player)
+    Public Sub load(ByRef p As Player, Optional overwriteStats As Boolean = True)
         p.name = name
         p.sex = sex
         p.pClass = p.classes(pClass.name)
         p.pForm = p.forms(pForm.name)
         p.description = description
-        p.maxHealth = maxHealth
-        If p.health > 1 Then p.health = 1
-        p.maxMana = maxMana
-        p.attack = attack
-        p.defence = defence
-        p.will = will
-        p.speed = speed
+
+        If overwriteStats Then
+            p.maxHealth = maxHealth
+            If p.health > 1 Then p.health = 1
+            p.maxMana = maxMana
+            p.attack = attack
+            p.defence = defence
+            p.will = will
+            p.speed = speed
+            p.lust = lust
+        End If
+
         p.gold = gold
-        p.lust = lust
         p.breastSize = breastSize
         p.equippedWeapon = equippedWeapon
         Equipment.clothesChange(equippedArmor.getName)
         Equipment.accChange(equippedArmor.getName)
         p.equippedArmor = equippedArmor
         p.equippedAcce = equippedAcce
-        p.iArrInd = iArrInd.Clone
+        p.prt.iArrInd = iArrInd.Clone
         p.perks = New Dictionary(Of String, Integer)(perks)
-        p.sexBool = sexBool
         p.inv.invNeedsUDate = invNeedsUDate
-        p.haircolor = haircolor
-        p.skincolor = skincolor
+        p.prt.haircolor = haircolor
+        p.prt.skincolor = skincolor
         p.TextColor = textColor
-        p.wingInd = wingIndex
-        p.hornInd = hornIndex
+        p.prt.wingInd = wingIndex
+        p.prt.hornInd = hornIndex
         p.pImage = pImage
         p.isPetrified = isPetrified
     End Sub
@@ -147,15 +148,14 @@
         equippedWeapon = p.equippedWeapon
         equippedArmor = p.equippedArmor
         equippedAcce = p.equippedAcce
-        iArrInd = p.iArrInd.Clone
+        iArrInd = p.prt.iArrInd.Clone
         perks = New Dictionary(Of String, Integer)(p.perks)
-        sexBool = p.sexBool
         invNeedsUDate = p.inv.invNeedsUDate
-        haircolor = p.haircolor
-        skincolor = p.skincolor
+        haircolor = p.prt.haircolor
+        skincolor = p.prt.skincolor
         textColor = p.TextColor
-        wingIndex = p.wingInd
-        hornIndex = p.hornInd
+        wingIndex = p.prt.wingInd
+        hornIndex = p.prt.hornInd
         pImage = p.pImage
         isPetrified = p.isPetrified
     End Sub
@@ -163,7 +163,7 @@
     'read converts a string given from a save file into a state
     Public Sub read(ByVal s As String)
         Equipment.init()
-        Dim pimg() As Image = {Game.picPlayer.BackgroundImage, Game.picPlayerB.BackgroundImage, Game.picChicken.BackgroundImage, Game.picBimbof.BackgroundImage, Game.picPlayerf.BackgroundImage}
+        Dim pimg() As Image = {Game.picPlayer.BackgroundImage, Game.picPlayerB.BackgroundImage, Game.picChicken.BackgroundImage, Game.picBimbof.BackgroundImage, Game.picPlayerf.BackgroundImage, Game.picBimboSpace.BackgroundImage, Game.picPlayerSpace.BackgroundImage}
         Dim readArray() As String = s.Split("*")
         If readArray(0) = "N/A" Then
             name = ""
@@ -187,7 +187,6 @@
             equippedArmor = New Naked
             iArrInd = {New Tuple(Of Integer, Boolean, Boolean)(2, False, False), New Tuple(Of Integer, Boolean, Boolean)(2, False, False), New Tuple(Of Integer, Boolean, Boolean)(2, False, False), New Tuple(Of Integer, Boolean, Boolean)(2, False, False), New Tuple(Of Integer, Boolean, Boolean)(2, False, False), New Tuple(Of Integer, Boolean, Boolean)(2, False, False), New Tuple(Of Integer, Boolean, Boolean)(2, False, False), New Tuple(Of Integer, Boolean, Boolean)(2, False, False), New Tuple(Of Integer, Boolean, Boolean)(2, False, False), New Tuple(Of Integer, Boolean, Boolean)(2, False, False), New Tuple(Of Integer, Boolean, Boolean)(2, False, False), New Tuple(Of Integer, Boolean, Boolean)(2, False, False), New Tuple(Of Integer, Boolean, Boolean)(2, False, False), New Tuple(Of Integer, Boolean, Boolean)(2, False, False), New Tuple(Of Integer, Boolean, Boolean)(2, False, False), New Tuple(Of Integer, Boolean, Boolean)(2, False, False), New Tuple(Of Integer, Boolean, Boolean)(2, False, False), New Tuple(Of Integer, Boolean, Boolean)(2, False, False), New Tuple(Of Integer, Boolean, Boolean)(2, False, False), New Tuple(Of Integer, Boolean, Boolean)(2, False, False)}
             perks = New Dictionary(Of String, Integer)()
-            sexBool = False
             invNeedsUDate = False
             haircolor = Color.Black
             skincolor = Color.Black
@@ -227,7 +226,6 @@
         Next
 
         sex = readArray(19)
-        If sex = "Male" Then sexBool = False Else sexBool = True
 
         breastSize = CInt(readArray(21))
 
@@ -275,7 +273,8 @@
                 output += (iArrInd(i).Item1 & "%" & iArrInd(i).Item2 & "%" & iArrInd(i).Item3 & "*")
             Next
             If Not initFlag Then pImage = Game.picChicken.BackgroundImage
-            output += Array.IndexOf({Game.picPlayer.BackgroundImage, Game.picPlayerB.BackgroundImage, Game.picChicken.BackgroundImage, Game.picBimbof.BackgroundImage, Game.picPlayerf.BackgroundImage}, pImage).ToString & "*"
+            Dim pimg() As Image = {Game.picPlayer.BackgroundImage, Game.picPlayerB.BackgroundImage, Game.picChicken.BackgroundImage, Game.picBimbof.BackgroundImage, Game.picPlayerf.BackgroundImage, Game.picBimboSpace.BackgroundImage, Game.picPlayerSpace.BackgroundImage}
+            output += Array.IndexOf(pimg, pImage).ToString & "*"
             output += Game.player.equippedAcce.getName & "*"
             Return output + "#"
         Else

@@ -4,11 +4,13 @@
     Sub New()
         MyBase.setName("Portal_Chalk")
         MyBase.setDesc("A debugging item that lets one teleport/reset floors.  Use your powers for good, ok?")
-        id = 57
+        id = 86
         tier = Nothing
         MyBase.setUsable(True)
         MyBase.count = 0
         MyBase.value = 2
+
+        MyBase.isRandoTFAcceptable = False
     End Sub
 
     Overrides Sub use()
@@ -19,5 +21,7 @@
         Catch e As Exception
             Game.pushLblEvent("Your attempted teleportation fails in a less than spectacular fashion, the portal you created simply fizzling away to nothingness.")
         End Try
+
+        count -= 1
     End Sub
 End Class

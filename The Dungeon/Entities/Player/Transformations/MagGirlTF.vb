@@ -17,15 +17,14 @@
         Dim out = "Swinging your wand, you are engulfed in a rain of stars. As the light around your body grows blinding and your clothes disolve into the aether, you become a buxom young woman wearing a skimpy uniform!"
         If p.sex = "Male" Then
             p.sex = "Female"
-            p.sexBool = True
         End If
-        p.iArrInd(16) = New Tuple(Of Integer, Boolean, Boolean)(Game.imgLib.atrs("Hat").getF.Count - 3, True, False)
+        p.prt.setIAInd(16, Portrait.imgLib.atrs("Hat").getF.Count - 3, True, False)
         Game.pushLblEvent(out, AddressOf step2)
 
 
         p.TextColor = Game.lblEvent.ForeColor
-        Game.cmboxSpec.Items.Clear()
-        Game.specialRoute()
+        p.specialRoute()
+        p.magicRoute()
     End Sub
     Sub step2()
         Game.lblEvent.Text = ""
@@ -34,23 +33,23 @@
             p.magGState.load(p)
         Else
             p.breastSize = 1
-            p.iArrInd(1) = New Tuple(Of Integer, Boolean, Boolean)(7, True, True)
-            p.iArrInd(2) = New Tuple(Of Integer, Boolean, Boolean)(10, True, True)
-            p.iArrInd(3) = New Tuple(Of Integer, Boolean, Boolean)(12, True, True)
-            p.iArrInd(4) = New Tuple(Of Integer, Boolean, Boolean)(0, True, False)
-            p.iArrInd(5) = New Tuple(Of Integer, Boolean, Boolean)(7, True, True)
-            p.iArrInd(6) = New Tuple(Of Integer, Boolean, Boolean)(6, True, True)
-            p.iArrInd(7) = New Tuple(Of Integer, Boolean, Boolean)(0, True, False)
-            p.iArrInd(8) = New Tuple(Of Integer, Boolean, Boolean)(7, True, True)
-            p.iArrInd(9) = New Tuple(Of Integer, Boolean, Boolean)(9, True, True)
-            p.iArrInd(10) = New Tuple(Of Integer, Boolean, Boolean)(0, True, False)
-            p.iArrInd(13) = New Tuple(Of Integer, Boolean, Boolean)(0, True, False)
-            p.iArrInd(15) = New Tuple(Of Integer, Boolean, Boolean)(8, True, True)
-            p.iArrInd(16) = New Tuple(Of Integer, Boolean, Boolean)(0, True, False)
+            p.prt.setIAInd(1, 7, True, True)
+            p.prt.setIAInd(2, 10, True, True)
+            p.prt.setIAInd(3, 12, True, True)
+            p.prt.setIAInd(4, 0, True, False)
+            p.prt.setIAInd(5, 7, True, True)
+            p.prt.setIAInd(6, 6, True, True)
+            p.prt.setIAInd(7, 0, True, False)
+            p.prt.setIAInd(8, 7, True, True)
+            p.prt.setIAInd(9, 9, True, True)
+            p.prt.setIAInd(10, 0, True, False)
+            p.prt.setIAInd(13, 0, True, False)
+            p.prt.setIAInd(15, 8, True, True)
+            p.prt.setIAInd(16, 0, True, False)
             p.magGState.save(p)
             p.magGState.initFlag = True
         End If
-        Game.cboxMG.Items.Add("Heartblast Starcannon")
+        If Not p.knownSpells.Contains("Heartblast Starcannon") Then p.knownSpells.Add("Heartblast Starcannon")
         p.inv.add(10, 1)
         Equipment.accChange("Nothing")
         p.pClass = p.classes("Magic Girl")
@@ -59,7 +58,30 @@
         Game.pushLstLog("'Heartblast Starcannon' spell learned!")
         Game.lblEvent.Visible = False
         p.canMoveFlag = True
+        p.createP()
+
+        stopTF()
     End Sub
+
+
+    Shared Sub halfRevert(ByRef p As Player)
+        p.pClass = p.classes("Mage")
+
+        p.breastSize = 2
+        p.reverseBSRoute()
+
+        Equipment.clothesChange("Naked")
+        p.prt.setIAInd(1, 7, True, True)
+        p.prt.setIAInd(6, 0, True, False)
+        p.prt.setIAInd(5, 7, True, True)
+        p.prt.setIAInd(15, 7, True, True)
+    End Sub
+    Shared Sub chkForMagGirlRevert(ByRef p As Player)
+        If Not p.pClass.name.Equals("Magic Girl") Then Exit Sub
+        pushLblEventWithoutLoss("Your form wavers, and while you can maintain it you are definitly tiring out.")
+        MagGirlTF.halfRevert(p)
+    End Sub
+
 
     Public Overrides Sub stopTF()
         MyBase.stopTF()
@@ -77,5 +99,11 @@
     End Function
     Public Overrides Sub setWaitTime(stage As Integer)
         turnsTilNextStep = 0
+    End Sub
+
+    Public Shared Sub pushLblEventWithoutLoss(ByRef out As String)
+        Dim revertText = Game.lblEvent.Text.Split(vbCrLf)(0)
+        If Not revertText.Equals("") Then out = revertText & vbCrLf & vbCrLf & out
+        Game.pushLblEvent(out)
     End Sub
 End Class

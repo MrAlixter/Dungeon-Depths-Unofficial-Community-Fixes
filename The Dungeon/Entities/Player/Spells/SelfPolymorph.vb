@@ -1,6 +1,6 @@
 ﻿Public Class SelfPolymorph
     Inherits Spell
-    Sub New(ByRef c As Player, ByRef t As Monster)
+    Sub New(ByRef c As Player, ByRef t As NPC)
         MyBase.New(c, t)
         MyBase.setName("Self Polymorph")
         MyBase.setUOC(True)
@@ -23,7 +23,6 @@
         End If
         Game.pushLstLog(CStr("You turn yourself into a " & delta & "!"))
         Game.pushLblCombatEvent(CStr("You turn yourself into a " & delta & "!"))
-        
     End Sub
     Public Overrides Sub backfire()
         If MyBase.getTarget Is Nothing Then

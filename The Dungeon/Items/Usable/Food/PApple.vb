@@ -4,7 +4,7 @@
     Sub New()
         MyBase.setName("Apple​")
         MyBase.setDesc("An normal green apple. -15 Hunger")
-        id = 32
+        id = 31
         tier = 3
         MyBase.setUsable(True)
         MyBase.count = 0

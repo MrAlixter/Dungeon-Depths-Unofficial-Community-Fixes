@@ -6,7 +6,7 @@
     Public sBoost As Integer = 0
     Public wboost As Integer = 0
     Overridable Function attack(ByRef p As Player, ByRef m As Entity) As Integer
-        Return Player.calcDamage(p.attack, m.defence)
+        Return Player.calcDamage(p.getATK, m.getDEF)
     End Function
     Overridable Sub onEquip()
     End Sub

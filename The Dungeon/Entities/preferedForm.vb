@@ -69,9 +69,9 @@
     End Sub
 
     Public Function playerMeetsForm(ByRef p As Player)
-        Return p.sexBool = isFemale And p.iArrInd(1).Item2 = hasFemaleHair And
-        p.iArrInd(1).Item1 = rHairInd And p.iArrInd(15).Item1 = fHairInd + 1 And
-        p.breastSize = breastSize And p.iArrInd(6).Item1 = earType And
+        Return p.prt.sexBool = isFemale And p.prt.iArrInd(1).Item2 = hasFemaleHair And
+        p.prt.iArrInd(1).Item1 = rHairInd And p.prt.iArrInd(15).Item1 = fHairInd + 1 And
+        p.breastSize = breastSize And p.prt.iArrInd(6).Item1 = earType And
         ((p.perks("slutcurse") > -1 And isSlut) Or (p.perks("slutcurse") = -1 And Not isSlut))
     End Function
 
@@ -80,19 +80,19 @@
         If Not p.pClass.name.Equals("Thrall") Then p.pClass = p.classes("Thrall")
         If playerMeetsForm(p) Then Exit Sub
 
-        If Not p.haircolor.Equals(hairColor) Then p.changeHairColor(Game.cShift(p.haircolor, hairColor, 8))
-        If Not p.skincolor.Equals(skinColor) Then p.changeSkinColor(Game.cShift(p.skincolor, skinColor, 8))
+        If Not p.prt.haircolor.Equals(hairColor) Then p.changeHairColor(Game.cShift(p.prt.haircolor, hairColor, 8))
+        If Not p.prt.skincolor.Equals(skinColor) Then p.changeSkinColor(Game.cShift(p.prt.skincolor, skinColor, 8))
 
         If Int(Rnd() * 3) = 0 Then
-            p.iArrInd(1) = New Tuple(Of Integer, Boolean, Boolean)(rHairInd, hasFemaleHair, False)
-            p.iArrInd(5) = New Tuple(Of Integer, Boolean, Boolean)(rHairInd, hasFemaleHair, False)
+            p.prt.iArrInd(1) = New Tuple(Of Integer, Boolean, Boolean)(rHairInd, hasFemaleHair, False)
+            p.prt.iArrInd(5) = New Tuple(Of Integer, Boolean, Boolean)(rHairInd, hasFemaleHair, False)
         End If
         If Int(Rnd() * 3) = 0 Then
-            p.iArrInd(15) = New Tuple(Of Integer, Boolean, Boolean)(fHairInd + 1, hasFemaleHair, False)
+            p.prt.setIAInd(15, fHairInd + 1, hasFemaleHair, False)
         End If
 
-        If p.sexBool <> isFemale And Int(Rnd() * 3) = 0 Then
-            If p.sexBool Then
+        If p.prt.sexBool <> isFemale And Int(Rnd() * 3) = 0 Then
+            If p.prt.sexBool Then
                 p.FtM()
             Else
                 p.MtF()
@@ -117,14 +117,14 @@
             End If
         End If
 
-        If Not p.iArrInd(6).Item1 = earType And Int(Rnd() * 3) = 0 Then
-            p.iArrInd(6) = New Tuple(Of Integer, Boolean, Boolean)(earType, isFemale, False)
+        If Not p.prt.iArrInd(6).Item1 = earType And Int(Rnd() * 3) = 0 Then
+            p.prt.setIAInd(6, earType, isFemale, False)
         End If
 
-        If p.sexBool Then
-            p.iArrInd(9) = New Tuple(Of Integer, Boolean, Boolean)(19, True, True)
+        If p.prt.sexBool Then
+            p.prt.setIAInd(9, 19, True, True)
         Else
-            p.iArrInd(9) = New Tuple(Of Integer, Boolean, Boolean)(8, False, True)
+            p.prt.setIAInd(9, 8, False, True)
         End If
 
         p.createP()
@@ -137,13 +137,13 @@
         p.changeHairColor(hairColor)
         p.changeSkinColor(skinColor)
 
-        p.iArrInd(1) = New Tuple(Of Integer, Boolean, Boolean)(rHairInd, hasFemaleHair, False)
-        p.iArrInd(5) = New Tuple(Of Integer, Boolean, Boolean)(rHairInd, hasFemaleHair, False)
+        p.prt.setIAInd(1, rHairInd, hasFemaleHair, False)
+        p.prt.setIAInd(5, rHairInd, hasFemaleHair, False)
 
-        p.iArrInd(15) = New Tuple(Of Integer, Boolean, Boolean)(fHairInd + 1, hasFemaleHair, False)
+        p.prt.setIAInd(15, fHairInd + 1, hasFemaleHair, False)
 
-        If p.sexBool <> isFemale Then
-            If p.sexBool Then
+        If p.prt.sexBool <> isFemale Then
+            If p.prt.sexBool Then
                 p.FtM()
             Else
                 p.MtF()
@@ -172,14 +172,14 @@
             End If
         End If
 
-        If Not p.iArrInd(6).Item1 = earType Then
-            p.iArrInd(6) = New Tuple(Of Integer, Boolean, Boolean)(earType, isFemale, False)
+        If Not p.prt.iArrInd(6).Item1 = earType Then
+            p.prt.setIAInd(6, earType, isFemale, False)
         End If
 
-        If p.sexBool Then
-            p.iArrInd(9) = New Tuple(Of Integer, Boolean, Boolean)(19, True, True)
+        If p.prt.sexBool Then
+            p.prt.setIAInd(9, 19, True, True)
         Else
-            p.iArrInd(9) = New Tuple(Of Integer, Boolean, Boolean)(8, False, True)
+            p.prt.setIAInd(9, 8, False, True)
         End If
 
         p.createP()

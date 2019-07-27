@@ -1,12 +1,17 @@
 ﻿Public Class Petrify2
     Inherits Spell
-    Sub New(ByRef c As Player, ByRef t As Monster)
+    Sub New(ByRef c As Player, ByRef t As NPC)
         MyBase.New(c, t)
         MyBase.setName("Petrify II")
         MyBase.settier(4)
-        MyBase.setcost(14)
+        If c.pForm.name.Contains("Gorgon") Then MyBase.setcost(2) Else MyBase.setcost(14)
     End Sub
     Public Overrides Sub effect()
+        If getTarget.sName.Equals("Medusa") Or (getCaster.pForm.name.Contains("Gorgon") And MyBase.getTarget.GetType().IsSubclassOf(GetType(Shopkeeper))) Then
+            Game.pushLblEvent("Your spell doesn't seem to have done anything...")
+            Exit Sub
+        End If
+
         If MyBase.getTarget.GetType() Is GetType(Monster) Then
             Game.pushLstLog(CStr("Your magic strikes the " & MyBase.getTarget.name & " in the chest, turning it briefly to stone!"))
             Game.pushLblCombatEvent(CStr("Your magic strikes the " & MyBase.getTarget.name & " in the chest, turning it briefly to stone!"))

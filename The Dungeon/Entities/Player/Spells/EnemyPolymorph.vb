@@ -1,6 +1,6 @@
 ﻿Public Class EnemyPolymorph
     Inherits Spell
-    Sub New(ByRef c As Player, ByRef t As Monster)
+    Sub New(ByRef c As Player, ByRef t As NPC)
         MyBase.New(c, t)
         MyBase.setName("Polymorph Enemy")
         MyBase.settier(4)
@@ -12,7 +12,7 @@
         p.target = MyBase.getTarget
         p.ShowDialog()
         p.Dispose()
-        If MyBase.getTarget.GetType() Is GetType(Shopkeep) Then
+        If MyBase.getTarget.GetType().IsSubclassOf(GetType(ShopNPC)) Then
             MyBase.getTarget.update()
         End If
         Game.pushLstLog(CStr("You transform" & MyBase.getTarget.title & " " & MyBase.getTarget.name & "!"))
@@ -34,6 +34,5 @@
         MyBase.getCaster.perks("polymorphed") = 1
         Game.pushLstLog(CStr("You turn yourself into a " & n & "!"))
         Game.pushLblCombatEvent(CStr("You turn yourself into a " & n & "!"))
-        
     End Sub
 End Class

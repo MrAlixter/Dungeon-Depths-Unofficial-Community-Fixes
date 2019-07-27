@@ -7,6 +7,7 @@
                        "Fits sizes -1 through 3" & vbCrLf & _
                        "+30 DEF")
         id = 38
+
         tier = Nothing
         MyBase.setUsable(False)
         MyBase.dBoost = 30

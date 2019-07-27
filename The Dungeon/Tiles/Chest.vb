@@ -1,13 +1,13 @@
 ﻿Public Class Chest
     Public contents As Inventory
     Public pos As Point
-    Public tier1 = New ArrayList()
-    Public tier2 = New ArrayList()
-    Public tier3 = New ArrayList()
-    Public tiers() = {Nothing, tier1, tier2, tier3}
+    Public tier1 = New List(Of Item)
+    Public tier2 = New List(Of Item)
+    Public tier3 = New List(Of Item)
+    Public tiers() As List(Of Item) = {Nothing, tier1, tier2, tier3}
     '|CONSTRUCTORS|
     Sub New()
-        contents = New Inventory
+        contents = New Inventory(False)
     End Sub
 
     '|PSEUDOCONSTRUCTORS|
@@ -26,7 +26,7 @@
         chest.pos = p
         Return chest
     End Function
-    Function Create(ByVal i As Inventory, ByVal p As Point) As Chest
+    Function Create(ByVal i As Inventory, ByVal p As Point, Optional addGold As Boolean = True) As Chest
         'functions as a pseudo constructor for a chest object
         'creates a chest from an inventory array and a point
         Dim chest = Me.Clone()
@@ -35,7 +35,7 @@
             chest.contents.setCount(x, i.getCountAt(x))
         Next
 
-        If chest.contents.getCountAt(43) < 1 Then chest.contents.setCount(43, CInt(Rnd() * 250))
+        If addGold And chest.contents.getCountAt(43) < 1 Then chest.contents.setCount(43, CInt(Rnd() * 250))
         chest.pos = p
         Return chest
     End Function
@@ -92,7 +92,7 @@
         toReturn.tier2 = Me.tier2
         toReturn.tier3 = Me.tier3
         toReturn.tiers = Me.tiers
-        toReturn.contents = New Inventory
+        toReturn.contents = New Inventory(False)
         Return toReturn
     End Function
     Public Overridable Sub open()
@@ -105,7 +105,7 @@
             Else
                 mOdds = Int(Rnd() * 10)
             End If
-            If mOdds = 0 And Not contents.getCountAt(53) > 0 Then
+            If Game.floor <> 9999 And mOdds = 0 And Not contents.getCountAt(53) > 0 Then
                 Monster.createMimic(contents)
                 Exit Sub
             End If
@@ -122,7 +122,7 @@
         For i = 0 To contents.upperBound
             Dim content As Item = contents.item(i)
             If contents.getCountAt(i) > 0 Then
-                c += " " & vbCrLf & "+" & content.count & " " & content.getName() & " "
+                c += " " & vbCrLf & "+" & content.count & " " & Game.player.inv.item(i).getName() & " "
             End If
         Next
         c += " " & vbCrLf & " " & vbCrLf & "Press any non-movement key to continue."

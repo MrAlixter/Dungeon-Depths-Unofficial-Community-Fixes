@@ -2,7 +2,8 @@
     Inherits Food
     Sub New()
         MyBase.setName("Chicken_Leg")
-        MyBase.setDesc("A fried piece of chicken found in a box in a cave. -25 Hunger")
+        MyBase.setDesc("A roasted and seasoned, steaming hot chicken leg." & vbCrLf &
+                       "-25 Hunger")
         id = 30
         tier = 1
         MyBase.setUsable(True)

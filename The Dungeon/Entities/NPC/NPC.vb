@@ -3,7 +3,7 @@
     'transformation variables
     Public tfCt As Integer = 0
     Public tfEnd As Integer = 0
-    Public sName As String
+    Public sName As String = ""
     Public sMaxHealth, sMana, sMaxMana, sAttack, sDefence, sWill, sSpeed As Integer
     'dialog variables
     Public form As String = ""
@@ -15,6 +15,8 @@
     'stun variables
     Public isStunned As Boolean = False
     Public stunct As Integer = 0
+    Public firstTurn = True
+    Dim img As Image
 
     Public Overrides Sub update()
         If tfCt > 0 Then
@@ -23,7 +25,10 @@
             tfCt = 0
             revert()
         End If
-        If Game.player.pClass.name = "Thrall" And Me.name.Contains("Thrall") Then
+        If (Game.player.pClass.name = "Thrall" And Me.name.Contains("Thrall")) Or
+           (Game.player.pForm.name = "Arachne" And Me.name.Contains("Arachne")) Or
+            (Game.player.pForm.name = "Slime" And Me.name.Contains("Slime")) Or
+            (Game.player.pForm.name.Equals("Goo Girl") And Me.name.Contains("Goo")) Then
             despawn("friend")
             Exit Sub
         End If
@@ -112,6 +117,8 @@
                 Game.player.UIupdate()
             End If
             Game.pushLstLog("You ran from the " & name & "!")
+        ElseIf reason = "warp" Then
+            Game.pushLstLog("With a flash, you teleport the " & name & " far away!")
         ElseIf reason = "p-death" Then
         ElseIf reason = "friend" Then
             If Int(Rnd() * 3) = 0 Then
@@ -119,9 +126,11 @@
                 Game.player.inv.add(2, 1)
                 Game.player.inv.add(13, 1)
                 Game.player.inv.add(31, 1)
-                Game.pushLblEvent("+1 Health_Potion" & vbCrLf & "+1 Mana_Potion" & vbCrLf & "+1 Apple_Potion")
+                Game.pushLblEvent("The " & name & " gives you some supplies before leaving!" &
+                                  vbCrLf &
+                                  "+1 Health_Potion" & vbCrLf & "+1 Mana_Potion" & vbCrLf & "+1 Apple")
             Else
-                Game.pushLstLog("The " & name & " is friendly, and you chat a bit before setting back out!")
+                Game.pushLstLog("The " & name & " is friendly, and you chat briefly before setting out!")
             End If
         ElseIf reason = "npc" Then
             Game.pushLstLog("You walk away from " & name & "!")
@@ -129,6 +138,11 @@
             Dim output As String = ""
             If Me.GetType() Is GetType(Monster) Then output += "The "
             output += name & ", seeing that you are no longer human, wanders off."
+            Game.pushLstLog(output)
+        ElseIf reason = "shrink" Then
+            Dim output As String = ""
+            If Me.GetType() Is GetType(Monster) Then output += "The "
+            output += name & ", losing track of you, wanders off."
             Game.pushLstLog(output)
         ElseIf reason = "flee" Then
             Dim output As String = ""
@@ -146,7 +160,7 @@
             isDead = True
             endBoss()
         End If
-        If inv.getCountAt(53) > 0 And name <> "Shopkeeper" Then
+        If inv.getCountAt(53) > 0 And Not Me.GetType().IsSubclassOf(GetType(ShopNPC)) Then
             Game.pushLblEvent("Your foe drops a key!")
             inv.setCount(53, 1)
             Dim c1 As Chest = Game.baseChest.Create(inv, pos)
@@ -155,9 +169,10 @@
         Game.player.perks("nekocurse") = -1
         Game.player.currState.save(Game.player)
         Game.fromCombat()
-        
+
     End Sub
     Private Sub endBoss()
+        If Not Me.GetType() Is GetType(MiniBoss) Then Exit Sub
         If sName.Equals("Marissa the Enchantress") Then
             Game.beatboss(1) = True
             Game.player.perks("nekocurse") = -1
@@ -243,7 +258,7 @@
         Game.pushLblEvent("The " & name & " return to " & pPronoun & " original self!")
     End Sub
     Public Sub setInventory(ByVal contents() As Integer)
-        inv = New Inventory()
+        inv = New Inventory(False)
         For i = 0 To UBound(contents)
             If Me.GetType() Is GetType(MiniBoss) Then
                 inv.add(contents(i), 1)
@@ -301,14 +316,10 @@
     End Sub
     Private Sub hit(dmg As Integer, target As Player)
         target.takeDMG(dmg, Me)
-        Game.pushLstLog(CStr("You got hit! -" & dmg & " health!"))
-        Game.pushLblCombatEvent(CStr("You got hit! -" & dmg & " health!"))
     End Sub
     Private Sub cHit(dmg As Integer, target As Player)
-        target.takeDMG(dmg * 2, Me)
-        Game.pushLstLog(CStr("You got hit! Critical hit! -" & dmg * 2 & " health!"))
-        Game.pushLblCombatEvent(CStr("You got hit! Critical hit! -" & dmg * 2 & " health!"))
-    End Sub
+        target.takeCritDMG(dmg * 2, Me)
+      End Sub
     'attacking a non-player entity
     Private Sub miss(target As Entity)
         If target.GetType() Is GetType(Player) Then

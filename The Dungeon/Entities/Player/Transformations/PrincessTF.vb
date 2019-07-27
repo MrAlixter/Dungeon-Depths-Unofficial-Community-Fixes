@@ -33,12 +33,12 @@
         'equip clothes
         p.pClass = New Unconcious()
 
-        'maid transformation
-        p.iArrInd(8) = New Tuple(Of Integer, Boolean, Boolean)(3, p.sexBool, False)
-        If p.sexBool Then
-            p.iArrInd(9) = New Tuple(Of Integer, Boolean, Boolean)(5, True, False)
+        'princess transformation
+        p.prt.setIAInd(8, 6, p.prt.sexBool, False)
+        If p.prt.sexBool Then
+            p.prt.setIAInd(9, 5, True, False)
         Else
-            p.iArrInd(9) = New Tuple(Of Integer, Boolean, Boolean)(4, False, False)
+            p.prt.setIAInd(9, 4, False, False)
         End If
 
         'transformation description push
@@ -60,16 +60,16 @@
         p.pClass = p.classes("Princess")
 
         'maid transformation
-        If Not p.sexBool Then
+        If Not p.prt.sexBool Then
             p.MtF()
         End If
         p.changeHairColor(Color.FromArgb(255, 181, 148, 98))
-        p.iArrInd(1) = New Tuple(Of Integer, Boolean, Boolean)(1, True, False)
-        p.iArrInd(5) = New Tuple(Of Integer, Boolean, Boolean)(13, True, True)
-        p.iArrInd(8) = New Tuple(Of Integer, Boolean, Boolean)(0, True, False)
-        p.iArrInd(9) = New Tuple(Of Integer, Boolean, Boolean)(p.pState.iArrInd(9).Item1, p.pState.iArrInd(9).Item2, p.pState.iArrInd(9).Item3)
-        p.iArrInd(15) = New Tuple(Of Integer, Boolean, Boolean)(10, True, True)
-        p.iArrInd(16) = New Tuple(Of Integer, Boolean, Boolean)(6, True, False)
+        p.prt.setIAInd(1, 1, True, False)
+        p.prt.setIAInd(5, 13, True, True)
+        p.prt.setIAInd(8, 0, True, False)
+        p.prt.setIAInd(9, p.pState.iArrInd(9).Item1, p.pState.iArrInd(9).Item2, p.pState.iArrInd(9).Item3)
+        p.prt.setIAInd(15, 10, True, True)
+        p.prt.setIAInd(16, 6, True, False)
 
         'transformation description push
         out += "As you come to several hours later, you groan and rub your forhead, only to knock a golden crown off of your head. This jolts you up, and you examine yourself further.  Long hair, poofy ballgown, gloves that go up past your elbows?!  Well, it seems like your ""fairy-tale"" hunch wasn't too far off after all.  Dusting youself off, you get ready to embark back on your journey to return to your kingdom.  Wait...that isn't why you came here..." & vbCrLf & "Or was it?"
@@ -88,16 +88,16 @@
         p.pClass = p.classes("Princess")
 
         'maid transformation
-        If Not p.sexBool Then
+        If Not p.prt.sexBool Then
             p.MtF()
         End If
         p.changeHairColor(Color.FromArgb(255, 181, 148, 98))
-        p.iArrInd(1) = New Tuple(Of Integer, Boolean, Boolean)(1, True, False)
-        p.iArrInd(5) = New Tuple(Of Integer, Boolean, Boolean)(13, True, True)
-        p.iArrInd(8) = New Tuple(Of Integer, Boolean, Boolean)(0, True, False)
-        p.iArrInd(9) = New Tuple(Of Integer, Boolean, Boolean)(p.pState.iArrInd(9).Item1, p.pState.iArrInd(9).Item2, p.pState.iArrInd(9).Item3)
-        p.iArrInd(15) = New Tuple(Of Integer, Boolean, Boolean)(10, True, True)
-        p.iArrInd(16) = New Tuple(Of Integer, Boolean, Boolean)(6, True, False)
+        p.prt.setIAInd(1, 1, True, False)
+        p.prt.setIAInd(5, 13, True, True)
+        p.prt.setIAInd(8, 0, True, False)
+        p.prt.setIAInd(9, p.pState.iArrInd(9).Item1, p.pState.iArrInd(9).Item2, p.pState.iArrInd(9).Item3)
+        p.prt.setIAInd(15, 10, True, True)
+        p.prt.setIAInd(16, 6, True, False)
 
         'transformation description push
         out += "As you bite into the apple, your mind starts to get foggy.  You yawn, " &

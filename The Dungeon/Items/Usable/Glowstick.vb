@@ -36,7 +36,7 @@
         Next
 
         Dim r As Integer = (Int(Rnd() * 7))
-        If r = 0 And (Game.player.iArrInd(1).Item1 < 5 Or (Game.player.iArrInd(1).Item2 And Game.player.iArrInd(1).Item1 = 7)) Then
+        If r = 0 Then
             Dim rc As Integer = (Int(Rnd() * 6))
             Dim c As Color
             Select Case rc
@@ -53,10 +53,10 @@
                 Case 5
                     c = Color.GreenYellow
             End Select
-                Game.pushLblEvent("As you crack the glowstick to activate it, the tube cracks open slightly, spraying some fluid on your face.  You wipe it off, and while you don't feel any different, your hair seems a little more...vibrant than it was before.")
-                Game.player.haircolor = c
-                Game.player.createP()
-            If transformation.canbeTFed(Game.player) Then
+            Game.pushLblEvent("As you crack the glowstick to activate it, the tube cracks open slightly, spraying some fluid on your face.  You wipe it off, and while you don't feel any different, your hair seems a little more...vibrant than it was before.")
+            Game.player.prt.haircolor = c
+            Game.player.createP()
+            If Transformation.canBeTFed(Game.player) Then
                 Game.player.pState.save(Game.player)
             End If
         End If

@@ -32,6 +32,12 @@
                 Return New BUDollTF()
             Case "Cake"
                 Return New TTCCBF()
+            Case "Fusion"
+                Return New SpotFuseTF()
+            Case "Mindless"
+                Return New MindlessTF()
+            Case "Shrunken"
+                Return New ShrunkenTF()
             Case Else
                 Return Nothing
         End Select
@@ -48,6 +54,12 @@
         tfDone = True
 
         Game.player.revertToPState()
+        Game.player.perks("polymorphed") = -1
+    End Sub
+    Public Sub stopTf2()
+        MyBase.stopTF()
+        tfDone = True
+
         Game.player.perks("polymorphed") = -1
     End Sub
 

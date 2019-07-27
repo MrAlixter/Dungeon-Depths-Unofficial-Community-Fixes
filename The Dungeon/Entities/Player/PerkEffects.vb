@@ -7,13 +7,14 @@
                 p.perks("hunger") = -1
             Else
                 Game.pushLstLog("Your stomach aches... -5 health!")
-                p.takeDMG(5, New Monster(10))
+                p.health -= 5 / p.getMaxHealth
+                If p.health <= 0 Then p.die(New Monster(10))
             End If
         End If
     End Sub
     Shared Sub slimeHairRegen()
         Dim p As Player = Game.player
-        If Not p.haircolor.A = 180 Then
+        If Not p.prt.haircolor.A = 180 Then
             p.perks("slimehair") = -1
         Else
             If p.health < 1 And Game.turn Mod 4 = 0 Then
@@ -25,15 +26,24 @@
     End Sub
     Shared Sub vslimeHairRegen()
         Dim p As Player = Game.player
-        If Not p.haircolor.A = 180 Then
+        If Not p.prt.haircolor.A = 180 Then
             p.perks("vsslimehair") = -1
         Else
             If p.health < 1 And Game.turn Mod 7 = 0 Then
                 Dim h As Integer = Int(Rnd() * 5) + 1
-                p.health += h / p.getmaxHealth()
+                p.health += h / p.getMaxHealth()
                 Game.pushLstLog("The gel portion of your body is able to heal some of your wounds! +" & h & " health")
                 If p.health > 1 Then p.health = 1
             End If
+        End If
+    End Sub
+    Shared Sub plantRegen()
+        Dim p As Player = Game.player
+        If p.health < 1 And Game.turn Mod 7 = 0 Then
+            Dim h As Integer = 3
+            p.health += h / p.getMaxHealth()
+            Game.pushLstLog("You are able to absorb some nutrients through the ground. +" & h & " health")
+            If p.health > 1 Then p.health = 1
         End If
     End Sub
     Shared Sub minorRegen()
@@ -49,6 +59,19 @@
                 p.inv.item(77).count -= 1
                 Equipment.accChange("Nothing")
             End If
+        End If
+    End Sub
+    Shared Sub minorManaRegen()
+        Dim p As Player = Game.player
+        If p.equippedAcce.getId <> 110 Then
+            p.perks("minmanregen") = -1
+            Exit Sub
+        End If
+        If p.mana < p.getMaxMana And Game.turn Mod 5 = 0 Then
+            Dim m As Integer = 2
+            p.mana += m
+            Game.pushLstLog("A slight glowing aura imbues you with magical energy! +" & m & " mana")
+            If p.mana > p.getMaxMana Then p.mana = p.getMaxMana
         End If
     End Sub
     Shared Sub Regen()
@@ -88,6 +111,24 @@
         End If
         Return False
     End Function
+    Shared Sub amazon()
+        Dim p = Game.player
+        If p.pForm.name.Equals("Amazon") Or p.pForm.name.Equals("Amazon​") Then
+            If p.equippedWeapon.getName.Equals("Fists") And p.pForm.name.Equals("Amazon​") Then
+                p.pForm = p.forms("Amazon")
+            ElseIf Not p.equippedWeapon.getName.Equals("Fists") And p.pForm.name.Equals("Amazon") Then
+                Game.pushLblEvent("Your lack of familiarity with this weapon greatly lowers your attack potential!")
+                p.pForm = p.forms("Amazon​")
+            End If
+        Else
+            p.perks("amazon") = -1
+        End If
+    End Sub
+    Shared Sub barbarian()
+        If Not Game.player.pClass.name.Equals("barbarian") Then
+            Game.player.perks("barbarian") = -1
+        End If
+    End Sub
 
     Shared Sub ROTLGRoute()
         Dim p As Player = Game.player
@@ -115,7 +156,27 @@
 
         p.UIupdate()
     End Sub
+    Shared Sub BowTieRoute()
+        Dim p As Player = Game.player
+        Dim btie = CType(p.inv.item(97), Bowtie)
 
+        btie.aBoost = 0
+        btie.mBoost = 0
+
+        If p.equippedArmor.slutVarInd = -1 And p.equippedArmor.antiSlutVarInd <> -1 Then
+            Dim buff = p.equippedArmor.dBoost
+            If buff = 0 Then
+                buff = 3
+            ElseIf buff < 5 Then
+                buff = 5
+            End If
+            buff *= 4
+            btie.aBoost = p.equippedArmor.aBoost * 1.2
+            btie.mBoost = p.equippedArmor.mBoost * 1.2
+        End If
+
+        p.UIupdate()
+    End Sub
     '|TRANSFORMATION TRIGGERS|
     Shared Sub targaxSwordTF()
         Dim p As Player = Game.player
@@ -141,9 +202,11 @@
         Dim p As Player = Game.player
         If p.perks("astatue") > 1 Then
             p.perks("astatue") -= 1
+            p.canMoveFlag = False
         ElseIf p.perks("astatue") <= 1 Then
             p.perks("astatue") = -1
             p.revertToPState()
+            p.canMoveFlag = True
         End If
     End Sub
     Shared Sub statueMove(obj As Entity)
@@ -192,4 +255,62 @@
 
         End If
     End Sub
+
+    '|TAKE DAMAGE PERKS|
+    Shared Function onDamage(ByVal dmg As Integer) As Boolean
+        Dim flag = False
+        flag = bowTieEffect() Or flag
+        flag = hardLightEffect(dmg) Or flag
+        flag = bimboDodge() Or flag
+        Return flag
+    End Function
+    Shared Function bowTieEffect() As Boolean
+        Dim p = Game.player
+        If p.perks("bowtie") > -1 Then
+            Dim r = Int(Rnd() * 10)
+            If r > 8 And Not p.pClass.name.Equals("Bunny Girl") Then
+                Dim dTF = New DancerTF(1, 0, 0, False)
+                dTF.update()
+                p.createP()
+                Return True
+            ElseIf r > 5 Then
+                Game.pushLblEvent("Your bowtie begins glowing, and suddenly everything seems to slow down.  You deftly sidestep the oncomming blow!  Time returns to its normal speed shortly, and your bowtie returns to its inert state.")
+                Return True
+            End If
+        End If
+        Return False
+    End Function
+    Shared Function hardLightEffect(ByVal dmg As Integer) As Boolean
+        Dim p = Game.player
+        If p.perks("hardlight") > -1 Then
+            If Not p.equippedArmor.getName.Contains("Photon") Then
+                p.perks("hardlight") = -1
+                Return False
+            End If
+            If dmg / 2 <= p.mana Then
+                p.mana -= dmg / 2
+                Game.pushLblEvent("Your hardlight shields withstand the impact!")
+                Return True
+            Else
+                Game.pushLblEvent("Your hardlight shields are completely down!")
+            End If
+        End If
+        Return False
+    End Function
+    Shared Function bimboDodge() As Boolean
+        Dim p = Game.player
+        Dim out = "You, like, totally aren't feeling this right now.  Giving your best pout, you wimper ""Hey, stop it!  You're gonna, like, hurt me or something!"".  Squeezing your arms together to show off your cleavage, you look up at your opponent, making sure your lip is quivering just a little bit.  They stop their attack short, looking more confused than merciful.  You don't even consider this subtle distinction though, instead deciding that they, like, totally thought you were too cute to hit!"
+        Dim out2 = "You realize that you probably need to dodge this next attack.  Giving your best pout, you wimper ""Hey, stop it!  You're gonna, like, hurt me or something!"".  Squeezing your arms together to show off your cleavage, you look up at your opponent, making sure your lip is quivering just a little bit.  They stop their attack short, looking more confused than merciful.  Inwardly you groan to yourself.   It looks like you aren't out of the woods yet..."
+        If p.pClass.name.Equals("Bimbo") And Int(Rnd() * 3) = 0 Then
+            Game.pushLblEvent(out)
+            Return True
+        ElseIf p.pClass.name.Equals("Bimbo++") And Int(Rnd() * 3) = 0 Then
+            Game.pushLblEvent(out2)
+            Return True
+        ElseIf p.pForm.name.Contains("Bimbo") And Int(Rnd() * 3) = 0 Then
+            Game.pushLblEvent(out)
+            Return True
+        End If
+        Return False
+    End Function
 End Class

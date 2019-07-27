@@ -10,6 +10,8 @@
         MyBase.aBoost = 50
         MyBase.count = 0
         MyBase.value = 1250
+
+        MyBase.isRandoTFAcceptable = False
     End Sub
 
     Overrides Sub discard()

@@ -97,6 +97,13 @@
             health -= dmg / getMaxHealth()
         End If
     End Sub
+    Public Overridable Sub takeCritDMG(ByVal dmg As Integer, ByRef source As Entity)
+        If dmg >= getIntHealth() Then
+            die(source)
+        Else
+            health -= dmg / getMaxHealth()
+        End If
+    End Sub
     Public Shared Function calcDamage(atk As Integer, def As Integer) As Integer
         If atk <= 0 Then Return 1
         If def <= 0 Then Return atk

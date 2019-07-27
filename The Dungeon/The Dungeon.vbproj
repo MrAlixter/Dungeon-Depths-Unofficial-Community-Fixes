@@ -116,11 +116,24 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Entities\Entity.vb" />
+    <Compile Include="Entities\NPC\Non-Hostile\FVendor.vb" />
+    <Compile Include="Entities\NPC\Non-Hostile\HTeach.vb" />
+    <Compile Include="Entities\NPC\Non-Hostile\Shopkeeper.vb" />
+    <Compile Include="Entities\NPC\Non-Hostile\TravelingWizard.vb" />
     <Compile Include="Entities\NPC\NPC.vb" />
+    <Compile Include="Entities\Player\Classes\Shrunken.vb" />
+    <Compile Include="Entities\Player\Classes\needRevertPassage\Warlock.vb" />
+    <Compile Include="Entities\Player\Classes\needRevertPassage\BimboPlusPlus.vb" />
+    <Compile Include="Entities\Player\Classes\needRevertPassage\Barbarian.vb" />
+    <Compile Include="Entities\Player\Classes\Mindless.vb" />
+    <Compile Include="Entities\Player\Forms\needsRevertPassage\AmazonWeak.vb" />
     <Compile Include="Entities\Player\Classes\Bimbo.vb" />
     <Compile Include="Entities\Player\Classes\Classless.vb" />
     <Compile Include="Entities\Player\Classes\Goddess.vb" />
     <Compile Include="Entities\Player\Classes\Mage.vb" />
+    <Compile Include="Entities\Player\Classes\needRevertPassage\Dancer.vb" />
+    <Compile Include="Entities\Player\Forms\needsRevertPassage\Amazon.vb" />
+    <Compile Include="Entities\Player\Classes\Valkyrie.vb" />
     <Compile Include="Entities\Player\Classes\MagicGirl.vb" />
     <Compile Include="Entities\Player\Classes\MagicGirlTransform.vb" />
     <Compile Include="Entities\Player\Classes\needRevertPassage\BunnyGirl.vb" />
@@ -140,8 +153,11 @@
     <Compile Include="Entities\Player\Forms\Dragon.vb" />
     <Compile Include="Entities\Player\Forms\Elf.vb" />
     <Compile Include="Entities\Player\Forms\Human.vb" />
+    <Compile Include="Entities\Player\Forms\needsRevertPassage\CombatUnit.vb" />
+    <Compile Include="Entities\Player\Forms\needsRevertPassage\Plantfolk.vb" />
     <Compile Include="Entities\Player\Forms\needsRevertPassage\Android.vb" />
     <Compile Include="Entities\Player\Forms\needsRevertPassage\Angel.vb" />
+    <Compile Include="Entities\Player\Forms\needsRevertPassage\Bimbo2.vb" />
     <Compile Include="Entities\Player\Forms\needsRevertPassage\BlowUpDoll.vb" />
     <Compile Include="Entities\Player\Forms\needsRevertPassage\Cake.vb" />
     <Compile Include="Entities\Player\Forms\needsRevertPassage\Cyborg.vb" />
@@ -157,11 +173,32 @@
     <Compile Include="Entities\Player\Forms\needsRevertPassage\MinotaurBull.vb" />
     <Compile Include="Entities\Player\Forms\needsRevertPassage\MinotaurCow.vb" />
     <Compile Include="Entities\Player\Forms\needsRevertPassage\Sheep.vb" />
+    <Compile Include="Entities\Player\Forms\needsRevertPassage\Arachne.vb" />
     <Compile Include="Entities\Player\Forms\needsRevertPassage\Tigress.vb" />
+    <Compile Include="Entities\Player\Forms\GooGirl.vb" />
     <Compile Include="Entities\Player\Forms\Slime.vb" />
     <Compile Include="Entities\Player\Forms\Succubus.vb" />
     <Compile Include="Entities\Player\PerkEffects.vb" />
     <Compile Include="Entities\Player\Forms\pForm.vb" />
+    <Compile Include="Entities\Player\Specials\Abso.vb" />
+    <Compile Include="Entities\Player\Specials\AFK.vb" />
+    <Compile Include="Entities\Player\Specials\ShrinkRayShoot.vb" />
+    <Compile Include="Entities\Player\Specials\KiWBlast.vb" />
+    <Compile Include="Entities\Player\Specials\UBlessing.vb" />
+    <Compile Include="Entities\Player\Specials\HeavyBlow.vb" />
+    <Compile Include="Entities\Player\Specials\FBarra.vb" />
+    <Compile Include="Entities\Player\Specials\RapidFireJabs.vb" />
+    <Compile Include="Entities\Player\Specials\FocusedKick.vb" />
+    <Compile Include="Entities\Player\Specials\BAStrike.vb" />
+    <Compile Include="Entities\Player\Specials\BRage.vb" />
+    <Compile Include="Entities\Player\Specials\Cleanse.vb" />
+    <Compile Include="Entities\Player\Specials\IHFu.vb" />
+    <Compile Include="Entities\Player\Specials\MMam.vb" />
+    <Compile Include="Entities\Player\Specials\RDesc.vb" />
+    <Compile Include="Entities\Player\Specials\RitOfMana.vb" />
+    <Compile Include="Entities\Player\Specials\Special.vb" />
+    <Compile Include="Entities\Player\Specials\SpotFusion.vb" />
+    <Compile Include="Entities\Player\Specials\USed.vb" />
     <Compile Include="Entities\Player\Spells\ArcaneCompass.vb" />
     <Compile Include="Entities\Player\Spells\Dowse.vb" />
     <Compile Include="Entities\Player\Spells\DragonsBreath.vb" />
@@ -178,11 +215,26 @@
     <Compile Include="Entities\Player\Spells\Petrify2.vb" />
     <Compile Include="Entities\Player\Spells\SelfPolymorph.vb" />
     <Compile Include="Entities\Player\Spells\Spell.vb" />
+    <Compile Include="Entities\Player\Spells\UvonasFugue.vb" />
+    <Compile Include="Entities\Player\Spells\Warp.vb" />
     <Compile Include="Entities\Player\Spells\SuperFireball.vb" />
     <Compile Include="Entities\Player\Spells\turnToBlade.vb" />
     <Compile Include="Entities\Player\Spells\turnToCupcake.vb" />
     <Compile Include="Entities\Player\Spells\turnToFrog.vb" />
+    <Compile Include="Entities\Player\Transformations\AmazonTF.vb" />
+    <Compile Include="Entities\Player\Transformations\GooGirlTF.vb" />
+    <Compile Include="Entities\Player\Transformations\CombatModTF.vb" />
+    <Compile Include="Entities\Player\Transformations\WBimboTF.vb" />
+    <Compile Include="Entities\Player\Transformations\BBBimboTF.vb" />
+    <Compile Include="Entities\Player\Transformations\BimboPlusTF.vb" />
+    <Compile Include="Entities\Player\Transformations\HGorgonTF.vb" />
+    <Compile Include="Entities\Player\Transformations\GynoidTF.vb" />
+    <Compile Include="Entities\Player\Transformations\PlantfolkTF.vb" />
+    <Compile Include="Entities\Player\Transformations\ArachneTF.vb" />
+    <Compile Include="Entities\Player\Transformations\MBimboTF.vb" />
+    <Compile Include="Entities\Player\Transformations\CBimboTF.vb" />
     <Compile Include="Entities\Player\Transformations\BimboTF.vb" />
+    <Compile Include="Entities\Player\Transformations\Blindness.vb" />
     <Compile Include="Entities\Player\Transformations\Polymorphs\BUDollTF.vb" />
     <Compile Include="Entities\Player\Transformations\MagGirlTF.vb" />
     <Compile Include="Entities\Player\Transformations\MinoFTF.vb" />
@@ -193,25 +245,93 @@
     <Compile Include="Entities\Player\Transformations\Polymorphs\GoddessTF.vb" />
     <Compile Include="Entities\Player\Transformations\Polymorphs\HalfSuccubusTF.vb" />
     <Compile Include="Entities\Player\Transformations\MaidTF.vb" />
+    <Compile Include="Entities\Player\Transformations\Polymorphs\ShrunkenTF.vb" />
     <Compile Include="Entities\Player\Transformations\Polymorphs\MinotaurCowTF.vb" />
     <Compile Include="Entities\Player\Transformations\Polymorphs\PolymorphTF.vb" />
     <Compile Include="Entities\Player\Transformations\Polymorphs\PrincessTFB.vb" />
     <Compile Include="Entities\Player\Transformations\Polymorphs\SheepTFB.vb" />
     <Compile Include="Entities\Player\Transformations\Polymorphs\SlimeTF.vb" />
+    <Compile Include="Entities\Player\Transformations\Polymorphs\SpotFuseTF.vb" />
     <Compile Include="Entities\Player\Transformations\Polymorphs\SuccubusTF.vb" />
+    <Compile Include="Entities\Player\Transformations\Polymorphs\MindlessTF.vb" />
     <Compile Include="Entities\Player\Transformations\Polymorphs\TigressTF.vb" />
     <Compile Include="Entities\Player\Transformations\Polymorphs\TTCCBF.vb" />
     <Compile Include="Entities\Player\Transformations\PrincessTF.vb" />
-    <Compile Include="Entities\Player\Transformations\RandoSlimeTF.vb" />
     <Compile Include="Entities\Player\Transformations\RandoTF.vb" />
+    <Compile Include="Entities\Player\Transformations\DancerTF.vb" />
+    <Compile Include="Entities\Player\Transformations\ValkyrieTF2.vb" />
     <Compile Include="Entities\Player\Transformations\VialOfSlimeTF.vb" />
     <Compile Include="Entities\Player\Transformations\TargaxTF.vb" />
     <Compile Include="Entities\Player\Transformations\ThrallTF.vb" />
     <Compile Include="Entities\Player\Transformations\Transformation.vb" />
     <Compile Include="Entities\Inventory.vb" />
     <Compile Include="Entities\preferedForm.vb" />
-    <Compile Include="ImageCollection\ImageAttribute.vb" />
-    <Compile Include="ImageCollection\ImageCollection.vb" />
+    <Compile Include="Items\Accesories\ActiveCamoflage.vb" />
+    <Compile Include="Items\Accesories\Generator.vb" />
+    <Compile Include="Items\Accesories\Bowtie.vb" />
+    <Compile Include="Items\Accesories\BracedHeadband.vb" />
+    <Compile Include="Items\Accesories\RingOfUvona.vb" />
+    <Compile Include="Items\Accesories\EmeraldCirclet.vb" />
+    <Compile Include="Items\Armor\GelLinge.vb" />
+    <Compile Include="Items\Armor\GelArmor.vb" />
+    <Compile Include="Items\Armor\CrystalArmor.vb" />
+    <Compile Include="Items\Armor\SVBunnySuit.vb" />
+    <Compile Include="Items\Armor\LabcoatSV.vb" />
+    <Compile Include="Items\Armor\Labcoat.vb" />
+    <Compile Include="Items\Armor\PhotonBikini.vb" />
+    <Compile Include="Items\Armor\PhotonArmor.vb" />
+    <Compile Include="Items\Armor\GCUniform.vb" />
+    <Compile Include="Items\Armor\VSkimpyClothes.vb" />
+    <Compile Include="Items\Armor\WarlockRobe.vb" />
+    <Compile Include="Items\Armor\STBodysuit.vb" />
+    <Compile Include="Items\Armor\SAJumpsuit.vb" />
+    <Compile Include="Items\Armor\BarbArmor.vb" />
+    <Compile Include="Items\Armor\BunnySuitA.vb" />
+    <Compile Include="Items\Armor\AmaAttire.vb" />
+    <Compile Include="Items\Armor\DissolvedClothes.vb" />
+    <Compile Include="Items\Armor\ValkyrieArmor.vb" />
+    <Compile Include="Items\Lessons\BFormReset.vb" />
+    <Compile Include="Items\Lessons\WarlockLesson.vb" />
+    <Compile Include="Items\Lessons\HGorgonLesson.vb" />
+    <Compile Include="Items\Lessons\BarbarianLesson.vb" />
+    <Compile Include="Items\Lessons\AmazonLesson.vb" />
+    <Compile Include="Items\Lessons\NameChange.vb" />
+    <Compile Include="Items\Lessons\BimboLesson.vb" />
+    <Compile Include="Items\Usable\CryoGrenade.vb" />
+    <Compile Include="Items\Usable\Food\WFeast.vb" />
+    <Compile Include="Items\Usable\Food\MDelicacy.vb" />
+    <Compile Include="Items\Usable\Food\TSpecial.vb" />
+    <Compile Include="Items\Usable\Food\WStickOfGum.vb" />
+    <Compile Include="Items\Usable\Potions\GalaxyDye.vb" />
+    <Compile Include="Items\Usable\Potions\Mystery Potions\Side Effects\GalaxyDyeEffect.vb" />
+    <Compile Include="Items\Usable\CombatModule.vb" />
+    <Compile Include="Items\Usable\NewStuff.vb" />
+    <Compile Include="Items\Usable\VialOfBimbo.vb" />
+    <Compile Include="Items\Usable\Charms\OmniCharm.vb" />
+    <Compile Include="Items\Usable\Food\BBStickOfGum.vb" />
+    <Compile Include="Items\Usable\TFTestRemote.vb" />
+    <Compile Include="Items\Usable\Food\GardenSalad.vb" />
+    <Compile Include="Items\Usable\Food\MStickOfGum.vb" />
+    <Compile Include="Items\Usable\Food\SShroom.vb" />
+    <Compile Include="Items\Usable\Food\CHeavyCream.vb" />
+    <Compile Include="Items\Usable\Food\Pancea.vb" />
+    <Compile Include="Items\Usable\Food\CStickOfGum.vb" />
+    <Compile Include="Items\Usable\Manuals\CombatManual.vb" />
+    <Compile Include="Items\Usable\Manuals\UtilityManual.vb" />
+    <Compile Include="Items\Usable\Potions\AntiVenom.vb" />
+    <Compile Include="Items\Usable\Potions\Mystery Potions\BlindPotion.vb" />
+    <Compile Include="Items\Usable\Potions\Mystery Potions\Main Effects\BlindEffect.vb" />
+    <Compile Include="Items\Usable\Potions\Mystery Potions\Main Effects\AntiVenomEffect.vb" />
+    <Compile Include="Items\Usable\VialOfPSlime.vb" />
+    <Compile Include="Items\Usable\VialOfVenom.vb" />
+    <Compile Include="Items\Weapons\ShrinkRay.vb" />
+    <Compile Include="Items\Weapons\CWarAxe.vb" />
+    <Compile Include="Items\Weapons\PhotonBlade.vb" />
+    <Compile Include="Items\Weapons\ManaDischarge.vb" />
+    <Compile Include="Items\Weapons\ValkyrieSword.vb" />
+    <Compile Include="Items\Weapons\ScepterOfAsh.vb" />
+    <Compile Include="Portrait\ImageAttribute.vb" />
+    <Compile Include="Portrait\ImageCollection.vb" />
     <Compile Include="Items\Accesories\Accessory.vb" />
     <Compile Include="Items\Accesories\Cowbell.vb" />
     <Compile Include="Items\Accesories\HeartNecklace.vb" />
@@ -228,7 +348,6 @@
     <Compile Include="Items\Armor\VDayClothes.vb" />
     <Compile Include="Items\Armor\VNightLingerie.vb" />
     <Compile Include="Items\Usable\PortalChalk.vb" />
-    <Compile Include="Items\Usable\Potions\BEPotion.vb" />
     <Compile Include="Items\Usable\Potions\ClearPotion.vb" />
     <Compile Include="Items\Usable\Potions\MajHealthPotion.vb" />
     <Compile Include="Items\Usable\Potions\Mystery Potions\Side Effects\HairBleachEffect.vb" />
@@ -245,8 +364,8 @@
     <Compile Include="Items\Usable\Potions\Mystery Potions\Main Effects\RestEffect.vb" />
     <Compile Include="Items\Usable\Potions\Mystery Potions\Main Effects\WeakMinRestEffect.vb" />
     <Compile Include="Items\Usable\Potions\Mystery Potions\Main Effects\WeakRestEffect.vb" />
-    <Compile Include="Items\Usable\Potions\Mystery Potions\MurkyPotion.vb" />
-    <Compile Include="Items\Usable\Potions\Mystery Potions\GlitteryPotion.vb" />
+    <Compile Include="Items\Usable\Potions\Mystery Potions\BSPotion.vb" />
+    <Compile Include="Items\Usable\Potions\Mystery Potions\DitzyPotion.vb" />
     <Compile Include="Items\Usable\Potions\Mystery Potions\Main Effects\HHealthEffect.vb" />
     <Compile Include="Items\Usable\Potions\Mystery Potions\Main Effects\HManaEffect.vb" />
     <Compile Include="Items\Usable\Potions\Mystery Potions\Main Effects\ManaEffect.vb" />
@@ -274,8 +393,10 @@
     <Compile Include="Items\Usable\Spellbooks\ASpellbook.vb" />
     <Compile Include="Items\Weapons\BronzeAxe.vb" />
     <Compile Include="Items\Weapons\SpidersilkWhip.vb" />
+    <Compile Include="Portrait\Portrait.vb" />
     <Compile Include="Testing.vb" />
     <Compile Include="Tiles\LoadedChest.vb" />
+    <Compile Include="Tiles\mBoard.vb" />
     <Compile Include="WindowsForms\About.Designer.vb">
       <DependentUpon>About.vb</DependentUpon>
     </Compile>
@@ -287,10 +408,10 @@
     <Compile Include="Items\Armor\Armor.vb" />
     <Compile Include="Items\Usable\Charms\AttackCharm.vb" />
     <Compile Include="Items\Weapons\BareFists.vb" />
-    <Compile Include="Items\Usable\Potions\Mystery Potions\RosePotion.vb" />
-    <Compile Include="Items\Usable\Potions\Mystery Potions\RedPotion.vb" />
-    <Compile Include="Items\Usable\Potions\Mystery Potions\GoldenPotion.vb" />
-    <Compile Include="Entities\NPC\Boss.vb" />
+    <Compile Include="Items\Usable\Potions\Mystery Potions\FemininePotion.vb" />
+    <Compile Include="Items\Usable\Potions\Mystery Potions\HazardousPotion.vb" />
+    <Compile Include="Items\Usable\Potions\Mystery Potions\BEPotion.vb" />
+    <Compile Include="Entities\NPC\Hostile\Boss.vb" />
     <Compile Include="Items\Armor\BrawlerCosplay.vb" />
     <Compile Include="Items\Weapons\BronzeXiphos.vb" />
     <Compile Include="Items\Armor\BunnySuit.vb" />
@@ -352,14 +473,14 @@
     <Compile Include="WindowsForms\Equipment.vb">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="Items\Usable\Potions\Mystery Potions\AzurePotion.vb" />
+    <Compile Include="Items\Usable\Potions\Mystery Potions\MasculinePotion.vb" />
     <Compile Include="WindowsForms\GeneratorSettings.Designer.vb">
       <DependentUpon>GeneratorSettings.vb</DependentUpon>
     </Compile>
     <Compile Include="WindowsForms\GeneratorSettings.vb">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="ImageCollection\ImageDump.vb" />
+    <Compile Include="Portrait\ImageDump.vb" />
     <Compile Include="WindowsForms\Polymorph.Designer.vb">
       <DependentUpon>Polymorph.vb</DependentUpon>
     </Compile>
@@ -378,8 +499,8 @@
     <Compile Include="Items\Usable\Potions\HealthPotion.vb" />
     <Compile Include="Items\Usable\Food\HeavyCream.vb" />
     <Compile Include="Items\Usable\Food\Herbs.vb" />
-    <Compile Include="Items\Usable\Potions\Mystery Potions\BluePotion.vb" />
-    <Compile Include="Entities\NPC\MiniBoss.vb" />
+    <Compile Include="Items\Usable\Potions\Mystery Potions\MysPotion.vb" />
+    <Compile Include="Entities\NPC\Hostile\MiniBoss.vb" />
     <Compile Include="Items\Item.vb" />
     <Compile Include="Items\Misc\Key.vb" />
     <Compile Include="Items\Unimplemented\LeatherWhip.vb" />
@@ -391,7 +512,7 @@
     <Compile Include="Items\Usable\Potions\ManaPotion.vb" />
     <Compile Include="Items\Weapons\MidasGuantlet.vb" />
     <Compile Include="Items\Usable\Mirror.vb" />
-    <Compile Include="Entities\NPC\Monster.vb" />
+    <Compile Include="Entities\NPC\Hostile\Monster.vb" />
     <Compile Include="Tiles\mTile.vb" />
     <Compile Include="My Project\AssemblyInfo.vb" />
     <Compile Include="My Project\Application.Designer.vb">
@@ -410,7 +531,7 @@
     </Compile>
     <Compile Include="Items\Armor\Naked.vb" />
     <Compile Include="Items\Armor\CommonClothes.vb" />
-    <Compile Include="Entities\NPC\Shopkeep.vb" />
+    <Compile Include="Entities\NPC\Non-Hostile\ShopNPC.vb" />
     <Compile Include="Items\Weapons\OakStaff.vb" />
     <Compile Include="Items\Usable\Food\PApple.vb" />
     <Compile Include="Entities\Player\Player.vb" />
@@ -419,7 +540,7 @@
     <Compile Include="PriorityQue\PQInterface.vb" />
     <Compile Include="Items\Armor\PrincessGown.vb" />
     <Compile Include="PriorityQue\Q.vb" />
-    <Compile Include="Items\Usable\Potions\Mystery Potions\GreenPotion.vb" />
+    <Compile Include="Items\Usable\Potions\Mystery Potions\GentlePotion.vb" />
     <Compile Include="Items\Usable\Potions\RestorationPotion.vb" />
     <Compile Include="Items\Usable\RigWrench.vb" />
     <Compile Include="Items\Armor\Ropes.vb" />
@@ -445,7 +566,6 @@
     <Compile Include="Items\Armor\SkimpyClothes.vb" />
     <Compile Include="Items\Armor\SorcerersRobes.vb" />
     <Compile Include="Items\Weapons\SoulBlade.vb" />
-    <Compile Include="Entities\Player\Specials.vb" />
     <Compile Include="Items\Usable\Charms\SpeedCharm.vb" />
     <Compile Include="Items\Usable\Spellbooks\Spellbook.vb" />
     <Compile Include="Items\Armor\SportBra.vb" />
@@ -457,11 +577,11 @@
     <Compile Include="Items\Armor\SteelBikini.vb" />
     <Compile Include="Items\Weapons\MagGirlWand.vb" />
     <Compile Include="Items\Weapons\SteelSword.vb" />
-    <Compile Include="Items\Usable\StickOfGum.vb" />
+    <Compile Include="Items\Usable\Food\StickOfGum.vb" />
     <Compile Include="Items\Armor\SuccubusGarb.vb" />
     <Compile Include="Items\Armor\TankTop.vb" />
     <Compile Include="Items\Weapons\TargaxSword.vb" />
-    <Compile Include="Items\Usable\Potions\Mystery Potions\MauvePotion.vb" />
+    <Compile Include="Items\Usable\Potions\Mystery Potions\GSPotion.vb" />
     <Compile Include="Tiles\Trap.vb" />
     <Compile Include="Entities\Updatable.vb" />
     <Compile Include="Items\Usable\VialOfSlime.vb" />
@@ -557,6 +677,24 @@
     <Content Include="img\bkg\back.png">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
+    <Content Include="img\fEyebrows\fEyebrows5.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="img\fHat\fHat8.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="img\fMouth\gfMouth12.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="img\fTF\tfAccA\fAccA9.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="img\fTF\tfAccA\gfAccA10.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="img\fTF\tfAccA\gfAccA11.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
     <Content Include="img\fTF\tfClothes\gfClothes125.png">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
@@ -573,6 +711,429 @@
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
     <Content Include="img\fTF\tfClothes\gfClothes130.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="img\fTF\tfClothes\gfClothes131.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="img\fTF\tfClothes\gfClothes132.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="img\fTF\tfClothes\gfClothes133.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="img\fTF\tfClothes\gfClothes134.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="img\fTF\tfClothes\gfClothes135.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="img\fTF\tfClothes\gfClothes136.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="img\fTF\tfClothes\gfClothes137.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="img\fTF\tfClothes\gfClothes138.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="img\fTF\tfClothes\gfClothes139.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="img\fTF\tfClothes\gfClothes140.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="img\fTF\tfClothes\gfClothes141.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="img\fTF\tfClothes\gfClothes142.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="img\fTF\tfClothes\gfClothes143.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="img\fTF\tfClothes\gfClothes144.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="img\fTF\tfClothes\gfClothes145.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="img\fTF\tfClothes\gfClothes146.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="img\fTF\tfClothes\gfClothes147.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="img\fTF\tfClothes\gfClothes148.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="img\fTF\tfClothes\gfClothes149.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="img\fTF\tfClothes\gfClothes150.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="img\fTF\tfClothes\gfClothes151.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="img\fTF\tfClothes\gfClothes152.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="img\fTF\tfClothes\gfClothes153.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="img\fTF\tfClothes\gfClothes154.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="img\fTF\tfClothes\gfClothes155.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="img\fTF\tfClothes\gfClothes156.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="img\fTF\tfClothes\gfClothes157.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="img\fTF\tfClothes\gfClothes158.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="img\fTF\tfClothes\gfClothes159.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="img\fTF\tfClothes\gfClothes160.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="img\fTF\tfClothes\gfClothes161.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="img\fTF\tfClothes\gfClothes162.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="img\fTF\tfClothes\gfClothes163.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="img\fTF\tfClothes\gfClothes164.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="img\fTF\tfClothes\gfClothes165.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="img\fTF\tfClothes\gfClothes166.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="img\fTF\tfClothes\gfClothes167.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="img\fTF\tfClothes\gfClothes168.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="img\fTF\tfClothes\gfClothes169.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="img\fTF\tfClothes\gfClothes170.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="img\fTF\tfClothes\gfClothes171.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="img\fTF\tfClothes\gfClothes172.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="img\fTF\tfClothes\gfClothes173.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="img\fTF\tfClothes\gfClothes174.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="img\fTF\tfClothes\gfClothes175.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="img\fTF\tfClothes\gfClothes176.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="img\fTF\tfClothes\gfClothes177.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="img\fTF\tfClothes\gfClothes178.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="img\fTF\tfClothes\gfClothes179.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="img\fTF\tfClothes\gfClothes180.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="img\fTF\tfClothes\gfClothes181.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="img\fTF\tfClothes\gfClothes182.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="img\fTF\tfClothes\gfClothes183.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="img\fTF\tfClothes\gfClothes184.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="img\fTF\tfClothes\gfClothes185.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="img\fTF\tfClothes\gfClothes186.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="img\fTF\tfClothes\gfClothes187.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="img\fTF\tfClothes\gfClothes188.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="img\fTF\tfClothes\gfClothes189.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="img\fTF\tfClothes\gfClothes190.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="img\fTF\tfClothes\gfClothes191.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="img\fTF\tfClothes\gfClothes192.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="img\fTF\tfClothes\gfClothes193.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="img\fTF\tfClothes\gfClothes194.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="img\fTF\tfClothes\gfClothes195.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="img\fTF\tfClothes\gfClothes196.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="img\fTF\tfClothes\gfClothes197.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="img\fTF\tfClothes\gfClothes198.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="img\fTF\tfClothes\gfClothes199.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="img\fTF\tfClothes\hfClothes200.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="img\fTF\tfClothes\hfClothes201.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="img\fTF\tfClothes\hfClothes202.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="img\fTF\tfClothes\hfClothes203.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="img\fTF\tfClothes\hfClothes204.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="img\fTF\tfClothes\hfClothes205.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="img\fTF\tfClothes\hfClothes206.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="img\fTF\tfClothes\hfClothes207.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="img\fTF\tfClothes\hfClothes208.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="img\fTF\tfClothes\hfClothes209.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="img\fTF\tfClothes\hfClothes210.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="img\fTF\tfEars\fEars9.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="img\fTF\tfEars\tfEars10.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="img\fTF\tfEars\tfEars11.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="img\fTF\tfEyes\tfEyes20.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="img\fTF\tfEyes\tfEyes21.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="img\fTF\tfEyes\tfEyes22.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="img\fTF\tfEyes\tfEyes23.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="img\fTF\tfEyes\tfEyes24.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="img\fTF\tfEyes\tfEyes25.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="img\fTF\tfEyes\tfEyes26.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="img\fTF\tfEyes\tfEyes27.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="img\fTF\tfEyes\tfEyes28.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="img\fTF\tfEyes\tfEyes29.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="img\fTF\tfEyes\tfEyes30.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="img\fTF\tfEyes\tfEyes31.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="img\fTF\tfEyes\tfEyes32.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="img\fTF\tfEyes\tfEyes33.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="img\fTF\tfEyes\tfEyes34.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="img\fTF\tfEyes\tfEyes35.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="img\fTF\tfEyes\tfEyes36.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="img\fTF\tfFace\fFace2.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="img\fTF\tfFrontHair\tfFrontHair18.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="img\fTF\tfFrontHair\tfFrontHair19.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="img\fTF\tfFrontHair\tfFrontHair20.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="img\fTF\tfFrontHair\tfFrontHair21.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="img\fTF\tfFrontHair\tfFrontHair22.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="img\fTF\tfFrontHair\tfFrontHair23.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="img\fTF\tfFrontHair\tfFrontHair24.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="img\fTF\tfFrontHair\tfFrontHair25.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="img\fTF\tfFrontHair\tfFrontHair26.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="img\fTF\tfFrontHair\tfFrontHair27.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="img\fTF\tfFrontHair\tfFrontHair28.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="img\fTF\tfGlasses\fGlasses6.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="img\fTF\tfGlasses\fGlasses7.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="img\fTF\tfMouth\fMouth13.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="img\fTF\tfMouth\fMouth14.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="img\fTF\tfMouth\fMouth15.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="img\fTF\tfMouth\fMouth16.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="img\fTF\tfMouth\fMouth17.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="img\fTF\tfMouth\fMouth18.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="img\fTF\tfRearHair1\tfRearHair21.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="img\fTF\tfRearHair1\tfRearHair22.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="img\fTF\tfRearHair1\tfRearHair23.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="img\fTF\tfRearHair1\tfRearHair24.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="img\fTF\tfRearHair1\tfRearHair25.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="img\fTF\tfRearHair1\tfRearHair26.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="img\fTF\tfRearHair1\tfRearHair27.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="img\fTF\tfRearHair1\tfRearHair28.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="img\fTF\tfRearHair1\tfRearHair29.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="img\fTF\tfRearHair1\tfRearHair30.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="img\fTF\tfRearHair2\tfRearHair217.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="img\fTF\tfRearHair2\tfRearHair218.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="img\fTF\tfRearHair2\tfRearHair219.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="img\fTF\tfRearHair2\tfRearHair220.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="img\fTF\tfRearHair2\tfRearHair221.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="img\fTF\tfRearHair2\tfRearHair222.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="img\fTF\tfRearHair2\tfRearHair223.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="img\fTF\tfRearHair2\tfRearHair224.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="img\fTF\tfRearHair2\tfRearHair225.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="img\fTF\tfRearHair2\tfRearHair226.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="img\fTF\tfRearHair2\tfRearHair227.png">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
     <Content Include="img\misc-unimplemented\blank.png">
@@ -1808,6 +2369,15 @@
     <Content Include="img\mTF\tfAccA\tfAccA5.png">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
+    <Content Include="img\mTF\tfAccA\tfAccA6.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="img\mTF\tfAccA\tfAccA7.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="img\mTF\tfAccA\tfAccA8.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
     <Content Include="img\mTF\tfBody\blank.png">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
@@ -1895,7 +2465,73 @@
     <Content Include="img\mTF\tfClothes\mClothes31.png">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
-    <Content Include="img\mTF\tfEars\blank.png">
+    <Content Include="img\mTF\tfClothes\mClothes32.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="img\mTF\tfClothes\mClothes33.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="img\mTF\tfClothes\mClothes34.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="img\mTF\tfClothes\mClothes35.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="img\mTF\tfClothes\mClothes36.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="img\mTF\tfClothes\mClothes37.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="img\mTF\tfClothes\mClothes38.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="img\mTF\tfClothes\mClothes39.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="img\mTF\tfClothes\mClothes40.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="img\mTF\tfClothes\mClothes41.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="img\mTF\tfClothes\mClothes42.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="img\mTF\tfClothes\mClothes43.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="img\mTF\tfClothes\mClothes44.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="img\mTF\tfClothes\mClothes45.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="img\mTF\tfClothes\mClothes46.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="img\mTF\tfClothes\mClothes47.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="img\mTF\tfClothes\mClothes48.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="img\mTF\tfClothes\mClothes49.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="img\mTF\tfClothes\mClothes50.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="img\mTF\tfClothes\mClothes51.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="img\mTF\tfClothes\mClothes52.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="img\mTF\tfClothes\mClothes53.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="img\mTF\tfEars\mEars6.png">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
     <Content Include="img\mTF\tfEyes\tfEyes5.png">
@@ -1910,19 +2546,37 @@
     <Content Include="img\mTF\tfEyes\tfEyes8.png">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
+    <Content Include="img\mTF\tfEyes\tfEyes9.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="img\mTF\tfEyes\ufEyes10.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="img\mTF\tfEyes\ufEyes11.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
     <Content Include="img\mTF\tfFace\blank.png">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
     <Content Include="img\mTF\tfFrontHair\fFrontHair5.png">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
+    <Content Include="img\mTF\tfFrontHair\fFrontHair6.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
     <Content Include="img\mTF\tfMouth\tfMouth2.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="img\mTF\tfMouth\tfMouth3.png">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
     <Content Include="img\mTF\tfNose\blank.png">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
     <Content Include="img\mTF\tfRearHair1\fRearHair11.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="img\mTF\tfRearHair1\tfRearHair12.png">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
     <Content Include="img\mTF\tfRearHair2\tfRearHair21.png">
@@ -1941,6 +2595,9 @@
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
     <Content Include="img\Wings\wings2.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="img\Wings\wings3.png">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
   </ItemGroup>

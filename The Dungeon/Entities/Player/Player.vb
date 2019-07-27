@@ -9,11 +9,11 @@
     Public pForm As pForm = New Human()
     Dim turnCt As Integer = 0
     'Public level, xp, nextLevelXp As Integer
-  
+
     Public breastSize As Integer = -1
     Public hunger As Integer
-    Public equippedWeapon As Weapon
-    Public equippedArmor As Armor
+    Public equippedWeapon As Weapon = New BareFists
+    Public equippedArmor As Armor = New CommonClothes
     Public equippedAcce As Accessory = New noAcce
 
     Public Shadows currTarget As NPC = Nothing
@@ -25,12 +25,9 @@
     Public pImage As Image 'tile image of the player
     Public TextColor As Color
     Public isPetrified = False
-    'portrait variables
-    Public sexBool As Boolean
-    Public iArr As Image()
-    Public iArrInd(16) As Tuple(Of Integer, Boolean, Boolean)
-    Public haircolor As Color = Color.FromArgb(255, 204, 203, 213)
-    Public skincolor As Color = Color.FromArgb(255, 247, 219, 195)
+
+    'portrait variable
+    Public prt As Portrait = New Portrait(True, Me)
 
     'player & form states
     Public currState, pState, sState As State
@@ -39,15 +36,17 @@
     Public goddState As State = New State()
     Public maidState As State = New State()
     Public prinState As State = New State()
-
     Dim formStates = {goddState, bimbState, magGState, maidState, prinState}
 
     Public solFlag = False
-    Public wingInd = 0
-    Public hornInd = 0
     Public prefForm As preferedForm
 
+    'assorted lists
     Public ongoingTFs As List(Of Transformation) = New List(Of Transformation)
+    Public knownSpells As List(Of String) = New List(Of String)
+    Public knownSpecials As List(Of String) = New List(Of String)
+    Public selfPolyForms As List(Of String) = New List(Of String)
+    Public enemPolyForms As List(Of String) = New List(Of String)
 
     '|CONSTRUCTORS|:
     Public Sub New()
@@ -74,6 +73,7 @@
     End Sub
     'load from save constructors
     Public Sub New(ByVal s As String, ByVal v As Double)
+        solFlag = True
         createInvPerks()
         Dim playArray() As String = s.Split("#")
 
@@ -144,38 +144,75 @@
             CType(inv.item(69), ThrallCollar).setFormerLife(stuff(13), New Tuple(Of Integer, Boolean, Boolean)(CInt(stuff(14)), stuff(15), stuff(16)))
         Else
             CType(inv.item(69), ThrallCollar).setFormerLife(stuff(1), New Tuple(Of Integer, Boolean, Boolean)(CInt(stuff(2)), stuff(3), stuff(4)))
-            ''If Not stuff(0).Equals("N/a") Then
-            ''    prefForm = New preferedForm(Color.FromArgb(CInt(stuff(0)), CInt(stuff(1)), CInt(stuff(2)), CInt(stuff(3))),
-            ''                                Color.FromArgb(CInt(stuff(5)), CInt(stuff(6)), CInt(stuff(7)), CInt(stuff(8))),
-            ''                                CBool(stuff(9)), CBool(stuff(10)), CInt(stuff(11)), CBool(stuff(12)), CInt(stuff(13)))
-            ''    CType(inv.item(69), ThrallCollar).setFormerLife(stuff(13), New Tuple(Of Integer, Boolean, Boolean)(CInt(stuff(14)), stuff(15), stuff(16)))
-            ''Else
-            ''    CType(inv.item(69), ThrallCollar).setFormerLife(stuff(1), New Tuple(Of Integer, Boolean, Boolean)(CInt(stuff(2)), stuff(3), stuff(4)))
-            ''End If
         End If
 
-        currentIndex += 1
-        'MsgBox(UBound(playArray) & "/" & currentIndex)
-        For i = 0 To CInt(playArray(currentIndex))
-            Dim tf As Transformation = Transformation.newTF(playArray(currentIndex + 1 + i).Split("$"))
+        Dim knowlegebase = playArray(currentIndex + 1).Split("†")
+        currentIndex = 1
+        Dim subKB = knowlegebase(currentIndex).Split("Ͱ")
+
+        For i = 1 To CInt(subKB(0) + 1)
+            Dim tf As Transformation = Transformation.newTF(subKB(i).Split("$"))
             ongoingTFs.Add(tf)
         Next
+        currentIndex += 1
+
+        'load the known self poly forms
+        subKB = knowlegebase(currentIndex).Split("Ͱ")
+        For i = 1 To CInt(subKB(0) + 1)
+            selfPolyForms.Add(subKB(i))
+
+        Next
+        currentIndex += 1
+
+        'load the known self enemy forms
+        subKB = knowlegebase(currentIndex).Split("Ͱ")
+        For i = 1 To CInt(subKB(0) + 1)
+            enemPolyForms.Add(subKB(i))
+
+        Next
+        currentIndex += 1
+
+        'load the known spells
+        subKB = knowlegebase(currentIndex).Split("Ͱ")
+        For i = 1 To CInt(subKB(0) + 1)
+            knownSpells.Add(subKB(i))
+
+        Next
+        currentIndex += 1
+        'load the known specials
+        subKB = knowlegebase(currentIndex).Split("Ͱ")
+        For i = 1 To CInt(subKB(0) + 1)
+            knownSpecials.Add(subKB(i))
+
+        Next
+        currentIndex += 1
 
         currState.load(Me)
-        ReDim iArr(16)
 
         turnCt = Game.turn
 
         createP()
-
+        magicRoute()
+        specialRoute()
         bsizeroute()
+
+        solFlag = False
+    End Sub
+    Public Sub setStatsToBeginning()
+        maxHealth = 100
+        attack = 10
+        defence = 10
+        will = 10
+        speed = 10
+        mana = 3
+        maxMana = mana
     End Sub
 
     '|CHARACTER CREATION/INITIALIZATION|
     Private Sub setStartingAccessory()
         'assigns an accessory based on the created player portrait
-        If iArrInd(14).Item2 Then
-            Select Case iArrInd(14).Item1
+        If prt.iArrInd(14).Item2 Then
+            Select Case prt.iArrInd(14).Item1
                 Case 1
                     equippedAcce = inv.item(66)
                 Case 2
@@ -187,7 +224,7 @@
                     equippedAcce.count -= 1
             End Select
         Else
-            Select Case iArrInd(14).Item1
+            Select Case prt.iArrInd(14).Item1
                 Case 1
                     equippedAcce = inv.item(67)
                 Case 2
@@ -200,10 +237,19 @@
         equippedAcce.add(1)
     End Sub
     Public Sub setClassLoadout(ByVal s As String)
+        'set the player's form baced on their ears
+        If prt.iArrInd(6).Item1 = 3 Then
+            pForm = forms("Elf")
+        ElseIf prt.iArrInd(6).Item1 = 4 Then
+            pForm = forms("Android")
+        End If
+
         'sets default weapon/armor/accessory
         equippedArmor = New CommonClothes
         equippedWeapon = New BareFists
         setStartingAccessory()
+        'set class
+        pClass = classes(s)
         'sets loadout based on selected class
         If s = "Warrior" Then
             inv.add(83, 1)
@@ -211,20 +257,28 @@
             equippedArmor = inv.item(83)
             equippedWeapon = inv.item(84)
         ElseIf s = "Mage" Then
-            Game.cboxMG.Items.Add("Fireball")
+            knownSpells.Add("Fireball")
             inv.add(2, 3)
             inv.add(4, 1)
             inv.add(21, 1)
             equippedWeapon = inv.item(21)
+        ElseIf s = "Magic Girl" Then
+            pClass = classes("Mage")
+            maxHealth = 80
+            attack = 7
+            defence = 7
+            speed = 7
+            inv.add(2, 3)
+            inv.add(4, 1)
+            inv.add(11, 1)
+            Game.pushLstLog("You find a wand lodged in the entrance...Maybe you should equip it?")
         End If
-        'set class
-        pClass = classes(s)
         'equip armor, boost mana if a staff is equipped
         Equipment.clothesChange(equippedArmor.getName)
         If equippedWeapon.GetType().IsSubclassOf(GetType(Staff)) Then mana += equippedWeapon.mBoost
-        'set sexBool
-        If sex = "Female" Then sexBool = True
-        If sex = "Male" Then sexBool = False
+        'set the known specials/spells
+        specialRoute()
+        magicRoute()
         'set pImage and TextColor
         pImage = Game.picPlayer.BackgroundImage
         TextColor = Color.White
@@ -235,7 +289,7 @@
         sState = New State(Me)
     End Sub
     Public Sub createInvPerks()
-        inv = New Inventory
+        inv = New Inventory(True)
         initPerks()
         initClasses()
         initForms()
@@ -244,25 +298,35 @@
     Private Sub initPerks()
         perks.Clear()
         'Creates the dictionary of perks
-        perks.Add("hunger", -1) '0
-        perks.Add("bimbotf", -1) '1
-        perks.Add("slutcurse", -1) '2
-        perks.Add("chickentf", -1) '3
-        perks.Add("slimehair", -1) '4
-        perks.Add("polymorphed", -1) '5
-        perks.Add("nekocurse", -1) '6
-        perks.Add("swordpossess", -1) '7
-        perks.Add("vsslimehair", -1) '8
-        perks.Add("brage", -1) '9
-        perks.Add("mmammaries", -1) '10
-        perks.Add("ihfury", -1) '11
-        perks.Add("livearm", -1) '12
-        perks.Add("livelinge", -1) '13
-        perks.Add("thrall", -1) '14
-        perks.Add("cowbell", -1) '15
-        perks.Add("minRegen", -1) '16
-        perks.Add("rotlg", -1) '17
-        perks.Add("astatue", -1) '18
+        perks.Add("hunger", -1)         '0
+        perks.Add("bimbotf", -1)        '1
+        perks.Add("slutcurse", -1)      '2
+        perks.Add("chickentf", -1)      '3
+        perks.Add("slimehair", -1)      '4
+        perks.Add("polymorphed", -1)    '5
+        perks.Add("nekocurse", -1)      '6
+        perks.Add("swordpossess", -1)   '7
+        perks.Add("vsslimehair", -1)    '8
+        perks.Add("brage", -1)          '9
+        perks.Add("mmammaries", -1)     '10
+        perks.Add("ihfury", -1)         '11
+        perks.Add("livearm", -1)        '12
+        perks.Add("livelinge", -1)      '13
+        perks.Add("thrall", -1)         '14
+        perks.Add("cowbell", -1)        '15
+        perks.Add("minRegen", -1)       '16
+        perks.Add("rotlg", -1)          '17
+        perks.Add("astatue", -1)        '18
+        perks.Add("svenom", -1)         '19
+        perks.Add("avenom", -1)         '20
+        perks.Add("blind", -1)          '21
+        perks.Add("bowtie", -1)         '22 
+        perks.Add("hardlight", -1)      '23
+        perks.Add("minmanregen", -1)    '24
+        perks.Add("amazon", -1)         '25
+        perks.Add("barbarian", -1)      '26
+        perks.Add("slimetf", -1)        '27
+        perks.Add("googirltf", -1)      '28
     End Sub
     Private Sub initClasses()
         'creates the class dictionary
@@ -285,6 +349,13 @@
         classes.Add("Soul-Lord", New SoulLord())
         classes.Add("Targaxian", New Targaxian())
         classes.Add("Unconscious", New Unconcious())
+        classes.Add("Valkyrie", New Valkyrie())
+        classes.Add("Bunny Girl", New Dancer())
+        classes.Add("Barbarian", New Barbarian())
+        classes.Add("Warlock", New Warlock())
+        classes.Add("Mindless", New Mindless())
+        classes.Add("Bimbo++", New BimboPlusPlus())
+        classes.Add("Shrunken", New Shrunken())
     End Sub
     Private Sub initForms()
         'Creates the form dictionary
@@ -312,6 +383,12 @@
         forms.Add("Cake", New Cake())
         forms.Add("Sheep", New Sheep())
         forms.Add("Frog", New Frog())
+        forms.Add("Arachne", New Arachne())
+        forms.Add("Amazon", New Amazon())
+        forms.Add("Amazon​", New AmazonWeak())
+        forms.Add("Plantfolk", New Plantfolk())
+        forms.Add("Goo Girl", New GooGirl())
+        forms.Add("Combat Unit", New CombatUnit())
     End Sub
     Private Sub initPolymorphs()
         'compile list of polymorphs
@@ -325,11 +402,13 @@
         polymorphs.Add("Bunny Girl​", Nothing)
         polymorphs.Add("Sheep", Nothing)
         polymorphs.Add("Cake", Nothing)
+        polymorphs.Add("Fusion", Nothing)
+        polymorphs.Add("Mindless", Nothing)
     End Sub
 
     '|MOVEMENT COMMANDS|
     Public Overrides Sub reachedFPathDest()
-        If Game.floor = 4 And Game.preBSBody Is Nothing And Not Game.preBSStartState Is Nothing And Game.floorboss(4) = "Ooze Empress" Then
+        If Game.floor = 4 And Not Game.preBSBody Is Nothing And Game.preBSStartState Is Nothing And Game.floorboss(4) = "Ooze Empress" Then
             RandoTF.floor4FirstBossEncounter()
             Exit Sub
         End If
@@ -354,6 +433,18 @@
             End If
         End If
     End Sub
+    Public Sub wander()
+        Select Case Int(Rnd() * 4) + 1
+            Case 1
+                moveUp()
+            Case 2
+                moveDown()
+            Case 3
+                moveLeft()
+            Case 4
+                moveRight()
+        End Select
+    End Sub
 
     '|COMBAT COMMANDS|
     Public Sub clearTarget()
@@ -364,6 +455,12 @@
     End Sub
     Public Overrides Sub attackCMD(ByRef target As Entity)
         Randomize()
+
+        If pClass.name.Equals("Barbarian") Then
+            aBuff -= perks("barbarian")
+            perks("barbarian") = 0
+        End If
+
         Dim dmg As Integer = equippedWeapon.attack(Me, target)
         If dmg = -1 Then
             miss(target)
@@ -380,55 +477,96 @@
         Game.pushLblCombatEvent(CStr("You miss" & target.title & " " & target.getName() & "!"))
     End Sub
     Private Sub hit(dmg As Integer, target As NPC)
+        Game.pushLstLog(CStr("You hit" & target.title.ToLower & target.getName() & " for " & dmg & " damage!"))
+        Game.pushLblCombatEvent(CStr("You hit" & target.title.ToLower & target.getName() & " for " & dmg & " damage!"))
         target.takeDMG(dmg, Me)
-        Game.pushLstLog(CStr("You hit" & target.title & " " & target.getName() & " for " & dmg & " damage!"))
-        Game.pushLblCombatEvent(CStr("You hit" & target.title & " " & target.getName() & " for " & dmg & " damage!"))
     End Sub
     Public Sub setTarget(ByRef t As NPC)
         currTarget = t
         MyBase.currTarget = t
     End Sub
     Private Sub cHit(dmg As Integer, target As NPC)
-        target.takeDMG(dmg * 3, Me)
         Game.pushLstLog(CStr("You hit" & target.title & " " & target.getName() & " for " & dmg * 3 & " damage!  Critical hit!"))
         Game.pushLblCombatEvent(CStr("You hit" & target.title & " " & target.getName() & " for " & dmg * 3 & " damage!  Critical hit!"))
         target.isStunned = True
         target.stunct = 0
+        target.takeDMG(dmg * 3, Me)
     End Sub
     'attacking a non npc
     Private Sub miss(target As Entity)
+        Game.pushLstLog(CStr("You miss " & target.getName() & "!"))
+        Game.pushLblCombatEvent(CStr("You miss " & target.getName() & "!"))
         If target.GetType() Is GetType(NPC) Or target.GetType.IsSubclassOf(GetType(NPC)) Then
             miss(CType(target, NPC))
             Exit Sub
         End If
-
-        Game.pushLstLog(CStr("You miss " & target.getName() & "!"))
-        Game.pushLblCombatEvent(CStr("You miss " & target.getName() & "!"))
     End Sub
     Private Sub hit(dmg As Integer, target As Entity)
+        Game.pushLstLog(CStr("You hit " & target.getName() & " for " & dmg & " damage!"))
+        Game.pushLblCombatEvent(CStr("You hit " & target.getName() & " for " & dmg & " damage!"))
         If target.GetType() Is GetType(NPC) Or target.GetType.IsSubclassOf(GetType(NPC)) Then
             hit(dmg, CType(target, NPC))
             Exit Sub
         End If
 
         target.takeDMG(dmg, Me)
-        Game.pushLstLog(CStr("You hit " & target.getName() & " for " & dmg & " damage!"))
-        Game.pushLblCombatEvent(CStr("You hit " & target.getName() & " for " & dmg & " damage!"))
     End Sub
     Private Sub cHit(dmg As Integer, target As Entity)
+        Game.pushLstLog(CStr("You hit " & target.getName() & " for " & dmg * 3 & " damage!  Critical hit!"))
+        Game.pushLblCombatEvent("You hit " & target.getName() & " for " & dmg * 3 & " damage!  Critical hit!")
+
         If target.GetType() Is GetType(NPC) Or target.GetType.IsSubclassOf(GetType(NPC)) Then
             cHit(dmg, CType(target, NPC))
             Exit Sub
         End If
 
         target.takeDMG(dmg * 3, Me)
-        Game.pushLstLog(CStr("You hit " & target.getName() & " for " & dmg * 3 & " damage!  Critical hit!"))
-        Game.pushLblCombatEvent("You hit " & target.getName() & " for " & dmg * 3 & " damage!  Critical hit!")
     End Sub
     'taking damage
     Public Overrides Sub takeDMG(ByVal dmg As Integer, ByRef source As Entity)
+        If PerkEffects.onDamage(dmg) Then Exit Sub
         MyBase.takeDMG(dmg, source)
         Game.lblPHealtDiff.Tag -= dmg
+        Game.pushLstLog(CStr("You got hit! -" & dmg & " health!"))
+        Game.pushLblCombatEvent(CStr("You got hit! -" & dmg & " health!"))
+    End Sub
+    Public Overrides Sub takeCritDMG(ByVal dmg As Integer, ByRef source As Entity)
+        If PerkEffects.onDamage(dmg) Then Exit Sub
+        If dmg > getIntHealth() And dmg > 0.05 * getMaxHealth() Then dmg = getIntHealth() - 1
+        MyBase.takeDMG(dmg, source)
+        Game.lblPHealtDiff.Tag -= dmg
+        Game.pushLstLog(CStr("You got hit!  Critical hit!  -" & dmg & " health!"))
+        Game.pushLblCombatEvent(CStr("You got hit!  Critical hit! -" & dmg & " health!"))
+    End Sub
+    'specials
+    Public Sub specialRoute()
+        Game.cboxSpec.Items.Clear()
+        For Each s In knownSpecials
+            Game.cboxSpec.Items.Add(s)
+        Next
+
+        If pClass.name = "Warrior" Or pClass.name = "Paladin" Then Game.cboxSpec.Items.Add("Berserker Rage")
+        If pClass.name = "Mage" Or pClass.name = "Paladin" Then Game.cboxSpec.Items.Add("Risky Decision")
+        If breastSize > 3 Then Game.cboxSpec.Items.Add("Massive Mammaries")
+        If pForm.name = "Succubus" Then Game.cboxSpec.Items.Add("Unholy Seduction")
+        If pForm.name = "Slime" Then Game.cboxSpec.Items.Add("Absorbtion")
+        If pForm.name = "Dragon" Then Game.cboxSpec.Items.Add("Ironhide Fury")
+        If inv.item("Shrink_Ray").count > 0 Then Game.cboxSpec.Items.Add("Shrink_Ray Shot")
+    End Sub
+    Public Sub magicRoute()
+        Game.cboxMG.Items.Clear()
+        Game.cboxNPCMG.Items.Clear()
+
+        For Each s In knownSpells
+            Game.cboxMG.Items.Add(s)
+        Next
+    End Sub
+    'wait
+    Public Sub wait()
+        If pClass.name.Equals("Barbarian") Then
+            aBuff += 5
+            perks("barbarian") += 5
+        End If
     End Sub
 
     '|TRANSFORMATION METHODS|
@@ -442,7 +580,7 @@
         If tEweap.getName = "Magic_Girl_Wand" Then tEweap = New BareFists()
         If tEarm.getName = "Magic_Girl_Outfit" Then tEarm = New Naked()
 
-        sState.load(Me)
+        sState.load(Me, False)
 
         mana = tMna
         gold = tGold
@@ -462,8 +600,8 @@
             Game.cboxMG.Items.Insert(0, "-- Select --")
             Game.cboxMG.SelectedIndex = 0
         End If
-        Do While Game.cboxMG.Items.Contains("Heartblast Starcannon")
-            Game.cboxMG.Items.Remove("Heartblast Starcannon")
+        Do While knownSpells.Contains("Heartblast Starcannon")
+            knownSpells.Remove("Heartblast Starcannon")
         Loop
 
         If health > 1 Then health = 1
@@ -474,7 +612,6 @@
         Game.lblEvent.ForeColor = TextColor
         Game.lblNameTitle.ForeColor = TextColor
 
-        changeHairColor(haircolor)
         createP()
         setPImage()
         UIupdate()
@@ -497,29 +634,29 @@
 
             Dim layer = Int(Rnd() * 18) + 1
 
-            If (layer <= 16 AndAlso (iArrInd(layer).Item1 <> sState.iArrInd(layer).Item1 And
-                               iArrInd(layer).Item2 <> sState.iArrInd(layer).Item2 And
-                               iArrInd(layer).Item2 <> sState.iArrInd(layer).Item3)) Or
-                           (layer = 17 And haircolor <> sState.getHairColor) Or
-                            (layer = 18 And skincolor <> sState.getSkinColor) Then
+            If (layer <= 16 AndAlso (prt.iArrInd(layer).Item1 <> sState.iArrInd(layer).Item1 And
+                               prt.iArrInd(layer).Item2 <> sState.iArrInd(layer).Item2 And
+                               prt.iArrInd(layer).Item2 <> sState.iArrInd(layer).Item3)) Or
+                           (layer = 17 And prt.haircolor <> sState.getHairColor) Or
+                            (layer = 18 And prt.skincolor <> sState.getSkinColor) Then
 
                 If layer = 18 Then
-                    skincolor = sState.getSkinColor
+                    prt.skincolor = sState.getSkinColor
                 ElseIf layer = 17 Then
-                    haircolor = sState.getHairColor
+                    prt.haircolor = sState.getHairColor
                 ElseIf layer = 1 Or layer = 5 Then
-                    iArrInd(1) = New Tuple(Of Integer, Boolean, Boolean)(sState.iArrInd(1).Item1, sState.iArrInd(1).Item2, sState.iArrInd(1).Item3)
-                    iArrInd(5) = New Tuple(Of Integer, Boolean, Boolean)(sState.iArrInd(5).Item1, sState.iArrInd(5).Item2, sState.iArrInd(5).Item3)
+                    prt.setIAInd(1, sState.iArrInd(1).Item1, sState.iArrInd(1).Item2, sState.iArrInd(1).Item3)
+                    prt.setIAInd(5, sState.iArrInd(5).Item1, sState.iArrInd(5).Item2, sState.iArrInd(5).Item3)
                 ElseIf layer = 3 Then
                     Dim tEarm As Armor = sState.equippedArmor
-                    iArrInd(layer) = New Tuple(Of Integer, Boolean, Boolean)(sState.iArrInd(layer).Item1, sState.iArrInd(layer).Item2, sState.iArrInd(layer).Item3)
+                    prt.setIAInd(layer, sState.iArrInd(layer).Item1, sState.iArrInd(layer).Item2, sState.iArrInd(layer).Item3)
                     If tEarm.getName = "Goddess_Gown" Or tEarm.getName = "Succubus_Garb" Then tEarm = New CommonClothes
                     If Not tEarm.getName.Equals("Magic_Girl_Outfit") Then equippedArmor = tEarm
-                    Equipment.portraitUDate()
                 Else
-                    iArrInd(layer) = New Tuple(Of Integer, Boolean, Boolean)(sState.iArrInd(layer).Item1, sState.iArrInd(layer).Item2, sState.iArrInd(layer).Item3)
+                    prt.setIAInd(layer, sState.iArrInd(layer).Item1, sState.iArrInd(layer).Item2, sState.iArrInd(layer).Item3)
                 End If
                 numtorevert -= 1
+                layer -= 1
                 If Not revertedAttributes.Contains(attributes(layer)) Then revertedAttributes.Add(attributes(layer))
             End If
             loopct += 1
@@ -548,7 +685,7 @@
 
         If tEweap.getName = "Magic_Girl_Wand" Then tEweap = New BareFists()
         If tEarm.getName = "Goddess_Gown" Or tEarm.getName = "Succubus_Garb" Then tEarm = New CommonClothes
-        pState.load(Me)
+        pState.load(Me, False)
 
         mana = tMna
         gold = tGold
@@ -563,8 +700,8 @@
             Game.cboxMG.Items.Insert(0, "-- Select --")
             Game.cboxMG.SelectedIndex = 0
         End If
-        Do While Game.cboxMG.Items.Contains("Heartblast Starcannon")
-            Game.cboxMG.Items.Remove("Heartblast Starcannon")
+        Do While knownSpells.Contains("Heartblast Starcannon")
+            knownSpells.Remove("Heartblast Starcannon")
             Game.pushLstLog("'Heartblast Starcannon' spell forgotten!")
         Loop
 
@@ -594,8 +731,6 @@
         Game.lblEvent.ForeColor = TextColor
         Game.lblNameTitle.ForeColor = TextColor
 
-        changeHairColor(haircolor)
-
         createP()
         setPImage()
         UIupdate()
@@ -617,29 +752,29 @@
             End If
 
             Dim layer = Int(Rnd() * 18) + 1
-            If (layer <= 16 AndAlso (iArrInd(layer).Item1 <> pState.iArrInd(layer).Item1 And
-                               iArrInd(layer).Item2 <> pState.iArrInd(layer).Item2 And
-                               iArrInd(layer).Item2 <> pState.iArrInd(layer).Item3)) Or
-                           (layer = 17 And haircolor <> pState.getHairColor) Or
-                            (layer = 18 And skincolor <> pState.getSkinColor) Then
+            If (layer <= 16 AndAlso (prt.iArrInd(layer).Item1 <> pState.iArrInd(layer).Item1 And
+                               prt.iArrInd(layer).Item2 <> pState.iArrInd(layer).Item2 And
+                               prt.iArrInd(layer).Item2 <> pState.iArrInd(layer).Item3)) Or
+                           (layer = 17 And prt.haircolor <> pState.getHairColor) Or
+                            (layer = 18 And prt.skincolor <> pState.getSkinColor) Then
 
                 If layer = 18 Then
-                    skincolor = pState.getSkinColor
+                    prt.skincolor = pState.getSkinColor
                 ElseIf layer = 17 Then
-                    haircolor = pState.getHairColor
+                    prt.haircolor = pState.getHairColor
                 ElseIf layer = 1 Or layer = 5 Then
-                    iArrInd(1) = New Tuple(Of Integer, Boolean, Boolean)(pState.iArrInd(1).Item1, pState.iArrInd(1).Item2, pState.iArrInd(1).Item3)
-                    iArrInd(5) = New Tuple(Of Integer, Boolean, Boolean)(pState.iArrInd(5).Item1, pState.iArrInd(5).Item2, pState.iArrInd(5).Item3)
+                    prt.setIAInd(1, pState.iArrInd(1).Item1, pState.iArrInd(1).Item2, pState.iArrInd(1).Item3)
+                    prt.setIAInd(5, pState.iArrInd(5).Item1, pState.iArrInd(5).Item2, pState.iArrInd(5).Item3)
                 ElseIf layer = 3 Then
                     Dim tEarm As Armor = pState.equippedArmor
-                    iArrInd(layer) = New Tuple(Of Integer, Boolean, Boolean)(pState.iArrInd(layer).Item1, pState.iArrInd(layer).Item2, pState.iArrInd(layer).Item3)
+                    prt.setIAInd(layer, pState.iArrInd(layer).Item1, pState.iArrInd(layer).Item2, pState.iArrInd(layer).Item3)
                     If tEarm.getName = "Goddess_Gown" Or tEarm.getName = "Succubus_Garb" Then tEarm = New CommonClothes
                     If Not tEarm.getName.Equals("Magic_Girl_Outfit") Then equippedArmor = tEarm
-                    Equipment.portraitUDate()
                 Else
-                    iArrInd(layer) = New Tuple(Of Integer, Boolean, Boolean)(pState.iArrInd(layer).Item1, pState.iArrInd(layer).Item2, pState.iArrInd(layer).Item3)
+                    prt.setIAInd(layer, pState.iArrInd(layer).Item1, pState.iArrInd(layer).Item2, pState.iArrInd(layer).Item3)
                 End If
                 numtorevert -= 1
+                layer -= 1
                 If Not revertedAttributes.Contains(attributes(layer)) Then revertedAttributes.Add(attributes(layer))
             End If
             loopct += 1
@@ -656,23 +791,19 @@
     Public Sub petrify(ByVal c As Color, ByVal dur As Integer)
         If pForm.name.Equals("Dragon") Then revertToPState()
         perks("astatue") = dur
-        changeHairColor(c)
-        If sexBool Then
-            iArrInd(8) = New Tuple(Of Integer, Boolean, Boolean)(10, True, True)
-            iArrInd(9) = New Tuple(Of Integer, Boolean, Boolean)(14, True, True)
+        changeHairColor(c, True)
+        If prt.sexBool Then
+            prt.setIAInd(8, 10, True, True)
+            prt.setIAInd(9, 14, True, True)
         Else
-            iArrInd(8) = New Tuple(Of Integer, Boolean, Boolean)(5, False, True)
-            iArrInd(9) = New Tuple(Of Integer, Boolean, Boolean)(6, False, True)
+            prt.setIAInd(8, 5, False, True)
+            prt.setIAInd(9, 6, False, True)
         End If
         changeSkinColor(c)
 
-        iArr(8) = CharacterGenerator.recolor(iArr(8), c)
-        iArr(9) = CharacterGenerator.recolor(iArr(9), c)
         isPetrified = True
         createP()
-
         canMoveFlag = False
-        Game.picPortrait.BackgroundImage = CharacterGenerator.CreateBMP(iArr)
     End Sub
     Public Sub toStatue(ByVal c As Color, ByVal r As String)
         Game.fromCombat()
@@ -685,9 +816,25 @@
     End Sub
 
     '|GENERAL METHODS|
-    Public Overrides Sub die(ByRef source As Entity)
+    Sub resetPerks()
+        Dim sv = perks("svenom")
+        Dim av = perks("avenom")
+
+        Dim stf = perks("slimetf")
+        Dim ggtf = perks("googirltf")
         initPerks()
+
+        perks("svenom") = sv
+        perks("avenom") = av
+        perks("slimetf") = stf
+        perks("googirltf") = ggtf
+    End Sub
+    Public Overrides Sub die(ByRef source As Entity)
         If Game.pnlSaveLoad.Visible = True Then Exit Sub
+
+        canMoveFlag = False
+
+        resetPerks()
         If source Is Nothing Then
             DeathEffects.hardDeath()
             Game.npcList.Clear()
@@ -702,6 +849,9 @@
         If source.getName.Equals("Shopkeeper") Then
             DeathEffects.ShopkeeperDeath()
             Exit Sub
+        ElseIf source.getName.Equals("Traveling Wizard") Or source.getName.Equals("Traveling Witch") Then
+            DeathEffects.SWizDeath()
+            Exit Sub
         ElseIf source.getName.Equals("Mindless Bimbo") Then
             DeathEffects.MBimboDeath()
             Exit Sub
@@ -711,11 +861,17 @@
         ElseIf source.getName.Equals("Enthralling Sorcerer") Or source.getName.Equals("Enthralling Sorceress") Then
             DeathEffects.sorcererDeath()
             Exit Sub
-        ElseIf source.getName.Equals("Slime") Or source.getName.Equals("Goo Girl") Then
+        ElseIf source.getName.Equals("Slime") Then
             DeathEffects.slimeDeath()
             Exit Sub
-        ElseIf source.getName.Equals("Spider") Or source.getName.Equals("Arachne Huntress") Then
+        ElseIf source.getName.Equals("Goo Girl") Then
+            DeathEffects.ggDeath()
+            Exit Sub
+        ElseIf source.getName.Equals("Spider") Then
             DeathEffects.spiderDeath()
+            Exit Sub
+        ElseIf source.getName.Equals("Arachne Huntress") Then
+            DeathEffects.arachneDeath()
             Exit Sub
         ElseIf source.getName.Equals("Mimic") Then
             DeathEffects.mimicDeath()
@@ -733,14 +889,18 @@
     Public Sub setPImage()
         'sets the player call
         If pClass.name.Equals("Bimbo") Then
-            If Game.floor > 5 Then
+            If Game.floor > 5 And Not Game.floor = 9999 Then
                 pImage = Game.picBimbof.BackgroundImage
+            ElseIf Game.floor = 9999 Then
+                pImage = Game.picBimboSpace.BackgroundImage
             Else
                 pImage = Game.picPlayerB.BackgroundImage
             End If
         Else
-            If Game.floor > 5 Then
+            If Game.floor > 5 And Not Game.floor = 9999 Then
                 pImage = Game.picPlayerf.BackgroundImage
+            ElseIf Game.floor = 9999 Then
+                pImage = Game.picPlayerSpace.BackgroundImage
             Else
                 pImage = Game.picPlayer.BackgroundImage
             End If
@@ -777,7 +937,7 @@
         'transformations
         Dim removeind = New List(Of Integer)
         For i = 0 To ongoingTFs.Count - 1
-            If Not ongoingTFs(i) Is Nothing Then
+            If i < ongoingTFs.Count AndAlso Not ongoingTFs(i) Is Nothing Then
                 If ongoingTFs(i).getTFDone Then
                     removeind.Add(i)
                 Else
@@ -786,15 +946,14 @@
                     ongoingTFs(i).update()
                 End If
             Else
-                ongoingTFs.RemoveAt(i)
+                If i < ongoingTFs.Count Then ongoingTFs.RemoveAt(i)
             End If
         Next
         For i = 0 To removeind.Count - 1
             ongoingTFs.RemoveAt(removeind(i))
         Next
+
         If pUpdateFlag Then createP()
-
-
     End Sub
     Function perkUpdate() As Boolean
         Dim needsToUpdatePortrait = False
@@ -807,64 +966,83 @@
         If perks("slutcurse") > -1 Then
             needsToUpdatePortrait = Equipment.clothingCurse1()
         End If
-            'slime hair health regen
-            If perks("slimehair") > -1 Then
-                PerkEffects.slimeHairRegen()
-            End If
-            'vial of slime hair regen
-            If perks("vsslimehair") > -1 Then
-                PerkEffects.vslimeHairRegen()
-            End If
+        'slime hair health regen
+        If perks("slimehair") > -1 Then
+            PerkEffects.slimeHairRegen()
+        End If
+        'vial of slime hair regen
+        If perks("vsslimehair") > -1 Then
+            PerkEffects.vslimeHairRegen()
+        End If
+        'plant regen
+        If pForm.name.Equals("Plantfolk") Then
+            PerkEffects.plantRegen()
+        End If
+        'ring of min. regen
+        If perks("minRegen") > -1 Then
+            PerkEffects.minorRegen()
+        End If
+        'mana generator
+        If perks("minmanregen") > -1 Then
+            PerkEffects.minorManaRegen()
+        End If
+        'amazon effect
+        If perks("amazon") > -1 Then
+            PerkEffects.amazon()
+        End If
+        'barbarian effect
+        If perks("barbarian") > -1 Then
+            PerkEffects.barbarian()
+        End If
 
-            'ring of min. regen
-            If perks("minRegen") > -1 Then
-                PerkEffects.minorRegen()
-            End If
+        'living armor
+        If perks("livearm") > -1 Then
+            needsToUpdatePortrait = PerkEffects.livingArmor()
+        End If
+        'living lingerie
+        If perks("livelinge") > -1 Then
+            needsToUpdatePortrait = PerkEffects.livingLingerie()
+        End If
 
-            'living armor
-            If perks("livearm") > -1 Then
-                needsToUpdatePortrait = PerkEffects.livingArmor()
-            End If
-            'living lingerie
-            If perks("livelinge") > -1 Then
-                needsToUpdatePortrait = PerkEffects.livingLingerie()
-            End If
+        'rotlg
+        If perks("rotlg") > -1 Then
+            PerkEffects.ROTLGRoute()
+        End If
+        'bowtie
+        If perks("bowtie") > -1 And pClass.name.Equals("Bunny Girl") Then
+            PerkEffects.BowTieRoute()
+        End If
 
-            'rotlg
-            If perks("rotlg") > -1 Then
-                PerkEffects.ROTLGRoute()
-            End If
+        '|TRANSFORMATION TRIGGERS|
+        'targax sword tf
+        If perks("swordpossess") > -1 Then
+            PerkEffects.targaxSwordTF()
+        End If
+        'shift toward prefered form
+        If Not prefForm Is Nothing AndAlso (pClass.name = "Thrall" Xor equippedAcce.getName.Equals("Slave_Collar")) AndAlso Not prefForm.playerMeetsForm(Game.player) And Not pForm.name.Equals("Half-Succubus") And Not perks("thrall") = 1 And Not perks("nekocurse") > -1 And Not perks("polymorphed") > -1 And Not perks("bimbotf") > -1 Then
+            PerkEffects.thrallRestore()
+        End If
+        If perks("astatue") > -1 Then
+            PerkEffects.aStatue()
+        End If
 
-            '|TRANSFORMATION TRIGGERS|
-            'targax sword tf
-            If perks("swordpossess") > -1 Then
-                PerkEffects.targaxSwordTF()
-            End If
-            'shift toward prefered form
-            If Not prefForm Is Nothing AndAlso (pClass.name = "Thrall" Xor equippedAcce.getName.Equals("Slave_Collar")) AndAlso Not prefForm.playerMeetsForm(Game.player) And Not pForm.name.Equals("Half-Succubus") And Not perks("thrall") = 1 And Not perks("nekocurse") > -1 And Not perks("polymorphed") > -1 And Not perks("bimbotf") > -1 Then
-                PerkEffects.thrallRestore()
-            End If
-            If perks("astatue") > -1 Then
-                PerkEffects.aStatue()
-            End If
-
-            '|SPECIAL MOVE HANDLERS|
-            'berserker rage special
-            If perks("brage") > -1 Then
-                PerkEffects.berserkerRage()
-            End If
-            'massive mammaries special
-            If perks("mmammaries") > -1 Then
-                PerkEffects.massiveMammaries()
-            End If
-            'ironhide fury
-            If perks("ihfury") > -1 Then
-                PerkEffects.ironhideFury()
-            End If
+        '|SPECIAL MOVE HANDLERS|
+        'berserker rage special
+        If perks("brage") > -1 Then
+            PerkEffects.berserkerRage()
+        End If
+        'massive mammaries special
+        If perks("mmammaries") > -1 Then
+            PerkEffects.massiveMammaries()
+        End If
+        'ironhide fury
+        If perks("ihfury") > -1 Then
+            PerkEffects.ironhideFury()
+        End If
 
 
-            description = CStr(name & " is a " & sex & " " & pForm.name & " " & pClass.name)
-            Return needsToUpdatePortrait
+        description = CStr(name & " is a " & sex & " " & pForm.name & " " & pClass.name)
+        Return needsToUpdatePortrait
     End Function
     Sub UIupdate()
         If Game.lblNameTitle.Text <> name & " the " & pClass.name Then Game.lblNameTitle.Text = name & " the " & pClass.name
@@ -881,83 +1059,97 @@
             Game.lblGold.Text = "GOLD = 999999+"
         End If
 
+        inv.invIDorder.Clear()
         Dim numItems As Integer = Game.lstInventory.Items.Count
         Dim tArr(inv.count + 5) As String
         Dim ct As Integer = 0
         If Game.invFilters(0) Then
             tArr(ct) = "-USEABLES:"
+            inv.invIDorder.Add(-1)
             ct += 1
             Dim u_list = inv.getUseable
             Array.Sort(u_list)
             For i = 0 To UBound(u_list)
                 If u_list(i).getCount > 0 Then
                     tArr(ct) = " " & u_list(i).getName() & " x" & u_list(i).count
+                    inv.invIDorder.Add(u_list(i).getId)
                     ct += 1
                 End If
             Next
         End If
         If Game.invFilters(1) Then
             tArr(ct) = "-POTIONS:"
+            inv.invIDorder.Add(-1)
             ct += 1
             Dim p_list = inv.getPotions
             Array.Sort(p_list)
             For i = 0 To UBound(p_list)
                 If p_list(i).getCount > 0 Then
                     tArr(ct) = " " & p_list(i).getName() & " x" & p_list(i).count
+                    inv.invIDorder.Add(p_list(i).getId)
                     ct += 1
                 End If
             Next
         End If
         If Game.invFilters(2) Then
             tArr(ct) = "-FOOD:"
+            inv.invIDorder.Add(-1)
             ct += 1
             Dim f_list = inv.getFood
             Array.Sort(f_list)
             For i = 0 To UBound(f_list)
                 If f_list(i).getCount > 0 Then
                     tArr(ct) = " " & f_list(i).getName() & " x" & f_list(i).count
+                    inv.invIDorder.Add(f_list(i).getId)
                     ct += 1
                 End If
             Next
         End If
         If Game.invFilters(3) Then
             tArr(ct) = "-ARMOR:"
+            inv.invIDorder.Add(-1)
             ct += 1
             Dim a_list = inv.getArmors.Item2
             Array.Sort(a_list)
             For i = 0 To UBound(a_list)
                 If a_list(i).getCount > 0 Then
                     tArr(ct) = " " & a_list(i).getName() & " x" & a_list(i).count
+                    inv.invIDorder.Add(a_list(i).getId)
                     ct += 1
                 End If
             Next
         End If
         If Game.invFilters(4) Then
             tArr(ct) = "-WEAPONS:"
+            inv.invIDorder.Add(-1)
             ct += 1
             Dim w_list = inv.getWeapons.Item2
             Array.Sort(w_list)
             For i = 0 To UBound(w_list)
                 If w_list(i).getCount > 0 Then
                     tArr(ct) = " " & w_list(i).getName() & " x" & w_list(i).count
+                    inv.invIDorder.Add(w_list(i).getId)
                     ct += 1
                 End If
             Next
         End If
         If Game.invFilters(6) Then
             tArr(ct) = "-ACCESSORIES:"
+            inv.invIDorder.Add(-1)
             ct += 1
             Dim ac_list = inv.getAccesories.Item2
             Array.Sort(ac_list)
             For i = 0 To UBound(ac_list)
                 If ac_list(i).getCount > 0 Then
                     tArr(ct) = " " & ac_list(i).getName() & " x" & ac_list(i).count
+                    inv.invIDorder.Add(ac_list(i).getId)
                     ct += 1
                 End If
             Next
         End If
         If Game.invFilters(5) Then
             tArr(ct) = "-MISC:"
+            inv.invIDorder.Add(-1)
             ct += 1
             Dim m_list = inv.getMisc
             Array.Sort(m_list)
@@ -975,10 +1167,6 @@
             Next
         End If
         inv.invNeedsUDate = False
-        'Dim t As Boolean = CharacterGenerator.CreateBMP(iArr).Equals(Game.picPortrait.BackgroundImage)
-        'Dim t As Boolean = picsAreSame(CharacterGenerator.CreateBMP(iArr), New Bitmap(Game.picPortrait.BackgroundImage))
-        ''If Game.turn < 2 AndAlso Not CharacterGenerator.CreateBMP(iArr).Equals(Game.picPortrait.BackgroundImage) Then createP() 'Form3.portraitUDate()
-        'If Game.turn < 2 AndAlso Not t Then createP() 'Form3.portraitUDate()
     End Sub
 
     '|PORTRAIT IMAGE RENDERING METHODS|
@@ -999,62 +1187,30 @@
     End Function
     Sub oneLayerImgCheck(ByRef b As Boolean)
         If pForm.name.Equals("Dragon") Then
-            Game.picPortrait.BackgroundImage = CharacterGenerator.CreateBMP({Game.picDragon.BackgroundImage})
+            Game.picPortrait.BackgroundImage = Portrait.CreateBMP({Game.picDragon.BackgroundImage})
             b = True
         ElseIf pClass.name.Equals("Magic Girl​") Then
-            Game.picPortrait.BackgroundImage = CharacterGenerator.CreateBMP({Game.picmgp1.BackgroundImage})
+            Game.picPortrait.BackgroundImage = Portrait.CreateBMP({Game.picmgp1.BackgroundImage})
             b = True
         ElseIf pForm.name.Equals("Sheep") Then
-            Game.picPortrait.BackgroundImage = CharacterGenerator.CreateBMP({Game.picSheep.BackgroundImage})
+            Game.picPortrait.BackgroundImage = Portrait.CreateBMP({Game.picSheep.BackgroundImage})
             b = True
         ElseIf pForm.name.Equals("Cake") Then
-            Game.picPortrait.BackgroundImage = CharacterGenerator.CreateBMP({Game.picCake.BackgroundImage})
+            Game.picPortrait.BackgroundImage = Portrait.CreateBMP({Game.picCake.BackgroundImage})
             b = True
         ElseIf pForm.name.Equals("Frog") Then
-            Game.picPortrait.BackgroundImage = CharacterGenerator.CreateBMP({Game.picFrog.BackgroundImage})
+            Game.picPortrait.BackgroundImage = Portrait.CreateBMP({Game.picFrog.BackgroundImage})
             b = True
         ElseIf pClass.name.Equals("Princess​") Then
-            Game.picPortrait.BackgroundImage = CharacterGenerator.CreateBMP({Game.picPrin.BackgroundImage})
+            Game.picPortrait.BackgroundImage = Portrait.CreateBMP({Game.picPrin.BackgroundImage})
             b = True
         ElseIf pClass.name.Equals("Bunny Girl​") Then
-            Game.picPortrait.BackgroundImage = CharacterGenerator.CreateBMP({Game.picBun.BackgroundImage})
+            Game.picPortrait.BackgroundImage = Portrait.CreateBMP({Game.picBun.BackgroundImage})
             b = True
         End If
     End Sub
     Public Sub createP()
-        'If Game.noImg Then Exit Sub
-
-        If solFlag Then Exit Sub
-
-        If Not Game.picPortrait.BackgroundImage Is Nothing Then Game.picPortrait.BackgroundImage.Dispose()
-
-        Dim chk = False
-
-        If Not solFlag Then Equipment.portraitUDate()
-        For i = 0 To 16
-            Try
-                    iArr(i) = Game.imgLib.atrs(Game.imgLib.atrs.Keys(i)).getAt(iArrInd(i))
-            Catch ex As Exception
-                MsgBox("Error!  Exception thrown in portrait creation (specifically in the " & Game.imgLib.atrs.Keys(i) & " layer).  The player character will now revert to default.")
-                revertToSState()
-            End Try
-        Next
-
-        changeHairColor(haircolor)
-        changeSkinColor(skincolor)
-
-        If isPetrified Then
-            iArr(8) = CharacterGenerator.recolor(iArr(8), skincolor)
-            iArr(9) = CharacterGenerator.recolor(iArr(9), skincolor)
-        End If
-
-        hideEars()
-        If lust > 0 Then lustBlushUpdate()
-        If wingInd > 0 Then addWings(wingInd)
-        If hornInd > 0 Then addHorns(hornInd)
-
-        If Not solFlag And Not chk Then Game.picPortrait.BackgroundImage = CharacterGenerator.CreateBMP(iArr)
-        oneLayerImgCheck(chk)
+        If Not solFlag Then Game.picPortrait.BackgroundImage = prt.draw(solFlag, isPetrified, AddressOf revertToSState, pForm.name, pClass.name)
         Game.picPortrait.Update()
 
         currState.save(Me)
@@ -1062,509 +1218,445 @@
         Game.lblEvent.ForeColor = TextColor
         Game.lblNameTitle.ForeColor = TextColor
     End Sub
-    Public Sub changeHairColor(ByVal c As Color)
-        haircolor = c
+    Public Sub changeHairColor(ByVal c As Color, Optional forceOpacity As Boolean = False)
+        If forceOpacity Then
+            prt.haircolor = c
+        Else
+            prt.haircolor = Color.FromArgb(prt.haircolor.A, c.R, c.G, c.B)
+        End If
 
-        iArr(1) = CharacterGenerator.recolor(Game.imgLib.atrs("RearHair2").getAt(iArrInd(1)), c)
-        iArr(5) = CharacterGenerator.recolor(Game.imgLib.atrs("RearHair1").getAt(iArrInd(5)), c)
-        iArr(10) = CharacterGenerator.recolor(Game.imgLib.atrs("Eyebrows").getAt(iArrInd(10)), c)
-        iArr(15) = CharacterGenerator.recolor(Game.imgLib.atrs("FrontHair").getAt(iArrInd(15)), c)
-
-        If Not solFlag Then Game.picPortrait.BackgroundImage = CharacterGenerator.CreateBMP(iArr)
+        createP()
     End Sub
     Public Sub changeSkinColor(ByVal c As Color)
-        skincolor = c
+        prt.skincolor = c
+        createP()
+    End Sub
 
-        iArr(2) = CharacterGenerator.recolor2(Game.imgLib.atrs("Body").getAt(iArrInd(2)), c)
-        iArr(4) = CharacterGenerator.recolor2(Game.imgLib.atrs("Face").getAt(iArrInd(4)), c)
-        iArr(6) = CharacterGenerator.recolor2(Game.imgLib.atrs("Ears").getAt(iArrInd(6)), c)
-        iArr(7) = CharacterGenerator.recolor2(Game.imgLib.atrs("Nose").getAt(iArrInd(7)), c)
-
-        If Not solFlag Then Game.picPortrait.BackgroundImage = CharacterGenerator.CreateBMP(iArr)
-    End Sub
-    Public Sub lustBlushUpdate()
-        Select Case Int(lust / 20)
-            Case 0
-            Case 1
-                iArr(4) = CharacterGenerator.CreateBMP({iArr(4), Game.picLust1.BackgroundImage})
-            Case 2
-                iArr(4) = CharacterGenerator.CreateBMP({iArr(4), Game.picLust2.BackgroundImage})
-            Case 3
-                iArr(4) = CharacterGenerator.CreateBMP({iArr(4), Game.picLust3.BackgroundImage})
-            Case Else
-                iArr(4) = CharacterGenerator.CreateBMP({iArr(4), Game.picLust4.BackgroundImage})
-        End Select
-    End Sub
-    Sub addWings(ByVal i As Integer)
-        iArr(1) = CharacterGenerator.CreateBMP({Game.imgLib.atrs("Wings").getM(i), iArr(1)})
-    End Sub
-    Sub addHorns(ByVal i As Integer)
-        iArr(6) = CharacterGenerator.CreateBMP({Game.imgLib.atrs("Horns").getM(i), iArr(6)})
-    End Sub
-    Sub hideEars()
-        If iArrInd(6).Item1 = 1 Or iArrInd(6).Item1 = 2 Or (Not iArrInd(5).Item2 And iArrInd(5).Item1 <> 2) Then Exit Sub
-
-        Dim t = iArr(5).Clone
-        iArr(5) = iArr(6).Clone
-        iArr(6) = t
-    End Sub
-    Sub setIAInd(ByVal attrInd As Integer, ByVal i As Integer, ByVal b As Boolean, ByVal nonDefFlag As Boolean)
-        iArrInd(attrInd) = New Tuple(Of Integer, Boolean, Boolean)(i, b, nonDefFlag)
-    End Sub
-    Sub setIAInd(ByVal attrInd As Integer, ByVal iaInd As Tuple(Of Integer, Boolean, Boolean))
-        iArrInd(attrInd) = iaInd
-    End Sub
-    Function checkNDefFemInd(ByVal attrInd As Integer, ByVal i As Integer) As Boolean
-        Dim ind = iArrInd(attrInd)
-        If Not ind.Item2 Or Not ind.Item3 Then Return False
-        If Game.imgLib.atrs(Game.imgLib.atrs.Keys(attrInd)).rosf(ind.Item1) = i Then Return True Else Return False
-    End Function
-    Function checkNDefMalInd(ByVal attrInd As Integer, ByVal i As Integer) As Boolean
-        Dim ind = iArrInd(attrInd)
-        If ind.Item2 Or ind.Item3 Then Return False
-        If Game.imgLib.atrs(Game.imgLib.atrs.Keys(attrInd)).rosm(ind.Item1) = i Then Return True Else Return False
-    End Function
-    Function checkFemInd(ByVal attrInd As Integer, ByVal i As Integer) As Boolean
-        Dim ind = iArrInd(attrInd)
-        If Not ind.Item2 Or Not ind.Item3 Then Return False
-        If ind.Item1 = i Then Return True Else Return False
-    End Function
-    Function checkMalInd(ByVal attrInd As Integer, ByVal i As Integer) As Boolean
-        Dim ind = iArrInd(attrInd)
-        If ind.Item2 Or ind.Item3 Then Return False
-        If ind.Item1 = i Then Return True Else Return False
-    End Function
     'sex change methods
     Public Sub MtF()
-        If perks("polymorphed") > -1 Or pClass.name.Equals("Magic Girl") Then
+        If perks("polymorphed") > -1 Or pClass.name.Equals("Magic Girl") Or pClass.name.Equals("Valkyrie") Then
             Game.pushLstLog("Your form prevents you from being altered.")
             Exit Sub
         End If
-        sexBool = True
         sex = "Female"
         breastSize = 1
         idRouteMF()
-        changeSkinColor(skincolor)
         If perks("swordpossess") > -1 Then perks("swordpossess") = 0
     End Sub
     Public Sub FtM()
-        If perks("polymorphed") > -1 Or pClass.name.Equals("Magic Girl") Then
+        If perks("polymorphed") > -1 Or pClass.name.Equals("Magic Girl") Or pClass.name.Equals("Valkyrie") Then
             Game.pushLstLog("Your form prevents you from being altered.")
             Exit Sub
         End If
-        sexBool = False
         sex = "Male"
         breastSize = -1
         perks(2) = False
         idRouteFM()
         If perks("swordpossess") > -1 Then perks("swordpossess") = 0
-
     End Sub
     Sub idRouteMF()
         'rearHair2
-        If Not iArrInd(1).Item2 Then
-            Select Case iArrInd(1).Item1
+        If Not prt.iArrInd(1).Item2 Then
+            Select Case prt.iArrInd(1).Item1
                 Case 5
-                    iArrInd(1) = New Tuple(Of Integer, Boolean, Boolean)(13, True, True)
+                    prt.setIAInd(1, 13, True, True)
+                Case 6
+                    prt.setIAInd(1, 21, True, True)
             End Select
         End If
         'body
-        If Not iArrInd(2).Item2 Then
-            Select Case iArrInd(2).Item1
+        If Not prt.iArrInd(2).Item2 Then
+            Select Case prt.iArrInd(2).Item1
                 Case 0
-                    iArrInd(2) = New Tuple(Of Integer, Boolean, Boolean)(0, True, False)
+                    prt.setIAInd(2, 0, True, False)
             End Select
         End If
         'clothing
-        Select Case iArrInd(3).Item1
+        Select Case prt.iArrInd(3).Item1
             Case 5
-                iArrInd(3) = New Tuple(Of Integer, Boolean, Boolean)(47, True, True)
+                prt.iArrInd(3) = New Tuple(Of Integer, Boolean, Boolean)(47, True, True)
             Case Else
-                If iArrInd(3).Item1 < 5 Then
-                    iArrInd(3) = New Tuple(Of Integer, Boolean, Boolean)(iArrInd(3).Item1, True, False)
+                If prt.iArrInd(3).Item1 < 5 Then
+                    prt.setIAInd(3, prt.iArrInd(3).Item1, True, False)
                 Else
-                    Equipment.portraitUDate()
+                    prt.portraitUDate()
                 End If
         End Select
         'face
-        Select Case iArrInd(4).Item1
+        Select Case prt.iArrInd(4).Item1
             Case Else
-                iArrInd(4) = New Tuple(Of Integer, Boolean, Boolean)(0, True, False)
+                prt.setIAInd(4, 0, True, False)
         End Select
         'rearHair1
-        If Not iArrInd(5).Item2 Then
-            Select Case iArrInd(5).Item1
+        If Not prt.iArrInd(5).Item2 Then
+            Select Case prt.iArrInd(5).Item1
                 Case 5
-                    iArrInd(5) = New Tuple(Of Integer, Boolean, Boolean)(15, True, True)
+                    prt.setIAInd(5, 15, True, True)
+                Case 6
+                    prt.setIAInd(5, 24, True, True)
             End Select
         End If
         'nose
-        Select Case iArrInd(7).Item1
+        Select Case prt.iArrInd(7).Item1
             Case Else
-                iArrInd(7) = New Tuple(Of Integer, Boolean, Boolean)(0, True, False)
+                prt.setIAInd(7, 0, True, False)
         End Select
-
         'ears
-        Select Case iArrInd(6).Item1
+        Select Case prt.iArrInd(6).Item1
             Case 5
-                iArrInd(6) = New Tuple(Of Integer, Boolean, Boolean)(5, True, True)
+                prt.setIAInd(6, 5, True, True)
+            Case 6
+                prt.setIAInd(6, 11, True, True)
             Case Else
-                iArrInd(6) = New Tuple(Of Integer, Boolean, Boolean)(iArrInd(6).Item1, True, False)
+                prt.setIAInd(6, prt.iArrInd(6).Item1, True, False)
         End Select
         'mouth
-        Select Case iArrInd(8).Item1
+        Select Case prt.iArrInd(8).Item1
             Case 5
-                iArrInd(8) = New Tuple(Of Integer, Boolean, Boolean)(10, True, True)
+                prt.setIAInd(8, 10, True, True)
+            Case 6
+                prt.setIAInd(8, 16, True, True)
             Case Else
-                iArrInd(8) = New Tuple(Of Integer, Boolean, Boolean)(iArrInd(8).Item1, True, False)
+                prt.setIAInd(8, prt.iArrInd(8).Item1, True, False)
         End Select
         'eyes
-        Select Case iArrInd(9).Item1
+        Select Case prt.iArrInd(9).Item1
             Case 5
-                iArrInd(9) = New Tuple(Of Integer, Boolean, Boolean)(11, True, True)
+                prt.setIAInd(9, 11, True, True)
             Case 6
-                iArrInd(9) = New Tuple(Of Integer, Boolean, Boolean)(14, True, True)
+                prt.setIAInd(9, 14, True, True)
             Case 7
-                iArrInd(9) = New Tuple(Of Integer, Boolean, Boolean)(15, True, True)
+                prt.setIAInd(9, 15, True, True)
             Case 8
-                iArrInd(9) = New Tuple(Of Integer, Boolean, Boolean)(19, True, True)
+                prt.setIAInd(9, 19, True, True)
+            Case 9
+                prt.setIAInd(9, 20, True, True)
+            Case 10
+                prt.setIAInd(9, 33, True, True)
+            Case 11
+                prt.setIAInd(9, 36, True, True)
             Case Else
-                iArrInd(9) = New Tuple(Of Integer, Boolean, Boolean)(iArrInd(9).Item1, True, False)
+                If prt.iArrInd(9).Item1 < 5 Then prt.setIAInd(9, prt.iArrInd(9).Item1, True, False)
         End Select
         'eyebrows
-        Select Case iArrInd(10).Item1
+        Select Case prt.iArrInd(10).Item1
             Case Else
-                iArrInd(10) = New Tuple(Of Integer, Boolean, Boolean)(iArrInd(10).Item1, True, False)
+                If prt.iArrInd(10).Item1 < 5 Then prt.setIAInd(10, prt.iArrInd(10).Item1, True, False)
         End Select
         'accesory
-        Select Case iArrInd(14).Item1
+        Select Case prt.iArrInd(14).Item1
             Case 1
-                iArrInd(14) = New Tuple(Of Integer, Boolean, Boolean)(2, True, False)
+                prt.setIAInd(14, 2, True, False)
             Case 2
-                iArrInd(14) = New Tuple(Of Integer, Boolean, Boolean)(3, True, False)
+                prt.setIAInd(14, 3, True, False)
         End Select
-        'fronthair
-        If Not iArrInd(15).Item2 Then
-            Select Case iArrInd(15).Item1
-                Case 6
-                    iArrInd(15) = New Tuple(Of Integer, Boolean, Boolean)(12, True, True)
-            End Select
-        End If
     End Sub
     Sub idRouteFM()
         'rearHair2
-        Select Case iArrInd(1).Item1
+        Select Case prt.iArrInd(1).Item1
             Case 13
-                iArrInd(1) = New Tuple(Of Integer, Boolean, Boolean)(5, False, True)
+                prt.setIAInd(1, 5, False, True)
+            Case 21
+                prt.setIAInd(1, 6, False, True)
         End Select
         'body
-        Select Case iArrInd(2).Item1
+        Select Case prt.iArrInd(2).Item1
             Case Else
-                iArrInd(2) = New Tuple(Of Integer, Boolean, Boolean)(0, False, False)
+                prt.setIAInd(2, 0, False, False)
         End Select
         'clothing
-        Select Case iArrInd(3).Item1
+        Select Case prt.iArrInd(3).Item1
             Case 47
-                iArrInd(3) = New Tuple(Of Integer, Boolean, Boolean)(5, False, True)
+                prt.setIAInd(3, 5, False, True)
             Case Else
-                If iArrInd(3).Item1 < 5 Then
-                    iArrInd(3) = New Tuple(Of Integer, Boolean, Boolean)(iArrInd(3).Item1, False, False)
+                If prt.iArrInd(3).Item1 < 5 Then
+                    prt.setIAInd(3, prt.iArrInd(3).Item1, False, False)
                 Else
-                    Equipment.portraitUDate()
+                    prt.portraitUDate()
                 End If
         End Select
         'face
-        Select Case iArrInd(4).Item1
+        Select Case prt.iArrInd(4).Item1
             Case Else
-                iArrInd(4) = New Tuple(Of Integer, Boolean, Boolean)(0, False, False)
+                prt.setIAInd(4, 0, False, False)
         End Select
         'rearHair1
-        Select Case iArrInd(5).Item1
+        Select Case prt.iArrInd(5).Item1
             Case 15
-                iArrInd(1) = New Tuple(Of Integer, Boolean, Boolean)(5, False, True)
+                prt.setIAInd(1, 5, False, True)
+            Case 24
+                prt.setIAInd(1, 6, False, True)
         End Select
         'nose
-        Select Case iArrInd(7).Item1
+        Select Case prt.iArrInd(7).Item1
             Case Else
-                iArrInd(7) = New Tuple(Of Integer, Boolean, Boolean)(0, True, False)
+                prt.setIAInd(7, 0, True, False)
         End Select
-
         'ears
-        Select Case iArrInd(6).Item1
+        Select Case prt.iArrInd(6).Item1
             Case 5
-                iArrInd(6) = New Tuple(Of Integer, Boolean, Boolean)(5, False, True)
+                prt.setIAInd(6, 5, False, True)
+            Case 11
+                prt.setIAInd(6, 6, False, True)
             Case Is < 5
-                iArrInd(6) = New Tuple(Of Integer, Boolean, Boolean)(iArrInd(6).Item1, False, False)
+                prt.setIAInd(6, prt.iArrInd(6).Item1, False, False)
         End Select
         'mouth
-        Select Case iArrInd(8).Item1
+        Select Case prt.iArrInd(8).Item1
             Case 10
-                iArrInd(8) = New Tuple(Of Integer, Boolean, Boolean)(5, False, True)
+                prt.setIAInd(8, 5, False, True)
+            Case 16
+                prt.setIAInd(8, 6, False, True)
             Case Else
-                If iArrInd(8).Item1 < 5 Then iArrInd(8) = New Tuple(Of Integer, Boolean, Boolean)(iArrInd(8).Item1, False, False)
+                If prt.iArrInd(8).Item1 < 5 Then prt.setIAInd(8, prt.iArrInd(8).Item1, False, False)
         End Select
         'eyes
-        Select Case iArrInd(9).Item1
+        Select Case prt.iArrInd(9).Item1
             Case 11
-                iArrInd(9) = New Tuple(Of Integer, Boolean, Boolean)(5, False, True)
+                prt.setIAInd(9, 5, False, True)
             Case 14
-                iArrInd(9) = New Tuple(Of Integer, Boolean, Boolean)(6, False, True)
+                prt.setIAInd(9, 6, False, True)
             Case 15
-                iArrInd(9) = New Tuple(Of Integer, Boolean, Boolean)(7, False, True)
+                prt.setIAInd(9, 7, False, True)
             Case 19
-                iArrInd(9) = New Tuple(Of Integer, Boolean, Boolean)(8, False, True)
+                prt.setIAInd(9, 8, False, True)
+            Case 20
+                prt.setIAInd(9, 9, False, True)
+            Case 33
+                prt.setIAInd(9, 10, False, True)
+            Case 36
+                prt.setIAInd(9, 11, False, True)
             Case Else
-                If iArrInd(9).Item1 < 5 Then iArrInd(9) = New Tuple(Of Integer, Boolean, Boolean)(iArrInd(9).Item1, False, False)
+                If prt.iArrInd(9).Item1 < 5 Then prt.setIAInd(9, prt.iArrInd(9).Item1, False, False)
         End Select
         'eyebrows
-        Select Case iArrInd(10).Item1
+        Select Case prt.iArrInd(10).Item1
             Case Else
-                iArrInd(10) = New Tuple(Of Integer, Boolean, Boolean)(iArrInd(10).Item1, False, False)
+                If prt.iArrInd(10).Item1 < 5 Then prt.setIAInd(10, prt.iArrInd(10).Item1, False, False)
         End Select
         'accesory
-        Select Case iArrInd(14).Item1
+        Select Case prt.iArrInd(14).Item1
             Case 2
-                iArrInd(14) = New Tuple(Of Integer, Boolean, Boolean)(1, False, False)
+                prt.setIAInd(14, 1, False, False)
             Case 3
-                iArrInd(14) = New Tuple(Of Integer, Boolean, Boolean)(2, False, False)
-        End Select
-        'fronthair
-        Select Case iArrInd(15).Item1
-            Case 12
-                iArrInd(15) = New Tuple(Of Integer, Boolean, Boolean)(6, False, True)
+                prt.setIAInd(14, 2, False, False)
         End Select
     End Sub
     Sub idRouteMFHalf()
         'rearHair2
-        If Not iArrInd(1).Item2 And Int(Rnd() * 2) = 0 Then
-            Select Case iArrInd(1).Item1
+        If Not prt.iArrInd(1).Item2 And Int(Rnd() * 2) = 0 Then
+            Select Case prt.iArrInd(1).Item1
                 Case 5
-                    iArrInd(1) = New Tuple(Of Integer, Boolean, Boolean)(13, True, True)
+                    prt.setIAInd(1, 13, True, True)
             End Select
         End If
         'body
         If Int(Rnd() * 2) = 0 Then
-            If Not iArrInd(2).Item2 And Int(Rnd() * 2) = 0 Then
-                Select Case iArrInd(2).Item1
+            If Not prt.iArrInd(2).Item2 And Int(Rnd() * 2) = 0 Then
+                Select Case prt.iArrInd(2).Item1
                     Case 0
-                        iArrInd(2) = New Tuple(Of Integer, Boolean, Boolean)(0, True, False)
+                        prt.setIAInd(2, 0, True, False)
                 End Select
             End If
         End If
         'clothing
         If Int(Rnd() * 2) = 0 Then
-            Select Case iArrInd(3).Item1
+            Select Case prt.iArrInd(3).Item1
                 Case 5
-                    iArrInd(3) = New Tuple(Of Integer, Boolean, Boolean)(47, True, True)
+                    prt.setIAInd(3, 47, True, True)
                 Case Else
-                    If iArrInd(3).Item1 < 5 Then
-                        iArrInd(3) = New Tuple(Of Integer, Boolean, Boolean)(iArrInd(3).Item1, True, False)
+                    If prt.iArrInd(3).Item1 < 5 Then
+                        prt.setIAInd(3, prt.iArrInd(3).Item1, True, False)
                     Else
-                        Equipment.portraitUDate()
+                        prt.portraitUDate()
                     End If
             End Select
         End If
         'face
         If Int(Rnd() * 2) = 0 Then
-            Select Case iArrInd(4).Item1
+            Select Case prt.iArrInd(4).Item1
                 Case Else
-                    iArrInd(4) = New Tuple(Of Integer, Boolean, Boolean)(0, True, False)
+                    prt.setIAInd(4, 0, True, False)
             End Select
         End If
         'rearHair1
         If Int(Rnd() * 2) = 0 Then
-            If Not iArrInd(5).Item2 And Int(Rnd() * 2) = 0 Then
-                Select Case iArrInd(5).Item1
+            If Not prt.iArrInd(5).Item2 And Int(Rnd() * 2) = 0 Then
+                Select Case prt.iArrInd(5).Item1
                     Case 5
-                        iArrInd(5) = New Tuple(Of Integer, Boolean, Boolean)(15, True, True)
+                        prt.setIAInd(5, 15, True, True)
                 End Select
             End If
         End If
         'nose
         If Int(Rnd() * 2) = 0 Then
-            Select Case iArrInd(7).Item1
+            Select Case prt.iArrInd(7).Item1
                 Case Else
-                    iArrInd(7) = New Tuple(Of Integer, Boolean, Boolean)(0, True, False)
+                    prt.setIAInd(7, 0, True, False)
             End Select
         End If
         'ears
         If Int(Rnd() * 2) = 0 Then
-            Select Case iArrInd(6).Item1
+            Select Case prt.iArrInd(6).Item1
                 Case 5
-                    iArrInd(6) = New Tuple(Of Integer, Boolean, Boolean)(5, True, True)
+                    prt.setIAInd(6, 5, True, True)
                 Case Else
-                    iArrInd(6) = New Tuple(Of Integer, Boolean, Boolean)(iArrInd(6).Item1, True, False)
+                    prt.setIAInd(6, prt.iArrInd(6).Item1, True, False)
             End Select
         End If
         'mouth
         If Int(Rnd() * 2) = 0 Then
-            Select Case iArrInd(8).Item1
+            Select Case prt.iArrInd(8).Item1
                 Case 5
-                    iArrInd(8) = New Tuple(Of Integer, Boolean, Boolean)(10, True, True)
+                    prt.setIAInd(8, 10, True, True)
                 Case Else
-                    iArrInd(8) = New Tuple(Of Integer, Boolean, Boolean)(iArrInd(8).Item1, True, False)
+                    prt.setIAInd(8, prt.iArrInd(8).Item1, True, False)
             End Select
         End If
         'eyes
         If Int(Rnd() * 2) = 0 Then
-            Select Case iArrInd(9).Item1
+            Select Case prt.iArrInd(9).Item1
                 Case 5
-                    iArrInd(9) = New Tuple(Of Integer, Boolean, Boolean)(11, True, True)
+                    prt.setIAInd(9, 11, True, True)
                 Case 6
-                    iArrInd(9) = New Tuple(Of Integer, Boolean, Boolean)(14, True, True)
+                    prt.setIAInd(9, 14, True, True)
                 Case 7
-                    iArrInd(9) = New Tuple(Of Integer, Boolean, Boolean)(15, True, True)
+                    prt.setIAInd(9, 15, True, True)
                 Case 8
-                    iArrInd(9) = New Tuple(Of Integer, Boolean, Boolean)(19, True, True)
+                    prt.setIAInd(9, 19, True, True)
                 Case Else
-                    iArrInd(9) = New Tuple(Of Integer, Boolean, Boolean)(iArrInd(9).Item1, True, False)
+                    prt.setIAInd(9, prt.iArrInd(9).Item1, True, False)
             End Select
         End If
         'eyebrows
         If Int(Rnd() * 2) = 0 Then
-            Select Case iArrInd(10).Item1
+            Select Case prt.iArrInd(10).Item1
                 Case Else
-                    iArrInd(10) = New Tuple(Of Integer, Boolean, Boolean)(iArrInd(10).Item1, True, False)
+                    prt.setIAInd(10, prt.iArrInd(10).Item1, True, False)
             End Select
         End If
         'accesory
         If Int(Rnd() * 2) = 0 Then
-            Select Case iArrInd(14).Item1
+            Select Case prt.iArrInd(14).Item1
                 Case 1
-                    iArrInd(14) = New Tuple(Of Integer, Boolean, Boolean)(2, True, False)
+                    prt.setIAInd(14, 2, True, False)
                 Case 2
-                    iArrInd(14) = New Tuple(Of Integer, Boolean, Boolean)(3, True, False)
+                    prt.setIAInd(14, 3, True, False)
             End Select
         End If
         'fronthair
-        If Not iArrInd(15).Item2 And Int(Rnd() * 2) = 0 Then
-            Select Case iArrInd(15).Item1
+        If Not prt.iArrInd(15).Item2 And Int(Rnd() * 2) = 0 Then
+            Select Case prt.iArrInd(15).Item1
                 Case 6
-                    iArrInd(15) = New Tuple(Of Integer, Boolean, Boolean)(12, True, True)
+                    prt.setIAInd(15, 12, True, True)
             End Select
         End If
     End Sub
     Sub idRouteFMHalf()
         'rearHair2
         If Int(Rnd() * 2) = 0 Then
-            Select Case iArrInd(1).Item1
+            Select Case prt.iArrInd(1).Item1
                 Case 13
-                    iArrInd(1) = New Tuple(Of Integer, Boolean, Boolean)(5, False, True)
+                    prt.setIAInd(1, 5, False, True)
             End Select
         End If
         'body
         If Int(Rnd() * 2) = 0 Then
-            Select Case iArrInd(2).Item1
+            Select Case prt.iArrInd(2).Item1
                 Case Else
-                    iArrInd(2) = New Tuple(Of Integer, Boolean, Boolean)(0, False, False)
+                    prt.setIAInd(2, 0, False, False)
             End Select
         End If
         'clothing
         If Int(Rnd() * 2) = 0 Then
-            Select Case iArrInd(3).Item1
+            Select Case prt.iArrInd(3).Item1
                 Case 47
-                    iArrInd(3) = New Tuple(Of Integer, Boolean, Boolean)(5, False, True)
+                    prt.setIAInd(3, 5, False, True)
                 Case Else
-                    If iArrInd(3).Item1 < 5 Then
-                        iArrInd(3) = New Tuple(Of Integer, Boolean, Boolean)(iArrInd(3).Item1, False, False)
+                    If prt.iArrInd(3).Item1 < 5 Then
+                        prt.setIAInd(3, prt.iArrInd(3).Item1, False, False)
                     Else
-                        Equipment.portraitUDate()
+                        prt.portraitUDate()
                     End If
             End Select
         End If
         'face
         If Int(Rnd() * 2) = 0 Then
-            Select Case iArrInd(4).Item1
+            Select Case prt.iArrInd(4).Item1
                 Case Else
-                    iArrInd(4) = New Tuple(Of Integer, Boolean, Boolean)(0, False, False)
+                    prt.setIAInd(4, 0, False, False)
             End Select
         End If
         'rearHair1
         If Int(Rnd() * 2) = 0 Then
-            Select Case iArrInd(5).Item1
+            Select Case prt.iArrInd(5).Item1
                 Case 15
-                    iArrInd(1) = New Tuple(Of Integer, Boolean, Boolean)(5, False, True)
+                    prt.setIAInd(1, 5, False, True)
             End Select
         End If
         'nose
         If Int(Rnd() * 2) = 0 Then
-            Select Case iArrInd(7).Item1
+            Select Case prt.iArrInd(7).Item1
                 Case Else
-                    iArrInd(7) = New Tuple(Of Integer, Boolean, Boolean)(0, True, False)
+                    prt.setIAInd(7, 0, True, False)
             End Select
         End If
         'ears
         If Int(Rnd() * 2) = 0 Then
-            Select Case iArrInd(6).Item1
+            Select Case prt.iArrInd(6).Item1
                 Case 5
-                    iArrInd(6) = New Tuple(Of Integer, Boolean, Boolean)(5, False, True)
+                    prt.setIAInd(6, 5, False, True)
                 Case Is < 5
-                    iArrInd(6) = New Tuple(Of Integer, Boolean, Boolean)(iArrInd(6).Item1, False, False)
+                    prt.setIAInd(6, prt.iArrInd(6).Item1, False, False)
             End Select
         End If
         'mouth
         If Int(Rnd() * 2) = 0 Then
-            Select Case iArrInd(8).Item1
+            Select Case prt.iArrInd(8).Item1
                 Case 10
-                    iArrInd(8) = New Tuple(Of Integer, Boolean, Boolean)(5, False, True)
+                    prt.setIAInd(8, 5, False, True)
                 Case Else
-                    If iArrInd(8).Item1 < 5 Then iArrInd(8) = New Tuple(Of Integer, Boolean, Boolean)(iArrInd(8).Item1, False, False)
+                    If prt.iArrInd(8).Item1 < 5 Then prt.setIAInd(8, prt.iArrInd(8).Item1, False, False)
             End Select
         End If
         'eyes
         If Int(Rnd() * 2) = 0 Then
-            Select Case iArrInd(9).Item1
+            Select Case prt.iArrInd(9).Item1
                 Case 11
-                    iArrInd(9) = New Tuple(Of Integer, Boolean, Boolean)(5, False, True)
+                    prt.setIAInd(9, 5, False, True)
                 Case 14
-                    iArrInd(9) = New Tuple(Of Integer, Boolean, Boolean)(6, False, True)
+                    prt.setIAInd(9, 6, False, True)
                 Case 15
-                    iArrInd(9) = New Tuple(Of Integer, Boolean, Boolean)(7, False, True)
+                    prt.setIAInd(9, 7, False, True)
                 Case 19
-                    iArrInd(9) = New Tuple(Of Integer, Boolean, Boolean)(8, False, True)
+                    prt.setIAInd(9, 8, False, True)
                 Case Else
-                    If iArrInd(9).Item1 < 5 Then iArrInd(9) = New Tuple(Of Integer, Boolean, Boolean)(iArrInd(9).Item1, False, False)
+                    If prt.iArrInd(9).Item1 < 5 Then prt.setIAInd(9, prt.iArrInd(9).Item1, False, False)
             End Select
         End If
         'eyebrows
         If Int(Rnd() * 2) = 0 Then
-            Select Case iArrInd(10).Item1
+            Select Case prt.iArrInd(10).Item1
                 Case Else
-                    iArrInd(10) = New Tuple(Of Integer, Boolean, Boolean)(iArrInd(10).Item1, False, False)
+                    prt.setIAInd(10, prt.iArrInd(10).Item1, False, False)
             End Select
         End If
         'accesory
         If Int(Rnd() * 2) = 0 Then
-            Select Case iArrInd(14).Item1
+            Select Case prt.iArrInd(14).Item1
                 Case 2
-                    iArrInd(14) = New Tuple(Of Integer, Boolean, Boolean)(1, False, False)
+                    prt.setIAInd(14, 1, False, False)
                 Case 3
-                    iArrInd(14) = New Tuple(Of Integer, Boolean, Boolean)(2, False, False)
+                    prt.setIAInd(14, 2, False, False)
             End Select
         End If
         'fronthair
         If Int(Rnd() * 2) = 0 Then
-            Select Case iArrInd(15).Item1
+            Select Case prt.iArrInd(15).Item1
                 Case 12
-                    iArrInd(15) = New Tuple(Of Integer, Boolean, Boolean)(6, False, True)
+                    prt.setIAInd(15, 6, False, True)
             End Select
         End If
-    End Sub
-    Public Sub lustUpdate()
-        Select Case Int(lust / 20)
-            Case 0
-            Case 1
-                iArr(4) = CharacterGenerator.CreateBMP({iArr(4), Game.picLust1.BackgroundImage})
-            Case 2
-                iArrInd(14) = New Tuple(Of Integer, Boolean, Boolean)(1, False, False)
-            Case 3
-                iArrInd(14) = New Tuple(Of Integer, Boolean, Boolean)(2, False, False)
-        End Select
-        'fronthair
-        Select Case iArrInd(15).Item1
-            Case 12
-                iArrInd(15) = New Tuple(Of Integer, Boolean, Boolean)(6, False, True)
-        End Select
     End Sub
     'breast enlargement/reduction methods
     Public Sub be()
@@ -1595,50 +1687,50 @@
         End If
     End Sub
     Sub bsizeroute()
-        If Game.imgLib Is Nothing Or iArr Is Nothing Or
-            iArrInd Is Nothing Or solFlag Then Exit Sub
-        If (checkFemInd(2, 0) Or checkNDefFemInd(2, 5)) And breastSize <> 1 Then
+        If Portrait.imgLib Is Nothing Or prt.iArr Is Nothing Or
+            prt.iArrInd Is Nothing Or solFlag Then Exit Sub
+        If (prt.checkFemInd(2, 0) Or prt.checkNDefFemInd(2, 5)) And breastSize <> 1 Then
             breastSize = 1
-        ElseIf (checkNDefFemInd(2, 1) Or checkNDefFemInd(2, 6) Or checkNDefFemInd(2, 21)) And breastSize <> 2 Then
+        ElseIf (prt.checkNDefFemInd(2, 1) Or prt.checkNDefFemInd(2, 6) Or prt.checkNDefFemInd(2, 21)) And breastSize <> 2 Then
             breastSize = 2
-        ElseIf (checkNDefFemInd(2, 2) Or checkNDefFemInd(2, 7) Or checkNDefFemInd(2, 10) Or checkNDefFemInd(2, 16)) And breastSize <> 3 Then
+        ElseIf (prt.checkNDefFemInd(2, 2) Or prt.checkNDefFemInd(2, 7) Or prt.checkNDefFemInd(2, 10) Or prt.checkNDefFemInd(2, 16)) And breastSize <> 3 Then
             breastSize = 3
-        ElseIf (checkNDefFemInd(2, 3) Or checkNDefFemInd(2, 8)) And breastSize <> 4 Then
+        ElseIf (prt.checkNDefFemInd(2, 3) Or prt.checkNDefFemInd(2, 8)) And breastSize <> 4 Then
             breastSize = 4
-        ElseIf (checkNDefFemInd(2, 4) Or checkNDefFemInd(2, 9)) And breastSize <> 5 Then
+        ElseIf (prt.checkNDefFemInd(2, 4) Or prt.checkNDefFemInd(2, 9)) And breastSize <> 5 Then
             breastSize = 5
-        ElseIf (checkNDefFemInd(2, 17) Or checkNDefFemInd(2, 18)) And breastSize <> 6 Then
+        ElseIf (prt.checkNDefFemInd(2, 17) Or prt.checkNDefFemInd(2, 18)) And breastSize <> 6 Then
             breastSize = 6
-        ElseIf (checkNDefFemInd(2, 19) Or checkNDefFemInd(2, 20)) And breastSize <> 7 Then
+        ElseIf (prt.checkNDefFemInd(2, 19) Or prt.checkNDefFemInd(2, 20)) And breastSize <> 7 Then
             breastSize = 7
-        ElseIf (checkNDefMalInd(2, 2)) And breastSize <> 0 Then
+        ElseIf (prt.checkNDefMalInd(2, 2)) And breastSize <> 0 Then
             breastSize = 0
-        ElseIf (checkMalInd(2, 0)) And breastSize <> -1 Then
+        ElseIf (prt.checkMalInd(2, 0)) And breastSize <> -1 Then
             breastSize = -1
         End If
     End Sub
     Public Sub reverseBSRoute()
         Select Case breastSize
             Case -1
-                iArrInd(2) = New Tuple(Of Integer, Boolean, Boolean)(0, False, False)
+                prt.setIAInd(2, 0, False, False)
             Case 0
-                iArrInd(2) = New Tuple(Of Integer, Boolean, Boolean)(2, False, True)
+                prt.setIAInd(2, 2, False, True)
             Case 1
-                iArrInd(2) = New Tuple(Of Integer, Boolean, Boolean)(0, True, False)
+                prt.setIAInd(2, 0, True, False)
             Case 2
-                iArrInd(2) = New Tuple(Of Integer, Boolean, Boolean)(1, True, True)
+                prt.setIAInd(2, 1, True, True)
             Case 3
-                iArrInd(2) = New Tuple(Of Integer, Boolean, Boolean)(2, True, True)
+                prt.setIAInd(2, 2, True, True)
             Case 4
-                iArrInd(2) = New Tuple(Of Integer, Boolean, Boolean)(3, True, True)
+                prt.setIAInd(2, 3, True, True)
             Case 5
-                iArrInd(2) = New Tuple(Of Integer, Boolean, Boolean)(4, True, True)
+                prt.setIAInd(2, 4, True, True)
             Case 6
-                iArrInd(2) = New Tuple(Of Integer, Boolean, Boolean)(17, True, True)
+                prt.setIAInd(2, 17, True, True)
             Case 7
-                iArrInd(2) = New Tuple(Of Integer, Boolean, Boolean)(19, True, True)
+                prt.setIAInd(2, 19, True, True)
         End Select
-        Equipment.portraitUDate()
+        prt.portraitUDate()
     End Sub
 
     '|SAVE METHODS|
@@ -1646,6 +1738,7 @@
         Dim output As String = ""
 
         currState.save(Me)
+
         output += currState.write()
         output += sState.write()
         output += pState.write()
@@ -1682,48 +1775,70 @@
         End If
         output += inv.item(69).ToString
 
-        output += "*" & ongoingTFs.Count - 1 & "*"
+        output += "*†"
+        output += ongoingTFs.Count - 1 & "Ͱ"
         For i = 0 To ongoingTFs.Count - 1
-            output += ongoingTFs(i).ToString
+            output += ongoingTFs(i).ToString & "Ͱ"
         Next
+        output += "†"
+        output += selfPolyForms.Count - 1 & "Ͱ"
+        For i = 0 To selfPolyForms.Count - 1
+            output += selfPolyForms(i).ToString & "Ͱ"
+        Next
+        output += "†"
+        output += enemPolyForms.Count - 1 & "Ͱ"
+        For i = 0 To enemPolyForms.Count - 1
+            output += enemPolyForms(i).ToString & "Ͱ"
+        Next
+        output += "†"
+        output += knownSpells.Count - 1 & "Ͱ"
+        For i = 0 To knownSpells.Count - 1
+            output += knownSpells(i).ToString & "Ͱ"
+        Next
+        output += "†"
+        output += knownSpecials.Count - 1 & "Ͱ"
+        For i = 0 To knownSpecials.Count - 1
+            output += knownSpecials(i).ToString & "Ͱ"
+        Next
+        output += "†"
         Return output
     End Function
     Public Function toGhost() As String
         Dim output = CStr(name & " the " & pForm.name & " " & pClass.name & "*" & health & "*" & maxHealth &
-            "*" & getATK() & "*" & getDEF() & "*" & getSPD() & "*" & sexBool & "*" & haircolor.R & "*" & haircolor.G & "*" & haircolor.B & "*")
+            "*" & getATK() & "*" & getDEF() & "*" & getSPD() & "*" & prt.sexBool & "*" & prt.haircolor.R & "*" & prt.haircolor.G & "*" & prt.haircolor.B & "*")
         output += inv.save
-        For i = 0 To UBound(iArrInd)
-            output += (iArrInd(i).Item1 & "%" & iArrInd(i).Item2 & "*")
+        For i = 0 To UBound(prt.iArrInd)
+            output += (prt.iArrInd(i).Item1 & "%" & prt.iArrInd(i).Item2 & "%" & prt.iArrInd(i).Item3 & "*")
         Next
         Return output
     End Function
 
     '|GETTER/SETTER METHODS|
     Overrides Function getMaxHealth() As Integer
-        Return CInt((maxHealth + hBuff + equippedArmor.hBoost + equippedAcce.hBoost) * pClass.h * pForm.h)
+        Return CInt((maxHealth + hBuff) * pClass.h * pForm.h) + equippedArmor.hBoost + equippedAcce.hBoost
     End Function
     Overrides Function getMaxMana() As Integer
         If equippedArmor Is Nothing Or equippedWeapon Is Nothing Then Return CInt(maxMana * pForm.m * pForm.m) + mBuff
-        Return CInt((maxMana + mBuff + equippedArmor.mBoost + equippedWeapon.mBoost + equippedAcce.mBoost) * pForm.m * pForm.m)
+        Return CInt((maxMana + mBuff) * pForm.m * pForm.m) + equippedArmor.mBoost + equippedWeapon.mBoost + equippedAcce.mBoost
     End Function
     Overrides Function getATK() As Integer
         If equippedArmor Is Nothing Or equippedWeapon Is Nothing Then Return CInt(attack * pForm.a * pClass.a) + aBuff
-        Return CInt((attack + aBuff + equippedArmor.aBoost + equippedAcce.aBoost) * pForm.a * pClass.a)
+        Return CInt((attack + aBuff) * pForm.a * pClass.a) + equippedArmor.aBoost + equippedAcce.aBoost
     End Function
     Overrides Function getDEF() As Integer
         If equippedArmor Is Nothing Or equippedWeapon Is Nothing Then Return CInt(defence * pClass.d * pForm.d) + dBuff
-        Return CInt((defence + dBuff + equippedArmor.dBoost + equippedAcce.dBoost) * pClass.d * pForm.d)
+        Return CInt((defence + dBuff) * pClass.d * pForm.d) + equippedArmor.dBoost + equippedAcce.dBoost
     End Function
     Overrides Function getSPD() As Integer
         If equippedArmor Is Nothing Or equippedWeapon Is Nothing Then Return CInt(speed * pClass.s * pForm.s) + sBuff
-        Return CInt((speed + sBuff + equippedArmor.sBoost + equippedAcce.sBoost) * pClass.s * pForm.s)
+        Return CInt((speed + sBuff) * pClass.s * pForm.s) + equippedArmor.sBoost + equippedAcce.sBoost
     End Function
     Overrides Function getWIL() As Integer
         Return CInt(will * pClass.w * pForm.w) + wBuff
     End Function
 
     '|DESCRIPTION GENERATION METHODS|
-    Function getColor(ByVal color As Color)
+    Function getColor(ByVal color As Color) As String
         Dim c As Color
 
 
@@ -1760,14 +1875,14 @@
             out += m.ToString
             out += " "
         Next
-        If out.Equals("Beige ") Or out.Equals("Wheat ") Then out = "Platinum Blonde "
+        If out.Equals("Beige ") Or out.Equals("Wheat ") Then out = "Light Blonde "
         Return out.ToLower
     End Function
     Function getHairColor() As String
-        Return getColor(haircolor)
+        Return getColor(prt.haircolor)
     End Function
     Function getSkinColor() As String
-        Select Case skincolor.GetHashCode
+        Select Case prt.skincolor.GetHashCode
             Case Color.AntiqueWhite.GetHashCode
                 Return "porcelain "
             Case Color.FromArgb(255, 247, 219, 195).GetHashCode
@@ -1781,7 +1896,7 @@
             Case Color.FromArgb(255, 105, 80, 70).GetHashCode
                 Return "ebony "
             Case Else
-                Return getColor(skincolor)
+                Return getColor(prt.skincolor)
         End Select
     End Function
     Function plusMinus(ByVal x, ByVal y, ByVal tol)
@@ -1838,13 +1953,13 @@
 
         'hair
         out += "You have " & getHairColor()
-        If haircolor.A = 180 Then
+        If prt.haircolor.A = 180 Then
             out += "gelatinous "
         End If
         If pForm.name.Equals("Blowup Doll") Then
             out += "rubber "
         End If
-        If iArrInd(1).Item2 Then
+        If prt.iArrInd(1).Item2 Then
             out += "hair, done in a feminine style." & vbCrLf & " " & vbCrLf
         Else
             out += "hair, done in a masculine style." & vbCrLf & " " & vbCrLf
@@ -1854,14 +1969,14 @@
         Select Case pForm.name
             Case "Blowup Doll"
                 out += "You are a inflatable sex doll with " & getSkinColor() & "rubber skin.  "
-                If sexBool Then
+                If prt.sexBool Then
                     out += "You have a feminine body, with huge breasts and the matching female genetalia." & vbCrLf & " " & vbCrLf
                 Else
                     out += "You have a feminine body, with huge breasts, though you have male genetalia." & vbCrLf & " " & vbCrLf
                 End If
             Case Else
                 'skincolor
-                If haircolor.A = 200 Then
+                If prt.haircolor.A = 200 Then
                     out += "Your body is made up of a " & getSkinColor() & "slime, and while you are technically formless, you still have enough control over the slime to form a bipedal, humanoid form.  "
                 Else
                     out += "You have a (relatively) normal human body with " & getSkinColor() & "skin.  "
@@ -1888,15 +2003,14 @@
                     Case 7
                         bAdj = "immense"
                 End Select
-                If sexBool Then
-                    If iArrInd(2).Item2 Then
+                If sex.Equals("Female") Then
+                    If prt.sexBool Then
                         out += "You have a feminine body, with " & bAdj & " breasts and the matching female genetalia." & vbCrLf & " " & vbCrLf
                     Else
                         out += "You have a a masculine body, with " & bAdj & " breasts, though you have female genetalia." & vbCrLf & " " & vbCrLf
                     End If
-                    out += "Your hips have womanly curves without being overly wide.  Overall, you have typical legs and feet for a humanoid woman." & vbCrLf & " " & vbCrLf
                 Else
-                    If iArrInd(2).Item2 Then
+                    If prt.sexBool Then
                         out += "You have a feminine body, with " & bAdj & " breasts, though you have male genetalia." & vbCrLf & " " & vbCrLf
                     Else
                         out += "You have a masculine body, with a toned chest and the matching male genetalia." & vbCrLf & " " & vbCrLf

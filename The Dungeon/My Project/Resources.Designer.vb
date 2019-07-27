@@ -18,9 +18,8 @@ Imports System
 'class via a tool like ResGen or Visual Studio.
 'To add or remove a member, edit your .ResX file then rerun ResGen
 'with the /str option, or rebuild your VS project.
-'''<summary>
-'''  A strongly-typed resource class, for looking up localized strings, etc.
-'''</summary>
+
+'  A strongly-typed resource class, for looking up localized strings, etc.
 <Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Resources.Tools.StronglyTypedResourceBuilder", "4.0.0.0"),  _
  Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
  Global.System.Runtime.CompilerServices.CompilerGeneratedAttribute()>  _
@@ -35,9 +34,7 @@ Friend Class Resources
         MyBase.New
     End Sub
     
-    '''<summary>
-    '''  Returns the cached ResourceManager instance used by this class.
-    '''</summary>
+    ' Returns the cached ResourceManager instance used by this class.
     <Global.System.ComponentModel.EditorBrowsableAttribute(Global.System.ComponentModel.EditorBrowsableState.Advanced)>  _
     Friend Shared ReadOnly Property ResourceManager() As Global.System.Resources.ResourceManager
         Get
@@ -49,10 +46,8 @@ Friend Class Resources
         End Get
     End Property
     
-    '''<summary>
-    '''  Overrides the current thread's CurrentUICulture property for all
-    '''  resource lookups using this strongly typed resource class.
-    '''</summary>
+    '  Overrides the current thread's CurrentUICulture property for all
+    '  resource lookups using this strongly typed resource class.
     <Global.System.ComponentModel.EditorBrowsableAttribute(Global.System.ComponentModel.EditorBrowsableState.Advanced)>  _
     Friend Shared Property Culture() As Global.System.Globalization.CultureInfo
         Get

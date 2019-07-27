@@ -7,6 +7,7 @@
                        "+25 ATK")
         MyBase.setUsable(False)
         MyBase.aBoost = 25
+        isMonsterDrop = True
         id = 63
         tier = 3
         MyBase.count = 0

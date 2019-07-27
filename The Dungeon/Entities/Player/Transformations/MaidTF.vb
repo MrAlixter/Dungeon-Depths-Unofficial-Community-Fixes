@@ -33,11 +33,11 @@
         'equip clothes
         Equipment.clothesChange("Maid_Outfit")
         'maid transformation
-        p.haircolor = Color.FromArgb(255, 115, 72, 65)
-        p.iArrInd(1) = New Tuple(Of Integer, Boolean, Boolean)(8, True, True)
-        p.iArrInd(5) = New Tuple(Of Integer, Boolean, Boolean)(8, True, True)
-        p.iArrInd(15) = New Tuple(Of Integer, Boolean, Boolean)(3, True, True)
-        p.iArrInd(16) = New Tuple(Of Integer, Boolean, Boolean)(2, True, False)
+        p.prt.haircolor = Color.FromArgb(255, 115, 72, 65)
+        p.prt.setIAInd(1, 8, True, True)
+        p.prt.setIAInd(5, 8, True, True)
+        p.prt.setIAInd(15, 3, True, True)
+        p.prt.setIAInd(16, 2, True, False)
 
         'transformation description push
         out += "As you shake the duster, the dust coming off of it seems to glow.  As you take a step back, it whips into a frenzy shrouding you in a radiant cloud.  As the glow dies down, your clothes seem to have become skimpy maid's attire to match the duster, and your hair seems to have become auburn.  Sneezing, you continue on your journey to clean this entire dungeon."

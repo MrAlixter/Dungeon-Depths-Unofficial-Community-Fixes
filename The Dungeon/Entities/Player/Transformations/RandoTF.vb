@@ -19,33 +19,27 @@
 
         'assign a pointer to the player character
         Dim p As player = game.player
+        p.sState.load(p)
 
-        'assign a random starter class
-        Dim classes = {"Warrior", "Mage", "Paladin", "Warrior", "Mage", "Bimbo"}
-        p.pClass = p.classes(classes(Int(Rnd() * classes.Length)))
+        Game.preBSStartState = New State(p)
 
+        'assign a starter class / form
+        p.pClass = p.classes("Classless")
+        p.pForm = p.forms("Human")
         'assign a random sex
         Randomize()
         Dim r = Int(Rnd() * 2)
-        If r = 0 Or p.pClass.Equals("Bimbo") Then
-            p.sex = "Female"
-            p.sexBool = p.sexbool
-            p.breastSize = Int(Rnd() * 3) + 1
-        Else
-            p.sex = "Male"
-            p.sexBool = False
-            p.breastSize = -1
-        End If
+        If r = 0 Then p.sex = "Female" Else  p.sex = "Male"
 
         'assign random stats
         p.health = 1.0
-        p.maxHealth = 70 + Int(Rnd() * 50)
-        p.mana = Int(Rnd() * 7)
+        p.maxHealth = 100 + Int(Rnd() * 50)
+        p.mana = 3 + Int(Rnd() * 7)
         p.maxMana = CInt(p.mana.ToString)
         p.attack = 10 + Int(Rnd() * 7)
-        p.defence = 7 + Int(Rnd() * 7)
+        p.defence = 10 + Int(Rnd() * 7)
         p.will = 5 + Int(Rnd() * 7)
-        p.speed = 9 + Int(Rnd() * 7)
+        p.speed = 10 + Int(Rnd() * 7)
         p.gold = 25 + Int(Rnd() * 200)
         p.lust = 0
         p.hunger = 0
@@ -55,93 +49,57 @@
         p.aBuff = 0
         p.dBuff = 0
 
+        p.prt.hornInd = 0
+        p.prt.wingInd = 0
+
         'set a random hair color
-        p.haircolor = Color.FromArgb(255, Int(Rnd() * 125) + 100, Int(Rnd() * 125) + 100, Int(Rnd() * 125) + 100)
+        p.prt.haircolor = Color.FromArgb(255, Int(Rnd() * 125) + 100, Int(Rnd() * 125) + 100, Int(Rnd() * 125) + 100)
 
         'set a random skin color
         Select Case Int(Rnd() * 6)
             Case 0
-                p.skincolor = (Color.AntiqueWhite)
+                p.prt.skincolor = (Color.AntiqueWhite)
             Case 1
-                p.skincolor = (Color.FromArgb(255, 247, 219, 195))
+                p.prt.skincolor = (Color.FromArgb(255, 247, 219, 195))
             Case 2
-                p.skincolor = (Color.FromArgb(255, 240, 184, 160))
+                p.prt.skincolor = (Color.FromArgb(255, 240, 184, 160))
             Case 3
-                p.skincolor = (Color.FromArgb(255, 210, 161, 140))
+                p.prt.skincolor = (Color.FromArgb(255, 210, 161, 140))
             Case 4
-                p.skincolor = (Color.FromArgb(255, 180, 138, 120))
+                p.prt.skincolor = (Color.FromArgb(255, 180, 138, 120))
             Case Else
-                p.skincolor = (Color.FromArgb(255, 105, 80, 70))
+                p.prt.skincolor = (Color.FromArgb(255, 105, 80, 70))
         End Select
 
         'set the rest of the portrait randomly
         r = Int(Rnd() * 7)
-        p.iArrInd(1) = New Tuple(Of Integer, Boolean, Boolean)(r, True, False)
-        p.iArrInd(2) = New Tuple(Of Integer, Boolean, Boolean)(0, True, False)
-        p.iArrInd(4) = New Tuple(Of Integer, Boolean, Boolean)(0, True, False)
-        p.iArrInd(5) = New Tuple(Of Integer, Boolean, Boolean)(r, True, False)
+        p.prt.setIAInd(1, r, True, False)
+        p.prt.setIAInd(4, 0, True, False)
+        p.prt.setIAInd(5, r, True, False)
         r = Int(Rnd() * 7)
-        p.iArrInd(3) = New Tuple(Of Integer, Boolean, Boolean)(r, True, False)
-        p.iArrInd(6) = New Tuple(Of Integer, Boolean, Boolean)(5, True, False)
-        p.iArrInd(7) = New Tuple(Of Integer, Boolean, Boolean)(0, True, False)
+        p.prt.setIAInd(3, r, True, False)
+        p.prt.setIAInd(6, 5, True, False)
+        p.prt.setIAInd(7, 0, True, False)
         r = Int(Rnd() * 11)
-        p.iArrInd(8) = New Tuple(Of Integer, Boolean, Boolean)(r, True, False)
-        p.iArrInd(9) = New Tuple(Of Integer, Boolean, Boolean)(9, True, True)
-        p.iArrInd(10) = New Tuple(Of Integer, Boolean, Boolean)(0, True, False)
-        p.iArrInd(11) = New Tuple(Of Integer, Boolean, Boolean)(0, True, False)
-        p.iArrInd(12) = New Tuple(Of Integer, Boolean, Boolean)(0 + (2 * Int(Rnd() * 3)), True, False)
-        p.iArrInd(13) = New Tuple(Of Integer, Boolean, Boolean)(0, True, False)
-        p.iArrInd(14) = New Tuple(Of Integer, Boolean, Boolean)(0, True, False)
+        p.prt.setIAInd(8, r, True, False)
+        p.prt.setIAInd(9, 9, True, True)
+        p.prt.setIAInd(10, 0, True, False)
+        p.prt.setIAInd(11, 0, True, False)
+        p.prt.setIAInd(13, 0, True, False)
+        p.prt.setIAInd(14, 0, True, False)
         r = Int(Rnd() * 8) + 1
-        p.iArrInd(15) = New Tuple(Of Integer, Boolean, Boolean)(r, True, False)
-        p.iArrInd(16) = New Tuple(Of Integer, Boolean, Boolean)(0, True, False)
+        p.prt.setIAInd(15, r, True, False)
+        p.prt.setIAInd(16, 0, True, False)
 
         'clear all player associated lists
         p.createInvPerks()
 
         'assign random equipment
-        Dim armor = New Integer() {5, 5, 5, 7, 12, 16, 17, 17, 17, 18, 19, 19, 19, 20, 38, 38, 39, 46, 47, 64, 71, 72, 73, 74, 83, 85}
-        Dim armorIndex = armor(Int(Rnd() * (armor.Length)))
-        Dim weapon = New Integer() {6, 6, 9, 9, 21, 21, 22, 22, 23, 63, 84}
-        Dim weaponIndex = weapon(Int(Rnd() * (weapon.Length)))
-        p.inv.add(armorIndex, 1)
-        p.inv.add(weaponIndex, 1)
-        p.equippedArmor = p.inv.item(armorIndex)
-        p.equippedWeapon = p.inv.item(weaponIndex)
+        setLoadout()
 
-        For i = 0 To 4
-            Dim invInd As Integer = 8
-            While invInd = 8 Or invInd = 10 Or invInd = 24 Or invInd = 53 Or invInd = 69 Or invInd = 78 Or invInd = 79 Or invInd = 81
-                invInd = Int(Rnd() * (Game.player.inv.upperBound + 1))
-            End While
-            p.inv.add(invInd, CInt(Int(Rnd() * 2) + 1))
-        Next
-
-        p.inv.add(2, 1)
-        p.inv.add(13, 1)
-
-        'set class stats
-        If p.pClass.Equals("Warrior") Or p.pClass.Equals("Paladin") Then
-            p.attack += 10 + Int(Rnd() * 5)
-            p.defence += 5 + Int(Rnd() * 5)
-            p.speed -= Int(Rnd() * 5)
-        ElseIf p.pClass.Equals("Mage") Or p.pClass.Equals("Paladin") Then
-            p.attack -= Int(Rnd() * 5)
-            p.defence -= Int(Rnd() * 5)
-            p.speed += Int(Rnd() * 5)
-            p.mana += 8 + Int(Rnd() * 5)
-            p.inv.add(4, 1)
-        ElseIf p.pClass.Equals("Bimbo") Then
-            p.changeHairColor(BimboTF.bimboyellow)
-            p.will = 1
-            p.perks("slutcurse") = 1
-            If Int(Rnd() * 10) = 7 Then p.inv.add(4, 1)
-        End If
-
-        'set other player stuff
         p.TextColor = Color.White
         If Game.floor < 6 Then p.pImage = Game.picPlayer.BackgroundImage Else p.pImage = Game.picPlayerf.BackgroundImage
-        p.bsizeroute()
+        p.reverseBSRoute()
         p.sState.save(p)
 
         p.inv.invNeedsUDate = True
@@ -151,8 +109,176 @@
         p.currState.save(p)
         p.pState.save(p)
         p.sState.save(p)
-        p.sState.iArrInd(3) = New Tuple(Of Integer, Boolean, Boolean)(si, p.sexBool, False)
+        p.sState.iArrInd(3) = New Tuple(Of Integer, Boolean, Boolean)(si, p.prt.sexBool, False)
     End Sub
+    Sub setLoadout()
+        Randomize()
+        Dim p = Game.player
+        Dim armor() As Integer = {}
+        Dim weapon() As Integer = {}
+        Dim armorIndex As Integer = -1
+        Dim weaponIndex As Integer = -1
+
+        Equipment.clothesChange("Naked")
+        Equipment.weaponChange("Fists")
+        Select Case Int(Rnd() * 23)
+            Case 0   'basic warrior
+                p.pClass = p.classes("Warrior")
+                armor = New Integer() {5, 19, 46, 83}
+                weapon = New Integer() {6, 23, 84}
+            Case 1   'basic mage
+                p.pClass = p.classes("Mage")
+                armor = New Integer() {5, 17, 46, 83}
+                weapon = New Integer() {21, 22}
+            Case 2   'advanced warrior
+                p.pClass = p.classes("Warrior")
+                armor = New Integer() {5, 19, 38, 46, 101}
+                weapon = New Integer() {6, 23, 40, 118}
+            Case 3   'advanced mage
+                p.pClass = p.classes("Mage")
+                armor = New Integer() {5, 17, 46, 83}
+                weapon = New Integer() {21, 22}
+            Case 4   'basic bimbo
+                p.pClass = p.classes("Bimbo")
+                p.sex = "Female"
+                armor = New Integer() {7, 12, 18, 20, 39, 47, 71, 72, 78, 85, 103, 105, 107, 116, 129}
+                weapon = New Integer() {6, 22, 23, 84}
+            Case 5   'combat bimbo
+                p.pForm = p.forms("Amazon")
+                p.pClass = p.classes("Bimbo++")
+                p.sex = "Female"
+                armor = New Integer() {7, 12, 18, 20, 39, 47, 71, 72, 78, 85, 99, 103, 105, 107, 116, 129}
+            Case 6   'amazon princess
+                p.pForm = p.forms("Amazon")
+                p.pClass = p.classes("Princess")
+                p.sex = "Female"
+                p.prt.skincolor = (Color.FromArgb(255, 210, 161, 140))
+                armor = New Integer() {39, 85, 99}
+            Case 7   'amazon warrior
+                p.pForm = p.forms("Amazon")
+                p.pClass = p.classes("Warrior")
+                p.sex = "Female"
+                p.prt.skincolor = (Color.FromArgb(255, 210, 161, 140))
+                armor = New Integer() {7, 41, 71, 85, 99}
+            Case 8   'succubus
+                p.pForm = p.forms("Succubus")
+                p.pClass = p.classes("Warrior")
+                armor = New Integer() {39, 74}
+                weapon = New Integer() {6, 21, 22, 23, 63, 63, 63}
+                p.sex = "Female"
+                p.prt.wingInd = 2
+                p.prt.hornInd = 3
+                p.prt.skincolor = Color.FromArgb(255, 255, 105, 180)
+            Case 4   'succubus bimbo
+                p.pForm = p.forms("Succubus")
+                p.pClass = p.classes("Bimbo")
+                p.sex = "Female"
+                armor = New Integer() {7, 12, 18, 20, 39, 47, 71, 72, 78, 85, 103, 105, 107, 116, 129}
+                weapon = New Integer() {6, 21, 22, 23, 63, 63, 63}
+                p.prt.wingInd = 2
+                p.prt.hornInd = 3
+                p.prt.skincolor = Color.FromArgb(255, 255, 105, 180)
+            Case 10   'barbarian
+                p.pClass = p.classes("Barbarian")
+                armor = New Integer() {101}
+                weapon = New Integer() {84, 118}
+            Case 11   'warlock
+                p.pClass = p.classes("Warlock")
+                armor = New Integer() {115}
+                weapon = New Integer() {22}
+            Case 12   'space warrior
+                p.pClass = p.classes("Warrior")
+                armor = New Integer() {102, 104, 106}
+                weapon = New Integer() {111, 112, 120}
+            Case 13   'classless
+                armor = New Integer() {5, 17, 19, 83}
+                weapon = New Integer() {6, 22, 23, 84}
+            Case 14   'magic maid
+                p.pForm = p.forms("Half-Succubus")
+                p.pClass = p.classes("Maid")
+                armor = New Integer() {72}
+                weapon = New Integer() {6, 21, 22, 23, 63, 63, 63}
+                p.sex = "Female"
+                p.prt.wingInd = 2
+                p.prt.haircolor = Color.FromArgb(255, 155, 0, 0)
+            Case 15   'valkyrie
+                p.pClass = p.classes("Angel")
+                armor = New Integer() {7, 19, 83, 85, 95, 105}
+                weapon = New Integer() {6, 23, 40, 112}
+                p.sex = "Female"
+                p.prt.wingInd = 1
+            Case 16   'bunny girl
+                p.pClass = p.classes("Bunny Girl")
+                armor = New Integer() {16, 94, 129}
+                weapon = New Integer() {6, 21, 22, 23, 40, 41, 63}
+                p.sex = "Female"
+                p.inv.item("Bowtie").add(1)
+                Equipment.accChange("Bowtie")
+            Case 17   'cow girl
+                p.pForm = p.forms("Minotaur Cow")
+                p.pClass = p.classes("Barbarian")
+                armor = New Integer() {19, 71, 101}
+                weapon = New Integer() {6, 23, 40, 118}
+                p.sex = "Female"
+                p.prt.hornInd = 2
+            Case 18   'cow male
+                p.pForm = p.forms("Minotaur Bull")
+                p.pClass = p.classes("Barbarian")
+                armor = New Integer() {19, 101}
+                weapon = New Integer() {6, 23, 40, 118}
+                p.sex = "Male"
+                p.prt.hornInd = 2
+            Case 19   'basic warrior
+                p.pClass = p.classes("Warrior")
+                armor = New Integer() {5, 19, 46, 83}
+                weapon = New Integer() {6, 23, 84}
+            Case 20   'basic mage
+                p.pClass = p.classes("Mage")
+                armor = New Integer() {5, 17, 46, 83}
+                weapon = New Integer() {21, 22}
+            Case 21  'advanced warrior
+                p.pClass = p.classes("Warrior")
+                armor = New Integer() {5, 19, 38, 46, 101}
+                weapon = New Integer() {6, 23, 40, 118}
+            Case 22  'advanced mage
+                p.pClass = p.classes("Mage")
+                armor = New Integer() {5, 17, 46, 83}
+                weapon = New Integer() {21, 22}
+        End Select
+
+        For i = 0 To 4
+            Dim invInd As Integer = 8
+            While Not p.inv.item(invInd).isRandoTFAcceptable
+                invInd = Int(Rnd() * (Game.player.inv.upperBound + 1))
+            End While
+            p.inv.add(invInd, CInt(Int(Rnd() * 2) + 1))
+        Next
+
+        p.inv.add(2, 1)
+        p.inv.add(13, 1)
+
+        'set other player stuff
+        If p.sex.Equals("Female") Then
+            p.breastSize = Int(Rnd() * 3) + 1
+        Else
+            For i = 1 To 16
+                p.prt.setIAInd(i, p.prt.iArrInd(i).Item1, False, False)
+            Next
+            p.breastSize = -1
+        End If
+
+        If armor.Length > 0 Then
+            armorIndex = armor(Int(Rnd() * (armor.Length)))
+            p.inv.add(armorIndex, 1)
+            Equipment.clothesChange(p.inv.item(armorIndex).getAName)
+        End If
+        If weapon.Length > 0 Then
+            weaponIndex = weapon(Int(Rnd() * (weapon.Length)))
+            p.inv.add(weaponIndex, 1)
+            Equipment.weaponChange(p.inv.item(weaponIndex).getAName)
+        End If
+    End Sub
+
     Shared Sub floor4FirstBossEncounter()
         Game.pushLblEvent("Turning around, you are about to move on when a " & _
                           "giggle coming from behind you causes you to stop." & _
@@ -235,7 +361,7 @@
         For i = 0 To Game.preBSInventory.Count - 1
             p.inv.add(i, Game.preBSInventory(i))
         Next
-        p.canMoveFlag = p.sexbool
+        p.canMoveFlag = True
         Game.lblEvent.Visible = False
         Game.player = p
         p.UIupdate()
@@ -245,7 +371,7 @@
         For i = 0 To Game.preBSInventory.Count - 1
             p.inv.add(i, Game.preBSInventory(i))
         Next
-        p.canMoveFlag = p.sexbool
+        p.canMoveFlag = True
         Game.lblEvent.Visible = False
         Game.player = p
         p.UIupdate()

@@ -22,7 +22,6 @@
                                             "                              5 6 7 8")
             Catch e As Exception
                 Game.pushLblEvent("The fusion crystal does not react.  It seems that an improper slot was selected.")
-                count += 1
                 Exit Sub
             End Try
             If Not System.IO.File.Exists("s" & i & ".ave") Then
@@ -31,7 +30,7 @@
             End If
             Dim save = Game.getPlayerFromFile("s" & i & ".ave")
             Dim p2 As Player = save.Item1
-            If save.Item2 <> Game.version Or p2.perks("polymorphed") > -1 Or Not Transformation.canBeTFed(Game.player) Xor p2.pClass.name.Equals("Magic Girl") Then
+            If save.Item2 <> Game.version Or p2.perks("polymorphed") > -1 Or Not Transformation.canBeTFed(Game.player) Or (p2.pClass.name.Equals("Magic Girl") Or p2.pClass.name.Equals("Valkyrie")) Then
                 Game.pushLblEvent("After talking it over, " & Game.player.name & " and " & p2.name & " decide that they are incompatable, and not to fuse.")
                 Exit Sub
             End If
@@ -43,8 +42,8 @@
                                "the crystal is whole again.  The second that the two pieces reunite, their glow becomes blinding, engulfing" & _
                                " both explorers." & vbCrLf & _
                                Game.player.name & " and " & p2.name & " fuse together to form " & nameFusion(Game.player.name, p2.name) & _
-                               ", a superior explorer!  The change is permenant, and unfortunately " & p2.name & _
-                               "'s known spells and forms are lost.")
+                               ", a superior explorer!  The change is permenant, though fortunately " & p2.name & _
+                               "'s known spells and forms are retained.")
 
             Dim fuPlay As Player = Fusion(Game.player, p2)
 
@@ -63,7 +62,6 @@
             fuPlay.createP()
             fuPlay.currState.save(fuPlay)
             fuPlay.pState.save(fuPlay)
-            
         End If
     End Sub
     Overrides Sub discard()
@@ -109,6 +107,12 @@
 
         r = Int(Rnd() * 2)
         If r = 0 Then player.sex = p1.sex Else player.sex = p2.sex
+
+        r = Int(Rnd() * 2)
+        If r = 0 Then player.prt.wingInd = p1.prt.wingInd Else player.prt.wingInd = p2.prt.wingInd
+
+        r = Int(Rnd() * 2)
+        If r = 0 Then player.prt.hornInd = p1.prt.hornInd Else player.prt.hornInd = p2.prt.hornInd
 
         If p1.maxHealth > p2.maxHealth Then
             player.maxHealth = p1.maxHealth * 1.5
@@ -171,30 +175,32 @@
         player.inv.add(2, -1)
         player.inv.add(58, -1)
 
-        player.iArr = p1.iArr.Clone
-        player.iArrInd = p1.iArrInd.Clone
+        player.breastSize = p1.breastSize + p2.breastSize / 2
+
+        player.prt.iArr = p1.prt.iArr.Clone
+        player.prt.iArrInd = p1.prt.iArrInd.Clone
         For i = 0 To 16
             If i <> 1 And i <> 15 And i <> 3 And i <> 5 Then
                 r = Int(Rnd() * 2)
-                If r = 0 Then player.iArrInd(i) = p1.iArrInd(i) Else player.iArrInd(i) = p2.iArrInd(i)
+                If r = 0 Then player.prt.iArrInd(i) = p1.prt.iArrInd(i) Else player.prt.iArrInd(i) = p2.prt.iArrInd(i)
             ElseIf i = 3 Then
                 r = Int(Rnd() * 2)
-                If r = 0 Then player.iArrInd(i) = p1.sState.iArrInd(i) Else player.iArrInd(i) = p2.sState.iArrInd(i)
+                If r = 0 Then player.prt.iArrInd(i) = p1.sState.iArrInd(i) Else player.prt.iArrInd(i) = p2.sState.iArrInd(i)
             ElseIf i = 1 Then
                 r = Int(Rnd() * 2)
-                If r = 0 Then player.iArrInd(1) = p1.iArrInd(1) Else player.iArrInd(1) = p2.iArrInd(1)
-                If r = 0 Then player.iArrInd(5) = p1.iArrInd(5) Else player.iArrInd(5) = p2.iArrInd(5)
-                If r = 0 Then player.iArrInd(15) = p2.iArrInd(15) Else player.iArrInd(15) = p1.iArrInd(15)
+                If r = 0 Then player.prt.iArrInd(1) = p1.prt.iArrInd(1) Else player.prt.iArrInd(1) = p2.prt.iArrInd(1)
+                If r = 0 Then player.prt.iArrInd(5) = p1.prt.iArrInd(5) Else player.prt.iArrInd(5) = p2.prt.iArrInd(5)
+                If r = 0 Then player.prt.iArrInd(15) = p2.prt.iArrInd(15) Else player.prt.iArrInd(15) = p1.prt.iArrInd(15)
             End If
         Next
 
         r = Int(Rnd() * 2)
         If r = 0 Then
-            player.skincolor = p1.skincolor
-            player.haircolor = p2.haircolor
+            player.prt.skincolor = p1.prt.skincolor
+            player.prt.haircolor = p2.prt.haircolor
         Else
-            player.skincolor = p2.skincolor
-            player.haircolor = p1.haircolor
+            player.prt.skincolor = p2.prt.skincolor
+            player.prt.haircolor = p1.prt.haircolor
         End If
 
         finalizeFusion(player, p1, p2)
@@ -202,7 +208,21 @@
         Return player
     End Function
 
+    Shared Function alUnion(ByVal a As List(Of String), ByVal b As List(Of String)) As List(Of String)
+        Dim c = New List(Of String)
+
+        For i = 0 To Math.Max(a.Count, b.Count) - 1
+            If i < a.Count AndAlso Not c.Contains(a.Item(i)) Then c.Add(a.Item(i))
+            If i < b.Count AndAlso Not c.Contains(b.Item(i)) Then c.Add(b.Item(i))
+        Next
+        Return c
+    End Function
     Shared Sub finalizeFusion(ByRef player As Player, ByRef p1 As Player, ByRef p2 As Player)
+
+        player.knownSpells = alUnion(p1.knownSpells, p2.knownSpells)
+        player.knownSpecials = alUnion(p1.knownSpecials, p2.knownSpecials)
+        player.selfPolyForms = alUnion(p1.selfPolyForms, p2.selfPolyForms)
+        player.enemPolyForms = alUnion(p1.enemPolyForms, p2.enemPolyForms)
 
         player.TextColor = Color.White
 

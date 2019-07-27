@@ -18,9 +18,12 @@
         bsize2 = New Tuple(Of Integer, Boolean, Boolean)(112, True, True)
         bsize3 = New Tuple(Of Integer, Boolean, Boolean)(113, True, True)
         bsize4 = New Tuple(Of Integer, Boolean, Boolean)(114, True, True)
-        bsize5 = New Tuple(Of Integer, Boolean, Boolean)(115, True, True)
-        bsize5 = New Tuple(Of Integer, Boolean, Boolean)(116, True, True)
+        bsize5 = New Tuple(Of Integer, Boolean, Boolean)(114, True, True)
+        bsize6 = New Tuple(Of Integer, Boolean, Boolean)(115, True, True)
+        bsize7 = New Tuple(Of Integer, Boolean, Boolean)(116, True, True)
         MyBase.compressesBreasts = False
+
+        MyBase.isRandoTFAcceptable = False
     End Sub
 
     Overrides Sub discard()
@@ -30,12 +33,13 @@
     End Sub
 
     Public Overrides Sub onEquip()
-        Polymorph.transform(Game.player, "bimboC")
-        prevWingInd = CInt(CStr(Game.player.wingInd))
-        Game.player.wingInd = 3
+        Dim bTF As BimboTF = New BimboTF(2, 0, 0.25, True)
+        bTF.chickenTf()
+        prevWingInd = CInt(CStr(Game.player.prt.wingInd))
+        Game.player.prt.wingInd = 3
     End Sub
 
     Public Overrides Sub onUnequip()
-        Game.player.wingInd = prevWingInd
+        Game.player.prt.wingInd = prevWingInd
     End Sub
 End Class

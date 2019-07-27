@@ -64,7 +64,7 @@ Public Class Testing
         p.name = "TEST"
 
         For i = 0 To 16
-            p.iArrInd(i) = New Tuple(Of Integer, Boolean, Boolean)(sInts(i), True, False)
+            p.prt.iArrInd(i) = New Tuple(Of Integer, Boolean, Boolean)(sInts(i), True, False)
         Next
 
         Return p
@@ -109,7 +109,7 @@ Public Class Testing
     End Function
     '|INVENTORY UNIT TESTS|
     Shared Function inventoryItemTestsByName() As Tuple(Of Boolean, String)
-        Dim testInventory = New Inventory
+        Dim testInventory = New Inventory(False)
 
         Dim output1 = testInventory.item("Liopleurodon")
         Dim output2 = testInventory.item("Dromiceiomimus")
@@ -132,7 +132,7 @@ Public Class Testing
         Return New Tuple(Of Boolean, String)(True, "Inventory.item (by name) tests successful.")
     End Function
     Shared Function inventoryItemTestsByID() As Tuple(Of Boolean, String)
-        Dim testInventory = New Inventory
+        Dim testInventory = New Inventory(False)
 
         Dim output1 = testInventory.item(3823695)
         Dim output2 = testInventory.item(-3)
@@ -155,8 +155,8 @@ Public Class Testing
         Return New Tuple(Of Boolean, String)(True, "Inventory.item (by id) tests successful.")
     End Function
     Shared Function inventoryMergeTests() As Tuple(Of Boolean, String)
-        Dim testInventory1 = New Inventory
-        Dim testInventory2 = New Inventory
+        Dim testInventory1 = New Inventory(False)
+        Dim testInventory2 = New Inventory(False)
 
         testInventory1.item(0).add(2)
         testInventory1.item(4).add(2)
@@ -186,7 +186,7 @@ Public Class Testing
         Return New Tuple(Of Boolean, String)(True, "Inventory.merge tests successful.")
     End Function
     Shared Function inventoryAddTests() As Tuple(Of Boolean, String)
-        Dim testInventory1 = New Inventory
+        Dim testInventory1 = New Inventory(False)
 
         testInventory1.add("Compass", 2)
         testInventory1.add(0, 2)
@@ -206,7 +206,7 @@ Public Class Testing
         Return New Tuple(Of Boolean, String)(True, "Inventory.add tests successful.")
     End Function
     Shared Function inventorySaveTests() As Tuple(Of Boolean, String)
-        Dim testInventory1 = New Inventory
+        Dim testInventory1 = New Inventory(False)
 
         testInventory1.add("Compass", 2)
         testInventory1.add("Spellbook", 3)
@@ -221,7 +221,7 @@ Public Class Testing
         Return New Tuple(Of Boolean, String)(True, "Inventory.save tests successful.")
     End Function
     Shared Function inventoryLoadTests() As Tuple(Of Boolean, String)
-        Dim testInventory1 = New Inventory
+        Dim testInventory1 = New Inventory(False)
 
         Dim input1 = "5:Compass~2:Spellbook~3:Witch_Cosplay~1:Key~4:Bad_Item_No_Good~2:*"
         Try

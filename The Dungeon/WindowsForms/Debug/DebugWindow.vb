@@ -46,12 +46,14 @@ Public Class Debug_Window
         btnEditSelection.Enabled = False
 
         'PLAYER
+        Dim playerPortrait = Game.player.prt
+
         boxName.Text = Game.player.name
         RemoveHandler boxSex.CheckedChanged, AddressOf boxSex_CheckedChanged
-        If Game.player.sexBool <> boxSex.Checked Then
+        If playerPortrait.sexBool <> boxSex.Checked Then
             clearPortrait()
         End If
-        boxSex.Checked = Game.player.sexBool
+        boxSex.Checked = playerPortrait.sexBool
         AddHandler boxSex.CheckedChanged, AddressOf boxSex_CheckedChanged
         For i = 0 To Game.titleList.Count - 1
             boxForm.Items.Add(Game.titleList(i).ToString())
@@ -71,10 +73,9 @@ Public Class Debug_Window
         boxEvd.Value = -0
         boxGold.Value = Game.player.gold
 
-
-        pnlSC.BackColor = Game.player.skincolor
-        pnlHC.BackColor = Color.FromArgb(255, Game.player.haircolor.R, Game.player.haircolor.G, Game.player.haircolor.B)
-        boxAlpha.Value = Game.player.haircolor.A
+        pnlSC.BackColor = playerPortrait.skincolor
+        pnlHC.BackColor = Color.FromArgb(255, playerPortrait.haircolor.R, playerPortrait.haircolor.G, playerPortrait.haircolor.B)
+        boxAlpha.Value = playerPortrait.haircolor.A
 
         'PORTRAIT
         loadPortrait()
@@ -118,6 +119,7 @@ Public Class Debug_Window
                     Dim c As Control = box.Controls(j)
                     If TypeOf (c) Is NumericUpDown Then
                         num = c
+                        num.Maximum = 999999
                     ElseIf TypeOf (c) Is Label Then
                         lbl = c
                     End If
@@ -151,16 +153,16 @@ Public Class Debug_Window
 
     Private Sub loadPortrait()
         picPreview.Image = Game.picPortrait.BackgroundImage
-        picPreview.BackgroundImage = Game.player.iArr(0)
+        picPreview.BackgroundImage = Game.player.prt.iArr(0)
         Dim PADDING = 0.1
         Dim w As Integer = 146
         Dim h As Integer = 216
 
         Dim attr As List(Of Image)()
-        If Game.player.sexBool Then
-            attr = Game.imgLib.fAttributes
+        If Game.player.prt.sexBool Then
+            attr = Portrait.imgLib.fAttributes
         Else
-            attr = Game.imgLib.mAttributes
+            attr = Portrait.imgLib.mAttributes
         End If
 
         If tabPortraitsLoaded = False Then
@@ -465,14 +467,14 @@ Public Class Debug_Window
 
     Private Sub boxSex_CheckedChanged(sender As Object, e As EventArgs) Handles boxSex.CheckedChanged
         Dim before As Boolean = Nothing
-        If Not Game.player.sexBool And boxSex.Checked Then
-            before = Game.player.sexBool
+        If Not Game.player.prt.sexBool And boxSex.Checked Then
+            before = Game.player.prt.sexBool
             Game.player.MtF()
-        ElseIf Game.player.sexBool And Not boxSex.Checked Then
-            before = Game.player.sexBool
+        ElseIf Game.player.prt.sexBool And Not boxSex.Checked Then
+            before = Game.player.prt.sexBool
             Game.player.FtM()
         End If
-        If (Not before = Nothing) And (Game.player.sexBool = before) Then
+        If (Not before = Nothing) And (Game.player.prt.sexBool = before) Then
             MessageBox.Show("Something prevents the player's sex from changing")
             boxSex.Checked = before
         Else
@@ -487,34 +489,34 @@ Public Class Debug_Window
         Game.player.changeSkinColor(cd.sc)
         CType(sender, Panel).BackColor = cd.sc
         cd.Dispose()
-        picPreview.Image = CharacterGenerator.CreateBMP(Game.player.iArr)
+        picPreview.Image = Portrait.CreateBMP(Game.player.prt.iArr)
     End Sub
 
     Private Sub pnlHC_Paint(sender As Object, e As EventArgs) Handles pnlHC.Click
         Dim cd As New ColorDialog()
-        cd.Color = Game.player.haircolor
+        cd.Color = Game.player.prt.haircolor
         cd.ShowDialog()
         Dim c As Color = Color.FromArgb(boxAlpha.Value, cd.Color.R, cd.Color.G, cd.Color.B)
         Game.player.changeHairColor(c)
         cd.Dispose()
-        picPreview.Image = CharacterGenerator.CreateBMP(Game.player.iArr)
+        picPreview.Image = Portrait.CreateBMP(Game.player.prt.iArr)
     End Sub
 
     Private Sub boxAlpha_ValueChanged(sender As Object, e As EventArgs) Handles boxAlpha.ValueChanged
-        Dim c As Color = Color.FromArgb(boxAlpha.Value, Game.player.haircolor.R, Game.player.haircolor.G, Game.player.haircolor.B)
+        Dim c As Color = Color.FromArgb(boxAlpha.Value, Game.player.prt.haircolor.R, Game.player.prt.haircolor.G, Game.player.prt.haircolor.B)
         Game.player.changeHairColor(c)
-        picPreview.Image = CharacterGenerator.CreateBMP(Game.player.iArr)
+        picPreview.Image = Portrait.CreateBMP(Game.player.prt.iArr)
     End Sub
 
     Private Sub clickOnPic(sender As Object, e As EventArgs)
         Dim tab As Integer = sender.Name.Split(":")(0)
         Dim pic As Integer = sender.Name.Split(":")(1)
 
-        Game.player.iArr(tab) = CType(sender, PictureBox).Image
-        Game.player.setIAInd(tab, pic, Game.player.sexBool, False)
+        Game.player.prt.iArr(tab) = CType(sender, PictureBox).Image
+        Game.player.prt.setIAInd(tab, pic, Game.player.prt.sexBool, False)
 
-        'picPreview.Image = CharacterGenerator.recolor(CharacterGenerator.CreateBMP(Game.player.iArr), Game.player.skincolor)
-        picPreview.Image = CharacterGenerator.CreateBMP(Game.player.iArr)
+        'picPreview.Image = CharacterGenerator.recolor(portrait.createBMP(Game.player.iArr), Game.player.skincolor)
+        picPreview.Image = Portrait.CreateBMP(Game.player.prt.iArr)
     End Sub
 
     Private Sub boxInventoryFilter_TextChanged(sender As Object, e As EventArgs) Handles boxInventoryFilter.TextChanged

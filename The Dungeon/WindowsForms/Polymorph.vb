@@ -1,6 +1,6 @@
 ﻿Public Class Polymorph
     Public Shared porm As Boolean = True
-    Public target As Monster
+    Public target As NPC
     Public tfForm As Boolean = False
     Private Sub Form4_Load(sender As Object, e As EventArgs) Handles MyBase.Load
         'scale to the screen size
@@ -23,16 +23,18 @@
             Me.Controls(i).Left += CDbl(Me.Controls(i).Left * RW)
             Me.Controls(i).Top += CDbl(Me.Controls(i).Top * RH)
         Next
+
+        Dim p = Game.player
         Select Case porm
             Case True
-                For i = 0 To Game.formList.Count - 1
-                    cboxPMorph.Items.Add(Game.formList.Item(i))
+                For i = 0 To p.selfPolyForms.Count - 1
+                    cboxPMorph.Items.Add(p.selfPolyForms.Item(i))
                 Next
-                If cboxPMorph.Items.Contains(Game.player.pClass.name) Then cboxPMorph.Items.Remove(Game.player.pClass.name)
-                If cboxPMorph.Items.Contains(Game.player.pForm.name) Then cboxPMorph.Items.Remove(Game.player.pForm.name)
+                If cboxPMorph.Items.Contains(p.pClass.name) Then cboxPMorph.Items.Remove(p.pClass.name)
+                If cboxPMorph.Items.Contains(p.pForm.name) Then cboxPMorph.Items.Remove(p.pForm.name)
             Case False
-                For i = 0 To Game.tFormList.Count - 1
-                    cboxPMorph.Items.Add(Game.tFormList.Item(i))
+                For i = 0 To p.enemPolyForms.Count - 1
+                    cboxPMorph.Items.Add(p.enemPolyForms.Item(i))
                 Next
         End Select
     End Sub
@@ -46,7 +48,7 @@
             Case True
                 transform(Game.player, cboxPMorph.Text)
             Case False
-                If target.GetType() Is GetType(Shopkeep) Then transformN(target) Else transform(target, cboxPMorph.Text)
+                If target.GetType().IsSubclassOf(GetType(ShopNPC)) Then transformN(target) Else transform(target, cboxPMorph.Text)
         End Select
         Me.Close()
     End Sub
@@ -79,11 +81,11 @@
         Next
 
         p.polymorphs(form) = PolymorphTF.newPoly(form)
-
         p.ongoingTFs.Add(p.polymorphs(form))
+
         If p.forms.Keys.Contains(form) Then
             p.pForm = p.forms(form)
-        Else
+        ElseIf p.classes.Keys.Contains(form) Then
             p.pClass = p.classes(form)
         End If
 
@@ -91,12 +93,12 @@
         p.perks("polymorphed") = p.polymorphs(form).getturnsTilNextStep
 
         Game.pushLblEvent(revertText & Game.lblEvent.Text.Split(vbCrLf)(0))
-        Game.cmboxSpec.Items.Clear()
-        Game.specialRoute()
+        p.specialRoute()
+        p.magicRoute()
         p.createP()
     End Sub
-    'monster transform method
-    Sub transform(ByRef t As Monster, ByVal s As String)
+    'NPC transform method
+    Sub transform(ByRef t As NPC, ByVal s As String)
         Dim title As String = s
         If title = "Sheep" Then
             t.health = 1
@@ -138,6 +140,15 @@
             t.tfCt = 1
             t.tfEnd = 6
             t.form = "Cow"
+        ElseIf title = "Amnesiac" Then
+            t.health = 1
+            t.attack = 0
+            t.defence = 0
+            t.speed = 1
+            t.stunct = 1
+            t.tfCt = 1
+            t.tfEnd = 6
+            t.form = "Amnesiac"
         ElseIf title = "Slime​" Then
             t.health = 1
             t.maxHealth = 150
@@ -165,56 +176,14 @@
         End If
     End Sub
     'npc transform methodF:\dungeon_depths\The Dungeon\img\
-    Sub transformN(ByRef t As Shopkeep)
+    Sub transformN(ByRef t As ShopNPC)
         Dim title As String = cboxPMorph.Text
         If title = "Sheep" Then
-            t.health = 50
-            t.maxHealth = 50
-            t.attack = 1
-            t.defence = 1
-            t.tfCt = 1
-            t.tfEnd = 6
-            t.npcIndex = 2
-            t.form = "Sheep"
+            t.toSheep()
         ElseIf title = "Princess" Then
-            t.health = 999
-            t.maxHealth = 999
-            t.attack = 50
-            t.defence = 1
-            t.tfCt = 1
-            t.tfEnd = 15
-            t.npcIndex = 3
-            t.toFemale("prin")
-            t.form = "Princess"
+            t.toPrincess()
         ElseIf title = "Bunny" Then
-            t.health = 500
-            t.maxHealth = 500
-            t.attack = 1
-            t.defence = 1
-            t.tfCt = 1
-            t.tfEnd = 15
-            t.npcIndex = 4
-            t.toFemale("bunny")
-            t.form = "Bunny Girl"
-            Game.NPCfromCombat(t)
-        ElseIf title = "Chicken" Then
-            t.health = 45
-            t.maxHealth = 45
-            t.attack = 5
-            t.defence = 5
-            t.tfCt = 1
-            t.tfEnd = 6
-            t.npcIndex = 6
-            t.form = "Chicken"
-        ElseIf title = "Cow" Then
-            t.health = 75
-            t.maxHealth = 75
-            t.attack = 0
-            t.defence = 0
-            t.tfCt = 1
-            t.tfEnd = 6
-            t.npcIndex = 7
-            t.form = "Cow"
+            t.toBunny()
         End If
         Game.npcIndex = t.npcIndex
     End Sub
