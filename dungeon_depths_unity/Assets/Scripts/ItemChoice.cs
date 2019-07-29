@@ -2,11 +2,14 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.EventSystems;
+using UnityEngine.UI;
 
-public class ItemChoice : MonoBehaviour, IPointerClickHandler
+public class ItemChoice : MonoBehaviour, ISelectHandler, IDeselectHandler
 {
+    public static IEnsureVisible<ItemChoice> ensureVisibleMaster;
+
     private Item associated_item;
-    private UnityEngine.UI.Text name;
+    private new UnityEngine.UI.Text name;
     private UnityEngine.UI.Text description;
     private UnityEngine.UI.Text count;
     private UnityEngine.UI.Text value;
@@ -24,11 +27,6 @@ public class ItemChoice : MonoBehaviour, IPointerClickHandler
         value = transform.Find("Value").GetComponent<UnityEngine.UI.Text>();
     }
 
-    public void OnPointerClick(PointerEventData eventData)
-    {
-        
-    }
-
     public void LoadItem(Item item)
     {
         associated_item = item;
@@ -37,5 +35,15 @@ public class ItemChoice : MonoBehaviour, IPointerClickHandler
         description.text = item.description;
         count.text = $"x{item.count}";
         value.text = $"{item.value} gold ea.";
+    }
+
+    public void OnSelect(BaseEventData eventData)
+    {
+        ensureVisibleMaster.ensure_visible(this);
+    }
+
+    public void OnDeselect(BaseEventData eventData)
+    {
+        
     }
 }

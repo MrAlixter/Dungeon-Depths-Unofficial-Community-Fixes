@@ -3,6 +3,7 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.EventSystems;
 
 [Serializable]
 public class MoveMap<T>
@@ -47,6 +48,8 @@ public sealed class Master : MonoBehaviour, ICombatantMaster, IMessageMaster, IE
         else { _instance = this; }
     }  
 
+    public static Color highlightColor = new Color32((byte)21, (byte)116, (byte)164, (byte)255);
+
 
     //These are currently set via the editor. 
     //Later, one maps are randonly generated, 
@@ -70,6 +73,8 @@ public sealed class Master : MonoBehaviour, ICombatantMaster, IMessageMaster, IE
     private Controller controller;
     [SerializeField]
     private Player player;
+    [SerializeField]
+    private EventSystem eventSystem;
 
     [SerializeField]
     private NPC enemy;
@@ -114,6 +119,7 @@ public sealed class Master : MonoBehaviour, ICombatantMaster, IMessageMaster, IE
 
         player = Player.instance;
         controller = Controller.instance;
+        eventSystem = GameObject.Find("EventSystem").GetComponent<EventSystem>();
         
         //Because there are health bars in the battle canvas 
         //I cannot make the health bar a singleton.
@@ -349,6 +355,7 @@ public sealed class Master : MonoBehaviour, ICombatantMaster, IMessageMaster, IE
     #region Pause Dialog Controls
     private void open_pause_dialog()
     {
+        pause_menu.Awake();
         pause_menu.open();
     }
 
@@ -390,9 +397,10 @@ public sealed class Master : MonoBehaviour, ICombatantMaster, IMessageMaster, IE
     #region Items Dialog Controls
     private void open_items_dialog()
     {
-        items_menu.Awake();
-
-        items_menu.load_items();
+        //Unneccessary because it's now called in the Awake(), which is 
+        //automatically called every time the object is set ot active
+        //items_menu.Awake();
+        //items_menu.load_items();
 
         items_menu.open();
     }
@@ -568,6 +576,18 @@ public sealed class Master : MonoBehaviour, ICombatantMaster, IMessageMaster, IE
         if(current_mode == Mode.combat)
         {
             battle_menu.add_battle_information(message);
+        }
+        else
+        {
+            open_info_dialog(message);
+        }
+    }
+
+    public void set_message(string message)
+    {
+        if (current_mode == Mode.combat)
+        {
+            battle_menu.set_battle_information(message);
         }
         else
         {

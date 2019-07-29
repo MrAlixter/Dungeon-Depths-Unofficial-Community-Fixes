@@ -57,14 +57,14 @@ namespace Assets.Scripts
         {
             if(source.MANA < cost)
             {
-                message_master.display_message("You don't have enough mana!");
+                message_master.set_message("You don't have enough mana!");
                 message_master.display_message($"{name} costs {cost} mana!");
                 return;
             }
 
             if(master.current_mode != Mode.combat && !useable_out_of_combat)
             {
-                message_master.display_message($"{name} requires a target!");
+                message_master.set_message($"{name} requires a target!");
             }
 
             source.decrease_mana(cost);

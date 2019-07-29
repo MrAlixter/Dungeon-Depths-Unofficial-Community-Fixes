@@ -3,18 +3,13 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.EventSystems;
 
-public class EquipmentSlot : MonoBehaviour, IPointerClickHandler, ISelectHandler, IDeselectHandler
+public class CustomButton : MonoBehaviour, ISelectHandler, IDeselectHandler
 {
-    private UIRectangle background;
+    UIRectangle background;
 
     private void Awake()
     {
         background = transform.Find("Background").GetComponent<UIRectangle>();
-    }
-
-    public void OnPointerClick(PointerEventData eventData)
-    {
-        
     }
 
     public void OnSelect(BaseEventData eventData)

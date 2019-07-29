@@ -1097,6 +1097,7 @@ GameObject:
   - component: {fileID: 7724589184523836135}
   - component: {fileID: 8008903179970580964}
   - component: {fileID: 1998163276046203181}
+  - component: {fileID: 7397944821439648668}
   m_Layer: 5
   m_Name: Equipment Option Button
   m_TagString: Untagged
@@ -1180,7 +1181,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Navigation:
-    m_Mode: 3
+    m_Mode: 4
     m_SelectOnUp: {fileID: 0}
     m_SelectOnDown: {fileID: 0}
     m_SelectOnLeft: {fileID: 0}
@@ -1209,6 +1210,18 @@ MonoBehaviour:
       m_Calls: []
     m_TypeName: UnityEngine.UI.Button+ButtonClickedEvent, UnityEngine.UI, Version=1.0.0.0,
       Culture=neutral, PublicKeyToken=null
+--- !u!114 &7397944821439648668
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7724589184523836139}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b29bbe2918eff3b4b9dd5e7a8322e2e0, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &7813432006694820293
 GameObject:
   m_ObjectHideFlags: 0

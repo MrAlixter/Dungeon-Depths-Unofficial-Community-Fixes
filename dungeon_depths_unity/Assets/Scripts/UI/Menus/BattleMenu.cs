@@ -2,6 +2,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class BattleMenu : Menu
 {
@@ -79,6 +80,13 @@ public class BattleMenu : Menu
         GameObject enemyStats = panel.transform.Find("Enemy Stats").gameObject;
         enemy_stat_text = enemyStats.transform.Find("Stat Text").GetComponent<UnityEngine.UI.Text>();
         update_player_stats();
+    }
+
+    public override void open()
+    {
+        base.open();
+
+        CustomEventSystem.getEventSystem().SetSelectedGameObject(attack_button.gameObject);
     }
 
     public void set_target(NPC t)

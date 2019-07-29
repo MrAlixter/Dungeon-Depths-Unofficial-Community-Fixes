@@ -17,12 +17,12 @@ namespace Assets.Scripts
         {
             if(source.HUNGER + cost > 100)
             {
-                message_master.display_message($"You are too hungry! {name} costs {cost} hunger!");
+                message_master.set_message($"You are too hungry! {name} costs {cost} hunger!");
                 return;
             }
             if(master.current_mode != Mode.combat && !useable_out_of_combat)
             {
-                message_master.display_message($"You don't have a target for that special!");
+                message_master.set_message($"You don't have a target for that special!");
                 return;
             }
             if(cost == -1)

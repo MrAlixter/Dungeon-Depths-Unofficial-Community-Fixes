@@ -1,9 +1,11 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.EventSystems;
 
 public abstract class Menu : MonoBehaviour
 {
+    protected static EventSystem eventSystem;
     protected RectTransform panel;
 
     public void Awake()
@@ -17,6 +19,8 @@ public abstract class Menu : MonoBehaviour
         {
             panel = GetComponent<RectTransform>();
         }
+
+        eventSystem = CustomEventSystem.getEventSystem();
     }
 
     public virtual void init()
@@ -24,7 +28,7 @@ public abstract class Menu : MonoBehaviour
 
     }
 
-    public void open()
+    public virtual void open()
     {
         active = true;
         init();
