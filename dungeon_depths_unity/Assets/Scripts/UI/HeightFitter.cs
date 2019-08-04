@@ -39,7 +39,7 @@ public class HeightFitter : MonoBehaviour
             }
         }
 
-        rt.sizeDelta = new Vector2(0, -current_y);
+        rt.SetSizeWithCurrentAnchors(RectTransform.Axis.Vertical, -current_y);
         //For some reason sizeDelta doesn't seem to be updating it immediately, 
         //so I'm returning the height for use elsewhere
         return -current_y;

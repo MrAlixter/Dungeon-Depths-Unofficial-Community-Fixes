@@ -5,6 +5,7 @@ using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.UI;
 
+/*
 public class ItemHeader : MonoBehaviour, ItemChoice.IItemChoiceMaster, ISelectHandler, IDeselectHandler
 {
     public static IEnsureVisible<ItemHeader> ensureVisibleMaster;
@@ -24,7 +25,7 @@ public class ItemHeader : MonoBehaviour, ItemChoice.IItemChoiceMaster, ISelectHa
     private GameObject childrenGO;
     private HeightFitter childrenHF;
     private List<GameObject> children;
-    private GameObject item_choice_prefab;
+    private static GameObject item_choice_prefab;
 
     private RectTransform background_rt;
     private RectTransform children_rt;
@@ -33,6 +34,11 @@ public class ItemHeader : MonoBehaviour, ItemChoice.IItemChoiceMaster, ISelectHa
     public ItemHeader nextHeader;
 
     public bool has_children { get { return children.Count > 0; } }
+
+    public static void setItemChoicePrefab(GameObject prefab)
+    {
+        ItemHeader.item_choice_prefab = prefab;
+    }
 
     public void Awake()
     {
@@ -129,14 +135,9 @@ public class ItemHeader : MonoBehaviour, ItemChoice.IItemChoiceMaster, ISelectHa
         itemsMenu.resize();
     }
 
-    public void setItemChoicePrefab(GameObject prefab)
-    {
-        item_choice_prefab = prefab;
-    }
-
     public void AddItem(Item item)
     {
-        GameObject go = Instantiate(item_choice_prefab, childrenGO.transform);
+        GameObject go = Instantiate(ItemHeader.item_choice_prefab, childrenGO.transform);
         ItemChoice itemChoice = go.GetComponent<ItemChoice>();
         itemChoice.Awake();
         itemChoice.LoadItem(item);
@@ -205,3 +206,4 @@ public class ItemHeader : MonoBehaviour, ItemChoice.IItemChoiceMaster, ISelectHa
         //throw new System.NotImplementedException();
     }
 }
+*/

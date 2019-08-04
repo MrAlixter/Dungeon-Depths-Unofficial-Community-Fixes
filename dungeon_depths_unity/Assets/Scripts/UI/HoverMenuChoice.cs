@@ -32,14 +32,12 @@ public class HoverMenuChoice : MonoBehaviour,
     }
     public string text { get { return ability.name; } }
     private IHoverMenu hoverMenuCallback;
-    private bool hovered;
 
     // Start is called before the first frame update
     void Start()
     {
-        hovered = false;
-
         button.onClick.AddListener(() => {
+            button.Select();
             hoverMenuCallback.OnChoiceClick(ability);
         });
     }

@@ -26,6 +26,11 @@ public class InfoMenu : Menu
         text = background.transform.Find("Text").GetComponent<UnityEngine.UI.Text>();
     }
 
+    protected override void SetDefault()
+    {
+        
+    }
+
     public void set_text(string txt)
     {
         text.text = txt;

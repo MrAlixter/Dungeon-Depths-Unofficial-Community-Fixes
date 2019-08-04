@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.EventSystems;
 using UnityEngine.UI;
 
 public class CharacterMenu : Menu
@@ -40,6 +41,11 @@ public class CharacterMenu : Menu
         itemsButton = itemsButtonGO.GetComponent<Button>();
         statsButton = statsButtonGO.GetComponent<Button>();
         examineSelfButton = examineSelfButtonGO.GetComponent<Button>();
+    }
+
+    protected override void SetDefault()
+    {
+        CustomEventSystem.instance.SetResetSelection(equipmentButton.GetComponent<Selectable>());
     }
 
     public override void open()

@@ -39,7 +39,7 @@ InputManager:
     joyNum: 0
   - serializedVersion: 3
     m_Name: Submit
-    descriptiveName: Mouse Left Click
+    descriptiveName: 
     descriptiveNegativeName: 
     negativeButton: 
     positiveButton: space
@@ -55,12 +55,12 @@ InputManager:
     joyNum: 0
   - serializedVersion: 3
     m_Name: Cancel
-    descriptiveName: Mouse Right Click
+    descriptiveName: 
     descriptiveNegativeName: 
     negativeButton: 
-    positiveButton: 
+    positiveButton: joystick button 1
     altNegativeButton: 
-    altPositiveButton: joystick button 1
+    altPositiveButton: 
     gravity: 100
     dead: 0
     sensitivity: 100

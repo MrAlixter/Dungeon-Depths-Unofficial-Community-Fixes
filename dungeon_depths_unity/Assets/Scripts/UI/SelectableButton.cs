@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.EventSystems;
 
-public class CustomButton : MonoBehaviour, ISelectHandler, IDeselectHandler
+public class SelectableButton : MonoBehaviour, ISelectHandler, IDeselectHandler
 {
     UIRectangle background;
 

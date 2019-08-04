@@ -42,6 +42,11 @@ public class HealthBar : Menu
         text = panel.transform.Find("Text").GetComponent<UnityEngine.UI.Text>();
     }
 
+    protected override void SetDefault()
+    {
+        
+    }
+
     public void set_health(decimal current, decimal max)
     {
         float percent = (float)(current / max);

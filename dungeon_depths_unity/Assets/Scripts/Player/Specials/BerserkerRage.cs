@@ -15,7 +15,7 @@ namespace Assets.Scripts
             cost = -1;
         }
 
-        public virtual void effect()
+        public override void effect()
         {
             //CURRENTLY DOES NOTHING
             //userperk["BerserkerRage"] = 2; 

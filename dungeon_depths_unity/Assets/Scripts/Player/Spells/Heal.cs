@@ -18,7 +18,7 @@ namespace Assets.Scripts
 
             source.heal(amt);
 
-            message_master.display_message($"You heal yourself for {amt} health!");
+            message_master.set_message($"You heal yourself for {amt} health!");
         }
     }
 }

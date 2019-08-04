@@ -3,21 +3,12 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
-
-[Serializable]
-public enum Header { Useables, Potions, Armors, Weapons, Accessories, Misc }
-
+/*
 public class ItemsMenu : Menu, FilterOption.IFilterMaster, IEnsureVisible<ItemHeader>, IEnsureVisible<ItemChoice>
 {
     private static ItemsMenu _instance;
     public static ItemsMenu instance { get { return _instance != null ? _instance : new ItemsMenu(); } }
     
-    public ItemsMenu()
-    {
-        if (_instance != null && _instance != this) { Destroy(this.gameObject); }
-        else { _instance = this; }
-    }
-
     private static Player player;
     private static Inventory inventory;
     public GameObject item_choice_prefab;
@@ -32,7 +23,7 @@ public class ItemsMenu : Menu, FilterOption.IFilterMaster, IEnsureVisible<ItemHe
     private static FilterOption misc_filter;
 
     private static GameObject right;
-    private static UnityEngine.UI.Scrollbar scrollbar;
+    private static Scrollbar scrollbar;
     private static GameObject item_list;
     private static RectTransform item_list_rt;
     private static GameObject height_fitterGO;
@@ -57,15 +48,20 @@ public class ItemsMenu : Menu, FilterOption.IFilterMaster, IEnsureVisible<ItemHe
 
     public new void Awake()
     {
+        if (_instance != null && _instance != this) { Destroy(this.gameObject); return; }
+        else { _instance = this; }
+
         base.Awake();
 
         player = Player.instance;
         inventory = Inventory.instance;
 
+        ItemHeader.setItemChoicePrefab(item_choice_prefab);
+
         left = panel.Find("Left Section").gameObject;
         Transform vertical_group = left.transform.Find("Vertical Group");
         filter_options = new Dictionary<Header, FilterOption>();
-        foreach(FilterOption fo in vertical_group.GetComponentsInChildren<FilterOption>(true))
+        foreach (FilterOption fo in vertical_group.GetComponentsInChildren<FilterOption>(true))
         {
             fo.Awake();
             filter_options[fo.type] = fo;
@@ -84,7 +80,7 @@ public class ItemsMenu : Menu, FilterOption.IFilterMaster, IEnsureVisible<ItemHe
         }
 
         right = panel.Find("Right Section").gameObject;
-        scrollbar = right.transform.Find("Scrollbar").GetComponent<UnityEngine.UI.Scrollbar>();
+        scrollbar = right.transform.Find("Scrollbar").GetComponent<Scrollbar>();
         item_list = right.transform.Find("Item List").gameObject;
         item_list_rt = item_list.GetComponent<RectTransform>();
         height_fitterGO = item_list.transform.Find("Height Fitter").gameObject;
@@ -118,21 +114,36 @@ public class ItemsMenu : Menu, FilterOption.IFilterMaster, IEnsureVisible<ItemHe
         headers[Header.Accessories] = accessoriesHeader;
         miscHeader = miscHeaderGO.GetComponent<ItemHeader>();
         headers[Header.Misc] = miscHeader;
-        
+
+        FilterOption last_filter = null;
+        foreach (KeyValuePair<Header, FilterOption> pair in filter_options)
+        {
+            FilterOption this_option = pair.Value;
+            if (last_filter != null)
+            {
+                Navigation nav = this_option.navigation;
+                nav.selectOnUp = last_filter.selectable;
+                this_option.navigation = nav;
+
+                nav = last_filter.navigation;
+                nav.selectOnDown = this_option.selectable;
+                last_filter.navigation = nav;
+            }
+            last_filter = this_option;
+        }
+
         ItemHeader previous = null;
-        foreach(KeyValuePair<Header, ItemHeader> header in headers)
+        foreach (KeyValuePair<Header, ItemHeader> header in headers)
         {
             ItemHeader h = header.Value;
-            
             FilterOption f = filter_options[header.Key];
 
-            h.setItemChoicePrefab(item_choice_prefab);
             h.Awake();
             h.set_items_menu(this);
 
             Navigation nav = h.button.navigation;
             nav.selectOnLeft = f.selectable;
-            if(previous != null)
+            if (previous != null)
             {
                 previous.nextHeader = h;
 
@@ -146,7 +157,9 @@ public class ItemsMenu : Menu, FilterOption.IFilterMaster, IEnsureVisible<ItemHe
             nav = f.toggle.navigation;
             nav.selectOnRight = h.selectable;
             f.toggle.navigation = nav;
-            
+
+            h.close();
+
             previous = h;
         }
 
@@ -156,15 +169,21 @@ public class ItemsMenu : Menu, FilterOption.IFilterMaster, IEnsureVisible<ItemHe
         load_items();
     }
 
+    protected override void SetDefault()
+    {
+        CustomEventSystem.instance.SetResetSelection(useables_filter.toggle.GetComponent<Selectable>());
+    }
+
     public override void open()
     {
         base.open();
-
+        CustomEventSystem.instance.SetResetSelection(useables_filter.toggle.GetComponent<Selectable>());
         useables_filter.toggle.Select();
     }
 
     public void load_items()
     {
+        ItemHeader.setItemChoicePrefab(item_choice_prefab);
         foreach (Item potion in inventory.potions)
         {
             if (potion.count > 0)
@@ -191,7 +210,7 @@ public class ItemsMenu : Menu, FilterOption.IFilterMaster, IEnsureVisible<ItemHe
     public void resize()
     {
         float h = height_fitter.update_children();
-        item_list_rt.offsetMin = new Vector2(0, -h);
+        item_list_rt.SetSizeWithCurrentAnchors(RectTransform.Axis.Vertical, h);
     }
 
     public void hide_header(Header type)
@@ -276,39 +295,41 @@ public class ItemsMenu : Menu, FilterOption.IFilterMaster, IEnsureVisible<ItemHe
             }
         }
     }
+    
+    //private void ensure_visible(RectTransform rt, float offset)
+    //{
+    //    float visible_size = right.GetComponent<RectTransform>().rect.height;
+    //    RectTransform scroll_rt = item_list_rt;
+    //    float scroll_offset = scroll_rt.anchoredPosition.y;
+    //    Rect r = rt.rect;
 
-    private void ensure_visible(RectTransform rt, float offset)
-    {
-        float visible_size = right.GetComponent<RectTransform>().rect.height;
-        RectTransform scroll_rt = item_list_rt;
-        float scroll_offset = scroll_rt.anchoredPosition.y;
-        Rect r = rt.rect;
+    //    float top_view_offset = rt.anchoredPosition.y;
 
-        float top_view_offset = rt.anchoredPosition.y;
-
-        float anchor_relative = rt.anchoredPosition.y + scroll_offset + offset;
+    //    float anchor_relative = rt.anchoredPosition.y + scroll_offset + offset;
         
-        //Off the top, bring down
-        if (anchor_relative > 0)
-        {
-            Vector2 pos = scroll_rt.anchoredPosition;
-            Debug.Log($"{offset} | {visible_size} | {scroll_offset} | {top_view_offset} | {r.height} | {pos.y} | {anchor_relative}");
-            pos.y -= anchor_relative;
-            //Note: anchor_relative will be positive, so subtracting it will make the position closer to 0.
-            //Where 0 is the scrollbar being at the top. Hence, this makes it scroll up so that the top is in view.
-            scroll_rt.anchoredPosition = pos;
-        }
-        else
-        {
-            float distance_from_bottom = visible_size + anchor_relative - r.height;
-            //Below the bottom
-            if (distance_from_bottom < 0)
-            {
-                Vector2 pos = scroll_rt.anchoredPosition;
-                Debug.Log($"{offset} | {visible_size} | {scroll_offset} | {top_view_offset} | {r.height} | {pos.y} | {anchor_relative} | {distance_from_bottom}");
-                pos.y -= distance_from_bottom;
-                scroll_rt.anchoredPosition = pos;
-            }
-        }
-    }
+    //    //Off the top, bring down
+    //    if (anchor_relative > 0)
+    //    {
+    //        Vector2 pos = scroll_rt.anchoredPosition;
+    //        Debug.Log($"{offset} | {visible_size} | {scroll_offset} | {top_view_offset} | {r.height} | {pos.y} | {anchor_relative}");
+    //        pos.y -= anchor_relative;
+    //        //Note: anchor_relative will be positive, so subtracting it will make the position closer to 0.
+    //        //Where 0 is the scrollbar being at the top. Hence, this makes it scroll up so that the top is in view.
+    //        scroll_rt.anchoredPosition = pos;
+    //    }
+    //    else
+    //    {
+    //        float distance_from_bottom = visible_size + anchor_relative - r.height;
+    //        //Below the bottom
+    //        if (distance_from_bottom < 0)
+    //        {
+    //            Vector2 pos = scroll_rt.anchoredPosition;
+    //            Debug.Log($"{offset} | {visible_size} | {scroll_offset} | {top_view_offset} | {r.height} | {pos.y} | {anchor_relative} | {distance_from_bottom}");
+    //            pos.y -= distance_from_bottom;
+    //            scroll_rt.anchoredPosition = pos;
+    //        }
+    //    }
+    //}
+    
 }
+*/

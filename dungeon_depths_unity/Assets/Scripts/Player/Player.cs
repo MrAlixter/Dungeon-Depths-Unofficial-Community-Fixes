@@ -43,7 +43,7 @@ public sealed class Player : MonoBehaviour, ICombatant
     public int HP
     {
         get { return _HP; }
-        protected set { _HP = value; }
+        private set { _HP = value; }
     }
 
     [SerializeField]
@@ -51,7 +51,7 @@ public sealed class Player : MonoBehaviour, ICombatant
     public int MAX_HP
     {
         get { return _MAX_HP; }
-        protected set { _MAX_HP = value; }
+        private set { _MAX_HP = value; }
     }
 
     [SerializeField]
@@ -59,7 +59,7 @@ public sealed class Player : MonoBehaviour, ICombatant
     public int MANA
     {
         get { return _MANA; }
-        protected set { _MANA = value; }
+        private set { _MANA = value; }
     }
 
     [SerializeField]
@@ -67,7 +67,7 @@ public sealed class Player : MonoBehaviour, ICombatant
     public int MAX_MANA
     {
         get { return _MAX_MANA; }
-        protected set { _MAX_MANA = value; }
+        private set { _MAX_MANA = value; }
     }
 
     [SerializeField]
@@ -75,7 +75,7 @@ public sealed class Player : MonoBehaviour, ICombatant
     public int HUNGER
     {
         get { return _HUNGER; }
-        protected set { _HUNGER = value; }
+        private set { _HUNGER = value; }
     }
 
     [SerializeField]
@@ -83,7 +83,7 @@ public sealed class Player : MonoBehaviour, ICombatant
     public int MAX_HUNGER
     {
         get { return _MAX_HUNGER; }
-        protected set { _MAX_HUNGER = value; }
+        private set { _MAX_HUNGER = value; }
     }
 
     [SerializeField]
@@ -91,7 +91,7 @@ public sealed class Player : MonoBehaviour, ICombatant
     public int ATK
     {
         get { return _ATK + equipped_armor.attack_boost; }
-        protected set { _ATK = value; }
+        private set { _ATK = value; }
     }
 
     [SerializeField]
@@ -99,7 +99,7 @@ public sealed class Player : MonoBehaviour, ICombatant
     public int DEF
     {
         get { return _DEF + equipped_armor.defense_boost; }
-        protected set { _DEF = value; }
+        private set { _DEF = value; }
     }
 
     [SerializeField]
@@ -107,7 +107,7 @@ public sealed class Player : MonoBehaviour, ICombatant
     public int WIL
     {
         get { return _WIL; }
-        protected set { _WIL = value; }
+        private set { _WIL = value; }
     }
 
     [SerializeField]
@@ -115,7 +115,7 @@ public sealed class Player : MonoBehaviour, ICombatant
     public int SPD
     {
         get { return _SPD; }
-        protected set { _SPD = value; }
+        private set { _SPD = value; }
     }
 
     [SerializeField]
@@ -123,15 +123,15 @@ public sealed class Player : MonoBehaviour, ICombatant
     public int breast_size
     {
         get { return _breast_size; }
-        protected set { _breast_size = value; }
+        private set { _breast_size = value; }
     }
     #endregion
 
-    public List<Spell> spells { get; protected set; }
-    public List<Special> specials { get; protected set; }
+    public List<Spell> spells { get; private set; }
+    public List<Special> specials { get; private set; }
 
     #region Equipment
-    public int equipped_armor_id { get; protected set; }
+    public int equipped_armor_id { get; private set; }
     public Armor equipped_armor { get { return inventory.get_armor_by_id(equipped_armor_id); } }
     #endregion
 
@@ -274,6 +274,7 @@ public sealed class Player : MonoBehaviour, ICombatant
     {
         HP += amt;
         if(HP > MAX_HP) { HP = MAX_HP; }
+        master.update_health_bar();
     }
 
     public void decrease_mana(int cost)

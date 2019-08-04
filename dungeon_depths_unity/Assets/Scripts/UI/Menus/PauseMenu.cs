@@ -42,9 +42,15 @@ public class PauseMenu : Menu
         quitButton = quitButtonGO.GetComponent<Button>();
     }
 
+    protected override void SetDefault()
+    {
+        CustomEventSystem.instance.SetResetSelection(saveButton.GetComponent<Selectable>());
+    }
+
     public override void open()
     {
         base.open();
+        CustomEventSystem.instance.SetResetSelection(saveButton.GetComponent<Selectable>());
         saveButton.Select();
     }
 }

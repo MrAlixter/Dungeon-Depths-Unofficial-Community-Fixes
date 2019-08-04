@@ -5,9 +5,9 @@ public class GoldArmor : Armor
     private static GoldArmor _instance;
     public static GoldArmor instance { get { return _instance != null ? _instance : new GoldArmor(); } }
     
-    public GoldArmor()
+    public void OnEnable()
     {
-        if (_instance != null && _instance != this) { Destroy(this); }
+        if (_instance != null && _instance != this) { Destroy(this); return; }
         else { _instance = this; }
 
         name = "Gold Armor";

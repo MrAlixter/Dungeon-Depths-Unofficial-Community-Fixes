@@ -65,9 +65,15 @@ public class EquipmentMenu : Menu, IEnsureVisible<EquipmentChoice>
         EquipmentChoice.ensureVisibleMaster = this;
     }
 
+    protected override void SetDefault()
+    {
+        CustomEventSystem.instance.SetResetSelection(armorSlot.GetComponent<Selectable>());
+    }
+
     public override void open()
     {
         base.open();
+        CustomEventSystem.instance.SetResetSelection(armorSlot.GetComponent<Selectable>());
         armorSlot.Select();
     }
 

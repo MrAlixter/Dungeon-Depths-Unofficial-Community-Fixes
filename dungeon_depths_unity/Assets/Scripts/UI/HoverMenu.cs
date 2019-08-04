@@ -26,9 +26,9 @@ public class HoverMenu : MonoBehaviour,
     private GameObject hoveredChild;
     private GameObject choicesContainer;
 
-    private Button button { get { return GetComponent<Button>(); } }
-    private Navigation navigation { get { return button.navigation; } set { button.navigation = value; } }
-    private Selectable selectable { get { return GetComponent<Selectable>(); } }
+    public Button button { get { return GetComponent<Button>(); } }
+    public Navigation navigation { get { return button.navigation; } set { button.navigation = value; } }
+    public Selectable selectable { get { return GetComponent<Selectable>(); } }
 
     private Selectable normalDown;
 
@@ -42,6 +42,9 @@ public class HoverMenu : MonoBehaviour,
         if(choices == null) { throw new System.Exception("No choices for " + name); }
 
         choiceButtons = new List<HoverMenuChoice>();
+        
+
+        normalDown = navigation.selectOnDown;
 
         Navigation nav;
         HoverMenuChoice previous = null;
@@ -78,13 +81,13 @@ public class HoverMenu : MonoBehaviour,
         nav.selectOnUp = selectable;
         choiceButtons[0].navigation = nav;
 
-        CloseChildren();
+        //Don't reselect, since this is the start and I don't want to override any
+        //other selection that was initialized earlier
+        CloseChildren(false);
         
         button.onClick.AddListener(() => {
             clicked = !clicked;
         });
-
-        normalDown = navigation.selectOnDown;
     }
 
     // Update is called once per frame
@@ -117,10 +120,10 @@ public class HoverMenu : MonoBehaviour,
         nav.selectOnDown = choiceButtons[0].selectable;
         navigation = nav;
 
-        CustomEventSystem.getEventSystem().SetSelectedGameObject(choiceButtons[0].gameObject);
+        choiceButtons[0].button.Select();
     }
 
-    private void CloseChildren()
+    private void CloseChildren(bool reselect = false)
     {
         open = false;
         choicesContainer.SetActive(false);
@@ -130,8 +133,8 @@ public class HoverMenu : MonoBehaviour,
         Navigation nav = navigation;
         nav.selectOnDown = normalDown;
         navigation = nav;
-
-        CustomEventSystem.getEventSystem().SetSelectedGameObject(gameObject);
+        
+        if(reselect) { button.Select(); }
     }
 
     public void OnChoiceClick(Ability clicked_ability)
@@ -146,6 +149,7 @@ public class HoverMenu : MonoBehaviour,
             ((Special)clicked_ability).perform();
         }
         CloseChildren();
+        button.Select();
     }
 
     public void OnDeselect(BaseEventData eventData)

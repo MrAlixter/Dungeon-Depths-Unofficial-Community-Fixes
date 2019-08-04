@@ -21,13 +21,13 @@ namespace Assets.Scripts
                 //Crit
                 dmg = 2*(dmg+d6);
                 target.take_damage(dmg);
-                message_master.display_message($"Critical hit! You hit the {target.enemy_name} for {dmg} damage!");
+                message_master.set_message($"Critical hit! You hit the {target.enemy_name} for {dmg} damage!");
             }
             else
             {
                 dmg = dmg + d6;
                 target.take_damage(dmg);
-                message_master.display_message($"You hit the {target.enemy_name} for {dmg} damage!");
+                message_master.set_message($"You hit the {target.enemy_name} for {dmg} damage!");
             }
         }
     }
