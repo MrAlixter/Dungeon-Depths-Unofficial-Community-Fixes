@@ -2,6 +2,8 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.EventSystems;
+using UnityEngine.UI;
 
 public class BattleMenu : Menu
 {
@@ -64,9 +66,9 @@ public class BattleMenu : Menu
         battle_information_scrollbar = battle_info_text_container.transform.Find("Scrollbar").GetComponent<UnityEngine.UI.Scrollbar>();
 
         Transform buttons = main.transform.Find("Buttons");
-        attack_button = buttons.Find("Attack Button").gameObject.GetComponent<UnityEngine.UI.Button>();
-        run_button = buttons.Find("Run Button").gameObject.GetComponent<UnityEngine.UI.Button>();
-        wait_button = buttons.Find("Wait Button").gameObject.GetComponent<UnityEngine.UI.Button>();
+        attack_button = buttons.Find("Attack Button").gameObject.GetComponent<Button>();
+        run_button = buttons.Find("Run Button").gameObject.GetComponent<Button>();
+        wait_button = buttons.Find("Wait Button").gameObject.GetComponent<Button>();
         magic_dropdown = buttons.Find("Magic Dropdown").gameObject.GetComponent<HoverMenu>();
         special_dropdown = buttons.Find("Special Dropdown").gameObject.GetComponent<HoverMenu>();
 
@@ -79,6 +81,18 @@ public class BattleMenu : Menu
         GameObject enemyStats = panel.transform.Find("Enemy Stats").gameObject;
         enemy_stat_text = enemyStats.transform.Find("Stat Text").GetComponent<UnityEngine.UI.Text>();
         update_player_stats();
+    }
+
+    protected override void SetDefault()
+    {
+        CustomEventSystem.instance.SetResetSelection(attack_button.GetComponent<Selectable>());
+    }
+
+    public override void open()
+    {
+        base.open();
+        CustomEventSystem.instance.SetResetSelection(attack_button.GetComponent<Selectable>());
+        attack_button.Select();
     }
 
     public void set_target(NPC t)
@@ -167,5 +181,29 @@ public class BattleMenu : Menu
         s += "\n";
         s += $"SPD\n{target.SPD}";
         enemy_stat_text.text = s;
+    }
+
+    public override void close()
+    {
+        deselect_dropdown_items();
+
+        base.close();
+    }
+
+    private void deselect_dropdown_items()
+    {
+        Navigation nav;
+
+        nav = magic_dropdown.navigation;
+        nav.mode = Navigation.Mode.None;
+        magic_dropdown.navigation = nav;
+        nav.mode = Navigation.Mode.Explicit;
+        magic_dropdown.navigation = nav;
+
+        nav = special_dropdown.navigation;
+        nav.mode = Navigation.Mode.None;
+        special_dropdown.navigation = nav;
+        nav.mode = Navigation.Mode.Explicit;
+        special_dropdown.navigation = nav;
     }
 }

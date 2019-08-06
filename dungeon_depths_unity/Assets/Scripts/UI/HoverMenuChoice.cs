@@ -3,18 +3,22 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.EventSystems;
+using UnityEngine.UI;
 
 public class HoverMenuChoice : MonoBehaviour,
-    IPointerClickHandler,
-    IPointerEnterHandler,
-    IPointerExitHandler
+    ISelectHandler,
+    IDeselectHandler
 {
     public interface IHoverMenu
     {
-        void OnChoicePointerEnter(GameObject choice);
-        void OnChoicePointerExit(GameObject choice);
+        void OnChoiceSelect(GameObject choice);
+        void OnChoiceDeselect(GameObject choice);
         void OnChoiceClick(Ability clicked_ability);
     }
+
+    public Button button { get { return GetComponent<Button>(); } }
+    public Navigation navigation { get { return button.navigation; } set { button.navigation = value; } }
+    public Selectable selectable { get { return GetComponent<Selectable>(); } }
 
     private Ability _ability;
     public Ability ability
@@ -28,12 +32,14 @@ public class HoverMenuChoice : MonoBehaviour,
     }
     public string text { get { return ability.name; } }
     private IHoverMenu hoverMenuCallback;
-    private bool hovered;
 
     // Start is called before the first frame update
     void Start()
     {
-        hovered = false;
+        button.onClick.AddListener(() => {
+            button.Select();
+            hoverMenuCallback.OnChoiceClick(ability);
+        });
     }
 
     // Update is called once per frame
@@ -52,20 +58,13 @@ public class HoverMenuChoice : MonoBehaviour,
         transform.Find("Text").GetComponent<UnityEngine.UI.Text>().text = text;
     }
 
-    public void OnPointerClick(PointerEventData eventData)
+    public void OnSelect(BaseEventData eventData)
     {
-        hoverMenuCallback.OnChoiceClick(ability);
+        hoverMenuCallback.OnChoiceSelect(gameObject);
     }
 
-    public void OnPointerEnter(PointerEventData eventData)
+    public void OnDeselect(BaseEventData eventData)
     {
-        hovered = true;
-        hoverMenuCallback.OnChoicePointerEnter(gameObject);
-    }
-
-    public void OnPointerExit(PointerEventData eventData)
-    {
-        hovered = false;
-        hoverMenuCallback.OnChoicePointerExit(gameObject);
+        hoverMenuCallback.OnChoiceDeselect(gameObject);
     }
 }

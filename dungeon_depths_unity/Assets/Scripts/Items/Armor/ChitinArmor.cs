@@ -5,9 +5,9 @@ public class ChitinArmor : Armor
     private static ChitinArmor _instance;
     public static ChitinArmor instance { get { return _instance != null ? _instance : new ChitinArmor(); } }
 
-    public ChitinArmor()
+    public void OnEnable()
     {
-        if (_instance != null && _instance != this) { Destroy(this); }
+        if (_instance != null && _instance != this) { Destroy(this); return; }
         else { _instance = this; }
 
         name = "Chitin Armor";

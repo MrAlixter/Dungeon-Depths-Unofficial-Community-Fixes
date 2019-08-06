@@ -5,9 +5,9 @@ public class BrawlerCosplay : Armor
     private static BrawlerCosplay _instance;
     public static BrawlerCosplay instance { get { return _instance != null ? _instance : new BrawlerCosplay(); } }
 
-    public BrawlerCosplay()
+    public void OnEnable()
     {
-        if (_instance != null && _instance != this) { Destroy(this); }
+        if (_instance != null && _instance != this) { Destroy(this); return; }
         else { _instance = this; }
 
         name = "Brawler Cosplay";

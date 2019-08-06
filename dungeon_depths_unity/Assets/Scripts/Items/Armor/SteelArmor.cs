@@ -5,9 +5,9 @@ public class SteelArmor : Armor
     private static SteelArmor _instance;
     public static SteelArmor instance { get { return _instance != null ? _instance : new SteelArmor(); } }
 
-    public SteelArmor()
+    public void OnEnable()
     {
-        if (_instance != null && _instance != this) { Destroy(this); }
+        if (_instance != null && _instance != this) { Destroy(this); return; }
         else { _instance = this; }
 
         name = "Steel Armor";

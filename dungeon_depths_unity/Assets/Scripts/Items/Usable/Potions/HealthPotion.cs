@@ -6,10 +6,16 @@ using System.Threading.Tasks;
 
 namespace Assets.Scripts
 {
-    class HealthPotion : Item
+    class HealthPotion : Potion
     {
-        public HealthPotion()
+        private static HealthPotion _instance;
+        public static HealthPotion instance { get { return _instance != null ? _instance : new HealthPotion(); } }
+
+        public void OnEnable()
         {
+            if (_instance != null && _instance != this) { Destroy(this); return; }
+            else { _instance = this; }
+
             name = "Health Potion";
             description = "A normal, everyday health potion.\n+75 health";
             id = 2;
@@ -27,7 +33,7 @@ namespace Assets.Scripts
             int amt = p.MAX_HP - p.HP;
             amt = Math.Min(75, amt);
             Player.instance.heal(amt);
-            messageMaster.display_message($"You drink the {name}. You heal {amt} health.");
+            messageMaster.display_message($"You drink the {name}.\nYou heal {amt} health.");
             count--;
         }
     }

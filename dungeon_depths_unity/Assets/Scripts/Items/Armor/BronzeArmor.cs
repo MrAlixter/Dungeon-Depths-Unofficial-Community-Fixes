@@ -5,9 +5,9 @@ public class BronzeArmor : Armor
     private static BronzeArmor _instance;
     public static BronzeArmor instance { get { return _instance != null ? _instance : new BronzeArmor(); } }
 
-    public BronzeArmor()
+    public void OnEnable()
     {
-        if (_instance != null && _instance != this) { Destroy(this); }
+        if (_instance != null && _instance != this) { Destroy(this); return; }
         else { _instance = this; }
 
         name = "Bronze Armor";

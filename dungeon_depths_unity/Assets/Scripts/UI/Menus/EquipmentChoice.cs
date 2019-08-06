@@ -1,24 +1,29 @@
 ﻿using UnityEngine;
+using UnityEngine.EventSystems;
+using UnityEngine.UI;
 
-public class EquipmentChoice
+public class EquipmentChoice : MonoBehaviour, ISelectHandler, IDeselectHandler
 {
-    private GameObject gameObject;
-    public UnityEngine.UI.Button button { get; set; }
-    public UnityEngine.UI.Image image { get; set; }
-    public UnityEngine.UI.Text name { get; set; }
-    public UnityEngine.UI.Text description { get; set; }
-    public UnityEngine.UI.Text stats { get; set; }
-    public EquipmentChoiceInfo info { get; set; }
+    public Button button { get; set; }
+    public UIRectangle background { get; set; }
+    public Image image { get; set; }
+    public Text nameText { get; set; }
+    public Text description { get; set; }
+    public Text stats { get; set; }
+    public int id { get { return info.id; } set { info.id = value; } }
+    private EquipmentChoiceInfo info { get; set; }
     public UIRectangle[] sizes { get; set; }
 
-    public EquipmentChoice(GameObject rootGameObject)
+    public static IEnsureVisible<EquipmentChoice> ensureVisibleMaster;
+
+    public void Awake()
     {
-        gameObject = rootGameObject;
-        button = gameObject.GetComponent<UnityEngine.UI.Button>();
-        image = gameObject.transform.Find("Image").GetComponent<UnityEngine.UI.Image>();
-        name = gameObject.transform.Find("Name Text").GetComponent<UnityEngine.UI.Text>();
-        description = gameObject.transform.Find("Description Text").GetComponent<UnityEngine.UI.Text>();
-        stats = gameObject.transform.Find("Stat Text").GetComponent<UnityEngine.UI.Text>();
+        button = gameObject.GetComponent<Button>();
+        background = gameObject.GetComponent<UIRectangle>();
+        image = gameObject.transform.Find("Image").GetComponent<Image>();
+        nameText = gameObject.transform.Find("Name Text").GetComponent<Text>();
+        description = gameObject.transform.Find("Description Text").GetComponent<Text>();
+        stats = gameObject.transform.Find("Stat Text").GetComponent<Text>();
         info = gameObject.transform.Find("Info").GetComponent<EquipmentChoiceInfo>();
         if (sizes == null)
         {
@@ -29,5 +34,16 @@ public class EquipmentChoice
                 sizes[i+1] = s.transform.Find($"{i}").GetComponent<UIRectangle>();
             }
         }
+    }
+
+    public void OnSelect(BaseEventData eventData)
+    {
+        background.color = Master.highlightColor;
+        ensureVisibleMaster.ensure_visible(this);
+    }
+
+    public void OnDeselect(BaseEventData eventData)
+    {
+        background.color = Color.black;
     }
 }

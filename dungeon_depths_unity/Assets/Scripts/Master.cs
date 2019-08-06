@@ -3,6 +3,7 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.EventSystems;
 
 [Serializable]
 public class MoveMap<T>
@@ -47,6 +48,8 @@ public sealed class Master : MonoBehaviour, ICombatantMaster, IMessageMaster, IE
         else { _instance = this; }
     }  
 
+    public static Color highlightColor = new Color32((byte)21, (byte)116, (byte)164, (byte)255);
+
 
     //These are currently set via the editor. 
     //Later, one maps are randonly generated, 
@@ -70,6 +73,8 @@ public sealed class Master : MonoBehaviour, ICombatantMaster, IMessageMaster, IE
     private Controller controller;
     [SerializeField]
     private Player player;
+    [SerializeField]
+    private EventSystem eventSystem;
 
     [SerializeField]
     private NPC enemy;
@@ -95,8 +100,10 @@ public sealed class Master : MonoBehaviour, ICombatantMaster, IMessageMaster, IE
     private CharacterMenu character_menu;
     [SerializeField]
     private EquipmentMenu equipment_menu;
+    //[SerializeField]
+    //private ItemsMenu items_menu;
     [SerializeField]
-    private ItemsMenu items_menu;
+    private ItemsMenuV2 items_menu;
 
     [SerializeField]
     private ProfilePicture profile_picture;
@@ -104,6 +111,10 @@ public sealed class Master : MonoBehaviour, ICombatantMaster, IMessageMaster, IE
     // Use this for initialization
     void Start ()
 	{
+        //Set them to get the compiler warnings to shut up 
+        //Specifically to -1 to make the game crash immediately if they're not set
+        if (MAP_WIDTH == 0) { MAP_WIDTH = -1; }
+        if(MAP_HEIGHT == 0) { MAP_HEIGHT = -1; }
         staticMap = new MoveMap<GameObject>(MAP_WIDTH, MAP_HEIGHT);
         entityMap = new MoveMap<GameObject>(MAP_WIDTH, MAP_HEIGHT);
 
@@ -114,6 +125,7 @@ public sealed class Master : MonoBehaviour, ICombatantMaster, IMessageMaster, IE
 
         player = Player.instance;
         controller = Controller.instance;
+        eventSystem = GameObject.Find("EventSystem").GetComponent<EventSystem>();
         
         //Because there are health bars in the battle canvas 
         //I cannot make the health bar a singleton.
@@ -125,7 +137,7 @@ public sealed class Master : MonoBehaviour, ICombatantMaster, IMessageMaster, IE
         pause_menu = PauseMenu.instance;
         character_menu = CharacterMenu.instance;
         equipment_menu = EquipmentMenu.instance;
-        items_menu = ItemsMenu.instance;
+        items_menu = ItemsMenuV2.instance;
 
         profile_picture = ProfilePicture.instance;
     }
@@ -206,9 +218,8 @@ public sealed class Master : MonoBehaviour, ICombatantMaster, IMessageMaster, IE
             close_dialog(current_dialog);
         }
 
-        if(menu == Menus.none)
+        if(menu == Menus.none && current_dialog == Menus.none)
         {
-            current_dialog = menu;
             current_mode = Mode.movement;
             return;
         }
@@ -228,29 +239,39 @@ public sealed class Master : MonoBehaviour, ICombatantMaster, IMessageMaster, IE
     public void close_dialog(Menus menu)
     {
         if(current_mode == Mode.combat) { return; }
-
-        current_dialog = Menus.none;
-        current_mode = Mode.movement;
+        
         switch (menu)
         {
             case Menus.battle:
                 close_battle_dialog();
-                return;
+                break;
             case Menus.character:
                 close_character_dialog();
-                return;
+                break;
             case Menus.equipment:
                 close_equipment_dialog();
-                return;
+                break;
             case Menus.info:
                 close_info_dialog();
-                return;
+                break;
             case Menus.pause:
                 close_pause_dialog();
-                return;
+                break;
             case Menus.items:
                 close_items_dialog();
-                return;
+                break;
+        }
+
+        if(battle_menu.active) { current_dialog = Menus.battle; }
+        else if(character_menu.active) { current_dialog = Menus.character; }
+        else if(equipment_menu.active) { current_dialog = Menus.equipment; }
+        else if(info_menu.active) { current_dialog = Menus.info; }
+        else if(pause_menu.active) { current_dialog = Menus.pause; }
+        else if(items_menu.active) { current_dialog = Menus.items; }
+
+        if(current_dialog == Menus.none)
+        {
+            current_mode = Mode.movement;
         }
     }
 
@@ -349,6 +370,7 @@ public sealed class Master : MonoBehaviour, ICombatantMaster, IMessageMaster, IE
     #region Pause Dialog Controls
     private void open_pause_dialog()
     {
+        pause_menu.Awake();
         pause_menu.open();
     }
 
@@ -390,10 +412,8 @@ public sealed class Master : MonoBehaviour, ICombatantMaster, IMessageMaster, IE
     #region Items Dialog Controls
     private void open_items_dialog()
     {
-        items_menu.Awake();
-
-        items_menu.load_items();
-
+        //Unneccessary because it's now called in the Awake(), which is 
+        //automatically called every time the object is set ot active
         items_menu.open();
     }
 
@@ -571,6 +591,19 @@ public sealed class Master : MonoBehaviour, ICombatantMaster, IMessageMaster, IE
         }
         else
         {
+            //open_info_dialog(message);
+            open_dialog(Menus.info, message);
+        }
+    }
+
+    public void set_message(string message)
+    {
+        if (current_mode == Mode.combat)
+        {
+            battle_menu.set_battle_information(message);
+        }
+        else
+        {
             open_info_dialog(message);
         }
     }
@@ -578,7 +611,10 @@ public sealed class Master : MonoBehaviour, ICombatantMaster, IMessageMaster, IE
     public void set_armor(int id)
     {
         player.equip_armor(id);
-        equipment_menu.load_current_equipment();
+        if(equipment_menu.active)
+        {
+            equipment_menu.load_current_equipment();
+        }
 
         update_armor();
     }
