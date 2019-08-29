@@ -213,6 +213,7 @@ Partial Class Game
         Me.btnNextRPnlEvent = New System.Windows.Forms.Button()
         Me.btnClosePnlEvent = New System.Windows.Forms.Button()
         Me.txtPNLEvents = New System.Windows.Forms.TextBox()
+        Me.Label5 = New System.Windows.Forms.Label()
         CType(Me.picEnemy, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me.picNPC, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me.picStatue, System.ComponentModel.ISupportInitialize).BeginInit()
@@ -1741,13 +1742,16 @@ Partial Class Game
         '
         'pnlDescript
         '
+        Me.pnlDescript.BackgroundImage = CType(resources.GetObject("pnlDescript.BackgroundImage"), System.Drawing.Image)
+        Me.pnlDescript.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch
         Me.pnlDescript.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle
+        Me.pnlDescript.Controls.Add(Me.Label5)
         Me.pnlDescript.Controls.Add(Me.lblNext)
         Me.pnlDescript.Controls.Add(Me.picDescPort)
         Me.pnlDescript.Controls.Add(Me.txtDescript)
-        Me.pnlDescript.Location = New System.Drawing.Point(901, 36)
+        Me.pnlDescript.Location = New System.Drawing.Point(900, 39)
         Me.pnlDescript.Name = "pnlDescript"
-        Me.pnlDescript.Size = New System.Drawing.Size(694, 461)
+        Me.pnlDescript.Size = New System.Drawing.Size(690, 502)
         Me.pnlDescript.TabIndex = 275
         Me.pnlDescript.Visible = False
         '
@@ -1757,7 +1761,7 @@ Partial Class Game
         Me.lblNext.BackColor = System.Drawing.Color.Black
         Me.lblNext.Font = New System.Drawing.Font("Consolas", 9.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.lblNext.ForeColor = System.Drawing.Color.White
-        Me.lblNext.Location = New System.Drawing.Point(23, 426)
+        Me.lblNext.Location = New System.Drawing.Point(23, 473)
         Me.lblNext.Name = "lblNext"
         Me.lblNext.Size = New System.Drawing.Size(336, 18)
         Me.lblNext.TabIndex = 277
@@ -1766,9 +1770,9 @@ Partial Class Game
         'picDescPort
         '
         Me.picDescPort.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch
-        Me.picDescPort.Location = New System.Drawing.Point(536, 21)
+        Me.picDescPort.Location = New System.Drawing.Point(524, 9)
         Me.picDescPort.Name = "picDescPort"
-        Me.picDescPort.Size = New System.Drawing.Size(125, 189)
+        Me.picDescPort.Size = New System.Drawing.Size(130, 480)
         Me.picDescPort.TabIndex = 276
         Me.picDescPort.TabStop = False
         '
@@ -1780,7 +1784,7 @@ Partial Class Game
         Me.txtDescript.Multiline = True
         Me.txtDescript.Name = "txtDescript"
         Me.txtDescript.ScrollBars = System.Windows.Forms.ScrollBars.Vertical
-        Me.txtDescript.Size = New System.Drawing.Size(468, 395)
+        Me.txtDescript.Size = New System.Drawing.Size(468, 446)
         Me.txtDescript.TabIndex = 0
         '
         'ttCosts
@@ -2331,7 +2335,7 @@ Partial Class Game
         Me.pnlEvent.Controls.Add(Me.btnNextRPnlEvent)
         Me.pnlEvent.Controls.Add(Me.btnClosePnlEvent)
         Me.pnlEvent.Controls.Add(Me.txtPNLEvents)
-        Me.pnlEvent.Location = New System.Drawing.Point(192, 29)
+        Me.pnlEvent.Location = New System.Drawing.Point(939, 26)
         Me.pnlEvent.Name = "pnlEvent"
         Me.pnlEvent.Size = New System.Drawing.Size(688, 447)
         Me.pnlEvent.TabIndex = 322
@@ -2395,9 +2399,20 @@ Partial Class Game
         Me.txtPNLEvents.Multiline = True
         Me.txtPNLEvents.Name = "txtPNLEvents"
         Me.txtPNLEvents.ReadOnly = True
+        Me.txtPNLEvents.ScrollBars = System.Windows.Forms.ScrollBars.Vertical
         Me.txtPNLEvents.Size = New System.Drawing.Size(665, 400)
         Me.txtPNLEvents.TabIndex = 0
         Me.txtPNLEvents.Text = resources.GetString("txtPNLEvents.Text")
+        '
+        'Label5
+        '
+        Me.Label5.AutoSize = True
+        Me.Label5.ForeColor = System.Drawing.Color.White
+        Me.Label5.Location = New System.Drawing.Point(21, 3)
+        Me.Label5.Name = "Label5"
+        Me.Label5.Size = New System.Drawing.Size(471, 17)
+        Me.Label5.TabIndex = 278
+        Me.Label5.Text = "NOTE: Full body image view is not complete, and still requires some work."
         '
         'Game
         '
@@ -2839,4 +2854,5 @@ Partial Class Game
     Friend WithEvents btnNextLPnlEvent As System.Windows.Forms.Button
     Friend WithEvents btnNextRPnlEvent As System.Windows.Forms.Button
     Friend WithEvents btnClosePnlEvent As System.Windows.Forms.Button
+    Friend WithEvents Label5 As System.Windows.Forms.Label
 End Class

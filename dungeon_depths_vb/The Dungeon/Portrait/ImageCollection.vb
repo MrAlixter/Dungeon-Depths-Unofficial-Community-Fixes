@@ -155,7 +155,8 @@
             mHat, mRearHair2 As ImageDump
 
         Dim fTFAccA, fTFBody, fTFClothes, fTFEars, fTFEyes, fTFface,
-            fTfFrontHair, fTFMouth, fTFNose, fTFRearhair1, fTfRearhair2, fTFGlasses As ImageDump
+            fTfFrontHair, fTFMouth, fTFNose, fTFRearhair1, fTfRearhair2, fTFGlasses,
+            fTFHat As ImageDump
         Dim mTFAccA, mTFBody, mTFClothes, mTFEars, mTFEyes, mTFface,
             mTfFrontHair, mTFMouth, mTFNose, mTFRearhair1, mTfRearhair2 As ImageDump
 
@@ -321,8 +322,10 @@
         '-index 16 (hat)
         fHat = New ImageDump("img/fHat")
         mHat = New ImageDump("img/mHat")
-        ndoF = fHat.Count
+        fTFHat = New ImageDump("img/fTF/tfHat")
+        ndoF = Int(fHat.Count)
         ndoM = mHat.Count
+        fHat.merge(fTFHat)
         fHat.add(fTFBody.getImageAt(10))
         fHat.add(fTFBody.getImageAt(12))
         fHat.add(fTFBody.getImageAt(13))

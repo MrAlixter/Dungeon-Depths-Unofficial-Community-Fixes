@@ -65,18 +65,18 @@
         Else
             sexAttrList = defImgLib.atrs("Body").getM
         End If
-            For i = 0 To sexAttrList.Count - 1
-                Dim x As Integer = (i * 71 * Me.Size.Width / 581)
-                Dim y As Integer = 0
-                Dim img As New PictureBox
-                img.BackgroundImage = sexAttrList(i)
-                img.Location = New Point(x, y - 20)
-                img.Size = New Point(70 * Me.Size.Width / 581, 104 * Me.Size.Width / 581)
-                img.BackgroundImageLayout = ImageLayout.Stretch
-                AddHandler img.Click, AddressOf PicOnClick
-                pnlBody.Controls.Add(img)
-            Next
-       
+        For i = 0 To sexAttrList.Count - 1
+            Dim x As Integer = (i * 71 * Me.Size.Width / 581)
+            Dim y As Integer = 0
+            Dim img As New PictureBox
+            img.BackgroundImage = sexAttrList(i)
+            img.Location = New Point(x, y - 20)
+            img.Size = New Point(70 * Me.Size.Width / 581, 260 * Me.Size.Width / 581)
+            img.BackgroundImageLayout = ImageLayout.Stretch
+            AddHandler img.Click, AddressOf PicOnClick
+            pnlBody.Controls.Add(img)
+        Next
+
         btnBody.Enabled = False
 
         setDefaultProfilePic()
@@ -87,7 +87,7 @@
         ComboBox2.Text = ComboBox2.Items(Int(Rnd() * ComboBox2.Items.Count))
         picPort.BackgroundImage = portrait.draw()
 
-            'init()
+        'init()
     End Sub
     'CharacterGenerator1_FormClosing handles the finalization of the in game image library
     Private Sub CharacterGenerator1_FormClosing(sender As Object, e As FormClosingEventArgs) Handles Me.FormClosing
@@ -122,7 +122,7 @@
         Else
             CommonClothes.bsize2 = Nothing
         End If
-    end sub
+    End Sub
     'initializes and orders the image libraries without launching a CharacterGenerator1
     Public Sub init()
 
@@ -166,7 +166,7 @@
             End If
         End Try
     End Sub
-    
+
 
     'recolor changes the color of an image, assumed to be of the same color as the players hair 
     Shared Function recolor(ByVal img As Bitmap, ByVal c As Color)
@@ -251,7 +251,7 @@
             Dim img As New PictureBox
             img.BackgroundImage = recolor2(sexAttrList(i), portrait.skincolor)
             img.Location = New Point(x, y - 20)
-            img.Size = New Point(70 * Me.Size.Width / 581, 104 * Me.Size.Width / 581)
+            img.Size = New Point(70 * Me.Size.Width / 581, 260 * Me.Size.Width / 581)
             img.BackgroundImageLayout = ImageLayout.Stretch
             AddHandler img.Click, AddressOf PicOnClick
             pnlBody.Controls.Add(img)

@@ -116,6 +116,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Entities\Entity.vb" />
+    <Compile Include="Entities\NPC\Hostile\Monsters\MesThrall.vb" />
     <Compile Include="Entities\NPC\Non-Hostile\FVendor.vb" />
     <Compile Include="Entities\NPC\Non-Hostile\HTeach.vb" />
     <Compile Include="Entities\NPC\Non-Hostile\Shopkeeper.vb" />
@@ -272,6 +273,7 @@
     <Compile Include="Items\Accesories\BracedHeadband.vb" />
     <Compile Include="Items\Accesories\RingOfUvona.vb" />
     <Compile Include="Items\Accesories\EmeraldCirclet.vb" />
+    <Compile Include="Items\Armor\CatArmor.vb" />
     <Compile Include="Items\Armor\GelLinge.vb" />
     <Compile Include="Items\Armor\GelArmor.vb" />
     <Compile Include="Items\Armor\CrystalArmor.vb" />
@@ -395,8 +397,9 @@
     <Compile Include="Items\Weapons\SpidersilkWhip.vb" />
     <Compile Include="Portrait\Portrait.vb" />
     <Compile Include="Testing.vb" />
+    <Compile Include="Tiles\Dungeon.vb" />
     <Compile Include="Tiles\LoadedChest.vb" />
-    <Compile Include="Tiles\mBoard.vb" />
+    <Compile Include="Tiles\mFloor.vb" />
     <Compile Include="WindowsForms\About.Designer.vb">
       <DependentUpon>About.vb</DependentUpon>
     </Compile>
@@ -411,7 +414,7 @@
     <Compile Include="Items\Usable\Potions\Mystery Potions\FemininePotion.vb" />
     <Compile Include="Items\Usable\Potions\Mystery Potions\HazardousPotion.vb" />
     <Compile Include="Items\Usable\Potions\Mystery Potions\BEPotion.vb" />
-    <Compile Include="Entities\NPC\Hostile\Boss.vb" />
+    <Compile Include="Entities\NPC\Hostile\Bosses\Boss.vb" />
     <Compile Include="Items\Armor\BrawlerCosplay.vb" />
     <Compile Include="Items\Weapons\BronzeXiphos.vb" />
     <Compile Include="Items\Armor\BunnySuit.vb" />
@@ -501,7 +504,7 @@
     <Compile Include="Items\Usable\Food\HeavyCream.vb" />
     <Compile Include="Items\Usable\Food\Herbs.vb" />
     <Compile Include="Items\Usable\Potions\Mystery Potions\MysPotion.vb" />
-    <Compile Include="Entities\NPC\Hostile\MiniBoss.vb" />
+    <Compile Include="Entities\NPC\Hostile\Bosses\MiniBoss.vb" />
     <Compile Include="Items\Item.vb" />
     <Compile Include="Items\Misc\Key.vb" />
     <Compile Include="Items\Unimplemented\LeatherWhip.vb" />
@@ -513,7 +516,7 @@
     <Compile Include="Items\Usable\Potions\ManaPotion.vb" />
     <Compile Include="Items\Weapons\MidasGuantlet.vb" />
     <Compile Include="Items\Usable\Mirror.vb" />
-    <Compile Include="Entities\NPC\Hostile\Monster.vb" />
+    <Compile Include="Entities\NPC\Hostile\Monsters\Monster.vb" />
     <Compile Include="Tiles\mTile.vb" />
     <Compile Include="My Project\AssemblyInfo.vb" />
     <Compile Include="My Project\Application.Designer.vb">
@@ -954,6 +957,18 @@
     <Content Include="img\fTF\tfClothes\hfClothes210.png">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
+    <Content Include="img\fTF\tfClothes\hfClothes211.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="img\fTF\tfClothes\hfClothes212.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="img\fTF\tfClothes\hfClothes213.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="img\fTF\tfClothes\hfClothes214.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
     <Content Include="img\fTF\tfEars\fEars9.png">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
@@ -1054,6 +1069,12 @@
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
     <Content Include="img\fTF\tfGlasses\fGlasses7.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="img\fTF\tfHat\fHat9.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="img\fTF\tfHat\tfHat10.png">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
     <Content Include="img\fTF\tfMouth\fMouth13.png">
@@ -2530,6 +2551,9 @@
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
     <Content Include="img\mTF\tfClothes\mClothes53.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="img\mTF\tfClothes\mClothes54.png">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
     <Content Include="img\mTF\tfEars\mEars6.png">

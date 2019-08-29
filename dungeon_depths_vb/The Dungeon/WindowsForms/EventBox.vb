@@ -32,18 +32,23 @@
         For i = 0 To s.Length - 1
             Dim c = s.Substring(i, 1)
             If c.Equals("\") Then
-                tPages.Add(tpage)
-                tpage = ""
-                ct = 0
-            Else
-                If ct < 1406 Or (ct >= 1406 And Not c.Equals(" ")) Then
-                    tpage += c
-                    ct += 1
+                If s.Substring(i + 1, 1).Equals("n") Then
+                    tpage += vbCrLf
+                    i += 1
+                    ct += 72
+                ElseIf s.Substring(i + 1, 1).Equals("t") Then
+                    tpage += "   "
+                    i += 1
+                    ct += 3
                 Else
                     tPages.Add(tpage)
                     tpage = ""
                     ct = 0
                 End If
+
+            Else
+                tpage += c
+                ct += 1
             End If
         Next
         If ct > 0 Then tPages.Add(tpage)
@@ -53,7 +58,6 @@
         pageind = 0
 
         txt.Text = pages(pageind)
-
         If Not oc Is Nothing Then Game.lblEventOnClose = oc
     End Sub
 

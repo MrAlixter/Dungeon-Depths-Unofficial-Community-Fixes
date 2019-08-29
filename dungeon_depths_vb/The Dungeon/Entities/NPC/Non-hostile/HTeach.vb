@@ -81,8 +81,8 @@
         ElseIf npcIndex = 4 Then
             Game.pushNPCDialog("HI!  I, like, don't know if it would be smart for me to try to hypno...hypotho...do my thing to you right now, but I totally have some tapes you can use!")
         End If
-        If Game.floor > 5 Then inv.setCount(113, 1) Else inv.setCount(113, 0)
-        If Game.floor < 5 Then inv.setCount(122, 1) Else inv.setCount(122, 0)
+        If Game.mDun.numCurrFloor > 5 Then inv.setCount(113, 1) Else inv.setCount(113, 0)
+        If Game.mDun.numCurrFloor < 5 Then inv.setCount(122, 1) Else inv.setCount(122, 0)
         Game.picNPC.BackgroundImage = picNCP(npcIndex)
     End Sub
 

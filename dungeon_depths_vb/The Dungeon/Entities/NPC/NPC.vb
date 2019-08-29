@@ -93,7 +93,7 @@
                           " is a lifeless stone statue. It doesn't seem like " & pronoun & " will be needing " &
                           pPronoun & " personal items anymore.", AddressOf Me.endMonster)
 
-        Game.statueList.Add(New Statue(Me))
+        Game.currfloor.statueList.Add(New Statue(Me))
     End Sub
     Public Overridable Sub toGold()
         Dim gd As Integer = (maxHealth + attack + defence) * 7
@@ -164,7 +164,7 @@
             Game.pushLblEvent("Your foe drops a key!")
             inv.setCount(53, 1)
             Dim c1 As Chest = Game.baseChest.Create(inv, pos)
-            Game.chestList.Add(c1)
+            Game.currfloor.chestList.Add(c1)
         End If
         Game.player.perks("nekocurse") = -1
         Game.player.currState.save(Game.player)
@@ -173,16 +173,14 @@
     End Sub
     Private Sub endBoss()
         If Not Me.GetType() Is GetType(MiniBoss) Then Exit Sub
-        If sName.Equals("Marissa the Enchantress") Then
-            Game.beatboss(1) = True
-            Game.player.perks("nekocurse") = -1
-        End If
-        If sName.Equals("Targax the Brutal") Then Game.beatboss(2) = True
-        If sName.Equals("Explorer") And Game.floor < 6 Then Game.beatboss(Game.floor) = True
+        If sName.Equals("Marissa the Enchantress") Then Game.player.perks("nekocurse") = -1
         If sName.Equals("Ooze Empress") Then
             'Game.beatboss(4) = True
-            Game.floorboss(4) = "Key"
+            Game.mDun.floorboss(4) = "Key"
+            Exit Sub
         End If
+
+        Game.currfloor.beatBoss = True
     End Sub
     Private Sub endMonster()
         'set temporary player pointer

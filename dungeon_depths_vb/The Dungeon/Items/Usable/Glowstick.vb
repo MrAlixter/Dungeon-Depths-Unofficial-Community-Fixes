@@ -18,19 +18,19 @@
         For indY = -3 To 3
             For indX = -3 To 3
                 If Game.player.pos.Y + indY < Game.mBoardHeight And Game.player.pos.Y + indY >= 0 And Game.player.pos.X + indX < Game.mBoardWidth And Game.player.pos.X + indX >= 0 Then
-                    If Game.mBoard(Game.player.pos.Y + indY, Game.player.pos.X + indX).Text = "H" And Game.mBoard(Game.player.pos.Y + indY, Game.player.pos.X + indX).Tag < 2 Then
-                        Game.mBoard(Game.player.pos.Y + indY, Game.player.pos.X + indX).ForeColor = Color.Black
-                        Game.pushLstLog("Floor " & Game.floor & ": Staircase Discovered")
+                    If Game.currfloor.mBoard(Game.player.pos.Y + indY, Game.player.pos.X + indX).Text = "H" And Game.currfloor.mBoard(Game.player.pos.Y + indY, Game.player.pos.X + indX).Tag < 2 Then
+                        Game.currfloor.mBoard(Game.player.pos.Y + indY, Game.player.pos.X + indX).ForeColor = Color.Black
+                        Game.pushLstLog("Floor " & game.mDun.numCurrFloor & ": Staircase Discovered")
                     End If
-                    If Game.mBoard(Game.player.pos.Y + indY, Game.player.pos.X + indX).Text = "#" And Game.mBoard(Game.player.pos.Y + indY, Game.player.pos.X + indX).Tag < 2 Then
-                        Game.mBoard(Game.player.pos.Y + indY, Game.player.pos.X + indX).ForeColor = Color.Black
+                    If Game.currfloor.mBoard(Game.player.pos.Y + indY, Game.player.pos.X + indX).Text = "#" And Game.currfloor.mBoard(Game.player.pos.Y + indY, Game.player.pos.X + indX).Tag < 2 Then
+                        Game.currfloor.mBoard(Game.player.pos.Y + indY, Game.player.pos.X + indX).ForeColor = Color.Black
                         Game.pushLstLog("Chest discovered!")
                     End If
-                    If Game.mBoard(Game.player.pos.Y + indY, Game.player.pos.X + indX).Text = "$" And Game.mBoard(Game.player.pos.Y + indY, Game.player.pos.X + indX).Tag < 2 Then
-                        Game.mBoard(Game.player.pos.Y + indY, Game.player.pos.X + indX).ForeColor = Color.Navy
+                    If Game.currfloor.mBoard(Game.player.pos.Y + indY, Game.player.pos.X + indX).Text = "$" And Game.currfloor.mBoard(Game.player.pos.Y + indY, Game.player.pos.X + indX).Tag < 2 Then
+                        Game.currfloor.mBoard(Game.player.pos.Y + indY, Game.player.pos.X + indX).ForeColor = Color.Navy
                         Game.pushLstLog("Shop discovered!")
                     End If
-                    If Game.mBoard(Game.player.pos.Y + indY, Game.player.pos.X + indX).Tag = 1 Then Game.mBoard(Game.player.pos.Y + indY, Game.player.pos.X + indX).Tag = 2
+                    If Game.currfloor.mBoard(Game.player.pos.Y + indY, Game.player.pos.X + indX).Tag = 1 Then Game.currfloor.mBoard(Game.player.pos.Y + indY, Game.player.pos.X + indX).Tag = 2
                 End If
             Next
         Next

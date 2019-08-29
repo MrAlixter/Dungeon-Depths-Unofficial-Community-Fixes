@@ -27,13 +27,9 @@ Public Class Debug_Window
         btnPan.Checked = True
 
         'GENERAL
-        If Game.floor > -1 Then boxFloor.Value = Game.floor Else boxFloor.Value = boxFloor.Maximum
+        If Game.mDun.numCurrFloor > -1 Then boxFloor.Value = Game.mDun.numCurrFloor Else boxFloor.Value = boxFloor.Maximum
         boxTurn.Value = Game.turn
-        If Game.floor < Game.beatboss.Count And Game.floor > 0 Then
-            boxBeaten.Checked = Game.beatboss(Game.floor)
-        Else
-            boxBeaten.Enabled = False
-        End If
+        boxBeaten.Checked = Game.currfloor.beatBoss
 
         'MAP
         magnification = Math.Floor(Math.Min(picBoard.Width / Game.mBoardWidth, picBoard.Height / Game.mBoardHeight))
@@ -61,7 +57,7 @@ Public Class Debug_Window
 
         boxForm.SelectedItem = Game.player.pClass.name
 
-        boxHealth.Value = Game.player.health * Game.player.getmaxHealth()
+        boxHealth.Value = Game.player.health * Game.player.getMaxHealth()
         boxMaxHealth.Value = Game.player.maxHealth
         boxMana.Value = Game.player.mana
         boxMaxMana.Value = Game.player.maxMana
@@ -133,7 +129,7 @@ Public Class Debug_Window
         End If
 
         'GENERATION SETTINGS
-        lblFC.Text = "Floorcode: " & Game.floorCode
+        lblFC.Text = "Floorcode: " & Game.currfloor.floorCode
         boxWidth.Value = Game.mBoardWidth
         boxHeight.Value = Game.mBoardHeight
         boxChestFreqMin.Value = Game.chestFreqMin
@@ -235,21 +231,21 @@ Public Class Debug_Window
         map = New Bitmap(Game.mBoardWidth + 2, Game.mBoardHeight + 2)
         For boardX = 0 To map.Width - 3
             For boardY = 0 To map.Height - 3
-                If (Game.mBoard(boardY, boardX).Text = "#") Then 'Chest
+                If (Game.currfloor.mBoard(boardY, boardX).Text = "#") Then 'Chest
                     map.SetPixel(boardX + 1, boardY + 1, Color.Yellow)
-                ElseIf (Game.mBoard(boardY, boardX).Text = "H") Then 'Stairs
+                ElseIf (Game.currfloor.mBoard(boardY, boardX).Text = "H") Then 'Stairs
                     map.SetPixel(boardX + 1, boardY + 1, Color.Sienna)
-                ElseIf (Game.mBoard(boardY, boardX).Text = "@" And Game.player.pos.X = boardX And Game.player.pos.Y = boardY) Then 'Player
+                ElseIf (Game.currfloor.mBoard(boardY, boardX).Text = "@" And Game.player.pos.X = boardX And Game.player.pos.Y = boardY) Then 'Player
                     map.SetPixel(boardX + 1, boardY + 1, Color.LawnGreen)
-                ElseIf (Game.mBoard(boardY, boardX).Text = "@") Then 'Statue
+                ElseIf (Game.currfloor.mBoard(boardY, boardX).Text = "@") Then 'Statue
                     map.SetPixel(boardX + 1, boardY + 1, Color.LightSlateGray)
-                ElseIf (Game.mBoard(boardY, boardX).Text = "$") Then 'NPC
+                ElseIf (Game.currfloor.mBoard(boardY, boardX).Text = "$") Then 'NPC
                     map.SetPixel(boardX + 1, boardY + 1, Color.Blue)
-                ElseIf (Game.mBoard(boardY, boardX).Text = "+") Then 'Trap
+                ElseIf (Game.currfloor.mBoard(boardY, boardX).Text = "+") Then 'Trap
                     map.SetPixel(boardX + 1, boardY + 1, Color.Red)
-                ElseIf (Game.mBoard(boardY, boardX).Tag = 2) Then 'Seen
+                ElseIf (Game.currfloor.mBoard(boardY, boardX).Tag = 2) Then 'Seen
                     map.SetPixel(boardX + 1, boardY + 1, Color.White)
-                ElseIf (Game.mBoard(boardY, boardX).Tag = 1) Then 'Unseen
+                ElseIf (Game.currfloor.mBoard(boardY, boardX).Tag = 1) Then 'Unseen
                     map.SetPixel(boardX + 1, boardY + 1, Color.Gray)
                 Else 'Nothing
                     map.SetPixel(boardX + 1, boardY + 1, Color.Black)
@@ -412,7 +408,7 @@ Public Class Debug_Window
     End Sub
 
     Private Sub boxBeaten_CheckedChanged(sender As Object, e As EventArgs) Handles boxBeaten.CheckedChanged
-        Game.beatboss(Game.floor) = boxBeaten.Checked
+        Game.currfloor.beatBoss = boxBeaten.Checked
     End Sub
 
     Private Sub boxName_TextChanged(sender As Object, e As EventArgs) Handles boxName.TextChanged

@@ -20,7 +20,7 @@
     End Sub
 
     Private Sub Reload()
-        t = Game.mBoard(p.Y, p.X)
+        t = Game.currfloor.mBoard(p.Y, p.X)
 
         lblPosition.Text = "POSITION: " & p.X & ", " & p.Y
         lblText.Text = "TEXT: " & t.Text.ToString()
@@ -190,17 +190,17 @@
             If t.Tag = 0 Then t.Tag = 1
             t.Text = "#"
             t.ForeColor = Color.FromArgb(45, 45, 45)
-            Game.mBoard(p.Y, p.X).ForeColor = Color.FromArgb(45, 45, 45)
+            Game.currfloor.mBoard(p.Y, p.X).ForeColor = Color.FromArgb(45, 45, 45)
             Dim c As Chest = Game.baseChest.Create(New Point(p.X, p.Y))
-            Game.chestList.Add(c)
+            Game.currfloor.chestList.Add(c)
         ElseIf name = "+ (Trap)" Then
             If removeFlag Then removeItem()
             If t.Tag = 0 Then t.Tag = 1
             t.Text = "+"
             t.ForeColor = Color.FromArgb(45, 45, 45)
-            Game.mBoard(p.Y, p.X).ForeColor = Color.FromArgb(45, 45, 45)
+            Game.currfloor.mBoard(p.Y, p.X).ForeColor = Color.FromArgb(45, 45, 45)
             Dim trap As New Trap(New Point(p.X, p.Y))
-            Game.trapList.Add(trap)
+            Game.currfloor.trapList.Add(trap)
         End If
 
 
@@ -229,11 +229,11 @@
         '    If prevTypeSel = "(Wall)" Or prevTypeSel = "(Walkable)" Then
         '        If boxType.SelectedItem = "# (Chest)" Then
         '            Dim c As Chest = Game.baseChest.Create(p.X, p.Y)
-        '            Game.chestList.Add(c)
-        '            Game.mBoard(p.Y, p.X).ForeColor = Color.FromArgb(45, 45, 45)
-        '            Game.mBoard(p.Y, p.X).Text = "#"
+        '            Game.currfloor.chestList.Add(c)
+        '            Game.currfloor.mBoard(p.Y, p.X).ForeColor = Color.FromArgb(45, 45, 45)
+        '            Game.currfloor.mBoard(p.Y, p.X).Text = "#"
         '            If prevTypeSel = "(Wall)" Then
-        '                Game.mBoard(p.Y, p.X).Tag = 1
+        '                Game.currfloor.mBoard(p.Y, p.X).Tag = 1
         '                t.Tag = 1
         '            End If
         '        Else
@@ -250,16 +250,16 @@
 
     Private Sub removeItem()
         If t.Text = "#" Then
-            For i = 0 To Game.chestList.Count - 1
-                If p = CType(Game.chestList(i), Chest).pos Then
-                    Game.chestList.RemoveAt(i)
+            For i = 0 To Game.currfloor.chestList.Count - 1
+                If p = CType(Game.currfloor.chestList(i), Chest).pos Then
+                    Game.currfloor.chestList.RemoveAt(i)
                     Exit Sub
                 End If
             Next
         ElseIf t.Text = "+" Then
-            For i = 0 To Game.trapList.Count - 1
-                If p = CType(Game.trapList(i), Trap).pos Then
-                    Game.trapList.RemoveAt(i)
+            For i = 0 To Game.currfloor.trapList.Count - 1
+                If p = CType(Game.currfloor.trapList(i), Trap).pos Then
+                    Game.currfloor.trapList.RemoveAt(i)
                     Exit Sub
                 End If
             Next
@@ -276,7 +276,7 @@
         ts.ShowDialog()
         If ts.saveChoice AndAlso ts.selected <> Nothing Then
             'MessageBox.Show("SELECTED " & ts.selected.ToString())
-            Dim toReplace As mTile = Game.mBoard(ts.selected.Y, ts.selected.X)
+            Dim toReplace As mTile = Game.currfloor.mBoard(ts.selected.Y, ts.selected.X)
             If toReplace.Text = "" Then
                 Dim tag As Integer = t.Tag
                 Dim col As Color = t.ForeColor
@@ -287,7 +287,7 @@
                 Dim item As String = boxType.SelectedItem.ToString()
                 If item.IndexOf("Stairs") <> -1 Then
                     toReplace.Text = "H"
-                    Game.stairs = ts.selected
+                    Game.currFloor.stairs = ts.selected
                 ElseIf item.IndexOf("NPC") <> -1 Then
                     For Each npc As ShopNPC In Game.npcList
                         If npc.pos = p Then
@@ -300,7 +300,7 @@
                     End If
                     toReplace.Text = "$"
                 ElseIf item.IndexOf("Chest") <> -1 Then
-                    For Each chest As Chest In Game.chestList
+                    For Each chest As Chest In Game.currfloor.chestList
                         If chest.pos = p Then
                             chest.pos = ts.selected
                             Exit For
@@ -313,7 +313,7 @@
                 ElseIf item.IndexOf("Statue") <> -1 Then
                     toReplace.Text = "@"
                 ElseIf item.IndexOf("Trap") <> -1 Then
-                    For Each trap As Trap In Game.trapList
+                    For Each trap As Trap In Game.currfloor.trapList
                         If trap.pos = p Then
                             trap.pos = ts.selected
                             Exit For
@@ -335,8 +335,8 @@
             Else
                 MessageBox.Show("TILE OCCUPIED")
             End If
-            Game.mBoard(ts.selected.Y, ts.selected.X) = toReplace
-            Game.mBoard(p.Y, p.X) = t
+            Game.currfloor.mBoard(ts.selected.Y, ts.selected.X) = toReplace
+            Game.currfloor.mBoard(p.Y, p.X) = t
         End If
     End Sub
 
@@ -349,8 +349,8 @@
         ElseIf Not boxSeen.Checked Then
             tag = 1
         End If
-        Game.mBoard(p.Y, p.X).Tag = tag
-        Game.mBoard(p.Y, p.X).Text = t.Text
-        Game.mBoard(p.Y, p.X).ForeColor = t.ForeColor
+        Game.currfloor.mBoard(p.Y, p.X).Tag = tag
+        Game.currfloor.mBoard(p.Y, p.X).Text = t.Text
+        Game.currfloor.mBoard(p.Y, p.X).ForeColor = t.ForeColor
     End Sub
 End Class

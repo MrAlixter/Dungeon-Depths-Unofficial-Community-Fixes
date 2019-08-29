@@ -51,7 +51,7 @@
         h = 60
         chestFreqMin = 3
         chestFreqRange = 8
-        chestSizeDependence = 25
+        chestSizeDependence = 30
         chestRichnessBase = 1
         chestRichnessRange = 5
         encounterRate = 25

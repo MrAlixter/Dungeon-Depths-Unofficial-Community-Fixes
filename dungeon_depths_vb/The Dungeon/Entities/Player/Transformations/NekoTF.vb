@@ -103,7 +103,13 @@
         Equipment.clothesChange("Cat_Lingerie")
 
         Game.fromCombat()
-        Game.pushLblEvent("As the last of your resistance drains away, all you can find yourself doing is focusing on your new mistress's voice as she orders you down onto all fours.  You happily oblige, purring softly, and she giggles.  ""Come on kitty, lets go!"" she orders and the two of you, with her leading, wander off into the darkness.  GAME OVER!", AddressOf p.die)
+        If p.isUnwilling Then
+            'Author Credit: Big Iron Red
+            Game.pushLblEvent("As Marissa's curse starts to fade, a collar and leash manifests on your neck, with a tag that says " & p.getName & ". The collar glows gently, and you feel any strength left leaving you. Marissa tugs the leash. ""Come, kitty!"" You don't see any other option, so you follow her sheepishly on all fours, cheeks flush with embarrassment. ""Am I really just a pet from nyow on?"" You think about your future stuck with Marissa as this soft, feminine creature. It has to end eventually, right? ""Don't worry, kitty! My magic will keep you young forever! You get to be cute forever and ever! You won't be an ugly boy ever again!"" Marissa chimes in, seemingly reading your mind.\n\nGAME OVER!", AddressOf p.die)
+        Else
+            Game.pushLblEvent("As the last of your resistance drains away, all you can find yourself doing is focusing on your new mistress's voice as she orders you down onto all fours.  You happily oblige, purring softly, and she giggles.  ""Come on kitty, lets go!"" she orders and the two of you, with her leading, wander off into the darkness.  GAME OVER!", AddressOf p.die)
+        End If
+
         p.perks("nekocurse") = -1
     End Sub
 

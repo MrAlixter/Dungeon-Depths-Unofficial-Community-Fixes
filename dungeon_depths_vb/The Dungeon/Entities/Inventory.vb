@@ -162,6 +162,8 @@
         internal_inventory.Add("Every_New_Item", New NewStuff())            '143
         internal_inventory.Add("Crystalline_Armor", New CrystalArmor())     '144
         internal_inventory.Add("Scepter_of_Ash", New ScepterOfAsh())        '145
+        '0.9
+        internal_inventory.Add("Cat_Armor", New CatArmor())                 '146
 
         armor = {New CommonClothes, New SkimpyClothes, New Naked, New VSkimpyClothes,
                  Me.item(5), Me.item(7), Me.item(8), Me.item(10),
@@ -174,7 +176,8 @@
                  Me.item(94), Me.item(95), Me.item(99), Me.item(101),
                  Me.item(102), Me.item(103), Me.item(104), Me.item(105),
                  Me.item(106), Me.item(107), Me.item(115), Me.item(116),
-                 Me.item(129), Me.item(137), Me.item(138), Me.item(144)}
+                 Me.item(129), Me.item(137), Me.item(138), Me.item(144),
+                 Me.item(146)}
 
         weapons = {New BareFists(),
                    Me.item(6), Me.item(9), Me.item(11), Me.item(21),

@@ -196,33 +196,45 @@
         If p.equippedArmor.slutVarInd = -1 Then Return False
 
         If p.equippedArmor.getName.Equals("Common_Clothes") Then
+            p.equippedArmor.onUnequip()
             p.equippedArmor = New SkimpyClothes
         ElseIf p.equippedArmor.getName.Equals("Skimpy_Clothes") Then
+            p.equippedArmor.onUnequip()
             p.equippedArmor = New VSkimpyClothes
         Else
             Dim equippedArmorIndex = p.equippedArmor.id
             Dim slutVarIndex = p.equippedArmor.slutVarInd
             p.inv.add(equippedArmorIndex, -1)
             p.inv.add(slutVarIndex, 1)
-            p.equippedArmor = p.inv.item(slutVarIndex)
+            clothesChange(p.inv.item(slutVarIndex).getAName)
         End If
         Game.pushLstLog("Your curse changes your clothes.")
-        If Not Game.lblEvent.Visible Then Game.pushLblEvent("As you adust your clothes, a crackling pink lightning coats them and they begin to shift across your body.  As the flashes of magic intensify, and despite your panic, you find yourself forced to close your eyes at the risk of being overwhelmed by the blaze erupting from your equipment.  As soon as it started, the curse finishes its work and you hesitantly open your eyes only to find nothing seems to be amiss after all.  You take off and inspect the outfit which, as far as you can tell, doesn't seem any different after all.  Unconcerned by your brief nudity, you get dressed again and with a twirl you set back out on your adventure.")
+        If Not Game.lblEvent.Visible Then
+            If p.isUnwilling Then
+                'Author Credit: Big Iron Red
+                Game.pushLblEvent("As you adjust your clothes, a crackling pink lightning coats them and they begin to shift across your body.  The flashes of magic intensify, and despite your panic, you find yourself forced to close your eyes at the risk of being overwhelmed by the blaze erupting from your equipment. As soon as it started, the curse finishes its work and you hesitantly open your eyes, feeling an oddly cold draft as you do so. You look down in abject horror as you find your previously protective armor has become a humiliatingly feminine facsimile of itself.\n" &
+                                  "You quickly remove the outfit in a vain attempt to regain your former equipment, yet it remains the same embarrassingly useless ensemble that serves only to show the world your feminine body. Tears welling in your eyes, you slip back on what used to be your original armor, feeling incredibly exposed and vulnerable. ""How will anyone take me seriously wearing this?"" you think, as you wobble unsteadily ahead, followed by the unmistakable sound of high heels clicking on the dungeon floor.")
+            Else
+                Game.pushLblEvent("As you adust your clothes, a crackling pink lightning coats them and they begin to shift across your body.  As the flashes of magic intensify, and despite your panic, you find yourself forced to close your eyes at the risk of being overwhelmed by the blaze erupting from your equipment.  As soon as it started, the curse finishes its work and you hesitantly open your eyes only to find nothing seems to be amiss after all.  You take off and inspect the outfit which, as far as you can tell, doesn't seem any different after all.  Unconcerned by your brief nudity, you get dressed again and with a twirl you set back out on your adventure.")
+            End If
+        End If
         Return True
     End Function
     Function antiClothingCurse() As Boolean
         If p.equippedArmor.antiSlutVarInd = -1 Then Return False
 
         If p.equippedArmor.getName.Equals("Skimpy_Clothes") Then
+            p.equippedArmor.onUnequip()
             p.equippedArmor = New CommonClothes
         ElseIf p.equippedArmor.getName.Equals("Very_Skimpy_Clothes") Then
+            p.equippedArmor.onUnequip()
             p.equippedArmor = New SkimpyClothes
         Else
             Dim equippedArmorIndex = p.equippedArmor.id
             Dim antiSlutVarIndex = p.equippedArmor.antiSlutVarInd
             p.inv.add(equippedArmorIndex, -1)
             p.inv.add(antiSlutVarIndex, 1)
-            p.equippedArmor = p.inv.item(antiSlutVarIndex)
+            clothesChange(p.inv.item(antiSlutVarIndex).getAName)
         End If
 
         Game.pushLstLog("Your curse changes your clothes.")

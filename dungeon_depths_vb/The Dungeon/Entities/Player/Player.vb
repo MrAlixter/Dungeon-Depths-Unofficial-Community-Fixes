@@ -408,7 +408,7 @@
 
     '|MOVEMENT COMMANDS|
     Public Overrides Sub reachedFPathDest()
-        If Game.floor = 4 And Not Game.preBSBody Is Nothing And Game.preBSStartState Is Nothing And Game.floorboss(4) = "Ooze Empress" Then
+        If game.mDun.numCurrFloor = 4 And Not Game.preBSBody Is Nothing And Game.preBSStartState Is Nothing And game.mDun.floorboss(4) = "Ooze Empress" Then
             RandoTF.floor4FirstBossEncounter()
             Exit Sub
         End If
@@ -889,17 +889,17 @@
     Public Sub setPImage()
         'sets the player call
         If pClass.name.Equals("Bimbo") Then
-            If Game.floor > 5 And Not Game.floor = 9999 Then
+            If game.mDun.numCurrFloor > 5 And Not game.mDun.numCurrFloor = 9999 Then
                 pImage = Game.picBimbof.BackgroundImage
-            ElseIf Game.floor = 9999 Then
+            ElseIf game.mDun.numCurrFloor = 9999 Then
                 pImage = Game.picBimboSpace.BackgroundImage
             Else
                 pImage = Game.picPlayerB.BackgroundImage
             End If
         Else
-            If Game.floor > 5 And Not Game.floor = 9999 Then
+            If game.mDun.numCurrFloor > 5 And Not game.mDun.numCurrFloor = 9999 Then
                 pImage = Game.picPlayerf.BackgroundImage
-            ElseIf Game.floor = 9999 Then
+            ElseIf game.mDun.numCurrFloor = 9999 Then
                 pImage = Game.picPlayerSpace.BackgroundImage
             Else
                 pImage = Game.picPlayer.BackgroundImage

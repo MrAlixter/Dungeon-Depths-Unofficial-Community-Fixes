@@ -98,7 +98,7 @@
         setLoadout()
 
         p.TextColor = Color.White
-        If Game.floor < 6 Then p.pImage = Game.picPlayer.BackgroundImage Else p.pImage = Game.picPlayerf.BackgroundImage
+        If game.mDun.numCurrFloor < 6 Then p.pImage = Game.picPlayer.BackgroundImage Else p.pImage = Game.picPlayerf.BackgroundImage
         p.reverseBSRoute()
         p.sState.save(p)
 

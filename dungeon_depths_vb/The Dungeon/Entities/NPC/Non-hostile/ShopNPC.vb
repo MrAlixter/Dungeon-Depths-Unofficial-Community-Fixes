@@ -60,7 +60,7 @@
         setGold(9999)
         Game.npcIndex = npcIndex
 
-        If Game.floor < 5 AndAlso Game.floorboss(Game.floor).Equals("Key") Then inv.setCount(53, 1) Else inv.setCount(53, 0)
+        If Game.mDun.numCurrFloor < 5 AndAlso Game.mDun.floorboss(Game.mDun.numCurrFloor).Equals("Key") Then inv.setCount(53, 1) Else inv.setCount(53, 0)
 
         picNCP = New List(Of Image)
         picNCP.AddRange({picNormal, Game.picFrog.BackgroundImage, Game.picSheep.BackgroundImage, picPrincess, picBunny})
@@ -72,9 +72,9 @@
     Public Overridable Function getShopInv() As Inventory
         Dim tInv As Inventory = New Inventory(False)
         tInv.mergeRevalue(inv)
-        If Game.floor < 5 AndAlso Game.floorboss(Game.floor).Equals("Key") Then tInv.setCount(53, 1) Else tInv.setCount(53, 0)
+        If Game.mDun.numCurrFloor < 5 AndAlso Game.mDun.floorboss(Game.mDun.numCurrFloor).Equals("Key") Then tInv.setCount(53, 1) Else tInv.setCount(53, 0)
 
-        
+
         For i = 0 To tInv.upperBound()
             Dim n = tInv.item(i).value
             tInv.item(i).value -= (n * discount)
@@ -156,4 +156,32 @@
         Game.btnLeave.Visible = False
         If npcIndex > 4 Then npcIndex = 0
     End Sub
+
+    'save/load methods
+    Function saveNPC() As String
+        Dim out = ""
+        out += npcIndex & "%"   '0
+        out += gold & "%"       '1
+        out += pos.X & "%"      '2
+        out += pos.Y & "%"      '3
+        out += form & "%"       '4
+        out += title & "%"      '5
+        out += pronoun & "%"    '6
+        out += pPronoun & "%"   '7
+        out += rPronoun & "%"   '8
+        Return out
+    End Function
+    Function loadNPC(ByVal s As String) As Boolean
+        Dim loadedVars = s.Split("%")
+
+        npcIndex = CInt(loadedVars(0))
+        gold = CInt(loadedVars(1))
+        pos = New Point(CInt(loadedVars(2)), CInt(loadedVars(3)))
+        form = loadedVars(4)
+        title = loadedVars(5)
+        pronoun = loadedVars(6)
+        pPronoun = loadedVars(7)
+        rPronoun = loadedVars(8)
+        Return True
+    End Function
 End Class

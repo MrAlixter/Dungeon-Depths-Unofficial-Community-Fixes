@@ -98,14 +98,14 @@
     Public Overridable Sub open()
         'handles the opening of a chest
         If Game.player.pos <> pos Then Exit Sub
-        If Not Game.combatmode And Game.floor >= 3 And Not Me.GetType Is GetType(LoadedChest) Then
+        If Not Game.combatmode And game.mDun.numCurrFloor >= 3 And Not Me.GetType Is GetType(LoadedChest) Then
             Dim mOdds As Integer
-            If Game.floor = 3 Then
+            If game.mDun.numCurrFloor = 3 Then
                 mOdds = Int(Rnd() * 2)
             Else
                 mOdds = Int(Rnd() * 10)
             End If
-            If Game.floor <> 9999 And mOdds = 0 And Not contents.getCountAt(53) > 0 Then
+            If game.mDun.numCurrFloor <> 9999 And mOdds = 0 And Not contents.getCountAt(53) > 0 Then
                 Monster.createMimic(contents)
                 Exit Sub
             End If

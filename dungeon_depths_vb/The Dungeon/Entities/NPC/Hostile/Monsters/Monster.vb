@@ -1,6 +1,49 @@
 ﻿Public Class Monster
     Inherits NPC
 
+    Sub New()
+        Select Case Game.mDun.numCurrFloor 'sets the multiplier for enemy stats based on floor
+            Case 1
+                maxHealth *= 1
+                attack *= 1
+                defence *= 1
+                speed *= 1
+            Case 2
+                maxHealth *= 1.05
+                attack *= 1.05
+                defence *= 1.05
+                speed *= 1.05
+            Case 3
+                maxHealth *= 1.1
+                attack *= 1.1
+                defence *= 1.1
+                speed *= 1.1
+            Case 4
+                maxHealth *= 1.2
+                attack *= 1.2
+                defence *= 1.2
+                speed *= 1.2
+            Case Else
+                maxHealth *= (1 + (0.05 * Game.mDun.numCurrFloor))
+                attack *= (1 + (0.05 * Game.mDun.numCurrFloor))
+                defence *= (1 + (0.05 * Game.mDun.numCurrFloor))
+                speed *= (1 + (0.05 * Game.mDun.numCurrFloor))
+        End Select
+
+        health = 1.0
+
+        title = " The "
+        sName = name
+        sMaxHealth = maxHealth
+        sMaxMana = maxMana
+        sAttack = attack
+        sDefence = defence
+        sWill = will
+        sSpeed = speed
+
+        If speed = Game.player.getSPD Then speed -= 1
+        pos = Game.player.pos
+    End Sub
     Sub New(ByVal mIndex As Integer)
         Select Case mIndex
             Case -1
@@ -108,7 +151,7 @@
                 Next
         End Select
 
-        Select Case Game.floor 'sets the multiplier for enemy stats based on floor
+        Select Case Game.mDun.numCurrFloor 'sets the multiplier for enemy stats based on floor
             Case 1
                 maxHealth *= 1
                 attack *= 1
@@ -130,10 +173,10 @@
                 defence *= 1.2
                 speed *= 1.2
             Case Else
-                maxHealth *= (1 + (0.05 * Game.floor))
-                attack *= (1 + (0.05 * Game.floor))
-                defence *= (1 + (0.05 * Game.floor))
-                speed *= (1 + (0.05 * Game.floor))
+                maxHealth *= (1 + (0.05 * Game.mDun.numCurrFloor))
+                attack *= (1 + (0.05 * Game.mDun.numCurrFloor))
+                defence *= (1 + (0.05 * Game.mDun.numCurrFloor))
+                speed *= (1 + (0.05 * Game.mDun.numCurrFloor))
         End Select
 
         health = 1.0
