@@ -447,18 +447,12 @@ Public Class Game
                 End If
             Next
         End If
-        If Not shopkeeper.isDead And shopkeeper.pos.X > 0 And shopkeeper.pos.Y > 0 Then
-            currfloor.mBoard(shopkeeper.pos.Y, shopkeeper.pos.X).Text = "$"
-        End If
-        If Not swiz.isDead And swiz.pos.X > 0 And swiz.pos.Y > 0 Then
-            currfloor.mBoard(swiz.pos.Y, swiz.pos.X).Text = "$"
-        End If
-        If Not hteach.isDead And hteach.pos.X > 0 And hteach.pos.Y > 0 Then
-            currfloor.mBoard(hteach.pos.Y, hteach.pos.X).Text = "$"
-        End If
-        If Not fvend.isDead And fvend.pos.X > 0 And fvend.pos.Y > 0 Then
-            currfloor.mBoard(fvend.pos.Y, fvend.pos.X).Text = "$"
-        End If
+
+        For Each sNPC In shopNPCList
+            If Not sNPC.isDead And sNPC.pos.X > 0 And sNPC.pos.Y > 0 Then
+                currFloor.mBoard(sNPC.pos.Y, sNPC.pos.X).Text = "$"
+            End If
+        Next
 
         If currfloor.mBoard(player.pos.Y, player.pos.X).Text = "+" Then
             For i = 0 To currfloor.trapList.Count - 1
@@ -1968,6 +1962,8 @@ Public Class Game
         'load the dungeon
         reader.ReadLine()
         mDun = New Dungeon(reader.ReadLine())
+        currFloor = mDun.floors(mDun.numCurrFloor)
+        newBoard()
 
         'load the player
         reader.ReadLine()
@@ -1992,6 +1988,11 @@ Public Class Game
             shopNPCList.Add(ShopNPC.shopFactory(i))
             shopNPCList(i).loadNPC(reader.ReadLine())
         Next
+        shopkeeper = shopNPCList(0)
+        swiz = shopNPCList(1)
+        hteach = shopNPCList(2)
+        fvend = shopNPCList(3)
+
 
         'load the dungeon generation settings
         reader.ReadLine()
@@ -2048,19 +2049,19 @@ Public Class Game
             MsgBox("Right Button Clicked")
         Else
             If solFlag Then
-                Try
-                    player.solFlag = True
-                    loadSave("s" & fileNum & ".ave")
-                    player.solFlag = False
-                Catch ex As System.IO.FileNotFoundException
-                    MsgBox("Error 004: No save detected!")
-                Catch ex2 As Exception
-                    If MessageBox.Show("Error 005: Error in loaded in save file!" & vbCrLf & "Restart?", "Error 005", MessageBoxButtons.YesNo) = Windows.Forms.DialogResult.Yes Then
-                        Application.Restart()
-                    Else
-                        Application.Exit()
-                    End If
-                End Try
+                'Try
+                player.solFlag = True
+                loadSave("s" & fileNum & ".ave")
+                player.solFlag = False
+                'Catch ex As System.IO.FileNotFoundException
+                '    MsgBox("Error 004: No save detected!")
+                'Catch ex2 As Exception
+                '    If MessageBox.Show("Error 005: Error in loaded in save file!" & vbCrLf & "Restart?", "Error 005", MessageBoxButtons.YesNo) = Windows.Forms.DialogResult.Yes Then
+                '        Application.Restart()
+                '    Else
+                '        Application.Exit()
+                '    End If
+                'End Try
             Else
                 save("s" & fileNum & ".ave")
                 imagesWorkerArg = Convert.ToInt32(fileNum)

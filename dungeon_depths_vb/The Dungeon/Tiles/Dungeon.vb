@@ -47,6 +47,10 @@
             End If
         End If
     End Sub
+    Private Sub setPositions()
+        Game.player.pos = floors(numCurrFloor).playerPosition
+
+    End Sub
     Public Sub setFloor(ByRef f As mFloor)
         f = floors(numCurrFloor)
         Game.mBoardHeight = f.mBoardHeight

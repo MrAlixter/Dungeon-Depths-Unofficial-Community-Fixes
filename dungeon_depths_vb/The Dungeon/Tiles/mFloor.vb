@@ -13,12 +13,15 @@
     Public statueList As ArrayList = New ArrayList()
     Public trapList As ArrayList = New ArrayList()
 
+    Public playerPosition As Point = New Point(-1, -1)
+    Public npcPositions As List(Of Point) = New List(Of Point)
+
     Public beatBoss As Boolean = False
 
     Public Sub New(ByVal code As String, ByVal fNum As Integer,
                    Optional ByVal bh As Integer = -1,
                    Optional ByVal bw As Integer = -1)
-        
+
         floorNumber = fNum
         floorCode = code
         If bh = -1 Then mBoardHeight = Game.mBoardHeight Else mBoardHeight = bh
@@ -30,6 +33,7 @@
         placeStairs()
         placeChest(floorCode)
         If floorNumber > 2 Then placeTraps()
+
         placeNPCs(Game.shopNPCList)
         verifyNoDisconectedChunks(Game.player)
 
@@ -67,6 +71,7 @@
     End Sub
     Sub placePlayer(ByRef p As Player)
         p.pos = randPoint()
+        playerPosition = p.pos
         mBoard(p.pos.Y, p.pos.X).Text = "@"
     End Sub
     Sub placeChest(ByVal code As String)
@@ -118,6 +123,7 @@
         For Each n In npcList
             n.pos = New Point(-1, -1)
         Next
+        npcPositions.Clear()
 
         Dim numNpc As Integer = CInt(Int(Rnd() * npcList.Count)) + 1
         If floorNumber = 1 Then numNpc = 1
@@ -135,6 +141,7 @@
             Dim sNPC = npcList(npcInd)
 
             sNPC.pos = npcPoint
+            npcPositions.Add(sNPC.pos)
 
             If floorNumber = 3 Then sNPC.inv.add(53, 1) Else sNPC.inv.item(53).count = 0
 
@@ -811,36 +818,45 @@
 
     '|---SERIALIZATION METHODS---|
     Function saveMFloor() As String
-        Dim out = ""
+        Dim out = "floornumber" & floorNumber & "%"
 
-        out += floorNumber & "%"                '0
-        out += floorCode & "%"                  '1
-        out += mBoardHeight & "%"               '2
-        out += mBoardWidth & "%"                '3
+        out += floorNumber & "%"                '1
+        out += floorCode & "%"                  '2
+        out += mBoardHeight & "%"               '3
+        out += mBoardWidth & "%"                '4
 
-        out += trapList.Count - 1 & "%"         '4
+        out += "traps%"
+        out += trapList.Count - 1 & "%"         '6
         For i = 0 To trapList.Count - 1
-            out += trapList(i).ToString & "%"   '5 to 5 + traplist.Count - 1
+            out += trapList(i).ToString & "%"   '7 to 6 + traplist.Count
         Next
 
-        out += statueList.Count - 1 & "%"       '5 + traplist.Count
+        out += "statues%"
+        out += statueList.Count - 1 & "%"       '8 + traplist.Count
         For i = 0 To statueList.Count - 1
-            out += statueList(i).ToString & "%" '6 + traplist.Count to 5 + traplist.Count + statueList.Count
+            out += statueList(i).ToString & "%" '9 + traplist.Count to 8 + traplist.Count + statueList.Count
         Next
 
-        out += chestList.Count - 1 & "%"        '6 + traplist.Count + statueList.Count
+        out += "chest%"
+        out += chestList.Count - 1 & "%"        '10 + traplist.Count + statueList.Count
         For i = 0 To chestList.Count - 1
             If chestList(i).GetType Is GetType(LoadedChest) Then
                 chestList(i).pos = New Point(-1, -1)  'LoadedChests are not saved
             End If
-            out += chestList(i).ToString & "%"  '7 + traplist.Count + statueList.Count to 6 + traplist.Count + statueList.Count + chestList.Count
+            out += chestList(i).ToString & "%"  '11 + traplist.Count + statueList.Count to 10 + traplist.Count + statueList.Count + chestList.Count
         Next
 
-        out += beatBoss & "%"                   '7 + traplist.Count + statueList.Count + chestList.Count
+        out += "beatboss%"
+        out += beatBoss & "%"                   '12 + traplist.Count + statueList.Count + chestList.Count
 
-        For y = 0 To mBoardHeight
-            For x = 0 To mBoardWidth
-                out += mBoard(y, x).Tag & "%"
+        out += "stairs%"
+        out += stairs.X & "%"                   '14 + traplist.Count + statueList.Count + chestList.Count
+        out += stairs.Y & "%"                   '15 + traplist.Count + statueList.Count + chestList.Count
+
+        out += "boardtags%"
+        For y = 0 To mBoardHeight - 1
+            For x = 0 To mBoardWidth - 1
+                out += mBoard(y, x).Tag & "%"   '17 + traplist.Count + statueList.Count + chestList.Count
             Next
         Next
 
@@ -849,10 +865,10 @@
     Sub loadMFloor(ByVal s As String)
         Dim buffer = s.Split("%")
 
-        floorNumber = CInt(buffer(0))
-        floorCode = buffer(1)
-        mBoardHeight = CInt(buffer(2))
+        floorNumber = CInt(buffer(1))
+        floorCode = buffer(2)
         mBoardHeight = CInt(buffer(3))
+        mBoardWidth = CInt(buffer(4))
 
         'reset the board
         ReDim mBoard(mBoardHeight, mBoardWidth)
@@ -863,27 +879,29 @@
         Next
 
         trapList.Clear()
-        For i = 0 To CInt(buffer(4))
-            trapList.Add(New Trap(buffer(5 + i)))
+        For i = 0 To CInt(buffer(6))
+            trapList.Add(New Trap(buffer(7 + i)))
         Next
 
         statueList.Clear()
-        For i = 0 To CInt(buffer(5 + trapList.Count))
-            statueList.Add(New Statue(buffer(6 + trapList.Count + i)))
+        For i = 0 To CInt(buffer(8 + trapList.Count))
+            statueList.Add(New Statue(buffer(9 + trapList.Count + i)))
         Next
 
         chestList.Clear()
-        For i = 0 To CInt(buffer(6 + trapList.Count + statueList.Count))
-            chestList.Add(New Chest().Create(buffer(7 + trapList.Count + statueList.Count + i)))
+        For i = 0 To CInt(buffer(10 + trapList.Count + statueList.Count))
+            chestList.Add(New Chest().Create(buffer(11 + trapList.Count + statueList.Count + i)))
         Next
 
-        beatBoss = CBool(buffer(7 + trapList.Count + statueList.Count + chestList.Count))
+        beatBoss = CBool(buffer(12 + trapList.Count + statueList.Count + chestList.Count))
 
+        stairs = New Point(CInt(buffer(14 + trapList.Count + statueList.Count + chestList.Count)),
+                           CInt(buffer(15 + trapList.Count + statueList.Count + chestList.Count)))
         coveredBoardSpace = 0
-        For y = 0 To mBoardHeight
-            For x = 0 To mBoardWidth
+        For y = 0 To mBoardHeight - 1
+            For x = 0 To mBoardWidth - 1
                 Dim i = (y * mBoardWidth) + x
-                mBoard(y, x).Tag = CInt(buffer(8 + trapList.Count + statueList.Count + chestList.Count + i))
+                mBoard(y, x).Tag = CInt(buffer(17 + trapList.Count + statueList.Count + chestList.Count + i))
                 If mBoard(y, x).Tag > 0 Then coveredBoardSpace += 1
             Next
         Next
