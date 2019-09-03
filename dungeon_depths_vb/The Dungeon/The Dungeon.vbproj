@@ -116,7 +116,17 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Entities\Entity.vb" />
+    <Compile Include="Entities\NPC\Hostile\Monsters\ArachHunt.vb" />
+    <Compile Include="Entities\NPC\Hostile\Monsters\EnrSorc.vb" />
+    <Compile Include="Entities\NPC\Hostile\Monsters\EnthDem.vb" />
+    <Compile Include="Entities\NPC\Hostile\Monsters\EnthSorc.vb" />
+    <Compile Include="Entities\NPC\Hostile\Monsters\GooGirlMonster.vb" />
     <Compile Include="Entities\NPC\Hostile\Monsters\MesThrall.vb" />
+    <Compile Include="Entities\NPC\Hostile\Monsters\Mimic.vb" />
+    <Compile Include="Entities\NPC\Hostile\Monsters\PlayerGhost.vb" />
+    <Compile Include="Entities\NPC\Hostile\Monsters\SlimeMonster.vb" />
+    <Compile Include="Entities\NPC\Hostile\Monsters\SpiderMonster.vb" />
+    <Compile Include="Entities\NPC\Non-Hostile\Caelia.vb" />
     <Compile Include="Entities\NPC\Non-Hostile\FVendor.vb" />
     <Compile Include="Entities\NPC\Non-Hostile\HTeach.vb" />
     <Compile Include="Entities\NPC\Non-Hostile\Shopkeeper.vb" />
@@ -277,6 +287,7 @@
     <Compile Include="Items\Armor\GelLinge.vb" />
     <Compile Include="Items\Armor\GelArmor.vb" />
     <Compile Include="Items\Armor\CrystalArmor.vb" />
+    <Compile Include="Items\Armor\SkimpyTT.vb" />
     <Compile Include="Items\Armor\SVBunnySuit.vb" />
     <Compile Include="Items\Armor\LabcoatSV.vb" />
     <Compile Include="Items\Armor\Labcoat.vb" />
@@ -299,11 +310,13 @@
     <Compile Include="Items\Services\AmazonLesson.vb" />
     <Compile Include="Items\Services\NameChange.vb" />
     <Compile Include="Items\Services\BimboLesson.vb" />
+    <Compile Include="Items\Usable\ManaHibiscus.vb" />
     <Compile Include="Items\Usable\CryoGrenade.vb" />
     <Compile Include="Items\Usable\Food\WFeast.vb" />
     <Compile Include="Items\Usable\Food\MDelicacy.vb" />
     <Compile Include="Items\Usable\Food\TSpecial.vb" />
     <Compile Include="Items\Usable\Food\WStickOfGum.vb" />
+    <Compile Include="Items\Usable\GrapplingHook.vb" />
     <Compile Include="Items\Usable\Potions\GalaxyDye.vb" />
     <Compile Include="Items\Usable\Potions\Mystery Potions\Side Effects\GalaxyDyeEffect.vb" />
     <Compile Include="Items\Usable\CombatModule.vb" />
@@ -690,6 +703,12 @@
     <Content Include="img\fMouth\gfMouth12.png">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
+    <Content Include="img\fRearHair1\fRearHair9.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="img\fRearHair2\fRearHair29.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
     <Content Include="img\fTF\tfAccA\fAccA9.png">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
@@ -697,6 +716,9 @@
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
     <Content Include="img\fTF\tfAccA\gfAccA11.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="img\fTF\tfAccA\gfAccA12.png">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
     <Content Include="img\fTF\tfClothes\gfClothes125.png">
@@ -969,6 +991,18 @@
     <Content Include="img\fTF\tfClothes\hfClothes214.png">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
+    <Content Include="img\fTF\tfClothes\hfClothes215.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="img\fTF\tfClothes\hfClothes216.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="img\fTF\tfClothes\hfClothes217.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="img\fTF\tfClothes\hfClothes218.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
     <Content Include="img\fTF\tfEars\fEars9.png">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
@@ -1030,6 +1064,9 @@
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
     <Content Include="img\fTF\tfFace\fFace2.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="img\fTF\tfFace\fFace3.png">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
     <Content Include="img\fTF\tfFrontHair\tfFrontHair18.png">
@@ -2398,6 +2435,9 @@
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
     <Content Include="img\mTF\tfAccA\tfAccA8.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="img\mTF\tfAccA\tfAccA9.png">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
     <Content Include="img\mTF\tfBody\blank.png">

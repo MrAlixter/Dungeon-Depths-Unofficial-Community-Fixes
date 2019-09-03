@@ -1,4 +1,6 @@
-﻿Public Class Dungeon
+﻿Imports System.ComponentModel
+
+<Serializable()> Public Class Dungeon
     Public floorboss() As String = {"Floor0", "Marissa the Enchantress", "Targax the Brutal", "Key", "Key", "Medusa"} 'boss names (NOT SAVED)
     Public floors As Dictionary(Of Integer, mFloor) = New Dictionary(Of Integer, mFloor)
     Public floorCodes As List(Of String) = New List(Of String)
@@ -8,9 +10,11 @@
 
     Public Sub New()
         Randomize()
+
         For i = 0 To 10
             floorCodes.Add(mFloor.genRNDLVLCode)
         Next
+
         numCurrFloor = 1
         lastVisitedFloor = 1
         floors.Add(1, New mFloor(floorCodes(1), numCurrFloor))
@@ -22,6 +26,8 @@
 
     Public Sub floorDown()
         lastVisitedFloor = numCurrFloor
+        floors(numCurrFloor).playerPosition = Game.player.pos
+
         numCurrFloor += 1
         If Not floors.Keys.Contains(numCurrFloor) Then
             If floorCodes.Count > numCurrFloor Then
@@ -29,15 +35,22 @@
             Else
                 floors.Add(numCurrFloor, New mFloor(mFloor.genRNDLVLCode, numCurrFloor))
             End If
+        Else
+            setPositions()
         End If
     End Sub
     Public Sub floorUp()
         lastVisitedFloor = numCurrFloor
+        floors(numCurrFloor).playerPosition = Game.player.pos
+
         numCurrFloor -= 1
         If numCurrFloor = 0 Then Game.pushLblEvent("As you near the top of the staircase leading out of the dungeon, you take a deep breath.  Unfortuately, you also trip; falling to your doom.", AddressOf Game.player.die)
+        setPositions()
     End Sub
     Public Sub jumpTo(ByVal i As Integer)
         lastVisitedFloor = numCurrFloor
+        floors(numCurrFloor).playerPosition = Game.player.pos
+
         numCurrFloor = i
         If Not floors.Keys.Contains(numCurrFloor) Then
             If floorCodes.Count > numCurrFloor Then
@@ -45,11 +58,16 @@
             Else
                 floors.Add(numCurrFloor, New mFloor(mFloor.genRNDLVLCode, numCurrFloor))
             End If
+        Else
+            setPositions()
         End If
     End Sub
     Private Sub setPositions()
         Game.player.pos = floors(numCurrFloor).playerPosition
 
+        For i = 0 To Game.shopNPCList.Count - 1
+            Game.shopNPCList(i).pos = floors(numCurrFloor).npcPositions(i)
+        Next
     End Sub
     Public Sub setFloor(ByRef f As mFloor)
         f = floors(numCurrFloor)
@@ -58,10 +76,18 @@
     End Sub
 
     Public Function currFloorBoss() As String
-        Return floorboss(numCurrFloor)
+        If floorboss.Count > numCurrFloor Then
+            Return floorboss(numCurrFloor)
+        Else
+            Return ""
+        End If
     End Function
     Public Function currFloorCode() As String
-        Return floorCodes(numCurrFloor)
+        If floorCodes.Count > numCurrFloor Then
+            Return floorCodes(numCurrFloor)
+        Else
+            Return ""
+        End If
     End Function
 
     Function save()
@@ -87,7 +113,6 @@
 
         Return out
     End Function
-
     Sub load(ByRef s As String)
         Dim buffer = s.Split("@")
 

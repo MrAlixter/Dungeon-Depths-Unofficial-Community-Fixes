@@ -1,7 +1,11 @@
 ﻿Public Class Monster
     Inherits NPC
-
     Sub New()
+        name = "Explorer"
+        setInventory({0})
+        setupMonsterOnSpawn()
+    End Sub
+    Sub setupMonsterOnSpawn()
         Select Case Game.mDun.numCurrFloor 'sets the multiplier for enemy stats based on floor
             Case 1
                 maxHealth *= 1
@@ -44,158 +48,50 @@
         If speed = Game.player.getSPD Then speed -= 1
         pos = Game.player.pos
     End Sub
-    Sub New(ByVal mIndex As Integer)
+    Shared Function monsterFactory(ByVal mIndex As Integer) As Monster
         Select Case mIndex
-            Case -1
-                name = "Explorer"
-                setInventory({0})
             Case 0
-                name = "Mesmerized Thrall"
-                maxHealth = 85
-                attack = 20
-                defence = 7
-                speed = 9
-                setInventory({0, 1, 13})
+                Return New MesThrall
             Case 1
-                name = "Slime"
-                maxHealth = 30
-                attack = 15
-                defence = 60
-                speed = 6
-                setInventory({2, 3})
+                Return New SlimeMonster
             Case 2
                 Try
-                    loadGhost()
+                    Return New PlayerGhost
                 Catch ex As Exception
-                    name = "Slime"
-                    maxHealth = 30
-                    attack = 15
-                    defence = 60
-                    speed = 6
-                    setInventory({2, 3})
+                    Select Case Int(Rnd() * 3)
+                        Case 0
+                            Return New MesThrall
+                        Case 1
+                            Return New SlimeMonster
+                        Case 2
+                            Return New SpiderMonster
+                    End Select
                 End Try
             Case 3
-                name = "Goo Girl"
-                maxHealth = 90
-                attack = 30
-                defence = 80
-                speed = 14
-                setInventory({3})
+                Return New GooGirlMonster
             Case 4
-                Dim rng = Int(Rnd() * 2)
-                If rng = 0 Then
-                    name = "Enthralling Sorcerer"
-                Else
-                    name = "Enthralling Sorceress"
-                End If
-                maxHealth = 150
-                attack = 40
-                defence = 17
-                speed = 20
-                setInventory({4, 13})
+                Return New EnthSorc
             Case 5
-                name = "Mimic"
-                maxHealth = 175
-                attack = 35
-                defence = 20
-                speed = 50
-                setInventory({0})
+                Return New Mimic
             Case 6
-                name = "Spider"
-                maxHealth = 65
-                attack = 35
-                defence = 1
-                speed = 45
-                setInventory({63})
+                Return New SpiderMonster
             Case 7
-                name = "Arachne Huntress"
-                maxHealth = 110
-                attack = 65
-                defence = 10
-                speed = 60
-                setInventory({63, 64})
+                Return New ArachHunt
             Case 8
-                Dim rng = Int(Rnd() * 2)
-                If rng = 0 Then
-                    name = "Enraged Sorcerer"
-                Else
-                    name = "Enraged Sorceress"
-                End If
-                maxHealth = 145
-                attack = 50
-                defence = 5
-                speed = 25
-                setInventory({})
+                Return New EnrSorc
             Case 9
-                Dim rng = Int(Rnd() * 2)
-                If rng = 0 Then
-                    name = "Enthralling Half-Demon"
-                Else
-                    name = "Enthralling Half-Demoness"
-                End If
-                maxHealth = 200
-                attack = 60
-                defence = 7
-                speed = 30
-                setInventory({})
+                Return New EnthDem
             Case 10
-                name = "Hunger"
-            Case Else
-                name = "Some Guy"
-                maxHealth = 66
-                attack = 1
-                defence = 1
-                speed = 1
-                For i = 0 To 2
-                    inv.setCount(CInt(Rnd() * (Game.player.inv.upperBound + 1)), CInt(Rnd() * 2) + 1)
-                Next
+                Dim m = New Monster
+                m.name = "Hunger"
+                Return m
         End Select
 
-        Select Case Game.mDun.numCurrFloor 'sets the multiplier for enemy stats based on floor
-            Case 1
-                maxHealth *= 1
-                attack *= 1
-                defence *= 1
-                speed *= 1
-            Case 2
-                maxHealth *= 1.05
-                attack *= 1.05
-                defence *= 1.05
-                speed *= 1.05
-            Case 3
-                maxHealth *= 1.1
-                attack *= 1.1
-                defence *= 1.1
-                speed *= 1.1
-            Case 4
-                maxHealth *= 1.2
-                attack *= 1.2
-                defence *= 1.2
-                speed *= 1.2
-            Case Else
-                maxHealth *= (1 + (0.05 * Game.mDun.numCurrFloor))
-                attack *= (1 + (0.05 * Game.mDun.numCurrFloor))
-                defence *= (1 + (0.05 * Game.mDun.numCurrFloor))
-                speed *= (1 + (0.05 * Game.mDun.numCurrFloor))
-        End Select
-
-        health = 1.0
-
-        title = " The "
-        sName = name
-        sMaxHealth = maxHealth
-        sMaxMana = maxMana
-        sAttack = attack
-        sDefence = defence
-        sWill = will
-        sSpeed = speed
-
-        If speed = Game.player.getSPD Then speed -= 1
-        pos = Game.player.pos
-    End Sub
+        Return New Monster()
+    End Function
 
     Shared Sub createMimic(ByRef contents As Inventory)
-        Dim m As Monster = New Monster(5)
+        Dim m As Monster = monsterFactory(5)
         m.inv.merge(contents)
 
         'adds the mimmic to combat queues

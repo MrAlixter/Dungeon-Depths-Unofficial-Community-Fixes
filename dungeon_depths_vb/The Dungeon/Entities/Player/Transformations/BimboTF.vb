@@ -70,7 +70,6 @@
         ElseIf p.prt.sexBool And p.breastSize >= 3 Then
             out += "In your haze, you look down to see your clothes have become tight and pink. You giggle, all traces of intellect vanishing as your body becomes more curvy and feminine. Your hair lengthens, becoming a platinum blonde, and your clothes finish changing to match your new figure."
         End If
-        Game.pushLblEvent(out)
         p.pClass = p.classes("Bimbo")
         p.lust += 10
         'final tf Stage
@@ -106,6 +105,7 @@
         p.perks("bimbotf") = -1
         p.createP()
         stopTF()
+        Game.pushLblEvent(out)
     End Sub
     Sub doubleTf()
         Dim p As Player = Game.player

@@ -1,4 +1,6 @@
-﻿Public Class mFloor
+﻿Imports System.ComponentModel
+
+<Serializable()> Public Class mFloor
     Public mBoardWidth As Integer = 60
     Public mBoardHeight As Integer = 60
     Dim coveredBoardSpace As Integer = 0
@@ -10,8 +12,8 @@
     Public stairs As Point
 
     Public chestList As List(Of Chest) = New List(Of Chest)
-    Public statueList As ArrayList = New ArrayList()
-    Public trapList As ArrayList = New ArrayList()
+    Public statueList As List(Of Statue) = New List(Of Statue)
+    Public trapList As List(Of Trap) = New List(Of Trap)
 
     Public playerPosition As Point = New Point(-1, -1)
     Public npcPositions As List(Of Point) = New List(Of Point)
@@ -21,13 +23,22 @@
     Public Sub New(ByVal code As String, ByVal fNum As Integer,
                    Optional ByVal bh As Integer = -1,
                    Optional ByVal bw As Integer = -1)
+        Dim updateLoadbar = False
+        updateLoadbar = Not Game.picLoadBar.Visible
 
+        If updateLoadbar Then Game.initLoadBar()
         floorNumber = fNum
         floorCode = code
         If bh = -1 Then mBoardHeight = Game.mBoardHeight Else mBoardHeight = bh
         If bw = -1 Then mBoardWidth = Game.mBoardWidth Else mBoardWidth = bw
 
         defineBoardSpace()
+        If floorNumber = 9999 Or floorNumber = 91017 Then
+            Game.updateLoadbar(99)
+            Game.boardWorker.CancelAsync()
+            Exit Sub
+        End If
+        If updateLoadbar Then Game.updateLoadbar(40)
 
         placePlayer(Game.player)
         placeStairs()
@@ -35,8 +46,12 @@
         If floorNumber > 2 Then placeTraps()
 
         placeNPCs(Game.shopNPCList)
+        If updateLoadbar Then Game.updateLoadbar(70)
         verifyNoDisconectedChunks(Game.player)
-
+        If updateLoadbar Then
+            Game.updateLoadbar(99)
+            Game.boardWorker.CancelAsync()
+        End If
     End Sub
     Public Sub New(ByVal save As String)
         loadMFloor(save)
@@ -51,6 +66,10 @@
                 mBoard(y, x) = New mTile(0, "", Color.Black)
             Next
         Next
+        For Each n In Game.shopNPCList
+            n.pos = New Point(-1, -1)
+        Next
+
 
         If floorNumber < 5 Then
             generateDungeonLevel(floorCode)
@@ -59,7 +78,8 @@
             genBossFloor(Game.player)
         ElseIf floorNumber = 9999 Then
             genSpaceFloor()
-            Exit Sub
+        ElseIf floorNumber = 91017 Then
+            genLegacyFloor()
         ElseIf floorNumber > 5 Then
             generateForestLevel(floorCode)
         End If
@@ -120,9 +140,6 @@
         Next
     End Sub
     Sub placeNPCs(ByRef npcList As List(Of ShopNPC))
-        For Each n In npcList
-            n.pos = New Point(-1, -1)
-        Next
         npcPositions.Clear()
 
         Dim numNpc As Integer = CInt(Int(Rnd() * npcList.Count)) + 1
@@ -141,7 +158,7 @@
             Dim sNPC = npcList(npcInd)
 
             sNPC.pos = npcPoint
-            npcPositions.Add(sNPC.pos)
+
 
             If floorNumber = 3 Then sNPC.inv.add(53, 1) Else sNPC.inv.item(53).count = 0
 
@@ -149,6 +166,10 @@
             mBoard(npcPoint.Y, npcPoint.X).Text = "$"
 
             placed.Add(npcInd)
+        Next
+
+        For i = 0 To npcList.Count - 1
+            npcPositions.Add(npcList(i).pos)
         Next
     End Sub
     Sub connectRooms(ByVal p1 As Point, ByVal p2 As Point)
@@ -609,7 +630,7 @@
         For i = 0 To numStatues
             Dim x = Int((Rnd() * 4) + 3)
             Dim y = Int((Rnd() * 15) + 3)
-            Dim tr As New Monster(-1)
+            Dim tr As New Monster()
             tr.pos = New Point(x, y)
             statueList.Add(New Statue(tr))
         Next
@@ -703,6 +724,58 @@
         inv.add("Combat_Module", r)
 
         inv.add("Vial_of_BIM_II", 1)
+        c1 = Game.baseChest.Create(inv, p, False)
+
+        chestList.Add(c1)
+        mBoard(p.Y, p.X).ForeColor = Color.FromArgb(45, 45, 45)
+        mBoard(p.Y, p.X).Text = "#"
+    End Sub
+    'legacy floor
+    Sub genLegacyFloor()
+        Dim floorLayout As String() = {"_############################",
+                                       "____####____________#@#_____#",
+                                       "____####____________###_____#",
+                                       "____####____________________#",
+                                       "#############################",
+                                       "#___________########_________",
+                                       "#___________###########______",
+                                       "#_____________###__#####______",
+                                       "#############################",
+                                       "______#####___###__#####____#",
+                                       "______#####___###__#####____#",
+                                       "______##^##___###___________#",
+                                       "#############################",
+                                       "#_____#####___###____________",
+                                       "#_____________#########______",
+                                       "#_____________#########______",
+                                       "##################%##########",
+                                       "______________#########_____#",
+                                       "______________#########______"}
+
+        If mBoardHeight < 19 Then mBoardHeight = 19
+        If mBoardWidth < 30 Then mBoardWidth = 30
+
+        For y = 0 To 18
+            Dim line = floorLayout(y).ToCharArray
+            For x = 0 To UBound(line)
+                If Not line(x) = "_"c Then mBoard(y, x).Tag = 1
+                If line(x) = "%"c Then
+                    stairs = New Point(x, y)
+                ElseIf line(x) = "^"c Then
+                    Dim chestPoint = New Point(x, y)
+                    genLegacyChest(chestPoint)
+                ElseIf line(x) = "@"c Then
+                    Game.player.pos = New Point(x, y)
+                End If
+            Next
+        Next
+    End Sub
+    Sub genLegacyChest(ByVal p As Point)
+        Dim c1 As Chest
+        Dim inv = New Inventory(False)
+
+        inv.add("Chicken_Suit", 1)
+
         c1 = Game.baseChest.Create(inv, p, False)
 
         chestList.Add(c1)
@@ -853,10 +926,21 @@
         out += stairs.X & "%"                   '14 + traplist.Count + statueList.Count + chestList.Count
         out += stairs.Y & "%"                   '15 + traplist.Count + statueList.Count + chestList.Count
 
+        out += "playerpos%"
+        out += playerPosition.X & "%"           '17 + traplist.Count + statueList.Count + chestList.Count
+        out += playerPosition.Y & "%"           '18 + traplist.Count + statueList.Count + chestList.Count
+
+        out += "NPCpos%"
+        out += CStr(npcPositions.Count - 1) & "%" '20 + traplist.Count + statueList.Count + chestList.Count
+        For i = 0 To npcPositions.Count - 1
+            out += npcPositions(i).X & "~"
+            out += npcPositions(i).X & "%"      '21 + traplist.Count + statueList.Count + chestList.Count to 20 + traplist.Count + statueList.Count + chestList.Count + npcPositions.Count
+        Next
+
         out += "boardtags%"
         For y = 0 To mBoardHeight - 1
             For x = 0 To mBoardWidth - 1
-                out += mBoard(y, x).Tag & "%"   '17 + traplist.Count + statueList.Count + chestList.Count
+                out += mBoard(y, x).Tag & "%"   '22 + traplist.Count + statueList.Count + chestList.Count + npcPositions.Count
             Next
         Next
 
@@ -897,11 +981,21 @@
 
         stairs = New Point(CInt(buffer(14 + trapList.Count + statueList.Count + chestList.Count)),
                            CInt(buffer(15 + trapList.Count + statueList.Count + chestList.Count)))
+
+        playerPosition = New Point(CInt(buffer(17 + trapList.Count + statueList.Count + chestList.Count)),
+                           CInt(buffer(18 + trapList.Count + statueList.Count + chestList.Count)))
+
+        npcPositions.Clear()
+        For i = 0 To CInt(buffer(20 + trapList.Count + statueList.Count + chestList.Count))
+            Dim xy = buffer(21 + trapList.Count + statueList.Count + chestList.Count + i).Split("~")
+            npcPositions.Add(New Point(xy(0), xy(1)))
+        Next
+
         coveredBoardSpace = 0
         For y = 0 To mBoardHeight - 1
             For x = 0 To mBoardWidth - 1
                 Dim i = (y * mBoardWidth) + x
-                mBoard(y, x).Tag = CInt(buffer(17 + trapList.Count + statueList.Count + chestList.Count + i))
+                mBoard(y, x).Tag = CInt(buffer(22 + trapList.Count + statueList.Count + chestList.Count + npcPositions.Count + i))
                 If mBoard(y, x).Tag > 0 Then coveredBoardSpace += 1
             Next
         Next

@@ -249,7 +249,6 @@ Public Class Game
             btnAbout.Visible = True
             Exit Sub
         End If
-
         chargen.Dispose()
         Dim int As Integer = 100 - player.getSPD
         If int < 1 Then int = 1
@@ -269,6 +268,8 @@ Public Class Game
         trapFreqMin = genSet.boxTrapFreqMin.Value
         trapFreqRange = genSet.boxTrapFreqRange.Value
         trapSizeDependence = genSet.boxTrapSizeDependence.Value
+
+        initLoadBar()
         If mBoardWidth * mBoardHeight < 4 Then
             Do While mBoardWidth * mBoardHeight < 4
                 If mBoardHeight < mBoardWidth Then
@@ -278,7 +279,6 @@ Public Class Game
                 End If
             Loop
         End If
-
         'lblLoadMsg.Visible = True
         Select Case CInt(Rnd() * 2)
             Case Else
@@ -288,18 +288,27 @@ Public Class Game
         End Select
 
         'creates the shopkeepers
+        updateLoadbar(10)
         shopNPCList.Clear()
         shopkeeper = ShopNPC.shopFactory(0)
+        updateLoadbar(12)
         swiz = ShopNPC.shopFactory(1)
+        updateLoadbar(14)
         hteach = ShopNPC.shopFactory(2)
+        updateLoadbar(16)
         fvend = ShopNPC.shopFactory(3)
+        updateLoadbar(20)
         shopNPCList.AddRange({shopkeeper, swiz, hteach, fvend})
 
+        'create the dungeon
         mDun = New Dungeon
+        updateLoadbar(40)
         mDun.setFloor(currFloor)
         initializeBoard(False)
+        updateLoadbar(60)
         drawBoard()
 
+        'setup the player
         player.currState = New State(player)
         player.sState = New State(player)
         player.pState = New State(player)
@@ -309,10 +318,12 @@ Public Class Game
         turn = 0
 
         pushLstLog("You see before you a dungeon.")
-
         picStart.Visible = False
 
         player.UIupdate()
+
+        updateLoadbar(99)
+        boardWorker.CancelAsync()
     End Sub
     Sub loadCKeys()
         cKeys.Clear()
@@ -332,8 +343,6 @@ Public Class Game
     Public Sub initializeBoard(Optional Draw As Boolean = True)
         lblEvent.Visible = False
         player.canMoveFlag = False
-
-        initLoadBar()
         newBoard()
 
         If Draw Then drawBoard()
@@ -344,7 +353,6 @@ Public Class Game
         Dim Margin As Integer = 3
         Dim XSize As Double = 15.0 * (CDbl(Me.Size.Width) / 688.0)
         Dim YSize As Double = 15.0 * (CDbl(Me.Size.Width) / 688.0)
-        boardWorker.ReportProgress(40)
 
         'create all of  the board lables dynamacly at runtime
         Dim viewWidth = 23
@@ -374,8 +382,6 @@ Public Class Game
                     mPics(y, x) = newPicture
 
                     viewPicsDone += 1
-                    Dim progress As Double = (viewPicsDone / (viewHeight * viewWidth))
-                    boardWorker.ReportProgress(80 + (progress * 20))
                 Next
             Next
         End If
@@ -383,9 +389,6 @@ Public Class Game
         If testingImageBoard Then
             CreateMapAndImages()
         End If
-
-        boardWorker.ReportProgress(99)
-        boardWorker.CancelAsync()
     End Sub
     Private Sub boxBoard_Draw(sender As Object, e As PaintEventArgs)
         Dim startTime As Double = (DateTime.Now - New DateTime(1970, 1, 1)).TotalMilliseconds
@@ -567,6 +570,7 @@ Public Class Game
         '13 = path
         '14 = h. teacher
         '15 = f. vendor
+        '16 = caelia
 
         If testingImageBoard Then
             boxBoard.Refresh()
@@ -579,12 +583,12 @@ Public Class Game
                 x = 0
                 For indX = -11 To 11
                     If (player.pos.Y + indY >= 0 And player.pos.Y + indY < mBoardHeight) And (player.pos.X + indX >= 0 And player.pos.X + indX < mBoardWidth) Then
-                        viewArray(y, x) = currfloor.mBoard(player.pos.Y + indY, player.pos.X + indX).Tag
-                        If currfloor.mBoard(player.pos.Y + indY, player.pos.X + indX).Tag = 2 Then
-                            If currfloor.mBoard(player.pos.Y + indY, player.pos.X + indX).Text = "" Then viewArray(y, x) = 2
-                            If currfloor.mBoard(player.pos.Y + indY, player.pos.X + indX).Text = "x" Then viewArray(y, x) = 13
-                            If currfloor.mBoard(player.pos.Y + indY, player.pos.X + indX).Text = "H" Then
-                                If mDun.numCurrFloor > 5 Or currfloor.beatBoss Then
+                        viewArray(y, x) = currFloor.mBoard(player.pos.Y + indY, player.pos.X + indX).Tag
+                        If currFloor.mBoard(player.pos.Y + indY, player.pos.X + indX).Tag = 2 Then
+                            If currFloor.mBoard(player.pos.Y + indY, player.pos.X + indX).Text = "" Then viewArray(y, x) = 2
+                            If currFloor.mBoard(player.pos.Y + indY, player.pos.X + indX).Text = "x" Then viewArray(y, x) = 13
+                            If currFloor.mBoard(player.pos.Y + indY, player.pos.X + indX).Text = "H" Then
+                                If mDun.numCurrFloor > 5 Or currFloor.beatBoss Then
                                     viewArray(y, x) = 3
                                 ElseIf mDun.numCurrFloor > 5 Or (mDun.numCurrFloor < 5 AndAlso mDun.floorboss(mDun.numCurrFloor).Equals("Key")) Then
                                     viewArray(y, x) = 9
@@ -592,16 +596,16 @@ Public Class Game
                                     viewArray(y, x) = 10
                                 End If
                             End If
-                            If currfloor.mBoard(player.pos.Y + indY, player.pos.X + indX).Text = "#" Then viewArray(y, x) = 5
-                            If currfloor.mBoard(player.pos.Y + indY, player.pos.X + indX).Text = "$" And player.pos.Y + indY = shopkeeper.pos.Y And player.pos.X + indX = shopkeeper.pos.X Then viewArray(y, x) = 6
-                            If currfloor.mBoard(player.pos.Y + indY, player.pos.X + indX).Text = "$" And player.pos.Y + indY = swiz.pos.Y And player.pos.X + indX = swiz.pos.X Then viewArray(y, x) = 11
-                            If currfloor.mBoard(player.pos.Y + indY, player.pos.X + indX).Text = "$" And player.pos.Y + indY = hteach.pos.Y And player.pos.X + indX = hteach.pos.X Then viewArray(y, x) = 14
-                            If currfloor.mBoard(player.pos.Y + indY, player.pos.X + indX).Text = "$" And player.pos.Y + indY = fvend.pos.Y And player.pos.X + indX = fvend.pos.X Then viewArray(y, x) = 15
-                            If currfloor.mBoard(player.pos.Y + indY, player.pos.X + indX).Text = "+" Then viewArray(y, x) = 8
-                            If currfloor.mBoard(player.pos.Y + indY, player.pos.X + indX).Text = "c" Then viewArray(y, x) = 12
+                            If currFloor.mBoard(player.pos.Y + indY, player.pos.X + indX).Text = "#" Then viewArray(y, x) = 5
+                            If currFloor.mBoard(player.pos.Y + indY, player.pos.X + indX).Text = "$" And player.pos.Y + indY = shopkeeper.pos.Y And player.pos.X + indX = shopkeeper.pos.X Then viewArray(y, x) = 6
+                            If currFloor.mBoard(player.pos.Y + indY, player.pos.X + indX).Text = "$" And player.pos.Y + indY = swiz.pos.Y And player.pos.X + indX = swiz.pos.X Then viewArray(y, x) = 11
+                            If currFloor.mBoard(player.pos.Y + indY, player.pos.X + indX).Text = "$" And player.pos.Y + indY = hteach.pos.Y And player.pos.X + indX = hteach.pos.X Then viewArray(y, x) = 14
+                            If currFloor.mBoard(player.pos.Y + indY, player.pos.X + indX).Text = "$" And player.pos.Y + indY = fvend.pos.Y And player.pos.X + indX = fvend.pos.X Then viewArray(y, x) = 15
+                            If currFloor.mBoard(player.pos.Y + indY, player.pos.X + indX).Text = "+" Then viewArray(y, x) = 8
+                            If currFloor.mBoard(player.pos.Y + indY, player.pos.X + indX).Text = "c" Then viewArray(y, x) = 12
                             If player.perks("blind") > -1 Then viewArray(y, x) = 1
                         End If
-                        If currfloor.mBoard(player.pos.Y + indY, player.pos.X + indX).Text = "@" Then
+                        If currFloor.mBoard(player.pos.Y + indY, player.pos.X + indX).Text = "@" Then
                             If indY = 0 And indX = 0 Then viewArray(y, x) = 4 Else viewArray(y, x) = 7
                         End If
                     Else
@@ -611,6 +615,8 @@ Public Class Game
                         setDungeonTileImg(x, y, viewArray)
                     ElseIf mDun.numCurrFloor = 9999 Then
                         setSpaceTileImg(x, y, viewArray)
+                    ElseIf mDun.numCurrFloor = 91017 Then
+                        setLegacyTileImg(x, y, viewArray)
                     Else
                         setForestTileImg(x, y, viewArray)
                     End If
@@ -721,6 +727,37 @@ Public Class Game
                 mPics(y, x).BackgroundImage = picSpaceCrystal.BackgroundImage
             Case 13
                 mPics(y, x).BackgroundImage = picSPacePath.BackgroundImage
+            Case Else
+                mPics(y, x).BackgroundImage = Nothing
+                mPics(y, x).BackColor = Color.Black
+        End Select
+    End Sub
+    Sub setLegacyTileImg(ByVal x As Integer, ByVal y As Integer, ByRef viewArray As Integer(,))
+        Select Case viewArray(y, x)
+            Case 0
+                'MsgBox(x & " " & y)
+                mPics(y, x).BackgroundImage = Nothing
+                mPics(y, x).BackColor = Color.Black
+            Case 1
+                mPics(y, x).BackgroundImage = picFog.BackgroundImage
+            Case 2
+                mPics(y, x).BackgroundImage = picLegaTile.BackgroundImage
+            Case 3
+                mPics(y, x).BackgroundImage = piclegaStairs.BackgroundImage
+            Case 4
+                mPics(y, x).BackgroundImage = player.pImage
+            Case 5
+                mPics(y, x).BackgroundImage = picLegaChest.BackgroundImage
+            Case 7
+                mPics(y, x).BackgroundImage = picLegaCrystal.BackgroundImage
+            Case 8
+                mPics(y, x).BackgroundImage = picLegaTrap.BackgroundImage
+            Case 12
+                mPics(y, x).BackgroundImage = picLegaCrystal.BackgroundImage
+            Case 13
+                mPics(y, x).BackgroundImage = picLegaPath.BackgroundImage
+            Case 16
+                mPics(y, x).BackgroundImage = picLegaCaelia.BackgroundImage
             Case Else
                 mPics(y, x).BackgroundImage = Nothing
                 mPics(y, x).BackColor = Color.Black
@@ -1239,7 +1276,7 @@ Public Class Game
     End Sub
     Sub randomEvents()
         'randomEvents decides whether random encounters will occur, and handles what will be encountered
-        If mDun.numCurrFloor = 5 Or mDun.numCurrFloor = 9999 Then Exit Sub
+        If mDun.numCurrFloor = 5 Or mDun.numCurrFloor = 9999 Or mDun.numCurrFloor = 91017 Then Exit Sub
         Randomize()
         If eClock > 0 Then eClock -= 1
         If combatmode = True Or npcmode = True Or eClock <> 0 Or Not player.canMoveFlag Then Exit Sub
@@ -1266,7 +1303,7 @@ Public Class Game
             If r2 = UBound(currTier) And r2 = r And Not currFloor.beatBoss And Not mDun.currFloorBoss.Equals("Key") Then
                 m = New MiniBoss(mDun.numCurrFloor)
             Else
-                m = New Monster(currTier(r))
+                m = Monster.monsterFactory(currTier(r))
             End If
             npcList.Add(m)
 
@@ -1393,6 +1430,7 @@ Public Class Game
                 mDun.setFloor(currFloor)
                 initializeBoard()
                 If combatmode Then fromCombat()
+                player.canMoveFlag = True
             ElseIf player.pos = currFloor.stairs Then
                 If mDun.currFloorBoss.Equals("Key") Then pushLblEvent("The stairs are behind a locked gate!  Perhaps the key is in a chest..." & vbCrLf & "[while this game is in development it can also be bought from the shop for 2500]") Else pushLblEvent("You must defeat " & mDun.currFloorBoss & "!")
             End If
@@ -1402,10 +1440,13 @@ Public Class Game
                 mDun.setFloor(currFloor)
                 pushLblEvent("Spotting a gleaming terminal, you notice the rough layout of the dungeon floor you were previouly on.  Spotting a holographic button over this section of the map, and with a hesitant press you find yourself sucked through another tear in space-time.  Once again, you join the void.  When you pop back into the familiar surroundings of the dungeon, you notice that some things, namely traps and chests, seem to have never been touched.  Time stuff is weird...", AddressOf initializeBoard)
                 Exit Sub
+            ElseIf mDun.numCurrFloor = 91017 Then
+                mDun.jumpTo(mDun.lastVisitedFloor)
+                mDun.setFloor(currFloor)
             End If
-
             initializeBoard()
             If combatmode Then fromCombat()
+            player.canMoveFlag = True
         End If
 
         If currfloor.statueList.Count > 0 Then
@@ -1489,12 +1530,12 @@ Public Class Game
                     pushLblEvent("Your attempted teleportation fails in a less than spectacular fashion, the portal you created simply fizzling away to nothingness.")
                 End Try
             ElseIf keyspresed = "slut" Then
-                player.perks("slutcurse") = True
-                player.inv.add(1, 1)
-                player.lust += 20
-                player.createP()
+                    player.perks("slutcurse") = True
+                    player.inv.add(1, 1)
+                    player.lust += 20
+                    player.createP()
             ElseIf keyspresed = "dies" Then
-                If player.currTarget IsNot Nothing Then player.currTarget.takeDMG(9999, Nothing)
+                    If player.currTarget IsNot Nothing Then player.currTarget.takeDMG(9999, Nothing)
             End If
         End If
         keyspresed = ""
@@ -1941,7 +1982,6 @@ Public Class Game
         picStart.BringToFront()
         picLoadBar.BringToFront()
 
-
         System.Threading.Thread.Sleep(750)
 
         initLoadBar()
@@ -1958,12 +1998,14 @@ Public Class Game
             boardWorker.CancelAsync()
             Exit Sub
         End If
+        updateLoadbar(10)
 
         'load the dungeon
         reader.ReadLine()
         mDun = New Dungeon(reader.ReadLine())
         currFloor = mDun.floors(mDun.numCurrFloor)
         newBoard()
+        updateLoadbar(45)
 
         'load the player
         reader.ReadLine()
@@ -1980,6 +2022,7 @@ Public Class Game
                 preBSInventory.Add(reader.ReadLine())
             Next
         End If
+        updateLoadbar(60)
 
         'load the NPCs
         reader.ReadLine()
@@ -1992,7 +2035,7 @@ Public Class Game
         swiz = shopNPCList(1)
         hteach = shopNPCList(2)
         fvend = shopNPCList(3)
-
+        updateLoadbar(70)
 
         'load the dungeon generation settings
         reader.ReadLine()
@@ -2006,6 +2049,7 @@ Public Class Game
         turn = reader.ReadLine()
         encounterRate = Int(reader.ReadLine())
         eClockResetVal = Int(reader.ReadLine())
+        updateLoadbar(80)
 
         combatmode = False
 
@@ -2040,6 +2084,9 @@ Public Class Game
 
         pushLblEvent("Game successfully loaded!")
         player.createP()
+
+        updateLoadbar(99)
+        boardWorker.CancelAsync()
     End Sub
     'save/load drivers
     Private Sub btnSavePic_Click(sender As Object, e As MouseEventArgs) Handles btnS1.Click, btnS2.Click, btnS3.Click, btnS4.Click, btnS5.Click, btnS6.Click, btnS7.Click, btnS8.Click
@@ -2049,19 +2096,19 @@ Public Class Game
             MsgBox("Right Button Clicked")
         Else
             If solFlag Then
-                'Try
-                player.solFlag = True
-                loadSave("s" & fileNum & ".ave")
-                player.solFlag = False
-                'Catch ex As System.IO.FileNotFoundException
-                '    MsgBox("Error 004: No save detected!")
-                'Catch ex2 As Exception
-                '    If MessageBox.Show("Error 005: Error in loaded in save file!" & vbCrLf & "Restart?", "Error 005", MessageBoxButtons.YesNo) = Windows.Forms.DialogResult.Yes Then
-                '        Application.Restart()
-                '    Else
-                '        Application.Exit()
-                '    End If
-                'End Try
+                Try
+                    player.solFlag = True
+                    loadSave("s" & fileNum & ".ave")
+                    player.solFlag = False
+                Catch ex As System.IO.FileNotFoundException
+                    MsgBox("Error 004: No save detected!")
+                Catch ex2 As Exception
+                    If MessageBox.Show("Error 005: Error in loaded in save file!" & vbCrLf & "Restart?", "Error 005", MessageBoxButtons.YesNo) = Windows.Forms.DialogResult.Yes Then
+                        Application.Restart()
+                    Else
+                        Application.Exit()
+                    End If
+                End Try
             Else
                 save("s" & fileNum & ".ave")
                 imagesWorkerArg = Convert.ToInt32(fileNum)
@@ -2267,6 +2314,7 @@ Public Class Game
         player.magicRoute()
     End Sub
     Public Sub fromCombat()
+
         'fromCombat hides the players combat menus
         pnlCombatClose()
         btnATK.Visible = False
@@ -3045,6 +3093,11 @@ Public Class Game
         boardWorker.RunWorkerAsync()
         boardWorker.ReportProgress(0)
     End Sub
+    Public Sub updateLoadbar(ByVal progress As Integer)
+        If progress < 1 Or progress > 99 Then Exit Sub
+        boardWorker.ReportProgress(progress)
+        Application.DoEvents()
+    End Sub
     Private Sub bw_DoWork(ByVal sender As Object, ByVal e As DoWorkEventArgs)
         Dim worker As BackgroundWorker = CType(sender, BackgroundWorker)
         While boardWorker.IsBusy
@@ -3053,7 +3106,7 @@ Public Class Game
                 Exit While
             Else
                 'Perform a time consuming operation
-                System.Threading.Thread.Sleep(500)
+                System.Threading.Thread.Sleep(50)
             End If
         End While
     End Sub
@@ -3320,6 +3373,12 @@ Public Class Game
         pnlSelection.Visible = False
         selecting = False
         lblEvent.Visible = False
+
+        If lblEventOnClose Is Nothing Or 1 = 1 Then
+            player.canMoveFlag = True
+            btnEQP.Enabled = True
+        End If
+
     End Sub
     Private Sub btnClosePnlEvent_Click(sender As Object, e As EventArgs) Handles btnClosePnlEvent.Click
         Do Until lblEventOnClose Is Nothing

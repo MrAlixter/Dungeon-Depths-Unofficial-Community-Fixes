@@ -70,7 +70,7 @@
     Shared Sub fightSorc()
         Dim p As player = game.player
         Dim m As Monster
-        m = New Monster(9)
+        m = Monster.monsterFactory(9)
 
         Monster.targetRoute(m)
 
@@ -82,7 +82,7 @@
         Dim p As player = game.player
         Game.lblEvent.Visible = False
         Dim m As Monster
-        m = New Monster(8)
+        m = Monster.monsterFactory(8)
 
         Monster.targetRoute(m)
 

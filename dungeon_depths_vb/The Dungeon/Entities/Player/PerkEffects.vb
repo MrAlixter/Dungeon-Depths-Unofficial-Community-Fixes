@@ -8,7 +8,7 @@
             Else
                 Game.pushLstLog("Your stomach aches... -5 health!")
                 p.health -= 5 / p.getMaxHealth
-                If p.health <= 0 Then p.die(New Monster(10))
+                If p.health <= 0 Then p.die(Monster.monsterFactory(10))
             End If
         End If
     End Sub
@@ -307,7 +307,7 @@
         ElseIf p.pClass.name.Equals("Bimbo++") And Int(Rnd() * 3) = 0 Then
             Game.pushLblEvent(out2)
             Return True
-        ElseIf p.pForm.name.Contains("Bimbo") And Int(Rnd() * 3) = 0 Then
+        ElseIf p.pForm.name.Contains("Bimbo") Or p.perks("bimbododge") > 0 And Int(Rnd() * 3) = 0 Then
             Game.pushLblEvent(out)
             Return True
         End If

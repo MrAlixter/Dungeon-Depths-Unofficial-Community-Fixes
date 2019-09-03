@@ -308,16 +308,16 @@
         
     End Sub
     'attacking a player
-    Private Sub miss(target As Player)
+    Protected Sub miss(target As Player)
         Game.pushLstLog(CStr("You are able to evade your opponent!"))
         Game.pushLblCombatEvent(CStr("You are able to evade your opponent!"))
     End Sub
-    Private Sub hit(dmg As Integer, target As Player)
+    Protected Sub hit(dmg As Integer, target As Player)
         target.takeDMG(dmg, Me)
     End Sub
-    Private Sub cHit(dmg As Integer, target As Player)
+    Protected Sub cHit(dmg As Integer, target As Player)
         target.takeCritDMG(dmg * 2, Me)
-      End Sub
+    End Sub
     'attacking a non-player entity
     Private Sub miss(target As Entity)
         If target.GetType() Is GetType(Player) Then

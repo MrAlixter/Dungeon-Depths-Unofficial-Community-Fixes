@@ -327,6 +327,7 @@
         perks.Add("barbarian", -1)      '26
         perks.Add("slimetf", -1)        '27
         perks.Add("googirltf", -1)      '28
+        perks.Add("bimbododge", -1)     '29
     End Sub
     Private Sub initClasses()
         'creates the class dictionary
@@ -889,18 +890,22 @@
     Public Sub setPImage()
         'sets the player call
         If pClass.name.Equals("Bimbo") Then
-            If game.mDun.numCurrFloor > 5 And Not game.mDun.numCurrFloor = 9999 Then
+            If Game.mDun.numCurrFloor > 5 And Not Game.mDun.numCurrFloor = 9999 And Not Game.mDun.numCurrFloor = 91017 Then
                 pImage = Game.picBimbof.BackgroundImage
-            ElseIf game.mDun.numCurrFloor = 9999 Then
+            ElseIf Game.mDun.numCurrFloor = 9999 Then
                 pImage = Game.picBimboSpace.BackgroundImage
+            ElseIf Game.mDun.numCurrFloor = 91017 Then
+                pImage = Game.picLegaBimbo.BackgroundImage
             Else
                 pImage = Game.picPlayerB.BackgroundImage
             End If
         Else
-            If game.mDun.numCurrFloor > 5 And Not game.mDun.numCurrFloor = 9999 Then
+            If Game.mDun.numCurrFloor > 5 And Not Game.mDun.numCurrFloor = 9999 And Not Game.mDun.numCurrFloor = 91017 Then
                 pImage = Game.picPlayerf.BackgroundImage
-            ElseIf game.mDun.numCurrFloor = 9999 Then
+            ElseIf Game.mDun.numCurrFloor = 9999 Then
                 pImage = Game.picPlayerSpace.BackgroundImage
+            ElseIf Game.mDun.numCurrFloor = 91017 Then
+                pImage = Game.picLegaPlayer.BackgroundImage
             Else
                 pImage = Game.picPlayer.BackgroundImage
             End If

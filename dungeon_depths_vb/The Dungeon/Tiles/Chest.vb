@@ -45,7 +45,7 @@
         Dim chest = Me.Clone()
         Dim cArray() As String = s.Split("*")
         chest.pos = New Point(cArray(0), cArray(1))
-        contents.load(cArray(2))
+        chest.contents.load(cArray(2))
 
         Return chest
     End Function
