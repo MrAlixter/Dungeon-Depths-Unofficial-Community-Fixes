@@ -33,7 +33,7 @@
         If bw = -1 Then mBoardWidth = Game.mBoardWidth Else mBoardWidth = bw
 
         defineBoardSpace()
-        If floorNumber = 9999 Or floorNumber = 91017 Then
+        If floorNumber = 9999 Or floorNumber = 91017 Or floorNumber = 5 Then
             Game.updateLoadbar(99)
             Game.boardWorker.CancelAsync()
             Exit Sub
@@ -600,6 +600,7 @@
         p.pos = New Point(5, 25)
         stairs = New Point(5, 2)
         If floorNumber = 5 Then genMedusaStatues()
+        beatBoss = True
     End Sub
 
     '|---SPECIFIC FLOOR GENERATION METHODS---|

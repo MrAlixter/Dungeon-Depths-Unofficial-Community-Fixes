@@ -1444,6 +1444,8 @@ Public Class Game
                 mDun.jumpTo(mDun.lastVisitedFloor)
                 mDun.setFloor(currFloor)
             End If
+            mDun.floorDown()
+            mDun.setFloor(currFloor)
             initializeBoard()
             If combatmode Then fromCombat()
             player.canMoveFlag = True
