@@ -82,7 +82,9 @@
 
         p.polymorphs(form) = PolymorphTF.newPoly(form)
         p.ongoingTFs.Add(p.polymorphs(form))
+        p.perks("polymorphed") = p.polymorphs(form).getturnsTilNextStep
 
+        If form = "MASBimbo" Then form = "Bimbo"
         If p.forms.Keys.Contains(form) Then
             p.pForm = p.forms(form)
         ElseIf p.classes.Keys.Contains(form) Then
@@ -90,8 +92,6 @@
         End If
 
         'cleanup
-        p.perks("polymorphed") = p.polymorphs(form).getturnsTilNextStep
-
         Game.pushLblEvent(revertText & Game.lblEvent.Text.Split(vbCrLf)(0))
         p.specialRoute()
         p.magicRoute()

@@ -15,7 +15,7 @@
         inv.setCount("Steel_Armor", 1)
         inv.setCount("Gold_Armor", 1)
 
-        isShop = True
+        isShop = False
         setGold(0)
         pronoun = "she"
         pPronoun = "her"
@@ -43,7 +43,13 @@
             pos = New Point(-1, -1)
         End If
     End Sub
-
+    Shared Sub teleportPlayer()
+        Game.leaveNPC()
+        Game.mDun.jumpTo(91017)
+        Game.mDun.setFloor(Game.currFloor)
+        Game.player.setPImage()
+        Game.drawBoard()
+    End Sub
     Public Overrides Sub encounter()
         MyBase.encounter()
         If npcIndex = 0 Then

@@ -86,15 +86,10 @@
             If p.sex = "Male" Then
                 p.MtF()
                 be()
-                p.prt.setIAInd(1, 12, True, True)
-                p.prt.setIAInd(5, 17, True, True)
-                p.prt.setIAInd(15, 1, True, False)
             End If
             p.prt.setIAInd(1, 12, True, True)
             p.prt.setIAInd(5, 17, True, True)
             p.prt.setIAInd(15, 1, True, False)
-            p.prt.setIAInd(2, 6, True, True)
-            p.prt.setIAInd(3, 40, True, True)
             p.prt.setIAInd(8, 9, True, True)
         End If
         p.pClass = p.classes("Kitty")

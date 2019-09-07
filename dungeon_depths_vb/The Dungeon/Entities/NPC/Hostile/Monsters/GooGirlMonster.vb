@@ -1,5 +1,5 @@
 ﻿Public Class GooGirlMonster
-    Inherits SlimeMonster
+    Inherits MarissaAS
     Sub New()
         name = "Goo Girl"
         maxHealth = 90

@@ -164,6 +164,10 @@
     End Sub
 
     '|BOSS / MINIBOSS DEATHS|
+    Shared Sub marissaASDeath()
+        Dim mdtf = New MASBimboTF
+        mdtf.step2()
+    End Sub
     Shared Sub oozeEmpDeath()
         Dim p As Player = Game.player
         p.currTarget.despawn("p-death")

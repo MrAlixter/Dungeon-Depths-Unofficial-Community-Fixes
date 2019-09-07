@@ -405,6 +405,7 @@
         polymorphs.Add("Cake", Nothing)
         polymorphs.Add("Fusion", Nothing)
         polymorphs.Add("Mindless", Nothing)
+        polymorphs.Add("MASBimbo", Nothing)
     End Sub
 
     '|MOVEMENT COMMANDS|
@@ -473,11 +474,11 @@
 
     End Sub
     'attacking a npc
-    Private Sub miss(target As NPC)
+    Public Sub miss(target As NPC)
         Game.pushLstLog(CStr("You miss" & target.title & " " & target.getName() & "!"))
         Game.pushLblCombatEvent(CStr("You miss" & target.title & " " & target.getName() & "!"))
     End Sub
-    Private Sub hit(dmg As Integer, target As NPC)
+    Public Sub hit(dmg As Integer, target As NPC)
         Game.pushLstLog(CStr("You hit" & target.title.ToLower & target.getName() & " for " & dmg & " damage!"))
         Game.pushLblCombatEvent(CStr("You hit" & target.title.ToLower & target.getName() & " for " & dmg & " damage!"))
         target.takeDMG(dmg, Me)
@@ -486,7 +487,7 @@
         currTarget = t
         MyBase.currTarget = t
     End Sub
-    Private Sub cHit(dmg As Integer, target As NPC)
+    Public Sub cHit(dmg As Integer, target As NPC)
         Game.pushLstLog(CStr("You hit" & target.title & " " & target.getName() & " for " & dmg * 3 & " damage!  Critical hit!"))
         Game.pushLblCombatEvent(CStr("You hit" & target.title & " " & target.getName() & " for " & dmg * 3 & " damage!  Critical hit!"))
         target.isStunned = True
@@ -876,6 +877,9 @@
             Exit Sub
         ElseIf source.getName.Equals("Mimic") Then
             DeathEffects.mimicDeath()
+            Exit Sub
+        ElseIf source.getName.Equals("Marissa, Aspiring Sorceress") Then
+            DeathEffects.marissaASDeath()
             Exit Sub
         ElseIf source.getName.Equals("Ooze Empress") Then
             DeathEffects.oozeEmpDeath()

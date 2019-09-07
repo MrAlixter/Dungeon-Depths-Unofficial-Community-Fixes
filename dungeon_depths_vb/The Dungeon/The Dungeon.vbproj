@@ -116,6 +116,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Entities\Entity.vb" />
+    <Compile Include="Entities\NPC\Hostile\Bosses\MarissaAS.vb" />
     <Compile Include="Entities\NPC\Hostile\Monsters\ArachHunt.vb" />
     <Compile Include="Entities\NPC\Hostile\Monsters\EnrSorc.vb" />
     <Compile Include="Entities\NPC\Hostile\Monsters\EnthDem.vb" />
@@ -235,6 +236,7 @@
     <Compile Include="Entities\Player\Transformations\AmazonTF.vb" />
     <Compile Include="Entities\Player\Transformations\GooGirlTF.vb" />
     <Compile Include="Entities\Player\Transformations\CombatModTF.vb" />
+    <Compile Include="Entities\Player\Transformations\Polymorphs\MASBimboTF.vb" />
     <Compile Include="Entities\Player\Transformations\WBimboTF.vb" />
     <Compile Include="Entities\Player\Transformations\BBBimboTF.vb" />
     <Compile Include="Entities\Player\Transformations\BimboPlusTF.vb" />
@@ -339,6 +341,7 @@
     <Compile Include="Items\Usable\Potions\Mystery Potions\Main Effects\AntiVenomEffect.vb" />
     <Compile Include="Items\Usable\VialOfPSlime.vb" />
     <Compile Include="Items\Usable\VialOfVenom.vb" />
+    <Compile Include="Items\Weapons\TwinBlades.vb" />
     <Compile Include="Items\Weapons\ShrinkRay.vb" />
     <Compile Include="Items\Weapons\CWarAxe.vb" />
     <Compile Include="Items\Weapons\PhotonBlade.vb" />

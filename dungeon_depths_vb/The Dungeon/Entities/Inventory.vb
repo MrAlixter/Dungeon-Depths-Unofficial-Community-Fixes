@@ -167,6 +167,7 @@
         internal_inventory.Add("Skimpy_Tube_Top", New SkimpyTT())           '147
         internal_inventory.Add("Grappling_Hook", New GrapplingHook())       '148
         internal_inventory.Add("Mana_Hibiscus", New ManaHibiscus())         '149
+        internal_inventory.Add("Twin_Xiphoi", New TwinBlades())             '150
 
         armor = {New CommonClothes, New SkimpyClothes, New Naked, New VSkimpyClothes,
                  Me.item(5), Me.item(7), Me.item(8), Me.item(10),
@@ -187,7 +188,7 @@
                    Me.item(22), Me.item(23), Me.item(24), Me.item(40),
                    Me.item(41), Me.item(42), Me.item(45), Me.item(63),
                    Me.item(84), Me.item(96), Me.item(111), Me.item(112),
-                   Me.item(118), Me.item(120), Me.item(145)}
+                   Me.item(118), Me.item(120), Me.item(145), Me.item(150)}
 
         useable = {Me.item(0), Me.item(3), Me.item(4),
                    Me.item(65), Me.item(15), Me.item(36), Me.item(37),
@@ -207,7 +208,7 @@
         acce = {New noAcce(), Me.item(66), Me.item(67), Me.item(68),
                 Me.item(69), Me.item(70), Me.item(77), Me.item(81),
                 Me.item(97), Me.item(110), Me.item(123), Me.item(139),
-                Me.item(140), Me.item(141)}
+                Me.item(140), Me.item(141), Me.item(149)}
 
         potions = {Me.item(2), Me.item(13), Me.item(14), Me.item(25),
                    Me.item(26), Me.item(27), Me.item(28), Me.item(29),

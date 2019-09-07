@@ -1276,7 +1276,20 @@ Public Class Game
     End Sub
     Sub randomEvents()
         'randomEvents decides whether random encounters will occur, and handles what will be encountered
-        If mDun.numCurrFloor = 5 Or mDun.numCurrFloor = 9999 Or mDun.numCurrFloor = 91017 Then Exit Sub
+        If mDun.numCurrFloor = 5 Or mDun.numCurrFloor = 9999 Then Exit Sub
+        If mDun.numCurrFloor = 91017 Then
+            If Int(Rnd() * 100) = 0 Then
+                Dim m = Monster.monsterFactory(11)
+                npcList.Add(m)
+
+                player.setTarget(m)
+                m.currTarget = player
+                toCombat()
+                pushLstLog((m.getName() & " attacks!"))
+                eClock = eClockResetVal
+            End If
+            Exit Sub
+        End If
         Randomize()
         If eClock > 0 Then eClock -= 1
         If combatmode = True Or npcmode = True Or eClock <> 0 Or Not player.canMoveFlag Then Exit Sub
@@ -1497,20 +1510,20 @@ Public Class Game
                 For indY = -mBoardHeight To mBoardHeight
                     For indX = -mBoardWidth To mBoardWidth
                         If player.pos.Y + indY < mBoardHeight And player.pos.Y + indY >= 0 And player.pos.X + indX < mBoardWidth And player.pos.X + indX >= 0 Then
-                            If currfloor.mBoard(player.pos.Y + indY, player.pos.X + indX).Text = "@" Then currfloor.mBoard(player.pos.Y + indY, player.pos.X + indX).Text = ""
-                            If currfloor.mBoard(player.pos.Y + indY, player.pos.X + indX).Text = "H" And currfloor.mBoard(player.pos.Y + indY, player.pos.X + indX).Tag < 2 Then
-                                currfloor.mBoard(player.pos.Y + indY, player.pos.X + indX).ForeColor = Color.Black
+                            If currFloor.mBoard(player.pos.Y + indY, player.pos.X + indX).Text = "@" Then currFloor.mBoard(player.pos.Y + indY, player.pos.X + indX).Text = ""
+                            If currFloor.mBoard(player.pos.Y + indY, player.pos.X + indX).Text = "H" And currFloor.mBoard(player.pos.Y + indY, player.pos.X + indX).Tag < 2 Then
+                                currFloor.mBoard(player.pos.Y + indY, player.pos.X + indX).ForeColor = Color.Black
                                 pushLstLog("Floor " & mDun.numCurrFloor & ": Staircase Discovered")
                             End If
-                            If currfloor.mBoard(player.pos.Y + indY, player.pos.X + indX).Text = "#" And currfloor.mBoard(player.pos.Y + indY, player.pos.X + indX).Tag < 2 Then
-                                currfloor.mBoard(player.pos.Y + indY, player.pos.X + indX).ForeColor = Color.Black
+                            If currFloor.mBoard(player.pos.Y + indY, player.pos.X + indX).Text = "#" And currFloor.mBoard(player.pos.Y + indY, player.pos.X + indX).Tag < 2 Then
+                                currFloor.mBoard(player.pos.Y + indY, player.pos.X + indX).ForeColor = Color.Black
                                 pushLstLog("Chest discovered!")
                             End If
-                            If currfloor.mBoard(player.pos.Y + indY, player.pos.X + indX).Text = "$" And currfloor.mBoard(player.pos.Y + indY, player.pos.X + indX).Tag < 2 Then
-                                currfloor.mBoard(player.pos.Y + indY, player.pos.X + indX).ForeColor = Color.Navy
+                            If currFloor.mBoard(player.pos.Y + indY, player.pos.X + indX).Text = "$" And currFloor.mBoard(player.pos.Y + indY, player.pos.X + indX).Tag < 2 Then
+                                currFloor.mBoard(player.pos.Y + indY, player.pos.X + indX).ForeColor = Color.Navy
                                 pushLstLog("Shop discovered!")
                             End If
-                            If currfloor.mBoard(player.pos.Y + indY, player.pos.X + indX).Tag = 1 Then currfloor.mBoard(player.pos.Y + indY, player.pos.X + indX).Tag = 2
+                            If currFloor.mBoard(player.pos.Y + indY, player.pos.X + indX).Tag = 1 Then currFloor.mBoard(player.pos.Y + indY, player.pos.X + indX).Tag = 2
                         End If
                     Next
                 Next
@@ -1523,24 +1536,27 @@ Public Class Game
                 player.ongoingTFs.Add(New BUDollTF())
                 player.update()
             ElseIf keyspresed = "gogo" Then
-                Try
-                    Dim f As Integer = CInt(InputBox("Which floor?"))
-                    mDun.jumpTo(f)
-                    mDun.setFloor(currFloor)
-                    pushLblEvent("You draw a circle on the floor, and think hard about floor " & f & ".  A portal opens to it, and you jump through, skipping every floor in between.", AddressOf initializeBoard)
-                Catch e As Exception
-                    pushLblEvent("Your attempted teleportation fails in a less than spectacular fashion, the portal you created simply fizzling away to nothingness.")
-                End Try
+                Dim f As Integer = CInt(InputBox("Which floor?"))
+                quickChangeFloor(f)
             ElseIf keyspresed = "slut" Then
-                    player.perks("slutcurse") = True
-                    player.inv.add(1, 1)
-                    player.lust += 20
-                    player.createP()
+                player.perks("slutcurse") = True
+                player.inv.add(1, 1)
+                player.lust += 20
+                player.createP()
             ElseIf keyspresed = "dies" Then
-                    If player.currTarget IsNot Nothing Then player.currTarget.takeDMG(9999, Nothing)
+                If player.currTarget IsNot Nothing Then player.currTarget.takeDMG(9999, Nothing)
             End If
         End If
         keyspresed = ""
+    End Sub
+    Public Sub quickChangeFloor(ByVal f As Integer)
+        Try
+            mDun.jumpTo(f)
+            mDun.setFloor(currFloor)
+            pushLblEvent("You draw a circle on the floor, and think hard about floor " & f & ".  A portal opens to it, and you jump through, skipping every floor in between.", AddressOf initializeBoard)
+        Catch e As Exception
+            pushLblEvent("Your attempted teleportation fails in a less than spectacular fashion, the portal you created simply fizzling away to nothingness.")
+        End Try
     End Sub
     'talk
     Sub talkKey()
@@ -2401,7 +2417,7 @@ Public Class Game
 
     'combat pannel
     Sub pushLblCombatEvent(ByVal s As String)
-        cleanupPanels()
+        'cleanupPanels()
         Dim sSplit() As String = s.Split(" ")
         Dim c As Integer = 0
         Dim ct As Integer = 0
@@ -3317,7 +3333,7 @@ Public Class Game
         Using boardG As Graphics = Graphics.FromImage(boardPic), seenG As Graphics = Graphics.FromImage(seenBoardPic)
             For x = 0 To mBoardWidth - 1
                 For y = 0 To mBoardHeight - 1
-                    Dim tile As mTile = currfloor.mBoard(y, x)
+                    Dim tile As mTile = currFloor.mBoard(y, x)
                     Dim img As Image = Nothing
 
                     If tile.Text = "H" Then 'Stairs

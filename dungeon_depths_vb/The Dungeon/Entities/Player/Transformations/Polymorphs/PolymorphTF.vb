@@ -38,6 +38,8 @@
                 Return New MindlessTF()
             Case "Shrunken"
                 Return New ShrunkenTF()
+            Case "MASBimbo"
+                Return New MASBimboTF()
             Case Else
                 Return Nothing
         End Select

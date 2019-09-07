@@ -1,0 +1,73 @@
+﻿Public Class MASBimboTF
+    Inherits PolymorphTF
+    Sub New()
+        MyBase.New()
+        tfName = "MASBimbo"
+    End Sub
+    Sub New(cs As Integer, n As Integer, tts As Integer, wi As Double, cbs As Boolean, tfd As Boolean)
+        MyBase.New(cs, n, tts, wi, cbs, tfd)
+        nextStep = getNextStep(cs)
+    End Sub
+
+    Public Overrides Sub setWaitTime(stage As Integer)
+        Dim p As Player = Game.player
+        turnsTilNextStep = Int(Rnd() * 30) - Int(Rnd() * p.getWIL)
+        If turnsTilNextStep < 5 Then turnsTilNextStep = 5
+    End Sub
+
+    Public Overrides Sub step1()
+        Dim p As Player = Game.player
+        Dim out = ""
+
+        'unequips
+        If p.inv.item(147).count < 1 Then p.inv.add(147, 1)
+        Equipment.clothesChange("Skimpy_Tube_Top")
+
+        'bimbo transformation
+        If Not p.prt.sexBool Then
+            out += "In your haze, you look down to see breasts blossoming from your chest. You giggle, all traces of intellect vanishing as your body becomes more curvy and feminine. As your dainty hands move down your body, you discover that you no longer have a cock and balls, and insted have a tight moist cunt.  Your hair lengthens, becoming a platinum blonde, and your clothes change to match your new figure."
+            p.MtF()
+        ElseIf p.prt.sexBool And p.breastSize < 3 Then
+            out += "In your haze, you look down at your tits. You, like, never noticed how round and big they had got. You giggle, all traces of intellect vanishing as your body becomes more curvy and feminine. Your hair lengthens, becoming a platinum blonde, and your clothes change to match your new figure."
+        ElseIf p.prt.sexBool And p.breastSize >= 3 Then
+            out += "In your haze, you look down to see your clothes have become tight and pink. You giggle, all traces of intellect vanishing as your body becomes more curvy and feminine. Your hair lengthens, becoming a platinum blonde, and your clothes finish changing to match your new figure."
+        End If
+
+        p.prt.haircolor = Color.FromArgb(255, 255, 245, 200)
+        p.prt.setIAInd(1, 14, True, True)
+        If p.breastSize < 3 Then p.breastSize = 3
+        p.reverseBSRoute()
+        p.prt.setIAInd(4, 0, True, False)
+        p.prt.setIAInd(5, 6, True, True)
+        p.prt.setIAInd(6, 1, True, False)
+        p.prt.setIAInd(7, 0, True, False)
+        p.prt.setIAInd(8, 6, True, True)
+        p.prt.setIAInd(9, 8, True, True)
+        p.prt.setIAInd(10, 0, True, False)
+        p.prt.setIAInd(13, 0, True, False)
+        p.prt.setIAInd(15, 19, True, True)
+        p.prt.setIAInd(16, 0, True, False)
+
+        'transformation description push
+        Game.pushLblEvent(out)
+    End Sub
+    Public Sub step2()
+        Game.fromCombat()
+
+        Dim p As Player = Game.player
+        p.prt.setIAInd(1, 12, True, True)
+        p.prt.setIAInd(5, 17, True, True)
+        p.prt.setIAInd(15, 1, True, False)
+        p.prt.setIAInd(6, 1, p.prt.sexBool, False)
+        p.prt.setIAInd(8, 9, True, True)
+        If p.breastSize > 0 And p.breastSize < 4 Then
+            If p.inv.item("Cat_Lingerie").count < 1 Then p.inv.add("Cat_Lingerie", 1)
+            Equipment.clothesChange("Cat_Lingerie")
+        End If
+        Game.pushLblEvent("In your weakened state, you are helpless to defend yourself as Marissa charges up a glowing ball of magic.\n\n" &
+                          """This is a little curse I've been working on..."" she states, gesturing at your prone body with the tip of her staff.  ""I haven't used the finished version of it on anyone yet, but I have a feeling that you're going to be my perfect little test kitty!""\n\n" &
+                          "With that, she flicks her staff your direction, and a tingling sensation erupts throughout your body.  Blushing, you can feel a burning between your legs, and as a lustful haze settles over your weakened mind, the tingling just ... stops.  Confused, you glance behind you at Marissa with an expectant glare.  She, to your surprise, also seems to be confused about this turn of events.  As you begin to pull yourself to your feet, her gaze turns cold and she mutters something about you probably not making a cute kitty anyway before storming off.\n\n" &
+                          "As you watch her walk off, part of you wants to get down on your hands and knees and follow her, although the majority is glad this version of Marissa seemed to be so inexperienced.")
+        p.createP()
+    End Sub
+End Class

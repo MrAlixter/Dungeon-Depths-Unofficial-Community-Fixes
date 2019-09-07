@@ -255,6 +255,9 @@
                 End If
             Next
         Next
+
+        Dim r2 = route(p.pos, stairs)
+        If r2.Length = 1 Then connectRooms(p.pos, stairs)
     End Sub
     'dungeon floors
     Sub generateDungeonLevel(ByVal code As String)
@@ -776,6 +779,7 @@
         Dim inv = New Inventory(False)
 
         inv.add("Chicken_Suit", 1)
+        inv.add(150, 1)
 
         c1 = Game.baseChest.Create(inv, p, False)
 

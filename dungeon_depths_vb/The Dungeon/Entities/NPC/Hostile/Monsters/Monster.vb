@@ -53,7 +53,7 @@
             Case 0
                 Return New MesThrall
             Case 1
-                Return New SlimeMonster
+                Return New MarissaAS
             Case 2
                 Try
                     Return New PlayerGhost
@@ -62,7 +62,7 @@
                         Case 0
                             Return New MesThrall
                         Case 1
-                            Return New SlimeMonster
+                            Return New MarissaAS
                         Case 2
                             Return New SpiderMonster
                     End Select
@@ -85,6 +85,8 @@
                 Dim m = New Monster
                 m.name = "Hunger"
                 Return m
+            Case 11
+                Return New MarissaAS
         End Select
 
         Return New Monster()
