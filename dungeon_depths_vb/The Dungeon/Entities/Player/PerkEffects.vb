@@ -163,16 +163,16 @@
         btie.aBoost = 0
         btie.mBoost = 0
 
-        If p.equippedArmor.slutVarInd = -1 And p.equippedArmor.antiSlutVarInd <> -1 Then
+        If (p.equippedArmor.slutVarInd = -1 And p.equippedArmor.antiSlutVarInd <> -1) Or p.equippedArmor.getName.Contains("Bunny") Then
             Dim buff = p.equippedArmor.dBoost
             If buff = 0 Then
                 buff = 3
             ElseIf buff < 5 Then
                 buff = 5
             End If
-            buff *= 4
-            btie.aBoost = p.equippedArmor.aBoost * 1.2
-            btie.mBoost = p.equippedArmor.mBoost * 1.2
+            buff *= 3.3
+            btie.aBoost = buff + (p.equippedArmor.aBoost * 1.2)
+            btie.mBoost = buff + (p.equippedArmor.mBoost * 1.2)
         End If
 
         p.UIupdate()

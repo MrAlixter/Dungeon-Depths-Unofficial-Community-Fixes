@@ -118,6 +118,9 @@
         If p.perks("rotlg") > -1 Then
             PerkEffects.ROTLGRoute()
         End If
+        If p.perks("bowtie") > -1 Then
+            PerkEffects.BowTieRoute()
+        End If
         p.UIupdate()
 
         Me.Close()

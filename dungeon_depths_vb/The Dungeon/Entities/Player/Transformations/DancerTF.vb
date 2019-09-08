@@ -45,6 +45,7 @@
 
         Game.pushLblEvent("Your bowtie glows, and everything slows down.  You attempt to deftly dodge the oncoming blow, but you aren't nimble enough.  Desperately, you focus on getting as much power to the bowtie as possible, and the aura around it shifts to a blinding crimson.  As the glow fades, you find yourself able to easily duck under the attack with a nimbleness you weren't aware you had before.  As time resumes its normal pace, you are shocked to discover that your body has become that of a rabbit themed hostess!  Fortunately you seem to have higher agilty now, though you doubt you can take as hard of a hit.")
         p.canMoveFlag = True
+        PerkEffects.BowTieRoute()
     End Sub
 
     Public Overrides Sub stopTF()
