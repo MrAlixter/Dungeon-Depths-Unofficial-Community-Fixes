@@ -43,8 +43,7 @@ Public Class Game
     Public npcmode As Boolean = False   'indicates if the player is talking to an npc (NOT SAVED)
     Public npcIndex As Integer = 0  'indicates which npc is encountered (NOT SAVED)
     'a list containing all valid cheats
-    Public cheatList() As String = {"girl", "nude", "blue", "catc", "bmbo", "bigr", "slut", "dies", "dick", "lust", "form", "tfme",
-                                    "gogo", "mana", "fuse", "rock", "doll", "seee"} 'list of cheats (NOT SAVED)
+    Public cheatList() As String = {"asss", "daaa", "wawa", "sasa", "gogo", "seee", "aeio"} 'list of cheats (NOT SAVED)
     Dim keyspresed As String = ""   'records last 4 keys pressed (NOT SAVED)
     Public titleList = New List(Of String)
     'other misc form1 instance variables
@@ -1340,6 +1339,9 @@ Public Class Game
             txtPNLEvents.Text = ""
             drawBoard()
         End If
+
+        player.canMoveFlag = True
+        btnEQP.Enabled = True
     End Sub
     Function shouldReturnEarly(ByVal Keydata As Keys)
         'This function determines if the key input should be ignored.
@@ -1477,35 +1479,18 @@ Public Class Game
         'oemReturn triggers when the player hits the enter (return) key
         If cheatList.Contains(keyspresed) Then
             MsgBox(keyspresed)
-            If keyspresed = "girl" Then
+            If keyspresed = "asss" Then
                 player.MtF()
                 player.createP()
-            ElseIf keyspresed = "dick" Then
+            ElseIf keyspresed = "daaa" Then
                 player.FtM()
                 player.createP()
-            ElseIf keyspresed = "bmbo" Then
-                player.perks("bimbotf") = True
-            ElseIf keyspresed = "catc" Then
-                player.perks("nekocurse") = True
-            ElseIf keyspresed = "mana" Then
-                player.inv.add(49, 1)
-                player.inv.invNeedsUDate = True
-                player.UIupdate()
-            ElseIf keyspresed = "form" Then
-                player.selfPolyForms.Add("Slime")
-                player.selfPolyForms.Add("Goddess")
-                player.selfPolyForms.Add("Succubus")
-                player.selfPolyForms.Add("Dragon")
-                player.selfPolyForms.Add("Tigress")
-            ElseIf keyspresed = "fuse" Then
-                player.inv.add(58, 1)
-                player.inv.invNeedsUDate = True
-                player.UIupdate()
-            ElseIf keyspresed = "tfme" Then
-                Polymorph.porm = True
-                Dim p As Polymorph = New Polymorph
-                p.ShowDialog()
-                p.Dispose()
+            ElseIf keyspresed = "wawa" Then
+                player.be()
+                player.createP()
+            ElseIf keyspresed = "sasa" Then
+                player.bs()
+                player.createP()
             ElseIf keyspresed = "seee" Then
                 For indY = -mBoardHeight To mBoardHeight
                     For indX = -mBoardWidth To mBoardWidth
@@ -1527,24 +1512,12 @@ Public Class Game
                         End If
                     Next
                 Next
-
-            ElseIf keyspresed = "bigr" Then
-                player.be()
-            ElseIf keyspresed = "rock" Then
-                player.petrify(Color.Gray, 10)
-            ElseIf keyspresed = "doll" Then
-                player.ongoingTFs.Add(New BUDollTF())
-                player.update()
             ElseIf keyspresed = "gogo" Then
                 Dim f As Integer = CInt(InputBox("Which floor?"))
                 quickChangeFloor(f)
-            ElseIf keyspresed = "slut" Then
-                player.perks("slutcurse") = True
-                player.inv.add(1, 1)
-                player.lust += 20
-                player.createP()
-            ElseIf keyspresed = "dies" Then
-                If player.currTarget IsNot Nothing Then player.currTarget.takeDMG(9999, Nothing)
+            ElseIf keyspresed = "aeio" Then
+                player.inv.add(149, 1)
+                player.UIupdate()
             End If
         End If
         keyspresed = ""
@@ -3037,7 +3010,7 @@ Public Class Game
         Loop
         lblEvent.Text = out
         If Not effect Is Nothing Then lblEventOnClose = effect
-        lblEvent.Location = New Point(160 * Me.Size.Width / 688, 120 * Me.Size.Width / 688)
+        lblEvent.Location = New Point(150 * Me.Size.Width / 688, 120 * Me.Size.Width / 688)
         lblEvent.Visible = True
         picNPC.Visible = True
     End Sub
@@ -3392,16 +3365,11 @@ Public Class Game
         selecting = False
         lblEvent.Visible = False
 
-        If lblEventOnClose Is Nothing Or 1 = 1 Then
-            player.canMoveFlag = True
-            btnEQP.Enabled = True
-        End If
-
+        player.canMoveFlag = True
+        btnEQP.Enabled = True
     End Sub
     Private Sub btnClosePnlEvent_Click(sender As Object, e As EventArgs) Handles btnClosePnlEvent.Click
-        Do Until lblEventOnClose Is Nothing
-            doLblEventOnClose()
-        Loop
+        doLblEventOnClose()
         closeLblEvent()
     End Sub
 

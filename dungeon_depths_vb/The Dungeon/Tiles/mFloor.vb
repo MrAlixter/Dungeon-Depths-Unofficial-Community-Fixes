@@ -113,7 +113,7 @@
         Dim r As Integer
         If floorNumber = 3 Then
             numChests *= 1.5
-            r = Int(Rnd() * (numChests))
+            r = Int(Rnd() * (numChests)) + 1
         End If
         For i = 1 To numChests
             Dim chestPoint = randPoint()

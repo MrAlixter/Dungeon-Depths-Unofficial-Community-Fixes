@@ -11,9 +11,6 @@
         'Define the inventory
         inv = New Inventory(False)
         'Armor/Accesories
-        inv.setCount("Bronze_Armor", 1)
-        inv.setCount("Steel_Armor", 1)
-        inv.setCount("Gold_Armor", 1)
 
         isShop = False
         setGold(0)

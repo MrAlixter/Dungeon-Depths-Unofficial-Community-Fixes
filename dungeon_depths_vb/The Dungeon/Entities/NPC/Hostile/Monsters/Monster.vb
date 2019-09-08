@@ -53,7 +53,7 @@
             Case 0
                 Return New MesThrall
             Case 1
-                Return New MarissaAS
+                Return New SlimeMonster
             Case 2
                 Try
                     Return New PlayerGhost
@@ -62,7 +62,7 @@
                         Case 0
                             Return New MesThrall
                         Case 1
-                            Return New MarissaAS
+                            Return New SlimeMonster
                         Case 2
                             Return New SpiderMonster
                     End Select

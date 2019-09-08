@@ -18,7 +18,7 @@
         Dim cae = New Caelia
         Game.npcEncounter(cae)
         Game.hideNPCButtons()
-        Game.pushNPCDialog("Have fun!", AddressOf Caelia.teleportPlayer)
+        Game.pushNPCDialog("*giggle* Hi, I'm Caelia!  The magic on that flower pulled here from another place.  It also kinda opened up a time rift, soooo have fun with that!", AddressOf Caelia.teleportPlayer)
         Equipment.accChange("Nothing")
 
         count -= 1

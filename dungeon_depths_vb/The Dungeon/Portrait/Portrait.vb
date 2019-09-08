@@ -204,10 +204,10 @@
         End Select
     End Sub
     Sub addWings(ByVal i As Integer)
-        iArr(1) = CreateBMP({imgLib.atrs("Wings").getM(i), iArr(1)})
+        iArr(1) = CreateFullBodyBMP({CharacterGenerator.picPort.Image, imgLib.atrs("Wings").getM(i), iArr(1)})
     End Sub
     Sub addHorns(ByVal i As Integer)
-        iArr(15) = CreateBMP({imgLib.atrs("Horns").getM(i), iArr(15)})
+        iArr(15) = CreateFullBodyBMP({CharacterGenerator.picPort.Image, imgLib.atrs("Horns").getM(i), iArr(15)})
     End Sub
     Sub hideEars()
         If iArrInd(6).Item1 = 1 Or iArrInd(6).Item1 = 2 Or (Not iArrInd(5).Item2 And iArrInd(5).Item1 <> 2) Or (iArrInd(5).Item2 And checkNDefFemInd(5, 10)) Then Exit Sub

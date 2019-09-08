@@ -16,7 +16,7 @@
         MyBase.value = 200
         MyBase.fInd = New Tuple(Of Integer, Boolean, Boolean)(7, True, True)
         MyBase.mInd = New Tuple(Of Integer, Boolean, Boolean)(3, False, True)
-
+        MyBase.isCursed = False
         MyBase.isRandoTFAcceptable = False
     End Sub
     Overrides Sub onEquip()

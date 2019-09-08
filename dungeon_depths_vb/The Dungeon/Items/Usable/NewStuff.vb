@@ -14,11 +14,11 @@
     Public Overrides Sub use()
         Dim p As Player = Game.player
 
-        For i = 87 To 145
+        For i = 146 To 152
             p.inv.add(i, 1)
         Next
 
-        Game.pushLblEvent("Added one of every new item in v0.8!")
+        Game.pushLblEvent("Added one of every new item in v0.9!")
         count -= 1
     End Sub
 End Class
