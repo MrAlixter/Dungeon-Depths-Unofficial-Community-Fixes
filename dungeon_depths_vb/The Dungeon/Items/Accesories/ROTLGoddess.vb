@@ -19,8 +19,8 @@
         MyBase.setUsable(True)
         MyBase.count = 0
         MyBase.value = 3333
-        MyBase.fInd = New Tuple(Of Integer, Boolean, Boolean)(0, True, False)
-        MyBase.mInd = New Tuple(Of Integer, Boolean, Boolean)(0, False, False)
+        MyBase.fInd = New Tuple(Of Integer, Boolean, Boolean)(12, True, True)
+        MyBase.mInd = New Tuple(Of Integer, Boolean, Boolean)(12, True, True)
 
         MyBase.isRandoTFAcceptable = False
     End Sub

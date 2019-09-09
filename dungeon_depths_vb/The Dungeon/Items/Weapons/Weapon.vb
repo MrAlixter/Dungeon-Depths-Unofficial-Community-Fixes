@@ -5,6 +5,7 @@
     Public mBoost As Integer = 0
     Public sBoost As Integer = 0
     Public wboost As Integer = 0
+    Public isCursed As Boolean = False
     Overridable Function attack(ByRef p As Player, ByRef m As Entity) As Integer
         Return Player.calcDamage(p.getATK, m.getDEF)
     End Function

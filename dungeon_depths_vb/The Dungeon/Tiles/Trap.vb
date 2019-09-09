@@ -28,7 +28,7 @@
                 Game.player.createP()
             Case 1
                 Dim n As String = Game.player.equippedArmor.getName()
-                Dim rng As Integer = Int(Rnd() * Game.chestList.Count)
+                Dim rng As Integer = Int(Rnd() * Game.currfloor.chestList.Count)
                 Dim out As String = "A beam fires out of the wall to your left, striking you in the chest."
                 If n <> "Ropes" Then
                     If n <> "Naked" Then
@@ -104,15 +104,14 @@
                 Game.pushLblEvent("Before you, you see a person-sized metal canister with an opened pink glass lid.  Looking at the chamber, you spot the text ""G.C.U"" written on the side, and a holographic countdown timer projected from a chome pedistal next to it.  This timer seems to be counting down to something called ""ConvProccess.exe"".  You think that you can fit in the canister, but you have no clue what will happen if you do...", AddressOf gConvChamb, AddressOf gcuCancel, "Get in the G.C.U?")
         End Select
 
-                pos = New Point(-1, -1)
-
+        pos = New Point(-1, -1)
     End Sub
 
     Shared Sub rubyRevert()
         Game.player.revertToPState()
         Game.player.canMoveFlag = True
-        Dim tr As New Monster(-1)
-        Game.statueList.Add(New Statue(tr))
+        Dim tr As Monster = Monster.monsterFactory(-1)
+        Game.currfloor.statueList.Add(New Statue(tr))
         Game.pushLblEvent("𝑺𝒆𝒗𝒆𝒓𝒂𝒍 𝒅𝒂𝒚𝒔 𝒍𝒂𝒕𝒆𝒓..." & vbCrLf &
                            "As you stand frozen in the same position you've held since you touched the cursed stone, suddenly you fall flat faced onto the ground.  Springing to your feet, you are exited to find yourself as you were, albiet redder than before, and another explorer frozen in your place.  From their pose, it seems that they were going through your stuff, and must have accidently touched you.  What's more, the original ruby you touched is nowhere to be found.  You muse on the nature of the curse for a bit, before grabbing your things and moving on." & vbCrLf & vbCrLf & "Your stomach rumbles loudly, and you can tell that your time as a statue hasn't been kind to you.")
         Game.player.mana = 0

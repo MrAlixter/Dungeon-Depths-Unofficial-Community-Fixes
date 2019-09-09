@@ -9,7 +9,7 @@
     Public wBoost As Integer = 0
     Public fInd As Tuple(Of Integer, Boolean, Boolean)
     Public mInd As Tuple(Of Integer, Boolean, Boolean)
-
+    Public isCursed
     Overridable Sub onEquip()
     End Sub
     Overridable Sub onUnequip()

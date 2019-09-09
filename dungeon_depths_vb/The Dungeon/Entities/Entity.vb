@@ -43,7 +43,7 @@
             Exit Sub
         End If
         If (pos.Y - 1) < 0 Or canMoveFlag = False Then Exit Sub
-        If Game.mBoard(pos.Y - 1, pos.X).Tag = 0 Then Exit Sub
+        If Game.currfloor.mBoard(pos.Y - 1, pos.X).Tag = 0 Then Exit Sub
         pos.Y -= 1
     End Sub
     Public Sub moveDown()
@@ -52,7 +52,7 @@
             Exit Sub
         End If
         If (pos.Y + 1) > Game.mBoardHeight - 1 Or canMoveFlag = False Then Exit Sub
-        If Game.mBoard(pos.Y + 1, pos.X).Tag = 0 Then Exit Sub
+        If Game.currfloor.mBoard(pos.Y + 1, pos.X).Tag = 0 Then Exit Sub
         pos.Y += 1
     End Sub
     Public Sub moveLeft()
@@ -61,7 +61,7 @@
             Exit Sub
         End If
         If (pos.X - 1) < 0 Or canMoveFlag = False Then Exit Sub
-        If Game.mBoard(pos.Y, pos.X - 1).Tag = 0 Then Exit Sub
+        If Game.currfloor.mBoard(pos.Y, pos.X - 1).Tag = 0 Then Exit Sub
         pos.X -= 1
     End Sub
     Public Sub moveRight()
@@ -70,7 +70,7 @@
             Exit Sub
         End If
         If (pos.X + 1) > Game.mBoardWidth - 1 Or canMoveFlag = False Then Exit Sub
-        If Game.mBoard(pos.Y, pos.X + 1).Tag = 0 Then Exit Sub
+        If Game.currfloor.mBoard(pos.Y, pos.X + 1).Tag = 0 Then Exit Sub
         pos.X += 1
     End Sub
 

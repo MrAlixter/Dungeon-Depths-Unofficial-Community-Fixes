@@ -162,6 +162,15 @@
         internal_inventory.Add("Every_New_Item", New NewStuff())            '143
         internal_inventory.Add("Crystalline_Armor", New CrystalArmor())     '144
         internal_inventory.Add("Scepter_of_Ash", New ScepterOfAsh())        '145
+        '0.9
+        internal_inventory.Add("Cat_Armor", New CatArmor())                 '146
+        internal_inventory.Add("Skimpy_Tank_Top", New SkimpyTT())           '147
+        internal_inventory.Add("Grappling_Hook", New GrapplingHook())       '148
+        internal_inventory.Add("Mana_Hibiscus", New ManaHibiscus())         '149
+        internal_inventory.Add("Twin_Xiphoi", New TwinBlades())             '150
+        internal_inventory.Add("Lolita_Dress_(Sweet)", New SLolitaDress())  '151
+        internal_inventory.Add("Will_Charm", New WillCharm())               '152
+        internal_inventory.Add("Anti_Curse_Tag", New AntiSCurseTag())       '153
 
         armor = {New CommonClothes, New SkimpyClothes, New Naked, New VSkimpyClothes,
                  Me.item(5), Me.item(7), Me.item(8), Me.item(10),
@@ -174,14 +183,15 @@
                  Me.item(94), Me.item(95), Me.item(99), Me.item(101),
                  Me.item(102), Me.item(103), Me.item(104), Me.item(105),
                  Me.item(106), Me.item(107), Me.item(115), Me.item(116),
-                 Me.item(129), Me.item(137), Me.item(138), Me.item(144)}
+                 Me.item(129), Me.item(137), Me.item(138), Me.item(144),
+                 Me.item(146), Me.item(147), Me.item(151)}
 
         weapons = {New BareFists(),
                    Me.item(6), Me.item(9), Me.item(11), Me.item(21),
                    Me.item(22), Me.item(23), Me.item(24), Me.item(40),
                    Me.item(41), Me.item(42), Me.item(45), Me.item(63),
                    Me.item(84), Me.item(96), Me.item(111), Me.item(112),
-                   Me.item(118), Me.item(120), Me.item(145)}
+                   Me.item(118), Me.item(120), Me.item(145), Me.item(150)}
 
         useable = {Me.item(0), Me.item(3), Me.item(4),
                    Me.item(65), Me.item(15), Me.item(36), Me.item(37),
@@ -190,7 +200,8 @@
                    Me.item(81), Me.item(86), Me.item(88), Me.item(89),
                    Me.item(91), Me.item(119), Me.item(126), Me.item(127),
                    Me.item(128), Me.item(130), Me.item(136), Me.item(142),
-                   Me.item(143)}
+                   Me.item(143), Me.item(148), Me.item(149), Me.item(152),
+                   Me.item(153)}
 
         food = {Me.item(1), Me.item(30), Me.item(31), Me.item(32), Me.item(33),
                 Me.item(34), Me.item(35), Me.item(44), Me.item(90),
@@ -201,7 +212,7 @@
         acce = {New noAcce(), Me.item(66), Me.item(67), Me.item(68),
                 Me.item(69), Me.item(70), Me.item(77), Me.item(81),
                 Me.item(97), Me.item(110), Me.item(123), Me.item(139),
-                Me.item(140), Me.item(141)}
+                Me.item(140), Me.item(141), Me.item(149)}
 
         potions = {Me.item(2), Me.item(13), Me.item(14), Me.item(25),
                    Me.item(26), Me.item(27), Me.item(28), Me.item(29),

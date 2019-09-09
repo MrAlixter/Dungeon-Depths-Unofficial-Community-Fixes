@@ -1,7 +1,6 @@
 ﻿Public Class MiniBoss
     Inherits Monster
     Sub New(ByVal mIndex As Integer)
-        MyBase.New(-1)
         Select Case mIndex
             Case 1
                 name = "Marissa the Enchantress"
@@ -18,6 +17,7 @@
                 inv.setCount("Mana_Charm", 1 + CInt(Rnd() * 2))
                 inv.setCount("Omni_Charm", 1)
                 inv.setCount("Sorcerer's_Robes", CInt(Rnd() * 2))
+                inv.setCount("Gold", 1000)
 
                 title = " "
                 pronoun = "she"
@@ -35,7 +35,7 @@
                 inv.setCount("Warrior's_Cuirass", CInt(Rnd() * 2))
                 inv.setCount("Attack_Charm", 1 + CInt(Rnd() * 2))
                 inv.setCount("Omni_Charm", 1)
-
+                inv.setCount("Gold", 2500)
                 title = " "
                 pronoun = "he"
                 pPronoun = "his"
@@ -49,6 +49,7 @@
                 setInventory({3, 58, 65})
                 inv.setCount("Defence_Charm", 1 + CInt(Rnd() * 2))
                 inv.setCount("Omni_Charm", 1)
+                inv.setCount("Gold", 5000)
                 title = " "
                 pronoun = "she"
                 pPronoun = "her"
@@ -74,6 +75,11 @@
         pos = Game.player.pos
     End Sub
     Public Overrides Sub attackCMD(ByRef target As Entity)
+        If isStunned Then
+            Game.pushLblEvent(name & " is stunned!")
+            Exit Sub
+        End If
+
         If name.Equals("Marissa the Enchantress") Then
             If target.GetType() Is GetType(Player) Then
                 If Game.player.perks("nekocurse") = -1 Then

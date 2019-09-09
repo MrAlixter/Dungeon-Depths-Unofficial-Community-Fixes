@@ -71,7 +71,6 @@
         ElseIf p.prt.sexBool And p.breastSize >= 3 Then
             out += "In your haze, you look down to see your clothes have become tight and revealing. You giggle, all traces of intellect vanishing as your body becomes more curvy and feminine. Your hair lengthens, becoming a minty cyan, and your clothes finish changing to match your new figure."
         End If
-        Game.pushLblEvent(out)
         p.pClass = p.classes("Bimbo")
         p.lust += 10
         'final tf Stage
@@ -107,6 +106,7 @@
         p.perks("bimbotf") = -1
         p.createP()
         stopTF()
+        Game.pushLblEvent(out)
     End Sub
     Sub step2alt()
         Dim p As player = game.player
@@ -124,7 +124,7 @@
         p.breastSize = 3
         Game.pushLblEvent("You immediatly feel funny, the increased magic in your system reacting swiftly with the gum.  In your haze, you look down to see your clothes have become tight and pink. You giggle, all traces of intellect vanishing as your body becomes more curvy and feminine. Your hair lengthens, becoming a minty cyan, and your clothes finish changing to match your new figure.")
         p.lust += 10
-        If Game.floor < 6 Then p.pImage = Game.picPlayerB.BackgroundImage Else p.pImage = Game.picBimbof.BackgroundImage
+        If game.mDun.numCurrFloor < 6 Then p.pImage = Game.picPlayerB.BackgroundImage Else p.pImage = Game.picBimbof.BackgroundImage
         p.perks("bimbotf") = -1
         stopTF()
     End Sub

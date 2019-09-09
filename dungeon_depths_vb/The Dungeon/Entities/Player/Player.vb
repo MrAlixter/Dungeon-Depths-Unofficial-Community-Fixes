@@ -327,6 +327,7 @@
         perks.Add("barbarian", -1)      '26
         perks.Add("slimetf", -1)        '27
         perks.Add("googirltf", -1)      '28
+        perks.Add("bimbododge", -1)     '29
     End Sub
     Private Sub initClasses()
         'creates the class dictionary
@@ -404,11 +405,12 @@
         polymorphs.Add("Cake", Nothing)
         polymorphs.Add("Fusion", Nothing)
         polymorphs.Add("Mindless", Nothing)
+        polymorphs.Add("MASBimbo", Nothing)
     End Sub
 
     '|MOVEMENT COMMANDS|
     Public Overrides Sub reachedFPathDest()
-        If Game.floor = 4 And Not Game.preBSBody Is Nothing And Game.preBSStartState Is Nothing And Game.floorboss(4) = "Ooze Empress" Then
+        If game.mDun.numCurrFloor = 4 And Not Game.preBSBody Is Nothing And Game.preBSStartState Is Nothing And game.mDun.floorboss(4) = "Ooze Empress" Then
             RandoTF.floor4FirstBossEncounter()
             Exit Sub
         End If
@@ -456,12 +458,14 @@
     Public Overrides Sub attackCMD(ByRef target As Entity)
         Randomize()
 
+
         If pClass.name.Equals("Barbarian") Then
             aBuff -= perks("barbarian")
             perks("barbarian") = 0
         End If
 
         Dim dmg As Integer = equippedWeapon.attack(Me, target)
+
         If dmg = -1 Then
             miss(target)
         ElseIf dmg = -2 Then
@@ -472,11 +476,11 @@
 
     End Sub
     'attacking a npc
-    Private Sub miss(target As NPC)
+    Public Sub miss(target As NPC)
         Game.pushLstLog(CStr("You miss" & target.title & " " & target.getName() & "!"))
         Game.pushLblCombatEvent(CStr("You miss" & target.title & " " & target.getName() & "!"))
     End Sub
-    Private Sub hit(dmg As Integer, target As NPC)
+    Public Sub hit(dmg As Integer, target As NPC)
         Game.pushLstLog(CStr("You hit" & target.title.ToLower & target.getName() & " for " & dmg & " damage!"))
         Game.pushLblCombatEvent(CStr("You hit" & target.title.ToLower & target.getName() & " for " & dmg & " damage!"))
         target.takeDMG(dmg, Me)
@@ -485,41 +489,41 @@
         currTarget = t
         MyBase.currTarget = t
     End Sub
-    Private Sub cHit(dmg As Integer, target As NPC)
-        Game.pushLstLog(CStr("You hit" & target.title & " " & target.getName() & " for " & dmg * 3 & " damage!  Critical hit!"))
-        Game.pushLblCombatEvent(CStr("You hit" & target.title & " " & target.getName() & " for " & dmg * 3 & " damage!  Critical hit!"))
+    Public Sub cHit(dmg As Integer, target As NPC)
+        Game.pushLstLog(CStr("You hit" & target.title.ToLower & target.getName() & " for " & dmg * 3 & " damage!  Critical hit!"))
+        Game.pushLblCombatEvent(CStr("You hit" & target.title.ToLower & target.getName() & " for " & dmg * 3 & " damage!  Critical hit!"))
         target.isStunned = True
         target.stunct = 0
         target.takeDMG(dmg * 3, Me)
     End Sub
     'attacking a non npc
     Private Sub miss(target As Entity)
-        Game.pushLstLog(CStr("You miss " & target.getName() & "!"))
-        Game.pushLblCombatEvent(CStr("You miss " & target.getName() & "!"))
         If target.GetType() Is GetType(NPC) Or target.GetType.IsSubclassOf(GetType(NPC)) Then
             miss(CType(target, NPC))
             Exit Sub
         End If
+
+        Game.pushLstLog(CStr("You miss " & target.getName() & "!"))
+        Game.pushLblCombatEvent(CStr("You miss " & target.getName() & "!"))
     End Sub
     Private Sub hit(dmg As Integer, target As Entity)
-        Game.pushLstLog(CStr("You hit " & target.getName() & " for " & dmg & " damage!"))
-        Game.pushLblCombatEvent(CStr("You hit " & target.getName() & " for " & dmg & " damage!"))
         If target.GetType() Is GetType(NPC) Or target.GetType.IsSubclassOf(GetType(NPC)) Then
             hit(dmg, CType(target, NPC))
             Exit Sub
         End If
 
+        Game.pushLstLog(CStr("You hit " & target.getName() & " for " & dmg & " damage!"))
+        Game.pushLblCombatEvent(CStr("You hit " & target.getName() & " for " & dmg & " damage!"))
         target.takeDMG(dmg, Me)
     End Sub
     Private Sub cHit(dmg As Integer, target As Entity)
-        Game.pushLstLog(CStr("You hit " & target.getName() & " for " & dmg * 3 & " damage!  Critical hit!"))
-        Game.pushLblCombatEvent("You hit " & target.getName() & " for " & dmg * 3 & " damage!  Critical hit!")
-
         If target.GetType() Is GetType(NPC) Or target.GetType.IsSubclassOf(GetType(NPC)) Then
             cHit(dmg, CType(target, NPC))
             Exit Sub
         End If
 
+        Game.pushLstLog(CStr("You hit " & target.getName() & " for " & dmg * 3 & " damage!  Critical hit!"))
+        Game.pushLblCombatEvent("You hit " & target.getName() & " for " & dmg * 3 & " damage!  Critical hit!")
         target.takeDMG(dmg * 3, Me)
     End Sub
     'taking damage
@@ -876,6 +880,9 @@
         ElseIf source.getName.Equals("Mimic") Then
             DeathEffects.mimicDeath()
             Exit Sub
+        ElseIf source.getName.Equals("Marissa, Aspiring Sorceress") Then
+            DeathEffects.marissaASDeath()
+            Exit Sub
         ElseIf source.getName.Equals("Ooze Empress") Then
             DeathEffects.oozeEmpDeath()
             Exit Sub
@@ -889,18 +896,22 @@
     Public Sub setPImage()
         'sets the player call
         If pClass.name.Equals("Bimbo") Then
-            If Game.floor > 5 And Not Game.floor = 9999 Then
+            If Game.mDun.numCurrFloor > 5 And Not Game.mDun.numCurrFloor = 9999 And Not Game.mDun.numCurrFloor = 91017 Then
                 pImage = Game.picBimbof.BackgroundImage
-            ElseIf Game.floor = 9999 Then
+            ElseIf Game.mDun.numCurrFloor = 9999 Then
                 pImage = Game.picBimboSpace.BackgroundImage
+            ElseIf Game.mDun.numCurrFloor = 91017 Then
+                pImage = Game.picLegaBimbo.BackgroundImage
             Else
                 pImage = Game.picPlayerB.BackgroundImage
             End If
         Else
-            If Game.floor > 5 And Not Game.floor = 9999 Then
+            If Game.mDun.numCurrFloor > 5 And Not Game.mDun.numCurrFloor = 9999 And Not Game.mDun.numCurrFloor = 91017 Then
                 pImage = Game.picPlayerf.BackgroundImage
-            ElseIf Game.floor = 9999 Then
+            ElseIf Game.mDun.numCurrFloor = 9999 Then
                 pImage = Game.picPlayerSpace.BackgroundImage
+            ElseIf Game.mDun.numCurrFloor = 91017 Then
+                pImage = Game.picLegaPlayer.BackgroundImage
             Else
                 pImage = Game.picPlayer.BackgroundImage
             End If

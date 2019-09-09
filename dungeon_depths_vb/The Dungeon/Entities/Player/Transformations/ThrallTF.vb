@@ -35,12 +35,12 @@
         Dim p As player = game.player
         If p.forcedPath Is Nothing And Not Game.combatmode And Not Game.npcmode Then
 
-            Dim crystal = Game.randPoint
+            Dim crystal = Game.currfloor.randPoint
 
-            Game.mBoard(crystal.Y, crystal.X).Tag = 2
-            Game.mBoard(crystal.Y, crystal.X).Text = "c"
+            Game.currfloor.mBoard(crystal.Y, crystal.X).Tag = 2
+            Game.currfloor.mBoard(crystal.Y, crystal.X).Text = "c"
 
-            p.forcedPath = Game.route(p.pos, crystal)
+            p.forcedPath = Game.currfloor.route(p.pos, crystal)
 
             Dim s As String = ""
             If p.getWIL() > 10 Then
@@ -62,15 +62,15 @@
     Shared Sub postLoadCrystalSpawn(ByVal e As Entity)
         Dim p = Game.player
         Dim crystal As Point = New Point(p.forcedPath(0).X, p.forcedPath(0).Y)
-        Game.mBoard(crystal.Y, crystal.X).Text = "c"
-        p.forcedPath = Game.route(p.pos, crystal)
+        Game.currfloor.mBoard(crystal.Y, crystal.X).Text = "c"
+        p.forcedPath = Game.currfloor.route(p.pos, crystal)
         p.nextCombatAction = Nothing
     End Sub
 
     Shared Sub fightSorc()
         Dim p As player = game.player
         Dim m As Monster
-        m = New Monster(9)
+        m = Monster.monsterFactory(9)
 
         Monster.targetRoute(m)
 
@@ -82,7 +82,7 @@
         Dim p As player = game.player
         Game.lblEvent.Visible = False
         Dim m As Monster
-        m = New Monster(8)
+        m = Monster.monsterFactory(8)
 
         Monster.targetRoute(m)
 

@@ -23,9 +23,20 @@
         name = p.name
         desc = "Your old body, turned to stone. Looking at it fills you with nostalgia."
     End Sub
+    Sub New(ByVal s As String)
+        Dim buffer = s.Split("*")
+
+        pos = New Point(CInt(buffer(0)), CInt(buffer(1)))
+        name = buffer(2)
+        desc = buffer(3)
+    End Sub
 
     Sub examine()
         Game.pushLstLog(desc)
         Game.pushLblEvent(desc)
     End Sub
+
+    Overrides Function toString() As String
+        Return pos.X & "*" & pos.Y & "*" & name & "*" & desc
+    End Function
 End Class

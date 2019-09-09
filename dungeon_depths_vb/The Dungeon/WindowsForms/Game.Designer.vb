@@ -152,6 +152,7 @@ Partial Class Game
         Me.picSWiz = New System.Windows.Forms.PictureBox()
         Me.picSWizF = New System.Windows.Forms.PictureBox()
         Me.pnlDescript = New System.Windows.Forms.Panel()
+        Me.Label5 = New System.Windows.Forms.Label()
         Me.lblNext = New System.Windows.Forms.Label()
         Me.picDescPort = New System.Windows.Forms.PictureBox()
         Me.txtDescript = New System.Windows.Forms.TextBox()
@@ -213,6 +214,18 @@ Partial Class Game
         Me.btnNextRPnlEvent = New System.Windows.Forms.Button()
         Me.btnClosePnlEvent = New System.Windows.Forms.Button()
         Me.txtPNLEvents = New System.Windows.Forms.TextBox()
+        Me.picLegaPath = New System.Windows.Forms.PictureBox()
+        Me.picLegaCrystal = New System.Windows.Forms.PictureBox()
+        Me.picLegaPlayer = New System.Windows.Forms.PictureBox()
+        Me.picLegaBimbo = New System.Windows.Forms.PictureBox()
+        Me.picLegaStairs = New System.Windows.Forms.PictureBox()
+        Me.picLegaTrap = New System.Windows.Forms.PictureBox()
+        Me.picLegaChest = New System.Windows.Forms.PictureBox()
+        Me.picLegaTile = New System.Windows.Forms.PictureBox()
+        Me.picLegaCaelia = New System.Windows.Forms.PictureBox()
+        Me.picCaeliaP = New System.Windows.Forms.PictureBox()
+        Me.picCaeliaB = New System.Windows.Forms.PictureBox()
+        Me.picCaelia = New System.Windows.Forms.PictureBox()
         CType(Me.picEnemy, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me.picNPC, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me.picStatue, System.ComponentModel.ISupportInitialize).BeginInit()
@@ -299,6 +312,18 @@ Partial Class Game
         CType(Me.picSPacePath, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me.picSpaceCrystal, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.pnlEvent.SuspendLayout()
+        CType(Me.picLegaPath, System.ComponentModel.ISupportInitialize).BeginInit()
+        CType(Me.picLegaCrystal, System.ComponentModel.ISupportInitialize).BeginInit()
+        CType(Me.picLegaPlayer, System.ComponentModel.ISupportInitialize).BeginInit()
+        CType(Me.picLegaBimbo, System.ComponentModel.ISupportInitialize).BeginInit()
+        CType(Me.picLegaStairs, System.ComponentModel.ISupportInitialize).BeginInit()
+        CType(Me.picLegaTrap, System.ComponentModel.ISupportInitialize).BeginInit()
+        CType(Me.picLegaChest, System.ComponentModel.ISupportInitialize).BeginInit()
+        CType(Me.picLegaTile, System.ComponentModel.ISupportInitialize).BeginInit()
+        CType(Me.picLegaCaelia, System.ComponentModel.ISupportInitialize).BeginInit()
+        CType(Me.picCaeliaP, System.ComponentModel.ISupportInitialize).BeginInit()
+        CType(Me.picCaeliaB, System.ComponentModel.ISupportInitialize).BeginInit()
+        CType(Me.picCaelia, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.SuspendLayout()
         '
         'btnUse1
@@ -1741,15 +1766,28 @@ Partial Class Game
         '
         'pnlDescript
         '
+        Me.pnlDescript.BackgroundImage = CType(resources.GetObject("pnlDescript.BackgroundImage"), System.Drawing.Image)
+        Me.pnlDescript.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch
         Me.pnlDescript.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle
+        Me.pnlDescript.Controls.Add(Me.Label5)
         Me.pnlDescript.Controls.Add(Me.lblNext)
         Me.pnlDescript.Controls.Add(Me.picDescPort)
         Me.pnlDescript.Controls.Add(Me.txtDescript)
-        Me.pnlDescript.Location = New System.Drawing.Point(901, 36)
+        Me.pnlDescript.Location = New System.Drawing.Point(900, 39)
         Me.pnlDescript.Name = "pnlDescript"
-        Me.pnlDescript.Size = New System.Drawing.Size(694, 461)
+        Me.pnlDescript.Size = New System.Drawing.Size(690, 502)
         Me.pnlDescript.TabIndex = 275
         Me.pnlDescript.Visible = False
+        '
+        'Label5
+        '
+        Me.Label5.AutoSize = True
+        Me.Label5.ForeColor = System.Drawing.Color.White
+        Me.Label5.Location = New System.Drawing.Point(21, 3)
+        Me.Label5.Name = "Label5"
+        Me.Label5.Size = New System.Drawing.Size(471, 17)
+        Me.Label5.TabIndex = 278
+        Me.Label5.Text = "NOTE: Full body image view is not complete, and still requires some work."
         '
         'lblNext
         '
@@ -1757,7 +1795,7 @@ Partial Class Game
         Me.lblNext.BackColor = System.Drawing.Color.Black
         Me.lblNext.Font = New System.Drawing.Font("Consolas", 9.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.lblNext.ForeColor = System.Drawing.Color.White
-        Me.lblNext.Location = New System.Drawing.Point(23, 426)
+        Me.lblNext.Location = New System.Drawing.Point(23, 473)
         Me.lblNext.Name = "lblNext"
         Me.lblNext.Size = New System.Drawing.Size(336, 18)
         Me.lblNext.TabIndex = 277
@@ -1766,9 +1804,9 @@ Partial Class Game
         'picDescPort
         '
         Me.picDescPort.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch
-        Me.picDescPort.Location = New System.Drawing.Point(536, 21)
+        Me.picDescPort.Location = New System.Drawing.Point(524, 9)
         Me.picDescPort.Name = "picDescPort"
-        Me.picDescPort.Size = New System.Drawing.Size(125, 189)
+        Me.picDescPort.Size = New System.Drawing.Size(130, 480)
         Me.picDescPort.TabIndex = 276
         Me.picDescPort.TabStop = False
         '
@@ -1780,7 +1818,7 @@ Partial Class Game
         Me.txtDescript.Multiline = True
         Me.txtDescript.Name = "txtDescript"
         Me.txtDescript.ScrollBars = System.Windows.Forms.ScrollBars.Vertical
-        Me.txtDescript.Size = New System.Drawing.Size(468, 395)
+        Me.txtDescript.Size = New System.Drawing.Size(468, 446)
         Me.txtDescript.TabIndex = 0
         '
         'ttCosts
@@ -2331,7 +2369,7 @@ Partial Class Game
         Me.pnlEvent.Controls.Add(Me.btnNextRPnlEvent)
         Me.pnlEvent.Controls.Add(Me.btnClosePnlEvent)
         Me.pnlEvent.Controls.Add(Me.txtPNLEvents)
-        Me.pnlEvent.Location = New System.Drawing.Point(192, 29)
+        Me.pnlEvent.Location = New System.Drawing.Point(939, 26)
         Me.pnlEvent.Name = "pnlEvent"
         Me.pnlEvent.Size = New System.Drawing.Size(688, 447)
         Me.pnlEvent.TabIndex = 322
@@ -2395,9 +2433,130 @@ Partial Class Game
         Me.txtPNLEvents.Multiline = True
         Me.txtPNLEvents.Name = "txtPNLEvents"
         Me.txtPNLEvents.ReadOnly = True
+        Me.txtPNLEvents.ScrollBars = System.Windows.Forms.ScrollBars.Vertical
         Me.txtPNLEvents.Size = New System.Drawing.Size(665, 400)
         Me.txtPNLEvents.TabIndex = 0
         Me.txtPNLEvents.Text = resources.GetString("txtPNLEvents.Text")
+        '
+        'picLegaPath
+        '
+        Me.picLegaPath.BackgroundImage = CType(resources.GetObject("picLegaPath.BackgroundImage"), System.Drawing.Image)
+        Me.picLegaPath.Location = New System.Drawing.Point(518, 225)
+        Me.picLegaPath.Name = "picLegaPath"
+        Me.picLegaPath.Size = New System.Drawing.Size(15, 15)
+        Me.picLegaPath.TabIndex = 330
+        Me.picLegaPath.TabStop = False
+        Me.picLegaPath.Visible = False
+        '
+        'picLegaCrystal
+        '
+        Me.picLegaCrystal.BackgroundImage = CType(resources.GetObject("picLegaCrystal.BackgroundImage"), System.Drawing.Image)
+        Me.picLegaCrystal.Location = New System.Drawing.Point(497, 224)
+        Me.picLegaCrystal.Name = "picLegaCrystal"
+        Me.picLegaCrystal.Size = New System.Drawing.Size(15, 15)
+        Me.picLegaCrystal.TabIndex = 329
+        Me.picLegaCrystal.TabStop = False
+        Me.picLegaCrystal.Visible = False
+        '
+        'picLegaPlayer
+        '
+        Me.picLegaPlayer.BackgroundImage = CType(resources.GetObject("picLegaPlayer.BackgroundImage"), System.Drawing.Image)
+        Me.picLegaPlayer.Location = New System.Drawing.Point(581, 204)
+        Me.picLegaPlayer.Name = "picLegaPlayer"
+        Me.picLegaPlayer.Size = New System.Drawing.Size(15, 15)
+        Me.picLegaPlayer.TabIndex = 328
+        Me.picLegaPlayer.TabStop = False
+        Me.picLegaPlayer.Visible = False
+        '
+        'picLegaBimbo
+        '
+        Me.picLegaBimbo.BackgroundImage = CType(resources.GetObject("picLegaBimbo.BackgroundImage"), System.Drawing.Image)
+        Me.picLegaBimbo.Location = New System.Drawing.Point(602, 204)
+        Me.picLegaBimbo.Name = "picLegaBimbo"
+        Me.picLegaBimbo.Size = New System.Drawing.Size(15, 15)
+        Me.picLegaBimbo.TabIndex = 327
+        Me.picLegaBimbo.TabStop = False
+        Me.picLegaBimbo.Visible = False
+        '
+        'picLegaStairs
+        '
+        Me.picLegaStairs.BackgroundImage = CType(resources.GetObject("picLegaStairs.BackgroundImage"), System.Drawing.Image)
+        Me.picLegaStairs.Location = New System.Drawing.Point(539, 204)
+        Me.picLegaStairs.Name = "picLegaStairs"
+        Me.picLegaStairs.Size = New System.Drawing.Size(15, 15)
+        Me.picLegaStairs.TabIndex = 326
+        Me.picLegaStairs.TabStop = False
+        Me.picLegaStairs.Visible = False
+        '
+        'picLegaTrap
+        '
+        Me.picLegaTrap.BackgroundImage = CType(resources.GetObject("picLegaTrap.BackgroundImage"), System.Drawing.Image)
+        Me.picLegaTrap.Location = New System.Drawing.Point(560, 204)
+        Me.picLegaTrap.Name = "picLegaTrap"
+        Me.picLegaTrap.Size = New System.Drawing.Size(15, 15)
+        Me.picLegaTrap.TabIndex = 325
+        Me.picLegaTrap.TabStop = False
+        Me.picLegaTrap.Visible = False
+        '
+        'picLegaChest
+        '
+        Me.picLegaChest.BackgroundImage = CType(resources.GetObject("picLegaChest.BackgroundImage"), System.Drawing.Image)
+        Me.picLegaChest.Location = New System.Drawing.Point(518, 204)
+        Me.picLegaChest.Name = "picLegaChest"
+        Me.picLegaChest.Size = New System.Drawing.Size(15, 15)
+        Me.picLegaChest.TabIndex = 324
+        Me.picLegaChest.TabStop = False
+        Me.picLegaChest.Visible = False
+        '
+        'picLegaTile
+        '
+        Me.picLegaTile.BackgroundImage = CType(resources.GetObject("picLegaTile.BackgroundImage"), System.Drawing.Image)
+        Me.picLegaTile.Location = New System.Drawing.Point(497, 203)
+        Me.picLegaTile.Name = "picLegaTile"
+        Me.picLegaTile.Size = New System.Drawing.Size(15, 15)
+        Me.picLegaTile.TabIndex = 323
+        Me.picLegaTile.TabStop = False
+        Me.picLegaTile.Visible = False
+        '
+        'picLegaCaelia
+        '
+        Me.picLegaCaelia.BackgroundImage = CType(resources.GetObject("picLegaCaelia.BackgroundImage"), System.Drawing.Image)
+        Me.picLegaCaelia.Location = New System.Drawing.Point(539, 225)
+        Me.picLegaCaelia.Name = "picLegaCaelia"
+        Me.picLegaCaelia.Size = New System.Drawing.Size(15, 15)
+        Me.picLegaCaelia.TabIndex = 331
+        Me.picLegaCaelia.TabStop = False
+        Me.picLegaCaelia.Visible = False
+        '
+        'picCaeliaP
+        '
+        Me.picCaeliaP.BackgroundImage = CType(resources.GetObject("picCaeliaP.BackgroundImage"), System.Drawing.Image)
+        Me.picCaeliaP.Location = New System.Drawing.Point(218, 133)
+        Me.picCaeliaP.Name = "picCaeliaP"
+        Me.picCaeliaP.Size = New System.Drawing.Size(15, 15)
+        Me.picCaeliaP.TabIndex = 334
+        Me.picCaeliaP.TabStop = False
+        Me.picCaeliaP.Visible = False
+        '
+        'picCaeliaB
+        '
+        Me.picCaeliaB.BackgroundImage = CType(resources.GetObject("picCaeliaB.BackgroundImage"), System.Drawing.Image)
+        Me.picCaeliaB.Location = New System.Drawing.Point(197, 133)
+        Me.picCaeliaB.Name = "picCaeliaB"
+        Me.picCaeliaB.Size = New System.Drawing.Size(15, 15)
+        Me.picCaeliaB.TabIndex = 333
+        Me.picCaeliaB.TabStop = False
+        Me.picCaeliaB.Visible = False
+        '
+        'picCaelia
+        '
+        Me.picCaelia.BackgroundImage = CType(resources.GetObject("picCaelia.BackgroundImage"), System.Drawing.Image)
+        Me.picCaelia.Location = New System.Drawing.Point(176, 133)
+        Me.picCaelia.Name = "picCaelia"
+        Me.picCaelia.Size = New System.Drawing.Size(15, 15)
+        Me.picCaelia.TabIndex = 332
+        Me.picCaelia.TabStop = False
+        Me.picCaelia.Visible = False
         '
         'Game
         '
@@ -2405,6 +2564,18 @@ Partial Class Game
         Me.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink
         Me.BackColor = System.Drawing.Color.Black
         Me.ClientSize = New System.Drawing.Size(1008, 690)
+        Me.Controls.Add(Me.picCaeliaP)
+        Me.Controls.Add(Me.picCaeliaB)
+        Me.Controls.Add(Me.picCaelia)
+        Me.Controls.Add(Me.picLegaCaelia)
+        Me.Controls.Add(Me.picLegaPath)
+        Me.Controls.Add(Me.picLegaCrystal)
+        Me.Controls.Add(Me.picLegaPlayer)
+        Me.Controls.Add(Me.picLegaBimbo)
+        Me.Controls.Add(Me.picLegaStairs)
+        Me.Controls.Add(Me.picLegaTrap)
+        Me.Controls.Add(Me.picLegaChest)
+        Me.Controls.Add(Me.picLegaTile)
         Me.Controls.Add(Me.pnlEvent)
         Me.Controls.Add(Me.picSPacePath)
         Me.Controls.Add(Me.picSpaceCrystal)
@@ -2646,6 +2817,18 @@ Partial Class Game
         CType(Me.picSpaceCrystal, System.ComponentModel.ISupportInitialize).EndInit()
         Me.pnlEvent.ResumeLayout(False)
         Me.pnlEvent.PerformLayout()
+        CType(Me.picLegaPath, System.ComponentModel.ISupportInitialize).EndInit()
+        CType(Me.picLegaCrystal, System.ComponentModel.ISupportInitialize).EndInit()
+        CType(Me.picLegaPlayer, System.ComponentModel.ISupportInitialize).EndInit()
+        CType(Me.picLegaBimbo, System.ComponentModel.ISupportInitialize).EndInit()
+        CType(Me.picLegaStairs, System.ComponentModel.ISupportInitialize).EndInit()
+        CType(Me.picLegaTrap, System.ComponentModel.ISupportInitialize).EndInit()
+        CType(Me.picLegaChest, System.ComponentModel.ISupportInitialize).EndInit()
+        CType(Me.picLegaTile, System.ComponentModel.ISupportInitialize).EndInit()
+        CType(Me.picLegaCaelia, System.ComponentModel.ISupportInitialize).EndInit()
+        CType(Me.picCaeliaP, System.ComponentModel.ISupportInitialize).EndInit()
+        CType(Me.picCaeliaB, System.ComponentModel.ISupportInitialize).EndInit()
+        CType(Me.picCaelia, System.ComponentModel.ISupportInitialize).EndInit()
         Me.ResumeLayout(False)
         Me.PerformLayout()
 
@@ -2839,4 +3022,17 @@ Partial Class Game
     Friend WithEvents btnNextLPnlEvent As System.Windows.Forms.Button
     Friend WithEvents btnNextRPnlEvent As System.Windows.Forms.Button
     Friend WithEvents btnClosePnlEvent As System.Windows.Forms.Button
+    Friend WithEvents Label5 As System.Windows.Forms.Label
+    Friend WithEvents picLegaPath As System.Windows.Forms.PictureBox
+    Friend WithEvents picLegaCrystal As System.Windows.Forms.PictureBox
+    Friend WithEvents picLegaPlayer As System.Windows.Forms.PictureBox
+    Friend WithEvents picLegaBimbo As System.Windows.Forms.PictureBox
+    Friend WithEvents picLegaStairs As System.Windows.Forms.PictureBox
+    Friend WithEvents picLegaTrap As System.Windows.Forms.PictureBox
+    Friend WithEvents picLegaChest As System.Windows.Forms.PictureBox
+    Friend WithEvents picLegaTile As System.Windows.Forms.PictureBox
+    Friend WithEvents picLegaCaelia As System.Windows.Forms.PictureBox
+    Friend WithEvents picCaeliaP As System.Windows.Forms.PictureBox
+    Friend WithEvents picCaeliaB As System.Windows.Forms.PictureBox
+    Friend WithEvents picCaelia As System.Windows.Forms.PictureBox
 End Class

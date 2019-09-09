@@ -28,7 +28,7 @@
                     Game.updateList = New PQ
                 End If
                 Game.pushLblEvent("With a flash of light, you suddenly find yourself at random to another portion of the dungeon.")
-                Game.player.pos = Game.randPoint
+                Game.player.pos = Game.currfloor.randPoint
             End If
         End If
     End Sub

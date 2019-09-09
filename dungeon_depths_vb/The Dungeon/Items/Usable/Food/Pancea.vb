@@ -20,6 +20,8 @@
         End If
         Dim av = New AntiVenomEffect
         av.apply(Game.player)
+        Game.player.perks("slutcurse") = -1
+        Equipment.antiClothingCurse()
         Game.player.health = 1
         Game.player.revertToSState()
     End Sub

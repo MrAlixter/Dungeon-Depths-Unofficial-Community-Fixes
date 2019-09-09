@@ -105,7 +105,8 @@ Public Class Transformation
             Not p.pClass.name.Equals("Magic Girl") And
             Not p.pClass.name.Equals("Valkyrie") And
             Not p.pClass.name.Equals("Unconscious") And
-            Not p.pForm.name.Equals("Blowup Doll") Then Return True
+            Not p.pForm.name.Equals("Blowup Doll") And
+            Not p.perks("astatue") > 1 Then Return True
         'MsgBox(Game.player.ongoingTFs.Count < 1 & vbCrLf &
         '    (Not p.polymorphs.ContainsKey(p.pClass.name) And Not p.polymorphs.ContainsKey(p.pForm.name)) & vbCrLf &
         '    Not p.pClass.name.Equals("Magic Girl") & vbCrLf &

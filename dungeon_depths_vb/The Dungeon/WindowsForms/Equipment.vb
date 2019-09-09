@@ -42,9 +42,9 @@
     'handles the click of the 'ok' button
     Private Sub btnACPT_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles btnACPT.Click
         'if clothes offer resistance on the way off, this handles that
-        If (p.equippedArmor.getName.Equals("Ropes") And cmbobxArmor.SelectedItem <> "Ropes") Or (p.equippedArmor.getName.Equals("Living_Armor") _
-            And cmbobxArmor.SelectedItem <> "Living_Armor") Or (p.equippedArmor.getName.Equals("Living_Lingerie") And cmbobxArmor.SelectedItem <> "Living_Lingerie") _
-            Or (p.equippedAcce.getName.Equals("Slave_Collar") And cboxAccessory.SelectedItem <> "Slave_Collar") Then
+        If (Not p.equippedArmor.getName.Equals(cboxArmor.SelectedItem) And p.equippedArmor.isCursed) _
+            Or (Not p.equippedWeapon.getName.Equals(cboxWeapon.SelectedItem) And p.equippedWeapon.isCursed) _
+            Or (Not p.equippedAcce.getName.Equals(cboxAccessory.SelectedItem) And p.equippedAcce.isCursed) Then
             If Int(Rnd() * 2) = 0 Then
                 Game.pushLblEvent("Despite a struggle agaisnt your bonds, you are unable to escape!  Oh well, maybe next time...")
                 Me.Close()
@@ -61,13 +61,13 @@
 
         'this handles the revert from the magical girl form, if needed
         Dim revertFlag As Boolean = False
-        If p.equippedWeapon.getName.Equals("Magic_Girl_Wand") And p.pClass.name.Equals("Magic Girl") And Not cmbobxWeapon.Text.Equals("Magic_Girl_Wand") Then
+        If p.equippedWeapon.getName.Equals("Magic_Girl_Wand") And p.pClass.name.Equals("Magic Girl") And Not cboxWeapon.Text.Equals("Magic_Girl_Wand") Then
             Game.pushLstLog("Putting away your wand causes you to change into your regular self!")
             p.inv.add(10, -1)
             p.magGState.save(p)
             p.revertToPState()
             revertFlag = True
-        ElseIf p.equippedWeapon.getName.Equals("Valkyrie_Sword") And p.pClass.name.Equals("Valkyrie") And Not cmbobxWeapon.Text.Equals("Valkyrie_Sword") Then
+        ElseIf p.equippedWeapon.getName.Equals("Valkyrie_Sword") And p.pClass.name.Equals("Valkyrie") And Not cboxWeapon.Text.Equals("Valkyrie_Sword") Then
             Game.pushLstLog("Putting away your sword causes you to change into your regular self!")
             p.inv.add(95, -1)
             p.revertToPState()
@@ -76,17 +76,17 @@
 
         'equip the new armor
         If Not revertFlag Then
-            If Not cmbobxArmor.Text.Equals(p.equippedArmor.getName) Then
+            If Not cboxArmor.Text.Equals(p.equippedArmor.getName) Then
                 If p.equippedArmor.mBoost > 0 Then p.mana += p.equippedArmor.mBoost
             End If
-            clothesChange(cmbobxArmor.Text)
+            clothesChange(cboxArmor.Text)
         End If
 
         'handles the equiping of weapons
-        If Not cmbobxWeapon.Text.Equals(p.equippedWeapon.getName) Then
+        If Not cboxWeapon.Text.Equals(p.equippedWeapon.getName) Then
             If p.equippedWeapon.mBoost > 0 Then p.mana += p.equippedWeapon.mBoost
         End If
-        weaponChange(cmbobxWeapon.Text)
+        weaponChange(cboxWeapon.Text)
 
         'equip the new accessory
         If Not revertFlag Then accChange(cboxAccessory.Text)
@@ -118,6 +118,9 @@
         If p.perks("rotlg") > -1 Then
             PerkEffects.ROTLGRoute()
         End If
+        If p.perks("bowtie") > -1 Then
+            PerkEffects.BowTieRoute()
+        End If
         p.UIupdate()
 
         Me.Close()
@@ -147,47 +150,47 @@
         Next
 
         'adds the default clothes for various forms
-        cmbobxArmor.Items.Add("Naked")
+        cboxArmor.Items.Add("Naked")
         If p.pClass.name = "Bimbo" Or p.perks("slutcurse") > -1 Or p.equippedArmor.getName.Equals("Skimpy_Clothes") Then
-            cmbobxArmor.Items.Add("Skimpy_Clothes")
+            cboxArmor.Items.Add("Skimpy_Clothes")
         ElseIf (p.perks("slutcurse") > -1 And p.equippedArmor.getName.Equals("Skimpy_Clothes")) Or p.equippedArmor.getName.Equals("Very_Skimpy_Clothes") Then
-            cmbobxArmor.Items.Add("Very_Skimpy_Clothes")
+            cboxArmor.Items.Add("Very_Skimpy_Clothes")
         ElseIf p.pClass.name = "Princess" Then
-            cmbobxArmor.Items.Add("Regal_Gown")
+            cboxArmor.Items.Add("Regal_Gown")
         ElseIf p.pClass.name = "Maid" Then
-            cmbobxArmor.Items.Add("Maid_Outfit")
+            cboxArmor.Items.Add("Maid_Outfit")
         ElseIf p.pForm.name = "Succubus" Or p.pForm.name = "Half-Succubus" Then
-            cmbobxArmor.Items.Add("Succubus_Garb")
+            cboxArmor.Items.Add("Succubus_Garb")
         ElseIf p.pForm.name = "Slime" Then
-            cmbobxArmor.Items.Add("Gelatinous_Shell")
+            cboxArmor.Items.Add("Gelatinous_Shell")
         ElseIf p.pForm.name = "Goo Girl" Then
-            cmbobxArmor.Items.Add("Gelatinous_Negligee")
+            cboxArmor.Items.Add("Gelatinous_Negligee")
         ElseIf p.pClass.name = "Goddess" Then
-            cmbobxArmor.Items.Add("Goddess_Gown")
+            cboxArmor.Items.Add("Goddess_Gown")
         Else
-            cmbobxArmor.Items.Add("Common_Clothes")
+            cboxArmor.Items.Add("Common_Clothes")
         End If
 
         'adds the default weapon (fists)
-        cmbobxWeapon.Items.Add("Fists")
+        cboxWeapon.Items.Add("Fists")
 
         'adds the default accessory (nothing)
         cboxAccessory.Items.Add("Nothing")
 
         'adds all weapons and armors that the player posesses to their respective menus
         For Each v In aList.Values
-            If v.count > 0 Then cmbobxArmor.Items.Add(v.getName())
+            If v.count > 0 Then cboxArmor.Items.Add(v.getName())
         Next
         For Each v In wList.Values
-            If v.count > 0 Then cmbobxWeapon.Items.Add(v.getName())
+            If v.count > 0 Then cboxWeapon.Items.Add(v.getName())
         Next
         For Each v In acList.Values
             If v.count > 0 Then cboxAccessory.Items.Add(v.getName())
         Next
 
         'sets the text of the drop-downs to the player's equipment
-        cmbobxWeapon.SelectedItem = p.equippedWeapon.getName()
-        cmbobxArmor.SelectedItem = p.equippedArmor.getName()
+        cboxWeapon.SelectedItem = p.equippedWeapon.getName()
+        cboxArmor.SelectedItem = p.equippedArmor.getName()
         cboxAccessory.SelectedItem = p.equippedAcce.getName()
     End Sub
 
@@ -196,33 +199,45 @@
         If p.equippedArmor.slutVarInd = -1 Then Return False
 
         If p.equippedArmor.getName.Equals("Common_Clothes") Then
+            p.equippedArmor.onUnequip()
             p.equippedArmor = New SkimpyClothes
         ElseIf p.equippedArmor.getName.Equals("Skimpy_Clothes") Then
+            p.equippedArmor.onUnequip()
             p.equippedArmor = New VSkimpyClothes
         Else
             Dim equippedArmorIndex = p.equippedArmor.id
             Dim slutVarIndex = p.equippedArmor.slutVarInd
             p.inv.add(equippedArmorIndex, -1)
             p.inv.add(slutVarIndex, 1)
-            p.equippedArmor = p.inv.item(slutVarIndex)
+            clothesChange(p.inv.item(slutVarIndex).getAName)
         End If
         Game.pushLstLog("Your curse changes your clothes.")
-        If Not Game.lblEvent.Visible Then Game.pushLblEvent("As you adust your clothes, a crackling pink lightning coats them and they begin to shift across your body.  As the flashes of magic intensify, and despite your panic, you find yourself forced to close your eyes at the risk of being overwhelmed by the blaze erupting from your equipment.  As soon as it started, the curse finishes its work and you hesitantly open your eyes only to find nothing seems to be amiss after all.  You take off and inspect the outfit which, as far as you can tell, doesn't seem any different after all.  Unconcerned by your brief nudity, you get dressed again and with a twirl you set back out on your adventure.")
+        If Not Game.lblEvent.Visible Then
+            If p.isUnwilling Then
+                'Author Credit: Big Iron Red
+                Game.pushLblEvent("As you adjust your clothes, a crackling pink lightning coats them and they begin to shift across your body.  The flashes of magic intensify, and despite your panic, you find yourself forced to close your eyes at the risk of being overwhelmed by the blaze erupting from your equipment. As soon as it started, the curse finishes its work and you hesitantly open your eyes, feeling an oddly cold draft as you do so. You look down in abject horror as you find your previously protective armor has become a humiliatingly feminine facsimile of itself.\n" &
+                                  "You quickly remove the outfit in a vain attempt to regain your former equipment, yet it remains the same embarrassingly useless ensemble that serves only to show the world your feminine body. Tears welling in your eyes, you slip back on what used to be your original armor, feeling incredibly exposed and vulnerable. ""How will anyone take me seriously wearing this?"" you think, as you wobble unsteadily ahead, followed by the unmistakable sound of high heels clicking on the dungeon floor.")
+            Else
+                Game.pushLblEvent("As you adust your clothes, a crackling pink lightning coats them and they begin to shift across your body.  As the flashes of magic intensify, and despite your panic, you find yourself forced to close your eyes at the risk of being overwhelmed by the blaze erupting from your equipment.  As soon as it started, the curse finishes its work and you hesitantly open your eyes only to find nothing seems to be amiss after all.  You take off and inspect the outfit which, as far as you can tell, doesn't seem any different after all.  Unconcerned by your brief nudity, you get dressed again and with a twirl you set back out on your adventure.")
+            End If
+        End If
         Return True
     End Function
     Function antiClothingCurse() As Boolean
         If p.equippedArmor.antiSlutVarInd = -1 Then Return False
 
         If p.equippedArmor.getName.Equals("Skimpy_Clothes") Then
+            p.equippedArmor.onUnequip()
             p.equippedArmor = New CommonClothes
         ElseIf p.equippedArmor.getName.Equals("Very_Skimpy_Clothes") Then
+            p.equippedArmor.onUnequip()
             p.equippedArmor = New SkimpyClothes
         Else
             Dim equippedArmorIndex = p.equippedArmor.id
             Dim antiSlutVarIndex = p.equippedArmor.antiSlutVarInd
             p.inv.add(equippedArmorIndex, -1)
             p.inv.add(antiSlutVarIndex, 1)
-            p.equippedArmor = p.inv.item(antiSlutVarIndex)
+            clothesChange(p.inv.item(antiSlutVarIndex).getAName)
         End If
 
         Game.pushLstLog("Your curse changes your clothes.")
@@ -245,7 +260,7 @@
             Next
             If sArmor Is Nothing Then Exit Sub
             p.equippedArmor = sArmor
-            cmbobxArmor.Text = clothes
+            cboxArmor.Text = clothes
             p.equippedArmor.onEquip()
         End If
     End Sub

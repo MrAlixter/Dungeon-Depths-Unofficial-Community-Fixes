@@ -41,21 +41,21 @@ Public Class TileSelector
         map = New Bitmap(Game.mBoardWidth + 2, Game.mBoardHeight + 2)
         For boardX = 0 To map.Width - 3
             For boardY = 0 To map.Height - 3
-                If (Game.mBoard(boardY, boardX).Text = "#") Then 'Chest
+                If (Game.currfloor.mBoard(boardY, boardX).Text = "#") Then 'Chest
                     map.SetPixel(boardX + 1, boardY + 1, Color.Yellow)
-                ElseIf (Game.mBoard(boardY, boardX).Text = "H") Then 'Stairs
+                ElseIf (Game.currfloor.mBoard(boardY, boardX).Text = "H") Then 'Stairs
                     map.SetPixel(boardX + 1, boardY + 1, Color.Sienna)
-                ElseIf (Game.mBoard(boardY, boardX).Text = "@" And Game.player.pos.X = boardX And Game.player.pos.Y = boardY) Then 'Player
+                ElseIf (Game.currfloor.mBoard(boardY, boardX).Text = "@" And Game.player.pos.X = boardX And Game.player.pos.Y = boardY) Then 'Player
                     map.SetPixel(boardX + 1, boardY + 1, Color.LawnGreen)
-                ElseIf (Game.mBoard(boardY, boardX).Text = "@") Then 'Statue
+                ElseIf (Game.currfloor.mBoard(boardY, boardX).Text = "@") Then 'Statue
                     map.SetPixel(boardX + 1, boardY + 1, Color.LightSlateGray)
-                ElseIf (Game.mBoard(boardY, boardX).Text = "$") Then 'NPC
+                ElseIf (Game.currfloor.mBoard(boardY, boardX).Text = "$") Then 'NPC
                     map.SetPixel(boardX + 1, boardY + 1, Color.Blue)
-                ElseIf (Game.mBoard(boardY, boardX).Text = "+") Then 'Trap
+                ElseIf (Game.currfloor.mBoard(boardY, boardX).Text = "+") Then 'Trap
                     map.SetPixel(boardX + 1, boardY + 1, Color.Red)
-                ElseIf (Game.mBoard(boardY, boardX).Tag = 2) Then 'Seen
+                ElseIf (Game.currfloor.mBoard(boardY, boardX).Tag = 2) Then 'Seen
                     map.SetPixel(boardX + 1, boardY + 1, Color.White)
-                ElseIf (Game.mBoard(boardY, boardX).Tag = 1) Then 'Unseen
+                ElseIf (Game.currfloor.mBoard(boardY, boardX).Tag = 1) Then 'Unseen
                     map.SetPixel(boardX + 1, boardY + 1, Color.Gray)
                 Else 'Nothing
                     map.SetPixel(boardX + 1, boardY + 1, Color.Black)

@@ -101,8 +101,10 @@
             Return 5
         ElseIf key = "FrontHair" Or key = "Glasses" Then
             Return 6
-        ElseIf key = "Eyes" Or key = "Hat" Then
+        ElseIf key = "Eyes" Then
             Return 7
+        ElseIf key = "Hat" Then
+            Return 9
         ElseIf key = "Eyebrows" Then
             Return 2
         Else

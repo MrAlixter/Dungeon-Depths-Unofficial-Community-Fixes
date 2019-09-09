@@ -17,6 +17,7 @@
         'Potions
         inv.setCount("Health_Potion", 1)
         inv.setCount("Mana_Potion", 1)
+        inv.setCount("Anti_Venom", 1)
         'Food
         inv.setCount("Chicken_Leg", 1)
         'Armor/Accesories

@@ -7,7 +7,6 @@
         setATK(999)
         setDEF(99)
         setSPD(99)
-
         'Define the inventory
         inv = New Inventory(False)
         'Useables

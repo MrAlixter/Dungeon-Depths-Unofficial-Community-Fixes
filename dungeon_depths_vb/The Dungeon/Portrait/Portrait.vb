@@ -53,7 +53,7 @@
             ElseIf img(i).Size.Height <= 300 Then
                 g.DrawImage(img(i), 1, 1, 144, 216)
             Else
-                g.DrawImage(img(i), -9, -38)
+                g.DrawImage(img(i), -11, -40, 164, 610)
             End If
         Next
         Return bmp
@@ -61,15 +61,15 @@
     Shared Function CreateFullBodyBMP(ByRef img() As Image) As Bitmap
         Dim bmp As New Bitmap(164, 610)
         Dim g As Graphics = Graphics.FromImage(bmp)
-        If img(0).Size.Height <> 144 Then g.DrawImage(img(0), 0, 0, 146, 216) Else g.DrawImage(img(0), 0, 0, 144, 144)
+        g.DrawImage(img(0), 0, 0, 164, 610)
         For i = 1 To UBound(img)
             If img(i) Is Nothing Then img(i) = CharacterGenerator.picPort.Image
             If img(i).Size.Height <= 144 Then
-                g.DrawImage(img(i), 1, 1, 144, 144)
+                g.DrawImage(img(i), 10, 39, 144, 144)
             ElseIf img(i).Size.Height <= 300 Then
-                g.DrawImage(img(i), 1, 1, 144, 216)
+                g.DrawImage(img(i), 10, 39, 144, 216)
             Else
-                g.DrawImage(img(i), -9, -38)
+                g.DrawImage(img(i), -1, 0, 164, 610)
             End If
         Next
         Return bmp
@@ -133,6 +133,7 @@
         changeSkinColor(skincolor)
 
         hideEars()
+        hideRearHair()
 
         If Not ent Is Nothing AndAlso ent.lust > 0 Then lustBlushUpdate()
         If wingInd > 0 Then addWings(wingInd)
@@ -165,6 +166,7 @@
         End If
 
         hideEars()
+        hideRearHair()
         If ent.lust > 0 Then lustBlushUpdate()
         If wingInd > 0 Then addWings(wingInd)
         If hornInd > 0 Then addHorns(hornInd)
@@ -202,10 +204,10 @@
         End Select
     End Sub
     Sub addWings(ByVal i As Integer)
-        iArr(1) = CreateBMP({imgLib.atrs("Wings").getM(i), iArr(1)})
+        iArr(1) = CreateFullBodyBMP({CharacterGenerator.picPort.Image, imgLib.atrs("Wings").getM(i), iArr(1)})
     End Sub
     Sub addHorns(ByVal i As Integer)
-        iArr(15) = CreateBMP({imgLib.atrs("Horns").getM(i), iArr(15)})
+        iArr(15) = CreateFullBodyBMP({CharacterGenerator.picPort.Image, imgLib.atrs("Horns").getM(i), iArr(15)})
     End Sub
     Sub hideEars()
         If iArrInd(6).Item1 = 1 Or iArrInd(6).Item1 = 2 Or (Not iArrInd(5).Item2 And iArrInd(5).Item1 <> 2) Or (iArrInd(5).Item2 And checkNDefFemInd(5, 10)) Then Exit Sub
@@ -219,6 +221,11 @@
            Not checkNDefFemInd(6, 3) And
            Not checkNDefFemInd(6, 9) Then
             iArr(6) = Portrait.recolor2(imgLib.atrs("Ears").getAt(iArrInd(6)), c)
+        End If
+    End Sub
+    Sub hideRearHair()
+        If checkNDefFemInd(16, 9) Then
+            iArr(1) = imgLib.atrs("Hat").getAt(New Tuple(Of Integer, Boolean, Boolean)(10, True, True))
         End If
     End Sub
     Sub setIAInd(ByVal attrInd As Integer, ByVal i As Integer, ByVal b As Boolean, ByVal nonDefFlag As Boolean)

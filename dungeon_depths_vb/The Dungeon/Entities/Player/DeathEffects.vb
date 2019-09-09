@@ -66,6 +66,7 @@
     End Sub
     Shared Sub slimeDeath()
         Dim p As Player = Game.player
+        'Author Credit: Marionette
         Dim out As String = "As the " & p.currTarget.name & " closes in you push yourself off the ground, a burst of adrenaline pushing through your fatigue as you sidestep around it and beat a hasty retreat. While your back is turned to it, however, the " & p.currTarget.name & " whips a ball of goo towards you, the impact causing you to stumble as the goo strikes your back. You can already feel it starting to writhe and squirm as it begins to move…"
         p.currTarget.despawn("p-death")
         If p.perks("slimetf") = -1 Then
@@ -82,8 +83,8 @@
         If p.perks("googirltf") = -1 Then
             p.perks("googirltf") = 1
         End If
+
         p.ongoingTFs.Add(New GooGirlTF(p.perks("googirltf")))
-        p.perks("googirltf") += 1
         Game.pushLblEvent(out, AddressOf p.update)
     End Sub
 
@@ -163,6 +164,10 @@
     End Sub
 
     '|BOSS / MINIBOSS DEATHS|
+    Shared Sub marissaASDeath()
+        Dim mdtf = New MASBimboTF
+        mdtf.step2()
+    End Sub
     Shared Sub oozeEmpDeath()
         Dim p As Player = Game.player
         p.currTarget.despawn("p-death")
@@ -175,7 +180,7 @@
         p.pState.save(p)
         Game.pushLblEvent("You awaken once again, in another body, in another part of the dungeon.")
 
-        p.pos = Game.randPoint
+        p.pos = Game.currfloor.randPoint
 
         p.update()
     End Sub

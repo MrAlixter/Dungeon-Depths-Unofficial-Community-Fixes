@@ -82,7 +82,9 @@
 
         p.polymorphs(form) = PolymorphTF.newPoly(form)
         p.ongoingTFs.Add(p.polymorphs(form))
+        p.perks("polymorphed") = p.polymorphs(form).getturnsTilNextStep
 
+        If form = "MASBimbo" Then form = "Bimbo"
         If p.forms.Keys.Contains(form) Then
             p.pForm = p.forms(form)
         ElseIf p.classes.Keys.Contains(form) Then
@@ -90,8 +92,6 @@
         End If
 
         'cleanup
-        p.perks("polymorphed") = p.polymorphs(form).getturnsTilNextStep
-
         Game.pushLblEvent(revertText & Game.lblEvent.Text.Split(vbCrLf)(0))
         p.specialRoute()
         p.magicRoute()
@@ -189,7 +189,7 @@
     End Sub
 
     Shared Sub giveRNDFName(ByRef p As Player)
-        If Game.floor < 5 Then Randomize(Game.floorLayouts(Game.floor).GetHashCode) Else Randomize()
+        Randomize()
         Dim fFNames() As String = {"Abigail", "Abby", "Anna", "Ann", "Ana", "Alexis", "Allie", _
                                "Becky", _
                                "Christine", "Casandra", "Catherine", "Cassie", "Carol", "Caroline", "Cara", _
@@ -209,7 +209,7 @@
         p.name = fFNames(Int(Rnd() * fFNames.Length))
     End Sub
     Shared Sub giveRNDMName(ByRef p As Player)
-        If Game.floor < 5 Then Randomize(Game.floorLayouts(Game.floor).GetHashCode) Else Randomize()
+        Randomize()
         Dim fFNames() As String = {"Aaron", "Alan", "Alexander", _
                                "Bob", "Bruce", "Brandon", "Bailey", _
                                "Chris", "Ciaran", _
@@ -232,7 +232,7 @@
         p.name = fFNames(Int(Rnd() * fFNames.Length))
     End Sub
     Shared Sub giveRNDBimName(ByRef p As Player)
-        If Game.floor < 5 Then Randomize(Game.floorLayouts(Game.floor).GetHashCode) Else Randomize()
+        Randomize()
         Dim fFNames() As String = {"Anna", "Ann", "Ana", "Alexis", "Allie", "Amber", "Ali", _
                                "Becky", _
                                "Christine", "Casandra", "Cassie", "Cara", "Chloe", _

@@ -20,7 +20,7 @@
         bsize3 = New Tuple(Of Integer, Boolean, Boolean)(86, True, True)
         bsize4 = New Tuple(Of Integer, Boolean, Boolean)(88, True, True)
         MyBase.compressesBreasts = True
-
+        MyBase.isCursed = True
         MyBase.isRandoTFAcceptable = False
     End Sub
 
