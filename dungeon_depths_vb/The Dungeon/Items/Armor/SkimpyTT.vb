@@ -2,7 +2,7 @@
     Inherits Armor
 
     Sub New()
-        MyBase.setName("Skimpy_Tube_Top")
+        MyBase.setName("Skimpy_Tank_Top")
         MyBase.setDesc("Barely there, this skimpy outfit boosts agility.")
         id = 147
         tier = Nothing

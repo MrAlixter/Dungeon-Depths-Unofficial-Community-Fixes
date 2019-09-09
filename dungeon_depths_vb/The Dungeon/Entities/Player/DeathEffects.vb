@@ -83,8 +83,8 @@
         If p.perks("googirltf") = -1 Then
             p.perks("googirltf") = 1
         End If
+
         p.ongoingTFs.Add(New GooGirlTF(p.perks("googirltf")))
-        p.perks("googirltf") += 1
         Game.pushLblEvent(out, AddressOf p.update)
     End Sub
 

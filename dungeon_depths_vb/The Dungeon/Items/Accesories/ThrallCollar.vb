@@ -21,7 +21,7 @@
     End Sub
     Overrides Sub onEquip()
         Dim p As Player = Game.player
-
+        If p.pForm.Equals("Half-Succubus") Or p.pClass.Equals("Thrall") Then Exit Sub
         MagGirlTF.chkForMagGirlRevert(p)
 
         p.perks("thrall") = 0
@@ -44,6 +44,7 @@
     Sub forceEquip()
         Dim p As Player = Game.player
 
+        If p.pForm.Equals("Half-Succubus") Or p.pClass.Equals("Thrall") Then Exit Sub
         MagGirlTF.chkForMagGirlRevert(p)
 
         p.perks("thrall") = 0
@@ -70,7 +71,10 @@
         p.createP()
     End Sub
     Public Overrides Sub onUnequip()
-        Dim p As player = game.player
+        Dim p As Player = Game.player
+
+        If p.pForm.Equals("Half-Succubus") Or p.pClass.Equals("Thrall") Then Exit Sub
+
         For i = 0 To p.ongoingTFs.Count - 1
             If i < p.ongoingTFs.Count Then
                 If p.ongoingTFs(i).GetType() Is GetType(ThrallTF) Then

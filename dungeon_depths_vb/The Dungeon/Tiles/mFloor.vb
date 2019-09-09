@@ -73,7 +73,6 @@
 
         If floorNumber < 5 Then
             generateDungeonLevel(floorCode)
-            If floorNumber = 4 Then placeFloor4TrappedChest(Game.player)
         ElseIf floorNumber = 5 Then
             genBossFloor(Game.player)
         ElseIf floorNumber = 9999 Then
@@ -93,6 +92,7 @@
         p.pos = randPoint()
         playerPosition = p.pos
         mBoard(p.pos.Y, p.pos.X).Text = "@"
+        If floorNumber = 4 Then placeFloor4TrappedChest(Game.player)
     End Sub
     Sub placeChest(ByVal code As String)
         'Fill Chest Tier List
@@ -619,12 +619,14 @@
                                   New Point(p.pos.X - 1, p.pos.Y + 1)}
         Dim pt As Point = possiblePoints(0)
         Dim i = 0
-        Do While (mBoard(pt.Y, pt.X).Tag < 1 Or mBoard(pt.Y, pt.X).Text <> "") And i < possiblePoints.Count
+        Do While (mBoard(pt.Y, pt.X).Tag < 1 Or mBoard(pt.Y, pt.X).Text <> "") And i < possiblePoints.Count - 1
             i += 1
             pt = possiblePoints(i)
         Loop
         Dim c As Chest = New LoadedChest(pt, 4)
         chestList.Add(c)
+        mBoard(c.pos.Y, c.pos.X).ForeColor = Color.FromArgb(45, 45, 45)
+        mBoard(c.pos.Y, c.pos.X).Text = "#"
     End Sub
     'floor 5
     Sub genMedusaStatues()

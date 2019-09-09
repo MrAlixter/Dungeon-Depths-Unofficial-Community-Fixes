@@ -1518,6 +1518,9 @@ Public Class Game
             ElseIf keyspresed = "aeio" Then
                 player.inv.add(149, 1)
                 player.UIupdate()
+            ElseIf keyspresed = "wasd" Then
+                player.inv.add(143, 1)
+                player.UIupdate()
             End If
         End If
         keyspresed = ""

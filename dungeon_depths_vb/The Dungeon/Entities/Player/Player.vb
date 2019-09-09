@@ -458,12 +458,14 @@
     Public Overrides Sub attackCMD(ByRef target As Entity)
         Randomize()
 
+
         If pClass.name.Equals("Barbarian") Then
             aBuff -= perks("barbarian")
             perks("barbarian") = 0
         End If
 
         Dim dmg As Integer = equippedWeapon.attack(Me, target)
+
         If dmg = -1 Then
             miss(target)
         ElseIf dmg = -2 Then
@@ -488,40 +490,40 @@
         MyBase.currTarget = t
     End Sub
     Public Sub cHit(dmg As Integer, target As NPC)
-        Game.pushLstLog(CStr("You hit" & target.title & " " & target.getName() & " for " & dmg * 3 & " damage!  Critical hit!"))
-        Game.pushLblCombatEvent(CStr("You hit" & target.title & " " & target.getName() & " for " & dmg * 3 & " damage!  Critical hit!"))
+        Game.pushLstLog(CStr("You hit" & target.title.ToLower & target.getName() & " for " & dmg * 3 & " damage!  Critical hit!"))
+        Game.pushLblCombatEvent(CStr("You hit" & target.title.ToLower & target.getName() & " for " & dmg * 3 & " damage!  Critical hit!"))
         target.isStunned = True
         target.stunct = 0
         target.takeDMG(dmg * 3, Me)
     End Sub
     'attacking a non npc
     Private Sub miss(target As Entity)
-        Game.pushLstLog(CStr("You miss " & target.getName() & "!"))
-        Game.pushLblCombatEvent(CStr("You miss " & target.getName() & "!"))
         If target.GetType() Is GetType(NPC) Or target.GetType.IsSubclassOf(GetType(NPC)) Then
             miss(CType(target, NPC))
             Exit Sub
         End If
+
+        Game.pushLstLog(CStr("You miss " & target.getName() & "!"))
+        Game.pushLblCombatEvent(CStr("You miss " & target.getName() & "!"))
     End Sub
     Private Sub hit(dmg As Integer, target As Entity)
-        Game.pushLstLog(CStr("You hit " & target.getName() & " for " & dmg & " damage!"))
-        Game.pushLblCombatEvent(CStr("You hit " & target.getName() & " for " & dmg & " damage!"))
         If target.GetType() Is GetType(NPC) Or target.GetType.IsSubclassOf(GetType(NPC)) Then
             hit(dmg, CType(target, NPC))
             Exit Sub
         End If
 
+        Game.pushLstLog(CStr("You hit " & target.getName() & " for " & dmg & " damage!"))
+        Game.pushLblCombatEvent(CStr("You hit " & target.getName() & " for " & dmg & " damage!"))
         target.takeDMG(dmg, Me)
     End Sub
     Private Sub cHit(dmg As Integer, target As Entity)
-        Game.pushLstLog(CStr("You hit " & target.getName() & " for " & dmg * 3 & " damage!  Critical hit!"))
-        Game.pushLblCombatEvent("You hit " & target.getName() & " for " & dmg * 3 & " damage!  Critical hit!")
-
         If target.GetType() Is GetType(NPC) Or target.GetType.IsSubclassOf(GetType(NPC)) Then
             cHit(dmg, CType(target, NPC))
             Exit Sub
         End If
 
+        Game.pushLstLog(CStr("You hit " & target.getName() & " for " & dmg * 3 & " damage!  Critical hit!"))
+        Game.pushLblCombatEvent("You hit " & target.getName() & " for " & dmg * 3 & " damage!  Critical hit!")
         target.takeDMG(dmg * 3, Me)
     End Sub
     'taking damage

@@ -314,6 +314,7 @@
     <Compile Include="Items\Services\NameChange.vb" />
     <Compile Include="Items\Services\BimboLesson.vb" />
     <Compile Include="Items\Usable\Charms\WillCharm.vb" />
+    <Compile Include="Items\Usable\AntiSCurseTag.vb" />
     <Compile Include="Items\Usable\ManaHibiscus.vb" />
     <Compile Include="Items\Usable\CryoGrenade.vb" />
     <Compile Include="Items\Usable\Food\WFeast.vb" />
@@ -1080,6 +1081,9 @@
     <Content Include="img\fTF\tfEyes\tfEyes36.png">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
+    <Content Include="img\fTF\tfEyes\tfEyes37.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
     <Content Include="img\fTF\tfFace\fFace2.png">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
@@ -1150,6 +1154,9 @@
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
     <Content Include="img\fTF\tfMouth\fMouth18.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="img\fTF\tfMouth\fMouth19.png">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
     <Content Include="img\fTF\tfRearHair1\tfRearHair21.png">

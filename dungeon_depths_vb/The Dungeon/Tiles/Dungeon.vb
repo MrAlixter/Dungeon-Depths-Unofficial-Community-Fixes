@@ -1,7 +1,7 @@
 ﻿Imports System.ComponentModel
 
 <Serializable()> Public Class Dungeon
-    Public floorboss() As String = {"Floor0", "Marissa the Enchantress", "Targax the Brutal", "Key", "Key", "Medusa"} 'boss names (NOT SAVED)
+    Public floorboss() As String = {"Floor0", "Marissa the Enchantress", "Targax the Brutal", "Key", "Key", "Medusa"} 'boss names
     Public floors As Dictionary(Of Integer, mFloor) = New Dictionary(Of Integer, mFloor)
     Public floorCodes As List(Of String) = New List(Of String)
 

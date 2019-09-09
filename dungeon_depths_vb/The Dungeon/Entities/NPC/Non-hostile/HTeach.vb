@@ -17,15 +17,17 @@
         inv.item("Advanced_Spellbook").value -= 0.2 * MyBase.inv.item("Advanced_Spellbook").value
         inv.setCount("Spellbook", 1)
         inv.item("Spellbook").value -= 0.2 * MyBase.inv.item("Spellbook").value
+        inv.setCount("Utility_Manual", 1)
+        inv.item("Utility_Manual").value -= 0.2 * MyBase.inv.item("Utility_Manual").value
+        inv.setCount("Combat_Manual", 1)
+        inv.item("Combat_Manual").value -= 0.2 * MyBase.inv.item("Combat_Manual").value
+        inv.setCount("Anti_Curse_Tag", 1)
+        'Services
         inv.setCount("Bimbo_Lesson", 1)
         inv.setCount("Barbarian_Lesson", 1)
         inv.setCount("Warlock_Lesson", 1)
         inv.setCount("Name_Change", 1)
         inv.setCount("Base_Form_Reset", 1)
-        inv.setCount("Utility_Manual", 1)
-        inv.item("Utility_Manual").value -= 0.2 * MyBase.inv.item("Utility_Manual").value
-        inv.setCount("Combat_Manual", 1)
-        inv.item("Combat_Manual").value -= 0.2 * MyBase.inv.item("Combat_Manual").value
 
         isShop = True
         setGold(99999)
