@@ -1,6 +1,7 @@
 ﻿Imports System.ComponentModel
 Imports System.IO
 Imports System.Threading
+
 'Imports DDTooltip
 
 Public Class Game
@@ -36,7 +37,7 @@ Public Class Game
     Public updateList As PQ = New PQ
     Public npcList As List(Of NPC) = New List(Of NPC)     'list of non-player updatables (NOT SAVED)
     Public shopNPCList As List(Of ShopNPC) = New List(Of ShopNPC)
-    Public shopkeeper, swiz, hteach, fvend As ShopNPC
+    Public shopkeeper, swiz, hteach, fvend, wsmith As ShopNPC
     Public currNPC As ShopNPC   'the current npc the player is talking to (NOT SAVED)
     Public pImage As Image  'which tile is used for the player (NOT SAVED)
     Public combatmode As Boolean = True 'indicates if the player is in combat (NOT SAVED)
@@ -61,7 +62,6 @@ Public Class Game
     Public yesAction, noAction As Action
     Public choiceText As String
     Public invFilters() As Boolean = {True, True, True, True, True, True, True}
-    'Dim eClock As Integer = 15
     Dim eClock As Integer = eClockResetVal * 3
     Public solFlag As Boolean = True
     Private trd As Thread
@@ -296,8 +296,10 @@ Public Class Game
         hteach = ShopNPC.shopFactory(2)
         updateLoadbar(16)
         fvend = ShopNPC.shopFactory(3)
+        updateLoadbar(18)
+        wsmith = ShopNPC.shopFactory(4)
         updateLoadbar(20)
-        shopNPCList.AddRange({shopkeeper, swiz, hteach, fvend})
+        shopNPCList.AddRange({shopkeeper, swiz, hteach, fvend, wsmith})
 
         'create the dungeon
         mDun = New Dungeon
@@ -435,17 +437,17 @@ Public Class Game
         If currFloor.mBoard(currFloor.stairs.Y, currFloor.stairs.X).Text <> "H" Then
             currFloor.mBoard(currFloor.stairs.Y, currFloor.stairs.X).Text = "H"
         End If
-        If currfloor.chestList.Count > 0 Then
-            For i = 0 To currfloor.chestList.Count - 1
-                If currfloor.mBoard(currfloor.chestList.Item(i).pos.Y, currfloor.chestList.Item(i).pos.X).Text <> "#" Then
-                    currfloor.mBoard(currfloor.chestList.Item(i).pos.Y, currfloor.chestList.Item(i).pos.X).Text = "#"
+        If currFloor.chestList.Count > 0 Then
+            For i = 0 To currFloor.chestList.Count - 1
+                If currFloor.mBoard(currFloor.chestList.Item(i).pos.Y, currFloor.chestList.Item(i).pos.X).Text <> "#" Then
+                    currFloor.mBoard(currFloor.chestList.Item(i).pos.Y, currFloor.chestList.Item(i).pos.X).Text = "#"
                 End If
             Next
         End If
-        If currfloor.statueList.Count > 0 Then
-            For i = 0 To currfloor.statueList.Count - 1
-                If currfloor.mBoard(currfloor.statueList.Item(i).pos.Y, currfloor.statueList.Item(i).pos.X).Text <> "@" Then
-                    currfloor.mBoard(currfloor.statueList.Item(i).pos.Y, currfloor.statueList.Item(i).pos.X).Text = "@"
+        If currFloor.statueList.Count > 0 Then
+            For i = 0 To currFloor.statueList.Count - 1
+                If currFloor.mBoard(currFloor.statueList.Item(i).pos.Y, currFloor.statueList.Item(i).pos.X).Text <> "@" Then
+                    currFloor.mBoard(currFloor.statueList.Item(i).pos.Y, currFloor.statueList.Item(i).pos.X).Text = "@"
                 End If
             Next
         End If
@@ -456,11 +458,11 @@ Public Class Game
             End If
         Next
 
-        If currfloor.mBoard(player.pos.Y, player.pos.X).Text = "+" Then
-            For i = 0 To currfloor.trapList.Count - 1
-                If currfloor.trapList(i).pos = player.pos Then
+        If currFloor.mBoard(player.pos.Y, player.pos.X).Text = "+" Then
+            For i = 0 To currFloor.trapList.Count - 1
+                If currFloor.trapList(i).pos = player.pos Then
                     Try
-                        currfloor.trapList(i).activate(i)
+                        currFloor.trapList(i).activate(i)
                     Catch ex As Exception
                         pushLblEvent("As you wander forward, your foot falls on a pressure plate.  As soon as you hear it click, you snap to attention.  Looking around, you see that nothing seems to have happened." & vbCrLf & "𝘚𝘰𝘮𝘦𝘵𝘩𝘪𝘯𝘨 𝘮𝘶𝘴𝘵 𝘩𝘢𝘷𝘦 𝘨𝘰𝘯𝘦 𝘸𝘳𝘰𝘯𝘨 𝘸𝘪𝘵𝘩 𝘵𝘩𝘦 𝘵𝘳𝘢𝘱'𝘴 𝘢𝘤𝘵𝘪𝘷𝘢𝘵𝘪𝘰𝘯...")
                     End Try
@@ -469,7 +471,7 @@ Public Class Game
             Next
         End If
 
-        currfloor.mBoard(player.pos.Y, player.pos.X).Text = "@"
+        currFloor.mBoard(player.pos.Y, player.pos.X).Text = "@"
 
         zoom()
 
@@ -488,29 +490,29 @@ Public Class Game
                 For indY = -viewRad To viewRad
                     For indX = -viewRad To viewRad
                         If player.pos.Y + indY < mBoardHeight And player.pos.Y + indY >= 0 And player.pos.X + indX < mBoardWidth And player.pos.X + indX > 0 Then
-                            If (currfloor.mBoard(player.pos.Y + indY, player.pos.X + indX).Tag = 1) Then
+                            If (currFloor.mBoard(player.pos.Y + indY, player.pos.X + indX).Tag = 1) Then
                                 'g.FillRectangle(Brushes.Purple, (player.pos.X + indX) * imgSize, (player.pos.Y + indY) * imgSize, imgSize, imgSize)
                                 For thisX As Integer = (player.pos.X + indX) * imgSize To (player.pos.X + indX + 1) * imgSize
                                     For thisY As Integer = (player.pos.Y + indY) * imgSize To (player.pos.Y + indY + 1) * imgSize
                                         seenBoardPic.SetPixel(thisX, thisY, Color.Transparent)
                                     Next
                                 Next
-                                currfloor.mBoard(player.pos.Y + indY, player.pos.X + indX).Tag = 2
+                                currFloor.mBoard(player.pos.Y + indY, player.pos.X + indX).Tag = 2
                             End If
-                            If currfloor.mBoard(player.pos.Y + indY, player.pos.X + indX).Text = "@" Then currfloor.mBoard(player.pos.Y + indY, player.pos.X + indX).Text = ""
-                            If currfloor.mBoard(player.pos.Y + indY, player.pos.X + indX).Text = "H" And currfloor.mBoard(player.pos.Y + indY, player.pos.X + indX).Tag < 2 Then
-                                currfloor.mBoard(player.pos.Y + indY, player.pos.X + indX).ForeColor = Color.Black
+                            If currFloor.mBoard(player.pos.Y + indY, player.pos.X + indX).Text = "@" Then currFloor.mBoard(player.pos.Y + indY, player.pos.X + indX).Text = ""
+                            If currFloor.mBoard(player.pos.Y + indY, player.pos.X + indX).Text = "H" And currFloor.mBoard(player.pos.Y + indY, player.pos.X + indX).Tag < 2 Then
+                                currFloor.mBoard(player.pos.Y + indY, player.pos.X + indX).ForeColor = Color.Black
                                 pushLstLog("Floor " & mDun.numCurrFloor & ": Staircase Discovered")
                             End If
-                            If currfloor.mBoard(player.pos.Y + indY, player.pos.X + indX).Text = "#" And currfloor.mBoard(player.pos.Y + indY, player.pos.X + indX).Tag < 2 Then
-                                currfloor.mBoard(player.pos.Y + indY, player.pos.X + indX).ForeColor = Color.Black
+                            If currFloor.mBoard(player.pos.Y + indY, player.pos.X + indX).Text = "#" And currFloor.mBoard(player.pos.Y + indY, player.pos.X + indX).Tag < 2 Then
+                                currFloor.mBoard(player.pos.Y + indY, player.pos.X + indX).ForeColor = Color.Black
                                 pushLstLog("Chest discovered!")
                             End If
-                            If currfloor.mBoard(player.pos.Y + indY, player.pos.X + indX).Text = "$" And currfloor.mBoard(player.pos.Y + indY, player.pos.X + indX).Tag < 2 Then
-                                currfloor.mBoard(player.pos.Y + indY, player.pos.X + indX).ForeColor = Color.Navy
+                            If currFloor.mBoard(player.pos.Y + indY, player.pos.X + indX).Text = "$" And currFloor.mBoard(player.pos.Y + indY, player.pos.X + indX).Tag < 2 Then
+                                currFloor.mBoard(player.pos.Y + indY, player.pos.X + indX).ForeColor = Color.Navy
                                 pushLstLog("Shop discovered!")
                             End If
-                            If currfloor.mBoard(player.pos.Y + indY, player.pos.X + indX).Tag = 1 Then currfloor.mBoard(player.pos.Y + indY, player.pos.X + indX).Tag = 2
+                            If currFloor.mBoard(player.pos.Y + indY, player.pos.X + indX).Tag = 1 Then currFloor.mBoard(player.pos.Y + indY, player.pos.X + indX).Tag = 2
                         End If
                     Next
                 Next
@@ -527,20 +529,20 @@ Public Class Game
             For indY = -viewRad To viewRad
                 For indX = -viewRad To viewRad
                     If (player.pos.Y + indY < mBoardHeight And player.pos.Y + indY >= 0 And player.pos.X + indX < mBoardWidth And player.pos.X + indX >= 0) Then
-                        If currfloor.mBoard(player.pos.Y + indY, player.pos.X + indX).Text = "@" Then currfloor.mBoard(player.pos.Y + indY, player.pos.X + indX).Text = ""
-                        If currfloor.mBoard(player.pos.Y + indY, player.pos.X + indX).Text = "H" And currfloor.mBoard(player.pos.Y + indY, player.pos.X + indX).Tag < 2 Then
-                            currfloor.mBoard(player.pos.Y + indY, player.pos.X + indX).ForeColor = Color.Black
+                        If currFloor.mBoard(player.pos.Y + indY, player.pos.X + indX).Text = "@" Then currFloor.mBoard(player.pos.Y + indY, player.pos.X + indX).Text = ""
+                        If currFloor.mBoard(player.pos.Y + indY, player.pos.X + indX).Text = "H" And currFloor.mBoard(player.pos.Y + indY, player.pos.X + indX).Tag < 2 Then
+                            currFloor.mBoard(player.pos.Y + indY, player.pos.X + indX).ForeColor = Color.Black
                             pushLstLog("Floor " & mDun.numCurrFloor & ": Staircase Discovered")
                         End If
-                        If currfloor.mBoard(player.pos.Y + indY, player.pos.X + indX).Text = "#" And currfloor.mBoard(player.pos.Y + indY, player.pos.X + indX).Tag < 2 Then
-                            currfloor.mBoard(player.pos.Y + indY, player.pos.X + indX).ForeColor = Color.Black
+                        If currFloor.mBoard(player.pos.Y + indY, player.pos.X + indX).Text = "#" And currFloor.mBoard(player.pos.Y + indY, player.pos.X + indX).Tag < 2 Then
+                            currFloor.mBoard(player.pos.Y + indY, player.pos.X + indX).ForeColor = Color.Black
                             pushLstLog("Chest discovered!")
                         End If
-                        If currfloor.mBoard(player.pos.Y + indY, player.pos.X + indX).Text = "$" And currfloor.mBoard(player.pos.Y + indY, player.pos.X + indX).Tag < 2 Then
-                            currfloor.mBoard(player.pos.Y + indY, player.pos.X + indX).ForeColor = Color.Navy
+                        If currFloor.mBoard(player.pos.Y + indY, player.pos.X + indX).Text = "$" And currFloor.mBoard(player.pos.Y + indY, player.pos.X + indX).Tag < 2 Then
+                            currFloor.mBoard(player.pos.Y + indY, player.pos.X + indX).ForeColor = Color.Navy
                             pushLstLog("Shop discovered!")
                         End If
-                        If currfloor.mBoard(player.pos.Y + indY, player.pos.X + indX).Tag = 1 Then currfloor.mBoard(player.pos.Y + indY, player.pos.X + indX).Tag = 2
+                        If currFloor.mBoard(player.pos.Y + indY, player.pos.X + indX).Tag = 1 Then currFloor.mBoard(player.pos.Y + indY, player.pos.X + indX).Tag = 2
                     End If
                 Next
             Next
@@ -569,7 +571,7 @@ Public Class Game
         '13 = path
         '14 = h. teacher
         '15 = f. vendor
-        '16 = caelia
+        '16 = w. smith
 
         If testingImageBoard Then
             boxBoard.Refresh()
@@ -600,6 +602,7 @@ Public Class Game
                             If currFloor.mBoard(player.pos.Y + indY, player.pos.X + indX).Text = "$" And player.pos.Y + indY = swiz.pos.Y And player.pos.X + indX = swiz.pos.X Then viewArray(y, x) = 11
                             If currFloor.mBoard(player.pos.Y + indY, player.pos.X + indX).Text = "$" And player.pos.Y + indY = hteach.pos.Y And player.pos.X + indX = hteach.pos.X Then viewArray(y, x) = 14
                             If currFloor.mBoard(player.pos.Y + indY, player.pos.X + indX).Text = "$" And player.pos.Y + indY = fvend.pos.Y And player.pos.X + indX = fvend.pos.X Then viewArray(y, x) = 15
+                            If currFloor.mBoard(player.pos.Y + indY, player.pos.X + indX).Text = "$" And player.pos.Y + indY = wsmith.pos.Y And player.pos.X + indX = wsmith.pos.X Then viewArray(y, x) = 16
                             If currFloor.mBoard(player.pos.Y + indY, player.pos.X + indX).Text = "+" Then viewArray(y, x) = 8
                             If currFloor.mBoard(player.pos.Y + indY, player.pos.X + indX).Text = "c" Then viewArray(y, x) = 12
                             If player.perks("blind") > -1 Then viewArray(y, x) = 1
@@ -663,6 +666,8 @@ Public Class Game
                 mPics(y, x).BackgroundImage = picHT.BackgroundImage
             Case 15
                 mPics(y, x).BackgroundImage = picFVtile.BackgroundImage
+            Case 16
+                mPics(y, x).BackgroundImage = picWS.BackgroundImage
         End Select
     End Sub
     Sub setForestTileImg(ByVal x As Integer, ByVal y As Integer, ByRef viewArray As Integer(,))
@@ -700,6 +705,8 @@ Public Class Game
                 mPics(y, x).BackgroundImage = picHTf.BackgroundImage
             Case 15
                 mPics(y, x).BackgroundImage = picFVf.BackgroundImage
+            Case 16
+                mPics(y, x).BackgroundImage = picWSf.BackgroundImage
         End Select
     End Sub
     Sub setSpaceTileImg(ByVal x As Integer, ByVal y As Integer, ByRef viewArray As Integer(,))
@@ -742,7 +749,7 @@ Public Class Game
             Case 2
                 mPics(y, x).BackgroundImage = picLegaTile.BackgroundImage
             Case 3
-                mPics(y, x).BackgroundImage = piclegaStairs.BackgroundImage
+                mPics(y, x).BackgroundImage = picLegaStairs.BackgroundImage
             Case 4
                 mPics(y, x).BackgroundImage = player.pImage
             Case 5
@@ -1392,7 +1399,7 @@ Public Class Game
             keyspresed = keyspresed.Substring(1, 3)
         End If
 
-        Dim m = CInt(7.8152 * Math.Exp(-0.011 * player.getWIL))
+        Dim m = Math.Max(CInt(7.8152 * Math.Exp(-0.011 * player.getWIL)), 1)
         If player.mana < player.getMaxMana And turn Mod m = 0 Then
             Dim mregen = Math.Max(Int(player.getMaxMana / 15), 1)
             player.mana += mregen
@@ -1413,24 +1420,18 @@ Public Class Game
     Sub oemSemiColon()
         If combatmode Then Exit Sub
         'oemSemicolon triggers when a player hits the semicolon key, or any of its equivalents
-        If player.pos.Equals(shopkeeper.pos) Then
-            npcEncounter(shopkeeper)
-        End If
-        If player.pos.Equals(swiz.pos) Then
-            npcEncounter(swiz)
-        End If
-        If player.pos.Equals(hteach.pos) Then
-            npcEncounter(hteach)
-        End If
-        If player.pos.Equals(fvend.pos) Then
-            npcEncounter(fvend)
-        End If
+        For Each sNPC In shopNPCList
+            If player.pos.Equals(sNPC.pos) Then
+                npcEncounter(sNPC)
+            End If
+        Next
+
         If btnEQP.Enabled = False Then btnEQP.Enabled = True
-        If currfloor.chestList.Count > 0 Then
-            For i = 0 To currfloor.chestList.Count - 1
-                If player.pos = currfloor.chestList.Item(i).pos Then
-                    currfloor.chestList.Item(i).open()
-                    currfloor.chestList.RemoveAt(i)
+        If currFloor.chestList.Count > 0 Then
+            For i = 0 To currFloor.chestList.Count - 1
+                If player.pos = currFloor.chestList.Item(i).pos Then
+                    currFloor.chestList.Item(i).open()
+                    currFloor.chestList.RemoveAt(i)
                     Exit For
                 End If
             Next
@@ -1466,10 +1467,10 @@ Public Class Game
             player.canMoveFlag = True
         End If
 
-        If currfloor.statueList.Count > 0 Then
-            For i = 0 To currfloor.statueList.Count - 1
-                If player.pos = currfloor.statueList.Item(i).pos Then
-                    currfloor.statueList.Item(i).examine()
+        If currFloor.statueList.Count > 0 Then
+            For i = 0 To currFloor.statueList.Count - 1
+                If player.pos = currFloor.statueList.Item(i).pos Then
+                    currFloor.statueList.Item(i).examine()
                     Exit For
                 End If
             Next
@@ -1901,6 +1902,7 @@ Public Class Game
         Dim writer As IO.StreamWriter
         IO.File.Delete(a)
         writer = IO.File.CreateText(a)
+
         writer.WriteLine(version)
         'save the dungeon
         writer.WriteLine("-------------------------------DUNGEON---------------------------------")
@@ -1910,7 +1912,7 @@ Public Class Game
         writer.WriteLine("----------------------------------PLAYER------------------------------------")
         writer.WriteLine(player.ToString)
         'save the player's original body prior to the floor 4 body swap
-        If mDun.numCurrFloor = 4 And Not preBSBody Is Nothing And Not preBSStartState Is Nothing Then
+        If mDun.numCurrFloor = 4 And mDun.floorboss(4) = "Ooze Empress" Then
             writer.WriteLine(preBSBody.write)
             writer.WriteLine(preBSStartState.write)
             writer.WriteLine(preBSInventory.Count - 1)
@@ -1982,6 +1984,7 @@ Public Class Game
 
         Dim reader As IO.StreamReader
         reader = IO.File.OpenText(a)
+
         Dim v = CDbl(reader.ReadLine())
         If v < 0.9 Then
             MsgBox("Error 003: Incorrect save file version!")
@@ -2005,8 +2008,7 @@ Public Class Game
         reader.ReadLine()
         player = New Player(reader.ReadLine(), v)
         'load the pre-floor 4 body if needed
-        If mDun.numCurrFloor = 4 Then
-            mDun.floorboss(4) = "Ooze Empress"
+        If mDun.numCurrFloor = 4 And mDun.floorboss(4) = "Ooze Empress" Then
             preBSBody = New State()
             preBSStartState = New State()
             preBSBody.read(reader.ReadLine)
@@ -2029,6 +2031,7 @@ Public Class Game
         swiz = shopNPCList(1)
         hteach = shopNPCList(2)
         fvend = shopNPCList(3)
+        wsmith = shopNPCList(4)
         updateLoadbar(70)
 
         'load the dungeon generation settings

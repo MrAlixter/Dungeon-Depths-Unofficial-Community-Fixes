@@ -159,10 +159,14 @@
 
         'HANDLE THE "TO"
         Dim name = boxType.SelectedItem.ToString()
-        If name = "H (Stairs)" Or name = "@ (Player)" Or name = "$ (NPC)" Then 'DENY! Cannot duplicatre stairs, player, or NPC
+        If name = "H (Stairs)" Or name = "$ (NPC)" Then 'DENY! Cannot duplicatre stairs, player, or NPC
             MessageBox.Show("ERR: CANNOT ADD TILES OF THIS TYPE")
             boxType.SelectedItem = prevTypeSel
             Exit Sub
+        ElseIf name = "@ (Player)" Then
+            t.Tag = 2
+            t.Text = "@"
+            Game.player.pos = p
         ElseIf name = "(Wall)" Then
             If removeFlag Then removeItem()
             t.Tag = 0
@@ -190,17 +194,17 @@
             If t.Tag = 0 Then t.Tag = 1
             t.Text = "#"
             t.ForeColor = Color.FromArgb(45, 45, 45)
-            Game.currfloor.mBoard(p.Y, p.X).ForeColor = Color.FromArgb(45, 45, 45)
+            Game.currFloor.mBoard(p.Y, p.X).ForeColor = Color.FromArgb(45, 45, 45)
             Dim c As Chest = Game.baseChest.Create(New Point(p.X, p.Y))
-            Game.currfloor.chestList.Add(c)
+            Game.currFloor.chestList.Add(c)
         ElseIf name = "+ (Trap)" Then
             If removeFlag Then removeItem()
             If t.Tag = 0 Then t.Tag = 1
             t.Text = "+"
             t.ForeColor = Color.FromArgb(45, 45, 45)
-            Game.currfloor.mBoard(p.Y, p.X).ForeColor = Color.FromArgb(45, 45, 45)
+            Game.currFloor.mBoard(p.Y, p.X).ForeColor = Color.FromArgb(45, 45, 45)
             Dim trap As New Trap(New Point(p.X, p.Y))
-            Game.currfloor.trapList.Add(trap)
+            Game.currFloor.trapList.Add(trap)
         End If
 
 

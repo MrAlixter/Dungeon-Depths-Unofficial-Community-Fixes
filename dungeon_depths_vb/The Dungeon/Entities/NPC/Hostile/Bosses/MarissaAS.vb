@@ -73,7 +73,7 @@
         isDead = True
         Game.fromCombat()
         Game.npcList.Remove(Me)
-        Game.pushLstLog("You've deafeated " & getName() & "!")
+        Game.pushLstLog("You've defeated " & getName() & "!")
 
         'player transformation
         Dim lastsentence = "When your senses return to you, your ear's twitch and you notice that they have become feline.  A quick glance confirms that Marissa is no longer present, though it seems like here last ditch effort might have actually held some power after all..."

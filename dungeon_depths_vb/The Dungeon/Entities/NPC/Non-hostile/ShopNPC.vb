@@ -14,6 +14,8 @@
                 Return New HTeach
             Case 3
                 Return New FVendor
+            Case 4
+                Return New WSmith
             Case Else
                 Return New Shopkeeper
         End Select

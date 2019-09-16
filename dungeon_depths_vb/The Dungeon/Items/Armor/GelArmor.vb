@@ -17,12 +17,12 @@
         MyBase.value = 0
         MyBase.bsizeneg1 = New Tuple(Of Integer, Boolean, Boolean)(52, False, True)
         MyBase.bsize0 = New Tuple(Of Integer, Boolean, Boolean)(199, True, True)
-        MyBase.bsize1 = New Tuple(Of Integer, Boolean, Boolean)(93, True, True)
-        MyBase.bsize2 = New Tuple(Of Integer, Boolean, Boolean)(94, True, True)
-        MyBase.bsize3 = New Tuple(Of Integer, Boolean, Boolean)(95, True, True)
-        MyBase.bsize4 = New Tuple(Of Integer, Boolean, Boolean)(93, True, True)
-        MyBase.bsize5 = New Tuple(Of Integer, Boolean, Boolean)(94, True, True)
-        MyBase.bsize6 = New Tuple(Of Integer, Boolean, Boolean)(95, True, True)
+        MyBase.bsize1 = New Tuple(Of Integer, Boolean, Boolean)(200, True, True)
+        MyBase.bsize2 = New Tuple(Of Integer, Boolean, Boolean)(201, True, True)
+        MyBase.bsize3 = New Tuple(Of Integer, Boolean, Boolean)(202, True, True)
+        MyBase.bsize4 = New Tuple(Of Integer, Boolean, Boolean)(203, True, True)
+        MyBase.bsize5 = New Tuple(Of Integer, Boolean, Boolean)(204, True, True)
+        MyBase.bsize6 = New Tuple(Of Integer, Boolean, Boolean)(205, True, True)
         MyBase.bsize7 = New Tuple(Of Integer, Boolean, Boolean)(206, True, True)
         MyBase.compressesBreasts = True
 

@@ -155,7 +155,7 @@
             If inv.getSum > 0 Then c1.open()
 
             Game.npcList.Remove(Me)
-            Game.pushLstLog("You've deafeated the " & name & "!")
+            Game.pushLstLog("You've defeated the " & name & "!")
             Game.player.currState.save(Game.player)
             isDead = True
             endBoss()
@@ -203,8 +203,8 @@
         endBoss()
         Game.fromCombat()
         Game.npcList.Remove(Me)
-        Game.pushLstLog("You've deafeated the " & name & "!")
-        
+        Game.pushLstLog("You've defeated the " & name & "!")
+
 
         'monster transformations
         If sName.Equals("Ooze Empress") Then

@@ -171,6 +171,7 @@
         internal_inventory.Add("Lolita_Dress_(Sweet)", New SLolitaDress())  '151
         internal_inventory.Add("Will_Charm", New WillCharm())               '152
         internal_inventory.Add("Anti_Curse_Tag", New AntiSCurseTag())       '153
+        internal_inventory.Add("New-U_Crystal", New NewUCrystal())       '154
 
         armor = {New CommonClothes, New SkimpyClothes, New Naked, New VSkimpyClothes,
                  Me.item(5), Me.item(7), Me.item(8), Me.item(10),
@@ -201,7 +202,7 @@
                    Me.item(91), Me.item(119), Me.item(126), Me.item(127),
                    Me.item(128), Me.item(130), Me.item(136), Me.item(142),
                    Me.item(143), Me.item(148), Me.item(149), Me.item(152),
-                   Me.item(153)}
+                   Me.item(153), Me.item(154)}
 
         food = {Me.item(1), Me.item(30), Me.item(31), Me.item(32), Me.item(33),
                 Me.item(34), Me.item(35), Me.item(44), Me.item(90),

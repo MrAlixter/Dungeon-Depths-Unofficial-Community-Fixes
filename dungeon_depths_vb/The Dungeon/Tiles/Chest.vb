@@ -42,8 +42,10 @@
     Function Create(ByVal s As String) As Chest
         'functions as a pseudo constructor for a chest object
         'loads a chest from a saved string
-        Dim chest = Me.Clone()
         Dim cArray() As String = s.Split("*")
+        If cArray(0).Equals("LOADED") Then Return New LoadedChest(s)
+        Dim chest = Me.Clone()
+
         chest.pos = New Point(cArray(0), cArray(1))
         chest.contents.load(cArray(2))
 

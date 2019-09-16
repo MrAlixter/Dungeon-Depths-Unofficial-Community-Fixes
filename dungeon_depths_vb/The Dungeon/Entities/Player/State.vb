@@ -16,7 +16,6 @@
     Dim perks As Dictionary(Of String, Integer)
     Dim invNeedsUDate As Boolean
     Dim haircolor, skincolor, textColor As Color
-    Dim pImage As Image
     Dim wingIndex As Integer
     Dim hornIndex As Integer
     Public initFlag As Boolean = False
@@ -50,7 +49,6 @@
         haircolor = p.prt.haircolor
         skincolor = p.prt.skincolor
         textColor = p.TextColor
-        pImage = p.pImage
         wingIndex = p.prt.wingInd
         hornIndex = p.prt.hornInd
         initFlag = True
@@ -123,7 +121,6 @@
         p.TextColor = textColor
         p.prt.wingInd = wingIndex
         p.prt.hornInd = hornIndex
-        p.pImage = pImage
         p.isPetrified = isPetrified
     End Sub
     'save applies a given instance of a player to a state
@@ -156,14 +153,12 @@
         textColor = p.TextColor
         wingIndex = p.prt.wingInd
         hornIndex = p.prt.hornInd
-        pImage = p.pImage
         isPetrified = p.isPetrified
     End Sub
 
     'read converts a string given from a save file into a state
     Public Sub read(ByVal s As String)
         Equipment.init()
-        Dim pimg() As Image = {Game.picPlayer.BackgroundImage, Game.picPlayerB.BackgroundImage, Game.picChicken.BackgroundImage, Game.picBimbof.BackgroundImage, Game.picPlayerf.BackgroundImage, Game.picBimboSpace.BackgroundImage, Game.picPlayerSpace.BackgroundImage}
         Dim readArray() As String = s.Split("*")
         If readArray(0) = "N/A" Then
             name = ""
@@ -247,10 +242,9 @@
             Dim arr() As String = readArray(32 + b1 + i).Split("%")
             iArrInd(i) = New Tuple(Of Integer, Boolean, Boolean)(CInt(arr(0)), CBool(arr(1)), CBool(arr(2)))
         Next
-        pImage = pimg(readArray(32 + b1 + 17))
 
         For Each k In Equipment.acList.Keys
-            If readArray(32 + b1 + 18) = k Then
+            If readArray(32 + b1 + 17) = k Then
                 equippedAcce = Equipment.acList(k)
                 Exit For
             End If
@@ -272,9 +266,7 @@
             For i = 0 To UBound(iArrInd)
                 output += (iArrInd(i).Item1 & "%" & iArrInd(i).Item2 & "%" & iArrInd(i).Item3 & "*")
             Next
-            If Not initFlag Then pImage = Game.picChicken.BackgroundImage
-            Dim pimg() As Image = {Game.picPlayer.BackgroundImage, Game.picPlayerB.BackgroundImage, Game.picChicken.BackgroundImage, Game.picBimbof.BackgroundImage, Game.picPlayerf.BackgroundImage, Game.picBimboSpace.BackgroundImage, Game.picPlayerSpace.BackgroundImage}
-            output += Array.IndexOf(pimg, pImage).ToString & "*"
+
             output += Game.player.equippedAcce.getName & "*"
             Return output + "#"
         Else

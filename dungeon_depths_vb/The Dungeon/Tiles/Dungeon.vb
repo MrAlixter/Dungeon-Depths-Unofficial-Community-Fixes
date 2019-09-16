@@ -49,7 +49,7 @@
     End Sub
     Public Sub jumpTo(ByVal i As Integer)
         lastVisitedFloor = numCurrFloor
-        floors(numCurrFloor).playerPosition = Game.player.pos
+        floors(numCurrFloor).playerPosition = New Point(Game.player.pos.X, Game.player.pos.Y)
 
         numCurrFloor = i
         If Not floors.Keys.Contains(numCurrFloor) Then
@@ -66,7 +66,12 @@
         Game.player.pos = floors(numCurrFloor).playerPosition
 
         For i = 0 To Game.shopNPCList.Count - 1
-            Game.shopNPCList(i).pos = floors(numCurrFloor).npcPositions(i)
+            If i < floors(numCurrFloor).npcPositions.Count Then
+                Game.shopNPCList(i).pos = floors(numCurrFloor).npcPositions(i)
+            Else
+                Game.shopNPCList(i).pos = New Point(-1, -1)
+            End If
+
         Next
     End Sub
     Public Sub setFloor(ByRef f As mFloor)

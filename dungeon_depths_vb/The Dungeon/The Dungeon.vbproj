@@ -128,6 +128,7 @@
     <Compile Include="Entities\NPC\Hostile\Monsters\SlimeMonster.vb" />
     <Compile Include="Entities\NPC\Hostile\Monsters\SpiderMonster.vb" />
     <Compile Include="Entities\NPC\Non-Hostile\Caelia.vb" />
+    <Compile Include="Entities\NPC\Non-Hostile\WSmith.vb" />
     <Compile Include="Entities\NPC\Non-Hostile\FVendor.vb" />
     <Compile Include="Entities\NPC\Non-Hostile\HTeach.vb" />
     <Compile Include="Entities\NPC\Non-Hostile\Shopkeeper.vb" />
@@ -322,6 +323,7 @@
     <Compile Include="Items\Usable\Food\TSpecial.vb" />
     <Compile Include="Items\Usable\Food\WStickOfGum.vb" />
     <Compile Include="Items\Usable\GrapplingHook.vb" />
+    <Compile Include="Items\Usable\NewUCrystal.vb" />
     <Compile Include="Items\Usable\Potions\GalaxyDye.vb" />
     <Compile Include="Items\Usable\Potions\Mystery Potions\Side Effects\GalaxyDyeEffect.vb" />
     <Compile Include="Items\Usable\CombatModule.vb" />

@@ -202,7 +202,8 @@
                 p.prt.wingInd = 2
                 p.prt.haircolor = Color.FromArgb(255, 155, 0, 0)
             Case 15   'valkyrie
-                p.pClass = p.classes("Angel")
+                p.pForm = p.forms("Angel")
+                p.pClass = p.classes("Warrior")
                 armor = New Integer() {7, 19, 83, 85, 95, 105}
                 weapon = New Integer() {6, 23, 40, 112}
                 p.sex = "Female"

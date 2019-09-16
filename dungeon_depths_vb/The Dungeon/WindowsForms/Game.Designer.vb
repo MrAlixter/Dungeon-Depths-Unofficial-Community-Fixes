@@ -159,7 +159,6 @@ Partial Class Game
         Me.ttCosts = New System.Windows.Forms.ToolTip(Me.components)
         Me.picStairsLock = New System.Windows.Forms.PictureBox()
         Me.picStairsBoss = New System.Windows.Forms.PictureBox()
-        Me.picChicken = New System.Windows.Forms.PictureBox()
         Me.picstairsbossf = New System.Windows.Forms.PictureBox()
         Me.picstairslockf = New System.Windows.Forms.PictureBox()
         Me.pnlSelection = New System.Windows.Forms.Panel()
@@ -226,6 +225,14 @@ Partial Class Game
         Me.picCaeliaP = New System.Windows.Forms.PictureBox()
         Me.picCaeliaB = New System.Windows.Forms.PictureBox()
         Me.picCaelia = New System.Windows.Forms.PictureBox()
+        Me.picWSmithPrin = New System.Windows.Forms.PictureBox()
+        Me.picWSmith = New System.Windows.Forms.PictureBox()
+        Me.picWSmithAlt = New System.Windows.Forms.PictureBox()
+        Me.picWSmithBun = New System.Windows.Forms.PictureBox()
+        Me.picWSmithAlt3 = New System.Windows.Forms.PictureBox()
+        Me.picWSmithAlt2 = New System.Windows.Forms.PictureBox()
+        Me.picWSf = New System.Windows.Forms.PictureBox()
+        Me.picWS = New System.Windows.Forms.PictureBox()
         CType(Me.picEnemy, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me.picNPC, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me.picStatue, System.ComponentModel.ISupportInitialize).BeginInit()
@@ -270,7 +277,6 @@ Partial Class Game
         CType(Me.picDescPort, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me.picStairsLock, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me.picStairsBoss, System.ComponentModel.ISupportInitialize).BeginInit()
-        CType(Me.picChicken, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me.picstairsbossf, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me.picstairslockf, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.pnlSelection.SuspendLayout()
@@ -324,6 +330,14 @@ Partial Class Game
         CType(Me.picCaeliaP, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me.picCaeliaB, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me.picCaelia, System.ComponentModel.ISupportInitialize).BeginInit()
+        CType(Me.picWSmithPrin, System.ComponentModel.ISupportInitialize).BeginInit()
+        CType(Me.picWSmith, System.ComponentModel.ISupportInitialize).BeginInit()
+        CType(Me.picWSmithAlt, System.ComponentModel.ISupportInitialize).BeginInit()
+        CType(Me.picWSmithBun, System.ComponentModel.ISupportInitialize).BeginInit()
+        CType(Me.picWSmithAlt3, System.ComponentModel.ISupportInitialize).BeginInit()
+        CType(Me.picWSmithAlt2, System.ComponentModel.ISupportInitialize).BeginInit()
+        CType(Me.picWSf, System.ComponentModel.ISupportInitialize).BeginInit()
+        CType(Me.picWS, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.SuspendLayout()
         '
         'btnUse1
@@ -1846,16 +1860,6 @@ Partial Class Game
         Me.picStairsBoss.TabStop = False
         Me.picStairsBoss.Visible = False
         '
-        'picChicken
-        '
-        Me.picChicken.BackgroundImage = CType(resources.GetObject("picChicken.BackgroundImage"), System.Drawing.Image)
-        Me.picChicken.Location = New System.Drawing.Point(413, 78)
-        Me.picChicken.Name = "picChicken"
-        Me.picChicken.Size = New System.Drawing.Size(15, 15)
-        Me.picChicken.TabIndex = 278
-        Me.picChicken.TabStop = False
-        Me.picChicken.Visible = False
-        '
         'picstairsbossf
         '
         Me.picstairsbossf.BackgroundImage = CType(resources.GetObject("picstairsbossf.BackgroundImage"), System.Drawing.Image)
@@ -2558,12 +2562,100 @@ Partial Class Game
         Me.picCaelia.TabStop = False
         Me.picCaelia.Visible = False
         '
+        'picWSmithPrin
+        '
+        Me.picWSmithPrin.BackgroundImage = CType(resources.GetObject("picWSmithPrin.BackgroundImage"), System.Drawing.Image)
+        Me.picWSmithPrin.Location = New System.Drawing.Point(280, 154)
+        Me.picWSmithPrin.Name = "picWSmithPrin"
+        Me.picWSmithPrin.Size = New System.Drawing.Size(15, 15)
+        Me.picWSmithPrin.TabIndex = 340
+        Me.picWSmithPrin.TabStop = False
+        Me.picWSmithPrin.Visible = False
+        '
+        'picWSmith
+        '
+        Me.picWSmith.BackgroundImage = CType(resources.GetObject("picWSmith.BackgroundImage"), System.Drawing.Image)
+        Me.picWSmith.Location = New System.Drawing.Point(176, 154)
+        Me.picWSmith.Name = "picWSmith"
+        Me.picWSmith.Size = New System.Drawing.Size(15, 15)
+        Me.picWSmith.TabIndex = 339
+        Me.picWSmith.TabStop = False
+        Me.picWSmith.Visible = False
+        '
+        'picWSmithAlt
+        '
+        Me.picWSmithAlt.BackgroundImage = CType(resources.GetObject("picWSmithAlt.BackgroundImage"), System.Drawing.Image)
+        Me.picWSmithAlt.Location = New System.Drawing.Point(196, 154)
+        Me.picWSmithAlt.Name = "picWSmithAlt"
+        Me.picWSmithAlt.Size = New System.Drawing.Size(15, 15)
+        Me.picWSmithAlt.TabIndex = 338
+        Me.picWSmithAlt.TabStop = False
+        Me.picWSmithAlt.Visible = False
+        '
+        'picWSmithBun
+        '
+        Me.picWSmithBun.BackgroundImage = CType(resources.GetObject("picWSmithBun.BackgroundImage"), System.Drawing.Image)
+        Me.picWSmithBun.Location = New System.Drawing.Point(259, 154)
+        Me.picWSmithBun.Name = "picWSmithBun"
+        Me.picWSmithBun.Size = New System.Drawing.Size(15, 15)
+        Me.picWSmithBun.TabIndex = 337
+        Me.picWSmithBun.TabStop = False
+        Me.picWSmithBun.Visible = False
+        '
+        'picWSmithAlt3
+        '
+        Me.picWSmithAlt3.BackgroundImage = CType(resources.GetObject("picWSmithAlt3.BackgroundImage"), System.Drawing.Image)
+        Me.picWSmithAlt3.Location = New System.Drawing.Point(238, 154)
+        Me.picWSmithAlt3.Name = "picWSmithAlt3"
+        Me.picWSmithAlt3.Size = New System.Drawing.Size(15, 15)
+        Me.picWSmithAlt3.TabIndex = 336
+        Me.picWSmithAlt3.TabStop = False
+        Me.picWSmithAlt3.Visible = False
+        '
+        'picWSmithAlt2
+        '
+        Me.picWSmithAlt2.BackgroundImage = CType(resources.GetObject("picWSmithAlt2.BackgroundImage"), System.Drawing.Image)
+        Me.picWSmithAlt2.Location = New System.Drawing.Point(217, 154)
+        Me.picWSmithAlt2.Name = "picWSmithAlt2"
+        Me.picWSmithAlt2.Size = New System.Drawing.Size(15, 15)
+        Me.picWSmithAlt2.TabIndex = 335
+        Me.picWSmithAlt2.TabStop = False
+        Me.picWSmithAlt2.Visible = False
+        '
+        'picWSf
+        '
+        Me.picWSf.BackgroundImage = CType(resources.GetObject("picWSf.BackgroundImage"), System.Drawing.Image)
+        Me.picWSf.Location = New System.Drawing.Point(581, 136)
+        Me.picWSf.Name = "picWSf"
+        Me.picWSf.Size = New System.Drawing.Size(15, 15)
+        Me.picWSf.TabIndex = 341
+        Me.picWSf.TabStop = False
+        Me.picWSf.Visible = False
+        '
+        'picWS
+        '
+        Me.picWS.BackgroundImage = CType(resources.GetObject("picWS.BackgroundImage"), System.Drawing.Image)
+        Me.picWS.Location = New System.Drawing.Point(581, 70)
+        Me.picWS.Name = "picWS"
+        Me.picWS.Size = New System.Drawing.Size(15, 15)
+        Me.picWS.TabIndex = 342
+        Me.picWS.TabStop = False
+        Me.picWS.Visible = False
+        '
         'Game
         '
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Inherit
         Me.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink
         Me.BackColor = System.Drawing.Color.Black
         Me.ClientSize = New System.Drawing.Size(1008, 690)
+        Me.Controls.Add(Me.picWS)
+        Me.Controls.Add(Me.picWSf)
+        Me.Controls.Add(Me.picWSmithPrin)
+        Me.Controls.Add(Me.picWSmith)
+        Me.Controls.Add(Me.picWSmithAlt)
+        Me.Controls.Add(Me.picWSmithBun)
+        Me.Controls.Add(Me.picWSmithAlt3)
+        Me.Controls.Add(Me.picWSmithAlt2)
         Me.Controls.Add(Me.picCaeliaP)
         Me.Controls.Add(Me.picCaeliaB)
         Me.Controls.Add(Me.picCaelia)
@@ -2621,7 +2713,6 @@ Partial Class Game
         Me.Controls.Add(Me.pnlSelection)
         Me.Controls.Add(Me.picstairslockf)
         Me.Controls.Add(Me.picstairsbossf)
-        Me.Controls.Add(Me.picChicken)
         Me.Controls.Add(Me.picStairsBoss)
         Me.Controls.Add(Me.picStairsLock)
         Me.Controls.Add(Me.picSWizF)
@@ -2773,7 +2864,6 @@ Partial Class Game
         CType(Me.picDescPort, System.ComponentModel.ISupportInitialize).EndInit()
         CType(Me.picStairsLock, System.ComponentModel.ISupportInitialize).EndInit()
         CType(Me.picStairsBoss, System.ComponentModel.ISupportInitialize).EndInit()
-        CType(Me.picChicken, System.ComponentModel.ISupportInitialize).EndInit()
         CType(Me.picstairsbossf, System.ComponentModel.ISupportInitialize).EndInit()
         CType(Me.picstairslockf, System.ComponentModel.ISupportInitialize).EndInit()
         Me.pnlSelection.ResumeLayout(False)
@@ -2829,6 +2919,14 @@ Partial Class Game
         CType(Me.picCaeliaP, System.ComponentModel.ISupportInitialize).EndInit()
         CType(Me.picCaeliaB, System.ComponentModel.ISupportInitialize).EndInit()
         CType(Me.picCaelia, System.ComponentModel.ISupportInitialize).EndInit()
+        CType(Me.picWSmithPrin, System.ComponentModel.ISupportInitialize).EndInit()
+        CType(Me.picWSmith, System.ComponentModel.ISupportInitialize).EndInit()
+        CType(Me.picWSmithAlt, System.ComponentModel.ISupportInitialize).EndInit()
+        CType(Me.picWSmithBun, System.ComponentModel.ISupportInitialize).EndInit()
+        CType(Me.picWSmithAlt3, System.ComponentModel.ISupportInitialize).EndInit()
+        CType(Me.picWSmithAlt2, System.ComponentModel.ISupportInitialize).EndInit()
+        CType(Me.picWSf, System.ComponentModel.ISupportInitialize).EndInit()
+        CType(Me.picWS, System.ComponentModel.ISupportInitialize).EndInit()
         Me.ResumeLayout(False)
         Me.PerformLayout()
 
@@ -2965,7 +3063,6 @@ Partial Class Game
     Friend WithEvents ttCosts As System.Windows.Forms.ToolTip
     Friend WithEvents picStairsLock As System.Windows.Forms.PictureBox
     Friend WithEvents picStairsBoss As System.Windows.Forms.PictureBox
-    Friend WithEvents picChicken As System.Windows.Forms.PictureBox
     Friend WithEvents picstairsbossf As System.Windows.Forms.PictureBox
     Friend WithEvents picstairslockf As System.Windows.Forms.PictureBox
     Friend WithEvents pnlSelection As System.Windows.Forms.Panel
@@ -3035,4 +3132,12 @@ Partial Class Game
     Friend WithEvents picCaeliaP As System.Windows.Forms.PictureBox
     Friend WithEvents picCaeliaB As System.Windows.Forms.PictureBox
     Friend WithEvents picCaelia As System.Windows.Forms.PictureBox
+    Friend WithEvents picWSmithPrin As System.Windows.Forms.PictureBox
+    Friend WithEvents picWSmith As System.Windows.Forms.PictureBox
+    Friend WithEvents picWSmithAlt As System.Windows.Forms.PictureBox
+    Friend WithEvents picWSmithBun As System.Windows.Forms.PictureBox
+    Friend WithEvents picWSmithAlt3 As System.Windows.Forms.PictureBox
+    Friend WithEvents picWSmithAlt2 As System.Windows.Forms.PictureBox
+    Friend WithEvents picWSf As System.Windows.Forms.PictureBox
+    Friend WithEvents picWS As System.Windows.Forms.PictureBox
 End Class

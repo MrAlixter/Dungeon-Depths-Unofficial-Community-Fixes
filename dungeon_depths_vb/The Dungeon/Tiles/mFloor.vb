@@ -45,7 +45,7 @@
         placeChest(floorCode)
         If floorNumber > 2 Then placeTraps()
 
-        placeNPCs(Game.shopNPCList)
+        placeNPCs(Game.shopNPCList, getPossibleNPCs)
         If updateLoadbar Then Game.updateLoadbar(70)
         verifyNoDisconectedChunks(Game.player)
         If updateLoadbar Then
@@ -110,19 +110,20 @@
         'Dim numChests As Integer = CInt(Int(Rnd() * 8) + 3) * Int((mBoardWidth / 30) + (mBoardHeight / 30) / 2)
         Dim numChests As Integer = CInt((Int(Rnd() * Game.chestFreqRange) + Game.chestFreqMin) * (Math.Sqrt(coveredBoardSpace) / Game.chestSizeDependence))
 
-        Dim r As Integer
         If floorNumber = 3 Then
             numChests *= 1.5
-            r = Int(Rnd() * (numChests)) + 1
+            placeKeyChest()
         End If
+
         For i = 1 To numChests
             Dim chestPoint = randPoint()
             Dim chest As Chest = Game.baseChest.Create(chestPoint, code)
-            If r = i Then chest.add(53, 1)
             chestList.Add(chest)
             mBoard(chestPoint.Y, chestPoint.X).ForeColor = Color.FromArgb(45, 45, 45)
             mBoard(chestPoint.Y, chestPoint.X).Text = "#"
         Next
+
+
         For Each c In chestList
             mBoard(c.pos.Y, c.pos.X).Text = ""
         Next
@@ -139,23 +140,32 @@
             mBoard(trapPoint.Y, trapPoint.X).Text = "+"
         Next
     End Sub
-    Sub placeNPCs(ByRef npcList As List(Of ShopNPC))
+    Function getPossibleNPCs() As Integer()
+        If floorNumber < 3 Then
+            Return {0, 1, 3}
+        ElseIf floorNumber = 3 Then
+            Return {0, 1, 2, 3}
+        Else
+            Return {0, 1, 2, 3, 4}
+        End If
+    End Function
+    Sub placeNPCs(ByRef npcList As List(Of ShopNPC), ByVal possibleNPCs As Integer())
         npcPositions.Clear()
 
-        Dim numNpc As Integer = CInt(Int(Rnd() * npcList.Count)) + 1
+        Dim numNpc As Integer = Int(Rnd() * possibleNPCs.Length) + 1
         If floorNumber = 1 Then numNpc = 1
         Dim placed = New List(Of Integer)
 
         For i = 1 To numNpc
             Dim npcPoint = randPoint()
-            Dim npcInd = Int(Rnd() * npcList.Count)
+            Dim npcInd = Int(Rnd() * possibleNPCs.Length)
             While placed.Contains(npcInd) And Not placed.Count >= npcList.Count
-                npcInd = Int(Rnd() * npcList.Count)
+                npcInd = Int(Rnd() * possibleNPCs.Length)
             End While
 
             If floorNumber = 1 Then npcInd = 0
 
-            Dim sNPC = npcList(npcInd)
+            Dim sNPC = npcList(possibleNPCs(npcInd))
 
             sNPC.pos = npcPoint
 
@@ -245,6 +255,13 @@
                 Next
             End If
         End If
+    End Sub
+    Sub placeKeyChest()
+        Dim ChestP = randPoint()
+        Dim c As Chest = New LoadedChest(ChestP, 3)
+        chestList.Add(c)
+        mBoard(c.pos.Y, c.pos.X).ForeColor = Color.FromArgb(45, 45, 45)
+        mBoard(c.pos.Y, c.pos.X).Text = "#"
     End Sub
     Sub verifyNoDisconectedChunks(ByRef p As Player)
         For j = 0 To rooms.Count - 1
@@ -607,6 +624,7 @@
     End Sub
 
     '|---SPECIFIC FLOOR GENERATION METHODS---|
+
     'floor 4
     Sub placeFloor4TrappedChest(ByRef p As Player)
         Dim possiblePoints = {New Point(p.pos.X + 1, p.pos.Y), _
@@ -920,10 +938,7 @@
         out += "chest%"
         out += chestList.Count - 1 & "%"        '10 + traplist.Count + statueList.Count
         For i = 0 To chestList.Count - 1
-            If chestList(i).GetType Is GetType(LoadedChest) Then
-                chestList(i).pos = New Point(-1, -1)  'LoadedChests are not saved
-            End If
-            out += chestList(i).ToString & "%"  '11 + traplist.Count + statueList.Count to 10 + traplist.Count + statueList.Count + chestList.Count
+                out += chestList(i).ToString & "%"  '11 + traplist.Count + statueList.Count to 10 + traplist.Count + statueList.Count + chestList.Count
         Next
 
         out += "beatboss%"
