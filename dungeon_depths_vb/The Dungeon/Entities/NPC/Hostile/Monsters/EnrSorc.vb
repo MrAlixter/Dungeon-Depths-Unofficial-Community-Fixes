@@ -13,5 +13,6 @@
         speed = 25
         setInventory({})
         setupMonsterOnSpawn()
+        xpValue = 35
     End Sub
 End Class

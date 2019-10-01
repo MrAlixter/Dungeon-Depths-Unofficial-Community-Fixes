@@ -30,6 +30,8 @@
 
         If speed = Game.player.getSPD Then speed -= 1
         pos = Game.player.pos
+
+        xpValue = 75
     End Sub
 
     Public Overrides Sub attackCMD(ByRef target As Entity)

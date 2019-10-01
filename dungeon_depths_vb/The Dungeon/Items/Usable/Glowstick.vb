@@ -8,7 +8,7 @@
         tier = 1
         MyBase.setUsable(True)
         MyBase.count = 0
-        MyBase.value = 150
+        MyBase.value = 250
     End Sub
 
     Overrides Sub use()
@@ -34,6 +34,8 @@
                 End If
             Next
         Next
+
+        Game.player.perks("lightsource") = 60
 
         Dim r As Integer = (Int(Rnd() * 7))
         If r = 0 Then

@@ -55,7 +55,7 @@
     Sub step4()
         Dim p As player = game.player
         Dim out = "As you bend down to pick up a dropped item, your cowbell jangles as you stand back up.  Already used to this, you give yourself a quick once over.  You don't see that much different, though your hair seems to have styled itself since you last checked up on it."
-        If p.pClass.name.Equals("Magic Girl") Or p.pClass.name.Equals("Valkyrie") Then
+        If p.pClass.name.Equals("Magical Girl") Or p.pClass.name.Equals("Valkyrie") Then
             out += "  You loose hold of your weapon dropping it and reverting your transformation."
             Equipment.weaponChange("Fists")
         End If

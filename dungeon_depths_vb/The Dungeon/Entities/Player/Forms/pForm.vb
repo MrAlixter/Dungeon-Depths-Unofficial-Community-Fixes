@@ -16,4 +16,7 @@
 
     Overridable Sub revert()
     End Sub
+
+    Overridable Sub onLVLUp(ByVal level As Integer)
+    End Sub
 End Class

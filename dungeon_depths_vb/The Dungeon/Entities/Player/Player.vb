@@ -8,7 +8,7 @@
     Public pClass As pClass = New Classless()
     Public pForm As pForm = New Human()
     Dim turnCt As Integer = 0
-    'Public level, xp, nextLevelXp As Integer
+    Public level, xp, nextLevelXp As Integer
 
     Public breastSize As Integer = -1
     Public hunger As Integer
@@ -60,9 +60,9 @@
         speed = 10
         gold = 200
         lust = 0
-        'level = 1
-        'xp = 0
-        'nextLevelXp = 100
+        level = 1
+        xp = 0
+        nextLevelXp = 200
         mana = 3
         maxMana = mana
         hunger = 0
@@ -120,21 +120,24 @@
         dBuff = playArray(8)
         wBuff = playArray(9)
         sBuff = playArray(10)
+        level = playArray(11)
+        xp = playArray(12)
+        nextLevelXp = playArray(13)
 
 
-        inv.load(playArray(11))
+        inv.load(playArray(14))
         Dim x As Integer = -2
 
-        If Not playArray(14 + x).Equals("N/a") Then
-            Dim crystal As Point = New Point(CInt(playArray(14 + x)), playArray(15 + x))
+        If Not playArray(17 + x).Equals("N/a") Then
+            Dim crystal As Point = New Point(CInt(playArray(17 + x)), playArray(18 + x))
             forcedPath = {crystal}
             nextCombatAction = AddressOf ThrallTF.postLoadCrystalSpawn
         Else
             forcedPath = Nothing
         End If
 
-        Dim currentIndex = 15 + x
-        If Not playArray(14 + x).Equals("N/a") Then currentIndex += 1
+        Dim currentIndex = 18 + x
+        If Not playArray(17 + x).Equals("N/a") Then currentIndex += 1
 
         Dim stuff() As String = playArray(currentIndex).Split("$")
         If Not stuff(0).Equals("N/a") Then
@@ -262,7 +265,7 @@
             inv.add(4, 1)
             inv.add(21, 1)
             equippedWeapon = inv.item(21)
-        ElseIf s = "Magic Girl" Then
+        ElseIf s = "Magical Girl" Then
             pClass = classes("Classless")
             maxHealth = 80
             attack = 7
@@ -328,6 +331,8 @@
         perks.Add("slimetf", -1)        '27
         perks.Add("googirltf", -1)      '28
         perks.Add("bimbododge", -1)     '29
+        perks.Add("lightsource", -1)    '30
+        perks.Add("cupcake", -1)        '31
     End Sub
     Private Sub initClasses()
         'creates the class dictionary
@@ -335,8 +340,8 @@
         classes.Add("Classless", New Classless())
         classes.Add("Warrior", New Warrior())
         classes.Add("Mage", New Mage())
-        classes.Add("Magic Girl", New MagicGirl())
-        classes.Add("Magic Girl​", New MagicGirlTransform())
+        classes.Add("Magical Girl", New MagicGirl())
+        classes.Add("Magical Girl​", New MagicGirlTransform())
         classes.Add("Bimbo", New Bimbo())
         classes.Add("Princess", New Princess())
         classes.Add("Maid", New Maid())
@@ -357,6 +362,7 @@
         classes.Add("Mindless", New Mindless())
         classes.Add("Bimbo++", New BimboPlusPlus())
         classes.Add("Shrunken", New Shrunken())
+        classes.Add("Maiden", New Maiden())
     End Sub
     Private Sub initForms()
         'Creates the form dictionary
@@ -558,12 +564,7 @@
         If inv.item("Shrink_Ray").count > 0 Then Game.cboxSpec.Items.Add("Shrink_Ray Shot")
     End Sub
     Public Sub magicRoute()
-        Game.cboxMG.Items.Clear()
         Game.cboxNPCMG.Items.Clear()
-
-        For Each s In knownSpells
-            Game.cboxMG.Items.Add(s)
-        Next
     End Sub
     'wait
     Public Sub wait()
@@ -581,8 +582,8 @@
         Dim tGold As Integer = gold
         Dim tEweap As Weapon = equippedWeapon
         Dim tEarm As Armor = equippedArmor
-        If tEweap.getName = "Magic_Girl_Wand" Then tEweap = New BareFists()
-        If tEarm.getName = "Magic_Girl_Outfit" Then tEarm = New Naked()
+        If tEweap.getName = "Magical_Girl_Wand" Then tEweap = New BareFists()
+        If tEarm.getName = "Magical_Girl_Outfit" Then tEarm = New Naked()
 
         sState.load(Me, False)
 
@@ -600,10 +601,6 @@
             ongoingTFs.RemoveAt(i)
         Next
 
-        If Game.cboxMG.SelectedItem = "Heartblast Starcannon" Then
-            Game.cboxMG.Items.Insert(0, "-- Select --")
-            Game.cboxMG.SelectedIndex = 0
-        End If
         Do While knownSpells.Contains("Heartblast Starcannon")
             knownSpells.Remove("Heartblast Starcannon")
         Loop
@@ -655,7 +652,7 @@
                     Dim tEarm As Armor = sState.equippedArmor
                     prt.setIAInd(layer, sState.iArrInd(layer).Item1, sState.iArrInd(layer).Item2, sState.iArrInd(layer).Item3)
                     If tEarm.getName = "Goddess_Gown" Or tEarm.getName = "Succubus_Garb" Then tEarm = New CommonClothes
-                    If Not tEarm.getName.Equals("Magic_Girl_Outfit") Then equippedArmor = tEarm
+                    If Not tEarm.getName.Equals("Magical_Girl_Outfit") Then equippedArmor = tEarm
                 Else
                     prt.setIAInd(layer, sState.iArrInd(layer).Item1, sState.iArrInd(layer).Item2, sState.iArrInd(layer).Item3)
                 End If
@@ -687,23 +684,19 @@
         Dim tpClassRP As String = pClass.revertPassage
         Dim tpFormRP As String = pClass.revertPassage
 
-        If tEweap.getName = "Magic_Girl_Wand" Then tEweap = New BareFists()
+        If tEweap.getName = "Magical_Girl_Wand" Then tEweap = New BareFists()
         If tEarm.getName = "Goddess_Gown" Or tEarm.getName = "Succubus_Garb" Then tEarm = New CommonClothes
         pState.load(Me, False)
 
         mana = tMna
         gold = tGold
-        If Not tEarm.getName.Equals("Magic_Girl_Outfit") Then equippedArmor = tEarm
+        If Not tEarm.getName.Equals("Magical_Girl_Outfit") Then equippedArmor = tEarm
         equippedWeapon = tEweap
         currState.save(Me)
         If Transformation.canBeTFed(Me) Then
             pState.save(Me)
         End If
 
-        If Game.cboxMG.SelectedItem = "Heartblast Starcannon" Then
-            Game.cboxMG.Items.Insert(0, "-- Select --")
-            Game.cboxMG.SelectedIndex = 0
-        End If
         Do While knownSpells.Contains("Heartblast Starcannon")
             knownSpells.Remove("Heartblast Starcannon")
             Game.pushLstLog("'Heartblast Starcannon' spell forgotten!")
@@ -773,7 +766,7 @@
                     Dim tEarm As Armor = pState.equippedArmor
                     prt.setIAInd(layer, pState.iArrInd(layer).Item1, pState.iArrInd(layer).Item2, pState.iArrInd(layer).Item3)
                     If tEarm.getName = "Goddess_Gown" Or tEarm.getName = "Succubus_Garb" Then tEarm = New CommonClothes
-                    If Not tEarm.getName.Equals("Magic_Girl_Outfit") Then equippedArmor = tEarm
+                    If Not tEarm.getName.Equals("Magical_Girl_Outfit") Then equippedArmor = tEarm
                 Else
                     prt.setIAInd(layer, pState.iArrInd(layer).Item1, pState.iArrInd(layer).Item2, pState.iArrInd(layer).Item3)
                 End If
@@ -937,6 +930,8 @@
         If will < 0 Then will = 0
         If mana > getMaxMana() And Not Game.combatmode And Not solFlag Then mana = getMaxMana()
 
+        If xp >= nextLevelXp Then levelUp()
+
         '|PERK AND TRANSFORMATION UPDATES|
         Dim pUpdateFlag As Boolean = False
         'perks
@@ -997,6 +992,10 @@
         If perks("minmanregen") > -1 Then
             PerkEffects.minorManaRegen()
         End If
+        'light source effect
+        If perks("minmanregen") > -1 Then
+            PerkEffects.lightSource()
+        End If
         'amazon effect
         If perks("amazon") > -1 Then
             PerkEffects.amazon()
@@ -1004,6 +1003,9 @@
         'barbarian effect
         If perks("barbarian") > -1 Then
             PerkEffects.barbarian()
+        End If
+        If perks("cupcake") > -1 Then
+            If Game.turn Mod 20 = 0 Then perks("cupcake") -= 1
         End If
 
         'living armor
@@ -1060,6 +1062,8 @@
         If Game.lblHealth.Text <> "Health = " & CInt(health * getMaxHealth()) & "/" & getMaxHealth() Then Game.lblHealth.Text = "Health = " & CInt(health * getMaxHealth()) & "/" & getMaxHealth()
         If Game.lblMana.Text <> "Mana = " & mana & "/" & getMaxMana() Then Game.lblMana.Text = "Mana = " & mana & "/" & getMaxMana()
         If Game.lblHunger.Text <> "Hunger = " & hunger & "/100" Then Game.lblHunger.Text = "Hunger = " & hunger & "/100"
+        If Game.lblXP.Text <> nextLevelXp - xp & " XP to next LVL" Then Game.lblXP.Text = nextLevelXp - xp & " XP to next LVL"
+        If Game.lblLevel.Text <> "Level = " & level Then Game.lblLevel.Text = "Level = " & level
         If Game.lblATK.Text <> "ATK = " & (getATK()) + equippedWeapon.aBoost Then Game.lblATK.Text = "ATK = " & (getATK()) + equippedWeapon.aBoost
         If Game.lblDEF.Text <> "DEF = " & getDEF() Then Game.lblDEF.Text = "DEF = " & getDEF()
         If Game.lblSKL.Text <> "WIL = " & getWIL() Then Game.lblSKL.Text = "WIL = " & getWIL()
@@ -1200,7 +1204,7 @@
         If pForm.name.Equals("Dragon") Then
             Game.picPortrait.BackgroundImage = Portrait.CreateBMP({Game.picDragon.BackgroundImage})
             b = True
-        ElseIf pClass.name.Equals("Magic Girl​") Then
+        ElseIf pClass.name.Equals("Magical Girl​") Then
             Game.picPortrait.BackgroundImage = Portrait.CreateBMP({Game.picmgp1.BackgroundImage})
             b = True
         ElseIf pForm.name.Equals("Sheep") Then
@@ -1245,7 +1249,7 @@
 
     'sex change methods
     Public Sub MtF()
-        If perks("polymorphed") > -1 Or pClass.name.Equals("Magic Girl") Or pClass.name.Equals("Valkyrie") Then
+        If perks("polymorphed") > -1 Or pClass.name.Equals("Magical Girl") Or pClass.name.Equals("Valkyrie") Then
             Game.pushLstLog("Your form prevents you from being altered.")
             Exit Sub
         End If
@@ -1255,7 +1259,7 @@
         If perks("swordpossess") > -1 Then perks("swordpossess") = 0
     End Sub
     Public Sub FtM()
-        If perks("polymorphed") > -1 Or pClass.name.Equals("Magic Girl") Or pClass.name.Equals("Valkyrie") Then
+        If perks("polymorphed") > -1 Or pClass.name.Equals("Magical Girl") Or pClass.name.Equals("Valkyrie") Then
             Game.pushLstLog("Your form prevents you from being altered.")
             Exit Sub
         End If
@@ -1704,7 +1708,7 @@
             breastSize = 1
         ElseIf (prt.checkNDefFemInd(2, 1) Or prt.checkNDefFemInd(2, 6) Or prt.checkNDefFemInd(2, 21)) And breastSize <> 2 Then
             breastSize = 2
-        ElseIf (prt.checkNDefFemInd(2, 2) Or prt.checkNDefFemInd(2, 7) Or prt.checkNDefFemInd(2, 10) Or prt.checkNDefFemInd(2, 16)) And breastSize <> 3 Then
+        ElseIf (prt.checkNDefFemInd(2, 2) Or prt.checkNDefFemInd(2, 7) Or prt.checkNDefFemInd(2, 16)) And breastSize <> 3 Then
             breastSize = 3
         ElseIf (prt.checkNDefFemInd(2, 3) Or prt.checkNDefFemInd(2, 8)) And breastSize <> 4 Then
             breastSize = 4
@@ -1769,6 +1773,9 @@
         output += dBuff & "*"
         output += wBuff & "*"
         output += sBuff & "*"
+        output += level & "*"
+        output += xp & "*"
+        output += nextLevelXp & "*"
 
         output += inv.save()
 
@@ -1931,7 +1938,7 @@
         Dim out As String = ""
         'general statement
         out = "You are " & name & ", a " & sex & " " & pForm.name & " " & pClass.name & vbCrLf & " " & vbCrLf
-
+        out += nextLevelXp - xp & " XP to next LVL" & vbCrLf & " " & vbCrLf
         'check for single image forms
         Select Case pForm.name
             Case "Dragon"
@@ -1955,7 +1962,7 @@
                 Return out + outPutPerkText()
         End Select
         Select Case pClass.name
-            Case "Magic Girl​"
+            Case "Magical Girl​"
                 out += "You are currently in the middle of a magical girl transformation!" & vbCrLf & vbCrLf
                 Return out + outPutPerkText()
             Case "Princess​"
@@ -2048,20 +2055,15 @@
     End Function
     '|UNIMPLEMENTED|
     Public Sub levelUp()
-        '    level += 1
-        '    xp -= nextLevelXp
-        '    nextLevelXp = nextLevelXp * 1.66
-        '    Form1.pushLstLog("Level up!  " & name & " is now level " & level)
-        '    If xp > nextLevelXp Then levelUp()
-        '    health += 3
-        '    maxHealth += 3
-        '    attack += 1
-        '    defence += 1
-        '    If level Mod 2 = 0 Then
-        '        mana += 5
-        '        maxMana += 5
-        '    End If
-        '    Form1.lstLog.TopIndex = Form1.lstLog.Items.Count - 1
-        '    description = CStr(name & " is a " & sex & ", level " & level & " " & title)
+        level += 1
+        xp -= nextLevelXp
+        nextLevelXp = nextLevelXp * level
+        Game.pushLstLog("Level up!  " & name & " is now level " & level)
+        If xp > nextLevelXp Then levelUp()
+        health = 1
+        maxHealth += 20
+
+        pClass.onLVLUp(level)
+        pForm.onLVLUp(level)
     End Sub
 End Class

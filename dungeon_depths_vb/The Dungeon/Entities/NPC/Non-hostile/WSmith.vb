@@ -10,9 +10,13 @@
 
         'Define the inventory
         inv = New Inventory(False)
-        'Food
-        inv.setCount("Chicken_Leg", 1)
-        inv.item("Chicken_Leg").value -= 0.2 * inv.item("Chicken_Leg").value
+        'Weapons
+        inv.setCount("Bronze_Spear", 1)
+        inv.setCount("Steel_Spear", 1)
+        inv.setCount("Flaming_Spear", 1)
+        inv.setCount("Signature_Spear", 1)
+        inv.setCount("Signature_Staff", 1)
+        inv.setCount("Spiked_Staff", 1)
 
         isShop = True
         setGold(99999)

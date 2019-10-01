@@ -607,7 +607,7 @@ Public Class Debug_Window
         'CType(box, System.ComponentModel.ISupportInitialize).BeginInit()
         'group.SuspendLayout()
 
-        lbl.Location = New System.Drawing.Point(10, 10)
+        lbl.Location = New System.Drawing.Point(12, 12)
         lbl.Name = p.Key & "Lbl"
         lbl.Size = New System.Drawing.Size(125, 25)
         lbl.TabStop = False
@@ -628,7 +628,7 @@ Public Class Debug_Window
         movePerkControl(group, col, row)
 
         Dim w As Integer = box.Size.Width + lbl.Size.Width + 10 * 3
-        Dim h As Integer = Math.Max(box.Size.Height, lbl.Size.Height) + 10 * 2
+        Dim h As Integer = Math.Max(box.Size.Height, lbl.Size.Height) + 15
         group.Name = "groupTest"
         group.Size = New System.Drawing.Size(w, h)
         group.TabIndex = 1
@@ -650,7 +650,7 @@ Public Class Debug_Window
         Next
 
         Dim w As Integer = box.Size.Width + lbl.Size.Width + 10 * 3
-        Dim h As Integer = Math.Max(box.Size.Height, lbl.Size.Height) + 10 * 2
+        Dim h As Integer = Math.Max(box.Size.Height, lbl.Size.Height) + 10
         Dim pad As Decimal = 0.05
         Dim x As Integer = w * pad + (w * pad * 2 + w) * col
         Dim y As Integer = h * pad + (h * pad * 2 + h) * row

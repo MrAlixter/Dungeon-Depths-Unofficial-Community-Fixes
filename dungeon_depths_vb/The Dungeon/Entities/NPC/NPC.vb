@@ -5,6 +5,7 @@
     Public tfEnd As Integer = 0
     Public sName As String = ""
     Public sMaxHealth, sMana, sMaxMana, sAttack, sDefence, sWill, sSpeed As Integer
+    Public xpValue As Integer = 10
     'dialog variables
     Public form As String = ""
     Public title As String
@@ -63,6 +64,7 @@
         endMonster()
 
         Game.player.clearTarget()
+        Game.player.xp += xpValue
         cause.currTarget = Nothing
         cause.nextCombatAction = Nothing
 
@@ -203,7 +205,7 @@
         endBoss()
         Game.fromCombat()
         Game.npcList.Remove(Me)
-        Game.pushLstLog("You've defeated the " & name & "!")
+        Game.pushLstLog("You've defeated the " & name & "!  +" & xpValue & " XP!")
 
 
         'monster transformations

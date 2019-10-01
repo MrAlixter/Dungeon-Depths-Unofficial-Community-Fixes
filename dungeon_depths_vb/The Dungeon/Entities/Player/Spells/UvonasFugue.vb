@@ -2,7 +2,7 @@
     Inherits Spell
     Sub New(ByRef c As Player, ByRef t As NPC)
         MyBase.New(c, t)
-        If c.equippedAcce.getName.Equals("Ring_of_Uvona") Then
+        If Not c Is Nothing AndAlso c.equippedAcce.getName.Equals("Ring_of_Uvona") Then
             MyBase.settier(3)
             MyBase.setcost(11)
         Else

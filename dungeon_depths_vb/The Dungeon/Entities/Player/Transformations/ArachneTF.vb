@@ -112,7 +112,7 @@
     End Sub
     Sub step4pt3()
         Dim p As Player = Game.player
-        If p.equippedWeapon.getName.Equals("Magic_Girl_Wand") Or
+        If p.equippedWeapon.getName.Equals("Magical_Girl_Wand") Or
             p.equippedWeapon.getName.Equals("Valkyrie_Sword") Then
             Equipment.weaponChange("Fists")
         End If

@@ -26,7 +26,7 @@
         End If
         Dim save = Game.getPlayerFromFile("s" & i & ".ave")
         Dim p2 As Player = save.Item1
-        If save.Item2 <> Game.version Or p2.perks("polymorphed") > -1 Or Not Transformation.canBeTFed(Game.player) Or (p2.pClass.name.Equals("Magic Girl") Or p2.pClass.name.Equals("Valkyrie")) Then
+        If save.Item2 <> Game.version Or p2.perks("polymorphed") > -1 Or Not Transformation.canBeTFed(Game.player) Or (p2.pClass.name.Equals("Magical Girl") Or p2.pClass.name.Equals("Valkyrie")) Then
             Game.pushLblEvent("After talking it over, " & Game.player.name & " and " & p2.name & " decide that they are incompatable, and not to fuse.")
             Game.player.hunger -= 50
             Exit Sub

@@ -13,6 +13,7 @@
     Public saleLim As Integer = 999
     Public onSell As Action = Nothing
     Public onBuy As Action = Nothing
+    Public durability As Integer = 100
 
     Overloads Function CompareTo(ByVal obj As Object) As Integer Implements IComparable.CompareTo
         Dim r As Integer
@@ -66,6 +67,11 @@
         Game.pushLstLog("You drop the " & getName())
         count -= 1
     End Sub
+    Overridable Sub break()
+        Game.pushLstLog("The " & getName() & " breaks!")
+        count -= 1
+        durability = 100
+    End Sub
     Overridable Sub remove()
         Game.pushLstLog("The " & getName() & " fades into non-existance")
         count -= 1
@@ -73,7 +79,12 @@
     End Sub
 
     Public Sub examine()
-        Game.pushLblEvent(description)
+        If durability > 99 Then
+            Game.pushLblEvent(description)
+        Else
+            Game.pushLblEvent(description & vbCrLf & vbCrLf & "Durability: " & durability & " (Breaks at 0)")
+        End If
+
     End Sub
     Public Function getDescription()
         Return description

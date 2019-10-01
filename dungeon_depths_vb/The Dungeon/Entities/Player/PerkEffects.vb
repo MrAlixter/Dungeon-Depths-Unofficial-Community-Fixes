@@ -111,6 +111,12 @@
         End If
         Return False
     End Function
+    Shared Sub lightSource()
+        Dim p = Game.player
+        If Game.turn Mod 4 = 0 And p.perks("lightsource") > -1 Then
+            p.perks("lightsource") -= 1
+        End If
+    End Sub
     Shared Sub amazon()
         Dim p = Game.player
         If p.pForm.name.Equals("Amazon") Or p.pForm.name.Equals("Amazon​") Then
@@ -190,10 +196,6 @@
     End Sub
     Shared Sub thrallRestore()
         Dim p As Player = Game.player
-        If p.pClass.name = "Magic Girl" Then
-            Game.pushLblEvent("Your form prevents you from being altered!")
-            Exit Sub
-        End If
 
         p.prefForm.shiftTowards(Game.player)
         p.perks("thrall") = 1

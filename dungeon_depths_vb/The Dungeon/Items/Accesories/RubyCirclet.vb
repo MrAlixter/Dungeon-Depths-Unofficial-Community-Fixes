@@ -14,9 +14,4 @@
         MyBase.fInd = New Tuple(Of Integer, Boolean, Boolean)(3, True, False)
         MyBase.mInd = New Tuple(Of Integer, Boolean, Boolean)(2, False, False)
     End Sub
-    Overrides Sub discard()
-        Game.pushLstLog("You drop the " & getName())
-        
-        count -= 1
-    End Sub
 End Class

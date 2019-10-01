@@ -26,30 +26,25 @@
     Sub step2()
         Dim p As Player = Game.player
 
-        If p.prt.checkNDefFemInd(5, 7) Then
-            Game.pushLstLog("Your hair resists being altered!")
-        Else
             p.prt.haircolor = Color.FromArgb(180, 5, 245, 198)
             p.createP()
             p.perks("vsslimehair") = 0
             'Author Credit: Marionette
             pushLblEventWithoutLoss("The rogue slime starts moving upwards towards your head, your fingers unable to get a grip on the slippery goo as it works its way up your neck and into your hair. Despite your best attempts you just can’t get the bulk of the goo out. It almost feels like your trying to pull out your own hair... After a few more experimental tugs you confirm that the slime seems to have converted your hair to a much more gooey consistency. ")
-        End If
+
         If Game.player.perks("slimetf") > -1 Then Game.player.perks("slimetf") += 1
     End Sub
     Shared Sub step2Alt()
         Dim p As Player = Game.player
-        If p.prt.checkNDefFemInd(5, 7) Then
-            Game.pushLstLog("Your hair resists being altered!")
-        Else
-            p.prt.setIAInd(1, 12, True, True)
-            p.prt.setIAInd(5, 21, True, True)
-            p.prt.setIAInd(15, 26, True, True)
+        
+        p.prt.setIAInd(1, 12, True, True)
+        p.prt.setIAInd(5, 21, True, True)
+        p.prt.setIAInd(15, 26, True, True)
             p.prt.haircolor = Color.FromArgb(180, 255, 120, 255)
             p.createP()
             p.perks("vsslimehair") = 0
-            pushLblEventWithoutLoss("The teal slime has taken on a pink hue now, and your hair has grown out a bit... Your hair is now made of a pink slime!")
-        End If
+        pushLblEventWithoutLoss("The teal slime has taken on a pink hue now, and your hair has grown out a bit... Your hair is now made of a pink slime!")
+
         If Game.player.perks("googirltf") > -1 Then Game.player.perks("googirltf") += 1
     End Sub
 
@@ -74,7 +69,7 @@
 
     Sub step4()
         Dim p As Player = Game.player
-        If p.equippedWeapon.getName.Equals("Magic_Girl_Wand") Or
+        If p.equippedWeapon.getName.Equals("Magical_Girl_Wand") Or
             p.equippedWeapon.getName.Equals("Valkyrie_Sword") Then
             Equipment.weaponChange("Fists")
         End If

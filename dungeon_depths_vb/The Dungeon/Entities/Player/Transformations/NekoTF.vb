@@ -56,7 +56,7 @@
     Sub step6()
         Dim p As player = game.player
 
-        If p.pClass.name.Equals("Magic Girl") Or p.pClass.name.Equals("Valkyrie") Then
+        If p.pClass.name.Equals("Magical Girl") Or p.pClass.name.Equals("Valkyrie") Then
             step6alt()
             Exit Sub
         End If
@@ -120,7 +120,7 @@
     Public Overrides Function getNextStep(stage As Integer) As Action
         If Game.player.perks("nekocurse") = -1 Then
             Return AddressOf stopTF
-        ElseIf (Game.player.pClass.name.Equals("Magic Girl") Or Game.player.pClass.name.Equals("Valkyrie")) And stage < 6 Then
+        ElseIf (Game.player.pClass.name.Equals("Magical Girl") Or Game.player.pClass.name.Equals("Valkyrie")) And stage < 6 Then
             Return AddressOf resist
         End If
 

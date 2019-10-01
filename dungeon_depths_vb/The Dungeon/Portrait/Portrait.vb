@@ -6,6 +6,7 @@
     Public skincolor As Color = Color.FromArgb(255, 247, 219, 195)
     Public wingInd = 0
     Public hornInd = 0
+    Public hBowInd = 0
     Public Shared imgLib As ImageCollection = New ImageCollection(1)
     Public Shared nullImg As Image = imgLib.atrs("Clothes").getAt(New Tuple(Of Integer, Boolean, Boolean)(5, False, True))
     Dim sInts() As Integer = {0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0} 'the starting indexes of each catagory
@@ -89,7 +90,7 @@
         If pForm.Equals("Dragon") Then
             Game.picPortrait.BackgroundImage = CreateBMP({Game.picDragon.BackgroundImage})
             Return Game.picPortrait.BackgroundImage
-        ElseIf pClass.Equals("Magic Girl​") Then
+        ElseIf pClass.Equals("Magical Girl​") Then
             Game.picPortrait.BackgroundImage = CreateBMP({Game.picmgp1.BackgroundImage})
             Return Game.picPortrait.BackgroundImage
         ElseIf pForm.Equals("Sheep") Then
@@ -125,7 +126,7 @@
             Try
                 iArr(i) = imgLib.atrs(imgLib.atrs.Keys(i)).getAt(iArrInd(i))
             Catch ex As Exception
-                PrintLine("Error!  Exception thrown in portrait creation (specifically in the " & imgLib.atrs.Keys(i) & " layer).  The player character will now revert to default.")
+                MsgBox("Error!  Exception thrown in portrait creation (specifically in the " & imgLib.atrs.Keys(i) & " layer).  The player character will now revert to default.")
             End Try
         Next
 
@@ -138,6 +139,7 @@
         If Not ent Is Nothing AndAlso ent.lust > 0 Then lustBlushUpdate()
         If wingInd > 0 Then addWings(wingInd)
         If hornInd > 0 Then addHorns(hornInd)
+        If hBowInd > 0 Then addHBow(hBowInd)
 
         Return CreateBMP(iArr)
     End Function
@@ -170,6 +172,7 @@
         If ent.lust > 0 Then lustBlushUpdate()
         If wingInd > 0 Then addWings(wingInd)
         If hornInd > 0 Then addHorns(hornInd)
+        If hBowInd > 0 Then addHBow(hBowInd)
 
         Return CreateBMP(iArr)
     End Function
@@ -205,6 +208,9 @@
     End Sub
     Sub addWings(ByVal i As Integer)
         iArr(1) = CreateFullBodyBMP({CharacterGenerator.picPort.Image, imgLib.atrs("Wings").getM(i), iArr(1)})
+    End Sub
+    Sub addHBow(ByVal i As Integer)
+        iArr(1) = CreateFullBodyBMP({CharacterGenerator.picPort.Image, iArr(1), imgLib.atrs("HBows").getM(i)})
     End Sub
     Sub addHorns(ByVal i As Integer)
         iArr(15) = CreateFullBodyBMP({CharacterGenerator.picPort.Image, imgLib.atrs("Horns").getM(i), iArr(15)})
@@ -319,8 +325,6 @@
         If p.solFlag Then Exit Sub
         If p.equippedArmor.getName = "Skimpy_Clothes" Then
             skimpyClothesUpdate()
-        ElseIf p.equippedArmor.getName = "Magic_Girl_Outfit" Then
-            mgoutfitUpdate()
         ElseIf p.equippedArmor.getName = "Common_Clothes" Then
             cclothesUpdate()
         Else
@@ -352,7 +356,7 @@
                 getNaked()
             End If
         End If
-        If Not p.equippedArmor.getName.Equals("Naked") And p.equippedArmor.compressesBreasts And Not p.pClass.name.Equals("Magic Girl") Then
+        If Not p.equippedArmor.getName.Equals("Naked") And p.equippedArmor.compressesBreasts Then
             compressBreasts()
         ElseIf p.equippedArmor.getName.Equals("Naked") Or Not p.equippedArmor.compressesBreasts Then
             notcompress()
@@ -392,30 +396,6 @@
                 iArrInd(3) = p.equippedArmor.bsize3
             Case 4
                 iArrInd(3) = p.equippedArmor.bsize4
-            Case Else
-                getNaked()
-        End Select
-    End Sub
-    Public Sub mgoutfitUpdate()
-        Dim p As Player
-        If ent.GetType Is GetType(Player) Then
-            p = CType(ent, Player)
-        Else
-            Exit Sub
-        End If
-
-        If Not p.pClass.name.Equals("Magic Girl") And Not (p.pClass.name.Equals("Bimbo") And p.breastSize = 3) Then
-            getNaked()
-        End If
-        Select Case p.breastSize
-            Case 1
-                iArrInd(3) = p.equippedArmor.bsize1
-            Case 3
-                haircolor = Color.FromArgb(255, 255, 250, 205)
-                iArrInd(1) = New Tuple(Of Integer, Boolean, Boolean)(10, True, True)
-                iArrInd(5) = New Tuple(Of Integer, Boolean, Boolean)(10, True, True)
-                iArrInd(15) = New Tuple(Of Integer, Boolean, Boolean)(7, True, True)
-                iArrInd(3) = p.equippedArmor.bsize3
             Case Else
                 getNaked()
         End Select

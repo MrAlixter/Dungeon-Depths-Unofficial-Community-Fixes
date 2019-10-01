@@ -76,7 +76,7 @@
     End Function
     Shared Function get0pt7DefaultImageOffsetM(ByVal key As String)
 
-        If key = "AccA" Or key = "Cloak" Or key = "Eyebrows" Or key = "FacialMark" Then
+        If key = "Acce" Or key = "Cloak" Or key = "Eyebrows" Or key = "FacialMark" Then
             Return 3
         ElseIf key = "Body" Or key = "Nose" Then
             Return 1
@@ -91,7 +91,7 @@
         End If
     End Function
     Shared Function get0pt7DefaultImageOffsetF(ByVal key As String)
-        If key = "AccA" Or key = "Cloak" Then
+        If key = "Acce" Or key = "Cloak" Then
             Return 4
         ElseIf key = "FacialMark" Then
             Return 3

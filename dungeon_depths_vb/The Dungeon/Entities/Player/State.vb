@@ -18,6 +18,7 @@
     Dim haircolor, skincolor, textColor As Color
     Dim wingIndex As Integer
     Dim hornIndex As Integer
+    Dim hBowIndex As Integer
     Public initFlag As Boolean = False
     Public isPetrified = False
 
@@ -51,6 +52,7 @@
         textColor = p.TextColor
         wingIndex = p.prt.wingInd
         hornIndex = p.prt.hornInd
+        hBowIndex = p.prt.hBowInd
         initFlag = True
     End Sub
     'constructs a state with placeholder values
@@ -84,6 +86,7 @@
         textColor = Color.Black
         wingIndex = 0
         hornIndex = 0
+        hBowIndex = 0
         ReDim iArrInd(16)
     End Sub
 
@@ -121,6 +124,7 @@
         p.TextColor = textColor
         p.prt.wingInd = wingIndex
         p.prt.hornInd = hornIndex
+        p.prt.hBowInd = hBowIndex
         p.isPetrified = isPetrified
     End Sub
     'save applies a given instance of a player to a state
@@ -153,6 +157,7 @@
         textColor = p.TextColor
         wingIndex = p.prt.wingInd
         hornIndex = p.prt.hornInd
+        hBowIndex = p.prt.hBowInd
         isPetrified = p.isPetrified
     End Sub
 
@@ -232,19 +237,20 @@
         skincolor = Color.FromArgb(A, CInt(readArray(25)), CInt(readArray(26)), CInt(readArray(27)))
         textColor = Color.FromArgb(255, CInt(readArray(28)), CInt(readArray(29)), CInt(readArray(30)))
 
+        hBowIndex = CInt(readArray(31))
 
-        Dim b1 As Integer = readArray(31)
+        Dim b1 As Integer = readArray(32)
         For i = 0 To b1 - 1
-            Dim kvp = readArray(32 + i).Split("!")
+            Dim kvp = readArray(33 + i).Split("!")
             perks(kvp(0)) = CInt(kvp(1))
         Next
         For i = 0 To UBound(iArrInd)
-            Dim arr() As String = readArray(32 + b1 + i).Split("%")
+            Dim arr() As String = readArray(33 + b1 + i).Split("%")
             iArrInd(i) = New Tuple(Of Integer, Boolean, Boolean)(CInt(arr(0)), CBool(arr(1)), CBool(arr(2)))
         Next
 
         For Each k In Equipment.acList.Keys
-            If readArray(32 + b1 + 17) = k Then
+            If readArray(33 + b1 + 17) = k Then
                 equippedAcce = Equipment.acList(k)
                 Exit For
             End If
@@ -258,7 +264,7 @@
             Dim output As String = CStr(name & "*" & pClass.name & "~" & pForm.name & "*" & description & "*" & health & "*" & maxHealth & "*" & mana & "*" & maxMana & "*" & wingIndex & "*" & haircolor.A & "*" & skincolor.A & "*" & _
                attack & "*" & defence & "*" & will & "*" & speed & "*" & isPetrified & "*" & hunger & "*" & gold & "*" & equippedArmor.getName() & "*" & equippedWeapon.getName() & "*" & _
                sex & "*" & hornIndex & "*" & breastSize & "*" & haircolor.R & "*" & haircolor.G & "*" & haircolor.B & "*" & skincolor.R & "*" & skincolor.G & "*" & skincolor.B & "*" & _
-               textColor.R & "*" & textColor.G & "*" & textColor.B & "*")
+               textColor.R & "*" & textColor.G & "*" & textColor.B & "*" & hBowIndex & "*")
             output += perks.Count & "*"
             For Each kvp As KeyValuePair(Of String, Integer) In perks
                 output += (kvp.Key & "!" & kvp.Value & "*")

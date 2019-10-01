@@ -23,11 +23,6 @@
     Public Sub step1()
         Dim p As Player = Game.player
 
-        If p.pClass.name = "Magic Girl" Then
-            Game.pushLblEvent("Your form prevents you from being altered!")
-            Exit Sub
-        End If
-
         Dim out = ""
 
         'equip clothes

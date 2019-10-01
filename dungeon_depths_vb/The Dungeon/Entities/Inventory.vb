@@ -22,8 +22,8 @@
         internal_inventory.Add("Steel_Bikini", New SteelBikini())           '7
         internal_inventory.Add("Chicken_Suit", New ChickenSuit())           '8
         internal_inventory.Add("SoulBlade", New SoulBlade())                '9
-        internal_inventory.Add("Magic_Girl_Outfit", New MagGirlOutfit())    '10
-        internal_inventory.Add("Magic_Girl_Wand", New MagGirlWand())        '11
+        internal_inventory.Add("Magical_Girl_Outfit", New MagGirlOutfit())  '10
+        internal_inventory.Add("Magical_Girl_Wand", New MagGirlWand())      '11
         internal_inventory.Add("Cat_Lingerie", New CatLingerie())           '12
         internal_inventory.Add("Mana_Potion", New ManaPotion())             '13
         internal_inventory.Add("Restore_Potion", New RestorationPotion())   '14
@@ -171,7 +171,14 @@
         internal_inventory.Add("Lolita_Dress_(Sweet)", New SLolitaDress())  '151
         internal_inventory.Add("Will_Charm", New WillCharm())               '152
         internal_inventory.Add("Anti_Curse_Tag", New AntiSCurseTag())       '153
-        internal_inventory.Add("New-U_Crystal", New NewUCrystal())       '154
+        internal_inventory.Add("New-U_Crystal", New NewUCrystal())          '154
+        internal_inventory.Add("Bronze_Spear", New BronzeSpear())           '155
+        internal_inventory.Add("Steel_Spear", New SteelSpear())             '156
+        internal_inventory.Add("Flaming_Spear", New FlamingSpear())         '157
+        internal_inventory.Add("Signature_Spear", New SigSpear())           '158
+        internal_inventory.Add("Signature_Staff", New SigStaff())           '159
+        internal_inventory.Add("Spiked_Staff", New SpikedStaff())           '160
+        internal_inventory.Add("Blindfold", New Blindfold())                '161
 
         armor = {New CommonClothes, New SkimpyClothes, New Naked, New VSkimpyClothes,
                  Me.item(5), Me.item(7), Me.item(8), Me.item(10),
@@ -192,7 +199,9 @@
                    Me.item(22), Me.item(23), Me.item(24), Me.item(40),
                    Me.item(41), Me.item(42), Me.item(45), Me.item(63),
                    Me.item(84), Me.item(96), Me.item(111), Me.item(112),
-                   Me.item(118), Me.item(120), Me.item(145), Me.item(150)}
+                   Me.item(118), Me.item(120), Me.item(145), Me.item(150),
+                   Me.item(155), Me.item(156), Me.item(157), Me.item(158),
+                   Me.item(159), Me.item(160)}
 
         useable = {Me.item(0), Me.item(3), Me.item(4),
                    Me.item(65), Me.item(15), Me.item(36), Me.item(37),
@@ -202,7 +211,8 @@
                    Me.item(91), Me.item(119), Me.item(126), Me.item(127),
                    Me.item(128), Me.item(130), Me.item(136), Me.item(142),
                    Me.item(143), Me.item(148), Me.item(149), Me.item(152),
-                   Me.item(153), Me.item(154)}
+                   Me.item(153), Me.item(154), Me.item(155), Me.item(156),
+                   Me.item(157), Me.item(158)}
 
         food = {Me.item(1), Me.item(30), Me.item(31), Me.item(32), Me.item(33),
                 Me.item(34), Me.item(35), Me.item(44), Me.item(90),
@@ -213,7 +223,7 @@
         acce = {New noAcce(), Me.item(66), Me.item(67), Me.item(68),
                 Me.item(69), Me.item(70), Me.item(77), Me.item(81),
                 Me.item(97), Me.item(110), Me.item(123), Me.item(139),
-                Me.item(140), Me.item(141), Me.item(149)}
+                Me.item(140), Me.item(141), Me.item(149), Me.item(161)}
 
         potions = {Me.item(2), Me.item(13), Me.item(14), Me.item(25),
                    Me.item(26), Me.item(27), Me.item(28), Me.item(29),
@@ -290,7 +300,7 @@
     Function save() As String
         Dim out = CStr(upperBound()) & ":"
         For i = 0 To upperBound()
-            out += getKeyByID(i) & "~" & item(i).count & ":"
+            out += getKeyByID(i) & "~" & item(i).count & "~" & item(i).durability & ":"
         Next
 
         If Not mPotions Is Nothing Then
@@ -311,6 +321,7 @@
         For i As Integer = 1 To parse(0) + 1
             Dim subParse As String() = parse(i).Split("~")
             add(subParse(0), CInt(subParse(1)))
+            item(i - 1).durability = CInt(subParse(2))
         Next
         Dim x = CInt(parse(0)) + 2
         If Not parse(x).Equals("na") Then

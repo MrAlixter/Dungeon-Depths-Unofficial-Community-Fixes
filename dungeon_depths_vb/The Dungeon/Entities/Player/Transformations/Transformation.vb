@@ -55,7 +55,7 @@ Public Class Transformation
                 Return New TargaxTF(CInt(s(0)), CInt(s(1)), CInt(s(2)), CDbl(s(3)), CBool(s(4)), CBool(s(6)))
             Case "ThrallTF"
                 Return New ThrallTF(CInt(s(0)), CInt(s(1)), CInt(s(2)), CDbl(s(3)), CBool(s(4)), CBool(s(6)))
-            Case "Magic Girl"
+            Case "Magical Girl"
                 Return New MagGirlTF(CInt(s(0)), CInt(s(1)), CInt(s(2)), CDbl(s(3)), CBool(s(4)), CBool(s(6)))
             Case "DragonTF"
                 Return New DragonTF(CInt(s(0)), CInt(s(1)), CInt(s(2)), CDbl(s(3)), CBool(s(4)), CBool(s(6)))
@@ -95,6 +95,8 @@ Public Class Transformation
                 Return New Blindness(CInt(s(0)), CInt(s(1)), CInt(s(2)), CDbl(s(3)), CBool(s(4)), CBool(s(6)))
             Case "Valkyrie"
                 Return New ValkyrieTF2(CInt(s(0)), CInt(s(1)), CInt(s(2)), CDbl(s(3)), CBool(s(4)), CBool(s(6)))
+            Case "LolitaSTF"
+                Return New LolitaSTF(CInt(s(0)), CInt(s(1)), CInt(s(2)), CDbl(s(3)), CBool(s(4)), CBool(s(6)))
             Case Else
                 Return Nothing
         End Select
@@ -102,14 +104,14 @@ Public Class Transformation
     Shared Function canBeTFed(ByRef p As Player) As Boolean
         If Game.player.ongoingTFs.Count < 1 And
             (Not p.polymorphs.ContainsKey(p.pClass.name) And Not p.polymorphs.ContainsKey(p.pForm.name)) And
-            Not p.pClass.name.Equals("Magic Girl") And
+            Not p.pClass.name.Equals("Magical Girl") And
             Not p.pClass.name.Equals("Valkyrie") And
             Not p.pClass.name.Equals("Unconscious") And
             Not p.pForm.name.Equals("Blowup Doll") And
             Not p.perks("astatue") > 1 Then Return True
         'MsgBox(Game.player.ongoingTFs.Count < 1 & vbCrLf &
         '    (Not p.polymorphs.ContainsKey(p.pClass.name) And Not p.polymorphs.ContainsKey(p.pForm.name)) & vbCrLf &
-        '    Not p.pClass.name.Equals("Magic Girl") & vbCrLf &
+        '    Not p.pClass.name.Equals("Magical Girl") & vbCrLf &
         '    Not p.pClass.name.Equals("Valkyrie") & vbCrLf &
         '    Not p.pClass.name.Equals("Unconscious") & vbCrLf &
         '    Not p.pForm.name.Equals("Blowup Doll"))
@@ -120,7 +122,6 @@ Public Class Transformation
     Overridable Sub update() Implements Updatable.update
         If Not updateDuringCombat And Game.combatmode Then Exit Sub
         If turnsTilNextStep = 0 Then
-            MagGirlTF.chkForMagGirlRevert(Game.player)
             nextStep = getNextStep(currStep)
             nextStep()
             currStep += 1

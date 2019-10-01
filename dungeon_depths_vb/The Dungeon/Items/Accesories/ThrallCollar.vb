@@ -60,12 +60,6 @@
             p.prt.setIAInd(9, 8, False, True)
         End If
 
-        If p.pClass.name.Equals("Magic Girl") Then
-            p.breastSize = 2
-            p.prt.setIAInd(6, 0, True, False)
-            p.prt.setIAInd(15, 7, True, False)
-        End If
-
         p.prefForm = New preferedForm()
 
         p.createP()
@@ -100,11 +94,5 @@
     Public Sub setFormerLife(ft As String, fet As Tuple(Of Integer, Boolean, Boolean))
         formerClass = ft
         formerEyeType = fet
-    End Sub
-
-    Overrides Sub discard()
-        Game.pushLstLog("You drop the " & getName())
-        
-        count -= 1
     End Sub
 End Class

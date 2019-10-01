@@ -14,10 +14,10 @@
     End Sub
     Sub createDefaultImageLib()
         Dim fGlasses, fEyes, fFace, fFacialMark, fMouth, fBody, fCloak,
-       fClothing, fFrontHair, fEyebrows, fNose, fRearHair1, fEars, fAccA,
+       fClothing, fFrontHair, fEyebrows, fNose, fRearHair1, fEars, fAcce,
        fHat, fRearHair2, bkg As ImageDump
         Dim mGlasses, mEyes, mFace, mFacialMark, mMouth, mBody, mCloak,
-            mClothing, mFrontHair, mEyebrows, mNose, mRearHair1, mEars, mAccA,
+            mClothing, mFrontHair, mEyebrows, mNose, mRearHair1, mEars, mAcce,
             mHat, mRearHair2 As ImageDump
 
         Dim wings, horns As ImageDump
@@ -119,12 +119,12 @@
         ndoM = mCloak.Count
         atrs.Add("Cloak", New ImageAttribute(fCloak, mCloak, ndoF, ndoM))
 
-        '-index 14 (AccA)
-        fAccA = New ImageDump("img/fAccA")
-        mAccA = New ImageDump("img/mAccA")
-        ndoF = fAccA.Count
-        ndoM = mAccA.Count
-        atrs.Add("AccA", New ImageAttribute(fAccA, mAccA, ndoF, ndoM))
+        '-index 14 (Acce)
+        fAcce = New ImageDump("img/fAcce")
+        mAcce = New ImageDump("img/mAcce")
+        ndoF = fAcce.Count
+        ndoM = mAcce.Count
+        atrs.Add("Acce", New ImageAttribute(fAcce, mAcce, ndoF, ndoM))
 
         '-index 15 (front hair)
         fFrontHair = New ImageDump("img/fFrontHair")
@@ -148,19 +148,19 @@
     End Sub
     Sub createAllImageLib()
         Dim fGlasses, fEyes, fFace, fFacialMark, fMouth, fBody, fCloak,
-       fClothing, fFrontHair, fEyebrows, fNose, fRearHair1, fEars, fAccA,
+       fClothing, fFrontHair, fEyebrows, fNose, fRearHair1, fEars, fAcce,
        fHat, fRearHair2, bkg As ImageDump
         Dim mGlasses, mEyes, mFace, mFacialMark, mMouth, mBody, mCloak,
-            mClothing, mFrontHair, mEyebrows, mNose, mRearHair1, mEars, mAccA,
+            mClothing, mFrontHair, mEyebrows, mNose, mRearHair1, mEars, mAcce,
             mHat, mRearHair2 As ImageDump
 
-        Dim fTFAccA, fTFBody, fTFClothes, fTFEars, fTFEyes, fTFface,
+        Dim fTFAcce, fTFBody, fTFClothes, fTFEars, fTFEyes, fTFface,
             fTfFrontHair, fTFMouth, fTFNose, fTFRearhair1, fTfRearhair2, fTFGlasses,
             fTFHat As ImageDump
-        Dim mTFAccA, mTFBody, mTFClothes, mTFEars, mTFEyes, mTFface,
+        Dim mTFAcce, mTFBody, mTFClothes, mTFEars, mTFEyes, mTFface,
             mTfFrontHair, mTFMouth, mTFNose, mTFRearhair1, mTfRearhair2 As ImageDump
 
-        Dim wings, horns As ImageDump
+        Dim wings, horns, hbow As ImageDump
 
         Dim ndoM, ndoF As Integer
 
@@ -297,16 +297,16 @@
         ndoM = mCloak.Count
         atrs.Add("Cloak", New ImageAttribute(fCloak, mCloak, ndoF, ndoM))
 
-        '-index 14 (AccA)
-        fAccA = New ImageDump("img/fAccA")
-        mAccA = New ImageDump("img/mAccA")
-        ndoF = fAccA.Count
-        ndoM = mAccA.Count
-        fTFAccA = New ImageDump("img/fTF/tfAccA")
-        mTFAccA = New ImageDump("img/mTF/tfAccA")
-        fAccA.merge(fTFAccA)
-        mAccA.merge(mTFAccA)
-        atrs.Add("AccA", New ImageAttribute(fAccA, mAccA, ndoF, ndoM))
+        '-index 14 (Acce)
+        fAcce = New ImageDump("img/fAcce")
+        mAcce = New ImageDump("img/mAcce")
+        ndoF = fAcce.Count
+        ndoM = mAcce.Count
+        fTFAcce = New ImageDump("img/fTF/tfAcce")
+        mTFAcce = New ImageDump("img/mTF/tfAcce")
+        fAcce.merge(fTFAcce)
+        mAcce.merge(mTFAcce)
+        atrs.Add("Acce", New ImageAttribute(fAcce, mAcce, ndoF, ndoM))
 
         '-index 15 (front hair)
         fFrontHair = New ImageDump("img/fFrontHair")
@@ -339,6 +339,9 @@
         horns = New ImageDump("img/Horns")
         atrs.Add("Horns", New ImageAttribute(horns, horns.Count))
 
+        hbow = New ImageDump("img/HairBows")
+        atrs.Add("HBows", New ImageAttribute(hbow, hbow.Count))
+
         For i = 0 To atrs.Keys.Count - 1
             atrs(atrs.Keys(i)).key = atrs.Keys(i)
         Next
@@ -353,8 +356,8 @@
         atrs("Cloak").setAt(New Tuple(Of Integer, Boolean, Boolean)(0, True, False), null)
         atrs("Cloak").setAt(New Tuple(Of Integer, Boolean, Boolean)(0, False, False), null)
 
-        atrs("AccA").setAt(New Tuple(Of Integer, Boolean, Boolean)(0, True, False), null)
-        atrs("AccA").setAt(New Tuple(Of Integer, Boolean, Boolean)(0, False, False), null)
+        atrs("Acce").setAt(New Tuple(Of Integer, Boolean, Boolean)(0, True, False), null)
+        atrs("Acce").setAt(New Tuple(Of Integer, Boolean, Boolean)(0, False, False), null)
 
         atrs("Hat").setAt(New Tuple(Of Integer, Boolean, Boolean)(0, True, False), null)
         atrs("Hat").setAt(New Tuple(Of Integer, Boolean, Boolean)(0, False, False), null)

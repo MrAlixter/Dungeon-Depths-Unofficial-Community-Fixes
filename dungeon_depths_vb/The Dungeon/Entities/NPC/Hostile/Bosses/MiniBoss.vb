@@ -23,6 +23,7 @@
                 pronoun = "she"
                 pPronoun = "her"
                 rPronoun = "her"
+                xpValue = 100
             Case 2
                 setName("Targax the Brutal")
                 setMaxHealth(250)
@@ -40,6 +41,7 @@
                 pronoun = "he"
                 pPronoun = "his"
                 rPronoun = "him"
+                xpValue = 200
             Case 4
                 setName("Ooze Empress")
                 setMaxHealth(100)
@@ -54,6 +56,7 @@
                 pronoun = "she"
                 pPronoun = "her"
                 rPronoun = "her"
+                xpValue = 400
             Case Else
                 setName("Explorer")
                 setMaxHealth(300)
@@ -68,6 +71,7 @@
                     End While
                     inv.add(invInd, CInt(Rnd() * 2) + 1)
                 Next
+                xpValue = 200
         End Select
         setHealth(1.0)
         If speed = Game.player.speed Then speed -= 1

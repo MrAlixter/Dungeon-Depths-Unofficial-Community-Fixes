@@ -55,8 +55,8 @@
     End Function
     Shared Function convToStd(ByVal s As String)
         Select Case s
-            Case "fTFAccA"
-                Return "fAccA"
+            Case "fTFAcce"
+                Return "fAcce"
             Case "fTFBody"
                 Return "fBody"
             Case "fTFClothes"
@@ -78,8 +78,8 @@
             Case "fTfRearhair2"
                 Return "fRearHair2"
 
-            Case "mTFAccA"
-                Return "mAccA"
+            Case "mTFAcce"
+                Return "mAcce"
             Case "mTFBody"
                 Return "mBody"
             Case "mTFClothes"

@@ -39,7 +39,7 @@
         p.prt.setIAInd(8, 5, True, True)
         p.prt.setIAInd(9, 7, True, True)
         p.prt.setIAInd(13, 0, True, False)
-        If Not p.pClass.name.Equals("Magic Girl") Then p.prt.setIAInd(16, 0, True, False)
+        If Not p.pClass.name.Equals("Magical Girl") Then p.prt.setIAInd(16, 0, True, False)
 
         If p.breastSize = 1 Then
             p.prt.setIAInd(2, 6, True, True)
@@ -51,7 +51,7 @@
             p.breastSize += 1
             p.reverseBSRoute()
         End If
-        If p.pClass.name.Equals("Magic Girl") Then
+        If p.pClass.name.Equals("Magical Girl") Then
             p.prt.setIAInd(16, Portrait.imgLib.atrs("Hat").getF.Count - 3, True, True)
             p.perks("bimbotf") = 24
         End If
@@ -74,7 +74,7 @@
         p.lust += 10
         'final tf Stage
         If p.name.Equals("Targax") Then p.prt.haircolor = Color.FromArgb(255, 20, 20, 20) Else p.prt.haircolor = Color.FromArgb(255, 245, 231, 184)
-        If p.breastSize < 3 And Not p.pClass.name.Equals("Magic Girl") Then
+        If p.breastSize < 3 And Not p.pClass.name.Equals("Magical Girl") Then
             p.prt.setIAInd(2, 7, True, True)
             p.breastSize = 3
         ElseIf p.breastSize < 7 Then
@@ -82,7 +82,7 @@
             p.reverseBSRoute()
         End If
 
-        If Not p.equippedArmor.getName.Equals("Naked") And Not p.pClass.name.Equals("Magic Girl") Then
+        If Not p.equippedArmor.getName.Equals("Naked") And Not p.pClass.name.Equals("Magical Girl") Then
 
             If p.equippedArmor.slutVarInd = -1 Then
                 Equipment.clothesChange("Skimpy_Clothes")
@@ -128,7 +128,7 @@
         p.prt.setIAInd(16, 0, True, False)
 
         p.prt.haircolor = Color.FromArgb(255, 245, 231, 184)
-        If p.breastSize < 3 And Not p.pClass.name.Equals("Magic Girl") Then
+        If p.breastSize < 3 And Not p.pClass.name.Equals("Magical Girl") Then
             p.prt.setIAInd(2, 7, True, True)
             p.breastSize = 3
         ElseIf p.breastSize < 7 Then
@@ -136,7 +136,7 @@
             p.reverseBSRoute()
         End If
 
-        If Not p.equippedArmor.getName.Equals("Naked") And Not p.pClass.name.Equals("Magic Girl") Then
+        If Not p.equippedArmor.getName.Equals("Naked") And Not p.pClass.name.Equals("Magical Girl") Then
             If p.equippedArmor.slutVarInd = -1 Then
                 Equipment.clothesChange("Very_Skimpy_Clothes")
             Else
@@ -173,7 +173,7 @@
         p.prt.setIAInd(16, 0, True, False) 'hat
 
         p.prt.haircolor = cRed
-        If p.breastSize < 3 And Not p.pClass.name.Equals("Magic Girl") Then
+        If p.breastSize < 3 And Not p.pClass.name.Equals("Magical Girl") Then
             p.prt.setIAInd(2, 7, True, True)
             p.breastSize = 3
         ElseIf p.breastSize < 7 Then
@@ -206,7 +206,7 @@
         p.prt.setIAInd(8, 6, True, True)
         p.prt.setIAInd(9, 8, True, True)
         p.prt.setIAInd(13, 0, True, True)
-        Equipment.clothesChange("Magic_Girl_Outfit")
+        Equipment.clothesChange("Magical_Girl_Outfit")
         p.breastSize = 3
         Game.pushLblEvent("You immediatly feel funny, the increased magic in your system reacting swiftly with the gum.  In your haze, you look down to see your clothes have become tight and pink. You giggle, all traces of intellect vanishing as your body becomes more curvy and feminine. Your hair lengthens, becoming a platinum blonde, and your clothes finish changing to match your new figure.")
         p.lust += 10
@@ -224,7 +224,7 @@
         If Not Game.player.prt.haircolor.Equals(bimboyellow) Then
             Return AddressOf hairColorShift
         End If
-        If Game.player.pClass.name = "Magic Girl" Then
+        If Game.player.pClass.name = "Magical Girl" Then
             Return AddressOf step2alt
         End If
         If Game.player.perks("bimbotf") = -1 Then
