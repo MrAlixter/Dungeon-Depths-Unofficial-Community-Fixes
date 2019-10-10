@@ -636,7 +636,7 @@ Partial Class Game
         Me.btnATK.BackColor = System.Drawing.Color.Black
         Me.btnATK.Font = New System.Drawing.Font("Consolas", 8.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.btnATK.ForeColor = System.Drawing.Color.White
-        Me.btnATK.Location = New System.Drawing.Point(237, 419)
+        Me.btnATK.Location = New System.Drawing.Point(236, 419)
         Me.btnATK.Name = "btnATK"
         Me.btnATK.Size = New System.Drawing.Size(89, 36)
         Me.btnATK.TabIndex = 156

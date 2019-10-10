@@ -611,7 +611,7 @@
     Sub genBossFloor(ByRef p As Player)
         'Creates a straight hallway of a floor for a boss floor
         If mBoardHeight < 30 Then mBoardHeight = 30
-        If mBoardWidth < 10 Then mBoardWidth = 10
+        If mBoardWidth < 15 Then mBoardWidth = 15
         For y = 0 To 25
             For x = 3 To 7
                 mBoard(y, x).Tag = 2
@@ -776,7 +776,7 @@
                                        "______________#########_____#",
                                        "______________#########______"}
 
-        If mBoardHeight < 19 Then mBoardHeight = 19
+        If mBoardHeight < 20 Then mBoardHeight = 20
         If mBoardWidth < 30 Then mBoardWidth = 30
 
         For y = 0 To 18

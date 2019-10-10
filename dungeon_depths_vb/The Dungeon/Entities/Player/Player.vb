@@ -259,6 +259,11 @@
             inv.add(84, 1)
             equippedArmor = inv.item(83)
             equippedWeapon = inv.item(84)
+        ElseIf s = "Rogue" Then
+            inv.add(164, 1)
+            inv.add(165, 1)
+            equippedAcce = inv.item(164)
+            equippedWeapon = inv.item(165)
         ElseIf s = "Mage" Then
             knownSpells.Add("Fireball")
             inv.add(2, 3)
@@ -333,6 +338,7 @@
         perks.Add("bimbododge", -1)     '29
         perks.Add("lightsource", -1)    '30
         perks.Add("cupcake", -1)        '31
+        perks.Add("stealth", -1)        '32
     End Sub
     Private Sub initClasses()
         'creates the class dictionary
@@ -363,6 +369,7 @@
         classes.Add("Bimbo++", New BimboPlusPlus())
         classes.Add("Shrunken", New Shrunken())
         classes.Add("Maiden", New Maiden())
+        classes.Add("Rogue", New Rogue())
     End Sub
     Private Sub initForms()
         'Creates the form dictionary

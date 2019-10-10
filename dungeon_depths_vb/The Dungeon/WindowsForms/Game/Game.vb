@@ -1277,7 +1277,10 @@ Public Class Game
         Dim r As Integer = Int(Rnd() * (UBound(currTier) + 1))
         Dim r2 As Integer = Int(Rnd() * (UBound(currTier) + 1))
 
-        If rand < encounterRate Then
+        Dim cancel = False
+        If player.perks("stealth") > 0 AndAlso Int(Rnd() * 3) = 0 Then cancel = True
+
+        If rand < encounterRate And Not cancel Then
             Dim m As NPC
             If r2 = UBound(currTier) And r2 = r And Not currFloor.beatBoss And Not mDun.currFloorBoss.Equals("Key") Then
                 m = New MiniBoss(mDun.numCurrFloor)
@@ -1487,13 +1490,13 @@ Public Class Game
         keyspresed = ""
     End Sub
     Public Sub quickChangeFloor(ByVal f As Integer)
-        Try
-            mDun.jumpTo(f)
-            mDun.setFloor(currFloor)
-            pushLblEvent("You draw a circle on the floor, and think hard about floor " & f & ".  A portal opens to it, and you jump through, skipping every floor in between.", AddressOf initializeBoard)
-        Catch e As Exception
-            pushLblEvent("Your attempted teleportation fails in a less than spectacular fashion, the portal you created simply fizzling away to nothingness.")
-        End Try
+        ' Try
+        mDun.jumpTo(f)
+        mDun.setFloor(currFloor)
+        pushLblEvent("You draw a circle on the floor, and think hard about floor " & f & ".  A portal opens to it, and you jump through, skipping every floor in between.", AddressOf initializeBoard)
+        'Catch e As Exception
+        '    pushLblEvent("Your attempted teleportation fails in a less than spectacular fashion, the portal you created simply fizzling away to nothingness.")
+        'End Try
     End Sub
     'talk
     Sub talkKey()
@@ -1932,6 +1935,9 @@ Public Class Game
         'load the dungeon
         reader.ReadLine()
         mDun = New Dungeon(reader.ReadLine())
+        While Not mDun.floors.Keys.Contains(mDun.numCurrFloor)
+            mDun.numCurrFloor -= 1
+        End While
         currFloor = mDun.floors(mDun.numCurrFloor)
         newBoard()
         updateLoadbar(45)
@@ -2025,19 +2031,19 @@ Public Class Game
             MsgBox("Right Button Clicked")
         Else
             If solFlag Then
-                Try
-                    player.solFlag = True
-                    loadSave("saves/s" & fileNum & ".ave")
-                    player.solFlag = False
-                Catch ex As System.IO.FileNotFoundException
-                    MsgBox("Error 004: No save detected!")
-                Catch ex2 As Exception
-                    If MessageBox.Show("Error 005: Error in loaded in save file!" & vbCrLf & "Restart?", "Error 005", MessageBoxButtons.YesNo) = Windows.Forms.DialogResult.Yes Then
-                        Application.Restart()
-                    Else
-                        Application.Exit()
-                    End If
-                End Try
+                'Try
+                player.solFlag = True
+                loadSave("saves/s" & fileNum & ".ave")
+                player.solFlag = False
+                'Catch ex As System.IO.FileNotFoundException
+                '    MsgBox("Error 004: No save detected!")
+                'Catch ex2 As Exception
+                '    If MessageBox.Show("Error 005: Error in loaded in save file!" & vbCrLf & "Restart?", "Error 005", MessageBoxButtons.YesNo) = Windows.Forms.DialogResult.Yes Then
+                '        Application.Restart()
+                '    Else
+                '        Application.Exit()
+                '    End If
+                'End Try
             Else
                 save("saves/s" & fileNum & ".ave")
                 imagesWorkerArg = Convert.ToInt32(fileNum)

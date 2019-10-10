@@ -169,6 +169,7 @@
 
         hideEars()
         hideRearHair()
+
         If ent.lust > 0 Then lustBlushUpdate()
         If wingInd > 0 Then addWings(wingInd)
         If hornInd > 0 Then addHorns(hornInd)
@@ -217,7 +218,6 @@
     End Sub
     Sub hideEars()
         If iArrInd(6).Item1 = 1 Or iArrInd(6).Item1 = 2 Or (Not iArrInd(5).Item2 And iArrInd(5).Item1 <> 2) Or (iArrInd(5).Item2 And checkNDefFemInd(5, 10)) Then Exit Sub
-
         Dim t = iArr(5).Clone
         iArr(5) = iArr(6).Clone
         iArr(6) = t
@@ -232,6 +232,8 @@
     Sub hideRearHair()
         If checkNDefFemInd(16, 9) Then
             iArr(1) = imgLib.atrs("Hat").getAt(New Tuple(Of Integer, Boolean, Boolean)(10, True, True))
+        ElseIf checkNDefFemInd(14, 14) Or checkNDefMalInd(14, 13) Then
+            iArr(1) = imgLib.atrs("Ears").getAt(New Tuple(Of Integer, Boolean, Boolean)(5, True, True))
         End If
     End Sub
     Sub setIAInd(ByVal attrInd As Integer, ByVal i As Integer, ByVal b As Boolean, ByVal nonDefFlag As Boolean)

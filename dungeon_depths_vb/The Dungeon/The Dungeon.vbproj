@@ -134,11 +134,12 @@
     <Compile Include="Entities\NPC\Non-Hostile\Shopkeeper.vb" />
     <Compile Include="Entities\NPC\Non-Hostile\TravelingWizard.vb" />
     <Compile Include="Entities\NPC\NPC.vb" />
+    <Compile Include="Entities\Player\Classes\needRevertPassage\Rogue.vb" />
     <Compile Include="Entities\Player\Classes\needRevertPassage\Maiden.vb" />
     <Compile Include="Entities\Player\Classes\Shrunken.vb" />
-    <Compile Include="Entities\Player\Classes\needRevertPassage\Warlock.vb" />
-    <Compile Include="Entities\Player\Classes\needRevertPassage\BimboPlusPlus.vb" />
     <Compile Include="Entities\Player\Classes\needRevertPassage\Barbarian.vb" />
+    <Compile Include="Entities\Player\Classes\needRevertPassage\BimboPlusPlus.vb" />
+    <Compile Include="Entities\Player\Classes\needRevertPassage\Warlock.vb" />
     <Compile Include="Entities\Player\Classes\Mindless.vb" />
     <Compile Include="Entities\Player\Forms\needsRevertPassage\AmazonWeak.vb" />
     <Compile Include="Entities\Player\Classes\Bimbo.vb" />
@@ -284,6 +285,7 @@
     <Compile Include="Entities\Inventory.vb" />
     <Compile Include="Entities\preferedForm.vb" />
     <Compile Include="Items\Accesories\ActiveCamoflage.vb" />
+    <Compile Include="Items\Accesories\StealthGear.vb" />
     <Compile Include="Items\Accesories\Generator.vb" />
     <Compile Include="Items\Accesories\Bowtie.vb" />
     <Compile Include="Items\Accesories\BracedHeadband.vb" />
@@ -352,6 +354,9 @@
     <Compile Include="Items\Usable\VialOfVenom.vb" />
     <Compile Include="Items\Weapons\Axes\Axe.vb" />
     <Compile Include="Items\Weapons\Daggers\Dagger.vb" />
+    <Compile Include="Items\Weapons\Daggers\MShank.vb" />
+    <Compile Include="Items\Weapons\Daggers\SigDagger.vb" />
+    <Compile Include="Items\Weapons\Daggers\TKnife.vb" />
     <Compile Include="Items\Weapons\Spears\SigSpear.vb" />
     <Compile Include="Items\Weapons\Spears\FlamingSpear.vb" />
     <Compile Include="Items\Weapons\Spears\SteelSpear.vb" />
@@ -746,6 +751,9 @@
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
     <Content Include="img\fTF\tfAcce\gfAcce13.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="img\fTF\tfAcce\gfAcce14.png">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
     <Content Include="img\fTF\tfClothes\gfClothes125.png">
@@ -2504,6 +2512,9 @@
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
     <Content Include="img\mTF\tfAcce\nAcce12.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="img\mTF\tfAcce\nAcce13.png">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
     <Content Include="img\mTF\tfBody\blank.png">

@@ -179,6 +179,10 @@
         internal_inventory.Add("Signature_Staff", New SigStaff())           '159
         internal_inventory.Add("Spiked_Staff", New SpikedStaff())           '160
         internal_inventory.Add("Blindfold", New Blindfold())                '161
+        internal_inventory.Add("Throwing_Knife", New TKnife())              '162
+        internal_inventory.Add("Signature_Dagger", New SigDagger())         '163
+        internal_inventory.Add("Stealth_Gear", New StealthGear())           '164
+        internal_inventory.Add("Mugger's_Shank", New MShank())              '165
 
         armor = {New CommonClothes, New SkimpyClothes, New Naked, New VSkimpyClothes,
                  Me.item(5), Me.item(7), Me.item(8), Me.item(10),
@@ -201,7 +205,8 @@
                    Me.item(84), Me.item(96), Me.item(111), Me.item(112),
                    Me.item(118), Me.item(120), Me.item(145), Me.item(150),
                    Me.item(155), Me.item(156), Me.item(157), Me.item(158),
-                   Me.item(159), Me.item(160)}
+                   Me.item(159), Me.item(160), Me.item(162), Me.item(163),
+                   Me.item(165)}
 
         useable = {Me.item(0), Me.item(3), Me.item(4),
                    Me.item(65), Me.item(15), Me.item(36), Me.item(37),
@@ -212,7 +217,7 @@
                    Me.item(128), Me.item(130), Me.item(136), Me.item(142),
                    Me.item(143), Me.item(148), Me.item(149), Me.item(152),
                    Me.item(153), Me.item(154), Me.item(155), Me.item(156),
-                   Me.item(157), Me.item(158)}
+                   Me.item(157), Me.item(158), Me.item(162)}
 
         food = {Me.item(1), Me.item(30), Me.item(31), Me.item(32), Me.item(33),
                 Me.item(34), Me.item(35), Me.item(44), Me.item(90),
@@ -223,7 +228,8 @@
         acce = {New noAcce(), Me.item(66), Me.item(67), Me.item(68),
                 Me.item(69), Me.item(70), Me.item(77), Me.item(81),
                 Me.item(97), Me.item(110), Me.item(123), Me.item(139),
-                Me.item(140), Me.item(141), Me.item(149), Me.item(161)}
+                Me.item(140), Me.item(141), Me.item(149), Me.item(161),
+                Me.item(164)}
 
         potions = {Me.item(2), Me.item(13), Me.item(14), Me.item(25),
                    Me.item(26), Me.item(27), Me.item(28), Me.item(29),

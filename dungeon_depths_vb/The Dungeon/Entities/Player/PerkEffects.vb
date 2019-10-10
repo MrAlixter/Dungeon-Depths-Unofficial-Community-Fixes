@@ -264,6 +264,7 @@
         flag = bowTieEffect() Or flag
         flag = hardLightEffect(dmg) Or flag
         flag = bimboDodge() Or flag
+        flag = stealthDodge() Or flag
         Return flag
     End Function
     Shared Function bowTieEffect() As Boolean
@@ -310,6 +311,15 @@
             Game.pushLblEvent(out2)
             Return True
         ElseIf p.pForm.name.Contains("Bimbo") Or p.perks("bimbododge") > 0 And Int(Rnd() * 3) = 0 Then
+            Game.pushLblEvent(out)
+            Return True
+        End If
+        Return False
+    End Function
+    Shared Function stealthDodge() As Boolean
+        Dim p = Game.player
+        Dim out = "You dodge the oncoming attack!"
+        If p.perks("stealth") > 0 And Int(Rnd() * 7) = 0 Then
             Game.pushLblEvent(out)
             Return True
         End If

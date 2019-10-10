@@ -26,12 +26,6 @@
         MyBase.isRandoTFAcceptable = False
     End Sub
 
-    Overrides Sub discard()
-        Game.pushLstLog("You drop the " & getName())
-        
-        count -= 1
-    End Sub
-
     Public Overrides Sub onEquip()
         Dim bTF As BimboTF = New BimboTF(2, 0, 0.25, True)
         bTF.chickenTf()

@@ -26,10 +26,4 @@
         bsize7 = New Tuple(Of Integer, Boolean, Boolean)(190, True, True)
         MyBase.compressesBreasts = False
     End Sub
-
-    Overrides Sub discard()
-        Game.pushLstLog("You drop the " & getName())
-
-        count -= 1
-    End Sub
 End Class

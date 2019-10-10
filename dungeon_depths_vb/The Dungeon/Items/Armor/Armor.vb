@@ -24,9 +24,4 @@
     End Sub
     Overridable Sub onUnequip()
     End Sub
-    Public Overrides Sub discard()
-        Game.pushLstLog("You drop the " & getName())
-
-        count -= 1
-    End Sub
 End Class

@@ -63,11 +63,6 @@
             fuPlay.pState.save(fuPlay)
         End If
     End Sub
-    Overrides Sub discard()
-        Game.pushLstLog("You drop the " & getName())
-        
-        count -= 1
-    End Sub
 
     Shared Function nameFusion(ByVal s1 As String, ByVal s2 As String) As String
         Dim vowels() As String = {"a", "e", "i", "o", "u"}

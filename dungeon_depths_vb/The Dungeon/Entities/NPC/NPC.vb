@@ -18,6 +18,7 @@
     Public stunct As Integer = 0
     Public firstTurn = True
     Dim img As Image
+    Dim dropTable() As Integer = {}
 
     Public Overrides Sub update()
         If tfCt > 0 Then
@@ -257,8 +258,8 @@
         npcIndex = 0
         Game.pushLblEvent("The " & name & " return to " & pPronoun & " original self!")
     End Sub
-    Public Sub setInventory(ByVal contents() As Integer)
-        inv = New Inventory(False)
+    Public Sub setInventory(ByVal contents() As Integer, Optional ByVal resetCurrentInv As Boolean = True)
+        If resetCurrentInv Then inv = New Inventory(False)
         For i = 0 To UBound(contents)
             If Me.GetType() Is GetType(MiniBoss) Then
                 inv.add(contents(i), 1)

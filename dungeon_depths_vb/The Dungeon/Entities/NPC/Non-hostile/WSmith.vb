@@ -17,6 +17,8 @@
         inv.setCount("Signature_Spear", 1)
         inv.setCount("Signature_Staff", 1)
         inv.setCount("Spiked_Staff", 1)
+        inv.setCount("Throwing_Knife", 1)
+        inv.setCount("Signature_Dagger", 1)
 
         isShop = True
         setGold(99999)

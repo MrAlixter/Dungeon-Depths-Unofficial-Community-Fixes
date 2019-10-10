@@ -21,7 +21,4 @@
         MyBase.bsize3 = New Tuple(Of Integer, Boolean, Boolean)(119, True, True)
         MyBase.compressesBreasts = True
     End Sub
-    Public Overrides Sub add(i As Integer)
-        MyBase.add(i)
-    End Sub
 End Class

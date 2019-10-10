@@ -23,12 +23,6 @@
         MyBase.compressesBreasts = True
     End Sub
 
-    Overrides Sub discard()
-        Game.pushLstLog("You drop the " & getName())
-
-        count -= 1
-    End Sub
-
     Public Overrides Sub onEquip()
         MyBase.onEquip()
         Game.player.mana += 15

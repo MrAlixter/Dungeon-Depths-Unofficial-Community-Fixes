@@ -13,12 +13,6 @@
         MyBase.isRandoTFAcceptable = False
     End Sub
 
-    Overrides Sub discard()
-        Game.pushLstLog("You drop the " & getName())
-
-        count -= 1
-    End Sub
-
     Overrides Function attack(ByRef p As Player, ByRef m As Entity) As Integer
         Dim dmg As Integer = Int(Rnd() * 3 + 1) + Int(Rnd() * 3 + 1) + Int(Rnd() * 3 + 1) + Int(Rnd() * 3 + 1)
         If dmg <= 4 Then
