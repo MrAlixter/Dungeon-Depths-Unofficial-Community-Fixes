@@ -13,23 +13,12 @@
         inv.setCount("Mana_Charm", 1 + CInt(Rnd() * 2))
         inv.setCount("Witch_Cosplay", CInt(Rnd() * 2))
 
+        setupMonsterOnSpawn()
+
         title = " "
         pronoun = "she"
         pPronoun = "her"
         rPronoun = "her"
-
-        health = 1.0
-
-        sName = name
-        sMaxHealth = maxHealth
-        sMaxMana = maxMana
-        sAttack = attack
-        sDefence = defence
-        sWill = will
-        sSpeed = speed
-
-        If speed = Game.player.getSPD Then speed -= 1
-        pos = Game.player.pos
 
         xpValue = 75
     End Sub

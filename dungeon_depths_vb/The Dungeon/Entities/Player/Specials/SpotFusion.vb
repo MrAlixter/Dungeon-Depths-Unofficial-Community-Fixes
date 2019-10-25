@@ -19,12 +19,12 @@
             Game.player.hunger -= 50
             Exit Sub
         End Try
-        If Not System.IO.File.Exists("s" & i & ".ave") Then
+        If Not System.IO.File.Exists("saves/s" & i & ".ave") Then
             Game.pushLblEvent("Despite looking for someone to fuse with, you can't find anyone at that location.")
             Game.player.hunger -= 50
             Exit Sub
         End If
-        Dim save = Game.getPlayerFromFile("s" & i & ".ave")
+        Dim save = Game.getPlayerFromFile("saves/s" & i & ".ave")
         Dim p2 As Player = save.Item1
         If save.Item2 <> Game.version Or p2.perks("polymorphed") > -1 Or Not Transformation.canBeTFed(Game.player) Or (p2.pClass.name.Equals("Magical Girl") Or p2.pClass.name.Equals("Valkyrie")) Then
             Game.pushLblEvent("After talking it over, " & Game.player.name & " and " & p2.name & " decide that they are incompatable, and not to fuse.")

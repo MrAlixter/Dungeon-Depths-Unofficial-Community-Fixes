@@ -117,8 +117,7 @@
             Equipment.weaponChange("Fists")
         End If
 
-        p.sState.save(p)
-        If Transformation.canBeTFed(p) Then p.pState.save(p)
+        p.setStartStates()
         Game.pushLblEvent("Your base form is now that of an Arachne!  Should you revert to your start state, this is what you will become.")
         stopTF()
     End Sub

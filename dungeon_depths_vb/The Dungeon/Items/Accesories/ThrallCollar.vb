@@ -16,7 +16,7 @@
         MyBase.value = 200
         MyBase.fInd = New Tuple(Of Integer, Boolean, Boolean)(7, True, True)
         MyBase.mInd = New Tuple(Of Integer, Boolean, Boolean)(3, False, True)
-        MyBase.isCursed = False
+        MyBase.isCursed = True
         MyBase.isRandoTFAcceptable = False
     End Sub
     Overrides Sub onEquip()
@@ -36,7 +36,6 @@
         Else
             p.prt.setIAInd(9, 8, False, True)
         End If
-
         p.prefForm = New preferedForm()
 
         p.createP()

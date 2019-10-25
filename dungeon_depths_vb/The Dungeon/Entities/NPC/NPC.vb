@@ -175,15 +175,17 @@
 
     End Sub
     Private Sub endBoss()
-        If Not Me.GetType() Is GetType(MiniBoss) Then Exit Sub
+        If Not Me.GetType().IsSubclassOf(GetType(MiniBoss)) Then Exit Sub
         If sName.Equals("Marissa the Enchantress") Then Game.player.perks("nekocurse") = -1
+        If sName.Equals("Medusa, Gorgon of Myth") Then
+            If Game.player.perks("blind") = 2 Then Game.player.perks("blind") = -1
+        End If
         If sName.Equals("Ooze Empress") Then
-            'Game.beatboss(4) = True
             Game.mDun.floorboss(4) = "Key"
             Exit Sub
         End If
 
-        Game.currfloor.beatBoss = True
+        Game.currFloor.beatBoss = True
     End Sub
     Private Sub endMonster()
         'set temporary player pointer
@@ -261,7 +263,7 @@
     Public Sub setInventory(ByVal contents() As Integer, Optional ByVal resetCurrentInv As Boolean = True)
         If resetCurrentInv Then inv = New Inventory(False)
         For i = 0 To UBound(contents)
-            If Me.GetType() Is GetType(MiniBoss) Then
+            If Me.GetType().IsSubclassOf(GetType(MiniBoss)) Then
                 inv.add(contents(i), 1)
             Else
                 Dim content = inv.item(contents(i))

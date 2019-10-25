@@ -15,7 +15,7 @@
                        "a near death, includes a transformation, and also has a punishment for abusing its " &
                        "power too much.]")
         id = 81
-        If DateTime.Now.Month = 2 And DateTime.Now.Day = 14 Then tier = 3 Else tier = Nothing
+        If DDDateTime.isValen Then tier = 3 Else tier = Nothing
         MyBase.setUsable(True)
         MyBase.count = 0
         MyBase.value = 3333

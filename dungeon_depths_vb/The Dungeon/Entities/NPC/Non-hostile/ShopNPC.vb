@@ -62,7 +62,7 @@
         setGold(9999)
         Game.npcIndex = npcIndex
 
-        If Game.mDun.numCurrFloor < 5 AndAlso Game.mDun.floorboss(Game.mDun.numCurrFloor).Equals("Key") Then inv.setCount(53, 1) Else inv.setCount(53, 0)
+        If Game.mDun.numCurrFloor < Game.mDun.floorboss.Length AndAlso Game.mDun.floorboss(Game.mDun.numCurrFloor).Equals("Key") Then inv.setCount(53, 1) Else inv.setCount(53, 0)
 
         picNCP = New List(Of Image)
         picNCP.AddRange({picNormal, Game.picFrog.BackgroundImage, Game.picSheep.BackgroundImage, picPrincess, picBunny})
@@ -74,7 +74,7 @@
     Public Overridable Function getShopInv() As Inventory
         Dim tInv As Inventory = New Inventory(False)
         tInv.mergeRevalue(inv)
-        If Game.mDun.numCurrFloor < 5 AndAlso Game.mDun.floorboss(Game.mDun.numCurrFloor).Equals("Key") Then tInv.setCount(53, 1) Else tInv.setCount(53, 0)
+        If Game.mDun.numCurrFloor < Game.mDun.floorboss.Length AndAlso Game.mDun.floorboss(Game.mDun.numCurrFloor).Equals("Key") Then tInv.setCount(53, 1) Else tInv.setCount(53, 0)
 
 
         For i = 0 To tInv.upperBound()

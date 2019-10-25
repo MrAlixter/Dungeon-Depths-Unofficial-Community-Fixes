@@ -10,7 +10,7 @@
         tier = Nothing
         MyBase.setUsable(False)
         MyBase.count = 0
-        MyBase.value = 0
+        MyBase.value = 10
         MyBase.fInd = New Tuple(Of Integer, Boolean, Boolean)(14, True, True)
         MyBase.mInd = New Tuple(Of Integer, Boolean, Boolean)(13, False, True)
     End Sub

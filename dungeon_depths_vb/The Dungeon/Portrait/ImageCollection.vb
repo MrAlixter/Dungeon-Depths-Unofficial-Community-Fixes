@@ -1,15 +1,17 @@
 ﻿Public Class ImageCollection
     Inherits Object
     Public atrs As Dictionary(Of String, ImageAttribute) = New Dictionary(Of String, ImageAttribute)
-
+    Public mfEquivalentIndexes As List(Of MFRouting)
     Sub New(ByVal libID As Integer)
         Select Case libID
             Case 0
                 createDefaultImageLib()
             Case 1
                 createAllImageLib()
+                createMFEqInd()
             Case Else
                 createAllImageLib()
+                createMFEqInd()
         End Select
     End Sub
     Sub createDefaultImageLib()
@@ -368,7 +370,60 @@
         atrs("FrontHair").setAt(New Tuple(Of Integer, Boolean, Boolean)(0, True, False), null)
         atrs("FrontHair").setAt(New Tuple(Of Integer, Boolean, Boolean)(0, False, False), null)
     End Sub
-
+    Sub createMFEqInd()
+        mfEquivalentIndexes = New List(Of MFRouting)
+        'bkg
+        mfEquivalentIndexes.Add(New MFRouting({},
+                                              {}))
+        'rearhair2
+        mfEquivalentIndexes.Add(New MFRouting({5, 6},
+                                              {13, 21}))
+        'body
+        mfEquivalentIndexes.Add(New MFRouting({0},
+                                              {0}))
+        'clothing
+        mfEquivalentIndexes.Add(New MFRouting({5},
+                                              {47}))
+        'face
+        mfEquivalentIndexes.Add(New MFRouting({},
+                                              {}))
+        'rearhair1
+        mfEquivalentIndexes.Add(New MFRouting({5, 6},
+                                              {15, 24}))
+        'nose
+        mfEquivalentIndexes.Add(New MFRouting({},
+                                              {}))
+        'ears
+        mfEquivalentIndexes.Add(New MFRouting({5, 6},
+                                              {5, 11}))
+        'mouth
+        mfEquivalentIndexes.Add(New MFRouting({5, 6},
+                                              {10, 16}))
+        'eyes
+        mfEquivalentIndexes.Add(New MFRouting({5, 6, 7, 8, 9, 10, 11, 12},
+                                              {11, 14, 15, 19, 20, 33, 36, 38}))
+        'eyebrows
+        mfEquivalentIndexes.Add(New MFRouting({},
+                                              {}))
+        'facial mark
+        mfEquivalentIndexes.Add(New MFRouting({},
+                                              {}))
+        'glasses
+        mfEquivalentIndexes.Add(New MFRouting({},
+                                              {}))
+        'cloak
+        mfEquivalentIndexes.Add(New MFRouting({},
+                                              {}))
+        'accessories
+        mfEquivalentIndexes.Add(New MFRouting({},
+                                              {}))
+        'fronthair
+        mfEquivalentIndexes.Add(New MFRouting({},
+                                              {}))
+        'hat
+        mfEquivalentIndexes.Add(New MFRouting({},
+                                              {}))
+    End Sub
     Public Function fAttributes() As List(Of Image)()
         Dim out As List(Of List(Of Image)) = New List(Of List(Of Image))
         For i = 0 To 16

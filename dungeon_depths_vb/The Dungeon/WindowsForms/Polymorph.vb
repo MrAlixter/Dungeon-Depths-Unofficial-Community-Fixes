@@ -101,7 +101,6 @@
     Sub transform(ByRef t As NPC, ByVal s As String)
         Dim title As String = s
         If title = "Sheep" Then
-            t.health = 1
             t.maxHealth = 50
             t.attack = 1
             t.defence = 1
@@ -109,7 +108,6 @@
             t.tfEnd = 6
             t.form = "Sheep"
         ElseIf title = "Princess" Then
-            t.health = 1
             t.maxHealth = 60
             t.attack = 5
             t.defence = 1
@@ -117,7 +115,6 @@
             t.tfEnd = 6
             t.form = "Princess"
         ElseIf title = "Bunny" Then
-            t.health = 1
             t.maxHealth = 25
             t.attack = 1
             t.defence = 1
@@ -125,7 +122,6 @@
             t.tfEnd = 6
             t.form = "Bunny"
         ElseIf title = "Chicken" Then
-            t.health = 1
             t.maxHealth = 45
             t.attack = 5
             t.defence = 5
@@ -133,7 +129,6 @@
             t.tfEnd = 6
             t.form = "Chicken"
         ElseIf title = "Cow" Then
-            t.health = 1
             t.maxHealth = 75
             t.attack = 0
             t.defence = 0
@@ -141,7 +136,6 @@
             t.tfEnd = 6
             t.form = "Cow"
         ElseIf title = "Amnesiac" Then
-            t.health = 1
             t.attack = 0
             t.defence = 0
             t.speed = 1
@@ -150,15 +144,13 @@
             t.tfEnd = 6
             t.form = "Amnesiac"
         ElseIf title = "Slime​" Then
-            t.health = 1
-            t.maxHealth = 150
+            t.maxHealth = 70
             t.attack = 10
-            t.defence = 15
+            t.defence = 35
             t.tfCt = 1
             t.tfEnd = 2
             t.form = "Slime"
         ElseIf title = "Succubus​" Then
-            t.health = 1
             t.maxHealth = 125
             t.attack = 20
             t.defence = 5
@@ -166,7 +158,6 @@
             t.tfEnd = 2
             t.form = "Succubus"
         ElseIf title = "Dragon​" Then
-            t.health = 1
             t.maxHealth = 200
             t.attack = 15
             t.defence = 30

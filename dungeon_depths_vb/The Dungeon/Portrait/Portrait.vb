@@ -11,6 +11,8 @@
     Public Shared nullImg As Image = imgLib.atrs("Clothes").getAt(New Tuple(Of Integer, Boolean, Boolean)(5, False, True))
     Dim sInts() As Integer = {0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0} 'the starting indexes of each catagory
 
+
+
     Sub New(ByVal sex As Boolean, ByRef e As Entity)
         Dim defInd0 = New Tuple(Of Integer, Boolean, Boolean)(0, sex, False)
         Dim defInd1 = New Tuple(Of Integer, Boolean, Boolean)(1, sex, False)
@@ -54,7 +56,7 @@
             ElseIf img(i).Size.Height <= 300 Then
                 g.DrawImage(img(i), 1, 1, 144, 216)
             Else
-                g.DrawImage(img(i), -11, -40, 164, 610)
+                g.DrawImage(img(i), -11, -38, 164, 610)
             End If
         Next
         Return bmp
@@ -66,11 +68,11 @@
         For i = 1 To UBound(img)
             If img(i) Is Nothing Then img(i) = CharacterGenerator.picPort.Image
             If img(i).Size.Height <= 144 Then
-                g.DrawImage(img(i), 10, 39, 144, 144)
+                g.DrawImage(img(i), 12, 39, 144, 144)
             ElseIf img(i).Size.Height <= 300 Then
-                g.DrawImage(img(i), 10, 39, 144, 216)
+                g.DrawImage(img(i), 12, 39, 144, 216)
             Else
-                g.DrawImage(img(i), -1, 0, 164, 610)
+                g.DrawImage(img(i), 0, 0, 164, 610)
             End If
         Next
         Return bmp
@@ -132,6 +134,7 @@
 
         changeHairColor(haircolor)
         changeSkinColor(skincolor)
+        accUnderClothes()
 
         hideEars()
         hideRearHair()
@@ -169,6 +172,7 @@
 
         hideEars()
         hideRearHair()
+        accUnderClothes()
 
         If ent.lust > 0 Then lustBlushUpdate()
         If wingInd > 0 Then addWings(wingInd)
@@ -232,8 +236,17 @@
     Sub hideRearHair()
         If checkNDefFemInd(16, 9) Then
             iArr(1) = imgLib.atrs("Hat").getAt(New Tuple(Of Integer, Boolean, Boolean)(10, True, True))
+        ElseIf checkNDefFemInd(16, 11) Then
+            iArr(1) = imgLib.atrs("Hat").getAt(New Tuple(Of Integer, Boolean, Boolean)(12, True, True))
         ElseIf checkNDefFemInd(14, 14) Or checkNDefMalInd(14, 13) Then
             iArr(1) = imgLib.atrs("Ears").getAt(New Tuple(Of Integer, Boolean, Boolean)(5, True, True))
+        End If
+    End Sub
+    Sub accUnderClothes()
+        If checkNDefFemInd(14, 14) Or checkNDefMalInd(14, 13) Then
+            iArr(5) = CreateFullBodyBMP({CharacterGenerator.picPort.Image, iArr(14), iArr(3), iArr(5)})
+            iArr(14) = CharacterGenerator.picPort.Image
+            iArr(8) = CharacterGenerator.picPort.Image
         End If
     End Sub
     Sub setIAInd(ByVal attrInd As Integer, ByVal i As Integer, ByVal b As Boolean, ByVal nonDefFlag As Boolean)
@@ -514,6 +527,7 @@
 
     'gets the player's current sexBool
     Public Function sexBool() As Boolean
+        If checkNDefMalInd(2, 1) Then Return True
         Return iArrInd(2).Item2
     End Function
 End Class

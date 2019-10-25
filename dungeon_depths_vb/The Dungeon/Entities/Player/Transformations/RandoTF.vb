@@ -20,8 +20,7 @@
         'assign a pointer to the player character
         Dim p As player = game.player
         p.sState.load(p)
-
-        Game.preBSStartState = New State(p)
+        If Game.preBSStartState Is Nothing Then Game.preBSStartState = New State(p)
 
         'assign a starter class / form
         p.pClass = p.classes("Classless")
@@ -38,7 +37,6 @@
         p.maxMana = CInt(p.mana.ToString)
         p.attack = 10 + Int(Rnd() * 7)
         p.defence = 10 + Int(Rnd() * 7)
-        p.will = 5 + Int(Rnd() * 7)
         p.speed = 10 + Int(Rnd() * 7)
         p.gold = 25 + Int(Rnd() * 200)
         p.lust = 0

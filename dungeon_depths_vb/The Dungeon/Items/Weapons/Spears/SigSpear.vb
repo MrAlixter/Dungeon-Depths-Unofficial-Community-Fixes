@@ -14,6 +14,8 @@
         MyBase.sBoost = -2
         MyBase.count = 0
         MyBase.value = 3300
+
+        MyBase.isMonsterDrop = False
     End Sub
 
     Overrides Sub wThrow(ByRef p As Player, ByRef m As Entity)

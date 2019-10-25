@@ -27,6 +27,8 @@
         p.prt.setIAInd(9, 30, True, True)
         p.prt.setIAInd(10, 5, True, False)
 
+        p.pForm = p.forms("Half-Gorgon")
+
         If Not p.knownSpells.Contains("Petrify II") Then p.knownSpells.Add("Petrify II")
     End Sub
 

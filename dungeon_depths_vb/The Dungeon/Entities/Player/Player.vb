@@ -62,7 +62,7 @@
         lust = 0
         level = 1
         xp = 0
-        nextLevelXp = 200
+        nextLevelXp = 125
         mana = 3
         maxMana = mana
         hunger = 0
@@ -270,6 +270,17 @@
             inv.add(4, 1)
             inv.add(21, 1)
             equippedWeapon = inv.item(21)
+        ElseIf s = "Witch" Then
+            knownSpells.Add("Turn to Frog")
+            If breastSize = -1 Then breastSize = 0
+            inv.add(2, 3)
+            inv.add(4, 1)
+            inv.add(166, 1)
+            inv.add(167, 1)
+            prt.skincolor = Game.cShift(prt.skincolor, Color.ForestGreen, 15)
+            equippedArmor = inv.item(166)
+            equippedArmor.onEquip()
+            equippedWeapon = inv.item(167)
         ElseIf s = "Magical Girl" Then
             pClass = classes("Classless")
             maxHealth = 80
@@ -370,6 +381,7 @@
         classes.Add("Shrunken", New Shrunken())
         classes.Add("Maiden", New Maiden())
         classes.Add("Rogue", New Rogue())
+        classes.Add("Witch", New witch())
     End Sub
     Private Sub initForms()
         'Creates the form dictionary
@@ -403,6 +415,7 @@
         forms.Add("Plantfolk", New Plantfolk())
         forms.Add("Goo Girl", New GooGirl())
         forms.Add("Combat Unit", New CombatUnit())
+        forms.Add("Half-Gorgon", New HGorgon())
     End Sub
     Private Sub initPolymorphs()
         'compile list of polymorphs
@@ -420,10 +433,15 @@
         polymorphs.Add("Mindless", Nothing)
         polymorphs.Add("MASBimbo", Nothing)
     End Sub
+    Sub setStartStates()
+        sState.save(Me)
+        If Transformation.canBeTFed(Me) Then pState.save(Me)
+        If perks("polymorphed") > -1 Then perks("polymorphed") = -1
+    End Sub
 
     '|MOVEMENT COMMANDS|
     Public Overrides Sub reachedFPathDest()
-        If game.mDun.numCurrFloor = 4 And Not Game.preBSBody Is Nothing And Game.preBSStartState Is Nothing And game.mDun.floorboss(4) = "Ooze Empress" Then
+        If Game.mDun.numCurrFloor = 4 And Not Game.preBSBody Is Nothing And Game.preBSStartState Is Nothing And Game.mDun.floorboss(4) = "Ooze Empress" Then
             RandoTF.floor4FirstBossEncounter()
             Exit Sub
         End If
@@ -483,7 +501,7 @@
             miss(target)
         ElseIf dmg = -2 Then
             cHit(Me.getATK, target)
-        Else
+        ElseIf dmg <> -3 Then
             hit(dmg, target)
         End If
 
@@ -886,9 +904,13 @@
         ElseIf source.getName.Equals("Ooze Empress") Then
             DeathEffects.oozeEmpDeath()
             Exit Sub
+        ElseIf source.getName.Equals("Medusa, Gorgon of Myth") Then
+            DeathEffects.medusaDeath()
+            Exit Sub
         ElseIf source.getName.Equals("Hunger") Then
             Game.pushLblEvent("You starve to death!")
         End If
+
 
         DeathEffects.hardDeath()
         Game.npcList.Clear()
@@ -948,6 +970,12 @@
         End If
         UIupdate()
         'transformations
+        tfUpdate(pUpdateFlag)
+
+        If pUpdateFlag Then createP()
+    End Sub
+    Sub tfUpdate(Optional ByRef pUpdateFlag = False)
+        'transformations
         Dim removeind = New List(Of Integer)
         For i = 0 To ongoingTFs.Count - 1
             If i < ongoingTFs.Count AndAlso Not ongoingTFs(i) Is Nothing Then
@@ -965,8 +993,6 @@
         For i = 0 To removeind.Count - 1
             ongoingTFs.RemoveAt(removeind(i))
         Next
-
-        If pUpdateFlag Then createP()
     End Sub
     Function perkUpdate() As Boolean
         Dim needsToUpdatePortrait = False
@@ -1276,409 +1302,45 @@
         idRouteFM()
         If perks("swordpossess") > -1 Then perks("swordpossess") = 0
     End Sub
-    Sub idRouteMF()
-        'rearHair2
-        If Not prt.iArrInd(1).Item2 Then
-            Select Case prt.iArrInd(1).Item1
-                Case 5
-                    prt.setIAInd(1, 13, True, True)
-                Case 6
-                    prt.setIAInd(1, 21, True, True)
-            End Select
-        End If
-        'body
-        If Not prt.iArrInd(2).Item2 Then
-            Select Case prt.iArrInd(2).Item1
-                Case 0
-                    prt.setIAInd(2, 0, True, False)
-            End Select
-        End If
-        'clothing
-        Select Case prt.iArrInd(3).Item1
-            Case 5
-                prt.iArrInd(3) = New Tuple(Of Integer, Boolean, Boolean)(47, True, True)
-            Case Else
-                If prt.iArrInd(3).Item1 < 5 Then
-                    prt.setIAInd(3, prt.iArrInd(3).Item1, True, False)
+    Sub idRouteMF(Optional halfRevertFlag As Boolean = False)
+        Dim mfr = Portrait.imgLib.mfEquivalentIndexes
+        For i = 0 To mfr.Count - 1
+            'checks for half reversion
+            If Int(Rnd() * 2) = 0 Or halfRevertFlag = False Then
+                'handles routing for default options
+                If (i = 10 Or i = 9) And prt.iArrInd(i).Item1 < 5 Then
+                    prt.setIAInd(i, prt.iArrInd(i).Item1, True, False)
                 Else
-                    prt.portraitUDate()
+                    'handles routing for non-default options
+                    Dim f = mfr(i).getFfromM(prt.iArrInd(i).Item1)
+                    If (i = 4 Or i = 7) And f = -1 Then f = 0
+                    If f <> -1 Then prt.setIAInd(i, f, True, True)
                 End If
-        End Select
-        'face
-        Select Case prt.iArrInd(4).Item1
-            Case Else
-                prt.setIAInd(4, 0, True, False)
-        End Select
-        'rearHair1
-        If Not prt.iArrInd(5).Item2 Then
-            Select Case prt.iArrInd(5).Item1
-                Case 5
-                    prt.setIAInd(5, 15, True, True)
-                Case 6
-                    prt.setIAInd(5, 24, True, True)
-            End Select
-        End If
-        'nose
-        Select Case prt.iArrInd(7).Item1
-            Case Else
-                prt.setIAInd(7, 0, True, False)
-        End Select
-        'ears
-        Select Case prt.iArrInd(6).Item1
-            Case 5
-                prt.setIAInd(6, 5, True, True)
-            Case 6
-                prt.setIAInd(6, 11, True, True)
-            Case Else
-                prt.setIAInd(6, prt.iArrInd(6).Item1, True, False)
-        End Select
-        'mouth
-        Select Case prt.iArrInd(8).Item1
-            Case 5
-                prt.setIAInd(8, 10, True, True)
-            Case 6
-                prt.setIAInd(8, 16, True, True)
-            Case Else
-                prt.setIAInd(8, prt.iArrInd(8).Item1, True, False)
-        End Select
-        'eyes
-        Select Case prt.iArrInd(9).Item1
-            Case 5
-                prt.setIAInd(9, 11, True, True)
-            Case 6
-                prt.setIAInd(9, 14, True, True)
-            Case 7
-                prt.setIAInd(9, 15, True, True)
-            Case 8
-                prt.setIAInd(9, 19, True, True)
-            Case 9
-                prt.setIAInd(9, 20, True, True)
-            Case 10
-                prt.setIAInd(9, 33, True, True)
-            Case 11
-                prt.setIAInd(9, 36, True, True)
-            Case Else
-                If prt.iArrInd(9).Item1 < 5 Then prt.setIAInd(9, prt.iArrInd(9).Item1, True, False)
-        End Select
-        'eyebrows
-        Select Case prt.iArrInd(10).Item1
-            Case Else
-                If prt.iArrInd(10).Item1 < 5 Then prt.setIAInd(10, prt.iArrInd(10).Item1, True, False)
-        End Select
-        'accesory
-        Select Case prt.iArrInd(14).Item1
-            Case 1
-                prt.setIAInd(14, 2, True, False)
-            Case 2
-                prt.setIAInd(14, 3, True, False)
-        End Select
+            End If
+        Next
+
+        'update the players clothing
+        prt.portraitUDate()
     End Sub
-    Sub idRouteFM()
-        'rearHair2
-        Select Case prt.iArrInd(1).Item1
-            Case 13
-                prt.setIAInd(1, 5, False, True)
-            Case 21
-                prt.setIAInd(1, 6, False, True)
-        End Select
-        'body
-        Select Case prt.iArrInd(2).Item1
-            Case Else
-                prt.setIAInd(2, 0, False, False)
-        End Select
-        'clothing
-        Select Case prt.iArrInd(3).Item1
-            Case 47
-                prt.setIAInd(3, 5, False, True)
-            Case Else
-                If prt.iArrInd(3).Item1 < 5 Then
-                    prt.setIAInd(3, prt.iArrInd(3).Item1, False, False)
+    Sub idRouteFM(Optional halfRevertFlag As Boolean = False)
+        Dim fmr = Portrait.imgLib.mfEquivalentIndexes
+        For i = 0 To fmr.Count - 1
+            'checks for half reversion
+            If Int(Rnd() * 2) = 0 Or halfRevertFlag = False Then
+                'handles routing for default options
+                If (i = 10 Or i = 9) And prt.iArrInd(i).Item1 < 5 Then
+                    prt.setIAInd(i, prt.iArrInd(i).Item1, True, False)
                 Else
-                    prt.portraitUDate()
+                    'handles routing for non-default options
+                    Dim m = fmr(i).getMfromF(prt.iArrInd(i).Item1)
+                    If (i = 4 Or i = 7) And m = -1 Then m = 0
+                    If m <> -1 Then prt.setIAInd(i, m, True, True)
                 End If
-        End Select
-        'face
-        Select Case prt.iArrInd(4).Item1
-            Case Else
-                prt.setIAInd(4, 0, False, False)
-        End Select
-        'rearHair1
-        Select Case prt.iArrInd(5).Item1
-            Case 15
-                prt.setIAInd(1, 5, False, True)
-            Case 24
-                prt.setIAInd(1, 6, False, True)
-        End Select
-        'nose
-        Select Case prt.iArrInd(7).Item1
-            Case Else
-                prt.setIAInd(7, 0, True, False)
-        End Select
-        'ears
-        Select Case prt.iArrInd(6).Item1
-            Case 5
-                prt.setIAInd(6, 5, False, True)
-            Case 11
-                prt.setIAInd(6, 6, False, True)
-            Case Is < 5
-                prt.setIAInd(6, prt.iArrInd(6).Item1, False, False)
-        End Select
-        'mouth
-        Select Case prt.iArrInd(8).Item1
-            Case 10
-                prt.setIAInd(8, 5, False, True)
-            Case 16
-                prt.setIAInd(8, 6, False, True)
-            Case Else
-                If prt.iArrInd(8).Item1 < 5 Then prt.setIAInd(8, prt.iArrInd(8).Item1, False, False)
-        End Select
-        'eyes
-        Select Case prt.iArrInd(9).Item1
-            Case 11
-                prt.setIAInd(9, 5, False, True)
-            Case 14
-                prt.setIAInd(9, 6, False, True)
-            Case 15
-                prt.setIAInd(9, 7, False, True)
-            Case 19
-                prt.setIAInd(9, 8, False, True)
-            Case 20
-                prt.setIAInd(9, 9, False, True)
-            Case 33
-                prt.setIAInd(9, 10, False, True)
-            Case 36
-                prt.setIAInd(9, 11, False, True)
-            Case Else
-                If prt.iArrInd(9).Item1 < 5 Then prt.setIAInd(9, prt.iArrInd(9).Item1, False, False)
-        End Select
-        'eyebrows
-        Select Case prt.iArrInd(10).Item1
-            Case Else
-                If prt.iArrInd(10).Item1 < 5 Then prt.setIAInd(10, prt.iArrInd(10).Item1, False, False)
-        End Select
-        'accesory
-        Select Case prt.iArrInd(14).Item1
-            Case 2
-                prt.setIAInd(14, 1, False, False)
-            Case 3
-                prt.setIAInd(14, 2, False, False)
-        End Select
-    End Sub
-    Sub idRouteMFHalf()
-        'rearHair2
-        If Not prt.iArrInd(1).Item2 And Int(Rnd() * 2) = 0 Then
-            Select Case prt.iArrInd(1).Item1
-                Case 5
-                    prt.setIAInd(1, 13, True, True)
-            End Select
-        End If
-        'body
-        If Int(Rnd() * 2) = 0 Then
-            If Not prt.iArrInd(2).Item2 And Int(Rnd() * 2) = 0 Then
-                Select Case prt.iArrInd(2).Item1
-                    Case 0
-                        prt.setIAInd(2, 0, True, False)
-                End Select
             End If
-        End If
-        'clothing
-        If Int(Rnd() * 2) = 0 Then
-            Select Case prt.iArrInd(3).Item1
-                Case 5
-                    prt.setIAInd(3, 47, True, True)
-                Case Else
-                    If prt.iArrInd(3).Item1 < 5 Then
-                        prt.setIAInd(3, prt.iArrInd(3).Item1, True, False)
-                    Else
-                        prt.portraitUDate()
-                    End If
-            End Select
-        End If
-        'face
-        If Int(Rnd() * 2) = 0 Then
-            Select Case prt.iArrInd(4).Item1
-                Case Else
-                    prt.setIAInd(4, 0, True, False)
-            End Select
-        End If
-        'rearHair1
-        If Int(Rnd() * 2) = 0 Then
-            If Not prt.iArrInd(5).Item2 And Int(Rnd() * 2) = 0 Then
-                Select Case prt.iArrInd(5).Item1
-                    Case 5
-                        prt.setIAInd(5, 15, True, True)
-                End Select
-            End If
-        End If
-        'nose
-        If Int(Rnd() * 2) = 0 Then
-            Select Case prt.iArrInd(7).Item1
-                Case Else
-                    prt.setIAInd(7, 0, True, False)
-            End Select
-        End If
-        'ears
-        If Int(Rnd() * 2) = 0 Then
-            Select Case prt.iArrInd(6).Item1
-                Case 5
-                    prt.setIAInd(6, 5, True, True)
-                Case Else
-                    prt.setIAInd(6, prt.iArrInd(6).Item1, True, False)
-            End Select
-        End If
-        'mouth
-        If Int(Rnd() * 2) = 0 Then
-            Select Case prt.iArrInd(8).Item1
-                Case 5
-                    prt.setIAInd(8, 10, True, True)
-                Case Else
-                    prt.setIAInd(8, prt.iArrInd(8).Item1, True, False)
-            End Select
-        End If
-        'eyes
-        If Int(Rnd() * 2) = 0 Then
-            Select Case prt.iArrInd(9).Item1
-                Case 5
-                    prt.setIAInd(9, 11, True, True)
-                Case 6
-                    prt.setIAInd(9, 14, True, True)
-                Case 7
-                    prt.setIAInd(9, 15, True, True)
-                Case 8
-                    prt.setIAInd(9, 19, True, True)
-                Case Else
-                    prt.setIAInd(9, prt.iArrInd(9).Item1, True, False)
-            End Select
-        End If
-        'eyebrows
-        If Int(Rnd() * 2) = 0 Then
-            Select Case prt.iArrInd(10).Item1
-                Case Else
-                    prt.setIAInd(10, prt.iArrInd(10).Item1, True, False)
-            End Select
-        End If
-        'accesory
-        If Int(Rnd() * 2) = 0 Then
-            Select Case prt.iArrInd(14).Item1
-                Case 1
-                    prt.setIAInd(14, 2, True, False)
-                Case 2
-                    prt.setIAInd(14, 3, True, False)
-            End Select
-        End If
-        'fronthair
-        If Not prt.iArrInd(15).Item2 And Int(Rnd() * 2) = 0 Then
-            Select Case prt.iArrInd(15).Item1
-                Case 6
-                    prt.setIAInd(15, 12, True, True)
-            End Select
-        End If
-    End Sub
-    Sub idRouteFMHalf()
-        'rearHair2
-        If Int(Rnd() * 2) = 0 Then
-            Select Case prt.iArrInd(1).Item1
-                Case 13
-                    prt.setIAInd(1, 5, False, True)
-            End Select
-        End If
-        'body
-        If Int(Rnd() * 2) = 0 Then
-            Select Case prt.iArrInd(2).Item1
-                Case Else
-                    prt.setIAInd(2, 0, False, False)
-            End Select
-        End If
-        'clothing
-        If Int(Rnd() * 2) = 0 Then
-            Select Case prt.iArrInd(3).Item1
-                Case 47
-                    prt.setIAInd(3, 5, False, True)
-                Case Else
-                    If prt.iArrInd(3).Item1 < 5 Then
-                        prt.setIAInd(3, prt.iArrInd(3).Item1, False, False)
-                    Else
-                        prt.portraitUDate()
-                    End If
-            End Select
-        End If
-        'face
-        If Int(Rnd() * 2) = 0 Then
-            Select Case prt.iArrInd(4).Item1
-                Case Else
-                    prt.setIAInd(4, 0, False, False)
-            End Select
-        End If
-        'rearHair1
-        If Int(Rnd() * 2) = 0 Then
-            Select Case prt.iArrInd(5).Item1
-                Case 15
-                    prt.setIAInd(1, 5, False, True)
-            End Select
-        End If
-        'nose
-        If Int(Rnd() * 2) = 0 Then
-            Select Case prt.iArrInd(7).Item1
-                Case Else
-                    prt.setIAInd(7, 0, True, False)
-            End Select
-        End If
-        'ears
-        If Int(Rnd() * 2) = 0 Then
-            Select Case prt.iArrInd(6).Item1
-                Case 5
-                    prt.setIAInd(6, 5, False, True)
-                Case Is < 5
-                    prt.setIAInd(6, prt.iArrInd(6).Item1, False, False)
-            End Select
-        End If
-        'mouth
-        If Int(Rnd() * 2) = 0 Then
-            Select Case prt.iArrInd(8).Item1
-                Case 10
-                    prt.setIAInd(8, 5, False, True)
-                Case Else
-                    If prt.iArrInd(8).Item1 < 5 Then prt.setIAInd(8, prt.iArrInd(8).Item1, False, False)
-            End Select
-        End If
-        'eyes
-        If Int(Rnd() * 2) = 0 Then
-            Select Case prt.iArrInd(9).Item1
-                Case 11
-                    prt.setIAInd(9, 5, False, True)
-                Case 14
-                    prt.setIAInd(9, 6, False, True)
-                Case 15
-                    prt.setIAInd(9, 7, False, True)
-                Case 19
-                    prt.setIAInd(9, 8, False, True)
-                Case Else
-                    If prt.iArrInd(9).Item1 < 5 Then prt.setIAInd(9, prt.iArrInd(9).Item1, False, False)
-            End Select
-        End If
-        'eyebrows
-        If Int(Rnd() * 2) = 0 Then
-            Select Case prt.iArrInd(10).Item1
-                Case Else
-                    prt.setIAInd(10, prt.iArrInd(10).Item1, False, False)
-            End Select
-        End If
-        'accesory
-        If Int(Rnd() * 2) = 0 Then
-            Select Case prt.iArrInd(14).Item1
-                Case 2
-                    prt.setIAInd(14, 1, False, False)
-                Case 3
-                    prt.setIAInd(14, 2, False, False)
-            End Select
-        End If
-        'fronthair
-        If Int(Rnd() * 2) = 0 Then
-            Select Case prt.iArrInd(15).Item1
-                Case 12
-                    prt.setIAInd(15, 6, False, True)
-            End Select
-        End If
+        Next
+
+        'update the players clothing
+        prt.portraitUDate()
     End Sub
     'breast enlargement/reduction methods
     Public Sub be()
@@ -1938,7 +1600,7 @@
         Return totalDelta
     End Function
     Function isUnwilling() As Boolean
-        If will > 7 Then Return True
+        If will > 15 Then Return True
         Return Game.pcUnwilling
     End Function
     Function genDescription()

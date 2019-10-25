@@ -7,7 +7,7 @@
                        "+7 ATK" & vbCrLf &
                        "+5 SPD" & vbCrLf &
                        "Hits twice")
-        id = 164
+        id = 165
         tier = Nothing
         MyBase.setUsable(False)
         MyBase.aBoost = 7

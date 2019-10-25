@@ -13,6 +13,8 @@
         MyBase.sBoost = 5
         MyBase.count = 0
         MyBase.value = 235
+
+        MyBase.isMonsterDrop = False
     End Sub
 
     Overrides Function attack(ByRef p As Player, ByRef m As Entity) As Integer

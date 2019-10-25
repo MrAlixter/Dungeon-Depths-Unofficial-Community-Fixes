@@ -620,7 +620,7 @@
         p.pos = New Point(5, 25)
         stairs = New Point(5, 2)
         If floorNumber = 5 Then genMedusaStatues()
-        beatBoss = True
+        'beatBoss = True
     End Sub
 
     '|---SPECIFIC FLOOR GENERATION METHODS---|

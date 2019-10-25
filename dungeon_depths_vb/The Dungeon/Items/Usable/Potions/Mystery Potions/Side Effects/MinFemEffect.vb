@@ -4,7 +4,7 @@
     Public Overrides Sub apply(ByRef p As Player)
         Game.pushLblEvent("You get slightly more feminine...")
 
-        p.idRouteMFHalf()
+        p.idRouteMF(True)
         If Int(Rnd() * 2) = 0 Then p.be()
         p.createP()
         If Transformation.canBeTFed(p) Then

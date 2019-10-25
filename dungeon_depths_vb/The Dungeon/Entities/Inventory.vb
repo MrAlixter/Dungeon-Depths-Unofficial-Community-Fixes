@@ -183,6 +183,8 @@
         internal_inventory.Add("Signature_Dagger", New SigDagger())         '163
         internal_inventory.Add("Stealth_Gear", New StealthGear())           '164
         internal_inventory.Add("Mugger's_Shank", New MShank())              '165
+        internal_inventory.Add("Frock_of_Night", New FoNight())             '166
+        internal_inventory.Add("Wand_of_Shocking", New WOShock())           '167
 
         armor = {New CommonClothes, New SkimpyClothes, New Naked, New VSkimpyClothes,
                  Me.item(5), Me.item(7), Me.item(8), Me.item(10),
@@ -196,7 +198,7 @@
                  Me.item(102), Me.item(103), Me.item(104), Me.item(105),
                  Me.item(106), Me.item(107), Me.item(115), Me.item(116),
                  Me.item(129), Me.item(137), Me.item(138), Me.item(144),
-                 Me.item(146), Me.item(147), Me.item(151)}
+                 Me.item(146), Me.item(147), Me.item(151), Me.item(166)}
 
         weapons = {New BareFists(),
                    Me.item(6), Me.item(9), Me.item(11), Me.item(21),
@@ -206,7 +208,7 @@
                    Me.item(118), Me.item(120), Me.item(145), Me.item(150),
                    Me.item(155), Me.item(156), Me.item(157), Me.item(158),
                    Me.item(159), Me.item(160), Me.item(162), Me.item(163),
-                   Me.item(165)}
+                   Me.item(165), Me.item(167)}
 
         useable = {Me.item(0), Me.item(3), Me.item(4),
                    Me.item(65), Me.item(15), Me.item(36), Me.item(37),
@@ -292,7 +294,9 @@
     End Sub
     Sub setCount(k As String, v As Integer)
         sum -= item(k).count
-        item(k).count = v
+        If internal_inventory.Keys.Contains(k) Then
+            item(k).count = v
+        End If
         sum += v
     End Sub
     Sub setCount(i As Integer, v As Integer)

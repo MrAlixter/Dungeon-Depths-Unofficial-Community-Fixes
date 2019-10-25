@@ -13,6 +13,8 @@
         MyBase.aBoost = 10
         count = 0
         value = 4666
+
+        MyBase.isMonsterDrop = False
     End Sub
 
     Public Overrides Sub onEquip()

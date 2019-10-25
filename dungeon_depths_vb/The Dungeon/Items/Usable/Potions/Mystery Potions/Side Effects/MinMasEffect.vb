@@ -4,7 +4,7 @@
     Public Overrides Sub apply(ByRef p As Player)
         Game.pushLblEvent("You get slightly more masculine...")
 
-        p.idRouteFMHalf()
+        p.idRouteFM(True)
 
         p.createP()
         If Transformation.canBeTFed(p) Then

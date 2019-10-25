@@ -8,7 +8,7 @@
                        "+6 DEF") '& vbCrLf & _
         '("Can not attack " & immune)
         id = 78
-        If DateTime.Now.Month = 2 And DateTime.Now.Day = 14 Then tier = 2 Else tier = Nothing
+        If DDDateTime.isValen Then tier = 2 Else tier = Nothing
         MyBase.setUsable(False)
         MyBase.dBoost = 6
         MyBase.count = 0

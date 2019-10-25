@@ -25,14 +25,13 @@
         Dim p As player = game.player
         Dim out = ""
 
-        'angel transformation
-        If DateTime.Now.Month = 12 Or DateTime.Now.Month = 1 Or DateTime.Now.Month = 2 Then
+        If DDDateTime.isWinter Then
             p.changeHairColor(winterColor)
-        ElseIf DateTime.Now.Month = 3 Or DateTime.Now.Month = 4 Or DateTime.Now.Month = 5 Then
+        ElseIf DDDateTime.isSpring Then
             p.changeHairColor(springColor)
-        ElseIf DateTime.Now.Month = 6 Or DateTime.Now.Month = 7 Or DateTime.Now.Month = 8 Then
+        ElseIf DDDateTime.isSummer Then
             p.changeHairColor(summerColor)
-        ElseIf DateTime.Now.Month = 9 Or DateTime.Now.Month = 10 Or DateTime.Now.Month = 11 Then
+        ElseIf DDDateTime.isFall Then
             p.changeHairColor(fallColor)
         End If
 

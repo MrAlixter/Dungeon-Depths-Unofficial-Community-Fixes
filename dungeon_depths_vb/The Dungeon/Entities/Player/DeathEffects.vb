@@ -73,7 +73,7 @@
             p.perks("slimetf") = 1
         End If
 
-        p.ongoingTFs.Add(New VialOfSlimeTF(p.perks("slimetf")))
+        p.ongoingTFs.Add(New SlimeETF(p.perks("slimetf")))
         Game.pushLblEvent(out, AddressOf p.update)
     End Sub
     Shared Sub ggDeath()
@@ -184,7 +184,13 @@
 
         p.update()
     End Sub
-
+    Shared Sub medusaDeath()
+        Game.fromCombat()
+        Game.player.petrify(Color.LightGray, 9999)
+        Game.pushLblEvent("Cackling with delight, Medusa slithers directly in front of you and glares intently into your eyes.\n\n" &
+                          "As you try to back away in shock, your legs quickly calcify and before long your lower body is composed of a light-ish gray stone.  Even as you try to shut your eyes and look away, the petrification reaches your face.\n\n" &
+                          "In mere moments, the stony gaze of Medusa has left " & Game.player.getName & " as nothing but another decoration adorning the hall of the mythical Gorgon.", AddressOf Game.player.die)
+    End Sub
     '|NPC DEATHS|
     Shared Sub ShopkeeperDeath()
         Dim p As Player = Game.player

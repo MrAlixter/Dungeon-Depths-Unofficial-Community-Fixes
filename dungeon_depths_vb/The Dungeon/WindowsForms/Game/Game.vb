@@ -476,10 +476,15 @@ Public Class Game
 
         zoom()
 
-        If mDun.numCurrFloor < 5 And mDun.numCurrFloor >= 0 AndAlso currFloor.beatBoss = False AndAlso Not mDun.floorboss(mDun.numCurrFloor).Equals("Key") And combatmode = False And player.health > 0 And player.canMoveFlag = True AndAlso New Point(player.pos.Y, player.pos.X).Equals(New Point(currFloor.stairs.Y, currFloor.stairs.X)) Then pushPnlYesNo("Challenge the floor boss?", AddressOf ChallengeBoss, Nothing)
-        'If picNPC.Visible Then picNPC.BackgroundImage = NPCimgList(npcIndex)
+        If mDun.numCurrFloor < 6 And mDun.numCurrFloor >= 0 AndAlso currFloor.beatBoss = False AndAlso Not mDun.floorboss(mDun.numCurrFloor).Equals("Key") And
+            combatmode = False And player.health > 0 And player.canMoveFlag = True AndAlso
+            New Point(player.pos.Y, player.pos.X).Equals(New Point(currFloor.stairs.Y, currFloor.stairs.X)) Then
+            pushPnlYesNo("Challenge the floor boss?", AddressOf ChallengeBoss, Nothing)
+        End If
 
-        player.UIupdate()
+            'If picNPC.Visible Then picNPC.BackgroundImage = NPCimgList(npcIndex)
+
+            player.UIupdate()
     End Sub
     Sub viewBubble()
         Dim viewRad = 1
@@ -593,7 +598,7 @@ Public Class Game
                             If currFloor.mBoard(player.pos.Y + indY, player.pos.X + indX).Text = "H" Then
                                 If mDun.numCurrFloor > 5 Or currFloor.beatBoss Then
                                     viewArray(y, x) = 3
-                                ElseIf mDun.numCurrFloor > 5 Or (mDun.numCurrFloor < 5 AndAlso mDun.floorboss(mDun.numCurrFloor).Equals("Key")) Then
+                                ElseIf mDun.numCurrFloor > 5 Or (mDun.numCurrFloor < mDun.floorboss.Length AndAlso mDun.floorboss(mDun.numCurrFloor).Equals("Key")) Then
                                     viewArray(y, x) = 9
                                 Else
                                     viewArray(y, x) = 10
@@ -1283,7 +1288,7 @@ Public Class Game
         If rand < encounterRate And Not cancel Then
             Dim m As NPC
             If r2 = UBound(currTier) And r2 = r And Not currFloor.beatBoss And Not mDun.currFloorBoss.Equals("Key") Then
-                m = New MiniBoss(mDun.numCurrFloor)
+                m = Boss.bossFactory(mDun.numCurrFloor)
             Else
                 m = Monster.monsterFactory(currTier(r))
             End If
@@ -1399,7 +1404,7 @@ Public Class Game
                 End If
             Next
         End If
-        If mDun.numCurrFloor < 5 Then
+        If mDun.numCurrFloor < mDun.floorboss.Length Then
             If mDun.currFloorBoss.Equals("Key") And player.inv.getCountAt("Key") > 0 Then currFloor.beatBoss = True
             If player.pos = currFloor.stairs And currFloor.beatBoss Then
                 If mDun.currFloorBoss.Equals("Key") Then player.inv.add("Key", -1)
@@ -1801,11 +1806,8 @@ Public Class Game
     End Sub
     Private Sub ChallengeBoss()
         Dim m As NPC
-        If mDun.numCurrFloor Mod 5 = 0 Then
-            m = New Boss(mDun.numCurrFloor)
-        Else
-            m = New MiniBoss(mDun.numCurrFloor)
-        End If
+        m = Boss.bossFactory(mDun.numCurrFloor)
+
 
         Monster.targetRoute(m)
         Dim oSpeed = m.getSPD
