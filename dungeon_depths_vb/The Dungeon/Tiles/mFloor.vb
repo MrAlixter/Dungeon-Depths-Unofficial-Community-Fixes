@@ -144,9 +144,9 @@
         If floorNumber < 3 Then
             Return {0, 1, 3}
         ElseIf floorNumber = 3 Then
-            Return {0, 1, 2, 3}
+            Return {0, 1, 2, 3, 5}
         Else
-            Return {0, 1, 2, 3, 4}
+            Return {0, 1, 2, 3, 4, 5}
         End If
     End Function
     Sub placeNPCs(ByRef npcList As List(Of ShopNPC), ByVal possibleNPCs As Integer())

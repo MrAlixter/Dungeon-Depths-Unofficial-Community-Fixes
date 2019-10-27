@@ -10,7 +10,7 @@
     Public acList As Dictionary(Of String, Accessory) = New Dictionary(Of String, Accessory)
     'define a shorthand representation of the main player
     Dim p As Player = Game.player
-    'init triggers an initialion Form3's global variables
+    'init triggers an initialion Form3's global variables 
     Public Sub init()
         p = Game.player
 
@@ -59,11 +59,12 @@
 
         'if clothes offer resistance on the way off, this handles that
         If (Not p.equippedArmor.getName.Equals(armor) And p.equippedArmor.isCursed) Then
-            If Int(Rnd() * 2) = 0 Then
-                Game.pushLblEvent("Despite a struggle agaisnt your bonds, you are unable to escape!  Oh well, maybe next time...")
-                Return False
+            If p.inv.item("Anti_Curse_Tag").count > 0 Then
+                Game.pushLblEvent("You apply a tag to your clothes, allowing you to remove them.")
+                p.inv.add("Anti_Curse_Tag", -1)
             Else
-                Game.pushLblEvent("You deftly take off your clothes, despite the resistance they put up.")
+                Game.pushLblEvent("Despite a struggle agaisnt your clothes, you are unable to escape!")
+                Return False
             End If
         End If
 
@@ -114,11 +115,12 @@
 
         'if clothes offer resistance on the way off, this handles that
         If (Not p.equippedWeapon.getName.Equals(weapon) And p.equippedWeapon.isCursed) Then
-            If Int(Rnd() * 2) = 0 Then
-                Game.pushLblEvent("Despite a struggle agaisnt your weapon, you are unable to sheath it!  Oh well, maybe next time...")
-                Return False
-            Else
+            If p.inv.item("Anti_Curse_Tag").count > 0 Then
                 Game.pushLblEvent("You sheath your weapon, despite the resistance it puts up.")
+                p.inv.add("Anti_Curse_Tag", -1)
+            Else
+                Game.pushLblEvent("Despite a struggle agaisnt your weapon, you are unable to put it away!")
+                Return False
             End If
         End If
 
@@ -154,11 +156,12 @@
 
         'if clothes offer resistance on the way off, this handles that
         If (Not p.equippedAcce.getName.Equals(acce) And p.equippedAcce.isCursed) Then
-            If Int(Rnd() * 2) = 0 Then
-                Game.pushLblEvent("Despite a struggle agaisnt your bonds, you are unable to escape!  Oh well, maybe next time...")
-                Return False
+            If p.inv.item("Anti_Curse_Tag").count > 0 Then
+                Game.pushLblEvent("You take off your accessory, despite the resistance it puts up.")
+                p.inv.add("Anti_Curse_Tag", -1)
             Else
-                Game.pushLblEvent("You deftly take off your accessory, despite the resistance they put up.")
+                Game.pushLblEvent("Despite a struggle agaisnt your accessory, you are unable to take it off!")
+                Return False
             End If
         End If
 

@@ -14,7 +14,6 @@
     Public Overrides Sub setWaitTime(stage As Integer)
         stopTF()
     End Sub
-
     Public Sub step1()
         Dim p As Player = Game.player
 

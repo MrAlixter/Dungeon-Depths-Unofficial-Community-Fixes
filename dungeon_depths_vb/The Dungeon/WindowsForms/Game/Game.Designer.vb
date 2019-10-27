@@ -171,7 +171,7 @@ Partial Class Game
         Me.picBun = New System.Windows.Forms.PictureBox()
         Me.picPrin = New System.Windows.Forms.PictureBox()
         Me.picmgp1 = New System.Windows.Forms.PictureBox()
-        Me.picDragon = New System.Windows.Forms.PictureBox()
+        Me.picDragonM = New System.Windows.Forms.PictureBox()
         Me.chkAcc = New System.Windows.Forms.CheckBox()
         Me.picCrystal = New System.Windows.Forms.PictureBox()
         Me.picCrystalf = New System.Windows.Forms.PictureBox()
@@ -232,6 +232,12 @@ Partial Class Game
         Me.picWSmithAlt2 = New System.Windows.Forms.PictureBox()
         Me.picWSf = New System.Windows.Forms.PictureBox()
         Me.picWS = New System.Windows.Forms.PictureBox()
+        Me.picDragonF = New System.Windows.Forms.PictureBox()
+        Me.picCBrok3 = New System.Windows.Forms.PictureBox()
+        Me.picCBrok2 = New System.Windows.Forms.PictureBox()
+        Me.picCBrok1 = New System.Windows.Forms.PictureBox()
+        Me.picCBrok = New System.Windows.Forms.PictureBox()
+        Me.picCBrokF = New System.Windows.Forms.PictureBox()
         CType(Me.picEnemy, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me.picNPC, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me.picStatue, System.ComponentModel.ISupportInitialize).BeginInit()
@@ -285,7 +291,7 @@ Partial Class Game
         CType(Me.picBun, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me.picPrin, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me.picmgp1, System.ComponentModel.ISupportInitialize).BeginInit()
-        CType(Me.picDragon, System.ComponentModel.ISupportInitialize).BeginInit()
+        CType(Me.picDragonM, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me.picCrystal, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me.picCrystalf, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me.picPath, System.ComponentModel.ISupportInitialize).BeginInit()
@@ -337,6 +343,12 @@ Partial Class Game
         CType(Me.picWSmithAlt2, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me.picWSf, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me.picWS, System.ComponentModel.ISupportInitialize).BeginInit()
+        CType(Me.picDragonF, System.ComponentModel.ISupportInitialize).BeginInit()
+        CType(Me.picCBrok3, System.ComponentModel.ISupportInitialize).BeginInit()
+        CType(Me.picCBrok2, System.ComponentModel.ISupportInitialize).BeginInit()
+        CType(Me.picCBrok1, System.ComponentModel.ISupportInitialize).BeginInit()
+        CType(Me.picCBrok, System.ComponentModel.ISupportInitialize).BeginInit()
+        CType(Me.picCBrokF, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.SuspendLayout()
         '
         'btnUse1
@@ -929,7 +941,7 @@ Partial Class Game
         'picPortrait
         '
         Me.picPortrait.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch
-        Me.picPortrait.Location = New System.Drawing.Point(871, 154)
+        Me.picPortrait.Location = New System.Drawing.Point(871, 150)
         Me.picPortrait.Name = "picPortrait"
         Me.picPortrait.Size = New System.Drawing.Size(125, 189)
         Me.picPortrait.TabIndex = 208
@@ -1987,15 +1999,15 @@ Partial Class Game
         Me.picmgp1.TabStop = False
         Me.picmgp1.Visible = False
         '
-        'picDragon
+        'picDragonM
         '
-        Me.picDragon.BackgroundImage = CType(resources.GetObject("picDragon.BackgroundImage"), System.Drawing.Image)
-        Me.picDragon.Location = New System.Drawing.Point(66, 70)
-        Me.picDragon.Name = "picDragon"
-        Me.picDragon.Size = New System.Drawing.Size(15, 15)
-        Me.picDragon.TabIndex = 288
-        Me.picDragon.TabStop = False
-        Me.picDragon.Visible = False
+        Me.picDragonM.BackgroundImage = CType(resources.GetObject("picDragonM.BackgroundImage"), System.Drawing.Image)
+        Me.picDragonM.Location = New System.Drawing.Point(66, 70)
+        Me.picDragonM.Name = "picDragonM"
+        Me.picDragonM.Size = New System.Drawing.Size(15, 15)
+        Me.picDragonM.TabIndex = 288
+        Me.picDragonM.TabStop = False
+        Me.picDragonM.Visible = False
         '
         'chkAcc
         '
@@ -2093,7 +2105,7 @@ Partial Class Game
         'picCake
         '
         Me.picCake.BackgroundImage = CType(resources.GetObject("picCake.BackgroundImage"), System.Drawing.Image)
-        Me.picCake.Location = New System.Drawing.Point(87, 70)
+        Me.picCake.Location = New System.Drawing.Point(108, 70)
         Me.picCake.Name = "picCake"
         Me.picCake.Size = New System.Drawing.Size(15, 15)
         Me.picCake.TabIndex = 296
@@ -2630,12 +2642,78 @@ Partial Class Game
         Me.picWS.TabStop = False
         Me.picWS.Visible = False
         '
+        'picDragonF
+        '
+        Me.picDragonF.BackgroundImage = CType(resources.GetObject("picDragonF.BackgroundImage"), System.Drawing.Image)
+        Me.picDragonF.Location = New System.Drawing.Point(87, 70)
+        Me.picDragonF.Name = "picDragonF"
+        Me.picDragonF.Size = New System.Drawing.Size(15, 15)
+        Me.picDragonF.TabIndex = 343
+        Me.picDragonF.TabStop = False
+        Me.picDragonF.Visible = False
+        '
+        'picCBrok3
+        '
+        Me.picCBrok3.BackgroundImage = CType(resources.GetObject("picCBrok3.BackgroundImage"), System.Drawing.Image)
+        Me.picCBrok3.Location = New System.Drawing.Point(280, 175)
+        Me.picCBrok3.Name = "picCBrok3"
+        Me.picCBrok3.Size = New System.Drawing.Size(15, 15)
+        Me.picCBrok3.TabIndex = 346
+        Me.picCBrok3.TabStop = False
+        Me.picCBrok3.Visible = False
+        '
+        'picCBrok2
+        '
+        Me.picCBrok2.BackgroundImage = CType(resources.GetObject("picCBrok2.BackgroundImage"), System.Drawing.Image)
+        Me.picCBrok2.Location = New System.Drawing.Point(259, 175)
+        Me.picCBrok2.Name = "picCBrok2"
+        Me.picCBrok2.Size = New System.Drawing.Size(15, 15)
+        Me.picCBrok2.TabIndex = 345
+        Me.picCBrok2.TabStop = False
+        Me.picCBrok2.Visible = False
+        '
+        'picCBrok1
+        '
+        Me.picCBrok1.BackgroundImage = CType(resources.GetObject("picCBrok1.BackgroundImage"), System.Drawing.Image)
+        Me.picCBrok1.Location = New System.Drawing.Point(238, 175)
+        Me.picCBrok1.Name = "picCBrok1"
+        Me.picCBrok1.Size = New System.Drawing.Size(15, 15)
+        Me.picCBrok1.TabIndex = 344
+        Me.picCBrok1.TabStop = False
+        Me.picCBrok1.Visible = False
+        '
+        'picCBrok
+        '
+        Me.picCBrok.BackgroundImage = CType(resources.GetObject("picCBrok.BackgroundImage"), System.Drawing.Image)
+        Me.picCBrok.Location = New System.Drawing.Point(602, 70)
+        Me.picCBrok.Name = "picCBrok"
+        Me.picCBrok.Size = New System.Drawing.Size(15, 15)
+        Me.picCBrok.TabIndex = 347
+        Me.picCBrok.TabStop = False
+        Me.picCBrok.Visible = False
+        '
+        'picCBrokF
+        '
+        Me.picCBrokF.BackgroundImage = CType(resources.GetObject("picCBrokF.BackgroundImage"), System.Drawing.Image)
+        Me.picCBrokF.Location = New System.Drawing.Point(602, 136)
+        Me.picCBrokF.Name = "picCBrokF"
+        Me.picCBrokF.Size = New System.Drawing.Size(15, 15)
+        Me.picCBrokF.TabIndex = 348
+        Me.picCBrokF.TabStop = False
+        Me.picCBrokF.Visible = False
+        '
         'Game
         '
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Inherit
         Me.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink
         Me.BackColor = System.Drawing.Color.Black
         Me.ClientSize = New System.Drawing.Size(1008, 690)
+        Me.Controls.Add(Me.picCBrokF)
+        Me.Controls.Add(Me.picCBrok)
+        Me.Controls.Add(Me.picCBrok3)
+        Me.Controls.Add(Me.picCBrok2)
+        Me.Controls.Add(Me.picCBrok1)
+        Me.Controls.Add(Me.picDragonF)
         Me.Controls.Add(Me.picWS)
         Me.Controls.Add(Me.pnlSelection)
         Me.Controls.Add(Me.picWSf)
@@ -2692,7 +2770,7 @@ Partial Class Game
         Me.Controls.Add(Me.picCrystalf)
         Me.Controls.Add(Me.picCrystal)
         Me.Controls.Add(Me.chkAcc)
-        Me.Controls.Add(Me.picDragon)
+        Me.Controls.Add(Me.picDragonM)
         Me.Controls.Add(Me.picmgp1)
         Me.Controls.Add(Me.picPrin)
         Me.Controls.Add(Me.picBun)
@@ -2861,7 +2939,7 @@ Partial Class Game
         CType(Me.picBun, System.ComponentModel.ISupportInitialize).EndInit()
         CType(Me.picPrin, System.ComponentModel.ISupportInitialize).EndInit()
         CType(Me.picmgp1, System.ComponentModel.ISupportInitialize).EndInit()
-        CType(Me.picDragon, System.ComponentModel.ISupportInitialize).EndInit()
+        CType(Me.picDragonM, System.ComponentModel.ISupportInitialize).EndInit()
         CType(Me.picCrystal, System.ComponentModel.ISupportInitialize).EndInit()
         CType(Me.picCrystalf, System.ComponentModel.ISupportInitialize).EndInit()
         CType(Me.picPath, System.ComponentModel.ISupportInitialize).EndInit()
@@ -2914,6 +2992,12 @@ Partial Class Game
         CType(Me.picWSmithAlt2, System.ComponentModel.ISupportInitialize).EndInit()
         CType(Me.picWSf, System.ComponentModel.ISupportInitialize).EndInit()
         CType(Me.picWS, System.ComponentModel.ISupportInitialize).EndInit()
+        CType(Me.picDragonF, System.ComponentModel.ISupportInitialize).EndInit()
+        CType(Me.picCBrok3, System.ComponentModel.ISupportInitialize).EndInit()
+        CType(Me.picCBrok2, System.ComponentModel.ISupportInitialize).EndInit()
+        CType(Me.picCBrok1, System.ComponentModel.ISupportInitialize).EndInit()
+        CType(Me.picCBrok, System.ComponentModel.ISupportInitialize).EndInit()
+        CType(Me.picCBrokF, System.ComponentModel.ISupportInitialize).EndInit()
         Me.ResumeLayout(False)
         Me.PerformLayout()
 
@@ -3062,7 +3146,7 @@ Partial Class Game
     Friend WithEvents picBun As System.Windows.Forms.PictureBox
     Friend WithEvents picPrin As System.Windows.Forms.PictureBox
     Friend WithEvents picmgp1 As System.Windows.Forms.PictureBox
-    Friend WithEvents picDragon As System.Windows.Forms.PictureBox
+    Friend WithEvents picDragonM As System.Windows.Forms.PictureBox
     Friend WithEvents chkAcc As System.Windows.Forms.CheckBox
     Friend WithEvents picCrystal As System.Windows.Forms.PictureBox
     Friend WithEvents picCrystalf As System.Windows.Forms.PictureBox
@@ -3126,4 +3210,10 @@ Partial Class Game
     Friend WithEvents picWSmithAlt2 As System.Windows.Forms.PictureBox
     Friend WithEvents picWSf As System.Windows.Forms.PictureBox
     Friend WithEvents picWS As System.Windows.Forms.PictureBox
+    Friend WithEvents picDragonF As System.Windows.Forms.PictureBox
+    Friend WithEvents picCBrok3 As System.Windows.Forms.PictureBox
+    Friend WithEvents picCBrok2 As System.Windows.Forms.PictureBox
+    Friend WithEvents picCBrok1 As System.Windows.Forms.PictureBox
+    Friend WithEvents picCBrok As System.Windows.Forms.PictureBox
+    Friend WithEvents picCBrokF As System.Windows.Forms.PictureBox
 End Class

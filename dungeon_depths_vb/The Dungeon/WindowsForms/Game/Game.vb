@@ -37,7 +37,7 @@ Public Class Game
     Public updateList As PQ = New PQ
     Public npcList As List(Of NPC) = New List(Of NPC)     'list of non-player updatables (NOT SAVED)
     Public shopNPCList As List(Of ShopNPC) = New List(Of ShopNPC)
-    Public shopkeeper, swiz, hteach, fvend, wsmith As ShopNPC
+    Public shopkeeper, swiz, hteach, fvend, wsmith, cbrok As ShopNPC
     Public currNPC As ShopNPC   'the current npc the player is talking to (NOT SAVED)
     Public pImage As Image  'which tile is used for the player (NOT SAVED)
     Public combatmode As Boolean = True 'indicates if the player is in combat (NOT SAVED)
@@ -293,14 +293,16 @@ Public Class Game
         shopkeeper = ShopNPC.shopFactory(0)
         updateLoadbar(12)
         swiz = ShopNPC.shopFactory(1)
-        updateLoadbar(14)
+        updateLoadbar(13)
         hteach = ShopNPC.shopFactory(2)
-        updateLoadbar(16)
+        updateLoadbar(15)
         fvend = ShopNPC.shopFactory(3)
-        updateLoadbar(18)
+        updateLoadbar(17)
         wsmith = ShopNPC.shopFactory(4)
+        updateLoadbar(18)
+        cbrok = ShopNPC.shopFactory(5)
         updateLoadbar(20)
-        shopNPCList.AddRange({shopkeeper, swiz, hteach, fvend, wsmith})
+        shopNPCList.AddRange({shopkeeper, swiz, hteach, fvend, wsmith, cbrok})
 
         'create the dungeon
         mDun = New Dungeon
@@ -496,7 +498,7 @@ Public Class Game
             Using g As Graphics = Graphics.FromImage(seenBoardPic)
                 For indY = -viewRad To viewRad
                     For indX = -viewRad To viewRad
-                        If player.pos.Y + indY < mBoardHeight And player.pos.Y + indY >= 0 And player.pos.X + indX < mBoardWidth And player.pos.X + indX > 0 Then
+                        If player.pos.Y + indY < currFloor.mBoardHeight And player.pos.Y + indY >= 0 And player.pos.X + indX < currFloor.mBoardWidth And player.pos.X + indX > 0 Then
                             If (currFloor.mBoard(player.pos.Y + indY, player.pos.X + indX).Tag = 1) Then
                                 'g.FillRectangle(Brushes.Purple, (player.pos.X + indX) * imgSize, (player.pos.Y + indY) * imgSize, imgSize, imgSize)
                                 For thisX As Integer = (player.pos.X + indX) * imgSize To (player.pos.X + indX + 1) * imgSize
@@ -535,7 +537,7 @@ Public Class Game
             Dim startTime As Double = (DateTime.Now - New DateTime(1970, 1, 1)).TotalMilliseconds
             For indY = -viewRad To viewRad
                 For indX = -viewRad To viewRad
-                    If (player.pos.Y + indY < mBoardHeight And player.pos.Y + indY >= 0 And player.pos.X + indX < mBoardWidth And player.pos.X + indX >= 0) Then
+                    If (player.pos.Y + indY < currFloor.mBoardHeight And player.pos.Y + indY >= 0 And player.pos.X + indX < currFloor.mBoardWidth And player.pos.X + indX >= 0) Then
                         If currFloor.mBoard(player.pos.Y + indY, player.pos.X + indX).Text = "@" Then currFloor.mBoard(player.pos.Y + indY, player.pos.X + indX).Text = ""
                         If currFloor.mBoard(player.pos.Y + indY, player.pos.X + indX).Text = "H" And currFloor.mBoard(player.pos.Y + indY, player.pos.X + indX).Tag < 2 Then
                             currFloor.mBoard(player.pos.Y + indY, player.pos.X + indX).ForeColor = Color.Black
@@ -590,7 +592,7 @@ Public Class Game
             For indY = -7 To 7
                 x = 0
                 For indX = -11 To 11
-                    If (player.pos.Y + indY >= 0 And player.pos.Y + indY < mBoardHeight) And (player.pos.X + indX >= 0 And player.pos.X + indX < mBoardWidth) Then
+                    If (player.pos.Y + indY >= 0 And player.pos.Y + indY < currFloor.mBoardHeight) And (player.pos.X + indX >= 0 And player.pos.X + indX < currFloor.mBoardWidth) Then
                         viewArray(y, x) = currFloor.mBoard(player.pos.Y + indY, player.pos.X + indX).Tag
                         If currFloor.mBoard(player.pos.Y + indY, player.pos.X + indX).Tag = 2 Then
                             If currFloor.mBoard(player.pos.Y + indY, player.pos.X + indX).Text = "" Then viewArray(y, x) = 2
@@ -610,6 +612,7 @@ Public Class Game
                             If currFloor.mBoard(player.pos.Y + indY, player.pos.X + indX).Text = "$" And player.pos.Y + indY = hteach.pos.Y And player.pos.X + indX = hteach.pos.X Then viewArray(y, x) = 14
                             If currFloor.mBoard(player.pos.Y + indY, player.pos.X + indX).Text = "$" And player.pos.Y + indY = fvend.pos.Y And player.pos.X + indX = fvend.pos.X Then viewArray(y, x) = 15
                             If currFloor.mBoard(player.pos.Y + indY, player.pos.X + indX).Text = "$" And player.pos.Y + indY = wsmith.pos.Y And player.pos.X + indX = wsmith.pos.X Then viewArray(y, x) = 16
+                            If currFloor.mBoard(player.pos.Y + indY, player.pos.X + indX).Text = "$" And player.pos.Y + indY = cbrok.pos.Y And player.pos.X + indX = cbrok.pos.X Then viewArray(y, x) = 17
                             If currFloor.mBoard(player.pos.Y + indY, player.pos.X + indX).Text = "+" Then viewArray(y, x) = 8
                             If currFloor.mBoard(player.pos.Y + indY, player.pos.X + indX).Text = "c" Then viewArray(y, x) = 12
                             If player.perks("blind") > -1 Then viewArray(y, x) = 1
@@ -675,6 +678,8 @@ Public Class Game
                 mPics(y, x).BackgroundImage = picFVtile.BackgroundImage
             Case 16
                 mPics(y, x).BackgroundImage = picWS.BackgroundImage
+            Case 17
+                mPics(y, x).BackgroundImage = picCBrok.BackgroundImage
         End Select
     End Sub
     Sub setForestTileImg(ByVal x As Integer, ByVal y As Integer, ByRef viewArray As Integer(,))
@@ -714,6 +719,8 @@ Public Class Game
                 mPics(y, x).BackgroundImage = picFVf.BackgroundImage
             Case 16
                 mPics(y, x).BackgroundImage = picWSf.BackgroundImage
+            Case 17
+                mPics(y, x).BackgroundImage = picCBrokF.BackgroundImage
         End Select
     End Sub
     Sub setSpaceTileImg(ByVal x As Integer, ByVal y As Integer, ByRef viewArray As Integer(,))
@@ -953,7 +960,7 @@ Public Class Game
                 lblEventOnClose = Nothing
             End If
 
-            If Not combatmode Then player.canMoveFlag = True
+            If Not combatmode Or npcmode Then player.canMoveFlag = True
         End If
     End Sub
 
@@ -1461,9 +1468,9 @@ Public Class Game
                 player.bs()
                 player.createP()
             ElseIf keyspresed = "seee" Then
-                For indY = -mBoardHeight To mBoardHeight
-                    For indX = -mBoardWidth To mBoardWidth
-                        If player.pos.Y + indY < mBoardHeight And player.pos.Y + indY >= 0 And player.pos.X + indX < mBoardWidth And player.pos.X + indX >= 0 Then
+                For indY = -currFloor.mBoardHeight To currFloor.mBoardHeight
+                    For indX = -currFloor.mBoardWidth To currFloor.mBoardWidth
+                        If player.pos.Y + indY < currFloor.mBoardHeight And player.pos.Y + indY >= 0 And player.pos.X + indX < currFloor.mBoardWidth And player.pos.X + indX >= 0 Then
                             If currFloor.mBoard(player.pos.Y + indY, player.pos.X + indX).Text = "@" Then currFloor.mBoard(player.pos.Y + indY, player.pos.X + indX).Text = ""
                             If currFloor.mBoard(player.pos.Y + indY, player.pos.X + indX).Text = "H" And currFloor.mBoard(player.pos.Y + indY, player.pos.X + indX).Tag < 2 Then
                                 currFloor.mBoard(player.pos.Y + indY, player.pos.X + indX).ForeColor = Color.Black
@@ -1789,7 +1796,14 @@ Public Class Game
     End Sub
     Sub toDesc()
         txtDescript.Text = player.genDescription
-        picDescPort.BackgroundImage = Portrait.CreateFullBodyBMP(player.prt.iArr)
+
+        Dim pImg = player.prt.oneLayerImgCheck(player.pForm.name, player.pClass.name)
+        If player.prt.oneLayerImgCheck(player.pForm.name, player.pClass.name) Is Nothing Then
+            pImg = Portrait.CreateFullBodyBMP(player.prt.iArr)
+        End If
+
+        picDescPort.BackgroundImage = pImg
+
         pnlDescript.Location = New Point((13 * (Me.Size.Width / 688)), (3 * (Me.Size.Width / 688)))
         pnlDescript.Visible = True
     End Sub
@@ -1972,6 +1986,7 @@ Public Class Game
         hteach = shopNPCList(2)
         fvend = shopNPCList(3)
         wsmith = shopNPCList(4)
+        cbrok = shopNPCList(5)
         updateLoadbar(70)
 
         'load the dungeon generation settings
@@ -2224,7 +2239,6 @@ Public Class Game
         player.magicRoute()
     End Sub
     Public Sub fromCombat()
-
         'fromCombat hides the players combat menus
         pnlCombatClose()
         btnATK.Visible = False
@@ -2516,6 +2530,7 @@ Public Class Game
                 Exit For
             End If
         Next
+        If combatmode Then fromCombat()
         closeLblEvent()
         If Not m Is Nothing Then m.despawn("npc")
         npcList.Clear()
@@ -2579,6 +2594,7 @@ Public Class Game
                 Exit For
             End If
         Next
+
         queueSetup()
         NPCtoCombat(m)
 
@@ -2894,6 +2910,7 @@ Public Class Game
         btnEQP.Enabled = False
     End Sub
     Sub pushNPCDialog(ByVal s As String, Optional ByRef effect As Action = Nothing)
+        If s = "" Then Exit Sub
         If combatmode Then
             pushLblCombatEvent("""" & s & """")
             Exit Sub
@@ -3188,9 +3205,9 @@ Public Class Game
         Dim YSize As Double = 15.0 * (CDbl(Me.Size.Width) / 688.0)
 
         Dim imgSize As Integer = picTile.BackgroundImage.PhysicalDimension.Height
-        boardPic = New Bitmap(mBoardWidth * imgSize, mBoardHeight * imgSize)
-        seenBoardPic = New Bitmap(mBoardWidth * imgSize, mBoardHeight * imgSize)
-        savedBoardPic = New Bitmap(mBoardWidth * imgSize, mBoardHeight * imgSize)
+        boardPic = New Bitmap(mBoardWidth * imgSize, currFloor.mBoardHeight * imgSize)
+        seenBoardPic = New Bitmap(mBoardWidth * imgSize, currFloor.mBoardHeight * imgSize)
+        savedBoardPic = New Bitmap(mBoardWidth * imgSize, currFloor.mBoardHeight * imgSize)
         boxBoard = New PictureBox()
         'boxBoard.Width = 23 * 25
         'boxBoard.Height = 15 * 25
@@ -3216,8 +3233,8 @@ Public Class Game
     Private Sub LoadMapAndImages()
         Dim imgSize As Integer = picTile.BackgroundImage.PhysicalDimension.Height
         Using boardG As Graphics = Graphics.FromImage(boardPic), seenG As Graphics = Graphics.FromImage(seenBoardPic)
-            For x = 0 To mBoardWidth - 1
-                For y = 0 To mBoardHeight - 1
+            For x = 0 To currFloor.mBoardWidth - 1
+                For y = 0 To currFloor.mBoardHeight - 1
                     Dim tile As mTile = currFloor.mBoard(y, x)
                     Dim img As Image = Nothing
 

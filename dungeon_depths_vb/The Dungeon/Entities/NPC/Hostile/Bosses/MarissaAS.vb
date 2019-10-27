@@ -13,7 +13,7 @@
         inv.setCount("Mana_Charm", 1 + CInt(Rnd() * 2))
         inv.setCount("Witch_Cosplay", CInt(Rnd() * 2))
 
-        setupMonsterOnSpawn()
+        setupMonsterOnSpawn(False)
 
         title = " "
         pronoun = "she"

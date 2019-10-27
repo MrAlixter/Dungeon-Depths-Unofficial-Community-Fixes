@@ -170,7 +170,7 @@
         internal_inventory.Add("Twin_Xiphoi", New TwinBlades())             '150
         internal_inventory.Add("Lolita_Dress_(Sweet)", New SLolitaDress())  '151
         internal_inventory.Add("Will_Charm", New WillCharm())               '152
-        internal_inventory.Add("Anti_Curse_Tag", New AntiSCurseTag())       '153
+        internal_inventory.Add("Anti_Curse_Tag", New AntiCurseTag())        '153
         internal_inventory.Add("New-U_Crystal", New NewUCrystal())          '154
         internal_inventory.Add("Bronze_Spear", New BronzeSpear())           '155
         internal_inventory.Add("Steel_Spear", New SteelSpear())             '156
@@ -185,6 +185,8 @@
         internal_inventory.Add("Mugger's_Shank", New MShank())              '165
         internal_inventory.Add("Frock_of_Night", New FoNight())             '166
         internal_inventory.Add("Wand_of_Shocking", New WOShock())           '167
+        internal_inventory.Add("Cursemark", New CursedTattoo())             '168
+        internal_inventory.Add("Maid_Lingerie", New MaidLingerie())         '169
 
         armor = {New CommonClothes, New SkimpyClothes, New Naked, New VSkimpyClothes,
                  Me.item(5), Me.item(7), Me.item(8), Me.item(10),
@@ -198,7 +200,8 @@
                  Me.item(102), Me.item(103), Me.item(104), Me.item(105),
                  Me.item(106), Me.item(107), Me.item(115), Me.item(116),
                  Me.item(129), Me.item(137), Me.item(138), Me.item(144),
-                 Me.item(146), Me.item(147), Me.item(151), Me.item(166)}
+                 Me.item(146), Me.item(147), Me.item(151), Me.item(166),
+                 Me.item(169)}
 
         weapons = {New BareFists(),
                    Me.item(6), Me.item(9), Me.item(11), Me.item(21),
@@ -231,7 +234,7 @@
                 Me.item(69), Me.item(70), Me.item(77), Me.item(81),
                 Me.item(97), Me.item(110), Me.item(123), Me.item(139),
                 Me.item(140), Me.item(141), Me.item(149), Me.item(161),
-                Me.item(164)}
+                Me.item(164), Me.item(168)}
 
         potions = {Me.item(2), Me.item(13), Me.item(14), Me.item(25),
                    Me.item(26), Me.item(27), Me.item(28), Me.item(29),

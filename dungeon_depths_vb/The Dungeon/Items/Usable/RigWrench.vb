@@ -20,15 +20,15 @@
             For indX = -1 To 1
                 Dim y As Integer = Game.player.pos.Y + indY
                 Dim x As Integer = Game.player.pos.X + indX
-                If y < Game.mBoardHeight And y >= 0 And x < Game.mBoardWidth And x >= 0 Then
-                    If Game.currfloor.mBoard(y, x).Text = "+" Then
+                If y < Game.currFloor.mBoardHeight And y >= 0 And x < Game.currFloor.mBoardWidth And x >= 0 Then
+                    If Game.currFloor.mBoard(y, x).Text = "+" Then
                         Dim id As Integer = -1
-                        For i = 0 To Game.currfloor.trapList.Count - 1
-                            If Game.currfloor.trapList(i).pos.Equals(New Point(x, y)) Then
-                                Game.currfloor.trapList(i).pos = New Point(-1, -1)
-                                id = Game.currfloor.trapList(i).id
-                                Game.currfloor.trapList.RemoveAt(i)
-                                Game.currfloor.mBoard(y, x).Text = ""
+                        For i = 0 To Game.currFloor.trapList.Count - 1
+                            If Game.currFloor.trapList(i).pos.Equals(New Point(x, y)) Then
+                                Game.currFloor.trapList(i).pos = New Point(-1, -1)
+                                id = Game.currFloor.trapList(i).iD
+                                Game.currFloor.trapList.RemoveAt(i)
+                                Game.currFloor.mBoard(y, x).Text = ""
                                 Exit For
                             End If
                         Next

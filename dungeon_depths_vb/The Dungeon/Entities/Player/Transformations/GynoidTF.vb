@@ -15,10 +15,8 @@
         stopTF()
     End Sub
 
-    Public Sub step1()
-        Dim p As player = game.player
-        Dim out = ""
 
+    Public Shared Sub tf(ByRef p As Player)
         'transformation
         If p.sex.Equals("Male") Then
             p.MtF()
@@ -41,7 +39,13 @@
         Equipment.clothesChange("Gynoid_Uniform")
 
         p.perks("slutcurse") = 1
+    End Sub
+    Public Sub step1()
+        Dim p As player = game.player
+        Dim out = ""
 
+        'transformation
+        tf(p)
 
         'transformation description push
         out += "..." & vbCrLf &

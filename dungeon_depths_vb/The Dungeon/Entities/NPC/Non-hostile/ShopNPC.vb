@@ -9,13 +9,15 @@
     Shared Function shopFactory(ByVal nIndex As Integer)
         Select Case nIndex
             Case 1
-                Return New TravelingWizard
+                Return New ShadyWizard
             Case 2
                 Return New HTeach
             Case 3
                 Return New FVendor
             Case 4
                 Return New WSmith
+            Case 5
+                Return New CBrok
             Case Else
                 Return New Shopkeeper
         End Select
@@ -53,6 +55,9 @@
 
         If Game.combatmode Then attackCMD(Game.player)
     End Sub
+    Public Overrides Function getName() As String
+        Return title & name
+    End Function
     Public Overridable Sub encounter()
         pos = Game.player.pos
         If isDead = True Then

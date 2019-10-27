@@ -30,7 +30,7 @@
         picBunny = Game.picWSmithBun.BackgroundImage
 
         If speed = Game.player.speed Then speed -= 1
-        title = ""
+        title = " the "
     End Sub
 
     Public Overrides Sub encounter()
@@ -41,7 +41,7 @@
         If npcIndex = 0 Then
             If Int(Rnd() * 2) = 0 Then
                 npcIndex = 5
-                Game.pushNPCDialog("I'm still getting everything moved in, but feel free to check out what I've got ready so far.  I should be operating at 100% by the time 0.9 rolls around, so stay in touch, eh?")
+                Game.pushNPCDialog("I'm still getting everything moved in, but feel free to check out what I've got ready so far.  I should be operating at 100% by the time 0.9 rolls around, so stay in touch, ok?")
             ElseIf Int(Rnd() * 20) = 1 Then
                 npcIndex = 6
                 Game.pushNPCDialog("So I was working on smelting down some scrapped weapons and, uh, I think I'm cursed now.  Let's make " &
@@ -51,8 +51,9 @@
             Else
                 Game.pushNPCDialog("Hey wanderer, what's going on?  I've got the firepower to keep a mobile forge burning basically wherever I go, " &
                                    "and that means I can get you the best damn weapons you've ever seen hot off the anvil!  I can tell you're not " &
-                                   "just looking for something pointy though, if you want that top-shelf quality I've got a signature series " &
-                                   "of stabby stuff that's been through an enchanting process.  Let me know what I'm banging out, ok?")
+                                   "just looking for something pointy though. If you want that top-shelf quality I've got a signature series " &
+                                   "of stabby stuff that's been through an quick enchanting process." & vbCrLf & vbCrLf &
+                                   "Let me know what I'm banging out, ok?")
             End If
         ElseIf npcIndex = 1 Then
             Game.pushNPCDialog("...")

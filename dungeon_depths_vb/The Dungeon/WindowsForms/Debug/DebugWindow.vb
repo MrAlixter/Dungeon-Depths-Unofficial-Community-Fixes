@@ -32,7 +32,7 @@ Public Class Debug_Window
         boxBeaten.Checked = Game.currfloor.beatBoss
 
         'MAP
-        magnification = Math.Floor(Math.Min(picBoard.Width / Game.mBoardWidth, picBoard.Height / Game.mBoardHeight))
+        magnification = Math.Floor(Math.Min(picBoard.Width / Game.currFloor.mBoardWidth, picBoard.Height / Game.currFloor.mBoardHeight))
         boxZoom.Value = magnification
         createMap()
         AddHandler picBoard.Paint, AddressOf Me.picBoard_Draw
@@ -228,7 +228,7 @@ Public Class Debug_Window
     End Sub
 
     Private Sub createMap()
-        map = New Bitmap(Game.mBoardWidth + 2, Game.mBoardHeight + 2)
+        map = New Bitmap(Game.currFloor.mBoardWidth + 2, Game.currFloor.mBoardHeight + 2)
         For boardX = 0 To map.Width - 3
             For boardY = 0 To map.Height - 3
                 If (Game.currfloor.mBoard(boardY, boardX).Text = "#") Then 'Chest

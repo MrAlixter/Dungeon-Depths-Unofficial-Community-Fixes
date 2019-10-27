@@ -1,7 +1,7 @@
-﻿Public Class TravelingWizard
+﻿Public Class ShadyWizard
     Inherits ShopNPC
     Sub New()
-        setName("Traveling Wizard")
+        setName("Shady Wizard")
         setHealth(1.0)
         setMaxHealth(9999)
         setATK(999)
@@ -45,7 +45,7 @@
         picBunny = Game.picSWb.BackgroundImage
 
         If speed = Game.player.speed Then speed -= 1
-        title = ""
+        title = " the "
     End Sub
 
     Public Overrides Sub encounter()
@@ -102,10 +102,10 @@
 
     Public Overrides Sub toFemale(form As String)
         MyBase.toFemale(form)
-        setName("Traveling Witch")
+        setName("Shady Witch")
     End Sub
     Public Overrides Sub toMale(form As String)
         MyBase.toMale(form)
-        setName("Traveling Wizard")
+        setName("Shady Wizard")
     End Sub
 End Class

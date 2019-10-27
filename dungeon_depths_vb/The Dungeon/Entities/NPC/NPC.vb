@@ -136,7 +136,7 @@
                 Game.pushLstLog("The " & name & " is friendly, and you chat briefly before setting out!")
             End If
         ElseIf reason = "npc" Then
-            Game.pushLstLog("You walk away from " & name & "!")
+            Game.pushLstLog("You walk away from " & getName() & "!")
         ElseIf reason = "animaltf" Then
             Dim output As String = ""
             If Me.GetType() Is GetType(Monster) Then output += "The "

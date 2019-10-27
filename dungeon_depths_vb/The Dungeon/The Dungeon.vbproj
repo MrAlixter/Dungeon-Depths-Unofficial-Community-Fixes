@@ -134,11 +134,12 @@
     <Compile Include="Entities\NPC\Hostile\Bosses\OEmpress.vb" />
     <Compile Include="Entities\NPC\Hostile\Bosses\Targax.vb" />
     <Compile Include="Entities\NPC\Non-Hostile\Caelia.vb" />
+    <Compile Include="Entities\NPC\Non-Hostile\CBrok.vb" />
     <Compile Include="Entities\NPC\Non-Hostile\WSmith.vb" />
     <Compile Include="Entities\NPC\Non-Hostile\FVendor.vb" />
     <Compile Include="Entities\NPC\Non-Hostile\HTeach.vb" />
     <Compile Include="Entities\NPC\Non-Hostile\Shopkeeper.vb" />
-    <Compile Include="Entities\NPC\Non-Hostile\TravelingWizard.vb" />
+    <Compile Include="Entities\NPC\Non-Hostile\ShadyWizard.vb" />
     <Compile Include="Entities\NPC\NPC.vb" />
     <Compile Include="Entities\Player\Classes\Witch.vb" />
     <Compile Include="Entities\Player\Classes\needRevertPassage\Rogue.vb" />
@@ -247,6 +248,7 @@
     <Compile Include="Entities\Player\Spells\turnToCupcake.vb" />
     <Compile Include="Entities\Player\Spells\turnToFrog.vb" />
     <Compile Include="Entities\Player\Transformations\AmazonTF.vb" />
+    <Compile Include="Entities\Player\Transformations\COServ.vb" />
     <Compile Include="Entities\Player\Transformations\GooGirlTF.vb" />
     <Compile Include="Entities\Player\Transformations\CombatModTF.vb" />
     <Compile Include="Entities\Player\Transformations\LolitaSTF.vb" />
@@ -295,6 +297,7 @@
     <Compile Include="Entities\Inventory.vb" />
     <Compile Include="Entities\preferedForm.vb" />
     <Compile Include="Items\Accesories\ActiveCamoflage.vb" />
+    <Compile Include="Items\Accesories\CursedTattoo.vb" />
     <Compile Include="Items\Accesories\StealthGear.vb" />
     <Compile Include="Items\Accesories\Generator.vb" />
     <Compile Include="Items\Accesories\Bowtie.vb" />
@@ -303,6 +306,7 @@
     <Compile Include="Items\Accesories\EmeraldCirclet.vb" />
     <Compile Include="Items\Accesories\Blindfold.vb" />
     <Compile Include="Items\Armor\FoNight.vb" />
+    <Compile Include="Items\Armor\MaidLingerie.vb" />
     <Compile Include="Items\Armor\SLolitaDress.vb" />
     <Compile Include="Items\Armor\CatArmor.vb" />
     <Compile Include="Items\Armor\GelLinge.vb" />
@@ -332,7 +336,7 @@
     <Compile Include="Items\Services\NameChange.vb" />
     <Compile Include="Items\Services\BimboLesson.vb" />
     <Compile Include="Items\Usable\Charms\WillCharm.vb" />
-    <Compile Include="Items\Usable\AntiSCurseTag.vb" />
+    <Compile Include="Items\Usable\AntiCurseTag.vb" />
     <Compile Include="Items\Usable\ManaHibiscus.vb" />
     <Compile Include="Items\Usable\CryoGrenade.vb" />
     <Compile Include="Items\Usable\Food\WFeast.vb" />

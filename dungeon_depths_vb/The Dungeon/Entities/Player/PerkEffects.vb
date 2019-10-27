@@ -135,7 +135,6 @@
             Game.player.perks("barbarian") = -1
         End If
     End Sub
-
     Shared Sub ROTLGRoute()
         Dim p As Player = Game.player
         Dim rotlg = CType(p.inv.item(81), ROTLGoddess)
@@ -183,6 +182,7 @@
 
         p.UIupdate()
     End Sub
+
     '|TRANSFORMATION TRIGGERS|
     Shared Sub targaxSwordTF()
         Dim p As Player = Game.player
@@ -214,6 +214,7 @@
     Shared Sub statueMove(obj As Entity)
         Game.pushLblEvent("You, being a statue, can not do anything.")
     End Sub
+
     '|SPECIAL MOVE HANDLERS|
     Shared Sub berserkerRage()
         Dim p As Player = Game.player
@@ -256,6 +257,64 @@
             Game.pushLstLog("Ironhide Fury has worn off.")
 
         End If
+    End Sub
+
+    '|CURSES|
+    Shared Function curseOfRust(ByRef p As Player) As Boolean
+        Dim updatePortrait = False
+        If Game.turn Mod 25 = 0 And (p.equippedAcce.count > 0 Or p.equippedArmor.count > 0 Or p.equippedWeapon.count > 0) Then
+            If p.equippedAcce.count > 0 AndAlso p.equippedAcce.damage(10 + Int(Rnd() * 20)) Then
+                p.equippedAcce = New noAcce
+                updatePortrait = True
+            End If
+
+            If p.equippedArmor.count > 0 AndAlso p.equippedArmor.damage(10 + Int(Rnd() * 20)) Then
+                p.equippedArmor = New Naked
+                updatePortrait = True
+            End If
+
+            If p.equippedWeapon.count > 0 AndAlso p.equippedWeapon.damage(10 + Int(Rnd() * 20)) Then
+                p.equippedWeapon = New BareFists
+            End If
+
+            Game.pushLstLog("A cackling red aura washes over your equipment...")
+        End If
+        Return updatePortrait
+    End Function
+    Shared Function curseOfMilk(ByRef p As Player) As Boolean
+        Dim updatePortrait = False
+        If Game.turn Mod 30 = 0 And p.breastSize < 7 Then
+            p.be()
+            Game.pushLstLog("Your chest begins glowing a sinister red...")
+            updatePortrait = True
+        End If
+        Return updatePortrait
+    End Function
+    Shared Function curseOfPolymorph(ByRef p As Player) As Boolean
+        Dim updatePortrait = False
+        If p.perks("copoly") = 0 AndAlso Transformation.canBeTFed(p) Then
+            randomPoly()
+            p.perks("copoly") = 50 + Int(Rnd() * 100)
+            Return True
+        ElseIf p.perks("copoly") > 0 Then
+            p.perks("copoly") -= 1
+        End If
+        Return updatePortrait
+    End Function
+    Private Shared Sub randomPoly()
+        Randomize(Game.currFloor.floorCode.GetHashCode)
+
+        Dim tfs As Dictionary(Of String, Action) = New Dictionary(Of String, Action)
+        tfs.Add("Minotaur Cow", AddressOf New MinotaurCowTF().step1)
+        tfs.Add("Dragon", AddressOf New DragonTF().step1)
+        tfs.Add("Succubus", AddressOf New SuccubusTF().step1)
+        tfs.Add("Slime", AddressOf New SlimeTF().step1)
+        tfs.Add("Bimbo", AddressOf New BimboTF(2, 0, 0.25, True).doubleTf)
+
+        Dim form = tfs.Keys(Int(Rnd() * (tfs.Keys.Count - 1)))
+        tfs(form)()
+        Game.pushLstLog("You're enveloped by a crimson aura...")
+        Game.pushLblEvent("You are swiftly enveloped by a blinding crimson aura!  By the time you can see again, it's obvious that you've been physically changed by your curse.")
     End Sub
 
     '|TAKE DAMAGE PERKS|

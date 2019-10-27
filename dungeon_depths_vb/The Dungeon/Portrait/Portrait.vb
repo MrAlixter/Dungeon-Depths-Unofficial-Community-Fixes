@@ -11,8 +11,6 @@
     Public Shared nullImg As Image = imgLib.atrs("Clothes").getAt(New Tuple(Of Integer, Boolean, Boolean)(5, False, True))
     Dim sInts() As Integer = {0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0} 'the starting indexes of each catagory
 
-
-
     Sub New(ByVal sex As Boolean, ByRef e As Entity)
         Dim defInd0 = New Tuple(Of Integer, Boolean, Boolean)(0, sex, False)
         Dim defInd1 = New Tuple(Of Integer, Boolean, Boolean)(1, sex, False)
@@ -48,7 +46,7 @@
     Shared Function CreateBMP(ByRef img() As Image) As Bitmap
         Dim bmp As New Bitmap(146, 216)
         Dim g As Graphics = Graphics.FromImage(bmp)
-        If img(0).Size.Height <> 144 Then g.DrawImage(img(0), 0, 0, 146, 216) Else g.DrawImage(img(0), 0, 0, 144, 144)
+        If img(0).Size.Height < 300 Then g.DrawImage(img(0), 0, 0, 146, 216) Else g.DrawImage(img(0), 0, 0, 144, 144)
         For i = 1 To UBound(img)
             If img(i) Is Nothing Then img(i) = CharacterGenerator.picPort.Image
             If img(i).Size.Height <= 144 Then
@@ -89,29 +87,25 @@
     End Function
 
     Function oneLayerImgCheck(ByVal pForm As String, ByVal pClass As String) As Image
-        If pForm.Equals("Dragon") Then
-            Game.picPortrait.BackgroundImage = CreateBMP({Game.picDragon.BackgroundImage})
-            Return Game.picPortrait.BackgroundImage
+        Dim pic = Nothing
+        If pForm.Equals("Dragon") And Not sexBool() Then
+            pic = Game.picDragonM.BackgroundImage
+        ElseIf pForm.Equals("Dragon") And sexBool() Then
+            pic = Game.picDragonF.BackgroundImage
         ElseIf pClass.Equals("Magical Girl​") Then
-            Game.picPortrait.BackgroundImage = CreateBMP({Game.picmgp1.BackgroundImage})
-            Return Game.picPortrait.BackgroundImage
+            pic = Game.picmgp1.BackgroundImage
         ElseIf pForm.Equals("Sheep") Then
-            Game.picPortrait.BackgroundImage = CreateBMP({Game.picSheep.BackgroundImage})
-            Return Game.picPortrait.BackgroundImage
+            pic = Game.picSheep.BackgroundImage
         ElseIf pForm.Equals("Cake") Then
-            Game.picPortrait.BackgroundImage = CreateBMP({Game.picCake.BackgroundImage})
-            Return Game.picPortrait.BackgroundImage
+            pic = Game.picCake.BackgroundImage
         ElseIf pForm.Equals("Frog") Then
-            Game.picPortrait.BackgroundImage = CreateBMP({Game.picFrog.BackgroundImage})
-            Return Game.picPortrait.BackgroundImage
+            pic = Game.picFrog.BackgroundImage
         ElseIf pClass.Equals("Princess​") Then
-            Game.picPortrait.BackgroundImage = CreateBMP({Game.picPrin.BackgroundImage})
-            Return Game.picPortrait.BackgroundImage
+            pic = Game.picPrin.BackgroundImage
         ElseIf pClass.Equals("Bunny Girl​") Then
-            Game.picPortrait.BackgroundImage = CreateBMP({Game.picBun.BackgroundImage})
-            Return Game.picPortrait.BackgroundImage
+            pic = Game.picBun.BackgroundImage
         End If
-        Return Nothing
+        Return pic
     End Function
     Public Function draw()
         portraitUDate()
@@ -149,7 +143,8 @@
     Public Function draw(ByVal solFlag As Boolean, ByVal isPetrified As Boolean, ByVal errorAction As action, ByVal pForm As String, ByVal pClass As String) As Image
         If solFlag Then Return Game.picPortrait.BackgroundImage
 
-        If Not oneLayerImgCheck(pForm, pClass) Is Nothing Then Return oneLayerImgCheck(pForm, pClass)
+        If Not oneLayerImgCheck(pForm, pClass) Is Nothing Then Return CreateBMP({iArr(0), oneLayerImgCheck(pForm, pClass)})
+
 
         If Not solFlag Then portraitUDate()
 
@@ -193,10 +188,10 @@
     Public Sub changeSkinColor(ByVal c As Color)
         skincolor = c
 
-        iArr(2) = portrait.recolor2(imgLib.atrs("Body").getAt(iArrInd(2)), c)
-        iArr(4) = portrait.recolor2(imgLib.atrs("Face").getAt(iArrInd(4)), c)
+        iArr(2) = Portrait.recolor2(imgLib.atrs("Body").getAt(iArrInd(2)), c)
+        iArr(4) = Portrait.recolor2(imgLib.atrs("Face").getAt(iArrInd(4)), c)
         colorEars(c)
-        iArr(7) = portrait.recolor2(imgLib.atrs("Nose").getAt(iArrInd(7)), c)
+        iArr(7) = Portrait.recolor2(imgLib.atrs("Nose").getAt(iArrInd(7)), c)
     End Sub
     Public Sub lustBlushUpdate()
         Select Case Int(ent.lust / 20)

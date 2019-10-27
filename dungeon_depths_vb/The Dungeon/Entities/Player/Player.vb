@@ -273,8 +273,8 @@
         ElseIf s = "Witch" Then
             knownSpells.Add("Turn to Frog")
             If breastSize = -1 Then breastSize = 0
-            inv.add(2, 3)
             inv.add(4, 1)
+            inv.add(117, 1)
             inv.add(166, 1)
             inv.add(167, 1)
             prt.skincolor = Game.cShift(prt.skincolor, Color.ForestGreen, 15)
@@ -350,6 +350,12 @@
         perks.Add("lightsource", -1)    '30
         perks.Add("cupcake", -1)        '31
         perks.Add("stealth", -1)        '32
+        'cursebroker curses
+        perks.Add("copoly", -1)         '33
+        perks.Add("cogreed", -1)        '34
+        perks.Add("corust", -1)         '35
+        perks.Add("comilk", -1)         '36
+        perks.Add("coblind", -1)        '37
     End Sub
     Private Sub initClasses()
         'creates the class dictionary
@@ -844,12 +850,25 @@
 
         Dim stf = perks("slimetf")
         Dim ggtf = perks("googirltf")
+
+        Dim cp = perks("copoly")
+        Dim cg = perks("cogreed")
+        Dim cr = perks("corust")
+        Dim cm = perks("comilk")
+        Dim cb = perks("coblind")
+
         initPerks()
 
         perks("svenom") = sv
         perks("avenom") = av
         perks("slimetf") = stf
         perks("googirltf") = ggtf
+
+        perks("copoly") = cp
+        perks("cogreed") = cg
+        perks("corust") = cr
+        perks("comilk") = cm
+        perks("coblind") = cb
     End Sub
     Public Overrides Sub die(ByRef source As Entity)
         If Game.pnlSaveLoad.Visible = True Then Exit Sub
@@ -871,7 +890,7 @@
         If source.getName.Equals("Shopkeeper") Then
             DeathEffects.ShopkeeperDeath()
             Exit Sub
-        ElseIf source.getName.Equals("Traveling Wizard") Or source.getName.Equals("Traveling Witch") Then
+        ElseIf source.getName.Equals("Shady Wizard") Or source.getName.Equals("Shady Witch") Then
             DeathEffects.SWizDeath()
             Exit Sub
         ElseIf source.getName.Equals("Mindless Bimbo") Then
@@ -1001,10 +1020,6 @@
         If perks("hunger") > -1 And Game.turn Mod 5 = 0 Then
             PerkEffects.hungerEffect()
         End If
-        'clothing curse
-        If perks("slutcurse") > -1 Then
-            needsToUpdatePortrait = Equipment.clothingCurse1()
-        End If
         'slime hair health regen
         If perks("slimehair") > -1 Then
             PerkEffects.slimeHairRegen()
@@ -1086,6 +1101,27 @@
             PerkEffects.ironhideFury()
         End If
 
+        '|CURSES|
+        'clothing curse
+        If perks("slutcurse") > -1 Then
+            needsToUpdatePortrait = Equipment.clothingCurse1()
+        End If
+        'curse of rust
+        If perks("corust") > -1 Then
+            needsToUpdatePortrait = PerkEffects.curseOfRust(Me)
+        End If
+        'curse of milk
+        If perks("comilk") > -1 Then
+            needsToUpdatePortrait = PerkEffects.curseOfMilk(Me)
+        End If
+        'curse of milk
+        If perks("copoly") > -1 Then
+            needsToUpdatePortrait = PerkEffects.curseOfPolymorph(Me)
+        End If
+        'curse of blindness
+        If perks("coblind") > -1 And Not perks("blind") > -1 Then
+            perks("blind") = 1
+        End If
 
         description = CStr(name & " is a " & sex & " " & pForm.name & " " & pClass.name)
         Return needsToUpdatePortrait
@@ -1234,28 +1270,7 @@
         Return True
     End Function
     Sub oneLayerImgCheck(ByRef b As Boolean)
-        If pForm.name.Equals("Dragon") Then
-            Game.picPortrait.BackgroundImage = Portrait.CreateBMP({Game.picDragon.BackgroundImage})
-            b = True
-        ElseIf pClass.name.Equals("Magical Girl​") Then
-            Game.picPortrait.BackgroundImage = Portrait.CreateBMP({Game.picmgp1.BackgroundImage})
-            b = True
-        ElseIf pForm.name.Equals("Sheep") Then
-            Game.picPortrait.BackgroundImage = Portrait.CreateBMP({Game.picSheep.BackgroundImage})
-            b = True
-        ElseIf pForm.name.Equals("Cake") Then
-            Game.picPortrait.BackgroundImage = Portrait.CreateBMP({Game.picCake.BackgroundImage})
-            b = True
-        ElseIf pForm.name.Equals("Frog") Then
-            Game.picPortrait.BackgroundImage = Portrait.CreateBMP({Game.picFrog.BackgroundImage})
-            b = True
-        ElseIf pClass.name.Equals("Princess​") Then
-            Game.picPortrait.BackgroundImage = Portrait.CreateBMP({Game.picPrin.BackgroundImage})
-            b = True
-        ElseIf pClass.name.Equals("Bunny Girl​") Then
-            Game.picPortrait.BackgroundImage = Portrait.CreateBMP({Game.picBun.BackgroundImage})
-            b = True
-        End If
+        If prt.oneLayerImgCheck(pForm.name, pClass.name) Is Nothing Then b = False Else b = True
     End Sub
     Public Sub createP()
         If Not solFlag Then Game.picPortrait.BackgroundImage = prt.draw(solFlag, isPetrified, AddressOf revertToSState, pForm.name, pClass.name)
@@ -1602,6 +1617,11 @@
     Function isUnwilling() As Boolean
         If will > 15 Then Return True
         Return Game.pcUnwilling
+    End Function
+    Function isCursed() As Boolean
+        If perks("slutcurse") > -1 Then Return True
+        If equippedArmor.isCursed Or equippedWeapon.isCursed Or equippedAcce.isCursed Then Return True
+        Return False
     End Function
     Function genDescription()
         Dim out As String = ""

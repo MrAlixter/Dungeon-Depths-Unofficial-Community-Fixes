@@ -67,10 +67,18 @@
         Game.pushLstLog("You drop the " & getName())
         count -= 1
     End Sub
+    Overridable Function damage(ByVal i As Integer) As Boolean
+        durability -= i
+        If durability <= 0 Then
+            break()
+            Return True
+        End If
+        Return False
+    End Function
     Overridable Sub break()
-        Game.pushLstLog("The " & getName() & " breaks!")
-        count -= 1
-        durability = 100
+            Game.pushLstLog("The " & getName() & " breaks!")
+            count -= 1
+            durability = 100
     End Sub
     Overridable Sub remove()
         Game.pushLstLog("The " & getName() & " fades into non-existance")

@@ -38,7 +38,7 @@
         picBunny = Game.picFSBun.BackgroundImage
 
         If speed = Game.player.speed Then speed -= 1
-        title = ""
+        title = " the "
     End Sub
 
     Public Overrides Sub encounter()

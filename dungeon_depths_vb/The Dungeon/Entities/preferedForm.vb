@@ -7,17 +7,20 @@
     Public breastSize As Integer
     Public isSlut As Boolean
     Public earType As Integer
+    Public onComplete As Action
 
-    Public Sub New(ByVal hc As Color, ByVal sc As Color, ByVal fh As Boolean, ByVal f As Boolean, ByVal bs As Integer, ByVal s As Boolean, ByVal et As Integer)
+    Public Sub New(ByVal hc As Color, ByVal sc As Color, ByVal fh As Boolean, ByVal f As Boolean, ByVal bs As Integer, ByVal s As Boolean, ByVal et As Integer,
+                   Optional fhi As Integer = -1, Optional rhi As Integer = -1, Optional oc As Action = Nothing)
         hairColor = hc
         skinColor = sc
         hasFemaleHair = fh
-        fHairInd = Int(Rnd() * 5)
-        rHairInd = Int(Rnd() * 5)
+        If fhi = -1 Then fHairInd = Int(Rnd() * 5) Else fHairInd = fhi
+        If rhi = -1 Then rHairInd = Int(Rnd() * 5) Else rHairInd = rhi
         isFemale = f
         breastSize = bs
         isSlut = s
         earType = et
+        onComplete = oc
     End Sub
     Public Sub New()
         hairColor = Color.FromArgb(255, Int(Rnd() * 125) + 100, Int(Rnd() * 125) + 100, Int(Rnd() * 125) + 100)
@@ -182,12 +185,52 @@
             p.prt.setIAInd(9, 8, False, True)
         End If
 
+        If Not onComplete Is Nothing Then onComplete()
+
         p.createP()
     End Sub
 
     Public Overrides Function ToString() As String
-        Return (hairColor.A & "$" & hairColor.R & "$" & hairColor.G & "$" & hairColor.B & "$" & _
-                skinColor.A & "$" & skinColor.R & "$" & skinColor.G & "$" & skinColor.B & "$" & _
-                hasFemaleHair & "$" & isFemale & "$" & breastSize & "$" & isSlut & "$" & earType)
+        Return (hairColor.A & "$" & hairColor.R & "$" & hairColor.G & "$" & hairColor.B & "$" &
+                skinColor.A & "$" & skinColor.R & "$" & skinColor.G & "$" & skinColor.B & "$" &
+                hasFemaleHair & "$" & isFemale & "$" & breastSize & "$" & isSlut & "$" & earType) '& "$" &
+        'fHairInd & "$" & rHairInd & "$" & onComplete.ToString)
     End Function
+End Class
+
+Public Class SuccMaid
+    Inherits preferedForm
+
+    Public Sub New(ByVal hc As Color, ByVal sc As Color, ByVal fh As Boolean, ByVal f As Boolean, ByVal bs As Integer, ByVal s As Boolean, ByVal et As Integer,
+               Optional fhi As Integer = -1, Optional rhi As Integer = -1, Optional oc As Action = Nothing)
+        hairColor = Color.White
+        skinColor = Color.FromArgb(255, 255, 78, 78)
+        hasFemaleHair = True
+        fHairInd = 26
+        rHairInd = 6
+        isFemale = True
+        breastSize = 2
+        isSlut = True
+        earType = 0
+        onComplete = AddressOf changeEquipment
+    End Sub
+    Sub New()
+        MyBase.New(Color.White, Color.FromArgb(255, 255, 78, 78), True, True, 2, True, 0, 26, 6, AddressOf changeEquipment)
+    End Sub
+
+    Shared Sub changeEquipment()
+        Dim p = Game.player
+
+        If p.inv.item("Maid_Lingerie").count < 1 Then p.inv.add("Maid_Lingerie", 1)
+        Equipment.clothesChange("Maid_Lingerie")
+
+        p.prt.setIAInd(9, 12, True, True)
+        p.prt.setIAInd(12, 2, True, False)
+
+        p.prt.wingInd = 2
+        p.prt.hornInd = 3
+
+        p.pClass = p.classes("Maid")
+        p.pForm = p.forms("Half-Succubus")
+    End Sub
 End Class
