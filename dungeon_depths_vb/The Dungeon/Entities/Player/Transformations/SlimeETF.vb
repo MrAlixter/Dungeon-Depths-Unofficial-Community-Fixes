@@ -1,4 +1,4 @@
-﻿Public Class SlimeETF
+﻿Public NotInheritable Class SlimeETF
     Inherits Transformation
     Sub New(Optional cs As Integer = 2)
         MyBase.New(1, 0, 0, False)
@@ -18,7 +18,7 @@
         p.inv.add("Dissolved_Clothes", 1)
         Equipment.clothesChange("Dissolved_Clothes")
         pushLblEventWithoutLoss("As you take stock of yourself, you notice that your clothing has been partially eaten away by a teal slime that you seem to sweating in small amounts.  This seems like something you are going to need to keep an eye on...")
-        p.createP()
+        p.drawPort()
         If Game.player.perks("slimetf") > -1 Then Game.player.perks("slimetf") += 1
         If Game.player.perks("googirltf") > -1 Then Game.player.perks("googirltf") += 1
     End Sub
@@ -27,7 +27,7 @@
         Dim p As Player = Game.player
 
         p.prt.haircolor = Color.FromArgb(180, 5, 245, 198)
-        p.createP()
+        p.drawPort()
         p.perks("vsslimehair") = 0
         'Author Credit: Marionette
         pushLblEventWithoutLoss("The rogue slime starts moving upwards towards your head, your fingers unable to get a grip on the slippery goo as it works its way up your neck and into your hair. Despite your best attempts you just can’t get the bulk of the goo out. It almost feels like your trying to pull out your own hair... After a few more experimental tugs you confirm that the slime seems to have converted your hair to a much more gooey consistency. ")
@@ -40,7 +40,7 @@
         p.pForm = p.forms("Half-Slime")
         'Author Credit: Marionette
         pushLblEventWithoutLoss("Looking back you see you’ve gotten far enough away to catch your breath, the adrenalin that had driven you on now draining as your left breathing heavily. Too late you remember the Slime had landed a fairly large glob of slime on you as it quickly surges around your body. Your skin starts to tingle as you watch your skin soak in the goo, the color of it changing and even becoming nearly translucent. You are now a half-slime!")
-        p.createP()
+        p.drawPort()
         If Game.player.perks("slimetf") > -1 Then Game.player.perks("slimetf") += 1
     End Sub
     Sub step4()
@@ -52,15 +52,15 @@
 
         p.health = 1
 
-        p.prt.setIAInd(6, 5, True, True)
+        p.prt.setIAInd(pInd.ears, 5, True, True)
         If p.sex.Equals("Male") Then
-            p.prt.setIAInd(9, 5, False, True)
+            p.prt.setIAInd(pInd.eyes, 5, False, True)
         Else
-            p.prt.setIAInd(9, 11, True, True)
+            p.prt.setIAInd(pInd.eyes, 11, True, True)
         End If
-        p.prt.setIAInd(10, 0, True, False)
-        p.prt.setIAInd(13, 0, True, False)
-        p.prt.setIAInd(16, 0, True, False)
+        p.prt.setIAInd(pInd.eyebrows, 0, True, False)
+        p.prt.setIAInd(pInd.cloak, 0, True, False)
+        p.prt.setIAInd(pInd.hat, 0, True, False)
 
         p.pForm = p.forms("Slime")
         Equipment.clothesChange("Naked")
@@ -84,7 +84,7 @@
 
         out += "\A few hours later…\nYour last orgasm is dying off as you lay on the stone floor. You try to pick yourself up and end up flopping wetly to the floor. Confused you look down at your body, realizing that the Slime all around you IS you. The Slime must of filled you up and turned you into a Slime yourself! Focusing on your old form you slowly form yourself into a rough approximation of yourself to the best of your ability. Now back in a much more familiar form you pick gather your gear prepare to face the dungeon once more in your new gooey form. You are now a Slime! (You will restore to this form)"
         pushLblEventWithoutLoss(out)
-        p.createP()
+        p.drawPort()
 
         If Game.player.perks("slimetf") > -1 Then Game.player.perks("slimetf") = -1
 

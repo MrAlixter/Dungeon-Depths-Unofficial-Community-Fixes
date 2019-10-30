@@ -1,6 +1,5 @@
 ﻿Imports System.ComponentModel
-
-<Serializable()> Public Class mFloor
+Public Class mFloor
     Public mBoardWidth As Integer = 60
     Public mBoardHeight As Integer = 60
     Dim coveredBoardSpace As Integer = 0
@@ -115,12 +114,16 @@
             placeKeyChest()
         End If
 
+
+        If floorNumber >= 3 And Int(Rnd() * 20) = 0 Then
+            Dim p = randPoint()
+            addChest(New LoadedChest(p, 5), p)
+        End If
+
         For i = 1 To numChests
             Dim chestPoint = randPoint()
             Dim chest As Chest = Game.baseChest.Create(chestPoint, code)
-            chestList.Add(chest)
-            mBoard(chestPoint.Y, chestPoint.X).ForeColor = Color.FromArgb(45, 45, 45)
-            mBoard(chestPoint.Y, chestPoint.X).Text = "#"
+            addChest(chest, chestPoint)
         Next
 
 
@@ -128,16 +131,21 @@
             mBoard(c.pos.Y, c.pos.X).Text = ""
         Next
     End Sub
+    Sub addChest(ByVal c As Chest, ByVal p As Point)
+        chestList.Add(c)
+        mBoard(p.Y, p.X).ForeColor = Color.FromArgb(45, 45, 45)
+        mBoard(p.Y, p.X).Text = "#"
+    End Sub
     Sub placeTraps()
         trapList.Clear()
         If Game.trapSizeDependence <= 0 Then Game.trapSizeDependence = 1
         Dim numtrap As Integer = CInt(Int(Rnd() * Game.trapFreqRange) + Game.trapFreqMin) * (Math.Sqrt(coveredBoardSpace) / Game.trapSizeDependence)
         For i = 1 To numtrap
             Dim trapPoint = randPoint()
-            Dim trap As New Trap(trapPoint)
-            trapList.Add(trap)
             mBoard(trapPoint.Y, trapPoint.X).ForeColor = Color.FromArgb(45, 45, 45)
             mBoard(trapPoint.Y, trapPoint.X).Text = "+"
+            Dim trap As New Trap(trapPoint)
+            trapList.Add(trap)
         Next
     End Sub
     Function getPossibleNPCs() As Integer()
@@ -167,21 +175,24 @@
 
             Dim sNPC = npcList(possibleNPCs(npcInd))
 
-            sNPC.pos = npcPoint
-
+            addNPC(sNPC, npcPoint)
 
             If floorNumber = 3 Then sNPC.inv.add(53, 1) Else sNPC.inv.item(53).count = 0
-
-            mBoard(npcPoint.Y, npcPoint.X).ForeColor = Color.FromArgb(45, 45, 45)
-            mBoard(npcPoint.Y, npcPoint.X).Text = "$"
-
             placed.Add(npcInd)
         Next
+
+        If Game.player.isCursed And Game.cbrok.pos.X = -1 And Not Game.cbrok.isDead Then addNPC(Game.cbrok, randPoint)
 
         For i = 0 To npcList.Count - 1
             npcPositions.Add(npcList(i).pos)
         Next
     End Sub
+    Sub addNPC(ByRef n As NPC, ByRef npcPoint As Point)
+        n.pos = npcPoint
+        mBoard(npcPoint.Y, npcPoint.X).ForeColor = Color.FromArgb(45, 45, 45)
+        mBoard(npcPoint.Y, npcPoint.X).Text = "$"
+    End Sub
+
     Sub connectRooms(ByVal p1 As Point, ByVal p2 As Point)
         'Connects the entrances/exits of the rooms
         Dim cursor As Point = p1
@@ -932,13 +943,13 @@
         out += "statues%"
         out += statueList.Count - 1 & "%"       '8 + traplist.Count
         For i = 0 To statueList.Count - 1
-            out += statueList(i).ToString & "%" '9 + traplist.Count to 8 + traplist.Count + statueList.Count
+            out += statueList(i).toString & "%" '9 + traplist.Count to 8 + traplist.Count + statueList.Count
         Next
 
         out += "chest%"
         out += chestList.Count - 1 & "%"        '10 + traplist.Count + statueList.Count
         For i = 0 To chestList.Count - 1
-                out += chestList(i).ToString & "%"  '11 + traplist.Count + statueList.Count to 10 + traplist.Count + statueList.Count + chestList.Count
+            out += chestList(i).ToString & "%"  '11 + traplist.Count + statueList.Count to 10 + traplist.Count + statueList.Count + chestList.Count
         Next
 
         out += "beatboss%"

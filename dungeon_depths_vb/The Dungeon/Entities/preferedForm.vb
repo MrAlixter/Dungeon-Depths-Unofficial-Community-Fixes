@@ -72,9 +72,9 @@
     End Sub
 
     Public Function playerMeetsForm(ByRef p As Player)
-        Return p.prt.sexBool = isFemale And p.prt.iArrInd(1).Item2 = hasFemaleHair And
-        p.prt.iArrInd(1).Item1 = rHairInd And p.prt.iArrInd(15).Item1 = fHairInd + 1 And
-        p.breastSize = breastSize And p.prt.iArrInd(6).Item1 = earType And
+        Return p.prt.sexBool = isFemale And p.prt.iArrInd(pInd.rearhair).Item2 = hasFemaleHair And
+        p.prt.iArrInd(pInd.rearhair).Item1 = rHairInd And p.prt.iArrInd(pInd.fronthair).Item1 = fHairInd + 1 And
+        p.breastSize = breastSize And p.prt.iArrInd(pInd.ears).Item1 = earType And
         ((p.perks("slutcurse") > -1 And isSlut) Or (p.perks("slutcurse") = -1 And Not isSlut))
     End Function
 
@@ -87,11 +87,11 @@
         If Not p.prt.skincolor.Equals(skinColor) Then p.changeSkinColor(Game.cShift(p.prt.skincolor, skinColor, 8))
 
         If Int(Rnd() * 3) = 0 Then
-            p.prt.iArrInd(1) = New Tuple(Of Integer, Boolean, Boolean)(rHairInd, hasFemaleHair, False)
-            p.prt.iArrInd(5) = New Tuple(Of Integer, Boolean, Boolean)(rHairInd, hasFemaleHair, False)
+            p.prt.iArrInd(pInd.rearhair) = New Tuple(Of Integer, Boolean, Boolean)(rHairInd, hasFemaleHair, False)
+            p.prt.iArrInd(pInd.midhair) = New Tuple(Of Integer, Boolean, Boolean)(rHairInd, hasFemaleHair, False)
         End If
         If Int(Rnd() * 3) = 0 Then
-            p.prt.setIAInd(15, fHairInd + 1, hasFemaleHair, False)
+            p.prt.setIAInd(pInd.fronthair, fHairInd + 1, hasFemaleHair, False)
         End If
 
         If p.prt.sexBool <> isFemale And Int(Rnd() * 3) = 0 Then
@@ -120,17 +120,17 @@
             End If
         End If
 
-        If Not p.prt.iArrInd(6).Item1 = earType And Int(Rnd() * 3) = 0 Then
-            p.prt.setIAInd(6, earType, isFemale, False)
+        If Not p.prt.iArrInd(pInd.ears).Item1 = earType And Int(Rnd() * 3) = 0 Then
+            p.prt.setIAInd(pInd.ears, earType, isFemale, False)
         End If
 
         If p.prt.sexBool Then
-            p.prt.setIAInd(9, 19, True, True)
+            p.prt.setIAInd(pInd.eyes, 19, True, True)
         Else
-            p.prt.setIAInd(9, 8, False, True)
+            p.prt.setIAInd(pInd.eyes, 8, False, True)
         End If
 
-        p.createP()
+        p.drawPort()
     End Sub
     Public Sub snapShift(ByRef p As Player)
         Randomize()
@@ -140,10 +140,10 @@
         p.changeHairColor(hairColor)
         p.changeSkinColor(skinColor)
 
-        p.prt.setIAInd(1, rHairInd, hasFemaleHair, False)
-        p.prt.setIAInd(5, rHairInd, hasFemaleHair, False)
+        p.prt.setIAInd(pInd.rearhair, rHairInd, hasFemaleHair, False)
+        p.prt.setIAInd(pInd.midhair, rHairInd, hasFemaleHair, False)
 
-        p.prt.setIAInd(15, fHairInd + 1, hasFemaleHair, False)
+        p.prt.setIAInd(pInd.fronthair, fHairInd + 1, hasFemaleHair, False)
 
         If p.prt.sexBool <> isFemale Then
             If p.prt.sexBool Then
@@ -175,19 +175,19 @@
             End If
         End If
 
-        If Not p.prt.iArrInd(6).Item1 = earType Then
-            p.prt.setIAInd(6, earType, isFemale, False)
+        If Not p.prt.iArrInd(pInd.ears).Item1 = earType Then
+            p.prt.setIAInd(pInd.ears, earType, isFemale, False)
         End If
 
         If p.prt.sexBool Then
-            p.prt.setIAInd(9, 19, True, True)
+            p.prt.setIAInd(pInd.eyes, 19, True, True)
         Else
-            p.prt.setIAInd(9, 8, False, True)
+            p.prt.setIAInd(pInd.eyes, 8, False, True)
         End If
 
         If Not onComplete Is Nothing Then onComplete()
 
-        p.createP()
+        p.drawPort()
     End Sub
 
     Public Overrides Function ToString() As String
@@ -224,8 +224,8 @@ Public Class SuccMaid
         If p.inv.item("Maid_Lingerie").count < 1 Then p.inv.add("Maid_Lingerie", 1)
         Equipment.clothesChange("Maid_Lingerie")
 
-        p.prt.setIAInd(9, 12, True, True)
-        p.prt.setIAInd(12, 2, True, False)
+        p.prt.setIAInd(pInd.eyes, 12, True, True)
+        p.prt.setIAInd(pInd.glasses, 2, True, False)
 
         p.prt.wingInd = 2
         p.prt.hornInd = 3

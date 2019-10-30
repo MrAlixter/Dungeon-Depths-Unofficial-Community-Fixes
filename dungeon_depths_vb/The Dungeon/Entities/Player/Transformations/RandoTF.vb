@@ -1,4 +1,4 @@
-﻿Public Class RandoTF
+﻿Public NotInheritable Class RandoTF
     Inherits Transformation
     Sub New()
         MyBase.New(1, 0, 0, False)
@@ -28,7 +28,7 @@
         'assign a random sex
         Randomize()
         Dim r = Int(Rnd() * 2)
-        If r = 0 Then p.sex = "Female" Else  p.sex = "Male"
+        If r = 0 Then p.sex = "Female" Else p.sex = "Male"
 
         'assign random stats
         p.health = 1.0
@@ -71,24 +71,24 @@
 
         'set the rest of the portrait randomly
         r = Int(Rnd() * 7)
-        p.prt.setIAInd(1, r, True, False)
-        p.prt.setIAInd(4, 0, True, False)
-        p.prt.setIAInd(5, r, True, False)
+        p.prt.setIAInd(pInd.rearhair, r, True, False)
+        p.prt.setIAInd(pInd.face, 0, True, False)
+        p.prt.setIAInd(pInd.midhair, r, True, False)
         r = Int(Rnd() * 7)
-        p.prt.setIAInd(3, r, True, False)
-        p.prt.setIAInd(6, 5, True, False)
-        p.prt.setIAInd(7, 0, True, False)
+        p.prt.setIAInd(pInd.clothes, r, True, False)
+        p.prt.setIAInd(pInd.ears, 5, True, False)
+        p.prt.setIAInd(pInd.nose, 0, True, False)
         r = Int(Rnd() * 11)
-        p.prt.setIAInd(8, r, True, False)
+        p.prt.setIAInd(pInd.mouth, r, True, False)
         r = Int(Rnd() * 5)
-        p.prt.setIAInd(9, r, True, True)
-        p.prt.setIAInd(10, 0, True, False)
-        p.prt.setIAInd(11, 0, True, False)
-        p.prt.setIAInd(13, 0, True, False)
-        p.prt.setIAInd(14, 0, True, False)
+        p.prt.setIAInd(pInd.eyes, r, True, True)
+        p.prt.setIAInd(pInd.eyebrows, 0, True, False)
+        p.prt.setIAInd(pInd.facemark, 0, True, False)
+        p.prt.setIAInd(pInd.cloak, 0, True, False)
+        p.prt.setIAInd(pInd.accessory, 0, True, False)
         r = Int(Rnd() * 8) + 1
-        p.prt.setIAInd(15, r, True, False)
-        p.prt.setIAInd(16, 0, True, False)
+        p.prt.setIAInd(pInd.fronthair, r, True, False)
+        p.prt.setIAInd(pInd.hat, 0, True, False)
 
         'clear all player associated lists
         p.createInvPerks()
@@ -104,11 +104,11 @@
         p.inv.invNeedsUDate = True
         p.UIupdate()
 
-        Dim si As Integer = p.sState.iArrInd(3).Item1
+        Dim si As Integer = p.sState.iArrInd(pInd.clothes).Item1
         p.currState.save(p)
         p.pState.save(p)
         p.sState.save(p)
-        p.sState.iArrInd(3) = New Tuple(Of Integer, Boolean, Boolean)(si, p.prt.sexBool, False)
+        p.sState.iArrInd(pInd.clothes) = New Tuple(Of Integer, Boolean, Boolean)(si, p.prt.sexBool, False)
     End Sub
     Sub setLoadout()
         Randomize()

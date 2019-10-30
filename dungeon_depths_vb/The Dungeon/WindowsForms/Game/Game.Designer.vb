@@ -8,6 +8,9 @@ Partial Class Game
         Try
             If disposing AndAlso components IsNot Nothing Then
                 components.Dispose()
+                If Not seenBoardPic Is Nothing Then seenBoardPic.Dispose()
+                If Not savedBoardPic Is Nothing Then savedBoardPic.Dispose()
+                If Not boardPic Is Nothing Then boardPic.Dispose()
             End If
         Finally
             MyBase.Dispose(disposing)
@@ -238,6 +241,10 @@ Partial Class Game
         Me.picCBrok1 = New System.Windows.Forms.PictureBox()
         Me.picCBrok = New System.Windows.Forms.PictureBox()
         Me.picCBrokF = New System.Windows.Forms.PictureBox()
+        Me.picPortOutline = New System.Windows.Forms.PictureBox()
+        Me.picHalfDragon2 = New System.Windows.Forms.PictureBox()
+        Me.picBroodmother = New System.Windows.Forms.PictureBox()
+        Me.picHalfDragon1 = New System.Windows.Forms.PictureBox()
         CType(Me.picEnemy, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me.picNPC, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me.picStatue, System.ComponentModel.ISupportInitialize).BeginInit()
@@ -349,6 +356,10 @@ Partial Class Game
         CType(Me.picCBrok1, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me.picCBrok, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me.picCBrokF, System.ComponentModel.ISupportInitialize).BeginInit()
+        CType(Me.picPortOutline, System.ComponentModel.ISupportInitialize).BeginInit()
+        CType(Me.picHalfDragon2, System.ComponentModel.ISupportInitialize).BeginInit()
+        CType(Me.picBroodmother, System.ComponentModel.ISupportInitialize).BeginInit()
+        CType(Me.picHalfDragon1, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.SuspendLayout()
         '
         'btnUse1
@@ -2702,12 +2713,56 @@ Partial Class Game
         Me.picCBrokF.TabStop = False
         Me.picCBrokF.Visible = False
         '
+        'picPortOutline
+        '
+        Me.picPortOutline.BackgroundImage = CType(resources.GetObject("picPortOutline.BackgroundImage"), System.Drawing.Image)
+        Me.picPortOutline.Location = New System.Drawing.Point(129, 70)
+        Me.picPortOutline.Name = "picPortOutline"
+        Me.picPortOutline.Size = New System.Drawing.Size(15, 15)
+        Me.picPortOutline.TabIndex = 349
+        Me.picPortOutline.TabStop = False
+        Me.picPortOutline.Visible = False
+        '
+        'picHalfDragon2
+        '
+        Me.picHalfDragon2.BackgroundImage = CType(resources.GetObject("picHalfDragon2.BackgroundImage"), System.Drawing.Image)
+        Me.picHalfDragon2.Location = New System.Drawing.Point(66, 112)
+        Me.picHalfDragon2.Name = "picHalfDragon2"
+        Me.picHalfDragon2.Size = New System.Drawing.Size(15, 15)
+        Me.picHalfDragon2.TabIndex = 352
+        Me.picHalfDragon2.TabStop = False
+        Me.picHalfDragon2.Visible = False
+        '
+        'picBroodmother
+        '
+        Me.picBroodmother.BackgroundImage = CType(resources.GetObject("picBroodmother.BackgroundImage"), System.Drawing.Image)
+        Me.picBroodmother.Location = New System.Drawing.Point(87, 112)
+        Me.picBroodmother.Name = "picBroodmother"
+        Me.picBroodmother.Size = New System.Drawing.Size(15, 15)
+        Me.picBroodmother.TabIndex = 351
+        Me.picBroodmother.TabStop = False
+        Me.picBroodmother.Visible = False
+        '
+        'picHalfDragon1
+        '
+        Me.picHalfDragon1.BackgroundImage = CType(resources.GetObject("picHalfDragon1.BackgroundImage"), System.Drawing.Image)
+        Me.picHalfDragon1.Location = New System.Drawing.Point(45, 112)
+        Me.picHalfDragon1.Name = "picHalfDragon1"
+        Me.picHalfDragon1.Size = New System.Drawing.Size(15, 15)
+        Me.picHalfDragon1.TabIndex = 350
+        Me.picHalfDragon1.TabStop = False
+        Me.picHalfDragon1.Visible = False
+        '
         'Game
         '
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Inherit
         Me.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink
         Me.BackColor = System.Drawing.Color.Black
         Me.ClientSize = New System.Drawing.Size(1008, 690)
+        Me.Controls.Add(Me.picHalfDragon2)
+        Me.Controls.Add(Me.picBroodmother)
+        Me.Controls.Add(Me.picHalfDragon1)
+        Me.Controls.Add(Me.picPortOutline)
         Me.Controls.Add(Me.picCBrokF)
         Me.Controls.Add(Me.picCBrok)
         Me.Controls.Add(Me.picCBrok3)
@@ -2998,6 +3053,10 @@ Partial Class Game
         CType(Me.picCBrok1, System.ComponentModel.ISupportInitialize).EndInit()
         CType(Me.picCBrok, System.ComponentModel.ISupportInitialize).EndInit()
         CType(Me.picCBrokF, System.ComponentModel.ISupportInitialize).EndInit()
+        CType(Me.picPortOutline, System.ComponentModel.ISupportInitialize).EndInit()
+        CType(Me.picHalfDragon2, System.ComponentModel.ISupportInitialize).EndInit()
+        CType(Me.picBroodmother, System.ComponentModel.ISupportInitialize).EndInit()
+        CType(Me.picHalfDragon1, System.ComponentModel.ISupportInitialize).EndInit()
         Me.ResumeLayout(False)
         Me.PerformLayout()
 
@@ -3216,4 +3275,8 @@ Partial Class Game
     Friend WithEvents picCBrok1 As System.Windows.Forms.PictureBox
     Friend WithEvents picCBrok As System.Windows.Forms.PictureBox
     Friend WithEvents picCBrokF As System.Windows.Forms.PictureBox
+    Friend WithEvents picPortOutline As System.Windows.Forms.PictureBox
+    Friend WithEvents picHalfDragon2 As System.Windows.Forms.PictureBox
+    Friend WithEvents picBroodmother As System.Windows.Forms.PictureBox
+    Friend WithEvents picHalfDragon1 As System.Windows.Forms.PictureBox
 End Class

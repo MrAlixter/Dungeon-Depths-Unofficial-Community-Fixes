@@ -1,4 +1,4 @@
-﻿Public Class SpotFuseTF
+﻿Public NotInheritable Class SpotFuseTF
     Inherits PolymorphTF
     Sub New()
         MyBase.New()

@@ -2,7 +2,7 @@
 'The Transformation class will be used to handle a (sequence of) tranformation(s) of the player from one "permenant"
 'state to another.
 
-Public Class Transformation
+Public MustInherit Class Transformation
     Implements Updatable
     Protected currStep As Integer
     Protected numSteps As Integer
@@ -16,7 +16,7 @@ Public Class Transformation
 
     'constuctors
     Sub New(n As Integer, tts As Integer, wi As Double, cbs As Boolean)
-        Dim p As player = game.player
+        Dim p As Player = Game.player
         If canBeTFed(p) Then
             p.pState.save(p)
         End If
@@ -176,7 +176,5 @@ Public Class Transformation
     Public Function getNextStep() As Action
         Return nextStep
     End Function
-    Overridable Function getNextStep(ByVal stage As Integer) As action
-        Return Nothing
-    End Function
+    MustOverride Function getNextStep(ByVal stage As Integer) As action
 End Class

@@ -1,4 +1,4 @@
-﻿Public Class MASBimboTF
+﻿Public NotInheritable Class MASBimboTF
     Inherits PolymorphTF
     Sub New()
         MyBase.New()
@@ -34,19 +34,19 @@
         End If
 
         p.prt.haircolor = Color.FromArgb(255, 255, 245, 200)
-        p.prt.setIAInd(1, 14, True, True)
+        p.prt.setIAInd(pInd.rearhair, 14, True, True)
         If p.breastSize < 3 Then p.breastSize = 3
         p.reverseBSRoute()
-        p.prt.setIAInd(4, 0, True, False)
-        p.prt.setIAInd(5, 6, True, True)
-        p.prt.setIAInd(6, 1, True, False)
-        p.prt.setIAInd(7, 0, True, False)
-        p.prt.setIAInd(8, 6, True, True)
-        p.prt.setIAInd(9, 8, True, True)
-        p.prt.setIAInd(10, 0, True, False)
-        p.prt.setIAInd(13, 0, True, False)
-        p.prt.setIAInd(15, 19, True, True)
-        p.prt.setIAInd(16, 0, True, False)
+        p.prt.setIAInd(pInd.face, 0, True, False)
+        p.prt.setIAInd(pInd.midhair, 6, True, True)
+        p.prt.setIAInd(pInd.ears, 1, True, False)
+        p.prt.setIAInd(pInd.nose, 0, True, False)
+        p.prt.setIAInd(pInd.mouth, 6, True, True)
+        p.prt.setIAInd(pInd.eyes, 8, True, True)
+        p.prt.setIAInd(pInd.eyebrows, 0, True, False)
+        p.prt.setIAInd(pInd.cloak, 0, True, False)
+        p.prt.setIAInd(pInd.fronthair, 19, True, True)
+        p.prt.setIAInd(pInd.hat, 0, True, False)
 
         'transformation description push
         Game.pushLblEvent(out)
@@ -55,11 +55,11 @@
         Game.fromCombat()
 
         Dim p As Player = Game.player
-        p.prt.setIAInd(1, 12, True, True)
-        p.prt.setIAInd(5, 17, True, True)
-        p.prt.setIAInd(15, 1, True, False)
-        p.prt.setIAInd(6, 1, p.prt.sexBool, False)
-        p.prt.setIAInd(8, 9, True, True)
+        p.prt.setIAInd(pInd.rearhair, 12, True, True)
+        p.prt.setIAInd(pInd.midhair, 17, True, True)
+        p.prt.setIAInd(pInd.fronthair, 1, True, False)
+        p.prt.setIAInd(pInd.ears, 1, p.prt.sexBool, False)
+        p.prt.setIAInd(pInd.mouth, 9, True, True)
         If p.breastSize > 0 And p.breastSize < 4 Then
             If p.inv.item("Cat_Lingerie").count < 1 Then p.inv.add("Cat_Lingerie", 1)
             Equipment.clothesChange("Cat_Lingerie")
@@ -68,6 +68,6 @@
                           """This is a little curse I've been working on..."" she states, gesturing at your prone body with the tip of her staff.  ""I haven't used the finished version of it on anyone yet, but I have a feeling that you're going to be my perfect little test kitty!""\n\n" &
                           "With that, she flicks her staff your direction, and a tingling sensation erupts throughout your body.  Blushing, you can feel a burning between your legs, and as a lustful haze settles over your weakened mind, the tingling just ... stops.  Confused, you glance behind you at Marissa with an expectant glare.  She, to your surprise, also seems to be confused about this turn of events.  As you begin to pull yourself to your feet, her gaze turns cold and she mutters something about you probably not making a cute kitty anyway before storming off.\n\n" &
                           "As you watch her walk off, part of you wants to get down on your hands and knees and follow her, although the majority is glad this version of Marissa seemed to be so inexperienced.")
-        p.createP()
+        p.drawPort()
     End Sub
 End Class

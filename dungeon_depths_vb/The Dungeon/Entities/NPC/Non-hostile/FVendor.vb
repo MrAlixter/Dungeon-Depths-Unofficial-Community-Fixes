@@ -1,12 +1,12 @@
 ﻿Public Class FVendor
     Inherits ShopNPC
     Sub New()
-        setName("Food Vendor")
-        setHealth(1.0)
-        setMaxHealth(9999)
-        setATK(999)
-        setDEF(99)
-        setSPD(99)
+        name = "Food Vendor"
+        health = 1.0
+        maxHealth = 9999
+        attack = 999
+        defence = 99
+        speed = 99
 
         'Define the inventory
         inv = New Inventory(False)
@@ -29,7 +29,7 @@
         inv.setCount("Tavern_Special", 1)
 
         isShop = True
-        setGold(99999)
+        gold = 99999
         pronoun = "he"
         pPronoun = "his"
         rPronoun = "him"

@@ -1,12 +1,12 @@
 ﻿Public Class ShadyWizard
     Inherits ShopNPC
     Sub New()
-        setName("Shady Wizard")
-        setHealth(1.0)
-        setMaxHealth(9999)
-        setATK(999)
-        setDEF(99)
-        setSPD(99)
+        name = "Shady Wizard"
+        health = (1.0)
+        maxHealth = (9999)
+        attack = (999)
+        defence = (99)
+        speed = (99)
         'Define the inventory
         inv = New Inventory(False)
         'Useables
@@ -36,7 +36,7 @@
         inv.setCount("Scepter_of_Ash", 1)
 
         isShop = True
-        setGold(99999)
+        gold = 99999
         pronoun = "he"
         pPronoun = "his"
         rPronoun = "him"

@@ -23,7 +23,7 @@
 
             Dim pturns = 4
             p.petrify(Color.FromArgb(190, 75, 209, 255), pturns)
-            p.createP()
+            p.drawPort()
             Game.pushLstLog(CStr("The grenade freezes you solid for 4 turns!"))
             Game.pushLblEvent(CStr("As the grenade goes off, you find yourself caught in its icy blast.  You are frozen for 4 turns!"))
         Else

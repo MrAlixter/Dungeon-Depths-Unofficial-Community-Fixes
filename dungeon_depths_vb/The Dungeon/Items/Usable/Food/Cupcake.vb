@@ -14,12 +14,12 @@
     Public Overrides Sub Effect()
         Dim p As Player = Game.player
 
-        If p.perks("cupcake") = -1 Then
-            p.perks("cupcake") = 0
-        ElseIf p.perks("cupcake") > 4 Then
+        If p.perks("cupcake") > 4 Or Game.noRNG Then
             p.ongoingTFs.Add(New LolitaSTF())
             p.update()
             p.perks("cupcake") = -1
+        ElseIf p.perks("cupcake") = -1 Then
+            p.perks("cupcake") = 0
         Else
             p.perks("cupcake") += 1
         End If

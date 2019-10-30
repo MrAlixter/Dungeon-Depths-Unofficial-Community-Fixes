@@ -11,6 +11,6 @@
         Else
             Game.pushLblEvent("Nothing happens")
         End If
-        p.createP()
+        p.drawPort()
     End Sub
 End Class

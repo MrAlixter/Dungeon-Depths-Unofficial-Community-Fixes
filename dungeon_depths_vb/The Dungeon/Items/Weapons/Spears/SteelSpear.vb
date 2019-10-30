@@ -13,7 +13,7 @@
         MyBase.aBoost = 22
         MyBase.sBoost = -5
         MyBase.count = 0
-        MyBase.value = 1000
+        MyBase.value = 1540
         MyBase.weight = 9
     End Sub
 End Class

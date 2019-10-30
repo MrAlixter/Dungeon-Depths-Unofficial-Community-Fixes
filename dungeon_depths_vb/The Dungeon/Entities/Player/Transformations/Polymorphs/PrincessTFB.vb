@@ -1,4 +1,4 @@
-﻿Public Class PrincessTFB
+﻿Public NotInheritable Class PrincessTFB
     Inherits PolymorphTF
     Sub New()
         MyBase.New()

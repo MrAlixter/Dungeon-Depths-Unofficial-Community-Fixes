@@ -1,4 +1,4 @@
-﻿Public Class HGorgonTF
+﻿Public NotInheritable Class HGorgonTF
     Inherits Transformation
     Sub New()
         MyBase.New(1, 0, 0, False)
@@ -21,11 +21,11 @@
         'transformation
         If p.sex.Equals("Male") Then p.MtF()
         p.changeHairColor(Color.FromArgb(255, 92, 154, 1))
-        p.prt.setIAInd(1, 20, True, True)
-        p.prt.setIAInd(5, 22, True, True)
-        p.prt.setIAInd(15, 21, True, True)
-        p.prt.setIAInd(9, 30, True, True)
-        p.prt.setIAInd(10, 5, True, False)
+        p.prt.setIAInd(pInd.rearhair, 20, True, True)
+        p.prt.setIAInd(pInd.midhair, 22, True, True)
+        p.prt.setIAInd(pInd.fronthair, 21, True, True)
+        p.prt.setIAInd(pInd.eyes, 30, True, True)
+        p.prt.setIAInd(pInd.eyebrows, 5, True, False)
 
         p.pForm = p.forms("Half-Gorgon")
 

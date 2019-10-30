@@ -1,4 +1,4 @@
-﻿Public Class MagGirlTF
+﻿Public NotInheritable Class MagGirlTF
     Inherits Transformation
     Sub New(n As Integer, tts As Integer, wi As Double, cbs As Boolean)
         MyBase.New(n, tts, wi, cbs)
@@ -18,7 +18,7 @@
         If p.sex = "Male" Then
             p.sex = "Female"
         End If
-        p.prt.setIAInd(16, Portrait.imgLib.atrs("Hat").getF.Count - 3, True, False)
+        p.prt.setIAInd(pInd.hat, Portrait.imgLib.atrs("Hat").getF.Count - 3, True, False)
         Game.pushLblEvent(out, AddressOf step2)
 
 
@@ -33,17 +33,17 @@
             p.magGState.load(p)
         Else
             p.breastSize = 2
-            p.prt.setIAInd(1, 7, True, True)
-            p.prt.setIAInd(3, 12, True, True)
-            p.prt.setIAInd(4, 0, True, False)
-            p.prt.setIAInd(5, 7, True, True)
-            p.prt.setIAInd(7, 0, True, False)
-            p.prt.setIAInd(8, 7, True, True)
-            p.prt.setIAInd(9, 9, True, True)
-            p.prt.setIAInd(10, 0, True, False)
-            p.prt.setIAInd(13, 0, True, False)
-            p.prt.setIAInd(15, 8, True, True)
-            p.prt.setIAInd(16, 0, True, False)
+            p.prt.setIAInd(pInd.rearhair, 7, True, True)
+            p.prt.setIAInd(pInd.clothes, 12, True, True)
+            p.prt.setIAInd(pInd.face, 0, True, False)
+            p.prt.setIAInd(pInd.midhair, 7, True, True)
+            p.prt.setIAInd(pInd.nose, 0, True, False)
+            p.prt.setIAInd(pInd.mouth, 7, True, True)
+            p.prt.setIAInd(pInd.eyes, 9, True, True)
+            p.prt.setIAInd(pInd.eyebrows, 0, True, False)
+            p.prt.setIAInd(pInd.cloak, 0, True, False)
+            p.prt.setIAInd(pInd.fronthair, 8, True, True)
+            p.prt.setIAInd(pInd.hat, 0, True, False)
             p.reverseBSRoute()
             p.magGState.save(p)
             p.magGState.initFlag = True
@@ -60,7 +60,7 @@
         Game.pushLstLog("'Heartblast Starcannon' spell learned!")
         Game.lblEvent.Visible = False
         p.canMoveFlag = True
-        p.createP()
+        p.drawPort()
         stopTF()
     End Sub
 
@@ -72,10 +72,10 @@
         p.reverseBSRoute()
 
         Equipment.clothesChange("Naked")
-        p.prt.setIAInd(1, 7, True, True)
-        p.prt.setIAInd(6, 0, True, False)
-        p.prt.setIAInd(5, 7, True, True)
-        p.prt.setIAInd(15, 7, True, True)
+        p.prt.setIAInd(pInd.rearhair, 7, True, True)
+        p.prt.setIAInd(pInd.ears, 0, True, False)
+        p.prt.setIAInd(pInd.midhair, 7, True, True)
+        p.prt.setIAInd(pInd.fronthair, 7, True, True)
     End Sub
     Shared Sub chkForMagGirlRevert(ByRef p As Player)
         If Not p.pClass.name.Equals("Magical Girl") Then Exit Sub

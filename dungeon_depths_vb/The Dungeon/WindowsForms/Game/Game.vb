@@ -18,6 +18,7 @@ Public Class Game
 
     Public mPics(,) As PictureBox       '(NOT SAVED)
 
+    Public seed As String = "noseed"
     Public mBoardWidth As Integer = 60
     Public mBoardHeight As Integer = 60
     Public chestFreqMin As Integer = 3
@@ -93,6 +94,7 @@ Public Class Game
     Public screenSize As String
     Public noImg As Boolean
     Public pcUnwilling As Boolean
+    Public noRNG As Boolean
 
     Dim debugWindow As Debug_Window
     Public shopMenu As ShopV2
@@ -100,9 +102,10 @@ Public Class Game
     '|STARTUP|
     Private Sub Form1_Load(sender As Object, e As EventArgs) Handles Me.Load
         'Form1_Load handles the loading of the form
-        If Not IO.File.Exists("sett.ing") Then createSettings()
+        If Not IO.File.Exists("sett.ing") Then Settings.makeNewSetting()
         If Not IO.File.Exists("configs.ave") Then createConfigs()
-
+        If Not IO.Directory.Exists("presets") Then IO.Directory.CreateDirectory("presets")
+        If Not IO.Directory.Exists("saves") Then IO.Directory.CreateDirectory("saves")
         Dim r As System.IO.StreamReader
         r = IO.File.OpenText("sett.ing")
         screenSize = r.ReadLine
@@ -218,14 +221,6 @@ Public Class Game
         w.WriteLine("W")
         w.Close()
     End Sub
-    Sub createSettings()
-        Dim w As System.IO.StreamWriter
-        w = System.IO.File.CreateText("sett.ing")
-        w.WriteLine("Large")
-        w.WriteLine(False)
-        w.WriteLine(False)
-        w.Close()
-    End Sub
     Sub newGame()
         'newGame prepares the application at the start of a new game
         combatmode = False
@@ -254,8 +249,10 @@ Public Class Game
         If int < 1 Then int = 1
         updateList.add(player, int)
 
-        Dim genSet As New GeneratorSettings("{broke atm}")
+        seed = mFloor.genRNDLVLCode
+        Dim genSet As New GeneratorSettings(seed)
         genSet.ShowDialog()
+        seed = genSet.txtSeed.Text
         mBoardWidth = genSet.boxWidth.Value
         mBoardHeight = genSet.boxHeight.Value
         chestFreqMin = genSet.boxChestFreqMin.Value
@@ -1076,7 +1073,7 @@ Public Class Game
         Equipment.equipArmor(subString)
 
         'updates the player, the stat display, and the portrait before the form closes
-        player.createP()
+        player.drawPort()
         player.UIupdate()
 
     End Sub
@@ -1086,7 +1083,7 @@ Public Class Game
         Equipment.equipAcce(subString)
 
         'updates the player, the stat display, and the portrait before the form closes
-        player.createP()
+        player.drawPort()
         player.UIupdate()
 
     End Sub
@@ -1096,7 +1093,7 @@ Public Class Game
         Equipment.equipWeapon(subString)
 
         'updates the player, the stat display, and the portrait before the form closes
-        player.createP()
+        player.drawPort()
         player.UIupdate()
 
     End Sub
@@ -1457,16 +1454,16 @@ Public Class Game
             MsgBox(keyspresed)
             If keyspresed = "asss" Then
                 player.MtF()
-                player.createP()
+                player.drawPort()
             ElseIf keyspresed = "daaa" Then
                 player.FtM()
-                player.createP()
+                player.drawPort()
             ElseIf keyspresed = "wawa" Then
                 player.be()
-                player.createP()
+                player.drawPort()
             ElseIf keyspresed = "sasa" Then
                 player.bs()
-                player.createP()
+                player.drawPort()
             ElseIf keyspresed = "seee" Then
                 For indY = -currFloor.mBoardHeight To currFloor.mBoardHeight
                     For indX = -currFloor.mBoardWidth To currFloor.mBoardWidth
@@ -1899,7 +1896,7 @@ Public Class Game
         writer.Close()
         pushLblEvent("Game successfully saved!")
         player.solFlag = False
-        player.createP()
+        player.drawPort()
     End Sub
     Sub loadSave(ByVal a As String)
         'loadSave handles the loading of a game
@@ -2035,7 +2032,7 @@ Public Class Game
         End If
 
         pushLblEvent("Game successfully loaded!")
-        player.createP()
+        player.drawPort()
 
         updateLoadbar(99)
         boardWorker.CancelAsync()
@@ -2192,7 +2189,7 @@ Public Class Game
                     iarr(i) = Portrait.imgLib.mAttributes(i)(id.Item1)
                 End If
                 ids(i) = id
-                If i = 6 And (id.Item1 = 0 Or id.Item1 = 3) Then iarr(6) = CharacterGenerator.recolor2(iarr(6), skincolor)
+                If i = 6 And (id.Item1 = 0 Or id.Item1 = 3) Then iarr(pind.ears) = CharacterGenerator.recolor2(iarr(pind.ears), skincolor)
             Next
             changeHairColor(haircolor, ids, iarr)
             changeSkinColor(skincolor, ids, iarr)
@@ -2642,7 +2639,7 @@ Public Class Game
         btnLook.Enabled = False
     End Sub
     Private Sub btnEXM_Click(sender As Object, e As EventArgs) Handles btnEXM.Click
-        doLblEventOnClose()
+        If Not lblEventOnClose Is Nothing Then Exit Sub
         pushLstLog(player.description)
         toDesc()
     End Sub
@@ -2989,16 +2986,16 @@ Public Class Game
         Return Color.FromArgb(a, r, g, b)
     End Function
     Shared Sub changeHairColor(ByVal c As Color, ByVal iarrind() As Tuple(Of Integer, Boolean, Boolean), ByRef iarr As Image())
-        iarr(1) = CharacterGenerator.recolor(Portrait.imgLib.atrs("RearHair2").getAt(iarrind(1)), c)
-        iarr(5) = CharacterGenerator.recolor(Portrait.imgLib.atrs("RearHair1").getAt(iarrind(5)), c)
-        iarr(10) = CharacterGenerator.recolor(Portrait.imgLib.atrs("Eyebrows").getAt(iarrind(10)), c)
-        iarr(15) = CharacterGenerator.recolor(Portrait.imgLib.atrs("FrontHair").getAt(iarrind(15)), c)
+        iarr(pind.rearhair) = CharacterGenerator.recolor(Portrait.imgLib.atrs("RearHair2").getAt(iArrInd(pInd.rearhair)), c)
+        iarr(pind.midhair) = CharacterGenerator.recolor(Portrait.imgLib.atrs("RearHair1").getAt(iArrInd(pInd.midhair)), c)
+        iarr(pind.eyebrows) = CharacterGenerator.recolor(Portrait.imgLib.atrs("Eyebrows").getAt(iArrInd(pInd.eyebrows)), c)
+        iarr(pInd.fronthair) = CharacterGenerator.recolor(Portrait.imgLib.atrs("FrontHair").getAt(iarrind(pInd.fronthair)), c)
     End Sub
     Shared Sub changeSkinColor(ByVal c As Color, ByVal iarrind() As Tuple(Of Integer, Boolean, Boolean), ByRef iarr As Image())
-        iarr(2) = CharacterGenerator.recolor2(Portrait.imgLib.atrs("Body").getAt(iarrind(2)), c)
-        iarr(4) = CharacterGenerator.recolor2(Portrait.imgLib.atrs("Face").getAt(iarrind(4)), c)
-        iarr(6) = CharacterGenerator.recolor2(Portrait.imgLib.atrs("Ears").getAt(iarrind(6)), c)
-        iarr(7) = CharacterGenerator.recolor2(Portrait.imgLib.atrs("Nose").getAt(iarrind(7)), c)
+        iarr(pind.body) = CharacterGenerator.recolor2(Portrait.imgLib.atrs("Body").getAt(iArrInd(pInd.body)), c)
+        iarr(pind.face) = CharacterGenerator.recolor2(Portrait.imgLib.atrs("Face").getAt(iArrInd(pInd.face)), c)
+        iarr(pind.ears) = CharacterGenerator.recolor2(Portrait.imgLib.atrs("Ears").getAt(iArrInd(pInd.ears)), c)
+        iarr(pind.nose) = CharacterGenerator.recolor2(Portrait.imgLib.atrs("Nose").getAt(iArrInd(pInd.nose)), c)
     End Sub
     'load bar functions
     Public Sub initLoadBar()
@@ -3052,11 +3049,11 @@ Public Class Game
         End If
         lblLoadMsg.Visible = False
         player.canMoveFlag = True
-        player.createP()
+        player.drawPort()
     End Sub
     Public Sub ppw_DoWork(ByVal sender As Object, ByVal e As DoWorkEventArgs)
         Dim worker As BackgroundWorker = CType(sender, BackgroundWorker)
-        player.createP()
+        player.drawPort()
     End Sub
     'cost display for spells and abilities
     Private Sub cboxNPCMG_SelectedIndexChanged(sender As Object, e As EventArgs) Handles cboxNPCMG.SelectedIndexChanged

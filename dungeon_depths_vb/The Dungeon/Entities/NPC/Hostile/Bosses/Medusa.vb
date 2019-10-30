@@ -4,10 +4,10 @@
     Dim pIsBlindCt = 3
     Sub New()
         name = "Medusa, Gorgon of Myth"
-        setMaxHealth(200)
-        setATK(50)
-        setDEF(35)
-        setSPD(40)
+        maxHealth = 200
+        attack = 50
+        defence = 35
+        speed = 40
 
         inv.setCount("Omni_Charm", 1)
 

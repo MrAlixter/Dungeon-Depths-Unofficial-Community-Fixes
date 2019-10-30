@@ -1,20 +1,22 @@
 ﻿Public Class CBrok
     Inherits ShopNPC
     Sub New()
-        setName("Curse Broker")
-        setHealth(1.0)
-        setMaxHealth(99999)
-        setATK(99999)
-        setDEF(99999)
-        setSPD(99999)
+        name = "Curse Broker"
+        health = 1.0
+        maxHealth = 99999
+        attack = 99999
+        defence = 99999
+        speed = 99999
 
         'Define the inventory
         inv = New Inventory(False)
         'Useables
         inv.setCount("Anti_Curse_Tag", 1)
+        inv.setCount("Magical_Girl_Wand​", 1)
+        inv.setCount(174, 1)
 
         isShop = True
-        setGold(99999)
+        gold = 99999
         pronoun = "they"
         pPronoun = "their"
         rPronoun = "them"
@@ -104,7 +106,7 @@
         If Int(Rnd() * 5) = 0 Then
             p.breastSize = 6
             Game.pushLstLog("You've been afflicted with the curse of Tits!")
-            p.createP()
+            p.drawPort()
         End If
         'Servitude
         If Int(Rnd() * 5) = 80 Then

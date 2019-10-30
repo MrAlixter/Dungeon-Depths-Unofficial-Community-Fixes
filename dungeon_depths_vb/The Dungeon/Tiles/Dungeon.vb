@@ -11,7 +11,9 @@
     Public Sub New()
         Randomize()
 
-        For i = 0 To 10
+        floorCodes.Add(mFloor.genRNDLVLCode)
+        floorCodes.Add(Game.seed)
+        For i = 2 To 10
             floorCodes.Add(mFloor.genRNDLVLCode)
         Next
 

@@ -1,4 +1,4 @@
-﻿Public Class NekoTF
+﻿Public NotInheritable Class NekoTF
     Inherits Transformation
 
     Sub New(n As Integer, tts As Integer, wi As Double, cbs As Boolean)
@@ -15,29 +15,29 @@
 
     Sub step1()
         Dim p As player = game.player
-        p.prt.setIAInd(6, 1, p.prt.sexBool, False)
+        p.prt.setIAInd(pInd.ears, 1, p.prt.sexBool, False)
         Game.pushLblCombatEvent("Your ears twitch, becoming feline while Marissa gives you a malicious grin.  ""I'm sure you tell where this is going,"" she giggles." & vbCrLf & "  You now have cat ears!")
         p.lust += 5
         p.will -= 1
     End Sub
     Sub step2()
         Dim p As player = game.player
-        p.prt.setIAInd(4, 0, True, False)
+        p.prt.setIAInd(pInd.face, 0, True, False)
         Game.pushLblCombatEvent("Your facial structure softens, and now you have a feminine face!")
         p.lust += 5
     End Sub
     Sub step3()
         Dim p As player = game.player
-        p.prt.setIAInd(1, 12, True, True)
-        p.prt.setIAInd(5, 17, True, True)
-        p.prt.setIAInd(15, 1, True, False)
+        p.prt.setIAInd(pInd.rearhair, 12, True, True)
+        p.prt.setIAInd(pInd.midhair, 17, True, True)
+        p.prt.setIAInd(pInd.fronthair, 1, True, False)
         p.will -= 1
         Game.pushLblCombatEvent("Your hair grows down to your ass, straightening out as it lengthens.  You now have long, straight hair!")
     End Sub
     Sub step4()
         Dim p As player = game.player
-        p.prt.setIAInd(7, 0, True, False)
-        p.prt.setIAInd(9, 13, True, True)
+        p.prt.setIAInd(pInd.nose, 0, True, False)
+        p.prt.setIAInd(pInd.eyes, 13, True, True)
         Game.pushLblCombatEvent("You wince and close your eye as a burning sensation flows through them. You now have kitten eyes!")
         p.lust += 5
     End Sub
@@ -45,7 +45,7 @@
         Dim p As player = game.player
         If Not p.prt.sexBool Then
             p.MtF()
-            p.prt.setIAInd(9, 13, True, True)
+            p.prt.setIAInd(pInd.eyes, 13, True, True)
             Game.pushLblCombatEvent("Your body slims down, and your chest inlates, giving you average sized breasts.  Soon after, your cock and balls shift into a vagina. You are now female!")
         Else
             be()
@@ -62,8 +62,8 @@
         End If
 
         be()
-        p.prt.setIAInd(3, 40, True, True)
-        p.prt.setIAInd(8, 9, True, True)
+        p.prt.setIAInd(pInd.clothes, 40, True, True)
+        p.prt.setIAInd(pInd.mouth, 9, True, True)
         p.will -= 2
         Equipment.clothesChange("Cat_Lingerie")
         Game.pushLblCombatEvent("Your tits expand, your clothes shift, and you feel your will grow weaker. You are now permenantly a cat girl!  Soon you will be Marissa's pet! ")
@@ -73,11 +73,11 @@
         Equipment.weaponChange("Fists")
         Equipment.clothesChange("Cat_Lingerie")
         be()
-        p.prt.setIAInd(1, 12, True, True)
-        p.prt.setIAInd(5, 17, True, True)
-        p.prt.setIAInd(15, 1, True, False)
-        p.prt.setIAInd(3, 40, True, True)
-        p.prt.setIAInd(8, 9, True, True)
+        p.prt.setIAInd(pInd.rearhair, 12, True, True)
+        p.prt.setIAInd(pInd.midhair, 17, True, True)
+        p.prt.setIAInd(pInd.fronthair, 1, True, False)
+        p.prt.setIAInd(pInd.clothes, 40, True, True)
+        p.prt.setIAInd(pInd.mouth, 9, True, True)
         Game.pushLblCombatEvent("Your hair grows down to your ass, straightening out as it lengthens.  You now have long, straight hair!  Your tits expand, your clothes shift, and you feel your will grow weaker. You are now a cat girl!  Soon you will be Marissa's pet! ")
     End Sub
     Sub step7()
@@ -87,10 +87,10 @@
                 p.MtF()
                 be()
             End If
-            p.prt.setIAInd(1, 12, True, True)
-            p.prt.setIAInd(5, 17, True, True)
-            p.prt.setIAInd(15, 1, True, False)
-            p.prt.setIAInd(8, 9, True, True)
+            p.prt.setIAInd(pInd.rearhair, 12, True, True)
+            p.prt.setIAInd(pInd.midhair, 17, True, True)
+            p.prt.setIAInd(pInd.fronthair, 1, True, False)
+            p.prt.setIAInd(pInd.mouth, 9, True, True)
         End If
         p.pClass = p.classes("Kitty")
         be()

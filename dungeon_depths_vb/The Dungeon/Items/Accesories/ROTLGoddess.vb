@@ -27,7 +27,7 @@
     Public Overrides Sub use()
         MyBase.use()
         If Not Equipment.clothingCurse1 Then Game.pushLblEvent("While the ring glows a little, nothing seems to happen.")
-        Game.player.createP()
+        Game.player.drawPort()
     End Sub
     Public Overrides Sub onEquip()
         Game.player.perks("rotlg") = 1
@@ -37,6 +37,6 @@
     Public Overrides Sub onUnequip()
         Game.player.perks("rotlg") = -1
         Equipment.antiClothingCurse()
-        Game.player.createP()
+        Game.player.drawPort()
     End Sub
 End Class

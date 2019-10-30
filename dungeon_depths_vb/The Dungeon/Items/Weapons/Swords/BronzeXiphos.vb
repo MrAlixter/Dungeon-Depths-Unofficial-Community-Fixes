@@ -7,7 +7,8 @@
     'lust applies
     Sub New()
         MyBase.setName("Bronze_Xiphos")
-        MyBase.setDesc("A neat curved double-edged blade forged from bronze. +25 ATK")
+        MyBase.setDesc("A neat curved double-edged blade forged from bronze." & vbcrlf &
+		               "+25 ATK")
         id = 23
         tier = 3
         MyBase.setUsable(False)

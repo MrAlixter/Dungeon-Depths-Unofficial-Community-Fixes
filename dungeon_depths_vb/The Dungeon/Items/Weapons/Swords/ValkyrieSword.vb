@@ -17,7 +17,7 @@
         If Not Game.player.pClass.name.Equals("Valkyrie") Then
             Dim valkyrieTF = New ValkyrieTF2(1, 0, 0, False)
             valkyrieTF.step1()
-            Game.player.createP()
+            Game.player.drawPort()
         End If
     End Sub
     Public Overrides Sub onUnequip()

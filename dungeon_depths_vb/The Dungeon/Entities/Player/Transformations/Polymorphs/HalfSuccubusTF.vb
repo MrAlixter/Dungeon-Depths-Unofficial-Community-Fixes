@@ -1,4 +1,4 @@
-﻿Public Class HalfSuccubusTF
+﻿Public NotInheritable Class HalfSuccubusTF
     Inherits Transformation
     Sub New()
         MyBase.New(1, 0, 0, False)
@@ -30,15 +30,15 @@
             p.breastSize = Int(Rnd() * 3) + 1
             out += " Your body becomes daintier, and you are soon fully female."
         End If
-        p.prt.setIAInd(1, 9, True, True)
-        p.prt.setIAInd(4, 0, True, False)
-        p.prt.setIAInd(5, 9, True, True)
-        p.prt.setIAInd(7, 0, True, False)
-        p.prt.setIAInd(9, 19, True, True)
-        p.prt.setIAInd(10, 0, True, False)
-        p.prt.setIAInd(13, 0, True, False)
-        p.prt.setIAInd(15, 13, True, True)
-        p.prt.setIAInd(16, 0, True, False)
+        p.prt.setIAInd(pInd.rearhair, 9, True, True)
+        p.prt.setIAInd(pInd.face, 0, True, False)
+        p.prt.setIAInd(pInd.midhair, 9, True, True)
+        p.prt.setIAInd(pInd.nose, 0, True, False)
+        p.prt.setIAInd(pInd.eyes, 19, True, True)
+        p.prt.setIAInd(pInd.eyebrows, 0, True, False)
+        p.prt.setIAInd(pInd.cloak, 0, True, False)
+        p.prt.setIAInd(pInd.fronthair, 13, True, True)
+        p.prt.setIAInd(pInd.hat, 0, True, False)
         p.prt.wingInd = 2
 
         'transformation description push

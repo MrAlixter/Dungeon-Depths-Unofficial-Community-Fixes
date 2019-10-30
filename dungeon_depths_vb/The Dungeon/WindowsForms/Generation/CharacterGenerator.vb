@@ -114,13 +114,13 @@
         End If
         Game.player.setClassLoadout(ComboBox2.Text)
 
-        CommonClothes.bsizeneg1 = New Tuple(Of Integer, Boolean, Boolean)(CInt(portrait.iArrInd(3).Item1), False, False)
-        CommonClothes.bsize1 = New Tuple(Of Integer, Boolean, Boolean)(CInt(portrait.iArrInd(3).Item1), True, False)
-        If portrait.iArrInd(3).Item1 < 5 Then
-            CommonClothes.bsize2 = New Tuple(Of Integer, Boolean, Boolean)(portrait.imgLib.atrs("Clothes").osf(CInt(portrait.iArrInd(3).Item1) + 99), True, False)
-        ElseIf portrait.iArrInd(3).Item1 = 5 Then
+        CommonClothes.bsizeneg1 = New Tuple(Of Integer, Boolean, Boolean)(CInt(portrait.iArrInd(pInd.clothes).Item1), False, False)
+        CommonClothes.bsize1 = New Tuple(Of Integer, Boolean, Boolean)(CInt(portrait.iArrInd(pInd.clothes).Item1), True, False)
+        If portrait.iArrInd(pInd.clothes).Item1 < 5 Then
+            CommonClothes.bsize2 = New Tuple(Of Integer, Boolean, Boolean)(portrait.imgLib.atrs("Clothes").osf(CInt(portrait.iArrInd(pInd.clothes).Item1) + 99), True, False)
+        ElseIf portrait.iArrInd(pInd.clothes).Item1 = 5 Then
             CommonClothes.bsize2 = New Tuple(Of Integer, Boolean, Boolean)(portrait.imgLib.atrs("Clothes").osf(123), True, True)
-        ElseIf portrait.iArrInd(3).Item1 = 6 Then
+        ElseIf portrait.iArrInd(pInd.clothes).Item1 = 6 Then
             CommonClothes.bsize2 = New Tuple(Of Integer, Boolean, Boolean)(portrait.imgLib.atrs("Clothes").osf(124), True, True)
         Else
             CommonClothes.bsize2 = Nothing
@@ -151,8 +151,8 @@
             If currAttribute.Equals(defImgLib.atrs("RearHair2")) Then
                 Dim ind As Tuple(Of Integer, Boolean, Boolean) = New Tuple(Of Integer, Boolean, Boolean)(pnlBody.Controls.IndexOf(sender), portrait.sexBool, False)
 
-                portrait.setIAInd(1, ind)
-                portrait.setIAInd(5, ind)
+                portrait.setIAInd(pInd.rearhair, ind)
+                portrait.setIAInd(pInd.midhair, ind)
 
                 picPort.BackgroundImage = portrait.draw()
                 Exit Sub
@@ -626,7 +626,7 @@
     End Sub
     'sex Selection buttons
     Private Sub btnMale_Click(sender As Object, e As EventArgs) Handles btnMale.Click
-        portrait.setIAInd(2, 0, False, False)
+        portrait.setIAInd(pInd.body, 0, False, False)
         btnBody_Click(sender, e)
 
         btnFemale.Enabled = True
@@ -637,7 +637,7 @@
         picPort.BackgroundImage = portrait.draw
     End Sub
     Private Sub btnFemale_Click(sender As Object, e As EventArgs) Handles btnFemale.Click
-        portrait.setIAInd(2, 0, True, False)
+        portrait.setIAInd(pInd.body, 0, True, False)
         btnBody_Click(sender, e)
 
         btnMale.Enabled = True
@@ -687,23 +687,23 @@
         Randomize()
 
         Dim r As Integer = Int(Rnd() * 7)
-        portrait.setIAInd(1, r, portrait.sexBool, False)
-        portrait.setIAInd(5, r, portrait.sexBool, False)
+        portrait.setIAInd(pInd.rearhair, r, portrait.sexBool, False)
+        portrait.setIAInd(pInd.midhair, r, portrait.sexBool, False)
 
         r = Int(Rnd() * 7)
-        portrait.setIAInd(3, r, portrait.sexBool, False)
+        portrait.setIAInd(pInd.clothes, r, portrait.sexBool, False)
 
         r = Int(Rnd() * 4)
-        portrait.setIAInd(6, r, portrait.sexBool, False)
+        portrait.setIAInd(pInd.ears, r, portrait.sexBool, False)
 
         r = Int(Rnd() * 11)
-        portrait.setIAInd(8, r, portrait.sexBool, False)
+        portrait.setIAInd(pInd.mouth, r, portrait.sexBool, False)
 
         r = Int(Rnd() * 9)
-        portrait.setIAInd(9, r, portrait.sexBool, False)
+        portrait.setIAInd(pInd.eyes, r, portrait.sexBool, False)
 
         r = Int(Rnd() * 8) + 1
-        portrait.setIAInd(15, r, portrait.sexBool, False)
+        portrait.setIAInd(pInd.fronthair, r, portrait.sexBool, False)
 
         changeHC(Color.FromArgb(255, Int(Rnd() * 125) + 100, Int(Rnd() * 125) + 100, Int(Rnd() * 125) + 100))
 

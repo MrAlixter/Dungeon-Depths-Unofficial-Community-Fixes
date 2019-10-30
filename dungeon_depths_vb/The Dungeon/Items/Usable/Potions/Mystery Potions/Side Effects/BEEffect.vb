@@ -7,6 +7,6 @@
             p.pState.save(p)
         End If
         Game.pushLblEvent("You breasts tingle plesently . . .")
-        p.createP()
+        p.drawPort()
     End Sub
 End Class

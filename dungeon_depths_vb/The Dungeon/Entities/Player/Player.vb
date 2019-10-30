@@ -194,7 +194,7 @@
 
         turnCt = Game.turn
 
-        createP()
+        drawPort()
         magicRoute()
         specialRoute()
         bsizeroute()
@@ -214,8 +214,8 @@
     '|CHARACTER CREATION/INITIALIZATION|
     Private Sub setStartingAccessory()
         'assigns an accessory based on the created player portrait
-        If prt.iArrInd(14).Item2 Then
-            Select Case prt.iArrInd(14).Item1
+        If prt.iArrInd(pInd.accessory).Item2 Then
+            Select Case prt.iArrInd(pInd.accessory).Item1
                 Case 1
                     equippedAcce = inv.item(66)
                 Case 2
@@ -227,7 +227,7 @@
                     equippedAcce.count -= 1
             End Select
         Else
-            Select Case prt.iArrInd(14).Item1
+            Select Case prt.iArrInd(pInd.accessory).Item1
                 Case 1
                     equippedAcce = inv.item(67)
                 Case 2
@@ -241,9 +241,9 @@
     End Sub
     Public Sub setClassLoadout(ByVal s As String)
         'set the player's form baced on their ears
-        If prt.iArrInd(6).Item1 = 3 Then
+        If prt.iArrInd(pInd.ears).Item1 = 3 Then
             pForm = forms("Elf")
-        ElseIf prt.iArrInd(6).Item1 = 4 Then
+        ElseIf prt.iArrInd(pInd.ears).Item1 = 4 Then
             pForm = forms("Android")
         End If
 
@@ -274,7 +274,7 @@
             knownSpells.Add("Turn to Frog")
             If breastSize = -1 Then breastSize = 0
             inv.add(4, 1)
-            inv.add(117, 1)
+            inv.add(117, 3)
             inv.add(166, 1)
             inv.add(167, 1)
             prt.skincolor = Game.cShift(prt.skincolor, Color.ForestGreen, 15)
@@ -356,6 +356,7 @@
         perks.Add("corust", -1)         '35
         perks.Add("comilk", -1)         '36
         perks.Add("coblind", -1)        '37
+        perks.Add("coscale", -1)        '38
     End Sub
     Private Sub initClasses()
         'creates the class dictionary
@@ -365,6 +366,7 @@
         classes.Add("Mage", New Mage())
         classes.Add("Magical Girl", New MagicGirl())
         classes.Add("Magical Girl​", New MagicGirlTransform())
+        classes.Add("Magical Slut", New MagicSlut())
         classes.Add("Bimbo", New Bimbo())
         classes.Add("Princess", New Princess())
         classes.Add("Maid", New Maid())
@@ -422,6 +424,9 @@
         forms.Add("Goo Girl", New GooGirl())
         forms.Add("Combat Unit", New CombatUnit())
         forms.Add("Half-Gorgon", New HGorgon())
+        forms.Add("Half-Dragoness", New HDragoness())
+        forms.Add("Half-Broodmother", New HBroodmother())
+        forms.Add("Broodmother", New Broodmother())
     End Sub
     Private Sub initPolymorphs()
         'compile list of polymorphs
@@ -644,7 +649,7 @@
         Game.lblEvent.ForeColor = TextColor
         Game.lblNameTitle.ForeColor = TextColor
 
-        createP()
+        drawPort()
         setPImage()
         UIupdate()
     End Sub
@@ -677,8 +682,8 @@
                 ElseIf layer = 17 Then
                     prt.haircolor = sState.getHairColor
                 ElseIf layer = 1 Or layer = 5 Then
-                    prt.setIAInd(1, sState.iArrInd(1).Item1, sState.iArrInd(1).Item2, sState.iArrInd(1).Item3)
-                    prt.setIAInd(5, sState.iArrInd(5).Item1, sState.iArrInd(5).Item2, sState.iArrInd(5).Item3)
+                    prt.setIAInd(pInd.rearhair, sState.iArrInd(pInd.rearhair).Item1, sState.iArrInd(pInd.rearhair).Item2, sState.iArrInd(pInd.rearhair).Item3)
+                    prt.setIAInd(pInd.midhair, sState.iArrInd(pInd.midhair).Item1, sState.iArrInd(pInd.midhair).Item2, sState.iArrInd(pInd.midhair).Item3)
                 ElseIf layer = 3 Then
                     Dim tEarm As Armor = sState.equippedArmor
                     prt.setIAInd(layer, sState.iArrInd(layer).Item1, sState.iArrInd(layer).Item2, sState.iArrInd(layer).Item3)
@@ -693,7 +698,7 @@
             End If
             loopct += 1
         End While
-        createP()
+        drawPort()
 
         Dim out = revertedAttributes.Count & " changes were reverted." & vbCrLf & "~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~"
         For Each atr In revertedAttributes
@@ -759,7 +764,7 @@
         Game.lblEvent.ForeColor = TextColor
         Game.lblNameTitle.ForeColor = TextColor
 
-        createP()
+        drawPort()
         setPImage()
         UIupdate()
     End Sub
@@ -791,8 +796,8 @@
                 ElseIf layer = 17 Then
                     prt.haircolor = pState.getHairColor
                 ElseIf layer = 1 Or layer = 5 Then
-                    prt.setIAInd(1, pState.iArrInd(1).Item1, pState.iArrInd(1).Item2, pState.iArrInd(1).Item3)
-                    prt.setIAInd(5, pState.iArrInd(5).Item1, pState.iArrInd(5).Item2, pState.iArrInd(5).Item3)
+                    prt.setIAInd(pInd.rearhair, pState.iArrInd(pInd.rearhair).Item1, pState.iArrInd(pInd.rearhair).Item2, pState.iArrInd(pInd.rearhair).Item3)
+                    prt.setIAInd(pInd.midhair, pState.iArrInd(pInd.midhair).Item1, pState.iArrInd(pInd.midhair).Item2, pState.iArrInd(pInd.midhair).Item3)
                 ElseIf layer = 3 Then
                     Dim tEarm As Armor = pState.equippedArmor
                     prt.setIAInd(layer, pState.iArrInd(layer).Item1, pState.iArrInd(layer).Item2, pState.iArrInd(layer).Item3)
@@ -807,7 +812,7 @@
             End If
             loopct += 1
         End While
-        createP()
+        drawPort()
 
         Dim out = revertedAttributes.Count & " changes were reverted." & vbCrLf & "~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~"
         For Each atr In revertedAttributes
@@ -821,16 +826,16 @@
         perks("astatue") = dur
         changeHairColor(c, True)
         If prt.sexBool Then
-            prt.setIAInd(8, 10, True, True)
-            prt.setIAInd(9, 14, True, True)
+            prt.setIAInd(pInd.mouth, 10, True, True)
+            prt.setIAInd(pInd.eyes, 14, True, True)
         Else
-            prt.setIAInd(8, 5, False, True)
-            prt.setIAInd(9, 6, False, True)
+            prt.setIAInd(pInd.mouth, 5, False, True)
+            prt.setIAInd(pInd.eyes, 6, False, True)
         End If
         changeSkinColor(c)
 
         isPetrified = True
-        createP()
+        drawPort()
         canMoveFlag = False
     End Sub
     Public Sub toStatue(ByVal c As Color, ByVal r As String)
@@ -856,6 +861,7 @@
         Dim cr = perks("corust")
         Dim cm = perks("comilk")
         Dim cb = perks("coblind")
+        Dim cs = perks("coscale")
 
         initPerks()
 
@@ -869,6 +875,7 @@
         perks("corust") = cr
         perks("comilk") = cm
         perks("coblind") = cb
+        perks("coscale") = cs
     End Sub
     Public Overrides Sub die(ByRef source As Entity)
         If Game.pnlSaveLoad.Visible = True Then Exit Sub
@@ -991,7 +998,7 @@
         'transformations
         tfUpdate(pUpdateFlag)
 
-        If pUpdateFlag Then createP()
+        If pUpdateFlag Then drawPort()
     End Sub
     Sub tfUpdate(Optional ByRef pUpdateFlag = False)
         'transformations
@@ -1272,7 +1279,7 @@
     Sub oneLayerImgCheck(ByRef b As Boolean)
         If prt.oneLayerImgCheck(pForm.name, pClass.name) Is Nothing Then b = False Else b = True
     End Sub
-    Public Sub createP()
+    Public Sub drawPort()
         If Not solFlag Then Game.picPortrait.BackgroundImage = prt.draw(solFlag, isPetrified, AddressOf revertToSState, pForm.name, pClass.name)
         Game.picPortrait.Update()
 
@@ -1288,11 +1295,16 @@
             prt.haircolor = Color.FromArgb(prt.haircolor.A, c.R, c.G, c.B)
         End If
 
-        createP()
+        drawPort()
     End Sub
     Public Sub changeSkinColor(ByVal c As Color)
         prt.skincolor = c
-        createP()
+        drawPort()
+    End Sub
+    Public Sub pout()
+        prt.setIAInd(pInd.eyes, 37, True, True)
+        prt.setIAInd(pInd.mouth, 20, True, True)
+        drawPort()
     End Sub
 
     'sex change methods
@@ -1411,23 +1423,23 @@
     Public Sub reverseBSRoute()
         Select Case breastSize
             Case -1
-                prt.setIAInd(2, 0, False, False)
+                prt.setIAInd(pInd.body, 0, False, False)
             Case 0
-                prt.setIAInd(2, 2, False, True)
+                prt.setIAInd(pInd.body, 2, False, True)
             Case 1
-                prt.setIAInd(2, 0, True, False)
+                prt.setIAInd(pInd.body, 0, True, False)
             Case 2
-                prt.setIAInd(2, 1, True, True)
+                prt.setIAInd(pInd.body, 1, True, True)
             Case 3
-                prt.setIAInd(2, 2, True, True)
+                prt.setIAInd(pInd.body, 2, True, True)
             Case 4
-                prt.setIAInd(2, 3, True, True)
+                prt.setIAInd(pInd.body, 3, True, True)
             Case 5
-                prt.setIAInd(2, 4, True, True)
+                prt.setIAInd(pInd.body, 4, True, True)
             Case 6
-                prt.setIAInd(2, 17, True, True)
+                prt.setIAInd(pInd.body, 17, True, True)
             Case 7
-                prt.setIAInd(2, 19, True, True)
+                prt.setIAInd(pInd.body, 19, True, True)
         End Select
         prt.portraitUDate()
     End Sub
@@ -1620,6 +1632,12 @@
     End Function
     Function isCursed() As Boolean
         If perks("slutcurse") > -1 Then Return True
+        If perks("copoly") > -1 Then Return True
+        If perks("cogreed") > -1 Then Return True
+        If perks("corust") > -1 Then Return True
+        If perks("comilk") > -1 Then Return True
+        If perks("coblind") > -1 Then Return True
+        If perks("coscale") > -1 Then Return True
         If equippedArmor.isCursed Or equippedWeapon.isCursed Or equippedAcce.isCursed Then Return True
         Return False
     End Function
@@ -1670,7 +1688,7 @@
         If pForm.name.Equals("Blowup Doll") Then
             out += "rubber "
         End If
-        If prt.iArrInd(1).Item2 Then
+        If prt.iArrInd(pInd.rearhair).Item2 Then
             out += "hair, done in a feminine style." & vbCrLf & " " & vbCrLf
         Else
             out += "hair, done in a masculine style." & vbCrLf & " " & vbCrLf

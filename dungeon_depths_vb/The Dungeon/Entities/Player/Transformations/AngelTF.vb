@@ -1,4 +1,4 @@
-﻿Public Class AngelTF
+﻿Public NotInheritable Class AngelTF
     Inherits Transformation
     Sub New()
         MyBase.New(1, 0, 0, False)
@@ -16,14 +16,14 @@
     End Sub
 
     Public Sub step1()
-        Dim p As player = game.player
+        Dim p As Player = Game.player
         Dim out = ""
 
         'angel transformation
         p.changeHairColor(Color.FromArgb(255, 245, 231, 184))
-        p.prt.setIAInd(1, 5, True, True)
-        p.prt.setIAInd(5, 14, True, True)
-        p.prt.setIAInd(15, 11, True, True)
+        p.prt.setIAInd(pInd.rearhair, 5, True, True)
+        p.prt.setIAInd(pInd.midhair, 14, True, True)
+        p.prt.setIAInd(pInd.fronthair, 11, True, True)
         p.prt.wingInd = 1
 
         'transformation description push
@@ -38,7 +38,7 @@
     End Sub
 
     Public Overrides Function getNextStep(stage As Integer) As Action
-        Dim p As player = game.player
+        Dim p As Player = Game.player
         Select Case stage
             Case 0
                 Return AddressOf step1

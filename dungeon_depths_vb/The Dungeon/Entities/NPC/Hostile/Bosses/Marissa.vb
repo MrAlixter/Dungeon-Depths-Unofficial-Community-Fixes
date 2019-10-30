@@ -3,10 +3,10 @@
 
     Sub New()
         name = "Marissa the Enchantress"
-        setMaxHealth(150)
-        setATK(25)
-        setDEF(-5)
-        setSPD(10)
+        maxHealth = 150
+        attack = 25
+        defence = -5
+        speed = 10
 
         inv.setCount("Health_Potion", 3)
         inv.setCount("Spellbook", 2)

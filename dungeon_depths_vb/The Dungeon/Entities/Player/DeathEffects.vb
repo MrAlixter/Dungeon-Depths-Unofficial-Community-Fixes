@@ -146,7 +146,7 @@
         If p.equippedArmor.getName.Equals("Naked") Then
             out += "  As you black out, you can feel the tendrils writhing around you crotch.  As the darkness takes you, so does the orgasmic bliss of the mimic's magic touch."
             p.lust += 50
-            p.createP()
+            p.drawPort()
             Game.pushLblEvent(out)
 
             Exit Sub
@@ -158,7 +158,7 @@
         p.inv.invNeedsUDate = True
         Equipment.clothesChange("Living_Armor")
         p.perks(12) = True
-        p.createP()
+        p.drawPort()
         Game.pushLblEvent(out)
         p.UIupdate()
     End Sub

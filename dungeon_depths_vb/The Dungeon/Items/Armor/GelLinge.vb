@@ -33,7 +33,7 @@
         If Not Game.player.pForm.name.Contains("Slime") And Not Game.player.pForm.name.Contains("Goo") Then
             Equipment.clothesChange("Naked")
             Game.pushLblEvent("Your clothes melt off!")
-            Game.player.createP()
+            Game.player.drawPort()
         End If
     End Sub
 End Class

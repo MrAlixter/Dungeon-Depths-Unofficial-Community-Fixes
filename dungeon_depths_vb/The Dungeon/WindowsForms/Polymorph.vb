@@ -95,7 +95,7 @@
         Game.pushLblEvent(revertText & Game.lblEvent.Text.Split(vbCrLf)(0))
         p.specialRoute()
         p.magicRoute()
-        p.createP()
+        p.drawPort()
     End Sub
     'NPC transform method
     Sub transform(ByRef t As NPC, ByVal s As String)

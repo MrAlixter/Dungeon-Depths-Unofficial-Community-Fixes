@@ -159,7 +159,7 @@
         internal_inventory.Add("Emerald_Circlet", New EmeraldCirclet())     '140
         internal_inventory.Add("Active_Camoflage", New ActiveCamoflage())   '141
         internal_inventory.Add("Combat_Module", New CombatModule())         '142
-        internal_inventory.Add("Every_New_Item", New NewStuff())            '143
+        internal_inventory.Add("Every_New_Item", New EveryNewItem())            '143
         internal_inventory.Add("Crystalline_Armor", New CrystalArmor())     '144
         internal_inventory.Add("Scepter_of_Ash", New ScepterOfAsh())        '145
         '0.9
@@ -185,8 +185,13 @@
         internal_inventory.Add("Mugger's_Shank", New MShank())              '165
         internal_inventory.Add("Frock_of_Night", New FoNight())             '166
         internal_inventory.Add("Wand_of_Shocking", New WOShock())           '167
-        internal_inventory.Add("Cursemark", New CursedTattoo())             '168
+        internal_inventory.Add("Cursemark", New Cursemark())             '168
         internal_inventory.Add("Maid_Lingerie", New MaidLingerie())         '169
+        internal_inventory.Add("Magical_Slut_Outfit", New MagSlutOutfit())  '170
+        internal_inventory.Add("Magical_Girl_Wand​", New MagSlutWand())      '171
+        internal_inventory.Add("Flaming_Sword", New FlamingSword())         '172
+        internal_inventory.Add("Signature_Whip", New SigWhip())             '173
+        internal_inventory.Add("Defence_Charm​", New CDefenceCharm())        '174
 
         armor = {New CommonClothes, New SkimpyClothes, New Naked, New VSkimpyClothes,
                  Me.item(5), Me.item(7), Me.item(8), Me.item(10),
@@ -201,7 +206,7 @@
                  Me.item(106), Me.item(107), Me.item(115), Me.item(116),
                  Me.item(129), Me.item(137), Me.item(138), Me.item(144),
                  Me.item(146), Me.item(147), Me.item(151), Me.item(166),
-                 Me.item(169)}
+                 Me.item(169), Me.item(170)}
 
         weapons = {New BareFists(),
                    Me.item(6), Me.item(9), Me.item(11), Me.item(21),
@@ -211,7 +216,8 @@
                    Me.item(118), Me.item(120), Me.item(145), Me.item(150),
                    Me.item(155), Me.item(156), Me.item(157), Me.item(158),
                    Me.item(159), Me.item(160), Me.item(162), Me.item(163),
-                   Me.item(165), Me.item(167)}
+                   Me.item(165), Me.item(167), Me.item(171), Me.item(172),
+                   Me.item(173)}
 
         useable = {Me.item(0), Me.item(3), Me.item(4),
                    Me.item(65), Me.item(15), Me.item(36), Me.item(37),
@@ -222,7 +228,7 @@
                    Me.item(128), Me.item(130), Me.item(136), Me.item(142),
                    Me.item(143), Me.item(148), Me.item(149), Me.item(152),
                    Me.item(153), Me.item(154), Me.item(155), Me.item(156),
-                   Me.item(157), Me.item(158), Me.item(162)}
+                   Me.item(157), Me.item(158), Me.item(162), Me.item(174)}
 
         food = {Me.item(1), Me.item(30), Me.item(31), Me.item(32), Me.item(33),
                 Me.item(34), Me.item(35), Me.item(44), Me.item(90),
@@ -333,8 +339,10 @@
 
         For i As Integer = 1 To parse(0) + 1
             Dim subParse As String() = parse(i).Split("~")
-            add(subParse(0), CInt(subParse(1)))
-            item(i - 1).durability = CInt(subParse(2))
+            If internal_inventory.Keys.Contains(subParse(0)) Then
+                add(subParse(0), CInt(subParse(1)))
+                item(i - 1).durability = CInt(subParse(2))
+            End If
         Next
         Dim x = CInt(parse(0)) + 2
         If Not parse(x).Equals("na") Then

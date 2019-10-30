@@ -87,7 +87,7 @@
         wingIndex = 0
         hornIndex = 0
         hBowIndex = 0
-        ReDim iArrInd(16)
+        Redim iArrInd(16)
     End Sub
 
     'load applies a state to a given instance of a player

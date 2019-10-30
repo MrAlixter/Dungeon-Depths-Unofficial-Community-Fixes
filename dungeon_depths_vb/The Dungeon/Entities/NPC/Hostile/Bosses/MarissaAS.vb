@@ -3,10 +3,10 @@
     Dim spellCooldown = 0
     Sub New()
         name = "Marissa, Aspiring Sorceress"
-        setMaxHealth(115)
-        setATK(15)
-        setDEF(5)
-        setSPD(30)
+        maxHealth = 115
+        attack = 15
+        defence = 5
+        speed = 30
 
         inv.setCount("Spellbook", 1)
         inv.setCount("Restore_Potion", CInt(Rnd() * 2))
@@ -71,8 +71,8 @@
         If Game.player.prt.checkFemInd(6, 1) Or Game.player.prt.checkMalInd(6, 1) Then
             lastsentence = "When your senses return to you, a quick glance confirms that Marissa is no longer present."
         End If
-        Game.player.prt.setIAInd(6, 1, True, False)
-        Game.player.createP()
+        Game.player.prt.setIAInd(pInd.ears, 1, True, False)
+        Game.player.drawPort()
 
 
         Game.pushLblEvent("""D-d-damn it..."" Marissa sputters, taking a shakey step backwards.  ""It looks like I u-underestimated you, but r-rest assured that it won't happen again..."" she declares, before charging a weak looking ball of energy, ""T-this one's g-going to leave you a mewing m-m-mess.""\n" &

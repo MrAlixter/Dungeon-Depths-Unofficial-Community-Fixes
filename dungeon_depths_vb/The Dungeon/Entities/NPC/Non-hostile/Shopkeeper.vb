@@ -1,12 +1,12 @@
 ﻿Public Class Shopkeeper
     Inherits ShopNPC
     Sub New()
-        setName("Shopkeeper")
-        setHealth(1.0)
-        setMaxHealth(9999)
-        setATK(99)
-        setDEF(999)
-        setSPD(99)
+        name = "Shopkeeper"
+        health = 1.0
+        maxHealth = 9999
+        attack = 99
+        defence = 999
+        speed = 99
 
         'Define the inventory
         inv = New Inventory(False)
@@ -32,7 +32,7 @@
         inv.setCount("Midas_Gauntlet", 1)
 
         isShop = True
-        setGold(99999)
+        gold = 99999
         pronoun = "he"
         pPronoun = "his"
         rPronoun = "him"

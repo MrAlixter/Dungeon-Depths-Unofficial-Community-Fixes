@@ -15,13 +15,13 @@
 
     Sub New(fc As String)
         InitializeComponent()
-
         floorcode = fc
     End Sub
 
     Sub GeneratorSettings_Load() Handles Me.Load
         reset()
-        lblFC.Text = "Floorcode: " & floorcode
+        lblFC.Text = "Floorcode:"
+        txtSeed.Text = floorcode
         refreshBoxes()
 
         'scale to the screen size

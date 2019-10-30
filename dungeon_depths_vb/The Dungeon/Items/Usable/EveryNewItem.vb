@@ -1,4 +1,4 @@
-﻿Public Class NewStuff
+﻿Public Class EveryNewItem
     Inherits item
     Sub New()
         MyBase.setName("Every_New_Item")
@@ -14,7 +14,7 @@
     Public Overrides Sub use()
         Dim p As Player = Game.player
 
-        For i = 146 To 160
+        For i = 146 To 174
             p.inv.add(i, 1)
         Next
 

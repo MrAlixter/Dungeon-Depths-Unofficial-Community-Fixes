@@ -30,6 +30,8 @@
                 Return AddressOf keyChest
             Case 4
                 Return AddressOf floor4StartChest
+            Case 5
+                Return AddressOf magSlutChest
         End Select
         Return Nothing
     End Function
@@ -54,6 +56,20 @@
         Game.player.inv.add(53, 1)
         Game.pushLblEvent("Upon opening the chest, you find a key!")
     End Sub
+
+    Sub magSlutChest()
+        Game.player.inv.add(171, 1)
+        Game.player.equippedWeapon.onUnequip()
+        Game.player.equippedWeapon = Game.player.inv.item(171)
+        Game.pushLblEvent("As soon as you open the lid of the chest, a loud click gives you only seconds to react as a pink, heart-tipped wand is flung at you from within!  Miraculously, you are able to catch it mid-air before getting hit in the face.  As it begins glowing and reality around you begins fading away into a techicolor void, though, you wonder if it would have been better to just take the hit...",
+                          AddressOf MagSlutChest2)
+
+    End Sub
+    Sub MagSlutChest2()
+        Game.player.equippedWeapon.onEquip()
+        Game.player.drawPort()
+    End Sub
+
 
     Public Overrides Function ToString() As String
         Return "LOADED*" & CStr(pos.X & "*") & CStr(pos.Y & "*") & CStr(cid) & "*"

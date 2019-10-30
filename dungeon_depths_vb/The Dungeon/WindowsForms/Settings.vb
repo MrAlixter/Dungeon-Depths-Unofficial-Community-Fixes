@@ -7,11 +7,13 @@
         w.WriteLine(ssize)
         w.WriteLine(chkNoImg.Checked)
         w.WriteLine(chkAlwaysUnwilling.Checked)
+        w.WriteLine(chkNoRNG.Checked)
         w.Flush()
         w.Close()
         Game.screenSize = ssize
         Game.noImg = chkNoImg.Checked
         Game.pcUnwilling = chkAlwaysUnwilling.Checked
+        Game.noRNG = chkNoRNG.Checked
         Me.Close()
     End Sub
 
@@ -42,6 +44,7 @@
         ssize = r.ReadLine
         chkNoImg.Checked = r.ReadLine
         chkAlwaysUnwilling.Checked = r.ReadLine
+        chkNoRNG.Checked = r.ReadLine
 
         r.Close()
 
@@ -61,6 +64,15 @@
             Game.picPortrait.Visible = True
             Game.picDescPort.Visible = True
         End If
+    End Sub
+    Shared Sub makeNewSetting()
+        Dim w As System.IO.StreamWriter
+        w = System.IO.File.CreateText("sett.ing")
+        w.WriteLine("Large")
+        w.WriteLine(False)
+        w.WriteLine(False)
+        w.WriteLine(False)
+        w.Close()
     End Sub
 
     Private Sub cboxScreenSize_TextChanged(sender As Object, e As EventArgs) Handles cboxScreenSize.TextChanged

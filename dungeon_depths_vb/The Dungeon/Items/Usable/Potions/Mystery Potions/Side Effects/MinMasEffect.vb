@@ -6,7 +6,7 @@
 
         p.idRouteFM(True)
 
-        p.createP()
+        p.drawPort()
         If Transformation.canBeTFed(p) Then
             p.pState.save(p)
         End If

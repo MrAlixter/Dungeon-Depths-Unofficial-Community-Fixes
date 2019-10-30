@@ -2,11 +2,11 @@
     Inherits MiniBoss
 
     Sub New()
-        setName("Explorer")
-        setMaxHealth(300)
-        setATK(15)
-        setDEF(15)
-        setSPD(15)
+        name = "Explorer"
+        maxHealth = 300
+        attack = 15
+        defence = 15
+        speed = 15
         Randomize()
         For i = 0 To 5
             Dim invInd As Integer = 8

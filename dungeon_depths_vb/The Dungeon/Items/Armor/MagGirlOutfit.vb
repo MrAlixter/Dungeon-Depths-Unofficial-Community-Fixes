@@ -13,8 +13,15 @@
         MyBase.dBoost = 10
         MyBase.count = 0
         MyBase.value = 100
+
+        slutVarInd = 170
+
+        bsizeneg1 = New Tuple(Of Integer, Boolean, Boolean)(60, False, True)
+        bsize0 = New Tuple(Of Integer, Boolean, Boolean)(230, True, True)
+        bsize1 = New Tuple(Of Integer, Boolean, Boolean)(231, True, True)
         bsize2 = New Tuple(Of Integer, Boolean, Boolean)(12, True, True)
-        bsize3 = New Tuple(Of Integer, Boolean, Boolean)(37, True, True)
+        bsize3 = New Tuple(Of Integer, Boolean, Boolean)(232, True, True)
+
         MyBase.compressesBreasts = True
 
         MyBase.isRandoTFAcceptable = False

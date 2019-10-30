@@ -2,11 +2,11 @@
     Inherits MiniBoss
 
     Sub New()
-        setName("Targax the Brutal")
-        setMaxHealth(250)
-        setATK(50)
-        setDEF(20)
-        setSPD(5)
+        name = "Targax the Brutal"
+        maxHealth = 250
+        attack = 50
+        defence = 20
+        speed = 5
         inv.setCount("Health_Potion", 2)
         inv.setCount("Major_Health_Potion", 3)
         inv.setCount("Sword_of_the_Brutal", 1)

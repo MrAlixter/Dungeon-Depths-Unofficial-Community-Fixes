@@ -7,8 +7,8 @@
         Dim r1 = Int(Rnd() * Portrait.imgLib.atrs("RearHair2").ndoF)
         Dim r2 = Int(Rnd() * Portrait.imgLib.atrs("FrontHair").ndoF)
 
-        p.prt.setIAInd(1, r1, True, False)
-        p.prt.setIAInd(5, r1, True, False)
-        p.prt.setIAInd(15, r2, True, False)
+        p.prt.setIAInd(pInd.rearhair, r1, True, False)
+        p.prt.setIAInd(pInd.midhair, r1, True, False)
+        p.prt.setIAInd(pInd.fronthair, r2, True, False)
     End Sub
 End Class

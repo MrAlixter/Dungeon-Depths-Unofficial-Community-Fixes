@@ -1,4 +1,4 @@
-﻿Public Class MindlessTF
+﻿Public NotInheritable Class MindlessTF
     Inherits PolymorphTF
     Sub New()
         MyBase.New()
@@ -20,11 +20,11 @@
 
         'transformation
         If p.sex.Equals("Male") Then
-            p.prt.setIAInd(8, 6, False, True)
-            p.prt.setIAInd(9, 10, False, True)
+            p.prt.setIAInd(pInd.mouth, 6, False, True)
+            p.prt.setIAInd(pInd.eyes, 10, False, True)
         Else
-            p.prt.setIAInd(8, 16, True, True)
-            p.prt.setIAInd(9, 33, True, True)
+            p.prt.setIAInd(pInd.mouth, 16, True, True)
+            p.prt.setIAInd(pInd.eyes, 33, True, True)
         End If
 
         p.pClass = p.classes("Mindless")

@@ -2,13 +2,14 @@
     Inherits Sword
     Sub New()
         MyBase.setName("Photon_Blade")
-        MyBase.setDesc("A shimmering red-orange blade made of pure light.  While it can deal quite a bit of damage, it also requires a fair amount of mana to remain useful. +37 ATK")
+        MyBase.setDesc("A shimmering red-orange blade made of pure light.  While it can deal quite a bit of damage, it also requires a fair amount of mana to remain useful." & vbcrlf & 
+		               "+37 ATK")
         id = 112
         tier = Nothing
         MyBase.setUsable(False)
         MyBase.aBoost = 37
         count = 0
-        value = 2224
+        value = 4320
 
         MyBase.isRandoTFAcceptable = False
     End Sub

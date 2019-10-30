@@ -1,4 +1,4 @@
-﻿Public Class BimboPlusTF
+﻿Public NotInheritable Class BimboPlusTF
     Inherits Transformation
     Public Shared bimboYellow As Color = Color.FromArgb(255, 255, 230, 160)
 
@@ -24,39 +24,39 @@
         Dim p As Player = Game.player
         If p.name = "Targax" Then
             p.prt.haircolor = Color.FromArgb(255, 255, 0, 147)
-            p.prt.setIAInd(1, 9, True, True)
-            p.prt.setIAInd(5, 9, True, True)
-            p.prt.setIAInd(15, 13, True, True)
+            p.prt.setIAInd(pInd.rearhair, 9, True, True)
+            p.prt.setIAInd(pInd.midhair, 9, True, True)
+            p.prt.setIAInd(pInd.fronthair, 13, True, True)
         Else
             p.prt.haircolor = bimboyellow
-            p.prt.setIAInd(1, 1, True, True)
-            p.prt.setIAInd(5, 5, True, True)
-            p.prt.setIAInd(15, 6, True, True)
+            p.prt.setIAInd(pInd.rearhair, 1, True, True)
+            p.prt.setIAInd(pInd.midhair, 5, True, True)
+            p.prt.setIAInd(pInd.fronthair, 6, True, True)
         End If
 
-        If p.prt.checkNDefFemInd(6, 6) Then p.prt.setIAInd(6, 0, True, True)
+        If p.prt.checkNDefFemInd(6, 6) Then p.prt.setIAInd(pInd.ears, 0, True, True)
 
-        p.prt.setIAInd(8, 5, True, True)
-        p.prt.setIAInd(9, 8, True, False)
-        p.prt.setIAInd(13, 0, True, False)
-        If Not p.pClass.name.Equals("Magical Girl") Then p.prt.setIAInd(16, 0, True, False)
+        p.prt.setIAInd(pInd.mouth, 5, True, True)
+        p.prt.setIAInd(pInd.eyes, 8, True, False)
+        p.prt.setIAInd(pInd.cloak, 0, True, False)
+        If Not p.pClass.name.Equals("Magical Girl") Then p.prt.setIAInd(pInd.hat, 0, True, False)
 
         If p.breastSize = 1 Then
-            p.prt.setIAInd(2, 6, True, True)
+            p.prt.setIAInd(pInd.body, 6, True, True)
             p.breastSize = 2
             If p.equippedArmor.getName.ToString() = "Common_Clothes" Then
-                p.prt.setIAInd(3, 5, True, True)
+                p.prt.setIAInd(pInd.clothes, 5, True, True)
             End If
         ElseIf p.breastSize < 7 Then
             p.breastSize += 1
             p.reverseBSRoute()
         End If
         If p.pClass.name.Equals("Magical Girl") Then
-            p.prt.setIAInd(16, Portrait.imgLib.atrs("Hat").getF.Count - 3, True, True)
+            p.prt.setIAInd(pInd.hat, Portrait.imgLib.atrs("Hat").getF.Count - 3, True, True)
             p.perks("bimbotf") = 24
         End If
         p.lust += 10
-        p.createP()
+        p.drawPort()
         Game.pushLblEvent("You pause to rub your temples, a massive headache comming down on you like a ton of bricks.  As you take a few minutes to recover, you notice that your center of balance is off.  You hypothisize that maybe that vial you drank might be causing these effects." & vbCrLf & vbCrLf & "Maybe you can just walk this off...")
     End Sub
     Sub step2()
@@ -75,7 +75,7 @@
         'final tf Stage
         If p.name.Equals("Targax") Then p.prt.haircolor = Color.FromArgb(255, 20, 20, 20) Else p.prt.haircolor = Color.FromArgb(255, 245, 231, 184)
         If p.breastSize < 3 And Not p.pClass.name.Equals("Magical Girl") Then
-            p.prt.setIAInd(2, 7, True, True)
+            p.prt.setIAInd(pInd.body, 7, True, True)
             p.breastSize = 3
         ElseIf p.breastSize < 7 Then
             p.breastSize += 1
@@ -92,35 +92,35 @@
         End If
         If p.name <> "Targax" Then
             p.prt.haircolor = Color.FromArgb(255, 250, 250, 205)
-            p.prt.setIAInd(1, 6, True, True)
-            p.prt.setIAInd(5, 6, True, True)
-            p.prt.setIAInd(9, 34, True, True)
-            p.prt.setIAInd(15, 7, True, True)
+            p.prt.setIAInd(pInd.rearhair, 6, True, True)
+            p.prt.setIAInd(pInd.midhair, 6, True, True)
+            p.prt.setIAInd(pInd.eyes, 34, True, True)
+            p.prt.setIAInd(pInd.fronthair, 7, True, True)
         Else
-            p.prt.setIAInd(9, 16, True, True)
+            p.prt.setIAInd(pInd.eyes, 16, True, True)
         End If
 
-        p.prt.setIAInd(8, 6, True, True)
-        p.prt.setIAInd(12, 2, True, False)
+        p.prt.setIAInd(pInd.mouth, 6, True, True)
+        p.prt.setIAInd(pInd.glasses, 2, True, False)
         p.TextColor = Color.HotPink
         p.perks("bimbotf") = -1
-        p.createP()
+        p.drawPort()
         stopTF()
         Game.pushLblEvent(out)
     End Sub
     Sub step2alt()
         Dim p As Player = Game.player
-        p.prt.setIAInd(16, 0, True, True)
-        p.prt.setIAInd(2, 7, True, True)
+        p.prt.setIAInd(pInd.hat, 0, True, True)
+        p.prt.setIAInd(pInd.body, 7, True, True)
         p.prt.haircolor = Color.FromArgb(255, 255, 250, 205)
-        p.prt.setIAInd(1, 10, True, True)
-        p.prt.setIAInd(5, 10, True, True)
-        p.prt.setIAInd(15, 7, True, True)
-        p.prt.setIAInd(6, 0, True, True)
-        p.prt.setIAInd(8, 6, True, True)
-        p.prt.setIAInd(9, 34, True, True)
-        p.prt.setIAInd(13, 0, True, True)
-        p.prt.setIAInd(12, 2, True, False)
+        p.prt.setIAInd(pInd.rearhair, 10, True, True)
+        p.prt.setIAInd(pInd.midhair, 10, True, True)
+        p.prt.setIAInd(pInd.fronthair, 7, True, True)
+        p.prt.setIAInd(pInd.ears, 0, True, True)
+        p.prt.setIAInd(pInd.mouth, 6, True, True)
+        p.prt.setIAInd(pInd.eyes, 34, True, True)
+        p.prt.setIAInd(pInd.cloak, 0, True, True)
+        p.prt.setIAInd(pInd.glasses, 2, True, False)
         Equipment.clothesChange("Magical_Girl_Outfit")
         p.breastSize = 3
         Game.pushLblEvent("You immediatly feel funny, the increased magic in your system reacting swiftly with the gum.  Mind clearer than ever, you look down to see your clothes have become tight and pink. You smirk; while you look like a typical brainless bimbo, you're far more intellegent than you were before. Your hair lengthens, becoming a platinum blonde, and your clothes finish changing to match your new figure.  While the effects on your body confirm your hypothesis that BIM_II is likely the chemical used in those sticks of gum the increased IQ hints that there may be another compound involved.")

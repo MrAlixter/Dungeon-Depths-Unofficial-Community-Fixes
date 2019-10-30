@@ -1,4 +1,4 @@
-﻿Public Class CursedTattoo
+﻿Public Class Cursemark
     Inherits Accessory
     Sub New()
         MyBase.setName("Cursemark")
@@ -14,8 +14,8 @@
 
         isCursed = True
 
-        MyBase.fInd = New Tuple(Of Integer, Boolean, Boolean)(12, False, True)
-        MyBase.mInd = New Tuple(Of Integer, Boolean, Boolean)(12, False, True)
+        MyBase.fInd = New Tuple(Of Integer, Boolean, Boolean)(12, True, True)
+        MyBase.mInd = New Tuple(Of Integer, Boolean, Boolean)(12, True, True)
     End Sub
 
     Public Overrides Sub discard()

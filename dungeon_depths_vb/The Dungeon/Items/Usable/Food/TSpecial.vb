@@ -14,7 +14,7 @@
     End Sub
 
     Public Overrides Sub Effect()
-        If Int(Rnd() * 5) = 0 Then
+        If Int(Rnd() * 5) = 0 Or Game.noRNG Then
             Game.player.maxHealth += 5
             Game.player.health += 5 / Game.player.getMaxHealth()
             If Game.player.health > 1 Then Game.player.health = 1

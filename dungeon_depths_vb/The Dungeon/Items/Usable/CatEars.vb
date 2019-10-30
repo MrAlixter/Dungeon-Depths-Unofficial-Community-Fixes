@@ -13,8 +13,8 @@
 
     Overrides Sub use()
         If Me.getUsable() = False Then Exit Sub
-        Game.player.prt.setIAInd(6, 1, Game.player.prt.sexBool, False)
-        Game.player.createP()
+        Game.player.prt.setIAInd(pInd.ears, 1, Game.player.prt.sexBool, False)
+        Game.player.drawPort()
         count -= 1
     End Sub
 End Class

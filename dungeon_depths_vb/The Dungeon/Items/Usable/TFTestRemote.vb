@@ -10,28 +10,50 @@
         MyBase.value = 375
 
         MyBase.isRandoTFAcceptable = False
+        MyBase.isMonsterDrop = False
     End Sub
     Public Overrides Sub use()
         Dim p As Player = Game.player
 
-        Dim form = InputBox("TF to... [Half-Gorgon, Gynoid, Amazon, Mindless, Rando]:")
+        Dim form = InputBox("TF to... [Half-Gorgon, Gynoid, Amazon, Mindless, Rando, Half-Broodmother, Broodmother, " &
+                            "Minotaur Cow, Dragon, Succubus, Slime, Bimbo, Cake]:")
 
         Dim tfs As Dictionary(Of String, Transformation) = New Dictionary(Of String, Transformation)
+        Dim tf2s As Dictionary(Of String, Action) = New Dictionary(Of String, Action)
         tfs.Add("Gynoid", New GynoidTF)
         tfs.Add("Half-Gorgon", New HGorgonTF)
         tfs.Add("Amazon", New AmazonTF)
         tfs.Add("Mindless", New MindlessTF)
         tfs.Add("Rando", New RandoTF)
+        tfs.Add("Half-Broodmother", Nothing)
+        tfs.Add("Broodmother", Nothing)
 
-        If Not tfs.ContainsKey(form) Then Exit Sub
+        tf2s.Add("Minotaur Cow", AddressOf New MinotaurCowTF().step1)
+        tf2s.Add("Dragon", AddressOf New DragonTF().step1)
+        tf2s.Add("Succubus", AddressOf New SuccubusTF().step1)
+        tf2s.Add("Slime", AddressOf New SlimeTF().step1)
+        tf2s.Add("Bimbo", AddressOf New BimboTF(2, 0, 0.25, True).doubleTf)
+        tf2s.Add("Cake", AddressOf New TTCCBF().step1)
 
-        If form.Equals("Midndless") Then
-            Polymorph.transform(p, form)
-            Exit Sub
+
+        If Not tfs.ContainsKey(form) And Not tf2s.ContainsKey(form) Then Exit Sub
+
+        If tfs.ContainsKey(form) Then
+            If form.Equals("Midndless") Then
+                Polymorph.transform(p, form)
+                Exit Sub
+            End If
+
+            If form.Equals("Half-Broodmother") Or form.Equals("Broodmother") Then
+                p.pForm = p.forms(form)
+                p.drawPort()
+                Exit Sub
+            End If
+            p.ongoingTFs.Add(tfs(form))
+            p.update()
+        ElseIf tf2s.ContainsKey(form) Then
+            tf2s(form)()
+            p.drawPort()
         End If
-        p.ongoingTFs.Add(tfs(form))
-        p.update()
-
-        count -= 1
     End Sub
 End Class

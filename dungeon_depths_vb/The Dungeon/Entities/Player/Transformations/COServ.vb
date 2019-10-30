@@ -1,4 +1,4 @@
-﻿Public Class COServ
+﻿Public NotInheritable Class COServ
     Inherits Transformation
 
     Dim destForm As preferedForm = New SuccMaid()

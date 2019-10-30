@@ -30,12 +30,12 @@
     End Sub
 
     Public Overrides Sub onEquip()
-        oldHat = Game.player.prt.iArrInd(16)
+        oldHat = Game.player.prt.iArrInd(pInd.hat)
 
-        Game.player.prt.setIAInd(16, 11, True, True)
+        Game.player.prt.setIAInd(pInd.hat, 11, True, True)
     End Sub
 
     Public Overrides Sub onUnequip()
-        Game.player.prt.iArrInd(16) = oldHat
+        Game.player.prt.iArrInd(pInd.hat) = oldHat
     End Sub
 End Class

@@ -49,7 +49,7 @@
         needsToUpdate = needsToUpdate Or equipAcce(cboxAccessory.Text)
 
         'updates the player, the stat display, and the portrait before the form closes
-        p.createP()
+        p.drawPort()
         p.UIupdate()
 
         Me.Close()

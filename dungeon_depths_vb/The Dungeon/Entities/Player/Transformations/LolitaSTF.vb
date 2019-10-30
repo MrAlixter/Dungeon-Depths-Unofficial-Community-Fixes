@@ -1,4 +1,4 @@
-﻿Public Class LolitaSTF
+﻿Public NotInheritable Class LolitaSTF
     Inherits Transformation
     Sub New()
         MyBase.New(1, 0, 0, False)
@@ -61,12 +61,12 @@
         Equipment.clothesChange("Lolita_Dress_(Sweet)")
         'maiden transformation
         p.prt.haircolor = Color.FromArgb(255, 227, 201, 153)
-        p.prt.setIAInd(1, 28, True, True)
-        p.prt.setIAInd(4, 7, True, True)
-        p.prt.setIAInd(5, 31, True, True)
-        p.prt.setIAInd(8, 19, True, True)
-        p.prt.setIAInd(9, 37, True, True)
-        p.prt.setIAInd(15, 29, True, True)
+        p.prt.setIAInd(pInd.rearhair, 28, True, True)
+        p.prt.setIAInd(pInd.face, 7, True, True)
+        p.prt.setIAInd(pInd.midhair, 31, True, True)
+        p.prt.setIAInd(pInd.mouth, 19, True, True)
+        p.prt.setIAInd(pInd.eyes, 37, True, True)
+        p.prt.setIAInd(pInd.fronthair, 29, True, True)
         p.breastSize = 0
         p.reverseBSRoute()
         p.prt.hBowInd = 1

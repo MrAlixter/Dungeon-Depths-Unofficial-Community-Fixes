@@ -1,4 +1,4 @@
-﻿Public Class PlantfolkTF
+﻿Public NotInheritable Class PlantfolkTF
     Inherits Transformation
 
     Dim summerColor As Color = Color.FromArgb(255, 55, 146, 46)
@@ -36,13 +36,13 @@
         End If
 
         If p.sex.Equals("Male") Then
-            p.prt.setIAInd(1, 6, False, True)
-            p.prt.setIAInd(5, 6, False, True)
-            p.prt.setIAInd(15, 7, False, True)
+            p.prt.setIAInd(pInd.rearhair, 6, False, True)
+            p.prt.setIAInd(pInd.midhair, 6, False, True)
+            p.prt.setIAInd(pInd.fronthair, 7, False, True)
         Else
-            p.prt.setIAInd(1, 21, True, True)
-            p.prt.setIAInd(5, 24, True, True)
-            p.prt.setIAInd(15, 22, True, True)
+            p.prt.setIAInd(pInd.rearhair, 21, True, True)
+            p.prt.setIAInd(pInd.midhair, 24, True, True)
+            p.prt.setIAInd(pInd.fronthair, 22, True, True)
         End If
 
 

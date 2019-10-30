@@ -1,4 +1,4 @@
-﻿Public Class MinotaurCowTF
+﻿Public NotInheritable Class MinotaurCowTF
     Inherits PolymorphTF
     Sub New()
         MyBase.New()
@@ -21,17 +21,17 @@
         Equipment.clothesChange("Cow_Print_Bra")
 
         'minotaur cow tf transformation
-         If p.sex = "Male" Then
+        If p.sex = "Male" Then
             p.MtF()
             out += " Your body becomes daintier, and you are soon fully female."
         End If
         p.be()
         p.be()
         p.be()
-        p.prt.setIAInd(1, 16, True, True)
-        p.prt.setIAInd(5, 20, True, True)
-        p.prt.setIAInd(6, 8, True, True)
-        p.prt.setIAInd(15, 16, True, True)
+        p.prt.setIAInd(pInd.rearhair, 16, True, True)
+        p.prt.setIAInd(pInd.midhair, 20, True, True)
+        p.prt.setIAInd(pInd.ears, 8, True, True)
+        p.prt.setIAInd(pInd.fronthair, 16, True, True)
         p.prt.hornInd = 2
 
         Dim revertText = Game.lblEvent.Text.Split(vbCrLf)(0)

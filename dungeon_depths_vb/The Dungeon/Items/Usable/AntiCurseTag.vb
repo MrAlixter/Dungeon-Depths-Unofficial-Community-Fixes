@@ -17,7 +17,7 @@
         Game.player.perks("slutcurse") = -1
         Equipment.antiClothingCurse()
         Game.pushLblEvent("You apply the anti-curse tag to your equipment.  The slut curse is neutralized!")
-        Game.player.createP()
+        Game.player.drawPort()
         count -= 1
     End Sub
 End Class

@@ -3,7 +3,8 @@
 
     Sub New()
         MyBase.setName("Steel_Sword")
-        MyBase.setDesc("A simple sword forged from steel. +17 ATK")
+        MyBase.setDesc("A simple sword forged from steel." & vbcrlf & 
+		               "+17 ATK")
         id = 6
         tier = Nothing
         MyBase.setUsable(False)

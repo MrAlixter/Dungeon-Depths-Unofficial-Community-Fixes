@@ -1,4 +1,4 @@
-﻿Public Class ArachneTF
+﻿Public NotInheritable Class ArachneTF
     'Displayed passages proofread and formatted as of 7/28/2019
     Inherits Transformation
 
@@ -17,9 +17,9 @@
     Sub step1()
         Dim p As Player = Game.player
         If p.sex.Equals("Male") Then
-            p.prt.setIAInd(9, 9, False, True)
+            p.prt.setIAInd(pInd.eyes, 9, False, True)
         Else
-            p.prt.setIAInd(9, 20, True, True)
+            p.prt.setIAInd(pInd.eyes, 20, True, True)
         End If
         Game.pushLblEvent("\tSomewhat concerningly, the color of the veins in your hands have darkened to a jet black.  While you aren't exactly a biologist, it's fairly obvious that the venom you were exposed to is causing this.\n\n" &
                           """Arachne venom, nasty stuff,"" you remember someone telling you once, ""It's a powerful mutator, and if you take a bite, you'll be lucky if you even remain human for a single night.  More than that, once it's done with you there isn't much that can be done to bring you back.  That's why antivenom like what the Shopkeeper has is so important.""\n\n" &
@@ -31,11 +31,11 @@
     Sub step2()
         Dim p As Player = Game.player
 
-        p.prt.setIAInd(9, 21, True, True)
+        p.prt.setIAInd(pInd.eyes, 21, True, True)
         Dim out = ""
 
         If p.sex.Equals("Male") Then
-            p.prt.setIAInd(4, 0, True, False)
+            p.prt.setIAInd(pInd.face, 0, True, False)
             If p.breastSize < 1 Then be()
             out += "\tYour facial structure softens, and you can feel your chest expand slightly.  It seems like you are becoming more feminine!\n\n"
         End If
@@ -52,7 +52,7 @@
     Sub step3()
         Dim p As Player = Game.player
 
-        p.prt.setIAInd(9, 22, True, True)
+        p.prt.setIAInd(pInd.eyes, 22, True, True)
         Dim out = ""
 
         If p.sex.Equals("Male") Then
@@ -79,8 +79,8 @@
         End If
 
         If p.breastSize < 2 Then be()
-        p.prt.setIAInd(1, 8, True, True)
-        p.prt.setIAInd(5, 19, True, True)
+        p.prt.setIAInd(pInd.rearhair, 8, True, True)
+        p.prt.setIAInd(pInd.midhair, 19, True, True)
         p.prt.changeSkinColor(Game.cShift(p.prt.skincolor, Color.LightSlateGray, 5))
 
         Game.pushLblEvent("\tWhile for the most part the venom seems to be concentrated in your lower body now, all at once its familiar throb returns so suddenly it forces you to the ground and onto the brink of passing out.  It isn't until a pain unlike anything you've ever felt before flares up in your legs that you decide that unconciousness might be a blessing, and allow yourself to go under.", AddressOf step4pt1)
@@ -89,7 +89,7 @@
     End Sub
     Sub step4pt1()
         Game.player.prt.wingInd = 4
-        Game.player.createP()
+        Game.player.drawPort()
         Game.pushLblEvent("\tYour many eyes snap open, and you jump to your feet.  You have no idea how long you were out, but apart from some stiffness in your lower joints, you feel fine now.  Impressed by your new stamina, you remark to yourself that an experience like that would have killed the old, weak person that you used to be.\n\n" &
                           "While picking up your things, you catch a glimpse of your rear over your shoulder and realize at once that you’ve undergone a drastic transformation.  From the waist down, your body has morphed into that of a massive spider.  Your waist leads directly onto your thorax, which in turn leads to a massive abdomen that is topped out with a spinneret, and it takes a few seconds for this drastic change to fully process through your brain.  Testing out your eight new limbs, you find that for as delicate as they look, you can strike the tiles around you with enough force to shatter them.\n\n" &
                           "Mere moments later, your newly heightened senses alert you to a presence behind you.", AddressOf step4pt2)
@@ -97,9 +97,9 @@
     Sub step4pt2()
         Dim p As Player = Game.player
 
-        p.prt.setIAInd(1, 17, True, True)
-        p.prt.setIAInd(5, 21, True, True)
-        p.prt.setIAInd(15, 18, True, True)
+        p.prt.setIAInd(pInd.rearhair, 17, True, True)
+        p.prt.setIAInd(pInd.midhair, 21, True, True)
+        p.prt.setIAInd(pInd.fronthair, 18, True, True)
 
         Game.pushLblEvent("\tStanding behind you is another arachne, and it is clear from her posture that she is one of the more experienced huntresses.  You stiffen up, and as the she gazes into your eyes you find yourself with a lot less control over the situation than you thought you had.\n\n" &
                           """Well, it seems that our venom has finally run its course,"" she muses, approaching you.  As she speaks, her words supersede any thoughts flowing through your head, and you find yourself completely at her mercy.  ""Our species began when an enchanted spider bit its enchantress, and she underwent a similar process to what you have just experienced.  Since that fateful day, the Sisterhood of Arachne has spread throughout these cursed passages with the singular goal of claiming all whom enter into our ranks. Now that you are one of us, you are free to go about your business without fear of our interference.""\n\n" &
@@ -108,7 +108,7 @@
                           "With that and a *thwip*, she vanishes as suddenly as she appeared, the her mental web slowly lifting from your mind.", AddressOf step4pt3)
         p.lust += 20
 
-        p.createP()
+        p.drawPort()
     End Sub
     Sub step4pt3()
         Dim p As Player = Game.player

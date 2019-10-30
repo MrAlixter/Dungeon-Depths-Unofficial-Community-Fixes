@@ -3,13 +3,14 @@
 
     Sub New()
         MyBase.setName("Sword_of_the_Brutal")
-        MyBase.setDesc("A suspicious sword owned by a brutal despot. +50 ATK")
+        MyBase.setDesc("A suspicious sword owned by a brutal despot." & vbcrlf & 
+		               "+50 ATK")
         id = 24
         tier = Nothing
         MyBase.setUsable(False)
         MyBase.aBoost = 50
         MyBase.count = 0
-        MyBase.value = 1250
+        MyBase.value = 3332
 
         MyBase.isRandoTFAcceptable = False
     End Sub

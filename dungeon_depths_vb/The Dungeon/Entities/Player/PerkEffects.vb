@@ -310,6 +310,7 @@
         tfs.Add("Succubus", AddressOf New SuccubusTF().step1)
         tfs.Add("Slime", AddressOf New SlimeTF().step1)
         tfs.Add("Bimbo", AddressOf New BimboTF(2, 0, 0.25, True).doubleTf)
+        tfs.Add("Cake", AddressOf New TTCCBF().step1)
 
         Dim form = tfs.Keys(Int(Rnd() * (tfs.Keys.Count - 1)))
         tfs(form)()
@@ -333,7 +334,7 @@
             If r > 8 And Not p.pClass.name.Equals("Bunny Girl") Then
                 Dim dTF = New DancerTF(1, 0, 0, False)
                 dTF.update()
-                p.createP()
+                p.drawPort()
                 Return True
             ElseIf r > 5 Then
                 Game.pushLblEvent("Your bowtie begins glowing, and suddenly everything seems to slow down.  You deftly sidestep the oncomming blow!  Time returns to its normal speed shortly, and your bowtie returns to its inert state.")

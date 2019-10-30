@@ -1,4 +1,4 @@
-﻿Public Class CombatModTF
+﻿Public NotInheritable Class CombatModTF
     Inherits Transformation
     Sub New()
         MyBase.New(1, 0, 0, False)
@@ -21,17 +21,17 @@
 
         'transformation
         If p.sex.Equals("Male") Then
-            p.prt.setIAInd(4, 0, False, True)
-            p.prt.setIAInd(6, 6, False, True)
-            p.prt.setIAInd(9, 11, False, True)
+            p.prt.setIAInd(pInd.face, 0, False, True)
+            p.prt.setIAInd(pInd.ears, 6, False, True)
+            p.prt.setIAInd(pInd.eyes, 11, False, True)
         Else
-            p.prt.setIAInd(4, 0, True, True)
-            p.prt.setIAInd(6, 11, True, True)
-            p.prt.setIAInd(9, 36, True, True)
+            p.prt.setIAInd(pInd.face, 0, True, True)
+            p.prt.setIAInd(pInd.ears, 11, True, True)
+            p.prt.setIAInd(pInd.eyes, 36, True, True)
         End If
-       
-        p.prt.setIAInd(12, 7, True, True)
-        p.prt.setIAInd(8, 12, True, False)
+
+        p.prt.setIAInd(pInd.glasses, 7, True, True)
+        p.prt.setIAInd(pInd.mouth, 12, True, False)
         p.pForm = p.forms("Combat Unit")
 
         p.perks("slutcurse") = -1

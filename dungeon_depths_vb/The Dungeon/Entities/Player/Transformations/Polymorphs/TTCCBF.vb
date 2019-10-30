@@ -1,4 +1,4 @@
-﻿Public Class TTCCBF
+﻿Public NotInheritable Class TTCCBF
     Inherits PolymorphTF
     Sub New()
         MyBase.New()
@@ -14,5 +14,7 @@
     End Sub
 
     Public Overrides Sub step1()
+        Game.player.pForm = Game.player.forms("Cake")
+        Game.player.sex = "Female"
     End Sub
 End Class

@@ -58,7 +58,7 @@
             f3.ShowDialog()
             f3.Dispose()
 
-            fuPlay.createP()
+            fuPlay.drawPort()
             fuPlay.currState.save(fuPlay)
             fuPlay.pState.save(fuPlay)
         End If
@@ -182,9 +182,9 @@
                 If r = 0 Then player.prt.iArrInd(i) = p1.sState.iArrInd(i) Else player.prt.iArrInd(i) = p2.sState.iArrInd(i)
             ElseIf i = 1 Then
                 r = Int(Rnd() * 2)
-                If r = 0 Then player.prt.iArrInd(1) = p1.prt.iArrInd(1) Else player.prt.iArrInd(1) = p2.prt.iArrInd(1)
-                If r = 0 Then player.prt.iArrInd(5) = p1.prt.iArrInd(5) Else player.prt.iArrInd(5) = p2.prt.iArrInd(5)
-                If r = 0 Then player.prt.iArrInd(15) = p2.prt.iArrInd(15) Else player.prt.iArrInd(15) = p1.prt.iArrInd(15)
+                If r = 0 Then player.prt.iArrInd(pInd.rearhair) = p1.prt.iArrInd(pInd.rearhair) Else player.prt.iArrInd(pInd.rearhair) = p2.prt.iArrInd(pInd.rearhair)
+                If r = 0 Then player.prt.iArrInd(pInd.midhair) = p1.prt.iArrInd(pInd.midhair) Else player.prt.iArrInd(pInd.midhair) = p2.prt.iArrInd(pInd.midhair)
+                If r = 0 Then player.prt.iArrInd(pInd.fronthair) = p2.prt.iArrInd(pInd.fronthair) Else player.prt.iArrInd(pInd.fronthair) = p1.prt.iArrInd(pInd.fronthair)
             End If
         Next
 

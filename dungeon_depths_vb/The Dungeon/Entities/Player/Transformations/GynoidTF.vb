@@ -1,4 +1,4 @@
-﻿Public Class GynoidTF
+﻿Public NotInheritable Class GynoidTF
     Inherits Transformation
     Sub New()
         MyBase.New(1, 0, 0, False)
@@ -23,14 +23,14 @@
         End If
         p.breastSize = 2 + Int(Rnd() * 2)
 
-        p.prt.setIAInd(1, 2, True, False)
-        p.prt.setIAInd(4, 6, True, True)
-        p.prt.setIAInd(5, 2, True, False)
-        p.prt.setIAInd(6, 9, True, True)
-        p.prt.setIAInd(8, 4, True, False)
-        p.prt.setIAInd(9, 25, True, True)
-        p.prt.setIAInd(11, 0, True, False)
-        p.prt.setIAInd(12, 6, True, True)
+        p.prt.setIAInd(pInd.rearhair, 2, True, False)
+        p.prt.setIAInd(pInd.face, 6, True, True)
+        p.prt.setIAInd(pInd.midhair, 2, True, False)
+        p.prt.setIAInd(pInd.ears, 9, True, True)
+        p.prt.setIAInd(pInd.mouth, 4, True, False)
+        p.prt.setIAInd(pInd.eyes, 25, True, True)
+        p.prt.setIAInd(pInd.facemark, 0, True, False)
+        p.prt.setIAInd(pInd.glasses, 6, True, True)
 
         p.pForm = p.forms("Gynoid")
 
@@ -61,7 +61,7 @@
             "...mmmm...maybe you should try to find someone to help you out of this uniform...it's making you so horny..."
         Game.pushLblEvent(out, AddressOf pt2)
         p.lust = 100
-        p.createP()
+        p.drawPort()
     End Sub
     Sub pt2()
         Dim out = "[sys/mind:] Dialing libido to 1000%-----COMPLETE!" & vbCrLf &
@@ -74,7 +74,7 @@
             "... uh oh.  You giggle to your self again.  If the only time you can be, like, totally smart is right after sex, then you're like totally gonna have to bang everything in this dungeon!"
         Game.pushLblEvent(out)
         Game.player.lust = 0
-        Game.player.createP()
+        Game.player.drawPort()
     End Sub
     Public Overrides Sub stopTF()
         MyBase.stopTF()

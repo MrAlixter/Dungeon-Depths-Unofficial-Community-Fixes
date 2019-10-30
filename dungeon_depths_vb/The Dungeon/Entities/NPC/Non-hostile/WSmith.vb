@@ -1,12 +1,12 @@
 ﻿Public Class WSmith
     Inherits ShopNPC
     Sub New()
-        setName("Weaponsmith")
-        setHealth(1.0)
-        setMaxHealth(99)
-        setATK(9999)
-        setDEF(9999)
-        setSPD(99)
+        name = "Weaponsmith"
+        health = 1.0
+        maxHealth = 99
+        attack = 9999
+        defence = 9999
+        speed = 99
 
         'Define the inventory
         inv = New Inventory(False)
@@ -19,9 +19,12 @@
         inv.setCount("Spiked_Staff", 1)
         inv.setCount("Throwing_Knife", 1)
         inv.setCount("Signature_Dagger", 1)
+        inv.setCount("Flaming_Sword", 1)
+        inv.setCount("Signature_Whip", 1)
+
 
         isShop = True
-        setGold(99999)
+        gold = 99999
         pronoun = "she"
         pPronoun = "her"
         rPronoun = "her"

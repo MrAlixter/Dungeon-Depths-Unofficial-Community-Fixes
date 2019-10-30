@@ -53,6 +53,7 @@ Partial Class GeneratorSettings
         Me.lblTrapFreqRange = New System.Windows.Forms.Label()
         Me.boxTrapSizeDependence = New System.Windows.Forms.NumericUpDown()
         Me.lblTrapSizeDependence = New System.Windows.Forms.Label()
+        Me.txtSeed = New System.Windows.Forms.TextBox()
         CType(Me.boxWidth, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me.boxHeight, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me.boxChestFreqRange, System.ComponentModel.ISupportInitialize).BeginInit()
@@ -363,12 +364,22 @@ Partial Class GeneratorSettings
         Me.lblTrapSizeDependence.TabIndex = 241
         Me.lblTrapSizeDependence.Text = "Trap Size Dependence:"
         '
+        'txtSeed
+        '
+        Me.txtSeed.BackColor = System.Drawing.Color.Black
+        Me.txtSeed.ForeColor = System.Drawing.Color.White
+        Me.txtSeed.Location = New System.Drawing.Point(129, 6)
+        Me.txtSeed.Name = "txtSeed"
+        Me.txtSeed.Size = New System.Drawing.Size(213, 31)
+        Me.txtSeed.TabIndex = 243
+        '
         'GeneratorSettings
         '
         Me.AutoScaleDimensions = New System.Drawing.SizeF(11.0!, 23.0!)
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font
         Me.BackColor = System.Drawing.Color.Black
         Me.ClientSize = New System.Drawing.Size(784, 461)
+        Me.Controls.Add(Me.txtSeed)
         Me.Controls.Add(Me.boxTrapSizeDependence)
         Me.Controls.Add(Me.lblTrapSizeDependence)
         Me.Controls.Add(Me.boxTrapFreqMin)
@@ -455,4 +466,5 @@ Partial Class GeneratorSettings
     Friend WithEvents lblTrapFreqRange As Label
     Friend WithEvents boxTrapSizeDependence As NumericUpDown
     Friend WithEvents lblTrapSizeDependence As Label
+    Friend WithEvents txtSeed As System.Windows.Forms.TextBox
 End Class

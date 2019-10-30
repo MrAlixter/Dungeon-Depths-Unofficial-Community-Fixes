@@ -9,6 +9,7 @@ Partial Class Debug_Window
             If disposing AndAlso components IsNot Nothing Then
                 components.Dispose()
             End If
+            If Not map Is Nothing Then map.Dispose()
         Finally
             MyBase.Dispose(disposing)
         End Try

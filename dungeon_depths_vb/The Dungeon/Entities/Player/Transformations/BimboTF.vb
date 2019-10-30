@@ -1,4 +1,4 @@
-﻿Public Class BimboTF
+﻿Public NotInheritable Class BimboTF
     Inherits Transformation
     Public Shared bimboyellow As Color = Color.FromArgb(255, 255, 230, 160)
 
@@ -24,39 +24,39 @@
         Dim p As player = game.player
         If p.name = "Targax" Then
             p.prt.haircolor = Color.FromArgb(255, 255, 0, 147)
-            p.prt.setIAInd(1, 9, True, True)
-            p.prt.setIAInd(5, 9, True, True)
-            p.prt.setIAInd(15, 13, True, True)
+            p.prt.setIAInd(pInd.rearhair, 9, True, True)
+            p.prt.setIAInd(pInd.midhair, 9, True, True)
+            p.prt.setIAInd(pInd.fronthair, 13, True, True)
         Else
             p.prt.haircolor = bimboyellow
-            p.prt.setIAInd(1, 1, True, True)
-            p.prt.setIAInd(5, 5, True, True)
-            p.prt.setIAInd(15, 6, True, True)
+            p.prt.setIAInd(pInd.rearhair, 1, True, True)
+            p.prt.setIAInd(pInd.midhair, 5, True, True)
+            p.prt.setIAInd(pInd.fronthair, 6, True, True)
         End If
 
-        If p.prt.checkNDefFemInd(6, 6) Then p.prt.setIAInd(6, 0, True, True)
+        If p.prt.checkNDefFemInd(6, 6) Then p.prt.setIAInd(pInd.ears, 0, True, True)
         Polymorph.giveRNDBimName(p)
-        p.prt.setIAInd(8, 5, True, True)
-        p.prt.setIAInd(9, 7, True, True)
-        p.prt.setIAInd(13, 0, True, False)
-        If Not p.pClass.name.Equals("Magical Girl") Then p.prt.setIAInd(16, 0, True, False)
+        p.prt.setIAInd(pInd.mouth, 5, True, True)
+        p.prt.setIAInd(pInd.eyes, 7, True, True)
+        p.prt.setIAInd(pInd.cloak, 0, True, False)
+        If Not p.pClass.name.Equals("Magical Girl") Then p.prt.setIAInd(pInd.hat, 0, True, False)
 
         If p.breastSize = 1 Then
-            p.prt.setIAInd(2, 6, True, True)
+            p.prt.setIAInd(pInd.body, 6, True, True)
             p.breastSize = 2
             If p.equippedArmor.getName.ToString() = "Common_Clothes" Then
-                p.prt.setIAInd(3, 5, True, True)
+                p.prt.setIAInd(pInd.clothes, 5, True, True)
             End If
         ElseIf p.breastSize < 7 Then
             p.breastSize += 1
             p.reverseBSRoute()
         End If
         If p.pClass.name.Equals("Magical Girl") Then
-            p.prt.setIAInd(16, Portrait.imgLib.atrs("Hat").getF.Count - 3, True, True)
+            p.prt.setIAInd(pInd.hat, Portrait.imgLib.atrs("Hat").getF.Count - 3, True, True)
             p.perks("bimbotf") = 24
         End If
         p.lust += 10
-        p.createP()
+        p.drawPort()
         Game.pushLblEvent("You pause to rub your temples, a massive headache comming down on you like a ton of bricks.  As you take a few minutes to recover, you notice that your center of balance is off and more disturbingly, that you can't seem to focus enough to figure out why." & vbCrLf & vbCrLf & "Maybe you can just walk this off...")
     End Sub
     Sub step2()
@@ -75,7 +75,7 @@
         'final tf Stage
         If p.name.Equals("Targax") Then p.prt.haircolor = Color.FromArgb(255, 20, 20, 20) Else p.prt.haircolor = Color.FromArgb(255, 245, 231, 184)
         If p.breastSize < 3 And Not p.pClass.name.Equals("Magical Girl") Then
-            p.prt.setIAInd(2, 7, True, True)
+            p.prt.setIAInd(pInd.body, 7, True, True)
             p.breastSize = 3
         ElseIf p.breastSize < 7 Then
             p.breastSize += 1
@@ -92,18 +92,18 @@
         End If
         If p.name <> "Targax" Then
             p.prt.haircolor = Color.FromArgb(255, 250, 250, 205)
-            p.prt.setIAInd(1, 6, True, True)
-            p.prt.setIAInd(5, 6, True, True)
-            p.prt.setIAInd(9, 8, True, True)
-            p.prt.setIAInd(15, 7, True, True)
+            p.prt.setIAInd(pInd.rearhair, 6, True, True)
+            p.prt.setIAInd(pInd.midhair, 6, True, True)
+            p.prt.setIAInd(pInd.eyes, 8, True, True)
+            p.prt.setIAInd(pInd.fronthair, 7, True, True)
         Else
-            p.prt.setIAInd(9, 16, True, True)
+            p.prt.setIAInd(pInd.eyes, 16, True, True)
         End If
-        p.prt.setIAInd(8, 6, True, True)
+        p.prt.setIAInd(pInd.mouth, 6, True, True)
         If game.mDun.numCurrFloor < 6 Then p.pImage = Game.picPlayerB.BackgroundImage Else p.pImage = Game.picBimbof.BackgroundImage
         p.TextColor = Color.HotPink
         p.perks("bimbotf") = -1
-        p.createP()
+        p.drawPort()
         stopTF()
         Game.pushLblEvent(out)
     End Sub
@@ -122,14 +122,14 @@
         p.pClass = p.classes("Bimbo")
         p.lust += 50
         'final tf Stage
-        If p.prt.checkNDefFemInd(6, 6) Then p.prt.setIAInd(6, 0, True, True)
+        If p.prt.checkNDefFemInd(6, 6) Then p.prt.setIAInd(pInd.ears, 0, True, True)
         Polymorph.giveRNDBimName(p)
-        p.prt.setIAInd(13, 0, True, False)
-        p.prt.setIAInd(16, 0, True, False)
+        p.prt.setIAInd(pInd.cloak, 0, True, False)
+        p.prt.setIAInd(pInd.hat, 0, True, False)
 
         p.prt.haircolor = Color.FromArgb(255, 245, 231, 184)
         If p.breastSize < 3 And Not p.pClass.name.Equals("Magical Girl") Then
-            p.prt.setIAInd(2, 7, True, True)
+            p.prt.setIAInd(pInd.body, 7, True, True)
             p.breastSize = 3
         ElseIf p.breastSize < 7 Then
             p.breastSize += 1
@@ -145,16 +145,16 @@
         End If
 
         p.prt.haircolor = Color.FromArgb(255, 250, 250, 205)
-        p.prt.setIAInd(1, 23, True, True)
-        p.prt.setIAInd(5, 26, True, True)
-        p.prt.setIAInd(9, 32, True, True)
-        p.prt.setIAInd(15, 24, True, True)
-        p.prt.setIAInd(8, 17, True, True)
+        p.prt.setIAInd(pInd.rearhair, 23, True, True)
+        p.prt.setIAInd(pInd.midhair, 26, True, True)
+        p.prt.setIAInd(pInd.eyes, 32, True, True)
+        p.prt.setIAInd(pInd.fronthair, 24, True, True)
+        p.prt.setIAInd(pInd.mouth, 17, True, True)
 
         p.setPImage()
         p.TextColor = Color.FromArgb(255, 255, 235, 240)
         p.perks("bimbotf") = -1
-        p.createP()
+        p.drawPort()
         stopTF()
     End Sub
 
@@ -167,14 +167,14 @@
         p.lust += 20
 
         'final tf Stage
-        If p.prt.checkNDefFemInd(6, 6) Then p.prt.setIAInd(6, 0, True, True)
+        If p.prt.checkNDefFemInd(6, 6) Then p.prt.setIAInd(pInd.ears, 0, True, True)
         Polymorph.giveRNDBimName(p)
-        p.prt.setIAInd(13, 0, True, False) 'glasses
-        p.prt.setIAInd(16, 0, True, False) 'hat
+        p.prt.setIAInd(pInd.cloak, 0, True, False) 'glasses
+        p.prt.setIAInd(pInd.hat, 0, True, False) 'hat
 
         p.prt.haircolor = cRed
         If p.breastSize < 3 And Not p.pClass.name.Equals("Magical Girl") Then
-            p.prt.setIAInd(2, 7, True, True)
+            p.prt.setIAInd(pInd.body, 7, True, True)
             p.breastSize = 3
         ElseIf p.breastSize < 7 Then
             p.breastSize += 1
@@ -182,35 +182,26 @@
         End If
 
         p.prt.haircolor = cRed
-        p.prt.setIAInd(1, 11, True, True) 'rhair 2
-        p.prt.setIAInd(5, 11, True, True) 'rhair 1
-        p.prt.setIAInd(9, 8, True, True) 'eyes
-        p.prt.setIAInd(15, 17, True, True) 'fhair
-        p.prt.setIAInd(8, 6, True, True) 'mouth
+        p.prt.setIAInd(pInd.rearhair, 11, True, True) 'rhair 2
+        p.prt.setIAInd(pInd.midhair, 11, True, True) 'rhair 1
+        p.prt.setIAInd(pInd.eyes, 8, True, True) 'eyes
+        p.prt.setIAInd(pInd.fronthair, 17, True, True) 'fhair
+        p.prt.setIAInd(pInd.mouth, 6, True, True) 'mouth
 
         p.setPImage()
         p.perks("bimbotf") = -1
-        p.createP()
+        p.drawPort()
         stopTF()
     End Sub
 
     Sub step2alt()
         Dim p As player = game.player
-        p.prt.setIAInd(16, 0, True, True)
-        p.prt.setIAInd(2, 7, True, True)
-        p.prt.haircolor = Color.FromArgb(255, 255, 250, 205)
-        p.prt.setIAInd(1, 10, True, True)
-        p.prt.setIAInd(5, 10, True, True)
-        p.prt.setIAInd(15, 7, True, True)
-        p.prt.setIAInd(6, 0, True, True)
-        p.prt.setIAInd(8, 6, True, True)
-        p.prt.setIAInd(9, 8, True, True)
-        p.prt.setIAInd(13, 0, True, True)
-        Equipment.clothesChange("Magical_Girl_Outfit")
-        p.breastSize = 3
+
+        Dim mstf = New MagSlutTF(1, 0, 0, False)
+        mstf.step2()
         Game.pushLblEvent("You immediatly feel funny, the increased magic in your system reacting swiftly with the gum.  In your haze, you look down to see your clothes have become tight and pink. You giggle, all traces of intellect vanishing as your body becomes more curvy and feminine. Your hair lengthens, becoming a platinum blonde, and your clothes finish changing to match your new figure.")
         p.lust += 10
-        If game.mDun.numCurrFloor < 6 Then p.pImage = Game.picPlayerB.BackgroundImage Else p.pImage = Game.picBimbof.BackgroundImage
+
         p.TextColor = Color.HotPink
         p.perks("bimbotf") = -1
         stopTF()
