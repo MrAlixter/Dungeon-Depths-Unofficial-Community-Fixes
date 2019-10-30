@@ -269,13 +269,13 @@ Public Class Portrait
         Select Case Int(ent.lust / 20)
             Case 0
             Case 1
-                iarr(pind.face) = CreateBMP({iarr(pind.face), Game.picLust1.BackgroundImage})
+                iarr(pInd.face) = CreateBMP({CharacterGenerator.picPort.Image, iarr(pInd.face), Game.picLust1.BackgroundImage})
             Case 2
-                iarr(pind.face) = CreateBMP({iarr(pind.face), Game.picLust2.BackgroundImage})
+                iarr(pInd.face) = CreateBMP({CharacterGenerator.picPort.Image, iarr(pInd.face), Game.picLust2.BackgroundImage})
             Case 3
-                iarr(pind.face) = CreateBMP({iarr(pind.face), Game.picLust3.BackgroundImage})
+                iarr(pInd.face) = CreateBMP({CharacterGenerator.picPort.Image, iarr(pInd.face), Game.picLust3.BackgroundImage})
             Case Else
-                iarr(pind.face) = CreateBMP({iarr(pind.face), Game.picLust4.BackgroundImage})
+                iarr(pInd.face) = CreateBMP({CharacterGenerator.picPort.Image, iarr(pInd.face), Game.picLust4.BackgroundImage})
         End Select
     End Sub
     Sub addWings(ByVal i As Integer)
@@ -451,9 +451,9 @@ Public Class Portrait
             p.equippedAcce = New noAcce()
         Else
             If sexBool() Then
-                If Not p.equippedAcce.fInd Is Nothing Then iArrInd(pInd.accessory) = p.equippedAcce.fInd Else iArrInd(pInd.face) = p.equippedAcce.mInd
+                If Not p.equippedAcce.fInd Is Nothing Then iArrInd(pInd.accessory) = p.equippedAcce.fInd Else iArrInd(pInd.accessory) = p.equippedAcce.mInd
             Else
-                If Not p.equippedAcce.mInd Is Nothing Then iArrInd(pInd.accessory) = p.equippedAcce.mInd Else iArrInd(pInd.face) = p.equippedAcce.fInd
+                If Not p.equippedAcce.mInd Is Nothing Then iArrInd(pInd.accessory) = p.equippedAcce.mInd Else iArrInd(pInd.accessory) = p.equippedAcce.fInd
             End If
         End If
 
