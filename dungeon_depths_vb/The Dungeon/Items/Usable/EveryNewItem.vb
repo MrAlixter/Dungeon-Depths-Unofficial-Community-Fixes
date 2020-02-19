@@ -14,7 +14,7 @@
     Public Overrides Sub use()
         Dim p As Player = Game.player
 
-        For i = 146 To 174
+        For i = 146 To 182
             p.inv.add(i, 1)
         Next
 

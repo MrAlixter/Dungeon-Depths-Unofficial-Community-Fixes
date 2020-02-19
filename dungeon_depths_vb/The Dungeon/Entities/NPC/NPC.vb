@@ -18,7 +18,6 @@
     Public stunct As Integer = 0
     Public firstTurn = True
     Dim img As Image
-    Dim dropTable() As Integer = {}
 
     Public Overrides Sub update()
         If tfCt > 0 Then
@@ -70,15 +69,7 @@
         cause.nextCombatAction = Nothing
 
 
-        If getName() = "Explorer" Then
-            If MessageBox.Show("Would you like to do the Explorer's body swap?", "Body Swap?", MessageBoxButtons.YesNo) = Windows.Forms.DialogResult.Yes Then 'Int(Rnd() * 3) = 0 Then '
-                Try
-                    bodySwap(Game.player)
-                Catch ex As Exception
-                    Game.pushLblEvent("The body swap fails!")
-                End Try
-            End If
-        ElseIf getName.Contains("Enthralling Half-Dem") Then
+        If getName.Contains("Enthralling Half-Dem") Then
             Equipment.accChange("Nothing")
         End If
 
@@ -241,12 +232,6 @@
         End If
     End Function
 
-    Public Sub bodySwap(ByRef p As Player)
-        p.ongoingTFs.Add(New RandoTF())
-        p.update()
-        p.health = 0.1
-        Game.pushLblEvent("As the explorer is defeated, they mumble some arcane poem and make a hand gesture which causes the two of you to begin glowing.  With a flash, you suddenly find yourself looking at the dungeon from a slightly different angle.  As you black out and collapse, the last thing you see is your grinning face standing over you." & vbCrLf & "The Explorer has taken your body!")
-    End Sub
     Public Overrides Sub reachedFPathDest()
         forcedPath = Nothing
     End Sub
@@ -359,4 +344,7 @@
         If Not source Is Nothing Then currTarget = source
         Game.lblEHealthChange.Tag -= dmg
     End Sub
+    Public Overridable Function reactToSpell(ByVal spell As String) As Boolean
+        Return True
+    End Function
 End Class

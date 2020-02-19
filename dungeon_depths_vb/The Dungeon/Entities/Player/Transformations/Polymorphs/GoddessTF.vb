@@ -10,12 +10,12 @@
     End Sub
 
     Public Overrides Sub setWaitTime(stage As Integer)
-        Dim p As player = game.player
-        turnsTilNextStep = Int(Rnd() * 50) + Int(Rnd() * 50) + Int(Rnd() * p.getmaxMana) + Int(Rnd() * p.getWIL)
+        Dim p As Player = Game.player
+        turnsTilNextStep = Int(Rnd() * 50) + Int(Rnd() * 50) + Int(Rnd() * p.getMaxMana) + Int(Rnd() * p.getWIL)
     End Sub
 
     Public Overrides Sub step1()
-        Dim p As player = game.player
+        Dim p As Player = Game.player
         Dim out = ""
 
         'unequips
@@ -30,8 +30,8 @@
         p.prt.haircolor = Color.FromArgb(255, 210, 180, 140)
         If p.prt.skincolor = Color.FromArgb(255, 255, 105, 180) Then p.prt.haircolor = Color.FromArgb(255, 155, 0, 0)
         If p.prt.skincolor = Color.FromArgb(200, 0, 255, 255) Then p.prt.haircolor = Color.FromArgb(180, 5, 245, 198)
+        p.breastSize = 2
         p.prt.setIAInd(pInd.rearhair, 8, True, True)
-        p.prt.setIAInd(pInd.body, 1, True, True)
         p.prt.setIAInd(pInd.face, 0, True, False)
         p.prt.setIAInd(pInd.midhair, 8, True, True)
         p.prt.setIAInd(pInd.ears, 0, True, False)
@@ -40,7 +40,7 @@
         p.prt.setIAInd(pInd.eyes, 10, True, True)
         p.prt.setIAInd(pInd.eyebrows, 0, True, False)
         p.prt.setIAInd(pInd.cloak, 0, True, False)
-        p.prt.setIAInd(pInd.fronthair, 9, True, False)
+        p.prt.setIAInd(pInd.fronthair, 9, True, True)
         p.prt.setIAInd(pInd.hat, 0, True, False)
         p.goddState.save(p)
 

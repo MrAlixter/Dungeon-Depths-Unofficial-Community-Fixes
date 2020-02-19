@@ -32,13 +32,17 @@
         picPrincess = Game.picWSmithPrin.BackgroundImage
         picBunny = Game.picWSmithBun.BackgroundImage
 
+        picNCP = New List(Of Image)
+        picNCP.AddRange({picNormal, Game.picFrog.BackgroundImage, Game.picSheep.BackgroundImage, picPrincess, picBunny})
+
+        picNCP.AddRange({Game.picWSmithAlt.BackgroundImage, Game.picWSmithAlt2.BackgroundImage, Game.picWSmithAlt3.BackgroundImage, Game.picWSDoll.BackgroundImage})
         If speed = Game.player.speed Then speed -= 1
         title = " the "
     End Sub
 
     Public Overrides Sub encounter()
         MyBase.encounter()
-        picNCP.AddRange({Game.picWSmithAlt.BackgroundImage, Game.picWSmithAlt2.BackgroundImage, Game.picWSmithAlt3.BackgroundImage})
+
         discount = 0
 
         If npcIndex = 0 Then
@@ -66,6 +70,8 @@
             Game.pushNPCDialog("Oh my, I appear to have broken a nail.  I suppose it comes with the title of ""Princess of Smithery"" to get my hands dirty, but I should still be more careful...")
         ElseIf npcIndex = 4 Then
             Game.pushNPCDialog("*giggle* Let me know what you, like, need and I'll totally hop to it, cutie! *fit of giggles*")
+        ElseIf npcIndex = 7 Then
+            Game.pushNPCDialog("...")
         End If
 
         Game.picNPC.BackgroundImage = picNCP(npcIndex)
@@ -82,6 +88,8 @@
             Return "As a warrior princess I shall not refuse this duel...  I shall end thou rightly!"
         ElseIf npcIndex = 4 Then
             Return "*giggle* I'll show you just how, like, cute I am, even in a fight!"
+        ElseIf npcIndex = 7 Then
+            Return "..."
         End If
         Return "Unless you're packing some serious magic, probably not your best move..."
     End Function
@@ -99,9 +107,18 @@
             Return "You now face the ""Princess of Smithery"", mage!"
         ElseIf npcIndex = 4 Then
             Return "Woah, everything's so...shiny...."
+        ElseIf npcIndex = 7 Then
+            Return "..."
         End If
 
         Game.NPCtoCombat(Me)
         Return "W-w-wait, don't try turning me into anything gross, ok?"
     End Function
+
+    Public Overrides Sub toDoll()
+        Game.pushNPCDialog("...")
+        Game.picNPC.BackgroundImage = picNCP(7)
+
+        discount = 0.5
+    End Sub
 End Class

@@ -13,6 +13,8 @@
         MyBase.value = 10
         MyBase.fInd = New Tuple(Of Integer, Boolean, Boolean)(14, True, True)
         MyBase.mInd = New Tuple(Of Integer, Boolean, Boolean)(13, False, True)
+
+        underClothes = True
     End Sub
     Public Overrides Sub onEquip()
         MyBase.onEquip()

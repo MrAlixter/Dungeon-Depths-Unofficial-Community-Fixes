@@ -176,6 +176,16 @@ Public Class Portrait
             pic = Game.picHalfDragon2.BackgroundImage
         ElseIf pForm.Equals("Broodmother") Then
             pic = Game.picBroodmother.BackgroundImage
+        ElseIf pForm.Equals("Horse") Then
+            pic = Game.picHorse.BackgroundImage
+        ElseIf pForm.Equals("Unicorn") Then
+            pic = Game.picUnicorn.BackgroundImage
+        ElseIf pForm.Equals("Oni") Then
+            pic = Game.picOniF.BackgroundImage
+        ElseIf pForm.Equals("Blob") And Not sexBool() Then
+            pic = Game.picBlobM.BackgroundImage
+        ElseIf pForm.Equals("Blob") And sexBool() Then
+            pic = Game.picBlobF.BackgroundImage
         End If
         Return pic
     End Function
@@ -314,7 +324,7 @@ Public Class Portrait
             iarr(pInd.midhair) = CreateFullBodyBMP({CharacterGenerator.picPort.Image, iarr(pInd.accessory), iarr(pInd.clothes), iarr(pInd.midhair)})
             iarr(pInd.accessory) = CharacterGenerator.picPort.Image
             iarr(pInd.mouth) = CharacterGenerator.picPort.Image
-        ElseIf checkNDefFemInd(14, 12) Then
+        ElseIf checkNDefFemInd(14, 12) Or checkNDefFemInd(14, 15) Or checkNDefMalInd(14, 14) Then
             iarr(pInd.midhair) = CreateFullBodyBMP({CharacterGenerator.picPort.Image, iarr(pInd.accessory), iarr(pInd.clothes), iarr(pInd.midhair)})
             iarr(pInd.accessory) = CharacterGenerator.picPort.Image
         End If

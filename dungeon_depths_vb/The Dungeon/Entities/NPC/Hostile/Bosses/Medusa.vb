@@ -44,6 +44,46 @@
             Game.pushLblEvent("You can see again!")
         End If
 
-        MyBase.attackCMD(target)
+        If target.GetType() Is GetType(Player) AndAlso Not CType(target, Player).prt.skincolor.Equals(Color.DarkGray) And Int(Rnd() * 20) = 0 Then
+            Game.pushLblEvent("Medusa casts Flesh to Basalt!")
+            StoneFlesh()
+        Else
+            MyBase.attackCMD(target)
+        End If
     End Sub
+    Public Sub StoneFlesh()
+        Dim p = Game.player
+        If Transformation.canBeTFed(p) Then
+            p.pState.save(p)
+        End If
+        p.defence = 40
+
+        Dim pturns = Int(Rnd() * 5) + 1
+        p.petrify(Color.DarkGray, pturns)
+        Game.pushLstLog(CStr("Medusa chants an arcane incantation, and petrifies you for " & pturns - 1 & " turns!"))
+        Game.pushLblCombatEvent(CStr("Medusa chants an arcane incantation, and petrifies you for " & pturns - 1 & " turns!"))
+    End Sub
+    Public Overrides Function reactToSpell(spell As String) As Boolean
+        If spell.Equals("Petrify") Then
+            Game.pushLblEvent("The spell bounces off Medusa and strikes the ground!")
+            Return False
+        ElseIf spell.Equals("Polymorph Enemy") Then
+            Dim pe = New EnemyPolymorph(Game.player, Nothing)
+            Game.pushLblEvent("Medusa's eyes flash and a copy of your spell is cast back at you!")
+            pe.backfire()
+            Return False
+        ElseIf spell.Equals("Turn to Cupcake") Then
+            Dim ttc = New turnToCupcake(Game.player, Nothing)
+            Game.pushLblEvent("Medusa's eyes flash and a copy of your spell is cast back at you!")
+            ttc.backfire()
+            Return False
+        ElseIf spell.Equals("Uvona's Fugue") Then
+            Dim uf = New UvonasFugue(Game.player, Nothing)
+            Game.pushLblEvent("Medusa's eyes flash and a copy of your spell is cast back at you!")
+            uf.backfire()
+            Return False
+        End If
+
+        Return True
+    End Function
 End Class

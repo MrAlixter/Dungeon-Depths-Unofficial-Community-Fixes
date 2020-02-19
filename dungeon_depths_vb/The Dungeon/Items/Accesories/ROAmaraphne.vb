@@ -1,11 +1,11 @@
-﻿Public Class ROTLGoddess
+﻿Public Class ROAmaraphne
     Inherits Accessory
 
     Sub New()
-        MyBase.setName("Ring_of_the_L._Goddess")
+        MyBase.setName("Ring_of_Amaraphne")
         MyBase.setDesc("While on the surface, this seems to be but an ornate ring crafted from " &
                        "extremely precious materials, closer inspection reveals that the inside " &
-                       "of its band is inscribed with a blessing of the love goddess." & vbCrLf &
+                       "of its band is inscribed with a blessing of Amaraphne, the love goddess." & vbCrLf &
                        "Use to change armor to slut variant" & vbCrLf &
                        "+ DEF based on equipped armor" & vbCrLf &
                        "+ SPD based on bust size" & vbCrLf & vbCrLf &

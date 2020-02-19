@@ -38,7 +38,7 @@
 
         Equipment.clothesChange("Valkyrie_Armor")
 
-        p.knownSpecials.Add("Blazing Angel Strike")
+        If Not p.knownSpecials.Contains("Blazing Angel Strike") Then p.knownSpecials.Add("Blazing Angel Strike")
         Game.pushLstLog("""Blazing Angel Strike"" special learned!")
         p.canMoveFlag = True
     End Sub

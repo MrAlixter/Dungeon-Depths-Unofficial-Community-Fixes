@@ -24,6 +24,10 @@
         picPrincess = Game.picCBrok2.BackgroundImage
         picBunny = Game.picCBrok3.BackgroundImage
 
+        picNCP = New List(Of Image)
+        picNCP.AddRange({picNormal, Game.picFrog.BackgroundImage, Game.picSheep.BackgroundImage, picPrincess, picBunny})
+
+        picNCP.AddRange({Game.picCBDoll.BackgroundImage})
         If speed = Game.player.speed Then speed -= 1
         title = " the "
     End Sub
@@ -77,7 +81,7 @@
             Game.pushLstLog("You've been afflicted with the curse of Blindness!")
         End If
         'Claustrophobia
-        If Int(Rnd() * 5) <> 90 Then
+        If Int(Rnd() * 5) = 0 Then
             Game.mBoardHeight = 10
             Game.mBoardWidth = 10
             Game.pushLstLog("You've been afflicted with the curse of Claustrophobia!")

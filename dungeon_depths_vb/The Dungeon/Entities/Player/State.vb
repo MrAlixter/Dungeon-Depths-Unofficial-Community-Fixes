@@ -8,7 +8,7 @@
     Dim health As Double
     Public maxHealth, mana, maxMana, attack, defence As Integer
     Dim will, speed, gold, lust As Integer
-    Dim breastSize, hunger As Integer
+    Public breastSize, hunger As Integer
     Dim equippedWeapon As Weapon
     Public equippedArmor As Armor
     Dim equippedAcce As Accessory
@@ -289,4 +289,8 @@
     Public Function getHairColor() As Color
         Return haircolor
     End Function
+    Public Sub saveHCSC(ByVal hc As Color, ByVal sc As Color)
+        haircolor = hc
+        skincolor = sc
+    End Sub
 End Class

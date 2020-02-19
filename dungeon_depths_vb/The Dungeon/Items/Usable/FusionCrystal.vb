@@ -49,7 +49,6 @@
             Game.updatelist = New PQ
 
             Game.player = fuPlay
-            Equipment.setP(Game.player)
 
             fuPlay.inv.invNeedsUDate = True
             fuPlay.UIupdate()

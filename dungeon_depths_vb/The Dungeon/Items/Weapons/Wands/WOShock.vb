@@ -1,5 +1,5 @@
 ﻿Public Class WOShock
-    Inherits Weapon
+    Inherits Wand
 
     Sub New()
         MyBase.setName("Wand_of_Shocking")
@@ -12,7 +12,7 @@
 
         MyBase.isMonsterDrop = False
     End Sub
-    Overrides Function attack(ByRef p As Player, ByRef m As Entity) As Integer
+    Public Overrides Sub spell(ByRef p As Player, ByRef m As Entity)
         Dim dmg As Integer = 10
         Dim d31 = Int(Rnd() * 3)
         Dim d32 = Int(Rnd() * 3)
@@ -21,6 +21,5 @@
         m.takeDMG(dmg + d31 + d32, p)
         Game.pushLstLog(CStr("You zap the " & m.name & " for " & dmg + d31 + d32 & " damage!"))
         Game.pushLblCombatEvent(CStr("You zap the " & m.name & " for " & dmg + d31 + d32 & " damage!"))
-        Return -3
-    End Function
+    End Sub
 End Class

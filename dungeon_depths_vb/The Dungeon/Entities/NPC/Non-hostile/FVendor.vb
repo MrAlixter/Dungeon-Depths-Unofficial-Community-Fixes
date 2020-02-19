@@ -36,14 +36,17 @@
         picNormal = Game.picFS.BackgroundImage
         picPrincess = Game.picFSPrin.BackgroundImage
         picBunny = Game.picFSBun.BackgroundImage
+        picNCP = New List(Of Image)
+        picNCP.AddRange({picNormal, Game.picFrog.BackgroundImage, Game.picSheep.BackgroundImage, picPrincess, picBunny})
 
+        picNCP.AddRange({Game.picFSCow.BackgroundImage, Game.picFSCat.BackgroundImage, Game.picFVHT.BackgroundImage, Game.picFVDoll.BackgroundImage})
         If speed = Game.player.speed Then speed -= 1
         title = " the "
     End Sub
 
     Public Overrides Sub encounter()
         MyBase.encounter()
-        picNCP.AddRange({Game.picFSCow.BackgroundImage, Game.picFSCat.BackgroundImage, Game.picFVHT.BackgroundImage})
+
         discount = 0
 
         If npcIndex = 0 Then
@@ -83,6 +86,8 @@
             Game.pushNPCDialog("I'd be lyinig if I said I wasn't used to being turned into a woman at this point.  Between my bestie and possibly girlfriend, and all the crazy stuff that " &
                                "goes on around this place, you'd think I'd have more than just the mental defences.  But hey, variety is the spice of life, and I'm totally sizzlin' in this thing!  " &
                                "Don't, uh, tell Teach I said that though, she might end up keeping me like this...")
+        ElseIf npcIndex = 8 Then
+            Game.pushNPCDialog("...")
         End If
         If npcIndex = 5 Then inv.setCount(98, 1) Else inv.setCount(98, 0)
         Game.picNPC.BackgroundImage = picNCP(npcIndex)
@@ -99,6 +104,8 @@
             Return "Wait, you wouldn't hit a princess, right?"
         ElseIf npcIndex = 4 Then
             Return "WHAA...can't we talk this out, or at least wait for me to turn back?!?"
+        ElseIf npcIndex = 8 Then
+            Return "..."
         End If
         Return "Looks like someone ordered...a knuckle sandwich!  Hahaha, aaahhh...no?  Not a fan of the puns?  Well, all the more reason to kick your ass."
     End Function
@@ -116,9 +123,18 @@
             Return "Hmmmm...  This actually might be useful..."
         ElseIf npcIndex = 4 Then
             Return "*giggle* Was tha... No, I've gotta focus...  "
+        ElseIf npcIndex = 8 Then
+            Return "..."
         End If
 
         Game.NPCtoCombat(Me)
         Return "*sigh* Alright, here we go."
     End Function
+
+    Public Overrides Sub toDoll()
+        Game.pushNPCDialog("...")
+        Game.picNPC.BackgroundImage = picNCP(8)
+
+        discount = 0.5
+    End Sub
 End Class

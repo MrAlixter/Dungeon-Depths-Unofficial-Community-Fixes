@@ -8,12 +8,10 @@
     Public wList As Dictionary(Of String, Weapon) = New Dictionary(Of String, Weapon)
     'accessories
     Public acList As Dictionary(Of String, Accessory) = New Dictionary(Of String, Accessory)
-    'define a shorthand representation of the main player
-    Dim p As Player = Game.player
+
     'init triggers an initialion Form3's global variables 
     Public Sub init()
-        p = Game.player
-
+        Dim p = Game.player
         Dim a As Tuple(Of String(), Armor())
         Dim w As Tuple(Of String(), Weapon())
         Dim ac As Tuple(Of String(), Accessory())
@@ -41,6 +39,7 @@
 
     'handles the click of the 'ok' button
     Private Sub btnACPT_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles btnACPT.Click
+        Dim p = Game.player
         Dim needsToUpdate As Boolean = False
 
         'equip the new equipment
@@ -174,6 +173,7 @@
     'handles the loading of this form
     Private Sub Form3_Load(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles MyBase.Load
         init()
+        Dim p = Game.player
         'scale to the screen size
         Dim startingWidth = Me.Width
         Dim startingHeight = Me.Height
@@ -222,6 +222,7 @@
         cboxAccessory.SelectedItem = p.equippedAcce.getName()
     End Sub
     Sub defaultClothesOptions(ByVal options As ComboBox.ObjectCollection)
+        Dim p = Game.player
         If p.pClass.name = "Bimbo" Or p.perks("slutcurse") > -1 Or p.equippedArmor.getName.Equals("Skimpy_Clothes") Then
             options.Add("Skimpy_Clothes")
         ElseIf (p.perks("slutcurse") > -1 And p.equippedArmor.getName.Equals("Skimpy_Clothes")) Or p.equippedArmor.getName.Equals("Very_Skimpy_Clothes") Then
@@ -243,6 +244,7 @@
         End If
     End Sub
     Sub defaultClothesOptionsAlt(ByVal options As ListBox.ObjectCollection)
+        Dim p = Game.player
         If p.pClass.name = "Bimbo" Or p.perks("slutcurse") > -1 Or p.equippedArmor.getName.Equals("Skimpy_Clothes") Then
             options.Add("b - Skimpy_Clothes")
         ElseIf (p.perks("slutcurse") > -1 And p.equippedArmor.getName.Equals("Skimpy_Clothes")) Or p.equippedArmor.getName.Equals("Very_Skimpy_Clothes") Then
@@ -266,6 +268,7 @@
 
     'clothingCurse1 routes the normal versions of armors to their slut forms, if they have them.
     Function clothingCurse1() As Boolean
+        Dim p = Game.player
         If p.equippedArmor.slutVarInd = -1 Then Return False
 
         If p.equippedArmor.getName.Equals("Common_Clothes") Then
@@ -294,6 +297,8 @@
         Return True
     End Function
     Function antiClothingCurse() As Boolean
+        Dim p = Game.player
+
         If p.equippedArmor.antiSlutVarInd = -1 Then Return False
 
         If p.equippedArmor.getName.Equals("Skimpy_Clothes") Then
@@ -316,6 +321,7 @@
     End Function
     'clothesChange handles the equipping and unequipping of armors
     Public Sub clothesChange(ByVal clothes As String)
+        Dim p = Game.player
         If aList.Count < 1 Then init()
         If Not p.equippedArmor Is Nothing AndAlso clothes.Equals(p.equippedArmor.getName) Then Exit Sub
         Dim sArmor As Armor = Nothing
@@ -345,6 +351,7 @@
     End Sub
     'clothesChange handles the equipping and unequipping of weapon
     Public Sub weaponChange(ByVal weapon As String)
+        Dim p = Game.player
         If wList.Count < 1 Then init()
         Dim sWeapon As Weapon = Nothing
         If Not p.equippedWeapon Is Nothing AndAlso weapon.Equals(p.equippedWeapon.getName) Then Exit Sub
@@ -364,6 +371,7 @@
     End Sub
     'accChange handles the equipping and unequipping of accessories
     Public Sub accChange(ByVal acc As String)
+        Dim p = Game.player
         If acList.Count < 1 Then init()
         If Not p.equippedAcce Is Nothing AndAlso acc.Equals(p.equippedAcce.getName) Then Exit Sub
         Dim sAcc As Accessory = Nothing
@@ -380,8 +388,5 @@
             p.equippedAcce = sAcc
             p.equippedAcce.onEquip()
         End If
-    End Sub
-    Public Sub setP(ByRef ply As Player)
-        p = ply
     End Sub
 End Class

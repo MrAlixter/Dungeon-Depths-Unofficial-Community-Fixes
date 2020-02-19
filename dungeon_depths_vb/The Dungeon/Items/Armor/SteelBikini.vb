@@ -3,7 +3,7 @@
 
     Sub New()
         MyBase.setName("Steel_Bikini")
-        MyBase.setDesc("A skimpy steel swimsuit that gives a new meaning to 'Breast plates'." & vbCrLf & _
+        MyBase.setDesc("A skimpy steel swimsuit that gives a new meaning to ""breast plates""." & vbCrLf & _
                        "Fits sizes -1 through 5" & vbCrLf & _
                        "+6 DEF")
         id = 7

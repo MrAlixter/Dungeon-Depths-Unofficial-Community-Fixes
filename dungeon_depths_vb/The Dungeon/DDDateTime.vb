@@ -20,6 +20,9 @@
     Shared Function isHallow()
         Return (DateTime.Now.Month = 10 And plusMinus(31, DateTime.Now.Day, 10) Or DateTime.Now.Month = 11 And plusMinus(1, DateTime.Now.Day, 5))
     End Function
+    Shared Function isHoli()
+        Return DateTime.Now.Month = 12 And plusMinus(25, DateTime.Now.Day, 5)
+    End Function
 
     Private Shared Function plusMinus(ByVal x As Integer, ByVal y As Integer, ByVal o As Integer) As Boolean
         'returns true if y is within x +- o

@@ -96,7 +96,7 @@
         internal_inventory.Add("Val._Night_Lingerie", New VNightLingerie()) '78
         internal_inventory.Add("Val._Day_Suit", New VDayClothes())          '79
         internal_inventory.Add("Dissolved_Clothes", New DissolvedClothes()) '80     actually a part of 0.8
-        internal_inventory.Add("Ring_of_the_L._Goddess", New ROTLGoddess()) '81
+        internal_inventory.Add("Ring_of_Amaraphne", New ROAmaraphne())      '81
         internal_inventory.Add("Major_Health_Potion", New MajHealthPotion()) '82
         internal_inventory.Add("Bronze_Armor", New BronzeArmor())           '83
         internal_inventory.Add("Bronze_Battle_Axe", New BronzeAxe())        '84
@@ -131,7 +131,7 @@
         internal_inventory.Add("Photon_Blade", New PhotonBlade())           '112
         internal_inventory.Add("Amazon_Lesson", New AmazonLesson())         '113
         internal_inventory.Add("Barbarian_Lesson", New BarbarianLesson())   '114
-        internal_inventory.Add("Warlock's_Robes", New WarlockRobe())         '115
+        internal_inventory.Add("Warlock's_Robes", New WarlockRobe())        '115
         internal_inventory.Add("Gynoid_Uniform", New GCUniform())           '116
         internal_inventory.Add("Garden_Salad", New GardenSalad())           '117
         internal_inventory.Add("Corse_War_Axe", New CWarAxe())              '118
@@ -159,7 +159,7 @@
         internal_inventory.Add("Emerald_Circlet", New EmeraldCirclet())     '140
         internal_inventory.Add("Active_Camoflage", New ActiveCamoflage())   '141
         internal_inventory.Add("Combat_Module", New CombatModule())         '142
-        internal_inventory.Add("Every_New_Item", New EveryNewItem())            '143
+        internal_inventory.Add("Every_New_Item", New EveryNewItem())        '143
         internal_inventory.Add("Crystalline_Armor", New CrystalArmor())     '144
         internal_inventory.Add("Scepter_of_Ash", New ScepterOfAsh())        '145
         '0.9
@@ -185,13 +185,21 @@
         internal_inventory.Add("Mugger's_Shank", New MShank())              '165
         internal_inventory.Add("Frock_of_Night", New FoNight())             '166
         internal_inventory.Add("Wand_of_Shocking", New WOShock())           '167
-        internal_inventory.Add("Cursemark", New Cursemark())             '168
+        internal_inventory.Add("Cursemark", New Cursemark())                '168
         internal_inventory.Add("Maid_Lingerie", New MaidLingerie())         '169
         internal_inventory.Add("Magical_Slut_Outfit", New MagSlutOutfit())  '170
         internal_inventory.Add("Magical_Girl_Wand​", New MagSlutWand())      '171
         internal_inventory.Add("Flaming_Sword", New FlamingSword())         '172
         internal_inventory.Add("Signature_Whip", New SigWhip())             '173
         internal_inventory.Add("Defence_Charm​", New CDefenceCharm())        '174
+        internal_inventory.Add("Cozy_Sweater", New CozySweater())           '175
+        internal_inventory.Add("Scale_Armor", New ScaleArmor())             '176
+        internal_inventory.Add("Scale_Bikini", New ScaleBikini())           '177
+        internal_inventory.Add("Antifreeze", New AntiFreeze())              '178
+        internal_inventory.Add("Wand_of_Voltage", New WOVoltage())          '179
+        internal_inventory.Add("Pink_Panties", New PPanties())              '180
+        internal_inventory.Add("TODO_Outfit", New GothOutfit())             '181
+        internal_inventory.Add("Cursed_Coupon", New CursedCoupon())         '182
 
         armor = {New CommonClothes, New SkimpyClothes, New Naked, New VSkimpyClothes,
                  Me.item(5), Me.item(7), Me.item(8), Me.item(10),
@@ -206,7 +214,8 @@
                  Me.item(106), Me.item(107), Me.item(115), Me.item(116),
                  Me.item(129), Me.item(137), Me.item(138), Me.item(144),
                  Me.item(146), Me.item(147), Me.item(151), Me.item(166),
-                 Me.item(169), Me.item(170)}
+                 Me.item(169), Me.item(170), Me.item(175), Me.item(176),
+                 Me.item(177), Me.item(181)}
 
         weapons = {New BareFists(),
                    Me.item(6), Me.item(9), Me.item(11), Me.item(21),
@@ -217,7 +226,7 @@
                    Me.item(155), Me.item(156), Me.item(157), Me.item(158),
                    Me.item(159), Me.item(160), Me.item(162), Me.item(163),
                    Me.item(165), Me.item(167), Me.item(171), Me.item(172),
-                   Me.item(173)}
+                   Me.item(173), Me.item(179)}
 
         useable = {Me.item(0), Me.item(3), Me.item(4),
                    Me.item(65), Me.item(15), Me.item(36), Me.item(37),
@@ -228,19 +237,20 @@
                    Me.item(128), Me.item(130), Me.item(136), Me.item(142),
                    Me.item(143), Me.item(148), Me.item(149), Me.item(152),
                    Me.item(153), Me.item(154), Me.item(155), Me.item(156),
-                   Me.item(157), Me.item(158), Me.item(162), Me.item(174)}
+                   Me.item(157), Me.item(158), Me.item(162), Me.item(174),
+                   Me.item(182)}
 
         food = {Me.item(1), Me.item(30), Me.item(31), Me.item(32), Me.item(33),
                 Me.item(34), Me.item(35), Me.item(44), Me.item(90),
                 Me.item(98), Me.item(100), Me.item(108), Me.item(109),
                 Me.item(117), Me.item(125), Me.item(132), Me.item(133),
-                Me.item(134), Me.item(135)}
+                Me.item(134), Me.item(135), Me.item(178)}
 
         acce = {New noAcce(), Me.item(66), Me.item(67), Me.item(68),
                 Me.item(69), Me.item(70), Me.item(77), Me.item(81),
                 Me.item(97), Me.item(110), Me.item(123), Me.item(139),
                 Me.item(140), Me.item(141), Me.item(149), Me.item(161),
-                Me.item(164), Me.item(168)}
+                Me.item(164), Me.item(168), Me.item(180)}
 
         potions = {Me.item(2), Me.item(13), Me.item(14), Me.item(25),
                    Me.item(26), Me.item(27), Me.item(28), Me.item(29),
@@ -259,7 +269,7 @@
         Dim names = New List(Of String)
         names.AddRange({"Red_Potion", "Green_Potion", "Blue_Potion", "Golden_Potion",
                       "Azure_Potion", "Rose_Potion", "Mauve_Potion", "Jet_Potion",
-                      "Ruby_Potion", "Emerald_Potion", "Saphire_Potion", "Silver_Potion",
+                      "Ruby_Potion", "Emerald_Potion", "Sapphire_Potion", "Silver_Potion",
                       "Murky_Potion", "Smokey_Potion", "Pink_Potion", "Glittery_Potion",
                       "Florecent_Potion"})
         mPotions = New List(Of MysteryPotion)
@@ -314,7 +324,6 @@
         sum += v
     End Sub
 
-
     '|SAVE/LOAD|
     Function save() As String
         Dim out = CStr(upperBound()) & ":"
@@ -345,7 +354,8 @@
             End If
         Next
         Dim x = CInt(parse(0)) + 2
-        If Not parse(x).Equals("na") Then
+
+        If Not parse(x).Equals("na") And Not mPotions Is Nothing Then
             For i = x + 1 To x + CInt(parse(x))
                 Dim subParse As String() = parse(i).Split("~")
                 mPotions(i - (x + 1)).setFName(subParse(0))

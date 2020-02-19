@@ -16,7 +16,7 @@
         Dim p As Player = Game.player
 
         Dim form = InputBox("TF to... [Half-Gorgon, Gynoid, Amazon, Mindless, Rando, Half-Broodmother, Broodmother, " &
-                            "Minotaur Cow, Dragon, Succubus, Slime, Bimbo, Cake]:")
+                            "Minotaur Cow, Dragon, Succubus, Slime, Bimbo, Cake, Blob, Horse, Oni, Alraune]:")
 
         Dim tfs As Dictionary(Of String, Transformation) = New Dictionary(Of String, Transformation)
         Dim tf2s As Dictionary(Of String, Action) = New Dictionary(Of String, Action)
@@ -27,6 +27,10 @@
         tfs.Add("Rando", New RandoTF)
         tfs.Add("Half-Broodmother", Nothing)
         tfs.Add("Broodmother", Nothing)
+        tfs.Add("Blob", Nothing)
+        tfs.Add("Horse", Nothing)
+        tfs.Add("Oni", Nothing)
+
 
         tf2s.Add("Minotaur Cow", AddressOf New MinotaurCowTF().step1)
         tf2s.Add("Dragon", AddressOf New DragonTF().step1)
@@ -34,17 +38,20 @@
         tf2s.Add("Slime", AddressOf New SlimeTF().step1)
         tf2s.Add("Bimbo", AddressOf New BimboTF(2, 0, 0.25, True).doubleTf)
         tf2s.Add("Cake", AddressOf New TTCCBF().step1)
+        tf2s.Add("Alraune", AddressOf New AlrauneTF().fullTF)
+        tf2s.Add("Goth GF", AddressOf New GothGFTF().step1)
 
 
         If Not tfs.ContainsKey(form) And Not tf2s.ContainsKey(form) Then Exit Sub
 
         If tfs.ContainsKey(form) Then
-            If form.Equals("Midndless") Then
+            If form.Equals("Mindless") Then
                 Polymorph.transform(p, form)
                 Exit Sub
             End If
 
-            If form.Equals("Half-Broodmother") Or form.Equals("Broodmother") Then
+            If form.Equals("Half-Broodmother") Or form.Equals("Broodmother") Or
+                form.Equals("Blob") Or form.Equals("Horse") Or form.Equals("Oni") Then
                 p.pForm = p.forms(form)
                 p.drawPort()
                 Exit Sub

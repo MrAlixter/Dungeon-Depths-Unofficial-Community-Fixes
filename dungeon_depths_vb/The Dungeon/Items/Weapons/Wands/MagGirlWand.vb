@@ -1,5 +1,5 @@
 ﻿Public Class MagGirlWand
-    Inherits Weapon
+    Inherits Wand
 
     Sub New()
         MyBase.setName("Magical_Girl_Wand")
@@ -20,5 +20,15 @@
             magicGirlTF.update()
             Game.player.ongoingTFs.Add(magicGirlTF)
         End If
+    End Sub
+
+    Public Overrides Sub spell(ByRef p As Player, ByRef m As Entity)
+        Dim dmg As Integer = aBoost
+        Dim d31 = Int(Rnd() * 3)
+        Dim d32 = Int(Rnd() * 4)
+
+        m.takeDMG(dmg + d31 + d32, p)
+        Game.pushLstLog(CStr("You fire off a heart-shaped blast, hitting the " & m.name & " for " & dmg + d31 + d32 & " damage!"))
+        Game.pushLblCombatEvent(CStr("You fire off a heart-shaped blast, hitting the " & m.name & " for " & dmg + d31 + d32 & " damage!"))
     End Sub
 End Class

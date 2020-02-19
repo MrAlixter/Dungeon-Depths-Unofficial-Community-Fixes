@@ -2,24 +2,30 @@
     Inherits Special
     Sub New(ByRef u As Player, ByRef t As NPC)
         MyBase.New(u, t)
-        MyBase.setName("Rapid Fire Jabs")
+        MyBase.setName("Bounty's Collection")
         MyBase.setUOC(False)
-        MyBase.setcost(9)
+        MyBase.setcost(22)
     End Sub
     Public Overrides Sub effect()
-
         Dim p = MyBase.getUser
         Dim m = MyBase.getTarget
-        Game.pushLstLog("Rapid Fire Jabs!")
-        Game.pushLblCombatEvent("Rapid Fire Jabs!")
+        Game.pushLstLog("Bounty's Collection!")
+        Game.pushLblCombatEvent("Bounty's Collection!")
 
-        For i = 0 To Int(Rnd() * 3) + 2
-            Dim dmg As Integer = p.getATK()
-            dmg += Int(Rnd() * 2 * (p.getATK() * 0.05)) - (p.getATK() * 0.05)
-            m.takeDMG(dmg, p)
-            Game.pushLblCombatEvent("You hit your opponent for " & dmg & " damage!")
-            If i <> 0 Then p.hunger += 6
-        Next
+        If m.health * m.maxHealth > p.getATK Then
+            'Fail
+            Game.pushLblCombatEvent("Failed to collect bounty!  All loot lost...")
+            Dim hasKey = False
+            If m.inv.getCountAt("Key") > 0 Then hasKey = True
+            m.inv = New Inventory()
 
+            If hasKey Then m.inv.add("Key", 1)
+        Else
+            'Success
+            m.inv.setCount(43, 4 * m.inv.getCountAt(43))
+
+            m.die(p)
+            Game.pushLblCombatEvent("Bounty Collected!")
+        End If
     End Sub
 End Class

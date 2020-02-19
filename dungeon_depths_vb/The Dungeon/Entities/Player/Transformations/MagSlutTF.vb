@@ -55,7 +55,9 @@
         p.magGState.save(p)
         p.magGState.initFlag = True
         If p.isUnwilling() Then p.pout()
+        If Not p.knownSpells.Contains("Heartblast Starcannon") Then p.knownSpells.Add("Heartblast Starcannon")
         If p.inv.item(170).count < 1 Then p.inv.add(170, 1)
+
         p.pClass = p.classes("Magical Slut")
         Equipment.clothesChange("Magical_Slut_Outfit")
         p.canMoveFlag = True

@@ -20,4 +20,8 @@
         rPronoun = "her"
         xpValue = 400
     End Sub
+
+    Public Overrides Sub attackCMD(ByRef target As Entity)
+        MyBase.attackCMD(target)
+    End Sub
 End Class

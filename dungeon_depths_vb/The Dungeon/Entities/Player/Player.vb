@@ -357,6 +357,8 @@
         perks.Add("comilk", -1)         '36
         perks.Add("coblind", -1)        '37
         perks.Add("coscale", -1)        '38
+        perks.Add("pprot", -1)          '39
+        perks.Add("masochist", -1)      '40
     End Sub
     Private Sub initClasses()
         'creates the class dictionary
@@ -427,6 +429,11 @@
         forms.Add("Half-Dragoness", New HDragoness())
         forms.Add("Half-Broodmother", New HBroodmother())
         forms.Add("Broodmother", New Broodmother())
+        forms.Add("Blob", New Blob())
+        forms.Add("Horse", New Horse())
+        forms.Add("Oni", New Oni())
+        forms.Add("Alraune", New AlrauneF())
+        forms.Add("Goth", New Goth())
     End Sub
     Private Sub initPolymorphs()
         'compile list of polymorphs
@@ -593,7 +600,9 @@
 
         If pClass.name = "Warrior" Or pClass.name = "Paladin" Then Game.cboxSpec.Items.Add("Berserker Rage")
         If pClass.name = "Mage" Or pClass.name = "Paladin" Then Game.cboxSpec.Items.Add("Risky Decision")
+        If pClass.name = "Rogue" Then Game.cboxSpec.Items.Add("Bounty's Collection")
         If breastSize > 3 Then Game.cboxSpec.Items.Add("Massive Mammaries")
+        If breastSize > 5 Then Game.cboxSpec.Items.Add("Pillowy Protect")
         If pForm.name = "Succubus" Then Game.cboxSpec.Items.Add("Unholy Seduction")
         If pForm.name = "Slime" Then Game.cboxSpec.Items.Add("Absorbtion")
         If pForm.name = "Dragon" Then Game.cboxSpec.Items.Add("Ironhide Fury")
@@ -618,8 +627,8 @@
         Dim tGold As Integer = gold
         Dim tEweap As Weapon = equippedWeapon
         Dim tEarm As Armor = equippedArmor
-        If tEweap.getName = "Magical_Girl_Wand" Then tEweap = New BareFists()
-        If tEarm.getName = "Magical_Girl_Outfit" Then tEarm = New Naked()
+        If tEweap.getName = "Magical_Girl_Wand" Or tEweap.getName = "Magical_Girl_Wand​" Then tEweap = New BareFists()
+        If tEarm.getName = "Magical_Girl_Outfit" Or tEarm.getName = "Magical_Slut_Outfit" Then tEarm = New Naked()
 
         sState.load(Me, False)
 
@@ -1103,6 +1112,10 @@
         If perks("mmammaries") > -1 Then
             PerkEffects.massiveMammaries()
         End If
+        'pillowy protect special
+        If perks("pprot") > -1 Then
+            PerkEffects.pProt()
+        End If
         'ironhide fury
         If perks("ihfury") > -1 Then
             PerkEffects.ironhideFury()
@@ -1518,12 +1531,24 @@
         Return output
     End Function
     Public Function toGhost() As String
-        Dim output = CStr(name & " the " & pForm.name & " " & pClass.name & "*" & health & "*" & maxHealth &
-            "*" & getATK() & "*" & getDEF() & "*" & getSPD() & "*" & prt.sexBool & "*" & prt.haircolor.R & "*" & prt.haircolor.G & "*" & prt.haircolor.B & "*")
+        Dim output = CStr(
+            name & " the " & pForm.name & " " & pClass.name & "*" &
+            Game.currFloor.floorCode & "*" &
+            pClass.name & "*" &
+            health & "*" &
+            getMaxHealth() & "*" &
+            getATK() & "*" &
+            getMaxMana() & "*" &
+            getDEF() & "*" &
+            getSPD() & "*" &
+            prt.sexBool & "*" &
+            prt.iArrInd(pInd.eyes).Item1 & "*" &
+            prt.iArrInd(pInd.eyes).Item2 & "*" &
+            prt.iArrInd(pInd.eyes).Item3 & "*" &
+            prt.haircolor.R & "*" &
+            prt.haircolor.G & "*" &
+            prt.haircolor.B & "*")
         output += inv.save
-        For i = 0 To UBound(prt.iArrInd)
-            output += (prt.iArrInd(i).Item1 & "%" & prt.iArrInd(i).Item2 & "%" & prt.iArrInd(i).Item3 & "*")
-        Next
         Return output
     End Function
 
@@ -1552,31 +1577,33 @@
     End Function
 
     '|DESCRIPTION GENERATION METHODS|
-    Function getColor(ByVal color As Color) As String
+    Function getColor(ByVal clr As Color) As String
         Dim c As Color
 
+        Dim DirtyBlonde = Color.FromArgb(255, 186, 163, 0)
 
-        Dim cArr As Color() = {color.Aqua, color.Aquamarine, color.Azure, _
-                               color.Beige, color.Black, color.Blue, color.BlueViolet, color.Brown, _
-                               color.Chartreuse, color.Coral, color.CornflowerBlue, color.Crimson, color.Cyan, _
-                               color.DarkBlue, color.DarkCyan, color.DarkGreen, color.DarkMagenta, color.DarkRed, color.DarkSeaGreen, color.DarkSlateBlue, color.DarkTurquoise, color.DarkViolet, _
-                               color.Fuchsia, _
-                               color.Gold, color.Gray, color.Green, color.GreenYellow, _
-                               color.Honeydew, color.HotPink, _
-                               color.Indigo, _
-                               color.Lavender, color.LawnGreen, color.LightBlue, color.LightGray, color.LightGreen, color.LightPink, color.LightSeaGreen, color.LightSkyBlue, color.LightSteelBlue, color.LightYellow, color.Lime, _
-                               color.Magenta, color.Maroon, color.MidnightBlue, color.MintCream, color.MediumPurple, color.MediumOrchid, _
-                               color.Navy, _
-                               color.Orange, color.OrangeRed, color.Orchid, _
-                               color.Pink, color.Purple, color.PowderBlue, color.Plum, color.PaleVioletRed, _
-                               color.Red, color.RosyBrown, _
-                               color.SeaGreen, color.Silver, color.Sienna, color.SteelBlue, _
-                               color.Tan, color.Teal, color.Turquoise, _
-                               color.Wheat, color.White, _
-                               color.Yellow}
+        Dim cArr As Color() = {Color.Aqua, Color.Aquamarine, Color.Azure, _
+                               Color.Beige, Color.Black, Color.Blue, Color.BlueViolet, Color.Brown, _
+                               Color.Chartreuse, Color.Coral, Color.CornflowerBlue, Color.Crimson, Color.Cyan, _
+                               Color.DarkBlue, Color.DarkCyan, Color.DarkGreen, Color.DarkMagenta, Color.DarkRed, Color.DarkSeaGreen, Color.DarkSlateBlue, Color.DarkTurquoise, Color.DarkViolet,
+                               DirtyBlonde, _
+                               Color.Fuchsia, _
+                               Color.Gold, Color.Gray, Color.Green, Color.GreenYellow, _
+                               Color.Honeydew, Color.HotPink, _
+                               Color.Indigo, _
+                               Color.Lavender, Color.LawnGreen, Color.LightBlue, Color.LightGray, Color.LightGreen, Color.LightPink, Color.LightSeaGreen, Color.LightSkyBlue, Color.LightSteelBlue, Color.LightYellow, Color.Lime, _
+                               Color.Magenta, Color.Maroon, Color.MidnightBlue, Color.MintCream, Color.MediumPurple, Color.MediumOrchid, _
+                               Color.Navy, _
+                               Color.Orange, Color.OrangeRed, Color.Orchid, _
+                               Color.Pink, Color.Purple, Color.PowderBlue, Color.Plum, Color.PaleVioletRed, _
+                               Color.Red, Color.RosyBrown, _
+                               Color.SeaGreen, Color.Silver, Color.Sienna, Color.SteelBlue, _
+                               Color.Tan, Color.Teal, Color.Turquoise, _
+                               Color.Wheat, Color.White, _
+                               Color.Yellow}
         Dim closest As Double = 99999999999999
         For i = 0 To UBound(cArr)
-            Dim ratio = isShadeOf(color.R, color.G, color.B, cArr(i))
+            Dim ratio = isShadeOf(clr.R, clr.G, clr.B, cArr(i))
             If ratio < closest Then
                 closest = ratio
                 c = cArr(i)
@@ -1590,6 +1617,8 @@
             out += " "
         Next
         If out.Equals("Beige ") Or out.Equals("Wheat ") Then out = "Light Blonde "
+        If c.Equals(DirtyBlonde) Then out = "Dirty Blonde "
+
         Return out.ToLower
     End Function
     Function getHairColor() As String
@@ -1649,9 +1678,20 @@
         'check for single image forms
         Select Case pForm.name
             Case "Dragon"
-                out += "You are a large, green dragon.  Yay for you." & vbCrLf & vbCrLf
+                out += "You are a large, green dragon." & vbCrLf & vbCrLf
+                Return out + outPutPerkText()
+            Case "Broodmother"
+                out += "You are a large, red dragon." & vbCrLf & vbCrLf
+                Return out + outPutPerkText()
+            Case "Oni"
+                out += "You are a massive red woman with small horns betraying a demonic origin."
+                Return out + outPutPerkText()
+            Case "Horse"
+                out += "You are draft horse, bred for pulling heavy loads."
                 Return out + outPutPerkText()
             Case "Blob"
+                out += "You are a small cyan blob of slime, too pliable to maintain a constant form.  While the gelatinous goo that makes up your body gives you a certain durability, one solid strike may leave you in pieces."
+                Return out + outPutPerkText()
             Case "Chicken"
             Case "Frog"
                 out += "You are a lime green tiny frog.  Ribbit, ribbit." & vbCrLf & vbCrLf
@@ -1673,10 +1713,10 @@
                 out += "You are currently in the middle of a magical girl transformation!" & vbCrLf & vbCrLf
                 Return out + outPutPerkText()
             Case "Princess​"
-                out += "Whatever you were before, you are now a princess in a yellow ballgown." & vbCrLf & vbCrLf
+                out += "Whatever you were before, you are now a princess in a golden ballgown." & vbCrLf & vbCrLf
                 Return out + outPutPerkText()
             Case "Bunny Girl​"
-                out += "Whatever you were before, you are now a small, blonde adult woman in a red bunny suit.  The suit, clinging to your suple body includes not just a crimzon leotard, but also a pair of fishnet stockings that highlight your toned legs, and end in a pair of platform heels.  Topping off your ensamble is a black headband with two bunny ears." & vbCrLf & vbCrLf
+                out += "Whatever you were before, you are now a small, blonde adult woman in a azure bunny suit.  The suit, clinging to your suple body includes not just a blue leotard, but also a pair of nylon stockings that highlight your toned legs, and end in a pair of platform heels.  Topping off your ensamble is a white headband with two bunny ears." & vbCrLf & vbCrLf
                 Return out + outPutPerkText()
         End Select
 
@@ -1699,9 +1739,9 @@
             Case "Blowup Doll"
                 out += "You are a inflatable sex doll with " & getSkinColor() & "rubber skin.  "
                 If prt.sexBool Then
-                    out += "You have a feminine body, with huge breasts and the matching female genetalia." & vbCrLf & " " & vbCrLf
+                    out += "You have a feminine body, with huge breasts and a matching ""pussy""." & vbCrLf & " " & vbCrLf
                 Else
-                    out += "You have a feminine body, with huge breasts, though you have male genetalia." & vbCrLf & " " & vbCrLf
+                    out += "You have a feminine body, with huge breasts, though you do have a dildo-like cock." & vbCrLf & " " & vbCrLf
                 End If
             Case Else
                 'skincolor
@@ -1734,15 +1774,15 @@
                 End Select
                 If sex.Equals("Female") Then
                     If prt.sexBool Then
-                        out += "You have a feminine body, with " & bAdj & " breasts and the matching female genetalia." & vbCrLf & " " & vbCrLf
+                        out += "You have a feminine body, with " & bAdj & " breasts and a feminine pussy." & vbCrLf & " " & vbCrLf
                     Else
-                        out += "You have a a masculine body, with " & bAdj & " breasts, though you have female genetalia." & vbCrLf & " " & vbCrLf
+                        out += "You have a a masculine body, with " & bAdj & " breasts, though you have a feminine pussy." & vbCrLf & " " & vbCrLf
                     End If
                 Else
                     If prt.sexBool Then
-                        out += "You have a feminine body, with " & bAdj & " breasts, though you have male genetalia." & vbCrLf & " " & vbCrLf
+                        out += "You have a feminine body, with " & bAdj & " breasts, though you do have a cock." & vbCrLf & " " & vbCrLf
                     Else
-                        out += "You have a masculine body, with a toned chest and the matching male genetalia." & vbCrLf & " " & vbCrLf
+                        out += "You have a masculine body, with a toned chest that leads down to a cock between your legs." & vbCrLf & " " & vbCrLf
                     End If
                 End If
         End Select

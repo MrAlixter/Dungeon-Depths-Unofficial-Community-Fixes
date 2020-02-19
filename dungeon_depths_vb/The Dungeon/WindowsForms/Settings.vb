@@ -30,7 +30,7 @@
         End If
         Dim RW As Double = (Me.Width - startingWidth) / startingWidth ' Ratio change of width
         Dim RH As Double = (Me.Height - startingHeight) / startingHeight ' Ratio change of height
-        Dim newFont As Font = New System.Drawing.Font("Consolas", CInt(8 * Me.Size.Width / 180))
+        Dim newFont As Font = New System.Drawing.Font("Consolas", CInt(10 * Me.Size.Width / 308))
         For i = 0 To Me.Controls.Count - 1
             Me.Controls(i).Font = newFont
             Me.Controls(i).Width += CDbl(Me.Controls(i).Width * RW)

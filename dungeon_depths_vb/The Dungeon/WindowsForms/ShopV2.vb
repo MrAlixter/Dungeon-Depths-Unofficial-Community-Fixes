@@ -312,4 +312,8 @@ Public Class ShopV2
         End If
 
     End Sub
+
+    Private Sub txtDesc_TextChanged(sender As Object, e As EventArgs) Handles txtDesc.TextChanged
+
+    End Sub
 End Class

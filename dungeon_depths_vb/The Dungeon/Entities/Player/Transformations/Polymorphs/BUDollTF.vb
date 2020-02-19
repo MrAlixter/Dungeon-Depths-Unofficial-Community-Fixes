@@ -25,6 +25,7 @@
         'maid transformation
         p.prt.setIAInd(pInd.rearhair, 14, True, True)
         p.prt.setIAInd(pInd.body, 16, True, True)
+        p.prt.setIAInd(pInd.clothes, 47, True, True)
         p.prt.setIAInd(pInd.face, 1, True, True)
         p.prt.setIAInd(pInd.midhair, 18, True, True)
         p.prt.setIAInd(pInd.nose, 1, True, True)

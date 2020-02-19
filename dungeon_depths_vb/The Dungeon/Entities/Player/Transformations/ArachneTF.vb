@@ -79,6 +79,7 @@
         End If
 
         If p.breastSize < 2 Then be()
+        p.prt.setIAInd(pInd.eyes, 22, True, True)
         p.prt.setIAInd(pInd.rearhair, 8, True, True)
         p.prt.setIAInd(pInd.midhair, 19, True, True)
         p.prt.changeSkinColor(Game.cShift(p.prt.skincolor, Color.LightSlateGray, 5))

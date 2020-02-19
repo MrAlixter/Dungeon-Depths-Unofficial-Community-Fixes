@@ -14,6 +14,7 @@
     End Sub
 
     Overrides Sub use()
+        If Game.currFloor.floorNumber = 91017 Or Game.currFloor.floorNumber = 9999 Then Exit Sub
         If Game.combatmode Or Game.npcmode Then Exit Sub
         Dim cae = New Caelia
         Game.npcEncounter(cae)

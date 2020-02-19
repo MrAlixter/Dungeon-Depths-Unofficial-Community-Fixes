@@ -14,8 +14,7 @@
         MyBase.count = 0
         MyBase.antiSlutVarInd = 79
         MyBase.value = 428
-        MyBase.bsizeneg1 = New Tuple(Of Integer, Boolean, Boolean)(23, False, True)
-        MyBase.bsize0 = New Tuple(Of Integer, Boolean, Boolean)(23, False, True)
+        MyBase.bsize0 = New Tuple(Of Integer, Boolean, Boolean)(252, True, True)
         MyBase.bsize1 = New Tuple(Of Integer, Boolean, Boolean)(117, True, True)
         MyBase.bsize2 = New Tuple(Of Integer, Boolean, Boolean)(118, True, True)
         MyBase.bsize3 = New Tuple(Of Integer, Boolean, Boolean)(119, True, True)

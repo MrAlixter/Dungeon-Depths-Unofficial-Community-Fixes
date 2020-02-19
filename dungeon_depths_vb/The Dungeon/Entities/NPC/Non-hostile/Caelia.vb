@@ -21,6 +21,9 @@
         picPrincess = Game.picCaeliaP.BackgroundImage
         picBunny = Game.picCaeliaB.BackgroundImage
 
+        picNCP = New List(Of Image)
+        picNCP.AddRange({picNormal, Game.picFrog.BackgroundImage, Game.picSheep.BackgroundImage, picPrincess, picBunny})
+
         If speed = Game.player.speed Then speed -= 1
         title = ""
     End Sub

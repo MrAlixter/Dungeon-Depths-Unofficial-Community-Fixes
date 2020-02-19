@@ -32,7 +32,7 @@ Public Class mFloor
         If bw = -1 Then mBoardWidth = Game.mBoardWidth Else mBoardWidth = bw
 
         defineBoardSpace()
-        If floorNumber = 9999 Or floorNumber = 91017 Or floorNumber = 5 Then
+        If floorNumber = 9999 Or floorNumber = 91017 Or floorNumber = 5 Or floorNumber = 75 Then
             Game.updateLoadbar(99)
             Game.boardWorker.CancelAsync()
             Exit Sub
@@ -46,14 +46,18 @@ Public Class mFloor
 
         placeNPCs(Game.shopNPCList, getPossibleNPCs)
         If updateLoadbar Then Game.updateLoadbar(70)
-        verifyNoDisconectedChunks(Game.player)
+
         If updateLoadbar Then
             Game.updateLoadbar(99)
             Game.boardWorker.CancelAsync()
         End If
     End Sub
-    Public Sub New(ByVal save As String)
-        loadMFloor(save)
+    Public Sub New(ByVal code As String, Optional readFromFile As Boolean = True)
+        If Not readFromFile Then
+            loadMFloor(code)
+        Else
+            readFloorFromFile(code)
+        End If
     End Sub
 
     '|---GENERAL FLOOR GENERATION METHODS---|
@@ -72,7 +76,7 @@ Public Class mFloor
 
         If floorNumber < 5 Then
             generateDungeonLevel(floorCode)
-        ElseIf floorNumber = 5 Then
+        ElseIf floorNumber = 5 Or floorNumber = 75 Then
             genBossFloor(Game.player)
         ElseIf floorNumber = 9999 Then
             genSpaceFloor()
@@ -81,6 +85,8 @@ Public Class mFloor
         ElseIf floorNumber > 5 Then
             generateForestLevel(floorCode)
         End If
+
+        verifyNoDisconectedChunks(Game.player)
     End Sub
     Sub placeStairs()
         stairs = randPoint()
@@ -91,6 +97,7 @@ Public Class mFloor
         p.pos = randPoint()
         playerPosition = p.pos
         mBoard(p.pos.Y, p.pos.X).Text = "@"
+        verifyAccessToStairs(p)
         If floorNumber = 4 Then placeFloor4TrappedChest(Game.player)
     End Sub
     Sub placeChest(ByVal code As String)
@@ -198,6 +205,7 @@ Public Class mFloor
         Dim cursor As Point = p1
         Dim xOry As Boolean = CBool(Int(Rnd() * 2))
         If xOry Then
+            'go up, then over
             If p1.Y < p2.Y Then
                 For y = p1.Y To p2.Y
                     If y < mBoardHeight And y > 0 And p1.X < mBoardWidth And p1.X > 0 AndAlso Not mBoard(y, p1.X).Tag = 2 Then
@@ -232,6 +240,7 @@ Public Class mFloor
                 Next
             End If
         Else
+            'Go over, then up
             If p1.X < p2.X Then
                 For x = p1.X To p2.X
                     If x < mBoardWidth And x > 0 And p2.Y < mBoardHeight And p2.Y > 0 AndAlso Not mBoard(p2.Y, x).Tag = 2 Then
@@ -278,14 +287,14 @@ Public Class mFloor
         For j = 0 To rooms.Count - 1
             For i = 0 To rooms(j).Count - 1
                 Dim r = route(p.pos, rooms(j)(i).topLeftPos)
-                If r.Length = 1 Then
-                    connectRooms(p.pos, rooms(j)(i).topLeftPos)
-                End If
+
+                If r.Length <= 1 Then connectRooms(p.pos, rooms(j)(i).topLeftPos)
             Next
         Next
-
+    End Sub
+    Sub verifyAccessToStairs(ByRef p As Player)
         Dim r2 = route(p.pos, stairs)
-        If r2.Length = 1 Then connectRooms(p.pos, stairs)
+        If r2.Length <= 1 Then connectRooms(p.pos, stairs)
     End Sub
     'dungeon floors
     Sub generateDungeonLevel(ByVal code As String)
@@ -997,7 +1006,11 @@ Public Class mFloor
 
         trapList.Clear()
         For i = 0 To CInt(buffer(6))
-            trapList.Add(New Trap(buffer(7 + i)))
+            Dim t = New Trap(buffer(7 + i))
+            trapList.Add(t)
+            If t.pos.X < mBoardWidth And t.pos.X > 0 And t.pos.Y < mBoardHeight And t.pos.Y > 0 Then
+                mBoard(t.pos.Y, t.pos.X).Text = "+"
+            End If
         Next
 
         statueList.Clear()
@@ -1032,6 +1045,33 @@ Public Class mFloor
                 If mBoard(y, x).Tag > 0 Then coveredBoardSpace += 1
             Next
         Next
+    End Sub
+
+    Public Sub writeFloorToFile()
+        Dim writer As IO.StreamWriter = Nothing
+        Try
+            IO.File.Delete("floors/" & floorCode & ".flr")
+            writer = IO.File.CreateText("floors/" & floorCode & ".flr")
+            writer.WriteLine(saveMFloor)
+        Catch ex As Exception
+            Game.pushLblEvent("Error writing floor " & floorCode & " to file!")
+        Finally
+            writer.Flush()
+            writer.Close()
+        End Try
+    End Sub
+    Public Sub readFloorFromFile(ByVal fCode As String)
+        Dim reader As IO.StreamReader = Nothing
+        'Try
+        If IO.File.Exists("floors/" & fCode & ".flr") Then
+            reader = IO.File.OpenText("floors/" & fCode & ".flr")
+            loadMFloor(reader.ReadLine)
+        End If
+        'Catch ex As Exception
+        'Game.pushLblEvent("Error reading floor " & floorCode & " from file!")
+        'Finally
+        '    If Not reader Is Nothing Then reader.Close()
+        'End Try
     End Sub
 End Class
 

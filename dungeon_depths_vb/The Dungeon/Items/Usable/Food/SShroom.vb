@@ -13,7 +13,7 @@
     End Sub
 
     Public Overrides Sub Effect()
-        If Int(Rnd() * 2) = 0 And Not Game.noRNG Then
+        If Int(Rnd() * 2) = 0 And Not Game.noRNG Or (Game.currFloor.floorNumber = 91017 Or Game.currFloor.floorNumber = 9999) Then
             Game.pushLblEvent("Disapointingly, nothing seems to have happened.")
         Else
             If Int(Rnd() * 7) = 0 Or Game.noRNG Then

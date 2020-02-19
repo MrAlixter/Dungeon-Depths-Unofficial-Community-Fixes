@@ -29,7 +29,7 @@
             p.prt.setIAInd(pInd.fronthair, 13, True, True)
         Else
             p.prt.haircolor = bimboyellow
-            p.prt.setIAInd(pInd.rearhair, 1, True, True)
+            p.prt.setIAInd(pInd.rearhair, 5, True, True)
             p.prt.setIAInd(pInd.midhair, 5, True, True)
             p.prt.setIAInd(pInd.fronthair, 6, True, True)
         End If

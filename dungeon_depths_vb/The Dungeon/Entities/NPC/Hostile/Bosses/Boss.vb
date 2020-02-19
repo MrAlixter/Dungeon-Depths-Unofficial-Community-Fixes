@@ -5,6 +5,8 @@
         Select Case mIndex
             Case 5
                 Return New Medusa
+            Case 75
+                Return New TarFoodVend
             Case Else
                 Return miniBossFactory(mIndex)
         End Select

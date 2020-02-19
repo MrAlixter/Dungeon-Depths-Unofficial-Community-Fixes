@@ -41,7 +41,7 @@ Public Class Game
     Public shopkeeper, swiz, hteach, fvend, wsmith, cbrok As ShopNPC
     Public currNPC As ShopNPC   'the current npc the player is talking to (NOT SAVED)
     Public pImage As Image  'which tile is used for the player (NOT SAVED)
-    Public combatmode As Boolean = True 'indicates if the player is in combat (NOT SAVED)
+    Public combatmode As Boolean = False 'indicates if the player is in combat (NOT SAVED)
     Public npcmode As Boolean = False   'indicates if the player is talking to an npc (NOT SAVED)
     Public npcIndex As Integer = 0  'indicates which npc is encountered (NOT SAVED)
     'a list containing all valid cheats
@@ -54,8 +54,9 @@ Public Class Game
     Dim monstierTier2() As Integer = {0, 1, 2, 4, 6}
     Dim monstierTier3() As Integer = {0, 1, 2, 4, 6, 7}
     Dim monstierTier4() As Integer = {0, 1, 2, 3, 4, 6, 7}
+    Dim monstierTier6() As Integer = {0, 1, 2, 3, 4, 6, 7, 12, 12}
     Public turn As Integer = 0  '(NOT SAVED)
-    Public version As Double = 0.9     'the save file version
+    Public version As Double = 0.92     'the save file version
 
     Public lblEventOnClose As Action    'the event method preformed when lblEvent closes (NOT SAVED)
     Public eventDialogBox As EventBox
@@ -99,6 +100,8 @@ Public Class Game
     Dim debugWindow As Debug_Window
     Public shopMenu As ShopV2
 
+    Dim needsToWait As Boolean = False
+
     '|STARTUP|
     Private Sub Form1_Load(sender As Object, e As EventArgs) Handles Me.Load
         'Form1_Load handles the loading of the form
@@ -106,6 +109,8 @@ Public Class Game
         If Not IO.File.Exists("configs.ave") Then createConfigs()
         If Not IO.Directory.Exists("presets") Then IO.Directory.CreateDirectory("presets")
         If Not IO.Directory.Exists("saves") Then IO.Directory.CreateDirectory("saves")
+        If Not IO.Directory.Exists("floors") Then IO.Directory.CreateDirectory("floors")
+
         Dim r As System.IO.StreamReader
         r = IO.File.OpenText("sett.ing")
         screenSize = r.ReadLine
@@ -160,6 +165,7 @@ Public Class Game
         FileToolStripMenuItem.Font = newFont
         SaveToolStripMenuItem.Font = newFont
         LoadToolStripMenuItem.Font = newFont
+        DebugToolStripMenuItem1.Font = newFont
         HelpToolStripMenuItem.Font = newFont
         HelpToolStripMenuItem1.Font = newFont
         InfoToolStripMenuItem.Font = newFont
@@ -222,6 +228,9 @@ Public Class Game
         w.Close()
     End Sub
     Sub newGame()
+        If combatmode Or npcmode Then Exit Sub
+        player = New Player()
+
         'newGame prepares the application at the start of a new game
         combatmode = False
         btnS.Visible = False
@@ -249,6 +258,20 @@ Public Class Game
         If int < 1 Then int = 1
         updateList.add(player, int)
 
+        If Not mDun Is Nothing Then
+            needsToWait = True
+            pushPnlYesNo("Use the existing dungeon?", AddressOf useOldDungeon, AddressOf makeNewDungeon)
+        Else
+            makeNewDungeon()
+        End If
+    End Sub
+    '|DUNGEON SETUP|
+    Sub useOldDungeon()
+        mDun.reset()
+        setupDungeon()
+        needsToWait = False
+    End Sub
+    Sub makeNewDungeon()
         seed = mFloor.genRNDLVLCode
         Dim genSet As New GeneratorSettings(seed)
         genSet.ShowDialog()
@@ -265,7 +288,21 @@ Public Class Game
         trapFreqMin = genSet.boxTrapFreqMin.Value
         trapFreqRange = genSet.boxTrapFreqRange.Value
         trapSizeDependence = genSet.boxTrapSizeDependence.Value
+        'creates the shopkeepers
+        shopNPCList.Clear()
+        shopkeeper = ShopNPC.shopFactory(0)
+        swiz = ShopNPC.shopFactory(1)
+        hteach = ShopNPC.shopFactory(2)
+        fvend = ShopNPC.shopFactory(3)
+        wsmith = ShopNPC.shopFactory(4)
+        cbrok = ShopNPC.shopFactory(5)
+        shopNPCList.AddRange({shopkeeper, swiz, hteach, fvend, wsmith, cbrok})
+        mDun = New Dungeon
 
+        setupDungeon()
+        needsToWait = False
+    End Sub
+    Sub setupDungeon()
         initLoadBar()
         If mBoardWidth * mBoardHeight < 4 Then
             Do While mBoardWidth * mBoardHeight < 4
@@ -284,25 +321,7 @@ Public Class Game
                                   "yes key (y by default)."
         End Select
 
-        'creates the shopkeepers
-        updateLoadbar(10)
-        shopNPCList.Clear()
-        shopkeeper = ShopNPC.shopFactory(0)
-        updateLoadbar(12)
-        swiz = ShopNPC.shopFactory(1)
-        updateLoadbar(13)
-        hteach = ShopNPC.shopFactory(2)
-        updateLoadbar(15)
-        fvend = ShopNPC.shopFactory(3)
-        updateLoadbar(17)
-        wsmith = ShopNPC.shopFactory(4)
-        updateLoadbar(18)
-        cbrok = ShopNPC.shopFactory(5)
-        updateLoadbar(20)
-        shopNPCList.AddRange({shopkeeper, swiz, hteach, fvend, wsmith, cbrok})
-
         'create the dungeon
-        mDun = New Dungeon
         updateLoadbar(40)
         mDun.setFloor(currFloor)
         initializeBoard(False)
@@ -318,6 +337,7 @@ Public Class Game
 
         turn = 0
 
+        lstLog.Items.Clear()
         pushLstLog("You see before you a dungeon.")
         picStart.Visible = False
 
@@ -326,6 +346,7 @@ Public Class Game
         updateLoadbar(99)
         boardWorker.CancelAsync()
     End Sub
+
     Sub loadCKeys()
         cKeys.Clear()
         Dim sr As StreamReader
@@ -475,15 +496,17 @@ Public Class Game
 
         zoom()
 
-        If mDun.numCurrFloor < 6 And mDun.numCurrFloor >= 0 AndAlso currFloor.beatBoss = False AndAlso Not mDun.floorboss(mDun.numCurrFloor).Equals("Key") And
+        If mDun.floorboss.ContainsKey(mDun.numCurrFloor) AndAlso currFloor.beatBoss = False AndAlso Not mDun.floorboss(mDun.numCurrFloor).Equals("Key") And
             combatmode = False And player.health > 0 And player.canMoveFlag = True AndAlso
             New Point(player.pos.Y, player.pos.X).Equals(New Point(currFloor.stairs.Y, currFloor.stairs.X)) Then
             pushPnlYesNo("Challenge the floor boss?", AddressOf ChallengeBoss, Nothing)
         End If
 
-            'If picNPC.Visible Then picNPC.BackgroundImage = NPCimgList(npcIndex)
+        'If picNPC.Visible Then picNPC.BackgroundImage = NPCimgList(npcIndex)
 
-            player.UIupdate()
+        player.UIupdate()
+
+        If player.isDead And lblEvent.Visible = False And pnlEvent.Visible = False Then player.die()
     End Sub
     Sub viewBubble()
         Dim viewRad = 1
@@ -595,9 +618,9 @@ Public Class Game
                             If currFloor.mBoard(player.pos.Y + indY, player.pos.X + indX).Text = "" Then viewArray(y, x) = 2
                             If currFloor.mBoard(player.pos.Y + indY, player.pos.X + indX).Text = "x" Then viewArray(y, x) = 13
                             If currFloor.mBoard(player.pos.Y + indY, player.pos.X + indX).Text = "H" Then
-                                If mDun.numCurrFloor > 5 Or currFloor.beatBoss Then
+                                If Not mDun.floorboss.ContainsKey(mDun.numCurrFloor) Or currFloor.beatBoss Then
                                     viewArray(y, x) = 3
-                                ElseIf mDun.numCurrFloor > 5 Or (mDun.numCurrFloor < mDun.floorboss.Length AndAlso mDun.floorboss(mDun.numCurrFloor).Equals("Key")) Then
+                                ElseIf mDun.floorboss.ContainsKey(mDun.numCurrFloor) AndAlso mDun.floorboss(mDun.numCurrFloor).Equals("Key") Then
                                     viewArray(y, x) = 9
                                 Else
                                     viewArray(y, x) = 10
@@ -950,7 +973,6 @@ Public Class Game
                     Exit Sub
                 End If
             End If
-
             Dim lastOnClose = lblEventOnClose.Method.Name
             lblEventOnClose()
             If lblEventOnClose.Method.Name.Equals(lastOnClose) Then
@@ -975,6 +997,12 @@ Public Class Game
                                   "another letter."
                 Exit Sub
             End If
+
+            selecting = False
+            player.canMoveFlag = True
+            pnlSelection.Location = New Point(1000, pnlSelection.Location.Y)
+            pnlSelection.Visible = False
+
             If selectionType.Equals("Potion") Or selectionType.Equals("Useable") Or selectionType.Equals("Food") Then
                 selectItem(index)
             ElseIf selectionType = "Magic" Then
@@ -990,13 +1018,10 @@ Public Class Game
             ElseIf selectionType = "yesNo" Then
                 selectYesNo(index)
             End If
+
+            selectedItem = Nothing
             player.inv.invNeedsUDate = True
             player.UIupdate()
-            selecting = False
-            player.canMoveFlag = True
-            pnlSelection.Location = New Point(1000, pnlSelection.Location.Y)
-            pnlSelection.Visible = False
-            selectedItem = Nothing
         End If
     End Sub
     Sub selectItem(ByVal index As Integer)
@@ -1098,7 +1123,8 @@ Public Class Game
 
     End Sub
     Sub selectYesNo(ByVal index As Integer)
-        Dim tempAct = yesAction.Clone
+        Dim tempAct
+        If Not yesAction Is Nothing Then tempAct = yesAction.Clone Else tempAct = Nothing
 
         If index = 0 Then
             If Not yesAction Is Nothing Then yesAction()
@@ -1251,7 +1277,7 @@ Public Class Game
     End Sub
     Sub randomEvents()
         'randomEvents decides whether random encounters will occur, and handles what will be encountered
-        If mDun.numCurrFloor = 5 Or mDun.numCurrFloor = 9999 Then Exit Sub
+        If mDun.numCurrFloor = 5 Or mDun.numCurrFloor = 75 Or mDun.numCurrFloor = 9999 Then Exit Sub
         If mDun.numCurrFloor = 91017 Then
             If Int(Rnd() * 100) = 0 Then
                 Dim m = Monster.monsterFactory(11)
@@ -1279,7 +1305,7 @@ Public Class Game
             Case 4
                 currTier = monstierTier4
             Case Else
-                currTier = monstierTier4
+                currTier = monstierTier6
         End Select
 
         Dim rand As Integer = CInt(Int(Rnd() * 1000))
@@ -1408,7 +1434,7 @@ Public Class Game
                 End If
             Next
         End If
-        If mDun.numCurrFloor < mDun.floorboss.Length Then
+        If mDun.floorboss.ContainsKey(mDun.numCurrFloor) Then
             If mDun.currFloorBoss.Equals("Key") And player.inv.getCountAt("Key") > 0 Then currFloor.beatBoss = True
             If player.pos = currFloor.stairs And currFloor.beatBoss Then
                 If mDun.currFloorBoss.Equals("Key") Then player.inv.add("Key", -1)
@@ -1796,7 +1822,7 @@ Public Class Game
 
         Dim pImg = player.prt.oneLayerImgCheck(player.pForm.name, player.pClass.name)
         If player.prt.oneLayerImgCheck(player.pForm.name, player.pClass.name) Is Nothing Then
-            pImg = Portrait.CreateFullBodyBMP(player.prt.iArr)
+            pImg = Portrait.CreateFullBodyBMP(player.prt.iarr)
         End If
 
         picDescPort.BackgroundImage = pImg
@@ -1899,6 +1925,24 @@ Public Class Game
         player.drawPort()
     End Sub
     Sub loadSave(ByVal a As String)
+        Dim reader As IO.StreamReader
+        reader = IO.File.OpenText(a)
+
+        Dim v = CDbl(reader.ReadLine())
+        If v < 0.92 Then
+            MsgBox("Error 003: Incorrect save file version!")
+            If mDun Is Nothing Then
+                picStart.Location = New Point(2, picStart.Location.Y)
+                picStart.Visible = True
+                btnS.Visible = True
+                btnL.Visible = True
+                btnSettings.Visible = True
+                btnControls.Visible = True
+                btnAbout.Visible = True
+            End If
+            Exit Sub
+        End If
+
         'loadSave handles the loading of a game
         Debug_Window.clear()
         cboxNPCMG.Items.Clear()
@@ -1930,27 +1974,11 @@ Public Class Game
 
         initLoadBar()
 
-        Dim reader As IO.StreamReader
-        reader = IO.File.OpenText(a)
-
-        Dim v = CDbl(reader.ReadLine())
-        If v < 0.9 Then
-            MsgBox("Error 003: Incorrect save file version!")
-            picStart.Visible = True
-            btnS.Visible = True
-            btnL.Visible = True
-            btnAbout.Visible = True
-            boardWorker.CancelAsync()
-            Exit Sub
-        End If
         updateLoadbar(10)
 
         'load the dungeon
         reader.ReadLine()
         mDun = New Dungeon(reader.ReadLine())
-        While Not mDun.floors.Keys.Contains(mDun.numCurrFloor)
-            mDun.numCurrFloor -= 1
-        End While
         currFloor = mDun.floors(mDun.numCurrFloor)
         newBoard()
         updateLoadbar(45)
@@ -2045,19 +2073,19 @@ Public Class Game
             MsgBox("Right Button Clicked")
         Else
             If solFlag Then
-                'Try
-                player.solFlag = True
-                loadSave("saves/s" & fileNum & ".ave")
-                player.solFlag = False
-                'Catch ex As System.IO.FileNotFoundException
-                '    MsgBox("Error 004: No save detected!")
-                'Catch ex2 As Exception
-                '    If MessageBox.Show("Error 005: Error in loaded in save file!" & vbCrLf & "Restart?", "Error 005", MessageBoxButtons.YesNo) = Windows.Forms.DialogResult.Yes Then
-                '        Application.Restart()
-                '    Else
-                '        Application.Exit()
-                '    End If
-                'End Try
+                Try
+                    player.solFlag = True
+                    loadSave("saves/s" & fileNum & ".ave")
+                    player.solFlag = False
+                Catch ex As System.IO.FileNotFoundException
+                    MsgBox("Error 004: No save detected!")
+                Catch ex2 As Exception
+                    If MessageBox.Show("Error 005: Error in loaded in save file!" & vbCrLf & "Restart?", "Error 005", MessageBoxButtons.YesNo) = Windows.Forms.DialogResult.Yes Then
+                        Application.Restart()
+                    Else
+                        Application.Exit()
+                    End If
+                End Try
             Else
                 save("saves/s" & fileNum & ".ave")
                 imagesWorkerArg = Convert.ToInt32(fileNum)
@@ -2163,7 +2191,7 @@ Public Class Game
         If int < 1 Then int = 1
         updateList.add(player, int)
         combatmode = False
-        picStart.Visible = False
+        If Not mDun Is Nothing Then picStart.Visible = False
         If player.isDead Then formReset()
         player.canMoveFlag = True
     End Sub
@@ -2189,7 +2217,7 @@ Public Class Game
                     iarr(i) = Portrait.imgLib.mAttributes(i)(id.Item1)
                 End If
                 ids(i) = id
-                If i = 6 And (id.Item1 = 0 Or id.Item1 = 3) Then iarr(pind.ears) = CharacterGenerator.recolor2(iarr(pind.ears), skincolor)
+                If i = 6 And (id.Item1 = 0 Or id.Item1 = 3) Then iarr(pInd.ears) = CharacterGenerator.recolor2(iarr(pInd.ears), skincolor)
             Next
             changeHairColor(haircolor, ids, iarr)
             changeSkinColor(skincolor, ids, iarr)
@@ -2721,7 +2749,10 @@ Public Class Game
     '|UI TOOLSTRIP|
     Private Sub NewGameToolStripMenuItem_Click(sender As Object, e As EventArgs) Handles NewGameToolStripMenuItem.Click
         'NewGameToolStripMenuItem_Click restarts the application
-        Application.Restart()
+        'Application.Restart()
+        picStart.Visible = True
+        newGame()
+        HandleKeyPress(cKeys(20))
     End Sub
     Private Sub LoadToolStripMenuItem_Click(sender As Object, e As EventArgs) Handles LoadToolStripMenuItem.Click
         If (lblEvent.Visible Or pnlEvent.Visible) Or combatmode Or npcmode Or Me.MdiChildren.Length > 0 Then
@@ -2733,7 +2764,8 @@ Public Class Game
     End Sub
     Private Sub SaveToolStripMenuItem_Click(sender As Object, e As EventArgs) Handles SaveToolStripMenuItem.Click
         solFlag = False
-        If (lblEvent.Visible Or pnlEvent.Visible) Or combatmode Or npcmode Or Me.MdiChildren.Length > 0 Then
+        If (lblEvent.Visible Or pnlEvent.Visible) Or combatmode Or npcmode Or Me.MdiChildren.Length > 0 Or
+            (mDun.numCurrFloor = 4 And mDun.floorboss(4) = "Ooze Empress" And preBSStartState Is Nothing) Then
             pushLblEvent("You can't save now!")
             Exit Sub
         End If
@@ -2744,7 +2776,7 @@ Public Class Game
         ab1.ShowDialog()
         ab1.Dispose()
     End Sub
-    Private Sub DebugToolStripMenuItem_Click(sender As Object, e As EventArgs) Handles DebugToolStripMenuItem.Click
+    Private Sub DebugToolStripMenuItem_Click(sender As Object, e As EventArgs) Handles DebugToolStripMenuItem1.Click
         Try
             debugWindow.ToString() 'Try to do something to check if it exists
         Catch ex As NullReferenceException
@@ -2986,16 +3018,16 @@ Public Class Game
         Return Color.FromArgb(a, r, g, b)
     End Function
     Shared Sub changeHairColor(ByVal c As Color, ByVal iarrind() As Tuple(Of Integer, Boolean, Boolean), ByRef iarr As Image())
-        iarr(pind.rearhair) = CharacterGenerator.recolor(Portrait.imgLib.atrs("RearHair2").getAt(iArrInd(pInd.rearhair)), c)
-        iarr(pind.midhair) = CharacterGenerator.recolor(Portrait.imgLib.atrs("RearHair1").getAt(iArrInd(pInd.midhair)), c)
-        iarr(pind.eyebrows) = CharacterGenerator.recolor(Portrait.imgLib.atrs("Eyebrows").getAt(iArrInd(pInd.eyebrows)), c)
+        iarr(pInd.rearhair) = CharacterGenerator.recolor(Portrait.imgLib.atrs("RearHair2").getAt(iarrind(pInd.rearhair)), c)
+        iarr(pInd.midhair) = CharacterGenerator.recolor(Portrait.imgLib.atrs("RearHair1").getAt(iarrind(pInd.midhair)), c)
+        iarr(pInd.eyebrows) = CharacterGenerator.recolor(Portrait.imgLib.atrs("Eyebrows").getAt(iarrind(pInd.eyebrows)), c)
         iarr(pInd.fronthair) = CharacterGenerator.recolor(Portrait.imgLib.atrs("FrontHair").getAt(iarrind(pInd.fronthair)), c)
     End Sub
     Shared Sub changeSkinColor(ByVal c As Color, ByVal iarrind() As Tuple(Of Integer, Boolean, Boolean), ByRef iarr As Image())
-        iarr(pind.body) = CharacterGenerator.recolor2(Portrait.imgLib.atrs("Body").getAt(iArrInd(pInd.body)), c)
-        iarr(pind.face) = CharacterGenerator.recolor2(Portrait.imgLib.atrs("Face").getAt(iArrInd(pInd.face)), c)
-        iarr(pind.ears) = CharacterGenerator.recolor2(Portrait.imgLib.atrs("Ears").getAt(iArrInd(pInd.ears)), c)
-        iarr(pind.nose) = CharacterGenerator.recolor2(Portrait.imgLib.atrs("Nose").getAt(iArrInd(pInd.nose)), c)
+        iarr(pInd.body) = CharacterGenerator.recolor2(Portrait.imgLib.atrs("Body").getAt(iarrind(pInd.body)), c)
+        iarr(pInd.face) = CharacterGenerator.recolor2(Portrait.imgLib.atrs("Face").getAt(iarrind(pInd.face)), c)
+        iarr(pInd.ears) = CharacterGenerator.recolor2(Portrait.imgLib.atrs("Ears").getAt(iarrind(pInd.ears)), c)
+        iarr(pInd.nose) = CharacterGenerator.recolor2(Portrait.imgLib.atrs("Nose").getAt(iarrind(pInd.nose)), c)
     End Sub
     'load bar functions
     Public Sub initLoadBar()
@@ -3014,7 +3046,7 @@ Public Class Game
         boardWorker.ReportProgress(0)
     End Sub
     Public Sub updateLoadbar(ByVal progress As Integer)
-        If progress < 1 Or progress > 99 Then Exit Sub
+        If progress < 1 Or progress > 99 Or boardWorker Is Nothing Then Exit Sub
         boardWorker.ReportProgress(progress)
         Application.DoEvents()
     End Sub

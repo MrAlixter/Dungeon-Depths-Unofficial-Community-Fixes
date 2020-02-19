@@ -30,7 +30,7 @@
             p.prt.setIAInd(pInd.fronthair, 13, True, True)
         Else
             p.prt.haircolor = bimboblue1
-            p.prt.setIAInd(pInd.rearhair, 1, True, True)
+            p.prt.setIAInd(pInd.rearhair, 5, True, True)
             p.prt.setIAInd(pInd.midhair, 5, True, True)
             p.prt.setIAInd(pInd.fronthair, 6, True, True)
         End If
@@ -108,23 +108,15 @@
         stopTF()
         Game.pushLblEvent(out)
     End Sub
-    Sub step2alt()
+   Sub step2alt()
         Dim p As player = game.player
-        p.prt.setIAInd(pInd.hat, 0, True, True)
-        p.prt.setIAInd(pInd.body, 7, True, True)
-        p.prt.haircolor = bimboblue2
-        p.prt.setIAInd(pInd.rearhair, 10, True, True)
-        p.prt.setIAInd(pInd.midhair, 10, True, True)
-        p.prt.setIAInd(pInd.fronthair, 7, True, True)
-        p.prt.setIAInd(pInd.ears, 0, True, True)
-        p.prt.setIAInd(pInd.mouth, 6, True, True)
-        p.prt.setIAInd(pInd.eyes, 26, True, True)
-        p.prt.setIAInd(pInd.cloak, 0, True, True)
-        Equipment.clothesChange("Magical_Girl_Outfit")
-        p.breastSize = 3
-        Game.pushLblEvent("You immediatly feel funny, the increased magic in your system reacting swiftly with the gum.  In your haze, you look down to see your clothes have become tight and pink. You giggle, all traces of intellect vanishing as your body becomes more curvy and feminine. Your hair lengthens, becoming a minty cyan, and your clothes finish changing to match your new figure.")
+
+        Dim mstf = New MagSlutTF(1, 0, 0, False)
+        mstf.step2()
+        Game.pushLblEvent("You immediatly feel funny, the increased magic in your system reacting swiftly with the gum.  In your haze, you look down to see your clothes have become tight and pink. You giggle, all traces of intellect vanishing as your body becomes more curvy and feminine. Your hair lengthens, becoming a platinum blonde, and your clothes finish changing to match your new figure.")
         p.lust += 10
-        If game.mDun.numCurrFloor < 6 Then p.pImage = Game.picPlayerB.BackgroundImage Else p.pImage = Game.picBimbof.BackgroundImage
+
+        p.TextColor = Color.HotPink
         p.perks("bimbotf") = -1
         stopTF()
     End Sub

@@ -124,7 +124,7 @@
             Case 0   'basic warrior
                 p.pClass = p.classes("Warrior")
                 armor = New Integer() {5, 19, 46, 83}
-                weapon = New Integer() {6, 23, 84}
+                weapon = New Integer() {6, 23, 84, 176}
             Case 1   'basic mage
                 p.pClass = p.classes("Mage")
                 armor = New Integer() {5, 17, 46, 83}
@@ -132,7 +132,7 @@
             Case 2   'advanced warrior
                 p.pClass = p.classes("Warrior")
                 armor = New Integer() {5, 19, 38, 46, 101}
-                weapon = New Integer() {6, 23, 40, 118}
+                weapon = New Integer() {6, 23, 40, 118, 176}
             Case 3   'advanced mage
                 p.pClass = p.classes("Mage")
                 armor = New Integer() {5, 17, 46, 83}
@@ -140,7 +140,7 @@
             Case 4   'basic bimbo
                 p.pClass = p.classes("Bimbo")
                 p.sex = "Female"
-                armor = New Integer() {7, 12, 18, 20, 39, 47, 71, 72, 78, 85, 103, 105, 107, 116, 129}
+                armor = New Integer() {7, 12, 18, 20, 39, 47, 71, 72, 78, 85, 103, 105, 107, 116, 129, 177}
                 weapon = New Integer() {6, 22, 23, 84}
             Case 5   'combat bimbo
                 p.pForm = p.forms("Amazon")
@@ -158,12 +158,12 @@
                 p.pClass = p.classes("Warrior")
                 p.sex = "Female"
                 p.prt.skincolor = (Color.FromArgb(255, 210, 161, 140))
-                armor = New Integer() {7, 41, 71, 85, 99}
+                armor = New Integer() {7, 41, 71, 85, 99, 177}
             Case 8   'succubus
                 p.pForm = p.forms("Succubus")
                 p.pClass = p.classes("Warrior")
                 armor = New Integer() {39, 74}
-                weapon = New Integer() {6, 21, 22, 23, 63, 63, 63}
+                weapon = New Integer() {6, 21, 22, 23, 63, 63, 63, 177}
                 p.sex = "Female"
                 p.prt.wingInd = 2
                 p.prt.hornInd = 3
@@ -172,7 +172,7 @@
                 p.pForm = p.forms("Succubus")
                 p.pClass = p.classes("Bimbo")
                 p.sex = "Female"
-                armor = New Integer() {7, 12, 18, 20, 39, 47, 71, 72, 78, 85, 103, 105, 107, 116, 129}
+                armor = New Integer() {7, 12, 18, 20, 39, 47, 71, 72, 78, 85, 103, 105, 107, 116, 129, 177}
                 weapon = New Integer() {6, 21, 22, 23, 63, 63, 63}
                 p.prt.wingInd = 2
                 p.prt.hornInd = 3
@@ -204,7 +204,7 @@
                 p.pForm = p.forms("Angel")
                 p.pClass = p.classes("Warrior")
                 armor = New Integer() {7, 19, 83, 85, 95, 105}
-                weapon = New Integer() {6, 23, 40, 112}
+                weapon = New Integer() {6, 23, 40, 112, 177, 176}
                 p.sex = "Female"
                 p.prt.wingInd = 1
             Case 16   'bunny girl
@@ -218,20 +218,20 @@
                 p.pForm = p.forms("Minotaur Cow")
                 p.pClass = p.classes("Barbarian")
                 armor = New Integer() {19, 71, 101}
-                weapon = New Integer() {6, 23, 40, 118}
+                weapon = New Integer() {6, 23, 40, 118, 177}
                 p.sex = "Female"
                 p.prt.hornInd = 2
             Case 18   'cow male
                 p.pForm = p.forms("Minotaur Bull")
                 p.pClass = p.classes("Barbarian")
                 armor = New Integer() {19, 101}
-                weapon = New Integer() {6, 23, 40, 118}
+                weapon = New Integer() {6, 23, 40, 118, 176}
                 p.sex = "Male"
                 p.prt.hornInd = 2
             Case 19   'basic warrior
                 p.pClass = p.classes("Warrior")
                 armor = New Integer() {5, 19, 46, 83}
-                weapon = New Integer() {6, 23, 84}
+                weapon = New Integer() {6, 23, 84, 176}
             Case 20   'basic mage
                 p.pClass = p.classes("Mage")
                 armor = New Integer() {5, 17, 46, 83}
@@ -239,7 +239,7 @@
             Case 21  'advanced warrior
                 p.pClass = p.classes("Warrior")
                 armor = New Integer() {5, 19, 38, 46, 101}
-                weapon = New Integer() {6, 23, 40, 118}
+                weapon = New Integer() {6, 23, 40, 118, 176}
             Case 22  'advanced mage
                 p.pClass = p.classes("Mage")
                 armor = New Integer() {5, 17, 46, 83}

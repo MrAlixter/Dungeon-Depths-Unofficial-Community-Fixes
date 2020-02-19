@@ -9,6 +9,7 @@
         tier = Nothing
         MyBase.setUsable(False)
         MyBase.mBoost = 10
+        MyBase.wBoost = -10
         MyBase.count = 0
         MyBase.value = 0
 
@@ -16,6 +17,8 @@
 
         MyBase.fInd = New Tuple(Of Integer, Boolean, Boolean)(12, True, True)
         MyBase.mInd = New Tuple(Of Integer, Boolean, Boolean)(12, True, True)
+
+        underClothes = True
     End Sub
 
     Public Overrides Sub discard()

@@ -30,6 +30,8 @@
         spellList.Add("Warp", New Warp(Nothing, Nothing))
         spellList.Add("Uvona's Fugue", New UvonasFugue(Nothing, Nothing))
         spellList.Add("Molten Fireball", New MoltenFireball(Nothing, Nothing))
+        spellList.Add("Snowball", New Snowball(Nothing, Nothing))
+        spellList.Add("Mesmeric Bloom", New MesmericBloom(Nothing, Nothing))
         spellList.Add("Frazzle", New Frazzle(Nothing, Nothing))
     End Sub
 
@@ -148,30 +150,15 @@
 
     Shared Sub spellCast(ByRef t As NPC, ByRef c As Player, ByVal s As String)
         If Game.combatmode Or Game.npcmode Then
-            If Not t.sName = "Targax the Brutal" Or s = "Heal" Then
+            If t.reactToSpell(s) Or s = "Heal" Then
                 spellroute(c, t, s)
-            ElseIf t.getName = "Shopkeeper" Then
-                If Rnd() < (0.01) Then
-                    spellroute(c, t, s)
-                Else
-                    Game.pushLstLog("The spell bounces off the Shopkeeper!")
-                    Game.pushLblCombatEvent("The spell bounces off the Shopkeeper!")
-                End If
-            Else
-                If Rnd() < (0.6) Then
-                    spellroute(c, t, s)
-                Else
-                    Game.pushLstLog("The spell bounces off Targax!")
-                    Game.pushLblCombatEvent("The spell bounces off Targax!")
-                End If
             End If
         Else
             spellroute(c, t, s)
         End If
-
-
     End Sub
     Shared Sub spellroute(ByRef c As Player, ByRef t As NPC, ByRef s As String)
+        If s.Contains("Heartblast Starcan.") Then s = "Heartblast Starcannon"
         If Not spellList.Keys.Contains(s) Then s = "Frazzle"
 
         If s.Equals("Self Polymorph") And Not Transformation.canBeTFed(c) Then
@@ -180,7 +167,7 @@
             Exit Sub
         ElseIf s.Equals("Heal") Then
             If Game.player.pClass.name.Equals("Soul-Lord") Then
-                Game.pushLblEvent("You scoff at the thought of healing in this moment, instead firing off a much more agressive fireball.  As you go back to your buisness, you muse on what a waste of time a heal spell would be." & vbCrLf & vbCrLf & """Only someone who cares about their mortal vessel would bother to maintain it.")
+                Game.pushLblEvent("You scoff at the thought of healing in this moment, instead firing off a much more agressive fireball.  Settling down slightly, you muse on what a waste of time a heal spell would be." & vbCrLf & vbCrLf & """Only someone who cares about their mortal vessel would bother to maintain it.")
                 s = "Fireball"
             End If
         End If

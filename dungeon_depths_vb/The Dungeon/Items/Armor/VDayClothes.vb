@@ -15,6 +15,7 @@
         MyBase.value = 428
         MyBase.slutVarInd = 78
         MyBase.bsizeneg1 = New Tuple(Of Integer, Boolean, Boolean)(24, False, True)
+        MyBase.bsize0 = New Tuple(Of Integer, Boolean, Boolean)(23, False, True)
         MyBase.bsize1 = New Tuple(Of Integer, Boolean, Boolean)(120, True, True)
         MyBase.bsize2 = New Tuple(Of Integer, Boolean, Boolean)(121, True, True)
         MyBase.bsize3 = New Tuple(Of Integer, Boolean, Boolean)(122, True, True)

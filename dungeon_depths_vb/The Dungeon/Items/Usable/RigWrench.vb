@@ -43,7 +43,8 @@
                             Case 2
                                 outout = "Trap disarmed!" & vbCrLf & " You have disarmed an ruby trap."
                             Case 3
-                                outout = "Trap disarmed!" & vbCrLf & "You have disarmed an blowup doll trap."
+                                outout = "Trap disarmed!" & vbCrLf & "You have disarmed an blowup doll trap. +1 Cursed_Cupon"
+                                Game.player.inv.add("Cursed_Coupon", 1)
                             Case Else
                                 outout = "Trap disarmed!" & vbCrLf & " You have disarmed an broken trap."
                         End Select

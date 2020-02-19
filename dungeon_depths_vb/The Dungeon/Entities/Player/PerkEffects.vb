@@ -137,7 +137,7 @@
     End Sub
     Shared Sub ROTLGRoute()
         Dim p As Player = Game.player
-        Dim rotlg = CType(p.inv.item(81), ROTLGoddess)
+        Dim rotlg = CType(p.inv.item(81), ROAmaraphne)
         rotlg.sBoost = CInt(2.2222 * p.breastSize)
 
         rotlg.dBoost = 0
@@ -239,6 +239,18 @@
             p.dBuff = 0
             p.perks("mmammaries") = -1
             Game.pushLstLog("Massive mammaries has worn off.")
+
+        End If
+    End Sub
+    Shared Sub pProt()
+        Dim p As Player = Game.player
+        If p.perks("pprot") = 1 Then
+            p.dBuff = p.dBuff + ((p.getDEF - p.dBuff) * 9.99)
+            p.perks("pprot") -= 1
+        Else
+            p.dBuff = 0
+            p.perks("pprot") = -1
+            Game.pushLstLog("Pillowy Protect has worn off.")
 
         End If
     End Sub
