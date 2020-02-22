@@ -610,6 +610,7 @@
     End Sub
     Public Sub magicRoute()
         Game.cboxNPCMG.Items.Clear()
+        If pForm.name = "Alraune" And Not knownSpells.Contains("Mesmeric Bloom") Then knownSpells.Add("Mesmeric Bloom")
     End Sub
     'wait
     Public Sub wait()

@@ -5,7 +5,7 @@
         MyBase.setDesc("" & vbCrLf & _
                        "+10 Mana" & vbCrLf & _
                        "-10 WIL")
-        id = 140
+        id = 168
         tier = Nothing
         MyBase.setUsable(False)
         MyBase.mBoost = 10

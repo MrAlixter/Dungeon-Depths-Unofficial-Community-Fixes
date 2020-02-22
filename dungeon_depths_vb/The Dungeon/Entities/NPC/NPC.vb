@@ -29,7 +29,8 @@
         If (Game.player.pClass.name = "Thrall" And Me.name.Contains("Thrall")) Or
            (Game.player.pForm.name = "Arachne" And Me.name.Contains("Arachne")) Or
             (Game.player.pForm.name = "Slime" And Me.name.Contains("Slime")) Or
-            (Game.player.pForm.name.Equals("Goo Girl") And Me.name.Contains("Goo")) Then
+            (Game.player.pForm.name.Equals("Goo Girl") And Me.name.Contains("Goo")) Or
+            (Game.player.pForm.name = "Alraune" And Me.name.Contains("Alraune")) Then
             despawn("friend")
             Exit Sub
         End If

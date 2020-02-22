@@ -68,6 +68,7 @@
 
         If Game.combatmode Then Game.fromCombat()
         Game.pushLblEvent("You are now an Alraune!")
+        Game.pushLstLog("You are now an Alraune!")
         p.pForm = p.forms("Alraune")
         If Not p.knownSpells.Contains("Mesmeric Bloom") Then p.knownSpells.Add("Mesmeric Bloom")
     End Sub

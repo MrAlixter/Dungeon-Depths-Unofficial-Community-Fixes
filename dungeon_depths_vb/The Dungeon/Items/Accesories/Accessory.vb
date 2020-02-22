@@ -14,4 +14,12 @@
     End Sub
     Overridable Sub onUnequip()
     End Sub
+
+    Public Overrides Sub discard()
+        If isCursed And Game.player.equippedAcce.getAName.Equals(getAName) Then
+            Game.pushLblEvent("You are unable to drop your equipped equipment.")
+        Else
+            MyBase.discard()
+        End If
+    End Sub
 End Class

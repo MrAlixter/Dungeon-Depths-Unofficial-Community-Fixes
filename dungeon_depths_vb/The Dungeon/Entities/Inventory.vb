@@ -200,6 +200,7 @@
         internal_inventory.Add("Pink_Panties", New PPanties())              '180
         internal_inventory.Add("TODO_Outfit", New GothOutfit())             '181
         internal_inventory.Add("Cursed_Coupon", New CursedCoupon())         '182
+        internal_inventory.Add("Kitsune's_Robes", New KitsuneRobe())        '183
 
         armor = {New CommonClothes, New SkimpyClothes, New Naked, New VSkimpyClothes,
                  Me.item(5), Me.item(7), Me.item(8), Me.item(10),
@@ -215,7 +216,7 @@
                  Me.item(129), Me.item(137), Me.item(138), Me.item(144),
                  Me.item(146), Me.item(147), Me.item(151), Me.item(166),
                  Me.item(169), Me.item(170), Me.item(175), Me.item(176),
-                 Me.item(177), Me.item(181)}
+                 Me.item(177), Me.item(181), Me.item(183)}
 
         weapons = {New BareFists(),
                    Me.item(6), Me.item(9), Me.item(11), Me.item(21),

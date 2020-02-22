@@ -5,7 +5,7 @@
         MyBase.setName("Grappling_Hook")
         MyBase.setDesc("A debugging item that lets one teleport/reset floors.  Use your powers for good, ok?")
         id = 148
-        tier = 3
+        tier = Nothing
         MyBase.setUsable(True)
         MyBase.count = 0
         MyBase.value = 0

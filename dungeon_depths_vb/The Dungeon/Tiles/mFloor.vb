@@ -39,8 +39,8 @@ Public Class mFloor
         End If
         If updateLoadbar Then Game.updateLoadbar(40)
 
-        placePlayer(Game.player)
         placeStairs()
+        placePlayer(Game.player)
         placeChest(floorCode)
         If floorNumber > 2 Then placeTraps()
 
@@ -294,7 +294,33 @@ Public Class mFloor
     End Sub
     Sub verifyAccessToStairs(ByRef p As Player)
         Dim r2 = route(p.pos, stairs)
-        If r2.Length <= 1 Then connectRooms(p.pos, stairs)
+        If r2.Length <= 1 Then
+
+            Dim p1, p2 As Point
+            If p1.X > p2.X Then
+                p1 = New Point(p.pos)
+                p2 = New Point(stairs)
+            Else
+                p1 = New Point(stairs)
+                p2 = New Point(p.pos)
+            End If
+
+            For x = p1.X To p2.X
+                mBoard(x, p1.Y).Tag = 1
+            Next
+
+            If p1.Y > p2.Y Then
+                p1 = New Point(p.pos)
+                p2 = New Point(stairs)
+            Else
+                p1 = New Point(stairs)
+                p2 = New Point(p.pos)
+            End If
+
+            For y = p1.Y To p2.Y
+                mBoard(p1.X, y).Tag = 1
+            Next
+        End If
     End Sub
     'dungeon floors
     Sub generateDungeonLevel(ByVal code As String)
