@@ -21,9 +21,4 @@
         Game.pushLblEvent("You drink the " & getName() & ".  +" & (Game.player.mana - phMana) & " mana!")
         count -= 1
     End Sub
-    Overrides Sub discard()
-        Game.pushLstLog("You drop the " & getName())
-
-        count -= 1
-    End Sub
 End Class

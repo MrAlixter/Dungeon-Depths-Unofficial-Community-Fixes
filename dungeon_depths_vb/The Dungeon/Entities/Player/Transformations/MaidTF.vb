@@ -1,4 +1,4 @@
-﻿Public Class MaidTF
+﻿Public NotInheritable Class MaidTF
     Inherits Transformation
     Sub New()
         MyBase.New(1, 0, 0, False)
@@ -19,11 +19,6 @@
 
         Dim p As Player = Game.player
 
-        If p.pClass.name = "Magic Girl" Then
-            Game.pushLblEvent("Your form prevents you from being altered!")
-            Exit Sub
-        End If
-
         Dim out = ""
 
         p.pClass.revert()
@@ -34,10 +29,10 @@
         Equipment.clothesChange("Maid_Outfit")
         'maid transformation
         p.prt.haircolor = Color.FromArgb(255, 115, 72, 65)
-        p.prt.setIAInd(1, 8, True, True)
-        p.prt.setIAInd(5, 8, True, True)
-        p.prt.setIAInd(15, 3, True, True)
-        p.prt.setIAInd(16, 2, True, False)
+        p.prt.setIAInd(pInd.rearhair, 8, True, True)
+        p.prt.setIAInd(pInd.midhair, 8, True, True)
+        p.prt.setIAInd(pInd.fronthair, 3, True, True)
+        p.prt.setIAInd(pInd.hat, 2, True, False)
 
         'transformation description push
         If p.isUnwilling And p.prt.sexBool = False Then

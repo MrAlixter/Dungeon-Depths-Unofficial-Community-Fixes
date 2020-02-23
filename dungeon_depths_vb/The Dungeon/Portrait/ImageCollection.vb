@@ -1,23 +1,25 @@
 ﻿Public Class ImageCollection
     Inherits Object
     Public atrs As Dictionary(Of String, ImageAttribute) = New Dictionary(Of String, ImageAttribute)
-
+    Public mfEquivalentIndexes As List(Of MFRouting)
     Sub New(ByVal libID As Integer)
         Select Case libID
             Case 0
                 createDefaultImageLib()
             Case 1
                 createAllImageLib()
+                createMFEqInd()
             Case Else
                 createAllImageLib()
+                createMFEqInd()
         End Select
     End Sub
     Sub createDefaultImageLib()
         Dim fGlasses, fEyes, fFace, fFacialMark, fMouth, fBody, fCloak,
-       fClothing, fFrontHair, fEyebrows, fNose, fRearHair1, fEars, fAccA,
+       fClothing, fFrontHair, fEyebrows, fNose, fRearHair1, fEars, fAcce,
        fHat, fRearHair2, bkg As ImageDump
         Dim mGlasses, mEyes, mFace, mFacialMark, mMouth, mBody, mCloak,
-            mClothing, mFrontHair, mEyebrows, mNose, mRearHair1, mEars, mAccA,
+            mClothing, mFrontHair, mEyebrows, mNose, mRearHair1, mEars, mAcce,
             mHat, mRearHair2 As ImageDump
 
         Dim wings, horns As ImageDump
@@ -119,12 +121,12 @@
         ndoM = mCloak.Count
         atrs.Add("Cloak", New ImageAttribute(fCloak, mCloak, ndoF, ndoM))
 
-        '-index 14 (AccA)
-        fAccA = New ImageDump("img/fAccA")
-        mAccA = New ImageDump("img/mAccA")
-        ndoF = fAccA.Count
-        ndoM = mAccA.Count
-        atrs.Add("AccA", New ImageAttribute(fAccA, mAccA, ndoF, ndoM))
+        '-index 14 (Acce)
+        fAcce = New ImageDump("img/fAcce")
+        mAcce = New ImageDump("img/mAcce")
+        ndoF = fAcce.Count
+        ndoM = mAcce.Count
+        atrs.Add("Acce", New ImageAttribute(fAcce, mAcce, ndoF, ndoM))
 
         '-index 15 (front hair)
         fFrontHair = New ImageDump("img/fFrontHair")
@@ -148,19 +150,19 @@
     End Sub
     Sub createAllImageLib()
         Dim fGlasses, fEyes, fFace, fFacialMark, fMouth, fBody, fCloak,
-       fClothing, fFrontHair, fEyebrows, fNose, fRearHair1, fEars, fAccA,
+       fClothing, fFrontHair, fEyebrows, fNose, fRearHair1, fEars, fAcce,
        fHat, fRearHair2, bkg As ImageDump
         Dim mGlasses, mEyes, mFace, mFacialMark, mMouth, mBody, mCloak,
-            mClothing, mFrontHair, mEyebrows, mNose, mRearHair1, mEars, mAccA,
+            mClothing, mFrontHair, mEyebrows, mNose, mRearHair1, mEars, mAcce,
             mHat, mRearHair2 As ImageDump
 
-        Dim fTFAccA, fTFBody, fTFClothes, fTFEars, fTFEyes, fTFface,
+        Dim fTFAcce, fTFBody, fTFClothes, fTFEars, fTFEyes, fTFface,
             fTfFrontHair, fTFMouth, fTFNose, fTFRearhair1, fTfRearhair2, fTFGlasses,
             fTFHat As ImageDump
-        Dim mTFAccA, mTFBody, mTFClothes, mTFEars, mTFEyes, mTFface,
+        Dim mTFAcce, mTFBody, mTFClothes, mTFEars, mTFEyes, mTFface,
             mTfFrontHair, mTFMouth, mTFNose, mTFRearhair1, mTfRearhair2 As ImageDump
 
-        Dim wings, horns As ImageDump
+        Dim wings, horns, hbow As ImageDump
 
         Dim ndoM, ndoF As Integer
 
@@ -297,16 +299,16 @@
         ndoM = mCloak.Count
         atrs.Add("Cloak", New ImageAttribute(fCloak, mCloak, ndoF, ndoM))
 
-        '-index 14 (AccA)
-        fAccA = New ImageDump("img/fAccA")
-        mAccA = New ImageDump("img/mAccA")
-        ndoF = fAccA.Count
-        ndoM = mAccA.Count
-        fTFAccA = New ImageDump("img/fTF/tfAccA")
-        mTFAccA = New ImageDump("img/mTF/tfAccA")
-        fAccA.merge(fTFAccA)
-        mAccA.merge(mTFAccA)
-        atrs.Add("AccA", New ImageAttribute(fAccA, mAccA, ndoF, ndoM))
+        '-index 14 (Acce)
+        fAcce = New ImageDump("img/fAcce")
+        mAcce = New ImageDump("img/mAcce")
+        ndoF = fAcce.Count
+        ndoM = mAcce.Count
+        fTFAcce = New ImageDump("img/fTF/tfAcce")
+        mTFAcce = New ImageDump("img/mTF/tfAcce")
+        fAcce.merge(fTFAcce)
+        mAcce.merge(mTFAcce)
+        atrs.Add("Acce", New ImageAttribute(fAcce, mAcce, ndoF, ndoM))
 
         '-index 15 (front hair)
         fFrontHair = New ImageDump("img/fFrontHair")
@@ -339,6 +341,9 @@
         horns = New ImageDump("img/Horns")
         atrs.Add("Horns", New ImageAttribute(horns, horns.Count))
 
+        hbow = New ImageDump("img/HairBows")
+        atrs.Add("HBows", New ImageAttribute(hbow, hbow.Count))
+
         For i = 0 To atrs.Keys.Count - 1
             atrs(atrs.Keys(i)).key = atrs.Keys(i)
         Next
@@ -353,8 +358,8 @@
         atrs("Cloak").setAt(New Tuple(Of Integer, Boolean, Boolean)(0, True, False), null)
         atrs("Cloak").setAt(New Tuple(Of Integer, Boolean, Boolean)(0, False, False), null)
 
-        atrs("AccA").setAt(New Tuple(Of Integer, Boolean, Boolean)(0, True, False), null)
-        atrs("AccA").setAt(New Tuple(Of Integer, Boolean, Boolean)(0, False, False), null)
+        atrs("Acce").setAt(New Tuple(Of Integer, Boolean, Boolean)(0, True, False), null)
+        atrs("Acce").setAt(New Tuple(Of Integer, Boolean, Boolean)(0, False, False), null)
 
         atrs("Hat").setAt(New Tuple(Of Integer, Boolean, Boolean)(0, True, False), null)
         atrs("Hat").setAt(New Tuple(Of Integer, Boolean, Boolean)(0, False, False), null)
@@ -365,7 +370,60 @@
         atrs("FrontHair").setAt(New Tuple(Of Integer, Boolean, Boolean)(0, True, False), null)
         atrs("FrontHair").setAt(New Tuple(Of Integer, Boolean, Boolean)(0, False, False), null)
     End Sub
-
+    Sub createMFEqInd()
+        mfEquivalentIndexes = New List(Of MFRouting)
+        'bkg
+        mfEquivalentIndexes.Add(New MFRouting({},
+                                              {}))
+        'rearhair2
+        mfEquivalentIndexes.Add(New MFRouting({5, 6},
+                                              {13, 21}))
+        'body
+        mfEquivalentIndexes.Add(New MFRouting({0},
+                                              {0}))
+        'clothing
+        mfEquivalentIndexes.Add(New MFRouting({5},
+                                              {47}))
+        'face
+        mfEquivalentIndexes.Add(New MFRouting({},
+                                              {}))
+        'rearhair1
+        mfEquivalentIndexes.Add(New MFRouting({5, 6},
+                                              {15, 24}))
+        'nose
+        mfEquivalentIndexes.Add(New MFRouting({},
+                                              {}))
+        'ears
+        mfEquivalentIndexes.Add(New MFRouting({5, 6},
+                                              {5, 11}))
+        'mouth
+        mfEquivalentIndexes.Add(New MFRouting({5, 6},
+                                              {10, 16}))
+        'eyes
+        mfEquivalentIndexes.Add(New MFRouting({5, 6, 7, 8, 9, 10, 11, 12},
+                                              {11, 14, 15, 19, 20, 33, 36, 38}))
+        'eyebrows
+        mfEquivalentIndexes.Add(New MFRouting({},
+                                              {}))
+        'facial mark
+        mfEquivalentIndexes.Add(New MFRouting({},
+                                              {}))
+        'glasses
+        mfEquivalentIndexes.Add(New MFRouting({},
+                                              {}))
+        'cloak
+        mfEquivalentIndexes.Add(New MFRouting({},
+                                              {}))
+        'accessories
+        mfEquivalentIndexes.Add(New MFRouting({},
+                                              {}))
+        'fronthair
+        mfEquivalentIndexes.Add(New MFRouting({},
+                                              {}))
+        'hat
+        mfEquivalentIndexes.Add(New MFRouting({},
+                                              {}))
+    End Sub
     Public Function fAttributes() As List(Of Image)()
         Dim out As List(Of List(Of Image)) = New List(Of List(Of Image))
         For i = 0 To 16

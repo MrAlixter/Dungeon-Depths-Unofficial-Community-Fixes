@@ -1,4 +1,4 @@
-﻿Public Class SuccubusTF
+﻿Public NotInheritable Class SuccubusTF
     Inherits PolymorphTF
     Sub New()
         MyBase.New()
@@ -29,24 +29,24 @@
         End If
         p.prt.haircolor = Color.FromArgb(255, 155, 0, 0)
         p.prt.skincolor = Color.FromArgb(255, 255, 105, 180)
-        p.prt.setIAInd(1, 9, True, True)
+        p.prt.setIAInd(pInd.rearhair, 9, True, True)
         If p.breastSize < 2 Then p.breastSize = 2
         p.reverseBSRoute()
-        p.prt.setIAInd(4, 0, True, False)
-        p.prt.setIAInd(5, 9, True, True)
-        p.prt.setIAInd(7, 0, True, False)
-        p.prt.setIAInd(9, 12, True, True)
-        p.prt.setIAInd(10, 0, True, False)
-        p.prt.setIAInd(13, 0, True, False)
-        p.prt.setIAInd(15, 13, True, True)
-        p.prt.setIAInd(16, 0, True, False)
+        p.prt.setIAInd(pInd.face, 0, True, False)
+        p.prt.setIAInd(pInd.midhair, 9, True, True)
+        p.prt.setIAInd(pInd.nose, 0, True, False)
+        p.prt.setIAInd(pInd.eyes, 12, True, True)
+        p.prt.setIAInd(pInd.eyebrows, 0, True, False)
+        p.prt.setIAInd(pInd.cloak, 0, True, False)
+        p.prt.setIAInd(pInd.fronthair, 13, True, True)
+        p.prt.setIAInd(pInd.hat, 0, True, False)
         p.prt.wingInd = 2
         p.prt.hornInd = 3
 
         'transformation description push
         p.TextColor = Color.HotPink
         out += "As hellfire engulfs you, you ponder over what you should do to your opponent.  Maybe flay them, mabye just go for a quick clean decapitation, or maybe tie them up and use them as a fucktoy until you get bored?  ""Well,"" you tell them with a sinister grin, ""... whatever I decide on ..."" you do a pirouette, showing off your new body in all its glory ""... will certainly be more fun for me ..."" you lock eyes with your prey and bare your fangs in a vicious sneer ""... than for you."""
-        
+
         Game.pushLblEvent(out)
     End Sub
 End Class

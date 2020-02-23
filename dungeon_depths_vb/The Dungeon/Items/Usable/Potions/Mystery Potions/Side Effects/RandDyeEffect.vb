@@ -5,7 +5,7 @@
         Game.pushLblEvent("You now have randomly colored hair!")
 
         p.prt.haircolor = Color.FromArgb(255, Int(Rnd() * 125) + 100, Int(Rnd() * 125) + 100, Int(Rnd() * 125) + 100)
-        p.createP()
+        p.drawPort()
         If Transformation.canBeTFed(p) Then
             p.pState.save(p)
         End If

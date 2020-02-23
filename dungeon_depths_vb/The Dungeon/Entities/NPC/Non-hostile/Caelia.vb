@@ -1,25 +1,28 @@
 ﻿Public Class Caelia
     Inherits ShopNPC
     Sub New()
-        setName("Caelia")
-        setHealth(1.0)
-        setMaxHealth(9999)
-        setATK(99)
-        setDEF(99)
-        setSPD(999)
+        name = "Caelia"
+        health = 1.0
+        maxHealth = 9999
+        attack = 99
+        defence = 99
+        speed = 999
 
         'Define the inventory
         inv = New Inventory(False)
         'Armor/Accesories
 
         isShop = False
-        setGold(0)
+        gold = 0
         pronoun = "she"
         pPronoun = "her"
         rPronoun = "her"
         picNormal = Game.picCaelia.BackgroundImage
         picPrincess = Game.picCaeliaP.BackgroundImage
         picBunny = Game.picCaeliaB.BackgroundImage
+
+        picNCP = New List(Of Image)
+        picNCP.AddRange({picNormal, Game.picFrog.BackgroundImage, Game.picSheep.BackgroundImage, picPrincess, picBunny})
 
         If speed = Game.player.speed Then speed -= 1
         title = ""
@@ -36,7 +39,7 @@
             bTF.step2()
             Game.player.inv.add(147, 1)
             Equipment.clothesChange("Skimpy_Tube_Top")
-            Game.player.createP()
+            Game.player.drawPort()
             pos = New Point(-1, -1)
         End If
     End Sub

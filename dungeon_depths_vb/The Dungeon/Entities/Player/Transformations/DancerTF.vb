@@ -1,4 +1,4 @@
-﻿Public Class DancerTF
+﻿Public NotInheritable Class DancerTF
     Inherits Transformation
     Sub New(n As Integer, tts As Integer, wi As Double, cbs As Boolean)
         MyBase.New(n, tts, wi, cbs)
@@ -21,17 +21,17 @@
         p.pClass = p.classes("Bunny Girl")
 
         p.breastSize = 2
-        p.prt.setIAInd(1, 6, True, True)
-        p.prt.setIAInd(2, 6, True, True)
-        p.prt.setIAInd(4, 0, True, False)
-        p.prt.setIAInd(5, 18, True, True)
-        p.prt.setIAInd(7, 0, True, False)
-        p.prt.setIAInd(8, 7, True, False)
-        p.prt.setIAInd(9, 24, True, True)
-        p.prt.setIAInd(10, 0, True, False)
-        p.prt.setIAInd(13, 0, True, False)
-        p.prt.setIAInd(15, 18, True, True)
-        p.prt.setIAInd(16, 8, True, False)
+        p.prt.setIAInd(pInd.rearhair, 6, True, True)
+        p.prt.setIAInd(pInd.body, 6, True, True)
+        p.prt.setIAInd(pInd.face, 0, True, False)
+        p.prt.setIAInd(pInd.midhair, 18, True, True)
+        p.prt.setIAInd(pInd.nose, 0, True, False)
+        p.prt.setIAInd(pInd.mouth, 7, True, False)
+        p.prt.setIAInd(pInd.eyes, 24, True, True)
+        p.prt.setIAInd(pInd.eyebrows, 0, True, False)
+        p.prt.setIAInd(pInd.cloak, 0, True, False)
+        p.prt.setIAInd(pInd.fronthair, 18, True, True)
+        p.prt.setIAInd(pInd.hat, 8, True, False)
 
         p.changeHairColor(BimboTF.bimboyellow)
 

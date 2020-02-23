@@ -9,11 +9,15 @@
     Shared Function shopFactory(ByVal nIndex As Integer)
         Select Case nIndex
             Case 1
-                Return New TravelingWizard
+                Return New ShadyWizard
             Case 2
                 Return New HTeach
             Case 3
                 Return New FVendor
+            Case 4
+                Return New WSmith
+            Case 5
+                Return New CBrok
             Case Else
                 Return New Shopkeeper
         End Select
@@ -51,6 +55,9 @@
 
         If Game.combatmode Then attackCMD(Game.player)
     End Sub
+    Public Overrides Function getName() As String
+        Return title & name
+    End Function
     Public Overridable Sub encounter()
         pos = Game.player.pos
         If isDead = True Then
@@ -60,10 +67,9 @@
         setGold(9999)
         Game.npcIndex = npcIndex
 
-        If Game.mDun.numCurrFloor < 5 AndAlso Game.mDun.floorboss(Game.mDun.numCurrFloor).Equals("Key") Then inv.setCount(53, 1) Else inv.setCount(53, 0)
+        If Game.mDun.floorboss.ContainsKey(Game.mDun.numCurrFloor) AndAlso
+            Game.mDun.floorboss(Game.mDun.numCurrFloor).Equals("Key") Then inv.setCount(53, 1) Else inv.setCount(53, 0)
 
-        picNCP = New List(Of Image)
-        picNCP.AddRange({picNormal, Game.picFrog.BackgroundImage, Game.picSheep.BackgroundImage, picPrincess, picBunny})
         If npcIndex < picNCP.Count Then Game.picNPC.BackgroundImage = picNCP(npcIndex)
         firstCTurn = True
         firstTurn = True
@@ -72,7 +78,8 @@
     Public Overridable Function getShopInv() As Inventory
         Dim tInv As Inventory = New Inventory(False)
         tInv.mergeRevalue(inv)
-        If Game.mDun.numCurrFloor < 5 AndAlso Game.mDun.floorboss(Game.mDun.numCurrFloor).Equals("Key") Then tInv.setCount(53, 1) Else tInv.setCount(53, 0)
+        If Game.mDun.floorboss.ContainsKey(Game.mDun.numCurrFloor) AndAlso
+            Game.mDun.floorboss(Game.mDun.numCurrFloor).Equals("Key") Then tInv.setCount(53, 1) Else tInv.setCount(53, 0)
 
 
         For i = 0 To tInv.upperBound()
@@ -154,7 +161,14 @@
         Game.btnShop.Visible = False
         Game.btnFight.Visible = False
         Game.btnLeave.Visible = False
-        If npcIndex > 4 Then npcIndex = 0
+        If npcIndex > 4 And Not Game.picNPC.BackgroundImage.Equals(Game.picSWDoll.BackgroundImage) Then npcIndex = 0
+    End Sub
+
+    Public Overridable Sub toDoll()
+        Game.pushNPCDialog("...")
+        Game.picNPC.BackgroundImage = picNCP(5)
+
+        discount = 0.5
     End Sub
 
     'save/load methods
@@ -169,6 +183,8 @@
         out += pronoun & "%"    '6
         out += pPronoun & "%"   '7
         out += rPronoun & "%"   '8
+        out += isShop & "%"     '9
+        out += isDead & "%"     '10
         Return out
     End Function
     Function loadNPC(ByVal s As String) As Boolean
@@ -182,6 +198,8 @@
         pronoun = loadedVars(6)
         pPronoun = loadedVars(7)
         rPronoun = loadedVars(8)
+        isShop = CBool(loadedVars(9))
+        isDead = CBool(loadedVars(10))
         Return True
     End Function
 End Class

@@ -8,7 +8,7 @@
         MyBase.setUsable(False)
         MyBase.aBoost = 0
         MyBase.count = 0
-        MyBase.value = 100
+        MyBase.value = 100000
         bsizeneg1 = New Tuple(Of Integer, Boolean, Boolean)(5, False, True)
         bsize1 = New Tuple(Of Integer, Boolean, Boolean)(47, True, True)
         bsize2 = New Tuple(Of Integer, Boolean, Boolean)(47, True, True)
@@ -18,11 +18,5 @@
         bsize6 = New Tuple(Of Integer, Boolean, Boolean)(47, True, True)
         bsize7 = New Tuple(Of Integer, Boolean, Boolean)(47, True, True)
         MyBase.compressesBreasts = False
-    End Sub
-
-    Overrides Sub discard()
-        Game.pushLstLog("You drop the " & getName())
-        
-        count -= 1
     End Sub
 End Class

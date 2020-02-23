@@ -1,4 +1,4 @@
-﻿Public Class ShrunkenTF
+﻿Public NotInheritable Class ShrunkenTF
     Inherits PolymorphTF
     Sub New()
         MyBase.New()

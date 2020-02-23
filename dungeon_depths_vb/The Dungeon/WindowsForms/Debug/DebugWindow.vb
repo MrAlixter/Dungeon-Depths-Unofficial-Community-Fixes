@@ -32,7 +32,7 @@ Public Class Debug_Window
         boxBeaten.Checked = Game.currfloor.beatBoss
 
         'MAP
-        magnification = Math.Floor(Math.Min(picBoard.Width / Game.mBoardWidth, picBoard.Height / Game.mBoardHeight))
+        magnification = Math.Floor(Math.Min(picBoard.Width / Game.currFloor.mBoardWidth, picBoard.Height / Game.currFloor.mBoardHeight))
         boxZoom.Value = magnification
         createMap()
         AddHandler picBoard.Paint, AddressOf Me.picBoard_Draw
@@ -144,17 +144,17 @@ Public Class Debug_Window
         boxTrapSizeDependence.Value = Game.trapSizeDependence
     End Sub
     Private Sub OnClose(sender As Object, e As EventArgs) Handles MyBase.FormClosing
-        Game.player.createP()
+        Game.player.drawPort()
     End Sub
 
     Private Sub loadPortrait()
         picPreview.Image = Game.picPortrait.BackgroundImage
-        picPreview.BackgroundImage = Game.player.prt.iArr(0)
+        picPreview.BackgroundImage = Game.player.prt.iarr(pind.bkg)
         Dim PADDING = 0.1
         Dim w As Integer = 146
         Dim h As Integer = 216
 
-        Dim attr As List(Of Image)()
+        Dim attr As List(Of image)()
         If Game.player.prt.sexBool Then
             attr = Portrait.imgLib.fAttributes
         Else
@@ -163,16 +163,16 @@ Public Class Debug_Window
 
         If tabPortraitsLoaded = False Then
             Dim y As Integer = (tabPortrait.TabPages(0).Height - h) / 2
-            Dim bg As Image = attr(0)(0)
+            Dim bg As image = attr(0)(0)
             For i = 0 To tabPortrait.TabPages.Count - 1
                 Dim page As TabPage = tabPortrait.TabPages(i)
                 Dim x As Integer = w * PADDING
-                Dim att As List(Of Image) = attr(i)
+                Dim att As List(Of image) = attr(i)
                 For j As Integer = 0 To att.Count - 1
                     Dim img As New PictureBox
                     img.Name = i.ToString() & ":" & j.ToString()
                     page.Controls.Add(img)
-                    img.Image = att(j)
+                    img.image = att(j)
                     img.BackgroundImage = bg
                     img.Location = New Point(x, y)
                     img.Size = New Point(w, h)
@@ -228,7 +228,7 @@ Public Class Debug_Window
     End Sub
 
     Private Sub createMap()
-        map = New Bitmap(Game.mBoardWidth + 2, Game.mBoardHeight + 2)
+        map = New Bitmap(Game.currFloor.mBoardWidth + 2, Game.currFloor.mBoardHeight + 2)
         For boardX = 0 To map.Width - 3
             For boardY = 0 To map.Height - 3
                 If (Game.currfloor.mBoard(boardY, boardX).Text = "#") Then 'Chest
@@ -256,7 +256,7 @@ Public Class Debug_Window
 
     Private Sub picBoard_Draw(sender As Object, e As PaintEventArgs)
         e.Graphics.InterpolationMode = Drawing2D.InterpolationMode.NearestNeighbor
-        e.Graphics.DrawImage(map, CInt((picBoard.Width - (map.Width * magnification)) / 2) + xOffset, CInt((picBoard.Height - (map.Height * magnification)) / 2) + yOffset, map.Width * magnification + 0, map.Height * magnification + 0)
+        e.Graphics.Drawimage(map, CInt((picBoard.Width - (map.Width * magnification)) / 2) + xOffset, CInt((picBoard.Height - (map.Height * magnification)) / 2) + yOffset, map.Width * magnification + 0, map.Height * magnification + 0)
 
         ''DEBUG LINES
         'Dim p As Pen
@@ -270,7 +270,7 @@ Public Class Debug_Window
         'p = Pens.Maroon
         'e.Graphics.DrawLine(p, CInt(picBoard.Width / 2), 0, CInt(picBoard.Width / 2), picBoard.Height)
         'e.Graphics.DrawLine(p, 0, CInt(picBoard.Height / 2), picBoard.Width, CInt(picBoard.Height / 2))
-        ''EDGE OF MAP IMAGE
+        ''EDGE OF MAP image
         'p = Pens.Black
         ''e.Graphics.DrawLine(p, CInt(0), CInt(picBoard.Height / 2 - map.Height * magnification / 2) + yOffset, CInt(picBoard.Width), CInt(picBoard.Height / 2 - map.Height * magnification / 2) + yOffset)
         ''e.Graphics.DrawLine(p, CInt(0), CInt(picBoard.Height / 2 + map.Height * magnification / 2) + yOffset, CInt(picBoard.Width), CInt(picBoard.Height / 2 + map.Height * magnification / 2) + yOffset)
@@ -485,7 +485,7 @@ Public Class Debug_Window
         Game.player.changeSkinColor(cd.sc)
         CType(sender, Panel).BackColor = cd.sc
         cd.Dispose()
-        picPreview.Image = Portrait.CreateBMP(Game.player.prt.iArr)
+        picPreview.image = Portrait.CreateBMP(Game.player.prt.iArr)
     End Sub
 
     Private Sub pnlHC_Paint(sender As Object, e As EventArgs) Handles pnlHC.Click
@@ -495,24 +495,24 @@ Public Class Debug_Window
         Dim c As Color = Color.FromArgb(boxAlpha.Value, cd.Color.R, cd.Color.G, cd.Color.B)
         Game.player.changeHairColor(c)
         cd.Dispose()
-        picPreview.Image = Portrait.CreateBMP(Game.player.prt.iArr)
+        picPreview.image = Portrait.CreateBMP(Game.player.prt.iArr)
     End Sub
 
     Private Sub boxAlpha_ValueChanged(sender As Object, e As EventArgs) Handles boxAlpha.ValueChanged
         Dim c As Color = Color.FromArgb(boxAlpha.Value, Game.player.prt.haircolor.R, Game.player.prt.haircolor.G, Game.player.prt.haircolor.B)
         Game.player.changeHairColor(c)
-        picPreview.Image = Portrait.CreateBMP(Game.player.prt.iArr)
+        picPreview.image = Portrait.CreateBMP(Game.player.prt.iArr)
     End Sub
 
     Private Sub clickOnPic(sender As Object, e As EventArgs)
         Dim tab As Integer = sender.Name.Split(":")(0)
         Dim pic As Integer = sender.Name.Split(":")(1)
 
-        Game.player.prt.iArr(tab) = CType(sender, PictureBox).Image
+        Game.player.prt.iArr(tab) = CType(sender, PictureBox).image
         Game.player.prt.setIAInd(tab, pic, Game.player.prt.sexBool, False)
 
-        'picPreview.Image = CharacterGenerator.recolor(portrait.createBMP(Game.player.iArr), Game.player.skincolor)
-        picPreview.Image = Portrait.CreateBMP(Game.player.prt.iArr)
+        'picPreview.image = CharacterGenerator.recolor(portrait.createBMP(Game.player.iArr), Game.player.skincolor)
+        picPreview.image = Portrait.CreateBMP(Game.player.prt.iArr)
     End Sub
 
     Private Sub boxInventoryFilter_TextChanged(sender As Object, e As EventArgs) Handles boxInventoryFilter.TextChanged
@@ -607,7 +607,7 @@ Public Class Debug_Window
         'CType(box, System.ComponentModel.ISupportInitialize).BeginInit()
         'group.SuspendLayout()
 
-        lbl.Location = New System.Drawing.Point(10, 10)
+        lbl.Location = New System.Drawing.Point(12, 12)
         lbl.Name = p.Key & "Lbl"
         lbl.Size = New System.Drawing.Size(125, 25)
         lbl.TabStop = False
@@ -618,6 +618,7 @@ Public Class Debug_Window
         box.Name = p.Key & "Box"
         box.Location = New System.Drawing.Point(lbl.Location.X + lbl.Size.Width + 10, lbl.Location.Y)
         box.Minimum = -1
+        box.Maximum = 999
         box.Value = p.Value
         box.Size = New System.Drawing.Size(63, 26)
         AddHandler box.ValueChanged, AddressOf numericUpDownChanged
@@ -628,7 +629,7 @@ Public Class Debug_Window
         movePerkControl(group, col, row)
 
         Dim w As Integer = box.Size.Width + lbl.Size.Width + 10 * 3
-        Dim h As Integer = Math.Max(box.Size.Height, lbl.Size.Height) + 10 * 2
+        Dim h As Integer = Math.Max(box.Size.Height, lbl.Size.Height) + 15
         group.Name = "groupTest"
         group.Size = New System.Drawing.Size(w, h)
         group.TabIndex = 1
@@ -650,7 +651,7 @@ Public Class Debug_Window
         Next
 
         Dim w As Integer = box.Size.Width + lbl.Size.Width + 10 * 3
-        Dim h As Integer = Math.Max(box.Size.Height, lbl.Size.Height) + 10 * 2
+        Dim h As Integer = Math.Max(box.Size.Height, lbl.Size.Height) + 10
         Dim pad As Decimal = 0.05
         Dim x As Integer = w * pad + (w * pad * 2 + w) * col
         Dim y As Integer = h * pad + (h * pad * 2 + h) * row

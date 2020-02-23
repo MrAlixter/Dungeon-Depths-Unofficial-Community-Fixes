@@ -15,7 +15,7 @@
     End Sub
 
     Public Overrides Sub Effect()
-        If Int(Rnd() * 5) = 0 Then
+        If Int(Rnd() * 5) = 0 Or Game.noRNG Then
             Game.player.maxMana += 3
             Game.player.mana += 3
 

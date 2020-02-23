@@ -1,4 +1,4 @@
-﻿Public Class ValkyrieTF2
+﻿Public NotInheritable Class ValkyrieTF2
     Inherits Transformation
     Sub New(n As Integer, tts As Integer, wi As Double, cbs As Boolean)
         MyBase.New(n, tts, wi, cbs)
@@ -21,24 +21,24 @@
         p.pClass = p.classes("Valkyrie")
 
         p.breastSize = 2
-        p.prt.setIAInd(1, 0, True, False)
-        p.prt.setIAInd(2, 6, True, True)
-        p.prt.setIAInd(4, 3, True, False)
-        p.prt.setIAInd(5, 3, True, False)
-        p.prt.setIAInd(7, 0, True, False)
-        p.prt.setIAInd(8, 4, True, False)
-        p.prt.setIAInd(9, 23, True, True)
-        p.prt.setIAInd(10, 2, True, False)
-        p.prt.setIAInd(13, 0, True, False)
-        p.prt.setIAInd(15, 11, True, True)
-        p.prt.setIAInd(16, 7, True, False)
+        p.prt.setIAInd(pInd.rearhair, 0, True, False)
+        p.prt.setIAInd(pInd.body, 6, True, True)
+        p.prt.setIAInd(pInd.face, 3, True, False)
+        p.prt.setIAInd(pInd.midhair, 3, True, False)
+        p.prt.setIAInd(pInd.nose, 0, True, False)
+        p.prt.setIAInd(pInd.mouth, 4, True, False)
+        p.prt.setIAInd(pInd.eyes, 23, True, True)
+        p.prt.setIAInd(pInd.eyebrows, 2, True, False)
+        p.prt.setIAInd(pInd.cloak, 0, True, False)
+        p.prt.setIAInd(pInd.fronthair, 11, True, True)
+        p.prt.setIAInd(pInd.hat, 7, True, False)
         p.prt.wingInd = 1
 
         p.inv.add(95, 1)
 
         Equipment.clothesChange("Valkyrie_Armor")
 
-        p.knownSpecials.Add("Blazing Angel Strike")
+        If Not p.knownSpecials.Contains("Blazing Angel Strike") Then p.knownSpecials.Add("Blazing Angel Strike")
         Game.pushLstLog("""Blazing Angel Strike"" special learned!")
         p.canMoveFlag = True
     End Sub

@@ -1,4 +1,4 @@
-﻿Public Class Blindness
+﻿Public NotInheritable Class Blindness
     Inherits Transformation
 
     Sub New()

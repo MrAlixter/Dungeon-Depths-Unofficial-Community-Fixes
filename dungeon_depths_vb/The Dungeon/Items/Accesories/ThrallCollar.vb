@@ -16,7 +16,7 @@
         MyBase.value = 200
         MyBase.fInd = New Tuple(Of Integer, Boolean, Boolean)(7, True, True)
         MyBase.mInd = New Tuple(Of Integer, Boolean, Boolean)(3, False, True)
-        MyBase.isCursed = False
+        MyBase.isCursed = True
         MyBase.isRandoTFAcceptable = False
     End Sub
     Overrides Sub onEquip()
@@ -28,18 +28,17 @@
         p.ongoingTFs.Add(New ThrallTF(2, 10, 3.0, True))
 
         If Not p.pClass.name.Equals("Thrall") Then formerClass = p.pClass.name
-        formerEyeType = p.prt.iArrInd(9)
+        formerEyeType = p.prt.iArrInd(pInd.eyes)
         If Transformation.canBeTFed(p) Then p.pState.save(p)
         p.pClass = p.classes("Thrall")
         If p.prt.sexBool Then
-            p.prt.setIAInd(9, 19, True, True)
+            p.prt.setIAInd(pInd.eyes, 19, True, True)
         Else
-            p.prt.setIAInd(9, 8, False, True)
+            p.prt.setIAInd(pInd.eyes, 8, False, True)
         End If
-
         p.prefForm = New preferedForm()
 
-        p.createP()
+        p.drawPort()
     End Sub
     Sub forceEquip()
         Dim p As Player = Game.player
@@ -51,24 +50,18 @@
         p.ongoingTFs.Add(New ThrallTF(2, 10, 3.0, True))
 
         formerClass = p.pClass.name
-        formerEyeType = p.prt.iArrInd(9)
+        formerEyeType = p.prt.iArrInd(pInd.eyes)
         If Transformation.canBeTFed(p) Then p.pState.save(p)
         p.pClass = p.classes("Thrall")
         If p.prt.sexBool Then
-            p.prt.setIAInd(9, 19, True, True)
+            p.prt.setIAInd(pInd.eyes, 19, True, True)
         Else
-            p.prt.setIAInd(9, 8, False, True)
-        End If
-
-        If p.pClass.name.Equals("Magic Girl") Then
-            p.breastSize = 2
-            p.prt.setIAInd(6, 0, True, False)
-            p.prt.setIAInd(15, 7, True, False)
+            p.prt.setIAInd(pInd.eyes, 8, False, True)
         End If
 
         p.prefForm = New preferedForm()
 
-        p.createP()
+        p.drawPort()
     End Sub
     Public Overrides Sub onUnequip()
         Dim p As Player = Game.player
@@ -85,7 +78,7 @@
         Next
         p.perks("thrall") = -1
         p.pClass = Game.player.classes(formerClass)
-        p.prt.setIAInd(9, formerEyeType)
+        p.prt.setIAInd(pInd.eyes, formerEyeType)
         p.prefForm = Nothing
         p.forcedPath = Nothing
         p.genDescription()
@@ -100,11 +93,5 @@
     Public Sub setFormerLife(ft As String, fet As Tuple(Of Integer, Boolean, Boolean))
         formerClass = ft
         formerEyeType = fet
-    End Sub
-
-    Overrides Sub discard()
-        Game.pushLstLog("You drop the " & getName())
-        
-        count -= 1
     End Sub
 End Class

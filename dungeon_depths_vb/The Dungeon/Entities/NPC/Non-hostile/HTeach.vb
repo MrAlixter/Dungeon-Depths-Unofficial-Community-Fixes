@@ -3,12 +3,12 @@
 
     Dim preHypnoID = 0
     Sub New()
-        setName("Hypnotist Teacher")
-        setHealth(1.0)
-        setMaxHealth(9999)
-        setATK(99)
-        setDEF(999)
-        setSPD(99)
+        name = "Hypnotist Teacher"
+        health = 1.0
+        maxHealth = 9999
+        attack = 99
+        defence = 999
+        speed = 99
 
         'Define the inventory
         inv = New Inventory(False)
@@ -30,7 +30,7 @@
         inv.setCount("Base_Form_Reset", 1)
 
         isShop = True
-        setGold(99999)
+        gold = 99999
         pronoun = "she"
         pPronoun = "her"
         rPronoun = "her"
@@ -38,13 +38,16 @@
         picPrincess = Game.picHTeachPrin.BackgroundImage
         picBunny = Game.picHTeachBun.BackgroundImage
 
+        picNCP = New List(Of Image)
+        picNCP.AddRange({picNormal, Game.picFrog.BackgroundImage, Game.picSheep.BackgroundImage, picPrincess, picBunny})
+
+        picNCP.AddRange({Game.picHTHypno.BackgroundImage, Game.picHTFV.BackgroundImage, Game.picHTCow.BackgroundImage, Game.picHTDoll.BackgroundImage})
         If speed = Game.player.speed Then speed -= 1
-        MyBase.title = ""
+        MyBase.title = " the "
     End Sub
 
     Public Overrides Sub encounter()
         MyBase.encounter()
-        picNCP.AddRange({Game.picHTHypno.BackgroundImage, Game.picHTFV.BackgroundImage, Game.picHTCow.BackgroundImage})
 
         MyBase.discount = 0
 
@@ -82,6 +85,8 @@
             Game.pushNPCDialog("Well salutations there, " & Game.player.pClass.name & ".  Please let me know if there's anything I can do to help you.")
         ElseIf npcIndex = 4 Then
             Game.pushNPCDialog("HI!  I, like, don't know if it would be smart for me to try to hypno...hypotho...do my thing to you right now, but I totally have some tapes you can use!")
+        ElseIf npcIndex = 8 Then
+            Game.pushNPCDialog("...")
         End If
         If Game.mDun.numCurrFloor > 5 Then inv.setCount(113, 1) Else inv.setCount(113, 0)
         If Game.mDun.numCurrFloor < 5 Then inv.setCount(122, 1) Else inv.setCount(122, 0)
@@ -101,6 +106,8 @@
             Return "Whaaaaaat?!?  No, like, don't do that!"
         ElseIf npcIndex = 6 Then
             Return "Cmon!  I'm, like, trying to help you out here!"
+        ElseIf npcIndex = 8 Then
+            Return "..."
         End If
         Return "Bad move."
     End Function
@@ -121,6 +128,8 @@
             Return "WOAH!  That's a neat trick!"
         ElseIf npcIndex = 6 Then
             Return "Cmon!  I'm, like, trying to help you out here!"
+        ElseIf npcIndex = 8 Then
+            Return "..."
         End If
         Return "Woah there!"
     End Function
@@ -149,5 +158,11 @@
         Game.picNPC.BackgroundImage = picNCP(npcIndex)
         Game.showNPCButtons()
         Game.player.canMoveFlag = False
+    End Sub
+    Public Overrides Sub toDoll()
+        Game.pushNPCDialog("...")
+        Game.picNPC.BackgroundImage = picNCP(8)
+
+        discount = 0.5
     End Sub
 End Class

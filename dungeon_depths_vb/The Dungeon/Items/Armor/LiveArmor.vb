@@ -24,12 +24,6 @@
         MyBase.isRandoTFAcceptable = False
     End Sub
 
-    Overrides Sub discard()
-        Game.pushLstLog("You drop the " & getName())
-        
-        count -= 1
-    End Sub
-
     Public Overrides Sub onEquip()
         If Not Game.player.perks("livearm") > -1 Then Game.player.perks("livearm") = 0
     End Sub

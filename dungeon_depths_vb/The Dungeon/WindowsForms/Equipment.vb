@@ -8,12 +8,10 @@
     Public wList As Dictionary(Of String, Weapon) = New Dictionary(Of String, Weapon)
     'accessories
     Public acList As Dictionary(Of String, Accessory) = New Dictionary(Of String, Accessory)
-    'define a shorthand representation of the main player
-    Dim p As Player = Game.player
-    'init triggers an initialion Form3's global variables
-    Public Sub init()
-        p = Game.player
 
+    'init triggers an initialion Form3's global variables 
+    Public Sub init()
+        Dim p = Game.player
         Dim a As Tuple(Of String(), Armor())
         Dim w As Tuple(Of String(), Weapon())
         Dim ac As Tuple(Of String(), Accessory())
@@ -41,93 +39,141 @@
 
     'handles the click of the 'ok' button
     Private Sub btnACPT_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles btnACPT.Click
+        Dim p = Game.player
+        Dim needsToUpdate As Boolean = False
+
+        'equip the new equipment
+        needsToUpdate = equipArmor(cboxArmor.Text)
+        needsToUpdate = needsToUpdate Or equipWeapon(cboxWeapon.Text)
+        needsToUpdate = needsToUpdate Or equipAcce(cboxAccessory.Text)
+
+        'updates the player, the stat display, and the portrait before the form closes
+        p.drawPort()
+        p.UIupdate()
+
+        Me.Close()
+    End Sub
+    Public Shared Function equipArmor(ByVal armor As String) As Boolean
+        Dim p = Game.player
+
         'if clothes offer resistance on the way off, this handles that
-        If (Not p.equippedArmor.getName.Equals(cboxArmor.SelectedItem) And p.equippedArmor.isCursed) _
-            Or (Not p.equippedWeapon.getName.Equals(cboxWeapon.SelectedItem) And p.equippedWeapon.isCursed) _
-            Or (Not p.equippedAcce.getName.Equals(cboxAccessory.SelectedItem) And p.equippedAcce.isCursed) Then
-            If Int(Rnd() * 2) = 0 Then
-                Game.pushLblEvent("Despite a struggle agaisnt your bonds, you are unable to escape!  Oh well, maybe next time...")
-                Me.Close()
-                Exit Sub
+        If (Not p.equippedArmor.getName.Equals(armor) And p.equippedArmor.isCursed) Then
+            If p.inv.item("Anti_Curse_Tag").count > 0 Then
+                Game.pushLblEvent("You apply a tag to your clothes, allowing you to remove them.")
+                p.inv.add("Anti_Curse_Tag", -1)
             Else
-                Game.pushLblEvent("You deftly take off your clothes, despite the resistance they put up.")
+                Game.pushLblEvent("Despite a struggle agaisnt your clothes, you are unable to escape!")
+                Return False
             End If
         End If
 
-        Dim oW, oA, oAc As String
-        oW = p.equippedWeapon.getName
-        oA = p.equippedArmor.getName
-        oAc = p.equippedAcce.getName
-
-        'this handles the revert from the magical girl form, if needed
-        Dim revertFlag As Boolean = False
-        If p.equippedWeapon.getName.Equals("Magic_Girl_Wand") And p.pClass.name.Equals("Magic Girl") And Not cboxWeapon.Text.Equals("Magic_Girl_Wand") Then
-            Game.pushLstLog("Putting away your wand causes you to change into your regular self!")
-            p.inv.add(10, -1)
-            p.magGState.save(p)
-            p.revertToPState()
-            revertFlag = True
-        ElseIf p.equippedWeapon.getName.Equals("Valkyrie_Sword") And p.pClass.name.Equals("Valkyrie") And Not cboxWeapon.Text.Equals("Valkyrie_Sword") Then
-            Game.pushLstLog("Putting away your sword causes you to change into your regular self!")
-            p.inv.add(95, -1)
-            p.revertToPState()
-            revertFlag = True
+        'unequip the old armor
+        If Not p.equippedArmor.getName.Equals(armor) Then
+            p.equippedArmor.onUnequip()
+        Else
+            Return False
         End If
 
         'equip the new armor
-        If Not revertFlag Then
-            If Not cboxArmor.Text.Equals(p.equippedArmor.getName) Then
-                If p.equippedArmor.mBoost > 0 Then p.mana += p.equippedArmor.mBoost
-            End If
-            clothesChange(cboxArmor.Text)
-        End If
-
-        'handles the equiping of weapons
-        If Not cboxWeapon.Text.Equals(p.equippedWeapon.getName) Then
-            If p.equippedWeapon.mBoost > 0 Then p.mana += p.equippedWeapon.mBoost
-        End If
-        weaponChange(cboxWeapon.Text)
-
-        'equip the new accessory
-        If Not revertFlag Then accChange(cboxAccessory.Text)
-        If p.equippedAcce.mBoost > 0 Then p.mana += p.equippedAcce.mBoost
-
+        Equipment.clothesChange(armor)
+        If p.equippedArmor.mBoost > 0 Then p.mana += p.equippedArmor.mBoost
         If p.mana > p.getMaxMana Then p.mana = p.getMaxMana
 
-        'if the player has the slutty dress curse, this takes care of it
+        'if the player has the slut curse, this takes care of it
         If p.perks("slutcurse") > -1 Then
-            clothingCurse1()
+            Equipment.clothingCurse1()
         End If
-        'handles any tfs or triggers triggered by equipping of certain weapons
-        If p.pClass.name.Equals("Magic Girl") And Not p.equippedArmor.getName.Equals("Magic_Girl_Outfit") And Not revertFlag Then
+
+        'handles any tfs or triggers triggered by equipping of certain armors by certain classes
+        If p.pClass.name.Equals("Magical Girl") And p.equippedArmor.getName.Equals("Magical_Girl_Outfit") Then
             p.equippedArmor = p.inv.item(10)
-            Game.pushLstLog("A magic girl needs her uniform!")
+            Game.pushLstLog("A magical girl needs her uniform!")
+            Game.pushLblEvent("A magical girl needs her uniform!")
         End If
-        If p.pClass.name.Equals("Valkyrie") And Not p.equippedArmor.getName.Equals("Valkyrie_Armor") And Not revertFlag Then
+        If p.pClass.name.Equals("Valkyrie") And Not p.equippedArmor.getName.Equals("Valkyrie_Armor") Then
             p.equippedArmor = p.inv.item(95)
             Game.pushLstLog("Your armor magically re-equips!")
+            Game.pushLblEvent("Your armor magically re-equips!")
         End If
 
         If p.pForm.name.Equals("Blow-Up Doll") Then
             p.equippedArmor = New Naked
         End If
 
-        'updates the player, the stat display, and the portrait before the form closes
-        p.createP()
-        'ring of the love goddess
-        If p.perks("rotlg") > -1 Then
-            PerkEffects.ROTLGRoute()
+        'handles any tfs or triggers triggered by equipping of certain armors
+        If p.equippedArmor.getName = "Living_Armor" And Not p.perks("livearm") > -1 Then
+            p.perks("livearm") = 0
+        ElseIf p.equippedArmor.getName = "Living_Lingerie" And Not p.perks("livelinge") > -1 Then
+            p.perks("livelinge") = 0
         End If
-        If p.perks("bowtie") > -1 Then
-            PerkEffects.BowTieRoute()
-        End If
-        p.UIupdate()
 
-        Me.Close()
-    End Sub
+        Return True
+    End Function
+    Public Shared Function equipWeapon(ByVal weapon As String) As Boolean
+        Dim p = Game.player
+
+        'if clothes offer resistance on the way off, this handles that
+        If (Not p.equippedWeapon.getName.Equals(weapon) And p.equippedWeapon.isCursed) Then
+            If p.inv.item("Anti_Curse_Tag").count > 0 Then
+                Game.pushLblEvent("You sheath your weapon, despite the resistance it puts up.")
+                p.inv.add("Anti_Curse_Tag", -1)
+            Else
+                Game.pushLblEvent("Despite a struggle agaisnt your weapon, you are unable to put it away!")
+                Return False
+            End If
+        End If
+
+
+        'unequip the old weapon
+        If Not p.equippedWeapon.getName.Equals(weapon) Then
+            p.equippedWeapon.onUnequip()
+        Else
+            Return False
+        End If
+
+        'this handles the revert from the magical girl form, if needed
+        If p.equippedWeapon.getName.Equals("Magical_Girl_Wand") And p.pClass.name.Equals("Magical Girl") And Not weapon.Equals("Magical_Girl_Wand") Then
+            Game.pushLstLog("Putting away your wand causes you to change into your regular self!")
+            p.inv.add(10, -1)
+            p.magGState.save(p)
+            p.revertToPState()
+        ElseIf p.equippedWeapon.getName.Equals("Valkyrie_Sword") And p.pClass.name.Equals("Valkyrie") And Not weapon.Equals("Valkyrie_Sword") Then
+            Game.pushLstLog("Putting away your sword causes you to change into your regular self!")
+            p.inv.add(95, -1)
+            p.revertToPState()
+        End If
+
+        'handles the equiping of weapons
+        Equipment.weaponChange(weapon)
+        If p.equippedWeapon.mBoost > 0 Then p.mana += p.equippedWeapon.mBoost
+        If p.mana > p.getMaxMana Then p.mana = p.getMaxMana
+
+        Return True
+    End Function
+    Public Shared Function equipAcce(ByVal acce As String) As Boolean
+        Dim p = Game.player
+
+        'if clothes offer resistance on the way off, this handles that
+        If (Not p.equippedAcce.getName.Equals(acce) And p.equippedAcce.isCursed) Then
+            If p.inv.item("Anti_Curse_Tag").count > 0 Then
+                Game.pushLblEvent("You take off your accessory, despite the resistance it puts up.")
+                p.inv.add("Anti_Curse_Tag", -1)
+            Else
+                Game.pushLblEvent("Despite a struggle agaisnt your accessory, you are unable to take it off!")
+                Return False
+            End If
+        End If
+
+        Equipment.accChange(acce)
+        If p.equippedAcce.mBoost > 0 Then p.mana += p.equippedAcce.mBoost
+        If p.mana > p.getMaxMana Then p.mana = p.getMaxMana
+
+        Return True
+    End Function
     'handles the loading of this form
     Private Sub Form3_Load(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles MyBase.Load
         init()
+        Dim p = Game.player
         'scale to the screen size
         Dim startingWidth = Me.Width
         Dim startingHeight = Me.Height
@@ -151,25 +197,7 @@
 
         'adds the default clothes for various forms
         cboxArmor.Items.Add("Naked")
-        If p.pClass.name = "Bimbo" Or p.perks("slutcurse") > -1 Or p.equippedArmor.getName.Equals("Skimpy_Clothes") Then
-            cboxArmor.Items.Add("Skimpy_Clothes")
-        ElseIf (p.perks("slutcurse") > -1 And p.equippedArmor.getName.Equals("Skimpy_Clothes")) Or p.equippedArmor.getName.Equals("Very_Skimpy_Clothes") Then
-            cboxArmor.Items.Add("Very_Skimpy_Clothes")
-        ElseIf p.pClass.name = "Princess" Then
-            cboxArmor.Items.Add("Regal_Gown")
-        ElseIf p.pClass.name = "Maid" Then
-            cboxArmor.Items.Add("Maid_Outfit")
-        ElseIf p.pForm.name = "Succubus" Or p.pForm.name = "Half-Succubus" Then
-            cboxArmor.Items.Add("Succubus_Garb")
-        ElseIf p.pForm.name = "Slime" Then
-            cboxArmor.Items.Add("Gelatinous_Shell")
-        ElseIf p.pForm.name = "Goo Girl" Then
-            cboxArmor.Items.Add("Gelatinous_Negligee")
-        ElseIf p.pClass.name = "Goddess" Then
-            cboxArmor.Items.Add("Goddess_Gown")
-        Else
-            cboxArmor.Items.Add("Common_Clothes")
-        End If
+        defaultClothesOptions(cboxArmor.Items)
 
         'adds the default weapon (fists)
         cboxWeapon.Items.Add("Fists")
@@ -193,9 +221,54 @@
         cboxArmor.SelectedItem = p.equippedArmor.getName()
         cboxAccessory.SelectedItem = p.equippedAcce.getName()
     End Sub
+    Sub defaultClothesOptions(ByVal options As ComboBox.ObjectCollection)
+        Dim p = Game.player
+        If p.pClass.name = "Bimbo" Or p.perks("slutcurse") > -1 Or p.equippedArmor.getName.Equals("Skimpy_Clothes") Then
+            options.Add("Skimpy_Clothes")
+        ElseIf (p.perks("slutcurse") > -1 And p.equippedArmor.getName.Equals("Skimpy_Clothes")) Or p.equippedArmor.getName.Equals("Very_Skimpy_Clothes") Then
+            options.Add("Very_Skimpy_Clothes")
+        ElseIf p.pClass.name = "Princess" Then
+            options.Add("Regal_Gown")
+        ElseIf p.pClass.name = "Maid" Then
+            options.Add("Maid_Outfit")
+        ElseIf p.pForm.name = "Succubus" Or p.pForm.name = "Half-Succubus" Then
+            options.Add("Succubus_Garb")
+        ElseIf p.pForm.name = "Slime" Then
+            options.Add("Gelatinous_Shell")
+        ElseIf p.pForm.name = "Goo Girl" Then
+            options.Add("Gelatinous_Negligee")
+        ElseIf p.pClass.name = "Goddess" Then
+            options.Add("Goddess_Gown")
+        Else
+            options.Add("Common_Clothes")
+        End If
+    End Sub
+    Sub defaultClothesOptionsAlt(ByVal options As ListBox.ObjectCollection)
+        Dim p = Game.player
+        If p.pClass.name = "Bimbo" Or p.perks("slutcurse") > -1 Or p.equippedArmor.getName.Equals("Skimpy_Clothes") Then
+            options.Add("b - Skimpy_Clothes")
+        ElseIf (p.perks("slutcurse") > -1 And p.equippedArmor.getName.Equals("Skimpy_Clothes")) Or p.equippedArmor.getName.Equals("Very_Skimpy_Clothes") Then
+            options.Add("b - Very_Skimpy_Clothes")
+        ElseIf p.pClass.name = "Princess" Then
+            options.Add("b - Regal_Gown")
+        ElseIf p.pClass.name = "Maid" Then
+            options.Add("b - Maid_Outfit")
+        ElseIf p.pForm.name = "Succubus" Or p.pForm.name = "Half-Succubus" Then
+            options.Add("b - Succubus_Garb")
+        ElseIf p.pForm.name = "Slime" Then
+            options.Add("b - Gelatinous_Shell")
+        ElseIf p.pForm.name = "Goo Girl" Then
+            options.Add("b - Gelatinous_Negligee")
+        ElseIf p.pClass.name = "Goddess" Then
+            options.Add("b - Goddess_Gown")
+        Else
+            options.Add("b - Common_Clothes")
+        End If
+    End Sub
 
     'clothingCurse1 routes the normal versions of armors to their slut forms, if they have them.
     Function clothingCurse1() As Boolean
+        Dim p = Game.player
         If p.equippedArmor.slutVarInd = -1 Then Return False
 
         If p.equippedArmor.getName.Equals("Common_Clothes") Then
@@ -224,6 +297,8 @@
         Return True
     End Function
     Function antiClothingCurse() As Boolean
+        Dim p = Game.player
+
         If p.equippedArmor.antiSlutVarInd = -1 Then Return False
 
         If p.equippedArmor.getName.Equals("Skimpy_Clothes") Then
@@ -246,6 +321,7 @@
     End Function
     'clothesChange handles the equipping and unequipping of armors
     Public Sub clothesChange(ByVal clothes As String)
+        Dim p = Game.player
         If aList.Count < 1 Then init()
         If Not p.equippedArmor Is Nothing AndAlso clothes.Equals(p.equippedArmor.getName) Then Exit Sub
         Dim sArmor As Armor = Nothing
@@ -263,9 +339,19 @@
             cboxArmor.Text = clothes
             p.equippedArmor.onEquip()
         End If
+
+        'ring of the love goddess stat changes
+        If p.perks("rotlg") > -1 Then
+            PerkEffects.ROTLGRoute()
+        End If
+        'bowtie stat changes
+        If p.perks("bowtie") > -1 Then
+            PerkEffects.BowTieRoute()
+        End If
     End Sub
     'clothesChange handles the equipping and unequipping of weapon
     Public Sub weaponChange(ByVal weapon As String)
+        Dim p = Game.player
         If wList.Count < 1 Then init()
         Dim sWeapon As Weapon = Nothing
         If Not p.equippedWeapon Is Nothing AndAlso weapon.Equals(p.equippedWeapon.getName) Then Exit Sub
@@ -285,6 +371,7 @@
     End Sub
     'accChange handles the equipping and unequipping of accessories
     Public Sub accChange(ByVal acc As String)
+        Dim p = Game.player
         If acList.Count < 1 Then init()
         If Not p.equippedAcce Is Nothing AndAlso acc.Equals(p.equippedAcce.getName) Then Exit Sub
         Dim sAcc As Accessory = Nothing
@@ -301,8 +388,5 @@
             p.equippedAcce = sAcc
             p.equippedAcce.onEquip()
         End If
-    End Sub
-    Public Sub setP(ByRef ply As Player)
-        p = ply
     End Sub
 End Class

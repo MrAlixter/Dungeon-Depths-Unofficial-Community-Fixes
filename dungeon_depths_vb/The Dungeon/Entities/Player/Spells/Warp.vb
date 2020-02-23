@@ -17,6 +17,7 @@
         End If
     End Sub
     Public Overrides Sub backfire()
+        If Game.currFloor.floorNumber = 91017 Or Game.currFloor.floorNumber = 9999 Then Exit Sub
         If Game.combatmode Then
             MyBase.getTarget.despawn("warp")
             Game.updateList = New PQ

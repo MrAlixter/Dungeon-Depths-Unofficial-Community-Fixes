@@ -6,7 +6,7 @@
         name = m.name.Split()(0)
         If m.GetType() Is GetType(Monster) Then
             desc = "This " & name & " has been turned to stone."
-        ElseIf m.GetType() Is GetType(MiniBoss) Then
+        ElseIf m.GetType().IsSubclassOf(GetType(MiniBoss)) Then
             If m.name = "Marissa the Enchantress" Then
                 desc = "Marissa, once a powerful sorceress, is now little more than a lawn decoration."
             ElseIf m.name = "Targax the Brutal" Then

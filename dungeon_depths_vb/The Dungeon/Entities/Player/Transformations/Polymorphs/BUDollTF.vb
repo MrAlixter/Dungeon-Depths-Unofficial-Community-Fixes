@@ -1,4 +1,4 @@
-﻿Public Class BUDollTF
+﻿Public NotInheritable Class BUDollTF
     Inherits PolymorphTF
     Sub New()
         MyBase.New()
@@ -23,17 +23,18 @@
         p.pForm = p.forms("Blowup Doll")
 
         'maid transformation
-        p.prt.setIAInd(1, 14, True, True)
-        p.prt.setIAInd(2, 16, True, True)
-        p.prt.setIAInd(4, 1, True, True)
-        p.prt.setIAInd(5, 18, True, True)
-        p.prt.setIAInd(7, 1, True, True)
-        p.prt.setIAInd(8, 12, True, True)
-        p.prt.setIAInd(9, 17, True, True)
-        p.prt.setIAInd(10, 2, False, True)
-        p.prt.setIAInd(13, 0, True, True)
-        p.prt.setIAInd(15, 14, True, True)
-        p.prt.setIAInd(16, 0, True, False)
+        p.prt.setIAInd(pInd.rearhair, 14, True, True)
+        p.prt.setIAInd(pInd.body, 16, True, True)
+        p.prt.setIAInd(pInd.clothes, 47, True, True)
+        p.prt.setIAInd(pInd.face, 1, True, True)
+        p.prt.setIAInd(pInd.midhair, 18, True, True)
+        p.prt.setIAInd(pInd.nose, 1, True, True)
+        p.prt.setIAInd(pInd.mouth, 12, True, True)
+        p.prt.setIAInd(pInd.eyes, 17, True, True)
+        p.prt.setIAInd(pInd.eyebrows, 2, False, True)
+        p.prt.setIAInd(pInd.cloak, 0, True, True)
+        p.prt.setIAInd(pInd.fronthair, 14, True, True)
+        p.prt.setIAInd(pInd.hat, 0, True, False)
 
         'transformation description push
         out += "Looking down, you see some sort of coupon laying on the ground.  Picking it up, you read " & vbCrLf &

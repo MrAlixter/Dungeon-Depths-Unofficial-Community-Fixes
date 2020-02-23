@@ -42,8 +42,10 @@
     Function Create(ByVal s As String) As Chest
         'functions as a pseudo constructor for a chest object
         'loads a chest from a saved string
-        Dim chest = Me.Clone()
         Dim cArray() As String = s.Split("*")
+        If cArray(0).Equals("LOADED") Then Return New LoadedChest(s)
+        Dim chest = Me.Clone()
+
         chest.pos = New Point(cArray(0), cArray(1))
         chest.contents.load(cArray(2))
 
@@ -100,20 +102,22 @@
         If Game.player.pos <> pos Then Exit Sub
         If Not Game.combatmode And game.mDun.numCurrFloor >= 3 And Not Me.GetType Is GetType(LoadedChest) Then
             Dim mOdds As Integer
-            If game.mDun.numCurrFloor = 3 Then
+            If Game.player.perks("cogreed") > -1 Then
+                mOdds = 0
+            ElseIf Game.mDun.numCurrFloor = 3 Then
                 mOdds = Int(Rnd() * 2)
             Else
                 mOdds = Int(Rnd() * 10)
             End If
-            If game.mDun.numCurrFloor <> 9999 And mOdds = 0 And Not contents.getCountAt(53) > 0 Then
+            If Game.mDun.numCurrFloor <> 9999 And Game.mDun.numCurrFloor <> 91017 And mOdds = 0 And Not contents.getCountAt(53) > 0 Then
                 Monster.createMimic(contents)
                 Exit Sub
             End If
         End If
-        pushLblEventChest()
-        Game.player.UIupdate()
-        Game.pushLstLog("You open a chest!")
-        
+            pushLblEventChest()
+            Game.player.UIupdate()
+            Game.pushLstLog("You open a chest!")
+
     End Sub
     Public Sub pushLblEventChest()
         Dim c As String = "Chest Contents: " & vbCrLf

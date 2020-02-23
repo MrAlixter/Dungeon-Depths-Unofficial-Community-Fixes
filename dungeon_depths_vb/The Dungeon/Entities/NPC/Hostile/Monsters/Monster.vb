@@ -5,34 +5,36 @@
         setInventory({0})
         setupMonsterOnSpawn()
     End Sub
-    Sub setupMonsterOnSpawn()
-        Select Case Game.mDun.numCurrFloor 'sets the multiplier for enemy stats based on floor
-            Case 1
-                maxHealth *= 1
-                attack *= 1
-                defence *= 1
-                speed *= 1
-            Case 2
-                maxHealth *= 1.05
-                attack *= 1.05
-                defence *= 1.05
-                speed *= 1.05
-            Case 3
-                maxHealth *= 1.1
-                attack *= 1.1
-                defence *= 1.1
-                speed *= 1.1
-            Case 4
-                maxHealth *= 1.2
-                attack *= 1.2
-                defence *= 1.2
-                speed *= 1.2
-            Case Else
-                maxHealth *= (1 + (0.05 * Game.mDun.numCurrFloor))
-                attack *= (1 + (0.05 * Game.mDun.numCurrFloor))
-                defence *= (1 + (0.05 * Game.mDun.numCurrFloor))
-                speed *= (1 + (0.05 * Game.mDun.numCurrFloor))
-        End Select
+    Sub setupMonsterOnSpawn(Optional ByVal scaleToFloor As Boolean = True)
+        If scaleToFloor Then
+            Select Case Game.mDun.numCurrFloor 'sets the multiplier for enemy stats based on floor
+                Case 1
+                    maxHealth *= 1
+                    attack *= 1
+                    defence *= 1
+                    speed *= 1
+                Case 2
+                    maxHealth *= 1.05
+                    attack *= 1.05
+                    defence *= 1.05
+                    speed *= 1.05
+                Case 3
+                    maxHealth *= 1.1
+                    attack *= 1.1
+                    defence *= 1.1
+                    speed *= 1.1
+                Case 4
+                    maxHealth *= 1.2
+                    attack *= 1.2
+                    defence *= 1.2
+                    speed *= 1.2
+                Case Else
+                    maxHealth *= (1 + (0.05 * Game.mDun.numCurrFloor))
+                    attack *= (1 + (0.05 * Game.mDun.numCurrFloor))
+                    defence *= (1 + (0.05 * Game.mDun.numCurrFloor))
+                    speed *= (1 + (0.05 * Game.mDun.numCurrFloor))
+            End Select
+        End If
 
         health = 1.0
 
@@ -87,6 +89,10 @@
                 Return m
             Case 11
                 Return New MarissaAS
+            Case 12
+                Return New Alraune
+            Case 13
+                Return New IWitch
         End Select
 
         Return New Monster()
@@ -111,36 +117,4 @@
         m.currTarget = Game.player
         Game.toCombat()
     End Sub
-    Private Function loadGhost() As Boolean
-        Dim reader As IO.StreamReader
-        reader = IO.File.OpenText("gho.sts")
-
-        Dim ghost As String
-        Try
-            ghost = reader.ReadLine()
-            ghost.Split()
-        Catch e As Exception
-            Return False
-        End Try
-
-        Dim ghostArray() As String = ghost.Split("*")
-
-        name = ghostArray(0)
-        health = ghostArray(2)
-        maxHealth = ghostArray(2)
-        attack = ghostArray(3)
-        defence = ghostArray(4)
-        speed = ghostArray(5)
-        Dim sexBool As Boolean = CBool(ghostArray(6))
-        Dim haircolor As Color = Color.FromArgb(255, ghostArray(7), ghostArray(8), ghostArray(9))
-
-        inv.load(ghostArray(10))
-        reader.Close()
-
-        Dim writer = IO.File.CreateText("gho.sts")
-        writer.WriteLine("MTGRAVE")
-        writer.Flush()
-        writer.Close()
-        Return True
-    End Function
 End Class

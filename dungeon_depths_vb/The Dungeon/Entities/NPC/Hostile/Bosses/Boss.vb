@@ -1,17 +1,14 @@
 ﻿Public Class Boss
-    Inherits Monster
+    Inherits MiniBoss
     'The Bosses appear every 5 floors, can not be fled from, and guard the entrance to the next stage
-    Sub New(ByVal mIndex As Integer)
+    Shared Function bossFactory(ByVal mIndex As Integer) As MiniBoss
         Select Case mIndex
+            Case 5
+                Return New Medusa
+            Case 75
+                Return New TarFoodVend
             Case Else
-                name = "A Boss"
-                health = 60
-                maxHealth = 60
-                attack = 1
-                defence = 1
-                speed = 1
-                inv.add(1, 1)
+                Return miniBossFactory(mIndex)
         End Select
-        pos = Game.player.pos
-    End Sub
+    End Function
 End Class

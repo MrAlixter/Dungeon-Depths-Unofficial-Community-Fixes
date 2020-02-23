@@ -3,33 +3,24 @@
     Dim spellCooldown = 0
     Sub New()
         name = "Marissa, Aspiring Sorceress"
-        setMaxHealth(115)
-        setATK(15)
-        setDEF(5)
-        setSPD(30)
+        maxHealth = 115
+        attack = 15
+        defence = 5
+        speed = 30
 
         inv.setCount("Spellbook", 1)
         inv.setCount("Restore_Potion", CInt(Rnd() * 2))
         inv.setCount("Mana_Charm", 1 + CInt(Rnd() * 2))
         inv.setCount("Witch_Cosplay", CInt(Rnd() * 2))
 
+        setupMonsterOnSpawn(False)
+
         title = " "
         pronoun = "she"
         pPronoun = "her"
         rPronoun = "her"
 
-        health = 1.0
-
-        sName = name
-        sMaxHealth = maxHealth
-        sMaxMana = maxMana
-        sAttack = attack
-        sDefence = defence
-        sWill = will
-        sSpeed = speed
-
-        If speed = Game.player.getSPD Then speed -= 1
-        pos = Game.player.pos
+        xpValue = 75
     End Sub
 
     Public Overrides Sub attackCMD(ByRef target As Entity)
@@ -73,15 +64,15 @@
         isDead = True
         Game.fromCombat()
         Game.npcList.Remove(Me)
-        Game.pushLstLog("You've deafeated " & getName() & "!")
+        Game.pushLstLog("You've defeated " & getName() & "!")
 
         'player transformation
         Dim lastsentence = "When your senses return to you, your ear's twitch and you notice that they have become feline.  A quick glance confirms that Marissa is no longer present, though it seems like here last ditch effort might have actually held some power after all..."
         If Game.player.prt.checkFemInd(6, 1) Or Game.player.prt.checkMalInd(6, 1) Then
             lastsentence = "When your senses return to you, a quick glance confirms that Marissa is no longer present."
         End If
-        Game.player.prt.setIAInd(6, 1, True, False)
-        Game.player.createP()
+        Game.player.prt.setIAInd(pInd.ears, 1, True, False)
+        Game.player.drawPort()
 
 
         Game.pushLblEvent("""D-d-damn it..."" Marissa sputters, taking a shakey step backwards.  ""It looks like I u-underestimated you, but r-rest assured that it won't happen again..."" she declares, before charging a weak looking ball of energy, ""T-this one's g-going to leave you a mewing m-m-mess.""\n" &

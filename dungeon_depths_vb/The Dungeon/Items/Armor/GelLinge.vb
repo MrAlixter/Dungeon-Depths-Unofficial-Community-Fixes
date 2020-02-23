@@ -27,19 +27,13 @@
         MyBase.isRandoTFAcceptable = False
     End Sub
 
-    Overrides Sub discard()
-        Game.pushLstLog("You drop the " & getName())
-
-        count -= 1
-    End Sub
-
     Public Overrides Sub onEquip()
         MyBase.onEquip()
 
         If Not Game.player.pForm.name.Contains("Slime") And Not Game.player.pForm.name.Contains("Goo") Then
             Equipment.clothesChange("Naked")
             Game.pushLblEvent("Your clothes melt off!")
-            Game.player.createP()
+            Game.player.drawPort()
         End If
     End Sub
 End Class

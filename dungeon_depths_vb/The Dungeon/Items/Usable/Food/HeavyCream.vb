@@ -22,10 +22,10 @@
     End Sub
     Public Overrides Sub Effect()
         Dim r As Integer = Int(Rnd() * 3)
-        If r = 0 Then Game.player.be()
+        If r = 0 Or Game.noRNG Then Game.player.be()
         If transformation.canbeTFed(Game.player) Then
             Game.player.pState.save(Game.player)
         End If
-        Game.player.createP()
+        Game.player.drawPort()
     End Sub
 End Class

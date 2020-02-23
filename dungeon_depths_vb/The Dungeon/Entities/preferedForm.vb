@@ -7,17 +7,20 @@
     Public breastSize As Integer
     Public isSlut As Boolean
     Public earType As Integer
+    Public onComplete As Action
 
-    Public Sub New(ByVal hc As Color, ByVal sc As Color, ByVal fh As Boolean, ByVal f As Boolean, ByVal bs As Integer, ByVal s As Boolean, ByVal et As Integer)
+    Public Sub New(ByVal hc As Color, ByVal sc As Color, ByVal fh As Boolean, ByVal f As Boolean, ByVal bs As Integer, ByVal s As Boolean, ByVal et As Integer,
+                   Optional fhi As Integer = -1, Optional rhi As Integer = -1, Optional oc As Action = Nothing)
         hairColor = hc
         skinColor = sc
         hasFemaleHair = fh
-        fHairInd = Int(Rnd() * 5)
-        rHairInd = Int(Rnd() * 5)
+        If fhi = -1 Then fHairInd = Int(Rnd() * 5) Else fHairInd = fhi
+        If rhi = -1 Then rHairInd = Int(Rnd() * 5) Else rHairInd = rhi
         isFemale = f
         breastSize = bs
         isSlut = s
         earType = et
+        onComplete = oc
     End Sub
     Public Sub New()
         hairColor = Color.FromArgb(255, Int(Rnd() * 125) + 100, Int(Rnd() * 125) + 100, Int(Rnd() * 125) + 100)
@@ -69,9 +72,9 @@
     End Sub
 
     Public Function playerMeetsForm(ByRef p As Player)
-        Return p.prt.sexBool = isFemale And p.prt.iArrInd(1).Item2 = hasFemaleHair And
-        p.prt.iArrInd(1).Item1 = rHairInd And p.prt.iArrInd(15).Item1 = fHairInd + 1 And
-        p.breastSize = breastSize And p.prt.iArrInd(6).Item1 = earType And
+        Return p.prt.sexBool = isFemale And p.prt.iArrInd(pInd.rearhair).Item2 = hasFemaleHair And
+        p.prt.iArrInd(pInd.rearhair).Item1 = rHairInd And p.prt.iArrInd(pInd.fronthair).Item1 = fHairInd + 1 And
+        p.breastSize = breastSize And p.prt.iArrInd(pInd.ears).Item1 = earType And
         ((p.perks("slutcurse") > -1 And isSlut) Or (p.perks("slutcurse") = -1 And Not isSlut))
     End Function
 
@@ -84,11 +87,11 @@
         If Not p.prt.skincolor.Equals(skinColor) Then p.changeSkinColor(Game.cShift(p.prt.skincolor, skinColor, 8))
 
         If Int(Rnd() * 3) = 0 Then
-            p.prt.iArrInd(1) = New Tuple(Of Integer, Boolean, Boolean)(rHairInd, hasFemaleHair, False)
-            p.prt.iArrInd(5) = New Tuple(Of Integer, Boolean, Boolean)(rHairInd, hasFemaleHair, False)
+            p.prt.iArrInd(pInd.rearhair) = New Tuple(Of Integer, Boolean, Boolean)(rHairInd, hasFemaleHair, False)
+            p.prt.iArrInd(pInd.midhair) = New Tuple(Of Integer, Boolean, Boolean)(rHairInd, hasFemaleHair, False)
         End If
         If Int(Rnd() * 3) = 0 Then
-            p.prt.setIAInd(15, fHairInd + 1, hasFemaleHair, False)
+            p.prt.setIAInd(pInd.fronthair, fHairInd + 1, hasFemaleHair, False)
         End If
 
         If p.prt.sexBool <> isFemale And Int(Rnd() * 3) = 0 Then
@@ -117,17 +120,17 @@
             End If
         End If
 
-        If Not p.prt.iArrInd(6).Item1 = earType And Int(Rnd() * 3) = 0 Then
-            p.prt.setIAInd(6, earType, isFemale, False)
+        If Not p.prt.iArrInd(pInd.ears).Item1 = earType And Int(Rnd() * 3) = 0 Then
+            p.prt.setIAInd(pInd.ears, earType, isFemale, False)
         End If
 
         If p.prt.sexBool Then
-            p.prt.setIAInd(9, 19, True, True)
+            p.prt.setIAInd(pInd.eyes, 19, True, True)
         Else
-            p.prt.setIAInd(9, 8, False, True)
+            p.prt.setIAInd(pInd.eyes, 8, False, True)
         End If
 
-        p.createP()
+        p.drawPort()
     End Sub
     Public Sub snapShift(ByRef p As Player)
         Randomize()
@@ -137,10 +140,10 @@
         p.changeHairColor(hairColor)
         p.changeSkinColor(skinColor)
 
-        p.prt.setIAInd(1, rHairInd, hasFemaleHair, False)
-        p.prt.setIAInd(5, rHairInd, hasFemaleHair, False)
+        p.prt.setIAInd(pInd.rearhair, rHairInd, hasFemaleHair, False)
+        p.prt.setIAInd(pInd.midhair, rHairInd, hasFemaleHair, False)
 
-        p.prt.setIAInd(15, fHairInd + 1, hasFemaleHair, False)
+        p.prt.setIAInd(pInd.fronthair, fHairInd + 1, hasFemaleHair, False)
 
         If p.prt.sexBool <> isFemale Then
             If p.prt.sexBool Then
@@ -172,22 +175,62 @@
             End If
         End If
 
-        If Not p.prt.iArrInd(6).Item1 = earType Then
-            p.prt.setIAInd(6, earType, isFemale, False)
+        If Not p.prt.iArrInd(pInd.ears).Item1 = earType Then
+            p.prt.setIAInd(pInd.ears, earType, isFemale, False)
         End If
 
         If p.prt.sexBool Then
-            p.prt.setIAInd(9, 19, True, True)
+            p.prt.setIAInd(pInd.eyes, 19, True, True)
         Else
-            p.prt.setIAInd(9, 8, False, True)
+            p.prt.setIAInd(pInd.eyes, 8, False, True)
         End If
 
-        p.createP()
+        If Not onComplete Is Nothing Then onComplete()
+
+        p.drawPort()
     End Sub
 
     Public Overrides Function ToString() As String
-        Return (hairColor.A & "$" & hairColor.R & "$" & hairColor.G & "$" & hairColor.B & "$" & _
-                skinColor.A & "$" & skinColor.R & "$" & skinColor.G & "$" & skinColor.B & "$" & _
-                hasFemaleHair & "$" & isFemale & "$" & breastSize & "$" & isSlut & "$" & earType)
+        Return (hairColor.A & "$" & hairColor.R & "$" & hairColor.G & "$" & hairColor.B & "$" &
+                skinColor.A & "$" & skinColor.R & "$" & skinColor.G & "$" & skinColor.B & "$" &
+                hasFemaleHair & "$" & isFemale & "$" & breastSize & "$" & isSlut & "$" & earType) '& "$" &
+        'fHairInd & "$" & rHairInd & "$" & onComplete.ToString)
     End Function
+End Class
+
+Public Class SuccMaid
+    Inherits preferedForm
+
+    Public Sub New(ByVal hc As Color, ByVal sc As Color, ByVal fh As Boolean, ByVal f As Boolean, ByVal bs As Integer, ByVal s As Boolean, ByVal et As Integer,
+               Optional fhi As Integer = -1, Optional rhi As Integer = -1, Optional oc As Action = Nothing)
+        hairColor = Color.White
+        skinColor = Color.FromArgb(255, 255, 78, 78)
+        hasFemaleHair = True
+        fHairInd = 26
+        rHairInd = 6
+        isFemale = True
+        breastSize = 2
+        isSlut = True
+        earType = 0
+        onComplete = AddressOf changeEquipment
+    End Sub
+    Sub New()
+        MyBase.New(Color.White, Color.FromArgb(255, 255, 78, 78), True, True, 2, True, 0, 26, 6, AddressOf changeEquipment)
+    End Sub
+
+    Shared Sub changeEquipment()
+        Dim p = Game.player
+
+        If p.inv.item("Maid_Lingerie").count < 1 Then p.inv.add("Maid_Lingerie", 1)
+        Equipment.clothesChange("Maid_Lingerie")
+
+        p.prt.setIAInd(pInd.eyes, 12, True, True)
+        p.prt.setIAInd(pInd.glasses, 2, True, False)
+
+        p.prt.wingInd = 2
+        p.prt.hornInd = 3
+
+        p.pClass = p.classes("Maid")
+        p.pForm = p.forms("Half-Succubus")
+    End Sub
 End Class

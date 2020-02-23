@@ -2,7 +2,7 @@
 'The Transformation class will be used to handle a (sequence of) tranformation(s) of the player from one "permenant"
 'state to another.
 
-Public Class Transformation
+Public MustInherit Class Transformation
     Implements Updatable
     Protected currStep As Integer
     Protected numSteps As Integer
@@ -16,7 +16,7 @@ Public Class Transformation
 
     'constuctors
     Sub New(n As Integer, tts As Integer, wi As Double, cbs As Boolean)
-        Dim p As player = game.player
+        Dim p As Player = Game.player
         If canBeTFed(p) Then
             p.pState.save(p)
         End If
@@ -55,7 +55,7 @@ Public Class Transformation
                 Return New TargaxTF(CInt(s(0)), CInt(s(1)), CInt(s(2)), CDbl(s(3)), CBool(s(4)), CBool(s(6)))
             Case "ThrallTF"
                 Return New ThrallTF(CInt(s(0)), CInt(s(1)), CInt(s(2)), CDbl(s(3)), CBool(s(4)), CBool(s(6)))
-            Case "Magic Girl"
+            Case "Magical Girl"
                 Return New MagGirlTF(CInt(s(0)), CInt(s(1)), CInt(s(2)), CDbl(s(3)), CBool(s(4)), CBool(s(6)))
             Case "DragonTF"
                 Return New DragonTF(CInt(s(0)), CInt(s(1)), CInt(s(2)), CDbl(s(3)), CBool(s(4)), CBool(s(6)))
@@ -95,6 +95,20 @@ Public Class Transformation
                 Return New Blindness(CInt(s(0)), CInt(s(1)), CInt(s(2)), CDbl(s(3)), CBool(s(4)), CBool(s(6)))
             Case "Valkyrie"
                 Return New ValkyrieTF2(CInt(s(0)), CInt(s(1)), CInt(s(2)), CDbl(s(3)), CBool(s(4)), CBool(s(6)))
+            Case "LolitaSTF"
+                Return New LolitaSTF(CInt(s(0)), CInt(s(1)), CInt(s(2)), CDbl(s(3)), CBool(s(4)), CBool(s(6)))
+            Case "SlimeETF"
+                Return New LolitaSTF(CInt(s(0)), CInt(s(1)), CInt(s(2)), CDbl(s(3)), CBool(s(4)), CBool(s(6)))
+            Case "COServ"
+                Return New COServ(CInt(s(0)), CInt(s(1)), CInt(s(2)), CDbl(s(3)), CBool(s(4)), CBool(s(6)))
+            Case "BroodmotherTF"
+                Return New BroodmotherTF(CInt(s(0)), CInt(s(1)), CInt(s(2)), CDbl(s(3)), CBool(s(4)), CBool(s(6)))
+            Case "RandoTF"
+                Return New RandoTF(CInt(s(0)), CInt(s(1)), CInt(s(2)), CDbl(s(3)), CBool(s(4)), CBool(s(6)))
+            Case "WBimbo"
+                Return New COServ(CInt(s(0)), CInt(s(1)), CInt(s(2)), CDbl(s(3)), CBool(s(4)), CBool(s(6)))
+            Case "Magical Slut"
+                Return New MagSlutTF(CInt(s(0)), CInt(s(1)), CInt(s(2)), CDbl(s(3)), CBool(s(4)), CBool(s(6)))
             Case Else
                 Return Nothing
         End Select
@@ -102,14 +116,14 @@ Public Class Transformation
     Shared Function canBeTFed(ByRef p As Player) As Boolean
         If Game.player.ongoingTFs.Count < 1 And
             (Not p.polymorphs.ContainsKey(p.pClass.name) And Not p.polymorphs.ContainsKey(p.pForm.name)) And
-            Not p.pClass.name.Equals("Magic Girl") And
+            Not p.pClass.name.Equals("Magical Girl") And
             Not p.pClass.name.Equals("Valkyrie") And
             Not p.pClass.name.Equals("Unconscious") And
             Not p.pForm.name.Equals("Blowup Doll") And
             Not p.perks("astatue") > 1 Then Return True
         'MsgBox(Game.player.ongoingTFs.Count < 1 & vbCrLf &
         '    (Not p.polymorphs.ContainsKey(p.pClass.name) And Not p.polymorphs.ContainsKey(p.pForm.name)) & vbCrLf &
-        '    Not p.pClass.name.Equals("Magic Girl") & vbCrLf &
+        '    Not p.pClass.name.Equals("Magical Girl") & vbCrLf &
         '    Not p.pClass.name.Equals("Valkyrie") & vbCrLf &
         '    Not p.pClass.name.Equals("Unconscious") & vbCrLf &
         '    Not p.pForm.name.Equals("Blowup Doll"))
@@ -120,7 +134,6 @@ Public Class Transformation
     Overridable Sub update() Implements Updatable.update
         If Not updateDuringCombat And Game.combatmode Then Exit Sub
         If turnsTilNextStep = 0 Then
-            MagGirlTF.chkForMagGirlRevert(Game.player)
             nextStep = getNextStep(currStep)
             nextStep()
             currStep += 1
@@ -171,7 +184,5 @@ Public Class Transformation
     Public Function getNextStep() As Action
         Return nextStep
     End Function
-    Overridable Function getNextStep(ByVal stage As Integer) As action
-        Return Nothing
-    End Function
+    MustOverride Function getNextStep(ByVal stage As Integer) As action
 End Class

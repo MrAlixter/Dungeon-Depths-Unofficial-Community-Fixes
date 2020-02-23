@@ -5,6 +5,7 @@
     Public tfEnd As Integer = 0
     Public sName As String = ""
     Public sMaxHealth, sMana, sMaxMana, sAttack, sDefence, sWill, sSpeed As Integer
+    Public xpValue As Integer = 10
     'dialog variables
     Public form As String = ""
     Public title As String
@@ -28,7 +29,8 @@
         If (Game.player.pClass.name = "Thrall" And Me.name.Contains("Thrall")) Or
            (Game.player.pForm.name = "Arachne" And Me.name.Contains("Arachne")) Or
             (Game.player.pForm.name = "Slime" And Me.name.Contains("Slime")) Or
-            (Game.player.pForm.name.Equals("Goo Girl") And Me.name.Contains("Goo")) Then
+            (Game.player.pForm.name.Equals("Goo Girl") And Me.name.Contains("Goo")) Or
+            (Game.player.pForm.name = "Alraune" And Me.name.Contains("Alraune")) Then
             despawn("friend")
             Exit Sub
         End If
@@ -63,19 +65,12 @@
         endMonster()
 
         Game.player.clearTarget()
+        Game.player.xp += xpValue
         cause.currTarget = Nothing
         cause.nextCombatAction = Nothing
 
 
-        If getName() = "Explorer" Then
-            If MessageBox.Show("Would you like to do the Explorer's body swap?", "Body Swap?", MessageBoxButtons.YesNo) = Windows.Forms.DialogResult.Yes Then 'Int(Rnd() * 3) = 0 Then '
-                Try
-                    bodySwap(Game.player)
-                Catch ex As Exception
-                    Game.pushLblEvent("The body swap fails!")
-                End Try
-            End If
-        ElseIf getName.Contains("Enthralling Half-Dem") Then
+        If getName.Contains("Enthralling Half-Dem") Then
             Equipment.accChange("Nothing")
         End If
 
@@ -133,7 +128,7 @@
                 Game.pushLstLog("The " & name & " is friendly, and you chat briefly before setting out!")
             End If
         ElseIf reason = "npc" Then
-            Game.pushLstLog("You walk away from " & name & "!")
+            Game.pushLstLog("You walk away from " & getName() & "!")
         ElseIf reason = "animaltf" Then
             Dim output As String = ""
             If Me.GetType() Is GetType(Monster) Then output += "The "
@@ -155,7 +150,7 @@
             If inv.getSum > 0 Then c1.open()
 
             Game.npcList.Remove(Me)
-            Game.pushLstLog("You've deafeated the " & name & "!")
+            Game.pushLstLog("You've defeated the " & name & "!")
             Game.player.currState.save(Game.player)
             isDead = True
             endBoss()
@@ -172,15 +167,17 @@
 
     End Sub
     Private Sub endBoss()
-        If Not Me.GetType() Is GetType(MiniBoss) Then Exit Sub
+        If Not Me.GetType().IsSubclassOf(GetType(MiniBoss)) Then Exit Sub
         If sName.Equals("Marissa the Enchantress") Then Game.player.perks("nekocurse") = -1
+        If sName.Equals("Medusa, Gorgon of Myth") Then
+            If Game.player.perks("blind") = 2 Then Game.player.perks("blind") = -1
+        End If
         If sName.Equals("Ooze Empress") Then
-            'Game.beatboss(4) = True
             Game.mDun.floorboss(4) = "Key"
             Exit Sub
         End If
 
-        Game.currfloor.beatBoss = True
+        Game.currFloor.beatBoss = True
     End Sub
     Private Sub endMonster()
         'set temporary player pointer
@@ -203,8 +200,8 @@
         endBoss()
         Game.fromCombat()
         Game.npcList.Remove(Me)
-        Game.pushLstLog("You've deafeated the " & name & "!")
-        
+        Game.pushLstLog("You've defeated the " & name & "!  +" & xpValue & " XP!")
+
 
         'monster transformations
         If sName.Equals("Ooze Empress") Then
@@ -236,12 +233,6 @@
         End If
     End Function
 
-    Public Sub bodySwap(ByRef p As Player)
-        p.ongoingTFs.Add(New RandoTF())
-        p.update()
-        p.health = 0.1
-        Game.pushLblEvent("As the explorer is defeated, they mumble some arcane poem and make a hand gesture which causes the two of you to begin glowing.  With a flash, you suddenly find yourself looking at the dungeon from a slightly different angle.  As you black out and collapse, the last thing you see is your grinning face standing over you." & vbCrLf & "The Explorer has taken your body!")
-    End Sub
     Public Overrides Sub reachedFPathDest()
         forcedPath = Nothing
     End Sub
@@ -255,10 +246,10 @@
         npcIndex = 0
         Game.pushLblEvent("The " & name & " return to " & pPronoun & " original self!")
     End Sub
-    Public Sub setInventory(ByVal contents() As Integer)
-        inv = New Inventory(False)
+    Public Sub setInventory(ByVal contents() As Integer, Optional ByVal resetCurrentInv As Boolean = True)
+        If resetCurrentInv Then inv = New Inventory(False)
         For i = 0 To UBound(contents)
-            If Me.GetType() Is GetType(MiniBoss) Then
+            If Me.GetType().IsSubclassOf(GetType(MiniBoss)) Then
                 inv.add(contents(i), 1)
             Else
                 Dim content = inv.item(contents(i))
@@ -354,4 +345,7 @@
         If Not source Is Nothing Then currTarget = source
         Game.lblEHealthChange.Tag -= dmg
     End Sub
+    Public Overridable Function reactToSpell(ByVal spell As String) As Boolean
+        Return True
+    End Function
 End Class

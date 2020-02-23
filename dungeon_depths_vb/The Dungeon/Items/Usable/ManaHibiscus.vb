@@ -4,7 +4,7 @@
         MyBase.setName("Mana_Hibiscus")
         MyBase.setDesc("The runes covering this magenta flower not only keep it perpetually young, but also emit a sublte aura of mana.  Who knows what would happen if one were to try to activate them further...")
         id = 149
-        If DateTime.Now.Month = 9 And DateTime.Now.Day = 10 Then tier = 2 Else tier = Nothing
+        If DDDateTime.isAni Then tier = 2 Else tier = Nothing
         MyBase.setUsable(True)
         MyBase.mBoost = 17
         MyBase.count = 0
@@ -14,17 +14,13 @@
     End Sub
 
     Overrides Sub use()
+        If Game.currFloor.floorNumber = 91017 Or Game.currFloor.floorNumber = 9999 Then Exit Sub
         If Game.combatmode Or Game.npcmode Then Exit Sub
         Dim cae = New Caelia
         Game.npcEncounter(cae)
         Game.hideNPCButtons()
         Game.pushNPCDialog("*giggle* Hi, I'm Caelia!  The magic on that flower pulled here from another place.  It also kinda opened up a time rift, soooo have fun with that!", AddressOf Caelia.teleportPlayer)
         Equipment.accChange("Nothing")
-
-        count -= 1
-    End Sub
-    Overrides Sub discard()
-        Game.pushLstLog("You drop the " & getName())
 
         count -= 1
     End Sub
