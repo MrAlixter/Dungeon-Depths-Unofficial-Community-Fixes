@@ -1,0 +1,53 @@
+﻿Public Class GoddessTF
+    Inherits PolymorphTF
+    Sub New()
+        MyBase.New()
+        tfName = "GoddessTF"
+    End Sub
+    Sub New(cs As Integer, n As Integer, tts As Integer, wi As Double, cbs As Boolean, tfd As Boolean)
+        MyBase.New(cs, n, tts, wi, cbs, tfd)
+        nextStep = getNextStep(cs)
+    End Sub
+
+    Public Overrides Sub setWaitTime(stage As Integer)
+        Dim p As player = game.player
+        turnsTilNextStep = Int(Rnd() * 50) + Int(Rnd() * 50) + Int(Rnd() * p.getmaxMana) + Int(Rnd() * p.getWIL)
+    End Sub
+
+    Public Overrides Sub step1()
+        Dim p As player = game.player
+        Dim out = ""
+
+        'unequips
+        Equipment.clothesChange("Goddess_Gown")
+        Equipment.weaponChange("Fists")
+
+        'goddess transformation
+        If p.sex = "Male" Then
+            p.MtF()
+            out += "Your body becomes daintier, and you are soon fully female.  "
+        End If
+        p.prt.haircolor = Color.FromArgb(255, 210, 180, 140)
+        If p.prt.skincolor = Color.FromArgb(255, 255, 105, 180) Then p.prt.haircolor = Color.FromArgb(255, 155, 0, 0)
+        If p.prt.skincolor = Color.FromArgb(200, 0, 255, 255) Then p.prt.haircolor = Color.FromArgb(180, 5, 245, 198)
+        p.prt.setIAInd(1, 8, True, True)
+        p.prt.setIAInd(2, 1, True, True)
+        p.prt.setIAInd(4, 0, True, False)
+        p.prt.setIAInd(5, 8, True, True)
+        p.prt.setIAInd(6, 0, True, False)
+        p.prt.setIAInd(7, 0, True, False)
+        p.prt.setIAInd(8, 8, True, True)
+        p.prt.setIAInd(9, 10, True, True)
+        p.prt.setIAInd(10, 0, True, False)
+        p.prt.setIAInd(13, 0, True, False)
+        p.prt.setIAInd(15, 9, True, False)
+        p.prt.setIAInd(16, 0, True, False)
+        p.goddState.save(p)
+
+        'transformation description push
+        p.TextColor = Color.LightGoldenrodYellow
+        out += "Your eyes burn with an awesome fury as golden flames engulf you.  Your opponent squints and covers their eyes, blinded by your new found vibrance.  Dialing back your personal light show, you give them a cocky grin.  They may not know it, but this battle is already over."
+        
+        Game.pushLblEvent(out)
+    End Sub
+End Class

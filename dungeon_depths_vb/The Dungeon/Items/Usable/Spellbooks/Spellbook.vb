@@ -1,0 +1,107 @@
+﻿Public Class Spellbook
+    Inherits Item
+    Public Shared spells() As String = {"Super Fireball", "Icicle Spear", "Self Polymorph", "Turn to Frog", "Polymorph Enemy",
+                                        "Petrify", "Heal", "Illuminate", "Fireball"}
+    Sub New()
+        MyBase.setName("Spellbook")
+        MyBase.setDesc("A simple, leather-bound book that likely contains something cool and magic.")
+        id = 4
+        tier = 2
+        MyBase.setUsable(True)
+        MyBase.count = 0
+        MyBase.value = 500
+    End Sub
+
+    Overrides Sub use()
+        If Int(Rnd() * 10) = -1 Then
+            'bimbo tf
+        Else
+            Randomize()
+            If Me.getUsable() = False Then Exit Sub
+            Dim sName As String = "ERROR"
+            Dim ct As Integer = 0
+            Dim out As String = ""
+            While ct < 1 Or Game.player.knownSpells.Contains(sName)
+                ct += 1
+                Dim spell As Integer = CInt(Int(Rnd() * (spells.Length)))
+                Select Case spell
+                    Case 2
+                        sName = "Self Polymorph"
+                        Dim form As String = "Err"
+                        Dim c As Integer = 0
+                        Dim p = Game.player
+                        While c < 1 Or p.selfPolyForms.Contains(form)
+                            c += 1
+                            Dim learnForm As Integer = CInt(Int(Rnd() * 4))
+                            Select Case learnForm
+                                Case 0
+                                    form = "Dragon"
+                                Case 1
+                                    form = "Succubus"
+                                Case 2
+                                    form = "Slime"
+                                Case 3
+                                    form = "Tigress"
+                            End Select
+                            If c > 40 Then
+                                out = "All self polymorph forms learned from spellbooks!"
+                                Exit Select
+                            End If
+                        End While
+                        If Not p.selfPolyForms.Contains(form) Then
+                            p.selfPolyForms.Add(form)
+                            out = "You learn how to turn yourself into a " & form & "!"
+                            Exit While
+                        End If
+                    Case 4
+                        sName = "Polymorph Enemy"
+                        Dim form As String = "Err"
+                        Dim c As Integer = 0
+                        Dim p = Game.player
+                        While c < 1 Or p.enemPolyForms.Contains(form)
+                            c += 1
+                            Dim learnForm As Integer = CInt(Int(Rnd() * 3))
+                            Select Case learnForm
+                                Case 0
+                                    form = "Sheep"
+                                Case 1
+                                    form = "Princess"
+                                Case 2
+                                    form = "Bunny"
+                            End Select
+                            If c > 40 Then
+                                out = "All polymorph enemy forms learned from spellbooks!"
+                                Exit Select
+                            End If
+                        End While
+                        If Not p.enemPolyForms.Contains(form) Then
+                            p.enemPolyForms.Add(form)
+                            out = "You learn how to polymorph somthing into a " & form & "!"
+                            Exit While
+                        End If
+                    Case Else
+                        sName = spells(spell)
+                End Select
+                If ct > 60 Then
+                    Game.pushLstLog("You know all the spells in spellbooks already!")
+                    Exit Sub
+                End If
+            End While
+            If Not Game.player.knownSpells.Contains(sName) Then Game.player.knownSpells.Add(sName)
+            Game.pushLstLog("You read the " & getName() & ". " & sName & " learned!")
+            If Not out.Equals("") Then
+                Game.pushLstLog(out)
+                Game.pushLblEvent("You read the " & getName() & ". " & sName & " learned!" & vbCrLf & vbCrLf & out)
+            Else
+                Game.pushLblEvent("You read the " & getName() & ". " & sName & " learned!")
+            End If
+        End If
+        count -= 1
+        
+    End Sub
+    Overrides Sub discard()
+        Game.pushLstLog("You drop the " & getName())
+        
+        count -= 1
+    End Sub
+End Class
