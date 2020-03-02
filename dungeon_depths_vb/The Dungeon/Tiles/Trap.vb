@@ -25,10 +25,10 @@
                 End If
                 out += "is probably a sign that the dart was actually carrying a potent aphrodisiac."
                 Game.pushLblEvent(out)
-                Game.player.createP()
+                Game.player.drawPort()
             Case 1
                 Dim n As String = Game.player.equippedArmor.getName()
-                Dim rng As Integer = Int(Rnd() * Game.chestList.Count)
+                Dim rng As Integer = Int(Rnd() * Game.currfloor.chestList.Count)
                 Dim out As String = "A beam fires out of the wall to your left, striking you in the chest."
                 If n <> "Ropes" Then
                     If n <> "Naked" Then
@@ -49,7 +49,7 @@
                 End If
                 Game.player.inv.add(54, 1)
                 Equipment.clothesChange("Ropes")
-                Game.player.createP()
+                Game.player.drawPort()
                 If transformation.canbeTFed(Game.player) Then
                     Game.player.pState.save(Game.player)
                 End If
@@ -73,29 +73,29 @@
                 Game.player.petrify(rubyTF, 1)
                 Dim out As String = "As you walk through the dungeon, you see what looks like a valuable ruby on the ground, and you bend down to pick it up.  As soon as you touch it, a shock runs through your body, and starting with the hand you have on the gem your body is turned into ruby.  𝘚𝘩𝘪𝘵!  Looks like that ruby was probably cursed . . ."
                 Game.pushLblEvent(out, AddressOf Trap.rubyRevert)
-                Game.player.createP()
+                Game.player.drawPort()
             Case 3
                 Game.player.ongoingTFs.Add(New BUDollTF())
                 Game.player.update()
             Case 4
                 Dim out = "As your foot touches down on what looks to be the same ground that you have been walking on, you find that it is not met with any resistance.  Unable to keep your balance, you fall face first into the shiny waterlike facsimile of the floor and are thrown, flipping, into a another room.  As you regain your senses, you notice that you actually just ahead of where you were.  Turning around, you tap the floor you presumably fell out through, only to find it as solid as any other patch of floor you have come across.  Not able to find anything else abnormal with your surroundings, you write your expirience off as some failed illusion and set off on your way."
                 If Game.player.prt.sexBool Then
-                    Game.player.prt.setIAInd(1, Game.player.sState.iArrInd(1).Item1, False, Game.player.sState.iArrInd(1).Item3)
-                    Game.player.prt.setIAInd(2, 0, True, False)
-                    Game.player.prt.setIAInd(4, Game.player.sState.iArrInd(4).Item1, False, Game.player.sState.iArrInd(1).Item3)
-                    Game.player.prt.setIAInd(5, Game.player.sState.iArrInd(5).Item1, False, Game.player.sState.iArrInd(1).Item3)
-                    Game.player.prt.setIAInd(8, Game.player.sState.iArrInd(8).Item1, False, Game.player.sState.iArrInd(1).Item3)
-                    Game.player.prt.setIAInd(10, Game.player.sState.iArrInd(10).Item1, False, Game.player.sState.iArrInd(1).Item3)
-                    Game.player.prt.setIAInd(15, Game.player.sState.iArrInd(15).Item1, False, Game.player.sState.iArrInd(1).Item3)
+                    Game.player.prt.setIAInd(pInd.rearhair, Game.player.sState.iArrInd(pInd.rearhair).Item1, False, Game.player.sState.iArrInd(pInd.rearhair).Item3)
+                    Game.player.prt.setIAInd(pInd.body, 0, True, False)
+                    Game.player.prt.setIAInd(pInd.face, Game.player.sState.iArrInd(pInd.face).Item1, False, Game.player.sState.iArrInd(pInd.rearhair).Item3)
+                    Game.player.prt.setIAInd(pInd.midhair, Game.player.sState.iArrInd(pInd.midhair).Item1, False, Game.player.sState.iArrInd(pInd.rearhair).Item3)
+                    Game.player.prt.setIAInd(pInd.mouth, Game.player.sState.iArrInd(pInd.mouth).Item1, False, Game.player.sState.iArrInd(pInd.rearhair).Item3)
+                    Game.player.prt.setIAInd(pInd.eyebrows, Game.player.sState.iArrInd(pInd.eyebrows).Item1, False, Game.player.sState.iArrInd(pInd.rearhair).Item3)
+                    Game.player.prt.setIAInd(pInd.fronthair, Game.player.sState.iArrInd(pInd.fronthair).Item1, False, Game.player.sState.iArrInd(pInd.rearhair).Item3)
                     Game.player.FtM()
                 Else
-                    Game.player.prt.setIAInd(1, Game.player.sState.iArrInd(1).Item1, True, Game.player.sState.iArrInd(1).Item3)
-                    Game.player.prt.setIAInd(5, Game.player.sState.iArrInd(5).Item1, True, Game.player.sState.iArrInd(1).Item3)
-                    Game.player.prt.setIAInd(8, Game.player.sState.iArrInd(8).Item1, True, Game.player.sState.iArrInd(1).Item3)
-                    Game.player.prt.setIAInd(15, Game.player.sState.iArrInd(15).Item1, True, Game.player.sState.iArrInd(1).Item3)
+                    Game.player.prt.setIAInd(pInd.rearhair, Game.player.sState.iArrInd(pInd.rearhair).Item1, True, Game.player.sState.iArrInd(pInd.rearhair).Item3)
+                    Game.player.prt.setIAInd(pInd.midhair, Game.player.sState.iArrInd(pInd.midhair).Item1, True, Game.player.sState.iArrInd(pInd.rearhair).Item3)
+                    Game.player.prt.setIAInd(pInd.mouth, Game.player.sState.iArrInd(pInd.mouth).Item1, True, Game.player.sState.iArrInd(pInd.rearhair).Item3)
+                    Game.player.prt.setIAInd(pInd.fronthair, Game.player.sState.iArrInd(pInd.fronthair).Item1, True, Game.player.sState.iArrInd(pInd.rearhair).Item3)
                     Game.player.MtF()
                 End If
-                Game.player.createP()
+                Game.player.drawPort()
                 Game.player.UIupdate()
                 Game.pushLblEvent(out)
             Case 5
@@ -104,15 +104,14 @@
                 Game.pushLblEvent("Before you, you see a person-sized metal canister with an opened pink glass lid.  Looking at the chamber, you spot the text ""G.C.U"" written on the side, and a holographic countdown timer projected from a chome pedistal next to it.  This timer seems to be counting down to something called ""ConvProccess.exe"".  You think that you can fit in the canister, but you have no clue what will happen if you do...", AddressOf gConvChamb, AddressOf gcuCancel, "Get in the G.C.U?")
         End Select
 
-                pos = New Point(-1, -1)
-
+        pos = New Point(-1, -1)
     End Sub
 
     Shared Sub rubyRevert()
         Game.player.revertToPState()
         Game.player.canMoveFlag = True
-        Dim tr As New Monster(-1)
-        Game.statueList.Add(New Statue(tr))
+        Dim tr As Monster = Monster.monsterFactory(-1)
+        Game.currfloor.statueList.Add(New Statue(tr))
         Game.pushLblEvent("𝑺𝒆𝒗𝒆𝒓𝒂𝒍 𝒅𝒂𝒚𝒔 𝒍𝒂𝒕𝒆𝒓..." & vbCrLf &
                            "As you stand frozen in the same position you've held since you touched the cursed stone, suddenly you fall flat faced onto the ground.  Springing to your feet, you are exited to find yourself as you were, albiet redder than before, and another explorer frozen in your place.  From their pose, it seems that they were going through your stuff, and must have accidently touched you.  What's more, the original ruby you touched is nowhere to be found.  You muse on the nature of the curse for a bit, before grabbing your things and moving on." & vbCrLf & vbCrLf & "Your stomach rumbles loudly, and you can tell that your time as a statue hasn't been kind to you.")
         Game.player.mana = 0
@@ -126,9 +125,9 @@
                           """Suddenly, the pad's machinery whirs to life.  While some of its many mechanical arms quickly strip you, others prepare a clinical looking labcoat and begin dressing you in it.  Finally, one arm places a pair of small glasses carefully onto your face and the pad returns to its idle state." & vbCrLf & vbCrLf &
                           """Have a nice day, doctor."" chimes the terminal, before darkening and going to sleep.")
         Equipment.clothesChange("Labcoat")
-        Game.player.prt.setIAInd(12, 2, True, False)
+        Game.player.prt.setIAInd(pInd.glasses, 2, True, False)
 
-        Game.player.createP()
+        Game.player.drawPort()
     End Sub
     Sub doctorCancel()
         Game.pushLblEvent("""Very well.  Have a nice day, doctor."" chimes the terminal, before darkening and going to sleep.")
@@ -140,8 +139,8 @@
         Dim out = "You climb into the chamber, mere seconds until the timer hits zero.  Almost as soon as you are clear, the lid slams tightly shut.  While you aren't exactly familiar with this level of technology, a forceful 'CHNK' is probably a sign that you won't be getting out until it's hatch opens back up.  Suddenly, a pink visor drops down onto your face from above.  A log of information starts on the visor, and as two antennae are positioned on the sides of your head you notice that some of the information is...yours?  Name, sex, age...this machine is reading your mind!  While this has you slightly worried, the fact that it seems to be populating a ""DELETION QUEUE"" has you ready to attempt to escape.  As you squirm, the machine takes notice and soon ""SECOND THOUGHTS PROTOCOL"" is flashing on the visor.  Beginning to relax that at least this crazy device has a failsafe, you fail to notice until it's too late that the deletion queue has been re-arranged.  All of a sudden, both the visor and the chambers lid become flashing strobes, and with each flash one of your attributes is marked as ""[deleted]"".  ""MOTOR FUNCTION"" is the first to go, followed by ""NAME"", ""AGE"", and ""LANGUAGE"", and before long a list of your negative emotions fly by on the screen.  Unable to fear, or mourn your loss, you sit idly as your body's abilities to do, well, anything, are erased one by one.  Finally, after what could be a few seconds or a millenia ""CONSCIOUSNESS"" is at the head of the queue.  With a final flash, everything goes dark."
         Dim p As Player = Game.player
 
-        p.prt.setIAInd(6, 9, True, True)
-        p.prt.setIAInd(12, 6, True, True)
+        p.prt.setIAInd(pInd.ears, 9, True, True)
+        p.prt.setIAInd(pInd.glasses, 6, True, True)
 
         p.ongoingTFs.Add(New GynoidTF)
 

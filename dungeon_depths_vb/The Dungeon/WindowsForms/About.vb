@@ -44,9 +44,13 @@
                                      "- Lazerlite142 for the creation and management of the game's discord server, the creation of several image packs that signifiganty change up the game's visuals, and for the creation of in-game art assets, such as the Slime dissolved shirt, and the full body images for the Goddess Gown and Steel Armor." & vbCrLf & vbCrLf &
                                      "These two have greatly improved our game through their being a part of it, and for that I am eternally grateful." & vbCrLf &
                                      "-----------------------------------------------" & vbCrLf &
+                                     "Writing Credits: " & vbCrLf &
+                                    "- Marionette: Slime Loss/TF Scenes, yet-to-be-implemented Vial of Slime & Mimic loss scenes" & vbCrLf & vbCrLf &
+                                    "- Big Iron Red: Unwilling versions of Maid TF, Marissa Loss, and Slut curse passages; yet-to-be-implemented Gothic & Sweet Lolita TF, Victorian Mannequin TF scenes" & vbCrLf & vbCrLf &
+                                    "- Lazerbear7: Proofreading and editing of new passages" & vbCrLf & vbCrLf &
+                                     "-----------------------------------------------" & vbCrLf &
                                      "I would also like to send a special thanks to:" & vbCrLf & vbCrLf &
                                      "- undercoversam for advice on the balancing of weapons and armor through simulated dice" & vbCrLf & vbCrLf &
-                                     "- Marionette for writing the slime loss scenes" & vbCrLf & vbCrLf &
                                      "- Rangorak for advice on Kisekae2.0 and for the design of the fourth default clothing options, as well as extensive contributions to debugging." & vbCrLf & vbCrLf &
                                      "- Storm for the ability to bodyswap with the explorer" & vbCrLf & vbCrLf &
                                      "- Arrhae Khellian for help cleaning up the BitBucket"

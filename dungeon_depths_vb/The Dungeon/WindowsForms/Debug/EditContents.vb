@@ -24,7 +24,7 @@
     End Sub
 
     Private Sub loadChest()
-        For Each c In Game.chestList
+        For Each c In Game.currfloor.chestList
             If CType(c, Chest).pos = loc Then
                 chest = c
                 refreshChest()

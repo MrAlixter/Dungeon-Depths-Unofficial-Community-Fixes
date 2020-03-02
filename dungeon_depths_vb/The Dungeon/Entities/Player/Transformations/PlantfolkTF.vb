@@ -1,4 +1,4 @@
-﻿Public Class PlantfolkTF
+﻿Public NotInheritable Class PlantfolkTF
     Inherits Transformation
 
     Dim summerColor As Color = Color.FromArgb(255, 55, 146, 46)
@@ -25,25 +25,24 @@
         Dim p As player = game.player
         Dim out = ""
 
-        'angel transformation
-        If DateTime.Now.Month = 12 Or DateTime.Now.Month = 1 Or DateTime.Now.Month = 2 Then
+        If DDDateTime.isWinter Then
             p.changeHairColor(winterColor)
-        ElseIf DateTime.Now.Month = 3 Or DateTime.Now.Month = 4 Or DateTime.Now.Month = 5 Then
+        ElseIf DDDateTime.isSpring Then
             p.changeHairColor(springColor)
-        ElseIf DateTime.Now.Month = 6 Or DateTime.Now.Month = 7 Or DateTime.Now.Month = 8 Then
+        ElseIf DDDateTime.isSummer Then
             p.changeHairColor(summerColor)
-        ElseIf DateTime.Now.Month = 9 Or DateTime.Now.Month = 10 Or DateTime.Now.Month = 11 Then
+        ElseIf DDDateTime.isFall Then
             p.changeHairColor(fallColor)
         End If
 
         If p.sex.Equals("Male") Then
-            p.prt.setIAInd(1, 6, False, True)
-            p.prt.setIAInd(5, 6, False, True)
-            p.prt.setIAInd(15, 7, False, True)
+            p.prt.setIAInd(pInd.rearhair, 6, False, True)
+            p.prt.setIAInd(pInd.midhair, 6, False, True)
+            p.prt.setIAInd(pInd.fronthair, 7, False, True)
         Else
-            p.prt.setIAInd(1, 21, True, True)
-            p.prt.setIAInd(5, 24, True, True)
-            p.prt.setIAInd(15, 22, True, True)
+            p.prt.setIAInd(pInd.rearhair, 21, True, True)
+            p.prt.setIAInd(pInd.midhair, 24, True, True)
+            p.prt.setIAInd(pInd.fronthair, 22, True, True)
         End If
 
 

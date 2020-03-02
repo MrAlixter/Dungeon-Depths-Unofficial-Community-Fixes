@@ -2,7 +2,7 @@
     Inherits Accessory
     Sub New()
         MyBase.setName("Nothing")
-        MyBase.setDesc("NO ACCESORY")
+        MyBase.setDesc("NO accessory")
         id = Nothing
         tier = Nothing
         MyBase.setUsable(False)

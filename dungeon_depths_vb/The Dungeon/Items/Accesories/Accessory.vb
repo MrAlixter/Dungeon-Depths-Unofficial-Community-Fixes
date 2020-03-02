@@ -9,9 +9,17 @@
     Public wBoost As Integer = 0
     Public fInd As Tuple(Of Integer, Boolean, Boolean)
     Public mInd As Tuple(Of Integer, Boolean, Boolean)
-
+    Public isCursed, underClothes As Boolean
     Overridable Sub onEquip()
     End Sub
     Overridable Sub onUnequip()
+    End Sub
+
+    Public Overrides Sub discard()
+        If isCursed And Game.player.equippedAcce.getAName.Equals(getAName) Then
+            Game.pushLblEvent("You are unable to drop your equipped equipment.")
+        Else
+            MyBase.discard()
+        End If
     End Sub
 End Class

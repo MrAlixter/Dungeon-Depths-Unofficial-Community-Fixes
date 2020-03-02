@@ -3,12 +3,12 @@
 
     Dim preHypnoID = 0
     Sub New()
-        setName("Hypnotist Teacher")
-        setHealth(1.0)
-        setMaxHealth(9999)
-        setATK(99)
-        setDEF(999)
-        setSPD(99)
+        name = "Hypnotist Teacher"
+        health = 1.0
+        maxHealth = 9999
+        attack = 99
+        defence = 999
+        speed = 99
 
         'Define the inventory
         inv = New Inventory(False)
@@ -17,18 +17,20 @@
         inv.item("Advanced_Spellbook").value -= 0.2 * MyBase.inv.item("Advanced_Spellbook").value
         inv.setCount("Spellbook", 1)
         inv.item("Spellbook").value -= 0.2 * MyBase.inv.item("Spellbook").value
+        inv.setCount("Utility_Manual", 1)
+        inv.item("Utility_Manual").value -= 0.2 * MyBase.inv.item("Utility_Manual").value
+        inv.setCount("Combat_Manual", 1)
+        inv.item("Combat_Manual").value -= 0.2 * MyBase.inv.item("Combat_Manual").value
+        inv.setCount("Anti_Curse_Tag", 1)
+        'Services
         inv.setCount("Bimbo_Lesson", 1)
         inv.setCount("Barbarian_Lesson", 1)
         inv.setCount("Warlock_Lesson", 1)
         inv.setCount("Name_Change", 1)
         inv.setCount("Base_Form_Reset", 1)
-        inv.setCount("Utility_Manual", 1)
-        inv.item("Utility_Manual").value -= 0.2 * MyBase.inv.item("Utility_Manual").value
-        inv.setCount("Combat_Manual", 1)
-        inv.item("Combat_Manual").value -= 0.2 * MyBase.inv.item("Combat_Manual").value
 
         isShop = True
-        setGold(99999)
+        gold = 99999
         pronoun = "she"
         pPronoun = "her"
         rPronoun = "her"
@@ -36,13 +38,16 @@
         picPrincess = Game.picHTeachPrin.BackgroundImage
         picBunny = Game.picHTeachBun.BackgroundImage
 
+        picNCP = New List(Of Image)
+        picNCP.AddRange({picNormal, Game.picFrog.BackgroundImage, Game.picSheep.BackgroundImage, picPrincess, picBunny})
+
+        picNCP.AddRange({Game.picHTHypno.BackgroundImage, Game.picHTFV.BackgroundImage, Game.picHTCow.BackgroundImage, Game.picHTDoll.BackgroundImage})
         If speed = Game.player.speed Then speed -= 1
-        MyBase.title = ""
+        MyBase.title = " the "
     End Sub
 
     Public Overrides Sub encounter()
         MyBase.encounter()
-        picNCP.AddRange({Game.picHTHypno.BackgroundImage, Game.picHTFV.BackgroundImage, Game.picHTCow.BackgroundImage})
 
         MyBase.discount = 0
 
@@ -80,9 +85,11 @@
             Game.pushNPCDialog("Well salutations there, " & Game.player.pClass.name & ".  Please let me know if there's anything I can do to help you.")
         ElseIf npcIndex = 4 Then
             Game.pushNPCDialog("HI!  I, like, don't know if it would be smart for me to try to hypno...hypotho...do my thing to you right now, but I totally have some tapes you can use!")
+        ElseIf npcIndex = 8 Then
+            Game.pushNPCDialog("...")
         End If
-        If Game.floor > 5 Then inv.setCount(113, 1) Else inv.setCount(113, 0)
-        If Game.floor < 5 Then inv.setCount(122, 1) Else inv.setCount(122, 0)
+        If Game.mDun.numCurrFloor > 5 Then inv.setCount(113, 1) Else inv.setCount(113, 0)
+        If Game.mDun.numCurrFloor < 5 Then inv.setCount(122, 1) Else inv.setCount(122, 0)
         Game.picNPC.BackgroundImage = picNCP(npcIndex)
     End Sub
 
@@ -99,6 +106,8 @@
             Return "Whaaaaaat?!?  No, like, don't do that!"
         ElseIf npcIndex = 6 Then
             Return "Cmon!  I'm, like, trying to help you out here!"
+        ElseIf npcIndex = 8 Then
+            Return "..."
         End If
         Return "Bad move."
     End Function
@@ -119,6 +128,8 @@
             Return "WOAH!  That's a neat trick!"
         ElseIf npcIndex = 6 Then
             Return "Cmon!  I'm, like, trying to help you out here!"
+        ElseIf npcIndex = 8 Then
+            Return "..."
         End If
         Return "Woah there!"
     End Function
@@ -147,5 +158,11 @@
         Game.picNPC.BackgroundImage = picNCP(npcIndex)
         Game.showNPCButtons()
         Game.player.canMoveFlag = False
+    End Sub
+    Public Overrides Sub toDoll()
+        Game.pushNPCDialog("...")
+        Game.picNPC.BackgroundImage = picNCP(8)
+
+        discount = 0.5
     End Sub
 End Class

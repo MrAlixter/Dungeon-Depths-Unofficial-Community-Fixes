@@ -1,4 +1,4 @@
-﻿Public Class SheepTFB
+﻿Public NotInheritable Class SheepTFB
     Inherits PolymorphTF
     Sub New()
         MyBase.New()

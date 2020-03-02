@@ -13,10 +13,11 @@
             Game.updateList = New PQ
         Else
             Game.pushLblEvent("With a flash of light, you teleport yourself at random to another portion of the dungeon.")
-            Game.player.pos = Game.randPoint
+            Game.player.pos = Game.currfloor.randPoint
         End If
     End Sub
     Public Overrides Sub backfire()
+        If Game.currFloor.floorNumber = 91017 Or Game.currFloor.floorNumber = 9999 Then Exit Sub
         If Game.combatmode Then
             MyBase.getTarget.despawn("warp")
             Game.updateList = New PQ
@@ -25,7 +26,8 @@
     End Sub
 
     Public Shared Sub gotospace()
-        Game.floor = 9998
+        Game.mDun.jumpTo(9999)
+        Game.mDun.setFloor(Game.currFloor)
         Game.initializeBoard()
         Game.pushLblEvent("Soon, you are spit back out into reality, though as you glance around you soon begin to doubt that.  The subtle whir of machinery surrounds you, and you are not able to identify the smooth material that makes up the tiles of its floor.")
     End Sub

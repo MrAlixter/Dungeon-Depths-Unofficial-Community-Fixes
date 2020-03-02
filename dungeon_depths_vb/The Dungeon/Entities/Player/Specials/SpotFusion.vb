@@ -19,14 +19,14 @@
             Game.player.hunger -= 50
             Exit Sub
         End Try
-        If Not System.IO.File.Exists("s" & i & ".ave") Then
+        If Not System.IO.File.Exists("saves/s" & i & ".ave") Then
             Game.pushLblEvent("Despite looking for someone to fuse with, you can't find anyone at that location.")
             Game.player.hunger -= 50
             Exit Sub
         End If
-        Dim save = Game.getPlayerFromFile("s" & i & ".ave")
+        Dim save = Game.getPlayerFromFile("saves/s" & i & ".ave")
         Dim p2 As Player = save.Item1
-        If save.Item2 <> Game.version Or p2.perks("polymorphed") > -1 Or Not Transformation.canBeTFed(Game.player) Or (p2.pClass.name.Equals("Magic Girl") Or p2.pClass.name.Equals("Valkyrie")) Then
+        If save.Item2 <> Game.version Or p2.perks("polymorphed") > -1 Or Not Transformation.canBeTFed(Game.player) Or (p2.pClass.name.Equals("Magical Girl") Or p2.pClass.name.Equals("Valkyrie")) Then
             Game.pushLblEvent("After talking it over, " & Game.player.name & " and " & p2.name & " decide that they are incompatable, and not to fuse.")
             Game.player.hunger -= 50
             Exit Sub
@@ -111,9 +111,9 @@
                 If r = 0 Then p1.prt.iArrInd(i) = p2.prt.iArrInd(i)
             ElseIf i = 1 Then
                 r = Int(Rnd() * 2)
-                If r = 0 Then p1.prt.iArrInd(1) = p2.prt.iArrInd(1)
-                If r = 0 Then p1.prt.iArrInd(5) = p2.prt.iArrInd(5)
-                If r = 0 Then p1.prt.iArrInd(15) = p1.prt.iArrInd(15)
+                If r = 0 Then p1.prt.iArrInd(pInd.rearhair) = p2.prt.iArrInd(pInd.rearhair)
+                If r = 0 Then p1.prt.iArrInd(pInd.midhair) = p2.prt.iArrInd(pInd.midhair)
+                If r = 0 Then p1.prt.iArrInd(pInd.fronthair) = p1.prt.iArrInd(pInd.fronthair)
             End If
         Next
 
@@ -128,7 +128,7 @@
 
         p1.breastSize = (p1.breastSize + p2.breastSize) / 2
         p1.currState.save(p1)
-        p1.createP()
+        p1.drawPort()
     End Sub
 
 End Class

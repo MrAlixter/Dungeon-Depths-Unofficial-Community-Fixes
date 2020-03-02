@@ -1,4 +1,4 @@
-﻿Public Class TigressTF
+﻿Public NotInheritable Class TigressTF
     Inherits PolymorphTF
     Sub New()
         MyBase.New()
@@ -29,23 +29,23 @@
         End If
         If p.prt.skincolor = Color.FromArgb(255, 255, 105, 180) Then p.prt.haircolor = Color.FromArgb(255, 155, 0, 0)
         If p.prt.skincolor = Color.FromArgb(200, 0, 255, 255) Then p.prt.haircolor = Color.FromArgb(180, 5, 245, 198)
-        p.prt.setIAInd(1, 15, True, True)
-        p.prt.setIAInd(2, 21, True, True)
-        p.prt.setIAInd(4, 0, True, False)
-        p.prt.setIAInd(5, 19, True, True)
-        p.prt.setIAInd(6, 7, True, True)
-        p.prt.setIAInd(7, 0, True, False)
-        p.prt.setIAInd(8, 11, True, True)
-        p.prt.setIAInd(9, 18, True, True)
-        p.prt.setIAInd(10, 0, True, False)
-        p.prt.setIAInd(13, 0, True, False)
-        p.prt.setIAInd(15, 15, True, True)
-        p.prt.setIAInd(16, 0, True, False)
+        p.prt.setIAInd(pInd.rearhair, 15, True, True)
+        p.prt.setIAInd(pInd.body, 21, True, True)
+        p.prt.setIAInd(pInd.face, 0, True, False)
+        p.prt.setIAInd(pInd.midhair, 19, True, True)
+        p.prt.setIAInd(pInd.ears, 7, True, True)
+        p.prt.setIAInd(pInd.nose, 0, True, False)
+        p.prt.setIAInd(pInd.mouth, 11, True, True)
+        p.prt.setIAInd(pInd.eyes, 18, True, True)
+        p.prt.setIAInd(pInd.eyebrows, 0, True, False)
+        p.prt.setIAInd(pInd.cloak, 0, True, False)
+        p.prt.setIAInd(pInd.fronthair, 15, True, True)
+        p.prt.setIAInd(pInd.hat, 0, True, False)
 
         'transformation description push
         p.TextColor = Color.Orange
         out += "[Transformation decription pending]"
-        
+
         Game.pushLblEvent(out)
     End Sub
 End Class

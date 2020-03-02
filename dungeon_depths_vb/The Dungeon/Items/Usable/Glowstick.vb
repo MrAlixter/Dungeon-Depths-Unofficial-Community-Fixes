@@ -8,7 +8,7 @@
         tier = 1
         MyBase.setUsable(True)
         MyBase.count = 0
-        MyBase.value = 150
+        MyBase.value = 250
     End Sub
 
     Overrides Sub use()
@@ -17,23 +17,25 @@
 
         For indY = -3 To 3
             For indX = -3 To 3
-                If Game.player.pos.Y + indY < Game.mBoardHeight And Game.player.pos.Y + indY >= 0 And Game.player.pos.X + indX < Game.mBoardWidth And Game.player.pos.X + indX >= 0 Then
-                    If Game.mBoard(Game.player.pos.Y + indY, Game.player.pos.X + indX).Text = "H" And Game.mBoard(Game.player.pos.Y + indY, Game.player.pos.X + indX).Tag < 2 Then
-                        Game.mBoard(Game.player.pos.Y + indY, Game.player.pos.X + indX).ForeColor = Color.Black
-                        Game.pushLstLog("Floor " & Game.floor & ": Staircase Discovered")
+                If Game.player.pos.Y + indY < Game.currFloor.mBoardHeight And Game.player.pos.Y + indY >= 0 And Game.player.pos.X + indX < Game.currFloor.mBoardWidth And Game.player.pos.X + indX >= 0 Then
+                    If Game.currFloor.mBoard(Game.player.pos.Y + indY, Game.player.pos.X + indX).Text = "H" And Game.currFloor.mBoard(Game.player.pos.Y + indY, Game.player.pos.X + indX).Tag < 2 Then
+                        Game.currFloor.mBoard(Game.player.pos.Y + indY, Game.player.pos.X + indX).ForeColor = Color.Black
+                        Game.pushLstLog("Floor " & Game.mDun.numCurrFloor & ": Staircase Discovered")
                     End If
-                    If Game.mBoard(Game.player.pos.Y + indY, Game.player.pos.X + indX).Text = "#" And Game.mBoard(Game.player.pos.Y + indY, Game.player.pos.X + indX).Tag < 2 Then
-                        Game.mBoard(Game.player.pos.Y + indY, Game.player.pos.X + indX).ForeColor = Color.Black
+                    If Game.currFloor.mBoard(Game.player.pos.Y + indY, Game.player.pos.X + indX).Text = "#" And Game.currFloor.mBoard(Game.player.pos.Y + indY, Game.player.pos.X + indX).Tag < 2 Then
+                        Game.currFloor.mBoard(Game.player.pos.Y + indY, Game.player.pos.X + indX).ForeColor = Color.Black
                         Game.pushLstLog("Chest discovered!")
                     End If
-                    If Game.mBoard(Game.player.pos.Y + indY, Game.player.pos.X + indX).Text = "$" And Game.mBoard(Game.player.pos.Y + indY, Game.player.pos.X + indX).Tag < 2 Then
-                        Game.mBoard(Game.player.pos.Y + indY, Game.player.pos.X + indX).ForeColor = Color.Navy
+                    If Game.currFloor.mBoard(Game.player.pos.Y + indY, Game.player.pos.X + indX).Text = "$" And Game.currFloor.mBoard(Game.player.pos.Y + indY, Game.player.pos.X + indX).Tag < 2 Then
+                        Game.currFloor.mBoard(Game.player.pos.Y + indY, Game.player.pos.X + indX).ForeColor = Color.Navy
                         Game.pushLstLog("Shop discovered!")
                     End If
-                    If Game.mBoard(Game.player.pos.Y + indY, Game.player.pos.X + indX).Tag = 1 Then Game.mBoard(Game.player.pos.Y + indY, Game.player.pos.X + indX).Tag = 2
+                    If Game.currFloor.mBoard(Game.player.pos.Y + indY, Game.player.pos.X + indX).Tag = 1 Then Game.currFloor.mBoard(Game.player.pos.Y + indY, Game.player.pos.X + indX).Tag = 2
                 End If
             Next
         Next
+
+        Game.player.perks("lightsource") = 60
 
         Dim r As Integer = (Int(Rnd() * 7))
         If r = 0 Then
@@ -55,7 +57,7 @@
             End Select
             Game.pushLblEvent("As you crack the glowstick to activate it, the tube cracks open slightly, spraying some fluid on your face.  You wipe it off, and while you don't feel any different, your hair seems a little more...vibrant than it was before.")
             Game.player.prt.haircolor = c
-            Game.player.createP()
+            Game.player.drawPort()
             If Transformation.canBeTFed(Game.player) Then
                 Game.player.pState.save(Game.player)
             End If
@@ -63,10 +65,5 @@
         Game.drawBoard()
         count -= 1
         
-    End Sub
-    Overrides Sub discard()
-        Game.pushLstLog("You drop the " & getName())
-        
-        count -= 1
     End Sub
 End Class

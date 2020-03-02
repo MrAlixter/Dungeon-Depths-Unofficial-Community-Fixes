@@ -13,8 +13,8 @@
         MyBase.isRandoTFAcceptable = False
     End Sub
     Public Overrides Sub add(i As Integer)
-        'If i > 0 And Game.floor < 6 AndAlso Game.floorboss(Game.floor).Equals("Key") Then
-        '    Game.beatboss(Game.floor) = True
+        'If i > 0 And game.mDun.numCurrFloor < 6 AndAlso game.mDun.floorboss(game.mDun.numCurrFloor).Equals("Key") Then
+        '    Game.beatboss(game.mDun.numCurrFloor) = True
         'End If
         count += i
     End Sub

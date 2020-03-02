@@ -6,10 +6,10 @@
 
         Polymorph.giveRNDBimName(p)
         p.pClass = p.classes("Bimbo")
-        If Game.floor < 6 Then p.pImage = Game.picPlayerB.BackgroundImage Else p.pImage = Game.picBimbof.BackgroundImage
+        If game.mDun.numCurrFloor < 6 Then p.pImage = Game.picPlayerB.BackgroundImage Else p.pImage = Game.picBimbof.BackgroundImage
         p.TextColor = Color.HotPink
 
-        p.createP()
+        p.drawPort()
         If Transformation.canBeTFed(p) Then
             p.pState.save(p)
         End If

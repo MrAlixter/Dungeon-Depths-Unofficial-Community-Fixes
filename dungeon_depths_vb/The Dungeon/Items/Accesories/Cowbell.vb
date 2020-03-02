@@ -28,9 +28,4 @@
         If Game.player.perks("cowbell") > -1 Then Game.player.perks("cowbell") = -1
             If Game.player.health > 1 Then Game.player.health = 1
     End Sub
-    Overrides Sub discard()
-        Game.pushLstLog("You drop the " & getName())
-        
-        count -= 1
-    End Sub
 End Class

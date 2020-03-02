@@ -13,10 +13,10 @@
     End Sub
 
     Public Overrides Sub Effect()
-        If Int(Rnd() * 2) = 0 Then
+        If Int(Rnd() * 2) = 0 And Not Game.noRNG Or (Game.currFloor.floorNumber = 91017 Or Game.currFloor.floorNumber = 9999) Then
             Game.pushLblEvent("Disapointingly, nothing seems to have happened.")
         Else
-            If Int(Rnd() * 7) = 0 Then
+            If Int(Rnd() * 7) = 0 Or Game.noRNG Then
                 If Game.combatmode Then
                     Game.player.currTarget.despawn("warp")
                     Game.updateList = New PQ
@@ -28,7 +28,7 @@
                     Game.updateList = New PQ
                 End If
                 Game.pushLblEvent("With a flash of light, you suddenly find yourself at random to another portion of the dungeon.")
-                Game.player.pos = Game.randPoint
+                Game.player.pos = Game.currFloor.randPoint
             End If
         End If
     End Sub

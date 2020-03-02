@@ -90,6 +90,12 @@
             spec = New UBlessing(u, t)
         ElseIf s.Equals("Shrink_Ray Shot") Then
             spec = New ShrinkRayShoot(u, t)
+        ElseIf s.Equals("Bounty's Collection") Then
+            spec = New Bounty(u, t)
+        ElseIf s.Equals("Blazing Angel Strike") Then
+            spec = New BAStrike(u, t)
+        ElseIf s.Equals("Pillowy Protect") Then
+            spec = New PProt(u, t)
         End If
 
         spec.perform()

@@ -12,13 +12,8 @@
         MyBase.dBoost = 5
         MyBase.wBoost = 5
         MyBase.count = 0
-        MyBase.value = 0
+        MyBase.value = 2200
         MyBase.fInd = New Tuple(Of Integer, Boolean, Boolean)(9, False, True)
         MyBase.mInd = New Tuple(Of Integer, Boolean, Boolean)(9, False, True)
-    End Sub
-    Overrides Sub discard()
-        Game.pushLstLog("You drop the " & getName())
-
-        count -= 1
     End Sub
 End Class

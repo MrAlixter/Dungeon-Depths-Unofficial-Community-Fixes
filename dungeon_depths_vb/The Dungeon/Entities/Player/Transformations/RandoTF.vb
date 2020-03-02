@@ -1,4 +1,4 @@
-﻿Public Class RandoTF
+﻿Public NotInheritable Class RandoTF
     Inherits Transformation
     Sub New()
         MyBase.New(1, 0, 0, False)
@@ -20,8 +20,7 @@
         'assign a pointer to the player character
         Dim p As player = game.player
         p.sState.load(p)
-
-        Game.preBSStartState = New State(p)
+        If Game.preBSStartState Is Nothing Then Game.preBSStartState = New State(p)
 
         'assign a starter class / form
         p.pClass = p.classes("Classless")
@@ -29,7 +28,7 @@
         'assign a random sex
         Randomize()
         Dim r = Int(Rnd() * 2)
-        If r = 0 Then p.sex = "Female" Else  p.sex = "Male"
+        If r = 0 Then p.sex = "Female" Else p.sex = "Male"
 
         'assign random stats
         p.health = 1.0
@@ -38,7 +37,6 @@
         p.maxMana = CInt(p.mana.ToString)
         p.attack = 10 + Int(Rnd() * 7)
         p.defence = 10 + Int(Rnd() * 7)
-        p.will = 5 + Int(Rnd() * 7)
         p.speed = 10 + Int(Rnd() * 7)
         p.gold = 25 + Int(Rnd() * 200)
         p.lust = 0
@@ -73,23 +71,24 @@
 
         'set the rest of the portrait randomly
         r = Int(Rnd() * 7)
-        p.prt.setIAInd(1, r, True, False)
-        p.prt.setIAInd(4, 0, True, False)
-        p.prt.setIAInd(5, r, True, False)
+        p.prt.setIAInd(pInd.rearhair, r, True, False)
+        p.prt.setIAInd(pInd.face, 0, True, False)
+        p.prt.setIAInd(pInd.midhair, r, True, False)
         r = Int(Rnd() * 7)
-        p.prt.setIAInd(3, r, True, False)
-        p.prt.setIAInd(6, 5, True, False)
-        p.prt.setIAInd(7, 0, True, False)
+        p.prt.setIAInd(pInd.clothes, r, True, False)
+        p.prt.setIAInd(pInd.ears, 5, True, False)
+        p.prt.setIAInd(pInd.nose, 0, True, False)
         r = Int(Rnd() * 11)
-        p.prt.setIAInd(8, r, True, False)
-        p.prt.setIAInd(9, 9, True, True)
-        p.prt.setIAInd(10, 0, True, False)
-        p.prt.setIAInd(11, 0, True, False)
-        p.prt.setIAInd(13, 0, True, False)
-        p.prt.setIAInd(14, 0, True, False)
+        p.prt.setIAInd(pInd.mouth, r, True, False)
+        r = Int(Rnd() * 5)
+        p.prt.setIAInd(pInd.eyes, r, True, True)
+        p.prt.setIAInd(pInd.eyebrows, 0, True, False)
+        p.prt.setIAInd(pInd.facemark, 0, True, False)
+        p.prt.setIAInd(pInd.cloak, 0, True, False)
+        p.prt.setIAInd(pInd.accessory, 0, True, False)
         r = Int(Rnd() * 8) + 1
-        p.prt.setIAInd(15, r, True, False)
-        p.prt.setIAInd(16, 0, True, False)
+        p.prt.setIAInd(pInd.fronthair, r, True, False)
+        p.prt.setIAInd(pInd.hat, 0, True, False)
 
         'clear all player associated lists
         p.createInvPerks()
@@ -98,18 +97,18 @@
         setLoadout()
 
         p.TextColor = Color.White
-        If Game.floor < 6 Then p.pImage = Game.picPlayer.BackgroundImage Else p.pImage = Game.picPlayerf.BackgroundImage
+        If game.mDun.numCurrFloor < 6 Then p.pImage = Game.picPlayer.BackgroundImage Else p.pImage = Game.picPlayerf.BackgroundImage
         p.reverseBSRoute()
         p.sState.save(p)
 
         p.inv.invNeedsUDate = True
         p.UIupdate()
 
-        Dim si As Integer = p.sState.iArrInd(3).Item1
+        Dim si As Integer = p.sState.iArrInd(pInd.clothes).Item1
         p.currState.save(p)
         p.pState.save(p)
         p.sState.save(p)
-        p.sState.iArrInd(3) = New Tuple(Of Integer, Boolean, Boolean)(si, p.prt.sexBool, False)
+        p.sState.iArrInd(pInd.clothes) = New Tuple(Of Integer, Boolean, Boolean)(si, p.prt.sexBool, False)
     End Sub
     Sub setLoadout()
         Randomize()
@@ -125,7 +124,7 @@
             Case 0   'basic warrior
                 p.pClass = p.classes("Warrior")
                 armor = New Integer() {5, 19, 46, 83}
-                weapon = New Integer() {6, 23, 84}
+                weapon = New Integer() {6, 23, 84, 176}
             Case 1   'basic mage
                 p.pClass = p.classes("Mage")
                 armor = New Integer() {5, 17, 46, 83}
@@ -133,7 +132,7 @@
             Case 2   'advanced warrior
                 p.pClass = p.classes("Warrior")
                 armor = New Integer() {5, 19, 38, 46, 101}
-                weapon = New Integer() {6, 23, 40, 118}
+                weapon = New Integer() {6, 23, 40, 118, 176}
             Case 3   'advanced mage
                 p.pClass = p.classes("Mage")
                 armor = New Integer() {5, 17, 46, 83}
@@ -141,7 +140,7 @@
             Case 4   'basic bimbo
                 p.pClass = p.classes("Bimbo")
                 p.sex = "Female"
-                armor = New Integer() {7, 12, 18, 20, 39, 47, 71, 72, 78, 85, 103, 105, 107, 116, 129}
+                armor = New Integer() {7, 12, 18, 20, 39, 47, 71, 72, 78, 85, 103, 105, 107, 116, 129, 177}
                 weapon = New Integer() {6, 22, 23, 84}
             Case 5   'combat bimbo
                 p.pForm = p.forms("Amazon")
@@ -159,12 +158,12 @@
                 p.pClass = p.classes("Warrior")
                 p.sex = "Female"
                 p.prt.skincolor = (Color.FromArgb(255, 210, 161, 140))
-                armor = New Integer() {7, 41, 71, 85, 99}
+                armor = New Integer() {7, 41, 71, 85, 99, 177}
             Case 8   'succubus
                 p.pForm = p.forms("Succubus")
                 p.pClass = p.classes("Warrior")
                 armor = New Integer() {39, 74}
-                weapon = New Integer() {6, 21, 22, 23, 63, 63, 63}
+                weapon = New Integer() {6, 21, 22, 23, 63, 63, 63, 177}
                 p.sex = "Female"
                 p.prt.wingInd = 2
                 p.prt.hornInd = 3
@@ -173,7 +172,7 @@
                 p.pForm = p.forms("Succubus")
                 p.pClass = p.classes("Bimbo")
                 p.sex = "Female"
-                armor = New Integer() {7, 12, 18, 20, 39, 47, 71, 72, 78, 85, 103, 105, 107, 116, 129}
+                armor = New Integer() {7, 12, 18, 20, 39, 47, 71, 72, 78, 85, 103, 105, 107, 116, 129, 177}
                 weapon = New Integer() {6, 21, 22, 23, 63, 63, 63}
                 p.prt.wingInd = 2
                 p.prt.hornInd = 3
@@ -202,9 +201,10 @@
                 p.prt.wingInd = 2
                 p.prt.haircolor = Color.FromArgb(255, 155, 0, 0)
             Case 15   'valkyrie
-                p.pClass = p.classes("Angel")
+                p.pForm = p.forms("Angel")
+                p.pClass = p.classes("Warrior")
                 armor = New Integer() {7, 19, 83, 85, 95, 105}
-                weapon = New Integer() {6, 23, 40, 112}
+                weapon = New Integer() {6, 23, 40, 112, 177, 176}
                 p.sex = "Female"
                 p.prt.wingInd = 1
             Case 16   'bunny girl
@@ -218,20 +218,20 @@
                 p.pForm = p.forms("Minotaur Cow")
                 p.pClass = p.classes("Barbarian")
                 armor = New Integer() {19, 71, 101}
-                weapon = New Integer() {6, 23, 40, 118}
+                weapon = New Integer() {6, 23, 40, 118, 177}
                 p.sex = "Female"
                 p.prt.hornInd = 2
             Case 18   'cow male
                 p.pForm = p.forms("Minotaur Bull")
                 p.pClass = p.classes("Barbarian")
                 armor = New Integer() {19, 101}
-                weapon = New Integer() {6, 23, 40, 118}
+                weapon = New Integer() {6, 23, 40, 118, 176}
                 p.sex = "Male"
                 p.prt.hornInd = 2
             Case 19   'basic warrior
                 p.pClass = p.classes("Warrior")
                 armor = New Integer() {5, 19, 46, 83}
-                weapon = New Integer() {6, 23, 84}
+                weapon = New Integer() {6, 23, 84, 176}
             Case 20   'basic mage
                 p.pClass = p.classes("Mage")
                 armor = New Integer() {5, 17, 46, 83}
@@ -239,7 +239,7 @@
             Case 21  'advanced warrior
                 p.pClass = p.classes("Warrior")
                 armor = New Integer() {5, 19, 38, 46, 101}
-                weapon = New Integer() {6, 23, 40, 118}
+                weapon = New Integer() {6, 23, 40, 118, 176}
             Case 22  'advanced mage
                 p.pClass = p.classes("Mage")
                 armor = New Integer() {5, 17, 46, 83}

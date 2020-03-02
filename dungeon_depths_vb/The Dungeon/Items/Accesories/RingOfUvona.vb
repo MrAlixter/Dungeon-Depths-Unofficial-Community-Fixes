@@ -18,10 +18,7 @@
         MyBase.value = 813
         MyBase.fInd = New Tuple(Of Integer, Boolean, Boolean)(0, True, False)
         MyBase.mInd = New Tuple(Of Integer, Boolean, Boolean)(0, False, False)
-    End Sub
-    Overrides Sub discard()
-        Game.pushLstLog("You drop the " & getName())
-
-        count -= 1
+        'MyBase.fInd = New Tuple(Of Integer, Boolean, Boolean)(11, True, True)
+        'MyBase.mInd = New Tuple(Of Integer, Boolean, Boolean)(9, False, True)
     End Sub
 End Class

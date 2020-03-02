@@ -12,7 +12,7 @@
         If b > 255 Then b = 255
 
         p.prt.haircolor = Color.FromArgb(p.prt.haircolor.A, r, g, b)
-        p.createP()
+        p.drawPort()
         If Transformation.canBeTFed(p) Then
             p.pState.save(p)
         End If

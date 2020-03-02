@@ -48,7 +48,7 @@
         p.pClass = p.classes("Barbarian")
 
         Game.pushLblEvent(out, AddressOf CType(Game.hteach, HTeach).back)
-        p.createP()
+        p.drawPort()
         p.UIupdate()
         p.pState.save(p)
         p.sState.save(p)

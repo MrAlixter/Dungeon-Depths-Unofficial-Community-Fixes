@@ -4,7 +4,7 @@
         MyBase.New(c, t)
         MyBase.setName("Petrify")
         MyBase.settier(2)
-        If c.pForm.name.Contains("Gorgon") Then MyBase.setcost(1) Else MyBase.setcost(9)
+        If Not c Is Nothing AndAlso c.pForm.name.Contains("Gorgon") Then MyBase.setcost(1) Else MyBase.setcost(9)
     End Sub
     Public Overrides Sub effect()
         If getTarget.sName.Equals("Medusa") Or (getCaster.pForm.name.Contains("Gorgon") And MyBase.getTarget.GetType().IsSubclassOf(GetType(Shopkeeper))) Then

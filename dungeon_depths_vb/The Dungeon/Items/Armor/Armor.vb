@@ -19,13 +19,17 @@
     Public bsize6 As Tuple(Of Integer, Boolean, Boolean)
     Public bsize7 As Tuple(Of Integer, Boolean, Boolean)
     Public compressesBreasts As Boolean
+    Public isCursed As Boolean = False
     Overridable Sub onEquip()
     End Sub
     Overridable Sub onUnequip()
     End Sub
-    Public Overrides Sub discard()
-        Game.pushLstLog("You drop the " & getName())
 
-        count -= 1
+    Public Overrides Sub discard()
+        If Game.player.equippedArmor.getAName.Equals(getAName) Then
+            Game.pushLblEvent("You are unable to drop your equipped equipment.")
+        Else
+            MyBase.discard()
+        End If
     End Sub
 End Class

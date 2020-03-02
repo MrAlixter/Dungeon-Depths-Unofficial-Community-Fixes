@@ -26,6 +26,6 @@
         If Transformation.canBeTFed(Game.player) Then
             Game.player.pState.save(Game.player)
         End If
-        Game.player.createP()
+        Game.player.drawPort()
     End Sub
 End Class

@@ -4,11 +4,11 @@
     Public Overrides Sub apply(ByRef p As Player)
         Game.pushLblEvent("You now have long, straight hair!")
 
-        p.prt.setIAInd(1, 6, True, True)
-        p.prt.setIAInd(5, 6, True, True)
-        p.prt.setIAInd(15, 7, True, True)
+        p.prt.setIAInd(pInd.rearhair, 6, True, True)
+        p.prt.setIAInd(pInd.midhair, 6, True, True)
+        p.prt.setIAInd(pInd.fronthair, 7, True, True)
 
-        p.createP()
+        p.drawPort()
         If Transformation.canBeTFed(p) Then
             p.pState.save(p)
         End If

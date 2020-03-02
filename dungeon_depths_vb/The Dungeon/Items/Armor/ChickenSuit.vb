@@ -7,7 +7,7 @@
                       "Fits all sizes" & vbCrLf & _
                       "+10 SPD")
         id = 8
-        If DateTime.Now.Month = 9 And DateTime.Now.Day = 10 Then tier = 2 Else tier = Nothing
+        If DDDateTime.isAni Then tier = 2 Else tier = Nothing
         MyBase.setUsable(False)
         MyBase.sBoost = 10
         MyBase.count = 0
@@ -24,12 +24,6 @@
         MyBase.compressesBreasts = False
 
         MyBase.isRandoTFAcceptable = False
-    End Sub
-
-    Overrides Sub discard()
-        Game.pushLstLog("You drop the " & getName())
-        
-        count -= 1
     End Sub
 
     Public Overrides Sub onEquip()

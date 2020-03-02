@@ -18,9 +18,12 @@
             Game.player.UIupdate()
             Exit Sub
         End If
-        Dim av = New AntiVenomEffect
-        av.apply(Game.player)
-        Game.player.health = 1
-        Game.player.revertToSState()
+            Dim av = New AntiVenomEffect
+            av.apply(Game.player)
+            Game.player.perks("slutcurse") = -1
+
+            Equipment.antiClothingCurse()
+            Game.player.health = 1
+            Game.player.revertToSState()
     End Sub
 End Class

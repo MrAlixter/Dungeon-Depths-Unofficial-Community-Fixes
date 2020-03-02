@@ -16,18 +16,13 @@
         If Me.getUsable() = False Then Exit Sub
         Game.pushLstLog("You use the " & getName())
         
-        Dim p = Game.route(Game.player.pos, Game.stairs)
+        Dim p = Game.currFloor.route(Game.player.pos, Game.currFloor.stairs)
         For i = 0 To UBound(p) Step 4
-            Game.mBoard(p(i).Y, p(i).X).Tag = 2
-            If Game.mBoard(p(i).Y, p(i).X).Text = "" Then Game.mBoard(p(i).Y, p(i).X).Text = "x"
+            Game.currfloor.mBoard(p(i).Y, p(i).X).Tag = 2
+            If Game.currfloor.mBoard(p(i).Y, p(i).X).Text = "" Then Game.currfloor.mBoard(p(i).Y, p(i).X).Text = "x"
         Next
-        Game.mBoard(p(UBound(p)).Y, p(UBound(p)).X).Tag = 2
+        Game.currfloor.mBoard(p(UBound(p)).Y, p(UBound(p)).X).Tag = 2
         Game.drawBoard()
-        count -= 1
-    End Sub
-    Overrides Sub discard()
-        Game.pushLstLog("You drop the " & getName())
-        
         count -= 1
     End Sub
 End Class

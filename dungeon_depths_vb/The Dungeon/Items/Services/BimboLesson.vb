@@ -27,7 +27,7 @@
     Sub tf()
         Dim bTF As BimboTF = New BimboTF(2, 0, 0.25, True)
         bTF.doubleTf()
-        Game.player.createP()
+        Game.player.drawPort()
         CType(Game.hteach, HTeach).back()
     End Sub
 End Class

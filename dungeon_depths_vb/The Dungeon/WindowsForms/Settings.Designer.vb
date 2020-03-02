@@ -27,6 +27,7 @@ Partial Class Settings
         Me.cboxScreenSize = New System.Windows.Forms.ComboBox()
         Me.chkNoImg = New System.Windows.Forms.CheckBox()
         Me.chkAlwaysUnwilling = New System.Windows.Forms.CheckBox()
+        Me.chkNoRNG = New System.Windows.Forms.CheckBox()
         Me.SuspendLayout()
         '
         'Button1
@@ -44,7 +45,7 @@ Partial Class Settings
         Me.Label1.BackColor = System.Drawing.Color.Black
         Me.Label1.Font = New System.Drawing.Font("Consolas", 8.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.Label1.ForeColor = System.Drawing.Color.White
-        Me.Label1.Location = New System.Drawing.Point(29, 10)
+        Me.Label1.Location = New System.Drawing.Point(13, 9)
         Me.Label1.Margin = New System.Windows.Forms.Padding(4, 0, 4, 0)
         Me.Label1.Name = "Label1"
         Me.Label1.Size = New System.Drawing.Size(104, 17)
@@ -57,7 +58,7 @@ Partial Class Settings
         Me.cboxScreenSize.Font = New System.Drawing.Font("Consolas", 8.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.cboxScreenSize.ForeColor = System.Drawing.Color.White
         Me.cboxScreenSize.FormattingEnabled = True
-        Me.cboxScreenSize.Location = New System.Drawing.Point(33, 34)
+        Me.cboxScreenSize.Location = New System.Drawing.Point(17, 33)
         Me.cboxScreenSize.Margin = New System.Windows.Forms.Padding(4, 5, 4, 5)
         Me.cboxScreenSize.Name = "cboxScreenSize"
         Me.cboxScreenSize.Size = New System.Drawing.Size(199, 23)
@@ -69,7 +70,7 @@ Partial Class Settings
         Me.chkNoImg.AutoSize = True
         Me.chkNoImg.Font = New System.Drawing.Font("Consolas", 8.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.chkNoImg.ForeColor = System.Drawing.Color.White
-        Me.chkNoImg.Location = New System.Drawing.Point(33, 79)
+        Me.chkNoImg.Location = New System.Drawing.Point(17, 78)
         Me.chkNoImg.Name = "chkNoImg"
         Me.chkNoImg.Size = New System.Drawing.Size(182, 21)
         Me.chkNoImg.TabIndex = 21
@@ -81,19 +82,32 @@ Partial Class Settings
         Me.chkAlwaysUnwilling.AutoSize = True
         Me.chkAlwaysUnwilling.Font = New System.Drawing.Font("Consolas", 8.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.chkAlwaysUnwilling.ForeColor = System.Drawing.Color.White
-        Me.chkAlwaysUnwilling.Location = New System.Drawing.Point(32, 106)
+        Me.chkAlwaysUnwilling.Location = New System.Drawing.Point(16, 105)
         Me.chkAlwaysUnwilling.Name = "chkAlwaysUnwilling"
-        Me.chkAlwaysUnwilling.Size = New System.Drawing.Size(206, 38)
+        Me.chkAlwaysUnwilling.Size = New System.Drawing.Size(238, 38)
         Me.chkAlwaysUnwilling.TabIndex = 22
-        Me.chkAlwaysUnwilling.Text = "PC is always unwilling" & Global.Microsoft.VisualBasic.ChrW(13) & Global.Microsoft.VisualBasic.ChrW(10) & "(regrdless of will)"
+        Me.chkAlwaysUnwilling.Text = "Player is always unwilling" & Global.Microsoft.VisualBasic.ChrW(13) & Global.Microsoft.VisualBasic.ChrW(10) & "(regrdless of will)"
         Me.chkAlwaysUnwilling.UseVisualStyleBackColor = True
+        '
+        'chkNoRNG
+        '
+        Me.chkNoRNG.AutoSize = True
+        Me.chkNoRNG.Font = New System.Drawing.Font("Consolas", 8.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.chkNoRNG.ForeColor = System.Drawing.Color.White
+        Me.chkNoRNG.Location = New System.Drawing.Point(16, 149)
+        Me.chkNoRNG.Name = "chkNoRNG"
+        Me.chkNoRNG.Size = New System.Drawing.Size(246, 21)
+        Me.chkNoRNG.TabIndex = 23
+        Me.chkNoRNG.Text = "Always transform from items"
+        Me.chkNoRNG.UseVisualStyleBackColor = True
         '
         'Settings
         '
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Inherit
         Me.BackColor = System.Drawing.Color.Black
-        Me.ClientSize = New System.Drawing.Size(260, 244)
+        Me.ClientSize = New System.Drawing.Size(292, 244)
         Me.ControlBox = False
+        Me.Controls.Add(Me.chkNoRNG)
         Me.Controls.Add(Me.chkAlwaysUnwilling)
         Me.Controls.Add(Me.chkNoImg)
         Me.Controls.Add(Me.Label1)
@@ -112,4 +126,5 @@ Partial Class Settings
     Friend WithEvents cboxScreenSize As System.Windows.Forms.ComboBox
     Friend WithEvents chkNoImg As System.Windows.Forms.CheckBox
     Friend WithEvents chkAlwaysUnwilling As System.Windows.Forms.CheckBox
+    Friend WithEvents chkNoRNG As System.Windows.Forms.CheckBox
 End Class

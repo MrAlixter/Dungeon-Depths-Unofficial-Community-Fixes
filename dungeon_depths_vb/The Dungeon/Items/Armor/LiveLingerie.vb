@@ -20,14 +20,8 @@
         bsize3 = New Tuple(Of Integer, Boolean, Boolean)(86, True, True)
         bsize4 = New Tuple(Of Integer, Boolean, Boolean)(88, True, True)
         MyBase.compressesBreasts = True
-
+        MyBase.isCursed = True
         MyBase.isRandoTFAcceptable = False
-    End Sub
-
-    Overrides Sub discard()
-        Game.pushLstLog("You drop the " & getName())
-        
-        count -= 1
     End Sub
 
     Public Overrides Sub onEquip()

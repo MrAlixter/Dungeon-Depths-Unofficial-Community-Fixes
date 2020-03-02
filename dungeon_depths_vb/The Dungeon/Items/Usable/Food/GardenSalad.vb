@@ -25,7 +25,7 @@
             Game.pushLstLog("+14 mana!")
         End If
 
-        If Int(Rnd() * 3) = 0 Then
+        If Int(Rnd() * 3) = 0 Or Game.noRNG Then
             p.ongoingTFs.Add(New PlantfolkTF())
         End If
 

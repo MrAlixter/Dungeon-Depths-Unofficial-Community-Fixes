@@ -20,9 +20,4 @@
     Public Overrides Sub onUnequip()
         Game.player.perks("minRegen") = -1
     End Sub
-    Overrides Sub discard()
-        Game.pushLstLog("You drop the " & getName())
-
-        count -= 1
-    End Sub
 End Class

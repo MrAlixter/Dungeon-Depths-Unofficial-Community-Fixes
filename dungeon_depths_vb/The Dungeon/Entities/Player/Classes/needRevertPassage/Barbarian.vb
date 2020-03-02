@@ -1,7 +1,7 @@
-﻿Public Class Warlock
+﻿Public Class Barbarian
     Inherits pClass
     Sub New()
-        MyBase.New(0.65, 0.5, 1.75, 0.75, 1, 1.6, "Warlock")
+        MyBase.New(0.75, 1.75, 0.5, 1.6, 0.5, 0.75, "Barbarian")
         MyBase.revertPassage = ""
     End Sub
 End Class
