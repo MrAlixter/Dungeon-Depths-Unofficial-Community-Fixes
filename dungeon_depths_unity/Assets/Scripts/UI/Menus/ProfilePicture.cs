@@ -76,7 +76,7 @@ public class ProfilePicture : MonoBehaviour
         if (_cloak_front == null) { _cloak_front = panel.Find("Cloak_Front").GetComponent<Image>(); }
         if (_hat == null) { _hat = panel.Find("Hat").GetComponent<Image>(); }
 
-        string path = "Images/Body";
+        string path = "Player Images/Body";
         if(body_pictures == null)
         {
             body_pictures = new Dictionary<string, Sprite>();

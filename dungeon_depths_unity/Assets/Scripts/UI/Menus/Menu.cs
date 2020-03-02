@@ -1,4 +1,5 @@
-﻿using System.Collections;
+﻿using Scripts;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.EventSystems;
@@ -23,6 +24,11 @@ public abstract class Menu : MonoBehaviour
         Transform backgroundFade;
         if (panel.parent != null)
         {
+            if(panel.parent.name.Contains("Battle Menu"))
+            {
+                //Skip adding the function for the Battle Menu
+                return;
+            }
             backgroundFade = panel.parent.Find("Background Fade");
         }
         else
@@ -59,6 +65,7 @@ public abstract class Menu : MonoBehaviour
         //To fix this, I have to unselect it before the object goes inactive
         EventSystem.current.SetSelectedGameObject(null);
         active = false;
+        //Master.instance.switch_dialog(MENU.none); //Causes stack overflow
     }
 
     public bool active

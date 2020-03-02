@@ -30,7 +30,7 @@ public class EquipmentMenu : Menu, IEnsureVisible<EquipmentChoice>
     private static HeightFitter equipment_options_container_hf;
     private static List<EquipmentChoice> equipment_options;
 
-    public static GameObject equipment_choice_prefab;
+    public GameObject equipment_choice_prefab;
     public static Inventory inventory;
     public static Player player;
     public static IEquipmentMaster equipment_master;
@@ -99,7 +99,7 @@ public class EquipmentMenu : Menu, IEnsureVisible<EquipmentChoice>
             children.Add(child.gameObject);
             //Because both unparenting and deleting the child immediately increment
             //the iterator, despite the children not disappearing until the end of the
-            //frame, I need to create my only list and destroy them on my own. 
+            //frame, I need to create my own list and destroy them on my own. 
         }
         foreach(GameObject child in children)
         {
@@ -116,6 +116,8 @@ public class EquipmentMenu : Menu, IEnsureVisible<EquipmentChoice>
         EquipmentChoice ec;
         foreach(Armor armor in inventory.armors)
         {
+            if(armor.count <= 0) { continue; }
+
             choice = Instantiate(equipment_choice_prefab, equipment_options_container.gameObject.transform);
             rt = choice.GetComponent<RectTransform>();
             rt.anchorMin = new Vector2(0, 1);

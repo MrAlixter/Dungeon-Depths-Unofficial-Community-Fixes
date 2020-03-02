@@ -6,29 +6,31 @@ namespace Assets.Scripts
 {
     public class TestEnemy : Enemy
     {
-        public TestEnemy(ICombatantMaster combatantMaster) : base(combatantMaster)
+        public TestEnemy() : base()
         {
-            MAX_HP = 85;
+            MAX_HP = 65;
             HP = MAX_HP;
-            ATK = 20;
-            DEF = 7;
-            _enemy_name = "Test Enemy";
+            ATK = 10;
+            MAX_MANA = 5;
+            MANA = MAX_MANA;
+            MAX_HUNGER = 100;
+            HUNGER = 0;
+            DEF = 6;
+            WIL = 5;
+            SPD = 10;
+            name = "Test Enemy";
         }
 
         public override void do_turn()
         {
-            attack();
-            combatantMaster.end_turn();
+            random_attack();
         }
 
-        public override void attack()
+        public void random_attack()
         {
-            combatantMaster.attack();
-        }
-
-        public override void take_damage(int dmg)
-        {
-            HP -= dmg;
+            List<ICombatant> targets = combatantMaster.getEnemies(this);
+            combatantMaster.attack(this, targets.PickRandom());
+            combatantMaster.end_turn(this);
         }
     }
 }

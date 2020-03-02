@@ -24,9 +24,9 @@ public class BattleMenu : Menu
     private Transform main;
 
     private UnityEngine.UI.Text enemy_name_text;
-    private HealthBar enemy_health_bar;
+    private StatBar enemy_health_bar;
     private UnityEngine.UI.Text player_name_text;
-    private HealthBar player_health_bar;
+    private StatBar player_health_bar;
 
     private UnityEngine.UI.Text turn_text;
 
@@ -51,19 +51,19 @@ public class BattleMenu : Menu
         main = panel.Find("MainBody");
         GameObject enemy_info = main.Find("Enemy Info").gameObject;
         enemy_name_text = enemy_info.transform.Find("Enemy Name").GetComponent<UnityEngine.UI.Text>();
-        enemy_health_bar = enemy_info.transform.Find("Panel").GetComponent<HealthBar>();
+        enemy_health_bar = enemy_info.transform.Find("Panel").GetComponent<StatBar>();
         enemy_health_bar.Awake();
 
         GameObject player_info = main.Find("Player Info").gameObject;
         player_name_text = player_info.transform.Find("Player Name").GetComponent<UnityEngine.UI.Text>();
-        player_health_bar = player_info.transform.Find("Panel").GetComponent<HealthBar>();
+        player_health_bar = player_info.transform.Find("Panel").GetComponent<StatBar>();
         player_health_bar.Awake();
 
         turn_text = main.Find("Turn Text").GetComponent<UnityEngine.UI.Text>();
 
         GameObject battle_info_text_container = main.Find("Text Area").Find("TextContainer").gameObject;
-        battle_information_text = battle_info_text_container.transform.Find("InputField").GetComponent<UnityEngine.UI.InputField>();
-        battle_information_scrollbar = battle_info_text_container.transform.Find("Scrollbar").GetComponent<UnityEngine.UI.Scrollbar>();
+        battle_information_text = battle_info_text_container.transform.Find("InputField").GetComponent<InputField>();
+        battle_information_scrollbar = battle_info_text_container.transform.Find("Scrollbar").GetComponent<Scrollbar>();
 
         Transform buttons = main.transform.Find("Buttons");
         attack_button = buttons.Find("Attack Button").gameObject.GetComponent<Button>();
@@ -72,9 +72,8 @@ public class BattleMenu : Menu
         magic_dropdown = buttons.Find("Magic Dropdown").gameObject.GetComponent<HoverMenu>();
         special_dropdown = buttons.Find("Special Dropdown").gameObject.GetComponent<HoverMenu>();
 
-        magic_dropdown.choices = player.spells.ToArray();
-        special_dropdown.choices = player.specials.ToArray();
-
+        //magic_dropdown.choices = player.spells.ToArray();
+        //special_dropdown.choices = player.specials.ToArray();
 
         GameObject playerStats = panel.transform.Find("Player Stats").gameObject;
         player_stat_text = playerStats.transform.Find("Stat Text").GetComponent<UnityEngine.UI.Text>();
@@ -98,7 +97,7 @@ public class BattleMenu : Menu
     public void set_target(NPC t)
     {
         target = t;
-        Ability.set_target(t);
+        //Ability.set_target(t);
         update_enemy_stats();
     }
 

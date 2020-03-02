@@ -4,7 +4,8 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public sealed class Player : MonoBehaviour, ICombatant
+[Serializable]
+public sealed class Player : MonoBehaviour, ICombatant, IPlayable
 {
     private static Player _instance;
     public static Player instance { get { return _instance != null ? _instance : new Player(); } }
@@ -38,85 +39,34 @@ public sealed class Player : MonoBehaviour, ICombatant
     }
 
     #region Stats
-    [SerializeField]
-    internal int _HP;
-    public int HP
-    {
-        get { return _HP; }
-        private set { _HP = value; }
-    }
+    //Instead of using the ones defined in Combatant, 
+    // I have to define here because C# doesn't support multiple inheritance
 
-    [SerializeField]
-    internal int _MAX_HP;
-    public int MAX_HP
-    {
-        get { return _MAX_HP; }
-        private set { _MAX_HP = value; }
-    }
+    //These are the base (real) stats
+    public int _HP { get; set; }
+    public int _MAX_HP { get; set; }
+    public int _MANA { get; set; }
+    public int _MAX_MANA { get; set; }
+    public int _HUNGER { get; set; }
+    public int _MAX_HUNGER { get; set; }
+    public int _ATK { get; set; }
+    public int _DEF { get; set; }
+    public int _WIL { get; set; }
+    public int _SPD { get; set; }
 
-    [SerializeField]
-    internal int _MANA;
-    public int MANA
-    {
-        get { return _MANA; }
-        private set { _MANA = value; }
-    }
+    public int equipped_armor_id { get; set; }
+    public Armor equipped_armor { get { return Inventory.instance.get_armor_by_id(equipped_armor_id); } }
 
-    [SerializeField]
-    internal int _MAX_MANA;
-    public int MAX_MANA
-    {
-        get { return _MAX_MANA; }
-        private set { _MAX_MANA = value; }
-    }
-
-    [SerializeField]
-    internal int _HUNGER;
-    public int HUNGER
-    {
-        get { return _HUNGER; }
-        private set { _HUNGER = value; }
-    }
-
-    [SerializeField]
-    internal int _MAX_HUNGER;
-    public int MAX_HUNGER
-    {
-        get { return _MAX_HUNGER; }
-        private set { _MAX_HUNGER = value; }
-    }
-
-    [SerializeField]
-    internal int _ATK;
-    public int ATK
-    {
-        get { return _ATK + equipped_armor.attack_boost; }
-        private set { _ATK = value; }
-    }
-
-    [SerializeField]
-    internal int _DEF;
-    public int DEF
-    {
-        get { return _DEF + equipped_armor.defense_boost; }
-        private set { _DEF = value; }
-    }
-
-    [SerializeField]
-    internal int _WIL;
-    public int WIL
-    {
-        get { return _WIL; }
-        private set { _WIL = value; }
-    }
-
-    [SerializeField]
-    internal int _SPD;
-    public int SPD
-    {
-        get { return _SPD; }
-        private set { _SPD = value; }
-    }
+    public int HP { get { return _HP; } set { _HP = value; } }
+    public int MAX_HP { get { return _MAX_HP + (equipped_armor == null ? 0 : equipped_armor.health_boost); } set { _MAX_HP = value; } }
+    public int MANA { get { return _MANA; } set { _MANA = value; } }
+    public int MAX_MANA { get { return _MAX_MANA + (equipped_armor == null ? 0 : equipped_armor.mana_boost); } set { _MAX_MANA = value; } }
+    public int HUNGER { get { return _HUNGER; } set { _HUNGER = value; } }
+    public int MAX_HUNGER { get { return _MAX_HUNGER; } set { _MAX_HUNGER = value; } }
+    public int ATK { get { return _ATK + (equipped_armor == null ? 0 : equipped_armor.attack_boost); } set { _ATK = value; } }
+    public int DEF { get { return _DEF + (equipped_armor == null ? 0 : equipped_armor.defense_boost); } set { _DEF = value; } }
+    public int WIL { get { return _WIL + (equipped_armor == null ? 0 : equipped_armor.will_boost); } set { _WIL = value; } }
+    public int SPD { get { return _SPD + (equipped_armor == null ? 0 : equipped_armor.speed_boost); } set { _SPD = value; } }
 
     [SerializeField]
     internal int _breast_size;
@@ -130,11 +80,6 @@ public sealed class Player : MonoBehaviour, ICombatant
     public List<Spell> spells { get; private set; }
     public List<Special> specials { get; private set; }
 
-    #region Equipment
-    public int equipped_armor_id { get; private set; }
-    public Armor equipped_armor { get { return inventory.get_armor_by_id(equipped_armor_id); } }
-    #endregion
-
     private int xDir;
     private int yDir;
     private float xLeft;
@@ -142,8 +87,7 @@ public sealed class Player : MonoBehaviour, ICombatant
 
     public bool canMove; //Public for the debug text
     
-    // Use this for initialization
-    void Start ()
+    public void Start ()
 	{
         position = new Vector2Int((int)Mathf.Round(transform.position.x), (int)Mathf.Round(transform.position.y));
         xDir = 0;
@@ -151,7 +95,6 @@ public sealed class Player : MonoBehaviour, ICombatant
         canMove = true;
 
 	    master = Master.instance;
-        combatantMaster = master;
 
         master.entityMap[position.x, position.y] = this.gameObject;
 
@@ -167,6 +110,8 @@ public sealed class Player : MonoBehaviour, ICombatant
         MANA = MAX_MANA;
         MAX_HUNGER = 100;
         HUNGER = 0;
+        WIL = 10;
+        SPD = 15;
 
         breast_size = 1;
 
@@ -181,6 +126,12 @@ public sealed class Player : MonoBehaviour, ICombatant
         equipped_armor_id = GoldArmor.instance.id;
 
         change_skin_color(SkinGradient.instance.colors[0]);
+
+        change_hair_color(Color.white);
+
+        master.regenerate_profile_picture();
+        //master.update_bars();
+        master.update_all_bars();
     }
 
     // Update is called once per frame
@@ -200,7 +151,7 @@ public sealed class Player : MonoBehaviour, ICombatant
             {
                 int newX = position.x + xDir;
                 int newY = position.y + yDir;
-                if(master.staticMap[newX, newY] == null && master.entityMap[newX, newY] == null)
+                if(master.freeSpot(newX, newY))
                 {
                     master.entityMap[position.x, position.y] = null;
                     master.entityMap[newX, newY] = this.gameObject;
@@ -244,49 +195,53 @@ public sealed class Player : MonoBehaviour, ICombatant
     }
 
     #region Combat
-    public void attack()
-    {
-        combatantMaster.attack();
-        combatantMaster.end_turn();
-    }
+    public void take_damage(int dmg) { HP -= dmg; }
 
-    public void take_damage(int dmg)
+    public void die()
     {
-        HP -= dmg;
-    }
+        //TODO Player death
+        if (combatantMaster != null) //In combat
+        {
 
-    public void do_turn()
-    {
-        throw new NotImplementedException();
-    }
+        }
+        else
+        {
 
-    public void run()
-    {
-        combatantMaster.run();
-    }
-
-    public void wait()
-    {
-        combatantMaster.wait();
+        }
     }
 
     public void heal(int amt)
     {
         HP += amt;
         if(HP > MAX_HP) { HP = MAX_HP; }
+        //master.update_bars();
         master.update_health_bar();
     }
 
     public void decrease_mana(int cost)
     {
         MANA -= cost;
+        //master.update_bars();
+        master.update_mana_bar();
     }
 
     public void add_hunger(int hunger)
     {
         HUNGER += hunger;
+        //master.update_bars();
+        master.update_hunger_bar();
     }
+
+    public List<Spell> getSpells() { return spells; }
+
+    public List<Special> getSpecials() { return specials; }
     #endregion
+
+    public void setPosition(Vector2Int p)
+    {
+        position = p;
+        gameObject.transform.position = new Vector3(p.x, p.y, 0);
+    }
 
     public void equip_armor(int id)
     {

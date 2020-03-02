@@ -5,6 +5,7 @@ using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.UI;
 
+//I tried to genericize this but Unity doesn't support generic components (and thus MonoBehaviours)
 public class HoverMenuChoice : MonoBehaviour,
     ISelectHandler,
     IDeselectHandler
@@ -20,17 +21,17 @@ public class HoverMenuChoice : MonoBehaviour,
     public Navigation navigation { get { return button.navigation; } set { button.navigation = value; } }
     public Selectable selectable { get { return GetComponent<Selectable>(); } }
 
-    private Ability _ability;
-    public Ability ability
+    private Ability _choice_data;
+    public Ability choice_data
     {
-        get { return _ability; }
+        get { return _choice_data; }
         set
         {
-            _ability = value;
+            _choice_data = value;
             set_text();
         }
     }
-    public string text { get { return ability.name; } }
+    public string text { get { return choice_data.ToString(); } }
     private IHoverMenu hoverMenuCallback;
 
     // Start is called before the first frame update
@@ -38,7 +39,7 @@ public class HoverMenuChoice : MonoBehaviour,
     {
         button.onClick.AddListener(() => {
             button.Select();
-            hoverMenuCallback.OnChoiceClick(ability);
+            hoverMenuCallback.OnChoiceClick(choice_data);
         });
     }
 
@@ -55,7 +56,7 @@ public class HoverMenuChoice : MonoBehaviour,
 
     private void set_text()
     {
-        transform.Find("Text").GetComponent<UnityEngine.UI.Text>().text = text;
+        transform.Find("Text").GetComponent<Text>().text = text;
     }
 
     public void OnSelect(BaseEventData eventData)

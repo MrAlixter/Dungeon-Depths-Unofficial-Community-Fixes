@@ -24,6 +24,7 @@ public class CustomEventSystem : MonoBehaviour
 
     private void Update()
     {
+        if(es == null) { es = EventSystem.current; }
         if (es.currentSelectedGameObject == null && reset != null)
         {
             reset.Select();
@@ -39,6 +40,11 @@ public class CustomEventSystem : MonoBehaviour
     public void SetResetSelection(Selectable selectable)
     {
         reset = selectable;
+        reset.Select();
+    }
+
+    public void SelectDefault()
+    {
         reset.Select();
     }
 }

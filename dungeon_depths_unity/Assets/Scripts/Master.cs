@@ -1,22 +1,24 @@
 ﻿using Assets.Scripts;
+using Scripts;
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 using UnityEngine.EventSystems;
 
 [Serializable]
 public class MoveMap<T>
 {
-    private int WIDTH;
-    private int HEIGHT;
-    
+    public int width { get; private set; }
+    public int height { get; private set; }
+
     public T[,] map;
     
     public MoveMap(int w, int h)
     {
-        WIDTH = w;
-        HEIGHT = h;
+        width = w;
+        height = h;
         map = new T[w, h];
     }
     
@@ -32,12 +34,12 @@ public class MoveMap<T>
         set { this[pos.x, pos.y] = value; }
     }
     
-    public int getWidth() { return WIDTH; }
+    public int getWidth() { return width; }
 
-    public int getHeight() { return HEIGHT; }
+    public int getHeight() { return height; }
 }
 
-public sealed class Master : MonoBehaviour, ICombatantMaster, IMessageMaster, IEquipmentMaster
+public sealed class Master : MonoBehaviour, IMessageMaster, IEquipmentMaster, IDialogMaster, IPlayerHealthMaster
 {
     private static Master _instance;
     public static Master instance { get { return _instance != null ? _instance : new Master(); } }
@@ -59,6 +61,11 @@ public sealed class Master : MonoBehaviour, ICombatantMaster, IMessageMaster, IE
     [SerializeField]
     private int MAP_HEIGHT;
 
+    [SerializeField]
+    private GameObject prefabFloorTile;
+    [SerializeField]
+    private GameObject prefabWall;
+
     public MoveMap<GameObject> staticMap;
     public MoveMap<GameObject> entityMap;
 
@@ -74,9 +81,19 @@ public sealed class Master : MonoBehaviour, ICombatantMaster, IMessageMaster, IE
     [SerializeField]
     private Player player;
     [SerializeField]
+    private GameObject playerCamera;
+    [SerializeField]
     private EventSystem eventSystem;
+    [SerializeField]
+    private GameObject floorsParent;
+    [SerializeField]
+    private GameObject wallsParent;
 
     [SerializeField]
+    private List<ICombatant> allies;
+
+    [SerializeField]
+    private List<ICombatant> enemies;
     private NPC enemy;
 
 
@@ -84,14 +101,17 @@ public sealed class Master : MonoBehaviour, ICombatantMaster, IMessageMaster, IE
     public bool player_turn;
 
     [SerializeField]
-    private Menus current_dialog;
-    [Serializable]
-    public enum Menus { none, battle, info, pause, character, equipment, items };
+    private MENU current_dialog;
 
     [SerializeField]
-    private HealthBar health_bar;
+    //private HealthBar health_bar;
+    private StatBar stats_bar;
     [SerializeField]
     private BattleMenu battle_menu;
+    [SerializeField]
+    private BattleMaster battle_master;
+    [SerializeField]
+    private BattleMenuV2 battle_menu_v2;
     [SerializeField]
     private InfoMenu info_menu;
     [SerializeField]
@@ -103,7 +123,7 @@ public sealed class Master : MonoBehaviour, ICombatantMaster, IMessageMaster, IE
     //[SerializeField]
     //private ItemsMenu items_menu;
     [SerializeField]
-    private ItemsMenuV2 items_menu;
+    private ItemsMenu items_menu;
 
     [SerializeField]
     private ProfilePicture profile_picture;
@@ -111,14 +131,24 @@ public sealed class Master : MonoBehaviour, ICombatantMaster, IMessageMaster, IE
     // Use this for initialization
     void Start ()
 	{
+        floorsParent = GameObject.Find("Floors");
+        wallsParent = GameObject.Find("Walls");
+        System.Random r = new System.Random();
+        DungeonGenerator.init(seed: r.Next(), allowTouching: false);
+        DungeonGenerator.DUNGEON_TYPE[] dungeon_types = (DungeonGenerator.DUNGEON_TYPE[])Enum.GetValues(typeof(DungeonGenerator.DUNGEON_TYPE));
+        Scripts.Tile[,] generated = DungeonGenerator.generate( (DungeonGenerator.DUNGEON_TYPE)dungeon_types.GetValue(r.Next(dungeon_types.Length)) );
+
         //Set them to get the compiler warnings to shut up 
         //Specifically to -1 to make the game crash immediately if they're not set
-        if (MAP_WIDTH == 0) { MAP_WIDTH = -1; }
+        if(MAP_WIDTH == 0) { MAP_WIDTH = -1; }
         if(MAP_HEIGHT == 0) { MAP_HEIGHT = -1; }
-        staticMap = new MoveMap<GameObject>(MAP_WIDTH, MAP_HEIGHT);
-        entityMap = new MoveMap<GameObject>(MAP_WIDTH, MAP_HEIGHT);
+        //staticMap = new MoveMap<GameObject>(MAP_WIDTH, MAP_HEIGHT);
+        //entityMap = new MoveMap<GameObject>(MAP_WIDTH, MAP_HEIGHT);
 
-        UnityEngine.Random.InitState(0); //Init seed to 0 for consistent testing
+        staticMap = createMap(generated);
+        entityMap = new MoveMap<GameObject>(staticMap.width, staticMap.height);
+
+        //UnityEngine.Random.InitState(0); //Init seed to 0 for consistent testing
 
         current_mode = Mode.movement;
         player_turn = true;
@@ -126,50 +156,62 @@ public sealed class Master : MonoBehaviour, ICombatantMaster, IMessageMaster, IE
         player = Player.instance;
         controller = Controller.instance;
         eventSystem = GameObject.Find("EventSystem").GetComponent<EventSystem>();
-        
+        playerCamera = GameObject.Find("Main Camera");
+
+        placePlayer();
+
+        ICombatant testAlly = new TestEnemy();
+        testAlly.name = "Test Ally";
+        allies = new List<ICombatant>() { player, testAlly };
+
         //Because there are health bars in the battle canvas 
         //I cannot make the health bar a singleton.
         //Thus, I must search for it at Start
-        health_bar = GameObject.Find("Health Canvas").GetComponent<HealthBar>();
+        //health_bar = GameObject.Find("Stats Canvas").GetComponent<HealthBar>();
+        stats_bar = GameObject.Find("Stats Canvas").GetComponent<StatBar>();
 
         battle_menu = BattleMenu.instance;
+        battle_menu_v2 = BattleMenuV2.instance;
         info_menu = InfoMenu.instance;
         pause_menu = PauseMenu.instance;
         character_menu = CharacterMenu.instance;
         equipment_menu = EquipmentMenu.instance;
-        items_menu = ItemsMenuV2.instance;
+        items_menu = ItemsMenu.instance;
 
         profile_picture = ProfilePicture.instance;
+
+        //update_bars();
+        update_all_bars();
     }
 
     // Update is called once per frame
     void Update () {
         if (controller.pause_menu.down)
         {
-            if(current_dialog == Menus.none && !pause_menu.active)
+            if(current_dialog == MENU.none && !pause_menu.active)
             {
-                open_dialog(Menus.pause);
+                open_dialog(MENU.pause);
             }
             else
             {
                 //Close any dialog (switch_dialog() is smart enough 
                 //to prevent the battle menu from being closed
                 //while in battle)
-                switch_dialog(Menus.none);
+                switch_dialog(MENU.none);
             }
         }
         if (controller.character_menu.down)
         {
-            if (current_dialog == Menus.none && !character_menu.active)
+            if (current_dialog == MENU.none && !character_menu.active)
             {
-                open_dialog(Menus.character);
+                open_dialog(MENU.character);
             }
             else
             {
                 //Close any dialog (switch_dialog() is smart enough 
                 //to prevent the battle menu from being closed
                 //while in battle)
-                switch_dialog(Menus.none);
+                switch_dialog(MENU.none);
             }
         }
     }
@@ -178,104 +220,132 @@ public sealed class Master : MonoBehaviour, ICombatantMaster, IMessageMaster, IE
     {
         float v = UnityEngine.Random.value * 100; //Random number on a scale of 0-100 inclusive
 
-        v = 0;
+        //v = 0; //Force encounters on
+        //v = 100; //Force encounters off
 
-        if(v <= 11) //12/101% chance of true
+        if(v <= 0) //1/101% chance of true
+        //if(v <= 11) //12/101% chance of true (default)
         {
-            switch_dialog(Menus.battle);
+            int enemyCount = UnityEngine.Random.Range(1, 4);
+
+            enemies = new List<ICombatant>();
+            foreach (int i in Enumerable.Range(0, enemyCount))
+            {
+                enemies.Add(new TestEnemy());
+            }
+            
+            switch_dialog(MENU.battle);
         }
-        else if(v <= 22)
-        {
-            switch_dialog(Menus.info, "This is a test dialog.\nAnd more text here.\nAnother line!");
-        }
+        //else if(v <= 22)
+        //{
+        //    switch_dialog(Menus.info, "This is a test dialog.\nAnd more text here.\nAnother line!");
+        //}
     }
 
     public void next_turn()
     {
         turn++;
 
+        //update_health_bar();
+        //update_bars();
         update_health_bar();
 
         if(battle_menu != null && battle_menu.active)
         {
+            foreach(NPC npc in enemies)
+            {
+
+            }
             battle_menu.update_turn(turn);
             battle_menu.set_battle_information(turn.ToString());
-            battle_menu.update_enemy_health(enemy.HP, enemy.MAX_HP);
-            battle_menu.update_player_health(player.HP, player.MAX_HP);
+            //battle_menu.update_enemy_health(enemy.HP, enemy.MAX_HP);
+            //battle_menu.update_player_health(player.HP, player.MAX_HP);
         }
 
         //Allow enemy to attack if in attack mode
     }
 
     #region Dialog Controls
-    [SerializeField]
-    public void switch_dialog(Menus menu)
+    public void end_battle()
+    {
+        current_mode = Mode.movement;
+        switch_dialog(MENU.none);
+    }
+    
+    public void switch_dialog(MENU menu)
     {
         if(current_mode == Mode.combat) { return; }
 
-        if(current_dialog != Menus.none)
+        if(current_dialog != MENU.none)
         {
             close_dialog(current_dialog);
         }
-
-        if(menu == Menus.none && current_dialog == Menus.none)
+        
+        if(menu == MENU.none)
         {
-            current_mode = Mode.movement;
-            return;
+            if(current_dialog == MENU.none)
+            {
+                current_mode = Mode.movement;
+                return;
+            }
         }
-        open_dialog(menu);
+        else
+        {
+            open_dialog(menu);
+        }
     }
     
-    public void switch_dialog(Menus menu, string text)
+    public void switch_dialog(MENU menu, string text)
     {
         switch_dialog(menu);
 
-        if (menu == Menus.info)
+        if (menu == MENU.info)
         {
             set_info_dialog_text(text);
         }
     }
     
-    public void close_dialog(Menus menu)
+    public void close_dialog(MENU menu)
     {
         if(current_mode == Mode.combat) { return; }
         
         switch (menu)
         {
-            case Menus.battle:
+            case MENU.battle:
                 close_battle_dialog();
                 break;
-            case Menus.character:
+            case MENU.character:
                 close_character_dialog();
                 break;
-            case Menus.equipment:
+            case MENU.equipment:
                 close_equipment_dialog();
                 break;
-            case Menus.info:
+            case MENU.info:
                 close_info_dialog();
                 break;
-            case Menus.pause:
+            case MENU.pause:
                 close_pause_dialog();
                 break;
-            case Menus.items:
+            case MENU.items:
                 close_items_dialog();
                 break;
         }
+        
+        if(battle_menu_v2.active) { current_dialog = MENU.battle; }
+        else if(character_menu.active) { current_dialog = MENU.character; }
+        else if(equipment_menu.active) { current_dialog = MENU.equipment; }
+        else if(info_menu.active) { current_dialog = MENU.info; }
+        else if(pause_menu.active) { current_dialog = MENU.pause; }
+        else if(items_menu.active) { current_dialog = MENU.items; }
+        else { current_dialog = MENU.none; }
 
-        if(battle_menu.active) { current_dialog = Menus.battle; }
-        else if(character_menu.active) { current_dialog = Menus.character; }
-        else if(equipment_menu.active) { current_dialog = Menus.equipment; }
-        else if(info_menu.active) { current_dialog = Menus.info; }
-        else if(pause_menu.active) { current_dialog = Menus.pause; }
-        else if(items_menu.active) { current_dialog = Menus.items; }
-
-        if(current_dialog == Menus.none)
+        if(current_dialog == MENU.none)
         {
             current_mode = Mode.movement;
         }
     }
 
-    public void open_dialog(Menus menu)
+    public void open_dialog(MENU menu)
     {
         if (current_mode == Mode.combat) { return; }
 
@@ -283,29 +353,29 @@ public sealed class Master : MonoBehaviour, ICombatantMaster, IMessageMaster, IE
         current_mode = Mode.dialog;
         switch (menu)
         {
-            case Menus.battle:
+            case MENU.battle:
                 current_mode = Mode.combat;
                 open_battle_dialog();
                 return;
-            case Menus.character:
+            case MENU.character:
                 open_character_dialog();
                 return;
-            case Menus.equipment:
+            case MENU.equipment:
                 open_equipment_dialog();
                 return;
-            case Menus.info:
+            case MENU.info:
                 open_info_dialog();
                 return;
-            case Menus.pause:
+            case MENU.pause:
                 open_pause_dialog();
                 return;
-            case Menus.items:
+            case MENU.items:
                 open_items_dialog();
                 return;
         }
     }
 
-    public void open_dialog(Menus menu, string text)
+    public void open_dialog(MENU menu, string text)
     {
         open_dialog(menu);
         set_info_dialog_text(text);
@@ -314,29 +384,33 @@ public sealed class Master : MonoBehaviour, ICombatantMaster, IMessageMaster, IE
     #region Battle Dialog Controls
     private void open_battle_dialog()
     {
-        battle_menu.Awake(); //Do any initialization necessary before loading
+        //battle_menu.Awake(); //Do any initialization necessary before loading
+        battle_master = gameObject.AddComponent<BattleMaster>();
+        battle_master.init(this, this, this, allies, enemies);
+        battle_master.startBattle();
 
-        enemy = new TestEnemy(this);
-        battle_menu.set_target(enemy);
+        //battle_menu.set_target(enemy);
 
-        battle_menu.set_player_name_text(player.player_name);
-        battle_menu.update_player_health(player.HP, player.MAX_HP);
+        //battle_menu.set_player_name_text(player.player_name);
+        //battle_menu.update_player_health(player.HP, player.MAX_HP);
 
-        battle_menu.set_enemy_name_text(enemy.enemy_name);
-        battle_menu.update_enemy_health(enemy.HP, enemy.MAX_HP);
+        //battle_menu.set_enemy_name_text(enemy.enemy_name);
+        //battle_menu.update_enemy_health(enemy.HP, enemy.MAX_HP);
 
-        battle_menu.update_turn(turn);
-        battle_menu.set_battle_information("");
+        //battle_menu.update_turn(turn);
+        //battle_menu.set_battle_information("");
 
-        battle_menu.update_stats();
-        
-        player_turn = true;
-        battle_menu.open();
+        //battle_menu.update_stats();
+
+        //player_turn = true;
+        //battle_menu.open();
     }
 
     private void close_battle_dialog()
     {
-        battle_menu.close();
+        Destroy(battle_master);
+
+        battle_menu_v2.close();
     }
     #endregion
 
@@ -423,14 +497,59 @@ public sealed class Master : MonoBehaviour, ICombatantMaster, IMessageMaster, IE
     }
     #endregion
 
+    //public void update_health_bar()
+    //{
+    //    //health_bar.Awake();
+    //    //health_bar.set_health(player.HP, player.MAX_HP);
+    //    //if(battle_menu != null && battle_menu.active)
+    //    //{
+    //    //    battle_menu.update_player_health(player.HP, player.MAX_HP);
+    //    //    battle_menu.update_enemy_health(enemy.HP, enemy.MAX_HP);
+    //    //}
+    //}
+
+    //public void update_bars()
+    //{
+    //    update_all_bars();
+    //}
+
     public void update_health_bar()
     {
-        health_bar.Awake();
-        health_bar.set_health(player.HP, player.MAX_HP);
+        stats_bar.Awake();
+        stats_bar.set_health(player.HP, player.MAX_HP);
+
         if(battle_menu != null && battle_menu.active)
         {
             battle_menu.update_player_health(player.HP, player.MAX_HP);
-            battle_menu.update_enemy_health(enemy.HP, enemy.MAX_HP);
+        }
+    }
+
+    public void update_mana_bar()
+    {
+        stats_bar.Awake();
+        stats_bar.set_mana(player.MANA, player.MAX_MANA);
+    }
+
+    public void update_hunger_bar()
+    {
+        stats_bar.Awake();
+        stats_bar.set_hunger(player.HUNGER, player.MAX_HUNGER);
+    }
+
+    public void update_all_bars()
+    {
+        update_health_bar();
+        update_mana_bar();
+        update_hunger_bar();
+        
+        //stats_bar.set_health(player.HP, player.MAX_HP);
+        //stats_bar.set_mana(player.MANA, player.MAX_MANA);
+        //stats_bar.set_hunger(player.HUNGER, player.MAX_HUNGER);
+
+        if(battle_menu != null && battle_menu.active)
+        {
+            battle_menu.update_player_health(player.HP, player.MAX_HP);
+            //battle_menu.update_enemy_health(enemy.HP, enemy.MAX_HP);
         }
     }
     #endregion
@@ -445,7 +564,7 @@ public sealed class Master : MonoBehaviour, ICombatantMaster, IMessageMaster, IE
         }
         if(player_turn)
         {
-            int dmg = calc_damage(player.ATK, enemy.DEF);
+            int dmg = Formulas.calc_damage(player.ATK, enemy.DEF);
             enemy.take_damage(dmg);
             //Note the set here and the add forthe enemy turn
             //The actions triggered by the player reset the battle information
@@ -457,7 +576,7 @@ public sealed class Master : MonoBehaviour, ICombatantMaster, IMessageMaster, IE
         }
         else
         {
-            int dmg = calc_damage(enemy.ATK, player.DEF);
+            int dmg = Formulas.calc_damage(enemy.ATK, player.DEF);
             player.take_damage(dmg);
             battle_menu.add_battle_information("You got hit for "+dmg+" damage!");
         }
@@ -504,13 +623,13 @@ public sealed class Master : MonoBehaviour, ICombatantMaster, IMessageMaster, IE
             //There's nothing to run from!
             return;
         }
-        int rand_num = (int)UnityEngine.Random.Range(0, 3);
+        int rand_num = UnityEngine.Random.Range(0, 3); //[0, 2]
         if(rand_num == 0)
         {
             //If they successfully run, it's the end of the turn
             turn++;
             current_mode = Mode.dialog;
-            switch_dialog(Menus.info, "You successfully ran!");
+            switch_dialog(MENU.info, "You successfully ran!");
         }
         else
         {
@@ -531,14 +650,7 @@ public sealed class Master : MonoBehaviour, ICombatantMaster, IMessageMaster, IE
         battle_menu.set_battle_information("You waited a turn");
         end_turn();
     }
-
-    private int calc_damage(int atk, int def)
-    {
-        if(atk <= 0) { return 1; }
-        if(def <= 0) { return atk; }
-        return (atk * atk) / (atk + def);
-    }
-
+    
     private bool check_death()
     {
         if(enemy != null && enemy.HP <= 0)
@@ -562,7 +674,7 @@ public sealed class Master : MonoBehaviour, ICombatantMaster, IMessageMaster, IE
         //Loot
         //WILL update
         //Victory message
-        switch_dialog(Menus.info, "YOU WIN!"); //Leave combat
+        switch_dialog(MENU.info, "YOU WIN!"); //Leave combat
         //Pause/Stop battle TFs/curses
         //Death TFs/curses
         enemy = null;
@@ -579,7 +691,7 @@ public sealed class Master : MonoBehaviour, ICombatantMaster, IMessageMaster, IE
         //If TF killed, set health to 10% and TF death'
         //Otherwise just regular death
         enemy = null;
-        switch_dialog(Menus.info, "YOU LOSE!"); //Leave combat
+        switch_dialog(MENU.info, "YOU LOSE!"); //Leave combat
     }
     #endregion
 
@@ -587,12 +699,13 @@ public sealed class Master : MonoBehaviour, ICombatantMaster, IMessageMaster, IE
     {
         if(current_mode == Mode.combat)
         {
-            battle_menu.add_battle_information(message);
+            //battle_menu.add_battle_information(message);
+            battle_master.add_battle_information(message);
         }
         else
         {
             //open_info_dialog(message);
-            open_dialog(Menus.info, message);
+            open_dialog(MENU.info, message);
         }
     }
 
@@ -600,11 +713,13 @@ public sealed class Master : MonoBehaviour, ICombatantMaster, IMessageMaster, IE
     {
         if (current_mode == Mode.combat)
         {
-            battle_menu.set_battle_information(message);
+            //battle_menu.set_battle_information(message);
+            battle_master.set_battle_information(message);
         }
         else
         {
-            open_info_dialog(message);
+            //open_info_dialog(message);
+            open_dialog(MENU.info, message);
         }
     }
 
@@ -620,6 +735,14 @@ public sealed class Master : MonoBehaviour, ICombatantMaster, IMessageMaster, IE
     }
 
     #region Profile Picture Updating Function
+    public void regenerate_profile_picture()
+    {
+        update_armor();
+        update_body();
+        update_skin_color();
+        update_hair_color();
+    }
+
     public void update_armor()
     {
         profile_picture.clothes = player.equipped_armor.variants[player.breast_size];
@@ -641,6 +764,93 @@ public sealed class Master : MonoBehaviour, ICombatantMaster, IMessageMaster, IE
         profile_picture.set_hair_color(player.hair_color);
     }
     #endregion
+    
+    private void movePlayerAndCamera(Vector2Int p)
+    {
+        player.setPosition(p);
+        playerCamera.transform.position = new Vector3(p.x, p.y, playerCamera.transform.position.z);
+    }
+
+    private void placePlayer()
+    {
+        Vector2Int newPos = new Vector2Int(-1, -1);
+        int w = staticMap.getWidth();
+        int h = staticMap.getWidth();
+
+        System.Random r = new System.Random();
+        while(!freeSpot(newPos))
+        {
+            newPos = new Vector2Int(
+                r.Next(0, w),
+                r.Next(0, h)
+                );
+        }
+        movePlayerAndCamera(newPos);
+    }
+
+    public bool freeSpot(Vector2Int p)
+    {
+        return freeSpot(p.x, p.y);
+    }
+
+    public bool freeSpot(int x, int y)
+    {
+        if(x < 0 || x >= staticMap.width || y < 0 || y >= staticMap.height) { return false; }
+
+        GameObject at = staticMap[x, y];
+        if(at != null)
+        {
+            if(at.transform != null)
+            {
+                if(at.transform.parent != null)
+                {
+                    if(at.transform.parent.gameObject != null)
+                    {
+                        if(at.transform.parent.gameObject == wallsParent) { return false; }
+                    }
+                }
+            }
+        }
+
+        at = entityMap[x, y];
+        if(at != null)
+        {
+            if(at != player.gameObject) { return false; }
+        }
+        return true;
+    }
+
+    private MoveMap<GameObject> createMap(Scripts.Tile[,] inMap)
+    {
+        int w = inMap.GetLength(0);
+        int h = inMap.GetLength(1);
+        MoveMap<GameObject> ret = new MoveMap<GameObject>(w, h);
+
+        for(int x = 0; x < w; x++)
+        {
+            for(int y = 0; y < h; y++)
+            {
+                GameObject toPut = null;
+                switch(inMap[x, y])
+                {
+                    case Scripts.Floor inst:
+                        toPut = Instantiate(prefabFloorTile, new Vector3(x, y, 0), Quaternion.identity);
+                        toPut.transform.SetParent(floorsParent.transform);
+                        break;
+                    case Scripts.Wall inst:
+                        toPut = Instantiate(prefabWall, new Vector3(x, y, 0), Quaternion.identity);
+                        toPut.transform.SetParent(wallsParent.transform);
+                        break;
+                    default:
+                        Console.WriteLine("ERROR: Found Tile of unhandled type");
+                        break;
+                }
+                ret[x, y] = toPut;
+            }
+        }
+
+        return ret;
+    }
 }
 
 public enum Mode { movement, dialog, combat };

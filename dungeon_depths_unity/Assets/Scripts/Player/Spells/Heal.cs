@@ -1,4 +1,5 @@
-﻿using UnityEngine;
+﻿using System;
+using UnityEngine;
 
 namespace Assets.Scripts
 {
@@ -9,16 +10,25 @@ namespace Assets.Scripts
             name = "Heal";
             tier = 1;
             cost = 3;
+            default_target = TARGET_TYPE.SELF;
+            possible_targets = TARGET_TYPE.ALL;
         }
 
-        public override void effect()
+        public override void effect(ICombatant source, ICombatant target)
         {
-            int amt = source.MAX_HP / 2;
-            if(amt + source.HP > source.MAX_HP) { amt = source.MAX_HP - source.HP; }
+            int amt = target.MAX_HP / 2;
+            if(amt + target.HP > target.MAX_HP) { amt = target.MAX_HP - target.HP; }
 
-            source.heal(amt);
+            target.HP += amt;
 
-            message_master.set_message($"You heal yourself for {amt} health!");
+            if(source == target)
+            {
+                message_master.set_message($"${source.name} heals themself for {amt} health!");
+            }
+            else
+            {
+                message_master.set_message($"${source.name} heals ${target.name} for {amt} health!");
+            }
         }
     }
 }

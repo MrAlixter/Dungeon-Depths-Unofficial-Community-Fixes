@@ -8,6 +8,7 @@ using UnityEngine.Experimental.Rendering;
 #endif
 using UnityEngine.Experimental.U2D;
 using Unity.Collections;
+using UnityEngine.U2D;
 
 namespace Assets.Scripts
 {

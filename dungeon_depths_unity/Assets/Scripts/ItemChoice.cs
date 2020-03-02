@@ -15,7 +15,8 @@ public class ItemChoice : MonoBehaviour,
     public interface IItemChoiceMaster
     {
         void ItemUsed(ItemChoice itemChoice);
-        void ItemEqupped(ItemChoice itemChoice);
+        void ItemEquipped(ItemChoice itemChoice);
+        void ItemDiscarded(ItemChoice itemChoice);
         void ItemCanceled();
     }
 
@@ -99,6 +100,7 @@ public class ItemChoice : MonoBehaviour,
         
     }
 
+    #region Item Choice Functions
     public void ChoiceSubmitted()
     {
         open_options();
@@ -109,35 +111,36 @@ public class ItemChoice : MonoBehaviour,
         close_options();
         itemChoiceMaster.ItemCanceled();
     }
+    #endregion
 
-    public void OptionSubmitted()
+    #region Item Choice Option Functions
+    public void ItemUse()
     {
-        if(associated_item as Armor != null)
-        {
-            itemChoiceMaster.ItemEqupped(this);
-        }
-        else if(associated_item as Potion != null)
-        {
-            itemChoiceMaster.ItemUsed(this);
-        }
-        selectable.Select();
+        itemChoiceMaster.ItemUsed(this);
     }
 
-    public void OptionCancelled()
+    public void ItemEquip()
     {
-        //itemChoiceMaster.ItemCanceled();
+        itemChoiceMaster.ItemEquipped(this);
+    }
+
+    public void ItemDiscard()
+    {
+        itemChoiceMaster.ItemDiscarded(this);
+    }
+
+    public void ItemCancelled()
+    {
         button.Select();
-        //close_options() is called in OnSelect()
-        //close_options();
     }
 
-    public void OptionSelected()
+    public void ItemSelected()
     {
         GameObject selected = EventSystem.current.currentSelectedGameObject;
         option_selected = selected;
     }
 
-    public void OptionDeselected()
+    public void ItemDeselected()
     {
         GameObject selected = EventSystem.current.currentSelectedGameObject;
         if (selected != null)
@@ -148,6 +151,7 @@ public class ItemChoice : MonoBehaviour,
             }
         }
     }
+    #endregion
 
     private void open_options()
     {
@@ -171,11 +175,13 @@ public class ItemChoice : MonoBehaviour,
         foreach (Transform child in go.transform)
         {
             OverridableButton current_button = child.GetComponent<OverridableButton>();
-            current_button.customOnSubmit = new OverridableButton.eventDelegate(OptionSubmitted);
-            current_button.customOnClick = new OverridableButton.eventDelegate(OptionSubmitted);
-            current_button.customOnCancel = new OverridableButton.eventDelegate(OptionCancelled);
-            current_button.customOnSelect = new OverridableButton.eventDelegate(OptionSelected);
-            current_button.customOnDeselect = new OverridableButton.eventDelegate(OptionDeselected);
+            if(child.name.Equals("Use")) { current_button.customOnSubmit = new OverridableButton.eventDelegate(ItemUse); }
+            else if(child.name.Equals("Equip")) { current_button.customOnSubmit = new OverridableButton.eventDelegate(ItemEquip); }
+            else if(child.name.Equals("Discard")) { current_button.customOnSubmit = new OverridableButton.eventDelegate(ItemDiscard); }
+            current_button.customOnClick = current_button.customOnSubmit;
+            current_button.customOnCancel = new OverridableButton.eventDelegate(ItemCancelled);
+            current_button.customOnSelect = new OverridableButton.eventDelegate(ItemSelected);
+            current_button.customOnDeselect = new OverridableButton.eventDelegate(ItemDeselected);
 
             Selectable current = current_button.selectable;
             if (child.gameObject.activeSelf)
