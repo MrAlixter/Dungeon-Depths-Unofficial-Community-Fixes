@@ -11,7 +11,7 @@
         For i = 0 To 5
             Dim invInd As Integer = 8
             While Not inv.item(invInd).isRandoTFAcceptable
-                invInd = Int(Rnd() * (Game.player.inv.upperBound + 1))
+                invInd = Int(Rnd() * (Game.player1.inv.upperBound + 1))
             End While
             inv.add(invInd, CInt(Rnd() * 2) + 1)
         Next
@@ -24,7 +24,7 @@
         MyBase.die(cause)
         If MessageBox.Show("Would you like to do the Explorer's body swap?", "Body Swap?", MessageBoxButtons.YesNo) = Windows.Forms.DialogResult.Yes Then 'Int(Rnd() * 3) = 0 Then '
             Try
-                bodySwap(Game.player)
+                bodySwap(Game.player1)
             Catch ex As Exception
                 Game.pushLblEvent("The body swap fails!")
             End Try

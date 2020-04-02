@@ -40,7 +40,7 @@ Public Class mFloor
         If updateLoadbar Then Game.updateLoadbar(40)
 
         placeStairs()
-        placePlayer(Game.player)
+        placePlayer(Game.player1)
         placeChest(floorCode)
         If floorNumber > 2 Then placeTraps()
 
@@ -77,7 +77,7 @@ Public Class mFloor
         If floorNumber < 5 Then
             generateDungeonLevel(floorCode)
         ElseIf floorNumber = 5 Or floorNumber = 75 Then
-            genBossFloor(Game.player)
+            genBossFloor(Game.player1)
         ElseIf floorNumber = 9999 Then
             genSpaceFloor()
         ElseIf floorNumber = 91017 Then
@@ -86,7 +86,7 @@ Public Class mFloor
             generateForestLevel(floorCode)
         End If
 
-        verifyNoDisconectedChunks(Game.player)
+        verifyNoDisconectedChunks(Game.player1)
     End Sub
     Sub placeStairs()
         stairs = randPoint()
@@ -98,7 +98,7 @@ Public Class mFloor
         playerPosition = p.pos
         mBoard(p.pos.Y, p.pos.X).Text = "@"
         verifyAccessToStairs(p)
-        If floorNumber = 4 Then placeFloor4TrappedChest(Game.player)
+        If floorNumber = 4 Then placeFloor4TrappedChest(Game.player1)
     End Sub
     Sub placeChest(ByVal code As String)
         'Fill Chest Tier List
@@ -188,7 +188,7 @@ Public Class mFloor
             placed.Add(npcInd)
         Next
 
-        If Game.player.isCursed And Game.cbrok.pos.X = -1 And Not Game.cbrok.isDead Then addNPC(Game.cbrok, randPoint)
+        If Game.player1.isCursed And Game.cbrok.pos.X = -1 And Not Game.cbrok.isDead Then addNPC(Game.cbrok, randPoint)
 
         For i = 0 To npcList.Count - 1
             npcPositions.Add(npcList(i).pos)
@@ -751,7 +751,7 @@ Public Class mFloor
                     mBoard(trapPoint.Y, trapPoint.X).ForeColor = Color.FromArgb(45, 45, 45)
                     mBoard(trapPoint.Y, trapPoint.X).Text = "+"
                 ElseIf line(x) = "@"c Then
-                    Game.player.pos = New Point(x, y)
+                    Game.player1.pos = New Point(x, y)
                 End If
             Next
         Next
@@ -835,7 +835,7 @@ Public Class mFloor
                     Dim chestPoint = New Point(x, y)
                     genLegacyChest(chestPoint)
                 ElseIf line(x) = "@"c Then
-                    Game.player.pos = New Point(x, y)
+                    Game.player1.pos = New Point(x, y)
                 End If
             Next
         Next

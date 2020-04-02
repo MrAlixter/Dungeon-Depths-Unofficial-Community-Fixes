@@ -14,17 +14,17 @@
 
     Shared Sub step1()
         'In the future this will damage/destroy armor
-        Dim p = Game.player
+        Dim p = Game.player1
         p.inv.add("Dissolved_Clothes", 1)
         Equipment.clothesChange("Dissolved_Clothes")
         pushLblEventWithoutLoss("As you take stock of yourself, you notice that your clothing has been partially eaten away by a teal slime that you seem to sweating in small amounts.  This seems like something you are going to need to keep an eye on...")
         p.drawPort()
-        If Game.player.perks("slimetf") > -1 Then Game.player.perks("slimetf") += 1
-        If Game.player.perks("googirltf") > -1 Then Game.player.perks("googirltf") += 1
+        If Game.player1.perks("slimetf") > -1 Then Game.player1.perks("slimetf") += 1
+        If Game.player1.perks("googirltf") > -1 Then Game.player1.perks("googirltf") += 1
     End Sub
 
     Sub step2()
-        Dim p As Player = Game.player
+        Dim p As Player = Game.player1
 
         p.prt.haircolor = Color.FromArgb(180, 5, 245, 198)
         p.drawPort()
@@ -32,19 +32,19 @@
         'Author Credit: Marionette
         pushLblEventWithoutLoss("The rogue slime starts moving upwards towards your head, your fingers unable to get a grip on the slippery goo as it works its way up your neck and into your hair. Despite your best attempts you just can’t get the bulk of the goo out. It almost feels like your trying to pull out your own hair... After a few more experimental tugs you confirm that the slime seems to have converted your hair to a much more gooey consistency. ")
 
-        If Game.player.perks("slimetf") > -1 Then Game.player.perks("slimetf") += 1
+        If Game.player1.perks("slimetf") > -1 Then Game.player1.perks("slimetf") += 1
     End Sub
     Sub step3()
-        Dim p As Player = Game.player
+        Dim p As Player = Game.player1
         p.prt.skincolor = Color.FromArgb(230, 0, 255, 255)
         p.pForm = p.forms("Half-Slime")
         'Author Credit: Marionette
         pushLblEventWithoutLoss("Looking back you see you’ve gotten far enough away to catch your breath, the adrenalin that had driven you on now draining as your left breathing heavily. Too late you remember the Slime had landed a fairly large glob of slime on you as it quickly surges around your body. Your skin starts to tingle as you watch your skin soak in the goo, the color of it changing and even becoming nearly translucent. You are now a half-slime!")
         p.drawPort()
-        If Game.player.perks("slimetf") > -1 Then Game.player.perks("slimetf") += 1
+        If Game.player1.perks("slimetf") > -1 Then Game.player1.perks("slimetf") += 1
     End Sub
     Sub step4()
-        Dim p As Player = Game.player
+        Dim p As Player = Game.player1
         If p.equippedWeapon.getName.Equals("Magical_Girl_Wand") Or
             p.equippedWeapon.getName.Equals("Valkyrie_Sword") Then
             Equipment.weaponChange("Fists")
@@ -86,7 +86,7 @@
         pushLblEventWithoutLoss(out)
         p.drawPort()
 
-        If Game.player.perks("slimetf") > -1 Then Game.player.perks("slimetf") = -1
+        If Game.player1.perks("slimetf") > -1 Then Game.player1.perks("slimetf") = -1
 
         p.setStartStates()
     End Sub
@@ -95,7 +95,7 @@
         MyBase.stopTF()
     End Sub
     Public Overrides Function getNextStep(stage As Integer) As Action
-        Dim p As Player = Game.player
+        Dim p As Player = Game.player1
 
         Select Case currStep
             Case 1

@@ -15,10 +15,10 @@
 
     Public Overrides Sub Effect()
         If Int(Rnd() * 5) = 0 Or Game.noRNG Then
-            Game.player.attack += 3
-            Game.player.defence += 3
+            Game.player1.attack += 3
+            Game.player1.defence += 3
 
-            Game.player.UIupdate()
+            Game.player1.UIupdate()
         End If
     End Sub
 End Class

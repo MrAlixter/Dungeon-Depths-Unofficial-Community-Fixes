@@ -5,7 +5,7 @@
         If p.prt.sexBool And Not p.perks("slutcurse") > -1 Then
             p.FtM()
             Game.pushLblEvent("You are now a man!")
-            Equipment.antiClothingCurse()
+            Equipment.antiClothingCurse(p)
             p.drawPort()
         ElseIf p.perks("slutcurse") > -1 Or p.prt.iArrInd(pInd.rearhair).Item2 = True Then
             p.prt.setIAInd(pInd.rearhair, p.sState.iArrInd(pInd.rearhair).Item1, False, False)
@@ -16,7 +16,7 @@
             p.prt.setIAInd(pInd.fronthair, p.sState.iArrInd(pInd.fronthair).Item1, False, False)
             Game.pushLblEvent("Thoughts of modesty return to your mind. You are free of the slut curse!")
             p.perks("slutcurse") = -1
-            Equipment.antiClothingCurse()
+            Equipment.antiClothingCurse(p)
             Game.pushLblEvent("You are now a man!")
             p.drawPort()
         Else

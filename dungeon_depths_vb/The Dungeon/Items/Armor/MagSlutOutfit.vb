@@ -29,7 +29,7 @@
     End Sub
 
     Overrides Sub discard()
-        If Game.player.pClass.name.Equals("Magical Girl") Then
+        If Game.player1.pClass.name.Equals("Magical Girl") Then
             Game.pushLstLog("You can't just drop your uniform!")
             Exit Sub
         End If
@@ -37,5 +37,4 @@
 
         count -= 1
     End Sub
-
 End Class

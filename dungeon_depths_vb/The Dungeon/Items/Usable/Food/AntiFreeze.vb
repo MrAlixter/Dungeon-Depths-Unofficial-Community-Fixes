@@ -12,16 +12,16 @@
         MyBase.isRandoTFAcceptable = False
         setCalories(100)
     End Sub
-    Overrides Sub use()
+    Overrides Sub use(ByRef p As Player)
         If Me.getUsable() = False Then Exit Sub
         Game.pushLstLog("You drink the " & getName())
-        Game.player.hunger -= getCalories()
-        If Game.player.hunger < 0 Then Game.player.hunger = 0
+        p.hunger -= getCalories()
+        If p.hunger < 0 Then p.hunger = 0
         Effect()
 
         count -= 1
     End Sub
     Public Overrides Sub Effect()
-        Game.player.die(Nothing)
+        Game.player1.die(Nothing)
     End Sub
 End Class

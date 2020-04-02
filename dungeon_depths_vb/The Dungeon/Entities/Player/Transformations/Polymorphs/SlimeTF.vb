@@ -10,12 +10,12 @@
     End Sub
 
     Public Overrides Sub setWaitTime(stage As Integer)
-        Dim p As player = game.player
+        Dim p As player = game.player1
         turnsTilNextStep = Int(Rnd() * 50) + Int(Rnd() * 50) + Int(Rnd() * p.getmaxMana) + Int(Rnd() * p.getWIL)
     End Sub
 
     Public Overrides Sub step1()
-        Dim p As player = game.player
+        Dim p As player = game.player1
 
         'unequips
         Equipment.clothesChange("Naked")

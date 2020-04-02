@@ -13,11 +13,11 @@
         MyBase.value = 777
     End Sub
 
-    Overrides Sub use()
-        Game.player.perks("slutcurse") = -1
-        Equipment.antiClothingCurse()
+    Overrides Sub use(ByRef p As Player)
+        p.perks("slutcurse") = -1
+        Equipment.antiClothingCurse(p)
         Game.pushLblEvent("You apply the anti-curse tag to your equipment.  The slut curse is neutralized!")
-        Game.player.drawPort()
+        p.drawPort()
         count -= 1
     End Sub
 End Class

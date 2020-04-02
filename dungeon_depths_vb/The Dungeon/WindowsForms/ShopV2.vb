@@ -2,7 +2,7 @@
 
 Public Class ShopV2
     Dim sk As ShopNPC = Game.currNPC
-    Dim p As Player = Game.player
+    Dim p As Player = Game.player1
     Dim skInventory As List(Of String) = Nothing
     Dim pInventory As List(Of String) = Nothing
 
@@ -136,8 +136,8 @@ Public Class ShopV2
 
         RefreshScreen()
 
-        Game.player.inv.invNeedsUDate = True
-        Game.player.UIupdate()
+        Game.player1.inv.invNeedsUDate = True
+        Game.player1.UIupdate()
     End Sub
     'buy
     Private Sub btnBuy_Click(sender As Object, e As EventArgs) Handles btnBuy.Click
@@ -182,8 +182,8 @@ Public Class ShopV2
 
         RefreshScreen()
 
-        Game.player.inv.invNeedsUDate = True
-        Game.player.UIupdate()
+        Game.player1.inv.invNeedsUDate = True
+        Game.player1.UIupdate()
     End Sub
 
     Private Sub boxInventory_SelectedIndexChanged(sender As Object, e As EventArgs) Handles boxInventory.SelectedIndexChanged

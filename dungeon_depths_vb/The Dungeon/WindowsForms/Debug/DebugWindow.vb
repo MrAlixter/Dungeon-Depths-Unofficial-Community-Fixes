@@ -42,9 +42,9 @@ Public Class Debug_Window
         btnEditSelection.Enabled = False
 
         'PLAYER
-        Dim playerPortrait = Game.player.prt
+        Dim playerPortrait = Game.player1.prt
 
-        boxName.Text = Game.player.name
+        boxName.Text = Game.player1.name
         RemoveHandler boxSex.CheckedChanged, AddressOf boxSex_CheckedChanged
         If playerPortrait.sexBool <> boxSex.Checked Then
             clearPortrait()
@@ -55,19 +55,19 @@ Public Class Debug_Window
             boxForm.Items.Add(Game.titleList(i).ToString())
         Next
 
-        boxForm.SelectedItem = Game.player.pClass.name
+        boxForm.SelectedItem = Game.player1.pClass.name
 
-        boxHealth.Value = Game.player.health * Game.player.getMaxHealth()
-        boxMaxHealth.Value = Game.player.maxHealth
-        boxMana.Value = Game.player.mana
-        boxMaxMana.Value = Game.player.maxMana
-        boxHunger.Value = Game.player.hunger
-        boxAtk.Value = Game.player.attack
-        boxDef.Value = Game.player.defence
-        boxWil.Value = Game.player.will
-        boxSpd.Value = Game.player.speed
+        boxHealth.Value = Game.player1.health * Game.player1.getMaxHealth()
+        boxMaxHealth.Value = Game.player1.maxHealth
+        boxMana.Value = Game.player1.mana
+        boxMaxMana.Value = Game.player1.maxMana
+        boxHunger.Value = Game.player1.hunger
+        boxAtk.Value = Game.player1.attack
+        boxDef.Value = Game.player1.defence
+        boxWil.Value = Game.player1.will
+        boxSpd.Value = Game.player1.speed
         boxEvd.Value = -0
-        boxGold.Value = Game.player.gold
+        boxGold.Value = Game.player1.gold
 
         pnlSC.BackColor = playerPortrait.skincolor
         pnlHC.BackColor = Color.FromArgb(255, playerPortrait.haircolor.R, playerPortrait.haircolor.G, playerPortrait.haircolor.B)
@@ -88,13 +88,13 @@ Public Class Debug_Window
                 groupBoxes.Add(control)
             End If
         Next
-        If groupBoxes.Count <> Game.player.perks.Count Then
+        If groupBoxes.Count <> Game.player1.perks.Count Then
             tabPerks.Controls.Clear()
 
             Dim row = 0
             Dim col = 0
             Dim test = 0
-            For Each perk In Game.player.perks
+            For Each perk In Game.player1.perks
                 addPerk(perk, col, row)
                 row += 1
                 Dim control As Control = tabPerks.Controls.Item(tabPerks.Controls.Count - 1)
@@ -121,7 +121,7 @@ Public Class Debug_Window
                     End If
 
                     If num IsNot Nothing AndAlso lbl IsNot Nothing Then
-                        num.Value = Game.player.perks(lbl.Text)
+                        num.Value = Game.player1.perks(lbl.Text)
                         Exit For
                     End If
                 Next
@@ -144,18 +144,18 @@ Public Class Debug_Window
         boxTrapSizeDependence.Value = Game.trapSizeDependence
     End Sub
     Private Sub OnClose(sender As Object, e As EventArgs) Handles MyBase.FormClosing
-        Game.player.drawPort()
+        Game.player1.drawPort()
     End Sub
 
     Private Sub loadPortrait()
         picPreview.Image = Game.picPortrait.BackgroundImage
-        picPreview.BackgroundImage = Game.player.prt.iarr(pind.bkg)
+        picPreview.BackgroundImage = Game.player1.prt.iarr(pind.bkg)
         Dim PADDING = 0.1
         Dim w As Integer = 146
         Dim h As Integer = 216
 
         Dim attr As List(Of image)()
-        If Game.player.prt.sexBool Then
+        If Game.player1.prt.sexBool Then
             attr = Portrait.imgLib.fAttributes
         Else
             attr = Portrait.imgLib.mAttributes
@@ -235,7 +235,7 @@ Public Class Debug_Window
                     map.SetPixel(boardX + 1, boardY + 1, Color.Yellow)
                 ElseIf (Game.currfloor.mBoard(boardY, boardX).Text = "H") Then 'Stairs
                     map.SetPixel(boardX + 1, boardY + 1, Color.Sienna)
-                ElseIf (Game.currfloor.mBoard(boardY, boardX).Text = "@" And Game.player.pos.X = boardX And Game.player.pos.Y = boardY) Then 'Player
+                ElseIf (Game.currfloor.mBoard(boardY, boardX).Text = "@" And Game.player1.pos.X = boardX And Game.player1.pos.Y = boardY) Then 'Player
                     map.SetPixel(boardX + 1, boardY + 1, Color.LawnGreen)
                 ElseIf (Game.currfloor.mBoard(boardY, boardX).Text = "@") Then 'Statue
                     map.SetPixel(boardX + 1, boardY + 1, Color.LightSlateGray)
@@ -344,7 +344,7 @@ Public Class Debug_Window
     Private Sub updateInventoryList()
         inventoryList.Clear()
         boxInventory.Items.Clear()
-        Dim p_inv = Game.player.inv
+        Dim p_inv = Game.player1.inv
         For i = 0 To p_inv.upperBound
             If p_inv.item(i).count > 0 Then
                 inventoryList.Add(p_inv.getKeyByID(i) & " x" & p_inv.item(i).count)
@@ -359,7 +359,7 @@ Public Class Debug_Window
     Private Sub updateItemsList()
         itemsList.Clear()
         boxItems.Items.Clear()
-        Dim p_inv = Game.player.inv
+        Dim p_inv = Game.player1.inv
         For i = 0 To p_inv.upperBound
             itemsList.Add(p_inv.getKeyByID(i))
         Next
@@ -413,44 +413,44 @@ Public Class Debug_Window
 
     Private Sub boxName_TextChanged(sender As Object, e As EventArgs) Handles boxName.TextChanged
         If boxName.Text.Trim() <> "" Then
-            Game.player.name = boxName.Text.Trim()
+            Game.player1.name = boxName.Text.Trim()
         End If
     End Sub
 
     Private Sub boxHealth_ValueChanged(sender As Object, e As EventArgs) Handles boxHealth.ValueChanged
-        Game.player.health = boxHealth.Value / Game.player.getmaxHealth
+        Game.player1.health = boxHealth.Value / Game.player1.getmaxHealth
     End Sub
 
     Private Sub boxMaxHealth_ValueChanged(sender As Object, e As EventArgs) Handles boxMaxHealth.ValueChanged
-        Game.player.maxHealth = boxMaxHealth.Value
+        Game.player1.maxHealth = boxMaxHealth.Value
     End Sub
 
     Private Sub boxMana_ValueChanged(sender As Object, e As EventArgs) Handles boxMana.ValueChanged
-        Game.player.mana = boxMana.Value
+        Game.player1.mana = boxMana.Value
     End Sub
 
     Private Sub boxMaxMana_ValueChanged(sender As Object, e As EventArgs) Handles boxMaxMana.ValueChanged
-        Game.player.maxMana = boxMaxMana.Value
+        Game.player1.maxMana = boxMaxMana.Value
     End Sub
 
     Private Sub boxHunger_ValueChanged(sender As Object, e As EventArgs) Handles boxHunger.ValueChanged
-        Game.player.hunger = boxHunger.Value
+        Game.player1.hunger = boxHunger.Value
     End Sub
 
     Private Sub boxAtk_ValueChanged(sender As Object, e As EventArgs) Handles boxAtk.ValueChanged
-        Game.player.attack = boxAtk.Value
+        Game.player1.attack = boxAtk.Value
     End Sub
 
     Private Sub boxDef_ValueChanged(sender As Object, e As EventArgs) Handles boxDef.ValueChanged
-        Game.player.defence = boxDef.Value
+        Game.player1.defence = boxDef.Value
     End Sub
 
     Private Sub boxWil_ValueChanged(sender As Object, e As EventArgs) Handles boxWil.ValueChanged
-        Game.player.will = boxWil.Value
+        Game.player1.will = boxWil.Value
     End Sub
 
     Private Sub boxSpd_ValueChanged(sender As Object, e As EventArgs) Handles boxSpd.ValueChanged
-        Game.player.speed = boxSpd.Value
+        Game.player1.speed = boxSpd.Value
     End Sub
 
     Private Sub boxEvd_ValueChanged(sender As Object, e As EventArgs) Handles boxEvd.ValueChanged
@@ -458,19 +458,19 @@ Public Class Debug_Window
     End Sub
 
     Private Sub boxGold_ValueChanged(sender As Object, e As EventArgs) Handles boxGold.ValueChanged
-        Game.player.gold = boxGold.Value
+        Game.player1.gold = boxGold.Value
     End Sub
 
     Private Sub boxSex_CheckedChanged(sender As Object, e As EventArgs) Handles boxSex.CheckedChanged
         Dim before As Boolean = Nothing
-        If Not Game.player.prt.sexBool And boxSex.Checked Then
-            before = Game.player.prt.sexBool
-            Game.player.MtF()
-        ElseIf Game.player.prt.sexBool And Not boxSex.Checked Then
-            before = Game.player.prt.sexBool
-            Game.player.FtM()
+        If Not Game.player1.prt.sexBool And boxSex.Checked Then
+            before = Game.player1.prt.sexBool
+            Game.player1.MtF()
+        ElseIf Game.player1.prt.sexBool And Not boxSex.Checked Then
+            before = Game.player1.prt.sexBool
+            Game.player1.FtM()
         End If
-        If (Not before = Nothing) And (Game.player.prt.sexBool = before) Then
+        If (Not before = Nothing) And (Game.player1.prt.sexBool = before) Then
             MessageBox.Show("Something prevents the player's sex from changing")
             boxSex.Checked = before
         Else
@@ -482,37 +482,37 @@ Public Class Debug_Window
     Private Sub pnlSC_Paint(sender As Object, e As EventArgs) Handles pnlSC.Click
         Dim cd As New SCPicker
         cd.ShowDialog()
-        Game.player.changeSkinColor(cd.sc)
+        Game.player1.changeSkinColor(cd.sc)
         CType(sender, Panel).BackColor = cd.sc
         cd.Dispose()
-        picPreview.image = Portrait.CreateBMP(Game.player.prt.iArr)
+        picPreview.image = Portrait.CreateBMP(Game.player1.prt.iArr)
     End Sub
 
     Private Sub pnlHC_Paint(sender As Object, e As EventArgs) Handles pnlHC.Click
         Dim cd As New ColorDialog()
-        cd.Color = Game.player.prt.haircolor
+        cd.Color = Game.player1.prt.haircolor
         cd.ShowDialog()
         Dim c As Color = Color.FromArgb(boxAlpha.Value, cd.Color.R, cd.Color.G, cd.Color.B)
-        Game.player.changeHairColor(c)
+        Game.player1.changeHairColor(c)
         cd.Dispose()
-        picPreview.image = Portrait.CreateBMP(Game.player.prt.iArr)
+        picPreview.image = Portrait.CreateBMP(Game.player1.prt.iArr)
     End Sub
 
     Private Sub boxAlpha_ValueChanged(sender As Object, e As EventArgs) Handles boxAlpha.ValueChanged
-        Dim c As Color = Color.FromArgb(boxAlpha.Value, Game.player.prt.haircolor.R, Game.player.prt.haircolor.G, Game.player.prt.haircolor.B)
-        Game.player.changeHairColor(c)
-        picPreview.image = Portrait.CreateBMP(Game.player.prt.iArr)
+        Dim c As Color = Color.FromArgb(boxAlpha.Value, Game.player1.prt.haircolor.R, Game.player1.prt.haircolor.G, Game.player1.prt.haircolor.B)
+        Game.player1.changeHairColor(c)
+        picPreview.image = Portrait.CreateBMP(Game.player1.prt.iArr)
     End Sub
 
     Private Sub clickOnPic(sender As Object, e As EventArgs)
         Dim tab As Integer = sender.Name.Split(":")(0)
         Dim pic As Integer = sender.Name.Split(":")(1)
 
-        Game.player.prt.iArr(tab) = CType(sender, PictureBox).image
-        Game.player.prt.setIAInd(tab, pic, Game.player.prt.sexBool, False)
+        Game.player1.prt.iArr(tab) = CType(sender, PictureBox).image
+        Game.player1.prt.setIAInd(tab, pic, Game.player1.prt.sexBool, False)
 
-        'picPreview.image = CharacterGenerator.recolor(portrait.createBMP(Game.player.iArr), Game.player.skincolor)
-        picPreview.image = Portrait.CreateBMP(Game.player.prt.iArr)
+        'picPreview.image = Portrait.recolor(portrait.createBMP(Game.player1.iArr), Game.player1.skincolor)
+        picPreview.image = Portrait.CreateBMP(Game.player1.prt.iArr)
     End Sub
 
     Private Sub boxInventoryFilter_TextChanged(sender As Object, e As EventArgs) Handles boxInventoryFilter.TextChanged
@@ -548,7 +548,7 @@ Public Class Debug_Window
             Dim name As String = boxInventory.Items(selected(0)).ToString()
             name = name.Substring(0, name.IndexOf(" x")).Trim()
 
-            Dim p_inv = Game.player.inv
+            Dim p_inv = Game.player1.inv
 
             Dim itemInd As Integer = p_inv.idOfKey(name)
             If number.Value >= p_inv.item(itemInd).count Then
@@ -570,15 +570,15 @@ Public Class Debug_Window
             Do Until selected.Count = 0
                 Dim name As String = boxInventory.Items(selected(0)).ToString()
                 name = name.Substring(0, name.IndexOf(" x")).Trim()
-                Game.player.inv.add(name, CInt(number.Value))
+                Game.player1.inv.add(name, CInt(number.Value))
                 Dim temp As Integer = selected(0)
                 boxInventory.Items.RemoveAt(selected(0))
-                boxInventory.Items.Insert(temp, name & " x" & Game.player.inv.item(name).count)
+                boxInventory.Items.Insert(temp, name & " x" & Game.player1.inv.item(name).count)
             Loop
         ElseIf boxItems.SelectedIndices.Count > 0 Then
             Do Until boxItems.SelectedIndices.Count = 0
                 Dim name As String = boxItems.Items(boxItems.SelectedIndices(0))
-                Game.player.inv.add(name, CInt(number.Value))
+                Game.player1.inv.add(name, CInt(number.Value))
                 updateInventoryList()
                 boxItems.SelectedIndices.Remove(boxItems.SelectedIndices(0))
             Loop
@@ -661,7 +661,7 @@ Public Class Debug_Window
 
     Private Sub numericUpDownChanged(ByVal sender As Object, ByVal e As EventArgs)
         Dim name As String = sender.Name.Substring(0, sender.Name.Length - 3)
-        Game.player.perks(name) = sender.Value
+        Game.player1.perks(name) = sender.Value
     End Sub
 
     Private Sub btnReset_Click(sender As Object, e As EventArgs) Handles btnGenerationReset.Click

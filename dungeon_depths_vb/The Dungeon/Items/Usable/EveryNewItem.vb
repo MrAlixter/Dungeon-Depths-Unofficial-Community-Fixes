@@ -11,14 +11,12 @@
 
         MyBase.isRandoTFAcceptable = False
     End Sub
-    Public Overrides Sub use()
-        Dim p As Player = Game.player
-
-        For i = 146 To 182
+    Public Overrides Sub use(ByRef p As Player)
+        For i = 183 To 195
             p.inv.add(i, 1)
         Next
 
-        Game.pushLblEvent("Added one of every new item in v0.9!")
+        Game.pushLblEvent("Added one of every new item in v0.9.5!")
         count -= 1
     End Sub
 End Class

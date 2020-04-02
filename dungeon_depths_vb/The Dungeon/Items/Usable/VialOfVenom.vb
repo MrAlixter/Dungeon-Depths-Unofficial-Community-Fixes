@@ -11,10 +11,9 @@
         MyBase.value = 100
     End Sub
 
-    Overrides Sub use()
+    Overrides Sub use(ByRef p As Player)
         If Me.getUsable() = False Then Exit Sub
         Game.pushLstLog("You drink the " & getName())
-        Dim p As Player = Game.player
         Dim out As String = "You drink the vial of venom!"
 
         If p.perks("avenom") = -1 And p.perks("svenom") = -1 Then

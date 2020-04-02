@@ -28,7 +28,7 @@
         Return Player.calcDamage(dmg, m.defence)
     End Function
 
-    Public Overrides Sub use()
-        wThrow(Game.player, Game.player.currTarget)
+    Public Overrides Sub use(ByRef p As Player)
+        wThrow(p, p.currTarget)
     End Sub
 End Class

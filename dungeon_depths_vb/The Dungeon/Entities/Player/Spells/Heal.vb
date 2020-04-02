@@ -8,13 +8,13 @@
         MyBase.setcost(3)
     End Sub
     Public Overrides Sub effect()
-        Dim hdif = 50 / Game.player.getmaxHealth
-        If Game.player.health + hdif >= Game.player.getmaxHealth Then hdif = 1 - Game.player.health
+        Dim hdif = 50 / Game.player1.getmaxHealth
+        If Game.player1.health + hdif >= Game.player1.getmaxHealth Then hdif = 1 - Game.player1.health
 
-        Game.player.health += hdif
+        Game.player1.health += hdif
 
-        Game.pushLstLog("You heal yourself for " & hdif * Game.player.getmaxHealth & " health!")
-        Game.pushLblEvent("You heal yourself for " & hdif * Game.player.getmaxHealth & " health!")
+        Game.pushLstLog("You heal yourself for " & hdif * Game.player1.getmaxHealth & " health!")
+        Game.pushLblEvent("You heal yourself for " & hdif * Game.player1.getmaxHealth & " health!")
         
     End Sub
 End Class

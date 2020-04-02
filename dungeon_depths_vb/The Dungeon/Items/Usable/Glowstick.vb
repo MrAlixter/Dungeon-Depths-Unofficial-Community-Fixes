@@ -11,31 +11,31 @@
         MyBase.value = 250
     End Sub
 
-    Overrides Sub use()
+    Overrides Sub use(ByRef p As Player)
         If Me.getUsable() = False Then Exit Sub
         Game.pushLstLog("You use the " & getName())
 
         For indY = -3 To 3
             For indX = -3 To 3
-                If Game.player.pos.Y + indY < Game.currFloor.mBoardHeight And Game.player.pos.Y + indY >= 0 And Game.player.pos.X + indX < Game.currFloor.mBoardWidth And Game.player.pos.X + indX >= 0 Then
-                    If Game.currFloor.mBoard(Game.player.pos.Y + indY, Game.player.pos.X + indX).Text = "H" And Game.currFloor.mBoard(Game.player.pos.Y + indY, Game.player.pos.X + indX).Tag < 2 Then
-                        Game.currFloor.mBoard(Game.player.pos.Y + indY, Game.player.pos.X + indX).ForeColor = Color.Black
+                If p.pos.Y + indY < Game.currFloor.mBoardHeight And p.pos.Y + indY >= 0 And p.pos.X + indX < Game.currFloor.mBoardWidth And p.pos.X + indX >= 0 Then
+                    If Game.currFloor.mBoard(p.pos.Y + indY, p.pos.X + indX).Text = "H" And Game.currFloor.mBoard(p.pos.Y + indY, p.pos.X + indX).Tag < 2 Then
+                        Game.currFloor.mBoard(p.pos.Y + indY, p.pos.X + indX).ForeColor = Color.Black
                         Game.pushLstLog("Floor " & Game.mDun.numCurrFloor & ": Staircase Discovered")
                     End If
-                    If Game.currFloor.mBoard(Game.player.pos.Y + indY, Game.player.pos.X + indX).Text = "#" And Game.currFloor.mBoard(Game.player.pos.Y + indY, Game.player.pos.X + indX).Tag < 2 Then
-                        Game.currFloor.mBoard(Game.player.pos.Y + indY, Game.player.pos.X + indX).ForeColor = Color.Black
+                    If Game.currFloor.mBoard(p.pos.Y + indY, p.pos.X + indX).Text = "#" And Game.currFloor.mBoard(p.pos.Y + indY, p.pos.X + indX).Tag < 2 Then
+                        Game.currFloor.mBoard(p.pos.Y + indY, p.pos.X + indX).ForeColor = Color.Black
                         Game.pushLstLog("Chest discovered!")
                     End If
-                    If Game.currFloor.mBoard(Game.player.pos.Y + indY, Game.player.pos.X + indX).Text = "$" And Game.currFloor.mBoard(Game.player.pos.Y + indY, Game.player.pos.X + indX).Tag < 2 Then
-                        Game.currFloor.mBoard(Game.player.pos.Y + indY, Game.player.pos.X + indX).ForeColor = Color.Navy
+                    If Game.currFloor.mBoard(p.pos.Y + indY, p.pos.X + indX).Text = "$" And Game.currFloor.mBoard(p.pos.Y + indY, p.pos.X + indX).Tag < 2 Then
+                        Game.currFloor.mBoard(p.pos.Y + indY, p.pos.X + indX).ForeColor = Color.Navy
                         Game.pushLstLog("Shop discovered!")
                     End If
-                    If Game.currFloor.mBoard(Game.player.pos.Y + indY, Game.player.pos.X + indX).Tag = 1 Then Game.currFloor.mBoard(Game.player.pos.Y + indY, Game.player.pos.X + indX).Tag = 2
+                    If Game.currFloor.mBoard(p.pos.Y + indY, p.pos.X + indX).Tag = 1 Then Game.currFloor.mBoard(p.pos.Y + indY, p.pos.X + indX).Tag = 2
                 End If
             Next
         Next
 
-        Game.player.perks("lightsource") = 60
+        p.perks("lightsource") = 60
 
         Dim r As Integer = (Int(Rnd() * 7))
         If r = 0 Then
@@ -56,14 +56,14 @@
                     c = Color.GreenYellow
             End Select
             Game.pushLblEvent("As you crack the glowstick to activate it, the tube cracks open slightly, spraying some fluid on your face.  You wipe it off, and while you don't feel any different, your hair seems a little more...vibrant than it was before.")
-            Game.player.prt.haircolor = c
-            Game.player.drawPort()
-            If Transformation.canBeTFed(Game.player) Then
-                Game.player.pState.save(Game.player)
+            p.prt.haircolor = c
+            p.drawPort()
+            If Transformation.canBeTFed(p) Then
+                p.pState.save(p)
             End If
         End If
         Game.drawBoard()
         count -= 1
-        
+
     End Sub
 End Class

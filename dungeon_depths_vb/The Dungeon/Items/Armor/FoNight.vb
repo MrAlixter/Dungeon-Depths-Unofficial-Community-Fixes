@@ -29,13 +29,15 @@
         MyBase.isMonsterDrop = False
     End Sub
 
-    Public Overrides Sub onEquip()
-        oldHat = Game.player.prt.iArrInd(pInd.hat)
+    Public Overrides Sub onEquip(ByRef p As Player)
+        MyBase.onEquip(p)
+        oldHat = p.prt.iArrInd(pInd.hat)
 
-        Game.player.prt.setIAInd(pInd.hat, 11, True, True)
+        p.prt.setIAInd(pInd.hat, 11, True, True)
     End Sub
 
-    Public Overrides Sub onUnequip()
-        Game.player.prt.iArrInd(pInd.hat) = oldHat
+    Public Overrides Sub onUnequip(ByRef p As Player)
+        MyBase.onUnequip(p)
+        p.prt.iArrInd(pInd.hat) = oldHat
     End Sub
 End Class

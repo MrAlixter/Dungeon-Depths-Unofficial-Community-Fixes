@@ -11,7 +11,7 @@
         MyBase.value = 500
     End Sub
 
-    Overrides Sub use()
+    Overrides Sub use(ByRef p As Player)
         If Int(Rnd() * 10) = -1 Then
             'tf
         Else
@@ -20,7 +20,7 @@
             Dim sName As String = "ERROR"
             Dim ct As Integer = 0
             Dim out As String = ""
-            While ct < 1 Or Game.player.knownSpecials.Contains(sName)
+            While ct < 1 Or p.knownSpecials.Contains(sName)
                 ct += 1
                 Dim spec As Integer = CInt(Int(Rnd() * (specials.Length)))
                 Select Case spec
@@ -32,7 +32,7 @@
                     Exit Sub
                 End If
             End While
-            If Not Game.player.knownSpecials.Contains(sName) Then Game.player.knownSpecials.Add(sName)
+            If Not p.knownSpecials.Contains(sName) Then p.knownSpecials.Add(sName)
             Game.pushLstLog("You read the " & getName() & ". " & sName & " learned!")
             If Not out.Equals("") Then
                 Game.pushLstLog(out)
@@ -41,7 +41,7 @@
                 Game.pushLblEvent("You read the " & getName() & ". " & sName & " learned!")
             End If
         End If
-        Game.player.specialRoute()
+        p.specialRoute()
         count -= 1
     End Sub
 End Class

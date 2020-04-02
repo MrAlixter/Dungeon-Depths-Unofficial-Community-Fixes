@@ -16,7 +16,7 @@ Public MustInherit Class Transformation
 
     'constuctors
     Sub New(n As Integer, tts As Integer, wi As Double, cbs As Boolean)
-        Dim p As Player = Game.player
+        Dim p As Player = Game.player1
         If canBeTFed(p) Then
             p.pState.save(p)
         End If
@@ -114,14 +114,14 @@ Public MustInherit Class Transformation
         End Select
     End Function
     Shared Function canBeTFed(ByRef p As Player) As Boolean
-        If Game.player.ongoingTFs.Count < 1 And
+        If Game.player1.ongoingTFs.Count < 1 And
             (Not p.polymorphs.ContainsKey(p.pClass.name) And Not p.polymorphs.ContainsKey(p.pForm.name)) And
             Not p.pClass.name.Equals("Magical Girl") And
             Not p.pClass.name.Equals("Valkyrie") And
             Not p.pClass.name.Equals("Unconscious") And
             Not p.pForm.name.Equals("Blowup Doll") And
             Not p.perks("astatue") > 1 Then Return True
-        'MsgBox(Game.player.ongoingTFs.Count < 1 & vbCrLf &
+        'MsgBox(Game.player1.ongoingTFs.Count < 1 & vbCrLf &
         '    (Not p.polymorphs.ContainsKey(p.pClass.name) And Not p.polymorphs.ContainsKey(p.pForm.name)) & vbCrLf &
         '    Not p.pClass.name.Equals("Magical Girl") & vbCrLf &
         '    Not p.pClass.name.Equals("Valkyrie") & vbCrLf &
@@ -162,7 +162,7 @@ Public MustInherit Class Transformation
         turnsTilNextStep += generatWILResistance()
     End Sub
     Function generatWILResistance()
-        Return CInt(turnsTilNextStep * (Game.player.getWIL() / 20) * wilImpact)
+        Return CInt(turnsTilNextStep * (Game.player1.getWIL() / 20) * wilImpact)
     End Function
 
     'toString for save / load

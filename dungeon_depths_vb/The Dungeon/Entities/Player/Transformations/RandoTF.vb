@@ -18,7 +18,7 @@
     Public Sub step1()
 
         'assign a pointer to the player character
-        Dim p As player = game.player
+        Dim p As player = game.player1
         p.sState.load(p)
         If Game.preBSStartState Is Nothing Then Game.preBSStartState = New State(p)
 
@@ -47,8 +47,8 @@
         p.aBuff = 0
         p.dBuff = 0
 
-        p.prt.hornInd = 0
-        p.prt.wingInd = 0
+        p.prt.setIAInd(pInd.wings, 0, True, True)
+        p.prt.setIAInd(pInd.horns, 0, True, False)
 
         'set a random hair color
         p.prt.haircolor = Color.FromArgb(255, Int(Rnd() * 125) + 100, Int(Rnd() * 125) + 100, Int(Rnd() * 125) + 100)
@@ -98,7 +98,7 @@
 
         p.TextColor = Color.White
         If game.mDun.numCurrFloor < 6 Then p.pImage = Game.picPlayer.BackgroundImage Else p.pImage = Game.picPlayerf.BackgroundImage
-        p.reverseBSRoute()
+        p.reverseallroute()
         p.sState.save(p)
 
         p.inv.invNeedsUDate = True
@@ -112,7 +112,7 @@
     End Sub
     Sub setLoadout()
         Randomize()
-        Dim p = Game.player
+        Dim p = Game.player1
         Dim armor() As Integer = {}
         Dim weapon() As Integer = {}
         Dim armorIndex As Integer = -1
@@ -165,8 +165,8 @@
                 armor = New Integer() {39, 74}
                 weapon = New Integer() {6, 21, 22, 23, 63, 63, 63, 177}
                 p.sex = "Female"
-                p.prt.wingInd = 2
-                p.prt.hornInd = 3
+                p.prt.setIAInd(pInd.wings, 2, True, False)
+                p.prt.setIAInd(pInd.horns, 3, True, False)
                 p.prt.skincolor = Color.FromArgb(255, 255, 105, 180)
             Case 4   'succubus bimbo
                 p.pForm = p.forms("Succubus")
@@ -174,8 +174,8 @@
                 p.sex = "Female"
                 armor = New Integer() {7, 12, 18, 20, 39, 47, 71, 72, 78, 85, 103, 105, 107, 116, 129, 177}
                 weapon = New Integer() {6, 21, 22, 23, 63, 63, 63}
-                p.prt.wingInd = 2
-                p.prt.hornInd = 3
+                p.prt.setIAInd(pInd.wings, 2, True, False)
+                p.prt.setIAInd(pInd.horns, 3, True, False)
                 p.prt.skincolor = Color.FromArgb(255, 255, 105, 180)
             Case 10   'barbarian
                 p.pClass = p.classes("Barbarian")
@@ -198,7 +198,7 @@
                 armor = New Integer() {72}
                 weapon = New Integer() {6, 21, 22, 23, 63, 63, 63}
                 p.sex = "Female"
-                p.prt.wingInd = 2
+                p.prt.setIAInd(pInd.wings, 2, True, False)
                 p.prt.haircolor = Color.FromArgb(255, 155, 0, 0)
             Case 15   'valkyrie
                 p.pForm = p.forms("Angel")
@@ -206,7 +206,7 @@
                 armor = New Integer() {7, 19, 83, 85, 95, 105}
                 weapon = New Integer() {6, 23, 40, 112, 177, 176}
                 p.sex = "Female"
-                p.prt.wingInd = 1
+                p.prt.setIAInd(pInd.wings, 1, True, False)
             Case 16   'bunny girl
                 p.pClass = p.classes("Bunny Girl")
                 armor = New Integer() {16, 94, 129}
@@ -220,14 +220,14 @@
                 armor = New Integer() {19, 71, 101}
                 weapon = New Integer() {6, 23, 40, 118, 177}
                 p.sex = "Female"
-                p.prt.hornInd = 2
+                p.prt.setIAInd(pInd.horns, 2, True, False)
             Case 18   'cow male
                 p.pForm = p.forms("Minotaur Bull")
                 p.pClass = p.classes("Barbarian")
                 armor = New Integer() {19, 101}
                 weapon = New Integer() {6, 23, 40, 118, 176}
                 p.sex = "Male"
-                p.prt.hornInd = 2
+                p.prt.setIAInd(pInd.horns, 2, True, False)
             Case 19   'basic warrior
                 p.pClass = p.classes("Warrior")
                 armor = New Integer() {5, 19, 46, 83}
@@ -249,7 +249,7 @@
         For i = 0 To 4
             Dim invInd As Integer = 8
             While Not p.inv.item(invInd).isRandoTFAcceptable
-                invInd = Int(Rnd() * (Game.player.inv.upperBound + 1))
+                invInd = Int(Rnd() * (Game.player1.inv.upperBound + 1))
             End While
             p.inv.add(invInd, CInt(Int(Rnd() * 2) + 1))
         Next
@@ -261,7 +261,7 @@
         If p.sex.Equals("Female") Then
             p.breastSize = Int(Rnd() * 3) + 1
         Else
-            For i = 1 To 16
+            For i = 1 To Portrait.NUM_IMG_LAYERS
                 p.prt.setIAInd(i, p.prt.iArrInd(i).Item1, False, False)
             Next
             p.breastSize = -1
@@ -312,7 +312,7 @@
                           " every inch of it is flushing with arousal.", AddressOf floor4FirstBossEncounterP2)
     End Sub
     Shared Sub floor4FirstBossEncounterP2()
-        Dim p As player = game.player
+        Dim p As player = game.player1
         Game.preBSBody = New State(p)
         Game.preBSInventory = New ArrayList()
         For i = 0 To p.inv.upperBound
@@ -352,7 +352,7 @@
                           "maybe if you can find her again you can straighten this out.")
     End Sub
     Shared Sub floor4revert()
-        Dim p As player = game.player
+        Dim p As player = game.player1
         Game.preBSStartState.load(p)
         p.sState.save(p)
         Game.preBSBody.load(p)
@@ -363,17 +363,17 @@
         Next
         p.canMoveFlag = True
         Game.lblEvent.Visible = False
-        Game.player = p
+        Game.player1 = p
         p.UIupdate()
     End Sub
     Shared Sub floor4keep()
-        Dim p As player = game.player
+        Dim p As player = game.player1
         For i = 0 To Game.preBSInventory.Count - 1
             p.inv.add(i, Game.preBSInventory(i))
         Next
         p.canMoveFlag = True
         Game.lblEvent.Visible = False
-        Game.player = p
+        Game.player1 = p
         p.UIupdate()
     End Sub
 
@@ -382,7 +382,7 @@
     End Sub
 
     Public Overrides Function getNextStep(stage As Integer) As Action
-        Dim p As player = game.player
+        Dim p As player = game.player1
         Select Case stage
             Case 0
                 Return AddressOf step1

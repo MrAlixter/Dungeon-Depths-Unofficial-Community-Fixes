@@ -42,7 +42,7 @@
         picNCP.AddRange({picNormal, Game.picFrog.BackgroundImage, Game.picSheep.BackgroundImage, picPrincess, picBunny})
 
         picNCP.AddRange({Game.picHTHypno.BackgroundImage, Game.picHTFV.BackgroundImage, Game.picHTCow.BackgroundImage, Game.picHTDoll.BackgroundImage})
-        If speed = Game.player.speed Then speed -= 1
+        If speed = Game.player1.speed Then speed -= 1
         MyBase.title = " the "
     End Sub
 
@@ -82,7 +82,7 @@
         ElseIf npcIndex = 2 Then
             Game.pushNPCDialog("BLEEEET!")
         ElseIf npcIndex = 3 Then
-            Game.pushNPCDialog("Well salutations there, " & Game.player.pClass.name & ".  Please let me know if there's anything I can do to help you.")
+            Game.pushNPCDialog("Well salutations there, " & Game.player1.pClass.name & ".  Please let me know if there's anything I can do to help you.")
         ElseIf npcIndex = 4 Then
             Game.pushNPCDialog("HI!  I, like, don't know if it would be smart for me to try to hypno...hypotho...do my thing to you right now, but I totally have some tapes you can use!")
         ElseIf npcIndex = 8 Then
@@ -157,7 +157,7 @@
         Game.pushNPCDialog("So, anything else?")
         Game.picNPC.BackgroundImage = picNCP(npcIndex)
         Game.showNPCButtons()
-        Game.player.canMoveFlag = False
+        Game.player1.canMoveFlag = False
     End Sub
     Public Overrides Sub toDoll()
         Game.pushNPCDialog("...")

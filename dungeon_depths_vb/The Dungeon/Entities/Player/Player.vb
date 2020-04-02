@@ -11,9 +11,12 @@
     Public level, xp, nextLevelXp As Integer
 
     Public breastSize As Integer = -1
+    Public dickSize As Integer = -1
+    Public buttSize As Integer = -1
+
     Public hunger As Integer
     Public equippedWeapon As Weapon = New BareFists
-    Public equippedArmor As Armor = New CommonClothes
+    Public equippedArmor As Armor = New CommonClothes0
     Public equippedAcce As Accessory = New noAcce
 
     Public Shadows currTarget As NPC = Nothing
@@ -197,7 +200,7 @@
         drawPort()
         magicRoute()
         specialRoute()
-        bsizeroute()
+        allRoute()
 
         solFlag = False
     End Sub
@@ -239,6 +242,29 @@
         End If
         equippedAcce.add(1)
     End Sub
+    Private Sub setCommonClothes()
+        'assigns an accessory based on the created player portrait
+            Select Case prt.iArrInd(pInd.clothes).Item1
+            Case 0
+                equippedArmor = inv.item("Common_Clothes")
+            Case 1
+                equippedArmor = inv.item("Common_Armor")
+            Case 2
+                equippedArmor = inv.item("Common_Garb")
+            Case 3
+                equippedArmor = inv.item("Fancy_Clothes")
+            Case 4
+                equippedArmor = inv.item("Ordinary_Clothes")
+            Case 5
+                equippedArmor = inv.item("Common_Kimono")
+            Case 6
+                equippedArmor = inv.item("Sneaky_Clothes")
+            Case Else
+                equippedArmor = New Naked
+                equippedArmor.count -= 1
+        End Select
+        equippedArmor.add(1)
+    End Sub
     Public Sub setClassLoadout(ByVal s As String)
         'set the player's form baced on their ears
         If prt.iArrInd(pInd.ears).Item1 = 3 Then
@@ -248,9 +274,9 @@
         End If
 
         'sets default weapon/armor/accessory
-        equippedArmor = New CommonClothes
         equippedWeapon = New BareFists
         setStartingAccessory()
+        setCommonClothes()
         'set class
         pClass = classes(s)
         'sets loadout based on selected class
@@ -279,7 +305,7 @@
             inv.add(167, 1)
             prt.skincolor = Game.cShift(prt.skincolor, Color.ForestGreen, 15)
             equippedArmor = inv.item(166)
-            equippedArmor.onEquip()
+            equippedArmor.onEquip(Me)
             equippedWeapon = inv.item(167)
         ElseIf s = "Magical Girl" Then
             pClass = classes("Classless")
@@ -697,7 +723,6 @@
                 ElseIf layer = 3 Then
                     Dim tEarm As Armor = sState.equippedArmor
                     prt.setIAInd(layer, sState.iArrInd(layer).Item1, sState.iArrInd(layer).Item2, sState.iArrInd(layer).Item3)
-                    If tEarm.getName = "Goddess_Gown" Or tEarm.getName = "Succubus_Garb" Then tEarm = New CommonClothes
                     If Not tEarm.getName.Equals("Magical_Girl_Outfit") Then equippedArmor = tEarm
                 Else
                     prt.setIAInd(layer, sState.iArrInd(layer).Item1, sState.iArrInd(layer).Item2, sState.iArrInd(layer).Item3)
@@ -731,7 +756,6 @@
         Dim tpFormRP As String = pClass.revertPassage
 
         If tEweap.getName = "Magical_Girl_Wand" Then tEweap = New BareFists()
-        If tEarm.getName = "Goddess_Gown" Or tEarm.getName = "Succubus_Garb" Then tEarm = New CommonClothes
         pState.load(Me, False)
 
         mana = tMna
@@ -762,8 +786,8 @@
         End If
 
         Dim removeind = New List(Of Integer)
-        For i = 0 To Game.player.ongoingTFs.Count - 1
-            If Game.player.ongoingTFs(i).GetType().IsSubclassOf(GetType(PolymorphTF)) Then removeind.Add(i)
+        For i = 0 To Game.player1.ongoingTFs.Count - 1
+            If Game.player1.ongoingTFs(i).GetType().IsSubclassOf(GetType(PolymorphTF)) Then removeind.Add(i)
         Next
         For i = 0 To removeind.Count - 1
             ongoingTFs.RemoveAt(removeind(i))
@@ -811,7 +835,6 @@
                 ElseIf layer = 3 Then
                     Dim tEarm As Armor = pState.equippedArmor
                     prt.setIAInd(layer, pState.iArrInd(layer).Item1, pState.iArrInd(layer).Item2, pState.iArrInd(layer).Item3)
-                    If tEarm.getName = "Goddess_Gown" Or tEarm.getName = "Succubus_Garb" Then tEarm = New CommonClothes
                     If Not tEarm.getName.Equals("Magical_Girl_Outfit") Then equippedArmor = tEarm
                 Else
                     prt.setIAInd(layer, pState.iArrInd(layer).Item1, pState.iArrInd(layer).Item2, pState.iArrInd(layer).Item3)
@@ -1097,7 +1120,7 @@
             PerkEffects.targaxSwordTF()
         End If
         'shift toward prefered form
-        If Not prefForm Is Nothing AndAlso (pClass.name = "Thrall" Xor equippedAcce.getName.Equals("Slave_Collar")) AndAlso Not prefForm.playerMeetsForm(Game.player) And Not pForm.name.Equals("Half-Succubus") And Not perks("thrall") = 1 And Not perks("nekocurse") > -1 And Not perks("polymorphed") > -1 And Not perks("bimbotf") > -1 Then
+        If Not prefForm Is Nothing AndAlso (pClass.name = "Thrall" Xor equippedAcce.getName.Equals("Slave_Collar")) AndAlso Not prefForm.playerMeetsForm(Game.player1) And Not pForm.name.Equals("Half-Succubus") And Not perks("thrall") = 1 And Not perks("nekocurse") > -1 And Not perks("polymorphed") > -1 And Not perks("bimbotf") > -1 Then
             PerkEffects.thrallRestore()
         End If
         If perks("astatue") > -1 Then
@@ -1125,7 +1148,7 @@
         '|CURSES|
         'clothing curse
         If perks("slutcurse") > -1 Then
-            needsToUpdatePortrait = Equipment.clothingCurse1()
+            needsToUpdatePortrait = Equipment.clothingCurse1(Me)
         End If
         'curse of rust
         If perks("corust") > -1 Then
@@ -1329,6 +1352,8 @@
         End If
         sex = "Female"
         breastSize = 1
+        buttSize = 1
+        dickSize = -1
         idRouteMF()
         If perks("swordpossess") > -1 Then perks("swordpossess") = 0
     End Sub
@@ -1339,6 +1364,8 @@
         End If
         sex = "Male"
         breastSize = -1
+        buttSize = -1
+        dickSize = 1
         perks(2) = False
         idRouteFM()
         If perks("swordpossess") > -1 Then perks("swordpossess") = 0
@@ -1349,12 +1376,12 @@
             'checks for half reversion
             If Int(Rnd() * 2) = 0 Or halfRevertFlag = False Then
                 'handles routing for default options
-                If (i = 10 Or i = 9) And prt.iArrInd(i).Item1 < 5 Then
+                If (i = pInd.eyebrows Or i = pInd.eyes) And prt.iArrInd(i).Item1 < 5 Then
                     prt.setIAInd(i, prt.iArrInd(i).Item1, True, False)
                 Else
                     'handles routing for non-default options
                     Dim f = mfr(i).getFfromM(prt.iArrInd(i).Item1)
-                    If (i = 4 Or i = 7) And f = -1 Then f = 0
+                    If (i = pInd.face Or i = pInd.facemark) And f = -1 Then f = 0
                     If f <> -1 Then prt.setIAInd(i, f, True, True)
                 End If
             End If
@@ -1369,12 +1396,12 @@
             'checks for half reversion
             If Int(Rnd() * 2) = 0 Or halfRevertFlag = False Then
                 'handles routing for default options
-                If (i = 10 Or i = 9) And prt.iArrInd(i).Item1 < 5 Then
+                If (i = pInd.eyebrows Or i = pInd.eyes) And prt.iArrInd(i).Item1 < 5 Then
                     prt.setIAInd(i, prt.iArrInd(i).Item1, True, False)
                 Else
                     'handles routing for non-default options
                     Dim m = fmr(i).getMfromF(prt.iArrInd(i).Item1)
-                    If (i = 4 Or i = 7) And m = -1 Then m = 0
+                    If (i = pInd.face Or i = pInd.facemark) And m = -1 Then m = 0
                     If m <> -1 Then prt.setIAInd(i, m, True, True)
                 End If
             End If
@@ -1392,7 +1419,8 @@
 
         If breastSize >= -1 And breastSize < 7 Then
             breastSize += 1
-            reverseBSRoute()
+            reverseBSroute()
+            reverseUSRoute()
             Game.pushLstLog("+ 1 cup size!")
         Else
             Game.pushLstLog("Your breasts can get no larger!")
@@ -1405,7 +1433,8 @@
         End If
         If breastSize > -1 And breastSize <= 7 Then
             breastSize -= 1
-            reverseBSRoute()
+            reverseBSroute()
+            reverseUSRoute()
             Game.pushLstLog("- 1 cup size!")
         Else
             Game.pushLstLog("Your breasts can get no smaller!")
@@ -1414,48 +1443,263 @@
     Sub bsizeroute()
         If Portrait.imgLib Is Nothing Or prt.iArr Is Nothing Or
             prt.iArrInd Is Nothing Or solFlag Then Exit Sub
-        If (prt.checkFemInd(2, 0) Or prt.checkNDefFemInd(2, 5)) And breastSize <> 1 Then
+        If (prt.checkFemInd(pInd.chest, 2) Or prt.checkFemInd(pInd.chest, 9)) And breastSize <> 1 Then
             breastSize = 1
-        ElseIf (prt.checkNDefFemInd(2, 1) Or prt.checkNDefFemInd(2, 6) Or prt.checkNDefFemInd(2, 21)) And breastSize <> 2 Then
+        ElseIf (prt.checkFemInd(pInd.chest, 3) Or prt.checkFemInd(pInd.chest, 10)) And breastSize <> 2 Then
             breastSize = 2
-        ElseIf (prt.checkNDefFemInd(2, 2) Or prt.checkNDefFemInd(2, 7) Or prt.checkNDefFemInd(2, 16)) And breastSize <> 3 Then
+        ElseIf (prt.checkFemInd(pInd.chest, 4) Or prt.checkFemInd(pInd.chest, 11)) And breastSize <> 3 Then
             breastSize = 3
-        ElseIf (prt.checkNDefFemInd(2, 3) Or prt.checkNDefFemInd(2, 8)) And breastSize <> 4 Then
+        ElseIf (prt.checkFemInd(pInd.chest, 5) Or prt.checkFemInd(pInd.chest, 12)) And breastSize <> 4 Then
             breastSize = 4
-        ElseIf (prt.checkNDefFemInd(2, 4) Or prt.checkNDefFemInd(2, 9)) And breastSize <> 5 Then
+        ElseIf (prt.checkFemInd(pInd.chest, 6) Or prt.checkFemInd(pInd.chest, 13)) And breastSize <> 5 Then
             breastSize = 5
-        ElseIf (prt.checkNDefFemInd(2, 17) Or prt.checkNDefFemInd(2, 18)) And breastSize <> 6 Then
+        ElseIf (prt.checkFemInd(pInd.chest, 7) Or prt.checkFemInd(pInd.chest, 14)) And breastSize <> 6 Then
             breastSize = 6
-        ElseIf (prt.checkNDefFemInd(2, 19) Or prt.checkNDefFemInd(2, 20)) And breastSize <> 7 Then
+        ElseIf (prt.checkFemInd(pInd.chest, 8) Or prt.checkFemInd(pInd.chest, 15)) And breastSize <> 7 Then
             breastSize = 7
-        ElseIf (prt.checkNDefMalInd(2, 2)) And breastSize <> 0 Then
+        ElseIf (prt.checkMalInd(pInd.chest, 1)) And breastSize <> 0 Then
             breastSize = 0
-        ElseIf (prt.checkMalInd(2, 0)) And breastSize <> -1 Then
+        ElseIf (prt.checkMalInd(pInd.chest, 0)) And breastSize <> -1 Then
             breastSize = -1
         End If
     End Sub
-    Public Sub reverseBSRoute()
+    Public Sub reverseBSroute(Optional ByVal shoulderFlag = True)
         Select Case breastSize
             Case -1
-                prt.setIAInd(pInd.body, 0, False, False)
+                If shoulderFlag Then prt.setIAInd(pInd.shoulders, 0, False, False)
+                prt.setIAInd(pInd.chest, 0, True, False)
+                buttSize = -1
             Case 0
-                prt.setIAInd(pInd.body, 2, False, True)
+                If shoulderFlag Then prt.setIAInd(pInd.shoulders, 1, False, False)
+                prt.setIAInd(pInd.chest, 1, True, False)
+                buttSize = 0
             Case 1
-                prt.setIAInd(pInd.body, 0, True, False)
+                If shoulderFlag Then prt.setIAInd(pInd.shoulders, 2, True, False)
+                prt.setIAInd(pInd.chest, 9, True, False)
+                If buttSize < 1 Then buttSize = 1
             Case 2
-                prt.setIAInd(pInd.body, 1, True, True)
+                If shoulderFlag Then prt.setIAInd(pInd.shoulders, 2, True, False)
+                prt.setIAInd(pInd.chest, 10, True, False)
+                If buttSize < 1 Then buttSize = 1
             Case 3
-                prt.setIAInd(pInd.body, 2, True, True)
+                If shoulderFlag Then prt.setIAInd(pInd.shoulders, 2, True, False)
+                prt.setIAInd(pInd.chest, 11, True, False)
+                If buttSize < 1 Then buttSize = 1
             Case 4
-                prt.setIAInd(pInd.body, 3, True, True)
+                If shoulderFlag Then prt.setIAInd(pInd.shoulders, 2, True, False)
+                prt.setIAInd(pInd.chest, 12, True, False)
+                If buttSize < 1 Then buttSize = 1
             Case 5
-                prt.setIAInd(pInd.body, 4, True, True)
+                If shoulderFlag Then prt.setIAInd(pInd.shoulders, 2, True, False)
+                prt.setIAInd(pInd.chest, 13, True, False)
+                If buttSize < 1 Then buttSize = 1
             Case 6
-                prt.setIAInd(pInd.body, 17, True, True)
+                If shoulderFlag Then prt.setIAInd(pInd.shoulders, 2, True, False)
+                prt.setIAInd(pInd.chest, 14, True, False)
+                If buttSize < 1 Then buttSize = 1
             Case 7
-                prt.setIAInd(pInd.body, 19, True, True)
+                If shoulderFlag Then prt.setIAInd(pInd.shoulders, 2, True, False)
+                prt.setIAInd(pInd.chest, 15, True, False)
+                If buttSize < 1 Then buttSize = 1
         End Select
         prt.portraitUDate()
+    End Sub
+    'dick enlargement/reduction methods
+    Public Sub de()
+        If Not Transformation.canBeTFed(Me) And Not pClass.name.Equals("Thrall") Then
+            Game.pushLstLog("Your form prevents you from being altered.")
+            Exit Sub
+        End If
+
+        If dickSize >= -1 And dickSize < 3 Then
+            dickSize += 1
+            reverseAllRoute()
+            Game.pushLstLog("+ dick size!")
+        Else
+            Game.pushLstLog("Your dick can get no larger!")
+        End If
+    End Sub
+    Friend Sub ds()
+        If Not Transformation.canBeTFed(Me) And Not pClass.name.Equals("Thrall") Then
+            Game.pushLstLog("Your form prevents you from being altered.")
+            Exit Sub
+        End If
+        If dickSize > -1 And dickSize <= 3 Then
+            dickSize -= 1
+            reverseDSRoute()
+            Game.pushLstLog("- dick size!")
+        Else
+            Game.pushLstLog("You no longer have a dick!")
+        End If
+    End Sub
+    Sub dsizeroute()
+        If Portrait.imgLib Is Nothing Or prt.iArr Is Nothing Or
+            prt.iArrInd Is Nothing Or solFlag Then Exit Sub
+        If prt.checkFemInd(pInd.genitalia, 4) And dickSize <> -1 Then
+            dickSize = -1
+        ElseIf prt.checkMalInd(pInd.genitalia, 0) And dickSize <> 0 Then
+            dickSize = 0
+        ElseIf prt.checkMalInd(pInd.genitalia, 1) And dickSize <> 1 Then
+            dickSize = 1
+        ElseIf prt.checkMalInd(pInd.genitalia, 2) And dickSize <> 2 Then
+            dickSize = 2
+        ElseIf prt.checkMalInd(pInd.genitalia, 3) And dickSize <> 3 Then
+            dickSize = 3
+        End If
+    End Sub
+    Public Sub reverseDSRoute()
+        Select Case dickSize
+            Case -1
+                prt.setIAInd(pInd.genitalia, 4, False, False)
+            Case 0
+                prt.setIAInd(pInd.genitalia, 0, True, False)
+            Case 1
+                prt.setIAInd(pInd.genitalia, 1, True, False)
+            Case 2
+                prt.setIAInd(pInd.genitalia, 2, True, False)
+            Case 3
+                prt.setIAInd(pInd.genitalia, 3, True, False)
+        End Select
+        prt.portraitUDate()
+    End Sub
+    'butt enlargement/reduction methods
+    Public Sub ue()
+        If Not Transformation.canBeTFed(Me) And Not pClass.name.Equals("Thrall") Then
+            Game.pushLstLog("Your form prevents you from being altered.")
+            Exit Sub
+        End If
+
+        If buttSize >= -1 And buttSize < 5 Then
+            buttSize += 1
+            reverseUSRoute()
+            If equippedArmor.bindsWearer Then reverseBSroute(False) Else reverseBSroute()
+            Game.pushLstLog("+ 1 butt size!")
+        Else
+            Game.pushLstLog("Your ass can get no larger!")
+        End If
+    End Sub
+    Friend Sub us()
+        If Not Transformation.canBeTFed(Me) And Not pClass.name.Equals("Thrall") Then
+            Game.pushLstLog("Your form prevents you from being altered.")
+            Exit Sub
+        End If
+        If buttSize > -1 And buttSize <= 5 Then
+            buttSize -= 1
+            reverseUSRoute()
+            If equippedArmor.bindsWearer Then reverseBSroute(False) Else reverseBSroute()
+            Game.pushLstLog("- 1 butt size!")
+        Else
+            Game.pushLstLog("Your butt can get no smaller!")
+        End If
+    End Sub
+    Sub usizeroute()
+        If equippedArmor.bindsWearer Then uBsizeroute() : Exit Sub
+        If Portrait.imgLib Is Nothing Or prt.iArr Is Nothing Or
+            prt.iArrInd Is Nothing Or solFlag Then Exit Sub
+        If prt.checkMalInd(pInd.body, 0) And buttSize <> -1 Then
+            buttSize = -1
+        ElseIf prt.checkNDefMalInd(pInd.body, 1) And buttSize <> 0 Then
+            buttSize = 0
+        ElseIf prt.checkFemInd(pInd.body, 0) And buttSize <> 1 Then
+            buttSize = 1
+        ElseIf prt.checkNDefFemInd(pInd.body, 1) And buttSize <> 2 Then
+            buttSize = 2
+        ElseIf prt.checkNDefFemInd(pInd.body, 2) And buttSize <> 3 Then
+            buttSize = 3
+        ElseIf prt.checkNDefFemInd(pInd.body, 3) And buttSize <> 4 Then
+            buttSize = 4
+        ElseIf prt.checkNDefFemInd(pInd.body, 11) And buttSize <> 5 Then
+            buttSize = 5
+        End If
+    End Sub
+    Public Sub reverseUSRoute()
+        If equippedArmor.bindsWearer Then reverseUBSRoute() : Exit Sub
+        Select Case buttSize
+            Case -1
+                prt.setIAInd(pInd.body, 0, False, False)
+                breastSize = -1
+            Case 0
+                prt.setIAInd(pInd.body, 2, False, True)
+                breastSize = 0
+            Case 1
+                prt.setIAInd(pInd.body, 0, True, False)
+                If breastSize < 1 Then breastSize = 1
+            Case 2
+                prt.setIAInd(pInd.body, 1, True, True)
+                If breastSize < 1 Then breastSize = 1
+            Case 3
+                prt.setIAInd(pInd.body, 2, True, True)
+                If breastSize < 1 Then breastSize = 1
+            Case 4
+                prt.setIAInd(pInd.body, 3, True, True)
+                If breastSize < 1 Then breastSize = 1
+            Case 5
+                prt.setIAInd(pInd.body, 11, True, True)
+                If breastSize < 1 Then breastSize = 1
+        End Select
+        prt.portraitUDate()
+    End Sub
+    'bondage butt enlargement/reduction methods
+    Sub uBsizeroute()
+        If Portrait.imgLib Is Nothing Or prt.iArr Is Nothing Or
+            prt.iArrInd Is Nothing Or solFlag Then Exit Sub
+        If prt.checkNDefMalInd(pInd.body, 4) And buttSize <> -1 Then
+            buttSize = -1
+        ElseIf prt.checkNDefFemInd(pInd.body, 12) And buttSize <> 0 Then
+            buttSize = 0
+        ElseIf prt.checkNDefFemInd(pInd.body, 13) And buttSize <> 1 Then
+            buttSize = 1
+        ElseIf prt.checkNDefFemInd(pInd.body, 14) And buttSize <> 2 Then
+            buttSize = 2
+        ElseIf prt.checkNDefFemInd(pInd.body, 15) And buttSize <> 3 Then
+            buttSize = 3
+        ElseIf prt.checkNDefFemInd(pInd.body, 16) And buttSize <> 4 Then
+            buttSize = 4
+        End If
+    End Sub
+    Public Sub reverseUBSRoute()
+        Select Case buttSize
+            Case -1
+                prt.setIAInd(pInd.body, 4, False, True)
+                prt.setIAInd(pInd.shoulders, 3, False, False)
+                breastSize = -1
+            Case 0
+                prt.setIAInd(pInd.body, 12, True, True)
+                prt.setIAInd(pInd.shoulders, 4, False, False)
+                breastSize = 0
+            Case 1
+                prt.setIAInd(pInd.body, 13, True, False)
+                prt.setIAInd(pInd.shoulders, 5, False, False)
+                If breastSize < 1 Then breastSize = 1
+            Case 2
+                prt.setIAInd(pInd.body, 14, True, True)
+                prt.setIAInd(pInd.shoulders, 5, False, False)
+                If breastSize < 1 Then breastSize = 1
+            Case 3
+                prt.setIAInd(pInd.body, 15, True, True)
+                prt.setIAInd(pInd.shoulders, 5, False, False)
+                If breastSize < 1 Then breastSize = 1
+            Case 4
+                prt.setIAInd(pInd.body, 16, True, True)
+                prt.setIAInd(pInd.shoulders, 5, False, False)
+                If breastSize < 1 Then breastSize = 1
+            Case 5
+                prt.setIAInd(pInd.body, 16, True, True)
+                prt.setIAInd(pInd.shoulders, 5, False, False)
+                If breastSize < 1 Then breastSize = 1
+        End Select
+        prt.portraitUDate()
+    End Sub
+
+    Public Sub allRoute()
+        bsizeroute()
+        dsizeroute()
+        usizeroute()
+    End Sub
+    Public Sub reverseAllRoute()
+        reverseBSroute()
+        reverseDSRoute()
+        reverseUSRoute()
     End Sub
 
     '|SAVE METHODS|

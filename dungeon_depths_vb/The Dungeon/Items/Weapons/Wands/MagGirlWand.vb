@@ -14,11 +14,11 @@
     End Sub
 
     Public Overrides Sub onEquip()
-        If Not Game.player.pClass.name.Equals("Magical Girl") Then
+        If Not Game.player1.pClass.name.Equals("Magical Girl") Then
 
             Dim magicGirlTF = New MagGirlTF(2, 0, 0, False)
             magicGirlTF.update()
-            Game.player.ongoingTFs.Add(magicGirlTF)
+            Game.player1.ongoingTFs.Add(magicGirlTF)
         End If
     End Sub
 

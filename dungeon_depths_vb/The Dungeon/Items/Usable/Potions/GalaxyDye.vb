@@ -11,11 +11,11 @@
         MyBase.value = 1345
     End Sub
 
-    Overrides Sub use()
+    Overrides Sub use(ByRef p As Player)
         Game.pushLstLog("You apply the " & getName())
 
         Dim geffect As GalaxyDyeEffect = New GalaxyDyeEffect
-        geffect.apply(Game.player)
+        geffect.apply(p)
         count -= 1
     End Sub
 End Class

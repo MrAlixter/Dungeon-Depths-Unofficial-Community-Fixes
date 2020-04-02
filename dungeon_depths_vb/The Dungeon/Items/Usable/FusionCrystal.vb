@@ -12,7 +12,7 @@
         MyBase.count = 0
         MyBase.value = 1000
     End Sub
-    Overrides Sub use()
+    Overrides Sub use(ByRef p As Player)
         If Me.getUsable() = False Then Exit Sub
         If MessageBox.Show("This will rewrite your current player permenantly (Restore potions will restore to the fusion). Continue?", "Fusion", MessageBoxButtons.YesNo) = Windows.Forms.DialogResult.Yes Then
             Dim i As Integer
@@ -29,26 +29,26 @@
             End If
             Dim save = Game.getPlayerFromFile("saves/s" & i & ".ave")
             Dim p2 As Player = save.Item1
-            If save.Item2 <> Game.version Or p2.perks("polymorphed") > -1 Or Not Transformation.canBeTFed(Game.player) Or (p2.pClass.name.Equals("Magical Girl") Or p2.pClass.name.Equals("Valkyrie")) Then
-                Game.pushLblEvent("After talking it over, " & Game.player.name & " and " & p2.name & " decide that they are incompatable, and not to fuse.")
+            If save.Item2 <> Game.version Or p2.perks("polymorphed") > -1 Or Not Transformation.canBeTFed(p) Or (p2.pClass.name.Equals("Magical Girl") Or p2.pClass.name.Equals("Valkyrie")) Then
+                Game.pushLblEvent("After talking it over, " & p.name & " and " & p2.name & " decide that they are incompatable, and not to fuse.")
                 Exit Sub
             End If
 
-            Game.pushLblEvent(Game.player.name & " takes the fusion crystal in both hands as they glance over at " & p2.name & _
-                               ", who nods in confirmation.  " & Game.player.name & " then snaps the crystal in half, keeping one half " & _
+            Game.pushLblEvent(p.name & " takes the fusion crystal in both hands as they glance over at " & p2.name & _
+                               ", who nods in confirmation.  " & p.name & " then snaps the crystal in half, keeping one half " & _
                                "and tossing the other to " & p2.name & ".  Once separated, the shards begin glowing and pulling towards " & _
                                "each other, pulling the two with them.  As the shards gets closer, their attraction increases, and soon " & _
                                "the crystal is whole again.  The second that the two pieces reunite, their glow becomes blinding, engulfing" & _
                                " both explorers." & vbCrLf & _
-                               Game.player.name & " and " & p2.name & " fuse together to form " & nameFusion(Game.player.name, p2.name) & _
+                               p.name & " and " & p2.name & " fuse together to form " & nameFusion(p.name, p2.name) & _
                                ", a superior explorer!  The change is permenant, though fortunately " & p2.name & _
                                "'s known spells and forms are retained.")
 
-            Dim fuPlay As Player = Fusion(Game.player, p2)
+            Dim fuPlay As Player = Fusion(p, p2)
 
-            Game.updatelist = New PQ
+            Game.updateList = New PQ
 
-            Game.player = fuPlay
+            p = fuPlay
 
             fuPlay.inv.invNeedsUDate = True
             fuPlay.UIupdate()
@@ -101,11 +101,6 @@
         r = Int(Rnd() * 2)
         If r = 0 Then player.sex = p1.sex Else player.sex = p2.sex
 
-        r = Int(Rnd() * 2)
-        If r = 0 Then player.prt.wingInd = p1.prt.wingInd Else player.prt.wingInd = p2.prt.wingInd
-
-        r = Int(Rnd() * 2)
-        If r = 0 Then player.prt.hornInd = p1.prt.hornInd Else player.prt.hornInd = p2.prt.hornInd
 
         If p1.maxHealth > p2.maxHealth Then
             player.maxHealth = p1.maxHealth * 1.5
@@ -172,7 +167,7 @@
 
         player.prt.iArr = p1.prt.iArr.Clone
         player.prt.iArrInd = p1.prt.iArrInd.Clone
-        For i = 0 To 16
+        For i = 0 To Portrait.NUM_IMG_LAYERS
             If i <> 1 And i <> 15 And i <> 3 And i <> 5 Then
                 r = Int(Rnd() * 2)
                 If r = 0 Then player.prt.iArrInd(i) = p1.prt.iArrInd(i) Else player.prt.iArrInd(i) = p2.prt.iArrInd(i)

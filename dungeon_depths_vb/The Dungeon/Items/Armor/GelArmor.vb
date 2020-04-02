@@ -29,13 +29,13 @@
         MyBase.isRandoTFAcceptable = False
     End Sub
 
-    Public Overrides Sub onEquip()
-        MyBase.onEquip()
+    Public Overrides Sub onEquip(ByRef p As Player)
+        MyBase.onEquip(p)
 
-        If Not Game.player.pForm.name.Contains("Slime") And Not Game.player.pForm.name.Contains("Goo") Then
+        If Not p.pForm.name.Contains("Slime") And Not p.pForm.name.Contains("Goo") Then
             Equipment.clothesChange("Naked")
             Game.pushLblEvent("Your clothes melt off!")
-            Game.player.drawPort()
+            p.drawPort()
         End If
     End Sub
 End Class

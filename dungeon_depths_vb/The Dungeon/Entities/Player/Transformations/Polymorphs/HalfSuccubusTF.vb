@@ -16,7 +16,7 @@
     End Sub
 
     Public Sub step1()
-        Dim p As player = game.player
+        Dim p As player = game.player1
         Dim out = ""
 
         'unequips
@@ -39,7 +39,7 @@
         p.prt.setIAInd(pInd.cloak, 0, True, False)
         p.prt.setIAInd(pInd.fronthair, 13, True, True)
         p.prt.setIAInd(pInd.hat, 0, True, False)
-        p.prt.wingInd = 2
+        p.prt.setIAInd(pInd.wings, 2, True, False)
 
         'transformation description push
         p.TextColor = Color.HotPink
@@ -50,7 +50,7 @@
     End Sub
 
     Public Overrides Function getNextStep(stage As Integer) As Action
-        Dim p As player = game.player
+        Dim p As player = game.player1
         Select Case stage
             Case 0
                 Return AddressOf step1

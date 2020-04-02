@@ -51,7 +51,7 @@
                     Dim i = Int(Rnd() * ownedPotions.Count)
                     out += "  As you stumble backwards, you fall, landing on your " &
                         ownedPotions(i).getAName & ", which breaks open!"
-                    target.inv.item(ownedPotions(i).getAName).use()
+                    target.inv.item(ownedPotions(i).getAName).use(Game.player1)
                 End If
 
                 target.takeDMG(10, Me)

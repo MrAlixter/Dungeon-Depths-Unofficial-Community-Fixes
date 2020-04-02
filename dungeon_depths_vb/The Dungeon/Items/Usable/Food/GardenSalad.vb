@@ -13,7 +13,7 @@
         setCalories(22)
     End Sub
     Public Overrides Sub Effect()
-        Dim p As Player = Game.player
+        Dim p As Player = Game.player1
 
         If Int(Rnd() * 2) = 0 Then
             p.health += 35 / p.getMaxHealth

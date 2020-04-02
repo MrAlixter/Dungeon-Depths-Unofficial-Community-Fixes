@@ -26,16 +26,16 @@
             tfCt = 0
             revert()
         End If
-        If (Game.player.pClass.name = "Thrall" And Me.name.Contains("Thrall")) Or
-           (Game.player.pForm.name = "Arachne" And Me.name.Contains("Arachne")) Or
-            (Game.player.pForm.name = "Slime" And Me.name.Contains("Slime")) Or
-            (Game.player.pForm.name.Equals("Goo Girl") And Me.name.Contains("Goo")) Or
-            (Game.player.pForm.name = "Alraune" And Me.name.Contains("Alraune")) Then
+        If (Game.player1.pClass.name = "Thrall" And Me.name.Contains("Thrall")) Or
+           (Game.player1.pForm.name = "Arachne" And Me.name.Contains("Arachne")) Or
+            (Game.player1.pForm.name = "Slime" And Me.name.Contains("Slime")) Or
+            (Game.player1.pForm.name.Equals("Goo Girl") And Me.name.Contains("Goo")) Or
+            (Game.player1.pForm.name = "Alraune" And Me.name.Contains("Alraune")) Then
             despawn("friend")
             Exit Sub
         End If
         If Not isStunned Then
-            If Game.player.pForm.name.Equals("Black Cat") Or Game.player.pForm.name.Equals("Chicken") And Me.GetType() = GetType(Monster) Then despawn("animaltf")
+            If Game.player1.pForm.name.Equals("Black Cat") Or Game.player1.pForm.name.Equals("Chicken") And Me.GetType() = GetType(Monster) Then despawn("animaltf")
             nextCombatAction = Sub(t As Entity) attackCMD(t)
         Else
             If Me.GetType() Is GetType(Monster) Then
@@ -64,8 +64,8 @@
 
         endMonster()
 
-        Game.player.clearTarget()
-        Game.player.xp += xpValue
+        Game.player1.clearTarget()
+        Game.player1.xp += xpValue
         cause.currTarget = Nothing
         cause.nextCombatAction = Nothing
 
@@ -103,13 +103,13 @@
     End Sub
     Public Overridable Sub despawn(ByVal reason As String)
         Game.npcList.Remove(Me)
-        Game.player.clearTarget()
+        Game.player1.clearTarget()
         If reason = "run" Then
             If Int(Rnd() * 30) < 2 Then
                 Game.pushLstLog("Running away makes you less confident.")
-                Game.player.will -= 1
-                If Game.player.will < 1 Then Game.player.will = 0
-                Game.player.UIupdate()
+                Game.player1.will -= 1
+                If Game.player1.will < 1 Then Game.player1.will = 0
+                Game.player1.UIupdate()
             End If
             Game.pushLstLog("You ran from the " & name & "!")
         ElseIf reason = "warp" Then
@@ -118,9 +118,9 @@
         ElseIf reason = "friend" Then
             If Int(Rnd() * 3) = 0 Then
                 Game.pushLstLog("The " & name & " gives you some supplies before leaving!")
-                Game.player.inv.add(2, 1)
-                Game.player.inv.add(13, 1)
-                Game.player.inv.add(31, 1)
+                Game.player1.inv.add(2, 1)
+                Game.player1.inv.add(13, 1)
+                Game.player1.inv.add(31, 1)
                 Game.pushLblEvent("The " & name & " gives you some supplies before leaving!" &
                                   vbCrLf &
                                   "+1 Health_Potion" & vbCrLf & "+1 Mana_Potion" & vbCrLf & "+1 Apple")
@@ -151,7 +151,7 @@
 
             Game.npcList.Remove(Me)
             Game.pushLstLog("You've defeated the " & name & "!")
-            Game.player.currState.save(Game.player)
+            Game.player1.currState.save(Game.player1)
             isDead = True
             endBoss()
         End If
@@ -161,16 +161,16 @@
             Dim c1 As Chest = Game.baseChest.Create(inv, pos)
             Game.currfloor.chestList.Add(c1)
         End If
-        Game.player.perks("nekocurse") = -1
-        Game.player.currState.save(Game.player)
+        Game.player1.perks("nekocurse") = -1
+        Game.player1.currState.save(Game.player1)
         Game.fromCombat()
 
     End Sub
     Private Sub endBoss()
         If Not Me.GetType().IsSubclassOf(GetType(MiniBoss)) Then Exit Sub
-        If sName.Equals("Marissa the Enchantress") Then Game.player.perks("nekocurse") = -1
+        If sName.Equals("Marissa the Enchantress") Then Game.player1.perks("nekocurse") = -1
         If sName.Equals("Medusa, Gorgon of Myth") Then
-            If Game.player.perks("blind") = 2 Then Game.player.perks("blind") = -1
+            If Game.player1.perks("blind") = 2 Then Game.player1.perks("blind") = -1
         End If
         If sName.Equals("Ooze Empress") Then
             Game.mDun.floorboss(4) = "Key"
@@ -181,7 +181,7 @@
     End Sub
     Private Sub endMonster()
         'set temporary player pointer
-        Dim p As Player = Game.player
+        Dim p As Player = Game.player1
 
         'create the chest for the encounter
         Dim c1 As Chest

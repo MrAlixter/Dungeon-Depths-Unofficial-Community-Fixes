@@ -23,13 +23,13 @@
         MyBase.compressesBreasts = True
     End Sub
 
-    Public Overrides Sub onEquip()
-        MyBase.onEquip()
-        Game.player.mana += 15
+    Public Overrides Sub onEquip(ByRef p As Player)
+        MyBase.onEquip(p)
+        p.mana += 15
     End Sub
-    Public Overrides Sub onUnequip()
-        MyBase.onEquip()
-        Game.player.mana -= 15
-        If Game.player.mana < 0 Then Game.player.mana = 0
+    Public Overrides Sub onUnequip(ByRef p As Player)
+        MyBase.onEquip(p)
+        p.mana -= 15
+        If p.mana < 0 Then p.mana = 0
     End Sub
 End Class

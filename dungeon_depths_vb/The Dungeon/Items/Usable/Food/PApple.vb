@@ -13,7 +13,7 @@
     End Sub
 
     Public Overrides Sub Effect()
-        Dim p As Player = Game.player
+        Dim p As Player = Game.player1
         If Game.combatmode = True Or Game.npcmode = True Or Not p.canMoveFlag Then
             p.ongoingTFs.Add(New PrincessTF(False))
         Else

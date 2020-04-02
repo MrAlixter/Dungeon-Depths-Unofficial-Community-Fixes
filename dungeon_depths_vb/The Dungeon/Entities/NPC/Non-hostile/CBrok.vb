@@ -28,13 +28,13 @@
         picNCP.AddRange({picNormal, Game.picFrog.BackgroundImage, Game.picSheep.BackgroundImage, picPrincess, picBunny})
 
         picNCP.AddRange({Game.picCBDoll.BackgroundImage})
-        If speed = Game.player.speed Then speed -= 1
+        If speed = Game.player1.speed Then speed -= 1
         title = " the "
     End Sub
 
     Public Overrides Sub encounter()
         MyBase.encounter()
-        If Not Game.player.isCursed Then
+        If Not Game.player1.isCursed Then
             npcIndex = 0
             Game.pushNPCDialog("What have you gotten yourself into this time?  Nothing?  Perhaps there's a curse somewhere out there for you...")
         Else
@@ -63,7 +63,7 @@
     End Sub
 
     Sub leave()
-        applyCurses(Game.player)
+        applyCurses(Game.player1)
         isDead = True
         Game.leaveNPC()
     End Sub

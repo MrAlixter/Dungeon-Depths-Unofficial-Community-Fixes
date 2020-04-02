@@ -44,7 +44,7 @@
         picNCP.AddRange({picNormal, Game.picFrog.BackgroundImage, Game.picSheep.BackgroundImage, picPrincess, picBunny})
 
         picNCP.AddRange({Game.picSKDoll.BackgroundImage})
-        If speed = Game.player.speed Then speed -= 1
+        If speed = Game.player1.speed Then speed -= 1
         title = " the "
     End Sub
 
@@ -70,7 +70,7 @@
         ElseIf npcIndex = 2 Then
             Game.pushNPCDialog("Baaahhh.")
         ElseIf npcIndex = 3 Then
-            Game.pushNPCDialog("Hello, kind " & Game.player.pClass.name & ", how are you on this fine day?")
+            Game.pushNPCDialog("Hello, kind " & Game.player1.pClass.name & ", how are you on this fine day?")
         ElseIf npcIndex = 4 Then
             Game.pushNPCDialog("*giggle* Hey!")
         ElseIf npcIndex = 5 Then

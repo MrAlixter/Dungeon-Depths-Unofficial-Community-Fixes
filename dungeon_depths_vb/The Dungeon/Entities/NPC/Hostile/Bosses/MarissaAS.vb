@@ -26,11 +26,11 @@
     Public Overrides Sub attackCMD(ByRef target As Entity)
         If spellCooldown > 0 Then spellCooldown -= 1
         If target.GetType() Is GetType(Player) Then
-            If spellCooldown < 1 And Not Game.player.pClass.name.Equals("Bimbo") And Int(Rnd() * 3) = 0 Then
+            If spellCooldown < 1 And Not Game.player1.pClass.name.Equals("Bimbo") And Int(Rnd() * 3) = 0 Then
                 Game.pushLstLog((getName() & " casts Bimbofy on you!"))
                 Game.pushLblCombatEvent((getName() & " casts Bimbofy on you!"))
-                Polymorph.transform(Game.player, "MASBimbo")
-                Game.player.update()
+                Polymorph.transform(Game.player1, "MASBimbo")
+                Game.player1.update()
             Else
                 Game.pushLstLog((getName() & " casts shock!"))
                 Game.pushLblCombatEvent((getName() & " casts shock!"))
@@ -48,7 +48,7 @@
         currTarget = Nothing
         nextCombatAction = Nothing
 
-        Game.player.clearTarget()
+        Game.player1.clearTarget()
         cause.currTarget = Nothing
         cause.nextCombatAction = Nothing
         Game.drawBoard()
@@ -56,8 +56,8 @@
         'will update
         If Int(Rnd() * 8) < 2 Then
             Game.pushLstLog("Your victory makes you feel more confident.")
-            Game.player.will += 1
-            Game.player.UIupdate()
+            Game.player1.will += 1
+            Game.player1.UIupdate()
         End If
 
         'cleanup of the monster
@@ -68,11 +68,11 @@
 
         'player transformation
         Dim lastsentence = "When your senses return to you, your ear's twitch and you notice that they have become feline.  A quick glance confirms that Marissa is no longer present, though it seems like here last ditch effort might have actually held some power after all..."
-        If Game.player.prt.checkFemInd(6, 1) Or Game.player.prt.checkMalInd(6, 1) Then
+        If Game.player1.prt.checkFemInd(pInd.ears, 1) Or Game.player1.prt.checkMalInd(pInd.ears, 1) Then
             lastsentence = "When your senses return to you, a quick glance confirms that Marissa is no longer present."
         End If
-        Game.player.prt.setIAInd(pInd.ears, 1, True, False)
-        Game.player.drawPort()
+        Game.player1.prt.setIAInd(pInd.ears, 1, True, False)
+        Game.player1.drawPort()
 
 
         Game.pushLblEvent("""D-d-damn it..."" Marissa sputters, taking a shakey step backwards.  ""It looks like I u-underestimated you, but r-rest assured that it won't happen again..."" she declares, before charging a weak looking ball of energy, ""T-this one's g-going to leave you a mewing m-m-mess.""\n" &

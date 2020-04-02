@@ -19,7 +19,7 @@
     End Sub
 
     Sub step1()
-        Dim p As Player = Game.player
+        Dim p As Player = Game.player1
 
         p.prt.setIAInd(pInd.rearhair, 14, True, True)
         p.prt.setIAInd(pInd.midhair, 13, True, True)
@@ -34,7 +34,7 @@
         Game.pushLblEvent("Your hair flows down, and small petals begin forming in it.  You now have Alraune hair!")
     End Sub
     Sub step2()
-        Dim p As Player = Game.player
+        Dim p As Player = Game.player1
 
         p.prt.setIAInd(pInd.mouth, 6, True, True)
         p.prt.setIAInd(pInd.eyes, 35, True, True)
@@ -47,7 +47,7 @@
         Game.pushLblEvent("You now have the facial features of an Alraune!")
     End Sub
     Sub step3()
-        Dim p As Player = Game.player
+        Dim p As Player = Game.player1
 
         p.changeHairColor(Game.cShift(p.prt.haircolor, hc, 100))
         p.changeSkinColor(Game.cShift(p.prt.skincolor, sc, 100))
@@ -64,7 +64,7 @@
         If Not p.prt.haircolor.Equals(hc) Or Not p.prt.skincolor.Equals(sc) Then currStep -= 1
     End Sub
     Sub step4()
-        Dim p As Player = Game.player
+        Dim p As Player = Game.player1
 
         If Game.combatmode Then Game.fromCombat()
         Game.pushLblEvent("You are now an Alraune!")
@@ -74,7 +74,7 @@
     End Sub
 
     Sub fullTF()
-        Dim p As Player = Game.player
+        Dim p As Player = Game.player1
 
         p.prt.setIAInd(pInd.rearhair, 14, True, True)
         p.prt.setIAInd(pInd.midhair, 13, True, True)

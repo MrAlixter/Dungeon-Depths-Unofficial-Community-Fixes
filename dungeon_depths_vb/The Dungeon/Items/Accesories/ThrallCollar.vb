@@ -19,8 +19,7 @@
         MyBase.isCursed = True
         MyBase.isRandoTFAcceptable = False
     End Sub
-    Overrides Sub onEquip()
-        Dim p As Player = Game.player
+    Overrides Sub onEquip(ByRef p As Player)
         If p.pForm.Equals("Half-Succubus") Or p.pClass.Equals("Thrall") Then Exit Sub
         MagGirlTF.chkForMagGirlRevert(p)
 
@@ -41,7 +40,7 @@
         p.drawPort()
     End Sub
     Sub forceEquip()
-        Dim p As Player = Game.player
+        Dim p As Player = Game.player1
 
         If p.pForm.Equals("Half-Succubus") Or p.pClass.Equals("Thrall") Then Exit Sub
         MagGirlTF.chkForMagGirlRevert(p)
@@ -63,8 +62,7 @@
 
         p.drawPort()
     End Sub
-    Public Overrides Sub onUnequip()
-        Dim p As Player = Game.player
+    Public Overrides Sub onUnequip(ByRef p As Player)
 
         If p.pForm.Equals("Half-Succubus") Or p.pClass.Equals("Thrall") Then Exit Sub
 
@@ -77,7 +75,7 @@
             End If
         Next
         p.perks("thrall") = -1
-        p.pClass = Game.player.classes(formerClass)
+        p.pClass = Game.player1.classes(formerClass)
         p.prt.setIAInd(pInd.eyes, formerEyeType)
         p.prefForm = Nothing
         p.forcedPath = Nothing

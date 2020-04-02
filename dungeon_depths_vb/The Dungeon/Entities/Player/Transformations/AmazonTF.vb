@@ -15,7 +15,7 @@
         stopTF()
     End Sub
     Public Sub step1()
-        Dim p As Player = Game.player
+        Dim p As Player = Game.player1
 
         If p.sex.Equals("Male") Then
             p.MtF()
@@ -24,8 +24,8 @@
 
         If p.breastSize > 3 Then p.breastSize = 3
 
-        Dim r1 = Int(Rnd() * Portrait.imgLib.atrs("RearHair2").ndoF)
-        Dim r2 = Int(Rnd() * Portrait.imgLib.atrs("FrontHair").ndoF)
+        Dim r1 = Int(Rnd() * Portrait.imgLib.atrs(pInd.rearhair).ndoF)
+        Dim r2 = Int(Rnd() * Portrait.imgLib.atrs(pInd.fronthair).ndoF)
 
         p.prt.setIAInd(pInd.rearhair, r1, True, False)
         p.prt.setIAInd(pInd.midhair, r1, True, False)
@@ -49,7 +49,7 @@
     End Sub
 
     Public Overrides Function getNextStep(stage As Integer) As Action
-        Dim p As Player = Game.player
+        Dim p As Player = Game.player1
         Select Case stage
             Case 0
                 Return AddressOf step1

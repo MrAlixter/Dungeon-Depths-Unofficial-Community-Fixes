@@ -10,12 +10,12 @@
     End Sub
 
     Public Overrides Sub setWaitTime(stage As Integer)
-        Dim p As player = game.player
+        Dim p As player = game.player1
         turnsTilNextStep = Int(Rnd() * 50) + Int(Rnd() * 50) + Int(Rnd() * p.getmaxMana) + Int(Rnd() * p.getWIL)
     End Sub
 
     Public Overrides Sub step1()
-        Dim p As player = game.player
+        Dim p As player = game.player1
         Dim out = ""
 
         'unequips
@@ -30,7 +30,7 @@
         If p.prt.skincolor = Color.FromArgb(255, 255, 105, 180) Then p.prt.haircolor = Color.FromArgb(255, 155, 0, 0)
         If p.prt.skincolor = Color.FromArgb(200, 0, 255, 255) Then p.prt.haircolor = Color.FromArgb(180, 5, 245, 198)
         p.prt.setIAInd(pInd.rearhair, 15, True, True)
-        p.prt.setIAInd(pInd.body, 21, True, True)
+        p.prt.setIAInd(pInd.shoulders, 6, True, False)
         p.prt.setIAInd(pInd.face, 0, True, False)
         p.prt.setIAInd(pInd.midhair, 19, True, True)
         p.prt.setIAInd(pInd.ears, 7, True, True)
@@ -42,9 +42,14 @@
         p.prt.setIAInd(pInd.fronthair, 15, True, True)
         p.prt.setIAInd(pInd.hat, 0, True, False)
 
+        p.breastSize = 2
+        p.dickSize = -1
+        p.buttSize = 1
         'transformation description push
         p.TextColor = Color.Orange
         out += "[Transformation decription pending]"
+
+        p.reverseAllRoute()
 
         Game.pushLblEvent(out)
     End Sub

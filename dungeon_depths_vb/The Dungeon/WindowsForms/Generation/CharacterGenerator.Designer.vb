@@ -99,7 +99,7 @@ Partial Class CharacterGenerator
         Me.btnBody.ForeColor = System.Drawing.Color.White
         Me.btnBody.Location = New System.Drawing.Point(166, 120)
         Me.btnBody.Name = "btnBody"
-        Me.btnBody.Size = New System.Drawing.Size(75, 31)
+        Me.btnBody.Size = New System.Drawing.Size(89, 31)
         Me.btnBody.TabIndex = 3
         Me.btnBody.Text = "Body"
         Me.btnBody.UseVisualStyleBackColor = False
@@ -111,7 +111,7 @@ Partial Class CharacterGenerator
         Me.btnFace.ForeColor = System.Drawing.Color.White
         Me.btnFace.Location = New System.Drawing.Point(166, 157)
         Me.btnFace.Name = "btnFace"
-        Me.btnFace.Size = New System.Drawing.Size(75, 31)
+        Me.btnFace.Size = New System.Drawing.Size(89, 31)
         Me.btnFace.TabIndex = 4
         Me.btnFace.Text = "Face"
         Me.btnFace.UseVisualStyleBackColor = False
@@ -121,9 +121,9 @@ Partial Class CharacterGenerator
         Me.btnFHair.BackColor = System.Drawing.Color.DimGray
         Me.btnFHair.Font = New System.Drawing.Font("Consolas", 8.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.btnFHair.ForeColor = System.Drawing.Color.White
-        Me.btnFHair.Location = New System.Drawing.Point(247, 120)
+        Me.btnFHair.Location = New System.Drawing.Point(261, 120)
         Me.btnFHair.Name = "btnFHair"
-        Me.btnFHair.Size = New System.Drawing.Size(112, 31)
+        Me.btnFHair.Size = New System.Drawing.Size(126, 31)
         Me.btnFHair.TabIndex = 5
         Me.btnFHair.Text = "Front Hair"
         Me.btnFHair.UseVisualStyleBackColor = False
@@ -133,9 +133,9 @@ Partial Class CharacterGenerator
         Me.btnBHair.BackColor = System.Drawing.Color.DimGray
         Me.btnBHair.Font = New System.Drawing.Font("Consolas", 8.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.btnBHair.ForeColor = System.Drawing.Color.White
-        Me.btnBHair.Location = New System.Drawing.Point(247, 157)
+        Me.btnBHair.Location = New System.Drawing.Point(261, 157)
         Me.btnBHair.Name = "btnBHair"
-        Me.btnBHair.Size = New System.Drawing.Size(112, 31)
+        Me.btnBHair.Size = New System.Drawing.Size(126, 31)
         Me.btnBHair.TabIndex = 6
         Me.btnBHair.Text = "Rear Hair"
         Me.btnBHair.UseVisualStyleBackColor = False
@@ -145,7 +145,7 @@ Partial Class CharacterGenerator
         Me.btnEars.BackColor = System.Drawing.Color.DimGray
         Me.btnEars.Font = New System.Drawing.Font("Consolas", 8.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.btnEars.ForeColor = System.Drawing.Color.White
-        Me.btnEars.Location = New System.Drawing.Point(468, 157)
+        Me.btnEars.Location = New System.Drawing.Point(496, 157)
         Me.btnEars.Name = "btnEars"
         Me.btnEars.Size = New System.Drawing.Size(75, 31)
         Me.btnEars.TabIndex = 7
@@ -157,7 +157,7 @@ Partial Class CharacterGenerator
         Me.btnMark.BackColor = System.Drawing.Color.DimGray
         Me.btnMark.Font = New System.Drawing.Font("Consolas", 8.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.btnMark.ForeColor = System.Drawing.Color.White
-        Me.btnMark.Location = New System.Drawing.Point(525, 120)
+        Me.btnMark.Location = New System.Drawing.Point(553, 120)
         Me.btnMark.Name = "btnMark"
         Me.btnMark.Size = New System.Drawing.Size(125, 31)
         Me.btnMark.TabIndex = 8
@@ -169,7 +169,7 @@ Partial Class CharacterGenerator
         Me.btnClothes.BackColor = System.Drawing.Color.DimGray
         Me.btnClothes.Font = New System.Drawing.Font("Consolas", 8.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.btnClothes.ForeColor = System.Drawing.Color.White
-        Me.btnClothes.Location = New System.Drawing.Point(549, 157)
+        Me.btnClothes.Location = New System.Drawing.Point(577, 157)
         Me.btnClothes.Name = "btnClothes"
         Me.btnClothes.Size = New System.Drawing.Size(101, 31)
         Me.btnClothes.TabIndex = 9
@@ -181,7 +181,7 @@ Partial Class CharacterGenerator
         Me.btnCloak.BackColor = System.Drawing.Color.DimGray
         Me.btnCloak.Font = New System.Drawing.Font("Consolas", 8.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.btnCloak.ForeColor = System.Drawing.Color.White
-        Me.btnCloak.Location = New System.Drawing.Point(749, 157)
+        Me.btnCloak.Location = New System.Drawing.Point(777, 157)
         Me.btnCloak.Name = "btnCloak"
         Me.btnCloak.Size = New System.Drawing.Size(83, 31)
         Me.btnCloak.TabIndex = 10
@@ -193,7 +193,7 @@ Partial Class CharacterGenerator
         Me.btnAcca.BackColor = System.Drawing.Color.DimGray
         Me.btnAcca.Font = New System.Drawing.Font("Consolas", 8.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.btnAcca.ForeColor = System.Drawing.Color.White
-        Me.btnAcca.Location = New System.Drawing.Point(656, 120)
+        Me.btnAcca.Location = New System.Drawing.Point(684, 120)
         Me.btnAcca.Name = "btnAcca"
         Me.btnAcca.Size = New System.Drawing.Size(105, 31)
         Me.btnAcca.TabIndex = 11
@@ -206,7 +206,7 @@ Partial Class CharacterGenerator
         Me.pnlBody.BackColor = System.Drawing.Color.Gray
         Me.pnlBody.Location = New System.Drawing.Point(180, 197)
         Me.pnlBody.Name = "pnlBody"
-        Me.pnlBody.Size = New System.Drawing.Size(635, 140)
+        Me.pnlBody.Size = New System.Drawing.Size(659, 140)
         Me.pnlBody.TabIndex = 13
         '
         'btnGlasses
@@ -214,7 +214,7 @@ Partial Class CharacterGenerator
         Me.btnGlasses.BackColor = System.Drawing.Color.DimGray
         Me.btnGlasses.Font = New System.Drawing.Font("Consolas", 8.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.btnGlasses.ForeColor = System.Drawing.Color.White
-        Me.btnGlasses.Location = New System.Drawing.Point(656, 157)
+        Me.btnGlasses.Location = New System.Drawing.Point(684, 157)
         Me.btnGlasses.Name = "btnGlasses"
         Me.btnGlasses.Size = New System.Drawing.Size(87, 31)
         Me.btnGlasses.TabIndex = 14
@@ -226,7 +226,7 @@ Partial Class CharacterGenerator
         Me.btnEyes.BackColor = System.Drawing.Color.DimGray
         Me.btnEyes.Font = New System.Drawing.Font("Consolas", 8.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.btnEyes.ForeColor = System.Drawing.Color.White
-        Me.btnEyes.Location = New System.Drawing.Point(363, 120)
+        Me.btnEyes.Location = New System.Drawing.Point(391, 120)
         Me.btnEyes.Name = "btnEyes"
         Me.btnEyes.Size = New System.Drawing.Size(75, 31)
         Me.btnEyes.TabIndex = 15
@@ -238,7 +238,7 @@ Partial Class CharacterGenerator
         Me.btnEyebrows.BackColor = System.Drawing.Color.DimGray
         Me.btnEyebrows.Font = New System.Drawing.Font("Consolas", 8.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.btnEyebrows.ForeColor = System.Drawing.Color.White
-        Me.btnEyebrows.Location = New System.Drawing.Point(363, 157)
+        Me.btnEyebrows.Location = New System.Drawing.Point(391, 157)
         Me.btnEyebrows.Name = "btnEyebrows"
         Me.btnEyebrows.Size = New System.Drawing.Size(101, 31)
         Me.btnEyebrows.TabIndex = 16
@@ -250,7 +250,7 @@ Partial Class CharacterGenerator
         Me.btnMouth.BackColor = System.Drawing.Color.DimGray
         Me.btnMouth.Font = New System.Drawing.Font("Consolas", 8.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.btnMouth.ForeColor = System.Drawing.Color.White
-        Me.btnMouth.Location = New System.Drawing.Point(444, 120)
+        Me.btnMouth.Location = New System.Drawing.Point(472, 120)
         Me.btnMouth.Name = "btnMouth"
         Me.btnMouth.Size = New System.Drawing.Size(75, 31)
         Me.btnMouth.TabIndex = 17
@@ -262,7 +262,7 @@ Partial Class CharacterGenerator
         Me.btnHat.BackColor = System.Drawing.Color.DimGray
         Me.btnHat.Font = New System.Drawing.Font("Consolas", 8.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.btnHat.ForeColor = System.Drawing.Color.White
-        Me.btnHat.Location = New System.Drawing.Point(767, 120)
+        Me.btnHat.Location = New System.Drawing.Point(795, 120)
         Me.btnHat.Name = "btnHat"
         Me.btnHat.Size = New System.Drawing.Size(65, 31)
         Me.btnHat.TabIndex = 18
@@ -366,7 +366,7 @@ Partial Class CharacterGenerator
         Me.btnBack.BackColor = System.Drawing.Color.DimGray
         Me.btnBack.Font = New System.Drawing.Font("Consolas", 8.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.btnBack.ForeColor = System.Drawing.Color.White
-        Me.btnBack.Location = New System.Drawing.Point(744, 26)
+        Me.btnBack.Location = New System.Drawing.Point(777, 12)
         Me.btnBack.Name = "btnBack"
         Me.btnBack.Size = New System.Drawing.Size(88, 31)
         Me.btnBack.TabIndex = 27
@@ -391,7 +391,7 @@ Partial Class CharacterGenerator
         Me.Label2.AutoSize = True
         Me.Label2.Font = New System.Drawing.Font("Consolas", 8.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.Label2.ForeColor = System.Drawing.Color.White
-        Me.Label2.Location = New System.Drawing.Point(465, 6)
+        Me.Label2.Location = New System.Drawing.Point(511, 6)
         Me.Label2.Name = "Label2"
         Me.Label2.Size = New System.Drawing.Size(64, 17)
         Me.Label2.TabIndex = 29
@@ -404,7 +404,7 @@ Partial Class CharacterGenerator
         Me.cBoxPresets.ForeColor = System.Drawing.Color.White
         Me.cBoxPresets.FormattingEnabled = True
         Me.cBoxPresets.Items.AddRange(New Object() {"--- (none) ---"})
-        Me.cBoxPresets.Location = New System.Drawing.Point(468, 26)
+        Me.cBoxPresets.Location = New System.Drawing.Point(514, 26)
         Me.cBoxPresets.Name = "cBoxPresets"
         Me.cBoxPresets.Size = New System.Drawing.Size(196, 23)
         Me.cBoxPresets.TabIndex = 30
@@ -414,7 +414,7 @@ Partial Class CharacterGenerator
         '
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Inherit
         Me.BackColor = System.Drawing.Color.Black
-        Me.ClientSize = New System.Drawing.Size(842, 396)
+        Me.ClientSize = New System.Drawing.Size(877, 396)
         Me.ControlBox = False
         Me.Controls.Add(Me.cBoxPresets)
         Me.Controls.Add(Me.Label2)

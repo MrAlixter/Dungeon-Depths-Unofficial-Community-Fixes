@@ -15,7 +15,7 @@
     End Sub
 
     Sub step1()
-        Dim p As Player = Game.player
+        Dim p As Player = Game.player1
         If p.sex.Equals("Male") Then
             p.prt.setIAInd(pInd.eyes, 9, False, True)
         Else
@@ -25,11 +25,11 @@
                           """Arachne venom, nasty stuff,"" you remember someone telling you once, ""It's a powerful mutator, and if you take a bite, you'll be lucky if you even remain human for a single night.  More than that, once it's done with you there isn't much that can be done to bring you back.  That's why antivenom like what the Shopkeeper has is so important.""\n\n" &
                           "Well, it seems like it’s only a matter of time before you start changing.  The real question is what you should do about it.")
 
-        If Game.player.perks("svenom") > -1 Then Game.player.perks("svenom") += 1
+        If Game.player1.perks("svenom") > -1 Then Game.player1.perks("svenom") += 1
     End Sub
 
     Sub step2()
-        Dim p As Player = Game.player
+        Dim p As Player = Game.player1
 
         p.prt.setIAInd(pInd.eyes, 21, True, True)
         Dim out = ""
@@ -46,11 +46,11 @@
                "As you examine yourself, you can tell that the venom has been progressing through your darkening veins, and while you aren't completely sure, your skin also seems to have become marginally greyer."
 
         Game.pushLblEvent(out)
-        If Game.player.perks("svenom") > -1 Then Game.player.perks("svenom") += 1
+        If Game.player1.perks("svenom") > -1 Then Game.player1.perks("svenom") += 1
     End Sub
 
     Sub step3()
-        Dim p As Player = Game.player
+        Dim p As Player = Game.player1
 
         p.prt.setIAInd(pInd.eyes, 22, True, True)
         Dim out = ""
@@ -67,11 +67,11 @@
                "Between your improved sight and noticeably quickened reflexes, it seems that the venom is actually improving your body, contrary to what you had heard of it.  Examining your body further, you do notice that you seem more bottom heavy than before, with your ass easily spilling over clothes that fit perfectly just last night.  You set back out, excited for what the venom brings next."
 
         Game.pushLblEvent(out)
-        If Game.player.perks("svenom") > -1 Then Game.player.perks("svenom") += 1
+        If Game.player1.perks("svenom") > -1 Then Game.player1.perks("svenom") += 1
     End Sub
 
     Sub step4()
-        Dim p As Player = Game.player
+        Dim p As Player = Game.player1
 
         If p.sex.Equals("Male") Then
             p.MtF()
@@ -89,14 +89,14 @@
         p.lust += 5
     End Sub
     Sub step4pt1()
-        Game.player.prt.wingInd = 4
-        Game.player.drawPort()
+        Game.player1.prt.setIAInd(pInd.wings, 4, True, False)
+        Game.player1.drawPort()
         Game.pushLblEvent("\tYour many eyes snap open, and you jump to your feet.  You have no idea how long you were out, but apart from some stiffness in your lower joints, you feel fine now.  Impressed by your new stamina, you remark to yourself that an experience like that would have killed the old, weak person that you used to be.\n\n" &
                           "While picking up your things, you catch a glimpse of your rear over your shoulder and realize at once that you’ve undergone a drastic transformation.  From the waist down, your body has morphed into that of a massive spider.  Your waist leads directly onto your thorax, which in turn leads to a massive abdomen that is topped out with a spinneret, and it takes a few seconds for this drastic change to fully process through your brain.  Testing out your eight new limbs, you find that for as delicate as they look, you can strike the tiles around you with enough force to shatter them.\n\n" &
                           "Mere moments later, your newly heightened senses alert you to a presence behind you.", AddressOf step4pt2)
     End Sub
     Sub step4pt2()
-        Dim p As Player = Game.player
+        Dim p As Player = Game.player1
 
         p.prt.setIAInd(pInd.rearhair, 17, True, True)
         p.prt.setIAInd(pInd.midhair, 21, True, True)
@@ -112,7 +112,7 @@
         p.drawPort()
     End Sub
     Sub step4pt3()
-        Dim p As Player = Game.player
+        Dim p As Player = Game.player1
         If p.equippedWeapon.getName.Equals("Magical_Girl_Wand") Or
             p.equippedWeapon.getName.Equals("Valkyrie_Sword") Then
             Equipment.weaponChange("Fists")
@@ -125,14 +125,14 @@
 
     Public Overrides Sub stopTF()
         MyBase.stopTF()
-        Game.player.perks("avenom") = -1
+        Game.player1.perks("avenom") = -1
     End Sub
 
     Public Overrides Function getNextStep(stage As Integer) As Action
-        If (Game.player.perks("avenom") = -1 And Game.player.perks("svenom") = -1) Or Game.player.pForm.name.Equals("Arachne") Then
+        If (Game.player1.perks("avenom") = -1 And Game.player1.perks("svenom") = -1) Or Game.player1.pForm.name.Equals("Arachne") Then
             Return AddressOf stopTF
         End If
-        If Game.player.perks("svenom") > -1 Then stage = Game.player.perks("svenom")
+        If Game.player1.perks("svenom") > -1 Then stage = Game.player1.perks("svenom")
 
         Select Case stage
             Case 1
@@ -148,20 +148,20 @@
         End Select
     End Function
     Public Overrides Sub setWaitTime(stage As Integer)
-        If Game.player.perks("avenom") > -1 Then
+        If Game.player1.perks("avenom") > -1 Then
             turnsTilNextStep = 1
             turnsTilNextStep += generatWILResistance()
             turnsTilNextStep += -2 + Int(Rnd() * 4)
-        ElseIf Game.player.perks("svenom") > -1 Then
+        ElseIf Game.player1.perks("svenom") > -1 Then
             stopTF()
         End If
     End Sub
 
     Sub be()
-        Dim p = Game.player
+        Dim p = Game.player1
         If p.breastSize < 7 Then
             p.breastSize += 1
-            p.reverseBSRoute()
+            p.reverseallroute()
         End If
     End Sub
 End Class

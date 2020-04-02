@@ -10,7 +10,7 @@
             p.prt.setIAInd(pInd.rearhair, p.sState.iArrInd(pInd.rearhair).Item1, True, False)
             p.prt.setIAInd(pInd.midhair, p.sState.iArrInd(pInd.midhair).Item1, True, False)
             p.prt.setIAInd(pInd.fronthair, p.sState.iArrInd(pInd.fronthair).Item1, True, False)
-            Equipment.clothingCurse1()
+            Equipment.clothingCurse1(p)
             p.be()
             Game.pushLblEvent("All thoughts of modesty vanish from your brain.  You will now dress sluttier!")
         Else

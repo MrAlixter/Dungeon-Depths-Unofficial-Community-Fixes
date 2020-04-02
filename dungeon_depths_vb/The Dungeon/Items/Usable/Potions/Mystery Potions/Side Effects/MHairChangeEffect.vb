@@ -4,8 +4,8 @@
     Public Overrides Sub apply(ByRef p As Player)
         Game.pushLblEvent("You now have a new hairstyle!")
 
-        Dim r1 = Int(Rnd() * Portrait.imgLib.atrs("RearHair2").ndoM)
-        Dim r2 = Int(Rnd() * Portrait.imgLib.atrs("FrontHair").ndoM)
+        Dim r1 = Int(Rnd() * Portrait.imgLib.atrs(pInd.rearhair).ndoM)
+        Dim r2 = Int(Rnd() * Portrait.imgLib.atrs(pInd.fronthair).ndoM)
 
         p.prt.setIAInd(pInd.rearhair, r1, False, False)
         p.prt.setIAInd(pInd.midhair, r1, False, False)

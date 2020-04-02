@@ -11,9 +11,8 @@
         MyBase.value = 400
     End Sub
 
-    Overrides Sub use()
+    Overrides Sub use(ByRef p As Player)
         If Me.getUsable() = False Then Exit Sub
-        Dim p = Game.player
 
         Game.pushLstLog("You apply the " & getName())
 

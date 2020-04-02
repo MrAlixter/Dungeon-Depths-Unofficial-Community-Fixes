@@ -21,9 +21,9 @@
         MyBase.compressesBreasts = True
     End Sub
 
-    Public Overrides Sub onEquip()
-        MyBase.onEquip()
-        If Game.player.pForm.name.Equals("Cyborg") Or Game.player.pForm.name.Equals("Gynoid") Or Game.player.pForm.name.Equals("Android") Or Game.player.pForm.name.Equals("Combat Unit") Then
+    Public Overrides Sub onEquip(ByRef p As Player)
+        MyBase.onEquip(p)
+        If p.pForm.name.Equals("Cyborg") Or p.pForm.name.Equals("Gynoid") Or p.pForm.name.Equals("Android") Or p.pForm.name.Equals("Combat Unit") Then
             MyBase.mBoost = 13
             MyBase.sBoost = 10
         Else
@@ -31,8 +31,8 @@
             MyBase.sBoost = 0
         End If
     End Sub
-    Public Overrides Sub onUnequip()
-        MyBase.onUnequip()
+    Public Overrides Sub onUnequip(ByRef p As Player)
+        MyBase.onUnequip(p)
         MyBase.mBoost = 0
         MyBase.sBoost = 0
     End Sub

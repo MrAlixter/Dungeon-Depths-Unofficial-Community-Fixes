@@ -5,7 +5,7 @@
     Public hasBeenUsed As Boolean = False
     Public Shadows onBuy As Action = AddressOf reveal
 
-    Overrides Sub use()
+    Overrides Sub use(ByRef p As Player)
         If Not hasBeenUsed Then reveal()
         If Me.getUsable() = False Then Exit Sub
         Game.pushLstLog("You drink the " & getName())
@@ -13,7 +13,7 @@
         setEffectList()
 
         For Each effect In effectList
-            effect.apply(Game.player)
+            effect.apply(p)
         Next
         pushLblEventEffects(effectList)
 
@@ -31,7 +31,7 @@
         Game.lblEvent.BringToFront()
         Game.lblEvent.Location = New Point((250 * Game.Size.Width / 688) - (Game.lblEvent.Size.Width / 2), 65 * Game.Size.Width / 688)
         Game.lblEvent.Visible = True
-        Game.player.inv.invNeedsUDate = True
+        Game.player1.inv.invNeedsUDate = True
     End Sub
 
     Private Function getEffectName(ByRef pe As PEffect) As String

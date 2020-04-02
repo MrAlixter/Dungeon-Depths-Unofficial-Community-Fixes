@@ -103,15 +103,15 @@
     Shared Function specCost(ByVal s As String)
         Select Case s
             Case "Ritual of Mana"
-                If Game.player.getMana < 5 Then
+                If Game.player1.getMana < 5 Then
                     Return "+20 hunger"
-                ElseIf Game.player.getMana < 10 Then
+                ElseIf Game.player1.getMana < 10 Then
                     Return "+40 hunger"
-                ElseIf Game.player.getMana < 15 Then
+                ElseIf Game.player1.getMana < 15 Then
                     Return "+60 hunger"
-                ElseIf Game.player.getMana < 20 Then
+                ElseIf Game.player1.getMana < 20 Then
                     Return "+80 hunger"
-                ElseIf Game.player.getMana < 30 Then
+                ElseIf Game.player1.getMana < 30 Then
                     Return "+100 hunger"
                 Else
                     Return "+120 hunger"

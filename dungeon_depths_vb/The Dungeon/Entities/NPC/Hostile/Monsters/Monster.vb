@@ -47,8 +47,8 @@
         sWill = will
         sSpeed = speed
 
-        If speed = Game.player.getSPD Then speed -= 1
-        pos = Game.player.pos
+        If speed = Game.player1.getSPD Then speed -= 1
+        pos = Game.player1.pos
     End Sub
     Shared Function monsterFactory(ByVal mIndex As Integer) As Monster
         Select Case mIndex
@@ -113,8 +113,8 @@
     End Sub
     Shared Sub targetRoute(ByRef m As Monster)
         Game.npcList.Add(m)
-        Game.player.setTarget(m)
-        m.currTarget = Game.player
+        Game.player1.setTarget(m)
+        m.currTarget = Game.player1
         Game.toCombat()
     End Sub
 End Class

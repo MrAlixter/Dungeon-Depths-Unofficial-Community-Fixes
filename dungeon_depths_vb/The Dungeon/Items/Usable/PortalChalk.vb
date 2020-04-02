@@ -13,7 +13,7 @@
         MyBase.isRandoTFAcceptable = False
     End Sub
 
-    Overrides Sub use()
+    Overrides Sub use(ByRef p As Player)
         Dim f As Integer = CInt(InputBox("Which floor?"))
         Game.quickChangeFloor(f)
         count -= 1

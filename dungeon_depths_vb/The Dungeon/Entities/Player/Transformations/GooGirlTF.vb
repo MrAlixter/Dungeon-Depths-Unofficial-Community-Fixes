@@ -13,7 +13,7 @@
     End Sub
 
     Shared Sub step2()
-        Dim p As Player = Game.player
+        Dim p As Player = Game.player1
 
         p.prt.setIAInd(pInd.rearhair, 12, True, True)
         p.prt.setIAInd(pInd.midhair, 21, True, True)
@@ -23,19 +23,19 @@
         p.perks("vsslimehair") = 0
         VialOfSlimeTF.pushLblEventWithoutLoss("The teal slime has taken on a pink hue now, and your hair has grown out a bit... Your hair is now made of a pink slime!")
 
-        If Game.player.perks("googirltf") > -1 Then Game.player.perks("googirltf") += 1
+        If Game.player1.perks("googirltf") > -1 Then Game.player1.perks("googirltf") += 1
     End Sub
     Shared Sub step3()
-        Dim p As Player = Game.player
+        Dim p As Player = Game.player1
 
         p.prt.skincolor = Color.FromArgb(230, 255, 102, 179)
         p.pForm = p.forms("Half-Slime")
         VialOfSlimeTF.pushLblEventWithoutLoss("At first it seems like the slime your skin has slowly been soaking in seems to have dyed it, but as you inspect your hand and notice that you can almost see through it completely, you realize that its become more than just a different color...  You are now a half-slime!")
         p.drawPort()
-        If Game.player.perks("googirltf") > -1 Then Game.player.perks("googirltf") += 1
+        If Game.player1.perks("googirltf") > -1 Then Game.player1.perks("googirltf") += 1
     End Sub
     Shared Sub step4()
-        Dim p As Player = Game.player
+        Dim p As Player = Game.player1
 
         p.pForm = p.forms("Goo Girl")
 
@@ -46,7 +46,7 @@
         Equipment.clothesChange("Naked")
 
         p.breastSize = 4
-        p.reverseBSRoute()
+        p.reverseallroute()
 
         p.prt.setIAInd(pInd.ears, 5, True, True)
         p.prt.setIAInd(pInd.mouth, 18, True, True)
@@ -71,7 +71,7 @@
         If Transformation.canBeTFed(p) Then p.pState.save(p)
 
         p.health = 1
-        If Game.player.perks("googirltf") > -1 Then Game.player.perks("googirltf") = -1
+        If Game.player1.perks("googirltf") > -1 Then Game.player1.perks("googirltf") = -1
     End Sub
 
 
@@ -80,7 +80,7 @@
     End Sub
 
     Public Overrides Function getNextStep(stage As Integer) As Action
-        Dim p As Player = Game.player
+        Dim p As Player = Game.player1
 
         Select Case currStep
             Case 1

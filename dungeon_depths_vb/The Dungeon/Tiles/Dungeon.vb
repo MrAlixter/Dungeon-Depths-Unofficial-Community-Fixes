@@ -36,27 +36,27 @@
         jumpTo(1)
         lastVisitedFloor = 1
 
-        Game.player.pos = floors(numCurrFloor).randPoint
+        Game.player1.pos = floors(numCurrFloor).randPoint
     End Sub
 
     Public Sub floorDown()
         lastVisitedFloor = numCurrFloor
-        floors(numCurrFloor).playerPosition = Game.player.pos
+        floors(numCurrFloor).playerPosition = Game.player1.pos
 
         numCurrFloor += 1
         setupCurrentFloor()
     End Sub
     Public Sub floorUp()
         lastVisitedFloor = numCurrFloor
-        floors(numCurrFloor).playerPosition = Game.player.pos
+        floors(numCurrFloor).playerPosition = Game.player1.pos
 
         numCurrFloor -= 1
-        If numCurrFloor = 0 Then Game.pushLblEvent("As you near the top of the staircase leading out of the dungeon, you take a deep breath.  Unfortuately, you also trip; falling to your doom.", AddressOf Game.player.die)
+        If numCurrFloor = 0 Then Game.pushLblEvent("As you near the top of the staircase leading out of the dungeon, you take a deep breath.  Unfortuately, you also trip; falling to your doom.", AddressOf Game.player1.die)
         setPositions()
     End Sub
     Public Sub jumpTo(ByVal i As Integer)
         lastVisitedFloor = numCurrFloor
-        floors(numCurrFloor).playerPosition = New Point(Game.player.pos.X, Game.player.pos.Y)
+        floors(numCurrFloor).playerPosition = New Point(Game.player1.pos.X, Game.player1.pos.Y)
 
         numCurrFloor = i
         setupCurrentFloor()
@@ -75,7 +75,7 @@
         End If
     End Sub
     Private Sub setPositions()
-        Game.player.pos = floors(numCurrFloor).playerPosition
+        Game.player1.pos = floors(numCurrFloor).playerPosition
 
         For i = 0 To Game.shopNPCList.Count - 1
             If i < floors(numCurrFloor).npcPositions.Count Then

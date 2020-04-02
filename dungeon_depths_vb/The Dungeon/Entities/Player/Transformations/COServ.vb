@@ -18,7 +18,7 @@
     End Sub
 
     Public Sub step1()
-        Dim p As Player = Game.player
+        Dim p As Player = Game.player1
         Dim t = p.pClass
         destForm.shiftTowards(p)
         p.pClass = t
@@ -29,7 +29,7 @@
     End Sub
 
     Public Overrides Function getNextStep(stage As Integer) As Action
-        Dim p As Player = Game.player
+        Dim p As Player = Game.player1
         currStep = 1
         Return AddressOf step1
     End Function

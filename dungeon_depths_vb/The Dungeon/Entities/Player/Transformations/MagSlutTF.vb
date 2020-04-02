@@ -12,7 +12,7 @@
     End Sub
 
     Sub step1()
-        Dim p As player = game.player
+        Dim p As player = game.player1
         p.pClass = p.classes("Magical Girl​")
         Dim out = "Swinging your wand, you are engulfed in a rain of hearts. As the light around your body grows blinding and your clothes disolve into the aether, you become a increadibly busty young woman wearing next to nothing!  "
         If p.isUnwilling() Then
@@ -23,7 +23,7 @@
         If p.sex = "Male" Then
             p.sex = "Female"
         End If
-        p.prt.setIAInd(pInd.hat, Portrait.imgLib.atrs("Hat").getF.Count - 3, True, False)
+        p.prt.setIAInd(pInd.hat, Portrait.imgLib.atrs(pInd.hat).getF.Count - 3, True, False)
         Game.pushLblEvent(out, AddressOf step2)
 
 
@@ -35,10 +35,10 @@
     Sub step2()
         Game.lblEvent.Text = ""
 
-        Dim p As Player = Game.player
+        Dim p As Player = Game.player1
 
         p.breastSize = 3
-        p.prt.hBowInd = 3
+        p.prt.setIAInd(pInd.hairacc, 3, True, True)
         p.prt.haircolor = Color.FromArgb(255, 255, 250, 205)
         p.prt.setIAInd(pInd.rearhair, 10, True, True)
         p.prt.setIAInd(pInd.clothes, 12, True, True)
@@ -51,7 +51,7 @@
         p.prt.setIAInd(pInd.cloak, 0, True, False)
         p.prt.setIAInd(pInd.fronthair, 30, True, True)
         p.prt.setIAInd(pInd.hat, 0, True, False)
-        p.reverseBSRoute()
+        p.reverseallroute()
         p.magGState.save(p)
         p.magGState.initFlag = True
         If p.isUnwilling() Then p.pout()
@@ -70,7 +70,7 @@
     End Sub
 
     Public Overrides Function getNextStep(stage As Integer) As Action
-        Dim p As Player = Game.player
+        Dim p As Player = Game.player1
         If p.pClass.name.Equals("Magical Girl​") Then
             Return AddressOf step2
         ElseIf p.pClass.name.Equals("Magical Slut") Then

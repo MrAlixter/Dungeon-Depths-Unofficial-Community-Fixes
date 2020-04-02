@@ -12,7 +12,7 @@
     End Sub
 
     Public Overrides Sub Effect()
-        Dim p As Player = Game.player
+        Dim p As Player = Game.player1
 
         If p.perks("cupcake") > 4 Or Game.noRNG Then
             p.ongoingTFs.Add(New LolitaSTF())

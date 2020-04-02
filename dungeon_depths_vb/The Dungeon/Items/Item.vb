@@ -52,7 +52,7 @@
     Sub setUsable(ByVal b As Boolean)
         isUsable = b
     End Sub
-    Overridable Sub use()
+    Overridable Sub use(ByRef p As Player)
         If Me.getUsable() = False Then Exit Sub
         Game.pushLstLog("You use the " & getName())
 

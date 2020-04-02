@@ -1,7 +1,7 @@
 ﻿Public Class DeathEffects
     '|MONSTER DEATHS|
     Shared Sub MBimboDeath()
-        Dim p As Player = Game.player
+        Dim p As Player = Game.player1
 
         p.perks("bimbotf") = 1
         Dim out As String = "Exausted, you slump to the floor.  Glancing up, the horny mess attacking you seem to have gotten a running start, throwing herself on top of you, and pulling you into a sloppy kiss.  As she clumsily fumbles around, trying to remove your clothes, you roll out from underneath her and beat a hasty retreat, the faint sweetness of bubblegum lingering in your mouth."
@@ -9,7 +9,7 @@
         Game.pushLblEvent(out)
     End Sub
     Shared Sub thrallDeath()
-        Dim p As Player = Game.player
+        Dim p As Player = Game.player1
         If p.pForm.name.Equals("Blowup Doll") Then
             p.currTarget.despawn("p-death")
             Game.pushLblEvent("Your enemy, seeing your current state, decides that you likely aren't useful and leaves you alone.")
@@ -26,8 +26,8 @@
             Equipment.accChange("Slave_Collar")
             p.health = 1
             p.mana = p.getMaxMana()
-            Game.player.will -= 3
-            If Game.player.will < 1 Then Game.player.will = 0
+            Game.player1.will -= 3
+            If Game.player1.will < 1 Then Game.player1.will = 0
         End If
         p.currTarget.despawn("p-death")
         If Not ln1 Is Nothing Then
@@ -37,7 +37,7 @@
         End If
     End Sub
     Shared Sub sorcererDeath()
-        Dim p As Player = Game.player
+        Dim p As Player = Game.player1
         If p.pForm.name.Equals("Blowup Doll") Then
             p.currTarget.despawn("p-death")
             Game.pushLblEvent("Your enemy, seeing your current state, decides that you likely aren't useful and leaves you alone.")
@@ -52,20 +52,20 @@
                   "𝘛𝘩𝘳𝘢𝘭𝘭!? you think moments before a small metal collar finds its way around your neck and a network of runes inscribed on it begin glowing with your new master's magic.  𝘞𝘢𝘪𝘵 ... 𝘕𝘦𝘸 𝘔𝘈𝘚𝘛𝘌𝘙?!  You don't have a momment to rest before your mind is filled with a booming voice." & vbCrLf & _
                   """LISTEN UP, NEW SLAVE!  I have need of your services."" your new master begins, ""In this dungeon, there are several high-power mana arrays.  Only one of them, however, is capable of bestowing the power of a demon lord onto a mortal such as I.  Your task is to find and inspect these arrays, and report back to me with your findings.""  They snicker,  ""I'm sure you won't let me down, but I'm going to need to make a few changes to make you more ... uniform ... with the rest of your collegues.""" & vbCrLf & vbCrLf & "...       " & vbCrLf & vbCrLf & "With a final warning not to fail them, the foreign presence leaves your mind and you are once again alone with your thoughts and your task."
             p.inv.add(69, 1)
-            If Not p.equippedAcce.getName.Equals("Nothing") Then p.equippedAcce.onUnequip()
+            If Not p.equippedAcce.getName.Equals("Nothing") Then p.equippedAcce.onUnequip(p)
             p.equippedAcce = p.inv.item(69)
-            p.equippedAcce.onEquip()
+            p.equippedAcce.onEquip(p)
             p.health = 1
             p.mana = p.getMaxMana()
             p.prefForm.snapShift(p)
-            Game.player.will -= 3
-            If Game.player.will < 1 Then Game.player.will = 0
+            Game.player1.will -= 3
+            If Game.player1.will < 1 Then Game.player1.will = 0
         End If
         p.currTarget.despawn("p-death")
         Game.pushLblEvent(out)
     End Sub
     Shared Sub slimeDeath()
-        Dim p As Player = Game.player
+        Dim p As Player = Game.player1
         'Author Credit: Marionette
         Dim out As String = "As the " & p.currTarget.name & " closes in you push yourself off the ground, a burst of adrenaline pushing through your fatigue as you sidestep around it and beat a hasty retreat. While your back is turned to it, however, the " & p.currTarget.name & " whips a ball of goo towards you, the impact causing you to stumble as the goo strikes your back. You can already feel it starting to writhe and squirm as it begins to move…"
         p.currTarget.despawn("p-death")
@@ -77,7 +77,7 @@
         Game.pushLblEvent(out, AddressOf p.update)
     End Sub
     Shared Sub ggDeath()
-        Dim p As Player = Game.player
+        Dim p As Player = Game.player1
         Dim out As String = "As the " & p.currTarget.name & " closes in on you, you push yourself off the ground, sidestep it, and make a hasty retreat.  While your back is turned, the " & p.currTarget.name & " whips a ball of goo at you.  As soon as it makes contact, you can feel the familiar tingle of magic..."
         p.currTarget.despawn("p-death")
         If p.perks("googirltf") = -1 Then
@@ -89,7 +89,7 @@
     End Sub
 
     Shared Sub spiderDeath()
-        Dim p As Player = Game.player
+        Dim p As Player = Game.player1
         Dim out As String = "As the " & p.currTarget.name & " closes in on you, you push yourself off the ground, and sidestep it.  It anticipates this though, and with a lunging bite it latches onto your arm and delivers a powerful bite.  You smack it off, and make your escape, though a trickle of a golden venom hints that you might not be out of the woods yet."
         p.currTarget.despawn("p-death")
         If p.perks("avenom") = -1 And p.perks("svenom") = -1 Then
@@ -100,28 +100,28 @@
         Game.pushLblEvent(out, AddressOf p.update)
     End Sub
     Shared Sub arachneDeath()
-        Dim p As Player = Game.player
+        Dim p As Player = Game.player1
         p.currTarget.despawn("p-death")
         Dim out As String = "It's clear that you can't beat the huntress, weakened as you are.  Dodging even the simplest of her lightning quick strikes is taking more and more of a toll, and you decide that a hasty retreat might be the best bet if you want to survive.  As you turn to run, you hear a giggle over your shoulder.  Sparing a quick glance back, you see the arach... *WHAP!!!*  Suddenly, you can no longer move.  Shocked, you find that you are caught in a large web, and your assailant approaches you slowly." &
             vbCrLf & vbCrLf & """Sshhh, little one..."" she whispers, spinning a tight bond of webbing around your hands and feet before lowering you to the floor,  ""You aren't going to die yet.  Our sisterhood can always use new members, and you can be so much stronger than you are now."""
         Game.pushLblEvent(out, AddressOf arachneDeath2)
     End Sub
     Shared Sub arachneDeath2()
-        Dim p As Player = Game.player
+        Dim p As Player = Game.player1
         Dim out As String = "She grips your neck firmly, before baring her small fangs and giving you a quick bite.  You can feel her potent venom as it is injected, and almost immediately your body flushes with arousal.  Everything about your captor, from her supple bossom to her glistening chitinous legs has you lusting for more, and as she positions her slit over your face, your hazy mind loses all control.  Even as your mistress lowers her body onto your face, your tongue begins lapping at her folds." &
             vbCrLf & vbCrLf & """Mmmm..."", the huntress moans, blushing, ""Someone's eager...""." &
             vbCrLf & vbCrLf & "With her approval, you double your efforts and soon your tongue finds her clit.  She begins squirming with pleasure, her warmth radiating onto your face.  Whether it's from the venom or your lover's reaction, your entire body is burning with passion, on the verge of a climax yourself and as you caress her clit with your tongue she isn't far behind you.  With a cry, she orgasms, her fangs spraying golden ichor, though your burning lust continues."
         Game.pushLblEvent(out, AddressOf arachneDeath3)
     End Sub
     Shared Sub arachneDeath3()
-        Dim p As Player = Game.player
+        Dim p As Player = Game.player1
         Dim out As String = "Basking in the afterglow of her climax for mere moments, the arachne moves from your face, leaving your immobilized body unable to do much but flail wildly as the heat of your love continues to burn away all rationality." &
             vbCrLf & vbCrLf & """Ooh, you are a fun one..."" she tenderly murmurs, drips from her pussy still falling into your thisty mouth, ""Come and find me when you've finished changing, 'dungeon explorer'""." &
             vbCrLf & vbCrLf & "With that, she leaves your field of view, and you are left smoldering mess of unfulfilled lust soaked in pussy juice, venom, and webbing."
         Game.pushLblEvent(out, AddressOf arachneDeath4)
     End Sub
     Shared Sub arachneDeath4()
-        Dim p As Player = Game.player
+        Dim p As Player = Game.player1
         If p.perks("avenom") = -1 And p.perks("svenom") = -1 Then
             p.perks("svenom") = 1
             p.perks("avenom") = 1
@@ -140,7 +140,7 @@
     End Sub
 
     Shared Sub mimicDeath()
-        Dim p As Player = Game.player
+        Dim p As Player = Game.player1
         p.currTarget.despawn("p-death")
         Dim out As String = "As you collapse, out of the corner of your eye you can see thick tendrils flowing out of the chest that could only be the body of the mimic.  Some of the tendrils wrap around your wrist and ankles, while others work their way up your thighs, aggressively groping your thighs."
         If p.equippedArmor.getName.Equals("Naked") Then
@@ -170,7 +170,7 @@
         Game.pushLblEvent("As you collapse to the ground in the haze of pollen, your alraune opponent giggles, and your conciousness slowly fades away." & vbCrLf & vbCrLf &
                           """Good night, honey!""" & vbCrLf & vbCrLf &
                           "You are now an Alraune!")
-        Game.player.drawPort()
+        Game.player1.drawPort()
     End Sub
 
     '|BOSS / MINIBOSS DEATHS|
@@ -179,12 +179,12 @@
         mdtf.step2()
     End Sub
     Shared Sub oozeEmpDeath()
-        Dim p As Player = Game.player
+        Dim p As Player = Game.player1
         p.currTarget.despawn("p-death")
         Game.pushLblEvent("""Aww, sweetie, if you wanted another go you should have just asked!"", the Ooze Empress chuckles, her aphrodesiac-laced tendrils wrapping you in their arousing embrace.  ""You really do need to relax more.  Lucky for you, I have just the thing..."" she states, plunging your entire body deeper into her slime.  As the pleasure once again overtakes you, you resign yourself to needing to try again.  Well, maybe not right away...", AddressOf oEmpDeathPt2)
     End Sub
     Shared Sub oEmpDeathPt2()
-        Dim p As Player = Game.player
+        Dim p As Player = Game.player1
         p.ongoingTFs.Add(New RandoTF())
         p.sState.save(p)
         p.pState.save(p)
@@ -196,14 +196,14 @@
     End Sub
     Shared Sub medusaDeath()
         Game.fromCombat()
-        Game.player.petrify(Color.White, 9999)
+        Game.player1.petrify(Color.White, 9999)
         Game.pushLblEvent("Cackling with delight, Medusa slithers directly in front of you and glares intently into your eyes.\n\n" &
                           "As you try to back away in shock, your legs quickly calcify and before long your lower body is composed of a light-ish gray stone.  Even as you try to shut your eyes and look away, the petrification reaches your face.\n\n" &
-                          "In mere moments, the stony gaze of Medusa has left " & Game.player.getName & " as nothing but another decoration adorning the hall of the mythical Gorgon.", AddressOf hardDeath)
+                          "In mere moments, the stony gaze of Medusa has left " & Game.player1.getName & " as nothing but another decoration adorning the hall of the mythical Gorgon.", AddressOf hardDeath)
     End Sub
     '|NPC DEATHS|
     Shared Sub ShopkeeperDeath()
-        Dim p As Player = Game.player
+        Dim p As Player = Game.player1
         Dim n As ShopNPC = Game.currNPC
         Game.fromCombat()
         p.petrify(Color.Goldenrod, 9999)
@@ -220,7 +220,7 @@
         p.pClass = p.classes("Trophy")
     End Sub
     Shared Sub SWizDeath()
-        Dim p As Player = Game.player
+        Dim p As Player = Game.player1
         Dim n As ShopNPC = Game.currNPC
         Game.fromCombat()
         Dim out = "You collapse to the ground, the wizard's onslaught wearing down your last defences.  Twirling " & n.pPronoun & " staff, they fire off one final blast, and as it hits your lifeforce...surges?  Startled, you notice that your body is coursing with magical energy, far more than you were capable of mustering before.  You spring back to your feet, resuming a fighting stance though your confusion over this turn of events has you puzzled enough to hold off on attacking." & vbCrLf & vbCrLf &
@@ -230,7 +230,7 @@
         Game.pushLblEvent(out, AddressOf SWizDeath2)
     End Sub
     Shared Sub SWizDeath2()
-        Dim p As Player = Game.player
+        Dim p As Player = Game.player1
         Dim n As ShopNPC = Game.currNPC
         Game.fromCombat()
         Dim out = """Wow, you're in there good,"" they remark.  ""Geez, looks like somehow you got embeded in the wood.  I'm not walking around with a loser like you in one of my products.  You didn't even make that good of a crystal!  If I want to sell this now, I'm going to need to make you more...eyecatching.""" & vbCrLf & vbCrLf &
@@ -250,7 +250,7 @@
 
     '|MISC DEATH|
     Shared Sub hardDeath()
-        Dim p As Player = Game.player
+        Dim p As Player = Game.player1
         p.isDead = True
         Dim r As Integer = 0 ' CInt(Int(Rnd() * 2))
         If r = 0 Then

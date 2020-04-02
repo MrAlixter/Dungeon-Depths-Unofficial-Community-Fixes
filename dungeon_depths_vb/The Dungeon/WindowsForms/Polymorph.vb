@@ -24,7 +24,7 @@
             Me.Controls(i).Top += CDbl(Me.Controls(i).Top * RH)
         Next
 
-        Dim p = Game.player
+        Dim p = Game.player1
         Select Case porm
             Case True
                 For i = 0 To p.selfPolyForms.Count - 1
@@ -41,12 +41,12 @@
     Private Sub Button1_Click(sender As Object, e As EventArgs) Handles Button1.Click
         If cboxPMorph.Text = "-- Select --" Or Not tfForm Then
             Me.Close()
-            Game.player.mana += 5
+            Game.player1.mana += 5
             Exit Sub
         End If
         Select Case porm
             Case True
-                transform(Game.player, cboxPMorph.Text)
+                transform(Game.player1, cboxPMorph.Text)
             Case False
                 If target.GetType().IsSubclassOf(GetType(ShopNPC)) Then transformN(target) Else transform(target, cboxPMorph.Text)
         End Select

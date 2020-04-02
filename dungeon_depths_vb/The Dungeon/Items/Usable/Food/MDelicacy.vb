@@ -16,12 +16,12 @@
 
     Public Overrides Sub Effect()
         If Int(Rnd() * 5) = 0 Or Game.noRNG Then
-            Game.player.maxMana += 3
-            Game.player.mana += 3
+            Game.player1.maxMana += 3
+            Game.player1.mana += 3
 
-            Game.player.will += 3
+            Game.player1.will += 3
 
-            Game.player.UIupdate()
+            Game.player1.UIupdate()
         End If
     End Sub
 End Class

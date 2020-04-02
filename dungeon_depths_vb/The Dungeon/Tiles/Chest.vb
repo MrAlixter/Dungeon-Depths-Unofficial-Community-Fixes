@@ -99,10 +99,10 @@
     End Function
     Public Overridable Sub open()
         'handles the opening of a chest
-        If Game.player.pos <> pos Then Exit Sub
+        If Game.player1.pos <> pos Then Exit Sub
         If Not Game.combatmode And game.mDun.numCurrFloor >= 3 And Not Me.GetType Is GetType(LoadedChest) Then
             Dim mOdds As Integer
-            If Game.player.perks("cogreed") > -1 Then
+            If Game.player1.perks("cogreed") > -1 Then
                 mOdds = 0
             ElseIf Game.mDun.numCurrFloor = 3 Then
                 mOdds = Int(Rnd() * 2)
@@ -114,19 +114,19 @@
                 Exit Sub
             End If
         End If
-            pushLblEventChest()
-            Game.player.UIupdate()
-            Game.pushLstLog("You open a chest!")
+        pushLblEventChest()
+        Game.player1.UIupdate()
+        Game.pushLstLog("You open a chest!")
 
     End Sub
     Public Sub pushLblEventChest()
         Dim c As String = "Chest Contents: " & vbCrLf
 
-        Game.player.inv.merge(contents)
+        Game.player1.inv.merge(contents)
         For i = 0 To contents.upperBound
             Dim content As Item = contents.item(i)
             If contents.getCountAt(i) > 0 Then
-                c += " " & vbCrLf & "+" & content.count & " " & Game.player.inv.item(i).getName() & " "
+                c += " " & vbCrLf & "+" & content.count & " " & Game.player1.inv.item(i).getName() & " "
             End If
         Next
         c += " " & vbCrLf & " " & vbCrLf & "Press any non-movement key to continue."
@@ -134,7 +134,7 @@
         Game.lblEvent.BringToFront()
         Game.lblEvent.Location = New Point((250 * Game.Size.Width / 688) - (Game.lblEvent.Size.Width / 2), 65 * Game.Size.Width / 688)
         Game.lblEvent.Visible = True
-        Game.player.inv.invNeedsUDate = True
+        Game.player1.inv.invNeedsUDate = True
     End Sub
     Public Sub add(ByVal i As Integer, ByVal c As Integer)
         'adds a quantity "c" to inventory slot "i"

@@ -11,16 +11,16 @@
         MyBase.value = 550
     End Sub
 
-    Overrides Sub use()
-        If Game.player.pClass.name.Equals("Soul-Lord") Then
+    Overrides Sub use(ByRef p As Player)
+        If p.pClass.name.Equals("Soul-Lord") Then
             Game.pushLblEvent("You spike the health potion on the ground, shattering it all over the dungeon floor.  As you go back to your buisness, you muse on how cowardly healing is." & vbCrLf & vbCrLf & """Only someone who cares about their mortal vessel would bother to maintain it.")
-            Game.player.UIupdate()
+            p.UIupdate()
             Exit Sub
         End If
         Game.pushLstLog("You drink the " & getName())
-        Dim phHealth = Game.player.health
-        Game.player.health = 1.0
-        Game.pushLblEvent("You drink the " & getName() & ".  +" & CInt((Game.player.health - phHealth) * Game.player.getMaxHealth) & " health!")
+        Dim phHealth = p.health
+        p.health = 1.0
+        Game.pushLblEvent("You drink the " & getName() & ".  +" & CInt((p.health - phHealth) * p.getMaxHealth) & " health!")
         count -= 1
     End Sub
 End Class

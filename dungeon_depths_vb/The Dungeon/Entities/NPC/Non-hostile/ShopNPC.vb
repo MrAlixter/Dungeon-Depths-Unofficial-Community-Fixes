@@ -53,13 +53,13 @@
         If npcIndex = 1 Or npcIndex = 2 Then despawn("flee")
         Game.picNPC.BackgroundImage = picNCP(npcIndex)
 
-        If Game.combatmode Then attackCMD(Game.player)
+        If Game.combatmode Then attackCMD(Game.player1)
     End Sub
     Public Overrides Function getName() As String
         Return title & name
     End Function
     Public Overridable Sub encounter()
-        pos = Game.player.pos
+        pos = Game.player1.pos
         If isDead = True Then
             Game.pushLblEvent("This NPC is dead.")
             Exit Sub

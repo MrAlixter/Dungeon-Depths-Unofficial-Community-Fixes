@@ -8,12 +8,12 @@
         MyBase.count = 0
     End Sub
 
-    Overrides Sub use()
+    Overrides Sub use(ByRef p As Player)
         If Me.getUsable() = False Then Exit Sub
         If getName() = "Medicinal_Tea" Then Game.pushLstLog("You drink the " & getName()) Else Game.pushLstLog("You eat the " & getName())
-        
-        Game.player.hunger -= calories
-        If Game.player.hunger < 0 Then Game.player.hunger = 0
+
+        p.hunger -= calories
+        If Game.player1.hunger < 0 Then Game.player1.hunger = 0
         Effect()
         count -= 1
     End Sub

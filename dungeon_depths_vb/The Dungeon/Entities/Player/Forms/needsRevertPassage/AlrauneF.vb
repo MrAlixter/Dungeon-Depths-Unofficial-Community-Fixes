@@ -7,8 +7,8 @@
 
     Public Overrides Sub revert()
         MyBase.revert()
-        Do While Game.player.knownSpells.Contains("Mesmeric Bloom")
-            Game.player.knownSpells.Remove("Mesmeric Bloom")
+        Do While Game.player1.knownSpells.Contains("Mesmeric Bloom")
+            Game.player1.knownSpells.Remove("Mesmeric Bloom")
         Loop
         Game.pushLstLog("""Mesmeric Bloom"" spell forgotten!")
     End Sub

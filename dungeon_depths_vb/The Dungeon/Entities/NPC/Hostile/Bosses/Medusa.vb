@@ -52,7 +52,7 @@
         End If
     End Sub
     Public Sub StoneFlesh()
-        Dim p = Game.player
+        Dim p = Game.player1
         If Transformation.canBeTFed(p) Then
             p.pState.save(p)
         End If
@@ -68,17 +68,17 @@
             Game.pushLblEvent("The spell bounces off Medusa and strikes the ground!")
             Return False
         ElseIf spell.Equals("Polymorph Enemy") Then
-            Dim pe = New EnemyPolymorph(Game.player, Nothing)
+            Dim pe = New EnemyPolymorph(Game.player1, Nothing)
             Game.pushLblEvent("Medusa's eyes flash and a copy of your spell is cast back at you!")
             pe.backfire()
             Return False
         ElseIf spell.Equals("Turn to Cupcake") Then
-            Dim ttc = New turnToCupcake(Game.player, Nothing)
+            Dim ttc = New turnToCupcake(Game.player1, Nothing)
             Game.pushLblEvent("Medusa's eyes flash and a copy of your spell is cast back at you!")
             ttc.backfire()
             Return False
         ElseIf spell.Equals("Uvona's Fugue") Then
-            Dim uf = New UvonasFugue(Game.player, Nothing)
+            Dim uf = New UvonasFugue(Game.player1, Nothing)
             Game.pushLblEvent("Medusa's eyes flash and a copy of your spell is cast back at you!")
             uf.backfire()
             Return False

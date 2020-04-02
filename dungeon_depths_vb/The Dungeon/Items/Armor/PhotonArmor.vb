@@ -24,8 +24,8 @@ Public Class PhotonArmor
         MyBase.isRandoTFAcceptable = False
     End Sub
 
-    Public Overrides Sub onEquip()
-        MyBase.onEquip()
-        Game.player.perks("hardlight") = 1
+    Public Overrides Sub onEquip(ByRef p As Player)
+        MyBase.onEquip(p)
+        p.perks("hardlight") = 1
     End Sub
 End Class

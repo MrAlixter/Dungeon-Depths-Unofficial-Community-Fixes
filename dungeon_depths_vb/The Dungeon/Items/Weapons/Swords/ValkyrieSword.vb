@@ -14,10 +14,10 @@
     End Sub
 
     Public Overrides Sub onEquip()
-        If Not Game.player.pClass.name.Equals("Valkyrie") Then
+        If Not Game.player1.pClass.name.Equals("Valkyrie") Then
             Dim valkyrieTF = New ValkyrieTF2(1, 0, 0, False)
             valkyrieTF.step1()
-            Game.player.drawPort()
+            Game.player1.drawPort()
         End If
     End Sub
     Public Overrides Sub onUnequip()

@@ -12,7 +12,7 @@
     End Sub
 
     Sub step1()
-        Dim p As Player = Game.player
+        Dim p As Player = Game.player1
 
         If p.sex = "Male" Then
             p.MtF()
@@ -33,7 +33,7 @@
         p.prt.setIAInd(pInd.fronthair, 18, True, True)
         p.prt.setIAInd(pInd.hat, 8, True, False)
 
-        p.changeHairColor(BimboTF.bimboyellow)
+        p.changeHairColor(BimboTF.bimboyellow1)
 
         If p.equippedArmor.dBoost > 15 Then
             p.inv.add(94, 1)
@@ -53,7 +53,7 @@
     End Sub
 
     Public Overrides Function getNextStep(stage As Integer) As Action
-        Dim p As Player = Game.player
+        Dim p As Player = Game.player1
         If p.pClass.name.Equals("Dancer") Then
             Return AddressOf stopTF
         Else

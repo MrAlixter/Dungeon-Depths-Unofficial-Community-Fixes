@@ -11,14 +11,14 @@
         MyBase.value = 750
     End Sub
 
-    Overrides Sub use()
+    Overrides Sub use(ByRef p As Player)
         If Me.getUsable() = False Then Exit Sub
         Game.pushLstLog("You use the " & getName() & ". +5 base mana!")
-        
-        Game.player.maxMana += 5
-        Game.player.mana += 5
-        If Game.player.mana > Game.player.getMaxMana Then Game.player.mana = Game.player.getMaxMana
-        Game.player.UIupdate()
+
+        p.maxMana += 5
+        p.mana += 5
+        If p.mana > p.getMaxMana Then p.mana = p.getMaxMana
+        p.UIupdate()
         count -= 1
     End Sub
 End Class

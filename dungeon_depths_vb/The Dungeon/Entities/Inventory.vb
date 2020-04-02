@@ -201,8 +201,21 @@
         internal_inventory.Add("TODO_Outfit", New GothOutfit())             '181
         internal_inventory.Add("Cursed_Coupon", New CursedCoupon())         '182
         internal_inventory.Add("Kitsune's_Robes", New KitsuneRobe())        '183
+        'v0.9.1
+        internal_inventory.Add("Common_Clothes", New CommonClothes0())      '184
+        internal_inventory.Add("Common_Armor", New CommonClothes1())        '185
+        internal_inventory.Add("Common_Garb", New CommonClothes2())         '186
+        internal_inventory.Add("Fancy_Clothes", New CommonClothes3())       '187
+        internal_inventory.Add("Ordinary_Clothes", New CommonClothes4())    '188
+        internal_inventory.Add("Common_Kimono", New CommonClothes5())       '189
+        internal_inventory.Add("Sneaky_Clothes", New CommonClothes6())      '190
+        internal_inventory.Add("Skimpy_Clothes", New SkimpyClothes())       '191
+        internal_inventory.Add("Very_Skimpy_Clothes", New VSkimpyClothes()) '192
+        internal_inventory.Add("Ass_Growth_Potion", New UEPotion())         '193
+        internal_inventory.Add("Dick_Growth_Potion", New DEPotion())        '194
+        internal_inventory.Add("Curse_'B'_Gone", New CurseBGone())       '195
 
-        armor = {New CommonClothes, New SkimpyClothes, New Naked, New VSkimpyClothes,
+        armor = {New Naked,
                  Me.item(5), Me.item(7), Me.item(8), Me.item(10),
                  Me.item(12), Me.item(16), Me.item(17), Me.item(18),
                  Me.item(19), Me.item(20), Me.item(38), Me.item(39),
@@ -216,7 +229,9 @@
                  Me.item(129), Me.item(137), Me.item(138), Me.item(144),
                  Me.item(146), Me.item(147), Me.item(151), Me.item(166),
                  Me.item(169), Me.item(170), Me.item(175), Me.item(176),
-                 Me.item(177), Me.item(181), Me.item(183)}
+                 Me.item(177), Me.item(181), Me.item(183), Me.item(184),
+                 Me.item(185), Me.item(186), Me.item(187), Me.item(188),
+                 Me.item(189), Me.item(190), Me.item(191), Me.item(192)}
 
         weapons = {New BareFists(),
                    Me.item(6), Me.item(9), Me.item(11), Me.item(21),
@@ -239,7 +254,7 @@
                    Me.item(143), Me.item(148), Me.item(149), Me.item(152),
                    Me.item(153), Me.item(154), Me.item(155), Me.item(156),
                    Me.item(157), Me.item(158), Me.item(162), Me.item(174),
-                   Me.item(182)}
+                   Me.item(182), Me.item(195)}
 
         food = {Me.item(1), Me.item(30), Me.item(31), Me.item(32), Me.item(33),
                 Me.item(34), Me.item(35), Me.item(44), Me.item(90),
@@ -256,7 +271,8 @@
         potions = {Me.item(2), Me.item(13), Me.item(14), Me.item(25),
                    Me.item(26), Me.item(27), Me.item(28), Me.item(29),
                    Me.item(59), Me.item(60), Me.item(61), Me.item(62),
-                   Me.item(76), Me.item(82), Me.item(92), Me.item(93)}
+                   Me.item(76), Me.item(82), Me.item(92), Me.item(93),
+                   Me.item(193), Me.item(194)}
 
         Array.Sort(potions)
 
@@ -272,7 +288,7 @@
                       "Azure_Potion", "Rose_Potion", "Mauve_Potion", "Jet_Potion",
                       "Ruby_Potion", "Emerald_Potion", "Sapphire_Potion", "Silver_Potion",
                       "Murky_Potion", "Smokey_Potion", "Pink_Potion", "Glittery_Potion",
-                      "Florecent_Potion"})
+                      "Florecent_Potion", "Coral_Potion", "Steely_Potion"})
         mPotions = New List(Of MysteryPotion)
         For i = 0 To UBound(potions)
             If potions(i).GetType().IsSubclassOf(GetType(MysteryPotion)) Then mPotions.Add(potions(i))
@@ -407,7 +423,7 @@
     Function getArmors() As Tuple(Of String(), Armor())
         Dim s(UBound(armor)) As String
         For i = 0 To UBound(armor)
-            s(i) = armor(i).getName
+                s(i) = armor(i).getName
         Next
         Return New Tuple(Of String(), Armor())(s, armor)
     End Function

@@ -14,10 +14,10 @@
         MyBase.fInd = New Tuple(Of Integer, Boolean, Boolean)(10, True, True)
         MyBase.mInd = New Tuple(Of Integer, Boolean, Boolean)(10, True, True)
     End Sub
-    Public Overrides Sub onEquip()
-        Game.player.perks("minmanregen") = 1
+    Public Overrides Sub onEquip(ByRef p As Player)
+        p.perks("minmanregen") = 1
     End Sub
-    Public Overrides Sub onUnequip()
-        Game.player.perks("minmanregen") = -1
+    Public Overrides Sub onUnequip(ByRef p As Player)
+        p.perks("minmanregen") = -1
     End Sub
 End Class

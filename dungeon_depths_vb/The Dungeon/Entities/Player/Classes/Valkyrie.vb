@@ -11,8 +11,8 @@
             Game.cboxSpec.Items.Insert(0, "-- Select --")
             Game.cboxSpec.SelectedIndex = 0
         End If
-        Do While Game.player.knownSpecials.Contains("Blazing Angel Strike")
-            Game.player.knownSpecials.Remove("Blazing Angel Strike")
+        Do While Game.player1.knownSpecials.Contains("Blazing Angel Strike")
+            Game.player1.knownSpecials.Remove("Blazing Angel Strike")
         Loop
         Game.pushLstLog("'Blazing Angel Strike' special forgotten!")
     End Sub

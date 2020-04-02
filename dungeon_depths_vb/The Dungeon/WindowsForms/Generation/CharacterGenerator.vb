@@ -1,29 +1,10 @@
 ﻿Public Class CharacterGenerator
     'CharacterGenerator1 is the form that allows the assembly of a player portrait
 
-    'iArrKey
-    '0 = Background
-    '1 = RearHair2 / Wings
-    '2 = Body
-    '3 = Clothes
-    '4 = Face
-    '5 = RearHair1
-    '6 = Ears / Horns
-    '7 = Nose
-    '8 = Mouth
-    '9 = Eyes
-    '10 = EyeBrows
-    '11 = FacialMark
-    '12 = Glasses
-    '13 = Cloak
-    '14 = Accessory
-    '15 = FrontHair
-    '16 = Hat
-
     'CharacterGenerator1's instance variables
     'Dim attrOrder As List(Of Image)
     Dim graph As Graphics = Me.CreateGraphics()
-    Dim currAttribute As ImageAttribute
+    Dim currAttribute As pInd
     Dim currAtrButton As New Button
     Dim newForm As Boolean = True
 
@@ -56,28 +37,7 @@
             Me.Controls(i).Top += CDbl(Me.Controls(i).Top * RH)
         Next
 
-        currAtrButton = btnBody
-
-        currAttribute = defImgLib.atrs("Body")
-        Dim sexAttrList As List(Of Image)
-        If portrait.sexBool Then
-            sexAttrList = defImgLib.atrs("Body").getF
-        Else
-            sexAttrList = defImgLib.atrs("Body").getM
-        End If
-        For i = 0 To sexAttrList.Count - 1
-            Dim x As Integer = (i * 71 * Me.Size.Width / 581)
-            Dim y As Integer = 0
-            Dim img As New PictureBox
-            img.BackgroundImage = sexAttrList(i)
-            img.Location = New Point(x, y - 20)
-            img.Size = New Point(70 * Me.Size.Width / 581, 260 * Me.Size.Width / 581)
-            img.BackgroundImageLayout = ImageLayout.Stretch
-            AddHandler img.Click, AddressOf PicOnClick
-            pnlBody.Controls.Add(img)
-        Next
-
-        btnBody.Enabled = False
+        btnBody_Click(sender, e)
 
         setDefaultProfilePic()
 
@@ -94,37 +54,30 @@
     End Sub
     'CharacterGenerator1_FormClosing handles the finalization of the in game image library
     Private Sub CharacterGenerator1_FormClosing(sender As Object, e As FormClosingEventArgs) Handles Me.FormClosing
-        Game.player.prt.iArr = portrait.iArr
-        Game.player.prt.iArrInd = portrait.iArrInd
-        Game.player.prt.haircolor = portrait.haircolor
-        Game.player.prt.skincolor = portrait.skincolor
+        Game.player1.prt.iArr = portrait.iArr
+        Game.player1.prt.iArrInd = portrait.iArrInd
+        Game.player1.prt.haircolor = portrait.haircolor
+        Game.player1.prt.skincolor = portrait.skincolor
 
         If Not ComboBox2.Items.Contains(ComboBox2.Text) Then
             If MessageBox.Show("Woah there! You entered in a non recognized class.  You sure you want to do that?", "Sneeky sneek", MessageBoxButtons.YesNo) = Windows.Forms.DialogResult.No Then
                 Exit Sub
             End If
         End If
-        Game.player.name = TextBox1.Text
+        Game.player1.name = TextBox1.Text
         If portrait.sexBool Then
-            Game.player.sex = "Female"
-            Game.player.breastSize = 1
+            Game.player1.sex = "Female"
+            Game.player1.breastSize = 1
+            Game.player1.dickSize = -1
+            Game.player1.buttSize = 1
         Else
-            Game.player.sex = "Male"
-            Game.player.breastSize = -1
+            Game.player1.sex = "Male"
+            Game.player1.breastSize = -1
+            Game.player1.dickSize = 1
+            Game.player1.buttSize = -1
         End If
-        Game.player.setClassLoadout(ComboBox2.Text)
 
-        CommonClothes.bsizeneg1 = New Tuple(Of Integer, Boolean, Boolean)(CInt(portrait.iArrInd(pInd.clothes).Item1), False, False)
-        CommonClothes.bsize1 = New Tuple(Of Integer, Boolean, Boolean)(CInt(portrait.iArrInd(pInd.clothes).Item1), True, False)
-        If portrait.iArrInd(pInd.clothes).Item1 < 5 Then
-            CommonClothes.bsize2 = New Tuple(Of Integer, Boolean, Boolean)(portrait.imgLib.atrs("Clothes").osf(CInt(portrait.iArrInd(pInd.clothes).Item1) + 99), True, False)
-        ElseIf portrait.iArrInd(pInd.clothes).Item1 = 5 Then
-            CommonClothes.bsize2 = New Tuple(Of Integer, Boolean, Boolean)(portrait.imgLib.atrs("Clothes").osf(123), True, True)
-        ElseIf portrait.iArrInd(pInd.clothes).Item1 = 6 Then
-            CommonClothes.bsize2 = New Tuple(Of Integer, Boolean, Boolean)(portrait.imgLib.atrs("Clothes").osf(124), True, True)
-        Else
-            CommonClothes.bsize2 = Nothing
-        End If
+        Game.player1.setClassLoadout(ComboBox2.Text)
 
         If chkSavePreset.Checked And Not quit Then
             Dim preset = New PCPreset()
@@ -148,7 +101,7 @@
     'PicOnClick handles the selecting of images via click
     Sub PicOnClick(ByVal sender As Object, ByVal e As EventArgs)
         Try
-            If currAttribute.Equals(defImgLib.atrs("RearHair2")) Then
+            If currAttribute.Equals(pInd.rearhair) Then
                 Dim ind As Tuple(Of Integer, Boolean, Boolean) = New Tuple(Of Integer, Boolean, Boolean)(pnlBody.Controls.IndexOf(sender), portrait.sexBool, False)
 
                 portrait.setIAInd(pInd.rearhair, ind)
@@ -156,8 +109,25 @@
 
                 picPort.BackgroundImage = portrait.draw()
                 Exit Sub
+            ElseIf currAttribute.Equals(pInd.body) Then
+                If portrait.sexBool Then
+                    setFBody()
+                Else
+                    setMBody()
+                End If
+
+                picPort.BackgroundImage = portrait.draw()
+                Exit Sub
+            ElseIf currAttribute.Equals(pInd.clothes) Then
+                Dim ind As Tuple(Of Integer, Boolean, Boolean) = New Tuple(Of Integer, Boolean, Boolean)(pnlBody.Controls.IndexOf(sender), portrait.sexBool, False)
+
+                portrait.setIAInd(pInd.clothes, ind)
+                portrait.setIAInd(pInd.clothesbtm, New Tuple(Of Integer, Boolean, Boolean)(pnlBody.Controls.IndexOf(sender) * 2, portrait.sexBool, False))
+
+                picPort.BackgroundImage = portrait.draw()
+                Exit Sub
             Else
-                Dim i As Integer = defImgLib.atrs.Values.ToList.IndexOf(currAttribute)
+                Dim i As Integer = currAttribute
                 Dim ind As Tuple(Of Integer, Boolean, Boolean) = New Tuple(Of Integer, Boolean, Boolean)(pnlBody.Controls.IndexOf(sender), portrait.sexBool, False)
                 portrait.setIAInd(i, ind)
 
@@ -173,56 +143,6 @@
         End Try
     End Sub
 
-    'recolor changes the color of an image, assumed to be of the same color as the players hair 
-    Shared Function recolor(ByVal img As Bitmap, ByVal c As Color)
-        If img Is Nothing Then Return Nothing
-        Dim cImg As Bitmap = img.Clone
-        For x = 0 To img.Width - 1
-            For y = 0 To img.Height - 1
-                If Not img.GetPixel(x, y).A = 0 Then
-                    Dim rfactor As Double = (img.GetPixel(x, y).R / 204)
-                    Dim gfactor As Double = (img.GetPixel(x, y).G / 203)
-                    Dim bfactor As Double = (img.GetPixel(x, y).B / 212)
-                    'If Not checkColors(rfactor, gfactor, bfactor) Then
-                    Dim R As Integer = (c.R * (rfactor))
-                    Dim G As Integer = (c.G * (gfactor))
-                    Dim B As Integer = (c.B * (bfactor))
-                    If R > 255 Then R = 255
-                    If G > 255 Then G = 255
-                    If B > 255 Then B = 255
-                    Dim c1 As Color = Color.FromArgb(c.A, R, G, B)
-                    cImg.SetPixel(x, y, c1)
-                    'End If
-                End If
-            Next
-        Next
-        Return cImg
-    End Function
-    'recolor2 changes the color of an image, assumed to be of the same color as the players skin
-    Shared Function recolor2(ByVal img As Bitmap, ByVal c As Color)
-        If img Is Nothing Then Return Nothing
-        Dim cImg As Bitmap = img.Clone
-        For x = 0 To img.Width - 1
-            For y = 0 To img.Height - 1
-                If Not img.GetPixel(x, y).A = 0 Then 'And img.GetPixel(x, y).GetBrightness() > 0.5 Then
-                    'MsgBox(img.GetPixel(x, y).GetBrightness())
-                    Dim rfactor As Double = (img.GetPixel(x, y).R / 247)
-                    Dim gfactor As Double = (img.GetPixel(x, y).G / 219)
-                    Dim bfactor As Double = (img.GetPixel(x, y).B / 195)
-                    Dim R As Integer = (c.R * (rfactor))
-                    Dim G As Integer = (c.G * (gfactor))
-                    Dim B As Integer = (c.B * (bfactor))
-                    If R > 255 Then R = 255
-                    If G > 255 Then G = 255
-                    If B > 255 Then B = 255
-                    Dim c1 As Color = Color.FromArgb(c.A, R, G, B)
-
-                    cImg.SetPixel(x, y, c1)
-                End If
-            Next
-        Next
-        Return cImg
-    End Function
     'checkColors checks for similar colors amongst pixels
     Shared Function checkColors(ByVal d1 As Double, ByVal d2 As Double, ByVal d3 As Double)
         Dim out = True
@@ -243,24 +163,49 @@
         currAtrButton = btnBody
         currAtrButton.Enabled = False
 
-        currAttribute = defImgLib.atrs("Body")
-        Dim sexAttrList As List(Of Image)
+        currAttribute = pInd.body
+        Dim sexAttrList1, sexAttrList2, sexAttrList3, sexAttrList4 As List(Of Image)
         If portrait.sexBool Then
-            sexAttrList = defImgLib.atrs("Body").getF
+            sexAttrList1 = defImgLib.atrs(pInd.body).getF
+            sexAttrList2 = defImgLib.atrs(pInd.shoulders).getF
+            sexAttrList3 = defImgLib.atrs(pInd.genitalia).getF
+            sexAttrList4 = defImgLib.atrs(pInd.chest).getF
         Else
-            sexAttrList = defImgLib.atrs("Body").getM
+            sexAttrList1 = defImgLib.atrs(pInd.body).getM
+            sexAttrList2 = defImgLib.atrs(pInd.shoulders).getM
+            sexAttrList3 = defImgLib.atrs(pInd.genitalia).getM
+            sexAttrList4 = defImgLib.atrs(pInd.chest).getM
         End If
-        For i = 0 To sexAttrList.Count - 1
+        For i = 0 To sexAttrList1.Count - 1
             Dim x As Integer = (i * 71 * Me.Size.Width / 581)
             Dim y As Integer = 0
             Dim img As New PictureBox
-            img.BackgroundImage = recolor2(sexAttrList(i), portrait.skincolor)
+
+            Dim bodyArr(3) As Image
+            bodyArr(0) = sexAttrList1(i)
+            bodyArr(1) = sexAttrList2(i)
+            bodyArr(2) = sexAttrList3(i)
+            bodyArr(3) = sexAttrList4(i)
+
+            img.BackgroundImage = Portrait.recolor2(portrait.CreateFullBodyBMP(bodyArr), portrait.skincolor)
             img.Location = New Point(x, y - 20)
             img.Size = New Point(70 * Me.Size.Width / 581, 260 * Me.Size.Width / 581)
             img.BackgroundImageLayout = ImageLayout.Stretch
             AddHandler img.Click, AddressOf PicOnClick
             pnlBody.Controls.Add(img)
         Next
+    End Sub
+    Sub setMBody()
+        portrait.setIAInd(pInd.body, New Tuple(Of Integer, Boolean, Boolean)(0, False, False))
+        portrait.setIAInd(pInd.chest, New Tuple(Of Integer, Boolean, Boolean)(0, False, False))
+        portrait.setIAInd(pInd.shoulders, New Tuple(Of Integer, Boolean, Boolean)(0, False, False))
+        portrait.setIAInd(pInd.genitalia, New Tuple(Of Integer, Boolean, Boolean)(1, False, False))
+    End Sub
+    Sub setFBody()
+        portrait.setIAInd(pInd.body, New Tuple(Of Integer, Boolean, Boolean)(0, True, False))
+        portrait.setIAInd(pInd.chest, New Tuple(Of Integer, Boolean, Boolean)(9, True, False))
+        portrait.setIAInd(pInd.shoulders, New Tuple(Of Integer, Boolean, Boolean)(2, True, False))
+        portrait.setIAInd(pInd.genitalia, New Tuple(Of Integer, Boolean, Boolean)(4, True, False))
     End Sub
     Private Sub btnFHair_Click(sender As Object, e As EventArgs) Handles btnFHair.Click
         pnlBody.Controls.Clear()
@@ -269,18 +214,18 @@
         currAtrButton = btnFHair
         currAtrButton.Enabled = False
 
-        currAttribute = defImgLib.atrs("FrontHair")
+        currAttribute = pInd.fronthair
         Dim sexAttrList As List(Of Image)
         If portrait.sexBool Then
-            sexAttrList = defImgLib.atrs("FrontHair").getF
+            sexAttrList = defImgLib.atrs(pInd.fronthair).getF
         Else
-            sexAttrList = defImgLib.atrs("FrontHair").getM
+            sexAttrList = defImgLib.atrs(pInd.fronthair).getM
         End If
         For i = 0 To sexAttrList.Count - 1
             Dim x As Integer = (i * 71 * Me.Size.Width / 581)
             Dim y As Integer = 0
             Dim img As New PictureBox
-            img.BackgroundImage = recolor(sexAttrList(i), portrait.haircolor)
+            img.BackgroundImage = Portrait.recolor(sexAttrList(i), portrait.haircolor)
             img.Location = New Point(x, y)
             img.Size = New Point(70 * Me.Size.Width / 581, 70 * Me.Size.Width / 581)
             img.BackgroundImageLayout = ImageLayout.Stretch
@@ -295,12 +240,12 @@
         currAtrButton = btnEyes
         currAtrButton.Enabled = False
 
-        currAttribute = defImgLib.atrs("Eyes")
+        currAttribute = pInd.eyes
         Dim sexAttrList As List(Of Image)
         If portrait.sexBool Then
-            sexAttrList = defImgLib.atrs("Eyes").getF
+            sexAttrList = defImgLib.atrs(pInd.eyes).getF
         Else
-            sexAttrList = defImgLib.atrs("Eyes").getM
+            sexAttrList = defImgLib.atrs(pInd.eyes).getM
         End If
         For i = 0 To sexAttrList.Count - 1
             Dim x As Integer = (i * 71 * Me.Size.Width / 581)
@@ -321,12 +266,12 @@
         currAtrButton = btnMouth
         currAtrButton.Enabled = False
 
-        currAttribute = defImgLib.atrs("Mouth")
+        currAttribute = pInd.mouth
         Dim sexAttrList As List(Of Image)
         If portrait.sexBool Then
-            sexAttrList = defImgLib.atrs("Mouth").getF
+            sexAttrList = defImgLib.atrs(pInd.mouth).getF
         Else
-            sexAttrList = defImgLib.atrs("Mouth").getM
+            sexAttrList = defImgLib.atrs(pInd.mouth).getM
         End If
         For i = 0 To sexAttrList.Count - 1
             Dim x As Integer = (i * 71 * Me.Size.Width / 581)
@@ -347,12 +292,12 @@
         currAtrButton = btnMark
         currAtrButton.Enabled = False
 
-        currAttribute = defImgLib.atrs("FacialMark")
+        currAttribute = pInd.facemark
         Dim sexAttrList As List(Of Image)
         If portrait.sexBool Then
-            sexAttrList = defImgLib.atrs("FacialMark").getF
+            sexAttrList = defImgLib.atrs(pInd.facemark).getF
         Else
-            sexAttrList = defImgLib.atrs("FacialMark").getM
+            sexAttrList = defImgLib.atrs(pInd.facemark).getM
         End If
 
         For i = 0 To sexAttrList.Count - 1
@@ -374,12 +319,12 @@
         currAtrButton = btnAcca
         currAtrButton.Enabled = False
 
-        currAttribute = defImgLib.atrs("Acce")
+        currAttribute = pInd.accessory
         Dim sexAttrList As List(Of Image)
         If portrait.sexBool Then
-            sexAttrList = defImgLib.atrs("Acce").getF
+            sexAttrList = defImgLib.atrs(pInd.accessory).getF
         Else
-            sexAttrList = defImgLib.atrs("Acce").getM
+            sexAttrList = defImgLib.atrs(pInd.accessory).getM
         End If
         For i = 0 To sexAttrList.Count - 1
             Dim x As Integer = (i * 71 * Me.Size.Width / 581)
@@ -400,18 +345,18 @@
         currAtrButton = btnFace
         currAtrButton.Enabled = False
 
-        currAttribute = defImgLib.atrs("Face")
+        currAttribute = pInd.face
         Dim sexAttrList As List(Of Image)
         If portrait.sexBool Then
-            sexAttrList = defImgLib.atrs("Face").getF
+            sexAttrList = defImgLib.atrs(pInd.face).getF
         Else
-            sexAttrList = defImgLib.atrs("Face").getM
+            sexAttrList = defImgLib.atrs(pInd.face).getM
         End If
         For i = 0 To sexAttrList.Count - 1
             Dim x As Integer = (i * 71 * Me.Size.Width / 581)
             Dim y As Integer = 0
             Dim img As New PictureBox
-            img.BackgroundImage = recolor2(sexAttrList(i), portrait.skincolor)
+            img.BackgroundImage = Portrait.recolor2(sexAttrList(i), portrait.skincolor)
             img.Location = New Point(x, y)
             img.Size = New Point(70 * Me.Size.Width / 581, 70 * Me.Size.Width / 581)
             img.BackgroundImageLayout = ImageLayout.Stretch
@@ -426,14 +371,14 @@
         currAtrButton = btnBHair
         currAtrButton.Enabled = False
 
-        currAttribute = defImgLib.atrs("RearHair2")
+        currAttribute = pInd.rearhair
         Dim sexAttrList1, sexAttrList2 As List(Of Image)
         If portrait.sexBool Then
-            sexAttrList1 = defImgLib.atrs("RearHair2").getF
-            sexAttrList2 = defImgLib.atrs("RearHair1").getF
+            sexAttrList1 = defImgLib.atrs(pInd.rearhair).getF
+            sexAttrList2 = defImgLib.atrs(pInd.midhair).getF
         Else
-            sexAttrList1 = defImgLib.atrs("RearHair2").getM
-            sexAttrList2 = defImgLib.atrs("RearHair1").getM
+            sexAttrList1 = defImgLib.atrs(pInd.rearhair).getM
+            sexAttrList2 = defImgLib.atrs(pInd.midhair).getM
         End If
         For i = 0 To sexAttrList1.Count - 1
             Dim x As Integer = (i * 71 * Me.Size.Width / 581)
@@ -443,7 +388,7 @@
             hairArr(0) = sexAttrList1(i)
             hairArr(1) = sexAttrList2(i)
 
-            img.BackgroundImage = recolor(portrait.CreateBMP(hairArr), portrait.haircolor)
+            img.BackgroundImage = Portrait.recolor(portrait.CreateFullBodyBMP(hairArr), portrait.haircolor)
             img.Location = New Point(x, y)
             img.Size = New Point(70 * Me.Size.Width / 581, 104 * Me.Size.Width / 581)
             img.BackgroundImageLayout = ImageLayout.Stretch
@@ -458,12 +403,12 @@
         currAtrButton = btnEyebrows
         currAtrButton.Enabled = False
 
-        currAttribute = defImgLib.atrs("Eyebrows")
+        currAttribute = pInd.eyebrows
         Dim sexAttrList As List(Of Image)
         If portrait.sexBool Then
-            sexAttrList = defImgLib.atrs("Eyebrows").getF
+            sexAttrList = defImgLib.atrs(pInd.eyebrows).getF
         Else
-            sexAttrList = defImgLib.atrs("Eyebrows").getM
+            sexAttrList = defImgLib.atrs(pInd.eyebrows).getM
         End If
         For i = 0 To sexAttrList.Count - 1
             Dim x As Integer = (i * 71 * Me.Size.Width / 581)
@@ -484,18 +429,18 @@
         currAtrButton = btnEars
         currAtrButton.Enabled = False
 
-        currAttribute = defImgLib.atrs("Ears")
+        currAttribute = pInd.ears
         Dim sexAttrList As List(Of Image)
         If portrait.sexBool Then
-            sexAttrList = defImgLib.atrs("Ears").getF
+            sexAttrList = defImgLib.atrs(pInd.ears).getF
         Else
-            sexAttrList = defImgLib.atrs("Ears").getM
+            sexAttrList = defImgLib.atrs(pInd.ears).getM
         End If
         For i = 0 To sexAttrList.Count - 1
             Dim x As Integer = (i * 71 * Me.Size.Width / 581)
             Dim y As Integer = 0
             Dim img As New PictureBox
-            img.BackgroundImage = recolor2(sexAttrList(i), portrait.skincolor)
+            img.BackgroundImage = Portrait.recolor2(sexAttrList(i), portrait.skincolor)
             img.Location = New Point(x, y)
             img.Size = New Point(70 * Me.Size.Width / 581, 70 * Me.Size.Width / 581)
             img.BackgroundImageLayout = ImageLayout.Stretch
@@ -510,20 +455,29 @@
         currAtrButton = btnClothes
         currAtrButton.Enabled = False
 
-        currAttribute = defImgLib.atrs("Clothes")
-        Dim sexAttrList As List(Of Image)
+        currAttribute = pInd.clothes
+        Dim sexAttrList1, sexAttrList2 As List(Of Image)
         If portrait.sexBool Then
-            sexAttrList = defImgLib.atrs("Clothes").getF
+            sexAttrList1 = defImgLib.atrs(pInd.clothes).getF
+            sexAttrList2 = defImgLib.atrs(pInd.clothesbtm).getF
         Else
-            sexAttrList = defImgLib.atrs("Clothes").getM
+            sexAttrList1 = defImgLib.atrs(pInd.clothes).getM
+            sexAttrList2 = defImgLib.atrs(pInd.clothesbtm).getM
         End If
-        For i = 0 To sexAttrList.Count - 1
+        For i = 0 To sexAttrList1.Count - 1
             Dim x As Integer = (i * 71 * Me.Size.Width / 581)
             Dim y As Integer = 0
             Dim img As New PictureBox
-            img.BackgroundImage = sexAttrList(i)
-            img.Location = New Point(x, y - 20)
-            img.Size = New Point(70 * Me.Size.Width / 581, 104 * Me.Size.Width / 581)
+
+            Dim clothesArr(2) As Image
+            clothesArr(0) = sexAttrList1(i)
+
+            clothesArr(1) = sexAttrList2(i * 2)
+
+
+            img.BackgroundImage = portrait.CreateFullBodyBMP(clothesArr)
+            img.Location = New Point(x, y - 70)
+            img.Size = New Point(70 * Me.Size.Width / 581, 260 * Me.Size.Width / 581)
             img.BackgroundImageLayout = ImageLayout.Stretch
             AddHandler img.Click, AddressOf PicOnClick
             pnlBody.Controls.Add(img)
@@ -536,12 +490,12 @@
         currAtrButton = btnGlasses
         currAtrButton.Enabled = False
 
-        currAttribute = defImgLib.atrs("Glasses")
+        currAttribute = pInd.glasses
         Dim sexAttrList As List(Of Image)
         If portrait.sexBool Then
-            sexAttrList = defImgLib.atrs("Glasses").getF
+            sexAttrList = defImgLib.atrs(pInd.glasses).getF
         Else
-            sexAttrList = defImgLib.atrs("Glasses").getM
+            sexAttrList = defImgLib.atrs(pInd.glasses).getM
         End If
         For i = 0 To sexAttrList.Count - 1
             Dim x As Integer = (i * 71 * Me.Size.Width / 581)
@@ -562,12 +516,12 @@
         currAtrButton = btnCloak
         currAtrButton.Enabled = False
 
-        currAttribute = defImgLib.atrs("Cloak")
+        currAttribute = pInd.cloak
         Dim sexAttrList As List(Of Image)
         If portrait.sexBool Then
-            sexAttrList = defImgLib.atrs("Cloak").getF
+            sexAttrList = defImgLib.atrs(pInd.cloak).getF
         Else
-            sexAttrList = defImgLib.atrs("Cloak").getM
+            sexAttrList = defImgLib.atrs(pInd.cloak).getM
         End If
         For i = 0 To sexAttrList.Count - 1
             Dim x As Integer = (i * 71 * Me.Size.Width / 581)
@@ -588,12 +542,12 @@
         currAtrButton = btnHat
         currAtrButton.Enabled = False
 
-        currAttribute = defImgLib.atrs("Hat")
+        currAttribute = pInd.hat
         Dim sexAttrList As List(Of Image)
         If portrait.sexBool Then
-            sexAttrList = defImgLib.atrs("Hat").getF
+            sexAttrList = defImgLib.atrs(pInd.hat).getF
         Else
-            sexAttrList = defImgLib.atrs("Hat").getM
+            sexAttrList = defImgLib.atrs(pInd.hat).getM
         End If
         For i = 0 To sexAttrList.Count - 1
             Dim x As Integer = (i * 71 * Me.Size.Width / 581)
@@ -602,6 +556,58 @@
             img.BackgroundImage = sexAttrList(i)
             img.Location = New Point(x, y)
             img.Size = New Point(70 * Me.Size.Width / 581, 70 * Me.Size.Width / 581)
+            img.BackgroundImageLayout = ImageLayout.Stretch
+            AddHandler img.Click, AddressOf PicOnClick
+            pnlBody.Controls.Add(img)
+        Next
+    End Sub
+    Private Sub btnChest_Click(sender As Object, e As EventArgs)
+        pnlBody.Controls.Clear()
+
+        currAtrButton.Enabled = True
+        'currAtrButton = btnChest
+        currAtrButton.Enabled = False
+
+        currAttribute = pInd.chest
+        Dim sexAttrList As List(Of Image)
+        If portrait.sexBool Then
+            sexAttrList = defImgLib.atrs(pInd.chest).getF
+        Else
+            sexAttrList = defImgLib.atrs(pInd.chest).getM
+        End If
+        For i = 0 To sexAttrList.Count - 1
+            Dim x As Integer = (i * 71 * Me.Size.Width / 581)
+            Dim y As Integer = 0
+            Dim img As New PictureBox
+            img.BackgroundImage = Portrait.recolor2(sexAttrList(i), portrait.skincolor)
+            img.Location = New Point(x, y - 20)
+            img.Size = New Point(70 * Me.Size.Width / 581, 260 * Me.Size.Width / 581)
+            img.BackgroundImageLayout = ImageLayout.Stretch
+            AddHandler img.Click, AddressOf PicOnClick
+            pnlBody.Controls.Add(img)
+        Next
+    End Sub
+    Private Sub btnShoulders_Click(sender As Object, e As EventArgs)
+        pnlBody.Controls.Clear()
+
+        currAtrButton.Enabled = True
+        'currAtrButton = btnShoulders
+        currAtrButton.Enabled = False
+
+        currAttribute = pInd.shoulders
+        Dim sexAttrList As List(Of Image)
+        If portrait.sexBool Then
+            sexAttrList = defImgLib.atrs(pInd.shoulders).getF
+        Else
+            sexAttrList = defImgLib.atrs(pInd.shoulders).getM
+        End If
+        For i = 0 To sexAttrList.Count - 1
+            Dim x As Integer = (i * 71 * Me.Size.Width / 581)
+            Dim y As Integer = 0
+            Dim img As New PictureBox
+            img.BackgroundImage = Portrait.recolor2(sexAttrList(i), portrait.skincolor)
+            img.Location = New Point(x, y - 20)
+            img.Size = New Point(70 * Me.Size.Width / 581, 260 * Me.Size.Width / 581)
             img.BackgroundImageLayout = ImageLayout.Stretch
             AddHandler img.Click, AddressOf PicOnClick
             pnlBody.Controls.Add(img)

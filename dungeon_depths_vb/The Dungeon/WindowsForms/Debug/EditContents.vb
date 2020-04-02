@@ -35,7 +35,7 @@
 
     Private Sub loadItems()
         boxItems.Items.Clear()
-        Dim p_inv = Game.player.inv
+        Dim p_inv = Game.player1.inv
         For i = 0 To p_inv.upperBound
             boxItems.Items.Add(p_inv.getKeyByID(i))
         Next
@@ -73,8 +73,8 @@
 
     Private Sub itemFilterUpdate()
         boxItems.Items.Clear()
-        Dim p_inv = Game.player.inv
-        For i As Integer = 0 To game.player.inv.upperbound
+        Dim p_inv = Game.player1.inv
+        For i As Integer = 0 To game.player1.inv.upperbound
             If p_inv.getKeyByID(i).IndexOf(boxItemsFilter.Text, 0, StringComparison.CurrentCultureIgnoreCase) > -1 Then
                 boxItems.Items.Add(p_inv.getKeyByID(i).ToString())
             End If

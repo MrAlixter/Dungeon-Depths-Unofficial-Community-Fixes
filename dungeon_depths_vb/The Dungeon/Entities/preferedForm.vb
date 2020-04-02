@@ -104,19 +104,19 @@
 
         If p.breastSize > breastSize Then
             p.breastSize -= 1
-            p.reverseBSRoute()
+            p.reverseallroute()
         ElseIf p.breastSize < breastSize Then
             p.breastSize += 1
-            p.reverseBSRoute()
+            p.reverseallroute()
         End If
 
         If isFemale And ((p.perks("slutcurse") = -1 And isSlut) Or (p.perks("slutcurse") > -1 And Not isSlut)) And Int(Rnd() * 3) = 0 Then
             If (p.perks("slutcurse") = -1 And isSlut) Then
                 p.perks("slutcurse") = 0
-                Equipment.clothingCurse1()
+                Equipment.clothingCurse1(p)
             Else
                 p.perks("slutcurse") = -1
-                Equipment.antiClothingCurse()
+                Equipment.antiClothingCurse(p)
             End If
         End If
 
@@ -156,22 +156,22 @@
         If p.breastSize > breastSize Then
             While p.breastSize > breastSize
                 p.breastSize -= 1
-                p.reverseBSRoute()
+                p.reverseallroute()
             End While
         ElseIf p.breastSize < breastSize Then
             While p.breastSize < breastSize
                 p.breastSize += 1
-                p.reverseBSRoute()
+                p.reverseallroute()
             End While
         End If
 
         If isFemale And ((p.perks("slutcurse") = -1 And isSlut) Or (p.perks("slutcurse") > -1 And Not isSlut)) Then
             If (p.perks("slutcurse") = -1 And isSlut) Then
                 p.perks("slutcurse") = 0
-                Equipment.clothingCurse1()
+                Equipment.clothingCurse1(p)
             Else
                 p.perks("slutcurse") = -1
-                Equipment.antiClothingCurse()
+                Equipment.antiClothingCurse(p)
             End If
         End If
 
@@ -219,16 +219,15 @@ Public Class SuccMaid
     End Sub
 
     Shared Sub changeEquipment()
-        Dim p = Game.player
+        Dim p = Game.player1
 
         If p.inv.item("Maid_Lingerie").count < 1 Then p.inv.add("Maid_Lingerie", 1)
         Equipment.clothesChange("Maid_Lingerie")
 
         p.prt.setIAInd(pInd.eyes, 12, True, True)
         p.prt.setIAInd(pInd.glasses, 2, True, False)
-
-        p.prt.wingInd = 2
-        p.prt.hornInd = 3
+        p.prt.setIAInd(pInd.wings, 2, True, False)
+        p.prt.setIAInd(pInd.horns, 3, True, False)
 
         p.pClass = p.classes("Maid")
         p.pForm = p.forms("Half-Succubus")

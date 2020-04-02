@@ -12,7 +12,7 @@
         setCalories(20)
     End Sub
     Public Overrides Sub Effect()
-        Dim p As Player = Game.player
+        Dim p As Player = Game.player1
         p.ongoingTFs.Add(New AngelTF())
         p.update()
     End Sub

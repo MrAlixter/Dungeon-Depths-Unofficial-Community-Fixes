@@ -14,6 +14,6 @@
     End Sub
 
     Public Overrides Sub step1()
-        Game.player.sex = "Female"
+        Game.player1.sex = "Female"
     End Sub
 End Class

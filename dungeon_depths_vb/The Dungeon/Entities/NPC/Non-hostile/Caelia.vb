@@ -24,7 +24,7 @@
         picNCP = New List(Of Image)
         picNCP.AddRange({picNormal, Game.picFrog.BackgroundImage, Game.picSheep.BackgroundImage, picPrincess, picBunny})
 
-        If speed = Game.player.speed Then speed -= 1
+        If speed = Game.player1.speed Then speed -= 1
         title = ""
     End Sub
 
@@ -37,9 +37,9 @@
             Game.pushLblEvent("""Well, someone needs to relax...""")
             Dim bTF As BimboTF = New BimboTF(2, 0, 0.25, True)
             bTF.step2()
-            Game.player.inv.add(147, 1)
+            Game.player1.inv.add(147, 1)
             Equipment.clothesChange("Skimpy_Tube_Top")
-            Game.player.drawPort()
+            Game.player1.drawPort()
             pos = New Point(-1, -1)
         End If
     End Sub
@@ -47,7 +47,7 @@
         Game.leaveNPC()
         Game.mDun.jumpTo(91017)
         Game.mDun.setFloor(Game.currFloor)
-        Game.player.setPImage()
+        Game.player1.setPImage()
         Game.drawBoard()
     End Sub
     Public Overrides Sub encounter()
@@ -59,7 +59,7 @@
         ElseIf npcIndex = 2 Then
             Game.pushNPCDialog("Baaahhh.")
         ElseIf npcIndex = 3 Then
-            Game.pushNPCDialog("Hello, kind " & Game.player.pClass.name & ", how are you on this fine day?")
+            Game.pushNPCDialog("Hello, kind " & Game.player1.pClass.name & ", how are you on this fine day?")
         ElseIf npcIndex = 4 Then
             Game.pushNPCDialog("*giggle* Hey!")
         End If

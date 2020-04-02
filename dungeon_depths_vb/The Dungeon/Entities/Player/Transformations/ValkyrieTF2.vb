@@ -12,7 +12,7 @@
     End Sub
 
     Sub step1()
-        Dim p As Player = Game.player
+        Dim p As Player = Game.player1
 
         If p.sex = "Male" Then
             p.MtF()
@@ -32,7 +32,7 @@
         p.prt.setIAInd(pInd.cloak, 0, True, False)
         p.prt.setIAInd(pInd.fronthair, 11, True, True)
         p.prt.setIAInd(pInd.hat, 7, True, False)
-        p.prt.wingInd = 1
+        p.prt.setIAInd(pInd.wings, 1, True, False)
 
         p.inv.add(95, 1)
 
@@ -48,7 +48,7 @@
     End Sub
 
     Public Overrides Function getNextStep(stage As Integer) As Action
-        Dim p As player = game.player
+        Dim p As player = game.player1
         If p.pClass.name.Equals("Valkyrie") Then
             Return AddressOf stopTF
         Else

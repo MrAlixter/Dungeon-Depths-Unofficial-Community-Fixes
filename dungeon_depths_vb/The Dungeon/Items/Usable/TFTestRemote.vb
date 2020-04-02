@@ -12,9 +12,7 @@
         MyBase.isRandoTFAcceptable = False
         MyBase.isMonsterDrop = False
     End Sub
-    Public Overrides Sub use()
-        Dim p As Player = Game.player
-
+    Public Overrides Sub use(ByRef p As Player)
         Dim form = InputBox("TF to... [Half-Gorgon, Gynoid, Amazon, Mindless, Rando, Half-Broodmother, Broodmother, " &
                             "Minotaur Cow, Dragon, Succubus, Slime, Bimbo, Cake, Blob, Horse, Oni, Alraune]:")
 

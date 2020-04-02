@@ -24,19 +24,19 @@
 
         MyBase.isRandoTFAcceptable = False
     End Sub
-    Public Overrides Sub use()
-        MyBase.use()
-        If Not Equipment.clothingCurse1 Then Game.pushLblEvent("While the ring glows a little, nothing seems to happen.")
-        Game.player.drawPort()
+    Public Overrides Sub use(ByRef p As Player)
+        MyBase.use(p)
+        If Not Equipment.clothingCurse1(p) Then Game.pushLblEvent("While the ring glows a little, nothing seems to happen.")
+        p.drawPort()
     End Sub
-    Public Overrides Sub onEquip()
-        Game.player.perks("rotlg") = 1
+    Public Overrides Sub onEquip(ByRef p As Player)
+        p.perks("rotlg") = 1
         PerkEffects.ROTLGRoute()
-        Game.player.UIupdate()
+        p.UIupdate()
     End Sub
-    Public Overrides Sub onUnequip()
-        Game.player.perks("rotlg") = -1
-        Equipment.antiClothingCurse()
-        Game.player.drawPort()
+    Public Overrides Sub onUnequip(ByRef p As Player)
+        p.perks("rotlg") = -1
+        Equipment.antiClothingCurse(p)
+        p.drawPort()
     End Sub
 End Class

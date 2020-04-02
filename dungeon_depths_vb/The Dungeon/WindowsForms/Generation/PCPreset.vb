@@ -1,7 +1,7 @@
 ﻿Imports System.IO
 
 Public Class PCPreset
-    Public iArrInd(16) As Tuple(Of Integer, Boolean, Boolean)
+    Public iArrInd(Portrait.NUM_IMG_LAYERS) As Tuple(Of Integer, Boolean, Boolean)
     Public pName As String
     Public pClass As String
     Public haircolor, skincolor As Color
@@ -41,18 +41,18 @@ Public Class PCPreset
 
     Sub save(ByVal c As String) 'ByVal genSet As GeneratorSettings)
         'set preset values
-        ReDim iArrInd(UBound(Game.player.prt.iArrInd))
+        ReDim iArrInd(UBound(Game.player1.prt.iArrInd))
         For i = 0 To UBound(iArrInd)
-            iArrInd(i) = (Game.player.prt.iArrInd(i))
+            iArrInd(i) = (Game.player1.prt.iArrInd(i))
         Next
-        pName = Game.player.name
+        pName = Game.player1.name
         pClass = c
-        haircolor = Game.player.prt.haircolor
-        skincolor = Game.player.prt.skincolor
+        haircolor = Game.player1.prt.haircolor
+        skincolor = Game.player1.prt.skincolor
 
-        sexbool = Game.player.prt.sexBool
+        sexbool = Game.player1.prt.sexBool
 
-        Dim path = "presets/" & Game.player.name & ".pset"
+        Dim path = "presets/" & Game.player1.name & ".pset"
         If IO.File.Exists(path) AndAlso MessageBox.Show("A preset for " & pName & " already exists.  Overwrite existing preset?", "Overwrite Preset?", MessageBoxButtons.YesNo) = DialogResult.No Then Exit Sub
         Dim writer As StreamWriter
         IO.File.Delete(path)

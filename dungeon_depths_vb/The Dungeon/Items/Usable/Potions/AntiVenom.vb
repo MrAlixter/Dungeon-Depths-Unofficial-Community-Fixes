@@ -11,10 +11,10 @@
         MyBase.value = 1000
     End Sub
 
-    Overrides Sub use()
+    Overrides Sub use(ByRef p As Player)
         Game.pushLstLog("You drink the " & getName())
         Dim av As AntiVenomEffect = New AntiVenomEffect
-        av.apply(Game.player)
+        av.apply(p)
         Game.pushLblEvent("You drink the " & getName() & ".  All venom effects have been neutralized!")
         count -= 1
     End Sub

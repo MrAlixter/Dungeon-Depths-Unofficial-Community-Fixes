@@ -36,7 +36,7 @@
         picNCP.AddRange({picNormal, Game.picFrog.BackgroundImage, Game.picSheep.BackgroundImage, picPrincess, picBunny})
 
         picNCP.AddRange({Game.picWSmithAlt.BackgroundImage, Game.picWSmithAlt2.BackgroundImage, Game.picWSmithAlt3.BackgroundImage, Game.picWSDoll.BackgroundImage})
-        If speed = Game.player.speed Then speed -= 1
+        If speed = Game.player1.speed Then speed -= 1
         title = " the "
     End Sub
 

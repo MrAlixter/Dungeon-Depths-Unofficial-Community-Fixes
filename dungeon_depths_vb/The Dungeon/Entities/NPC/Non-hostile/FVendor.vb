@@ -40,7 +40,7 @@
         picNCP.AddRange({picNormal, Game.picFrog.BackgroundImage, Game.picSheep.BackgroundImage, picPrincess, picBunny})
 
         picNCP.AddRange({Game.picFSCow.BackgroundImage, Game.picFSCat.BackgroundImage, Game.picFVHT.BackgroundImage, Game.picFVDoll.BackgroundImage})
-        If speed = Game.player.speed Then speed -= 1
+        If speed = Game.player1.speed Then speed -= 1
         title = " the "
     End Sub
 
@@ -80,7 +80,7 @@
         ElseIf npcIndex = 2 Then
             Game.pushNPCDialog("...")
         ElseIf npcIndex = 3 Then
-            Game.pushNPCDialog("You dine with royalty this day, " & Game.player.pClass.name & ".  I assure you, my cooking is more than fit for a princess, and I would know! ~🖤  " &
+            Game.pushNPCDialog("You dine with royalty this day, " & Game.player1.pClass.name & ".  I assure you, my cooking is more than fit for a princess, and I would know! ~🖤  " &
                                "See, you may have thought you got the upper hand by turning me into a helpless princess, but now I've turned it around into marketing!  Pretty sneaky, huh?")
         ElseIf npcIndex = 4 Then
             Game.pushNPCDialog("I'd be lyinig if I said I wasn't used to being turned into a woman at this point.  Between my bestie and possibly girlfriend, and all the crazy stuff that " &

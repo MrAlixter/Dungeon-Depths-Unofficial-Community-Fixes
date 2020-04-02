@@ -11,18 +11,18 @@
         MyBase.value = 3700
     End Sub
 
-    Overrides Sub use()
+    Overrides Sub use(ByRef p As Player)
         If Me.getUsable() = False Then Exit Sub
         Game.pushLblEvent("You use the " & getName() & ". +5 base ATK, DEF, SPD, WIL, Max Mana, +10 Max Health!")
 
-        Game.player.attack += 5
-        Game.player.defence += 5
-        Game.player.speed += 5
-        Game.player.maxMana += 5
-        Game.player.will += 5
-        Game.player.maxHealth += 10
+        p.attack += 5
+        p.defence += 5
+        p.speed += 5
+        p.maxMana += 5
+        p.will += 5
+        p.maxHealth += 10
 
-        Game.player.UIupdate()
+        p.UIupdate()
         count -= 1
     End Sub
 End Class

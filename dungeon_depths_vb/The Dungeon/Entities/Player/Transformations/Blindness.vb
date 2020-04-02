@@ -14,12 +14,12 @@
     End Sub
 
     Sub step1()
-        Game.player.perks("blind") = 1
+        Game.player1.perks("blind") = 1
     End Sub
 
     Public Overrides Sub stopTF()
         MyBase.stopTF()
-        Game.player.perks("blind") = -1
+        Game.player1.perks("blind") = -1
         Game.pushLblEvent("You can see again!")
     End Sub
 

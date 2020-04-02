@@ -12,13 +12,13 @@
     End Sub
 
     Sub step1()
-        Dim p As player = game.player
+        Dim p As player = game.player1
         p.pClass = p.classes("Magical Girl​")
         Dim out = "Swinging your wand, you are engulfed in a rain of stars. As the light around your body grows blinding and your clothes disolve into the aether, you become a buxom young woman wearing a skimpy uniform!"
         If p.sex = "Male" Then
             p.sex = "Female"
         End If
-        p.prt.setIAInd(pInd.hat, Portrait.imgLib.atrs("Hat").getF.Count - 3, True, False)
+        p.prt.setIAInd(pInd.hat, Portrait.imgLib.atrs(pInd.hat).getF.Count - 3, True, False)
         Game.pushLblEvent(out, AddressOf step2)
 
 
@@ -28,7 +28,7 @@
     End Sub
     Sub step2()
         Game.lblEvent.Text = ""
-        Dim p As Player = Game.player
+        Dim p As Player = Game.player1
         If p.magGState.initFlag Then
             p.magGState.load(p)
         Else
@@ -44,14 +44,14 @@
             p.prt.setIAInd(pInd.cloak, 0, True, False)
             p.prt.setIAInd(pInd.fronthair, 8, True, True)
             p.prt.setIAInd(pInd.hat, 0, True, False)
-            p.reverseBSRoute()
+            p.reverseallroute()
             p.magGState.save(p)
             p.magGState.initFlag = True
         End If
         If Not p.knownSpells.Contains("Heartblast Starcannon") Then p.knownSpells.Add("Heartblast Starcannon")
         If p.inv.item(10).count < 1 Then p.inv.add(10, 1)
 
-        p.prt.hBowInd = 2
+        p.prt.setIAInd(pInd.hairacc, 2, True, True)
 
         Equipment.accChange("Nothing")
         p.pClass = p.classes("Magical Girl")
@@ -69,7 +69,7 @@
         p.pClass = p.classes("Mage")
 
         p.breastSize = 2
-        p.reverseBSRoute()
+        p.reverseallroute()
 
         Equipment.clothesChange("Naked")
         p.prt.setIAInd(pInd.rearhair, 7, True, True)
@@ -89,7 +89,7 @@
     End Sub
 
     Public Overrides Function getNextStep(stage As Integer) As Action
-        Dim p As Player = Game.player
+        Dim p As Player = Game.player1
         If p.pClass.name.Equals("Magical Girl​") Then
             Return AddressOf step2
         ElseIf p.pClass.name.Equals("Magical Girl") Then
