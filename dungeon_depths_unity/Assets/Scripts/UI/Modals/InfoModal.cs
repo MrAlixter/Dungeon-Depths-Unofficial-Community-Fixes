@@ -2,12 +2,12 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class InfoMenu : Menu
+public class InfoModal : Modal
 {
-    private static InfoMenu _instance;
-    public static InfoMenu instance { get { return _instance != null ? _instance : new InfoMenu(); } }
+    private static InfoModal _instance;
+    public static InfoModal instance { get { if(_instance != null) { return _instance; } else { _instance = new InfoModal(); return _instance; } } }
 
-    public InfoMenu()
+    public InfoModal()
     {
         if (_instance != null && _instance != this) { Destroy(this.gameObject); }
         else { _instance = this; }

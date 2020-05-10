@@ -1,19 +1,17 @@
 ﻿using Assets.Scripts;
 using Scripts;
-using System.Collections;
 using System.Collections.Generic;
-using System.Linq;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class BattleMenuV2 : Menu, HoverMenu.HoverMenuChoiceHandler
+public class BattleModalV2 : Modal, HoverMenu.HoverMenuChoiceHandler
 {
-    private static BattleMenuV2 _instance;
-    public static BattleMenuV2 instance { get { return _instance != null ? _instance : new BattleMenuV2(); } }
+    private static BattleModalV2 _instance;
+    public static BattleModalV2 instance { get { if(_instance != null) { return _instance; } else { _instance = new BattleModalV2(); return _instance; } } }
 
     //Since Awake() is only called when the object is active, but the menus
     //are inactive at the start, I need to use their constructor instead
-    public BattleMenuV2()
+    public BattleModalV2()
     {
         if (_instance != null && _instance != this) { Destroy(this.gameObject); }
         else { _instance = this; }
@@ -23,7 +21,14 @@ public class BattleMenuV2 : Menu, HoverMenu.HoverMenuChoiceHandler
     private IBattleInputHandler battleInputHandler;
     [SerializeField]
     private IPlayerHealthMaster playerHealthMaster;
-    
+
+    [SerializeField]
+    private UIRectangle turn_bar;
+    [SerializeField]
+    private UIRectangle turn_bar_base;
+    [SerializeField]
+    private Text turn_bar_text;
+
     [SerializeField]
     private GameObject ally_entity_panel;
     [SerializeField]
@@ -31,7 +36,7 @@ public class BattleMenuV2 : Menu, HoverMenu.HoverMenuChoiceHandler
     [SerializeField]
     private GameObject dropdown_choice;
 
-    private List<ICombatant> allies;
+    private List<IPlayable> allies;
     private List<ICombatant> enemies;
     private Transform ally_container;
     private Transform enemy_container;
@@ -105,7 +110,7 @@ public class BattleMenuV2 : Menu, HoverMenu.HoverMenuChoiceHandler
         }
     }
 
-    public void init(IBattleInputHandler bih, IPlayerHealthMaster phm, List<ICombatant> allies, List<ICombatant> enemies)
+    public void init(IBattleInputHandler bih, IPlayerHealthMaster phm, List<IPlayable> allies, List<ICombatant> enemies)
     {
         battleInputHandler = bih;
         playerHealthMaster = phm;
@@ -114,6 +119,11 @@ public class BattleMenuV2 : Menu, HoverMenu.HoverMenuChoiceHandler
         {
             base.Awake();
         }
+        Transform turn_container = panel.Find("Turn Container");
+        turn_bar = turn_container.Find("Turn Bar").GetComponent<UIRectangle>();
+        turn_bar_base = turn_container.Find("Turn Bar Base").GetComponent<UIRectangle>();
+        turn_bar_text = turn_container.Find("Text").GetComponent<Text>();
+
         ally_container = panel.Find("Ally Container");
         enemy_container = panel.Find("Enemy Container");
 
@@ -150,10 +160,10 @@ public class BattleMenuV2 : Menu, HoverMenu.HoverMenuChoiceHandler
         selecting_target = false;
     }
 
-    public void loadAlliesAndEnemies(List<ICombatant> allies, List<ICombatant> enemies)
+    public void loadAlliesAndEnemies(List<IPlayable> allies, List<ICombatant> enemies)
     {
         this.allies = allies;
-        foreach (ICombatant combatant in allies)
+        foreach (IPlayable combatant in allies)
         {
             GameObject go = Instantiate(ally_entity_panel, ally_container);
             CombatantPanel cp = go.GetComponent<CombatantPanel>();
@@ -566,10 +576,26 @@ public class BattleMenuV2 : Menu, HoverMenu.HoverMenuChoiceHandler
         }
     }
 
+    public void set_turn_percent(float percent)
+    {
+        //hp_text.text = current.ToString() + "/" + max.ToString();
+        turn_bar.width = turn_bar_base.width * percent;
+        //hp_bar_rectangle.color = hp_gradient.Evaluate(percent);
+        turn_bar.SetVerticesDirty();
+    }
+
+    public void set_turn_text(string text)
+    {
+        turn_bar_text.text = text;
+    }
+
     #region Util
     public bool is_ally_to_player(ICombatant combatant)
     {
-        if (allies.Contains(combatant)) { return true; }
+        if(combatant is IPlayable)
+        {
+            if(allies.Contains((IPlayable)combatant)) { return true; }
+        }
         if (enemies.Contains(combatant)) { return false; }
         return false;
     }

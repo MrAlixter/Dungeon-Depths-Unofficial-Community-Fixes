@@ -1,14 +1,15 @@
 ﻿using Assets.Scripts;
+using Scripts;
 using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
 [Serializable]
-public sealed class Player : MonoBehaviour, ICombatant, IPlayable
+public sealed class Player : MonoBehaviour, ICombatant, IPlayable, IEquipmentMaster
 {
     private static Player _instance;
-    public static Player instance { get { return _instance != null ? _instance : new Player(); } }
+    public static Player instance { get { if(_instance != null) { return _instance; } else { _instance = new Player(); return _instance; } } }
 
     public Player()
     {
@@ -16,8 +17,15 @@ public sealed class Player : MonoBehaviour, ICombatant, IPlayable
         else { _instance = this; }
     }
 
-    private ICombatantMaster combatantMaster;
+    public static Player init()
+    {
+        return instance;
+    }
+
     private Master master;
+    private ICombatantMaster combatantMaster;
+    private ITurnMaster turnMaster;
+    private IProfilePictureMaster profilePictureMaster;
     public Controller controller;
     public Inventory inventory;
 
@@ -32,11 +40,7 @@ public sealed class Player : MonoBehaviour, ICombatant, IPlayable
     public Color hair_color;
     [SerializeField]
     public Color skin_color;
-
-    static Player()
-    {
-        
-    }
+    
 
     #region Stats
     //Instead of using the ones defined in Combatant, 
@@ -87,7 +91,9 @@ public sealed class Player : MonoBehaviour, ICombatant, IPlayable
 
     public bool canMove; //Public for the debug text
     
-    public void Start ()
+
+    public void Awake()
+    //public void Start ()
 	{
         position = new Vector2Int((int)Mathf.Round(transform.position.x), (int)Mathf.Round(transform.position.y));
         xDir = 0;
@@ -95,6 +101,8 @@ public sealed class Player : MonoBehaviour, ICombatant, IPlayable
         canMove = true;
 
 	    master = Master.instance;
+        turnMaster = TurnMaster.instance;
+        profilePictureMaster = ProfilePicture.instance;
 
         master.entityMap[position.x, position.y] = this.gameObject;
 
@@ -129,15 +137,13 @@ public sealed class Player : MonoBehaviour, ICombatant, IPlayable
 
         change_hair_color(Color.white);
 
-        master.regenerate_profile_picture();
-        //master.update_bars();
-        master.update_all_bars();
+        profilePictureMaster.regenerate_profile_picture();
     }
 
     // Update is called once per frame
     void Update()
     {
-        if (canMove && master.current_mode == Mode.movement)
+        if(canMove && ModalMaster.instance.current_mode == MODE.movement) //TODO
         {
             xDir = 0;
             yDir = 0;
@@ -161,11 +167,16 @@ public sealed class Player : MonoBehaviour, ICombatant, IPlayable
                     position.y += (int)yLeft;
                     moveTowards();
                     canMove = false;
-
-                    master.random_encounter();
+                    
+                    if(!master.random_encounter())
+                    {
+                        turnMaster.next();
+                    }
                 }
-
-                master.next_turn();
+                else
+                {
+                    turnMaster.next();
+                }
             }
         }
         else if(xLeft != 0 || yLeft != 0)
@@ -214,22 +225,19 @@ public sealed class Player : MonoBehaviour, ICombatant, IPlayable
     {
         HP += amt;
         if(HP > MAX_HP) { HP = MAX_HP; }
-        //master.update_bars();
-        master.update_health_bar();
+        ////////////master.update_health_bar(); //TODO
     }
 
     public void decrease_mana(int cost)
     {
         MANA -= cost;
-        //master.update_bars();
-        master.update_mana_bar();
+        ////////////master.update_mana_bar(); //TODO
     }
 
     public void add_hunger(int hunger)
     {
         HUNGER += hunger;
-        //master.update_bars();
-        master.update_hunger_bar();
+        //////////////master.update_hunger_bar(); //TODO
     }
 
     public List<Spell> getSpells() { return spells; }
@@ -249,6 +257,7 @@ public sealed class Player : MonoBehaviour, ICombatant, IPlayable
         {
             equipped_armor_id = id;
         }
+        profilePictureMaster.update_armor();
     }
 
     public void change_breast_size(int change)
@@ -256,19 +265,19 @@ public sealed class Player : MonoBehaviour, ICombatant, IPlayable
         breast_size += change;
         if(breast_size < -1) { breast_size = -1; }
         if (breast_size > 7) { breast_size = 7; }
-        master.update_body();
-        master.update_armor();
+        profilePictureMaster.update_body();
+        profilePictureMaster.update_armor();
     }
 
     public void change_skin_color(Color color)
     {
         skin_color = color;
-        master.update_skin_color();
+        profilePictureMaster.update_skin_color();
     }
 
     public void change_hair_color(Color color)
     {
         hair_color = color;
-        master.update_hair_color();
+        profilePictureMaster.update_hair_color();
     }
 }

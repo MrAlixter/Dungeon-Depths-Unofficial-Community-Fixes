@@ -3,7 +3,7 @@
 public class ValkyrieArmor : Armor
 {
     private static ValkyrieArmor _instance;
-    public static ValkyrieArmor instance { get { return _instance != null ? _instance : new ValkyrieArmor(); } }
+    public static ValkyrieArmor instance { get { if(_instance != null) { return _instance; } else { _instance = new ValkyrieArmor(); return _instance; } } }
 
     public void OnEnable()
     {

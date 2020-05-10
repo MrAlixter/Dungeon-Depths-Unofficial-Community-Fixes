@@ -3,7 +3,7 @@
 public class BronzeArmor : Armor
 {
     private static BronzeArmor _instance;
-    public static BronzeArmor instance { get { return _instance != null ? _instance : new BronzeArmor(); } }
+    public static BronzeArmor instance { get { if(_instance != null) { return _instance; } else { _instance = new BronzeArmor(); return _instance; } } }
 
     public void OnEnable()
     {

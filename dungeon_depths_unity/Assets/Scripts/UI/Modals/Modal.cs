@@ -1,11 +1,7 @@
-﻿using Scripts;
-using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+﻿using UnityEngine;
 using UnityEngine.EventSystems;
-using UnityEngine.UI;
 
-public abstract class Menu : MonoBehaviour
+public abstract class Modal : MonoBehaviour
 {
     protected RectTransform panel;
 
@@ -39,8 +35,7 @@ public abstract class Menu : MonoBehaviour
         if(backgroundFade != null)
         {
             OverridableButton b = backgroundFade.GetComponent<OverridableButton>();
-            b.customOnClick = new OverridableButton.eventDelegate(close);
-            //b.customOnSubmit
+            b.customOnClick = ask_to_close;
         }
     }
 
@@ -78,4 +73,9 @@ public abstract class Menu : MonoBehaviour
     //This way I have to make a concious decision to not make a default button 
     //for when it's not needed (info menu and health bar).
     protected abstract void SetDefault();
+
+    private void ask_to_close()
+    {
+        ModalMaster.instance.switch_modal(Scripts.MODAL.none);
+    }
 }

@@ -3,7 +3,7 @@
 public class GoldArmor : Armor
 {
     private static GoldArmor _instance;
-    public static GoldArmor instance { get { return _instance != null ? _instance : new GoldArmor(); } }
+    public static GoldArmor instance { get { if(_instance != null) { return _instance; } else { _instance = new GoldArmor(); return _instance; } } }
     
     public void OnEnable()
     {

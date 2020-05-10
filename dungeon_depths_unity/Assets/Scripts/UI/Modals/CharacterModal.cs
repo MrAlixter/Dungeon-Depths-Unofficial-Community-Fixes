@@ -1,13 +1,10 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
-using UnityEngine.EventSystems;
+﻿using UnityEngine;
 using UnityEngine.UI;
 
-public class CharacterMenu : Menu
+public class CharacterModal : Modal
 {
-    private static CharacterMenu _instance;
-    public static CharacterMenu instance { get { return _instance != null ? _instance : new CharacterMenu(); } }
+    private static CharacterModal _instance;
+    public static CharacterModal instance { get { if(_instance != null) { return _instance; } else { _instance = new CharacterModal(); return _instance; } } }
 
     private static GameObject equipmentButtonGO;
     private static GameObject itemsButtonGO;
@@ -19,7 +16,7 @@ public class CharacterMenu : Menu
     private static Button statsButton;
     private static Button examineSelfButton;
 
-    public CharacterMenu()
+    public CharacterModal()
     {
         if (_instance != null && _instance != this) { Destroy(this.gameObject); }
         else { _instance = this; }

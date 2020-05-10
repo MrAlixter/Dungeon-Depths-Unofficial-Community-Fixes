@@ -8,7 +8,7 @@ using UnityEngine.Experimental.Playables;
 public sealed class Controller : MonoBehaviour
 {
     private static Controller _instance;
-    public static Controller instance { get { return _instance != null ? _instance : new Controller(); } }
+    public static Controller instance { get { if(_instance != null) { return _instance; } else { _instance = new Controller(); return _instance; } } }
 
     public Controller()
     {
@@ -17,7 +17,7 @@ public sealed class Controller : MonoBehaviour
     }
 
     [Serializable]
-    public struct Map
+    public class Map
     {
         public bool down;
         public bool hold;
@@ -32,7 +32,7 @@ public sealed class Controller : MonoBehaviour
 
         public void press()
         {
-            if (hold)
+            if(hold)
             {
                 down = false;
                 up = false;
@@ -76,6 +76,41 @@ public sealed class Controller : MonoBehaviour
         }
     }
 
+    [Serializable]
+    public class AnalogMap : Map
+    {
+        public float deadzone = 0.05f;
+        public float magnitude;
+        [SerializeField]
+        private float raw;
+
+        public new void setFalse()
+        {
+            base.setFalse();
+            magnitude = 0;
+        }
+
+        public void update(float magnitude)
+        {
+            raw = magnitude;
+            if(Mathf.Abs(magnitude) >= deadzone)
+            {
+                press();
+                this.magnitude = magnitude;
+            }
+            else
+            {
+                release();
+                this.magnitude = 0;
+            }
+        }
+
+        public override string ToString()
+        {
+            return base.ToString() + $" {magnitude}";
+        }
+    }
+
     public List<Map> inputMaps;
 
     [SerializeField]
@@ -91,6 +126,22 @@ public sealed class Controller : MonoBehaviour
     public Map pause_menu;
     [SerializeField]
     public Map character_menu;
+    
+    [SerializeField]
+    public AnalogMap zoom;
+    [SerializeField]
+    public AnalogMap panHorizontally;
+    [SerializeField]
+    public AnalogMap panVertically;
+    [SerializeField]
+    public AnalogMap mouse_panHorizontally;
+    [SerializeField]
+    public AnalogMap mouse_panVertically;
+    [SerializeField]
+    private Vector2 mouse_position_on_down;
+    [SerializeField]
+    private Vector2 last_mouse_position;
+
 
     void setAllFalse()
     {
@@ -98,13 +149,6 @@ public sealed class Controller : MonoBehaviour
         {
             inputMaps[i].setFalse();
         }
-    }
-
-    void setFalse(ref Map map)
-    {
-        map.down = false;
-        map.hold = false;
-        map.up = false;
     }
 
 	// Use this for initialization
@@ -120,6 +164,15 @@ public sealed class Controller : MonoBehaviour
         pause_menu = new Map();
         character_menu = new Map();
 
+        //mouse_zoom = new Map();
+        //mouse_click = new Map();
+        zoom = new AnalogMap();
+        panHorizontally = new AnalogMap();
+        panVertically = new AnalogMap();
+        mouse_panHorizontally = new AnalogMap();
+        mouse_panVertically = new AnalogMap();
+
+
         inputMaps.Add(moveU);
 	    inputMaps.Add(moveR);
 	    inputMaps.Add(moveD);
@@ -128,7 +181,16 @@ public sealed class Controller : MonoBehaviour
         inputMaps.Add(pause_menu);
         inputMaps.Add(character_menu);
 
-	    setAllFalse();
+        //inputMaps.Add(mouse_zoom);
+        //inputMaps.Add(mouse_click);
+        inputMaps.Add(zoom);
+        inputMaps.Add(panHorizontally);
+        inputMaps.Add(panVertically);
+        inputMaps.Add(mouse_panHorizontally);
+        inputMaps.Add(mouse_panVertically);
+
+
+        setAllFalse();
 	}
 	
 	// Update is called once per frame
@@ -178,5 +240,46 @@ public sealed class Controller : MonoBehaviour
         if (Input.GetAxisRaw("Character Menu") > 0)
             { character_menu.press(); }
         else { character_menu.release(); }
+
+        //if(Input.GetAxisRaw("Zoom") > 0)
+        //    { mouse_zoom.press(); }
+        zoom.update(Input.GetAxis("Zoom"));
+        panHorizontally.update(Input.GetAxis("PanHorizontally"));
+        panVertically.update(-1*Input.GetAxis("PanVertically"));
+
+        if(Input.GetMouseButtonDown(0))
+        {
+            mouse_panHorizontally.press();
+            mouse_panVertically.press();
+            mouse_position_on_down = Input.mousePosition;
+            last_mouse_position = mouse_position_on_down;
+        }
+        else if(Input.GetMouseButtonUp(0))
+        {
+            mouse_panHorizontally.release();
+            mouse_panVertically.release();
+        }
+        if(Input.GetMouseButton(0))
+        {
+            float xDiff = Input.mousePosition.x - last_mouse_position.x;
+            float yDiff = Input.mousePosition.y - last_mouse_position.y;
+
+            xDiff /= Screen.width;
+            yDiff /= Screen.width; //I don't know why it only works when both are divded by the width
+            xDiff *= 85f; //I don't know why 85 happens to be the magic constant
+            yDiff *= 85f;
+            //Account for the aspect ratio
+            float aspect_ratio = (16f / 9f) / ((float)Screen.width / (float)Screen.height);
+            xDiff /= aspect_ratio;
+            yDiff /= aspect_ratio;
+            
+            //You might be tempted to think that the fact that I'm multiplying and dividing by the same constants 
+            //Means they're redundant but somehow that's not the case.
+            //Short version, it works. I don't know why, but it's the most reliable way 
+            
+            mouse_panHorizontally.update(-1 * xDiff);
+            mouse_panVertically.update(-1 * yDiff);
+            last_mouse_position = Input.mousePosition;
+        }
     }
 }

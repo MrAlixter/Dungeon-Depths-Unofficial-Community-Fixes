@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class StatBar : Menu
+public class StatBar : Modal
 {
     public UIRectangle hp_base_rectangle;
     public UIRectangle hp_bar_rectangle;
@@ -119,6 +119,7 @@ public class StatBar : Menu
         hp_text.text = current.ToString() + "/" + max.ToString();
         hp_bar_rectangle.width = hp_base_rectangle.width * percent;
         //hp_bar_rectangle.color = hp_gradient.Evaluate(percent);
+        hp_bar_rectangle.SetVerticesDirty();
     }
 
     public void set_mana(decimal current, decimal max)
@@ -129,6 +130,7 @@ public class StatBar : Menu
         mp_text.text = current.ToString() + "/" + max.ToString();
         mp_bar_rectangle.width = mp_base_rectangle.width * percent;
         //mp_bar_rectangle.color = mp_gradient.Evaluate(percent);
+        mp_bar_rectangle.SetVerticesDirty();
     }
 
     public void set_hunger(decimal current, decimal max)
@@ -139,5 +141,6 @@ public class StatBar : Menu
         hunger_text.text = current.ToString() + "/" + max.ToString();
         hunger_bar_rectangle.width = hunger_base_rectangle.width * percent;
         //hunger_bar_rectangle.color = hunger_gradient.Evaluate(percent);
+        hunger_bar_rectangle.SetVerticesDirty();
     }
 }

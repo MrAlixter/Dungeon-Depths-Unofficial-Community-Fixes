@@ -3,7 +3,7 @@
 public class WarriorsCuirass : Armor
 {
     private static WarriorsCuirass _instance;
-    public static WarriorsCuirass instance { get { return _instance != null ? _instance : new WarriorsCuirass(); } }
+    public static WarriorsCuirass instance { get { if(_instance != null) { return _instance; } else { _instance = new WarriorsCuirass(); return _instance; } } }
 
     public void OnEnable()
     {

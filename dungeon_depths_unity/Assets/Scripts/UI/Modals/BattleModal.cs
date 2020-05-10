@@ -1,18 +1,15 @@
 ﻿using Assets.Scripts;
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.EventSystems;
 using UnityEngine.UI;
 
-public class BattleMenu : Menu
+public class BattleModal : Modal
 {
-    private static BattleMenu _instance;
-    public static BattleMenu instance { get { return _instance != null ? _instance : new BattleMenu(); } }
+    private static BattleModal _instance;
+    public static BattleModal instance { get { if(_instance != null) { return _instance; } else { _instance = new BattleModal(); return _instance; } } }
     
     //Since Awake() is only called when the object is active, but the menus
     //are inactive at the start, I need to use their constructor instead
-    public BattleMenu()
+    public BattleModal()
     {
         if (_instance != null && _instance != this) { Destroy(this.gameObject); }
         else { _instance = this; }
@@ -23,24 +20,24 @@ public class BattleMenu : Menu
 
     private Transform main;
 
-    private UnityEngine.UI.Text enemy_name_text;
+    private Text enemy_name_text;
     private StatBar enemy_health_bar;
-    private UnityEngine.UI.Text player_name_text;
+    private Text player_name_text;
     private StatBar player_health_bar;
 
-    private UnityEngine.UI.Text turn_text;
+    private Text turn_text;
 
-    private UnityEngine.UI.InputField battle_information_text;
-    private UnityEngine.UI.Scrollbar battle_information_scrollbar;
+    private InputField battle_information_text;
+    private Scrollbar battle_information_scrollbar;
 
-    private UnityEngine.UI.Button attack_button;
-    private UnityEngine.UI.Button run_button;
-    private UnityEngine.UI.Button wait_button;
+    private Button attack_button;
+    private Button run_button;
+    private Button wait_button;
     private HoverMenu magic_dropdown;
     private HoverMenu special_dropdown;
 
-    private UnityEngine.UI.Text player_stat_text;
-    private UnityEngine.UI.Text enemy_stat_text;
+    private Text player_stat_text;
+    private Text enemy_stat_text;
 
     public new void Awake()
     {
@@ -50,16 +47,16 @@ public class BattleMenu : Menu
 
         main = panel.Find("MainBody");
         GameObject enemy_info = main.Find("Enemy Info").gameObject;
-        enemy_name_text = enemy_info.transform.Find("Enemy Name").GetComponent<UnityEngine.UI.Text>();
+        enemy_name_text = enemy_info.transform.Find("Enemy Name").GetComponent<Text>();
         enemy_health_bar = enemy_info.transform.Find("Panel").GetComponent<StatBar>();
         enemy_health_bar.Awake();
 
         GameObject player_info = main.Find("Player Info").gameObject;
-        player_name_text = player_info.transform.Find("Player Name").GetComponent<UnityEngine.UI.Text>();
+        player_name_text = player_info.transform.Find("Player Name").GetComponent<Text>();
         player_health_bar = player_info.transform.Find("Panel").GetComponent<StatBar>();
         player_health_bar.Awake();
 
-        turn_text = main.Find("Turn Text").GetComponent<UnityEngine.UI.Text>();
+        turn_text = main.Find("Turn Text").GetComponent<Text>();
 
         GameObject battle_info_text_container = main.Find("Text Area").Find("TextContainer").gameObject;
         battle_information_text = battle_info_text_container.transform.Find("InputField").GetComponent<InputField>();
@@ -76,9 +73,9 @@ public class BattleMenu : Menu
         //special_dropdown.choices = player.specials.ToArray();
 
         GameObject playerStats = panel.transform.Find("Player Stats").gameObject;
-        player_stat_text = playerStats.transform.Find("Stat Text").GetComponent<UnityEngine.UI.Text>();
+        player_stat_text = playerStats.transform.Find("Stat Text").GetComponent<Text>();
         GameObject enemyStats = panel.transform.Find("Enemy Stats").gameObject;
-        enemy_stat_text = enemyStats.transform.Find("Stat Text").GetComponent<UnityEngine.UI.Text>();
+        enemy_stat_text = enemyStats.transform.Find("Stat Text").GetComponent<Text>();
         update_player_stats();
     }
 

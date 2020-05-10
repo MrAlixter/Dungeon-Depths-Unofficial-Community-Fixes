@@ -143,7 +143,7 @@ namespace Scripts
             {
                 maxIterations = checked(2500 * height * width);
             }
-            catch(OverflowException e)
+            catch(OverflowException)
             {
                 maxIterations = Int32.MaxValue;
             }

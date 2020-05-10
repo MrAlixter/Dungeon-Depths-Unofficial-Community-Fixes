@@ -1,12 +1,10 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+﻿using UnityEngine;
 using UnityEngine.UI;
 
-public class PauseMenu : Menu
+public class PauseModal : Modal
 {
-    private static PauseMenu _instance;
-    public static PauseMenu instance { get { return _instance != null ? _instance : new PauseMenu(); } }
+    private static PauseModal _instance;
+    public static PauseModal instance { get { if(_instance != null) { return _instance; } else { _instance = new PauseModal(); return _instance; } } }
 
     private static GameObject saveButtonGO;
     private static GameObject loadButtonGO;
@@ -18,7 +16,7 @@ public class PauseMenu : Menu
     private static Button optionsButton;
     private static Button quitButton;
 
-    public PauseMenu()
+    public PauseModal()
     {
         if (_instance != null && _instance != this) { Destroy(this.gameObject); }
         else { _instance = this; }

@@ -7,7 +7,7 @@ using UnityEngine.UI;
 public class CustomEventSystem : MonoBehaviour
 {
     private static CustomEventSystem _instance;
-    public static CustomEventSystem instance { get { return _instance != null ? _instance : new CustomEventSystem(); } }
+    public static CustomEventSystem instance { get { if(_instance != null) { return _instance; } else { _instance = new CustomEventSystem(); return _instance; } } }
     public CustomEventSystem()
     {
         if (_instance != null && _instance != this) { Destroy(this.gameObject); }

@@ -3,7 +3,7 @@
 public class ChitinArmor : Armor
 {
     private static ChitinArmor _instance;
-    public static ChitinArmor instance { get { return _instance != null ? _instance : new ChitinArmor(); } }
+    public static ChitinArmor instance { get { if(_instance != null) { return _instance; } else { _instance = new ChitinArmor(); return _instance; } } }
 
     public void OnEnable()
     {

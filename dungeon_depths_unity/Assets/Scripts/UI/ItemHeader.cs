@@ -11,7 +11,7 @@ public class ItemHeader : MonoBehaviour, ISelectHandler, IDeselectHandler
     public Button button;
     public Navigation navigation { get { return button.navigation; } set { button.navigation = value; } }
     public Selectable selectable { get { return button.GetComponent<Selectable>(); } }
-    //MUST SET IN EDITOR
+    //vvv MUST SET IN EDITOR vvv
     public ItemType type;
     public bool selected;
 

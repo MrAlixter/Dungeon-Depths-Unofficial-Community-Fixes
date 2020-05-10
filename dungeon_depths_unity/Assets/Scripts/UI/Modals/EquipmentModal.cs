@@ -1,15 +1,14 @@
 ﻿using System;
-using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class EquipmentMenu : Menu, IEnsureVisible<EquipmentChoice>
+public class EquipmentModal : Modal, IEnsureVisible<EquipmentChoice>
 {
-    private static EquipmentMenu _instance;
-    public static EquipmentMenu instance { get { return _instance != null ? _instance : new EquipmentMenu(); } }
+    private static EquipmentModal _instance;
+    public static EquipmentModal instance { get { if(_instance != null) { return _instance; } else { _instance = new EquipmentModal(); return _instance; } } }
 
-    public EquipmentMenu()
+    public EquipmentModal()
     {
         if (_instance != null && _instance != this) { Destroy(this.gameObject); }
         else { _instance = this; }
@@ -60,7 +59,7 @@ public class EquipmentMenu : Menu, IEnsureVisible<EquipmentChoice>
         if(equipment_choice_prefab == null) { equipment_choice_prefab = (GameObject)Resources.Load("Equipment Option Button"); }
         if(inventory == null) { inventory = Inventory.instance; }
         if(player == null) { player = Player.instance; }
-        if(equipment_master == null) { equipment_master = Master.instance; }
+        if(equipment_master == null) { equipment_master = Player.instance; }
 
         EquipmentChoice.ensureVisibleMaster = this;
     }
@@ -213,7 +212,7 @@ public class EquipmentMenu : Menu, IEnsureVisible<EquipmentChoice>
             }
 
             ec.button.onClick.AddListener(() =>
-                { equipment_master.set_armor(armor.id); });
+                { equipment_master.equip_armor(armor.id); });
             
             temp = ec.button.navigation;
             temp.selectOnLeft = armorSlot.GetComponent<Selectable>();

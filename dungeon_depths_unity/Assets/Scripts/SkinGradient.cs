@@ -7,7 +7,7 @@ using UnityEngine.UI;
 public class SkinGradient : RawImage, IPointerClickHandler
 {
     private static SkinGradient _instance;
-    public static SkinGradient instance { get { return _instance != null ? _instance : new SkinGradient(); } }
+    public static SkinGradient instance { get { if(_instance != null) { return _instance; } else { _instance = new SkinGradient(); return _instance; } } }
     
     private RectTransform rt;
     public List<Color> colors;

@@ -1,15 +1,13 @@
-﻿using System;
-using System.Collections;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class ItemsMenu : Menu, ItemHeader.ItemHeaderMaster, IEnsureVisible<ItemChoice>, ItemChoice.IItemChoiceMaster
+public class ItemsModal : Modal, ItemHeader.ItemHeaderMaster, IEnsureVisible<ItemChoice>, ItemChoice.IItemChoiceMaster
 {
-    private static ItemsMenu _instance;
-    public static ItemsMenu instance { get { return _instance != null ? _instance : new ItemsMenu(); } }
+    private static ItemsModal _instance;
+    public static ItemsModal instance { get { if(_instance != null) { return _instance; } else { _instance = new ItemsModal(); return _instance; } } }
 
-    public ItemsMenu()
+    public ItemsModal()
     {
         if (_instance != null && _instance != this) { Destroy(this.gameObject); }
         else { _instance = this; }
@@ -38,6 +36,8 @@ public class ItemsMenu : Menu, ItemHeader.ItemHeaderMaster, IEnsureVisible<ItemC
     private static GameObject item_list;
     private static RectTransform item_list_rt;
     private static HeightFitter height_fitter;
+
+    private static IEquipmentMaster equipmentMaster;
 
     public new void Awake()
     {
@@ -72,6 +72,8 @@ public class ItemsMenu : Menu, ItemHeader.ItemHeaderMaster, IEnsureVisible<ItemC
         item_list = scroll_section.transform.Find("Item List").gameObject;
         item_list_rt = item_list.GetComponent<RectTransform>();
         height_fitter = item_list.transform.Find("Height Fitter").GetComponent<HeightFitter>();
+
+        equipmentMaster = Player.instance;
     }
 
     protected override void SetDefault()
@@ -224,7 +226,7 @@ public class ItemsMenu : Menu, ItemHeader.ItemHeaderMaster, IEnsureVisible<ItemC
 
     public void ItemEquipped(ItemChoice itemChoice)
     {
-        Master.instance.set_armor(itemChoice.associated_item.id);
+        equipmentMaster.equip_armor(itemChoice.associated_item.id);
         itemChoice.selectable.Select();
     }
 

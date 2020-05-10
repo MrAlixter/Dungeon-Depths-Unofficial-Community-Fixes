@@ -6,7 +6,7 @@ using UnityEngine.UI;
 public class DummyButton : Button
 {
     private static DummyButton _instance;
-    public static DummyButton instance { get { return _instance != null ? _instance : new DummyButton(); } }
+    public static DummyButton instance { get { if(_instance != null) { return _instance; } else { _instance = new DummyButton(); return _instance; } } }
 
     public DummyButton()
     {

@@ -4,6 +4,11 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
+public interface ICombatMaster : IBattleInputHandler, ICombatantMaster
+{
+
+}
+
 //FOR BattleMenuV2 menu handling
 public interface IBattleInputHandler
 {
@@ -16,13 +21,14 @@ public interface IBattleInputHandler
 //FOR BattleMenu 
 public interface ICombatantMaster
 {
+    BattleMaster startBattle(List<IPlayable> allies, List<ICombatant> enemies);
     List<ICombatant> getEnemies(ICombatant forWhom);
     List<ICombatant> getAllies(ICombatant forWhom);
     void attack(ICombatant from, ICombatant to);
-    void end_turn(ICombatant forWhom);
-    bool run(ICombatant forWhom);
-    void wait(ICombatant who);
-    void die(ICombatant dead);
+    void end_turn(ICombatant whom);
+    bool run(ICombatant whom);
+    void wait(ICombatant whom);
+    void die(ICombatant whom);
 }
 
 public interface ICombatant
@@ -55,7 +61,7 @@ public interface ICombatant
     int SPD { get; set; }
 }
 
-public interface IPlayable
+public interface IPlayable : ICombatant
 {
     List<Spell> getSpells();
     List<Special> getSpecials();
@@ -66,7 +72,7 @@ public interface IPlayable
     Armor equipped_armor { get; }
 }
 
-public abstract class Combatant : ICombatant, IPlayable
+public abstract class Combatant : IPlayable
 {
     public string name { get; set; }
 

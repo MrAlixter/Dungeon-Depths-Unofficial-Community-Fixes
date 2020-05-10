@@ -5,15 +5,16 @@ using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
 
-public class BattleMaster : MonoBehaviour, IBattleInputHandler, ICombatantMaster
+public class BattleMaster : MonoBehaviour, ICombatMaster
 {
-    private IMessageMaster messageMaster;
-    private IDialogMaster dialogMaster;
-    private IPlayerHealthMaster playerHealthMaster;
+    private static IMessageMaster messageMaster;
+    private static IModalMaster dialogMaster;
+    private static IPlayerHealthMaster playerHealthMaster;
+    private static ITurnMaster turnMaster;
 
-    private BattleMenuV2 battle_menu;
+    private BattleModalV2 battle_menu;
 
-    private List<ICombatant> allies;
+    private List<IPlayable> allies;
     private List<ICombatant> enemies;
     private Dictionary<ICombatant, float> ATBAmounts;
 
@@ -21,36 +22,63 @@ public class BattleMaster : MonoBehaviour, IBattleInputHandler, ICombatantMaster
     private Queue<ICombatant> awaiting_input_from;
     private List<ICombatant> enemies_waiting;
 
+    int turn_at_battle_start;
     [SerializeField]
-    private float BATTLE_SPEED = 25; //Mutiplier for ATB speed where 100 makes entities with SPD == 1 attack once per second
+    //Meant to, eventually, be a setting
+    private static float BATTLE_SPEED = 25; //Mutiplier for ATB speed where 100 makes entities with SPD == 1 attack once per second
+    [SerializeField]
+    //Never supposed to be changed by the user
+    private static float TURN_LENGTH = 1f;
+    [SerializeField]
+    private float timeToNextTurn = 0;
     
-    public void init(IMessageMaster messageMaster, IDialogMaster dialogMaster, IPlayerHealthMaster playerHealthMaster, List<ICombatant> allies, List<ICombatant> enemies)
+    public static void init(IMessageMaster messageMaster, IModalMaster dialogMaster, IPlayerHealthMaster playerHealthMaster, ITurnMaster turnMaster)
     {
-        this.messageMaster = messageMaster;
-        this.dialogMaster = dialogMaster;
-        this.playerHealthMaster = playerHealthMaster;
-        battle_menu = BattleMenuV2.instance;
+        BattleMaster.messageMaster = messageMaster;
+        BattleMaster.dialogMaster = dialogMaster;
+        BattleMaster.playerHealthMaster = playerHealthMaster;
+        BattleMaster.turnMaster = turnMaster;
+    }
 
+    public static BattleMaster createInstance(GameObject parent)
+    {
+        BattleMaster battle_master = parent.AddComponent<BattleMaster>();
+        return battle_master;
+    }
+
+    public BattleMaster startBattle(List<IPlayable> allies, List<ICombatant> enemies)
+    {
         this.allies = allies;
         this.enemies = enemies;
+        //player = this.allies.FirstOrDefault(a => a is Player) as Player;
 
-        ATBAmounts = new Dictionary<ICombatant, float>();
+        this.ATBAmounts = new Dictionary<ICombatant, float>();
         allies.ForEach(c => {
-            ATBAmounts.Add(c, 0);
+            this.ATBAmounts.Add(c, 0);
             if(typeof(NPC).IsAssignableFrom(c.GetType()))
-                { ((NPC)c).setCombatantMaster(this); }
+            { ((NPC)c).setCombatantMaster(this); }
         });
         enemies.ForEach(c => {
-            ATBAmounts.Add(c, 0);
-            if (typeof(NPC).IsAssignableFrom(c.GetType()))
-                { ((NPC)c).setCombatantMaster(this); }
+            this.ATBAmounts.Add(c, 0);
+            if(typeof(NPC).IsAssignableFrom(c.GetType()))
+            { ((NPC)c).setCombatantMaster(this); }
         });
+        this.awaiting_input_from = new Queue<ICombatant>();
+        this.enemies_waiting = new List<ICombatant>();
 
-        awaiting_input_from = new Queue<ICombatant>();
-        enemies_waiting = new List<ICombatant>();
+        this.battle_menu = BattleModalV2.instance;
+        this.battle_menu.Awake();
+        this.battle_menu.init(this, playerHealthMaster, allies, enemies);
 
-        battle_menu.Awake();
-        battle_menu.init(this, playerHealthMaster, allies, enemies);
+        //turnMaster.in_battle = true;
+        
+        dialogMaster.switch_modal(MODAL.battle);
+        
+        turn_at_battle_start = turnMaster.turn_number;
+        timeToNextTurn = TURN_LENGTH;
+        battle_menu.set_turn_text(turn_text);
+
+        return this;
     }
 
     // Start is called before the first frame update
@@ -80,6 +108,7 @@ public class BattleMaster : MonoBehaviour, IBattleInputHandler, ICombatantMaster
             else
             {
                 //Nobody else waiting for their turn
+                float baseATBAmt = Time.deltaTime / 100 * BATTLE_SPEED;
 
                 //Note that C# doesn't like changing dictionaries while iterating through them, 
                 //hence the separate dictionary every update
@@ -87,7 +116,7 @@ public class BattleMaster : MonoBehaviour, IBattleInputHandler, ICombatantMaster
                 foreach (KeyValuePair<ICombatant, float> kvp in ATBAmounts)
                 {
                     //Increase ATB amounts based on SPD/sec passed since last update
-                    float newAmt = kvp.Value + kvp.Key.SPD * Time.deltaTime / 100 * BATTLE_SPEED;
+                    float newAmt = kvp.Value + kvp.Key.SPD * baseATBAmt;
                     if (newAmt > 1) //Percent, so 1 is ready
                     {
                         if (allies.Contains(kvp.Key))
@@ -106,6 +135,18 @@ public class BattleMaster : MonoBehaviour, IBattleInputHandler, ICombatantMaster
                     replacement.Add(kvp.Key, newAmt);
                 }
                 ATBAmounts = replacement;
+                
+                timeToNextTurn -= (baseATBAmt * 10);
+                while(timeToNextTurn <= 0)
+                {
+                    timeToNextTurn += TURN_LENGTH;
+                    turnMaster.next();
+                    battle_menu.set_turn_text(turn_text);
+                }
+                float turn_percent = 0;
+                if(TURN_LENGTH > 0) { turn_percent = (TURN_LENGTH - timeToNextTurn) / TURN_LENGTH; }
+                //Debug.Log($"{baseATBAmt} // {timeToNextTurn} | ({TURN_LENGTH - timeToNextTurn}) / {TURN_LENGTH} == {turn_percent}%");
+                battle_menu.set_turn_percent(turn_percent);
             }
             battle_menu.updateATBs(ATBAmounts);
         }
@@ -174,22 +215,22 @@ public class BattleMaster : MonoBehaviour, IBattleInputHandler, ICombatantMaster
     public List<ICombatant> getEnemies(ICombatant forWhom)
     {
         if(allies.Contains(forWhom)) { return enemies; }
-        else { return allies; }
+        else { return allies.Cast<ICombatant>().ToList(); }
     }
 
     public List<ICombatant> getAllies(ICombatant forWhom)
     {
-        if (allies.Contains(forWhom)) { return allies; }
+        if (allies.Contains(forWhom)) { return allies.Cast<ICombatant>().ToList(); }
         else { return enemies; }
     }
 
-    public void attack(ICombatant from, ICombatant to)
+    public void attack(ICombatant fromWhom, ICombatant toWhom)
     {
-        int dmg = Formulas.calc_damage(from.ATK, to.DEF);
-        to.take_damage(dmg);
-        battle_menu.update_combatant(to);
-        string str = $"{from.name} attacks {to.name} and deals {dmg} damage!";
-        if (allies.Contains(from))
+        int dmg = Formulas.calc_damage(fromWhom.ATK, toWhom.DEF);
+        toWhom.take_damage(dmg);
+        battle_menu.update_combatant(toWhom);
+        string str = $"{fromWhom.name} attacks {toWhom.name} and deals {dmg} damage!";
+        if (allies.Contains(fromWhom))
         {
             //If it's a player action, clear the information
             set_battle_information(str);
@@ -199,7 +240,7 @@ public class BattleMaster : MonoBehaviour, IBattleInputHandler, ICombatantMaster
             //Otherwise add to it
             add_battle_information(str);
         }
-        if(to is Player)
+        if(toWhom is Player)
         {
 
         }
@@ -233,12 +274,12 @@ public class BattleMaster : MonoBehaviour, IBattleInputHandler, ICombatantMaster
         }
     }
 
-    public bool run(ICombatant who)
+    public bool run(ICombatant whom)
     {
-        if(allies.Contains(who))
+        if(allies.Contains(whom))
         {
             int rand_num = Random.Range(0, 3); //[0, 2]
-            Debug.Log(rand_num);
+            //Debug.Log(rand_num);
             if(rand_num == 0)
             {
                 //Success message
@@ -252,23 +293,23 @@ public class BattleMaster : MonoBehaviour, IBattleInputHandler, ICombatantMaster
         return false;
     }
 
-    public void wait(ICombatant who)
+    public void wait(ICombatant whom)
     {
-        ATBAmounts[who] += 0.5f;
+        ATBAmounts[whom] += 0.5f;
         //TODO Perhaps it could also restore Mana?
-        set_battle_information($"{who.name} waited.");
-        end_turn(who);
+        set_battle_information($"{whom.name} waited.");
+        end_turn(whom);
     }
 
-    public void die(ICombatant who)
+    public void die(ICombatant whom)
     {
-        if(who is Player)
+        if(whom is Player)
         {
             //TODO Player died
         }
-        else if(allies.Contains(who))
+        else if(allies.Contains(whom))
         {
-            allies.Remove(who);
+            allies.Remove((IPlayable)whom);
             if (allies.Count == 0)
             {
                 //TODO END COMBAT
@@ -276,26 +317,26 @@ public class BattleMaster : MonoBehaviour, IBattleInputHandler, ICombatantMaster
             }
             else
             {
-                if (awaiting_input_from.Contains(who))
+                if (awaiting_input_from.Contains(whom))
                 {
                     //Remove from queue
                     Queue<ICombatant> new_awaiting = new Queue<ICombatant>();
                     while(awaiting_input_from.Peek() != null)
                     {
                         ICombatant combatant = awaiting_input_from.Dequeue();
-                        if (combatant != who)
+                        if (combatant != whom)
                         {
                             new_awaiting.Enqueue(awaiting_input_from.Dequeue());
                         }
                     }
                     awaiting_input_from = new_awaiting;
                 }
-                battle_menu.remove_combatant(who);
+                battle_menu.remove_combatant(whom);
             }
         }
-        else if(enemies.Contains(who))
+        else if(enemies.Contains(whom))
         {
-            enemies.Remove(who);
+            enemies.Remove(whom);
             if (enemies.Count == 0)
             {
                 //TODO END COMBAT
@@ -303,20 +344,22 @@ public class BattleMaster : MonoBehaviour, IBattleInputHandler, ICombatantMaster
             }
             else
             {
-                if(enemies_waiting.Contains(who)) { enemies_waiting.Remove(who); }
-                battle_menu.remove_combatant(who);
+                if(enemies_waiting.Contains(whom)) { enemies_waiting.Remove(whom); }
+                battle_menu.remove_combatant(whom);
             }
         }
         else
         {
-            Debug.LogError("Combatant died who isn't an ally or enemy: " + who);
+            Debug.LogError("Combatant died who isn't an ally or enemy: " + whom);
         }
 
-        ATBAmounts.Remove(who);
+        ATBAmounts.Remove(whom);
     }
 
     private void end_battle()
     {
         dialogMaster.end_battle();
     }
+
+    private string turn_text { get { return $"TURN {turnMaster.turn_number - turn_at_battle_start + 1} ({turnMaster.turn_number})"; } }
 }

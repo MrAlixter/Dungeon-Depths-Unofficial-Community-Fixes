@@ -9,7 +9,7 @@ namespace Assets.Scripts
     class HealthPotion : Potion
     {
         private static HealthPotion _instance;
-        public static HealthPotion instance { get { return _instance != null ? _instance : new HealthPotion(); } }
+        public static HealthPotion instance { get { if(_instance != null) { return _instance; } else { _instance = new HealthPotion(); return _instance; } } }
 
         public void OnEnable()
         {

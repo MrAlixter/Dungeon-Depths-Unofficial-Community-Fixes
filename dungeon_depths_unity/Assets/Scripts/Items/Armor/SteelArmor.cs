@@ -3,7 +3,7 @@
 public class SteelArmor : Armor
 {
     private static SteelArmor _instance;
-    public static SteelArmor instance { get { return _instance != null ? _instance : new SteelArmor(); } }
+    public static SteelArmor instance { get { if(_instance != null) { return _instance; } else { _instance = new SteelArmor(); return _instance; } } }
 
     public void OnEnable()
     {

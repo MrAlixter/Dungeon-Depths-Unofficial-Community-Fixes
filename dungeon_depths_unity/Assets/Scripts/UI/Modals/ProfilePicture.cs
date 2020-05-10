@@ -3,16 +3,25 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class ProfilePicture : MonoBehaviour
+public class ProfilePicture : MonoBehaviour, IProfilePictureMaster
 {
     private static ProfilePicture _instance;
-    public static ProfilePicture instance { get { return _instance != null ? _instance : new ProfilePicture(); } }
+    public static ProfilePicture instance { get { if(_instance != null) { return _instance; } else { _instance = new ProfilePicture(); return _instance; } } }
 
     public ProfilePicture()
     {
-        if (_instance != null && _instance != this) { Destroy(this.gameObject); }
+        if (_instance != null && _instance != this) { Destroy(this.gameObject); return; }
         else { _instance = this; }
     }
+
+    public static ProfilePicture init(Player player)
+    {
+        ProfilePicture.player = player;
+        instance.Awake();
+        return instance;
+    }
+
+    protected static Player player;
 
     private RectTransform panel;
 
@@ -88,7 +97,38 @@ public class ProfilePicture : MonoBehaviour
         }
     }
 
-    public void set_skin_color(Color goal)
+
+    public void regenerate_profile_picture()
+    {
+        update_armor();
+        update_body();
+        update_skin_color();
+        update_hair_color();
+    }
+
+    public void update_armor()
+    {
+        clothes = player.equipped_armor.variants[player.breast_size];
+    }
+
+    public void update_body()
+    {
+        string s = player.equipped_armor.compresses_breasts ? $"{player.breast_size}c" : $"{player.breast_size}";
+        body = body_pictures[s];
+    }
+
+    public void update_skin_color()
+    {
+        set_skin_color(player.skin_color);
+    }
+
+    public void update_hair_color()
+    {
+        set_hair_color(player.hair_color);
+    }
+
+
+    protected void set_skin_color(Color goal)
     {
         _head.color = goal;
         _body.color = goal;
@@ -120,7 +160,7 @@ public class ProfilePicture : MonoBehaviour
         ////Debug.Log($"NEW COL {h_diff} {s_diff} {v_diff}");
     }
 
-    public void set_hair_color(Color color)
+    protected void set_hair_color(Color color)
     {
         _hair_back.color = color;
         _hair_middle.color = color;

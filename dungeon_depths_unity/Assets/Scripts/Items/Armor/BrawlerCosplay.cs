@@ -3,7 +3,7 @@
 public class BrawlerCosplay : Armor
 {
     private static BrawlerCosplay _instance;
-    public static BrawlerCosplay instance { get { return _instance != null ? _instance : new BrawlerCosplay(); } }
+    public static BrawlerCosplay instance { get { if(_instance != null) { return _instance; } else { _instance = new BrawlerCosplay(); return _instance; } } }
 
     public void OnEnable()
     {

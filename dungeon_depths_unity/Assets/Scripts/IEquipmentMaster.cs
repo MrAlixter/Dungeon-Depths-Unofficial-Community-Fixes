@@ -1,4 +1,4 @@
 ﻿public interface IEquipmentMaster
 {
-    void set_armor(int id);
+    void equip_armor(int id);
 }

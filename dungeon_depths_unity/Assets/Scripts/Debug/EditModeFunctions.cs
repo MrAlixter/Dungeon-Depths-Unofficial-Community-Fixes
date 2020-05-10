@@ -22,7 +22,7 @@ public class EditModeFunctions : EditorWindow
         }
         if(GUILayout.Button("Master.Update_Hair_Color()"))
         {
-            Master.instance.update_hair_color();
+            ProfilePicture.instance.update_hair_color();
         }
     }
 }
