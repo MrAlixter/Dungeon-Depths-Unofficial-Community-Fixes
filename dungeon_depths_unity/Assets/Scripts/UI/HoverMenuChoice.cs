@@ -1,6 +1,5 @@
-﻿using Assets.Scripts;
-using System.Collections;
-using System.Collections.Generic;
+using Assets.Scripts;
+using TMPro;
 using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.UI;
@@ -33,20 +32,13 @@ public class HoverMenuChoice : MonoBehaviour,
     }
     public string text { get { return choice_data.ToString(); } }
     private IHoverMenu hoverMenuCallback;
-
-    // Start is called before the first frame update
+    
     void Start()
     {
         button.onClick.AddListener(() => {
             button.Select();
             hoverMenuCallback.OnChoiceClick(choice_data);
         });
-    }
-
-    // Update is called once per frame
-    void Update()
-    {
-        
     }
 
     public void setHoverMenuCallback(IHoverMenu callback)
@@ -56,7 +48,7 @@ public class HoverMenuChoice : MonoBehaviour,
 
     private void set_text()
     {
-        transform.Find("Text").GetComponent<Text>().text = text;
+        transform.Find("Text").GetComponent<TextMeshProUGUI>().text = text;
     }
 
     public void OnSelect(BaseEventData eventData)

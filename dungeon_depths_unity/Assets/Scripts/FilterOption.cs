@@ -40,7 +40,7 @@ public class FilterOption : MonoBehaviour,
         //    toggled();
         //});
 
-        toggle.set_toggle_handler(this);
+        toggle.init(this);
     }
 
     public void set_filter_master(IFilterMaster fm)

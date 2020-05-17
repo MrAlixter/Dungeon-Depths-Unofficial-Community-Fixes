@@ -24,6 +24,14 @@ public class EditModeFunctions : EditorWindow
         {
             ProfilePicture.instance.update_hair_color();
         }
+        if(GUILayout.Button("To Stairs Up"))
+        {
+            Master.instance.movePlayerAndCamera(Master.instance.stairsUp);
+        }
+        if(GUILayout.Button("To Stairs Down"))
+        {
+            Master.instance.movePlayerAndCamera(Master.instance.stairsDown);
+        }
     }
 }
 #endif 

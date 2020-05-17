@@ -1,21 +1,14 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using UnityEngine;
 
 namespace Assets.Scripts
 {
     class HealthPotion : Potion
     {
         private static HealthPotion _instance;
-        public static HealthPotion instance { get { if(_instance != null) { return _instance; } else { _instance = new HealthPotion(); return _instance; } } }
+        public static HealthPotion instance { get { if(_instance == null) { _instance = new HealthPotion(); } return _instance; } }
 
-        public void OnEnable()
+        public HealthPotion() : base()
         {
-            if (_instance != null && _instance != this) { Destroy(this); return; }
-            else { _instance = this; }
-
             name = "Health Potion";
             description = "A normal, everyday health potion.\n+75 health";
             id = 2;
@@ -28,12 +21,12 @@ namespace Assets.Scripts
         public override void use()
         {
             //If Soul-Lord, do special stuff
-            messageMaster.display_message($"You drink the {name}");
+            message_master.display_message($"You drink the {name}");
             Player p = Player.instance;
             int amt = p.MAX_HP - p.HP;
-            amt = Math.Min(75, amt);
+            amt = Mathf.Min(75, amt);
             Player.instance.heal(amt);
-            messageMaster.display_message($"You drink the {name}.\nYou heal {amt} health.");
+            message_master.display_message($"You drink the {name}.\nYou heal {amt} health.");
             count--;
         }
     }

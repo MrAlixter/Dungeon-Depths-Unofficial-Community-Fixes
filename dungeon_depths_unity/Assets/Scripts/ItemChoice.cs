@@ -1,16 +1,12 @@
-﻿using System;
-using System.Collections;
-using System.Collections.Generic;
+using System.IO;
+using TMPro;
 using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.UI;
 
 public class ItemChoice : MonoBehaviour, 
     ISelectHandler, 
-    IDeselectHandler//, 
-    //ISubmitHandler,
-    //ICancelHandler,
-    //ItemChoiceButton.IItemChoiceMaster 
+    IDeselectHandler
 {
     public interface IItemChoiceMaster
     {
@@ -20,45 +16,45 @@ public class ItemChoice : MonoBehaviour,
         void ItemCanceled();
     }
 
-    public static IEnsureVisible<ItemChoice> ensureVisibleMaster;
+    public static IEnsureVisible<ItemChoice> ensure_visible_master;
     public static IItemChoiceMaster itemChoiceMaster;
     private static GameObject item_option_prefab;
+    private static char SEP = Path.DirectorySeparatorChar;
     
-    //public ItemChoiceButton button;
     public OverridableButton button;
     public Navigation navigation { get { return button.navigation; } set { button.navigation = value; } }
     public Selectable selectable { get { return button.GetComponent<Selectable>(); } }
 
     public Item associated_item { get; private set; }
-    private new Text name;
-    private Text description;
-    private Text count;
-    private Text value;
+    private new TextMeshProUGUI name;
+    private TextMeshProUGUI description;
+    private TextMeshProUGUI count;
+    private TextMeshProUGUI value;
 
     private bool options_open;
     private GameObject option_selected;
     
     public static void set_ensure_visible_master(IEnsureVisible<ItemChoice> iev)
     {
-        ensureVisibleMaster = iev;
+        ensure_visible_master = iev;
     }
-
+    
     public static void set_item_choice_master(IItemChoiceMaster icm)
     {
         itemChoiceMaster = icm;
     }
 
-    public static void set_item_option_prefab(GameObject prefab)
+    void Awake()
     {
-        item_option_prefab = prefab;
-    }
+        if(item_option_prefab == null)
+        {
+            item_option_prefab = Resources.Load<GameObject>("Prefabs"+SEP+"UI"+SEP+"Elements"+SEP+"ItemOptions");
+        }
 
-    public void Awake()
-    {
-        name = transform.Find("Name").GetComponent<Text>();
-        description = transform.Find("Description").GetComponent<Text>();
-        count = transform.Find("Count").GetComponent<Text>();
-        value = transform.Find("Value").GetComponent<Text>();
+        name = transform.Find("Name").GetComponent<TextMeshProUGUI>();
+        description = transform.Find("Description").GetComponent<TextMeshProUGUI>();
+        count = transform.Find("Count").GetComponent<TextMeshProUGUI>();
+        value = transform.Find("Value").GetComponent<TextMeshProUGUI>();
 
         //button = GetComponent<ItemChoiceButton>();
         //button.set_item_choice_master(this);
@@ -71,7 +67,7 @@ public class ItemChoice : MonoBehaviour,
         option_selected = null;
     }
 
-    public void Update()
+    void Update()
     {
         if(options_open && option_selected == null)
         {
@@ -92,7 +88,7 @@ public class ItemChoice : MonoBehaviour,
     public void OnSelect(BaseEventData eventData)
     {
         close_options();
-        ensureVisibleMaster.ensure_visible(this);
+        ensure_visible_master.ensure_visible(this);
     }
 
     public void OnDeselect(BaseEventData eventData)
@@ -159,6 +155,7 @@ public class ItemChoice : MonoBehaviour,
 
         if (associated_item as Armor != null) //+Weapon
         {
+            //TODO Fix NullReferenceException
             go.transform.Find("Equip").gameObject.SetActive(true);
         }
         else if (associated_item.is_usable)

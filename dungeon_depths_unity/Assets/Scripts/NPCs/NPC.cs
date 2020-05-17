@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Scripts;
+using System;
 using UnityEngine;
 
 namespace Assets.Scripts

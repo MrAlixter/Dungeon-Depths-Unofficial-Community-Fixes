@@ -5,8 +5,8 @@ using UnityEngine.EventSystems;
 
 public class SelectableButton : MonoBehaviour, ISelectHandler, IDeselectHandler
 {
-    UIRectangle background;
-
+    private UIRectangle background;
+    
     private void Awake()
     {
         background = transform.Find("Background").GetComponent<UIRectangle>();

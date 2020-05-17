@@ -4,9 +4,13 @@ using UnityEngine;
 [Serializable]
 public class MoveMap<T>
 {
-    public int width { get; private set; }
-    public int height { get; private set; }
+    [SerializeField]
+    public int width { get; protected set; }
+    [SerializeField]
+    public int height { get; protected set; }
 
+
+    [SerializeField]
     public T[,] map;
 
     public MoveMap(int w, int h)
@@ -27,8 +31,4 @@ public class MoveMap<T>
         get { return this[pos.x, pos.y]; }
         set { this[pos.x, pos.y] = value; }
     }
-
-    public int getWidth() { return width; }
-
-    public int getHeight() { return height; }
 }

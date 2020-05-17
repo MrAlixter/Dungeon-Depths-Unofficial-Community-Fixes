@@ -1,3 +1,28 @@
 TODO: 
 If you don't have any more of an item to use, then set the default to its header
-Build discard
+Build item discard
+
+
+Recruitablility: 
+  Regular Enemies: 
+    Maybe, after battle, the last enemy has a chance (dependent on type) of asking 
+    Maybe there are items you can find that can increase the chances of recruitment
+  Bosses:
+    Marissa: 
+      To recruit: ???
+      After Recruitment: 
+        Can cast the cat-girl spell on enemies and party members
+          When casting on party members, a certain tier (number of curse steps) can be chosen
+    Targax: 
+      To recruit, defeat by beating solo without using any healing
+        This shows to him that you are actually strong and not just using cheap tricks
+      After recruitment:
+        Will refuse to use healing items or requsets to change equipment 
+        Has a chance to kill enemies who have relinquished before you can recruit them
+  NPCs:
+    To recruit: ???
+    After Recruitment: 
+      Your party gets an assortment of their wares and money
+      Don't show up on any future floor
+      On floors where they would show up you can discover their hidden cache of items (like an invisible chest full of special goods)
+      

@@ -1,15 +1,10 @@
-﻿using UnityEngine;
-
-public class GoldArmor : Armor
+﻿public class GoldArmor : Armor
 {
     private static GoldArmor _instance;
-    public static GoldArmor instance { get { if(_instance != null) { return _instance; } else { _instance = new GoldArmor(); return _instance; } } }
-    
-    public void OnEnable()
-    {
-        if (_instance != null && _instance != this) { Destroy(this); return; }
-        else { _instance = this; }
+    public static GoldArmor instance { get { if(_instance == null) { _instance = new GoldArmor(); } return _instance; } }
 
+    public GoldArmor() : base()
+    {
         name = "Gold Armor";
         description = "An expensive looking armor set made for the wealthy.";
         id = 38;

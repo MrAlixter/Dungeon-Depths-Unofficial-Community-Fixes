@@ -1,6 +1,7 @@
-﻿using Assets.Scripts;
+using Assets.Scripts;
 using System.Collections;
 using System.Collections.Generic;
+using System.IO;
 using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.UI;
@@ -14,12 +15,15 @@ public class HoverMenu : MonoBehaviour,
     //ISelectHandler,
     IDeselectHandler
 {
-    public interface HoverMenuChoiceHandler
+    public interface IHoverMenuChoiceHandler
     {
-        void onHoverMenuChoiceClicked(Ability choice);
+        void on_hover_menu_choice_clicked(Ability choice);
     }
 
-    private HoverMenuChoiceHandler hoverMenuChoiceCallback;
+    private static GameObject child_button_prefab;
+    private static char SEP = Path.DirectorySeparatorChar;
+
+    private IHoverMenuChoiceHandler hoverMenuChoiceCallback;
 
     private Ability[] choices;
     private List<HoverMenuChoice> choiceButtons;
@@ -31,10 +35,9 @@ public class HoverMenu : MonoBehaviour,
     private bool clicked;
     [SerializeField]
     private bool wasOpen;
-    public GameObject childButtonPrefab;
     [SerializeField]
     private GameObject hoveredChild;
-    private GameObject choicesContainer;
+    private GameObject choices_container;
 
     public Button button { get { return GetComponent<Button>(); } }
     public Navigation navigation { get { return button.navigation; } set { button.navigation = value; } }
@@ -42,10 +45,13 @@ public class HoverMenu : MonoBehaviour,
 
     private Selectable normalDown;
 
-    public void init(HoverMenuChoiceHandler hmch, GameObject childButtonPrefab, Ability[] abilities, bool can_open)
+    public void init(IHoverMenuChoiceHandler hmch, Ability[] abilities, bool can_open)
     {
         hoverMenuChoiceCallback = hmch;
-        this.childButtonPrefab = childButtonPrefab;
+        if(child_button_prefab == null)
+        {
+            child_button_prefab = Resources.Load<GameObject>("Prefabs"+SEP+"UI"+SEP+"Elements"+SEP+"DropdownChoiceButton");
+        }
 
         this.choices = abilities;
 
@@ -64,10 +70,10 @@ public class HoverMenu : MonoBehaviour,
 
         Navigation nav;
         HoverMenuChoice previous = null;
-        choicesContainer = transform.Find("ChoicesContainer").gameObject;
+        choices_container = transform.Find("ChoicesContainer").gameObject;
         for (int i = 0; i < choices.Length; i++)
         {
-            GameObject button = Instantiate(childButtonPrefab, choicesContainer.transform);
+            GameObject button = Instantiate(child_button_prefab, choices_container.transform);
             HoverMenuChoice hmc;
             button.AddComponent<HoverMenuChoice>();
             hmc = button.GetComponent<HoverMenuChoice>();
@@ -105,6 +111,9 @@ public class HoverMenu : MonoBehaviour,
         button.onClick.AddListener(() => {
             clicked = !clicked;
         });
+        //button.OnSubmit(() => {
+        //    clicked = !clicked;
+        //})
 
         //Don't reselect, since this is the start and I don't want to override any
         //other selection that was initialized earlier
@@ -137,7 +146,7 @@ public class HoverMenu : MonoBehaviour,
     {
         if (!can_open) { return; }
         if (choiceButtons.Count < 1) { return; }
-        choicesContainer.SetActive(true);
+        choices_container.SetActive(true);
         wasOpen = true;
 
         Navigation nav = navigation;
@@ -151,7 +160,7 @@ public class HoverMenu : MonoBehaviour,
     {
         if (!can_open) { return; }
         open = false;
-        choicesContainer.SetActive(false);
+        choices_container.SetActive(false);
         hoveredChild = null;
         wasOpen = false;
 
@@ -178,7 +187,7 @@ public class HoverMenu : MonoBehaviour,
         CloseChildren();
         button.Select(); //Must go before the onHoverMenuChoiceClicked() to enable redirection
 
-        hoverMenuChoiceCallback.onHoverMenuChoiceClicked(clicked_data);
+        hoverMenuChoiceCallback.on_hover_menu_choice_clicked(clicked_data);
     }
 
     public void OnDeselect(BaseEventData eventData)

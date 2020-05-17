@@ -1,25 +1,34 @@
-﻿using System;
+using Newtonsoft.Json;
+using System;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Drawing;
 using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
+using UnityEngine;
 
 namespace Scripts
 {
     public static class DungeonGenerator
     {
         public enum DUNGEON_TYPE { FOREST, CAVE };
+        public enum SPAWN_TILES
+        {
+            NONE = 0,
+            STAIRS_DOWN = 1,
+            STAIRS_UP = 2
+        }
         
         //private static string line_clear = "\r" + new string(' ', Console.WindowWidth - 1) + "\r";
         private static string line_clear = "\r";
 
-        private static Random r;
+        private static System.Random r;
         private static int seed = 0;
         private static bool consoleOut = false;
 
         private static DUNGEON_TYPE type = DUNGEON_TYPE.FOREST;
+        private static SPAWN_TILES tiles_to_spawn = SPAWN_TILES.NONE;
 
         //Forest
         private static int mapWidth = 60;
@@ -43,7 +52,7 @@ namespace Scripts
         private static double weightedTowardPreviousDirection = 0.2;
         private static int cleanMax = 10;
 
-        public static void init(int seed = 0, bool consoleOut = false, int mapWidth = 60, int mapHeight = 60, int minRooms = 10, int maxRooms = 13, int minMinRoomWidth = 5, int maxMinRoomWidth = 10, int minMaxRoomWidth = 10, int maxMaxRoomWidth = 20, int minMinRoomHeight = 5, int maxMinRoomHeight = 10, int minMaxRoomHeight = 10, int maxMaxRoomHeight = 20, double waviness = 1, bool allowTouching = true, DUNGEON_TYPE dungeon_type = DUNGEON_TYPE.FOREST, double fillAmt = 0.4, double weightedTowardCenter = 0, double weightedTowardPreviousDirection = .2, int cleanMax = 10)
+        public static void init(int seed = 0, bool consoleOut = false, int mapWidth = 60, int mapHeight = 60, int minRooms = 10, int maxRooms = 13, int minMinRoomWidth = 5, int maxMinRoomWidth = 10, int minMaxRoomWidth = 10, int maxMaxRoomWidth = 20, int minMinRoomHeight = 5, int maxMinRoomHeight = 10, int minMaxRoomHeight = 10, int maxMaxRoomHeight = 20, double waviness = 1, bool allowTouching = true, DUNGEON_TYPE dungeon_type = DUNGEON_TYPE.FOREST, double fillAmt = 0.4, double weightedTowardCenter = 0, double weightedTowardPreviousDirection = .2, int cleanMax = 10, SPAWN_TILES tilesToSpawn = SPAWN_TILES.NONE)
         {
             DungeonGenerator.seed = seed;
             DungeonGenerator.consoleOut = consoleOut;
@@ -66,17 +75,19 @@ namespace Scripts
             DungeonGenerator.weightedTowardCenter = weightedTowardCenter;
             DungeonGenerator.weightedTowardPreviousDirection = weightedTowardPreviousDirection;
             DungeonGenerator.cleanMax = cleanMax;
+            DungeonGenerator.tiles_to_spawn = tilesToSpawn;
         }
 
-        public static Tile[,] generate(DUNGEON_TYPE type)
+        public static Tile[,] generate(DUNGEON_TYPE type, SPAWN_TILES tiles)
         {
             DungeonGenerator.type = type;
+            DungeonGenerator.tiles_to_spawn = tiles;
             return generate();
         }
 
-        public static Tile[,] generate()
+        private static Tile[,] generate()
         {
-            r = new Random(seed);
+            r = new System.Random(seed);
 
             Tile[,] map = createEmptyMapOfSize(mapWidth, mapHeight);
 
@@ -276,12 +287,37 @@ namespace Scripts
                 {
                     if(level[x, y])
                     {
-                        map[x, y] = new Floor();
+                        map[x, y] = new Tile(Tile.TILE_TYPE.FLOOR);
                     }
                 }
             }
             stopwatch.Stop();
             //Console.WriteLine("Translated in [" + stopwatch.Elapsed + "]");
+
+            #region Place Stairs
+            int stairX;  
+            int stairY;
+            if(tiles_to_spawn.HasFlag(SPAWN_TILES.STAIRS_UP))
+            {
+                do
+                {
+                    stairX = r.Next(0, width);
+                    stairY = r.Next(0, height);
+                } while(map[stairX, stairY].type != Tile.TILE_TYPE.FLOOR);
+                map[stairX, stairY] = new Tile(Tile.TILE_TYPE.STAIRS_UP);
+            }
+
+
+            if(tiles_to_spawn.HasFlag(SPAWN_TILES.STAIRS_DOWN))
+            {
+                do
+                {
+                    stairX = r.Next(0, width);
+                    stairY = r.Next(0, height);
+                } while(map[stairX, stairY].type != Tile.TILE_TYPE.FLOOR);
+                map[stairX, stairY] = new Tile(Tile.TILE_TYPE.STAIRS_DOWN);
+            }
+            #endregion
         }
 
         private static void walk(bool[,] map, ref int x, ref int y, int width, int height, double weightedTowardCenter, double weightedTowardPreviousDirection, ref char previousDir, ref double filled)
@@ -537,6 +573,7 @@ namespace Scripts
                 Console.Write(line_clear + "Created " + rooms.Count + " rooms in [" + stopwatch.Elapsed + "]");
                 Console.WriteLine();
             }
+
             stopwatch = Stopwatch.StartNew();
             int i = 0;
             foreach(Room room in rooms)
@@ -551,6 +588,30 @@ namespace Scripts
                 Console.Write(line_clear + "Put " + rooms.Count + " rooms in [" + stopwatch.Elapsed + "]");
                 Console.WriteLine();
             }
+
+            #region Place Stairs
+            int roomNum;
+            Room stairRoom;
+            int stairX;
+            int stairY;
+            if(tiles_to_spawn.HasFlag(SPAWN_TILES.STAIRS_UP))
+            {
+                roomNum = r.Next(0, rooms.Count);
+                stairRoom = rooms[roomNum];
+                stairX = r.Next(stairRoom.left, stairRoom.right);
+                stairY = r.Next(stairRoom.top, stairRoom.bottom);
+                map[stairX, stairY] = new Tile(Tile.TILE_TYPE.STAIRS_UP);
+            }
+
+            if(tiles_to_spawn.HasFlag(SPAWN_TILES.STAIRS_DOWN))
+            {
+                roomNum = r.Next(0, rooms.Count);
+                stairRoom = rooms[roomNum];
+                stairX = r.Next(stairRoom.left, stairRoom.right);
+                stairY = r.Next(stairRoom.top, stairRoom.bottom);
+                map[stairX, stairY] = new Tile(Tile.TILE_TYPE.STAIRS_DOWN);
+            }
+            #endregion
 
             connectForestRooms(map, rooms, straightness);
         }
@@ -686,7 +747,7 @@ namespace Scripts
             }
 
 
-            Random r = new Random();
+            System.Random r = new System.Random();
             
             int horizontal_axis = 0;
             int vertical_axis = 0;
@@ -714,7 +775,7 @@ namespace Scripts
             int start_x = 0;
             int start_y = 0;
 
-            #region Pick a random point along the closest edge of source
+            #region Pick a System.Random point along the closest edge of source
             if(horizontal_axis == 0)
             {
                 start_x = r.Next(room1.left, room1.right);
@@ -746,7 +807,7 @@ namespace Scripts
             int end_x = 0;
             int end_y = 0;
 
-            #region Pick a random point along closest edge of target
+            #region Pick a System.Random point along closest edge of target
             if(horizontal_axis == 0)
             {
                 end_x = r.Next(room2.left, room2.right);
@@ -784,7 +845,7 @@ namespace Scripts
                 bool horizontal = current_x != end_x;
                 bool vertical = current_y != end_y;
 
-                //If it still needs to go both directions, pick a random one
+                //If it still needs to go both directions, pick a System.Random one
                 if(horizontal && vertical)
                 {
                     double horizontal_factor = 0.5;
@@ -826,7 +887,7 @@ namespace Scripts
 
                 previous_was_horizontal = horizontal;
 
-                map[current_x, current_y] = new Floor();
+                map[current_x, current_y] = new Tile(Tile.TILE_TYPE.FLOOR);
             }
         }
 
@@ -897,12 +958,12 @@ namespace Scripts
         }
         #endregion
 
-        public static IEnumerable<T> shuffle<T>(this IEnumerable<T> source, Random rng)
+        public static IEnumerable<T> shuffle<T>(this IEnumerable<T> source, System.Random rng)
         {
             T[] elements = source.ToArray();
             for(int i = elements.Length - 1; i >= 0; i--)
             {
-                // Swap element "i" with a random earlier element it (or itself)
+                // Swap element "i" with a System.Random earlier element it (or itself)
                 // ... except we don't really need to swap it fully, as we can
                 // return it immediately, and afterwards it's irrelevant.
                 int swapIndex = rng.Next(i + 1);
@@ -1010,14 +1071,7 @@ namespace Scripts
             {
                 for(int y = room.top; y <= room.bottom; y++)
                 {
-                    if(map[x, y] is Floor)
-                    {
-                        map[x, y] = new Floor2();
-                    }
-                    else
-                    {
-                        map[x, y] = new Floor();
-                    }
+                    map[x, y] = new Tile(Tile.TILE_TYPE.FLOOR);
                 }
             }
         }
@@ -1054,7 +1108,7 @@ namespace Scripts
 
         private static Tile[,] createEmptyMapOfSize(int width, int height)
         {
-            return create2DArrayOfSize<Tile>(width, height, new Wall());
+            return create2DArrayOfSize<Tile>(width, height, new Tile(Tile.TILE_TYPE.WALL));
         }
 
         private static T[,] create2DArrayOfSize<T>(int width, int height, T defaultValue)
@@ -1071,36 +1125,16 @@ namespace Scripts
         }
     }
 
-    public abstract class Tile
+    [Serializable]
+    public class Tile
     {
-        //public readonly Color color;
-
-        //public Tile(Color color) { this.color = color; }
-    }
-
-    public class Wall : Tile
-    {
-        //public Wall() : base(Color.Black) { }
-    }
-
-    public class Floor : Tile
-    {
-        //public Floor() : base(Color.White) { }
-    }
-
-    public class Floor2 : Tile
-    {
-        //public Floor2() : base(Color.Gray) { }
-    }
-
-    public class DebugRed : Tile
-    {
-        //public DebugRed() : base(Color.Red) { }
-    }
-
-    public class DebugGreen : Tile
-    {
-        //public DebugGreen() : base(Color.Green) { }
+        public enum TILE_TYPE { NONE, WALL, FLOOR, STAIRS_DOWN, STAIRS_UP, FOG }
+        [SerializeField]
+        public TILE_TYPE type;
+        public Tile(TILE_TYPE type) { this.type = type; }
+        
+        [JsonIgnore]
+        public GameObject gameObject;
     }
 
     public class Room

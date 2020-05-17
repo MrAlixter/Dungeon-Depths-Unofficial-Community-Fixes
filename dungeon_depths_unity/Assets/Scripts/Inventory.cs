@@ -1,83 +1,91 @@
 ﻿using Assets.Scripts;
+using Scripts;
 using System;
 using System.Collections.Generic;
+using System.IO;
 using UnityEngine;
 
 [Serializable]
 public enum ItemType { Useables, Potions, Armors, Weapons, Accessories, Keys }
 
-public class Inventory : ScriptableObject
+[Savable]
+public class Inventory
 {
     private static Inventory _instance;
-    public static Inventory instance { get { return _instance != null ? _instance : CreateInstance<Inventory>(); } }
-
-    public Dictionary<ItemType, List<Item>> types;
-    public List<Item> useables;
-    public List<Item> potions;
-    public List<Item> armors;
-    public List<Item> weapons;
-    public List<Item> accessories;
-    public List<Item> keys;
-
-    public void Awake()
+    public static Inventory instance { get { if(_instance == null) { _instance = new Inventory(); } return _instance; } }
+    
+    public Inventory()
     {
-        if (_instance != null && _instance != this) { Destroy(this); return; }
-        else { _instance = this; }
-
         types = new Dictionary<ItemType, List<Item>>();
-
-        #region Useables
         useables = new List<Item>();
-        #endregion
-
-        #region Potions
         potions = new List<Item>();
-
-        potions.Add(CreateInstance<HealthPotion>());
-
-        foreach (Item potion in potions)
-        {
-            potion.count = 1;
-        }
-        #endregion
-
-        #region Armors
         armors = new List<Item>();
-
-        armors.Add(CreateInstance<SteelArmor>());
-        armors.Add(CreateInstance<GoldArmor>());
-        armors.Add(CreateInstance<ValkyrieArmor>());
-        armors.Add(CreateInstance<BrawlerCosplay>());
-        armors.Add(CreateInstance<BronzeArmor>());
-        armors.Add(CreateInstance<ChitinArmor>());
-        armors.Add(CreateInstance<WarriorsCuirass>());
-
-        foreach (Armor armor in armors)
-        {
-            armor.count = 1;
-        }
-
-        armors.Sort();
-        #endregion
-        
-        #region Weapons
         weapons = new List<Item>();
-        #endregion
-
-        #region Accessories
         accessories = new List<Item>();
-        #endregion
-
-        #region Keys
-        keys = new List<Item>();
-        #endregion
+        key_items = new List<Item>();
 
         types[ItemType.Useables] = useables;
         types[ItemType.Potions] = potions;
         types[ItemType.Armors] = armors;
         types[ItemType.Weapons] = weapons;
         types[ItemType.Accessories] = accessories;
-        types[ItemType.Keys] = keys;
+        types[ItemType.Keys] = key_items;
+    }
+
+    public Dictionary<ItemType, List<Item>> types;
+    [Savable]
+    public List<Item> useables;
+    [Savable]
+    public List<Item> potions;
+    [Savable]
+    public List<Item> armors;
+    [Savable]
+    public List<Item> weapons;
+    [Savable]
+    public List<Item> accessories;
+    [Savable]
+    public List<Item> key_items;
+
+    public void load()
+    {
+        Savable.load(this);
+        types[ItemType.Useables] = useables;
+        types[ItemType.Potions] = potions;
+        types[ItemType.Armors] = armors;
+        types[ItemType.Weapons] = weapons;
+        types[ItemType.Accessories] = accessories;
+        types[ItemType.Keys] = key_items;
+    }
+
+    public void load_default_values()
+    {
+        #region Potions
+        potions.Add(HealthPotion.instance);
+
+        foreach(Item potion in potions)
+        {
+            potion.count = 1;
+        }
+        #endregion
+
+        #region Armors
+        armors.Add(NoArmor.instance);
+        armors.Add(SteelArmor.instance);
+        armors.Add(GoldArmor.instance);
+        armors.Add(ValkyrieArmor.instance);
+        armors.Add(BrawlerCosplay.instance);
+        armors.Add(BronzeArmor.instance);
+        armors.Add(ChitinArmor.instance);
+        armors.Add(WarriorsCuirass.instance);
+
+        foreach(Armor armor in armors)
+        {
+            armor.count = 1;
+        }
+        armors[0].count = 0;
+
+        armors.Sort();
+        #endregion
     }
 
     public Armor get_armor_by_id(int id)
