@@ -213,7 +213,9 @@
         internal_inventory.Add("Very_Skimpy_Clothes", New VSkimpyClothes()) '192
         internal_inventory.Add("Ass_Growth_Potion", New UEPotion())         '193
         internal_inventory.Add("Dick_Growth_Potion", New DEPotion())        '194
-        internal_inventory.Add("Curse_'B'_Gone", New CurseBGone())       '195
+        internal_inventory.Add("Curse_'B'_Gone", New CurseBGone())          '195
+        internal_inventory.Add("Cow_Cosplay", New CowCosplay())             '196
+        internal_inventory.Add("Bimbell", New Bimbell())                    '197
 
         armor = {New Naked,
                  Me.item(5), Me.item(7), Me.item(8), Me.item(10),
@@ -231,7 +233,8 @@
                  Me.item(169), Me.item(170), Me.item(175), Me.item(176),
                  Me.item(177), Me.item(181), Me.item(183), Me.item(184),
                  Me.item(185), Me.item(186), Me.item(187), Me.item(188),
-                 Me.item(189), Me.item(190), Me.item(191), Me.item(192)}
+                 Me.item(189), Me.item(190), Me.item(191), Me.item(192),
+                 Me.item(196)}
 
         weapons = {New BareFists(),
                    Me.item(6), Me.item(9), Me.item(11), Me.item(21),
@@ -266,7 +269,7 @@
                 Me.item(69), Me.item(70), Me.item(77), Me.item(81),
                 Me.item(97), Me.item(110), Me.item(123), Me.item(139),
                 Me.item(140), Me.item(141), Me.item(149), Me.item(161),
-                Me.item(164), Me.item(168), Me.item(180)}
+                Me.item(164), Me.item(168), Me.item(180), Me.item(197)}
 
         potions = {Me.item(2), Me.item(13), Me.item(14), Me.item(25),
                    Me.item(26), Me.item(27), Me.item(28), Me.item(29),

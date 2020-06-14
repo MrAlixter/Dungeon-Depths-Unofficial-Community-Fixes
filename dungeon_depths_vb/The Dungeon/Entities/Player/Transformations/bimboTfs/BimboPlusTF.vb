@@ -58,7 +58,6 @@
     Overrides Sub step2alt()
         Dim p As Player = Game.player1
         p.prt.setIAInd(pInd.hat, 0, True, True)
-        p.prt.setIAInd(pInd.body, 7, True, True)
         p.prt.haircolor = Color.FromArgb(255, 255, 250, 205)
         p.prt.setIAInd(pInd.rearhair, 10, True, True)
         p.prt.setIAInd(pInd.midhair, 10, True, True)
@@ -72,6 +71,8 @@
         p.breastSize = 3
         Game.pushLblEvent("You immediatly feel funny, the increased magic in your system reacting swiftly with the gum.  Mind clearer than ever, you look down to see your clothes have become tight and pink. You smirk; while you look like a typical brainless bimbo, you're far more intellegent than you were before. Your hair lengthens, becoming a platinum blonde, and your clothes finish changing to match your new figure.  While the effects on your body confirm your hypothesis that BIM_II is likely the chemical used in those sticks of gum the increased IQ hints that there may be another compound involved.")
         p.lust += 10
+
+        p.reverseAllRoute()
         If game.mDun.numCurrFloor < 6 Then p.pImage = Game.picPlayerB.BackgroundImage Else p.pImage = Game.picBimbof.BackgroundImage
         p.TextColor = Color.HotPink
         p.perks("bimbotf") = -1

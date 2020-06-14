@@ -317,6 +317,16 @@
             inv.add(4, 1)
             inv.add(11, 1)
             Game.pushLstLog("You find a wand lodged in the entrance...Maybe you should equip it?")
+        ElseIf s = "Valkyrie" Then
+            pClass = classes("Classless")
+            maxHealth = 80
+            attack = 7
+            defence = 7
+            speed = 7
+            inv.add(2, 3)
+            inv.add(4, 1)
+            inv.add("Valkyrie_Sword", 1)
+            Game.pushLstLog("You find a sword piercing the floor...Maybe you should equip it?")
         End If
         'equip armor, boost mana if a staff is equipped
         Equipment.clothesChange(equippedArmor.getName)

@@ -45,6 +45,7 @@
         ComboBox2.Items.Add("Mage")
         ComboBox2.Items.Add("Rogue")
         ComboBox2.Items.Add("Magical Girl")
+        ComboBox2.Items.Add("Valkyrie")
         If DDDateTime.isHallow Then ComboBox2.Items.Add("Witch")
         ComboBox2.Text = ComboBox2.Items(Int(Rnd() * ComboBox2.Items.Count))
         picPort.BackgroundImage = portrait.draw()

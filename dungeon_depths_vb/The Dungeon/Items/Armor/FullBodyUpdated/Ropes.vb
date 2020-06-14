@@ -34,6 +34,8 @@
         MyBase.compressesBreasts = True
         MyBase.isCursed = True
         MyBase.bindsWearer = True
+
+        hidesDick = False
     End Sub
 
     Public Overrides Sub onEquip(ByRef p As Player)

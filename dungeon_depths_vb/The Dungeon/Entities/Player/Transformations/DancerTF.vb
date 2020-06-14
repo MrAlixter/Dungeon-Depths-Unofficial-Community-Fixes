@@ -22,7 +22,6 @@
 
         p.breastSize = 2
         p.prt.setIAInd(pInd.rearhair, 6, True, True)
-        p.prt.setIAInd(pInd.body, 6, True, True)
         p.prt.setIAInd(pInd.face, 0, True, False)
         p.prt.setIAInd(pInd.midhair, 18, True, True)
         p.prt.setIAInd(pInd.nose, 0, True, False)
@@ -32,6 +31,8 @@
         p.prt.setIAInd(pInd.cloak, 0, True, False)
         p.prt.setIAInd(pInd.fronthair, 18, True, True)
         p.prt.setIAInd(pInd.hat, 8, True, False)
+
+        p.reverseAllRoute()
 
         p.changeHairColor(BimboTF.bimboyellow1)
 

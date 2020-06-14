@@ -21,8 +21,8 @@
         p.pClass = p.classes("Valkyrie")
 
         p.breastSize = 2
+
         p.prt.setIAInd(pInd.rearhair, 0, True, False)
-        p.prt.setIAInd(pInd.body, 6, True, True)
         p.prt.setIAInd(pInd.face, 3, True, False)
         p.prt.setIAInd(pInd.midhair, 3, True, False)
         p.prt.setIAInd(pInd.nose, 0, True, False)
@@ -38,6 +38,7 @@
 
         Equipment.clothesChange("Valkyrie_Armor")
 
+        p.reverseAllRoute()
         If Not p.knownSpecials.Contains("Blazing Angel Strike") Then p.knownSpecials.Add("Blazing Angel Strike")
         Game.pushLstLog("""Blazing Angel Strike"" special learned!")
         p.canMoveFlag = True

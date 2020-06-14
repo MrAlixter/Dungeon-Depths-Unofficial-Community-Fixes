@@ -60,7 +60,7 @@
         atrs.Add(pInd.body, New ImageAttribute(fBody, mBody, ndoF, ndoM))
 
         '-genetalia
-        genitalia = New ImageDump("img/😳")
+        genitalia = New ImageDump("img/Gen")
         Dim gM = New ImageDump(New List(Of Image)({genitalia.getImageAt(1)}))
         Dim gF = New ImageDump(New List(Of Image)({genitalia.getImageAt(4)}))
         ndoF = gF.Count
@@ -248,7 +248,7 @@
         atrs.Add(pInd.body, New ImageAttribute(fBody, mBody, ndoF, ndoM))
 
         '-genetalia
-        genitalia = New ImageDump("img/😳")
+        genitalia = New ImageDump("img/Gen")
         atrs.Add(pInd.genitalia, New ImageAttribute(genitalia, genitalia.Count))
 
         '-shoulders

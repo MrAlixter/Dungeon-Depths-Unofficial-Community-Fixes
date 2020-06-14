@@ -32,7 +32,7 @@ Public Class Portrait
     Public Const NUM_IMG_LAYERS As Integer = 25
 
     Dim ent As Entity
-    Public iArr(NUM_IMG_LAYERS) As Image
+    Public iArr(NUM_IMG_LAYERS) As Bitmap
     Public iArrInd(NUM_IMG_LAYERS) As Tuple(Of Integer, Boolean, Boolean)
     Public haircolor As Color = Color.FromArgb(255, 204, 203, 213)
     Public skincolor As Color = Color.FromArgb(255, 247, 219, 195)
@@ -80,75 +80,60 @@ Public Class Portrait
         If img(0).Size.Height < 300 Then g.DrawImage(img(0), 0, 0, 146, 216) Else g.DrawImage(img(0), 0, 0, 144, 144)
         For i = 1 To UBound(img)
             If img(i) Is Nothing Then img(i) = CharacterGenerator.picPort.Image
-            If img(i).Size.Height <= 144 Then
-                g.DrawImage(img(i), 1, 1, 144, 144)
-            ElseIf img(i).Size.Height <= 300 Then
-                g.DrawImage(img(i), 1, 1, 144, 216)
-            Else
-                g.DrawImage(img(i), -11, -38, 164, 610)
-            End If
+            g.DrawImage(img(i), getRelativeX(img(i).Size, False), getRelativeY(img(i).Size, False))
         Next
         g.DrawImage(Game.picPortOutline.BackgroundImage, 0, 0, 146, 216)
 
         Dim endTime = (DateTime.Now - New DateTime(1970, 1, 1)).TotalMilliseconds
-        Console.WriteLine("RENDER TIME: " + (endTime - startTime).ToString())
+        Console.WriteLine("HBPRT RENDER TIME: " + (endTime - startTime).ToString())
         Return bmp
     End Function
     Shared Function CreateFullBodyBMP(ByRef img() As Image) As Bitmap
+        Dim startTime As Double = (DateTime.Now - New DateTime(1970, 1, 1)).TotalMilliseconds
+
         Dim bmp As New Bitmap(164, 610)
         Dim g As Graphics = Graphics.FromImage(bmp)
         g.DrawImage(img(0), 0, 0, 164, 610)
         For i = 1 To UBound(img)
             If img(i) Is Nothing Then img(i) = CharacterGenerator.picPort.Image
-            If img(i).Size.Height <= 144 Then
-                g.DrawImage(img(i), 12, 39, 144, 144)
-            ElseIf img(i).Size.Height <= 300 Then
-                g.DrawImage(img(i), 12, 39, 144, 216)
-            Else
-                g.DrawImage(img(i), 0, 0, 164, 610)
-            End If
-        Next
-        Return bmp
-    End Function
-    Shared Function fastCreateBMP(ByVal img() As Image, Optional fullBodyFlag As Boolean = False) As Bitmap
-        Dim startTime As Double = (DateTime.Now - New DateTime(1970, 1, 1)).TotalMilliseconds
-
-        Dim bmp As Bitmap
-
-        Dim workingImg(UBound(img)) As Bitmap
-
-        If fullBodyFlag Then
-            bmp = New Bitmap(164, 610)
-            For l = 0 To UBound(img)
-                If img(l).Size.Height <= 300 Then workingImg(l) = CreateFullBodyBMP({img(l)}) Else workingImg(l) = img(l)
-            Next
-        Else
-            bmp = New Bitmap(146, 216)
-            For l = 0 To UBound(img)
-                If img(l).Size.Height > 300 Or img(l).Size.Height < 200 Then img(l) = CreateBMP({img(l)}) Else workingImg(l) = img(l)
-            Next
-        End If
-
-        Dim bkgColor = Color.FromArgb(255, 32, 34, 38)
-
-        For i = 0 To bmp.Size.Height
-            For j = 0 To bmp.Size.Width
-                For k = UBound(img) To 0 Step -1
-                    If workingImg(k) Is Nothing Then Exit For
-                    If Not workingImg(k).GetPixel(i, j).IsEmpty AndAlso workingImg(k).GetPixel(j, i).Equals(bkgColor) Then
-                        k = pInd.rearhair
-                    ElseIf workingImg(k).GetPixel(j, i).A <> 0 Then
-                        bmp.SetPixel(j, i, workingImg(k).GetPixel(j, i))
-                        Exit For
-                    End If
-                Next
-            Next
+            g.DrawImage(img(i), getRelativeX(img(i).Size, True), getRelativeY(img(i).Size, True))
         Next
 
         Dim endTime = (DateTime.Now - New DateTime(1970, 1, 1)).TotalMilliseconds
-        Console.WriteLine("RENDER TIME: " + (endTime - startTime).ToString())
+        Console.WriteLine("FBPRT RENDER TIME: " + (endTime - startTime).ToString())
         Return bmp
     End Function
+    Shared Function getRelativeX(ByVal s As Size, ByVal fullBody As Boolean)
+        If fullBody Then
+            If s.Height <= 300 Then
+                Return 12
+            End If
+        Else
+            If s.Height <= 300 Then
+                Return 1
+            Else
+                Return -11
+            End If
+        End If
+
+        Return 0
+    End Function
+    Shared Function getRelativeY(ByVal s As Size, ByVal fullBody As Boolean)
+        If fullBody Then
+            If s.Height <= 300 Then
+                Return 39
+            End If
+        Else
+            If s.Height <= 300 Then
+                Return 1
+            Else
+                Return -38
+            End If
+        End If
+
+        Return 0
+    End Function
+
     'exports the current assembled portrait as a .bmp image
     Public Function ExportIMG() As Image
         Dim bmp As New Bitmap(146, 216)
@@ -261,14 +246,26 @@ Public Class Portrait
     Public Sub changeSkinColor(ByVal c As Color)
         skincolor = c
 
-        iArr(pInd.body) = Portrait.recolor2(imgLib.atrs(pInd.body).getAt(iArrInd(pInd.body)), c)
-        iArr(pInd.chest) = Portrait.recolor2(imgLib.atrs(pInd.chest).getAt(iArrInd(pInd.chest)), c)
-        iArr(pInd.shoulders) = Portrait.recolor2(imgLib.atrs(pInd.shoulders).getAt(iArrInd(pInd.shoulders)), c)
+        bodyOverlay()
+
+        If c.A = 255 Then
+            iArr(pInd.body) = Portrait.recolor2(imgLib.atrs(pInd.body).getAt(iArrInd(pInd.body)), c)
+            iArr(pInd.chest) = Portrait.recolor2(imgLib.atrs(pInd.chest).getAt(iArrInd(pInd.chest)), c)
+            iArr(pInd.shoulders) = Portrait.recolor2(imgLib.atrs(pInd.shoulders).getAt(iArrInd(pInd.shoulders)), c)
+            iArr(pInd.bodyoverlay) = Portrait.recolor2(imgLib.atrs(pInd.bodyoverlay).getAt(iArrInd(pInd.bodyoverlay)), c)
+        Else
+            Dim bImg = CreateFullBodyBMP({imgLib.atrs(pInd.body).getAt(iArrInd(pInd.body)), imgLib.atrs(pInd.bodyoverlay).getAt(iArrInd(pInd.bodyoverlay)),
+                                          imgLib.atrs(pInd.shoulders).getAt(iArrInd(pInd.shoulders)), imgLib.atrs(pInd.chest).getAt(iArrInd(pInd.chest))})
+            iArr(pInd.body) = Portrait.recolor2(bImg, c)
+            iArr(pInd.chest) = nullImg
+            iArr(pInd.shoulders) = nullImg
+            iArr(pInd.bodyoverlay) = nullImg
+        End If
+
         iArr(pInd.genitalia) = Portrait.recolor2(imgLib.atrs(pInd.genitalia).getAt(iArrInd(pInd.genitalia)), c)
         iArr(pInd.face) = Portrait.recolor2(imgLib.atrs(pInd.face).getAt(iArrInd(pInd.face)), c)
 
-        bodyOverlay()
-        iArr(pInd.bodyoverlay) = Portrait.recolor2(imgLib.atrs(pInd.bodyoverlay).getAt(iArrInd(pInd.bodyoverlay)), c)
+
 
         colorEars(c)
         iArr(pInd.nose) = Portrait.recolor2(imgLib.atrs(pInd.nose).getAt(iArrInd(pInd.nose)), c)
@@ -326,7 +323,7 @@ Public Class Portrait
             Exit Sub
         End If
 
-        If p.pClass.name.Equals("Warrior") Or p.pClass.name.Equals("Barbarian") Or p.pClass.name.Equals("Paladin") Or p.pClass.name.Equals("Amazon") Or
+        If p.pClass.name.Equals("Warrior") Or p.pClass.name.Equals("Barbarian") Or p.pClass.name.Equals("Paladin") Or p.pClass.name.Equals("Amazon") Or p.pClass.name.Equals("Valkyrie") Or
          p.pForm.name.Equals("Tigress") Then
             Select Case p.breastSize
                 Case -1
@@ -339,6 +336,8 @@ Public Class Portrait
         Else
             iArrInd(pInd.bodyoverlay) = New Tuple(Of Integer, Boolean, Boolean)(0, True, False)
         End If
+
+        If Not p.equippedArmor.getAName.Equals("Naked") And p.equippedArmor.hidesDick Then iArrInd(pInd.genitalia) = New Tuple(Of Integer, Boolean, Boolean)(4, True, False) Else p.dsizeroute()
     End Sub
     Sub setIAInd(ByVal attrInd As pInd, ByVal i As Integer, ByVal b As Boolean, ByVal nonDefFlag As Boolean)
         iArrInd(attrInd) = New Tuple(Of Integer, Boolean, Boolean)(i, b, nonDefFlag)
@@ -429,43 +428,43 @@ Public Class Portrait
         End If
 
         If p.solFlag Then Exit Sub
-            Select Case p.breastSize
-                Case -1
+        Select Case p.breastSize
+            Case -1
+                iArrInd(pInd.clothes) = p.equippedArmor.bsizeneg1
+            Case 0
+                If p.equippedArmor.bsize0 Is Nothing Then
                     iArrInd(pInd.clothes) = p.equippedArmor.bsizeneg1
-                Case 0
-                    If p.equippedArmor.bsize0 Is Nothing Then
-                        iArrInd(pInd.clothes) = p.equippedArmor.bsizeneg1
-                    Else
-                        iArrInd(pInd.clothes) = p.equippedArmor.bsize0
-                    End If
-                Case 1
-                    iArrInd(pInd.clothes) = p.equippedArmor.bsize1
-                Case 2
-                    iArrInd(pInd.clothes) = p.equippedArmor.bsize2
-                Case 3
-                    iArrInd(pInd.clothes) = p.equippedArmor.bsize3
-                Case 4
-                    iArrInd(pInd.clothes) = p.equippedArmor.bsize4
-                Case 5
-                    iArrInd(pInd.clothes) = p.equippedArmor.bsize5
-                Case 6
-                    iArrInd(pInd.clothes) = p.equippedArmor.bsize6
-                Case 7
-                    iArrInd(pInd.clothes) = p.equippedArmor.bsize7
-            End Select
+                Else
+                    iArrInd(pInd.clothes) = p.equippedArmor.bsize0
+                End If
+            Case 1
+                iArrInd(pInd.clothes) = p.equippedArmor.bsize1
+            Case 2
+                iArrInd(pInd.clothes) = p.equippedArmor.bsize2
+            Case 3
+                iArrInd(pInd.clothes) = p.equippedArmor.bsize3
+            Case 4
+                iArrInd(pInd.clothes) = p.equippedArmor.bsize4
+            Case 5
+                iArrInd(pInd.clothes) = p.equippedArmor.bsize5
+            Case 6
+                iArrInd(pInd.clothes) = p.equippedArmor.bsize6
+            Case 7
+                iArrInd(pInd.clothes) = p.equippedArmor.bsize7
+        End Select
 
-            Select Case p.buttSize
-                Case -1
-                    iArrInd(pInd.clothesbtm) = p.equippedArmor.usizeneg1
-                Case 0
-                    iArrInd(pInd.clothesbtm) = p.equippedArmor.usize0
-                Case 1
-                    iArrInd(pInd.clothesbtm) = p.equippedArmor.usize1
-                Case 2
-                    iArrInd(pInd.clothesbtm) = p.equippedArmor.usize2
-                Case 3
-                    iArrInd(pInd.clothesbtm) = p.equippedArmor.usize3
-                Case 4
+        Select Case p.buttSize
+            Case -1
+                iArrInd(pInd.clothesbtm) = p.equippedArmor.usizeneg1
+            Case 0
+                iArrInd(pInd.clothesbtm) = p.equippedArmor.usize0
+            Case 1
+                iArrInd(pInd.clothesbtm) = p.equippedArmor.usize1
+            Case 2
+                iArrInd(pInd.clothesbtm) = p.equippedArmor.usize2
+            Case 3
+                iArrInd(pInd.clothesbtm) = p.equippedArmor.usize3
+            Case 4
                 iArrInd(pInd.clothesbtm) = p.equippedArmor.usize4
             Case 5
                 iArrInd(pInd.clothesbtm) = p.equippedArmor.usize5
@@ -589,7 +588,18 @@ Public Class Portrait
 
     'gets the player's current sexBool
     Public Function sexBool() As Boolean
-        If checkNDefMalInd(2, 1) Then Return True
-        Return iArrInd(pInd.body).Item2
+
+        Dim p As Player
+        If Not ent Is Nothing AndAlso ent.GetType Is GetType(Player) Then
+            p = CType(ent, Player)
+        Else
+            Return (iArrInd(pInd.body).Item2)
+        End If
+
+        If iArrInd(pInd.genitalia).Item1 = -1 Then
+            Return True
+        Else
+            Return False
+        End If
     End Function
 End Class

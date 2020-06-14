@@ -28,6 +28,7 @@
     Public usize5 As Tuple(Of Integer, Boolean, Boolean)
 
     Public compressesBreasts As Boolean
+    Public hidesDick As Boolean = False
     Public isCursed As Boolean = False
     Public bindsWearer As Boolean = False
 
