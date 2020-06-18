@@ -13,7 +13,7 @@ public class CustomToggle : Toggle
         void toggled();
     }
 
-    public void set_toggle_handler(IToggleHandler th) { toggleHandler = th; }
+    public void init(IToggleHandler th) { toggleHandler = th; }
 
     public override void OnSubmit(BaseEventData eventData)
     {

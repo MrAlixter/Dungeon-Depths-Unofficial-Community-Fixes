@@ -22,7 +22,15 @@ public class EditModeFunctions : EditorWindow
         }
         if(GUILayout.Button("Master.Update_Hair_Color()"))
         {
-            Master.instance.update_hair_color();
+            ProfilePicture.instance.update_hair_color();
+        }
+        if(GUILayout.Button("To Stairs Up"))
+        {
+            Master.instance.movePlayerAndCamera(Master.instance.stairsUp);
+        }
+        if(GUILayout.Button("To Stairs Down"))
+        {
+            Master.instance.movePlayerAndCamera(Master.instance.stairsDown);
         }
     }
 }

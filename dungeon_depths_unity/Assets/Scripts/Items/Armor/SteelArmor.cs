@@ -1,15 +1,10 @@
-﻿using UnityEngine;
-
-public class SteelArmor : Armor
+﻿public class SteelArmor : Armor
 {
     private static SteelArmor _instance;
-    public static SteelArmor instance { get { return _instance != null ? _instance : new SteelArmor(); } }
+    public static SteelArmor instance { get { if(_instance == null) { _instance = new SteelArmor(); } return _instance; } }
 
-    public void OnEnable()
+    public SteelArmor() : base()
     {
-        if (_instance != null && _instance != this) { Destroy(this); return; }
-        else { _instance = this; }
-
         name = "Steel Armor";
         description = "A basic armor set forged from steel.";
         id = 5;

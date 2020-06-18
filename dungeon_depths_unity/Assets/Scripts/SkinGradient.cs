@@ -1,4 +1,3 @@
-﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.EventSystems;
@@ -6,18 +5,15 @@ using UnityEngine.UI;
 
 public class SkinGradient : RawImage, IPointerClickHandler
 {
-    private static SkinGradient _instance;
-    public static SkinGradient instance { get { return _instance != null ? _instance : new SkinGradient(); } }
+    public static SkinGradient instance { get; private set; }
     
+    public static List<Color> colors;
+    public static Gradient skin_colors;
+
     private RectTransform rt;
-    public List<Color> colors;
-    private Gradient skin_colors;
 
-    public SkinGradient()
+    static SkinGradient()
     {
-        if (_instance != null && _instance != this) { Destroy(this.gameObject); }
-        else { _instance = this; }
-
         colors = new List<Color>();
         colors.Add(c_byte(250, 235, 215));
         colors.Add(c_byte(247, 219, 195));
@@ -27,14 +23,14 @@ public class SkinGradient : RawImage, IPointerClickHandler
         colors.Add(c_byte(105, 80, 70));
 
         float buffer = 0.05f;
-        float stretch = 1-(2*buffer);
+        float stretch = 1 - (2 * buffer);
 
         skin_colors = new Gradient();
         GradientColorKey[] ck = new GradientColorKey[colors.Count];
         GradientAlphaKey[] ak = new GradientAlphaKey[colors.Count];
         for(int i = 0; i < colors.Count; i++)
         {
-            float time = ((float)i/(colors.Count-1)) * stretch + buffer;
+            float time = ((float)i / (colors.Count - 1)) * stretch + buffer;
             GradientColorKey ck_temp = new GradientColorKey();
             ck_temp.color = colors[i];
             ck_temp.time = time;
@@ -48,8 +44,19 @@ public class SkinGradient : RawImage, IPointerClickHandler
         skin_colors.colorKeys = ck;
     }
 
+    new void Awake()
+    {
+        base.Awake();
+
+        instance = this;
+
+        rt = gameObject.GetComponent<RectTransform>();
+        Texture2D t2d = GetTexture((int)rt.rect.width);
+        texture = t2d;
+    }
+
     //Mostly to be used for the implicit conversion of int to byte and Color32 to Color
-    private Color c_byte(byte r, byte g, byte b)
+    private static Color c_byte(byte r, byte g, byte b)
     {
         return new Color32(r, g, b, 255);
     }
@@ -70,16 +77,6 @@ public class SkinGradient : RawImage, IPointerClickHandler
         texture.SetPixels(colors);
         texture.Apply();
         return texture;
-    }
-
-    protected override void Awake()
-    {
-        rt = gameObject.GetComponent<RectTransform>();
-        Texture2D t2d = GetTexture((int)rt.rect.width);
-        texture = t2d;
-        
-        //sprite = Sprite.Create(t2d, new Rect(0, 0, t2d.width, t2d.height), rt.pivot);
-        //SpriteDrawMode
     }
 
     public void OnPointerClick(PointerEventData eventData)

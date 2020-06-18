@@ -1,35 +1,46 @@
-﻿using System;
-using UnityEngine;
+using Newtonsoft.Json;
+using System;
 
-public abstract class Item : ScriptableObject, IComparable
+public abstract class Item : IComparable
 {
-    protected static IMessageMaster messageMaster;
-    static Item()
-    {
-        messageMaster = Master.instance;
-    }
+    protected static IMessageMaster message_master;
 
-    //Note: I am overriding the ScriptableObject.name
-    //However, since it's never put in the heirarchy and 
-    //I'm never searching by name, I don't care.
-    //And I need to inherit ScriptableObject because I can't call
-    //Object.Destroy() otherwise, which would mean that I 
-    //wouldn't be able to make Items into singletons
-    public new string name { get; protected set; } = "DEFAULT_NAME";
+    public string type { get; private set; }
+
+    [JsonIgnore]
+    public string name { get; protected set; } = "DEFAULT_NAME";
+    [JsonIgnore]
     public string actual_name { get { return name; } }
+    [JsonIgnore]
     public string description { get; protected set; } = "DEFAULT_DESCRIPTION";
 
+    [JsonIgnore]
     public bool is_usable { get; protected set; } = false;
 
+
     public int count { get; set; } = -1;
+    [JsonIgnore]
     public int value { get; set; } = -1;
+    [JsonIgnore]
     public int tier { get; set; } = -1;
+    [JsonIgnore]
     public int id { get; set; } = -1;
+    [JsonIgnore]
     public bool is_monster_drop { get; set; } = false;
 
+    [JsonIgnore]
     public int sale_limit { get; set; } = 999;
     //public delegate void on_sell();
     //public delegate void on_buy();
+
+    public Item()
+    {
+        if(message_master == null)
+        {
+            message_master = Master.get_master<IMessageMaster>();
+        }
+        type = GetType().FullName;
+    }
 
     public int CompareTo(object obj)
     {
@@ -45,19 +56,19 @@ public abstract class Item : ScriptableObject, IComparable
     public virtual void use()
     {
         if(!is_usable) { return; }
-        messageMaster.display_message($"You use the {name}");
+        message_master.display_message($"You use the {name}");
     }
     protected void add_one() { count++; }
     protected virtual void add(int i) { count += i; }
     public virtual void discard()
     {
-        messageMaster.display_message($"You drop the {name}");
+        message_master.display_message($"You drop the {name}");
         count--;
     }
     public virtual void remove()
     {
-        messageMaster.display_message($"The {name} fades into non-existance");
+        message_master.display_message($"The {name} fades into non-existance");
         count--;
     }
-    public void examine() { messageMaster.display_message(description); }
+    public void examine() { message_master.display_message(description); }
 }

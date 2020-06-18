@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using Scripts;
 
 namespace Assets.Scripts
 {
@@ -13,31 +9,31 @@ namespace Assets.Scripts
 
         }
 
-        public virtual void perform()
+        public virtual bool perform(ICombatant user, ICombatant target)
         {
-            if(source.HUNGER + cost > 100)
+            if(user.HUNGER + cost > 100)
             {
-                message_master.set_message($"You are too hungry! {name} costs {cost} hunger!");
-                return;
+                message_master.set_message($"{user.name} is too hungry! {name} costs {cost} hunger!");
+                return false;
             }
-            if(master.current_mode != Mode.combat && !useable_out_of_combat)
-            {
-                message_master.set_message($"You don't have a target for that special!");
-                return;
-            }
+            //if(master.current_mode != Mode.combat && !useable_out_of_combat)
+            //{
+            //    message_master.set_message($"{user.name} doesn't have a target for that special!");
+            //    return;
+            //}
             if(cost == -1)
             {
                 //Remove from options
             }
             else
             {
-                source.add_hunger(cost);
+                user.HUNGER += cost;
             }
 
-            message_master.display_message($"You perform {name}!");
-            effect();
+            message_master.display_message($"{user.name} performs {name}!");
+            effect(user, target);
 
-            master.end_turn();
+            return true;
         }
     }
 }

@@ -1,15 +1,10 @@
-﻿using UnityEngine;
-
-public class ValkyrieArmor : Armor
+﻿public class ValkyrieArmor : Armor
 {
     private static ValkyrieArmor _instance;
-    public static ValkyrieArmor instance { get { return _instance != null ? _instance : new ValkyrieArmor(); } }
+    public static ValkyrieArmor instance { get { if(_instance == null) { _instance = new ValkyrieArmor(); } return _instance; } }
 
-    public void OnEnable()
+    public ValkyrieArmor() : base()
     {
-        if (_instance != null && _instance != this) { Destroy(this); return; }
-        else { _instance = this; }
-
         name = "Valkyrie Armor";
         description = "An etherial armor set crafted for a valiant defender.\nValkyries can not remove this armor.";
         id = 95;
@@ -26,7 +21,7 @@ public class ValkyrieArmor : Armor
     public override void discard()
     {
         //If player is a Valkyrie
-        messageMaster.display_message($"You drop the {name}");
+        message_master.display_message($"You drop the {name}");
         count--;
     }
 }

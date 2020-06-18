@@ -1,63 +1,60 @@
-﻿using System;
-using System.Collections;
-using System.Collections.Generic;
+using System.IO;
+using TMPro;
 using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.UI;
 
 public class ItemChoice : MonoBehaviour, 
     ISelectHandler, 
-    IDeselectHandler//, 
-    //ISubmitHandler,
-    //ICancelHandler,
-    //ItemChoiceButton.IItemChoiceMaster 
+    IDeselectHandler
 {
     public interface IItemChoiceMaster
     {
         void ItemUsed(ItemChoice itemChoice);
-        void ItemEqupped(ItemChoice itemChoice);
+        void ItemEquipped(ItemChoice itemChoice);
+        void ItemDiscarded(ItemChoice itemChoice);
         void ItemCanceled();
     }
 
-    public static IEnsureVisible<ItemChoice> ensureVisibleMaster;
+    public static IEnsureVisible<ItemChoice> ensure_visible_master;
     public static IItemChoiceMaster itemChoiceMaster;
     private static GameObject item_option_prefab;
+    private static char SEP = Path.DirectorySeparatorChar;
     
-    //public ItemChoiceButton button;
     public OverridableButton button;
     public Navigation navigation { get { return button.navigation; } set { button.navigation = value; } }
     public Selectable selectable { get { return button.GetComponent<Selectable>(); } }
 
     public Item associated_item { get; private set; }
-    private new Text name;
-    private Text description;
-    private Text count;
-    private Text value;
+    private new TextMeshProUGUI name;
+    private TextMeshProUGUI description;
+    private TextMeshProUGUI count;
+    private TextMeshProUGUI value;
 
     private bool options_open;
     private GameObject option_selected;
     
     public static void set_ensure_visible_master(IEnsureVisible<ItemChoice> iev)
     {
-        ensureVisibleMaster = iev;
+        ensure_visible_master = iev;
     }
-
+    
     public static void set_item_choice_master(IItemChoiceMaster icm)
     {
         itemChoiceMaster = icm;
     }
 
-    public static void set_item_option_prefab(GameObject prefab)
+    void Awake()
     {
-        item_option_prefab = prefab;
-    }
+        if(item_option_prefab == null)
+        {
+            item_option_prefab = Resources.Load<GameObject>("Prefabs"+SEP+"UI"+SEP+"Elements"+SEP+"ItemOptions");
+        }
 
-    public void Awake()
-    {
-        name = transform.Find("Name").GetComponent<Text>();
-        description = transform.Find("Description").GetComponent<Text>();
-        count = transform.Find("Count").GetComponent<Text>();
-        value = transform.Find("Value").GetComponent<Text>();
+        name = transform.Find("Name").GetComponent<TextMeshProUGUI>();
+        description = transform.Find("Description").GetComponent<TextMeshProUGUI>();
+        count = transform.Find("Count").GetComponent<TextMeshProUGUI>();
+        value = transform.Find("Value").GetComponent<TextMeshProUGUI>();
 
         //button = GetComponent<ItemChoiceButton>();
         //button.set_item_choice_master(this);
@@ -70,7 +67,7 @@ public class ItemChoice : MonoBehaviour,
         option_selected = null;
     }
 
-    public void Update()
+    void Update()
     {
         if(options_open && option_selected == null)
         {
@@ -91,7 +88,7 @@ public class ItemChoice : MonoBehaviour,
     public void OnSelect(BaseEventData eventData)
     {
         close_options();
-        ensureVisibleMaster.ensure_visible(this);
+        ensure_visible_master.ensure_visible(this);
     }
 
     public void OnDeselect(BaseEventData eventData)
@@ -99,6 +96,7 @@ public class ItemChoice : MonoBehaviour,
         
     }
 
+    #region Item Choice Functions
     public void ChoiceSubmitted()
     {
         open_options();
@@ -109,35 +107,36 @@ public class ItemChoice : MonoBehaviour,
         close_options();
         itemChoiceMaster.ItemCanceled();
     }
+    #endregion
 
-    public void OptionSubmitted()
+    #region Item Choice Option Functions
+    public void ItemUse()
     {
-        if(associated_item as Armor != null)
-        {
-            itemChoiceMaster.ItemEqupped(this);
-        }
-        else if(associated_item as Potion != null)
-        {
-            itemChoiceMaster.ItemUsed(this);
-        }
-        selectable.Select();
+        itemChoiceMaster.ItemUsed(this);
     }
 
-    public void OptionCancelled()
+    public void ItemEquip()
     {
-        //itemChoiceMaster.ItemCanceled();
+        itemChoiceMaster.ItemEquipped(this);
+    }
+
+    public void ItemDiscard()
+    {
+        itemChoiceMaster.ItemDiscarded(this);
+    }
+
+    public void ItemCancelled()
+    {
         button.Select();
-        //close_options() is called in OnSelect()
-        //close_options();
     }
 
-    public void OptionSelected()
+    public void ItemSelected()
     {
         GameObject selected = EventSystem.current.currentSelectedGameObject;
         option_selected = selected;
     }
 
-    public void OptionDeselected()
+    public void ItemDeselected()
     {
         GameObject selected = EventSystem.current.currentSelectedGameObject;
         if (selected != null)
@@ -148,6 +147,7 @@ public class ItemChoice : MonoBehaviour,
             }
         }
     }
+    #endregion
 
     private void open_options()
     {
@@ -155,6 +155,7 @@ public class ItemChoice : MonoBehaviour,
 
         if (associated_item as Armor != null) //+Weapon
         {
+            //TODO Fix NullReferenceException
             go.transform.Find("Equip").gameObject.SetActive(true);
         }
         else if (associated_item.is_usable)
@@ -171,11 +172,13 @@ public class ItemChoice : MonoBehaviour,
         foreach (Transform child in go.transform)
         {
             OverridableButton current_button = child.GetComponent<OverridableButton>();
-            current_button.customOnSubmit = new OverridableButton.eventDelegate(OptionSubmitted);
-            current_button.customOnClick = new OverridableButton.eventDelegate(OptionSubmitted);
-            current_button.customOnCancel = new OverridableButton.eventDelegate(OptionCancelled);
-            current_button.customOnSelect = new OverridableButton.eventDelegate(OptionSelected);
-            current_button.customOnDeselect = new OverridableButton.eventDelegate(OptionDeselected);
+            if(child.name.Equals("Use")) { current_button.customOnSubmit = new OverridableButton.eventDelegate(ItemUse); }
+            else if(child.name.Equals("Equip")) { current_button.customOnSubmit = new OverridableButton.eventDelegate(ItemEquip); }
+            else if(child.name.Equals("Discard")) { current_button.customOnSubmit = new OverridableButton.eventDelegate(ItemDiscard); }
+            current_button.customOnClick = current_button.customOnSubmit;
+            current_button.customOnCancel = new OverridableButton.eventDelegate(ItemCancelled);
+            current_button.customOnSelect = new OverridableButton.eventDelegate(ItemSelected);
+            current_button.customOnDeselect = new OverridableButton.eventDelegate(ItemDeselected);
 
             Selectable current = current_button.selectable;
             if (child.gameObject.activeSelf)
