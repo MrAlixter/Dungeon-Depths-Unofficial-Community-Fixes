@@ -26,7 +26,7 @@
             mClothing, mClothing2, mFrontHair, mEyebrows, mNose, mRearHair1, mEars, mAcce,
             mHat, mRearHair2 As ImageDump
 
-        Dim wings, horns, hbow As ImageDump
+        Dim wings, horns, hbow, tail As ImageDump
         Dim shoulders, chest, genitalia, bodyoverlay As ImageDump
 
         Dim ndoM, ndoF As Integer
@@ -35,7 +35,9 @@
         bkg = New ImageDump("img/bkg")
         atrs.Add(pInd.bkg, New ImageAttribute(bkg, bkg.Count))
 
-        atrs.Add(pInd.tail, New ImageAttribute(bkg, bkg.Count))
+        '-tail
+        tail = New ImageDump("img/Tails")
+        atrs.Add(pInd.tail, New ImageAttribute(tail, bkg.Count))
 
         '-wings
         wings = New ImageDump("img/Wings")
@@ -206,7 +208,7 @@
         Dim mTFAcce, mTFBody, mTFClothes, mTFClothes2, mTFEars, mTFEyes, mTFface,
             mTfFrontHair, mTFMouth, mTFNose, mTFRearhair1, mTfRearhair2 As ImageDump
 
-        Dim wings, horns, hbow As ImageDump
+        Dim wings, horns, hbow, tail As ImageDump
         Dim shoulders, chest, genitalia, bodyoverlay As ImageDump
 
         Dim ndoM, ndoF As Integer
@@ -215,7 +217,9 @@
         bkg = New ImageDump("img/bkg")
         atrs.Add(pInd.bkg, New ImageAttribute(bkg, bkg.Count))
 
-        atrs.Add(pInd.tail, New ImageAttribute(bkg, bkg.Count))
+        '-tail
+        tail = New ImageDump("img/Tails")
+        atrs.Add(pInd.tail, New ImageAttribute(tail, bkg.Count))
 
         '-wings
         wings = New ImageDump("img/Wings")

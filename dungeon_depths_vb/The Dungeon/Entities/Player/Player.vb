@@ -445,6 +445,7 @@
         forms.Add("Half-Dragon", New HalfDragon())
         forms.Add("Harpy", New Harpy())
         forms.Add("Djinn", New Djinn())
+        forms.Add("Kitsune", New Kitsune())
         forms.Add("Minotaur Cow", New MinotaurCow())
         forms.Add("Minotaur Bull", New MinotaurBull())
         forms.Add("Golem", New Golem())

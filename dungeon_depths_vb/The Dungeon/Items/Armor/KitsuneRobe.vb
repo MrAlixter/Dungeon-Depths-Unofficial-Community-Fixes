@@ -3,7 +3,7 @@
 
     Sub New()
         MyBase.setName("Kitsune's_Robes")
-        MyBase.setDesc("A snazzy robe that identifies its wearer as the gurdian of a long forgotten shrine." & vbCrLf & _
+        MyBase.setDesc("A snazzy robe that identifies its wearer as the guardian of a long forgotten shrine." & vbCrLf & _
                        "Fits sizes 1 through 4" & vbCrLf & _
                        "+10 Max Health, +5 DEF, +20 Max Mana")
         id = 183
@@ -19,6 +19,23 @@
         MyBase.bsize2 = New Tuple(Of Integer, Boolean, Boolean)(254, True, True)
         MyBase.bsize3 = New Tuple(Of Integer, Boolean, Boolean)(255, True, True)
         MyBase.bsize4 = New Tuple(Of Integer, Boolean, Boolean)(256, True, True)
+
+        MyBase.usize0 = New Tuple(Of Integer, Boolean, Boolean)(172, True, True)
+        MyBase.usize1 = New Tuple(Of Integer, Boolean, Boolean)(173, True, True)
+        MyBase.usize2 = New Tuple(Of Integer, Boolean, Boolean)(174, True, True)
+        MyBase.usize3 = New Tuple(Of Integer, Boolean, Boolean)(175, True, True)
+        MyBase.usize4 = New Tuple(Of Integer, Boolean, Boolean)(176, True, True)
+        MyBase.usize5 = New Tuple(Of Integer, Boolean, Boolean)(177, True, True)
         MyBase.compressesBreasts = True
+    End Sub
+
+    Public Overrides Sub onEquip(ByRef p As Player)
+        MyBase.onEquip(p)
+        p.prt.setIAInd(pInd.hairacc, 5, True, False)
+    End Sub
+
+    Public Overrides Sub onUnequip(ByRef p As Player)
+        MyBase.onUnequip(p)
+        p.prt.setIAInd(pInd.hairacc, 0, True, False)
     End Sub
 End Class

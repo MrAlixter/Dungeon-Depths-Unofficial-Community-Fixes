@@ -1,4 +1,4 @@
-﻿'pi defines the various portrait indexes
+﻿'pInd defines the various portrait indexes
 Public Enum pInd
     bkg             '0
     tail            '1

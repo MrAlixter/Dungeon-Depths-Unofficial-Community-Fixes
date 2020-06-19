@@ -111,6 +111,8 @@ Public MustInherit Class Transformation
                 Return New COServ(CInt(s(0)), CInt(s(1)), CInt(s(2)), CDbl(s(3)), CBool(s(4)), CBool(s(6)))
             Case "Magical Slut"
                 Return New MagSlutTF(CInt(s(0)), CInt(s(1)), CInt(s(2)), CDbl(s(3)), CBool(s(4)), CBool(s(6)))
+            Case "KitsuneTF"
+                Return New KitsuneTF(CInt(s(0)), CInt(s(1)), CInt(s(2)), CDbl(s(3)), CBool(s(4)), CBool(s(6)))
             Case Else
                 Return Nothing
         End Select

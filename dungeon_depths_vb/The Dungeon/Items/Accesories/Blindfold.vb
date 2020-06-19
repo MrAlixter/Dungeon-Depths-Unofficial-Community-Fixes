@@ -10,6 +10,9 @@
         MyBase.setUsable(False)
         MyBase.count = 0
         MyBase.value = 0
+
+        mBoost = 2
+
         MyBase.fInd = New Tuple(Of Integer, Boolean, Boolean)(13, True, True)
         MyBase.mInd = New Tuple(Of Integer, Boolean, Boolean)(12, False, True)
     End Sub
