@@ -80,7 +80,7 @@ Public Class Portrait
         If img(0).Size.Height < 300 Then g.DrawImage(img(0), 0, 0, 146, 216) Else g.DrawImage(img(0), 0, 0, 144, 144)
         For i = 1 To UBound(img)
             If img(i) Is Nothing Then img(i) = CharacterGenerator.picPort.Image
-            g.DrawImage(img(i), getRelativeX(img(i).Size, False), getRelativeY(img(i).Size, False))
+            g.DrawImage(img(i), getRelativeX(img(i).Size, False), getRelativeY(img(i).Size, False), getRelativeSizeX(img(i).Size), getRelativeSizeY(img(i).Size))
         Next
         g.DrawImage(Game.picPortOutline.BackgroundImage, 0, 0, 146, 216)
 
@@ -96,7 +96,7 @@ Public Class Portrait
         g.DrawImage(img(0), 0, 0, 164, 610)
         For i = 1 To UBound(img)
             If img(i) Is Nothing Then img(i) = CharacterGenerator.picPort.Image
-            g.DrawImage(img(i), getRelativeX(img(i).Size, True), getRelativeY(img(i).Size, True))
+            g.DrawImage(img(i), getRelativeX(img(i).Size, True), getRelativeY(img(i).Size, True), getRelativeSizeX(img(i).Size), getRelativeSizeY(img(i).Size))
         Next
 
         Dim endTime = (DateTime.Now - New DateTime(1970, 1, 1)).TotalMilliseconds
@@ -115,7 +115,6 @@ Public Class Portrait
                 Return -11
             End If
         End If
-
         Return 0
     End Function
     Shared Function getRelativeY(ByVal s As Size, ByVal fullBody As Boolean)
@@ -132,6 +131,24 @@ Public Class Portrait
         End If
 
         Return 0
+    End Function
+    Shared Function getRelativeSizeX(ByVal s As Size)
+        If s.Height <= 200 Then
+            Return 144
+        ElseIf s.Height <= 300 Then
+            Return 146
+        Else
+            Return 164
+        End If
+    End Function
+    Shared Function getRelativeSizeY(ByVal s As Size)
+        If s.Height <= 200 Then
+            Return 144
+        ElseIf s.Height <= 300 Then
+            Return 216
+        Else
+            Return 610
+        End If
     End Function
 
     'exports the current assembled portrait as a .bmp image
