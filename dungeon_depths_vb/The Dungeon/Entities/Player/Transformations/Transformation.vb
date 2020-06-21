@@ -49,6 +49,8 @@ Public MustInherit Class Transformation
                 Return New BBBimboTF(CInt(s(0)), CInt(s(1)), CInt(s(2)), CDbl(s(3)), CBool(s(4)), CBool(s(6)))
             Case "NekoTF"
                 Return New NekoTF(CInt(s(0)), CInt(s(1)), CInt(s(2)), CDbl(s(3)), CBool(s(4)), CBool(s(6)))
+            Case "MinoMTF"
+                Return New MinoMTF(CInt(s(0)), CInt(s(1)), CInt(s(2)), CDbl(s(3)), CBool(s(4)), CBool(s(6)))
             Case "MinoFTF"
                 Return New MinoFTF(CInt(s(0)), CInt(s(1)), CInt(s(2)), CDbl(s(3)), CBool(s(4)), CBool(s(6)))
             Case "BimBellTF"
@@ -125,12 +127,12 @@ Public MustInherit Class Transformation
             Not p.pClass.name.Equals("Unconscious") And
             Not p.pForm.name.Equals("Blowup Doll") And
             Not p.perks("astatue") > 1 Then Return True
-        'MsgBox(Game.player1.ongoingTFs.Count < 1 & vbCrLf &
-        '    (Not p.polymorphs.ContainsKey(p.pClass.name) And Not p.polymorphs.ContainsKey(p.pForm.name)) & vbCrLf &
-        '    Not p.pClass.name.Equals("Magical Girl") & vbCrLf &
-        '    Not p.pClass.name.Equals("Valkyrie") & vbCrLf &
-        '    Not p.pClass.name.Equals("Unconscious") & vbCrLf &
-        '    Not p.pForm.name.Equals("Blowup Doll"))
+        Return False
+    End Function
+
+    Shared Function doPartialRevert() As Boolean
+
+
         Return False
     End Function
 

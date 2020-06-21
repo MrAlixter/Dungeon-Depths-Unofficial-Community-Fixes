@@ -5,7 +5,7 @@
     Dim isUsable As Boolean = False
     Public count As Integer
     Public value As Integer
-    Public tier As Integer = Nothing
+    Protected tier As Integer = Nothing
     Public id As Integer = Nothing
     Public isMonsterDrop As Boolean = False
     Public isRandoTFAcceptable = True
@@ -43,7 +43,7 @@
     Public Function getUsable()
         Return isUsable
     End Function
-    Public Function getTier()
+    Public Overridable Function getTier() As Integer
         Return tier
     End Function
     Public Function getId()

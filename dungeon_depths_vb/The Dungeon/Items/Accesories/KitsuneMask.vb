@@ -34,4 +34,19 @@
         p.perks("blind") = -1
         Game.drawBoard()
     End Sub
+
+    Public Overrides Function getTier() As Integer
+        Try
+            Select Case Game.mDun.numCurrFloor
+                Case Is < 5
+                    Return Nothing
+                Case 7
+                    Return 1
+                Case Else
+                    Return 3
+            End Select
+        Catch ex As Exception
+            Return Nothing
+        End Try
+    End Function
 End Class

@@ -253,7 +253,7 @@
                 inv.add(contents(i), 1)
             Else
                 Dim content = inv.item(contents(i))
-                Select Case content.tier
+                Select Case content.getTier()
                     Case 3
                         Dim rng = (Int(Rnd() * 9))
                         If rng = 1 Then content.addOne()

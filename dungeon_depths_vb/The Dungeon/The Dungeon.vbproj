@@ -266,6 +266,7 @@
     <Compile Include="Entities\Player\Spells\turnToFrog.vb" />
     <Compile Include="Entities\Player\Transformations\AmazonTF.vb" />
     <Compile Include="Entities\Player\Transformations\AlrauneTF.vb" />
+    <Compile Include="Entities\Player\Transformations\MinoMTF.vb" />
     <Compile Include="Entities\Player\Transformations\KitsuneTF.vb" />
     <Compile Include="Entities\Player\Transformations\COServ.vb" />
     <Compile Include="Entities\Player\Transformations\cowbellTFs\BimBellTF.vb" />

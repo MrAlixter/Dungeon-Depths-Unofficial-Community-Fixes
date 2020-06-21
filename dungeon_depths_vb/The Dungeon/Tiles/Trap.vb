@@ -72,6 +72,9 @@
                 End If
                 Game.player1.petrify(rubyTF, 1)
                 Dim out As String = "As you walk through the dungeon, you see what looks like a valuable ruby on the ground, and you bend down to pick it up.  As soon as you touch it, a shock runs through your body, and starting with the hand you have on the gem your body is turned into ruby.  𝘚𝘩𝘪𝘵!  Looks like that ruby was probably cursed . . ."
+
+                Game.currFloor.statueList.Add(New Statue(Game.player1, True))
+
                 Game.pushLblEvent(out, AddressOf Trap.rubyRevert)
                 Game.player1.drawPort()
             Case 3
@@ -110,8 +113,6 @@
     Shared Sub rubyRevert()
         Game.player1.revertToPState()
         Game.player1.canMoveFlag = True
-        Dim tr As Monster = Monster.monsterFactory(-1)
-        Game.currfloor.statueList.Add(New Statue(tr))
         Game.pushLblEvent("𝑺𝒆𝒗𝒆𝒓𝒂𝒍 𝒅𝒂𝒚𝒔 𝒍𝒂𝒕𝒆𝒓..." & vbCrLf &
                            "As you stand frozen in the same position you've held since you touched the cursed stone, suddenly you fall flat faced onto the ground.  Springing to your feet, you are exited to find yourself as you were, albiet redder than before, and another explorer frozen in your place.  From their pose, it seems that they were going through your stuff, and must have accidently touched you.  What's more, the original ruby you touched is nowhere to be found.  You muse on the nature of the curse for a bit, before grabbing your things and moving on." & vbCrLf & vbCrLf & "Your stomach rumbles loudly, and you can tell that your time as a statue hasn't been kind to you.")
         Game.player1.mana = 0
@@ -146,6 +147,7 @@
 
         Game.pushLblEvent(out, AddressOf p.update)
     End Sub
+
     Public Overrides Function ToString() As String
         Return pos.X & "*" & pos.Y & "*" & iD
     End Function
