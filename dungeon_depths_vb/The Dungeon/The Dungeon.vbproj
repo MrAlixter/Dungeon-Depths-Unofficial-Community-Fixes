@@ -341,7 +341,7 @@
     <Compile Include="Items\Armor\FullBodyUpdated\CommonClothes0.vb" />
     <Compile Include="Items\Armor\FullBodyUpdated\CowCosplay.vb" />
     <Compile Include="Items\Armor\GothOutfit.vb" />
-    <Compile Include="Items\Armor\AngelicSweater.vb" />
+    <Compile Include="Items\Armor\FullBodyUpdated\AngelicSweater.vb" />
     <Compile Include="Items\Armor\ScaleBikini.vb" />
     <Compile Include="Items\Armor\ScaleArmor.vb" />
     <Compile Include="Items\Armor\FullBodyUpdated\FoNight.vb" />
@@ -361,7 +361,7 @@
     <Compile Include="Items\Armor\FullBodyUpdated\GCUniform.vb" />
     <Compile Include="Items\Armor\CozySweater.vb" />
     <Compile Include="Items\Armor\VSkimpyClothes.vb" />
-    <Compile Include="Items\Armor\KitsuneRobe.vb" />
+    <Compile Include="Items\Armor\FullBodyUpdated\KitsuneRobe.vb" />
     <Compile Include="Items\Armor\WarlockRobe.vb" />
     <Compile Include="Items\Armor\STBodysuit.vb" />
     <Compile Include="Items\Armor\SAJumpsuit.vb" />
@@ -1531,6 +1531,33 @@
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
     <Content Include="img\fTF\tfClothes2\gfClothes182.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="img\fTF\tfClothes2\gfClothes183.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="img\fTF\tfClothes2\gfClothes184.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="img\fTF\tfClothes2\gfClothes185.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="img\fTF\tfClothes2\gfClothes186.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="img\fTF\tfClothes2\gfClothes187.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="img\fTF\tfClothes2\gfClothes188.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="img\fTF\tfClothes2\gfClothes189.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="img\fTF\tfClothes2\gfClothes190.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="img\fTF\tfClothes2\gfClothes191.png">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
     <Content Include="img\fTF\tfClothes\gfClothes125.png">
@@ -3689,7 +3716,15 @@
     <Content Include="img\mTF\tfClothes2\mClothes48.png">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
-    <Content Include="img\mTF\tfClothes2\mClothes49.png" />
+    <Content Include="img\mTF\tfClothes2\mClothes49.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="img\mTF\tfClothes2\mClothes50.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="img\mTF\tfClothes2\mClothes51.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
     <Content Include="img\mTF\tfClothes\mClothes10.png">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
