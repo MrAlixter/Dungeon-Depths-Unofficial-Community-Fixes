@@ -74,7 +74,7 @@ Public Class Portrait
     'converts an array of images into a .bmp image
     Shared Function CreateBMP(ByRef img() As Image) As Bitmap
         Dim startTime As Double = (DateTime.Now - New DateTime(1970, 1, 1)).TotalMilliseconds
-
+        'MsgBox("CreateBMP")
         Dim bmp As New Bitmap(146, 216)
         Dim g As Graphics = Graphics.FromImage(bmp)
         If img(0).Size.Height < 300 Then g.DrawImage(img(0), 0, 0, 146, 216) Else g.DrawImage(img(0), 0, 0, 144, 144)
@@ -90,7 +90,7 @@ Public Class Portrait
     End Function
     Shared Function CreateFullBodyBMP(ByRef img() As Image) As Bitmap
         Dim startTime As Double = (DateTime.Now - New DateTime(1970, 1, 1)).TotalMilliseconds
-
+        'MsgBox("CreateFullBodyBMP")
         Dim bmp As New Bitmap(164, 610)
         Dim g As Graphics = Graphics.FromImage(bmp)
         g.DrawImage(img(0), 0, 0, 164, 610)
@@ -218,6 +218,12 @@ Public Class Portrait
         changeHairColor(haircolor)
         changeSkinColor(skincolor)
         accUnderClothes()
+
+        If Not ent Is Nothing AndAlso ent.GetType Is GetType(Player) Then
+            If CType(ent, Player).equippedArmor.hidesDick Then
+                iArr(pInd.genitalia) = Game.picPortrait.BackgroundImage
+            End If
+        End If
 
         hideEars()
         hideRearHair()

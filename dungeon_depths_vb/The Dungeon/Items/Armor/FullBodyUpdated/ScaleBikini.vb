@@ -23,6 +23,14 @@
         MyBase.bsize4 = New Tuple(Of Integer, Boolean, Boolean)(245, True, True)
         MyBase.bsize5 = New Tuple(Of Integer, Boolean, Boolean)(246, True, True)
 
+        MyBase.usizeneg1 = New Tuple(Of Integer, Boolean, Boolean)(51, False, True)
+        MyBase.usize0 = New Tuple(Of Integer, Boolean, Boolean)(186, True, True)
+        MyBase.usize1 = New Tuple(Of Integer, Boolean, Boolean)(187, True, True)
+        MyBase.usize2 = New Tuple(Of Integer, Boolean, Boolean)(188, True, True)
+        MyBase.usize3 = New Tuple(Of Integer, Boolean, Boolean)(189, True, True)
+        MyBase.usize4 = New Tuple(Of Integer, Boolean, Boolean)(190, True, True)
+        MyBase.usize5 = New Tuple(Of Integer, Boolean, Boolean)(191, True, True)
+
         MyBase.compressesBreasts = True
     End Sub
 End Class

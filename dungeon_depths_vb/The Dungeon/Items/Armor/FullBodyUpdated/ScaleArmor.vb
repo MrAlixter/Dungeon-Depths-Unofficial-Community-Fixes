@@ -17,9 +17,17 @@
         MyBase.value = 2300
 
         MyBase.bsizeneg1 = New Tuple(Of Integer, Boolean, Boolean)(62, False, True)
+        MyBase.bsize0 = New Tuple(Of Integer, Boolean, Boolean)(62, False, True)
         MyBase.bsize1 = New Tuple(Of Integer, Boolean, Boolean)(238, True, True)
         MyBase.bsize2 = New Tuple(Of Integer, Boolean, Boolean)(239, True, True)
         MyBase.bsize3 = New Tuple(Of Integer, Boolean, Boolean)(240, True, True)
+
+        MyBase.usizeneg1 = New Tuple(Of Integer, Boolean, Boolean)(50, False, True)
+        MyBase.usize0 = New Tuple(Of Integer, Boolean, Boolean)(183, True, True)
+        MyBase.usize1 = New Tuple(Of Integer, Boolean, Boolean)(183, True, True)
+        MyBase.usize2 = New Tuple(Of Integer, Boolean, Boolean)(184, True, True)
+        MyBase.usize3 = New Tuple(Of Integer, Boolean, Boolean)(185, True, True)
+
         MyBase.compressesBreasts = True
     End Sub
 End Class
