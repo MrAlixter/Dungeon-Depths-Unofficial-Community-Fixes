@@ -133,6 +133,7 @@
     <Compile Include="Entities\NPC\Hostile\Monsters\MesThrall.vb" />
     <Compile Include="Entities\NPC\Hostile\Monsters\Mimic.vb" />
     <Compile Include="Entities\NPC\Hostile\Monsters\PlayerGhost.vb" />
+    <Compile Include="Entities\NPC\Hostile\Monsters\FFElemental.vb" />
     <Compile Include="Entities\NPC\Hostile\Monsters\SlimeMonster.vb" />
     <Compile Include="Entities\NPC\Hostile\Monsters\SpiderMonster.vb" />
     <Compile Include="Entities\NPC\Hostile\Bosses\OEmpress.vb" />
