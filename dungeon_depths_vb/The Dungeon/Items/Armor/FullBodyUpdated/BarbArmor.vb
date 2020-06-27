@@ -29,6 +29,10 @@ Public Class BarbArmor
         MyBase.usize2 = New Tuple(Of Integer, Boolean, Boolean)(65, True, True)
         MyBase.usize3 = New Tuple(Of Integer, Boolean, Boolean)(66, True, True)
         MyBase.usize4 = New Tuple(Of Integer, Boolean, Boolean)(67, True, True)
+
+        MyBase.bsizeneg2 = New Tuple(Of Integer, Boolean, Boolean)(67, False, True)
+        MyBase.usizeneg2 = New Tuple(Of Integer, Boolean, Boolean)(49, False, True)
+
         MyBase.compressesBreasts = True
     End Sub
 End Class

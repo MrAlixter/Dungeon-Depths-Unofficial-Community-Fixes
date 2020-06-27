@@ -45,7 +45,7 @@ Public Class Game
     Public npcmode As Boolean = False   'indicates if the player is talking to an npc (NOT SAVED)
     Public npcIndex As Integer = 0  'indicates which npc is encountered (NOT SAVED)
     'a list containing all valid cheats
-    Public cheatList() As String = {"asss", "daaa", "wawa", "sasa", "gogo", "seee", "aeio", "wasd"} 'list of cheats (NOT SAVED)
+    Public cheatList() As String = {"asss", "daaa", "wawa", "sasa", "gogo", "seee", "aeio", "wasd", "aaaa"} 'list of cheats (NOT SAVED)
     Dim keyspresed As String = ""   'records last 4 keys pressed (NOT SAVED)
     Public titleList = New List(Of String)
     'other misc form1 instance variables
@@ -1353,6 +1353,7 @@ Public Class Game
         'If it returns true, HandleKeyPress returns false before anything is done
         If Keydata = Keys.Escape Then Return False
         If picStart.Visible = True Then Return True
+        If btnS.Visible Then Return True
         If combatmode And (Keydata.Equals(cKeys(0)) Or Keydata.Equals(cKeys(1)) Or Keydata.Equals(cKeys(2)) Or Keydata.Equals(cKeys(3)) Or Keydata.Equals(Keys.Left) Or Keydata.Equals(Keys.Right) Or Keydata.Equals(Keys.Down) Or Keydata.Equals(Keys.Up)) And Not selecting Then
             Return True
         End If
@@ -1517,6 +1518,10 @@ Public Class Game
             ElseIf keyspresed = "aeio" Then
                 player1.inv.add(149, 1)
                 player1.UIupdate()
+
+            ElseIf keyspresed = "aaaa" Then
+                Dim name As String = InputBox("Enter a Name:")
+                MsgBox("If " & name & " was a bimbo, they'd be " & Polymorph.bimboizeName(name))
             ElseIf keyspresed = "wasd" Then
                 Dim ct = New ClothingTester()
                 ct.ShowDialog()

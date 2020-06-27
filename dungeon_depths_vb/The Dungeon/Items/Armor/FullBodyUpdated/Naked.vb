@@ -9,6 +9,7 @@
         MyBase.aBoost = 0
         MyBase.count = 0
         MyBase.value = 100000
+        MyBase.bsizeneg2 = New Tuple(Of Integer, Boolean, Boolean)(5, False, True)
         bsizeneg1 = New Tuple(Of Integer, Boolean, Boolean)(5, False, True)
         bsize1 = New Tuple(Of Integer, Boolean, Boolean)(47, True, True)
         bsize2 = New Tuple(Of Integer, Boolean, Boolean)(47, True, True)
@@ -18,6 +19,7 @@
         bsize6 = New Tuple(Of Integer, Boolean, Boolean)(47, True, True)
         bsize7 = New Tuple(Of Integer, Boolean, Boolean)(47, True, True)
 
+        MyBase.usizeneg2 = New Tuple(Of Integer, Boolean, Boolean)(14, True, True)
         usizeneg1 = New Tuple(Of Integer, Boolean, Boolean)(14, True, True)
         usize0 = New Tuple(Of Integer, Boolean, Boolean)(14, True, True)
         usize1 = New Tuple(Of Integer, Boolean, Boolean)(14, True, True)
@@ -26,5 +28,6 @@
         usize4 = New Tuple(Of Integer, Boolean, Boolean)(14, True, True)
         usize5 = New Tuple(Of Integer, Boolean, Boolean)(14, True, True)
         MyBase.compressesBreasts = False
+        MyBase.hidesDick = False
     End Sub
 End Class

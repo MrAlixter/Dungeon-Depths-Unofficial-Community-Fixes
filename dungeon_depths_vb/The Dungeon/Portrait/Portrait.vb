@@ -221,7 +221,7 @@ Public Class Portrait
 
         If Not ent Is Nothing AndAlso ent.GetType Is GetType(Player) Then
             If CType(ent, Player).equippedArmor.hidesDick Then
-                iArr(pInd.genitalia) = Game.picPortrait.BackgroundImage
+                iArr(pInd.genitalia) = nullImg
             End If
         End If
 
@@ -291,7 +291,7 @@ Public Class Portrait
 
 
         colorEars(c)
-        iArr(pInd.nose) = Portrait.recolor2(imgLib.atrs(pInd.nose).getAt(iArrInd(pInd.nose)), c)
+        'iArr(pInd.nose) = Portrait.recolor2(imgLib.atrs(pInd.nose).getAt(iArrInd(pInd.nose)), c)
     End Sub
     Public Sub lustBlushUpdate()
         Select Case Int(ent.lust / 20)
@@ -349,8 +349,17 @@ Public Class Portrait
         If p.pClass.name.Equals("Warrior") Or p.pClass.name.Equals("Barbarian") Or p.pClass.name.Equals("Paladin") Or p.pClass.name.Equals("Amazon") Or p.pClass.name.Equals("Valkyrie") Or
          p.pForm.name.Equals("Tigress") Then
             Select Case p.breastSize
-                Case -1
+                Case -1, -2
                     iArrInd(pInd.bodyoverlay) = New Tuple(Of Integer, Boolean, Boolean)(1, True, False)
+                Case 0
+                    iArrInd(pInd.bodyoverlay) = New Tuple(Of Integer, Boolean, Boolean)(2, True, False)
+                Case Else
+                    iArrInd(pInd.bodyoverlay) = New Tuple(Of Integer, Boolean, Boolean)(3, True, False)
+            End Select
+        ElseIf p.pForm.name.Equals("Minotaur Bull") Then
+            Select Case p.breastSize
+                Case -1, 2
+                    iArrInd(pInd.bodyoverlay) = New Tuple(Of Integer, Boolean, Boolean)(4, True, False)
                 Case 0
                     iArrInd(pInd.bodyoverlay) = New Tuple(Of Integer, Boolean, Boolean)(2, True, False)
                 Case Else
@@ -360,7 +369,7 @@ Public Class Portrait
             iArrInd(pInd.bodyoverlay) = New Tuple(Of Integer, Boolean, Boolean)(0, True, False)
         End If
 
-        If Not p.equippedArmor.getAName.Equals("Naked") And p.equippedArmor.hidesDick Then iArrInd(pInd.genitalia) = New Tuple(Of Integer, Boolean, Boolean)(4, True, False) Else p.dsizeroute()
+        p.dsizeroute()
     End Sub
     Sub setIAInd(ByVal attrInd As pInd, ByVal i As Integer, ByVal b As Boolean, ByVal nonDefFlag As Boolean)
         iArrInd(attrInd) = New Tuple(Of Integer, Boolean, Boolean)(i, b, nonDefFlag)
@@ -370,21 +379,25 @@ Public Class Portrait
     End Sub
     Function checkNDefFemInd(ByVal attrInd As pInd, ByVal i As Integer) As Boolean
         Dim ind = iArrInd(attrInd)
+        If ind Is Nothing Then Return False
         If Not ind.Item2 Then Return False
         If imgLib.atrs(attrInd).rosf(ind.Item1) = i Then Return True Else Return False
     End Function
     Function checkNDefMalInd(ByVal attrInd As pInd, ByVal i As Integer) As Boolean
         Dim ind = iArrInd(attrInd)
+        If ind Is Nothing Then Return False
         If ind.Item2 Or ind.Item3 Then Return False
         If imgLib.atrs(attrInd).rosm(ind.Item1) = i Then Return True Else Return False
     End Function
     Function checkFemInd(ByVal attrInd As pInd, ByVal i As Integer) As Boolean
         Dim ind = iArrInd(attrInd)
+        If ind Is Nothing Then Return False
         If Not ind.Item2 Or Not ind.Item3 Then Return False
         If ind.Item1 = i Then Return True Else Return False
     End Function
     Function checkMalInd(ByVal attrInd As pInd, ByVal i As Integer) As Boolean
         Dim ind = iArrInd(attrInd)
+        If ind Is Nothing Then Return False
         If ind.Item2 Or ind.Item3 Then Return False
         If ind.Item1 = i Then Return True Else Return False
     End Function
@@ -452,6 +465,8 @@ Public Class Portrait
 
         If p.solFlag Then Exit Sub
         Select Case p.breastSize
+            Case -2
+                iArrInd(pInd.clothes) = p.equippedArmor.bsizeneg2
             Case -1
                 iArrInd(pInd.clothes) = p.equippedArmor.bsizeneg1
             Case 0
@@ -477,6 +492,8 @@ Public Class Portrait
         End Select
 
         Select Case p.buttSize
+            Case -2
+                iArrInd(pInd.clothesbtm) = p.equippedArmor.usizeneg2
             Case -1
                 iArrInd(pInd.clothesbtm) = p.equippedArmor.usizeneg1
             Case 0
@@ -493,7 +510,10 @@ Public Class Portrait
                 iArrInd(pInd.clothesbtm) = p.equippedArmor.usize5
         End Select
 
-        If iArrInd(pInd.clothes) Is Nothing Or iArrInd(pInd.clothesbtm) Is Nothing Then getNaked()
+        If iArrInd(pInd.clothes) Is Nothing Or iArrInd(pInd.clothesbtm) Is Nothing Then
+            getNaked()
+        End If
+
 
         If Not p.equippedArmor.getName.Equals("Naked") And p.equippedArmor.compressesBreasts Then
             compressBreasts()
@@ -548,6 +568,8 @@ Public Class Portrait
         End If
 
         Select Case p.breastSize
+            Case -2
+                setIAInd(pInd.chest, 0, True, False)
             Case -1
                 setIAInd(pInd.chest, 0, True, False)
             Case 0
@@ -577,6 +599,9 @@ Public Class Portrait
         End If
 
         Equipment.equipArmor("Naked", False)
+
+        portraitUDate()
+
         Game.pushLstLog("Your clothes don't fit!")
     End Sub
     Public Sub notcompress()
@@ -588,6 +613,8 @@ Public Class Portrait
         End If
 
         Select Case p.breastSize
+            Case -2
+                setIAInd(pInd.chest, 0, True, False)
             Case -1
                 setIAInd(pInd.chest, 0, True, False)
             Case 0

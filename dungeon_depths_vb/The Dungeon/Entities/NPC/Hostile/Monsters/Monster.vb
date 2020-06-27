@@ -93,6 +93,12 @@
                 Return New Alraune
             Case 13
                 Return New IWitch
+            Case 14
+                Return New FFElemental
+            Case 15
+                Dim m = New Monster
+                m.name = "Fire"
+                Return m
         End Select
 
         Return New Monster()

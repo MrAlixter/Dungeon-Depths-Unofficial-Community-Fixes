@@ -12,6 +12,28 @@
             End If
         End If
     End Sub
+    Shared Sub burnEffect()
+        Dim p As Player = Game.player1
+        If p.perks("burn") > -1 And Game.turn Mod 4 = 0 Then
+            Dim exclaim As String = "The flames scorch your arms!"
+            Dim r = Int(Rnd() * 100)
+            If r = 0 Then
+                exclaim = "AAAAAAAAAAAAAAAAAAA!!!"
+            ElseIf r < 11 Then
+                exclaim = "Flailing wildly does not put out the fire."
+            ElseIf r < 25 Then
+                exclaim = "Your entire torso is engulfed in fire!"
+            ElseIf r < 50 Then
+                exclaim = "The blaze singes your legs!"
+            End If
+
+            Game.pushLstLog(exclaim & "  -2 health!")
+            p.health -= 2 / p.getMaxHealth
+            If p.health <= 0 Then p.die(Monster.monsterFactory(15))
+
+            If p.perks("burn") >= 0 Then p.perks("burn") -= 1
+        End If
+    End Sub
     Shared Sub slimeHairRegen()
         Dim p As Player = Game.player1
         If Not p.prt.haircolor.A = 180 Then

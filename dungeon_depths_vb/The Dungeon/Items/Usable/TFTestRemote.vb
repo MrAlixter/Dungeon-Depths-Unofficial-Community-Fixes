@@ -14,7 +14,7 @@
     End Sub
     Public Overrides Sub use(ByRef p As Player)
         Dim form = InputBox("TF to... [Half-Gorgon, Gynoid, Amazon, Mindless, Rando, Half-Broodmother, Broodmother, " &
-                            "Minotaur Cow, Dragon, Succubus, Slime, Bimbo, Cake, Blob, Horse, Oni, Alraune]:")
+                            "Minotaur Cow, Dragon, Succubus, Slime, Bimbo, Cake, Blob, Horse, Oni, Alraune, Minotaur Bull]:")
 
         Dim tfs As Dictionary(Of String, Transformation) = New Dictionary(Of String, Transformation)
         Dim tf2s As Dictionary(Of String, Action) = New Dictionary(Of String, Action)
@@ -31,6 +31,7 @@
 
 
         tf2s.Add("Minotaur Cow", AddressOf New MinotaurCowTF().step1)
+        tf2s.Add("Minotaur Bull", AddressOf New MinoMTF().fulltf)
         tf2s.Add("Dragon", AddressOf New DragonTF().step1)
         tf2s.Add("Succubus", AddressOf New SuccubusTF().step1)
         tf2s.Add("Slime", AddressOf New SlimeTF().step1)

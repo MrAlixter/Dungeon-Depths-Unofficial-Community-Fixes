@@ -697,8 +697,9 @@
         portrait.setIAInd(pInd.rearhair, r, portrait.sexBool, False)
         portrait.setIAInd(pInd.midhair, r, portrait.sexBool, False)
 
-        r = Int(Rnd() * 7)
-        portrait.setIAInd(pInd.clothes, r, portrait.sexBool, False)
+        Dim r2 = Int(Rnd() * 7)
+        portrait.setIAInd(pInd.clothes, r2, portrait.sexBool, False)
+        portrait.setIAInd(pInd.clothesbtm, New Tuple(Of Integer, Boolean, Boolean)(r2, portrait.sexBool, False))
 
         r = Int(Rnd() * 4)
         portrait.setIAInd(pInd.ears, r, portrait.sexBool, False)

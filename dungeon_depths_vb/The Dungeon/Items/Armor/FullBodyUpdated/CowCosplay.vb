@@ -32,5 +32,6 @@
         MyBase.usize4 = New Tuple(Of Integer, Boolean, Boolean)(162, True, True)
         MyBase.usize5 = New Tuple(Of Integer, Boolean, Boolean)(163, True, True)
         MyBase.compressesBreasts = False
+        MyBase.hidesDick = False
     End Sub
 End Class

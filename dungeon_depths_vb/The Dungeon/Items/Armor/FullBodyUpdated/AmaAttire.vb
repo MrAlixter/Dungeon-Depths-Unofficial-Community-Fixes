@@ -25,5 +25,6 @@ Public Class AmaAttire
         MyBase.usize3 = New Tuple(Of Integer, Boolean, Boolean)(27, True, True)
         MyBase.usize4 = New Tuple(Of Integer, Boolean, Boolean)(28, True, True)
         MyBase.compressesBreasts = True
+        MyBase.hidesDick = False
     End Sub
 End Class

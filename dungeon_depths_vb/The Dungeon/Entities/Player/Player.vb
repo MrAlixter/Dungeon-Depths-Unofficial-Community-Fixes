@@ -395,6 +395,8 @@
         perks.Add("coscale", -1)        '38
         perks.Add("pprot", -1)          '39
         perks.Add("masochist", -1)      '40
+
+        perks.Add("burn", -1)      '41
     End Sub
     Private Sub initClasses()
         'creates the class dictionary
@@ -1071,6 +1073,9 @@
         If perks("hunger") > -1 And Game.turn Mod 5 = 0 Then
             PerkEffects.hungerEffect()
         End If
+        If perks("Burn") > -1 And Game.turn Mod 4 = 0 Then
+            PerkEffects.burnEffect()
+        End If
         'slime hair health regen
         If perks("slimehair") > -1 Then
             PerkEffects.slimeHairRegen()
@@ -1428,7 +1433,7 @@
             Exit Sub
         End If
 
-        If breastSize >= -1 And breastSize < 7 Then
+        If breastSize >= -2 And breastSize < 7 Then
             breastSize += 1
             reverseBSroute()
             reverseUSRoute()
@@ -1470,12 +1475,18 @@
             breastSize = 7
         ElseIf (prt.checkMalInd(pInd.chest, 1)) And breastSize <> 0 Then
             breastSize = 0
+        ElseIf (prt.checkMalInd(pInd.chest, 0)) And (prt.checkMalInd(pInd.shoulders, 7)) And breastSize <> -2 Then
+            breastSize = -2
         ElseIf (prt.checkMalInd(pInd.chest, 0)) And breastSize <> -1 Then
             breastSize = -1
         End If
     End Sub
     Public Sub reverseBSroute(Optional ByVal shoulderFlag = True)
         Select Case breastSize
+            Case -2
+                If shoulderFlag Then prt.setIAInd(pInd.shoulders, 7, False, False)
+                prt.setIAInd(pInd.chest, 0, True, False)
+                buttSize = -2
             Case -1
                 If shoulderFlag Then prt.setIAInd(pInd.shoulders, 0, False, False)
                 prt.setIAInd(pInd.chest, 0, True, False)
@@ -1580,7 +1591,7 @@
             Exit Sub
         End If
 
-        If buttSize >= -1 And buttSize < 5 Then
+        If buttSize >= -2 And buttSize < 5 Then
             buttSize += 1
             reverseUSRoute()
             If equippedArmor.bindsWearer Then reverseBSroute(False) Else reverseBSroute()
@@ -1607,7 +1618,9 @@
         If equippedArmor.bindsWearer Then uBsizeroute() : Exit Sub
         If Portrait.imgLib Is Nothing Or prt.iArr Is Nothing Or
             prt.iArrInd Is Nothing Or solFlag Then Exit Sub
-        If prt.checkMalInd(pInd.body, 0) And buttSize <> -1 Then
+        If prt.checkNDefMalInd(pInd.body, 5) And buttSize <> -2 Then
+            buttSize = -2
+        ElseIf prt.checkMalInd(pInd.body, 0) And buttSize <> -1 Then
             buttSize = -1
         ElseIf prt.checkNDefMalInd(pInd.body, 1) And buttSize <> 0 Then
             buttSize = 0
@@ -1626,6 +1639,9 @@
     Public Sub reverseUSRoute()
         If equippedArmor.bindsWearer Then reverseUBSRoute() : Exit Sub
         Select Case buttSize
+            Case -2
+                prt.setIAInd(pInd.body, 5, False, False)
+                breastSize = -2
             Case -1
                 prt.setIAInd(pInd.body, 0, False, False)
                 breastSize = -1

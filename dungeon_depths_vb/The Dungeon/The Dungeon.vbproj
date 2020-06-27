@@ -266,7 +266,7 @@
     <Compile Include="Entities\Player\Spells\turnToFrog.vb" />
     <Compile Include="Entities\Player\Transformations\AmazonTF.vb" />
     <Compile Include="Entities\Player\Transformations\AlrauneTF.vb" />
-    <Compile Include="Entities\Player\Transformations\MinoMTF.vb" />
+    <Compile Include="Entities\Player\Transformations\cowbellTFs\MinoMTF.vb" />
     <Compile Include="Entities\Player\Transformations\KitsuneTF.vb" />
     <Compile Include="Entities\Player\Transformations\COServ.vb" />
     <Compile Include="Entities\Player\Transformations\cowbellTFs\BimBellTF.vb" />
@@ -341,10 +341,10 @@
     <Compile Include="Items\Armor\FullBodyUpdated\CommonClothes1.vb" />
     <Compile Include="Items\Armor\FullBodyUpdated\CommonClothes0.vb" />
     <Compile Include="Items\Armor\FullBodyUpdated\CowCosplay.vb" />
+    <Compile Include="Items\Armor\FullBodyUpdated\ScaleArmor.vb" />
+    <Compile Include="Items\Armor\FullBodyUpdated\ScaleBikini.vb" />
     <Compile Include="Items\Armor\GothOutfit.vb" />
     <Compile Include="Items\Armor\FullBodyUpdated\AngelicSweater.vb" />
-    <Compile Include="Items\Armor\ScaleBikini.vb" />
-    <Compile Include="Items\Armor\ScaleArmor.vb" />
     <Compile Include="Items\Armor\FullBodyUpdated\FoNight.vb" />
     <Compile Include="Items\Armor\MagSlutOutfit.vb" />
     <Compile Include="Items\Armor\FullBodyUpdated\MaidLingerie.vb" />
@@ -378,6 +378,7 @@
     <Compile Include="Items\Services\AmazonLesson.vb" />
     <Compile Include="Items\Services\NameChange.vb" />
     <Compile Include="Items\Services\BimboLesson.vb" />
+    <Compile Include="Items\Usable\Charms\CAttackCharm.vb" />
     <Compile Include="Items\Usable\Charms\CManaCharm.vb" />
     <Compile Include="Items\Usable\CurseBGone.vb" />
     <Compile Include="Items\Usable\Charms\CDefenceCharm.vb" />
@@ -3233,8 +3234,12 @@
     <Content Include="img\Horns\blank.png">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
-    <Content Include="img\Horns\horns1.png" />
-    <Content Include="img\Horns\horns2.png" />
+    <Content Include="img\Horns\horns1.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="img\Horns\horns2.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
     <Content Include="img\Horns\horns3.png">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
@@ -3357,6 +3362,9 @@
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
     <Content Include="img\mEyebrows\mEyebrows5.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="img\mEyebrows\mEyebrows6.png">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
     <Content Include="img\mEyes\mEyes0.png">
@@ -3611,7 +3619,9 @@
     <Content Include="img\mTF\tfBody\fBody4.png">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
-    <Content Include="img\mTF\tfBody\fBody5.png" />
+    <Content Include="img\mTF\tfBody\fBody5.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
     <Content Include="img\mTF\tfClothes2\blank.png">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
@@ -4015,7 +4025,9 @@
     <Content Include="img\Shoulders\shoulders5.png">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
-    <Content Include="img\Shoulders\shoulders6.png" />
+    <Content Include="img\Shoulders\shoulders6.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
     <Content Include="img\Shoulders\shoulders7.png">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>

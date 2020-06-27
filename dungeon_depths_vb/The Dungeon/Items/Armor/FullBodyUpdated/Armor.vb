@@ -19,6 +19,8 @@
     Public bsize6 As Tuple(Of Integer, Boolean, Boolean)
     Public bsize7 As Tuple(Of Integer, Boolean, Boolean)
 
+    Public bsizeneg2 As Tuple(Of Integer, Boolean, Boolean) = Nothing
+
     Public usizeneg1 As Tuple(Of Integer, Boolean, Boolean)
     Public usize0 As Tuple(Of Integer, Boolean, Boolean)
     Public usize1 As Tuple(Of Integer, Boolean, Boolean)
@@ -26,6 +28,8 @@
     Public usize3 As Tuple(Of Integer, Boolean, Boolean)
     Public usize4 As Tuple(Of Integer, Boolean, Boolean)
     Public usize5 As Tuple(Of Integer, Boolean, Boolean)
+
+    Public usizeneg2 As Tuple(Of Integer, Boolean, Boolean) = Nothing
 
     Public compressesBreasts As Boolean
     Public hidesDick As Boolean = True

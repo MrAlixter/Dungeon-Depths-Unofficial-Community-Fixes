@@ -2,6 +2,20 @@
     Public Shared porm As Boolean = True
     Public target As NPC
     Public tfForm As Boolean = False
+    Shared fFNames() As String = {"Anna", "Ann", "Ana", "Alexis", "Allie", "Amber", "Ali", "Ashlie", _
+                               "Becky", "Bambi", "Barbie", _
+                               "Christine", "Casandra", "Cassie", "Cara", "Chloe", "Crystal", "Kristal", _
+                               "Danica", "Dani", _
+                                "Erika", "Emmy", _
+                               "Heather", "Hailey", _
+                               "Johanna", "Jenna", "Jenni", "Jo-Jo", _
+                               "Kelli", _
+                               "Lana", "Leora", _
+                               "Monica", "Mia", _
+                               "Nancy", "Nicole", _
+                               "Racheal", _
+                               "Sammi", "Sam", "Sally", "Sara", "Sofi", _
+                               "Trisha", "Trixie"}
     Private Sub Form4_Load(sender As Object, e As EventArgs) Handles MyBase.Load
         'scale to the screen size
         Dim startingWidth = Me.Width
@@ -224,22 +238,77 @@
     End Sub
     Shared Sub giveRNDBimName(ByRef p As Player)
         Randomize()
-        Dim fFNames() As String = {"Anna", "Ann", "Ana", "Alexis", "Allie", "Amber", "Ali", _
-                               "Becky", _
-                               "Christine", "Casandra", "Cassie", "Cara", "Chloe", _
-                               "Danica", "Dani", _
-                                "Erika", "Emmy", _
-                               "Heather", "Hailey", _
-                               "Johanna", "Jenna", "Jenni", "Jo-Jo", _
-                               "Kelli", _
-                               "Lana", "Leora", _
-                               "Monica", "Mia", _
-                               "Nancy", "Nicole", _
-                               "Racheal", _
-                               "Sammi", "Sam", "Sally", "Sara", "Sofi", _
-                               "Trisha", "Trixie"}
         p.name = fFNames(Int(Rnd() * fFNames.Length))
     End Sub
+
+    Shared Function bimboizeName(ByVal name As String) As String
+
+
+        Dim vowels() As String = {"a", "e", "i", "o", "u"}
+
+        Dim oname = name.ToLower
+        Dim firstVowel As Integer = oname.Length
+
+        For i = 1 To oname.Length - 1
+            If vowels.Contains(oname.Substring(i, 1)) Then
+                If Not firstVowel = oname.Length Then firstVowel = i + 1 : Exit For
+                firstVowel = i + 1
+            End If
+
+        Next
+        name = oname.Substring(0, firstVowel)
+
+        If name.EndsWith("ie") Or name.EndsWith("ey") Then
+            name = name.Substring(0, name.Length - 1) & "i"
+        ElseIf (name.EndsWith("e") Or name.EndsWith("y")) And name.Length > 2 Then
+            name = name.Substring(0, name.Length - 1) & "i"
+        ElseIf (name.EndsWith("i") Or name.EndsWith("n")) And name.Length > 2 Then
+            name = name.Substring(0, name.Length) & "i"
+        End If
+
+        name = name.Substring(0, 1).ToUpper() + name.Substring(1, name.Length - 1)
+
+        If (name.EndsWith("chelli")) Then Return name.Substring(0, name.Length - 1) & "e"
+        If (name.EndsWith("vi")) Then Return name.Substring(0, name.Length) & "i"
+        If (name.EndsWith("Ali")) Then Return "Alli"
+        If (name.EndsWith("au")) Then Return name.Substring(0, name.Length) & "li"
+        If (name.EndsWith("sa") Or name.EndsWith("sta")) Then Return name.Substring(0, name.Length - 2) & "sie"
+        If (name.EndsWith("oo")) Then name = name.Substring(0, name.Length - 1)
+
+        If name.Length <= 2 Then
+            If (name.EndsWith("Le") Or name.EndsWith("Se") Or name.EndsWith("Ro") Or name.EndsWith("Fo")) Then
+                Return name.Substring(0, name.Length - 1) & "xi"
+            ElseIf (name.EndsWith("He") Or name.EndsWith("Ka") Or name.EndsWith("Ke") Or name.EndsWith("Ha")) Then
+                Return name.Substring(0, 1) & "aylee"
+            ElseIf (name.EndsWith("Ju") Or name.EndsWith("Do") Or name.EndsWith("Ca") Or name.EndsWith("Ho")) Then
+                Return name.Substring(0, name.Length - 1) & "li"
+            ElseIf (name.EndsWith("Co") Or name.EndsWith("Ko")) Then
+                Return name.Substring(0, 1) & "hloe"
+            ElseIf (name.EndsWith("Ba")) Then
+                Return name.Substring(0, name.Length - 1) & "mbi"
+            ElseIf (name.EndsWith("Bo")) Then
+                Return name.Substring(0, name.Length) & "obi"
+            ElseIf (name.EndsWith("Am")) Then
+                Return name.Substring(0, name.Length - 1) & "ber"
+            ElseIf (name.EndsWith("Se")) Then
+                Return name.Substring(0, 1) & "kye"
+            ElseIf (name.EndsWith("Lo")) Then
+                Return name.Substring(0, 1) & "oona"
+            ElseIf (name.EndsWith("Sa")) Then
+                Return name.Substring(0, 1) & "tacey"
+            ElseIf (name.EndsWith("i") Or name.EndsWith("o") Or name.EndsWith("u")) Then
+                Return name & "-" & name
+            ElseIf (name.EndsWith("a")) Then
+                Return name.Substring(0, name.Length - 1) & "ia"
+            ElseIf (name.EndsWith("e")) Then
+                Return name.Substring(0, name.Length - 1) & "na"
+            End If
+        Else
+            Return name
+        End If
+
+        Return "Allie"
+    End Function
 
     Private Sub cboxPMorph_SelectedValueChanged(sender As Object, e As EventArgs) Handles cboxPMorph.SelectedValueChanged
         tfForm = True

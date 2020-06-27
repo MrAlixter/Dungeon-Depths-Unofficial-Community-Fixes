@@ -218,6 +218,7 @@
         internal_inventory.Add("Bimbell", New Bimbell())                    '197
         internal_inventory.Add("Kitsune_Mask", New KitsuneMask())           '198
         internal_inventory.Add("Angelic_Sweater", New AngelicSweater())     '199
+        internal_inventory.Add("Attack_Charm​", New CAttackCharm())          '200
 
         armor = {New Naked,
                  Me.item(5), Me.item(7), Me.item(8), Me.item(10),
@@ -259,7 +260,7 @@
                    Me.item(143), Me.item(148), Me.item(149), Me.item(152),
                    Me.item(153), Me.item(154), Me.item(155), Me.item(156),
                    Me.item(157), Me.item(158), Me.item(162), Me.item(174),
-                   Me.item(182), Me.item(195)}
+                   Me.item(182), Me.item(195), Me.item(200)}
 
         food = {Me.item(1), Me.item(30), Me.item(31), Me.item(32), Me.item(33),
                 Me.item(34), Me.item(35), Me.item(44), Me.item(90),

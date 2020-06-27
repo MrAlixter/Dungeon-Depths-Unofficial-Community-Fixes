@@ -70,7 +70,7 @@
         s1FaceChange(p)
         s1BodyChange(p)
 
-        Polymorph.giveRNDBimName(p)
+        p.name = Polymorph.bimboizeName(p.name)
 
         p.lust += 10
         p.drawPort()
