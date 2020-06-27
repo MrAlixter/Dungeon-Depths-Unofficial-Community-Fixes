@@ -360,7 +360,7 @@ Public Class Portrait
             iArrInd(pInd.bodyoverlay) = New Tuple(Of Integer, Boolean, Boolean)(0, True, False)
         End If
 
-        If Not p.equippedArmor.getAName.Equals("Naked") And p.equippedArmor.hidesDick Then iArrInd(pInd.genitalia) = New Tuple(Of Integer, Boolean, Boolean)(4, True, False) Else p.dsizeroute()
+        p.dsizeroute()
     End Sub
     Sub setIAInd(ByVal attrInd As pInd, ByVal i As Integer, ByVal b As Boolean, ByVal nonDefFlag As Boolean)
         iArrInd(attrInd) = New Tuple(Of Integer, Boolean, Boolean)(i, b, nonDefFlag)
