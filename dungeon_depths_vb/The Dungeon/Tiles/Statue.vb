@@ -1,6 +1,7 @@
 ﻿Public Class Statue
     Public pos As Point
     Dim name, desc As String
+    Public isRuby As Boolean = False
     Sub New(ByRef m As NPC)
         pos = m.pos
         name = m.name.Split()(0)
@@ -18,10 +19,13 @@
 
         End If
     End Sub
-    Sub New(ByRef p As Player)
+    Sub New(ByRef p As Player, Optional ByVal r As Boolean = False)
         pos = p.pos
         name = p.name
         desc = "Your old body, turned to stone. Looking at it fills you with nostalgia."
+
+
+        isRuby = r
     End Sub
     Sub New(ByVal s As String)
         Dim buffer = s.Split("*")
@@ -29,6 +33,7 @@
         pos = New Point(CInt(buffer(0)), CInt(buffer(1)))
         name = buffer(2)
         desc = buffer(3)
+        isRuby = buffer(4)
     End Sub
 
     Sub examine()
@@ -37,6 +42,6 @@
     End Sub
 
     Overrides Function toString() As String
-        Return pos.X & "*" & pos.Y & "*" & name & "*" & desc
+        Return pos.X & "*" & pos.Y & "*" & name & "*" & desc & "*" & isRuby
     End Function
 End Class

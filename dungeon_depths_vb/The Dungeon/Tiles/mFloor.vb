@@ -107,8 +107,8 @@ Public Class mFloor
         Next
         For i = 0 To Game.baseChest.contents.upperBound
             Dim c_item = Game.baseChest.contents.item(i)
-            If c_item.tier <> Nothing And Not c_item.isMonsterDrop Then
-                Game.baseChest.tiers(c_item.tier).Add(c_item)
+            If c_item.getTier() <> Nothing And Not c_item.isMonsterDrop Then
+                Game.baseChest.tiers(c_item.getTier()).Add(c_item)
             End If
         Next
         Rnd(-1)
