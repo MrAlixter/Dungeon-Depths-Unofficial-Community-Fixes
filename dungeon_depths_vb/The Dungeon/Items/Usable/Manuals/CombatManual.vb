@@ -1,6 +1,6 @@
 ﻿Public Class CombatManual
     Inherits Item
-    Public Shared specials() As String = {"Rapid Fire Jabs", "Focused Roundhouse", "Heavy Blow", "Focused Barrage", "Ki Wave Blast"}
+    Public Shared specials() As String = {"Rapid Fire Jabs", "Focused Roundhouse", "Heavy Blow", "Focused Barrage", "Aura Cannon"}
     Sub New()
         MyBase.setName("Combat_Manual")
         MyBase.setDesc("A simple, leather-bound book that likely contains some skills specifically for combat.")

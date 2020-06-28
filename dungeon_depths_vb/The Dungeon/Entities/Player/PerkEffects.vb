@@ -46,6 +46,18 @@
             End If
         End If
     End Sub
+    Shared Sub mBurst()
+        Dim p As Player = Game.player1
+        If p.health < 1 And Game.turn Mod 4 = 0 Then
+            p.health += 5 / p.getMaxHealth()
+            If p.mana < p.getMaxMana + 5 Then p.mana += 5 Else p.mana = p.getMaxMana
+            p.hunger += 7
+            Game.pushLstLog("Your blazing aura surges!  +5 health, +5 mana, +7 hunger")
+            If p.health > 1 Then p.health = 1
+
+            If p.perks(perk.mburst) >= 0 Then p.perks(perk.mburst) -= 1
+        End If
+    End Sub
     Shared Sub vslimeHairRegen()
         Dim p As Player = Game.player1
         If Not p.prt.haircolor.A = 180 Then

@@ -2,7 +2,7 @@
     Inherits Accessory
     'The red headband provides a +1 attack buff
     Sub New()
-        MyBase.setName(perk.cowbell)
+        MyBase.setName("Cowbell")
         MyBase.setDesc("A large brass bell attached to a collar that rings steadily with its wearer's gait." & vbCrLf &
                        "+20 Health." & vbCrLf &
                        "-1 WIL")

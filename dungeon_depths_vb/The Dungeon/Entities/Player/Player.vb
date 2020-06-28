@@ -41,6 +41,7 @@
     pprot           '39
     masochist       '40
     burn            '41
+    mburst          '42
 End Enum
 
 Public Class Player
@@ -899,19 +900,19 @@ Public Class Player
     End Sub
 
     '|GENERAL METHODS|
-    `Sub resetPerks()
-    Dim sv = perks(perk.svenom)
-    Dim av = perks(perk.avenom)
+    Sub resetPerks()
+        Dim sv = perks(perk.svenom)
+        Dim av = perks(perk.avenom)
 
-    Dim stf = perks(perk.slimetf)
-    Dim ggtf = perks(perk.googirltf)
+        Dim stf = perks(perk.slimetf)
+        Dim ggtf = perks(perk.googirltf)
 
-    Dim cp = perks(perk.copoly)
-    Dim cg = perks(perk.cogreed)
-    Dim cr = perks(perk.corust)
-    Dim cm = perks(perk.comilk)
-    Dim cb = perks(perk.coblind)
-    Dim cs = perks(perk.coscale)
+        Dim cp = perks(perk.copoly)
+        Dim cg = perks(perk.cogreed)
+        Dim cr = perks(perk.corust)
+        Dim cm = perks(perk.comilk)
+        Dim cb = perks(perk.coblind)
+        Dim cs = perks(perk.coscale)
 
         initPerks()
 
@@ -1079,6 +1080,9 @@ Public Class Player
         End If
         If perks(perk.burn) > -1 And Game.turn Mod 4 = 0 Then
             PerkEffects.burnEffect()
+        End If
+        If perks(perk.mburst) > -1 And Game.turn Mod 4 = 0 Then
+            PerkEffects.mBurst()
         End If
         'slime hair health regen
         If perks(perk.slimehair) > -1 Then

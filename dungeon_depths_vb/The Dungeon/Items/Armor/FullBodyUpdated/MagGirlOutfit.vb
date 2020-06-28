@@ -14,6 +14,7 @@
         MyBase.count = 0
         MyBase.value = 100
 
+        antiSlutVarInd = 201
         slutVarInd = 170
 
         bsizeneg1 = New Tuple(Of Integer, Boolean, Boolean)(60, False, True)

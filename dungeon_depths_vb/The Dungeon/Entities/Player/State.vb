@@ -233,7 +233,7 @@
         Dim b1 As Integer = readArray(32)
         For i = 0 To b1 - 1
             Dim kvp = readArray(33 + i).Split("!")
-            perks(kvp(0)) = CInt(kvp(1))
+            perks(CInt(kvp(0))) = CInt(kvp(1))
         Next
         For i = 0 To UBound(iArrInd)
             Dim arr() As String = readArray(33 + b1 + i).Split("%")

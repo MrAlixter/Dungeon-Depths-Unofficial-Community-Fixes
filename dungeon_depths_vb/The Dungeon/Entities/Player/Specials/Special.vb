@@ -84,8 +84,8 @@
             spec = New HeavyBlow(u, t)
         ElseIf s.Equals("Focused Barrage") Then
             spec = New FBarra(u, t)
-        ElseIf s.Equals("Ki Wave Blast") Then
-            spec = New KiWBlast(u, t)
+        ElseIf s.Equals("Ki Wave Blast") Or s.Equals("Aura Cannon") Then
+            spec = New ACannon(u, t)
         ElseIf s.Equals("Uvona's Blessing") Then
             spec = New UBlessing(u, t)
         ElseIf s.Equals("Shrink_Ray Shot") Then
@@ -96,6 +96,8 @@
             spec = New BAStrike(u, t)
         ElseIf s.Equals("Pillowy Protect") Then
             spec = New PProt(u, t)
+        ElseIf s.Equals("Mana Burst") Then
+            spec = New MBurst(u, t)
         End If
 
         spec.perform()

@@ -1,8 +1,8 @@
-﻿Public Class KiWBlast
+﻿Public Class ACannon
     Inherits Special
     Sub New(ByRef u As Player, ByRef t As NPC)
         MyBase.New(u, t)
-        MyBase.setName("Ki Wave Blast")
+        MyBase.setName("Aura Cannon")
         MyBase.setUOC(False)
         MyBase.setcost(u.mana * ((u.attack + u.aBuff) * u.pClass.a * u.pForm.a) / 10)
     End Sub
@@ -14,7 +14,7 @@
         p.mana = 0
         m.takeDMG(dmg, p)
 
-        Game.pushLstLog("Ki Wave Blast!")
-        Game.pushLblCombatEvent("Ki Wave Blast!" & vbCrLf & "You focus all of your internal energy into your hands, using it to fire a beam at your opponent.  The blast hits them for " & dmg & " damage!")
+        Game.pushLstLog("Aura Cannon!")
+        Game.pushLblCombatEvent("Aura Cannon!" & vbCrLf & "You focus all of your internal energy into your hands, using it to fire a beam at your opponent.  The blast hits them for " & dmg & " damage!")
     End Sub
 End Class

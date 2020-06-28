@@ -1,7 +1,7 @@
 ﻿Public Class Cupcake
     Inherits Food
     Sub New()
-        MyBase.setName(perk.cupcake)
+        MyBase.setName("Cupcake")
         MyBase.setDesc("A 100% not magic totally not cursed cupcake. -50 Hunger")
         id = 35
         tier = 3

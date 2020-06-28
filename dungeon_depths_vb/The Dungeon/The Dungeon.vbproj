@@ -224,9 +224,10 @@
     <Compile Include="Entities\Player\Specials\Abso.vb" />
     <Compile Include="Entities\Player\Specials\AFK.vb" />
     <Compile Include="Entities\Player\Specials\Bounty.vb" />
+    <Compile Include="Entities\Player\Specials\MBurst.vb" />
     <Compile Include="Entities\Player\Specials\PProt.vb" />
     <Compile Include="Entities\Player\Specials\ShrinkRayShoot.vb" />
-    <Compile Include="Entities\Player\Specials\KiWBlast.vb" />
+    <Compile Include="Entities\Player\Specials\ACannon.vb" />
     <Compile Include="Entities\Player\Specials\UBlessing.vb" />
     <Compile Include="Entities\Player\Specials\HeavyBlow.vb" />
     <Compile Include="Entities\Player\Specials\FBarra.vb" />
@@ -246,6 +247,8 @@
     <Compile Include="Entities\Player\Spells\Dowse.vb" />
     <Compile Include="Entities\Player\Spells\DragonsBreath.vb" />
     <Compile Include="Entities\Player\Spells\EnemyPolymorph.vb" />
+    <Compile Include="Entities\Player\Spells\HBSN.vb" />
+    <Compile Include="Entities\Player\Spells\SSMissile.vb" />
     <Compile Include="Entities\Player\Spells\Snowball.vb" />
     <Compile Include="Entities\Player\Spells\MoltenFireball.vb" />
     <Compile Include="Entities\Player\Spells\Fireball.vb" />
@@ -261,6 +264,7 @@
     <Compile Include="Entities\Player\Spells\SelfPolymorph.vb" />
     <Compile Include="Entities\Player\Spells\Spell.vb" />
     <Compile Include="Entities\Player\Spells\MesmericBloom.vb" />
+    <Compile Include="Entities\Player\Spells\CuteBeam.vb" />
     <Compile Include="Entities\Player\Spells\UvonasFugue.vb" />
     <Compile Include="Entities\Player\Spells\Warp.vb" />
     <Compile Include="Entities\Player\Spells\SuperFireball.vb" />
@@ -276,7 +280,8 @@
     <Compile Include="Entities\Player\Transformations\GooGirlTF.vb" />
     <Compile Include="Entities\Player\Transformations\CombatModTF.vb" />
     <Compile Include="Entities\Player\Transformations\LolitaSTF.vb" />
-    <Compile Include="Entities\Player\Transformations\MagSlutTF.vb" />
+    <Compile Include="Entities\Player\Transformations\maggirlTFs\ProMagGirlTF.vb" />
+    <Compile Include="Entities\Player\Transformations\maggirlTFs\MagSlutTF.vb" />
     <Compile Include="Entities\Player\Transformations\BroodmotherTF.vb" />
     <Compile Include="Entities\Player\Transformations\Polymorphs\MASBimboTF.vb" />
     <Compile Include="Entities\Player\Transformations\Polymorphs\GothGFTF.vb" />
@@ -293,7 +298,7 @@
     <Compile Include="Entities\Player\Transformations\bimboTFs\BimboTF.vb" />
     <Compile Include="Entities\Player\Transformations\Blindness.vb" />
     <Compile Include="Entities\Player\Transformations\Polymorphs\BUDollTF.vb" />
-    <Compile Include="Entities\Player\Transformations\MagGirlTF.vb" />
+    <Compile Include="Entities\Player\Transformations\maggirlTFs\MagGirlTF.vb" />
     <Compile Include="Entities\Player\Transformations\cowbellTFs\MinoFTF.vb" />
     <Compile Include="Entities\Player\Transformations\NekoTF.vb" />
     <Compile Include="Entities\Player\Transformations\AngelTF.vb" />
@@ -344,6 +349,7 @@
     <Compile Include="Items\Armor\FullBodyUpdated\CommonClothes1.vb" />
     <Compile Include="Items\Armor\FullBodyUpdated\CommonClothes0.vb" />
     <Compile Include="Items\Armor\FullBodyUpdated\CowCosplay.vb" />
+    <Compile Include="Items\Armor\FullBodyUpdated\ProMagGirlOutfit.vb" />
     <Compile Include="Items\Armor\FullBodyUpdated\ScaleArmor.vb" />
     <Compile Include="Items\Armor\FullBodyUpdated\ScaleBikini.vb" />
     <Compile Include="Items\Armor\GothOutfit.vb" />
