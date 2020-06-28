@@ -29,12 +29,12 @@
 
     Public Overrides Sub attackCMD(ByRef target As Entity)
         If target.GetType() Is GetType(Player) Then
-            If Game.player1.perks("nekocurse") = -1 Then
+            If Game.player1.perks(perk.nekocurse) = -1 Then
                 Game.pushLstLog((getName() & " casts a curse on you!"))
                 Game.pushLblCombatEvent((getName() & " casts a curse on you!"))
                 Game.player1.ongoingTFs.Add(New NekoTF(7, 1, 0.3, True))
                 Exit Sub
-            ElseIf Game.player1.perks("nekocurse") > -1 And getHealth() < 45 / getMaxHealth() Then
+            ElseIf Game.player1.perks(perk.nekocurse) > -1 And getHealth() < 45 / getMaxHealth() Then
                 Dim healvalue = Int(Rnd() * 4) + Int(Rnd() * 2) + 30
                 If getIntHealth() + healvalue > getMaxHealth() Then healvalue = getMaxHealth() - getIntHealth()
                 Game.pushLstLog((getName() & " heals herself!  +" & healvalue & " health!"))

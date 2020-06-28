@@ -15,7 +15,7 @@
             Case "Goddess"
                 Return New GoddessTF()
             Case "Slime"
-                Return New SlimeTF()
+                Return New slimetf()
             Case "Succubus"
                 Return New SuccubusTF()
             Case "Tigress"
@@ -53,20 +53,20 @@
 
     Public Overrides Sub update()
         MyBase.update()
-        If Not tfDone Then Game.player1.perks("polymorphed") = turnsTilNextStep
+        If Not tfDone Then Game.player1.perks(perk.polymorphed) = turnsTilNextStep
     End Sub
     Public Overrides Sub stopTF()
         MyBase.stopTF()
         tfDone = True
 
         Game.player1.revertToPState()
-        Game.player1.perks("polymorphed") = -1
+        Game.player1.perks(perk.polymorphed) = -1
     End Sub
     Public Sub stopTf2()
         MyBase.stopTF()
         tfDone = True
 
-        Game.player1.perks("polymorphed") = -1
+        Game.player1.perks(perk.polymorphed) = -1
     End Sub
 
     Public Overrides Function getNextStep(stage As Integer) As Action

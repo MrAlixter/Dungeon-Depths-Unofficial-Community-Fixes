@@ -4,8 +4,8 @@
     Sub New()
         MyBase.setName("Kitsune_Mask")
         MyBase.setDesc("A snazzy mask that invokes image of a guardian of a long forgotten shrine. A closer look reveals a smudged riddle inscribed in an shifting script..." & vbCrLf & vbCrLf & _
-                       """ " & vbCrLf & _
-                       "Forest's Watcher Be Revealed""" & vbCrLf & vbCrLf & _
+                       """Doused in flame, should this mask you wield;" & vbCrLf & _
+                       "Forest's watcher be revealed""" & vbCrLf & vbCrLf & _
                        "+15 Mana" & vbCrLf & _
                        "+20 Speed" & vbCrLf & _
                        "+15 Will")
@@ -24,14 +24,14 @@
     End Sub
     Public Overrides Sub onEquip(ByRef p As Player)
         MyBase.onEquip(p)
-        p.perks("blind") = 1
-        If Not p.pForm.name.Equals("Kitsune") Then p.ongoingTFs.Add(New KitsuneTF())
+        p.perks(perk.blind) = 1
+        If Not p.pForm.name.Equals("Kitsune") AndAlso p.perks(perk.burn) Then p.ongoingTFs.Add(New KitsuneTF())
         p.update()
         Game.drawBoard()
     End Sub
     Public Overrides Sub onUnequip(ByRef p As Player)
         MyBase.onUnequip(p)
-        p.perks("blind") = -1
+        p.perks(perk.blind) = -1
         Game.drawBoard()
     End Sub
 

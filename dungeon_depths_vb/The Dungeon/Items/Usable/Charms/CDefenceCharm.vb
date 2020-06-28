@@ -18,9 +18,9 @@
         p.defence += 5
         p.UIupdate()
 
-        If Not p.perks("coscale") > -1 And (Int(Rnd() * 2) = 0 Or Game.noRNG) Then
+        If Not p.perks(perk.coscale) > -1 And (Int(Rnd() * 2) = 0 Or Game.noRNG) Then
             p.ongoingTFs.Add(New BroodmotherTF(5, 15, 2.0, True))
-            p.perks("coscale") = 1
+            p.perks(perk.coscale) = 1
             Game.pushLstLog("You've been afflicted wth the curse of scales!")
         End If
 

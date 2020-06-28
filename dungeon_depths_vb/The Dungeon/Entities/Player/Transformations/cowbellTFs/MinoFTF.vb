@@ -4,7 +4,7 @@
         MyBase.New(n, tts, wi, cbs)
         tfName = "MinoFTF"
         MyBase.updateDuringCombat = False
-        Game.player1.perks("cowbell") = 0
+        Game.player1.perks(perk.cowbell) = 0
         nextStep = AddressOf step1
     End Sub
     Sub New(cs As Integer, n As Integer, tts As Integer, wi As Double, cbs As Boolean, tfd As Boolean)
@@ -216,11 +216,11 @@
     End Sub
     Public Overrides Sub stopTF()
         MyBase.stopTF()
-        Game.player1.perks("cowbell") = -1
+        Game.player1.perks(perk.cowbell) = -1
     End Sub
 
     Public Overrides Function getNextStep(stage As Integer) As Action
-        If Game.player1.perks("cowbell") = -1 Then
+        If Game.player1.perks(perk.cowbell) = -1 Then
             Return AddressOf stopTF
         End If
         Select Case stage

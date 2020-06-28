@@ -3,7 +3,7 @@
     Shared Sub MBimboDeath()
         Dim p As Player = Game.player1
 
-        p.perks("bimbotf") = 1
+        p.perks(perk.bimbotf) = 1
         Dim out As String = "Exausted, you slump to the floor.  Glancing up, the horny mess attacking you seem to have gotten a running start, throwing herself on top of you, and pulling you into a sloppy kiss.  As she clumsily fumbles around, trying to remove your clothes, you roll out from underneath her and beat a hasty retreat, the faint sweetness of bubblegum lingering in your mouth."
         p.currTarget.despawn("p-death")
         Game.pushLblEvent(out)
@@ -17,7 +17,7 @@
         End If
         Dim out As String = ""
         Dim ln1 As String = Nothing
-        If p.pClass.name.Equals("Thrall") Then
+        If p.pClass.name.Equals(perk.thrall) Then
             out = "Despite your fatigue, you are able to roll out of the way of the thrall's attempt to restrain you, and make a clumsy escape."
 
         Else
@@ -44,7 +44,7 @@
             Exit Sub
         End If
         Dim out As String = ""
-        If p.pClass.name.Equals("Thrall") Then
+        If p.pClass.name.Equals(perk.thrall) Then
             out = "Despite your fatigue, you are able to roll out of the way of the mage's attempt to restrain you, and make a clumsy escape."
 
         Else
@@ -69,22 +69,22 @@
         'Author Credit: Marionette
         Dim out As String = "As the " & p.currTarget.name & " closes in you push yourself off the ground, a burst of adrenaline pushing through your fatigue as you sidestep around it and beat a hasty retreat. While your back is turned to it, however, the " & p.currTarget.name & " whips a ball of goo towards you, the impact causing you to stumble as the goo strikes your back. You can already feel it starting to writhe and squirm as it begins to move…"
         p.currTarget.despawn("p-death")
-        If p.perks("slimetf") = -1 Then
-            p.perks("slimetf") = 1
+        If p.perks(perk.slimetf) = -1 Then
+            p.perks(perk.slimetf) = 1
         End If
 
-        p.ongoingTFs.Add(New SlimeETF(p.perks("slimetf")))
+        p.ongoingTFs.Add(New SlimeETF(p.perks(perk.slimetf)))
         Game.pushLblEvent(out, AddressOf p.update)
     End Sub
     Shared Sub ggDeath()
         Dim p As Player = Game.player1
         Dim out As String = "As the " & p.currTarget.name & " closes in on you, you push yourself off the ground, sidestep it, and make a hasty retreat.  While your back is turned, the " & p.currTarget.name & " whips a ball of goo at you.  As soon as it makes contact, you can feel the familiar tingle of magic..."
         p.currTarget.despawn("p-death")
-        If p.perks("googirltf") = -1 Then
-            p.perks("googirltf") = 1
+        If p.perks(perk.googirltf) = -1 Then
+            p.perks(perk.googirltf) = 1
         End If
 
-        p.ongoingTFs.Add(New GooGirlTF(p.perks("googirltf")))
+        p.ongoingTFs.Add(New GooGirlTF(p.perks(perk.googirltf)))
         Game.pushLblEvent(out, AddressOf p.update)
     End Sub
 
@@ -92,10 +92,10 @@
         Dim p As Player = Game.player1
         Dim out As String = "As the " & p.currTarget.name & " closes in on you, you push yourself off the ground, and sidestep it.  It anticipates this though, and with a lunging bite it latches onto your arm and delivers a powerful bite.  You smack it off, and make your escape, though a trickle of a golden venom hints that you might not be out of the woods yet."
         p.currTarget.despawn("p-death")
-        If p.perks("avenom") = -1 And p.perks("svenom") = -1 Then
-            p.perks("svenom") = 1
+        If p.perks(perk.avenom) = -1 And p.perks(perk.svenom) = -1 Then
+            p.perks(perk.svenom) = 1
         End If
-        p.ongoingTFs.Add(New ArachneTF(p.perks("svenom")))
+        p.ongoingTFs.Add(New ArachneTF(p.perks(perk.svenom)))
 
         Game.pushLblEvent(out, AddressOf p.update)
     End Sub
@@ -122,14 +122,14 @@
     End Sub
     Shared Sub arachneDeath4()
         Dim p As Player = Game.player1
-        If p.perks("avenom") = -1 And p.perks("svenom") = -1 Then
-            p.perks("svenom") = 1
-            p.perks("avenom") = 1
-            p.ongoingTFs.Add(New ArachneTF(p.perks("svenom")))
+        If p.perks(perk.avenom) = -1 And p.perks(perk.svenom) = -1 Then
+            p.perks(perk.svenom) = 1
+            p.perks(perk.avenom) = 1
+            p.ongoingTFs.Add(New ArachneTF(p.perks(perk.svenom)))
         Else
             For Each tf In p.ongoingTFs
                 If tf.GetType Is GetType(ArachneTF) Then
-                    tf.setCurrStep(p.perks("svenom"))
+                    tf.setCurrStep(p.perks(perk.svenom))
                     tf.setTurnsTilStep(0)
                 End If
 

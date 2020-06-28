@@ -102,7 +102,7 @@
         If Game.player1.pos <> pos Then Exit Sub
         If Not Game.combatmode And game.mDun.numCurrFloor >= 3 And Not Me.GetType Is GetType(LoadedChest) Then
             Dim mOdds As Integer
-            If Game.player1.perks("cogreed") > -1 Then
+            If Game.player1.perks(perk.cogreed) > -1 Then
                 mOdds = 0
             ElseIf Game.mDun.numCurrFloor = 3 Then
                 mOdds = Int(Rnd() * 2)

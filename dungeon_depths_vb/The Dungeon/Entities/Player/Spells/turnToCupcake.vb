@@ -10,7 +10,7 @@
         MyBase.getCaster.inv.add(35, 1)
         MyBase.getCaster.inv.invNeedsUDate = True
         MyBase.getCaster.UIupdate()
-        MyBase.getTarget.despawn("cupcake")
+        MyBase.getTarget.despawn(perk.cupcake)
         Game.pushLstLog(CStr("Your spell hits the " & MyBase.getTarget.name & ", turning " & MyBase.getTarget.rPronoun & " into a cupcake!"))
         Game.pushLblCombatEvent(CStr("Your spell hits the " & MyBase.getTarget.name & ", turning " & MyBase.getTarget.rPronoun & " into a cupcake!"))
     End Sub
@@ -18,7 +18,7 @@
     Public Overrides Sub backfire()
         Polymorph.transform(MyBase.getCaster, "Cake")
 
-        MyBase.getCaster.perks("polymorphed") = 1
+        MyBase.getCaster.perks(perk.polymorphed) = 1
         Game.pushLstLog(CStr("You turn yourself into a cake-girl!"))
         Game.pushLblCombatEvent(CStr("You turn yourself into a cake-girl!"))
 

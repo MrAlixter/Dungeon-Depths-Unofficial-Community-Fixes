@@ -13,7 +13,7 @@
     Public equippedArmor As Armor
     Dim equippedAcce As Accessory
     Public iArrInd(Portrait.NUM_IMG_LAYERS) As Tuple(Of Integer, Boolean, Boolean)
-    Dim perks As Dictionary(Of String, Integer)
+    Dim perks As Dictionary(Of perk, Integer)
     Dim invNeedsUDate As Boolean
     Dim haircolor, skincolor, textColor As Color
     Public initFlag As Boolean = False
@@ -44,7 +44,7 @@
         equippedArmor = p.equippedArmor
         equippedAcce = p.equippedAcce
         iArrInd = p.prt.iArrInd.Clone
-        perks = New Dictionary(Of String, Integer)(p.perks)
+        perks = New Dictionary(Of perk, Integer)(p.perks)
         invNeedsUDate = p.inv.invNeedsUDate
         haircolor = p.prt.haircolor
         skincolor = p.prt.skincolor
@@ -77,7 +77,7 @@
         equippedArmor = New Naked
         equippedAcce = New noAcce
         iArrInd = Nothing
-        perks = New Dictionary(Of String, Integer)()
+        perks = New Dictionary(Of perk, Integer)()
         invNeedsUDate = False
         haircolor = Color.Black
         skincolor = Color.Black
@@ -114,7 +114,7 @@
         p.equippedArmor = equippedArmor
         p.equippedAcce = equippedAcce
         p.prt.iArrInd = iArrInd.Clone
-        p.perks = New Dictionary(Of String, Integer)(perks)
+        p.perks = New Dictionary(Of perk, Integer)(perks)
         p.inv.invNeedsUDate = invNeedsUDate
         p.prt.haircolor = haircolor
         p.prt.skincolor = skincolor
@@ -146,7 +146,7 @@
         equippedArmor = p.equippedArmor
         equippedAcce = p.equippedAcce
         iArrInd = p.prt.iArrInd.Clone
-        perks = New Dictionary(Of String, Integer)(p.perks)
+        perks = New Dictionary(Of perk, Integer)(p.perks)
         invNeedsUDate = p.inv.invNeedsUDate
         haircolor = p.prt.haircolor
         skincolor = p.prt.skincolor
@@ -179,7 +179,7 @@
             equippedWeapon = New BareFists
             equippedArmor = New Naked
             iArrInd = {New Tuple(Of Integer, Boolean, Boolean)(2, False, False), New Tuple(Of Integer, Boolean, Boolean)(2, False, False), New Tuple(Of Integer, Boolean, Boolean)(2, False, False), New Tuple(Of Integer, Boolean, Boolean)(2, False, False), New Tuple(Of Integer, Boolean, Boolean)(2, False, False), New Tuple(Of Integer, Boolean, Boolean)(2, False, False), New Tuple(Of Integer, Boolean, Boolean)(2, False, False), New Tuple(Of Integer, Boolean, Boolean)(2, False, False), New Tuple(Of Integer, Boolean, Boolean)(2, False, False), New Tuple(Of Integer, Boolean, Boolean)(2, False, False), New Tuple(Of Integer, Boolean, Boolean)(2, False, False), New Tuple(Of Integer, Boolean, Boolean)(2, False, False), New Tuple(Of Integer, Boolean, Boolean)(2, False, False), New Tuple(Of Integer, Boolean, Boolean)(2, False, False), New Tuple(Of Integer, Boolean, Boolean)(2, False, False), New Tuple(Of Integer, Boolean, Boolean)(2, False, False), New Tuple(Of Integer, Boolean, Boolean)(2, False, False), New Tuple(Of Integer, Boolean, Boolean)(2, False, False), New Tuple(Of Integer, Boolean, Boolean)(2, False, False), New Tuple(Of Integer, Boolean, Boolean)(2, False, False)}
-            perks = New Dictionary(Of String, Integer)()
+            perks = New Dictionary(Of perk, Integer)()
             invNeedsUDate = False
             haircolor = Color.Black
             skincolor = Color.Black
@@ -257,7 +257,7 @@
                sex & "*" & buttSize & "*" & breastSize & "*" & haircolor.R & "*" & haircolor.G & "*" & haircolor.B & "*" & skincolor.R & "*" & skincolor.G & "*" & skincolor.B & "*" & _
                textColor.R & "*" & textColor.G & "*" & textColor.B & "*" & "placeholder" & "*")
             output += perks.Count & "*"
-            For Each kvp As KeyValuePair(Of String, Integer) In perks
+            For Each kvp As KeyValuePair(Of perk, Integer) In perks
                 output += (kvp.Key & "!" & kvp.Value & "*")
             Next
             For i = 0 To UBound(iArrInd)

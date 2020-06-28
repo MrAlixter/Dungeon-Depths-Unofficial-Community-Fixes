@@ -19,8 +19,8 @@
         Equipment.clothesChange("Dissolved_Clothes")
         pushLblEventWithoutLoss("As you take stock of yourself, you notice that your clothing has been partially eaten away by a teal slime that you seem to sweating in small amounts.  This seems like something you are going to need to keep an eye on...")
         p.drawPort()
-        If Game.player1.perks("slimetf") > -1 Then Game.player1.perks("slimetf") += 1
-        If Game.player1.perks("googirltf") > -1 Then Game.player1.perks("googirltf") += 1
+        If Game.player1.perks(perk.slimetf) > -1 Then Game.player1.perks(perk.slimetf) += 1
+        If Game.player1.perks(perk.googirltf) > -1 Then Game.player1.perks(perk.googirltf) += 1
     End Sub
 
     Sub step2()
@@ -28,11 +28,11 @@
 
         p.prt.haircolor = Color.FromArgb(180, 5, 245, 198)
         p.drawPort()
-        p.perks("vsslimehair") = 0
+        p.perks(perk.vsslimehair) = 0
         'Author Credit: Marionette
         pushLblEventWithoutLoss("The rogue slime starts moving upwards towards your head, your fingers unable to get a grip on the slippery goo as it works its way up your neck and into your hair. Despite your best attempts you just can’t get the bulk of the goo out. It almost feels like your trying to pull out your own hair... After a few more experimental tugs you confirm that the slime seems to have converted your hair to a much more gooey consistency. ")
 
-        If Game.player1.perks("slimetf") > -1 Then Game.player1.perks("slimetf") += 1
+        If Game.player1.perks(perk.slimetf) > -1 Then Game.player1.perks(perk.slimetf) += 1
     End Sub
     Sub step3()
         Dim p As Player = Game.player1
@@ -41,7 +41,7 @@
         'Author Credit: Marionette
         pushLblEventWithoutLoss("Looking back you see you’ve gotten far enough away to catch your breath, the adrenalin that had driven you on now draining as your left breathing heavily. Too late you remember the Slime had landed a fairly large glob of slime on you as it quickly surges around your body. Your skin starts to tingle as you watch your skin soak in the goo, the color of it changing and even becoming nearly translucent. You are now a half-slime!")
         p.drawPort()
-        If Game.player1.perks("slimetf") > -1 Then Game.player1.perks("slimetf") += 1
+        If Game.player1.perks(perk.slimetf) > -1 Then Game.player1.perks(perk.slimetf) += 1
     End Sub
     Sub step4()
         Dim p As Player = Game.player1
@@ -86,7 +86,7 @@
         pushLblEventWithoutLoss(out)
         p.drawPort()
 
-        If Game.player1.perks("slimetf") > -1 Then Game.player1.perks("slimetf") = -1
+        If Game.player1.perks(perk.slimetf) > -1 Then Game.player1.perks(perk.slimetf) = -1
 
         p.setStartStates()
     End Sub

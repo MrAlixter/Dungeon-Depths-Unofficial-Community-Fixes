@@ -47,7 +47,7 @@
         internal_inventory.Add("Apple", New Apple())                        '32
         internal_inventory.Add("Medicinal_Tea", New Herbs())                '33
         internal_inventory.Add("Heavy_Cream", New HeavyCream())             '34
-        internal_inventory.Add("Cupcake", New Cupcake())                    '35
+        internal_inventory.Add(perk.cupcake, New Cupcake())                    '35
         internal_inventory.Add("Mirror", New Mirror())                      '36
         internal_inventory.Add("Glowstick", New Glowstick())                '37
         internal_inventory.Add("Gold_Armor", New GoldArmor())               '38
@@ -84,7 +84,7 @@
         internal_inventory.Add("Red_Headband", New RedHeadband())           '67
         internal_inventory.Add("Ruby_Circlet", New RubyCirclet())           '68
         internal_inventory.Add("Slave_Collar", New ThrallCollar())          '69
-        internal_inventory.Add("Cowbell", New Cowbell())                    '70
+        internal_inventory.Add(perk.cowbell, New Cowbell())                    '70
         internal_inventory.Add("Cow_Print_Bra", New CowBra())               '71
         '0.7
         internal_inventory.Add("Maid_Outfit", New MaidOutfit())             '72
@@ -113,7 +113,7 @@
         internal_inventory.Add("Armored_Bunny_Suit", New BunnySuitA())      '94
         internal_inventory.Add("Valkyrie_Armor", New ValkyrieArmor())       '95
         internal_inventory.Add("Valkyrie_Sword", New ValkyrieSword())       '96
-        internal_inventory.Add("Bowtie", New Bowtie())                      '97
+        internal_inventory.Add(perk.bowtie, New Bowtie())                      '97
         internal_inventory.Add("Cursed_Heavy_Cream", New CHeavyCream())     '98
         internal_inventory.Add("Amazonian_Attire", New AmaAttire())         '99
         internal_inventory.Add("Cherry_Stick_of_Gum", New CStickOfGum())    '100

@@ -34,7 +34,7 @@
         p.prt.setIAInd(pInd.mouth, 12, True, False)
         p.pForm = p.forms("Combat Unit")
 
-        p.perks("slutcurse") = -1
+        p.perks(perk.slutcurse) = -1
     End Sub
 
     Public Overrides Sub stopTF()

@@ -346,7 +346,7 @@ Public Class Portrait
             Exit Sub
         End If
 
-        If p.pClass.name.Equals("Warrior") Or p.pClass.name.Equals("Barbarian") Or p.pClass.name.Equals("Paladin") Or p.pClass.name.Equals("Amazon") Or p.pClass.name.Equals("Valkyrie") Or
+        If p.pClass.name.Equals("Warrior") Or p.pClass.name.Equals(perk.barbarian) Or p.pClass.name.Equals("Paladin") Or p.pClass.name.Equals(perk.amazon) Or p.pClass.name.Equals("Valkyrie") Or
          p.pForm.name.Equals("Tigress") Then
             Select Case p.breastSize
                 Case -1, -2

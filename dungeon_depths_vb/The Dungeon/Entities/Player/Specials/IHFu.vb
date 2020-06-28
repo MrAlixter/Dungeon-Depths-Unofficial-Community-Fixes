@@ -9,7 +9,7 @@
     Public Overrides Sub effect()
         Dim p = MyBase.getUser
 
-        p.perks("ihfury") = 3
+        p.perks(perk.ihfury) = 3
         Game.pushLstLog("Ironhide Fury!")
         Game.pushLblCombatEvent("Ironhide Fury!" & vbCrLf & "+50% ATK, +60% DEF for 3 turn.")
     End Sub

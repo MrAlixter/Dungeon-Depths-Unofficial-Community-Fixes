@@ -67,7 +67,7 @@
 
         p.polymorphs("Mindless") = PolymorphTF.newPoly("MindlessAlt")
         p.ongoingTFs.Add(p.polymorphs("Mindless"))
-        p.perks("polymorphed") = turnsTilNextStep
+        p.perks(perk.polymorphed) = turnsTilNextStep
         p.pClass = p.classes("Mindless")
 
         p.drawPort()

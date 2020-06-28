@@ -5,8 +5,8 @@
         If p.prt.sexBool = False Then
             p.MtF()
             Game.pushLblEvent("You are now a woman!")
-        ElseIf Not p.perks("slutcurse") > -1 Then
-            p.perks("slutcurse") = 0
+        ElseIf Not p.perks(perk.slutcurse) > -1 Then
+            p.perks(perk.slutcurse) = 0
             p.prt.setIAInd(pInd.rearhair, p.sState.iArrInd(pInd.rearhair).Item1, True, False)
             p.prt.setIAInd(pInd.midhair, p.sState.iArrInd(pInd.midhair).Item1, True, False)
             p.prt.setIAInd(pInd.fronthair, p.sState.iArrInd(pInd.fronthair).Item1, True, False)

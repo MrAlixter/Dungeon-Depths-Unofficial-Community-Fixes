@@ -4,14 +4,14 @@
         MyBase.New(n, tts, wi, cbs)
         tfName = "ThrallTF"
         MyBase.updateDuringCombat = False
-        Game.player1.perks("thrall") = 0
+        Game.player1.perks(perk.thrall) = 0
         nextStep = AddressOf shiftTowardsPrefForm
     End Sub
     Sub New()
         MyBase.New(1, Int(Rnd() * 10) + 10, 0, False)
         tfName = "ThrallTF"
         MyBase.updateDuringCombat = False
-        Game.player1.perks("thrall") = 11
+        Game.player1.perks(perk.thrall) = 11
         nextStep = AddressOf crystalSpawn
     End Sub
     Sub New(cs As Integer, n As Integer, tts As Integer, wi As Double, cbs As Boolean, tfd As Boolean)
@@ -24,8 +24,8 @@
     Sub shiftTowardsPrefForm()
         Dim p As player = game.player1
         p.prefForm.shiftTowards(Game.player1)
-        p.perks("thrall") += 1
-        If p.perks("thrall") > 11 Then
+        p.perks(perk.thrall) += 1
+        If p.perks(perk.thrall) > 11 Then
             p.prefForm.snapShift(Game.player1)
 
         End If
@@ -92,7 +92,7 @@
     End Sub
     Shared Sub acceptSorc()
         Dim p As player = game.player1
-        p.perks("thrall") = -1
+        p.perks(perk.thrall) = -1
         p.ongoingTFs.Add(New HalfSuccubusTF())
         p.update()
         Game.pushLblEvent("""Then I deem your task concluded as a success.  Go now, and take care not to fall under the spell of any others,"" your controller states.")
@@ -125,16 +125,16 @@
 
     Public Overrides Sub stopTF()
         MyBase.stopTF()
-        Game.player1.perks("thrall") = -1
+        Game.player1.perks(perk.thrall) = -1
     End Sub
 
     Public Overrides Function getNextStep(stage As Integer) As Action
         Dim p As player = game.player1
-        If p.perks("thrall") = -1 Or p.pForm.name.Equals("Half-Succubus") Then
+        If p.perks(perk.thrall) = -1 Or p.pForm.name.Equals("Half-Succubus") Then
             Return AddressOf stopTF
-        ElseIf Not p.prefForm.playerMeetsForm(p) And Not p.perks("thrall") > 10 Then
+        ElseIf Not p.prefForm.playerMeetsForm(p) And Not p.perks(perk.thrall) > 10 Then
             Return AddressOf shiftTowardsPrefForm
-        ElseIf p.prefForm.playerMeetsForm(p) Or p.perks("thrall") > 10 Then
+        ElseIf p.prefForm.playerMeetsForm(p) Or p.perks(perk.thrall) > 10 Then
             Return AddressOf crystalSpawn
         End If
         Return Nothing

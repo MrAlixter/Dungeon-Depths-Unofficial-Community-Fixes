@@ -14,7 +14,7 @@
     End Sub
 
     Overrides Sub use(ByRef p As Player)
-        p.perks("slutcurse") = -1
+        p.perks(perk.slutcurse) = -1
         Equipment.antiClothingCurse(p)
         Game.pushLblEvent("You apply the anti-curse tag to your equipment.  The slut curse is neutralized!")
         p.drawPort()

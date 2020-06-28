@@ -15,9 +15,9 @@
         MyBase.mInd = New Tuple(Of Integer, Boolean, Boolean)(10, True, True)
     End Sub
     Public Overrides Sub onEquip(ByRef p As Player)
-        p.perks("minmanregen") = 1
+        p.perks(perk.minmanregen) = 1
     End Sub
     Public Overrides Sub onUnequip(ByRef p As Player)
-        p.perks("minmanregen") = -1
+        p.perks(perk.minmanregen) = -1
     End Sub
 End Class

@@ -16,11 +16,11 @@
         Game.pushLstLog("You drink the " & getName())
         Dim out As String = "You drink the vial of venom!"
 
-        If p.perks("avenom") = -1 And p.perks("svenom") = -1 Then
-            p.perks("svenom") = 1
+        If p.perks(perk.avenom) = -1 And p.perks(perk.svenom) = -1 Then
+            p.perks(perk.svenom) = 1
         End If
 
-        p.ongoingTFs.Add(New ArachneTF(p.perks("svenom")))
+        p.ongoingTFs.Add(New ArachneTF(p.perks(perk.svenom)))
 
         Game.pushLblEvent(out, AddressOf p.update)
         count -= 1

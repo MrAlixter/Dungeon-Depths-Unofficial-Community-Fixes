@@ -75,7 +75,7 @@
         p.reverseAllRoute()
         If game.mDun.numCurrFloor < 6 Then p.pImage = Game.picPlayerB.BackgroundImage Else p.pImage = Game.picBimbof.BackgroundImage
         p.TextColor = Color.HotPink
-        p.perks("bimbotf") = -1
+        p.perks(perk.bimbotf) = -1
         stopTF()
     End Sub
 End Class

@@ -45,7 +45,7 @@
         Equipment.weaponChange("Corse_War_Axe")
 
 
-        p.pClass = p.classes("Barbarian")
+        p.pClass = p.classes(perk.barbarian)
 
         Game.pushLblEvent(out, AddressOf CType(Game.hteach, HTeach).back)
         p.drawPort()

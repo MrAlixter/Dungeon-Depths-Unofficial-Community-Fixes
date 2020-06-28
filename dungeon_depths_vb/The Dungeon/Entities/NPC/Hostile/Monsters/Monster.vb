@@ -85,7 +85,7 @@
                 Return New EnthDem
             Case 10
                 Dim m = New Monster
-                m.name = "Hunger"
+                m.name = perk.hunger
                 Return m
             Case 11
                 Return New MarissaAS

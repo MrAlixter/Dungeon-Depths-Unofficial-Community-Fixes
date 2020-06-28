@@ -23,7 +23,7 @@
         If p.health > 1 Then p.health = 1
     End Sub
     Public Overrides Sub onUnequip(ByRef p As Player)
-        If p.perks("cowbell") > -1 Then p.perks("cowbell") = -1
+        If p.perks(perk.cowbell) > -1 Then p.perks(perk.cowbell) = -1
         If p.health > 1 Then p.health = 1
     End Sub
 End Class

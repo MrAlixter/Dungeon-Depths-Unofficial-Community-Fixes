@@ -7,7 +7,7 @@
         MyBase.setcost(-1)
     End Sub
     Public Overrides Sub effect()
-        MyBase.getUser.perks("pprot") = 1
+        MyBase.getUser.perks(perk.pprot) = 1
         Game.pushLstLog("Pillowy Protect!")
         Game.pushLblCombatEvent("Pillowy Protect!" & vbCrLf & "+999% DEF for 1 turn.")
     End Sub

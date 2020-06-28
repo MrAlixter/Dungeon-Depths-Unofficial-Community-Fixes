@@ -21,10 +21,10 @@
 
     Public Overrides Sub onEquip(ByRef p As Player)
         MyBase.onEquip(p)
-        p.perks("bimbododge") = 2
+        p.perks(perk.bimbododge) = 2
     End Sub
     Public Overrides Sub onUnequip(ByRef p As Player)
         MyBase.onUnequip(p)
-        p.perks("bimbododge") = -1
+        p.perks(perk.bimbododge) = -1
     End Sub
 End Class

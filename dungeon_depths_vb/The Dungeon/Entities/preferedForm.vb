@@ -75,12 +75,12 @@
         Return p.prt.sexBool = isFemale And p.prt.iArrInd(pInd.rearhair).Item2 = hasFemaleHair And
         p.prt.iArrInd(pInd.rearhair).Item1 = rHairInd And p.prt.iArrInd(pInd.fronthair).Item1 = fHairInd + 1 And
         p.breastSize = breastSize And p.prt.iArrInd(pInd.ears).Item1 = earType And
-        ((p.perks("slutcurse") > -1 And isSlut) Or (p.perks("slutcurse") = -1 And Not isSlut))
+        ((p.perks(perk.slutcurse) > -1 And isSlut) Or (p.perks(perk.slutcurse) = -1 And Not isSlut))
     End Function
 
     Public Sub shiftTowards(ByRef p As Player)
         Randomize()
-        If Not p.pClass.name.Equals("Thrall") Then p.pClass = p.classes("Thrall")
+        If Not p.pClass.name.Equals(perk.thrall) Then p.pClass = p.classes(perk.thrall)
         If playerMeetsForm(p) Then Exit Sub
 
         If Not p.prt.haircolor.Equals(hairColor) Then p.changeHairColor(Game.cShift(p.prt.haircolor, hairColor, 8))
@@ -110,12 +110,12 @@
             p.reverseallroute()
         End If
 
-        If isFemale And ((p.perks("slutcurse") = -1 And isSlut) Or (p.perks("slutcurse") > -1 And Not isSlut)) And Int(Rnd() * 3) = 0 Then
-            If (p.perks("slutcurse") = -1 And isSlut) Then
-                p.perks("slutcurse") = 0
+        If isFemale And ((p.perks(perk.slutcurse) = -1 And isSlut) Or (p.perks(perk.slutcurse) > -1 And Not isSlut)) And Int(Rnd() * 3) = 0 Then
+            If (p.perks(perk.slutcurse) = -1 And isSlut) Then
+                p.perks(perk.slutcurse) = 0
                 Equipment.clothingCurse1(p)
             Else
-                p.perks("slutcurse") = -1
+                p.perks(perk.slutcurse) = -1
                 Equipment.antiClothingCurse(p)
             End If
         End If
@@ -134,7 +134,7 @@
     End Sub
     Public Sub snapShift(ByRef p As Player)
         Randomize()
-        If Not p.pClass.name.Equals("Thrall") Then p.pClass = p.classes("Thrall")
+        If Not p.pClass.name.Equals(perk.thrall) Then p.pClass = p.classes(perk.thrall)
         If playerMeetsForm(p) Then Exit Sub
 
         p.changeHairColor(hairColor)
@@ -165,12 +165,12 @@
             End While
         End If
 
-        If isFemale And ((p.perks("slutcurse") = -1 And isSlut) Or (p.perks("slutcurse") > -1 And Not isSlut)) Then
-            If (p.perks("slutcurse") = -1 And isSlut) Then
-                p.perks("slutcurse") = 0
+        If isFemale And ((p.perks(perk.slutcurse) = -1 And isSlut) Or (p.perks(perk.slutcurse) > -1 And Not isSlut)) Then
+            If (p.perks(perk.slutcurse) = -1 And isSlut) Then
+                p.perks(perk.slutcurse) = 0
                 Equipment.clothingCurse1(p)
             Else
-                p.perks("slutcurse") = -1
+                p.perks(perk.slutcurse) = -1
                 Equipment.antiClothingCurse(p)
             End If
         End If

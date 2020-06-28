@@ -26,6 +26,6 @@ Public Class PhotonArmor
 
     Public Overrides Sub onEquip(ByRef p As Player)
         MyBase.onEquip(p)
-        p.perks("hardlight") = 1
+        p.perks(perk.hardlight) = 1
     End Sub
 End Class

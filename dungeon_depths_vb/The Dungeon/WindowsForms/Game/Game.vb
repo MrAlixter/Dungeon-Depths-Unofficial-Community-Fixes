@@ -54,7 +54,7 @@ Public Class Game
     Dim monstierTier2() As Integer = {0, 1, 2, 4, 6}
     Dim monstierTier3() As Integer = {0, 1, 2, 4, 6, 7}
     Dim monstierTier4() As Integer = {0, 1, 2, 3, 4, 6, 7}
-    Dim monstierTier6() As Integer = {0, 1, 2, 3, 4, 6, 7, 12, 12}
+    Dim monstierTier6() As Integer = {0, 1, 2, 3, 4, 6, 7, 12, 12, 14}
     Public turn As Integer = 0  '(NOT SAVED)
     Public version As Double = 0.92     'the save file version
 
@@ -510,7 +510,7 @@ Public Class Game
     End Sub
     Sub viewBubble()
         Dim viewRad = 1
-        If player1.perks("lightsource") > 0 Then viewRad = 2
+        If player1.perks(perk.lightsource) > 0 Then viewRad = 2
         'viewBubble "discovers" the area around the player and erases the players previous location
         If testingImageBoard Then
             Dim startTime As Double = (DateTime.Now - New DateTime(1970, 1, 1)).TotalMilliseconds
@@ -635,7 +635,7 @@ Public Class Game
                             If currFloor.mBoard(player1.pos.Y + indY, player1.pos.X + indX).Text = "$" And player1.pos.Y + indY = cbrok.pos.Y And player1.pos.X + indX = cbrok.pos.X Then viewArray(y, x) = 17
                             If currFloor.mBoard(player1.pos.Y + indY, player1.pos.X + indX).Text = "+" Then viewArray(y, x) = 8
                             If currFloor.mBoard(player1.pos.Y + indY, player1.pos.X + indX).Text = "c" Then viewArray(y, x) = 12
-                            If player1.perks("blind") > -1 Then viewArray(y, x) = 1
+                            If player1.perks(perk.blind) > -1 Then viewArray(y, x) = 1
                         End If
                         If currFloor.mBoard(player1.pos.Y + indY, player1.pos.X + indX).Text = "@" Then
                             If indY = 0 And indX = 0 Then viewArray(y, x) = 4 Else viewArray(y, x) = 7
@@ -1313,7 +1313,7 @@ Public Class Game
         Dim r2 As Integer = Int(Rnd() * (UBound(currTier) + 1))
 
         Dim cancel = False
-        If player1.perks("stealth") > 0 AndAlso Int(Rnd() * 3) = 0 Then cancel = True
+        If player1.perks(perk.stealth) > 0 AndAlso Int(Rnd() * 3) = 0 Then cancel = True
 
         If rand < encounterRate And Not cancel Then
             Dim m As NPC
@@ -1678,7 +1678,7 @@ Public Class Game
 
         'Targax can't run
         If player1.health < 1 / player1.getMaxHealth Then Exit Sub
-        If player1.perks("swordpossess") > -1 Or (player1.name.Equals("Targax") And player1.pClass.name.Equals("Soul-Lord")) Then
+        If player1.perks(perk.swordpossess) > -1 Or (player1.name.Equals("Targax") And player1.pClass.name.Equals("Soul-Lord")) Then
             pushLstLog("Something inside you decides that running away is cowardly, so you don't.")
             pushLblCombatEvent("Something inside you decides that running away is cowardly, so you don't.")
             Exit Sub
@@ -1804,7 +1804,7 @@ Public Class Game
         If player1.pForm.name.Equals("Blowup Doll") Then
             pushLblEvent("Any weapon you try to wield, and any armor or accessories you try to equip slide off.  It doesn't look like you'll be able to do this until you're not a blowup doll.")
             Return True
-        ElseIf player1.perks("astatue") > -1 Then
+        ElseIf player1.perks(perk.astatue) > -1 Then
             pushLblEvent("You can't move.")
             Return True
         End If
@@ -2281,7 +2281,7 @@ Public Class Game
         combatmode = False
         picNPC.Visible = False
         btnWait.Visible = False
-        If player1.perks("astatue") = -1 Then player1.canMoveFlag = True
+        If player1.perks(perk.astatue) = -1 Then player1.canMoveFlag = True
         player1.clearTarget()
         cboxSpec.Visible = False
         btnSpec.Visible = False
@@ -2328,7 +2328,7 @@ Public Class Game
         btnWait.Visible = False
         cboxSpec.Visible = False
         btnSpec.Visible = False
-        If player1.perks("astatue") = -1 Then player1.canMoveFlag = True
+        If player1.perks(perk.astatue) = -1 Then player1.canMoveFlag = True
 
         showNPCButtons()
         player1.specialRoute()

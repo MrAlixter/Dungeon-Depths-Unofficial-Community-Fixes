@@ -38,7 +38,7 @@
         p.inv.add("Gynoid_Uniform", 1)
         Equipment.clothesChange("Gynoid_Uniform")
 
-        p.perks("slutcurse") = 1
+        p.perks(perk.slutcurse) = 1
     End Sub
     Public Sub step1()
         Dim p As player = game.player1

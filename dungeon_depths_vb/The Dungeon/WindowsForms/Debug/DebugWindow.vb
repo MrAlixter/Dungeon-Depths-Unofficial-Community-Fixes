@@ -94,8 +94,8 @@ Public Class Debug_Window
             Dim row = 0
             Dim col = 0
             Dim test = 0
-            For Each perk In Game.player1.perks
-                addPerk(perk, col, row)
+            For Each p In Game.player1.perks
+                addPerk(p, col, row)
                 row += 1
                 Dim control As Control = tabPerks.Controls.Item(tabPerks.Controls.Count - 1)
                 If (control.Location.Y + control.Size.Height) > tabPerks.Size.Height Then
@@ -598,7 +598,7 @@ Public Class Debug_Window
         End If
     End Sub
 
-    Private Sub addPerk(p As KeyValuePair(Of String, Integer), col As Integer, row As Integer)
+    Private Sub addPerk(p As KeyValuePair(Of perk, Integer), col As Integer, row As Integer)
         Dim group = New System.Windows.Forms.GroupBox()
         Me.tabPerks.Controls.Add(group)
 

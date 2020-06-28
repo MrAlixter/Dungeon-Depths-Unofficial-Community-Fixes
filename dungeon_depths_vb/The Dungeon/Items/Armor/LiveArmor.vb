@@ -26,10 +26,10 @@
 
     Public Overrides Sub onEquip(ByRef p As Player)
         MyBase.onEquip(p)
-        If Not p.perks("livearm") > -1 Then p.perks("livearm") = 0
+        If Not p.perks(perk.livearm) > -1 Then p.perks(perk.livearm) = 0
     End Sub
     Public Overrides Sub onUnequip(ByRef p As Player)
         MyBase.onUnequip(p)
-        If Not p.perks("livearm") > -1 Then p.perks("livearm") = -1
+        If Not p.perks(perk.livearm) > -1 Then p.perks(perk.livearm) = -1
     End Sub
 End Class

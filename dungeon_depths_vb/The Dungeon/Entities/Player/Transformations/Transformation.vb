@@ -65,8 +65,8 @@ Public MustInherit Class Transformation
                 Return New DragonTF(CInt(s(0)), CInt(s(1)), CInt(s(2)), CDbl(s(3)), CBool(s(4)), CBool(s(6)))
             Case "GoddessTF"
                 Return New GoddessTF(CInt(s(0)), CInt(s(1)), CInt(s(2)), CDbl(s(3)), CBool(s(4)), CBool(s(6)))
-            Case "SlimeTF"
-                Return New SlimeTF(CInt(s(0)), CInt(s(1)), CInt(s(2)), CDbl(s(3)), CBool(s(4)), CBool(s(6)))
+            Case perk.slimetf
+                Return New slimetf(CInt(s(0)), CInt(s(1)), CInt(s(2)), CDbl(s(3)), CBool(s(4)), CBool(s(6)))
             Case "SuccubusTF"
                 Return New SuccubusTF(CInt(s(0)), CInt(s(1)), CInt(s(2)), CDbl(s(3)), CBool(s(4)), CBool(s(6)))
             Case "TigressTF"
@@ -81,9 +81,9 @@ Public MustInherit Class Transformation
                 Return New BunnyGirlTFB(CInt(s(0)), CInt(s(1)), CInt(s(2)), CDbl(s(3)), CBool(s(4)), CBool(s(6)))
             Case "SheepTF"
                 Return New SheepTFB(CInt(s(0)), CInt(s(1)), CInt(s(2)), CDbl(s(3)), CBool(s(4)), CBool(s(6)))
-            Case "VialOfSlimeTF"
-                Return New VialOfSlimeTF(CInt(s(0)), CInt(s(1)), CInt(s(2)), CDbl(s(3)), CBool(s(4)), CBool(s(6)))
-            Case "GooGirlTF"
+            Case "VialOfslimetf"
+                Return New VialOfslimetf(CInt(s(0)), CInt(s(1)), CInt(s(2)), CDbl(s(3)), CBool(s(4)), CBool(s(6)))
+            Case perk.googirltf
                 Return New GooGirlTF(CInt(s(0)), CInt(s(1)), CInt(s(2)), CDbl(s(3)), CBool(s(4)), CBool(s(6)))
             Case "AngelTF"
                 Return New AngelTF(CInt(s(0)), CInt(s(1)), CInt(s(2)), CDbl(s(3)), CBool(s(4)), CBool(s(6)))
@@ -95,7 +95,7 @@ Public MustInherit Class Transformation
                 Return New PrincessTF(CInt(s(0)), CInt(s(1)), CInt(s(2)), CDbl(s(3)), CBool(s(4)), CBool(s(6)))
             Case "Arachne"
                 Return New ArachneTF(CInt(s(0)), CInt(s(1)), CInt(s(2)), CDbl(s(3)), CBool(s(4)), CBool(s(6)))
-            Case "Blind"
+            Case perk.blind
                 Return New Blindness(CInt(s(0)), CInt(s(1)), CInt(s(2)), CDbl(s(3)), CBool(s(4)), CBool(s(6)))
             Case "Valkyrie"
                 Return New ValkyrieTF2(CInt(s(0)), CInt(s(1)), CInt(s(2)), CDbl(s(3)), CBool(s(4)), CBool(s(6)))
@@ -126,7 +126,7 @@ Public MustInherit Class Transformation
             Not p.pClass.name.Equals("Valkyrie") And
             Not p.pClass.name.Equals("Unconscious") And
             Not p.pForm.name.Equals("Blowup Doll") And
-            Not p.perks("astatue") > 1 Then Return True
+            Not p.perks(perk.astatue) > 1 Then Return True
         Return False
     End Function
 

@@ -27,7 +27,7 @@
         inv.setCount("Bunny_Suit", 1)
         inv.setCount("Witch_Cosplay", 1)
         inv.setCount("Brawler_Cosplay", 1)
-        inv.setCount("Cowbell", 1)
+        inv.setCount(perk.cowbell, 1)
         inv.setCount("Crystalline_Armor", 1)
 
         'Weapons

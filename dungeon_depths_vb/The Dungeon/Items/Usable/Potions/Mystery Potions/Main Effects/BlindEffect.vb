@@ -4,7 +4,7 @@
     Public Overrides Sub apply(ByRef p As Player)
         Dim out = Game.lblEvent.Text.Split(vbCrLf)(0) & vbCrLf & vbCrLf
 
-        If p.perks("blind") = -1 Then
+        If p.perks(perk.blind) = -1 Then
             p.ongoingTFs.Add(New Blindness)
             p.update()
             Game.zoom()

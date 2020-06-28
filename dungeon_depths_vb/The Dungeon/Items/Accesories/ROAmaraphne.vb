@@ -30,12 +30,12 @@
         p.drawPort()
     End Sub
     Public Overrides Sub onEquip(ByRef p As Player)
-        p.perks("rotlg") = 1
+        p.perks(perk.rotlg) = 1
         PerkEffects.ROTLGRoute()
         p.UIupdate()
     End Sub
     Public Overrides Sub onUnequip(ByRef p As Player)
-        p.perks("rotlg") = -1
+        p.perks(perk.rotlg) = -1
         Equipment.antiClothingCurse(p)
         p.drawPort()
     End Sub

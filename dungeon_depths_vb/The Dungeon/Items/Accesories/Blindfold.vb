@@ -18,12 +18,12 @@
     End Sub
     Public Overrides Sub onEquip(ByRef p As Player)
         MyBase.onEquip(p)
-        p.perks("blind") = 1
+        p.perks(perk.blind) = 1
         Game.drawBoard()
     End Sub
     Public Overrides Sub onUnequip(ByRef p As Player)
         MyBase.onUnequip(p)
-        p.perks("blind") = -1
+        p.perks(perk.blind) = -1
         Game.drawBoard()
     End Sub
 End Class

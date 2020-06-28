@@ -96,7 +96,7 @@
 
         p.polymorphs(form) = PolymorphTF.newPoly(form)
         p.ongoingTFs.Add(p.polymorphs(form))
-        p.perks("polymorphed") = p.polymorphs(form).getturnsTilNextStep
+        p.perks(perk.polymorphed) = p.polymorphs(form).getturnsTilNextStep
 
         If form = "MASBimbo" Then form = "Bimbo"
         If p.forms.Keys.Contains(form) Then

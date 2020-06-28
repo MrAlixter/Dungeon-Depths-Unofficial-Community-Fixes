@@ -26,7 +26,7 @@
             tfCt = 0
             revert()
         End If
-        If (Game.player1.pClass.name = "Thrall" And Me.name.Contains("Thrall")) Or
+        If (Game.player1.pClass.name = perk.thrall And Me.name.Contains(perk.thrall)) Or
            (Game.player1.pForm.name = "Arachne" And Me.name.Contains("Arachne")) Or
             (Game.player1.pForm.name = "Slime" And Me.name.Contains("Slime")) Or
             (Game.player1.pForm.name.Equals("Goo Girl") And Me.name.Contains("Goo")) Or
@@ -144,7 +144,7 @@
             If Me.GetType() Is GetType(Monster) Then output += "The "
             output += name & " runs away in fear!"
             Game.pushLstLog(output)
-        ElseIf reason = "cupcake" Then
+        ElseIf reason = perk.cupcake Then
             Dim c1 As Chest
             c1 = Game.baseChest.Create(inv, pos)
             If inv.getSum > 0 Then c1.open()
@@ -161,16 +161,16 @@
             Dim c1 As Chest = Game.baseChest.Create(inv, pos)
             Game.currfloor.chestList.Add(c1)
         End If
-        Game.player1.perks("nekocurse") = -1
+        Game.player1.perks(perk.nekocurse) = -1
         Game.player1.currState.save(Game.player1)
         Game.fromCombat()
 
     End Sub
     Private Sub endBoss()
         If Not Me.GetType().IsSubclassOf(GetType(MiniBoss)) Then Exit Sub
-        If sName.Equals("Marissa the Enchantress") Then Game.player1.perks("nekocurse") = -1
+        If sName.Equals("Marissa the Enchantress") Then Game.player1.perks(perk.nekocurse) = -1
         If sName.Equals("Medusa, Gorgon of Myth") Then
-            If Game.player1.perks("blind") = 2 Then Game.player1.perks("blind") = -1
+            If Game.player1.perks(perk.blind) = 2 Then Game.player1.perks(perk.blind) = -1
         End If
         If sName.Equals("Ooze Empress") Then
             Game.mDun.floorboss(4) = "Key"
@@ -213,14 +213,14 @@
                 p.ongoingTFs.RemoveAt(i)
             End If
         Next
-        p.perks("nekocurse") = -1
-        If p.perks("swordpossess") > -1 Then
-            p.perks("swordpossess") += 1
-            If p.perks("swordpossess") = 2 Then
+        p.perks(perk.nekocurse) = -1
+        If p.perks(perk.swordpossess) > -1 Then
+            p.perks(perk.swordpossess) += 1
+            If p.perks(perk.swordpossess) = 2 Then
                 TargaxTF.step1()
-            ElseIf p.perks("swordpossess") = 3 Then
+            ElseIf p.perks(perk.swordpossess) = 3 Then
                 TargaxTF.step2()
-            ElseIf p.perks("swordpossess") = 4 And name <> "Targax" Then
+            ElseIf p.perks(perk.swordpossess) = 4 And name <> "Targax" Then
                 TargaxTF.step3()
             End If
         End If

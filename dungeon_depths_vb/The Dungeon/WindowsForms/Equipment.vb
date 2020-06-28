@@ -80,7 +80,7 @@
         If p.mana > p.getMaxMana Then p.mana = p.getMaxMana
 
         'if the player has the slut curse, this takes care of it
-        If p.perks("slutcurse") > -1 Then
+        If p.perks(perk.slutcurse) > -1 Then
             Equipment.clothingCurse1(p)
         End If
 
@@ -101,10 +101,10 @@
         End If
 
         'handles any tfs or triggers triggered by equipping of certain armors
-        If p.equippedArmor.getName = "Living_Armor" And Not p.perks("livearm") > -1 Then
-            p.perks("livearm") = 0
-        ElseIf p.equippedArmor.getName = "Living_Lingerie" And Not p.perks("livelinge") > -1 Then
-            p.perks("livelinge") = 0
+        If p.equippedArmor.getName = "Living_Armor" And Not p.perks(perk.livearm) > -1 Then
+            p.perks(perk.livearm) = 0
+        ElseIf p.equippedArmor.getName = "Living_Lingerie" And Not p.perks(perk.livelinge) > -1 Then
+            p.perks(perk.livelinge) = 0
         End If
 
         Return True
@@ -221,9 +221,9 @@
     End Sub
     Sub defaultClothesOptionsAlt(ByVal options As ListBox.ObjectCollection)
         Dim p = Game.player1
-        If p.pClass.name = "Bimbo" Or p.perks("slutcurse") > -1 Or p.equippedArmor.getName.Equals("Skimpy_Clothes") Then
+        If p.pClass.name = "Bimbo" Or p.perks(perk.slutcurse) > -1 Or p.equippedArmor.getName.Equals("Skimpy_Clothes") Then
             options.Add("b - Skimpy_Clothes")
-        ElseIf (p.perks("slutcurse") > -1 And p.equippedArmor.getName.Equals("Skimpy_Clothes")) Or p.equippedArmor.getName.Equals("Very_Skimpy_Clothes") Then
+        ElseIf (p.perks(perk.slutcurse) > -1 And p.equippedArmor.getName.Equals("Skimpy_Clothes")) Or p.equippedArmor.getName.Equals("Very_Skimpy_Clothes") Then
             options.Add("b - Very_Skimpy_Clothes")
         ElseIf p.pClass.name = "Princess" Then
             options.Add("b - Regal_Gown")
@@ -300,11 +300,11 @@
         End If
 
         'ring of the love goddess stat changes
-        If p.perks("rotlg") > -1 Then
+        If p.perks(perk.rotlg) > -1 Then
             PerkEffects.ROTLGRoute()
         End If
         'bowtie stat changes
-        If p.perks("bowtie") > -1 Then
+        If p.perks(perk.bowtie) > -1 Then
             PerkEffects.BowTieRoute()
         End If
     End Sub
@@ -325,7 +325,7 @@
             If sWeapon Is Nothing Then Exit Sub
             p.equippedWeapon = sWeapon
             p.equippedWeapon.onEquip()
-            If p.perks("amazon") > -15 Then PerkEffects.amazon()
+            If p.perks(perk.amazon) > -15 Then PerkEffects.amazon()
         End If
     End Sub
     'accChange handles the equipping and unequipping of accessories

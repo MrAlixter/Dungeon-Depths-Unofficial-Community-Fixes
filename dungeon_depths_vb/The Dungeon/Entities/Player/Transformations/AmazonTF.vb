@@ -38,10 +38,10 @@
         Equipment.clothesChange("Amazonian_Attire")
         Equipment.weaponChange("Fists")
 
-        p.pForm = p.forms("Amazon")
+        p.pForm = p.forms(perk.amazon)
         p.pClass = p.classes("Warrior")
 
-        p.perks("amazon") = 1
+        p.perks(perk.amazon) = 1
     End Sub
 
     Public Overrides Sub stopTF()

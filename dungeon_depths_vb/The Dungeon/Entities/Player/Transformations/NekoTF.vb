@@ -4,7 +4,7 @@
     Sub New(n As Integer, tts As Integer, wi As Double, cbs As Boolean)
         MyBase.New(n, tts, wi, cbs)
         tfName = "Neko"
-        Game.player1.perks("nekocurse") = 0
+        Game.player1.perks(perk.nekocurse) = 0
         nextStep = AddressOf step1
     End Sub
     Sub New(cs As Integer, n As Integer, tts As Integer, wi As Double, cbs As Boolean, tfd As Boolean)
@@ -105,7 +105,7 @@
             Game.pushLblEvent("As the last of your resistance drains away, all you can find yourself doing is focusing on your new mistress's voice as she orders you down onto all fours.  You happily oblige, purring softly, and she giggles.  ""Come on kitty, lets go!"" she orders and the two of you, with her leading, wander off into the darkness.  GAME OVER!", AddressOf p.die)
         End If
 
-        p.perks("nekocurse") = -1
+        p.perks(perk.nekocurse) = -1
     End Sub
 
     Sub resist()
@@ -114,11 +114,11 @@
     End Sub
     Public Overrides Sub stopTF()
         MyBase.stopTF()
-        Game.player1.perks("nekocurse") = -1
+        Game.player1.perks(perk.nekocurse) = -1
     End Sub
 
     Public Overrides Function getNextStep(stage As Integer) As Action
-        If Game.player1.perks("nekocurse") = -1 Then
+        If Game.player1.perks(perk.nekocurse) = -1 Then
             Return AddressOf stopTF
         ElseIf (Game.player1.pClass.name.Equals("Magical Girl") Or Game.player1.pClass.name.Equals("Valkyrie")) And stage < 6 Then
             Return AddressOf resist

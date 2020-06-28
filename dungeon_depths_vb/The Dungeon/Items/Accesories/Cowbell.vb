@@ -2,7 +2,7 @@
     Inherits Accessory
     'The red headband provides a +1 attack buff
     Sub New()
-        MyBase.setName("Cowbell")
+        MyBase.setName(perk.cowbell)
         MyBase.setDesc("A large brass bell attached to a collar that rings steadily with its wearer's gait." & vbCrLf &
                        "+20 Health." & vbCrLf &
                        "-1 WIL")
@@ -23,7 +23,7 @@
         If p.health > 1 Then p.health = 1
     End Sub
     Public Overrides Sub onUnequip(ByRef p As Player)
-        If p.perks("cowbell") > -1 Then p.perks("cowbell") = -1
+        If p.perks(perk.cowbell) > -1 Then p.perks(perk.cowbell) = -1
         If p.health > 1 Then p.health = 1
     End Sub
 End Class

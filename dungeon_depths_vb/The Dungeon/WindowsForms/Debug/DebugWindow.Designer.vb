@@ -1091,7 +1091,7 @@ Partial Class Debug_Window
         Me.lblHunger.Name = "lblHunger"
         Me.lblHunger.Size = New System.Drawing.Size(76, 23)
         Me.lblHunger.TabIndex = 229
-        Me.lblHunger.Text = "HUNGER"
+        Me.lblHunger.Text = perk.hunger
         '
         'boxMaxMana
         '

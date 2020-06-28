@@ -25,7 +25,7 @@
                           """Arachne venom, nasty stuff,"" you remember someone telling you once, ""It's a powerful mutator, and if you take a bite, you'll be lucky if you even remain human for a single night.  More than that, once it's done with you there isn't much that can be done to bring you back.  That's why antivenom like what the Shopkeeper has is so important.""\n\n" &
                           "Well, it seems like it’s only a matter of time before you start changing.  The real question is what you should do about it.")
 
-        If Game.player1.perks("svenom") > -1 Then Game.player1.perks("svenom") += 1
+        If Game.player1.perks(perk.svenom) > -1 Then Game.player1.perks(perk.svenom) += 1
     End Sub
 
     Sub step2()
@@ -46,7 +46,7 @@
                "As you examine yourself, you can tell that the venom has been progressing through your darkening veins, and while you aren't completely sure, your skin also seems to have become marginally greyer."
 
         Game.pushLblEvent(out)
-        If Game.player1.perks("svenom") > -1 Then Game.player1.perks("svenom") += 1
+        If Game.player1.perks(perk.svenom) > -1 Then Game.player1.perks(perk.svenom) += 1
     End Sub
 
     Sub step3()
@@ -67,7 +67,7 @@
                "Between your improved sight and noticeably quickened reflexes, it seems that the venom is actually improving your body, contrary to what you had heard of it.  Examining your body further, you do notice that you seem more bottom heavy than before, with your ass easily spilling over clothes that fit perfectly just last night.  You set back out, excited for what the venom brings next."
 
         Game.pushLblEvent(out)
-        If Game.player1.perks("svenom") > -1 Then Game.player1.perks("svenom") += 1
+        If Game.player1.perks(perk.svenom) > -1 Then Game.player1.perks(perk.svenom) += 1
     End Sub
 
     Sub step4()
@@ -125,14 +125,14 @@
 
     Public Overrides Sub stopTF()
         MyBase.stopTF()
-        Game.player1.perks("avenom") = -1
+        Game.player1.perks(perk.avenom) = -1
     End Sub
 
     Public Overrides Function getNextStep(stage As Integer) As Action
-        If (Game.player1.perks("avenom") = -1 And Game.player1.perks("svenom") = -1) Or Game.player1.pForm.name.Equals("Arachne") Then
+        If (Game.player1.perks(perk.avenom) = -1 And Game.player1.perks(perk.svenom) = -1) Or Game.player1.pForm.name.Equals("Arachne") Then
             Return AddressOf stopTF
         End If
-        If Game.player1.perks("svenom") > -1 Then stage = Game.player1.perks("svenom")
+        If Game.player1.perks(perk.svenom) > -1 Then stage = Game.player1.perks(perk.svenom)
 
         Select Case stage
             Case 1
@@ -148,11 +148,11 @@
         End Select
     End Function
     Public Overrides Sub setWaitTime(stage As Integer)
-        If Game.player1.perks("avenom") > -1 Then
+        If Game.player1.perks(perk.avenom) > -1 Then
             turnsTilNextStep = 1
             turnsTilNextStep += generatWILResistance()
             turnsTilNextStep += -2 + Int(Rnd() * 4)
-        ElseIf Game.player1.perks("svenom") > -1 Then
+        ElseIf Game.player1.perks(perk.svenom) > -1 Then
             stopTF()
         End If
     End Sub

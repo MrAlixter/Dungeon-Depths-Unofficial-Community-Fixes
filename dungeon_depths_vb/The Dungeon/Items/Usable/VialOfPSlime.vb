@@ -22,11 +22,11 @@
             count -= 1
             Exit Sub
         End If
-        If p.perks("googirltf") = -1 Or p.prt.haircolor.A = 255 Then
-            p.perks("googirltf") = 2
+        If p.perks(perk.googirltf) = -1 Or p.prt.haircolor.A = 255 Then
+            p.perks(perk.googirltf) = 2
         End If
 
-        p.ongoingTFs.Add(New GooGirlTF(p.perks("googirltf")))
+        p.ongoingTFs.Add(New GooGirlTF(p.perks(perk.googirltf)))
         p.update()
         count -= 1
 

@@ -77,7 +77,7 @@
         End If
         'Blindness
         If Int(Rnd() * 5) = 0 Then
-            p.perks("coblind") = 2
+            p.perks(perk.coblind) = 2
             Game.pushLstLog("You've been afflicted with the curse of Blindness!")
         End If
         'Claustrophobia
@@ -88,22 +88,22 @@
         End If
         'Greed
         If Int(Rnd() * 5) = 0 Then
-            p.perks("cogreed") = 2
+            p.perks(perk.cogreed) = 2
             Game.pushLstLog("You've been afflicted with the curse of Greed!")
         End If
         'Milk
         If Int(Rnd() * 5) = 0 Then
-            p.perks("comilk") = 2
+            p.perks(perk.comilk) = 2
             Game.pushLstLog("You've been afflicted with the curse of Milk!")
         End If
         'Polymorph
         If Int(Rnd() * 5) = 0 Then
-            p.perks("copoly") = 7
+            p.perks(perk.copoly) = 7
             Game.pushLstLog("You've been afflicted with the curse of Polymorph!")
         End If
         'Rusting
         If Int(Rnd() * 5) = 0 Then
-            p.perks("corust") = 2
+            p.perks(perk.corust) = 2
             Game.pushLstLog("You've been afflicted with the curse of Rusting!")
         End If
         'Tits

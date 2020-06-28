@@ -143,18 +143,18 @@
                 armor = New Integer() {7, 12, 18, 20, 39, 47, 71, 72, 78, 85, 103, 105, 107, 116, 129, 177}
                 weapon = New Integer() {6, 22, 23, 84}
             Case 5   'combat bimbo
-                p.pForm = p.forms("Amazon")
+                p.pForm = p.forms(perk.amazon)
                 p.pClass = p.classes("Bimbo++")
                 p.sex = "Female"
                 armor = New Integer() {7, 12, 18, 20, 39, 47, 71, 72, 78, 85, 99, 103, 105, 107, 116, 129}
             Case 6   'amazon princess
-                p.pForm = p.forms("Amazon")
+                p.pForm = p.forms(perk.amazon)
                 p.pClass = p.classes("Princess")
                 p.sex = "Female"
                 p.prt.skincolor = (Color.FromArgb(255, 210, 161, 140))
                 armor = New Integer() {39, 85, 99}
             Case 7   'amazon warrior
-                p.pForm = p.forms("Amazon")
+                p.pForm = p.forms(perk.amazon)
                 p.pClass = p.classes("Warrior")
                 p.sex = "Female"
                 p.prt.skincolor = (Color.FromArgb(255, 210, 161, 140))
@@ -178,7 +178,7 @@
                 p.prt.setIAInd(pInd.horns, 3, True, False)
                 p.prt.skincolor = Color.FromArgb(255, 255, 105, 180)
             Case 10   'barbarian
-                p.pClass = p.classes("Barbarian")
+                p.pClass = p.classes(perk.barbarian)
                 armor = New Integer() {101}
                 weapon = New Integer() {84, 118}
             Case 11   'warlock
@@ -212,18 +212,18 @@
                 armor = New Integer() {16, 94, 129}
                 weapon = New Integer() {6, 21, 22, 23, 40, 41, 63}
                 p.sex = "Female"
-                p.inv.item("Bowtie").add(1)
-                Equipment.accChange("Bowtie")
+                p.inv.item(perk.bowtie).add(1)
+                Equipment.accChange(perk.bowtie)
             Case 17   'cow girl
                 p.pForm = p.forms("Minotaur Cow")
-                p.pClass = p.classes("Barbarian")
+                p.pClass = p.classes(perk.barbarian)
                 armor = New Integer() {19, 71, 101}
                 weapon = New Integer() {6, 23, 40, 118, 177}
                 p.sex = "Female"
                 p.prt.setIAInd(pInd.horns, 2, True, False)
             Case 18   'cow male
                 p.pForm = p.forms("Minotaur Bull")
-                p.pClass = p.classes("Barbarian")
+                p.pClass = p.classes(perk.barbarian)
                 armor = New Integer() {19, 101}
                 weapon = New Integer() {6, 23, 40, 118, 176}
                 p.sex = "Male"

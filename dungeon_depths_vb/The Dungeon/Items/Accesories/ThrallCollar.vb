@@ -20,16 +20,16 @@
         MyBase.isRandoTFAcceptable = False
     End Sub
     Overrides Sub onEquip(ByRef p As Player)
-        If p.pForm.Equals("Half-Succubus") Or p.pClass.Equals("Thrall") Then Exit Sub
+        If p.pForm.Equals("Half-Succubus") Or p.pClass.Equals(perk.thrall) Then Exit Sub
         MagGirlTF.chkForMagGirlRevert(p)
 
-        p.perks("thrall") = 0
+        p.perks(perk.thrall) = 0
         p.ongoingTFs.Add(New ThrallTF(2, 10, 3.0, True))
 
-        If Not p.pClass.name.Equals("Thrall") Then formerClass = p.pClass.name
+        If Not p.pClass.name.Equals(perk.thrall) Then formerClass = p.pClass.name
         formerEyeType = p.prt.iArrInd(pInd.eyes)
         If Transformation.canBeTFed(p) Then p.pState.save(p)
-        p.pClass = p.classes("Thrall")
+        p.pClass = p.classes(perk.thrall)
         If p.prt.sexBool Then
             p.prt.setIAInd(pInd.eyes, 19, True, True)
         Else
@@ -42,16 +42,16 @@
     Sub forceEquip()
         Dim p As Player = Game.player1
 
-        If p.pForm.Equals("Half-Succubus") Or p.pClass.Equals("Thrall") Then Exit Sub
+        If p.pForm.Equals("Half-Succubus") Or p.pClass.Equals(perk.thrall) Then Exit Sub
         MagGirlTF.chkForMagGirlRevert(p)
 
-        p.perks("thrall") = 0
+        p.perks(perk.thrall) = 0
         p.ongoingTFs.Add(New ThrallTF(2, 10, 3.0, True))
 
         formerClass = p.pClass.name
         formerEyeType = p.prt.iArrInd(pInd.eyes)
         If Transformation.canBeTFed(p) Then p.pState.save(p)
-        p.pClass = p.classes("Thrall")
+        p.pClass = p.classes(perk.thrall)
         If p.prt.sexBool Then
             p.prt.setIAInd(pInd.eyes, 19, True, True)
         Else
@@ -64,7 +64,7 @@
     End Sub
     Public Overrides Sub onUnequip(ByRef p As Player)
 
-        If p.pForm.Equals("Half-Succubus") Or p.pClass.Equals("Thrall") Then Exit Sub
+        If p.pForm.Equals("Half-Succubus") Or p.pClass.Equals(perk.thrall) Then Exit Sub
 
         For i = 0 To p.ongoingTFs.Count - 1
             If i < p.ongoingTFs.Count Then
@@ -74,7 +74,7 @@
                 End If
             End If
         Next
-        p.perks("thrall") = -1
+        p.perks(perk.thrall) = -1
         p.pClass = Game.player1.classes(formerClass)
         p.prt.setIAInd(pInd.eyes, formerEyeType)
         p.prefForm = Nothing

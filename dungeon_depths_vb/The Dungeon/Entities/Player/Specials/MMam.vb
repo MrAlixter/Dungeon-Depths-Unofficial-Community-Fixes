@@ -7,7 +7,7 @@
         MyBase.setcost(-1)
     End Sub
     Public Overrides Sub effect()
-        MyBase.getUser.perks("mmammaries") = 1
+        MyBase.getUser.perks(perk.mmammaries) = 1
         Game.pushLstLog("Massive Mammaries!")
         Game.pushLblCombatEvent("Massive Mammaries!" & vbCrLf & "+80% DEF for 1 turn.")
     End Sub

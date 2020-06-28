@@ -18,7 +18,7 @@
         p.attack += 5
         p.UIupdate()
 
-        If Not p.pForm.name.Equals("Minotaur Bull") And Not p.perks("cowbell") > -1 And (Int(Rnd() * 2) = 0 Or Game.noRNG) Then
+        If Not p.pForm.name.Equals("Minotaur Bull") And Not p.perks(perk.cowbell) > -1 And (Int(Rnd() * 2) = 0 Or Game.noRNG) Then
             p.ongoingTFs.Add(New MinoMTF())
             Game.pushLstLog("You've been afflicted wth the curse of the bull!")
         End If

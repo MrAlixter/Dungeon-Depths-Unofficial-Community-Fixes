@@ -1,4 +1,49 @@
-﻿Public Class Player
+﻿Public Enum perk
+    hunger          '0
+    bimbotf         '1
+    slutcurse       '2
+    chickentf       '3
+    slimehair       '4
+    polymorphed     '5
+    nekocurse       '6
+    swordpossess    '7
+    vsslimehair     '8
+    brage           '9
+    mmammaries      '10
+    ihfury          '11
+    livearm         '12
+    livelinge       '13
+    thrall          '14
+    cowbell         '15
+    minRegen        '16
+    rotlg           '17
+    astatue         '18
+    svenom          '19
+    avenom          '20
+    blind           '21
+    bowtie          '22
+    hardlight       '23
+    minmanregen     '24
+    amazon          '25
+    barbarian       '26
+    slimetf         '27
+    googirltf       '28
+    bimbododge      '29
+    lightsource     '30
+    cupcake         '31
+    stealth         '32
+    copoly          '33
+    cogreed         '34
+    corust          '35
+    comilk          '36
+    coblind         '37
+    coscale         '38
+    pprot           '39
+    masochist       '40
+    burn            '41
+End Enum
+
+Public Class Player
     'Player is the representation of a player controlled entity (the main player, any teammates)
     'METHODS AND VARIABLES RELATED TO LEVELING HAVE BEEN COMMENTED OUT.
     Inherits Entity
@@ -21,7 +66,7 @@
 
     Public Shadows currTarget As NPC = Nothing
 
-    Public perks As Dictionary(Of String, Integer) = New Dictionary(Of String, Integer)() 'perks also include triggers for events
+    Public perks As Dictionary(Of perk, Integer) = New Dictionary(Of perk, Integer)() 'perks also include triggers for events
     Public classes As Dictionary(Of String, pClass) = New Dictionary(Of String, pClass)()
     Public forms As Dictionary(Of String, pForm) = New Dictionary(Of String, pForm)()
     Public polymorphs As Dictionary(Of String, Transformation) = New Dictionary(Of String, Transformation)()
@@ -244,7 +289,7 @@
     End Sub
     Private Sub setCommonClothes()
         'assigns an accessory based on the created player portrait
-            Select Case prt.iArrInd(pInd.clothes).Item1
+        Select Case prt.iArrInd(pInd.clothes).Item1
             Case 0
                 equippedArmor = inv.item("Common_Clothes")
             Case 1
@@ -353,50 +398,9 @@
     Private Sub initPerks()
         perks.Clear()
         'Creates the dictionary of perks
-        perks.Add("hunger", -1)         '0
-        perks.Add("bimbotf", -1)        '1
-        perks.Add("slutcurse", -1)      '2
-        perks.Add("chickentf", -1)      '3
-        perks.Add("slimehair", -1)      '4
-        perks.Add("polymorphed", -1)    '5
-        perks.Add("nekocurse", -1)      '6
-        perks.Add("swordpossess", -1)   '7
-        perks.Add("vsslimehair", -1)    '8
-        perks.Add("brage", -1)          '9
-        perks.Add("mmammaries", -1)     '10
-        perks.Add("ihfury", -1)         '11
-        perks.Add("livearm", -1)        '12
-        perks.Add("livelinge", -1)      '13
-        perks.Add("thrall", -1)         '14
-        perks.Add("cowbell", -1)        '15
-        perks.Add("minRegen", -1)       '16
-        perks.Add("rotlg", -1)          '17
-        perks.Add("astatue", -1)        '18
-        perks.Add("svenom", -1)         '19
-        perks.Add("avenom", -1)         '20
-        perks.Add("blind", -1)          '21
-        perks.Add("bowtie", -1)         '22 
-        perks.Add("hardlight", -1)      '23
-        perks.Add("minmanregen", -1)    '24
-        perks.Add("amazon", -1)         '25
-        perks.Add("barbarian", -1)      '26
-        perks.Add("slimetf", -1)        '27
-        perks.Add("googirltf", -1)      '28
-        perks.Add("bimbododge", -1)     '29
-        perks.Add("lightsource", -1)    '30
-        perks.Add("cupcake", -1)        '31
-        perks.Add("stealth", -1)        '32
-        'cursebroker curses
-        perks.Add("copoly", -1)         '33
-        perks.Add("cogreed", -1)        '34
-        perks.Add("corust", -1)         '35
-        perks.Add("comilk", -1)         '36
-        perks.Add("coblind", -1)        '37
-        perks.Add("coscale", -1)        '38
-        perks.Add("pprot", -1)          '39
-        perks.Add("masochist", -1)      '40
-
-        perks.Add("burn", -1)      '41
+        For Each p In System.Enum.GetValues(GetType(perk))
+            perks.Add(p, -1)
+        Next
     End Sub
     Private Sub initClasses()
         'creates the class dictionary
@@ -412,7 +416,7 @@
         classes.Add("Maid", New Maid())
         classes.Add("Goddess", New Goddess())
         classes.Add("Paladin", New Paladin())
-        classes.Add("Thrall", New Thrall())
+        classes.Add(perk.thrall, New Thrall())
         classes.Add("Trophy", New Trophy())
         classes.Add("Princess​", New PrincessBackfire())
         classes.Add("Bunny Girl​", New BunnyGirl())
@@ -422,7 +426,7 @@
         classes.Add("Unconscious", New Unconcious())
         classes.Add("Valkyrie", New Valkyrie())
         classes.Add("Bunny Girl", New Dancer())
-        classes.Add("Barbarian", New Barbarian())
+        classes.Add(perk.barbarian, New Barbarian())
         classes.Add("Warlock", New Warlock())
         classes.Add("Mindless", New Mindless())
         classes.Add("Bimbo++", New BimboPlusPlus())
@@ -459,7 +463,7 @@
         forms.Add("Sheep", New Sheep())
         forms.Add("Frog", New Frog())
         forms.Add("Arachne", New Arachne())
-        forms.Add("Amazon", New Amazon())
+        forms.Add(perk.amazon, New Amazon())
         forms.Add("Amazon​", New AmazonWeak())
         forms.Add("Plantfolk", New Plantfolk())
         forms.Add("Goo Girl", New GooGirl())
@@ -493,7 +497,7 @@
     Sub setStartStates()
         sState.save(Me)
         If Transformation.canBeTFed(Me) Then pState.save(Me)
-        If perks("polymorphed") > -1 Then perks("polymorphed") = -1
+        If perks(perk.polymorphed) > -1 Then perks(perk.polymorphed) = -1
     End Sub
 
     '|MOVEMENT COMMANDS|
@@ -502,7 +506,7 @@
             RandoTF.floor4FirstBossEncounter()
             Exit Sub
         End If
-        If pClass.name.Equals("Thrall") Then
+        If pClass.name.Equals(perk.thrall) Then
             If Int(Rnd() * 2) = 1 Then
                 Dim out = "You've found one of the crystals your controller is seeking!  As you circle it, you feel a familiar presence enter your mind.  " & _
                     """Yes!  You've found it!"" your overseer states exitedly, ""I'll be over shortly, don't go anywhere and don't touch that crystal.""" & vbCrLf & _
@@ -547,9 +551,9 @@
         Randomize()
 
 
-        If pClass.name.Equals("Barbarian") Then
-            aBuff -= perks("barbarian")
-            perks("barbarian") = 0
+        If pClass.name.Equals(perk.barbarian) Then
+            aBuff -= perks(perk.barbarian)
+            perks(perk.barbarian) = 0
         End If
 
         Dim dmg As Integer = equippedWeapon.attack(Me, target)
@@ -653,9 +657,9 @@
     End Sub
     'wait
     Public Sub wait()
-        If pClass.name.Equals("Barbarian") Then
+        If pClass.name.Equals(perk.barbarian) Then
             aBuff += 5
-            perks("barbarian") += 5
+            perks(perk.barbarian) += 5
         End If
     End Sub
 
@@ -676,7 +680,7 @@
         gold = tGold
         equippedArmor = tEarm
         equippedWeapon = tEweap
-        perks("slutcurse") = -1
+        perks(perk.slutcurse) = -1
         currState.save(Me)
         If Transformation.canBeTFed(Me) Then
             pState.save(Me)
@@ -869,7 +873,7 @@
     End Function
     Public Sub petrify(ByVal c As Color, ByVal dur As Integer)
         If pForm.name.Equals("Dragon") Then revertToPState()
-        perks("astatue") = dur
+        perks(perk.astatue) = dur
         changeHairColor(c, True)
         If prt.sexBool Then
             prt.setIAInd(pInd.mouth, 10, True, True)
@@ -895,33 +899,33 @@
     End Sub
 
     '|GENERAL METHODS|
-    Sub resetPerks()
-        Dim sv = perks("svenom")
-        Dim av = perks("avenom")
+    `Sub resetPerks()
+    Dim sv = perks(perk.svenom)
+    Dim av = perks(perk.avenom)
 
-        Dim stf = perks("slimetf")
-        Dim ggtf = perks("googirltf")
+    Dim stf = perks(perk.slimetf)
+    Dim ggtf = perks(perk.googirltf)
 
-        Dim cp = perks("copoly")
-        Dim cg = perks("cogreed")
-        Dim cr = perks("corust")
-        Dim cm = perks("comilk")
-        Dim cb = perks("coblind")
-        Dim cs = perks("coscale")
+    Dim cp = perks(perk.copoly)
+    Dim cg = perks(perk.cogreed)
+    Dim cr = perks(perk.corust)
+    Dim cm = perks(perk.comilk)
+    Dim cb = perks(perk.coblind)
+    Dim cs = perks(perk.coscale)
 
         initPerks()
 
-        perks("svenom") = sv
-        perks("avenom") = av
-        perks("slimetf") = stf
-        perks("googirltf") = ggtf
+        perks(perk.svenom) = sv
+        perks(perk.avenom) = av
+        perks(perk.slimetf) = stf
+        perks(perk.googirltf) = ggtf
 
-        perks("copoly") = cp
-        perks("cogreed") = cg
-        perks("corust") = cr
-        perks("comilk") = cm
-        perks("coblind") = cb
-        perks("coscale") = cs
+        perks(perk.copoly) = cp
+        perks(perk.cogreed) = cg
+        perks(perk.corust) = cr
+        perks(perk.comilk) = cm
+        perks(perk.coblind) = cb
+        perks(perk.coscale) = cs
     End Sub
     Public Overrides Sub die(ByRef source As Entity)
         If Game.pnlSaveLoad.Visible = True Then Exit Sub
@@ -979,7 +983,7 @@
         ElseIf source.getName.Equals("Medusa, Gorgon of Myth") Then
             DeathEffects.medusaDeath()
             Exit Sub
-        ElseIf source.getName.Equals("Hunger") Then
+        ElseIf source.getName.Equals(perk.hunger) Then
             Game.pushLblEvent("You starve to death!")
         End If
 
@@ -1015,12 +1019,12 @@
     '|UPDATE METHODS|
     Public Overrides Sub update()
         '|COMBAT|
-        If perks("astatue") > -1 Then nextCombatAction = AddressOf PerkEffects.statueMove
+        If perks(perk.astatue) > -1 Then nextCombatAction = AddressOf PerkEffects.statueMove
         MyBase.update()
 
         '|PLAYER STAT UPKEEP|
         If hunger >= 100 Then
-            perks("hunger") = 0
+            perks(perk.hunger) = 0
         ElseIf hunger > 100 Then
             hunger = 100
         ElseIf Game.turn Mod 25 = 0 Then
@@ -1070,18 +1074,18 @@
         Dim needsToUpdatePortrait = False
         '|GENERAL EFFECTS|
         'hunger
-        If perks("hunger") > -1 And Game.turn Mod 5 = 0 Then
+        If perks(perk.hunger) > -1 And Game.turn Mod 5 = 0 Then
             PerkEffects.hungerEffect()
         End If
-        If perks("Burn") > -1 And Game.turn Mod 4 = 0 Then
+        If perks(perk.burn) > -1 And Game.turn Mod 4 = 0 Then
             PerkEffects.burnEffect()
         End If
         'slime hair health regen
-        If perks("slimehair") > -1 Then
+        If perks(perk.slimehair) > -1 Then
             PerkEffects.slimeHairRegen()
         End If
         'vial of slime hair regen
-        If perks("vsslimehair") > -1 Then
+        If perks(perk.vsslimehair) > -1 Then
             PerkEffects.vslimeHairRegen()
         End If
         'plant regen
@@ -1089,98 +1093,98 @@
             PerkEffects.plantRegen()
         End If
         'ring of min. regen
-        If perks("minRegen") > -1 Then
+        If perks(perk.minRegen) > -1 Then
             PerkEffects.minorRegen()
         End If
         'mana generator
-        If perks("minmanregen") > -1 Then
+        If perks(perk.minmanregen) > -1 Then
             PerkEffects.minorManaRegen()
         End If
         'light source effect
-        If perks("minmanregen") > -1 Then
+        If perks(perk.minmanregen) > -1 Then
             PerkEffects.lightSource()
         End If
         'amazon effect
-        If perks("amazon") > -1 Then
+        If perks(perk.amazon) > -1 Then
             PerkEffects.amazon()
         End If
         'barbarian effect
-        If perks("barbarian") > -1 Then
+        If perks(perk.barbarian) > -1 Then
             PerkEffects.barbarian()
         End If
-        If perks("cupcake") > -1 Then
-            If Game.turn Mod 20 = 0 Then perks("cupcake") -= 1
+        If perks(perk.cupcake) > -1 Then
+            If Game.turn Mod 20 = 0 Then perks(perk.cupcake) -= 1
         End If
 
         'living armor
-        If perks("livearm") > -1 Then
+        If perks(perk.livearm) > -1 Then
             needsToUpdatePortrait = PerkEffects.livingArmor()
         End If
         'living lingerie
-        If perks("livelinge") > -1 Then
+        If perks(perk.livelinge) > -1 Then
             needsToUpdatePortrait = PerkEffects.livingLingerie()
         End If
 
         'rotlg
-        If perks("rotlg") > -1 Then
+        If perks(perk.rotlg) > -1 Then
             PerkEffects.ROTLGRoute()
         End If
         'bowtie
-        If perks("bowtie") > -1 And pClass.name.Equals("Bunny Girl") Then
+        If perks(perk.bowtie) > -1 And pClass.name.Equals("Bunny Girl") Then
             PerkEffects.BowTieRoute()
         End If
 
         '|TRANSFORMATION TRIGGERS|
         'targax sword tf
-        If perks("swordpossess") > -1 Then
+        If perks(perk.swordpossess) > -1 Then
             PerkEffects.targaxSwordTF()
         End If
         'shift toward prefered form
-        If Not prefForm Is Nothing AndAlso (pClass.name = "Thrall" Xor equippedAcce.getName.Equals("Slave_Collar")) AndAlso Not prefForm.playerMeetsForm(Game.player1) And Not pForm.name.Equals("Half-Succubus") And Not perks("thrall") = 1 And Not perks("nekocurse") > -1 And Not perks("polymorphed") > -1 And Not perks("bimbotf") > -1 Then
+        If Not prefForm Is Nothing AndAlso (pClass.name = perk.thrall Xor equippedAcce.getName.Equals("Slave_Collar")) AndAlso Not prefForm.playerMeetsForm(Game.player1) And Not pForm.name.Equals("Half-Succubus") And Not perks(perk.thrall) = 1 And Not perks(perk.nekocurse) > -1 And Not perks(perk.polymorphed) > -1 And Not perks(perk.bimbotf) > -1 Then
             PerkEffects.thrallRestore()
         End If
-        If perks("astatue") > -1 Then
+        If perks(perk.astatue) > -1 Then
             PerkEffects.aStatue()
         End If
 
         '|SPECIAL MOVE HANDLERS|
         'berserker rage special
-        If perks("brage") > -1 Then
+        If perks(perk.brage) > -1 Then
             PerkEffects.berserkerRage()
         End If
         'massive mammaries special
-        If perks("mmammaries") > -1 Then
+        If perks(perk.mmammaries) > -1 Then
             PerkEffects.massiveMammaries()
         End If
         'pillowy protect special
-        If perks("pprot") > -1 Then
+        If perks(perk.pprot) > -1 Then
             PerkEffects.pProt()
         End If
         'ironhide fury
-        If perks("ihfury") > -1 Then
+        If perks(perk.ihfury) > -1 Then
             PerkEffects.ironhideFury()
         End If
 
         '|CURSES|
         'clothing curse
-        If perks("slutcurse") > -1 Then
+        If perks(perk.slutcurse) > -1 Then
             needsToUpdatePortrait = Equipment.clothingCurse1(Me)
         End If
         'curse of rust
-        If perks("corust") > -1 Then
+        If perks(perk.corust) > -1 Then
             needsToUpdatePortrait = PerkEffects.curseOfRust(Me)
         End If
         'curse of milk
-        If perks("comilk") > -1 Then
+        If perks(perk.comilk) > -1 Then
             needsToUpdatePortrait = PerkEffects.curseOfMilk(Me)
         End If
         'curse of milk
-        If perks("copoly") > -1 Then
+        If perks(perk.copoly) > -1 Then
             needsToUpdatePortrait = PerkEffects.curseOfPolymorph(Me)
         End If
         'curse of blindness
-        If perks("coblind") > -1 And Not perks("blind") > -1 Then
-            perks("blind") = 1
+        If perks(perk.coblind) > -1 And Not perks(perk.blind) > -1 Then
+            perks(perk.blind) = 1
         End If
 
         description = CStr(name & " is a " & sex & " " & pForm.name & " " & pClass.name)
@@ -1362,7 +1366,7 @@
 
     'sex change methods
     Public Sub MtF()
-        If perks("polymorphed") > -1 Or pClass.name.Equals("Magical Girl") Or pClass.name.Equals("Valkyrie") Then
+        If perks(perk.polymorphed) > -1 Or pClass.name.Equals("Magical Girl") Or pClass.name.Equals("Valkyrie") Then
             Game.pushLstLog("Your form prevents you from being altered.")
             Exit Sub
         End If
@@ -1371,10 +1375,10 @@
         buttSize = 1
         dickSize = -1
         idRouteMF()
-        If perks("swordpossess") > -1 Then perks("swordpossess") = 0
+        If perks(perk.swordpossess) > -1 Then perks(perk.swordpossess) = 0
     End Sub
     Public Sub FtM()
-        If perks("polymorphed") > -1 Or pClass.name.Equals("Magical Girl") Or pClass.name.Equals("Valkyrie") Then
+        If perks(perk.polymorphed) > -1 Or pClass.name.Equals("Magical Girl") Or pClass.name.Equals("Valkyrie") Then
             Game.pushLstLog("Your form prevents you from being altered.")
             Exit Sub
         End If
@@ -1384,7 +1388,7 @@
         dickSize = 1
         perks(2) = False
         idRouteFM()
-        If perks("swordpossess") > -1 Then perks("swordpossess") = 0
+        If perks(perk.swordpossess) > -1 Then perks(perk.swordpossess) = 0
     End Sub
     Sub idRouteMF(Optional halfRevertFlag As Boolean = False)
         Dim mfr = Portrait.imgLib.mfEquivalentIndexes
@@ -1428,7 +1432,7 @@
     End Sub
     'breast enlargement/reduction methods
     Public Sub be()
-        If Not Transformation.canBeTFed(Me) And Not pClass.name.Equals("Thrall") Then
+        If Not Transformation.canBeTFed(Me) And Not pClass.name.Equals(perk.thrall) Then
             Game.pushLstLog("Your form prevents you from being altered.")
             Exit Sub
         End If
@@ -1443,7 +1447,7 @@
         End If
     End Sub
     Friend Sub bs()
-        If Not Transformation.canBeTFed(Me) And Not pClass.name.Equals("Thrall") Then
+        If Not Transformation.canBeTFed(Me) And Not pClass.name.Equals(perk.thrall) Then
             Game.pushLstLog("Your form prevents you from being altered.")
             Exit Sub
         End If
@@ -1528,7 +1532,7 @@
     End Sub
     'dick enlargement/reduction methods
     Public Sub de()
-        If Not Transformation.canBeTFed(Me) And Not pClass.name.Equals("Thrall") Then
+        If Not Transformation.canBeTFed(Me) And Not pClass.name.Equals(perk.thrall) Then
             Game.pushLstLog("Your form prevents you from being altered.")
             Exit Sub
         End If
@@ -1542,7 +1546,7 @@
         End If
     End Sub
     Friend Sub ds()
-        If Not Transformation.canBeTFed(Me) And Not pClass.name.Equals("Thrall") Then
+        If Not Transformation.canBeTFed(Me) And Not pClass.name.Equals(perk.thrall) Then
             Game.pushLstLog("Your form prevents you from being altered.")
             Exit Sub
         End If
@@ -1586,7 +1590,7 @@
     End Sub
     'butt enlargement/reduction methods
     Public Sub ue()
-        If Not Transformation.canBeTFed(Me) And Not pClass.name.Equals("Thrall") Then
+        If Not Transformation.canBeTFed(Me) And Not pClass.name.Equals(perk.thrall) Then
             Game.pushLstLog("Your form prevents you from being altered.")
             Exit Sub
         End If
@@ -1601,7 +1605,7 @@
         End If
     End Sub
     Friend Sub us()
-        If Not Transformation.canBeTFed(Me) And Not pClass.name.Equals("Thrall") Then
+        If Not Transformation.canBeTFed(Me) And Not pClass.name.Equals(perk.thrall) Then
             Game.pushLstLog("Your form prevents you from being altered.")
             Exit Sub
         End If
@@ -1932,13 +1936,13 @@
         Return Game.pcUnwilling
     End Function
     Function isCursed() As Boolean
-        If perks("slutcurse") > -1 Then Return True
-        If perks("copoly") > -1 Then Return True
-        If perks("cogreed") > -1 Then Return True
-        If perks("corust") > -1 Then Return True
-        If perks("comilk") > -1 Then Return True
-        If perks("coblind") > -1 Then Return True
-        If perks("coscale") > -1 Then Return True
+        If perks(perk.slutcurse) > -1 Then Return True
+        If perks(perk.copoly) > -1 Then Return True
+        If perks(perk.cogreed) > -1 Then Return True
+        If perks(perk.corust) > -1 Then Return True
+        If perks(perk.comilk) > -1 Then Return True
+        If perks(perk.coblind) > -1 Then Return True
+        If perks(perk.coscale) > -1 Then Return True
         If equippedArmor.isCursed Or equippedWeapon.isCursed Or equippedAcce.isCursed Then Return True
         Return False
     End Function
@@ -2065,11 +2069,11 @@
     End Function
     Function outPutPerkText() As String
         Dim out = ""
-        If perks("hunger") > -1 Then out += "You haven't eaten anything in a while and are starving." & vbCrLf & " " & vbCrLf
-        If perks("slutcurse") > -1 Then out += "You choose to dress very provocatively, showing as much skin as possible due to a curse."
-        If perks("polymorphed") > -1 Then out += "You are under the effects of a temporary polymorph, and will be for " & perks("polymorphed") & " more turns." & vbCrLf & " " & vbCrLf
-        If perks("thrall") > -1 Then out += "You are under the thrall of a sorcerer/ess, and may not have full control over your body or mind." & vbCrLf & " " & vbCrLf
-        If perks("astatue") > -1 Then out += "You are currently a statue, and won't be able to do much for " & perks("astatue") & " turns." & vbCrLf & " " & vbCrLf
+        If perks(perk.hunger) > -1 Then out += "You haven't eaten anything in a while and are starving." & vbCrLf & " " & vbCrLf
+        If perks(perk.slutcurse) > -1 Then out += "You choose to dress very provocatively, showing as much skin as possible due to a curse."
+        If perks(perk.polymorphed) > -1 Then out += "You are under the effects of a temporary polymorph, and will be for " & perks(perk.polymorphed) & " more turns." & vbCrLf & " " & vbCrLf
+        If perks(perk.thrall) > -1 Then out += "You are under the thrall of a sorcerer/ess, and may not have full control over your body or mind." & vbCrLf & " " & vbCrLf
+        If perks(perk.astatue) > -1 Then out += "You are currently a statue, and won't be able to do much for " & perks(perk.astatue) & " turns." & vbCrLf & " " & vbCrLf
         Return out
     End Function
     '|UNIMPLEMENTED|

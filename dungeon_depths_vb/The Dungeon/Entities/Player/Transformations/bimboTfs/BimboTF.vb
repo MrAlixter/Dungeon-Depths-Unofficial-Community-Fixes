@@ -55,7 +55,7 @@
             p.breastSize += 1
         End If
         If p.pClass.name.Equals("Magical Girl") Then
-            p.perks("bimbotf") = 24
+            p.perks(perk.bimbotf) = 24
         End If
 
         p.reverseAllRoute()
@@ -129,7 +129,7 @@
         p.pClass = p.classes("Bimbo")
         p.setPImage()
         p.TextColor = Color.FromArgb(255, 255, 235, 240)
-        p.perks("bimbotf") = -1
+        p.perks(perk.bimbotf) = -1
         p.drawPort()
         Game.pushLblEvent(out)
     End Sub
@@ -221,13 +221,13 @@
         p.lust += 10
 
         p.TextColor = Color.FromArgb(255, 255, 235, 240)
-        p.perks("bimbotf") = -1
+        p.perks(perk.bimbotf) = -1
         stopTF()
     End Sub
 
     Public Overrides Sub stopTF()
         MyBase.stopTF()
-        Game.player1.perks("bimbotf") = -1
+        Game.player1.perks(perk.bimbotf) = -1
     End Sub
 
     Public Overridable Function hasBimboHair(ByVal p As Player) As Boolean
@@ -240,7 +240,7 @@
         If Game.player1.pClass.name = "Magical Girl" Then
             Return AddressOf step2alt
         End If
-        If Game.player1.perks("bimbotf") = -1 Then
+        If Game.player1.perks(perk.bimbotf) = -1 Then
             Return AddressOf stopTF
         End If
 
