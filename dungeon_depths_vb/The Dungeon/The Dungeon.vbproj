@@ -280,6 +280,7 @@
     <Compile Include="Entities\Player\Transformations\GooGirlTF.vb" />
     <Compile Include="Entities\Player\Transformations\CombatModTF.vb" />
     <Compile Include="Entities\Player\Transformations\LolitaSTF.vb" />
+    <Compile Include="Entities\Player\Transformations\maggirlTFs\MagGirlPTF.vb" />
     <Compile Include="Entities\Player\Transformations\maggirlTFs\ProMagGirlTF.vb" />
     <Compile Include="Entities\Player\Transformations\maggirlTFs\MagSlutTF.vb" />
     <Compile Include="Entities\Player\Transformations\BroodmotherTF.vb" />
@@ -349,6 +350,7 @@
     <Compile Include="Items\Armor\FullBodyUpdated\CommonClothes1.vb" />
     <Compile Include="Items\Armor\FullBodyUpdated\CommonClothes0.vb" />
     <Compile Include="Items\Armor\FullBodyUpdated\CowCosplay.vb" />
+    <Compile Include="Items\Armor\FullBodyUpdated\MagGirlOutfitP.vb" />
     <Compile Include="Items\Armor\FullBodyUpdated\ProMagGirlOutfit.vb" />
     <Compile Include="Items\Armor\FullBodyUpdated\ScaleArmor.vb" />
     <Compile Include="Items\Armor\FullBodyUpdated\ScaleBikini.vb" />
@@ -434,6 +436,8 @@
     <Compile Include="Items\Weapons\Daggers\MShank.vb" />
     <Compile Include="Items\Weapons\Daggers\SigDagger.vb" />
     <Compile Include="Items\Weapons\Daggers\TKnife.vb" />
+    <Compile Include="Items\Weapons\Wands\ProMagGirlWand.vb" />
+    <Compile Include="Items\Weapons\Wands\MagGirlWandP.vb" />
     <Compile Include="Items\Weapons\Wands\MagSlutWand.vb" />
     <Compile Include="Items\Weapons\Wands\WOVoltage.vb" />
     <Compile Include="Items\Weapons\Wands\WOShock.vb" />

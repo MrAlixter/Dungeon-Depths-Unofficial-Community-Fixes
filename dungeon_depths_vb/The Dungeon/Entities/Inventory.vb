@@ -220,6 +220,9 @@
         internal_inventory.Add("Angelic_Sweater", New AngelicSweater())     '199
         internal_inventory.Add("Attack_Charm​", New CAttackCharm())          '200
         internal_inventory.Add("Pro_Mag._Girl_Outfit", New ProMagGirlOutfit()) '201
+        internal_inventory.Add("Mag._Girl_Outfit_(P)", New MagGirlOutfitP()) '202
+        internal_inventory.Add("Pro_Mag._Girl_Wand", New ProMagGirlWand())  '203
+        internal_inventory.Add("Mag._Girl_Wand_(P)", New MagGirlWandP())    '204
 
         armor = {New Naked,
                  Me.item(5), Me.item(7), Me.item(8), Me.item(10),
@@ -238,7 +241,7 @@
                  Me.item(177), Me.item(181), Me.item(183), Me.item(184),
                  Me.item(185), Me.item(186), Me.item(187), Me.item(188),
                  Me.item(189), Me.item(190), Me.item(191), Me.item(192),
-                 Me.item(196), Me.item(199), Me.item(201)}
+                 Me.item(196), Me.item(199), Me.item(201), Me.item(202)}
 
         weapons = {New BareFists(),
                    Me.item(6), Me.item(9), Me.item(11), Me.item(21),
@@ -249,7 +252,7 @@
                    Me.item(155), Me.item(156), Me.item(157), Me.item(158),
                    Me.item(159), Me.item(160), Me.item(162), Me.item(163),
                    Me.item(165), Me.item(167), Me.item(171), Me.item(172),
-                   Me.item(173), Me.item(179)}
+                   Me.item(173), Me.item(179), Me.item(203), Me.item(204)}
 
         useable = {Me.item(0), Me.item(3), Me.item(4),
                    Me.item(65), Me.item(15), Me.item(36), Me.item(37),
