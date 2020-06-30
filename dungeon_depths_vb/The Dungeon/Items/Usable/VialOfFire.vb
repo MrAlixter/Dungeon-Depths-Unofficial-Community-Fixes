@@ -3,7 +3,7 @@
     Sub New()
         MyBase.setName("Vial_of_Fire")
         MyBase.setDesc("A glass bottle filled with actual, magically fueled fire.  It hurts to hold...")
-        id = 202
+        id = 205
         tier = Nothing
         isMonsterDrop = True
         MyBase.setUsable(True)
