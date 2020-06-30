@@ -25,7 +25,11 @@
     Public Overrides Sub onEquip(ByRef p As Player)
         MyBase.onEquip(p)
         p.perks(perk.blind) = 1
-        If Not p.pForm.name.Equals("Kitsune") AndAlso p.perks(perk.burn) Then p.ongoingTFs.Add(New KitsuneTF())
+        If Not p.pForm.name.Equals("Kitsune") AndAlso p.perks(perk.burn) > -1 Then
+            p.ongoingTFs.Add(New KitsuneTF())
+            p.perks(perk.burn) = -1
+        End If
+
         p.update()
         Game.drawBoard()
     End Sub

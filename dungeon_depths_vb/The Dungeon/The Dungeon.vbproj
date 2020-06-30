@@ -428,6 +428,7 @@
     <Compile Include="Items\Usable\Potions\Mystery Potions\Main Effects\BlindEffect.vb" />
     <Compile Include="Items\Usable\Potions\Mystery Potions\Main Effects\AntiVenomEffect.vb" />
     <Compile Include="Items\Usable\VialOfPSlime.vb" />
+    <Compile Include="Items\Usable\VialOfFire.vb" />
     <Compile Include="Items\Usable\VialOfVenom.vb" />
     <Compile Include="Items\Weapons\Axes\Axe.vb" />
     <Compile Include="Items\Weapons\Daggers\Dagger.vb" />

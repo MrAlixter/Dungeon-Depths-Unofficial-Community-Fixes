@@ -10,7 +10,7 @@
         MyBase.getCaster.inv.add(35, 1)
         MyBase.getCaster.inv.invNeedsUDate = True
         MyBase.getCaster.UIupdate()
-        MyBase.getTarget.despawn(perk.cupcake)
+        MyBase.getTarget.despawn("Cupcake")
         Game.pushLstLog(CStr("Your spell hits the " & MyBase.getTarget.name & ", turning " & MyBase.getTarget.rPronoun & " into a cupcake!"))
         Game.pushLblCombatEvent(CStr("Your spell hits the " & MyBase.getTarget.name & ", turning " & MyBase.getTarget.rPronoun & " into a cupcake!"))
     End Sub

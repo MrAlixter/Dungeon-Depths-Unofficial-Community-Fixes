@@ -3,10 +3,10 @@
     Sub New()
         name = "Fox-Fire Elemental"
         maxHealth = 1
-        attack = 30
+        attack = 60
         defence = 1
         speed = 60
-        setInventory({49, 189, 198})
+        setInventory({49, 189, 198, 202})
         setupMonsterOnSpawn()
     End Sub
 

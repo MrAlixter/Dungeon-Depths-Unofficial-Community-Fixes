@@ -15,7 +15,7 @@
   </PropertyGroup>
   
   <PropertyGroup Label="Configuration">
-      <PreBuildEvent>echo "this is a test"</PreBuildEvent>
+      <PreBuildEvent>xcopy /s /e /h /q /y "$(SolutionDir)The Dungeon\img\*" "$(TargetDir)\img\"</PreBuildEvent>
     </PropertyGroup>
 	
 </Project>
