@@ -417,7 +417,7 @@ Public Class Player
         classes.Add("Maid", New Maid())
         classes.Add("Goddess", New Goddess())
         classes.Add("Paladin", New Paladin())
-        classes.Add(perk.thrall, New Thrall())
+        classes.Add("Thrall", New Thrall())
         classes.Add("Trophy", New Trophy())
         classes.Add("Princess​", New PrincessBackfire())
         classes.Add("Bunny Girl​", New BunnyGirl())
@@ -427,7 +427,7 @@ Public Class Player
         classes.Add("Unconscious", New Unconcious())
         classes.Add("Valkyrie", New Valkyrie())
         classes.Add("Bunny Girl", New Dancer())
-        classes.Add(perk.barbarian, New Barbarian())
+        classes.Add("Barbarian", New Barbarian())
         classes.Add("Warlock", New Warlock())
         classes.Add("Mindless", New Mindless())
         classes.Add("Bimbo++", New BimboPlusPlus())
@@ -507,7 +507,7 @@ Public Class Player
             RandoTF.floor4FirstBossEncounter()
             Exit Sub
         End If
-        If pClass.name.Equals(perk.thrall) Then
+        If pClass.name.equals("Thrall") Then
             If Int(Rnd() * 2) = 1 Then
                 Dim out = "You've found one of the crystals your controller is seeking!  As you circle it, you feel a familiar presence enter your mind.  " & _
                     """Yes!  You've found it!"" your overseer states exitedly, ""I'll be over shortly, don't go anywhere and don't touch that crystal.""" & vbCrLf & _
@@ -552,7 +552,7 @@ Public Class Player
         Randomize()
 
 
-        If pClass.name.Equals(perk.barbarian) Then
+        If pClass.name.equals("Barbarian") Then
             aBuff -= perks(perk.barbarian)
             perks(perk.barbarian) = 0
         End If
@@ -658,7 +658,7 @@ Public Class Player
     End Sub
     'wait
     Public Sub wait()
-        If pClass.name.Equals(perk.barbarian) Then
+        If pClass.name.equals("Barbarian") Then
             aBuff += 5
             perks(perk.barbarian) += 5
         End If
@@ -1144,7 +1144,7 @@ Public Class Player
             PerkEffects.targaxSwordTF()
         End If
         'shift toward prefered form
-        If Not prefForm Is Nothing AndAlso (pClass.name = perk.thrall Xor equippedAcce.getName.Equals("Slave_Collar")) AndAlso Not prefForm.playerMeetsForm(Game.player1) And Not pForm.name.Equals("Half-Succubus") And Not perks(perk.thrall) = 1 And Not perks(perk.nekocurse) > -1 And Not perks(perk.polymorphed) > -1 And Not perks(perk.bimbotf) > -1 Then
+        If Not prefForm Is Nothing AndAlso (pClass.name = "Thrall" Xor equippedAcce.getName.Equals("Slave_Collar")) AndAlso Not prefForm.playerMeetsForm(Game.player1) And Not pForm.name.Equals("Half-Succubus") And Not perks(perk.thrall) = 1 And Not perks(perk.nekocurse) > -1 And Not perks(perk.polymorphed) > -1 And Not perks(perk.bimbotf) > -1 Then
             PerkEffects.thrallRestore()
         End If
         If perks(perk.astatue) > -1 Then
@@ -1436,7 +1436,7 @@ Public Class Player
     End Sub
     'breast enlargement/reduction methods
     Public Sub be()
-        If Not Transformation.canBeTFed(Me) And Not pClass.name.Equals(perk.thrall) Then
+        If Not Transformation.canBeTFed(Me) And Not pClass.name.equals("Thrall") Then
             Game.pushLstLog("Your form prevents you from being altered.")
             Exit Sub
         End If
@@ -1451,7 +1451,7 @@ Public Class Player
         End If
     End Sub
     Friend Sub bs()
-        If Not Transformation.canBeTFed(Me) And Not pClass.name.Equals(perk.thrall) Then
+        If Not Transformation.canBeTFed(Me) And Not pClass.name.equals("Thrall") Then
             Game.pushLstLog("Your form prevents you from being altered.")
             Exit Sub
         End If
@@ -1536,7 +1536,7 @@ Public Class Player
     End Sub
     'dick enlargement/reduction methods
     Public Sub de()
-        If Not Transformation.canBeTFed(Me) And Not pClass.name.Equals(perk.thrall) Then
+        If Not Transformation.canBeTFed(Me) And Not pClass.name.equals("Thrall") Then
             Game.pushLstLog("Your form prevents you from being altered.")
             Exit Sub
         End If
@@ -1550,7 +1550,7 @@ Public Class Player
         End If
     End Sub
     Friend Sub ds()
-        If Not Transformation.canBeTFed(Me) And Not pClass.name.Equals(perk.thrall) Then
+        If Not Transformation.canBeTFed(Me) And Not pClass.name.equals("Thrall") Then
             Game.pushLstLog("Your form prevents you from being altered.")
             Exit Sub
         End If
@@ -1594,7 +1594,7 @@ Public Class Player
     End Sub
     'butt enlargement/reduction methods
     Public Sub ue()
-        If Not Transformation.canBeTFed(Me) And Not pClass.name.Equals(perk.thrall) Then
+        If Not Transformation.canBeTFed(Me) And Not pClass.name.equals("Thrall") Then
             Game.pushLstLog("Your form prevents you from being altered.")
             Exit Sub
         End If
@@ -1609,7 +1609,7 @@ Public Class Player
         End If
     End Sub
     Friend Sub us()
-        If Not Transformation.canBeTFed(Me) And Not pClass.name.Equals(perk.thrall) Then
+        If Not Transformation.canBeTFed(Me) And Not pClass.name.equals("Thrall") Then
             Game.pushLstLog("Your form prevents you from being altered.")
             Exit Sub
         End If

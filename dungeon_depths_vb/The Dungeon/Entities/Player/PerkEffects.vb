@@ -165,7 +165,7 @@
         End If
     End Sub
     Shared Sub barbarian()
-        If Not Game.player1.pClass.name.Equals(perk.barbarian) Then
+        If Not Game.player1.pClass.name.Equals("Barbarian") Then
             Game.player1.perks(perk.barbarian) = -1
         End If
     End Sub

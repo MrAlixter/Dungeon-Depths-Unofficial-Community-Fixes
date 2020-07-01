@@ -90,6 +90,17 @@
             Game.pushLstLog("A magical girl needs her uniform!")
             Game.pushLblEvent("A magical girl needs her uniform!")
         End If
+        If p.pClass.name.Equals("Magical Girl") And p.equippedArmor.getName.Equals("Magical_Girl_Outfit") Then
+            p.equippedArmor = p.inv.item(10)
+            Game.pushLstLog("A magical girl needs her uniform!")
+            Game.pushLblEvent("A magical girl needs her uniform!")
+        End If
+        If p.pClass.name.Equals("Magical Girl") And p.equippedArmor.getName.Equals("Magical_Girl_Outfit") Then
+            p.equippedArmor = p.inv.item(10)
+            Game.pushLstLog("A magical girl needs her uniform!")
+            Game.pushLblEvent("A magical girl needs her uniform!")
+        End If
+
         If p.pClass.name.Equals("Valkyrie") And Not p.equippedArmor.getName.Equals("Valkyrie_Armor") Then
             p.equippedArmor = p.inv.item(95)
             Game.pushLstLog("Your armor magically re-equips!")
@@ -135,6 +146,16 @@
         If p.equippedWeapon.getName.Equals("Magical_Girl_Wand") And p.pClass.name.Equals("Magical Girl") And Not weapon.Equals("Magical_Girl_Wand") Then
             Game.pushLstLog("Putting away your wand causes you to change into your regular self!")
             p.inv.add(10, -1)
+            p.magGState.save(p)
+            p.revertToPState()
+        ElseIf p.equippedWeapon.getName.Equals("Pro_Mag._Girl_Wand") And p.pClass.name.Equals("Magical Girl") And Not weapon.Equals("Pro_Mag._Girl_Wand") Then
+            Game.pushLstLog("Putting away your wand causes you to change into your regular self!")
+            p.inv.add(201, -1)
+            p.magGState.save(p)
+            p.revertToPState()
+        ElseIf p.equippedWeapon.getName.Equals("Mag._Girl_Wand_(P)") And p.pClass.name.Equals("Magical Girl") And Not weapon.Equals("Mag._Girl_Wand_(P)") Then
+            Game.pushLstLog("Putting away your wand causes you to change into your regular self!")
+            p.inv.add(202, -1)
             p.magGState.save(p)
             p.revertToPState()
         ElseIf p.equippedWeapon.getName.Equals("Valkyrie_Sword") And p.pClass.name.Equals("Valkyrie") And Not weapon.Equals("Valkyrie_Sword") Then

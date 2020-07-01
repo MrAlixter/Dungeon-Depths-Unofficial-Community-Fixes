@@ -34,7 +34,8 @@
         spellList.Add("Mesmeric Bloom", New MesmericBloom(Nothing, Nothing))
         spellList.Add("Frazzle", New Frazzle(Nothing, Nothing))
         spellList.Add("Heartbreak Supernova", New HBSN(Nothing, Nothing))
-        spellList.Add("Adorable Sunbeam", New CuteBeam(Nothing, Nothing))
+        spellList.Add("Sweet Sunbeam", New CuteBeam(Nothing, Nothing))
+        spellList.Add("Shiny Sparking Missile", New SSMissile(Nothing, Nothing))
     End Sub
 
     Sub New(ByRef c As Player, ByRef t As NPC)

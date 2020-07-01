@@ -49,7 +49,7 @@
     Overrides Sub tfClothes(ByRef p As Player)
         If p.inv.item(170).count < 1 Then p.inv.add(170, 1)
 
-        p.prt.setIAInd(pInd.hairacc, 3, True, True)
+        p.prt.setIAInd(pInd.hairacc, 3, True, False)
 
         Equipment.accChange("Nothing")
         Equipment.clothesChange("Magical_Slut_Outfit")

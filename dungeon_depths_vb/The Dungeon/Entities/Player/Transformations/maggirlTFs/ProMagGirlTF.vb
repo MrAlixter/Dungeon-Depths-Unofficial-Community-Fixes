@@ -23,7 +23,7 @@
     Overrides Sub tfClothes(ByRef p As Player)
         If p.inv.item(201).count < 1 Then p.inv.add(201, 1)
 
-        p.prt.setIAInd(pInd.hairacc, 2, True, True)
+        p.prt.setIAInd(pInd.hairacc, 2, True, False)
 
         Equipment.accChange("Nothing")
         Equipment.clothesChange("Pro_Mag._Girl_Outfit")

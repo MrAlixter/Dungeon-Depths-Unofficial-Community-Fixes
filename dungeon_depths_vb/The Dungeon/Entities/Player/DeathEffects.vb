@@ -17,7 +17,7 @@
         End If
         Dim out As String = ""
         Dim ln1 As String = Nothing
-        If p.pClass.name.Equals(perk.thrall) Then
+        If p.pClass.name.Equals("Thrall") Then
             out = "Despite your fatigue, you are able to roll out of the way of the thrall's attempt to restrain you, and make a clumsy escape."
 
         Else
@@ -44,7 +44,7 @@
             Exit Sub
         End If
         Dim out As String = ""
-        If p.pClass.name.Equals(perk.thrall) Then
+        If p.pClass.name.Equals("Thrall") Then
             out = "Despite your fatigue, you are able to roll out of the way of the mage's attempt to restrain you, and make a clumsy escape."
 
         Else

@@ -80,7 +80,7 @@
 
     Public Sub shiftTowards(ByRef p As Player)
         Randomize()
-        If Not p.pClass.name.Equals(perk.thrall) Then p.pClass = p.classes(perk.thrall)
+        If Not p.pClass.name.equals("Thrall") Then p.pClass = p.classes(perk.thrall)
         If playerMeetsForm(p) Then Exit Sub
 
         If Not p.prt.haircolor.Equals(hairColor) Then p.changeHairColor(Game.cShift(p.prt.haircolor, hairColor, 8))
@@ -134,7 +134,7 @@
     End Sub
     Public Sub snapShift(ByRef p As Player)
         Randomize()
-        If Not p.pClass.name.Equals(perk.thrall) Then p.pClass = p.classes(perk.thrall)
+        If Not p.pClass.name.equals("Thrall") Then p.pClass = p.classes(perk.thrall)
         If playerMeetsForm(p) Then Exit Sub
 
         p.changeHairColor(hairColor)

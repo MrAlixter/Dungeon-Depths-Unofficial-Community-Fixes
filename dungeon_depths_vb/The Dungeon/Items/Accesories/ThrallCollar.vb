@@ -26,7 +26,7 @@
         p.perks(perk.thrall) = 0
         p.ongoingTFs.Add(New ThrallTF(2, 10, 3.0, True))
 
-        If Not p.pClass.name.Equals(perk.thrall) Then formerClass = p.pClass.name
+        If Not p.pClass.name.equals("Thrall") Then formerClass = p.pClass.name
         formerEyeType = p.prt.iArrInd(pInd.eyes)
         If Transformation.canBeTFed(p) Then p.pState.save(p)
         p.pClass = p.classes(perk.thrall)

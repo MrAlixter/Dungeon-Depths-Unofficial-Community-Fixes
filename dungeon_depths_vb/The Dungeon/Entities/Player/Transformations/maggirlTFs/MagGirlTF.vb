@@ -58,7 +58,7 @@
     Overridable Sub tfClothes(ByRef p As Player)
         If p.inv.item(10).count < 1 Then p.inv.add(10, 1)
 
-        p.prt.setIAInd(pInd.hairacc, 2, True, True)
+        p.prt.setIAInd(pInd.hairacc, 2, True, False)
 
         Equipment.accChange("Nothing")
         Equipment.clothesChange("Magical_Girl_Outfit")

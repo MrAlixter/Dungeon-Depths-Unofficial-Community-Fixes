@@ -142,6 +142,8 @@
     <Compile Include="Entities\NPC\Hostile\Bosses\Targax.vb" />
     <Compile Include="Entities\NPC\Non-Hostile\Caelia.vb" />
     <Compile Include="Entities\NPC\Non-Hostile\CBrok.vb" />
+    <Compile Include="Entities\NPC\Non-Hostile\TimeTraveler.vb" />
+    <Compile Include="Entities\NPC\Non-Hostile\MaskedMG.vb" />
     <Compile Include="Entities\NPC\Non-Hostile\WSmith.vb" />
     <Compile Include="Entities\NPC\Non-Hostile\FVendor.vb" />
     <Compile Include="Entities\NPC\Non-Hostile\HTeach.vb" />
@@ -397,6 +399,8 @@
     <Compile Include="Items\Usable\AntiCurseTag.vb" />
     <Compile Include="Items\Usable\CursedCoupon.vb" />
     <Compile Include="Items\Usable\Food\AntiFreeze.vb" />
+    <Compile Include="Items\Usable\GemOfPink.vb" />
+    <Compile Include="Items\Usable\GemOfDark.vb" />
     <Compile Include="Items\Usable\ManaHibiscus.vb" />
     <Compile Include="Items\Usable\CryoGrenade.vb" />
     <Compile Include="Items\Usable\Food\WFeast.vb" />
@@ -429,6 +433,7 @@
     <Compile Include="Items\Usable\Potions\Mystery Potions\BlindPotion.vb" />
     <Compile Include="Items\Usable\Potions\Mystery Potions\Main Effects\BlindEffect.vb" />
     <Compile Include="Items\Usable\Potions\Mystery Potions\Main Effects\AntiVenomEffect.vb" />
+    <Compile Include="Items\Usable\GemOfProg.vb" />
     <Compile Include="Items\Usable\VialOfPSlime.vb" />
     <Compile Include="Items\Usable\VialOfFire.vb" />
     <Compile Include="Items\Usable\VialOfVenom.vb" />

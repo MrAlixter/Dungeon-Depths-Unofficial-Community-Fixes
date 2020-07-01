@@ -26,7 +26,7 @@
             tfCt = 0
             revert()
         End If
-        If (Game.player1.pClass.name = perk.thrall And Me.name.Contains(perk.thrall)) Or
+        If (Game.player1.pClass.name = "Thrall" And Me.name.Contains("Thrall")) Or
            (Game.player1.pForm.name = "Arachne" And Me.name.Contains("Arachne")) Or
             (Game.player1.pForm.name = "Slime" And Me.name.Contains("Slime")) Or
             (Game.player1.pForm.name.Equals("Goo Girl") And Me.name.Contains("Goo")) Or
