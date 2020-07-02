@@ -11,7 +11,7 @@
     End Function
     Overridable Sub onEquip()
     End Sub
-    Overridable Sub onUnequip()
+    Overridable Sub onUnequip(Optional w As Weapon = Nothing)
     End Sub
 
     Public Overrides Sub discard()

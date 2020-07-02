@@ -1,5 +1,5 @@
 ﻿Public Class ProMagGirlWand
-    Inherits Wand
+    Inherits MagGirlWand
 
     Sub New()
         MyBase.setName("Pro_Mag._Girl_Wand")
@@ -11,6 +11,8 @@
         MyBase.aBoost = 7
         MyBase.count = 0
         MyBase.value = 2000
+
+        mgOutfit = 201
     End Sub
 
     Public Overrides Sub onEquip()

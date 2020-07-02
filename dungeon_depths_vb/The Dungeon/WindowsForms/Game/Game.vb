@@ -38,7 +38,7 @@ Public Class Game
     Public updateList As PQ = New PQ
     Public npcList As List(Of NPC) = New List(Of NPC)     'list of non-player updatables (NOT SAVED)
     Public shopNPCList As List(Of ShopNPC) = New List(Of ShopNPC)
-    Public shopkeeper, swiz, hteach, fvend, wsmith, cbrok As ShopNPC
+    Public shopkeeper, swiz, hteach, fvend, wsmith, cbrok, mgirl As ShopNPC
     Public currNPC As ShopNPC   'the current npc the player is talking to (NOT SAVED)
     Public pImage As Image  'which tile is used for the player (NOT SAVED)
     Public combatmode As Boolean = False 'indicates if the player is in combat (NOT SAVED)
@@ -296,7 +296,8 @@ Public Class Game
         fvend = ShopNPC.shopFactory(3)
         wsmith = ShopNPC.shopFactory(4)
         cbrok = ShopNPC.shopFactory(5)
-        shopNPCList.AddRange({shopkeeper, swiz, hteach, fvend, wsmith, cbrok})
+        mgirl = ShopNPC.shopFactory(6)
+        shopNPCList.AddRange({shopkeeper, swiz, hteach, fvend, wsmith, cbrok, mgirl})
         mDun = New Dungeon
 
         setupDungeon()
@@ -633,6 +634,7 @@ Public Class Game
                             If currFloor.mBoard(player1.pos.Y + indY, player1.pos.X + indX).Text = "$" And player1.pos.Y + indY = fvend.pos.Y And player1.pos.X + indX = fvend.pos.X Then viewArray(y, x) = 15
                             If currFloor.mBoard(player1.pos.Y + indY, player1.pos.X + indX).Text = "$" And player1.pos.Y + indY = wsmith.pos.Y And player1.pos.X + indX = wsmith.pos.X Then viewArray(y, x) = 16
                             If currFloor.mBoard(player1.pos.Y + indY, player1.pos.X + indX).Text = "$" And player1.pos.Y + indY = cbrok.pos.Y And player1.pos.X + indX = cbrok.pos.X Then viewArray(y, x) = 17
+                            If currFloor.mBoard(player1.pos.Y + indY, player1.pos.X + indX).Text = "$" And player1.pos.Y + indY = mgirl.pos.Y And player1.pos.X + indX = mgirl.pos.X Then viewArray(y, x) = 18
                             If currFloor.mBoard(player1.pos.Y + indY, player1.pos.X + indX).Text = "+" Then viewArray(y, x) = 8
                             If currFloor.mBoard(player1.pos.Y + indY, player1.pos.X + indX).Text = "c" Then viewArray(y, x) = 12
                             If player1.perks(perk.blind) > -1 Then viewArray(y, x) = 1
@@ -700,6 +702,8 @@ Public Class Game
                 mPics(y, x).BackgroundImage = picWS.BackgroundImage
             Case 17
                 mPics(y, x).BackgroundImage = picCBrok.BackgroundImage
+            Case 18
+                mPics(y, x).BackgroundImage = picMGTile.BackgroundImage
         End Select
     End Sub
     Sub setForestTileImg(ByVal x As Integer, ByVal y As Integer, ByRef viewArray As Integer(,))
@@ -741,6 +745,8 @@ Public Class Game
                 mPics(y, x).BackgroundImage = picWSf.BackgroundImage
             Case 17
                 mPics(y, x).BackgroundImage = picCBrokF.BackgroundImage
+            Case 18
+                mPics(y, x).BackgroundImage = picMGTileF.BackgroundImage
         End Select
     End Sub
     Sub setSpaceTileImg(ByVal x As Integer, ByVal y As Integer, ByRef viewArray As Integer(,))
@@ -2020,6 +2026,7 @@ Public Class Game
         fvend = shopNPCList(3)
         wsmith = shopNPCList(4)
         cbrok = shopNPCList(5)
+        mgirl = shopNPCList(6)
         updateLoadbar(70)
 
         'load the dungeon generation settings

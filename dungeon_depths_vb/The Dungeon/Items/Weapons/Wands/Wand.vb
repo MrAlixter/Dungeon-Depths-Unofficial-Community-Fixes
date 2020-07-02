@@ -16,7 +16,7 @@
         Game.player1.mana += mBoost
     End Sub
 
-    Public Overrides Sub onunEquip()
+    Public Overrides Sub onunEquip(Optional w As Weapon = Nothing)
         MyBase.onEquip()
         Game.player1.mana -= mBoost
         If Game.player1.mana < 0 Then Game.player1.mana = 0

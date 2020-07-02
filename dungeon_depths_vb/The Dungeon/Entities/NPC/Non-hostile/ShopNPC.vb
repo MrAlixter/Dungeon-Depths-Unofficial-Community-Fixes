@@ -18,6 +18,8 @@
                 Return New WSmith
             Case 5
                 Return New CBrok
+            Case 6
+                Return New MaskedMG
             Case Else
                 Return New Shopkeeper
         End Select

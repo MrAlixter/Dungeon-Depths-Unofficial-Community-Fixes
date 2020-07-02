@@ -20,7 +20,7 @@
     Public Overrides Sub onEquip()
         If Not Game.player1.knownSpells.Contains("Molten Fireball") Then Game.player1.knownSpells.Add("Molten Fireball")
     End Sub
-    Public Overrides Sub onunEquip()
+    Public Overrides Sub onunEquip(Optional w As Weapon = Nothing)
         Game.player1.knownSpells.Remove("Molten Fireball")
     End Sub
 End Class

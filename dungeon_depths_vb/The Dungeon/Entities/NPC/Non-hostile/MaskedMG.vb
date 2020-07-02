@@ -10,6 +10,9 @@
 
         'Define the inventory
         inv = New Inventory(False)
+        inv.setCount("Magical_Girl_Wand", 1)
+        inv.setCount("Gem_of_Progress", 1)
+        inv.setCount("Gem_of_Sweetness", 1)
 
         isShop = True
         gold = 99999

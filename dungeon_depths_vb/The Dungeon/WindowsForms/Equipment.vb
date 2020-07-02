@@ -137,31 +137,9 @@
 
         'unequip the old weapon
         If Not p.equippedWeapon.getName.Equals(weapon) Then
-            p.equippedWeapon.onUnequip()
+            p.equippedWeapon.onUnequip(Equipment.wList(weapon))
         Else
             Return False
-        End If
-
-        'this handles the revert from the magical girl form, if needed
-        If p.equippedWeapon.getName.Equals("Magical_Girl_Wand") And p.pClass.name.Equals("Magical Girl") And Not weapon.Equals("Magical_Girl_Wand") Then
-            Game.pushLstLog("Putting away your wand causes you to change into your regular self!")
-            p.inv.add(10, -1)
-            p.magGState.save(p)
-            p.revertToPState()
-        ElseIf p.equippedWeapon.getName.Equals("Pro_Mag._Girl_Wand") And p.pClass.name.Equals("Magical Girl") And Not weapon.Equals("Pro_Mag._Girl_Wand") Then
-            Game.pushLstLog("Putting away your wand causes you to change into your regular self!")
-            p.inv.add(201, -1)
-            p.magGState.save(p)
-            p.revertToPState()
-        ElseIf p.equippedWeapon.getName.Equals("Mag._Girl_Wand_(P)") And p.pClass.name.Equals("Magical Girl") And Not weapon.Equals("Mag._Girl_Wand_(P)") Then
-            Game.pushLstLog("Putting away your wand causes you to change into your regular self!")
-            p.inv.add(202, -1)
-            p.magGState.save(p)
-            p.revertToPState()
-        ElseIf p.equippedWeapon.getName.Equals("Valkyrie_Sword") And p.pClass.name.Equals("Valkyrie") And Not weapon.Equals("Valkyrie_Sword") Then
-            Game.pushLstLog("Putting away your sword causes you to change into your regular self!")
-            p.inv.add(95, -1)
-            p.revertToPState()
         End If
 
         'handles the equiping of weapons

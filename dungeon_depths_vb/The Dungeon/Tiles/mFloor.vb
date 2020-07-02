@@ -161,7 +161,12 @@ Public Class mFloor
         ElseIf floorNumber = 3 Then
             Return {0, 1, 2, 3, 5}
         Else
-            Return {0, 1, 2, 3, 4, 5}
+            If Int(Rnd() * 2) = 0 Then
+                Return {0, 1, 2, 3, 4, 5}
+            Else
+                Return {0, 1, 2, 4, 5, 6}
+            End If
+
         End If
     End Function
     Sub placeNPCs(ByRef npcList As List(Of ShopNPC), ByVal possibleNPCs As Integer())
