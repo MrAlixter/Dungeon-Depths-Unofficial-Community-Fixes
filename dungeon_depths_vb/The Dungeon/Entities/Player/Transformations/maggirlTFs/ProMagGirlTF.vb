@@ -14,7 +14,7 @@
 
     Public Overrides Sub setSpells(ByRef p As Player)
         MyBase.setSpells(p)
-        If Not p.knownSpells.Contains("Mana Burst") Then p.knownSpells.Add("Mana Burst")
+        If Not p.knownSpecials.Contains("Mana Burst") Then p.knownSpecials.Add("Mana Burst")
         Game.pushLstLog("'Mana Burst' special learned!")
 
         If Not p.knownSpells.Contains("Shiny Sparking Missile") Then p.knownSpells.Add("Shiny Sparking Missile")

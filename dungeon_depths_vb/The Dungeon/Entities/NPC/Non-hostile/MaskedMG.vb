@@ -10,9 +10,9 @@
 
         'Define the inventory
         inv = New Inventory(False)
-        inv.setCount("Magical_Girl_Wand", 1)
         inv.setCount("Gem_of_Progress", 1)
         inv.setCount("Gem_of_Sweetness", 1)
+        inv.setCount("Gem_of_Flame", 1)
 
         isShop = True
         gold = 99999
@@ -41,6 +41,8 @@
             npcIndex = 0
             Game.pushNPCDialog("Always a pleasure to run across another Magic Girl!  What can I get ya?")
         End If
+
+        Game.picNPC.BackgroundImage = picNCP(npcIndex)
     End Sub
 
     Public Overrides Function toFight() As String

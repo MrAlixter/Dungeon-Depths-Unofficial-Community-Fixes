@@ -19,6 +19,9 @@
             Game.pushLblCombatEvent(CStr("A golden ray of light engulfs your foe, cackling with a rosy glow!  As they stumble back, you notice that they seem a little ... cuter ... than they did before..."))
         End If
     End Sub
+    Public Overrides Sub backfire()
+        selfPlushTF()
+    End Sub
 
     Sub targetPlushTF()
         MyBase.getTarget.tfCt = 1
@@ -28,5 +31,9 @@
         MyBase.getTarget.defence *= 1.25
         Game.pushLstLog(CStr("Your spell hits the " & MyBase.getTarget.name & ", turning " & MyBase.getTarget.rPronoun & " into a plush!"))
         Game.pushLblCombatEvent(CStr("Your spell hits the " & MyBase.getTarget.name & ", turning " & MyBase.getTarget.rPronoun & " into a plush version of their prior form!"))
+    End Sub
+
+    Sub selfPlushTF()
+        Polymorph.transform(MyBase.getCaster, "Plush")
     End Sub
 End Class

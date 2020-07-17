@@ -42,6 +42,7 @@
     masochist       '40
     burn            '41
     mburst          '42
+    infernoa        '43
 End Enum
 
 Public Class Player
@@ -464,7 +465,7 @@ Public Class Player
         forms.Add("Sheep", New Sheep())
         forms.Add("Frog", New Frog())
         forms.Add("Arachne", New Arachne())
-        forms.Add(perk.amazon, New Amazon())
+        forms.Add("Amazon", New Amazon())
         forms.Add("Amazon​", New AmazonWeak())
         forms.Add("Plantfolk", New Plantfolk())
         forms.Add("Goo Girl", New GooGirl())
@@ -478,6 +479,7 @@ Public Class Player
         forms.Add("Oni", New Oni())
         forms.Add("Alraune", New AlrauneF())
         forms.Add("Goth", New Goth())
+        forms.Add("Plush", New Plush())
     End Sub
     Private Sub initPolymorphs()
         'compile list of polymorphs
@@ -494,6 +496,7 @@ Public Class Player
         polymorphs.Add("Fusion", Nothing)
         polymorphs.Add("Mindless", Nothing)
         polymorphs.Add("MASBimbo", Nothing)
+        polymorphs.Add("Plush", Nothing)
     End Sub
     Sub setStartStates()
         sState.save(Me)
@@ -1167,6 +1170,10 @@ Public Class Player
         'ironhide fury
         If perks(perk.ihfury) > -1 Then
             PerkEffects.ironhideFury()
+        End If
+        'inferno aura
+        If perks(perk.infernoa) > -1 Then
+            PerkEffects.infernoAura()
         End If
 
         '|CURSES|

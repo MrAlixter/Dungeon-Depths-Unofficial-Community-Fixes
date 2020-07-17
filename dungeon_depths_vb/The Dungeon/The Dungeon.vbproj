@@ -189,6 +189,7 @@
     <Compile Include="Entities\Player\Forms\Human.vb" />
     <Compile Include="Entities\Player\Forms\needsRevertPassage\CombatUnit.vb" />
     <Compile Include="Entities\Player\Forms\needsRevertPassage\Goth.vb" />
+    <Compile Include="Entities\Player\Forms\needsRevertPassage\Plush.vb" />
     <Compile Include="Entities\Player\Forms\needsRevertPassage\Oni.vb" />
     <Compile Include="Entities\Player\Forms\needsRevertPassage\Horse.vb" />
     <Compile Include="Entities\Player\Forms\needsRevertPassage\Blob.vb" />
@@ -226,6 +227,9 @@
     <Compile Include="Entities\Player\Specials\Abso.vb" />
     <Compile Include="Entities\Player\Specials\AFK.vb" />
     <Compile Include="Entities\Player\Specials\Bounty.vb" />
+    <Compile Include="Entities\Player\Specials\GigaPunch.vb" />
+    <Compile Include="Entities\Player\Specials\BurningPunch.vb" />
+    <Compile Include="Entities\Player\Specials\InfernoAura.vb" />
     <Compile Include="Entities\Player\Specials\MBurst.vb" />
     <Compile Include="Entities\Player\Specials\PProt.vb" />
     <Compile Include="Entities\Player\Specials\ShrinkRayShoot.vb" />
@@ -282,12 +286,16 @@
     <Compile Include="Entities\Player\Transformations\GooGirlTF.vb" />
     <Compile Include="Entities\Player\Transformations\CombatModTF.vb" />
     <Compile Include="Entities\Player\Transformations\LolitaSTF.vb" />
+    <Compile Include="Entities\Player\Transformations\maggirlTFs\MagGirlDTF.vb" />
+    <Compile Include="Entities\Player\Transformations\maggirlTFs\MagGirlRTF.vb" />
     <Compile Include="Entities\Player\Transformations\maggirlTFs\MagGirlPTF.vb" />
+    <Compile Include="Entities\Player\Transformations\maggirlTFs\ProMagGirlRTF.vb" />
     <Compile Include="Entities\Player\Transformations\maggirlTFs\ProMagGirlTF.vb" />
     <Compile Include="Entities\Player\Transformations\maggirlTFs\MagSlutTF.vb" />
     <Compile Include="Entities\Player\Transformations\BroodmotherTF.vb" />
     <Compile Include="Entities\Player\Transformations\Polymorphs\MASBimboTF.vb" />
     <Compile Include="Entities\Player\Transformations\Polymorphs\GothGFTF.vb" />
+    <Compile Include="Entities\Player\Transformations\Polymorphs\PlushTF.vb" />
     <Compile Include="Entities\Player\Transformations\SlimeETF.vb" />
     <Compile Include="Entities\Player\Transformations\bimboTFs\WBimboTF.vb" />
     <Compile Include="Entities\Player\Transformations\bimboTFs\BBBimboTF.vb" />
@@ -352,6 +360,9 @@
     <Compile Include="Items\Armor\FullBodyUpdated\CommonClothes1.vb" />
     <Compile Include="Items\Armor\FullBodyUpdated\CommonClothes0.vb" />
     <Compile Include="Items\Armor\FullBodyUpdated\CowCosplay.vb" />
+    <Compile Include="Items\Armor\FullBodyUpdated\ProMagGirlOutfitR.vb" />
+    <Compile Include="Items\Armor\FullBodyUpdated\MagGirlOutfitR.vb" />
+    <Compile Include="Items\Armor\FullBodyUpdated\MagGirlOutfitD.vb" />
     <Compile Include="Items\Armor\FullBodyUpdated\MagGirlOutfitP.vb" />
     <Compile Include="Items\Armor\FullBodyUpdated\ProMagGirlOutfit.vb" />
     <Compile Include="Items\Armor\FullBodyUpdated\ScaleArmor.vb" />
@@ -359,7 +370,7 @@
     <Compile Include="Items\Armor\GothOutfit.vb" />
     <Compile Include="Items\Armor\FullBodyUpdated\AngelicSweater.vb" />
     <Compile Include="Items\Armor\FullBodyUpdated\FoNight.vb" />
-    <Compile Include="Items\Armor\MagSlutOutfit.vb" />
+    <Compile Include="Items\Armor\FullBodyUpdated\MagSlutOutfit.vb" />
     <Compile Include="Items\Armor\FullBodyUpdated\MaidLingerie.vb" />
     <Compile Include="Items\Armor\SLolitaDress.vb" />
     <Compile Include="Items\Armor\FullBodyUpdated\CatArmor.vb" />
@@ -399,6 +410,7 @@
     <Compile Include="Items\Usable\AntiCurseTag.vb" />
     <Compile Include="Items\Usable\CursedCoupon.vb" />
     <Compile Include="Items\Usable\Food\AntiFreeze.vb" />
+    <Compile Include="Items\Usable\GemOfFlame.vb" />
     <Compile Include="Items\Usable\GemOfPink.vb" />
     <Compile Include="Items\Usable\GemOfDark.vb" />
     <Compile Include="Items\Usable\ManaHibiscus.vb" />
@@ -442,6 +454,9 @@
     <Compile Include="Items\Weapons\Daggers\MShank.vb" />
     <Compile Include="Items\Weapons\Daggers\SigDagger.vb" />
     <Compile Include="Items\Weapons\Daggers\TKnife.vb" />
+    <Compile Include="Items\Weapons\Wands\MagGirlWandR.vb" />
+    <Compile Include="Items\Weapons\Wands\ProMagGirlWandR.vb" />
+    <Compile Include="Items\Weapons\Wands\MagGirlWandD.vb" />
     <Compile Include="Items\Weapons\Wands\ProMagGirlWand.vb" />
     <Compile Include="Items\Weapons\Wands\MagGirlWandP.vb" />
     <Compile Include="Items\Weapons\Wands\MagSlutWand.vb" />

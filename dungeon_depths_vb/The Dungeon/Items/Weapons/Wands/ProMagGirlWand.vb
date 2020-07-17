@@ -8,7 +8,7 @@
         tier = Nothing
         MyBase.setUsable(False)
         MyBase.mBoost = 20
-        MyBase.aBoost = 7
+        MyBase.dBoost = 13
         MyBase.count = 0
         MyBase.value = 2000
 

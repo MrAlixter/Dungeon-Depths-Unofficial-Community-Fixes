@@ -260,11 +260,14 @@ Public Class Portrait
 
     Public Sub changeHairColor(ByVal c As Color)
         haircolor = c
+        Dim rearHairIndsToIgnore = {26, 32, 34, 35, 36}
+        Dim midHairIndsToIgnore = {29, 38, 40, 41, 42}
+        Dim frontHairIndsToIgnore = {27, 36, 38, 39, 40}
 
-        If Not checkNDefFemInd(pInd.rearhair, 26) Then iArr(pInd.rearhair) = Portrait.recolor(imgLib.atrs(pInd.rearhair).getAt(iArrInd(pInd.rearhair)), c)
-        If Not checkNDefFemInd(pInd.midhair, 29) Then iArr(pInd.midhair) = Portrait.recolor(imgLib.atrs(pInd.midhair).getAt(iArrInd(pInd.midhair)), c)
+        If Not checkNDefFemInd(pInd.rearhair, rearHairIndsToIgnore) Then iArr(pInd.rearhair) = Portrait.recolor(imgLib.atrs(pInd.rearhair).getAt(iArrInd(pInd.rearhair)), c)
+        If Not checkNDefFemInd(pInd.midhair, midHairIndsToIgnore) Then iArr(pInd.midhair) = Portrait.recolor(imgLib.atrs(pInd.midhair).getAt(iArrInd(pInd.midhair)), c)
         iArr(pInd.eyebrows) = Portrait.recolor(imgLib.atrs(pInd.eyebrows).getAt(iArrInd(pInd.eyebrows)), c)
-        If Not checkNDefFemInd(pInd.fronthair, 27) Then iArr(pInd.fronthair) = Portrait.recolor(imgLib.atrs(pInd.fronthair).getAt(iArrInd(pInd.fronthair)), c)
+        If Not checkNDefFemInd(pInd.fronthair, frontHairIndsToIgnore) Then iArr(pInd.fronthair) = Portrait.recolor(imgLib.atrs(pInd.fronthair).getAt(iArrInd(pInd.fronthair)), c)
     End Sub
     Public Sub changeSkinColor(ByVal c As Color)
         skincolor = c
@@ -307,6 +310,10 @@ Public Class Portrait
         End Select
     End Sub
     Sub hideEars()
+        If checkNDefFemInd(pInd.midhair, 41) Then
+            iArr(pInd.ears) = nullImg
+            Exit Sub
+        End If
         If iArrInd(pInd.ears).Item1 = 1 Or iArrInd(pInd.ears).Item1 = 2 Or (Not iArrInd(pInd.midhair).Item2 And iArrInd(pInd.midhair).Item1 <> 2) Or (iArrInd(pInd.midhair).Item2 And checkNDefFemInd(pInd.midhair, 10)) Then Exit Sub
         Dim t = iArr(pInd.midhair).Clone
         iArr(pInd.midhair) = iArr(pInd.ears).Clone
@@ -382,6 +389,13 @@ Public Class Portrait
         If ind Is Nothing Then Return False
         If Not ind.Item2 Then Return False
         If imgLib.atrs(attrInd).rosf(ind.Item1) = i Then Return True Else Return False
+    End Function
+    Private Function checkNDefFemInd(pInd As pInd, inds As Integer()) As Boolean
+        For Each ind In inds
+            If checkNDefFemInd(pInd, ind) Then Return True
+        Next
+
+        Return False
     End Function
     Function checkNDefMalInd(ByVal attrInd As pInd, ByVal i As Integer) As Boolean
         Dim ind = iArrInd(attrInd)

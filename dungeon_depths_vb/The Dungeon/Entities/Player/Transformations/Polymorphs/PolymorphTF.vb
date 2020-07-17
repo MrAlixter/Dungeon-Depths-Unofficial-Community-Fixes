@@ -44,6 +44,8 @@
                 Return New ShrunkenTF()
             Case "MASBimbo"
                 Return New MASBimboTF()
+            Case "Plush"
+                Return New PlushTF()
             Case Else
                 Return Nothing
         End Select

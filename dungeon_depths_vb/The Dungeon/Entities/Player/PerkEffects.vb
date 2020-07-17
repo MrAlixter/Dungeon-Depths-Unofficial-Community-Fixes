@@ -304,6 +304,19 @@
 
         End If
     End Sub
+    Shared Sub infernoAura()
+        Dim p As Player = Game.player1
+        If p.perks(perk.infernoa) = 3 Then
+            p.dBuff = p.dBuff + ((p.getDEF - p.dBuff) * 0.45)
+            p.perks(perk.infernoa) -= 1
+        ElseIf p.perks(perk.infernoa) > 0 Then
+            p.perks(perk.infernoa) -= 1
+        Else
+            p.dBuff = 0
+            p.perks(perk.infernoa) = -1
+            Game.pushLstLog("Inferno Aura has worn off.")
+        End If
+    End Sub
 
     '|CURSES|
     Shared Function curseOfRust(ByRef p As Player) As Boolean
@@ -371,6 +384,7 @@
         flag = hardLightEffect(dmg) Or flag
         flag = bimboDodge() Or flag
         flag = stealthDodge() Or flag
+        If Game.player1.perks(perk.infernoa) > -1 Then flag = reflectDamage(dmg, 0.45, Game.player1.currTarget, Game.player1)
         Return flag
     End Function
     Shared Function bowTieEffect() As Boolean
@@ -429,6 +443,15 @@
             Game.pushLblEvent(out)
             Return True
         End If
+        Return False
+    End Function
+    Shared Function reflectDamage(ByVal dmg As Integer, ByVal ratio As Double, ByRef currTarget As Entity, ByRef p As Player)
+        If dmg > 0 Then
+            currTarget.takeDMG(CInt(dmg * ratio), p)
+            Game.pushLblEvent("Your opponent takes " & CInt(dmg * ratio) & " from their attack!")
+            Return True
+        End If
+
         Return False
     End Function
 End Class

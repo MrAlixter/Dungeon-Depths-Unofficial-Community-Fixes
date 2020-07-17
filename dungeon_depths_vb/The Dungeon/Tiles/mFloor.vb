@@ -161,10 +161,10 @@ Public Class mFloor
         ElseIf floorNumber = 3 Then
             Return {0, 1, 2, 3, 5}
         Else
-            If Int(Rnd() * 2) = 0 Then
-                Return {0, 1, 2, 3, 4, 5}
-            Else
+            If Int(Rnd() * 2) = 0 And Game.player1.pClass.name.StartsWith("Magical") Then
                 Return {0, 1, 2, 4, 5, 6}
+            Else
+                Return {0, 1, 2, 3, 4, 5}
             End If
 
         End If

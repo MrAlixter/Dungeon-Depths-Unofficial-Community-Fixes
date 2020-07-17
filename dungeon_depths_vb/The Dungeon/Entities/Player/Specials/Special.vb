@@ -98,6 +98,12 @@
             spec = New PProt(u, t)
         ElseIf s.Equals("Mana Burst") Then
             spec = New MBurst(u, t)
+        ElseIf s.Equals("Inferno Aura") Then
+            spec = New InfernoAura(u, t)
+        ElseIf s.Equals("Megaton Punch") Then
+            spec = New BurningPunch(u, t)
+        ElseIf s.Equals("Gigaton Punch") Then
+            spec = New GigaPunch(u, t)
         End If
 
         spec.perform()

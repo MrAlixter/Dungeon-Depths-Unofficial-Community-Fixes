@@ -5,17 +5,17 @@
         MyBase.setName("Pro_Mag._Girl_Outfit")
         MyBase.setDesc("A mysterious uniform worn by a mysterious protector with a fair bit of experience." & vbCrLf & _
                        "Fits Magical Girls" & vbCrLf & _
-                       "+20 DEF" & vbCrLf & _
-                       "+17 SPD" & vbCrLf & _
-                       "+10 MANA" & vbCrLf & _
+                       "+30 DEF" & vbCrLf & _
+                       "+20 SPD" & vbCrLf & _
+                       "+40 MANA" & vbCrLf & _
                        "Magical girls can not remove this uniform.")
 
         id = 201
         tier = Nothing
         MyBase.setUsable(False)
-        MyBase.dBoost = 25
-        MyBase.sBoost = 17
-        MyBase.mBoost = 10
+        MyBase.dBoost = 30
+        MyBase.sBoost = 20
+        MyBase.mBoost = 40
 
         MyBase.count = 0
         MyBase.value = 100

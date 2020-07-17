@@ -23,6 +23,14 @@
         bsize3 = New Tuple(Of Integer, Boolean, Boolean)(37, True, True)
         bsize4 = New Tuple(Of Integer, Boolean, Boolean)(236, True, True)
 
+        usizeneg1 = New Tuple(Of Integer, Boolean, Boolean)(211, True, True)
+        usize0 = New Tuple(Of Integer, Boolean, Boolean)(212, True, True)
+        usize1 = New Tuple(Of Integer, Boolean, Boolean)(213, True, True)
+        usize2 = New Tuple(Of Integer, Boolean, Boolean)(214, True, True)
+        usize3 = New Tuple(Of Integer, Boolean, Boolean)(215, True, True)
+        usize4 = New Tuple(Of Integer, Boolean, Boolean)(216, True, True)
+
+
         MyBase.compressesBreasts = True
 
         MyBase.isRandoTFAcceptable = False

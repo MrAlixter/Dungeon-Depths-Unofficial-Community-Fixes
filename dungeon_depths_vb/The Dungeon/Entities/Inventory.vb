@@ -226,6 +226,14 @@
         internal_inventory.Add("Vial_of_Fire", New VialOfFire())            '205
         internal_inventory.Add("Gem_of_Progress", New GemOfProg())          '206
         internal_inventory.Add("Gem_of_Sweetness", New GemOfPink())         '207
+        internal_inventory.Add("Mag._Girl_Outfit_(D)", New MagGirlOutfitD()) '208
+        internal_inventory.Add("Mag._Girl_Wand_(D)", New MagGirlWandD)      '209
+        internal_inventory.Add("Mag._Girl_Outfit_(R)", New MagGirlOutfitR)  '210
+        internal_inventory.Add("Pro_Mag._G._Outfit_(R)", New ProMagGirlOutfitR) '211
+        internal_inventory.Add("Mag._Girl_Wand_(R)", New MagGirlWandR)      '212
+        internal_inventory.Add("Pro_Mag._G._Wand_(R)", New ProMagGirlWandR) '213
+        internal_inventory.Add("Gem_of_Flame", New GemOfFlame())            '214
+        internal_inventory.Add("Gem_of_Darkness", New GemOfDark())          '215
 
         armor = {New Naked,
                  Me.item(5), Me.item(7), Me.item(8), Me.item(10),
@@ -244,7 +252,8 @@
                  Me.item(177), Me.item(181), Me.item(183), Me.item(184),
                  Me.item(185), Me.item(186), Me.item(187), Me.item(188),
                  Me.item(189), Me.item(190), Me.item(191), Me.item(192),
-                 Me.item(196), Me.item(199), Me.item(201), Me.item(202)}
+                 Me.item(196), Me.item(199), Me.item(201), Me.item(202),
+                 Me.item(208), Me.item(210), Me.item(211)}
 
         weapons = {New BareFists(),
                    Me.item(6), Me.item(9), Me.item(11), Me.item(21),
@@ -255,7 +264,8 @@
                    Me.item(155), Me.item(156), Me.item(157), Me.item(158),
                    Me.item(159), Me.item(160), Me.item(162), Me.item(163),
                    Me.item(165), Me.item(167), Me.item(171), Me.item(172),
-                   Me.item(173), Me.item(179), Me.item(203), Me.item(204)}
+                   Me.item(173), Me.item(179), Me.item(203), Me.item(204),
+                   Me.item(209), Me.item(212), Me.item(213)}
 
         useable = {Me.item(0), Me.item(3), Me.item(4),
                    Me.item(65), Me.item(15), Me.item(36), Me.item(37),
@@ -268,7 +278,7 @@
                    Me.item(153), Me.item(154), Me.item(155), Me.item(156),
                    Me.item(157), Me.item(158), Me.item(162), Me.item(174),
                    Me.item(182), Me.item(195), Me.item(200), Me.item(205),
-                   Me.item(206), Me.item(207)}
+                   Me.item(206), Me.item(207), Me.item(214), Me.item(215)}
 
         food = {Me.item(1), Me.item(30), Me.item(31), Me.item(32), Me.item(33),
                 Me.item(34), Me.item(35), Me.item(44), Me.item(90),
