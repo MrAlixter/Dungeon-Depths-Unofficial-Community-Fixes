@@ -360,6 +360,7 @@
     <Compile Include="Items\Armor\FullBodyUpdated\CommonClothes1.vb" />
     <Compile Include="Items\Armor\FullBodyUpdated\CommonClothes0.vb" />
     <Compile Include="Items\Armor\FullBodyUpdated\CowCosplay.vb" />
+    <Compile Include="Items\Armor\FullBodyUpdated\MagGirlOutfitC.vb" />
     <Compile Include="Items\Armor\FullBodyUpdated\ProMagGirlOutfitR.vb" />
     <Compile Include="Items\Armor\FullBodyUpdated\MagGirlOutfitR.vb" />
     <Compile Include="Items\Armor\FullBodyUpdated\MagGirlOutfitD.vb" />

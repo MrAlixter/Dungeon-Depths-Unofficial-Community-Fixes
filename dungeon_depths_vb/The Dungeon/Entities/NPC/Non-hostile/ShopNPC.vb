@@ -5,6 +5,7 @@
     Public picNormal, picPrincess, picBunny As Image
     Public picNCP As List(Of Image)
     Protected discount As Double = 0
+    Protected Shared npcLib As ImageCollection = New ImageCollection(2)
 
     Shared Function shopFactory(ByVal nIndex As Integer)
         Select Case nIndex

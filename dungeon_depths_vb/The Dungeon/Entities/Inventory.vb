@@ -234,6 +234,7 @@
         internal_inventory.Add("Pro_Mag._G._Wand_(R)", New ProMagGirlWandR) '213
         internal_inventory.Add("Gem_of_Flame", New GemOfFlame())            '214
         internal_inventory.Add("Gem_of_Darkness", New GemOfDark())          '215
+        internal_inventory.Add("Mag._Girl_Outfit_(C)", New MagGirlOutfitC)  '216
 
         armor = {New Naked,
                  Me.item(5), Me.item(7), Me.item(8), Me.item(10),
@@ -253,7 +254,7 @@
                  Me.item(185), Me.item(186), Me.item(187), Me.item(188),
                  Me.item(189), Me.item(190), Me.item(191), Me.item(192),
                  Me.item(196), Me.item(199), Me.item(201), Me.item(202),
-                 Me.item(208), Me.item(210), Me.item(211)}
+                 Me.item(208), Me.item(210), Me.item(211), Me.item(216)}
 
         weapons = {New BareFists(),
                    Me.item(6), Me.item(9), Me.item(11), Me.item(21),

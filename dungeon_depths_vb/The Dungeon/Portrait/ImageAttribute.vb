@@ -22,7 +22,6 @@
         Return mImages.getImages
     End Function
     Function getAt(ByRef ind As Tuple(Of Integer, Boolean, Boolean)) As Image
-
         If ind.Item3 Then
             If ind.Item2 Then
                 ind = New Tuple(Of Integer, Boolean, Boolean)(osf(ind.Item1), True, False)
@@ -36,6 +35,10 @@
         Else
             Return mImages.getImageAt(ind.Item1)
         End If
+    End Function
+    Function getAt(ByVal ind As Integer) As Image
+        Dim tind = New Tuple(Of Integer, Boolean, Boolean)(ind, False, False)
+        Return getAt(tind)
     End Function
     Sub setAt(ByRef ind As Tuple(Of Integer, Boolean, Boolean), ByRef img As Image)
         If ind.Item2 Then

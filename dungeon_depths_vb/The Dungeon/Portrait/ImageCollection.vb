@@ -13,6 +13,8 @@
             Case 1
                 createAllImageLib()
                 createMFEqInd()
+            Case 2
+                createNPCLib()
             Case Else
                 createAllImageLib()
                 createMFEqInd()
@@ -37,7 +39,7 @@
 
         '-tail
         tail = New ImageDump("img/Tails")
-        atrs.Add(pInd.tail, New ImageAttribute(tail, bkg.Count))
+        atrs.Add(pInd.tail, New ImageAttribute(tail, tail.Count))
 
         '-wings
         wings = New ImageDump("img/Wings")
@@ -219,7 +221,7 @@
 
         '-tail
         tail = New ImageDump("img/Tails")
-        atrs.Add(pInd.tail, New ImageAttribute(tail, bkg.Count))
+        atrs.Add(pInd.tail, New ImageAttribute(tail, tail.Count))
 
         '-wings
         wings = New ImageDump("img/Wings")
@@ -426,6 +428,13 @@
         Next
 
         removePlaceholderNullImg(Nothing)
+    End Sub
+    Sub createNPCLib()
+        Dim npcImg As ImageDump
+
+        '-npcImg
+        npcImg = New ImageDump("img/npcImg")
+        atrs.Add(0, New ImageAttribute(npcImg, npcImg.Count))
     End Sub
     Sub removePlaceholderNullImg(ByVal null As Image)
         'replace the red "no image" images with transparent images
