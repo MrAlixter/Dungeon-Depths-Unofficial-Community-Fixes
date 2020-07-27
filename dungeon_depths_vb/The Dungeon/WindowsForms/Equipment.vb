@@ -56,6 +56,8 @@
     Public Shared Function equipArmor(ByVal armor As String, Optional ByVal considerCurse As Boolean = True) As Boolean
         Dim p = Game.player1
 
+        If Not p.inv.getArmors.Item1.Contains(armor) Then Return False
+
         'if clothes offer resistance on the way off, this handles that
         If (Not p.equippedArmor.getName.Equals(armor) And p.equippedArmor.isCursed) And Not considerCurse Then
             If p.inv.item("Anti_Curse_Tag").count > 0 Then
@@ -123,6 +125,8 @@
     Public Shared Function equipWeapon(ByVal weapon As String) As Boolean
         Dim p = Game.player1
 
+        If Not p.inv.getWeapons.Item1.Contains(weapon) Then Return False
+
         'if clothes offer resistance on the way off, this handles that
         If (Not p.equippedWeapon.getName.Equals(weapon) And p.equippedWeapon.isCursed) Then
             If p.inv.item("Anti_Curse_Tag").count > 0 Then
@@ -173,7 +177,7 @@
     Private Sub Form3_Load(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles MyBase.Load
         init()
         Dim p = Game.player1
-        DDUtils.resizeForm(Me, 210)
+        DDUtils.resizeForm(Me)
 
         'adds the default clothes for various forms
         cboxArmor.Items.Add("Naked")
@@ -280,6 +284,7 @@
     'clothesChange handles the equipping and unequipping of armors
     Public Sub clothesChange(ByVal clothes As String)
         Dim p = Game.player1
+        If p.perks(perk.isfae) > 0 Then Exit Sub
         If aList.Count < 1 Then init()
         If Not p.equippedArmor Is Nothing AndAlso clothes.Equals(p.equippedArmor.getName) Then Exit Sub
         Dim sArmor As Armor = Nothing
@@ -310,6 +315,7 @@
     'clothesChange handles the equipping and unequipping of weapon
     Public Sub weaponChange(ByVal weapon As String)
         Dim p = Game.player1
+        If p.perks(perk.isfae) > 0 Then Exit Sub
         If wList.Count < 1 Then init()
         Dim sWeapon As Weapon = Nothing
         If Not p.equippedWeapon Is Nothing AndAlso weapon.Equals(p.equippedWeapon.getName) Then Exit Sub
@@ -317,7 +323,7 @@
             For Each k In wList.Keys
                 If weapon.Split()(0).Equals(k) Then
                     sWeapon = wList(k)
-                    If Not p.equippedWeapon Is Nothing Then p.equippedWeapon.onUnequip()
+                    If Not p.equippedWeapon Is Nothing Then p.equippedWeapon.onUnequip(sWeapon)
                     Exit For
                 End If
             Next
@@ -330,6 +336,7 @@
     'accChange handles the equipping and unequipping of accessories
     Public Sub accChange(ByVal acc As String)
         Dim p = Game.player1
+        If p.perks(perk.isfae) > 0 Then Exit Sub
         If acList.Count < 1 Then init()
         If Not p.equippedAcce Is Nothing AndAlso acc.Equals(p.equippedAcce.getName) Then Exit Sub
         Dim sAcc As Accessory = Nothing

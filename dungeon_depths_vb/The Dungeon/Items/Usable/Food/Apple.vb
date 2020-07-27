@@ -1,9 +1,9 @@
 ﻿Public Class Apple
     Inherits Food
-    'Apple is a food item that reduces hunger by 15
+    'Apple is a food item that reduces stamina by 15
     Sub New()
         MyBase.setName("Apple")
-        MyBase.setDesc("An normal red apple. -15 Hunger")
+        MyBase.setDesc("An normal red apple. +15 Stamina")
         id = 32
         tier = 1
         MyBase.setUsable(True)

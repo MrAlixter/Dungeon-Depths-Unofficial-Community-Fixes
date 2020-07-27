@@ -5,7 +5,7 @@
 
     Private Sub ClothingTester_Load(sender As Object, e As EventArgs) Handles MyBase.Load
         p = Game.player1
-        DDUtils.resizeForm(Me, 320)
+        DDUtils.resizeForm(Me)
 
         Dim a As Tuple(Of String(), Armor())
         a = p.inv.getArmors

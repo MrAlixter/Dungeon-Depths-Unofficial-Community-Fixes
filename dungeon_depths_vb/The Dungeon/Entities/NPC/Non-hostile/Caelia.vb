@@ -17,12 +17,12 @@
         pronoun = "she"
         pPronoun = "her"
         rPronoun = "her"
-        picNormal = Game.picCaelia.BackgroundImage
-        picPrincess = Game.picCaeliaP.BackgroundImage
-        picBunny = Game.picCaeliaB.BackgroundImage
+        picNormal = ShopNPC.npcLib.atrs(0).getAt(32)
+        picPrincess = ShopNPC.npcLib.atrs(0).getAt(33)
+        picBunny = ShopNPC.npcLib.atrs(0).getAt(34)
 
         picNCP = New List(Of Image)
-        picNCP.AddRange({picNormal, Game.picFrog.BackgroundImage, Game.picSheep.BackgroundImage, picPrincess, picBunny})
+        picNCP.AddRange({picNormal, ShopNPC.npcLib.atrs(0).getAt(4), ShopNPC.npcLib.atrs(0).getAt(5), picPrincess, picBunny})
 
         If speed = Game.player1.speed Then speed -= 1
         title = ""

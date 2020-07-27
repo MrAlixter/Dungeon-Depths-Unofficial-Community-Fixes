@@ -1,5 +1,5 @@
 ﻿Public Enum perk
-    hunger          '0
+    stamina          '0
     bimbotf         '1
     slutcurse       '2
     chickentf       '3
@@ -43,6 +43,10 @@
     burn            '41
     mburst          '42
     infernoa        '43
+    faehasname      '44
+    faecurse        '45
+    isfae           '46
+    meetfae1        '47
 End Enum
 
 Public Class Player
@@ -61,7 +65,7 @@ Public Class Player
     Public dickSize As Integer = -1
     Public buttSize As Integer = -1
 
-    Public hunger As Integer
+    Public stamina As Integer
     Public equippedWeapon As Weapon = New BareFists
     Public equippedArmor As Armor = New CommonClothes0
     Public equippedAcce As Accessory = New noAcce
@@ -92,7 +96,7 @@ Public Class Player
     Public prefForm As preferedForm
 
     'assorted lists
-    Public ongoingTFs As List(Of Transformation) = New List(Of Transformation)
+    Public ongoingTFs As TFList = New TFList
     Public knownSpells As List(Of String) = New List(Of String)
     Public knownSpecials As List(Of String) = New List(Of String)
     Public selfPolyForms As List(Of String) = New List(Of String)
@@ -115,7 +119,7 @@ Public Class Player
         nextLevelXp = 125
         mana = 3
         maxMana = mana
-        hunger = 0
+        stamina = 100
 
         createInvPerks()
         inv.add(0, 1)
@@ -163,7 +167,7 @@ Public Class Player
         pos.Y = playArray(1)
         health = playArray(2)
         mana = playArray(3)
-        hunger = playArray(4)
+        stamina = playArray(4)
         hBuff = playArray(5)
         mBuff = playArray(6)
         aBuff = playArray(7)
@@ -480,6 +484,7 @@ Public Class Player
         forms.Add("Alraune", New AlrauneF())
         forms.Add("Goth", New Goth())
         forms.Add("Plush", New Plush())
+        forms.Add("Fae", New FaeForm())
     End Sub
     Private Sub initPolymorphs()
         'compile list of polymorphs
@@ -497,6 +502,8 @@ Public Class Player
         polymorphs.Add("Mindless", Nothing)
         polymorphs.Add("MASBimbo", Nothing)
         polymorphs.Add("Plush", Nothing)
+        polymorphs.Add("Fae", Nothing)
+        polymorphs.Add("Horse", Nothing)
     End Sub
     Sub setStartStates()
         sState.save(Me)
@@ -650,7 +657,7 @@ Public Class Player
         If pClass.name = "Rogue" Then Game.cboxSpec.Items.Add("Bounty's Collection")
         If breastSize > 3 Then Game.cboxSpec.Items.Add("Massive Mammaries")
         If breastSize > 5 Then Game.cboxSpec.Items.Add("Pillowy Protect")
-        If pForm.name = "Succubus" Then Game.cboxSpec.Items.Add("Unholy Seduction")
+        If pForm.name = "Succubus" Then Game.cboxSpec.Items.Add("Charm") : Game.cboxSpec.Items.Add("Drain Soul")
         If pForm.name = "Slime" Then Game.cboxSpec.Items.Add("Absorbtion")
         If pForm.name = "Dragon" Then Game.cboxSpec.Items.Add("Ironhide Fury")
         If inv.item("Shrink_Ray").count > 0 Then Game.cboxSpec.Items.Add("Shrink_Ray Shot")
@@ -671,7 +678,7 @@ Public Class Player
     Public Sub revertToSState()
         Dim tHth As Integer = health + hBuff
         Dim tMna As Integer = mana + mBuff
-        Dim tHun As Integer = hunger
+        Dim tHun As Integer = stamina
         Dim tGold As Integer = gold
         Dim tEweap As Weapon = equippedWeapon
         Dim tEarm As Armor = equippedArmor
@@ -690,9 +697,7 @@ Public Class Player
             pState.save(Me)
         End If
 
-        For i = 0 To ongoingTFs.Count - 1
-            ongoingTFs.RemoveAt(i)
-        Next
+        ongoingTFs.reset()
 
         Do While knownSpells.Contains("Heartblast Starcannon")
             knownSpells.Remove("Heartblast Starcannon")
@@ -766,7 +771,7 @@ Public Class Player
     Public Sub revertToPState()
         Dim tHth As Integer = health + hBuff
         Dim tMna As Integer = mana + mBuff
-        Dim tHun As Integer = hunger
+        Dim tHun As Integer = stamina
         Dim tGold As Integer = gold
         Dim tEweap As Weapon = equippedWeapon
         Dim tEarm As Armor = equippedArmor
@@ -806,13 +811,7 @@ Public Class Player
             If pForm.revertPassage <> "" Then out += pForm.revertPassage & vbCrLf & vbCrLf
         End If
 
-        Dim removeind = New List(Of Integer)
-        For i = 0 To Game.player1.ongoingTFs.Count - 1
-            If Game.player1.ongoingTFs(i).GetType().IsSubclassOf(GetType(PolymorphTF)) Then removeind.Add(i)
-        Next
-        For i = 0 To removeind.Count - 1
-            ongoingTFs.RemoveAt(removeind(i))
-        Next
+        ongoingTFs.resetPolymorphs()
 
         If Game.lblEvent.Visible = False Then Game.pushLblEvent(out & "You return to your former form!")
         Game.pImage = pImage
@@ -934,12 +933,13 @@ Public Class Player
     Public Overrides Sub die(ByRef source As Entity)
         If Game.pnlSaveLoad.Visible = True Then Exit Sub
 
+        Game.fromCombat()
+        Game.pnlCombat.Visible = False
         canMoveFlag = False
 
         resetPerks()
         If source Is Nothing Then
             DeathEffects.hardDeath()
-            Game.npcList.Clear()
             Exit Sub
         End If
 
@@ -947,73 +947,79 @@ Public Class Player
         source.nextCombatAction = Nothing
 
         setHealth(0.1)
-
-        If source.getName.Equals("Shopkeeper") Then
-            DeathEffects.ShopkeeperDeath()
-            Exit Sub
-        ElseIf source.getName.Equals("Shady Wizard") Or source.getName.Equals("Shady Witch") Then
-            DeathEffects.SWizDeath()
-            Exit Sub
-        ElseIf source.getName.Equals("Mindless Bimbo") Then
-            DeathEffects.MBimboDeath()
-            Exit Sub
-        ElseIf source.getName.Equals("Mesmerized Thrall") Or source.getName.Equals("Mesmerized Thrall​") Then
-            DeathEffects.thrallDeath()
-            Exit Sub
-        ElseIf source.getName.Equals("Enthralling Sorcerer") Or source.getName.Equals("Enthralling Sorceress") Then
-            DeathEffects.sorcererDeath()
-            Exit Sub
-        ElseIf source.getName.Equals("Slime") Then
-            DeathEffects.slimeDeath()
-            Exit Sub
-        ElseIf source.getName.Equals("Goo Girl") Then
-            DeathEffects.ggDeath()
-            Exit Sub
-        ElseIf source.getName.Equals("Spider") Then
-            DeathEffects.spiderDeath()
-            Exit Sub
-        ElseIf source.getName.Equals("Arachne Huntress") Then
-            DeathEffects.arachneDeath()
-            Exit Sub
-        ElseIf source.getName.Equals("Mimic") Then
-            DeathEffects.mimicDeath()
-            Exit Sub
-        ElseIf source.getName.Equals("Marissa, Aspiring Sorceress") Then
-            DeathEffects.marissaASDeath()
-            Exit Sub
-        ElseIf source.getName.Equals("Ooze Empress") Then
-            DeathEffects.oozeEmpDeath()
-            Exit Sub
-        ElseIf source.getName.Equals("Medusa, Gorgon of Myth") Then
-            DeathEffects.medusaDeath()
-            Exit Sub
-        ElseIf source.getName.Equals(perk.hunger) Then
-            Game.pushLblEvent("You starve to death!")
+        If Not source Is Nothing AndAlso Not source.getSName Is Nothing Then
+            If source.getSName.Equals("Shopkeeper") Then
+                DeathEffects.ShopkeeperDeath()
+                Exit Sub
+            ElseIf source.getSName.Equals("Shady Wizard") Or source.getName.Equals("Shady Witch") Then
+                DeathEffects.SWizDeath()
+                Exit Sub
+            ElseIf source.getName.Equals("Mindless Bimbo") Then
+                DeathEffects.MBimboDeath()
+                Exit Sub
+            ElseIf source.getName.Equals("Mesmerized Thrall") Or source.getName.Equals("Mesmerized Thrall​") Then
+                DeathEffects.thrallDeath()
+                Exit Sub
+            ElseIf source.getName.Equals("Enthralling Sorcerer") Or source.getName.Equals("Enthralling Sorceress") Then
+                DeathEffects.sorcererDeath()
+                Exit Sub
+            ElseIf source.getName.Equals("Slime") Then
+                DeathEffects.slimeDeath()
+                Exit Sub
+            ElseIf source.getName.Equals("Goo Girl") Then
+                DeathEffects.ggDeath()
+                Exit Sub
+            ElseIf source.getName.Equals("Spider") Then
+                DeathEffects.spiderDeath()
+                Exit Sub
+            ElseIf source.getName.Equals("Arachne Huntress") Then
+                DeathEffects.arachneDeath()
+                Exit Sub
+            ElseIf source.getName.Equals("Mimic") Then
+                DeathEffects.mimicDeath()
+                Exit Sub
+            ElseIf source.getSName.Equals("Marissa, Aspiring Sorceress") Then
+                DeathEffects.marissaASDeath()
+                Exit Sub
+            ElseIf source.getSName.Equals("Ooze Empress") Then
+                DeathEffects.oozeEmpDeath()
+                Exit Sub
+            ElseIf source.getSName.Equals("Medusa, Gorgon of Myth") Then
+                DeathEffects.medusaDeath()
+                Exit Sub
+            ElseIf source.getName.Equals("stamina") Then
+                Game.pushLblEvent("You starve to death!")
+            ElseIf source.getName.Equals("Fire") Then
+                Game.pushLblEvent("You burn to death!")
+            End If
         End If
-
 
         DeathEffects.hardDeath()
         Game.npcList.Clear()
     End Sub
     Public Sub setPImage()
-        'sets the player call
+        'sets the player tile image
         If pClass.name.Equals("Bimbo") Then
-            If Game.mDun.numCurrFloor > 5 And Not Game.mDun.numCurrFloor = 9999 And Not Game.mDun.numCurrFloor = 91017 Then
-                pImage = Game.picBimbof.BackgroundImage
+            If Game.mDun.numCurrFloor = 13 Then
+                pImage = Game.picPlayerBFog.BackgroundImage
             ElseIf Game.mDun.numCurrFloor = 9999 Then
                 pImage = Game.picBimboSpace.BackgroundImage
             ElseIf Game.mDun.numCurrFloor = 91017 Then
                 pImage = Game.picLegaBimbo.BackgroundImage
+            ElseIf Game.mDun.numCurrFloor > 5 Then
+                pImage = Game.picBimbof.BackgroundImage
             Else
                 pImage = Game.picPlayerB.BackgroundImage
             End If
         Else
-            If Game.mDun.numCurrFloor > 5 And Not Game.mDun.numCurrFloor = 9999 And Not Game.mDun.numCurrFloor = 91017 Then
-                pImage = Game.picPlayerf.BackgroundImage
+            If Game.mDun.numCurrFloor = 13 Then
+                pImage = Game.picPlayerFog.BackgroundImage
             ElseIf Game.mDun.numCurrFloor = 9999 Then
                 pImage = Game.picPlayerSpace.BackgroundImage
             ElseIf Game.mDun.numCurrFloor = 91017 Then
                 pImage = Game.picLegaPlayer.BackgroundImage
+            ElseIf Game.mDun.numCurrFloor > 5 Then
+                pImage = Game.picPlayerf.BackgroundImage
             Else
                 pImage = Game.picPlayer.BackgroundImage
             End If
@@ -1027,12 +1033,12 @@ Public Class Player
         MyBase.update()
 
         '|PLAYER STAT UPKEEP|
-        If hunger >= 100 Then
-            perks(perk.hunger) = 0
-        ElseIf hunger > 100 Then
-            hunger = 100
-        ElseIf Game.turn Mod 25 = 0 Then
-            hunger += 1
+        If stamina <= 0 Then
+            perks(perk.stamina) = 1
+        ElseIf stamina < 0 Then
+            stamina = 0
+        ElseIf Game.turn Mod 25 = 24 Then
+            stamina -= 1
         End If
 
         If health > 1 Then health = 1
@@ -1056,30 +1062,14 @@ Public Class Player
     End Sub
     Sub tfUpdate(Optional ByRef pUpdateFlag = False)
         'transformations
-        Dim removeind = New List(Of Integer)
-        For i = 0 To ongoingTFs.Count - 1
-            If i < ongoingTFs.Count AndAlso Not ongoingTFs(i) Is Nothing Then
-                If ongoingTFs(i).getTFDone Then
-                    removeind.Add(i)
-                Else
-                    Dim c = ongoingTFs(i).getturnsTilNextStep
-                    If c = 0 Then pUpdateFlag = True
-                    ongoingTFs(i).update()
-                End If
-            Else
-                If i < ongoingTFs.Count Then ongoingTFs.RemoveAt(i)
-            End If
-        Next
-        For i = 0 To removeind.Count - 1
-            ongoingTFs.RemoveAt(removeind(i))
-        Next
+        ongoingTFs.ping(pUpdateFlag)
     End Sub
     Function perkUpdate() As Boolean
         Dim needsToUpdatePortrait = False
         '|GENERAL EFFECTS|
-        'hunger
-        If perks(perk.hunger) > -1 And Game.turn Mod 5 = 0 Then
-            PerkEffects.hungerEffect()
+        'stamina
+        If perks(perk.stamina) > -1 And Game.turn Mod 5 = 0 Then
+            PerkEffects.staminaEffect()
         End If
         If perks(perk.burn) > -1 And Game.turn Mod 4 = 0 Then
             PerkEffects.burnEffect()
@@ -1203,14 +1193,20 @@ Public Class Player
     End Function
     Sub UIupdate()
         If Game.lblNameTitle.Text <> name & " the " & pClass.name Then Game.lblNameTitle.Text = name & " the " & pClass.name
-        If Game.lblHealth.Text <> "Health = " & CInt(health * getMaxHealth()) & "/" & getMaxHealth() Then Game.lblHealth.Text = "Health = " & CInt(health * getMaxHealth()) & "/" & getMaxHealth()
-        If Game.lblMana.Text <> "Mana = " & mana & "/" & getMaxMana() Then Game.lblMana.Text = "Mana = " & mana & "/" & getMaxMana()
-        If Game.lblHunger.Text <> "Hunger = " & hunger & "/100" Then Game.lblHunger.Text = "Hunger = " & hunger & "/100"
-        If Game.lblXP.Text <> nextLevelXp - xp & " XP to next LVL" Then Game.lblXP.Text = nextLevelXp - xp & " XP to next LVL"
+
+        Game.lblHealth.Text = statBar(getIntHealth, getMaxHealth, Game.lblHealth)
+        Game.lblHealth.ForeColor = Game.getHPColor(getHealth)
+
+        Game.lblMana.Text = statBar(getMana, getMaxMana, Game.lblMana)
+
+        Game.lblstamina.Text = statBar(stamina, 100, Game.lblMana)
+
+        Game.lblXP.Text = statBar(xp, nextLevelXp, Game.lblMana)
+
         If Game.lblLevel.Text <> "Level = " & level Then Game.lblLevel.Text = "Level = " & level
         If Game.lblATK.Text <> "ATK = " & (getATK()) + equippedWeapon.aBoost Then Game.lblATK.Text = "ATK = " & (getATK()) + equippedWeapon.aBoost
         If Game.lblDEF.Text <> "DEF = " & getDEF() Then Game.lblDEF.Text = "DEF = " & getDEF()
-        If Game.lblSKL.Text <> "WIL = " & getWIL() Then Game.lblSKL.Text = "WIL = " & getWIL()
+        If Game.lblWIL.Text <> "WIL = " & getWIL() Then Game.lblWIL.Text = "WIL = " & getWIL()
         If Game.lblSPD.Text <> "SPD = " & getSPD() Then Game.lblSPD.Text = "SPD = " & getSPD()
         If Game.lblGold.Text <> "GOLD = " & gold And gold <= 999999 Then
             Game.lblGold.Text = "GOLD = " & gold
@@ -1223,109 +1219,68 @@ Public Class Player
         Dim tArr(inv.count + 5) As String
         Dim ct As Integer = 0
         If Game.invFilters(0) Then
-            tArr(ct) = "-USEABLES:"
-            inv.invIDorder.Add(-1)
-            ct += 1
-            Dim u_list = inv.getUseable
-            Array.Sort(u_list)
-            For i = 0 To UBound(u_list)
-                If u_list(i).getCount > 0 Then
-                    tArr(ct) = " " & u_list(i).getName() & " x" & u_list(i).count
-                    inv.invIDorder.Add(u_list(i).getId)
-                    ct += 1
-                End If
-            Next
+            drawInv("-USEABLES:", inv.getUseable, tArr, ct)
         End If
         If Game.invFilters(1) Then
-            tArr(ct) = "-POTIONS:"
-            inv.invIDorder.Add(-1)
-            ct += 1
-            Dim p_list = inv.getPotions
-            Array.Sort(p_list)
-            For i = 0 To UBound(p_list)
-                If p_list(i).getCount > 0 Then
-                    tArr(ct) = " " & p_list(i).getName() & " x" & p_list(i).count
-                    inv.invIDorder.Add(p_list(i).getId)
-                    ct += 1
-                End If
-            Next
+            drawInv("-POTIONS:", inv.getPotions, tArr, ct)
         End If
         If Game.invFilters(2) Then
-            tArr(ct) = "-FOOD:"
-            inv.invIDorder.Add(-1)
-            ct += 1
-            Dim f_list = inv.getFood
-            Array.Sort(f_list)
-            For i = 0 To UBound(f_list)
-                If f_list(i).getCount > 0 Then
-                    tArr(ct) = " " & f_list(i).getName() & " x" & f_list(i).count
-                    inv.invIDorder.Add(f_list(i).getId)
-                    ct += 1
-                End If
-            Next
+            drawInv("-FOOD:", inv.getFood, tArr, ct)
         End If
         If Game.invFilters(3) Then
-            tArr(ct) = "-ARMOR:"
-            inv.invIDorder.Add(-1)
-            ct += 1
-            Dim a_list = inv.getArmors.Item2
-            Array.Sort(a_list)
-            For i = 0 To UBound(a_list)
-                If a_list(i).getCount > 0 Then
-                    tArr(ct) = " " & a_list(i).getName() & " x" & a_list(i).count
-                    inv.invIDorder.Add(a_list(i).getId)
-                    ct += 1
-                End If
-            Next
+            drawInv("-ARMOR:", inv.getArmors.Item2, tArr, ct)
         End If
         If Game.invFilters(4) Then
-            tArr(ct) = "-WEAPONS:"
-            inv.invIDorder.Add(-1)
-            ct += 1
-            Dim w_list = inv.getWeapons.Item2
-            Array.Sort(w_list)
-            For i = 0 To UBound(w_list)
-                If w_list(i).getCount > 0 Then
-                    tArr(ct) = " " & w_list(i).getName() & " x" & w_list(i).count
-                    inv.invIDorder.Add(w_list(i).getId)
-                    ct += 1
-                End If
-            Next
+            drawInv("-WEAPONS:", inv.getWeapons.Item2, tArr, ct)
         End If
         If Game.invFilters(6) Then
-            tArr(ct) = "-ACCESSORIES:"
-            inv.invIDorder.Add(-1)
-            ct += 1
-            Dim ac_list = inv.getAccesories.Item2
-            Array.Sort(ac_list)
-            For i = 0 To UBound(ac_list)
-                If ac_list(i).getCount > 0 Then
-                    tArr(ct) = " " & ac_list(i).getName() & " x" & ac_list(i).count
-                    inv.invIDorder.Add(ac_list(i).getId)
-                    ct += 1
-                End If
-            Next
+            drawInv("-ACCESSORIES:", inv.getAccesories.Item2, tArr, ct)
         End If
         If Game.invFilters(5) Then
-            tArr(ct) = "-MISC:"
-            inv.invIDorder.Add(-1)
-            ct += 1
-            Dim m_list = inv.getMisc
-            Array.Sort(m_list)
-            For i = 0 To UBound(m_list)
-                If m_list(i).getCount > 0 Then
-                    tArr(ct) = " " & m_list(i).getName() & " x" & m_list(i).count
-                    ct += 1
-                End If
-            Next
+            drawInv("-MISC:", inv.getMisc, tArr, ct)
         End If
         If ct <> numItems Or inv.invNeedsUDate Then
             Game.lstInventory.Items.Clear()
-            For i = 0 To UBound(tArr)
-                If Not tArr(i) Is Nothing Then Game.lstInventory.Items.Add(tArr(i))
+            For Each invItem In tArr
+                If Not invItem Is Nothing Then
+                    Game.lstInventory.Items.Add(invItem)
+                End If
             Next
         End If
         inv.invNeedsUDate = False
+    End Sub
+    Function statBar(ByVal cval As Double, ByVal mval As Double, ByVal ctrl As Control, Optional ByVal delim As Char = "ᚋ")
+        Dim out As String = " " & cval & "/" & mval & " "
+
+        While ctrl.Width * (cval / mval) > TextRenderer.MeasureText(out, ctrl.Font).Width
+            out = delim & out & delim
+        End While
+
+        While ctrl.Width < TextRenderer.MeasureText(out, ctrl.Font).Width
+            out = out.Substring(0, out.Length - 1)
+        End While
+
+        If Not out.Contains(delim) Then out.Replace(" ", "")
+
+        Return out
+    End Function
+    Sub drawInv(ByVal heading As String, ByRef list() As Item, ByRef tArr() As String, ByRef ct As Integer)
+        tArr(ct) = heading
+        inv.invIDorder.Add(-1)
+        ct += 1
+
+        Array.Sort(list)
+        For i = 0 To UBound(list)
+            If list(i).getCount > 0 Then
+                tArr(ct) = " " & list(i).getName().Replace("_", " ") & " x" & list(i).count
+                inv.invIDorder.Add(list(i).getId)
+                ct += 1
+            End If
+        Next
+
+        tArr(ct) = ""
+        inv.invIDorder.Add(-1)
+        ct += 1
     End Sub
 
     '|PORTRAIT IMAGE RENDERING METHODS|
@@ -1443,7 +1398,7 @@ Public Class Player
     End Sub
     'breast enlargement/reduction methods
     Public Sub be()
-        If Not Transformation.canBeTFed(Me) And Not pClass.name.equals("Thrall") Then
+        If Not Transformation.canBeTFed(Me) And Not pClass.name.Equals("Thrall") Then
             Game.pushLstLog("Your form prevents you from being altered.")
             Exit Sub
         End If
@@ -1458,7 +1413,7 @@ Public Class Player
         End If
     End Sub
     Friend Sub bs()
-        If Not Transformation.canBeTFed(Me) And Not pClass.name.equals("Thrall") Then
+        If Not Transformation.canBeTFed(Me) And Not pClass.name.Equals("Thrall") Then
             Game.pushLstLog("Your form prevents you from being altered.")
             Exit Sub
         End If
@@ -1543,7 +1498,7 @@ Public Class Player
     End Sub
     'dick enlargement/reduction methods
     Public Sub de()
-        If Not Transformation.canBeTFed(Me) And Not pClass.name.equals("Thrall") Then
+        If Not Transformation.canBeTFed(Me) And Not pClass.name.Equals("Thrall") Then
             Game.pushLstLog("Your form prevents you from being altered.")
             Exit Sub
         End If
@@ -1557,7 +1512,7 @@ Public Class Player
         End If
     End Sub
     Friend Sub ds()
-        If Not Transformation.canBeTFed(Me) And Not pClass.name.equals("Thrall") Then
+        If Not Transformation.canBeTFed(Me) And Not pClass.name.Equals("Thrall") Then
             Game.pushLstLog("Your form prevents you from being altered.")
             Exit Sub
         End If
@@ -1601,7 +1556,7 @@ Public Class Player
     End Sub
     'butt enlargement/reduction methods
     Public Sub ue()
-        If Not Transformation.canBeTFed(Me) And Not pClass.name.equals("Thrall") Then
+        If Not Transformation.canBeTFed(Me) And Not pClass.name.Equals("Thrall") Then
             Game.pushLstLog("Your form prevents you from being altered.")
             Exit Sub
         End If
@@ -1616,7 +1571,7 @@ Public Class Player
         End If
     End Sub
     Friend Sub us()
-        If Not Transformation.canBeTFed(Me) And Not pClass.name.equals("Thrall") Then
+        If Not Transformation.canBeTFed(Me) And Not pClass.name.Equals("Thrall") Then
             Game.pushLstLog("Your form prevents you from being altered.")
             Exit Sub
         End If
@@ -1762,7 +1717,7 @@ Public Class Player
         output += pos.Y & "*"
         output += health & "*"
         output += mana & "*"
-        output += hunger & "*"
+        output += stamina & "*"
         output += hBuff & "*"
         output += mBuff & "*"
         output += aBuff & "*"
@@ -1790,10 +1745,8 @@ Public Class Player
         output += inv.item(69).ToString
 
         output += "*†"
-        output += ongoingTFs.Count - 1 & "Ͱ"
-        For i = 0 To ongoingTFs.Count - 1
-            output += ongoingTFs(i).ToString & "Ͱ"
-        Next
+        output += ongoingTFs.save()
+
         output += "†"
         output += selfPolyForms.Count - 1 & "Ͱ"
         For i = 0 To selfPolyForms.Count - 1
@@ -1974,12 +1927,15 @@ Public Class Player
                 out += "You are a massive red woman with small horns betraying a demonic origin."
                 Return out + outPutPerkText()
             Case "Horse"
-                out += "You are draft horse, bred for pulling heavy loads."
+                out += "You are dark brown draft horse, bred for pulling heavy loads."
                 Return out + outPutPerkText()
             Case "Blob"
                 out += "You are a small cyan blob of slime, too pliable to maintain a constant form.  While the gelatinous goo that makes up your body gives you a certain durability, one solid strike may leave you in pieces."
                 Return out + outPutPerkText()
             Case "Chicken"
+            Case "Fae"
+                out += "You are a small, naked farie with long blond hair and a feminine body.  While you can fly using the delicate pink wings attached to your back, your size makes it difficult to wear or use any form of equipment designed for bigger folk." & vbCrLf & vbCrLf
+                Return out + outPutPerkText()
             Case "Frog"
                 out += "You are a lime green tiny frog.  Ribbit, ribbit." & vbCrLf & vbCrLf
                 Return out + outPutPerkText()
@@ -2059,17 +2015,38 @@ Public Class Player
                     Case 7
                         bAdj = "immense"
                 End Select
-                If sex.Equals("Female") Then
-                    If prt.sexBool Then
-                        out += "You have a feminine body, with " & bAdj & " breasts and a feminine pussy." & vbCrLf & " " & vbCrLf
-                    Else
-                        out += "You have a a masculine body, with " & bAdj & " breasts, though you have a feminine pussy." & vbCrLf & " " & vbCrLf
-                    End If
+                'dick
+                Dim dAdj = ""
+                Select Case dickSize
+                    Case 0
+                        dAdj = "small"
+                    Case 1
+                        dAdj = "medium-sized"
+                    Case 2
+                        dAdj = "large"
+                    Case 3
+                        dAdj = "huge"
+                    Case 4
+                        dAdj = "massive"
+                End Select
+                'body
+                Dim uAdj = ""
+                Select Case buttSize
+                    Case -2 Or -1
+                        uAdj = "masculine"
+                    Case 1 Or 2 Or 3 Or 4 Or 5
+                        uAdj = "feminine"
+                    Case Else
+                        uAdj = "androgynous"
+                End Select
+
+                If prt.sexBool Then
+                    out += "Your body has a generally " & uAdj & " appearance, with " & bAdj & " breasts and a pussy between your legs." & vbCrLf & " " & vbCrLf
                 Else
-                    If prt.sexBool Then
-                        out += "You have a feminine body, with " & bAdj & " breasts, though you do have a cock." & vbCrLf & " " & vbCrLf
+                    If breastSize = -1 Then
+                        out += "Your body has a generally " & uAdj & " appearance, with a toned chest and a " & dAdj & " cock between your legs." & vbCrLf & " " & vbCrLf
                     Else
-                        out += "You have a masculine body, with a toned chest that leads down to a cock between your legs." & vbCrLf & " " & vbCrLf
+                        out += "Your body has a generally " & uAdj & " appearance, with " & bAdj & " breasts and a " & dAdj & " cock between your legs." & vbCrLf & " " & vbCrLf
                     End If
                 End If
         End Select
@@ -2080,7 +2057,7 @@ Public Class Player
     End Function
     Function outPutPerkText() As String
         Dim out = ""
-        If perks(perk.hunger) > -1 Then out += "You haven't eaten anything in a while and are starving." & vbCrLf & " " & vbCrLf
+        If perks(perk.stamina) > -1 Then out += "You haven't eaten anything in a while and are starving." & vbCrLf & " " & vbCrLf
         If perks(perk.slutcurse) > -1 Then out += "You choose to dress very provocatively, showing as much skin as possible due to a curse."
         If perks(perk.polymorphed) > -1 Then out += "You are under the effects of a temporary polymorph, and will be for " & perks(perk.polymorphed) & " more turns." & vbCrLf & " " & vbCrLf
         If perks(perk.thrall) > -1 Then out += "You are under the thrall of a sorcerer/ess, and may not have full control over your body or mind." & vbCrLf & " " & vbCrLf

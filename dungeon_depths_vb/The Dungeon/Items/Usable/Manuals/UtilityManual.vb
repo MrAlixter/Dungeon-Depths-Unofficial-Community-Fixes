@@ -1,6 +1,6 @@
 ﻿Public Class UtilityManual
     Inherits Item
-    Public Shared specials() As String = {"Ritual of Mana", "Cleanse", "Spot Fusion", "Uvona's Blessing"}
+    Public Shared specials() As String = {"Ritual of Mana", "Cleanse", "Spot Fusion", "Uvona's Blessing", "Charm"}
     Sub New()
         MyBase.setName("Utility_Manual")
         MyBase.setDesc("A simple, leather-bound book that likely contains some helpful skills.")

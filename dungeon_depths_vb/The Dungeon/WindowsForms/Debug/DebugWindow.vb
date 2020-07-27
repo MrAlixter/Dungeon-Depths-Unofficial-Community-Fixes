@@ -61,7 +61,7 @@ Public Class Debug_Window
         boxMaxHealth.Value = Game.player1.maxHealth
         boxMana.Value = Game.player1.mana
         boxMaxMana.Value = Game.player1.maxMana
-        boxHunger.Value = Game.player1.hunger
+        boxstamina.Value = Game.player1.stamina
         boxAtk.Value = Game.player1.attack
         boxDef.Value = Game.player1.defence
         boxWil.Value = Game.player1.will
@@ -433,8 +433,8 @@ Public Class Debug_Window
         Game.player1.maxMana = boxMaxMana.Value
     End Sub
 
-    Private Sub boxHunger_ValueChanged(sender As Object, e As EventArgs) Handles boxHunger.ValueChanged
-        Game.player1.hunger = boxHunger.Value
+    Private Sub boxstamina_ValueChanged(sender As Object, e As EventArgs) Handles boxstamina.ValueChanged
+        Game.player1.stamina = boxstamina.Value
     End Sub
 
     Private Sub boxAtk_ValueChanged(sender As Object, e As EventArgs) Handles boxAtk.ValueChanged

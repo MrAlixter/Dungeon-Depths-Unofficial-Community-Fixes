@@ -22,6 +22,6 @@
         Dim p = MyBase.getUser
         p.mana += 15
         Game.pushLstLog("Ritual of Mana!")
-        Game.pushLblEvent("Ritual of Mana!" & vbCrLf & "Generate 15 mana, with a hunger cost based on the existing mana.")
+        Game.pushLblEvent("Ritual of Mana!" & vbCrLf & "Generate 15 mana, with a stamina cost based on the existing mana.")
     End Sub
 End Class

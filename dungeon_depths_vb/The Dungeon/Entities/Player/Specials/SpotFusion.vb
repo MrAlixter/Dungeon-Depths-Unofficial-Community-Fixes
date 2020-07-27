@@ -16,19 +16,19 @@
                                         "                              5 6 7 8")
         Catch e As Exception
             Game.pushLblEvent("The spot fusion technique does not react.  It seems that an improper slot was selected.")
-            Game.player1.hunger -= 50
+            Game.player1.stamina += 50
             Exit Sub
         End Try
         If Not System.IO.File.Exists("saves/s" & i & ".ave") Then
             Game.pushLblEvent("Despite looking for someone to fuse with, you can't find anyone at that location.")
-            Game.player1.hunger -= 50
+            Game.player1.stamina += 50
             Exit Sub
         End If
         Dim save = Game.getPlayerFromFile("saves/s" & i & ".ave")
         Dim p2 As Player = save.Item1
         If save.Item2 <> Game.version Or p2.perks(perk.polymorphed) > -1 Or Not Transformation.canBeTFed(Game.player1) Or (p2.pClass.name.Equals("Magical Girl") Or p2.pClass.name.Equals("Valkyrie")) Then
             Game.pushLblEvent("After talking it over, " & Game.player1.name & " and " & p2.name & " decide that they are incompatable, and not to fuse.")
-            Game.player1.hunger -= 50
+            Game.player1.stamina += 50
             Exit Sub
         End If
 
@@ -93,10 +93,10 @@
             p1.lust = p2.lust * 1.5
         End If
 
-        If p1.hunger > p2.hunger Then
-            p1.hunger = p1.hunger * 1.5
+        If p1.stamina > p2.stamina Then
+            p1.stamina = p1.stamina * 1.5
         Else
-            p1.hunger = p2.hunger * 1.5
+            p1.stamina = p2.stamina * 1.5
         End If
 
         For i = 0 To Portrait.NUM_IMG_LAYERS

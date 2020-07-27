@@ -88,8 +88,6 @@ Public Class Game
     Dim cKeys As List(Of System.Windows.Forms.Keys) = New List(Of Keys)
 
     Dim iHeight, iWidth As Integer
-    Dim startingHeight As Integer = 0
-    Dim startingWidth As Integer = 0
 
     'settings
     Public screenSize As String
@@ -122,23 +120,10 @@ Public Class Game
             picDescPort.Visible = False
         End If
 
+        iHeight = CInt(Size.Height)
+        iWidth = CInt(Size.Width)
 
-
-        iHeight = Size.Height
-        iWidth = Size.Width
-
-        startingHeight = CInt(Size.Height.ToString)
-        startingWidth = CInt(Size.Width.ToString)
-        If screenSize = "Small" Then
-            Size = New Size(Size.Width * 0.8, Size.Height * 0.8)
-        ElseIf screenSize = "Medium" Then
-            Size = New Size(Size.Width * 0.9, Size.Height * 0.9)
-        ElseIf screenSize = "XLarge" Then
-            Size = New Size(iWidth * 1.3, iHeight * 1.3)
-        ElseIf screenSize = "Maximized" Then
-            Me.FormBorderStyle = Windows.Forms.FormBorderStyle.None
-            Me.WindowState = FormWindowState.Maximized
-        End If
+        Game_Resize()
 
         loadCKeys()
         imagesWorker = New BackgroundWorker
@@ -154,40 +139,12 @@ Public Class Game
 
         'sets the player tile image to the default @
         pImage = picPlayer.BackgroundImage
-        'scales the font size to that of the window
-        Dim newFont As Font = New System.Drawing.Font("Consolas", CInt(8 * Me.Size.Width / 688))
-        For i = 0 To Me.Controls.Count - 1
-            Me.Controls(i).Font = newFont
-        Next
-        For i = 0 To pnlSelection.Controls.Count - 1
-            pnlSelection.Controls(i).Font = newFont
-        Next
-        FileToolStripMenuItem.Font = newFont
-        SaveToolStripMenuItem.Font = newFont
-        LoadToolStripMenuItem.Font = newFont
-        DebugToolStripMenuItem1.Font = newFont
-        HelpToolStripMenuItem.Font = newFont
-        HelpToolStripMenuItem1.Font = newFont
-        InfoToolStripMenuItem.Font = newFont
-        newFont = New System.Drawing.Font("Consolas", CInt(9.25 * Me.Size.Width / 688), FontStyle.Underline)
-        lblNameTitle.Font = newFont
-        newFont = New System.Drawing.Font("Consolas", CInt(7 * Me.Size.Width / 688))
-        btnDrop.Font = newFont
-        btnLook.Font = newFont
-        newFont = New System.Drawing.Font("Consolas", CInt(9 * Me.Size.Width / 688))
-        MenuStrip1.Font = newFont
-        For i = 0 To pnlCombat.Controls.Count - 1
-            pnlCombat.Controls(i).Font = newFont
-        Next
-        For i = 0 To pnlDescript.Controls.Count - 1
-            pnlDescript.Controls(i).Font = newFont
-        Next
 
         pnlCombat.Location = New Point(115, pnlCombat.Location.Y)
-        pnlDescript.Location = New Point(115, pnlDescript.Location.Y)
+        pnlDescription.Location = New Point(115, pnlDescription.Location.Y)
         pnlSaveLoad.Location = New Point(188, pnlSaveLoad.Location.Y)
         pnlSelection.Location = New Point(115, pnlSelection.Location.Y)
-        picStart.Location = New Point(2, picStart.Location.Y)
+        picStart.Location = New Point(-2, picStart.Location.Y)
         If Not System.IO.File.Exists("dis.cla") Then
             If MessageBox.Show("This game features adult content sexual in nature, and is not for anyone under the age of 18 or otherwise of legal age in their country. By clicking 'Yes' below, you confirm that you are legally an adult in your country.", "Obligatory Disclaimer", MessageBoxButtons.YesNo) = Windows.Forms.DialogResult.Yes Then
                 System.IO.File.CreateText("dis.cla")
@@ -198,7 +155,6 @@ Public Class Game
 
         Spell.init()
         eventDialogBox = New EventBox(txtPNLEvents, pnlEvent)
-        Game_Resize()
     End Sub
     Sub createConfigs()
         Dim w As StreamWriter
@@ -645,14 +601,16 @@ Public Class Game
                     Else
                         viewArray(y, x) = 0
                     End If
-                    If mDun.numCurrFloor < 6 Then
-                        setDungeonTileImg(x, y, viewArray)
+                    If mDun.numCurrFloor = 13 Then
+                        setFoggyForestTileImg(x, y, viewArray)
                     ElseIf mDun.numCurrFloor = 9999 Then
                         setSpaceTileImg(x, y, viewArray)
                     ElseIf mDun.numCurrFloor = 91017 Then
                         setLegacyTileImg(x, y, viewArray)
-                    Else
+                    ElseIf mDun.numCurrFloor > 5 Then
                         setForestTileImg(x, y, viewArray)
+                    Else
+                        setDungeonTileImg(x, y, viewArray)
                     End If
                     x += 1
                 Next
@@ -807,6 +765,37 @@ Public Class Game
             Case Else
                 mPics(y, x).BackgroundImage = Nothing
                 mPics(y, x).BackColor = Color.Black
+        End Select
+    End Sub
+    Sub setFoggyForestTileImg(ByVal x As Integer, ByVal y As Integer, ByRef viewArray As Integer(,))
+        Select Case viewArray(y, x)
+            Case 0
+                mPics(y, x).BackgroundImage = picTreeFog.BackgroundImage
+            Case 1
+                mPics(y, x).BackgroundImage = Nothing
+                mPics(y, x).BackColor = Color.FromArgb(255, 36, 63, 52)
+            Case 2
+                mPics(y, x).BackgroundImage = picTileFog.BackgroundImage
+            Case 3
+                mPics(y, x).BackgroundImage = picStairFog.BackgroundImage
+            Case 4
+                mPics(y, x).BackgroundImage = player1.pImage
+            Case 5
+                mPics(y, x).BackgroundImage = picChestFog.BackgroundImage
+            Case 7
+                mPics(y, x).BackgroundImage = picStatueFog.BackgroundImage
+            Case 8
+                mPics(y, x).BackgroundImage = picTrapFog.BackgroundImage
+            Case 10
+                mPics(y, x).BackgroundImage = picBossStairsFog.BackgroundImage
+            Case 12
+                mPics(y, x).BackgroundImage = picCrystalFog.BackgroundImage
+            Case 13
+                mPics(y, x).BackgroundImage = picPathf.BackgroundImage
+            Case 15
+                mPics(y, x).BackgroundImage = picFVFog.BackgroundImage
+            Case 17
+                mPics(y, x).BackgroundImage = picCBFog.BackgroundImage
         End Select
     End Sub
     '|COMMAND DRIVERS|
@@ -1297,6 +1286,12 @@ Public Class Game
             End If
             Exit Sub
         End If
+        If mDun.numCurrFloor = 13 And player1.perks(perk.meetfae1) < 1 Then
+            If Int(Rnd() * 2) = 0 Then
+                Fae.firstEncounter()
+            End If
+            Exit Sub
+        End If
         Randomize()
         If eClock > 0 Then eClock -= 1
         If combatmode = True Or npcmode = True Or eClock <> 0 Or Not player1.canMoveFlag Then Exit Sub
@@ -1375,9 +1370,9 @@ Public Class Game
         If (lblEvent.Visible Or pnlEvent.Visible) And npcmode = True And Keydata.Equals(cKeys(13)) Then
             Return False
         End If
-        If pnlDescript.Visible And Not lblEvent.Visible Then
-            pnlDescript.Location = New Point(1000, pnlDescript.Location.Y)
-            pnlDescript.Visible = False
+        If pnlDescription.Visible And Not lblEvent.Visible Then
+            pnlDescription.Location = New Point(1000, pnlDescription.Location.Y)
+            pnlDescription.Visible = False
             Return True
         End If
         If (lblEvent.Visible Or pnlEvent.Visible) And Not (Keydata.Equals(Keys.Enter)) And Not Keydata.Equals(cKeys(0)) And Not Keydata.Equals(cKeys(1)) And Not Keydata.Equals(cKeys(2)) And Not Keydata.Equals(cKeys(3)) _
@@ -1831,7 +1826,7 @@ Public Class Game
         toDesc()
     End Sub
     Sub toDesc()
-        txtDescript.Text = player1.genDescription
+        txtPlayerDesc.Text = player1.genDescription
 
         Dim pImg = player1.prt.oneLayerImgCheck(player1.pForm.name, player1.pClass.name)
         If player1.prt.oneLayerImgCheck(player1.pForm.name, player1.pClass.name) Is Nothing Then
@@ -1841,8 +1836,8 @@ Public Class Game
 
         picDescPort.BackgroundImage = pImg
 
-        pnlDescript.Location = New Point((13 * (Me.Size.Width / 688)), (3 * (Me.Size.Width / 688)))
-        pnlDescript.Visible = True
+        pnlDescription.Location = New Point((13 * (Me.Size.Width / 688)), (3 * (Me.Size.Width / 688)))
+        pnlDescription.Visible = True
     End Sub
     'eat
     Sub eatKey()
@@ -1946,7 +1941,7 @@ Public Class Game
         If v < 0.92 Then
             MsgBox("Error 003: Incorrect save file version!")
             If mDun Is Nothing Then
-                picStart.Location = New Point(2, picStart.Location.Y)
+                picStart.Location = New Point(-2, picStart.Location.Y)
                 picStart.Visible = True
                 btnS.Visible = True
                 btnL.Visible = True
@@ -2055,10 +2050,10 @@ Public Class Game
         lblNameTitle.Text = player1.name & " the " & player1.pClass.name
         lblHealth.Text = "Health = " & CInt(player1.health * player1.getMaxHealth) & "/" & player1.maxHealth
         lblMana.Text = "Mana = " & player1.mana & "/" & player1.maxMana
-        lblHunger.Text = "Hunger = " & player1.hunger & "/100"
+        lblstamina.Text = "stamina = " & player1.stamina & "/100"
         lblATK.Text = "ATK = " & player1.getATK
         lblDEF.Text = "DEF = " & player1.getDEF
-        lblSKL.Text = "WIL = " & player1.getWIL
+        lblWIL.Text = "WIL = " & player1.getWIL
         lblSPD.Text = "SPD = " & player1.getSPD
 
         player1.currState.save(player1)
@@ -2437,10 +2432,7 @@ Public Class Game
 
 
         If healthCol Is Nothing = False Then
-            Dim place = Int(ratioEH * 100)
-            If place >= 100 Then place = 99
-            If place < 0 Then place = 0
-            picEHbar.BackColor = healthCol.GetPixel(place, 0)
+            picEHbar.BackColor = getHPColor(ratioEH)
         Else
             If ratioEH <= 0.2 Then picEHbar.BackColor = Color.Crimson Else picEHbar.BackColor = Color.YellowGreen
         End If
@@ -2451,16 +2443,24 @@ Public Class Game
         If x > picPHealth.Location.X + (174 * ratio) - (30 * ratio) Then x = picPHealth.Location.X + (174 * ratio) - (30 * ratio)
         lblPHealtDiff.Location = New Point(x, lblPHealtDiff.Location.Y)
         If healthCol Is Nothing = False Then
-            Dim place = Int(ratioPH * 100)
-            If place >= 100 Then place = 99
-            If place < 0 Then place = 0
-            picPHealth.BackColor = healthCol.GetPixel(place, 0)
+            picPHealth.BackColor = getHPColor(ratioPH)
         Else
             If ratioPH <= 0.2 Then picPHealth.BackColor = Color.Crimson Else picPHealth.BackColor = Color.YellowGreen
         End If
 
         player1.UIupdate()
     End Sub
+    Shared Function getHPColor(ByVal r As Double) As Color
+        Dim place = Int(r * 100)
+        If place >= 100 Then place = 99
+        If place < 0 Then place = 0
+
+        If Game.healthCol Is Nothing Then
+            Return Color.YellowGreen
+        Else
+            Return Game.healthCol.GetPixel(place, 0)
+        End If
+    End Function
     Sub pnlCombatClose()
         pnlCombat.Location = New Point(1000, pnlCombat.Location.Y)
         pnlCombat.Visible = False
@@ -2468,10 +2468,50 @@ Public Class Game
     End Sub
 
     '|INVENTORY|
+    Private Sub lstInventory_DrawItem(sender As Object, e As DrawItemEventArgs) Handles lstInventory.DrawItem
+        e.DrawBackground()
+        Dim textBrush As Brush = New SolidBrush(lstInventory.ForeColor)
+        Dim drawFont As Font = e.Font
+
+        If e.Index < 0 Then Exit Sub
+
+        Dim text = DirectCast(sender, ListBox).Items(e.Index).ToString()
+
+        If (e.State And DrawItemState.Selected) = DrawItemState.Selected Then
+            e.Graphics.FillRectangle(New SolidBrush(lstInventory.BackColor), e.Bounds)
+            If Not text.StartsWith("-") Then textBrush = Brushes.Gold
+        End If
+
+
+        If text.StartsWith("-") Then
+            drawFont = DDUtils.scaledFont(drawFont, drawFont.Size, True)
+        ElseIf Not (e.State And DrawItemState.Selected) = DrawItemState.Selected Then
+            Dim i = 80
+            textBrush = New SolidBrush(Color.FromArgb(lstInventory.ForeColor.A,
+                                                      lstInventory.ForeColor.R - i,
+                                                      lstInventory.ForeColor.B - i,
+                                                      lstInventory.ForeColor.G - i))
+        End If
+
+        e.Graphics.DrawString(text,
+                              drawFont,
+                              textBrush,
+                              e.Bounds,
+                              StringFormat.GenericDefault)
+    End Sub
+    Private Sub lstInventory_MeasureItem(sender As Object, e As MeasureItemEventArgs) Handles lstInventory.MeasureItem
+        Dim text = DirectCast(sender, ListBox).Items(e.Index).ToString()
+
+        If Not (text.Equals("")) Then
+            e.ItemHeight = TextRenderer.MeasureText(text, DirectCast(sender, ListBox).Font).Height + 2
+        Else
+            e.ItemHeight *= 0.33
+        End If
+    End Sub
     Private Sub lstInventory_SelectedValueChanged(sender As Object, e As EventArgs) Handles lstInventory.SelectedValueChanged
         'lstInventory_SelectedValueChanged handles the selecting of items from the inventory listbox
         Try
-            If lstInventory.SelectedItem.ToString.Substring(0, 1) = "-" Then Throw New NullReferenceException
+            If lstInventory.SelectedItem.ToString.Length = 0 OrElse lstInventory.SelectedItem.ToString.EndsWith(":") Then Throw New NullReferenceException
             selectedItem = player1.inv.item(player1.inv.invIDorder(lstInventory.SelectedIndex))
             If Not selectedItem Is Nothing Then
                 'MsgBox(aInd & ", " & subString)
@@ -2490,7 +2530,7 @@ Public Class Game
         chkUseable.Visible = True
         chkPotion.Visible = True
         chkFood.Visible = True
-        chkArmor.Visible = True
+        frmArmor.Visible = True
         chkWeapon.Visible = True
         chkMisc.Visible = True
         chkAcc.Visible = True
@@ -2502,7 +2542,7 @@ Public Class Game
         If chkUseable.Checked Then invFilters(0) = True Else invFilters(0) = False
         If chkPotion.Checked Then invFilters(1) = True Else invFilters(1) = False
         If chkFood.Checked Then invFilters(2) = True Else invFilters(2) = False
-        If chkArmor.Checked Then invFilters(3) = True Else invFilters(3) = False
+        If frmArmor.Checked Then invFilters(3) = True Else invFilters(3) = False
         If chkWeapon.Checked Then invFilters(4) = True Else invFilters(4) = False
         If chkMisc.Checked Then invFilters(5) = True Else invFilters(5) = False
         If chkAcc.Checked Then invFilters(6) = True Else invFilters(6) = False
@@ -2511,7 +2551,7 @@ Public Class Game
         chkUseable.Visible = False
         chkPotion.Visible = False
         chkFood.Visible = False
-        chkArmor.Visible = False
+        frmArmor.Visible = False
         chkWeapon.Visible = False
         chkMisc.Visible = False
         chkAcc.Visible = False
@@ -2530,8 +2570,8 @@ Public Class Game
     Private Sub fFood_CheckedChanged(sender As Object, e As EventArgs) Handles chkFood.CheckedChanged
         If chkFood.Checked Then invFilters(2) = True Else invFilters(2) = False
     End Sub
-    Private Sub fArmor_CheckedChanged(sender As Object, e As EventArgs) Handles chkArmor.CheckedChanged
-        If chkArmor.Checked Then invFilters(3) = True Else invFilters(3) = False
+    Private Sub fArmor_CheckedChanged(sender As Object, e As EventArgs) Handles frmArmor.CheckedChanged
+        If frmArmor.Checked Then invFilters(3) = True Else invFilters(3) = False
     End Sub
     Private Sub fWeapon_CheckedChanged(sender As Object, e As EventArgs) Handles chkWeapon.CheckedChanged
         If chkWeapon.Checked Then invFilters(4) = True Else invFilters(4) = False
@@ -2546,7 +2586,7 @@ Public Class Game
         chkUseable.Checked = True
         chkPotion.Checked = True
         chkFood.Checked = True
-        chkArmor.Checked = True
+        frmArmor.Checked = True
         chkWeapon.Checked = True
         chkMisc.Checked = True
         chkAcc.Checked = True
@@ -2555,7 +2595,7 @@ Public Class Game
         chkUseable.Checked = False
         chkPotion.Checked = False
         chkFood.Checked = False
-        chkArmor.Checked = False
+        frmArmor.Checked = False
         chkWeapon.Checked = False
         chkMisc.Checked = False
         chkAcc.Checked = False
@@ -2730,28 +2770,22 @@ Public Class Game
         loadCKeys()
     End Sub
     Private Sub btnSettings_Click(sender As Object, e As EventArgs) Handles btnSettings.Click
+        Dim ss = screenSize.ToString
+
         Dim s As Settings = New Settings
         s.ShowDialog()
         s.Dispose()
-        If screenSize = "Small" Then
-            Size = New Size(iWidth * 0.8, iHeight * 0.8)
-            Me.FormBorderStyle = Windows.Forms.FormBorderStyle.FixedSingle
-            Me.WindowState = FormWindowState.Normal
-        ElseIf screenSize = "Medium" Then
-            Size = New Size(iWidth * 0.9, iHeight * 0.9)
-            Me.FormBorderStyle = Windows.Forms.FormBorderStyle.FixedSingle
-            Me.WindowState = FormWindowState.Normal
-        ElseIf screenSize = "XLarge" Then
-            Size = New Size(iWidth * 1.3, iHeight * 1.3)
-            Me.FormBorderStyle = Windows.Forms.FormBorderStyle.FixedSingle
-            Me.WindowState = FormWindowState.Normal
-        ElseIf screenSize = "Maximized" Then
+
+        If screenSize = "Maximized" Then
             Me.FormBorderStyle = Windows.Forms.FormBorderStyle.None
             Me.WindowState = FormWindowState.Maximized
         Else
-            Size = New Size(iWidth, iHeight)
             Me.FormBorderStyle = Windows.Forms.FormBorderStyle.FixedSingle
             Me.WindowState = FormWindowState.Normal
+        End If
+
+        If Not ss.Equals("Large") Then
+            Application.Restart()
         End If
         Game_Resize()
     End Sub
@@ -3177,72 +3211,7 @@ Public Class Game
         'player1.canMoveFlag = False
     End Sub
     Private Sub Game_Resize()
-        Dim RW As Double = (Me.Width - startingWidth) / startingWidth ' Ratio change of width
-        Dim RH As Double = (Me.Height - startingHeight) / startingHeight ' Ratio change of height
-
-        'scales the font size to that of the window
-        Dim newFont As Font = New System.Drawing.Font("Consolas", CInt(8 * Me.Size.Width / 688))
-        For i = 0 To Me.Controls.Count - 1
-            Me.Controls(i).Width += CDbl(Me.Controls(i).Width * RW)
-            Me.Controls(i).Height += CDbl(Me.Controls(i).Height * RH)
-            Me.Controls(i).Left += CDbl(Me.Controls(i).Left * RW)
-            Me.Controls(i).Top += CDbl(Me.Controls(i).Top * RH)
-            Me.Controls(i).Font = newFont
-        Next
-        For i = 0 To pnlSelection.Controls.Count - 1
-            pnlSelection.Controls(i).Width += CDbl(pnlSelection.Controls(i).Width * RW)
-            pnlSelection.Controls(i).Height += CDbl(pnlSelection.Controls(i).Height * RH)
-            pnlSelection.Controls(i).Left += CDbl(pnlSelection.Controls(i).Left * RW)
-            pnlSelection.Controls(i).Top += CDbl(pnlSelection.Controls(i).Top * RH)
-            pnlSelection.Controls(i).Font = newFont
-        Next
-        FileToolStripMenuItem.Font = newFont
-        SaveToolStripMenuItem.Font = newFont
-        LoadToolStripMenuItem.Font = newFont
-        HelpToolStripMenuItem.Font = newFont
-        HelpToolStripMenuItem1.Font = newFont
-        InfoToolStripMenuItem.Font = newFont
-        newFont = New System.Drawing.Font("Consolas", CInt(9.25 * Me.Size.Width / 688), FontStyle.Underline)
-        lblNameTitle.Font = newFont
-        newFont = New System.Drawing.Font("Consolas", CDbl(7 * Me.Size.Width / 688))
-        btnDrop.Font = newFont
-        btnControls.Font = newFont
-        btnSettings.Font = newFont
-        btnLook.Font = newFont
-        newFont = New System.Drawing.Font("Consolas", CDbl(9 * Me.Size.Width / 688))
-        MenuStrip1.Font = newFont
-        For i = 0 To pnlCombat.Controls.Count - 1
-            pnlCombat.Controls(i).Width += CDbl(pnlCombat.Controls(i).Width * RW)
-            pnlCombat.Controls(i).Height += CDbl(pnlCombat.Controls(i).Height * RH)
-            pnlCombat.Controls(i).Left += CDbl(pnlCombat.Controls(i).Left * RW)
-            pnlCombat.Controls(i).Top += CDbl(pnlCombat.Controls(i).Top * RH)
-            pnlCombat.Controls(i).Font = newFont
-        Next
-        For i = 0 To pnlDescript.Controls.Count - 1
-            pnlDescript.Controls(i).Width += CDbl(pnlDescript.Controls(i).Width * RW)
-            pnlDescript.Controls(i).Height += CDbl(pnlDescript.Controls(i).Height * RH)
-            pnlDescript.Controls(i).Left += CDbl(pnlDescript.Controls(i).Left * RW)
-            pnlDescript.Controls(i).Top += CDbl(pnlDescript.Controls(i).Top * RH)
-            If Not pnlDescript.Controls(i).Name.Equals("Label5") Then pnlDescript.Controls(i).Font = newFont Else pnlDescript.Controls(i).Font = New System.Drawing.Font("Consolas", CDbl(7.8 * Me.Size.Width / 688))
-        Next
-        For i = 0 To pnlSaveLoad.Controls.Count - 1
-            pnlSaveLoad.Controls(i).Width += CDbl(pnlSaveLoad.Controls(i).Width * RW)
-            pnlSaveLoad.Controls(i).Height += CDbl(pnlSaveLoad.Controls(i).Height * RH)
-            pnlSaveLoad.Controls(i).Left += CDbl(pnlSaveLoad.Controls(i).Left * RW)
-            pnlSaveLoad.Controls(i).Top += CDbl(pnlSaveLoad.Controls(i).Top * RH)
-        Next
-        For i = 0 To pnlEvent.Controls.Count - 1
-            pnlEvent.Controls(i).Width += CDbl(pnlEvent.Controls(i).Width * RW)
-            pnlEvent.Controls(i).Height += CDbl(pnlEvent.Controls(i).Height * RH)
-            pnlEvent.Controls(i).Left += CDbl(pnlEvent.Controls(i).Left * RW)
-            pnlEvent.Controls(i).Top += CDbl(pnlEvent.Controls(i).Top * RH)
-            pnlEvent.Controls(i).Font = newFont
-        Next
-
-        startingHeight = Height
-        startingWidth = Width
-        Dim ratio As Double = Me.Size.Width / 1024
-        picLoadBar.Location = New Point(306 * ratio, 361 * ratio)
+        DDUtils.resizeForm(Me, iHeight, iWidth)
     End Sub
     Private Sub CreateMapAndImages()
         Dim XSize As Double = 15.0 * (CDbl(Me.Size.Width) / 688.0)
@@ -3330,7 +3299,7 @@ Public Class Game
 
 
     Public Sub cleanupPanels()
-        pnlDescript.Visible = False
+        pnlDescription.Visible = False
         If Not combatmode Then pnlCombat.Visible = False
         pnlEvent.Visible = False
         pnlSaveLoad.Visible = False
@@ -3342,8 +3311,9 @@ Public Class Game
         btnEQP.Enabled = True
     End Sub
     Private Sub btnClosePnlEvent_Click(sender As Object, e As EventArgs) Handles btnClosePnlEvent.Click
-        doLblEventOnClose()
         closeLblEvent()
+
+        doLblEventOnClose()
     End Sub
 
     Private Sub btnNextLPnlEvent_Click(sender As Object, e As EventArgs) Handles btnNextLPnlEvent.Click

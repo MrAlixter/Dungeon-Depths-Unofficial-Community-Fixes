@@ -46,16 +46,16 @@
             Return "Hyper health effect"
         ElseIf pe.GetType Is GetType(HManaEffect) Then
             Return "Hyper mana effect"
-        ElseIf pe.GetType Is GetType(HungerEffect) Then
-            Return "Hunger reduction"
+        ElseIf pe.GetType Is GetType(staminaEffect) Then
+            Return "Stamina gain"
         ElseIf pe.GetType Is GetType(ManaEffect) Then
             Return "Mana gain"
         ElseIf pe.GetType Is GetType(MinManaEffect) Then
             Return "Minor mana gain"
         ElseIf pe.GetType Is GetType(MajManaEffect) Then
             Return "Major mana gain"
-        ElseIf pe.GetType Is GetType(MinHungerEffect) Then
-            Return "Minor hunger reduction"
+        ElseIf pe.GetType Is GetType(MinstaminaEffect) Then
+            Return "Minor stamina gain"
         ElseIf pe.GetType Is GetType(MinPainEffect) Then
             Return "Minor pain effect"
         ElseIf pe.GetType Is GetType(MinRestEffect) Then

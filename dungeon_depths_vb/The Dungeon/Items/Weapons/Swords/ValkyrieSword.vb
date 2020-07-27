@@ -23,7 +23,7 @@
 
     Public Overrides Sub onunEquip(Optional w As Weapon = Nothing)
         Dim p = Game.player1
-        If p.pClass.name.Equals("Valkyrie") And Not w.GetType.IsSubclassOf(GetType(Sword)) Then
+        If p.pClass.name.Equals("Valkyrie") And Not w Is Nothing AndAlso Not w.GetType.IsSubclassOf(GetType(Sword)) Then
             Game.pushLstLog("Putting away your sword causes you to change into your regular self!")
             p.inv.add(95, -1)
             p.revertToPState()

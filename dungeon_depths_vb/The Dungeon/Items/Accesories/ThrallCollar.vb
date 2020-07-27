@@ -29,7 +29,7 @@
         If Not p.pClass.name.equals("Thrall") Then formerClass = p.pClass.name
         formerEyeType = p.prt.iArrInd(pInd.eyes)
         If Transformation.canBeTFed(p) Then p.pState.save(p)
-        p.pClass = p.classes(perk.thrall)
+        p.pClass = p.classes("Thrall")
         If p.prt.sexBool Then
             p.prt.setIAInd(pInd.eyes, 19, True, True)
         Else
@@ -66,14 +66,8 @@
 
         If p.pForm.Equals("Half-Succubus") Or p.pClass.Equals(perk.thrall) Then Exit Sub
 
-        For i = 0 To p.ongoingTFs.Count - 1
-            If i < p.ongoingTFs.Count Then
-                If p.ongoingTFs(i).GetType() Is GetType(ThrallTF) Then
-                    p.ongoingTFs(i).stopTF()
-                    p.ongoingTFs.RemoveAt(i)
-                End If
-            End If
-        Next
+        p.ongoingTFs.remove("ThrallTF")
+
         p.perks(perk.thrall) = -1
         p.pClass = Game.player1.classes(formerClass)
         p.prt.setIAInd(pInd.eyes, formerEyeType)

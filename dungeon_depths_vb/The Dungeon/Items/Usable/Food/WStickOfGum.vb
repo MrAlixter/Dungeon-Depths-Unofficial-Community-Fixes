@@ -3,7 +3,7 @@
 
     Sub New()
         MyBase.setName("Melon_Stick_of_Gum")
-        MyBase.setDesc("An pink piece of gum with a faint chemical smell.  Supposedly, it tastes like watermelon.  -10 Hunger")
+        MyBase.setDesc("An pink piece of gum with a faint chemical smell.  Supposedly, it tastes like watermelon.  +10 Stamina")
         id = 132
         tier = 3
         MyBase.setUsable(True)

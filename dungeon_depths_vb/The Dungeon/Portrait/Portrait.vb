@@ -196,6 +196,8 @@ Public Class Portrait
             pic = Game.picBlobM.BackgroundImage
         ElseIf pForm.Equals("Blob") And sexBool() Then
             pic = Game.picBlobF.BackgroundImage
+        ElseIf pForm.Equals("Fae") Then
+            pic = Game.picPFae.BackgroundImage
         End If
         Return pic
     End Function
@@ -652,14 +654,6 @@ Public Class Portrait
 
     'gets the player's current sexBool
     Public Function sexBool() As Boolean
-
-        Dim p As Player
-        If Not ent Is Nothing AndAlso ent.GetType Is GetType(Player) Then
-            p = CType(ent, Player)
-        Else
-            Return (iArrInd(pInd.body).Item2)
-        End If
-
         If iArrInd(pInd.genitalia).Item1 = -1 Then
             Return True
         Else

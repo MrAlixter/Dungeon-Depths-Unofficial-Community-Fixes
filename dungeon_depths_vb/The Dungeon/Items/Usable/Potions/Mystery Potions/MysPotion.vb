@@ -16,8 +16,8 @@
         Dim mainEffects As List(Of PEffect) = New List(Of PEffect)
         Dim sideEffects As List(Of PEffect) = New List(Of PEffect)
 
-        mainEffects.AddRange({New HealthEffect, New HungerEffect, New ManaEffect, New MajHealthEffect,
-                              New MajManaEffect, New MinHealthEffect, New MinHungerEffect,
+        mainEffects.AddRange({New HealthEffect, New staminaEffect, New ManaEffect, New MajHealthEffect,
+                              New MajManaEffect, New MinHealthEffect, New MinstaminaEffect,
                               New MinManaEffect, New MinRestEffect, New MinRestEffect,
                               New RestEffect, New PainEffect, New MinPainEffect, New WeakRestEffect,
                               New MinFemEffect, New MinMasEffect, New MinFemEffect,

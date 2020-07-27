@@ -46,6 +46,10 @@
                 Return New MASBimboTF()
             Case "Plush"
                 Return New PlushTF()
+            Case "Fae"
+                Return New FaePieTF()
+            Case "Horse"
+                Return New HorseTF()
             Case Else
                 Return Nothing
         End Select

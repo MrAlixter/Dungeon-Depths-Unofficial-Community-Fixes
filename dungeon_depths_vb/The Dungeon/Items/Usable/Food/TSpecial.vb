@@ -3,7 +3,7 @@
     Sub New()
         MyBase.setName("Tavern_Special")
         MyBase.setDesc("An entire broasted chicken, served with mashed potatos and bread." & vbCrLf &
-                       "-100 Hunger" & vbCrLf &
+                       "+100 Stamina" & vbCrLf &
                        "Low chance to raise Max Health by 5")
         id = 135
         tier = Nothing

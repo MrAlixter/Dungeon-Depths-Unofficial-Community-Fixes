@@ -2,14 +2,14 @@
     Inherits Special
     Sub New(ByRef u As Player, ByRef t As NPC)
         MyBase.New(u, t)
-        MyBase.setName("Unholy Seduction")
+        MyBase.setName("Charm")
         MyBase.setUOC(False)
         MyBase.setcost(-1)
     End Sub
     Public Overrides Sub effect()
         MyBase.getTarget.isStunned = True
         MyBase.getTarget.stunct = 2
-        Game.pushLstLog("Unholy Seduction!")
-        Game.pushLblCombatEvent("Unholy Seduction!" & vbCrLf & "Stuns enemy for 3 turns.")
+        Game.pushLstLog("Charm!")
+        Game.pushLblCombatEvent("Charm!" & vbCrLf & "Stuns enemy for 3 turns.")
     End Sub
 End Class

@@ -164,7 +164,7 @@
         Game.btnShop.Visible = False
         Game.btnFight.Visible = False
         Game.btnLeave.Visible = False
-        If npcIndex > 4 And Not Game.picNPC.BackgroundImage.Equals(Game.picSWDoll.BackgroundImage) Then npcIndex = 0
+        If npcIndex > 4 And Not Game.picNPC.BackgroundImage.Equals(ShopNPC.npcLib.atrs(0).getAt(3)) Then npcIndex = 0
     End Sub
 
     Public Overridable Sub toDoll()

@@ -3,7 +3,7 @@
 
     Sub New()
         MyBase.setName("Medicinal_Tea")
-        MyBase.setDesc("A bitter tea that restores health. -15 Hunger, +50 Health")
+        MyBase.setDesc("A bitter tea that restores health. +15 Stamina, +50 Health")
         id = 33
         tier = 2
         MyBase.setUsable(True)

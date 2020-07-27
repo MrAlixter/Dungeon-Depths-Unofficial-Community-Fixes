@@ -8,7 +8,7 @@
     Dim health As Double
     Public maxHealth, mana, maxMana, attack, defence As Integer
     Dim will, speed, gold, lust As Integer
-    Public breastSize, hunger, dickSize, buttSize As Integer
+    Public breastSize, stamina, dickSize, buttSize As Integer
     Dim equippedWeapon As Weapon
     Public equippedArmor As Armor
     Dim equippedAcce As Accessory
@@ -39,7 +39,7 @@
         breastSize = p.breastSize
         dickSize = p.dickSize
         buttSize = p.buttSize
-        hunger = p.hunger
+        stamina = p.stamina
         equippedWeapon = p.equippedWeapon
         equippedArmor = p.equippedArmor
         equippedAcce = p.equippedAcce
@@ -72,7 +72,7 @@
         breastSize = 0
         dickSize = 0
         buttSize = 0
-        hunger = 0
+        stamina = 0
         equippedWeapon = New BareFists
         equippedArmor = New Naked
         equippedAcce = New noAcce
@@ -141,7 +141,7 @@
         breastSize = p.breastSize
         dickSize = p.dickSize
         buttSize = p.buttSize
-        hunger = p.hunger
+        stamina = p.stamina
         equippedWeapon = p.equippedWeapon
         equippedArmor = p.equippedArmor
         equippedAcce = p.equippedAcce
@@ -175,7 +175,7 @@
             gold = 0
             lust = 0
             breastSize = 0
-            hunger = 0
+            stamina = 0
             equippedWeapon = New BareFists
             equippedArmor = New Naked
             iArrInd = {New Tuple(Of Integer, Boolean, Boolean)(2, False, False), New Tuple(Of Integer, Boolean, Boolean)(2, False, False), New Tuple(Of Integer, Boolean, Boolean)(2, False, False), New Tuple(Of Integer, Boolean, Boolean)(2, False, False), New Tuple(Of Integer, Boolean, Boolean)(2, False, False), New Tuple(Of Integer, Boolean, Boolean)(2, False, False), New Tuple(Of Integer, Boolean, Boolean)(2, False, False), New Tuple(Of Integer, Boolean, Boolean)(2, False, False), New Tuple(Of Integer, Boolean, Boolean)(2, False, False), New Tuple(Of Integer, Boolean, Boolean)(2, False, False), New Tuple(Of Integer, Boolean, Boolean)(2, False, False), New Tuple(Of Integer, Boolean, Boolean)(2, False, False), New Tuple(Of Integer, Boolean, Boolean)(2, False, False), New Tuple(Of Integer, Boolean, Boolean)(2, False, False), New Tuple(Of Integer, Boolean, Boolean)(2, False, False), New Tuple(Of Integer, Boolean, Boolean)(2, False, False), New Tuple(Of Integer, Boolean, Boolean)(2, False, False), New Tuple(Of Integer, Boolean, Boolean)(2, False, False), New Tuple(Of Integer, Boolean, Boolean)(2, False, False), New Tuple(Of Integer, Boolean, Boolean)(2, False, False)}
@@ -202,7 +202,7 @@
         will = CInt(readArray(12))
         speed = CInt(readArray(13))
         If Not readArray(14).Equals("placeholder") Then isPetrified = CBool(readArray(14))
-        hunger = CInt(readArray(15))
+        stamina = CInt(readArray(15))
         gold = CInt(readArray(16))
 
         For Each k In Equipment.aList.Keys
@@ -253,7 +253,7 @@
     Public Function write() As String
         If initFlag Then
             Dim output As String = CStr(name & "*" & pClass.name & "~" & pForm.name & "*" & description & "*" & health & "*" & maxHealth & "*" & mana & "*" & maxMana & "*" & buttSize & "*" & haircolor.A & "*" & skincolor.A & "*" & _
-               attack & "*" & defence & "*" & will & "*" & speed & "*" & isPetrified & "*" & hunger & "*" & gold & "*" & equippedArmor.getName() & "*" & equippedWeapon.getName() & "*" & _
+               attack & "*" & defence & "*" & will & "*" & speed & "*" & isPetrified & "*" & stamina & "*" & gold & "*" & equippedArmor.getName() & "*" & equippedWeapon.getName() & "*" & _
                sex & "*" & buttSize & "*" & breastSize & "*" & haircolor.R & "*" & haircolor.G & "*" & haircolor.B & "*" & skincolor.R & "*" & skincolor.G & "*" & skincolor.B & "*" & _
                textColor.R & "*" & textColor.G & "*" & textColor.B & "*" & "placeholder" & "*")
             output += perks.Count & "*"

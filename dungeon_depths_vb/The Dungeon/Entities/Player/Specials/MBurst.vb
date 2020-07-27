@@ -9,6 +9,6 @@
     Public Overrides Sub effect()
         MyBase.getUser.perks(perk.mburst) = 14
         Game.pushLstLog("MANA BURST!")
-        Game.pushLblCombatEvent("MANA BURST!" & vbCrLf & "Regen Health and Mana at the cost of hunger for 60 turns.")
+        Game.pushLblCombatEvent("MANA BURST!" & vbCrLf & "Regen Health and Mana at the cost of stamina for 60 turns.")
     End Sub
 End Class

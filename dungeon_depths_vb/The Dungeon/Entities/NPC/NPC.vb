@@ -3,7 +3,6 @@
     'transformation variables
     Public tfCt As Integer = 0
     Public tfEnd As Integer = 0
-    Public sName As String = ""
     Public sMaxHealth, sMana, sMaxMana, sAttack, sDefence, sWill, sSpeed As Integer
     Public xpValue As Integer = 10
     'dialog variables
@@ -207,12 +206,9 @@
         If sName.Equals("Ooze Empress") Then
             Game.pushLblEvent(Game.lblEvent.Text.Split("Press")(0), AddressOf RandoTF.floor4revert, AddressOf RandoTF.floor4keep, "Take your body back?")
         End If
-        For i = 0 To p.ongoingTFs.Count - 1
-            If p.ongoingTFs(i).GetType() Is GetType(NekoTF) Then
-                p.ongoingTFs(i).stopTF()
-                p.ongoingTFs.RemoveAt(i)
-            End If
-        Next
+       
+        p.ongoingTFs.remove("Neko")
+
         p.perks(perk.nekocurse) = -1
         If p.perks(perk.swordpossess) > -1 Then
             p.perks(perk.swordpossess) += 1

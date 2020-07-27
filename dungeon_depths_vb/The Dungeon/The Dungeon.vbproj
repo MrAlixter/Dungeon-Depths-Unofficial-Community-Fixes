@@ -118,6 +118,8 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="DDDateTime.vb" />
+    <Compile Include="Entities\Player\Specials\DrainSoul.vb" />
+    <Compile Include="TFList.vb" />
     <Compile Include="DDUtils.vb" />
     <Compile Include="Entities\Entity.vb" />
     <Compile Include="Entities\NPC\Hostile\Bosses\ExplorerBoss.vb" />
@@ -141,6 +143,7 @@
     <Compile Include="Entities\NPC\Hostile\Bosses\OEmpress.vb" />
     <Compile Include="Entities\NPC\Hostile\Bosses\Targax.vb" />
     <Compile Include="Entities\NPC\Non-Hostile\Caelia.vb" />
+    <Compile Include="Entities\NPC\Non-Hostile\Fae.vb" />
     <Compile Include="Entities\NPC\Non-Hostile\CBrok.vb" />
     <Compile Include="Entities\NPC\Non-Hostile\TimeTraveler.vb" />
     <Compile Include="Entities\NPC\Non-Hostile\MaskedMG.vb" />
@@ -187,6 +190,7 @@
     <Compile Include="Entities\Player\Forms\Dragon.vb" />
     <Compile Include="Entities\Player\Forms\Elf.vb" />
     <Compile Include="Entities\Player\Forms\Human.vb" />
+    <Compile Include="Entities\Player\Forms\needsRevertPassage\FaeForm.vb" />
     <Compile Include="Entities\Player\Forms\needsRevertPassage\CombatUnit.vb" />
     <Compile Include="Entities\Player\Forms\needsRevertPassage\Goth.vb" />
     <Compile Include="Entities\Player\Forms\needsRevertPassage\Plush.vb" />
@@ -293,6 +297,8 @@
     <Compile Include="Entities\Player\Transformations\maggirlTFs\ProMagGirlTF.vb" />
     <Compile Include="Entities\Player\Transformations\maggirlTFs\MagSlutTF.vb" />
     <Compile Include="Entities\Player\Transformations\BroodmotherTF.vb" />
+    <Compile Include="Entities\Player\Transformations\Polymorphs\HorseTF.vb" />
+    <Compile Include="Entities\Player\Transformations\Polymorphs\FaePieTF.vb" />
     <Compile Include="Entities\Player\Transformations\Polymorphs\MASBimboTF.vb" />
     <Compile Include="Entities\Player\Transformations\Polymorphs\GothGFTF.vb" />
     <Compile Include="Entities\Player\Transformations\Polymorphs\PlushTF.vb" />

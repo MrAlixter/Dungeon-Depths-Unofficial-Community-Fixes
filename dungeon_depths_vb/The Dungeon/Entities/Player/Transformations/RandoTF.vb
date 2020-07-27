@@ -40,7 +40,7 @@
         p.speed = 10 + Int(Rnd() * 7)
         p.gold = 25 + Int(Rnd() * 200)
         p.lust = 0
-        p.hunger = 0
+        p.stamina = 0
         p.hBuff = 0
         p.mBuff = 0
         p.wBuff = 0

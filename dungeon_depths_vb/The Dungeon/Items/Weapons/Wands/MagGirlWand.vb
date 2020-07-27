@@ -24,7 +24,7 @@
 
     Public Overrides Sub onunEquip(Optional w As Weapon = Nothing)
         Dim p = Game.player1
-        If p.pClass.name.Equals("Magical Girl") And Not w.GetType.IsSubclassOf(GetType(Wand)) Then
+        If p.pClass.name.Equals("Magical Girl") And Not w Is Nothing AndAlso Not w.GetType.IsSubclassOf(GetType(Wand)) Then
             Game.pushLstLog("Putting away your wand causes you to change into your regular self!")
             p.inv.add(mgOutfit, -1)
             p.magGState.save(p)

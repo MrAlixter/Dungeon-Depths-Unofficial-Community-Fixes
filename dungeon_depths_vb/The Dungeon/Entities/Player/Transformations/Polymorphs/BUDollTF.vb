@@ -22,19 +22,25 @@
         Equipment.clothesChange("Naked")
         p.pForm = p.forms("Blowup Doll")
 
-        'maid transformation
+        'bu doll transformation
+
+        p.breastSize = 4
+
         p.prt.setIAInd(pInd.rearhair, 14, True, True)
-        p.prt.setIAInd(pInd.body, 16, True, True)
-        p.prt.setIAInd(pInd.clothes, 47, True, True)
         p.prt.setIAInd(pInd.face, 1, True, True)
         p.prt.setIAInd(pInd.midhair, 18, True, True)
         p.prt.setIAInd(pInd.nose, 1, True, True)
+        p.prt.setIAInd(pInd.body, 9, True, True)
         p.prt.setIAInd(pInd.mouth, 12, True, True)
         p.prt.setIAInd(pInd.eyes, 17, True, True)
-        p.prt.setIAInd(pInd.eyebrows, 2, False, True)
+        p.prt.setIAInd(pInd.eyebrows, 2, True, False)
         p.prt.setIAInd(pInd.cloak, 0, True, True)
         p.prt.setIAInd(pInd.fronthair, 14, True, True)
         p.prt.setIAInd(pInd.hat, 0, True, False)
+
+        p.reverseBSroute()
+        p.prt.setIAInd(pInd.shoulders, 9, True, False)
+        p.prt.setIAInd(pInd.genitalia, 5, True, False)
 
         'transformation description push
         out += "Looking down, you see some sort of coupon laying on the ground.  Picking it up, you read " & vbCrLf &

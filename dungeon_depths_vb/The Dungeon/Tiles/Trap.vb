@@ -78,8 +78,12 @@
                 Game.pushLblEvent(out, AddressOf Trap.rubyRevert)
                 Game.player1.drawPort()
             Case 3
-                Game.player1.ongoingTFs.Add(New BUDollTF())
-                Game.player1.update()
+                If Transformation.canBeTFed(Game.player1) Then
+                    Game.player1.ongoingTFs.Add(New BUDollTF())
+                    Game.player1.update()
+                Else
+                    Game.pushLblEvent("You spot a slip of paper on the floor, although a gust of wind blows it away before you can investigate it further...")
+                End If
             Case 4
                 Dim out = "As your foot touches down on what looks to be the same ground that you have been walking on, you find that it is not met with any resistance.  Unable to keep your balance, you fall face first into the shiny waterlike facsimile of the floor and are thrown, flipping, into a another room.  As you regain your senses, you notice that you actually just ahead of where you were.  Turning around, you tap the floor you presumably fell out through, only to find it as solid as any other patch of floor you have come across.  Not able to find anything else abnormal with your surroundings, you write your expirience off as some failed illusion and set off on your way."
                 If Game.player1.prt.sexBool Then
@@ -116,7 +120,7 @@
         Game.pushLblEvent("𝑺𝒆𝒗𝒆𝒓𝒂𝒍 𝒅𝒂𝒚𝒔 𝒍𝒂𝒕𝒆𝒓..." & vbCrLf &
                            "As you stand frozen in the same position you've held since you touched the cursed stone, suddenly you fall flat faced onto the ground.  Springing to your feet, you are exited to find yourself as you were, albiet redder than before, and another explorer frozen in your place.  From their pose, it seems that they were going through your stuff, and must have accidently touched you.  What's more, the original ruby you touched is nowhere to be found.  You muse on the nature of the curse for a bit, before grabbing your things and moving on." & vbCrLf & vbCrLf & "Your stomach rumbles loudly, and you can tell that your time as a statue hasn't been kind to you.")
         Game.player1.mana = 0
-        Game.player1.hunger += 60
+        Game.player1.stamina -= 60
     End Sub
 
     Sub doctorAccept()

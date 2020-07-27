@@ -18,7 +18,7 @@
         mainEffects.AddRange({New MinPainEffect, New MinPainEffect, New MinPainEffect,
                               New MinPainEffect, New PainEffect, New PainEffect})
 
-        mainEffects.AddRange({New MinHungerEffect, New HungerEffect, New MinHealthEffect,
+        mainEffects.AddRange({New MinstaminaEffect, New staminaEffect, New MinHealthEffect,
                               New MinHealthEffect, New MinManaEffect, New MinRestEffect,
                               New MinRestEffect, New HealthEffect, New WeakRestEffect,
                               New MinFemEffect, New MinMasEffect, New MinFemEffect,

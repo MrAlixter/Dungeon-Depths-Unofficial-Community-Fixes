@@ -1,10 +1,10 @@
 ﻿Public Class PerkEffects
     '|GENERAL EFFECTS|
-    Shared Sub hungerEffect()
+    Shared Sub staminaEffect()
         Dim p As Player = Game.player1
-        If p.perks(perk.hunger) > -1 And Game.turn Mod 5 = 0 Then
-            If p.hunger < 100 Then
-                p.perks(perk.hunger) = -1
+        If p.perks(perk.stamina) > -1 And Game.turn Mod 5 = 0 Then
+            If p.stamina <= 0 Then
+                p.perks(perk.stamina) = -1
             Else
                 Game.pushLstLog("Your stomach aches... -5 health!")
                 p.health -= 5 / p.getMaxHealth
@@ -51,8 +51,8 @@
         If p.health < 1 And Game.turn Mod 4 = 0 Then
             p.health += 5 / p.getMaxHealth()
             If p.mana < p.getMaxMana + 5 Then p.mana += 5 Else p.mana = p.getMaxMana
-            p.hunger += 7
-            Game.pushLstLog("Your blazing aura surges!  +5 health, +5 mana, +7 hunger")
+            p.stamina -= 7
+            Game.pushLstLog("Your blazing aura surges!  +5 health, +5 mana, -7 stamina")
             If p.health > 1 Then p.health = 1
 
             If p.perks(perk.mburst) >= 0 Then p.perks(perk.mburst) -= 1

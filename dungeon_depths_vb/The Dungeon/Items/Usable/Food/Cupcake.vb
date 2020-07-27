@@ -2,7 +2,7 @@
     Inherits Food
     Sub New()
         MyBase.setName("Cupcake")
-        MyBase.setDesc("A 100% not magic totally not cursed cupcake. -50 Hunger")
+        MyBase.setDesc("A 100% not magic totally not cursed cupcake. +50 Stamina")
         id = 35
         tier = 3
         MyBase.setUsable(True)

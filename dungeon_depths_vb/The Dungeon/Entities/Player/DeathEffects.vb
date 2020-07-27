@@ -29,7 +29,7 @@
             Game.player1.will -= 3
             If Game.player1.will < 1 Then Game.player1.will = 0
         End If
-        p.currTarget.despawn("p-death")
+        If Not p.currTarget Is Nothing Then p.currTarget.despawn("p-death")
         If Not ln1 Is Nothing Then
             Game.pushLblEvent(ln1, AddressOf ThrallTF.thrallLN2)
         Else
@@ -127,13 +127,9 @@
             p.perks(perk.avenom) = 1
             p.ongoingTFs.Add(New ArachneTF(p.perks(perk.svenom)))
         Else
-            For Each tf In p.ongoingTFs
-                If tf.GetType Is GetType(ArachneTF) Then
-                    tf.setCurrStep(p.perks(perk.svenom))
-                    tf.setTurnsTilStep(0)
-                End If
-
-            Next
+            Dim tf = p.ongoingTFs.getAt("Arachne")
+            tf.setCurrStep(p.perks(perk.svenom))
+            tf.setTurnsTilStep(0)
         End If
         Dim out As String = "Hours later, the embers of your venom-fueled passion are all that remain.  You are able to inch yourself to a shallow well, and once in the cool water you break free of your snare and clean yourself off, reflecting on the encounter.  Although the aphrodesiac qualities of the venom have subsided, you can still feel it flow through you.  Given what your mistr...that huntress said, it's likely that you have some physical changes in store.  Part of you wonders why you would even bother stopping them."
         Game.pushLblEvent(out, AddressOf p.update)

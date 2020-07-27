@@ -3,7 +3,7 @@
 
     Sub New()
         MyBase.setName("Apple​")
-        MyBase.setDesc("An normal green apple. -15 Hunger")
+        MyBase.setDesc("An normal green apple. +15 Stamina")
         id = 31
         tier = 3
         MyBase.setUsable(True)

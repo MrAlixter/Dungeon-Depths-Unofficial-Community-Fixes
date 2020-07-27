@@ -34,14 +34,14 @@
         pronoun = "she"
         pPronoun = "her"
         rPronoun = "her"
-        picNormal = Game.picHTeach.BackgroundImage
-        picPrincess = Game.picHTeachPrin.BackgroundImage
-        picBunny = Game.picHTeachBun.BackgroundImage
+        picNormal = ShopNPC.npcLib.atrs(0).getAt(17)
+        picPrincess = ShopNPC.npcLib.atrs(0).getAt(19)
+        picBunny = ShopNPC.npcLib.atrs(0).getAt(18)
 
         picNCP = New List(Of Image)
-        picNCP.AddRange({picNormal, Game.picFrog.BackgroundImage, Game.picSheep.BackgroundImage, picPrincess, picBunny})
+        picNCP.AddRange({picNormal, ShopNPC.npcLib.atrs(0).getAt(4), ShopNPC.npcLib.atrs(0).getAt(5), picPrincess, picBunny})
 
-        picNCP.AddRange({Game.picHTHypno.BackgroundImage, Game.picHTFV.BackgroundImage, Game.picHTCow.BackgroundImage, Game.picHTDoll.BackgroundImage})
+        picNCP.AddRange({ShopNPC.npcLib.atrs(0).getAt(21), ShopNPC.npcLib.atrs(0).getAt(24), ShopNPC.npcLib.atrs(0).getAt(22), ShopNPC.npcLib.atrs(0).getAt(20)})
         If speed = Game.player1.speed Then speed -= 1
         MyBase.title = " the "
     End Sub

@@ -23,6 +23,6 @@
         End If
 
         getCaster.takeCritDMG(Int(Rnd() * 6) + 6, getCaster)
-        getCaster.hunger += 6
+        getCaster.stamina -= 6
     End Sub
 End Class

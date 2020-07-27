@@ -85,14 +85,8 @@
             MsgBox(form.Equals(p.pClass.name) & " | " & form.Equals(p.pForm.name))
         End If
 
-        'performs the neccisary polymorph
-        Dim removeind = New List(Of Integer)
-        For i = 0 To p.ongoingTFs.Count - 1
-            If p.ongoingTFs(i).GetType().IsSubclassOf(GetType(PolymorphTF)) Then removeind.Add(i)
-        Next
-        For i = 0 To removeind.Count - 1
-            p.ongoingTFs.RemoveAt(removeind(i))
-        Next
+        'polymorph updates
+        p.ongoingTFs.resetPolymorphs()
 
         p.polymorphs(form) = PolymorphTF.newPoly(form)
         p.ongoingTFs.Add(p.polymorphs(form))

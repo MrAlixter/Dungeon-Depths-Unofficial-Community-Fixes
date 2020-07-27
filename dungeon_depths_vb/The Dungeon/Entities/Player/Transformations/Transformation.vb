@@ -126,6 +126,7 @@ Public MustInherit Class Transformation
             Not p.pClass.name.Equals("Valkyrie") And
             Not p.pClass.name.Equals("Unconscious") And
             Not p.pForm.name.Equals("Blowup Doll") And
+            Not p.pForm.name.Equals("Fae") And
             Not p.perks(perk.astatue) > 1 Then Return True
         Return False
     End Function
@@ -186,6 +187,9 @@ Public MustInherit Class Transformation
     End Function
     Public Function getTFDone() As Boolean
         Return tfDone
+    End Function
+    Public Function getTFName() As String
+        Return tfName
     End Function
     Public Function getNextStep() As Action
         Return nextStep

@@ -20,14 +20,14 @@
         pronoun = "they"
         pPronoun = "their"
         rPronoun = "them"
-        picNormal = Game.picCBrok1.BackgroundImage
-        picPrincess = Game.picCBrok2.BackgroundImage
-        picBunny = Game.picCBrok3.BackgroundImage
+        picNormal = ShopNPC.npcLib.atrs(0).getAt(35)
+        picPrincess = ShopNPC.npcLib.atrs(0).getAt(36)
+        picBunny = ShopNPC.npcLib.atrs(0).getAt(37)
 
         picNCP = New List(Of Image)
-        picNCP.AddRange({picNormal, Game.picFrog.BackgroundImage, Game.picSheep.BackgroundImage, picPrincess, picBunny})
+        picNCP.AddRange({picNormal, ShopNPC.npcLib.atrs(0).getAt(4), ShopNPC.npcLib.atrs(0).getAt(5), picPrincess, picBunny})
 
-        picNCP.AddRange({Game.picCBDoll.BackgroundImage})
+        picNCP.AddRange({ShopNPC.npcLib.atrs(0).getAt(38)})
         If speed = Game.player1.speed Then speed -= 1
         title = " the "
     End Sub

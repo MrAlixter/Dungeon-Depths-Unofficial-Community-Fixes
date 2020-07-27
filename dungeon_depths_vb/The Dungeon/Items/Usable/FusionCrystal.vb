@@ -146,10 +146,10 @@
             player.lust = p2.lust * 1.5
         End If
 
-        If p1.hunger > p2.hunger Then
-            player.hunger = p1.hunger * 1.5
+        If p1.stamina > p2.stamina Then
+            player.stamina = p1.stamina * 1.5
         Else
-            player.hunger = p2.hunger * 1.5
+            player.stamina = p2.stamina * 1.5
         End If
 
         player.gold = p1.gold + p2.gold

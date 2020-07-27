@@ -160,6 +160,8 @@ Public Class mFloor
             Return {0, 1, 3}
         ElseIf floorNumber = 3 Then
             Return {0, 1, 2, 3, 5}
+        ElseIf floorNumber = 13 Then
+            Return {3, 5}
         Else
             If Int(Rnd() * 2) = 0 And Game.player1.pClass.name.StartsWith("Magical") Then
                 Return {0, 1, 2, 4, 5, 6}
@@ -299,8 +301,8 @@ Public Class mFloor
     End Sub
     Sub verifyAccessToStairs(ByRef p As Player)
         Dim r2 = route(p.pos, stairs)
-        If r2.Length <= 1 Then
-
+        If Not r2.Contains(stairs) Then
+            Game.pushLblEvent("A blazing light burns a line straight to the dungeons floor, cleaving through all disconnected chunks.  ""Whoops, my bad!"" exclaims a disembodied voice")
             Dim p1, p2 As Point
             If p1.X > p2.X Then
                 p1 = New Point(p.pos)

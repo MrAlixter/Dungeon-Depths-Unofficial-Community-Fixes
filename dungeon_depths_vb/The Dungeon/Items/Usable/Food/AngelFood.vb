@@ -1,9 +1,9 @@
 ﻿Public Class AngelFood
     Inherits Food
-    'Angel Food is a food item that reduces hunger by 20 and triggers the angel transformation
+    'Angel Food is a food item that reduces stamina by 20 and triggers the angel transformation
     Sub New()
         MyBase.setName("Angel_Food_Cake")
-        MyBase.setDesc("An divine sugary confection. -20 Hunger")
+        MyBase.setDesc("An divine sugary confection. +20 Stamina")
         id = 44
         tier = 3
         MyBase.setUsable(True)

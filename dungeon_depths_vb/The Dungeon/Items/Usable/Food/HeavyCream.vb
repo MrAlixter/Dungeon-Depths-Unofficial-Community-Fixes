@@ -3,7 +3,7 @@
 
     Sub New()
         MyBase.setName("Heavy_Cream")
-        MyBase.setDesc("An increadibly heavy cream that seems a bit fattening. -30 Hunger")
+        MyBase.setDesc("An increadibly heavy cream that seems a bit fattening. +30 stamina")
         id = 34
         tier = 2
         MyBase.setUsable(True)
@@ -14,8 +14,8 @@
     Overrides Sub use(ByRef p As Player)
         If Me.getUsable() = False Then Exit Sub
         Game.pushLstLog("You drink the " & getName())
-        p.hunger -= getCalories()
-        If p.hunger < 0 Then p.hunger = 0
+        p.stamina += getCalories()
+        If p.stamina > 100 Then p.stamina = 100
         Effect()
 
         count -= 1

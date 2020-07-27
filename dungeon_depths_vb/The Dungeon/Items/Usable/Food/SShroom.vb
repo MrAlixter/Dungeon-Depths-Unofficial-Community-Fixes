@@ -1,9 +1,9 @@
 ﻿Public Class SShroom
     Inherits Food
-    'Apple is a food item that reduces hunger by 15
+    'Apple is a food item that reduces stamina by 15
     Sub New()
         MyBase.setName("Spatial_Shroom")
-        MyBase.setDesc("An small white mushroom that gives off a subtle white glow.  Rumor has it that eating one has the potential to disrupt time and space. -25 Hunger.")
+        MyBase.setDesc("An small white mushroom that gives off a subtle white glow.  Rumor has it that eating one has the potential to disrupt time and space. +25 Stamina.")
         id = 108
         tier = 1
         MyBase.setUsable(True)
