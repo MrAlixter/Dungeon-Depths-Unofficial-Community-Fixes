@@ -5,7 +5,7 @@
     End Sub
 
     Sub add(ByRef tf As Transformation)
-        internalList.Add(tf.getTFName(), tf)
+        If Not internalList.ContainsKey(tf.getTFName) Then internalList.Add(tf.getTFName(), tf)
     End Sub
 
     Sub ping(Optional ByRef pUpdateFlag = False)
