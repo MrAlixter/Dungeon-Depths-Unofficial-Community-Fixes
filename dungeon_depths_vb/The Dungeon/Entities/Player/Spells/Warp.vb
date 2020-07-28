@@ -13,7 +13,7 @@
             Game.updateList = New PQ
         Else
             Game.pushLblEvent("With a flash of light, you teleport yourself at random to another portion of the dungeon.")
-            Game.player.pos = Game.currfloor.randPoint
+            Game.player1.pos = Game.currfloor.randPoint
         End If
     End Sub
     Public Overrides Sub backfire()

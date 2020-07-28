@@ -10,12 +10,12 @@
     End Sub
 
     Public Overrides Sub setWaitTime(stage As Integer)
-        Dim p As Player = Game.player
+        Dim p As Player = Game.player1
         turnsTilNextStep = 90 + Int(Rnd() * 20)
     End Sub
 
     Public Overrides Sub step1()
-        Dim p As Player = Game.player
+        Dim p As Player = Game.player1
         Dim out = ""
 
 

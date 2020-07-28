@@ -24,7 +24,7 @@
         Game.pushPnlYesNo("Start over as a Half-Gorgon?", AddressOf tf, AddressOf cancel)
     End Sub
     Sub cancel()
-        Game.player.gold += value
+        Game.player1.gold += value
         CType(Game.hteach, HTeach).back()
     End Sub
     Sub tf()
@@ -39,7 +39,7 @@
         Dim aTF As HGorgonTF = New HGorgonTF()
         aTF.step1()
 
-        Dim p = Game.player
+        Dim p = Game.player1
 
         Game.pushLblEvent(out, AddressOf CType(Game.hteach, HTeach).back)
         p.drawPort()

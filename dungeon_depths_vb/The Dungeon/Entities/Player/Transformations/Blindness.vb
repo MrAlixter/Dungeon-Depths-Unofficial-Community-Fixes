@@ -3,23 +3,23 @@
 
     Sub New()
         MyBase.New(1, 0, 0, False)
-        tfName = "Blind"
+        tfName = perk.blind
         nextStep = AddressOf step1
         setTurnsTilStep(0)
     End Sub
     Sub New(cs As Integer, n As Integer, tts As Integer, wi As Double, cbs As Boolean, tfd As Boolean)
         MyBase.New(cs, n, tts, wi, cbs, tfd)
-        tfName = "Blind"
+        tfName = perk.blind
         nextStep = getNextStep(cs)
     End Sub
 
     Sub step1()
-        Game.player.perks("blind") = 1
+        Game.player1.perks(perk.blind) = 1
     End Sub
 
     Public Overrides Sub stopTF()
         MyBase.stopTF()
-        Game.player.perks("blind") = -1
+        Game.player1.perks(perk.blind) = -1
         Game.pushLblEvent("You can see again!")
     End Sub
 

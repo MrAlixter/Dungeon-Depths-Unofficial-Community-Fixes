@@ -40,7 +40,7 @@ Public Class mFloor
         If updateLoadbar Then Game.updateLoadbar(40)
 
         placeStairs()
-        placePlayer(Game.player)
+        placePlayer(Game.player1)
         placeChest(floorCode)
         If floorNumber > 2 Then placeTraps()
 
@@ -77,7 +77,7 @@ Public Class mFloor
         If floorNumber < 5 Then
             generateDungeonLevel(floorCode)
         ElseIf floorNumber = 5 Or floorNumber = 75 Then
-            genBossFloor(Game.player)
+            genBossFloor(Game.player1)
         ElseIf floorNumber = 9999 Then
             genSpaceFloor()
         ElseIf floorNumber = 91017 Then
@@ -86,7 +86,7 @@ Public Class mFloor
             generateForestLevel(floorCode)
         End If
 
-        verifyNoDisconectedChunks(Game.player)
+        verifyNoDisconectedChunks(Game.player1)
     End Sub
     Sub placeStairs()
         stairs = randPoint()
@@ -98,7 +98,7 @@ Public Class mFloor
         playerPosition = p.pos
         mBoard(p.pos.Y, p.pos.X).Text = "@"
         verifyAccessToStairs(p)
-        If floorNumber = 4 Then placeFloor4TrappedChest(Game.player)
+        If floorNumber = 4 Then placeFloor4TrappedChest(Game.player1)
     End Sub
     Sub placeChest(ByVal code As String)
         'Fill Chest Tier List
@@ -107,8 +107,8 @@ Public Class mFloor
         Next
         For i = 0 To Game.baseChest.contents.upperBound
             Dim c_item = Game.baseChest.contents.item(i)
-            If c_item.tier <> Nothing And Not c_item.isMonsterDrop Then
-                Game.baseChest.tiers(c_item.tier).Add(c_item)
+            If c_item.getTier() <> Nothing And Not c_item.isMonsterDrop Then
+                Game.baseChest.tiers(c_item.getTier()).Add(c_item)
             End If
         Next
         Rnd(-1)
@@ -160,8 +160,15 @@ Public Class mFloor
             Return {0, 1, 3}
         ElseIf floorNumber = 3 Then
             Return {0, 1, 2, 3, 5}
+        ElseIf floorNumber = 13 Then
+            Return {3, 5}
         Else
-            Return {0, 1, 2, 3, 4, 5}
+            If Int(Rnd() * 2) = 0 And Game.player1.pClass.name.StartsWith("Magical") Then
+                Return {0, 1, 2, 4, 5, 6}
+            Else
+                Return {0, 1, 2, 3, 4, 5}
+            End If
+
         End If
     End Function
     Sub placeNPCs(ByRef npcList As List(Of ShopNPC), ByVal possibleNPCs As Integer())
@@ -188,7 +195,7 @@ Public Class mFloor
             placed.Add(npcInd)
         Next
 
-        If Game.player.isCursed And Game.cbrok.pos.X = -1 And Not Game.cbrok.isDead Then addNPC(Game.cbrok, randPoint)
+        If Game.player1.isCursed And Game.cbrok.pos.X = -1 And Not Game.cbrok.isDead Then addNPC(Game.cbrok, randPoint)
 
         For i = 0 To npcList.Count - 1
             npcPositions.Add(npcList(i).pos)
@@ -294,8 +301,8 @@ Public Class mFloor
     End Sub
     Sub verifyAccessToStairs(ByRef p As Player)
         Dim r2 = route(p.pos, stairs)
-        If r2.Length <= 1 Then
-
+        If Not r2.Contains(stairs) Then
+            Game.pushLblEvent("A blazing light burns a line straight to the dungeons floor, cleaving through all disconnected chunks.  ""Whoops, my bad!"" exclaims a disembodied voice")
             Dim p1, p2 As Point
             If p1.X > p2.X Then
                 p1 = New Point(p.pos)
@@ -751,7 +758,7 @@ Public Class mFloor
                     mBoard(trapPoint.Y, trapPoint.X).ForeColor = Color.FromArgb(45, 45, 45)
                     mBoard(trapPoint.Y, trapPoint.X).Text = "+"
                 ElseIf line(x) = "@"c Then
-                    Game.player.pos = New Point(x, y)
+                    Game.player1.pos = New Point(x, y)
                 End If
             Next
         Next
@@ -835,7 +842,7 @@ Public Class mFloor
                     Dim chestPoint = New Point(x, y)
                     genLegacyChest(chestPoint)
                 ElseIf line(x) = "@"c Then
-                    Game.player.pos = New Point(x, y)
+                    Game.player1.pos = New Point(x, y)
                 End If
             Next
         Next

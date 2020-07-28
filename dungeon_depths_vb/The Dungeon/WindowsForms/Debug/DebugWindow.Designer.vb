@@ -92,8 +92,8 @@ Partial Class Debug_Window
         Me.boxAtk = New System.Windows.Forms.NumericUpDown()
         Me.lblAtk = New System.Windows.Forms.Label()
         Me.boxGold = New System.Windows.Forms.NumericUpDown()
-        Me.boxHunger = New System.Windows.Forms.NumericUpDown()
-        Me.lblHunger = New System.Windows.Forms.Label()
+        Me.boxstamina = New System.Windows.Forms.NumericUpDown()
+        Me.lblstamina = New System.Windows.Forms.Label()
         Me.boxMaxMana = New System.Windows.Forms.NumericUpDown()
         Me.lblOf2 = New System.Windows.Forms.Label()
         Me.boxMana = New System.Windows.Forms.NumericUpDown()
@@ -172,7 +172,7 @@ Partial Class Debug_Window
         CType(Me.boxDef, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me.boxAtk, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me.boxGold, System.ComponentModel.ISupportInitialize).BeginInit()
-        CType(Me.boxHunger, System.ComponentModel.ISupportInitialize).BeginInit()
+        CType(Me.boxstamina, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me.boxMaxMana, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me.boxMana, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me.boxMaxHealth, System.ComponentModel.ISupportInitialize).BeginInit()
@@ -585,8 +585,8 @@ Partial Class Debug_Window
         Me.tabPlayer.Controls.Add(Me.boxAtk)
         Me.tabPlayer.Controls.Add(Me.lblAtk)
         Me.tabPlayer.Controls.Add(Me.boxGold)
-        Me.tabPlayer.Controls.Add(Me.boxHunger)
-        Me.tabPlayer.Controls.Add(Me.lblHunger)
+        Me.tabPlayer.Controls.Add(Me.boxstamina)
+        Me.tabPlayer.Controls.Add(Me.lblstamina)
         Me.tabPlayer.Controls.Add(Me.boxMaxMana)
         Me.tabPlayer.Controls.Add(Me.lblOf2)
         Me.tabPlayer.Controls.Add(Me.boxMana)
@@ -1068,30 +1068,30 @@ Partial Class Debug_Window
         Me.boxGold.TabIndex = 213
         Me.boxGold.TextAlign = System.Windows.Forms.HorizontalAlignment.Right
         '
-        'boxHunger
+        'boxstamina
         '
-        Me.boxHunger.BackColor = System.Drawing.Color.Black
-        Me.boxHunger.Font = New System.Drawing.Font("Consolas", 12.0!)
-        Me.boxHunger.ForeColor = System.Drawing.Color.White
-        Me.boxHunger.Location = New System.Drawing.Point(476, 42)
-        Me.boxHunger.Margin = New System.Windows.Forms.Padding(4, 4, 4, 4)
-        Me.boxHunger.Maximum = New Decimal(New Integer() {999999, 0, 0, 0})
-        Me.boxHunger.Name = "boxHunger"
-        Me.boxHunger.Size = New System.Drawing.Size(179, 31)
-        Me.boxHunger.TabIndex = 228
-        Me.boxHunger.TextAlign = System.Windows.Forms.HorizontalAlignment.Right
+        Me.boxstamina.BackColor = System.Drawing.Color.Black
+        Me.boxstamina.Font = New System.Drawing.Font("Consolas", 12.0!)
+        Me.boxstamina.ForeColor = System.Drawing.Color.White
+        Me.boxstamina.Location = New System.Drawing.Point(476, 42)
+        Me.boxstamina.Margin = New System.Windows.Forms.Padding(4, 4, 4, 4)
+        Me.boxstamina.Maximum = New Decimal(New Integer() {999999, 0, 0, 0})
+        Me.boxstamina.Name = "boxstamina"
+        Me.boxstamina.Size = New System.Drawing.Size(179, 31)
+        Me.boxstamina.TabIndex = 228
+        Me.boxstamina.TextAlign = System.Windows.Forms.HorizontalAlignment.Right
         '
-        'lblHunger
+        'lblstamina
         '
-        Me.lblHunger.AutoSize = True
-        Me.lblHunger.Font = New System.Drawing.Font("Consolas", 12.0!)
-        Me.lblHunger.ForeColor = System.Drawing.Color.White
-        Me.lblHunger.Location = New System.Drawing.Point(333, 44)
-        Me.lblHunger.Margin = New System.Windows.Forms.Padding(4, 0, 4, 0)
-        Me.lblHunger.Name = "lblHunger"
-        Me.lblHunger.Size = New System.Drawing.Size(76, 23)
-        Me.lblHunger.TabIndex = 229
-        Me.lblHunger.Text = "HUNGER"
+        Me.lblstamina.AutoSize = True
+        Me.lblstamina.Font = New System.Drawing.Font("Consolas", 12.0!)
+        Me.lblstamina.ForeColor = System.Drawing.Color.White
+        Me.lblstamina.Location = New System.Drawing.Point(333, 44)
+        Me.lblstamina.Margin = New System.Windows.Forms.Padding(4, 0, 4, 0)
+        Me.lblstamina.Name = "lblstamina"
+        Me.lblstamina.Size = New System.Drawing.Size(76, 23)
+        Me.lblstamina.TabIndex = 229
+        Me.lblstamina.Text = perk.stamina
         '
         'boxMaxMana
         '
@@ -1822,7 +1822,7 @@ Partial Class Debug_Window
         CType(Me.boxDef, System.ComponentModel.ISupportInitialize).EndInit()
         CType(Me.boxAtk, System.ComponentModel.ISupportInitialize).EndInit()
         CType(Me.boxGold, System.ComponentModel.ISupportInitialize).EndInit()
-        CType(Me.boxHunger, System.ComponentModel.ISupportInitialize).EndInit()
+        CType(Me.boxstamina, System.ComponentModel.ISupportInitialize).EndInit()
         CType(Me.boxMaxMana, System.ComponentModel.ISupportInitialize).EndInit()
         CType(Me.boxMana, System.ComponentModel.ISupportInitialize).EndInit()
         CType(Me.boxMaxHealth, System.ComponentModel.ISupportInitialize).EndInit()
@@ -1873,8 +1873,8 @@ Partial Class Debug_Window
     Friend WithEvents boxAtk As NumericUpDown
     Friend WithEvents lblAtk As Label
     Friend WithEvents boxGold As NumericUpDown
-    Friend WithEvents boxHunger As NumericUpDown
-    Friend WithEvents lblHunger As Label
+    Friend WithEvents boxstamina As NumericUpDown
+    Friend WithEvents lblstamina As Label
     Friend WithEvents boxMaxMana As NumericUpDown
     Friend WithEvents lblOf2 As Label
     Friend WithEvents boxMana As NumericUpDown

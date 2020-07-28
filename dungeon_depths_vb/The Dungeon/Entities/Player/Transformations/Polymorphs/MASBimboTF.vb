@@ -10,13 +10,13 @@
     End Sub
 
     Public Overrides Sub setWaitTime(stage As Integer)
-        Dim p As Player = Game.player
+        Dim p As Player = Game.player1
         turnsTilNextStep = Int(Rnd() * 30) - Int(Rnd() * p.getWIL)
         If turnsTilNextStep < 5 Then turnsTilNextStep = 5
     End Sub
 
     Public Overrides Sub step1()
-        Dim p As Player = Game.player
+        Dim p As Player = Game.player1
         Dim out = ""
 
         'unequips
@@ -36,7 +36,7 @@
         p.prt.haircolor = Color.FromArgb(255, 255, 245, 200)
         p.prt.setIAInd(pInd.rearhair, 14, True, True)
         If p.breastSize < 3 Then p.breastSize = 3
-        p.reverseBSRoute()
+        p.reverseallroute()
         p.prt.setIAInd(pInd.face, 0, True, False)
         p.prt.setIAInd(pInd.midhair, 6, True, True)
         p.prt.setIAInd(pInd.ears, 1, True, False)
@@ -54,7 +54,7 @@
     Public Sub step2()
         Game.fromCombat()
 
-        Dim p As Player = Game.player
+        Dim p As Player = Game.player1
         p.prt.setIAInd(pInd.rearhair, 12, True, True)
         p.prt.setIAInd(pInd.midhair, 17, True, True)
         p.prt.setIAInd(pInd.fronthair, 1, True, False)

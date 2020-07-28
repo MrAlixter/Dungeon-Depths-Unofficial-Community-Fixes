@@ -19,10 +19,12 @@
         MyBase.isRandoTFAcceptable = False
     End Sub
 
-    Public Overrides Sub onEquip()
-        Game.player.perks("bimbododge") = 2
+    Public Overrides Sub onEquip(ByRef p As Player)
+        MyBase.onEquip(p)
+        p.perks(perk.bimbododge) = 2
     End Sub
-    Public Overrides Sub onUnequip()
-        Game.player.perks("bimbododge") = -1
+    Public Overrides Sub onUnequip(ByRef p As Player)
+        MyBase.onUnequip(p)
+        p.perks(perk.bimbododge) = -1
     End Sub
 End Class

@@ -10,12 +10,12 @@
         MyBase.value = 300
     End Sub
 
-    Overrides Sub use()
+    Overrides Sub use(ByRef p As Player)
         If Me.getUsable() = False Then Exit Sub
-        If Game.player.knownSpells.Contains("Self Polymorph") Then
-            If MessageBox.Show("Do you want to cast Self Polymorph?", "Mirror", MessageBoxButtons.YesNo) = Windows.Forms.DialogResult.Yes Then Spell.spellCast(Nothing, Game.player, "Self Polymorph")
+        If p.knownSpells.Contains("Self Polymorph") Then
+            If MessageBox.Show("Do you want to cast Self Polymorph?", "Mirror", MessageBoxButtons.YesNo) = Windows.Forms.DialogResult.Yes Then Spell.spellCast(Nothing, p, "Self Polymorph")
         Else
-            Game.pushLstLog(Game.player.description)
+            Game.pushLstLog(p.description)
 
         End If
     End Sub

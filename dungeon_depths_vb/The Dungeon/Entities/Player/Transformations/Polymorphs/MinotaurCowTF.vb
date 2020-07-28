@@ -14,7 +14,7 @@
     End Sub
 
     Public Overrides Sub step1()
-        Dim p As player = game.player
+        Dim p As player = game.player1
         Dim out = ""
 
         'unequips
@@ -32,7 +32,7 @@
         p.prt.setIAInd(pInd.midhair, 20, True, True)
         p.prt.setIAInd(pInd.ears, 8, True, True)
         p.prt.setIAInd(pInd.fronthair, 16, True, True)
-        p.prt.hornInd = 2
+        p.prt.setIAInd(pInd.horns, 2, True, False)
 
         Dim revertText = Game.lblEvent.Text.Split(vbCrLf)(0)
         If Not revertText.Equals("") Then out = revertText & vbCrLf & vbCrLf & out

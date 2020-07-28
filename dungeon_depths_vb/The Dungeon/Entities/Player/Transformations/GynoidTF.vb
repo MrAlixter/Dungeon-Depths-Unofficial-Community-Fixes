@@ -38,10 +38,10 @@
         p.inv.add("Gynoid_Uniform", 1)
         Equipment.clothesChange("Gynoid_Uniform")
 
-        p.perks("slutcurse") = 1
+        p.perks(perk.slutcurse) = 1
     End Sub
     Public Sub step1()
-        Dim p As player = game.player
+        Dim p As player = game.player1
         Dim out = ""
 
         'transformation
@@ -73,15 +73,15 @@
             "[sys/mind:] Re-enabling mental dampener-COMPLETE!" & vbCrLf &
             "... uh oh.  You giggle to your self again.  If the only time you can be, like, totally smart is right after sex, then you're like totally gonna have to bang everything in this dungeon!"
         Game.pushLblEvent(out)
-        Game.player.lust = 0
-        Game.player.drawPort()
+        Game.player1.lust = 0
+        Game.player1.drawPort()
     End Sub
     Public Overrides Sub stopTF()
         MyBase.stopTF()
     End Sub
 
     Public Overrides Function getNextStep(stage As Integer) As Action
-        Dim p As player = game.player
+        Dim p As player = game.player1
         Select Case stage
             Case 0
                 Return AddressOf step1

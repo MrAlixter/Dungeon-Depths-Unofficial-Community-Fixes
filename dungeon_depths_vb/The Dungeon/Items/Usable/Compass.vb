@@ -12,16 +12,16 @@
         MyBase.value = 150
     End Sub
 
-    Overrides Sub use()
+    Overrides Sub use(ByRef p As Player)
         If Me.getUsable() = False Then Exit Sub
         Game.pushLstLog("You use the " & getName())
-        
-        Dim p = Game.currFloor.route(Game.player.pos, Game.currFloor.stairs)
-        For i = 0 To UBound(p) Step 4
-            Game.currfloor.mBoard(p(i).Y, p(i).X).Tag = 2
-            If Game.currfloor.mBoard(p(i).Y, p(i).X).Text = "" Then Game.currfloor.mBoard(p(i).Y, p(i).X).Text = "x"
+
+        Dim path = Game.currFloor.route(p.pos, Game.currFloor.stairs)
+        For i = 0 To UBound(path) Step 4
+            Game.currFloor.mBoard(path(i).Y, path(i).X).Tag = 2
+            If Game.currFloor.mBoard(path(i).Y, path(i).X).Text = "" Then Game.currFloor.mBoard(path(i).Y, path(i).X).Text = "x"
         Next
-        Game.currfloor.mBoard(p(UBound(p)).Y, p(UBound(p)).X).Tag = 2
+        Game.currFloor.mBoard(path(UBound(path)).Y, path(UBound(path)).X).Tag = 2
         Game.drawBoard()
         count -= 1
     End Sub

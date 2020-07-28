@@ -8,7 +8,7 @@
         MyBase.setcost(3)
     End Sub
     Public Overrides Sub effect()
-        Game.player.perks("lightsource") = 120
+        Game.player1.perks(perk.lightsource) = 120
         Game.drawBoard()
     End Sub
 End Class

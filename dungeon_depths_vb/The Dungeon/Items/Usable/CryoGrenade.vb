@@ -11,8 +11,7 @@
         MyBase.value = 560
     End Sub
 
-    Public Overrides Sub use()
-        Dim p = Game.player
+    Public Overrides Sub use(ByRef p As Player)
 
         If (p.getWIL < 8 And Int(Rnd() * 5) = 1) Or p.currTarget Is Nothing Or Game.combatmode = False Then
             'backfire

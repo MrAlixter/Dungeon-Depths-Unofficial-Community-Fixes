@@ -12,8 +12,7 @@
         MyBase.value = 375
     End Sub
 
-    Overrides Sub use()
-        Dim p As Player = Game.player
+    Overrides Sub use(ByRef p As Player)
         p.ongoingTFs.Add(New MaidTF())
         p.update()
     End Sub

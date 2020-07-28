@@ -75,12 +75,12 @@
         Return p.prt.sexBool = isFemale And p.prt.iArrInd(pInd.rearhair).Item2 = hasFemaleHair And
         p.prt.iArrInd(pInd.rearhair).Item1 = rHairInd And p.prt.iArrInd(pInd.fronthair).Item1 = fHairInd + 1 And
         p.breastSize = breastSize And p.prt.iArrInd(pInd.ears).Item1 = earType And
-        ((p.perks("slutcurse") > -1 And isSlut) Or (p.perks("slutcurse") = -1 And Not isSlut))
+        ((p.perks(perk.slutcurse) > -1 And isSlut) Or (p.perks(perk.slutcurse) = -1 And Not isSlut))
     End Function
 
     Public Sub shiftTowards(ByRef p As Player)
         Randomize()
-        If Not p.pClass.name.Equals("Thrall") Then p.pClass = p.classes("Thrall")
+        If Not p.pClass.name.equals("Thrall") Then p.pClass = p.classes(perk.thrall)
         If playerMeetsForm(p) Then Exit Sub
 
         If Not p.prt.haircolor.Equals(hairColor) Then p.changeHairColor(Game.cShift(p.prt.haircolor, hairColor, 8))
@@ -104,19 +104,19 @@
 
         If p.breastSize > breastSize Then
             p.breastSize -= 1
-            p.reverseBSRoute()
+            p.reverseallroute()
         ElseIf p.breastSize < breastSize Then
             p.breastSize += 1
-            p.reverseBSRoute()
+            p.reverseallroute()
         End If
 
-        If isFemale And ((p.perks("slutcurse") = -1 And isSlut) Or (p.perks("slutcurse") > -1 And Not isSlut)) And Int(Rnd() * 3) = 0 Then
-            If (p.perks("slutcurse") = -1 And isSlut) Then
-                p.perks("slutcurse") = 0
-                Equipment.clothingCurse1()
+        If isFemale And ((p.perks(perk.slutcurse) = -1 And isSlut) Or (p.perks(perk.slutcurse) > -1 And Not isSlut)) And Int(Rnd() * 3) = 0 Then
+            If (p.perks(perk.slutcurse) = -1 And isSlut) Then
+                p.perks(perk.slutcurse) = 0
+                Equipment.clothingCurse1(p)
             Else
-                p.perks("slutcurse") = -1
-                Equipment.antiClothingCurse()
+                p.perks(perk.slutcurse) = -1
+                Equipment.antiClothingCurse(p)
             End If
         End If
 
@@ -134,7 +134,7 @@
     End Sub
     Public Sub snapShift(ByRef p As Player)
         Randomize()
-        If Not p.pClass.name.Equals("Thrall") Then p.pClass = p.classes("Thrall")
+        If Not p.pClass.name.equals("Thrall") Then p.pClass = p.classes(perk.thrall)
         If playerMeetsForm(p) Then Exit Sub
 
         p.changeHairColor(hairColor)
@@ -156,22 +156,22 @@
         If p.breastSize > breastSize Then
             While p.breastSize > breastSize
                 p.breastSize -= 1
-                p.reverseBSRoute()
+                p.reverseallroute()
             End While
         ElseIf p.breastSize < breastSize Then
             While p.breastSize < breastSize
                 p.breastSize += 1
-                p.reverseBSRoute()
+                p.reverseallroute()
             End While
         End If
 
-        If isFemale And ((p.perks("slutcurse") = -1 And isSlut) Or (p.perks("slutcurse") > -1 And Not isSlut)) Then
-            If (p.perks("slutcurse") = -1 And isSlut) Then
-                p.perks("slutcurse") = 0
-                Equipment.clothingCurse1()
+        If isFemale And ((p.perks(perk.slutcurse) = -1 And isSlut) Or (p.perks(perk.slutcurse) > -1 And Not isSlut)) Then
+            If (p.perks(perk.slutcurse) = -1 And isSlut) Then
+                p.perks(perk.slutcurse) = 0
+                Equipment.clothingCurse1(p)
             Else
-                p.perks("slutcurse") = -1
-                Equipment.antiClothingCurse()
+                p.perks(perk.slutcurse) = -1
+                Equipment.antiClothingCurse(p)
             End If
         End If
 
@@ -219,16 +219,15 @@ Public Class SuccMaid
     End Sub
 
     Shared Sub changeEquipment()
-        Dim p = Game.player
+        Dim p = Game.player1
 
         If p.inv.item("Maid_Lingerie").count < 1 Then p.inv.add("Maid_Lingerie", 1)
         Equipment.clothesChange("Maid_Lingerie")
 
         p.prt.setIAInd(pInd.eyes, 12, True, True)
         p.prt.setIAInd(pInd.glasses, 2, True, False)
-
-        p.prt.wingInd = 2
-        p.prt.hornInd = 3
+        p.prt.setIAInd(pInd.wings, 2, True, False)
+        p.prt.setIAInd(pInd.horns, 3, True, False)
 
         p.pClass = p.classes("Maid")
         p.pForm = p.forms("Half-Succubus")

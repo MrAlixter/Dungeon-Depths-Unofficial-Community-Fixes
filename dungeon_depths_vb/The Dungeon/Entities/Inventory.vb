@@ -201,8 +201,42 @@
         internal_inventory.Add("TODO_Outfit", New GothOutfit())             '181
         internal_inventory.Add("Cursed_Coupon", New CursedCoupon())         '182
         internal_inventory.Add("Kitsune's_Robes", New KitsuneRobe())        '183
+        'v0.9.1
+        internal_inventory.Add("Common_Clothes", New CommonClothes0())      '184
+        internal_inventory.Add("Common_Armor", New CommonClothes1())        '185
+        internal_inventory.Add("Common_Garb", New CommonClothes2())         '186
+        internal_inventory.Add("Fancy_Clothes", New CommonClothes3())       '187
+        internal_inventory.Add("Ordinary_Clothes", New CommonClothes4())    '188
+        internal_inventory.Add("Common_Kimono", New CommonClothes5())       '189
+        internal_inventory.Add("Sneaky_Clothes", New CommonClothes6())      '190
+        internal_inventory.Add("Skimpy_Clothes", New SkimpyClothes())       '191
+        internal_inventory.Add("Very_Skimpy_Clothes", New VSkimpyClothes()) '192
+        internal_inventory.Add("Ass_Growth_Potion", New UEPotion())         '193
+        internal_inventory.Add("Dick_Growth_Potion", New DEPotion())        '194
+        internal_inventory.Add("Curse_'B'_Gone", New CurseBGone())          '195
+        internal_inventory.Add("Cow_Cosplay", New CowCosplay())             '196
+        internal_inventory.Add("Bimbell", New Bimbell())                    '197
+        internal_inventory.Add("Kitsune_Mask", New KitsuneMask())           '198
+        internal_inventory.Add("Angelic_Sweater", New AngelicSweater())     '199
+        internal_inventory.Add("Attack_Charm​", New CAttackCharm())          '200
+        internal_inventory.Add("Pro_Mag._Girl_Outfit", New ProMagGirlOutfit()) '201
+        internal_inventory.Add("Mag._Girl_Outfit_(P)", New MagGirlOutfitP()) '202
+        internal_inventory.Add("Pro_Mag._Girl_Wand", New ProMagGirlWand())  '203
+        internal_inventory.Add("Mag._Girl_Wand_(P)", New MagGirlWandP())    '204
+        internal_inventory.Add("Vial_of_Fire", New VialOfFire())            '205
+        internal_inventory.Add("Gem_of_Progress", New GemOfProg())          '206
+        internal_inventory.Add("Gem_of_Sweetness", New GemOfPink())         '207
+        internal_inventory.Add("Mag._Girl_Outfit_(D)", New MagGirlOutfitD()) '208
+        internal_inventory.Add("Mag._Girl_Wand_(D)", New MagGirlWandD)      '209
+        internal_inventory.Add("Mag._Girl_Outfit_(R)", New MagGirlOutfitR)  '210
+        internal_inventory.Add("Pro_Mag._G._Outfit_(R)", New ProMagGirlOutfitR) '211
+        internal_inventory.Add("Mag._Girl_Wand_(R)", New MagGirlWandR)      '212
+        internal_inventory.Add("Pro_Mag._G._Wand_(R)", New ProMagGirlWandR) '213
+        internal_inventory.Add("Gem_of_Flame", New GemOfFlame())            '214
+        internal_inventory.Add("Gem_of_Darkness", New GemOfDark())          '215
+        internal_inventory.Add("Mag._Girl_Outfit_(C)", New MagGirlOutfitC)  '216
 
-        armor = {New CommonClothes, New SkimpyClothes, New Naked, New VSkimpyClothes,
+        armor = {New Naked,
                  Me.item(5), Me.item(7), Me.item(8), Me.item(10),
                  Me.item(12), Me.item(16), Me.item(17), Me.item(18),
                  Me.item(19), Me.item(20), Me.item(38), Me.item(39),
@@ -216,7 +250,11 @@
                  Me.item(129), Me.item(137), Me.item(138), Me.item(144),
                  Me.item(146), Me.item(147), Me.item(151), Me.item(166),
                  Me.item(169), Me.item(170), Me.item(175), Me.item(176),
-                 Me.item(177), Me.item(181), Me.item(183)}
+                 Me.item(177), Me.item(181), Me.item(183), Me.item(184),
+                 Me.item(185), Me.item(186), Me.item(187), Me.item(188),
+                 Me.item(189), Me.item(190), Me.item(191), Me.item(192),
+                 Me.item(196), Me.item(199), Me.item(201), Me.item(202),
+                 Me.item(208), Me.item(210), Me.item(211), Me.item(216)}
 
         weapons = {New BareFists(),
                    Me.item(6), Me.item(9), Me.item(11), Me.item(21),
@@ -227,7 +265,8 @@
                    Me.item(155), Me.item(156), Me.item(157), Me.item(158),
                    Me.item(159), Me.item(160), Me.item(162), Me.item(163),
                    Me.item(165), Me.item(167), Me.item(171), Me.item(172),
-                   Me.item(173), Me.item(179)}
+                   Me.item(173), Me.item(179), Me.item(203), Me.item(204),
+                   Me.item(209), Me.item(212), Me.item(213)}
 
         useable = {Me.item(0), Me.item(3), Me.item(4),
                    Me.item(65), Me.item(15), Me.item(36), Me.item(37),
@@ -239,7 +278,8 @@
                    Me.item(143), Me.item(148), Me.item(149), Me.item(152),
                    Me.item(153), Me.item(154), Me.item(155), Me.item(156),
                    Me.item(157), Me.item(158), Me.item(162), Me.item(174),
-                   Me.item(182)}
+                   Me.item(182), Me.item(195), Me.item(200), Me.item(205),
+                   Me.item(206), Me.item(207), Me.item(214), Me.item(215)}
 
         food = {Me.item(1), Me.item(30), Me.item(31), Me.item(32), Me.item(33),
                 Me.item(34), Me.item(35), Me.item(44), Me.item(90),
@@ -251,12 +291,14 @@
                 Me.item(69), Me.item(70), Me.item(77), Me.item(81),
                 Me.item(97), Me.item(110), Me.item(123), Me.item(139),
                 Me.item(140), Me.item(141), Me.item(149), Me.item(161),
-                Me.item(164), Me.item(168), Me.item(180)}
+                Me.item(164), Me.item(168), Me.item(180), Me.item(197),
+                Me.item(198)}
 
         potions = {Me.item(2), Me.item(13), Me.item(14), Me.item(25),
                    Me.item(26), Me.item(27), Me.item(28), Me.item(29),
                    Me.item(59), Me.item(60), Me.item(61), Me.item(62),
-                   Me.item(76), Me.item(82), Me.item(92), Me.item(93)}
+                   Me.item(76), Me.item(82), Me.item(92), Me.item(93),
+                   Me.item(193), Me.item(194)}
 
         Array.Sort(potions)
 
@@ -272,7 +314,7 @@
                       "Azure_Potion", "Rose_Potion", "Mauve_Potion", "Jet_Potion",
                       "Ruby_Potion", "Emerald_Potion", "Sapphire_Potion", "Silver_Potion",
                       "Murky_Potion", "Smokey_Potion", "Pink_Potion", "Glittery_Potion",
-                      "Florecent_Potion"})
+                      "Florecent_Potion", "Coral_Potion", "Steely_Potion"})
         mPotions = New List(Of MysteryPotion)
         For i = 0 To UBound(potions)
             If potions(i).GetType().IsSubclassOf(GetType(MysteryPotion)) Then mPotions.Add(potions(i))
@@ -407,7 +449,7 @@
     Function getArmors() As Tuple(Of String(), Armor())
         Dim s(UBound(armor)) As String
         For i = 0 To UBound(armor)
-            s(i) = armor(i).getName
+                s(i) = armor(i).getName
         Next
         Return New Tuple(Of String(), Armor())(s, armor)
     End Function

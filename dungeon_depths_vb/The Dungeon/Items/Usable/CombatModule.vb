@@ -11,11 +11,11 @@
         MyBase.value = 3120
     End Sub
 
-    Public Overrides Sub use()
-        If Game.player.pForm.name.Equals("Cyborg") Or Game.player.pForm.name.Equals("Gynoid") Or Game.player.pForm.name.Equals("Android") Then
+    Public Overrides Sub use(ByRef p As Player)
+        If p.pForm.name.Equals("Cyborg") Or p.pForm.name.Equals("Gynoid") Or p.pForm.name.Equals("Android") Then
             Game.pushLblEvent("Plugging in the combat module floods your system with a wealth of offensive and defensive strategies")
-            Game.player.ongoingTFs.Add(New CombatModTF())
-            Game.player.update()
+            p.ongoingTFs.Add(New CombatModTF())
+            p.update()
             count -= 1
         Else
             Game.pushLblEvent("You can't use this as you aren't robotic in nature.")

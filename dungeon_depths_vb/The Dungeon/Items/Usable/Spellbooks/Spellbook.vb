@@ -12,7 +12,7 @@
         MyBase.value = 500
     End Sub
 
-    Overrides Sub use()
+    Overrides Sub use(ByRef p As Player)
         If Int(Rnd() * 10) = -1 Then
             'bimbo tf
         Else
@@ -21,7 +21,7 @@
             Dim sName As String = "ERROR"
             Dim ct As Integer = 0
             Dim out As String = ""
-            While ct < 1 Or Game.player.knownSpells.Contains(sName)
+            While ct < 1 Or Game.player1.knownSpells.Contains(sName)
                 ct += 1
                 Dim spell As Integer = CInt(Int(Rnd() * (spells.Length)))
                 Select Case spell
@@ -29,7 +29,6 @@
                         sName = "Self Polymorph"
                         Dim form As String = "Err"
                         Dim c As Integer = 0
-                        Dim p = Game.player
                         While c < 1 Or p.selfPolyForms.Contains(form)
                             c += 1
                             Dim learnForm As Integer = CInt(Int(Rnd() * 4))
@@ -57,7 +56,6 @@
                         sName = "Polymorph Enemy"
                         Dim form As String = "Err"
                         Dim c As Integer = 0
-                        Dim p = Game.player
                         While c < 1 Or p.enemPolyForms.Contains(form)
                             c += 1
                             Dim learnForm As Integer = CInt(Int(Rnd() * 3))
@@ -87,7 +85,7 @@
                     Exit Sub
                 End If
             End While
-            If Not Game.player.knownSpells.Contains(sName) Then Game.player.knownSpells.Add(sName)
+            If Not Game.player1.knownSpells.Contains(sName) Then Game.player1.knownSpells.Add(sName)
             Game.pushLstLog("You read the " & getName() & ". " & sName & " learned!")
             If Not out.Equals("") Then
                 Game.pushLstLog(out)
@@ -97,6 +95,6 @@
             End If
         End If
         count -= 1
-        
+
     End Sub
 End Class

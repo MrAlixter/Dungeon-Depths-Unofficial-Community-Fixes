@@ -11,9 +11,8 @@
         MyBase.value = 100
     End Sub
 
-    Overrides Sub use()
+    Overrides Sub use(ByRef p As Player)
         If Me.getUsable() = False Then Exit Sub
-        Dim p = Game.player
 
         Game.pushLstLog("You apply the " & getName())
 
@@ -23,11 +22,11 @@
             count -= 1
             Exit Sub
         End If
-        If p.perks("slimetf") = -1 Or p.prt.haircolor.A = 255 Then
-            p.perks("slimetf") = 2
+        If p.perks(perk.slimetf) = -1 Or p.prt.haircolor.A = 255 Then
+            p.perks(perk.slimetf) = 2
         End If
 
-        p.ongoingTFs.Add(New VialOfSlimeTF(p.perks("slimetf")))
+        p.ongoingTFs.Add(New VialOfslimetf(p.perks(perk.slimetf)))
         p.update()
         count -= 1
 

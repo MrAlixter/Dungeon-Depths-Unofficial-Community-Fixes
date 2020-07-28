@@ -25,7 +25,7 @@
         If target.GetType() Is GetType(Player) Then
             If firstMove Then
                 Game.pushLblEvent("The " & getName() & " puffs out a haze of pollen!")
-                Game.player.ongoingTFs.Add(New AlrauneTF())
+                Game.player1.ongoingTFs.Add(New AlrauneTF())
                 firstMove = False
                 Exit Sub
             ElseIf Int(Rnd() * 6) = 0 Then

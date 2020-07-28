@@ -4,7 +4,7 @@
     Sub New(n As Integer, tts As Integer, wi As Double, cbs As Boolean)
         MyBase.New(n, tts, wi, cbs)
         tfName = "Neko"
-        Game.player.perks("nekocurse") = 0
+        Game.player1.perks(perk.nekocurse) = 0
         nextStep = AddressOf step1
     End Sub
     Sub New(cs As Integer, n As Integer, tts As Integer, wi As Double, cbs As Boolean, tfd As Boolean)
@@ -14,20 +14,20 @@
     End Sub
 
     Sub step1()
-        Dim p As player = game.player
+        Dim p As player = game.player1
         p.prt.setIAInd(pInd.ears, 1, p.prt.sexBool, False)
         Game.pushLblCombatEvent("Your ears twitch, becoming feline while Marissa gives you a malicious grin.  ""I'm sure you tell where this is going,"" she giggles." & vbCrLf & "  You now have cat ears!")
         p.lust += 5
         p.will -= 1
     End Sub
     Sub step2()
-        Dim p As player = game.player
+        Dim p As player = game.player1
         p.prt.setIAInd(pInd.face, 0, True, False)
         Game.pushLblCombatEvent("Your facial structure softens, and now you have a feminine face!")
         p.lust += 5
     End Sub
     Sub step3()
-        Dim p As player = game.player
+        Dim p As player = game.player1
         p.prt.setIAInd(pInd.rearhair, 12, True, True)
         p.prt.setIAInd(pInd.midhair, 17, True, True)
         p.prt.setIAInd(pInd.fronthair, 1, True, False)
@@ -35,14 +35,14 @@
         Game.pushLblCombatEvent("Your hair grows down to your ass, straightening out as it lengthens.  You now have long, straight hair!")
     End Sub
     Sub step4()
-        Dim p As player = game.player
+        Dim p As player = game.player1
         p.prt.setIAInd(pInd.nose, 0, True, False)
         p.prt.setIAInd(pInd.eyes, 13, True, True)
         Game.pushLblCombatEvent("You wince and close your eye as a burning sensation flows through them. You now have kitten eyes!")
         p.lust += 5
     End Sub
     Sub step5()
-        Dim p As player = game.player
+        Dim p As player = game.player1
         If Not p.prt.sexBool Then
             p.MtF()
             p.prt.setIAInd(pInd.eyes, 13, True, True)
@@ -54,7 +54,7 @@
         p.lust += 5
     End Sub
     Sub step6()
-        Dim p As player = game.player
+        Dim p As player = game.player1
 
         If p.pClass.name.Equals("Magical Girl") Or p.pClass.name.Equals("Valkyrie") Then
             step6alt()
@@ -69,7 +69,7 @@
         Game.pushLblCombatEvent("Your tits expand, your clothes shift, and you feel your will grow weaker. You are now permenantly a cat girl!  Soon you will be Marissa's pet! ")
     End Sub
     Sub step6alt()
-        Dim p As player = game.player
+        Dim p As player = game.player1
         Equipment.weaponChange("Fists")
         Equipment.clothesChange("Cat_Lingerie")
         be()
@@ -81,7 +81,7 @@
         Game.pushLblCombatEvent("Your hair grows down to your ass, straightening out as it lengthens.  You now have long, straight hair!  Your tits expand, your clothes shift, and you feel your will grow weaker. You are now a cat girl!  Soon you will be Marissa's pet! ")
     End Sub
     Sub step7()
-        Dim p As player = game.player
+        Dim p As player = game.player1
         If p.will < 5 Then
             If p.sex = "Male" Then
                 p.MtF()
@@ -105,22 +105,22 @@
             Game.pushLblEvent("As the last of your resistance drains away, all you can find yourself doing is focusing on your new mistress's voice as she orders you down onto all fours.  You happily oblige, purring softly, and she giggles.  ""Come on kitty, lets go!"" she orders and the two of you, with her leading, wander off into the darkness.  GAME OVER!", AddressOf p.die)
         End If
 
-        p.perks("nekocurse") = -1
+        p.perks(perk.nekocurse) = -1
     End Sub
 
     Sub resist()
         Game.pushLblCombatEvent("You are able to resist the curse, but you can feel your resolve wavering...")
-        Game.player.will -= 1
+        Game.player1.will -= 1
     End Sub
     Public Overrides Sub stopTF()
         MyBase.stopTF()
-        Game.player.perks("nekocurse") = -1
+        Game.player1.perks(perk.nekocurse) = -1
     End Sub
 
     Public Overrides Function getNextStep(stage As Integer) As Action
-        If Game.player.perks("nekocurse") = -1 Then
+        If Game.player1.perks(perk.nekocurse) = -1 Then
             Return AddressOf stopTF
-        ElseIf (Game.player.pClass.name.Equals("Magical Girl") Or Game.player.pClass.name.Equals("Valkyrie")) And stage < 6 Then
+        ElseIf (Game.player1.pClass.name.Equals("Magical Girl") Or Game.player1.pClass.name.Equals("Valkyrie")) And stage < 6 Then
             Return AddressOf resist
         End If
 
@@ -149,10 +149,10 @@
     End Sub
 
     Sub be()
-        Dim p = Game.player
+        Dim p = Game.player1
         If p.breastSize < 7 Then
             p.breastSize += 1
-            p.reverseBSRoute()
+            p.reverseallroute()
         End If
     End Sub
 End Class

@@ -16,11 +16,11 @@
 
     Sub teach()
         count = 0
-        Dim p = Game.player
+        Dim p = Game.player1
 
         If Not Transformation.canBeTFed(p) Then
             Game.pushNPCDialog("Unfortunately, you seem to be in a rather unstable state.  I am afraid that I will not be able to set your base state at this time.")
-            Game.player.gold += value
+            Game.player1.gold += value
             Exit Sub
         End If
 
@@ -31,9 +31,9 @@
         CType(Game.hteach, HTeach).hypnotize("Have you seen my pendant?  I know it is a bit of a cliche, but doesn't seeing it swing back and forth just relax you so perfectly?  Back...and forth...watch it glisten in the light...feel yourself go deeper and deeper...deeper...and deeper...until you just...*SNAP*...drift away...", AddressOf wakeup)
     End Sub
     Sub wakeup()
-        Game.player.UIupdate()
+        Game.player1.UIupdate()
         Equipment.clothesChange("Naked")
-        Game.player.drawPort()
-        Game.pushLblEvent("You wake up to the teacher's snap.  ""Well then, " & Game.player.name & ", it seems like we're done here."" she says with a knowing grin.  Done?  Right!  The form reset.  She already did it?  But you've always looked like this..." & vbCrLf & vbCrLf & "Stripping naked, you give the hypnotist a dirty look.  If she was going to rip you off, your mistress could have done a better job of hiding it...", AddressOf CType(Game.hteach, HTeach).back)
+        Game.player1.drawPort()
+        Game.pushLblEvent("You wake up to the teacher's snap.  ""Well then, " & Game.player1.name & ", it seems like we're done here."" she says with a knowing grin.  Done?  Right!  The form reset.  She already did it?  But you've always looked like this..." & vbCrLf & vbCrLf & "Stripping naked, you give the hypnotist a dirty look.  If she was going to rip you off, your mistress could have done a better job of hiding it...", AddressOf CType(Game.hteach, HTeach).back)
     End Sub
 End Class

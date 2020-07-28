@@ -11,10 +11,10 @@
         MyBase.value = 250
     End Sub
 
-    Overrides Sub use()
+    Overrides Sub use(ByRef p As Player)
         If Me.getUsable() = False Then Exit Sub
-        Game.player.prt.setIAInd(pInd.ears, 1, Game.player.prt.sexBool, False)
-        Game.player.drawPort()
+        p.prt.setIAInd(pInd.ears, 1, p.prt.sexBool, False)
+        p.drawPort()
         count -= 1
     End Sub
 End Class

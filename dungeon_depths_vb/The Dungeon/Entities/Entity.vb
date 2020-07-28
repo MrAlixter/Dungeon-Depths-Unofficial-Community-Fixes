@@ -1,7 +1,7 @@
 ﻿Public MustInherit Class Entity
     Implements Updatable
 
-    Public name As String
+    Public name, sName As String
     Public health As Double = 1.0 'represents a percentage of maxhealth
     Public maxHealth, mana, maxMana, attack, defence, will, speed, gold, lust As Integer
     Public hBuff As Integer = 0     'buffs that apply across forms (from charms, etc)
@@ -150,6 +150,9 @@
     End Function
     Public Overridable Function getLust() As Integer
         Return lust
+    End Function
+    Public Function getSName() As String
+        Return sName
     End Function
 
     '|SETTERS|

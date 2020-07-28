@@ -11,12 +11,12 @@
         MyBase.value = 750
     End Sub
 
-    Overrides Sub use()
+    Overrides Sub use(ByRef p As Player)
         If Me.getUsable() = False Then Exit Sub
         Game.pushLstLog("You use the " & getName() & ". +5 base SPD!")
-        
-        Game.player.speed += 5
-        Game.player.UIupdate()
+
+        p.speed += 5
+        p.UIupdate()
         count -= 1
     End Sub
 End Class

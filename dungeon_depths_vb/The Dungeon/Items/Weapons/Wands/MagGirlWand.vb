@@ -1,6 +1,6 @@
 ﻿Public Class MagGirlWand
     Inherits Wand
-
+    Protected mgOutfit As Integer = 10
     Sub New()
         MyBase.setName("Magical_Girl_Wand")
         MyBase.setDesc("A mysterious wand used by a mysterious protector." & vbCrLf & "+7 ATK, +20 Max Mana")
@@ -14,11 +14,21 @@
     End Sub
 
     Public Overrides Sub onEquip()
-        If Not Game.player.pClass.name.Equals("Magical Girl") Then
+        If Not Game.player1.pClass.name.Equals("Magical Girl") Then
 
             Dim magicGirlTF = New MagGirlTF(2, 0, 0, False)
             magicGirlTF.update()
-            Game.player.ongoingTFs.Add(magicGirlTF)
+            Game.player1.ongoingTFs.Add(magicGirlTF)
+        End If
+    End Sub
+
+    Public Overrides Sub onunEquip(Optional w As Weapon = Nothing)
+        Dim p = Game.player1
+        If p.pClass.name.Equals("Magical Girl") And Not w Is Nothing AndAlso Not w.GetType.IsSubclassOf(GetType(Wand)) Then
+            Game.pushLstLog("Putting away your wand causes you to change into your regular self!")
+            p.inv.add(mgOutfit, -1)
+            p.magGState.save(p)
+            p.revertToPState()
         End If
     End Sub
 

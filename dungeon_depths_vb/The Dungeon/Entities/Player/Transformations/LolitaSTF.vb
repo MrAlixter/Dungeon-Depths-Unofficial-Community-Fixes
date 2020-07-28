@@ -17,7 +17,7 @@
 
     Public Sub step1()
 
-        Dim p As Player = Game.player
+        Dim p As Player = Game.player1
 
         Dim out = ""
 
@@ -68,8 +68,8 @@
         p.prt.setIAInd(pInd.eyes, 37, True, True)
         p.prt.setIAInd(pInd.fronthair, 29, True, True)
         p.breastSize = 0
-        p.reverseBSRoute()
-        p.prt.hBowInd = 1
+        p.reverseallroute()
+        p.prt.setIAInd(pInd.hairacc, 1, True, True)
         p.lust = 70
 
         'End If
@@ -83,7 +83,7 @@
     End Sub
 
     Public Overrides Function getNextStep(stage As Integer) As Action
-        Dim p As Player = Game.player
+        Dim p As Player = Game.player1
         Select Case stage
             Case 0
                 Return AddressOf step1

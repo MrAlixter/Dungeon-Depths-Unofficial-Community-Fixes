@@ -11,16 +11,16 @@
         MyBase.value = 500
     End Sub
 
-    Overrides Sub use()
+    Overrides Sub use(ByRef p As Player)
         If Me.getUsable() = False Then Exit Sub
         Game.pushLstLog("You use the " & getName() & ". +5 base DEF!")
 
-        Game.player.defence += 5
-        Game.player.UIupdate()
+        p.defence += 5
+        p.UIupdate()
 
-        If Not Game.player.perks("coscale") > -1 And (Int(Rnd() * 2) = 0 Or Game.noRNG) Then
-            Game.player.ongoingTFs.Add(New BroodmotherTF(5, 15, 2.0, True))
-            Game.player.perks("coscale") = 1
+        If Not p.perks(perk.coscale) > -1 And (Int(Rnd() * 2) = 0 Or Game.noRNG) Then
+            p.ongoingTFs.Add(New BroodmotherTF(5, 15, 2.0, True))
+            p.perks(perk.coscale) = 1
             Game.pushLstLog("You've been afflicted wth the curse of scales!")
         End If
 

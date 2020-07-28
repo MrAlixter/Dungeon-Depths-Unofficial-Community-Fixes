@@ -7,8 +7,8 @@
 
     Public Overrides Sub revert()
         MyBase.revert()
-        Do While Game.player.knownSpells.Contains("Heartblast Starcannon")
-            Game.player.knownSpells.Remove("Heartblast Starcannon")
+        Do While Game.player1.knownSpells.Contains("Heartblast Starcannon")
+            Game.player1.knownSpells.Remove("Heartblast Starcannon")
         Loop
         Game.pushLstLog("'Heartblast Starcannon' spell forgotten!")
     End Sub

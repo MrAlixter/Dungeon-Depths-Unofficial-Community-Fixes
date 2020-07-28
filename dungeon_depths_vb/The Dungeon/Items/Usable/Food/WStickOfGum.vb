@@ -3,7 +3,7 @@
 
     Sub New()
         MyBase.setName("Melon_Stick_of_Gum")
-        MyBase.setDesc("An pink piece of gum with a faint chemical smell.  Supposedly, it tastes like watermelon.  -10 Hunger")
+        MyBase.setDesc("An pink piece of gum with a faint chemical smell.  Supposedly, it tastes like watermelon.  +10 Stamina")
         id = 132
         tier = 3
         MyBase.setUsable(True)
@@ -13,11 +13,11 @@
     End Sub
 
     Overrides Sub effect()
-        If Game.player.perks("bimbotf") = -1 Then
+        If Game.player1.perks(perk.bimbotf) = -1 Then
             Game.pushLblEvent("Chewing the gum causes a dizzy calm wash to over you.")
-            Game.player.ongoingTFs.Add(New WBimboTF(2, 5, 0.25, True))
-            Game.player.perks("bimbotf") = 0
-        ElseIf Game.player.pClass.name.Equals("Bimbo") Then
+            Game.player1.ongoingTFs.Add(New WBimboTF(2, 5, 0.25, True))
+            Game.player1.perks(perk.bimbotf) = 0
+        ElseIf Game.player1.pClass.name.Equals("Bimbo") Then
             Game.pushLblEvent("Chewing the gum make your head feel warm and fuzzy and stuff. You like, totally, love this gum!")
         Else
             Game.pushLblEvent("Chewing the gum make your head feel warm and fuzzy.")

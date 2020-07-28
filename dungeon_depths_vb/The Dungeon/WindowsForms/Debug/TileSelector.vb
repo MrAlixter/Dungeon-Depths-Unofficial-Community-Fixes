@@ -45,7 +45,7 @@ Public Class TileSelector
                     map.SetPixel(boardX + 1, boardY + 1, Color.Yellow)
                 ElseIf (Game.currfloor.mBoard(boardY, boardX).Text = "H") Then 'Stairs
                     map.SetPixel(boardX + 1, boardY + 1, Color.Sienna)
-                ElseIf (Game.currfloor.mBoard(boardY, boardX).Text = "@" And Game.player.pos.X = boardX And Game.player.pos.Y = boardY) Then 'Player
+                ElseIf (Game.currfloor.mBoard(boardY, boardX).Text = "@" And Game.player1.pos.X = boardX And Game.player1.pos.Y = boardY) Then 'Player
                     map.SetPixel(boardX + 1, boardY + 1, Color.LawnGreen)
                 ElseIf (Game.currfloor.mBoard(boardY, boardX).Text = "@") Then 'Statue
                     map.SetPixel(boardX + 1, boardY + 1, Color.LightSlateGray)

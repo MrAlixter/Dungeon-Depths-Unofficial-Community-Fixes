@@ -3,7 +3,7 @@
   <PropertyGroup>
     <EnableSecurityDebugging>false</EnableSecurityDebugging>
     <ProjectView>ShowAllFiles</ProjectView>
-    <PublishUrlHistory>publish\</PublishUrlHistory>
+    <PublishUrlHistory>F:\d_d\|publish\</PublishUrlHistory>
     <InstallUrlHistory />
     <SupportUrlHistory />
     <UpdateUrlHistory />
@@ -11,5 +11,11 @@
     <ErrorReportUrlHistory />
     <FallbackCulture>en-US</FallbackCulture>
     <VerifyUploadedFiles>false</VerifyUploadedFiles>
+	<DisableFastUpToDateCheck>true</DisableFastUpToDateCheck>
   </PropertyGroup>
+  
+  <PropertyGroup Label="Configuration">
+      <PreBuildEvent>xcopy /s /e /h /q /y "$(SolutionDir)The Dungeon\img\*" "$(TargetDir)\img\"</PreBuildEvent>
+    </PropertyGroup>
+	
 </Project>

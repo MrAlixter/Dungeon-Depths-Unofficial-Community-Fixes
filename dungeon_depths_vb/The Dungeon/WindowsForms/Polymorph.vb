@@ -2,6 +2,20 @@
     Public Shared porm As Boolean = True
     Public target As NPC
     Public tfForm As Boolean = False
+    Shared fFNames() As String = {"Anna", "Ann", "Ana", "Alexis", "Allie", "Amber", "Ali", "Ashlie", _
+                               "Becky", "Bambi", "Barbie", _
+                               "Christine", "Casandra", "Cassie", "Cara", "Chloe", "Crystal", "Kristal", _
+                               "Danica", "Dani", _
+                                "Erika", "Emmy", _
+                               "Heather", "Hailey", _
+                               "Johanna", "Jenna", "Jenni", "Jo-Jo", _
+                               "Kelli", _
+                               "Lana", "Leora", _
+                               "Monica", "Mia", _
+                               "Nancy", "Nicole", _
+                               "Racheal", _
+                               "Sammi", "Sam", "Sally", "Sara", "Sofi", _
+                               "Trisha", "Trixie"}
     Private Sub Form4_Load(sender As Object, e As EventArgs) Handles MyBase.Load
         'scale to the screen size
         Dim startingWidth = Me.Width
@@ -24,7 +38,7 @@
             Me.Controls(i).Top += CDbl(Me.Controls(i).Top * RH)
         Next
 
-        Dim p = Game.player
+        Dim p = Game.player1
         Select Case porm
             Case True
                 For i = 0 To p.selfPolyForms.Count - 1
@@ -41,12 +55,12 @@
     Private Sub Button1_Click(sender As Object, e As EventArgs) Handles Button1.Click
         If cboxPMorph.Text = "-- Select --" Or Not tfForm Then
             Me.Close()
-            Game.player.mana += 5
+            Game.player1.mana += 5
             Exit Sub
         End If
         Select Case porm
             Case True
-                transform(Game.player, cboxPMorph.Text)
+                transform(Game.player1, cboxPMorph.Text)
             Case False
                 If target.GetType().IsSubclassOf(GetType(ShopNPC)) Then transformN(target) Else transform(target, cboxPMorph.Text)
         End Select
@@ -71,18 +85,12 @@
             MsgBox(form.Equals(p.pClass.name) & " | " & form.Equals(p.pForm.name))
         End If
 
-        'performs the neccisary polymorph
-        Dim removeind = New List(Of Integer)
-        For i = 0 To p.ongoingTFs.Count - 1
-            If p.ongoingTFs(i).GetType().IsSubclassOf(GetType(PolymorphTF)) Then removeind.Add(i)
-        Next
-        For i = 0 To removeind.Count - 1
-            p.ongoingTFs.RemoveAt(removeind(i))
-        Next
+        'polymorph updates
+        p.ongoingTFs.resetPolymorphs()
 
         p.polymorphs(form) = PolymorphTF.newPoly(form)
         p.ongoingTFs.Add(p.polymorphs(form))
-        p.perks("polymorphed") = p.polymorphs(form).getturnsTilNextStep
+        p.perks(perk.polymorphed) = p.polymorphs(form).getturnsTilNextStep
 
         If form = "MASBimbo" Then form = "Bimbo"
         If p.forms.Keys.Contains(form) Then
@@ -224,22 +232,77 @@
     End Sub
     Shared Sub giveRNDBimName(ByRef p As Player)
         Randomize()
-        Dim fFNames() As String = {"Anna", "Ann", "Ana", "Alexis", "Allie", "Amber", "Ali", _
-                               "Becky", _
-                               "Christine", "Casandra", "Cassie", "Cara", "Chloe", _
-                               "Danica", "Dani", _
-                                "Erika", "Emmy", _
-                               "Heather", "Hailey", _
-                               "Johanna", "Jenna", "Jenni", "Jo-Jo", _
-                               "Kelli", _
-                               "Lana", "Leora", _
-                               "Monica", "Mia", _
-                               "Nancy", "Nicole", _
-                               "Racheal", _
-                               "Sammi", "Sam", "Sally", "Sara", "Sofi", _
-                               "Trisha", "Trixie"}
         p.name = fFNames(Int(Rnd() * fFNames.Length))
     End Sub
+
+    Shared Function bimboizeName(ByVal name As String) As String
+
+
+        Dim vowels() As String = {"a", "e", "i", "o", "u"}
+
+        Dim oname = name.ToLower
+        Dim firstVowel As Integer = oname.Length
+
+        For i = 1 To oname.Length - 1
+            If vowels.Contains(oname.Substring(i, 1)) Then
+                If Not firstVowel = oname.Length Then firstVowel = i + 1 : Exit For
+                firstVowel = i + 1
+            End If
+
+        Next
+        name = oname.Substring(0, firstVowel)
+
+        If name.EndsWith("ie") Or name.EndsWith("ey") Then
+            name = name.Substring(0, name.Length - 1) & "i"
+        ElseIf (name.EndsWith("e") Or name.EndsWith("y")) And name.Length > 2 Then
+            name = name.Substring(0, name.Length - 1) & "i"
+        ElseIf (name.EndsWith("i") Or name.EndsWith("n")) And name.Length > 2 Then
+            name = name.Substring(0, name.Length) & "i"
+        End If
+
+        name = name.Substring(0, 1).ToUpper() + name.Substring(1, name.Length - 1)
+
+        If (name.EndsWith("chelli")) Then Return name.Substring(0, name.Length - 1) & "e"
+        If (name.EndsWith("vi")) Then Return name.Substring(0, name.Length) & "i"
+        If (name.EndsWith("Ali")) Then Return "Alli"
+        If (name.EndsWith("au")) Then Return name.Substring(0, name.Length) & "li"
+        If (name.EndsWith("sa") Or name.EndsWith("sta")) Then Return name.Substring(0, name.Length - 2) & "sie"
+        If (name.EndsWith("oo")) Then name = name.Substring(0, name.Length - 1)
+
+        If name.Length <= 2 Then
+            If (name.EndsWith("Le") Or name.EndsWith("Se") Or name.EndsWith("Ro") Or name.EndsWith("Fo")) Then
+                Return name.Substring(0, name.Length - 1) & "xi"
+            ElseIf (name.EndsWith("He") Or name.EndsWith("Ka") Or name.EndsWith("Ke") Or name.EndsWith("Ha")) Then
+                Return name.Substring(0, 1) & "aylee"
+            ElseIf (name.EndsWith("Ju") Or name.EndsWith("Do") Or name.EndsWith("Ca") Or name.EndsWith("Ho")) Then
+                Return name.Substring(0, name.Length - 1) & "li"
+            ElseIf (name.EndsWith("Co") Or name.EndsWith("Ko")) Then
+                Return name.Substring(0, 1) & "hloe"
+            ElseIf (name.EndsWith("Ba")) Then
+                Return name.Substring(0, name.Length - 1) & "mbi"
+            ElseIf (name.EndsWith("Bo")) Then
+                Return name.Substring(0, name.Length) & "obi"
+            ElseIf (name.EndsWith("Am")) Then
+                Return name.Substring(0, name.Length - 1) & "ber"
+            ElseIf (name.EndsWith("Se")) Then
+                Return name.Substring(0, 1) & "kye"
+            ElseIf (name.EndsWith("Lo")) Then
+                Return name.Substring(0, 1) & "oona"
+            ElseIf (name.EndsWith("Sa")) Then
+                Return name.Substring(0, 1) & "tacey"
+            ElseIf (name.EndsWith("i") Or name.EndsWith("o") Or name.EndsWith("u")) Then
+                Return name & "-" & name
+            ElseIf (name.EndsWith("a")) Then
+                Return name.Substring(0, name.Length - 1) & "ia"
+            ElseIf (name.EndsWith("e")) Then
+                Return name.Substring(0, name.Length - 1) & "na"
+            End If
+        Else
+            Return name
+        End If
+
+        Return "Allie"
+    End Function
 
     Private Sub cboxPMorph_SelectedValueChanged(sender As Object, e As EventArgs) Handles cboxPMorph.SelectedValueChanged
         tfForm = True

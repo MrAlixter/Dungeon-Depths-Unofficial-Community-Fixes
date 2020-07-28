@@ -3,7 +3,7 @@
 
     Sub New()
         MyBase.setName("Cursed_Heavy_Cream")
-        MyBase.setDesc("An increadibly heavy cream that seems a bit fattening.  Apperantly it might be a little bit cursed." & vbCrLf & "-30 Hunger, major breast enlargement")
+        MyBase.setDesc("An increadibly heavy cream that seems a bit fattening.  Apperantly it might be a little bit cursed." & vbCrLf & "-30 stamina, major breast enlargement")
         id = 98
         tier = Nothing
         MyBase.setUsable(True)
@@ -11,21 +11,21 @@
         MyBase.value = 265
         setCalories(30)
     End Sub
-    Overrides Sub use()
+    Overrides Sub use(ByRef p As Player)
         If Me.getUsable() = False Then Exit Sub
         Game.pushLstLog("You drink the " & getName())
-        Game.player.hunger -= getCalories()
-        If Game.player.hunger < 0 Then Game.player.hunger = 0
+        p.stamina += getCalories()
+        If p.stamina > 100 Then p.stamina = 100
         Effect()
 
         count -= 1
     End Sub
     Public Overrides Sub Effect()
-        Game.player.be()
-        Game.player.be()
-        If Transformation.canBeTFed(Game.player) Then
-            Game.player.pState.save(Game.player)
+        Game.player1.be()
+        Game.player1.be()
+        If Transformation.canBeTFed(Game.player1) Then
+            Game.player1.pState.save(Game.player1)
         End If
-        Game.player.drawPort()
+        Game.player1.drawPort()
     End Sub
 End Class

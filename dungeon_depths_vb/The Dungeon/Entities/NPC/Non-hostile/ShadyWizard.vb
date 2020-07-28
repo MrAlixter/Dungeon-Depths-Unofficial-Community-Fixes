@@ -27,7 +27,7 @@
         inv.setCount("Bunny_Suit", 1)
         inv.setCount("Witch_Cosplay", 1)
         inv.setCount("Brawler_Cosplay", 1)
-        inv.setCount("Cowbell", 1)
+        inv.setCount(perk.cowbell, 1)
         inv.setCount("Crystalline_Armor", 1)
 
         'Weapons
@@ -39,15 +39,15 @@
         pronoun = "he"
         pPronoun = "his"
         rPronoun = "him"
-        picNormal = Game.picSW.BackgroundImage
-        picPrincess = Game.picSWPrin.BackgroundImage
-        picBunny = Game.picSWb.BackgroundImage
+        picNormal = ShopNPC.npcLib.atrs(0).getAt(6)
+        picPrincess = ShopNPC.npcLib.atrs(0).getAt(8)
+        picBunny = ShopNPC.npcLib.atrs(0).getAt(7)
 
         picNCP = New List(Of Image)
-        picNCP.AddRange({picNormal, Game.picFrog.BackgroundImage, Game.picSheep.BackgroundImage, picPrincess, picBunny})
+        picNCP.AddRange({picNormal, ShopNPC.npcLib.atrs(0).getAt(4), ShopNPC.npcLib.atrs(0).getAt(5), picPrincess, picBunny})
 
-        picNCP.AddRange({Game.picSWDoll.BackgroundImage})
-        If speed = Game.player.speed Then speed -= 1
+        picNCP.AddRange({ShopNPC.npcLib.atrs(0).getAt(9)})
+        If speed = Game.player1.speed Then speed -= 1
         title = " the "
     End Sub
 
@@ -64,7 +64,7 @@
         MyBase.discount = 0
 
         If npcIndex = 0 Then
-            If CInt(Game.player.health * Game.player.getMaxHealth()) = 69 Then
+            If CInt(Game.player1.health * Game.player1.getMaxHealth()) = 69 Then
                 Game.pushNPCDialog("Ehehe. Your health. Nice." & vbCrLf & "Anyway, what are you buying?")
             Else
                 Game.pushNPCDialog("What are you buying?")
@@ -74,7 +74,7 @@
         ElseIf npcIndex = 2 Then
             Game.pushNPCDialog("*bleets*")
         ElseIf npcIndex = 3 Then
-            Game.pushNPCDialog("Hey, " & Game.player.pClass.name & ", how's it going?")
+            Game.pushNPCDialog("Hey, " & Game.player1.pClass.name & ", how's it going?")
         ElseIf npcIndex = 4 Then
             Game.pushNPCDialog("So are these real or fake?  My ears, I mean.")
         ElseIf npcIndex = 5 Then

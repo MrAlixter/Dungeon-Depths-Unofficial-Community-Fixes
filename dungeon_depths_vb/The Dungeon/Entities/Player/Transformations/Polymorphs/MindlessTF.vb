@@ -24,7 +24,7 @@
 
     Public Overrides Sub step1()
         If altcourse Then Exit Sub
-        Dim p As Player = Game.player
+        Dim p As Player = Game.player1
         Dim out = ""
 
         'transformation
@@ -44,7 +44,7 @@
     End Sub
 
     Public Sub step1alt()
-        Dim p As Player = Game.player
+        Dim p As Player = Game.player1
         Dim out = ""
 
         p.pState.save(p)
@@ -67,7 +67,7 @@
 
         p.polymorphs("Mindless") = PolymorphTF.newPoly("MindlessAlt")
         p.ongoingTFs.Add(p.polymorphs("Mindless"))
-        p.perks("polymorphed") = turnsTilNextStep
+        p.perks(perk.polymorphed) = turnsTilNextStep
         p.pClass = p.classes("Mindless")
 
         p.drawPort()

@@ -14,14 +14,19 @@
     End Sub
 
     Public Overrides Sub onEquip()
-        If Not Game.player.pClass.name.Equals("Valkyrie") Then
+        If Not Game.player1.pClass.name.Equals("Valkyrie") Then
             Dim valkyrieTF = New ValkyrieTF2(1, 0, 0, False)
             valkyrieTF.step1()
-            Game.player.drawPort()
+            Game.player1.drawPort()
         End If
     End Sub
-    Public Overrides Sub onUnequip()
-        MyBase.onUnequip()
-        Equipment.clothesChange("Naked")
+
+    Public Overrides Sub onunEquip(Optional w As Weapon = Nothing)
+        Dim p = Game.player1
+        If p.pClass.name.Equals("Valkyrie") And Not w Is Nothing AndAlso Not w.GetType.IsSubclassOf(GetType(Sword)) Then
+            Game.pushLstLog("Putting away your sword causes you to change into your regular self!")
+            p.inv.add(95, -1)
+            p.revertToPState()
+        End If
     End Sub
 End Class

@@ -11,11 +11,10 @@
         MyBase.value = 560
     End Sub
 
-    Public Overrides Sub use()
-        Dim p = Game.player
+    Public Overrides Sub use(ByRef p As Player)
 
         If Game.combatmode And Not p.currTarget Is Nothing Then
-            'regular effect
+            'regular effecth
             p.currTarget.isStunned = True
             p.currTarget.stunct = 2
             Game.pushLstLog("With a poof, " & p.currTarget.getName & " becomes an inflated version of themselves!")
@@ -25,8 +24,8 @@
             If Game.currNPC.getName.Contains("Shady") Then out = "The second they take hold of the coupon, the magical grifter's eyes widen and a powerful backlash of magic washes over them...   "
             Game.pushLblEvent(out & "With a poof " & Game.currNPC.getName & " becomes an inflated version of themselves!", AddressOf Game.currNPC.toDoll)
         Else
-            Game.player.ongoingTFs.Add(New BUDollTF())
-            Game.player.update()
+            Game.player1.ongoingTFs.Add(New BUDollTF())
+            Game.player1.update()
         End If
         count -= 1
     End Sub

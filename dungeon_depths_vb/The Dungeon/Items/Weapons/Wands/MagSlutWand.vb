@@ -1,5 +1,5 @@
 ﻿Public Class MagSlutWand
-    Inherits Wand
+    Inherits MagGirlWand
 
     Sub New()
         MyBase.setName("Magical_Girl_Wand​")
@@ -12,13 +12,24 @@
         MyBase.count = 0
         MyBase.value = 10
         isCursed = True
+
+        mgOutfit = 170
     End Sub
 
     Public Overrides Sub onEquip()
-        If Not Game.player.pClass.name.Equals("Magical Slut") Then
+        If Not Game.player1.pClass.name.Equals("Magical Slut") Then
             Dim magicGirlTF = New MagSlutTF(2, 0, 0, False)
             magicGirlTF.update()
-            Game.player.ongoingTFs.Add(magicGirlTF)
+            Game.player1.ongoingTFs.Add(magicGirlTF)
+        End If
+    End Sub
+    Public Overrides Sub onunEquip(Optional w As Weapon = Nothing)
+        Dim p = Game.player1
+        If p.pClass.name.Equals("Magical Slut") And Not w.GetType.IsSubclassOf(GetType(Wand)) Then
+            Game.pushLstLog("Putting away your wand causes you to change into your regular self!")
+            p.inv.add(mgOutfit, -1)
+            p.magGState.save(p)
+            p.revertToPState()
         End If
     End Sub
 

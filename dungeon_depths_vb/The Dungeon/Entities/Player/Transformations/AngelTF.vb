@@ -16,7 +16,7 @@
     End Sub
 
     Public Sub step1()
-        Dim p As Player = Game.player
+        Dim p As Player = Game.player1
         Dim out = ""
 
         'angel transformation
@@ -24,7 +24,7 @@
         p.prt.setIAInd(pInd.rearhair, 5, True, True)
         p.prt.setIAInd(pInd.midhair, 14, True, True)
         p.prt.setIAInd(pInd.fronthair, 11, True, True)
-        p.prt.wingInd = 1
+        p.prt.setIAInd(pInd.wings, 1, True, False)
 
         'transformation description push
         out += "As you bite into the cake, you are lost in its sweet flavor.  So lost, in fact, that you miss the large white wings growing on you back.  You are now an angel!"
@@ -38,7 +38,7 @@
     End Sub
 
     Public Overrides Function getNextStep(stage As Integer) As Action
-        Dim p As Player = Game.player
+        Dim p As Player = Game.player1
         Select Case stage
             Case 0
                 Return AddressOf step1

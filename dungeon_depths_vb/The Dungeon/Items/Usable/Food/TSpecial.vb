@@ -3,7 +3,7 @@
     Sub New()
         MyBase.setName("Tavern_Special")
         MyBase.setDesc("An entire broasted chicken, served with mashed potatos and bread." & vbCrLf &
-                       "-100 Hunger" & vbCrLf &
+                       "+100 Stamina" & vbCrLf &
                        "Low chance to raise Max Health by 5")
         id = 135
         tier = Nothing
@@ -15,10 +15,10 @@
 
     Public Overrides Sub Effect()
         If Int(Rnd() * 5) = 0 Or Game.noRNG Then
-            Game.player.maxHealth += 5
-            Game.player.health += 5 / Game.player.getMaxHealth()
-            If Game.player.health > 1 Then Game.player.health = 1
-            Game.player.UIupdate()
+            Game.player1.maxHealth += 5
+            Game.player1.health += 5 / Game.player1.getMaxHealth()
+            If Game.player1.health > 1 Then Game.player1.health = 1
+            Game.player1.UIupdate()
         End If
     End Sub
 End Class

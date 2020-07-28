@@ -11,14 +11,14 @@
         MyBase.value = 150
     End Sub
 
-    Overrides Sub use()
+    Overrides Sub use(ByRef p As Player)
         Game.pushLstLog("You drink the " & getName())
-        Dim phMana = Game.player.mana
+        Dim phMana = p.mana
 
         Dim meffect As ManaEffect = New ManaEffect
-        meffect.apply(Game.player)
+        meffect.apply(p)
 
-        Game.pushLblEvent("You drink the " & getName() & ".  +" & (Game.player.mana - phMana) & " mana!")
+        Game.pushLblEvent("You drink the " & getName() & ".  +" & (p.mana - phMana) & " mana!")
         count -= 1
     End Sub
 End Class

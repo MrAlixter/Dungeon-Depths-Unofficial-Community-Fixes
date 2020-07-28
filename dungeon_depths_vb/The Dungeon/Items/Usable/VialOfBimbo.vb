@@ -11,10 +11,10 @@
         MyBase.value = 1230
     End Sub
 
-    Public Overrides Sub use()
+    Public Overrides Sub use(ByRef p As Player)
         Game.pushLblEvent("Drinking the pink contents of the vial causes a dizzy calm wash to over you.")
-        Game.player.ongoingTFs.Add(New BimboPlusTF(2, 5, 0.25, True))
-        Game.player.perks("bimbotf") = 0
+        p.ongoingTFs.Add(New BimboPlusTF(2, 5, 0.25, True))
+        p.perks(perk.bimbotf) = 0
         count -= 1
     End Sub
 End Class

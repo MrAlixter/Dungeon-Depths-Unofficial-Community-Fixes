@@ -12,17 +12,15 @@
         MyBase.isRandoTFAcceptable = False
         MyBase.isMonsterDrop = False
     End Sub
-    Public Overrides Sub use()
-        Dim p As Player = Game.player
-
+    Public Overrides Sub use(ByRef p As Player)
         Dim form = InputBox("TF to... [Half-Gorgon, Gynoid, Amazon, Mindless, Rando, Half-Broodmother, Broodmother, " &
-                            "Minotaur Cow, Dragon, Succubus, Slime, Bimbo, Cake, Blob, Horse, Oni, Alraune]:")
+                            "Minotaur Cow, Dragon, Succubus, Slime, Bimbo, Cake, Blob, Horse, Oni, Alraune, Minotaur Bull]:")
 
         Dim tfs As Dictionary(Of String, Transformation) = New Dictionary(Of String, Transformation)
         Dim tf2s As Dictionary(Of String, Action) = New Dictionary(Of String, Action)
         tfs.Add("Gynoid", New GynoidTF)
         tfs.Add("Half-Gorgon", New HGorgonTF)
-        tfs.Add("Amazon", New AmazonTF)
+        tfs.Add(perk.amazon, New AmazonTF)
         tfs.Add("Mindless", New MindlessTF)
         tfs.Add("Rando", New RandoTF)
         tfs.Add("Half-Broodmother", Nothing)
@@ -33,9 +31,10 @@
 
 
         tf2s.Add("Minotaur Cow", AddressOf New MinotaurCowTF().step1)
+        tf2s.Add("Minotaur Bull", AddressOf New MinoMTF().fulltf)
         tf2s.Add("Dragon", AddressOf New DragonTF().step1)
         tf2s.Add("Succubus", AddressOf New SuccubusTF().step1)
-        tf2s.Add("Slime", AddressOf New SlimeTF().step1)
+        tf2s.Add("Slime", AddressOf New slimetf().step1)
         tf2s.Add("Bimbo", AddressOf New BimboTF(2, 0, 0.25, True).doubleTf)
         tf2s.Add("Cake", AddressOf New TTCCBF().step1)
         tf2s.Add("Alraune", AddressOf New AlrauneTF().fullTF)

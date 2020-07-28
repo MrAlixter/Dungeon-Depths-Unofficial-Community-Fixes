@@ -36,15 +36,15 @@
         pronoun = "he"
         pPronoun = "his"
         rPronoun = "him"
-        picNormal = Game.picShopkeep.BackgroundImage
-        picPrincess = Game.picSKPrin.BackgroundImage
-        picBunny = Game.picSKBunny.BackgroundImage
+        picNormal = ShopNPC.npcLib.atrs(0).getAt(0)
+        picPrincess = ShopNPC.npcLib.atrs(0).getAt(2)
+        picBunny = ShopNPC.npcLib.atrs(0).getAt(1)
 
         picNCP = New List(Of Image)
-        picNCP.AddRange({picNormal, Game.picFrog.BackgroundImage, Game.picSheep.BackgroundImage, picPrincess, picBunny})
+        picNCP.AddRange({picNormal, ShopNPC.npcLib.atrs(0).getAt(4), ShopNPC.npcLib.atrs(0).getAt(5), picPrincess, picBunny})
 
-        picNCP.AddRange({Game.picSKDoll.BackgroundImage})
-        If speed = Game.player.speed Then speed -= 1
+        picNCP.AddRange({ShopNPC.npcLib.atrs(0).getAt(3)})
+        If speed = Game.player1.speed Then speed -= 1
         title = " the "
     End Sub
 
@@ -70,7 +70,7 @@
         ElseIf npcIndex = 2 Then
             Game.pushNPCDialog("Baaahhh.")
         ElseIf npcIndex = 3 Then
-            Game.pushNPCDialog("Hello, kind " & Game.player.pClass.name & ", how are you on this fine day?")
+            Game.pushNPCDialog("Hello, kind " & Game.player1.pClass.name & ", how are you on this fine day?")
         ElseIf npcIndex = 4 Then
             Game.pushNPCDialog("*giggle* Hey!")
         ElseIf npcIndex = 5 Then

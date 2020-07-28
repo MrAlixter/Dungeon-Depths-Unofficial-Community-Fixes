@@ -5,6 +5,7 @@
     Public picNormal, picPrincess, picBunny As Image
     Public picNCP As List(Of Image)
     Protected discount As Double = 0
+    Protected Shared npcLib As ImageCollection = New ImageCollection(2)
 
     Shared Function shopFactory(ByVal nIndex As Integer)
         Select Case nIndex
@@ -18,6 +19,8 @@
                 Return New WSmith
             Case 5
                 Return New CBrok
+            Case 6
+                Return New MaskedMG
             Case Else
                 Return New Shopkeeper
         End Select
@@ -53,13 +56,13 @@
         If npcIndex = 1 Or npcIndex = 2 Then despawn("flee")
         Game.picNPC.BackgroundImage = picNCP(npcIndex)
 
-        If Game.combatmode Then attackCMD(Game.player)
+        If Game.combatmode Then attackCMD(Game.player1)
     End Sub
     Public Overrides Function getName() As String
         Return title & name
     End Function
     Public Overridable Sub encounter()
-        pos = Game.player.pos
+        pos = Game.player1.pos
         If isDead = True Then
             Game.pushLblEvent("This NPC is dead.")
             Exit Sub
@@ -161,7 +164,7 @@
         Game.btnShop.Visible = False
         Game.btnFight.Visible = False
         Game.btnLeave.Visible = False
-        If npcIndex > 4 And Not Game.picNPC.BackgroundImage.Equals(Game.picSWDoll.BackgroundImage) Then npcIndex = 0
+        If npcIndex > 4 And Not Game.picNPC.BackgroundImage.Equals(ShopNPC.npcLib.atrs(0).getAt(3)) Then npcIndex = 0
     End Sub
 
     Public Overridable Sub toDoll()

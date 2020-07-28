@@ -25,9 +25,9 @@
     End Function
 
     Public Overrides Sub onEquip()
-        If Not Game.player.perks("swordpossess") > -1 Then Game.player.perks("swordpossess") = 0
+        If Not Game.player1.perks(perk.swordpossess) > -1 Then Game.player1.perks(perk.swordpossess) = 0
     End Sub
-    Public Overrides Sub onUnequip()
-        If Game.player.perks("swordpossess") > -1 Then Game.player.perks("swordpossess") = -1
+    Public Overrides Sub onUnequip(Optional w As Weapon = Nothing)
+        If Game.player1.perks(perk.swordpossess) > -1 Then Game.player1.perks(perk.swordpossess) = -1
     End Sub
 End Class

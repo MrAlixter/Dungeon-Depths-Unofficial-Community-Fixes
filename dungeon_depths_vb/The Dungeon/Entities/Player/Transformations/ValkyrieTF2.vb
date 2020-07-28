@@ -12,7 +12,7 @@
     End Sub
 
     Sub step1()
-        Dim p As Player = Game.player
+        Dim p As Player = Game.player1
 
         If p.sex = "Male" Then
             p.MtF()
@@ -21,8 +21,8 @@
         p.pClass = p.classes("Valkyrie")
 
         p.breastSize = 2
+
         p.prt.setIAInd(pInd.rearhair, 0, True, False)
-        p.prt.setIAInd(pInd.body, 6, True, True)
         p.prt.setIAInd(pInd.face, 3, True, False)
         p.prt.setIAInd(pInd.midhair, 3, True, False)
         p.prt.setIAInd(pInd.nose, 0, True, False)
@@ -32,12 +32,13 @@
         p.prt.setIAInd(pInd.cloak, 0, True, False)
         p.prt.setIAInd(pInd.fronthair, 11, True, True)
         p.prt.setIAInd(pInd.hat, 7, True, False)
-        p.prt.wingInd = 1
+        p.prt.setIAInd(pInd.wings, 1, True, False)
 
         p.inv.add(95, 1)
 
         Equipment.clothesChange("Valkyrie_Armor")
 
+        p.reverseAllRoute()
         If Not p.knownSpecials.Contains("Blazing Angel Strike") Then p.knownSpecials.Add("Blazing Angel Strike")
         Game.pushLstLog("""Blazing Angel Strike"" special learned!")
         p.canMoveFlag = True
@@ -48,7 +49,7 @@
     End Sub
 
     Public Overrides Function getNextStep(stage As Integer) As Action
-        Dim p As player = game.player
+        Dim p As player = game.player1
         If p.pClass.name.Equals("Valkyrie") Then
             Return AddressOf stopTF
         Else

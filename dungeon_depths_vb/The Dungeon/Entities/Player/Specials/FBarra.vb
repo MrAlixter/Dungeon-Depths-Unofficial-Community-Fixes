@@ -19,7 +19,7 @@
                 ((p.attack + p.aBuff) * p.pClass.a * p.pForm.a * 0.65 * 0.05)
             m.takeDMG(dmg, p)
             Game.pushLblCombatEvent("You hit your opponent for " & dmg & " damage!")
-            If i <> 0 Then p.hunger += 4
+            If i <> 0 Then p.stamina -= 4
         Next
 
     End Sub

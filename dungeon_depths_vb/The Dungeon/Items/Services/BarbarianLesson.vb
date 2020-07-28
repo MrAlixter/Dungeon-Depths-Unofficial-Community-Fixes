@@ -25,7 +25,7 @@
         Game.pushPnlYesNo("Start over as a Barbarian?", AddressOf tf, AddressOf cancel)
     End Sub
     Sub cancel()
-        Game.player.gold += value
+        Game.player1.gold += value
         CType(Game.hteach, HTeach).back()
     End Sub
     Sub tf()
@@ -37,7 +37,7 @@
             "Fought a dragon!?  While that sounds like something you'd do, you don't remember it which is strange considering how much you savor combat.  All the same, you tell this strange, yet beautiful lady that you are fine.  Twirling your heavy weapon deftly, you remark that you've never felt better!  This actually isn't too far off, your well toned muscles are raring to give something a beatdown." & vbCrLf & vbCrLf &
             """Well then, it seems like my work here is done,"" the Hypnotist says, inturupting your thoughts.  ""If I can help you with anything else, don't hesitate to ask!"""
 
-        Dim p = Game.player
+        Dim p = Game.player1
 
         p.inv.add("Barbarian_Armor", 1)
         Equipment.clothesChange("Barbarian_Armor")
@@ -45,7 +45,7 @@
         Equipment.weaponChange("Corse_War_Axe")
 
 
-        p.pClass = p.classes("Barbarian")
+        p.pClass = p.classes(perk.barbarian)
 
         Game.pushLblEvent(out, AddressOf CType(Game.hteach, HTeach).back)
         p.drawPort()

@@ -15,7 +15,7 @@
         MyBase.setEffectList()
         Dim mainEffects As List(Of PEffect) = New List(Of PEffect)
 
-        If Game.player.prt.sexBool Then
+        If Game.player1.prt.sexBool Then
             mainEffects.AddRange({New MasEffect, New MasEffect, New MinMasEffect, New MasEffect})
         Else
             mainEffects.AddRange({New FemEffect, New FemEffect, New MinFemEffect, New FemEffect})

@@ -7,7 +7,7 @@
         MyBase.setcost(-1)
     End Sub
     Public Overrides Sub effect()
-        MyBase.getUser.perks("brage") = 2
+        MyBase.getUser.perks(perk.brage) = 2
         Game.pushLstLog("BERSERKER RAGE!")
         Game.pushLblCombatEvent("BERSERKER RAGE!" & vbCrLf & "+50% ATK, -25% DEF for 2 turns.")
     End Sub

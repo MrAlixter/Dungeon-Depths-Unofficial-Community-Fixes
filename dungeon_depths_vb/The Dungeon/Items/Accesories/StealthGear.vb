@@ -16,14 +16,14 @@
 
         underClothes = True
     End Sub
-    Public Overrides Sub onEquip()
-        MyBase.onEquip()
-        Game.player.perks("stealth") = 1
+    Public Overrides Sub onEquip(ByRef p As Player)
+        MyBase.onEquip(p)
+        p.perks(perk.stealth) = 1
         Game.drawBoard()
     End Sub
-    Public Overrides Sub onUnequip()
-        MyBase.onUnequip()
-        Game.player.perks("stealth") = -1
+    Public Overrides Sub onUnequip(ByRef p As Player)
+        MyBase.onUnequip(p)
+        p.perks(perk.stealth) = -1
         Game.drawBoard()
     End Sub
 End Class

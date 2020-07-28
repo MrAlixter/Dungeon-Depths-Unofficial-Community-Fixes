@@ -16,7 +16,7 @@
     End Sub
 
     Public Sub step1()
-        Dim p As Player = Game.player
+        Dim p As Player = Game.player1
         Dim out = ""
 
         'transformation
@@ -34,7 +34,7 @@
         p.prt.setIAInd(pInd.mouth, 12, True, False)
         p.pForm = p.forms("Combat Unit")
 
-        p.perks("slutcurse") = -1
+        p.perks(perk.slutcurse) = -1
     End Sub
 
     Public Overrides Sub stopTF()
@@ -42,7 +42,7 @@
     End Sub
 
     Public Overrides Function getNextStep(stage As Integer) As Action
-        Dim p As Player = Game.player
+        Dim p As Player = Game.player1
         Select Case stage
             Case 0
                 Return AddressOf step1

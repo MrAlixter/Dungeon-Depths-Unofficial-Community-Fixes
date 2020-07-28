@@ -10,9 +10,9 @@
         target = t
     End Sub
     Sub perform()
-        If (user.hunger + cost) > 100 Then
-            Game.pushLblEvent("You are too famished to use this special! (" & name & " costs " & cost & " hunger)")
-            Game.pushLstLog("You are too hungry!")
+        If (user.stamina + cost) < 0 Then
+            Game.pushLblEvent("You are too famished to use this special! (" & name & " costs " & cost & " stamina)")
+            Game.pushLstLog("You are too famished to use this special!")
             Exit Sub
         End If
         If Not Game.combatmode And Not Game.npcmode And Not useableOutOfCombat Then
@@ -24,7 +24,7 @@
         If cost = -1 Then
             Game.cboxSpec.Items.Remove(name)
         Else
-            user.hunger += cost
+            user.stamina -= cost
         End If
 
         Game.pushLblEvent("You perform " & name & "!")
@@ -64,8 +64,10 @@
             spec = New RDesc(u, t)
         ElseIf s.Equals("Massive Mammaries") Then
             spec = New MMam(u, t)
-        ElseIf s.Equals("Unholy Seduction") Then
+        ElseIf s.Equals("Unholy Seduction") Or s.Equals("Charm") Then
             spec = New USed(u, t)
+        ElseIf s.Equals("Drain Soul") Then
+            spec = New DrainSoul(u, t)
         ElseIf s.Equals("Absorbtion") Then
             spec = New Abso(u, t)
         ElseIf s.Equals("Ironhide Fury") Then
@@ -84,8 +86,8 @@
             spec = New HeavyBlow(u, t)
         ElseIf s.Equals("Focused Barrage") Then
             spec = New FBarra(u, t)
-        ElseIf s.Equals("Ki Wave Blast") Then
-            spec = New KiWBlast(u, t)
+        ElseIf s.Equals("Ki Wave Blast") Or s.Equals("Aura Cannon") Then
+            spec = New ACannon(u, t)
         ElseIf s.Equals("Uvona's Blessing") Then
             spec = New UBlessing(u, t)
         ElseIf s.Equals("Shrink_Ray Shot") Then
@@ -96,6 +98,14 @@
             spec = New BAStrike(u, t)
         ElseIf s.Equals("Pillowy Protect") Then
             spec = New PProt(u, t)
+        ElseIf s.Equals("Mana Burst") Then
+            spec = New MBurst(u, t)
+        ElseIf s.Equals("Inferno Aura") Then
+            spec = New InfernoAura(u, t)
+        ElseIf s.Equals("Megaton Punch") Then
+            spec = New BurningPunch(u, t)
+        ElseIf s.Equals("Gigaton Punch") Then
+            spec = New GigaPunch(u, t)
         End If
 
         spec.perform()
@@ -103,33 +113,33 @@
     Shared Function specCost(ByVal s As String)
         Select Case s
             Case "Ritual of Mana"
-                If Game.player.getMana < 5 Then
-                    Return "+20 hunger"
-                ElseIf Game.player.getMana < 10 Then
-                    Return "+40 hunger"
-                ElseIf Game.player.getMana < 15 Then
-                    Return "+60 hunger"
-                ElseIf Game.player.getMana < 20 Then
-                    Return "+80 hunger"
-                ElseIf Game.player.getMana < 30 Then
-                    Return "+100 hunger"
+                If Game.player1.getMana < 5 Then
+                    Return "-20 stamina"
+                ElseIf Game.player1.getMana < 10 Then
+                    Return "-40 stamina"
+                ElseIf Game.player1.getMana < 15 Then
+                    Return "-60 stamina"
+                ElseIf Game.player1.getMana < 20 Then
+                    Return "-80 stamina"
+                ElseIf Game.player1.getMana < 30 Then
+                    Return "-100 stamina"
                 Else
-                    Return "+120 hunger"
+                    Return "-120 stamina"
                 End If
             Case "Cleanse"
-                Return "+15 hunger"
+                Return "-15 stamina"
             Case "Spot Fusion"
-                Return "+50 hunger "
+                Return "-50 stamina "
             Case "Rapid Fire Jabs"
-                Return "+9 hunger for the first jab, and +6 hunger for each additional jab"
+                Return "-9 stamina for the first jab, and +6 stamina for each additional jab"
             Case "Focused Roundhouse"
-                Return "+16 hunger"
+                Return "-16 stamina"
             Case "Heavy Blow"
-                Return "+24 hunger"
+                Return "-24 stamina"
             Case "Focused Barrage"
-                Return "+6 hunger for the first hit, and +4 hunger for each additional hit"
+                Return "-6 stamina for the first hit, and +4 stamina for each additional hit"
             Case Else
-                Return "Useable only once per combat, or consumes an amount of hunger"
+                Return "Useable only once per combat, or consumes an amount of stamina"
         End Select
     End Function
 End Class

@@ -13,8 +13,7 @@
         MyBase.isRandoTFAcceptable = False
     End Sub
 
-    Overrides Sub use()
-        Dim p As Player = Game.player
+    Overrides Sub use(ByRef p As Player)
         p.ongoingTFs.Add(New RandoTF())
         p.update()
 

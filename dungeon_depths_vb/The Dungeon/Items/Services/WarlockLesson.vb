@@ -24,7 +24,7 @@
         Game.pushPnlYesNo("Start over as a Warlock?", AddressOf tf, AddressOf cancel)
     End Sub
     Sub cancel()
-        Game.player.gold += value
+        Game.player1.gold += value
         CType(Game.hteach, HTeach).back()
     End Sub
     Sub tf()
@@ -36,7 +36,7 @@
             "A cult?  Hardly...  While you're certainly in an arrangement with a deity, it isn't that of a worshipper and goddess so much as that she offered you a great deal of magical power in exchange for whole bunch of favors.  Your benefactor Uvona, Goddess of Fugue, rarely calls these favors in, though when she does it's even rarer that you remember them.  Are there cults devoted to Uvona? Probably, but you would never..." & vbCrLf & vbCrLf &
             """Well, I think you're done at least..."" the Hypnotist says, inturupting your thoughts.  ""If I can help you with anything else, don't hesitate to ask."""
 
-        Dim p = Game.player
+        Dim p = Game.player1
 
         p.inv.add("Warlock's_Robes", 1)
         Equipment.clothesChange("Warlock's_Robes")

@@ -7,6 +7,6 @@
 
     Public Overrides Sub revert()
         MyBase.revert()
-        Game.player.perks("slimehair") = -1
+        Game.player1.perks(perk.slimehair) = -1
     End Sub
 End Class

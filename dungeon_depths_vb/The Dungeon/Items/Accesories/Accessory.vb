@@ -10,13 +10,13 @@
     Public fInd As Tuple(Of Integer, Boolean, Boolean)
     Public mInd As Tuple(Of Integer, Boolean, Boolean)
     Public isCursed, underClothes As Boolean
-    Overridable Sub onEquip()
+    Overridable Sub onEquip(ByRef p As Player)
     End Sub
-    Overridable Sub onUnequip()
+    Overridable Sub onUnequip(ByRef p As Player)
     End Sub
 
     Public Overrides Sub discard()
-        If isCursed And Game.player.equippedAcce.getAName.Equals(getAName) Then
+        If isCursed And Game.player1.equippedAcce.getAName.Equals(getAName) Then
             Game.pushLblEvent("You are unable to drop your equipped equipment.")
         Else
             MyBase.discard()

@@ -32,7 +32,7 @@
         End If
     End Sub
     Public Overrides Sub backfire()
-        Dim p = Game.player
+        Dim p = Game.player1
         If Transformation.canBeTFed(p) Then
             p.pState.save(p)
         End If

@@ -10,12 +10,12 @@
     End Sub
 
     Public Overrides Sub setWaitTime(stage As Integer)
-        Dim p As player = game.player
+        Dim p As player = game.player1
         turnsTilNextStep = Int(Rnd() * 50) + Int(Rnd() * 50) + Int(Rnd() * p.getmaxMana) + Int(Rnd() * p.getWIL)
     End Sub
 
     Public Overrides Sub step1()
-        Dim p As player = game.player
+        Dim p As player = game.player1
         Dim out = ""
 
         'unequips
@@ -23,7 +23,7 @@
         Equipment.weaponChange("Fists")
 
         'dragon transformation
-        p.prt.setIAInd(pInd.hat, Portrait.imgLib.atrs("Hat").getF.Count - 2, True, False)
+        p.prt.setIAInd(pInd.hat, Portrait.imgLib.atrs(pInd.hat).getF.Count - 2, True, False)
         If Not p.knownSpells.Contains("Dragon's Breath") Then p.knownSpells.Add("Dragon's Breath")
 
         'transformation description push

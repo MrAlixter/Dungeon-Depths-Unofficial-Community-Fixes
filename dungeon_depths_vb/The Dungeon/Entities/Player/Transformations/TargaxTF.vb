@@ -15,8 +15,8 @@
         Return Nothing
     End Function
     Shared Sub step1()
-        Dim p As player = game.player
-        If Not p.prt.checkNDefFemInd(9, 15) And Not p.prt.checkNDefMalInd(9, 7) Then
+        Dim p As player = game.player1
+        If Not p.prt.checkNDefFemInd(pInd.eyes, 15) And Not p.prt.checkNDefMalInd(pInd.eyes, 7) Then
             If p.prt.iArrInd(pInd.eyes).Item2 Then
                 p.prt.setIAInd(pInd.eyes, 15, True, True)
             Else
@@ -27,8 +27,8 @@
         p.drawPort()
     End Sub
     Shared Sub step2()
-        Dim p As player = game.player
-        If Not p.prt.checkNDefFemInd(15, 12) And Not p.prt.checkNDefMalInd(15, 6) Then
+        Dim p As player = game.player1
+        If Not p.prt.checkNDefFemInd(pInd.fronthair, 12) And Not p.prt.checkNDefMalInd(pInd.fronthair, 6) Then
             If p.prt.sexBool Then
                 p.prt.setIAInd(pInd.rearhair, 13, True, True)
                 p.prt.setIAInd(pInd.midhair, 15, True, True)
@@ -45,7 +45,7 @@
         p.drawPort()
     End Sub
     Shared Sub step3()
-        Dim p As player = game.player
+        Dim p As player = game.player1
         p.name = "Targax"
         p.pClass = p.classes("Soul-Lord")
         Game.pushLblEvent("You jolt out of the trance you've been in for a unknown period of time, and stare in awe at the ornate glyphs that you have apperantly carved in the ground.  ""What the hell did I ..."" when the voice in your head returns, asking ""Do you accept?"".  ""Do I accept what?"" you demand, to which the voice in your head simply repeats the question.  About to firmly decline whatever nonsense your mental passenger is getting at, you are cut short by a thundering ""DO YOU ACCEPT"".  Your eyes space out and you answer your master the only way you can." & vbCrLf & vbCrLf & """Yes Master.""")

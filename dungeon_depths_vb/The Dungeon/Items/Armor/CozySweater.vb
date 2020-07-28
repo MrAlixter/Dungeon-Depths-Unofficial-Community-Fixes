@@ -31,10 +31,13 @@
         MyBase.compressesBreasts = True
     End Sub
 
-    Public Overrides Sub onEquip()
-        If Not Game.player.knownSpells.Contains("Snowball") Then Game.player.knownSpells.Add("Snowball")
+    Public Overrides Sub onEquip(ByRef p As Player)
+        MyBase.onEquip(p)
+
+        If Not p.knownSpells.Contains("Snowball") Then p.knownSpells.Add("Snowball")
     End Sub
-    Public Overrides Sub onunEquip()
-        Game.player.knownSpells.Remove("Snowball")
+    Public Overrides Sub onUnEquip(ByRef p As Player)
+        MyBase.onUnequip(p)
+        p.knownSpells.Remove("Snowball")
     End Sub
 End Class

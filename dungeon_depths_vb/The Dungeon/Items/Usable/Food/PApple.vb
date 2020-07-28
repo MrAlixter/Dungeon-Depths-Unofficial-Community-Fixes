@@ -3,7 +3,7 @@
 
     Sub New()
         MyBase.setName("Apple​")
-        MyBase.setDesc("An normal green apple. -15 Hunger")
+        MyBase.setDesc("An normal green apple. +15 Stamina")
         id = 31
         tier = 3
         MyBase.setUsable(True)
@@ -13,7 +13,7 @@
     End Sub
 
     Public Overrides Sub Effect()
-        Dim p As Player = Game.player
+        Dim p As Player = Game.player1
         If Game.combatmode = True Or Game.npcmode = True Or Not p.canMoveFlag Then
             p.ongoingTFs.Add(New PrincessTF(False))
         Else

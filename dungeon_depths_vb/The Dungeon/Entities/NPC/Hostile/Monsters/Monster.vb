@@ -47,8 +47,8 @@
         sWill = will
         sSpeed = speed
 
-        If speed = Game.player.getSPD Then speed -= 1
-        pos = Game.player.pos
+        If speed = Game.player1.getSPD Then speed -= 1
+        pos = Game.player1.pos
     End Sub
     Shared Function monsterFactory(ByVal mIndex As Integer) As Monster
         Select Case mIndex
@@ -85,7 +85,7 @@
                 Return New EnthDem
             Case 10
                 Dim m = New Monster
-                m.name = "Hunger"
+                m.name = "stamina"
                 Return m
             Case 11
                 Return New MarissaAS
@@ -93,6 +93,12 @@
                 Return New Alraune
             Case 13
                 Return New IWitch
+            Case 14
+                Return New FFElemental
+            Case 15
+                Dim m = New Monster
+                m.name = "Fire"
+                Return m
         End Select
 
         Return New Monster()
@@ -113,8 +119,8 @@
     End Sub
     Shared Sub targetRoute(ByRef m As Monster)
         Game.npcList.Add(m)
-        Game.player.setTarget(m)
-        m.currTarget = Game.player
+        Game.player1.setTarget(m)
+        m.currTarget = Game.player1
         Game.toCombat()
     End Sub
 End Class

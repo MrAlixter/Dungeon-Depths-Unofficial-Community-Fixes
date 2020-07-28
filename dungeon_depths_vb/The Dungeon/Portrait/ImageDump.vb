@@ -1,6 +1,6 @@
 ﻿Public Class ImageDump
     Dim images As List(Of Image)
-
+    Public key As pInd
     Shared Function imgEQ(ByVal a As Bitmap, ByVal b As Bitmap) As Boolean
         Return a Is b
         If a.Size.Equals(b.Size) Then
@@ -22,8 +22,13 @@
     Function getImages() As List(Of Image)
         Return images
     End Function
-    Function getImageAt(Byval ind As Integer) As Image
-        Return images(ind)
+    Function getImageAt(ByVal ind As Integer) As Image
+        Try
+            Return images(ind)
+        Catch e As Exception
+            MsgBox(key.ToString & ": Image #" & ind & " not found!")
+            Return Nothing
+        End Try
     End Function
     Sub add(ByRef img As Image)
         images.Add(img)
@@ -61,6 +66,8 @@
                 Return "fBody"
             Case "fTFClothes"
                 Return "fClothing"
+            Case "fTFClothes2"
+                Return "fClothing2"
             Case "fTFEars"
                 Return "fEars"
             Case "fTFEyes"
@@ -84,6 +91,8 @@
                 Return "mBody"
             Case "mTFClothes"
                 Return "mClothing"
+            Case "mTFClothes2"
+                Return "mClothing2"
             Case "mTFEars"
                 Return "mEars"
             Case "mTFEyes"

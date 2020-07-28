@@ -63,7 +63,7 @@ Public Class Testing
         Dim sInts() As Integer = {0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0}
         p.name = "TEST"
 
-        For i = 0 To 16
+        For i = 0 To Portrait.NUM_IMG_LAYERS
             p.prt.iArrInd(i) = New Tuple(Of Integer, Boolean, Boolean)(sInts(i), True, False)
         Next
 
@@ -80,7 +80,7 @@ Public Class Testing
         Dim test2 As Tuple(Of Boolean, String) = expectEQ("allimgcol.atrs.count", 19, allimgcol.atrs.Count)
         If Not test2.Item1 Then Return test2
 
-        For i = 0 To 16
+        For i = 0 To Portrait.NUM_IMG_LAYERS
             Dim diCT, aiCT As Integer
             diCT = defimgcol.atrs(defimgcol.atrs.Keys(i)).Count
             aiCT = allimgcol.atrs(allimgcol.atrs.Keys(i)).Count
@@ -95,7 +95,7 @@ Public Class Testing
     Shared Function imageattributeIndexingTests() As Tuple(Of Boolean, String)
         Dim allimgcol = New ImageCollection(1)
 
-        For i = 1 To 16
+        For i = 1 To Portrait.NUM_IMG_LAYERS
             Dim fInd = allimgcol.atrs(allimgcol.atrs.Keys(i)).rosf(allimgcol.atrs(allimgcol.atrs.Keys(i)).osf(10))
             Dim test1 As Tuple(Of Boolean, String) = expectEQ("for attr. i = " & i & ", rosf(osf(10))", 10, fInd)
             If Not test1.Item1 Then Return test1

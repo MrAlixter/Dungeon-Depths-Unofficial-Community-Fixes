@@ -12,11 +12,11 @@
 
         MyBase.isRandoTFAcceptable = False
     End Sub
-    Overrides Sub use()
-        Game.player.gold += MyBase.count
+    Overrides Sub use(ByRef p As Player)
+        p.gold += MyBase.count
         MyBase.count = 0
     End Sub
     Public Overrides Sub add(i As Integer)
-        Game.player.gold += i
+        Game.player1.gold += i
     End Sub
 End Class

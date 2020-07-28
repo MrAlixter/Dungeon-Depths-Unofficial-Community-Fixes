@@ -20,21 +20,21 @@
         pronoun = "they"
         pPronoun = "their"
         rPronoun = "them"
-        picNormal = Game.picCBrok1.BackgroundImage
-        picPrincess = Game.picCBrok2.BackgroundImage
-        picBunny = Game.picCBrok3.BackgroundImage
+        picNormal = ShopNPC.npcLib.atrs(0).getAt(35)
+        picPrincess = ShopNPC.npcLib.atrs(0).getAt(36)
+        picBunny = ShopNPC.npcLib.atrs(0).getAt(37)
 
         picNCP = New List(Of Image)
-        picNCP.AddRange({picNormal, Game.picFrog.BackgroundImage, Game.picSheep.BackgroundImage, picPrincess, picBunny})
+        picNCP.AddRange({picNormal, ShopNPC.npcLib.atrs(0).getAt(4), ShopNPC.npcLib.atrs(0).getAt(5), picPrincess, picBunny})
 
-        picNCP.AddRange({Game.picCBDoll.BackgroundImage})
-        If speed = Game.player.speed Then speed -= 1
+        picNCP.AddRange({ShopNPC.npcLib.atrs(0).getAt(38)})
+        If speed = Game.player1.speed Then speed -= 1
         title = " the "
     End Sub
 
     Public Overrides Sub encounter()
         MyBase.encounter()
-        If Not Game.player.isCursed Then
+        If Not Game.player1.isCursed Then
             npcIndex = 0
             Game.pushNPCDialog("What have you gotten yourself into this time?  Nothing?  Perhaps there's a curse somewhere out there for you...")
         Else
@@ -63,7 +63,7 @@
     End Sub
 
     Sub leave()
-        applyCurses(Game.player)
+        applyCurses(Game.player1)
         isDead = True
         Game.leaveNPC()
     End Sub
@@ -77,7 +77,7 @@
         End If
         'Blindness
         If Int(Rnd() * 5) = 0 Then
-            p.perks("coblind") = 2
+            p.perks(perk.coblind) = 2
             Game.pushLstLog("You've been afflicted with the curse of Blindness!")
         End If
         'Claustrophobia
@@ -88,22 +88,22 @@
         End If
         'Greed
         If Int(Rnd() * 5) = 0 Then
-            p.perks("cogreed") = 2
+            p.perks(perk.cogreed) = 2
             Game.pushLstLog("You've been afflicted with the curse of Greed!")
         End If
         'Milk
         If Int(Rnd() * 5) = 0 Then
-            p.perks("comilk") = 2
+            p.perks(perk.comilk) = 2
             Game.pushLstLog("You've been afflicted with the curse of Milk!")
         End If
         'Polymorph
         If Int(Rnd() * 5) = 0 Then
-            p.perks("copoly") = 7
+            p.perks(perk.copoly) = 7
             Game.pushLstLog("You've been afflicted with the curse of Polymorph!")
         End If
         'Rusting
         If Int(Rnd() * 5) = 0 Then
-            p.perks("corust") = 2
+            p.perks(perk.corust) = 2
             Game.pushLstLog("You've been afflicted with the curse of Rusting!")
         End If
         'Tits

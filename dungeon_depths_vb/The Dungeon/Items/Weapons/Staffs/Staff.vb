@@ -14,12 +14,12 @@
 
     Public Overrides Sub onEquip()
         MyBase.onEquip()
-        Game.player.mana += mBoost
+        Game.player1.mana += mBoost
     End Sub
 
-    Public Overrides Sub onunEquip()
+    Public Overrides Sub onunEquip(Optional w As Weapon = Nothing)
         MyBase.onEquip()
-        Game.player.mana -= mBoost
-        If Game.player.mana < 0 Then Game.player.mana = 0
+        Game.player1.mana -= mBoost
+        If Game.player1.mana < 0 Then Game.player1.mana = 0
     End Sub
 End Class

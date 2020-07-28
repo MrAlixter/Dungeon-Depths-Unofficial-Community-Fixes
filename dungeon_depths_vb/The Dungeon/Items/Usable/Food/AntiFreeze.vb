@@ -3,7 +3,7 @@
 
     Sub New()
         MyBase.setName("Antifreeze")
-        MyBase.setDesc("The forbidden sport's drink.  If you drink it, you will die. -100 Hunger")
+        MyBase.setDesc("The forbidden sport's drink.  If you drink it, you will die. -100 stamina")
         id = 178
         tier = Nothing
         MyBase.setUsable(True)
@@ -12,16 +12,16 @@
         MyBase.isRandoTFAcceptable = False
         setCalories(100)
     End Sub
-    Overrides Sub use()
+    Overrides Sub use(ByRef p As Player)
         If Me.getUsable() = False Then Exit Sub
         Game.pushLstLog("You drink the " & getName())
-        Game.player.hunger -= getCalories()
-        If Game.player.hunger < 0 Then Game.player.hunger = 0
+        p.stamina += getCalories()
+        If p.stamina > 100 Then p.stamina = 100
         Effect()
 
         count -= 1
     End Sub
     Public Overrides Sub Effect()
-        Game.player.die(Nothing)
+        Game.player1.die(Nothing)
     End Sub
 End Class

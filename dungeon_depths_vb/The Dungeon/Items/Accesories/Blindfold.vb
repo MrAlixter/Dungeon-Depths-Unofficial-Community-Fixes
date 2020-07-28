@@ -10,17 +10,20 @@
         MyBase.setUsable(False)
         MyBase.count = 0
         MyBase.value = 0
+
+        mBoost = 2
+
         MyBase.fInd = New Tuple(Of Integer, Boolean, Boolean)(13, True, True)
         MyBase.mInd = New Tuple(Of Integer, Boolean, Boolean)(12, False, True)
     End Sub
-    Public Overrides Sub onEquip()
-        MyBase.onEquip()
-        Game.player.perks("blind") = 1
+    Public Overrides Sub onEquip(ByRef p As Player)
+        MyBase.onEquip(p)
+        p.perks(perk.blind) = 1
         Game.drawBoard()
     End Sub
-    Public Overrides Sub onUnequip()
-        MyBase.onUnequip()
-        Game.player.perks("blind") = -1
+    Public Overrides Sub onUnequip(ByRef p As Player)
+        MyBase.onUnequip(p)
+        p.perks(perk.blind) = -1
         Game.drawBoard()
     End Sub
 End Class

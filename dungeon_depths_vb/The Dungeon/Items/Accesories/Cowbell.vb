@@ -17,15 +17,13 @@
         MyBase.mInd = New Tuple(Of Integer, Boolean, Boolean)(4, False, True)
     End Sub
 
-    Overrides Sub onEquip()
-        'If transformation.canbeTFed(Game.player) Then Game.player.pState.save(Game.player)
-        Game.player.health += 20 / Game.player.getmaxHealth
-        Game.player.ongoingTFs.Add(New MinoFTF(9, 15, 2.0, True))
-        'If Game.player.perks("cowbell") = -1 Then Game.player.perks("cowbell") = 0
-        If Game.player.health > 1 Then Game.player.health = 1
+    Overrides Sub onEquip(ByRef p As Player)
+        p.health += 20 / p.getMaxHealth
+        p.ongoingTFs.Add(New MinoFTF(9, 15, 2.0, True))
+        If p.health > 1 Then p.health = 1
     End Sub
-    Public Overrides Sub onUnequip()
-        If Game.player.perks("cowbell") > -1 Then Game.player.perks("cowbell") = -1
-            If Game.player.health > 1 Then Game.player.health = 1
+    Public Overrides Sub onUnequip(ByRef p As Player)
+        If p.perks(perk.cowbell) > -1 Then p.perks(perk.cowbell) = -1
+        If p.health > 1 Then p.health = 1
     End Sub
 End Class

@@ -1,8 +1,8 @@
 ﻿Public Class ImageAttribute
     Dim fImages As ImageDump
-    Dim mImages As ImageDump
+    Public mImages As ImageDump
     Dim fNonDefOffset, mNonDefOffset As Integer
-    Public key As String
+    Public key As pInd
     Sub New(ByVal i As ImageDump, ByVal ndo As Integer)
         fImages = i
         mImages = i
@@ -22,12 +22,10 @@
         Return mImages.getImages
     End Function
     Function getAt(ByRef ind As Tuple(Of Integer, Boolean, Boolean)) As Image
-
         If ind.Item3 Then
             If ind.Item2 Then
                 ind = New Tuple(Of Integer, Boolean, Boolean)(osf(ind.Item1), True, False)
             Else
-
                 ind = New Tuple(Of Integer, Boolean, Boolean)(osm(ind.Item1), False, False)
             End If
         End If
@@ -37,6 +35,10 @@
         Else
             Return mImages.getImageAt(ind.Item1)
         End If
+    End Function
+    Function getAt(ByVal ind As Integer) As Image
+        Dim tind = New Tuple(Of Integer, Boolean, Boolean)(ind, False, False)
+        Return getAt(tind)
     End Function
     Sub setAt(ByRef ind As Tuple(Of Integer, Boolean, Boolean), ByRef img As Image)
         If ind.Item2 Then
@@ -74,41 +76,53 @@
     Function Count() As Integer
         Return fImages.Count + mImages.Count
     End Function
-    Shared Function get0pt7DefaultImageOffsetM(ByVal key As String)
+    Shared Function get0pt7DefaultImageOffsetM(ByVal key As pInd)
+        If key = pInd.clothes Then Return 5
 
-        If key = "Acce" Or key = "Cloak" Or key = "Eyebrows" Or key = "FacialMark" Then
+        If key = pInd.accessory Or key = pInd.cloak Or key = pInd.eyebrows Or key = pInd.facemark Then
             Return 3
-        ElseIf key = "Body" Or key = "Nose" Then
+        ElseIf key = pInd.body Or key = pInd.nose Then
             Return 1
-        ElseIf key = "Clothes" Or key = "Ears" Or key = "Eyes" Or key = "Face" Or key = "Mouth" Or key = "RearHair1" Or key = "RearHair2" Then
+        ElseIf key = pInd.clothes Or key = pInd.ears Or key = pInd.eyes Or key = pInd.face Or
+            key = pInd.mouth Or key = pInd.rearhair Or key = pInd.midhair Then
             Return 5
-        ElseIf key = "FrontHair" Or key = "Glasses" Then
+        ElseIf key = pInd.fronthair Or key = pInd.glasses Then
             Return 6
-        ElseIf key = "Hat" Then
+        ElseIf key = pInd.hat Then
             Return 2
+        ElseIf key = pInd.clothesbtm Then
+            Return 14
         Else
             Return 0
         End If
     End Function
-    Shared Function get0pt7DefaultImageOffsetF(ByVal key As String)
-        If key = "Acce" Or key = "Cloak" Then
+    Shared Function get0pt7DefaultImageOffsetF(ByVal key As pInd)
+        If key = pInd.accessory Or key = pInd.cloak Then
             Return 4
-        ElseIf key = "FacialMark" Then
+        ElseIf key = pInd.facemark Then
             Return 3
-        ElseIf key = "Body" Or key = "Nose" Then
+        ElseIf key = pInd.body Or key = pInd.nose Then
             Return 1
-        ElseIf key = "Clothes" Or key = "Ears" Or key = "Face" Or key = "Mouth" Or key = "RearHair1" Or key = "RearHair2" Then
+        ElseIf key = pInd.clothes Or key = pInd.ears Or key = pInd.face Or key = pInd.mouth Or
+            key = pInd.rearhair Or key = pInd.midhair Then
             Return 5
-        ElseIf key = "FrontHair" Or key = "Glasses" Then
+        ElseIf key = pInd.fronthair Or key = pInd.glasses Then
             Return 6
-        ElseIf key = "Eyes" Then
+        ElseIf key = pInd.eyes Then
             Return 7
-        ElseIf key = "Hat" Then
+        ElseIf key = pInd.hat Then
             Return 9
-        ElseIf key = "Eyebrows" Then
+        ElseIf key = pInd.eyebrows Then
             Return 2
+        ElseIf key = pInd.clothesbtm Then
+            Return 14
         Else
             Return 0
         End If
     End Function
+
+    Sub setDumpKey()
+        mImages.key = key
+        fImages.key = key
+    End Sub
 End Class

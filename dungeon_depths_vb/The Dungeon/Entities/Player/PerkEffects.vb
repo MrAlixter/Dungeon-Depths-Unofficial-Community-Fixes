@@ -1,10 +1,10 @@
 ﻿Public Class PerkEffects
     '|GENERAL EFFECTS|
-    Shared Sub hungerEffect()
-        Dim p As Player = Game.player
-        If p.perks("hunger") > -1 And Game.turn Mod 5 = 0 Then
-            If p.hunger < 100 Then
-                p.perks("hunger") = -1
+    Shared Sub staminaEffect()
+        Dim p As Player = Game.player1
+        If p.perks(perk.stamina) > -1 And Game.turn Mod 5 = 0 Then
+            If p.stamina <= 0 Then
+                p.perks(perk.stamina) = -1
             Else
                 Game.pushLstLog("Your stomach aches... -5 health!")
                 p.health -= 5 / p.getMaxHealth
@@ -12,10 +12,32 @@
             End If
         End If
     End Sub
+    Shared Sub burnEffect()
+        Dim p As Player = Game.player1
+        If p.perks(perk.burn) > -1 And Game.turn Mod 4 = 0 Then
+            Dim exclaim As String = "The flames scorch your arms!"
+            Dim r = Int(Rnd() * 100)
+            If r = 0 Then
+                exclaim = "AAAAAAAAAAAAAAAAAAA!!!"
+            ElseIf r < 11 Then
+                exclaim = "Flailing wildly does not put out the fire."
+            ElseIf r < 25 Then
+                exclaim = "Your entire torso is engulfed in fire!"
+            ElseIf r < 50 Then
+                exclaim = "The blaze singes your legs!"
+            End If
+
+            Game.pushLstLog(exclaim & "  -2 health!")
+            p.health -= 2 / p.getMaxHealth
+            If p.health <= 0 Then p.die(Monster.monsterFactory(15))
+
+            If p.perks(perk.burn) >= 0 Then p.perks(perk.burn) -= 1
+        End If
+    End Sub
     Shared Sub slimeHairRegen()
-        Dim p As Player = Game.player
+        Dim p As Player = Game.player1
         If Not p.prt.haircolor.A = 180 Then
-            p.perks("slimehair") = -1
+            p.perks(perk.slimehair) = -1
         Else
             If p.health < 1 And Game.turn Mod 4 = 0 Then
                 p.health += 5 / p.getMaxHealth()
@@ -24,10 +46,22 @@
             End If
         End If
     End Sub
+    Shared Sub mBurst()
+        Dim p As Player = Game.player1
+        If p.health < 1 And Game.turn Mod 4 = 0 Then
+            p.health += 5 / p.getMaxHealth()
+            If p.mana < p.getMaxMana + 5 Then p.mana += 5 Else p.mana = p.getMaxMana
+            p.stamina -= 7
+            Game.pushLstLog("Your blazing aura surges!  +5 health, +5 mana, -7 stamina")
+            If p.health > 1 Then p.health = 1
+
+            If p.perks(perk.mburst) >= 0 Then p.perks(perk.mburst) -= 1
+        End If
+    End Sub
     Shared Sub vslimeHairRegen()
-        Dim p As Player = Game.player
+        Dim p As Player = Game.player1
         If Not p.prt.haircolor.A = 180 Then
-            p.perks("vsslimehair") = -1
+            p.perks(perk.vsslimehair) = -1
         Else
             If p.health < 1 And Game.turn Mod 7 = 0 Then
                 Dim h As Integer = Int(Rnd() * 5) + 1
@@ -38,7 +72,7 @@
         End If
     End Sub
     Shared Sub plantRegen()
-        Dim p As Player = Game.player
+        Dim p As Player = Game.player1
         If p.health < 1 And Game.turn Mod 7 = 0 Then
             Dim h As Integer = 3
             p.health += h / p.getMaxHealth()
@@ -47,7 +81,7 @@
         End If
     End Sub
     Shared Sub minorRegen()
-        Dim p As Player = Game.player
+        Dim p As Player = Game.player1
         If p.health < 1 And Game.turn Mod 7 = 0 Then
             Dim h As Integer = Int(Rnd() * 8) + 1
             p.health += h / p.getMaxHealth()
@@ -62,9 +96,9 @@
         End If
     End Sub
     Shared Sub minorManaRegen()
-        Dim p As Player = Game.player
+        Dim p As Player = Game.player1
         If p.equippedAcce.getId <> 110 Then
-            p.perks("minmanregen") = -1
+            p.perks(perk.minmanregen) = -1
             Exit Sub
         End If
         If p.mana < p.getMaxMana And Game.turn Mod 5 = 0 Then
@@ -75,7 +109,7 @@
         End If
     End Sub
     Shared Sub Regen()
-        Dim p As Player = Game.player
+        Dim p As Player = Game.player1
         If p.health < 1 And Game.turn Mod 7 = 0 Then
             Dim h As Integer = Int(Rnd() * 15) + 1
             p.health += h / p.getMaxHealth()
@@ -84,7 +118,7 @@
         End If
     End Sub
     Shared Function livingArmor() As Boolean
-        Dim p As Player = Game.player
+        Dim p As Player = Game.player1
         If p.equippedArmor.getName.Equals("Living_Armor") Then
             If Game.turn Mod 6 = 0 And p.lust < 100 Then
                 Dim l As Integer = Int(Rnd() * 15) + 10
@@ -93,12 +127,12 @@
                 Return True
             End If
         Else
-            p.perks("livearm") = -1
+            p.perks(perk.livearm) = -1
         End If
         Return False
     End Function
     Shared Function livingLingerie() As Boolean
-        Dim p As Player = Game.player
+        Dim p As Player = Game.player1
         If p.equippedArmor.getName.Equals("Living_Lingerie") Then
             If Game.turn Mod 4 = 0 And p.lust < 100 Then
                 Dim l As Integer = Int(Rnd() * 15) + 10
@@ -107,36 +141,36 @@
                 Return True
             End If
         Else
-            p.perks("livelinge") = -1
+            p.perks(perk.livelinge) = -1
         End If
         Return False
     End Function
     Shared Sub lightSource()
-        Dim p = Game.player
-        If Game.turn Mod 4 = 0 And p.perks("lightsource") > -1 Then
-            p.perks("lightsource") -= 1
+        Dim p = Game.player1
+        If Game.turn Mod 4 = 0 And p.perks(perk.lightsource) > -1 Then
+            p.perks(perk.lightsource) -= 1
         End If
     End Sub
     Shared Sub amazon()
-        Dim p = Game.player
-        If p.pForm.name.Equals("Amazon") Or p.pForm.name.Equals("Amazon​") Then
+        Dim p = Game.player1
+        If p.pForm.name.Equals(perk.amazon) Or p.pForm.name.Equals("Amazon​") Then
             If p.equippedWeapon.getName.Equals("Fists") And p.pForm.name.Equals("Amazon​") Then
-                p.pForm = p.forms("Amazon")
-            ElseIf Not p.equippedWeapon.getName.Equals("Fists") And p.pForm.name.Equals("Amazon") Then
+                p.pForm = p.forms(perk.amazon)
+            ElseIf Not p.equippedWeapon.getName.Equals("Fists") And p.pForm.name.Equals(perk.amazon) Then
                 Game.pushLblEvent("Your lack of familiarity with this weapon greatly lowers your attack potential!")
                 p.pForm = p.forms("Amazon​")
             End If
         Else
-            p.perks("amazon") = -1
+            p.perks(perk.amazon) = -1
         End If
     End Sub
     Shared Sub barbarian()
-        If Not Game.player.pClass.name.Equals("barbarian") Then
-            Game.player.perks("barbarian") = -1
+        If Not Game.player1.pClass.name.Equals("Barbarian") Then
+            Game.player1.perks(perk.barbarian) = -1
         End If
     End Sub
     Shared Sub ROTLGRoute()
-        Dim p As Player = Game.player
+        Dim p As Player = Game.player1
         Dim rotlg = CType(p.inv.item(81), ROAmaraphne)
         rotlg.sBoost = CInt(2.2222 * p.breastSize)
 
@@ -144,7 +178,7 @@
         rotlg.aBoost = 0
         rotlg.mBoost = 0
 
-        If p.equippedArmor.slutVarInd <> -1 Then
+        If p.equippedArmor.getSlutVarInd <> -1 Then
             rotlg.dBoost = -p.equippedArmor.dBoost
         Else
             Dim buff = p.equippedArmor.dBoost
@@ -162,13 +196,13 @@
         p.UIupdate()
     End Sub
     Shared Sub BowTieRoute()
-        Dim p As Player = Game.player
+        Dim p As Player = Game.player1
         Dim btie = CType(p.inv.item(97), Bowtie)
 
         btie.aBoost = 0
         btie.mBoost = 0
 
-        If (p.equippedArmor.slutVarInd = -1 And p.equippedArmor.antiSlutVarInd <> -1) Or p.equippedArmor.getName.Contains("Bunny") Then
+        If (p.equippedArmor.getSlutVarInd = -1 And p.equippedArmor.getAntiSlutVarInd <> -1) Or p.equippedArmor.getName.Contains("Bunny") Then
             Dim buff = p.equippedArmor.dBoost
             If buff = 0 Then
                 buff = 3
@@ -185,28 +219,28 @@
 
     '|TRANSFORMATION TRIGGERS|
     Shared Sub targaxSwordTF()
-        Dim p As Player = Game.player
+        Dim p As Player = Game.player1
         If p.name <> "Targax" Then
             If Not p.equippedWeapon.getName.Equals("Sword_of_the_Brutal") Then
-                p.perks("swordpossess") = -1
+                p.perks(perk.swordpossess) = -1
             End If
         Else
-            p.perks("swordpossess") = -1
+            p.perks(perk.swordpossess) = -1
         End If
     End Sub
     Shared Sub thrallRestore()
-        Dim p As Player = Game.player
+        Dim p As Player = Game.player1
 
-        p.prefForm.shiftTowards(Game.player)
-        p.perks("thrall") = 1
+        p.prefForm.shiftTowards(Game.player1)
+        p.perks(perk.thrall) = 1
     End Sub
     Shared Sub aStatue()
-        Dim p As Player = Game.player
-        If p.perks("astatue") > 1 Then
-            p.perks("astatue") -= 1
+        Dim p As Player = Game.player1
+        If p.perks(perk.astatue) > 1 Then
+            p.perks(perk.astatue) -= 1
             p.canMoveFlag = False
-        ElseIf p.perks("astatue") <= 1 Then
-            p.perks("astatue") = -1
+        ElseIf p.perks(perk.astatue) <= 1 Then
+            p.perks(perk.astatue) = -1
             p.revertToPState()
             p.canMoveFlag = True
         End If
@@ -217,57 +251,70 @@
 
     '|SPECIAL MOVE HANDLERS|
     Shared Sub berserkerRage()
-        Dim p As Player = Game.player
-        If p.perks("brage") > 0 Then
+        Dim p As Player = Game.player1
+        If p.perks(perk.brage) > 0 Then
             p.aBuff = p.aBuff + ((p.attack) / 2)
             p.dBuff = p.dBuff - ((p.defence) / 3)
-            p.perks("brage") -= 1
+            p.perks(perk.brage) -= 1
         Else
             p.aBuff = 0
             p.dBuff = 0
-            p.perks("brage") = -1
+            p.perks(perk.brage) = -1
             Game.pushLstLog("Berserker rage has worn off.")
 
         End If
     End Sub
     Shared Sub massiveMammaries()
-        Dim p As Player = Game.player
-        If p.perks("mmammaries") = 1 Then
+        Dim p As Player = Game.player1
+        If p.perks(perk.mmammaries) = 1 Then
             p.dBuff = p.dBuff + ((p.getDEF - p.dBuff) * 0.8)
-            p.perks("mmammaries") -= 1
+            p.perks(perk.mmammaries) -= 1
         Else
             p.dBuff = 0
-            p.perks("mmammaries") = -1
+            p.perks(perk.mmammaries) = -1
             Game.pushLstLog("Massive mammaries has worn off.")
 
         End If
     End Sub
     Shared Sub pProt()
-        Dim p As Player = Game.player
-        If p.perks("pprot") = 1 Then
+        Dim p As Player = Game.player1
+        If p.perks(perk.pprot) = 1 Then
             p.dBuff = p.dBuff + ((p.getDEF - p.dBuff) * 9.99)
-            p.perks("pprot") -= 1
+            p.perks(perk.pprot) -= 1
         Else
             p.dBuff = 0
-            p.perks("pprot") = -1
+            p.perks(perk.pprot) = -1
             Game.pushLstLog("Pillowy Protect has worn off.")
 
         End If
     End Sub
     Shared Sub ironhideFury()
-        Dim p As Player = Game.player
-        If p.perks("ihfury") = 3 Then
+        Dim p As Player = Game.player1
+        If p.perks(perk.ihfury) = 3 Then
             p.aBuff = p.aBuff + ((p.getATK - p.aBuff) * 0.5)
             p.dBuff = p.dBuff + ((p.getDEF - p.dBuff) * 0.6)
-            p.perks("ihfury") -= 1
-        ElseIf p.perks("ihfury") > 0 Then
-            p.perks("ihfury") -= 1
+            p.perks(perk.ihfury) -= 1
+        ElseIf p.perks(perk.ihfury) > 0 Then
+            p.perks(perk.ihfury) -= 1
         Else
             p.aBuff = 0
             p.dBuff = 0
-            p.perks("ihfury") = -1
+            p.perks(perk.ihfury) = -1
             Game.pushLstLog("Ironhide Fury has worn off.")
 
+        End If
+    End Sub
+    Shared Sub infernoAura()
+        Dim p As Player = Game.player1
+        If p.perks(perk.infernoa) = 3 Then
+            p.dBuff = p.dBuff + ((p.getDEF - p.dBuff) * 0.45)
+            p.perks(perk.infernoa) -= 1
+        ElseIf p.perks(perk.infernoa) > 0 Then
+            p.perks(perk.infernoa) -= 1
+        Else
+            p.dBuff = 0
+            p.perks(perk.infernoa) = -1
+            Game.pushLstLog("Inferno Aura has worn off.")
         End If
     End Sub
 
@@ -304,12 +351,12 @@
     End Function
     Shared Function curseOfPolymorph(ByRef p As Player) As Boolean
         Dim updatePortrait = False
-        If p.perks("copoly") = 0 AndAlso Transformation.canBeTFed(p) Then
+        If p.perks(perk.copoly) = 0 AndAlso Transformation.canBeTFed(p) Then
             randomPoly()
-            p.perks("copoly") = 50 + Int(Rnd() * 100)
+            p.perks(perk.copoly) = 50 + Int(Rnd() * 100)
             Return True
-        ElseIf p.perks("copoly") > 0 Then
-            p.perks("copoly") -= 1
+        ElseIf p.perks(perk.copoly) > 0 Then
+            p.perks(perk.copoly) -= 1
         End If
         Return updatePortrait
     End Function
@@ -320,7 +367,7 @@
         tfs.Add("Minotaur Cow", AddressOf New MinotaurCowTF().step1)
         tfs.Add("Dragon", AddressOf New DragonTF().step1)
         tfs.Add("Succubus", AddressOf New SuccubusTF().step1)
-        tfs.Add("Slime", AddressOf New SlimeTF().step1)
+        tfs.Add("Slime", AddressOf New slimetf().step1)
         tfs.Add("Bimbo", AddressOf New BimboTF(2, 0, 0.25, True).doubleTf)
         tfs.Add("Cake", AddressOf New TTCCBF().step1)
 
@@ -337,11 +384,12 @@
         flag = hardLightEffect(dmg) Or flag
         flag = bimboDodge() Or flag
         flag = stealthDodge() Or flag
+        If Game.player1.perks(perk.infernoa) > -1 Then flag = reflectDamage(dmg, 0.45, Game.player1.currTarget, Game.player1)
         Return flag
     End Function
     Shared Function bowTieEffect() As Boolean
-        Dim p = Game.player
-        If p.perks("bowtie") > -1 Then
+        Dim p = Game.player1
+        If p.perks(perk.bowtie) > -1 Then
             Dim r = Int(Rnd() * 10)
             If r > 8 And Not p.pClass.name.Equals("Bunny Girl") Then
                 Dim dTF = New DancerTF(1, 0, 0, False)
@@ -356,10 +404,10 @@
         Return False
     End Function
     Shared Function hardLightEffect(ByVal dmg As Integer) As Boolean
-        Dim p = Game.player
-        If p.perks("hardlight") > -1 Then
+        Dim p = Game.player1
+        If p.perks(perk.hardlight) > -1 Then
             If Not p.equippedArmor.getName.Contains("Photon") Then
-                p.perks("hardlight") = -1
+                p.perks(perk.hardlight) = -1
                 Return False
             End If
             If dmg / 2 <= p.mana Then
@@ -373,7 +421,7 @@
         Return False
     End Function
     Shared Function bimboDodge() As Boolean
-        Dim p = Game.player
+        Dim p = Game.player1
         Dim out = "You, like, totally aren't feeling this right now.  Giving your best pout, you wimper ""Hey, stop it!  You're gonna, like, hurt me or something!"".  Squeezing your arms together to show off your cleavage, you look up at your opponent, making sure your lip is quivering just a little bit.  They stop their attack short, looking more confused than merciful.  You don't even consider this subtle distinction though, instead deciding that they, like, totally thought you were too cute to hit!"
         Dim out2 = "You realize that you probably need to dodge this next attack.  Giving your best pout, you wimper ""Hey, stop it!  You're gonna, like, hurt me or something!"".  Squeezing your arms together to show off your cleavage, you look up at your opponent, making sure your lip is quivering just a little bit.  They stop their attack short, looking more confused than merciful.  Inwardly you groan to yourself.   It looks like you aren't out of the woods yet..."
         If p.pClass.name.Equals("Bimbo") And Int(Rnd() * 3) = 0 Then
@@ -382,19 +430,28 @@
         ElseIf p.pClass.name.Equals("Bimbo++") And Int(Rnd() * 3) = 0 Then
             Game.pushLblEvent(out2)
             Return True
-        ElseIf p.pForm.name.Contains("Bimbo") Or p.perks("bimbododge") > 0 And Int(Rnd() * 3) = 0 Then
+        ElseIf p.pForm.name.Contains("Bimbo") Or p.perks(perk.bimbododge) > 0 And Int(Rnd() * 3) = 0 Then
             Game.pushLblEvent(out)
             Return True
         End If
         Return False
     End Function
     Shared Function stealthDodge() As Boolean
-        Dim p = Game.player
+        Dim p = Game.player1
         Dim out = "You dodge the oncoming attack!"
-        If p.perks("stealth") > 0 And Int(Rnd() * 7) = 0 Then
+        If p.perks(perk.stealth) > 0 And Int(Rnd() * 7) = 0 Then
             Game.pushLblEvent(out)
             Return True
         End If
+        Return False
+    End Function
+    Shared Function reflectDamage(ByVal dmg As Integer, ByVal ratio As Double, ByRef currTarget As Entity, ByRef p As Player)
+        If dmg > 0 Then
+            currTarget.takeDMG(CInt(dmg * ratio), p)
+            Game.pushLblEvent("Your opponent takes " & CInt(dmg * ratio) & " from their attack!")
+            Return True
+        End If
+
         Return False
     End Function
 End Class

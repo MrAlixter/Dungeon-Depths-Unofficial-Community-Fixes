@@ -2,7 +2,7 @@
     Inherits Food
     Sub New()
         MyBase.setName("Cupcake")
-        MyBase.setDesc("A 100% not magic totally not cursed cupcake. -50 Hunger")
+        MyBase.setDesc("A 100% not magic totally not cursed cupcake. +50 Stamina")
         id = 35
         tier = 3
         MyBase.setUsable(True)
@@ -12,16 +12,16 @@
     End Sub
 
     Public Overrides Sub Effect()
-        Dim p As Player = Game.player
+        Dim p As Player = Game.player1
 
-        If p.perks("cupcake") > 4 Or Game.noRNG Then
+        If p.perks(perk.cupcake) > 4 Or Game.noRNG Then
             p.ongoingTFs.Add(New LolitaSTF())
             p.update()
-            p.perks("cupcake") = -1
-        ElseIf p.perks("cupcake") = -1 Then
-            p.perks("cupcake") = 0
+            p.perks(perk.cupcake) = -1
+        ElseIf p.perks(perk.cupcake) = -1 Then
+            p.perks(perk.cupcake) = 0
         Else
-            p.perks("cupcake") += 1
+            p.perks(perk.cupcake) += 1
         End If
     End Sub
 End Class

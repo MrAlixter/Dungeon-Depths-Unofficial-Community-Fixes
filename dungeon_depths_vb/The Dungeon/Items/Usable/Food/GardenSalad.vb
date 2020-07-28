@@ -4,7 +4,7 @@
     Sub New()
         MyBase.setName("Garden_Salad")
         MyBase.setDesc("A leafy dish that has some degree of healing/mana restoration power.  While it seems healthy enough, the magic used to give it its regenerative powers was not performed by an expert, so it may be slightly unstable." & vbCrLf &
-                       "-22 Hunger, Either +35 health or +14 mana")
+                       "+22 stamina, Either +35 health or +14 mana")
         id = 117
         tier = Nothing
         MyBase.setUsable(True)
@@ -13,7 +13,7 @@
         setCalories(22)
     End Sub
     Public Overrides Sub Effect()
-        Dim p As Player = Game.player
+        Dim p As Player = Game.player1
 
         If Int(Rnd() * 2) = 0 Then
             p.health += 35 / p.getMaxHealth

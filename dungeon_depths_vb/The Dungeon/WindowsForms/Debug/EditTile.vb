@@ -73,7 +73,7 @@
             boxType.Enabled = False
             boxOptions.Visible = True
             addMoveButton(boxOptions.Controls.Count)
-        ElseIf (t.Text = "@" And Game.player.pos.X = p.X And Game.player.pos.Y = p.Y) Then 'Player
+        ElseIf (t.Text = "@" And Game.player1.pos.X = p.X And Game.player1.pos.Y = p.Y) Then 'Player
             boxType.SelectedItem = "@ (Player)"
             boxType.Enabled = False
             boxOptions.Visible = True
@@ -166,7 +166,7 @@
         ElseIf name = "@ (Player)" Then
             t.Tag = 2
             t.Text = "@"
-            Game.player.pos = p
+            Game.player1.pos = p
         ElseIf name = "(Wall)" Then
             If removeFlag Then removeItem()
             t.Tag = 0
@@ -312,7 +312,7 @@
                     Next
                     toReplace.Text = "#"
                 ElseIf item.IndexOf("Player") <> -1 Then
-                    Game.player.pos = ts.selected
+                    Game.player1.pos = ts.selected
                     toReplace.Text = "@"
                 ElseIf item.IndexOf("Statue") <> -1 Then
                     toReplace.Text = "@"

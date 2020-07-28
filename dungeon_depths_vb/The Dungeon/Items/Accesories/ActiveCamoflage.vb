@@ -13,12 +13,12 @@
         MyBase.isRandoTFAcceptable = False
     End Sub
 
-    Public Overrides Sub onEquip()
+    Public Overrides Sub onEquip(ByRef p As Player)
         Game.pushLblEvent("Unimplemented")
-        MyBase.onEquip()
+        MyBase.onEquip(p)
     End Sub
 
-    Public Overrides Sub onUnequip()
-        MyBase.onUnequip()
+    Public Overrides Sub onUnequip(ByRef p As Player)
+        MyBase.onUnequip(p)
     End Sub
 End Class

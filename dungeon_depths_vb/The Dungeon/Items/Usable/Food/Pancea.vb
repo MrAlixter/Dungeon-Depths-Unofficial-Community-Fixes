@@ -13,17 +13,17 @@
     End Sub
 
     Public Overrides Sub Effect()
-        If Game.player.pClass.name.Equals("Soul-Lord") Then
+        If Game.player1.pClass.name.Equals("Soul-Lord") Then
             Game.pushLblEvent("You spike the Panacea on the ground, kicking the mystic dish all over the dungeon floor.  As you go back to your buisness, you muse on how cowardly healing is." & vbCrLf & vbCrLf & """Only someone who cares about their mortal vessel would bother to maintain it.""")
-            Game.player.UIupdate()
+            Game.player1.UIupdate()
             Exit Sub
         End If
-            Dim av = New AntiVenomEffect
-            av.apply(Game.player)
-            Game.player.perks("slutcurse") = -1
+        Dim av = New AntiVenomEffect
+        av.apply(Game.player1)
+        Game.player1.perks(perk.slutcurse) = -1
 
-            Equipment.antiClothingCurse()
-            Game.player.health = 1
-            Game.player.revertToSState()
+        Equipment.antiClothingCurse(Game.player1)
+        Game.player1.health = 1
+        Game.player1.revertToSState()
     End Sub
 End Class

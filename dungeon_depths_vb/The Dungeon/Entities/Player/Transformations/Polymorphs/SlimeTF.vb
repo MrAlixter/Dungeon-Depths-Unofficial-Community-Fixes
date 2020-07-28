@@ -1,8 +1,8 @@
-﻿Public NotInheritable Class SlimeTF
+﻿Public NotInheritable Class slimetf
     Inherits PolymorphTF
     Sub New()
         MyBase.New()
-        tfName = "SlimeTF"
+        tfName = perk.slimetf
     End Sub
     Sub New(cs As Integer, n As Integer, tts As Integer, wi As Double, cbs As Boolean, tfd As Boolean)
         MyBase.New(cs, n, tts, wi, cbs, tfd)
@@ -10,18 +10,18 @@
     End Sub
 
     Public Overrides Sub setWaitTime(stage As Integer)
-        Dim p As player = game.player
+        Dim p As player = game.player1
         turnsTilNextStep = Int(Rnd() * 50) + Int(Rnd() * 50) + Int(Rnd() * p.getmaxMana) + Int(Rnd() * p.getWIL)
     End Sub
 
     Public Overrides Sub step1()
-        Dim p As player = game.player
+        Dim p As player = game.player1
 
         'unequips
         Equipment.clothesChange("Naked")
 
         'slime transformation
-        p.perks("slimehair") = 1
+        p.perks(perk.slimehair) = 1
         p.prt.haircolor = Color.FromArgb(180, 5, 245, 198)
         p.prt.skincolor = Color.FromArgb(200, 0, 255, 255)
         p.prt.setIAInd(pInd.ears, 5, True, True)

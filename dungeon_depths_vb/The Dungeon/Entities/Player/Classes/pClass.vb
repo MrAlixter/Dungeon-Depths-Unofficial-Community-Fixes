@@ -17,4 +17,6 @@
 
     Overridable Sub onLVLUp(ByVal level As Integer)
     End Sub
+    Overridable Sub deLVL(ByVal toLevel As Integer)
+    End Sub
 End Class

@@ -3,14 +3,16 @@
 
     Sub New()
         MyBase.setName("Very_Skimpy_Clothes")
-        MyBase.setDesc("DO NOT SEE THIS EVER")
-        id = -4
+        MyBase.setDesc("A soft set of clothing that definitely seems crafted to show off its wearer's body." & vbCrLf & vbCrLf &
+                       "Fits sizes 2 to 6" & vbCrLf & vbCrLf &
+                       "+15 HP")
+        id = 192
         tier = Nothing
         MyBase.setUsable(False)
-        MyBase.aBoost = 2
+        MyBase.hBoost = 15
         MyBase.count = 0
         MyBase.value = 0
-        MyBase.antiSlutVarInd = -3
+        MyBase.antiSlutVarInd = 191
         MyBase.bsize2 = New Tuple(Of Integer, Boolean, Boolean)(177, True, True)
         MyBase.bsize3 = New Tuple(Of Integer, Boolean, Boolean)(178, True, True)
         MyBase.bsize4 = New Tuple(Of Integer, Boolean, Boolean)(179, True, True)
