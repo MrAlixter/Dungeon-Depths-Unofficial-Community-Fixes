@@ -349,7 +349,7 @@ Public Class Portrait
     End Sub
     Sub spiderBody()
         If iArrInd(pInd.tail).Item1 = 2 Then
-            iArr(pInd.horns) = CreateBMP({CharacterGenerator.picPort.Image, iArr(pInd.horns), imgLib.atrs(pInd.horns).getAt(6)})
+            iArr(pInd.horns) = CreateFullBodyBMP({imgLib.atrs(pInd.horns).getAt(6), iArr(pInd.horns)})
         End If
     End Sub
     Sub bodyOverlay()
