@@ -17,7 +17,7 @@
                 Case 3
                     Game.player1.maxHealth += 1
                 Case 4
-                    Game.player1.defence += 1
+                    Game.player1.defense += 1
                 Case 5
                     Game.player1.will += 1
                 Case 6

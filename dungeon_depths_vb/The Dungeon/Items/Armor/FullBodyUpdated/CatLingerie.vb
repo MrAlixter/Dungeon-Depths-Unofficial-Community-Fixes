@@ -1,6 +1,6 @@
 ﻿Public Class CatLingerie
     Inherits Armor
-    'CatLingerie is a cosmetic armor that doesn't provide a defence bonus
+    'CatLingerie is a cosmetic armor that doesn't provide a defense bonus
     Sub New()
         MyBase.setName("Cat_Lingerie")
         MyBase.setDesc("A skimpy, pink, cat themed set of underwear. Nya." & vbCrLf & _

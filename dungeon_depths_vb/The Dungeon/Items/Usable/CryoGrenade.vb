@@ -18,7 +18,7 @@
             If Transformation.canBeTFed(p) Then
                 p.pState.save(p)
             End If
-            p.defence = 20
+            p.defense = 20
 
             Dim pturns = 4
             p.petrify(Color.FromArgb(190, 75, 209, 255), pturns)

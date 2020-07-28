@@ -6,7 +6,7 @@
         name = "Medusa, Gorgon of Myth"
         maxHealth = 200
         attack = 50
-        defence = 35
+        defense = 35
         speed = 40
 
         inv.setCount("Omni_Charm", 1)
@@ -56,7 +56,7 @@
         If Transformation.canBeTFed(p) Then
             p.pState.save(p)
         End If
-        p.defence = 40
+        p.defense = 40
 
         Dim pturns = Int(Rnd() * 5) + 1
         p.petrify(Color.DarkGray, pturns)

@@ -32,7 +32,7 @@
         MyBase.health = playArray(3)
         MyBase.maxHealth = playArray(4)
         MyBase.attack = playArray(5)
-        MyBase.defence = playArray(6)
+        MyBase.defense = playArray(6)
         MyBase.speed = playArray(7)
         inv.load(playArray(8))
         MyBase.title = ""
@@ -100,7 +100,7 @@
         MyBase.health = 1.0
         MyBase.maxHealth = 500
         MyBase.attack = 1
-        MyBase.defence = 1
+        MyBase.defense = 1
         MyBase.tfCt = 1
         MyBase.tfEnd = 15
         MyBase.npcIndex = 4
@@ -113,7 +113,7 @@
         MyBase.health = 1.0
         MyBase.maxHealth = 999
         MyBase.attack = 50
-        MyBase.defence = 1
+        MyBase.defense = 1
         MyBase.tfCt = 1
         MyBase.tfEnd = 15
         MyBase.npcIndex = 3
@@ -125,7 +125,7 @@
         MyBase.health = 1.0
         MyBase.maxHealth = 600
         MyBase.attack = 1
-        MyBase.defence = 40
+        MyBase.defense = 40
         MyBase.tfCt = 1
         MyBase.tfEnd = 6
         MyBase.npcIndex = 2
@@ -137,7 +137,7 @@
         MyBase.health = 1.0
         MyBase.maxHealth = 500
         MyBase.attack = 1
-        MyBase.defence = 4
+        MyBase.defense = 4
         MyBase.tfCt = 1
         MyBase.tfEnd = 6
         MyBase.npcIndex = 1

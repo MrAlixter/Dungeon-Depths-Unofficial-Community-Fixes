@@ -4,7 +4,7 @@
         name = "Slime"
         maxHealth = 30
         attack = 15
-        defence = 60
+        defense = 60
         speed = 6
         setInventory({2, 3})
         setupMonsterOnSpawn()

@@ -9,6 +9,6 @@
             Return -2
         End If
         dmg += (p.attack) + (Me.aBoost)
-        Return Player.calcDamage(dmg, m.defence)
+        Return Player.calcDamage(dmg, m.defense)
     End Function
 End Class

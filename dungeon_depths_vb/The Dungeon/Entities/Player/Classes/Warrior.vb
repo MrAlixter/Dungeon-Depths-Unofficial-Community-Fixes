@@ -4,4 +4,23 @@
         MyBase.New(1, 1.5, 0.75, 1.5, 0.75, 1, "Warrior")
         MyBase.revertPassage = "You feel your muscle mass decrease slightly, and your physical strength becomes far more average."
     End Sub
+
+    Public Overrides Sub onLVLUp(level As Integer, ByRef p As Player)
+        If level Mod 2 = 0 Then
+            p.attack += 4
+        ElseIf level Mod 2 = 1 Then
+            p.defense += 4
+        End If
+    End Sub
+
+    Public Overrides Sub deLVL(levels As Integer, ByRef p As Player)
+        For i = p.level To p.level - levels Step -1
+            p.level = i
+            If i Mod 2 = 0 Then
+                p.attack -= 4
+            ElseIf i Mod 2 = 1 Then
+                p.defense -= 4
+            End If
+        Next
+    End Sub
 End Class

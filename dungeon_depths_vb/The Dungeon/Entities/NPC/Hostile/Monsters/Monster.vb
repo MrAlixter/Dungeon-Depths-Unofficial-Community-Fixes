@@ -11,27 +11,27 @@
                 Case 1
                     maxHealth *= 1
                     attack *= 1
-                    defence *= 1
+                    defense *= 1
                     speed *= 1
                 Case 2
                     maxHealth *= 1.05
                     attack *= 1.05
-                    defence *= 1.05
+                    defense *= 1.05
                     speed *= 1.05
                 Case 3
                     maxHealth *= 1.1
                     attack *= 1.1
-                    defence *= 1.1
+                    defense *= 1.1
                     speed *= 1.1
                 Case 4
                     maxHealth *= 1.2
                     attack *= 1.2
-                    defence *= 1.2
+                    defense *= 1.2
                     speed *= 1.2
                 Case Else
                     maxHealth *= (1 + (0.05 * Game.mDun.numCurrFloor))
                     attack *= (1 + (0.05 * Game.mDun.numCurrFloor))
-                    defence *= (1 + (0.05 * Game.mDun.numCurrFloor))
+                    defense *= (1 + (0.05 * Game.mDun.numCurrFloor))
                     speed *= (1 + (0.05 * Game.mDun.numCurrFloor))
             End Select
         End If
@@ -43,7 +43,7 @@
         sMaxHealth = maxHealth
         sMaxMana = maxMana
         sAttack = attack
-        sDefence = defence
+        sdefense = defense
         sWill = will
         sSpeed = speed
 

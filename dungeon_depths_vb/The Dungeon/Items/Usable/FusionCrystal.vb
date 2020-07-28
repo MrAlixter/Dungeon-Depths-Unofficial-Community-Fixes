@@ -122,10 +122,10 @@
             player.attack = p2.attack * 1.5
         End If
 
-        If p1.defence > p2.defence Then
-            player.defence = p1.defence * 1.5
+        If p1.defense > p2.defense Then
+            player.defense = p1.defense * 1.5
         Else
-            player.defence = p2.defence * 1.5
+            player.defense = p2.defense * 1.5
         End If
 
         If p1.will > p2.will Then

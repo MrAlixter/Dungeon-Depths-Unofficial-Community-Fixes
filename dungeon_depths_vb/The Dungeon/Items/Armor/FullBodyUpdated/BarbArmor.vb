@@ -4,7 +4,7 @@ Public Class BarbArmor
 
     Sub New()
         MyBase.setName("Barbarian_Armor")
-        MyBase.setDesc("While this ""armor"" may not provide the same defence as other sets, it greatly improves offensive options." & vbCrLf & _
+        MyBase.setDesc("While this ""armor"" may not provide the same defense as other sets, it greatly improves offensive options." & vbCrLf & _
                        "Fits sizes -1 through 4" & vbCrLf & _
                        "+12 ATK, +10 DEF, +5 SPD")
         id = 101

@@ -18,7 +18,7 @@
         If mP.maxHealth > (mP.sMaxHealth / 10) Then
             m.maxHealth -= m.maxHealth / 4
             m.attack -= m.attack / 4
-            m.defence -= m.defence / 4
+            m.defense -= m.defense / 4
             m.speed += (m.speed / 4)
             mP.tfEnd += Int(3 * m.maxHealth / mP.sMaxHealth)
             Game.pushLblEvent("You zap your target with the shrink ray, and they get slightly smaller!")
@@ -30,7 +30,7 @@
             Else
                 m.maxHealth = mP.sMaxHealth / 10
                 m.attack = mP.sAttack / 10
-                m.defence = mP.sDefence / 10
+                m.defense = mP.sdefense / 10
                 m.speed = (mP.sSpeed / 10)
 
                 Game.pushLblEvent("Your target can get no smaller!")

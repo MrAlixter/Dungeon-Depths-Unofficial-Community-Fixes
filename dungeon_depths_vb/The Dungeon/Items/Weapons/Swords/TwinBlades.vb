@@ -22,7 +22,7 @@
             p.cHit(p.getATK, m)
         Else
             dmg += (p.getATK) + (Me.aBoost)
-            p.hit(Player.calcDamage(dmg, m.defence), m)
+            p.hit(Player.calcDamage(dmg, m.defense), m)
         End If
 
         '2nd hit
@@ -33,6 +33,6 @@
             Return -2
         End If
         dmg += (p.getATK) + (Me.aBoost)
-        Return Player.calcDamage(dmg, m.defence)
+        Return Player.calcDamage(dmg, m.defense)
     End Function
 End Class

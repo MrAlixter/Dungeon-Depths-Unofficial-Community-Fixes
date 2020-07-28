@@ -26,6 +26,6 @@
         End If
         dmg += (p.getATK) + (Me.aBoost)
         p.mana -= 5
-        Return Player.calcDamage(dmg, m.defence)
+        Return Player.calcDamage(dmg, m.defense)
     End Function
 End Class

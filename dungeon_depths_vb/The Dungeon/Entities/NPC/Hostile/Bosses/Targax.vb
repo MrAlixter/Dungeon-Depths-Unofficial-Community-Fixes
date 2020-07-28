@@ -6,7 +6,7 @@
         name = "Targax the Brutal"
         maxHealth = 250
         attack = 50
-        defence = 20
+        defense = 20
         speed = 5
         inv.setCount("Health_Potion", 2)
         inv.setCount("Major_Health_Potion", 3)
@@ -36,7 +36,7 @@
                 Game.pushLblCombatEvent((getName() & " focuses all " & pPronoun & " energy into " & pPronoun & " blade!"))
 
                 attack *= 1.2
-                defence *= 0.7
+                defense *= 0.7
                 speed *= 1.2
             ElseIf Int(Rnd() * 2) = 0 Then
                 Game.pushLstLog((getName() & " fires off a shockwave!"))

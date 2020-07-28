@@ -3,7 +3,7 @@
 
     Public name, sName As String
     Public health As Double = 1.0 'represents a percentage of maxhealth
-    Public maxHealth, mana, maxMana, attack, defence, will, speed, gold, lust As Integer
+    Public maxHealth, mana, maxMana, attack, defense, will, speed, gold, lust As Integer
     Public hBuff As Integer = 0     'buffs that apply across forms (from charms, etc)
     Public mBuff As Integer = 0
     Public aBuff As Integer = 0
@@ -137,7 +137,7 @@
         Return attack + aBuff
     End Function
     Public Overridable Function getDEF() As Integer
-        Return defence + dBuff
+        Return defense + dBuff
     End Function
     Public Overridable Function getWIL() As Integer
         Return will + wBuff
@@ -178,7 +178,7 @@
         attack = a
     End Sub
     Public Overridable Sub setDEF(ByVal d As Integer)
-        defence = d
+        defense = d
     End Sub
     Public Overridable Sub setWIL(ByVal w As Integer)
         will = w

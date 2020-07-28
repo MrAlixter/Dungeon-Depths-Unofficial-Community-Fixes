@@ -3,7 +3,7 @@
     'transformation variables
     Public tfCt As Integer = 0
     Public tfEnd As Integer = 0
-    Public sMaxHealth, sMana, sMaxMana, sAttack, sDefence, sWill, sSpeed As Integer
+    Public sMaxHealth, sMana, sMaxMana, sAttack, sdefense, sWill, sSpeed As Integer
     Public xpValue As Integer = 10
     'dialog variables
     Public form As String = ""
@@ -90,7 +90,7 @@
         Game.currfloor.statueList.Add(New Statue(Me))
     End Sub
     Public Overridable Sub toGold()
-        Dim gd As Integer = (maxHealth + attack + defence) * 7
+        Dim gd As Integer = (maxHealth + attack + defense) * 7
         inv.setCount(43, inv.getCountAt(43) + gd)
         Game.fromCombat()
         Me.nextCombatAction = Nothing
@@ -237,7 +237,7 @@
         name = sName
         maxHealth = sMaxHealth
         attack = sAttack
-        defence = sDefence
+        defense = sdefense
         speed = sSpeed
         npcIndex = 0
         Game.pushLblEvent("The " & name & " return to " & pPronoun & " original self!")

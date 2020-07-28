@@ -21,7 +21,7 @@
             Return -1
         End If
         dmg += (p.getATK) + (Me.aBoost)
-        Return Player.calcDamage(dmg, m.defence)
+        Return Player.calcDamage(dmg, m.defense)
     End Function
 
     Public Overrides Sub onEquip()

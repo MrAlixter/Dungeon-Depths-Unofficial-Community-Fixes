@@ -63,7 +63,7 @@
         internal_inventory.Add("Health_Charm", New HealthCharm())           '48
         internal_inventory.Add("Mana_Charm", New ManaCharm())               '49
         internal_inventory.Add("Attack_Charm", New AttackCharm())           '50
-        internal_inventory.Add("Defence_Charm", New DefenceCharm())         '51
+        internal_inventory.Add("defense_Charm", New defenseCharm())         '51
         internal_inventory.Add("Speed_Charm", New SpeedCharm())             '52
         internal_inventory.Add("Key", New Key())                            '53
         internal_inventory.Add("Ropes", New Ropes())                        '54
@@ -191,7 +191,7 @@
         internal_inventory.Add("Magical_Girl_Wand​", New MagSlutWand())      '171
         internal_inventory.Add("Flaming_Sword", New FlamingSword())         '172
         internal_inventory.Add("Signature_Whip", New SigWhip())             '173
-        internal_inventory.Add("Defence_Charm​", New CDefenceCharm())        '174
+        internal_inventory.Add("defense_Charm​", New CdefenseCharm())        '174
         internal_inventory.Add("Cozy_Sweater", New CozySweater())           '175
         internal_inventory.Add("Scale_Armor", New ScaleArmor())             '176
         internal_inventory.Add("Scale_Bikini", New ScaleBikini())           '177

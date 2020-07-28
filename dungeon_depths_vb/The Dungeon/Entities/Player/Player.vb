@@ -109,7 +109,7 @@ Public Class Player
         health = 1.0
         maxHealth = 100
         attack = 10
-        defence = 10
+        defense = 10
         will = 10
         speed = 10
         gold = 200
@@ -258,7 +258,7 @@ Public Class Player
     Public Sub setStatsToBeginning()
         maxHealth = 100
         attack = 10
-        defence = 10
+        defense = 10
         will = 10
         speed = 10
         mana = 3
@@ -362,7 +362,7 @@ Public Class Player
             pClass = classes("Classless")
             maxHealth = 80
             attack = 7
-            defence = 7
+            defense = 7
             speed = 7
             inv.add(2, 3)
             inv.add(4, 1)
@@ -372,7 +372,7 @@ Public Class Player
             pClass = classes("Classless")
             maxHealth = 80
             attack = 7
-            defence = 7
+            defense = 7
             speed = 7
             inv.add(2, 3)
             inv.add(4, 1)
@@ -1807,8 +1807,8 @@ Public Class Player
         Return CInt((attack + aBuff) * pForm.a * pClass.a) + equippedArmor.aBoost + equippedAcce.aBoost
     End Function
     Overrides Function getDEF() As Integer
-        If equippedArmor Is Nothing Or equippedWeapon Is Nothing Then Return CInt(defence * pClass.d * pForm.d) + dBuff
-        Return CInt((defence + dBuff) * pClass.d * pForm.d) + equippedArmor.dBoost + equippedAcce.dBoost
+        If equippedArmor Is Nothing Or equippedWeapon Is Nothing Then Return CInt(defense * pClass.d * pForm.d) + dBuff
+        Return CInt((defense + dBuff) * pClass.d * pForm.d) + equippedArmor.dBoost + equippedAcce.dBoost
     End Function
     Overrides Function getSPD() As Integer
         If equippedArmor Is Nothing Or equippedWeapon Is Nothing Then Return CInt(speed * pClass.s * pForm.s) + sBuff
@@ -2076,7 +2076,7 @@ Public Class Player
         health = 1
         maxHealth += 20
 
-        pClass.onLVLUp(level)
-        pForm.onLVLUp(level)
+        pClass.onLVLUp(level, Me)
+        pForm.onLVLUp(level, Me)
     End Sub
 End Class

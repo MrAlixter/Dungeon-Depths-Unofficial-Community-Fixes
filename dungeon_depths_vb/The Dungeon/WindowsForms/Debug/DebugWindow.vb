@@ -63,7 +63,7 @@ Public Class Debug_Window
         boxMaxMana.Value = Game.player1.maxMana
         boxstamina.Value = Game.player1.stamina
         boxAtk.Value = Game.player1.attack
-        boxDef.Value = Game.player1.defence
+        boxDef.Value = Game.player1.defense
         boxWil.Value = Game.player1.will
         boxSpd.Value = Game.player1.speed
         boxEvd.Value = -0
@@ -442,7 +442,7 @@ Public Class Debug_Window
     End Sub
 
     Private Sub boxDef_ValueChanged(sender As Object, e As EventArgs) Handles boxDef.ValueChanged
-        Game.player1.defence = boxDef.Value
+        Game.player1.defense = boxDef.Value
     End Sub
 
     Private Sub boxWil_ValueChanged(sender As Object, e As EventArgs) Handles boxWil.ValueChanged

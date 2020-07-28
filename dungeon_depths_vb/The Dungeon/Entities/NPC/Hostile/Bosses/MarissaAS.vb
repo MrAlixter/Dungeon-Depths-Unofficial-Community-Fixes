@@ -5,7 +5,7 @@
         name = "Marissa, Aspiring Sorceress"
         maxHealth = 115
         attack = 15
-        defence = 5
+        defense = 5
         speed = 30
 
         inv.setCount("Spellbook", 1)

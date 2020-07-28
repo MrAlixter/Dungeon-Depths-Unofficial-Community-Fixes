@@ -31,7 +31,7 @@
         maxHealth = ghostArray(4)
         attack = ghostArray(5)
         mana = ghostArray(6)
-        defence = ghostArray(7)
+        defense = ghostArray(7)
         speed = ghostArray(8)
         Dim sexBool As Boolean = CBool(ghostArray(9))
         eyeInd = New Tuple(Of Integer, Boolean, Boolean)(ghostArray(10), ghostArray(11), ghostArray(12))

@@ -5,7 +5,7 @@
         health = (1.0)
         maxHealth = (9999)
         attack = (999)
-        defence = (99)
+        defense = (99)
         speed = (99)
         'Define the inventory
         inv = New Inventory(False)

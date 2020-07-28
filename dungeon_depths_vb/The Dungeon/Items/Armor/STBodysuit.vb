@@ -4,7 +4,7 @@ Public Class STBodysuit
 
     Sub New()
         MyBase.setName("Skin_Tight_Bodysuit")
-        MyBase.setDesc("This sleek bodysuit leaves very little to the imagination, despite covering most of one's body.  Its thin, but flexible material trades any possible defence to maximize energy production." & vbCrLf & _
+        MyBase.setDesc("This sleek bodysuit leaves very little to the imagination, despite covering most of one's body.  Its thin, but flexible material trades any possible defense to maximize energy production." & vbCrLf & _
                        "Fits sizes -1 through 4" & vbCrLf & _
                        "+23 Max Mana")
         id = 103

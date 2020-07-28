@@ -4,7 +4,7 @@
         name = "Mimic"
         maxHealth = 175
         attack = 35
-        defence = 20
+        defense = 20
         speed = 50
         setInventory({0})
         setupMonsterOnSpawn()

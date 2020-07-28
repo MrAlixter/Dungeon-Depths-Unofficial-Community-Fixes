@@ -4,7 +4,7 @@
         name = "Goo Girl"
         maxHealth = 90
         attack = 30
-        defence = 80
+        defense = 80
         speed = 14
         setInventory({3})
         setupMonsterOnSpawn()

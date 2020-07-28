@@ -254,7 +254,7 @@
         Dim p As Player = Game.player1
         If p.perks(perk.brage) > 0 Then
             p.aBuff = p.aBuff + ((p.attack) / 2)
-            p.dBuff = p.dBuff - ((p.defence) / 3)
+            p.dBuff = p.dBuff - ((p.defense) / 3)
             p.perks(perk.brage) -= 1
         Else
             p.aBuff = 0

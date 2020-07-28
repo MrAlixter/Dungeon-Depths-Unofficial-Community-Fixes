@@ -1,6 +1,6 @@
 ﻿Public Class BunnySuit
     Inherits Armor
-    'the BunnySuit is a cosmetic armor that provides +1 defence
+    'the BunnySuit is a cosmetic armor that provides +1 defense
     Sub New()
         MyBase.setName("Bunny_Suit")
         MyBase.setDesc("A sultry outfit worn by waitresses in a club. " & vbCrLf & _

@@ -15,6 +15,6 @@
     Overrides Function attack(ByRef p As Player, ByRef m As Entity) As Integer
         Dim dmg As Integer = p.mana * 2.5
         p.mana = 0
-        Return Player.calcDamage(dmg, m.defence)
+        Return Player.calcDamage(dmg, m.defense)
     End Function
 End Class

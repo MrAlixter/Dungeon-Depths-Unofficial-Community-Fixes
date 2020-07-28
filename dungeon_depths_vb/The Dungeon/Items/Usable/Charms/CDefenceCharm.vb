@@ -1,9 +1,9 @@
-﻿Public Class CDefenceCharm
+﻿Public Class CdefenseCharm
     Inherits Item
 
     Sub New()
-        MyBase.setName("Defence_Charm​")
-        MyBase.setDesc("A charm that slightly boosts your defence.  There is a subtle red glow surrounding this charm.")
+        MyBase.setName("defense_Charm​")
+        MyBase.setDesc("A charm that slightly boosts your defense.  There is a subtle red glow surrounding this charm.")
         id = 174
         tier = 3
         MyBase.setUsable(True)
@@ -15,7 +15,7 @@
         If Me.getUsable() = False Then Exit Sub
         Game.pushLstLog("You use the " & getName() & ". +5 base DEF!")
 
-        p.defence += 5
+        p.defense += 5
         p.UIupdate()
 
         If Not p.perks(perk.coscale) > -1 And (Int(Rnd() * 2) = 0 Or Game.noRNG) Then

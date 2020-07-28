@@ -69,10 +69,10 @@
             p1.attack = p2.attack * 1.5
         End If
 
-        If p1.defence > p2.defence Then
-            p1.defence = p1.defence * 1.5
+        If p1.defense > p2.defense Then
+            p1.defense = p1.defense * 1.5
         Else
-            p1.defence = p2.defence * 1.5
+            p1.defense = p2.defense * 1.5
         End If
 
         If p1.will > p2.will Then

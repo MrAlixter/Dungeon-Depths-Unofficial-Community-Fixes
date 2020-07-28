@@ -19,7 +19,7 @@
             Return -1
         End If
         dmg += p.getATK
-        dmg = Player.calcDamage(dmg, m.defence)
+        dmg = Player.calcDamage(dmg, m.defense)
         Return dmg
     End Function
 End Class

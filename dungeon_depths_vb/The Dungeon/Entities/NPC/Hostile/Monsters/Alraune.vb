@@ -7,7 +7,7 @@
         name = "Alraune"
         maxHealth = 175
         attack = 15
-        defence = 35
+        defense = 35
         speed = 1
 
         inv.setCount("Medicinal_Tea", 3)

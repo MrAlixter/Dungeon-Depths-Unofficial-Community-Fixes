@@ -5,7 +5,7 @@
         name = "Marissa the Enchantress"
         maxHealth = 150
         attack = 25
-        defence = -5
+        defense = -5
         speed = 10
 
         inv.setCount("Health_Potion", 3)

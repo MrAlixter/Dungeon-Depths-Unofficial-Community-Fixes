@@ -16,7 +16,7 @@
         Game.pushLblEvent("You use the " & getName() & ". +5 base ATK, DEF, SPD, WIL, Max Mana, +10 Max Health!")
 
         p.attack += 5
-        p.defence += 5
+        p.defense += 5
         p.speed += 5
         p.maxMana += 5
         p.will += 5

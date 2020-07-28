@@ -2,7 +2,7 @@
     Inherits Armor
     Sub New()
         MyBase.setName("Dissolved_Clothes")
-        MyBase.setDesc("While at some point this set of apperal may have provided some defence, a generous dousing of slime has left it completely ruined." & vbCrLf &
+        MyBase.setDesc("While at some point this set of apperal may have provided some defense, a generous dousing of slime has left it completely ruined." & vbCrLf &
                        "+1 DEF")
         id = 80
         tier = Nothing

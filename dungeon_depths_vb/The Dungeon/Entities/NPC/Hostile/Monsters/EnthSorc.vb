@@ -9,7 +9,7 @@
         End If
         maxHealth = 150
         attack = 40
-        defence = 17
+        defense = 17
         speed = 20
         setInventory({4, 13})
         setupMonsterOnSpawn()

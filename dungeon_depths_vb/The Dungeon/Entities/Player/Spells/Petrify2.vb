@@ -36,7 +36,7 @@
         If Transformation.canBeTFed(p) Then
             p.pState.save(p)
         End If
-        p.defence = 40
+        p.defense = 40
 
         Dim pturns = Int(Rnd() * 5) + 3
         p.petrify(Color.LightGray, pturns)

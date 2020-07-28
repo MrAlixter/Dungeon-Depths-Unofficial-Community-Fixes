@@ -5,7 +5,7 @@
         health = 1.0
         maxHealth = 99
         attack = 9999
-        defence = 9999
+        defense = 9999
         speed = 99
 
         'Define the inventory

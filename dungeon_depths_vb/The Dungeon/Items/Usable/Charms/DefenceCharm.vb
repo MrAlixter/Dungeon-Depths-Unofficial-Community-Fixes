@@ -1,9 +1,9 @@
-﻿Public Class DefenceCharm
+﻿Public Class defenseCharm
     Inherits Item
 
     Sub New()
-        MyBase.setName("Defence_Charm")
-        MyBase.setDesc("A charm that slightly boosts your defence.")
+        MyBase.setName("defense_Charm")
+        MyBase.setDesc("A charm that slightly boosts your defense.")
         id = 51
         tier = 2
         MyBase.setUsable(True)
@@ -15,7 +15,7 @@
         If Me.getUsable() = False Then Exit Sub
         Game.pushLstLog("You use the " & getName() & ". +5 base DEF!")
 
-        p.defence += 5
+        p.defense += 5
         p.UIupdate()
         count -= 1
     End Sub

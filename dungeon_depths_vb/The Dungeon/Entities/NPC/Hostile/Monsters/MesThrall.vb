@@ -4,7 +4,7 @@
         name = "Mesmerized Thrall"
         maxHealth = 85
         attack = 20
-        defence = 7
+        defense = 7
         speed = 9
         setInventory({0, 1, 13})
         setupMonsterOnSpawn()

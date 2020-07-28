@@ -5,7 +5,7 @@
 
         maxHealth = 400
         attack = 600
-        defence = 250
+        defense = 250
         speed = 700
 
         inv.setCount("Omni_Charm", 1)

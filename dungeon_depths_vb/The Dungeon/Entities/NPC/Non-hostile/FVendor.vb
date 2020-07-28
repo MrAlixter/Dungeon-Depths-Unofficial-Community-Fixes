@@ -5,7 +5,7 @@
         health = 1.0
         maxHealth = 9999
         attack = 999
-        defence = 99
+        defense = 99
         speed = 99
 
         'Define the inventory
@@ -83,7 +83,7 @@
                     npcIndex = 6
                     Game.pushNPCDialog("Say what you will about Marissa, but the lady's got a type for sure.  Fortunately for me, I've got a " &
                                        "deal goin' on with one of the hottest mind controllers you'll find in these parts, and part of my payment was " &
-                                       "some solid mental defence training.  I'm not even worried about the new body, either.  I've got just the thing " &
+                                       "some solid mental defense training.  I'm not even worried about the new body, either.  I've got just the thing " &
                                        "to change back me to my old self...when I get bored, that is.  No reason not to enjoy Marissa's ""tip"" to its fullest, right?  " &
                                        "In the meantime, I've always got something cooking if you're hungry.  Let me know if I can get you anything, ok?")
                 Else
@@ -100,7 +100,7 @@
                                    "See, you may have thought you got the upper hand by turning me into a helpless princess, but now I've turned it around into marketing!  Pretty sneaky, huh?")
             ElseIf npcIndex = 4 Then
                 Game.pushNPCDialog("I'd be lyinig if I said I wasn't used to being turned into a woman at this point.  Between my bestie and possibly girlfriend, and all the crazy stuff that " &
-                                   "goes on around this place, you'd think I'd have more than just the mental defences.  But hey, variety is the spice of life, and I'm totally sizzlin' in this thing!  " &
+                                   "goes on around this place, you'd think I'd have more than just the mental defenses.  But hey, variety is the spice of life, and I'm totally sizzlin' in this thing!  " &
                                    "Don't, uh, tell Teach I said that though, she might end up keeping me like this...")
             ElseIf npcIndex = 8 Then
                 Game.pushNPCDialog("...")

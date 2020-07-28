@@ -3,7 +3,7 @@
 
     Sub New()
         MyBase.setName("Bronze_Armor")
-        MyBase.setDesc("A lightweight armor set forged from bronze that, while not offering much defence also gives a slight speed boost." & vbCrLf & _
+        MyBase.setDesc("A lightweight armor set forged from bronze that, while not offering much defense also gives a slight speed boost." & vbCrLf & _
                        "Fits sizes -1 through 3" & vbCrLf & _
                        "+6 DEF" & vbCrLf & _
                        "+2 SPD")

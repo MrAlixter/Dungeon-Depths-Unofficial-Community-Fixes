@@ -5,7 +5,7 @@
         name = "Explorer"
         maxHealth = 300
         attack = 15
-        defence = 15
+        defense = 15
         speed = 15
         Randomize()
         For i = 0 To 5

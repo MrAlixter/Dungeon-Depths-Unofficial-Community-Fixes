@@ -36,7 +36,7 @@
         p.mana = 3 + Int(Rnd() * 7)
         p.maxMana = CInt(p.mana.ToString)
         p.attack = 10 + Int(Rnd() * 7)
-        p.defence = 10 + Int(Rnd() * 7)
+        p.defense = 10 + Int(Rnd() * 7)
         p.speed = 10 + Int(Rnd() * 7)
         p.gold = 25 + Int(Rnd() * 200)
         p.lust = 0

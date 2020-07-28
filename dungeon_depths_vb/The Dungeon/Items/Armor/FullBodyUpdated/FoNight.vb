@@ -2,7 +2,7 @@
     Inherits Armor
 
     Dim oldHat As Tuple(Of Integer, Boolean, Boolean) = New Tuple(Of Integer, Boolean, Boolean)(0, True, False)
-    'CatLingerie is a cosmetic armor that doesn't provide a defence bonus
+    'CatLingerie is a cosmetic armor that doesn't provide a defense bonus
     Sub New()
         MyBase.setName("Frock_of_Night")
         MyBase.setDesc("A black dress commonly worn by those who aren't afraid of the dark." & vbCrLf & _

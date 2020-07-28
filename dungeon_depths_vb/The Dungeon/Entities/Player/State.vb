@@ -6,7 +6,7 @@
     Public pClass As pClass = New Classless()
     Public pForm As pForm = New Human()
     Dim health As Double
-    Public maxHealth, mana, maxMana, attack, defence As Integer
+    Public maxHealth, mana, maxMana, attack, defense As Integer
     Dim will, speed, gold, lust As Integer
     Public breastSize, stamina, dickSize, buttSize As Integer
     Dim equippedWeapon As Weapon
@@ -31,7 +31,7 @@
         mana = p.mana
         maxMana = p.mana
         attack = p.attack
-        defence = p.defence
+        defense = p.defense
         will = p.will
         speed = p.speed
         gold = p.gold
@@ -64,7 +64,7 @@
         mana = 0
         maxMana = 0
         attack = 0
-        defence = 0
+        defense = 0
         will = 0
         speed = 0
         gold = 0
@@ -98,7 +98,7 @@
             If p.health > 1 Then p.health = 1
             p.maxMana = maxMana
             p.attack = attack
-            p.defence = defence
+            p.defense = defense
             p.will = will
             p.speed = speed
             p.lust = lust
@@ -133,7 +133,7 @@
         mana = p.mana
         maxMana = p.maxMana
         attack = p.attack
-        defence = p.defence
+        defense = p.defense
         will = p.will
         speed = p.speed
         gold = p.gold
@@ -169,7 +169,7 @@
             mana = 0
             maxMana = 0
             attack = 0
-            defence = 0
+            defense = 0
             will = 0
             speed = 0
             gold = 0
@@ -198,7 +198,7 @@
         dickSize = CInt(readArray(7))
 
         attack = CInt(readArray(10))
-        defence = CInt(readArray(11))
+        defense = CInt(readArray(11))
         will = CInt(readArray(12))
         speed = CInt(readArray(13))
         If Not readArray(14).Equals("placeholder") Then isPetrified = CBool(readArray(14))
@@ -253,7 +253,7 @@
     Public Function write() As String
         If initFlag Then
             Dim output As String = CStr(name & "*" & pClass.name & "~" & pForm.name & "*" & description & "*" & health & "*" & maxHealth & "*" & mana & "*" & maxMana & "*" & buttSize & "*" & haircolor.A & "*" & skincolor.A & "*" & _
-               attack & "*" & defence & "*" & will & "*" & speed & "*" & isPetrified & "*" & stamina & "*" & gold & "*" & equippedArmor.getName() & "*" & equippedWeapon.getName() & "*" & _
+               attack & "*" & defense & "*" & will & "*" & speed & "*" & isPetrified & "*" & stamina & "*" & gold & "*" & equippedArmor.getName() & "*" & equippedWeapon.getName() & "*" & _
                sex & "*" & buttSize & "*" & breastSize & "*" & haircolor.R & "*" & haircolor.G & "*" & haircolor.B & "*" & skincolor.R & "*" & skincolor.G & "*" & skincolor.B & "*" & _
                textColor.R & "*" & textColor.G & "*" & textColor.B & "*" & "placeholder" & "*")
             output += perks.Count & "*"

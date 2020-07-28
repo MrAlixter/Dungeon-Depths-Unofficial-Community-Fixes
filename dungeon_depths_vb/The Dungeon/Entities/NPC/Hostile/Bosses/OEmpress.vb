@@ -5,10 +5,10 @@
         name = ("Ooze Empress")
         maxHealth = (100)
         attack = (30)
-        defence = (70)
+        defense = (70)
         speed = (1)
         setInventory({3, 58, 65})
-        inv.setCount("Defence_Charm", 1 + CInt(Rnd() * 2))
+        inv.setCount("defense_Charm", 1 + CInt(Rnd() * 2))
         inv.setCount("Omni_Charm", 1)
         inv.setCount("Gold", 5000)
 

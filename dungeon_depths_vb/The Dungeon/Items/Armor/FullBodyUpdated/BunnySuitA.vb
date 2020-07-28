@@ -2,7 +2,7 @@
     Inherits Armor
     Sub New()
         MyBase.setName("Armored_Bunny_Suit")
-        MyBase.setDesc("Once a sultry outfit worn by waitresses in a club, this bunny suit has been modified to provide more defence, and to improve mobility." & vbCrLf & _
+        MyBase.setDesc("Once a sultry outfit worn by waitresses in a club, this bunny suit has been modified to provide more defense, and to improve mobility." & vbCrLf & _
                        "Fits sizes -1 through 3" & vbCrLf & _
                        "+16 DEF, +5 SPD")
         id = 94
