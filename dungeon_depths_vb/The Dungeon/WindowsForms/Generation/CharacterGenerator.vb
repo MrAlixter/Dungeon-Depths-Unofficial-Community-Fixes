@@ -615,7 +615,7 @@
     End Sub
     'sex Selection buttons
     Private Sub btnMale_Click(sender As Object, e As EventArgs) Handles btnMale.Click
-        portrait.setIAInd(pInd.body, 0, False, False)
+        portrait.setIAInd(pInd.genitalia, 1, False, False)
         btnBody_Click(sender, e)
 
         btnFemale.Enabled = True
@@ -626,7 +626,7 @@
         picPort.BackgroundImage = portrait.draw
     End Sub
     Private Sub btnFemale_Click(sender As Object, e As EventArgs) Handles btnFemale.Click
-        portrait.setIAInd(pInd.body, 0, True, False)
+        portrait.setIAInd(pInd.genitalia, 4, True, False)
         btnBody_Click(sender, e)
 
         btnMale.Enabled = True

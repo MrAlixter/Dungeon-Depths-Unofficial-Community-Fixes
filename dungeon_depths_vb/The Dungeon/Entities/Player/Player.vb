@@ -1037,8 +1037,8 @@ Public Class Player
             perks(perk.stamina) = 1
         ElseIf stamina < 0 Then
             stamina = 0
-        ElseIf Game.turn Mod 25 = 24 Then
-            stamina -= 1
+        ElseIf Game.turn Mod 25 = 10 Then
+            If Int(Rnd() * 2) = 0 Then stamina -= 1
         End If
 
         If health > 1 Then health = 1

@@ -2392,14 +2392,8 @@ Public Class Game
         lblTurn.Text = "Turn: " & turn
         lblPName.Text = p.name
         lblEName.Text = t.getName
-        If t.getName.Length > 20 Then
-            Dim tRatio = 10 / t.getName.Length
-            Dim newFont As Font = New System.Drawing.Font("Consolas", CInt(9 * 2 * tRatio * Me.Size.Width / 688))
-            lblEName.Font = newFont
-        Else
-            Dim newFont As Font = New System.Drawing.Font("Consolas", CInt(9 * Me.Size.Width / 688))
-            lblEName.Font = newFont
-        End If
+        lblPName.Font = DDUtils.fitFont(lblPName, lblPHealth.Font)
+        lblEName.Font = DDUtils.fitFont(lblEName, lblEHealth.Font)
 
         If lblEHealthChange.Tag > 0 Then
             lblEHealthChange.Text = "+" & lblEHealthChange.Tag

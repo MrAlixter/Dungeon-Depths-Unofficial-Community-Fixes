@@ -654,7 +654,15 @@ Public Class Portrait
 
     'gets the player's current sexBool
     Public Function sexBool() As Boolean
-        If iArrInd(pInd.genitalia).Item1 = -1 Then
+        If Not ent Is Nothing AndAlso ent.GetType() Is GetType(Player) Then
+            If CType(ent, Player).dickSize = -1 Then
+                Return True
+            Else
+                Return False
+            End If
+        End If
+
+        If iArrInd(pInd.genitalia).Item1 = 4 Then
             Return True
         Else
             Return False
