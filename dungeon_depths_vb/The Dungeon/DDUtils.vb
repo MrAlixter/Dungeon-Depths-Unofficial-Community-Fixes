@@ -53,7 +53,7 @@
         helperResizeControl(ctrl, RW, RH, fontRatio)
 
         For Each c In ctrl.Controls
-            helperResizeControl(ctrl, RW, RH, fontRatio)
+            helperResizeControl(c, RW, RH, fontRatio)
         Next
     End Sub
 

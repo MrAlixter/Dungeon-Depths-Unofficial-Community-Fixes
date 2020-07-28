@@ -1199,9 +1199,9 @@ Public Class Player
 
         Game.lblMana.Text = statBar(getMana, getMaxMana, Game.lblMana)
 
-        Game.lblstamina.Text = statBar(stamina, 100, Game.lblMana)
+        Game.lblstamina.Text = statBar(stamina, 100, Game.lblstamina)
 
-        Game.lblXP.Text = statBar(xp, nextLevelXp, Game.lblMana)
+        Game.lblXP.Text = statBar(xp, nextLevelXp, Game.lblXP)
 
         If Game.lblLevel.Text <> "Level = " & level Then Game.lblLevel.Text = "Level = " & level
         If Game.lblATK.Text <> "ATK = " & (getATK()) + equippedWeapon.aBoost Then Game.lblATK.Text = "ATK = " & (getATK()) + equippedWeapon.aBoost
@@ -1251,6 +1251,8 @@ Public Class Player
     End Sub
     Function statBar(ByVal cval As Double, ByVal mval As Double, ByVal ctrl As Control, Optional ByVal delim As Char = "ᚋ")
         Dim out As String = " " & cval & "/" & mval & " "
+
+        ctrl.Font = Game.lblHealthbarFont.Font
 
         While ctrl.Width * (cval / mval) > TextRenderer.MeasureText(out, ctrl.Font).Width
             out = delim & out & delim

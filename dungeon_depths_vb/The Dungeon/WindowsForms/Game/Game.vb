@@ -3206,6 +3206,8 @@ Public Class Game
     End Sub
     Private Sub Game_Resize()
         DDUtils.resizeForm(Me, iHeight, iWidth)
+
+        player1.UIupdate()
     End Sub
     Private Sub CreateMapAndImages()
         Dim XSize As Double = 15.0 * (CDbl(Me.Size.Width) / 688.0)

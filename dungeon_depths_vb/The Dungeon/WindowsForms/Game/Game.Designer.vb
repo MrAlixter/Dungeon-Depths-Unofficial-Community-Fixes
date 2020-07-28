@@ -247,6 +247,7 @@ Partial Class Game
         Me.Label8 = New System.Windows.Forms.Label()
         Me.Label9 = New System.Windows.Forms.Label()
         Me.Label10 = New System.Windows.Forms.Label()
+        Me.lblHealthbarFont = New System.Windows.Forms.Label()
         CType(Me.picEnemy, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me.picNPC, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me.picStatue, System.ComponentModel.ISupportInitialize).BeginInit()
@@ -2685,6 +2686,7 @@ Partial Class Game
         'pnlStats
         '
         Me.pnlStats.BackgroundImage = CType(resources.GetObject("pnlStats.BackgroundImage"), System.Drawing.Image)
+        Me.pnlStats.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch
         Me.pnlStats.Controls.Add(Me.lblSPD)
         Me.pnlStats.Controls.Add(Me.lblGold)
         Me.pnlStats.Controls.Add(Me.lblATK)
@@ -2711,6 +2713,8 @@ Partial Class Game
         'pnlMeter
         '
         Me.pnlMeter.BackgroundImage = CType(resources.GetObject("pnlMeter.BackgroundImage"), System.Drawing.Image)
+        Me.pnlMeter.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch
+        Me.pnlMeter.Controls.Add(Me.lblHealthbarFont)
         Me.pnlMeter.Controls.Add(Me.lblstamina)
         Me.pnlMeter.Controls.Add(Me.lblXP)
         Me.pnlMeter.Controls.Add(Me.Label11)
@@ -2789,6 +2793,18 @@ Partial Class Game
         Me.Label10.Size = New System.Drawing.Size(40, 17)
         Me.Label10.TabIndex = 152
         Me.Label10.Text = "ST: "
+        '
+        'lblHealthbarFont
+        '
+        Me.lblHealthbarFont.AutoSize = True
+        Me.lblHealthbarFont.Font = New System.Drawing.Font("Consolas", 8.150944!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.lblHealthbarFont.ForeColor = System.Drawing.Color.White
+        Me.lblHealthbarFont.Location = New System.Drawing.Point(0, 65)
+        Me.lblHealthbarFont.Name = "lblHealthbarFont"
+        Me.lblHealthbarFont.Size = New System.Drawing.Size(0, 15)
+        Me.lblHealthbarFont.TabIndex = 156
+        Me.lblHealthbarFont.TextAlign = System.Drawing.ContentAlignment.MiddleLeft
+        Me.lblHealthbarFont.Visible = False
         '
         'Game
         '
@@ -3308,4 +3324,5 @@ Partial Class Game
     Friend WithEvents lblXP As System.Windows.Forms.Label
     Friend WithEvents Label11 As System.Windows.Forms.Label
     Friend WithEvents Label10 As System.Windows.Forms.Label
+    Friend WithEvents lblHealthbarFont As System.Windows.Forms.Label
 End Class
