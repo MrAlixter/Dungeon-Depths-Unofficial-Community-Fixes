@@ -89,7 +89,7 @@
         p.lust += 5
     End Sub
     Sub step4pt1()
-        Game.player1.prt.setIAInd(pInd.wings, 4, True, False)
+        Game.player1.prt.setIAInd(pInd.tail, 2, True, False)
         Game.player1.drawPort()
         Game.pushLblEvent("\tYour many eyes snap open, and you jump to your feet.  You have no idea how long you were out, but apart from some stiffness in your lower joints, you feel fine now.  Impressed by your new stamina, you remark to yourself that an experience like that would have killed the old, weak person that you used to be.\n\n" &
                           "While picking up your things, you catch a glimpse of your rear over your shoulder and realize at once that you’ve undergone a drastic transformation.  From the waist down, your body has morphed into that of a massive spider.  Your waist leads directly onto your thorax, which in turn leads to a massive abdomen that is topped out with a spinneret, and it takes a few seconds for this drastic change to fully process through your brain.  Testing out your eight new limbs, you find that for as delicate as they look, you can strike the tiles around you with enough force to shatter them.\n\n" &

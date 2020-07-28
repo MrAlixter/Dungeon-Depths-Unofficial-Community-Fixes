@@ -347,6 +347,11 @@ Public Class Portrait
             iArr(pInd.accessory) = CharacterGenerator.picPort.Image
         End If
     End Sub
+    Sub spiderBody()
+        If iArrInd(pInd.tail).Item1 = 2 Then
+            iArr(pInd.horns) = CreateBMP({CharacterGenerator.picPort.Image, iArr(pInd.horns), imgLib.atrs(pInd.horns).getAt(6)})
+        End If
+    End Sub
     Sub bodyOverlay()
         Dim p As Player
         If Not ent Is Nothing AndAlso ent.GetType Is GetType(Player) Then
@@ -377,6 +382,8 @@ Public Class Portrait
         Else
             iArrInd(pInd.bodyoverlay) = New Tuple(Of Integer, Boolean, Boolean)(0, True, False)
         End If
+
+        spiderBody()
 
         p.dsizeroute()
     End Sub

@@ -209,7 +209,7 @@ Public Class Player
 
         For i = 1 To CInt(subKB(0) + 1)
             Dim tf As Transformation = Transformation.newTF(subKB(i).Split("$"))
-            ongoingTFs.Add(tf)
+            ongoingTFs.add(tf)
         Next
         currentIndex += 1
 
@@ -517,7 +517,7 @@ Public Class Player
             RandoTF.floor4FirstBossEncounter()
             Exit Sub
         End If
-        If pClass.name.equals("Thrall") Then
+        If pClass.name.Equals("Thrall") Then
             If Int(Rnd() * 2) = 1 Then
                 Dim out = "You've found one of the crystals your controller is seeking!  As you circle it, you feel a familiar presence enter your mind.  " & _
                     """Yes!  You've found it!"" your overseer states exitedly, ""I'll be over shortly, don't go anywhere and don't touch that crystal.""" & vbCrLf & _
@@ -534,7 +534,7 @@ Public Class Player
             Else
                 Game.pushLblEvent("You've found one of the crystals your controller is seeking!  As you circle it, you feel a familiar presence enter your mind.  " & _
                     """No, that isn't it."" your overseer states disappointedly, ""Well, I guess you can go back to your buisness now.""")
-                ongoingTFs.Add(New ThrallTF())
+                ongoingTFs.add(New ThrallTF())
             End If
         End If
     End Sub
@@ -562,7 +562,7 @@ Public Class Player
         Randomize()
 
 
-        If pClass.name.equals("Barbarian") Then
+        If pClass.name.Equals("Barbarian") Then
             aBuff -= perks(perk.barbarian)
             perks(perk.barbarian) = 0
         End If
@@ -668,7 +668,7 @@ Public Class Player
     End Sub
     'wait
     Public Sub wait()
-        If pClass.name.equals("Barbarian") Then
+        If pClass.name.Equals("Barbarian") Then
             aBuff += 5
             perks(perk.barbarian) += 5
         End If
