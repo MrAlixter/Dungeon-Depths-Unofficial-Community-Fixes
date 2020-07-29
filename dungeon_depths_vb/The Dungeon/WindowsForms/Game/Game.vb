@@ -2411,7 +2411,7 @@ Public Class Game
         lblPHealth.Text = CInt(p.health * p.getMaxHealth) & "/" & p.getMaxHealth
         lblEHealth.Text = CInt(t.getHealth * t.getMaxHealth) & "/" & t.getMaxHealth
         lblTurn.Text = "Turn: " & turn
-        lblPName.Text = p.name
+        lblPName.Text = p.getName
         lblEName.Text = t.getName
         lblPName.Font = DDUtils.fitFont(lblPName, lblPHealth.Font)
         lblEName.Font = DDUtils.fitFont(lblEName, lblEHealth.Font)
