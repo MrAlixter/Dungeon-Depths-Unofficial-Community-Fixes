@@ -5,7 +5,8 @@
     End Sub
 
     Sub add(ByRef tf As Transformation)
-        If Not internalList.ContainsKey(tf.getTFName) Then internalList.Add(tf.getTFName(), tf)
+        If tf.getTFName Is Nothing Then MsgBox(tf.GetType.ToString)
+        If Not tf.getTFName Is Nothing AndAlso Not internalList.ContainsKey(tf.getTFName) Then internalList.Add(tf.getTFName(), tf)
     End Sub
 
     Sub ping(Optional ByRef pUpdateFlag = False)
@@ -16,7 +17,11 @@
             Else
                 Dim c = tf.getturnsTilNextStep
                 If c = 0 Then pUpdateFlag = True
-                tf.update()
+                Try
+                    tf.update()
+                Catch ex As Exception
+                    MsgBox(tf.GetType.ToString)
+                End Try
             End If
         Next
     End Sub

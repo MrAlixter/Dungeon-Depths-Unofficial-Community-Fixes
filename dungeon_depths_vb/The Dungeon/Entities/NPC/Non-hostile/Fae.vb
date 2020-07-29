@@ -30,7 +30,8 @@
                          ShopNPC.npcLib.atrs(0).getAt(56),
                          ShopNPC.npcLib.atrs(0).getAt(57),
                          ShopNPC.npcLib.atrs(0).getAt(58),
-                         ShopNPC.npcLib.atrs(0).getAt(60)})
+                         ShopNPC.npcLib.atrs(0).getAt(60),
+                         ShopNPC.npcLib.atrs(0).getAt(62)})
 
         If speed = Game.player1.speed Then speed -= 1
         title = ""
@@ -124,7 +125,7 @@
         Game.pushNPCDialog("Yay, great!  I've been workshopping a pie recipe, but for some reason no one wants to try it.  Have a slice and let me know what you think, ok?", AddressOf askToEatPie)
     End Sub
     Shared Sub refuseFavor()
-        Game.pushPnlYesNo("Decline Politely?", AddressOf giveApology, AddressOf declineRudely)
+        Game.pushPnlYesNo("Decline Politely?", AddressOf declinePolitely, AddressOf declineRudely)
     End Sub
     Shared Sub declinePolitely()
         displayFaeImg(8)
@@ -173,7 +174,22 @@
     Shared Sub horseTF2()
         displayFaeImg(10)
         Polymorph.transform(Game.player1, "Horse")
-        Game.pushNPCDialog("Oh yeah, I know the PERFECT way for you to pay me back!")
+        System.Threading.Thread.Sleep(750)
+        Game.pushLblEvent("With a glittering poof, the fae is replaced by a shadowy figure clad in a hooded robe.  Rather a gasp of shock, you let out a loud neigh and rear back on your hind legs at the sight of the now not-so-teeny fae.  In a panic, you make off into the mist of the forest and away from the angry forest spirit but before you can get far you are tugged back by a bridle and reins that seem to have materialized out of thin air.", AddressOf horseTF3)
+    End Sub
+    Shared Sub horseTF3()
+        displayFaeImg(10)
+
+        Dim refP = "guy"
+        If Game.player1.prt.sexBool Then refP = "gal"
+        If Game.player1.perks(perk.faehasname) Then refP = Game.player1.name
+
+        Game.pushNPCDialog("Woah there, " & refP & ", let's cut it out with the running.  I'm not gonna hurt you.  See, there's a lot of travellers that end up in these woods without knowing where they need to go.  Some of them don't exactly play nice, so we fae-folk like to keep you all moving through here as soon as possible.", AddressOf horseTF4)
+    End Sub
+    Shared Sub horseTF4()
+        displayFaeImg(11)
+
+        Game.pushNPCDialog("Turns out that the easiest way to get the more savy wanderers out of here is to just roll up with a carrige and ferry them out.  Congrats, you get to help me out!  Let's get moving, I'll point you in the right direction...")
     End Sub
 
     Shared Sub displayFaeImg(ByVal i As Integer)

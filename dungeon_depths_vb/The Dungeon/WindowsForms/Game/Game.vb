@@ -1286,11 +1286,32 @@ Public Class Game
             End If
             Exit Sub
         End If
-        If mDun.numCurrFloor = 13 And player1.perks(perk.meetfae1) < 1 Then
-            If Int(Rnd() * 2) = 0 Then
-                Fae.firstEncounter()
+        If mDun.numCurrFloor = 13 Then
+            If player1.perks(perk.meetfae1) < 1 Then
+                If Int(Rnd() * 2) = 0 Then
+                    Fae.firstEncounter()
+                End If
+                Exit Sub
+            Else
+                If Int(Rnd() * 130) = 0 Then
+                    Select Case Int(Rnd() * 7)
+                        Case 1
+                            pushLblEvent("You feel eyes glaring through the shroud of mist...")
+                        Case 2
+                            pushLblEvent("You hear a multitude of whispers surrounding you from all directions...")
+                        Case 3
+                            pushLblEvent("Something lurks menacingly just outside of your vision...")
+                        Case 4
+                            pushLblEvent("A sinister voice wispers """ & My.Computer.Info.OSFullName & " suuuckssssssss"" in your ear...")
+                        Case 5
+                            pushLblEvent("The ground writhes beneath you, slinking out of view...")
+                        Case 6
+                            pushLblEvent("You feel unwelcome in this place...")
+                        Case Else
+                            pushLblEvent("A shadow darts behind a tree before peeking back out and staring slightly to your left...")
+                    End Select
+                End If
             End If
-            Exit Sub
         End If
         Randomize()
         If eClock > 0 Then eClock -= 1
