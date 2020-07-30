@@ -5,7 +5,7 @@
     End Sub
 
     Sub add(ByRef tf As Transformation)
-        If tf.getTFName Is Nothing Then MsgBox(tf.GetType.ToString)
+        If tf.getTFName Is Nothing Then MsgBox("Error 007: " & tf.GetType.ToString & " transformation missing name field!")
         If Not tf.getTFName Is Nothing AndAlso Not internalList.ContainsKey(tf.getTFName) Then internalList.Add(tf.getTFName(), tf)
     End Sub
 
@@ -20,7 +20,7 @@
                 Try
                     tf.update()
                 Catch ex As Exception
-                    MsgBox(tf.GetType.ToString)
+                    MsgBox("Error 008: " & tf.GetType.ToString & " transformation has thrown an unhandled exception!")
                 End Try
             End If
         Next
@@ -38,8 +38,9 @@
     End Sub
 
     Sub resetPolymorphs()
-        For Each tf In internalList
-            If tf.Value.GetType().IsSubclassOf(GetType(PolymorphTF)) Then remove(tf.Key)
+        For i = internalList.Count - 1 To 0 Step -1
+            tf = internalList.Values(i)
+            If tf.GetType().IsSubclassOf(GetType(PolymorphTF)) Then internalList.Remove(tf.getTFName)
         Next
     End Sub
 

@@ -20,6 +20,13 @@ Public Class STBodysuit
         MyBase.bsize2 = New Tuple(Of Integer, Boolean, Boolean)(160, True, True)
         MyBase.bsize3 = New Tuple(Of Integer, Boolean, Boolean)(161, True, True)
         MyBase.bsize4 = New Tuple(Of Integer, Boolean, Boolean)(162, True, True)
+
+        MyBase.usizeneg1 = New Tuple(Of Integer, Boolean, Boolean)(52, False, True)
+        MyBase.usize0 = New Tuple(Of Integer, Boolean, Boolean)(53, False, True)
+        MyBase.usize1 = New Tuple(Of Integer, Boolean, Boolean)(230, True, True)
+        MyBase.usize2 = New Tuple(Of Integer, Boolean, Boolean)(231, True, True)
+        MyBase.usize3 = New Tuple(Of Integer, Boolean, Boolean)(232, True, True)
+        MyBase.usize4 = New Tuple(Of Integer, Boolean, Boolean)(233, True, True)
         MyBase.compressesBreasts = True
 
         MyBase.isRandoTFAcceptable = False

@@ -20,6 +20,9 @@
 
         Return out
     End Function
+    Public Shared Function copyDictionary(ByVal dic As Dictionary(Of perk, Integer)) As Dictionary(Of perk, Integer)
+        Return dic
+    End Function
 
     'Text/Form resizing
     Public Shared Sub resizeForm(ByRef form As Form)

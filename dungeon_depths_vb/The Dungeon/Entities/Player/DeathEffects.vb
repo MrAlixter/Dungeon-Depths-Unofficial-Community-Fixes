@@ -61,7 +61,7 @@
             Game.player1.will -= 3
             If Game.player1.will < 1 Then Game.player1.will = 0
         End If
-        p.currTarget.despawn("p-death")
+        If Not p.currTarget Is Nothing Then p.currTarget.despawn("p-death")
         Game.pushLblEvent(out)
     End Sub
     Shared Sub slimeDeath()

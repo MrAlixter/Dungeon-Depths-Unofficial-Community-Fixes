@@ -782,6 +782,7 @@ Public Class Player
         Dim tpFormRP As String = pClass.revertPassage
 
         If tEweap.getName = "Magical_Girl_Wand" Then tEweap = New BareFists()
+
         pState.load(Me, False)
 
         mana = tMna

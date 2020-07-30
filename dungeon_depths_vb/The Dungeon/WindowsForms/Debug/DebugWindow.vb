@@ -29,7 +29,7 @@ Public Class Debug_Window
         'GENERAL
         If Game.mDun.numCurrFloor > -1 Then boxFloor.Value = Game.mDun.numCurrFloor Else boxFloor.Value = boxFloor.Maximum
         boxTurn.Value = Game.turn
-        boxBeaten.Checked = Game.currfloor.beatBoss
+        boxBeaten.Checked = Game.currFloor.beatBoss
 
         'MAP
         magnification = Math.Floor(Math.Min(picBoard.Width / Game.currFloor.mBoardWidth, picBoard.Height / Game.currFloor.mBoardHeight))
@@ -129,7 +129,7 @@ Public Class Debug_Window
         End If
 
         'GENERATION SETTINGS
-        lblFC.Text = "Floorcode: " & Game.currfloor.floorCode
+        lblFC.Text = "Floorcode: " & Game.currFloor.floorCode
         boxWidth.Value = Game.mBoardWidth
         boxHeight.Value = Game.mBoardHeight
         boxChestFreqMin.Value = Game.chestFreqMin
@@ -149,30 +149,23 @@ Public Class Debug_Window
 
     Private Sub loadPortrait()
         picPreview.Image = Game.picPortrait.BackgroundImage
-        picPreview.BackgroundImage = Game.player1.prt.iarr(pind.bkg)
+        picPreview.BackgroundImage = Game.player1.prt.iArr(pInd.bkg)
         Dim PADDING = 0.1
         Dim w As Integer = 146
         Dim h As Integer = 216
 
-        Dim attr As List(Of image)()
-        If Game.player1.prt.sexBool Then
-            attr = Portrait.imgLib.fAttributes
-        Else
-            attr = Portrait.imgLib.mAttributes
-        End If
-
         If tabPortraitsLoaded = False Then
             Dim y As Integer = (tabPortrait.TabPages(0).Height - h) / 2
-            Dim bg As image = attr(0)(0)
+            Dim bg As Image = Portrait.imgLib.atrs(pInd.bkg).getAt(0)
             For i = 0 To tabPortrait.TabPages.Count - 1
                 Dim page As TabPage = tabPortrait.TabPages(i)
                 Dim x As Integer = w * PADDING
-                Dim att As List(Of image) = attr(i)
+                Dim att As List(Of Image) = Portrait.imgLib.atrs(i).getI(Game.player1.prt.sexBool)
                 For j As Integer = 0 To att.Count - 1
                     Dim img As New PictureBox
                     img.Name = i.ToString() & ":" & j.ToString()
                     page.Controls.Add(img)
-                    img.image = att(j)
+                    img.Image = att(j)
                     img.BackgroundImage = bg
                     img.Location = New Point(x, y)
                     img.Size = New Point(w, h)
@@ -231,21 +224,21 @@ Public Class Debug_Window
         map = New Bitmap(Game.currFloor.mBoardWidth + 2, Game.currFloor.mBoardHeight + 2)
         For boardX = 0 To map.Width - 3
             For boardY = 0 To map.Height - 3
-                If (Game.currfloor.mBoard(boardY, boardX).Text = "#") Then 'Chest
+                If (Game.currFloor.mBoard(boardY, boardX).Text = "#") Then 'Chest
                     map.SetPixel(boardX + 1, boardY + 1, Color.Yellow)
-                ElseIf (Game.currfloor.mBoard(boardY, boardX).Text = "H") Then 'Stairs
+                ElseIf (Game.currFloor.mBoard(boardY, boardX).Text = "H") Then 'Stairs
                     map.SetPixel(boardX + 1, boardY + 1, Color.Sienna)
-                ElseIf (Game.currfloor.mBoard(boardY, boardX).Text = "@" And Game.player1.pos.X = boardX And Game.player1.pos.Y = boardY) Then 'Player
+                ElseIf (Game.currFloor.mBoard(boardY, boardX).Text = "@" And Game.player1.pos.X = boardX And Game.player1.pos.Y = boardY) Then 'Player
                     map.SetPixel(boardX + 1, boardY + 1, Color.LawnGreen)
-                ElseIf (Game.currfloor.mBoard(boardY, boardX).Text = "@") Then 'Statue
+                ElseIf (Game.currFloor.mBoard(boardY, boardX).Text = "@") Then 'Statue
                     map.SetPixel(boardX + 1, boardY + 1, Color.LightSlateGray)
-                ElseIf (Game.currfloor.mBoard(boardY, boardX).Text = "$") Then 'NPC
+                ElseIf (Game.currFloor.mBoard(boardY, boardX).Text = "$") Then 'NPC
                     map.SetPixel(boardX + 1, boardY + 1, Color.Blue)
-                ElseIf (Game.currfloor.mBoard(boardY, boardX).Text = "+") Then 'Trap
+                ElseIf (Game.currFloor.mBoard(boardY, boardX).Text = "+") Then 'Trap
                     map.SetPixel(boardX + 1, boardY + 1, Color.Red)
-                ElseIf (Game.currfloor.mBoard(boardY, boardX).Tag = 2) Then 'Seen
+                ElseIf (Game.currFloor.mBoard(boardY, boardX).Tag = 2) Then 'Seen
                     map.SetPixel(boardX + 1, boardY + 1, Color.White)
-                ElseIf (Game.currfloor.mBoard(boardY, boardX).Tag = 1) Then 'Unseen
+                ElseIf (Game.currFloor.mBoard(boardY, boardX).Tag = 1) Then 'Unseen
                     map.SetPixel(boardX + 1, boardY + 1, Color.Gray)
                 Else 'Nothing
                     map.SetPixel(boardX + 1, boardY + 1, Color.Black)
@@ -256,7 +249,7 @@ Public Class Debug_Window
 
     Private Sub picBoard_Draw(sender As Object, e As PaintEventArgs)
         e.Graphics.InterpolationMode = Drawing2D.InterpolationMode.NearestNeighbor
-        e.Graphics.Drawimage(map, CInt((picBoard.Width - (map.Width * magnification)) / 2) + xOffset, CInt((picBoard.Height - (map.Height * magnification)) / 2) + yOffset, map.Width * magnification + 0, map.Height * magnification + 0)
+        e.Graphics.DrawImage(map, CInt((picBoard.Width - (map.Width * magnification)) / 2) + xOffset, CInt((picBoard.Height - (map.Height * magnification)) / 2) + yOffset, map.Width * magnification + 0, map.Height * magnification + 0)
 
         ''DEBUG LINES
         'Dim p As Pen
@@ -408,7 +401,7 @@ Public Class Debug_Window
     End Sub
 
     Private Sub boxBeaten_CheckedChanged(sender As Object, e As EventArgs) Handles boxBeaten.CheckedChanged
-        Game.currfloor.beatBoss = boxBeaten.Checked
+        Game.currFloor.beatBoss = boxBeaten.Checked
     End Sub
 
     Private Sub boxName_TextChanged(sender As Object, e As EventArgs) Handles boxName.TextChanged
@@ -418,7 +411,7 @@ Public Class Debug_Window
     End Sub
 
     Private Sub boxHealth_ValueChanged(sender As Object, e As EventArgs) Handles boxHealth.ValueChanged
-        Game.player1.health = boxHealth.Value / Game.player1.getmaxHealth
+        Game.player1.health = boxHealth.Value / Game.player1.getMaxHealth
     End Sub
 
     Private Sub boxMaxHealth_ValueChanged(sender As Object, e As EventArgs) Handles boxMaxHealth.ValueChanged
@@ -485,7 +478,7 @@ Public Class Debug_Window
         Game.player1.changeSkinColor(cd.sc)
         CType(sender, Panel).BackColor = cd.sc
         cd.Dispose()
-        picPreview.image = Portrait.CreateBMP(Game.player1.prt.iArr)
+        picPreview.Image = Portrait.CreateBMP(Game.player1.prt.iArr)
     End Sub
 
     Private Sub pnlHC_Paint(sender As Object, e As EventArgs) Handles pnlHC.Click
@@ -495,24 +488,24 @@ Public Class Debug_Window
         Dim c As Color = Color.FromArgb(boxAlpha.Value, cd.Color.R, cd.Color.G, cd.Color.B)
         Game.player1.changeHairColor(c)
         cd.Dispose()
-        picPreview.image = Portrait.CreateBMP(Game.player1.prt.iArr)
+        picPreview.Image = Portrait.CreateBMP(Game.player1.prt.iArr)
     End Sub
 
     Private Sub boxAlpha_ValueChanged(sender As Object, e As EventArgs) Handles boxAlpha.ValueChanged
         Dim c As Color = Color.FromArgb(boxAlpha.Value, Game.player1.prt.haircolor.R, Game.player1.prt.haircolor.G, Game.player1.prt.haircolor.B)
         Game.player1.changeHairColor(c)
-        picPreview.image = Portrait.CreateBMP(Game.player1.prt.iArr)
+        picPreview.Image = Portrait.CreateBMP(Game.player1.prt.iArr)
     End Sub
 
     Private Sub clickOnPic(sender As Object, e As EventArgs)
         Dim tab As Integer = sender.Name.Split(":")(0)
         Dim pic As Integer = sender.Name.Split(":")(1)
 
-        Game.player1.prt.iArr(tab) = CType(sender, PictureBox).image
+        Game.player1.prt.iArr(tab) = CType(sender, PictureBox).Image
         Game.player1.prt.setIAInd(tab, pic, Game.player1.prt.sexBool, False)
 
         'picPreview.image = Portrait.recolor(portrait.createBMP(Game.player1.iArr), Game.player1.skincolor)
-        picPreview.image = Portrait.CreateBMP(Game.player1.prt.iArr)
+        picPreview.Image = Portrait.CreateBMP(Game.player1.prt.iArr)
     End Sub
 
     Private Sub boxInventoryFilter_TextChanged(sender As Object, e As EventArgs) Handles boxInventoryFilter.TextChanged
@@ -611,7 +604,7 @@ Public Class Debug_Window
         lbl.Name = p.Key & "Lbl"
         lbl.Size = New System.Drawing.Size(125, 25)
         lbl.TabStop = False
-        lbl.Text = p.Key
+        lbl.Text = p.Key.ToString
 
         box.BackColor = System.Drawing.Color.Black
         box.ForeColor = System.Drawing.Color.White

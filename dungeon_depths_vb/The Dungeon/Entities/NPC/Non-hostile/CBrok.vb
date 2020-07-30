@@ -114,7 +114,7 @@
         End If
         'Servitude
         If Int(Rnd() * 5) = 80 Then
-            p.ongoingTFs.Add(New COServ)
+            p.ongoingTFs.add(New COServ)
             Game.pushLstLog("You've been afflicted with the curse of Servitude!")
         End If
     End Sub

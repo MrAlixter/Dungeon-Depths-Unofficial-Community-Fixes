@@ -3,7 +3,7 @@
     Dim hc As Color = Color.FromArgb(255, 255, 175, 200)
     Dim sc As Color = Color.FromArgb(255, 118, 228, 151)
     Sub New()
-        MyBase.New(4, 3, 2.0, True)
+        Me.New(4, 3, 2.0, True)
     End Sub
     Sub New(n As Integer, tts As Integer, wi As Double, cbs As Boolean)
         MyBase.New(n, tts, wi, cbs)

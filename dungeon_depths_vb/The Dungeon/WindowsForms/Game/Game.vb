@@ -1535,8 +1535,11 @@ Public Class Game
                     Next
                 Next
             ElseIf keyspresed = "gogo" Then
-                Dim f As Integer = CInt(InputBox("Which floor?"))
-                quickChangeFloor(f)
+                Try
+                    Dim f As Integer = CInt(InputBox("Which floor?"))
+                    quickChangeFloor(f)
+                Catch ex As Exception
+                End Try
             ElseIf keyspresed = "aeio" Then
                 player1.inv.add(149, 1)
                 player1.UIupdate()

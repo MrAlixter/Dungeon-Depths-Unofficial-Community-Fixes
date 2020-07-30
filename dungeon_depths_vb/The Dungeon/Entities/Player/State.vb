@@ -44,7 +44,7 @@
         equippedArmor = p.equippedArmor
         equippedAcce = p.equippedAcce
         iArrInd = p.prt.iArrInd.Clone
-        perks = New Dictionary(Of perk, Integer)(p.perks)
+        perks = DDUtils.copyDictionary(p.perks)
         invNeedsUDate = p.inv.invNeedsUDate
         haircolor = p.prt.haircolor
         skincolor = p.prt.skincolor
@@ -114,7 +114,7 @@
         p.equippedArmor = equippedArmor
         p.equippedAcce = equippedAcce
         p.prt.iArrInd = iArrInd.Clone
-        p.perks = New Dictionary(Of perk, Integer)(perks)
+        p.perks = DDUtils.copyDictionary(perks)
         p.inv.invNeedsUDate = invNeedsUDate
         p.prt.haircolor = haircolor
         p.prt.skincolor = skincolor
@@ -146,7 +146,7 @@
         equippedArmor = p.equippedArmor
         equippedAcce = p.equippedAcce
         iArrInd = p.prt.iArrInd.Clone
-        perks = New Dictionary(Of perk, Integer)(p.perks)
+        perks = DDUtils.copyDictionary(p.perks)
         invNeedsUDate = p.inv.invNeedsUDate
         haircolor = p.prt.haircolor
         skincolor = p.prt.skincolor
