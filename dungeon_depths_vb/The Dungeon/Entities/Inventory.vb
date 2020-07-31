@@ -235,6 +235,8 @@
         internal_inventory.Add("Gem_of_Flame", New GemOfFlame())            '214
         internal_inventory.Add("Gem_of_Darkness", New GemOfDark())          '215
         internal_inventory.Add("Mag._Girl_Outfit_(C)", New MagGirlOutfitC)  '216
+        internal_inventory.Add("Demonic_Whip", New DemWhip)                 '217
+        internal_inventory.Add("Archdemon_Whip", New ArchDemWhip)           '218
 
         armor = {New Naked,
                  Me.item(5), Me.item(7), Me.item(8), Me.item(10),
@@ -266,7 +268,8 @@
                    Me.item(159), Me.item(160), Me.item(162), Me.item(163),
                    Me.item(165), Me.item(167), Me.item(171), Me.item(172),
                    Me.item(173), Me.item(179), Me.item(203), Me.item(204),
-                   Me.item(209), Me.item(212), Me.item(213)}
+                   Me.item(209), Me.item(212), Me.item(213), Me.item(217),
+                   Me.item(218)}
 
         useable = {Me.item(0), Me.item(3), Me.item(4),
                    Me.item(65), Me.item(15), Me.item(36), Me.item(37),

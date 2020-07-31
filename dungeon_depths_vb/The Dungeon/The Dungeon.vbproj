@@ -118,7 +118,12 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="DDDateTime.vb" />
+    <Compile Include="Entities\NPC\Hostile\Monsters\Succubus\EImp.vb" />
+    <Compile Include="Entities\NPC\Hostile\Monsters\Succubus\ESuccubus.vb" />
     <Compile Include="Entities\Player\Specials\DrainSoul.vb" />
+    <Compile Include="Items\Armor\FullBodyUpdated\STBodysuit.vb" />
+    <Compile Include="Items\Weapons\Whips\DemWhip.vb" />
+    <Compile Include="Items\Weapons\Whips\ArchDemWhip.vb" />
     <Compile Include="TFList.vb" />
     <Compile Include="DDUtils.vb" />
     <Compile Include="Entities\Entity.vb" />
@@ -395,7 +400,6 @@
     <Compile Include="Items\Armor\VSkimpyClothes.vb" />
     <Compile Include="Items\Armor\FullBodyUpdated\KitsuneRobe.vb" />
     <Compile Include="Items\Armor\WarlockRobe.vb" />
-    <Compile Include="Items\Armor\STBodysuit.vb" />
     <Compile Include="Items\Armor\SAJumpsuit.vb" />
     <Compile Include="Items\Armor\FullBodyUpdated\BarbArmor.vb" />
     <Compile Include="Items\Armor\FullBodyUpdated\BunnySuitA.vb" />

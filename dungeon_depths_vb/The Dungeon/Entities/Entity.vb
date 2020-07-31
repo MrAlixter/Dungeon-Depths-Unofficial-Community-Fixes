@@ -4,6 +4,7 @@
     Public name, sName As String
     Public health As Double = 1.0 'represents a percentage of maxhealth
     Public maxHealth, mana, maxMana, attack, defense, will, speed, gold, lust As Integer
+    Public level As Integer
     Public hBuff As Integer = 0     'buffs that apply across forms (from charms, etc)
     Public mBuff As Integer = 0
     Public aBuff As Integer = 0

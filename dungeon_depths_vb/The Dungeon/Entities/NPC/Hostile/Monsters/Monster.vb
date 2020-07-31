@@ -85,7 +85,7 @@
                 Return New EnthDem
             Case 10
                 Dim m = New Monster
-                m.name = "stamina"
+                m.name = "Hunger"
                 Return m
             Case 11
                 Return New MarissaAS
@@ -99,11 +99,64 @@
                 Dim m = New Monster
                 m.name = "Fire"
                 Return m
+            Case 16
+                Return New ESuccubus
+            Case 17
+                Return New EImp
         End Select
 
         Return New Monster()
     End Function
+    Shared Function floorMonsterTier(ByVal floorInd As Integer) As Integer()
+        Dim tier = {0, 1, 2, 6}
 
+        Select Case floorInd
+            Case 1
+                tier = {0, 1, 2, 6}
+            Case 2
+                tier = {0, 1, 2, 4, 6}
+            Case 3
+                tier = {0, 1, 2, 4, 6, 7}
+            Case 4
+                tier = {0, 1, 2, 3, 4, 6, 7}
+            Case Else
+                tier = {0, 1, 2, 3, 4, 6, 7, 12, 12, 14}
+        End Select
+
+        If Game.player1.getLust < 25 Then
+            DDUtils.append(tier, 17)
+            DDUtils.append(tier, 17)
+            DDUtils.append(tier, 17)
+
+            DDUtils.append(tier, 16)
+        ElseIf Game.player1.getLust < 50 Then
+            DDUtils.append(tier, 17)
+            DDUtils.append(tier, 17)
+            DDUtils.append(tier, 17)
+
+            DDUtils.append(tier, 16)
+            DDUtils.append(tier, 16)
+        ElseIf Game.player1.getLust < 75 Then
+            DDUtils.append(tier, 17)
+            DDUtils.append(tier, 17)
+            DDUtils.append(tier, 17)
+            DDUtils.append(tier, 17)
+
+            DDUtils.append(tier, 16)
+            DDUtils.append(tier, 16)
+            DDUtils.append(tier, 16)
+        Else
+            DDUtils.append(tier, 17)
+            DDUtils.append(tier, 17)
+            DDUtils.append(tier, 17)
+            DDUtils.append(tier, 17)
+
+            DDUtils.append(tier, 16)
+            DDUtils.append(tier, 16)
+        End If
+
+        Return tier
+    End Function
     Shared Sub createMimic(ByRef contents As Inventory)
         Dim m As Monster = monsterFactory(5)
         m.inv.merge(contents)

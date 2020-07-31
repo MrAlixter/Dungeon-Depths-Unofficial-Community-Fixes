@@ -50,11 +50,6 @@ Public Class Game
     Public titleList = New List(Of String)
     'other misc form1 instance variables
     Dim selectedItem As Item = New Item()   'the item Fhilighted in the inventory (NOT SAVED)
-    Dim monstierTier1() As Integer = {0, 1, 2, 6}
-    Dim monstierTier2() As Integer = {0, 1, 2, 4, 6}
-    Dim monstierTier3() As Integer = {0, 1, 2, 4, 6, 7}
-    Dim monstierTier4() As Integer = {0, 1, 2, 3, 4, 6, 7}
-    Dim monstierTier6() As Integer = {0, 1, 2, 3, 4, 6, 7, 12, 12, 14}
     Public turn As Integer = 0  '(NOT SAVED)
     Public version As Double = 0.92     'the save file version
 
@@ -1316,19 +1311,7 @@ Public Class Game
         Randomize()
         If eClock > 0 Then eClock -= 1
         If combatmode = True Or npcmode = True Or eClock <> 0 Or Not player1.canMoveFlag Then Exit Sub
-        Dim currTier As Integer() = monstierTier1
-        Select Case mDun.numCurrFloor
-            Case 1
-                currTier = monstierTier1
-            Case 2
-                currTier = monstierTier2
-            Case 3
-                currTier = monstierTier3
-            Case 4
-                currTier = monstierTier4
-            Case Else
-                currTier = monstierTier6
-        End Select
+        Dim currTier As Integer() = Monster.floorMonsterTier(mDun.numCurrFloor)
 
         Dim rand As Integer = CInt(Int(Rnd() * 1000))
         Dim r As Integer = Int(Rnd() * (UBound(currTier) + 1))

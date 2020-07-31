@@ -59,7 +59,7 @@ Public Class Player
     Public pClass As pClass = New Classless()
     Public pForm As pForm = New Human()
     Dim turnCt As Integer = 0
-    Public level, xp, nextLevelXp As Integer
+    Public xp, nextLevelXp As Integer
 
     Public breastSize As Integer = -1
     Public dickSize As Integer = -1
@@ -2079,5 +2079,19 @@ Public Class Player
 
         pClass.onLVLUp(level, Me)
         pForm.onLVLUp(level, Me)
+    End Sub
+    Public Sub deLevel(ByVal lostLevels As Integer)
+        If level - lostLevels < 1 Then lostLevels = level - 1
+
+        For i = level To level - lostLevels Step -1
+            nextLevelXp /= level
+            maxHealth -= 20
+            level -= 1
+        Next
+
+        If xp > nextLevelXp / 2 Then xp = nextLevelXp / 2
+
+        pClass.deLVL(lostLevels, Me)
+        pForm.deLVL(lostLevels, Me)
     End Sub
 End Class

@@ -20,6 +20,10 @@
 
         Return out
     End Function
+    Public Shared Sub append(ByRef a As Integer(), ByVal i As Integer)
+        Array.Resize(a, a.Length + 1)
+        a(a.Length - 1) = i
+    End Sub
     Public Shared Function copyDictionary(ByVal dic As Dictionary(Of perk, Integer)) As Dictionary(Of perk, Integer)
         Return dic
     End Function
