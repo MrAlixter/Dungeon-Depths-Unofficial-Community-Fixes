@@ -988,6 +988,9 @@ Public Class Player
             ElseIf source.getSName.Equals("Medusa, Gorgon of Myth") Then
                 DeathEffects.medusaDeath()
                 Exit Sub
+            ElseIf source.GetType() Is GetType(ESuccubus) Or source.GetType.IsSubclassOf(GetType(ESuccubus)) Then
+                DeathEffects.succubusDeath()
+                Exit Sub
             ElseIf source.getName.Equals("stamina") Then
                 Game.pushLblEvent("You starve to death!")
             ElseIf source.getName.Equals("Fire") Then

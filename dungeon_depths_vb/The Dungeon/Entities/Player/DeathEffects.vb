@@ -135,6 +135,13 @@
         Game.pushLblEvent(out, AddressOf p.update)
     End Sub
 
+    Shared Sub succubusDeath()
+        Game.pushLstLog("You black out...")
+
+        Dim p = Game.player1
+        p.lust = 0
+    End Sub
+
     Shared Sub mimicDeath()
         Dim p As Player = Game.player1
         p.currTarget.despawn("p-death")
@@ -181,7 +188,7 @@
     End Sub
     Shared Sub oEmpDeathPt2()
         Dim p As Player = Game.player1
-        p.ongoingTFs.Add(New RandoTF())
+        p.ongoingTFs.add(New RandoTF())
         p.sState.save(p)
         p.pState.save(p)
         Game.pushLblEvent("You awaken once again, in another body, in another part of the dungeon.")
