@@ -2,7 +2,7 @@
     Inherits Item
 
     Sub New()
-        MyBase.setName("defense_Charm​")
+        MyBase.setName("Defense_Charm​")
         MyBase.setDesc("A charm that slightly boosts your defense.  There is a subtle red glow surrounding this charm.")
         id = 174
         tier = 3

@@ -103,6 +103,8 @@
                 Return New ESuccubus
             Case 17
                 Return New EImp
+            Case 18
+                Return New ESuccPrincess
         End Select
 
         Return New Monster()
@@ -136,6 +138,8 @@
 
             DDUtils.append(tier, 16)
             DDUtils.append(tier, 16)
+
+            DDUtils.append(tier, 18)
         ElseIf Game.player1.getLust < 75 Then
             DDUtils.append(tier, 17)
             DDUtils.append(tier, 17)
@@ -145,6 +149,9 @@
             DDUtils.append(tier, 16)
             DDUtils.append(tier, 16)
             DDUtils.append(tier, 16)
+
+            DDUtils.append(tier, 18)
+            DDUtils.append(tier, 18)
         Else
             DDUtils.append(tier, 17)
             DDUtils.append(tier, 17)
@@ -153,6 +160,11 @@
 
             DDUtils.append(tier, 16)
             DDUtils.append(tier, 16)
+            DDUtils.append(tier, 16)
+
+            DDUtils.append(tier, 18)
+            DDUtils.append(tier, 18)
+            DDUtils.append(tier, 18)
         End If
 
         Return tier

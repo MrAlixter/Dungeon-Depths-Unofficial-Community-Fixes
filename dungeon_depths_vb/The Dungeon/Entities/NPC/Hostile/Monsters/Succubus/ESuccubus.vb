@@ -9,7 +9,7 @@
         maxHealth = 66
         attack = 33
         defense = 66
-        speed = 6
+        speed = 33
 
         levelDrainThres = 2
         lustRaiseThres = 33

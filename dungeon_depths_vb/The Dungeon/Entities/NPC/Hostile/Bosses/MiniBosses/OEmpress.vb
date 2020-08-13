@@ -8,7 +8,7 @@
         defense = (70)
         speed = (1)
         setInventory({3, 58, 65})
-        inv.setCount("defense_Charm", 1 + CInt(Rnd() * 2))
+        inv.setCount("Defense_Charm", 1 + CInt(Rnd() * 2))
         inv.setCount("Omni_Charm", 1)
         inv.setCount("Gold", 5000)
 

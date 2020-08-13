@@ -63,7 +63,7 @@
         internal_inventory.Add("Health_Charm", New HealthCharm())           '48
         internal_inventory.Add("Mana_Charm", New ManaCharm())               '49
         internal_inventory.Add("Attack_Charm", New AttackCharm())           '50
-        internal_inventory.Add("defense_Charm", New defenseCharm())         '51
+        internal_inventory.Add("Defense_Charm", New defenseCharm())         '51
         internal_inventory.Add("Speed_Charm", New SpeedCharm())             '52
         internal_inventory.Add("Key", New Key())                            '53
         internal_inventory.Add("Ropes", New Ropes())                        '54
@@ -191,7 +191,7 @@
         internal_inventory.Add("Magical_Girl_Wand​", New MagSlutWand())      '171
         internal_inventory.Add("Flaming_Sword", New FlamingSword())         '172
         internal_inventory.Add("Signature_Whip", New SigWhip())             '173
-        internal_inventory.Add("defense_Charm​", New CdefenseCharm())        '174
+        internal_inventory.Add("Defense_Charm​", New CdefenseCharm())        '174
         internal_inventory.Add("Cozy_Sweater", New CozySweater())           '175
         internal_inventory.Add("Scale_Armor", New ScaleArmor())             '176
         internal_inventory.Add("Scale_Bikini", New ScaleBikini())           '177
@@ -237,6 +237,7 @@
         internal_inventory.Add("Mag._Girl_Outfit_(C)", New MagGirlOutfitC)  '216
         internal_inventory.Add("Demonic_Whip", New DemWhip)                 '217
         internal_inventory.Add("Archdemon_Whip", New ArchDemWhip)           '218
+        internal_inventory.Add("Fox_Ears", New FoxEars)                     '219
 
         armor = {New Naked,
                  Me.item(5), Me.item(7), Me.item(8), Me.item(10),
@@ -282,7 +283,8 @@
                    Me.item(153), Me.item(154), Me.item(155), Me.item(156),
                    Me.item(157), Me.item(158), Me.item(162), Me.item(174),
                    Me.item(182), Me.item(195), Me.item(200), Me.item(205),
-                   Me.item(206), Me.item(207), Me.item(214), Me.item(215)}
+                   Me.item(206), Me.item(207), Me.item(214), Me.item(215),
+                   Me.item(219)}
 
         food = {Me.item(1), Me.item(30), Me.item(31), Me.item(32), Me.item(33),
                 Me.item(34), Me.item(35), Me.item(44), Me.item(90),

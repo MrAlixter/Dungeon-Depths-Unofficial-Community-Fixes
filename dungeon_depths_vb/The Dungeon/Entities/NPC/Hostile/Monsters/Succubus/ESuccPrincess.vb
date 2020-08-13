@@ -5,18 +5,18 @@
     Protected levelsToDrain, lustToIncrease As Integer
 
     Sub New()
-        name = "Succubus"
-        maxHealth = 66
-        attack = 33
+        name = "Succubus Princess"
+        maxHealth = 266
+        attack = 99
         defense = 66
-        speed = 6
+        speed = 66
 
-        levelDrainThres = 2
-        lustRaiseThres = 33
-        levelsToDrain = 1
+        levelDrainThres = 1
+        lustRaiseThres = 66
+        levelsToDrain = 2
         lustToIncrease = Int(Rnd() * 6) + 6
 
-        setInventory({74, 194, 217})
+        setInventory({25, 74, 168, 194, 182, 205, 214, 218})
         setupMonsterOnSpawn()
     End Sub
 
