@@ -237,6 +237,7 @@
         internal_inventory.Add("Mag._Girl_Outfit_(C)", New MagGirlOutfitC)  '216
         internal_inventory.Add("Demonic_Whip", New DemWhip)                 '217
         internal_inventory.Add("Archdemon_Whip", New ArchDemWhip)           '218
+        internal_inventory.Add("Skimpy_Clothes_(D)", New SkimpyClothesD)    '219
 
         armor = {New Naked,
                  Me.item(5), Me.item(7), Me.item(8), Me.item(10),
@@ -256,7 +257,8 @@
                  Me.item(185), Me.item(186), Me.item(187), Me.item(188),
                  Me.item(189), Me.item(190), Me.item(191), Me.item(192),
                  Me.item(196), Me.item(199), Me.item(201), Me.item(202),
-                 Me.item(208), Me.item(210), Me.item(211), Me.item(216)}
+                 Me.item(208), Me.item(210), Me.item(211), Me.item(216),
+                 Me.item(219)}
 
         weapons = {New BareFists(),
                    Me.item(6), Me.item(9), Me.item(11), Me.item(21),

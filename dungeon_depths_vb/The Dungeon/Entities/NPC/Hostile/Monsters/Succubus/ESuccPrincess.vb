@@ -1,11 +1,7 @@
-﻿Public Class ESuccubus
-    Inherits Monster
-
-    Protected levelDrainThres, lustRaiseThres As Integer
-    Protected levelsToDrain, lustToIncrease As Integer
-
+﻿Public Class ESuccPrincess
+    Inherits ESuccubus
     Sub New()
-        name = "Succubus"
+        name = "Succubus Princess"
         maxHealth = 66
         attack = 33
         defense = 66
