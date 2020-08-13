@@ -1,11 +1,8 @@
-﻿Public Class ESuccubus
-    Inherits Monster
-
-    Protected levelDrainThres, lustRaiseThres As Integer
-    Protected levelsToDrain, lustToIncrease As Integer
-
+﻿Public Class ESuccPrincess
+    Inherits ESuccubus
     Sub New()
         name = "Succubus Princess"
+
         maxHealth = 266
         attack = 99
         defense = 66
@@ -20,19 +17,7 @@
         setupMonsterOnSpawn()
     End Sub
 
-    Public Overrides Sub attackCMD(ByRef target As Entity)
-        If target.level > levelDrainThres Then
-            If target.lust < lustRaiseThres And Int(Rnd() * 2) Then
-                charm(target)
-            Else
-                sapLevel(target)
-            End If
-        Else
-            MyBase.attackCMD(target)
-        End If
-    End Sub
-
-    Public Overridable Sub sapLevel(ByRef t As Entity)
+    Public Overrides Sub sapLevel(ByRef t As Entity)
         If t.GetType Is GetType(Player) Then sapPlayer(CType(t, Player)) Else sapEntity(t)
 
         health *= 1.2
@@ -45,7 +30,7 @@
         Game.pushLstLog("The " & getName() & " used Drain Soul!  1 level drained!")
     End Sub
 
-    Public Overridable Sub charm(ByRef t As Entity)
+    Public Overrides Sub charm(ByRef t As Entity)
         If Int(Rnd() * t.will) < 15 Then
             t.lust += lustRaiseThres
             Game.pushLblEvent("The " & getName() & " used Charm!")
@@ -56,10 +41,10 @@
         End If
     End Sub
 
-    Public Overridable Sub sapPlayer(ByRef p As Player)
+    Public Overrides Sub sapPlayer(ByRef p As Player)
         p.deLevel(levelsToDrain)
     End Sub
-    Public Overridable Sub sapEntity(ByRef e As Entity)
+    Public Overrides Sub sapEntity(ByRef e As Entity)
         e.maxHealth *= 0.8
         e.attack *= 0.8
         e.defense *= 0.8
