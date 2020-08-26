@@ -360,6 +360,36 @@
         End If
         Return updatePortrait
     End Function
+    Shared Sub curseOfBimbo(ByRef p As Player)
+        If p.getLust = 0 Then
+            If p.perks(perk.succubuscurse) > -1 Then
+                p.perks(perk.succubuscurse) = -1
+                p.revertToPState()
+            End If
+        ElseIf p.getLust < 33 And p.getLust > 0 Then
+            If p.perks(perk.succubuscurse) <= 1 And p.perks(perk.succubuscurse) > -1 Then
+                p.dembimState1.save(p)
+                p.perks(perk.succubuscurse) += 1
+                DemBimboTF.tfPlayer(1, p)
+            ElseIf p.perks(perk.succubuscurse) > 1 Then
+                p.revertToState(p.dembimState1)
+                p.perks(perk.succubuscurse) -= 1
+            End If
+        ElseIf p.getLust < 66 Then
+            If p.perks(perk.succubuscurse) <= 2 And p.perks(perk.succubuscurse) > -1 Then
+                p.dembimState2.save(p)
+                p.perks(perk.succubuscurse) += 1
+                DemBimboTF.tfPlayer(2, p)
+            ElseIf p.perks(perk.succubuscurse) > 2 Then
+                p.revertToState(p.dembimState2)
+                p.perks(perk.succubuscurse) -= 1
+            End If
+        ElseIf p.getLust < 100 Then
+            If p.perks(perk.succubuscurse) = 3 Then
+                DemBimboTF.tfPlayer(3, p)
+            End If
+        End If
+    End Sub
     Private Shared Sub randomPoly()
         Randomize(Game.currFloor.floorCode.GetHashCode)
 

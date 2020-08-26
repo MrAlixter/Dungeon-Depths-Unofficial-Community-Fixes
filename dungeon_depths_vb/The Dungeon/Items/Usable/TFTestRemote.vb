@@ -14,7 +14,7 @@
     End Sub
     Public Overrides Sub use(ByRef p As Player)
         Dim form = InputBox("TF to... [Half-Gorgon, Gynoid, Amazon, Mindless, Rando, Half-Broodmother, Broodmother, " &
-                            "Minotaur Cow, Dragon, Succubus, Slime, Bimbo, Cake, Blob, Horse, Oni, Alraune, Minotaur Bull]:")
+                            "Minotaur Cow, Dragon, Succubus, Slime, Bimbo, Cake, Blob, Horse, Oni, Alraune, Minotaur Bull, Targax]:")
 
         Dim tfs As Dictionary(Of String, Transformation) = New Dictionary(Of String, Transformation)
         Dim tf2s As Dictionary(Of String, Action) = New Dictionary(Of String, Action)
@@ -39,6 +39,8 @@
         tf2s.Add("Cake", AddressOf New TTCCBF().step1)
         tf2s.Add("Alraune", AddressOf New AlrauneTF().fullTF)
         tf2s.Add("Goth GF", AddressOf New GothGFTF().step1)
+        tf2s.Add("Targax", AddressOf TargaxTF.instantTF)
+
 
 
         If Not tfs.ContainsKey(form) And Not tf2s.ContainsKey(form) Then Exit Sub

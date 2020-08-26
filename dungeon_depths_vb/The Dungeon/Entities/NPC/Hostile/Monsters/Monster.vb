@@ -125,7 +125,7 @@
                 tier = {0, 1, 2, 3, 4, 6, 7, 12, 12, 14}
         End Select
 
-        If Game.player1.getLust < 25 Then
+        If Game.player1.getLust < 25 And Game.player1.getLust > 0 Then
             DDUtils.append(tier, 17)
             DDUtils.append(tier, 17)
             DDUtils.append(tier, 17)

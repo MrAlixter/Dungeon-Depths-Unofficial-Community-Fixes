@@ -1,5 +1,5 @@
 ﻿Public Enum perk
-    stamina          '0
+    stamina         '0
     bimbotf         '1
     slutcurse       '2
     chickentf       '3
@@ -47,6 +47,7 @@
     faecurse        '45
     isfae           '46
     meetfae1        '47
+    succubuscurse   '48
 End Enum
 
 Public Class Player
@@ -90,7 +91,9 @@ Public Class Player
     Public goddState As State = New State()
     Public maidState As State = New State()
     Public prinState As State = New State()
-    Dim formStates = {goddState, bimbState, magGState, maidState, prinState}
+    Public dembimState1 As State = New State()
+    Public dembimState2 As State = New State()
+    Dim formStates = {goddState, bimbState, magGState, maidState, prinState, dembimState1, dembimState2}
 
     Public solFlag = False
     Public prefForm As preferedForm
@@ -675,120 +678,28 @@ Public Class Player
     End Sub
 
     '|TRANSFORMATION METHODS|
-    Public Sub revertToSState()
+    Public Sub revertToState(ByRef s As State)
         Dim tHth As Integer = health + hBuff
         Dim tMna As Integer = mana + mBuff
         Dim tHun As Integer = stamina
         Dim tGold As Integer = gold
         Dim tEweap As Weapon = equippedWeapon
         Dim tEarm As Armor = equippedArmor
-        If tEweap.getName = "Magical_Girl_Wand" Or tEweap.getName = "Magical_Girl_Wand​" Then tEweap = New BareFists()
-        If tEarm.getName = "Magical_Girl_Outfit" Or tEarm.getName = "Magical_Slut_Outfit" Then tEarm = New Naked()
-
-        sState.load(Me, False)
-
-        mana = tMna
-        gold = tGold
-        equippedArmor = tEarm
-        equippedWeapon = tEweap
-        perks(perk.slutcurse) = -1
-        currState.save(Me)
-        If Transformation.canBeTFed(Me) Then
-            pState.save(Me)
-        End If
-
-        ongoingTFs.reset()
-
-        Do While knownSpells.Contains("Heartblast Starcannon")
-            knownSpells.Remove("Heartblast Starcannon")
-        Loop
-
-        If health > 1 Then health = 1
-        If mana > maxMana + mBuff Then mana = maxMana + mBuff
-
-        Game.pushLblEvent("With a poof of smoke, you return to your original self!")
-        Game.pImage = pImage
-        Game.lblEvent.ForeColor = TextColor
-        Game.lblNameTitle.ForeColor = TextColor
-
-        drawPort()
-        setPImage()
-        UIupdate()
-    End Sub
-    Public Function revertToSState(ByVal numtorevert As Integer) As String
-        Randomize()
-        Dim loopct = 0
-        Dim attributes As String() = {"Rear Hair", "Body", "Clothing", "Face", "Rear Hair", "Ears",
-                                      "Nose", "Mouth", "Eyes", "Eyebrows", "Facial Mark", "Glasses",
-                                      "Cloak", "Accessories", "Front Hair", "Hat", "Hair Color", "Skin Color"}
-        Dim revertedAttributes As List(Of String) = New List(Of String)
-
-
-        While numtorevert > 0
-            If loopct > 100 Then
-                revertToSState()
-                Return ""
-                Exit While
-            End If
-
-            Dim layer = Int(Rnd() * 18) + 1
-
-            If (layer <= 16 AndAlso (prt.iArrInd(layer).Item1 <> sState.iArrInd(layer).Item1 And
-                               prt.iArrInd(layer).Item2 <> sState.iArrInd(layer).Item2 And
-                               prt.iArrInd(layer).Item2 <> sState.iArrInd(layer).Item3)) Or
-                           (layer = 17 And prt.haircolor <> sState.getHairColor) Or
-                            (layer = 18 And prt.skincolor <> sState.getSkinColor) Then
-
-                If layer = 18 Then
-                    prt.skincolor = sState.getSkinColor
-                ElseIf layer = 17 Then
-                    prt.haircolor = sState.getHairColor
-                ElseIf layer = 1 Or layer = 5 Then
-                    prt.setIAInd(pInd.rearhair, sState.iArrInd(pInd.rearhair).Item1, sState.iArrInd(pInd.rearhair).Item2, sState.iArrInd(pInd.rearhair).Item3)
-                    prt.setIAInd(pInd.midhair, sState.iArrInd(pInd.midhair).Item1, sState.iArrInd(pInd.midhair).Item2, sState.iArrInd(pInd.midhair).Item3)
-                ElseIf layer = 3 Then
-                    Dim tEarm As Armor = sState.equippedArmor
-                    prt.setIAInd(layer, sState.iArrInd(layer).Item1, sState.iArrInd(layer).Item2, sState.iArrInd(layer).Item3)
-                    If Not tEarm.getName.Equals("Magical_Girl_Outfit") Then equippedArmor = tEarm
-                Else
-                    prt.setIAInd(layer, sState.iArrInd(layer).Item1, sState.iArrInd(layer).Item2, sState.iArrInd(layer).Item3)
-                End If
-                numtorevert -= 1
-                layer -= 1
-                If Not revertedAttributes.Contains(attributes(layer)) Then revertedAttributes.Add(attributes(layer))
-            End If
-            loopct += 1
-        End While
-        drawPort()
-
-        Dim out = revertedAttributes.Count & " changes were reverted." & vbCrLf & "~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~"
-        For Each atr In revertedAttributes
-            out += vbCrLf & atr & " reverted."
-        Next
-        If revertedAttributes.Count > 0 Then out += vbCrLf & "~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~"
-        Return out
-    End Function
-    Public Sub revertToPState()
-        Dim tHth As Integer = health + hBuff
-        Dim tMna As Integer = mana + mBuff
-        Dim tHun As Integer = stamina
-        Dim tGold As Integer = gold
-        Dim tEweap As Weapon = equippedWeapon
-        Dim tEarm As Armor = equippedArmor
+        Dim tAcc As Accessory = equippedAcce
 
         Dim tpClassName As String = pClass.name
         Dim tpFormName As String = pForm.name
         Dim tpClassRP As String = pClass.revertPassage
         Dim tpFormRP As String = pClass.revertPassage
 
-        If tEweap.getName = "Magical_Girl_Wand" Then tEweap = New BareFists()
-
-        pState.load(Me, False)
+        s.load(Me, False)
 
         mana = tMna
         gold = tGold
-        If Not tEarm.getName.Equals("Magical_Girl_Outfit") Then equippedArmor = tEarm
+        equippedArmor = tEarm
         equippedWeapon = tEweap
+        equippedAcce = tAcc
+
         currState.save(Me)
         If Transformation.canBeTFed(Me) Then
             pState.save(Me)
@@ -823,43 +734,77 @@ Public Class Player
         setPImage()
         UIupdate()
     End Sub
-    Public Function revertToPState(ByVal numtorevert As Integer) As String
+    Public Function revertToState(ByVal numtorevert As Integer, ByRef s As State) As String
         Randomize()
         Dim loopct = 0
-        Dim attributes As String() = {"Rear Hair", "Body", "Clothing", "Face", "Rear Hair", "Ears",
-                                      "Nose", "Mouth", "Eyes", "Eyebrows", "Facial Mark", "Glasses",
-                                      "Cloak", "Accessories", "Front Hair", "Hat", "Hair Color", "Skin Color"}
+        Dim attributes As String() = {"Tail", "Wings", "Rear Hair", "Hair Accessory", "Clothes",
+                                      "Face", "Mid. Hair", "Horns", "Ears", "Nose", "Mouth", "Eyes",
+                                      "Eyebrows", "Facemark", "Glasses", "Cloak", "Front Hair", "Hat",
+                                      "Hair Color", "Skin Color"}
+        DDUtils.shuffle(attributes)
+
         Dim revertedAttributes As List(Of String) = New List(Of String)
 
 
         While numtorevert > 0
             If loopct > 100 Then
-                revertToPState()
+                revertToState(s)
                 Return ""
                 Exit While
             End If
 
-            Dim layer = Int(Rnd() * 18) + 1
-            If (layer <= 16 AndAlso (prt.iArrInd(layer).Item1 <> pState.iArrInd(layer).Item1 And
-                               prt.iArrInd(layer).Item2 <> pState.iArrInd(layer).Item2 And
-                               prt.iArrInd(layer).Item2 <> pState.iArrInd(layer).Item3)) Or
-                           (layer = 17 And prt.haircolor <> pState.getHairColor) Or
-                            (layer = 18 And prt.skincolor <> pState.getSkinColor) Then
+            Dim attribute = attributes(Int(Rnd() * attributes.Length))
+            Dim layer = -1
 
-                If layer = 18 Then
-                    prt.skincolor = pState.getSkinColor
-                ElseIf layer = 17 Then
-                    prt.haircolor = pState.getHairColor
-                ElseIf layer = 1 Or layer = 5 Then
-                    prt.setIAInd(pInd.rearhair, pState.iArrInd(pInd.rearhair).Item1, pState.iArrInd(pInd.rearhair).Item2, pState.iArrInd(pInd.rearhair).Item3)
-                    prt.setIAInd(pInd.midhair, pState.iArrInd(pInd.midhair).Item1, pState.iArrInd(pInd.midhair).Item2, pState.iArrInd(pInd.midhair).Item3)
-                ElseIf layer = 3 Then
-                    Dim tEarm As Armor = pState.equippedArmor
-                    prt.setIAInd(layer, pState.iArrInd(layer).Item1, pState.iArrInd(layer).Item2, pState.iArrInd(layer).Item3)
-                    If Not tEarm.getName.Equals("Magical_Girl_Outfit") Then equippedArmor = tEarm
-                Else
-                    prt.setIAInd(layer, pState.iArrInd(layer).Item1, pState.iArrInd(layer).Item2, pState.iArrInd(layer).Item3)
-                End If
+            Select Case attribute
+                Case "Tail"
+                    layer = pInd.tail
+                Case "Wings"
+                    layer = pInd.wings
+                Case "Rear Hair" Or "Mid. Hair"
+                    prt.setIAInd(pInd.rearhair, s.iArrInd(pInd.rearhair).Item1, s.iArrInd(pInd.rearhair).Item2, s.iArrInd(pInd.rearhair).Item3)
+                    prt.setIAInd(pInd.midhair, s.iArrInd(pInd.midhair).Item1, s.iArrInd(pInd.midhair).Item2, s.iArrInd(pInd.midhair).Item3)
+                Case "Hair Accessory"
+                    layer = pInd.hairacc
+                Case "Clothes"
+                    Dim tEarm As Armor = s.equippedArmor
+                    equippedArmor = tEarm
+                Case "Face"
+                    layer = pInd.face
+                Case "Horns"
+                    layer = pInd.horns
+                Case "Ears"
+                    layer = pInd.ears
+                Case "Nose"
+                    layer = pInd.nose
+                Case "Mouth"
+                    layer = pInd.mouth
+                Case "Eyes"
+                    layer = pInd.eyes
+                Case "Eyebrows"
+                    layer = pInd.eyebrows
+                Case "Facemark"
+                    layer = pInd.facemark
+                Case "Glasses"
+                    layer = pInd.glasses
+                Case "Cloak"
+                    layer = pInd.cloak
+                Case "Front Hair"
+                    layer = pInd.fronthair
+                Case "Hat"
+                    layer = pInd.hat
+                Case "Hair Color"
+                    prt.haircolor = sState.getHairColor
+                Case "Skin Color"
+                    prt.skincolor = sState.getSkinColor
+            End Select
+
+            If (layer <> -1 AndAlso (prt.iArrInd(layer).Item1 <> sState.iArrInd(layer).Item1 And
+                                     prt.iArrInd(layer).Item2 <> sState.iArrInd(layer).Item2 And
+                                     prt.iArrInd(layer).Item2 <> sState.iArrInd(layer).Item3)) Then
+
+                prt.setIAInd(layer, s.iArrInd(layer).Item1, s.iArrInd(layer).Item2, s.iArrInd(layer).Item3)
+
                 numtorevert -= 1
                 layer -= 1
                 If Not revertedAttributes.Contains(attributes(layer)) Then revertedAttributes.Add(attributes(layer))
@@ -874,6 +819,22 @@ Public Class Player
         Next
         If revertedAttributes.Count > 0 Then out += vbCrLf & "~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~"
         Return out
+    End Function
+    Public Sub revertToSState()
+        perks(perk.slutcurse) = -1
+
+        revertToState(sState)
+
+        Game.pushLblEvent("With a poof of smoke, you return to your original self!")
+    End Sub
+    Public Function revertToSState(ByVal numtorevert As Integer) As String
+        Return revertToState(numtorevert, sState)
+    End Function
+    Public Sub revertToPState()
+        revertToState(pState)
+    End Sub
+    Public Function revertToPState(ByVal numtorevert As Integer) As String
+        Return revertToState(numtorevert, pState)
     End Function
     Public Sub petrify(ByVal c As Color, ByVal dur As Integer)
         If pForm.name.Equals("Dragon") Then revertToPState()
@@ -1191,6 +1152,11 @@ Public Class Player
         If perks(perk.coblind) > -1 And Not perks(perk.blind) > -1 Then
             perks(perk.blind) = 1
         End If
+        'succubus curse
+        If perks(perk.succubuscurse) > -1 Then
+            PerkEffects.curseOfBimbo(Me)
+        End If
+
 
         description = CStr(name & " is a " & sex & " " & pForm.name & " " & pClass.name)
         Return needsToUpdatePortrait

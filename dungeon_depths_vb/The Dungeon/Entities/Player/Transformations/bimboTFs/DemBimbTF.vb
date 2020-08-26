@@ -17,9 +17,9 @@
 
     'Hair Color Shift
     Overrides Sub hairColorShift()
-        Game.player1.prt.haircolor = Game.cShift(Game.player1.prt.haircolor, bimbop, 25)
+        Game.player1.prt.haircolor = Game.cShift(Game.player1.prt.haircolor, bimbop, 125)
         If Not Game.player1.getHairColor.Equals(bimbop) Then currStep -= 1
-        Game.pushLblEvent("Your hair becomes slightly lighter, brightening towards a pastel pink.")
+        Game.pushLblEvent("Your hair rapidly becomes lighter, brightening towards a pastel pink.")
     End Sub
 
     'Step 1
@@ -52,4 +52,25 @@
     Public Overrides Function hasBimboHair(p As Player) As Boolean
         Return p.prt.haircolor.Equals(bimbop)
     End Function
+
+    Public Overrides Function getNextStep(stage As Integer) As Action
+        Select Case stage
+            Case 1
+                Return AddressOf hairColorShift
+            Case 2
+                Return AddressOf step1
+            Case 3
+                Return AddressOf step2
+            Case Else
+                Return AddressOf stopTF
+        End Select
+    End Function
+
+    Shared Sub tfPlayer(ByVal stepNum As Integer, ByRef p As Player)
+        Dim bTF As DemBimboTF = New DemBimboTF(3, 0, 0, False)
+        bTF.nextStep = bTF.getNextStep(stepNum)
+
+        p.ongoingTFs.add(bTF)
+        p.update()
+    End Sub
 End Class

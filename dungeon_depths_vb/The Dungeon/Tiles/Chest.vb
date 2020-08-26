@@ -4,6 +4,8 @@
     Public tier1 = New List(Of Item)
     Public tier2 = New List(Of Item)
     Public tier3 = New List(Of Item)
+    Public tier4 = New List(Of Item)
+    Public tier5 = New List(Of Item)
     Public tiers() As List(Of Item) = {Nothing, tier1, tier2, tier3}
     '|CONSTRUCTORS|
     Sub New()
@@ -60,15 +62,19 @@
         Randomize(code.GetHashCode)
         Dim numC As Integer = CInt(Int(Rnd() * Game.chestRichnessRange) + Game.chestRichnessBase)
         For i = 0 To numC
-            Dim r As Integer = Int(Rnd() * 10)
+            Dim r As Integer = Int(Rnd() * 17)
             Dim itemTier As Integer = 1
             Select Case r
-                Case 0, 1, 2, 3, 4
-                    itemTier = 1
-                Case 9
+                Case 19
+                    itemTier = 5
+                Case 18, 17
+                    itemTier = 4
+                Case 16, 15
                     itemTier = 3
-                Case Else
+                Case 14, 13, 12, 11, 10, 9
                     itemTier = 2
+                Case Else
+                    itemTier = 1
             End Select
             If itemTier < 1 Or itemTier > tiers.Length - 1 Then
                 MessageBox.Show("Chest @ (" & CStr(x) & ", " & CStr(y) & ") tried making an item out of tier range.\nDefaulting to tier 1.")
@@ -93,6 +99,8 @@
         toReturn.tier1 = Me.tier1
         toReturn.tier2 = Me.tier2
         toReturn.tier3 = Me.tier3
+        toReturn.tier2 = Me.tier4
+        toReturn.tier3 = Me.tier5
         toReturn.tiers = Me.tiers
         toReturn.contents = New Inventory(False)
         Return toReturn

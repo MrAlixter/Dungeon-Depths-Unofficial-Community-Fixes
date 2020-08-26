@@ -5,7 +5,7 @@
         MyBase.setName("Health_Charm")
         MyBase.setDesc("A charm that slightly boosts your health.")
         id = 48
-        tier = 2
+        tier = 3
         MyBase.setUsable(True)
         MyBase.count = 0
         MyBase.value = 750

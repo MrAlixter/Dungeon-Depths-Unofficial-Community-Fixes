@@ -21,14 +21,14 @@
     End Sub
 
     Public Overrides Sub attackCMD(ByRef target As Entity)
-        If target.level > levelDrainThres Then
-            If target.lust < lustRaiseThres And Int(Rnd() * 2) Then
-                charm(target)
-            Else
-                sapLevel(target)
-            End If
+        If target.lust < lustRaiseThres And Int(Rnd() * 2) Then
+            charm(target)
         Else
-            MyBase.attackCMD(target)
+            If target.level > levelDrainThres Then
+                sapLevel(target)
+            Else
+                MyBase.attackCMD(target)
+            End If
         End If
     End Sub
 

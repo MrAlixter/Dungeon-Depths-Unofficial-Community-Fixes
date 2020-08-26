@@ -27,6 +27,15 @@
     Public Shared Function copyDictionary(ByVal dic As Dictionary(Of perk, Integer)) As Dictionary(Of perk, Integer)
         Return dic
     End Function
+    Public Shared Sub shuffle(ByRef a As String())
+        For i = 1 To UBound(a)
+            Dim j = Int(Rnd() * i + 1)
+
+            Dim tAi = a(i).ToString
+            a(i) = a(j)
+            a(j) = tAi
+        Next
+    End Sub
 
     'Text/Form resizing
     Public Shared Sub resizeForm(ByRef form As Form)

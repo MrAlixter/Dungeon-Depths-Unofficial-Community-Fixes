@@ -121,7 +121,7 @@ Public Class Debug_Window
                     End If
 
                     If num IsNot Nothing AndAlso lbl IsNot Nothing Then
-                        num.Value = Game.player1.perks(lbl.Text)
+                        num.Value = Game.player1.perks(perk.Parse(GetType(perk), lbl.Text))
                         Exit For
                     End If
                 Next

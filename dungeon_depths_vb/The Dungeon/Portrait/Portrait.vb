@@ -267,9 +267,9 @@ Public Class Portrait
         Dim frontHairIndsToIgnore = {27, 36, 38, 39, 40}
 
         If Not checkNDefFemInd(pInd.rearhair, rearHairIndsToIgnore) Then iArr(pInd.rearhair) = Portrait.recolor(imgLib.atrs(pInd.rearhair).getAt(iArrInd(pInd.rearhair)), c)
-        If Not checkNDefFemInd(pInd.midhair, midHairIndsToIgnore) Then iArr(pInd.midhair) = Portrait.recolor(imgLib.atrs(pInd.midhair).getAt(iArrInd(pInd.midhair)), c)
+        If Not checkNDefFemInd(pInd.midhair, midHairIndsToIgnore) And Not checkNDefMalInd(pInd.midhair, 5) Then iArr(pInd.midhair) = Portrait.recolor(imgLib.atrs(pInd.midhair).getAt(iArrInd(pInd.midhair)), c)
         iArr(pInd.eyebrows) = Portrait.recolor(imgLib.atrs(pInd.eyebrows).getAt(iArrInd(pInd.eyebrows)), c)
-        If Not checkNDefFemInd(pInd.fronthair, frontHairIndsToIgnore) Then iArr(pInd.fronthair) = Portrait.recolor(imgLib.atrs(pInd.fronthair).getAt(iArrInd(pInd.fronthair)), c)
+        If Not checkNDefFemInd(pInd.fronthair, frontHairIndsToIgnore) And Not checkNDefMalInd(pInd.fronthair, 6) Then iArr(pInd.fronthair) = Portrait.recolor(imgLib.atrs(pInd.fronthair).getAt(iArrInd(pInd.fronthair)), c)
     End Sub
     Public Sub changeSkinColor(ByVal c As Color)
         skincolor = c
