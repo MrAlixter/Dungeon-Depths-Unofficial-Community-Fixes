@@ -90,7 +90,7 @@
         If durability > 99 Then
             Game.pushLblEvent(description)
         Else
-            Game.pushLblEvent(description & vbCrLf & vbCrLf & "Durability: " & durability & " (Breaks at 0)")
+            Game.pushLblEvent(description & DDUtils.RNRN & "Durability: " & durability & " (Breaks at 0)")
         End If
 
     End Sub

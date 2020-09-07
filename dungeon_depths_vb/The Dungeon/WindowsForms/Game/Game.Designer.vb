@@ -241,13 +241,16 @@ Partial Class Game
         Me.pnlStats = New System.Windows.Forms.Panel()
         Me.Label6 = New System.Windows.Forms.Label()
         Me.pnlMeter = New System.Windows.Forms.Panel()
+        Me.lblHealthbarFont = New System.Windows.Forms.Label()
         Me.lblstamina = New System.Windows.Forms.Label()
         Me.lblXP = New System.Windows.Forms.Label()
         Me.Label11 = New System.Windows.Forms.Label()
         Me.Label8 = New System.Windows.Forms.Label()
         Me.Label9 = New System.Windows.Forms.Label()
         Me.Label10 = New System.Windows.Forms.Label()
-        Me.lblHealthbarFont = New System.Windows.Forms.Label()
+        Me.pic9tailsBimbo = New System.Windows.Forms.PictureBox()
+        Me.picFoxStatueGold = New System.Windows.Forms.PictureBox()
+        Me.picFoxStatueF = New System.Windows.Forms.PictureBox()
         CType(Me.picEnemy, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me.picNPC, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me.picStatue, System.ComponentModel.ISupportInitialize).BeginInit()
@@ -361,6 +364,9 @@ Partial Class Game
         CType(Me.picPFae, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.pnlStats.SuspendLayout()
         Me.pnlMeter.SuspendLayout()
+        CType(Me.pic9tailsBimbo, System.ComponentModel.ISupportInitialize).BeginInit()
+        CType(Me.picFoxStatueGold, System.ComponentModel.ISupportInitialize).BeginInit()
+        CType(Me.picFoxStatueF, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.SuspendLayout()
         '
         'btnUse1
@@ -2728,6 +2734,18 @@ Partial Class Game
         Me.pnlMeter.Size = New System.Drawing.Size(269, 82)
         Me.pnlMeter.TabIndex = 400
         '
+        'lblHealthbarFont
+        '
+        Me.lblHealthbarFont.AutoSize = True
+        Me.lblHealthbarFont.Font = New System.Drawing.Font("Consolas", 8.150944!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.lblHealthbarFont.ForeColor = System.Drawing.Color.White
+        Me.lblHealthbarFont.Location = New System.Drawing.Point(0, 65)
+        Me.lblHealthbarFont.Name = "lblHealthbarFont"
+        Me.lblHealthbarFont.Size = New System.Drawing.Size(0, 15)
+        Me.lblHealthbarFont.TabIndex = 156
+        Me.lblHealthbarFont.TextAlign = System.Drawing.ContentAlignment.MiddleLeft
+        Me.lblHealthbarFont.Visible = False
+        '
         'lblstamina
         '
         Me.lblstamina.Font = New System.Drawing.Font("Consolas", 8.150944!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
@@ -2794,17 +2812,35 @@ Partial Class Game
         Me.Label10.TabIndex = 152
         Me.Label10.Text = "ST: "
         '
-        'lblHealthbarFont
+        'pic9tailsBimbo
         '
-        Me.lblHealthbarFont.AutoSize = True
-        Me.lblHealthbarFont.Font = New System.Drawing.Font("Consolas", 8.150944!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.lblHealthbarFont.ForeColor = System.Drawing.Color.White
-        Me.lblHealthbarFont.Location = New System.Drawing.Point(0, 65)
-        Me.lblHealthbarFont.Name = "lblHealthbarFont"
-        Me.lblHealthbarFont.Size = New System.Drawing.Size(0, 15)
-        Me.lblHealthbarFont.TabIndex = 156
-        Me.lblHealthbarFont.TextAlign = System.Drawing.ContentAlignment.MiddleLeft
-        Me.lblHealthbarFont.Visible = False
+        Me.pic9tailsBimbo.BackgroundImage = CType(resources.GetObject("pic9tailsBimbo.BackgroundImage"), System.Drawing.Image)
+        Me.pic9tailsBimbo.Location = New System.Drawing.Point(150, 133)
+        Me.pic9tailsBimbo.Name = "pic9tailsBimbo"
+        Me.pic9tailsBimbo.Size = New System.Drawing.Size(15, 15)
+        Me.pic9tailsBimbo.TabIndex = 401
+        Me.pic9tailsBimbo.TabStop = False
+        Me.pic9tailsBimbo.Visible = False
+        '
+        'picFoxStatueGold
+        '
+        Me.picFoxStatueGold.BackgroundImage = CType(resources.GetObject("picFoxStatueGold.BackgroundImage"), System.Drawing.Image)
+        Me.picFoxStatueGold.Location = New System.Drawing.Point(623, 115)
+        Me.picFoxStatueGold.Name = "picFoxStatueGold"
+        Me.picFoxStatueGold.Size = New System.Drawing.Size(15, 15)
+        Me.picFoxStatueGold.TabIndex = 403
+        Me.picFoxStatueGold.TabStop = False
+        Me.picFoxStatueGold.Visible = False
+        '
+        'picFoxStatueF
+        '
+        Me.picFoxStatueF.BackgroundImage = CType(resources.GetObject("picFoxStatueF.BackgroundImage"), System.Drawing.Image)
+        Me.picFoxStatueF.Location = New System.Drawing.Point(602, 115)
+        Me.picFoxStatueF.Name = "picFoxStatueF"
+        Me.picFoxStatueF.Size = New System.Drawing.Size(15, 15)
+        Me.picFoxStatueF.TabIndex = 402
+        Me.picFoxStatueF.TabStop = False
+        Me.picFoxStatueF.Visible = False
         '
         'Game
         '
@@ -2813,6 +2849,9 @@ Partial Class Game
         Me.BackColor = System.Drawing.Color.Black
         Me.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch
         Me.ClientSize = New System.Drawing.Size(1008, 690)
+        Me.Controls.Add(Me.picFoxStatueGold)
+        Me.Controls.Add(Me.picFoxStatueF)
+        Me.Controls.Add(Me.pic9tailsBimbo)
         Me.Controls.Add(Me.pnlSaveLoad)
         Me.Controls.Add(Me.btnAll)
         Me.Controls.Add(Me.btnNone)
@@ -3100,6 +3139,9 @@ Partial Class Game
         Me.pnlStats.PerformLayout()
         Me.pnlMeter.ResumeLayout(False)
         Me.pnlMeter.PerformLayout()
+        CType(Me.pic9tailsBimbo, System.ComponentModel.ISupportInitialize).EndInit()
+        CType(Me.picFoxStatueGold, System.ComponentModel.ISupportInitialize).EndInit()
+        CType(Me.picFoxStatueF, System.ComponentModel.ISupportInitialize).EndInit()
         Me.ResumeLayout(False)
         Me.PerformLayout()
 
@@ -3325,4 +3367,7 @@ Partial Class Game
     Friend WithEvents Label11 As System.Windows.Forms.Label
     Friend WithEvents Label10 As System.Windows.Forms.Label
     Friend WithEvents lblHealthbarFont As System.Windows.Forms.Label
+    Friend WithEvents pic9tailsBimbo As System.Windows.Forms.PictureBox
+    Friend WithEvents picFoxStatueGold As System.Windows.Forms.PictureBox
+    Friend WithEvents picFoxStatueF As System.Windows.Forms.PictureBox
 End Class

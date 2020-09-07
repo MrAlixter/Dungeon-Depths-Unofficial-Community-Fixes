@@ -3,8 +3,8 @@
 
     Sub New()
         MyBase.setName("Common_Garb")
-        MyBase.setDesc("Common garb for the common adventurer." & vbCrLf & vbCrLf &
-                       "Fits sizes -1 to 2" & vbCrLf & vbCrLf &
+        MyBase.setDesc("Common garb for the common adventurer." & DDUtils.RNRN &
+                       "Fits sizes -1 to 2" & DDUtils.RNRN &
                        "+1 DEF" & vbCrLf &
                        "+1 Max Mana")
         id = 186

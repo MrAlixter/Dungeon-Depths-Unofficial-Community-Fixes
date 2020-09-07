@@ -4,13 +4,13 @@
     Sub New(n As Integer, tts As Integer, wi As Double, cbs As Boolean)
         MyBase.New(n, tts, wi, cbs)
         MyBase.updateDuringCombat = False
-        tfName = "Bimbo"
+        tfName = "BimboPlusTF"
         nextStep = AddressOf hairColorShift
     End Sub
     Sub New(cs As Integer, n As Integer, tts As Integer, wi As Double, cbs As Boolean, tfd As Boolean)
         MyBase.New(cs, n, tts, wi, cbs, tfd)
         MyBase.updateDuringCombat = False
-        tfName = "Bimbo"
+        tfName = "BimboPlusTF"
         nextStep = getNextStep(cs)
     End Sub
 
@@ -22,7 +22,7 @@
         p.prt.setIAInd(pInd.fronthair, 6, True, True)
     End Sub
     Public Overrides Sub s1TFText(ByRef p As Player)
-        Game.pushLblEvent("You pause to rub your temples, a massive headache comming down on you like a ton of bricks.  As you take a few minutes to recover, you notice that your center of balance is off.  You hypothisize that maybe that vial you drank might be causing these effects." & vbCrLf & vbCrLf & "Maybe you can just walk this off...")
+        Game.pushLblEvent("You pause to rub your temples, a massive headache comming down on you like a ton of bricks.  As you take a few minutes to recover, you notice that your center of balance is off.  You hypothisize that maybe that vial you drank might be causing these effects." & DDUtils.RNRN & "Maybe you can just walk this off...")
     End Sub
 
     'Step 2

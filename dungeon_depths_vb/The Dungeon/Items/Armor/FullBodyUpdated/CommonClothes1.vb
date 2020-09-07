@@ -3,8 +3,8 @@
 
     Sub New()
         MyBase.setName("Common_Armor")
-        MyBase.setDesc("Common armor for the common adventurer." & vbCrLf & vbCrLf &
-                       "Fits sizes -1 to 2" & vbCrLf & vbCrLf &
+        MyBase.setDesc("Common armor for the common adventurer." & DDUtils.RNRN &
+                       "Fits sizes -1 to 2" & DDUtils.RNRN &
                        "+2 DEF")
         id = 185
         tier = Nothing

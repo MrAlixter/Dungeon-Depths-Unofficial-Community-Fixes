@@ -17,6 +17,7 @@
             p.prt.skincolor = Color.FromArgb(255, 196, 43, 59)
         ElseIf level = 12 Then
             p.prt.setIAInd(pInd.horns, 9, True, False)
+            p.prt.setIAInd(pInd.eyes, 48, True, True)
             p.prt.haircolor = Color.FromArgb(255, 41, 16, 38)
             p.prt.skincolor = Color.FromArgb(255, 210, 45, 45)
         End If

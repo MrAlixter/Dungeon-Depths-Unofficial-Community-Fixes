@@ -2,7 +2,7 @@
     Inherits PEffect
 
     Public Overrides Sub apply(ByRef p As Player)
-        Dim out = Game.lblEvent.Text.Split(vbCrLf)(0) & vbCrLf & vbCrLf
+        Dim out = Game.lblEvent.Text.Split(vbCrLf)(0) & DDUtils.RNRN
 
         If p.perks(perk.blind) = -1 Then
             p.ongoingTFs.Add(New Blindness)

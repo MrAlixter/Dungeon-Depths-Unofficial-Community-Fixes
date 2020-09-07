@@ -40,10 +40,10 @@
         picPrincess = ShopNPC.npcLib.atrs(0).getAt(2)
         picBunny = ShopNPC.npcLib.atrs(0).getAt(1)
 
-        picNCP = New List(Of Image)
-        picNCP.AddRange({picNormal, ShopNPC.npcLib.atrs(0).getAt(4), ShopNPC.npcLib.atrs(0).getAt(5), picPrincess, picBunny})
+        picNPC = New List(Of Image)
+        picNPC.AddRange({picNormal, ShopNPC.npcLib.atrs(0).getAt(4), ShopNPC.npcLib.atrs(0).getAt(5), picPrincess, picBunny})
 
-        picNCP.AddRange({ShopNPC.npcLib.atrs(0).getAt(3)})
+        picNPC.AddRange({ShopNPC.npcLib.atrs(0).getAt(3)})
         If speed = Game.player1.speed Then speed -= 1
         title = " the "
     End Sub
@@ -123,4 +123,20 @@
             Return False
         End If
     End Function
+
+    Public Overrides Sub playerDeath(ByRef p As Player)
+        Game.fromCombat()
+        p.petrify(Color.Goldenrod, 9999)
+        Dim out As String = """You should have known better than to try and rob a shop keeper,"" the shopkeep says," &
+            " glaring down at you, ""...and if its gold you're after, I guess I've got some good news for you.""" &
+            "  With that, " & pronoun & " reaches into " & pPronoun & " bag and puts on a gaudy gauntlet " &
+            "that begins glowing with a golden light. You lack the strength to fight back as " & pronoun & " places" &
+            " his thumb on your forhead, and suddenly everything just seems so heavy. ""Noooo..."" you moan, " &
+            "as the area around where he touched turns to gold, and that gold turns your flesh and blood " &
+            "around it to gold as well. In a matter of seconds, all that is left of " & p.name & " the " &
+            p.pClass.name & " is a solid gold statue. The shopkeeper sighs, muttering to no one in particular, " & vbCrLf &
+         """Now how am I going to get you back to the refinery?""" & DDUtils.RNRN & "GAME OVER!"
+        Game.pushLblEvent(out, AddressOf p.die)
+        p.pClass = p.classes("Trophy")
+    End Sub
 End Class

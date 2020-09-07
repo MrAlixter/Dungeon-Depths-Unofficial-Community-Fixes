@@ -21,8 +21,8 @@
         picPrincess = ShopNPC.npcLib.atrs(0).getAt(33)
         picBunny = ShopNPC.npcLib.atrs(0).getAt(34)
 
-        picNCP = New List(Of Image)
-        picNCP.AddRange({picNormal, ShopNPC.npcLib.atrs(0).getAt(4), ShopNPC.npcLib.atrs(0).getAt(5), picPrincess, picBunny})
+        picNPC = New List(Of Image)
+        picNPC.AddRange({picNormal, ShopNPC.npcLib.atrs(0).getAt(4), ShopNPC.npcLib.atrs(0).getAt(5), picPrincess, picBunny})
 
         If speed = Game.player1.speed Then speed -= 1
         title = ""

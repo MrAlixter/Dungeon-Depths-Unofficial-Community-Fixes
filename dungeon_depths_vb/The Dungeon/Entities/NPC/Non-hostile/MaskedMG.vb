@@ -24,10 +24,10 @@
         picPrincess = ShopNPC.npcLib.atrs(0).getAt(47)
         picBunny = ShopNPC.npcLib.atrs(0).getAt(46)
 
-        picNCP = New List(Of Image)
-        picNCP.AddRange({picNormal, ShopNPC.npcLib.atrs(0).getAt(4), ShopNPC.npcLib.atrs(0).getAt(5), picPrincess, picBunny})
+        picNPC = New List(Of Image)
+        picNPC.AddRange({picNormal, ShopNPC.npcLib.atrs(0).getAt(4), ShopNPC.npcLib.atrs(0).getAt(5), picPrincess, picBunny})
 
-        picNCP.AddRange({ShopNPC.npcLib.atrs(0).getAt(48), ShopNPC.npcLib.atrs(0).getAt(59)})
+        picNPC.AddRange({ShopNPC.npcLib.atrs(0).getAt(48), ShopNPC.npcLib.atrs(0).getAt(59)})
         If speed = Game.player1.speed Then speed -= 1
         title = " the "
     End Sub
@@ -47,7 +47,7 @@
             Game.pushNPCDialog("Always a pleasure to run across another Magic Girl!  What can I get ya?")
         End If
 
-        Game.picNPC.BackgroundImage = picNCP(npcIndex)
+        Game.picNPC.BackgroundImage = picNPC(npcIndex)
     End Sub
 
     Public Overrides Function toFight() As String
@@ -75,7 +75,7 @@
 
     Public Overrides Sub toDoll()
         Game.pushNPCDialog("*squeek*")
-        Game.picNPC.BackgroundImage = picNCP(5)
+        Game.picNPC.BackgroundImage = picNPC(5)
 
         discount = 0.5
     End Sub

@@ -37,14 +37,14 @@
         picPrincess = ShopNPC.npcLib.atrs(0).getAt(13)
         picBunny = ShopNPC.npcLib.atrs(0).getAt(12)
 
-        picNCP = New List(Of Image)
-        picNCP.AddRange({picNormal,
+        picNPC = New List(Of Image)
+        picNPC.AddRange({picNormal,
                          ShopNPC.npcLib.atrs(0).getAt(4),
                          ShopNPC.npcLib.atrs(0).getAt(5),
                          picPrincess,
                          picBunny})
 
-        picNCP.AddRange({ShopNPC.npcLib.atrs(0).getAt(16),
+        picNPC.AddRange({ShopNPC.npcLib.atrs(0).getAt(16),
                          ShopNPC.npcLib.atrs(0).getAt(15),
                          ShopNPC.npcLib.atrs(0).getAt(23),
                          ShopNPC.npcLib.atrs(0).getAt(14),
@@ -108,7 +108,7 @@
         End If
 
         If npcIndex = 5 Then inv.setCount(98, 1) Else inv.setCount(98, 0)
-        Game.picNPC.BackgroundImage = picNCP(npcIndex)
+        Game.picNPC.BackgroundImage = picNPC(npcIndex)
     End Sub
 
     Public Overrides Function toFight() As String
@@ -151,7 +151,7 @@
 
     Public Overrides Sub toDoll()
         Game.pushNPCDialog("...")
-        Game.picNPC.BackgroundImage = picNCP(8)
+        Game.picNPC.BackgroundImage = picNPC(8)
 
         discount = 0.5
     End Sub

@@ -86,6 +86,8 @@ Public Class mFloor
             generateForestLevel(floorCode)
         End If
 
+        If floorNumber = 7 Then placeFloor7Statues()
+
         verifyNoDisconectedChunks(Game.player1)
     End Sub
     Sub placeStairs()
@@ -160,6 +162,8 @@ Public Class mFloor
             Return {0, 1, 3}
         ElseIf floorNumber = 3 Then
             Return {0, 1, 2, 3, 5}
+        ElseIf floorNumber = 7 Then
+            Return {2}
         ElseIf floorNumber = 13 Then
             Return {3, 5}
         Else
@@ -679,7 +683,16 @@ Public Class mFloor
     '|---SPECIFIC FLOOR GENERATION METHODS---|
 
     'floor 4
+    Function ptInBounds(ByVal pt As Point) As Boolean
+        Return pt.X >= 0 And pt.X <= mBoardWidth And pt.Y >= 0 And pt.Y <= mBoardHeight
+    End Function
     Sub placeFloor4TrappedChest(ByRef p As Player)
+        Dim c As Chest = New LoadedChest(getRndAdjPoint(p), 4)
+        chestList.Add(c)
+        mBoard(c.pos.Y, c.pos.X).ForeColor = Color.FromArgb(45, 45, 45)
+        mBoard(c.pos.Y, c.pos.X).Text = "#"
+    End Sub
+    Public Function getRndAdjPoint(ByVal p As Player) As Point
         Dim possiblePoints = {New Point(p.pos.X + 1, p.pos.Y), _
                                   New Point(p.pos.X - 1, p.pos.Y), _
                                   New Point(p.pos.X, p.pos.Y + 1), _
@@ -690,15 +703,13 @@ Public Class mFloor
                                   New Point(p.pos.X - 1, p.pos.Y + 1)}
         Dim pt As Point = possiblePoints(0)
         Dim i = 0
-        Do While (mBoard(pt.Y, pt.X).Tag < 1 Or mBoard(pt.Y, pt.X).Text <> "") And i < possiblePoints.Count - 1
+        Do While (Not ptInBounds(pt) OrElse mBoard(pt.Y, pt.X).Tag < 1 Or mBoard(pt.Y, pt.X).Text <> "") And i < possiblePoints.Count - 1
             i += 1
             pt = possiblePoints(i)
         Loop
-        Dim c As Chest = New LoadedChest(pt, 4)
-        chestList.Add(c)
-        mBoard(c.pos.Y, c.pos.X).ForeColor = Color.FromArgb(45, 45, 45)
-        mBoard(c.pos.Y, c.pos.X).Text = "#"
-    End Sub
+
+        Return pt
+    End Function
     'floor 5
     Sub genMedusaStatues()
         'places the statues on floor 5 for ambience
@@ -711,6 +722,14 @@ Public Class mFloor
             tr.pos = New Point(x, y)
             statueList.Add(New Statue(tr))
         Next
+    End Sub
+    'floor 7
+    Sub placeFloor7Statues()
+        For i = 1 To 6
+            statueList.Add(New Statue(randPoint(), "Fox", "You see here a statue of a fox"))
+        Next
+
+        statueList.Add(New Statue(randPoint(), "seventailsstatue", "You see here a golden statue of a fox"))
     End Sub
     'space floor
     Sub genSpaceFloor()

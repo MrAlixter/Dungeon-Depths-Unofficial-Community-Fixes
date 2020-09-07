@@ -32,9 +32,9 @@
         CType(Game.hteach, HTeach).hypnotize("Perfect!  Speaking of perfection, have you seen my pendant?  I know it is a bit of a cliche, but doesn't seeing it swing back and forth just relax you so perfectly?  Back...and forth...watch it glisten in the light...feel yourself go deeper and deeper...deeper...and deeper...until you just...*SNAP*...drift away...", AddressOf tf2)
     End Sub
     Sub tf2()
-        Dim out = "As soon as she snaps, your entire reality fades away.  You can't bother to recall who you are, or what you're doing, focusing instead solely on your mistresses voice, though in your haze you don't understand much of what she's saying.  You pass in and out of conciousness several times until gradually you begin to clearly hear what she's saying." & vbCrLf & vbCrLf &
-            """...and then we met!  You're a fair ways off from the Amazonian village though, right?"" the hypnotist teacher asks cheerfully." & vbCrLf & vbCrLf &
-            "Right!  The Village!  You recall all the time you spent in that village; your childhood, your combat training, the first time you saw a man.  He, a lost traveller, had stumbled into the village one clear evening.  Before the sun rose, though, the shamans worked their magic, leaving a very confused woman in his place." & vbCrLf & vbCrLf &
+        Dim out = "As soon as she snaps, your entire reality fades away.  You can't bother to recall who you are, or what you're doing, focusing instead solely on your mistresses voice, though in your haze you don't understand much of what she's saying.  You pass in and out of conciousness several times until gradually you begin to clearly hear what she's saying." & DDUtils.RNRN &
+            """...and then we met!  You're a fair ways off from the Amazonian village though, right?"" the hypnotist teacher asks cheerfully." & DDUtils.RNRN &
+            "Right!  The Village!  You recall all the time you spent in that village; your childhood, your combat training, the first time you saw a man.  He, a lost traveller, had stumbled into the village one clear evening.  Before the sun rose, though, the shamans worked their magic, leaving a very confused woman in his place." & DDUtils.RNRN &
             """Well then, it seems like my work here is done,"" the Hypnotist says, inturupting your reminissing.  ""If I can help you with anything else, don't hesitate to ask!"""
         Dim aTF As AmazonTF = New AmazonTF()
         aTF.step1()

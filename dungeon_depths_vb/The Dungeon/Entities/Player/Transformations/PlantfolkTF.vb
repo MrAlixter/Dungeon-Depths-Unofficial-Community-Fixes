@@ -52,7 +52,7 @@
         'transformation description push
         out += "As you chew on a particularly leafy portion of the salad, you feel the familiar flow of transformative magic flow through your body!  Expecting the worse, you are suprised to find that it seems to be providing your body with a benevolent energy.  It isn't until a leaf droops down from the top of your head that you realize something has indeed been changed.  You are now a plantfolk."
         Dim revertText = Game.lblEvent.Text.Split(vbCrLf)(0)
-        If Not revertText.Equals("") Then out = revertText & vbCrLf & vbCrLf & out
+        If Not revertText.Equals("") Then out = revertText & DDUtils.RNRN & out
         Game.pushLblEvent(out)
     End Sub
 

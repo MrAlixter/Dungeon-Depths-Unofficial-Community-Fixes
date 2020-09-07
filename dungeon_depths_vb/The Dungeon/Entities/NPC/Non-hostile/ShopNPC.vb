@@ -3,9 +3,9 @@
     Public firstCTurn As Boolean = True
     Public isShop = False
     Public picNormal, picPrincess, picBunny As Image
-    Public picNCP As List(Of Image)
+    Public picNPC As List(Of Image)
     Protected discount As Double = 0
-    Protected Shared npcLib As ImageCollection = New ImageCollection(2)
+    Public Shared npcLib As ImageCollection = New ImageCollection(2)
 
     Shared Function shopFactory(ByVal nIndex As Integer)
         Select Case nIndex
@@ -54,7 +54,7 @@
             Exit Sub
         End If
         If npcIndex = 1 Or npcIndex = 2 Then despawn("flee")
-        Game.picNPC.BackgroundImage = picNCP(npcIndex)
+        Game.picNPC.BackgroundImage = picNPC(npcIndex)
 
         If Game.combatmode Then attackCMD(Game.player1)
     End Sub
@@ -73,7 +73,7 @@
         If Game.mDun.floorboss.ContainsKey(Game.mDun.numCurrFloor) AndAlso
             Game.mDun.floorboss(Game.mDun.numCurrFloor).Equals("Key") Then inv.setCount(53, 1) Else inv.setCount(53, 0)
 
-        If npcIndex < picNCP.Count Then Game.picNPC.BackgroundImage = picNCP(npcIndex)
+        If npcIndex < picNPC.Count Then Game.picNPC.BackgroundImage = picNPC(npcIndex)
         firstCTurn = True
         firstTurn = True
     End Sub
@@ -107,7 +107,7 @@
         toFemale("bunny")
         MyBase.form = "Bunny Girl"
         Game.NPCfromCombat(Me)
-        Game.picNPC.BackgroundImage = picNCP(npcIndex)
+        Game.picNPC.BackgroundImage = picNPC(npcIndex)
     End Sub
     Overridable Sub toPrincess()
         MyBase.health = 1.0
@@ -119,7 +119,7 @@
         MyBase.npcIndex = 3
         toFemale("prin")
         MyBase.form = "Princess"
-        Game.picNPC.BackgroundImage = picNCP(npcIndex)
+        Game.picNPC.BackgroundImage = picNPC(npcIndex)
     End Sub
     Overridable Sub toSheep()
         MyBase.health = 1.0
@@ -130,7 +130,7 @@
         MyBase.tfEnd = 6
         MyBase.npcIndex = 2
         MyBase.form = "Sheep"
-        Game.picNPC.BackgroundImage = picNCP(npcIndex)
+        Game.picNPC.BackgroundImage = picNPC(npcIndex)
     End Sub
 
     Overridable Sub toFrog()
@@ -141,7 +141,7 @@
         MyBase.tfCt = 1
         MyBase.tfEnd = 6
         MyBase.npcIndex = 1
-        Game.picNPC.BackgroundImage = picNCP(npcIndex)
+        Game.picNPC.BackgroundImage = picNPC(npcIndex)
     End Sub
 
     Public Overridable Sub toFemale(ByVal form As String)
@@ -169,7 +169,7 @@
 
     Public Overridable Sub toDoll()
         Game.pushNPCDialog("...")
-        Game.picNPC.BackgroundImage = picNCP(5)
+        Game.picNPC.BackgroundImage = picNPC(5)
 
         discount = 0.5
     End Sub

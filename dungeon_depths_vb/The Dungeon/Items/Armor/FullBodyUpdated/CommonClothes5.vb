@@ -3,8 +3,8 @@
 
     Sub New()
         MyBase.setName("Common_Kimono")
-        MyBase.setDesc("Traditional clothes for a katana-wielding adventurer." & vbCrLf & vbCrLf &
-                       "Fits sizes -1 to 2" & vbCrLf & vbCrLf &
+        MyBase.setDesc("Traditional clothes for a katana-wielding adventurer." & DDUtils.RNRN &
+                       "Fits sizes -1 to 2" & DDUtils.RNRN &
                        "+2 ATK")
         id = 189
         tier = Nothing

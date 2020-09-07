@@ -118,16 +118,16 @@
         Game.player1.revertToPState()
         Game.player1.canMoveFlag = True
         Game.pushLblEvent("𝑺𝒆𝒗𝒆𝒓𝒂𝒍 𝒅𝒂𝒚𝒔 𝒍𝒂𝒕𝒆𝒓..." & vbCrLf &
-                           "As you stand frozen in the same position you've held since you touched the cursed stone, suddenly you fall flat faced onto the ground.  Springing to your feet, you are exited to find yourself as you were, albiet redder than before, and another explorer frozen in your place.  From their pose, it seems that they were going through your stuff, and must have accidently touched you.  What's more, the original ruby you touched is nowhere to be found.  You muse on the nature of the curse for a bit, before grabbing your things and moving on." & vbCrLf & vbCrLf & "Your stomach rumbles loudly, and you can tell that your time as a statue hasn't been kind to you.")
+                           "As you stand frozen in the same position you've held since you touched the cursed stone, suddenly you fall flat faced onto the ground.  Springing to your feet, you are exited to find yourself as you were, albiet redder than before, and another explorer frozen in your place.  From their pose, it seems that they were going through your stuff, and must have accidently touched you.  What's more, the original ruby you touched is nowhere to be found.  You muse on the nature of the curse for a bit, before grabbing your things and moving on." & DDUtils.RNRN & "Your stomach rumbles loudly, and you can tell that your time as a statue hasn't been kind to you.")
         Game.player1.mana = 0
         Game.player1.stamina -= 60
     End Sub
 
     Sub doctorAccept()
-        Game.pushLblEvent("""Very good.  Please step onto the equipping pad.""" & vbCrLf & vbCrLf &
-                          "Spotting a raised area of the floor that looks to be equipped with all sorts of fancy machinery, you step onto it." & vbCrLf & vbCrLf &
-                          """Thank you.  Please remain still.""" & vbCrLf & vbCrLf &
-                          """Suddenly, the pad's machinery whirs to life.  While some of its many mechanical arms quickly strip you, others prepare a clinical looking labcoat and begin dressing you in it.  Finally, one arm places a pair of small glasses carefully onto your face and the pad returns to its idle state." & vbCrLf & vbCrLf &
+        Game.pushLblEvent("""Very good.  Please step onto the equipping pad.""" & DDUtils.RNRN &
+                          "Spotting a raised area of the floor that looks to be equipped with all sorts of fancy machinery, you step onto it." & DDUtils.RNRN &
+                          """Thank you.  Please remain still.""" & DDUtils.RNRN &
+                          """Suddenly, the pad's machinery whirs to life.  While some of its many mechanical arms quickly strip you, others prepare a clinical looking labcoat and begin dressing you in it.  Finally, one arm places a pair of small glasses carefully onto your face and the pad returns to its idle state." & DDUtils.RNRN &
                           """Have a nice day, doctor."" chimes the terminal, before darkening and going to sleep.")
         Equipment.clothesChange("Labcoat")
         Game.player1.prt.setIAInd(pInd.glasses, 2, True, False)

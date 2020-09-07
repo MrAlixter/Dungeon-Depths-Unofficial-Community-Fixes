@@ -86,4 +86,11 @@
 
         Return True
     End Function
+    Public Overrides Sub playerDeath(ByRef p As Player)
+        Game.fromCombat()
+        p.petrify(Color.White, 9999)
+        Game.pushLblEvent("Cackling with delight, Medusa slithers directly in front of you and glares intently into your eyes.\n\n" &
+                          "As you try to back away in shock, your legs quickly calcify and before long your lower body is composed of a light-ish gray stone.  Even as you try to shut your eyes and look away, the petrification reaches your face.\n\n" &
+                          "In mere moments, the stony gaze of Medusa has left " & p.getName & " as nothing but another decoration adorning the hall of the mythical Gorgon.", AddressOf DeathEffects.hardDeath)
+    End Sub
 End Class

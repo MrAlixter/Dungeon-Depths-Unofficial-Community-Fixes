@@ -38,10 +38,10 @@
         picPrincess = ShopNPC.npcLib.atrs(0).getAt(19)
         picBunny = ShopNPC.npcLib.atrs(0).getAt(18)
 
-        picNCP = New List(Of Image)
-        picNCP.AddRange({picNormal, ShopNPC.npcLib.atrs(0).getAt(4), ShopNPC.npcLib.atrs(0).getAt(5), picPrincess, picBunny})
+        picNPC = New List(Of Image)
+        picNPC.AddRange({picNormal, ShopNPC.npcLib.atrs(0).getAt(4), ShopNPC.npcLib.atrs(0).getAt(5), picPrincess, picBunny})
 
-        picNCP.AddRange({ShopNPC.npcLib.atrs(0).getAt(21), ShopNPC.npcLib.atrs(0).getAt(24), ShopNPC.npcLib.atrs(0).getAt(22), ShopNPC.npcLib.atrs(0).getAt(20)})
+        picNPC.AddRange({ShopNPC.npcLib.atrs(0).getAt(21), ShopNPC.npcLib.atrs(0).getAt(24), ShopNPC.npcLib.atrs(0).getAt(22), ShopNPC.npcLib.atrs(0).getAt(20)})
         If speed = Game.player1.speed Then speed -= 1
         MyBase.title = " the "
     End Sub
@@ -51,8 +51,10 @@
 
         MyBase.discount = 0
 
+        seventailsAdjustment()
+
         If npcIndex = 0 Then
-            If Int(Rnd() * 20) = 0 Then
+            If Int(Rnd() * 20) = 0 And Game.currFloor.floorNumber <> 7 Then
                 MyBase.discount = 0.25
                 npcIndex = 6
                 Game.pushNPCDialog("Like, hey!  I, like, totally just got back from negot...nagosh...trying to work " &
@@ -61,7 +63,7 @@
                                    "and don't tell him I said this but he's toootally like my soulmate...  " &
                                    "Anyway, like, he has that panana...penasi...special food thing that can get me back to my normal self!" &
                                    "But first, I'm like, totally gonna take a break from being all serious and see what else he has that I can eat! ~🖤")
-            ElseIf Int(Rnd() * 20) = 1 Then
+            ElseIf Int(Rnd() * 20) = 1 And Game.currFloor.floorNumber <> 7 Then
                 npcIndex = 7
                 Game.pushNPCDialog("Hello, potential customer!  I don't suppose you've seen Mr. Vendor around anywhere, have you?  " &
                                    "He appears to have gotten the cream in my usual morning coffee mixed up with some other malarkey, " &
@@ -90,10 +92,15 @@
         End If
         If Game.mDun.numCurrFloor > 5 Then inv.setCount(113, 1) Else inv.setCount(113, 0)
         If Game.mDun.numCurrFloor < 5 Then inv.setCount(122, 1) Else inv.setCount(122, 0)
-        Game.picNPC.BackgroundImage = picNCP(npcIndex)
+
+
+
+        Game.picNPC.BackgroundImage = picNPC(npcIndex)
     End Sub
 
     Public Overrides Function toFight() As String
+        If Game.currFloor.floorNumber = 7 And Game.player1.perks(perk.seventailsstage) = 1 Then sevenTailsFight()
+
         If npcIndex = 0 Then
             Return "Seems like you need another type of lesson."
         ElseIf npcIndex = 1 Then
@@ -112,6 +119,8 @@
         Return "Bad move."
     End Function
     Public Overrides Function hitBySpell() As String
+        If Game.currFloor.floorNumber = 7 And Game.player1.perks(perk.seventailsstage) = 1 Then sevenTailsFight()
+
         If npcIndex = 0 Then
             Game.NPCtoCombat(Me)
             Return "*sigh*...Well, I can always use another test subject."
@@ -141,7 +150,7 @@
         Game.pushNPCDialog(s, AddressOf back)
         Game.shopMenu.Close()
 
-        Game.picNPC.BackgroundImage = picNCP(npcIndex)
+        Game.picNPC.BackgroundImage = picNPC(npcIndex)
     End Sub
     Public Sub hypnotize(ByVal s As String, a As Action)
         preHypnoID = npcIndex
@@ -150,19 +159,56 @@
         Game.pushNPCDialog(s, a)
         Game.shopMenu.Close()
 
-        Game.picNPC.BackgroundImage = picNCP(npcIndex)
+        Game.picNPC.BackgroundImage = picNPC(npcIndex)
     End Sub
     Public Sub back()
         npcIndex = preHypnoID
         Game.pushNPCDialog("So, anything else?")
-        Game.picNPC.BackgroundImage = picNCP(npcIndex)
+        Game.picNPC.BackgroundImage = picNPC(npcIndex)
         Game.showNPCButtons()
         Game.player1.canMoveFlag = False
     End Sub
     Public Overrides Sub toDoll()
         Game.pushNPCDialog("...")
-        Game.picNPC.BackgroundImage = picNCP(8)
+        Game.picNPC.BackgroundImage = picNPC(8)
 
         discount = 0.5
+    End Sub
+
+    Sub seventailsAdjustment()
+        If Game.currFloor.floorNumber = 7 And Game.player1.perks(perk.seventailsstage) = 1 Then
+            npcIndex = 0
+            picNPC(0) = ShopNPC.npcLib.atrs(0).getAt(63)
+            picNPC(5) = ShopNPC.npcLib.atrs(0).getAt(64)
+        Else
+            picNPC(0) = ShopNPC.npcLib.atrs(0).getAt(17)
+            picNPC(5) = ShopNPC.npcLib.atrs(0).getAt(21)
+        End If
+    End Sub
+    Sub sevenTailsFight()
+        Dim m As SevenTails = MiniBoss.miniBossFactory(7)
+
+        'adds the miniboss to combat queues
+        Monster.targetRoute(m)
+
+        Game.toCombat()
+        Game.pushLblCombatEvent("With a poof of smoke, the hypnotist shifts into a familiar kitsune and " & m.getName() & " attacks!")
+        Game.pushLstLog("With a poof of smoke, the hypnotist shifts into a familiar kitsune and " & m.getName() & " attacks!")
+
+        m.health = 0.66
+        m.dragonTF()
+
+        Game.player1.perks(perk.seventailsstage) = 2
+
+        Game.currFloor.beatBoss = False
+        Game.mDun.floorboss(7) = "Seven-Tails"
+
+        pos = New Point(-1, -1)
+        Game.drawBoard()
+    End Sub
+
+    Public Overrides Sub die(ByRef cause As Entity)
+        If Game.currFloor.floorNumber = 7 Then Exit Sub
+        MyBase.die(cause)
     End Sub
 End Class

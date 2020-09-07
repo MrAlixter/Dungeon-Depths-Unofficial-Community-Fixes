@@ -29,7 +29,7 @@
         'transformation description push
         out += "As you bite into the cake, you are lost in its sweet flavor.  So lost, in fact, that you miss the large white wings growing on you back.  You are now an angel!"
         Dim revertText = Game.lblEvent.Text.Split(vbCrLf)(0)
-        If Not revertText.Equals("") Then out = revertText & vbCrLf & vbCrLf & out
+        If Not revertText.Equals("") Then out = revertText & DDUtils.RNRN & out
         Game.pushLblEvent(out)
     End Sub
 

@@ -504,7 +504,7 @@ Public Class Debug_Window
         Game.player1.prt.iArr(tab) = CType(sender, PictureBox).Image
         Game.player1.prt.setIAInd(tab, pic, Game.player1.prt.sexBool, False)
 
-        'picPreview.image = Portrait.recolor(portrait.createBMP(Game.player1.iArr), Game.player1.skincolor)
+        'picPreview.image = Portrait.hairRecolor(portrait.createBMP(Game.player1.iArr), Game.player1.skincolor)
         picPreview.Image = Portrait.CreateBMP(Game.player1.prt.iArr)
     End Sub
 

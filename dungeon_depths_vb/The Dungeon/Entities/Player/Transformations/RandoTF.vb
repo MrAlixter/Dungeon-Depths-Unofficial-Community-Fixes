@@ -289,10 +289,10 @@
                           "attack, a single, large, gooey tendril shoots out" & _
                           "of the mass, yanking your weapon from your hand " & _
                           "before several smaller tentacles wrap around your " & _
-                          "limbs, restraining you." & vbCrLf & vbCrLf & _
+                          "limbs, restraining you." & DDUtils.RNRN & _
                           """Well, well, well.  What do we have here?"", a " & _
                           "slightly distorted female voice chuckles from " & _
-                          "somewhere behind you." & vbCrLf & vbCrLf & "Suddenly, you " & _
+                          "somewhere behind you." & DDUtils.RNRN & "Suddenly, you " & _
                           "find yourself being flipped upside down and dragged " & _
                           "upwards to the ceiling, where you meet the gaze of " & _
                           "a translucent, teal woman who's lower half seems to be" & _
@@ -340,7 +340,7 @@
                           "before, being submmerged in it practically puts you in" & _
                           " a pleasure coma.  Before passing out from the burning " & _
                           "need flowing throug every part of your body, you catch her " & _
-                          "motherly gaze as she giggles, ""Have fun!""." & vbCrLf & vbCrLf & _
+                          "motherly gaze as she giggles, ""Have fun!""." & DDUtils.RNRN & _
                           "When you come to, you can tell some time has passed.  Though " & _
                           "the Emperess is nowhere to be found, the amount of slime" & _
                           " you are drenched still fills you with a bit of lust.  " & _

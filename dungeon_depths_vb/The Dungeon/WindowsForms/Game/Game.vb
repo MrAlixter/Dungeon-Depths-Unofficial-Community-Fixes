@@ -45,8 +45,8 @@ Public Class Game
     Public npcmode As Boolean = False   'indicates if the player is talking to an npc (NOT SAVED)
     Public npcIndex As Integer = 0  'indicates which npc is encountered (NOT SAVED)
     'a list containing all valid cheats
-    Public cheatList() As String = {"asss", "daaa", "wawa", "sasa", "gogo", "seee", "aeio", "wasd", "aaaa"} 'list of cheats (NOT SAVED)
-    Dim keyspresed As String = ""   'records last 4 keys pressed (NOT SAVED)
+    Public cheatList() As String = {"asss", "daaa", "wawa", "sasa", "gogo", "seee", "aeio", "wasd", "aaaa", "sawd", "swda"} 'list of cheats (NOT SAVED)
+    Dim keysPressed As String = ""   'records last 4 keys pressed (NOT SAVED)
     Public titleList = New List(Of String)
     'other misc form1 instance variables
     Dim selectedItem As Item = New Item()   'the item Fhilighted in the inventory (NOT SAVED)
@@ -419,8 +419,10 @@ Public Class Game
         End If
         If currFloor.statueList.Count > 0 Then
             For i = 0 To currFloor.statueList.Count - 1
-                If currFloor.mBoard(currFloor.statueList.Item(i).pos.Y, currFloor.statueList.Item(i).pos.X).Text <> "@" Then
-                    currFloor.mBoard(currFloor.statueList.Item(i).pos.Y, currFloor.statueList.Item(i).pos.X).Text = "@"
+                If currFloor.statueList.Item(i).pos.X <> -1 And currFloor.statueList.Item(i).pos.Y <> -1 Then
+                    If currFloor.mBoard(currFloor.statueList.Item(i).pos.Y, currFloor.statueList.Item(i).pos.X).Text <> "@" Then
+                        currFloor.mBoard(currFloor.statueList.Item(i).pos.Y, currFloor.statueList.Item(i).pos.X).Text = "@"
+                    End If
                 End If
             Next
         End If
@@ -523,6 +525,10 @@ Public Class Game
                             currFloor.mBoard(player1.pos.Y + indY, player1.pos.X + indX).ForeColor = Color.Navy
                             pushLstLog("Shop discovered!")
                         End If
+                        If (currFloor.mBoard(player1.pos.Y + indY, player1.pos.X + indX).Text = "d" Or currFloor.mBoard(player1.pos.Y + indY, player1.pos.X + indX).Text = "D") And currFloor.mBoard(player1.pos.Y + indY, player1.pos.X + indX).Tag < 2 Then
+                            currFloor.mBoard(player1.pos.Y + indY, player1.pos.X + indX).ForeColor = Color.Gray
+                            pushLstLog("Fox Statue discovered!")
+                        End If
                         If currFloor.mBoard(player1.pos.Y + indY, player1.pos.X + indX).Tag = 1 Then currFloor.mBoard(player1.pos.Y + indY, player1.pos.X + indX).Tag = 2
                     End If
                 Next
@@ -553,6 +559,10 @@ Public Class Game
         '14 = h. teacher
         '15 = f. vendor
         '16 = w. smith
+        '17 = c. broker
+        '18 = m. magical girl
+        '19 = fox statue
+        '20 = fox statue (gold)
 
         If testingImageBoard Then
             boxBoard.Refresh()
@@ -588,6 +598,8 @@ Public Class Game
                             If currFloor.mBoard(player1.pos.Y + indY, player1.pos.X + indX).Text = "$" And player1.pos.Y + indY = mgirl.pos.Y And player1.pos.X + indX = mgirl.pos.X Then viewArray(y, x) = 18
                             If currFloor.mBoard(player1.pos.Y + indY, player1.pos.X + indX).Text = "+" Then viewArray(y, x) = 8
                             If currFloor.mBoard(player1.pos.Y + indY, player1.pos.X + indX).Text = "c" Then viewArray(y, x) = 12
+                            If currFloor.mBoard(player1.pos.Y + indY, player1.pos.X + indX).Text = "d" Then viewArray(y, x) = 19
+                            If currFloor.mBoard(player1.pos.Y + indY, player1.pos.X + indX).Text = "D" Then viewArray(y, x) = 20
                             If player1.perks(perk.blind) > -1 Then viewArray(y, x) = 1
                         End If
                         If currFloor.mBoard(player1.pos.Y + indY, player1.pos.X + indX).Text = "@" Then
@@ -700,6 +712,10 @@ Public Class Game
                 mPics(y, x).BackgroundImage = picCBrokF.BackgroundImage
             Case 18
                 mPics(y, x).BackgroundImage = picMGTileF.BackgroundImage
+            Case 19
+                mPics(y, x).BackgroundImage = picFoxStatueF.BackgroundImage
+            Case 20
+                mPics(y, x).BackgroundImage = picFoxStatueGold.BackgroundImage
         End Select
     End Sub
     Sub setSpaceTileImg(ByVal x As Integer, ByVal y As Integer, ByRef viewArray As Integer(,))
@@ -802,7 +818,7 @@ Public Class Game
         If Not selecting Then
             If shouldReturnEarly(Keydata) Then Return True
             Dim spos As Point = player1.pos
-            If isALetter(Keydata.ToString.ToLower) Then keyspresed += Keydata.ToString.ToLower
+            If isALetter(Keydata.ToString.ToLower) Then keysPressed += Keydata.ToString.ToLower
             Select Case Keydata
                 Case cKeys(0)
                     If player1.pClass.name.Equals("Mindless") Then
@@ -982,7 +998,7 @@ Public Class Game
         If indexes.Contains(Keydata.ToString.ToLower) Then
             Dim index = indexes.IndexOf(Keydata.ToString.ToLower)
             If index > lstSelec.Items.Count - 1 Then
-                lblInstruc.Text = "Invalid selection:" & vbCrLf & vbCrLf &
+                lblInstruc.Text = "Invalid selection:" & DDUtils.RNRN &
                                   "Please select" & vbCrLf &
                                   "another letter."
                 Exit Sub
@@ -1399,8 +1415,8 @@ Public Class Game
             Or Keydata.Equals(Keys.Left) Or Keydata.Equals(Keys.Right) Or Keydata.Equals(Keys.Down) Or Keydata.Equals(Keys.Up)) Then
             Return True
         End If
-        If keyspresed.Length > 4 Then
-            keyspresed = keyspresed.Substring(1, 3)
+        If keysPressed.Length > 4 Then
+            keysPressed = keysPressed.Substring(1, 3)
         End If
 
         Dim m = Math.Max(CInt(7.8152 * Math.Exp(-0.011 * player1.getWIL)), 1)
@@ -1482,21 +1498,21 @@ Public Class Game
     End Sub
     Sub oemReturn()
         'oemReturn triggers when the player hits the enter (return) key
-        If cheatList.Contains(keyspresed) Then
-            MsgBox(keyspresed)
-            If keyspresed = "asss" Then
+        If cheatList.Contains(keysPressed) Then
+            MsgBox(keysPressed)
+            If keysPressed = "asss" Then
                 player1.MtF()
                 player1.drawPort()
-            ElseIf keyspresed = "daaa" Then
+            ElseIf keysPressed = "daaa" Then
                 player1.FtM()
                 player1.drawPort()
-            ElseIf keyspresed = "wawa" Then
+            ElseIf keysPressed = "wawa" Then
                 player1.be()
                 player1.drawPort()
-            ElseIf keyspresed = "sasa" Then
+            ElseIf keysPressed = "sasa" Then
                 player1.bs()
                 player1.drawPort()
-            ElseIf keyspresed = "seee" Then
+            ElseIf keysPressed = "seee" Then
                 For indY = -currFloor.mBoardHeight To currFloor.mBoardHeight
                     For indX = -currFloor.mBoardWidth To currFloor.mBoardWidth
                         If player1.pos.Y + indY < currFloor.mBoardHeight And player1.pos.Y + indY >= 0 And player1.pos.X + indX < currFloor.mBoardWidth And player1.pos.X + indX >= 0 Then
@@ -1517,27 +1533,46 @@ Public Class Game
                         End If
                     Next
                 Next
-            ElseIf keyspresed = "gogo" Then
+            ElseIf keysPressed = "gogo" Then
                 Try
                     Dim f As Integer = CInt(InputBox("Which floor?"))
                     quickChangeFloor(f)
                 Catch ex As Exception
                 End Try
-            ElseIf keyspresed = "aeio" Then
+            ElseIf keysPressed = "aeio" Then
                 player1.inv.add(149, 1)
                 player1.UIupdate()
-
-            ElseIf keyspresed = "aaaa" Then
+            ElseIf keysPressed = "aaaa" Then
                 Dim name As String = InputBox("Enter a Name:")
                 MsgBox("If " & name & " was a bimbo, they'd be " & Polymorph.bimboizeName(name))
-            ElseIf keyspresed = "wasd" Then
+            ElseIf keysPressed = "sawd" Then
+                player1.lust -= 10
+                player1.UIupdate()
+            ElseIf keysPressed = "wasd" Then
                 Dim ct = New ClothingTester()
                 ct.ShowDialog()
                 ct.Dispose()
                 player1.UIupdate()
+            ElseIf keysPressed = "swda" Then
+                Try
+                    Dim npcInd As Integer = CInt(InputBox("Enter an NPC index:" & vbCrLf &
+                                                     "0 - Shopkeeper" & vbCrLf &
+                                                     "1 - Shady Wizard" & vbCrLf &
+                                                     "2 - Hypnotist Teacher" & vbCrLf &
+                                                     "3 - Food Vendor" & vbCrLf &
+                                                     "4 - Weaponsmith" & vbCrLf &
+                                                     "5 - Curse Broker" & vbCrLf &
+                                                     "6 - Magical Girl"))
+                    Dim newpoint = currFloor.getRndAdjPoint(player1)
+                    shopNPCList(npcInd).pos = newpoint
+                    currFloor.npcPositions(npcInd) = newpoint
+
+                    drawBoard()
+                Catch ex As Exception
+                End Try
             End If
         End If
-        keyspresed = ""
+        keysPressed = ""
     End Sub
     Public Sub quickChangeFloor(ByVal f As Integer)
         ' Try
@@ -1695,7 +1730,7 @@ Public Class Game
         'Standard run procedure
         Dim run As Integer = Int(Rnd() * 3)
         For i = 0 To npcList.Count() - 1
-            If Not (npcList.Item(i).GetType() Is GetType(Boss)) And run <> 1 Then
+            If i < npcList.Count And Not (npcList.Item(i).GetType() Is GetType(Boss)) And run <> 1 Then
                 npcList.Item(i).despawn("run")
                 updateList = New PQ
             Else
@@ -1871,7 +1906,7 @@ Public Class Game
         queueSetup()
         m.setSPD(oSpeed)
         If mDun.numCurrFloor = 4 Then
-            pushLblEvent("As you approach the staircase, you spot the Ooze Empress, hanging over the stairs.  As you wave to get her attention, she plops off the celing to come and greet you.  As you explain your situation to her, she chuckles, catching you off guard.  ""You know, I was placed on this floor as kind of a buffer.  Mistress Medusa isn't interested in weaklings, and if you even want to have a chance at beating her, you need to have a stronger will."".  You notice a shift in her previously bubbly personality, and when the rest of her tentacles drop down, you take a leap back and prepare for combat." & vbCrLf & vbCrLf &
+            pushLblEvent("As you approach the staircase, you spot the Ooze Empress, hanging over the stairs.  As you wave to get her attention, she plops off the celing to come and greet you.  As you explain your situation to her, she chuckles, catching you off guard.  ""You know, I was placed on this floor as kind of a buffer.  Mistress Medusa isn't interested in weaklings, and if you even want to have a chance at beating her, you need to have a stronger will."".  You notice a shift in her previously bubbly personality, and when the rest of her tentacles drop down, you take a leap back and prepare for combat." & DDUtils.RNRN &
                                """Let's see if you've learned anthing since the last time you tried this,"" she says with an somewhat mencing grin, ""... though I'm sure neither of us would mind a repeat either.""")
         End If
     End Sub
@@ -2234,7 +2269,7 @@ Public Class Game
                     iarr(i) = Portrait.imgLib.mAttributes(i)(id.Item1)
                 End If
                 ids(i) = id
-                If i = 6 And (id.Item1 = 0 Or id.Item1 = 3) Then iarr(pInd.ears) = Portrait.recolor2(iarr(pInd.ears), skincolor)
+                If i = 6 And (id.Item1 = 0 Or id.Item1 = 3) Then iarr(pInd.ears) = Portrait.skinRecolor(iarr(pInd.ears), skincolor)
             Next
             changeHairColor(haircolor, ids, iarr)
             changeSkinColor(skincolor, ids, iarr)
@@ -2299,6 +2334,8 @@ Public Class Game
         player1.specialRoute()
         player1.magicRoute()
         ttCosts.RemoveAll()
+
+        updateList = New PQ
     End Sub
     Sub NPCtoCombat(ByRef m As NPC)
         'the NPC versions of from and to combat
@@ -2663,7 +2700,7 @@ Public Class Game
 
         Dim int As Integer = 100 - player1.getSPD
         If int < 1 Then int = 1
-        picNPC.BackgroundImage = currNPC.picNCP(currNPC.npcIndex)
+        picNPC.BackgroundImage = currNPC.picNPC(currNPC.npcIndex)
         updateList.add(player1, int)
         drawBoard()
     End Sub
@@ -3068,16 +3105,16 @@ Public Class Game
         Return Color.FromArgb(a, r, g, b)
     End Function
     Shared Sub changeHairColor(ByVal c As Color, ByVal iarrind() As Tuple(Of Integer, Boolean, Boolean), ByRef iarr As Image())
-        iarr(pInd.rearhair) = Portrait.recolor(Portrait.imgLib.atrs(pInd.rearhair).getAt(iarrind(pInd.rearhair)), c)
-        iarr(pInd.midhair) = Portrait.recolor(Portrait.imgLib.atrs(pInd.midhair).getAt(iarrind(pInd.midhair)), c)
-        iarr(pInd.eyebrows) = Portrait.recolor(Portrait.imgLib.atrs(pInd.eyebrows).getAt(iarrind(pInd.eyebrows)), c)
-        iarr(pInd.fronthair) = Portrait.recolor(Portrait.imgLib.atrs(pInd.fronthair).getAt(iarrind(pInd.fronthair)), c)
+        iarr(pInd.rearhair) = Portrait.hairRecolor(Portrait.imgLib.atrs(pInd.rearhair).getAt(iarrind(pInd.rearhair)), c)
+        iarr(pInd.midhair) = Portrait.hairRecolor(Portrait.imgLib.atrs(pInd.midhair).getAt(iarrind(pInd.midhair)), c)
+        iarr(pInd.eyebrows) = Portrait.hairRecolor(Portrait.imgLib.atrs(pInd.eyebrows).getAt(iarrind(pInd.eyebrows)), c)
+        iarr(pInd.fronthair) = Portrait.hairRecolor(Portrait.imgLib.atrs(pInd.fronthair).getAt(iarrind(pInd.fronthair)), c)
     End Sub
     Shared Sub changeSkinColor(ByVal c As Color, ByVal iarrind() As Tuple(Of Integer, Boolean, Boolean), ByRef iarr As Image())
-        iarr(pInd.body) = Portrait.recolor2(Portrait.imgLib.atrs(pInd.body).getAt(iarrind(pInd.body)), c)
-        iarr(pInd.face) = Portrait.recolor2(Portrait.imgLib.atrs(pInd.face).getAt(iarrind(pInd.face)), c)
-        iarr(pInd.ears) = Portrait.recolor2(Portrait.imgLib.atrs(pInd.ears).getAt(iarrind(pInd.ears)), c)
-        iarr(pInd.nose) = Portrait.recolor2(Portrait.imgLib.atrs(pInd.nose).getAt(iarrind(pInd.nose)), c)
+        iarr(pInd.body) = Portrait.skinRecolor(Portrait.imgLib.atrs(pInd.body).getAt(iarrind(pInd.body)), c)
+        iarr(pInd.face) = Portrait.skinRecolor(Portrait.imgLib.atrs(pInd.face).getAt(iarrind(pInd.face)), c)
+        iarr(pInd.ears) = Portrait.skinRecolor(Portrait.imgLib.atrs(pInd.ears).getAt(iarrind(pInd.ears)), c)
+        iarr(pInd.nose) = Portrait.skinRecolor(Portrait.imgLib.atrs(pInd.nose).getAt(iarrind(pInd.nose)), c)
     End Sub
     'load bar functions
     Public Sub initLoadBar()

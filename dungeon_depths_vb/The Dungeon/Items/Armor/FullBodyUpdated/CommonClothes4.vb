@@ -3,8 +3,8 @@
 
     Sub New()
         MyBase.setName("Ordinary_Clothes")
-        MyBase.setDesc("Ordinary clothes for a ordinary adventurer." & vbCrLf & vbCrLf &
-                       "Fits sizes -1 to 2" & vbCrLf & vbCrLf &
+        MyBase.setDesc("Ordinary clothes for a ordinary adventurer." & DDUtils.RNRN &
+                       "Fits sizes -1 to 2" & DDUtils.RNRN &
                        "+1 Max Mana" & vbCrLf &
                        "+1 SPD")
         id = 188

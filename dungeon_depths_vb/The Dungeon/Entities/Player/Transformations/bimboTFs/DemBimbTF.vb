@@ -36,8 +36,8 @@
     End Sub
     Public Overrides Sub s2HairChange(ByRef p As Player)
         p.prt.haircolor = bimbop
-        p.prt.setIAInd(pInd.rearhair, 6, True, True)
-        p.prt.setIAInd(pInd.midhair, 22, True, True)
+        p.prt.setIAInd(pInd.rearhair, 12, True, True)
+        p.prt.setIAInd(pInd.midhair, 32, True, True)
         p.prt.setIAInd(pInd.fronthair, 19, True, True)
     End Sub
     Public Overrides Sub s2FaceChange(ByRef p As Player)
@@ -47,6 +47,16 @@
             p.prt.setIAInd(pInd.eyes, 29, True, True)  'eyes
         End If
         p.prt.setIAInd(pInd.mouth, 25, True, True)  'mouth
+    End Sub
+    Overrides Sub s2ClothesChange(ByRef p As Player)
+        If Not p.equippedArmor.getName.Equals("Naked") And Not p.pClass.name.Equals("Magical Girl") Then
+            If p.equippedArmor.getSlutVarInd = -1 Then
+                If p.inv.item("Skimpy_Clothes_(D)").count < 1 Then p.inv.add("Skimpy_Clothes_(D)", 1)
+                Equipment.clothesChange("Skimpy_Clothes_(D)")
+            Else
+                Equipment.clothingCurse1(p)
+            End If
+        End If
     End Sub
 
     Public Overrides Function hasBimboHair(p As Player) As Boolean
@@ -70,7 +80,7 @@
         Dim bTF As DemBimboTF = New DemBimboTF(3, 0, 0, False)
         bTF.nextStep = bTF.getNextStep(stepNum)
 
-        p.ongoingTFs.add(bTF)
-        p.update()
+        bTF.nextStep()
+        p.UIupdate()
     End Sub
 End Class

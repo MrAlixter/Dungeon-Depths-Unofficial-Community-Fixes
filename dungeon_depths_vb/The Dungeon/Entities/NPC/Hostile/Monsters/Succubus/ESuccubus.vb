@@ -47,7 +47,7 @@
 
     Public Overridable Sub charm(ByRef t As Entity)
         If Int(Rnd() * t.will) < 15 Then
-            t.lust += lustRaiseThres
+            t.addLust(lustRaiseThres)
             Game.pushLblEvent("The " & getName() & " used Charm!")
             Game.pushLstLog("The " & getName() & " used Charm!")
         Else
@@ -66,5 +66,12 @@
         e.maxMana *= 0.8
         e.speed *= 0.8
         e.will *= 0.8
+    End Sub
+
+    Public Overrides Sub playerDeath(ByRef p As Player)
+        Game.pushLstLog("You black out...")
+
+        p.deLevel(p.level)
+        p.lust = 0
     End Sub
 End Class

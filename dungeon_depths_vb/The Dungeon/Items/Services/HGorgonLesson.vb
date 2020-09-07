@@ -31,9 +31,9 @@
         CType(Game.hteach, HTeach).hypnotize("Perfect!  Speaking of perfection, have you seen my pendant?  I know it is a bit of a cliche, but doesn't seeing it swing back and forth just relax you so perfectly?  Back...and forth...watch it glisten in the light...feel yourself go deeper and deeper...deeper...and deeper...until you just...*SNAP*...drift away...", AddressOf tf2)
     End Sub
     Sub tf2()
-        Dim out = "As soon as she snaps, your entire reality fades away.  You can't bother to recall who you are, or what you're doing, focusing instead solely on your mistresses voice, though in your haze you don't understand much of what she's saying.  You pass in and out of conciousness several times until gradually you begin to clearly hear what she's saying." & vbCrLf & vbCrLf &
-            """...aaannnd there.  We wouldn't want you turning any of the vendors to stone!"" the teacher giggles, returning her pendant to her pocket.  ""I focused primarily on getting you acclimated to your new body with this session, so your concious memories should mostly be in tact.""" & vbCrLf & vbCrLf &
-            "A 'hiss' startles you, and it is only now that it sinks in that your hair is now made up of nest of snakes!  Fortunatly they seem to be fairly well behaved snakes, and you already feel comfortable with them." & vbCrLf & vbCrLf &
+        Dim out = "As soon as she snaps, your entire reality fades away.  You can't bother to recall who you are, or what you're doing, focusing instead solely on your mistresses voice, though in your haze you don't understand much of what she's saying.  You pass in and out of conciousness several times until gradually you begin to clearly hear what she's saying." & DDUtils.RNRN &
+            """...aaannnd there.  We wouldn't want you turning any of the vendors to stone!"" the teacher giggles, returning her pendant to her pocket.  ""I focused primarily on getting you acclimated to your new body with this session, so your concious memories should mostly be in tact.""" & DDUtils.RNRN &
+            "A 'hiss' startles you, and it is only now that it sinks in that your hair is now made up of nest of snakes!  Fortunatly they seem to be fairly well behaved snakes, and you already feel comfortable with them." & DDUtils.RNRN &
             """Well then, it seems like my work here is done,"" the Hypnotist says, inturupting your thoughts.  ""If I can help you with anything else, don't hesitate to ask!"""
 
         Dim aTF As HGorgonTF = New HGorgonTF()

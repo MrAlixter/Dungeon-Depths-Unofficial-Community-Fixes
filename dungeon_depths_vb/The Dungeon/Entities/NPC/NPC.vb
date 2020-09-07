@@ -178,7 +178,7 @@
 
         Game.currFloor.beatBoss = True
     End Sub
-    Private Sub endMonster()
+    Protected Sub endMonster()
         'set temporary player pointer
         Dim p As Player = Game.player1
 
@@ -206,7 +206,7 @@
         If sName.Equals("Ooze Empress") Then
             Game.pushLblEvent(Game.lblEvent.Text.Split("Press")(0), AddressOf RandoTF.floor4revert, AddressOf RandoTF.floor4keep, "Take your body back?")
         End If
-       
+
         p.ongoingTFs.remove("Neko")
 
         p.perks(perk.nekocurse) = -1
@@ -344,4 +344,7 @@
     Public Overridable Function reactToSpell(ByVal spell As String) As Boolean
         Return True
     End Function
+
+    Overridable Sub playerDeath(ByRef p As Player)
+    End Sub
 End Class

@@ -108,6 +108,9 @@
         ndoM = mFace.Count
         atrs.Add(pInd.face, New ImageAttribute(fFace, mFace, ndoF, ndoM))
 
+        '-blush
+        atrs.Add(pInd.blush, New ImageAttribute(bkg, bkg.Count))
+
         '-mid hair
         fRearHair1 = New ImageDump("img/fRearHair1")
         mRearHair1 = New ImageDump("img/mRearHair1")
@@ -301,6 +304,9 @@
         fFace.merge(fTFface)
         mFace.merge(mTFface)
         atrs.Add(pInd.face, New ImageAttribute(fFace, mFace, ndoF, ndoM))
+
+        '-blush
+        atrs.Add(pInd.blush, New ImageAttribute(bkg, bkg.Count))
 
         '-mid hair
         fRearHair1 = New ImageDump("img/fRearHair1")

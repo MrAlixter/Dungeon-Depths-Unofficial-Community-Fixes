@@ -32,10 +32,10 @@
         picPrincess = ShopNPC.npcLib.atrs(0).getAt(41)
         picBunny = ShopNPC.npcLib.atrs(0).getAt(40)
 
-        picNCP = New List(Of Image)
-        picNCP.AddRange({picNormal, ShopNPC.npcLib.atrs(0).getAt(4), ShopNPC.npcLib.atrs(0).getAt(5), picPrincess, picBunny})
+        picNPC = New List(Of Image)
+        picNPC.AddRange({picNormal, ShopNPC.npcLib.atrs(0).getAt(4), ShopNPC.npcLib.atrs(0).getAt(5), picPrincess, picBunny})
 
-        picNCP.AddRange({ShopNPC.npcLib.atrs(0).getAt(42), ShopNPC.npcLib.atrs(0).getAt(43), ShopNPC.npcLib.atrs(0).getAt(44)})
+        picNPC.AddRange({ShopNPC.npcLib.atrs(0).getAt(42), ShopNPC.npcLib.atrs(0).getAt(43), ShopNPC.npcLib.atrs(0).getAt(44)})
         If speed = Game.player1.speed Then speed -= 1
         title = " the "
     End Sub
@@ -59,7 +59,7 @@
                 Game.pushNPCDialog("Hey wanderer, what's going on?  I've got the firepower to keep a mobile forge burning basically wherever I go, " &
                                    "and that means I can get you the best damn weapons you've ever seen hot off the anvil!  I can tell you're not " &
                                    "just looking for something pointy though. If you want that top-shelf quality I've got a signature series " &
-                                   "of stabby stuff that's been through an quick enchanting process." & vbCrLf & vbCrLf &
+                                   "of stabby stuff that's been through an quick enchanting process." & DDUtils.RNRN &
                                    "Let me know what I'm banging out, ok?")
             End If
         ElseIf npcIndex = 1 Then
@@ -74,7 +74,7 @@
             Game.pushNPCDialog("...")
         End If
 
-        Game.picNPC.BackgroundImage = picNCP(npcIndex)
+        Game.picNPC.BackgroundImage = picNPC(npcIndex)
     End Sub
 
     Public Overrides Function toFight() As String
@@ -117,7 +117,7 @@
 
     Public Overrides Sub toDoll()
         Game.pushNPCDialog("...")
-        Game.picNPC.BackgroundImage = picNCP(7)
+        Game.picNPC.BackgroundImage = picNPC(7)
 
         discount = 0.5
     End Sub

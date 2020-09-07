@@ -48,6 +48,10 @@
     isfae           '46
     meetfae1        '47
     succubuscurse   '48
+    succubuscow     '49
+    lucky7          '50
+    dodge           '51
+    seventailsstage '52
 End Enum
 
 Public Class Player
@@ -526,7 +530,7 @@ Public Class Player
                     """Yes!  You've found it!"" your overseer states exitedly, ""I'll be over shortly, don't go anywhere and don't touch that crystal.""" & vbCrLf & _
                     "Obeying, you take a seat and wait for a few minutes before a violet portal opens up near the crystal and your master steps out."
                 If will > 7 Then
-                    out += "  In their attention to the crystal, they don't seem to notice you at all giving you a few minutes to yourself." & vbCrLf & vbCrLf & "Wait... if they aren't paying attention to you..." & vbCrLf & vbCrLf & "You fiddle around with your collar, and they still don't seem to notice your actions, so you leverage your thumb in the collars joint."
+                    out += "  In their attention to the crystal, they don't seem to notice you at all giving you a few minutes to yourself." & DDUtils.RNRN & "Wait... if they aren't paying attention to you..." & DDUtils.RNRN & "You fiddle around with your collar, and they still don't seem to notice your actions, so you leverage your thumb in the collars joint."
                     Game.pushLblEvent(out, AddressOf ThrallTF.betraySorc, AddressOf ThrallTF.waitSorc, "Break off your collar?")
                 Else
                     out += "  Despite your excitement, they don't seem to notice you, instead focusing all their attention on the crystalline array.  As they fiddle with it, you notice a slight purple aura beginning to form around them and wait, are those horns sprouting out of their hair that seems to catch a non-existant wind?  With a flourish, they complete ... something ... and a blinding flash engulfs them.  Where once stood your human controller now stands a half-demon who only now seems to have taken notice of you." & _
@@ -716,11 +720,11 @@ Public Class Player
         Dim out = ""
         If Not tpClassName.Equals(pClass.name) Then
             pClass.revert()
-            If pClass.revertPassage <> "" Then out += pClass.revertPassage & vbCrLf & vbCrLf
+            If pClass.revertPassage <> "" Then out += pClass.revertPassage & DDUtils.RNRN
         End If
         If Not tpFormName.Equals(pForm.name) Then
             pForm.revert()
-            If pForm.revertPassage <> "" Then out += pForm.revertPassage & vbCrLf & vbCrLf
+            If pForm.revertPassage <> "" Then out += pForm.revertPassage & DDUtils.RNRN
         End If
 
         ongoingTFs.resetPolymorphs()
@@ -910,52 +914,13 @@ Public Class Player
 
         setHealth(0.1)
         If Not source Is Nothing AndAlso Not source.getSName Is Nothing Then
-            If source.getSName.Equals("Shopkeeper") Then
-                DeathEffects.ShopkeeperDeath()
-                Exit Sub
-            ElseIf source.getSName.Equals("Shady Wizard") Or source.getName.Equals("Shady Witch") Then
-                DeathEffects.SWizDeath()
-                Exit Sub
-            ElseIf source.getName.Equals("Mindless Bimbo") Then
-                DeathEffects.MBimboDeath()
-                Exit Sub
-            ElseIf source.getName.Equals("Mesmerized Thrall") Or source.getName.Equals("Mesmerized Thrall​") Then
-                DeathEffects.thrallDeath()
-                Exit Sub
-            ElseIf source.getName.Equals("Enthralling Sorcerer") Or source.getName.Equals("Enthralling Sorceress") Then
-                DeathEffects.sorcererDeath()
-                Exit Sub
-            ElseIf source.getName.Equals("Slime") Then
-                DeathEffects.slimeDeath()
-                Exit Sub
-            ElseIf source.getName.Equals("Goo Girl") Then
-                DeathEffects.ggDeath()
-                Exit Sub
-            ElseIf source.getName.Equals("Spider") Then
-                DeathEffects.spiderDeath()
-                Exit Sub
-            ElseIf source.getName.Equals("Arachne Huntress") Then
-                DeathEffects.arachneDeath()
-                Exit Sub
-            ElseIf source.getName.Equals("Mimic") Then
-                DeathEffects.mimicDeath()
-                Exit Sub
-            ElseIf source.getSName.Equals("Marissa, Aspiring Sorceress") Then
-                DeathEffects.marissaASDeath()
-                Exit Sub
-            ElseIf source.getSName.Equals("Ooze Empress") Then
-                DeathEffects.oozeEmpDeath()
-                Exit Sub
-            ElseIf source.getSName.Equals("Medusa, Gorgon of Myth") Then
-                DeathEffects.medusaDeath()
-                Exit Sub
-            ElseIf source.GetType() Is GetType(ESuccubus) Or source.GetType.IsSubclassOf(GetType(ESuccubus)) Then
-                DeathEffects.succubusDeath()
-                Exit Sub
-            ElseIf source.getName.Equals("stamina") Then
+            If source.getName.Equals("stamina") Then
                 Game.pushLblEvent("You starve to death!")
             ElseIf source.getName.Equals("Fire") Then
                 Game.pushLblEvent("You burn to death!")
+            ElseIf source.GetType.IsSubclassOf(GetType(Monster)) Then
+                CType(source, Monster).playerDeath(Me)
+                Exit Sub
             End If
         End If
 
@@ -1336,7 +1301,7 @@ Public Class Player
                 'handles routing for default options
                 If (i = pInd.eyebrows Or i = pInd.eyes) And prt.iArrInd(i).Item1 < 5 Then
                     prt.setIAInd(i, prt.iArrInd(i).Item1, True, False)
-                Else
+                ElseIf i <> pInd.blush Then
                     'handles routing for non-default options
                     Dim f = mfr(i).getFfromM(prt.iArrInd(i).Item1)
                     If (i = pInd.face Or i = pInd.facemark) And f = -1 Then f = 0
@@ -1356,7 +1321,7 @@ Public Class Player
                 'handles routing for default options
                 If (i = pInd.eyebrows Or i = pInd.eyes) And prt.iArrInd(i).Item1 < 5 Then
                     prt.setIAInd(i, prt.iArrInd(i).Item1, True, False)
-                Else
+                ElseIf i <> pInd.blush Then
                     'handles routing for non-default options
                     Dim m = fmr(i).getMfromF(prt.iArrInd(i).Item1)
                     If (i = pInd.face Or i = pInd.facemark) And m = -1 Then m = 0
@@ -1660,6 +1625,12 @@ Public Class Player
         prt.portraitUDate()
     End Sub
 
+    Public Overrides Sub addLust(ByVal i As Integer)
+        lust += i
+
+        prt.draw()
+    End Sub
+
     Public Sub allRoute()
         bsizeroute()
         dsizeroute()
@@ -1787,6 +1758,13 @@ Public Class Player
     Overrides Function getWIL() As Integer
         Return CInt(will * pClass.w * pForm.w) + wBuff
     End Function
+    Public Function passDieRoll(ByVal d As Integer, Optional ByVal lessthanPass As Integer = 1, Optional ByVal savingThrow As Boolean = False) As Boolean
+        Dim rollPassed As Boolean = (Int(Rnd() * d) + 1) <= lessthanPass
+
+        If Not rollPassed AndAlso (perks(perk.lucky7) > -1 Or savingThrow) Then Return (passDieRoll(d, lessthanPass, False))
+
+        Return rollPassed
+    End Function
 
     '|DESCRIPTION GENERATION METHODS|
     Function getColor(ByVal clr As Color) As String
@@ -1890,10 +1868,10 @@ Public Class Player
         'check for single image forms
         Select Case pForm.name
             Case "Dragon"
-                out += "You are a large, green dragon." & vbCrLf & vbCrLf
+                out += "You are a large, green dragon." & DDUtils.RNRN
                 Return out + outPutPerkText()
             Case "Broodmother"
-                out += "You are a large, red dragon." & vbCrLf & vbCrLf
+                out += "You are a large, red dragon." & DDUtils.RNRN
                 Return out + outPutPerkText()
             Case "Oni"
                 out += "You are a massive red woman with small horns betraying a demonic origin."
@@ -1906,32 +1884,32 @@ Public Class Player
                 Return out + outPutPerkText()
             Case "Chicken"
             Case "Fae"
-                out += "You are a small, naked farie with long blond hair and a feminine body.  While you can fly using the delicate pink wings attached to your back, your size makes it difficult to wear or use any form of equipment designed for bigger folk." & vbCrLf & vbCrLf
+                out += "You are a small, naked farie with long blond hair and a feminine body.  While you can fly using the delicate pink wings attached to your back, your size makes it difficult to wear or use any form of equipment designed for bigger folk." & DDUtils.RNRN
                 Return out + outPutPerkText()
             Case "Frog"
-                out += "You are a lime green tiny frog.  Ribbit, ribbit." & vbCrLf & vbCrLf
+                out += "You are a lime green tiny frog.  Ribbit, ribbit." & DDUtils.RNRN
                 Return out + outPutPerkText()
             Case "Sheep"
-                out += "You are a fluffy, white sheep.  Bahh." & vbCrLf & vbCrLf
+                out += "You are a fluffy, white sheep.  Bahh." & DDUtils.RNRN
                 Return out + outPutPerkText()
             Case "Cake"
                 out += "Your body is made of a rich, pink cake.  Despite this, be it through magic or sheer force of will, " &
                     "you can keep yourself together enough to move and even fight.  That said, your form isn't exactly durable " &
                     "and while you may be able to take a few hits, anything else might just end up leaving you splattered on the floor " &
-                    "of the dungeon." & vbCrLf & vbCrLf &
+                    "of the dungeon." & DDUtils.RNRN &
                     "You look female, with massive breasts topped with dollops of whipped cream topping them.  Your ""hair"" is also made " &
-                    "of a similar frosting, done in a feminine style." & vbCrLf & vbCrLf
+                    "of a similar frosting, done in a feminine style." & DDUtils.RNRN
                 Return out + outPutPerkText()
         End Select
         Select Case pClass.name
             Case "Magical Girl​"
-                out += "You are currently in the middle of a magical girl transformation!" & vbCrLf & vbCrLf
+                out += "You are currently in the middle of a magical girl transformation!" & DDUtils.RNRN
                 Return out + outPutPerkText()
             Case "Princess​"
-                out += "Whatever you were before, you are now a princess in a golden ballgown." & vbCrLf & vbCrLf
+                out += "Whatever you were before, you are now a princess in a golden ballgown." & DDUtils.RNRN
                 Return out + outPutPerkText()
             Case "Bunny Girl​"
-                out += "Whatever you were before, you are now a small, blonde adult woman in a azure bunny suit.  The suit, clinging to your suple body includes not just a blue leotard, but also a pair of nylon stockings that highlight your toned legs, and end in a pair of platform heels.  Topping off your ensamble is a white headband with two bunny ears." & vbCrLf & vbCrLf
+                out += "Whatever you were before, you are now a small, blonde adult woman in a azure bunny suit.  The suit, clinging to your suple body includes not just a blue leotard, but also a pair of nylon stockings that highlight your toned legs, and end in a pair of platform heels.  Topping off your ensamble is a white headband with two bunny ears." & DDUtils.RNRN
                 Return out + outPutPerkText()
         End Select
 
@@ -2036,7 +2014,8 @@ Public Class Player
         If perks(perk.astatue) > -1 Then out += "You are currently a statue, and won't be able to do much for " & perks(perk.astatue) & " turns." & vbCrLf & " " & vbCrLf
         Return out
     End Function
-    '|UNIMPLEMENTED|
+
+    '|LEVELING|
     Public Sub levelUp()
         level += 1
         xp -= nextLevelXp

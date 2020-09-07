@@ -1,4 +1,5 @@
 ﻿Public Class DDUtils
+    Public Const RNRN As String = vbCrLf & vbCrLf
     Public Shared Function saveList(ByVal list As List(Of Object)) As String
         Dim out = ""
 
@@ -36,6 +37,8 @@
             a(j) = tAi
         Next
     End Sub
+
+
 
     'Text/Form resizing
     Public Shared Sub resizeForm(ByRef form As Form)

@@ -3,8 +3,8 @@
 
     Sub New()
         MyBase.setName("Fancy_Clothes")
-        MyBase.setDesc("Fancy clothes for a fancy adventurer." & vbCrLf & vbCrLf &
-                       "Fits sizes -1 to 2" & vbCrLf & vbCrLf &
+        MyBase.setDesc("Fancy clothes for a fancy adventurer." & DDUtils.RNRN &
+                       "Fits sizes -1 to 2" & DDUtils.RNRN &
                        "+1 WIL" & vbCrLf &
                        "+1 DEF")
         id = 187

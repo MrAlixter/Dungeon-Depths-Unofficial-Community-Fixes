@@ -3,7 +3,7 @@
 
     Sub New()
         MyBase.setName("Skimpy_Clothes")
-        MyBase.setDesc("A soft set of clothing that seems almost crafted to show off its wearer's body." & vbCrLf & vbCrLf &
+        MyBase.setDesc("A soft set of clothing that seems almost crafted to show off its wearer's body." & DDUtils.RNRN &
                        "Fits sizes -1 to 4")
         id = 191
         tier = Nothing

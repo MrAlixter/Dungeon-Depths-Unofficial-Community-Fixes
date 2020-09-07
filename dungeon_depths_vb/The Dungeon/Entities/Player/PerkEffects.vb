@@ -362,31 +362,34 @@
     End Function
     Shared Sub curseOfBimbo(ByRef p As Player)
         If p.getLust = 0 Then
-            If p.perks(perk.succubuscurse) > -1 Then
-                p.perks(perk.succubuscurse) = -1
+            If p.perks(perk.succubuscurse) > 0 Then
                 p.revertToPState()
+                p.perks(perk.succubuscurse) -= 1
             End If
-        ElseIf p.getLust < 33 And p.getLust > 0 Then
-            If p.perks(perk.succubuscurse) <= 1 And p.perks(perk.succubuscurse) > -1 Then
-                p.dembimState1.save(p)
+
+        ElseIf p.getLust < 33 Then
+            If p.perks(perk.succubuscurse) < 1 Then
                 p.perks(perk.succubuscurse) += 1
                 DemBimboTF.tfPlayer(1, p)
             ElseIf p.perks(perk.succubuscurse) > 1 Then
                 p.revertToState(p.dembimState1)
                 p.perks(perk.succubuscurse) -= 1
             End If
+
         ElseIf p.getLust < 66 Then
-            If p.perks(perk.succubuscurse) <= 2 And p.perks(perk.succubuscurse) > -1 Then
-                p.dembimState2.save(p)
+            If p.perks(perk.succubuscurse) < 2 And p.perks(perk.succubuscurse) Then
+                p.dembimState1.save(p)
                 p.perks(perk.succubuscurse) += 1
                 DemBimboTF.tfPlayer(2, p)
             ElseIf p.perks(perk.succubuscurse) > 2 Then
                 p.revertToState(p.dembimState2)
                 p.perks(perk.succubuscurse) -= 1
             End If
-        ElseIf p.getLust < 100 Then
-            If p.perks(perk.succubuscurse) = 3 Then
+        Else
+            If p.perks(perk.succubuscurse) = 2 Then
+                p.dembimState2.save(p)
                 DemBimboTF.tfPlayer(3, p)
+                p.perks(perk.succubuscurse) += 1
             End If
         End If
     End Sub
@@ -469,8 +472,9 @@
     Shared Function stealthDodge() As Boolean
         Dim p = Game.player1
         Dim out = "You dodge the oncoming attack!"
-        If p.perks(perk.stealth) > 0 And Int(Rnd() * 7) = 0 Then
+        If p.perks(perk.stealth) > 0 And Int(Rnd() * 7) = 0 Or p.perks(perk.dodge) > 0 Then
             Game.pushLblEvent(out)
+            If p.perks(perk.dodge) - 1 > 0 Then p.perks(perk.dodge) -= 1 Else p.perks(perk.dodge) = -1
             Return True
         End If
         Return False

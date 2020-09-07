@@ -25,10 +25,10 @@
         picPrincess = ShopNPC.npcLib.atrs(0).getAt(36)
         picBunny = ShopNPC.npcLib.atrs(0).getAt(37)
 
-        picNCP = New List(Of Image)
-        picNCP.AddRange({picNormal, ShopNPC.npcLib.atrs(0).getAt(4), ShopNPC.npcLib.atrs(0).getAt(5), picPrincess, picBunny})
+        picNPC = New List(Of Image)
+        picNPC.AddRange({picNormal, ShopNPC.npcLib.atrs(0).getAt(4), ShopNPC.npcLib.atrs(0).getAt(5), picPrincess, picBunny})
 
-        picNCP.AddRange({ShopNPC.npcLib.atrs(0).getAt(38)})
+        picNPC.AddRange({ShopNPC.npcLib.atrs(0).getAt(38)})
         If speed = Game.player1.speed Then speed -= 1
         title = " the "
     End Sub
@@ -59,7 +59,7 @@
         Game.picNPC.Visible = True
         If Game.npcmode Then Game.hideNPCButtons()
         Game.pushNPCDialog("So be it.  While I'm not suprised by this betrayal, it's nonetheless disappointing. Your actions " &
-                           "will result in nothing but future hardship, and moving forward I hope you get cursed into ȏ̸̞͕ḅ̷̨͠ļ̴̮́í̶̯͒v̵̪̤̓͠í̵̻̩͆o̵̰̼̓n̵͈̄. " & vbCrLf & vbCrLf &
+                           "will result in nothing but future hardship, and moving forward I hope you get cursed into ȏ̸̞͕ḅ̷̨͠ļ̴̮́í̶̯͒v̵̪̤̓͠í̵̻̩͆o̵̰̼̓n̵͈̄. " & DDUtils.RNRN &
                            "I certainly won't stick around to save you.", AddressOf leave)
     End Sub
 

@@ -39,20 +39,20 @@
         Me.LabelCompanyName.Text = My.Application.Info.CompanyName
         Me.TextBoxDescription.Text = "Dungeon_Depths is a 2D dungeon crawler with art made in Kisekae2.0 featuring TF fetish content, made for adults." & vbCrLf &
                                      "-----------------------------------------------" & vbCrLf &
-                                     "Outside of myself (VHU), there have been several people to join the game's development team.  I would like to recognize:" & vbCrLf & vbCrLf &
-                                     "- Houdini111 for extensive contributions in debugging and game features, namely in the design and implementation of the debug menu, the current shop UI, and the dungeon customization menu." & vbCrLf & vbCrLf &
-                                     "- Lazerlite142 for the creation and management of the game's discord server, the creation of several image packs that signifiganty change up the game's visuals, and for the creation of in-game art assets, such as the Slime dissolved shirt, and the full body images for the Goddess Gown and Steel Armor." & vbCrLf & vbCrLf &
+                                     "Outside of myself (VHU), there have been several people to join the game's development team.  I would like to recognize:" & DDUtils.RNRN &
+                                     "- Houdini111 for extensive contributions in debugging and game features, namely in the design and implementation of the debug menu, the current shop UI, and the dungeon customization menu." & DDUtils.RNRN &
+                                     "- Lazerlite142 for the creation and management of the game's discord server, the creation of several image packs that signifiganty change up the game's visuals, and for the creation of in-game art assets, such as the Slime dissolved shirt, and the full body images for the Goddess Gown and Steel Armor." & DDUtils.RNRN &
                                      "These two have greatly improved our game through their being a part of it, and for that I am eternally grateful." & vbCrLf &
                                      "-----------------------------------------------" & vbCrLf &
                                      "Writing Credits: " & vbCrLf &
-                                    "- Marionette: Slime Loss/TF Scenes, yet-to-be-implemented Vial of Slime & Mimic loss scenes" & vbCrLf & vbCrLf &
-                                    "- Big Iron Red: Unwilling versions of Maid TF, Marissa Loss, and Slut curse passages; yet-to-be-implemented Gothic & Sweet Lolita TF, Victorian Mannequin TF scenes" & vbCrLf & vbCrLf &
-                                    "- Lazerbear7: Proofreading and editing of new passages" & vbCrLf & vbCrLf &
+                                    "- Marionette: Slime Loss/TF Scenes, yet-to-be-implemented Vial of Slime & Mimic loss scenes" & DDUtils.RNRN &
+                                    "- Big Iron Red: Unwilling versions of Maid TF, Marissa Loss, and Slut curse passages; yet-to-be-implemented Gothic & Sweet Lolita TF, Victorian Mannequin TF scenes" & DDUtils.RNRN &
+                                    "- Lazerbear7: Proofreading and editing of new passages" & DDUtils.RNRN &
                                      "-----------------------------------------------" & vbCrLf &
-                                     "I would also like to send a special thanks to:" & vbCrLf & vbCrLf &
-                                     "- undercoversam for advice on the balancing of weapons and armor through simulated dice" & vbCrLf & vbCrLf &
-                                     "- Rangorak for advice on Kisekae2.0 and for the design of the fourth default clothing options, as well as extensive contributions to debugging." & vbCrLf & vbCrLf &
-                                     "- Storm for the ability to bodyswap with the explorer" & vbCrLf & vbCrLf &
+                                     "I would also like to send a special thanks to:" & DDUtils.RNRN &
+                                     "- undercoversam for advice on the balancing of weapons and armor through simulated dice" & DDUtils.RNRN &
+                                     "- Rangorak for advice on Kisekae2.0 and for the design of the fourth default clothing options, as well as extensive contributions to debugging." & DDUtils.RNRN &
+                                     "- Storm for the ability to bodyswap with the explorer" & DDUtils.RNRN &
                                      "- Arrhae Khellian for help cleaning up the BitBucket"
     End Sub
 

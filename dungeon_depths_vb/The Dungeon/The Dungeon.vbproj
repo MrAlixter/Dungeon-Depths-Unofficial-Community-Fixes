@@ -123,9 +123,15 @@
     <Compile Include="Entities\NPC\Hostile\Monsters\Succubus\ESuccubus.vb" />
     <Compile Include="Entities\NPC\Hostile\Monsters\Succubus\ESuccPrincess.vb" />
     <Compile Include="Entities\Player\Specials\DrainSoul.vb" />
+    <Compile Include="Entities\Player\Specials\Dodge.vb" />
     <Compile Include="Entities\Player\Transformations\bimboTFs\DemBimbTF.vb" />
+    <Compile Include="Entities\Player\Transformations\cowbellTFs\MinoDTF.vb" />
+    <Compile Include="Items\Accesories\SevenBandedRing.vb" />
+    <Compile Include="Items\Armor\FullBodyUpdated\BunnySuitC.vb" />
+    <Compile Include="Items\Armor\FullBodyUpdated\CowCosplayD.vb" />
     <Compile Include="Items\Armor\FullBodyUpdated\SkimpyClothesD.vb" />
     <Compile Include="Items\Armor\FullBodyUpdated\STBodysuit.vb" />
+    <Compile Include="Items\Misc\FoxStatue.vb" />
     <Compile Include="Items\Usable\FoxEars.vb" />
     <Compile Include="Items\Weapons\Whips\DemWhip.vb" />
     <Compile Include="Items\Weapons\Whips\ArchDemWhip.vb" />
@@ -394,7 +400,7 @@
     <Compile Include="Items\Armor\GelLinge.vb" />
     <Compile Include="Items\Armor\FullBodyUpdated\GelArmor.vb" />
     <Compile Include="Items\Armor\FullBodyUpdated\CrystalArmor.vb" />
-    <Compile Include="Items\Armor\SkimpyTT.vb" />
+    <Compile Include="Items\Armor\FullBodyUpdated\SkimpyTT.vb" />
     <Compile Include="Items\Armor\FullBodyUpdated\SVBunnySuit.vb" />
     <Compile Include="Items\Armor\LabcoatSV.vb" />
     <Compile Include="Items\Armor\FullBodyUpdated\Labcoat.vb" />
@@ -681,7 +687,7 @@
     <Compile Include="Items\Item.vb" />
     <Compile Include="Items\Misc\Key.vb" />
     <Compile Include="Items\Unimplemented\LeatherWhip.vb" />
-    <Compile Include="Items\Armor\LiveArmor.vb" />
+    <Compile Include="Items\Armor\FullBodyUpdated\LiveArmor.vb" />
     <Compile Include="Items\Armor\FullBodyUpdated\LiveLingerie.vb" />
     <Compile Include="Items\Weapons\Misc\MaidDuster.vb" />
     <Compile Include="Items\Armor\FullBodyUpdated\MaidOutfit.vb" />

@@ -193,4 +193,7 @@
     Public Overridable Sub setLust(ByVal l As Integer)
         lust = l
     End Sub
+    Public Overridable Sub addLust(ByVal i As Integer)
+        lust += i
+    End Sub
 End Class

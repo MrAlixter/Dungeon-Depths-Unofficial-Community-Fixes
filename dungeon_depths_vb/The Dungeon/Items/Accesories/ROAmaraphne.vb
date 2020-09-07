@@ -8,7 +8,7 @@
                        "of its band is inscribed with a blessing of Amaraphne, the love goddess." & vbCrLf &
                        "Use to change armor to slut variant" & vbCrLf &
                        "+ DEF based on equipped armor" & vbCrLf &
-                       "+ SPD based on bust size" & vbCrLf & vbCrLf &
+                       "+ SPD based on bust size" & DDUtils.RNRN &
                        "[dev. note:  this is not fully implemented yet, and while at the momment " &
                        "it is a rare Valentine's day item, I plan on expanding its effect and making " &
                        "it a regular rare item.  I plan on making it so that its effect triggers after " &

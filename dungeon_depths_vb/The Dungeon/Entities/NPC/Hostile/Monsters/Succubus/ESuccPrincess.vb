@@ -16,7 +16,14 @@
         setInventory({25, 74, 168, 194, 182, 205, 214, 218})
         setupMonsterOnSpawn()
     End Sub
-
+    Public Overrides Sub attackCMD(ByRef target As Entity)
+        If Int(Rnd() * 3) = 0 And target.GetType Is GetType(Player) AndAlso CType(target, Player).perks(perk.succubuscurse) = -1 Then
+            Game.pushLblEvent("The " & getName() & " cast Curse of the Slut!")
+            CType(target, Player).perks(perk.succubuscurse) = 0
+            Exit Sub
+        End If
+        MyBase.attackCMD(target)
+    End Sub
     Public Overrides Sub sapLevel(ByRef t As Entity)
         If t.GetType Is GetType(Player) Then sapPlayer(CType(t, Player)) Else sapEntity(t)
 
@@ -32,7 +39,7 @@
 
     Public Overrides Sub charm(ByRef t As Entity)
         If Int(Rnd() * t.will) < 15 Then
-            t.lust += lustRaiseThres
+            t.addLust(lustRaiseThres)
             Game.pushLblEvent("The " & getName() & " used Charm!")
             Game.pushLstLog("The " & getName() & " used Charm!")
         Else

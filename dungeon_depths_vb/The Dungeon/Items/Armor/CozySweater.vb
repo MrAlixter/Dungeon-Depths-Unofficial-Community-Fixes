@@ -3,7 +3,7 @@
 
     Sub New()
         MyBase.setName("Cozy_Sweater")
-        MyBase.setDesc("This sweater is for the chillier parts of the year, and keeps its wearer nice and toasty out in the cold.  Well, that or it's a part of some frost demon(ess)'s elaborate scheme to freeze the dungeon solid..." & vbCrLf & vbCrLf &
+        MyBase.setDesc("This sweater is for the chillier parts of the year, and keeps its wearer nice and toasty out in the cold.  Well, that or it's a part of some frost demon(ess)'s elaborate scheme to freeze the dungeon solid..." & DDUtils.RNRN &
                         "That would explain the arcane runes on the collar and the suspicious boost in magical ability it offers its wearer, at least." & vbCrLf &
                         "Fits sizes -1 through 3" & vbCrLf &
                        "+10 DEF" & vbCrLf &

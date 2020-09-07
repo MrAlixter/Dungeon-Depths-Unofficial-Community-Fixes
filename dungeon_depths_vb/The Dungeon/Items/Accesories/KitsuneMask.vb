@@ -3,9 +3,9 @@
     'The ruby circlet provides a +1 attack buff
     Sub New()
         MyBase.setName("Kitsune_Mask")
-        MyBase.setDesc("A snazzy mask that invokes image of a guardian of a long forgotten shrine. A closer look reveals a smudged riddle inscribed in an shifting script..." & vbCrLf & vbCrLf & _
+        MyBase.setDesc("A snazzy mask that invokes image of a guardian of a long forgotten shrine. A closer look reveals a smudged riddle inscribed in an shifting script..." & DDUtils.RNRN & _
                        """Doused in flame, should this mask you wield;" & vbCrLf & _
-                       "Forest's watcher be revealed""" & vbCrLf & vbCrLf & _
+                       "Forest's watcher be revealed""" & DDUtils.RNRN & _
                        "+15 Mana" & vbCrLf & _
                        "+20 Speed" & vbCrLf & _
                        "+15 Will")

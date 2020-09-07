@@ -77,10 +77,10 @@
         Dim revertText = ""
         If Not form.Equals(p.pClass.name) Then
             p.pClass.revert()
-            revertText = p.pClass.revertPassage & vbCrLf & vbCrLf
+            revertText = p.pClass.revertPassage & DDUtils.RNRN
         ElseIf Not form.Equals(p.pForm.name) Then
             p.pForm.revert()
-            revertText = p.pForm.revertPassage & vbCrLf & vbCrLf
+            revertText = p.pForm.revertPassage & DDUtils.RNRN
         Else
             MsgBox(form.Equals(p.pClass.name) & " | " & form.Equals(p.pForm.name))
         End If

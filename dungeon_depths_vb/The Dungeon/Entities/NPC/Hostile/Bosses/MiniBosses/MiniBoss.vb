@@ -9,6 +9,8 @@
                 Return New Targax
             Case 4
                 Return New OEmpress
+            Case 7
+                Return New SevenTails
             Case Else
                 Return New ExplorerBoss
         End Select

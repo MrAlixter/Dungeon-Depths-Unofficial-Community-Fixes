@@ -106,6 +106,8 @@
             spec = New BurningPunch(u, t)
         ElseIf s.Equals("Gigaton Punch") Then
             spec = New GigaPunch(u, t)
+        ElseIf s.Equals("Dodge") Then
+            spec = New Dodge(u, t)
         End If
 
         spec.perform()
@@ -138,6 +140,8 @@
                 Return "-24 stamina"
             Case "Focused Barrage"
                 Return "-6 stamina for the first hit, and +4 stamina for each additional hit"
+            Case "Dodge"
+                Return "-10 stamina"
             Case Else
                 Return "Useable only once per combat, or consumes an amount of stamina"
         End Select

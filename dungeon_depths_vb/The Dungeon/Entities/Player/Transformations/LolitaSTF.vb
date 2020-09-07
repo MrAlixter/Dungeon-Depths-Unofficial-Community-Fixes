@@ -22,7 +22,7 @@
         Dim out = ""
 
         p.pClass.revert()
-        out = p.pClass.revertPassage & vbCrLf & vbCrLf
+        out = p.pClass.revertPassage & DDUtils.RNRN
         p.pClass = p.classes("Maiden")
 
         'transformation description push
@@ -74,7 +74,7 @@
 
         'End If
         Dim revertText = Game.lblEvent.Text.Split(vbCrLf)(0)
-        If Not revertText.Equals("") Then out = revertText & vbCrLf & vbCrLf & out
+        If Not revertText.Equals("") Then out = revertText & DDUtils.RNRN & out
         Game.pushLblEvent(out)
     End Sub
 

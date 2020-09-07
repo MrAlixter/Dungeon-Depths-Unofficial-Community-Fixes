@@ -43,10 +43,10 @@
         picPrincess = ShopNPC.npcLib.atrs(0).getAt(8)
         picBunny = ShopNPC.npcLib.atrs(0).getAt(7)
 
-        picNCP = New List(Of Image)
-        picNCP.AddRange({picNormal, ShopNPC.npcLib.atrs(0).getAt(4), ShopNPC.npcLib.atrs(0).getAt(5), picPrincess, picBunny})
+        picNPC = New List(Of Image)
+        picNPC.AddRange({picNormal, ShopNPC.npcLib.atrs(0).getAt(4), ShopNPC.npcLib.atrs(0).getAt(5), picPrincess, picBunny})
 
-        picNCP.AddRange({ShopNPC.npcLib.atrs(0).getAt(9)})
+        picNPC.AddRange({ShopNPC.npcLib.atrs(0).getAt(9)})
         If speed = Game.player1.speed Then speed -= 1
         title = " the "
     End Sub
@@ -133,5 +133,25 @@
         MyBase.npcIndex = 5
         Game.npcIndex = 5
         isShop = False
+    End Sub
+
+    Public Overrides Sub playerDeath(ByRef p As Player)
+        Game.fromCombat()
+        Dim out = "You collapse to the ground, the wizard's onslaught wearing down your last defenses.  Twirling " & pPronoun & " staff, they fire off one final blast, and as it hits your lifeforce...surges?  Startled, you notice that your body is coursing with magical energy, far more than you were capable of mustering before.  You spring back to your feet, resuming a fighting stance though your confusion over this turn of events has you puzzled enough to hold off on attacking." & DDUtils.RNRN &
+                  """Give it a sec,"" " & pronoun & " states, ""Or don't.  I don't really care.""" & DDUtils.RNRN &
+                  "You desperatly lunge at them, the flood of mana coursing through you still increasing, and before you can take three steps your body shrinks with a sudden jolt, leaving you looking at a far larger world.  The energy within you seems to have only been focused by your diminished stature.  Its electric flow overwhelms you, and you see small crystals of pure mana begining to form on your arms.  You try to flee, but your now giant opponent simply places the crook of their staff around you.  Escape no longer an option, you can do nothing but cower as the crystals swiftly replace your flesh and bone.  Nothing more than a gem full of magical energy now, you can't even react as the wizard raises their staff to inspect you."
+        Game.picPortrait.BackgroundImage = Game.picStaffEnd.BackgroundImage
+        Game.pushLblEvent(out, AddressOf SWizDeath2)
+    End Sub
+    Sub SWizDeath2()
+        Dim p = Game.player1
+
+        Game.fromCombat()
+        Dim out = """Wow, you're in there good,"" they remark.  ""Geez, looks like somehow you got embeded in the wood.  I'm not walking around with a loser like you in one of my products.  You didn't even make that good of a crystal!  If I want to sell this now, I'm going to need to make you more...eyecatching.""" & DDUtils.RNRN &
+                  pronoun & " snaps " & rPronoun & " fingers, and though you can not see it your body is instantly changed to that of an incredibly busty, nude young woman." & DDUtils.RNRN &
+                  """Now that's a look that will draw in customers.  I might have to make more of these, assuming I can find a couple more shmucks like you!  I wonder what that food guy is up to...""" & DDUtils.RNRN &
+                  "GAME OVER!"
+        Game.picPortrait.BackgroundImage = Game.picStaffEnd.BackgroundImage
+        Game.pushLblEvent(out, AddressOf p.die)
     End Sub
 End Class

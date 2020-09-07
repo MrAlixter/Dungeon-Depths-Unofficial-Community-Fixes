@@ -45,4 +45,14 @@
         Game.pushLblCombatEvent(("The " & getName() & " uses vine lash!"))
         MyBase.attackCMD(target)
     End Sub
+
+    Public Overrides Sub playerDeath(ByRef p As Player)
+        Dim tf As action = AddressOf New AlrauneTF().fullTF
+        tf()
+
+        Game.pushLblEvent("As you collapse to the ground in the haze of pollen, your alraune opponent giggles, and your conciousness slowly fades away." & DDUtils.RNRN &
+                          """Good night, honey!""" & DDUtils.RNRN &
+                          "You are now an Alraune!")
+        p.drawPort()
+    End Sub
 End Class

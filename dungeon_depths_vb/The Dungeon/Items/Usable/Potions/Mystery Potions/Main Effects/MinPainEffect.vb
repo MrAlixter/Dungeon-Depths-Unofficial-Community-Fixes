@@ -2,7 +2,7 @@
     Inherits PEffect
 
     Public Overrides Sub apply(ByRef p As Player)
-        Dim out = Game.lblEvent.Text.Split(vbCrLf)(0) & vbCrLf & vbCrLf
+        Dim out = Game.lblEvent.Text.Split(vbCrLf)(0) & DDUtils.RNRN
 
         p.health -= 10 / p.getMaxHealth
         out += "-10 health."

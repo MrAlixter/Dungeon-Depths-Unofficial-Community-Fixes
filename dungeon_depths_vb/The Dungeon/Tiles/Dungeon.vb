@@ -15,6 +15,7 @@
         floorboss.Add(3, "Key")
         floorboss.Add(4, "Key")
         floorboss.Add(5, "Medusa")
+        floorboss.Add(7, "Key")
         floorboss.Add(75, "???")
 
         floorCodes.Add(0, mFloor.genRNDLVLCode)

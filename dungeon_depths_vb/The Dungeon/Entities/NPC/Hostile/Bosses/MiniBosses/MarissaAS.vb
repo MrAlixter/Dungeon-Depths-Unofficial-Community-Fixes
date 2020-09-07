@@ -81,4 +81,8 @@
 
         Game.currFloor.beatBoss = True
     End Sub
+    Public Overrides Sub playerDeath(ByRef p As Player)
+        Dim mdtf = New MASBimboTF
+        mdtf.step2()
+    End Sub
 End Class

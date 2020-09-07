@@ -2,13 +2,13 @@
     Inherits Transformation
     Sub New(Optional cs As Integer = 2)
         MyBase.New(1, 0, 0, False)
-        tfName = perk.googirltf
+        tfName = "GooGirlTF"
         currStep = cs
         nextStep = getNextStep(cs)
     End Sub
     Sub New(cs As Integer, n As Integer, tts As Integer, wi As Double, cbs As Boolean, tfd As Boolean)
         MyBase.New(cs, n, tts, wi, cbs, tfd)
-        tfName = perk.googirltf
+        tfName = "GooGirlTF"
         nextStep = getNextStep(cs)
     End Sub
 
@@ -60,8 +60,8 @@
         p.prt.setIAInd(pInd.fronthair, 28, True, True)
         Dim athe = "a"
         If p.health <= 0 Then athe = "the"
-        VialOfslimetf.pushLblEventWithoutLoss("Nearly as soon as you make contact with the slime, a reaction begins and you start to melt.  Suprisingly, this doesn't really hurt so much as just feel weird, and you figure that with how much of your body was gelatinous this must have been just enough to finish you off.  While you are reflecting on your current state, " & athe & " Goo Girl glides toward you and giggles. " & vbCrLf & vbCrLf &
-                                """Here, let me help you out!  Reforming can be kinda hard, so I'll just hop in and do it for you.""" & vbCrLf & vbCrLf &
+        VialOfslimetf.pushLblEventWithoutLoss("Nearly as soon as you make contact with the slime, a reaction begins and you start to melt.  Suprisingly, this doesn't really hurt so much as just feel weird, and you figure that with how much of your body was gelatinous this must have been just enough to finish you off.  While you are reflecting on your current state, " & athe & " Goo Girl glides toward you and giggles. " & DDUtils.RNRN &
+                                """Here, let me help you out!  Reforming can be kinda hard, so I'll just hop in and do it for you.""" & DDUtils.RNRN &
                                 "Before you can protest, she dives into your body and the two of you merge into a single puddle.  You are powerless to do anything but watch as she raises the two of you back up into a feminine humanoid body.  Once upright, you are able to resist slightly, though not enough to stop her from swelling your breasts to a massive size.  Noticing your resistance, she grabs the nucleus that contains your mind with your shared body, and smushes it into her own.  Suddenly, you can, like, totally control your hot body again!  You are now a goo girl. (You will restore to this form)")
 
         p.prt.skincolor = Color.FromArgb(200, p.prt.skincolor.R, p.prt.skincolor.G, p.prt.skincolor.B)

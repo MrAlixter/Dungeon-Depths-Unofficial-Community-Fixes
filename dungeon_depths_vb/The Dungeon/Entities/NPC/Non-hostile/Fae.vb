@@ -19,8 +19,8 @@
         rPronoun = "her"
         picNormal = ShopNPC.npcLib.atrs(0).getAt(49)
 
-        picNCP = New List(Of Image)
-        picNCP.AddRange({ShopNPC.npcLib.atrs(0).getAt(49),
+        picNPC = New List(Of Image)
+        picNPC.AddRange({ShopNPC.npcLib.atrs(0).getAt(49),
                          ShopNPC.npcLib.atrs(0).getAt(50),
                          ShopNPC.npcLib.atrs(0).getAt(51),
                          ShopNPC.npcLib.atrs(0).getAt(52),
@@ -148,9 +148,9 @@
         Game.pushNPCDialog("I appreciate it!  Here, I'll get some for both of us!", AddressOf eatPie2)
     End Sub
     Shared Sub eatPie2()
-        Game.pushLblEvent("The fae waves one of her hands, and a plate containing a steaming hot slice of apple pie materializes in front of her.  Grasping it with both hands, she hands it over to you before twirling a fork from nothingness and placing it on the plate.  As you inspect the pie, she beams and summons herself a smaller plate." & vbCrLf & vbCrLf &
-                          """Dig in!""" & vbCrLf & vbCrLf &
-                          "As the fae begins eating, you glance down one last time before shrugging and taking a bite.  To your suprise, the pie is some of the best you've ever tasted!  Before long, your plate is clean, and you are enthusiastically praising the fae on her recipe.  The fae...who...seeeems to be getting bigger by the second..." & vbCrLf & vbCrLf &
+        Game.pushLblEvent("The fae waves one of her hands, and a plate containing a steaming hot slice of apple pie materializes in front of her.  Grasping it with both hands, she hands it over to you before twirling a fork from nothingness and placing it on the plate.  As you inspect the pie, she beams and summons herself a smaller plate." & DDUtils.RNRN &
+                          """Dig in!""" & DDUtils.RNRN &
+                          "As the fae begins eating, you glance down one last time before shrugging and taking a bite.  To your suprise, the pie is some of the best you've ever tasted!  Before long, your plate is clean, and you are enthusiastically praising the fae on her recipe.  The fae...who...seeeems to be getting bigger by the second..." & DDUtils.RNRN &
                           "With folktales and warnings of the tricks of the fairies running through your mind, you internally curse yourself as you sink deep into your apparel.", AddressOf eatPie3)
     End Sub
     Shared Sub eatPie3()
@@ -161,7 +161,7 @@
     End Sub
     Shared Sub eatPie4()
         Game.leaveNPC()
-        Game.pushLblEvent("As the fae vanishes into the mist with all of your stuff, you collapse to your tiny knees." & vbCrLf & vbCrLf &
+        Game.pushLblEvent("As the fae vanishes into the mist with all of your stuff, you collapse to your tiny knees." & DDUtils.RNRN &
                           """Did I really just get robbed by a damn fairy!?""")
     End Sub
 
@@ -195,14 +195,14 @@
     Shared Sub displayFaeImg(ByVal i As Integer)
         Dim f = New Fae
         f.npcIndex = i
-        Game.picNPC.BackgroundImage = f.picNCP(i)
+        Game.picNPC.BackgroundImage = f.picNPC(i)
     End Sub
     Sub leave()
         Game.leaveNPC()
     End Sub
     Sub badForYou()
         If Game.combatmode Then Game.fromCombat()
-        Game.picNPC.BackgroundImage = picNCP(7)
+        Game.picNPC.BackgroundImage = picNPC(7)
         Game.picNPC.Location = New Point(82 * Game.Size.Width / 1024, 179 * Game.Size.Width / 1024)
         Game.picNPC.Visible = True
         If Game.npcmode Then Game.hideNPCButtons()

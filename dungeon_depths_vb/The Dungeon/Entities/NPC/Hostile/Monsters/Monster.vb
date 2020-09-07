@@ -50,6 +50,7 @@
         If speed = Game.player1.getSPD Then speed -= 1
         pos = Game.player1.pos
     End Sub
+
     Shared Function monsterFactory(ByVal mIndex As Integer) As Monster
         Select Case mIndex
             Case 0
@@ -125,34 +126,34 @@
                 tier = {0, 1, 2, 3, 4, 6, 7, 12, 12, 14}
         End Select
 
-        If Game.player1.getLust < 25 And Game.player1.getLust > 0 Then
+        If Game.player1.getLust > 0 Then
             DDUtils.append(tier, 17)
             DDUtils.append(tier, 17)
             DDUtils.append(tier, 17)
 
             DDUtils.append(tier, 16)
-        ElseIf Game.player1.getLust < 50 Then
+        ElseIf Game.player1.getLust > 25 Then
             DDUtils.append(tier, 17)
             DDUtils.append(tier, 17)
             DDUtils.append(tier, 17)
 
-            DDUtils.append(tier, 16)
-            DDUtils.append(tier, 16)
-
-            DDUtils.append(tier, 18)
-        ElseIf Game.player1.getLust < 75 Then
-            DDUtils.append(tier, 17)
-            DDUtils.append(tier, 17)
-            DDUtils.append(tier, 17)
-            DDUtils.append(tier, 17)
-
-            DDUtils.append(tier, 16)
             DDUtils.append(tier, 16)
             DDUtils.append(tier, 16)
 
             DDUtils.append(tier, 18)
+        ElseIf Game.player1.getLust > 50 Then
+            DDUtils.append(tier, 17)
+            DDUtils.append(tier, 17)
+            DDUtils.append(tier, 17)
+            DDUtils.append(tier, 17)
+
+            DDUtils.append(tier, 16)
+            DDUtils.append(tier, 16)
+            DDUtils.append(tier, 16)
+
             DDUtils.append(tier, 18)
-        Else
+            DDUtils.append(tier, 18)
+        ElseIf Game.player1.getLust > 75 Then
             DDUtils.append(tier, 17)
             DDUtils.append(tier, 17)
             DDUtils.append(tier, 17)

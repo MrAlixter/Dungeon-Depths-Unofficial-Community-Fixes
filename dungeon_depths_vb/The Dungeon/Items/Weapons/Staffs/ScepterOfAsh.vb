@@ -4,7 +4,7 @@
     Sub New()
         MyBase.setName("Scepter_of_Ash")
         MyBase.setDesc("A polished staff of a light wood capped off by a gistening, vaugly woman shaped red gem.  While the ""Ash"" portion of its name might refer to the type of wood that its made of, it could also refer to the immense magical power it bears." &
-                       vbCrLf & vbCrLf & "+12 ATK, +42 Max Mana")
+                       DDUtils.RNRN & "+12 ATK, +42 Max Mana")
         id = 145
         tier = Nothing
         MyBase.setUsable(False)
