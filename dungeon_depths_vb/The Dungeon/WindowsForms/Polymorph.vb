@@ -172,6 +172,14 @@
             t.tfCt = 1
             t.tfEnd = 2
             t.form = "Dragon"
+        ElseIf title = "Goth​" Then
+            t.maxHealth = 200
+            t.attack = 6
+            t.defense = 6
+            t.speed = 2
+            t.tfCt = 1
+            t.tfEnd = 6
+            t.form = "Goth Girl"
         End If
     End Sub
     'npc transform methodF:\dungeon_depths\The Dungeon\img\

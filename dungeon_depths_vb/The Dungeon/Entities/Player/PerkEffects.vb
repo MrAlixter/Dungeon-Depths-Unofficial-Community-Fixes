@@ -169,52 +169,18 @@
             Game.player1.perks(perk.barbarian) = -1
         End If
     End Sub
-    Shared Sub ROTLGRoute()
-        Dim p As Player = Game.player1
-        Dim rotlg = CType(p.inv.item(81), ROAmaraphne)
-        rotlg.sBoost = CInt(2.2222 * p.breastSize)
-
-        rotlg.dBoost = 0
-        rotlg.aBoost = 0
-        rotlg.mBoost = 0
-
-        If p.equippedArmor.getSlutVarInd <> -1 Then
-            rotlg.dBoost = -p.equippedArmor.dBoost
-        Else
-            Dim buff = p.equippedArmor.dBoost
-            If buff = 0 Then
-                buff = 3
-            ElseIf buff < 5 Then
-                buff = 5
+    Shared Sub bunnyEars(ByRef p As Player)
+        If p.getLust = 0 Then
+            If p.perks(perk.bunnyears) > 1 Then
+                p.revertToPState()
+                p.perks(perk.bunnyears) = 1
             End If
-            buff *= 4
-            rotlg.dBoost = buff
-            rotlg.aBoost = p.equippedArmor.aBoost * 1.5
-            rotlg.mBoost = p.equippedArmor.mBoost * 1.5
-        End If
-
-        p.UIupdate()
-    End Sub
-    Shared Sub BowTieRoute()
-        Dim p As Player = Game.player1
-        Dim btie = CType(p.inv.item(97), Bowtie)
-
-        btie.aBoost = 0
-        btie.mBoost = 0
-
-        If (p.equippedArmor.getSlutVarInd = -1 And p.equippedArmor.getAntiSlutVarInd <> -1) Or p.equippedArmor.getName.Contains("Bunny") Then
-            Dim buff = p.equippedArmor.dBoost
-            If buff = 0 Then
-                buff = 3
-            ElseIf buff < 5 Then
-                buff = 5
+        ElseIf p.getLust > 33 Then
+            If p.perks(perk.bunnyears) < 2 Then
+                p.perks(perk.bunnyears) = 2
+                BunnyBimboTF.tfPlayer(1, p)
             End If
-            buff *= 3.3
-            btie.aBoost = buff + (p.equippedArmor.aBoost * 1.2)
-            btie.mBoost = buff + (p.equippedArmor.mBoost * 1.2)
         End If
-
-        p.UIupdate()
     End Sub
 
     '|TRANSFORMATION TRIGGERS|
@@ -417,7 +383,9 @@
         flag = hardLightEffect(dmg) Or flag
         flag = bimboDodge() Or flag
         flag = stealthDodge() Or flag
-        If Game.player1.perks(perk.infernoa) > -1 Then flag = reflectDamage(dmg, 0.45, Game.player1.currTarget, Game.player1)
+        Dim p = Game.player1
+        If p.perks(perk.bunnyears) = 2 Then p.addLust(-dmg / 2)
+        If p.perks(perk.infernoa) > -1 Then flag = reflectDamage(dmg, 0.45, p.currTarget, p)
         Return flag
     End Function
     Shared Function bowTieEffect() As Boolean
@@ -431,6 +399,12 @@
                 Return True
             ElseIf r > 5 Then
                 Game.pushLblEvent("Your bowtie begins glowing, and suddenly everything seems to slow down.  You deftly sidestep the oncomming blow!  Time returns to its normal speed shortly, and your bowtie returns to its inert state.")
+                Return True
+            End If
+        ElseIf p.perks(perk.bunnyears) > -1 Then
+            Dim r = Int(Rnd() * 10)
+            If r > 4 Then
+                Game.pushLblEvent("Your headband begins glowing, and suddenly everything seems to slow down.  You deftly sidestep the oncomming blow!  Time returns to its normal speed shortly, and your bunny ear headband returns to its inert state.")
                 Return True
             End If
         End If

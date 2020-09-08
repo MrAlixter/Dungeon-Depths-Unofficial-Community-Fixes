@@ -1,12 +1,12 @@
 ﻿Public Class Accessory
     Inherits Item
     'Accessories are equippable items that provide small passive buffs
-    Public aBoost As Integer = 0
-    Public dBoost As Integer = 0
-    Public hBoost As Integer = 0
-    Public mBoost As Integer = 0
-    Public sBoost As Integer = 0
-    Public wBoost As Integer = 0
+    Protected aBoost As Integer = 0
+    Protected dBoost As Integer = 0
+    Protected hBoost As Integer = 0
+    Protected mBoost As Integer = 0
+    Protected sBoost As Integer = 0
+    Protected wBoost As Integer = 0
     Public fInd As Tuple(Of Integer, Boolean, Boolean)
     Public mInd As Tuple(Of Integer, Boolean, Boolean)
     Public isCursed, underClothes As Boolean
@@ -22,4 +22,23 @@
             MyBase.discard()
         End If
     End Sub
+
+    Public Overridable Function getABoost(ByRef p As Player) As Integer
+        Return aBoost
+    End Function
+    Public Overridable Function getDBoost(ByRef p As Player) As Integer
+        Return dBoost
+    End Function
+    Public Overridable Function getHBoost(ByRef p As Player) As Integer
+        Return hBoost
+    End Function
+    Public Overridable Function getMBoost(ByRef p As Player) As Integer
+        Return mBoost
+    End Function
+    Public Overridable Function getSBoost(ByRef p As Player) As Integer
+        Return sBoost
+    End Function
+    Public Overridable Function getWBoost() As Integer
+        Return wBoost
+    End Function
 End Class

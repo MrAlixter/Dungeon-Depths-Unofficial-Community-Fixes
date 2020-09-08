@@ -124,8 +124,12 @@
     <Compile Include="Entities\NPC\Hostile\Monsters\Succubus\ESuccPrincess.vb" />
     <Compile Include="Entities\Player\Specials\DrainSoul.vb" />
     <Compile Include="Entities\Player\Specials\Dodge.vb" />
+    <Compile Include="Entities\Player\Spells\PuffUp.vb" />
+    <Compile Include="Entities\Player\Spells\RLust.vb" />
+    <Compile Include="Entities\Player\Transformations\bimboTFs\BunnyBimboTF.vb" />
     <Compile Include="Entities\Player\Transformations\bimboTFs\DemBimbTF.vb" />
     <Compile Include="Entities\Player\Transformations\cowbellTFs\MinoDTF.vb" />
+    <Compile Include="Items\Accesories\BunnyEars.vb" />
     <Compile Include="Items\Accesories\SevenBandedRing.vb" />
     <Compile Include="Items\Armor\FullBodyUpdated\BunnySuitC.vb" />
     <Compile Include="Items\Armor\FullBodyUpdated\CowCosplayD.vb" />
@@ -133,6 +137,7 @@
     <Compile Include="Items\Armor\FullBodyUpdated\STBodysuit.vb" />
     <Compile Include="Items\Misc\FoxStatue.vb" />
     <Compile Include="Items\Usable\FoxEars.vb" />
+    <Compile Include="Items\Usable\Spellbooks\CSpellbook.vb" />
     <Compile Include="Items\Weapons\Whips\DemWhip.vb" />
     <Compile Include="Items\Weapons\Whips\ArchDemWhip.vb" />
     <Compile Include="TFList.vb" />
@@ -390,7 +395,7 @@
     <Compile Include="Items\Armor\FullBodyUpdated\ProMagGirlOutfit.vb" />
     <Compile Include="Items\Armor\FullBodyUpdated\ScaleArmor.vb" />
     <Compile Include="Items\Armor\FullBodyUpdated\ScaleBikini.vb" />
-    <Compile Include="Items\Armor\GothOutfit.vb" />
+    <Compile Include="Items\Armor\FullBodyUpdated\GothOutfit.vb" />
     <Compile Include="Items\Armor\FullBodyUpdated\AngelicSweater.vb" />
     <Compile Include="Items\Armor\FullBodyUpdated\FoNight.vb" />
     <Compile Include="Items\Armor\FullBodyUpdated\MagSlutOutfit.vb" />

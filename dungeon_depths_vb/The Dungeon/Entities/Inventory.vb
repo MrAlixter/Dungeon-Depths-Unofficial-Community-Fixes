@@ -243,6 +243,7 @@
         internal_inventory.Add("Bunny_Suit_(Classic)", New BunnySuitC)      '222
         internal_inventory.Add("Seven_Banded_Ring", New SevenBandedRing)    '223
         internal_inventory.Add("Fox_Statue", New FoxStatue)                 '224
+        internal_inventory.Add("Bunny_Ears", New BunnyEars)                 '225
 
         armor = {New Naked,
                  Me.item(5), Me.item(7), Me.item(8), Me.item(10),
@@ -303,7 +304,7 @@
                 Me.item(97), Me.item(110), Me.item(123), Me.item(139),
                 Me.item(140), Me.item(141), Me.item(149), Me.item(161),
                 Me.item(164), Me.item(168), Me.item(180), Me.item(197),
-                Me.item(198), Me.item(223)}
+                Me.item(198), Me.item(223), Me.item(225)}
 
         potions = {Me.item(2), Me.item(13), Me.item(14), Me.item(25),
                    Me.item(26), Me.item(27), Me.item(28), Me.item(29),

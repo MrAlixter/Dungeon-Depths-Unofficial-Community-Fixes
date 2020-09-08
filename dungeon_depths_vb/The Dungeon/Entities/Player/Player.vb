@@ -52,6 +52,7 @@
     lucky7          '50
     dodge           '51
     seventailsstage '52
+    bunnyears       '53
 End Enum
 
 Public Class Player
@@ -974,6 +975,7 @@ Public Class Player
         If health > 1 Then health = 1
         If will < 0 Then will = 0
         If mana > getMaxMana() And Not Game.combatmode And Not solFlag Then mana = getMaxMana()
+        If lust < 0 Then lust = 0
 
         If xp >= nextLevelXp Then levelUp()
 
@@ -1050,15 +1052,6 @@ Public Class Player
         'living lingerie
         If perks(perk.livelinge) > -1 Then
             needsToUpdatePortrait = PerkEffects.livingLingerie()
-        End If
-
-        'rotlg
-        If perks(perk.rotlg) > -1 Then
-            PerkEffects.ROTLGRoute()
-        End If
-        'bowtie
-        If perks(perk.bowtie) > -1 And pClass.name.Equals("Bunny Girl") Then
-            PerkEffects.BowTieRoute()
         End If
 
         '|TRANSFORMATION TRIGGERS|
@@ -1737,23 +1730,23 @@ Public Class Player
 
     '|GETTER/SETTER METHODS|
     Overrides Function getMaxHealth() As Integer
-        Return CInt((maxHealth + hBuff) * pClass.h * pForm.h) + equippedArmor.hBoost + equippedAcce.hBoost
+        Return CInt((maxHealth + hBuff) * pClass.h * pForm.h) + equippedArmor.hBoost + equippedAcce.getHBoost(Me)
     End Function
     Overrides Function getMaxMana() As Integer
         If equippedArmor Is Nothing Or equippedWeapon Is Nothing Then Return CInt(maxMana * pForm.m * pForm.m) + mBuff
-        Return CInt((maxMana + mBuff) * pForm.m * pForm.m) + equippedArmor.mBoost + equippedWeapon.mBoost + equippedAcce.mBoost
+        Return CInt((maxMana + mBuff) * pForm.m * pForm.m) + equippedArmor.mBoost + equippedWeapon.mBoost + equippedAcce.getMBoost(Me)
     End Function
     Overrides Function getATK() As Integer
         If equippedArmor Is Nothing Or equippedWeapon Is Nothing Then Return CInt(attack * pForm.a * pClass.a) + aBuff
-        Return CInt((attack + aBuff) * pForm.a * pClass.a) + equippedArmor.aBoost + equippedAcce.aBoost
+        Return CInt((attack + aBuff) * pForm.a * pClass.a) + equippedArmor.aBoost + equippedAcce.getABoost(Me)
     End Function
     Overrides Function getDEF() As Integer
         If equippedArmor Is Nothing Or equippedWeapon Is Nothing Then Return CInt(defense * pClass.d * pForm.d) + dBuff
-        Return CInt((defense + dBuff) * pClass.d * pForm.d) + equippedArmor.dBoost + equippedAcce.dBoost
+        Return CInt((defense + dBuff) * pClass.d * pForm.d) + equippedArmor.dBoost + equippedAcce.getDBoost(Me)
     End Function
     Overrides Function getSPD() As Integer
         If equippedArmor Is Nothing Or equippedWeapon Is Nothing Then Return CInt(speed * pClass.s * pForm.s) + sBuff
-        Return CInt((speed + sBuff) * pClass.s * pForm.s) + equippedArmor.sBoost + equippedAcce.sBoost
+        Return CInt((speed + sBuff) * pClass.s * pForm.s) + equippedArmor.sBoost + equippedAcce.getSBoost(Me)
     End Function
     Overrides Function getWIL() As Integer
         Return CInt(will * pClass.w * pForm.w) + wBuff

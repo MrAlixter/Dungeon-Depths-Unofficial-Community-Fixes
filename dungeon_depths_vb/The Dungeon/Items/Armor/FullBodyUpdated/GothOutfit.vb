@@ -22,6 +22,12 @@
         MyBase.bsize6 = New Tuple(Of Integer, Boolean, Boolean)(250, True, True)
         MyBase.bsize7 = New Tuple(Of Integer, Boolean, Boolean)(251, True, True)
 
+        MyBase.usize1 = New Tuple(Of Integer, Boolean, Boolean)(256, True, True)
+        MyBase.usize2 = New Tuple(Of Integer, Boolean, Boolean)(257, True, True)
+        MyBase.usize3 = New Tuple(Of Integer, Boolean, Boolean)(258, True, True)
+        MyBase.usize4 = New Tuple(Of Integer, Boolean, Boolean)(259, True, True)
+        MyBase.usize5 = New Tuple(Of Integer, Boolean, Boolean)(260, True, True)
+
         MyBase.compressesBreasts = False
     End Sub
 End Class

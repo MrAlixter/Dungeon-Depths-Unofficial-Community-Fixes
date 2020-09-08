@@ -31,7 +31,6 @@
     End Sub
     Public Overrides Sub onEquip(ByRef p As Player)
         p.perks(perk.rotlg) = 1
-        PerkEffects.ROTLGRoute()
         p.UIupdate()
     End Sub
     Public Overrides Sub onUnequip(ByRef p As Player)
@@ -39,4 +38,33 @@
         Equipment.antiClothingCurse(p)
         p.drawPort()
     End Sub
+
+    Public Overrides Function getABoost(ByRef p As Player) As Integer
+        If p.equippedArmor.getSlutVarInd <> -1 Then Return 0
+
+        Return p.equippedArmor.aBoost * 1.5
+    End Function
+    Public Overrides Function getDBoost(ByRef p As Player) As Integer
+        If p.equippedArmor.getSlutVarInd <> -1 Then Return -p.equippedArmor.dBoost
+
+        Dim buff = p.equippedArmor.dBoost
+
+        If buff = 0 Then
+            buff = 3
+        ElseIf buff < 5 Then
+            buff = 5
+        End If
+
+        buff *= 4
+
+        Return buff
+    End Function
+    Public Overrides Function getSBoost(ByRef p As Player) As Integer
+        Return CInt(2.2222 * p.breastSize)
+    End Function
+    Public Overrides Function getMBoost(ByRef p As Player) As Integer
+        If p.equippedArmor.getSlutVarInd <> -1 Then Return 0
+
+        Return p.equippedArmor.mBoost * 1.5
+    End Function
 End Class

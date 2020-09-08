@@ -871,6 +871,7 @@ Public Class mFloor
         Dim inv = New Inventory(False)
 
         inv.add("Chicken_Suit", 1)
+        inv.add("Bunny_Ears", 1)
         inv.add(150, 1)
 
         c1 = Game.baseChest.Create(inv, p, False)

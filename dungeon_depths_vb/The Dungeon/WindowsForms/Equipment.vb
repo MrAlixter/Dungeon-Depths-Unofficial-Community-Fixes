@@ -168,7 +168,7 @@
         End If
 
         Equipment.accChange(acce)
-        If p.equippedAcce.mBoost > 0 Then p.mana += p.equippedAcce.mBoost
+        If p.equippedAcce.getMBoost(p) > 0 Then p.mana += p.equippedAcce.getMBoost(p)
         If p.mana > p.getMaxMana Then p.mana = p.getMaxMana
 
         Return True
@@ -301,15 +301,6 @@
             p.equippedArmor = sArmor
             cboxArmor.Text = clothes
             p.equippedArmor.onEquip(p)
-        End If
-
-        'ring of the love goddess stat changes
-        If p.perks(perk.rotlg) > -1 Then
-            PerkEffects.ROTLGRoute()
-        End If
-        'bowtie stat changes
-        If p.perks(perk.bowtie) > -1 Then
-            PerkEffects.BowTieRoute()
         End If
     End Sub
     'clothesChange handles the equipping and unequipping of weapon
