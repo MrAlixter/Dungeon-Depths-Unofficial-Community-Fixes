@@ -3,8 +3,8 @@
 Public Class ShopV2
     Dim sk As ShopNPC = Game.currNPC
     Dim p As Player = Game.player1
-    Dim skInventory As List(Of String) = Nothing
-    Dim pInventory As List(Of String) = Nothing
+    Dim skInventory, pInventory As List(Of String)
+    Dim skInvInds, pInvInds As List(Of Integer)
 
     Private Sub Done_Click(sender As Object, e As EventArgs) Handles btnDone.Click
         Me.Close()
@@ -13,6 +13,9 @@ Public Class ShopV2
         skInventory = New List(Of String)
         pInventory = New List(Of String)
 
+        skInvInds = New List(Of Integer)
+        pInvInds = New List(Of Integer)
+
         txtdesc.Text = ""
 
         RefreshScreen()
@@ -20,38 +23,54 @@ Public Class ShopV2
 
         DDUtils.resizeForm(Me)
     End Sub
+
+    'refresh
     Private Sub RefreshScreen()
+        '|Player Inventory Refresh|
         lblYG.Text = "Gold: " & p.gold
-        lblSKG.Text = "Gold: " & sk.gold
         pInventory.Clear()
         boxInventory.Items.Clear()
-        skInventory.Clear()
-        boxShop.Items.Clear()
+        pInvInds.Clear()
+
         For i = 0 To p.inv.upperBound
             Dim p_inv_i = p.inv.item(i)
             If p.inv.getCountAt(i) > 0 Then
                 If p_inv_i.getAName().Equals(p.equippedArmor.getAName()) Or p.inv.item(i).getAName().Equals(p.equippedWeapon.getAName()) Or p_inv_i.getAName().Equals(p.equippedAcce.getAName()) Then
-                    If p_inv_i.count > 1 Then
-                        boxInventory.Items.Add(lineup(p_inv_i.getName(), Int(p_inv_i.value / 2), p_inv_i.count - 1))
-                        pInventory.Add(p_inv_i.getAName())
-                    End If
+                    If p_inv_i.count > 1 Then addItemToPInv(p_inv_i, True)
                 Else
-                    boxInventory.Items.Add(lineup(p_inv_i.getName(), Int(p_inv_i.value / 2), p_inv_i.count))
-                    pInventory.Add(p_inv_i.getAName())
+                    addItemToPInv(p_inv_i)
                 End If
             End If
         Next
+
+        '|Shop Inventory Refresh|
+        lblSKG.Text = "Gold: " & sk.gold
+        skInventory.Clear()
+        boxShop.Items.Clear()
+        skInvInds.Clear()
+
         Dim skInv = sk.getShopInv
         For i = 0 To skInv.upperBound
             If sk.inv.getCountAt(i) > 0 And i <> 43 Then
                 Dim sk_inv_i As Item = skInv.item(i)
-                boxShop.Items.Add(lineup(sk_inv_i.getAName(), (sk_inv_i.value)))
-                skInventory.Add(sk_inv_i.getAName())
+                addItemToSkInv(sk_inv_i)
             End If
         Next
 
+        '|Apply Filter|
         inventoryFilterUpdate()
         shopFilterUpdate()
+    End Sub
+    Private Sub addItemToPInv(ByRef i As Item, Optional ByVal reduced As Boolean = False)
+        If Not reduced Then boxInventory.Items.Add(lineup(i.getName(), Int(i.value / 2), i.count)) Else boxInventory.Items.Add(lineup(i.getName(), Int(i.value / 2), i.count - 1))
+        pInventory.Add(i.getAName())
+        pInvInds.Add(i.id)
+    End Sub
+    Private Sub addItemToSkInv(ByRef i As Item)
+        boxShop.Items.Add(lineup(i.getAName(), (i.value)))
+        skInventory.Add(i.getAName())
+        skInvInds.Add(i.id)
+
     End Sub
 
     'sell
@@ -59,36 +78,22 @@ Public Class ShopV2
         Dim items = boxInventory.SelectedItems
         Dim cost As Integer = 0
         Dim indexes As List(Of Integer) = New List(Of Integer)
+
+        'Determine the items that are being sold and the total count
         For i As Integer = 0 To items.Count - 1
-            Dim name As String = items(i).Split({" "c, "("c, "."c})(0)
-            'Dim name As String = Regex.Split(items(i), ChrW(8203))(0).Trim() 'Read for the zero-width whitespace character
-            If name.Last = "." Then name = name.Substring(0, name.Length - 1)
-            Dim ind As Integer
+            Dim item As Item = p.inv.item(pInvInds(i))
 
-            If p.inv.item(name) Is Nothing Then
-                For j As Integer = 0 To p.inv.upperBound
-                    If p.inv.item(j).getName().Contains(name) Then
-                        ind = j
-                        indexes.Add(ind)
-                        Exit For
-                    End If
-                Next
-            Else
-                ind = p.inv.item(name).getId
-                indexes.Add(ind)
-            End If
-
-            Dim item As Item = p.inv.item(ind)
             If item.count >= number.Value Then
                 cost += (item.value) / 2 * number.Value
             Else
-                cost += p.inv.item(ind).value / 2 * item.count
+                cost += item.value / 2 * item.count
             End If
         Next
 
+        'Make the sale
         If cost <= sk.gold Then
             For i As Integer = 0 To indexes.Count - 1
-                Dim item As Item = p.inv.item(indexes(i))
+                Dim item As Item = p.inv.item(pInvInds(i))
                 If item.getName().Contains(p.equippedArmor.getName()) Or item.getName().Contains(p.equippedWeapon.getName()) Or item.getName().Contains(p.equippedAcce.getName()) Then
                     If item.count - number.Value >= 1 Then
                         item.count -= number.Value
@@ -120,38 +125,16 @@ Public Class ShopV2
     End Sub
     'buy
     Private Sub btnBuy_Click(sender As Object, e As EventArgs) Handles btnBuy.Click
-        Dim items = boxShop.SelectedItems
         Dim cost As Integer = 0
-        Dim indexes As List(Of Integer) = New List(Of Integer)
-        For i As Integer = 0 To items.Count - 1
-            Dim name As String = items(i).Split({" "c, "("c, "."c})(0)
-            'Dim name As String = Regex.Split(items(i), ChrW(8203))(0).Trim() 'Read for the zero-width whitespace character
-
-            Dim ind As Integer
-            If p.inv.item(name) Is Nothing Then
-                For j As Integer = 0 To p.inv.upperBound
-                    If p.inv.item(j).getAName().Contains(name) Then
-                        ind = j
-                        indexes.Add(ind)
-                        Exit For
-                    End If
-                Next
-            Else
-                ind = p.inv.item(name).getId
-                indexes.Add(ind)
-            End If
-
-            Dim item As Item = sk.getShopInv.item(ind)
-            If number.Value > item.saleLim Then number.Value = item.saleLim
-            cost += (item.value) * number.Value
-        Next
+        Dim itemToBuy As Item = sk.getShopInv.item(skInvInds(boxShop.SelectedIndex))
+       
+        If number.Value > itemToBuy.saleLim Then number.Value = itemToBuy.saleLim
+        cost = (itemToBuy.value) * number.Value
 
         If cost <= p.gold Then
-            For i As Integer = 0 To indexes.Count - 1
-                Dim item = p.inv.item(indexes(i))
-                p.inv.add(indexes(i), CInt(number.Value))
-                If Not item.onBuy Is Nothing Then item.onBuy()
-            Next
+            p.inv.add(itemToBuy.id, CInt(number.Value))
+            If Not itemToBuy.onBuy Is Nothing Then itemToBuy.onBuy()
+
             p.gold -= cost
             sk.gold += cost
             txtdesc.Text = "Purchase successful. Spent " & cost & " gold."
