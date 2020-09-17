@@ -17,7 +17,7 @@
 
     'Hair Color Shift
     Overrides Sub hairColorShift()
-        Game.player1.prt.haircolor = Game.cShift(Game.player1.prt.haircolor, bimbop, 125)
+        Game.player1.prt.haircolor = DDUtils.cShift(Game.player1.prt.haircolor, bimbop, 200)
         If Not Game.player1.getHairColor.Equals(bimbop) Then currStep -= 1
         Game.pushLblEvent("Your hair rapidly becomes lighter, brightening towards a pastel pink.")
     End Sub
@@ -50,12 +50,8 @@
     End Sub
     Overrides Sub s2ClothesChange(ByRef p As Player)
         If Not p.equippedArmor.getName.Equals("Naked") And Not p.pClass.name.Equals("Magical Girl") Then
-            If p.equippedArmor.getSlutVarInd = -1 Then
-                If p.inv.item("Skimpy_Clothes_(D)").count < 1 Then p.inv.add("Skimpy_Clothes_(D)", 1)
-                Equipment.clothesChange("Skimpy_Clothes_(D)")
-            Else
-                Equipment.clothingCurse1(p)
-            End If
+            If p.inv.item("Skimpy_Clothes_(D)").count < 1 Then p.inv.add("Skimpy_Clothes_(D)", 1)
+            Equipment.clothesChange("Skimpy_Clothes_(D)")
         End If
     End Sub
 
@@ -77,10 +73,13 @@
     End Function
 
     Shared Sub tfPlayer(ByVal stepNum As Integer, ByRef p As Player)
+
+
         Dim bTF As DemBimboTF = New DemBimboTF(3, 0, 0, False)
         bTF.nextStep = bTF.getNextStep(stepNum)
 
         bTF.nextStep()
         p.UIupdate()
+        p.drawPort()
     End Sub
 End Class

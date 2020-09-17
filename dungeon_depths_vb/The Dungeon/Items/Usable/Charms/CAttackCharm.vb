@@ -17,6 +17,7 @@
 
         p.attack += 5
         p.UIupdate()
+        p.perks(perk.acharmsused) += 1
 
         If Not p.pForm.name.Equals("Minotaur Bull") And Not p.perks(perk.cowbell) > -1 And (Int(Rnd() * 2) = 0 Or Game.noRNG) Then
             p.ongoingTFs.Add(New MinoMTF())

@@ -480,8 +480,8 @@
         mfEquivalentIndexes.Add(pInd.hairacc, New MFRouting({},
                                               {}))
         'genitalia
-        mfEquivalentIndexes.Add(pInd.genitalia, New MFRouting({},
-                                              {}))
+        mfEquivalentIndexes.Add(pInd.genitalia, New MFRouting({0, 1, 2, 3, 4},
+                                              {-1, -1, -1, -1, -1}))
         'shoulders
         mfEquivalentIndexes.Add(pInd.shoulders, New MFRouting({},
                                               {}))

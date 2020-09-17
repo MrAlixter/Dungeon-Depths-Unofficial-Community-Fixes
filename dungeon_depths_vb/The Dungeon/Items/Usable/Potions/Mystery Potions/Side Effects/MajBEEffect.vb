@@ -4,9 +4,7 @@
     Public Overrides Sub apply(ByRef p As Player)
         p.be()
         p.be()
-        If Transformation.canBeTFed(p) Then
-            p.pState.save(p)
-        End If
+        p.savePState()
         Game.pushLblEvent("You breasts tingle plesently . . .")
         p.drawPort()
     End Sub

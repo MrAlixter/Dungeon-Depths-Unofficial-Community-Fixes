@@ -35,7 +35,7 @@
     End Sub
 
     Overrides Sub earTF(ByRef p As Player)
-        p.prt.setIAInd(pInd.ears, 3, True, True)
+        p.prt.setIAInd(pInd.ears, 3, True, False)
         p.wBuff -= 1
     End Sub
     Overrides Sub tfDialogStep3(ByVal tfEars As Boolean, ByVal tfHair As Boolean)
@@ -76,9 +76,9 @@
     End Sub
 
     Overrides Sub boobTF(ByRef p As Player)
-        p.breastSize += Int(Rnd() * 2)
-        p.changeSkinColor(Game.cShift(p.prt.skincolor, Color.FromArgb(255, 222, 138, 172), 35))
-        MyBase.boobTF(p)
+        p.breastSize = Math.Max(5, p.breastSize)
+
+        p.changeSkinColor(DDUtils.cShift(p.prt.skincolor, Color.FromArgb(255, 222, 138, 172), 150))
     End Sub
     Overrides Sub tfDialogStep678(ByVal bsize7 As Boolean, ByVal bsizeneg1 As Boolean, ByVal be As Boolean, ByVal mtf As Boolean)
         Dim out = ""
@@ -113,11 +113,50 @@
         p.deLevel(p.level)
 
         p.prt.setIAInd(pInd.eyes, 12, True, True)
-        p.prt.setIAInd(pInd.wings, 6, True, True)
+        p.prt.setIAInd(pInd.wings, 6, True, False)
 
         Game.player1.pForm = p.forms("Succubus")
         Game.player1.pClass = p.classes("Bimbo")
+        p.changeSkinColor(DDUtils.cShift(p.prt.skincolor, Color.FromArgb(255, 222, 138, 172), 150))
 
         tfClothes(p)
+    End Sub
+
+    Public Overrides Sub stopTF()
+        MyBase.stopTF()
+        Game.player1.perks(perk.succubuscow) = -1
+    End Sub
+
+    Public Overrides Function getNextStep(stage As Integer) As Action
+        If Game.player1.perks(perk.succubuscow) = -1 Then
+            Return AddressOf stopTF
+        End If
+        Select Case stage
+            Case 0
+                Return AddressOf step1
+            Case 1
+                Return AddressOf step2
+            Case 2
+                Return AddressOf step3
+            Case 3
+                Return AddressOf step4
+            Case 4
+                Return AddressOf step5
+            Case 5
+                Return AddressOf step678
+            Case 6
+                Return AddressOf step9
+            Case Else
+                Return AddressOf stopTF
+        End Select
+    End Function
+
+    Shared Sub tfPlayer(ByVal stepNum As Integer, ByRef p As Player)
+        Dim bTF As MinoDTF = New MinoDTF(9, 0, 0, False)
+        bTF.nextStep = bTF.getNextStep(stepNum)
+
+        bTF.nextStep()
+        p.UIupdate()
+        p.drawPort()
     End Sub
 End Class

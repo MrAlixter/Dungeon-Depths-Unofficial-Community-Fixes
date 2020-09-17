@@ -68,7 +68,7 @@
         p.drawPort()
 
         p.sState.save(p)
-        If Transformation.canBeTFed(p) Then p.pState.save(p)
+        p.savePState()
 
         p.health = 1
         If Game.player1.perks(perk.googirltf) > -1 Then Game.player1.perks(perk.googirltf) = -1

@@ -17,6 +17,7 @@
 
         p.defense += 5
         p.UIupdate()
+        p.perks(perk.dcharmsused) += 1
         count -= 1
     End Sub
 End Class

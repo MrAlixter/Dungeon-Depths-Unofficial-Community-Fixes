@@ -105,7 +105,7 @@ Partial Class GeneratorSettings
         Me.boxWidth.Font = New System.Drawing.Font("Consolas", 10.18868!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.boxWidth.ForeColor = System.Drawing.Color.White
         Me.boxWidth.Location = New System.Drawing.Point(217, 43)
-        Me.boxWidth.Margin = New System.Windows.Forms.Padding(2, 2, 2, 2)
+        Me.boxWidth.Margin = New System.Windows.Forms.Padding(2)
         Me.boxWidth.Maximum = New Decimal(New Integer() {500, 0, 0, 0})
         Me.boxWidth.Minimum = New Decimal(New Integer() {15, 0, 0, 0})
         Me.boxWidth.Name = "boxWidth"
@@ -120,7 +120,7 @@ Partial Class GeneratorSettings
         Me.boxHeight.Font = New System.Drawing.Font("Consolas", 10.18868!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.boxHeight.ForeColor = System.Drawing.Color.White
         Me.boxHeight.Location = New System.Drawing.Point(217, 70)
-        Me.boxHeight.Margin = New System.Windows.Forms.Padding(2, 2, 2, 2)
+        Me.boxHeight.Margin = New System.Windows.Forms.Padding(2)
         Me.boxHeight.Maximum = New Decimal(New Integer() {500, 0, 0, 0})
         Me.boxHeight.Minimum = New Decimal(New Integer() {15, 0, 0, 0})
         Me.boxHeight.Name = "boxHeight"
@@ -135,7 +135,7 @@ Partial Class GeneratorSettings
         Me.boxChestFreqRange.Font = New System.Drawing.Font("Consolas", 10.18868!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.boxChestFreqRange.ForeColor = System.Drawing.Color.White
         Me.boxChestFreqRange.Location = New System.Drawing.Point(217, 117)
-        Me.boxChestFreqRange.Margin = New System.Windows.Forms.Padding(2, 2, 2, 2)
+        Me.boxChestFreqRange.Margin = New System.Windows.Forms.Padding(2)
         Me.boxChestFreqRange.Name = "boxChestFreqRange"
         Me.boxChestFreqRange.Size = New System.Drawing.Size(96, 25)
         Me.boxChestFreqRange.TabIndex = 6
@@ -157,7 +157,7 @@ Partial Class GeneratorSettings
         Me.boxChestFreqMin.Font = New System.Drawing.Font("Consolas", 10.18868!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.boxChestFreqMin.ForeColor = System.Drawing.Color.White
         Me.boxChestFreqMin.Location = New System.Drawing.Point(217, 143)
-        Me.boxChestFreqMin.Margin = New System.Windows.Forms.Padding(2, 2, 2, 2)
+        Me.boxChestFreqMin.Margin = New System.Windows.Forms.Padding(2)
         Me.boxChestFreqMin.Name = "boxChestFreqMin"
         Me.boxChestFreqMin.Size = New System.Drawing.Size(96, 25)
         Me.boxChestFreqMin.TabIndex = 8
@@ -179,7 +179,7 @@ Partial Class GeneratorSettings
         Me.boxChestSizeDependence.Font = New System.Drawing.Font("Consolas", 10.18868!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.boxChestSizeDependence.ForeColor = System.Drawing.Color.White
         Me.boxChestSizeDependence.Location = New System.Drawing.Point(217, 169)
-        Me.boxChestSizeDependence.Margin = New System.Windows.Forms.Padding(2, 2, 2, 2)
+        Me.boxChestSizeDependence.Margin = New System.Windows.Forms.Padding(2)
         Me.boxChestSizeDependence.Minimum = New Decimal(New Integer() {15, 0, 0, 0})
         Me.boxChestSizeDependence.Name = "boxChestSizeDependence"
         Me.boxChestSizeDependence.Size = New System.Drawing.Size(96, 25)
@@ -200,9 +200,9 @@ Partial Class GeneratorSettings
         '
         Me.separator1.FlatStyle = System.Windows.Forms.FlatStyle.Popup
         Me.separator1.Location = New System.Drawing.Point(13, 25)
-        Me.separator1.Margin = New System.Windows.Forms.Padding(2, 2, 2, 2)
+        Me.separator1.Margin = New System.Windows.Forms.Padding(2)
         Me.separator1.Name = "separator1"
-        Me.separator1.Padding = New System.Windows.Forms.Padding(2, 2, 2, 2)
+        Me.separator1.Padding = New System.Windows.Forms.Padding(2)
         Me.separator1.Size = New System.Drawing.Size(603, 8)
         Me.separator1.TabIndex = 11
         Me.separator1.TabStop = False
@@ -212,9 +212,9 @@ Partial Class GeneratorSettings
         Me.GroupBox1.BackColor = System.Drawing.Color.White
         Me.GroupBox1.FlatStyle = System.Windows.Forms.FlatStyle.Popup
         Me.GroupBox1.Location = New System.Drawing.Point(13, 106)
-        Me.GroupBox1.Margin = New System.Windows.Forms.Padding(2, 2, 2, 2)
+        Me.GroupBox1.Margin = New System.Windows.Forms.Padding(2)
         Me.GroupBox1.Name = "GroupBox1"
-        Me.GroupBox1.Padding = New System.Windows.Forms.Padding(2, 2, 2, 2)
+        Me.GroupBox1.Padding = New System.Windows.Forms.Padding(2)
         Me.GroupBox1.Size = New System.Drawing.Size(301, 1)
         Me.GroupBox1.TabIndex = 12
         Me.GroupBox1.TabStop = False
@@ -226,7 +226,7 @@ Partial Class GeneratorSettings
         Me.boxEncounterRate.Font = New System.Drawing.Font("Consolas", 10.18868!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.boxEncounterRate.ForeColor = System.Drawing.Color.White
         Me.boxEncounterRate.Location = New System.Drawing.Point(218, 264)
-        Me.boxEncounterRate.Margin = New System.Windows.Forms.Padding(2, 2, 2, 2)
+        Me.boxEncounterRate.Margin = New System.Windows.Forms.Padding(2)
         Me.boxEncounterRate.Maximum = New Decimal(New Integer() {1000, 0, 0, 0})
         Me.boxEncounterRate.Name = "boxEncounterRate"
         Me.boxEncounterRate.Size = New System.Drawing.Size(96, 25)
@@ -249,7 +249,7 @@ Partial Class GeneratorSettings
         Me.boxEClockResetVal.Font = New System.Drawing.Font("Consolas", 10.18868!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.boxEClockResetVal.ForeColor = System.Drawing.Color.White
         Me.boxEClockResetVal.Location = New System.Drawing.Point(218, 290)
-        Me.boxEClockResetVal.Margin = New System.Windows.Forms.Padding(2, 2, 2, 2)
+        Me.boxEClockResetVal.Margin = New System.Windows.Forms.Padding(2)
         Me.boxEClockResetVal.Maximum = New Decimal(New Integer() {1000, 0, 0, 0})
         Me.boxEClockResetVal.Name = "boxEClockResetVal"
         Me.boxEClockResetVal.Size = New System.Drawing.Size(96, 25)
@@ -272,7 +272,7 @@ Partial Class GeneratorSettings
         Me.boxChestRichnessBase.Font = New System.Drawing.Font("Consolas", 10.18868!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.boxChestRichnessBase.ForeColor = System.Drawing.Color.White
         Me.boxChestRichnessBase.Location = New System.Drawing.Point(217, 196)
-        Me.boxChestRichnessBase.Margin = New System.Windows.Forms.Padding(2, 2, 2, 2)
+        Me.boxChestRichnessBase.Margin = New System.Windows.Forms.Padding(2)
         Me.boxChestRichnessBase.Name = "boxChestRichnessBase"
         Me.boxChestRichnessBase.Size = New System.Drawing.Size(96, 25)
         Me.boxChestRichnessBase.TabIndex = 19
@@ -294,7 +294,7 @@ Partial Class GeneratorSettings
         Me.boxChestRichnessRange.Font = New System.Drawing.Font("Consolas", 10.18868!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.boxChestRichnessRange.ForeColor = System.Drawing.Color.White
         Me.boxChestRichnessRange.Location = New System.Drawing.Point(217, 222)
-        Me.boxChestRichnessRange.Margin = New System.Windows.Forms.Padding(2, 2, 2, 2)
+        Me.boxChestRichnessRange.Margin = New System.Windows.Forms.Padding(2)
         Me.boxChestRichnessRange.Name = "boxChestRichnessRange"
         Me.boxChestRichnessRange.Size = New System.Drawing.Size(96, 25)
         Me.boxChestRichnessRange.TabIndex = 21
@@ -315,7 +315,7 @@ Partial Class GeneratorSettings
         Me.btnReset.Font = New System.Drawing.Font("Consolas", 8.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.btnReset.ForeColor = System.Drawing.Color.White
         Me.btnReset.Location = New System.Drawing.Point(10, 342)
-        Me.btnReset.Margin = New System.Windows.Forms.Padding(2, 2, 2, 2)
+        Me.btnReset.Margin = New System.Windows.Forms.Padding(2)
         Me.btnReset.Name = "btnReset"
         Me.btnReset.Size = New System.Drawing.Size(60, 25)
         Me.btnReset.TabIndex = 22
@@ -328,7 +328,7 @@ Partial Class GeneratorSettings
         Me.btnConfirm.Font = New System.Drawing.Font("Consolas", 8.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.btnConfirm.ForeColor = System.Drawing.Color.White
         Me.btnConfirm.Location = New System.Drawing.Point(544, 342)
-        Me.btnConfirm.Margin = New System.Windows.Forms.Padding(2, 2, 2, 2)
+        Me.btnConfirm.Margin = New System.Windows.Forms.Padding(2)
         Me.btnConfirm.Name = "btnConfirm"
         Me.btnConfirm.Size = New System.Drawing.Size(74, 25)
         Me.btnConfirm.TabIndex = 23
@@ -338,7 +338,7 @@ Partial Class GeneratorSettings
         'divider
         '
         Me.divider.Location = New System.Drawing.Point(322, 51)
-        Me.divider.Margin = New System.Windows.Forms.Padding(2, 2, 2, 2)
+        Me.divider.Margin = New System.Windows.Forms.Padding(2)
         Me.divider.Multiline = True
         Me.divider.Name = "divider"
         Me.divider.Size = New System.Drawing.Size(2, 267)
@@ -351,7 +351,7 @@ Partial Class GeneratorSettings
         Me.boxTrapFreqMin.Font = New System.Drawing.Font("Consolas", 10.18868!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.boxTrapFreqMin.ForeColor = System.Drawing.Color.White
         Me.boxTrapFreqMin.Location = New System.Drawing.Point(525, 70)
-        Me.boxTrapFreqMin.Margin = New System.Windows.Forms.Padding(2, 2, 2, 2)
+        Me.boxTrapFreqMin.Margin = New System.Windows.Forms.Padding(2)
         Me.boxTrapFreqMin.Name = "boxTrapFreqMin"
         Me.boxTrapFreqMin.Size = New System.Drawing.Size(96, 25)
         Me.boxTrapFreqMin.TabIndex = 240
@@ -363,7 +363,7 @@ Partial Class GeneratorSettings
         Me.boxTrapFreqRange.Font = New System.Drawing.Font("Consolas", 10.18868!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.boxTrapFreqRange.ForeColor = System.Drawing.Color.White
         Me.boxTrapFreqRange.Location = New System.Drawing.Point(525, 43)
-        Me.boxTrapFreqRange.Margin = New System.Windows.Forms.Padding(2, 2, 2, 2)
+        Me.boxTrapFreqRange.Margin = New System.Windows.Forms.Padding(2)
         Me.boxTrapFreqRange.Name = "boxTrapFreqRange"
         Me.boxTrapFreqRange.Size = New System.Drawing.Size(96, 25)
         Me.boxTrapFreqRange.TabIndex = 239
@@ -395,7 +395,7 @@ Partial Class GeneratorSettings
         Me.boxTrapSizeDependence.Font = New System.Drawing.Font("Consolas", 10.18868!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.boxTrapSizeDependence.ForeColor = System.Drawing.Color.White
         Me.boxTrapSizeDependence.Location = New System.Drawing.Point(525, 96)
-        Me.boxTrapSizeDependence.Margin = New System.Windows.Forms.Padding(2, 2, 2, 2)
+        Me.boxTrapSizeDependence.Margin = New System.Windows.Forms.Padding(2)
         Me.boxTrapSizeDependence.Minimum = New Decimal(New Integer() {15, 0, 0, 0})
         Me.boxTrapSizeDependence.Name = "boxTrapSizeDependence"
         Me.boxTrapSizeDependence.Size = New System.Drawing.Size(96, 25)
@@ -418,7 +418,7 @@ Partial Class GeneratorSettings
         Me.txtSeed.Font = New System.Drawing.Font("Consolas", 10.18868!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.txtSeed.ForeColor = System.Drawing.Color.White
         Me.txtSeed.Location = New System.Drawing.Point(106, 5)
-        Me.txtSeed.Margin = New System.Windows.Forms.Padding(2, 2, 2, 2)
+        Me.txtSeed.Margin = New System.Windows.Forms.Padding(2)
         Me.txtSeed.Name = "txtSeed"
         Me.txtSeed.Size = New System.Drawing.Size(171, 25)
         Me.txtSeed.TabIndex = 243
@@ -437,8 +437,8 @@ Partial Class GeneratorSettings
         '
         'GeneratorSettings
         '
-        Me.AutoScaleDimensions = New System.Drawing.SizeF(8.0!, 18.0!)
-        Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font
+        Me.AutoScaleDimensions = New System.Drawing.SizeF(106.0!, 106.0!)
+        Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Dpi
         Me.AutoSize = True
         Me.BackColor = System.Drawing.Color.Black
         Me.ClientSize = New System.Drawing.Size(627, 377)

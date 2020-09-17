@@ -7,21 +7,22 @@
 
     Public Overrides Sub onLVLUp(level As Integer, ByRef p As Player)
         If level Mod 2 = 0 Then
-            p.maxMana += 4
-            p.mana += 4
+            p.maxMana += 10
+            p.mana += 10
         ElseIf level Mod 2 = 1 Then
-            p.will += 4
+            p.will += 5
         End If
+
+        If level = 3 And Not p.knownSpells.Contains("Super Fireball") Then p.knownSpells.Add("Super Fireball") : Game.pushLstLog("Super Fireball spell learned!")
     End Sub
 
-    Public Overrides Sub deLVL(levels As Integer, ByRef p As Player)
-        For i = p.level To p.level - levels Step -1
-            p.level = i
-            If i Mod 2 = 0 Then
-                p.maxMana -= 4
-            ElseIf i Mod 2 = 1 Then
-                p.will -= 4
-            End If
-        Next
+    Public Overrides Sub deLVL(level As Integer, ByRef p As Player)
+        If level Mod 2 = 0 Then
+            p.maxMana -= 10
+        ElseIf level Mod 2 = 1 Then
+            p.will -= 5
+        End If
+
+        If level = 3 And p.knownSpells.Contains("Super Fireball") Then p.knownSpells.Remove("Super Fireball") : Game.pushLstLog("Super Fireball spell forgotten!")
     End Sub
 End Class

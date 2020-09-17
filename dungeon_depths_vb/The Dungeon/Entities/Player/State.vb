@@ -102,6 +102,7 @@
             p.will = will
             p.speed = speed
             p.lust = lust
+            p.perks = DDUtils.copyDictionary(perks)
         End If
 
         p.gold = gold
@@ -110,11 +111,9 @@
         p.buttSize = buttSize
         p.equippedWeapon = equippedWeapon
         Equipment.clothesChange(equippedArmor.getName)
-        Equipment.accChange(equippedArmor.getName)
         p.equippedArmor = equippedArmor
         p.equippedAcce = equippedAcce
         p.prt.iArrInd = iArrInd.Clone
-        p.perks = DDUtils.copyDictionary(perks)
         p.inv.invNeedsUDate = invNeedsUDate
         p.prt.haircolor = haircolor
         p.prt.skincolor = skincolor
@@ -230,18 +229,22 @@
         skincolor = Color.FromArgb(A, CInt(readArray(25)), CInt(readArray(26)), CInt(readArray(27)))
         textColor = Color.FromArgb(255, CInt(readArray(28)), CInt(readArray(29)), CInt(readArray(30)))
 
+        If Not readArray(31).Equals("placeholder") Then lust = CInt(readArray(31))
+
         Dim b1 As Integer = readArray(32)
         For i = 0 To b1 - 1
             Dim kvp = readArray(33 + i).Split("!")
             perks(CInt(kvp(0))) = CInt(kvp(1))
         Next
-        For i = 0 To UBound(iArrInd)
-            Dim arr() As String = readArray(33 + b1 + i).Split("%")
+
+        Dim b2 As Integer = CInt(readArray(33 + b1))
+        For i = 0 To b2
+            Dim arr() As String = readArray(34 + b1 + i).Split("%")
             iArrInd(i) = New Tuple(Of Integer, Boolean, Boolean)(CInt(arr(0)), CBool(arr(1)), CBool(arr(2)))
         Next
 
         For Each k In Equipment.acList.Keys
-            If readArray(33 + b1 + 17) = k Then
+            If readArray(35 + b1 + b2) = k Then
                 equippedAcce = Equipment.acList(k)
                 Exit For
             End If
@@ -252,14 +255,15 @@
     'write converts a state into a string to be put into a save file
     Public Function write() As String
         If initFlag Then
-            Dim output As String = CStr(name & "*" & pClass.name & "~" & pForm.name & "*" & description & "*" & health & "*" & maxHealth & "*" & mana & "*" & maxMana & "*" & buttSize & "*" & haircolor.A & "*" & skincolor.A & "*" & _
+            Dim output As String = CStr(name & "*" & pClass.name & "~" & pForm.name & "*" & description & "*" & health & "*" & maxHealth & "*" & mana & "*" & maxMana & "*" & dickSize & "*" & haircolor.A & "*" & skincolor.A & "*" & _
                attack & "*" & defense & "*" & will & "*" & speed & "*" & isPetrified & "*" & stamina & "*" & gold & "*" & equippedArmor.getName() & "*" & equippedWeapon.getName() & "*" & _
                sex & "*" & buttSize & "*" & breastSize & "*" & haircolor.R & "*" & haircolor.G & "*" & haircolor.B & "*" & skincolor.R & "*" & skincolor.G & "*" & skincolor.B & "*" & _
-               textColor.R & "*" & textColor.G & "*" & textColor.B & "*" & "placeholder" & "*")
+               textColor.R & "*" & textColor.G & "*" & textColor.B & "*" & lust & "*")
             output += perks.Count & "*"
             For Each kvp As KeyValuePair(Of perk, Integer) In perks
                 output += (kvp.Key & "!" & kvp.Value & "*")
             Next
+            output += UBound(iArrInd) & "*"
             For i = 0 To UBound(iArrInd)
                 output += (iArrInd(i).Item1 & "%" & iArrInd(i).Item2 & "%" & iArrInd(i).Item3 & "*")
             Next

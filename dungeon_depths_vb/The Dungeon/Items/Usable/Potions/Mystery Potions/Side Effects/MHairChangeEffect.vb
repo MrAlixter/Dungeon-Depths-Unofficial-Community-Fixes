@@ -12,8 +12,6 @@
         p.prt.setIAInd(pInd.fronthair, r2, False, False)
 
         p.drawPort()
-        If Transformation.canBeTFed(p) Then
-            p.pState.save(p)
-        End If
+        p.savePState()
     End Sub
 End Class

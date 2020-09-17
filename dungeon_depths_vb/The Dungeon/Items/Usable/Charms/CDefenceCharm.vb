@@ -17,6 +17,7 @@
 
         p.defense += 5
         p.UIupdate()
+        p.perks(perk.dcharmsused) += 1
 
         If Not p.perks(perk.coscale) > -1 And (Int(Rnd() * 2) = 0 Or Game.noRNG) Then
             p.ongoingTFs.Add(New BroodmotherTF(5, 15, 2.0, True))

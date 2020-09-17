@@ -15,7 +15,6 @@
         floorboss.Add(3, "Key")
         floorboss.Add(4, "Key")
         floorboss.Add(5, "Medusa")
-        floorboss.Add(7, "Key")
         floorboss.Add(75, "???")
 
         floorCodes.Add(0, mFloor.genRNDLVLCode)
@@ -77,6 +76,7 @@
     End Sub
     Private Sub setPositions()
         Game.player1.pos = floors(numCurrFloor).playerPosition
+        If Not Game.player1.forcedPath Is Nothing AndAlso UBound(Game.player1.forcedPath) > 0 Then Game.player1.forcedPath = Nothing
 
         For i = 0 To Game.shopNPCList.Count - 1
             If i < floors(numCurrFloor).npcPositions.Count Then
@@ -100,7 +100,7 @@
     End Function
 
     Public Function currFloorBoss() As String
-        If floorboss.Count > numCurrFloor Then
+        If floorboss.ContainsKey(numCurrFloor) Then
             Return floorboss(numCurrFloor)
         Else
             Return ""

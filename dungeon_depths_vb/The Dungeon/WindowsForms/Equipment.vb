@@ -59,7 +59,7 @@
         If Not p.inv.getArmors.Item1.Contains(armor) Then Return False
 
         'if clothes offer resistance on the way off, this handles that
-        If (Not p.equippedArmor.getName.Equals(armor) And p.equippedArmor.isCursed) And Not considerCurse Then
+        If (Not p.equippedArmor.getName.Equals(armor) And p.equippedArmor.isCursed) And considerCurse Then
             If p.inv.item("Anti_Curse_Tag").count > 0 Then
                 Game.pushLblEvent("You apply a tag to your clothes, allowing you to remove them.")
                 p.inv.add("Anti_Curse_Tag", -1)
@@ -87,26 +87,15 @@
         End If
 
         'handles any tfs or triggers triggered by equipping of certain armors by certain classes
-        If p.pClass.name.Equals("Magical Girl") And p.equippedArmor.getName.Equals("Magical_Girl_Outfit") Then
-            p.equippedArmor = p.inv.item(10)
+        If p.pClass.name.Equals("Magical Girl") And Not (p.equippedArmor.getName.Contains("Outfit") And p.equippedArmor.getName.Contains("Mag")) And p.equippedArmor.fits(p) Then
             Game.pushLstLog("A magical girl needs her uniform!")
             Game.pushLblEvent("A magical girl needs her uniform!")
+            Return False
         End If
-        If p.pClass.name.Equals("Magical Girl") And p.equippedArmor.getName.Equals("Magical_Girl_Outfit") Then
-            p.equippedArmor = p.inv.item(10)
-            Game.pushLstLog("A magical girl needs her uniform!")
-            Game.pushLblEvent("A magical girl needs her uniform!")
-        End If
-        If p.pClass.name.Equals("Magical Girl") And p.equippedArmor.getName.Equals("Magical_Girl_Outfit") Then
-            p.equippedArmor = p.inv.item(10)
-            Game.pushLstLog("A magical girl needs her uniform!")
-            Game.pushLblEvent("A magical girl needs her uniform!")
-        End If
-
-        If p.pClass.name.Equals("Valkyrie") And Not p.equippedArmor.getName.Equals("Valkyrie_Armor") Then
-            p.equippedArmor = p.inv.item(95)
+        If p.pClass.name.Equals("Valkyrie") And Not p.equippedArmor.getName.Equals("Valkyrie_Armor") And p.equippedArmor.fits(p) Then
             Game.pushLstLog("Your armor magically re-equips!")
             Game.pushLblEvent("Your armor magically re-equips!")
+            Return False
         End If
 
         If p.pForm.name.Equals("Blow-Up Doll") Then
@@ -141,7 +130,7 @@
 
         'unequip the old weapon
         If Not p.equippedWeapon.getName.Equals(weapon) Then
-            p.equippedWeapon.onUnequip(Equipment.wList(weapon))
+            p.equippedWeapon.onUnequip(p, Equipment.wList(weapon))
         Else
             Return False
         End If
@@ -314,13 +303,13 @@
             For Each k In wList.Keys
                 If weapon.Split()(0).Equals(k) Then
                     sWeapon = wList(k)
-                    If Not p.equippedWeapon Is Nothing Then p.equippedWeapon.onUnequip(sWeapon)
+                    If Not p.equippedWeapon Is Nothing Then p.equippedWeapon.onUnequip(p, sWeapon)
                     Exit For
                 End If
             Next
             If sWeapon Is Nothing Then Exit Sub
             p.equippedWeapon = sWeapon
-            p.equippedWeapon.onEquip()
+            p.equippedWeapon.onEquip(p)
             If p.perks(perk.amazon) > -15 Then PerkEffects.amazon()
         End If
     End Sub

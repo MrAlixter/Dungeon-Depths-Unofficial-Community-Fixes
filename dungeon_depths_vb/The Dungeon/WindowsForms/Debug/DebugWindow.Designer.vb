@@ -62,11 +62,20 @@ Partial Class Debug_Window
         Me.pnlSC = New System.Windows.Forms.Panel()
         Me.tabPortrait = New System.Windows.Forms.TabControl()
         Me.tabPageBackground = New System.Windows.Forms.TabPage()
+        Me.tabPageTail = New System.Windows.Forms.TabPage()
+        Me.tabPageWings = New System.Windows.Forms.TabPage()
         Me.tabPageRearHair = New System.Windows.Forms.TabPage()
+        Me.tabPageHairAcc = New System.Windows.Forms.TabPage()
+        Me.tabPageShoulders = New System.Windows.Forms.TabPage()
         Me.tabPageBody = New System.Windows.Forms.TabPage()
+        Me.tabBodyOverlay = New System.Windows.Forms.TabPage()
+        Me.tabPageGen = New System.Windows.Forms.TabPage()
+        Me.tabPageChest = New System.Windows.Forms.TabPage()
+        Me.tabPageClothesBtm = New System.Windows.Forms.TabPage()
         Me.tabPageClothing = New System.Windows.Forms.TabPage()
         Me.tabPageFace = New System.Windows.Forms.TabPage()
         Me.tabPageMiddleHair = New System.Windows.Forms.TabPage()
+        Me.tabPageHorns = New System.Windows.Forms.TabPage()
         Me.tabPageEars = New System.Windows.Forms.TabPage()
         Me.tabPageNose = New System.Windows.Forms.TabPage()
         Me.tabPageMouth = New System.Windows.Forms.TabPage()
@@ -152,15 +161,7 @@ Partial Class Debug_Window
         Me.lblHeight = New System.Windows.Forms.Label()
         Me.lblWidth = New System.Windows.Forms.Label()
         Me.lblFC = New System.Windows.Forms.Label()
-        Me.tabPageTail = New System.Windows.Forms.TabPage()
-        Me.tabPageWings = New System.Windows.Forms.TabPage()
-        Me.tabPageHairAcc = New System.Windows.Forms.TabPage()
-        Me.tabPageShoulders = New System.Windows.Forms.TabPage()
-        Me.tabBodyOverlay = New System.Windows.Forms.TabPage()
-        Me.tabPageGen = New System.Windows.Forms.TabPage()
-        Me.tabPageChest = New System.Windows.Forms.TabPage()
-        Me.tabPageClothesBtm = New System.Windows.Forms.TabPage()
-        Me.tabPageHorns = New System.Windows.Forms.TabPage()
+        Me.tabPageBlush = New System.Windows.Forms.TabPage()
         Me.tabMain.SuspendLayout()
         Me.tabInformation.SuspendLayout()
         Me.tabGeneral.SuspendLayout()
@@ -227,7 +228,7 @@ Partial Class Debug_Window
         Me.tabInformation.ForeColor = System.Drawing.Color.White
         Me.tabInformation.Location = New System.Drawing.Point(4, 27)
         Me.tabInformation.Name = "tabInformation"
-        Me.tabInformation.Padding = New System.Windows.Forms.Padding(3, 3, 3, 3)
+        Me.tabInformation.Padding = New System.Windows.Forms.Padding(3)
         Me.tabInformation.Size = New System.Drawing.Size(742, 545)
         Me.tabInformation.TabIndex = 3
         Me.tabInformation.Text = "INFORMATION"
@@ -250,7 +251,7 @@ Partial Class Debug_Window
         Me.tabGeneral.Controls.Add(Me.groupGeneral)
         Me.tabGeneral.Location = New System.Drawing.Point(4, 27)
         Me.tabGeneral.Name = "tabGeneral"
-        Me.tabGeneral.Padding = New System.Windows.Forms.Padding(3, 3, 3, 3)
+        Me.tabGeneral.Padding = New System.Windows.Forms.Padding(3)
         Me.tabGeneral.Size = New System.Drawing.Size(742, 545)
         Me.tabGeneral.TabIndex = 0
         Me.tabGeneral.Text = "GENERAL"
@@ -580,7 +581,7 @@ Partial Class Debug_Window
         Me.tabPlayer.Controls.Add(Me.lblName)
         Me.tabPlayer.Location = New System.Drawing.Point(4, 27)
         Me.tabPlayer.Name = "tabPlayer"
-        Me.tabPlayer.Padding = New System.Windows.Forms.Padding(3, 3, 3, 3)
+        Me.tabPlayer.Padding = New System.Windows.Forms.Padding(3)
         Me.tabPlayer.Size = New System.Drawing.Size(742, 545)
         Me.tabPlayer.TabIndex = 1
         Me.tabPlayer.Text = "PLAYER"
@@ -669,6 +670,7 @@ Partial Class Debug_Window
         Me.tabPortrait.Controls.Add(Me.tabPageClothesBtm)
         Me.tabPortrait.Controls.Add(Me.tabPageClothing)
         Me.tabPortrait.Controls.Add(Me.tabPageFace)
+        Me.tabPortrait.Controls.Add(Me.tabPageBlush)
         Me.tabPortrait.Controls.Add(Me.tabPageMiddleHair)
         Me.tabPortrait.Controls.Add(Me.tabPageHorns)
         Me.tabPortrait.Controls.Add(Me.tabPageEars)
@@ -694,10 +696,30 @@ Partial Class Debug_Window
         Me.tabPageBackground.BackColor = System.Drawing.Color.Black
         Me.tabPageBackground.Location = New System.Drawing.Point(4, 27)
         Me.tabPageBackground.Name = "tabPageBackground"
-        Me.tabPageBackground.Padding = New System.Windows.Forms.Padding(3, 3, 3, 3)
+        Me.tabPageBackground.Padding = New System.Windows.Forms.Padding(3)
         Me.tabPageBackground.Size = New System.Drawing.Size(728, 260)
         Me.tabPageBackground.TabIndex = 0
         Me.tabPageBackground.Text = "BACKGROUND"
+        '
+        'tabPageTail
+        '
+        Me.tabPageTail.BackColor = System.Drawing.Color.Black
+        Me.tabPageTail.ForeColor = System.Drawing.Color.White
+        Me.tabPageTail.Location = New System.Drawing.Point(4, 27)
+        Me.tabPageTail.Name = "tabPageTail"
+        Me.tabPageTail.Size = New System.Drawing.Size(728, 260)
+        Me.tabPageTail.TabIndex = 17
+        Me.tabPageTail.Text = " TAIL"
+        '
+        'tabPageWings
+        '
+        Me.tabPageWings.BackColor = System.Drawing.Color.Black
+        Me.tabPageWings.ForeColor = System.Drawing.Color.White
+        Me.tabPageWings.Location = New System.Drawing.Point(4, 27)
+        Me.tabPageWings.Name = "tabPageWings"
+        Me.tabPageWings.Size = New System.Drawing.Size(728, 260)
+        Me.tabPageWings.TabIndex = 18
+        Me.tabPageWings.Text = "WINGS"
         '
         'tabPageRearHair
         '
@@ -705,10 +727,30 @@ Partial Class Debug_Window
         Me.tabPageRearHair.BackColor = System.Drawing.Color.Black
         Me.tabPageRearHair.Location = New System.Drawing.Point(4, 27)
         Me.tabPageRearHair.Name = "tabPageRearHair"
-        Me.tabPageRearHair.Padding = New System.Windows.Forms.Padding(3, 3, 3, 3)
+        Me.tabPageRearHair.Padding = New System.Windows.Forms.Padding(3)
         Me.tabPageRearHair.Size = New System.Drawing.Size(728, 260)
         Me.tabPageRearHair.TabIndex = 1
         Me.tabPageRearHair.Text = "REAR HAIR"
+        '
+        'tabPageHairAcc
+        '
+        Me.tabPageHairAcc.BackColor = System.Drawing.Color.Black
+        Me.tabPageHairAcc.ForeColor = System.Drawing.Color.White
+        Me.tabPageHairAcc.Location = New System.Drawing.Point(4, 27)
+        Me.tabPageHairAcc.Name = "tabPageHairAcc"
+        Me.tabPageHairAcc.Size = New System.Drawing.Size(728, 260)
+        Me.tabPageHairAcc.TabIndex = 19
+        Me.tabPageHairAcc.Text = "HAIR ACC"
+        '
+        'tabPageShoulders
+        '
+        Me.tabPageShoulders.BackColor = System.Drawing.Color.Black
+        Me.tabPageShoulders.ForeColor = System.Drawing.Color.White
+        Me.tabPageShoulders.Location = New System.Drawing.Point(4, 27)
+        Me.tabPageShoulders.Name = "tabPageShoulders"
+        Me.tabPageShoulders.Size = New System.Drawing.Size(728, 260)
+        Me.tabPageShoulders.TabIndex = 20
+        Me.tabPageShoulders.Text = "SHOULDERS"
         '
         'tabPageBody
         '
@@ -716,10 +758,50 @@ Partial Class Debug_Window
         Me.tabPageBody.BackColor = System.Drawing.Color.Black
         Me.tabPageBody.Location = New System.Drawing.Point(4, 27)
         Me.tabPageBody.Name = "tabPageBody"
-        Me.tabPageBody.Padding = New System.Windows.Forms.Padding(3, 3, 3, 3)
+        Me.tabPageBody.Padding = New System.Windows.Forms.Padding(3)
         Me.tabPageBody.Size = New System.Drawing.Size(728, 260)
         Me.tabPageBody.TabIndex = 2
         Me.tabPageBody.Text = "BODY"
+        '
+        'tabBodyOverlay
+        '
+        Me.tabBodyOverlay.BackColor = System.Drawing.Color.Black
+        Me.tabBodyOverlay.ForeColor = System.Drawing.Color.White
+        Me.tabBodyOverlay.Location = New System.Drawing.Point(4, 27)
+        Me.tabBodyOverlay.Name = "tabBodyOverlay"
+        Me.tabBodyOverlay.Size = New System.Drawing.Size(728, 260)
+        Me.tabBodyOverlay.TabIndex = 21
+        Me.tabBodyOverlay.Text = "BODY OVERLAY"
+        '
+        'tabPageGen
+        '
+        Me.tabPageGen.BackColor = System.Drawing.Color.Black
+        Me.tabPageGen.ForeColor = System.Drawing.Color.White
+        Me.tabPageGen.Location = New System.Drawing.Point(4, 27)
+        Me.tabPageGen.Name = "tabPageGen"
+        Me.tabPageGen.Size = New System.Drawing.Size(728, 260)
+        Me.tabPageGen.TabIndex = 22
+        Me.tabPageGen.Text = "GEN"
+        '
+        'tabPageChest
+        '
+        Me.tabPageChest.BackColor = System.Drawing.Color.Black
+        Me.tabPageChest.ForeColor = System.Drawing.Color.White
+        Me.tabPageChest.Location = New System.Drawing.Point(4, 27)
+        Me.tabPageChest.Name = "tabPageChest"
+        Me.tabPageChest.Size = New System.Drawing.Size(728, 260)
+        Me.tabPageChest.TabIndex = 23
+        Me.tabPageChest.Text = "CHEST"
+        '
+        'tabPageClothesBtm
+        '
+        Me.tabPageClothesBtm.BackColor = System.Drawing.Color.Black
+        Me.tabPageClothesBtm.ForeColor = System.Drawing.Color.White
+        Me.tabPageClothesBtm.Location = New System.Drawing.Point(4, 27)
+        Me.tabPageClothesBtm.Name = "tabPageClothesBtm"
+        Me.tabPageClothesBtm.Size = New System.Drawing.Size(728, 260)
+        Me.tabPageClothesBtm.TabIndex = 24
+        Me.tabPageClothesBtm.Text = "B. CLOTHING"
         '
         'tabPageClothing
         '
@@ -727,7 +809,7 @@ Partial Class Debug_Window
         Me.tabPageClothing.BackColor = System.Drawing.Color.Black
         Me.tabPageClothing.Location = New System.Drawing.Point(4, 27)
         Me.tabPageClothing.Name = "tabPageClothing"
-        Me.tabPageClothing.Padding = New System.Windows.Forms.Padding(3, 3, 3, 3)
+        Me.tabPageClothing.Padding = New System.Windows.Forms.Padding(3)
         Me.tabPageClothing.Size = New System.Drawing.Size(728, 260)
         Me.tabPageClothing.TabIndex = 3
         Me.tabPageClothing.Text = "T. CLOTHING"
@@ -751,6 +833,16 @@ Partial Class Debug_Window
         Me.tabPageMiddleHair.Size = New System.Drawing.Size(728, 260)
         Me.tabPageMiddleHair.TabIndex = 5
         Me.tabPageMiddleHair.Text = "MIDDLE HAIR"
+        '
+        'tabPageHorns
+        '
+        Me.tabPageHorns.BackColor = System.Drawing.Color.Black
+        Me.tabPageHorns.ForeColor = System.Drawing.Color.White
+        Me.tabPageHorns.Location = New System.Drawing.Point(4, 27)
+        Me.tabPageHorns.Name = "tabPageHorns"
+        Me.tabPageHorns.Size = New System.Drawing.Size(728, 260)
+        Me.tabPageHorns.TabIndex = 25
+        Me.tabPageHorns.Text = "HORNS"
         '
         'tabPageEars
         '
@@ -956,7 +1048,7 @@ Partial Class Debug_Window
         Me.lblWil.Name = "lblWil"
         Me.lblWil.Size = New System.Drawing.Size(40, 22)
         Me.lblWil.TabIndex = 218
-        Me.lblWil.Text = "WIL"
+        Me.lblWil.Text = "WILL"
         '
         'boxDef
         '
@@ -1196,7 +1288,7 @@ Partial Class Debug_Window
         Me.tabPerks.ForeColor = System.Drawing.Color.White
         Me.tabPerks.Location = New System.Drawing.Point(4, 27)
         Me.tabPerks.Name = "tabPerks"
-        Me.tabPerks.Padding = New System.Windows.Forms.Padding(3, 3, 3, 3)
+        Me.tabPerks.Padding = New System.Windows.Forms.Padding(3)
         Me.tabPerks.Size = New System.Drawing.Size(742, 545)
         Me.tabPerks.TabIndex = 4
         Me.tabPerks.Text = "PERKS"
@@ -1204,7 +1296,7 @@ Partial Class Debug_Window
         'Panel1
         '
         Me.Panel1.Location = New System.Drawing.Point(575, 349)
-        Me.Panel1.Margin = New System.Windows.Forms.Padding(2, 2, 2, 2)
+        Me.Panel1.Margin = New System.Windows.Forms.Padding(2)
         Me.Panel1.Name = "Panel1"
         Me.Panel1.Size = New System.Drawing.Size(150, 81)
         Me.Panel1.TabIndex = 0
@@ -1223,7 +1315,7 @@ Partial Class Debug_Window
         Me.tabInventory.Controls.Add(Me.lblItems)
         Me.tabInventory.Location = New System.Drawing.Point(4, 27)
         Me.tabInventory.Name = "tabInventory"
-        Me.tabInventory.Padding = New System.Windows.Forms.Padding(3, 3, 3, 3)
+        Me.tabInventory.Padding = New System.Windows.Forms.Padding(3)
         Me.tabInventory.Size = New System.Drawing.Size(742, 545)
         Me.tabInventory.TabIndex = 2
         Me.tabInventory.Text = "INVENTORY"
@@ -1372,7 +1464,7 @@ Partial Class Debug_Window
         Me.tabGeneration.ForeColor = System.Drawing.Color.White
         Me.tabGeneration.Location = New System.Drawing.Point(4, 27)
         Me.tabGeneration.Name = "tabGeneration"
-        Me.tabGeneration.Padding = New System.Windows.Forms.Padding(3, 3, 3, 3)
+        Me.tabGeneration.Padding = New System.Windows.Forms.Padding(3)
         Me.tabGeneration.Size = New System.Drawing.Size(742, 545)
         Me.tabGeneration.TabIndex = 5
         Me.tabGeneration.Text = "GENERATION"
@@ -1673,95 +1765,14 @@ Partial Class Debug_Window
         Me.lblFC.TabIndex = 22
         Me.lblFC.Text = "FloorCode: "
         '
-        'tabPageTail
+        'tabPageBlush
         '
-        Me.tabPageTail.BackColor = System.Drawing.Color.Black
-        Me.tabPageTail.ForeColor = System.Drawing.Color.White
-        Me.tabPageTail.Location = New System.Drawing.Point(4, 27)
-        Me.tabPageTail.Name = "tabPageTail"
-        Me.tabPageTail.Size = New System.Drawing.Size(728, 260)
-        Me.tabPageTail.TabIndex = 17
-        Me.tabPageTail.Text = " TAIL"
-        '
-        'tabPageWings
-        '
-        Me.tabPageWings.BackColor = System.Drawing.Color.Black
-        Me.tabPageWings.ForeColor = System.Drawing.Color.White
-        Me.tabPageWings.Location = New System.Drawing.Point(4, 27)
-        Me.tabPageWings.Name = "tabPageWings"
-        Me.tabPageWings.Size = New System.Drawing.Size(728, 260)
-        Me.tabPageWings.TabIndex = 18
-        Me.tabPageWings.Text = "WINGS"
-        '
-        'tabPageHairAcc
-        '
-        Me.tabPageHairAcc.BackColor = System.Drawing.Color.Black
-        Me.tabPageHairAcc.ForeColor = System.Drawing.Color.White
-        Me.tabPageHairAcc.Location = New System.Drawing.Point(4, 27)
-        Me.tabPageHairAcc.Name = "tabPageHairAcc"
-        Me.tabPageHairAcc.Size = New System.Drawing.Size(728, 260)
-        Me.tabPageHairAcc.TabIndex = 19
-        Me.tabPageHairAcc.Text = "HAIR ACC"
-        '
-        'tabPageShoulders
-        '
-        Me.tabPageShoulders.BackColor = System.Drawing.Color.Black
-        Me.tabPageShoulders.ForeColor = System.Drawing.Color.White
-        Me.tabPageShoulders.Location = New System.Drawing.Point(4, 27)
-        Me.tabPageShoulders.Name = "tabPageShoulders"
-        Me.tabPageShoulders.Size = New System.Drawing.Size(728, 260)
-        Me.tabPageShoulders.TabIndex = 20
-        Me.tabPageShoulders.Text = "SHOULDERS"
-        '
-        'tabBodyOverlay
-        '
-        Me.tabBodyOverlay.BackColor = System.Drawing.Color.Black
-        Me.tabBodyOverlay.ForeColor = System.Drawing.Color.White
-        Me.tabBodyOverlay.Location = New System.Drawing.Point(4, 27)
-        Me.tabBodyOverlay.Name = "tabBodyOverlay"
-        Me.tabBodyOverlay.Size = New System.Drawing.Size(728, 260)
-        Me.tabBodyOverlay.TabIndex = 21
-        Me.tabBodyOverlay.Text = "BODY OVERLAY"
-        '
-        'tabPageGen
-        '
-        Me.tabPageGen.BackColor = System.Drawing.Color.Black
-        Me.tabPageGen.ForeColor = System.Drawing.Color.White
-        Me.tabPageGen.Location = New System.Drawing.Point(4, 27)
-        Me.tabPageGen.Name = "tabPageGen"
-        Me.tabPageGen.Size = New System.Drawing.Size(728, 260)
-        Me.tabPageGen.TabIndex = 22
-        Me.tabPageGen.Text = "GEN"
-        '
-        'tabPageChest
-        '
-        Me.tabPageChest.BackColor = System.Drawing.Color.Black
-        Me.tabPageChest.ForeColor = System.Drawing.Color.White
-        Me.tabPageChest.Location = New System.Drawing.Point(4, 27)
-        Me.tabPageChest.Name = "tabPageChest"
-        Me.tabPageChest.Size = New System.Drawing.Size(728, 260)
-        Me.tabPageChest.TabIndex = 23
-        Me.tabPageChest.Text = "CHEST"
-        '
-        'tabPageClothesBtm
-        '
-        Me.tabPageClothesBtm.BackColor = System.Drawing.Color.Black
-        Me.tabPageClothesBtm.ForeColor = System.Drawing.Color.White
-        Me.tabPageClothesBtm.Location = New System.Drawing.Point(4, 27)
-        Me.tabPageClothesBtm.Name = "tabPageClothesBtm"
-        Me.tabPageClothesBtm.Size = New System.Drawing.Size(728, 260)
-        Me.tabPageClothesBtm.TabIndex = 24
-        Me.tabPageClothesBtm.Text = "B. CLOTHING"
-        '
-        'tabPageHorns
-        '
-        Me.tabPageHorns.BackColor = System.Drawing.Color.Black
-        Me.tabPageHorns.ForeColor = System.Drawing.Color.White
-        Me.tabPageHorns.Location = New System.Drawing.Point(4, 27)
-        Me.tabPageHorns.Name = "tabPageHorns"
-        Me.tabPageHorns.Size = New System.Drawing.Size(728, 260)
-        Me.tabPageHorns.TabIndex = 25
-        Me.tabPageHorns.Text = "HORNS"
+        Me.tabPageBlush.BackColor = System.Drawing.Color.Black
+        Me.tabPageBlush.Location = New System.Drawing.Point(4, 27)
+        Me.tabPageBlush.Name = "tabPageBlush"
+        Me.tabPageBlush.Size = New System.Drawing.Size(728, 260)
+        Me.tabPageBlush.TabIndex = 26
+        Me.tabPageBlush.Text = "BLUSH"
         '
         'Debug_Window
         '
@@ -1962,4 +1973,5 @@ Partial Class Debug_Window
     Friend WithEvents tabPageChest As System.Windows.Forms.TabPage
     Friend WithEvents tabPageClothesBtm As System.Windows.Forms.TabPage
     Friend WithEvents tabPageHorns As System.Windows.Forms.TabPage
+    Friend WithEvents tabPageBlush As System.Windows.Forms.TabPage
 End Class

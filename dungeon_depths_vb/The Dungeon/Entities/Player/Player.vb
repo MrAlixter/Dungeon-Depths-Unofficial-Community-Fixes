@@ -1,5 +1,5 @@
 ﻿Public Enum perk
-    stamina         '0
+    hunger          '0
     bimbotf         '1
     slutcurse       '2
     chickentf       '3
@@ -53,6 +53,12 @@
     dodge           '51
     seventailsstage '52
     bunnyears       '53
+    hcharmsused     '54
+    mcharmsused     '55
+    acharmsused     '56
+    dcharmsused     '57
+    scharmsused     '58
+    wcharmsused     '59
 End Enum
 
 Public Class Player
@@ -362,7 +368,7 @@ Public Class Player
             inv.add(117, 3)
             inv.add(166, 1)
             inv.add(167, 1)
-            prt.skincolor = Game.cShift(prt.skincolor, Color.ForestGreen, 15)
+            prt.skincolor = DDUtils.cShift(prt.skincolor, Color.ForestGreen, 15)
             equippedArmor = inv.item(166)
             equippedArmor.onEquip(Me)
             equippedWeapon = inv.item(167)
@@ -515,8 +521,13 @@ Public Class Player
     End Sub
     Sub setStartStates()
         sState.save(Me)
-        If Transformation.canBeTFed(Me) Then pState.save(Me)
+        savePState()
         If perks(perk.polymorphed) > -1 Then perks(perk.polymorphed) = -1
+    End Sub
+    Public Sub savePState()
+        If Transformation.canBeTFed(Me) And Not perks(perk.succubuscurse) > 0 Then
+            pState.save(Me)
+        End If
     End Sub
 
     '|MOVEMENT COMMANDS|
@@ -575,7 +586,7 @@ Public Class Player
             perks(perk.barbarian) = 0
         End If
 
-        Dim dmg As Integer = equippedWeapon.attack(Me, target)
+        Dim dmg As Integer = Math.Max(equippedWeapon.attack(Me, target), 1)
 
         If dmg = -1 Then
             miss(target)
@@ -702,13 +713,14 @@ Public Class Player
         mana = tMna
         gold = tGold
         equippedArmor = tEarm
+        If inv.getCountAt(tEarm.getAName) < 1 Then equippedArmor = New Naked
         equippedWeapon = tEweap
+        If inv.getCountAt(tEweap.getAName) < 1 Then equippedWeapon = New BareFists
         equippedAcce = tAcc
+        If inv.getCountAt(tAcc.getAName) < 1 Then equippedAcce = New noAcce
 
         currState.save(Me)
-        If Transformation.canBeTFed(Me) Then
-            pState.save(Me)
-        End If
+        savePState()
 
         Do While knownSpells.Contains("Heartblast Starcannon")
             knownSpells.Remove("Heartblast Starcannon")
@@ -758,7 +770,7 @@ Public Class Player
                 Exit While
             End If
 
-            Dim attribute = attributes(Int(Rnd() * attributes.Length))
+            Dim attribute As String = attributes(Int(Rnd() * attributes.Length))
             Dim layer = -1
 
             Select Case attribute
@@ -766,7 +778,7 @@ Public Class Player
                     layer = pInd.tail
                 Case "Wings"
                     layer = pInd.wings
-                Case "Rear Hair" Or "Mid. Hair"
+                Case "Rear Hair", "Mid. Hair"
                     prt.setIAInd(pInd.rearhair, s.iArrInd(pInd.rearhair).Item1, s.iArrInd(pInd.rearhair).Item2, s.iArrInd(pInd.rearhair).Item3)
                     prt.setIAInd(pInd.midhair, s.iArrInd(pInd.midhair).Item1, s.iArrInd(pInd.midhair).Item2, s.iArrInd(pInd.midhair).Item3)
                 Case "Hair Accessory"
@@ -812,7 +824,7 @@ Public Class Player
 
                 numtorevert -= 1
                 layer -= 1
-                If Not revertedAttributes.Contains(attributes(layer)) Then revertedAttributes.Add(attributes(layer))
+                If Not revertedAttributes.Contains(attribute) Then revertedAttributes.Add(attribute)
             End If
             loopct += 1
         End While
@@ -870,32 +882,20 @@ Public Class Player
 
     '|GENERAL METHODS|
     Sub resetPerks()
-        Dim sv = perks(perk.svenom)
-        Dim av = perks(perk.avenom)
-
-        Dim stf = perks(perk.slimetf)
-        Dim ggtf = perks(perk.googirltf)
-
-        Dim cp = perks(perk.copoly)
-        Dim cg = perks(perk.cogreed)
-        Dim cr = perks(perk.corust)
-        Dim cm = perks(perk.comilk)
-        Dim cb = perks(perk.coblind)
-        Dim cs = perks(perk.coscale)
-
-        initPerks()
-
-        perks(perk.svenom) = sv
-        perks(perk.avenom) = av
-        perks(perk.slimetf) = stf
-        perks(perk.googirltf) = ggtf
-
-        perks(perk.copoly) = cp
-        perks(perk.cogreed) = cg
-        perks(perk.corust) = cr
-        perks(perk.comilk) = cm
-        perks(perk.coblind) = cb
-        perks(perk.coscale) = cs
+        perks(perk.bimbotf) = -1
+        perks(perk.chickentf) = -1
+        perks(perk.polymorphed) = -1
+        perks(perk.nekocurse) = -1
+        perks(perk.brage) = -1
+        perks(perk.mmammaries) = -1
+        perks(perk.ihfury) = -1
+        perks(perk.astatue) = -1
+        perks(perk.bimbododge) = -1
+        perks(perk.pprot) = -1
+        perks(perk.burn) = -1
+        perks(perk.mburst) = -1
+        perks(perk.infernoa) = -1
+        perks(perk.dodge) = -1
     End Sub
     Public Overrides Sub die(ByRef source As Entity)
         If Game.pnlSaveLoad.Visible = True Then Exit Sub
@@ -919,8 +919,8 @@ Public Class Player
                 Game.pushLblEvent("You starve to death!")
             ElseIf source.getName.Equals("Fire") Then
                 Game.pushLblEvent("You burn to death!")
-            ElseIf source.GetType.IsSubclassOf(GetType(Monster)) Then
-                CType(source, Monster).playerDeath(Me)
+            ElseIf source.GetType.IsSubclassOf(GetType(NPC)) Or source.GetType.IsSubclassOf(GetType(Monster)) Then
+                CType(source, NPC).playerDeath(Me)
                 Exit Sub
             End If
         End If
@@ -964,19 +964,7 @@ Public Class Player
         MyBase.update()
 
         '|PLAYER STAT UPKEEP|
-        If stamina <= 0 Then
-            perks(perk.stamina) = 1
-        ElseIf stamina < 0 Then
-            stamina = 0
-        ElseIf Game.turn Mod 25 = 10 Then
-            If Int(Rnd() * 2) = 0 Then stamina -= 1
-        End If
-
-        If health > 1 Then health = 1
-        If will < 0 Then will = 0
-        If mana > getMaxMana() And Not Game.combatmode And Not solFlag Then mana = getMaxMana()
-        If lust < 0 Then lust = 0
-
+        keepStatsInBounds()
         If xp >= nextLevelXp Then levelUp()
 
         '|PERK AND TRANSFORMATION UPDATES|
@@ -996,11 +984,37 @@ Public Class Player
         'transformations
         ongoingTFs.ping(pUpdateFlag)
     End Sub
+    Sub keepStatsInBounds()
+        '|HEALTH|
+        If Not Game.combatmode And Not solFlag Then health = Math.Min(1, health)
+
+        '|MANA|
+        If Not Game.combatmode And Not solFlag Then mana = Math.Min(mana, getMaxMana)
+        mana = Math.Max(0, mana)
+
+        '|STAMINA|
+        stamina = Math.Max(0, stamina)
+        stamina = Math.Min(100, stamina)
+        If stamina <= 0 Then perks(perk.hunger) = 1
+        If Game.turn Mod 25 = 10 And Int(Rnd() * 2) = 0 Then stamina -= 1
+
+        '|STATS|
+        attack = Math.Max(1, attack)
+
+        defense = Math.Max(1, defense)
+
+        speed = Math.Max(1, speed)
+
+        will = Math.Max(0, will)
+
+        lust = Math.Min(100, lust)
+        lust = Math.Max(0, lust)
+    End Sub
     Function perkUpdate() As Boolean
         Dim needsToUpdatePortrait = False
         '|GENERAL EFFECTS|
         'stamina
-        If perks(perk.stamina) > -1 And Game.turn Mod 5 = 0 Then
+        If perks(perk.hunger) > -1 And Game.turn Mod 5 = 0 Then
             PerkEffects.staminaEffect()
         End If
         If perks(perk.burn) > -1 And Game.turn Mod 4 = 0 Then
@@ -1132,10 +1146,11 @@ Public Class Player
         Game.lblXP.Text = statBar(xp, nextLevelXp, Game.lblXP)
 
         If Game.lblLevel.Text <> "Level = " & level Then Game.lblLevel.Text = "Level = " & level
-        If Game.lblATK.Text <> "ATK = " & (getATK()) + equippedWeapon.aBoost Then Game.lblATK.Text = "ATK = " & (getATK()) + equippedWeapon.aBoost
+        If Game.lblATK.Text <> "ATK = " & getATK() Then Game.lblATK.Text = "ATK = " & getATK()
         If Game.lblDEF.Text <> "DEF = " & getDEF() Then Game.lblDEF.Text = "DEF = " & getDEF()
-        If Game.lblWIL.Text <> "WIL = " & getWIL() Then Game.lblWIL.Text = "WIL = " & getWIL()
         If Game.lblSPD.Text <> "SPD = " & getSPD() Then Game.lblSPD.Text = "SPD = " & getSPD()
+        If Game.lblWIL.Text <> "WILL = " & getWIL() Then Game.lblWIL.Text = "WILL = " & getWIL()
+        If Game.lblLust.Text <> "LUST = " & getLust() Then Game.lblLust.Text = "LUST = " & getLust()
         If Game.lblGold.Text <> "GOLD = " & gold And gold <= 999999 Then
             Game.lblGold.Text = "GOLD = " & gold
         ElseIf Game.lblGold.Text <> "GOLD = " & gold And Game.lblGold.Text <> "GOLD = 999999+" Then
@@ -1267,8 +1282,8 @@ Public Class Player
             Exit Sub
         End If
         sex = "Female"
-        breastSize = 1
-        buttSize = 1
+        breastSize = Math.Max(1, breastSize)
+        buttSize = Math.Max(1, buttSize)
         dickSize = -1
         idRouteMF()
         If perks(perk.swordpossess) > -1 Then perks(perk.swordpossess) = 0
@@ -1281,7 +1296,7 @@ Public Class Player
         sex = "Male"
         breastSize = -1
         buttSize = -1
-        dickSize = 1
+        dickSize = Math.Max(1, dickSize)
         perks(2) = False
         idRouteFM()
         If perks(perk.swordpossess) > -1 Then perks(perk.swordpossess) = 0
@@ -1303,6 +1318,8 @@ Public Class Player
             End If
         Next
 
+        reverseAllRoute()
+
         'update the players clothing
         prt.portraitUDate()
     End Sub
@@ -1322,6 +1339,8 @@ Public Class Player
                 End If
             End If
         Next
+
+        allRoute()
 
         'update the players clothing
         prt.portraitUDate()
@@ -1472,7 +1491,7 @@ Public Class Player
     Public Sub reverseDSRoute()
         Select Case dickSize
             Case -1
-                prt.setIAInd(pInd.genitalia, 4, False, False)
+                prt.setIAInd(pInd.genitalia, 4, True, False)
             Case 0
                 prt.setIAInd(pInd.genitalia, 0, True, False)
             Case 1
@@ -1621,7 +1640,7 @@ Public Class Player
     Public Overrides Sub addLust(ByVal i As Integer)
         lust += i
 
-        prt.draw()
+        drawPort()
     End Sub
 
     Public Sub allRoute()
@@ -1730,26 +1749,28 @@ Public Class Player
 
     '|GETTER/SETTER METHODS|
     Overrides Function getMaxHealth() As Integer
-        Return CInt((maxHealth + hBuff) * pClass.h * pForm.h) + equippedArmor.hBoost + equippedAcce.getHBoost(Me)
+        If equippedArmor Is Nothing Or equippedWeapon Is Nothing Or equippedAcce Is Nothing Then Return CInt(maxHealth * pForm.h * pForm.h) + hBuff
+        Return CInt((maxHealth + hBuff) * pClass.h * pForm.h) + equippedArmor.getHBoost(Me) + equippedWeapon.getHBoost(Me) + equippedAcce.getHBoost(Me)
     End Function
     Overrides Function getMaxMana() As Integer
-        If equippedArmor Is Nothing Or equippedWeapon Is Nothing Then Return CInt(maxMana * pForm.m * pForm.m) + mBuff
-        Return CInt((maxMana + mBuff) * pForm.m * pForm.m) + equippedArmor.mBoost + equippedWeapon.mBoost + equippedAcce.getMBoost(Me)
+        If equippedArmor Is Nothing Or equippedWeapon Is Nothing Or equippedAcce Is Nothing Then Return CInt(maxMana * pForm.m * pForm.m) + mBuff
+        Return CInt((maxMana + mBuff) * pForm.m * pForm.m) + equippedArmor.getMBoost(Me) + equippedWeapon.getMBoost(Me) + equippedAcce.getMBoost(Me)
     End Function
     Overrides Function getATK() As Integer
-        If equippedArmor Is Nothing Or equippedWeapon Is Nothing Then Return CInt(attack * pForm.a * pClass.a) + aBuff
-        Return CInt((attack + aBuff) * pForm.a * pClass.a) + equippedArmor.aBoost + equippedAcce.getABoost(Me)
+        If equippedArmor Is Nothing Or equippedWeapon Is Nothing Or equippedAcce Is Nothing Then Return CInt(attack * pForm.a * pClass.a) + aBuff
+        Return CInt((attack + aBuff) * pForm.a * pClass.a) + equippedArmor.getABoost(Me) + equippedWeapon.getABoost(Me) + equippedAcce.getABoost(Me)
     End Function
     Overrides Function getDEF() As Integer
-        If equippedArmor Is Nothing Or equippedWeapon Is Nothing Then Return CInt(defense * pClass.d * pForm.d) + dBuff
-        Return CInt((defense + dBuff) * pClass.d * pForm.d) + equippedArmor.dBoost + equippedAcce.getDBoost(Me)
+        If equippedArmor Is Nothing Or equippedWeapon Is Nothing Or equippedAcce Is Nothing Then Return CInt(defense * pClass.d * pForm.d) + dBuff
+        Return CInt((defense + dBuff) * pClass.d * pForm.d) + equippedArmor.getDBoost(Me) + equippedWeapon.getDBoost(Me) + equippedAcce.getDBoost(Me)
     End Function
     Overrides Function getSPD() As Integer
-        If equippedArmor Is Nothing Or equippedWeapon Is Nothing Then Return CInt(speed * pClass.s * pForm.s) + sBuff
-        Return CInt((speed + sBuff) * pClass.s * pForm.s) + equippedArmor.sBoost + equippedAcce.getSBoost(Me)
+        If equippedArmor Is Nothing Or equippedWeapon Is Nothing Or equippedAcce Is Nothing Then Return CInt(speed * pClass.s * pForm.s) + sBuff
+        Return CInt((speed + sBuff) * pClass.s * pForm.s) + equippedArmor.getSBoost(Me) + equippedWeapon.getSBoost(Me) + equippedAcce.getSBoost(Me)
     End Function
     Overrides Function getWIL() As Integer
-        Return CInt(will * pClass.w * pForm.w) + wBuff
+        If equippedArmor Is Nothing Or equippedWeapon Is Nothing Or equippedAcce Is Nothing Then Return CInt(will * pClass.w * pForm.w) + wBuff
+        Return CInt((will + wBuff) * pClass.w * pForm.w) + equippedArmor.getWBoost(Me) + equippedWeapon.getWBoost(Me) + equippedAcce.getWBoost(Me)
     End Function
     Public Function passDieRoll(ByVal d As Integer, Optional ByVal lessthanPass As Integer = 1, Optional ByVal savingThrow As Boolean = False) As Boolean
         Dim rollPassed As Boolean = (Int(Rnd() * d) + 1) <= lessthanPass
@@ -1850,10 +1871,13 @@ Public Class Player
         If perks(perk.comilk) > -1 Then Return True
         If perks(perk.coblind) > -1 Then Return True
         If perks(perk.coscale) > -1 Then Return True
+        If perks(perk.succubuscurse) > -1 Then Return True
         If equippedArmor.isCursed Or equippedWeapon.isCursed Or equippedAcce.isCursed Then Return True
         Return False
     End Function
     Function genDescription()
+        allRoute()
+
         Dim out As String = ""
         'general statement
         out = "You are " & name & ", a " & sex & " " & pForm.name & " " & pClass.name & vbCrLf & " " & vbCrLf
@@ -1961,6 +1985,8 @@ Public Class Player
                 'dick
                 Dim dAdj = ""
                 Select Case dickSize
+                    Case -1
+                        dAdj = "non-existant"
                     Case 0
                         dAdj = "small"
                     Case 1
@@ -1975,15 +2001,15 @@ Public Class Player
                 'body
                 Dim uAdj = ""
                 Select Case buttSize
-                    Case -2 Or -1
+                    Case -2, -1
                         uAdj = "masculine"
-                    Case 1 Or 2 Or 3 Or 4 Or 5
+                    Case 1, 2, 3, 4, 5
                         uAdj = "feminine"
                     Case Else
                         uAdj = "androgynous"
                 End Select
 
-                If prt.sexBool Then
+                If prt.sexBool Or dickSize = -1 Then
                     out += "Your body has a generally " & uAdj & " appearance, with " & bAdj & " breasts and a pussy between your legs." & vbCrLf & " " & vbCrLf
                 Else
                     If breastSize = -1 Then
@@ -2000,7 +2026,7 @@ Public Class Player
     End Function
     Function outPutPerkText() As String
         Dim out = ""
-        If perks(perk.stamina) > -1 Then out += "You haven't eaten anything in a while and are starving." & vbCrLf & " " & vbCrLf
+        If perks(perk.hunger) > -1 Then out += "You haven't eaten anything in a while and are starving." & vbCrLf & " " & vbCrLf
         If perks(perk.slutcurse) > -1 Then out += "You choose to dress very provocatively, showing as much skin as possible due to a curse."
         If perks(perk.polymorphed) > -1 Then out += "You are under the effects of a temporary polymorph, and will be for " & perks(perk.polymorphed) & " more turns." & vbCrLf & " " & vbCrLf
         If perks(perk.thrall) > -1 Then out += "You are under the thrall of a sorcerer/ess, and may not have full control over your body or mind." & vbCrLf & " " & vbCrLf
@@ -2022,17 +2048,19 @@ Public Class Player
         pForm.onLVLUp(level, Me)
     End Sub
     Public Sub deLevel(ByVal lostLevels As Integer)
-        If level - lostLevels < 1 Then lostLevels = level - 1
+        If lostLevels < 1 Or level = 1 Then Exit Sub
 
-        For i = level To level - lostLevels Step -1
-            nextLevelXp /= level
-            maxHealth -= 20
-            level -= 1
-        Next
+        nextLevelXp = Math.Max(CInt(nextLevelXp / level), 250)
+        maxHealth -= 20
+        level -= 1
 
         If xp > nextLevelXp / 2 Then xp = nextLevelXp / 2
 
-        pClass.deLVL(lostLevels, Me)
-        pForm.deLVL(lostLevels, Me)
+        pClass.deLVL(level, Me)
+        pForm.deLVL(level, Me)
+
+        If lostLevels > 1 Then
+            deLevel(lostLevels - 1)
+        End If
     End Sub
 End Class

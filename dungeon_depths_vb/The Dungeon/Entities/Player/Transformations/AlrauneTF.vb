@@ -49,8 +49,8 @@
     Sub step3()
         Dim p As Player = Game.player1
 
-        p.changeHairColor(Game.cShift(p.prt.haircolor, hc, 100))
-        p.changeSkinColor(Game.cShift(p.prt.skincolor, sc, 100))
+        p.changeHairColor(DDUtils.cShift(p.prt.haircolor, hc, 100))
+        p.changeSkinColor(DDUtils.cShift(p.prt.skincolor, sc, 100))
 
         If p.pClass.name.Equals("Mindless") Then
             p.pState.saveHCSC(p.prt.haircolor, p.prt.skincolor)

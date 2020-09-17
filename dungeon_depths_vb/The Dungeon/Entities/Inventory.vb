@@ -58,7 +58,7 @@
         internal_inventory.Add("Gold", New Gold())                          '43
         internal_inventory.Add("Angel_Food_Cake", New AngelFood())          '44
         internal_inventory.Add("Duster", New MaidDuster())                  '45
-        internal_inventory.Add("Tanktop", New TankTop())                    '46
+        internal_inventory.Add("Tank_Top", New TankTop())                   '46
         internal_inventory.Add("Sports_Bra", New SportBra())                '47
         internal_inventory.Add("Health_Charm", New HealthCharm())           '48
         internal_inventory.Add("Mana_Charm", New ManaCharm())               '49
@@ -244,6 +244,9 @@
         internal_inventory.Add("Seven_Banded_Ring", New SevenBandedRing)    '223
         internal_inventory.Add("Fox_Statue", New FoxStatue)                 '224
         internal_inventory.Add("Bunny_Ears", New BunnyEars)                 '225
+        internal_inventory.Add("Crimson_Spellbook", New CSpellbook)         '226
+        internal_inventory.Add("Crimson_Manual", New CrimsonManual)         '227
+        internal_inventory.Add("XP_Sandwich", New XPSandwich)               '228
 
         armor = {New Naked,
                  Me.item(5), Me.item(7), Me.item(8), Me.item(10),
@@ -291,13 +294,13 @@
                    Me.item(157), Me.item(158), Me.item(162), Me.item(174),
                    Me.item(182), Me.item(195), Me.item(200), Me.item(205),
                    Me.item(206), Me.item(207), Me.item(214), Me.item(215),
-                   Me.item(219)}
+                   Me.item(219), Me.item(226), Me.item(227)}
 
         food = {Me.item(1), Me.item(30), Me.item(31), Me.item(32), Me.item(33),
                 Me.item(34), Me.item(35), Me.item(44), Me.item(90),
                 Me.item(98), Me.item(100), Me.item(108), Me.item(109),
                 Me.item(117), Me.item(125), Me.item(132), Me.item(133),
-                Me.item(134), Me.item(135), Me.item(178)}
+                Me.item(134), Me.item(135), Me.item(178), Me.item(228)}
 
         acce = {New noAcce(), Me.item(66), Me.item(67), Me.item(68),
                 Me.item(69), Me.item(70), Me.item(77), Me.item(81),
@@ -445,10 +448,12 @@
         Return item(n).id
     End Function
     Public Function getCountAt(ByVal i As Integer) As Integer
-        Return item(i).getCount
+        If item(i) Is Nothing Then Return 0
+        Return item(i).getCount()
     End Function
     Public Function getCountAt(ByVal n As String) As Integer
-        Return item(n).getCount
+        If item(n) Is Nothing Then Return 0
+        Return item(n).getCount()
     End Function
     Private Function calcSum() As Integer
         Dim totalSum As Integer = 0

@@ -41,6 +41,9 @@ Public Class mFloor
 
         placeStairs()
         placePlayer(Game.player1)
+
+        verifyNoDisconectedChunks(Game.player1)
+
         placeChest(floorCode)
         If floorNumber > 2 Then placeTraps()
 
@@ -87,8 +90,6 @@ Public Class mFloor
         End If
 
         If floorNumber = 7 Then placeFloor7Statues()
-
-        verifyNoDisconectedChunks(Game.player1)
     End Sub
     Sub placeStairs()
         stairs = randPoint()
@@ -99,7 +100,6 @@ Public Class mFloor
         p.pos = randPoint()
         playerPosition = p.pos
         mBoard(p.pos.Y, p.pos.X).Text = "@"
-        verifyAccessToStairs(p)
         If floorNumber = 4 Then placeFloor4TrappedChest(Game.player1)
     End Sub
     Sub placeChest(ByVal code As String)
@@ -295,44 +295,9 @@ Public Class mFloor
         mBoard(c.pos.Y, c.pos.X).Text = "#"
     End Sub
     Sub verifyNoDisconectedChunks(ByRef p As Player)
-        For j = 0 To rooms.Count - 1
-            For i = 0 To rooms(j).Count - 1
-                Dim r = route(p.pos, rooms(j)(i).topLeftPos)
-
-                If r.Length <= 1 Then connectRooms(p.pos, rooms(j)(i).topLeftPos)
-            Next
-        Next
+        connectRooms(p.pos, stairs)
     End Sub
-    Sub verifyAccessToStairs(ByRef p As Player)
-        Dim r2 = route(p.pos, stairs)
-        If Not r2.Contains(stairs) Then
-            Game.pushLblEvent("A blazing light burns a line straight to the dungeons floor, cleaving through all disconnected chunks.  ""Whoops, my bad!"" exclaims a disembodied voice")
-            Dim p1, p2 As Point
-            If p1.X > p2.X Then
-                p1 = New Point(p.pos)
-                p2 = New Point(stairs)
-            Else
-                p1 = New Point(stairs)
-                p2 = New Point(p.pos)
-            End If
-
-            For x = p1.X To p2.X
-                mBoard(x, p1.Y).Tag = 1
-            Next
-
-            If p1.Y > p2.Y Then
-                p1 = New Point(p.pos)
-                p2 = New Point(stairs)
-            Else
-                p1 = New Point(stairs)
-                p2 = New Point(p.pos)
-            End If
-
-            For y = p1.Y To p2.Y
-                mBoard(p1.X, y).Tag = 1
-            Next
-        End If
-    End Sub
+ 
     'dungeon floors
     Sub generateDungeonLevel(ByVal code As String)
         'generateLevel creates the random rooms and corridors of each level
@@ -1098,6 +1063,17 @@ Public Class mFloor
                 If mBoard(y, x).Tag > 0 Then coveredBoardSpace += 1
             Next
         Next
+
+        '|Floor statue doublecheck|
+        If floorNumber = 7 And Game.player1.perks(perk.seventailsstage) = -1 Then
+            Dim stailsStatue = Nothing
+
+            For Each stat In statueList
+                If stat.name = "seventailsstatue" Then stailsStatue = stat
+            Next
+
+            If stailsStatue Is Nothing Then statueList.Add(New Statue(Game.player1.pos, "seventailsstatue", "You see here a golden statue of a fox"))
+        End If
     End Sub
 
     Public Sub writeFloorToFile()
@@ -1115,16 +1091,16 @@ Public Class mFloor
     End Sub
     Public Sub readFloorFromFile(ByVal fCode As String)
         Dim reader As IO.StreamReader = Nothing
-        'Try
-        If IO.File.Exists("floors/" & fCode & ".flr") Then
-            reader = IO.File.OpenText("floors/" & fCode & ".flr")
-            loadMFloor(reader.ReadLine)
-        End If
-        'Catch ex As Exception
-        'Game.pushLblEvent("Error reading floor " & floorCode & " from file!")
-        'Finally
-        '    If Not reader Is Nothing Then reader.Close()
-        'End Try
+        Try
+            If IO.File.Exists("floors/" & fCode & ".flr") Then
+                reader = IO.File.OpenText("floors/" & fCode & ".flr")
+                loadMFloor(reader.ReadLine)
+            End If
+        Catch ex As Exception
+            Game.pushLblEvent("Error reading floor " & floorCode & " from file!")
+        Finally
+            If Not reader Is Nothing Then reader.Close()
+        End Try
     End Sub
 End Class
 

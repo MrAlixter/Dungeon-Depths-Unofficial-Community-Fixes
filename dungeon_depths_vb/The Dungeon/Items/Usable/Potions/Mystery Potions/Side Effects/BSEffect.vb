@@ -4,9 +4,7 @@
     Public Overrides Sub apply(ByRef p As Player)
         If p.breastSize > 0 Then
             p.bs()
-            If Transformation.canBeTFed(p) Then
-                p.pState.save(p)
-            End If
+            p.savePState()
             Game.pushLblEvent("You breasts squeeze painfully . . .")
         Else
             Game.pushLblEvent("Nothing happens")

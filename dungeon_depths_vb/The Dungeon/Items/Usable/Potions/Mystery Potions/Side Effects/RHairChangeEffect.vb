@@ -25,8 +25,6 @@
         End If
 
         p.drawPort()
-        If Transformation.canBeTFed(p) Then
-            p.pState.save(p)
-        End If
+        p.savePState()
     End Sub
 End Class

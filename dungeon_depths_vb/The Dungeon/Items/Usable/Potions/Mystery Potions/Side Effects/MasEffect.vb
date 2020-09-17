@@ -22,9 +22,7 @@
         Else
             Game.pushLblEvent("Nothing happened!")
         End If
-        If Transformation.canBeTFed(p) Then
-            p.pState.save(p)
-        End If
+        p.savePState()
         p.drawPort()
     End Sub
 End Class

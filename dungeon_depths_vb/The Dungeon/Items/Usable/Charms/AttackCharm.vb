@@ -17,6 +17,7 @@
 
         p.attack += 5
         p.UIupdate()
+        p.perks(perk.acharmsused) += 1
         count -= 1
     End Sub
 End Class

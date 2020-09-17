@@ -196,12 +196,11 @@
         Game.pushLstLog("With a poof of smoke, the hypnotist shifts into a familiar kitsune and " & m.getName() & " attacks!")
 
         m.health = 0.66
-        m.dragonTF()
 
         Game.player1.perks(perk.seventailsstage) = 2
 
         Game.currFloor.beatBoss = False
-        Game.mDun.floorboss(7) = "Seven-Tails"
+        Game.mDun.floorboss.Add(7, "Seven-Tails")
 
         pos = New Point(-1, -1)
         Game.drawBoard()

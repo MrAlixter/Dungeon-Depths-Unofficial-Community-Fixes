@@ -10,7 +10,7 @@
         target = t
     End Sub
     Sub perform()
-        If (user.stamina + cost) < 0 Then
+        If (user.stamina - cost) < 0 Then
             Game.pushLblEvent("You are too famished to use this special! (" & name & " costs " & cost & " stamina)")
             Game.pushLstLog("You are too famished to use this special!")
             Exit Sub
@@ -94,7 +94,7 @@
             spec = New ShrinkRayShoot(u, t)
         ElseIf s.Equals("Bounty's Collection") Then
             spec = New Bounty(u, t)
-        ElseIf s.Equals("Blazing Angel Strike") Then
+        ElseIf s.Equals("Blazing Angel Strike") Or s.Equals("Helix Slash") Then
             spec = New BAStrike(u, t)
         ElseIf s.Equals("Pillowy Protect") Then
             spec = New PProt(u, t)
@@ -108,6 +108,30 @@
             spec = New GigaPunch(u, t)
         ElseIf s.Equals("Dodge") Then
             spec = New Dodge(u, t)
+        ElseIf s.Equals("Tits Up") Then
+            spec = New TUp(u, t)
+        ElseIf s.Equals("Tits Down") Then
+            spec = New TDn(u, t)
+        ElseIf s.Equals("Dick Up") Then
+            spec = New DUp(u, t)
+        ElseIf s.Equals("Dick Down") Then
+            spec = New DDn(u, t)
+        ElseIf s.Equals("Ass Up") Then
+            spec = New UUp(u, t)
+        ElseIf s.Equals("Ass Down") Then
+            spec = New UDn(u, t)
+        ElseIf s.Equals("Chameleon (Blonde)") Then
+            spec = New CHBlonde(u, t)
+        ElseIf s.Equals("Chameleon (Black Hair)") Then
+            spec = New CHBlackHair(u, t)
+        ElseIf s.Equals("Chameleon (Redhead)") Then
+            spec = New CHRedhead(u, t)
+        ElseIf s.Equals("Chameleon (Brunette)") Then
+            spec = New CHBrunette(u, t)
+        ElseIf s.Equals("Chameleon (Pastels)") Then
+            spec = New CHPastels(u, t)
+        ElseIf s.Equals("Chameleon (Neon)") Then
+            spec = New CHNeon(u, t)
         End If
 
         spec.perform()

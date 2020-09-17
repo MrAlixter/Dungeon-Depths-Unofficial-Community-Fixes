@@ -83,8 +83,8 @@
         If Not p.pClass.name.equals("Thrall") Then p.pClass = p.classes(perk.thrall)
         If playerMeetsForm(p) Then Exit Sub
 
-        If Not p.prt.haircolor.Equals(hairColor) Then p.changeHairColor(Game.cShift(p.prt.haircolor, hairColor, 8))
-        If Not p.prt.skincolor.Equals(skinColor) Then p.changeSkinColor(Game.cShift(p.prt.skincolor, skinColor, 8))
+        If Not p.prt.haircolor.Equals(hairColor) Then p.changeHairColor(DDUtils.cShift(p.prt.haircolor, hairColor, 8))
+        If Not p.prt.skincolor.Equals(skinColor) Then p.changeSkinColor(DDUtils.cShift(p.prt.skincolor, skinColor, 8))
 
         If Int(Rnd() * 3) = 0 Then
             p.prt.iArrInd(pInd.rearhair) = New Tuple(Of Integer, Boolean, Boolean)(rHairInd, hasFemaleHair, False)

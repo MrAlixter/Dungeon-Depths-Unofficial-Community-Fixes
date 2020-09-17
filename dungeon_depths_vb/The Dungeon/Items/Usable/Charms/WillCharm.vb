@@ -13,9 +13,10 @@
 
     Overrides Sub use(ByRef p As Player)
         If Me.getUsable() = False Then Exit Sub
-        Game.pushLstLog("You use the " & getName() & ". +5 base WIL!")
+        Game.pushLstLog("You use the " & getName() & ". +5 base WILL!")
 
         p.will += 5
+        p.perks(perk.wcharmsused) += 1
         p.UIupdate()
         count -= 1
     End Sub

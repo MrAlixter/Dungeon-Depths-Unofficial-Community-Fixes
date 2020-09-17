@@ -38,7 +38,7 @@
             p.perks(perk.avenom) = 1
             p.ongoingTFs.Add(New ArachneTF(p.perks(perk.svenom)))
         Else
-            Dim tf = p.ongoingTFs.getAt("Arachne")
+            Dim tf = New ArachneTF(p.perks(perk.svenom))
             tf.setCurrStep(p.perks(perk.svenom))
             tf.setTurnsTilStep(0)
         End If

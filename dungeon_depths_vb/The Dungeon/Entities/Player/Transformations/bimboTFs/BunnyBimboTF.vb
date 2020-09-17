@@ -40,7 +40,7 @@
 
         p.reverseAllRoute()
 
-        p.changeHairColor(Game.cShift(p.prt.haircolor, BimboTF.bimboyellow2, 50))
+        p.changeHairColor(DDUtils.cShift(p.prt.haircolor, BimboTF.bimboyellow2, 50))
 
         If p.inv.getCountAt(222) < 1 Then p.inv.add(222, 1)
         Equipment.clothesChange("Bunny_Suit_(Classic)")

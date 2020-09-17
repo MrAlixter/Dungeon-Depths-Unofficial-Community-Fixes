@@ -143,7 +143,7 @@
             If Me.GetType() Is GetType(Monster) Then output += "The "
             output += name & " runs away in fear!"
             Game.pushLstLog(output)
-        ElseIf reason = perk.cupcake Then
+        ElseIf reason = "cupcake" Then
             Dim c1 As Chest
             c1 = Game.baseChest.Create(inv, pos)
             If inv.getSum > 0 Then c1.open()
@@ -253,7 +253,7 @@
                     Case 3
                         Dim rng = (Int(Rnd() * 9))
                         If rng = 1 Then content.addOne()
-                    Case 2
+                    Case 2, Nothing
                         Dim rng = (Int(Rnd() * 6))
                         If rng = 1 Then content.addOne()
                     Case Else
@@ -346,5 +346,7 @@
     End Function
 
     Overridable Sub playerDeath(ByRef p As Player)
+        DeathEffects.hardDeath()
+        Game.npcList.Clear()
     End Sub
 End Class

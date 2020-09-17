@@ -16,6 +16,7 @@
         Game.pushLstLog("You use the " & getName() & ". +5 base SPD!")
 
         p.speed += 5
+        p.perks(perk.scharmsused) += 1
         p.UIupdate()
         count -= 1
     End Sub

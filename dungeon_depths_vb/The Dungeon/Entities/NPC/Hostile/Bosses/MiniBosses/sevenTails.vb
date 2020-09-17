@@ -4,10 +4,10 @@
 
     Sub New()
         name = "Seven-Tails"
-        maxHealth = 3
-        attack = 77
-        defense = 7777777
-        speed = 777
+        maxHealth = 7
+        attack = 7
+        defense = 7777
+        speed = 7
 
         inv.setCount("Fox_Ears", 3)
         inv.setCount("Mana_Charm", 1 + CInt(Rnd() * 2))
@@ -25,35 +25,66 @@
         xpValue = 1777
 
         If Game.player1.perks(perk.seventailsstage) = 2 Then
-            succubusTF()
+            'succubusTF()
             health = 0.33
             Game.player1.perks(perk.seventailsstage) = 3
         End If
     End Sub
 
     Public Overrides Sub attackCMD(ByRef target As Entity)
-        If target.GetType() Is GetType(Player) Then
-            Dim p = CType(target, Player)
-        End If
-
         If shouldRun Then runAway() : Exit Sub
 
-        If form = "Fire-Bite Arachne" Then
-            aAttack(target)
-        ElseIf form = "Skeletal Dragon" Then
-            dAttack(target)
-        ElseIf form = "Trio of Succubi" Then
-            suAttack(target)
+        If Int(Rnd() * 2) = 0 And getATK() < 67 Then
+            Game.pushLstLog((getName() & " casts Super Fireball!"))
+            Game.pushLblCombatEvent((getName() & " casts Super Fireball!"))
+
+            hit(67, target)
+        ElseIf target.getSPD > getSPD() Then
+            Game.pushLstLog((getName() & " casts Sharper Claws!  " & rPronoun & " ATK raises massively..."))
+            Game.pushLblCombatEvent((getName() & " casts Sharper Claws!  " & rPronoun & " ATK raises massively..."))
+
+            speed *= 4
+        ElseIf target.getATK > getATK() Then
+            Game.pushLstLog((getName() & " casts Swifter Haunches!  " & rPronoun & " ATK raises massively..."))
+            Game.pushLblCombatEvent((getName() & " casts Swifter Haunches!  " & rPronoun & " ATK raises massively..."))
+
+            speed *= 4
         Else
             Game.pushLstLog((getName() & " casts Super Fireball!"))
             Game.pushLblCombatEvent((getName() & " casts Super Fireball!"))
+
             MyBase.attackCMD(target)
         End If
     End Sub
 
+    Public Overrides Function reactToSpell(spell As String) As Boolean
+        If spell.Contains("Polymorph") Or spell.Contains("Turn to") Or spell.Contains("Petrify") Then
+            Game.pushLstLog("Seven-Tails grins as the spell washes over her, to no effect!")
+            Game.pushLblCombatEvent("Seven-Tails grins as the spell washes over her, to no effect!")
+            Return False
+        End If
+
+        If Game.player1.getWIL < 21 Then
+            Game.pushLstLog("Seven-Tails grins as the spell washes over her, to no effect!" & DDUtils.RNRN &
+                            """Ooh, you need a deeper resolve for that one to do anything, dummy!  I'd say you're about... " & 21 - Game.player1.getWIL & " Will points short...""")
+            Game.pushLblCombatEvent("Seven-Tails grins as the spell washes over her, to no effect!")
+            Return False
+        End If
+
+        Return True
+    End Function
+
     Public Overrides Sub takeDMG(dmg As Integer, ByRef source As Entity)
-        shouldRun = shouldRunST()
+        If dmg >= getIntHealth() And (health = 1 Or health = 0.66 Or health = 0.33) Then
+            Game.pushLstLog("Seven-Tails stumbles out of the way of the attack!")
+            Game.pushLblCombatEvent("Seven-Tails stumbles out of the way of the attack!")
+
+            dmg = getIntHealth() - 1
+        End If
+
         MyBase.takeDMG(dmg, source)
+
+        shouldRun = shouldRunST()
     End Sub
     Public Overrides Sub takeCritDMG(dmg As Integer, ByRef source As Entity)
         shouldRun = shouldRunST()
@@ -101,7 +132,7 @@
         Game.drawBoard()
     End Sub
     Public Overrides Sub playerDeath(ByRef p As Player)
-        Game.fromCombat()
+        despawn("p-death")
         Dim out = """Hmmmm, what to do with you..."" Seven-Tails grins, prodding your nearly unconscious body with a light kick.  ""Ooh, Sis's birthday is right around the corner!""" & DDUtils.RNRN &
                   "She waves her hand, and suddenly you start to feel a lot lighter.  With a *pomph*, you find yourself forced into an immobile pose as your lips begin to puff up into a permenant 'O' shape.  As your eyes widen in suprise, your expression settles as it becomes painted on to your smooth face." & DDUtils.RNRN &
                   """HA!  Oh, she's gonna get a kick out of you, the resemblance is uncanny!"" she laughs, tossing you up in the air.  As you slowly drift to the ground, the air ripples around you..."
@@ -135,7 +166,7 @@
         form = "Fire-Bite Arachne"
         maxHealth = 777
         attack = 77
-        defense = 777
+        defense = 77
         speed = 777
         tfCt = 1
         tfEnd = 3
@@ -147,7 +178,7 @@
             Dim tATK As Integer = CInt(attack)
             Game.pushLstLog((getName() & " casts Super Fireball!"))
             Game.pushLblCombatEvent((getName() & " casts Super Fireball!"))
-            attack *= 3
+            attack *= 2
             MyBase.attackCMD(target)
 
             attack = tATK
@@ -166,8 +197,8 @@
         Game.picNPC.Visible = False
         form = "Horned Dragon"
         maxHealth = 777
-        attack = 180
-        defense = 7777
+        attack = 100
+        defense = 777
         speed = 77
         tfCt = 1
         tfEnd = 5

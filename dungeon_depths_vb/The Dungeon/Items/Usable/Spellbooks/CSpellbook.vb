@@ -1,9 +1,9 @@
 ﻿Public Class CSpellbook
     Inherits Item
-    Public Shared spells() As String = {"Raise Lust", "Puff Up", "Polymorph Enemy"}
+    Public Shared spells() As String = {"Raise Lust", "Puff Up"}
     Sub New()
         MyBase.setName("Crimson_Spellbook")
-        MyBase.setDesc("A smoldering leather-bound book that contains something magic written by a succubus.  ")
+        MyBase.setDesc("A smoldering leather-bound book that contains something magic written by a succubus.")
         id = 226
         tier = Nothing
         MyBase.setUsable(True)
@@ -70,7 +70,7 @@
                         sName = spells(spell)
                 End Select
                 If ct > 60 Then
-                    Game.pushLstLog("You know all the spells in spellbooks already!")
+                    Game.pushLstLog("You know all the spells in crimson spellbooks already!")
                     Exit Sub
                 End If
             End While

@@ -25,23 +25,20 @@
         p.prt.draw()
     End Sub
     Public Overrides Sub deLVL(toLevel As Integer, ByRef p As Player)
-        For i = p.level To p.level - toLevel Step -1
-            p.level = i
-            If i = 4 Then
-                p.prt.setIAInd(pInd.horns, 3, True, False)
-                p.prt.haircolor = Color.FromArgb(255, 155, 0, 0)
-                p.prt.skincolor = Color.FromArgb(255, 255, 105, 180)
-            ElseIf i = 8 Then
-                p.prt.setIAInd(pInd.horns, 7, True, False)
-                p.prt.setIAInd(pInd.eyes, 12, True, True)
-                p.prt.haircolor = Color.FromArgb(255, 217, 0, 24)
-                p.prt.skincolor = Color.FromArgb(255, 201, 61, 77)
-            ElseIf i = 12 Then
-                p.prt.setIAInd(pInd.horns, 8, True, False)
-                p.prt.haircolor = Color.FromArgb(255, 175, 0, 97)
-                p.prt.skincolor = Color.FromArgb(255, 196, 43, 59)
-            End If
-        Next
+        If toLevel = 4 Then
+            p.prt.setIAInd(pInd.horns, 3, True, False)
+            p.prt.haircolor = Color.FromArgb(255, 155, 0, 0)
+            p.prt.skincolor = Color.FromArgb(255, 255, 105, 180)
+        ElseIf toLevel = 8 Then
+            p.prt.setIAInd(pInd.horns, 7, True, False)
+            p.prt.setIAInd(pInd.eyes, 12, True, True)
+            p.prt.haircolor = Color.FromArgb(255, 217, 0, 24)
+            p.prt.skincolor = Color.FromArgb(255, 201, 61, 77)
+        ElseIf toLevel = 12 Then
+            p.prt.setIAInd(pInd.horns, 8, True, False)
+            p.prt.haircolor = Color.FromArgb(255, 175, 0, 97)
+            p.prt.skincolor = Color.FromArgb(255, 196, 43, 59)
+        End If
 
         p.prt.draw()
     End Sub

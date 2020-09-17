@@ -6,8 +6,7 @@
 
         p.prt.haircolor = Color.FromArgb(255, Int(Rnd() * 125) + 100, Int(Rnd() * 125) + 100, Int(Rnd() * 125) + 100)
         p.drawPort()
-        If Transformation.canBeTFed(p) Then
-            p.pState.save(p)
-        End If
+
+         p.savePState()
     End Sub
 End Class

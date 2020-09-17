@@ -8,8 +8,6 @@
         p.prt.setIAInd(pInd.eyes, 8, True, True)
 
         p.drawPort()
-        If Transformation.canBeTFed(p) Then
-            p.pState.save(p)
-        End If
+      p.savePState()
     End Sub
 End Class

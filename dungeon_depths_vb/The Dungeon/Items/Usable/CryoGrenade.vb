@@ -15,9 +15,8 @@
 
         If (p.getWIL < 8 And Int(Rnd() * 5) = 1) Or p.currTarget Is Nothing Or Game.combatmode = False Then
             'backfire
-            If Transformation.canBeTFed(p) Then
-                p.pState.save(p)
-            End If
+            p.savePState()
+
             p.defense = 20
 
             Dim pturns = 4

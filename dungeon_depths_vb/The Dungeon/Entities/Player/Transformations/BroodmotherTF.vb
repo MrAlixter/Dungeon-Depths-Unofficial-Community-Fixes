@@ -21,8 +21,8 @@
 
     Sub step1()
         Dim p As Player = Game.player1
-        p.changeHairColor(Game.cShift(p.prt.haircolor, hc, 40))
-        p.changeSkinColor(Game.cShift(p.prt.skincolor, sc, 40))
+        p.changeHairColor(DDUtils.cShift(p.prt.haircolor, hc, 40))
+        p.changeSkinColor(DDUtils.cShift(p.prt.skincolor, sc, 40))
 
         If p.breastSize = -1 Then p.breastSize = 0
         If p.breastSize > 3 Then p.bs()

@@ -264,9 +264,9 @@ Public Class Portrait
 
     Public Sub changeHairColor(ByVal c As Color)
         haircolor = c
-        Dim rearHairIndsToIgnore = {26, 32, 34, 35, 36}
-        Dim midHairIndsToIgnore = {29, 38, 40, 41, 42}
-        Dim frontHairIndsToIgnore = {27, 36, 38, 39, 40}
+        Dim rearHairIndsToIgnore = {25, 26, 32, 34, 35, 36}
+        Dim midHairIndsToIgnore = {28, 29, 38, 40, 41, 42}
+        Dim frontHairIndsToIgnore = {26, 27, 36, 38, 39, 40}
 
         If Not checkNDefFemInd(pInd.rearhair, rearHairIndsToIgnore) Then iArr(pInd.rearhair) = Portrait.hairRecolor(imgLib.atrs(pInd.rearhair).getAt(iArrInd(pInd.rearhair)), c)
         If Not checkNDefFemInd(pInd.midhair, midHairIndsToIgnore) And Not checkNDefMalInd(pInd.midhair, 5) Then iArr(pInd.midhair) = Portrait.hairRecolor(imgLib.atrs(pInd.midhair).getAt(iArrInd(pInd.midhair)), c)
@@ -335,7 +335,7 @@ Public Class Portrait
         Dim mHairIndToNotHide = {0, 2}
         Dim fHairIndToNotHide = {10}
 
-        If checkNDefFemInd(pInd.ears, fEarIndToNotHide) Or checkNDefFemInd(pInd.midhair, fHairIndToNotHide) Or checkNDefMalInd(pInd.ears, mEarIndToNotHide) Or checkNDefMalInd(pInd.midhair, mHairIndToNotHide) Then Exit Sub
+        If checkFemInd(pInd.ears, fEarIndToNotHide) Or checkFemInd(pInd.midhair, fHairIndToNotHide) Or checkMalInd(pInd.ears, mEarIndToNotHide) Or checkMalInd(pInd.midhair, mHairIndToNotHide) Then Exit Sub
 
         Dim t = iArr(pInd.midhair).Clone
         iArr(pInd.midhair) = iArr(pInd.ears).Clone
@@ -359,11 +359,11 @@ Public Class Portrait
     End Sub
     Sub accUnderClothes()
         If checkNDefFemInd(pInd.accessory, 14) Or checkNDefMalInd(pInd.accessory, 13) Then
-            iArr(pInd.midhair) = CreateFullBodyBMP({CharacterGenerator.picPort.Image, iArr(pInd.accessory), iArr(pInd.clothes), iArr(pInd.midhair)})
+            iArr(pInd.midhair) = CreateFullBodyBMP({CharacterGenerator.picPort.Image, iArr(pInd.accessory), iArr(pInd.clothesbtm), iArr(pInd.clothes), iArr(pInd.midhair)})
             iArr(pInd.accessory) = CharacterGenerator.picPort.Image
             iArr(pInd.mouth) = CharacterGenerator.picPort.Image
         ElseIf checkNDefFemInd(pInd.accessory, 12) Or checkNDefFemInd(pInd.accessory, 15) Or checkNDefMalInd(pInd.accessory, 14) Then
-            iArr(pInd.midhair) = CreateFullBodyBMP({CharacterGenerator.picPort.Image, iArr(pInd.accessory), iArr(pInd.clothes), iArr(pInd.midhair)})
+            iArr(pInd.midhair) = CreateFullBodyBMP({CharacterGenerator.picPort.Image, iArr(pInd.accessory), iArr(pInd.clothesbtm), iArr(pInd.clothes), iArr(pInd.midhair)})
             iArr(pInd.accessory) = CharacterGenerator.picPort.Image
         End If
     End Sub
@@ -445,13 +445,26 @@ Public Class Portrait
         If Not ind.Item2 Or Not ind.Item3 Then Return False
         If ind.Item1 = i Then Return True Else Return False
     End Function
+    Private Function checkFemInd(pInd As pInd, inds As Integer()) As Boolean
+        For Each ind In inds
+            If checkFemInd(pInd, ind) Then Return True
+        Next
+
+        Return False
+    End Function
     Function checkMalInd(ByVal attrInd As pInd, ByVal i As Integer) As Boolean
         Dim ind = iArrInd(attrInd)
         If ind Is Nothing Then Return False
         If ind.Item2 Or ind.Item3 Then Return False
         If ind.Item1 = i Then Return True Else Return False
     End Function
+    Private Function checkMalInd(pInd As pInd, inds As Integer()) As Boolean
+        For Each ind In inds
+            If checkMalInd(pInd, ind) Then Return True
+        Next
 
+        Return False
+    End Function
     'hairRecolor changes the color of an image, assumed to be of the same color as the players hair 
     Shared Function hairRecolor(ByVal img As Bitmap, ByVal c As Color)
         If img Is Nothing Then Return Nothing
@@ -514,56 +527,13 @@ Public Class Portrait
         End If
 
         If p.solFlag Then Exit Sub
-        Select Case p.breastSize
-            Case -2
-                iArrInd(pInd.clothes) = p.equippedArmor.bsizeneg2
-            Case -1
-                iArrInd(pInd.clothes) = p.equippedArmor.bsizeneg1
-            Case 0
-                If p.equippedArmor.bsize0 Is Nothing Then
-                    iArrInd(pInd.clothes) = p.equippedArmor.bsizeneg1
-                Else
-                    iArrInd(pInd.clothes) = p.equippedArmor.bsize0
-                End If
-            Case 1
-                iArrInd(pInd.clothes) = p.equippedArmor.bsize1
-            Case 2
-                iArrInd(pInd.clothes) = p.equippedArmor.bsize2
-            Case 3
-                iArrInd(pInd.clothes) = p.equippedArmor.bsize3
-            Case 4
-                iArrInd(pInd.clothes) = p.equippedArmor.bsize4
-            Case 5
-                iArrInd(pInd.clothes) = p.equippedArmor.bsize5
-            Case 6
-                iArrInd(pInd.clothes) = p.equippedArmor.bsize6
-            Case 7
-                iArrInd(pInd.clothes) = p.equippedArmor.bsize7
-        End Select
 
-        Select Case p.buttSize
-            Case -2
-                iArrInd(pInd.clothesbtm) = p.equippedArmor.usizeneg2
-            Case -1
-                iArrInd(pInd.clothesbtm) = p.equippedArmor.usizeneg1
-            Case 0
-                iArrInd(pInd.clothesbtm) = p.equippedArmor.usize0
-            Case 1
-                iArrInd(pInd.clothesbtm) = p.equippedArmor.usize1
-            Case 2
-                iArrInd(pInd.clothesbtm) = p.equippedArmor.usize2
-            Case 3
-                iArrInd(pInd.clothesbtm) = p.equippedArmor.usize3
-            Case 4
-                iArrInd(pInd.clothesbtm) = p.equippedArmor.usize4
-            Case 5
-                iArrInd(pInd.clothesbtm) = p.equippedArmor.usize5
-        End Select
+        iArrInd(pInd.clothes) = p.equippedArmor.getClothesIMGTop(p)
+        iArrInd(pInd.clothesbtm) = p.equippedArmor.getClothesIMGBtm(p)
 
-        If iArrInd(pInd.clothes) Is Nothing Or iArrInd(pInd.clothesbtm) Is Nothing Then
+        If Not p.equippedArmor.fits(p) Then
             getNaked()
         End If
-
 
         If Not p.equippedArmor.getName.Equals("Naked") And p.equippedArmor.compressesBreasts Then
             compressBreasts()

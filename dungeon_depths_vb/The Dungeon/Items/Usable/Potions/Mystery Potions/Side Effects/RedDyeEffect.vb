@@ -6,8 +6,6 @@
         Dim r As Integer = Int(Rnd() * 100) + 155
         p.prt.haircolor = Color.FromArgb(p.prt.haircolor.A, r, 69, 0)
         p.drawPort()
-        If Transformation.canBeTFed(p) Then
-            p.pState.save(p)
-        End If
+        p.savePState()
     End Sub
 End Class

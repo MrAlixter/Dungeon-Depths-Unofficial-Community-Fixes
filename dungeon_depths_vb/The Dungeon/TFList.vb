@@ -45,6 +45,8 @@
     End Sub
 
     Function getAt(ByVal s As String) As Transformation
+        If Not internalList.Keys.Contains(s) Then Return Nothing
+
         Return internalList(s)
     End Function
 

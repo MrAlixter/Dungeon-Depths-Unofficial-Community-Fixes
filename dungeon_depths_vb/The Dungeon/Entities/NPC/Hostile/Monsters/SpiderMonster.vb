@@ -8,6 +8,13 @@
         speed = 45
         setInventory({63})
         setupMonsterOnSpawn()
+
+        If Int(Rnd() * 100) = 1 Then
+            name = "Jewelled Spider"
+            attack *= 3
+            speed *= 1.5
+            xpValue = 2000
+        End If
     End Sub
 
     Public Overrides Sub playerDeath(ByRef p As Player)

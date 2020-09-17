@@ -17,9 +17,7 @@ Public MustInherit Class Transformation
     'constuctors
     Sub New(n As Integer, tts As Integer, wi As Double, cbs As Boolean)
         Dim p As Player = Game.player1
-        If canBeTFed(p) Then
-            p.pState.save(p)
-        End If
+        p.savePState()
         currStep = 0
         numSteps = n
         turnsTilNextStep = tts
@@ -133,8 +131,7 @@ Public MustInherit Class Transformation
             Not p.pClass.name.Equals("Unconscious") And
             Not p.pForm.name.Equals("Blowup Doll") And
             Not p.pForm.name.Equals("Fae") And
-            Not p.perks(perk.astatue) > 1 And
-            Not p.perks(perk.succubuscurse) > -1 Then
+            Not p.perks(perk.astatue) > 1
             Return True
         End If
 

@@ -47,7 +47,7 @@
         p.aBuff = 0
         p.dBuff = 0
 
-        p.prt.setIAInd(pInd.wings, 0, True, True)
+        p.prt.setIAInd(pInd.wings, 0, True, False)
         p.prt.setIAInd(pInd.horns, 0, True, False)
 
         'set a random hair color
@@ -99,7 +99,6 @@
         p.TextColor = Color.White
         If game.mDun.numCurrFloor < 6 Then p.pImage = Game.picPlayer.BackgroundImage Else p.pImage = Game.picPlayerf.BackgroundImage
         p.reverseallroute()
-        p.sState.save(p)
 
         p.inv.invNeedsUDate = True
         p.UIupdate()
@@ -108,6 +107,7 @@
         p.currState.save(p)
         p.pState.save(p)
         p.sState.save(p)
+        p.ongoingTFs.reset()
         p.sState.iArrInd(pInd.clothes) = New Tuple(Of Integer, Boolean, Boolean)(si, p.prt.sexBool, False)
     End Sub
     Sub setLoadout()
@@ -270,13 +270,15 @@
         If armor.Length > 0 Then
             armorIndex = armor(Int(Rnd() * (armor.Length)))
             p.inv.add(armorIndex, 1)
-            Equipment.clothesChange(p.inv.item(armorIndex).getAName)
+            Equipment.equipArmor(p.inv.item(armorIndex).getAName, False)
         End If
         If weapon.Length > 0 Then
             weaponIndex = weapon(Int(Rnd() * (weapon.Length)))
             p.inv.add(weaponIndex, 1)
             Equipment.weaponChange(p.inv.item(weaponIndex).getAName)
         End If
+
+        p.equippedAcce = New noAcce()
     End Sub
 
     Shared Sub floor4FirstBossEncounter()

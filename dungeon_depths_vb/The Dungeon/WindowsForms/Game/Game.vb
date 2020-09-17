@@ -45,7 +45,7 @@ Public Class Game
     Public npcmode As Boolean = False   'indicates if the player is talking to an npc (NOT SAVED)
     Public npcIndex As Integer = 0  'indicates which npc is encountered (NOT SAVED)
     'a list containing all valid cheats
-    Public cheatList() As String = {"asss", "daaa", "wawa", "sasa", "gogo", "seee", "aeio", "wasd", "aaaa", "sawd", "swda"} 'list of cheats (NOT SAVED)
+    Public cheatList() As String = {"asss", "daaa", "wawa", "sasa", "gogo", "seee", "aeio", "wasd", "aaaa", "sawd", "swda", "ssss"} 'list of cheats (NOT SAVED)
     Dim keysPressed As String = ""   'records last 4 keys pressed (NOT SAVED)
     Public titleList = New List(Of String)
     'other misc form1 instance variables
@@ -216,6 +216,7 @@ Public Class Game
             makeNewDungeon()
         End If
     End Sub
+
     '|DUNGEON SETUP|
     Sub useOldDungeon()
         mDun.reset()
@@ -298,7 +299,6 @@ Public Class Game
         updateLoadbar(99)
         boardWorker.CancelAsync()
     End Sub
-
     Sub loadCKeys()
         cKeys.Clear()
         Dim sr As StreamReader
@@ -325,8 +325,8 @@ Public Class Game
         'newBoard creates a new representation of the board.
         player1.setPImage()
         Dim Margin As Integer = 3
-        Dim XSize As Double = 15.0 * (CDbl(Me.Size.Width) / 688.0)
-        Dim YSize As Double = 15.0 * (CDbl(Me.Size.Width) / 688.0)
+        Dim XSize As Double = 23 * (CDbl(Me.Size.Width) / iWidth)
+        Dim YSize As Double = 23 * (CDbl(Me.Size.Height) / iHeight)
 
         'create all of  the board lables dynamacly at runtime
         Dim viewWidth = 23
@@ -350,8 +350,9 @@ Public Class Game
                     newPicture.Name = "boardBox|" & x & "_" & y
                     newPicture.BackgroundImageLayout = ImageLayout.Stretch
                     newPicture.Size = New Point(YSize * 1.25, XSize * 1.25)
-                    newPicture.Location = New Point(60 + x * (XSize * 1.233), 75 + y * (YSize * 1.233))
+                    newPicture.Location = New Point(50 + x * (XSize * 1.233), 75 + y * (YSize * 1.233))
                     newPicture.Visible = True
+                    'newPicture.BorderStyle = BorderStyle.FixedSingle
                     Me.Controls.Add(newPicture)
                     mPics(y, x) = newPicture
 
@@ -809,6 +810,7 @@ Public Class Game
                 mPics(y, x).BackgroundImage = picCBFog.BackgroundImage
         End Select
     End Sub
+
     '|COMMAND DRIVERS|
     Function HandleKeyPress(ByVal Keydata As Keys) As Boolean
         'handleKeyPress handles the players pressed keys, and is the driver function for each one
@@ -951,8 +953,8 @@ Public Class Game
             End If
             If Keydata.Equals(Keys.Back) Then
                 selecting = False
-                pnlSelection.Location = New Point(1000, pnlSelection.Location.Y)
                 pnlSelection.Visible = False
+                pnlSelection.Location = New Point(1000, pnlSelection.Location.Y)
                 endTime = (DateTime.Now - New DateTime(1970, 1, 1)).TotalMilliseconds
                 Console.WriteLine("TOTAL TIME: " + (endTime - startTime).ToString())
                 Return True
@@ -988,7 +990,6 @@ Public Class Game
             If Not combatmode Or npcmode Then player1.canMoveFlag = True
         End If
     End Sub
-
     'selection drivers
     Sub selection(ByVal Keydata As Keys)
         If Keydata.Equals(Keys.Up) Or Keydata.Equals(Keys.Down) Then
@@ -1006,8 +1007,8 @@ Public Class Game
 
             selecting = False
             player1.canMoveFlag = True
-            pnlSelection.Location = New Point(1000, pnlSelection.Location.Y)
             pnlSelection.Visible = False
+            pnlSelection.Location = New Point(1000, pnlSelection.Location.Y)
 
             If selectionType.Equals("Potion") Or selectionType.Equals("Useable") Or selectionType.Equals("Food") Then
                 selectItem(index)
@@ -1300,7 +1301,7 @@ Public Class Game
         If mDun.numCurrFloor = 13 Then
             If player1.perks(perk.meetfae1) < 1 Then
                 If Int(Rnd() * 2) = 0 Then
-                    Fae.firstEncounter()
+                    'Fae.firstEncounter()
                 End If
                 Exit Sub
             Else
@@ -1553,6 +1554,12 @@ Public Class Game
                 ct.ShowDialog()
                 ct.Dispose()
                 player1.UIupdate()
+            ElseIf keysPressed = "ssss" Then
+                Try
+                    Dim f As Integer = CInt(InputBox("how many levels?"))
+                    player1.deLevel(f)
+                Catch ex As Exception
+                End Try
             ElseIf keysPressed = "swda" Then
                 Try
                     Dim npcInd As Integer = CInt(InputBox("Enter an NPC index:" & vbCrLf &
@@ -2089,14 +2096,7 @@ Public Class Game
         drawBoard()
 
         'update the display
-        lblNameTitle.Text = player1.name & " the " & player1.pClass.name
-        lblHealth.Text = "Health = " & CInt(player1.health * player1.getMaxHealth) & "/" & player1.maxHealth
-        lblMana.Text = "Mana = " & player1.mana & "/" & player1.maxMana
-        lblstamina.Text = "stamina = " & player1.stamina & "/100"
-        lblATK.Text = "ATK = " & player1.getATK
-        lblDEF.Text = "DEF = " & player1.getDEF
-        lblWIL.Text = "WIL = " & player1.getWIL
-        lblSPD.Text = "SPD = " & player1.getSPD
+        player1.UIupdate()
 
         player1.currState.save(player1)
         If Not player1.nextCombatAction Is Nothing Then player1.nextCombatAction(Nothing)
@@ -2148,7 +2148,6 @@ Public Class Game
             If picStart.Visible Then closesol()
         End If
     End Sub
-
     Private Sub btnCancel_Click(sender As Object, e As EventArgs) Handles btnCancel.Click
         pnlSaveLoad.Location = New Point(1000, pnlSaveLoad.Location.Y)
         pnlSaveLoad.Visible = False
@@ -2271,8 +2270,8 @@ Public Class Game
                 ids(i) = id
                 If i = 6 And (id.Item1 = 0 Or id.Item1 = 3) Then iarr(pInd.ears) = Portrait.skinRecolor(iarr(pInd.ears), skincolor)
             Next
-            changeHairColor(haircolor, ids, iarr)
-            changeSkinColor(skincolor, ids, iarr)
+            DDUtils.changeHairColor(haircolor, ids, iarr)
+            DDUtils.changeSkinColor(skincolor, ids, iarr)
 
             img = Portrait.CreateBMP(iarr)
         Catch ex As Exception
@@ -2293,7 +2292,7 @@ Public Class Game
         Return New Tuple(Of Player, Double)(player1, vers)
     End Function
 
-    '|COMBAT|
+    '|COMBAT MENUS|
     Sub toCombat()
         'toCombat displays the players combat menus
         lblCombatEvents.Text = ""
@@ -2500,12 +2499,13 @@ Public Class Game
         End If
     End Function
     Sub pnlCombatClose()
-        pnlCombat.Location = New Point(1000, pnlCombat.Location.Y)
         pnlCombat.Visible = False
+        pnlCombat.Location = New Point(1000, pnlCombat.Location.Y)
+
         lblCombatEvents.Text = ""
     End Sub
 
-    '|INVENTORY|
+    '|INVENTORY DISPLAY|
     Private Sub lstInventory_DrawItem(sender As Object, e As DrawItemEventArgs) Handles lstInventory.DrawItem
         e.DrawBackground()
         Dim textBrush As Brush = New SolidBrush(lstInventory.ForeColor)
@@ -2724,7 +2724,6 @@ Public Class Game
         doLblEventOnClose()
         pushPnlYesNo("Are you sure you want to do this?", AddressOf npcMG, AddressOf nofight)
     End Sub
-
     Private Sub btnFight_Click(sender As Object, e As EventArgs) Handles btnFight.Click
         doLblEventOnClose()
         pushPnlYesNo("Are you sure you want to do this?", AddressOf npcFight, AddressOf nofight)
@@ -2888,35 +2887,16 @@ Public Class Game
         MsgBox("Tests ran!  Check TestLog.txt for their results.")
         ' END OF RUNNING TESTS
     End Sub
+    Private Sub ExitToolStripMenuItem_Click(sender As Object, e As EventArgs) Handles ExitToolStripMenuItem.Click
+        Me.Close()
+    End Sub
 
     '|TIMERS|
     Private Sub tmrKeyCD_Tick(sender As Object, e As EventArgs) Handles tmrKeyCD.Tick
         tmrKeyCD.Enabled = False
     End Sub
 
-    '|GENERAL USE/UTILITY
-    Public Sub ShuffleArray(ByRef A() As String)
-        'ShuffleArray takes an array, and randomizes its order
-        Randomize()
-        Dim ct As Integer = UBound(A)   'last index of A
-        Dim B(ct) As String             'creates the array to put the shuffled values in
-        Dim order(ct) As Integer        'creates the array the order should go in
-        Dim n As Integer
-        For i = 0 To UBound(order) - 1  'puts each number between 0 and ct randomly in "order", with no duplication
-            Do
-                n = Int(Rnd() * (ct + 1))
-            Loop Until Not order.Contains(n)
-            order(i) = n
-        Next
-        n = Int(Rnd() * (ct + 1))       'swaps the last index with a random index
-        order(ct) = n
-        order(Array.IndexOf(order, n)) = 0
-        For i = 0 To UBound(order)      'organizes B according to order
-            B(i) = A(order(i))
-        Next
-        A = B                       'sets A to B, the shuffled array.
-    End Sub
-    'pushLblEvent family of functions
+    '|DIALOG BOX|
     Sub pushLblEvent(ByVal s As String, Optional effect As Action = Nothing)
         'pushLblEvent takes a string, formats it to wrap, and pushes a dialog box containing it
         If combatmode Then
@@ -3072,51 +3052,31 @@ Public Class Game
         choiceText = s
         makeChoice()
     End Sub
-    'color shift functions
-    Shared Function cShift(ByVal oC As Color, ByVal c As Color, ByVal inc As Integer)
-        If oC.Equals(c) Then Return c
-        Dim a, r, g, b As Integer
-        a = oC.A
-        r = oC.R
-        g = oC.G
-        b = oC.B
+    Public Sub cleanupPanels()
+        pnlDescription.Visible = False
+        If Not combatmode Then pnlCombat.Visible = False
+        pnlEvent.Visible = False
+        pnlSaveLoad.Visible = False
+        pnlSelection.Visible = False
+        selecting = False
+        lblEvent.Visible = False
 
-        If Math.Abs(a - c.A) < inc Or a > 255 Then
-            a = c.A
-        Else
-            If a > c.A Then a -= inc Else a += inc
-        End If
-        If Math.Abs(r - c.R) < inc Or r > 255 Then
-            r = c.R
-        Else
-            If r > c.R Then r -= inc Else r += inc
-        End If
-        If Math.Abs(g - c.G) < inc Or g > 255 Then
-            g = c.G
-        Else
-            If g > c.G Then g -= inc Else g += inc
-        End If
-        If Math.Abs(b - c.B) < inc Or b > 255 Then
-            b = c.B
-        Else
-            If b > c.B Then b -= inc Else b += inc
-        End If
+        player1.canMoveFlag = True
+        btnEQP.Enabled = True
+    End Sub
+    Private Sub btnClosePnlEvent_Click(sender As Object, e As EventArgs) Handles btnClosePnlEvent.Click
+        closeLblEvent()
 
-        Return Color.FromArgb(a, r, g, b)
-    End Function
-    Shared Sub changeHairColor(ByVal c As Color, ByVal iarrind() As Tuple(Of Integer, Boolean, Boolean), ByRef iarr As Image())
-        iarr(pInd.rearhair) = Portrait.hairRecolor(Portrait.imgLib.atrs(pInd.rearhair).getAt(iarrind(pInd.rearhair)), c)
-        iarr(pInd.midhair) = Portrait.hairRecolor(Portrait.imgLib.atrs(pInd.midhair).getAt(iarrind(pInd.midhair)), c)
-        iarr(pInd.eyebrows) = Portrait.hairRecolor(Portrait.imgLib.atrs(pInd.eyebrows).getAt(iarrind(pInd.eyebrows)), c)
-        iarr(pInd.fronthair) = Portrait.hairRecolor(Portrait.imgLib.atrs(pInd.fronthair).getAt(iarrind(pInd.fronthair)), c)
+        doLblEventOnClose()
     End Sub
-    Shared Sub changeSkinColor(ByVal c As Color, ByVal iarrind() As Tuple(Of Integer, Boolean, Boolean), ByRef iarr As Image())
-        iarr(pInd.body) = Portrait.skinRecolor(Portrait.imgLib.atrs(pInd.body).getAt(iarrind(pInd.body)), c)
-        iarr(pInd.face) = Portrait.skinRecolor(Portrait.imgLib.atrs(pInd.face).getAt(iarrind(pInd.face)), c)
-        iarr(pInd.ears) = Portrait.skinRecolor(Portrait.imgLib.atrs(pInd.ears).getAt(iarrind(pInd.ears)), c)
-        iarr(pInd.nose) = Portrait.skinRecolor(Portrait.imgLib.atrs(pInd.nose).getAt(iarrind(pInd.nose)), c)
+    Private Sub btnNextLPnlEvent_Click(sender As Object, e As EventArgs) Handles btnNextLPnlEvent.Click
+        eventDialogBox.nextpageL()
     End Sub
-    'load bar functions
+    Private Sub btnNextRPnlEvent_Click(sender As Object, e As EventArgs) Handles btnNextRPnlEvent.Click
+        eventDialogBox.nextpageR()
+    End Sub
+
+    '|LOADING BAR|
     Public Sub initLoadBar()
         boardWorker = New BackgroundWorker
         boardWorker.WorkerReportsProgress = True
@@ -3174,14 +3134,14 @@ Public Class Game
         Dim worker As BackgroundWorker = CType(sender, BackgroundWorker)
         player1.drawPort()
     End Sub
-    'cost display for spells and abilities
+
+    '|GENERAL USE/UTILITY|
     Private Sub cboxNPCMG_SelectedIndexChanged(sender As Object, e As EventArgs) Handles cboxNPCMG.SelectedIndexChanged
         If Not cboxNPCMG.Text.Equals("-- Select --") And Not cboxNPCMG.Text = "" Then ttCosts.SetToolTip(Me.cboxNPCMG, Spell.spellCost(cboxNPCMG.Text))
     End Sub
     Private Sub cmboxSpec_SelectedIndexChanged(sender As Object, e As EventArgs) Handles cboxSpec.SelectedIndexChanged
         If Not cboxSpec.Text.Equals("-- Select --") And Not cboxSpec.Text = "" Then ttCosts.SetToolTip(Me.cboxSpec, Special.specCost(cboxSpec.Text))
     End Sub
-    'other
     Private Sub prefetchImages()
         If imagesWorkerArg Is Nothing Then
             savePicsReady = False
@@ -3331,35 +3291,5 @@ Public Class Game
         'End Using
         'savedBoardPic.Save("BOARD_RENDERED.png")
         'boxBoard.Image = savedBoardPic
-    End Sub
-
-    Private Sub ExitToolStripMenuItem_Click(sender As Object, e As EventArgs) Handles ExitToolStripMenuItem.Click
-        Me.Close()
-    End Sub
-
-
-    Public Sub cleanupPanels()
-        pnlDescription.Visible = False
-        If Not combatmode Then pnlCombat.Visible = False
-        pnlEvent.Visible = False
-        pnlSaveLoad.Visible = False
-        pnlSelection.Visible = False
-        selecting = False
-        lblEvent.Visible = False
-
-        player1.canMoveFlag = True
-        btnEQP.Enabled = True
-    End Sub
-    Private Sub btnClosePnlEvent_Click(sender As Object, e As EventArgs) Handles btnClosePnlEvent.Click
-        closeLblEvent()
-
-        doLblEventOnClose()
-    End Sub
-
-    Private Sub btnNextLPnlEvent_Click(sender As Object, e As EventArgs) Handles btnNextLPnlEvent.Click
-        eventDialogBox.nextpageL()
-    End Sub
-    Private Sub btnNextRPnlEvent_Click(sender As Object, e As EventArgs) Handles btnNextRPnlEvent.Click
-        eventDialogBox.nextpageR()
     End Sub
 End Class

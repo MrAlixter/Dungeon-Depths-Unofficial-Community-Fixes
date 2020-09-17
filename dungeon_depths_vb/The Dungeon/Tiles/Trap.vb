@@ -87,19 +87,8 @@
             Case 4
                 Dim out = "As your foot touches down on what looks to be the same ground that you have been walking on, you find that it is not met with any resistance.  Unable to keep your balance, you fall face first into the shiny waterlike facsimile of the floor and are thrown, flipping, into a another room.  As you regain your senses, you notice that you actually just ahead of where you were.  Turning around, you tap the floor you presumably fell out through, only to find it as solid as any other patch of floor you have come across.  Not able to find anything else abnormal with your surroundings, you write your expirience off as some failed illusion and set off on your way."
                 If Game.player1.prt.sexBool Then
-                    Game.player1.prt.setIAInd(pInd.rearhair, Game.player1.sState.iArrInd(pInd.rearhair).Item1, False, Game.player1.sState.iArrInd(pInd.rearhair).Item3)
-                    Game.player1.prt.setIAInd(pInd.body, 0, True, False)
-                    Game.player1.prt.setIAInd(pInd.face, Game.player1.sState.iArrInd(pInd.face).Item1, False, Game.player1.sState.iArrInd(pInd.rearhair).Item3)
-                    Game.player1.prt.setIAInd(pInd.midhair, Game.player1.sState.iArrInd(pInd.midhair).Item1, False, Game.player1.sState.iArrInd(pInd.rearhair).Item3)
-                    Game.player1.prt.setIAInd(pInd.mouth, Game.player1.sState.iArrInd(pInd.mouth).Item1, False, Game.player1.sState.iArrInd(pInd.rearhair).Item3)
-                    Game.player1.prt.setIAInd(pInd.eyebrows, Game.player1.sState.iArrInd(pInd.eyebrows).Item1, False, Game.player1.sState.iArrInd(pInd.rearhair).Item3)
-                    Game.player1.prt.setIAInd(pInd.fronthair, Game.player1.sState.iArrInd(pInd.fronthair).Item1, False, Game.player1.sState.iArrInd(pInd.rearhair).Item3)
                     Game.player1.FtM()
                 Else
-                    Game.player1.prt.setIAInd(pInd.rearhair, Game.player1.sState.iArrInd(pInd.rearhair).Item1, True, Game.player1.sState.iArrInd(pInd.rearhair).Item3)
-                    Game.player1.prt.setIAInd(pInd.midhair, Game.player1.sState.iArrInd(pInd.midhair).Item1, True, Game.player1.sState.iArrInd(pInd.rearhair).Item3)
-                    Game.player1.prt.setIAInd(pInd.mouth, Game.player1.sState.iArrInd(pInd.mouth).Item1, True, Game.player1.sState.iArrInd(pInd.rearhair).Item3)
-                    Game.player1.prt.setIAInd(pInd.fronthair, Game.player1.sState.iArrInd(pInd.fronthair).Item1, True, Game.player1.sState.iArrInd(pInd.rearhair).Item3)
                     Game.player1.MtF()
                 End If
                 Game.player1.drawPort()

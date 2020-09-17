@@ -19,7 +19,7 @@
 
     'Hair color shifting
     Overridable Sub hairColorShift()
-        Game.player1.prt.haircolor = Game.cShift(Game.player1.prt.haircolor, bimboYellow1, 25)
+        Game.player1.prt.haircolor = DDUtils.cShift(Game.player1.prt.haircolor, bimboYellow1, 25)
         If Not Game.player1.getHairColor.Equals(bimboYellow1) Then currStep -= 1
         Game.pushLblEvent("Your hair becomes slightly lighter, brightening to a light blonde.")
     End Sub
@@ -216,12 +216,12 @@
         Dim p As Player = Game.player1
 
         Dim mstf = New MagSlutTF(1, 0, 0, False)
-        mstf.step2()
+        mstf.fullTF(p)
         Game.pushLblEvent("You immediatly feel funny, the increased magic in your system reacting swiftly with the gum.  In your haze, you look down to see your clothes have become tight and pink. You giggle, all traces of intellect vanishing as your body becomes more curvy and feminine. Your hair lengthens, becoming a platinum blonde, and your clothes finish changing to match your new figure.")
         p.lust += 10
 
         p.TextColor = Color.FromArgb(255, 255, 235, 240)
-        p.perks(perk.bimbotf) = -1
+
         stopTF()
     End Sub
 
@@ -237,7 +237,7 @@
         If Not hasBimboHair(Game.player1) Then
             Return AddressOf hairColorShift
         End If
-        If Game.player1.pClass.name = "Magical Girl" Then
+        If Game.player1.pClass.name.Equals("Magical Girl") Then
             Return AddressOf step2alt
         End If
         If Game.player1.perks(perk.bimbotf) = -1 Then

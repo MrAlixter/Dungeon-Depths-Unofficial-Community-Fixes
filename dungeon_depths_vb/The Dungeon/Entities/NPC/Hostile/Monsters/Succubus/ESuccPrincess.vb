@@ -6,35 +6,59 @@
         maxHealth = 266
         attack = 99
         defense = 66
-        speed = 66
+        speed = 666
 
         levelDrainThres = 1
         lustRaiseThres = 66
         levelsToDrain = 2
         lustToIncrease = Int(Rnd() * 6) + 6
 
-        setInventory({25, 74, 168, 194, 182, 205, 214, 218})
+        setInventory({25, 74, 168, 194, 182, 205, 214, 218, 226, 227})
         setupMonsterOnSpawn()
     End Sub
+
     Public Overrides Sub attackCMD(ByRef target As Entity)
-        If Int(Rnd() * 3) = 0 And target.GetType Is GetType(Player) AndAlso CType(target, Player).perks(perk.succubuscurse) = -1 Then
-            Game.pushLblEvent("The " & getName() & " cast Curse of the Slut!")
-            CType(target, Player).perks(perk.succubuscurse) = 0
+        Dim r = Int(Rnd() * 10)
+
+        If r = 0 And target.GetType Is GetType(Player) AndAlso CType(target, Player).perks(perk.succubuscurse) = -1 AndAlso CType(target, Player).perks(perk.succubuscow) = -1 Then
+            Dim p = CType(target, Player)
+            Game.pushLblEvent("The " & getName() & " casts Curse of the Slut!")
+            p.perks(perk.succubuscurse) = 0
+            p.dembimState1.save(p)
+            p.dembimState2.save(p)
             Exit Sub
         End If
+
+        If ((r = 1 And target.GetType Is GetType(Player)) AndAlso CType(target, Player).perks(perk.succubuscurse) = -1 And Not CType(target, Player).pClass.name.Equals("Bimbo") And Not CType(target, Player).pForm.name.Equals("Succubus")) OrElse (target.GetType Is GetType(Player) AndAlso CType(target, Player).perks(perk.succubuscow) <> -1) Then
+            Game.pushLblEvent("The " & getName() & " casts ""Moo for Me!""")
+            If CType(target, Player).perks(perk.succubuscow) = -1 Then CType(target, Player).perks(perk.succubuscow) = 1 Else CType(target, Player).perks(perk.succubuscow) += 1
+            MinoDTF.tfPlayer(CType(target, Player).perks(perk.succubuscow), CType(target, Player))
+            Exit Sub
+        End If
+
+        If r = 2 And target.GetType Is GetType(Player) AndAlso CType(target, Player).dickSize < 3 Then
+            Game.pushLblEvent("The " & getName() & " casts Stand at Attention!  Your dick tingles warmly!")
+
+            Dim p = CType(target, Player)
+            p.de()
+            p.addLust(33)
+
+            Exit Sub
+        End If
+
         MyBase.attackCMD(target)
     End Sub
+
     Public Overrides Sub sapLevel(ByRef t As Entity)
         If t.GetType Is GetType(Player) Then sapPlayer(CType(t, Player)) Else sapEntity(t)
 
-        health *= 1.2
         maxHealth *= 1.2
         attack *= 1.2
         defense *= 1.2
         speed *= 1.2
 
-        Game.pushLblEvent("The " & getName() & " used Drain Soul!  1 level drained!")
-        Game.pushLstLog("The " & getName() & " used Drain Soul!  1 level drained!")
+        Game.pushLblEvent("The " & getName() & " used Drain Soul!  " & levelsToDrain & " levels drained!")
+        Game.pushLstLog("The " & getName() & " used Drain Soul!  " & levelsToDrain & " levels drained!")
     End Sub
 
     Public Overrides Sub charm(ByRef t As Entity)

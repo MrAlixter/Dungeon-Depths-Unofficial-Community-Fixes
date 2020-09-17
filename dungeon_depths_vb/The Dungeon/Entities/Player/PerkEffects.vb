@@ -2,9 +2,9 @@
     '|GENERAL EFFECTS|
     Shared Sub staminaEffect()
         Dim p As Player = Game.player1
-        If p.perks(perk.stamina) > -1 And Game.turn Mod 5 = 0 Then
-            If p.stamina <= 0 Then
-                p.perks(perk.stamina) = -1
+        If p.perks(perk.hunger) > -1 And Game.turn Mod 5 = 0 Then
+            If p.stamina > 0 Then
+                p.perks(perk.hunger) = -1
             Else
                 Game.pushLstLog("Your stomach aches... -5 health!")
                 p.health -= 5 / p.getMaxHealth
@@ -122,7 +122,7 @@
         If p.equippedArmor.getName.Equals("Living_Armor") Then
             If Game.turn Mod 6 = 0 And p.lust < 100 Then
                 Dim l As Integer = Int(Rnd() * 15) + 10
-                p.lust += l
+                p.addLust(l)
                 Game.pushLstLog("Your living armor raises your lust!")
                 Return True
             End If
@@ -136,7 +136,7 @@
         If p.equippedArmor.getName.Equals("Living_Lingerie") Then
             If Game.turn Mod 4 = 0 And p.lust < 100 Then
                 Dim l As Integer = Int(Rnd() * 15) + 10
-                p.lust += l
+                p.addLust(l)
                 Game.pushLstLog("Your living lingerie raises your lust!")
                 Return True
             End If
@@ -330,32 +330,33 @@
         If p.getLust = 0 Then
             If p.perks(perk.succubuscurse) > 0 Then
                 p.revertToPState()
-                p.perks(perk.succubuscurse) -= 1
+                p.perks(perk.succubuscurse) = 0
             End If
 
         ElseIf p.getLust < 33 Then
             If p.perks(perk.succubuscurse) < 1 Then
-                p.perks(perk.succubuscurse) += 1
+                p.perks(perk.succubuscurse) = 1
                 DemBimboTF.tfPlayer(1, p)
             ElseIf p.perks(perk.succubuscurse) > 1 Then
                 p.revertToState(p.dembimState1)
-                p.perks(perk.succubuscurse) -= 1
+                p.perks(perk.succubuscurse) = 1
             End If
 
         ElseIf p.getLust < 66 Then
-            If p.perks(perk.succubuscurse) < 2 And p.perks(perk.succubuscurse) Then
+            If p.perks(perk.succubuscurse) < 2 Then
                 p.dembimState1.save(p)
-                p.perks(perk.succubuscurse) += 1
+                p.perks(perk.succubuscurse) = 2
                 DemBimboTF.tfPlayer(2, p)
             ElseIf p.perks(perk.succubuscurse) > 2 Then
                 p.revertToState(p.dembimState2)
-                p.perks(perk.succubuscurse) -= 1
+                p.perks(perk.succubuscurse) = 2
             End If
+
         Else
-            If p.perks(perk.succubuscurse) = 2 Then
+            If p.perks(perk.succubuscurse) < 3 Then
                 p.dembimState2.save(p)
                 DemBimboTF.tfPlayer(3, p)
-                p.perks(perk.succubuscurse) += 1
+                p.perks(perk.succubuscurse) = 3
             End If
         End If
     End Sub

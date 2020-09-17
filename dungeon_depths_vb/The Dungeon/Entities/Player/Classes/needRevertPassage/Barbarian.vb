@@ -13,14 +13,11 @@
         End If
     End Sub
 
-    Public Overrides Sub deLVL(levels As Integer, ByRef p As Player)
-        For i = p.level To p.level - levels Step -1
-            p.level = i
-            If i Mod 2 = 0 Then
-                p.attack -= 4
-            ElseIf i Mod 2 = 1 Then
-                p.defense -= 4
-            End If
-        Next
+    Public Overrides Sub deLVL(level As Integer, ByRef p As Player)
+        If level Mod 2 = 0 Then
+            p.attack -= 4
+        ElseIf level Mod 2 = 1 Then
+            p.defense -= 4
+        End If
     End Sub
 End Class

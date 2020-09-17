@@ -54,4 +54,9 @@
         Equipment.accChange("Nothing")
         Equipment.clothesChange("Magical_Slut_Outfit")
     End Sub
+
+    Public Sub fullTF(ByRef p As Player)
+        tfClothes(p)
+        tfBody(p)
+    End Sub
 End Class

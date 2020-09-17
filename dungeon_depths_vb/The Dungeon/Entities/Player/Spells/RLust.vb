@@ -24,9 +24,9 @@
     End Sub
 
     Public Overrides Sub backfire()
-        MyBase.getCaster.addLust(MyBase.getCaster.getLust)
+        MyBase.getCaster.addLust(Math.Max(MyBase.getCaster.getLust, 15))
 
-        Game.pushLstLog("You double your own lust!")
-        Game.pushLblEvent("You double your own lust!")
+        Game.pushLstLog("You raise your own lust!")
+        Game.pushLblEvent("You raise your own lust!")
     End Sub
 End Class

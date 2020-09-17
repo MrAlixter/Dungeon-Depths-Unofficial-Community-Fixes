@@ -7,13 +7,13 @@
 
     Public Overrides Sub revert()
         MyBase.revert()
-        If Game.cboxSpec.SelectedItem = "Blazing Angel Strike" Then
+        If Game.cboxSpec.SelectedItem = "Helix Slash" Then
             Game.cboxSpec.Items.Insert(0, "-- Select --")
             Game.cboxSpec.SelectedIndex = 0
         End If
-        Do While Game.player1.knownSpecials.Contains("Blazing Angel Strike")
-            Game.player1.knownSpecials.Remove("Blazing Angel Strike")
+        Do While Game.player1.knownSpecials.Contains("Helix Slash")
+            Game.player1.knownSpecials.Remove("Helix Slash")
         Loop
-        Game.pushLstLog("'Blazing Angel Strike' special forgotten!")
+        Game.pushLstLog("Helix Slash special forgotten!")
     End Sub
 End Class

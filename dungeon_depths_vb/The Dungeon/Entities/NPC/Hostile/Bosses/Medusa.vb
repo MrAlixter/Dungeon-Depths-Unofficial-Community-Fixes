@@ -38,7 +38,7 @@
             End If
         End If
         If CType(target, Player).perks(perk.blind) = 2 And pIsBlindCt >= 1 Then pIsBlindCt -= 1
-        If pIsBlindCt = 0 Then
+        If pIsBlindCt = 0 And target.isDead = False Then
             CType(target, Player).perks(perk.blind) = -1
             Game.zoom()
             Game.pushLblEvent("You can see again!")
@@ -53,9 +53,8 @@
     End Sub
     Public Sub StoneFlesh()
         Dim p = Game.player1
-        If Transformation.canBeTFed(p) Then
-            p.pState.save(p)
-        End If
+        p.savePState()
+
         p.defense = 40
 
         Dim pturns = Int(Rnd() * 5) + 1

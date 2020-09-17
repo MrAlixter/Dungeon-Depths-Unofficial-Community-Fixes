@@ -46,7 +46,7 @@
         End If
 
 
-        p.changeSkinColor(Game.cShift(p.prt.skincolor, summerColor, 50))
+        p.changeSkinColor(DDUtils.cShift(p.prt.skincolor, summerColor, 50))
 
         p.pForm = p.forms("Plantfolk")
         'transformation description push
