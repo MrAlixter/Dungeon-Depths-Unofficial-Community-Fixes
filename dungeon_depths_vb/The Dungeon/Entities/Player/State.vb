@@ -23,8 +23,8 @@
     Sub New(ByRef p As Player)
         name = p.name
         sex = p.sex
-        pClass = p.classes(p.pClass.name)
-        pForm = p.forms(p.pForm.name)
+        pClass = p.classes(p.className)
+        pForm = p.forms(p.formName)
         description = p.description
         health = p.health
         maxHealth = p.maxHealth
@@ -89,8 +89,8 @@
     Public Sub load(ByRef p As Player, Optional overwriteStats As Boolean = True)
         p.name = name
         p.sex = sex
-        p.pClass = p.classes(pClass.name)
-        p.pForm = p.forms(pForm.name)
+        p.changeClass(pClass.name)
+        p.changeForm(pForm.name)
         p.description = description
 
         If overwriteStats Then
@@ -124,8 +124,8 @@
     Public Sub save(ByRef p As Player)
         name = p.name
         sex = p.sex
-        pClass = p.classes(p.pClass.name)
-        pForm = p.forms(p.pForm.name)
+        pClass = p.classes(p.className)
+        pForm = p.forms(p.formName)
         description = p.description
         health = p.health
         maxHealth = p.maxHealth

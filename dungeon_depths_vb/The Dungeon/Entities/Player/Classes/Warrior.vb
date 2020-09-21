@@ -16,13 +16,10 @@
     End Sub
 
     Public Overrides Sub deLVL(level As Integer, ByRef p As Player)
-      
         If level Mod 2 = 0 Then
             p.attack -= 4
         ElseIf level Mod 2 = 1 Then
             p.defense -= 4
         End If
-
-        If level = 3 And p.knownSpecials.Contains("Rapid Fire Jabs") Then p.knownSpecials.Remove("Rapid Fire Jabs") : Game.pushLstLog("Rapid Fire Jabs special forgotten!")
     End Sub
 End Class

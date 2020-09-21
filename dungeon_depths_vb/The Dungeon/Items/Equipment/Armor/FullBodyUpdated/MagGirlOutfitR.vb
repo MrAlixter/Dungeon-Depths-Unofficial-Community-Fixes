@@ -35,7 +35,7 @@
     End Sub
 
     Overrides Sub discard()
-        If Game.player1.pClass.name.Equals("Magical Girl") Then
+        If Game.player1.className.Equals("Magical Girl") Then
             Game.pushLstLog("You can't just drop your uniform!")
             Exit Sub
         End If

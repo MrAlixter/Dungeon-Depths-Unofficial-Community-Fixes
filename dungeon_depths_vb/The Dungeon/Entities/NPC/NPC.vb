@@ -25,16 +25,16 @@
             tfCt = 0
             revert()
         End If
-        If (Game.player1.pClass.name = "Thrall" And Me.name.Contains("Thrall")) Or
-           (Game.player1.pForm.name = "Arachne" And Me.name.Contains("Arachne")) Or
-            (Game.player1.pForm.name = "Slime" And Me.name.Contains("Slime")) Or
-            (Game.player1.pForm.name.Equals("Goo Girl") And Me.name.Contains("Goo")) Or
-            (Game.player1.pForm.name = "Alraune" And Me.name.Contains("Alraune")) Then
+        If (Game.player1.className = "Thrall" And Me.name.Contains("Thrall")) Or
+           (Game.player1.formName = "Arachne" And Me.name.Contains("Arachne")) Or
+            (Game.player1.formName = "Slime" And Me.name.Contains("Slime")) Or
+            (Game.player1.formName.Equals("Goo Girl") And Me.name.Contains("Goo")) Or
+            (Game.player1.formName = "Alraune" And Me.name.Contains("Alraune")) Then
             despawn("friend")
             Exit Sub
         End If
         If Not isStunned Then
-            If Game.player1.pForm.name.Equals("Black Cat") Or Game.player1.pForm.name.Equals("Chicken") And Me.GetType() = GetType(Monster) Then despawn("animaltf")
+            If Game.player1.formName.Equals("Black Cat") Or Game.player1.formName.Equals("Chicken") And Me.GetType() = GetType(Monster) Then despawn("animaltf")
             nextCombatAction = Sub(t As Entity) attackCMD(t)
         Else
             If Me.GetType() Is GetType(Monster) Then

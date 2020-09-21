@@ -37,7 +37,7 @@
     Sub step3()
         Dim p As Player = Game.player1
         p.prt.skincolor = Color.FromArgb(230, 0, 255, 255)
-        p.pForm = p.forms("Half-Slime")
+        p.changeForm("Half-Slime")
         'Author Credit: Marionette
         Dim out = "As soon as the lid of the jar comes off the goo jumps out.  "
         If p.breastSize < 1 Then
@@ -71,7 +71,7 @@
         p.prt.setIAInd(pInd.cloak, 0, True, False)
         p.prt.setIAInd(pInd.hat, 0, True, False)
 
-        p.pForm = p.forms("Slime")
+        p.changeForm("Slime")
         Equipment.clothesChange("Naked")
 
         p.prt.skincolor = Color.FromArgb(200, p.prt.skincolor.R, p.prt.skincolor.G, p.prt.skincolor.B)

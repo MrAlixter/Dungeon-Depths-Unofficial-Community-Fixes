@@ -91,7 +91,7 @@
     Shared Sub giveTitle()
         displayFaeImg(1)
 
-        Game.pushNPCDialog("Oooooh, vocational...  Say, " & Game.player1.pClass.name & ", I don't suppose you could do me a favor before we're off...", AddressOf askForFavor)
+        Game.pushNPCDialog("Oooooh, vocational...  Say, " & Game.player1.className & ", I don't suppose you could do me a favor before we're off...", AddressOf askForFavor)
     End Sub
     Shared Sub declineToGiveName2()
         displayFaeImg(4)

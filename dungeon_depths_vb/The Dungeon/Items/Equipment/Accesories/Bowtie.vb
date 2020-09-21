@@ -23,7 +23,7 @@
     End Sub
 
     Public Overrides Function getABoost(ByRef p As Player) As Integer
-        If Not p.pClass.name.Equals("Bunny Girl") Then Return 0
+        If Not p.className.Equals("Bunny Girl") Then Return 0
         If Not (p.equippedArmor.getSlutVarInd = -1 And p.equippedArmor.getAntiSlutVarInd <> -1) And Not p.equippedArmor.getName.Contains("Bunny") Then Return 0
 
         Dim buff = p.equippedArmor.dBoost
@@ -39,7 +39,7 @@
         Return buff + (p.equippedArmor.aBoost * 1.2)
     End Function
     Public Overrides Function getMBoost(ByRef p As Player) As Integer
-        If Not p.pClass.name.Equals("Bunny Girl") Then Return 0
+        If Not p.className.Equals("Bunny Girl") Then Return 0
         If Not (p.equippedArmor.getSlutVarInd = -1 And p.equippedArmor.getAntiSlutVarInd <> -1) And Not p.equippedArmor.getName.Contains("Bunny") Then Return 0
 
         Dim buff = p.equippedArmor.dBoost

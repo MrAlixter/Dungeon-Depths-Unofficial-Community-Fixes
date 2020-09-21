@@ -1,7 +1,17 @@
 ﻿Public Class BimboPlusPlus
-    Inherits pClass
+    Inherits Bimbo
     Sub New()
-        MyBase.New(0.75, 1.1, 1.75, 0.75, 1, 2, "Bimbo++")
+        MyBase.New()
+
+        MyBase.h = 0.75
+        MyBase.a = 1.1
+        MyBase.m = 1.75
+        MyBase.d = 0.75
+        MyBase.s = 1
+        MyBase.w = 2
+
+        MyBase.name = "Bimbo++"
+
         MyBase.revertPassage = ""
     End Sub
 End Class

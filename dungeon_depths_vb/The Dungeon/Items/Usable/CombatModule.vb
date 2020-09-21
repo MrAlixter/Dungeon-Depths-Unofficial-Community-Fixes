@@ -12,7 +12,7 @@
     End Sub
 
     Public Overrides Sub use(ByRef p As Player)
-        If p.pForm.name.Equals("Cyborg") Or p.pForm.name.Equals("Gynoid") Or p.pForm.name.Equals("Android") Then
+        If p.formName.Equals("Cyborg") Or p.formName.Equals("Gynoid") Or p.formName.Equals("Android") Then
             Game.pushLblEvent("Plugging in the combat module floods your system with a wealth of offensive and defensive strategies")
             p.ongoingTFs.Add(New CombatModTF())
             p.update()

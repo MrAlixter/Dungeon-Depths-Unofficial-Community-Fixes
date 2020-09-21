@@ -16,7 +16,7 @@
 
         Game.pushLstLog("You apply the " & getName())
 
-        If p.pForm.name.Equals("Slime") Or p.pForm.name.Equals("Goo Girl") Then
+        If p.formName.Equals("Slime") Or p.formName.Equals("Goo Girl") Then
             p.health += 0.25
             If p.health > 1 Then p.health = 1
             count -= 1

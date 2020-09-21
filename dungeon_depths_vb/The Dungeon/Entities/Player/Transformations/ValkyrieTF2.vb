@@ -18,7 +18,7 @@
             p.MtF()
         End If
 
-        p.pClass = p.classes("Valkyrie")
+        p.changeClass("Valkyrie")
 
         p.breastSize = 2
 
@@ -50,7 +50,7 @@
 
     Public Overrides Function getNextStep(stage As Integer) As Action
         Dim p As player = game.player1
-        If p.pClass.name.Equals("Valkyrie") Then
+        If p.className.Equals("Valkyrie") Then
             Return AddressOf stopTF
         Else
             Return AddressOf step1

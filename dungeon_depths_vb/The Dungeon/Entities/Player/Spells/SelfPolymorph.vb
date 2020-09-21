@@ -10,16 +10,16 @@
     Public Overrides Sub effect()
         Polymorph.porm = True
         Dim p As Polymorph = New Polymorph
-        Dim fN = Game.player1.pForm.name
-        Dim cN = Game.player1.pClass.name
+        Dim fN = Game.player1.formName
+        Dim cN = Game.player1.className
         p.ShowDialog()
         p.Dispose()
 
         Dim delta As String
-        If Game.player1.pForm.name.Equals(fN) Then
-            delta = Game.player1.pClass.name
+        If Game.player1.formName.Equals(fN) Then
+            delta = Game.player1.className
         Else
-            delta = Game.player1.pForm.name
+            delta = Game.player1.formName
         End If
         Game.pushLstLog(CStr("You turn yourself into a " & delta & "!"))
         Game.pushLblCombatEvent(CStr("You turn yourself into a " & delta & "!"))

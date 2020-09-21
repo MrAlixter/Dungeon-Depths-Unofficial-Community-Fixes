@@ -59,7 +59,7 @@
         ElseIf npcIndex = 2 Then
             Game.pushNPCDialog("Baaahhh.")
         ElseIf npcIndex = 3 Then
-            Game.pushNPCDialog("Hello, kind " & Game.player1.pClass.name & ", how are you on this fine day?")
+            Game.pushNPCDialog("Hello, kind " & Game.player1.className & ", how are you on this fine day?")
         ElseIf npcIndex = 4 Then
             Game.pushNPCDialog("*giggle* Hey!")
         End If

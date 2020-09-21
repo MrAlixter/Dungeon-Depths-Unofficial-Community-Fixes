@@ -247,6 +247,7 @@
         internal_inventory.Add("Crimson_Spellbook", New CSpellbook)         '226
         internal_inventory.Add("Crimson_Manual", New CrimsonManual)         '227
         internal_inventory.Add("XP_Sandwich", New XPSandwich)               '228
+        internal_inventory.Add("BitGold", New BitGold)                      '229
 
         armor = {New Naked,
                  Me.item(5), Me.item(7), Me.item(8), Me.item(10),
@@ -317,7 +318,7 @@
 
         Array.Sort(potions)
 
-        misc = {Me.item(43), Me.item(53), Me.item(224)}
+        misc = {Me.item(43), Me.item(53), Me.item(224), Me.item(229)}
 
         invIDorder = New List(Of Integer)
 

@@ -20,7 +20,7 @@
 
         'equip clothes
         Equipment.clothesChange("Naked")
-        p.pForm = p.forms("Blowup Doll")
+        p.changeForm("Blowup Doll")
 
         'bu doll transformation
 

@@ -19,9 +19,9 @@
 
     Public Sub step1()
         Dim p As Player = Game.player1
-        Dim t = p.pClass
+        Dim t = p.className
         destForm.shiftTowards(p)
-        p.pClass = t
+        p.changeClass(t)
     End Sub
 
     Public Overrides Sub stopTF()

@@ -171,7 +171,7 @@
             Game.pushLblCombatEvent("You can't polymorph yourself!")
             Exit Sub
         ElseIf s.Equals("Heal") Then
-            If Game.player1.pClass.name.Equals("Soul-Lord") Then
+            If Game.player1.className.Equals("Soul-Lord") Then
                 Game.pushLblEvent("You scoff at the thought of healing in this moment, instead firing off a much more agressive fireball.  Settling down slightly, you muse on what a waste of time a heal spell would be." & DDUtils.RNRN & """Only someone who cares about their mortal vessel would bother to maintain it.")
                 s = "Fireball"
             End If
@@ -187,7 +187,7 @@
 
         Select Case s
             Case "Dragon's Breath"
-                If Game.player1.pForm.name.Equals("Dragon") Then Return "No cost" Else Return "-6 mana"
+                If Game.player1.formName.Equals("Dragon") Then Return "No cost" Else Return "-6 mana"
             Case "Molten Fireball"
                 Return "-4 health"
             Case Else

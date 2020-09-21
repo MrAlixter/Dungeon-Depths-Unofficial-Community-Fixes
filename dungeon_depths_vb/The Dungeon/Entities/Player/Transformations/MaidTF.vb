@@ -23,7 +23,7 @@
 
         p.pClass.revert()
         out = p.pClass.revertPassage & DDUtils.RNRN
-        p.pClass = p.classes("Maid")
+        p.changeClass("Maid")
 
         'equip clothes
         Equipment.clothesChange("Maid_Outfit")

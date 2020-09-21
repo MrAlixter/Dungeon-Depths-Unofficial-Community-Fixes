@@ -87,18 +87,18 @@
         End If
 
         'handles any tfs or triggers triggered by equipping of certain armors by certain classes
-        If p.pClass.name.Equals("Magical Girl") And Not (p.equippedArmor.getName.Contains("Outfit") And p.equippedArmor.getName.Contains("Mag")) And p.equippedArmor.fits(p) Then
+        If p.className.Equals("Magical Girl") And Not (p.equippedArmor.getName.Contains("Outfit") And p.equippedArmor.getName.Contains("Mag")) And p.equippedArmor.fits(p) Then
             Game.pushLstLog("A magical girl needs her uniform!")
             Game.pushLblEvent("A magical girl needs her uniform!")
             Return False
         End If
-        If p.pClass.name.Equals("Valkyrie") And Not p.equippedArmor.getName.Equals("Valkyrie_Armor") And p.equippedArmor.fits(p) Then
+        If p.className.Equals("Valkyrie") And Not p.equippedArmor.getName.Equals("Valkyrie_Armor") And p.equippedArmor.fits(p) Then
             Game.pushLstLog("Your armor magically re-equips!")
             Game.pushLblEvent("Your armor magically re-equips!")
             Return False
         End If
 
-        If p.pForm.name.Equals("Blow-Up Doll") Then
+        If p.formName.Equals("Blow-Up Doll") Then
             p.equippedArmor = New Naked
         End If
 
@@ -197,37 +197,37 @@
     Sub defaultClothesOptions(ByVal options As ComboBox.ObjectCollection)
         Dim p = Game.player1
 
-        If p.pClass.name = "Princess" Then
+        If p.className = "Princess" Then
             options.Add("Regal_Gown")
-        ElseIf p.pClass.name = "Maid" Then
+        ElseIf p.className = "Maid" Then
             options.Add("Maid_Outfit")
-        ElseIf p.pForm.name = "Succubus" Or p.pForm.name = "Half-Succubus" Then
+        ElseIf p.formName = "Succubus" Or p.formName = "Half-Succubus" Then
             options.Add("Succubus_Garb")
-        ElseIf p.pForm.name = "Slime" Then
+        ElseIf p.formName = "Slime" Then
             options.Add("Gelatinous_Shell")
-        ElseIf p.pForm.name = "Goo Girl" Then
+        ElseIf p.formName = "Goo Girl" Then
             options.Add("Gelatinous_Negligee")
-        ElseIf p.pClass.name = "Goddess" Then
+        ElseIf p.className = "Goddess" Then
             options.Add("Goddess_Gown")
         End If
     End Sub
     Sub defaultClothesOptionsAlt(ByVal options As ListBox.ObjectCollection)
         Dim p = Game.player1
-        If p.pClass.name = "Bimbo" Or p.perks(perk.slutcurse) > -1 Or p.equippedArmor.getName.Equals("Skimpy_Clothes") Then
+        If p.className = "Bimbo" Or p.perks(perk.slutcurse) > -1 Or p.equippedArmor.getName.Equals("Skimpy_Clothes") Then
             options.Add("b - Skimpy_Clothes")
         ElseIf (p.perks(perk.slutcurse) > -1 And p.equippedArmor.getName.Equals("Skimpy_Clothes")) Or p.equippedArmor.getName.Equals("Very_Skimpy_Clothes") Then
             options.Add("b - Very_Skimpy_Clothes")
-        ElseIf p.pClass.name = "Princess" Then
+        ElseIf p.className = "Princess" Then
             options.Add("b - Regal_Gown")
-        ElseIf p.pClass.name = "Maid" Then
+        ElseIf p.className = "Maid" Then
             options.Add("b - Maid_Outfit")
-        ElseIf p.pForm.name = "Succubus" Or p.pForm.name = "Half-Succubus" Then
+        ElseIf p.formName = "Succubus" Or p.formName = "Half-Succubus" Then
             options.Add("b - Succubus_Garb")
-        ElseIf p.pForm.name = "Slime" Then
+        ElseIf p.formName = "Slime" Then
             options.Add("b - Gelatinous_Shell")
-        ElseIf p.pForm.name = "Goo Girl" Then
+        ElseIf p.formName = "Goo Girl" Then
             options.Add("b - Gelatinous_Negligee")
-        ElseIf p.pClass.name = "Goddess" Then
+        ElseIf p.className = "Goddess" Then
             options.Add("b - Goddess_Gown")
         Else
             options.Add("b - Common_Clothes")

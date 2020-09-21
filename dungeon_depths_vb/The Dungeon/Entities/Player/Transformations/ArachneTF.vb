@@ -85,7 +85,7 @@
         p.prt.changeSkinColor(DDUtils.cShift(p.prt.skincolor, Color.LightSlateGray, 5))
 
         Game.pushLblEvent("\tWhile for the most part the venom seems to be concentrated in your lower body now, all at once its familiar throb returns so suddenly it forces you to the ground and onto the brink of passing out.  It isn't until a pain unlike anything you've ever felt before flares up in your legs that you decide that unconciousness might be a blessing, and allow yourself to go under.", AddressOf step4pt1)
-        p.pForm = p.forms("Arachne")
+        p.changeForm("Arachne")
         p.lust += 5
     End Sub
     Sub step4pt1()
@@ -129,7 +129,7 @@
     End Sub
 
     Public Overrides Function getNextStep(stage As Integer) As Action
-        If (Game.player1.perks(perk.avenom) = -1 And Game.player1.perks(perk.svenom) = -1) Or Game.player1.pForm.name.Equals("Arachne") Then
+        If (Game.player1.perks(perk.avenom) = -1 And Game.player1.perks(perk.svenom) = -1) Or Game.player1.formName.Equals("Arachne") Then
             Return AddressOf stopTF
         End If
         If Game.player1.perks(perk.svenom) > -1 Then stage = Game.player1.perks(perk.svenom)

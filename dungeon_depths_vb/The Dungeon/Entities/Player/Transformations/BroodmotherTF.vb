@@ -70,20 +70,20 @@
     End Sub
     Sub step5p1()
         Dim p As Player = Game.player1
-        p.pForm = p.forms("Half-Dragoness")
+        p.changeForm("Half-Dragoness")
         p.drawPort()
 
         Game.pushLblEvent("While your senses have been steadily becoming more precise, you can't help but feel that you're getting less done.  It's almost as though some distraction is clouding your judgment, and as you catch the echo of a dragon's wingbeat from far off in the distance you wonder if maybe you should track it down for a good fucking to clear your head..." & DDUtils.RNRN & "You are now a half broodmother!", AddressOf step5p2)
     End Sub
     Sub step5p2()
         Dim p As Player = Game.player1
-        p.pForm = p.forms("Half-Broodmother")
+        p.changeForm("Half-Broodmother")
         Game.pushLblEvent("*The next day...*" & DDUtils.RNRN & "You may have set off to find the dragon on somewhat of a whim, but the mere thought of being pinned down and bred by it has fanned a burning desire within you.  Blushing under your scales, you stagger forward, knees weak with anticipation.  While a small part of your psyche is screaming that you need to focus up, you practically tear off your clothes to get at your sex.  You collapse to the ground, panting as you desperately finger your pussy.  As you edge closer and closer to climaxing, you let out a gutteral roar, thrusting your wings out and spitting out a jet of red-hot flame.  As you sprawl out, scales covering every inch of your once fleshy hide, you giggle with an almost schoolgirl-like excitement.  That dragon may have gotten away this time, but next time you'll get him for sure!" & DDUtils.RNRN & "You are now a broodmother!", AddressOf step5p3)
         p.drawPort()
     End Sub
     Sub step5p3()
         Dim p As Player = Game.player1
-        p.pForm = p.forms("Broodmother")
+        p.changeForm("Broodmother")
         p.drawPort()
     End Sub
 

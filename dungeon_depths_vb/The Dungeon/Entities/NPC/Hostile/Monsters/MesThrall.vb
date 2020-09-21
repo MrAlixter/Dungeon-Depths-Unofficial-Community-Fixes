@@ -6,19 +6,20 @@
         attack = 20
         defense = 7
         speed = 9
+        will = 5
         setInventory({0, 1, 13})
         setupMonsterOnSpawn()
     End Sub
 
     Public Overrides Sub playerDeath(ByRef p As Player)
-        If p.pForm.name.Equals("Blowup Doll") Then
+        If p.formName.Equals("Blowup Doll") Then
             despawn("p-death")
             Game.pushLblEvent("Your enemy, seeing your current state, decides that you likely aren't useful and leaves you alone.")
             Exit Sub
         End If
         Dim out As String = ""
         Dim ln1 As String = Nothing
-        If p.pClass.name.Equals("Thrall") Then
+        If p.className.Equals("Thrall") Then
             out = "Despite your fatigue, you are able to roll out of the way of the thrall's attempt to restrain you, and make a clumsy escape."
 
         Else

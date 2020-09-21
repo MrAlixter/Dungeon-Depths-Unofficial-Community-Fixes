@@ -14,7 +14,7 @@
             'critical hit
         Else
             'non critical hit
-            MyBase.getTarget.takeDMG(dmg + d31 + d32, MyBase.getCaster)
+            MyBase.getCaster.dealSpellDamage(MyBase.getTarget, dmg + d31 + d32)
             Game.pushLstLog(CStr("You hit the " & MyBase.getTarget.name & " for " & dmg + d31 + d32 & " damage!"))
             Game.pushLblCombatEvent(CStr("You hit the " & MyBase.getTarget.name & " for " & dmg + d31 + d32 & " damage!"))
             

@@ -7,17 +7,17 @@
 
     Public Overrides Sub onLVLUp(level As Integer, ByRef p As Player)
         If level Mod 2 = 0 Then
-            p.attack += 4
+            p.attack += 5
         ElseIf level Mod 2 = 1 Then
-            p.defense += 4
+            p.defense += 5
         End If
     End Sub
 
     Public Overrides Sub deLVL(level As Integer, ByRef p As Player)
         If level Mod 2 = 0 Then
-            p.attack -= 4
+            p.attack -= 5
         ElseIf level Mod 2 = 1 Then
-            p.defense -= 4
+            p.defense -= 5
         End If
     End Sub
 End Class

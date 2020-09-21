@@ -32,7 +32,7 @@
         p.prt.setIAInd(pInd.facemark, 0, True, False)
         p.prt.setIAInd(pInd.glasses, 6, True, True)
 
-        p.pForm = p.forms("Gynoid")
+        p.changeForm("Gynoid")
 
         p.setName(p.name.Substring(0, 1) & "-1" & Int(Rnd() * 999))
         p.inv.add("Gynoid_Uniform", 1)

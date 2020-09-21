@@ -11,6 +11,7 @@
         attack = 50
         defense = 5
         speed = 25
+        will = 30
         setInventory({})
         setupMonsterOnSpawn()
         xpValue = 35

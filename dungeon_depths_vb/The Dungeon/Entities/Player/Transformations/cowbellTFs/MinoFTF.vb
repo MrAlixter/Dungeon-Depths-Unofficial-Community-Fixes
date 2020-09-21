@@ -98,7 +98,7 @@
     End Sub
 
     Overridable Function dropEWeapon(ByRef p As Player) As Boolean
-        If p.pClass.name.Equals("Magical Girl") Or p.pClass.name.Equals("Valkyrie") Then
+        If p.className.Equals("Magical Girl") Or p.className.Equals("Valkyrie") Then
             Equipment.weaponChange("Fists")
             Return True
         End If
@@ -205,7 +205,7 @@
 
         tfDialogStep9()
 
-        Game.player1.pForm = p.forms("Minotaur Cow")
+        p.changeForm("Minotaur Cow")
 
         tfClothes(p)
     End Sub

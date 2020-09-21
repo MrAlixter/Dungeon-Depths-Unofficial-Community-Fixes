@@ -30,7 +30,7 @@
     End Sub
 
     Public Overrides Function getMBoost(ByRef p As Player) As Integer
-        If Not p Is Nothing AndAlso (p.pForm.name.Equals("Cyborg") Or p.pForm.name.Equals("Gynoid") Or p.pForm.name.Equals("Android") Or p.pForm.name.Equals("Combat Unit")) Then
+        If Not p Is Nothing AndAlso (p.formName.Equals("Cyborg") Or p.formName.Equals("Gynoid") Or p.formName.Equals("Android") Or p.formName.Equals("Combat Unit")) Then
             Return MyBase.getMBoost(p) + 13
         Else
             Return MyBase.getMBoost(p)
@@ -38,7 +38,7 @@
     End Function
 
     Public Overrides Function getSBoost(ByRef p As Player) As Integer
-        If Not p Is Nothing AndAlso (p.pForm.name.Equals("Cyborg") Or p.pForm.name.Equals("Gynoid") Or p.pForm.name.Equals("Android") Or p.pForm.name.Equals("Combat Unit")) Then
+        If Not p Is Nothing AndAlso (p.formName.Equals("Cyborg") Or p.formName.Equals("Gynoid") Or p.formName.Equals("Android") Or p.formName.Equals("Combat Unit")) Then
             Return MyBase.getSBoost(p) + 10
         Else
             Return MyBase.getSBoost(p)

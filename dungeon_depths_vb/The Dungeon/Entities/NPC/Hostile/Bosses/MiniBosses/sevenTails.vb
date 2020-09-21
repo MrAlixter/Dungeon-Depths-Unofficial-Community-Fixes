@@ -7,6 +7,7 @@
         maxHealth = 7
         attack = 7
         defense = 7777
+        will = 7777
         speed = 7
 
         inv.setCount("Fox_Ears", 3)

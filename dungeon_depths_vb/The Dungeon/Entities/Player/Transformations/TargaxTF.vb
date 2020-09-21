@@ -35,7 +35,7 @@
             p.prt.setIAInd(pInd.fronthair, 6, False, True)
 
             p.prt.haircolor = Color.FromArgb(255, 128, 0, 0)
-            p.pClass = p.classes("Targaxian")
+            p.changeClass("Targaxian")
             Game.pushLblEvent("As another foe meets its demise at your, no, Targax's blade, you have a brief sense of regret that you defeated him.  Who knows what you could have gained from an alliance with him. ""Oh well, back to the slaughter.""")
         End If
         p.drawPort()
@@ -43,7 +43,7 @@
     Shared Sub step3()
         Dim p As Player = Game.player1
         p.name = "Targax"
-        p.pClass = p.classes("Soul-Lord")
+        p.changeClass("Soul-Lord")
         Game.pushLblEvent("You jolt out of the trance you've been in for a unknown period of time, and stare in awe at the ornate glyphs that you have apperantly carved in the ground.  ""What the hell did I ..."" when the voice in your head returns, asking ""Do you accept?"".  ""Do I accept what?"" you demand, to which the voice in your head simply repeats the question.  About to firmly decline whatever nonsense your mental passenger is getting at, you are cut short by a thundering ""DO YOU ACCEPT"".  Your eyes space out and you answer your master the only way you can." & DDUtils.RNRN & """Yes Master.""")
         p.prt.setIAInd(pInd.mouth, 8, False, True)
         p.drawPort()
@@ -55,7 +55,7 @@
     Shared Sub instantTF()
         Dim p As Player = Game.player1
         p.name = "Targax"
-        p.pClass = p.classes("Soul-Lord")
+        p.changeClass("Soul-Lord")
 
         If p.prt.iArrInd(pInd.eyes).Item2 Then
             p.prt.setIAInd(pInd.eyes, 15, True, True)

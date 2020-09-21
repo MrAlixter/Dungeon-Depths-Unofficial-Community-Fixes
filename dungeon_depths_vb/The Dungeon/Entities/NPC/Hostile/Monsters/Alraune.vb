@@ -35,7 +35,7 @@
                 target.health += 0.25
                 If target.health > 1 Then target.health = 1
                 Exit Sub
-            ElseIf Int(Rnd() * 3) = 0 And Not CType(target, Player).pClass.name.Equals("Mindless") Then
+            ElseIf Int(Rnd() * 3) = 0 And Not CType(target, Player).className.Equals("Mindless") Then
                 Game.pushLblEvent("The " & getName() & " casts Mesmeric Bloom!")
                 Dim tf = New MindlessTF()
                 tf.step1alt()

@@ -166,6 +166,21 @@
         iarr(pInd.ears) = Portrait.skinRecolor(Portrait.imgLib.atrs(pInd.ears).getAt(iarrind(pInd.ears)), c)
         iarr(pInd.nose) = Portrait.skinRecolor(Portrait.imgLib.atrs(pInd.nose).getAt(iarrind(pInd.nose)), c)
     End Sub
+
+    '|POINT CALCULATION|
+    Shared Function distance(ByVal x As Point, ByVal y As Point) As Double
+        'the straight-line distance between two points
+        Return Math.Abs(Math.Sqrt(CDbl((y.X - x.X) ^ 2) + CDbl((y.Y - x.Y) ^ 2)))
+    End Function
+    Shared Function withinOnePlusMinus(ByVal p1 As Point, ByVal pList As List(Of Point)) As Boolean
+        'indicates whether a point is within plus/minus one space of another in a list of points
+        For Each p In pList
+            If p.X + 1 = p1.X Or p.X - 1 = p1.X Then Return True
+            If p.Y + 1 = p1.Y Or p.Y - 1 = p1.Y Then Return True
+        Next
+        Return False
+    End Function
+
 End Class
 
 

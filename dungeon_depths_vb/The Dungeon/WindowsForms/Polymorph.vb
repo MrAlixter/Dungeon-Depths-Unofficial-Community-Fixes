@@ -44,8 +44,8 @@
                 For i = 0 To p.selfPolyForms.Count - 1
                     cboxPMorph.Items.Add(p.selfPolyForms.Item(i))
                 Next
-                If cboxPMorph.Items.Contains(p.pClass.name) Then cboxPMorph.Items.Remove(p.pClass.name)
-                If cboxPMorph.Items.Contains(p.pForm.name) Then cboxPMorph.Items.Remove(p.pForm.name)
+                If cboxPMorph.Items.Contains(p.className) Then cboxPMorph.Items.Remove(p.className)
+                If cboxPMorph.Items.Contains(p.formName) Then cboxPMorph.Items.Remove(p.formName)
             Case False
                 For i = 0 To p.enemPolyForms.Count - 1
                     cboxPMorph.Items.Add(p.enemPolyForms.Item(i))
@@ -69,20 +69,20 @@
 
     'player transform methods
     Sub transform(ByRef p As Player, ByVal form As String)
-        If form.Equals(p.pClass.name) Or form.Equals(p.pForm.name) Or Not p.polymorphs.Keys.Contains(form) Then
+        If form.Equals(p.className) Or form.Equals(p.formName) Or Not p.polymorphs.Keys.Contains(form) Then
             Exit Sub
         End If
 
         'gets the revert text for whatever is being changed
         Dim revertText = ""
-        If Not form.Equals(p.pClass.name) Then
+        If Not form.Equals(p.className) Then
             p.pClass.revert()
             revertText = p.pClass.revertPassage & DDUtils.RNRN
-        ElseIf Not form.Equals(p.pForm.name) Then
+        ElseIf Not form.Equals(p.formName) Then
             p.pForm.revert()
             revertText = p.pForm.revertPassage & DDUtils.RNRN
         Else
-            MsgBox(form.Equals(p.pClass.name) & " | " & form.Equals(p.pForm.name))
+            MsgBox(form.Equals(p.className) & " | " & form.Equals(p.formName))
         End If
 
         'polymorph updates
@@ -94,9 +94,9 @@
 
         If form = "MASBimbo" Then form = "Bimbo"
         If p.forms.Keys.Contains(form) Then
-            p.pForm = p.forms(form)
+            p.changeForm(form)
         ElseIf p.classes.Keys.Contains(form) Then
-            p.pClass = p.classes(form)
+            p.changeClass(form)
         End If
 
         'cleanup

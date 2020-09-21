@@ -15,7 +15,7 @@
             '"critical" hit
             dmg *= MyBase.getTarget.stunct + 2
 
-            MyBase.getTarget.takeDMG(dmg + d31 + d32, MyBase.getCaster)
+            MyBase.getCaster.dealSpellDamage(MyBase.getTarget, dmg + d31 + d32)
             Game.pushLstLog(CStr("You hit the " & MyBase.getTarget.name & " for " & dmg + d31 + d32 & " damage!  Oof, what a throw!"))
             Game.pushLblCombatEvent(CStr("You hit the " & MyBase.getTarget.name & " for " & dmg + d31 + d32 & " damage!  Oof, what a throw!"))
         Else
@@ -32,7 +32,7 @@
                 Game.pushLblCombatEvent(CStr("You hit the " & MyBase.getTarget.name & " for " & dmg + d31 + d32 & " damage!"))
             End If
 
-            MyBase.getTarget.takeDMG(dmg + d31 + d32, MyBase.getCaster)
+            MyBase.getCaster.dealSpellDamage(MyBase.getTarget, dmg + d31 + d32)
         End If
     End Sub
 End Class

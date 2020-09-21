@@ -26,7 +26,7 @@
     Public Overrides Sub attackCMD(ByRef target As Entity)
         If spellCooldown > 0 Then spellCooldown -= 1
         If target.GetType() Is GetType(Player) Then
-            If spellCooldown < 1 And Not Game.player1.pClass.name.Equals("Bimbo") And Int(Rnd() * 3) = 0 Then
+            If spellCooldown < 1 And Not Game.player1.className.Equals("Bimbo") And Int(Rnd() * 3) = 0 Then
                 Game.pushLstLog((getName() & " casts Bimbofy on you!"))
                 Game.pushLblCombatEvent((getName() & " casts Bimbofy on you!"))
                 Polymorph.transform(Game.player1, "MASBimbo")

@@ -17,6 +17,20 @@
         setupMonsterOnSpawn()
     End Sub
 
+    Public Overrides Sub die(ByRef cause As Entity)
+        If cause.GetType() Is GetType(Player) Then
+            Dim p = CType(cause, Player)
+
+            If p.perks(perk.succubuscurse) > -1 Then
+                p.perks(perk.succubuscurse) = -1
+                Game.pushLstLog("The succubus's curse is lifted!")
+                Game.pushLblEvent("The succubus's curse is lifted!")
+            End If
+        End If
+
+        MyBase.die(cause)
+    End Sub
+
     Public Overrides Sub attackCMD(ByRef target As Entity)
         Dim r = Int(Rnd() * 10)
 
@@ -29,7 +43,7 @@
             Exit Sub
         End If
 
-        If ((r = 1 And target.GetType Is GetType(Player)) AndAlso CType(target, Player).perks(perk.succubuscurse) = -1 And Not CType(target, Player).pClass.name.Equals("Bimbo") And Not CType(target, Player).pForm.name.Equals("Succubus")) OrElse (target.GetType Is GetType(Player) AndAlso CType(target, Player).perks(perk.succubuscow) <> -1) Then
+        If ((r = 1 And target.GetType Is GetType(Player)) AndAlso CType(target, Player).perks(perk.succubuscurse) = -1 And Not CType(target, Player).className.Equals("Bimbo") And Not CType(target, Player).formName.Equals("Succubus")) OrElse (target.GetType Is GetType(Player) AndAlso CType(target, Player).perks(perk.succubuscow) <> -1) Then
             Game.pushLblEvent("The " & getName() & " casts ""Moo for Me!""")
             If CType(target, Player).perks(perk.succubuscow) = -1 Then CType(target, Player).perks(perk.succubuscow) = 1 Else CType(target, Player).perks(perk.succubuscow) += 1
             MinoDTF.tfPlayer(CType(target, Player).perks(perk.succubuscow), CType(target, Player))

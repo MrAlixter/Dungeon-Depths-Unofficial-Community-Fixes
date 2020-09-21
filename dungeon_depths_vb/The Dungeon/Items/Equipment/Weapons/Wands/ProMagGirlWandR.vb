@@ -16,7 +16,7 @@
     End Sub
 
     Public Overrides Sub onEquip(ByRef p As Player)
-        If Not p.pClass.name.Equals("Magical Girl") Then
+        If Not p.className.Equals("Magical Girl") Then
 
             Dim magicGirlTF = New ProMagGirlRTF(2, 0, 0, False)
             magicGirlTF.update()

@@ -15,7 +15,7 @@
 
     Public Overrides Sub onEquip(ByRef p As Player)
         MyBase.onEquip(p)
-        If Not p.pClass.name.Equals("Magical Girl") Then
+        If Not p.className.Equals("Magical Girl") Then
 
             Dim magicGirlTF = New MagGirlTF(2, 0, 0, False)
             magicGirlTF.update()
@@ -24,7 +24,7 @@
     End Sub
 
     Public Overrides Sub onunEquip(ByRef p As Player, ByRef w As Weapon)
-        If p.pClass.name.Equals("Magical Girl") And Not w Is Nothing AndAlso Not w.GetType.IsSubclassOf(GetType(Wand)) Then
+        If p.className.Equals("Magical Girl") And Not w Is Nothing AndAlso Not w.GetType.IsSubclassOf(GetType(Wand)) Then
             Game.pushLstLog("Putting away your wand causes you to change into your regular self!")
             p.inv.add(mgOutfit, -1)
             p.magGState.save(p)

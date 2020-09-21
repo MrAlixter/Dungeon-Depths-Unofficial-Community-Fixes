@@ -36,7 +36,7 @@
             p.prt.setIAInd(pInd.eyes, 33, True, True)
         End If
 
-        p.pClass = p.classes("Mindless")
+        p.changeClass("Mindless")
 
         out += """Oh, you offer me your mind?  Very well, I shall borrow it for a while.  Perhaps if you bear my signet I'll even make some improvements before its return, loyal one..."" you hear the voice of Uvona whisper in your ear.  As she speaks, a haze falls over your mind and ... suddenly ... you can't ... think no more ..."
 
@@ -59,7 +59,7 @@
             p.prt.setIAInd(pInd.mouth, 16, True, True)
         End If
 
-        p.pClass = p.classes("Mindless")
+        p.changeClass("Mindless")
 
         Game.pushLblEvent("The alraune's spell puts you into a deep trance!")
 
@@ -68,7 +68,7 @@
         p.polymorphs("Mindless") = PolymorphTF.newPoly("MindlessAlt")
         p.ongoingTFs.Add(p.polymorphs("Mindless"))
         p.perks(perk.polymorphed) = turnsTilNextStep
-        p.pClass = p.classes("Mindless")
+        p.changeClass("Mindless")
 
         p.drawPort()
     End Sub

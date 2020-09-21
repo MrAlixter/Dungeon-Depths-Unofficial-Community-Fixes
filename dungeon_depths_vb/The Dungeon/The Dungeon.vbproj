@@ -149,6 +149,7 @@
     <Compile Include="Items\Equipment\Armor\FullBodyUpdated\STBodysuit.vb" />
     <Compile Include="Items\Equipment\EquipmentItem.vb" />
     <Compile Include="Items\Misc\FoxStatue.vb" />
+    <Compile Include="Items\Misc\BitGold.vb" />
     <Compile Include="Items\Usable\Food\XPSandwich.vb" />
     <Compile Include="Items\Usable\FoxEars.vb" />
     <Compile Include="Items\Usable\Manuals\CrimsonManual.vb" />
@@ -592,6 +593,13 @@
     <Compile Include="Tiles\Dungeon.vb" />
     <Compile Include="Tiles\LoadedChest.vb" />
     <Compile Include="Tiles\mFloor.vb" />
+    <Compile Include="Tiles\Traps\CouponTrap.vb" />
+    <Compile Include="Tiles\Traps\DartTrap.vb" />
+    <Compile Include="Tiles\Traps\DoctorScanner.vb" />
+    <Compile Include="Tiles\Traps\GynoidTrap.vb" />
+    <Compile Include="Tiles\Traps\RopeTrap.vb" />
+    <Compile Include="Tiles\Traps\RubyTrap.vb" />
+    <Compile Include="Tiles\Traps\TGMirrorTrap.vb" />
     <Compile Include="WindowsForms\About.Designer.vb">
       <DependentUpon>About.vb</DependentUpon>
     </Compile>
@@ -784,7 +792,7 @@
     <Compile Include="Items\Equipment\Armor\FullBodyUpdated\TankTop.vb" />
     <Compile Include="Items\Equipment\Weapons\Swords\TargaxSword.vb" />
     <Compile Include="Items\Usable\Potions\Mystery Potions\GSPotion.vb" />
-    <Compile Include="Tiles\Trap.vb" />
+    <Compile Include="Tiles\Traps\Trap.vb" />
     <Compile Include="Entities\Updatable.vb" />
     <Compile Include="Items\Usable\VialOfSlime.vb" />
     <Compile Include="Items\Equipment\Armor\WarriorsCuirass.vb" />

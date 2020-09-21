@@ -12,7 +12,7 @@
     End Sub
 
     Overrides Sub use(ByRef p As Player)
-        If p.pClass.name.Equals("Soul-Lord") Then
+        If p.className.Equals("Soul-Lord") Then
             Game.pushLblEvent("You spike the health potion on the ground, shattering it all over the dungeon floor.  As you go back to your buisness, you muse on how cowardly healing is." & DDUtils.RNRN & """Only someone who cares about their mortal vessel would bother to maintain it.")
             p.UIupdate()
             Exit Sub

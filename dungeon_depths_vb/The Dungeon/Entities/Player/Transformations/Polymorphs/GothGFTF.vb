@@ -64,6 +64,6 @@
 
         Game.pushLblEvent(out)
 
-        p.pForm = p.forms("Goth")
+        p.changeForm("Goth")
     End Sub
 End Class

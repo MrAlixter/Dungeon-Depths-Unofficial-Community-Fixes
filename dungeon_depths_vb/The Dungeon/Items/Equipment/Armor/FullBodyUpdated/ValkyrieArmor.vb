@@ -33,7 +33,7 @@
     End Sub
 
     Overrides Sub discard()
-        If Game.player1.pClass.name.Equals("Valkyrie") Then
+        If Game.player1.className.Equals("Valkyrie") Then
             Game.pushLstLog("Your armor magically reappears!")
             Exit Sub
         End If

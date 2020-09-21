@@ -17,14 +17,14 @@
     End Sub
 
     Public Overrides Sub onEquip(ByRef p As Player)
-        If Not p.pClass.name.Equals("Magical Slut") Then
+        If Not p.className.Equals("Magical Slut") Then
             Dim magicGirlTF = New MagSlutTF(2, 0, 0, False)
             magicGirlTF.update()
             p.ongoingTFs.add(magicGirlTF)
         End If
     End Sub
     Public Overloads Overrides Sub onunEquip(ByRef p As Player, ByRef w As Weapon)
-        If p.pClass.name.Equals("Magical Slut") And Not w.GetType.IsSubclassOf(GetType(Wand)) Then
+        If p.className.Equals("Magical Slut") And Not w.GetType.IsSubclassOf(GetType(Wand)) Then
             Game.pushLstLog("Putting away your wand causes you to change into your regular self!")
             p.inv.add(mgOutfit, -1)
             p.magGState.save(p)

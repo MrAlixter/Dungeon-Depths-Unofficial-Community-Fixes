@@ -23,7 +23,7 @@
 
         p.pClass.revert()
         out = p.pClass.revertPassage & DDUtils.RNRN
-        p.pClass = p.classes("Maiden")
+        p.changeClass("Maiden")
 
         'transformation description push
         If p.prt.sexBool = False Then

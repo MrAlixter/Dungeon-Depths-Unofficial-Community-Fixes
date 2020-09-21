@@ -14,6 +14,5 @@
 
     Public Overrides Sub deLVL(level As Integer, ByRef p As Player)
         If p.breastSize > 0 Then p.bs()
-        If level = 3 And p.knownSpecials.Contains("Charm") Then p.knownSpecials.Remove("Charm") : Game.pushLstLog("Charm special forgotten!")
     End Sub
 End Class

@@ -21,7 +21,7 @@
     End Sub
     Sub step1()
         Dim p As Player = Game.player1
-        p.pClass = p.classes("Magical Girl​")
+        p.changeClass("Magical Girl​")
 
         If p.sex = "Male" Then
             p.sex = "Female"
@@ -78,7 +78,7 @@
 
         tfClothes(p)
 
-        p.pClass = p.classes(className)
+        p.changeClass(className)
 
         Game.lblEvent.Text = ""
         Game.lblEvent.Visible = False
@@ -90,7 +90,7 @@
     End Sub
 
     Shared Sub halfRevert(ByRef p As Player)
-        p.pClass = p.classes("Mage")
+        p.changeClass("Mage")
 
         p.breastSize = 2
         p.reverseAllRoute()
@@ -101,7 +101,7 @@
         p.prt.setIAInd(pInd.fronthair, 7, True, True)
     End Sub
     Shared Sub chkForMagGirlRevert(ByRef p As Player)
-        If Not p.pClass.name.Equals(className) Then Exit Sub
+        If Not p.className.Equals(className) Then Exit Sub
         pushLblEventWithoutLoss("Your form wavers, and while you can maintain it you are definitly tiring out.")
         MagGirlTF.halfRevert(p)
     End Sub
@@ -112,9 +112,9 @@
 
     Public Overrides Function getNextStep(stage As Integer) As Action
         Dim p As Player = Game.player1
-        If p.pClass.name.Equals("Magical Girl​") Then
+        If p.className.Equals("Magical Girl​") Then
             Return AddressOf step2
-        ElseIf p.pClass.name.Equals(className) Then
+        ElseIf p.className.Equals(className) Then
             Return AddressOf stopTF
         Else
             Return AddressOf step1

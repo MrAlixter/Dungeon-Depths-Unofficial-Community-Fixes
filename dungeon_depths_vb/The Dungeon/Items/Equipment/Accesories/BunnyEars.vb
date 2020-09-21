@@ -21,12 +21,12 @@
     End Sub
     Public Overrides Sub onUnequip(ByRef p As Player)
         If p.prt.checkNDefFemInd(pInd.hat, 14) Then p.prt.setIAInd(pInd.hat, 0, True, False)
-        If p.pClass.name.Equals("Bunny Girl") Then p.revertToPState()
+        If p.className.Equals("Bunny Girl") Then p.revertToPState()
         p.perks(perk.bunnyears) = -1
     End Sub
 
     Public Overrides Function getHBoost(ByRef p As Player) As Integer
-        If Not p.pClass.name.Equals("Bunny Girl") Then Return 0
+        If Not p.className.Equals("Bunny Girl") Then Return 0
         If Not (p.equippedArmor.getSlutVarInd = -1 And p.equippedArmor.getAntiSlutVarInd <> -1) And Not p.equippedArmor.getName.Contains("Bunny") Then Return 0
 
         Dim buff = p.equippedArmor.dBoost
@@ -42,7 +42,7 @@
         Return buff + (p.equippedArmor.hBoost * 1.3)
     End Function
     Public Overrides Function getDBoost(ByRef p As Player) As Integer
-        If Not p.pClass.name.Equals("Bunny Girl") Then Return 0
+        If Not p.className.Equals("Bunny Girl") Then Return 0
         If Not (p.equippedArmor.getSlutVarInd = -1 And p.equippedArmor.getAntiSlutVarInd <> -1) And Not p.equippedArmor.getName.Contains("Bunny") Then Return 0
 
         Dim buff = p.equippedArmor.dBoost

@@ -114,6 +114,9 @@
         If def <= 0 Then Return atk
         Return atk * (atk / (atk + def))
     End Function
+    Public Overridable Sub dealSpellDamage(ByRef target As Entity, ByVal dmg As Integer)
+        target.takeDMG(calcDamage(dmg * (will / 10), target.getWIL), Me)
+    End Sub
 
     '|GETTERS|
     Public Overridable Function getName() As String

@@ -823,28 +823,28 @@ Public Class Game
             If isALetter(Keydata.ToString.ToLower) Then keysPressed += Keydata.ToString.ToLower
             Select Case Keydata
                 Case cKeys(0)
-                    If player1.pClass.name.Equals("Mindless") Then
+                    If player1.className.Equals("Mindless") Then
                         player1.wander()
                     Else
                         player1.moveUp()
                     End If
                     randomEvents()
                 Case cKeys(1)
-                    If player1.pClass.name.Equals("Mindless") Then
+                    If player1.className.Equals("Mindless") Then
                         player1.wander()
                     Else
                         player1.moveDown()
                     End If
                     randomEvents()
                 Case cKeys(2)
-                    If player1.pClass.name.Equals("Mindless") Then
+                    If player1.className.Equals("Mindless") Then
                         player1.wander()
                     Else
                         player1.moveLeft()
                     End If
                     randomEvents()
                 Case cKeys(3)
-                    If player1.pClass.name.Equals("Mindless") Then
+                    If player1.className.Equals("Mindless") Then
                         player1.wander()
                     Else
                         player1.moveRight()
@@ -892,28 +892,28 @@ Public Class Game
                 Case Keys.Enter
                     oemReturn()
                 Case Keys.Up
-                    If player1.pClass.name.Equals("Mindless") Then
+                    If player1.className.Equals("Mindless") Then
                         player1.wander()
                     Else
                         player1.moveUp()
                     End If
                     randomEvents()
                 Case Keys.Down
-                    If player1.pClass.name.Equals("Mindless") Then
+                    If player1.className.Equals("Mindless") Then
                         player1.wander()
                     Else
                         player1.moveDown()
                     End If
                     randomEvents()
                 Case Keys.Left
-                    If player1.pClass.name.Equals("Mindless") Then
+                    If player1.className.Equals("Mindless") Then
                         player1.wander()
                     Else
                         player1.moveLeft()
                     End If
                     randomEvents()
                 Case Keys.Right
-                    If player1.pClass.name.Equals("Mindless") Then
+                    If player1.className.Equals("Mindless") Then
                         player1.wander()
                     Else
                         player1.moveRight()
@@ -1728,7 +1728,7 @@ Public Class Game
 
         'Targax can't run
         If player1.health < 1 / player1.getMaxHealth Then Exit Sub
-        If player1.perks(perk.swordpossess) > -1 Or (player1.name.Equals("Targax") And player1.pClass.name.Equals("Soul-Lord")) Then
+        If player1.perks(perk.swordpossess) > -1 Or (player1.name.Equals("Targax") And player1.className.Equals("Soul-Lord")) Then
             pushLstLog("Something inside you decides that running away is cowardly, so you don't.")
             pushLblCombatEvent("Something inside you decides that running away is cowardly, so you don't.")
             Exit Sub
@@ -1851,7 +1851,7 @@ Public Class Game
         f3.Dispose()
     End Sub
     Function checkIfCantEquip() As Boolean
-        If player1.pForm.name.Equals("Blowup Doll") Then
+        If player1.formName.Equals("Blowup Doll") Then
             pushLblEvent("Any weapon you try to wield, and any armor or accessories you try to equip slide off.  It doesn't look like you'll be able to do this until you're not a blowup doll.")
             Return True
         ElseIf player1.perks(perk.astatue) > -1 Then
@@ -1877,8 +1877,8 @@ Public Class Game
     Sub toDesc()
         txtPlayerDesc.Text = player1.genDescription
 
-        Dim pImg = player1.prt.oneLayerImgCheck(player1.pForm.name, player1.pClass.name)
-        If player1.prt.oneLayerImgCheck(player1.pForm.name, player1.pClass.name) Is Nothing Then
+        Dim pImg = player1.prt.oneLayerImgCheck(player1.formName, player1.className)
+        If player1.prt.oneLayerImgCheck(player1.formName, player1.className) Is Nothing Then
             player1.prt.setIArr()
             pImg = Portrait.CreateFullBodyBMP(player1.prt.iArr)
         End If

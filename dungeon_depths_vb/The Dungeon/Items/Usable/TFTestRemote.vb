@@ -53,7 +53,7 @@
 
             If form.Equals("Half-Broodmother") Or form.Equals("Broodmother") Or
                 form.Equals("Blob") Or form.Equals("Horse") Or form.Equals("Oni") Then
-                p.pForm = p.forms(form)
+                p.changeForm(form)
                 p.drawPort()
                 Exit Sub
             End If

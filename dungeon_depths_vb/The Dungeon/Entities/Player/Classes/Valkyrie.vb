@@ -1,7 +1,7 @@
 ﻿Public Class Valkyrie
     Inherits pClass
     Sub New()
-        MyBase.New(0.77, 2.0, 0.5, 1.2, 1.77, 1.5, "Valkyrie")
+        MyBase.New(0.75, 2.44, 0.3, 2.44, 2.44, 1, "Valkyrie")
         MyBase.revertPassage = "As you sheath your flaming blade, its fire fades to embers and you return to your original form. Well, until you should need its power again, at least."
     End Sub
 
@@ -15,5 +15,21 @@
             Game.player1.knownSpecials.Remove("Helix Slash")
         Loop
         Game.pushLstLog("Helix Slash special forgotten!")
+    End Sub
+
+    Public Overrides Sub onLVLUp(level As Integer, ByRef p As Player)
+        If level Mod 2 = 0 Then
+            p.speed += 5
+        ElseIf level Mod 2 = 1 Then
+            p.defense += 5
+        End If
+    End Sub
+
+    Public Overrides Sub deLVL(level As Integer, ByRef p As Player)
+        If level Mod 2 = 0 Then
+            p.speed -= 5
+        ElseIf level Mod 2 = 1 Then
+            p.defense -= 5
+        End If
     End Sub
 End Class

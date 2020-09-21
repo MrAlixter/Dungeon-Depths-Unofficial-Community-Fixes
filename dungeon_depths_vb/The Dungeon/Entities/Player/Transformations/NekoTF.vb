@@ -56,7 +56,7 @@
     Sub step6()
         Dim p As player = game.player1
 
-        If p.pClass.name.Equals("Magical Girl") Or p.pClass.name.Equals("Valkyrie") Then
+        If p.className.Equals("Magical Girl") Or p.className.Equals("Valkyrie") Then
             step6alt()
             Exit Sub
         End If
@@ -92,7 +92,7 @@
             p.prt.setIAInd(pInd.fronthair, 1, True, False)
             p.prt.setIAInd(pInd.mouth, 9, True, True)
         End If
-        p.pClass = p.classes("Kitty")
+        p.changeClass("Kitty")
         be()
 
         Equipment.clothesChange("Cat_Lingerie")
@@ -120,7 +120,7 @@
     Public Overrides Function getNextStep(stage As Integer) As Action
         If Game.player1.perks(perk.nekocurse) = -1 Then
             Return AddressOf stopTF
-        ElseIf (Game.player1.pClass.name.Equals("Magical Girl") Or Game.player1.pClass.name.Equals("Valkyrie")) And stage < 6 Then
+        ElseIf (Game.player1.className.Equals("Magical Girl") Or Game.player1.className.Equals("Valkyrie")) And stage < 6 Then
             Return AddressOf resist
         End If
 

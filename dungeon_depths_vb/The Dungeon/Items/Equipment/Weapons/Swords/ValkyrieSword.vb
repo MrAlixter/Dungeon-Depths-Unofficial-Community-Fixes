@@ -14,7 +14,7 @@
     End Sub
 
     Public Overrides Sub onEquip(ByRef p As Player)
-        If Not p.pClass.name.Equals("Valkyrie") Then
+        If Not p.className.Equals("Valkyrie") Then
             Dim valkyrieTF = New ValkyrieTF2(1, 0, 0, False)
             valkyrieTF.step1()
             p.drawPort()
@@ -22,7 +22,7 @@
     End Sub
 
     Public Overrides Sub onunEquip(ByRef p As Player, ByRef w As Weapon)
-        If p.pClass.name.Equals("Valkyrie") And Not w Is Nothing AndAlso Not w.GetType.IsSubclassOf(GetType(Sword)) Then
+        If p.className.Equals("Valkyrie") And Not w Is Nothing AndAlso Not w.GetType.IsSubclassOf(GetType(Sword)) Then
             Game.pushLstLog("Putting away your sword causes you to change into your regular self!")
             p.inv.add(95, -1)
             p.revertToPState()

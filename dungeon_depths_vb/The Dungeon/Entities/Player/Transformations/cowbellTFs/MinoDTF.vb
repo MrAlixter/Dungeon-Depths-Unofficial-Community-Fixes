@@ -115,8 +115,8 @@
         p.prt.setIAInd(pInd.eyes, 12, True, True)
         p.prt.setIAInd(pInd.wings, 6, True, False)
 
-        Game.player1.pForm = p.forms("Succubus")
-        Game.player1.pClass = p.classes("Bimbo")
+        p.changeForm("Succubus")
+        p.changeClass("Bimbo")
         p.changeSkinColor(DDUtils.cShift(p.prt.skincolor, Color.FromArgb(255, 222, 138, 172), 150))
 
         tfClothes(p)

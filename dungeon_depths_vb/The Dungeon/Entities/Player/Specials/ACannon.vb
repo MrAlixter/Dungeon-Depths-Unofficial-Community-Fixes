@@ -12,8 +12,7 @@
 
         Dim dmg As Integer = p.mana * ((p.attack + p.aBuff) * p.pClass.a * p.pForm.a) / 10
         p.mana = 0
-        m.takeDMG(dmg, p)
-
+        p.dealSpellDamage(m, dmg)
         Game.pushLstLog("Aura Cannon!")
         Game.pushLblCombatEvent("Aura Cannon!" & vbCrLf & "You focus all of your internal energy into your hands, using it to fire a beam at your opponent.  The blast hits them for " & dmg & " damage!")
     End Sub

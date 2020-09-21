@@ -3,8 +3,7 @@
 
     Sub New()
         MyBase.setName("Scale_Bikini")
-        MyBase.setDesc("This bikini consists of a set of plates that contour to its wearer's breasts.  While the scales making up this ""armor"" don't offer much in the way of protection, they also don't get in the way." & DDUtils.RNRN & _
-                              getSizeInformation() & vbCrLf & getStatInformation())
+
         id = 177
         tier = Nothing
         antiSlutVarInd = 176
@@ -30,5 +29,8 @@
         MyBase.usize5 = New Tuple(Of Integer, Boolean, Boolean)(191, True, True)
 
         MyBase.compressesBreasts = True
+
+        MyBase.setDesc("This bikini consists of a set of plates that contour to its wearer's breasts.  While the scales making up this ""armor"" don't offer much in the way of protection, they also don't get in the way." & DDUtils.RNRN & _
+                                     getSizeInformation() & vbCrLf & getStatInformation())
     End Sub
 End Class

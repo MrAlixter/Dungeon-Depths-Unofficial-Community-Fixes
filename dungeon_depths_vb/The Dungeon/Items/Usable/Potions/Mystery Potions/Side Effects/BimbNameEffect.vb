@@ -5,7 +5,7 @@
         Game.pushLblEvent("You suddenly seem to have some trouble remembering your name, before it becomes clear again.  Weird.")
 
         Polymorph.giveRNDBimName(p)
-        p.pClass = p.classes("Bimbo")
+        p.changeClass("Bimbo")
         If game.mDun.numCurrFloor < 6 Then p.pImage = Game.picPlayerB.BackgroundImage Else p.pImage = Game.picBimbof.BackgroundImage
         p.TextColor = Color.HotPink
 

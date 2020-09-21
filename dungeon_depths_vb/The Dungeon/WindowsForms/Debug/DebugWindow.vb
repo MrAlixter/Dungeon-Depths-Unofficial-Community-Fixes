@@ -55,7 +55,7 @@ Public Class Debug_Window
             boxForm.Items.Add(Game.titleList(i).ToString())
         Next
 
-        boxForm.SelectedItem = Game.player1.pClass.name
+        boxForm.SelectedItem = Game.player1.className
 
         boxHealth.Value = Game.player1.health * Game.player1.getMaxHealth()
         boxMaxHealth.Value = Game.player1.maxHealth

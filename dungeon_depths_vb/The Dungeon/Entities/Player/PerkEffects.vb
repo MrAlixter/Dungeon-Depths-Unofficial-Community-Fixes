@@ -153,19 +153,19 @@
     End Sub
     Shared Sub amazon()
         Dim p = Game.player1
-        If p.pForm.name.Equals(perk.amazon) Or p.pForm.name.Equals("Amazon​") Then
-            If p.equippedWeapon.getName.Equals("Fists") And p.pForm.name.Equals("Amazon​") Then
-                p.pForm = p.forms(perk.amazon)
-            ElseIf Not p.equippedWeapon.getName.Equals("Fists") And p.pForm.name.Equals(perk.amazon) Then
+        If p.formName.Equals("Amazon​") Then
+            If p.equippedWeapon.getName.Equals("Fists") And p.formName.Equals("Amazon​") Then
+                p.changeForm("Amazon​")
+            ElseIf Not p.equippedWeapon.getName.Equals("Fists") And p.formName.Equals("Amazon​") Then
                 Game.pushLblEvent("Your lack of familiarity with this weapon greatly lowers your attack potential!")
-                p.pForm = p.forms("Amazon​")
+                p.changeForm("Amazon​")
             End If
         Else
             p.perks(perk.amazon) = -1
         End If
     End Sub
     Shared Sub barbarian()
-        If Not Game.player1.pClass.name.Equals("Barbarian") Then
+        If Not Game.player1.className.Equals("Barbarian") Then
             Game.player1.perks(perk.barbarian) = -1
         End If
     End Sub
@@ -213,6 +213,28 @@
     End Sub
     Shared Sub statueMove(obj As Entity)
         Game.pushLblEvent("You, being a statue, can not do anything.")
+    End Sub
+    Shared Sub magicGirlStatusCheck(ByRef p As Player)
+        If p.getMana > 0 AndAlso Game.turn Mod (11 + (p.level * p.getWIL() / 4)) = 0 Then
+            p.mana -= 6
+            Game.pushLstLog("Your transformation consumes six mana!")
+        End If
+
+        If p.getMana < 1 Then
+            Equipment.weaponChange("Fists")
+            Game.pushLblEvent("You no longer can keep up your transformation, and revert to your previous form!")
+        End If
+    End Sub
+    Shared Sub valkyrieStatusCheck(ByRef p As Player)
+        If p.stamina > 10 AndAlso Game.turn Mod (8 + (p.level * p.getWIL() / 2)) = 0 Then
+            p.stamina -= 10
+            Game.pushLstLog("Your transformation consumes ten stamina!")
+        End If
+
+        If p.stamina < 10 Then
+            Equipment.weaponChange("Fists")
+            Game.pushLblEvent("You no longer can keep up your transformation, and revert to your previous form!")
+        End If
     End Sub
 
     '|SPECIAL MOVE HANDLERS|
@@ -393,7 +415,7 @@
         Dim p = Game.player1
         If p.perks(perk.bowtie) > -1 Then
             Dim r = Int(Rnd() * 10)
-            If r > 8 And Not p.pClass.name.Equals("Bunny Girl") Then
+            If r > 8 And Not p.className.Equals("Bunny Girl") Then
                 Dim dTF = New DancerTF(1, 0, 0, False)
                 dTF.update()
                 p.drawPort()
@@ -432,13 +454,13 @@
         Dim p = Game.player1
         Dim out = "You, like, totally aren't feeling this right now.  Giving your best pout, you wimper ""Hey, stop it!  You're gonna, like, hurt me or something!"".  Squeezing your arms together to show off your cleavage, you look up at your opponent, making sure your lip is quivering just a little bit.  They stop their attack short, looking more confused than merciful.  You don't even consider this subtle distinction though, instead deciding that they, like, totally thought you were too cute to hit!"
         Dim out2 = "You realize that you probably need to dodge this next attack.  Giving your best pout, you wimper ""Hey, stop it!  You're gonna, like, hurt me or something!"".  Squeezing your arms together to show off your cleavage, you look up at your opponent, making sure your lip is quivering just a little bit.  They stop their attack short, looking more confused than merciful.  Inwardly you groan to yourself.   It looks like you aren't out of the woods yet..."
-        If p.pClass.name.Equals("Bimbo") And Int(Rnd() * 3) = 0 Then
+        If p.className.Equals("Bimbo") And Int(Rnd() * 3) = 0 Then
             Game.pushLblEvent(out)
             Return True
-        ElseIf p.pClass.name.Equals("Bimbo++") And Int(Rnd() * 3) = 0 Then
+        ElseIf p.className.Equals("Bimbo++") And Int(Rnd() * 3) = 0 Then
             Game.pushLblEvent(out2)
             Return True
-        ElseIf p.pForm.name.Contains("Bimbo") Or p.perks(perk.bimbododge) > 0 And Int(Rnd() * 3) = 0 Then
+        ElseIf p.formName.Contains("Bimbo") Or p.perks(perk.bimbododge) > 0 And Int(Rnd() * 3) = 0 Then
             Game.pushLblEvent(out)
             Return True
         End If

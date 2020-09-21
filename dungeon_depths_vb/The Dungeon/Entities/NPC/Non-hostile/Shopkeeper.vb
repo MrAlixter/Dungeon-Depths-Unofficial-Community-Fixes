@@ -70,7 +70,7 @@
         ElseIf npcIndex = 2 Then
             Game.pushNPCDialog("Baaahhh.")
         ElseIf npcIndex = 3 Then
-            Game.pushNPCDialog("Hello, kind " & Game.player1.pClass.name & ", how are you on this fine day?")
+            Game.pushNPCDialog("Hello, kind " & Game.player1.className & ", how are you on this fine day?")
         ElseIf npcIndex = 4 Then
             Game.pushNPCDialog("*giggle* Hey!")
         ElseIf npcIndex = 5 Then
@@ -134,9 +134,9 @@
             " his thumb on your forhead, and suddenly everything just seems so heavy. ""Noooo..."" you moan, " &
             "as the area around where he touched turns to gold, and that gold turns your flesh and blood " &
             "around it to gold as well. In a matter of seconds, all that is left of " & p.name & " the " &
-            p.pClass.name & " is a solid gold statue. The shopkeeper sighs, muttering to no one in particular, " & vbCrLf &
+            p.className & " is a solid gold statue. The shopkeeper sighs, muttering to no one in particular, " & vbCrLf &
          """Now how am I going to get you back to the refinery?""" & DDUtils.RNRN & "GAME OVER!"
         Game.pushLblEvent(out, AddressOf p.die)
-        p.pClass = p.classes("Trophy")
+        p.changeClass("Trophy")
     End Sub
 End Class

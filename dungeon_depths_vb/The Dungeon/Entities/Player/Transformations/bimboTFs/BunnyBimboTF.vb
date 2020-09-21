@@ -22,7 +22,7 @@
             p.MtF()
         End If
 
-        p.pClass = p.classes("Bunny Girl")
+        p.changeClass("Bunny Girl")
 
         p.breastSize = 2
 

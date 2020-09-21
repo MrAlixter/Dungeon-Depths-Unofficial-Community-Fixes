@@ -11,8 +11,8 @@
     End Sub
     Sub perform()
         If (user.stamina - cost) < 0 Then
-            Game.pushLblEvent("You are too famished to use this special! (" & name & " costs " & cost & " stamina)")
-            Game.pushLstLog("You are too famished to use this special!")
+            Game.pushLblEvent("You don't have enough stamina to use this special! (" & name & " costs " & cost & " stamina)")
+            Game.pushLstLog("You don't have enough stamina to use this special!")
             Exit Sub
         End If
         If Not Game.combatmode And Not Game.npcmode And Not useableOutOfCombat Then

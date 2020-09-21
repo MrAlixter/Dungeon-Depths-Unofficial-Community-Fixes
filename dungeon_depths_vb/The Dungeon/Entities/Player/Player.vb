@@ -853,6 +853,42 @@ Public Class Player
     Public Function revertToPState(ByVal numtorevert As Integer) As String
         Return revertToState(numtorevert, pState)
     End Function
+    Public Sub changeClass(ByVal newClass As String)
+        If Not classes.ContainsKey(newClass) Then MsgBox("Error 09: " & newClass & " is not a recognized player class!") : Exit Sub
+
+        Dim nextlevelPercentage As Double = xp / nextLevelXp
+        xp = 0
+
+        For i = level To 1 Step -1
+            pClass.deLVL(i, Me)
+        Next
+
+        pClass = classes(newClass)
+
+        For i = 1 To level
+            pClass.onLVLUp(i, Me)
+        Next
+
+        xp = CInt(nextlevelPercentage * nextLevelXp)
+    End Sub
+    Public Sub changeForm(ByVal newForm As String)
+        If Not forms.ContainsKey(newForm) Then MsgBox("Error 10: " & newForm & " is not a recognized player form!") : Exit Sub
+
+        Dim nextlevelPercentage As Double = xp / nextLevelXp
+        xp = 0
+
+        For i = level To 1 Step -1
+            pForm.deLVL(i, Me)
+        Next
+
+        pForm = forms(newForm)
+
+        For i = 1 To level
+            pForm.onLVLUp(i, Me)
+        Next
+
+        xp = CInt(nextlevelPercentage * nextLevelXp)
+    End Sub
     Public Sub petrify(ByVal c As Color, ByVal dur As Integer)
         If pForm.name.Equals("Dragon") Then revertToPState()
         perks(perk.astatue) = dur
@@ -963,10 +999,6 @@ Public Class Player
         If perks(perk.astatue) > -1 Then nextCombatAction = AddressOf PerkEffects.statueMove
         MyBase.update()
 
-        '|PLAYER STAT UPKEEP|
-        keepStatsInBounds()
-        If xp >= nextLevelXp Then levelUp()
-
         '|PERK AND TRANSFORMATION UPDATES|
         Dim pUpdateFlag As Boolean = False
         'perks
@@ -974,9 +1006,12 @@ Public Class Player
             turnCt = Game.turn
             pUpdateFlag = perkUpdate()
         End If
-        UIupdate()
         'transformations
         tfUpdate(pUpdateFlag)
+
+        '|PLAYER STAT UPKEEP|
+        If xp >= nextLevelXp Then levelUp()
+        UIupdate()
 
         If pUpdateFlag Then drawPort()
     End Sub
@@ -1080,6 +1115,12 @@ Public Class Player
         If perks(perk.astatue) > -1 Then
             PerkEffects.aStatue()
         End If
+        If pClass.name.Equals("Magical Girl") Then
+            PerkEffects.magicGirlStatusCheck(Me)
+        End If
+        If pClass.name.Equals("Valkyrie") Then
+            PerkEffects.valkyrieStatusCheck(Me)
+        End If
 
         '|SPECIAL MOVE HANDLERS|
         'berserker rage special
@@ -1134,6 +1175,8 @@ Public Class Player
         Return needsToUpdatePortrait
     End Function
     Sub UIupdate()
+        keepStatsInBounds()
+
         If Game.lblNameTitle.Text <> name & " the " & pClass.name Then Game.lblNameTitle.Text = name & " the " & pClass.name
 
         Game.lblHealth.Text = statBar(getIntHealth, getMaxHealth, Game.lblHealth)
@@ -1779,6 +1822,12 @@ Public Class Player
 
         Return rollPassed
     End Function
+    Public Function className() As String
+        Return pClass.name
+    End Function
+    Public Function formName() As String
+        Return pForm.name
+    End Function
 
     '|DESCRIPTION GENERATION METHODS|
     Function getColor(ByVal clr As Color) As String
@@ -2050,7 +2099,7 @@ Public Class Player
     Public Sub deLevel(ByVal lostLevels As Integer)
         If lostLevels < 1 Or level = 1 Then Exit Sub
 
-        nextLevelXp = Math.Max(CInt(nextLevelXp / level), 250)
+        nextLevelXp = Math.Max(CInt(nextLevelXp / level), 125)
         maxHealth -= 20
         level -= 1
 

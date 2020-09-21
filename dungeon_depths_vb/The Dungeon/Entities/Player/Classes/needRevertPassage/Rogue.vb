@@ -16,13 +16,10 @@
     End Sub
 
     Public Overrides Sub deLVL(level As Integer, ByRef p As Player)
-       
         If level Mod 2 = 0 Then
             p.speed -= 4
         ElseIf level Mod 2 = 1 Then
             p.attack -= 4
         End If
-
-        If level = 3 And p.knownSpecials.Contains("Dodge") Then p.knownSpecials.Remove("Dodge") : Game.pushLstLog("Dodge special forgotten!")
     End Sub
 End Class

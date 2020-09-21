@@ -20,6 +20,6 @@
         Game.player1.equippedAcce = New noAcce
         Game.player1.inv = New Inventory(True)
         Game.player1.perks(perk.isfae) = 1
-        Game.player1.pClass = Game.player1.classes("Classless")
+        Game.player1.changeClass("Classless")
     End Sub
 End Class

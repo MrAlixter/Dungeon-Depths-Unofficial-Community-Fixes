@@ -14,7 +14,7 @@
     End Sub
 
     Public Overrides Sub step1()
-        Game.player1.pForm = Game.player1.forms("Cake")
+        Game.player1.changeForm("Cake")
         Game.player1.sex = "Female"
     End Sub
 End Class

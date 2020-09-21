@@ -44,7 +44,7 @@
         Equipment.accChange("Ring_of_Uvona")
 
 
-        p.pClass = p.classes("Warlock")
+        p.changeClass("Warlock")
 
         Game.pushLblEvent(out, AddressOf CType(Game.hteach, HTeach).back)
         p.drawPort()

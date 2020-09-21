@@ -130,7 +130,7 @@
 
     Public Overrides Function getNextStep(stage As Integer) As Action
         Dim p As player = game.player1
-        If p.perks(perk.thrall) = -1 Or p.pForm.name.Equals("Half-Succubus") Then
+        If p.perks(perk.thrall) = -1 Or p.formName.Equals("Half-Succubus") Then
             Return AddressOf stopTF
         ElseIf Not p.prefForm.playerMeetsForm(p) And Not p.perks(perk.thrall) > 10 Then
             Return AddressOf shiftTowardsPrefForm

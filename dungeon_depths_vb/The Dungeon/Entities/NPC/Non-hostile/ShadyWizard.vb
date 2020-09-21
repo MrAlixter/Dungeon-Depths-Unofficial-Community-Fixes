@@ -74,7 +74,7 @@
         ElseIf npcIndex = 2 Then
             Game.pushNPCDialog("*bleets*")
         ElseIf npcIndex = 3 Then
-            Game.pushNPCDialog("Hey, " & Game.player1.pClass.name & ", how's it going?")
+            Game.pushNPCDialog("Hey, " & Game.player1.className & ", how's it going?")
         ElseIf npcIndex = 4 Then
             Game.pushNPCDialog("So are these real or fake?  My ears, I mean.")
         ElseIf npcIndex = 5 Then

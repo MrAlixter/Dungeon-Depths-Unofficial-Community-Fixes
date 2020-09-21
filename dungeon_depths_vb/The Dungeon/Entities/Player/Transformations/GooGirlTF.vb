@@ -29,7 +29,7 @@
         Dim p As Player = Game.player1
 
         p.prt.skincolor = Color.FromArgb(230, 255, 102, 179)
-        p.pForm = p.forms("Half-Slime")
+        p.changeForm("Half-Slime")
         VialOfslimetf.pushLblEventWithoutLoss("At first it seems like the slime your skin has slowly been soaking in seems to have dyed it, but as you inspect your hand and notice that you can almost see through it completely, you realize that its become more than just a different color...  You are now a half-slime!")
         p.drawPort()
         If Game.player1.perks(perk.googirltf) > -1 Then Game.player1.perks(perk.googirltf) += 1
@@ -37,7 +37,7 @@
     Shared Sub step4()
         Dim p As Player = Game.player1
 
-        p.pForm = p.forms("Goo Girl")
+        p.changeForm("Goo Girl")
 
         If p.sex.Equals("Male") Then
             p.MtF()

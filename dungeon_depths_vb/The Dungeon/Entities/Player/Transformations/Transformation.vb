@@ -125,13 +125,13 @@ Public MustInherit Class Transformation
     End Function
     Shared Function canBeTFed(ByRef p As Player) As Boolean
         If Game.player1.ongoingTFs.count < 1 And
-            (Not p.polymorphs.ContainsKey(p.pClass.name) And Not p.polymorphs.ContainsKey(p.pForm.name)) And
-            Not p.pClass.name.Equals("Magical Girl") And
-            Not p.pClass.name.Equals("Valkyrie") And
-            Not p.pClass.name.Equals("Unconscious") And
-            Not p.pForm.name.Equals("Blowup Doll") And
-            Not p.pForm.name.Equals("Fae") And
-            Not p.perks(perk.astatue) > 1
+            (Not p.polymorphs.ContainsKey(p.className) And Not p.polymorphs.ContainsKey(p.formName)) And
+            Not p.className.Equals("Magical Girl") And
+            Not p.className.Equals("Valkyrie") And
+            Not p.className.Equals("Unconscious") And
+            Not p.formName.Equals("Blowup Doll") And
+            Not p.formName.Equals("Fae") And
+            Not p.perks(perk.astatue) > 1 Then
             Return True
         End If
 

@@ -332,10 +332,17 @@ Public Class Portrait
         Dim mEarIndToNotHide = {1, 2}
         Dim fEarIndToNotHide = {1, 2}
 
-        Dim mHairIndToNotHide = {0, 2}
-        Dim fHairIndToNotHide = {10}
+        Dim mHairIndToNotHide = {1, 3, 4}
+        Dim fHairIndToNotHide = {8, 11, 12}
 
-        If checkFemInd(pInd.ears, fEarIndToNotHide) Or checkFemInd(pInd.midhair, fHairIndToNotHide) Or checkMalInd(pInd.ears, mEarIndToNotHide) Or checkMalInd(pInd.midhair, mHairIndToNotHide) Then Exit Sub
+
+        If iArr(pInd.midhair) Is Nothing Then iArr(pInd.midhair) = nullImg
+        If iArr(pInd.ears) Is Nothing Then iArr(pInd.ears) = nullImg
+
+        If checkFemInd(pInd.ears, fEarIndToNotHide) Or
+           checkFemInd(pInd.midhair, fHairIndToNotHide) Or
+           checkMalInd(pInd.ears, mEarIndToNotHide) Or
+           checkMalInd(pInd.midhair, mHairIndToNotHide) Then Exit Sub
 
         Dim t = iArr(pInd.midhair).Clone
         iArr(pInd.midhair) = iArr(pInd.ears).Clone
@@ -380,8 +387,8 @@ Public Class Portrait
             Exit Sub
         End If
 
-        If p.pClass.name.Equals("Warrior") Or p.pClass.name.equals("Barbarian") Or p.pClass.name.Equals("Paladin") Or p.pClass.name.Equals(perk.amazon) Or p.pClass.name.Equals("Valkyrie") Or
-         p.pForm.name.Equals("Tigress") Then
+        If p.className.Equals("Warrior") Or p.className.equals("Barbarian") Or p.className.Equals("Paladin") Or p.className.Equals(perk.amazon) Or p.className.Equals("Valkyrie") Or
+         p.formName.Equals("Tigress") Then
             Select Case p.breastSize
                 Case -1, -2
                     iArrInd(pInd.bodyoverlay) = New Tuple(Of Integer, Boolean, Boolean)(1, True, False)
@@ -390,7 +397,7 @@ Public Class Portrait
                 Case Else
                     iArrInd(pInd.bodyoverlay) = New Tuple(Of Integer, Boolean, Boolean)(3, True, False)
             End Select
-        ElseIf p.pForm.name.Equals("Minotaur Bull") Then
+        ElseIf p.formName.Equals("Minotaur Bull") Then
             Select Case p.breastSize
                 Case -1, 2
                     iArrInd(pInd.bodyoverlay) = New Tuple(Of Integer, Boolean, Boolean)(4, True, False)
@@ -419,9 +426,9 @@ Public Class Portrait
         If Not ind.Item2 Then Return False
         If imgLib.atrs(attrInd).rosf(ind.Item1) = i Then Return True Else Return False
     End Function
-    Private Function checkNDefFemInd(pInd As pInd, inds As Integer()) As Boolean
+    Private Function checkNDefFemInd(ByVal attrInd As pInd, inds As Integer()) As Boolean
         For Each ind In inds
-            If checkNDefFemInd(pInd, ind) Then Return True
+            If checkNDefFemInd(attrInd, ind) Then Return True
         Next
 
         Return False
@@ -432,9 +439,9 @@ Public Class Portrait
         If ind.Item2 Or ind.Item3 Then Return False
         If imgLib.atrs(attrInd).rosm(ind.Item1) = i Then Return True Else Return False
     End Function
-    Private Function checkNDefMalInd(pInd As pInd, inds As Integer()) As Boolean
+    Private Function checkNDefMalInd(ByVal attrInd As pInd, inds As Integer()) As Boolean
         For Each ind In inds
-            If checkNDefMalInd(pInd, ind) Then Return True
+            If checkNDefMalInd(attrInd, ind) Then Return True
         Next
 
         Return False
@@ -445,9 +452,9 @@ Public Class Portrait
         If Not ind.Item2 Or Not ind.Item3 Then Return False
         If ind.Item1 = i Then Return True Else Return False
     End Function
-    Private Function checkFemInd(pInd As pInd, inds As Integer()) As Boolean
+    Private Function checkFemInd(ByVal attrInd As pInd, inds As Integer()) As Boolean
         For Each ind In inds
-            If checkFemInd(pInd, ind) Then Return True
+            If checkFemInd(attrInd, ind) Then Return True
         Next
 
         Return False
@@ -458,9 +465,9 @@ Public Class Portrait
         If ind.Item2 Or ind.Item3 Then Return False
         If ind.Item1 = i Then Return True Else Return False
     End Function
-    Private Function checkMalInd(pInd As pInd, inds As Integer()) As Boolean
+    Private Function checkMalInd(ByVal attrInd As pInd, inds As Integer()) As Boolean
         For Each ind In inds
-            If checkMalInd(pInd, ind) Then Return True
+            If checkMalInd(attrInd, ind) Then Return True
         Next
 
         Return False

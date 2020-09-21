@@ -22,7 +22,5 @@
         ElseIf level Mod 2 = 1 Then
             p.will -= 5
         End If
-
-        If level = 3 And p.knownSpells.Contains("Super Fireball") Then p.knownSpells.Remove("Super Fireball") : Game.pushLstLog("Super Fireball spell forgotten!")
     End Sub
 End Class

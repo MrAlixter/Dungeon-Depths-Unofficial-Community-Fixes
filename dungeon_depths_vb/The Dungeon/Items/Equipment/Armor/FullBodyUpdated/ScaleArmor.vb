@@ -3,8 +3,7 @@
 
     Sub New()
         MyBase.setName("Scale_Armor")
-        MyBase.setDesc("Unlike the its bronze and steel counterparts, this armor set consists of a series of small interlocking plates.  The unique draconic alloy used by these scales provides ample protection, although it's also fairly heavy." & DDUtils.RNRN & _
-                              getSizeInformation() & vbCrLf & getStatInformation())
+
         id = 176
         tier = Nothing
         slutVarInd = 177
@@ -27,5 +26,8 @@
         MyBase.usize3 = New Tuple(Of Integer, Boolean, Boolean)(185, True, True)
 
         MyBase.compressesBreasts = True
+
+        MyBase.setDesc("Unlike the its bronze and steel counterparts, this armor set consists of a series of small interlocking plates.  The unique draconic alloy used by these scales provides ample protection, although it's also fairly heavy." & DDUtils.RNRN & _
+                                    getSizeInformation() & vbCrLf & getStatInformation())
     End Sub
 End Class

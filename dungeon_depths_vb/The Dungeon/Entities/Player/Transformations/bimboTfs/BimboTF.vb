@@ -46,7 +46,7 @@
         p.prt.setIAInd(pInd.mouth, 5, True, True)
         p.prt.setIAInd(pInd.eyes, 7, True, True)
         p.prt.setIAInd(pInd.cloak, 0, True, False)
-        If Not p.pClass.name.Equals("Magical Girl") Then p.prt.setIAInd(pInd.hat, 0, True, False)
+        If Not p.className.Equals("Magical Girl") Then p.prt.setIAInd(pInd.hat, 0, True, False)
     End Sub
     Overridable Sub s1BodyChange(ByRef p As Player)
         If p.breastSize = 1 Then
@@ -54,7 +54,7 @@
         ElseIf p.breastSize < 7 Then
             p.breastSize += 1
         End If
-        If p.pClass.name.Equals("Magical Girl") Then
+        If p.className.Equals("Magical Girl") Then
             p.perks(perk.bimbotf) = 24
         End If
 
@@ -106,7 +106,7 @@
         p.reverseAllRoute()
     End Sub
     Overridable Sub s2ClothesChange(ByRef p As Player)
-        If Not p.equippedArmor.getName.Equals("Naked") And Not p.pClass.name.Equals("Magical Girl") Then
+        If Not p.equippedArmor.getName.Equals("Naked") And Not p.className.Equals("Magical Girl") Then
             If p.equippedArmor.getSlutVarInd = -1 Then
                 If p.inv.item("Skimpy_Clothes").count < 1 Then p.inv.add("Skimpy_Clothes", 1)
                 Equipment.clothesChange("Skimpy_Clothes")
@@ -126,7 +126,7 @@
         End If
     End Sub
     Overridable Sub s2WrapUp(ByRef p As Player, ByRef out As String)
-        p.pClass = p.classes("Bimbo")
+        p.changeClass("Bimbo")
         p.setPImage()
         p.TextColor = Color.FromArgb(255, 255, 235, 240)
         p.perks(perk.bimbotf) = -1
@@ -237,7 +237,7 @@
         If Not hasBimboHair(Game.player1) Then
             Return AddressOf hairColorShift
         End If
-        If Game.player1.pClass.name.Equals("Magical Girl") Then
+        If Game.player1.className.Equals("Magical Girl") Then
             Return AddressOf step2alt
         End If
         If Game.player1.perks(perk.bimbotf) = -1 Then

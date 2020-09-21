@@ -1,7 +1,8 @@
-﻿Public Class witch
-    Inherits pClass
+﻿Public Class Witch
+    Inherits Mage
     Sub New()
-        MyBase.New(1, 0.75, 1.5, 0.75, 1, 1.5, "Witch")
+        MyBase.New()
+        MyBase.name = "Witch"
         MyBase.revertPassage = "Your mind feels slightly weaker, and your magical aptitude becomes far more average."
     End Sub
 

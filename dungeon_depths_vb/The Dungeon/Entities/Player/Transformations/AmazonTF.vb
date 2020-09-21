@@ -38,8 +38,8 @@
         Equipment.clothesChange("Amazonian_Attire")
         Equipment.weaponChange("Fists")
 
-        p.pForm = p.forms(perk.amazon)
-        p.pClass = p.classes("Warrior")
+        p.changeForm("Amazon")
+        p.changeClass("Warrior")
 
         p.perks(perk.amazon) = 1
     End Sub

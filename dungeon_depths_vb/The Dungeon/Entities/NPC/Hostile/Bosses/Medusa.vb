@@ -31,7 +31,7 @@
                 Exit Sub
             Else
 
-                If Not CType(target, Player).pForm.name.Contains("Gorgon") Then
+                If Not CType(target, Player).formName.Contains("Gorgon") Then
                     target.currTarget = Me
                     target.die(Me)
                 End If

@@ -20,16 +20,16 @@
         MyBase.isRandoTFAcceptable = False
     End Sub
     Overrides Sub onEquip(ByRef p As Player)
-        If p.pForm.Equals("Half-Succubus") Or p.pClass.Equals(perk.thrall) Then Exit Sub
+        If p.formName.Equals("Half-Succubus") Or p.className.Equals("Thrall") Then Exit Sub
         MagGirlTF.chkForMagGirlRevert(p)
 
         p.perks(perk.thrall) = 0
         p.ongoingTFs.Add(New ThrallTF(2, 10, 3.0, True))
 
-        If Not p.pClass.name.equals("Thrall") Then formerClass = p.pClass.name
+        If Not p.className.equals("Thrall") Then formerClass = p.className
         formerEyeType = p.prt.iArrInd(pInd.eyes)
         p.savePState()
-        p.pClass = p.classes("Thrall")
+        p.changeClass("Thrall")
         If p.prt.sexBool Then
             p.prt.setIAInd(pInd.eyes, 19, True, True)
         Else
@@ -42,16 +42,16 @@
     Sub forceEquip()
         Dim p As Player = Game.player1
 
-        If p.pForm.Equals("Half-Succubus") Or p.pClass.Equals(perk.thrall) Then Exit Sub
+        If p.formName.Equals("Half-Succubus") Or p.className.Equals("Thrall") Then Exit Sub
         MagGirlTF.chkForMagGirlRevert(p)
 
         p.perks(perk.thrall) = 0
         p.ongoingTFs.Add(New ThrallTF(2, 10, 3.0, True))
 
-        formerClass = p.pClass.name
+        formerClass = p.className
         formerEyeType = p.prt.iArrInd(pInd.eyes)
         p.savePState()
-        p.pClass = p.classes(perk.thrall)
+        p.changeClass(perk.thrall)
         If p.prt.sexBool Then
             p.prt.setIAInd(pInd.eyes, 19, True, True)
         Else
@@ -64,12 +64,12 @@
     End Sub
     Public Overrides Sub onUnequip(ByRef p As Player)
 
-        If p.pForm.Equals("Half-Succubus") Or p.pClass.Equals(perk.thrall) Then Exit Sub
+        If p.formName.Equals("Half-Succubus") Or p.className.Equals("Thrall") Then Exit Sub
 
         p.ongoingTFs.remove("ThrallTF")
 
         p.perks(perk.thrall) = -1
-        p.pClass = Game.player1.classes(formerClass)
+        p.changeClass(formerClass)
         p.prt.setIAInd(pInd.eyes, formerEyeType)
         p.prefForm = Nothing
         p.forcedPath = Nothing

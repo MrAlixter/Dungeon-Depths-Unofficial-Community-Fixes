@@ -27,7 +27,7 @@
         p.prt.setIAInd(pInd.eyes, 30, True, True)
         p.prt.setIAInd(pInd.eyebrows, 5, True, False)
 
-        p.pForm = p.forms("Half-Gorgon")
+        p.changeForm("Half-Gorgon")
 
         If Not p.knownSpells.Contains("Petrify II") Then p.knownSpells.Add("Petrify II")
     End Sub

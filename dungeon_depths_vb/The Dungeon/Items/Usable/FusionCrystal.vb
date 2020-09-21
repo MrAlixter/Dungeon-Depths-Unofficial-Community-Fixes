@@ -29,7 +29,7 @@
             End If
             Dim save = Game.getPlayerFromFile("saves/s" & i & ".ave")
             Dim p2 As Player = save.Item1
-            If save.Item2 <> Game.version Or p2.perks(perk.polymorphed) > -1 Or Not Transformation.canBeTFed(p) Or (p2.pClass.name.Equals("Magical Girl") Or p2.pClass.name.Equals("Valkyrie")) Then
+            If save.Item2 <> Game.version Or p2.perks(perk.polymorphed) > -1 Or Not Transformation.canBeTFed(p) Or (p2.className.Equals("Magical Girl") Or p2.className.Equals("Valkyrie")) Then
                 Game.pushLblEvent("After talking it over, " & p.name & " and " & p2.name & " decide that they are incompatable, and not to fuse.")
                 Exit Sub
             End If
@@ -96,63 +96,30 @@
 
         Dim r As Integer = Int(Rnd() * 2)
         If r = 0 Then player.pClass = p1.pClass Else player.pClass = p2.pClass
-        If (p1.pClass.name = "Warrior" And p2.pClass.name = "Mage") Or (p2.pClass.name = "Warrior" And p1.pClass.name = "Mage") Then player.pClass = player.classes("Paladin")
+        If (p1.className = "Warrior" And p2.className = "Mage") Or (p2.className = "Warrior" And p1.className = "Mage") Then player.pClass = player.classes("Paladin")
 
         r = Int(Rnd() * 2)
         If r = 0 Then player.sex = p1.sex Else player.sex = p2.sex
 
-
-        If p1.maxHealth > p2.maxHealth Then
-            player.maxHealth = p1.maxHealth * 1.5
-        Else
-            player.maxHealth = p2.maxHealth * 1.5
-        End If
+        player.maxHealth = Math.Max(p1.maxHealth * 1.5, p2.maxHealth * 1.5)
         player.health = 1
 
-        If p1.maxMana > p2.maxMana Then
-            player.mana = p1.maxMana * 1.5
-        Else
-            player.mana = p2.maxMana * 1.5
-        End If
-        player.maxMana = player.mana
+        player.maxMana = Math.Max(p1.maxMana * 1.5, p2.maxMana * 1.5)
+        player.mana = player.maxMana
 
-        If p1.attack > p2.attack Then
-            player.attack = p1.attack * 1.5
-        Else
-            player.attack = p2.attack * 1.5
-        End If
+        player.attack = Math.Max(p1.attack * 1.5, p2.attack * 1.5)
 
-        If p1.defense > p2.defense Then
-            player.defense = p1.defense * 1.5
-        Else
-            player.defense = p2.defense * 1.5
-        End If
+        player.defense = Math.Max(p1.defense * 1.5, p2.defense * 1.5)
 
-        If p1.will > p2.will Then
-            player.will = p1.will * 1.5
-        Else
-            player.will = p2.will * 1.5
-        End If
+        player.will = Math.Max(p1.will * 1.5, p2.will * 1.5)
 
-        If p1.speed > p2.speed Then
-            player.speed = p1.speed * 1.5
-        Else
-            player.speed = p2.speed * 1.5
-        End If
+        player.speed = Math.Max(p1.speed * 1.5, p2.speed * 1.5)
 
-        If p1.lust > p2.lust Then
-            player.lust = p1.lust * 1.5
-        Else
-            player.lust = p2.lust * 1.5
-        End If
+        player.lust = Math.Max(p1.lust * 1.5, p2.lust * 1.5)
 
-        If p1.stamina > p2.stamina Then
-            player.stamina = p1.stamina * 1.5
-        Else
-            player.stamina = p2.stamina * 1.5
-        End If
+        player.stamina = Math.Min(p1.stamina, p2.stamina)
 
-        player.gold = p1.gold + p2.gold
+        player.gold = p1.gold
 
         For i = 0 To player.inv.upperBound
             player.inv.item(i).setName(p1.inv.item(i).getName)
@@ -227,7 +194,7 @@
 
         player.inv.invNeedsUDate = True
         player.UIupdate()
-        player.description = CStr(player.name & " is a " & player.sex & " " & player.pClass.name)
+        player.description = CStr(player.name & " is a " & player.sex & " " & player.className)
         player.solFlag = False
     End Sub
 End Class

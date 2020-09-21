@@ -4,13 +4,13 @@
         MyBase.New(u, t)
         MyBase.setName("Helix Slash")
         MyBase.setUOC(False)
-        MyBase.setcost(77)
+        MyBase.setcost(33)
     End Sub
     Public Overrides Sub effect()
         Dim p = MyBase.getUser
         Dim m = MyBase.getTarget
 
-        Dim dmg As Integer = p.getATK * 2.5
+        Dim dmg As Integer = p.getATK * 1.5
         Dim rcv As Integer = (dmg / 8) / p.getMaxHealth
         m.takeDMG(dmg, p)
         p.health += rcv

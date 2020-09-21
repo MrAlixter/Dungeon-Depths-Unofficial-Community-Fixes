@@ -177,7 +177,7 @@
 
         tfDialogStep9()
 
-        Game.player1.pForm = p.forms("Minotaur Bull")
+        p.changeForm("Minotaur Bull")
 
         tfClothes(p)
     End Sub
@@ -206,7 +206,7 @@
         If p.inv.getCountAt("Barbarian_Armor") < 1 Then p.inv.add("Barbarian_Armor", 1)
         Equipment.clothesChange("Barbarian_Armor")
 
-        p.pForm = p.forms("Minotaur Bull")
+        p.changeForm("Minotaur Bull")
     End Sub
 
     Public Overrides Function getNextStep(stage As Integer) As Action

@@ -30,7 +30,7 @@
     Public Overrides Sub onEquip(ByRef p As Player)
         MyBase.onEquip(p)
 
-        If Not p.pForm.name.Contains("Slime") And Not p.pForm.name.Contains("Goo") Then
+        If Not p.formName.Contains("Slime") And Not p.formName.Contains("Goo") Then
             Equipment.clothesChange("Naked")
             Game.pushLblEvent("Your clothes melt off!")
             p.drawPort()

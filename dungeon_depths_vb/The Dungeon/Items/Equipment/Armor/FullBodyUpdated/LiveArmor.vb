@@ -18,7 +18,7 @@
         bsize4 = New Tuple(Of Integer, Boolean, Boolean)(87, True, True)
 
         usizeneg1 = New Tuple(Of Integer, Boolean, Boolean)(54, False, True)
-        usize0 = New Tuple(Of Integer, Boolean, Boolean)(244, False, True)
+        usize0 = New Tuple(Of Integer, Boolean, Boolean)(244, True, True)
         usize1 = New Tuple(Of Integer, Boolean, Boolean)(244, True, True)
         usize2 = New Tuple(Of Integer, Boolean, Boolean)(245, True, True)
         usize3 = New Tuple(Of Integer, Boolean, Boolean)(246, True, True)

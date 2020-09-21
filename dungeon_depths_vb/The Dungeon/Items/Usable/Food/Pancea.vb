@@ -13,7 +13,7 @@
     End Sub
 
     Public Overrides Sub Effect()
-        If Game.player1.pClass.name.Equals("Soul-Lord") Then
+        If Game.player1.className.Equals("Soul-Lord") Then
             Game.pushLblEvent("You spike the Panacea on the ground, kicking the mystic dish all over the dungeon floor.  As you go back to your buisness, you muse on how cowardly healing is." & DDUtils.RNRN & """Only someone who cares about their mortal vessel would bother to maintain it.""")
             Game.player1.UIupdate()
             Exit Sub

@@ -37,7 +37,7 @@
     Sub step3()
         Dim p As Player = Game.player1
         p.prt.skincolor = Color.FromArgb(230, 0, 255, 255)
-        p.pForm = p.forms("Half-Slime")
+        p.changeForm("Half-Slime")
         'Author Credit: Marionette
         pushLblEventWithoutLoss("Looking back you see you’ve gotten far enough away to catch your breath, the adrenalin that had driven you on now draining as your left breathing heavily. Too late you remember the Slime had landed a fairly large glob of slime on you as it quickly surges around your body. Your skin starts to tingle as you watch your skin soak in the goo, the color of it changing and even becoming nearly translucent. You are now a half-slime!")
         p.drawPort()
@@ -62,7 +62,7 @@
         p.prt.setIAInd(pInd.cloak, 0, True, False)
         p.prt.setIAInd(pInd.hat, 0, True, False)
 
-        p.pForm = p.forms("Slime")
+        p.changeForm("Slime")
         Equipment.clothesChange("Naked")
 
         p.prt.skincolor = Color.FromArgb(200, p.prt.skincolor.R, p.prt.skincolor.G, p.prt.skincolor.B)

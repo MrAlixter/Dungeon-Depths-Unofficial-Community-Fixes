@@ -7,19 +7,19 @@
 
     Public Overrides Sub onLVLUp(level As Integer, ByRef p As Player)
         If level Mod 2 = 0 Then
-            p.maxMana += 4
-            p.mana += 4
+            p.maxMana += 5
+            p.mana += 5
         ElseIf level Mod 2 = 1 Then
-            p.will += 4
+            p.will += 5
         End If
     End Sub
 
     Public Overrides Sub deLVL(level As Integer, ByRef p As Player)
        
         If level Mod 2 = 0 Then
-            p.maxMana -= 4
+            p.maxMana -= 5
         ElseIf level Mod 2 = 1 Then
-            p.will -= 4
+            p.will -= 5
         End If
 
     End Sub

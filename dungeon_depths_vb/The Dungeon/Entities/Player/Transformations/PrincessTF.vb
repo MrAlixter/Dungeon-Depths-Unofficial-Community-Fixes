@@ -52,7 +52,7 @@
 
         'equip clothes
         Equipment.clothesChange("Regal_Gown")
-        p.pClass = p.classes("Princess")
+        p.changeClass("Princess")
 
         'maid transformation
         If Not p.prt.sexBool Then
@@ -80,7 +80,7 @@
 
         'equip clothes
         Equipment.clothesChange("Regal_Gown")
-        p.pClass = p.classes("Princess")
+        p.changeClass("Princess")
 
         'maid transformation
         If Not p.prt.sexBool Then

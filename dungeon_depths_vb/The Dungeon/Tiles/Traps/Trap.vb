@@ -11,6 +11,24 @@
         iD = CInt(cArray(2))
     End Sub
 
+    'Shared Function trapFactory(ByVal i As Integer, ByVal p As Point)
+    '    Select Case i
+    '        Case 1
+
+    '        Case 2
+
+    '        Case 3
+
+    '        Case 4
+
+    '        Case 5
+
+    '        Case 6
+
+    '        Case Else
+
+    '    End Select
+    'End Function
     Public Sub activate(ByVal i As Integer)
         Game.pushLstLog("Trap activated!")
         Select Case iD
