@@ -5,9 +5,12 @@
         MyBase.revertPassage = ""
     End Sub
 
-    Public Overrides Sub onLVLUp(level As Integer, ByRef p As Player)
+    Public Overrides Sub onLVLUp(ByVal level As Integer, ByRef p As Player, Optional learnSkills as Boolean = True)
         p.maxMana += 6
         p.mana += 6
+
+        If Not learnSkills Then Exit Sub
+
     End Sub
 
     Public Overrides Sub deLVL(level As Integer, ByRef p As Player)

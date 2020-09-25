@@ -310,7 +310,7 @@
             If sWeapon Is Nothing Then Exit Sub
             p.equippedWeapon = sWeapon
             p.equippedWeapon.onEquip(p)
-            If p.perks(perk.amazon) > -15 Then PerkEffects.amazon()
+            If p.perks(perk.amazon) > -15 Then PerkEffects.amazon(p)
         End If
     End Sub
     'accChange handles the equipping and unequipping of accessories

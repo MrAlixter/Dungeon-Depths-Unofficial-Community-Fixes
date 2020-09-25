@@ -75,7 +75,14 @@
         End If
     End Sub
     Private Sub setPositions()
-        Game.player1.pos = floors(numCurrFloor).playerPosition
+        If floors(numCurrFloor).sessions.ContainsKey(Game.sessionID) Then
+            floors(numCurrFloor).sessions(Game.sessionID).load(floors(numCurrFloor))
+        ElseIf floors(numCurrFloor).playerPosition.X = -1 Or floors(numCurrFloor).playerPosition.Y = -1 Then
+            Game.player1.pos = floors(numCurrFloor).getStartPlayerPos
+        Else
+            Game.player1.pos = floors(numCurrFloor).playerPosition
+        End If
+
         If Not Game.player1.forcedPath Is Nothing AndAlso UBound(Game.player1.forcedPath) > 0 Then Game.player1.forcedPath = Nothing
 
         For i = 0 To Game.shopNPCList.Count - 1

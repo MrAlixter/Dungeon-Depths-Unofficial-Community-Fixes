@@ -5,9 +5,10 @@
         MyBase.revertPassage = "Your mind feels slightly more useful, and you pout sligthly as your tits and ass decrease in size.  While you are sad to see them go, you have become smart enough to realize that it is probably for the best."
     End Sub
 
-    Public Overrides Sub onLVLUp(level As Integer, ByRef p As Player)
-        p.nextLevelXp = p.nextLevelXp / 2
+    Public Overrides Sub onLVLUp(ByVal level As Integer, ByRef p As Player, Optional learnSkills As Boolean = True)
+        If Not learnSkills Then Exit Sub
 
+        p.nextLevelXp = p.nextLevelXp / 2
         If level = 3 And Not p.knownSpecials.Contains("Charm") Then p.knownSpecials.Add("Charm") : Game.pushLstLog("Charm special learned!")
         If level = 4 Then p.perks(perk.slutcurse) = 1
     End Sub

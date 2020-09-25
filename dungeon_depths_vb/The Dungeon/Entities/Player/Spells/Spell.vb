@@ -38,6 +38,8 @@
         spellList.Add("Shiny Sparking Missile", New SSMissile(Nothing, Nothing))
         spellList.Add("Raise Lust", New RLust(Nothing, Nothing))
         spellList.Add("Puff Up", New PuffUp(Nothing, Nothing))
+        spellList.Add("Flash Bolt", New FlashBolt(Nothing, Nothing))
+        spellList.Add("Firestorm", New FireStorm(Nothing, Nothing))
     End Sub
 
     Sub New(ByRef c As Player, ByRef t As NPC)

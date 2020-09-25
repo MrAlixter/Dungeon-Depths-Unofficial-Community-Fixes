@@ -59,6 +59,10 @@
     dcharmsused     '57
     scharmsused     '58
     wcharmsused     '59
+    guardup         '60
+    willup          '61
+    atkup           '62
+    lurk            '63
 End Enum
 
 Public Class Player
@@ -174,9 +178,6 @@ Public Class Player
             playArray = playArray(4 + ind).Split("*")
         End If
 
-        currState.load(Me)
-
-
         pos.X = playArray(0)
         pos.Y = playArray(1)
         health = playArray(2)
@@ -192,6 +193,7 @@ Public Class Player
         xp = playArray(12)
         nextLevelXp = playArray(13)
 
+        currState.load(Me)
 
         inv.load(playArray(14))
         Dim x As Integer = -2
@@ -453,7 +455,7 @@ Public Class Player
         classes.Add("Shrunken", New Shrunken())
         classes.Add("Maiden", New Maiden())
         classes.Add("Rogue", New Rogue())
-        classes.Add("Witch", New witch())
+        classes.Add("Witch", New Witch())
     End Sub
     Private Sub initForms()
         'Creates the form dictionary
@@ -595,7 +597,6 @@ Public Class Player
         ElseIf dmg <> -3 Then
             hit(dmg, target)
         End If
-
     End Sub
     'attacking a npc
     Public Sub miss(target As NPC)
@@ -650,14 +651,14 @@ Public Class Player
     End Sub
     'taking damage
     Public Overrides Sub takeDMG(ByVal dmg As Integer, ByRef source As Entity)
-        If PerkEffects.onDamage(dmg) Then Exit Sub
+        If PerkEffects.onDamage(Me, dmg) Then Exit Sub
         MyBase.takeDMG(dmg, source)
         Game.lblPHealtDiff.Tag -= dmg
         Game.pushLstLog(CStr("You got hit! -" & dmg & " health!"))
         Game.pushLblCombatEvent(CStr("You got hit! -" & dmg & " health!"))
     End Sub
     Public Overrides Sub takeCritDMG(ByVal dmg As Integer, ByRef source As Entity)
-        If PerkEffects.onDamage(dmg) Then Exit Sub
+        If PerkEffects.onDamage(Me, dmg) Then Exit Sub
         If dmg > getIntHealth() And dmg > 0.05 * getMaxHealth() Then dmg = getIntHealth() - 1
         MyBase.takeDMG(dmg, source)
         Game.lblPHealtDiff.Tag -= dmg
@@ -855,6 +856,7 @@ Public Class Player
     End Function
     Public Sub changeClass(ByVal newClass As String)
         If Not classes.ContainsKey(newClass) Then MsgBox("Error 09: " & newClass & " is not a recognized player class!") : Exit Sub
+        If pClass.name.Equals(newClass) Then Exit Sub
 
         Dim nextlevelPercentage As Double = xp / nextLevelXp
         xp = 0
@@ -866,13 +868,14 @@ Public Class Player
         pClass = classes(newClass)
 
         For i = 1 To level
-            pClass.onLVLUp(i, Me)
+            pClass.onLVLUp(i, Me, False)
         Next
 
         xp = CInt(nextlevelPercentage * nextLevelXp)
     End Sub
     Public Sub changeForm(ByVal newForm As String)
         If Not forms.ContainsKey(newForm) Then MsgBox("Error 10: " & newForm & " is not a recognized player form!") : Exit Sub
+        If pForm.name.Equals(newForm) Then Exit Sub
 
         Dim nextlevelPercentage As Double = xp / nextLevelXp
         xp = 0
@@ -884,7 +887,7 @@ Public Class Player
         pForm = forms(newForm)
 
         For i = 1 To level
-            pForm.onLVLUp(i, Me)
+            pForm.onLVLUp(i, Me, False)
         Next
 
         xp = CInt(nextlevelPercentage * nextLevelXp)
@@ -1050,45 +1053,45 @@ Public Class Player
         '|GENERAL EFFECTS|
         'stamina
         If perks(perk.hunger) > -1 And Game.turn Mod 5 = 0 Then
-            PerkEffects.staminaEffect()
+            PerkEffects.staminaEffect(Me)
         End If
         If perks(perk.burn) > -1 And Game.turn Mod 4 = 0 Then
-            PerkEffects.burnEffect()
+            PerkEffects.burnEffect(Me)
         End If
         If perks(perk.mburst) > -1 And Game.turn Mod 4 = 0 Then
-            PerkEffects.mBurst()
+            PerkEffects.mBurst(Me)
         End If
         'slime hair health regen
         If perks(perk.slimehair) > -1 Then
-            PerkEffects.slimeHairRegen()
+            PerkEffects.slimeHairRegen(Me)
         End If
         'vial of slime hair regen
         If perks(perk.vsslimehair) > -1 Then
-            PerkEffects.vslimeHairRegen()
+            PerkEffects.vslimeHairRegen(Me)
         End If
         'plant regen
         If pForm.name.Equals("Plantfolk") Then
-            PerkEffects.plantRegen()
+            PerkEffects.plantRegen(Me)
         End If
         'ring of min. regen
         If perks(perk.minRegen) > -1 Then
-            PerkEffects.minorRegen()
+            PerkEffects.minorRegen(Me)
         End If
         'mana generator
         If perks(perk.minmanregen) > -1 Then
-            PerkEffects.minorManaRegen()
+            PerkEffects.minorManaRegen(Me)
         End If
         'light source effect
         If perks(perk.minmanregen) > -1 Then
-            PerkEffects.lightSource()
+            PerkEffects.lightSource(Me)
         End If
         'amazon effect
         If perks(perk.amazon) > -1 Then
-            PerkEffects.amazon()
+            PerkEffects.amazon(Me)
         End If
         'barbarian effect
         If perks(perk.barbarian) > -1 Then
-            PerkEffects.barbarian()
+            PerkEffects.barbarian(Me)
         End If
         If perks(perk.cupcake) > -1 Then
             If Game.turn Mod 20 = 0 Then perks(perk.cupcake) -= 1
@@ -1096,24 +1099,24 @@ Public Class Player
 
         'living armor
         If perks(perk.livearm) > -1 Then
-            needsToUpdatePortrait = PerkEffects.livingArmor()
+            needsToUpdatePortrait = PerkEffects.livingArmor(Me)
         End If
         'living lingerie
         If perks(perk.livelinge) > -1 Then
-            needsToUpdatePortrait = PerkEffects.livingLingerie()
+            needsToUpdatePortrait = PerkEffects.livingLingerie(Me)
         End If
 
         '|TRANSFORMATION TRIGGERS|
         'targax sword tf
         If perks(perk.swordpossess) > -1 Then
-            PerkEffects.targaxSwordTF()
+            PerkEffects.targaxSwordTF(Me)
         End If
         'shift toward prefered form
         If Not prefForm Is Nothing AndAlso (pClass.name = "Thrall" Xor equippedAcce.getName.Equals("Slave_Collar")) AndAlso Not prefForm.playerMeetsForm(Game.player1) And Not pForm.name.Equals("Half-Succubus") And Not perks(perk.thrall) = 1 And Not perks(perk.nekocurse) > -1 And Not perks(perk.polymorphed) > -1 And Not perks(perk.bimbotf) > -1 Then
-            PerkEffects.thrallRestore()
+            PerkEffects.thrallRestore(Me)
         End If
         If perks(perk.astatue) > -1 Then
-            PerkEffects.aStatue()
+            PerkEffects.aStatue(Me)
         End If
         If pClass.name.Equals("Magical Girl") Then
             PerkEffects.magicGirlStatusCheck(Me)
@@ -1125,23 +1128,39 @@ Public Class Player
         '|SPECIAL MOVE HANDLERS|
         'berserker rage special
         If perks(perk.brage) > -1 Then
-            PerkEffects.berserkerRage()
+            PerkEffects.berserkerRage(Me)
         End If
         'massive mammaries special
         If perks(perk.mmammaries) > -1 Then
-            PerkEffects.massiveMammaries()
+            PerkEffects.massiveMammaries(Me)
+        End If
+        'guard up special
+        If perks(perk.guardup) > -1 Then
+            PerkEffects.guardUp(Me)
+        End If
+        'will up special
+        If perks(perk.willup) > -1 Then
+            PerkEffects.willUp(Me)
+        End If
+        'attack up special
+        If perks(perk.atkup) > -1 Then
+            PerkEffects.attackUp(Me)
+        End If
+        'lurk special
+        If perks(perk.lurk) > -1 Then
+            PerkEffects.lurk(Me)
         End If
         'pillowy protect special
         If perks(perk.pprot) > -1 Then
-            PerkEffects.pProt()
+            PerkEffects.pProt(Me)
         End If
         'ironhide fury
         If perks(perk.ihfury) > -1 Then
-            PerkEffects.ironhideFury()
+            PerkEffects.ironhideFury(Me)
         End If
         'inferno aura
         If perks(perk.infernoa) > -1 Then
-            PerkEffects.infernoAura()
+            PerkEffects.infernoAura(Me)
         End If
 
         '|CURSES|
@@ -1711,6 +1730,7 @@ Public Class Player
         For i = 0 To UBound(formStates)
             output += formStates(i).write()
         Next
+
         output += pos.X & "*"
         output += pos.Y & "*"
         output += health & "*"
@@ -2080,6 +2100,7 @@ Public Class Player
         If perks(perk.polymorphed) > -1 Then out += "You are under the effects of a temporary polymorph, and will be for " & perks(perk.polymorphed) & " more turns." & vbCrLf & " " & vbCrLf
         If perks(perk.thrall) > -1 Then out += "You are under the thrall of a sorcerer/ess, and may not have full control over your body or mind." & vbCrLf & " " & vbCrLf
         If perks(perk.astatue) > -1 Then out += "You are currently a statue, and won't be able to do much for " & perks(perk.astatue) & " turns." & vbCrLf & " " & vbCrLf
+        If perks(perk.lurk) > -1 Then out += "You are currently in a shrub." & vbCrLf & " " & vbCrLf
         Return out
     End Function
 
@@ -2089,12 +2110,13 @@ Public Class Player
         xp -= nextLevelXp
         nextLevelXp = nextLevelXp * level
         Game.pushLstLog("Level up!  " & name & " is now level " & level)
-        If xp > nextLevelXp Then levelUp()
         health = 1
         maxHealth += 20
 
         pClass.onLVLUp(level, Me)
         pForm.onLVLUp(level, Me)
+
+        If xp > nextLevelXp Then levelUp()
     End Sub
     Public Sub deLevel(ByVal lostLevels As Integer)
         If lostLevels < 1 Or level = 1 Then Exit Sub

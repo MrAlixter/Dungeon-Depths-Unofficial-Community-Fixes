@@ -7,6 +7,7 @@
         attack = 600
         defense = 250
         speed = 700
+        will = 250
 
         inv.setCount("Omni_Charm", 1)
         inv.setCount("Tavern_Special", 1)

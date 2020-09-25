@@ -44,16 +44,16 @@
 
             Dim s As String = ""
             If p.getWIL() > 10 Then
-                s = "you mock your instructions under your breath, before stiffly moving towards the crystal." + vbCrLf + "𝘐𝘧 𝘰𝘯𝘭𝘺 𝘐 𝘤𝘰𝘶𝘭𝘥 𝘨𝘦𝘵 𝘵𝘩𝘪𝘴 𝘥𝘢𝘮𝘯 𝘤𝘰𝘭𝘭𝘢𝘳 𝘰𝘧𝘧..."
+                s = "you mock your instructions under your breath, before stiffly moving towards the crystal." + DDUtils.RNRN + """If only I could get this damn collar off..."""
             ElseIf p.getWIL() > 7 Then
-                s = "you reluctantly start off towards the crystal." + vbCrLf + "𝘖𝘩 𝘸𝘦𝘭𝘭, 𝘣𝘦𝘵𝘵𝘦𝘳 𝘮𝘦 𝘵𝘩𝘢𝘯 𝘰𝘯𝘦 𝘰𝘧 𝘵𝘩𝘦𝘪𝘳 𝘰𝘵𝘩𝘦𝘳 𝘪𝘥𝘪𝘰𝘵𝘴."
+                s = "you reluctantly start off towards the crystal." + DDUtils.RNRN + """Oh well, better me than one of their other idiots..."""
             ElseIf p.getWIL() > 4 Then
-                s = "you jump immediatly into action, happy to help the voice in your head with whatever it may need." + vbCrLf + "𝘐'𝘮 𝘨𝘰𝘪𝘯𝘨 𝘵𝘰 𝘮𝘢𝘬𝘦 𝘲𝘶𝘪𝘤𝘬 𝘸𝘰𝘳𝘬 𝘰𝘧 𝘵𝘩𝘪𝘴 𝘵𝘢𝘴𝘬!"
+                s = "you jump immediately into action, happy to help the voice in your head with whatever it may need." + DDUtils.RNRN + """I'm gonna make quick work of this!"""
             Else
                 s = "you mindlessly obey, moving towards the crystal with a vacant grin."
             End If
-            Game.pushLblEvent("As your collar flares to life, you grimace as the location of a large mana crystal becomes clear in your mind." & _
-                              "'SERVANT!', your controller's voice booms in your head, 'This is another of the crystals!  Recover it immediately!'" & vbCrLf & _
+            Game.pushLblEvent("As your collar flares to life, you grimace as the location of a large mana crystal becomes clear in your mind." & DDUtils.RNRN &
+                              """SERVANT!"", your controller's voice booms in your head, ""This is another of the crystals!  Recover it immediately!""" & DDUtils.RNRN & _
                               "As their voice leaves your head, " & s)
         End If
 
@@ -110,7 +110,7 @@
         p.drawPort()
     End Sub
     Shared Sub waitSorc()
-        Dim out = "You decide against making a move now, instead waiting to see what happens next.  Your controller doesn't seem to notice you, instead focusing all their attention on the crystalline array.  As they fiddle with it, you notice a slight purple aura beginning to form around them and wait, are those horns sprouting out of their hair that seems to catch a non-existant wind?  With a flourish, they complete ... something ... and a blinding flash engulfs them.  Where once stood your human controller now stands a half-demon who only now seems to have taken notice of you." & _
+        Dim out = "You decide against making a move now, instead waiting to see what happens next.  Your controller doesn't seem to notice you, instead focusing all their attention on the crystalline array.  As they fiddle with it, you notice a slight purple aura beginning to form around them and wait, are those horns sprouting out of their hair that seems to catch a non-existant wind?  With a flourish, they complete ... something ... and a blinding flash engulfs them.  Where once stood your human controller now stands a half-demon who only now seems to have taken notice of you." & DDUtils.RNRN &
                         """Well... It looks like you succeeded.  For that, I will give you an ultimatium.  Join me as my general, or die in these dungeons as my slave."
         Game.pushLblEvent(out, AddressOf acceptSorc, AddressOf fightSorc, "Do you accept?")
     End Sub

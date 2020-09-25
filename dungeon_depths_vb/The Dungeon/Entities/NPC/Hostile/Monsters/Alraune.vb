@@ -9,6 +9,7 @@
         attack = 15
         defense = 35
         speed = 1
+        will = 13
 
         inv.setCount("Medicinal_Tea", 3)
         inv.setCount("Garden_Salad", 2)

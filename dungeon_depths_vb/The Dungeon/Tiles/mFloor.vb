@@ -19,6 +19,8 @@ Public Class mFloor
 
     Public beatBoss As Boolean = False
 
+    Public sessions As Dictionary(Of Integer, Session) = New Dictionary(Of Integer, Session)
+
     Public Sub New(ByVal code As String, ByVal fNum As Integer,
                    Optional ByVal bh As Integer = -1,
                    Optional ByVal bw As Integer = -1)
@@ -32,6 +34,7 @@ Public Class mFloor
         If bw = -1 Then mBoardWidth = Game.mBoardWidth Else mBoardWidth = bw
 
         defineBoardSpace()
+
         If floorNumber = 9999 Or floorNumber = 91017 Or floorNumber = 5 Or floorNumber = 75 Then
             Game.updateLoadbar(99)
             Game.boardWorker.CancelAsync()
@@ -54,6 +57,10 @@ Public Class mFloor
             Game.updateLoadbar(99)
             Game.boardWorker.CancelAsync()
         End If
+
+        'If Not sessions.ContainsKey(Game.sessionID) Then
+        '    sessions.Add(Game.sessionID, New Session(Game.sessionID, Game.player1.pos, beatBoss))
+        'End If
     End Sub
     Public Sub New(ByVal code As String, Optional readFromFile As Boolean = True)
         If Not readFromFile Then
@@ -777,11 +784,23 @@ Public Class mFloor
         mBoard(stairs.Y, stairs.X).Text = "H"
     End Sub
     Sub placePlayer(ByRef p As Player)
-        p.pos = randPoint()
+        p.pos = getStartPlayerPos()
         playerPosition = p.pos
         mBoard(p.pos.Y, p.pos.X).Text = "@"
         If floorNumber = 4 Then placeFloor4TrappedChest(Game.player1)
     End Sub
+    Public Function getStartPlayerPos() As Point
+        Select Case floorNumber
+            Case 5, 75
+                Return New Point(5, 25)
+            Case 91017
+                Return New Point(21, 1)
+            Case 9999
+                Return New Point(14, 13)
+            Case Else
+                Return randPoint()
+        End Select
+    End Function
     Sub placeChest(ByVal code As String)
         'Fill Chest Tier List
         For i = 1 To Game.baseChest.tiers.Count - 1
@@ -1042,10 +1061,16 @@ Public Class mFloor
             out += npcPositions(i).X & "%"      '21 + traplist.Count + statueList.Count + chestList.Count to 20 + traplist.Count + statueList.Count + chestList.Count + npcPositions.Count
         Next
 
+        out += "sessions%"
+        out += CStr(sessions.Count - 1) & "%"   '21 + traplist.Count + statueList.Count + chestList.Count + npcPositions.Count
+        For i = 0 To sessions.Count - 1
+            out += sessions.Values(i).ToString() & "%" '22 + traplist.Count + statueList.Count + chestList.Count + npcPositions.Count to 21 + traplist.Count + statueList.Count + chestList.Count + npcPositions.Count + sessions.Count
+        Next
+
         out += "boardtags%"
         For y = 0 To mBoardHeight - 1
             For x = 0 To mBoardWidth - 1
-                out += mBoard(y, x).Tag & "%"   '22 + traplist.Count + statueList.Count + chestList.Count + npcPositions.Count
+                out += mBoard(y, x).Tag & "%"   '23 + traplist.Count + statueList.Count + chestList.Count + npcPositions.Count + sessions.Count
             Next
         Next
 
@@ -1100,11 +1125,22 @@ Public Class mFloor
             npcPositions.Add(New Point(xy(0), xy(1)))
         Next
 
+        Dim sessionLines = 0
+        If buffer(21 + trapList.Count + statueList.Count + chestList.Count + npcPositions.Count).Equals("sessions") Then sessionLines = 2
+
+        If sessionLines = 2 Then
+            sessions.Clear()
+            For i = 0 To CInt(buffer(22 + trapList.Count + statueList.Count + chestList.Count + npcPositions.Count))
+                Dim idxybb = buffer(23 + trapList.Count + statueList.Count + chestList.Count + npcPositions.Count + i).Split("~")
+                sessions.Add(CInt(idxybb(0)), New Session(idxybb(0), New Point(idxybb(1), idxybb(2)), idxybb(3)))
+            Next
+        End If
+
         coveredBoardSpace = 0
         For y = 0 To mBoardHeight - 1
             For x = 0 To mBoardWidth - 1
                 Dim i = (y * mBoardWidth) + x
-                mBoard(y, x).Tag = CInt(buffer(22 + trapList.Count + statueList.Count + chestList.Count + npcPositions.Count + i))
+                mBoard(y, x).Tag = CInt(buffer(22 + sessionLines + trapList.Count + statueList.Count + chestList.Count + npcPositions.Count + sessions.Count + i))
                 If mBoard(y, x).Tag > 0 Then coveredBoardSpace += 1
             Next
         Next
@@ -1189,5 +1225,30 @@ Public Class Room
         Next
 
         Return False
+    End Function
+End Class
+
+Public Class Session
+    Dim ID As Integer
+    Dim playerPos As Point
+    Dim beatBoss As Boolean
+
+    Sub New(ByVal i As Integer, ByVal p As Point, ByVal b As Boolean)
+        ID = i
+        playerPos = p
+        beatBoss = b
+    End Sub
+
+    Sub load(ByRef f As mFloor)
+        f.playerPosition = playerPos
+        f.beatBoss = beatBoss
+    End Sub
+
+    Function hasID(ByVal sID As Integer) As Boolean
+        Return sID = ID
+    End Function
+
+    Overrides Function ToString() As String
+        Return ID & "~" & playerPos.X & "~" & playerPos.Y & "~" & beatBoss
     End Function
 End Class

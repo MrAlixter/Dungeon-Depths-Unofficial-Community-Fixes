@@ -11,15 +11,16 @@
         Dim d6 = Int(Rnd() * 7)
         If d6 = 2 Then
             'critical hit
-            MyBase.getCaster.dealSpellDamage(MyBase.getTarget, 2 * (dmg + d6))
-            Game.pushLstLog(CStr("Critical hit!  You hit the " & MyBase.getTarget.name & " for " & 2 * (dmg + d6) & " damage!"))
-            Game.pushLblCombatEvent(CStr("Critical hit!  You hit the " & MyBase.getTarget.name & " for " & 2 * (dmg + d6) & " damage!  The enemy is stunned for 2 turns!"))
-
+            dmg = MyBase.getCaster.getSpellDamage(MyBase.getTarget, 2 * (dmg + d6))
+            Game.pushLstLog(CStr("Critical hit!  You hit the " & MyBase.getTarget.name & " for " & dmg & " damage!"))
+            Game.pushLblCombatEvent(CStr("Critical hit!  You hit the " & MyBase.getTarget.name & " for " & dmg & " damage!  The enemy is stunned for 2 turns!"))
+            MyBase.getTarget.takeDMG(dmg, MyBase.getCaster)
         Else
             'non critical hit
-            MyBase.getCaster.dealSpellDamage(MyBase.getTarget, dmg + d6)
-            Game.pushLstLog(CStr("You hit the " & MyBase.getTarget.name & " for " & dmg + d6 & " damage!"))
-            Game.pushLblCombatEvent(CStr("You hit the " & MyBase.getTarget.name & " for " & dmg + d6 & " damage!  The enemy is stunned for 2 turns!"))
+            dmg = MyBase.getCaster.getSpellDamage(MyBase.getTarget, dmg + d6)
+            Game.pushLstLog(CStr("You hit the " & MyBase.getTarget.name & " for " & dmg & " damage!"))
+            Game.pushLblCombatEvent(CStr("You hit the " & MyBase.getTarget.name & " for " & dmg & " damage!  The enemy is stunned for 2 turns!"))
+            MyBase.getTarget.takeDMG(dmg, MyBase.getCaster)
         End If
 
         MyBase.getTarget.isStunned = True

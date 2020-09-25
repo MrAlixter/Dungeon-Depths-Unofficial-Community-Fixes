@@ -7,6 +7,7 @@
         attack = 99
         defense = 66
         speed = 666
+        will = 69
 
         levelDrainThres = 1
         lustRaiseThres = 66

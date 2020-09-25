@@ -5,7 +5,7 @@
         MyBase.revertPassage = "You roll your eyes dismissively as the magenta tint leaves your skin, and your demonic features slowly revert away."
     End Sub
 
-    Public Overrides Sub onLVLUp(level As Integer, ByRef p As Player)
+    Public Overrides Sub onLVLUp(ByVal level As Integer, ByRef p As Player, Optional learnSkills as Boolean = True)
         If level = 4 Then
             p.prt.setIAInd(pInd.horns, 7, True, False)
             p.prt.haircolor = Color.FromArgb(255, 217, 0, 24)

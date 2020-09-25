@@ -20,7 +20,7 @@
         Dim tf2s As Dictionary(Of String, Action) = New Dictionary(Of String, Action)
         tfs.Add("Gynoid", New GynoidTF)
         tfs.Add("Half-Gorgon", New HGorgonTF)
-        tfs.Add(perk.amazon, New AmazonTF)
+        tfs.Add("Amazon", New AmazonTF)
         tfs.Add("Mindless", New MindlessTF)
         tfs.Add("Rando", New RandoTF)
         tfs.Add("Half-Broodmother", Nothing)

@@ -7,6 +7,7 @@
         attack = 25
         defense = -5
         speed = 10
+        will = 20
 
         inv.setCount("Health_Potion", 3)
         inv.setCount("Spellbook", 2)

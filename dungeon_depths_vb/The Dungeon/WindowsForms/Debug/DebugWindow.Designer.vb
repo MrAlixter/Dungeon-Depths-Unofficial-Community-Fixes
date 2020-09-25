@@ -74,6 +74,7 @@ Partial Class Debug_Window
         Me.tabPageClothesBtm = New System.Windows.Forms.TabPage()
         Me.tabPageClothing = New System.Windows.Forms.TabPage()
         Me.tabPageFace = New System.Windows.Forms.TabPage()
+        Me.tabPageBlush = New System.Windows.Forms.TabPage()
         Me.tabPageMiddleHair = New System.Windows.Forms.TabPage()
         Me.tabPageHorns = New System.Windows.Forms.TabPage()
         Me.tabPageEars = New System.Windows.Forms.TabPage()
@@ -161,7 +162,6 @@ Partial Class Debug_Window
         Me.lblHeight = New System.Windows.Forms.Label()
         Me.lblWidth = New System.Windows.Forms.Label()
         Me.lblFC = New System.Windows.Forms.Label()
-        Me.tabPageBlush = New System.Windows.Forms.TabPage()
         Me.tabMain.SuspendLayout()
         Me.tabInformation.SuspendLayout()
         Me.tabGeneral.SuspendLayout()
@@ -226,10 +226,10 @@ Partial Class Debug_Window
         Me.tabInformation.BackColor = System.Drawing.Color.Black
         Me.tabInformation.Controls.Add(Me.boxNotes)
         Me.tabInformation.ForeColor = System.Drawing.Color.White
-        Me.tabInformation.Location = New System.Drawing.Point(4, 27)
+        Me.tabInformation.Location = New System.Drawing.Point(4, 24)
         Me.tabInformation.Name = "tabInformation"
         Me.tabInformation.Padding = New System.Windows.Forms.Padding(3)
-        Me.tabInformation.Size = New System.Drawing.Size(742, 545)
+        Me.tabInformation.Size = New System.Drawing.Size(742, 548)
         Me.tabInformation.TabIndex = 3
         Me.tabInformation.Text = "INFORMATION"
         '
@@ -249,10 +249,10 @@ Partial Class Debug_Window
         Me.tabGeneral.BackColor = System.Drawing.Color.Black
         Me.tabGeneral.Controls.Add(Me.groupNotes)
         Me.tabGeneral.Controls.Add(Me.groupGeneral)
-        Me.tabGeneral.Location = New System.Drawing.Point(4, 27)
+        Me.tabGeneral.Location = New System.Drawing.Point(4, 24)
         Me.tabGeneral.Name = "tabGeneral"
         Me.tabGeneral.Padding = New System.Windows.Forms.Padding(3)
-        Me.tabGeneral.Size = New System.Drawing.Size(742, 545)
+        Me.tabGeneral.Size = New System.Drawing.Size(742, 548)
         Me.tabGeneral.TabIndex = 0
         Me.tabGeneral.Text = "GENERAL"
         '
@@ -312,7 +312,7 @@ Partial Class Debug_Window
         Me.lblTrap.ForeColor = System.Drawing.Color.Red
         Me.lblTrap.Location = New System.Drawing.Point(70, 501)
         Me.lblTrap.Name = "lblTrap"
-        Me.lblTrap.Size = New System.Drawing.Size(50, 22)
+        Me.lblTrap.Size = New System.Drawing.Size(45, 19)
         Me.lblTrap.TabIndex = 209
         Me.lblTrap.Text = "TRAP"
         '
@@ -321,7 +321,7 @@ Partial Class Debug_Window
         Me.boxBeaten.AutoSize = True
         Me.boxBeaten.Location = New System.Drawing.Point(7, 99)
         Me.boxBeaten.Name = "boxBeaten"
-        Me.boxBeaten.Size = New System.Drawing.Size(139, 26)
+        Me.boxBeaten.Size = New System.Drawing.Size(127, 23)
         Me.boxBeaten.TabIndex = 207
         Me.boxBeaten.Text = "BOSS BEATEN"
         Me.boxBeaten.UseVisualStyleBackColor = True
@@ -333,7 +333,7 @@ Partial Class Debug_Window
         Me.lblSelected.ForeColor = System.Drawing.Color.HotPink
         Me.lblSelected.Location = New System.Drawing.Point(52, 348)
         Me.lblSelected.Name = "lblSelected"
-        Me.lblSelected.Size = New System.Drawing.Size(90, 22)
+        Me.lblSelected.Size = New System.Drawing.Size(81, 19)
         Me.lblSelected.TabIndex = 206
         Me.lblSelected.Text = "SELECTED"
         '
@@ -366,7 +366,7 @@ Partial Class Debug_Window
         Me.lblZoom.AutoSize = True
         Me.lblZoom.Location = New System.Drawing.Point(13, 83)
         Me.lblZoom.Name = "lblZoom"
-        Me.lblZoom.Size = New System.Drawing.Size(50, 22)
+        Me.lblZoom.Size = New System.Drawing.Size(45, 19)
         Me.lblZoom.TabIndex = 208
         Me.lblZoom.Text = "ZOOM"
         '
@@ -377,7 +377,7 @@ Partial Class Debug_Window
         Me.boxZoom.Location = New System.Drawing.Point(109, 81)
         Me.boxZoom.Minimum = New Decimal(New Integer() {1, 0, 0, 0})
         Me.boxZoom.Name = "boxZoom"
-        Me.boxZoom.Size = New System.Drawing.Size(54, 28)
+        Me.boxZoom.Size = New System.Drawing.Size(54, 26)
         Me.boxZoom.TabIndex = 207
         Me.boxZoom.TextAlign = System.Windows.Forms.HorizontalAlignment.Center
         Me.boxZoom.Value = New Decimal(New Integer() {1, 0, 0, 0})
@@ -387,7 +387,7 @@ Partial Class Debug_Window
         Me.btnSelect.AutoSize = True
         Me.btnSelect.Location = New System.Drawing.Point(17, 54)
         Me.btnSelect.Name = "btnSelect"
-        Me.btnSelect.Size = New System.Drawing.Size(88, 26)
+        Me.btnSelect.Size = New System.Drawing.Size(81, 23)
         Me.btnSelect.TabIndex = 206
         Me.btnSelect.TabStop = True
         Me.btnSelect.Text = "SELECT"
@@ -398,7 +398,7 @@ Partial Class Debug_Window
         Me.btnPan.AutoSize = True
         Me.btnPan.Location = New System.Drawing.Point(17, 25)
         Me.btnPan.Name = "btnPan"
-        Me.btnPan.Size = New System.Drawing.Size(58, 26)
+        Me.btnPan.Size = New System.Drawing.Size(54, 23)
         Me.btnPan.TabIndex = 205
         Me.btnPan.TabStop = True
         Me.btnPan.Text = "PAN"
@@ -411,7 +411,7 @@ Partial Class Debug_Window
         Me.lblStatue.ForeColor = System.Drawing.Color.LightSlateGray
         Me.lblStatue.Location = New System.Drawing.Point(61, 444)
         Me.lblStatue.Name = "lblStatue"
-        Me.lblStatue.Size = New System.Drawing.Size(70, 22)
+        Me.lblStatue.Size = New System.Drawing.Size(63, 19)
         Me.lblStatue.TabIndex = 204
         Me.lblStatue.Text = "STATUE"
         '
@@ -422,7 +422,7 @@ Partial Class Debug_Window
         Me.lblStairs.ForeColor = System.Drawing.Color.Sienna
         Me.lblStairs.Location = New System.Drawing.Point(61, 482)
         Me.lblStairs.Name = "lblStairs"
-        Me.lblStairs.Size = New System.Drawing.Size(70, 22)
+        Me.lblStairs.Size = New System.Drawing.Size(63, 19)
         Me.lblStairs.TabIndex = 203
         Me.lblStairs.Text = "STAIRS"
         '
@@ -433,7 +433,7 @@ Partial Class Debug_Window
         Me.lblChest.ForeColor = System.Drawing.Color.Yellow
         Me.lblChest.Location = New System.Drawing.Point(65, 463)
         Me.lblChest.Name = "lblChest"
-        Me.lblChest.Size = New System.Drawing.Size(60, 22)
+        Me.lblChest.Size = New System.Drawing.Size(54, 19)
         Me.lblChest.TabIndex = 202
         Me.lblChest.Text = "CHEST"
         '
@@ -444,7 +444,7 @@ Partial Class Debug_Window
         Me.lblNPC.ForeColor = System.Drawing.Color.Blue
         Me.lblNPC.Location = New System.Drawing.Point(74, 424)
         Me.lblNPC.Name = "lblNPC"
-        Me.lblNPC.Size = New System.Drawing.Size(40, 22)
+        Me.lblNPC.Size = New System.Drawing.Size(36, 19)
         Me.lblNPC.TabIndex = 201
         Me.lblNPC.Text = "NPC"
         '
@@ -455,7 +455,7 @@ Partial Class Debug_Window
         Me.lblPlayer.ForeColor = System.Drawing.Color.LawnGreen
         Me.lblPlayer.Location = New System.Drawing.Point(61, 405)
         Me.lblPlayer.Name = "lblPlayer"
-        Me.lblPlayer.Size = New System.Drawing.Size(70, 22)
+        Me.lblPlayer.Size = New System.Drawing.Size(63, 19)
         Me.lblPlayer.TabIndex = 200
         Me.lblPlayer.Text = "PLAYER"
         '
@@ -466,7 +466,7 @@ Partial Class Debug_Window
         Me.lblUnseen.ForeColor = System.Drawing.Color.Gray
         Me.lblUnseen.Location = New System.Drawing.Point(61, 386)
         Me.lblUnseen.Name = "lblUnseen"
-        Me.lblUnseen.Size = New System.Drawing.Size(70, 22)
+        Me.lblUnseen.Size = New System.Drawing.Size(63, 19)
         Me.lblUnseen.TabIndex = 199
         Me.lblUnseen.Text = "UNSEEN"
         '
@@ -476,7 +476,7 @@ Partial Class Debug_Window
         Me.lblSeen.Font = New System.Drawing.Font("Consolas", 12.0!, System.Drawing.FontStyle.Bold)
         Me.lblSeen.Location = New System.Drawing.Point(70, 367)
         Me.lblSeen.Name = "lblSeen"
-        Me.lblSeen.Size = New System.Drawing.Size(50, 22)
+        Me.lblSeen.Size = New System.Drawing.Size(45, 19)
         Me.lblSeen.TabIndex = 198
         Me.lblSeen.Text = "SEEN"
         '
@@ -486,7 +486,7 @@ Partial Class Debug_Window
         Me.lblKeyHeader.Font = New System.Drawing.Font("Consolas", 12.0!, System.Drawing.FontStyle.Underline)
         Me.lblKeyHeader.Location = New System.Drawing.Point(56, 325)
         Me.lblKeyHeader.Name = "lblKeyHeader"
-        Me.lblKeyHeader.Size = New System.Drawing.Size(80, 22)
+        Me.lblKeyHeader.Size = New System.Drawing.Size(72, 19)
         Me.lblKeyHeader.TabIndex = 197
         Me.lblKeyHeader.Text = "MAP KEY"
         '
@@ -497,7 +497,7 @@ Partial Class Debug_Window
         Me.boxTurn.Location = New System.Drawing.Point(66, 49)
         Me.boxTurn.Maximum = New Decimal(New Integer() {999999, 0, 0, 0})
         Me.boxTurn.Name = "boxTurn"
-        Me.boxTurn.Size = New System.Drawing.Size(113, 28)
+        Me.boxTurn.Size = New System.Drawing.Size(113, 26)
         Me.boxTurn.TabIndex = 196
         Me.boxTurn.TextAlign = System.Windows.Forms.HorizontalAlignment.Right
         '
@@ -509,7 +509,7 @@ Partial Class Debug_Window
         Me.boxFloor.Location = New System.Drawing.Point(66, 20)
         Me.boxFloor.Maximum = New Decimal(New Integer() {999999, 0, 0, 0})
         Me.boxFloor.Name = "boxFloor"
-        Me.boxFloor.Size = New System.Drawing.Size(113, 28)
+        Me.boxFloor.Size = New System.Drawing.Size(113, 26)
         Me.boxFloor.TabIndex = 195
         Me.boxFloor.TextAlign = System.Windows.Forms.HorizontalAlignment.Right
         '
@@ -519,10 +519,10 @@ Partial Class Debug_Window
         Me.lblTurn.Dock = System.Windows.Forms.DockStyle.Top
         Me.lblTurn.Font = New System.Drawing.Font("Consolas", 12.0!)
         Me.lblTurn.ForeColor = System.Drawing.Color.White
-        Me.lblTurn.Location = New System.Drawing.Point(3, 56)
+        Me.lblTurn.Location = New System.Drawing.Point(3, 51)
         Me.lblTurn.Name = "lblTurn"
         Me.lblTurn.Padding = New System.Windows.Forms.Padding(0, 0, 0, 10)
-        Me.lblTurn.Size = New System.Drawing.Size(70, 32)
+        Me.lblTurn.Size = New System.Drawing.Size(63, 29)
         Me.lblTurn.TabIndex = 1
         Me.lblTurn.Text = "TURN: "
         '
@@ -532,10 +532,10 @@ Partial Class Debug_Window
         Me.lblFloor.Dock = System.Windows.Forms.DockStyle.Top
         Me.lblFloor.Font = New System.Drawing.Font("Consolas", 12.0!)
         Me.lblFloor.ForeColor = System.Drawing.Color.White
-        Me.lblFloor.Location = New System.Drawing.Point(3, 24)
+        Me.lblFloor.Location = New System.Drawing.Point(3, 22)
         Me.lblFloor.Name = "lblFloor"
         Me.lblFloor.Padding = New System.Windows.Forms.Padding(0, 0, 0, 10)
-        Me.lblFloor.Size = New System.Drawing.Size(80, 32)
+        Me.lblFloor.Size = New System.Drawing.Size(72, 29)
         Me.lblFloor.TabIndex = 2
         Me.lblFloor.Text = "FLOOR: "
         '
@@ -579,10 +579,10 @@ Partial Class Debug_Window
         Me.tabPlayer.Controls.Add(Me.lblTitle)
         Me.tabPlayer.Controls.Add(Me.lblSex)
         Me.tabPlayer.Controls.Add(Me.lblName)
-        Me.tabPlayer.Location = New System.Drawing.Point(4, 27)
+        Me.tabPlayer.Location = New System.Drawing.Point(4, 24)
         Me.tabPlayer.Name = "tabPlayer"
         Me.tabPlayer.Padding = New System.Windows.Forms.Padding(3)
-        Me.tabPlayer.Size = New System.Drawing.Size(742, 545)
+        Me.tabPlayer.Size = New System.Drawing.Size(742, 548)
         Me.tabPlayer.TabIndex = 1
         Me.tabPlayer.Text = "PLAYER"
         '
@@ -605,7 +605,7 @@ Partial Class Debug_Window
         Me.boxAlpha.Location = New System.Drawing.Point(445, 211)
         Me.boxAlpha.Maximum = New Decimal(New Integer() {255, 0, 0, 0})
         Me.boxAlpha.Name = "boxAlpha"
-        Me.boxAlpha.Size = New System.Drawing.Size(53, 28)
+        Me.boxAlpha.Size = New System.Drawing.Size(53, 26)
         Me.boxAlpha.TabIndex = 269
         '
         'lblAlpha
@@ -615,7 +615,7 @@ Partial Class Debug_Window
         Me.lblAlpha.ForeColor = System.Drawing.Color.White
         Me.lblAlpha.Location = New System.Drawing.Point(333, 214)
         Me.lblAlpha.Name = "lblAlpha"
-        Me.lblAlpha.Size = New System.Drawing.Size(110, 22)
+        Me.lblAlpha.Size = New System.Drawing.Size(99, 19)
         Me.lblAlpha.TabIndex = 267
         Me.lblAlpha.Text = "HAIR ALPHA"
         '
@@ -626,7 +626,7 @@ Partial Class Debug_Window
         Me.lblHC.ForeColor = System.Drawing.Color.White
         Me.lblHC.Location = New System.Drawing.Point(172, 214)
         Me.lblHC.Name = "lblHC"
-        Me.lblHC.Size = New System.Drawing.Size(110, 22)
+        Me.lblHC.Size = New System.Drawing.Size(99, 19)
         Me.lblHC.TabIndex = 266
         Me.lblHC.Text = "HAIR COLOR"
         '
@@ -644,7 +644,7 @@ Partial Class Debug_Window
         Me.lblSC.ForeColor = System.Drawing.Color.White
         Me.lblSC.Location = New System.Drawing.Point(3, 214)
         Me.lblSC.Name = "lblSC"
-        Me.lblSC.Size = New System.Drawing.Size(110, 22)
+        Me.lblSC.Size = New System.Drawing.Size(99, 19)
         Me.lblSC.TabIndex = 264
         Me.lblSC.Text = "SKIN COLOR"
         '
@@ -694,10 +694,10 @@ Partial Class Debug_Window
         '
         Me.tabPageBackground.AutoScroll = True
         Me.tabPageBackground.BackColor = System.Drawing.Color.Black
-        Me.tabPageBackground.Location = New System.Drawing.Point(4, 27)
+        Me.tabPageBackground.Location = New System.Drawing.Point(4, 24)
         Me.tabPageBackground.Name = "tabPageBackground"
         Me.tabPageBackground.Padding = New System.Windows.Forms.Padding(3)
-        Me.tabPageBackground.Size = New System.Drawing.Size(728, 260)
+        Me.tabPageBackground.Size = New System.Drawing.Size(728, 263)
         Me.tabPageBackground.TabIndex = 0
         Me.tabPageBackground.Text = "BACKGROUND"
         '
@@ -705,9 +705,9 @@ Partial Class Debug_Window
         '
         Me.tabPageTail.BackColor = System.Drawing.Color.Black
         Me.tabPageTail.ForeColor = System.Drawing.Color.White
-        Me.tabPageTail.Location = New System.Drawing.Point(4, 27)
+        Me.tabPageTail.Location = New System.Drawing.Point(4, 24)
         Me.tabPageTail.Name = "tabPageTail"
-        Me.tabPageTail.Size = New System.Drawing.Size(728, 260)
+        Me.tabPageTail.Size = New System.Drawing.Size(728, 263)
         Me.tabPageTail.TabIndex = 17
         Me.tabPageTail.Text = " TAIL"
         '
@@ -715,9 +715,9 @@ Partial Class Debug_Window
         '
         Me.tabPageWings.BackColor = System.Drawing.Color.Black
         Me.tabPageWings.ForeColor = System.Drawing.Color.White
-        Me.tabPageWings.Location = New System.Drawing.Point(4, 27)
+        Me.tabPageWings.Location = New System.Drawing.Point(4, 24)
         Me.tabPageWings.Name = "tabPageWings"
-        Me.tabPageWings.Size = New System.Drawing.Size(728, 260)
+        Me.tabPageWings.Size = New System.Drawing.Size(728, 263)
         Me.tabPageWings.TabIndex = 18
         Me.tabPageWings.Text = "WINGS"
         '
@@ -725,10 +725,10 @@ Partial Class Debug_Window
         '
         Me.tabPageRearHair.AutoScroll = True
         Me.tabPageRearHair.BackColor = System.Drawing.Color.Black
-        Me.tabPageRearHair.Location = New System.Drawing.Point(4, 27)
+        Me.tabPageRearHair.Location = New System.Drawing.Point(4, 24)
         Me.tabPageRearHair.Name = "tabPageRearHair"
         Me.tabPageRearHair.Padding = New System.Windows.Forms.Padding(3)
-        Me.tabPageRearHair.Size = New System.Drawing.Size(728, 260)
+        Me.tabPageRearHair.Size = New System.Drawing.Size(728, 263)
         Me.tabPageRearHair.TabIndex = 1
         Me.tabPageRearHair.Text = "REAR HAIR"
         '
@@ -736,9 +736,9 @@ Partial Class Debug_Window
         '
         Me.tabPageHairAcc.BackColor = System.Drawing.Color.Black
         Me.tabPageHairAcc.ForeColor = System.Drawing.Color.White
-        Me.tabPageHairAcc.Location = New System.Drawing.Point(4, 27)
+        Me.tabPageHairAcc.Location = New System.Drawing.Point(4, 24)
         Me.tabPageHairAcc.Name = "tabPageHairAcc"
-        Me.tabPageHairAcc.Size = New System.Drawing.Size(728, 260)
+        Me.tabPageHairAcc.Size = New System.Drawing.Size(728, 263)
         Me.tabPageHairAcc.TabIndex = 19
         Me.tabPageHairAcc.Text = "HAIR ACC"
         '
@@ -746,9 +746,9 @@ Partial Class Debug_Window
         '
         Me.tabPageShoulders.BackColor = System.Drawing.Color.Black
         Me.tabPageShoulders.ForeColor = System.Drawing.Color.White
-        Me.tabPageShoulders.Location = New System.Drawing.Point(4, 27)
+        Me.tabPageShoulders.Location = New System.Drawing.Point(4, 24)
         Me.tabPageShoulders.Name = "tabPageShoulders"
-        Me.tabPageShoulders.Size = New System.Drawing.Size(728, 260)
+        Me.tabPageShoulders.Size = New System.Drawing.Size(728, 263)
         Me.tabPageShoulders.TabIndex = 20
         Me.tabPageShoulders.Text = "SHOULDERS"
         '
@@ -756,10 +756,10 @@ Partial Class Debug_Window
         '
         Me.tabPageBody.AutoScroll = True
         Me.tabPageBody.BackColor = System.Drawing.Color.Black
-        Me.tabPageBody.Location = New System.Drawing.Point(4, 27)
+        Me.tabPageBody.Location = New System.Drawing.Point(4, 24)
         Me.tabPageBody.Name = "tabPageBody"
         Me.tabPageBody.Padding = New System.Windows.Forms.Padding(3)
-        Me.tabPageBody.Size = New System.Drawing.Size(728, 260)
+        Me.tabPageBody.Size = New System.Drawing.Size(728, 263)
         Me.tabPageBody.TabIndex = 2
         Me.tabPageBody.Text = "BODY"
         '
@@ -767,9 +767,9 @@ Partial Class Debug_Window
         '
         Me.tabBodyOverlay.BackColor = System.Drawing.Color.Black
         Me.tabBodyOverlay.ForeColor = System.Drawing.Color.White
-        Me.tabBodyOverlay.Location = New System.Drawing.Point(4, 27)
+        Me.tabBodyOverlay.Location = New System.Drawing.Point(4, 24)
         Me.tabBodyOverlay.Name = "tabBodyOverlay"
-        Me.tabBodyOverlay.Size = New System.Drawing.Size(728, 260)
+        Me.tabBodyOverlay.Size = New System.Drawing.Size(728, 263)
         Me.tabBodyOverlay.TabIndex = 21
         Me.tabBodyOverlay.Text = "BODY OVERLAY"
         '
@@ -777,9 +777,9 @@ Partial Class Debug_Window
         '
         Me.tabPageGen.BackColor = System.Drawing.Color.Black
         Me.tabPageGen.ForeColor = System.Drawing.Color.White
-        Me.tabPageGen.Location = New System.Drawing.Point(4, 27)
+        Me.tabPageGen.Location = New System.Drawing.Point(4, 24)
         Me.tabPageGen.Name = "tabPageGen"
-        Me.tabPageGen.Size = New System.Drawing.Size(728, 260)
+        Me.tabPageGen.Size = New System.Drawing.Size(728, 263)
         Me.tabPageGen.TabIndex = 22
         Me.tabPageGen.Text = "GEN"
         '
@@ -787,9 +787,9 @@ Partial Class Debug_Window
         '
         Me.tabPageChest.BackColor = System.Drawing.Color.Black
         Me.tabPageChest.ForeColor = System.Drawing.Color.White
-        Me.tabPageChest.Location = New System.Drawing.Point(4, 27)
+        Me.tabPageChest.Location = New System.Drawing.Point(4, 24)
         Me.tabPageChest.Name = "tabPageChest"
-        Me.tabPageChest.Size = New System.Drawing.Size(728, 260)
+        Me.tabPageChest.Size = New System.Drawing.Size(728, 263)
         Me.tabPageChest.TabIndex = 23
         Me.tabPageChest.Text = "CHEST"
         '
@@ -797,9 +797,9 @@ Partial Class Debug_Window
         '
         Me.tabPageClothesBtm.BackColor = System.Drawing.Color.Black
         Me.tabPageClothesBtm.ForeColor = System.Drawing.Color.White
-        Me.tabPageClothesBtm.Location = New System.Drawing.Point(4, 27)
+        Me.tabPageClothesBtm.Location = New System.Drawing.Point(4, 24)
         Me.tabPageClothesBtm.Name = "tabPageClothesBtm"
-        Me.tabPageClothesBtm.Size = New System.Drawing.Size(728, 260)
+        Me.tabPageClothesBtm.Size = New System.Drawing.Size(728, 263)
         Me.tabPageClothesBtm.TabIndex = 24
         Me.tabPageClothesBtm.Text = "B. CLOTHING"
         '
@@ -807,10 +807,10 @@ Partial Class Debug_Window
         '
         Me.tabPageClothing.AutoScroll = True
         Me.tabPageClothing.BackColor = System.Drawing.Color.Black
-        Me.tabPageClothing.Location = New System.Drawing.Point(4, 27)
+        Me.tabPageClothing.Location = New System.Drawing.Point(4, 24)
         Me.tabPageClothing.Name = "tabPageClothing"
         Me.tabPageClothing.Padding = New System.Windows.Forms.Padding(3)
-        Me.tabPageClothing.Size = New System.Drawing.Size(728, 260)
+        Me.tabPageClothing.Size = New System.Drawing.Size(728, 263)
         Me.tabPageClothing.TabIndex = 3
         Me.tabPageClothing.Text = "T. CLOTHING"
         '
@@ -818,19 +818,28 @@ Partial Class Debug_Window
         '
         Me.tabPageFace.AutoScroll = True
         Me.tabPageFace.BackColor = System.Drawing.Color.Black
-        Me.tabPageFace.Location = New System.Drawing.Point(4, 27)
+        Me.tabPageFace.Location = New System.Drawing.Point(4, 24)
         Me.tabPageFace.Name = "tabPageFace"
-        Me.tabPageFace.Size = New System.Drawing.Size(728, 260)
+        Me.tabPageFace.Size = New System.Drawing.Size(728, 263)
         Me.tabPageFace.TabIndex = 4
         Me.tabPageFace.Text = "FACE"
+        '
+        'tabPageBlush
+        '
+        Me.tabPageBlush.BackColor = System.Drawing.Color.Black
+        Me.tabPageBlush.Location = New System.Drawing.Point(4, 24)
+        Me.tabPageBlush.Name = "tabPageBlush"
+        Me.tabPageBlush.Size = New System.Drawing.Size(728, 263)
+        Me.tabPageBlush.TabIndex = 26
+        Me.tabPageBlush.Text = "BLUSH"
         '
         'tabPageMiddleHair
         '
         Me.tabPageMiddleHair.AutoScroll = True
         Me.tabPageMiddleHair.BackColor = System.Drawing.Color.Black
-        Me.tabPageMiddleHair.Location = New System.Drawing.Point(4, 27)
+        Me.tabPageMiddleHair.Location = New System.Drawing.Point(4, 24)
         Me.tabPageMiddleHair.Name = "tabPageMiddleHair"
-        Me.tabPageMiddleHair.Size = New System.Drawing.Size(728, 260)
+        Me.tabPageMiddleHair.Size = New System.Drawing.Size(728, 263)
         Me.tabPageMiddleHair.TabIndex = 5
         Me.tabPageMiddleHair.Text = "MIDDLE HAIR"
         '
@@ -838,9 +847,9 @@ Partial Class Debug_Window
         '
         Me.tabPageHorns.BackColor = System.Drawing.Color.Black
         Me.tabPageHorns.ForeColor = System.Drawing.Color.White
-        Me.tabPageHorns.Location = New System.Drawing.Point(4, 27)
+        Me.tabPageHorns.Location = New System.Drawing.Point(4, 24)
         Me.tabPageHorns.Name = "tabPageHorns"
-        Me.tabPageHorns.Size = New System.Drawing.Size(728, 260)
+        Me.tabPageHorns.Size = New System.Drawing.Size(728, 263)
         Me.tabPageHorns.TabIndex = 25
         Me.tabPageHorns.Text = "HORNS"
         '
@@ -848,9 +857,9 @@ Partial Class Debug_Window
         '
         Me.tabPageEars.AutoScroll = True
         Me.tabPageEars.BackColor = System.Drawing.Color.Black
-        Me.tabPageEars.Location = New System.Drawing.Point(4, 27)
+        Me.tabPageEars.Location = New System.Drawing.Point(4, 24)
         Me.tabPageEars.Name = "tabPageEars"
-        Me.tabPageEars.Size = New System.Drawing.Size(728, 260)
+        Me.tabPageEars.Size = New System.Drawing.Size(728, 263)
         Me.tabPageEars.TabIndex = 6
         Me.tabPageEars.Text = "EARS"
         '
@@ -858,9 +867,9 @@ Partial Class Debug_Window
         '
         Me.tabPageNose.AutoScroll = True
         Me.tabPageNose.BackColor = System.Drawing.Color.Black
-        Me.tabPageNose.Location = New System.Drawing.Point(4, 27)
+        Me.tabPageNose.Location = New System.Drawing.Point(4, 24)
         Me.tabPageNose.Name = "tabPageNose"
-        Me.tabPageNose.Size = New System.Drawing.Size(728, 260)
+        Me.tabPageNose.Size = New System.Drawing.Size(728, 263)
         Me.tabPageNose.TabIndex = 7
         Me.tabPageNose.Text = "NOSE"
         '
@@ -868,9 +877,9 @@ Partial Class Debug_Window
         '
         Me.tabPageMouth.AutoScroll = True
         Me.tabPageMouth.BackColor = System.Drawing.Color.Black
-        Me.tabPageMouth.Location = New System.Drawing.Point(4, 27)
+        Me.tabPageMouth.Location = New System.Drawing.Point(4, 24)
         Me.tabPageMouth.Name = "tabPageMouth"
-        Me.tabPageMouth.Size = New System.Drawing.Size(728, 260)
+        Me.tabPageMouth.Size = New System.Drawing.Size(728, 263)
         Me.tabPageMouth.TabIndex = 8
         Me.tabPageMouth.Text = "MOUTH"
         '
@@ -878,9 +887,9 @@ Partial Class Debug_Window
         '
         Me.tabPageEyes.AutoScroll = True
         Me.tabPageEyes.BackColor = System.Drawing.Color.Black
-        Me.tabPageEyes.Location = New System.Drawing.Point(4, 27)
+        Me.tabPageEyes.Location = New System.Drawing.Point(4, 24)
         Me.tabPageEyes.Name = "tabPageEyes"
-        Me.tabPageEyes.Size = New System.Drawing.Size(728, 260)
+        Me.tabPageEyes.Size = New System.Drawing.Size(728, 263)
         Me.tabPageEyes.TabIndex = 9
         Me.tabPageEyes.Text = "EYES"
         '
@@ -888,9 +897,9 @@ Partial Class Debug_Window
         '
         Me.tabPageEyebrows.AutoScroll = True
         Me.tabPageEyebrows.BackColor = System.Drawing.Color.Black
-        Me.tabPageEyebrows.Location = New System.Drawing.Point(4, 27)
+        Me.tabPageEyebrows.Location = New System.Drawing.Point(4, 24)
         Me.tabPageEyebrows.Name = "tabPageEyebrows"
-        Me.tabPageEyebrows.Size = New System.Drawing.Size(728, 260)
+        Me.tabPageEyebrows.Size = New System.Drawing.Size(728, 263)
         Me.tabPageEyebrows.TabIndex = 10
         Me.tabPageEyebrows.Text = "EYEBROWS"
         '
@@ -898,9 +907,9 @@ Partial Class Debug_Window
         '
         Me.tabPageFaceMark.AutoScroll = True
         Me.tabPageFaceMark.BackColor = System.Drawing.Color.Black
-        Me.tabPageFaceMark.Location = New System.Drawing.Point(4, 27)
+        Me.tabPageFaceMark.Location = New System.Drawing.Point(4, 24)
         Me.tabPageFaceMark.Name = "tabPageFaceMark"
-        Me.tabPageFaceMark.Size = New System.Drawing.Size(728, 260)
+        Me.tabPageFaceMark.Size = New System.Drawing.Size(728, 263)
         Me.tabPageFaceMark.TabIndex = 11
         Me.tabPageFaceMark.Text = "FACE MARK"
         '
@@ -908,9 +917,9 @@ Partial Class Debug_Window
         '
         Me.tabPageGlasses.AutoScroll = True
         Me.tabPageGlasses.BackColor = System.Drawing.Color.Black
-        Me.tabPageGlasses.Location = New System.Drawing.Point(4, 27)
+        Me.tabPageGlasses.Location = New System.Drawing.Point(4, 24)
         Me.tabPageGlasses.Name = "tabPageGlasses"
-        Me.tabPageGlasses.Size = New System.Drawing.Size(728, 260)
+        Me.tabPageGlasses.Size = New System.Drawing.Size(728, 263)
         Me.tabPageGlasses.TabIndex = 12
         Me.tabPageGlasses.Text = "GLASSES"
         '
@@ -918,9 +927,9 @@ Partial Class Debug_Window
         '
         Me.tabPageCloak.AutoScroll = True
         Me.tabPageCloak.BackColor = System.Drawing.Color.Black
-        Me.tabPageCloak.Location = New System.Drawing.Point(4, 27)
+        Me.tabPageCloak.Location = New System.Drawing.Point(4, 24)
         Me.tabPageCloak.Name = "tabPageCloak"
-        Me.tabPageCloak.Size = New System.Drawing.Size(728, 260)
+        Me.tabPageCloak.Size = New System.Drawing.Size(728, 263)
         Me.tabPageCloak.TabIndex = 13
         Me.tabPageCloak.Text = "CLOAK"
         '
@@ -928,9 +937,9 @@ Partial Class Debug_Window
         '
         Me.tabPageAccessories.AutoScroll = True
         Me.tabPageAccessories.BackColor = System.Drawing.Color.Black
-        Me.tabPageAccessories.Location = New System.Drawing.Point(4, 27)
+        Me.tabPageAccessories.Location = New System.Drawing.Point(4, 24)
         Me.tabPageAccessories.Name = "tabPageAccessories"
-        Me.tabPageAccessories.Size = New System.Drawing.Size(728, 260)
+        Me.tabPageAccessories.Size = New System.Drawing.Size(728, 263)
         Me.tabPageAccessories.TabIndex = 14
         Me.tabPageAccessories.Text = "ACCESSORIES"
         '
@@ -938,9 +947,9 @@ Partial Class Debug_Window
         '
         Me.tabPageFrontHair.AutoScroll = True
         Me.tabPageFrontHair.BackColor = System.Drawing.Color.Black
-        Me.tabPageFrontHair.Location = New System.Drawing.Point(4, 27)
+        Me.tabPageFrontHair.Location = New System.Drawing.Point(4, 24)
         Me.tabPageFrontHair.Name = "tabPageFrontHair"
-        Me.tabPageFrontHair.Size = New System.Drawing.Size(728, 260)
+        Me.tabPageFrontHair.Size = New System.Drawing.Size(728, 263)
         Me.tabPageFrontHair.TabIndex = 15
         Me.tabPageFrontHair.Text = "FRONT HAIR"
         '
@@ -948,9 +957,9 @@ Partial Class Debug_Window
         '
         Me.tabPageHat.AutoScroll = True
         Me.tabPageHat.BackColor = System.Drawing.Color.Black
-        Me.tabPageHat.Location = New System.Drawing.Point(4, 27)
+        Me.tabPageHat.Location = New System.Drawing.Point(4, 24)
         Me.tabPageHat.Name = "tabPageHat"
-        Me.tabPageHat.Size = New System.Drawing.Size(728, 260)
+        Me.tabPageHat.Size = New System.Drawing.Size(728, 263)
         Me.tabPageHat.TabIndex = 16
         Me.tabPageHat.Text = "HAT"
         '
@@ -977,7 +986,7 @@ Partial Class Debug_Window
         Me.lblGold.ForeColor = System.Drawing.Color.White
         Me.lblGold.Location = New System.Drawing.Point(250, 181)
         Me.lblGold.Name = "lblGold"
-        Me.lblGold.Size = New System.Drawing.Size(50, 22)
+        Me.lblGold.Size = New System.Drawing.Size(45, 19)
         Me.lblGold.TabIndex = 224
         Me.lblGold.Text = "GOLD"
         '
@@ -989,7 +998,7 @@ Partial Class Debug_Window
         Me.boxEvd.Location = New System.Drawing.Point(110, 179)
         Me.boxEvd.Maximum = New Decimal(New Integer() {999999, 0, 0, 0})
         Me.boxEvd.Name = "boxEvd"
-        Me.boxEvd.Size = New System.Drawing.Size(134, 28)
+        Me.boxEvd.Size = New System.Drawing.Size(134, 26)
         Me.boxEvd.TabIndex = 223
         Me.boxEvd.TextAlign = System.Windows.Forms.HorizontalAlignment.Right
         '
@@ -1000,7 +1009,7 @@ Partial Class Debug_Window
         Me.lblEvd.ForeColor = System.Drawing.Color.White
         Me.lblEvd.Location = New System.Drawing.Point(3, 181)
         Me.lblEvd.Name = "lblEvd"
-        Me.lblEvd.Size = New System.Drawing.Size(40, 22)
+        Me.lblEvd.Size = New System.Drawing.Size(36, 19)
         Me.lblEvd.TabIndex = 222
         Me.lblEvd.Text = "EVD"
         '
@@ -1012,7 +1021,7 @@ Partial Class Debug_Window
         Me.boxSpd.Location = New System.Drawing.Point(364, 150)
         Me.boxSpd.Maximum = New Decimal(New Integer() {999999, 0, 0, 0})
         Me.boxSpd.Name = "boxSpd"
-        Me.boxSpd.Size = New System.Drawing.Size(134, 28)
+        Me.boxSpd.Size = New System.Drawing.Size(134, 26)
         Me.boxSpd.TabIndex = 221
         Me.boxSpd.TextAlign = System.Windows.Forms.HorizontalAlignment.Right
         '
@@ -1023,7 +1032,7 @@ Partial Class Debug_Window
         Me.lblSpd.ForeColor = System.Drawing.Color.White
         Me.lblSpd.Location = New System.Drawing.Point(250, 152)
         Me.lblSpd.Name = "lblSpd"
-        Me.lblSpd.Size = New System.Drawing.Size(40, 22)
+        Me.lblSpd.Size = New System.Drawing.Size(36, 19)
         Me.lblSpd.TabIndex = 220
         Me.lblSpd.Text = "SPD"
         '
@@ -1035,7 +1044,7 @@ Partial Class Debug_Window
         Me.boxWil.Location = New System.Drawing.Point(110, 150)
         Me.boxWil.Maximum = New Decimal(New Integer() {999999, 0, 0, 0})
         Me.boxWil.Name = "boxWil"
-        Me.boxWil.Size = New System.Drawing.Size(134, 28)
+        Me.boxWil.Size = New System.Drawing.Size(134, 26)
         Me.boxWil.TabIndex = 219
         Me.boxWil.TextAlign = System.Windows.Forms.HorizontalAlignment.Right
         '
@@ -1046,7 +1055,7 @@ Partial Class Debug_Window
         Me.lblWil.ForeColor = System.Drawing.Color.White
         Me.lblWil.Location = New System.Drawing.Point(3, 152)
         Me.lblWil.Name = "lblWil"
-        Me.lblWil.Size = New System.Drawing.Size(40, 22)
+        Me.lblWil.Size = New System.Drawing.Size(45, 19)
         Me.lblWil.TabIndex = 218
         Me.lblWil.Text = "WILL"
         '
@@ -1058,7 +1067,7 @@ Partial Class Debug_Window
         Me.boxDef.Location = New System.Drawing.Point(364, 121)
         Me.boxDef.Maximum = New Decimal(New Integer() {999999, 0, 0, 0})
         Me.boxDef.Name = "boxDef"
-        Me.boxDef.Size = New System.Drawing.Size(134, 28)
+        Me.boxDef.Size = New System.Drawing.Size(134, 26)
         Me.boxDef.TabIndex = 217
         Me.boxDef.TextAlign = System.Windows.Forms.HorizontalAlignment.Right
         '
@@ -1069,7 +1078,7 @@ Partial Class Debug_Window
         Me.lblDef.ForeColor = System.Drawing.Color.White
         Me.lblDef.Location = New System.Drawing.Point(250, 123)
         Me.lblDef.Name = "lblDef"
-        Me.lblDef.Size = New System.Drawing.Size(40, 22)
+        Me.lblDef.Size = New System.Drawing.Size(36, 19)
         Me.lblDef.TabIndex = 216
         Me.lblDef.Text = "DEF"
         '
@@ -1081,7 +1090,7 @@ Partial Class Debug_Window
         Me.boxAtk.Location = New System.Drawing.Point(110, 121)
         Me.boxAtk.Maximum = New Decimal(New Integer() {999999, 0, 0, 0})
         Me.boxAtk.Name = "boxAtk"
-        Me.boxAtk.Size = New System.Drawing.Size(134, 28)
+        Me.boxAtk.Size = New System.Drawing.Size(134, 26)
         Me.boxAtk.TabIndex = 215
         Me.boxAtk.TextAlign = System.Windows.Forms.HorizontalAlignment.Right
         '
@@ -1092,7 +1101,7 @@ Partial Class Debug_Window
         Me.lblAtk.ForeColor = System.Drawing.Color.White
         Me.lblAtk.Location = New System.Drawing.Point(3, 123)
         Me.lblAtk.Name = "lblAtk"
-        Me.lblAtk.Size = New System.Drawing.Size(40, 22)
+        Me.lblAtk.Size = New System.Drawing.Size(36, 19)
         Me.lblAtk.TabIndex = 214
         Me.lblAtk.Text = "ATK"
         '
@@ -1104,7 +1113,7 @@ Partial Class Debug_Window
         Me.boxGold.Location = New System.Drawing.Point(364, 179)
         Me.boxGold.Maximum = New Decimal(New Integer() {999999, 0, 0, 0})
         Me.boxGold.Name = "boxGold"
-        Me.boxGold.Size = New System.Drawing.Size(134, 28)
+        Me.boxGold.Size = New System.Drawing.Size(134, 26)
         Me.boxGold.TabIndex = 213
         Me.boxGold.TextAlign = System.Windows.Forms.HorizontalAlignment.Right
         '
@@ -1116,7 +1125,7 @@ Partial Class Debug_Window
         Me.boxstamina.Location = New System.Drawing.Point(364, 34)
         Me.boxstamina.Maximum = New Decimal(New Integer() {999999, 0, 0, 0})
         Me.boxstamina.Name = "boxstamina"
-        Me.boxstamina.Size = New System.Drawing.Size(134, 28)
+        Me.boxstamina.Size = New System.Drawing.Size(134, 26)
         Me.boxstamina.TabIndex = 228
         Me.boxstamina.TextAlign = System.Windows.Forms.HorizontalAlignment.Right
         '
@@ -1127,7 +1136,7 @@ Partial Class Debug_Window
         Me.lblstamina.ForeColor = System.Drawing.Color.White
         Me.lblstamina.Location = New System.Drawing.Point(255, 36)
         Me.lblstamina.Name = "lblstamina"
-        Me.lblstamina.Size = New System.Drawing.Size(80, 22)
+        Me.lblstamina.Size = New System.Drawing.Size(72, 19)
         Me.lblstamina.TabIndex = 229
         Me.lblstamina.Text = "STAMINA"
         '
@@ -1139,7 +1148,7 @@ Partial Class Debug_Window
         Me.boxMaxMana.Location = New System.Drawing.Point(364, 92)
         Me.boxMaxMana.Maximum = New Decimal(New Integer() {999999, 0, 0, 0})
         Me.boxMaxMana.Name = "boxMaxMana"
-        Me.boxMaxMana.Size = New System.Drawing.Size(134, 28)
+        Me.boxMaxMana.Size = New System.Drawing.Size(134, 26)
         Me.boxMaxMana.TabIndex = 231
         Me.boxMaxMana.TextAlign = System.Windows.Forms.HorizontalAlignment.Right
         '
@@ -1162,7 +1171,7 @@ Partial Class Debug_Window
         Me.boxMana.Location = New System.Drawing.Point(110, 92)
         Me.boxMana.Maximum = New Decimal(New Integer() {999999, 0, 0, 0})
         Me.boxMana.Name = "boxMana"
-        Me.boxMana.Size = New System.Drawing.Size(134, 28)
+        Me.boxMana.Size = New System.Drawing.Size(134, 26)
         Me.boxMana.TabIndex = 230
         Me.boxMana.TextAlign = System.Windows.Forms.HorizontalAlignment.Right
         '
@@ -1173,7 +1182,7 @@ Partial Class Debug_Window
         Me.lblMana.ForeColor = System.Drawing.Color.White
         Me.lblMana.Location = New System.Drawing.Point(3, 96)
         Me.lblMana.Name = "lblMana"
-        Me.lblMana.Size = New System.Drawing.Size(50, 22)
+        Me.lblMana.Size = New System.Drawing.Size(45, 19)
         Me.lblMana.TabIndex = 227
         Me.lblMana.Text = "MANA"
         '
@@ -1185,7 +1194,7 @@ Partial Class Debug_Window
         Me.boxMaxHealth.Location = New System.Drawing.Point(364, 63)
         Me.boxMaxHealth.Maximum = New Decimal(New Integer() {999999, 0, 0, 0})
         Me.boxMaxHealth.Name = "boxMaxHealth"
-        Me.boxMaxHealth.Size = New System.Drawing.Size(134, 28)
+        Me.boxMaxHealth.Size = New System.Drawing.Size(134, 26)
         Me.boxMaxHealth.TabIndex = 234
         Me.boxMaxHealth.TextAlign = System.Windows.Forms.HorizontalAlignment.Right
         '
@@ -1208,7 +1217,7 @@ Partial Class Debug_Window
         Me.boxHealth.Location = New System.Drawing.Point(110, 63)
         Me.boxHealth.Maximum = New Decimal(New Integer() {999999, 0, 0, 0})
         Me.boxHealth.Name = "boxHealth"
-        Me.boxHealth.Size = New System.Drawing.Size(134, 28)
+        Me.boxHealth.Size = New System.Drawing.Size(134, 26)
         Me.boxHealth.TabIndex = 226
         Me.boxHealth.TextAlign = System.Windows.Forms.HorizontalAlignment.Right
         '
@@ -1219,7 +1228,7 @@ Partial Class Debug_Window
         Me.lblHealth.ForeColor = System.Drawing.Color.White
         Me.lblHealth.Location = New System.Drawing.Point(3, 65)
         Me.lblHealth.Name = "lblHealth"
-        Me.lblHealth.Size = New System.Drawing.Size(70, 22)
+        Me.lblHealth.Size = New System.Drawing.Size(63, 19)
         Me.lblHealth.TabIndex = 225
         Me.lblHealth.Text = "HEALTH"
         '
@@ -1232,7 +1241,7 @@ Partial Class Debug_Window
         Me.boxForm.FormattingEnabled = True
         Me.boxForm.Location = New System.Drawing.Point(110, 33)
         Me.boxForm.Name = "boxForm"
-        Me.boxForm.Size = New System.Drawing.Size(134, 30)
+        Me.boxForm.Size = New System.Drawing.Size(134, 27)
         Me.boxForm.TabIndex = 212
         '
         'boxName
@@ -1242,7 +1251,7 @@ Partial Class Debug_Window
         Me.boxName.ForeColor = System.Drawing.Color.White
         Me.boxName.Location = New System.Drawing.Point(110, 4)
         Me.boxName.Name = "boxName"
-        Me.boxName.Size = New System.Drawing.Size(134, 28)
+        Me.boxName.Size = New System.Drawing.Size(134, 26)
         Me.boxName.TabIndex = 211
         '
         'lblTitle
@@ -1252,7 +1261,7 @@ Partial Class Debug_Window
         Me.lblTitle.ForeColor = System.Drawing.Color.White
         Me.lblTitle.Location = New System.Drawing.Point(3, 36)
         Me.lblTitle.Name = "lblTitle"
-        Me.lblTitle.Size = New System.Drawing.Size(60, 22)
+        Me.lblTitle.Size = New System.Drawing.Size(54, 19)
         Me.lblTitle.TabIndex = 210
         Me.lblTitle.Text = "TITLE"
         '
@@ -1263,7 +1272,7 @@ Partial Class Debug_Window
         Me.lblSex.ForeColor = System.Drawing.Color.White
         Me.lblSex.Location = New System.Drawing.Point(250, 7)
         Me.lblSex.Name = "lblSex"
-        Me.lblSex.Size = New System.Drawing.Size(160, 22)
+        Me.lblSex.Size = New System.Drawing.Size(144, 19)
         Me.lblSex.TabIndex = 208
         Me.lblSex.Text = "SEX (IS FEMALE)"
         Me.lblSex.Visible = False
@@ -1275,7 +1284,7 @@ Partial Class Debug_Window
         Me.lblName.ForeColor = System.Drawing.Color.White
         Me.lblName.Location = New System.Drawing.Point(3, 7)
         Me.lblName.Name = "lblName"
-        Me.lblName.Size = New System.Drawing.Size(50, 22)
+        Me.lblName.Size = New System.Drawing.Size(45, 19)
         Me.lblName.TabIndex = 209
         Me.lblName.Text = "NAME"
         '
@@ -1286,10 +1295,10 @@ Partial Class Debug_Window
         Me.tabPerks.Controls.Add(Me.Panel1)
         Me.tabPerks.Font = New System.Drawing.Font("Consolas", 12.0!)
         Me.tabPerks.ForeColor = System.Drawing.Color.White
-        Me.tabPerks.Location = New System.Drawing.Point(4, 27)
+        Me.tabPerks.Location = New System.Drawing.Point(4, 24)
         Me.tabPerks.Name = "tabPerks"
         Me.tabPerks.Padding = New System.Windows.Forms.Padding(3)
-        Me.tabPerks.Size = New System.Drawing.Size(742, 545)
+        Me.tabPerks.Size = New System.Drawing.Size(742, 548)
         Me.tabPerks.TabIndex = 4
         Me.tabPerks.Text = "PERKS"
         '
@@ -1313,10 +1322,10 @@ Partial Class Debug_Window
         Me.tabInventory.Controls.Add(Me.lblInventory)
         Me.tabInventory.Controls.Add(Me.boxItems)
         Me.tabInventory.Controls.Add(Me.lblItems)
-        Me.tabInventory.Location = New System.Drawing.Point(4, 27)
+        Me.tabInventory.Location = New System.Drawing.Point(4, 24)
         Me.tabInventory.Name = "tabInventory"
         Me.tabInventory.Padding = New System.Windows.Forms.Padding(3)
-        Me.tabInventory.Size = New System.Drawing.Size(742, 545)
+        Me.tabInventory.Size = New System.Drawing.Size(742, 548)
         Me.tabInventory.TabIndex = 2
         Me.tabInventory.Text = "INVENTORY"
         '
@@ -1327,7 +1336,7 @@ Partial Class Debug_Window
         Me.boxInventoryFilter.ForeColor = System.Drawing.Color.White
         Me.boxInventoryFilter.Location = New System.Drawing.Point(8, 12)
         Me.boxInventoryFilter.Name = "boxInventoryFilter"
-        Me.boxInventoryFilter.Size = New System.Drawing.Size(278, 28)
+        Me.boxInventoryFilter.Size = New System.Drawing.Size(278, 26)
         Me.boxInventoryFilter.TabIndex = 185
         '
         'boxItemsFilter
@@ -1337,7 +1346,7 @@ Partial Class Debug_Window
         Me.boxItemsFilter.ForeColor = System.Drawing.Color.White
         Me.boxItemsFilter.Location = New System.Drawing.Point(456, 12)
         Me.boxItemsFilter.Name = "boxItemsFilter"
-        Me.boxItemsFilter.Size = New System.Drawing.Size(278, 28)
+        Me.boxItemsFilter.Size = New System.Drawing.Size(278, 26)
         Me.boxItemsFilter.TabIndex = 184
         '
         'number
@@ -1348,7 +1357,7 @@ Partial Class Debug_Window
         Me.number.Location = New System.Drawing.Point(327, 261)
         Me.number.Maximum = New Decimal(New Integer() {999999, 0, 0, 0})
         Me.number.Name = "number"
-        Me.number.Size = New System.Drawing.Size(89, 28)
+        Me.number.Size = New System.Drawing.Size(89, 26)
         Me.number.TabIndex = 183
         Me.number.TextAlign = System.Windows.Forms.HorizontalAlignment.Center
         '
@@ -1367,6 +1376,7 @@ Partial Class Debug_Window
         'boxInventory
         '
         Me.boxInventory.BackColor = System.Drawing.Color.Black
+        Me.boxInventory.DrawMode = System.Windows.Forms.DrawMode.OwnerDrawVariable
         Me.boxInventory.Font = New System.Drawing.Font("Consolas", 12.0!)
         Me.boxInventory.ForeColor = System.Drawing.Color.White
         Me.boxInventory.FormattingEnabled = True
@@ -1374,7 +1384,7 @@ Partial Class Debug_Window
         Me.boxInventory.Location = New System.Drawing.Point(6, 44)
         Me.boxInventory.Name = "boxInventory"
         Me.boxInventory.SelectionMode = System.Windows.Forms.SelectionMode.MultiExtended
-        Me.boxInventory.Size = New System.Drawing.Size(280, 488)
+        Me.boxInventory.Size = New System.Drawing.Size(280, 479)
         Me.boxInventory.Sorted = True
         Me.boxInventory.TabIndex = 8
         '
@@ -1397,13 +1407,14 @@ Partial Class Debug_Window
         Me.lblInventory.ForeColor = System.Drawing.Color.White
         Me.lblInventory.Location = New System.Drawing.Point(288, 6)
         Me.lblInventory.Name = "lblInventory"
-        Me.lblInventory.Size = New System.Drawing.Size(100, 22)
+        Me.lblInventory.Size = New System.Drawing.Size(90, 19)
         Me.lblInventory.TabIndex = 6
         Me.lblInventory.Text = "INVENTORY"
         '
         'boxItems
         '
         Me.boxItems.BackColor = System.Drawing.Color.Black
+        Me.boxItems.DrawMode = System.Windows.Forms.DrawMode.OwnerDrawVariable
         Me.boxItems.Font = New System.Drawing.Font("Consolas", 12.0!)
         Me.boxItems.ForeColor = System.Drawing.Color.White
         Me.boxItems.FormattingEnabled = True
@@ -1411,7 +1422,7 @@ Partial Class Debug_Window
         Me.boxItems.Location = New System.Drawing.Point(456, 44)
         Me.boxItems.Name = "boxItems"
         Me.boxItems.SelectionMode = System.Windows.Forms.SelectionMode.MultiExtended
-        Me.boxItems.Size = New System.Drawing.Size(280, 488)
+        Me.boxItems.Size = New System.Drawing.Size(280, 479)
         Me.boxItems.TabIndex = 9
         '
         'lblItems
@@ -1421,7 +1432,7 @@ Partial Class Debug_Window
         Me.lblItems.ForeColor = System.Drawing.Color.White
         Me.lblItems.Location = New System.Drawing.Point(396, 523)
         Me.lblItems.Name = "lblItems"
-        Me.lblItems.Size = New System.Drawing.Size(60, 22)
+        Me.lblItems.Size = New System.Drawing.Size(54, 19)
         Me.lblItems.TabIndex = 7
         Me.lblItems.Text = "ITEMS"
         '
@@ -1462,10 +1473,10 @@ Partial Class Debug_Window
         Me.tabGeneration.Controls.Add(Me.lblFC)
         Me.tabGeneration.Font = New System.Drawing.Font("Consolas", 12.0!)
         Me.tabGeneration.ForeColor = System.Drawing.Color.White
-        Me.tabGeneration.Location = New System.Drawing.Point(4, 27)
+        Me.tabGeneration.Location = New System.Drawing.Point(4, 24)
         Me.tabGeneration.Name = "tabGeneration"
         Me.tabGeneration.Padding = New System.Windows.Forms.Padding(3)
-        Me.tabGeneration.Size = New System.Drawing.Size(742, 545)
+        Me.tabGeneration.Size = New System.Drawing.Size(742, 548)
         Me.tabGeneration.TabIndex = 5
         Me.tabGeneration.Text = "GENERATION"
         '
@@ -1475,7 +1486,7 @@ Partial Class Debug_Window
         Me.boxTrapSizeDependence.ForeColor = System.Drawing.Color.White
         Me.boxTrapSizeDependence.Location = New System.Drawing.Point(555, 114)
         Me.boxTrapSizeDependence.Name = "boxTrapSizeDependence"
-        Me.boxTrapSizeDependence.Size = New System.Drawing.Size(120, 28)
+        Me.boxTrapSizeDependence.Size = New System.Drawing.Size(120, 26)
         Me.boxTrapSizeDependence.TabIndex = 249
         '
         'lblTrapSizeDependence
@@ -1483,7 +1494,7 @@ Partial Class Debug_Window
         Me.lblTrapSizeDependence.AutoSize = True
         Me.lblTrapSizeDependence.Location = New System.Drawing.Point(347, 116)
         Me.lblTrapSizeDependence.Name = "lblTrapSizeDependence"
-        Me.lblTrapSizeDependence.Size = New System.Drawing.Size(220, 22)
+        Me.lblTrapSizeDependence.Size = New System.Drawing.Size(198, 19)
         Me.lblTrapSizeDependence.TabIndex = 248
         Me.lblTrapSizeDependence.Text = "Trap Size Dependence:"
         '
@@ -1493,7 +1504,7 @@ Partial Class Debug_Window
         Me.boxTrapFreqMin.ForeColor = System.Drawing.Color.White
         Me.boxTrapFreqMin.Location = New System.Drawing.Point(555, 82)
         Me.boxTrapFreqMin.Name = "boxTrapFreqMin"
-        Me.boxTrapFreqMin.Size = New System.Drawing.Size(120, 28)
+        Me.boxTrapFreqMin.Size = New System.Drawing.Size(120, 26)
         Me.boxTrapFreqMin.TabIndex = 247
         '
         'boxTrapFreqRange
@@ -1502,7 +1513,7 @@ Partial Class Debug_Window
         Me.boxTrapFreqRange.ForeColor = System.Drawing.Color.White
         Me.boxTrapFreqRange.Location = New System.Drawing.Point(555, 50)
         Me.boxTrapFreqRange.Name = "boxTrapFreqRange"
-        Me.boxTrapFreqRange.Size = New System.Drawing.Size(120, 28)
+        Me.boxTrapFreqRange.Size = New System.Drawing.Size(120, 26)
         Me.boxTrapFreqRange.TabIndex = 246
         '
         'lblTrapFreqMin
@@ -1510,7 +1521,7 @@ Partial Class Debug_Window
         Me.lblTrapFreqMin.AutoSize = True
         Me.lblTrapFreqMin.Location = New System.Drawing.Point(347, 84)
         Me.lblTrapFreqMin.Name = "lblTrapFreqMin"
-        Me.lblTrapFreqMin.Size = New System.Drawing.Size(150, 22)
+        Me.lblTrapFreqMin.Size = New System.Drawing.Size(135, 19)
         Me.lblTrapFreqMin.TabIndex = 245
         Me.lblTrapFreqMin.Text = "Trap Freq Min:"
         '
@@ -1519,7 +1530,7 @@ Partial Class Debug_Window
         Me.lblTrapFreqRange.AutoSize = True
         Me.lblTrapFreqRange.Location = New System.Drawing.Point(347, 52)
         Me.lblTrapFreqRange.Name = "lblTrapFreqRange"
-        Me.lblTrapFreqRange.Size = New System.Drawing.Size(180, 22)
+        Me.lblTrapFreqRange.Size = New System.Drawing.Size(162, 19)
         Me.lblTrapFreqRange.TabIndex = 244
         Me.lblTrapFreqRange.Text = "Trap Freq Range: "
         '
@@ -1571,7 +1582,7 @@ Partial Class Debug_Window
         Me.boxChestRichnessRange.ForeColor = System.Drawing.Color.White
         Me.boxChestRichnessRange.Location = New System.Drawing.Point(213, 268)
         Me.boxChestRichnessRange.Name = "boxChestRichnessRange"
-        Me.boxChestRichnessRange.Size = New System.Drawing.Size(120, 28)
+        Me.boxChestRichnessRange.Size = New System.Drawing.Size(120, 26)
         Me.boxChestRichnessRange.TabIndex = 43
         '
         'lblChestRichnessRange
@@ -1579,7 +1590,7 @@ Partial Class Debug_Window
         Me.lblChestRichnessRange.AutoSize = True
         Me.lblChestRichnessRange.Location = New System.Drawing.Point(5, 270)
         Me.lblChestRichnessRange.Name = "lblChestRichnessRange"
-        Me.lblChestRichnessRange.Size = New System.Drawing.Size(220, 22)
+        Me.lblChestRichnessRange.Size = New System.Drawing.Size(198, 19)
         Me.lblChestRichnessRange.TabIndex = 42
         Me.lblChestRichnessRange.Text = "Chest Richness Range:"
         '
@@ -1589,7 +1600,7 @@ Partial Class Debug_Window
         Me.boxChestRichnessBase.ForeColor = System.Drawing.Color.White
         Me.boxChestRichnessBase.Location = New System.Drawing.Point(212, 236)
         Me.boxChestRichnessBase.Name = "boxChestRichnessBase"
-        Me.boxChestRichnessBase.Size = New System.Drawing.Size(120, 28)
+        Me.boxChestRichnessBase.Size = New System.Drawing.Size(120, 26)
         Me.boxChestRichnessBase.TabIndex = 41
         '
         'lblChestRichnessBase
@@ -1597,7 +1608,7 @@ Partial Class Debug_Window
         Me.lblChestRichnessBase.AutoSize = True
         Me.lblChestRichnessBase.Location = New System.Drawing.Point(4, 238)
         Me.lblChestRichnessBase.Name = "lblChestRichnessBase"
-        Me.lblChestRichnessBase.Size = New System.Drawing.Size(210, 22)
+        Me.lblChestRichnessBase.Size = New System.Drawing.Size(189, 19)
         Me.lblChestRichnessBase.TabIndex = 40
         Me.lblChestRichnessBase.Text = "Chest Richness Base:"
         '
@@ -1608,7 +1619,7 @@ Partial Class Debug_Window
         Me.boxEClockResetVal.Location = New System.Drawing.Point(213, 352)
         Me.boxEClockResetVal.Maximum = New Decimal(New Integer() {1000, 0, 0, 0})
         Me.boxEClockResetVal.Name = "boxEClockResetVal"
-        Me.boxEClockResetVal.Size = New System.Drawing.Size(120, 28)
+        Me.boxEClockResetVal.Size = New System.Drawing.Size(120, 26)
         Me.boxEClockResetVal.TabIndex = 39
         '
         'lblEClockResetVal
@@ -1616,7 +1627,7 @@ Partial Class Debug_Window
         Me.lblEClockResetVal.AutoSize = True
         Me.lblEClockResetVal.Location = New System.Drawing.Point(5, 354)
         Me.lblEClockResetVal.Name = "lblEClockResetVal"
-        Me.lblEClockResetVal.Size = New System.Drawing.Size(170, 22)
+        Me.lblEClockResetVal.Size = New System.Drawing.Size(153, 19)
         Me.lblEClockResetVal.TabIndex = 38
         Me.lblEClockResetVal.Text = "Encounter Timer:"
         '
@@ -1627,7 +1638,7 @@ Partial Class Debug_Window
         Me.boxEncounterRate.Location = New System.Drawing.Point(213, 320)
         Me.boxEncounterRate.Maximum = New Decimal(New Integer() {1000, 0, 0, 0})
         Me.boxEncounterRate.Name = "boxEncounterRate"
-        Me.boxEncounterRate.Size = New System.Drawing.Size(120, 28)
+        Me.boxEncounterRate.Size = New System.Drawing.Size(120, 26)
         Me.boxEncounterRate.TabIndex = 37
         '
         'lblEncounterRate
@@ -1635,7 +1646,7 @@ Partial Class Debug_Window
         Me.lblEncounterRate.AutoSize = True
         Me.lblEncounterRate.Location = New System.Drawing.Point(5, 322)
         Me.lblEncounterRate.Name = "lblEncounterRate"
-        Me.lblEncounterRate.Size = New System.Drawing.Size(220, 22)
+        Me.lblEncounterRate.Size = New System.Drawing.Size(198, 19)
         Me.lblEncounterRate.TabIndex = 36
         Me.lblEncounterRate.Text = "Encounter Rate (.x%):"
         '
@@ -1672,7 +1683,7 @@ Partial Class Debug_Window
         Me.boxChestSizeDependence.ForeColor = System.Drawing.Color.White
         Me.boxChestSizeDependence.Location = New System.Drawing.Point(212, 204)
         Me.boxChestSizeDependence.Name = "boxChestSizeDependence"
-        Me.boxChestSizeDependence.Size = New System.Drawing.Size(120, 28)
+        Me.boxChestSizeDependence.Size = New System.Drawing.Size(120, 26)
         Me.boxChestSizeDependence.TabIndex = 32
         '
         'lblChestSize
@@ -1680,7 +1691,7 @@ Partial Class Debug_Window
         Me.lblChestSize.AutoSize = True
         Me.lblChestSize.Location = New System.Drawing.Point(4, 206)
         Me.lblChestSize.Name = "lblChestSize"
-        Me.lblChestSize.Size = New System.Drawing.Size(230, 22)
+        Me.lblChestSize.Size = New System.Drawing.Size(207, 19)
         Me.lblChestSize.TabIndex = 31
         Me.lblChestSize.Text = "Chest Size Dependence:"
         '
@@ -1690,7 +1701,7 @@ Partial Class Debug_Window
         Me.boxChestFreqMin.ForeColor = System.Drawing.Color.White
         Me.boxChestFreqMin.Location = New System.Drawing.Point(212, 172)
         Me.boxChestFreqMin.Name = "boxChestFreqMin"
-        Me.boxChestFreqMin.Size = New System.Drawing.Size(120, 28)
+        Me.boxChestFreqMin.Size = New System.Drawing.Size(120, 26)
         Me.boxChestFreqMin.TabIndex = 30
         '
         'lblChestFreqMin
@@ -1698,7 +1709,7 @@ Partial Class Debug_Window
         Me.lblChestFreqMin.AutoSize = True
         Me.lblChestFreqMin.Location = New System.Drawing.Point(4, 174)
         Me.lblChestFreqMin.Name = "lblChestFreqMin"
-        Me.lblChestFreqMin.Size = New System.Drawing.Size(160, 22)
+        Me.lblChestFreqMin.Size = New System.Drawing.Size(144, 19)
         Me.lblChestFreqMin.TabIndex = 29
         Me.lblChestFreqMin.Text = "Chest Freq Min:"
         '
@@ -1708,7 +1719,7 @@ Partial Class Debug_Window
         Me.boxChestFreqRange.ForeColor = System.Drawing.Color.White
         Me.boxChestFreqRange.Location = New System.Drawing.Point(212, 140)
         Me.boxChestFreqRange.Name = "boxChestFreqRange"
-        Me.boxChestFreqRange.Size = New System.Drawing.Size(120, 28)
+        Me.boxChestFreqRange.Size = New System.Drawing.Size(120, 26)
         Me.boxChestFreqRange.TabIndex = 28
         '
         'lblChestFreqRange
@@ -1716,7 +1727,7 @@ Partial Class Debug_Window
         Me.lblChestFreqRange.AutoSize = True
         Me.lblChestFreqRange.Location = New System.Drawing.Point(4, 142)
         Me.lblChestFreqRange.Name = "lblChestFreqRange"
-        Me.lblChestFreqRange.Size = New System.Drawing.Size(180, 22)
+        Me.lblChestFreqRange.Size = New System.Drawing.Size(162, 19)
         Me.lblChestFreqRange.TabIndex = 27
         Me.lblChestFreqRange.Text = "Chest Freq Range:"
         '
@@ -1726,7 +1737,7 @@ Partial Class Debug_Window
         Me.boxHeight.ForeColor = System.Drawing.Color.White
         Me.boxHeight.Location = New System.Drawing.Point(212, 82)
         Me.boxHeight.Name = "boxHeight"
-        Me.boxHeight.Size = New System.Drawing.Size(120, 28)
+        Me.boxHeight.Size = New System.Drawing.Size(120, 26)
         Me.boxHeight.TabIndex = 26
         '
         'boxWidth
@@ -1735,7 +1746,7 @@ Partial Class Debug_Window
         Me.boxWidth.ForeColor = System.Drawing.Color.White
         Me.boxWidth.Location = New System.Drawing.Point(212, 50)
         Me.boxWidth.Name = "boxWidth"
-        Me.boxWidth.Size = New System.Drawing.Size(120, 28)
+        Me.boxWidth.Size = New System.Drawing.Size(120, 26)
         Me.boxWidth.TabIndex = 25
         '
         'lblHeight
@@ -1743,7 +1754,7 @@ Partial Class Debug_Window
         Me.lblHeight.AutoSize = True
         Me.lblHeight.Location = New System.Drawing.Point(4, 84)
         Me.lblHeight.Name = "lblHeight"
-        Me.lblHeight.Size = New System.Drawing.Size(150, 22)
+        Me.lblHeight.Size = New System.Drawing.Size(135, 19)
         Me.lblHeight.TabIndex = 24
         Me.lblHeight.Text = "Board Height: "
         '
@@ -1752,7 +1763,7 @@ Partial Class Debug_Window
         Me.lblWidth.AutoSize = True
         Me.lblWidth.Location = New System.Drawing.Point(4, 52)
         Me.lblWidth.Name = "lblWidth"
-        Me.lblWidth.Size = New System.Drawing.Size(140, 22)
+        Me.lblWidth.Size = New System.Drawing.Size(126, 19)
         Me.lblWidth.TabIndex = 23
         Me.lblWidth.Text = "Board Width: "
         '
@@ -1761,18 +1772,9 @@ Partial Class Debug_Window
         Me.lblFC.AutoSize = True
         Me.lblFC.Location = New System.Drawing.Point(4, 6)
         Me.lblFC.Name = "lblFC"
-        Me.lblFC.Size = New System.Drawing.Size(120, 22)
+        Me.lblFC.Size = New System.Drawing.Size(108, 19)
         Me.lblFC.TabIndex = 22
         Me.lblFC.Text = "FloorCode: "
-        '
-        'tabPageBlush
-        '
-        Me.tabPageBlush.BackColor = System.Drawing.Color.Black
-        Me.tabPageBlush.Location = New System.Drawing.Point(4, 27)
-        Me.tabPageBlush.Name = "tabPageBlush"
-        Me.tabPageBlush.Size = New System.Drawing.Size(728, 260)
-        Me.tabPageBlush.TabIndex = 26
-        Me.tabPageBlush.Text = "BLUSH"
         '
         'Debug_Window
         '

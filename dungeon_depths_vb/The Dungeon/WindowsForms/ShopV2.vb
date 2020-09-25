@@ -295,4 +295,81 @@ Public Class ShopV2
     Private Sub txtDesc_TextChanged(sender As Object, e As EventArgs) Handles txtDesc.TextChanged
 
     End Sub
+
+    '|LISTBOX DISPLAY|
+    Private Sub boxInventory_DrawItem(sender As Object, e As DrawItemEventArgs) Handles boxInventory.DrawItem
+        e.DrawBackground()
+        Dim textBrush As Brush = New SolidBrush(boxInventory.ForeColor)
+        Dim drawFont As Font = e.Font
+
+        If e.Index < 0 Then Exit Sub
+
+        Dim text = DirectCast(sender, ListBox).Items(e.Index).ToString()
+
+        If (e.State And DrawItemState.Selected) = DrawItemState.Selected Then
+            e.Graphics.FillRectangle(New SolidBrush(boxInventory.BackColor), e.Bounds)
+            textBrush = Brushes.Gold
+        End If
+
+        If Not (e.State And DrawItemState.Selected) = DrawItemState.Selected Then
+            Dim i = 0
+            textBrush = New SolidBrush(Color.FromArgb(boxInventory.ForeColor.A,
+                                                      boxInventory.ForeColor.R - i,
+                                                      boxInventory.ForeColor.B - i,
+                                                      boxInventory.ForeColor.G - i))
+        End If
+
+        e.Graphics.DrawString(text,
+                              drawFont,
+                              textBrush,
+                              e.Bounds,
+                              StringFormat.GenericDefault)
+    End Sub
+    Private Sub boxInventory_MeasureItem(sender As Object, e As MeasureItemEventArgs) Handles boxInventory.MeasureItem
+        Dim text = DirectCast(sender, ListBox).Items(e.Index).ToString()
+
+        If Not (text.Equals("")) Then
+            e.ItemHeight = TextRenderer.MeasureText(text, DirectCast(sender, ListBox).Font).Height + 2
+        Else
+            e.ItemHeight *= 0.33
+        End If
+    End Sub
+
+    Private Sub boxShop_DrawItem(sender As Object, e As DrawItemEventArgs) Handles boxShop.DrawItem
+        e.DrawBackground()
+        Dim textBrush As Brush = New SolidBrush(boxShop.ForeColor)
+        Dim drawFont As Font = e.Font
+
+        If e.Index < 0 Then Exit Sub
+
+        Dim text = DirectCast(sender, ListBox).Items(e.Index).ToString()
+
+        If (e.State And DrawItemState.Selected) = DrawItemState.Selected Then
+            e.Graphics.FillRectangle(New SolidBrush(boxInventory.BackColor), e.Bounds)
+            textBrush = Brushes.Gold
+        End If
+
+        If Not (e.State And DrawItemState.Selected) = DrawItemState.Selected Then
+            Dim i = 0
+            textBrush = New SolidBrush(Color.FromArgb(boxInventory.ForeColor.A,
+                                                      boxInventory.ForeColor.R - i,
+                                                      boxInventory.ForeColor.B - i,
+                                                      boxInventory.ForeColor.G - i))
+        End If
+
+        e.Graphics.DrawString(text,
+                              drawFont,
+                              textBrush,
+                              e.Bounds,
+                              StringFormat.GenericDefault)
+    End Sub
+    Private Sub boxShop_MeasureItem(sender As Object, e As MeasureItemEventArgs) Handles boxShop.MeasureItem
+        Dim text = DirectCast(sender, ListBox).Items(e.Index).ToString()
+
+        If Not (text.Equals("")) Then
+            e.ItemHeight = TextRenderer.MeasureText(text, DirectCast(sender, ListBox).Font).Height + 2
+        Else
+            e.ItemHeight *= 0.33
+        End If
+    End Sub
 End Class

@@ -40,7 +40,7 @@
         p.speed = 10 + Int(Rnd() * 7)
         p.gold = 25 + Int(Rnd() * 200)
         p.lust = 0
-        p.stamina = 0
+        p.stamina = 100
         p.hBuff = 0
         p.mBuff = 0
         p.wBuff = 0
@@ -143,18 +143,18 @@
                 armor = New Integer() {7, 12, 18, 20, 39, 47, 71, 72, 78, 85, 103, 105, 107, 116, 129, 177}
                 weapon = New Integer() {6, 22, 23, 84}
             Case 5   'combat bimbo
-                p.changeForm(perk.amazon)
+                p.changeForm("Amazon")
                 p.changeClass("Bimbo++")
                 p.sex = "Female"
                 armor = New Integer() {7, 12, 18, 20, 39, 47, 71, 72, 78, 85, 99, 103, 105, 107, 116, 129}
             Case 6   'amazon princess
-                p.changeForm(perk.amazon)
+                p.changeForm("Amazon")
                 p.changeClass("Princess")
                 p.sex = "Female"
                 p.prt.skincolor = (Color.FromArgb(255, 210, 161, 140))
                 armor = New Integer() {39, 85, 99}
             Case 7   'amazon warrior
-                p.changeForm(perk.amazon)
+                p.changeForm("Amazon")
                 p.changeClass("Warrior")
                 p.sex = "Female"
                 p.prt.skincolor = (Color.FromArgb(255, 210, 161, 140))
@@ -178,7 +178,7 @@
                 p.prt.setIAInd(pInd.horns, 3, True, False)
                 p.prt.skincolor = Color.FromArgb(255, 255, 105, 180)
             Case 10   'barbarian
-                p.changeClass(perk.barbarian)
+                p.changeClass("Barbarian")
                 armor = New Integer() {101}
                 weapon = New Integer() {84, 118}
             Case 11   'warlock
@@ -216,14 +216,14 @@
                 Equipment.accChange(perk.bowtie)
             Case 17   'cow girl
                 p.changeForm("Minotaur Cow")
-                p.changeClass(perk.barbarian)
+                p.changeClass("Barbarian")
                 armor = New Integer() {19, 71, 101}
                 weapon = New Integer() {6, 23, 40, 118, 177}
                 p.sex = "Female"
                 p.prt.setIAInd(pInd.horns, 2, True, False)
             Case 18   'cow male
                 p.changeForm("Minotaur Bull")
-                p.changeClass(perk.barbarian)
+                p.changeClass("Barbarian")
                 armor = New Integer() {19, 101}
                 weapon = New Integer() {6, 23, 40, 118, 176}
                 p.sex = "Male"
@@ -260,11 +260,15 @@
         'set other player stuff
         If p.sex.Equals("Female") Then
             p.breastSize = Int(Rnd() * 3) + 1
+            p.buttSize = Int(Rnd() * 3) + 1
+            p.dickSize = -1
         Else
             For i = 1 To Portrait.NUM_IMG_LAYERS
                 p.prt.setIAInd(i, p.prt.iArrInd(i).Item1, False, False)
             Next
             p.breastSize = -1
+            p.buttSize = -1
+            p.dickSize = Int(Rnd() * 3) + 1
         End If
 
         If armor.Length > 0 Then

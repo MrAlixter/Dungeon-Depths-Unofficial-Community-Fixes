@@ -17,7 +17,7 @@
     Overridable Sub revert()
     End Sub
 
-    Overridable Sub onLVLUp(ByVal level As Integer, ByRef p As Player)
+    Overridable Sub onLVLUp(ByVal level As Integer, ByRef p As Player, Optional learnSkills As Boolean = True)
     End Sub
     Overridable Sub deLVL(ByVal toLevel As Integer, ByRef p As Player)
     End Sub

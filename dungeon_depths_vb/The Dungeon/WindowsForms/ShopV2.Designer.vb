@@ -121,6 +121,7 @@ Partial Class ShopV2
         'boxInventory
         '
         Me.boxInventory.BackColor = System.Drawing.Color.Black
+        Me.boxInventory.DrawMode = System.Windows.Forms.DrawMode.OwnerDrawVariable
         Me.boxInventory.Font = New System.Drawing.Font("Consolas", 10.0!)
         Me.boxInventory.ForeColor = System.Drawing.Color.White
         Me.boxInventory.FormattingEnabled = True
@@ -168,6 +169,7 @@ Partial Class ShopV2
         'boxShop
         '
         Me.boxShop.BackColor = System.Drawing.Color.Black
+        Me.boxShop.DrawMode = System.Windows.Forms.DrawMode.OwnerDrawVariable
         Me.boxShop.Font = New System.Drawing.Font("Consolas", 10.0!)
         Me.boxShop.ForeColor = System.Drawing.Color.White
         Me.boxShop.FormattingEnabled = True

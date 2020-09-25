@@ -6,7 +6,7 @@
     End Sub
 
 
-    Public Overrides Sub onLVLUp(level As Integer, ByRef p As Player)
+    Public Overrides Sub onLVLUp(ByVal level As Integer, ByRef p As Player, Optional learnSkills as Boolean = True)
         If level Mod 2 = 0 And p.breastSize < 7 Then p.be()
     End Sub
 End Class

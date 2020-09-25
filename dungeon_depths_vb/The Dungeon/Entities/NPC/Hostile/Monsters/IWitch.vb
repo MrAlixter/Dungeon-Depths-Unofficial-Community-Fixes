@@ -8,9 +8,9 @@
         name = "Intimidating Witch"
         maxHealth = 175
         attack = 15
-        defense = 35
+        defense = 22
         speed = 1
-
+        will = 35
         inv.setCount("Medicinal_Tea", 3)
         inv.setCount("Garden_Salad", 2)
 

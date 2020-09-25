@@ -3,10 +3,11 @@
 
     Sub New()
         name = ("Ooze Empress")
-        maxHealth = (100)
-        attack = (30)
-        defense = (70)
-        speed = (1)
+        maxHealth = 100
+        attack = 30
+        defense = 70
+        speed = 1
+        will = 25
         setInventory({3, 58, 65})
         inv.setCount("Defense_Charm", 1 + CInt(Rnd() * 2))
         inv.setCount("Omni_Charm", 1)

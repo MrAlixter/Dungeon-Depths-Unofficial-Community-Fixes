@@ -165,6 +165,7 @@ Public Class Portrait
 
     Function oneLayerImgCheck(ByVal pForm As String, ByVal pClass As String) As Image
         Dim pic = Nothing
+
         If pForm.Equals("Dragon") And Not sexBool() Then
             pic = Game.picDragonM.BackgroundImage
         ElseIf pForm.Equals("Dragon") And sexBool() Then
@@ -227,6 +228,10 @@ Public Class Portrait
             If CType(ent, Player).equippedArmor.hidesDick Then
                 iArr(pInd.genitalia) = nullImg
             End If
+
+            If CType(ent, Player).perks(perk.lurk) > 0 Then
+                iArr(NUM_IMG_LAYERS) = shrub()
+            End If
         End If
 
         hideEars()
@@ -253,7 +258,6 @@ Public Class Portrait
         If solFlag Then Return Game.picPortrait.BackgroundImage
 
         If Not oneLayerImgCheck(pForm, pClass) Is Nothing Then Return CreateBMP({iArr(pInd.bkg), oneLayerImgCheck(pForm, pClass)})
-
 
         If Not solFlag Then portraitUDate()
 
@@ -379,6 +383,9 @@ Public Class Portrait
             iArr(pInd.horns) = CreateFullBodyBMP({imgLib.atrs(pInd.horns).getAt(6), iArr(pInd.horns)})
         End If
     End Sub
+    Function shrub() As Image
+        Return CreateFullBodyBMP({imgLib.atrs(pInd.bkg).getAt(1), imgLib.atrs(pInd.bodyoverlay).getAt(5), imgLib.atrs(pInd.eyes).getAt(iArrInd(pInd.eyes))})
+    End Function
     Sub bodyOverlay()
         Dim p As Player
         If Not ent Is Nothing AndAlso ent.GetType Is GetType(Player) Then
@@ -387,7 +394,7 @@ Public Class Portrait
             Exit Sub
         End If
 
-        If p.className.Equals("Warrior") Or p.className.equals("Barbarian") Or p.className.Equals("Paladin") Or p.className.Equals(perk.amazon) Or p.className.Equals("Valkyrie") Or
+        If p.className.Equals("Warrior") Or p.className.Equals("Barbarian") Or p.className.Equals("Paladin") Or p.className.Equals("Amazon") Or p.className.Equals("Valkyrie") Or
          p.formName.Equals("Tigress") Then
             Select Case p.breastSize
                 Case -1, -2

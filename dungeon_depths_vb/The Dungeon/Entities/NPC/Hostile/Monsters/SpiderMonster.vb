@@ -6,6 +6,7 @@
         attack = 35
         defense = 1
         speed = 45
+        will = 6
         setInventory({63})
         setupMonsterOnSpawn()
 

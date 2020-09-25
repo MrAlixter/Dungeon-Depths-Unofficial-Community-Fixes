@@ -122,6 +122,7 @@
     <Compile Include="Entities\NPC\Hostile\Monsters\Succubus\EImp.vb" />
     <Compile Include="Entities\NPC\Hostile\Monsters\Succubus\ESuccubus.vb" />
     <Compile Include="Entities\NPC\Hostile\Monsters\Succubus\ESuccPrincess.vb" />
+    <Compile Include="Entities\Player\Specials\BladeBreaker.vb" />
     <Compile Include="Entities\Player\Specials\Crimson Manual\CHBlackHair.vb" />
     <Compile Include="Entities\Player\Specials\Crimson Manual\CHPastels.vb" />
     <Compile Include="Entities\Player\Specials\Crimson Manual\CHNeon.vb" />
@@ -136,6 +137,14 @@
     <Compile Include="Entities\Player\Specials\Crimson Manual\TUp.vb" />
     <Compile Include="Entities\Player\Specials\DrainSoul.vb" />
     <Compile Include="Entities\Player\Specials\Dodge.vb" />
+    <Compile Include="Entities\Player\Specials\FlashStrike.vb" />
+    <Compile Include="Entities\Player\Specials\AttackUp.vb" />
+    <Compile Include="Entities\Player\Specials\Lurk.vb" />
+    <Compile Include="Entities\Player\Specials\WillUp.vb" />
+    <Compile Include="Entities\Player\Specials\GuardUp.vb" />
+    <Compile Include="Entities\Player\Specials\TripleStrike.vb" />
+    <Compile Include="Entities\Player\Spells\FireStorm.vb" />
+    <Compile Include="Entities\Player\Spells\FlashBolt.vb" />
     <Compile Include="Entities\Player\Spells\PuffUp.vb" />
     <Compile Include="Entities\Player\Spells\RLust.vb" />
     <Compile Include="Entities\Player\Transformations\bimboTFs\BunnyBimboTF.vb" />

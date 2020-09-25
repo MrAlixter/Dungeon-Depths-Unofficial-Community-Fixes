@@ -18,21 +18,25 @@
                     attack *= 1.05
                     defense *= 1.05
                     speed *= 1.05
+                    will = Math.Max(1, will) * 1.05
                 Case 3
                     maxHealth *= 1.1
                     attack *= 1.1
                     defense *= 1.1
                     speed *= 1.1
+                    will = Math.Max(1, will) * 1.1
                 Case 4
                     maxHealth *= 1.2
                     attack *= 1.2
                     defense *= 1.2
                     speed *= 1.2
+                    will = Math.Max(1, will) * 1.2
                 Case Else
                     maxHealth *= (1 + (0.05 * Game.mDun.numCurrFloor))
                     attack *= (1 + (0.05 * Game.mDun.numCurrFloor))
                     defense *= (1 + (0.05 * Game.mDun.numCurrFloor))
                     speed *= (1 + (0.05 * Game.mDun.numCurrFloor))
+                    will = Math.Max(1, will) * (1 + (0.05 * Game.mDun.numCurrFloor))
             End Select
         End If
 
@@ -48,6 +52,8 @@
         sdefense = defense
         sWill = will
         sSpeed = speed
+
+        If Game.player1.perks(perk.lurk) > 0 Then stunct = 0 : isStunned = True
 
         If speed = Game.player1.getSPD Then speed -= 1
         pos = Game.player1.pos

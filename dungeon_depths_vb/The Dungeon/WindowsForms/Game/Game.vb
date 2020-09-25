@@ -51,7 +51,8 @@ Public Class Game
     'other misc form1 instance variables
     Dim selectedItem As Item = New Item()   'the item Fhilighted in the inventory (NOT SAVED)
     Public turn As Integer = 0  '(NOT SAVED)
-    Public version As Double = 0.92     'the save file version
+    Public version As Double = 10.0     'the save file version
+    Public sessionID As Integer = DateTime.Now.GetHashCode
 
     Public lblEventOnClose As Action    'the event method preformed when lblEvent closes (NOT SAVED)
     Public eventDialogBox As EventBox
@@ -149,6 +150,8 @@ Public Class Game
         End If
 
         Spell.init()
+        Special.init()
+
         eventDialogBox = New EventBox(txtPNLEvents, pnlEvent)
     End Sub
     Sub createConfigs()
@@ -1057,7 +1060,13 @@ Public Class Game
                     Exit For
                 End If
             Next
-            player1.nextCombatAction = Sub(t As Entity) Spell.spellCast(t, player1, subString)
+
+            If subString = FlashBolt.SPELL_NAME Then
+                Spell.spellCast(m, player1, subString)
+            else
+                player1.nextCombatAction = Sub(t As Entity) Spell.spellCast(t, player1, subString)
+            End If
+
             queueSetup()
             Do While updateList.isEmpty() = False
                 Dim u As Updatable = updateList.remove()
@@ -1083,7 +1092,12 @@ Public Class Game
             End If
         Next
 
-        Special.specPerform(m, player1, cboxSpec.Items(index))
+        If combatmode Then
+            player1.nextCombatAction = Sub(t As Entity) Special.specPerform(t, player1, cboxSpec.Items(index))
+        Else
+            Special.specPerform(m, player1, cboxSpec.Items(index))
+        End If
+
 
         If cboxSpec.Items.Count = 0 Then
             cboxSpec.Visible = False
@@ -1665,7 +1679,12 @@ Public Class Game
                 Exit For
             End If
         Next
-        Special.specPerform(m, player1, cboxSpec.Text)
+
+        If combatmode Then
+            player1.nextCombatAction = Sub(t As Entity) Special.specPerform(t, player1, cboxSpec.Text)
+        Else
+            Special.specPerform(m, player1, cboxSpec.Text)
+        End If
 
         If cboxSpec.Items.Count = 0 Then
             cboxSpec.Visible = False
@@ -1933,12 +1952,15 @@ Public Class Game
 
     '|SAVE/LOAD|
     Sub save(ByVal a As String)
+        sessionID = DateTime.Now.GetHashCode
+
         'save handles the saving of the game
         Dim writer As IO.StreamWriter
         IO.File.Delete(a)
         writer = IO.File.CreateText(a)
 
         writer.WriteLine(version)
+        writer.WriteLine(sessionID)
         'save the dungeon
         writer.WriteLine("-------------------------------DUNGEON---------------------------------")
         writer.WriteLine(mDun.save)
@@ -1999,6 +2021,8 @@ Public Class Game
                 btnAbout.Visible = True
             End If
             Exit Sub
+        ElseIf v > 0.92 Then
+            sessionID = CInt(reader.ReadLine)
         End If
 
         'loadSave handles the loading of a game
@@ -2125,19 +2149,19 @@ Public Class Game
             MsgBox("Right Button Clicked")
         Else
             If solFlag Then
-                Try
-                    player1.solFlag = True
-                    loadSave("saves/s" & fileNum & ".ave")
-                    player1.solFlag = False
-                Catch ex As System.IO.FileNotFoundException
-                    MsgBox("Error 004: No save detected!")
-                Catch ex2 As Exception
-                    If MessageBox.Show("Error 005: Error in loaded in save file!" & vbCrLf & "Restart?", "Error 005", MessageBoxButtons.YesNo) = Windows.Forms.DialogResult.Yes Then
-                        Application.Restart()
-                    Else
-                        Application.Exit()
-                    End If
-                End Try
+                'Try
+                player1.solFlag = True
+                loadSave("saves/s" & fileNum & ".ave")
+                player1.solFlag = False
+                'Catch ex As System.IO.FileNotFoundException
+                '    MsgBox("Error 004: No save detected!")
+                'Catch ex2 As Exception
+                '    If MessageBox.Show("Error 005: Error in loaded in save file!" & vbCrLf & "Restart?", "Error 005", MessageBoxButtons.YesNo) = Windows.Forms.DialogResult.Yes Then
+                '        Application.Restart()
+                '    Else
+                '        Application.Exit()
+                '    End If
+                'End Try
             Else
                 save("saves/s" & fileNum & ".ave")
                 imagesWorkerArg = Convert.ToInt32(fileNum)

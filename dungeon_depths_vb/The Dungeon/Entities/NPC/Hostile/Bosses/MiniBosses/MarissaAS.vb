@@ -7,6 +7,7 @@
         attack = 15
         defense = 5
         speed = 30
+        will = 15
 
         inv.setCount("Spellbook", 1)
         inv.setCount("Restore_Potion", CInt(Rnd() * 2))
