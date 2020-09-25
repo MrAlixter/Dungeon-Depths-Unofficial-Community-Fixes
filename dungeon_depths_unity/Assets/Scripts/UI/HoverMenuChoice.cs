@@ -1,45 +1,44 @@
-﻿using Assets.Scripts;
-using System.Collections;
-using System.Collections.Generic;
+using Assets.Scripts;
+using TMPro;
 using UnityEngine;
 using UnityEngine.EventSystems;
+using UnityEngine.UI;
 
+//I tried to genericize this but Unity doesn't support generic components (and thus MonoBehaviours)
 public class HoverMenuChoice : MonoBehaviour,
-    IPointerClickHandler,
-    IPointerEnterHandler,
-    IPointerExitHandler
+    ISelectHandler,
+    IDeselectHandler
 {
     public interface IHoverMenu
     {
-        void OnChoicePointerEnter(GameObject choice);
-        void OnChoicePointerExit(GameObject choice);
+        void OnChoiceSelect(GameObject choice);
+        void OnChoiceDeselect(GameObject choice);
         void OnChoiceClick(Ability clicked_ability);
     }
 
-    private Ability _ability;
-    public Ability ability
+    public Button button { get { return GetComponent<Button>(); } }
+    public Navigation navigation { get { return button.navigation; } set { button.navigation = value; } }
+    public Selectable selectable { get { return GetComponent<Selectable>(); } }
+
+    private Ability _choice_data;
+    public Ability choice_data
     {
-        get { return _ability; }
+        get { return _choice_data; }
         set
         {
-            _ability = value;
+            _choice_data = value;
             set_text();
         }
     }
-    public string text { get { return ability.name; } }
+    public string text { get { return choice_data.ToString(); } }
     private IHoverMenu hoverMenuCallback;
-    private bool hovered;
-
-    // Start is called before the first frame update
+    
     void Start()
     {
-        hovered = false;
-    }
-
-    // Update is called once per frame
-    void Update()
-    {
-        
+        button.onClick.AddListener(() => {
+            button.Select();
+            hoverMenuCallback.OnChoiceClick(choice_data);
+        });
     }
 
     public void setHoverMenuCallback(IHoverMenu callback)
@@ -49,23 +48,16 @@ public class HoverMenuChoice : MonoBehaviour,
 
     private void set_text()
     {
-        transform.Find("Text").GetComponent<UnityEngine.UI.Text>().text = text;
+        transform.Find("Text").GetComponent<TextMeshProUGUI>().text = text;
     }
 
-    public void OnPointerClick(PointerEventData eventData)
+    public void OnSelect(BaseEventData eventData)
     {
-        hoverMenuCallback.OnChoiceClick(ability);
+        hoverMenuCallback.OnChoiceSelect(gameObject);
     }
 
-    public void OnPointerEnter(PointerEventData eventData)
+    public void OnDeselect(BaseEventData eventData)
     {
-        hovered = true;
-        hoverMenuCallback.OnChoicePointerEnter(gameObject);
-    }
-
-    public void OnPointerExit(PointerEventData eventData)
-    {
-        hovered = false;
-        hoverMenuCallback.OnChoicePointerExit(gameObject);
+        hoverMenuCallback.OnChoiceDeselect(gameObject);
     }
 }

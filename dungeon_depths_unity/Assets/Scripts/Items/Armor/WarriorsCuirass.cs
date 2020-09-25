@@ -1,15 +1,10 @@
-﻿using UnityEngine;
-
-public class WarriorsCuirass : Armor
+﻿public class WarriorsCuirass : Armor
 {
     private static WarriorsCuirass _instance;
-    public static WarriorsCuirass instance { get { return _instance != null ? _instance : new WarriorsCuirass(); } }
+    public static WarriorsCuirass instance { get { if(_instance == null) { _instance = new WarriorsCuirass(); } return _instance; } }
 
-    public WarriorsCuirass()
+    public WarriorsCuirass() : base()
     {
-        if (_instance != null && _instance != this) { Destroy(this); }
-        else { _instance = this; }
-
         name = "Warrior's Cuirass";
         description = "A protective garment made more for elite fighters rather than fashion-minded common folk.";
         id = 19;

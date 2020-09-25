@@ -1,4 +1,5 @@
-﻿using UnityEngine;
+﻿using Scripts;
+using UnityEngine;
 
 namespace Assets.Scripts
 {
@@ -53,41 +54,41 @@ namespace Assets.Scripts
             
         }
 
-        public void cast()
+        public bool cast(ICombatant caster, ICombatant target)
         {
-            if(source.MANA < cost)
+            if(caster.MANA < cost)
             {
-                message_master.display_message("You don't have enough mana!");
+                message_master.set_message($"{caster.name} doesn't have enough mana!");
                 message_master.display_message($"{name} costs {cost} mana!");
-                return;
+                return false;
             }
 
-            if(master.current_mode != Mode.combat && !useable_out_of_combat)
-            {
-                message_master.display_message($"{name} requires a target!");
-            }
+            //if (caster.current_mode != Mode.combat && !useable_out_of_combat)
+            //{
+            //    message_master.set_message($"{name} requires a target!");
+            //}
 
-            source.decrease_mana(cost);
+            caster.MANA -= cost;
 
             if(Random.value < hit_chance)
             {
-                message_master.display_message($"You cast {name}!");
-                effect();
+                message_master.display_message($"{caster.name} casts {name}!");
+                effect(caster, target);
             }
             else if(Random.value < backfire_chance)
             {
-                message_master.display_message($"You cast {name} but it backfires!");
-                backfire();
+                message_master.display_message($"${caster.name} casts {name} but it backfires!");
+                backfire(caster);
             }
             else
             {
-                message_master.display_message($"You cast {name} but it fizzles into nothing!");
+                message_master.display_message($"{caster.name} casts {name} but it fizzles into nothing!");
             }
 
-            master.end_turn();
+            return true;
         }
 
-        public virtual void backfire()
+        public virtual void backfire(ICombatant source)
         {
             message_master.display_message("No backfire effect.");
         }

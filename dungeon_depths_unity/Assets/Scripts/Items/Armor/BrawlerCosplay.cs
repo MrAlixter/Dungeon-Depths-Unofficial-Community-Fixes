@@ -1,15 +1,10 @@
-﻿using UnityEngine;
-
-public class BrawlerCosplay : Armor
+﻿public class BrawlerCosplay : Armor
 {
     private static BrawlerCosplay _instance;
-    public static BrawlerCosplay instance { get { return _instance != null ? _instance : new BrawlerCosplay(); } }
+    public static BrawlerCosplay instance { get { if(_instance == null) { _instance = new BrawlerCosplay(); } return _instance; } }
 
-    public BrawlerCosplay()
+    public BrawlerCosplay() : base()
     {
-        if (_instance != null && _instance != this) { Destroy(this); }
-        else { _instance = this; }
-
         name = "Brawler Cosplay";
         description = "A glamourous garment made more for the highlighting one's body than for any practical function.";
         id = 20;

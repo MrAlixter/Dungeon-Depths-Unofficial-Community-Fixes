@@ -1,52 +1,90 @@
 ﻿using Assets.Scripts;
+using Scripts;
+using System;
 using System.Collections.Generic;
+using System.IO;
 using UnityEngine;
 
-public class Inventory : ScriptableObject
+[Serializable]
+public enum ItemType { Useables, Potions, Armors, Weapons, Accessories, Keys }
+
+[Savable]
+public class Inventory
 {
     private static Inventory _instance;
-    public static Inventory instance { get { return _instance != null ? _instance : new Inventory(); } }
-
-    public List<Item> useables;
-    public List<Item> potions;
-    public List<Armor> armors;
-    public List<Item> weapons;
-    public List<Item> accessories;
-    public List<Item> miscs;
-
+    public static Inventory instance { get { if(_instance == null) { _instance = new Inventory(); } return _instance; } }
+    
     public Inventory()
     {
-        if (_instance != null && _instance != this) { Destroy(this); }
-        else { _instance = this; }
-
-        #region Armors
-        armors = new List<Armor>();
-
-        armors.Add(new SteelArmor());
-        armors.Add(new GoldArmor());
-        armors.Add(new ValkyrieArmor());
-        armors.Add(new BrawlerCosplay());
-        armors.Add(new BronzeArmor());
-        armors.Add(new ChitinArmor());
-        armors.Add(new WarriorsCuirass());
-
-        foreach (Armor armor in armors)
-        {
-            armor.count = 1;
-        }
-
-        armors.Sort();
-        #endregion
-
-        #region Potions
+        types = new Dictionary<ItemType, List<Item>>();
+        useables = new List<Item>();
         potions = new List<Item>();
+        armors = new List<Item>();
+        weapons = new List<Item>();
+        accessories = new List<Item>();
+        key_items = new List<Item>();
 
-        potions.Add(new HealthPotion());
+        types[ItemType.Useables] = useables;
+        types[ItemType.Potions] = potions;
+        types[ItemType.Armors] = armors;
+        types[ItemType.Weapons] = weapons;
+        types[ItemType.Accessories] = accessories;
+        types[ItemType.Keys] = key_items;
+    }
+
+    public Dictionary<ItemType, List<Item>> types;
+    [Savable]
+    public List<Item> useables;
+    [Savable]
+    public List<Item> potions;
+    [Savable]
+    public List<Item> armors;
+    [Savable]
+    public List<Item> weapons;
+    [Savable]
+    public List<Item> accessories;
+    [Savable]
+    public List<Item> key_items;
+
+    public void load()
+    {
+        Savable.load(this);
+        types[ItemType.Useables] = useables;
+        types[ItemType.Potions] = potions;
+        types[ItemType.Armors] = armors;
+        types[ItemType.Weapons] = weapons;
+        types[ItemType.Accessories] = accessories;
+        types[ItemType.Keys] = key_items;
+    }
+
+    public void load_default_values()
+    {
+        #region Potions
+        potions.Add(HealthPotion.instance);
 
         foreach(Item potion in potions)
         {
             potion.count = 1;
         }
+        #endregion
+
+        #region Armors
+        armors.Add(NoArmor.instance);
+        armors.Add(SteelArmor.instance);
+        armors.Add(GoldArmor.instance);
+        armors.Add(ValkyrieArmor.instance);
+        armors.Add(BrawlerCosplay.instance);
+        armors.Add(BronzeArmor.instance);
+        armors.Add(ChitinArmor.instance);
+        armors.Add(WarriorsCuirass.instance);
+
+        foreach(Armor armor in armors)
+        {
+            armor.count = 1;
+        }
+        armors[0].count = 0;
+
+        armors.Sort();
         #endregion
     }
 
