@@ -14,9 +14,9 @@
         Dim sattack = t.attack
         Dim sspeed = t.speed
         Dim sHealth = t.maxHealth
-        t.attack = Math.Max(t.attack * 0.85, 1)
-        t.speed = Math.Max(t.speed * 0.85, 1)
-        If sspeed > 1 Then t.maxHealth = t.maxHealth * 1.15
+        t.attack = Math.Max(t.attack * 0.5, 1)
+        t.speed = Math.Max(t.speed * 0.5, 1)
+        If t.speed > 1 Then t.maxHealth = t.maxHealth * 1.3
 
         Game.pushLstLog("Your foe's body inflates slightly!  -" & sattack - t.attack & " ATK, -" & sspeed - t.speed & " SPD, +" & t.maxHealth - sHealth & " Max Health")
         Game.pushLblEvent("Your foe's body inflates slightly!  -" & sattack - t.attack & " ATK, -" & sspeed - t.speed & " SPD, +" & t.maxHealth - sHealth & " Max Health")
@@ -28,9 +28,9 @@
         Dim sattack = p.attack
         Dim sspeed = p.speed
         Dim sHealth = p.maxHealth
-        p.attack = Math.Max(p.attack * 0.85, 1)
-        p.speed = Math.Max(p.speed * 0.85, 1)
-        If sspeed > 1 Then p.maxHealth = p.maxHealth * 1.15
+        p.attack = Math.Max(p.attack * 0.5, 1)
+        p.speed = Math.Max(p.speed * 0.5, 1)
+        If p.speed > 1 Then p.maxHealth = p.maxHealth * 1.3
 
         If Not p.breastSize = -1 Then p.be()
         If Not p.buttSize = -1 Then p.ue()
@@ -38,5 +38,7 @@
 
         Game.pushLstLog("Your body inflates slightly!  -" & sattack - p.attack & " ATK, -" & sspeed - p.speed & " SPD, +" & p.maxHealth - sHealth & " Max Health")
         Game.pushLblEvent("Your body inflates slightly!  -" & sattack - p.attack & " ATK, -" & sspeed - p.speed & " SPD, +" & p.maxHealth - sHealth & " Max Health")
+
+        p.drawPort()
     End Sub
 End Class

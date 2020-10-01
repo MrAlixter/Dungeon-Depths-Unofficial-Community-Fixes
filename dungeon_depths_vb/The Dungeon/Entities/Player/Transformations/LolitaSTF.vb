@@ -68,8 +68,7 @@
         p.prt.setIAInd(pInd.eyes, 37, True, True)
         p.prt.setIAInd(pInd.fronthair, 29, True, True)
         p.breastSize = 0
-        p.reverseallroute()
-        p.prt.setIAInd(pInd.hairacc, 1, True, True)
+        p.prt.setIAInd(pInd.hairacc, 1, True, False)
         p.lust = 70
 
         'End If

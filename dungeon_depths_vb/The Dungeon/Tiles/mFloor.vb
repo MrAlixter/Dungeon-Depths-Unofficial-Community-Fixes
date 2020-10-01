@@ -45,7 +45,7 @@ Public Class mFloor
         placeStairs()
         placePlayer(Game.player1)
 
-        verifyNoDisconectedChunks(Game.player1)
+        If floorNumber > 5 And Not floorNumber = 9999 And Not floorNumber = 91017 Then verifyNoDisconectedChunks(Game.player1)
 
         placeChest(floorCode)
         If floorNumber > 2 Then placeTraps()
@@ -110,7 +110,7 @@ Public Class mFloor
         Dim roomRow As List(Of Room) = New List(Of Room)
         Dim cursor As Point = New Point(0, 5)
 
-        'define all of the rooms
+        '|CREATE THE ROOMS|
         Dim prevProgress As Double = -1
         While (coveredBoardSpace / maxBoardSpace) < 0.75
             'define a new room:  Each iteration get smaller
@@ -152,19 +152,30 @@ Public Class mFloor
             prevProgress = (coveredBoardSpace / maxBoardSpace)
         End While
 
+        '|CONNECT THE ROOMS|
+        Dim allrooms As List(Of Room) = New List(Of Room)()
         For j = 0 To rooms.Count - 1
             For i = 0 To rooms(j).Count - 1
                 'get the room in question
                 Dim r = rooms(j)(i)
+                allrooms.Add(r)
                 Dim potentialNeighbors As List(Of Room) = getPotentialNeigbors(rooms, i, j)
+                If potentialNeighbors.Count = 0 Then Continue For
 
                 'set the number of exits on the room
                 Dim numExits = Int(Rnd() * potentialNeighbors.Count) + 1
-                For num = 1 To numExits
-                    connectRooms(r, potentialNeighbors(Int(Rnd() * potentialNeighbors.Count)))
-                Next
+                    For num = 1 To numExits
+                        connectRooms(r, potentialNeighbors(Int(Rnd() * potentialNeighbors.Count)))
+                    Next
 
-                r.marked = True
+                    r.marked = True
+            Next
+        Next
+
+        '|VERIFY NO DISCONECTED CHUNKS|
+        For i = 0 To allrooms.Count - 1
+            For j = i + 1 To allrooms.Count - 1
+                If Not allrooms(i).connectedTo(allrooms(j)) Then connectRooms(allrooms(i), allrooms(j), True)
             Next
         Next
     End Sub
@@ -177,14 +188,18 @@ Public Class mFloor
 
         coveredBoardSpace += 1
     End Sub
-    Private Sub connectRooms(ByRef r1 As Room, ByRef r2 As Room)
-        If r1.connectedTo(r2) Or r2.connectedTo(r1) Then Exit Sub
+    Private Sub connectRooms(ByRef r1 As Room, ByRef r2 As Room, Optional overrideFlag As Boolean = False)
+        If (r1.connectedTo(r2) Or r2.connectedTo(r1)) And Not overrideFlag Then Exit Sub
 
         connectPoints(r1.getExit, r2.getExit)
+
         r1.connect(r2)
         r2.connect(r1)
     End Sub
     Sub connectPoints(ByVal p1 As Point, ByVal p2 As Point)
+        p1 = New Point(Math.Max(p1.X, 0), Math.Max(p1.Y, 0))
+        p2 = New Point(Math.Max(p2.X, 0), Math.Max(p2.Y, 0))
+
         'Connects the entrances/exits of the rooms
         If p1.Y > p2.Y Then
             'p1 is above p2
@@ -482,19 +497,23 @@ Public Class mFloor
                 End Select
             Next
         Next
-
         While exits.Count > 1
             Dim r1 As Integer = Int(Rnd() * exits.Count)
             Dim r2 As Integer = Int(Rnd() * exits.Count)
             Dim r3 As Integer = Int(Rnd() * 3)
+
+            ' MsgBox("R1: " & r1 & " R2: " & r2 & " R3: " & r3 & " E count: " & exits.Count)
+
             If r1 > r2 Or r3 > 0 Then
                 makeDeadEnd(exits(r1), exits)
                 exits.RemoveAt(r1)
             Else
                 If r1 <> r2 Then
                     connectPoints(exits(r1), exits(r2))
-                    exits.RemoveAt(r1)
-                    exits.RemoveAt(r2 - 1)
+                    Dim exit1 As Point = exits(r1)
+                    Dim exit2 As Point = exits(r2)
+                    If exits.Contains(exit1) Then exits.Remove(exit1)
+                    If exits.Contains(exit2) Then exits.Remove(exit2)
                 End If
             End If
         End While
@@ -941,7 +960,7 @@ Public Class mFloor
         Dim path As List(Of Point) = New List(Of Point)
         For i = 0 To mBoardHeight - 1
             For j = 0 To mBoardWidth - 1
-                dist(i, j) = 99999
+                dist(i, j) = 999999999
                 allPoints.Add(New Point(j, i))
                 prev(i, j) = Nothing
             Next
@@ -1189,7 +1208,7 @@ Public Class Room
     Public width, height As Integer
     Public marked As Boolean = False
     Dim exits As List(Of Point) = New List(Of Point)
-    Dim connectedRooms As List(Of Room) = New List(Of Room)
+    Public connectedRooms As List(Of Room) = New List(Of Room)
 
     Public Sub New(tlp As Point, w As Integer, h As Integer)
         topLeftPos = tlp
@@ -1217,14 +1236,36 @@ Public Class Room
         Return p
     End Function
     Public Sub connect(ByRef r As Room)
+        If connectedRooms.Contains(r) Then Exit Sub
+
         connectedRooms.Add(r)
+
+        For Each subR In r.connectedRooms
+            connect(subR)
+        Next
     End Sub
-    Public Function connectedTo(ByRef r1 As Room)
+    Public Function connectedTo(ByRef r1 As Room, Optional ByRef checkedRooms As List(Of Point) = Nothing)
+        If checkedRooms Is Nothing Then checkedRooms = New List(Of Point)()
+
+        If r1.topLeftPos.Equals(topLeftPos) Then Return True
+
         For Each r2 In connectedRooms
             If r2.topLeftPos.Equals(r1.topLeftPos) Then Return True
+
+            For Each subR2 In r2.connectedRooms
+                If Not checkedRooms.Contains(subR2.topLeftPos) Then
+                    checkedRooms.Add(subR2.topLeftPos)
+                    Return subR2.connectedTo(r1, checkedRooms)
+                End If
+            Next
         Next
 
         Return False
+    End Function
+    Public Overrides Function Equals(obj As Object) As Boolean
+        If Not obj.GetType Is GetType(Room) Then Return False
+
+        Return CType(obj, Room).topLeftPos.Equals(topLeftPos)
     End Function
 End Class
 

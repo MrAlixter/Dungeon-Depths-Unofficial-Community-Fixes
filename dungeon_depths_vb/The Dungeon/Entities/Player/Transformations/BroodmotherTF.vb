@@ -83,6 +83,12 @@
     End Sub
     Sub step5p3()
         Dim p As Player = Game.player1
+        'unequips
+        Equipment.clothesChange("Naked")
+        Equipment.weaponChange("Fists")
+
+        'dragon transformation
+        If Not p.knownSpells.Contains("Dragon's Breath") Then p.knownSpells.Add("Dragon's Breath")
         p.changeForm("Broodmother")
         p.drawPort()
     End Sub

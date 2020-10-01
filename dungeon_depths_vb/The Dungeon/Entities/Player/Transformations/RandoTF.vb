@@ -19,8 +19,7 @@
 
         'assign a pointer to the player character
         Dim p As player = game.player1
-        p.sState.load(p)
-        If Game.preBSStartState Is Nothing Then Game.preBSStartState = New State(p)
+        If Game.preBSStartState Is Nothing Then Game.preBSStartState = p.sState.clone(p)
 
         'assign a starter class / form
         p.changeClass("Classless")
@@ -83,7 +82,8 @@
         r = Int(Rnd() * 5)
         p.prt.setIAInd(pInd.eyes, r, True, True)
         p.prt.setIAInd(pInd.eyebrows, 0, True, False)
-        p.prt.setIAInd(pInd.facemark, 0, True, False)
+        r = Int(Rnd() * 5)
+        p.prt.setIAInd(pInd.facemark, r, True, False)
         p.prt.setIAInd(pInd.cloak, 0, True, False)
         p.prt.setIAInd(pInd.accessory, 0, True, False)
         r = Int(Rnd() * 8) + 1
@@ -98,7 +98,6 @@
 
         p.TextColor = Color.White
         If game.mDun.numCurrFloor < 6 Then p.pImage = Game.picPlayer.BackgroundImage Else p.pImage = Game.picPlayerf.BackgroundImage
-        p.reverseallroute()
 
         p.inv.invNeedsUDate = True
         p.UIupdate()
@@ -282,7 +281,7 @@
             Equipment.weaponChange(p.inv.item(weaponIndex).getAName)
         End If
 
-        p.equippedAcce = New noAcce()
+        Equipment.accChange("Nothing")
     End Sub
 
     Shared Sub floor4FirstBossEncounter()
@@ -319,7 +318,7 @@
     End Sub
     Shared Sub floor4FirstBossEncounterP2()
         Dim p As player = game.player1
-        Game.preBSBody = New State(p)
+        Game.preBSBody = If(Transformation.canBeTFed(p), New State(p), p.pState.clone(p))
         Game.preBSInventory = New ArrayList()
         For i = 0 To p.inv.upperBound
             Game.preBSInventory.Add(p.inv.getCountAt(i))
@@ -327,7 +326,7 @@
         p.ongoingTFs.Add(New RandoTF())
         p.update()
         p.sState.save(p)
-        p.pState.save(p)
+        p.savePState()
         Game.pushLblEvent("The " & _
                           "warmth slowly builds until you are burning with " & _
                           "lust, and you can't help but lose intrest in what " & _

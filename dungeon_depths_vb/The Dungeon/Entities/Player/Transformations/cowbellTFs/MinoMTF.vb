@@ -103,7 +103,6 @@
 
     Overrides Sub boobTF(ByRef p As Player)
         p.breastSize -= 1
-        p.reverseAllRoute()
     End Sub
     Overrides Sub tfDialogStep678(ByVal bsize7 As Boolean, ByVal bsizeneg1 As Boolean, ByVal be As Boolean, ByVal mtf As Boolean)
         Dim out = "Despite being out of the cloud of dust, another small sneeze rattles you slightly."
@@ -166,8 +165,6 @@
         p.prt.setIAInd(pInd.mouth, 8, False, False)
         p.prt.setIAInd(pInd.eyes, 13, False, True)
         p.prt.setIAInd(pInd.nose, 2, False, True)
-
-        p.reverseAllRoute()
     End Sub
     Overrides Sub tfDialogStep9()
         Game.pushLblEvent("You take another look at your chest.  It seems that with every change this curse inflicts, you've progressed a little more into some form of bovine-human hybrid.  𝘔𝘪𝘯𝘰𝘵𝘢𝘶𝘳, you correct your self.  It's been turning you into a minotaur, and a masculine one at that.  Your transformation seems pretty far along, and you'd wager you're only one more change away.  With that in mind, you focus all your energy on bulking up your already ample muscles." & DDUtils.RNRN & "You are now a male minotaur!")
@@ -200,8 +197,6 @@
         p.prt.setIAInd(pInd.nose, 2, False, True)
         p.prt.setIAInd(pInd.ears, 7, False, True)
         p.prt.setIAInd(pInd.horns, 5, True, False)
-
-        p.reverseAllRoute()
 
         If p.inv.getCountAt("Barbarian_Armor") < 1 Then p.inv.add("Barbarian_Armor", 1)
         Equipment.clothesChange("Barbarian_Armor")

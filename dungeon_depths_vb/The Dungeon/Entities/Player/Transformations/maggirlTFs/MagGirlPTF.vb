@@ -35,8 +35,6 @@
         p.prt.setIAInd(pInd.fronthair, 37, True, True)
         p.prt.setIAInd(pInd.hat, 0, True, False)
 
-        p.reverseAllRoute()
-
         If p.isUnwilling() Then p.pout()
     End Sub
     Overrides Sub tfClothes(ByRef p As Player)

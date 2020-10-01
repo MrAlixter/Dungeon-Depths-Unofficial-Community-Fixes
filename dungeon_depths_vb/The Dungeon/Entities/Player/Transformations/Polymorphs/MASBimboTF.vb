@@ -36,7 +36,6 @@
         p.prt.haircolor = Color.FromArgb(255, 255, 245, 200)
         p.prt.setIAInd(pInd.rearhair, 14, True, True)
         If p.breastSize < 3 Then p.breastSize = 3
-        p.reverseallroute()
         p.prt.setIAInd(pInd.face, 0, True, False)
         p.prt.setIAInd(pInd.midhair, 6, True, True)
         p.prt.setIAInd(pInd.ears, 1, True, False)

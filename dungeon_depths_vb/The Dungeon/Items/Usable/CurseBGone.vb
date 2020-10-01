@@ -16,7 +16,6 @@
 
         p.breastSize = 7
         p.buttSize = 5
-        p.reverseAllRoute()
 
         Game.pushLblEvent("Peeling off the paper backing from the Curse-B-Gone tag, you place it gently on your chest.")
         p.drawPort()

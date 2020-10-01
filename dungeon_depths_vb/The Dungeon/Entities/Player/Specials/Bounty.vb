@@ -12,7 +12,7 @@
         Game.pushLstLog("Bounty's Collection!")
         Game.pushLblCombatEvent("Bounty's Collection!")
 
-        If m.health * m.maxHealth > p.getATK Then
+        If m.getIntHealth > Entity.calcDamage(p.getATK, m.getDEF / 2) Then
             'Fail
             Game.pushLblCombatEvent("Failed to collect bounty!  All loot lost...")
             Dim hasKey = False

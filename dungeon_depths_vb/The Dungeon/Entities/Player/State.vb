@@ -85,6 +85,11 @@
         ReDim iArrInd(Portrait.NUM_IMG_LAYERS)
     End Sub
 
+    Public Function clone(ByVal p As Player)
+        load(p, True)
+        Return (New State(p))
+    End Function
+
     'load applies a state to a given instance of a player
     Public Sub load(ByRef p As Player, Optional overwriteStats As Boolean = True)
         p.name = name
@@ -154,7 +159,7 @@
     End Sub
 
     'read converts a string given from a save file into a state
-    Public Sub read(ByVal s As String)
+    Public Sub read(ByVal s As String, ByVal version As Double)
         Equipment.init()
         Dim readArray() As String = s.Split("*")
         If readArray(0) = "N/A" Then
@@ -250,6 +255,17 @@
             End If
         Next
 
+
+        '|Version Based Save Updating|
+        If version = 0.92 Or version = 10.0 Then
+            Dim t = New Tuple(Of Integer, Boolean, Boolean)(iArrInd(21).Item1, iArrInd(21).Item2, iArrInd(21).Item3)
+
+            For i = 20 To 14 Step -1
+                iArrInd(i + 1) = New Tuple(Of Integer, Boolean, Boolean)(iArrInd(i).Item1, iArrInd(i).Item2, iArrInd(i).Item3)
+            Next
+
+            iArrInd(14) = t
+        End If
         initFlag = True
     End Sub
     'write converts a state into a string to be put into a save file

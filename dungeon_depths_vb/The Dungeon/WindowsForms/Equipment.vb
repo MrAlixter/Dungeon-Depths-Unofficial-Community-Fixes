@@ -55,7 +55,6 @@
     End Sub
     Public Shared Function equipArmor(ByVal armor As String, Optional ByVal considerCurse As Boolean = True) As Boolean
         Dim p = Game.player1
-
         If Not p.inv.getArmors.Item1.Contains(armor) Then Return False
 
         'if clothes offer resistance on the way off, this handles that
@@ -67,6 +66,18 @@
                 Game.pushLblEvent("Despite a struggle agaisnt your clothes, you are unable to escape!")
                 Return False
             End If
+        End If
+
+        'handles any tfs or triggers triggered by equipping of certain armors by certain classes
+        If p.className.Equals("Magical Girl") And Not (armor.Contains("Outfit") And armor.Contains("Mag")) And p.equippedArmor.fits(p) Then
+            Game.pushLstLog("A magical girl needs her uniform!")
+            Game.pushLblEvent("A magical girl needs her uniform!")
+            Return False
+        End If
+        If p.className.Equals("Valkyrie") And Not armor.Equals("Valkyrie_Armor") And p.equippedArmor.fits(p) Then
+            Game.pushLstLog("Your armor magically re-equips!")
+            Game.pushLblEvent("Your armor magically re-equips!")
+            Return False
         End If
 
         'unequip the old armor
@@ -84,18 +95,6 @@
         'if the player has the slut curse, this takes care of it
         If p.perks(perk.slutcurse) > -1 Then
             Equipment.clothingCurse1(p)
-        End If
-
-        'handles any tfs or triggers triggered by equipping of certain armors by certain classes
-        If p.className.Equals("Magical Girl") And Not (p.equippedArmor.getName.Contains("Outfit") And p.equippedArmor.getName.Contains("Mag")) And p.equippedArmor.fits(p) Then
-            Game.pushLstLog("A magical girl needs her uniform!")
-            Game.pushLblEvent("A magical girl needs her uniform!")
-            Return False
-        End If
-        If p.className.Equals("Valkyrie") And Not p.equippedArmor.getName.Equals("Valkyrie_Armor") And p.equippedArmor.fits(p) Then
-            Game.pushLstLog("Your armor magically re-equips!")
-            Game.pushLblEvent("Your armor magically re-equips!")
-            Return False
         End If
 
         If p.formName.Equals("Blow-Up Doll") Then

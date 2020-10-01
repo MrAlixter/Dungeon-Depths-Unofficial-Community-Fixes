@@ -30,7 +30,7 @@
         If target.lust < lustRaiseThres And Int(Rnd() * 2) Then
             charm(target)
         Else
-            If levelDrainThres > 0 And target.level > 2 And target.level - levelDrainThres >= 1 Then
+            If levelDrainThres > 0 And levelsToDrain > 0 And target.level > 2 And target.level - levelDrainThres >= 1 Then
                 sapLevel(target)
             Else
                 MyBase.attackCMD(target)

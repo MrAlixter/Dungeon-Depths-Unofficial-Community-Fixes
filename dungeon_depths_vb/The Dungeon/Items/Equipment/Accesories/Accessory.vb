@@ -7,7 +7,7 @@
     Public underClothes As Boolean
 
     Public Overrides Sub discard()
-        If isCursed And owner.equippedAcce.getAName.Equals(getAName) Then
+        If isCursed And Not owner Is Nothing AndAlso owner.equippedAcce.getAName.Equals(getAName) Then
             Game.pushLblEvent("You are unable to drop your equipped equipment.")
         Else
             MyBase.discard()

@@ -142,7 +142,6 @@
 
     Overridable Sub boobTF(ByRef p As Player)
         p.breastSize += 1
-        p.reverseAllRoute()
     End Sub
     Overridable Sub tfDialogStep678(ByVal bsize7 As Boolean, ByVal bsizeneg1 As Boolean, ByVal be As Boolean, ByVal mtf As Boolean)
         Dim out = "Despite being out of the cloud of dust, another small sneeze rattles your bell slightly."

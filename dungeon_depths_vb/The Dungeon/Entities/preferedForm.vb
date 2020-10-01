@@ -80,7 +80,7 @@
 
     Public Sub shiftTowards(ByRef p As Player)
         Randomize()
-        If Not p.className.equals("Thrall") Then p.changeClass(perk.thrall)
+        If Not p.className.Equals("Thrall") Then p.changeClass("Thrall")
         If playerMeetsForm(p) Then Exit Sub
 
         If Not p.prt.haircolor.Equals(hairColor) Then p.changeHairColor(DDUtils.cShift(p.prt.haircolor, hairColor, 8))
@@ -104,10 +104,8 @@
 
         If p.breastSize > breastSize Then
             p.breastSize -= 1
-            p.reverseallroute()
         ElseIf p.breastSize < breastSize Then
             p.breastSize += 1
-            p.reverseallroute()
         End If
 
         If isFemale And ((p.perks(perk.slutcurse) = -1 And isSlut) Or (p.perks(perk.slutcurse) > -1 And Not isSlut)) And Int(Rnd() * 3) = 0 Then
@@ -134,7 +132,7 @@
     End Sub
     Public Sub snapShift(ByRef p As Player)
         Randomize()
-        If Not p.className.equals("Thrall") Then p.changeClass(perk.thrall)
+        If Not p.className.Equals("Thrall") Then p.changeClass("Thrall")
         If playerMeetsForm(p) Then Exit Sub
 
         p.changeHairColor(hairColor)
@@ -156,12 +154,10 @@
         If p.breastSize > breastSize Then
             While p.breastSize > breastSize
                 p.breastSize -= 1
-                p.reverseallroute()
             End While
         ElseIf p.breastSize < breastSize Then
             While p.breastSize < breastSize
                 p.breastSize += 1
-                p.reverseallroute()
             End While
         End If
 

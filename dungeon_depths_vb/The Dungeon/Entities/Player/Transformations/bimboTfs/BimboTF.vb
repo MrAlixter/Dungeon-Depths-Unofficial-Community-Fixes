@@ -57,8 +57,6 @@
         If p.className.Equals("Magical Girl") Then
             p.perks(perk.bimbotf) = 24
         End If
-
-        p.reverseAllRoute()
     End Sub
     Overridable Sub s1TFText(ByRef p As Player)
         Game.pushLblEvent("You pause to rub your temples, a massive headache comming down on you like a ton of bricks.  As you take a few minutes to recover, you notice that your center of balance is off and more disturbingly, that you can't seem to focus enough to figure out why." & DDUtils.RNRN & "Maybe you can just walk this off...")
@@ -103,7 +101,6 @@
             p.breastSize += 1
         End If
         s2ClothesChange(p)
-        p.reverseAllRoute()
     End Sub
     Overridable Sub s2ClothesChange(ByRef p As Player)
         If Not p.equippedArmor.getName.Equals("Naked") And Not p.className.Equals("Magical Girl") Then

@@ -26,7 +26,6 @@
 
         p.breastSize = 4
         p.buttSize = 2
-        p.reverseAllRoute()
 
         'kitsune transformation
         p.changeHairColor(Color.FromArgb(255, 234, 189, 134))

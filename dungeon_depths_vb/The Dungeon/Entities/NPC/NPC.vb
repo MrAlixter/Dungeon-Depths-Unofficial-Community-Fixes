@@ -113,6 +113,8 @@
             Game.pushLstLog("You ran from the " & name & "!")
         ElseIf reason = "warp" Then
             Game.pushLstLog("With a flash, you teleport the " & name & " far away!")
+        ElseIf reason = "pwarp" Then
+            Game.pushLstLog("With a flash, you teleport away!")
         ElseIf reason = "p-death" Then
         ElseIf reason = "friend" Then
             If Int(Rnd() * 3) = 0 Then

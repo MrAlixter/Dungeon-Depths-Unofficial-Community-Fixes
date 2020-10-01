@@ -152,10 +152,10 @@
     <Compile Include="Entities\Player\Transformations\cowbellTFs\MinoDTF.vb" />
     <Compile Include="Items\Equipment\Accesories\BunnyEars.vb" />
     <Compile Include="Items\Equipment\Accesories\SevenBandedRing.vb" />
-    <Compile Include="Items\Equipment\Armor\FullBodyUpdated\BunnySuitC.vb" />
-    <Compile Include="Items\Equipment\Armor\FullBodyUpdated\CowCosplayD.vb" />
-    <Compile Include="Items\Equipment\Armor\FullBodyUpdated\SkimpyClothesD.vb" />
-    <Compile Include="Items\Equipment\Armor\FullBodyUpdated\STBodysuit.vb" />
+    <Compile Include="Items\Equipment\Armor\BunnySuitC.vb" />
+    <Compile Include="Items\Equipment\Armor\CowCosplayD.vb" />
+    <Compile Include="Items\Equipment\Armor\SkimpyClothesD.vb" />
+    <Compile Include="Items\Equipment\Armor\STBodysuit.vb" />
     <Compile Include="Items\Equipment\EquipmentItem.vb" />
     <Compile Include="Items\Misc\FoxStatue.vb" />
     <Compile Include="Items\Misc\BitGold.vb" />
@@ -404,49 +404,49 @@
     <Compile Include="Items\Equipment\Accesories\RingOfUvona.vb" />
     <Compile Include="Items\Equipment\Accesories\EmeraldCirclet.vb" />
     <Compile Include="Items\Equipment\Accesories\Blindfold.vb" />
-    <Compile Include="Items\Equipment\Armor\FullBodyUpdated\CommonClothes3.vb" />
-    <Compile Include="Items\Equipment\Armor\FullBodyUpdated\CommonClothes4.vb" />
-    <Compile Include="Items\Equipment\Armor\FullBodyUpdated\CommonClothes6.vb" />
-    <Compile Include="Items\Equipment\Armor\FullBodyUpdated\CommonClothes5.vb" />
-    <Compile Include="Items\Equipment\Armor\FullBodyUpdated\CommonClothes2.vb" />
-    <Compile Include="Items\Equipment\Armor\FullBodyUpdated\CommonClothes1.vb" />
-    <Compile Include="Items\Equipment\Armor\FullBodyUpdated\CommonClothes0.vb" />
-    <Compile Include="Items\Equipment\Armor\FullBodyUpdated\CowCosplay.vb" />
-    <Compile Include="Items\Equipment\Armor\FullBodyUpdated\MagGirlOutfitC.vb" />
-    <Compile Include="Items\Equipment\Armor\FullBodyUpdated\ProMagGirlOutfitR.vb" />
-    <Compile Include="Items\Equipment\Armor\FullBodyUpdated\MagGirlOutfitR.vb" />
-    <Compile Include="Items\Equipment\Armor\FullBodyUpdated\MagGirlOutfitD.vb" />
-    <Compile Include="Items\Equipment\Armor\FullBodyUpdated\MagGirlOutfitP.vb" />
-    <Compile Include="Items\Equipment\Armor\FullBodyUpdated\ProMagGirlOutfit.vb" />
-    <Compile Include="Items\Equipment\Armor\FullBodyUpdated\ScaleArmor.vb" />
-    <Compile Include="Items\Equipment\Armor\FullBodyUpdated\ScaleBikini.vb" />
-    <Compile Include="Items\Equipment\Armor\FullBodyUpdated\GothOutfit.vb" />
-    <Compile Include="Items\Equipment\Armor\FullBodyUpdated\AngelicSweater.vb" />
-    <Compile Include="Items\Equipment\Armor\FullBodyUpdated\FoNight.vb" />
-    <Compile Include="Items\Equipment\Armor\FullBodyUpdated\MagSlutOutfit.vb" />
-    <Compile Include="Items\Equipment\Armor\FullBodyUpdated\MaidLingerie.vb" />
+    <Compile Include="Items\Equipment\Armor\CommonClothes3.vb" />
+    <Compile Include="Items\Equipment\Armor\CommonClothes4.vb" />
+    <Compile Include="Items\Equipment\Armor\CommonClothes6.vb" />
+    <Compile Include="Items\Equipment\Armor\CommonClothes5.vb" />
+    <Compile Include="Items\Equipment\Armor\CommonClothes2.vb" />
+    <Compile Include="Items\Equipment\Armor\CommonClothes1.vb" />
+    <Compile Include="Items\Equipment\Armor\CommonClothes0.vb" />
+    <Compile Include="Items\Equipment\Armor\CowCosplay.vb" />
+    <Compile Include="Items\Equipment\Armor\MagGirlOutfitC.vb" />
+    <Compile Include="Items\Equipment\Armor\ProMagGirlOutfitR.vb" />
+    <Compile Include="Items\Equipment\Armor\MagGirlOutfitR.vb" />
+    <Compile Include="Items\Equipment\Armor\MagGirlOutfitD.vb" />
+    <Compile Include="Items\Equipment\Armor\MagGirlOutfitP.vb" />
+    <Compile Include="Items\Equipment\Armor\ProMagGirlOutfit.vb" />
+    <Compile Include="Items\Equipment\Armor\ScaleArmor.vb" />
+    <Compile Include="Items\Equipment\Armor\ScaleBikini.vb" />
+    <Compile Include="Items\Equipment\Armor\GothOutfit.vb" />
+    <Compile Include="Items\Equipment\Armor\AngelicSweater.vb" />
+    <Compile Include="Items\Equipment\Armor\FoNight.vb" />
+    <Compile Include="Items\Equipment\Armor\MagSlutOutfit.vb" />
+    <Compile Include="Items\Equipment\Armor\MaidLingerie.vb" />
     <Compile Include="Items\Equipment\Armor\SLolitaDress.vb" />
-    <Compile Include="Items\Equipment\Armor\FullBodyUpdated\CatArmor.vb" />
+    <Compile Include="Items\Equipment\Armor\CatArmor.vb" />
     <Compile Include="Items\Equipment\Armor\GelLinge.vb" />
-    <Compile Include="Items\Equipment\Armor\FullBodyUpdated\GelArmor.vb" />
-    <Compile Include="Items\Equipment\Armor\FullBodyUpdated\CrystalArmor.vb" />
-    <Compile Include="Items\Equipment\Armor\FullBodyUpdated\SkimpyTT.vb" />
-    <Compile Include="Items\Equipment\Armor\FullBodyUpdated\SVBunnySuit.vb" />
+    <Compile Include="Items\Equipment\Armor\GelArmor.vb" />
+    <Compile Include="Items\Equipment\Armor\CrystalArmor.vb" />
+    <Compile Include="Items\Equipment\Armor\SkimpyTT.vb" />
+    <Compile Include="Items\Equipment\Armor\SVBunnySuit.vb" />
     <Compile Include="Items\Equipment\Armor\LabcoatSV.vb" />
-    <Compile Include="Items\Equipment\Armor\FullBodyUpdated\Labcoat.vb" />
+    <Compile Include="Items\Equipment\Armor\Labcoat.vb" />
     <Compile Include="Items\Equipment\Armor\PhotonBikini.vb" />
     <Compile Include="Items\Equipment\Armor\PhotonArmor.vb" />
-    <Compile Include="Items\Equipment\Armor\FullBodyUpdated\GCUniform.vb" />
-    <Compile Include="Items\Equipment\Armor\CozySweater.vb" />
+    <Compile Include="Items\Equipment\Armor\GCUniform.vb" />
+    <Compile Include="Items\Equipment\Armor\NotGoingToUpdateYet\CozySweater.vb" />
     <Compile Include="Items\Equipment\Armor\VSkimpyClothes.vb" />
-    <Compile Include="Items\Equipment\Armor\FullBodyUpdated\KitsuneRobe.vb" />
+    <Compile Include="Items\Equipment\Armor\KitsuneRobe.vb" />
     <Compile Include="Items\Equipment\Armor\WarlockRobe.vb" />
     <Compile Include="Items\Equipment\Armor\SAJumpsuit.vb" />
-    <Compile Include="Items\Equipment\Armor\FullBodyUpdated\BarbArmor.vb" />
-    <Compile Include="Items\Equipment\Armor\FullBodyUpdated\BunnySuitA.vb" />
-    <Compile Include="Items\Equipment\Armor\FullBodyUpdated\AmaAttire.vb" />
+    <Compile Include="Items\Equipment\Armor\BarbArmor.vb" />
+    <Compile Include="Items\Equipment\Armor\BunnySuitA.vb" />
+    <Compile Include="Items\Equipment\Armor\AmaAttire.vb" />
     <Compile Include="Items\Equipment\Armor\DissolvedClothes.vb" />
-    <Compile Include="Items\Equipment\Armor\FullBodyUpdated\ValkyrieArmor.vb" />
+    <Compile Include="Items\Equipment\Armor\ValkyrieArmor.vb" />
     <Compile Include="Items\Services\BFormReset.vb" />
     <Compile Include="Items\Services\WarlockLesson.vb" />
     <Compile Include="Items\Services\HGorgonLesson.vb" />
@@ -544,12 +544,12 @@
     <Compile Include="Items\Equipment\Accesories\ROAmaraphne.vb" />
     <Compile Include="Items\Equipment\Accesories\RubyCirclet.vb" />
     <Compile Include="Items\Equipment\Accesories\ThrallCollar.vb" />
-    <Compile Include="Items\Equipment\Armor\FullBodyUpdated\BronzeArmor.vb" />
-    <Compile Include="Items\Equipment\Armor\FullBodyUpdated\BronzeBikini.vb" />
-    <Compile Include="Items\Equipment\Armor\FullBodyUpdated\ChitArmor.vb" />
-    <Compile Include="Items\Equipment\Armor\FullBodyUpdated\CowBra.vb" />
-    <Compile Include="Items\Equipment\Armor\VDayClothes.vb" />
-    <Compile Include="Items\Equipment\Armor\VNightLingerie.vb" />
+    <Compile Include="Items\Equipment\Armor\BronzeArmor.vb" />
+    <Compile Include="Items\Equipment\Armor\BronzeBikini.vb" />
+    <Compile Include="Items\Equipment\Armor\ChitArmor.vb" />
+    <Compile Include="Items\Equipment\Armor\CowBra.vb" />
+    <Compile Include="Items\Equipment\Armor\NotGoingToUpdateYet\VDayClothes.vb" />
+    <Compile Include="Items\Equipment\Armor\NotGoingToUpdateYet\VNightLingerie.vb" />
     <Compile Include="Items\Usable\PortalChalk.vb" />
     <Compile Include="Items\Usable\Potions\ClearPotion.vb" />
     <Compile Include="Items\Usable\Potions\MajHealthPotion.vb" />
@@ -617,18 +617,18 @@
     </Compile>
     <Compile Include="Items\Usable\Food\AngelFood.vb" />
     <Compile Include="Items\Usable\Food\Apple.vb" />
-    <Compile Include="Items\Equipment\Armor\FullBodyUpdated\Armor.vb" />
+    <Compile Include="Items\Equipment\Armor\Armor.vb" />
     <Compile Include="Items\Usable\Charms\AttackCharm.vb" />
     <Compile Include="Items\Equipment\Weapons\Misc\BareFists.vb" />
     <Compile Include="Items\Usable\Potions\Mystery Potions\FemininePotion.vb" />
     <Compile Include="Items\Usable\Potions\Mystery Potions\HazardousPotion.vb" />
     <Compile Include="Items\Usable\Potions\Mystery Potions\BEPotion.vb" />
     <Compile Include="Entities\NPC\Hostile\Bosses\Boss.vb" />
-    <Compile Include="Items\Equipment\Armor\FullBodyUpdated\BrawlerCosplay.vb" />
+    <Compile Include="Items\Equipment\Armor\BrawlerCosplay.vb" />
     <Compile Include="Items\Equipment\Weapons\Swords\BronzeXiphos.vb" />
-    <Compile Include="Items\Equipment\Armor\FullBodyUpdated\BunnySuit.vb" />
+    <Compile Include="Items\Equipment\Armor\BunnySuit.vb" />
     <Compile Include="Items\Usable\CatEars.vb" />
-    <Compile Include="Items\Equipment\Armor\FullBodyUpdated\CatLingerie.vb" />
+    <Compile Include="Items\Equipment\Armor\CatLingerie.vb" />
     <Compile Include="Items\Unimplemented\AnniverseryClothes.vb" />
     <Compile Include="WindowsForms\ClothingTester.Designer.vb">
       <DependentUpon>ClothingTester.vb</DependentUpon>
@@ -644,7 +644,7 @@
     </Compile>
     <Compile Include="Tiles\Chest.vb" />
     <Compile Include="Items\Usable\Food\ChickenLeg.vb" />
-    <Compile Include="Items\Equipment\Armor\FullBodyUpdated\ChickenSuit.vb" />
+    <Compile Include="Items\Equipment\Armor\ChickenSuit.vb" />
     <Compile Include="Items\Usable\Compass.vb" />
     <Compile Include="Items\Usable\Food\Cupcake.vb" />
     <Compile Include="Items\Usable\Charms\DefenceCharm.vb" />
@@ -709,9 +709,9 @@
     </Compile>
     <Compile Include="Items\Usable\FusionCrystal.vb" />
     <Compile Include="Items\Usable\Glowstick.vb" />
-    <Compile Include="Items\Equipment\Armor\FullBodyUpdated\GoddessGown.vb" />
+    <Compile Include="Items\Equipment\Armor\GoddessGown.vb" />
     <Compile Include="Items\Misc\Gold.vb" />
-    <Compile Include="Items\Equipment\Armor\FullBodyUpdated\GoldAdornment.vb" />
+    <Compile Include="Items\Equipment\Armor\GoldAdornment.vb" />
     <Compile Include="Items\Equipment\Armor\GoldArmor.vb" />
     <Compile Include="Items\Equipment\Weapons\Staffs\GoldenStaff.vb" />
     <Compile Include="Items\Equipment\Weapons\Swords\GoldSword.vb" />
@@ -724,10 +724,10 @@
     <Compile Include="Items\Item.vb" />
     <Compile Include="Items\Misc\Key.vb" />
     <Compile Include="Items\Unimplemented\LeatherWhip.vb" />
-    <Compile Include="Items\Equipment\Armor\FullBodyUpdated\LiveArmor.vb" />
-    <Compile Include="Items\Equipment\Armor\FullBodyUpdated\LiveLingerie.vb" />
+    <Compile Include="Items\Equipment\Armor\LiveArmor.vb" />
+    <Compile Include="Items\Equipment\Armor\LiveLingerie.vb" />
     <Compile Include="Items\Equipment\Weapons\Misc\MaidDuster.vb" />
-    <Compile Include="Items\Equipment\Armor\FullBodyUpdated\MaidOutfit.vb" />
+    <Compile Include="Items\Equipment\Armor\MaidOutfit.vb" />
     <Compile Include="Items\Usable\Charms\ManaCharm.vb" />
     <Compile Include="Items\Usable\Potions\ManaPotion.vb" />
     <Compile Include="Items\Equipment\Weapons\Misc\MidasGuantlet.vb" />
@@ -749,7 +749,7 @@
       <DependentUpon>Settings.settings</DependentUpon>
       <DesignTimeSharedInput>True</DesignTimeSharedInput>
     </Compile>
-    <Compile Include="Items\Equipment\Armor\FullBodyUpdated\Naked.vb" />
+    <Compile Include="Items\Equipment\Armor\Naked.vb" />
     <Compile Include="Entities\NPC\Non-Hostile\ShopNPC.vb" />
     <Compile Include="Items\Equipment\Weapons\Staffs\OakStaff.vb" />
     <Compile Include="Items\Usable\Food\PApple.vb" />
@@ -757,12 +757,12 @@
     <Compile Include="Items\Usable\Potions\Mystery Potions\MysteryPotion.vb" />
     <Compile Include="PriorityQue\PQ.vb" />
     <Compile Include="PriorityQue\PQInterface.vb" />
-    <Compile Include="Items\Equipment\Armor\FullBodyUpdated\PrincessGown.vb" />
+    <Compile Include="Items\Equipment\Armor\PrincessGown.vb" />
     <Compile Include="PriorityQue\Q.vb" />
     <Compile Include="Items\Usable\Potions\Mystery Potions\GentlePotion.vb" />
     <Compile Include="Items\Usable\Potions\RestorationPotion.vb" />
     <Compile Include="Items\Usable\RigWrench.vb" />
-    <Compile Include="Items\Equipment\Armor\FullBodyUpdated\Ropes.vb" />
+    <Compile Include="Items\Equipment\Armor\Ropes.vb" />
     <Compile Include="WindowsForms\SCPicker.Designer.vb">
       <DependentUpon>SCPicker.vb</DependentUpon>
     </Compile>
@@ -782,23 +782,23 @@
     <Compile Include="WindowsForms\ShopV2.vb">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="Items\Equipment\Armor\FullBodyUpdated\SkimpyClothes.vb" />
+    <Compile Include="Items\Equipment\Armor\SkimpyClothes.vb" />
     <Compile Include="Items\Equipment\Armor\SorcerersRobes.vb" />
     <Compile Include="Items\Equipment\Weapons\Swords\SoulBlade.vb" />
     <Compile Include="Items\Usable\Charms\SpeedCharm.vb" />
     <Compile Include="Items\Usable\Spellbooks\Spellbook.vb" />
-    <Compile Include="Items\Equipment\Armor\FullBodyUpdated\SportBra.vb" />
+    <Compile Include="Items\Equipment\Armor\SportBra.vb" />
     <Compile Include="Items\Equipment\Weapons\Staffs\Staff.vb" />
     <Compile Include="Entities\Player\State.vb" />
     <Compile Include="Tiles\Statue.vb" />
-    <Compile Include="Items\Equipment\Armor\FullBodyUpdated\MagGirlOutfit.vb" />
-    <Compile Include="Items\Equipment\Armor\FullBodyUpdated\SteelArmor.vb" />
-    <Compile Include="Items\Equipment\Armor\FullBodyUpdated\SteelBikini.vb" />
+    <Compile Include="Items\Equipment\Armor\MagGirlOutfit.vb" />
+    <Compile Include="Items\Equipment\Armor\SteelArmor.vb" />
+    <Compile Include="Items\Equipment\Armor\SteelBikini.vb" />
     <Compile Include="Items\Equipment\Weapons\Wands\MagGirlWand.vb" />
     <Compile Include="Items\Equipment\Weapons\Swords\SteelSword.vb" />
     <Compile Include="Items\Usable\Food\StickOfGum.vb" />
-    <Compile Include="Items\Equipment\Armor\FullBodyUpdated\SuccubusGarb.vb" />
-    <Compile Include="Items\Equipment\Armor\FullBodyUpdated\TankTop.vb" />
+    <Compile Include="Items\Equipment\Armor\SuccubusGarb.vb" />
+    <Compile Include="Items\Equipment\Armor\TankTop.vb" />
     <Compile Include="Items\Equipment\Weapons\Swords\TargaxSword.vb" />
     <Compile Include="Items\Usable\Potions\Mystery Potions\GSPotion.vb" />
     <Compile Include="Tiles\Traps\Trap.vb" />
@@ -806,7 +806,7 @@
     <Compile Include="Items\Usable\VialOfSlime.vb" />
     <Compile Include="Items\Equipment\Armor\WarriorsCuirass.vb" />
     <Compile Include="Items\Equipment\Weapons\Weapon.vb" />
-    <Compile Include="Items\Equipment\Armor\FullBodyUpdated\WitchCosplay.vb" />
+    <Compile Include="Items\Equipment\Armor\WitchCosplay.vb" />
     <Compile Include="Items\Equipment\Weapons\Staffs\WizardStaff.vb" />
   </ItemGroup>
   <ItemGroup>

@@ -276,20 +276,20 @@
         currAtrButton.Enabled = False
 
         currAttribute = pInd.facemark
-        Dim sexAttrList As List(Of Image)
+        Dim sexAttrList1 As List(Of Image)
         If portrait.sexBool Then
-            sexAttrList = defImgLib.atrs(pInd.facemark).getF
+            sexAttrList1 = defImgLib.atrs(pInd.facemark).getF
         Else
-            sexAttrList = defImgLib.atrs(pInd.facemark).getM
+            sexAttrList1 = defImgLib.atrs(pInd.facemark).getM
         End If
 
-        For i = 0 To sexAttrList.Count - 1
+        For i = 0 To sexAttrList1.Count - 1
             Dim x As Integer = (i * 71 * Me.Size.Width / 581)
             Dim y As Integer = 0
             Dim img As New PictureBox
-            img.BackgroundImage = sexAttrList(i)
+            If i <> 0 Then img.BackgroundImage = portrait.CreateFullBodyBMP({portrait.nullImg, portrait.iArr(pInd.face), sexAttrList1(i)}) Else img.BackgroundImage = portrait.CreateFullBodyBMP({portrait.nullImg, sexAttrList1(i)})
             img.Location = New Point(x, y)
-            img.Size = New Point(70 * Me.Size.Width / 581, 70 * Me.Size.Width / 581)
+            img.Size = New Point(70 * Me.Size.Width / 581, 260 * Me.Size.Width / 581)
             img.BackgroundImageLayout = ImageLayout.Stretch
             AddHandler img.Click, AddressOf PicOnClick
             pnlBody.Controls.Add(img)
@@ -686,6 +686,9 @@
 
         r = Int(Rnd() * 4)
         portrait.setIAInd(pInd.ears, r, portrait.sexBool, False)
+
+        r = Int(Rnd() * 6)
+        portrait.setIAInd(pInd.facemark, r, portrait.sexBool, False)
 
         r = Int(Rnd() * 11)
         portrait.setIAInd(pInd.mouth, r, portrait.sexBool, False)

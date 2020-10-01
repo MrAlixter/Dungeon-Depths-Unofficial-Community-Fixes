@@ -11,4 +11,13 @@
         dmg += (p.getATK) + (Me.aBoost)
         Return Player.calcDamage(dmg, m.defense)
     End Function
+
+    Public Overrides Sub onUnequip(ByRef p As Player, ByRef w As Weapon)
+        MyBase.onUnequip(p, w)
+
+        If p.perks(perk.tfcausingsword) <> -1 Then
+            CType(p.inv.item(p.perks(perk.tfcausingsword)), Sword).onUnequip(p, w)
+            p.perks(perk.tfcausingsword) = -1
+        End If
+    End Sub
 End Class

@@ -1,7 +1,7 @@
 ﻿Public Class MagGirlTF
     Inherits Transformation
 
-    Shared className As String = "Magical Girl"
+    Protected Const className As String = "Magical Girl"
 
     Sub New(n As Integer, tts As Integer, wi As Double, cbs As Boolean)
         MyBase.New(n, tts, wi, cbs)
@@ -27,7 +27,7 @@
             p.sex = "Female"
         End If
 
-        p.prt.setIAInd(pInd.hat, Portrait.imgLib.atrs(pInd.hat).getF.Count - 3, True, False)
+        'p.prt.setIAInd(pInd.hat, Portrait.imgLib.atrs(pInd.hat).getF.Count - 3, True, False)
 
         step1dialog(p)
 
@@ -53,7 +53,6 @@
         p.prt.setIAInd(pInd.fronthair, 8, True, True)
         p.prt.setIAInd(pInd.hat, 0, True, False)
 
-        p.reverseAllRoute()
     End Sub
     Overridable Sub tfClothes(ByRef p As Player)
         If p.inv.item(10).count < 1 Then p.inv.add(10, 1)
@@ -63,7 +62,7 @@
         Equipment.accChange("Nothing")
         Equipment.clothesChange("Magical_Girl_Outfit")
     End Sub
-    Sub step2()
+    Overridable Sub step2()
         Dim p As Player = Game.player1
         If p.magGState.initFlag Then
             p.magGState.load(p)
@@ -93,7 +92,6 @@
         p.changeClass("Mage")
 
         p.breastSize = 2
-        p.reverseAllRoute()
 
         p.prt.setIAInd(pInd.rearhair, 7, True, True)
         p.prt.setIAInd(pInd.ears, 0, True, False)

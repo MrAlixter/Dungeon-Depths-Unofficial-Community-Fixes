@@ -63,6 +63,8 @@
     willup          '61
     atkup           '62
     lurk            '63
+    tfcausingwand   '64
+    tfcausingsword  '65
 End Enum
 
 Public Class Player
@@ -157,23 +159,23 @@ Public Class Player
         Next
 
 
-        currState.read(playArray(0))
-        sState.read(playArray(1))
-        pState.read(playArray(2))
+        currState.read(playArray(0), v)
+        sState.read(playArray(1), v)
+        pState.read(playArray(2), v)
         pClass = classes(currState.pClass.name)
         pForm = forms(currState.pForm.name)
         Dim ind As Integer
         If v > 0.4 Then
             ind = CInt(playArray(3)) - 1
             For i = 0 To ind
-                formStates(i).read(playArray(4 + i))
+                formStates(i).read(playArray(4 + i), v)
                 If i = UBound(formStates) Then Exit For
             Next
             playArray = playArray(5 + ind).Split("*")
         Else
             ind = 7
             For i = 0 To 7
-                formStates(i).read(playArray(3 + i))
+                formStates(i).read(playArray(3 + i), v)
             Next
             playArray = playArray(4 + ind).Split("*")
         End If
@@ -748,6 +750,7 @@ Public Class Player
         Game.lblEvent.ForeColor = TextColor
         Game.lblNameTitle.ForeColor = TextColor
 
+        reverseAllRoute()
         drawPort()
         setPImage()
         UIupdate()
@@ -829,6 +832,8 @@ Public Class Player
             End If
             loopct += 1
         End While
+
+        reverseAllRoute()
         drawPort()
 
         Dim out = revertedAttributes.Count & " changes were reverted." & vbCrLf & "~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~"
@@ -1096,6 +1101,9 @@ Public Class Player
         If perks(perk.cupcake) > -1 Then
             If Game.turn Mod 20 = 0 Then perks(perk.cupcake) -= 1
         End If
+        If perks(perk.bunnyears) > -1 Then
+            PerkEffects.bunnyEars(Me)
+        End If
 
         'living armor
         If perks(perk.livearm) > -1 Then
@@ -1310,7 +1318,9 @@ Public Class Player
         If prt.oneLayerImgCheck(pForm.name, pClass.name) Is Nothing Then b = False Else b = True
     End Sub
     Public Sub drawPort()
+        reverseAllRoute()
         If Not solFlag Then Game.picPortrait.BackgroundImage = prt.draw(solFlag, isPetrified, AddressOf revertToSState, pForm.name, pClass.name)
+
         Game.picPortrait.Update()
 
         currState.save(Me)
@@ -1371,11 +1381,13 @@ Public Class Player
                 'handles routing for default options
                 If (i = pInd.eyebrows Or i = pInd.eyes) And prt.iArrInd(i).Item1 < 5 Then
                     prt.setIAInd(i, prt.iArrInd(i).Item1, True, False)
+                ElseIf (i = pInd.facemark) And prt.iArrInd(i).Item1 < 6 Then
+                    prt.setIAInd(i, prt.iArrInd(i).Item1, True, False)
                 ElseIf i <> pInd.blush Then
                     'handles routing for non-default options
                     Dim f = mfr(i).getFfromM(prt.iArrInd(i).Item1)
-                    If (i = pInd.face Or i = pInd.facemark) And f = -1 Then f = 0
-                    If f <> -1 Then prt.setIAInd(i, f, True, True)
+                    If (i = pInd.face) And f = -1 Then f = 0
+                    If f <> -1 Then prt.setIAInd(i, f, True, prt.iArrInd(i).Item3)
                 End If
             End If
         Next
@@ -1392,12 +1404,14 @@ Public Class Player
             If Int(Rnd() * 2) = 0 Or halfRevertFlag = False Then
                 'handles routing for default options
                 If (i = pInd.eyebrows Or i = pInd.eyes) And prt.iArrInd(i).Item1 < 5 Then
-                    prt.setIAInd(i, prt.iArrInd(i).Item1, True, False)
+                    prt.setIAInd(i, prt.iArrInd(i).Item1, False, False)
+                ElseIf (i = pInd.facemark) And prt.iArrInd(i).Item1 < 6 Then
+                    prt.setIAInd(i, prt.iArrInd(i).Item1, False, False)
                 ElseIf i <> pInd.blush Then
                     'handles routing for non-default options
                     Dim m = fmr(i).getMfromF(prt.iArrInd(i).Item1)
-                    If (i = pInd.face Or i = pInd.facemark) And m = -1 Then m = 0
-                    If m <> -1 Then prt.setIAInd(i, m, True, True)
+                    If (i = pInd.face) And m = -1 Then m = 0
+                    If m <> -1 Then prt.setIAInd(i, m, False, prt.iArrInd(i).Item3)
                 End If
             End If
         Next
@@ -1696,12 +1710,12 @@ Public Class Player
                 prt.setIAInd(pInd.shoulders, 5, False, False)
                 If breastSize < 1 Then breastSize = 1
         End Select
-        prt.portraitUDate()
     End Sub
 
     Public Overrides Sub addLust(ByVal i As Integer)
         lust += i
-
+        lust = Math.Max(lust, 0)
+        lust = Math.Min(lust, 100)
         drawPort()
     End Sub
 

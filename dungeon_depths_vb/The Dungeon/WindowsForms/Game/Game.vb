@@ -51,7 +51,7 @@ Public Class Game
     'other misc form1 instance variables
     Dim selectedItem As Item = New Item()   'the item Fhilighted in the inventory (NOT SAVED)
     Public turn As Integer = 0  '(NOT SAVED)
-    Public version As Double = 10.0     'the save file version
+    Public version As Double = 10.1    'the save file version
     Public sessionID As Integer = DateTime.Now.GetHashCode
 
     Public lblEventOnClose As Action    'the event method preformed when lblEvent closes (NOT SAVED)
@@ -1095,6 +1095,7 @@ Public Class Game
         If combatmode Then
             player1.nextCombatAction = Sub(t As Entity) Special.specPerform(t, player1, cboxSpec.Items(index))
         Else
+            turn += 1
             Special.specPerform(m, player1, cboxSpec.Items(index))
         End If
 
@@ -1690,7 +1691,7 @@ Public Class Game
             cboxSpec.Visible = False
             btnSpec.Visible = False
         End If
-        cboxSpec.Text = "-- Select --"
+
         queueSetup()
         Do While updateList.isEmpty() = False
             Dim u As Updatable = updateList.remove()
@@ -1699,6 +1700,7 @@ Public Class Game
         'updates the combat banner
         updatePnlCombat(player1, player1.currTarget)
         ttCosts.RemoveAll()
+        cboxSpec.Text = "-- Select --"
     End Sub
     'drink
     Sub drinkKey()
@@ -2072,8 +2074,8 @@ Public Class Game
         If mDun.numCurrFloor = 4 And mDun.floorboss(4) = "Ooze Empress" Then
             preBSBody = New State()
             preBSStartState = New State()
-            preBSBody.read(reader.ReadLine)
-            preBSStartState.read(reader.ReadLine)
+            preBSBody.read(reader.ReadLine, v)
+            preBSStartState.read(reader.ReadLine, v)
             preBSInventory = New ArrayList
             For i As Integer = 0 To reader.ReadLine()
                 preBSInventory.Add(reader.ReadLine())
@@ -2149,19 +2151,19 @@ Public Class Game
             MsgBox("Right Button Clicked")
         Else
             If solFlag Then
-                'Try
-                player1.solFlag = True
-                loadSave("saves/s" & fileNum & ".ave")
-                player1.solFlag = False
-                'Catch ex As System.IO.FileNotFoundException
-                '    MsgBox("Error 004: No save detected!")
-                'Catch ex2 As Exception
-                '    If MessageBox.Show("Error 005: Error in loaded in save file!" & vbCrLf & "Restart?", "Error 005", MessageBoxButtons.YesNo) = Windows.Forms.DialogResult.Yes Then
-                '        Application.Restart()
-                '    Else
-                '        Application.Exit()
-                '    End If
-                'End Try
+                Try
+                    player1.solFlag = True
+                    loadSave("saves/s" & fileNum & ".ave")
+                    player1.solFlag = False
+                Catch ex As System.IO.FileNotFoundException
+                    MsgBox("Error 004: No save detected!")
+                Catch ex2 As Exception
+                    If MessageBox.Show("Error 005: Error in loaded in save file!" & vbCrLf & "Restart?", "Error 005", MessageBoxButtons.YesNo) = Windows.Forms.DialogResult.Yes Then
+                        Application.Restart()
+                    Else
+                        Application.Exit()
+                    End If
+                End Try
             Else
                 save("saves/s" & fileNum & ".ave")
                 imagesWorkerArg = Convert.ToInt32(fileNum)
@@ -2308,6 +2310,7 @@ Public Class Game
         Dim reader As IO.StreamReader
         reader = IO.File.OpenText(a)
         Dim vers As Double = CDbl(reader.ReadLine())
+        reader.ReadLine()
         reader.ReadLine()
         reader.ReadLine()
         reader.ReadLine()

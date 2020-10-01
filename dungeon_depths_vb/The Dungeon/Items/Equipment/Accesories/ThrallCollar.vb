@@ -51,7 +51,7 @@
         formerClass = p.className
         formerEyeType = p.prt.iArrInd(pInd.eyes)
         p.savePState()
-        p.changeClass(perk.thrall)
+        p.changeClass("Thrall")
         If p.prt.sexBool Then
             p.prt.setIAInd(pInd.eyes, 19, True, True)
         Else
@@ -63,8 +63,7 @@
         p.drawPort()
     End Sub
     Public Overrides Sub onUnequip(ByRef p As Player)
-
-        If p.formName.Equals("Half-Succubus") Or p.className.Equals("Thrall") Then Exit Sub
+        If p.ongoingTFs.getAt("ThrallTF") Is Nothing And Not p.className.Equals("Thrall") And Not p.formName.Equals("Half-Succubus") Then Exit Sub
 
         p.ongoingTFs.remove("ThrallTF")
 

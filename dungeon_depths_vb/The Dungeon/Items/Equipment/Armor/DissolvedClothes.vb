@@ -1,20 +1,34 @@
 ﻿Public Class DissolvedClothes
     Inherits Armor
     Sub New()
+        '|ID Info|
         MyBase.setName("Dissolved_Clothes")
-        MyBase.setDesc("While at some point this set of apperal may have provided some defense, a generous dousing of slime has left it completely ruined." & vbCrLf &
-                       "+1 DEF")
         id = 80
         tier = Nothing
+
+        '|Item Flags|
         MyBase.setUsable(False)
+        MyBase.compressesBreasts = True
+        MyBase.isRandoTFAcceptable = False
+
+        '|Stats|
         MyBase.dBoost = 1
         MyBase.count = 0
         MyBase.value = 0
-        MyBase.compressesBreasts = True
+
+        '|Image Index|
         MyBase.bsizeneg1 = New Tuple(Of Integer, Boolean, Boolean)(32, False, True)
+        MyBase.bsize0 = New Tuple(Of Integer, Boolean, Boolean)(32, False, True)
         MyBase.bsize1 = New Tuple(Of Integer, Boolean, Boolean)(131, True, True)
         MyBase.bsize2 = New Tuple(Of Integer, Boolean, Boolean)(132, True, True)
 
-        MyBase.isRandoTFAcceptable = False
+        MyBase.usizeneg1 = New Tuple(Of Integer, Boolean, Boolean)(64, False, True)
+        MyBase.usize0 = New Tuple(Of Integer, Boolean, Boolean)(287, True, True)
+        MyBase.usize1 = New Tuple(Of Integer, Boolean, Boolean)(288, True, True)
+        MyBase.usize2 = New Tuple(Of Integer, Boolean, Boolean)(288, True, True)
+
+        '|Description|
+        MyBase.setDesc("While at some point this set of apperal may have provided some defense, a generous dousing of slime has left it completely ruined." & DDUtils.RNRN &
+                        getSizeInformation() & vbCrLf & getStatInformation())
     End Sub
 End Class

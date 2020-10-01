@@ -23,9 +23,13 @@
             Dim p = CType(cause, Player)
 
             If p.perks(perk.succubuscurse) > -1 Then
+
+                Dim isPTFed = p.perks(perk.succubuscurse) > 0
+
                 p.perks(perk.succubuscurse) = -1
+
                 Game.pushLstLog("The succubus's curse is lifted!")
-                Game.pushLblEvent("The succubus's curse is lifted!")
+                Game.pushLblEvent(If(isPTFed, "The succubus's curse is lifted!  However, this does not revert your transformation...", "The succubus's curse is lifted!"))
             End If
         End If
 

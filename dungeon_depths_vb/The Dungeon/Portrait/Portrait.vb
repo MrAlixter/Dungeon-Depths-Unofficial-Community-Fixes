@@ -14,14 +14,14 @@ Public Enum pInd
     clothes         '11
     face            '12
     blush           '13
-    midhair         '14
-    horns           '15
-    ears            '16
-    nose            '17
-    mouth           '18
-    eyes            '19
-    eyebrows        '20
-    facemark        '21
+    facemark        '14
+    midhair         '15
+    horns           '16
+    ears            '17
+    nose            '18
+    mouth           '19
+    eyes            '20
+    eyebrows        '21
     glasses         '22
     cloak           '23
     accessory       '24

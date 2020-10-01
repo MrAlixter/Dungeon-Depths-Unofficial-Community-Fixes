@@ -34,8 +34,8 @@
         Select Case iD
             Case 0
                 Game.player1.lust += 20
-                Game.player1.health -= 2 / Game.player1.getmaxHealth
-                Dim out As String = "𝘱𝘸𝘩𝘪𝘱! You smack your neck, expecting a bug, only to feel a sharp pain as your smack crushes a small dart and leaks its contents all over your neck.  Initially fearing some sort of poison, the blushing of your cheeks and "
+                Game.player1.health -= 2 / Game.player1.getMaxHealth
+                Dim out As String = "pwip! You smack your neck, expecting a bug, only to feel a sharp pain as your smack crushes a small dart and leaks its contents all over your neck.  Initially fearing some sort of poison, the blushing of your cheeks and "
                 If Game.player1.prt.sexBool Then
                     out += "warmth between your legs "
                 Else
@@ -46,7 +46,7 @@
                 Game.player1.drawPort()
             Case 1
                 Dim n As String = Game.player1.equippedArmor.getName()
-                Dim rng As Integer = Int(Rnd() * Game.currfloor.chestList.Count)
+                Dim rng As Integer = Int(Rnd() * Game.currFloor.chestList.Count)
                 Dim out As String = "A beam fires out of the wall to your left, striking you in the chest."
                 If n <> "Ropes" Then
                     If n <> "Naked" Then
@@ -57,20 +57,19 @@
                     out += "  Shortly after, a bundle of rope drops from the ceiling, ensnaring you, and as it is pulled taut, you find yourself in a rather unique, less mobile, position."
                     If Game.player1.breastSize > 5 Then
                         out += "  However, the ropes are not able to contain your massive breasts, and they quickly burst apart leaving you naked."
-                        Equipment.clothesChange("Naked")
+                        Equipment.equipArmor("Naked", False)
                         pos = New Point(-1, -1)
                         Game.pushLblEvent(out)
                         Exit Sub
                     End If
                 Else
-                    out += "  It doesn't seem to have done anything.  𝘞𝘦𝘪𝘳𝘥..."
+                    out += "  It doesn't seem to have done anything.  Weird..."
                 End If
                 Game.player1.inv.add(54, 1)
-                Equipment.clothesChange("Ropes")
+
+                Equipment.equipArmor("Ropes", False)
                 Game.player1.drawPort()
-                If transformation.canbeTFed(Game.player1) Then
-                    Game.player1.pState.save(Game.player1)
-                End If
+                Game.player1.savePState()
                 Game.player1.UIupdate()
                 Game.pushLblEvent(out)
             Case 2
@@ -85,7 +84,7 @@
                 End If
 
                 Game.player1.prt.skincolor = Color.FromArgb(Game.player1.prt.skincolor.A, r, g, b)
-                If transformation.canbeTFed(Game.player1) Then
+                If Transformation.canBeTFed(Game.player1) Then
                     Game.player1.pState.save(Game.player1)
                 End If
                 Game.player1.petrify(rubyTF, 1)
@@ -97,7 +96,7 @@
                 Game.player1.drawPort()
             Case 3
                 If Transformation.canBeTFed(Game.player1) Then
-                    Game.player1.ongoingTFs.Add(New BUDollTF())
+                    Game.player1.ongoingTFs.add(New BUDollTF())
                     Game.player1.update()
                 Else
                     Game.pushLblEvent("You spot a slip of paper on the floor, although a gust of wind blows it away before you can investigate it further...")

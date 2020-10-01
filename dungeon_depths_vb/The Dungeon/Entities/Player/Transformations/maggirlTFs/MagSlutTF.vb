@@ -1,7 +1,7 @@
 ﻿Public NotInheritable Class MagSlutTF
     Inherits MagGirlTF
 
-    Shared className As String = "Magical Slut"
+    Protected Shadows Const className As String = "Magical Slut"
 
 
     Sub New(n As Integer, tts As Integer, wi As Double, cbs As Boolean)
@@ -42,8 +42,6 @@
         p.prt.setIAInd(pInd.fronthair, 30, True, True)
         p.prt.setIAInd(pInd.hat, 0, True, False)
 
-        p.reverseAllRoute()
-
         If p.isUnwilling() Then p.pout()
     End Sub
     Overrides Sub tfClothes(ByRef p As Player)
@@ -53,6 +51,26 @@
 
         Equipment.accChange("Nothing")
         Equipment.clothesChange("Magical_Slut_Outfit")
+    End Sub
+
+    Overrides Sub step2()
+        Dim p As Player = Game.player1
+
+        tfBody(p)
+
+        setSpells(p)
+
+        tfClothes(p)
+
+        p.changeClass(className)
+
+        Game.lblEvent.Text = ""
+        Game.lblEvent.Visible = False
+        p.canMoveFlag = True
+
+        p.drawPort()
+
+        stopTF()
     End Sub
 
     Public Sub fullTF(ByRef p As Player)

@@ -46,7 +46,6 @@
         Equipment.clothesChange("Naked")
 
         p.breastSize = 4
-        p.reverseallroute()
 
         p.prt.setIAInd(pInd.ears, 5, True, True)
         p.prt.setIAInd(pInd.mouth, 18, True, True)

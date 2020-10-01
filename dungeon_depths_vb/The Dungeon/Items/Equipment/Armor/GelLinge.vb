@@ -2,38 +2,53 @@
     Inherits Armor
 
     Sub New()
+        '|ID Info|
         MyBase.setName("Gelatinous_Negligee")
-        MyBase.setDesc("Negligee might even be too much to describe this skimpy outfit formed from the a pink goo that unfortunately only slimes can wear." & vbCrLf & _
-                       "Fits all sizes." & vbCrLf & _
-                       "+30 Max HP")
         id = 138
         tier = Nothing
-        isMonsterDrop = False
+
+        '|Item Flags|
         MyBase.setUsable(False)
+        MyBase.compressesBreasts = True
+        MyBase.isMonsterDrop = False
+        MyBase.isRandoTFAcceptable = False
+
+        '|Stats|
         MyBase.hBoost = 30
         MyBase.count = 0
         MyBase.value = 0
-        MyBase.bsizeneg1 = New Tuple(Of Integer, Boolean, Boolean)(51, False, True)
-        MyBase.bsize0 = New Tuple(Of Integer, Boolean, Boolean)(198, True, True)
-        MyBase.bsize1 = New Tuple(Of Integer, Boolean, Boolean)(191, True, True)
-        MyBase.bsize2 = New Tuple(Of Integer, Boolean, Boolean)(192, True, True)
-        MyBase.bsize3 = New Tuple(Of Integer, Boolean, Boolean)(193, True, True)
-        MyBase.bsize4 = New Tuple(Of Integer, Boolean, Boolean)(194, True, True)
-        MyBase.bsize5 = New Tuple(Of Integer, Boolean, Boolean)(195, True, True)
-        MyBase.bsize6 = New Tuple(Of Integer, Boolean, Boolean)(196, True, True)
-        MyBase.bsize7 = New Tuple(Of Integer, Boolean, Boolean)(197, True, True)
-        MyBase.compressesBreasts = True
 
-        MyBase.isRandoTFAcceptable = False
+        '|Image Index|
+        MyBase.bsizeneg1 = New Tuple(Of Integer, Boolean, Boolean)(51, False, True)
+        MyBase.bsize0 = New Tuple(Of Integer, Boolean, Boolean)(191, True, True)
+        MyBase.bsize1 = New Tuple(Of Integer, Boolean, Boolean)(192, True, True)
+        MyBase.bsize2 = New Tuple(Of Integer, Boolean, Boolean)(193, True, True)
+        MyBase.bsize3 = New Tuple(Of Integer, Boolean, Boolean)(194, True, True)
+        MyBase.bsize4 = New Tuple(Of Integer, Boolean, Boolean)(195, True, True)
+        MyBase.bsize5 = New Tuple(Of Integer, Boolean, Boolean)(196, True, True)
+        MyBase.bsize6 = New Tuple(Of Integer, Boolean, Boolean)(197, True, True)
+        MyBase.bsize7 = New Tuple(Of Integer, Boolean, Boolean)(198, True, True)
+
+        MyBase.usizeneg1 = New Tuple(Of Integer, Boolean, Boolean)(58, False, True)
+        MyBase.usize0 = New Tuple(Of Integer, Boolean, Boolean)(281, True, True)
+        MyBase.usize1 = New Tuple(Of Integer, Boolean, Boolean)(282, True, True)
+        MyBase.usize2 = New Tuple(Of Integer, Boolean, Boolean)(283, True, True)
+        MyBase.usize3 = New Tuple(Of Integer, Boolean, Boolean)(284, True, True)
+        MyBase.usize4 = New Tuple(Of Integer, Boolean, Boolean)(285, True, True)
+        MyBase.usize5 = New Tuple(Of Integer, Boolean, Boolean)(286, True, True)
+
+        '|Description|
+        MyBase.setDesc("Negligee might even be too much to describe this skimpy outfit formed from the a pink goo that unfortunately only slimes can wear." & DDUtils.RNRN &
+                        getSizeInformation() & vbCrLf & getStatInformation())
     End Sub
 
     Public Overrides Sub onEquip(ByRef p As Player)
         MyBase.onEquip(p)
 
-        If Not p.formName.Contains("Slime") And Not p.formName.Contains("Goo") Then
-            Equipment.clothesChange("Naked")
-            Game.pushLblEvent("Your clothes melt off!")
-            p.drawPort()
-        End If
+        'If Not p.formName.Contains("Slime") And Not p.formName.Contains("Goo") Then
+        '    Equipment.clothesChange("Naked")
+        '    Game.pushLblEvent("Your clothes melt off!")
+        '    p.drawPort()
+        'End If
     End Sub
 End Class

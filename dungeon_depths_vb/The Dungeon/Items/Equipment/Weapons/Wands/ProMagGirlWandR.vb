@@ -2,23 +2,32 @@
     Inherits MagGirlWand
 
     Sub New()
+        '|ID Info|
         MyBase.setName("Pro_Mag._G._Wand_(R)")
-        MyBase.setDesc("A mysterious wand used by a mysterious protector." & vbCrLf & "+33 ATK, +15 Max Mana")
         id = 213
         tier = Nothing
+
+        '|Item Flags|
         MyBase.setUsable(False)
+        MyBase.isMonsterDrop = False
+        MyBase.isRandoTFAcceptable = False
+        mgOutfit = 211
+
+        '|Stats|
         MyBase.aBoost = 33
         MyBase.mBoost = 15
         MyBase.count = 0
         MyBase.value = 2000
 
-        mgOutfit = 211
+        '|Description|
+        MyBase.setDesc("A mysterious wand used by a mysterious protector." & vbCrLf & "+33 ATK, +15 Max Mana")
     End Sub
 
     Public Overrides Sub onEquip(ByRef p As Player)
         If Not p.className.Equals("Magical Girl") Then
 
             Dim magicGirlTF = New ProMagGirlRTF(2, 0, 0, False)
+            p.perks(perk.tfcausingwand) = id
             magicGirlTF.update()
             p.ongoingTFs.add(magicGirlTF)
         End If

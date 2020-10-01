@@ -19,6 +19,7 @@
         If Not p.className.Equals("Magical Girl") Then
 
             Dim magicGirlTF = New MagGirlRTF(2, 0, 0, False)
+            p.perks(perk.tfcausingwand) = id
             magicGirlTF.update()
             p.ongoingTFs.add(magicGirlTF)
         End If

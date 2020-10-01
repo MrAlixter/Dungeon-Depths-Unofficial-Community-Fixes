@@ -186,6 +186,9 @@
         End If
     End Sub
     Sub sevenTailsFight()
+        If Game.combatmode Then Game.fromCombat()
+        If Game.npcmode Then Game.hideNPCButtons()
+
         Dim m As SevenTails = MiniBoss.miniBossFactory(7)
 
         'adds the miniboss to combat queues

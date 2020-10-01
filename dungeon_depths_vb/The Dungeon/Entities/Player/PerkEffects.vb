@@ -166,6 +166,7 @@
             If p.perks(perk.bunnyears) < 2 Then
                 p.perks(perk.bunnyears) = 2
                 BunnyBimboTF.tfPlayer(1, p)
+                p.drawPort()
             End If
         End If
     End Sub
@@ -268,7 +269,7 @@
         If p.perks(perk.atkup) > 0 Then
             p.perks(perk.atkup) -= 1
         Else
-            p.wBuff = 0
+            p.aBuff = 0
             p.perks(perk.atkup) = -1
             Game.pushLstLog("Attack Up has worn off.")
         End If
@@ -400,9 +401,10 @@
     End Sub
     Private Shared Sub randomPoly()
         Randomize(Game.currFloor.floorCode.GetHashCode)
-
+        Game.player1.savePState()
         Dim tfs As Dictionary(Of String, Action) = New Dictionary(Of String, Action)
         tfs.Add("Minotaur Cow", AddressOf New MinotaurCowTF().step1)
+        tfs.Add("Minotaur Bull", AddressOf New MinoMTF().fulltf)
         tfs.Add("Dragon", AddressOf New DragonTF().step1)
         tfs.Add("Succubus", AddressOf New SuccubusTF().step1)
         tfs.Add("Slime", AddressOf New slimetf().step1)
@@ -410,7 +412,14 @@
         tfs.Add("Cake", AddressOf New TTCCBF().step1)
 
         Dim form = tfs.Keys(Int(Rnd() * (tfs.Keys.Count - 1)))
+        While Game.player1.formName.Equals(form)
+            form = tfs.Keys(Int(Rnd() * (tfs.Keys.Count - 1)))
+        End While
+        Game.player1.revertToPState()
+        Game.player1.perks(perk.polymorphed) = 999
         tfs(form)()
+        Game.player1.drawPort()
+        Game.player1.UIupdate()
         Game.pushLstLog("You're enveloped by a crimson aura...")
         Game.pushLblEvent("You are swiftly enveloped by a blinding crimson aura!  By the time you can see again, it's obvious that you've been physically changed by your curse.")
     End Sub

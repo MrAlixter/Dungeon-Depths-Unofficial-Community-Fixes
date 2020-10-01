@@ -18,6 +18,7 @@
         If Not p.className.Equals("Magical Girl") Then
 
             Dim magicGirlTF = New MagGirlTF(2, 0, 0, False)
+            p.perks(perk.tfcausingwand) = id
             magicGirlTF.update()
             p.ongoingTFs.add(magicGirlTF)
         End If
@@ -25,7 +26,8 @@
 
     Public Overrides Sub onunEquip(ByRef p As Player, ByRef w As Weapon)
         If p.className.Equals("Magical Girl") And Not w Is Nothing AndAlso Not w.GetType.IsSubclassOf(GetType(Wand)) Then
-            Game.pushLstLog("Putting away your wand causes you to change into your regular self!")
+            Game.pushLstLog("Putting away your wand causes you to change into your regular self!  Heartblast Starcannon spell forgotten...")
+            If p.knownSpecials.Contains("Heartblast Starcannon") Then p.knownSpecials.Remove("Heartblast Starcannon")
             p.inv.add(mgOutfit, -1)
             p.magGState.save(p)
             p.revertToPState()

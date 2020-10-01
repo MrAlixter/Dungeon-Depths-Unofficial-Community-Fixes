@@ -7,6 +7,8 @@
         id = 203
         tier = Nothing
         MyBase.setUsable(False)
+        MyBase.isMonsterDrop = False
+        MyBase.isRandoTFAcceptable = False
         MyBase.mBoost = 20
         MyBase.dBoost = 13
         MyBase.count = 0
@@ -18,6 +20,7 @@
     Public Overrides Sub onEquip(ByRef p As Player)
         If Not p.className.Equals("Magical Girl") Then
             Dim magicGirlTF = New ProMagGirlTF(2, 0, 0, False)
+            p.perks(perk.tfcausingwand) = id
             magicGirlTF.update()
             p.ongoingTFs.add(magicGirlTF)
         End If

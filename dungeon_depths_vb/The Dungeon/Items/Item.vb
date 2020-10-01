@@ -16,13 +16,9 @@
     Public durability As Integer = 100
 
     Overloads Function CompareTo(ByVal obj As Object) As Integer Implements IComparable.CompareTo
-        Dim r As Integer
-        Try
-            r = Me.getName.CompareTo(obj.getName.ToString)
-        Catch ex As Exception
-            r = 0
-        End Try
-        Return r
+        If Not obj.GetType().IsSubclassOf(GetType(Item)) Or obj Is Nothing OrElse obj.getname Is Nothing OrElse Me.getName Is Nothing Then Return 0
+
+        Return Me.getName.CompareTo(obj.getName.ToString)
     End Function
     'getters/setters
     Overridable Function getName() As String

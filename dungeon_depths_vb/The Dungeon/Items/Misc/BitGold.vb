@@ -4,8 +4,10 @@
     Sub New()
         MyBase.setName("BitGold")
         MyBase.setDesc("An untraceable, decenteralized alternative to gold with a value that varries from day to day.")
+        MyBase.id = 229
         tier = Nothing
         MyBase.setUsable(False)
+        MyBase.isRandoTFAcceptable = False
         MyBase.count = 0
 
         Randomize(DateTime.Now.ToString.GetHashCode)

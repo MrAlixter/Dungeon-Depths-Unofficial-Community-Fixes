@@ -46,7 +46,6 @@
         p.prt.haircolor = c
         p.prt.setIAInd(pInd.rearhair, 29, True, True)
         p.breastSize = 4
-        p.reverseallroute()
         p.prt.setIAInd(pInd.face, 0, True, False)
         p.prt.setIAInd(pInd.midhair, 33, True, True)
         p.prt.setIAInd(pInd.nose, 0, True, False)

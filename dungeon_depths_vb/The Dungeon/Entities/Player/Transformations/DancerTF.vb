@@ -32,8 +32,6 @@
         p.prt.setIAInd(pInd.fronthair, 18, True, True)
         p.prt.setIAInd(pInd.hat, 8, True, False)
 
-        p.reverseAllRoute()
-
         p.changeHairColor(BimboTF.bimboyellow1)
 
         If p.equippedArmor.dBoost > 15 Then

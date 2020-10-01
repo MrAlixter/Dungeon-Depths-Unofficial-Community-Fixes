@@ -38,9 +38,8 @@
 
         Equipment.clothesChange("Valkyrie_Armor")
 
-        p.reverseAllRoute()
-        If Not p.knownSpecials.Contains("Blazing Angel Strike") Then p.knownSpecials.Add("Blazing Angel Strike")
-        Game.pushLstLog("""Blazing Angel Strike"" special learned!")
+        If Not p.knownSpecials.Contains("Helix Slash") Then p.knownSpecials.Add("Helix Slash")
+        Game.pushLstLog("""Helix Slash"" special learned!")
         p.canMoveFlag = True
     End Sub
 

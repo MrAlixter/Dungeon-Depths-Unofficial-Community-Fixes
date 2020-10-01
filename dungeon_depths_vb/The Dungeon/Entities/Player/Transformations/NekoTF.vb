@@ -152,7 +152,6 @@
         Dim p = Game.player1
         If p.breastSize < 7 Then
             p.breastSize += 1
-            p.reverseallroute()
         End If
     End Sub
 End Class

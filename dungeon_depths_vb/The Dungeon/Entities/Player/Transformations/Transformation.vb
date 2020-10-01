@@ -99,7 +99,7 @@ Public MustInherit Class Transformation
                 Return New PrincessTF(CInt(s(0)), CInt(s(1)), CInt(s(2)), CDbl(s(3)), CBool(s(4)), CBool(s(6)))
             Case "Arachne"
                 Return New ArachneTF(CInt(s(0)), CInt(s(1)), CInt(s(2)), CDbl(s(3)), CBool(s(4)), CBool(s(6)))
-            Case perk.blind
+            Case "Blind"
                 Return New Blindness(CInt(s(0)), CInt(s(1)), CInt(s(2)), CDbl(s(3)), CBool(s(4)), CBool(s(6)))
             Case "Valkyrie"
                 Return New ValkyrieTF2(CInt(s(0)), CInt(s(1)), CInt(s(2)), CDbl(s(3)), CBool(s(4)), CBool(s(6)))

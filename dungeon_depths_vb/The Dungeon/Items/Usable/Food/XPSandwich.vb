@@ -7,6 +7,8 @@
         id = 228
         tier = Nothing
         MyBase.setUsable(True)
+        MyBase.isMonsterDrop = False
+        MyBase.isRandoTFAcceptable = False
         MyBase.count = 0
         MyBase.value = 150
         setCalories(25)

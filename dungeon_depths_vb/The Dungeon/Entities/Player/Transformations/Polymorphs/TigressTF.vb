@@ -49,8 +49,6 @@
         p.TextColor = Color.Orange
         out += "[Transformation decription pending]"
 
-        p.reverseAllRoute()
-
         Game.pushLblEvent(out)
     End Sub
 End Class

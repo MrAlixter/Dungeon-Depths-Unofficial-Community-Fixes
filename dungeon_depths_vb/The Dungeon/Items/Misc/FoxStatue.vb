@@ -7,6 +7,8 @@
         id = 224
         tier = Nothing
         MyBase.setUsable(False)
+        MyBase.isMonsterDrop = False
+        MyBase.isRandoTFAcceptable = False
         MyBase.count = 0
         MyBase.value = 0
 

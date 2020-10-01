@@ -38,8 +38,6 @@
         'other
         p.prt.setIAInd(pInd.cloak, 0, True, False)
 
-        p.reverseAllRoute()
-
         p.changeHairColor(DDUtils.cShift(p.prt.haircolor, BimboTF.bimboyellow2, 50))
 
         If p.inv.getCountAt(222) < 1 Then p.inv.add(222, 1)

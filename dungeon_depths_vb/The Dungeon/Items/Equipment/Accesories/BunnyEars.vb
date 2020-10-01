@@ -2,18 +2,29 @@
     Inherits Accessory
 
     Sub New()
+        '|ID Info|
         MyBase.setName("Bunny_Ears")
-        MyBase.setDesc("A black headband with a pair of white rabbit ears that would go well with .  While it seems ordinary enough at a glance, every once and a while it sparks suspiciously." & vbCrLf & _
-                       "+22 Speed, Dodge Effect" & vbCrLf &
-                       "If equipped by a Bunny Girl,  +Max HP, DEF based on equipped armor, +Max Mana based on lust")
         id = 225
         If DDDateTime.isAni Then tier = 2 Else tier = Nothing
+
+        '|Item Flags|
         MyBase.setUsable(False)
+        MyBase.isMonsterDrop = False
+        MyBase.isRandoTFAcceptable = False
+
+        '|Stats|
         MyBase.sBoost = 22
         MyBase.count = 0
         MyBase.value = 4000
+
+        '|Image Index|
         MyBase.fInd = New Tuple(Of Integer, Boolean, Boolean)(0, True, True)
         MyBase.mInd = New Tuple(Of Integer, Boolean, Boolean)(0, False, True)
+
+        '|Description|
+        MyBase.setDesc("A black headband with a pair of white rabbit ears that would go well with .  While it seems ordinary enough at a glance, every once and a while it sparks suspiciously." & vbCrLf & _
+                           "+22 Speed, Dodge Effect" & vbCrLf &
+                           "If equipped by a Bunny Girl,  +Max HP, DEF based on equipped armor, +Max Mana based on lust")
     End Sub
     Public Overrides Sub onEquip(ByRef p As Player)
         p.prt.setIAInd(pInd.hat, 14, True, True)

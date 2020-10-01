@@ -151,13 +151,25 @@
         Dim p = Game.player1
 
         Game.picNPC.BackgroundImage = ShopNPC.npcLib.atrs(0).getAt(65)
-        Game.pushNPCDialog("AHHH, what the hell!  Where did...  Why would...  WHAT?!?", AddressOf p.die)
+        Game.pushNPCDialog("AHHH, what the hell!  Where did...  Why would...  WHAT?!?", AddressOf stailsDeath3)
     End Sub
     Public Sub stailsDeath3()
         Dim p = Game.player1
 
+        'Game.picNPC.BackgroundImage = ShopNPC.npcLib.atrs(0).getAt(66)
+        Game.picNPC.Visible = False
+        Game.pushLblEvent("As she relaxes her posture and her suprise fades into visible annoyance, the kitsune angles her weapon in your general direction. " & DDUtils.RNRN &
+                          """Clearly you're a product of my sister's work...  I don't suppose you were one of her opponents, were you?""" & DDUtils.RNRN &
+                          "With a rush of scorching wind, the edge of her blade glows white and the air surrounding it bursts into flame.  As the blaze engulfs you, her expression hardens and she continues," & DDUtils.RNRN &
+                          """Well, you should know for the rest of whatever future awaits you...""", AddressOf stailsDeath4)
+    End Sub
+    Public Sub stailsDeath4()
+        Dim p = Game.player1
+
         Game.picNPC.BackgroundImage = ShopNPC.npcLib.atrs(0).getAt(66)
-        Game.pushNPCDialog("How dare she...  IT'S NOT EVEN MY BIRTHDAY!!!", AddressOf p.die)
+        Game.picNPC.Visible = True
+        Game.pushNPCDialog("""...that I am nothing like my sister.""" & DDUtils.RNRN &
+                           "Press any non combat key to continue...", AddressOf p.die)
     End Sub
 
     '|Arachne Fight|

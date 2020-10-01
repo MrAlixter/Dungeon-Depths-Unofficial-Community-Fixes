@@ -23,7 +23,6 @@
         Equipment.weaponChange("Fists")
 
         'dragon transformation
-        p.prt.setIAInd(pInd.hat, Portrait.imgLib.atrs(pInd.hat).getF.Count - 2, True, False)
         If Not p.knownSpells.Contains("Dragon's Breath") Then p.knownSpells.Add("Dragon's Breath")
 
         'transformation description push
