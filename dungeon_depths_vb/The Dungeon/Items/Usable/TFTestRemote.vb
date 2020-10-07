@@ -14,7 +14,7 @@
     End Sub
     Public Overrides Sub use(ByRef p As Player)
         Dim form = InputBox("TF to... [Half-Gorgon, Gynoid, Amazon, Mindless, Rando, Half-Broodmother, Broodmother, " &
-                            "Minotaur Cow, Dragon, Succubus, Slime, Bimbo, Cake, Blob, Horse, Oni, Alraune, Minotaur Bull, Targax]:")
+                            "Minotaur Cow, Dragon, Succubus, Slime, Bimbo, Cake, Blob, Horse, Oni, Alraune, Minotaur Bull, Targax, Half-Dragon (R)]:")
 
         Dim tfs As Dictionary(Of String, Transformation) = New Dictionary(Of String, Transformation)
         Dim tf2s As Dictionary(Of String, Action) = New Dictionary(Of String, Action)
@@ -24,6 +24,7 @@
         tfs.Add("Mindless", New MindlessTF)
         tfs.Add("Rando", New RandoTF)
         tfs.Add("Half-Broodmother", Nothing)
+        tfs.Add("Half-Dragon (R)", Nothing)
         tfs.Add("Broodmother", Nothing)
         tfs.Add("Blob", Nothing)
         tfs.Add("Horse", Nothing)
@@ -52,7 +53,8 @@
             End If
 
             If form.Equals("Half-Broodmother") Or form.Equals("Broodmother") Or
-                form.Equals("Blob") Or form.Equals("Horse") Or form.Equals("Oni") Then
+                form.Equals("Blob") Or form.Equals("Horse") Or form.Equals("Oni") Or
+                form.Equals("Half-Dragon (R)") Then
                 p.changeForm(form)
                 p.drawPort()
                 Exit Sub

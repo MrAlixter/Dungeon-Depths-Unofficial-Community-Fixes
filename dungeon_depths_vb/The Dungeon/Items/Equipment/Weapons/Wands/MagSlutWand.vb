@@ -2,7 +2,7 @@
     Inherits MagGirlWand
 
     Sub New()
-        MyBase.setName("Magical_Girl_Wand​")
+        MyBase.setName("​Magical_Girl_Wand​")
         MyBase.setDesc("A heart adorned wand used by a mysterious protector.  Every once in a while, if flickers with a sinister crimson aura" & vbCrLf & "+7 ATK, +20 Max Mana")
         id = 171
         tier = Nothing

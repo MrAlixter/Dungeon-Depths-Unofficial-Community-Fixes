@@ -472,7 +472,7 @@ Public Class Player
         forms.Add("Half-Slime", New HalfSlime())
         forms.Add("Tigress", New Tigress())
         forms.Add("Dragon", New Dragon())
-        forms.Add("Half-Dragon", New HalfDragon())
+        forms.Add("Half-Dragon (R)", New HalfDragonR())
         forms.Add("Harpy", New Harpy())
         forms.Add("Djinn", New Djinn())
         forms.Add("Kitsune", New Kitsune())
@@ -542,8 +542,8 @@ Public Class Player
         End If
         If pClass.name.Equals("Thrall") Then
             If Int(Rnd() * 2) = 1 Then
-                Dim out = "You've found one of the crystals your controller is seeking!  As you circle it, you feel a familiar presence enter your mind.  " & _
-                    """Yes!  You've found it!"" your overseer states exitedly, ""I'll be over shortly, don't go anywhere and don't touch that crystal.""" & vbCrLf & _
+                Dim out = "You've found one of the crystals your controller is seeking!  As you circle it, you feel a familiar presence enter your mind.  " & DDUtils.RNRN &
+                    """Yes!  You've found it!"" your overseer states exitedly, ""I'll be over shortly, don't go anywhere and don't touch that crystal.""" & DDUtils.RNRN &
                     "Obeying, you take a seat and wait for a few minutes before a violet portal opens up near the crystal and your master steps out."
                 If will > 7 Then
                     out += "  In their attention to the crystal, they don't seem to notice you at all giving you a few minutes to yourself." & DDUtils.RNRN & "Wait... if they aren't paying attention to you..." & DDUtils.RNRN & "You fiddle around with your collar, and they still don't seem to notice your actions, so you leverage your thumb in the collars joint."
@@ -1369,7 +1369,7 @@ Public Class Player
         breastSize = -1
         buttSize = -1
         dickSize = Math.Max(1, dickSize)
-        perks(2) = False
+        perks(perk.slutcurse) = -1
         idRouteFM()
         If perks(perk.swordpossess) > -1 Then perks(perk.swordpossess) = 0
     End Sub
@@ -1454,25 +1454,25 @@ Public Class Player
     Sub bsizeroute()
         If Portrait.imgLib Is Nothing Or prt.iArr Is Nothing Or
             prt.iArrInd Is Nothing Or solFlag Then Exit Sub
-        If (prt.checkFemInd(pInd.chest, 2) Or prt.checkFemInd(pInd.chest, 9)) And breastSize <> 1 Then
+        If (prt.checkFemInd(pInd.chest, pForm.bsize1.Item1) Or prt.checkFemInd(pInd.chest, 9)) And breastSize <> 1 Then
             breastSize = 1
-        ElseIf (prt.checkFemInd(pInd.chest, 3) Or prt.checkFemInd(pInd.chest, 10)) And breastSize <> 2 Then
+        ElseIf (prt.checkFemInd(pInd.chest, pForm.bsize2.Item1) Or prt.checkFemInd(pInd.chest, 10)) And breastSize <> 2 Then
             breastSize = 2
-        ElseIf (prt.checkFemInd(pInd.chest, 4) Or prt.checkFemInd(pInd.chest, 11)) And breastSize <> 3 Then
+        ElseIf (prt.checkFemInd(pInd.chest, pForm.bsize3.Item1) Or prt.checkFemInd(pInd.chest, 11)) And breastSize <> 3 Then
             breastSize = 3
-        ElseIf (prt.checkFemInd(pInd.chest, 5) Or prt.checkFemInd(pInd.chest, 12)) And breastSize <> 4 Then
+        ElseIf (prt.checkFemInd(pInd.chest, pForm.bsize4.Item1) Or prt.checkFemInd(pInd.chest, 12)) And breastSize <> 4 Then
             breastSize = 4
-        ElseIf (prt.checkFemInd(pInd.chest, 6) Or prt.checkFemInd(pInd.chest, 13)) And breastSize <> 5 Then
+        ElseIf (prt.checkFemInd(pInd.chest, pForm.bsize5.Item1) Or prt.checkFemInd(pInd.chest, 13)) And breastSize <> 5 Then
             breastSize = 5
-        ElseIf (prt.checkFemInd(pInd.chest, 7) Or prt.checkFemInd(pInd.chest, 14)) And breastSize <> 6 Then
+        ElseIf (prt.checkFemInd(pInd.chest, pForm.bsize6.Item1) Or prt.checkFemInd(pInd.chest, 14)) And breastSize <> 6 Then
             breastSize = 6
-        ElseIf (prt.checkFemInd(pInd.chest, 8) Or prt.checkFemInd(pInd.chest, 15)) And breastSize <> 7 Then
+        ElseIf (prt.checkFemInd(pInd.chest, pForm.bsize7.Item1) Or prt.checkFemInd(pInd.chest, 15)) And breastSize <> 7 Then
             breastSize = 7
-        ElseIf (prt.checkMalInd(pInd.chest, 1)) And breastSize <> 0 Then
+        ElseIf (prt.checkMalInd(pInd.chest, pForm.bsize0.Item1)) And breastSize <> 0 Then
             breastSize = 0
-        ElseIf (prt.checkMalInd(pInd.chest, 0)) And (prt.checkMalInd(pInd.shoulders, 7)) And breastSize <> -2 Then
+        ElseIf (prt.checkMalInd(pInd.chest, pForm.bsizeneg2.Item1)) And (prt.checkMalInd(pInd.shoulders, 7)) And breastSize <> -2 Then
             breastSize = -2
-        ElseIf (prt.checkMalInd(pInd.chest, 0)) And breastSize <> -1 Then
+        ElseIf (prt.checkMalInd(pInd.chest, pForm.bsizeneg1.Item1)) And breastSize <> -1 Then
             breastSize = -1
         End If
     End Sub
@@ -1480,43 +1480,43 @@ Public Class Player
         Select Case breastSize
             Case -2
                 If shoulderFlag Then prt.setIAInd(pInd.shoulders, 7, False, False)
-                prt.setIAInd(pInd.chest, 0, True, False)
+                prt.setIAInd(pInd.chest, pForm.bsizeneg2)
                 buttSize = -2
             Case -1
                 If shoulderFlag Then prt.setIAInd(pInd.shoulders, 0, False, False)
-                prt.setIAInd(pInd.chest, 0, True, False)
+                prt.setIAInd(pInd.chest, pForm.bsizeneg1)
                 buttSize = -1
             Case 0
                 If shoulderFlag Then prt.setIAInd(pInd.shoulders, 1, False, False)
-                prt.setIAInd(pInd.chest, 1, True, False)
+                prt.setIAInd(pInd.chest, pForm.bsize0)
                 buttSize = 0
             Case 1
                 If shoulderFlag Then prt.setIAInd(pInd.shoulders, 2, True, False)
-                prt.setIAInd(pInd.chest, 9, True, False)
+                prt.setIAInd(pInd.chest, pForm.bsize1)
                 If buttSize < 1 Then buttSize = 1
             Case 2
                 If shoulderFlag Then prt.setIAInd(pInd.shoulders, 2, True, False)
-                prt.setIAInd(pInd.chest, 10, True, False)
+                prt.setIAInd(pInd.chest, pForm.bsize2)
                 If buttSize < 1 Then buttSize = 1
             Case 3
                 If shoulderFlag Then prt.setIAInd(pInd.shoulders, 2, True, False)
-                prt.setIAInd(pInd.chest, 11, True, False)
+                prt.setIAInd(pInd.chest, pForm.bsize3)
                 If buttSize < 1 Then buttSize = 1
             Case 4
                 If shoulderFlag Then prt.setIAInd(pInd.shoulders, 2, True, False)
-                prt.setIAInd(pInd.chest, 12, True, False)
+                prt.setIAInd(pInd.chest, pForm.bsize4)
                 If buttSize < 1 Then buttSize = 1
             Case 5
                 If shoulderFlag Then prt.setIAInd(pInd.shoulders, 2, True, False)
-                prt.setIAInd(pInd.chest, 13, True, False)
+                prt.setIAInd(pInd.chest, pForm.bsize5)
                 If buttSize < 1 Then buttSize = 1
             Case 6
                 If shoulderFlag Then prt.setIAInd(pInd.shoulders, 2, True, False)
-                prt.setIAInd(pInd.chest, 14, True, False)
+                prt.setIAInd(pInd.chest, pForm.bsize6)
                 If buttSize < 1 Then buttSize = 1
             Case 7
                 If shoulderFlag Then prt.setIAInd(pInd.shoulders, 2, True, False)
-                prt.setIAInd(pInd.chest, 15, True, False)
+                prt.setIAInd(pInd.chest, pForm.bsize7)
                 If buttSize < 1 Then buttSize = 1
         End Select
         prt.portraitUDate()
@@ -2135,14 +2135,14 @@ Public Class Player
     Public Sub deLevel(ByVal lostLevels As Integer)
         If lostLevels < 1 Or level = 1 Then Exit Sub
 
+        pClass.deLVL(level, Me)
+        pForm.deLVL(level, Me)
+
         nextLevelXp = Math.Max(CInt(nextLevelXp / level), 125)
         maxHealth -= 20
         level -= 1
 
         If xp > nextLevelXp / 2 Then xp = nextLevelXp / 2
-
-        pClass.deLVL(level, Me)
-        pForm.deLVL(level, Me)
 
         If lostLevels > 1 Then
             deLevel(lostLevels - 1)

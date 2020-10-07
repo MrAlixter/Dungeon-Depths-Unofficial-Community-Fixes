@@ -288,9 +288,13 @@ Public Class Portrait
 
         bodyOverlay()
 
+        Dim p = If((Not ent Is Nothing AndAlso ent.GetType Is GetType(Player)), CType(ent, Player), Nothing)
+
         If c.A = 255 Then
             iArr(pInd.body) = Portrait.skinRecolor(imgLib.atrs(pInd.body).getAt(iArrInd(pInd.body)), c)
+            If Not p Is Nothing AndAlso Not p.pForm.getOverlayU(p).Item1 = 0 Then iArr(pInd.body) = CreateFullBodyBMP({nullImg, iArr(pInd.body), imgLib.atrs(pInd.bodyoverlay).getAt(p.pForm.getOverlayU(p))})
             iArr(pInd.chest) = Portrait.skinRecolor(imgLib.atrs(pInd.chest).getAt(iArrInd(pInd.chest)), c)
+            If Not p Is Nothing AndAlso Not p.pForm.getOverlayB(p).Item1 = 0 Then iArr(pInd.chest) = CreateFullBodyBMP({nullImg, iArr(pInd.chest), imgLib.atrs(pInd.bodyoverlay).getAt(p.pForm.getOverlayB(p))})
             iArr(pInd.shoulders) = Portrait.skinRecolor(imgLib.atrs(pInd.shoulders).getAt(iArrInd(pInd.shoulders)), c)
             iArr(pInd.bodyoverlay) = Portrait.skinRecolor(imgLib.atrs(pInd.bodyoverlay).getAt(iArrInd(pInd.bodyoverlay)), c)
         Else
@@ -304,6 +308,7 @@ Public Class Portrait
 
         iArr(pInd.genitalia) = Portrait.skinRecolor(imgLib.atrs(pInd.genitalia).getAt(iArrInd(pInd.genitalia)), c)
         iArr(pInd.face) = Portrait.skinRecolor(imgLib.atrs(pInd.face).getAt(iArrInd(pInd.face)), c)
+        If Not p Is Nothing AndAlso Not p.pForm.getOverlayF(p).Item1 = 0 Then iArr(pInd.face) = CreateFullBodyBMP({nullImg, iArr(pInd.face), imgLib.atrs(pInd.bodyoverlay).getAt(p.pForm.getOverlayF(p))})
 
         colorEars(c)
         'iArr(pInd.nose) = Portrait.skinRecolor(imgLib.atrs(pInd.nose).getAt(iArrInd(pInd.nose)), c)

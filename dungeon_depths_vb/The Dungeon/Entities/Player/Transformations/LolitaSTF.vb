@@ -21,6 +21,8 @@
 
         Dim out = ""
 
+        If p.sex.Equals("Male") Then p.MtF()
+
         p.pClass.revert()
         out = p.pClass.revertPassage & DDUtils.RNRN
         p.changeClass("Maiden")

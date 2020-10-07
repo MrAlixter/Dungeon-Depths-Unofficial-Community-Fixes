@@ -159,6 +159,7 @@
     <Compile Include="Items\Equipment\EquipmentItem.vb" />
     <Compile Include="Items\Misc\FoxStatue.vb" />
     <Compile Include="Items\Misc\BitGold.vb" />
+    <Compile Include="Items\Usable\Food\DragonFruit.vb" />
     <Compile Include="Items\Usable\Food\XPSandwich.vb" />
     <Compile Include="Items\Usable\FoxEars.vb" />
     <Compile Include="Items\Usable\Manuals\CrimsonManual.vb" />
@@ -259,7 +260,7 @@
     <Compile Include="Entities\Player\Forms\needsRevertPassage\Frog.vb" />
     <Compile Include="Entities\Player\Forms\needsRevertPassage\Golem.vb" />
     <Compile Include="Entities\Player\Forms\needsRevertPassage\Gynoid.vb" />
-    <Compile Include="Entities\Player\Forms\needsRevertPassage\HalfDragon.vb" />
+    <Compile Include="Entities\Player\Forms\needsRevertPassage\HalfDragonR.vb" />
     <Compile Include="Entities\Player\Forms\needsRevertPassage\HalfSlime.vb" />
     <Compile Include="Entities\Player\Forms\needsRevertPassage\HalfSuccubus.vb" />
     <Compile Include="Entities\Player\Forms\needsRevertPassage\Harpy.vb" />

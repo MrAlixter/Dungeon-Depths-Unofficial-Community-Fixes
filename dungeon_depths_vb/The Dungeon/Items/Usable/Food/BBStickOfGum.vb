@@ -2,14 +2,21 @@
     Inherits Food
 
     Sub New()
+        '|ID Info|
         MyBase.setName("Berry_Stick_of_Gum")
-        MyBase.setDesc("An deep violet piece of gum with a faint chemical smell.  Supposedly, it tastes like blackberries.  +10 Stamina")
         id = 125
         tier = 3
+
+        '|Item Flags|
         MyBase.setUsable(True)
+
+        '|Stats|
         MyBase.count = 0
         MyBase.value = 100
         setCalories(10)
+
+        '|Description|
+        MyBase.setDesc("An deep violet piece of gum with a faint chemical smell.  Supposedly, it tastes like blackberries. " & DDUtils.RNRN & "+10 Stamina")
     End Sub
 
     Overrides Sub effect()

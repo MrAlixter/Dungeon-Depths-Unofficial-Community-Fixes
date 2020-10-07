@@ -44,6 +44,11 @@
     End Sub
 
     Public Overrides Sub onEquip(ByRef p As Player)
+        If Not p.pForm.canBeBound Then
+            Equipment.equipArmor("Naked")
+            Game.pushLblEvent("You effortlessly break your bonds.")
+            Game.pushLstLog("You effortlessly break your bonds.")
+        End If
     End Sub
 
     Public Overrides Sub onUnequip(ByRef p As Player)

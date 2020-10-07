@@ -1,7 +1,7 @@
 ﻿Public NotInheritable Class BroodmotherTF
     Inherits Transformation
-    Dim hc As Color = Color.FromArgb(255, 236, 196, 87)
-    Dim sc As Color = Color.FromArgb(255, 213, 145, 113)
+    Shared hc As Color = Color.FromArgb(255, 236, 196, 87)
+    Shared sc As Color = Color.FromArgb(255, 213, 145, 113)
     Sub New()
         MyBase.New(5, 15, 2.0, True)
     End Sub
@@ -90,6 +90,27 @@
         'dragon transformation
         If Not p.knownSpells.Contains("Dragon's Breath") Then p.knownSpells.Add("Dragon's Breath")
         p.changeForm("Broodmother")
+        p.drawPort()
+    End Sub
+
+    Shared Sub halfDragonTF(ByRef p As Player)
+        p.prt.setIAInd(pInd.mouth, 7, True, True)
+        p.prt.setIAInd(pInd.eyes, 40, True, True)
+        p.prt.setIAInd(pInd.wings, 5, True, False)
+        p.prt.setIAInd(pInd.horns, 4, True, False)
+        p.prt.setIAInd(pInd.rearhair, 38, True, True)
+        p.prt.setIAInd(pInd.midhair, 44, True, True)
+        p.prt.setIAInd(pInd.fronthair, 42, True, True)
+
+        p.changeHairColor(hc)
+        p.changeSkinColor(sc)
+
+        p.breastSize = 2
+        p.buttSize = 1
+        p.dickSize = -1
+
+        p.changeForm("Half-Dragon (R)")
+
         p.drawPort()
     End Sub
 

@@ -12,7 +12,7 @@
         inv = New Inventory(False)
         'Useables
         inv.setCount("Anti_Curse_Tag", 1)
-        inv.setCount("Magical_Girl_Wand​", 1)
+        inv.setCount(171, 1)
         inv.setCount(174, 1)
         inv.setCount(200, 1)
 

@@ -24,7 +24,7 @@
         p.changeClass("Magical Girl​")
 
         If p.sex = "Male" Then
-            p.sex = "Female"
+            p.MtF()
         End If
 
         'p.prt.setIAInd(pInd.hat, Portrait.imgLib.atrs(pInd.hat).getF.Count - 3, True, False)

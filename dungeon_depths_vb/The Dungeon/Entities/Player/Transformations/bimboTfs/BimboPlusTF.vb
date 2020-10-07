@@ -30,7 +30,7 @@
         haircolor = "platinum blonde"
         If Not p.prt.sexBool Then
             out += "Mind clearer than ever, you look down to see breasts blossoming from your chest.  You smirk; while you look like a typical brainless bimbo, you're far more intellegent than you were before. As your dainty hands move down your body, you discover that you no longer have a cock and balls, and insted have a tight moist cunt.  Your hair lengthens, becoming a " & haircolor & ", and your clothes change to match your new figure.  While the effects on your body confirm your hypothesis that BIM_II is likely the chemical used in those sticks of gum the increased IQ hints that there may be another compound involved."
-            p.sex = "Female"
+            p.MtF()
         ElseIf p.prt.sexBool And p.breastSize < 3 Then
             out += "Mind clearer than ever, you look down at your tits. You notice that they seem to have swollen slightly.  You smirk; while you look like a typical brainless bimbo, you're far more intellegent than you were before.  Your hair lengthens, becoming a " & haircolor & ", and your clothes change to match your new figure.  While the effects on your body confirm your hypothesis that BIM_II is likely the chemical used in those sticks of gum the increased IQ hints that there may be another compound involved."
         ElseIf p.prt.sexBool And p.breastSize >= 3 Then

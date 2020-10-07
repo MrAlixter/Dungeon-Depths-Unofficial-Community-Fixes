@@ -148,7 +148,7 @@
     End Function
 
     Public Function fits(ByRef p As Player)
-        Return Not getClothesIMGTop(p) Is Nothing AndAlso Not getClothesIMGBtm(p) Is Nothing
+        Return Not getClothesIMGTop(p) Is Nothing AndAlso Not getClothesIMGBtm(p) Is Nothing AndAlso (p.pForm.canBeBound Or Not compressesBreasts)
     End Function
 
     Public Overrides Sub discard()

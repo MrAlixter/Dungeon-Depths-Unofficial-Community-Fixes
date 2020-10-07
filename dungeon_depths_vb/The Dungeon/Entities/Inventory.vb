@@ -188,7 +188,7 @@
         internal_inventory.Add("Cursemark", New Cursemark())                '168
         internal_inventory.Add("Maid_Lingerie", New MaidLingerie())         '169
         internal_inventory.Add("Magical_Slut_Outfit", New MagSlutOutfit())  '170
-        internal_inventory.Add("Magical_Girl_Wand​", New MagSlutWand())      '171
+        internal_inventory.Add("​Magical_Girl_Wand​", New MagSlutWand())      '171
         internal_inventory.Add("Flaming_Sword", New FlamingSword())         '172
         internal_inventory.Add("Signature_Whip", New SigWhip())             '173
         internal_inventory.Add("Defense_Charm​", New CdefenseCharm())        '174
@@ -248,6 +248,7 @@
         internal_inventory.Add("Crimson_Manual", New CrimsonManual)         '227
         internal_inventory.Add("XP_Sandwich", New XPSandwich)               '228
         internal_inventory.Add("BitGold", New BitGold)                      '229
+        internal_inventory.Add("Dragonfruit", New DragonFruit)              '230
 
         armor = {New Naked,
                  Me.item(5), Me.item(7), Me.item(8), Me.item(10),
@@ -301,7 +302,8 @@
                 Me.item(34), Me.item(35), Me.item(44), Me.item(90),
                 Me.item(98), Me.item(100), Me.item(108), Me.item(109),
                 Me.item(117), Me.item(125), Me.item(132), Me.item(133),
-                Me.item(134), Me.item(135), Me.item(178), Me.item(228)}
+                Me.item(134), Me.item(135), Me.item(178), Me.item(228),
+                Me.item(230)}
 
         acce = {New noAcce(), Me.item(66), Me.item(67), Me.item(68),
                 Me.item(69), Me.item(70), Me.item(77), Me.item(81),

@@ -22,7 +22,7 @@
     Public Sub fulltf()
         Dim p As Player = Game.player1
 
-        If Not p.prt.sexBool Then p.MtF()
+        If p.sex.Equals("Male") Then p.MtF()
 
         p.breastSize = 4
         p.buttSize = 2

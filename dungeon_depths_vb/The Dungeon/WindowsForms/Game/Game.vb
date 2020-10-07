@@ -2145,6 +2145,17 @@ Public Class Game
     End Sub
     'save/load drivers
     Private Sub btnSavePic_Click(sender As Object, e As MouseEventArgs) Handles btnS1.Click, btnS2.Click, btnS3.Click, btnS4.Click, btnS5.Click, btnS6.Click, btnS7.Click, btnS8.Click
+        pnlSaveLoad.Visible = False
+
+        btnS1.Enabled = False
+        btnS2.Enabled = False
+        btnS3.Enabled = False
+        btnS4.Enabled = False
+        btnS5.Enabled = False
+        btnS6.Enabled = False
+        btnS7.Enabled = False
+        btnS8.Enabled = False
+
         Dim name As String = CType(sender, Button).Name
         Dim fileNum As String = name(name.Length - 1)
         If e.Button = MouseButtons.Right Then
@@ -2170,9 +2181,17 @@ Public Class Game
                 imagesWorker.RunWorkerAsync()
             End If
             pnlSaveLoad.Location = New Point(1000, pnlSaveLoad.Location.Y)
-            pnlSaveLoad.Visible = False
             If picStart.Visible Then closesol()
         End If
+
+        btnS1.Enabled = True
+        btnS2.Enabled = True
+        btnS3.Enabled = True
+        btnS4.Enabled = True
+        btnS5.Enabled = True
+        btnS6.Enabled = True
+        btnS7.Enabled = True
+        btnS8.Enabled = True
     End Sub
     Private Sub btnCancel_Click(sender As Object, e As EventArgs) Handles btnCancel.Click
         pnlSaveLoad.Location = New Point(1000, pnlSaveLoad.Location.Y)

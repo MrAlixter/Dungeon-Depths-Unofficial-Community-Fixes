@@ -137,44 +137,23 @@
         If Game.player1.getLust = 0 Then
         ElseIf Game.player1.getLust < 25 Then
             DDUtils.append(tier, 17)
-            DDUtils.append(tier, 17)
-            DDUtils.append(tier, 17)
-
             DDUtils.append(tier, 16)
         ElseIf Game.player1.getLust < 50 Then
             DDUtils.append(tier, 17)
-            DDUtils.append(tier, 17)
-            DDUtils.append(tier, 17)
-
             DDUtils.append(tier, 16)
             DDUtils.append(tier, 16)
-
-            DDUtils.append(tier, 18)
         ElseIf Game.player1.getLust < 75 Then
             DDUtils.append(tier, 17)
             DDUtils.append(tier, 17)
-            DDUtils.append(tier, 17)
-            DDUtils.append(tier, 17)
-
             DDUtils.append(tier, 16)
             DDUtils.append(tier, 16)
-            DDUtils.append(tier, 16)
-
-            DDUtils.append(tier, 18)
             DDUtils.append(tier, 18)
         ElseIf Game.player1.getLust < 100 Then
             DDUtils.append(tier, 17)
             DDUtils.append(tier, 17)
-            DDUtils.append(tier, 17)
-            DDUtils.append(tier, 17)
-
             DDUtils.append(tier, 16)
             DDUtils.append(tier, 16)
             DDUtils.append(tier, 16)
-            DDUtils.append(tier, 16)
-            DDUtils.append(tier, 16)
-
-            DDUtils.append(tier, 18)
             DDUtils.append(tier, 18)
             DDUtils.append(tier, 18)
         ElseIf Game.player1.getLust < 200 Then
@@ -182,7 +161,6 @@
             DDUtils.append(tier, 16)
             DDUtils.append(tier, 16)
             DDUtils.append(tier, 16)
-
             DDUtils.append(tier, 18)
             DDUtils.append(tier, 18)
             DDUtils.append(tier, 18)

@@ -2,14 +2,21 @@
     Inherits Food
 
     Sub New()
+        '|ID Info|
         MyBase.setName("Apple​")
-        MyBase.setDesc("An normal green apple. +15 Stamina")
         id = 31
         tier = 3
+
+        '|Item Flags|
         MyBase.setUsable(True)
+
+        '|Stats|
         MyBase.count = 0
         MyBase.value = 150
         setCalories(15)
+
+        '|Description|
+        MyBase.setDesc("An normal green apple." & DDUtils.RNRN & "+15 Stamina")
     End Sub
 
     Public Overrides Sub Effect()

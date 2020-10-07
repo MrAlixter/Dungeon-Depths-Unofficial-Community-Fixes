@@ -254,7 +254,7 @@ Public Class ShopV2
     Function lineup(ByVal s As String, ByVal i As Integer, Optional ByVal j As Integer = -1)
         Dim c As Char = ChrW(8203)
 
-        If s.Length > 16 Then s = s.Substring(0, 16) & "."
+        If s.Length > 16 Then s = s.Substring(0, 16) & ". "
         If s.Length < 16 Then
             For x = s.Length To 16
                 If s.Last = "​" Then s = s & " "
