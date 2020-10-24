@@ -42,11 +42,12 @@
         picNormal = ShopNPC.npcLib.atrs(0).getAt(6)
         picPrincess = ShopNPC.npcLib.atrs(0).getAt(8)
         picBunny = ShopNPC.npcLib.atrs(0).getAt(7)
+        picArachne = ShopNPC.npcLib.atrs(0).getAt(68)
 
         picNPC = New List(Of Image)
         picNPC.AddRange({picNormal, ShopNPC.npcLib.atrs(0).getAt(4), ShopNPC.npcLib.atrs(0).getAt(5), picPrincess, picBunny})
 
-        picNPC.AddRange({ShopNPC.npcLib.atrs(0).getAt(9)})
+        picNPC.AddRange({ShopNPC.npcLib.atrs(0).getAt(9), picArachne})
         If speed = Game.player1.speed Then speed -= 1
         title = " the "
     End Sub
@@ -79,6 +80,16 @@
             Game.pushNPCDialog("So are these real or fake?  My ears, I mean.")
         ElseIf npcIndex = 5 Then
             Game.pushNPCDialog("...")
+        ElseIf npcIndex = 6 Then
+            If Game.player1.formName.Equals("Arachne") And Game.player1.equippedArmor.getAntiSlutVarInd > 0 Then
+                Game.pushNPCDialog("Ooh, darling, are you the one who laid that snare?  Aren't you a cutie...")
+            ElseIf Game.player1.formName.Equals("Arachne") And Game.player1.equippedArmor.getSlutVarInd > 0 Then
+                Game.pushNPCDialog("Ooh, darling, are you the one who laid that snare?  You know, you could spice your look up a bit...")
+            ElseIf Game.player1.formName.Equals("Arachne") Then
+                Game.pushNPCDialog("Ooh, darling, are you the one who laid that snare?  Let me know if you'd like any tips on your bondage technique...")
+            Else
+                Game.pushNPCDialog("Ooh, darling, you should really give the whole ""8-Legs"" thing a chance... I have a more...potent...venom if you'd like...")
+            End If
         End If
     End Sub
 
@@ -95,6 +106,8 @@
             Return "Whaaaat!?!"
         ElseIf npcIndex = 5 Then
             Return "..."
+        ElseIf npcIndex = 6 Then
+            Game.pushNPCDialog("*tsk* *tsk* *tsk* Not too bright...")
         End If
         Return "Bad move."
     End Function
@@ -115,6 +128,9 @@
             Return "That's neat!"
         ElseIf npcIndex = 5 Then
             Return "..."
+        ElseIf npcIndex = 6 Then
+            Game.NPCtoCombat(Me)
+            Game.pushNPCDialog("Oooh, is that really your best?  Adorable...")
         End If
         Return "Woah there!"
     End Function

@@ -2,20 +2,26 @@
     Inherits Spear
 
     Sub New()
+        '|ID Info|
         MyBase.setName("Signature_Spear")
-        MyBase.setDesc("A finely crafted spear bearing a trademarked signature.  This spear is specifically designed to be thrown and will not take damage from doing so." & vbCrLf &
-                       "Can be thrown using the ""Use"" button." & vbCrLf &
-                       "+35 ATK" & vbCrLf &
-                       "-2 SPD")
         id = 158
         tier = Nothing
+
+        '|Item Flags|
         MyBase.setUsable(True)
+        MyBase.isMonsterDrop = False
+
+        '|Stats|
         MyBase.aBoost = 35
         MyBase.sBoost = -2
         MyBase.count = 0
         MyBase.value = 3300
 
-        MyBase.isMonsterDrop = False
+        '|Description|
+        MyBase.setDesc("A finely crafted spear bearing a trademarked signature.  This spear is specifically designed to be thrown and will not take damage from doing so." & DDUtils.RNRN &
+                       "Can be thrown using the ""Use"" button." & vbCrLf &
+                       "+35 ATK" & vbCrLf &
+                       "-2 SPD")
     End Sub
 
     Overrides Sub wThrow(ByRef p As Player, ByRef m As Entity)

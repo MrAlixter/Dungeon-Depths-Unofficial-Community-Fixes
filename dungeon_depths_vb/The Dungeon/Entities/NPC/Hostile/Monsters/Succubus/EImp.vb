@@ -9,7 +9,7 @@
         speed = 66
         will = 13
 
-        levelDrainThres = 1
+        levelDrainThres = 2
         lustRaiseThres = 100
         levelsToDrain = Int(Rnd() * 2)
         lustToIncrease = Int(Rnd() * 20) + 6

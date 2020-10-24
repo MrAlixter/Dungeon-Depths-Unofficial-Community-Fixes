@@ -12,7 +12,7 @@
         speed = 33
         will = 40
 
-        levelDrainThres = 2
+        levelDrainThres = 3
         lustRaiseThres = 33
         levelsToDrain = 1
         lustToIncrease = Int(Rnd() * 6) + 6
@@ -27,10 +27,10 @@
     End Sub
 
     Public Overrides Sub attackCMD(ByRef target As Entity)
-        If target.lust < lustRaiseThres And Int(Rnd() * 2) Then
+        If target.lust < lustRaiseThres And Int(Rnd() * 3) = 0 Then
             charm(target)
         Else
-            If levelDrainThres > 0 And levelsToDrain > 0 And target.level > 2 And target.level - levelDrainThres >= 1 Then
+            If levelDrainThres > 0 And levelsToDrain > 0 And target.level > 2 And target.level - levelDrainThres >= 1 And Int(Rnd() * 4) = 0 Then
                 sapLevel(target)
             Else
                 MyBase.attackCMD(target)
@@ -129,10 +129,10 @@
         despawn("p-death")
 
         Game.pushLblEvent("You black out..." & DDUtils.RNRN &
-                        "Level reset to 1!")
+                        "-1 level!")
         Game.pushLstLog("You black out...")
 
-        p.deLevel(p.level)
+        p.deLevel(1)
         p.addLust(-p.lust)
     End Sub
 End Class

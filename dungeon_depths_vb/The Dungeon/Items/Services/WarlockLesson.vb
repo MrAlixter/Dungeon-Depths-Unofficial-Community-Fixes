@@ -39,9 +39,9 @@
         Dim p = Game.player1
 
         p.inv.add("Warlock's_Robes", 1)
-        Equipment.clothesChange("Warlock's_Robes")
+        Equipment.clothesChange(p, "Warlock's_Robes")
         p.inv.add("Ring_of_Uvona", 1)
-        Equipment.accChange("Ring_of_Uvona")
+        Equipment.accChange(p, "Ring_of_Uvona")
 
 
         p.changeClass("Warlock")

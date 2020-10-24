@@ -35,8 +35,8 @@
         p.changeHairColor(Color.FromArgb(255, 55, 30, 0))
         p.changeSkinColor(Color.FromArgb(255, 180, 138, 120))
         p.inv.add("Amazonian_Attire", 1)
-        Equipment.clothesChange("Amazonian_Attire")
-        Equipment.weaponChange("Fists")
+        Equipment.clothesChange(p, "Amazonian_Attire")
+        Equipment.weaponChange(p, "Fists")
 
         p.changeForm("Amazon")
         p.changeClass("Warrior")

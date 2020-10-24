@@ -1,11 +1,13 @@
 ﻿Public Class FusionCrystal
     Inherits Item
+
     Sub New()
         MyBase.setName("Fusion_Crystal")
-        MyBase.setDesc("A strange looking crystal reported to fuse two beings upon shattering." & vbCrLf & _
-                       "Disclaimers:" & vbCrLf & _
-                       "Only saves of the current version can be fused." & vbCrLf & _
-                       "Spells and Forms known by the second fusee are not carried over")
+        MyBase.setDesc("A strange looking crystal reported to fuse two beings upon shattering." & DDUtils.RNRN & _
+                       "Disclaimers:" & vbCrLf &
+                       "Only saves of the current version can be fused." & vbCrLf &
+                       "Players that can not be transformed can not fuse." & vbCrLf &
+                       "Players with the same name can not fuse.")
         id = 58
         tier = Nothing
         MyBase.setUsable(True)
@@ -14,53 +16,10 @@
     End Sub
     Overrides Sub use(ByRef p As Player)
         If Me.getUsable() = False Then Exit Sub
-        If MessageBox.Show("This will rewrite your current player permenantly (Restore potions will restore to the fusion). Continue?", "Fusion", MessageBoxButtons.YesNo) = Windows.Forms.DialogResult.Yes Then
-            Dim i As Integer
-            Try
-                i = InputBox("Which save slot?   1 2 3 4" & vbCrLf & _
-                                            "                              5 6 7 8")
-            Catch e As Exception
-                Game.pushLblEvent("The fusion crystal does not react.  It seems that an improper slot was selected.")
-                Exit Sub
-            End Try
-            If Not System.IO.File.Exists("saves/s" & i & ".ave") Then
-                Game.pushLblEvent("Despite looking for someone to fuse with, you can't find anyone at that location")
-                Exit Sub
-            End If
-            Dim save = Game.getPlayerFromFile("saves/s" & i & ".ave")
-            Dim p2 As Player = save.Item1
-            If save.Item2 <> Game.version Or p2.perks(perk.polymorphed) > -1 Or Not Transformation.canBeTFed(p) Or (p2.className.Equals("Magical Girl") Or p2.className.Equals("Valkyrie")) Then
-                Game.pushLblEvent("After talking it over, " & p.name & " and " & p2.name & " decide that they are incompatable, and not to fuse.")
-                Exit Sub
-            End If
 
-            Game.pushLblEvent(p.name & " takes the fusion crystal in both hands as they glance over at " & p2.name & _
-                               ", who nods in confirmation.  " & p.name & " then snaps the crystal in half, keeping one half " & _
-                               "and tossing the other to " & p2.name & ".  Once separated, the shards begin glowing and pulling towards " & _
-                               "each other, pulling the two with them.  As the shards gets closer, their attraction increases, and soon " & _
-                               "the crystal is whole again.  The second that the two pieces reunite, their glow becomes blinding, engulfing" & _
-                               " both explorers." & vbCrLf & _
-                               p.name & " and " & p2.name & " fuse together to form " & nameFusion(p.name, p2.name) & _
-                               ", a superior explorer!  The change is permenant, though fortunately " & p2.name & _
-                               "'s known spells and forms are retained.")
+        count -= 1
 
-            Dim fuPlay As Player = Fusion(p, p2)
-
-            Game.updateList = New PQ
-
-            p = fuPlay
-
-            fuPlay.inv.invNeedsUDate = True
-            fuPlay.UIupdate()
-            fuPlay.sState.save(fuPlay)
-            Dim f3 As New Equipment
-            f3.ShowDialog()
-            f3.Dispose()
-
-            fuPlay.drawPort()
-            fuPlay.currState.save(fuPlay)
-            fuPlay.pState.save(fuPlay)
-        End If
+        FusionDialogBackend.toPNL(p, TypeOfFusion.CRYSTAL_FUSION)
     End Sub
 
     Shared Function nameFusion(ByVal s1 As String, ByVal s2 As String) As String
@@ -90,7 +49,7 @@
         Return out
     End Function
     Shared Function Fusion(ByVal p1 As Player, ByVal p2 As Player) As Player
-        Randomize(p1.name.GetHashCode)
+        Randomize(String.Compare(p1.name, p2.name))
         Dim player As Player = New Player()
         player.name = nameFusion(p1.name, p2.name)
 
@@ -135,13 +94,10 @@
         player.prt.iArr = p1.prt.iArr.Clone
         player.prt.iArrInd = p1.prt.iArrInd.Clone
         For i = 0 To Portrait.NUM_IMG_LAYERS
-            If i <> 1 And i <> 15 And i <> 3 And i <> 5 Then
+            If i <> pInd.rearhair And i <> pInd.fronthair And i <> pInd.midhair Then
                 r = Int(Rnd() * 2)
                 If r = 0 Then player.prt.iArrInd(i) = p1.prt.iArrInd(i) Else player.prt.iArrInd(i) = p2.prt.iArrInd(i)
-            ElseIf i = 3 Then
-                r = Int(Rnd() * 2)
-                If r = 0 Then player.prt.iArrInd(i) = p1.sState.iArrInd(i) Else player.prt.iArrInd(i) = p2.sState.iArrInd(i)
-            ElseIf i = 1 Then
+            ElseIf i = pInd.rearhair Then
                 r = Int(Rnd() * 2)
                 If r = 0 Then player.prt.iArrInd(pInd.rearhair) = p1.prt.iArrInd(pInd.rearhair) Else player.prt.iArrInd(pInd.rearhair) = p2.prt.iArrInd(pInd.rearhair)
                 If r = 0 Then player.prt.iArrInd(pInd.midhair) = p1.prt.iArrInd(pInd.midhair) Else player.prt.iArrInd(pInd.midhair) = p2.prt.iArrInd(pInd.midhair)
@@ -158,7 +114,7 @@
             player.prt.haircolor = p1.prt.haircolor
         End If
 
-        finalizeFusion(player, p1, p2)
+        player.reverseAllRoute()
 
         Return player
     End Function
@@ -188,9 +144,6 @@
         player.currState = New State(player)
         player.pState = New State(player)
         player.sState = New State(player)
-
-        player.equippedWeapon = New BareFists
-        player.equippedArmor = New Naked
 
         player.inv.invNeedsUDate = True
         player.UIupdate()

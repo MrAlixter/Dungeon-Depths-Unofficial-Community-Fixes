@@ -117,8 +117,8 @@
         Dim armorIndex As Integer = -1
         Dim weaponIndex As Integer = -1
 
-        Equipment.clothesChange("Naked")
-        Equipment.weaponChange("Fists")
+        Equipment.clothesChange(p, "Naked")
+        Equipment.weaponChange(p, "Fists")
         Select Case Int(Rnd() * 23)
             Case 0   'basic warrior
                 p.changeClass("Warrior")
@@ -211,8 +211,8 @@
                 armor = New Integer() {16, 94, 129}
                 weapon = New Integer() {6, 21, 22, 23, 40, 41, 63}
                 p.sex = "Female"
-                p.inv.item(perk.bowtie).add(1)
-                Equipment.accChange(perk.bowtie)
+                p.inv.item("Bowtie").add(1)
+                Equipment.accChange(p, "Bowtie")
             Case 17   'cow girl
                 p.changeForm("Minotaur Cow")
                 p.changeClass("Barbarian")
@@ -273,15 +273,15 @@
         If armor.Length > 0 Then
             armorIndex = armor(Int(Rnd() * (armor.Length)))
             p.inv.add(armorIndex, 1)
-            Equipment.equipArmor(p.inv.item(armorIndex).getAName, False)
+            Equipment.equipArmor(p, p.inv.item(armorIndex).getAName, False)
         End If
         If weapon.Length > 0 Then
             weaponIndex = weapon(Int(Rnd() * (weapon.Length)))
             p.inv.add(weaponIndex, 1)
-            Equipment.weaponChange(p.inv.item(weaponIndex).getAName)
+            Equipment.weaponChange(p, p.inv.item(weaponIndex).getAName)
         End If
 
-        Equipment.accChange("Nothing")
+        Equipment.accChange(p, "Nothing")
     End Sub
 
     Shared Sub floor4FirstBossEncounter()

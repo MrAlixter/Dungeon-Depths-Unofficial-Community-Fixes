@@ -23,11 +23,19 @@
         picNormal = ShopNPC.npcLib.atrs(0).getAt(45)
         picPrincess = ShopNPC.npcLib.atrs(0).getAt(47)
         picBunny = ShopNPC.npcLib.atrs(0).getAt(46)
+        picArachne = ShopNPC.npcLib.atrs(0).getAt(72)
 
         picNPC = New List(Of Image)
-        picNPC.AddRange({picNormal, ShopNPC.npcLib.atrs(0).getAt(4), ShopNPC.npcLib.atrs(0).getAt(5), picPrincess, picBunny})
+        picNPC.AddRange({picNormal,
+                         ShopNPC.npcLib.atrs(0).getAt(4),
+                         ShopNPC.npcLib.atrs(0).getAt(5),
+                         picPrincess,
+                         picBunny})
 
-        picNPC.AddRange({ShopNPC.npcLib.atrs(0).getAt(48), ShopNPC.npcLib.atrs(0).getAt(59)})
+        picNPC.AddRange({ShopNPC.npcLib.atrs(0).getAt(48),
+                         ShopNPC.npcLib.atrs(0).getAt(59),
+                         picArachne})
+
         If speed = Game.player1.speed Then speed -= 1
         title = " the "
     End Sub
@@ -35,7 +43,13 @@
     Public Overrides Sub encounter()
         MyBase.encounter()
 
-        If Int(Rnd() * 25) = 0 Then
+        If npcIndex = 7 Then
+            If Game.player1.formName.Equals("Arachne") Then
+                Game.pushNPCDialog("Arachne or not, there are still dummies out there that need protectin'!")
+            Else
+                Game.pushNPCDialog("Hey, if I were to roll out a ""Gem Of Spiders"" do you think you'd take the plunge into eight-legged glory?  Well, I've got the next best thing in the meantime!")
+            End If
+        ElseIf Int(Rnd() * 25) = 0 Then
             npcIndex = 4
             Game.pushNPCDialog("Hey, like, have you seen a shadowy guy with a hood?  He TOTALLY put some sorta curse on my wand!  It's not like I, uh, wanted to get all, like, ditzy to have some fun or whatever...")
         ElseIf Int(Rnd() * 25) = 0 Then
@@ -72,6 +86,10 @@
         isDead = True
         Game.leaveNPC()
     End Sub
+
+    Public Overrides Function getArachneImageInd() As Integer
+        Return 7
+    End Function
 
     Public Overrides Sub toDoll()
         Game.pushNPCDialog("*squeek*")

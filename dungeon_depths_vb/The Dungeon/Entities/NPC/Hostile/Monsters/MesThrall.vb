@@ -25,7 +25,7 @@
         Else
             ln1 = "As you collapse, you see the thrall pull a small metal collar out of their bag.  Lacking the strength to resist, you are powerless as they secure it firmly around your neck, all the while murmuring whispers of the joys of submission into your ear.  Once they have the collar fitted properly, they place a small glowing gem into a slot on the collar, igniting a small array of runes.  Your mind goes blank in an instant, and while at first an ammnesia-fueled panic sets in it is quickly replaced by a booming disembodied voice."
             p.inv.add(69, 1)
-            Equipment.accChange("Slave_Collar")
+            Equipment.accChange(p, "Slave_Collar")
             p.health = 1
             p.mana = p.getMaxMana()
             Game.player1.will -= 3

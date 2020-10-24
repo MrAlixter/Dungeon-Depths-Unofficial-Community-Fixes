@@ -70,7 +70,7 @@
 
 
         If getName.Contains("Enthralling Half-Dem") Then
-            Equipment.accChange("Nothing")
+            Equipment.accChange(Game.player1, "Nothing")
         End If
 
         Game.drawBoard()
@@ -205,7 +205,7 @@
 
 
         'monster transformations
-        If sName.Equals("Ooze Empress") Then
+        If Not sName Is Nothing AndAlso sName.Equals("Ooze Empress") Then
             Game.pushLblEvent(Game.lblEvent.Text.Split("Press")(0), AddressOf RandoTF.floor4revert, AddressOf RandoTF.floor4keep, "Take your body back?")
         End If
 

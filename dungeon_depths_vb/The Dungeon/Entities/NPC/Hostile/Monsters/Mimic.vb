@@ -28,7 +28,7 @@
         p.inv.add(x, -1)
         p.inv.add(55, 1)
         p.inv.invNeedsUDate = True
-        Equipment.clothesChange("Living_Armor")
+        Equipment.clothesChange(p, "Living_Armor")
         p.perks(12) = True
         p.drawPort()
         Game.pushLblEvent(out)

@@ -3,13 +3,20 @@
 
     'The compass identifies where the stairs are.
     Sub New()
+        '|ID Info|
         MyBase.setName("Compass")
-        MyBase.setDesc("A compass, used to find the stairs leading down to the next level.")
         id = 0
         tier = 1
+
+        '|Item Flags|
         MyBase.setUsable(True)
+
+        '|Stats|
         MyBase.count = 0
         MyBase.value = 150
+
+        '|Description|
+        MyBase.setDesc("A compass, used to find the stairs leading down to the next level.")
     End Sub
 
     Overrides Sub use(ByRef p As Player)

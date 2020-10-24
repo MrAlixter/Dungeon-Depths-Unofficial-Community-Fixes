@@ -224,6 +224,8 @@ Public Class Portrait
         accUnderClothes()
         lustBlushUpdate()
 
+        iArr(pInd.midhair) = CreateBMP({nullImg, iArr(pInd.midhair), iArr(pInd.horns)})
+
         If Not ent Is Nothing AndAlso ent.GetType Is GetType(Player) Then
             If CType(ent, Player).equippedArmor.hidesDick Then
                 iArr(pInd.genitalia) = nullImg
@@ -236,7 +238,6 @@ Public Class Portrait
 
         hideEars()
         hideRearHair()
-
 
     End Sub
     Public Function draw()
@@ -294,8 +295,9 @@ Public Class Portrait
             iArr(pInd.body) = Portrait.skinRecolor(imgLib.atrs(pInd.body).getAt(iArrInd(pInd.body)), c)
             If Not p Is Nothing AndAlso Not p.pForm.getOverlayU(p).Item1 = 0 Then iArr(pInd.body) = CreateFullBodyBMP({nullImg, iArr(pInd.body), imgLib.atrs(pInd.bodyoverlay).getAt(p.pForm.getOverlayU(p))})
             iArr(pInd.chest) = Portrait.skinRecolor(imgLib.atrs(pInd.chest).getAt(iArrInd(pInd.chest)), c)
-            If Not p Is Nothing AndAlso Not p.pForm.getOverlayB(p).Item1 = 0 Then iArr(pInd.chest) = CreateFullBodyBMP({nullImg, iArr(pInd.chest), imgLib.atrs(pInd.bodyoverlay).getAt(p.pForm.getOverlayB(p))})
+            If Not p Is Nothing AndAlso Not p.pForm.getOverlayB(p).Item1 = 0 AndAlso Not p.equippedArmor.compressesBreasts Then iArr(pInd.chest) = CreateFullBodyBMP({nullImg, iArr(pInd.chest), imgLib.atrs(pInd.bodyoverlay).getAt(p.pForm.getOverlayB(p))})
             iArr(pInd.shoulders) = Portrait.skinRecolor(imgLib.atrs(pInd.shoulders).getAt(iArrInd(pInd.shoulders)), c)
+            If Not p Is Nothing AndAlso Not p.pForm.getOverlayS(p).Item1 = 0 Then iArr(pInd.shoulders) = CreateFullBodyBMP({nullImg, iArr(pInd.shoulders), imgLib.atrs(pInd.bodyoverlay).getAt(p.pForm.getOverlayS(p))})
             iArr(pInd.bodyoverlay) = Portrait.skinRecolor(imgLib.atrs(pInd.bodyoverlay).getAt(iArrInd(pInd.bodyoverlay)), c)
         Else
             Dim bImg = CreateFullBodyBMP({imgLib.atrs(pInd.body).getAt(iArrInd(pInd.body)), imgLib.atrs(pInd.bodyoverlay).getAt(iArrInd(pInd.bodyoverlay)),
@@ -385,7 +387,7 @@ Public Class Portrait
     End Sub
     Sub spiderBody()
         If iArrInd(pInd.tail).Item1 = 2 Then
-            iArr(pInd.horns) = CreateFullBodyBMP({imgLib.atrs(pInd.horns).getAt(6), iArr(pInd.horns)})
+            iArr(pInd.clothes) = CreateFullBodyBMP({iArr(pInd.clothes), imgLib.atrs(pInd.horns).getAt(6)})
         End If
     End Sub
     Function shrub() As Image
@@ -637,7 +639,7 @@ Public Class Portrait
             Exit Sub
         End If
 
-        Equipment.equipArmor("Naked", False)
+        Equipment.equipArmor(p, "Naked", False)
 
         portraitUDate()
 

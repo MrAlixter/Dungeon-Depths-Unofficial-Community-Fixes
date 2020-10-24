@@ -1,17 +1,23 @@
 ﻿Public Class PhotonBlade
     Inherits Sword
     Sub New()
+        '|ID Info|
         MyBase.setName("Photon_Blade")
-        MyBase.setDesc("A shimmering red-orange blade made of pure light.  While it can deal quite a bit of damage, it also requires a fair amount of mana to remain useful." & vbcrlf & 
-		               "+37 ATK")
         id = 112
         tier = Nothing
+
+        '|Item Flags|
         MyBase.setUsable(False)
+        MyBase.isRandoTFAcceptable = False
+
+        '|Stats|
         MyBase.aBoost = 37
         count = 0
         value = 4320
 
-        MyBase.isRandoTFAcceptable = False
+        '|Description|
+        MyBase.setDesc("A shimmering red-orange blade made of pure light.  While it can deal quite a bit of damage, it also requires a fair amount of mana to remain useful." & DDUtils.RNRN &
+                       getStatInformation())
     End Sub
 
     Overrides Function attack(ByRef p As Player, ByRef m As Entity) As Integer

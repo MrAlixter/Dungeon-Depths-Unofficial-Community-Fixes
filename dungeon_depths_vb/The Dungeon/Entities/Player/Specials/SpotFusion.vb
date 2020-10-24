@@ -10,38 +10,12 @@
         Game.pushLstLog("Spot Fusion!")
         Game.pushLblCombatEvent("Spot Fusion!" & vbCrLf & "Fuses two explorers for 100 turns.")
 
-        Dim i As Integer
-        Try
-            i = InputBox("Which save slot?   1 2 3 4" & vbCrLf & _
-                                        "                              5 6 7 8")
-        Catch e As Exception
-            Game.pushLblEvent("The spot fusion technique does not react.  It seems that an improper slot was selected.")
-            Game.player1.stamina += 50
-            Exit Sub
-        End Try
-        If Not System.IO.File.Exists("saves/s" & i & ".ave") Then
-            Game.pushLblEvent("Despite looking for someone to fuse with, you can't find anyone at that location.")
-            Game.player1.stamina += 50
-            Exit Sub
-        End If
-        Dim save = Game.getPlayerFromFile("saves/s" & i & ".ave")
-        Dim p2 As Player = save.Item1
-        If save.Item2 <> Game.version Or p2.perks(perk.polymorphed) > -1 Or Not Transformation.canBeTFed(Game.player1) Or (p2.className.Equals("Magical Girl") Or p2.className.Equals("Valkyrie")) Then
-            Game.pushLblEvent("After talking it over, " & Game.player1.name & " and " & p2.name & " decide that they are incompatable, and not to fuse.")
-            Game.player1.stamina += 50
-            Exit Sub
-        End If
-
-        Game.pushLblEvent(Game.player1.name & " and " & p2.name & " fuse together to form " & FusionCrystal.nameFusion(Game.player1.name, p2.name) & _
-                           ", a superior explorer!")
-
-        Fusion(getUser, p2)
+        FusionDialogBackend.toPNL(MyBase.getUser, TypeOfFusion.SPOT_FUSION)
     End Sub
 
 
-    Shared Sub Fusion(ByVal p1 As Player, ByVal p2 As Player)
-        Polymorph.transform(Game.player1, "Fusion")
-        Randomize(p1.name.GetHashCode)
+    Shared Function Fusion(ByVal p1 As Player, ByVal p2 As Player) As Player
+        Randomize(String.Compare(p1.name, p2.name))
         p1.name = FusionCrystal.nameFusion(p1.name, p2.name)
 
         Dim r As Integer = Int(Rnd() * 2)
@@ -68,10 +42,10 @@
         p1.stamina = Math.Min(p1.stamina, p2.stamina)
 
         For i = 0 To Portrait.NUM_IMG_LAYERS
-            If i <> 1 And i <> 15 And i <> 3 And i <> 5 Then
+            If i <> pInd.rearhair And i <> pInd.fronthair And i <> pInd.midhair Then
                 r = Int(Rnd() * 2)
                 If r = 0 Then p1.prt.iArrInd(i) = p2.prt.iArrInd(i)
-            ElseIf i = 1 Then
+            ElseIf i = pInd.rearhair Then
                 r = Int(Rnd() * 2)
                 If r = 0 Then p1.prt.iArrInd(pInd.rearhair) = p2.prt.iArrInd(pInd.rearhair)
                 If r = 0 Then p1.prt.iArrInd(pInd.midhair) = p2.prt.iArrInd(pInd.midhair)
@@ -90,7 +64,8 @@
 
         p1.breastSize = (p1.breastSize + p2.breastSize) / 2
         p1.currState.save(p1)
-        p1.drawPort()
-    End Sub
+
+        Return p1
+    End Function
 
 End Class

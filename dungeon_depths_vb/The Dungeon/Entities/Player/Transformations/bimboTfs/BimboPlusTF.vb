@@ -67,7 +67,7 @@
         p.prt.setIAInd(pInd.eyes, 34, True, True)
         p.prt.setIAInd(pInd.cloak, 0, True, True)
         p.prt.setIAInd(pInd.glasses, 2, True, False)
-        Equipment.clothesChange("Magical_Slut_Outfit")
+        Equipment.clothesChange(p, "Magical_Slut_Outfit")
         p.breastSize = 3
         Game.pushLblEvent("You immediatly feel funny, the increased magic in your system reacting swiftly with the gum.  Mind clearer than ever, you look down to see your clothes have become tight and pink. You smirk; while you look like a typical brainless bimbo, you're far more intellegent than you were before. Your hair lengthens, becoming a platinum blonde, and your clothes finish changing to match your new figure.  While the effects on your body confirm your hypothesis that BIM_II is likely the chemical used in those sticks of gum the increased IQ hints that there may be another compound involved.")
         p.lust += 10

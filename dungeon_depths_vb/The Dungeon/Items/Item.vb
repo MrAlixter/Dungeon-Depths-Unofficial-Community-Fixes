@@ -4,18 +4,23 @@
     '| -- New Layout Example -- |
     '|ID Info|
 
+
     '|Item Flags|
+
 
     '|Stats|
 
+
     '|Description|
+
+
     Dim name As String = ""
     Dim description As String
     Dim isUsable As Boolean = False
     Public count As Integer
     Public value As Integer
     Protected tier As Integer = Nothing
-    Public id As Integer = Nothing
+    Public id As Integer = -1
     Public isMonsterDrop As Boolean = False
     Public isRandoTFAcceptable = True
 
@@ -41,7 +46,7 @@
     Sub setName(ByVal s As String)
         name = s
     End Sub
-    Function getDesc()
+    Public Overridable Function getDesc()
         Return description
     End Function
     Sub setDesc(ByVal s As String)

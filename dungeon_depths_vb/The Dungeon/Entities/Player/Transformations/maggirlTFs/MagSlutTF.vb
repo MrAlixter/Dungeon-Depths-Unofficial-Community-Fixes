@@ -49,8 +49,8 @@
 
         p.prt.setIAInd(pInd.hairacc, 3, True, False)
 
-        Equipment.accChange("Nothing")
-        Equipment.clothesChange("Magical_Slut_Outfit")
+        Equipment.accChange(p, "Nothing")
+        Equipment.clothesChange(p, "Magical_Slut_Outfit")
     End Sub
 
     Overrides Sub step2()

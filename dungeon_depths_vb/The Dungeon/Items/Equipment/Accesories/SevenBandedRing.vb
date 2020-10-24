@@ -5,7 +5,7 @@
         '|ID Info|
         MyBase.setName("Seven_Banded_Ring")
         id = 223
-        tier = 3
+        tier = Nothing
 
         '|Item Flags|
         MyBase.setUsable(False)

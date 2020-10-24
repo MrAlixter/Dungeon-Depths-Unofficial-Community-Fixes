@@ -18,7 +18,7 @@
         Dim p As player = game.player1
 
         'unequips
-        Equipment.clothesChange("Naked")
+        Equipment.clothesChange(p, "Naked")
 
         'slime transformation
         p.perks(perk.slimehair) = 1

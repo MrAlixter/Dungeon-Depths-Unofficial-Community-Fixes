@@ -51,7 +51,7 @@
         Dim out = ""
 
         'equip clothes
-        Equipment.clothesChange("Regal_Gown")
+        Equipment.clothesChange(p, "Regal_Gown")
         p.changeClass("Princess")
 
         'maid transformation
@@ -79,7 +79,7 @@
         Dim out = ""
 
         'equip clothes
-        Equipment.clothesChange("Regal_Gown")
+        Equipment.clothesChange(p, "Regal_Gown")
         p.changeClass("Princess")
 
         'maid transformation

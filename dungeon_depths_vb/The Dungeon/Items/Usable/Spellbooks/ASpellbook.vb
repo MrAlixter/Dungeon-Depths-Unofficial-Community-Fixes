@@ -1,7 +1,7 @@
 ﻿Public Class ASpellbook
     Inherits Item
-    Public Shared spells() As String = {"Turn to Blade", "Turn to Cupcake", "Self Polymorph", "Arcane Compass",
-                                        "Magma Spear", "Petrify II", "Major Heal", "Warp", "Uvona's Fugue"}
+    Public Shared spells() As String = {"Turn to Blade", "Turn to Cupcake", "Self Polymorph",
+                                        "Magma Spear", "Petrify II", "Major Heal", "Uvona's Fugue"}
 
     Sub New()
         MyBase.setName("Advanced_Spellbook")
@@ -10,7 +10,7 @@
         tier = 3
         MyBase.setUsable(True)
         MyBase.count = 0
-        MyBase.value = 1000
+        MyBase.value = 1500
     End Sub
 
     Overrides Sub use(ByRef p As Player)

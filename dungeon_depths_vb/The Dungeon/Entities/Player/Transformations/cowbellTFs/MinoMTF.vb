@@ -159,7 +159,7 @@
         p.dickSize = 3
 
         If p.inv.getCountAt("Barbarian_Armor") < 1 Then p.inv.add("Barbarian_Armor", 1)
-        Equipment.clothesChange("Barbarian_Armor")
+        Equipment.clothesChange(p, "Barbarian_Armor")
 
         p.prt.setIAInd(pInd.eyebrows, 5, False, False)
         p.prt.setIAInd(pInd.mouth, 8, False, False)
@@ -199,7 +199,7 @@
         p.prt.setIAInd(pInd.horns, 5, True, False)
 
         If p.inv.getCountAt("Barbarian_Armor") < 1 Then p.inv.add("Barbarian_Armor", 1)
-        Equipment.clothesChange("Barbarian_Armor")
+        Equipment.clothesChange(p, "Barbarian_Armor")
 
         p.changeForm("Minotaur Bull")
     End Sub

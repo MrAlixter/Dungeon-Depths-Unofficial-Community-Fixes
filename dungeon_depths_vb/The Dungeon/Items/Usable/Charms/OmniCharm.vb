@@ -8,7 +8,7 @@
         tier = Nothing
         MyBase.setUsable(True)
         MyBase.count = 0
-        MyBase.value = 3700
+        MyBase.value = 4700
     End Sub
 
     Overrides Sub use(ByRef p As Player)

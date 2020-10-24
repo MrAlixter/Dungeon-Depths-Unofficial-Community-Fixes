@@ -93,6 +93,17 @@
             End If
         Next
     End Sub
+
+    Public Sub tfNPCToArachne()
+        If Game.player1 Is Nothing OrElse Game.player1.perks(perk.snarednpc) = -1 Then Exit Sub
+
+        Dim s = Game.shopNPCList(Game.player1.perks(perk.snarednpc))
+
+        Game.pushLblEvent("You feel a slight vibration in the web leading to your snare.  Maybe you should pay the " & s.name & " a visit...")
+
+        s.toArachne()
+        Game.player1.perks(perk.snarednpc) = -1
+    End Sub
     Public Sub setFloor(ByRef f As mFloor)
         f = floors(numCurrFloor)
         Game.mBoardHeight = f.mBoardHeight

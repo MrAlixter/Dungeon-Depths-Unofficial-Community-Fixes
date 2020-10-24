@@ -34,9 +34,9 @@
         p.prt.setIAInd(pInd.hat, 7, True, False)
         p.prt.setIAInd(pInd.wings, 1, True, False)
 
-        p.inv.add(95, 1)
+        If p.inv.getCountAt(95) < 1 Then p.inv.add(95, 1)
 
-        Equipment.clothesChange("Valkyrie_Armor")
+        Equipment.clothesChange(p, "Valkyrie_Armor")
 
         If Not p.knownSpecials.Contains("Helix Slash") Then p.knownSpecials.Add("Helix Slash")
         Game.pushLstLog("""Helix Slash"" special learned!")

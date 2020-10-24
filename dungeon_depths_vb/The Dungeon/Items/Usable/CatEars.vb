@@ -2,13 +2,20 @@
     'CatEars is a useable item that gives the player cat ears
     Inherits Item
     Sub New()
+        '|ID Info|
         MyBase.setName("Cat_Ears")
-        MyBase.setDesc("These will give you cat ears.")
         id = 15
         tier = Nothing
+
+        '|Item Flags|
         MyBase.setUsable(True)
+
+        '|Stats|
         MyBase.count = 0
         MyBase.value = 250
+
+        '|Description|
+        MyBase.setDesc("These will give you cat ears.")
     End Sub
 
     Overrides Sub use(ByRef p As Player)

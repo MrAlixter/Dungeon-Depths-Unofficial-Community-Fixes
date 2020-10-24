@@ -43,7 +43,7 @@
             p.MtF()
         End If
 
-        Equipment.clothesChange("Naked")
+        Equipment.clothesChange(p, "Naked")
 
         p.breastSize = 4
 

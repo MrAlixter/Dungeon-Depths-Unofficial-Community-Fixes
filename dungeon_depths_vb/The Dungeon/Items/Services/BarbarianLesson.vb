@@ -40,9 +40,9 @@
         Dim p = Game.player1
 
         p.inv.add("Barbarian_Armor", 1)
-        Equipment.clothesChange("Barbarian_Armor")
+        Equipment.clothesChange(p, "Barbarian_Armor")
         p.inv.add("Corse_War_Axe", 1)
-        Equipment.weaponChange("Corse_War_Axe")
+        Equipment.weaponChange(p, "Corse_War_Axe")
 
 
         p.changeClass("Barbarian")

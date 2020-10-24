@@ -19,7 +19,7 @@
         Dim out = ""
 
         'equip clothes
-        Equipment.clothesChange("Naked")
+        Equipment.clothesChange(p, "Naked")
         p.changeForm("Blowup Doll")
 
         'bu doll transformation

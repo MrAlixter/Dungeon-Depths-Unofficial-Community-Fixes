@@ -2,17 +2,23 @@
     Inherits Sword
 
     Sub New()
+        '|ID Info|
         MyBase.setName("Sword_of_the_Brutal")
-        MyBase.setDesc("A suspicious sword owned by a brutal despot." & vbcrlf & 
-		               "+50 ATK")
         id = 24
         tier = Nothing
+
+        '|Item Flags|
         MyBase.setUsable(False)
+        MyBase.isRandoTFAcceptable = False
+
+        '|Stats|
         MyBase.aBoost = 50
         MyBase.count = 0
         MyBase.value = 3332
 
-        MyBase.isRandoTFAcceptable = False
+        '|Description|
+        MyBase.setDesc("A suspicious sword owned by a brutal despot." & DDUtils.RNRN &
+                       getStatInformation())
     End Sub
 
     Overrides Function attack(ByRef p As Player, ByRef m As Entity) As Integer

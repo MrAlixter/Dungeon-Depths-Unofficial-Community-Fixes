@@ -57,6 +57,7 @@
         specialList.Add("Flash Strike", New FlashStrike(Nothing, Nothing))
         specialList.Add("Attack Up", New AttackUp(Nothing, Nothing))
         specialList.Add("Lurk", New Lurk(Nothing, Nothing))
+        specialList.Add("Snare", New Snare(Nothing, Nothing))
     End Sub
 
     Sub New(ByRef u As Player, ByRef t As NPC)

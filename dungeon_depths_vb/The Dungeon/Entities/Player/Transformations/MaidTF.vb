@@ -26,7 +26,7 @@
         p.changeClass("Maid")
 
         'equip clothes
-        Equipment.clothesChange("Maid_Outfit")
+        Equipment.clothesChange(p, "Maid_Outfit")
         'maid transformation
         p.prt.haircolor = Color.FromArgb(255, 115, 72, 65)
         p.prt.setIAInd(pInd.rearhair, 8, True, True)

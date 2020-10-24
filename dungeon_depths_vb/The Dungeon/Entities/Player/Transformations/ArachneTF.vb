@@ -101,6 +101,7 @@
         p.prt.setIAInd(pInd.rearhair, 17, True, True)
         p.prt.setIAInd(pInd.midhair, 21, True, True)
         p.prt.setIAInd(pInd.fronthair, 18, True, True)
+        p.prt.setIAInd(pInd.hairacc, 10, True, False)
 
         Game.pushLblEvent("\tStanding behind you is another arachne, and it is clear from her posture that she is one of the more experienced huntresses.  You stiffen up, and as the she gazes into your eyes you find yourself with a lot less control over the situation than you thought you had.\n\n" &
                           """Well, it seems that our venom has finally run its course,"" she muses, approaching you.  As she speaks, her words supersede any thoughts flowing through your head, and you find yourself completely at her mercy.  ""Our species began when an enchanted spider bit its enchantress, and she underwent a similar process to what you have just experienced.  Since that fateful day, the Sisterhood of Arachne has spread throughout these cursed passages with the singular goal of claiming all whom enter into our ranks. Now that you are one of us, you are free to go about your business without fear of our interference.""\n\n" &
@@ -115,7 +116,7 @@
         Dim p As Player = Game.player1
         If p.equippedWeapon.getName.Equals("Magical_Girl_Wand") Or
             p.equippedWeapon.getName.Equals("Valkyrie_Sword") Then
-            Equipment.weaponChange("Fists")
+            Equipment.weaponChange(p, "Fists")
         End If
 
         p.setStartStates()

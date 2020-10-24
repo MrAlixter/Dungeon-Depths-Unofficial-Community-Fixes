@@ -2,7 +2,7 @@
     Inherits NPC
     Public firstCTurn As Boolean = True
     Public isShop = False
-    Public picNormal, picPrincess, picBunny As Image
+    Public picNormal, picPrincess, picBunny, picArachne As Image
     Public picNPC As List(Of Image)
     Protected discount As Double = 0
     Public Shared npcLib As ImageCollection = New ImageCollection(2)
@@ -132,7 +132,6 @@
         MyBase.form = "Sheep"
         Game.picNPC.BackgroundImage = picNPC(npcIndex)
     End Sub
-
     Overridable Sub toFrog()
         MyBase.health = 1.0
         MyBase.maxHealth = 500
@@ -143,7 +142,23 @@
         MyBase.npcIndex = 1
         Game.picNPC.BackgroundImage = picNPC(npcIndex)
     End Sub
+    Overridable Sub toArachne()
+        MyBase.health = 1.0
+        MyBase.tfCt = 1
+        MyBase.tfEnd = 9999999
 
+        npcIndex = getArachneImageInd()
+
+        toFemale("arachne")
+        MyBase.form = "Arachne"
+        Game.picNPC.BackgroundImage = picArachne
+    End Sub
+    Public Overridable Sub toDoll()
+        Game.pushNPCDialog("...")
+        Game.picNPC.BackgroundImage = picNPC(5)
+
+        discount = 0.5
+    End Sub
     Public Overridable Sub toFemale(ByVal form As String)
         pronoun = "she"
         pPronoun = "her"
@@ -154,6 +169,7 @@
         pPronoun = "his"
         rPronoun = "him"
     End Sub
+
     Public Overrides Sub despawn(reason As String)
         MyBase.despawn(reason)
         Dim ratio As Double = Game.Size.Width / 1024
@@ -166,13 +182,10 @@
         Game.btnLeave.Visible = False
         If npcIndex > 4 And Not Game.picNPC.BackgroundImage.Equals(ShopNPC.npcLib.atrs(0).getAt(3)) Then npcIndex = 0
     End Sub
+    Public Overridable Function getArachneImageInd() As Integer
+        Return 6
+    End Function
 
-    Public Overridable Sub toDoll()
-        Game.pushNPCDialog("...")
-        Game.picNPC.BackgroundImage = picNPC(5)
-
-        discount = 0.5
-    End Sub
 
     'save/load methods
     Function saveNPC() As String

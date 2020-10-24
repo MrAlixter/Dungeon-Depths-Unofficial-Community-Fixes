@@ -104,7 +104,7 @@
                           "Looking down, you see that your collar has gone dark and dangles open from your neck.  Grinning, your prepare to fight for your life.", AddressOf fightSorc2)
 
 
-        Equipment.accChange("Nothing")
+        Equipment.accChange(p, "Nothing")
         p.inv.add(69, -1)
 
         p.drawPort()

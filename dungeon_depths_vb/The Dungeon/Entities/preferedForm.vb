@@ -218,7 +218,7 @@ Public Class SuccMaid
         Dim p = Game.player1
 
         If p.inv.item("Maid_Lingerie").count < 1 Then p.inv.add("Maid_Lingerie", 1)
-        Equipment.clothesChange("Maid_Lingerie")
+        Equipment.clothesChange(p, "Maid_Lingerie")
 
         p.prt.setIAInd(pInd.eyes, 12, True, True)
         p.prt.setIAInd(pInd.glasses, 2, True, False)

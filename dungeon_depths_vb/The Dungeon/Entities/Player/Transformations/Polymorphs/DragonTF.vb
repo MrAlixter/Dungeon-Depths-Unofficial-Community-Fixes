@@ -19,8 +19,8 @@
         Dim out = ""
 
         'unequips
-        Equipment.clothesChange("Naked")
-        Equipment.weaponChange("Fists")
+        Equipment.clothesChange(p, "Naked")
+        Equipment.weaponChange(p, "Fists")
 
         'dragon transformation
         If Not p.knownSpells.Contains("Dragon's Breath") Then p.knownSpells.Add("Dragon's Breath")

@@ -2,15 +2,23 @@
     Inherits Sword
 
     Sub New()
+        '|ID Info|
         MyBase.setName("Valkyrie_Sword")
-        MyBase.setDesc("A blazing sword used by a winged protector." & vbCrLf & "+22 ATK, +7 Max Mana")
         id = 96
         tier = 3
+
+        '|Item Flags|
         MyBase.setUsable(False)
+
+        '|Stats|
         MyBase.mBoost = 7
         MyBase.aBoost = 22
         MyBase.count = 0
         MyBase.value = 1000
+
+        '|Description|
+        MyBase.setDesc("A blazing sword used by a winged protector." & DDUtils.RNRN &
+                       getStatInformation())
     End Sub
 
     Public Overrides Sub onEquip(ByRef p As Player)

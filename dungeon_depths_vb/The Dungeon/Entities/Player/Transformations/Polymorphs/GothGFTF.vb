@@ -57,7 +57,7 @@
         p.prt.setIAInd(pInd.fronthair, 32, True, True)
         p.prt.setIAInd(pInd.hat, 0, True, False)
 
-        Equipment.clothesChange("Goth_Outfit")
+        Equipment.clothesChange(p, "Goth_Outfit")
         'transformation description push
         out += "GothGF TF"
 

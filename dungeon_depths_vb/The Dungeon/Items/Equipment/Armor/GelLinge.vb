@@ -46,7 +46,7 @@
         MyBase.onEquip(p)
 
         'If Not p.formName.Contains("Slime") And Not p.formName.Contains("Goo") Then
-        '    Equipment.clothesChange("Naked")
+        '    Equipment.clothesChange(p, "Naked")
         '    Game.pushLblEvent("Your clothes melt off!")
         '    p.drawPort()
         'End If

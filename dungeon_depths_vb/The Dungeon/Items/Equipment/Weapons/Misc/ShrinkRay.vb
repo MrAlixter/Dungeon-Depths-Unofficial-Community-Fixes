@@ -26,7 +26,7 @@
             If Int(Rnd() * 2) = 0 And Not p.className.Equals("Shrunken") Then
                 'backfire
                 Polymorph.transform(p, "Shrunken")
-                Equipment.weaponChange("Fists")
+                Equipment.weaponChange(p, "Fists")
             Else
                 m.maxHealth = mP.sMaxHealth / 10
                 m.attack = mP.sAttack / 10

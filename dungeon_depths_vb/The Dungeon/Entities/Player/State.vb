@@ -115,7 +115,7 @@
         p.dickSize = dickSize
         p.buttSize = buttSize
         p.equippedWeapon = equippedWeapon
-        Equipment.clothesChange(equippedArmor.getName)
+        Equipment.clothesChange(p, equippedArmor.getName)
         p.equippedArmor = equippedArmor
         p.equippedAcce = equippedAcce
         p.prt.iArrInd = iArrInd.Clone

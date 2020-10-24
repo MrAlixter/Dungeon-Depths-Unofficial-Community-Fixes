@@ -37,11 +37,22 @@
         picNormal = ShopNPC.npcLib.atrs(0).getAt(17)
         picPrincess = ShopNPC.npcLib.atrs(0).getAt(19)
         picBunny = ShopNPC.npcLib.atrs(0).getAt(18)
+        picArachne = ShopNPC.npcLib.atrs(0).getAt(70)
 
         picNPC = New List(Of Image)
-        picNPC.AddRange({picNormal, ShopNPC.npcLib.atrs(0).getAt(4), ShopNPC.npcLib.atrs(0).getAt(5), picPrincess, picBunny})
+        picNPC.AddRange({picNormal,
+                         ShopNPC.npcLib.atrs(0).getAt(4),
+                         ShopNPC.npcLib.atrs(0).getAt(5),
+                         picPrincess,
+                         picBunny})
 
-        picNPC.AddRange({ShopNPC.npcLib.atrs(0).getAt(21), ShopNPC.npcLib.atrs(0).getAt(24), ShopNPC.npcLib.atrs(0).getAt(22), ShopNPC.npcLib.atrs(0).getAt(20)})
+        picNPC.AddRange({ShopNPC.npcLib.atrs(0).getAt(21),
+                         ShopNPC.npcLib.atrs(0).getAt(24),
+                         ShopNPC.npcLib.atrs(0).getAt(22),
+                         ShopNPC.npcLib.atrs(0).getAt(20),
+                         picArachne,
+                         ShopNPC.npcLib.atrs(0).getAt(74)})
+
         If speed = Game.player1.speed Then speed -= 1
         MyBase.title = " the "
     End Sub
@@ -89,6 +100,13 @@
             Game.pushNPCDialog("HI!  I, like, don't know if it would be smart for me to try to hypno...hypotho...do my thing to you right now, but I totally have some tapes you can use!")
         ElseIf npcIndex = 8 Then
             Game.pushNPCDialog("...")
+        ElseIf npcIndex = 9 Then
+            If Game.player1.formName.Equals("Arachne") Then
+                Game.pushNPCDialog("Oh, it's you.  I'm not sure which is worse, the fact that I'm part bug now, or the fact that your bait actually decieved me.")
+            Else
+                Game.pushNPCDialog("You should try this venom.  Or don't.  Say, you don't happen to have a Panacea in your possession, do you?")
+            End If
+
         End If
         If Game.mDun.numCurrFloor > 5 Then inv.setCount(113, 1) Else inv.setCount(113, 0)
         If Game.mDun.numCurrFloor < 5 Then inv.setCount(122, 1) Else inv.setCount(122, 0)
@@ -115,13 +133,15 @@
             Return "Cmon!  I'm, like, trying to help you out here!"
         ElseIf npcIndex = 8 Then
             Return "..."
+        ElseIf npcIndex = 9 Then
+            Return "Outstanding!  I've been looking for the opportunity to burn off some arachnophobic stress..."
         End If
         Return "Bad move."
     End Function
     Public Overrides Function hitBySpell() As String
         If Game.currFloor.floorNumber = 7 And Game.player1.perks(perk.seventailsstage) = 1 Then sevenTailsFight()
 
-        If npcIndex = 0 Then
+        If npcIndex = 0 Or npcIndex = 9 Then
             Game.NPCtoCombat(Me)
             Return "*sigh*...Well, I can always use another test subject."
         ElseIf npcIndex = 1 Then
@@ -144,17 +164,12 @@
     End Function
 
     Public Sub hypnotize(ByVal s As String)
-        preHypnoID = npcIndex
-        npcIndex = 5
-
-        Game.pushNPCDialog(s, AddressOf back)
-        Game.shopMenu.Close()
-
-        Game.picNPC.BackgroundImage = picNPC(npcIndex)
+        hypnotize(s, AddressOf back)
     End Sub
     Public Sub hypnotize(ByVal s As String, a As Action)
         preHypnoID = npcIndex
-        npcIndex = 5
+
+        If form.Equals("Arachne") Then npcIndex = 10 Else npcIndex = 5
 
         Game.pushNPCDialog(s, a)
         Game.shopMenu.Close()
@@ -174,6 +189,10 @@
 
         discount = 0.5
     End Sub
+
+    Public Overrides Function getArachneImageInd() As Integer
+        Return 9
+    End Function
 
     Sub seventailsAdjustment()
         If Game.currFloor.floorNumber = 7 And Game.player1.perks(perk.seventailsstage) = 1 Then

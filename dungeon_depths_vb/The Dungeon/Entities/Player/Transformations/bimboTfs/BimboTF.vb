@@ -106,7 +106,7 @@
         If Not p.equippedArmor.getName.Equals("Naked") And Not p.className.Equals("Magical Girl") Then
             If p.equippedArmor.getSlutVarInd = -1 Then
                 If p.inv.item("Skimpy_Clothes").count < 1 Then p.inv.add("Skimpy_Clothes", 1)
-                Equipment.clothesChange("Skimpy_Clothes")
+                Equipment.clothesChange(p, "Skimpy_Clothes")
             Else
                 Equipment.clothingCurse1(p)
             End If
@@ -164,7 +164,7 @@
         If Not p.equippedArmor.getName.Equals("Naked") Then
             If p.equippedArmor.getSlutVarInd = -1 Then
                 p.inv.add("Very_Skimpy_Clothes", 1)
-                Equipment.clothesChange("Very_Skimpy_Clothes")
+                Equipment.clothesChange(p, "Very_Skimpy_Clothes")
             Else
                 Equipment.clothingCurse1(p)
             End If

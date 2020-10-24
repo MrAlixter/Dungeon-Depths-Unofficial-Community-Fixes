@@ -39,11 +39,12 @@
         picNormal = ShopNPC.npcLib.atrs(0).getAt(0)
         picPrincess = ShopNPC.npcLib.atrs(0).getAt(2)
         picBunny = ShopNPC.npcLib.atrs(0).getAt(1)
+        picArachne = ShopNPC.npcLib.atrs(0).getAt(67)
 
         picNPC = New List(Of Image)
         picNPC.AddRange({picNormal, ShopNPC.npcLib.atrs(0).getAt(4), ShopNPC.npcLib.atrs(0).getAt(5), picPrincess, picBunny})
 
-        picNPC.AddRange({ShopNPC.npcLib.atrs(0).getAt(3)})
+        picNPC.AddRange({ShopNPC.npcLib.atrs(0).getAt(3), picArachne})
         If speed = Game.player1.speed Then speed -= 1
         title = " the "
     End Sub
@@ -63,7 +64,7 @@
             inv.setCount("Midas_Gauntlet", 1)
         End If
 
-        If npcIndex = 0 Then
+        If npcIndex = 0 Or npcIndex = 6 Then
             Game.pushNPCDialog("Hey, what's up?")
         ElseIf npcIndex = 1 Then
             Game.pushNPCDialog("Ribbit.  Ribbit.")
@@ -78,7 +79,7 @@
         End If
     End Sub
     Public Overrides Function toFight() As String
-        If npcIndex = 0 Then
+        If npcIndex = 0 Or npcIndex = 6 Then
             Return "So you want to fight, eh?  I'm ready whenever you are."
         ElseIf npcIndex = 1 Then
             Return "Ribbit . . ."
@@ -94,7 +95,7 @@
         Return "Bad move."
     End Function
     Public Overrides Function hitBySpell() As String
-        If npcIndex = 0 Then
+        If npcIndex = 0 Or npcIndex = 6 Then
             Game.NPCtoCombat(Me)
             Return "Did . . . did you just cast a spell on me?  You know I have to kill you now, right?"
         ElseIf npcIndex = 1 Then

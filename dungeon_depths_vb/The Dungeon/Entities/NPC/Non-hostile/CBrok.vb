@@ -24,18 +24,28 @@
         picNormal = ShopNPC.npcLib.atrs(0).getAt(35)
         picPrincess = ShopNPC.npcLib.atrs(0).getAt(36)
         picBunny = ShopNPC.npcLib.atrs(0).getAt(37)
+        picArachne = ShopNPC.npcLib.atrs(0).getAt(73)
 
         picNPC = New List(Of Image)
-        picNPC.AddRange({picNormal, ShopNPC.npcLib.atrs(0).getAt(4), ShopNPC.npcLib.atrs(0).getAt(5), picPrincess, picBunny})
+        picNPC.AddRange({picNormal,
+                         ShopNPC.npcLib.atrs(0).getAt(4),
+                         ShopNPC.npcLib.atrs(0).getAt(5),
+                         picPrincess,
+                         picBunny})
 
-        picNPC.AddRange({ShopNPC.npcLib.atrs(0).getAt(38)})
+        picNPC.AddRange({ShopNPC.npcLib.atrs(0).getAt(38),
+                         picArachne})
+
         If speed = Game.player1.speed Then speed -= 1
         title = " the "
     End Sub
 
     Public Overrides Sub encounter()
         MyBase.encounter()
-        If Not Game.player1.isCursed Then
+
+        If npcIndex = 6 Then
+            Game.pushNPCDialog("So, so many eyes.....")
+        ElseIf Not Game.player1.isCursed Then
             npcIndex = 0
             Game.pushNPCDialog("What have you gotten yourself into this time?  Nothing?  Perhaps there's a curse somewhere out there for you...")
         Else

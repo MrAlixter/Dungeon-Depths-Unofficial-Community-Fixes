@@ -59,8 +59,8 @@
 
         p.prt.setIAInd(pInd.hairacc, 2, True, False)
 
-        Equipment.accChange("Nothing")
-        Equipment.clothesChange("Magical_Girl_Outfit")
+        Equipment.accChange(p, "Nothing")
+        Equipment.clothesChange(p, "Magical_Girl_Outfit")
     End Sub
     Overridable Sub step2()
         Dim p As Player = Game.player1

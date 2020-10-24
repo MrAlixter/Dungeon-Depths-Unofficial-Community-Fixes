@@ -84,7 +84,7 @@
             If Int(Rnd() * 20) = 0 Then
                 Game.pushLblEvent(Game.lblEvent.Text.Split(vbCrLf)(0) & vbCrLf & "Your ring of regeneration goes dim, before shattering into dust.")
                 p.inv.item(77).count -= 1
-                Equipment.accChange("Nothing")
+                Equipment.accChange(p, "Nothing")
             End If
         End If
     End Sub
@@ -205,7 +205,7 @@
         End If
 
         If p.getMana < 1 Then
-            Equipment.weaponChange("Fists")
+            Equipment.weaponChange(p, "Fists")
             Game.pushLblEvent("You no longer can keep up your transformation, and revert to your previous form!")
         End If
     End Sub
@@ -216,7 +216,7 @@
         End If
 
         If p.stamina < 10 Then
-            Equipment.weaponChange("Fists")
+            Equipment.weaponChange(p, "Fists")
             Game.pushLblEvent("You no longer can keep up your transformation, and revert to your previous form!")
         End If
     End Sub

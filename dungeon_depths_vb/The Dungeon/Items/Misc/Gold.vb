@@ -2,15 +2,21 @@
     Inherits Item
 
     Sub New()
+        '|ID Info|
         MyBase.setName("Gold")
-        MyBase.setDesc("TFng")
         id = 43
         tier = 2
+
+        '|Item Flags|
         MyBase.setUsable(True)
+        MyBase.isRandoTFAcceptable = False
+
+        '|Stats|
         MyBase.count = 0
         MyBase.value = 2
 
-        MyBase.isRandoTFAcceptable = False
+        '|Description|
+        MyBase.setDesc("TFng")
     End Sub
     Overrides Sub use(ByRef p As Player)
         p.gold += MyBase.count

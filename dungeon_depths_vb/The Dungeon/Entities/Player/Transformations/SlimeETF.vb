@@ -16,7 +16,7 @@
         'In the future this will damage/destroy armor
         Dim p = Game.player1
         p.inv.add("Dissolved_Clothes", 1)
-        Equipment.clothesChange("Dissolved_Clothes")
+        Equipment.clothesChange(p, "Dissolved_Clothes")
         pushLblEventWithoutLoss("As you take stock of yourself, you notice that your clothing has been partially eaten away by a teal slime that you seem to sweating in small amounts.  This seems like something you are going to need to keep an eye on...")
         p.drawPort()
         If Game.player1.perks(perk.slimetf) > -1 Then Game.player1.perks(perk.slimetf) += 1
@@ -47,7 +47,7 @@
         Dim p As Player = Game.player1
         If p.equippedWeapon.getName.Equals("Magical_Girl_Wand") Or
             p.equippedWeapon.getName.Equals("Valkyrie_Sword") Then
-            Equipment.weaponChange("Fists")
+            Equipment.weaponChange(p, "Fists")
         End If
 
         p.health = 1
@@ -63,7 +63,7 @@
         p.prt.setIAInd(pInd.hat, 0, True, False)
 
         p.changeForm("Slime")
-        Equipment.clothesChange("Naked")
+        Equipment.clothesChange(p, "Naked")
 
         p.prt.skincolor = Color.FromArgb(200, p.prt.skincolor.R, p.prt.skincolor.G, p.prt.skincolor.B)
 

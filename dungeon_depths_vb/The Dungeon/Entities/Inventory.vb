@@ -248,7 +248,21 @@
         internal_inventory.Add("Crimson_Manual", New CrimsonManual)         '227
         internal_inventory.Add("XP_Sandwich", New XPSandwich)               '228
         internal_inventory.Add("BitGold", New BitGold)                      '229
+        'v10.0.1
         internal_inventory.Add("Dragonfruit", New DragonFruit)              '230
+        internal_inventory.Add("Mental_Potion", New MentalPotion)           '231
+        internal_inventory.Add("Chilling_Potion", New ChillingPotion)       '232
+        internal_inventory.Add("Ass_Shrink._Potion", New USPotion)          '233
+        internal_inventory.Add("Dick_Shrink._Potion", New DSPotion)         '234
+        internal_inventory.Add("Hyper_Health_Potion", New HHealthPotion)    '235
+        internal_inventory.Add("Hyper_Mana_Potion", New HManaPotion)        '236
+        internal_inventory.Add("Succubus_Armor", New SuccubusArmor)         '237
+        internal_inventory.Add("Lance_of_Darkness", New LanceOfDarkness)    '238
+        internal_inventory.Add("Spidersilk_Bonds", New SpidersilkBonds)     '239
+        internal_inventory.Add("Spidersilk_Bikini", New SpidersilkBikini)   '240
+        internal_inventory.Add("Major_Mana_Potion", New MajManaPotion)      '241
+        internal_inventory.Add("Spellcyclopedia", New SpidersilkBikini)     '242
+        internal_inventory.Add("Big_Book_O'_Specials", New BookOSpecials)   '243
 
         armor = {New Naked,
                  Me.item(5), Me.item(7), Me.item(8), Me.item(10),
@@ -269,7 +283,8 @@
                  Me.item(189), Me.item(190), Me.item(191), Me.item(192),
                  Me.item(196), Me.item(199), Me.item(201), Me.item(202),
                  Me.item(208), Me.item(210), Me.item(211), Me.item(216),
-                 Me.item(220), Me.item(221), Me.item(222)}
+                 Me.item(220), Me.item(221), Me.item(222), Me.item(237),
+                 Me.item(239), Me.item(240)}
 
         weapons = {New BareFists(),
                    Me.item(6), Me.item(9), Me.item(11), Me.item(21),
@@ -282,7 +297,7 @@
                    Me.item(165), Me.item(167), Me.item(171), Me.item(172),
                    Me.item(173), Me.item(179), Me.item(203), Me.item(204),
                    Me.item(209), Me.item(212), Me.item(213), Me.item(217),
-                   Me.item(218)}
+                   Me.item(218), Me.item(238)}
 
         useable = {Me.item(0), Me.item(3), Me.item(4),
                    Me.item(65), Me.item(15), Me.item(36), Me.item(37),
@@ -296,7 +311,8 @@
                    Me.item(157), Me.item(158), Me.item(162), Me.item(174),
                    Me.item(182), Me.item(195), Me.item(200), Me.item(205),
                    Me.item(206), Me.item(207), Me.item(214), Me.item(215),
-                   Me.item(219), Me.item(226), Me.item(227)}
+                   Me.item(219), Me.item(226), Me.item(227), Me.item(238),
+                   Me.item(241)}
 
         food = {Me.item(1), Me.item(30), Me.item(31), Me.item(32), Me.item(33),
                 Me.item(34), Me.item(35), Me.item(44), Me.item(90),
@@ -316,11 +332,13 @@
                    Me.item(26), Me.item(27), Me.item(28), Me.item(29),
                    Me.item(59), Me.item(60), Me.item(61), Me.item(62),
                    Me.item(76), Me.item(82), Me.item(92), Me.item(93),
-                   Me.item(193), Me.item(194)}
+                   Me.item(193), Me.item(194), Me.item(231), Me.item(232),
+                   Me.item(233), Me.item(234), Me.item(235), Me.item(236)}
 
         Array.Sort(potions)
 
-        misc = {Me.item(43), Me.item(53), Me.item(224), Me.item(229)}
+        misc = {Me.item(43), Me.item(53), Me.item(224), Me.item(229),
+                Me.item(242), Me.item(243)}
 
         invIDorder = New List(Of Integer)
 
@@ -332,7 +350,8 @@
                       "Azure_Potion", "Rose_Potion", "Mauve_Potion", "Jet_Potion",
                       "Ruby_Potion", "Emerald_Potion", "Sapphire_Potion", "Silver_Potion",
                       "Murky_Potion", "Smokey_Potion", "Pink_Potion", "Glittery_Potion",
-                      "Florecent_Potion", "Coral_Potion", "Steely_Potion"})
+                      "Florecent_Potion", "Coral_Potion", "Steely_Potion", "Cyan_Potion",
+                      "Violet_Potion", "Pewter_Potion", "Pearly_Potion", "Verdant_Potion"})
         mPotions = New List(Of MysteryPotion)
         For i = 0 To UBound(potions)
             If potions(i).GetType().IsSubclassOf(GetType(MysteryPotion)) Then mPotions.Add(potions(i))

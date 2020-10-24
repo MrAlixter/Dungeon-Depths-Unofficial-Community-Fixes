@@ -47,7 +47,7 @@
             Dim bTF As BimboTF = New BimboTF(2, 0, 0.25, True)
             bTF.step2()
             Game.player1.inv.add(147, 1)
-            Equipment.clothesChange("Skimpy_Tube_Top")
+            Equipment.clothesChange(Game.player1, "Skimpy_Tube_Top")
             Game.player1.drawPort()
             pos = New Point(-1, -1)
         End If

@@ -36,10 +36,10 @@
 
         If p.equippedArmor.dBoost > 15 Then
             p.inv.add(94, 1)
-            Equipment.clothesChange("Armored_Bunny_Suit")
+            Equipment.clothesChange(p, "Armored_Bunny_Suit")
         Else
             p.inv.add(16, 1)
-            Equipment.clothesChange("Bunny_Suit")
+            Equipment.clothesChange(p, "Bunny_Suit")
         End If
 
         Game.pushLblEvent("Your bowtie glows, and everything slows down.  You attempt to deftly dodge the oncoming blow, but you aren't nimble enough.  Desperately, you focus on getting as much power to the bowtie as possible, and the aura around it shifts to a blinding crimson.  As the glow fades, you find yourself able to easily duck under the attack with a nimbleness you weren't aware you had before.  As time resumes its normal pace, you are shocked to discover that your body has become that of a rabbit themed hostess!  Fortunately you seem to have higher agilty now, though you doubt you can take as hard of a hit.")

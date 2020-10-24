@@ -36,6 +36,7 @@
         picNormal = ShopNPC.npcLib.atrs(0).getAt(11)
         picPrincess = ShopNPC.npcLib.atrs(0).getAt(13)
         picBunny = ShopNPC.npcLib.atrs(0).getAt(12)
+        picArachne = ShopNPC.npcLib.atrs(0).getAt(69)
 
         picNPC = New List(Of Image)
         picNPC.AddRange({picNormal,
@@ -48,7 +49,8 @@
                          ShopNPC.npcLib.atrs(0).getAt(15),
                          ShopNPC.npcLib.atrs(0).getAt(23),
                          ShopNPC.npcLib.atrs(0).getAt(14),
-                         ShopNPC.npcLib.atrs(0).getAt(61)})
+                         ShopNPC.npcLib.atrs(0).getAt(61),
+                         picArachne})
         If speed = Game.player1.speed Then speed -= 1
         title = " the "
     End Sub
@@ -63,7 +65,7 @@
             inv.setCount("Warrior's_Feast", 0)
             inv.setCount("Mage's_Delicacy", 0)
             inv.setCount("Tavern_Special", 0)
-            Game.pushNPCDialog("Hey!  I'm turning into a tree!  Now, obviously this ain't great, but at least I'm getting hard!  HA!  That's a little bit of some tree humor, buy some stuff before you leaf and maybe I can get this straighed out before I'm all arborial...")
+            Game.pushNPCDialog("Hey!  I'm turning into a tree!  Now, obviously this ain't great, but at least I'm getting hard!  HA!  That's a little bit of some tree humor, buy some stuff before you leaf and maybe I can get this straighed out before this curse runs its course, eh?")
         Else
             If npcIndex = 0 Then
                 If Int(Rnd() * 20) = 0 Then
@@ -104,6 +106,15 @@
                                    "Don't, uh, tell Teach I said that though, she might end up keeping me like this...")
             ElseIf npcIndex = 8 Then
                 Game.pushNPCDialog("...")
+            ElseIf npcIndex = 10 Then
+                If Game.player1.formName.Equals("Arachne") Then
+                    Game.pushNPCDialog("Hey, it's you!  All hail the spider goddess or whatever we're on about, to be completely honest I wasn't really paying attention during my initiation." & DDUtils.RNRN &
+                                       "So, whatcha eatin'?")
+                Else
+                    Game.pushNPCDialog("Ya know, I do have a extra potent venom you could use if you wanted to try the spider thing out...  Hey, then we could hang out!  Just...*hang* out!  Kinda just....sit around....and *haaaaang* out..." & DDUtils.RNRN &
+                                       "...because, like, spiders hang....off....stuff..." & DDUtils.RNRN &
+                                       ".....just gonna......let that *hang*......haha...ahh...")
+                End If
             End If
         End If
 
@@ -124,11 +135,13 @@
             Return "WHAA...can't we talk this out, or at least wait for me to turn back?!?"
         ElseIf npcIndex = 8 Then
             Return "..."
+        ElseIf npcIndex = 10 Then
+            Return "Whelp, time for one of us to die."
         End If
         Return "Looks like someone ordered...a knuckle sandwich!  Hahaha, aaahhh...no?  Not a fan of the puns?  Well, all the more reason to kick your ass."
     End Function
     Public Overrides Function hitBySpell() As String
-        If npcIndex = 0 Then
+        If npcIndex = 0 Or npcIndex = 10 Then
             Game.NPCtoCombat(Me)
             Return "*sigh* Alright, here we go."
         ElseIf npcIndex = 1 Then
@@ -155,4 +168,8 @@
 
         discount = 0.5
     End Sub
+
+    Public Overrides Function getArachneImageInd() As Integer
+        Return 10
+    End Function
 End Class

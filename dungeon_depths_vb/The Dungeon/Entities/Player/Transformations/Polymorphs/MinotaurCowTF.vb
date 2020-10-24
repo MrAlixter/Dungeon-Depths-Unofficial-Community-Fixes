@@ -18,7 +18,7 @@
         Dim out = ""
 
         'unequips
-        Equipment.clothesChange("Cow_Print_Bra")
+        Equipment.clothesChange(p, "Cow_Print_Bra")
 
         'minotaur cow tf transformation
         If p.sex = "Male" Then

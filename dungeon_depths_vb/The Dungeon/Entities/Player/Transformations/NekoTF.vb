@@ -65,13 +65,13 @@
         p.prt.setIAInd(pInd.clothes, 40, True, True)
         p.prt.setIAInd(pInd.mouth, 9, True, True)
         p.will -= 2
-        Equipment.clothesChange("Cat_Lingerie")
+        Equipment.clothesChange(p, "Cat_Lingerie")
         Game.pushLblCombatEvent("Your tits expand, your clothes shift, and you feel your will grow weaker. You are now permenantly a cat girl!  Soon you will be Marissa's pet! ")
     End Sub
     Sub step6alt()
         Dim p As player = game.player1
-        Equipment.weaponChange("Fists")
-        Equipment.clothesChange("Cat_Lingerie")
+        Equipment.weaponChange(p, "Fists")
+        Equipment.clothesChange(p, "Cat_Lingerie")
         be()
         p.prt.setIAInd(pInd.rearhair, 12, True, True)
         p.prt.setIAInd(pInd.midhair, 17, True, True)
@@ -95,7 +95,7 @@
         p.changeClass("Kitty")
         be()
 
-        Equipment.clothesChange("Cat_Lingerie")
+        Equipment.clothesChange(p, "Cat_Lingerie")
 
         Game.fromCombat()
         If p.isUnwilling And p.sex.Equals("Male") Then

@@ -1,16 +1,23 @@
 ﻿Public Class TwinBlades
     Inherits Weapon
     Sub New()
+        '|ID Info|
         MyBase.setName("Twin_Xiphoi")
-        MyBase.setDesc("Why have one neat curved double-edged blade forged from bronze when you can have 2?" & vbCrLf &
-                       "+25 ATK" & vbCrLf &
-                       "Hits twice")
         id = 150
         tier = Nothing
+
+        '|Item Flags|
         MyBase.setUsable(False)
+
+        '|Stats|
         MyBase.aBoost = 25
         count = 0
         value = 1820
+
+        '|Description|
+        MyBase.setDesc("Why have one neat curved double-edged blade forged from bronze when you can have 2?" & DDUtils.RNRN &
+                       "Hits twice" & vbCrLf &
+                       getStatInformation())
     End Sub
 
     Overrides Function attack(ByRef p As Player, ByRef m As Entity) As Integer

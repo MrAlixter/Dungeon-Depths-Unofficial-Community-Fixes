@@ -3,7 +3,6 @@
     Sub New()
         MyBase.setName("Nothing")
         MyBase.setDesc("NO accessory")
-        id = Nothing
         tier = Nothing
         MyBase.setUsable(False)
         MyBase.count = 0

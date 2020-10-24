@@ -43,9 +43,9 @@
         Dim needsToUpdate As Boolean = False
 
         'equip the new equipment
-        needsToUpdate = equipArmor(cboxArmor.Text)
-        needsToUpdate = needsToUpdate Or equipWeapon(cboxWeapon.Text)
-        needsToUpdate = needsToUpdate Or equipAcce(cboxAccessory.Text)
+        needsToUpdate = equipArmor(p, cboxArmor.Text)
+        needsToUpdate = needsToUpdate Or equipWeapon(p, cboxWeapon.Text)
+        needsToUpdate = needsToUpdate Or equipAcce(p, cboxAccessory.Text)
 
         'updates the player, the stat display, and the portrait before the form closes
         p.drawPort()
@@ -53,8 +53,7 @@
 
         Me.Close()
     End Sub
-    Public Shared Function equipArmor(ByVal armor As String, Optional ByVal considerCurse As Boolean = True) As Boolean
-        Dim p = Game.player1
+    Public Shared Function equipArmor(ByRef p As Player, ByVal armor As String, Optional ByVal considerCurse As Boolean = True) As Boolean
         If Not p.inv.getArmors.Item1.Contains(armor) Then Return False
 
         'if clothes offer resistance on the way off, this handles that
@@ -88,7 +87,7 @@
         End If
 
         'equip the new armor
-        Equipment.clothesChange(armor)
+        Equipment.clothesChange(p, armor)
         If p.equippedArmor.mBoost > 0 Then p.mana += p.equippedArmor.mBoost
         If p.mana > p.getMaxMana Then p.mana = p.getMaxMana
 
@@ -110,9 +109,7 @@
 
         Return True
     End Function
-    Public Shared Function equipWeapon(ByVal weapon As String) As Boolean
-        Dim p = Game.player1
-
+    Public Shared Function equipWeapon(ByRef p As Player, ByVal weapon As String) As Boolean
         If Not p.inv.getWeapons.Item1.Contains(weapon) Then Return False
 
         'if clothes offer resistance on the way off, this handles that
@@ -135,15 +132,13 @@
         End If
 
         'handles the equiping of weapons
-        Equipment.weaponChange(weapon)
+        Equipment.weaponChange(p, weapon)
         If p.equippedWeapon.mBoost > 0 Then p.mana += p.equippedWeapon.mBoost
         If p.mana > p.getMaxMana Then p.mana = p.getMaxMana
 
         Return True
     End Function
-    Public Shared Function equipAcce(ByVal acce As String) As Boolean
-        Dim p = Game.player1
-
+    Public Shared Function equipAcce(ByRef p As Player, ByVal acce As String) As Boolean
         'if clothes offer resistance on the way off, this handles that
         If (Not p.equippedAcce.getName.Equals(acce) And p.equippedAcce.isCursed) Then
             If p.inv.item("Anti_Curse_Tag").count > 0 Then
@@ -155,7 +150,7 @@
             End If
         End If
 
-        Equipment.accChange(acce)
+        Equipment.accChange(p, acce)
         If p.equippedAcce.getMBoost(p) > 0 Then p.mana += p.equippedAcce.getMBoost(p)
         If p.mana > p.getMaxMana Then p.mana = p.getMaxMana
 
@@ -242,7 +237,7 @@
         Dim slutVarIndex = p.equippedArmor.getSlutVarInd
         p.inv.add(equippedArmorIndex, -1)
         p.inv.add(slutVarIndex, 1)
-        clothesChange(p.inv.item(slutVarIndex).getAName)
+        clothesChange(p, p.inv.item(slutVarIndex).getAName)
 
         Game.pushLstLog("Your curse changes your clothes.")
         If Not Game.lblEvent.Visible Then
@@ -263,15 +258,14 @@
         Dim antiSlutVarIndex = p.equippedArmor.getAntiSlutVarInd
         p.inv.add(equippedArmorIndex, -1)
         p.inv.add(antiSlutVarIndex, 1)
-        clothesChange(p.inv.item(antiSlutVarIndex).getAName)
+        clothesChange(p, p.inv.item(antiSlutVarIndex).getAName)
 
         Game.pushLstLog("Your curse changes your clothes.")
         If Not Game.lblEvent.Visible Then Game.pushLblEvent("Suddenly, something seems off.  You look down to see a golden glow beginning to form on your outfit.  You pop off your top, mesmerised by the shimmering light that seems to be getting brighter by the second.  As the light becomes blinding, your top seems to be gaining mass and you drop it to cover your eyes.  Peeking out a few seconds later, you see that your gear is no longer glowing, and pick it back up.  As far as you can tell, it looks the same as it always had, and annoyed at yourself for getting sidetracked, you set back out on your adventure.")
         Return True
     End Function
     'clothesChange handles the equipping and unequipping of armors
-    Public Sub clothesChange(ByVal clothes As String)
-        Dim p = Game.player1
+    Public Sub clothesChange(ByRef p As Player, ByVal clothes As String, Optional doEquipHandlers As Boolean = True)
         If p.perks(perk.isfae) > 0 Then Exit Sub
         If aList.Count < 1 Then init()
         If Not p.equippedArmor Is Nothing AndAlso clothes.Equals(p.equippedArmor.getName) Then Exit Sub
@@ -281,19 +275,18 @@
                 If clothes.Equals(k) Then
                     'MsgBox("{" & cmbobxArmor.SelectedItem & "}&[") ' & aNameList(i) & "]")
                     sArmor = aList(k)
-                    If Not p.equippedArmor Is Nothing Then p.equippedArmor.onUnequip(p)
+                    If Not p.equippedArmor Is Nothing And doEquipHandlers Then p.equippedArmor.onUnequip(p)
                     Exit For
                 End If
             Next
             If sArmor Is Nothing Then Exit Sub
             p.equippedArmor = sArmor
             cboxArmor.Text = clothes
-            p.equippedArmor.onEquip(p)
+            If doEquipHandlers Then p.equippedArmor.onEquip(p)
         End If
     End Sub
     'clothesChange handles the equipping and unequipping of weapon
-    Public Sub weaponChange(ByVal weapon As String)
-        Dim p = Game.player1
+    Public Sub weaponChange(ByRef p As Player, ByVal weapon As String, Optional doEquipHandlers As Boolean = True)
         If p.perks(perk.isfae) > 0 Then Exit Sub
         If wList.Count < 1 Then init()
         Dim sWeapon As Weapon = Nothing
@@ -302,19 +295,18 @@
             For Each k In wList.Keys
                 If weapon.Split()(0).Equals(k) Then
                     sWeapon = wList(k)
-                    If Not p.equippedWeapon Is Nothing Then p.equippedWeapon.onUnequip(p, sWeapon)
+                    If Not p.equippedWeapon Is Nothing And doEquipHandlers Then p.equippedWeapon.onUnequip(p, sWeapon)
                     Exit For
                 End If
             Next
             If sWeapon Is Nothing Then Exit Sub
             p.equippedWeapon = sWeapon
-            p.equippedWeapon.onEquip(p)
+            If doEquipHandlers Then p.equippedWeapon.onEquip(p)
             If p.perks(perk.amazon) > -15 Then PerkEffects.amazon(p)
         End If
     End Sub
     'accChange handles the equipping and unequipping of accessories
-    Public Sub accChange(ByVal acc As String)
-        Dim p = Game.player1
+    Public Sub accChange(ByRef p As Player, ByVal acc As String, Optional doEquipHandlers As Boolean = True)
         If p.perks(perk.isfae) > 0 Then Exit Sub
         If acList.Count < 1 Then init()
         If Not p.equippedAcce Is Nothing AndAlso acc.Equals(p.equippedAcce.getName) Then Exit Sub
@@ -324,13 +316,13 @@
                 If acc.Equals(k) Then
                     'MsgBox("{" & acList(i).getName & "}&[" & acNameList(i) & "]")
                     sAcc = acList(k)
-                    If Not p.equippedAcce Is Nothing Then p.equippedAcce.onUnequip(p)
+                    If Not p.equippedAcce Is Nothing And doEquipHandlers Then p.equippedAcce.onUnequip(p)
                     Exit For
                 End If
             Next
             If sAcc Is Nothing Then Exit Sub
             p.equippedAcce = sAcc
-            p.equippedAcce.onEquip(p)
+            If doEquipHandlers Then p.equippedAcce.onEquip(p)
         End If
     End Sub
 End Class

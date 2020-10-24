@@ -2,13 +2,20 @@
     Inherits Item
 
     Sub New()
+        '|ID Info|
         MyBase.setName("Disarment_Kit")
-        MyBase.setDesc("A kit that disables any traps around you.")
         id = 57
         tier = 3
+
+        '|Item Flags|
         MyBase.setUsable(True)
+
+        '|Stats|
         MyBase.count = 0
         MyBase.value = 475
+
+        '|Description|
+        MyBase.setDesc("A kit that disables any traps around you.")
     End Sub
 
     Overrides Sub use(ByRef p As Player)

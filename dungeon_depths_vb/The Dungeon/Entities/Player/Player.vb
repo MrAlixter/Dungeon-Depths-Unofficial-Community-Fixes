@@ -65,6 +65,7 @@
     lurk            '63
     tfcausingwand   '64
     tfcausingsword  '65
+    snarednpc       '66
 End Enum
 
 Public Class Player
@@ -398,7 +399,7 @@ Public Class Player
             Game.pushLstLog("You find a sword piercing the floor...Maybe you should equip it?")
         End If
         'equip armor, boost mana if a staff is equipped
-        Equipment.clothesChange(equippedArmor.getName)
+        Equipment.clothesChange(Me, equippedArmor.getName)
         If equippedWeapon.GetType().IsSubclassOf(GetType(Staff)) Then mana += equippedWeapon.mBoost
         'set the known specials/spells
         specialRoute()
@@ -503,6 +504,7 @@ Public Class Player
         forms.Add("Goth", New Goth())
         forms.Add("Plush", New Plush())
         forms.Add("Fae", New FaeForm())
+        forms.Add("Archdemoness", New ArchDemoness())
     End Sub
     Private Sub initPolymorphs()
         'compile list of polymorphs

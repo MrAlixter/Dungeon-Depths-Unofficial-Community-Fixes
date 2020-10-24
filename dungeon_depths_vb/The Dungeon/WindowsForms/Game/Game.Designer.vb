@@ -239,6 +239,7 @@ Partial Class Game
         Me.picPFaeShock = New System.Windows.Forms.PictureBox()
         Me.picPFae = New System.Windows.Forms.PictureBox()
         Me.pnlStats = New System.Windows.Forms.Panel()
+        Me.lblLust = New System.Windows.Forms.Label()
         Me.Label6 = New System.Windows.Forms.Label()
         Me.pnlMeter = New System.Windows.Forms.Panel()
         Me.lblHealthbarFont = New System.Windows.Forms.Label()
@@ -251,7 +252,34 @@ Partial Class Game
         Me.pic9tailsBimbo = New System.Windows.Forms.PictureBox()
         Me.picFoxStatueGold = New System.Windows.Forms.PictureBox()
         Me.picFoxStatueF = New System.Windows.Forms.PictureBox()
-        Me.lblLust = New System.Windows.Forms.Label()
+        Me.pnlFusion = New System.Windows.Forms.Panel()
+        Me.lblFusionDisclaimer = New System.Windows.Forms.Label()
+        Me.PictureBox1 = New System.Windows.Forms.PictureBox()
+        Me.picFusionPort = New System.Windows.Forms.PictureBox()
+        Me.lblFusionHP = New System.Windows.Forms.Label()
+        Me.lblFusionMP = New System.Windows.Forms.Label()
+        Me.Label24 = New System.Windows.Forms.Label()
+        Me.lblFusionLust = New System.Windows.Forms.Label()
+        Me.lblFusionSPD = New System.Windows.Forms.Label()
+        Me.lblFusionATK = New System.Windows.Forms.Label()
+        Me.lblFusionDEF = New System.Windows.Forms.Label()
+        Me.lblFusionWill = New System.Windows.Forms.Label()
+        Me.lblFusionLVL = New System.Windows.Forms.Label()
+        Me.Label16 = New System.Windows.Forms.Label()
+        Me.cboxFusionTarget = New System.Windows.Forms.ComboBox()
+        Me.Label13 = New System.Windows.Forms.Label()
+        Me.cboxFusionAccessory = New System.Windows.Forms.ComboBox()
+        Me.Label14 = New System.Windows.Forms.Label()
+        Me.cboxFusionArmor = New System.Windows.Forms.ComboBox()
+        Me.Label15 = New System.Windows.Forms.Label()
+        Me.cboxFusionWeapon = New System.Windows.Forms.ComboBox()
+        Me.btnFusionAcc = New System.Windows.Forms.Button()
+        Me.btnFusionCancel = New System.Windows.Forms.Button()
+        Me.PictureBox2 = New System.Windows.Forms.PictureBox()
+        Me.pnlSnare = New System.Windows.Forms.Panel()
+        Me.btnConfirmBait = New System.Windows.Forms.Button()
+        Me.Label7 = New System.Windows.Forms.Label()
+        Me.cboxBait = New System.Windows.Forms.ComboBox()
         CType(Me.picEnemy, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me.picNPC, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me.picStatue, System.ComponentModel.ISupportInitialize).BeginInit()
@@ -368,6 +396,11 @@ Partial Class Game
         CType(Me.pic9tailsBimbo, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me.picFoxStatueGold, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me.picFoxStatueF, System.ComponentModel.ISupportInitialize).BeginInit()
+        Me.pnlFusion.SuspendLayout()
+        CType(Me.PictureBox1, System.ComponentModel.ISupportInitialize).BeginInit()
+        CType(Me.picFusionPort, System.ComponentModel.ISupportInitialize).BeginInit()
+        CType(Me.PictureBox2, System.ComponentModel.ISupportInitialize).BeginInit()
+        Me.pnlSnare.SuspendLayout()
         Me.SuspendLayout()
         '
         'btnUse1
@@ -1754,7 +1787,7 @@ Partial Class Game
         Me.pnlDescription.Controls.Add(Me.picDescPort)
         Me.pnlDescription.Controls.Add(Me.txtPlayerDesc)
         Me.pnlDescription.Controls.Add(Me.Label5)
-        Me.pnlDescription.Location = New System.Drawing.Point(1003, 129)
+        Me.pnlDescription.Location = New System.Drawing.Point(1000, 44)
         Me.pnlDescription.Name = "pnlDescription"
         Me.pnlDescription.Size = New System.Drawing.Size(690, 502)
         Me.pnlDescription.TabIndex = 275
@@ -1796,13 +1829,13 @@ Partial Class Game
         'Label5
         '
         Me.Label5.AutoSize = True
-        Me.Label5.Font = New System.Drawing.Font("Corbel", 8.150944!, System.Drawing.FontStyle.Italic, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.Label5.Font = New System.Drawing.Font("Consolas", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.Label5.ForeColor = System.Drawing.Color.White
-        Me.Label5.Location = New System.Drawing.Point(103, 4)
+        Me.Label5.Location = New System.Drawing.Point(93, 5)
         Me.Label5.Name = "Label5"
-        Me.Label5.Size = New System.Drawing.Size(327, 13)
+        Me.Label5.Size = New System.Drawing.Size(397, 13)
         Me.Label5.TabIndex = 278
-        Me.Label5.Text = "NOTE: Full body image view is not complete, and still requires some work."
+        Me.Label5.Text = "Note: Some images have not yet been updated to the full body size"
         '
         'ttCosts
         '
@@ -2708,6 +2741,17 @@ Partial Class Game
         Me.pnlStats.Size = New System.Drawing.Size(131, 140)
         Me.pnlStats.TabIndex = 398
         '
+        'lblLust
+        '
+        Me.lblLust.AutoSize = True
+        Me.lblLust.Font = New System.Drawing.Font("Consolas", 8.830189!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.lblLust.ForeColor = System.Drawing.Color.White
+        Me.lblLust.Location = New System.Drawing.Point(5, 100)
+        Me.lblLust.Name = "lblLust"
+        Me.lblLust.Size = New System.Drawing.Size(84, 14)
+        Me.lblLust.TabIndex = 211
+        Me.lblLust.Text = "LUST = TEMP"
+        '
         'Label6
         '
         Me.Label6.AutoSize = True
@@ -2846,16 +2890,358 @@ Partial Class Game
         Me.picFoxStatueF.TabStop = False
         Me.picFoxStatueF.Visible = False
         '
-        'lblLust
+        'pnlFusion
         '
-        Me.lblLust.AutoSize = True
-        Me.lblLust.Font = New System.Drawing.Font("Consolas", 8.830189!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.lblLust.ForeColor = System.Drawing.Color.White
-        Me.lblLust.Location = New System.Drawing.Point(5, 100)
-        Me.lblLust.Name = "lblLust"
-        Me.lblLust.Size = New System.Drawing.Size(84, 14)
-        Me.lblLust.TabIndex = 211
-        Me.lblLust.Text = "LUST = TEMP"
+        Me.pnlFusion.BackColor = System.Drawing.Color.Black
+        Me.pnlFusion.BackgroundImage = CType(resources.GetObject("pnlFusion.BackgroundImage"), System.Drawing.Image)
+        Me.pnlFusion.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch
+        Me.pnlFusion.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle
+        Me.pnlFusion.Controls.Add(Me.lblFusionDisclaimer)
+        Me.pnlFusion.Controls.Add(Me.PictureBox1)
+        Me.pnlFusion.Controls.Add(Me.picFusionPort)
+        Me.pnlFusion.Controls.Add(Me.lblFusionHP)
+        Me.pnlFusion.Controls.Add(Me.lblFusionMP)
+        Me.pnlFusion.Controls.Add(Me.Label24)
+        Me.pnlFusion.Controls.Add(Me.lblFusionLust)
+        Me.pnlFusion.Controls.Add(Me.lblFusionSPD)
+        Me.pnlFusion.Controls.Add(Me.lblFusionATK)
+        Me.pnlFusion.Controls.Add(Me.lblFusionDEF)
+        Me.pnlFusion.Controls.Add(Me.lblFusionWill)
+        Me.pnlFusion.Controls.Add(Me.lblFusionLVL)
+        Me.pnlFusion.Controls.Add(Me.Label16)
+        Me.pnlFusion.Controls.Add(Me.cboxFusionTarget)
+        Me.pnlFusion.Controls.Add(Me.Label13)
+        Me.pnlFusion.Controls.Add(Me.cboxFusionAccessory)
+        Me.pnlFusion.Controls.Add(Me.Label14)
+        Me.pnlFusion.Controls.Add(Me.cboxFusionArmor)
+        Me.pnlFusion.Controls.Add(Me.Label15)
+        Me.pnlFusion.Controls.Add(Me.cboxFusionWeapon)
+        Me.pnlFusion.Controls.Add(Me.btnFusionAcc)
+        Me.pnlFusion.Controls.Add(Me.btnFusionCancel)
+        Me.pnlFusion.Controls.Add(Me.PictureBox2)
+        Me.pnlFusion.Location = New System.Drawing.Point(1000, 83)
+        Me.pnlFusion.Name = "pnlFusion"
+        Me.pnlFusion.Size = New System.Drawing.Size(591, 295)
+        Me.pnlFusion.TabIndex = 404
+        Me.pnlFusion.Visible = False
+        '
+        'lblFusionDisclaimer
+        '
+        Me.lblFusionDisclaimer.AutoSize = True
+        Me.lblFusionDisclaimer.BackColor = System.Drawing.Color.Black
+        Me.lblFusionDisclaimer.Font = New System.Drawing.Font("Consolas", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.lblFusionDisclaimer.ForeColor = System.Drawing.Color.White
+        Me.lblFusionDisclaimer.Location = New System.Drawing.Point(8, 241)
+        Me.lblFusionDisclaimer.Margin = New System.Windows.Forms.Padding(4, 0, 4, 0)
+        Me.lblFusionDisclaimer.Name = "lblFusionDisclaimer"
+        Me.lblFusionDisclaimer.Size = New System.Drawing.Size(577, 13)
+        Me.lblFusionDisclaimer.TabIndex = 226
+        Me.lblFusionDisclaimer.Text = "This will rewrite your current player permenantly (Restore potions will restore t" & _
+    "o the fusion)."
+        Me.lblFusionDisclaimer.TextAlign = System.Drawing.ContentAlignment.MiddleLeft
+        '
+        'PictureBox1
+        '
+        Me.PictureBox1.BackColor = System.Drawing.Color.White
+        Me.PictureBox1.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch
+        Me.PictureBox1.Location = New System.Drawing.Point(330, 52)
+        Me.PictureBox1.Name = "PictureBox1"
+        Me.PictureBox1.Size = New System.Drawing.Size(110, 1)
+        Me.PictureBox1.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage
+        Me.PictureBox1.TabIndex = 224
+        Me.PictureBox1.TabStop = False
+        '
+        'picFusionPort
+        '
+        Me.picFusionPort.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch
+        Me.picFusionPort.Location = New System.Drawing.Point(446, 30)
+        Me.picFusionPort.Name = "picFusionPort"
+        Me.picFusionPort.Size = New System.Drawing.Size(125, 189)
+        Me.picFusionPort.TabIndex = 223
+        Me.picFusionPort.TabStop = False
+        '
+        'lblFusionHP
+        '
+        Me.lblFusionHP.AutoSize = True
+        Me.lblFusionHP.Font = New System.Drawing.Font("Consolas", 8.830189!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.lblFusionHP.ForeColor = System.Drawing.Color.White
+        Me.lblFusionHP.Location = New System.Drawing.Point(328, 74)
+        Me.lblFusionHP.Name = "lblFusionHP"
+        Me.lblFusionHP.Size = New System.Drawing.Size(98, 14)
+        Me.lblFusionHP.TabIndex = 220
+        Me.lblFusionHP.Text = "Max HP = TEMP"
+        '
+        'lblFusionMP
+        '
+        Me.lblFusionMP.AutoSize = True
+        Me.lblFusionMP.Font = New System.Drawing.Font("Consolas", 8.830189!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.lblFusionMP.ForeColor = System.Drawing.Color.White
+        Me.lblFusionMP.Location = New System.Drawing.Point(328, 93)
+        Me.lblFusionMP.Name = "lblFusionMP"
+        Me.lblFusionMP.Size = New System.Drawing.Size(98, 14)
+        Me.lblFusionMP.TabIndex = 221
+        Me.lblFusionMP.Text = "Max MP = TEMP"
+        '
+        'Label24
+        '
+        Me.Label24.AutoSize = True
+        Me.Label24.BackColor = System.Drawing.Color.Black
+        Me.Label24.Font = New System.Drawing.Font("Consolas", 9.75!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.Label24.ForeColor = System.Drawing.Color.White
+        Me.Label24.Location = New System.Drawing.Point(329, 33)
+        Me.Label24.Margin = New System.Windows.Forms.Padding(8, 0, 8, 0)
+        Me.Label24.Name = "Label24"
+        Me.Label24.Padding = New System.Windows.Forms.Padding(0, 1, 0, 1)
+        Me.Label24.Size = New System.Drawing.Size(84, 17)
+        Me.Label24.TabIndex = 219
+        Me.Label24.Text = "-- Stats --"
+        '
+        'lblFusionLust
+        '
+        Me.lblFusionLust.AutoSize = True
+        Me.lblFusionLust.Font = New System.Drawing.Font("Consolas", 8.830189!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.lblFusionLust.ForeColor = System.Drawing.Color.White
+        Me.lblFusionLust.Location = New System.Drawing.Point(328, 188)
+        Me.lblFusionLust.Name = "lblFusionLust"
+        Me.lblFusionLust.Size = New System.Drawing.Size(84, 14)
+        Me.lblFusionLust.TabIndex = 218
+        Me.lblFusionLust.Text = "LUST = TEMP"
+        '
+        'lblFusionSPD
+        '
+        Me.lblFusionSPD.AutoSize = True
+        Me.lblFusionSPD.Font = New System.Drawing.Font("Consolas", 8.830189!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.lblFusionSPD.ForeColor = System.Drawing.Color.White
+        Me.lblFusionSPD.Location = New System.Drawing.Point(328, 150)
+        Me.lblFusionSPD.Name = "lblFusionSPD"
+        Me.lblFusionSPD.Size = New System.Drawing.Size(77, 14)
+        Me.lblFusionSPD.TabIndex = 216
+        Me.lblFusionSPD.Text = "SPD = TEMP"
+        '
+        'lblFusionATK
+        '
+        Me.lblFusionATK.AutoSize = True
+        Me.lblFusionATK.Font = New System.Drawing.Font("Consolas", 8.830189!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.lblFusionATK.ForeColor = System.Drawing.Color.White
+        Me.lblFusionATK.Location = New System.Drawing.Point(328, 112)
+        Me.lblFusionATK.Name = "lblFusionATK"
+        Me.lblFusionATK.Size = New System.Drawing.Size(77, 14)
+        Me.lblFusionATK.TabIndex = 213
+        Me.lblFusionATK.Text = "ATK = TEMP"
+        '
+        'lblFusionDEF
+        '
+        Me.lblFusionDEF.AutoSize = True
+        Me.lblFusionDEF.Font = New System.Drawing.Font("Consolas", 8.830189!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.lblFusionDEF.ForeColor = System.Drawing.Color.White
+        Me.lblFusionDEF.Location = New System.Drawing.Point(328, 131)
+        Me.lblFusionDEF.Name = "lblFusionDEF"
+        Me.lblFusionDEF.Size = New System.Drawing.Size(77, 14)
+        Me.lblFusionDEF.TabIndex = 214
+        Me.lblFusionDEF.Text = "DEF = TEMP"
+        '
+        'lblFusionWill
+        '
+        Me.lblFusionWill.AutoSize = True
+        Me.lblFusionWill.Font = New System.Drawing.Font("Consolas", 8.830189!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.lblFusionWill.ForeColor = System.Drawing.Color.White
+        Me.lblFusionWill.Location = New System.Drawing.Point(328, 169)
+        Me.lblFusionWill.Name = "lblFusionWill"
+        Me.lblFusionWill.Size = New System.Drawing.Size(84, 14)
+        Me.lblFusionWill.TabIndex = 215
+        Me.lblFusionWill.Text = "WILL = TEMP"
+        '
+        'lblFusionLVL
+        '
+        Me.lblFusionLVL.AutoSize = True
+        Me.lblFusionLVL.Font = New System.Drawing.Font("Consolas", 8.830189!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.lblFusionLVL.ForeColor = System.Drawing.Color.White
+        Me.lblFusionLVL.Location = New System.Drawing.Point(327, 56)
+        Me.lblFusionLVL.Name = "lblFusionLVL"
+        Me.lblFusionLVL.Size = New System.Drawing.Size(77, 14)
+        Me.lblFusionLVL.TabIndex = 212
+        Me.lblFusionLVL.Text = "Level TEMP"
+        '
+        'Label16
+        '
+        Me.Label16.AutoSize = True
+        Me.Label16.BackColor = System.Drawing.Color.Black
+        Me.Label16.Font = New System.Drawing.Font("Consolas", 9.75!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.Label16.ForeColor = System.Drawing.Color.White
+        Me.Label16.Location = New System.Drawing.Point(15, 14)
+        Me.Label16.Margin = New System.Windows.Forms.Padding(4, 0, 4, 0)
+        Me.Label16.Name = "Label16"
+        Me.Label16.Size = New System.Drawing.Size(105, 15)
+        Me.Label16.TabIndex = 154
+        Me.Label16.Text = "Fusion Target:"
+        '
+        'cboxFusionTarget
+        '
+        Me.cboxFusionTarget.BackColor = System.Drawing.Color.Black
+        Me.cboxFusionTarget.Font = New System.Drawing.Font("Consolas", 8.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.cboxFusionTarget.ForeColor = System.Drawing.Color.White
+        Me.cboxFusionTarget.FormattingEnabled = True
+        Me.cboxFusionTarget.Location = New System.Drawing.Point(16, 33)
+        Me.cboxFusionTarget.Margin = New System.Windows.Forms.Padding(4, 5, 4, 5)
+        Me.cboxFusionTarget.Name = "cboxFusionTarget"
+        Me.cboxFusionTarget.Size = New System.Drawing.Size(262, 21)
+        Me.cboxFusionTarget.TabIndex = 153
+        '
+        'Label13
+        '
+        Me.Label13.AutoSize = True
+        Me.Label13.BackColor = System.Drawing.Color.Black
+        Me.Label13.Font = New System.Drawing.Font("Consolas", 9.75!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.Label13.ForeColor = System.Drawing.Color.White
+        Me.Label13.Location = New System.Drawing.Point(12, 178)
+        Me.Label13.Margin = New System.Windows.Forms.Padding(4, 0, 4, 0)
+        Me.Label13.Name = "Label13"
+        Me.Label13.Size = New System.Drawing.Size(231, 15)
+        Me.Label13.TabIndex = 152
+        Me.Label13.Text = "Equipped Accessory After Fusion:"
+        '
+        'cboxFusionAccessory
+        '
+        Me.cboxFusionAccessory.BackColor = System.Drawing.Color.Black
+        Me.cboxFusionAccessory.Font = New System.Drawing.Font("Consolas", 8.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.cboxFusionAccessory.ForeColor = System.Drawing.Color.White
+        Me.cboxFusionAccessory.FormattingEnabled = True
+        Me.cboxFusionAccessory.Location = New System.Drawing.Point(14, 203)
+        Me.cboxFusionAccessory.Margin = New System.Windows.Forms.Padding(4, 5, 4, 5)
+        Me.cboxFusionAccessory.Name = "cboxFusionAccessory"
+        Me.cboxFusionAccessory.Size = New System.Drawing.Size(264, 21)
+        Me.cboxFusionAccessory.TabIndex = 151
+        '
+        'Label14
+        '
+        Me.Label14.AutoSize = True
+        Me.Label14.BackColor = System.Drawing.Color.Black
+        Me.Label14.Font = New System.Drawing.Font("Consolas", 9.75!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.Label14.ForeColor = System.Drawing.Color.White
+        Me.Label14.Location = New System.Drawing.Point(12, 122)
+        Me.Label14.Margin = New System.Windows.Forms.Padding(4, 0, 4, 0)
+        Me.Label14.Name = "Label14"
+        Me.Label14.Size = New System.Drawing.Size(203, 15)
+        Me.Label14.TabIndex = 150
+        Me.Label14.Text = "Equipped Armor After Fusion:"
+        '
+        'cboxFusionArmor
+        '
+        Me.cboxFusionArmor.BackColor = System.Drawing.Color.Black
+        Me.cboxFusionArmor.Font = New System.Drawing.Font("Consolas", 8.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.cboxFusionArmor.ForeColor = System.Drawing.Color.White
+        Me.cboxFusionArmor.FormattingEnabled = True
+        Me.cboxFusionArmor.Location = New System.Drawing.Point(14, 147)
+        Me.cboxFusionArmor.Margin = New System.Windows.Forms.Padding(4, 5, 4, 5)
+        Me.cboxFusionArmor.Name = "cboxFusionArmor"
+        Me.cboxFusionArmor.Size = New System.Drawing.Size(264, 21)
+        Me.cboxFusionArmor.TabIndex = 149
+        '
+        'Label15
+        '
+        Me.Label15.AutoSize = True
+        Me.Label15.BackColor = System.Drawing.Color.Black
+        Me.Label15.Font = New System.Drawing.Font("Consolas", 9.75!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.Label15.ForeColor = System.Drawing.Color.White
+        Me.Label15.Location = New System.Drawing.Point(13, 67)
+        Me.Label15.Margin = New System.Windows.Forms.Padding(4, 0, 4, 0)
+        Me.Label15.Name = "Label15"
+        Me.Label15.Size = New System.Drawing.Size(210, 15)
+        Me.Label15.TabIndex = 148
+        Me.Label15.Text = "Equipped Weapon After Fusion:"
+        '
+        'cboxFusionWeapon
+        '
+        Me.cboxFusionWeapon.BackColor = System.Drawing.Color.Black
+        Me.cboxFusionWeapon.Font = New System.Drawing.Font("Consolas", 8.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.cboxFusionWeapon.ForeColor = System.Drawing.Color.White
+        Me.cboxFusionWeapon.FormattingEnabled = True
+        Me.cboxFusionWeapon.Location = New System.Drawing.Point(14, 92)
+        Me.cboxFusionWeapon.Margin = New System.Windows.Forms.Padding(4, 5, 4, 5)
+        Me.cboxFusionWeapon.Name = "cboxFusionWeapon"
+        Me.cboxFusionWeapon.Size = New System.Drawing.Size(264, 21)
+        Me.cboxFusionWeapon.TabIndex = 147
+        '
+        'btnFusionAcc
+        '
+        Me.btnFusionAcc.BackColor = System.Drawing.SystemColors.Window
+        Me.btnFusionAcc.Font = New System.Drawing.Font("Consolas", 8.830189!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.btnFusionAcc.Location = New System.Drawing.Point(502, 259)
+        Me.btnFusionAcc.Name = "btnFusionAcc"
+        Me.btnFusionAcc.Size = New System.Drawing.Size(75, 23)
+        Me.btnFusionAcc.TabIndex = 145
+        Me.btnFusionAcc.Text = "OK"
+        Me.btnFusionAcc.UseVisualStyleBackColor = False
+        '
+        'btnFusionCancel
+        '
+        Me.btnFusionCancel.BackColor = System.Drawing.SystemColors.Window
+        Me.btnFusionCancel.Font = New System.Drawing.Font("Consolas", 8.830189!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.btnFusionCancel.Location = New System.Drawing.Point(421, 259)
+        Me.btnFusionCancel.Name = "btnFusionCancel"
+        Me.btnFusionCancel.Size = New System.Drawing.Size(75, 23)
+        Me.btnFusionCancel.TabIndex = 144
+        Me.btnFusionCancel.Text = "Back"
+        Me.btnFusionCancel.UseVisualStyleBackColor = False
+        '
+        'PictureBox2
+        '
+        Me.PictureBox2.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch
+        Me.PictureBox2.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle
+        Me.PictureBox2.Location = New System.Drawing.Point(315, 25)
+        Me.PictureBox2.Name = "PictureBox2"
+        Me.PictureBox2.Size = New System.Drawing.Size(261, 199)
+        Me.PictureBox2.TabIndex = 225
+        Me.PictureBox2.TabStop = False
+        '
+        'pnlSnare
+        '
+        Me.pnlSnare.BackgroundImage = CType(resources.GetObject("pnlSnare.BackgroundImage"), System.Drawing.Image)
+        Me.pnlSnare.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch
+        Me.pnlSnare.Controls.Add(Me.btnConfirmBait)
+        Me.pnlSnare.Controls.Add(Me.Label7)
+        Me.pnlSnare.Controls.Add(Me.cboxBait)
+        Me.pnlSnare.Location = New System.Drawing.Point(244, 200)
+        Me.pnlSnare.Name = "pnlSnare"
+        Me.pnlSnare.Size = New System.Drawing.Size(285, 104)
+        Me.pnlSnare.TabIndex = 405
+        Me.pnlSnare.Visible = False
+        '
+        'btnConfirmBait
+        '
+        Me.btnConfirmBait.BackColor = System.Drawing.SystemColors.Window
+        Me.btnConfirmBait.Font = New System.Drawing.Font("Consolas", 8.830189!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.btnConfirmBait.Location = New System.Drawing.Point(199, 66)
+        Me.btnConfirmBait.Name = "btnConfirmBait"
+        Me.btnConfirmBait.Size = New System.Drawing.Size(75, 23)
+        Me.btnConfirmBait.TabIndex = 157
+        Me.btnConfirmBait.Text = "OK"
+        Me.btnConfirmBait.UseVisualStyleBackColor = False
+        '
+        'Label7
+        '
+        Me.Label7.AutoSize = True
+        Me.Label7.BackColor = System.Drawing.Color.Black
+        Me.Label7.Font = New System.Drawing.Font("Consolas", 9.75!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.Label7.ForeColor = System.Drawing.Color.White
+        Me.Label7.Location = New System.Drawing.Point(11, 14)
+        Me.Label7.Margin = New System.Windows.Forms.Padding(4, 0, 4, 0)
+        Me.Label7.Name = "Label7"
+        Me.Label7.Size = New System.Drawing.Size(126, 15)
+        Me.Label7.TabIndex = 156
+        Me.Label7.Text = "Use what as bait?"
+        '
+        'cboxBait
+        '
+        Me.cboxBait.BackColor = System.Drawing.Color.Black
+        Me.cboxBait.Font = New System.Drawing.Font("Consolas", 8.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.cboxBait.ForeColor = System.Drawing.Color.White
+        Me.cboxBait.FormattingEnabled = True
+        Me.cboxBait.Location = New System.Drawing.Point(12, 33)
+        Me.cboxBait.Margin = New System.Windows.Forms.Padding(4, 5, 4, 5)
+        Me.cboxBait.Name = "cboxBait"
+        Me.cboxBait.Size = New System.Drawing.Size(262, 21)
+        Me.cboxBait.TabIndex = 155
         '
         'Game
         '
@@ -2864,6 +3250,8 @@ Partial Class Game
         Me.BackColor = System.Drawing.Color.Black
         Me.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch
         Me.ClientSize = New System.Drawing.Size(1008, 690)
+        Me.Controls.Add(Me.pnlSnare)
+        Me.Controls.Add(Me.pnlFusion)
         Me.Controls.Add(Me.picFoxStatueGold)
         Me.Controls.Add(Me.picFoxStatueF)
         Me.Controls.Add(Me.pic9tailsBimbo)
@@ -3157,6 +3545,13 @@ Partial Class Game
         CType(Me.pic9tailsBimbo, System.ComponentModel.ISupportInitialize).EndInit()
         CType(Me.picFoxStatueGold, System.ComponentModel.ISupportInitialize).EndInit()
         CType(Me.picFoxStatueF, System.ComponentModel.ISupportInitialize).EndInit()
+        Me.pnlFusion.ResumeLayout(False)
+        Me.pnlFusion.PerformLayout()
+        CType(Me.PictureBox1, System.ComponentModel.ISupportInitialize).EndInit()
+        CType(Me.picFusionPort, System.ComponentModel.ISupportInitialize).EndInit()
+        CType(Me.PictureBox2, System.ComponentModel.ISupportInitialize).EndInit()
+        Me.pnlSnare.ResumeLayout(False)
+        Me.pnlSnare.PerformLayout()
         Me.ResumeLayout(False)
         Me.PerformLayout()
 
@@ -3386,4 +3781,32 @@ Partial Class Game
     Friend WithEvents picFoxStatueGold As System.Windows.Forms.PictureBox
     Friend WithEvents picFoxStatueF As System.Windows.Forms.PictureBox
     Friend WithEvents lblLust As System.Windows.Forms.Label
+    Friend WithEvents pnlFusion As System.Windows.Forms.Panel
+    Friend WithEvents btnFusionAcc As System.Windows.Forms.Button
+    Friend WithEvents btnFusionCancel As System.Windows.Forms.Button
+    Friend WithEvents Label16 As System.Windows.Forms.Label
+    Friend WithEvents cboxFusionTarget As System.Windows.Forms.ComboBox
+    Friend WithEvents Label13 As System.Windows.Forms.Label
+    Friend WithEvents cboxFusionAccessory As System.Windows.Forms.ComboBox
+    Friend WithEvents Label14 As System.Windows.Forms.Label
+    Friend WithEvents cboxFusionArmor As System.Windows.Forms.ComboBox
+    Friend WithEvents Label15 As System.Windows.Forms.Label
+    Friend WithEvents cboxFusionWeapon As System.Windows.Forms.ComboBox
+    Friend WithEvents lblFusionHP As System.Windows.Forms.Label
+    Friend WithEvents lblFusionMP As System.Windows.Forms.Label
+    Friend WithEvents Label24 As System.Windows.Forms.Label
+    Friend WithEvents lblFusionLust As System.Windows.Forms.Label
+    Friend WithEvents lblFusionSPD As System.Windows.Forms.Label
+    Friend WithEvents lblFusionATK As System.Windows.Forms.Label
+    Friend WithEvents lblFusionDEF As System.Windows.Forms.Label
+    Friend WithEvents lblFusionWill As System.Windows.Forms.Label
+    Friend WithEvents lblFusionLVL As System.Windows.Forms.Label
+    Friend WithEvents picFusionPort As System.Windows.Forms.PictureBox
+    Friend WithEvents PictureBox1 As System.Windows.Forms.PictureBox
+    Friend WithEvents PictureBox2 As System.Windows.Forms.PictureBox
+    Friend WithEvents lblFusionDisclaimer As System.Windows.Forms.Label
+    Friend WithEvents pnlSnare As System.Windows.Forms.Panel
+    Friend WithEvents btnConfirmBait As System.Windows.Forms.Button
+    Friend WithEvents Label7 As System.Windows.Forms.Label
+    Friend WithEvents cboxBait As System.Windows.Forms.ComboBox
 End Class

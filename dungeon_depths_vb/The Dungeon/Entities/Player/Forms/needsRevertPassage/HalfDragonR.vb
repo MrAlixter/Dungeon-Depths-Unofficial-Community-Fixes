@@ -5,9 +5,13 @@
         MyBase.New(1, 1.5, 1, 1.5, 0.75, 1, "Half-Dragon (R)", False)
         MyBase.revertPassage = ""
 
-        MyBase.overlaybsizeneg1 = New Tuple(Of Integer, Boolean, Boolean)(6, False, False)
-        MyBase.overlaybsize0 = New Tuple(Of Integer, Boolean, Boolean)(7, False, False)
-        MyBase.overlaybsize1 = New Tuple(Of Integer, Boolean, Boolean)(8, True, False)
+        MyBase.overlayshouldersneg1 = New Tuple(Of Integer, Boolean, Boolean)(6, False, False)
+        MyBase.overlayshoulders0 = New Tuple(Of Integer, Boolean, Boolean)(7, False, False)
+        MyBase.overlayshoulders1 = New Tuple(Of Integer, Boolean, Boolean)(8, True, False)
+
+        MyBase.overlaybsizeneg1 = New Tuple(Of Integer, Boolean, Boolean)(23, False, False)
+        MyBase.overlaybsize0 = New Tuple(Of Integer, Boolean, Boolean)(24, False, False)
+        MyBase.overlaybsize1 = New Tuple(Of Integer, Boolean, Boolean)(25, True, False)
         MyBase.overlaybsize2 = New Tuple(Of Integer, Boolean, Boolean)(9, True, False)
         MyBase.overlaybsize3 = New Tuple(Of Integer, Boolean, Boolean)(10, True, False)
         MyBase.overlaybsize4 = New Tuple(Of Integer, Boolean, Boolean)(11, True, False)

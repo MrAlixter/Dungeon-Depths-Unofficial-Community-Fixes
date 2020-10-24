@@ -42,7 +42,7 @@
     Overrides Sub tfClothes(ByRef p As Player)
         If p.inv.item(211).count < 1 Then p.inv.add(211, 1)
 
-        Equipment.accChange("Nothing")
-        Equipment.clothesChange("Pro_Mag._G._Outfit_(R)")
+        Equipment.accChange(p, "Nothing")
+        Equipment.clothesChange(p, "Pro_Mag._G._Outfit_(R)")
     End Sub
 End Class

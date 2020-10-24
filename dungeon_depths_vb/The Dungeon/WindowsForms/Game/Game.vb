@@ -439,11 +439,11 @@ Public Class Game
 
         If currFloor.mBoard(player1.pos.Y, player1.pos.X).Text = "+" Then
             For i = 0 To currFloor.trapList.Count - 1
-                If currFloor.trapList(i).pos = player1.pos Then
+                If currFloor.trapList(i).pos = player1.pos And Not player1.pos.Equals(New Point(-1, -1)) Then
                     Try
                         currFloor.trapList(i).activate(i)
                     Catch ex As Exception
-                        pushLblEvent("As you wander forward, your foot falls on a pressure plate.  As soon as you hear it click, you snap to attention.  Looking around, you see that nothing seems to have happened." & vbCrLf & "𝘚𝘰𝘮𝘦𝘵𝘩𝘪𝘯𝘨 𝘮𝘶𝘴𝘵 𝘩𝘢𝘷𝘦 𝘨𝘰𝘯𝘦 𝘸𝘳𝘰𝘯𝘨 𝘸𝘪𝘵𝘩 𝘵𝘩𝘦 𝘵𝘳𝘢𝘱'𝘴 𝘢𝘤𝘵𝘪𝘷𝘢𝘵𝘪𝘰𝘯...")
+                        pushLblEvent("As you wander forward, your foot falls on a pressure plate.  As soon as you hear it click, you snap to attention.  Looking around, you see that nothing seems to have happened." & DDUtils.RNRN & "Something must have gone wrong with the trap's activation...")
                     End Try
                     Exit For
                 End If
@@ -1117,7 +1117,7 @@ Public Class Game
     Sub selectArmor(ByVal index As Integer)
         Dim subString As String = lstSelec.Items(index).ToString.Split(" (")(2)
 
-        Equipment.equipArmor(subString)
+        Equipment.equipArmor(player1, subString)
 
         'updates the player1, the stat display, and the portrait before the form closes
         player1.drawPort()
@@ -1127,7 +1127,7 @@ Public Class Game
     Sub selectOther(ByVal index As Integer)
         Dim subString As String = lstSelec.Items(index).ToString.Split(" (")(2)
 
-        Equipment.equipAcce(subString)
+        Equipment.equipAcce(player1, subString)
 
         'updates the player1, the stat display, and the portrait before the form closes
         player1.drawPort()
@@ -1137,7 +1137,7 @@ Public Class Game
     Sub selectWeapon(ByVal index As Integer)
         Dim subString As String = lstSelec.Items(index).ToString.Split(" (")(2)
 
-        Equipment.equipWeapon(subString)
+        Equipment.equipWeapon(player1, subString)
 
         'updates the player1, the stat display, and the portrait before the form closes
         player1.drawPort()
@@ -1499,6 +1499,9 @@ Public Class Game
             mDun.floorDown()
             mDun.setFloor(currFloor)
             initializeBoard()
+
+            mDun.tfNPCToArachne()
+
             If combatmode Then fromCombat()
             player1.canMoveFlag = True
         End If
@@ -1597,13 +1600,19 @@ Public Class Game
         keysPressed = ""
     End Sub
     Public Sub quickChangeFloor(ByVal f As Integer)
-        ' Try
-        mDun.jumpTo(f)
-        mDun.setFloor(currFloor)
-        pushLblEvent("You draw a circle on the floor, and think hard about floor " & f & ".  A portal opens to it, and you jump through, skipping every floor in between.", AddressOf initializeBoard)
-        'Catch e As Exception
-        '    pushLblEvent("Your attempted teleportation fails in a less than spectacular fashion, the portal you created simply fizzling away to nothingness.")
-        'End Try
+        Try
+            mDun.jumpTo(f)
+            mDun.setFloor(currFloor)
+            pushLblEvent(If(Not lblEvent.Visible,
+                            "You draw a circle on the floor, and think hard about floor " & f & ".  A portal opens to it, and you jump through, skipping every floor in between.",
+                            "You draw a circle on the floor, and think hard about floor " & f & ".  A portal opens to it, and you jump through, skipping every floor in between." & DDUtils.RNRN & lblEvent.Text.Split(vbCrLf)(0)),
+                        AddressOf initializeBoard)
+
+            mDun.tfNPCToArachne()
+
+        Catch e As Exception
+            pushLblEvent("Your attempted teleportation fails in a less than spectacular fashion, the portal you created simply fizzling away to nothingness.")
+        End Try
     End Sub
     'talk
     Sub talkKey()
@@ -3337,5 +3346,21 @@ Public Class Game
         'End Using
         'savedBoardPic.Save("BOARD_RENDERED.png")
         'boxBoard.Image = savedBoardPic
+    End Sub
+
+    Private Sub btnFusionAcc_Click(sender As Object, e As EventArgs) Handles btnFusionAcc.Click
+        FusionDialogBackend.btnOKOnClick(sender, e, player1)
+    End Sub
+    Private Sub btnFusionCancel_Click(sender As Object, e As EventArgs) Handles btnFusionCancel.Click
+        FusionDialogBackend.btnCancelOnClick(sender, e, player1)
+    End Sub
+    Private Sub cboxFusion_SelectedIndexChanged(sender As Object, e As EventArgs) Handles cboxFusionTarget.SelectedIndexChanged
+        Dim p2 = Game.getPlayerFromFile("saves/s" & cboxFusionTarget.SelectedIndex + 1 & ".ave").Item1
+
+        FusionDialogBackend.updateDisplay(player1, p2)
+    End Sub
+
+    Private Sub btnConfirmBait_Click(sender As Object, e As EventArgs) Handles btnConfirmBait.Click
+        SnareDialogBackend.fromPnlSnare(sender, e, player1)
     End Sub
 End Class

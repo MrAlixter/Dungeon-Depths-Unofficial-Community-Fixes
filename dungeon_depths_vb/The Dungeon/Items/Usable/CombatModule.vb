@@ -2,13 +2,20 @@
     Inherits Item
 
     Sub New()
+        '|ID Info|
         MyBase.setName("Combat_Module")
-        MyBase.setDesc("A tactical cartridge that looks like  it could be fit into a memory slot, if you have one...")
         id = 142
         tier = Nothing
-        MyBase.setUsable(True)
+
+        '|Item Flags|
         MyBase.count = 0
         MyBase.value = 3120
+
+        '|Stats|
+        MyBase.setUsable(True)
+
+        '|Description|
+        MyBase.setDesc("A tactical cartridge that looks like  it could be fit into a memory slot, if you have one...")
     End Sub
 
     Public Overrides Sub use(ByRef p As Player)

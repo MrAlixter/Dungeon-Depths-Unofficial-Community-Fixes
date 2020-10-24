@@ -97,7 +97,7 @@
 
     Overrides Sub tfClothes(ByRef p As Player)
         p.inv.add(196, 1)
-        Equipment.clothesChange("Cow_Cosplay")
+        Equipment.clothesChange(p, "Cow_Cosplay")
     End Sub
     Overrides Sub tfDialogStep9()
         Game.pushLblEvent("Giggling, you take hold of the bell dangling from the collar on your neck.  With each ring so far you've gotten a little bit ditzier, but also a whole lot cuter.  Between your little horns and your gigantic tits, you almost look like some sort of cow...  Falling into another fit of giggles, you give the bell a hard shake, and the sound from its ring echos throughout the dungeon." & DDUtils.RNRN & "You are now a female minotaur!")

@@ -100,7 +100,7 @@
 
     Overrides Sub tfClothes(ByRef p As Player)
         p.inv.add(221, 1)
-        Equipment.clothesChange("Cow_Cosplay_(Demonic)")
+        Equipment.clothesChange(p, "Cow_Cosplay_(Demonic)")
     End Sub
     Overrides Sub tfDialogStep9()
         Game.pushLblEvent("You are now a Cow Succubus!")

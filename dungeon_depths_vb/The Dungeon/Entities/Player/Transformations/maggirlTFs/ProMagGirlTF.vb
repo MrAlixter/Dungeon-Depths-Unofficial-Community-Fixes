@@ -25,7 +25,7 @@
 
         p.prt.setIAInd(pInd.hairacc, 2, True, False)
 
-        Equipment.accChange("Nothing")
-        Equipment.clothesChange("Pro_Mag._Girl_Outfit")
+        Equipment.accChange(p, "Nothing")
+        Equipment.clothesChange(p, "Pro_Mag._Girl_Outfit")
     End Sub
 End Class

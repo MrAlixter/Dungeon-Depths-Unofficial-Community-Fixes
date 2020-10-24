@@ -51,7 +51,7 @@
     Overrides Sub s2ClothesChange(ByRef p As Player)
         If Not p.equippedArmor.getName.Equals("Naked") And Not p.className.Equals("Magical Girl") Then
             If p.inv.item("Skimpy_Clothes_(D)").count < 1 Then p.inv.add("Skimpy_Clothes_(D)", 1)
-            Equipment.clothesChange("Skimpy_Clothes_(D)")
+            Equipment.clothesChange(p, "Skimpy_Clothes_(D)")
         End If
     End Sub
 

@@ -39,13 +39,16 @@
 
         '|Description|
         MyBase.setDesc("A tightened set of ropes that both reduces mobility and leaves one nearly naked." & DDUtils.RNRN & _
-                              getSizeInformation() & vbCrLf & getStatInformation() & vbCrLf &
-                             "May not be easy to remove")
+                       getSizeInformation() & vbCrLf &
+                       "-5 ATK" & vbCrLf &
+                       "-5 DEF" & vbCrLf &
+                       "-5 SPD" & vbCrLf &
+                       "May not be easy to remove")
     End Sub
 
     Public Overrides Sub onEquip(ByRef p As Player)
         If Not p.pForm.canBeBound Then
-            Equipment.equipArmor("Naked")
+            Equipment.equipArmor(p, "Naked")
             Game.pushLblEvent("You effortlessly break your bonds.")
             Game.pushLstLog("You effortlessly break your bonds.")
         End If

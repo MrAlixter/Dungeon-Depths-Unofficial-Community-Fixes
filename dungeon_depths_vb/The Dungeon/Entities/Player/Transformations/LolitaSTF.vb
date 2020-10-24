@@ -60,7 +60,7 @@
 
         'equip clothes
         p.inv.add("Lolita_Dress_(Sweet)", 1)
-        Equipment.clothesChange("Lolita_Dress_(Sweet)")
+        Equipment.clothesChange(p, "Lolita_Dress_(Sweet)")
         'maiden transformation
         p.prt.haircolor = Color.FromArgb(255, 227, 201, 153)
         p.prt.setIAInd(pInd.rearhair, 28, True, True)

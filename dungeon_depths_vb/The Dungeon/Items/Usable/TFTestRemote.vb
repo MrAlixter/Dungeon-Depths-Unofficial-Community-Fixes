@@ -1,16 +1,22 @@
 ﻿Public Class TFTestRemote
     Inherits item
     Sub New()
+        '|ID Info|
         MyBase.setName("Broken_Remote")
-        MyBase.setDesc("This item is for testing individual transformations, and should not be in the base game")
         id = 119
         tier = Nothing
+
+        '|Item Flags|
         MyBase.setUsable(True)
+        MyBase.isRandoTFAcceptable = False
+        MyBase.isMonsterDrop = False
+
+        '|Stats|
         MyBase.count = 0
         MyBase.value = 375
 
-        MyBase.isRandoTFAcceptable = False
-        MyBase.isMonsterDrop = False
+        '|Description|
+        MyBase.setDesc("This item is for testing individual transformations, and should not be in the base game")
     End Sub
     Public Overrides Sub use(ByRef p As Player)
         Dim form = InputBox("TF to... [Half-Gorgon, Gynoid, Amazon, Mindless, Rando, Half-Broodmother, Broodmother, " &

@@ -99,7 +99,7 @@
 
     Overridable Function dropEWeapon(ByRef p As Player) As Boolean
         If p.className.Equals("Magical Girl") Or p.className.Equals("Valkyrie") Then
-            Equipment.weaponChange("Fists")
+            Equipment.weaponChange(p, "Fists")
             Return True
         End If
         Return False
@@ -194,7 +194,7 @@
 
     Overridable Sub tfClothes(ByRef p As Player)
         p.inv.add(71, 1)
-        Equipment.clothesChange("Cow_Print_Bra")
+        Equipment.clothesChange(p, "Cow_Print_Bra")
     End Sub
     Overridable Sub tfDialogStep9()
         Game.pushLblEvent("You take another look at your cowbell.  Every time its rung thus far, you've progressed a little more into some form of bovine-human hybrid.  'Minotaur', you correct your self.  It's been turning you into a minotaur, and a female one at that.  Your transformation seems pretty far along, and you'd wager you're only one more chime away from completing the change.  With that in mind, you give the bell a hard shake, and the sound from its ring echos throughout the dungeon." & DDUtils.RNRN & "You are now a female minotaur!")
