@@ -124,6 +124,26 @@
         stopTF()
     End Sub
 
+    Public Shared Sub rapidTF(ByRef p As Player)
+        If p.sex.Equals("Male") Then
+            p.MtF()
+            If p.breastSize < 2 Then p.be()
+        End If
+
+        If p.breastSize < 2 Then p.be()
+
+        p.prt.setIAInd(pInd.eyes, 22, True, True)
+        p.prt.setIAInd(pInd.rearhair, 8, True, True)
+        p.prt.setIAInd(pInd.midhair, 19, True, True)
+        p.prt.setIAInd(pInd.tail, 2, True, False)
+        p.prt.changeSkinColor(DDUtils.cShift(p.prt.skincolor, Color.LightSlateGray, 35))
+
+        p.changeForm("Arachne")
+        p.lust += 35
+
+        p.drawPort()
+    End Sub
+
     Public Overrides Sub stopTF()
         MyBase.stopTF()
         Game.player1.perks(perk.avenom) = -1

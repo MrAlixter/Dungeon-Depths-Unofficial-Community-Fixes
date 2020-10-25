@@ -77,6 +77,9 @@
         ElseIf npcIndex = 5 Then
             Game.pushNPCDialog("...")
         End If
+
+        If npcIndex = getArachneImageInd() And Not Game.player1.formName.Equals("Arachne") Then inv.setCount(244, 1) Else inv.setCount(244, 0)
+
     End Sub
     Public Overrides Function toFight() As String
         If npcIndex = 0 Or npcIndex = 6 Then

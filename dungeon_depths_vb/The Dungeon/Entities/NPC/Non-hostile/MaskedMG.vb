@@ -61,6 +61,8 @@
             Game.pushNPCDialog("Always a pleasure to run across another Magic Girl!  What can I get ya?")
         End If
 
+        If npcIndex = getArachneImageInd() And Not Game.player1.formName.Equals("Arachne") Then inv.setCount(244, 1) Else inv.setCount(244, 0)
+
         Game.picNPC.BackgroundImage = picNPC(npcIndex)
     End Sub
 

@@ -186,6 +186,7 @@
     <Compile Include="Items\Usable\Spellbooks\CSpellbook.vb" />
     <Compile Include="Items\Equipment\Weapons\Whips\DemWhip.vb" />
     <Compile Include="Items\Equipment\Weapons\Whips\ArchDemWhip.vb" />
+    <Compile Include="Items\Usable\VialOfPotVenom.vb" />
     <Compile Include="TFList.vb" />
     <Compile Include="DDUtils.vb" />
     <Compile Include="Entities\Entity.vb" />

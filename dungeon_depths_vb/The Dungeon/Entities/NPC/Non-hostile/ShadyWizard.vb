@@ -91,6 +91,8 @@
                 Game.pushNPCDialog("Ooh, darling, you should really give the whole ""8-Legs"" thing a chance... I have a more...potent...venom if you'd like...")
             End If
         End If
+
+        If npcIndex = getArachneImageInd() And Not Game.player1.formName.Equals("Arachne") Then inv.setCount(244, 1) Else inv.setCount(244, 0)
     End Sub
 
     Public Overrides Function toFight() As String

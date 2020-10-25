@@ -1,14 +1,21 @@
 ﻿Public Class VialOfSlime
     Inherits Item
     Sub New()
+        '|ID Info|
         MyBase.setName("Vial_of_Slime")
-        MyBase.setDesc("A glass bottle filled with an aquamarine non-newtonian gel.")
         id = 3
         tier = 1
-        isMonsterDrop = True
+
+        '|Item Flags|
         MyBase.setUsable(True)
+        isMonsterDrop = True
+
+        '|Stats|
         MyBase.count = 0
         MyBase.value = 100
+
+        '|Description|
+        MyBase.setDesc("A glass bottle filled with an aquamarine non-newtonian gel.")
     End Sub
 
     Overrides Sub use(ByRef p As Player)
@@ -17,8 +24,7 @@
         Game.pushLstLog("You apply the " & getName())
 
         If p.formName.Equals("Slime") Or p.formName.Equals("Goo Girl") Then
-            p.health += 0.25
-            If p.health > 1 Then p.health = 1
+            p.health = Math.Min(1, p.health + 0.25)
             count -= 1
             Exit Sub
         End If

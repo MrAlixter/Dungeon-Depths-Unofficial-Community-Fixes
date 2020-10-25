@@ -6,7 +6,7 @@
         attack = 30
         defense = 80
         speed = 14
-        setInventory({3})
+        setInventory({3, 136})
         setupMonsterOnSpawn()
         xpValue = 25
     End Sub

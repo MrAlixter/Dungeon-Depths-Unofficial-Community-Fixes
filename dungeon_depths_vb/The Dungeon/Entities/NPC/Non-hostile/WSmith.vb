@@ -88,8 +88,9 @@
             Else
                 Game.pushNPCDialog("Heeeey, you wouldn't mind drinking some of this venom, right?  I'd hate if another arachne ate one of my best customers...")
             End If
-
         End If
+
+        If npcIndex = getArachneImageInd() And Not Game.player1.formName.Equals("Arachne") Then inv.setCount(244, 1) Else inv.setCount(244, 0)
 
         Game.picNPC.BackgroundImage = picNPC(npcIndex)
     End Sub

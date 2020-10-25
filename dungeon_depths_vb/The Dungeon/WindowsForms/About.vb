@@ -1,8 +1,6 @@
 ﻿Public NotInheritable Class About
 
     Private Sub AboutBox1_Load(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles MyBase.Load
-        DDUtils.resizeForm(Me)
-
 
         ' Set the title of the form.
         Dim ApplicationTitle As String

@@ -263,6 +263,7 @@
         internal_inventory.Add("Major_Mana_Potion", New MajManaPotion)      '241
         internal_inventory.Add("Spellcyclopedia", New SpidersilkBikini)     '242
         internal_inventory.Add("Big_Book_O'_Specials", New BookOSpecials)   '243
+        internal_inventory.Add("Vial_of_Potent_Venom", New VialOfPotVenom)  '244
 
         armor = {New Naked,
                  Me.item(5), Me.item(7), Me.item(8), Me.item(10),
@@ -312,7 +313,7 @@
                    Me.item(182), Me.item(195), Me.item(200), Me.item(205),
                    Me.item(206), Me.item(207), Me.item(214), Me.item(215),
                    Me.item(219), Me.item(226), Me.item(227), Me.item(238),
-                   Me.item(241)}
+                   Me.item(241), Me.item(244)}
 
         food = {Me.item(1), Me.item(30), Me.item(31), Me.item(32), Me.item(33),
                 Me.item(34), Me.item(35), Me.item(44), Me.item(90),

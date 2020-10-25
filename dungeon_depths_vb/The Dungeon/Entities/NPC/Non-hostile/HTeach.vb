@@ -108,10 +108,10 @@
             End If
 
         End If
+
         If Game.mDun.numCurrFloor > 5 Then inv.setCount(113, 1) Else inv.setCount(113, 0)
         If Game.mDun.numCurrFloor < 5 Then inv.setCount(122, 1) Else inv.setCount(122, 0)
-
-
+        If npcIndex = getArachneImageInd() And Not Game.player1.formName.Equals("Arachne") Then inv.setCount(244, 1) Else inv.setCount(244, 0)
 
         Game.picNPC.BackgroundImage = picNPC(npcIndex)
     End Sub
