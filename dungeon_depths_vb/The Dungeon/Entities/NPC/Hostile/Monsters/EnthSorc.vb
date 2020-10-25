@@ -14,7 +14,6 @@
         will = 15
         setInventory({4, 13})
         setupMonsterOnSpawn()
-        xpValue = 25
     End Sub
 
     Public Overrides Sub playerDeath(ByRef p As Player)

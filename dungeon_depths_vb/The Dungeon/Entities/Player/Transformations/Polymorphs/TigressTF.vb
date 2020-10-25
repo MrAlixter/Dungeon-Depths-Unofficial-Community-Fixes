@@ -29,8 +29,9 @@
         End If
         If p.prt.skincolor = Color.FromArgb(255, 255, 105, 180) Then p.prt.haircolor = Color.FromArgb(255, 155, 0, 0)
         If p.prt.skincolor = Color.FromArgb(200, 0, 255, 255) Then p.prt.haircolor = Color.FromArgb(180, 5, 245, 198)
+
+        p.prt.setIAInd(pInd.tail, 4, True, False)
         p.prt.setIAInd(pInd.rearhair, 15, True, True)
-        p.prt.setIAInd(pInd.shoulders, 6, True, False)
         p.prt.setIAInd(pInd.face, 0, True, False)
         p.prt.setIAInd(pInd.midhair, 19, True, True)
         p.prt.setIAInd(pInd.ears, 7, True, True)
@@ -47,7 +48,7 @@
         p.buttSize = 1
         'transformation description push
         p.TextColor = Color.Orange
-        out += "[Transformation decription pending]"
+        out += "As a golden fur spreads over your arms and legs, your muscles surge with a new strength.  You grin, barring your newly retractable claws and taking an aggressive stance."
 
         Game.pushLblEvent(out)
     End Sub

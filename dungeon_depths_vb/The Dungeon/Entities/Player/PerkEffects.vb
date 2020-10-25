@@ -472,6 +472,15 @@
         End If
         Return False
     End Function
+    Shared Function spidersilkEffect(ByVal dmg As Integer, ByRef p As Player) As Boolean
+        If Not p.equippedArmor.getName.Contains("Spidersilk") Then Return False
+        Dim shouldBreak = p.equippedArmor.durability - dmg <= 0
+
+        p.equippedArmor.damage(dmg)
+        If shouldBreak Then Equipment.equipArmor(p, "Naked", False)
+
+        Return False
+    End Function
     Shared Function bimboDodge(ByRef p As Player) As Boolean
         Dim out = "You, like, totally aren't feeling this right now.  Giving your best pout, you wimper ""Hey, stop it!  You're gonna, like, hurt me or something!"".  Squeezing your arms together to show off your cleavage, you look up at your opponent, making sure your lip is quivering just a little bit.  They stop their attack short, looking more confused than merciful.  You don't even consider this subtle distinction though, instead deciding that they, like, totally thought you were too cute to hit!"
         Dim out2 = "You realize that you probably need to dodge this next attack.  Giving your best pout, you wimper ""Hey, stop it!  You're gonna, like, hurt me or something!"".  Squeezing your arms together to show off your cleavage, you look up at your opponent, making sure your lip is quivering just a little bit.  They stop their attack short, looking more confused than merciful.  Inwardly you groan to yourself.   It looks like you aren't out of the woods yet..."

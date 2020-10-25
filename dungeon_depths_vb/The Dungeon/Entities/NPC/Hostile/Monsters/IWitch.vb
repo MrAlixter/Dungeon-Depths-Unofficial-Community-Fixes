@@ -19,7 +19,6 @@
         pronoun = "she"
         pPronoun = "her"
         rPronoun = "her"
-        xpValue = 40
     End Sub
 
     Public Overrides Sub attackCMD(ByRef target As Entity)
