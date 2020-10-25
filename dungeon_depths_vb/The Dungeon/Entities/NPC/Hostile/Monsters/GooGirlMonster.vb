@@ -8,7 +8,6 @@
         speed = 14
         setInventory({3, 136})
         setupMonsterOnSpawn()
-        xpValue = 25
     End Sub
 
     Public Overrides Sub playerDeath(ByRef p As Player)

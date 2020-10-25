@@ -114,6 +114,8 @@
                 Return New EImp
             Case 18
                 Return New ESuccPrincess
+            Case 19
+                Return New WebCasterArach
         End Select
 
         Return New Monster()
@@ -129,9 +131,9 @@
             Case 3
                 tier = {0, 1, 2, 4, 6, 7}
             Case 4
-                tier = {0, 1, 2, 3, 4, 6, 7}
+                tier = {0, 1, 2, 3, 4, 6, 7, 19}
             Case Else
-                tier = {0, 1, 2, 3, 4, 6, 7, 12, 12, 14}
+                tier = {0, 1, 2, 3, 4, 6, 7, 12, 12, 14, 19}
         End Select
 
         If Game.player1.getLust = 0 Then

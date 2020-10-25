@@ -224,14 +224,14 @@ Public Class Portrait
         accUnderClothes()
         lustBlushUpdate()
 
-        iArr(pInd.midhair) = CreateBMP({nullImg, iArr(pInd.midhair), iArr(pInd.horns)})
+        iArr(pInd.midhair) = CreateFullBodyBMP({nullImg, iArr(pInd.midhair), iArr(pInd.horns)})
 
-        If Not ent Is Nothing AndAlso ent.GetType Is GetType(Player) Then
-            If CType(ent, Player).equippedArmor.hidesDick Then
+        If Not ent Is Nothing AndAlso Not ent.getPlayer Is Nothing Then
+            If ent.getPlayer.equippedArmor.hidesDick Then
                 iArr(pInd.genitalia) = nullImg
             End If
 
-            If CType(ent, Player).perks(perk.lurk) > 0 Then
+            If ent.getPlayer.perks(perk.lurk) > 0 Then
                 iArr(NUM_IMG_LAYERS) = shrub()
             End If
         End If
@@ -632,13 +632,9 @@ Public Class Portrait
         End Select
     End Sub
     Public Sub getNaked()
-        Dim p As Player
-        If ent.GetType Is GetType(Player) Then
-            p = CType(ent, Player)
-        Else
-            Exit Sub
-        End If
-
+        Dim p As Player = ent.getPlayer
+        If p Is Nothing Then Exit Sub
+   
         Equipment.equipArmor(p, "Naked", False)
 
         portraitUDate()
@@ -646,12 +642,8 @@ Public Class Portrait
         Game.pushLstLog("Your clothes don't fit!")
     End Sub
     Public Sub notcompress()
-        Dim p As Player
-        If ent.GetType Is GetType(Player) Then
-            p = CType(ent, Player)
-        Else
-            Exit Sub
-        End If
+        Dim p As Player = ent.getPlayer
+        If p Is Nothing Then Exit Sub
 
         Select Case p.breastSize
             Case -2

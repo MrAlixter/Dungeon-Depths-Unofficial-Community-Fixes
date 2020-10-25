@@ -119,6 +119,7 @@
   <ItemGroup>
     <Compile Include="DDDateTime.vb" />
     <Compile Include="Entities\NPC\Hostile\Bosses\MiniBosses\SevenTails.vb" />
+    <Compile Include="Entities\NPC\Hostile\Monsters\WebCasterArach.vb" />
     <Compile Include="Entities\NPC\Hostile\Monsters\Succubus\EImp.vb" />
     <Compile Include="Entities\NPC\Hostile\Monsters\Succubus\ESuccubus.vb" />
     <Compile Include="Entities\NPC\Hostile\Monsters\Succubus\ESuccPrincess.vb" />

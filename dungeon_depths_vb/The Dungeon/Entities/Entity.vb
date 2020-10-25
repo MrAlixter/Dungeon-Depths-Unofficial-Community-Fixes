@@ -159,6 +159,13 @@
     Public Function getSName() As String
         Return sName
     End Function
+    Public Function getPlayer() As Player
+        Return If(Me.GetType Is GetType(Player), CType(Me, Player), Nothing)
+    End Function
+    Public Function getNPC() As NPC
+        Return If(Me.GetType Is GetType(NPC), CType(Me, NPC), Nothing)
+    End Function
+
 
     '|SETTERS|
     Public Overridable Sub setName(ByVal n As String)

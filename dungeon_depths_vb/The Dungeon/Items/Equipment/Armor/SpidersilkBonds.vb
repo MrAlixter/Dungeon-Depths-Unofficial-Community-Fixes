@@ -16,8 +16,8 @@
         hidesDick = False
 
         '|Stats|
-        MyBase.aBoost = -13
-        MyBase.sBoost = -13
+        MyBase.aBoost = -31
+        MyBase.sBoost = -31
         MyBase.count = 0
         MyBase.value = 25
 
@@ -37,10 +37,10 @@
         usize3 = New Tuple(Of Integer, Boolean, Boolean)(321, True, True)
 
         '|Description|
-        MyBase.setDesc("A tight, binding web of spidersilk." & DDUtils.RNRN & _
+        MyBase.setDesc("A tight, binding web of spidersilk.  While the threads are nearly impossible to break from within, they are fairly delicate to outside attacks..." & DDUtils.RNRN & _
                        getSizeInformation() & vbCrLf & vbCrLf &
-                       "-13 ATK" & vbCrLf &
-                       "-13 SPD" & vbCrLf &
+                       "-31 ATK" & vbCrLf &
+                       "-31 SPD" & vbCrLf &
                        "May not be easy to remove")
     End Sub
 

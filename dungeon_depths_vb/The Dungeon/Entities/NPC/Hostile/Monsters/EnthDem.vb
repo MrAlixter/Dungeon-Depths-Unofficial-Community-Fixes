@@ -14,6 +14,5 @@
         will = 40
         setInventory({})
         setupMonsterOnSpawn()
-        xpValue = 40
     End Sub
 End Class

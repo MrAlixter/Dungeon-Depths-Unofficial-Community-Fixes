@@ -19,7 +19,7 @@
     End Sub
 
     Public Overrides Sub sapLevel(ByRef t As Entity)
-        If t.GetType Is GetType(Player) Then sapPlayer(CType(t, Player)) Else sapEntity(t)
+        If Not t.getPlayer Is Nothing Then sapPlayer(t.getPlayer) Else sapEntity(t)
 
         maxHealth *= 1.6
         attack *= 1.6

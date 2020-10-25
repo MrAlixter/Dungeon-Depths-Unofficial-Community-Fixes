@@ -199,7 +199,7 @@
             Game.pushLstLog((getName() & " goes in for a bite!"))
             Game.pushLblCombatEvent((getName() & " goes in for a bite!"))
             MyBase.attackCMD(target)
-            If target.GetType Is GetType(Player) Then CType(target, Player).perks(perk.burn) = 3
+            If Not target.getPlayer Is Nothing Then target.getPlayer.perks(perk.burn) = 3
         End If
     End Sub
 
