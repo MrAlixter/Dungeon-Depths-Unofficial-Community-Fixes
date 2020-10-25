@@ -2165,11 +2165,13 @@ Public Class Game
         btnS7.Enabled = False
         btnS8.Enabled = False
 
-        Dim name As String = CType(sender, Button).Name
+        Dim btn As Button = CType(sender, Button)
+        Dim name As String = btn.Name
+
         Dim fileNum As String = name(name.Length - 1)
-        If e.Button = MouseButtons.Right Then
-            MsgBox("Right Button Clicked")
-        Else
+        Dim mouseEvent As MouseEventArgs = TryCast(e, MouseEventArgs)
+
+        If mouseEvent IsNot Nothing AndAlso mouseEvent.Button = MouseButtons.Left Then
             If solFlag Then
                 Try
                     player1.solFlag = True
