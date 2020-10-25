@@ -1,4 +1,7 @@
 ﻿Public Class DDUtils
+    Public Const RNRN As String = vbCrLf & vbCrLf
+
+    '|ARRAY MANIPULATION|
     Public Shared Function saveList(ByVal list As List(Of Object)) As String
         Dim out = ""
 
@@ -20,8 +23,24 @@
 
         Return out
     End Function
+    Public Shared Sub append(ByRef a As Integer(), ByVal i As Integer)
+        Array.Resize(a, a.Length + 1)
+        a(a.Length - 1) = i
+    End Sub
+    Public Shared Function copyDictionary(ByVal dic As Dictionary(Of perk, Integer)) As Dictionary(Of perk, Integer)
+        Return dic
+    End Function
+    Public Shared Sub shuffle(ByRef a As String())
+        For i = 1 To UBound(a)
+            Dim j = Int(Rnd() * i + 1)
 
-    'Text/Form resizing
+            Dim tAi = a(i).ToString
+            a(i) = a(j)
+            a(j) = tAi
+        Next
+    End Sub
+
+    '|TEXT & FORM RESIZING|
     Public Shared Sub resizeForm(ByRef form As Form)
         resizeForm(form, form.Height, form.Width)
     End Sub
@@ -56,7 +75,6 @@
             helperResizeControl(c, RW, RH, fontRatio)
         Next
     End Sub
-
     Private Shared Sub helperResizeControl(ByRef ctrl As Control, ByVal RW As Double, ByVal RH As Double, ByVal fontRatio As Double)
         Dim newFont As Font = scaledFont(ctrl.Font, (ctrl.Font.Size * fontRatio))
 
@@ -68,7 +86,7 @@
         ctrl.Font = fitFont(ctrl, newFont)
     End Sub
     Public Shared Function fitFont(ByRef ctrl As Control, ByVal newFont As Font) As Font
-        While ctrl.Width < TextRenderer.MeasureText(ctrl.Text, newFont).Width
+        While ctrl.Width < TextRenderer.MeasureText(ctrl.Text, newFont).Width Or (ctrl.Height < TextRenderer.MeasureText(ctrl.Text, newFont).Height And Not ctrl.GetType Is GetType(Label))
             newFont = New System.Drawing.Font("Consolas", newFont.SizeInPoints * 0.9)
         End While
 
@@ -103,6 +121,66 @@
 
         MsgBox(out)
     End Sub
+
+    '|COLOR SHIFT FUNCTIONS|
+    Shared Function cShift(ByVal oC As Color, ByVal c As Color, ByVal inc As Integer)
+        If oC.Equals(c) Then Return c
+        Dim a, r, g, b As Integer
+        a = oC.A
+        r = oC.R
+        g = oC.G
+        b = oC.B
+
+        If Math.Abs(a - c.A) < inc Or a > 255 Then
+            a = c.A
+        Else
+            If a > c.A Then a -= inc Else a += inc
+        End If
+        If Math.Abs(r - c.R) < inc Or r > 255 Then
+            r = c.R
+        Else
+            If r > c.R Then r -= inc Else r += inc
+        End If
+        If Math.Abs(g - c.G) < inc Or g > 255 Then
+            g = c.G
+        Else
+            If g > c.G Then g -= inc Else g += inc
+        End If
+        If Math.Abs(b - c.B) < inc Or b > 255 Then
+            b = c.B
+        Else
+            If b > c.B Then b -= inc Else b += inc
+        End If
+
+        Return Color.FromArgb(a, r, g, b)
+    End Function
+    Shared Sub changeHairColor(ByVal c As Color, ByVal iarrind() As Tuple(Of Integer, Boolean, Boolean), ByRef iarr As Image())
+        iarr(pInd.rearhair) = Portrait.hairRecolor(Portrait.imgLib.atrs(pInd.rearhair).getAt(iarrind(pInd.rearhair)), c)
+        iarr(pInd.midhair) = Portrait.hairRecolor(Portrait.imgLib.atrs(pInd.midhair).getAt(iarrind(pInd.midhair)), c)
+        iarr(pInd.eyebrows) = Portrait.hairRecolor(Portrait.imgLib.atrs(pInd.eyebrows).getAt(iarrind(pInd.eyebrows)), c)
+        iarr(pInd.fronthair) = Portrait.hairRecolor(Portrait.imgLib.atrs(pInd.fronthair).getAt(iarrind(pInd.fronthair)), c)
+    End Sub
+    Shared Sub changeSkinColor(ByVal c As Color, ByVal iarrind() As Tuple(Of Integer, Boolean, Boolean), ByRef iarr As Image())
+        iarr(pInd.body) = Portrait.skinRecolor(Portrait.imgLib.atrs(pInd.body).getAt(iarrind(pInd.body)), c)
+        iarr(pInd.face) = Portrait.skinRecolor(Portrait.imgLib.atrs(pInd.face).getAt(iarrind(pInd.face)), c)
+        iarr(pInd.ears) = Portrait.skinRecolor(Portrait.imgLib.atrs(pInd.ears).getAt(iarrind(pInd.ears)), c)
+        iarr(pInd.nose) = Portrait.skinRecolor(Portrait.imgLib.atrs(pInd.nose).getAt(iarrind(pInd.nose)), c)
+    End Sub
+
+    '|POINT CALCULATION|
+    Shared Function distance(ByVal x As Point, ByVal y As Point) As Double
+        'the straight-line distance between two points
+        Return Math.Abs(Math.Sqrt(CDbl((y.X - x.X) ^ 2) + CDbl((y.Y - x.Y) ^ 2)))
+    End Function
+    Shared Function withinOnePlusMinus(ByVal p1 As Point, ByVal pList As List(Of Point)) As Boolean
+        'indicates whether a point is within plus/minus one space of another in a list of points
+        For Each p In pList
+            If p.X + 1 = p1.X Or p.X - 1 = p1.X Then Return True
+            If p.Y + 1 = p1.Y Or p.Y - 1 = p1.Y Then Return True
+        Next
+        Return False
+    End Function
+
 End Class
 
 

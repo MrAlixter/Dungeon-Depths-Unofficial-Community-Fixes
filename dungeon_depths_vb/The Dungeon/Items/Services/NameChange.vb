@@ -24,8 +24,8 @@
     End Sub
     Sub wakeup()
         Game.player1.UIupdate()
-        Equipment.clothesChange("Naked")
+        Equipment.clothesChange(Game.player1, "Naked")
         Game.player1.drawPort()
-        Game.pushLblEvent("You wake up to the teacher's snap.  ""Well then, " & Game.player1.name & ", it seems like we're done here."" she says with a knowing grin.  Done?  Right!  The name change.  She already did it?  But you've always been " & Game.player1.name & "..." & vbCrLf & vbCrLf & "Stripping naked, you give the hypnotist a dirty look.  If she was going to rip you off, your mistress could have done a better job of hiding it...", AddressOf CType(Game.hteach, HTeach).back)
+        Game.pushLblEvent("You wake up to the teacher's snap.  ""Well then, " & Game.player1.name & ", it seems like we're done here."" she says with a knowing grin.  Done?  Right!  The name change.  She already did it?  But you've always been " & Game.player1.name & "..." & DDUtils.RNRN & "Stripping naked, you give the hypnotist a dirty look.  If she was going to rip you off, your mistress could have done a better job of hiding it...", AddressOf CType(Game.hteach, HTeach).back)
     End Sub
 End Class

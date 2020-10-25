@@ -58,9 +58,7 @@
             Game.pushLblEvent("As you crack the glowstick to activate it, the tube cracks open slightly, spraying some fluid on your face.  You wipe it off, and while you don't feel any different, your hair seems a little more...vibrant than it was before.")
             p.prt.haircolor = c
             p.drawPort()
-            If Transformation.canBeTFed(p) Then
-                p.pState.save(p)
-            End If
+            p.savePState()
         End If
         Game.drawBoard()
         count -= 1

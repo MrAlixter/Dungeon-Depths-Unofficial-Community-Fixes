@@ -5,7 +5,7 @@
         health = 1.0
         maxHealth = 9999
         attack = 99
-        defence = 99
+        defense = 99
         speed = 999
 
         'Define the inventory
@@ -21,8 +21,8 @@
         picPrincess = ShopNPC.npcLib.atrs(0).getAt(33)
         picBunny = ShopNPC.npcLib.atrs(0).getAt(34)
 
-        picNCP = New List(Of Image)
-        picNCP.AddRange({picNormal, ShopNPC.npcLib.atrs(0).getAt(4), ShopNPC.npcLib.atrs(0).getAt(5), picPrincess, picBunny})
+        picNPC = New List(Of Image)
+        picNPC.AddRange({picNormal, ShopNPC.npcLib.atrs(0).getAt(4), ShopNPC.npcLib.atrs(0).getAt(5), picPrincess, picBunny})
 
         If speed = Game.player1.speed Then speed -= 1
         title = ""
@@ -38,7 +38,7 @@
             Dim bTF As BimboTF = New BimboTF(2, 0, 0.25, True)
             bTF.step2()
             Game.player1.inv.add(147, 1)
-            Equipment.clothesChange("Skimpy_Tube_Top")
+            Equipment.clothesChange(Game.player1, "Skimpy_Tube_Top")
             Game.player1.drawPort()
             pos = New Point(-1, -1)
         End If
@@ -59,7 +59,7 @@
         ElseIf npcIndex = 2 Then
             Game.pushNPCDialog("Baaahhh.")
         ElseIf npcIndex = 3 Then
-            Game.pushNPCDialog("Hello, kind " & Game.player1.pClass.name & ", how are you on this fine day?")
+            Game.pushNPCDialog("Hello, kind " & Game.player1.className & ", how are you on this fine day?")
         ElseIf npcIndex = 4 Then
             Game.pushNPCDialog("*giggle* Hey!")
         End If

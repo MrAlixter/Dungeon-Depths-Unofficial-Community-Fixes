@@ -18,7 +18,7 @@
             p.MtF()
         End If
 
-        p.pClass = p.classes("Valkyrie")
+        p.changeClass("Valkyrie")
 
         p.breastSize = 2
 
@@ -34,13 +34,12 @@
         p.prt.setIAInd(pInd.hat, 7, True, False)
         p.prt.setIAInd(pInd.wings, 1, True, False)
 
-        p.inv.add(95, 1)
+        If p.inv.getCountAt(95) < 1 Then p.inv.add(95, 1)
 
-        Equipment.clothesChange("Valkyrie_Armor")
+        Equipment.clothesChange(p, "Valkyrie_Armor")
 
-        p.reverseAllRoute()
-        If Not p.knownSpecials.Contains("Blazing Angel Strike") Then p.knownSpecials.Add("Blazing Angel Strike")
-        Game.pushLstLog("""Blazing Angel Strike"" special learned!")
+        If Not p.knownSpecials.Contains("Helix Slash") Then p.knownSpecials.Add("Helix Slash")
+        Game.pushLstLog("""Helix Slash"" special learned!")
         p.canMoveFlag = True
     End Sub
 
@@ -50,7 +49,7 @@
 
     Public Overrides Function getNextStep(stage As Integer) As Action
         Dim p As player = game.player1
-        If p.pClass.name.Equals("Valkyrie") Then
+        If p.className.Equals("Valkyrie") Then
             Return AddressOf stopTF
         Else
             Return AddressOf step1

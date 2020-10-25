@@ -6,7 +6,7 @@
     Public pClass As pClass = New Classless()
     Public pForm As pForm = New Human()
     Dim health As Double
-    Public maxHealth, mana, maxMana, attack, defence As Integer
+    Public maxHealth, mana, maxMana, attack, defense As Integer
     Dim will, speed, gold, lust As Integer
     Public breastSize, stamina, dickSize, buttSize As Integer
     Dim equippedWeapon As Weapon
@@ -23,15 +23,15 @@
     Sub New(ByRef p As Player)
         name = p.name
         sex = p.sex
-        pClass = p.classes(p.pClass.name)
-        pForm = p.forms(p.pForm.name)
+        pClass = p.classes(p.className)
+        pForm = p.forms(p.formName)
         description = p.description
         health = p.health
         maxHealth = p.maxHealth
         mana = p.mana
         maxMana = p.mana
         attack = p.attack
-        defence = p.defence
+        defense = p.defense
         will = p.will
         speed = p.speed
         gold = p.gold
@@ -44,7 +44,7 @@
         equippedArmor = p.equippedArmor
         equippedAcce = p.equippedAcce
         iArrInd = p.prt.iArrInd.Clone
-        perks = New Dictionary(Of perk, Integer)(p.perks)
+        perks = DDUtils.copyDictionary(p.perks)
         invNeedsUDate = p.inv.invNeedsUDate
         haircolor = p.prt.haircolor
         skincolor = p.prt.skincolor
@@ -64,7 +64,7 @@
         mana = 0
         maxMana = 0
         attack = 0
-        defence = 0
+        defense = 0
         will = 0
         speed = 0
         gold = 0
@@ -85,12 +85,17 @@
         ReDim iArrInd(Portrait.NUM_IMG_LAYERS)
     End Sub
 
+    Public Function clone(ByVal p As Player)
+        load(p, True)
+        Return (New State(p))
+    End Function
+
     'load applies a state to a given instance of a player
     Public Sub load(ByRef p As Player, Optional overwriteStats As Boolean = True)
         p.name = name
         p.sex = sex
-        p.pClass = p.classes(pClass.name)
-        p.pForm = p.forms(pForm.name)
+        p.changeClass(pClass.name)
+        p.changeForm(pForm.name)
         p.description = description
 
         If overwriteStats Then
@@ -98,10 +103,11 @@
             If p.health > 1 Then p.health = 1
             p.maxMana = maxMana
             p.attack = attack
-            p.defence = defence
+            p.defense = defense
             p.will = will
             p.speed = speed
             p.lust = lust
+            p.perks = DDUtils.copyDictionary(perks)
         End If
 
         p.gold = gold
@@ -109,12 +115,10 @@
         p.dickSize = dickSize
         p.buttSize = buttSize
         p.equippedWeapon = equippedWeapon
-        Equipment.clothesChange(equippedArmor.getName)
-        Equipment.accChange(equippedArmor.getName)
+        Equipment.clothesChange(p, equippedArmor.getName)
         p.equippedArmor = equippedArmor
         p.equippedAcce = equippedAcce
         p.prt.iArrInd = iArrInd.Clone
-        p.perks = New Dictionary(Of perk, Integer)(perks)
         p.inv.invNeedsUDate = invNeedsUDate
         p.prt.haircolor = haircolor
         p.prt.skincolor = skincolor
@@ -125,15 +129,15 @@
     Public Sub save(ByRef p As Player)
         name = p.name
         sex = p.sex
-        pClass = p.classes(p.pClass.name)
-        pForm = p.forms(p.pForm.name)
+        pClass = p.classes(p.className)
+        pForm = p.forms(p.formName)
         description = p.description
         health = p.health
         maxHealth = p.maxHealth
         mana = p.mana
         maxMana = p.maxMana
         attack = p.attack
-        defence = p.defence
+        defense = p.defense
         will = p.will
         speed = p.speed
         gold = p.gold
@@ -146,7 +150,7 @@
         equippedArmor = p.equippedArmor
         equippedAcce = p.equippedAcce
         iArrInd = p.prt.iArrInd.Clone
-        perks = New Dictionary(Of perk, Integer)(p.perks)
+        perks = DDUtils.copyDictionary(p.perks)
         invNeedsUDate = p.inv.invNeedsUDate
         haircolor = p.prt.haircolor
         skincolor = p.prt.skincolor
@@ -155,7 +159,7 @@
     End Sub
 
     'read converts a string given from a save file into a state
-    Public Sub read(ByVal s As String)
+    Public Sub read(ByVal s As String, ByVal version As Double)
         Equipment.init()
         Dim readArray() As String = s.Split("*")
         If readArray(0) = "N/A" Then
@@ -169,7 +173,7 @@
             mana = 0
             maxMana = 0
             attack = 0
-            defence = 0
+            defense = 0
             will = 0
             speed = 0
             gold = 0
@@ -198,7 +202,7 @@
         dickSize = CInt(readArray(7))
 
         attack = CInt(readArray(10))
-        defence = CInt(readArray(11))
+        defense = CInt(readArray(11))
         will = CInt(readArray(12))
         speed = CInt(readArray(13))
         If Not readArray(14).Equals("placeholder") Then isPetrified = CBool(readArray(14))
@@ -230,36 +234,52 @@
         skincolor = Color.FromArgb(A, CInt(readArray(25)), CInt(readArray(26)), CInt(readArray(27)))
         textColor = Color.FromArgb(255, CInt(readArray(28)), CInt(readArray(29)), CInt(readArray(30)))
 
+        If Not readArray(31).Equals("placeholder") Then lust = CInt(readArray(31))
+
         Dim b1 As Integer = readArray(32)
         For i = 0 To b1 - 1
             Dim kvp = readArray(33 + i).Split("!")
             perks(CInt(kvp(0))) = CInt(kvp(1))
         Next
-        For i = 0 To UBound(iArrInd)
-            Dim arr() As String = readArray(33 + b1 + i).Split("%")
+
+        Dim b2 As Integer = CInt(readArray(33 + b1))
+        For i = 0 To b2
+            Dim arr() As String = readArray(34 + b1 + i).Split("%")
             iArrInd(i) = New Tuple(Of Integer, Boolean, Boolean)(CInt(arr(0)), CBool(arr(1)), CBool(arr(2)))
         Next
 
         For Each k In Equipment.acList.Keys
-            If readArray(33 + b1 + 17) = k Then
+            If readArray(35 + b1 + b2) = k Then
                 equippedAcce = Equipment.acList(k)
                 Exit For
             End If
         Next
 
+
+        '|Version Based Save Updating|
+        If version = 0.92 Or version = 10.0 Then
+            Dim t = New Tuple(Of Integer, Boolean, Boolean)(iArrInd(21).Item1, iArrInd(21).Item2, iArrInd(21).Item3)
+
+            For i = 20 To 14 Step -1
+                iArrInd(i + 1) = New Tuple(Of Integer, Boolean, Boolean)(iArrInd(i).Item1, iArrInd(i).Item2, iArrInd(i).Item3)
+            Next
+
+            iArrInd(14) = t
+        End If
         initFlag = True
     End Sub
     'write converts a state into a string to be put into a save file
     Public Function write() As String
         If initFlag Then
-            Dim output As String = CStr(name & "*" & pClass.name & "~" & pForm.name & "*" & description & "*" & health & "*" & maxHealth & "*" & mana & "*" & maxMana & "*" & buttSize & "*" & haircolor.A & "*" & skincolor.A & "*" & _
-               attack & "*" & defence & "*" & will & "*" & speed & "*" & isPetrified & "*" & stamina & "*" & gold & "*" & equippedArmor.getName() & "*" & equippedWeapon.getName() & "*" & _
+            Dim output As String = CStr(name & "*" & pClass.name & "~" & pForm.name & "*" & description & "*" & health & "*" & maxHealth & "*" & mana & "*" & maxMana & "*" & dickSize & "*" & haircolor.A & "*" & skincolor.A & "*" & _
+               attack & "*" & defense & "*" & will & "*" & speed & "*" & isPetrified & "*" & stamina & "*" & gold & "*" & equippedArmor.getName() & "*" & equippedWeapon.getName() & "*" & _
                sex & "*" & buttSize & "*" & breastSize & "*" & haircolor.R & "*" & haircolor.G & "*" & haircolor.B & "*" & skincolor.R & "*" & skincolor.G & "*" & skincolor.B & "*" & _
-               textColor.R & "*" & textColor.G & "*" & textColor.B & "*" & "placeholder" & "*")
+               textColor.R & "*" & textColor.G & "*" & textColor.B & "*" & lust & "*")
             output += perks.Count & "*"
             For Each kvp As KeyValuePair(Of perk, Integer) In perks
                 output += (kvp.Key & "!" & kvp.Value & "*")
             Next
+            output += UBound(iArrInd) & "*"
             For i = 0 To UBound(iArrInd)
                 output += (iArrInd(i).Item1 & "%" & iArrInd(i).Item2 & "%" & iArrInd(i).Item3 & "*")
             Next

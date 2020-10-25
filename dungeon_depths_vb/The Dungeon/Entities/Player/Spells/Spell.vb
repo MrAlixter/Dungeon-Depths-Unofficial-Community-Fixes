@@ -36,6 +36,10 @@
         spellList.Add("Heartbreak Supernova", New HBSN(Nothing, Nothing))
         spellList.Add("Sweet Sunbeam", New CuteBeam(Nothing, Nothing))
         spellList.Add("Shiny Sparking Missile", New SSMissile(Nothing, Nothing))
+        spellList.Add("Raise Lust", New RLust(Nothing, Nothing))
+        spellList.Add("Puff Up", New PuffUp(Nothing, Nothing))
+        spellList.Add("Flash Bolt", New FlashBolt(Nothing, Nothing))
+        spellList.Add("Firestorm", New FireStorm(Nothing, Nothing))
     End Sub
 
     Sub New(ByRef c As Player, ByRef t As NPC)
@@ -60,7 +64,7 @@
 
         Select Case tier
             Case 2
-                If Rnd() < 0.9 Then
+                If caster.passDieRoll(10, 9) Then
                     Game.pushLblEvent("You cast " & name & "!")
                     Game.pushLstLog("You cast " & name & "!")
                     effect()
@@ -69,12 +73,12 @@
                     Game.pushLstLog("You try to cast " & name & ", but it fizzles into nothing!")
                 End If
             Case 3
-                If Rnd() < 0.8 Then
+                If caster.passDieRoll(10, 8) Then
                     Game.pushLblEvent("You cast " & name & "!")
                     Game.pushLstLog("You cast " & name & "!")
                     effect()
                 Else
-                    If Rnd() < 0.5 Then
+                    If caster.passDieRoll(10, 5) Then
                         Game.pushLblEvent("You try to cast " & name & ", but it fizzles into nothing!")
                         Game.pushLstLog("You try to cast " & name & ", but it fizzles into nothing!")
                     Else
@@ -84,12 +88,12 @@
                     End If
                 End If
             Case 4
-                If Rnd() < 0.7 Then
+                If caster.passDieRoll(10, 7) Then
                     Game.pushLblEvent("You cast " & name & "!")
                     Game.pushLstLog("You cast " & name & "!")
                     effect()
                 Else
-                    If Rnd() < 0.35 Then
+                    If caster.passDieRoll(100, 35) Then
                         Game.pushLblEvent("You try to cast " & name & ", but it fizzles into nothing!")
                         Game.pushLstLog("You try to cast " & name & ", but it fizzles into nothing!")
                     Else
@@ -99,12 +103,12 @@
                     End If
                 End If
             Case 5
-                If Rnd() < 0.6 Then
+                If caster.passDieRoll(10, 6) Then
                     Game.pushLblEvent("You cast " & name & "!")
                     Game.pushLstLog("You cast " & name & "!")
                     effect()
                 Else
-                    If Rnd() < 0.2 Then
+                    If caster.passDieRoll(10, 2) Then
                         Game.pushLblEvent("You try to cast " & name & ", but it fizzles into nothing!")
                         Game.pushLstLog("You try to cast " & name & ", but it fizzles into nothing!")
                     Else
@@ -169,8 +173,8 @@
             Game.pushLblCombatEvent("You can't polymorph yourself!")
             Exit Sub
         ElseIf s.Equals("Heal") Then
-            If Game.player1.pClass.name.Equals("Soul-Lord") Then
-                Game.pushLblEvent("You scoff at the thought of healing in this moment, instead firing off a much more agressive fireball.  Settling down slightly, you muse on what a waste of time a heal spell would be." & vbCrLf & vbCrLf & """Only someone who cares about their mortal vessel would bother to maintain it.")
+            If Game.player1.className.Equals("Soul-Lord") Then
+                Game.pushLblEvent("You scoff at the thought of healing in this moment, instead firing off a much more agressive fireball.  Settling down slightly, you muse on what a waste of time a heal spell would be." & DDUtils.RNRN & """Only someone who cares about their mortal vessel would bother to maintain it.")
                 s = "Fireball"
             End If
         End If
@@ -185,7 +189,7 @@
 
         Select Case s
             Case "Dragon's Breath"
-                If Game.player1.pForm.name.Equals("Dragon") Then Return "No cost" Else Return "-6 mana"
+                If Game.player1.formName.Equals("Dragon") Then Return "No cost" Else Return "-6 mana"
             Case "Molten Fireball"
                 Return "-4 health"
             Case Else

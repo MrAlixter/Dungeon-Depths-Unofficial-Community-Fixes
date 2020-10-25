@@ -80,11 +80,11 @@
 
     Public Sub shiftTowards(ByRef p As Player)
         Randomize()
-        If Not p.pClass.name.equals("Thrall") Then p.pClass = p.classes(perk.thrall)
+        If Not p.className.Equals("Thrall") Then p.changeClass("Thrall")
         If playerMeetsForm(p) Then Exit Sub
 
-        If Not p.prt.haircolor.Equals(hairColor) Then p.changeHairColor(Game.cShift(p.prt.haircolor, hairColor, 8))
-        If Not p.prt.skincolor.Equals(skinColor) Then p.changeSkinColor(Game.cShift(p.prt.skincolor, skinColor, 8))
+        If Not p.prt.haircolor.Equals(hairColor) Then p.changeHairColor(DDUtils.cShift(p.prt.haircolor, hairColor, 8))
+        If Not p.prt.skincolor.Equals(skinColor) Then p.changeSkinColor(DDUtils.cShift(p.prt.skincolor, skinColor, 8))
 
         If Int(Rnd() * 3) = 0 Then
             p.prt.iArrInd(pInd.rearhair) = New Tuple(Of Integer, Boolean, Boolean)(rHairInd, hasFemaleHair, False)
@@ -104,10 +104,8 @@
 
         If p.breastSize > breastSize Then
             p.breastSize -= 1
-            p.reverseallroute()
         ElseIf p.breastSize < breastSize Then
             p.breastSize += 1
-            p.reverseallroute()
         End If
 
         If isFemale And ((p.perks(perk.slutcurse) = -1 And isSlut) Or (p.perks(perk.slutcurse) > -1 And Not isSlut)) And Int(Rnd() * 3) = 0 Then
@@ -134,7 +132,7 @@
     End Sub
     Public Sub snapShift(ByRef p As Player)
         Randomize()
-        If Not p.pClass.name.equals("Thrall") Then p.pClass = p.classes(perk.thrall)
+        If Not p.className.Equals("Thrall") Then p.changeClass("Thrall")
         If playerMeetsForm(p) Then Exit Sub
 
         p.changeHairColor(hairColor)
@@ -156,12 +154,10 @@
         If p.breastSize > breastSize Then
             While p.breastSize > breastSize
                 p.breastSize -= 1
-                p.reverseallroute()
             End While
         ElseIf p.breastSize < breastSize Then
             While p.breastSize < breastSize
                 p.breastSize += 1
-                p.reverseallroute()
             End While
         End If
 
@@ -222,14 +218,14 @@ Public Class SuccMaid
         Dim p = Game.player1
 
         If p.inv.item("Maid_Lingerie").count < 1 Then p.inv.add("Maid_Lingerie", 1)
-        Equipment.clothesChange("Maid_Lingerie")
+        Equipment.clothesChange(p, "Maid_Lingerie")
 
         p.prt.setIAInd(pInd.eyes, 12, True, True)
         p.prt.setIAInd(pInd.glasses, 2, True, False)
         p.prt.setIAInd(pInd.wings, 2, True, False)
         p.prt.setIAInd(pInd.horns, 3, True, False)
 
-        p.pClass = p.classes("Maid")
-        p.pForm = p.forms("Half-Succubus")
+        p.changeClass("Maid")
+        p.changeForm("Half-Succubus")
     End Sub
 End Class

@@ -44,8 +44,8 @@
                 For i = 0 To p.selfPolyForms.Count - 1
                     cboxPMorph.Items.Add(p.selfPolyForms.Item(i))
                 Next
-                If cboxPMorph.Items.Contains(p.pClass.name) Then cboxPMorph.Items.Remove(p.pClass.name)
-                If cboxPMorph.Items.Contains(p.pForm.name) Then cboxPMorph.Items.Remove(p.pForm.name)
+                If cboxPMorph.Items.Contains(p.className) Then cboxPMorph.Items.Remove(p.className)
+                If cboxPMorph.Items.Contains(p.formName) Then cboxPMorph.Items.Remove(p.formName)
             Case False
                 For i = 0 To p.enemPolyForms.Count - 1
                     cboxPMorph.Items.Add(p.enemPolyForms.Item(i))
@@ -69,20 +69,20 @@
 
     'player transform methods
     Sub transform(ByRef p As Player, ByVal form As String)
-        If form.Equals(p.pClass.name) Or form.Equals(p.pForm.name) Or Not p.polymorphs.Keys.Contains(form) Then
+        If form.Equals(p.className) Or form.Equals(p.formName) Or Not p.polymorphs.Keys.Contains(form) Then
             Exit Sub
         End If
 
         'gets the revert text for whatever is being changed
         Dim revertText = ""
-        If Not form.Equals(p.pClass.name) Then
+        If Not form.Equals(p.className) Then
             p.pClass.revert()
-            revertText = p.pClass.revertPassage & vbCrLf & vbCrLf
-        ElseIf Not form.Equals(p.pForm.name) Then
+            revertText = p.pClass.revertPassage & DDUtils.RNRN
+        ElseIf Not form.Equals(p.formName) Then
             p.pForm.revert()
-            revertText = p.pForm.revertPassage & vbCrLf & vbCrLf
+            revertText = p.pForm.revertPassage & DDUtils.RNRN
         Else
-            MsgBox(form.Equals(p.pClass.name) & " | " & form.Equals(p.pForm.name))
+            MsgBox(form.Equals(p.className) & " | " & form.Equals(p.formName))
         End If
 
         'polymorph updates
@@ -94,9 +94,9 @@
 
         If form = "MASBimbo" Then form = "Bimbo"
         If p.forms.Keys.Contains(form) Then
-            p.pForm = p.forms(form)
+            p.changeForm(form)
         ElseIf p.classes.Keys.Contains(form) Then
-            p.pClass = p.classes(form)
+            p.changeClass(form)
         End If
 
         'cleanup
@@ -111,41 +111,41 @@
         If title = "Sheep" Then
             t.maxHealth = 50
             t.attack = 1
-            t.defence = 1
+            t.defense = 1
             t.tfCt = 1
             t.tfEnd = 6
             t.form = "Sheep"
         ElseIf title = "Princess" Then
             t.maxHealth = 60
             t.attack = 5
-            t.defence = 1
+            t.defense = 1
             t.tfCt = 1
             t.tfEnd = 6
             t.form = "Princess"
         ElseIf title = "Bunny" Then
             t.maxHealth = 25
             t.attack = 1
-            t.defence = 1
+            t.defense = 1
             t.tfCt = 1
             t.tfEnd = 6
             t.form = "Bunny"
         ElseIf title = "Chicken" Then
             t.maxHealth = 45
             t.attack = 5
-            t.defence = 5
+            t.defense = 5
             t.tfCt = 1
             t.tfEnd = 6
             t.form = "Chicken"
         ElseIf title = "Cow" Then
             t.maxHealth = 75
             t.attack = 0
-            t.defence = 0
+            t.defense = 0
             t.tfCt = 1
             t.tfEnd = 6
             t.form = "Cow"
         ElseIf title = "Amnesiac" Then
             t.attack = 0
-            t.defence = 0
+            t.defense = 0
             t.speed = 1
             t.stunct = 1
             t.tfCt = 1
@@ -154,24 +154,32 @@
         ElseIf title = "Slime​" Then
             t.maxHealth = 70
             t.attack = 10
-            t.defence = 35
+            t.defense = 35
             t.tfCt = 1
             t.tfEnd = 2
             t.form = "Slime"
         ElseIf title = "Succubus​" Then
             t.maxHealth = 125
             t.attack = 20
-            t.defence = 5
+            t.defense = 5
             t.tfCt = 1
             t.tfEnd = 2
             t.form = "Succubus"
         ElseIf title = "Dragon​" Then
             t.maxHealth = 200
             t.attack = 15
-            t.defence = 30
+            t.defense = 30
             t.tfCt = 1
             t.tfEnd = 2
             t.form = "Dragon"
+        ElseIf title = "Goth​" Then
+            t.maxHealth = 200
+            t.attack = 6
+            t.defense = 6
+            t.speed = 2
+            t.tfCt = 1
+            t.tfEnd = 6
+            t.form = "Goth Girl"
         End If
     End Sub
     'npc transform methodF:\dungeon_depths\The Dungeon\img\

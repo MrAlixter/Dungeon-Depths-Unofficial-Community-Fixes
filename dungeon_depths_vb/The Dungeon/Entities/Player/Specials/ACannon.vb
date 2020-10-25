@@ -4,7 +4,7 @@
         MyBase.New(u, t)
         MyBase.setName("Aura Cannon")
         MyBase.setUOC(False)
-        MyBase.setcost(u.mana * ((u.attack + u.aBuff) * u.pClass.a * u.pForm.a) / 10)
+        MyBase.setcost(0)
     End Sub
     Public Overrides Sub effect()
         Dim p = MyBase.getUser
@@ -12,9 +12,15 @@
 
         Dim dmg As Integer = p.mana * ((p.attack + p.aBuff) * p.pClass.a * p.pForm.a) / 10
         p.mana = 0
-        m.takeDMG(dmg, p)
 
+        dmg = p.getSpellDamage(m, dmg)
         Game.pushLstLog("Aura Cannon!")
         Game.pushLblCombatEvent("Aura Cannon!" & vbCrLf & "You focus all of your internal energy into your hands, using it to fire a beam at your opponent.  The blast hits them for " & dmg & " damage!")
+
+        MyBase.getTarget.takeDMG(dmg, MyBase.getUser)
     End Sub
+
+    Public Overrides Function getCost() As Integer
+        Return (getUser.mana * ((getUser.attack + getUser.aBuff) * getUser.pClass.a * getUser.pForm.a) / 10)
+    End Function
 End Class

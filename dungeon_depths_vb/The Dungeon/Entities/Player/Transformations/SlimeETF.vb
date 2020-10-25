@@ -16,7 +16,7 @@
         'In the future this will damage/destroy armor
         Dim p = Game.player1
         p.inv.add("Dissolved_Clothes", 1)
-        Equipment.clothesChange("Dissolved_Clothes")
+        Equipment.clothesChange(p, "Dissolved_Clothes")
         pushLblEventWithoutLoss("As you take stock of yourself, you notice that your clothing has been partially eaten away by a teal slime that you seem to sweating in small amounts.  This seems like something you are going to need to keep an eye on...")
         p.drawPort()
         If Game.player1.perks(perk.slimetf) > -1 Then Game.player1.perks(perk.slimetf) += 1
@@ -37,7 +37,7 @@
     Sub step3()
         Dim p As Player = Game.player1
         p.prt.skincolor = Color.FromArgb(230, 0, 255, 255)
-        p.pForm = p.forms("Half-Slime")
+        p.changeForm("Half-Slime")
         'Author Credit: Marionette
         pushLblEventWithoutLoss("Looking back you see you’ve gotten far enough away to catch your breath, the adrenalin that had driven you on now draining as your left breathing heavily. Too late you remember the Slime had landed a fairly large glob of slime on you as it quickly surges around your body. Your skin starts to tingle as you watch your skin soak in the goo, the color of it changing and even becoming nearly translucent. You are now a half-slime!")
         p.drawPort()
@@ -47,7 +47,7 @@
         Dim p As Player = Game.player1
         If p.equippedWeapon.getName.Equals("Magical_Girl_Wand") Or
             p.equippedWeapon.getName.Equals("Valkyrie_Sword") Then
-            Equipment.weaponChange("Fists")
+            Equipment.weaponChange(p, "Fists")
         End If
 
         p.health = 1
@@ -62,8 +62,8 @@
         p.prt.setIAInd(pInd.cloak, 0, True, False)
         p.prt.setIAInd(pInd.hat, 0, True, False)
 
-        p.pForm = p.forms("Slime")
-        Equipment.clothesChange("Naked")
+        p.changeForm("Slime")
+        Equipment.clothesChange(p, "Naked")
 
         p.prt.skincolor = Color.FromArgb(200, p.prt.skincolor.R, p.prt.skincolor.G, p.prt.skincolor.B)
 
@@ -112,7 +112,7 @@
     End Function
     Public Shared Sub pushLblEventWithoutLoss(ByRef out As String)
         Dim revertText = Game.lblEvent.Text.Split(vbCrLf)(0)
-        If Not revertText.Equals("") Then out = revertText & vbCrLf & vbCrLf & out
+        If Not revertText.Equals("") Then out = revertText & DDUtils.RNRN & out
         Game.pushLblEvent(out)
     End Sub
     Public Overrides Sub setWaitTime(stage As Integer)

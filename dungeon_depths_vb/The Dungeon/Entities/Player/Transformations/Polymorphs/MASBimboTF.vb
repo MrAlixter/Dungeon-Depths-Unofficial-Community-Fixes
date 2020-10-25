@@ -21,7 +21,7 @@
 
         'unequips
         If p.inv.item(147).count < 1 Then p.inv.add(147, 1)
-        Equipment.clothesChange("Skimpy_Tube_Top")
+        Equipment.clothesChange(p, "Skimpy_Tube_Top")
 
         'bimbo transformation
         If Not p.prt.sexBool Then
@@ -36,7 +36,6 @@
         p.prt.haircolor = Color.FromArgb(255, 255, 245, 200)
         p.prt.setIAInd(pInd.rearhair, 14, True, True)
         If p.breastSize < 3 Then p.breastSize = 3
-        p.reverseallroute()
         p.prt.setIAInd(pInd.face, 0, True, False)
         p.prt.setIAInd(pInd.midhair, 6, True, True)
         p.prt.setIAInd(pInd.ears, 1, True, False)
@@ -62,7 +61,7 @@
         p.prt.setIAInd(pInd.mouth, 9, True, True)
         If p.breastSize > 0 And p.breastSize < 4 Then
             If p.inv.item("Cat_Lingerie").count < 1 Then p.inv.add("Cat_Lingerie", 1)
-            Equipment.clothesChange("Cat_Lingerie")
+            Equipment.clothesChange(p, "Cat_Lingerie")
         End If
         Game.pushLblEvent("In your weakened state, you are helpless to defend yourself as Marissa charges up a glowing ball of magic.\n\n" &
                           """This is a little curse I've been working on..."" she states, gesturing at your prone body with the tip of her staff.  ""I haven't used the finished version of it on anyone yet, but I have a feeling that you're going to be my perfect little test kitty!""\n\n" &

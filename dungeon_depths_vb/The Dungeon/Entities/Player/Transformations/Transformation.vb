@@ -17,9 +17,7 @@ Public MustInherit Class Transformation
     'constuctors
     Sub New(n As Integer, tts As Integer, wi As Double, cbs As Boolean)
         Dim p As Player = Game.player1
-        If canBeTFed(p) Then
-            p.pState.save(p)
-        End If
+        p.savePState()
         currStep = 0
         numSteps = n
         turnsTilNextStep = tts
@@ -47,12 +45,18 @@ Public MustInherit Class Transformation
                 Return New MBimboTF(CInt(s(0)), CInt(s(1)), CInt(s(2)), CDbl(s(3)), CBool(s(4)), CBool(s(6)))
             Case "BBBimbo"
                 Return New BBBimboTF(CInt(s(0)), CInt(s(1)), CInt(s(2)), CDbl(s(3)), CBool(s(4)), CBool(s(6)))
+            Case "DemBimbo"
+                Return New DemBimboTF(CInt(s(0)), CInt(s(1)), CInt(s(2)), CDbl(s(3)), CBool(s(4)), CBool(s(6)))
+            Case "BimboPlusTF"
+                Return New BimboPlusTF(CInt(s(0)), CInt(s(1)), CInt(s(2)), CDbl(s(3)), CBool(s(4)), CBool(s(6)))
             Case "NekoTF"
                 Return New NekoTF(CInt(s(0)), CInt(s(1)), CInt(s(2)), CDbl(s(3)), CBool(s(4)), CBool(s(6)))
             Case "MinoMTF"
                 Return New MinoMTF(CInt(s(0)), CInt(s(1)), CInt(s(2)), CDbl(s(3)), CBool(s(4)), CBool(s(6)))
             Case "MinoFTF"
                 Return New MinoFTF(CInt(s(0)), CInt(s(1)), CInt(s(2)), CDbl(s(3)), CBool(s(4)), CBool(s(6)))
+            Case "MinoDTF"
+                Return New MinoDTF(CInt(s(0)), CInt(s(1)), CInt(s(2)), CDbl(s(3)), CBool(s(4)), CBool(s(6)))
             Case "BimBellTF"
                 Return New BimBellTF(CInt(s(0)), CInt(s(1)), CInt(s(2)), CDbl(s(3)), CBool(s(4)), CBool(s(6)))
             Case "Targax"
@@ -65,7 +69,7 @@ Public MustInherit Class Transformation
                 Return New DragonTF(CInt(s(0)), CInt(s(1)), CInt(s(2)), CDbl(s(3)), CBool(s(4)), CBool(s(6)))
             Case "GoddessTF"
                 Return New GoddessTF(CInt(s(0)), CInt(s(1)), CInt(s(2)), CDbl(s(3)), CBool(s(4)), CBool(s(6)))
-            Case perk.slimetf
+            Case "SlimeETF"
                 Return New slimetf(CInt(s(0)), CInt(s(1)), CInt(s(2)), CDbl(s(3)), CBool(s(4)), CBool(s(6)))
             Case "SuccubusTF"
                 Return New SuccubusTF(CInt(s(0)), CInt(s(1)), CInt(s(2)), CDbl(s(3)), CBool(s(4)), CBool(s(6)))
@@ -83,7 +87,7 @@ Public MustInherit Class Transformation
                 Return New SheepTFB(CInt(s(0)), CInt(s(1)), CInt(s(2)), CDbl(s(3)), CBool(s(4)), CBool(s(6)))
             Case "VialOfslimetf"
                 Return New VialOfslimetf(CInt(s(0)), CInt(s(1)), CInt(s(2)), CDbl(s(3)), CBool(s(4)), CBool(s(6)))
-            Case perk.googirltf
+            Case "GooGirlTF"
                 Return New GooGirlTF(CInt(s(0)), CInt(s(1)), CInt(s(2)), CDbl(s(3)), CBool(s(4)), CBool(s(6)))
             Case "AngelTF"
                 Return New AngelTF(CInt(s(0)), CInt(s(1)), CInt(s(2)), CDbl(s(3)), CBool(s(4)), CBool(s(6)))
@@ -95,7 +99,7 @@ Public MustInherit Class Transformation
                 Return New PrincessTF(CInt(s(0)), CInt(s(1)), CInt(s(2)), CDbl(s(3)), CBool(s(4)), CBool(s(6)))
             Case "Arachne"
                 Return New ArachneTF(CInt(s(0)), CInt(s(1)), CInt(s(2)), CDbl(s(3)), CBool(s(4)), CBool(s(6)))
-            Case perk.blind
+            Case "Blind"
                 Return New Blindness(CInt(s(0)), CInt(s(1)), CInt(s(2)), CDbl(s(3)), CBool(s(4)), CBool(s(6)))
             Case "Valkyrie"
                 Return New ValkyrieTF2(CInt(s(0)), CInt(s(1)), CInt(s(2)), CDbl(s(3)), CBool(s(4)), CBool(s(6)))
@@ -120,14 +124,17 @@ Public MustInherit Class Transformation
         End Select
     End Function
     Shared Function canBeTFed(ByRef p As Player) As Boolean
-        If Game.player1.ongoingTFs.Count < 1 And
-            (Not p.polymorphs.ContainsKey(p.pClass.name) And Not p.polymorphs.ContainsKey(p.pForm.name)) And
-            Not p.pClass.name.Equals("Magical Girl") And
-            Not p.pClass.name.Equals("Valkyrie") And
-            Not p.pClass.name.Equals("Unconscious") And
-            Not p.pForm.name.Equals("Blowup Doll") And
-            Not p.pForm.name.Equals("Fae") And
-            Not p.perks(perk.astatue) > 1 Then Return True
+        If Game.player1.ongoingTFs.count < 1 And
+            (Not p.polymorphs.ContainsKey(p.className) And Not p.polymorphs.ContainsKey(p.formName)) And
+            Not p.className.Equals("Magical Girl") And
+            Not p.className.Equals("Valkyrie") And
+            Not p.className.Equals("Unconscious") And
+            Not p.formName.Equals("Blowup Doll") And
+            Not p.formName.Equals("Fae") And
+            Not p.perks(perk.astatue) > 1 Then
+            Return True
+        End If
+
         Return False
     End Function
 

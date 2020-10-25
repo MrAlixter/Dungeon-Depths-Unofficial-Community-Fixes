@@ -14,7 +14,7 @@ Imports System.Runtime.InteropServices
 <Assembly: AssemblyDescription("Dungeon Depths is a 2D dungeon crawler with art made in Kisekae2.0 featuring TF fetish content, made for adults.")> 
 <Assembly: AssemblyCompany("VowelHeavyUsername")> 
 <Assembly: AssemblyProduct("Dungeon Depths")> 
-<Assembly: AssemblyCopyright("Copyright ©  2019")> 
+<Assembly: AssemblyCopyright("Copyright ©  2020")> 
 <Assembly: AssemblyTrademark("")> 
 
 <Assembly: ComVisible(False)> 
@@ -33,7 +33,7 @@ Imports System.Runtime.InteropServices
 ' by using the '*' as shown below:
 ' <Assembly: AssemblyVersion("1.0.*")> 
 
-<Assembly: AssemblyVersion("0.9.0.2")> 
-<Assembly: AssemblyFileVersion("0.9.0.2")> 
+<Assembly: AssemblyVersion("10.0.2.0")> 
+<Assembly: AssemblyFileVersion("10.0.2.0")> 
 
 <Assembly: NeutralResourcesLanguageAttribute("en-US")> 

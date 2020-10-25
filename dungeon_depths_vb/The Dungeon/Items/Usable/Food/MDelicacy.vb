@@ -4,7 +4,7 @@
         MyBase.setName("Mage's_Delicacy")
         MyBase.setDesc("Three pieces of baked haddock served with wild rice and a selection of grilled vegetables.  Some of the spices glow with a dim azure light." & vbCrLf &
                        "+90 Stamina" & vbCrLf &
-                       "Low chance to raise Max Mana and WIL by 3 points each")
+                       "Low chance to raise Max Mana and WILL by 3 points each")
 
         id = 134
         tier = Nothing

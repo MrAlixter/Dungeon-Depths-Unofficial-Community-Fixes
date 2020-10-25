@@ -5,16 +5,16 @@
         MyBase.setName("Health_Charm")
         MyBase.setDesc("A charm that slightly boosts your health.")
         id = 48
-        tier = 2
+        tier = 3
         MyBase.setUsable(True)
         MyBase.count = 0
-        MyBase.value = 750
+        MyBase.value = 1750
     End Sub
 
     Overrides Sub use(ByRef p As Player)
         If Me.getUsable() = False Then Exit Sub
-        If p.pClass.name.Equals("Soul-Lord") Then
-            Game.pushLblEvent("You spike the health charm on the ground, shattering it all over the dungeon floor.  As you go back to your buisness, you muse on how cowardly healing is." & vbCrLf & vbCrLf & """Only someone who cares about their mortal vessel would bother to maintain it.")
+        If p.className.Equals("Soul-Lord") Then
+            Game.pushLblEvent("You spike the health charm on the ground, shattering it all over the dungeon floor.  As you go back to your buisness, you muse on how cowardly healing is." & DDUtils.RNRN & """Only someone who cares about their mortal vessel would bother to maintain it.")
             p.UIupdate()
             Exit Sub
         End If

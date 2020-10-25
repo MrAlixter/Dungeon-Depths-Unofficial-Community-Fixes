@@ -5,10 +5,10 @@
         MyBase.setName("Mana_Charm")
         MyBase.setDesc("A charm that slightly boosts your mana.")
         id = 49
-        tier = 2
+        tier = 3
         MyBase.setUsable(True)
         MyBase.count = 0
-        MyBase.value = 750
+        MyBase.value = 1750
     End Sub
 
     Overrides Sub use(ByRef p As Player)
@@ -18,6 +18,7 @@
         p.maxMana += 5
         p.mana += 5
         If p.mana > p.getMaxMana Then p.mana = p.getMaxMana
+        p.perks(perk.mcharmsused) += 1
         p.UIupdate()
         count -= 1
     End Sub

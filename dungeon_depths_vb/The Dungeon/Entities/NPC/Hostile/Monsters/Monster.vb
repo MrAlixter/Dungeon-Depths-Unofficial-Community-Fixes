@@ -11,30 +11,36 @@
                 Case 1
                     maxHealth *= 1
                     attack *= 1
-                    defence *= 1
+                    defense *= 1
                     speed *= 1
                 Case 2
                     maxHealth *= 1.05
                     attack *= 1.05
-                    defence *= 1.05
+                    defense *= 1.05
                     speed *= 1.05
+                    will = Math.Max(1, will) * 1.05
                 Case 3
                     maxHealth *= 1.1
                     attack *= 1.1
-                    defence *= 1.1
+                    defense *= 1.1
                     speed *= 1.1
+                    will = Math.Max(1, will) * 1.1
                 Case 4
                     maxHealth *= 1.2
                     attack *= 1.2
-                    defence *= 1.2
+                    defense *= 1.2
                     speed *= 1.2
+                    will = Math.Max(1, will) * 1.2
                 Case Else
                     maxHealth *= (1 + (0.05 * Game.mDun.numCurrFloor))
                     attack *= (1 + (0.05 * Game.mDun.numCurrFloor))
-                    defence *= (1 + (0.05 * Game.mDun.numCurrFloor))
+                    defense *= (1 + (0.05 * Game.mDun.numCurrFloor))
                     speed *= (1 + (0.05 * Game.mDun.numCurrFloor))
+                    will = Math.Max(1, will) * (1 + (0.05 * Game.mDun.numCurrFloor))
             End Select
         End If
+
+        xpValue = (maxHealth + attack + defense + speed) / 4
 
         health = 1.0
 
@@ -43,13 +49,16 @@
         sMaxHealth = maxHealth
         sMaxMana = maxMana
         sAttack = attack
-        sDefence = defence
+        sdefense = defense
         sWill = will
         sSpeed = speed
+
+        If Game.player1.perks(perk.lurk) > 0 Then stunct = 0 : isStunned = True
 
         If speed = Game.player1.getSPD Then speed -= 1
         pos = Game.player1.pos
     End Sub
+
     Shared Function monsterFactory(ByVal mIndex As Integer) As Monster
         Select Case mIndex
             Case 0
@@ -85,7 +94,7 @@
                 Return New EnthDem
             Case 10
                 Dim m = New Monster
-                m.name = "stamina"
+                m.name = "Hunger"
                 Return m
             Case 11
                 Return New MarissaAS
@@ -99,11 +108,69 @@
                 Dim m = New Monster
                 m.name = "Fire"
                 Return m
+            Case 16
+                Return New ESuccubus
+            Case 17
+                Return New EImp
+            Case 18
+                Return New ESuccPrincess
         End Select
 
         Return New Monster()
     End Function
+    Shared Function floorMonsterTier(ByVal floorInd As Integer) As Integer()
+        Dim tier = {0, 1, 2, 6}
 
+        Select Case floorInd
+            Case 1
+                tier = {0, 1, 2, 6}
+            Case 2
+                tier = {0, 1, 2, 4, 6}
+            Case 3
+                tier = {0, 1, 2, 4, 6, 7}
+            Case 4
+                tier = {0, 1, 2, 3, 4, 6, 7}
+            Case Else
+                tier = {0, 1, 2, 3, 4, 6, 7, 12, 12, 14}
+        End Select
+
+        If Game.player1.getLust = 0 Then
+        ElseIf Game.player1.getLust < 25 Then
+            DDUtils.append(tier, 17)
+            DDUtils.append(tier, 16)
+        ElseIf Game.player1.getLust < 50 Then
+            DDUtils.append(tier, 17)
+            DDUtils.append(tier, 16)
+            DDUtils.append(tier, 16)
+        ElseIf Game.player1.getLust < 75 Then
+            DDUtils.append(tier, 17)
+            DDUtils.append(tier, 17)
+            DDUtils.append(tier, 16)
+            DDUtils.append(tier, 16)
+            DDUtils.append(tier, 18)
+        ElseIf Game.player1.getLust < 100 Then
+            DDUtils.append(tier, 17)
+            DDUtils.append(tier, 17)
+            DDUtils.append(tier, 16)
+            DDUtils.append(tier, 16)
+            DDUtils.append(tier, 16)
+            DDUtils.append(tier, 18)
+            DDUtils.append(tier, 18)
+        ElseIf Game.player1.getLust < 200 Then
+            DDUtils.append(tier, 16)
+            DDUtils.append(tier, 16)
+            DDUtils.append(tier, 16)
+            DDUtils.append(tier, 16)
+            DDUtils.append(tier, 18)
+            DDUtils.append(tier, 18)
+            DDUtils.append(tier, 18)
+            DDUtils.append(tier, 18)
+            DDUtils.append(tier, 18)
+            DDUtils.append(tier, 18)
+        End If
+
+        Return tier
+    End Function
     Shared Sub createMimic(ByRef contents As Inventory)
         Dim m As Monster = monsterFactory(5)
         m.inv.merge(contents)

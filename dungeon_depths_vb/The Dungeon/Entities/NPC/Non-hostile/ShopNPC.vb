@@ -2,10 +2,10 @@
     Inherits NPC
     Public firstCTurn As Boolean = True
     Public isShop = False
-    Public picNormal, picPrincess, picBunny As Image
-    Public picNCP As List(Of Image)
+    Public picNormal, picPrincess, picBunny, picArachne As Image
+    Public picNPC As List(Of Image)
     Protected discount As Double = 0
-    Protected Shared npcLib As ImageCollection = New ImageCollection(2)
+    Public Shared npcLib As ImageCollection = New ImageCollection(2)
 
     Shared Function shopFactory(ByVal nIndex As Integer)
         Select Case nIndex
@@ -32,7 +32,7 @@
         MyBase.health = playArray(3)
         MyBase.maxHealth = playArray(4)
         MyBase.attack = playArray(5)
-        MyBase.defence = playArray(6)
+        MyBase.defense = playArray(6)
         MyBase.speed = playArray(7)
         inv.load(playArray(8))
         MyBase.title = ""
@@ -54,7 +54,7 @@
             Exit Sub
         End If
         If npcIndex = 1 Or npcIndex = 2 Then despawn("flee")
-        Game.picNPC.BackgroundImage = picNCP(npcIndex)
+        Game.picNPC.BackgroundImage = picNPC(npcIndex)
 
         If Game.combatmode Then attackCMD(Game.player1)
     End Sub
@@ -73,7 +73,7 @@
         If Game.mDun.floorboss.ContainsKey(Game.mDun.numCurrFloor) AndAlso
             Game.mDun.floorboss(Game.mDun.numCurrFloor).Equals("Key") Then inv.setCount(53, 1) Else inv.setCount(53, 0)
 
-        If npcIndex < picNCP.Count Then Game.picNPC.BackgroundImage = picNCP(npcIndex)
+        If npcIndex < picNPC.Count Then Game.picNPC.BackgroundImage = picNPC(npcIndex)
         firstCTurn = True
         firstTurn = True
     End Sub
@@ -100,50 +100,65 @@
         MyBase.health = 1.0
         MyBase.maxHealth = 500
         MyBase.attack = 1
-        MyBase.defence = 1
+        MyBase.defense = 1
         MyBase.tfCt = 1
         MyBase.tfEnd = 15
         MyBase.npcIndex = 4
         toFemale("bunny")
         MyBase.form = "Bunny Girl"
         Game.NPCfromCombat(Me)
-        Game.picNPC.BackgroundImage = picNCP(npcIndex)
+        Game.picNPC.BackgroundImage = picNPC(npcIndex)
     End Sub
     Overridable Sub toPrincess()
         MyBase.health = 1.0
         MyBase.maxHealth = 999
         MyBase.attack = 50
-        MyBase.defence = 1
+        MyBase.defense = 1
         MyBase.tfCt = 1
         MyBase.tfEnd = 15
         MyBase.npcIndex = 3
         toFemale("prin")
         MyBase.form = "Princess"
-        Game.picNPC.BackgroundImage = picNCP(npcIndex)
+        Game.picNPC.BackgroundImage = picNPC(npcIndex)
     End Sub
     Overridable Sub toSheep()
         MyBase.health = 1.0
         MyBase.maxHealth = 600
         MyBase.attack = 1
-        MyBase.defence = 40
+        MyBase.defense = 40
         MyBase.tfCt = 1
         MyBase.tfEnd = 6
         MyBase.npcIndex = 2
         MyBase.form = "Sheep"
-        Game.picNPC.BackgroundImage = picNCP(npcIndex)
+        Game.picNPC.BackgroundImage = picNPC(npcIndex)
     End Sub
-
     Overridable Sub toFrog()
         MyBase.health = 1.0
         MyBase.maxHealth = 500
         MyBase.attack = 1
-        MyBase.defence = 4
+        MyBase.defense = 4
         MyBase.tfCt = 1
         MyBase.tfEnd = 6
         MyBase.npcIndex = 1
-        Game.picNPC.BackgroundImage = picNCP(npcIndex)
+        Game.picNPC.BackgroundImage = picNPC(npcIndex)
     End Sub
+    Overridable Sub toArachne()
+        MyBase.health = 1.0
+        MyBase.tfCt = 1
+        MyBase.tfEnd = 9999999
 
+        npcIndex = getArachneImageInd()
+
+        toFemale("arachne")
+        MyBase.form = "Arachne"
+        Game.picNPC.BackgroundImage = picArachne
+    End Sub
+    Public Overridable Sub toDoll()
+        Game.pushNPCDialog("...")
+        Game.picNPC.BackgroundImage = picNPC(5)
+
+        discount = 0.5
+    End Sub
     Public Overridable Sub toFemale(ByVal form As String)
         pronoun = "she"
         pPronoun = "her"
@@ -154,6 +169,7 @@
         pPronoun = "his"
         rPronoun = "him"
     End Sub
+
     Public Overrides Sub despawn(reason As String)
         MyBase.despawn(reason)
         Dim ratio As Double = Game.Size.Width / 1024
@@ -166,13 +182,10 @@
         Game.btnLeave.Visible = False
         If npcIndex > 4 And Not Game.picNPC.BackgroundImage.Equals(ShopNPC.npcLib.atrs(0).getAt(3)) Then npcIndex = 0
     End Sub
+    Public Overridable Function getArachneImageInd() As Integer
+        Return 6
+    End Function
 
-    Public Overridable Sub toDoll()
-        Game.pushNPCDialog("...")
-        Game.picNPC.BackgroundImage = picNCP(5)
-
-        discount = 0.5
-    End Sub
 
     'save/load methods
     Function saveNPC() As String

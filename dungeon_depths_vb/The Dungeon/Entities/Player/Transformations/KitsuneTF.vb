@@ -22,11 +22,10 @@
     Public Sub fulltf()
         Dim p As Player = Game.player1
 
-        If Not p.prt.sexBool Then p.MtF()
+        If p.sex.Equals("Male") Then p.MtF()
 
         p.breastSize = 4
         p.buttSize = 2
-        p.reverseAllRoute()
 
         'kitsune transformation
         p.changeHairColor(Color.FromArgb(255, 234, 189, 134))
@@ -40,9 +39,9 @@
         p.prt.setIAInd(pInd.fronthair, 35, True, True)
 
         If p.inv.getCountAt("Kitsune's_Robes") < 1 Then p.inv.add("Kitsune's_Robes", 1)
-        Equipment.clothesChange("Kitsune's_Robes")
+        Equipment.clothesChange(p, "Kitsune's_Robes")
 
-        p.pForm = p.forms("Kitsune")
+        p.changeForm("Kitsune")
     End Sub
 
     Public Overrides Sub stopTF()

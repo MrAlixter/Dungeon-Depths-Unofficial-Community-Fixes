@@ -5,7 +5,7 @@
         health = 1.0
         maxHealth = 99999
         attack = 9999
-        defence = 999
+        defense = 999
         speed = 99
 
         'Define the inventory
@@ -23,11 +23,19 @@
         picNormal = ShopNPC.npcLib.atrs(0).getAt(45)
         picPrincess = ShopNPC.npcLib.atrs(0).getAt(47)
         picBunny = ShopNPC.npcLib.atrs(0).getAt(46)
+        picArachne = ShopNPC.npcLib.atrs(0).getAt(72)
 
-        picNCP = New List(Of Image)
-        picNCP.AddRange({picNormal, ShopNPC.npcLib.atrs(0).getAt(4), ShopNPC.npcLib.atrs(0).getAt(5), picPrincess, picBunny})
+        picNPC = New List(Of Image)
+        picNPC.AddRange({picNormal,
+                         ShopNPC.npcLib.atrs(0).getAt(4),
+                         ShopNPC.npcLib.atrs(0).getAt(5),
+                         picPrincess,
+                         picBunny})
 
-        picNCP.AddRange({ShopNPC.npcLib.atrs(0).getAt(48), ShopNPC.npcLib.atrs(0).getAt(59)})
+        picNPC.AddRange({ShopNPC.npcLib.atrs(0).getAt(48),
+                         ShopNPC.npcLib.atrs(0).getAt(59),
+                         picArachne})
+
         If speed = Game.player1.speed Then speed -= 1
         title = " the "
     End Sub
@@ -35,7 +43,13 @@
     Public Overrides Sub encounter()
         MyBase.encounter()
 
-        If Int(Rnd() * 25) = 0 Then
+        If npcIndex = 7 Then
+            If Game.player1.formName.Equals("Arachne") Then
+                Game.pushNPCDialog("Arachne or not, there are still dummies out there that need protectin'!")
+            Else
+                Game.pushNPCDialog("Hey, if I were to roll out a ""Gem Of Spiders"" do you think you'd take the plunge into eight-legged glory?  Well, I've got the next best thing in the meantime!")
+            End If
+        ElseIf Int(Rnd() * 25) = 0 Then
             npcIndex = 4
             Game.pushNPCDialog("Hey, like, have you seen a shadowy guy with a hood?  He TOTALLY put some sorta curse on my wand!  It's not like I, uh, wanted to get all, like, ditzy to have some fun or whatever...")
         ElseIf Int(Rnd() * 25) = 0 Then
@@ -47,7 +61,9 @@
             Game.pushNPCDialog("Always a pleasure to run across another Magic Girl!  What can I get ya?")
         End If
 
-        Game.picNPC.BackgroundImage = picNCP(npcIndex)
+        If npcIndex = getArachneImageInd() And Not Game.player1.formName.Equals("Arachne") Then inv.setCount(244, 1) Else inv.setCount(244, 0)
+
+        Game.picNPC.BackgroundImage = picNPC(npcIndex)
     End Sub
 
     Public Overrides Function toFight() As String
@@ -73,9 +89,13 @@
         Game.leaveNPC()
     End Sub
 
+    Public Overrides Function getArachneImageInd() As Integer
+        Return 7
+    End Function
+
     Public Overrides Sub toDoll()
         Game.pushNPCDialog("*squeek*")
-        Game.picNPC.BackgroundImage = picNCP(5)
+        Game.picNPC.BackgroundImage = picNPC(5)
 
         discount = 0.5
     End Sub

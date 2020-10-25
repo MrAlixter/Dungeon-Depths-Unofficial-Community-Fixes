@@ -5,15 +5,16 @@
         health = 1.0
         maxHealth = 99999
         attack = 99999
-        defence = 99999
+        defense = 99999
         speed = 99999
 
         'Define the inventory
         inv = New Inventory(False)
         'Useables
         inv.setCount("Anti_Curse_Tag", 1)
-        inv.setCount("Magical_Girl_Wand​", 1)
+        inv.setCount(171, 1)
         inv.setCount(174, 1)
+        inv.setCount(200, 1)
 
         isShop = True
         gold = 99999
@@ -23,24 +24,36 @@
         picNormal = ShopNPC.npcLib.atrs(0).getAt(35)
         picPrincess = ShopNPC.npcLib.atrs(0).getAt(36)
         picBunny = ShopNPC.npcLib.atrs(0).getAt(37)
+        picArachne = ShopNPC.npcLib.atrs(0).getAt(73)
 
-        picNCP = New List(Of Image)
-        picNCP.AddRange({picNormal, ShopNPC.npcLib.atrs(0).getAt(4), ShopNPC.npcLib.atrs(0).getAt(5), picPrincess, picBunny})
+        picNPC = New List(Of Image)
+        picNPC.AddRange({picNormal,
+                         ShopNPC.npcLib.atrs(0).getAt(4),
+                         ShopNPC.npcLib.atrs(0).getAt(5),
+                         picPrincess,
+                         picBunny})
 
-        picNCP.AddRange({ShopNPC.npcLib.atrs(0).getAt(38)})
+        picNPC.AddRange({ShopNPC.npcLib.atrs(0).getAt(38),
+                         picArachne})
+
         If speed = Game.player1.speed Then speed -= 1
         title = " the "
     End Sub
 
     Public Overrides Sub encounter()
         MyBase.encounter()
-        If Not Game.player1.isCursed Then
+
+        If npcIndex = 6 Then
+            Game.pushNPCDialog("So, so many eyes.....")
+        ElseIf Not Game.player1.isCursed Then
             npcIndex = 0
             Game.pushNPCDialog("What have you gotten yourself into this time?  Nothing?  Perhaps there's a curse somewhere out there for you...")
         Else
             npcIndex = 3
             Game.pushNPCDialog("Oh, so you're cursed? Truely a tragedy; if you'd like I can take care of that for you...")
         End If
+
+        If npcIndex = getArachneImageInd() And Not Game.player1.formName.Equals("Arachne") Then inv.setCount(244, 1) Else inv.setCount(244, 0)
     End Sub
     Public Overrides Function toFight() As String
         badForYou()
@@ -58,7 +71,7 @@
         Game.picNPC.Visible = True
         If Game.npcmode Then Game.hideNPCButtons()
         Game.pushNPCDialog("So be it.  While I'm not suprised by this betrayal, it's nonetheless disappointing. Your actions " &
-                           "will result in nothing but future hardship, and moving forward I hope you get cursed into ȏ̸̞͕ḅ̷̨͠ļ̴̮́í̶̯͒v̵̪̤̓͠í̵̻̩͆o̵̰̼̓n̵͈̄. " & vbCrLf & vbCrLf &
+                           "will result in nothing but future hardship, and moving forward I hope you get cursed into ȏ̸̞͕ḅ̷̨͠ļ̴̮́í̶̯͒v̵̪̤̓͠í̵̻̩͆o̵̰̼̓n̵͈̄. " & DDUtils.RNRN &
                            "I certainly won't stick around to save you.", AddressOf leave)
     End Sub
 
@@ -114,7 +127,7 @@
         End If
         'Servitude
         If Int(Rnd() * 5) = 80 Then
-            p.ongoingTFs.Add(New COServ)
+            p.ongoingTFs.add(New COServ)
             Game.pushLstLog("You've been afflicted with the curse of Servitude!")
         End If
     End Sub

@@ -3,7 +3,7 @@
     Dim hc As Color = Color.FromArgb(255, 255, 175, 200)
     Dim sc As Color = Color.FromArgb(255, 118, 228, 151)
     Sub New()
-        MyBase.New(4, 3, 2.0, True)
+        Me.New(4, 3, 2.0, True)
     End Sub
     Sub New(n As Integer, tts As Integer, wi As Double, cbs As Boolean)
         MyBase.New(n, tts, wi, cbs)
@@ -25,7 +25,7 @@
         p.prt.setIAInd(pInd.midhair, 13, True, True)
         p.prt.setIAInd(pInd.fronthair, 22, True, True)
 
-        If p.pClass.name.Equals("Mindless") Then
+        If p.className.Equals("Mindless") Then
             p.pState.iArrInd(pInd.rearhair) = New Tuple(Of Integer, Boolean, Boolean)(14, True, True)
             p.pState.iArrInd(pInd.midhair) = New Tuple(Of Integer, Boolean, Boolean)(13, True, True)
             p.pState.iArrInd(pInd.fronthair) = New Tuple(Of Integer, Boolean, Boolean)(22, True, True)
@@ -39,7 +39,7 @@
         p.prt.setIAInd(pInd.mouth, 6, True, True)
         p.prt.setIAInd(pInd.eyes, 35, True, True)
 
-        If p.pClass.name.Equals("Mindless") Then
+        If p.className.Equals("Mindless") Then
             p.pState.iArrInd(pInd.mouth) = New Tuple(Of Integer, Boolean, Boolean)(6, True, True)
             p.pState.iArrInd(pInd.eyes) = New Tuple(Of Integer, Boolean, Boolean)(35, True, True)
         End If
@@ -49,16 +49,16 @@
     Sub step3()
         Dim p As Player = Game.player1
 
-        p.changeHairColor(Game.cShift(p.prt.haircolor, hc, 100))
-        p.changeSkinColor(Game.cShift(p.prt.skincolor, sc, 100))
+        p.changeHairColor(DDUtils.cShift(p.prt.haircolor, hc, 100))
+        p.changeSkinColor(DDUtils.cShift(p.prt.skincolor, sc, 100))
 
-        If p.pClass.name.Equals("Mindless") Then
+        If p.className.Equals("Mindless") Then
             p.pState.saveHCSC(p.prt.haircolor, p.prt.skincolor)
         End If
 
         If p.breastSize = -1 Then p.breastSize = 0
         If p.breastSize > 4 Then p.be()
-        If p.pClass.name.Equals("Mindless") Then
+        If p.className.Equals("Mindless") Then
             p.pState.breastSize = p.breastSize
         End If
         If Not p.prt.haircolor.Equals(hc) Or Not p.prt.skincolor.Equals(sc) Then currStep -= 1
@@ -69,7 +69,7 @@
         If Game.combatmode Then Game.fromCombat()
         Game.pushLblEvent("You are now an Alraune!")
         Game.pushLstLog("You are now an Alraune!")
-        p.pForm = p.forms("Alraune")
+        p.changeForm("Alraune")
         If Not p.knownSpells.Contains("Mesmeric Bloom") Then p.knownSpells.Add("Mesmeric Bloom")
     End Sub
 
@@ -88,7 +88,7 @@
         p.changeHairColor(hc)
         p.changeSkinColor(sc)
 
-        p.pForm = p.forms("Alraune")
+        p.changeForm("Alraune")
     End Sub
 
     Public Overrides Function getNextStep(stage As Integer) As Action

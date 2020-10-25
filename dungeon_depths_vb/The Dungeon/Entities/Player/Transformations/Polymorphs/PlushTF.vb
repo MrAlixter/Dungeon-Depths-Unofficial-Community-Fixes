@@ -22,6 +22,6 @@
         p.prt.setIAInd(pInd.eyes, 46, True, True)
         p.prt.setIAInd(pInd.face, 10, True, True)
 
-        p.pForm = p.forms("Plush")
+        p.changeForm("Plush")
     End Sub
 End Class

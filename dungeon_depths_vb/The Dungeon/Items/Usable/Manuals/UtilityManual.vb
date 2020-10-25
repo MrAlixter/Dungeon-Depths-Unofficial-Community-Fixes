@@ -36,7 +36,7 @@
             Game.pushLstLog("You read the " & getName() & ". " & sName & " learned!")
             If Not out.Equals("") Then
                 Game.pushLstLog(out)
-                Game.pushLblEvent("You read the " & getName() & ". " & sName & " learned!" & vbCrLf & vbCrLf & out)
+                Game.pushLblEvent("You read the " & getName() & ". " & sName & " learned!" & DDUtils.RNRN & out)
             Else
                 Game.pushLblEvent("You read the " & getName() & ". " & sName & " learned!")
             End If

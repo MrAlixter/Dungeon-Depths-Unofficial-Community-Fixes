@@ -1,7 +1,7 @@
 ﻿Public Class mTile
     'since the original (not picture) board was made of labels, and the picture board eliminated the need
     'for it to be seen, I've replaced the labels with a smaller data type that uses only the essential
-    'portions of the label (the tag, text, and forecolor)
+    'portions of the label (the tag, text, and fohairRecolor)
     Public Tag As Integer
     Public Text As String
     Public ForeColor As Color

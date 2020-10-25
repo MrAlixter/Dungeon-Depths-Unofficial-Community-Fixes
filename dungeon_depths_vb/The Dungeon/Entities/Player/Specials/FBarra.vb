@@ -17,8 +17,8 @@
             Dim dmg As Integer = (p.attack + p.aBuff) * p.pClass.a * p.pForm.a * 0.65
             dmg += Int(Rnd() * 2 * ((p.attack + p.aBuff) * p.pClass.a * p.pForm.a * 0.65 * 0.05)) -
                 ((p.attack + p.aBuff) * p.pClass.a * p.pForm.a * 0.65 * 0.05)
-            m.takeDMG(dmg, p)
             Game.pushLblCombatEvent("You hit your opponent for " & dmg & " damage!")
+            m.takeDMG(dmg, p)
             If i <> 0 Then p.stamina -= 4
         Next
 

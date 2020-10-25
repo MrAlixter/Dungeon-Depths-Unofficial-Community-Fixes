@@ -19,7 +19,7 @@
 
     'Hair color shifting
     Overridable Sub hairColorShift()
-        Game.player1.prt.haircolor = Game.cShift(Game.player1.prt.haircolor, bimboYellow1, 25)
+        Game.player1.prt.haircolor = DDUtils.cShift(Game.player1.prt.haircolor, bimboYellow1, 25)
         If Not Game.player1.getHairColor.Equals(bimboYellow1) Then currStep -= 1
         Game.pushLblEvent("Your hair becomes slightly lighter, brightening to a light blonde.")
     End Sub
@@ -46,7 +46,7 @@
         p.prt.setIAInd(pInd.mouth, 5, True, True)
         p.prt.setIAInd(pInd.eyes, 7, True, True)
         p.prt.setIAInd(pInd.cloak, 0, True, False)
-        If Not p.pClass.name.Equals("Magical Girl") Then p.prt.setIAInd(pInd.hat, 0, True, False)
+        If Not p.className.Equals("Magical Girl") Then p.prt.setIAInd(pInd.hat, 0, True, False)
     End Sub
     Overridable Sub s1BodyChange(ByRef p As Player)
         If p.breastSize = 1 Then
@@ -54,16 +54,14 @@
         ElseIf p.breastSize < 7 Then
             p.breastSize += 1
         End If
-        If p.pClass.name.Equals("Magical Girl") Then
+        If p.className.Equals("Magical Girl") Then
             p.perks(perk.bimbotf) = 24
         End If
-
-        p.reverseAllRoute()
     End Sub
     Overridable Sub s1TFText(ByRef p As Player)
-        Game.pushLblEvent("You pause to rub your temples, a massive headache comming down on you like a ton of bricks.  As you take a few minutes to recover, you notice that your center of balance is off and more disturbingly, that you can't seem to focus enough to figure out why." & vbCrLf & vbCrLf & "Maybe you can just walk this off...")
+        Game.pushLblEvent("You pause to rub your temples, a massive headache comming down on you like a ton of bricks.  As you take a few minutes to recover, you notice that your center of balance is off and more disturbingly, that you can't seem to focus enough to figure out why." & DDUtils.RNRN & "Maybe you can just walk this off...")
     End Sub
-    Sub step1()
+    Overridable Sub step1()
         Dim p As Player = Game.player1
 
         s1HairChange(p)
@@ -103,13 +101,12 @@
             p.breastSize += 1
         End If
         s2ClothesChange(p)
-        p.reverseAllRoute()
     End Sub
     Overridable Sub s2ClothesChange(ByRef p As Player)
-        If Not p.equippedArmor.getName.Equals("Naked") And Not p.pClass.name.Equals("Magical Girl") Then
+        If Not p.equippedArmor.getName.Equals("Naked") And Not p.className.Equals("Magical Girl") Then
             If p.equippedArmor.getSlutVarInd = -1 Then
                 If p.inv.item("Skimpy_Clothes").count < 1 Then p.inv.add("Skimpy_Clothes", 1)
-                Equipment.clothesChange("Skimpy_Clothes")
+                Equipment.clothesChange(p, "Skimpy_Clothes")
             Else
                 Equipment.clothingCurse1(p)
             End If
@@ -126,7 +123,7 @@
         End If
     End Sub
     Overridable Sub s2WrapUp(ByRef p As Player, ByRef out As String)
-        p.pClass = p.classes("Bimbo")
+        p.changeClass("Bimbo")
         p.setPImage()
         p.TextColor = Color.FromArgb(255, 255, 235, 240)
         p.perks(perk.bimbotf) = -1
@@ -167,7 +164,7 @@
         If Not p.equippedArmor.getName.Equals("Naked") Then
             If p.equippedArmor.getSlutVarInd = -1 Then
                 p.inv.add("Very_Skimpy_Clothes", 1)
-                Equipment.clothesChange("Very_Skimpy_Clothes")
+                Equipment.clothesChange(p, "Very_Skimpy_Clothes")
             Else
                 Equipment.clothingCurse1(p)
             End If
@@ -216,12 +213,12 @@
         Dim p As Player = Game.player1
 
         Dim mstf = New MagSlutTF(1, 0, 0, False)
-        mstf.step2()
+        mstf.fullTF(p)
         Game.pushLblEvent("You immediatly feel funny, the increased magic in your system reacting swiftly with the gum.  In your haze, you look down to see your clothes have become tight and pink. You giggle, all traces of intellect vanishing as your body becomes more curvy and feminine. Your hair lengthens, becoming a platinum blonde, and your clothes finish changing to match your new figure.")
         p.lust += 10
 
         p.TextColor = Color.FromArgb(255, 255, 235, 240)
-        p.perks(perk.bimbotf) = -1
+
         stopTF()
     End Sub
 
@@ -237,7 +234,7 @@
         If Not hasBimboHair(Game.player1) Then
             Return AddressOf hairColorShift
         End If
-        If Game.player1.pClass.name = "Magical Girl" Then
+        If Game.player1.className.Equals("Magical Girl") Then
             Return AddressOf step2alt
         End If
         If Game.player1.perks(perk.bimbotf) = -1 Then

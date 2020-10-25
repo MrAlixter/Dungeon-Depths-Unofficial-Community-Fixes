@@ -56,7 +56,7 @@
     Sub step6()
         Dim p As player = game.player1
 
-        If p.pClass.name.Equals("Magical Girl") Or p.pClass.name.Equals("Valkyrie") Then
+        If p.className.Equals("Magical Girl") Or p.className.Equals("Valkyrie") Then
             step6alt()
             Exit Sub
         End If
@@ -65,13 +65,13 @@
         p.prt.setIAInd(pInd.clothes, 40, True, True)
         p.prt.setIAInd(pInd.mouth, 9, True, True)
         p.will -= 2
-        Equipment.clothesChange("Cat_Lingerie")
+        Equipment.clothesChange(p, "Cat_Lingerie")
         Game.pushLblCombatEvent("Your tits expand, your clothes shift, and you feel your will grow weaker. You are now permenantly a cat girl!  Soon you will be Marissa's pet! ")
     End Sub
     Sub step6alt()
         Dim p As player = game.player1
-        Equipment.weaponChange("Fists")
-        Equipment.clothesChange("Cat_Lingerie")
+        Equipment.weaponChange(p, "Fists")
+        Equipment.clothesChange(p, "Cat_Lingerie")
         be()
         p.prt.setIAInd(pInd.rearhair, 12, True, True)
         p.prt.setIAInd(pInd.midhair, 17, True, True)
@@ -92,10 +92,10 @@
             p.prt.setIAInd(pInd.fronthair, 1, True, False)
             p.prt.setIAInd(pInd.mouth, 9, True, True)
         End If
-        p.pClass = p.classes("Kitty")
+        p.changeClass("Kitty")
         be()
 
-        Equipment.clothesChange("Cat_Lingerie")
+        Equipment.clothesChange(p, "Cat_Lingerie")
 
         Game.fromCombat()
         If p.isUnwilling And p.sex.Equals("Male") Then
@@ -120,7 +120,7 @@
     Public Overrides Function getNextStep(stage As Integer) As Action
         If Game.player1.perks(perk.nekocurse) = -1 Then
             Return AddressOf stopTF
-        ElseIf (Game.player1.pClass.name.Equals("Magical Girl") Or Game.player1.pClass.name.Equals("Valkyrie")) And stage < 6 Then
+        ElseIf (Game.player1.className.Equals("Magical Girl") Or Game.player1.className.Equals("Valkyrie")) And stage < 6 Then
             Return AddressOf resist
         End If
 
@@ -152,7 +152,6 @@
         Dim p = Game.player1
         If p.breastSize < 7 Then
             p.breastSize += 1
-            p.reverseallroute()
         End If
     End Sub
 End Class

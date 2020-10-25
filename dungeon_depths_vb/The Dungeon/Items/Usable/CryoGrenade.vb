@@ -2,23 +2,29 @@
     Inherits Item
 
     Sub New()
+        '|ID Info|
         MyBase.setName("CryoGrenade")
-        MyBase.setDesc("A chrome-plated metal cage housing a core that glows an icy blue.  A set of vents keeps the frigid cold inside, but the entire device seems rather...poorly constructed.")
         id = 128
         tier = Nothing
+
+        '|Item Flags|
         MyBase.setUsable(True)
+
+        '|Stats|
         MyBase.count = 0
         MyBase.value = 560
+
+        '|Description|
+        MyBase.setDesc("A chrome-plated metal cage housing a core that glows an icy blue.  A set of vents keeps the frigid cold inside, but the entire device seems rather...poorly constructed.")
     End Sub
 
     Public Overrides Sub use(ByRef p As Player)
 
         If (p.getWIL < 8 And Int(Rnd() * 5) = 1) Or p.currTarget Is Nothing Or Game.combatmode = False Then
             'backfire
-            If Transformation.canBeTFed(p) Then
-                p.pState.save(p)
-            End If
-            p.defence = 20
+            p.savePState()
+
+            p.defense = 20
 
             Dim pturns = 4
             p.petrify(Color.FromArgb(190, 75, 209, 255), pturns)

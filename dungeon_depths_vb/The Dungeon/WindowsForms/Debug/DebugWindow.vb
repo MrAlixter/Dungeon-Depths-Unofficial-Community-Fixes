@@ -29,7 +29,7 @@ Public Class Debug_Window
         'GENERAL
         If Game.mDun.numCurrFloor > -1 Then boxFloor.Value = Game.mDun.numCurrFloor Else boxFloor.Value = boxFloor.Maximum
         boxTurn.Value = Game.turn
-        boxBeaten.Checked = Game.currfloor.beatBoss
+        boxBeaten.Checked = Game.currFloor.beatBoss
 
         'MAP
         magnification = Math.Floor(Math.Min(picBoard.Width / Game.currFloor.mBoardWidth, picBoard.Height / Game.currFloor.mBoardHeight))
@@ -55,7 +55,7 @@ Public Class Debug_Window
             boxForm.Items.Add(Game.titleList(i).ToString())
         Next
 
-        boxForm.SelectedItem = Game.player1.pClass.name
+        boxForm.SelectedItem = Game.player1.className
 
         boxHealth.Value = Game.player1.health * Game.player1.getMaxHealth()
         boxMaxHealth.Value = Game.player1.maxHealth
@@ -63,7 +63,7 @@ Public Class Debug_Window
         boxMaxMana.Value = Game.player1.maxMana
         boxstamina.Value = Game.player1.stamina
         boxAtk.Value = Game.player1.attack
-        boxDef.Value = Game.player1.defence
+        boxDef.Value = Game.player1.defense
         boxWil.Value = Game.player1.will
         boxSpd.Value = Game.player1.speed
         boxEvd.Value = -0
@@ -121,7 +121,7 @@ Public Class Debug_Window
                     End If
 
                     If num IsNot Nothing AndAlso lbl IsNot Nothing Then
-                        num.Value = Game.player1.perks(lbl.Text)
+                        num.Value = Game.player1.perks(perk.Parse(GetType(perk), lbl.Text))
                         Exit For
                     End If
                 Next
@@ -129,7 +129,7 @@ Public Class Debug_Window
         End If
 
         'GENERATION SETTINGS
-        lblFC.Text = "Floorcode: " & Game.currfloor.floorCode
+        lblFC.Text = "Floorcode: " & Game.currFloor.floorCode
         boxWidth.Value = Game.mBoardWidth
         boxHeight.Value = Game.mBoardHeight
         boxChestFreqMin.Value = Game.chestFreqMin
@@ -149,30 +149,23 @@ Public Class Debug_Window
 
     Private Sub loadPortrait()
         picPreview.Image = Game.picPortrait.BackgroundImage
-        picPreview.BackgroundImage = Game.player1.prt.iarr(pind.bkg)
+        picPreview.BackgroundImage = Game.player1.prt.iArr(pInd.bkg)
         Dim PADDING = 0.1
         Dim w As Integer = 146
         Dim h As Integer = 216
 
-        Dim attr As List(Of image)()
-        If Game.player1.prt.sexBool Then
-            attr = Portrait.imgLib.fAttributes
-        Else
-            attr = Portrait.imgLib.mAttributes
-        End If
-
         If tabPortraitsLoaded = False Then
             Dim y As Integer = (tabPortrait.TabPages(0).Height - h) / 2
-            Dim bg As image = attr(0)(0)
+            Dim bg As Image = Portrait.imgLib.atrs(pInd.bkg).getAt(0)
             For i = 0 To tabPortrait.TabPages.Count - 1
                 Dim page As TabPage = tabPortrait.TabPages(i)
                 Dim x As Integer = w * PADDING
-                Dim att As List(Of image) = attr(i)
+                Dim att As List(Of Image) = Portrait.imgLib.atrs(i).getI(Game.player1.prt.sexBool)
                 For j As Integer = 0 To att.Count - 1
                     Dim img As New PictureBox
                     img.Name = i.ToString() & ":" & j.ToString()
                     page.Controls.Add(img)
-                    img.image = att(j)
+                    img.Image = att(j)
                     img.BackgroundImage = bg
                     img.Location = New Point(x, y)
                     img.Size = New Point(w, h)
@@ -231,21 +224,21 @@ Public Class Debug_Window
         map = New Bitmap(Game.currFloor.mBoardWidth + 2, Game.currFloor.mBoardHeight + 2)
         For boardX = 0 To map.Width - 3
             For boardY = 0 To map.Height - 3
-                If (Game.currfloor.mBoard(boardY, boardX).Text = "#") Then 'Chest
+                If (Game.currFloor.mBoard(boardY, boardX).Text = "#") Then 'Chest
                     map.SetPixel(boardX + 1, boardY + 1, Color.Yellow)
-                ElseIf (Game.currfloor.mBoard(boardY, boardX).Text = "H") Then 'Stairs
+                ElseIf (Game.currFloor.mBoard(boardY, boardX).Text = "H") Then 'Stairs
                     map.SetPixel(boardX + 1, boardY + 1, Color.Sienna)
-                ElseIf (Game.currfloor.mBoard(boardY, boardX).Text = "@" And Game.player1.pos.X = boardX And Game.player1.pos.Y = boardY) Then 'Player
+                ElseIf (Game.currFloor.mBoard(boardY, boardX).Text = "@" And Game.player1.pos.X = boardX And Game.player1.pos.Y = boardY) Then 'Player
                     map.SetPixel(boardX + 1, boardY + 1, Color.LawnGreen)
-                ElseIf (Game.currfloor.mBoard(boardY, boardX).Text = "@") Then 'Statue
+                ElseIf (Game.currFloor.mBoard(boardY, boardX).Text = "@") Then 'Statue
                     map.SetPixel(boardX + 1, boardY + 1, Color.LightSlateGray)
-                ElseIf (Game.currfloor.mBoard(boardY, boardX).Text = "$") Then 'NPC
+                ElseIf (Game.currFloor.mBoard(boardY, boardX).Text = "$") Then 'NPC
                     map.SetPixel(boardX + 1, boardY + 1, Color.Blue)
-                ElseIf (Game.currfloor.mBoard(boardY, boardX).Text = "+") Then 'Trap
+                ElseIf (Game.currFloor.mBoard(boardY, boardX).Text = "+") Then 'Trap
                     map.SetPixel(boardX + 1, boardY + 1, Color.Red)
-                ElseIf (Game.currfloor.mBoard(boardY, boardX).Tag = 2) Then 'Seen
+                ElseIf (Game.currFloor.mBoard(boardY, boardX).Tag = 2) Then 'Seen
                     map.SetPixel(boardX + 1, boardY + 1, Color.White)
-                ElseIf (Game.currfloor.mBoard(boardY, boardX).Tag = 1) Then 'Unseen
+                ElseIf (Game.currFloor.mBoard(boardY, boardX).Tag = 1) Then 'Unseen
                     map.SetPixel(boardX + 1, boardY + 1, Color.Gray)
                 Else 'Nothing
                     map.SetPixel(boardX + 1, boardY + 1, Color.Black)
@@ -256,7 +249,7 @@ Public Class Debug_Window
 
     Private Sub picBoard_Draw(sender As Object, e As PaintEventArgs)
         e.Graphics.InterpolationMode = Drawing2D.InterpolationMode.NearestNeighbor
-        e.Graphics.Drawimage(map, CInt((picBoard.Width - (map.Width * magnification)) / 2) + xOffset, CInt((picBoard.Height - (map.Height * magnification)) / 2) + yOffset, map.Width * magnification + 0, map.Height * magnification + 0)
+        e.Graphics.DrawImage(map, CInt((picBoard.Width - (map.Width * magnification)) / 2) + xOffset, CInt((picBoard.Height - (map.Height * magnification)) / 2) + yOffset, map.Width * magnification + 0, map.Height * magnification + 0)
 
         ''DEBUG LINES
         'Dim p As Pen
@@ -408,7 +401,7 @@ Public Class Debug_Window
     End Sub
 
     Private Sub boxBeaten_CheckedChanged(sender As Object, e As EventArgs) Handles boxBeaten.CheckedChanged
-        Game.currfloor.beatBoss = boxBeaten.Checked
+        Game.currFloor.beatBoss = boxBeaten.Checked
     End Sub
 
     Private Sub boxName_TextChanged(sender As Object, e As EventArgs) Handles boxName.TextChanged
@@ -418,7 +411,7 @@ Public Class Debug_Window
     End Sub
 
     Private Sub boxHealth_ValueChanged(sender As Object, e As EventArgs) Handles boxHealth.ValueChanged
-        Game.player1.health = boxHealth.Value / Game.player1.getmaxHealth
+        Game.player1.health = boxHealth.Value / Game.player1.getMaxHealth
     End Sub
 
     Private Sub boxMaxHealth_ValueChanged(sender As Object, e As EventArgs) Handles boxMaxHealth.ValueChanged
@@ -442,7 +435,7 @@ Public Class Debug_Window
     End Sub
 
     Private Sub boxDef_ValueChanged(sender As Object, e As EventArgs) Handles boxDef.ValueChanged
-        Game.player1.defence = boxDef.Value
+        Game.player1.defense = boxDef.Value
     End Sub
 
     Private Sub boxWil_ValueChanged(sender As Object, e As EventArgs) Handles boxWil.ValueChanged
@@ -485,7 +478,7 @@ Public Class Debug_Window
         Game.player1.changeSkinColor(cd.sc)
         CType(sender, Panel).BackColor = cd.sc
         cd.Dispose()
-        picPreview.image = Portrait.CreateBMP(Game.player1.prt.iArr)
+        picPreview.Image = Portrait.CreateBMP(Game.player1.prt.iArr)
     End Sub
 
     Private Sub pnlHC_Paint(sender As Object, e As EventArgs) Handles pnlHC.Click
@@ -495,24 +488,24 @@ Public Class Debug_Window
         Dim c As Color = Color.FromArgb(boxAlpha.Value, cd.Color.R, cd.Color.G, cd.Color.B)
         Game.player1.changeHairColor(c)
         cd.Dispose()
-        picPreview.image = Portrait.CreateBMP(Game.player1.prt.iArr)
+        picPreview.Image = Portrait.CreateBMP(Game.player1.prt.iArr)
     End Sub
 
     Private Sub boxAlpha_ValueChanged(sender As Object, e As EventArgs) Handles boxAlpha.ValueChanged
         Dim c As Color = Color.FromArgb(boxAlpha.Value, Game.player1.prt.haircolor.R, Game.player1.prt.haircolor.G, Game.player1.prt.haircolor.B)
         Game.player1.changeHairColor(c)
-        picPreview.image = Portrait.CreateBMP(Game.player1.prt.iArr)
+        picPreview.Image = Portrait.CreateBMP(Game.player1.prt.iArr)
     End Sub
 
     Private Sub clickOnPic(sender As Object, e As EventArgs)
         Dim tab As Integer = sender.Name.Split(":")(0)
         Dim pic As Integer = sender.Name.Split(":")(1)
 
-        Game.player1.prt.iArr(tab) = CType(sender, PictureBox).image
+        Game.player1.prt.iArr(tab) = CType(sender, PictureBox).Image
         Game.player1.prt.setIAInd(tab, pic, Game.player1.prt.sexBool, False)
 
-        'picPreview.image = Portrait.recolor(portrait.createBMP(Game.player1.iArr), Game.player1.skincolor)
-        picPreview.image = Portrait.CreateBMP(Game.player1.prt.iArr)
+        'picPreview.image = Portrait.hairRecolor(portrait.createBMP(Game.player1.iArr), Game.player1.skincolor)
+        picPreview.Image = Portrait.CreateBMP(Game.player1.prt.iArr)
     End Sub
 
     Private Sub boxInventoryFilter_TextChanged(sender As Object, e As EventArgs) Handles boxInventoryFilter.TextChanged
@@ -586,18 +579,6 @@ Public Class Debug_Window
         inventoryFilterUpdate()
     End Sub
 
-    Private Sub boxInventory_SelectedIndexChanged(sender As Object, e As EventArgs) Handles boxInventory.SelectedIndexChanged
-        If boxItems.SelectedIndex <> -1 Then
-            boxItems.SelectedIndex = -1
-        End If
-    End Sub
-
-    Private Sub boxItems_SelectedIndexChanged(sender As Object, e As EventArgs) Handles boxItems.SelectedIndexChanged
-        If boxInventory.SelectedIndex <> -1 Then
-            boxInventory.SelectedIndex = -1
-        End If
-    End Sub
-
     Private Sub addPerk(p As KeyValuePair(Of perk, Integer), col As Integer, row As Integer)
         Dim group = New System.Windows.Forms.GroupBox()
         Me.tabPerks.Controls.Add(group)
@@ -611,7 +592,7 @@ Public Class Debug_Window
         lbl.Name = p.Key & "Lbl"
         lbl.Size = New System.Drawing.Size(125, 25)
         lbl.TabStop = False
-        lbl.Text = p.Key
+        lbl.Text = p.Key.ToString
 
         box.BackColor = System.Drawing.Color.Black
         box.ForeColor = System.Drawing.Color.White
@@ -706,5 +687,100 @@ Public Class Debug_Window
         Game.trapFreqMin = boxTrapFreqMin.Value
         Game.trapFreqRange = boxTrapFreqRange.Value
         Game.trapSizeDependence = boxTrapSizeDependence.Value
+    End Sub
+
+    '|LISTBOX DISPLAY|
+    Private Sub boxInventory_SelectedIndexChanged(sender As Object, e As EventArgs) Handles boxInventory.SelectedIndexChanged
+        Dim temp = CInt(boxInventory.SelectedIndex)
+
+        If boxItems.SelectedIndex <> -1 Then
+            boxItems.SelectedIndex = -1
+        End If
+
+        boxInventory.SelectedIndex = temp
+    End Sub
+    Private Sub boxInventory_DrawItem(sender As Object, e As DrawItemEventArgs) Handles boxInventory.DrawItem
+        e.DrawBackground()
+        Dim textBrush As Brush = New SolidBrush(boxInventory.ForeColor)
+        Dim drawFont As Font = e.Font
+
+        If e.Index < 0 Then Exit Sub
+
+        Dim text = DirectCast(sender, ListBox).Items(e.Index).ToString()
+
+        If (e.State And DrawItemState.Selected) = DrawItemState.Selected Then
+            e.Graphics.FillRectangle(New SolidBrush(boxInventory.BackColor), e.Bounds)
+            textBrush = Brushes.Gold
+        End If
+
+        If Not (e.State And DrawItemState.Selected) = DrawItemState.Selected Then
+            Dim i = 0
+            textBrush = New SolidBrush(Color.FromArgb(boxInventory.ForeColor.A,
+                                                      boxInventory.ForeColor.R - i,
+                                                      boxInventory.ForeColor.B - i,
+                                                      boxInventory.ForeColor.G - i))
+        End If
+
+        e.Graphics.DrawString(text,
+                              drawFont,
+                              textBrush,
+                              e.Bounds,
+                              StringFormat.GenericDefault)
+    End Sub
+    Private Sub boxInventory_MeasureItem(sender As Object, e As MeasureItemEventArgs) Handles boxInventory.MeasureItem
+        Dim text = DirectCast(sender, ListBox).Items(e.Index).ToString()
+
+        If Not (text.Equals("")) Then
+            e.ItemHeight = TextRenderer.MeasureText(text, DirectCast(sender, ListBox).Font).Height + 2
+        Else
+            e.ItemHeight *= 0.33
+        End If
+    End Sub
+
+    Private Sub boxItems_SelectedIndexChanged(sender As Object, e As EventArgs) Handles boxItems.SelectedIndexChanged
+        Dim temp = CInt(boxItems.SelectedIndex)
+
+        If boxInventory.SelectedIndex <> -1 Then
+            boxInventory.SelectedIndex = -1
+        End If
+
+        boxItems.SelectedIndex = temp
+    End Sub
+    Private Sub boxItems_DrawItem(sender As Object, e As DrawItemEventArgs) Handles boxItems.DrawItem
+        e.DrawBackground()
+        Dim textBrush As Brush = New SolidBrush(boxItems.ForeColor)
+        Dim drawFont As Font = e.Font
+
+        If e.Index < 0 Then Exit Sub
+
+        Dim text = DirectCast(sender, ListBox).Items(e.Index).ToString()
+
+        If (e.State And DrawItemState.Selected) = DrawItemState.Selected Then
+            e.Graphics.FillRectangle(New SolidBrush(boxInventory.BackColor), e.Bounds)
+            textBrush = Brushes.Gold
+        End If
+
+        If Not (e.State And DrawItemState.Selected) = DrawItemState.Selected Then
+            Dim i = 0
+            textBrush = New SolidBrush(Color.FromArgb(boxInventory.ForeColor.A,
+                                                      boxInventory.ForeColor.R - i,
+                                                      boxInventory.ForeColor.B - i,
+                                                      boxInventory.ForeColor.G - i))
+        End If
+
+        e.Graphics.DrawString(text,
+                              drawFont,
+                              textBrush,
+                              e.Bounds,
+                              StringFormat.GenericDefault)
+    End Sub
+    Private Sub boxItems_MeasureItem(sender As Object, e As MeasureItemEventArgs) Handles boxItems.MeasureItem
+        Dim text = DirectCast(sender, ListBox).Items(e.Index).ToString()
+
+        If Not (text.Equals("")) Then
+            e.ItemHeight = TextRenderer.MeasureText(text, DirectCast(sender, ListBox).Font).Height + 2
+        Else
+            e.ItemHeight *= 0.33
+        End If
     End Sub
 End Class

@@ -3,7 +3,7 @@
     'transformation variables
     Public tfCt As Integer = 0
     Public tfEnd As Integer = 0
-    Public sMaxHealth, sMana, sMaxMana, sAttack, sDefence, sWill, sSpeed As Integer
+    Public sMaxHealth, sMana, sMaxMana, sAttack, sdefense, sWill, sSpeed As Integer
     Public xpValue As Integer = 10
     'dialog variables
     Public form As String = ""
@@ -25,16 +25,16 @@
             tfCt = 0
             revert()
         End If
-        If (Game.player1.pClass.name = "Thrall" And Me.name.Contains("Thrall")) Or
-           (Game.player1.pForm.name = "Arachne" And Me.name.Contains("Arachne")) Or
-            (Game.player1.pForm.name = "Slime" And Me.name.Contains("Slime")) Or
-            (Game.player1.pForm.name.Equals("Goo Girl") And Me.name.Contains("Goo")) Or
-            (Game.player1.pForm.name = "Alraune" And Me.name.Contains("Alraune")) Then
+        If (Game.player1.className = "Thrall" And Me.name.Contains("Thrall")) Or
+           (Game.player1.formName = "Arachne" And Me.name.Contains("Arachne")) Or
+            (Game.player1.formName = "Slime" And Me.name.Contains("Slime")) Or
+            (Game.player1.formName.Equals("Goo Girl") And Me.name.Contains("Goo")) Or
+            (Game.player1.formName = "Alraune" And Me.name.Contains("Alraune")) Then
             despawn("friend")
             Exit Sub
         End If
         If Not isStunned Then
-            If Game.player1.pForm.name.Equals("Black Cat") Or Game.player1.pForm.name.Equals("Chicken") And Me.GetType() = GetType(Monster) Then despawn("animaltf")
+            If Game.player1.formName.Equals("Black Cat") Or Game.player1.formName.Equals("Chicken") And Me.GetType() = GetType(Monster) Then despawn("animaltf")
             nextCombatAction = Sub(t As Entity) attackCMD(t)
         Else
             If Me.GetType() Is GetType(Monster) Then
@@ -70,7 +70,7 @@
 
 
         If getName.Contains("Enthralling Half-Dem") Then
-            Equipment.accChange("Nothing")
+            Equipment.accChange(Game.player1, "Nothing")
         End If
 
         Game.drawBoard()
@@ -90,7 +90,7 @@
         Game.currfloor.statueList.Add(New Statue(Me))
     End Sub
     Public Overridable Sub toGold()
-        Dim gd As Integer = (maxHealth + attack + defence) * 7
+        Dim gd As Integer = (maxHealth + attack + defense) * 7
         inv.setCount(43, inv.getCountAt(43) + gd)
         Game.fromCombat()
         Me.nextCombatAction = Nothing
@@ -113,6 +113,8 @@
             Game.pushLstLog("You ran from the " & name & "!")
         ElseIf reason = "warp" Then
             Game.pushLstLog("With a flash, you teleport the " & name & " far away!")
+        ElseIf reason = "pwarp" Then
+            Game.pushLstLog("With a flash, you teleport away!")
         ElseIf reason = "p-death" Then
         ElseIf reason = "friend" Then
             If Int(Rnd() * 3) = 0 Then
@@ -143,7 +145,7 @@
             If Me.GetType() Is GetType(Monster) Then output += "The "
             output += name & " runs away in fear!"
             Game.pushLstLog(output)
-        ElseIf reason = perk.cupcake Then
+        ElseIf reason = "cupcake" Then
             Dim c1 As Chest
             c1 = Game.baseChest.Create(inv, pos)
             If inv.getSum > 0 Then c1.open()
@@ -178,7 +180,7 @@
 
         Game.currFloor.beatBoss = True
     End Sub
-    Private Sub endMonster()
+    Protected Sub endMonster()
         'set temporary player pointer
         Dim p As Player = Game.player1
 
@@ -203,10 +205,10 @@
 
 
         'monster transformations
-        If sName.Equals("Ooze Empress") Then
+        If Not sName Is Nothing AndAlso sName.Equals("Ooze Empress") Then
             Game.pushLblEvent(Game.lblEvent.Text.Split("Press")(0), AddressOf RandoTF.floor4revert, AddressOf RandoTF.floor4keep, "Take your body back?")
         End If
-       
+
         p.ongoingTFs.remove("Neko")
 
         p.perks(perk.nekocurse) = -1
@@ -237,7 +239,7 @@
         name = sName
         maxHealth = sMaxHealth
         attack = sAttack
-        defence = sDefence
+        defense = sdefense
         speed = sSpeed
         npcIndex = 0
         Game.pushLblEvent("The " & name & " return to " & pPronoun & " original self!")
@@ -253,7 +255,7 @@
                     Case 3
                         Dim rng = (Int(Rnd() * 9))
                         If rng = 1 Then content.addOne()
-                    Case 2
+                    Case 2, Nothing
                         Dim rng = (Int(Rnd() * 6))
                         If rng = 1 Then content.addOne()
                     Case Else
@@ -344,4 +346,9 @@
     Public Overridable Function reactToSpell(ByVal spell As String) As Boolean
         Return True
     End Function
+
+    Overridable Sub playerDeath(ByRef p As Player)
+        DeathEffects.hardDeath()
+        Game.npcList.Clear()
+    End Sub
 End Class

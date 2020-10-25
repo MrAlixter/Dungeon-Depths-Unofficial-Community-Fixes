@@ -19,12 +19,11 @@
 
         'assign a pointer to the player character
         Dim p As player = game.player1
-        p.sState.load(p)
-        If Game.preBSStartState Is Nothing Then Game.preBSStartState = New State(p)
+        If Game.preBSStartState Is Nothing Then Game.preBSStartState = p.sState.clone(p)
 
         'assign a starter class / form
-        p.pClass = p.classes("Classless")
-        p.pForm = p.forms("Human")
+        p.changeClass("Classless")
+        p.changeForm("Human")
         'assign a random sex
         Randomize()
         Dim r = Int(Rnd() * 2)
@@ -36,18 +35,18 @@
         p.mana = 3 + Int(Rnd() * 7)
         p.maxMana = CInt(p.mana.ToString)
         p.attack = 10 + Int(Rnd() * 7)
-        p.defence = 10 + Int(Rnd() * 7)
+        p.defense = 10 + Int(Rnd() * 7)
         p.speed = 10 + Int(Rnd() * 7)
         p.gold = 25 + Int(Rnd() * 200)
         p.lust = 0
-        p.stamina = 0
+        p.stamina = 100
         p.hBuff = 0
         p.mBuff = 0
         p.wBuff = 0
         p.aBuff = 0
         p.dBuff = 0
 
-        p.prt.setIAInd(pInd.wings, 0, True, True)
+        p.prt.setIAInd(pInd.wings, 0, True, False)
         p.prt.setIAInd(pInd.horns, 0, True, False)
 
         'set a random hair color
@@ -83,7 +82,8 @@
         r = Int(Rnd() * 5)
         p.prt.setIAInd(pInd.eyes, r, True, True)
         p.prt.setIAInd(pInd.eyebrows, 0, True, False)
-        p.prt.setIAInd(pInd.facemark, 0, True, False)
+        r = Int(Rnd() * 5)
+        p.prt.setIAInd(pInd.facemark, r, True, False)
         p.prt.setIAInd(pInd.cloak, 0, True, False)
         p.prt.setIAInd(pInd.accessory, 0, True, False)
         r = Int(Rnd() * 8) + 1
@@ -98,8 +98,6 @@
 
         p.TextColor = Color.White
         If game.mDun.numCurrFloor < 6 Then p.pImage = Game.picPlayer.BackgroundImage Else p.pImage = Game.picPlayerf.BackgroundImage
-        p.reverseallroute()
-        p.sState.save(p)
 
         p.inv.invNeedsUDate = True
         p.UIupdate()
@@ -108,6 +106,7 @@
         p.currState.save(p)
         p.pState.save(p)
         p.sState.save(p)
+        p.ongoingTFs.reset()
         p.sState.iArrInd(pInd.clothes) = New Tuple(Of Integer, Boolean, Boolean)(si, p.prt.sexBool, False)
     End Sub
     Sub setLoadout()
@@ -118,50 +117,50 @@
         Dim armorIndex As Integer = -1
         Dim weaponIndex As Integer = -1
 
-        Equipment.clothesChange("Naked")
-        Equipment.weaponChange("Fists")
+        Equipment.clothesChange(p, "Naked")
+        Equipment.weaponChange(p, "Fists")
         Select Case Int(Rnd() * 23)
             Case 0   'basic warrior
-                p.pClass = p.classes("Warrior")
+                p.changeClass("Warrior")
                 armor = New Integer() {5, 19, 46, 83}
                 weapon = New Integer() {6, 23, 84, 176}
             Case 1   'basic mage
-                p.pClass = p.classes("Mage")
+                p.changeClass("Mage")
                 armor = New Integer() {5, 17, 46, 83}
                 weapon = New Integer() {21, 22}
             Case 2   'advanced warrior
-                p.pClass = p.classes("Warrior")
+                p.changeClass("Warrior")
                 armor = New Integer() {5, 19, 38, 46, 101}
                 weapon = New Integer() {6, 23, 40, 118, 176}
             Case 3   'advanced mage
-                p.pClass = p.classes("Mage")
+                p.changeClass("Mage")
                 armor = New Integer() {5, 17, 46, 83}
                 weapon = New Integer() {21, 22}
             Case 4   'basic bimbo
-                p.pClass = p.classes("Bimbo")
+                p.changeClass("Bimbo")
                 p.sex = "Female"
                 armor = New Integer() {7, 12, 18, 20, 39, 47, 71, 72, 78, 85, 103, 105, 107, 116, 129, 177}
                 weapon = New Integer() {6, 22, 23, 84}
             Case 5   'combat bimbo
-                p.pForm = p.forms(perk.amazon)
-                p.pClass = p.classes("Bimbo++")
+                p.changeForm("Amazon")
+                p.changeClass("Bimbo++")
                 p.sex = "Female"
                 armor = New Integer() {7, 12, 18, 20, 39, 47, 71, 72, 78, 85, 99, 103, 105, 107, 116, 129}
             Case 6   'amazon princess
-                p.pForm = p.forms(perk.amazon)
-                p.pClass = p.classes("Princess")
+                p.changeForm("Amazon")
+                p.changeClass("Princess")
                 p.sex = "Female"
                 p.prt.skincolor = (Color.FromArgb(255, 210, 161, 140))
                 armor = New Integer() {39, 85, 99}
             Case 7   'amazon warrior
-                p.pForm = p.forms(perk.amazon)
-                p.pClass = p.classes("Warrior")
+                p.changeForm("Amazon")
+                p.changeClass("Warrior")
                 p.sex = "Female"
                 p.prt.skincolor = (Color.FromArgb(255, 210, 161, 140))
                 armor = New Integer() {7, 41, 71, 85, 99, 177}
             Case 8   'succubus
-                p.pForm = p.forms("Succubus")
-                p.pClass = p.classes("Warrior")
+                p.changeForm("Succubus")
+                p.changeClass("Warrior")
                 armor = New Integer() {39, 74}
                 weapon = New Integer() {6, 21, 22, 23, 63, 63, 63, 177}
                 p.sex = "Female"
@@ -169,8 +168,8 @@
                 p.prt.setIAInd(pInd.horns, 3, True, False)
                 p.prt.skincolor = Color.FromArgb(255, 255, 105, 180)
             Case 4   'succubus bimbo
-                p.pForm = p.forms("Succubus")
-                p.pClass = p.classes("Bimbo")
+                p.changeForm("Succubus")
+                p.changeClass("Bimbo")
                 p.sex = "Female"
                 armor = New Integer() {7, 12, 18, 20, 39, 47, 71, 72, 78, 85, 103, 105, 107, 116, 129, 177}
                 weapon = New Integer() {6, 21, 22, 23, 63, 63, 63}
@@ -178,70 +177,70 @@
                 p.prt.setIAInd(pInd.horns, 3, True, False)
                 p.prt.skincolor = Color.FromArgb(255, 255, 105, 180)
             Case 10   'barbarian
-                p.pClass = p.classes(perk.barbarian)
+                p.changeClass("Barbarian")
                 armor = New Integer() {101}
                 weapon = New Integer() {84, 118}
             Case 11   'warlock
-                p.pClass = p.classes("Warlock")
+                p.changeClass("Warlock")
                 armor = New Integer() {115}
                 weapon = New Integer() {22}
             Case 12   'space warrior
-                p.pClass = p.classes("Warrior")
+                p.changeClass("Warrior")
                 armor = New Integer() {102, 104, 106}
                 weapon = New Integer() {111, 112, 120}
             Case 13   'classless
                 armor = New Integer() {5, 17, 19, 83}
                 weapon = New Integer() {6, 22, 23, 84}
             Case 14   'magic maid
-                p.pForm = p.forms("Half-Succubus")
-                p.pClass = p.classes("Maid")
+                p.changeForm("Half-Succubus")
+                p.changeClass("Maid")
                 armor = New Integer() {72}
                 weapon = New Integer() {6, 21, 22, 23, 63, 63, 63}
                 p.sex = "Female"
                 p.prt.setIAInd(pInd.wings, 2, True, False)
                 p.prt.haircolor = Color.FromArgb(255, 155, 0, 0)
             Case 15   'valkyrie
-                p.pForm = p.forms("Angel")
-                p.pClass = p.classes("Warrior")
+                p.changeForm("Angel")
+                p.changeClass("Warrior")
                 armor = New Integer() {7, 19, 83, 85, 95, 105}
                 weapon = New Integer() {6, 23, 40, 112, 177, 176}
                 p.sex = "Female"
                 p.prt.setIAInd(pInd.wings, 1, True, False)
             Case 16   'bunny girl
-                p.pClass = p.classes("Bunny Girl")
+                p.changeClass("Bunny Girl")
                 armor = New Integer() {16, 94, 129}
                 weapon = New Integer() {6, 21, 22, 23, 40, 41, 63}
                 p.sex = "Female"
-                p.inv.item(perk.bowtie).add(1)
-                Equipment.accChange(perk.bowtie)
+                p.inv.item("Bowtie").add(1)
+                Equipment.accChange(p, "Bowtie")
             Case 17   'cow girl
-                p.pForm = p.forms("Minotaur Cow")
-                p.pClass = p.classes(perk.barbarian)
+                p.changeForm("Minotaur Cow")
+                p.changeClass("Barbarian")
                 armor = New Integer() {19, 71, 101}
                 weapon = New Integer() {6, 23, 40, 118, 177}
                 p.sex = "Female"
                 p.prt.setIAInd(pInd.horns, 2, True, False)
             Case 18   'cow male
-                p.pForm = p.forms("Minotaur Bull")
-                p.pClass = p.classes(perk.barbarian)
+                p.changeForm("Minotaur Bull")
+                p.changeClass("Barbarian")
                 armor = New Integer() {19, 101}
                 weapon = New Integer() {6, 23, 40, 118, 176}
                 p.sex = "Male"
                 p.prt.setIAInd(pInd.horns, 2, True, False)
             Case 19   'basic warrior
-                p.pClass = p.classes("Warrior")
+                p.changeClass("Warrior")
                 armor = New Integer() {5, 19, 46, 83}
                 weapon = New Integer() {6, 23, 84, 176}
             Case 20   'basic mage
-                p.pClass = p.classes("Mage")
+                p.changeClass("Mage")
                 armor = New Integer() {5, 17, 46, 83}
                 weapon = New Integer() {21, 22}
             Case 21  'advanced warrior
-                p.pClass = p.classes("Warrior")
+                p.changeClass("Warrior")
                 armor = New Integer() {5, 19, 38, 46, 101}
                 weapon = New Integer() {6, 23, 40, 118, 176}
             Case 22  'advanced mage
-                p.pClass = p.classes("Mage")
+                p.changeClass("Mage")
                 armor = New Integer() {5, 17, 46, 83}
                 weapon = New Integer() {21, 22}
         End Select
@@ -260,23 +259,29 @@
         'set other player stuff
         If p.sex.Equals("Female") Then
             p.breastSize = Int(Rnd() * 3) + 1
+            p.buttSize = Int(Rnd() * 3) + 1
+            p.dickSize = -1
         Else
             For i = 1 To Portrait.NUM_IMG_LAYERS
                 p.prt.setIAInd(i, p.prt.iArrInd(i).Item1, False, False)
             Next
             p.breastSize = -1
+            p.buttSize = -1
+            p.dickSize = Int(Rnd() * 3) + 1
         End If
 
         If armor.Length > 0 Then
             armorIndex = armor(Int(Rnd() * (armor.Length)))
             p.inv.add(armorIndex, 1)
-            Equipment.clothesChange(p.inv.item(armorIndex).getAName)
+            Equipment.equipArmor(p, p.inv.item(armorIndex).getAName, False)
         End If
         If weapon.Length > 0 Then
             weaponIndex = weapon(Int(Rnd() * (weapon.Length)))
             p.inv.add(weaponIndex, 1)
-            Equipment.weaponChange(p.inv.item(weaponIndex).getAName)
+            Equipment.weaponChange(p, p.inv.item(weaponIndex).getAName)
         End If
+
+        Equipment.accChange(p, "Nothing")
     End Sub
 
     Shared Sub floor4FirstBossEncounter()
@@ -289,10 +294,10 @@
                           "attack, a single, large, gooey tendril shoots out" & _
                           "of the mass, yanking your weapon from your hand " & _
                           "before several smaller tentacles wrap around your " & _
-                          "limbs, restraining you." & vbCrLf & vbCrLf & _
+                          "limbs, restraining you." & DDUtils.RNRN & _
                           """Well, well, well.  What do we have here?"", a " & _
                           "slightly distorted female voice chuckles from " & _
-                          "somewhere behind you." & vbCrLf & vbCrLf & "Suddenly, you " & _
+                          "somewhere behind you." & DDUtils.RNRN & "Suddenly, you " & _
                           "find yourself being flipped upside down and dragged " & _
                           "upwards to the ceiling, where you meet the gaze of " & _
                           "a translucent, teal woman who's lower half seems to be" & _
@@ -313,7 +318,7 @@
     End Sub
     Shared Sub floor4FirstBossEncounterP2()
         Dim p As player = game.player1
-        Game.preBSBody = New State(p)
+        Game.preBSBody = If(Transformation.canBeTFed(p), New State(p), p.pState.clone(p))
         Game.preBSInventory = New ArrayList()
         For i = 0 To p.inv.upperBound
             Game.preBSInventory.Add(p.inv.getCountAt(i))
@@ -321,7 +326,7 @@
         p.ongoingTFs.Add(New RandoTF())
         p.update()
         p.sState.save(p)
-        p.pState.save(p)
+        p.savePState()
         Game.pushLblEvent("The " & _
                           "warmth slowly builds until you are burning with " & _
                           "lust, and you can't help but lose intrest in what " & _
@@ -340,7 +345,7 @@
                           "before, being submmerged in it practically puts you in" & _
                           " a pleasure coma.  Before passing out from the burning " & _
                           "need flowing throug every part of your body, you catch her " & _
-                          "motherly gaze as she giggles, ""Have fun!""." & vbCrLf & vbCrLf & _
+                          "motherly gaze as she giggles, ""Have fun!""." & DDUtils.RNRN & _
                           "When you come to, you can tell some time has passed.  Though " & _
                           "the Emperess is nowhere to be found, the amount of slime" & _
                           " you are drenched still fills you with a bit of lust.  " & _

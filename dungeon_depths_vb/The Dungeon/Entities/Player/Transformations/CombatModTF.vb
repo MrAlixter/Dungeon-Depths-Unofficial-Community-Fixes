@@ -32,7 +32,7 @@
 
         p.prt.setIAInd(pInd.glasses, 7, True, True)
         p.prt.setIAInd(pInd.mouth, 12, True, False)
-        p.pForm = p.forms("Combat Unit")
+        p.changeForm("Combat Unit")
 
         p.perks(perk.slutcurse) = -1
     End Sub

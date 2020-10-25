@@ -239,15 +239,47 @@ Partial Class Game
         Me.picPFaeShock = New System.Windows.Forms.PictureBox()
         Me.picPFae = New System.Windows.Forms.PictureBox()
         Me.pnlStats = New System.Windows.Forms.Panel()
+        Me.lblLust = New System.Windows.Forms.Label()
         Me.Label6 = New System.Windows.Forms.Label()
         Me.pnlMeter = New System.Windows.Forms.Panel()
+        Me.lblHealthbarFont = New System.Windows.Forms.Label()
         Me.lblstamina = New System.Windows.Forms.Label()
         Me.lblXP = New System.Windows.Forms.Label()
         Me.Label11 = New System.Windows.Forms.Label()
         Me.Label8 = New System.Windows.Forms.Label()
         Me.Label9 = New System.Windows.Forms.Label()
         Me.Label10 = New System.Windows.Forms.Label()
-        Me.lblHealthbarFont = New System.Windows.Forms.Label()
+        Me.pic9tailsBimbo = New System.Windows.Forms.PictureBox()
+        Me.picFoxStatueGold = New System.Windows.Forms.PictureBox()
+        Me.picFoxStatueF = New System.Windows.Forms.PictureBox()
+        Me.pnlFusion = New System.Windows.Forms.Panel()
+        Me.lblFusionDisclaimer = New System.Windows.Forms.Label()
+        Me.PictureBox1 = New System.Windows.Forms.PictureBox()
+        Me.picFusionPort = New System.Windows.Forms.PictureBox()
+        Me.lblFusionHP = New System.Windows.Forms.Label()
+        Me.lblFusionMP = New System.Windows.Forms.Label()
+        Me.Label24 = New System.Windows.Forms.Label()
+        Me.lblFusionLust = New System.Windows.Forms.Label()
+        Me.lblFusionSPD = New System.Windows.Forms.Label()
+        Me.lblFusionATK = New System.Windows.Forms.Label()
+        Me.lblFusionDEF = New System.Windows.Forms.Label()
+        Me.lblFusionWill = New System.Windows.Forms.Label()
+        Me.lblFusionLVL = New System.Windows.Forms.Label()
+        Me.Label16 = New System.Windows.Forms.Label()
+        Me.cboxFusionTarget = New System.Windows.Forms.ComboBox()
+        Me.Label13 = New System.Windows.Forms.Label()
+        Me.cboxFusionAccessory = New System.Windows.Forms.ComboBox()
+        Me.Label14 = New System.Windows.Forms.Label()
+        Me.cboxFusionArmor = New System.Windows.Forms.ComboBox()
+        Me.Label15 = New System.Windows.Forms.Label()
+        Me.cboxFusionWeapon = New System.Windows.Forms.ComboBox()
+        Me.btnFusionAcc = New System.Windows.Forms.Button()
+        Me.btnFusionCancel = New System.Windows.Forms.Button()
+        Me.PictureBox2 = New System.Windows.Forms.PictureBox()
+        Me.pnlSnare = New System.Windows.Forms.Panel()
+        Me.btnConfirmBait = New System.Windows.Forms.Button()
+        Me.Label7 = New System.Windows.Forms.Label()
+        Me.cboxBait = New System.Windows.Forms.ComboBox()
         CType(Me.picEnemy, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me.picNPC, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me.picStatue, System.ComponentModel.ISupportInitialize).BeginInit()
@@ -361,6 +393,14 @@ Partial Class Game
         CType(Me.picPFae, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.pnlStats.SuspendLayout()
         Me.pnlMeter.SuspendLayout()
+        CType(Me.pic9tailsBimbo, System.ComponentModel.ISupportInitialize).BeginInit()
+        CType(Me.picFoxStatueGold, System.ComponentModel.ISupportInitialize).BeginInit()
+        CType(Me.picFoxStatueF, System.ComponentModel.ISupportInitialize).BeginInit()
+        Me.pnlFusion.SuspendLayout()
+        CType(Me.PictureBox1, System.ComponentModel.ISupportInitialize).BeginInit()
+        CType(Me.picFusionPort, System.ComponentModel.ISupportInitialize).BeginInit()
+        CType(Me.PictureBox2, System.ComponentModel.ISupportInitialize).BeginInit()
+        Me.pnlSnare.SuspendLayout()
         Me.SuspendLayout()
         '
         'btnUse1
@@ -469,7 +509,7 @@ Partial Class Game
         Me.cboxNPCMG.FormattingEnabled = True
         Me.cboxNPCMG.Location = New System.Drawing.Point(237, 422)
         Me.cboxNPCMG.Name = "cboxNPCMG"
-        Me.cboxNPCMG.Size = New System.Drawing.Size(149, 22)
+        Me.cboxNPCMG.Size = New System.Drawing.Size(149, 21)
         Me.cboxNPCMG.TabIndex = 182
         Me.cboxNPCMG.Text = "-- Select --"
         Me.cboxNPCMG.Visible = False
@@ -673,9 +713,9 @@ Partial Class Game
         Me.lblSPD.AutoSize = True
         Me.lblSPD.Font = New System.Drawing.Font("Consolas", 8.830189!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.lblSPD.ForeColor = System.Drawing.Color.White
-        Me.lblSPD.Location = New System.Drawing.Point(5, 81)
+        Me.lblSPD.Location = New System.Drawing.Point(5, 62)
         Me.lblSPD.Name = "lblSPD"
-        Me.lblSPD.Size = New System.Drawing.Size(88, 17)
+        Me.lblSPD.Size = New System.Drawing.Size(77, 14)
         Me.lblSPD.TabIndex = 154
         Me.lblSPD.Text = "SPD = TEMP"
         '
@@ -684,11 +724,11 @@ Partial Class Game
         Me.lblWIL.AutoSize = True
         Me.lblWIL.Font = New System.Drawing.Font("Consolas", 8.830189!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.lblWIL.ForeColor = System.Drawing.Color.White
-        Me.lblWIL.Location = New System.Drawing.Point(5, 62)
+        Me.lblWIL.Location = New System.Drawing.Point(5, 81)
         Me.lblWIL.Name = "lblWIL"
-        Me.lblWIL.Size = New System.Drawing.Size(88, 17)
+        Me.lblWIL.Size = New System.Drawing.Size(84, 14)
         Me.lblWIL.TabIndex = 153
-        Me.lblWIL.Text = "WIL = TEMP"
+        Me.lblWIL.Text = "WILL = TEMP"
         '
         'lblDEF
         '
@@ -697,7 +737,7 @@ Partial Class Game
         Me.lblDEF.ForeColor = System.Drawing.Color.White
         Me.lblDEF.Location = New System.Drawing.Point(5, 43)
         Me.lblDEF.Name = "lblDEF"
-        Me.lblDEF.Size = New System.Drawing.Size(88, 17)
+        Me.lblDEF.Size = New System.Drawing.Size(77, 14)
         Me.lblDEF.TabIndex = 152
         Me.lblDEF.Text = "DEF = TEMP"
         '
@@ -708,7 +748,7 @@ Partial Class Game
         Me.lblATK.ForeColor = System.Drawing.Color.White
         Me.lblATK.Location = New System.Drawing.Point(5, 24)
         Me.lblATK.Name = "lblATK"
-        Me.lblATK.Size = New System.Drawing.Size(88, 17)
+        Me.lblATK.Size = New System.Drawing.Size(77, 14)
         Me.lblATK.TabIndex = 151
         Me.lblATK.Text = "ATK = TEMP"
         '
@@ -719,7 +759,7 @@ Partial Class Game
         Me.lblLevel.ForeColor = System.Drawing.Color.White
         Me.lblLevel.Location = New System.Drawing.Point(5, 6)
         Me.lblLevel.Name = "lblLevel"
-        Me.lblLevel.Size = New System.Drawing.Size(88, 17)
+        Me.lblLevel.Size = New System.Drawing.Size(77, 14)
         Me.lblLevel.TabIndex = 150
         Me.lblLevel.Text = "Level TEMP"
         '
@@ -747,16 +787,17 @@ Partial Class Game
         '
         'lblNameTitle
         '
-        Me.lblNameTitle.AutoSize = True
         Me.lblNameTitle.BackColor = System.Drawing.Color.Black
-        Me.lblNameTitle.Font = New System.Drawing.Font("Consolas", 10.86792!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.lblNameTitle.Font = New System.Drawing.Font("Consolas", 10.18868!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.lblNameTitle.ForeColor = System.Drawing.Color.White
-        Me.lblNameTitle.Location = New System.Drawing.Point(732, 19)
+        Me.lblNameTitle.Location = New System.Drawing.Point(732, 16)
+        Me.lblNameTitle.Margin = New System.Windows.Forms.Padding(3)
         Me.lblNameTitle.MaximumSize = New System.Drawing.Size(270, 20)
         Me.lblNameTitle.Name = "lblNameTitle"
-        Me.lblNameTitle.Size = New System.Drawing.Size(270, 19)
+        Me.lblNameTitle.Size = New System.Drawing.Size(270, 20)
         Me.lblNameTitle.TabIndex = 145
         Me.lblNameTitle.Text = "PLACEHOLDERTEXTiiiiiiiiiiiiii" & Global.Microsoft.VisualBasic.ChrW(13) & Global.Microsoft.VisualBasic.ChrW(10)
+        Me.lblNameTitle.TextAlign = System.Drawing.ContentAlignment.MiddleLeft
         '
         'Label1
         '
@@ -764,9 +805,10 @@ Partial Class Game
         Me.Label1.BackColor = System.Drawing.Color.Black
         Me.Label1.Font = New System.Drawing.Font("Consolas", 10.86792!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.Label1.ForeColor = System.Drawing.Color.White
-        Me.Label1.Location = New System.Drawing.Point(729, 396)
+        Me.Label1.Location = New System.Drawing.Point(730, 395)
+        Me.Label1.Margin = New System.Windows.Forms.Padding(3)
         Me.Label1.Name = "Label1"
-        Me.Label1.Size = New System.Drawing.Size(99, 19)
+        Me.Label1.Size = New System.Drawing.Size(88, 18)
         Me.Label1.TabIndex = 144
         Me.Label1.Text = "Inventory:" & Global.Microsoft.VisualBasic.ChrW(13) & Global.Microsoft.VisualBasic.ChrW(10)
         '
@@ -801,10 +843,10 @@ Partial Class Game
         Me.lstLog.Font = New System.Drawing.Font("Consolas", 9.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.lstLog.ForeColor = System.Drawing.Color.White
         Me.lstLog.FormattingEnabled = True
-        Me.lstLog.ItemHeight = 15
+        Me.lstLog.ItemHeight = 14
         Me.lstLog.Location = New System.Drawing.Point(13, 510)
         Me.lstLog.Name = "lstLog"
-        Me.lstLog.Size = New System.Drawing.Size(701, 169)
+        Me.lstLog.Size = New System.Drawing.Size(701, 158)
         Me.lstLog.TabIndex = 141
         '
         'MenuStrip1
@@ -815,7 +857,7 @@ Partial Class Game
         Me.MenuStrip1.Items.AddRange(New System.Windows.Forms.ToolStripItem() {Me.FileToolStripMenuItem, Me.HelpToolStripMenuItem, Me.SettingsToolStripMenuItem, Me.DebugToolStripMenuItem1})
         Me.MenuStrip1.Location = New System.Drawing.Point(3, 4)
         Me.MenuStrip1.Name = "MenuStrip1"
-        Me.MenuStrip1.Size = New System.Drawing.Size(172, 25)
+        Me.MenuStrip1.Size = New System.Drawing.Size(156, 24)
         Me.MenuStrip1.TabIndex = 140
         Me.MenuStrip1.Text = "MenuStrip1"
         '
@@ -826,7 +868,7 @@ Partial Class Game
         Me.FileToolStripMenuItem.Font = New System.Drawing.Font("Consolas", 9.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.FileToolStripMenuItem.ForeColor = System.Drawing.Color.White
         Me.FileToolStripMenuItem.Name = "FileToolStripMenuItem"
-        Me.FileToolStripMenuItem.Size = New System.Drawing.Size(52, 21)
+        Me.FileToolStripMenuItem.Size = New System.Drawing.Size(47, 20)
         Me.FileToolStripMenuItem.Text = "File"
         '
         'SaveToolStripMenuItem
@@ -834,7 +876,7 @@ Partial Class Game
         Me.SaveToolStripMenuItem.BackColor = System.Drawing.Color.Black
         Me.SaveToolStripMenuItem.ForeColor = System.Drawing.Color.White
         Me.SaveToolStripMenuItem.Name = "SaveToolStripMenuItem"
-        Me.SaveToolStripMenuItem.Size = New System.Drawing.Size(142, 24)
+        Me.SaveToolStripMenuItem.Size = New System.Drawing.Size(130, 22)
         Me.SaveToolStripMenuItem.Text = "Save"
         '
         'LoadToolStripMenuItem
@@ -842,7 +884,7 @@ Partial Class Game
         Me.LoadToolStripMenuItem.BackColor = System.Drawing.Color.Black
         Me.LoadToolStripMenuItem.ForeColor = System.Drawing.Color.White
         Me.LoadToolStripMenuItem.Name = "LoadToolStripMenuItem"
-        Me.LoadToolStripMenuItem.Size = New System.Drawing.Size(142, 24)
+        Me.LoadToolStripMenuItem.Size = New System.Drawing.Size(130, 22)
         Me.LoadToolStripMenuItem.Text = "Load"
         '
         'NewGameToolStripMenuItem
@@ -850,7 +892,7 @@ Partial Class Game
         Me.NewGameToolStripMenuItem.BackColor = System.Drawing.Color.Black
         Me.NewGameToolStripMenuItem.ForeColor = System.Drawing.Color.White
         Me.NewGameToolStripMenuItem.Name = "NewGameToolStripMenuItem"
-        Me.NewGameToolStripMenuItem.Size = New System.Drawing.Size(142, 24)
+        Me.NewGameToolStripMenuItem.Size = New System.Drawing.Size(130, 22)
         Me.NewGameToolStripMenuItem.Text = "New Game"
         '
         'ExitToolStripMenuItem
@@ -858,7 +900,7 @@ Partial Class Game
         Me.ExitToolStripMenuItem.BackColor = System.Drawing.Color.Black
         Me.ExitToolStripMenuItem.ForeColor = System.Drawing.Color.White
         Me.ExitToolStripMenuItem.Name = "ExitToolStripMenuItem"
-        Me.ExitToolStripMenuItem.Size = New System.Drawing.Size(142, 24)
+        Me.ExitToolStripMenuItem.Size = New System.Drawing.Size(130, 22)
         Me.ExitToolStripMenuItem.Text = "Exit"
         '
         'HelpToolStripMenuItem
@@ -867,7 +909,7 @@ Partial Class Game
         Me.HelpToolStripMenuItem.Font = New System.Drawing.Font("Consolas", 9.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.HelpToolStripMenuItem.ForeColor = System.Drawing.Color.White
         Me.HelpToolStripMenuItem.Name = "HelpToolStripMenuItem"
-        Me.HelpToolStripMenuItem.Size = New System.Drawing.Size(52, 21)
+        Me.HelpToolStripMenuItem.Size = New System.Drawing.Size(47, 20)
         Me.HelpToolStripMenuItem.Text = "Help"
         '
         'HelpToolStripMenuItem1
@@ -875,7 +917,7 @@ Partial Class Game
         Me.HelpToolStripMenuItem1.BackColor = System.Drawing.Color.Black
         Me.HelpToolStripMenuItem1.ForeColor = System.Drawing.Color.White
         Me.HelpToolStripMenuItem1.Name = "HelpToolStripMenuItem1"
-        Me.HelpToolStripMenuItem1.Size = New System.Drawing.Size(150, 24)
+        Me.HelpToolStripMenuItem1.Size = New System.Drawing.Size(137, 22)
         Me.HelpToolStripMenuItem1.Text = "Controls"
         '
         'StatInfoToolStripMenuItem
@@ -883,7 +925,7 @@ Partial Class Game
         Me.StatInfoToolStripMenuItem.BackColor = System.Drawing.Color.Black
         Me.StatInfoToolStripMenuItem.ForeColor = System.Drawing.Color.White
         Me.StatInfoToolStripMenuItem.Name = "StatInfoToolStripMenuItem"
-        Me.StatInfoToolStripMenuItem.Size = New System.Drawing.Size(150, 24)
+        Me.StatInfoToolStripMenuItem.Size = New System.Drawing.Size(137, 22)
         Me.StatInfoToolStripMenuItem.Text = "Stat Info"
         Me.StatInfoToolStripMenuItem.Visible = False
         '
@@ -892,7 +934,7 @@ Partial Class Game
         Me.ReportToolStripMenuItem.BackColor = System.Drawing.Color.Black
         Me.ReportToolStripMenuItem.ForeColor = System.Drawing.Color.White
         Me.ReportToolStripMenuItem.Name = "ReportToolStripMenuItem"
-        Me.ReportToolStripMenuItem.Size = New System.Drawing.Size(150, 24)
+        Me.ReportToolStripMenuItem.Size = New System.Drawing.Size(137, 22)
         Me.ReportToolStripMenuItem.Text = "Report"
         '
         'InfoToolStripMenuItem
@@ -901,7 +943,7 @@ Partial Class Game
         Me.InfoToolStripMenuItem.Font = New System.Drawing.Font("Consolas", 9.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.InfoToolStripMenuItem.ForeColor = System.Drawing.Color.White
         Me.InfoToolStripMenuItem.Name = "InfoToolStripMenuItem"
-        Me.InfoToolStripMenuItem.Size = New System.Drawing.Size(150, 24)
+        Me.InfoToolStripMenuItem.Size = New System.Drawing.Size(137, 22)
         Me.InfoToolStripMenuItem.Text = "Info"
         '
         'RunAutomatedTestsToolStripMenuItem
@@ -909,7 +951,7 @@ Partial Class Game
         Me.RunAutomatedTestsToolStripMenuItem.BackColor = System.Drawing.Color.Black
         Me.RunAutomatedTestsToolStripMenuItem.ForeColor = System.Drawing.Color.White
         Me.RunAutomatedTestsToolStripMenuItem.Name = "RunAutomatedTestsToolStripMenuItem"
-        Me.RunAutomatedTestsToolStripMenuItem.Size = New System.Drawing.Size(150, 24)
+        Me.RunAutomatedTestsToolStripMenuItem.Size = New System.Drawing.Size(137, 22)
         Me.RunAutomatedTestsToolStripMenuItem.Text = "Run Tests"
         '
         'SettingsToolStripMenuItem
@@ -917,7 +959,7 @@ Partial Class Game
         Me.SettingsToolStripMenuItem.Font = New System.Drawing.Font("Consolas", 9.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.SettingsToolStripMenuItem.ForeColor = System.Drawing.Color.White
         Me.SettingsToolStripMenuItem.Name = "SettingsToolStripMenuItem"
-        Me.SettingsToolStripMenuItem.Size = New System.Drawing.Size(84, 21)
+        Me.SettingsToolStripMenuItem.Size = New System.Drawing.Size(75, 20)
         Me.SettingsToolStripMenuItem.Text = "Settings"
         Me.SettingsToolStripMenuItem.Visible = False
         '
@@ -926,7 +968,7 @@ Partial Class Game
         Me.DebugToolStripMenuItem1.Font = New System.Drawing.Font("Consolas", 9.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.DebugToolStripMenuItem1.ForeColor = System.Drawing.Color.White
         Me.DebugToolStripMenuItem1.Name = "DebugToolStripMenuItem1"
-        Me.DebugToolStripMenuItem1.Size = New System.Drawing.Size(60, 21)
+        Me.DebugToolStripMenuItem1.Size = New System.Drawing.Size(54, 20)
         Me.DebugToolStripMenuItem1.Text = "Debug"
         '
         'picPortrait
@@ -954,9 +996,9 @@ Partial Class Game
         Me.lblGold.AutoSize = True
         Me.lblGold.Font = New System.Drawing.Font("Consolas", 8.830189!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.lblGold.ForeColor = System.Drawing.Color.White
-        Me.lblGold.Location = New System.Drawing.Point(5, 100)
+        Me.lblGold.Location = New System.Drawing.Point(5, 119)
         Me.lblGold.Name = "lblGold"
-        Me.lblGold.Size = New System.Drawing.Size(120, 17)
+        Me.lblGold.Size = New System.Drawing.Size(105, 14)
         Me.lblGold.TabIndex = 210
         Me.lblGold.Text = "GOLD = 999999+"
         '
@@ -1082,7 +1124,7 @@ Partial Class Game
         Me.cboxSpec.FormattingEnabled = True
         Me.cboxSpec.Location = New System.Drawing.Point(237, 462)
         Me.cboxSpec.Name = "cboxSpec"
-        Me.cboxSpec.Size = New System.Drawing.Size(149, 22)
+        Me.cboxSpec.Size = New System.Drawing.Size(149, 21)
         Me.cboxSpec.TabIndex = 231
         Me.cboxSpec.Text = "-- Select --"
         Me.cboxSpec.Visible = False
@@ -1132,7 +1174,7 @@ Partial Class Game
         Me.chkUseable.ForeColor = System.Drawing.Color.White
         Me.chkUseable.Location = New System.Drawing.Point(738, 422)
         Me.chkUseable.Name = "chkUseable"
-        Me.chkUseable.Size = New System.Drawing.Size(83, 22)
+        Me.chkUseable.Size = New System.Drawing.Size(83, 21)
         Me.chkUseable.TabIndex = 236
         Me.chkUseable.Text = "Useable"
         Me.chkUseable.UseVisualStyleBackColor = True
@@ -1147,7 +1189,7 @@ Partial Class Game
         Me.chkPotion.ForeColor = System.Drawing.Color.White
         Me.chkPotion.Location = New System.Drawing.Point(738, 444)
         Me.chkPotion.Name = "chkPotion"
-        Me.chkPotion.Size = New System.Drawing.Size(83, 22)
+        Me.chkPotion.Size = New System.Drawing.Size(83, 21)
         Me.chkPotion.TabIndex = 237
         Me.chkPotion.Text = "Potions"
         Me.chkPotion.UseVisualStyleBackColor = True
@@ -1162,7 +1204,7 @@ Partial Class Game
         Me.chkFood.ForeColor = System.Drawing.Color.White
         Me.chkFood.Location = New System.Drawing.Point(738, 466)
         Me.chkFood.Name = "chkFood"
-        Me.chkFood.Size = New System.Drawing.Size(59, 22)
+        Me.chkFood.Size = New System.Drawing.Size(59, 21)
         Me.chkFood.TabIndex = 238
         Me.chkFood.Text = "Food"
         Me.chkFood.UseVisualStyleBackColor = True
@@ -1177,7 +1219,7 @@ Partial Class Game
         Me.frmArmor.ForeColor = System.Drawing.Color.White
         Me.frmArmor.Location = New System.Drawing.Point(738, 488)
         Me.frmArmor.Name = "frmArmor"
-        Me.frmArmor.Size = New System.Drawing.Size(67, 22)
+        Me.frmArmor.Size = New System.Drawing.Size(67, 21)
         Me.frmArmor.TabIndex = 239
         Me.frmArmor.Text = "Armor"
         Me.frmArmor.UseVisualStyleBackColor = True
@@ -1192,7 +1234,7 @@ Partial Class Game
         Me.chkWeapon.ForeColor = System.Drawing.Color.White
         Me.chkWeapon.Location = New System.Drawing.Point(738, 510)
         Me.chkWeapon.Name = "chkWeapon"
-        Me.chkWeapon.Size = New System.Drawing.Size(75, 22)
+        Me.chkWeapon.Size = New System.Drawing.Size(75, 21)
         Me.chkWeapon.TabIndex = 240
         Me.chkWeapon.Text = "Weapon"
         Me.chkWeapon.UseVisualStyleBackColor = True
@@ -1207,7 +1249,7 @@ Partial Class Game
         Me.chkMisc.ForeColor = System.Drawing.Color.White
         Me.chkMisc.Location = New System.Drawing.Point(738, 554)
         Me.chkMisc.Name = "chkMisc"
-        Me.chkMisc.Size = New System.Drawing.Size(59, 22)
+        Me.chkMisc.Size = New System.Drawing.Size(59, 21)
         Me.chkMisc.TabIndex = 241
         Me.chkMisc.Text = "Misc"
         Me.chkMisc.UseVisualStyleBackColor = True
@@ -1416,7 +1458,7 @@ Partial Class Game
         Me.pnlSaveLoad.Controls.Add(Me.btnS3)
         Me.pnlSaveLoad.Controls.Add(Me.btnS5)
         Me.pnlSaveLoad.Controls.Add(Me.btnS4)
-        Me.pnlSaveLoad.Location = New System.Drawing.Point(881, 12)
+        Me.pnlSaveLoad.Location = New System.Drawing.Point(1012, 12)
         Me.pnlSaveLoad.Name = "pnlSaveLoad"
         Me.pnlSaveLoad.Size = New System.Drawing.Size(568, 458)
         Me.pnlSaveLoad.TabIndex = 258
@@ -1551,7 +1593,7 @@ Partial Class Game
         Me.pnlCombat.Controls.Add(Me.lblEName)
         Me.pnlCombat.Controls.Add(Me.picPHealth)
         Me.pnlCombat.Controls.Add(Me.picEHbar)
-        Me.pnlCombat.Location = New System.Drawing.Point(800, 50)
+        Me.pnlCombat.Location = New System.Drawing.Point(983, 50)
         Me.pnlCombat.Name = "pnlCombat"
         Me.pnlCombat.Size = New System.Drawing.Size(568, 362)
         Me.pnlCombat.TabIndex = 270
@@ -1579,7 +1621,7 @@ Partial Class Game
         Me.Label2.ForeColor = System.Drawing.Color.White
         Me.Label2.Location = New System.Drawing.Point(5, 338)
         Me.Label2.Name = "Label2"
-        Me.Label2.Size = New System.Drawing.Size(280, 15)
+        Me.Label2.Size = New System.Drawing.Size(241, 13)
         Me.Label2.TabIndex = 10
         Me.Label2.Text = "Press a combat button to continue . . ."
         '
@@ -1590,7 +1632,7 @@ Partial Class Game
         Me.lblPHealtDiff.ForeColor = System.Drawing.Color.White
         Me.lblPHealtDiff.Location = New System.Drawing.Point(379, 88)
         Me.lblPHealtDiff.Name = "lblPHealtDiff"
-        Me.lblPHealtDiff.Size = New System.Drawing.Size(40, 17)
+        Me.lblPHealtDiff.Size = New System.Drawing.Size(35, 14)
         Me.lblPHealtDiff.TabIndex = 8
         Me.lblPHealtDiff.Text = "-999"
         '
@@ -1601,7 +1643,7 @@ Partial Class Game
         Me.lblEHealthChange.ForeColor = System.Drawing.Color.White
         Me.lblEHealthChange.Location = New System.Drawing.Point(139, 91)
         Me.lblEHealthChange.Name = "lblEHealthChange"
-        Me.lblEHealthChange.Size = New System.Drawing.Size(40, 17)
+        Me.lblEHealthChange.Size = New System.Drawing.Size(35, 14)
         Me.lblEHealthChange.TabIndex = 7
         Me.lblEHealthChange.Text = "-999"
         '
@@ -1612,7 +1654,7 @@ Partial Class Game
         Me.lblTurn.ForeColor = System.Drawing.Color.White
         Me.lblTurn.Location = New System.Drawing.Point(236, 20)
         Me.lblTurn.Name = "lblTurn"
-        Me.lblTurn.Size = New System.Drawing.Size(96, 17)
+        Me.lblTurn.Size = New System.Drawing.Size(84, 14)
         Me.lblTurn.TabIndex = 6
         Me.lblTurn.Text = "Turn: 99999"
         '
@@ -1623,7 +1665,7 @@ Partial Class Game
         Me.lblPHealth.ForeColor = System.Drawing.Color.White
         Me.lblPHealth.Location = New System.Drawing.Point(450, 48)
         Me.lblPHealth.Name = "lblPHealth"
-        Me.lblPHealth.Size = New System.Drawing.Size(80, 17)
+        Me.lblPHealth.Size = New System.Drawing.Size(70, 14)
         Me.lblPHealth.TabIndex = 5
         Me.lblPHealth.Text = "9999/9999"
         '
@@ -1646,7 +1688,7 @@ Partial Class Game
         Me.lblEHealth.ForeColor = System.Drawing.Color.White
         Me.lblEHealth.Location = New System.Drawing.Point(20, 49)
         Me.lblEHealth.Name = "lblEHealth"
-        Me.lblEHealth.Size = New System.Drawing.Size(80, 17)
+        Me.lblEHealth.Size = New System.Drawing.Size(70, 14)
         Me.lblEHealth.TabIndex = 3
         Me.lblEHealth.Text = "9999/9999"
         '
@@ -1688,7 +1730,7 @@ Partial Class Game
         Me.lblEvent.ForeColor = System.Drawing.Color.White
         Me.lblEvent.Location = New System.Drawing.Point(304, 120)
         Me.lblEvent.Name = "lblEvent"
-        Me.lblEvent.Size = New System.Drawing.Size(2, 19)
+        Me.lblEvent.Size = New System.Drawing.Size(2, 16)
         Me.lblEvent.TabIndex = 271
         Me.lblEvent.TextAlign = System.Drawing.ContentAlignment.MiddleLeft
         Me.lblEvent.Visible = False
@@ -1745,7 +1787,7 @@ Partial Class Game
         Me.pnlDescription.Controls.Add(Me.picDescPort)
         Me.pnlDescription.Controls.Add(Me.txtPlayerDesc)
         Me.pnlDescription.Controls.Add(Me.Label5)
-        Me.pnlDescription.Location = New System.Drawing.Point(866, 129)
+        Me.pnlDescription.Location = New System.Drawing.Point(1000, 44)
         Me.pnlDescription.Name = "pnlDescription"
         Me.pnlDescription.Size = New System.Drawing.Size(690, 502)
         Me.pnlDescription.TabIndex = 275
@@ -1759,7 +1801,7 @@ Partial Class Game
         Me.lblNext.ForeColor = System.Drawing.Color.White
         Me.lblNext.Location = New System.Drawing.Point(23, 473)
         Me.lblNext.Name = "lblNext"
-        Me.lblNext.Size = New System.Drawing.Size(336, 17)
+        Me.lblNext.Size = New System.Drawing.Size(294, 14)
         Me.lblNext.TabIndex = 277
         Me.lblNext.Text = "Press any non-movement key to continue..."
         '
@@ -1787,13 +1829,13 @@ Partial Class Game
         'Label5
         '
         Me.Label5.AutoSize = True
-        Me.Label5.Font = New System.Drawing.Font("Corbel", 8.150944!, System.Drawing.FontStyle.Italic, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.Label5.Font = New System.Drawing.Font("Consolas", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.Label5.ForeColor = System.Drawing.Color.White
-        Me.Label5.Location = New System.Drawing.Point(103, 4)
+        Me.Label5.Location = New System.Drawing.Point(93, 5)
         Me.Label5.Name = "Label5"
-        Me.Label5.Size = New System.Drawing.Size(386, 15)
+        Me.Label5.Size = New System.Drawing.Size(397, 13)
         Me.Label5.TabIndex = 278
-        Me.Label5.Text = "NOTE: Full body image view is not complete, and still requires some work."
+        Me.Label5.Text = "Note: Some images have not yet been updated to the full body size"
         '
         'ttCosts
         '
@@ -1847,7 +1889,7 @@ Partial Class Game
         Me.pnlSelection.Controls.Add(Me.lblWhat)
         Me.pnlSelection.Controls.Add(Me.Label3)
         Me.pnlSelection.Controls.Add(Me.lstSelec)
-        Me.pnlSelection.Location = New System.Drawing.Point(864, 87)
+        Me.pnlSelection.Location = New System.Drawing.Point(1005, 87)
         Me.pnlSelection.Name = "pnlSelection"
         Me.pnlSelection.Size = New System.Drawing.Size(591, 293)
         Me.pnlSelection.TabIndex = 281
@@ -1861,7 +1903,7 @@ Partial Class Game
         Me.lblInstruc.ForeColor = System.Drawing.Color.White
         Me.lblInstruc.Location = New System.Drawing.Point(6, 61)
         Me.lblInstruc.Name = "lblInstruc"
-        Me.lblInstruc.Size = New System.Drawing.Size(112, 51)
+        Me.lblInstruc.Size = New System.Drawing.Size(98, 42)
         Me.lblInstruc.TabIndex = 280
         Me.lblInstruc.Text = "Type the " & Global.Microsoft.VisualBasic.ChrW(13) & Global.Microsoft.VisualBasic.ChrW(10) & "corresponding" & Global.Microsoft.VisualBasic.ChrW(13) & Global.Microsoft.VisualBasic.ChrW(10) & "letter:"
         '
@@ -1873,7 +1915,7 @@ Partial Class Game
         Me.lblWhat.ForeColor = System.Drawing.Color.White
         Me.lblWhat.Location = New System.Drawing.Point(8, 8)
         Me.lblWhat.Name = "lblWhat"
-        Me.lblWhat.Size = New System.Drawing.Size(88, 17)
+        Me.lblWhat.Size = New System.Drawing.Size(77, 14)
         Me.lblWhat.TabIndex = 279
         Me.lblWhat.Text = "Verb what?"
         '
@@ -1885,7 +1927,7 @@ Partial Class Game
         Me.Label3.ForeColor = System.Drawing.Color.White
         Me.Label3.Location = New System.Drawing.Point(7, 262)
         Me.Label3.Name = "Label3"
-        Me.Label3.Size = New System.Drawing.Size(216, 17)
+        Me.Label3.Size = New System.Drawing.Size(189, 14)
         Me.Label3.TabIndex = 278
         Me.Label3.Text = "Press backspace to cancel."
         '
@@ -1895,11 +1937,11 @@ Partial Class Game
         Me.lstSelec.Font = New System.Drawing.Font("Consolas", 10.18868!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.lstSelec.ForeColor = System.Drawing.Color.White
         Me.lstSelec.FormattingEnabled = True
-        Me.lstSelec.ItemHeight = 18
+        Me.lstSelec.ItemHeight = 17
         Me.lstSelec.Items.AddRange(New Object() {"oooooooooooooooooooooooooooooo"})
         Me.lstSelec.Location = New System.Drawing.Point(239, 35)
         Me.lstSelec.Name = "lstSelec"
-        Me.lstSelec.Size = New System.Drawing.Size(330, 220)
+        Me.lstSelec.Size = New System.Drawing.Size(330, 208)
         Me.lstSelec.TabIndex = 142
         '
         'picBun
@@ -1951,7 +1993,7 @@ Partial Class Game
         Me.chkAcc.ForeColor = System.Drawing.Color.White
         Me.chkAcc.Location = New System.Drawing.Point(738, 532)
         Me.chkAcc.Name = "chkAcc"
-        Me.chkAcc.Size = New System.Drawing.Size(115, 22)
+        Me.chkAcc.Size = New System.Drawing.Size(115, 21)
         Me.chkAcc.TabIndex = 289
         Me.chkAcc.Text = "Accessories"
         Me.chkAcc.UseVisualStyleBackColor = True
@@ -2017,7 +2059,7 @@ Partial Class Game
         Me.lblLoadMsg.ForeColor = System.Drawing.Color.White
         Me.lblLoadMsg.Location = New System.Drawing.Point(306, 392)
         Me.lblLoadMsg.Name = "lblLoadMsg"
-        Me.lblLoadMsg.Size = New System.Drawing.Size(70, 22)
+        Me.lblLoadMsg.Size = New System.Drawing.Size(63, 19)
         Me.lblLoadMsg.TabIndex = 295
         Me.lblLoadMsg.Text = "Label2"
         Me.lblLoadMsg.TextAlign = System.Drawing.ContentAlignment.MiddleCenter
@@ -2172,7 +2214,7 @@ Partial Class Game
         Me.pnlEvent.Controls.Add(Me.btnNextRPnlEvent)
         Me.pnlEvent.Controls.Add(Me.btnClosePnlEvent)
         Me.pnlEvent.Controls.Add(Me.txtPNLEvents)
-        Me.pnlEvent.Location = New System.Drawing.Point(938, 26)
+        Me.pnlEvent.Location = New System.Drawing.Point(997, 26)
         Me.pnlEvent.Name = "pnlEvent"
         Me.pnlEvent.Size = New System.Drawing.Size(688, 447)
         Me.pnlEvent.TabIndex = 322
@@ -2185,7 +2227,7 @@ Partial Class Game
         Me.Label4.ForeColor = System.Drawing.Color.White
         Me.Label4.Location = New System.Drawing.Point(13, 416)
         Me.Label4.Name = "Label4"
-        Me.Label4.Size = New System.Drawing.Size(378, 19)
+        Me.Label4.Size = New System.Drawing.Size(336, 17)
         Me.Label4.TabIndex = 236
         Me.Label4.Text = "Press any non-movement key to continue..."
         '
@@ -2687,6 +2729,7 @@ Partial Class Game
         '
         Me.pnlStats.BackgroundImage = CType(resources.GetObject("pnlStats.BackgroundImage"), System.Drawing.Image)
         Me.pnlStats.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch
+        Me.pnlStats.Controls.Add(Me.lblLust)
         Me.pnlStats.Controls.Add(Me.lblSPD)
         Me.pnlStats.Controls.Add(Me.lblGold)
         Me.pnlStats.Controls.Add(Me.lblATK)
@@ -2695,8 +2738,19 @@ Partial Class Game
         Me.pnlStats.Controls.Add(Me.lblLevel)
         Me.pnlStats.Location = New System.Drawing.Point(734, 150)
         Me.pnlStats.Name = "pnlStats"
-        Me.pnlStats.Size = New System.Drawing.Size(131, 124)
+        Me.pnlStats.Size = New System.Drawing.Size(131, 140)
         Me.pnlStats.TabIndex = 398
+        '
+        'lblLust
+        '
+        Me.lblLust.AutoSize = True
+        Me.lblLust.Font = New System.Drawing.Font("Consolas", 8.830189!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.lblLust.ForeColor = System.Drawing.Color.White
+        Me.lblLust.Location = New System.Drawing.Point(5, 100)
+        Me.lblLust.Name = "lblLust"
+        Me.lblLust.Size = New System.Drawing.Size(84, 14)
+        Me.lblLust.TabIndex = 211
+        Me.lblLust.Text = "LUST = TEMP"
         '
         'Label6
         '
@@ -2704,9 +2758,9 @@ Partial Class Game
         Me.Label6.BackColor = System.Drawing.Color.Black
         Me.Label6.Font = New System.Drawing.Font("Consolas", 10.86792!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.Label6.ForeColor = System.Drawing.Color.White
-        Me.Label6.Location = New System.Drawing.Point(730, 129)
+        Me.Label6.Location = New System.Drawing.Point(730, 130)
         Me.Label6.Name = "Label6"
-        Me.Label6.Size = New System.Drawing.Size(63, 19)
+        Me.Label6.Size = New System.Drawing.Size(56, 18)
         Me.Label6.TabIndex = 399
         Me.Label6.Text = "Stats:"
         '
@@ -2727,6 +2781,18 @@ Partial Class Game
         Me.pnlMeter.Name = "pnlMeter"
         Me.pnlMeter.Size = New System.Drawing.Size(269, 82)
         Me.pnlMeter.TabIndex = 400
+        '
+        'lblHealthbarFont
+        '
+        Me.lblHealthbarFont.AutoSize = True
+        Me.lblHealthbarFont.Font = New System.Drawing.Font("Consolas", 8.150944!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.lblHealthbarFont.ForeColor = System.Drawing.Color.White
+        Me.lblHealthbarFont.Location = New System.Drawing.Point(0, 65)
+        Me.lblHealthbarFont.Name = "lblHealthbarFont"
+        Me.lblHealthbarFont.Size = New System.Drawing.Size(0, 13)
+        Me.lblHealthbarFont.TabIndex = 156
+        Me.lblHealthbarFont.TextAlign = System.Drawing.ContentAlignment.MiddleLeft
+        Me.lblHealthbarFont.Visible = False
         '
         'lblstamina
         '
@@ -2757,7 +2823,7 @@ Partial Class Game
         Me.Label11.ForeColor = System.Drawing.Color.White
         Me.Label11.Location = New System.Drawing.Point(6, 58)
         Me.Label11.Name = "Label11"
-        Me.Label11.Size = New System.Drawing.Size(40, 17)
+        Me.Label11.Size = New System.Drawing.Size(35, 14)
         Me.Label11.TabIndex = 153
         Me.Label11.Text = "XP: "
         '
@@ -2768,7 +2834,7 @@ Partial Class Game
         Me.Label8.ForeColor = System.Drawing.Color.White
         Me.Label8.Location = New System.Drawing.Point(6, 6)
         Me.Label8.Name = "Label8"
-        Me.Label8.Size = New System.Drawing.Size(40, 17)
+        Me.Label8.Size = New System.Drawing.Size(35, 14)
         Me.Label8.TabIndex = 150
         Me.Label8.Text = "HP: "
         '
@@ -2779,7 +2845,7 @@ Partial Class Game
         Me.Label9.ForeColor = System.Drawing.Color.White
         Me.Label9.Location = New System.Drawing.Point(6, 23)
         Me.Label9.Name = "Label9"
-        Me.Label9.Size = New System.Drawing.Size(40, 17)
+        Me.Label9.Size = New System.Drawing.Size(35, 14)
         Me.Label9.TabIndex = 151
         Me.Label9.Text = "MP: "
         '
@@ -2790,21 +2856,392 @@ Partial Class Game
         Me.Label10.ForeColor = System.Drawing.Color.White
         Me.Label10.Location = New System.Drawing.Point(6, 41)
         Me.Label10.Name = "Label10"
-        Me.Label10.Size = New System.Drawing.Size(40, 17)
+        Me.Label10.Size = New System.Drawing.Size(35, 14)
         Me.Label10.TabIndex = 152
         Me.Label10.Text = "ST: "
         '
-        'lblHealthbarFont
+        'pic9tailsBimbo
         '
-        Me.lblHealthbarFont.AutoSize = True
-        Me.lblHealthbarFont.Font = New System.Drawing.Font("Consolas", 8.150944!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.lblHealthbarFont.ForeColor = System.Drawing.Color.White
-        Me.lblHealthbarFont.Location = New System.Drawing.Point(0, 65)
-        Me.lblHealthbarFont.Name = "lblHealthbarFont"
-        Me.lblHealthbarFont.Size = New System.Drawing.Size(0, 15)
-        Me.lblHealthbarFont.TabIndex = 156
-        Me.lblHealthbarFont.TextAlign = System.Drawing.ContentAlignment.MiddleLeft
-        Me.lblHealthbarFont.Visible = False
+        Me.pic9tailsBimbo.BackgroundImage = CType(resources.GetObject("pic9tailsBimbo.BackgroundImage"), System.Drawing.Image)
+        Me.pic9tailsBimbo.Location = New System.Drawing.Point(150, 133)
+        Me.pic9tailsBimbo.Name = "pic9tailsBimbo"
+        Me.pic9tailsBimbo.Size = New System.Drawing.Size(15, 15)
+        Me.pic9tailsBimbo.TabIndex = 401
+        Me.pic9tailsBimbo.TabStop = False
+        Me.pic9tailsBimbo.Visible = False
+        '
+        'picFoxStatueGold
+        '
+        Me.picFoxStatueGold.BackgroundImage = CType(resources.GetObject("picFoxStatueGold.BackgroundImage"), System.Drawing.Image)
+        Me.picFoxStatueGold.Location = New System.Drawing.Point(623, 115)
+        Me.picFoxStatueGold.Name = "picFoxStatueGold"
+        Me.picFoxStatueGold.Size = New System.Drawing.Size(15, 15)
+        Me.picFoxStatueGold.TabIndex = 403
+        Me.picFoxStatueGold.TabStop = False
+        Me.picFoxStatueGold.Visible = False
+        '
+        'picFoxStatueF
+        '
+        Me.picFoxStatueF.BackgroundImage = CType(resources.GetObject("picFoxStatueF.BackgroundImage"), System.Drawing.Image)
+        Me.picFoxStatueF.Location = New System.Drawing.Point(602, 115)
+        Me.picFoxStatueF.Name = "picFoxStatueF"
+        Me.picFoxStatueF.Size = New System.Drawing.Size(15, 15)
+        Me.picFoxStatueF.TabIndex = 402
+        Me.picFoxStatueF.TabStop = False
+        Me.picFoxStatueF.Visible = False
+        '
+        'pnlFusion
+        '
+        Me.pnlFusion.BackColor = System.Drawing.Color.Black
+        Me.pnlFusion.BackgroundImage = CType(resources.GetObject("pnlFusion.BackgroundImage"), System.Drawing.Image)
+        Me.pnlFusion.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch
+        Me.pnlFusion.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle
+        Me.pnlFusion.Controls.Add(Me.lblFusionDisclaimer)
+        Me.pnlFusion.Controls.Add(Me.PictureBox1)
+        Me.pnlFusion.Controls.Add(Me.picFusionPort)
+        Me.pnlFusion.Controls.Add(Me.lblFusionHP)
+        Me.pnlFusion.Controls.Add(Me.lblFusionMP)
+        Me.pnlFusion.Controls.Add(Me.Label24)
+        Me.pnlFusion.Controls.Add(Me.lblFusionLust)
+        Me.pnlFusion.Controls.Add(Me.lblFusionSPD)
+        Me.pnlFusion.Controls.Add(Me.lblFusionATK)
+        Me.pnlFusion.Controls.Add(Me.lblFusionDEF)
+        Me.pnlFusion.Controls.Add(Me.lblFusionWill)
+        Me.pnlFusion.Controls.Add(Me.lblFusionLVL)
+        Me.pnlFusion.Controls.Add(Me.Label16)
+        Me.pnlFusion.Controls.Add(Me.cboxFusionTarget)
+        Me.pnlFusion.Controls.Add(Me.Label13)
+        Me.pnlFusion.Controls.Add(Me.cboxFusionAccessory)
+        Me.pnlFusion.Controls.Add(Me.Label14)
+        Me.pnlFusion.Controls.Add(Me.cboxFusionArmor)
+        Me.pnlFusion.Controls.Add(Me.Label15)
+        Me.pnlFusion.Controls.Add(Me.cboxFusionWeapon)
+        Me.pnlFusion.Controls.Add(Me.btnFusionAcc)
+        Me.pnlFusion.Controls.Add(Me.btnFusionCancel)
+        Me.pnlFusion.Controls.Add(Me.PictureBox2)
+        Me.pnlFusion.Location = New System.Drawing.Point(1000, 83)
+        Me.pnlFusion.Name = "pnlFusion"
+        Me.pnlFusion.Size = New System.Drawing.Size(591, 295)
+        Me.pnlFusion.TabIndex = 404
+        Me.pnlFusion.Visible = False
+        '
+        'lblFusionDisclaimer
+        '
+        Me.lblFusionDisclaimer.AutoSize = True
+        Me.lblFusionDisclaimer.BackColor = System.Drawing.Color.Black
+        Me.lblFusionDisclaimer.Font = New System.Drawing.Font("Consolas", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.lblFusionDisclaimer.ForeColor = System.Drawing.Color.White
+        Me.lblFusionDisclaimer.Location = New System.Drawing.Point(8, 241)
+        Me.lblFusionDisclaimer.Margin = New System.Windows.Forms.Padding(4, 0, 4, 0)
+        Me.lblFusionDisclaimer.Name = "lblFusionDisclaimer"
+        Me.lblFusionDisclaimer.Size = New System.Drawing.Size(577, 13)
+        Me.lblFusionDisclaimer.TabIndex = 226
+        Me.lblFusionDisclaimer.Text = "This will rewrite your current player permenantly (Restore potions will restore t" & _
+    "o the fusion)."
+        Me.lblFusionDisclaimer.TextAlign = System.Drawing.ContentAlignment.MiddleLeft
+        '
+        'PictureBox1
+        '
+        Me.PictureBox1.BackColor = System.Drawing.Color.White
+        Me.PictureBox1.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch
+        Me.PictureBox1.Location = New System.Drawing.Point(330, 52)
+        Me.PictureBox1.Name = "PictureBox1"
+        Me.PictureBox1.Size = New System.Drawing.Size(110, 1)
+        Me.PictureBox1.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage
+        Me.PictureBox1.TabIndex = 224
+        Me.PictureBox1.TabStop = False
+        '
+        'picFusionPort
+        '
+        Me.picFusionPort.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch
+        Me.picFusionPort.Location = New System.Drawing.Point(446, 30)
+        Me.picFusionPort.Name = "picFusionPort"
+        Me.picFusionPort.Size = New System.Drawing.Size(125, 189)
+        Me.picFusionPort.TabIndex = 223
+        Me.picFusionPort.TabStop = False
+        '
+        'lblFusionHP
+        '
+        Me.lblFusionHP.AutoSize = True
+        Me.lblFusionHP.Font = New System.Drawing.Font("Consolas", 8.830189!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.lblFusionHP.ForeColor = System.Drawing.Color.White
+        Me.lblFusionHP.Location = New System.Drawing.Point(328, 74)
+        Me.lblFusionHP.Name = "lblFusionHP"
+        Me.lblFusionHP.Size = New System.Drawing.Size(98, 14)
+        Me.lblFusionHP.TabIndex = 220
+        Me.lblFusionHP.Text = "Max HP = TEMP"
+        '
+        'lblFusionMP
+        '
+        Me.lblFusionMP.AutoSize = True
+        Me.lblFusionMP.Font = New System.Drawing.Font("Consolas", 8.830189!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.lblFusionMP.ForeColor = System.Drawing.Color.White
+        Me.lblFusionMP.Location = New System.Drawing.Point(328, 93)
+        Me.lblFusionMP.Name = "lblFusionMP"
+        Me.lblFusionMP.Size = New System.Drawing.Size(98, 14)
+        Me.lblFusionMP.TabIndex = 221
+        Me.lblFusionMP.Text = "Max MP = TEMP"
+        '
+        'Label24
+        '
+        Me.Label24.AutoSize = True
+        Me.Label24.BackColor = System.Drawing.Color.Black
+        Me.Label24.Font = New System.Drawing.Font("Consolas", 9.75!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.Label24.ForeColor = System.Drawing.Color.White
+        Me.Label24.Location = New System.Drawing.Point(329, 33)
+        Me.Label24.Margin = New System.Windows.Forms.Padding(8, 0, 8, 0)
+        Me.Label24.Name = "Label24"
+        Me.Label24.Padding = New System.Windows.Forms.Padding(0, 1, 0, 1)
+        Me.Label24.Size = New System.Drawing.Size(84, 17)
+        Me.Label24.TabIndex = 219
+        Me.Label24.Text = "-- Stats --"
+        '
+        'lblFusionLust
+        '
+        Me.lblFusionLust.AutoSize = True
+        Me.lblFusionLust.Font = New System.Drawing.Font("Consolas", 8.830189!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.lblFusionLust.ForeColor = System.Drawing.Color.White
+        Me.lblFusionLust.Location = New System.Drawing.Point(328, 188)
+        Me.lblFusionLust.Name = "lblFusionLust"
+        Me.lblFusionLust.Size = New System.Drawing.Size(84, 14)
+        Me.lblFusionLust.TabIndex = 218
+        Me.lblFusionLust.Text = "LUST = TEMP"
+        '
+        'lblFusionSPD
+        '
+        Me.lblFusionSPD.AutoSize = True
+        Me.lblFusionSPD.Font = New System.Drawing.Font("Consolas", 8.830189!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.lblFusionSPD.ForeColor = System.Drawing.Color.White
+        Me.lblFusionSPD.Location = New System.Drawing.Point(328, 150)
+        Me.lblFusionSPD.Name = "lblFusionSPD"
+        Me.lblFusionSPD.Size = New System.Drawing.Size(77, 14)
+        Me.lblFusionSPD.TabIndex = 216
+        Me.lblFusionSPD.Text = "SPD = TEMP"
+        '
+        'lblFusionATK
+        '
+        Me.lblFusionATK.AutoSize = True
+        Me.lblFusionATK.Font = New System.Drawing.Font("Consolas", 8.830189!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.lblFusionATK.ForeColor = System.Drawing.Color.White
+        Me.lblFusionATK.Location = New System.Drawing.Point(328, 112)
+        Me.lblFusionATK.Name = "lblFusionATK"
+        Me.lblFusionATK.Size = New System.Drawing.Size(77, 14)
+        Me.lblFusionATK.TabIndex = 213
+        Me.lblFusionATK.Text = "ATK = TEMP"
+        '
+        'lblFusionDEF
+        '
+        Me.lblFusionDEF.AutoSize = True
+        Me.lblFusionDEF.Font = New System.Drawing.Font("Consolas", 8.830189!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.lblFusionDEF.ForeColor = System.Drawing.Color.White
+        Me.lblFusionDEF.Location = New System.Drawing.Point(328, 131)
+        Me.lblFusionDEF.Name = "lblFusionDEF"
+        Me.lblFusionDEF.Size = New System.Drawing.Size(77, 14)
+        Me.lblFusionDEF.TabIndex = 214
+        Me.lblFusionDEF.Text = "DEF = TEMP"
+        '
+        'lblFusionWill
+        '
+        Me.lblFusionWill.AutoSize = True
+        Me.lblFusionWill.Font = New System.Drawing.Font("Consolas", 8.830189!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.lblFusionWill.ForeColor = System.Drawing.Color.White
+        Me.lblFusionWill.Location = New System.Drawing.Point(328, 169)
+        Me.lblFusionWill.Name = "lblFusionWill"
+        Me.lblFusionWill.Size = New System.Drawing.Size(84, 14)
+        Me.lblFusionWill.TabIndex = 215
+        Me.lblFusionWill.Text = "WILL = TEMP"
+        '
+        'lblFusionLVL
+        '
+        Me.lblFusionLVL.AutoSize = True
+        Me.lblFusionLVL.Font = New System.Drawing.Font("Consolas", 8.830189!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.lblFusionLVL.ForeColor = System.Drawing.Color.White
+        Me.lblFusionLVL.Location = New System.Drawing.Point(327, 56)
+        Me.lblFusionLVL.Name = "lblFusionLVL"
+        Me.lblFusionLVL.Size = New System.Drawing.Size(77, 14)
+        Me.lblFusionLVL.TabIndex = 212
+        Me.lblFusionLVL.Text = "Level TEMP"
+        '
+        'Label16
+        '
+        Me.Label16.AutoSize = True
+        Me.Label16.BackColor = System.Drawing.Color.Black
+        Me.Label16.Font = New System.Drawing.Font("Consolas", 9.75!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.Label16.ForeColor = System.Drawing.Color.White
+        Me.Label16.Location = New System.Drawing.Point(15, 14)
+        Me.Label16.Margin = New System.Windows.Forms.Padding(4, 0, 4, 0)
+        Me.Label16.Name = "Label16"
+        Me.Label16.Size = New System.Drawing.Size(105, 15)
+        Me.Label16.TabIndex = 154
+        Me.Label16.Text = "Fusion Target:"
+        '
+        'cboxFusionTarget
+        '
+        Me.cboxFusionTarget.BackColor = System.Drawing.Color.Black
+        Me.cboxFusionTarget.Font = New System.Drawing.Font("Consolas", 8.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.cboxFusionTarget.ForeColor = System.Drawing.Color.White
+        Me.cboxFusionTarget.FormattingEnabled = True
+        Me.cboxFusionTarget.Location = New System.Drawing.Point(16, 33)
+        Me.cboxFusionTarget.Margin = New System.Windows.Forms.Padding(4, 5, 4, 5)
+        Me.cboxFusionTarget.Name = "cboxFusionTarget"
+        Me.cboxFusionTarget.Size = New System.Drawing.Size(262, 21)
+        Me.cboxFusionTarget.TabIndex = 153
+        '
+        'Label13
+        '
+        Me.Label13.AutoSize = True
+        Me.Label13.BackColor = System.Drawing.Color.Black
+        Me.Label13.Font = New System.Drawing.Font("Consolas", 9.75!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.Label13.ForeColor = System.Drawing.Color.White
+        Me.Label13.Location = New System.Drawing.Point(12, 178)
+        Me.Label13.Margin = New System.Windows.Forms.Padding(4, 0, 4, 0)
+        Me.Label13.Name = "Label13"
+        Me.Label13.Size = New System.Drawing.Size(231, 15)
+        Me.Label13.TabIndex = 152
+        Me.Label13.Text = "Equipped Accessory After Fusion:"
+        '
+        'cboxFusionAccessory
+        '
+        Me.cboxFusionAccessory.BackColor = System.Drawing.Color.Black
+        Me.cboxFusionAccessory.Font = New System.Drawing.Font("Consolas", 8.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.cboxFusionAccessory.ForeColor = System.Drawing.Color.White
+        Me.cboxFusionAccessory.FormattingEnabled = True
+        Me.cboxFusionAccessory.Location = New System.Drawing.Point(14, 203)
+        Me.cboxFusionAccessory.Margin = New System.Windows.Forms.Padding(4, 5, 4, 5)
+        Me.cboxFusionAccessory.Name = "cboxFusionAccessory"
+        Me.cboxFusionAccessory.Size = New System.Drawing.Size(264, 21)
+        Me.cboxFusionAccessory.TabIndex = 151
+        '
+        'Label14
+        '
+        Me.Label14.AutoSize = True
+        Me.Label14.BackColor = System.Drawing.Color.Black
+        Me.Label14.Font = New System.Drawing.Font("Consolas", 9.75!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.Label14.ForeColor = System.Drawing.Color.White
+        Me.Label14.Location = New System.Drawing.Point(12, 122)
+        Me.Label14.Margin = New System.Windows.Forms.Padding(4, 0, 4, 0)
+        Me.Label14.Name = "Label14"
+        Me.Label14.Size = New System.Drawing.Size(203, 15)
+        Me.Label14.TabIndex = 150
+        Me.Label14.Text = "Equipped Armor After Fusion:"
+        '
+        'cboxFusionArmor
+        '
+        Me.cboxFusionArmor.BackColor = System.Drawing.Color.Black
+        Me.cboxFusionArmor.Font = New System.Drawing.Font("Consolas", 8.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.cboxFusionArmor.ForeColor = System.Drawing.Color.White
+        Me.cboxFusionArmor.FormattingEnabled = True
+        Me.cboxFusionArmor.Location = New System.Drawing.Point(14, 147)
+        Me.cboxFusionArmor.Margin = New System.Windows.Forms.Padding(4, 5, 4, 5)
+        Me.cboxFusionArmor.Name = "cboxFusionArmor"
+        Me.cboxFusionArmor.Size = New System.Drawing.Size(264, 21)
+        Me.cboxFusionArmor.TabIndex = 149
+        '
+        'Label15
+        '
+        Me.Label15.AutoSize = True
+        Me.Label15.BackColor = System.Drawing.Color.Black
+        Me.Label15.Font = New System.Drawing.Font("Consolas", 9.75!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.Label15.ForeColor = System.Drawing.Color.White
+        Me.Label15.Location = New System.Drawing.Point(13, 67)
+        Me.Label15.Margin = New System.Windows.Forms.Padding(4, 0, 4, 0)
+        Me.Label15.Name = "Label15"
+        Me.Label15.Size = New System.Drawing.Size(210, 15)
+        Me.Label15.TabIndex = 148
+        Me.Label15.Text = "Equipped Weapon After Fusion:"
+        '
+        'cboxFusionWeapon
+        '
+        Me.cboxFusionWeapon.BackColor = System.Drawing.Color.Black
+        Me.cboxFusionWeapon.Font = New System.Drawing.Font("Consolas", 8.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.cboxFusionWeapon.ForeColor = System.Drawing.Color.White
+        Me.cboxFusionWeapon.FormattingEnabled = True
+        Me.cboxFusionWeapon.Location = New System.Drawing.Point(14, 92)
+        Me.cboxFusionWeapon.Margin = New System.Windows.Forms.Padding(4, 5, 4, 5)
+        Me.cboxFusionWeapon.Name = "cboxFusionWeapon"
+        Me.cboxFusionWeapon.Size = New System.Drawing.Size(264, 21)
+        Me.cboxFusionWeapon.TabIndex = 147
+        '
+        'btnFusionAcc
+        '
+        Me.btnFusionAcc.BackColor = System.Drawing.SystemColors.Window
+        Me.btnFusionAcc.Font = New System.Drawing.Font("Consolas", 8.830189!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.btnFusionAcc.Location = New System.Drawing.Point(502, 259)
+        Me.btnFusionAcc.Name = "btnFusionAcc"
+        Me.btnFusionAcc.Size = New System.Drawing.Size(75, 23)
+        Me.btnFusionAcc.TabIndex = 145
+        Me.btnFusionAcc.Text = "OK"
+        Me.btnFusionAcc.UseVisualStyleBackColor = False
+        '
+        'btnFusionCancel
+        '
+        Me.btnFusionCancel.BackColor = System.Drawing.SystemColors.Window
+        Me.btnFusionCancel.Font = New System.Drawing.Font("Consolas", 8.830189!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.btnFusionCancel.Location = New System.Drawing.Point(421, 259)
+        Me.btnFusionCancel.Name = "btnFusionCancel"
+        Me.btnFusionCancel.Size = New System.Drawing.Size(75, 23)
+        Me.btnFusionCancel.TabIndex = 144
+        Me.btnFusionCancel.Text = "Back"
+        Me.btnFusionCancel.UseVisualStyleBackColor = False
+        '
+        'PictureBox2
+        '
+        Me.PictureBox2.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch
+        Me.PictureBox2.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle
+        Me.PictureBox2.Location = New System.Drawing.Point(315, 25)
+        Me.PictureBox2.Name = "PictureBox2"
+        Me.PictureBox2.Size = New System.Drawing.Size(261, 199)
+        Me.PictureBox2.TabIndex = 225
+        Me.PictureBox2.TabStop = False
+        '
+        'pnlSnare
+        '
+        Me.pnlSnare.BackgroundImage = CType(resources.GetObject("pnlSnare.BackgroundImage"), System.Drawing.Image)
+        Me.pnlSnare.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch
+        Me.pnlSnare.Controls.Add(Me.btnConfirmBait)
+        Me.pnlSnare.Controls.Add(Me.Label7)
+        Me.pnlSnare.Controls.Add(Me.cboxBait)
+        Me.pnlSnare.Location = New System.Drawing.Point(244, 200)
+        Me.pnlSnare.Name = "pnlSnare"
+        Me.pnlSnare.Size = New System.Drawing.Size(285, 104)
+        Me.pnlSnare.TabIndex = 405
+        Me.pnlSnare.Visible = False
+        '
+        'btnConfirmBait
+        '
+        Me.btnConfirmBait.BackColor = System.Drawing.SystemColors.Window
+        Me.btnConfirmBait.Font = New System.Drawing.Font("Consolas", 8.830189!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.btnConfirmBait.Location = New System.Drawing.Point(199, 66)
+        Me.btnConfirmBait.Name = "btnConfirmBait"
+        Me.btnConfirmBait.Size = New System.Drawing.Size(75, 23)
+        Me.btnConfirmBait.TabIndex = 157
+        Me.btnConfirmBait.Text = "OK"
+        Me.btnConfirmBait.UseVisualStyleBackColor = False
+        '
+        'Label7
+        '
+        Me.Label7.AutoSize = True
+        Me.Label7.BackColor = System.Drawing.Color.Black
+        Me.Label7.Font = New System.Drawing.Font("Consolas", 9.75!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.Label7.ForeColor = System.Drawing.Color.White
+        Me.Label7.Location = New System.Drawing.Point(11, 14)
+        Me.Label7.Margin = New System.Windows.Forms.Padding(4, 0, 4, 0)
+        Me.Label7.Name = "Label7"
+        Me.Label7.Size = New System.Drawing.Size(126, 15)
+        Me.Label7.TabIndex = 156
+        Me.Label7.Text = "Use what as bait?"
+        '
+        'cboxBait
+        '
+        Me.cboxBait.BackColor = System.Drawing.Color.Black
+        Me.cboxBait.Font = New System.Drawing.Font("Consolas", 8.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.cboxBait.ForeColor = System.Drawing.Color.White
+        Me.cboxBait.FormattingEnabled = True
+        Me.cboxBait.Location = New System.Drawing.Point(12, 33)
+        Me.cboxBait.Margin = New System.Windows.Forms.Padding(4, 5, 4, 5)
+        Me.cboxBait.Name = "cboxBait"
+        Me.cboxBait.Size = New System.Drawing.Size(262, 21)
+        Me.cboxBait.TabIndex = 155
         '
         'Game
         '
@@ -2813,6 +3250,11 @@ Partial Class Game
         Me.BackColor = System.Drawing.Color.Black
         Me.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch
         Me.ClientSize = New System.Drawing.Size(1008, 690)
+        Me.Controls.Add(Me.pnlSnare)
+        Me.Controls.Add(Me.pnlFusion)
+        Me.Controls.Add(Me.picFoxStatueGold)
+        Me.Controls.Add(Me.picFoxStatueF)
+        Me.Controls.Add(Me.pic9tailsBimbo)
         Me.Controls.Add(Me.pnlSaveLoad)
         Me.Controls.Add(Me.btnAll)
         Me.Controls.Add(Me.btnNone)
@@ -3100,6 +3542,16 @@ Partial Class Game
         Me.pnlStats.PerformLayout()
         Me.pnlMeter.ResumeLayout(False)
         Me.pnlMeter.PerformLayout()
+        CType(Me.pic9tailsBimbo, System.ComponentModel.ISupportInitialize).EndInit()
+        CType(Me.picFoxStatueGold, System.ComponentModel.ISupportInitialize).EndInit()
+        CType(Me.picFoxStatueF, System.ComponentModel.ISupportInitialize).EndInit()
+        Me.pnlFusion.ResumeLayout(False)
+        Me.pnlFusion.PerformLayout()
+        CType(Me.PictureBox1, System.ComponentModel.ISupportInitialize).EndInit()
+        CType(Me.picFusionPort, System.ComponentModel.ISupportInitialize).EndInit()
+        CType(Me.PictureBox2, System.ComponentModel.ISupportInitialize).EndInit()
+        Me.pnlSnare.ResumeLayout(False)
+        Me.pnlSnare.PerformLayout()
         Me.ResumeLayout(False)
         Me.PerformLayout()
 
@@ -3325,4 +3777,36 @@ Partial Class Game
     Friend WithEvents Label11 As System.Windows.Forms.Label
     Friend WithEvents Label10 As System.Windows.Forms.Label
     Friend WithEvents lblHealthbarFont As System.Windows.Forms.Label
+    Friend WithEvents pic9tailsBimbo As System.Windows.Forms.PictureBox
+    Friend WithEvents picFoxStatueGold As System.Windows.Forms.PictureBox
+    Friend WithEvents picFoxStatueF As System.Windows.Forms.PictureBox
+    Friend WithEvents lblLust As System.Windows.Forms.Label
+    Friend WithEvents pnlFusion As System.Windows.Forms.Panel
+    Friend WithEvents btnFusionAcc As System.Windows.Forms.Button
+    Friend WithEvents btnFusionCancel As System.Windows.Forms.Button
+    Friend WithEvents Label16 As System.Windows.Forms.Label
+    Friend WithEvents cboxFusionTarget As System.Windows.Forms.ComboBox
+    Friend WithEvents Label13 As System.Windows.Forms.Label
+    Friend WithEvents cboxFusionAccessory As System.Windows.Forms.ComboBox
+    Friend WithEvents Label14 As System.Windows.Forms.Label
+    Friend WithEvents cboxFusionArmor As System.Windows.Forms.ComboBox
+    Friend WithEvents Label15 As System.Windows.Forms.Label
+    Friend WithEvents cboxFusionWeapon As System.Windows.Forms.ComboBox
+    Friend WithEvents lblFusionHP As System.Windows.Forms.Label
+    Friend WithEvents lblFusionMP As System.Windows.Forms.Label
+    Friend WithEvents Label24 As System.Windows.Forms.Label
+    Friend WithEvents lblFusionLust As System.Windows.Forms.Label
+    Friend WithEvents lblFusionSPD As System.Windows.Forms.Label
+    Friend WithEvents lblFusionATK As System.Windows.Forms.Label
+    Friend WithEvents lblFusionDEF As System.Windows.Forms.Label
+    Friend WithEvents lblFusionWill As System.Windows.Forms.Label
+    Friend WithEvents lblFusionLVL As System.Windows.Forms.Label
+    Friend WithEvents picFusionPort As System.Windows.Forms.PictureBox
+    Friend WithEvents PictureBox1 As System.Windows.Forms.PictureBox
+    Friend WithEvents PictureBox2 As System.Windows.Forms.PictureBox
+    Friend WithEvents lblFusionDisclaimer As System.Windows.Forms.Label
+    Friend WithEvents pnlSnare As System.Windows.Forms.Panel
+    Friend WithEvents btnConfirmBait As System.Windows.Forms.Button
+    Friend WithEvents Label7 As System.Windows.Forms.Label
+    Friend WithEvents cboxBait As System.Windows.Forms.ComboBox
 End Class

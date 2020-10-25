@@ -20,6 +20,6 @@
             Return -2
         End If
         dmg += (p.attack) + (Me.aBoost)
-        Return dmg - ((m.defence / 100) * dmg)
+        Return dmg - ((m.defense / 100) * dmg)
     End Function
 End Class

@@ -75,7 +75,15 @@
         End If
     End Sub
     Private Sub setPositions()
-        Game.player1.pos = floors(numCurrFloor).playerPosition
+        'If floors(numCurrFloor).sessions.ContainsKey(Game.sessionID) Then
+        '    floors(numCurrFloor).sessions(Game.sessionID).load(floors(numCurrFloor))
+        If floors(numCurrFloor).playerPosition.X = -1 Or floors(numCurrFloor).playerPosition.Y = -1 Then
+            Game.player1.pos = floors(numCurrFloor).getStartPlayerPos
+        Else
+            Game.player1.pos = floors(numCurrFloor).playerPosition
+        End If
+
+        If Not Game.player1.forcedPath Is Nothing AndAlso UBound(Game.player1.forcedPath) > 0 Then Game.player1.forcedPath = Nothing
 
         For i = 0 To Game.shopNPCList.Count - 1
             If i < floors(numCurrFloor).npcPositions.Count Then
@@ -84,6 +92,17 @@
                 Game.shopNPCList(i).pos = New Point(-1, -1)
             End If
         Next
+    End Sub
+
+    Public Sub tfNPCToArachne()
+        If Game.player1 Is Nothing OrElse Game.player1.perks(perk.snarednpc) = -1 Then Exit Sub
+
+        Dim s = Game.shopNPCList(Game.player1.perks(perk.snarednpc))
+
+        Game.pushLblEvent("You feel a slight vibration in the web leading to your snare.  Maybe you should pay the " & s.name & " a visit...")
+
+        s.toArachne()
+        Game.player1.perks(perk.snarednpc) = -1
     End Sub
     Public Sub setFloor(ByRef f As mFloor)
         f = floors(numCurrFloor)
@@ -99,7 +118,7 @@
     End Function
 
     Public Function currFloorBoss() As String
-        If floorboss.Count > numCurrFloor Then
+        If floorboss.ContainsKey(numCurrFloor) Then
             Return floorboss(numCurrFloor)
         Else
             Return ""

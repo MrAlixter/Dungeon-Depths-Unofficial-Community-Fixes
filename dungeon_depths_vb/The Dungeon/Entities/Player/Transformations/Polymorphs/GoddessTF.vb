@@ -19,8 +19,8 @@
         Dim out = ""
 
         'unequips
-        Equipment.clothesChange("Goddess_Gown")
-        Equipment.weaponChange("Fists")
+        Equipment.clothesChange(p, "Goddess_Gown")
+        Equipment.weaponChange(p, "Fists")
 
         'goddess transformation
         If p.sex = "Male" Then

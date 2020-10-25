@@ -30,9 +30,9 @@
     Overridable Sub tfDialogStep1(ByVal hairColorInd As Integer)
         Try
             Dim hcn = {"Black", "Brown", "Blonde", "White"}
-            Game.pushLblEvent("Your foot falls on an uneven patch of dungeon and you breifly lose your footing. As you lurch forward, catching your balance, your cowbell gives out a loud ring.  Looking franctically around, you are relived to see that nothing seems to have been attracted by the noise.  As you brush your shaken up hair back into place, you notice that at some point your hair color had changed to a shade of " & hcn(hairColorInd) & ".  𝘔𝘢𝘺𝘣𝘦 𝘐 𝘴𝘵𝘦𝘱𝘱𝘦𝘥 𝘰𝘯 𝘢 𝘤𝘶𝘳𝘴𝘦𝘥 𝘣𝘳𝘪𝘤𝘬 𝘰𝘳 𝘴𝘰𝘮𝘦𝘵𝘩𝘪𝘯𝘨, you muse as you continue on." & vbCrLf & vbCrLf & "You now have " & hcn(hairColorInd) & " hair!")
+            Game.pushLblEvent("Your foot falls on an uneven patch of dungeon and you breifly lose your footing. As you lurch forward, catching your balance, your cowbell gives out a loud ring.  Looking franctically around, you are relived to see that nothing seems to have been attracted by the noise.  As you brush your shaken up hair back into place, you notice that at some point your hair color had changed to a shade of " & hcn(hairColorInd) & "." & DDUtils.RNRN & """Maybe I stepped on a cursed brick or something..."" you muse as you continue on." & DDUtils.RNRN & "You now have " & hcn(hairColorInd) & " hair!")
         Catch ex As Exception
-            Game.pushLblEvent("Your foot falls on an uneven patch of dungeon and you breifly lose your footing. As you lurch forward, catching your balance, your cowbell gives out a loud ring.  Looking franctically around, you are relived to see that nothing seems to have been attracted by the noise.  As you brush your shaken up hair back into place, you notice that at some point your hair color had shifted.  𝘔𝘢𝘺𝘣𝘦 𝘐 𝘴𝘵𝘦𝘱𝘱𝘦𝘥 𝘰𝘯 𝘢 𝘤𝘶𝘳𝘴𝘦𝘥 𝘣𝘳𝘪𝘤𝘬 𝘰𝘳 𝘴𝘰𝘮𝘦𝘵𝘩𝘪𝘯𝘨, you muse as you continue on." & vbCrLf & vbCrLf & "Your hair color has changed!")
+            Game.pushLblEvent("Your foot falls on an uneven patch of dungeon and you breifly lose your footing. As you lurch forward, catching your balance, your cowbell gives out a loud ring.  Looking franctically around, you are relived to see that nothing seems to have been attracted by the noise.  As you brush your shaken up hair back into place, you notice that at some point your hair color had shifted." & DDUtils.RNRN & """Maybe I stepped on a cursed brick or something..."" you muse as you continue on." & DDUtils.RNRN & "Your hair color has changed!")
         End Try
     End Sub
     Sub step1()
@@ -98,8 +98,8 @@
     End Sub
 
     Overridable Function dropEWeapon(ByRef p As Player) As Boolean
-        If p.pClass.name.Equals("Magical Girl") Or p.pClass.name.Equals("Valkyrie") Then
-            Equipment.weaponChange("Fists")
+        If p.className.Equals("Magical Girl") Or p.className.Equals("Valkyrie") Then
+            Equipment.weaponChange(p, "Fists")
             Return True
         End If
         Return False
@@ -113,7 +113,7 @@
         Dim out = "As you bend down to pick up a dropped item, your cowbell jangles as you stand back up.  Already used to this, you give yourself a quick once over.  You don't see that much different, though your hair seems to have styled itself since you last checked up on it."
 
         If dropItem Then
-            out += "  You loose hold of your weapon dropping it and reverting your transformation."
+            out += "  You lose hold of your weapon, dropping it and reverting your transformation."
         End If
 
         Game.pushLblEvent(out)
@@ -142,7 +142,6 @@
 
     Overridable Sub boobTF(ByRef p As Player)
         p.breastSize += 1
-        p.reverseAllRoute()
     End Sub
     Overridable Sub tfDialogStep678(ByVal bsize7 As Boolean, ByVal bsizeneg1 As Boolean, ByVal be As Boolean, ByVal mtf As Boolean)
         Dim out = "Despite being out of the cloud of dust, another small sneeze rattles your bell slightly."
@@ -152,7 +151,7 @@
         End If
 
         If bsizeneg1 Then
-            out += "  Your breasts jiggle a little, and ..." & vbCrLf & vbCrLf & "Wait, BREASTS?!" & vbCrLf & vbCrLf & "You strip off your top and examine your chest and sure enough, you have two small breasts now."
+            out += "  Your breasts jiggle a little, and ..." & DDUtils.RNRN & "Wait, BREASTS?!" & DDUtils.RNRN & "You strip off your top and examine your chest and sure enough, you have two small breasts now."
         End If
 
         If be Then
@@ -195,17 +194,17 @@
 
     Overridable Sub tfClothes(ByRef p As Player)
         p.inv.add(71, 1)
-        Equipment.clothesChange("Cow_Print_Bra")
+        Equipment.clothesChange(p, "Cow_Print_Bra")
     End Sub
     Overridable Sub tfDialogStep9()
-        Game.pushLblEvent("You take another look at your cowbell.  Every time its rung thus far, you've progressed a little more into some form of bovine-human hybrid.  𝘔𝘪𝘯𝘰𝘵𝘢𝘶𝘳, you correct your self.  It's been turning you into a minotaur, and a female one at that.  Your transformation seems pretty far along, and you'd wager you're only one more chime away from completing the change.  With that in mind, you give the bell a hard shake, and the sound from its ring echos throughout the dungeon." & vbCrLf & vbCrLf & "You are now a female minotaur!")
+        Game.pushLblEvent("You take another look at your cowbell.  Every time its rung thus far, you've progressed a little more into some form of bovine-human hybrid.  'Minotaur', you correct your self.  It's been turning you into a minotaur, and a female one at that.  Your transformation seems pretty far along, and you'd wager you're only one more chime away from completing the change.  With that in mind, you give the bell a hard shake, and the sound from its ring echos throughout the dungeon." & DDUtils.RNRN & "You are now a female minotaur!")
     End Sub
     Overridable Sub step9()
         Dim p As Player = Game.player1
 
         tfDialogStep9()
 
-        Game.player1.pForm = p.forms("Minotaur Cow")
+        p.changeForm("Minotaur Cow")
 
         tfClothes(p)
     End Sub

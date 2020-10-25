@@ -18,13 +18,13 @@
         Else
             If Int(Rnd() * 7) = 0 Or Game.noRNG Then
                 If Game.combatmode Then
-                    Game.player1.currTarget.despawn("warp")
+                    Game.player1.currTarget.despawn("pwarp")
                     Game.updateList = New PQ
                 End If
                 Game.pushLblEvent("As you eat the mushroom, you can feel something...weird.  Unlike the simple teleports of past experiences, this time a massive, slowly growing tunnel of sorts has opened up in front of you.  You try to run, but soon you find that you can not escape the pull of its void.", AddressOf Warp.gotospace)
             Else
                 If Game.combatmode Then
-                    Game.player1.currTarget.despawn("warp")
+                    Game.player1.currTarget.despawn("pwarp")
                     Game.updateList = New PQ
                 End If
                 Game.pushLblEvent("With a flash of light, you suddenly find yourself at random to another portion of the dungeon.")

@@ -40,7 +40,7 @@
             out += "\tYour facial structure softens, and you can feel your chest expand slightly.  It seems like you are becoming more feminine!\n\n"
         End If
 
-        p.prt.changeSkinColor(Game.cShift(p.prt.skincolor, Color.LightSlateGray, 15))
+        p.prt.changeSkinColor(DDUtils.cShift(p.prt.skincolor, Color.LightSlateGray, 15))
 
         out += "Seemingly out of nowhere, your wound throbs, and your vision goes black.  Fortunately, it quickly returns, but everything seems slightly . . . off.  While shadows seem less dark, bright areas seem no brighter, and everything looks slightly fuzzier.\n\n" &
                "As you examine yourself, you can tell that the venom has been progressing through your darkening veins, and while you aren't completely sure, your skin also seems to have become marginally greyer."
@@ -61,7 +61,7 @@
             out += "\tWhile you aren't sure exactly when, you have become fully female since exposure to the venom.  While you feel like this should be a huge deal, the throbbing of the venom through your head has you more concerned.\n\n"
         End If
 
-        p.prt.changeSkinColor(Game.cShift(p.prt.skincolor, Color.LightSlateGray, 15))
+        p.prt.changeSkinColor(DDUtils.cShift(p.prt.skincolor, Color.LightSlateGray, 15))
 
         out += "With every beat of your heart, your vision becomes clearer and clearer.  It isn't until you blink and feel eight eyelids reopen that you realize why.  You have eight eyes now! With six on the front of your head, and one on each side, not only is your vision sharper, but your field of vision has expanded as well!\n\n" &
                "Between your improved sight and noticeably quickened reflexes, it seems that the venom is actually improving your body, contrary to what you had heard of it.  Examining your body further, you do notice that you seem more bottom heavy than before, with your ass easily spilling over clothes that fit perfectly just last night.  You set back out, excited for what the venom brings next."
@@ -82,10 +82,10 @@
         p.prt.setIAInd(pInd.eyes, 22, True, True)
         p.prt.setIAInd(pInd.rearhair, 8, True, True)
         p.prt.setIAInd(pInd.midhair, 19, True, True)
-        p.prt.changeSkinColor(Game.cShift(p.prt.skincolor, Color.LightSlateGray, 5))
+        p.prt.changeSkinColor(DDUtils.cShift(p.prt.skincolor, Color.LightSlateGray, 5))
 
         Game.pushLblEvent("\tWhile for the most part the venom seems to be concentrated in your lower body now, all at once its familiar throb returns so suddenly it forces you to the ground and onto the brink of passing out.  It isn't until a pain unlike anything you've ever felt before flares up in your legs that you decide that unconciousness might be a blessing, and allow yourself to go under.", AddressOf step4pt1)
-        p.pForm = p.forms("Arachne")
+        p.changeForm("Arachne")
         p.lust += 5
     End Sub
     Sub step4pt1()
@@ -101,6 +101,7 @@
         p.prt.setIAInd(pInd.rearhair, 17, True, True)
         p.prt.setIAInd(pInd.midhair, 21, True, True)
         p.prt.setIAInd(pInd.fronthair, 18, True, True)
+        p.prt.setIAInd(pInd.hairacc, 10, True, False)
 
         Game.pushLblEvent("\tStanding behind you is another arachne, and it is clear from her posture that she is one of the more experienced huntresses.  You stiffen up, and as the she gazes into your eyes you find yourself with a lot less control over the situation than you thought you had.\n\n" &
                           """Well, it seems that our venom has finally run its course,"" she muses, approaching you.  As she speaks, her words supersede any thoughts flowing through your head, and you find yourself completely at her mercy.  ""Our species began when an enchanted spider bit its enchantress, and she underwent a similar process to what you have just experienced.  Since that fateful day, the Sisterhood of Arachne has spread throughout these cursed passages with the singular goal of claiming all whom enter into our ranks. Now that you are one of us, you are free to go about your business without fear of our interference.""\n\n" &
@@ -115,12 +116,32 @@
         Dim p As Player = Game.player1
         If p.equippedWeapon.getName.Equals("Magical_Girl_Wand") Or
             p.equippedWeapon.getName.Equals("Valkyrie_Sword") Then
-            Equipment.weaponChange("Fists")
+            Equipment.weaponChange(p, "Fists")
         End If
 
         p.setStartStates()
         Game.pushLblEvent("Your base form is now that of an Arachne!  Should you revert to your start state, this is what you will become.")
         stopTF()
+    End Sub
+
+    Public Shared Sub rapidTF(ByRef p As Player)
+        If p.sex.Equals("Male") Then
+            p.MtF()
+            If p.breastSize < 2 Then p.be()
+        End If
+
+        If p.breastSize < 2 Then p.be()
+
+        p.prt.setIAInd(pInd.eyes, 22, True, True)
+        p.prt.setIAInd(pInd.rearhair, 8, True, True)
+        p.prt.setIAInd(pInd.midhair, 19, True, True)
+        p.prt.setIAInd(pInd.tail, 2, True, False)
+        p.prt.changeSkinColor(DDUtils.cShift(p.prt.skincolor, Color.LightSlateGray, 35))
+
+        p.changeForm("Arachne")
+        p.lust += 35
+
+        p.drawPort()
     End Sub
 
     Public Overrides Sub stopTF()
@@ -129,7 +150,7 @@
     End Sub
 
     Public Overrides Function getNextStep(stage As Integer) As Action
-        If (Game.player1.perks(perk.avenom) = -1 And Game.player1.perks(perk.svenom) = -1) Or Game.player1.pForm.name.Equals("Arachne") Then
+        If (Game.player1.perks(perk.avenom) = -1 And Game.player1.perks(perk.svenom) = -1) Or Game.player1.formName.Equals("Arachne") Then
             Return AddressOf stopTF
         End If
         If Game.player1.perks(perk.svenom) > -1 Then stage = Game.player1.perks(perk.svenom)
@@ -161,7 +182,6 @@
         Dim p = Game.player1
         If p.breastSize < 7 Then
             p.breastSize += 1
-            p.reverseallroute()
         End If
     End Sub
 End Class

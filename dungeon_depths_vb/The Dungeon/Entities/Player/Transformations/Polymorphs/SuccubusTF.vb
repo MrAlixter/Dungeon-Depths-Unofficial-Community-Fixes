@@ -19,8 +19,8 @@
         Dim out = ""
 
         'unequips
-        Equipment.clothesChange("Succubus_Garb")
-        Equipment.weaponChange("Fists")
+        Equipment.clothesChange(p, "Succubus_Garb")
+        Equipment.weaponChange(p, "Fists")
 
         'succubus transformation
         If p.sex = "Male" Then
@@ -31,7 +31,6 @@
         p.prt.skincolor = Color.FromArgb(255, 255, 105, 180)
         p.prt.setIAInd(pInd.rearhair, 9, True, True)
         If p.breastSize < 2 Then p.breastSize = 2
-        p.reverseallroute()
         p.prt.setIAInd(pInd.face, 0, True, False)
         p.prt.setIAInd(pInd.midhair, 9, True, True)
         p.prt.setIAInd(pInd.nose, 0, True, False)

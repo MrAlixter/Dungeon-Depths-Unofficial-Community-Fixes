@@ -1,7 +1,7 @@
 ﻿Public Class Spellbook
     Inherits Item
     Public Shared spells() As String = {"Super Fireball", "Icicle Spear", "Self Polymorph", "Turn to Frog", "Polymorph Enemy",
-                                        "Petrify", "Heal", "Illuminate", "Fireball"}
+                                        "Petrify", "Heal", "Illuminate", "Fireball", "Warp", "Arcane Compass"}
     Sub New()
         MyBase.setName("Spellbook")
         MyBase.setDesc("A simple, leather-bound book that likely contains something cool and magic.")
@@ -89,7 +89,7 @@
             Game.pushLstLog("You read the " & getName() & ". " & sName & " learned!")
             If Not out.Equals("") Then
                 Game.pushLstLog(out)
-                Game.pushLblEvent("You read the " & getName() & ". " & sName & " learned!" & vbCrLf & vbCrLf & out)
+                Game.pushLblEvent("You read the " & getName() & ". " & sName & " learned!" & DDUtils.RNRN & out)
             Else
                 Game.pushLblEvent("You read the " & getName() & ". " & sName & " learned!")
             End If

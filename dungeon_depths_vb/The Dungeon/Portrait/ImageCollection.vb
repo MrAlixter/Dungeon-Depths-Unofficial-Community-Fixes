@@ -108,6 +108,9 @@
         ndoM = mFace.Count
         atrs.Add(pInd.face, New ImageAttribute(fFace, mFace, ndoF, ndoM))
 
+        '-blush
+        atrs.Add(pInd.blush, New ImageAttribute(bkg, bkg.Count))
+
         '-mid hair
         fRearHair1 = New ImageDump("img/fRearHair1")
         mRearHair1 = New ImageDump("img/mRearHair1")
@@ -302,6 +305,9 @@
         mFace.merge(mTFface)
         atrs.Add(pInd.face, New ImageAttribute(fFace, mFace, ndoF, ndoM))
 
+        '-blush
+        atrs.Add(pInd.blush, New ImageAttribute(bkg, bkg.Count))
+
         '-mid hair
         fRearHair1 = New ImageDump("img/fRearHair1")
         mRearHair1 = New ImageDump("img/mRearHair1")
@@ -474,8 +480,8 @@
         mfEquivalentIndexes.Add(pInd.hairacc, New MFRouting({},
                                               {}))
         'genitalia
-        mfEquivalentIndexes.Add(pInd.genitalia, New MFRouting({},
-                                              {}))
+        mfEquivalentIndexes.Add(pInd.genitalia, New MFRouting({0, 1, 2, 3, 4},
+                                              {-1, -1, -1, -1, -1}))
         'shoulders
         mfEquivalentIndexes.Add(pInd.shoulders, New MFRouting({},
                                               {}))

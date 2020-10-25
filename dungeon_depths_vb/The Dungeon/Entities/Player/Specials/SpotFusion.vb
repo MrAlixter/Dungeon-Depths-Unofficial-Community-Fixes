@@ -10,100 +10,42 @@
         Game.pushLstLog("Spot Fusion!")
         Game.pushLblCombatEvent("Spot Fusion!" & vbCrLf & "Fuses two explorers for 100 turns.")
 
-        Dim i As Integer
-        Try
-            i = InputBox("Which save slot?   1 2 3 4" & vbCrLf & _
-                                        "                              5 6 7 8")
-        Catch e As Exception
-            Game.pushLblEvent("The spot fusion technique does not react.  It seems that an improper slot was selected.")
-            Game.player1.stamina += 50
-            Exit Sub
-        End Try
-        If Not System.IO.File.Exists("saves/s" & i & ".ave") Then
-            Game.pushLblEvent("Despite looking for someone to fuse with, you can't find anyone at that location.")
-            Game.player1.stamina += 50
-            Exit Sub
-        End If
-        Dim save = Game.getPlayerFromFile("saves/s" & i & ".ave")
-        Dim p2 As Player = save.Item1
-        If save.Item2 <> Game.version Or p2.perks(perk.polymorphed) > -1 Or Not Transformation.canBeTFed(Game.player1) Or (p2.pClass.name.Equals("Magical Girl") Or p2.pClass.name.Equals("Valkyrie")) Then
-            Game.pushLblEvent("After talking it over, " & Game.player1.name & " and " & p2.name & " decide that they are incompatable, and not to fuse.")
-            Game.player1.stamina += 50
-            Exit Sub
-        End If
-
-        Game.pushLblEvent(Game.player1.name & " and " & p2.name & " fuse together to form " & FusionCrystal.nameFusion(Game.player1.name, p2.name) & _
-                           ", a superior explorer!")
-
-        Fusion(getUser, p2)
+        FusionDialogBackend.toPNL(MyBase.getUser, TypeOfFusion.SPOT_FUSION)
     End Sub
 
 
-    Shared Sub Fusion(ByVal p1 As Player, ByVal p2 As Player)
-        Polymorph.transform(Game.player1, "Fusion")
-        Randomize(p1.name.GetHashCode)
+    Shared Function Fusion(ByVal p1 As Player, ByVal p2 As Player) As Player
+        Randomize(String.Compare(p1.name, p2.name))
         p1.name = FusionCrystal.nameFusion(p1.name, p2.name)
 
         Dim r As Integer = Int(Rnd() * 2)
-        If r = 0 Then p1.pClass = p2.pClass
-        If (p1.pClass.name = "Warrior" And p2.pClass.name = "Mage") Or (p2.pClass.name = "Warrior" And p1.pClass.name = "Mage") Then p1.pClass = p1.classes("Paladin")
+        If r = 0 Then p1.changeClass(p2.className)
+        If (p1.className = "Warrior" And p2.className = "Mage") Or (p2.className = "Warrior" And p1.className = "Mage") Then p1.changeClass("Paladin")
 
         r = Int(Rnd() * 2)
         If r = 0 Then p1.sex = p2.sex
 
-        If p1.maxHealth > p2.maxHealth Then
-            p1.maxHealth = p1.maxHealth * 1.5
-        Else
-            p1.maxHealth = p2.maxHealth * 1.5
-        End If
+        p1.maxHealth = Math.Max(p1.maxHealth * 1.5, p2.maxHealth * 1.5)
 
-        If p1.maxMana > p2.maxMana Then
-            p1.mana = p1.maxMana * 1.5
-        Else
-            p1.mana = p2.maxMana * 1.5
-        End If
+        p1.maxMana = Math.Max(p1.maxMana * 1.5, p2.maxMana * 1.5)
 
-        If p1.attack > p2.attack Then
-            p1.attack = p1.attack * 1.5
-        Else
-            p1.attack = p2.attack * 1.5
-        End If
+        p1.attack = Math.Max(p1.attack * 1.5, p2.attack * 1.5)
 
-        If p1.defence > p2.defence Then
-            p1.defence = p1.defence * 1.5
-        Else
-            p1.defence = p2.defence * 1.5
-        End If
+        p1.defense = Math.Max(p1.defense * 1.5, p2.defense * 1.5)
 
-        If p1.will > p2.will Then
-            p1.will = p1.will * 1.5
-        Else
-            p1.will = p2.will * 1.5
-        End If
+        p1.will = Math.Max(p1.will * 1.5, p2.will * 1.5)
 
-        If p1.speed > p2.speed Then
-            p1.speed = p1.speed * 1.5
-        Else
-            p1.speed = p2.speed * 1.5
-        End If
+        p1.speed = Math.Max(p1.speed * 1.5, p2.speed * 1.5)
 
-        If p1.lust > p2.lust Then
-            p1.lust = p1.lust * 1.5
-        Else
-            p1.lust = p2.lust * 1.5
-        End If
+        p1.lust = Math.Max(p1.lust * 1.5, p2.lust * 1.5)
 
-        If p1.stamina > p2.stamina Then
-            p1.stamina = p1.stamina * 1.5
-        Else
-            p1.stamina = p2.stamina * 1.5
-        End If
+        p1.stamina = Math.Min(p1.stamina, p2.stamina)
 
         For i = 0 To Portrait.NUM_IMG_LAYERS
-            If i <> 1 And i <> 15 And i <> 3 And i <> 5 Then
+            If i <> pInd.rearhair And i <> pInd.fronthair And i <> pInd.midhair Then
                 r = Int(Rnd() * 2)
                 If r = 0 Then p1.prt.iArrInd(i) = p2.prt.iArrInd(i)
-            ElseIf i = 1 Then
+            ElseIf i = pInd.rearhair Then
                 r = Int(Rnd() * 2)
                 If r = 0 Then p1.prt.iArrInd(pInd.rearhair) = p2.prt.iArrInd(pInd.rearhair)
                 If r = 0 Then p1.prt.iArrInd(pInd.midhair) = p2.prt.iArrInd(pInd.midhair)
@@ -122,7 +64,8 @@
 
         p1.breastSize = (p1.breastSize + p2.breastSize) / 2
         p1.currState.save(p1)
-        p1.drawPort()
-    End Sub
+
+        Return p1
+    End Function
 
 End Class

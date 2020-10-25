@@ -1,7 +1,7 @@
 ﻿Public Class MagGirlTF
     Inherits Transformation
 
-    Shared className As String = "Magical Girl"
+    Protected Const className As String = "Magical Girl"
 
     Sub New(n As Integer, tts As Integer, wi As Double, cbs As Boolean)
         MyBase.New(n, tts, wi, cbs)
@@ -21,13 +21,13 @@
     End Sub
     Sub step1()
         Dim p As Player = Game.player1
-        p.pClass = p.classes("Magical Girl​")
+        p.changeClass("Magical Girl​")
 
         If p.sex = "Male" Then
-            p.sex = "Female"
+            p.MtF()
         End If
 
-        p.prt.setIAInd(pInd.hat, Portrait.imgLib.atrs(pInd.hat).getF.Count - 3, True, False)
+        'p.prt.setIAInd(pInd.hat, Portrait.imgLib.atrs(pInd.hat).getF.Count - 3, True, False)
 
         step1dialog(p)
 
@@ -53,17 +53,16 @@
         p.prt.setIAInd(pInd.fronthair, 8, True, True)
         p.prt.setIAInd(pInd.hat, 0, True, False)
 
-        p.reverseAllRoute()
     End Sub
     Overridable Sub tfClothes(ByRef p As Player)
         If p.inv.item(10).count < 1 Then p.inv.add(10, 1)
 
         p.prt.setIAInd(pInd.hairacc, 2, True, False)
 
-        Equipment.accChange("Nothing")
-        Equipment.clothesChange("Magical_Girl_Outfit")
+        Equipment.accChange(p, "Nothing")
+        Equipment.clothesChange(p, "Magical_Girl_Outfit")
     End Sub
-    Sub step2()
+    Overridable Sub step2()
         Dim p As Player = Game.player1
         If p.magGState.initFlag Then
             p.magGState.load(p)
@@ -78,7 +77,7 @@
 
         tfClothes(p)
 
-        p.pClass = p.classes(className)
+        p.changeClass(className)
 
         Game.lblEvent.Text = ""
         Game.lblEvent.Visible = False
@@ -90,10 +89,9 @@
     End Sub
 
     Shared Sub halfRevert(ByRef p As Player)
-        p.pClass = p.classes("Mage")
+        p.changeClass("Mage")
 
         p.breastSize = 2
-        p.reverseAllRoute()
 
         p.prt.setIAInd(pInd.rearhair, 7, True, True)
         p.prt.setIAInd(pInd.ears, 0, True, False)
@@ -101,7 +99,7 @@
         p.prt.setIAInd(pInd.fronthair, 7, True, True)
     End Sub
     Shared Sub chkForMagGirlRevert(ByRef p As Player)
-        If Not p.pClass.name.Equals(className) Then Exit Sub
+        If Not p.className.Equals(className) Then Exit Sub
         pushLblEventWithoutLoss("Your form wavers, and while you can maintain it you are definitly tiring out.")
         MagGirlTF.halfRevert(p)
     End Sub
@@ -112,9 +110,9 @@
 
     Public Overrides Function getNextStep(stage As Integer) As Action
         Dim p As Player = Game.player1
-        If p.pClass.name.Equals("Magical Girl​") Then
+        If p.className.Equals("Magical Girl​") Then
             Return AddressOf step2
-        ElseIf p.pClass.name.Equals(className) Then
+        ElseIf p.className.Equals(className) Then
             Return AddressOf stopTF
         Else
             Return AddressOf step1
@@ -126,7 +124,7 @@
 
     Public Shared Sub pushLblEventWithoutLoss(ByRef out As String)
         Dim revertText = Game.lblEvent.Text.Split(vbCrLf)(0)
-        If Not revertText.Equals("") Then out = revertText & vbCrLf & vbCrLf & out
+        If Not revertText.Equals("") Then out = revertText & DDUtils.RNRN & out
         Game.pushLblEvent(out)
     End Sub
 End Class

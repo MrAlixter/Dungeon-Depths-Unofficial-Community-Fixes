@@ -14,13 +14,13 @@
         If spdBuff < 0 Then spdBuff = 0
 
         Dim dmg As Integer = p.getATK + (p.getATK * (spdBuff / 20))
+        Game.pushLstLog("Heavy Blow!")
+        Game.pushLblCombatEvent("Heavy Blow!" & vbCrLf & "You hit your opponent for " & dmg & " damage!")
+
         m.takeDMG(dmg, p)
         If Not m.isStunned Then
             m.isStunned = True
             m.stunct = 0
         End If
-
-        Game.pushLstLog("Heavy Blow!")
-        Game.pushLblCombatEvent("Heavy Blow!" & vbCrLf & "You hit your opponent for " & dmg & " damage!")
     End Sub
 End Class

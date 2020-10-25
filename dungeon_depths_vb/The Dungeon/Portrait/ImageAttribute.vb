@@ -21,7 +21,16 @@
     Function getM() As List(Of Image)
         Return mImages.getImages
     End Function
+    Function getI(ByVal bool As Boolean) As List(Of Image)
+        If bool Then
+            Return getF()
+        Else
+            Return getM()
+        End If
+    End Function
     Function getAt(ByRef ind As Tuple(Of Integer, Boolean, Boolean)) As Image
+        If ind Is Nothing Then Return Portrait.nullImg
+
         If ind.Item3 Then
             If ind.Item2 Then
                 ind = New Tuple(Of Integer, Boolean, Boolean)(osf(ind.Item1), True, False)

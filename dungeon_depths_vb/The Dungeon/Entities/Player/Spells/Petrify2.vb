@@ -4,10 +4,10 @@
         MyBase.New(c, t)
         MyBase.setName("Petrify II")
         MyBase.settier(4)
-        If Not c Is Nothing AndAlso c.pForm.name.Contains("Gorgon") Then MyBase.setcost(2) Else MyBase.setcost(14)
+        If Not c Is Nothing AndAlso c.formName.Contains("Gorgon") Then MyBase.setcost(2) Else MyBase.setcost(14)
     End Sub
     Public Overrides Sub effect()
-        If getTarget.sName.Equals("Medusa") Or (getCaster.pForm.name.Contains("Gorgon") And MyBase.getTarget.GetType().IsSubclassOf(GetType(Shopkeeper))) Then
+        If getTarget.sName.Equals("Medusa") Or (getCaster.formName.Contains("Gorgon") And MyBase.getTarget.GetType().IsSubclassOf(GetType(Shopkeeper))) Then
             Game.pushLblEvent("Your spell doesn't seem to have done anything...")
             Exit Sub
         End If
@@ -33,10 +33,10 @@
     End Sub
     Public Overrides Sub backfire()
         Dim p = Game.player1
-        If Transformation.canBeTFed(p) Then
-            p.pState.save(p)
-        End If
-        p.defence = 40
+       
+        p.savePState()
+
+        p.defense = 40
 
         Dim pturns = Int(Rnd() * 5) + 3
         p.petrify(Color.LightGray, pturns)

@@ -18,9 +18,9 @@
     Overrides Sub tfDialogStep1(ByVal hairColorInd As Integer)
         Try
             Dim hcn = {"Black", "Brown", "Blonde", "White"}
-            Game.pushLblEvent("Your foot falls on an uneven patch of dungeon and you breifly lose your footing.  As you brush your shaken up hair back into place, you notice that at some point your hair color had changed to a shade of " & hcn(hairColorInd) & ".  𝘔𝘢𝘺𝘣𝘦 𝘐 𝘴𝘵𝘦𝘱𝘱𝘦𝘥 𝘰𝘯 𝘢 𝘤𝘶𝘳𝘴𝘦𝘥 𝘣𝘳𝘪𝘤𝘬 𝘰𝘳 𝘴𝘰𝘮𝘦𝘵𝘩𝘪𝘯𝘨, you muse as you continue on." & vbCrLf & vbCrLf & "You now have " & hcn(hairColorInd) & " hair!")
+            Game.pushLblEvent("Your foot falls on an uneven patch of dungeon and you breifly lose your footing.  As you brush your shaken up hair back into place, you notice that at some point your hair color had changed to a shade of " & hcn(hairColorInd) & "." & DDUtils.RNRN & """Maybe I stepped on a cursed brick or something..."" you muse as you continue on." & DDUtils.RNRN & "You now have " & hcn(hairColorInd) & " hair!")
         Catch ex As Exception
-            Game.pushLblEvent("Your foot falls on an uneven patch of dungeon and you breifly lose your footing.  As you brush your shaken up hair back into place, you notice that at some point your hair color had shifted.  𝘔𝘢𝘺𝘣𝘦 𝘐 𝘴𝘵𝘦𝘱𝘱𝘦𝘥 𝘰𝘯 𝘢 𝘤𝘶𝘳𝘴𝘦𝘥 𝘣𝘳𝘪𝘤𝘬 𝘰𝘳 𝘴𝘰𝘮𝘦𝘵𝘩𝘪𝘯𝘨, you muse as you continue on." & vbCrLf & vbCrLf & "Your hair color has changed!")
+            Game.pushLblEvent("Your foot falls on an uneven patch of dungeon and you breifly lose your footing.  As you brush your shaken up hair back into place, you notice that at some point your hair color had shifted." & DDUtils.RNRN & """Maybe I stepped on a cursed brick or something..."" you muse as you continue on." & DDUtils.RNRN & "Your hair color has changed!")
         End Try
     End Sub
 
@@ -103,7 +103,6 @@
 
     Overrides Sub boobTF(ByRef p As Player)
         p.breastSize -= 1
-        p.reverseAllRoute()
     End Sub
     Overrides Sub tfDialogStep678(ByVal bsize7 As Boolean, ByVal bsizeneg1 As Boolean, ByVal be As Boolean, ByVal mtf As Boolean)
         Dim out = "Despite being out of the cloud of dust, another small sneeze rattles you slightly."
@@ -160,24 +159,22 @@
         p.dickSize = 3
 
         If p.inv.getCountAt("Barbarian_Armor") < 1 Then p.inv.add("Barbarian_Armor", 1)
-        Equipment.clothesChange("Barbarian_Armor")
+        Equipment.clothesChange(p, "Barbarian_Armor")
 
         p.prt.setIAInd(pInd.eyebrows, 5, False, False)
         p.prt.setIAInd(pInd.mouth, 8, False, False)
         p.prt.setIAInd(pInd.eyes, 13, False, True)
         p.prt.setIAInd(pInd.nose, 2, False, True)
-
-        p.reverseAllRoute()
     End Sub
     Overrides Sub tfDialogStep9()
-        Game.pushLblEvent("You take another look at your chest.  It seems that with every change this curse inflicts, you've progressed a little more into some form of bovine-human hybrid.  𝘔𝘪𝘯𝘰𝘵𝘢𝘶𝘳, you correct your self.  It's been turning you into a minotaur, and a masculine one at that.  Your transformation seems pretty far along, and you'd wager you're only one more change away.  With that in mind, you focus all your energy on bulking up your already ample muscles." & vbCrLf & vbCrLf & "You are now a male minotaur!")
+        Game.pushLblEvent("You take another look at your chest.  It seems that with every change this curse inflicts, you've progressed a little more into some form of bovine-human hybrid.  𝘔𝘪𝘯𝘰𝘵𝘢𝘶𝘳, you correct your self.  It's been turning you into a minotaur, and a masculine one at that.  Your transformation seems pretty far along, and you'd wager you're only one more change away.  With that in mind, you focus all your energy on bulking up your already ample muscles." & DDUtils.RNRN & "You are now a male minotaur!")
     End Sub
     Overrides Sub step9()
         Dim p As Player = Game.player1
 
         tfDialogStep9()
 
-        Game.player1.pForm = p.forms("Minotaur Bull")
+        p.changeForm("Minotaur Bull")
 
         tfClothes(p)
     End Sub
@@ -201,12 +198,10 @@
         p.prt.setIAInd(pInd.ears, 7, False, True)
         p.prt.setIAInd(pInd.horns, 5, True, False)
 
-        p.reverseAllRoute()
-
         If p.inv.getCountAt("Barbarian_Armor") < 1 Then p.inv.add("Barbarian_Armor", 1)
-        Equipment.clothesChange("Barbarian_Armor")
+        Equipment.clothesChange(p, "Barbarian_Armor")
 
-        p.pForm = p.forms("Minotaur Bull")
+        p.changeForm("Minotaur Bull")
     End Sub
 
     Public Overrides Function getNextStep(stage As Integer) As Action

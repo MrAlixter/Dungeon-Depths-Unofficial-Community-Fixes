@@ -17,7 +17,7 @@
             Game.pushLblEvent("Chewing the gum causes a dizzy calm wash to over you.")
             Game.player1.ongoingTFs.Add(New MBimboTF(2, 5, 0.25, True))
             Game.player1.perks(perk.bimbotf) = 0
-        ElseIf Game.player1.pClass.name.Equals("Bimbo") Then
+        ElseIf Game.player1.className.Equals("Bimbo") Then
             Game.pushLblEvent("Chewing the gum make your head feel warm and fuzzy and stuff. You like, totally, love this gum!")
         Else
             Game.pushLblEvent("Chewing the gum make your head feel warm and fuzzy.")

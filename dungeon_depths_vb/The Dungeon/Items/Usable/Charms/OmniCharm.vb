@@ -8,15 +8,15 @@
         tier = Nothing
         MyBase.setUsable(True)
         MyBase.count = 0
-        MyBase.value = 3700
+        MyBase.value = 4700
     End Sub
 
     Overrides Sub use(ByRef p As Player)
         If Me.getUsable() = False Then Exit Sub
-        Game.pushLblEvent("You use the " & getName() & ". +5 base ATK, DEF, SPD, WIL, Max Mana, +10 Max Health!")
+        Game.pushLblEvent("You use the " & getName() & ". +5 base ATK, DEF, SPD, WILL, Max Mana, +10 Max Health!")
 
         p.attack += 5
-        p.defence += 5
+        p.defense += 5
         p.speed += 5
         p.maxMana += 5
         p.will += 5

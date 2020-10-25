@@ -30,8 +30,8 @@
     End Sub
 
     Sub drawImg()
-        Dim pImg = p.prt.oneLayerImgCheck(p.pForm.name, p.pClass.name)
-        If p.prt.oneLayerImgCheck(p.pForm.name, p.pClass.name) Is Nothing Then
+        Dim pImg = p.prt.oneLayerImgCheck(p.formName, p.className)
+        If p.prt.oneLayerImgCheck(p.formName, p.className) Is Nothing Then
             p.prt.setIArr()
             pImg = Portrait.CreateFullBodyBMP(p.prt.iArr)
         End If
@@ -59,7 +59,7 @@
 
     Private Sub cmbArmor_SelectedValueChanged(sender As Object, e As EventArgs) Handles cmbArmor.SelectedValueChanged
         If p.inv.item(cmbArmor.SelectedItem).count < 1 Then p.inv.add(cmbArmor.SelectedItem, 1)
-        Equipment.clothesChange(cmbArmor.SelectedItem)
+        Equipment.clothesChange(p, cmbArmor.SelectedItem)
 
         p.prt.portraitUDate()
         drawImg()

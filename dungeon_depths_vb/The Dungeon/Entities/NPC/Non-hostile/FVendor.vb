@@ -5,7 +5,7 @@
         health = 1.0
         maxHealth = 9999
         attack = 999
-        defence = 99
+        defense = 99
         speed = 99
 
         'Define the inventory
@@ -36,19 +36,21 @@
         picNormal = ShopNPC.npcLib.atrs(0).getAt(11)
         picPrincess = ShopNPC.npcLib.atrs(0).getAt(13)
         picBunny = ShopNPC.npcLib.atrs(0).getAt(12)
+        picArachne = ShopNPC.npcLib.atrs(0).getAt(69)
 
-        picNCP = New List(Of Image)
-        picNCP.AddRange({picNormal,
+        picNPC = New List(Of Image)
+        picNPC.AddRange({picNormal,
                          ShopNPC.npcLib.atrs(0).getAt(4),
                          ShopNPC.npcLib.atrs(0).getAt(5),
                          picPrincess,
                          picBunny})
 
-        picNCP.AddRange({ShopNPC.npcLib.atrs(0).getAt(16),
+        picNPC.AddRange({ShopNPC.npcLib.atrs(0).getAt(16),
                          ShopNPC.npcLib.atrs(0).getAt(15),
                          ShopNPC.npcLib.atrs(0).getAt(23),
                          ShopNPC.npcLib.atrs(0).getAt(14),
-                         ShopNPC.npcLib.atrs(0).getAt(61)})
+                         ShopNPC.npcLib.atrs(0).getAt(61),
+                         picArachne})
         If speed = Game.player1.speed Then speed -= 1
         title = " the "
     End Sub
@@ -63,7 +65,7 @@
             inv.setCount("Warrior's_Feast", 0)
             inv.setCount("Mage's_Delicacy", 0)
             inv.setCount("Tavern_Special", 0)
-            Game.pushNPCDialog("Hey!  I'm turning into a tree!  Now, obviously this ain't great, but at least I'm getting hard!  HA!  That's a little bit of some tree humor, buy some stuff before you leaf and maybe I can get this straighed out before I'm all arborial...")
+            Game.pushNPCDialog("Hey!  I'm turning into a tree!  Now, obviously this ain't great, but at least I'm getting hard!  HA!  That's a little bit of some tree humor, buy some stuff before you leaf and maybe I can get this straighed out before this curse runs its course, eh?")
         Else
             If npcIndex = 0 Then
                 If Int(Rnd() * 20) = 0 Then
@@ -83,7 +85,7 @@
                     npcIndex = 6
                     Game.pushNPCDialog("Say what you will about Marissa, but the lady's got a type for sure.  Fortunately for me, I've got a " &
                                        "deal goin' on with one of the hottest mind controllers you'll find in these parts, and part of my payment was " &
-                                       "some solid mental defence training.  I'm not even worried about the new body, either.  I've got just the thing " &
+                                       "some solid mental defense training.  I'm not even worried about the new body, either.  I've got just the thing " &
                                        "to change back me to my old self...when I get bored, that is.  No reason not to enjoy Marissa's ""tip"" to its fullest, right?  " &
                                        "In the meantime, I've always got something cooking if you're hungry.  Let me know if I can get you anything, ok?")
                 Else
@@ -96,19 +98,30 @@
             ElseIf npcIndex = 2 Then
                 Game.pushNPCDialog("...")
             ElseIf npcIndex = 3 Then
-                Game.pushNPCDialog("You dine with royalty this day, " & Game.player1.pClass.name & ".  I assure you, my cooking is more than fit for a princess, and I would know! ~🖤  " &
+                Game.pushNPCDialog("You dine with royalty this day, " & Game.player1.className & ".  I assure you, my cooking is more than fit for a princess, and I would know! ~🖤  " &
                                    "See, you may have thought you got the upper hand by turning me into a helpless princess, but now I've turned it around into marketing!  Pretty sneaky, huh?")
             ElseIf npcIndex = 4 Then
                 Game.pushNPCDialog("I'd be lyinig if I said I wasn't used to being turned into a woman at this point.  Between my bestie and possibly girlfriend, and all the crazy stuff that " &
-                                   "goes on around this place, you'd think I'd have more than just the mental defences.  But hey, variety is the spice of life, and I'm totally sizzlin' in this thing!  " &
+                                   "goes on around this place, you'd think I'd have more than just the mental defenses.  But hey, variety is the spice of life, and I'm totally sizzlin' in this thing!  " &
                                    "Don't, uh, tell Teach I said that though, she might end up keeping me like this...")
             ElseIf npcIndex = 8 Then
                 Game.pushNPCDialog("...")
+            ElseIf npcIndex = 10 Then
+                If Game.player1.formName.Equals("Arachne") Then
+                    Game.pushNPCDialog("Hey, it's you!  All hail the spider goddess or whatever we're on about, to be completely honest I wasn't really paying attention during my initiation." & DDUtils.RNRN &
+                                       "So, whatcha eatin'?")
+                Else
+                    Game.pushNPCDialog("Ya know, I do have a extra potent venom you could use if you wanted to try the spider thing out...  Hey, then we could hang out!  Just...*hang* out!  Kinda just....sit around....and *haaaaang* out..." & DDUtils.RNRN &
+                                       "...because, like, spiders hang....off....stuff..." & DDUtils.RNRN &
+                                       ".....just gonna......let that *hang*......haha...ahh...")
+                End If
             End If
         End If
 
         If npcIndex = 5 Then inv.setCount(98, 1) Else inv.setCount(98, 0)
-        Game.picNPC.BackgroundImage = picNCP(npcIndex)
+        If npcIndex = getArachneImageInd() And Not Game.player1.formName.Equals("Arachne") Then inv.setCount(244, 1) Else inv.setCount(244, 0)
+
+        Game.picNPC.BackgroundImage = picNPC(npcIndex)
     End Sub
 
     Public Overrides Function toFight() As String
@@ -124,11 +137,13 @@
             Return "WHAA...can't we talk this out, or at least wait for me to turn back?!?"
         ElseIf npcIndex = 8 Then
             Return "..."
+        ElseIf npcIndex = 10 Then
+            Return "Whelp, time for one of us to die."
         End If
         Return "Looks like someone ordered...a knuckle sandwich!  Hahaha, aaahhh...no?  Not a fan of the puns?  Well, all the more reason to kick your ass."
     End Function
     Public Overrides Function hitBySpell() As String
-        If npcIndex = 0 Then
+        If npcIndex = 0 Or npcIndex = 10 Then
             Game.NPCtoCombat(Me)
             Return "*sigh* Alright, here we go."
         ElseIf npcIndex = 1 Then
@@ -151,8 +166,12 @@
 
     Public Overrides Sub toDoll()
         Game.pushNPCDialog("...")
-        Game.picNPC.BackgroundImage = picNCP(8)
+        Game.picNPC.BackgroundImage = picNPC(8)
 
         discount = 0.5
     End Sub
+
+    Public Overrides Function getArachneImageInd() As Integer
+        Return 10
+    End Function
 End Class

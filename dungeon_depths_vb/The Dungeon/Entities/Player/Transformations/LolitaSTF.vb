@@ -21,9 +21,11 @@
 
         Dim out = ""
 
+        If p.sex.Equals("Male") Then p.MtF()
+
         p.pClass.revert()
-        out = p.pClass.revertPassage & vbCrLf & vbCrLf
-        p.pClass = p.classes("Maiden")
+        out = p.pClass.revertPassage & DDUtils.RNRN
+        p.changeClass("Maiden")
 
         'transformation description push
         If p.prt.sexBool = False Then
@@ -58,7 +60,7 @@
 
         'equip clothes
         p.inv.add("Lolita_Dress_(Sweet)", 1)
-        Equipment.clothesChange("Lolita_Dress_(Sweet)")
+        Equipment.clothesChange(p, "Lolita_Dress_(Sweet)")
         'maiden transformation
         p.prt.haircolor = Color.FromArgb(255, 227, 201, 153)
         p.prt.setIAInd(pInd.rearhair, 28, True, True)
@@ -68,13 +70,12 @@
         p.prt.setIAInd(pInd.eyes, 37, True, True)
         p.prt.setIAInd(pInd.fronthair, 29, True, True)
         p.breastSize = 0
-        p.reverseallroute()
-        p.prt.setIAInd(pInd.hairacc, 1, True, True)
+        p.prt.setIAInd(pInd.hairacc, 1, True, False)
         p.lust = 70
 
         'End If
         Dim revertText = Game.lblEvent.Text.Split(vbCrLf)(0)
-        If Not revertText.Equals("") Then out = revertText & vbCrLf & vbCrLf & out
+        If Not revertText.Equals("") Then out = revertText & DDUtils.RNRN & out
         Game.pushLblEvent(out)
     End Sub
 

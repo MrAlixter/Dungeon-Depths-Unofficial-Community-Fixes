@@ -12,16 +12,16 @@
         Dim d32 = Int(Rnd() * 6)
         If d31 = d32 And d31 = 3 Then
             'critical hit
-            MyBase.getTarget.takeDMG(1.75 * (dmg + d31 + d32), MyBase.getCaster)
-            Game.pushLstLog(CStr("Critical hit! You hit the " & MyBase.getTarget.name & " for " & 1.75 * (dmg + d31 + d32) & " damage!"))
-            Game.pushLblCombatEvent(CStr("Critical hit! You hit the " & MyBase.getTarget.name & " for " & 1.75 * (dmg + d31 + d32) & " damage!"))
-            
+            dmg = MyBase.getCaster.getSpellDamage(MyBase.getTarget, 1.75 * (dmg + d31 + d32))
+            Game.pushLstLog(CStr("Critical hit! You hit the " & MyBase.getTarget.name & " for " & dmg & " damage!"))
+            Game.pushLblCombatEvent(CStr("Critical hit! You hit the " & MyBase.getTarget.name & " for " & dmg & " damage!"))
+            MyBase.getTarget.takeDMG(dmg, MyBase.getCaster)
         Else
             'non critical hit
-            MyBase.getTarget.takeDMG(dmg + d31 + d32, MyBase.getCaster)
-            Game.pushLstLog(CStr("You hit the " & MyBase.getTarget.name & " for " & dmg + d31 + d32 & " damage!"))
-            Game.pushLblCombatEvent(CStr("You hit the " & MyBase.getTarget.name & " for " & dmg + d31 + d32 & " damage!"))
-            
+            dmg = MyBase.getCaster.getSpellDamage(MyBase.getTarget, dmg + d31 + d32)
+            Game.pushLstLog(CStr("You hit the " & MyBase.getTarget.name & " for " & dmg & " damage!"))
+            Game.pushLblCombatEvent(CStr("You hit the " & MyBase.getTarget.name & " for " & dmg & " damage!"))
+            MyBase.getTarget.takeDMG(dmg, MyBase.getCaster)
         End If
     End Sub
 End Class

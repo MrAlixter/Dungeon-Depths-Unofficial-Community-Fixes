@@ -2,15 +2,22 @@
     Inherits Food
 
     Sub New()
+        '|ID Info|
         MyBase.setName("Antifreeze")
-        MyBase.setDesc("The forbidden sport's drink.  If you drink it, you will die. -100 stamina")
         id = 178
         tier = Nothing
+
+        '|Item Flags|
         MyBase.setUsable(True)
+        MyBase.isRandoTFAcceptable = False
+
+        '|Stats|
         MyBase.count = 0
         MyBase.value = 226
-        MyBase.isRandoTFAcceptable = False
         setCalories(100)
+
+        '|Description|
+        MyBase.setDesc("The forbidden sport's drink.  If you drink it, you will die. " & DDUtils.RNRN & "+100 Stamina")
     End Sub
     Overrides Sub use(ByRef p As Player)
         If Me.getUsable() = False Then Exit Sub

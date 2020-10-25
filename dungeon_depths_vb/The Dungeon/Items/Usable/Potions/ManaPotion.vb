@@ -5,10 +5,10 @@
         MyBase.setName("Mana_Potion")
         MyBase.setDesc("A normal, everyday mana potion.")
         id = 13
-        tier = 1
+        tier = 2
         MyBase.setUsable(True)
         MyBase.count = 0
-        MyBase.value = 150
+        MyBase.value = 633
     End Sub
 
     Overrides Sub use(ByRef p As Player)

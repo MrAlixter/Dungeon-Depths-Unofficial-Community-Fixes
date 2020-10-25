@@ -4,13 +4,13 @@
     Sub New(n As Integer, tts As Integer, wi As Double, cbs As Boolean)
         MyBase.New(n, tts, wi, cbs)
         MyBase.updateDuringCombat = False
-        tfName = "Bimbo"
+        tfName = "BimboPlusTF"
         nextStep = AddressOf hairColorShift
     End Sub
     Sub New(cs As Integer, n As Integer, tts As Integer, wi As Double, cbs As Boolean, tfd As Boolean)
         MyBase.New(cs, n, tts, wi, cbs, tfd)
         MyBase.updateDuringCombat = False
-        tfName = "Bimbo"
+        tfName = "BimboPlusTF"
         nextStep = getNextStep(cs)
     End Sub
 
@@ -22,7 +22,7 @@
         p.prt.setIAInd(pInd.fronthair, 6, True, True)
     End Sub
     Public Overrides Sub s1TFText(ByRef p As Player)
-        Game.pushLblEvent("You pause to rub your temples, a massive headache comming down on you like a ton of bricks.  As you take a few minutes to recover, you notice that your center of balance is off.  You hypothisize that maybe that vial you drank might be causing these effects." & vbCrLf & vbCrLf & "Maybe you can just walk this off...")
+        Game.pushLblEvent("You pause to rub your temples, a massive headache comming down on you like a ton of bricks.  As you take a few minutes to recover, you notice that your center of balance is off.  You hypothisize that maybe that vial you drank might be causing these effects." & DDUtils.RNRN & "Maybe you can just walk this off...")
     End Sub
 
     'Step 2
@@ -30,7 +30,7 @@
         haircolor = "platinum blonde"
         If Not p.prt.sexBool Then
             out += "Mind clearer than ever, you look down to see breasts blossoming from your chest.  You smirk; while you look like a typical brainless bimbo, you're far more intellegent than you were before. As your dainty hands move down your body, you discover that you no longer have a cock and balls, and insted have a tight moist cunt.  Your hair lengthens, becoming a " & haircolor & ", and your clothes change to match your new figure.  While the effects on your body confirm your hypothesis that BIM_II is likely the chemical used in those sticks of gum the increased IQ hints that there may be another compound involved."
-            p.sex = "Female"
+            p.MtF()
         ElseIf p.prt.sexBool And p.breastSize < 3 Then
             out += "Mind clearer than ever, you look down at your tits. You notice that they seem to have swollen slightly.  You smirk; while you look like a typical brainless bimbo, you're far more intellegent than you were before.  Your hair lengthens, becoming a " & haircolor & ", and your clothes change to match your new figure.  While the effects on your body confirm your hypothesis that BIM_II is likely the chemical used in those sticks of gum the increased IQ hints that there may be another compound involved."
         ElseIf p.prt.sexBool And p.breastSize >= 3 Then
@@ -67,12 +67,11 @@
         p.prt.setIAInd(pInd.eyes, 34, True, True)
         p.prt.setIAInd(pInd.cloak, 0, True, True)
         p.prt.setIAInd(pInd.glasses, 2, True, False)
-        Equipment.clothesChange("Magical_Slut_Outfit")
+        Equipment.clothesChange(p, "Magical_Slut_Outfit")
         p.breastSize = 3
         Game.pushLblEvent("You immediatly feel funny, the increased magic in your system reacting swiftly with the gum.  Mind clearer than ever, you look down to see your clothes have become tight and pink. You smirk; while you look like a typical brainless bimbo, you're far more intellegent than you were before. Your hair lengthens, becoming a platinum blonde, and your clothes finish changing to match your new figure.  While the effects on your body confirm your hypothesis that BIM_II is likely the chemical used in those sticks of gum the increased IQ hints that there may be another compound involved.")
         p.lust += 10
 
-        p.reverseAllRoute()
         If game.mDun.numCurrFloor < 6 Then p.pImage = Game.picPlayerB.BackgroundImage Else p.pImage = Game.picBimbof.BackgroundImage
         p.TextColor = Color.HotPink
         p.perks(perk.bimbotf) = -1

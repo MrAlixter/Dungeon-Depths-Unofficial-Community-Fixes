@@ -2,14 +2,23 @@
     Inherits Food
 
     Sub New()
+        '|ID Info|
         MyBase.setName("Cursed_Heavy_Cream")
-        MyBase.setDesc("An increadibly heavy cream that seems a bit fattening.  Apperantly it might be a little bit cursed." & vbCrLf & "-30 stamina, major breast enlargement")
         id = 98
         tier = Nothing
+
+        '|Item Flags|
         MyBase.setUsable(True)
+
+        '|Stats|
         MyBase.count = 0
         MyBase.value = 265
         setCalories(30)
+
+        '|Description|
+        MyBase.setDesc("An increadibly heavy cream that seems a bit fattening.  Apperantly it might be a little bit cursed." & DDUtils.RNRN &
+                       "-30 stamina" & DDUtils.RNRN &
+                       "Major breast enlargement")
     End Sub
     Overrides Sub use(ByRef p As Player)
         If Me.getUsable() = False Then Exit Sub

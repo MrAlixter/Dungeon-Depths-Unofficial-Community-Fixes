@@ -13,9 +13,10 @@
 
     Overrides Sub use(ByRef p As Player)
         Game.pushLstLog("You drink the " & getName())
-        Game.pushLblEvent("You drink the " & getName() & ".  -5 stamina!")
+        Game.pushLblEvent("You drink the " & getName() & ".  -5 stamina, -15 lust!")
         Dim mseffect As MinstaminaEffect = New MinstaminaEffect
         mseffect.apply(p)
+        p.addLust(-15)
         count -= 1
     End Sub
 End Class

@@ -4,19 +4,8 @@
         MyBase.New(u, t)
         MyBase.setName("Ritual of Mana")
         MyBase.setUOC(True)
-        If u.getMana < 5 Then
-            setcost(20)
-        ElseIf u.getMana < 10 Then
-            setcost(40)
-        ElseIf u.getMana < 15 Then
-            setcost(60)
-        ElseIf u.getMana < 20 Then
-            setcost(80)
-        ElseIf u.getMana < 30 Then
-            setcost(100)
-        Else
-            setcost(120)
-        End If
+
+        setcost(100)
     End Sub
     Public Overrides Sub effect()
         Dim p = MyBase.getUser
@@ -24,4 +13,20 @@
         Game.pushLstLog("Ritual of Mana!")
         Game.pushLblEvent("Ritual of Mana!" & vbCrLf & "Generate 15 mana, with a stamina cost based on the existing mana.")
     End Sub
+
+    Public Overrides Function getCost() As Integer
+        If getUser.getMana < 5 Then
+            Return 20
+        ElseIf getUser.getMana < 10 Then
+            Return 30
+        ElseIf getUser.getMana < 15 Then
+            Return 45
+        ElseIf getUser.getMana < 20 Then
+            Return 60
+        ElseIf getUser.getMana < 30 Then
+            Return 85
+        Else
+            Return 100
+        End If
+    End Function
 End Class

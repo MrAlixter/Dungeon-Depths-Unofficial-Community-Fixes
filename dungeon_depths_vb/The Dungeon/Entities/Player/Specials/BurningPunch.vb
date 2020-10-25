@@ -14,9 +14,9 @@
             'critical hit
         Else
             'non critical hit
-            MyBase.getTarget.takeDMG(dmg + d31 + d32, MyBase.getUser)
             Game.pushLstLog(CStr("Megaton Punch!  You hit the " & MyBase.getTarget.name & " for " & dmg + d31 + d32 & " damage!"))
             Game.pushLblCombatEvent(CStr("Megaton Punch!  You hit the " & MyBase.getTarget.name & " for " & dmg + d31 + d32 & " damage!"))
+            MyBase.getTarget.takeDMG(dmg + d31 + d32, MyBase.getUser)
         End If
     End Sub
 End Class

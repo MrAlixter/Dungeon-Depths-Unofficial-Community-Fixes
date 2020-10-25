@@ -20,9 +20,10 @@
         Dim out = ""
 
         'unequips
-        Equipment.clothesChange("Succubus_Garb")
-        Equipment.weaponChange("Fists")
-        Equipment.accChange("Nothing")
+        If p.inv.getCountAt("Succubus_Garb") < 1 Then p.inv.add("Succubus_Garb", 1)
+        Equipment.clothesChange(p, "Succubus_Garb")
+        Equipment.weaponChange(p, "Fists")
+        Equipment.accChange(p, "Nothing")
 
         'succubus transformation
         If p.sex = "Male" Or Not p.prt.sexBool Then

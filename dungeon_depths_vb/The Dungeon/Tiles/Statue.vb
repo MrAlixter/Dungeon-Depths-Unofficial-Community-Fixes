@@ -1,7 +1,12 @@
 ﻿Public Class Statue
     Public pos As Point
-    Dim name, desc As String
+    Public name, desc As String
     Public isRuby As Boolean = False
+    Sub New(ByVal p As Point, ByVal n As String, ByVal d As String)
+        pos = p
+        name = n
+        desc = d
+    End Sub
     Sub New(ByRef m As NPC)
         pos = m.pos
         name = m.name.Split()(0)
@@ -37,8 +42,24 @@
     End Sub
 
     Sub examine()
-        Game.pushLstLog(desc)
-        Game.pushLblEvent(desc)
+        If name = "seventailsstatue" Then
+            Dim m As SevenTails = MiniBoss.miniBossFactory(7)
+
+            'adds the miniboss to combat queues
+            Monster.targetRoute(m)
+
+            Game.toCombat()
+            Game.pushLblCombatEvent(("The golden statue comes to life, and " & m.getName() & " attacks!"))
+            Game.pushLstLog(("The golden statue comes to life, and " & m.getName() & " attacks!"))
+
+            Game.player1.perks(perk.seventailsstage) = 1
+
+            pos = New Point(-1, -1)
+            Game.drawBoard()
+        Else
+            Game.pushLstLog(desc)
+            Game.pushLblEvent(desc)
+        End If
     End Sub
 
     Overrides Function toString() As String

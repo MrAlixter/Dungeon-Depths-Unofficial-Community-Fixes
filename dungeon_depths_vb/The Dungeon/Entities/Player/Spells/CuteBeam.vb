@@ -28,7 +28,7 @@
         MyBase.getTarget.tfEnd = 7
         MyBase.getTarget.form = "Plush"
         MyBase.getTarget.attack = 0
-        MyBase.getTarget.defence *= 1.25
+        MyBase.getTarget.defense *= 1.25
         Game.pushLstLog(CStr("Your spell hits the " & MyBase.getTarget.name & ", turning " & MyBase.getTarget.rPronoun & " into a plush!"))
         Game.pushLblCombatEvent(CStr("Your spell hits the " & MyBase.getTarget.name & ", turning " & MyBase.getTarget.rPronoun & " into a plush version of their prior form!"))
     End Sub

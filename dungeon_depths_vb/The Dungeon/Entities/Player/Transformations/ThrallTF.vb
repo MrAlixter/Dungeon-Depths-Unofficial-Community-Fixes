@@ -44,16 +44,16 @@
 
             Dim s As String = ""
             If p.getWIL() > 10 Then
-                s = "you mock your instructions under your breath, before stiffly moving towards the crystal." + vbCrLf + "𝘐𝘧 𝘰𝘯𝘭𝘺 𝘐 𝘤𝘰𝘶𝘭𝘥 𝘨𝘦𝘵 𝘵𝘩𝘪𝘴 𝘥𝘢𝘮𝘯 𝘤𝘰𝘭𝘭𝘢𝘳 𝘰𝘧𝘧..."
+                s = "you mock your instructions under your breath, before stiffly moving towards the crystal." + DDUtils.RNRN + """If only I could get this damn collar off..."""
             ElseIf p.getWIL() > 7 Then
-                s = "you reluctantly start off towards the crystal." + vbCrLf + "𝘖𝘩 𝘸𝘦𝘭𝘭, 𝘣𝘦𝘵𝘵𝘦𝘳 𝘮𝘦 𝘵𝘩𝘢𝘯 𝘰𝘯𝘦 𝘰𝘧 𝘵𝘩𝘦𝘪𝘳 𝘰𝘵𝘩𝘦𝘳 𝘪𝘥𝘪𝘰𝘵𝘴."
+                s = "you reluctantly start off towards the crystal." + DDUtils.RNRN + """Oh well, better me than one of their other idiots..."""
             ElseIf p.getWIL() > 4 Then
-                s = "you jump immediatly into action, happy to help the voice in your head with whatever it may need." + vbCrLf + "𝘐'𝘮 𝘨𝘰𝘪𝘯𝘨 𝘵𝘰 𝘮𝘢𝘬𝘦 𝘲𝘶𝘪𝘤𝘬 𝘸𝘰𝘳𝘬 𝘰𝘧 𝘵𝘩𝘪𝘴 𝘵𝘢𝘴𝘬!"
+                s = "you jump immediately into action, happy to help the voice in your head with whatever it may need." + DDUtils.RNRN + """I'm gonna make quick work of this!"""
             Else
                 s = "you mindlessly obey, moving towards the crystal with a vacant grin."
             End If
-            Game.pushLblEvent("As your collar flares to life, you grimace as the location of a large mana crystal becomes clear in your mind." & _
-                              "'SERVANT!', your controller's voice booms in your head, 'This is another of the crystals!  Recover it immediately!'" & vbCrLf & _
+            Game.pushLblEvent("As your collar flares to life, you grimace as the location of a large mana crystal becomes clear in your mind." & DDUtils.RNRN &
+                              """SERVANT!"", your controller's voice booms in your head, ""This is another of the crystals!  Recover it immediately!""" & DDUtils.RNRN & _
                               "As their voice leaves your head, " & s)
         End If
 
@@ -104,13 +104,13 @@
                           "Looking down, you see that your collar has gone dark and dangles open from your neck.  Grinning, your prepare to fight for your life.", AddressOf fightSorc2)
 
 
-        Equipment.accChange("Nothing")
+        Equipment.accChange(p, "Nothing")
         p.inv.add(69, -1)
 
         p.drawPort()
     End Sub
     Shared Sub waitSorc()
-        Dim out = "You decide against making a move now, instead waiting to see what happens next.  Your controller doesn't seem to notice you, instead focusing all their attention on the crystalline array.  As they fiddle with it, you notice a slight purple aura beginning to form around them and wait, are those horns sprouting out of their hair that seems to catch a non-existant wind?  With a flourish, they complete ... something ... and a blinding flash engulfs them.  Where once stood your human controller now stands a half-demon who only now seems to have taken notice of you." & _
+        Dim out = "You decide against making a move now, instead waiting to see what happens next.  Your controller doesn't seem to notice you, instead focusing all their attention on the crystalline array.  As they fiddle with it, you notice a slight purple aura beginning to form around them and wait, are those horns sprouting out of their hair that seems to catch a non-existant wind?  With a flourish, they complete ... something ... and a blinding flash engulfs them.  Where once stood your human controller now stands a half-demon who only now seems to have taken notice of you." & DDUtils.RNRN &
                         """Well... It looks like you succeeded.  For that, I will give you an ultimatium.  Join me as my general, or die in these dungeons as my slave."
         Game.pushLblEvent(out, AddressOf acceptSorc, AddressOf fightSorc, "Do you accept?")
     End Sub
@@ -120,7 +120,7 @@
         If Int(Rnd() * 2) = 0 Then
             ptype = "brother"
         End If
-        Game.pushLblEvent("""LISTEN UP, NEW SLAVE!  I have need of your services."" your new master begins, ""In this dungeon, there are several high-power mana arrays.  Only one of them, however, is capable of bestowing the power of a demon lord onto a mortal such as I.  Your task is to find and inspect these arrays, and report back to me with your findings.""  They snicker,  ""I'm sure you won't let me down, but I'm going to need to make a few changes to make you more ... uniform ... with the rest of your collegues.""" & vbCrLf & vbCrLf & "        .....       " & vbCrLf & vbCrLf & "With a final warning not to fail them, the foreign presence leaves your mind and you are once again alone with your thoughts, your new " & ptype & ", and your task.")
+        Game.pushLblEvent("""LISTEN UP, NEW SLAVE!  I have need of your services."" your new master begins, ""In this dungeon, there are several high-power mana arrays.  Only one of them, however, is capable of bestowing the power of a demon lord onto a mortal such as I.  Your task is to find and inspect these arrays, and report back to me with your findings.""  They snicker,  ""I'm sure you won't let me down, but I'm going to need to make a few changes to make you more ... uniform ... with the rest of your collegues.""" & DDUtils.RNRN & "        .....       " & DDUtils.RNRN & "With a final warning not to fail them, the foreign presence leaves your mind and you are once again alone with your thoughts, your new " & ptype & ", and your task.")
     End Sub
 
     Public Overrides Sub stopTF()
@@ -130,7 +130,7 @@
 
     Public Overrides Function getNextStep(stage As Integer) As Action
         Dim p As player = game.player1
-        If p.perks(perk.thrall) = -1 Or p.pForm.name.Equals("Half-Succubus") Then
+        If p.perks(perk.thrall) = -1 Or p.formName.Equals("Half-Succubus") Then
             Return AddressOf stopTF
         ElseIf Not p.prefForm.playerMeetsForm(p) And Not p.perks(perk.thrall) > 10 Then
             Return AddressOf shiftTowardsPrefForm

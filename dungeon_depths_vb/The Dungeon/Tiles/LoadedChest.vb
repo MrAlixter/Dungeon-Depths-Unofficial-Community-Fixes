@@ -59,14 +59,14 @@
 
     Sub magSlutChest()
         Game.player1.inv.add(171, 1)
-        Game.player1.equippedWeapon.onUnequip()
+        Game.player1.equippedWeapon.onunequip(Game.player1, Game.player1.equippedWeapon)
         Game.player1.equippedWeapon = Game.player1.inv.item(171)
         Game.pushLblEvent("As soon as you open the lid of the chest, a loud click gives you only seconds to react as a pink, heart-tipped wand is flung at you from within!  Miraculously, you are able to catch it mid-air before getting hit in the face.  As it begins glowing and reality around you begins fading away into a techicolor void, though, you wonder if it would have been better to just take the hit...",
                           AddressOf MagSlutChest2)
 
     End Sub
     Sub MagSlutChest2()
-        Game.player1.equippedWeapon.onEquip()
+        Game.player1.equippedWeapon.onEquip(Game.player1)
         Game.player1.drawPort()
     End Sub
 

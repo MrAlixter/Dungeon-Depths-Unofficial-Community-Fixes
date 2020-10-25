@@ -35,7 +35,6 @@
         p.prt.setIAInd(pInd.fronthair, 40, True, True)
         p.prt.setIAInd(pInd.hat, 0, True, False)
 
-        p.reverseAllRoute()
     End Sub
 
     Overrides Sub tfClothes(ByRef p As Player)
@@ -43,7 +42,7 @@
 
         p.prt.setIAInd(pInd.hairacc, 8, True, False)
 
-        Equipment.accChange("Nothing")
-        Equipment.clothesChange("Mag._Girl_Outfit_(D)")
+        Equipment.accChange(p, "Nothing")
+        Equipment.clothesChange(p, "Mag._Girl_Outfit_(D)")
     End Sub
 End Class

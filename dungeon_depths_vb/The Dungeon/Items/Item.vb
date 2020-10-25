@@ -1,12 +1,26 @@
 ﻿Public Class Item
     Implements IComparable
+
+    '| -- New Layout Example -- |
+    '|ID Info|
+
+
+    '|Item Flags|
+
+
+    '|Stats|
+
+
+    '|Description|
+
+
     Dim name As String = ""
     Dim description As String
     Dim isUsable As Boolean = False
     Public count As Integer
     Public value As Integer
     Protected tier As Integer = Nothing
-    Public id As Integer = Nothing
+    Public id As Integer = -1
     Public isMonsterDrop As Boolean = False
     Public isRandoTFAcceptable = True
 
@@ -15,16 +29,14 @@
     Public onBuy As Action = Nothing
     Public durability As Integer = 100
 
+    '| -- Comparable -- |
     Overloads Function CompareTo(ByVal obj As Object) As Integer Implements IComparable.CompareTo
-        Dim r As Integer
-        Try
-            r = Me.getName.CompareTo(obj.getName.ToString)
-        Catch ex As Exception
-            r = 0
-        End Try
-        Return r
+        If Not obj.GetType().IsSubclassOf(GetType(Item)) Or obj Is Nothing OrElse obj.getname Is Nothing OrElse Me.getName Is Nothing Then Return 0
+
+        Return Me.getName.CompareTo(obj.getName.ToString)
     End Function
-    'getters/setters
+
+    '| -- Getters/Setters -- |
     Overridable Function getName() As String
         Return name
     End Function
@@ -34,7 +46,7 @@
     Sub setName(ByVal s As String)
         name = s
     End Sub
-    Function getDesc()
+    Public Overridable Function getDesc()
         Return description
     End Function
     Sub setDesc(ByVal s As String)
@@ -52,11 +64,14 @@
     Sub setUsable(ByVal b As Boolean)
         isUsable = b
     End Sub
-    Overridable Sub use(ByRef p As Player)
-        If Me.getUsable() = False Then Exit Sub
-        Game.pushLstLog("You use the " & getName())
+    Public Function getDescription()
+        Return description
+    End Function
+    Function getCount()
+        Return count
+    End Function
 
-    End Sub
+    '| -- Inventory -- |
     Sub addOne()
         count += 1
     End Sub
@@ -67,6 +82,18 @@
         Game.pushLstLog("You drop the " & getName())
         count -= 1
     End Sub
+    Overridable Sub remove()
+        Game.pushLstLog("The " & getName() & " fades into non-existance")
+        count -= 1
+
+    End Sub
+
+    '| -- Player Interaction -- |
+    Overridable Sub use(ByRef p As Player)
+        If Me.getUsable() = False Then Exit Sub
+        Game.pushLstLog("You use the " & getName())
+
+    End Sub
     Overridable Function damage(ByVal i As Integer) As Boolean
         durability -= i
         If durability <= 0 Then
@@ -76,28 +103,18 @@
         Return False
     End Function
     Overridable Sub break()
-            Game.pushLstLog("The " & getName() & " breaks!")
-            count -= 1
-            durability = 100
-    End Sub
-    Overridable Sub remove()
-        Game.pushLstLog("The " & getName() & " fades into non-existance")
+        Game.pushLstLog("The " & getName() & " breaks!")
         count -= 1
-
+        durability = 100
     End Sub
 
+    '| -- Misc. -- |
     Public Sub examine()
         If durability > 99 Then
             Game.pushLblEvent(description)
         Else
-            Game.pushLblEvent(description & vbCrLf & vbCrLf & "Durability: " & durability & " (Breaks at 0)")
+            Game.pushLblEvent(description & DDUtils.RNRN & "Durability: " & durability & " (Breaks at 0)")
         End If
 
     End Sub
-    Public Function getDescription()
-        Return description
-    End Function
-    Function getCount()
-        Return count
-    End Function
 End Class

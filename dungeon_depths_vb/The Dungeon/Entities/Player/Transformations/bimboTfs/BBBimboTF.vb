@@ -18,7 +18,7 @@
 
     'Hair color shifting
     Overrides Sub hairColorShift()
-        Game.player1.prt.haircolor = Game.cShift(Game.player1.prt.haircolor, bimbovi1, 25)
+        Game.player1.prt.haircolor = DDUtils.cShift(Game.player1.prt.haircolor, bimbovi1, 25)
         If Not Game.player1.getHairColor.Equals(bimbovi1) Then currStep -= 1
         Game.pushLblEvent("Your hair becomes slightly darker, deepening towards a deep purple.")
     End Sub
