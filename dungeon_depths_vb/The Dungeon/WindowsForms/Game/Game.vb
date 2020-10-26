@@ -1063,7 +1063,7 @@ Public Class Game
 
             If subString = FlashBolt.SPELL_NAME Then
                 Spell.spellCast(m, player1, subString)
-            else
+            Else
                 player1.nextCombatAction = Sub(t As Entity) Spell.spellCast(t, player1, subString)
             End If
 
@@ -1435,8 +1435,9 @@ Public Class Game
             keysPressed = keysPressed.Substring(1, 3)
         End If
 
+        '| -- Mana Regen -- |
         Dim m = Math.Max(CInt(7.8152 * Math.Exp(-0.011 * player1.getWIL)), 1)
-        If player1.mana < player1.getMaxMana And turn Mod m = 0 Then
+        If player1.mana < player1.getMaxMana And turn Mod m = 0 And Not player1.perks(perk.cmark) > -1 Then
             Dim mregen = Math.Max(Int(player1.getMaxMana / 15), 1)
             player1.mana += mregen
             If player1.getMaxMana < player1.mana Then player1.mana = player1.getMaxMana

@@ -2,16 +2,22 @@
     Inherits Item
 
     Sub New()
+        '|ID Info|
         MyBase.setName("Warlock_Lesson")
-        MyBase.setDesc("""Are you a fan of overwhelming magical power, without regard to its cost?  Do you mind needing to bend to the whim of, say, a goddess of forgetfulness, in order to achive your hopes and dreams?  Perhaps the Warlock life is for you...""")
         id = 124
         tier = Nothing
+
+        '|Item Flags|
         MyBase.setUsable(False)
-        MyBase.count = 0
-        MyBase.value = 5900
+        MyBase.isRandoTFAcceptable = False
         MyBase.onBuy = AddressOf teach
 
-        MyBase.isRandoTFAcceptable = False
+        '|Stats|
+        MyBase.count = 0
+        MyBase.value = 5900
+
+        '|Description|
+        MyBase.setDesc("""Are you a fan of overwhelming magical power, without regard to its cost?  Do you mind bending to the whim of, say, a goddess of forgetfulness, in order to achive your hopes and dreams?  Perhaps the Warlock life is for you...""")
     End Sub
 
     Sub teach()

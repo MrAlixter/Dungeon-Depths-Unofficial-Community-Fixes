@@ -66,6 +66,7 @@
     tfcausingwand   '64
     tfcausingsword  '65
     snarednpc       '66
+    cmark           '67
 End Enum
 
 Public Class Player
@@ -400,7 +401,7 @@ Public Class Player
         End If
         'equip armor, boost mana if a staff is equipped
         Equipment.clothesChange(Me, equippedArmor.getName)
-        If equippedWeapon.GetType().IsSubclassOf(GetType(Staff)) Then mana += equippedWeapon.mBoost
+        mana = getMaxMana()
         'set the known specials/spells
         specialRoute()
         magicRoute()
@@ -1054,6 +1055,7 @@ Public Class Player
 
         lust = Math.Min(100, lust)
         lust = Math.Max(0, lust)
+        If perks(perk.cmark) > -1 Then lust = Math.Max((mana / maxMana) * 100, lust)
     End Sub
     Function perkUpdate() As Boolean
         Dim needsToUpdatePortrait = False

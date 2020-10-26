@@ -264,6 +264,7 @@
         internal_inventory.Add("Spellcyclopedia", New SpidersilkBikini)     '242
         internal_inventory.Add("Big_Book_O'_Specials", New BookOSpecials)   '243
         internal_inventory.Add("Vial_of_Potent_Venom", New VialOfPotVenom)  '244
+        internal_inventory.Add("Blight_Dismissal", New CursePurge)          '245
 
         armor = {New Naked,
                  Me.item(5), Me.item(7), Me.item(8), Me.item(10),

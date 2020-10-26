@@ -2,16 +2,23 @@
     Inherits Item
 
     Sub New()
+        '|ID Info|
         MyBase.setName("Gorgon_Lesson")
-        MyBase.setDesc("More than just mental manipulation, this lesson offers a physical transformation as well as some mental changes.  ""While I don't think anyone can make you immune to Medusa's power completely, I can at least give you a Gorgon upbringing.  It is not a flawless counter to her abilities, but at least you won't be petrified from the offset.  Fair warning though, I'll also make it so that you can no longer petrify the other shopkeepers and I...""")
         id = 122
         tier = Nothing
+
+        '|Item Flags|
         MyBase.setUsable(False)
-        MyBase.count = 0
-        MyBase.value = 8888
+        MyBase.isRandoTFAcceptable = False
         MyBase.onBuy = AddressOf teach
 
-        MyBase.isRandoTFAcceptable = False
+        '|Stats|
+        MyBase.count = 0
+        MyBase.value = 8888
+
+        '|Description|
+        MyBase.setDesc("More than just mental manipulation, this lesson offers a physical transformation as well as some mental changes." & DDUtils.RNRN &
+                       """While I don't think anyone can make you immune to Medusa's power completely, I can at least give you a Gorgon upbringing.  It is not a flawless counter to her abilities, but at least you won't be petrified from the offset.  Fair warning though, I'll also make it so that you can no longer petrify the other shopkeepers and I...""")
     End Sub
 
     Sub teach()

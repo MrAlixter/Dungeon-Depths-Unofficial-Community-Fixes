@@ -2,16 +2,23 @@
     Inherits Item
 
     Sub New()
+        '|ID Info|
         MyBase.setName("Barbarian_Lesson")
-        MyBase.setDesc("""Are you a fan of the simple things in life, without the complications of magic?  Are you bored of the standard warrior class, and are you looking to shift things up a bit?  Perhaps the Barbarian life is for you...""")
         id = 114
         tier = Nothing
+
+        '|Item Flags|
         MyBase.setUsable(False)
-        MyBase.count = 0
-        MyBase.value = 5900
+        MyBase.isRandoTFAcceptable = False
         MyBase.onBuy = AddressOf teach
 
-        MyBase.isRandoTFAcceptable = False
+        '|Stats|
+        MyBase.count = 0
+        MyBase.value = 5900
+
+        '|Description|
+
+        MyBase.setDesc("""Are you a fan of the simple things in life, without the complications of magic?  Are you bored of the standard warrior class, and are you looking to shift things up a bit?  Perhaps the Barbarian life is for you...""")
     End Sub
 
   Sub teach()

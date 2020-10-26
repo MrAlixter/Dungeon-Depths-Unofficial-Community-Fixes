@@ -369,10 +369,25 @@ Public Class Portrait
     Sub hideRearHair()
         If checkNDefFemInd(pInd.hat, 9) Then
             iArr(pInd.rearhair) = imgLib.atrs(pInd.hat).getAt(New Tuple(Of Integer, Boolean, Boolean)(10, True, True))
+
         ElseIf checkNDefFemInd(pInd.hat, 11) Then
             iArr(pInd.rearhair) = imgLib.atrs(pInd.hat).getAt(New Tuple(Of Integer, Boolean, Boolean)(12, True, True))
+
+        ElseIf checkFemInd(pInd.hat, 1) Or checkNDefFemInd(pInd.hat, 17) Then
+            iArr(pInd.hat) = imgLib.atrs(pInd.hat).getAt(New Tuple(Of Integer, Boolean, Boolean)(17, True, True))
+            iArr(pInd.rearhair) = CreateFullBodyBMP({nullImg, imgLib.atrs(pInd.hat).getAt(New Tuple(Of Integer, Boolean, Boolean)(15, True, True)), iArr(pInd.rearhair)})
+
+        ElseIf checkFemInd(pInd.hat, 3) Or checkNDefFemInd(pInd.hat, 18) Then
+            iArr(pInd.hat) = imgLib.atrs(pInd.hat).getAt(New Tuple(Of Integer, Boolean, Boolean)(18, True, True))
+            iArr(pInd.rearhair) = CreateFullBodyBMP({nullImg, imgLib.atrs(pInd.hat).getAt(New Tuple(Of Integer, Boolean, Boolean)(16, True, True)), iArr(pInd.rearhair)})
+
+        ElseIf checkMalInd(pInd.hat, 2) Or checkNDefFemInd(pInd.hat, 18) Then
+            iArr(pInd.hat) = imgLib.atrs(pInd.hat).getAt(New Tuple(Of Integer, Boolean, Boolean)(18, True, True))
+            iArr(pInd.rearhair) = CreateFullBodyBMP({nullImg, imgLib.atrs(pInd.hat).getAt(New Tuple(Of Integer, Boolean, Boolean)(16, True, True)), iArr(pInd.rearhair)})
+
         ElseIf checkNDefFemInd(pInd.accessory, 14) Or checkNDefMalInd(pInd.accessory, 13) Then
             iArr(pInd.rearhair) = imgLib.atrs(pInd.ears).getAt(New Tuple(Of Integer, Boolean, Boolean)(5, True, True))
+
         End If
     End Sub
     Sub accUnderClothes()
@@ -463,7 +478,7 @@ Public Class Portrait
     Function checkFemInd(ByVal attrInd As pInd, ByVal i As Integer) As Boolean
         Dim ind = iArrInd(attrInd)
         If ind Is Nothing Then Return False
-        If Not ind.Item2 Or Not ind.Item3 Then Return False
+        If Not ind.Item2 Or ind.Item3 Then Return False
         If ind.Item1 = i Then Return True Else Return False
     End Function
     Private Function checkFemInd(ByVal attrInd As pInd, inds As Integer()) As Boolean

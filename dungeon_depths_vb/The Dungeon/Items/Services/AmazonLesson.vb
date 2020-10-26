@@ -2,16 +2,24 @@
     Inherits Item
 
     Sub New()
+        '|ID Info|
         MyBase.setName("Amazon_Lesson")
-        MyBase.setDesc("More than just mental manipulation, this lesson offers a physical transformation as well as some mental changes.  ""Are you disillusioned with all this magic and weapons malarchy?  Do you just want to smack things around with your bare hands like the powerful woman you are (or could be)?  Perhaps the Amazon life is for you...""")
         id = 113
         tier = Nothing
+
+        '|Item Flags|
         MyBase.setUsable(False)
-        MyBase.count = 0
-        MyBase.value = 6969
+        MyBase.isRandoTFAcceptable = False
         MyBase.onBuy = AddressOf teach
 
-        MyBase.isRandoTFAcceptable = False
+        '|Stats|
+        MyBase.count = 0
+        MyBase.value = 6969
+
+        '|Description|
+
+        MyBase.setDesc("More than just mental manipulation, this lesson offers a physical transformation as well as some mental changes." & DDUtils.RNRN &
+                       """Are you disillusioned with all this 'magic and weapons' malarchy?  Do you just want to smack things around with your bare hands like the powerful woman you are (or could be)?  Perhaps the Amazon life is for you...""")
     End Sub
 
     Sub teach()

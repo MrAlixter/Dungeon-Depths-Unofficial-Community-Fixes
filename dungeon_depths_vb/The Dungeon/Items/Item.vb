@@ -111,9 +111,9 @@
     '| -- Misc. -- |
     Public Sub examine()
         If durability > 99 Then
-            Game.pushLblEvent(description)
+            Game.pushLblEvent(getDesc())
         Else
-            Game.pushLblEvent(description & DDUtils.RNRN & "Durability: " & durability & " (Breaks at 0)")
+            Game.pushLblEvent(getDesc() & DDUtils.RNRN & "Durability: " & durability & " (Breaks at 0)")
         End If
 
     End Sub

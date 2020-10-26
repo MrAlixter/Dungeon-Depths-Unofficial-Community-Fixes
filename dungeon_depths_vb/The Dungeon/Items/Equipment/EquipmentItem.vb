@@ -41,12 +41,12 @@
     Public Function getStatInformation() As String
         Dim out As String = ""
 
-        If getHBoost(owner) > 0 Then out += "+" & getHBoost(owner) & " Max HP" & vbCrLf
-        If getMBoost(owner) > 0 Then out += "+" & getMBoost(owner) & " Max MP" & vbCrLf
-        If getABoost(owner) > 0 Then out += "+" & getABoost(owner) & " ATK" & vbCrLf
-        If getDBoost(owner) > 0 Then out += "+" & getDBoost(owner) & " DEF" & vbCrLf
-        If getSBoost(owner) > 0 Then out += "+" & getSBoost(owner) & " SPD" & vbCrLf
-        If getWBoost(owner) > 0 Then out += "+" & getWBoost(owner) & " WILL" & vbCrLf
+        If getHBoost(owner) <> 0 Then out += If(getHBoost(owner) > 0, "+", "-") & Math.Abs(getHBoost(owner)) & " Max HP" & vbCrLf
+        If getMBoost(owner) <> 0 Then out += If(getMBoost(owner) > 0, "+", "-") & Math.Abs(getMBoost(owner)) & " Max MP" & vbCrLf
+        If getABoost(owner) <> 0 Then out += If(getABoost(owner) > 0, "+", "-") & Math.Abs(getABoost(owner)) & " ATK" & vbCrLf
+        If getDBoost(owner) <> 0 Then out += If(getDBoost(owner) > 0, "+", "-") & Math.Abs(getDBoost(owner)) & " DEF" & vbCrLf
+        If getSBoost(owner) <> 0 Then out += If(getSBoost(owner) > 0, "+", "-") & Math.Abs(getSBoost(owner)) & " SPD" & vbCrLf
+        If getWBoost(owner) <> 0 Then out += If(getWBoost(owner) > 0, "+", "-") & Math.Abs(getWBoost(owner)) & " WILL" & vbCrLf
 
         If Not out.Contains(vbCrLf) Then out += vbCrLf
 

@@ -2,16 +2,22 @@
     Inherits Item
 
     Sub New()
+        '|ID Info|
         MyBase.setName("Bimbo_Lesson")
-        MyBase.setDesc("""*sigh* This lesson is part of an ill-advised negotiation tactic with a shady bastard of a wizard, and now I am contractually obligated to provide it to my customers, lest he release some 'trigger' words to the public.  Once you listen to it, his magic will take its course and anything that happens to you is out of my hands.  'Buyer beware', I suppose.""")
         id = 87
         tier = Nothing
+
+        '|Item Flags|
         MyBase.setUsable(True)
-        MyBase.count = 0
-        MyBase.value = 150
+        MyBase.isRandoTFAcceptable = False
         MyBase.onBuy = AddressOf teach
 
-        MyBase.isRandoTFAcceptable = False
+        '|Stats|
+        MyBase.count = 0
+        MyBase.value = 150
+
+        '|Description|
+        MyBase.setDesc("""*sigh* This lesson is part of an ill-advised negotiation tactic with a shady bastard of a wizard, and now I am contractually obligated to provide it to my customers, lest he release some 'trigger' words to the public.  Once you listen to it, his magic will take its course and anything that happens to you is out of my hands.  'Buyer beware', I suppose.""")
     End Sub
 
     Sub teach()

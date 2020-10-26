@@ -15,6 +15,7 @@
         inv.setCount(171, 1)
         inv.setCount(174, 1)
         inv.setCount(200, 1)
+        inv.setCount(245, 1)
 
         isShop = True
         gold = 99999

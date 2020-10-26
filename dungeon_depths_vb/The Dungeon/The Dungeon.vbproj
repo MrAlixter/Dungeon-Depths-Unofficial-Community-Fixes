@@ -169,6 +169,7 @@
     <Compile Include="Items\Misc\BitGold.vb" />
     <Compile Include="Items\Misc\BookOSpecials.vb" />
     <Compile Include="Items\Misc\Spellcyclopedia.vb" />
+    <Compile Include="Items\Services\CursePurge.vb" />
     <Compile Include="Items\Usable\Food\DragonFruit.vb" />
     <Compile Include="Items\Usable\Food\XPSandwich.vb" />
     <Compile Include="Items\Usable\FoxEars.vb" />

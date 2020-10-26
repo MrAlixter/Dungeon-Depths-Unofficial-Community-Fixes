@@ -2,16 +2,22 @@
     Inherits Item
 
     Sub New()
+        '|ID Info|
         MyBase.setName("Base_Form_Reset")
-        MyBase.setDesc("""Not happy with your current base form?  I can cause you to forget it, and default you to how you are now.  Well, as long as you're in a stable form, that is...""")
         id = 131
         tier = Nothing
+
+        '|Item Flags|
         MyBase.setUsable(True)
-        MyBase.count = 0
-        MyBase.value = 1000
+        MyBase.isRandoTFAcceptable = False
         MyBase.onBuy = AddressOf teach
 
-        MyBase.isRandoTFAcceptable = False
+        '|Stats|
+        MyBase.count = 0
+        MyBase.value = 1000
+
+        '|Description|
+        MyBase.setDesc("""Not happy with your current base form?  I can cause you to forget it, and default you to how you are now.  Well, as long as you're in a stable form, that is...""")
     End Sub
 
     Sub teach()
