@@ -4,7 +4,7 @@
     Dim caster As Player
     Dim target As NPC
 
-    Shared spellList As Dictionary(Of String, Spell)
+    Public Shared spellList As Dictionary(Of String, Spell)
     Dim useableOutOfCombat As Boolean = False
     Shared Sub init()
         spellList = New Dictionary(Of String, Spell)
@@ -154,6 +154,9 @@
         caster = c
         target = t
     End Sub
+    Public Overridable Function getDesc(ByRef c As Player, ByRef t As NPC)
+        Return "Description not added."
+    End Function
 
     Shared Sub spellCast(ByRef t As NPC, ByRef c As Player, ByVal s As String)
         If Game.combatmode Or Game.npcmode Then

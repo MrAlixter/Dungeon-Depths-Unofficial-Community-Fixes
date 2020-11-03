@@ -261,10 +261,16 @@
         internal_inventory.Add("Spidersilk_Bonds", New SpidersilkBonds)     '239
         internal_inventory.Add("Spidersilk_Bikini", New SpidersilkBikini)   '240
         internal_inventory.Add("Major_Mana_Potion", New MajManaPotion)      '241
-        internal_inventory.Add("Spellcyclopedia", New SpidersilkBikini)     '242
+        internal_inventory.Add("Spellcyclopedia", New Spellcyclopedia)      '242
         internal_inventory.Add("Big_Book_O'_Specials", New BookOSpecials)   '243
         internal_inventory.Add("Vial_of_Potent_Venom", New VialOfPotVenom)  '244
         internal_inventory.Add("Blight_Dismissal", New CursePurge)          '245
+        internal_inventory.Add("Potion_of_Benediction", New BenedictPotion) '246
+        internal_inventory.Add("Potion_of_Dodging", New DodgePotion)        '247
+        internal_inventory.Add("Incandescent_Potion", New IncandPotion)     '248
+        internal_inventory.Add("Learn_'Focus_Up'", New TeachFocusedMantra)  '249
+        internal_inventory.Add("Familiar's_Costume", New FamCostume)        '250
+        internal_inventory.Add("Old_Snips", New OldSnips)                   '251
 
         armor = {New Naked,
                  Me.item(5), Me.item(7), Me.item(8), Me.item(10),
@@ -286,7 +292,7 @@
                  Me.item(196), Me.item(199), Me.item(201), Me.item(202),
                  Me.item(208), Me.item(210), Me.item(211), Me.item(216),
                  Me.item(220), Me.item(221), Me.item(222), Me.item(237),
-                 Me.item(239), Me.item(240)}
+                 Me.item(239), Me.item(240), Me.item(250)}
 
         weapons = {New BareFists(),
                    Me.item(6), Me.item(9), Me.item(11), Me.item(21),
@@ -314,7 +320,7 @@
                    Me.item(182), Me.item(195), Me.item(200), Me.item(205),
                    Me.item(206), Me.item(207), Me.item(214), Me.item(215),
                    Me.item(219), Me.item(226), Me.item(227), Me.item(238),
-                   Me.item(241), Me.item(244)}
+                   Me.item(244), Me.item(251)}
 
         food = {Me.item(1), Me.item(30), Me.item(31), Me.item(32), Me.item(33),
                 Me.item(34), Me.item(35), Me.item(44), Me.item(90),
@@ -335,7 +341,8 @@
                    Me.item(59), Me.item(60), Me.item(61), Me.item(62),
                    Me.item(76), Me.item(82), Me.item(92), Me.item(93),
                    Me.item(193), Me.item(194), Me.item(231), Me.item(232),
-                   Me.item(233), Me.item(234), Me.item(235), Me.item(236)}
+                   Me.item(233), Me.item(234), Me.item(235), Me.item(236),
+                   Me.item(241), Me.item(246), Me.item(247), Me.item(248)}
 
         Array.Sort(potions)
 
@@ -353,7 +360,8 @@
                       "Ruby_Potion", "Emerald_Potion", "Sapphire_Potion", "Silver_Potion",
                       "Murky_Potion", "Smokey_Potion", "Pink_Potion", "Glittery_Potion",
                       "Florecent_Potion", "Coral_Potion", "Steely_Potion", "Cyan_Potion",
-                      "Violet_Potion", "Pewter_Potion", "Pearly_Potion", "Verdant_Potion"})
+                      "Violet_Potion", "Pewter_Potion", "Pearly_Potion", "Verdant_Potion",
+                      "Lilac_Potion"})
         mPotions = New List(Of MysteryPotion)
         For i = 0 To UBound(potions)
             If potions(i).GetType().IsSubclassOf(GetType(MysteryPotion)) Then mPotions.Add(potions(i))

@@ -399,6 +399,13 @@ Public Class Portrait
             iArr(pInd.midhair) = CreateFullBodyBMP({CharacterGenerator.picPort.Image, iArr(pInd.accessory), iArr(pInd.clothesbtm), iArr(pInd.clothes), iArr(pInd.midhair)})
             iArr(pInd.accessory) = CharacterGenerator.picPort.Image
         End If
+
+        If Not ent Is Nothing AndAlso Not ent.getPlayer Is Nothing AndAlso ent.getPlayer.equippedArmor.getId = 250 Then
+            Dim t = iArr(pInd.chest).Clone
+
+            iArr(pInd.chest) = iArr(pInd.clothesbtm)
+            iArr(pInd.clothesbtm) = t
+        End If
     End Sub
     Sub spiderBody()
         If iArrInd(pInd.tail).Item1 = 2 Then

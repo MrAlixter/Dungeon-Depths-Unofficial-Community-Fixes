@@ -27,6 +27,27 @@
         Array.Resize(a, a.Length + 1)
         a(a.Length - 1) = i
     End Sub
+    Public Shared Function union(ByVal a As List(Of String), ByVal b As List(Of String)) As List(Of String)
+        Dim out = New List(Of String)
+
+        For Each s In a
+            If Not out.Contains(s) Then out.Add(s)
+        Next
+        For Each s In b
+            If Not out.Contains(s) Then out.Add(s)
+        Next
+
+        Return out
+    End Function
+    Public Shared Function cboxToList(ByVal a As ComboBox.ObjectCollection) As List(Of String)
+        Dim out = New List(Of String)
+
+        For Each s In a
+            out.Add(s.ToString)
+        Next
+
+        Return out
+    End Function
     Public Shared Function copyDictionary(ByVal dic As Dictionary(Of perk, Integer)) As Dictionary(Of perk, Integer)
         Return dic
     End Function

@@ -199,10 +199,14 @@ Public Class mFloor
     Sub connectPoints(ByVal p1 As Point, ByVal p2 As Point)
         p1 = New Point(Math.Max(p1.X, 0), Math.Max(p1.Y, 0))
         p2 = New Point(Math.Max(p2.X, 0), Math.Max(p2.Y, 0))
+        p1 = New Point(Math.Min(p1.X, mBoardWidth - 1), Math.Min(p1.Y, mBoardHeight - 1))
+        p2 = New Point(Math.Min(p2.X, mBoardWidth - 1), Math.Min(p2.Y, mBoardHeight - 1))
+
+        If p1.X.Equals(p2.X) And p1.Y.Equals(p2.Y) Then Exit Sub
 
         'Connects the entrances/exits of the rooms
         If p1.Y > p2.Y Then
-            'p1 is above p2
+            'p1 is below p2
             If p1.X > p2.X Then
                 'p1 is right of p2
                 goUpThenLeft(p1, p2)
@@ -211,7 +215,7 @@ Public Class mFloor
                 goUpThenRight(p1, p2)
             End If
         Else
-            'p1 is below p2
+            'p1 is above p2
             If p1.X > p2.X Then
                 'p1 is right of p2
                 goDownThenLeft(p1, p2)
@@ -1077,7 +1081,7 @@ Public Class mFloor
         out += CStr(npcPositions.Count - 1) & "%" '20 + traplist.Count + statueList.Count + chestList.Count
         For i = 0 To npcPositions.Count - 1
             out += npcPositions(i).X & "~"
-            out += npcPositions(i).X & "%"      '21 + traplist.Count + statueList.Count + chestList.Count to 20 + traplist.Count + statueList.Count + chestList.Count + npcPositions.Count
+            out += npcPositions(i).Y & "%"      '21 + traplist.Count + statueList.Count + chestList.Count to 20 + traplist.Count + statueList.Count + chestList.Count + npcPositions.Count
         Next
 
         out += "sessions%"

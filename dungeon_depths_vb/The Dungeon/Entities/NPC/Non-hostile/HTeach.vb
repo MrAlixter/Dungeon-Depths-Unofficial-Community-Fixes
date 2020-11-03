@@ -28,6 +28,7 @@
         inv.setCount("Warlock_Lesson", 1)
         inv.setCount("Name_Change", 1)
         inv.setCount("Base_Form_Reset", 1)
+        inv.setCount("Learn_'Focus_Up'", 1)
 
         isShop = True
         gold = 99999

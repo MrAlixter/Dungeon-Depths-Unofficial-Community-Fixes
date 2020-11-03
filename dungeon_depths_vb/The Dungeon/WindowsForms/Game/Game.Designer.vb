@@ -280,6 +280,12 @@ Partial Class Game
         Me.btnConfirmBait = New System.Windows.Forms.Button()
         Me.Label7 = New System.Windows.Forms.Label()
         Me.cboxBait = New System.Windows.Forms.ComboBox()
+        Me.pnlSpellSpecial = New System.Windows.Forms.Panel()
+        Me.Label17 = New System.Windows.Forms.Label()
+        Me.txtSpellSpecialDesc = New System.Windows.Forms.TextBox()
+        Me.btnSpellSpecOK = New System.Windows.Forms.Button()
+        Me.Label12 = New System.Windows.Forms.Label()
+        Me.cboxSpellSpecialDescSelector = New System.Windows.Forms.ComboBox()
         CType(Me.picEnemy, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me.picNPC, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me.picStatue, System.ComponentModel.ISupportInitialize).BeginInit()
@@ -401,6 +407,7 @@ Partial Class Game
         CType(Me.picFusionPort, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me.PictureBox2, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.pnlSnare.SuspendLayout()
+        Me.pnlSpellSpecial.SuspendLayout()
         Me.SuspendLayout()
         '
         'btnUse1
@@ -3243,6 +3250,82 @@ Partial Class Game
         Me.cboxBait.Size = New System.Drawing.Size(262, 21)
         Me.cboxBait.TabIndex = 155
         '
+        'pnlSpellSpecial
+        '
+        Me.pnlSpellSpecial.BackgroundImage = CType(resources.GetObject("pnlSpellSpecial.BackgroundImage"), System.Drawing.Image)
+        Me.pnlSpellSpecial.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch
+        Me.pnlSpellSpecial.Controls.Add(Me.Label17)
+        Me.pnlSpellSpecial.Controls.Add(Me.txtSpellSpecialDesc)
+        Me.pnlSpellSpecial.Controls.Add(Me.btnSpellSpecOK)
+        Me.pnlSpellSpecial.Controls.Add(Me.Label12)
+        Me.pnlSpellSpecial.Controls.Add(Me.cboxSpellSpecialDescSelector)
+        Me.pnlSpellSpecial.Location = New System.Drawing.Point(155, 158)
+        Me.pnlSpellSpecial.Name = "pnlSpellSpecial"
+        Me.pnlSpellSpecial.Size = New System.Drawing.Size(449, 224)
+        Me.pnlSpellSpecial.TabIndex = 406
+        Me.pnlSpellSpecial.Visible = False
+        '
+        'Label17
+        '
+        Me.Label17.AutoSize = True
+        Me.Label17.BackColor = System.Drawing.Color.Black
+        Me.Label17.Font = New System.Drawing.Font("Consolas", 9.75!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.Label17.ForeColor = System.Drawing.Color.White
+        Me.Label17.Location = New System.Drawing.Point(11, 65)
+        Me.Label17.Margin = New System.Windows.Forms.Padding(4, 0, 4, 0)
+        Me.Label17.Name = "Label17"
+        Me.Label17.Size = New System.Drawing.Size(91, 15)
+        Me.Label17.TabIndex = 159
+        Me.Label17.Text = "Description:"
+        '
+        'txtSpellSpecialDesc
+        '
+        Me.txtSpellSpecialDesc.BackColor = System.Drawing.Color.Black
+        Me.txtSpellSpecialDesc.Font = New System.Drawing.Font("Consolas", 10.18868!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.txtSpellSpecialDesc.ForeColor = System.Drawing.Color.White
+        Me.txtSpellSpecialDesc.Location = New System.Drawing.Point(11, 85)
+        Me.txtSpellSpecialDesc.Multiline = True
+        Me.txtSpellSpecialDesc.Name = "txtSpellSpecialDesc"
+        Me.txtSpellSpecialDesc.ScrollBars = System.Windows.Forms.ScrollBars.Vertical
+        Me.txtSpellSpecialDesc.Size = New System.Drawing.Size(428, 96)
+        Me.txtSpellSpecialDesc.TabIndex = 158
+        '
+        'btnSpellSpecOK
+        '
+        Me.btnSpellSpecOK.BackColor = System.Drawing.SystemColors.Window
+        Me.btnSpellSpecOK.Font = New System.Drawing.Font("Consolas", 8.830189!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.btnSpellSpecOK.Location = New System.Drawing.Point(365, 191)
+        Me.btnSpellSpecOK.Name = "btnSpellSpecOK"
+        Me.btnSpellSpecOK.Size = New System.Drawing.Size(75, 23)
+        Me.btnSpellSpecOK.TabIndex = 157
+        Me.btnSpellSpecOK.Text = "OK"
+        Me.btnSpellSpecOK.UseVisualStyleBackColor = False
+        '
+        'Label12
+        '
+        Me.Label12.AutoSize = True
+        Me.Label12.BackColor = System.Drawing.Color.Black
+        Me.Label12.Font = New System.Drawing.Font("Consolas", 9.75!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.Label12.ForeColor = System.Drawing.Color.White
+        Me.Label12.Location = New System.Drawing.Point(11, 14)
+        Me.Label12.Margin = New System.Windows.Forms.Padding(4, 0, 4, 0)
+        Me.Label12.Name = "Label12"
+        Me.Label12.Size = New System.Drawing.Size(119, 15)
+        Me.Label12.TabIndex = 156
+        Me.Label12.Text = "Known Abilities:"
+        '
+        'cboxSpellSpecialDescSelector
+        '
+        Me.cboxSpellSpecialDescSelector.BackColor = System.Drawing.Color.Black
+        Me.cboxSpellSpecialDescSelector.Font = New System.Drawing.Font("Consolas", 8.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.cboxSpellSpecialDescSelector.ForeColor = System.Drawing.Color.White
+        Me.cboxSpellSpecialDescSelector.FormattingEnabled = True
+        Me.cboxSpellSpecialDescSelector.Location = New System.Drawing.Point(11, 33)
+        Me.cboxSpellSpecialDescSelector.Margin = New System.Windows.Forms.Padding(4, 5, 4, 5)
+        Me.cboxSpellSpecialDescSelector.Name = "cboxSpellSpecialDescSelector"
+        Me.cboxSpellSpecialDescSelector.Size = New System.Drawing.Size(428, 21)
+        Me.cboxSpellSpecialDescSelector.TabIndex = 155
+        '
         'Game
         '
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Inherit
@@ -3250,6 +3333,7 @@ Partial Class Game
         Me.BackColor = System.Drawing.Color.Black
         Me.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch
         Me.ClientSize = New System.Drawing.Size(1008, 690)
+        Me.Controls.Add(Me.pnlSpellSpecial)
         Me.Controls.Add(Me.pnlSnare)
         Me.Controls.Add(Me.pnlFusion)
         Me.Controls.Add(Me.picFoxStatueGold)
@@ -3552,6 +3636,8 @@ Partial Class Game
         CType(Me.PictureBox2, System.ComponentModel.ISupportInitialize).EndInit()
         Me.pnlSnare.ResumeLayout(False)
         Me.pnlSnare.PerformLayout()
+        Me.pnlSpellSpecial.ResumeLayout(False)
+        Me.pnlSpellSpecial.PerformLayout()
         Me.ResumeLayout(False)
         Me.PerformLayout()
 
@@ -3809,4 +3895,10 @@ Partial Class Game
     Friend WithEvents btnConfirmBait As System.Windows.Forms.Button
     Friend WithEvents Label7 As System.Windows.Forms.Label
     Friend WithEvents cboxBait As System.Windows.Forms.ComboBox
+    Friend WithEvents pnlSpellSpecial As System.Windows.Forms.Panel
+    Friend WithEvents Label17 As System.Windows.Forms.Label
+    Friend WithEvents txtSpellSpecialDesc As System.Windows.Forms.TextBox
+    Friend WithEvents btnSpellSpecOK As System.Windows.Forms.Button
+    Friend WithEvents Label12 As System.Windows.Forms.Label
+    Friend WithEvents cboxSpellSpecialDescSelector As System.Windows.Forms.ComboBox
 End Class

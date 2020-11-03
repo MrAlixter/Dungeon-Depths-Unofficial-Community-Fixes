@@ -2,7 +2,6 @@
     Inherits Armor
 
     Dim oldHat As Tuple(Of Integer, Boolean, Boolean) = New Tuple(Of Integer, Boolean, Boolean)(0, True, False)
-    'CatLingerie is a cosmetic armor that doesn't provide a defense bonus
     Sub New()
         '|ID Info|
         MyBase.setName("Frock_of_Night")
@@ -13,6 +12,7 @@
         MyBase.setUsable(False)
         MyBase.compressesBreasts = True
         MyBase.isMonsterDrop = False
+        MyBase.slutVarInd = 250
 
         '|Stats|
         MyBase.dBoost = 3

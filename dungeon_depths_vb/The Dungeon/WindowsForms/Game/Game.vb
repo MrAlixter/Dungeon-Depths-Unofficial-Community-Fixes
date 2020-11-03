@@ -45,13 +45,13 @@ Public Class Game
     Public npcmode As Boolean = False   'indicates if the player is talking to an npc (NOT SAVED)
     Public npcIndex As Integer = 0  'indicates which npc is encountered (NOT SAVED)
     'a list containing all valid cheats
-    Public cheatList() As String = {"asss", "daaa", "wawa", "sasa", "gogo", "seee", "aeio", "wasd", "aaaa", "sawd", "swda", "ssss"} 'list of cheats (NOT SAVED)
+    Public cheatList() As String = {"asss", "daaa", "wawa", "sasa", "gogo", "seee", "aeio", "wasd", "aaaa", "sawd", "swda", "ssss", "eaea"} 'list of cheats (NOT SAVED)
     Dim keysPressed As String = ""   'records last 4 keys pressed (NOT SAVED)
     Public titleList = New List(Of String)
     'other misc form1 instance variables
     Dim selectedItem As Item = New Item()   'the item Fhilighted in the inventory (NOT SAVED)
     Public turn As Integer = 0  '(NOT SAVED)
-    Public version As Double = 10.1    'the save file version
+    Public version As Double = 10.2    'the save file version
     Public sessionID As Integer = DateTime.Now.GetHashCode
 
     Public lblEventOnClose As Action    'the event method preformed when lblEvent closes (NOT SAVED)
@@ -432,7 +432,7 @@ Public Class Game
         End If
 
         For Each sNPC In shopNPCList
-            If Not sNPC.isDead And sNPC.pos.X > 0 And sNPC.pos.Y > 0 Then
+            If Not sNPC.isDead And sNPC.pos.X > 0 And sNPC.pos.Y > 0 And sNPC.pos.Y < mBoardHeight And sNPC.pos.X < mBoardWidth Then
                 currFloor.mBoard(sNPC.pos.Y, sNPC.pos.X).Text = "$"
             End If
         Next
@@ -1596,6 +1596,16 @@ Public Class Game
                     drawBoard()
                 Catch ex As Exception
                 End Try
+            ElseIf keysPressed = "eaea" Then
+                player1.knownSpecials.Clear()
+                player1.knownSpells.Clear()
+
+                For Each s In Spell.spellList.Keys
+                    player1.knownSpells.Add(s)
+                Next
+                For Each s In Special.specialList.Keys
+                    player1.knownSpecials.Add(s)
+                Next
             End If
         End If
         keysPressed = ""
@@ -1618,23 +1628,16 @@ Public Class Game
     'talk
     Sub talkKey()
         If Not npcmode Then
-            If player1.pos.Equals(shopkeeper.pos) Then
-                npcEncounter(shopkeeper)
-            End If
-            If player1.pos.Equals(swiz.pos) Then
-                npcEncounter(swiz)
-            End If
-            If player1.pos.Equals(hteach.pos) Then
-                npcEncounter(hteach)
-            End If
+            For Each s In shopNPCList
+                If player1.pos.Equals(s.pos) Then npcEncounter(s) : Exit For
+            Next
         Else
             doLblEventOnClose()
             closeLblEvent()
         End If
     End Sub
     Private Sub btnTalk_Click(sender As Object, e As EventArgs) Handles btnTalk.Click
-        doLblEventOnClose()
-        closeLblEvent()
+        talkKey()
     End Sub
     'attack
     Sub attackKey()
@@ -1944,8 +1947,9 @@ Public Class Game
         queueSetup()
         m.setSPD(oSpeed)
         If mDun.numCurrFloor = 4 Then
-            pushLblEvent("As you approach the staircase, you spot the Ooze Empress, hanging over the stairs.  As you wave to get her attention, she plops off the celing to come and greet you.  As you explain your situation to her, she chuckles, catching you off guard.  ""You know, I was placed on this floor as kind of a buffer.  Mistress Medusa isn't interested in weaklings, and if you even want to have a chance at beating her, you need to have a stronger will."".  You notice a shift in her previously bubbly personality, and when the rest of her tentacles drop down, you take a leap back and prepare for combat." & DDUtils.RNRN &
-                               """Let's see if you've learned anthing since the last time you tried this,"" she says with an somewhat mencing grin, ""... though I'm sure neither of us would mind a repeat either.""")
+            pushLblEvent("As you approach the staircase, you spot the Ooze Empress, hanging over the stairs.  As you wave to get her attention, she plops off the ceiling to come and greet you.  As you explain your situation to her, she chuckles, catching you off guard." & DDUtils.RNRN &
+                         """You know, I was placed on this floor as kind of a buffer.  Mistress Medusa isn't interested in weaklings, and if you even want to have a chance at beating her, you need to have a stronger will."".  You notice a shift in her previously bubbly personality, and when the rest of her tentacles drop down, you take a leap back and prepare for combat!" & DDUtils.RNRN &
+                         """Let's see if you've learned anthing since the last time you tried this,"" she says with an somewhat mencing grin, ""... though I'm sure neither of us would mind a repeat either...""")
         End If
     End Sub
     'movement
@@ -2090,6 +2094,9 @@ Public Class Game
             For i As Integer = 0 To reader.ReadLine()
                 preBSInventory.Add(reader.ReadLine())
             Next
+        Else
+            preBSBody = Nothing
+            preBSStartState = Nothing
         End If
         updateLoadbar(60)
 
@@ -2390,6 +2397,7 @@ Public Class Game
         npcList.Clear()
         player1.specialRoute()
         player1.magicRoute()
+        player1.skillsUsedThisCombat.Clear()
         ttCosts.RemoveAll()
 
         updateList = New PQ
@@ -2976,11 +2984,11 @@ Public Class Game
             If sSplit(c).Equals(vbCrLf) Then ct = 0
             If ct < 70 Then
                 If Not sSplit(c).Contains(vbCrLf) Then
-                    out += sSplit(c) & " "
+                    out += sSplit(c).Trim & " "
                     ct += sSplit(c).Length + 1
                     c += 1
                 Else
-                    out += sSplit(c) & " "
+                    out += sSplit(c).Trim & " "
                     ct = 0
                     c += 1
                 End If
@@ -3032,11 +3040,11 @@ Public Class Game
         Do While c < sSplit.Length
             If ct < 70 Then
                 If Not sSplit(c).Contains(vbCrLf) Then
-                    out += sSplit(c) & " "
+                    out += sSplit(c).Trim & " "
                     ct += sSplit(c).Length + 1
                     c += 1
                 Else
-                    out += sSplit(c) & " "
+                    out += sSplit(c).Trim & " "
                     ct = 0
                     c += 1
                 End If
@@ -3081,11 +3089,11 @@ Public Class Game
         Do While c < sSplit.Length
             If ct < 50 Then
                 If Not sSplit(c).Contains(vbCrLf) Then
-                    out += sSplit(c) & " "
+                    out += sSplit(c).Trim & " "
                     ct += sSplit(c).Length + 1
                     c += 1
                 Else
-                    out += sSplit(c) & " "
+                    out += sSplit(c).Trim & " "
                     ct = 0
                     c += 1
                 End If
@@ -3365,5 +3373,12 @@ Public Class Game
 
     Private Sub btnConfirmBait_Click(sender As Object, e As EventArgs) Handles btnConfirmBait.Click
         SnareDialogBackend.fromPnlSnare(sender, e, player1)
+    End Sub
+
+    Private Sub btnSpellSpecOK_Click(sender As Object, e As EventArgs) Handles btnSpellSpecOK.Click
+        SpellSpecDescBackend.fromPNLSpellSpecDesc(sender, e, player1)
+    End Sub
+    Private Sub cboxSpellSpecialDescSelector_SelectedIndexChanged(sender As Object, e As EventArgs) Handles cboxSpellSpecialDescSelector.SelectedIndexChanged
+        SpellSpecDescBackend.cboxSpellSpecIndexChanged(sender, e, player1)
     End Sub
 End Class

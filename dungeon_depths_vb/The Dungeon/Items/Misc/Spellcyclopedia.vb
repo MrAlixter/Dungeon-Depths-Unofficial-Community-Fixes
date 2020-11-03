@@ -16,9 +16,9 @@
         MyBase.value = 0
 
         '|Description|
-        MyBase.setDesc("TFng")
+        MyBase.setDesc("A large book that explains how to make the best use of certain skills, as long as you know the basics.")
     End Sub
     Overrides Sub use(ByRef p As Player)
-
+        SpellSpecDescBackend.toPNLSpellSpecDesc(Nothing, Nothing, p, SpellOrSpec.SPELL)
     End Sub
 End Class

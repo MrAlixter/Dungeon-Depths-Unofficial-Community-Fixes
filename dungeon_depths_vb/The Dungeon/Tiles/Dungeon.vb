@@ -1,4 +1,9 @@
 ﻿Imports System.ComponentModel
+Public Enum worldFlags
+    allfrogs
+    fvendhassword
+    hteachslime
+End Enum
 
 <Serializable()> Public Class Dungeon
     Public floorboss As Dictionary(Of Integer, String) = New Dictionary(Of Integer, String)

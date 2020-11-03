@@ -12421,6 +12421,13 @@ iiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiii
         +TSf5tN8mk/zaT7Np/k0n+bTfJpP82l7nyl3D72pu6JUgpOZAAAAAElFTkSuQmCC
 </value>
   </data>
+  <data name="pnlSpellSpecial.BackgroundImage" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
+    <value>
+        iVBORw0KGgoAAAANSUhEUgAAAcEAAADgAQMAAABB8k+MAAAABGdBTUEAALGPC/xhBQAAAAZQTFRF////
+        AAAAVcLTfgAAAAlwSFlzAAAOwwAADsMBx2+oZAAAAERJREFUaN7ty7ENAAAIA6B+7un6QzcT2ElvtmOa
+        pmmapmmapmmapmmapmmapmmapmmapmmapmmapmmapmmapmn+m6XkAKQw8zILQUcKAAAAAElFTkSuQmCC
+</value>
+  </data>
   <metadata name="$this.TrayHeight" type="System.Int32, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089">
     <value>42</value>
   </metadata>

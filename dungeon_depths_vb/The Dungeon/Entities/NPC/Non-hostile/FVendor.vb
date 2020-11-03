@@ -111,9 +111,7 @@
                     Game.pushNPCDialog("Hey, it's you!  All hail the spider goddess or whatever we're on about, to be completely honest I wasn't really paying attention during my initiation." & DDUtils.RNRN &
                                        "So, whatcha eatin'?")
                 Else
-                    Game.pushNPCDialog("Ya know, I do have a extra potent venom you could use if you wanted to try the spider thing out...  Hey, then we could hang out!  Just...*hang* out!  Kinda just....sit around....and *haaaaang* out..." & DDUtils.RNRN &
-                                       "...because, like, spiders hang....off....stuff..." & DDUtils.RNRN &
-                                       ".....just gonna......let that *hang*......haha...ahh...")
+                    Game.pushNPCDialog("Ya know, they did give me this extra strength venom you could use if you wanted to try this spider thing out...")
                 End If
             End If
         End If

@@ -92,6 +92,9 @@
 
         Return tInv
     End Function
+    Public Function getDiscount() As Double
+        Return discount
+    End Function
 
     Public MustOverride Function toFight() As String
     Public MustOverride Function hitBySpell() As String

@@ -5,6 +5,7 @@
     End Sub
 
     Sub add(ByRef tf As Transformation)
+        If tf Is Nothing Then Exit Sub
         If tf.getTFName Is Nothing Then MsgBox("Error 007: " & tf.GetType.ToString & " transformation missing name field!")
         If Not tf.getTFName Is Nothing AndAlso Not internalList.ContainsKey(tf.getTFName) Then internalList.Add(tf.getTFName(), tf)
     End Sub

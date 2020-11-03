@@ -117,7 +117,7 @@
 
         If p.name <> "Targax" Then
             p.prt.haircolor = bimboyellow2
-            p.prt.setIAInd(pInd.rearhair, 6, True, True)
+            p.prt.setIAInd(pInd.rearhair, 12, True, True)
             p.prt.setIAInd(pInd.midhair, 6, True, True)
             p.prt.setIAInd(pInd.fronthair, 7, True, True)
         End If

@@ -42,5 +42,7 @@
         If p.equippedAcce.isCursed Then Equipment.equipAcce(p, "Nothing") : Game.pushLstLog("Cursed accessory removed")
 
         Game.pushNPCDialog("Ah, a fresh slate.  Don't stay out of too much trouble now, caution won't lead you anywhere...interesting...")
+
+        count -= 1
     End Sub
 End Class

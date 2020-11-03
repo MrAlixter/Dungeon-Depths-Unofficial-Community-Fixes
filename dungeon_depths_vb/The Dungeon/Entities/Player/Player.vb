@@ -67,6 +67,8 @@
     tfcausingsword  '65
     snarednpc       '66
     cmark           '67
+    isspotfused     '68
+    collarssnipped  '69
 End Enum
 
 Public Class Player
@@ -123,6 +125,8 @@ Public Class Player
     Public knownSpecials As List(Of String) = New List(Of String)
     Public selfPolyForms As List(Of String) = New List(Of String)
     Public enemPolyForms As List(Of String) = New List(Of String)
+    Public skillsUsedThisCombat As List(Of String) = New List(Of String)
+    Public quests As List(Of Quest) = New List(Of Quest)
 
     '|CONSTRUCTORS|:
     Public Sub New()
@@ -146,6 +150,8 @@ Public Class Player
         createInvPerks()
         inv.add(0, 1)
         inv.add(2, 1)
+        inv.add(242, 1)
+        inv.add(243, 1)
     End Sub
     'load from save constructors
     Public Sub New(ByVal s As String, ByVal v As Double)
@@ -263,6 +269,15 @@ Public Class Player
 
         Next
         currentIndex += 1
+
+        If v >= 10.2 Then
+            'load the player's quests
+            subKB = knowlegebase(currentIndex).Split("Ͱ")
+            For i = 1 To CInt(subKB(0) + 1)
+                quests(i - 1).load(subKB(i))
+            Next
+            currentIndex += 1
+        End If
 
         currState.load(Me)
 
@@ -420,6 +435,7 @@ Public Class Player
         initClasses()
         initForms()
         initPolymorphs()
+        initQuests()
     End Sub
     Private Sub initPerks()
         perks.Clear()
@@ -525,6 +541,9 @@ Public Class Player
         polymorphs.Add("Plush", Nothing)
         polymorphs.Add("Fae", Nothing)
         polymorphs.Add("Horse", Nothing)
+    End Sub
+    Private Sub initQuests()
+        quests.Add(New HelpWanted)
     End Sub
     Sub setStartStates()
         sState.save(Me)
@@ -677,15 +696,16 @@ Public Class Player
             Game.cboxSpec.Items.Add(s)
         Next
 
-        If pClass.name = "Warrior" Or pClass.name = "Paladin" Then Game.cboxSpec.Items.Add("Berserker Rage")
-        If pClass.name = "Mage" Or pClass.name = "Paladin" Then Game.cboxSpec.Items.Add("Risky Decision")
-        If pClass.name = "Rogue" Then Game.cboxSpec.Items.Add("Bounty's Collection")
-        If breastSize > 3 Then Game.cboxSpec.Items.Add("Massive Mammaries")
-        If breastSize > 5 Then Game.cboxSpec.Items.Add("Pillowy Protect")
-        If pForm.name = "Succubus" Then Game.cboxSpec.Items.Add("Charm") : Game.cboxSpec.Items.Add("Drain Soul")
-        If pForm.name = "Slime" Then Game.cboxSpec.Items.Add("Absorbtion")
-        If pForm.name = "Dragon" Then Game.cboxSpec.Items.Add("Ironhide Fury")
-        If inv.item("Shrink_Ray").count > 0 Then Game.cboxSpec.Items.Add("Shrink_Ray Shot")
+        If (pClass.name = "Warrior" Or pClass.name = "Paladin") And Not knownSpecials.Contains("Berserker Rage") Then Game.cboxSpec.Items.Add("Berserker Rage")
+        If (pClass.name = "Mage" Or pClass.name = "Paladin") And Not knownSpecials.Contains("Risky Decision") Then Game.cboxSpec.Items.Add("Risky Decision")
+        If pClass.name = "Rogue" And Not knownSpecials.Contains("Bounty's Collection") Then Game.cboxSpec.Items.Add("Bounty's Collection")
+        If breastSize > 3 And Not knownSpecials.Contains("Massive Mammaries") Then Game.cboxSpec.Items.Add("Massive Mammaries")
+        If breastSize > 5 And Not knownSpecials.Contains("Pillowy Protect") Then Game.cboxSpec.Items.Add("Pillowy Protect")
+        If pForm.name = "Succubus" And Not knownSpecials.Contains("Charm") Then Game.cboxSpec.Items.Add("Charm")
+        If pForm.name = "Succubus" And Not knownSpecials.Contains("Drain Soul") Then Game.cboxSpec.Items.Add("Drain Soul")
+        If pForm.name = "Slime" And Not knownSpecials.Contains("Absorbtion") Then Game.cboxSpec.Items.Add("Absorbtion")
+        If pForm.name = "Dragon" And Not knownSpecials.Contains("Ironhide Fury") Then Game.cboxSpec.Items.Add("Ironhide Fury")
+        If inv.item("Shrink_Ray").count > 0 And Not knownSpecials.Contains("Shrink_Ray Shot") Then Game.cboxSpec.Items.Add("Shrink_Ray Shot")
     End Sub
     Public Sub magicRoute()
         Game.cboxNPCMG.Items.Clear()
@@ -1020,6 +1040,11 @@ Public Class Player
         'transformations
         tfUpdate(pUpdateFlag)
 
+        '|QUEST UPDATES|
+        For Each qu In quests
+            If qu.getActive And qu.getCurrObj.isComplete Then qu.completeCurrOjb()
+        Next
+
         '|PLAYER STAT UPKEEP|
         If xp >= nextLevelXp Then levelUp()
         UIupdate()
@@ -1173,6 +1198,11 @@ Public Class Player
         'inferno aura
         If perks(perk.infernoa) > -1 Then
             PerkEffects.infernoAura(Me)
+        End If
+        'spotfusion cooldown
+        If perks(perk.isspotfused) > -1 Then
+            perks(perk.isspotfused) -= 1
+            If perks(perk.isspotfused) < 1 Then perks(perk.isspotfused) = -1
         End If
 
         '|CURSES|
@@ -1803,7 +1833,14 @@ Public Class Player
         For i = 0 To knownSpecials.Count - 1
             output += knownSpecials(i).ToString & "Ͱ"
         Next
+
         output += "†"
+        output += quests.Count - 1 & "Ͱ"
+        For i = 0 To quests.Count - 1
+            output += quests(i).save & "Ͱ"
+        Next
+        output += "†"
+
         Return output
     End Function
     Public Function toGhost() As String
@@ -2109,19 +2146,48 @@ Public Class Player
 
         out += outPutPerkText()
 
+        out += listQuests()
         Return out
     End Function
     Function outPutPerkText() As String
         Dim out = ""
-        If perks(perk.hunger) > -1 Then out += "You haven't eaten anything in a while and are starving." & vbCrLf & " " & vbCrLf
-        If perks(perk.slutcurse) > -1 Then out += "You choose to dress very provocatively, showing as much skin as possible due to a curse."
-        If perks(perk.polymorphed) > -1 Then out += "You are under the effects of a temporary polymorph, and will be for " & perks(perk.polymorphed) & " more turns." & vbCrLf & " " & vbCrLf
-        If perks(perk.thrall) > -1 Then out += "You are under the thrall of a sorcerer/ess, and may not have full control over your body or mind." & vbCrLf & " " & vbCrLf
-        If perks(perk.astatue) > -1 Then out += "You are currently a statue, and won't be able to do much for " & perks(perk.astatue) & " turns." & vbCrLf & " " & vbCrLf
-        If perks(perk.lurk) > -1 Then out += "You are currently in a shrub." & vbCrLf & " " & vbCrLf
+
+        '| -- Status Indicators -- |
+        If perks(perk.hunger) > -1 Then out += "You haven't eaten anything in a while and are starving." & DDUtils.RNRN
+        If perks(perk.thrall) > -1 Then out += "You are under the thrall of a sorcerer/ess, and may not have full control over your body or mind." & DDUtils.RNRN
+        If perks(perk.polymorphed) > -1 Then out += "You are under the effects of a temporary polymorph, and will be for " & perks(perk.polymorphed) & " more turns." & DDUtils.RNRN
+        If perks(perk.astatue) > -1 Then out += "You are currently a statue, and won't be able to do much for " & perks(perk.astatue) & " turns." & DDUtils.RNRN
+        If perks(perk.lurk) > -1 Then out += "You are currently in a shrub." & DDUtils.RNRN
+        If perks(perk.blind) > -1 Then out += "You are blind." & DDUtils.RNRN
+        If perks(perk.lightsource) > -1 Then out += "Your entire body is glowing, and will continue to do so for " & perks(perk.lightsource) & " turns." & DDUtils.RNRN
+        'If perks(perk.masochist) > -1 Then out += "Damage you take will raise your lust." & DDUtils.RNRN
+        If perks(perk.burn) > -1 Then out += "You are on fire, and will continue to do so for " & perks(perk.burn) & " turns." & DDUtils.RNRN
+        If perks(perk.dodge) > -1 Then out += "You will dodge the next attack that comes your way." & DDUtils.RNRN
+        If perks(perk.isspotfused) > -1 Then out += "You can not fuse again for " & perks(perk.isspotfused) & " turns." & DDUtils.RNRN
+
+        '| -- Curse Indicators -- |
+        If perks(perk.slutcurse) > -1 Then out += "Due to a curse, any clothes or armor you wear will become skimpy and revealing." & DDUtils.RNRN
+        If perks(perk.copoly) > -1 Then out += "Due to a curse, you will occasionally change forms uncontrollably." & DDUtils.RNRN
+        If perks(perk.cogreed) > -1 Then out += "Due to a curse, all chests that you open will turn into mimics." & DDUtils.RNRN
+        If perks(perk.corust) > -1 Then out += "Due to a curse, your worn equipment will take damage occasionally." & DDUtils.RNRN
+        If perks(perk.comilk) > -1 Then out += "Due to a curse, your tits will rapidly grow larger over time." & DDUtils.RNRN
+        If perks(perk.coblind) > -1 Then out += "Due to a curse, you can no longer see." & DDUtils.RNRN
+        If perks(perk.succubuscurse) > -1 Then out += "Due to a curse, you will turn into a bimbo the hornier you get." & DDUtils.RNRN
+
         Return out
     End Function
+    Function listQuests() As String
+        Dim originalOut = "|----- QUESTS -----|" & DDUtils.RNRN
+        Dim out = originalOut
 
+        For Each qu In quests
+            If qu.getActive And Not qu.getComplete Then
+                out += """" & qu.getName & """ (" & qu.getProgress & ")" & vbCrLf & "- " & qu.getCurrObj.getDesc & DDUtils.RNRN
+            End If
+        Next
+
+        Return If(out.Equals(originalOut), "", out)
+    End Function
     '|LEVELING|
     Public Sub levelUp()
         level += 1

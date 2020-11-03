@@ -135,7 +135,7 @@
         Return False
     End Function
     Shared Sub lightSource(ByRef p As Player)
-        If Game.turn Mod 4 = 0 And p.perks(perk.lightsource) > -1 Then
+        If p.perks(perk.lightsource) > -1 Then
             p.perks(perk.lightsource) -= 1
         End If
     End Sub
@@ -431,6 +431,8 @@
         flag = hardLightEffect(dmg, p) Or flag
         flag = bimboDodge(p) Or flag
         flag = stealthDodge(p) Or flag
+        flag = spidersilkEffect(dmg, p) Or flag
+
         If p.perks(perk.bunnyears) = 2 Then p.addLust(-dmg / 2)
         If p.perks(perk.infernoa) > -1 Then flag = reflectDamage(dmg, 0.45, p.currTarget, p)
         Return flag

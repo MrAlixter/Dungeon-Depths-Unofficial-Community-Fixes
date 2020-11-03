@@ -55,6 +55,5 @@
         Game.pushLstLog("You read the " & getName() & ". " & sName & " learned!")
         If Not out.Equals("") Then Game.pushLstLog(out)
         count -= 1
-
     End Sub
 End Class

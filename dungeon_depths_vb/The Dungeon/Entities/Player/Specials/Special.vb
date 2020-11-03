@@ -4,7 +4,7 @@
     Dim user As Player
     Dim target As NPC
 
-    Shared specialList As Dictionary(Of String, Special)
+    Public Shared specialList As Dictionary(Of String, Special)
     Dim useableOutOfCombat As Boolean = False
     Shared Sub init()
         specialList = New Dictionary(Of String, Special)
@@ -58,6 +58,8 @@
         specialList.Add("Attack Up", New AttackUp(Nothing, Nothing))
         specialList.Add("Lurk", New Lurk(Nothing, Nothing))
         specialList.Add("Snare", New Snare(Nothing, Nothing))
+        specialList.Add("Focus Up", New FMantra(Nothing, Nothing))
+        specialList.Add("Mirage Dance", New MirageDance(Nothing, Nothing))
     End Sub
 
     Sub New(ByRef u As Player, ByRef t As NPC)
@@ -65,6 +67,14 @@
         target = t
     End Sub
     Sub perform()
+
+        If getCost() = -1 And user.skillsUsedThisCombat.Contains(name) Then
+            Game.pushLblEvent("You've already used '" & name & "' this combat!")
+            Game.pushLstLog("You've already used '" & name & "' this combat!")
+            Exit Sub
+        ElseIf getCost() = -1 Then
+            user.skillsUsedThisCombat.Add(name)
+        End If
         If (user.stamina - getCost()) < 0 Then
             Game.pushLblEvent("You don't have enough stamina to use this special! (" & name & " costs " & getCost() & " stamina)")
             Game.pushLstLog("You don't have enough stamina to use this special!")
@@ -107,6 +117,9 @@
     End Function
     Function getTarget() As NPC
         Return target
+    End Function
+    Public Overridable Function getDesc(ByRef c As Player, ByRef t As NPC)
+        Return "Description not added."
     End Function
     Sub redefineCandT(ByRef u As Player, ByRef t As NPC)
         user = u

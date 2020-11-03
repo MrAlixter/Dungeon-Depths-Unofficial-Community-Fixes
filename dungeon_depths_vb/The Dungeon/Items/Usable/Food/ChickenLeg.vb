@@ -11,7 +11,7 @@
 
         '|Stats|
         MyBase.count = 0
-        MyBase.value = 150
+        MyBase.value = 230
         setCalories(25)
 
         '|Description|

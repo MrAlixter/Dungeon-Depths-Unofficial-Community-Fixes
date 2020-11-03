@@ -10,11 +10,11 @@
         setInventory({63})
         setupMonsterOnSpawn()
 
-        If Int(Rnd() * 100) = 1 Then
+        If Int(Rnd() * 75) = 1 Then
             name = "Jewelled Spider"
             attack *= 3
             speed *= 1.5
-            xpValue = 2000
+            xpValue = 10000
         End If
     End Sub
 

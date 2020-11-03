@@ -6,6 +6,6 @@
     End Sub
 
     Public Overrides Sub onLVLUp(level As Integer, ByRef p As Player, Optional learnSkills As Boolean = True)
-        If level = 3 And Not p.knownSpecials.Contains("Snare") Then p.knownSpecials.Add("Snare") : Game.pushLstLog("Snare special learned!")
+        If Not p.knownSpecials.Contains("Snare") Then p.knownSpecials.Add("Snare") : Game.pushLstLog("Snare special learned!")
     End Sub
 End Class

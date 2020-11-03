@@ -64,7 +64,15 @@
             inv.setCount("Midas_Gauntlet", 1)
         End If
 
-        If npcIndex = 0 Or npcIndex = 6 Then
+        If npcIndex = 0 Then
+            If Game.player1.quests(0).canGet Then
+                Game.player1.quests(0).init()
+                Game.pushNPCDialog("""Hey, can I ask for your help on something?  I've been seeing a lot of people roaming around here with those collars looking for valubles, and that got me thinking... Why don't I expand my staff?  If you can snip off a few of their collars and send them my way,  I can make it worth your time.""" & DDUtils.RNRN &
+                                   "Quest ""Help Wanted"" aquired!" & vbCrLf & "+1 Old Snips")
+                Exit Sub
+            End If
+            Game.pushNPCDialog("Hey, what's up?")
+        ElseIf npcIndex = 6 Then
             Game.pushNPCDialog("Hey, what's up?")
         ElseIf npcIndex = 1 Then
             Game.pushNPCDialog("Ribbit.  Ribbit.")

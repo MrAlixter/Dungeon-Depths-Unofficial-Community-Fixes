@@ -24,6 +24,9 @@
     'Dick_Shrink._Potion		occult
     'Hyper_Health_Potion		unearthly
     'Hyper_Mana_Potion		    outlandish
+    'Potion_of_Benediction	    wonky
+    'Potion_of_Dodging          dodgy
+    'Incandescent_Potion        suspicious
 
     Overrides Sub use(ByRef p As Player)
         If Not hasBeenUsed Then reveal()

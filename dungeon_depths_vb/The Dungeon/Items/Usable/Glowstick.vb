@@ -35,7 +35,7 @@
             Next
         Next
 
-        p.perks(perk.lightsource) = 60
+        p.perks(perk.lightsource) = 240
 
         Dim r As Integer = (Int(Rnd() * 7))
         If r = 0 Then
