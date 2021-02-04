@@ -1,31 +1,35 @@
 ﻿Public Class Caelia
     Inherits ShopNPC
     Sub New()
+        MyBase.New()
+
+        '|ID Info|
         name = "Caelia"
-        health = 1.0
+
+        '|NPC Flags|
+        pronoun = "she"
+        pPronoun = "her"
+        rPronoun = "her"
+        title = ""
+        isShop = False
+
+        '|Inventory|
+
+
+        '|Stats|
         maxHealth = 9999
         attack = 99
         defense = 99
         speed = 999
-
-        'Define the inventory
-        inv = New Inventory(False)
-        'Armor/Accesories
-
-        isShop = False
         gold = 0
-        pronoun = "she"
-        pPronoun = "her"
-        rPronoun = "her"
+
+        '|Images|
         picNormal = ShopNPC.npcLib.atrs(0).getAt(32)
         picPrincess = ShopNPC.npcLib.atrs(0).getAt(33)
         picBunny = ShopNPC.npcLib.atrs(0).getAt(34)
 
         picNPC = New List(Of Image)
         picNPC.AddRange({picNormal, ShopNPC.npcLib.atrs(0).getAt(4), ShopNPC.npcLib.atrs(0).getAt(5), picPrincess, picBunny})
-
-        If speed = Game.player1.speed Then speed -= 1
-        title = ""
     End Sub
 
     Public Overrides Sub attackCMD(ByRef target As Entity)

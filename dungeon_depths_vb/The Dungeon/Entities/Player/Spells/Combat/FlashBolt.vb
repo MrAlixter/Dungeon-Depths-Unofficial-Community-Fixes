@@ -16,14 +16,12 @@
         If Int(Rnd() * 6) = 0 Then
             'critical hit
             dmg = MyBase.getCaster.getSpellDamage(MyBase.getTarget, (dmg + d31 + d32) * 2)
-            Game.pushLstLog(CStr("Critical Hit!  You hit the " & MyBase.getTarget.name & " for " & dmg & " damage!"))
-            Game.pushLblCombatEvent(CStr("Critical Hit!  You hit the " & MyBase.getTarget.name & " for " & dmg & " damage!"))
+            Game.pushLogAndEvent(CStr("Critical Hit!  You hit the " & MyBase.getTarget.name & " for " & dmg & " damage!"))
             MyBase.getTarget.takeDMG(dmg, MyBase.getCaster)
         Else
             'non critical hit
             dmg = MyBase.getCaster.getSpellDamage(MyBase.getTarget, dmg + d31 + d32)
-            Game.pushLstLog(CStr("You hit the " & MyBase.getTarget.name & " for " & dmg & " damage!"))
-            Game.pushLblCombatEvent(CStr("You hit the " & MyBase.getTarget.name & " for " & dmg & " damage!"))
+            Game.pushLogAndEvent(CStr("You hit the " & MyBase.getTarget.name & " for " & dmg & " damage!"))
             MyBase.getTarget.takeDMG(dmg, MyBase.getCaster)
         End If
     End Sub

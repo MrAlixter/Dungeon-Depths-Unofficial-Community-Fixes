@@ -50,6 +50,8 @@
                 Return New FaePieTF()
             Case "Horse"
                 Return New HorseTF()
+            Case "Cow"
+                Return New CowTF()
             Case Else
                 Return Nothing
         End Select

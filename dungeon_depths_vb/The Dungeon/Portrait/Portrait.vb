@@ -295,7 +295,7 @@ Public Class Portrait
             iArr(pInd.body) = Portrait.skinRecolor(imgLib.atrs(pInd.body).getAt(iArrInd(pInd.body)), c)
             If Not p Is Nothing AndAlso Not p.pForm.getOverlayU(p).Item1 = 0 Then iArr(pInd.body) = CreateFullBodyBMP({nullImg, iArr(pInd.body), imgLib.atrs(pInd.bodyoverlay).getAt(p.pForm.getOverlayU(p))})
             iArr(pInd.chest) = Portrait.skinRecolor(imgLib.atrs(pInd.chest).getAt(iArrInd(pInd.chest)), c)
-            If Not p Is Nothing AndAlso Not p.pForm.getOverlayB(p).Item1 = 0 AndAlso Not p.equippedArmor.compressesBreasts Then iArr(pInd.chest) = CreateFullBodyBMP({nullImg, iArr(pInd.chest), imgLib.atrs(pInd.bodyoverlay).getAt(p.pForm.getOverlayB(p))})
+            If Not p Is Nothing AndAlso Not p.pForm.getOverlayB(p).Item1 = 0 Then iArr(pInd.chest) = CreateFullBodyBMP({nullImg, iArr(pInd.chest), imgLib.atrs(pInd.bodyoverlay).getAt(p.pForm.getOverlayB(p))})
             iArr(pInd.shoulders) = Portrait.skinRecolor(imgLib.atrs(pInd.shoulders).getAt(iArrInd(pInd.shoulders)), c)
             If Not p Is Nothing AndAlso Not p.pForm.getOverlayS(p).Item1 = 0 Then iArr(pInd.shoulders) = CreateFullBodyBMP({nullImg, iArr(pInd.shoulders), imgLib.atrs(pInd.bodyoverlay).getAt(p.pForm.getOverlayS(p))})
             iArr(pInd.bodyoverlay) = Portrait.skinRecolor(imgLib.atrs(pInd.bodyoverlay).getAt(iArrInd(pInd.bodyoverlay)), c)
@@ -400,7 +400,7 @@ Public Class Portrait
             iArr(pInd.accessory) = CharacterGenerator.picPort.Image
         End If
 
-        If Not ent Is Nothing AndAlso Not ent.getPlayer Is Nothing AndAlso ent.getPlayer.equippedArmor.getId = 250 Then
+        If Not ent Is Nothing AndAlso Not ent.getPlayer Is Nothing AndAlso (ent.getPlayer.equippedArmor.getId = 250 Or ent.getPlayer.equippedArmor.getId = 175) Then
             Dim t = iArr(pInd.chest).Clone
 
             iArr(pInd.chest) = iArr(pInd.clothesbtm)
@@ -422,6 +422,8 @@ Public Class Portrait
         Else
             Exit Sub
         End If
+
+        If Not p.pForm.getOverlayU(p).Item1 = 0 Then iArrInd(pInd.bodyoverlay) = New Tuple(Of Integer, Boolean, Boolean)(0, True, False) : Exit Sub
 
         If p.className.Equals("Warrior") Or p.className.Equals("Barbarian") Or p.className.Equals("Paladin") Or p.className.Equals("Amazon") Or p.className.Equals("Valkyrie") Or
          p.formName.Equals("Tigress") Then
@@ -656,7 +658,7 @@ Public Class Portrait
     Public Sub getNaked()
         Dim p As Player = ent.getPlayer
         If p Is Nothing Then Exit Sub
-   
+
         Equipment.equipArmor(p, "Naked", False)
 
         portraitUDate()

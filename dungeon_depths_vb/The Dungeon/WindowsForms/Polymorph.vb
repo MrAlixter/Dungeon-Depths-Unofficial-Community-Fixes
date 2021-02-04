@@ -2,20 +2,7 @@
     Public Shared porm As Boolean = True
     Public target As NPC
     Public tfForm As Boolean = False
-    Shared fFNames() As String = {"Anna", "Ann", "Ana", "Alexis", "Allie", "Amber", "Ali", "Ashlie", _
-                               "Becky", "Bambi", "Barbie", _
-                               "Christine", "Casandra", "Cassie", "Cara", "Chloe", "Crystal", "Kristal", _
-                               "Danica", "Dani", _
-                                "Erika", "Emmy", _
-                               "Heather", "Hailey", _
-                               "Johanna", "Jenna", "Jenni", "Jo-Jo", _
-                               "Kelli", _
-                               "Lana", "Leora", _
-                               "Monica", "Mia", _
-                               "Nancy", "Nicole", _
-                               "Racheal", _
-                               "Sammi", "Sam", "Sally", "Sara", "Sofi", _
-                               "Trisha", "Trixie"}
+
     Private Sub Form4_Load(sender As Object, e As EventArgs) Handles MyBase.Load
         'scale to the screen size
         Dim startingWidth = Me.Width
@@ -53,22 +40,34 @@
         End Select
     End Sub
     Private Sub Button1_Click(sender As Object, e As EventArgs) Handles Button1.Click
+        '|--Cancel the Polymorph if an Invalid Form Type is Selected--|
         If cboxPMorph.Text = "-- Select --" Or Not tfForm Then
             Me.Close()
-            Game.player1.mana += 5
+            Game.player1.mana += 12
             Exit Sub
         End If
+
+        '|--Route the Polymorph Based on Target Type--|
         Select Case porm
             Case True
+                '|-Polymorph a Player-|
                 transform(Game.player1, cboxPMorph.Text)
             Case False
-                If target.GetType().IsSubclassOf(GetType(ShopNPC)) Then transformN(target) Else transform(target, cboxPMorph.Text)
+                If target.GetType().IsSubclassOf(GetType(ShopNPC)) Then
+                    '|-Polymorph a NPC-|
+                    transformN(target, cboxPMorph.Text)
+                Else
+                    '|-Polymorph an Enemy-|
+                    transform(target, cboxPMorph.Text)
+                End If
         End Select
+
+        '|--Close the Form--|
         Me.Close()
     End Sub
 
     'player transform methods
-    Sub transform(ByRef p As Player, ByVal form As String)
+    Shared Sub transform(ByRef p As Player, ByVal form As String)
         If form.Equals(p.className) Or form.Equals(p.formName) Or Not p.polymorphs.Keys.Contains(form) Then
             Exit Sub
         End If
@@ -106,93 +105,119 @@
         p.drawPort()
     End Sub
     'NPC transform method
-    Sub transform(ByRef t As NPC, ByVal s As String)
-        Dim title As String = s
-        If title = "Sheep" Then
-            t.maxHealth = 50
-            t.attack = 1
-            t.defense = 1
-            t.tfCt = 1
+    Shared Sub transform(ByRef t As NPC, ByVal s As String)
+        If s = "Giant Frog" Then                'Even Debuff
+            t.maxHealth *= 0.7
+            t.attack *= 0.2
+            t.defense *= 0.2
+            t.speed *= 0.7
+            t.will *= 0.2
+            t.tfEnd = 5
+
+        ElseIf s = "Sheep" Then                 'Even Debuff
+            t.maxHealth *= 0.5
+            t.attack *= 0.5
+            t.defense *= 0.5
+            t.speed *= 0.5
+            t.will *= 0.5
             t.tfEnd = 6
-            t.form = "Sheep"
-        ElseIf title = "Princess" Then
-            t.maxHealth = 60
-            t.attack = 5
-            t.defense = 1
-            t.tfCt = 1
+
+        ElseIf s = "Princess" Then              '+WIL Debuff
+            t.maxHealth *= 0.33
+            t.attack *= 0.33
+            t.defense *= 0.33
+            t.speed *= 0.33
+            t.will *= 1.0
             t.tfEnd = 6
-            t.form = "Princess"
-        ElseIf title = "Bunny" Then
-            t.maxHealth = 25
-            t.attack = 1
-            t.defense = 1
-            t.tfCt = 1
+
+        ElseIf s = "Cat-Girl" Then              '+WIL/SPD Debuff
+            t.maxHealth *= 0.33
+            t.attack *= 0.33
+            t.defense *= 0.33
+            t.speed *= 0.33
+            t.will *= 1.0
             t.tfEnd = 6
-            t.form = "Bunny"
-        ElseIf title = "Chicken" Then
-            t.maxHealth = 45
-            t.attack = 5
-            t.defense = 5
-            t.tfCt = 1
+
+        ElseIf s = "Bunny" Then                 '+SPD Debuff
+            t.maxHealth *= 0.33
+            t.attack *= 0.33
+            t.defense *= 0.33
+            t.speed *= 1.0
+            t.will *= 0.33
             t.tfEnd = 6
-            t.form = "Chicken"
-        ElseIf title = "Cow" Then
-            t.maxHealth = 75
-            t.attack = 0
-            t.defense = 0
-            t.tfCt = 1
+
+        ElseIf s = "Cow" Then                   '+HP Debuff
+            t.maxHealth *= 1.0
+            t.attack *= 0.33
+            t.defense *= 0.33
+            t.speed *= 0.33
+            t.will *= 0.33
             t.tfEnd = 6
-            t.form = "Cow"
-        ElseIf title = "Amnesiac" Then
-            t.attack = 0
-            t.defense = 0
-            t.speed = 1
+
+        ElseIf s = "Trilobite" Then             '+DEF Debuff
+            t.maxHealth *= 0.33
+            t.attack *= 0.33
+            t.defense *= 1.0
+            t.speed *= 0.33
+            t.will *= 0.33
+            t.tfEnd = 6
+
+        ElseIf s = "Amnesiac" Then              'Even Debuff
+            t.maxHealth *= 0.33
+            t.attack *= 0.33
+            t.defense *= 0.33
+            t.speed *= 0.33
+            t.will *= 0.33
             t.stunct = 1
-            t.tfCt = 1
-            t.tfEnd = 6
-            t.form = "Amnesiac"
-        ElseIf title = "Slime​" Then
-            t.maxHealth = 70
-            t.attack = 10
-            t.defense = 35
-            t.tfCt = 1
+            t.tfEnd = 3
+
+        ElseIf s = "Slime​" Then                 '+DEF Buff
+            t.maxHealth *= 0.5
+            t.attack *= 1.2
+            t.defense *= 2.5
+            t.speed *= 0.9
+            t.will *= 1.0
             t.tfEnd = 2
-            t.form = "Slime"
-        ElseIf title = "Succubus​" Then
-            t.maxHealth = 125
-            t.attack = 20
-            t.defense = 5
-            t.tfCt = 1
+
+        ElseIf s = "Succubus​" Then              '+ATK/WIL Buff
+            t.maxHealth *= 2.0
+            t.attack *= 1.5
+            t.defense *= 0.75
+            t.speed *= 1.5
+            t.will *= 1.25
             t.tfEnd = 2
-            t.form = "Succubus"
-        ElseIf title = "Dragon​" Then
-            t.maxHealth = 200
-            t.attack = 15
-            t.defense = 30
-            t.tfCt = 1
+
+        ElseIf s = "Dragon​" Then                '+HP/ATK/DEF Buff
+            t.maxHealth *= 1.5
+            t.attack *= 1.5
+            t.defense *= 2.0
+            t.speed *= 0.5
+            t.will *= 1.25
             t.tfEnd = 2
-            t.form = "Dragon"
-        ElseIf title = "Goth​" Then
-            t.maxHealth = 200
-            t.attack = 6
-            t.defense = 6
-            t.speed = 2
-            t.tfCt = 1
-            t.tfEnd = 6
-            t.form = "Goth Girl"
+
+        Else
+            Exit Sub
+
         End If
+
+        t.tfCt = 1
+        t.form = s
     End Sub
-    'npc transform methodF:\dungeon_depths\The Dungeon\img\
-    Sub transformN(ByRef t As ShopNPC)
-        Dim title As String = cboxPMorph.Text
-        If title = "Sheep" Then
+    'npc transform method
+    Shared Sub transformN(ByRef t As ShopNPC, ByVal s As String)
+        Polymorph.transform(t, s)
+
+        If s = "Sheep" Then
             t.toSheep()
-        ElseIf title = "Princess" Then
+        ElseIf s = "Princess" Then
             t.toPrincess()
-        ElseIf title = "Bunny" Then
+        ElseIf s = "Bunny" Then
             t.toBunny()
+        ElseIf s = "Cat-Girl" Then
+            t.toCatgirl()
+        ElseIf s = "Trilobite" Then
+            t.toTrilobite()
         End If
-        Game.npcIndex = t.npcIndex
     End Sub
 
     Shared Sub giveRNDFName(ByRef p As Player)
@@ -236,10 +261,6 @@
                                "Tanner", "Tristan", "Travis", _
                                "Vance", _
                                "Zachary", "Zack"}
-        p.name = fFNames(Int(Rnd() * fFNames.Length))
-    End Sub
-    Shared Sub giveRNDBimName(ByRef p As Player)
-        Randomize()
         p.name = fFNames(Int(Rnd() * fFNames.Length))
     End Sub
 

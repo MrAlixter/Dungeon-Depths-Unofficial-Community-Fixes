@@ -18,8 +18,9 @@
     Public Overrides Function attack(ByRef p As Player, ByRef m As Entity) As Integer
         Dim dmg = MyBase.attack(p, m)
 
-        If m.GetType.IsSubclassOf(GetType(NPC)) AndAlso Int(Rnd() * 3) = 0 Then
-            Dim mp = CType(m, NPC)
+        Dim mp As NPC = m.getNPC
+
+        If Not mp Is Nothing AndAlso Int(Rnd() * 3) = 0 Then
             mp.isStunned = True
             mp.stunct = 0
             Game.pushPnlEvent("Your attack stuns" & mp.title & m.name & "!")

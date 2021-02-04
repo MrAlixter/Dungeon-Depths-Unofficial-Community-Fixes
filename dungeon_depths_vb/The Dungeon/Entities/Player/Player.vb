@@ -69,8 +69,14 @@
     cmark           '67
     isspotfused     '68
     collarssnipped  '69
+    canmeetcyn      '70
+    cynnsq1ct1      '71
+    cynnsq1ct2      '72
+    fvHasSword      '73
+    coftheox        '74
+    pickaxe         '75
+    pdrill          '76
 End Enum
-
 Public Class Player
     'Player is the representation of a player controlled entity (the main player, any teammates)
     'METHODS AND VARIABLES RELATED TO LEVELING HAVE BEEN COMMENTED OUT.
@@ -114,13 +120,15 @@ Public Class Player
     Public prinState As State = New State()
     Public dembimState1 As State = New State()
     Public dembimState2 As State = New State()
-    Dim formStates = {goddState, bimbState, magGState, maidState, prinState, dembimState1, dembimState2}
+    Public succDisgState As State = New State()
+    Dim formStates = {goddState, bimbState, magGState, maidState, prinState, dembimState1, dembimState2, succDisgState}
 
     Public solFlag = False
     Public prefForm As preferedForm
 
     'assorted lists
     Public ongoingTFs As TFList = New TFList
+    Public ongoingQuests As QuestList = New QuestList
     Public knownSpells As List(Of String) = New List(Of String)
     Public knownSpecials As List(Of String) = New List(Of String)
     Public selfPolyForms As List(Of String) = New List(Of String)
@@ -150,13 +158,25 @@ Public Class Player
         createInvPerks()
         inv.add(0, 1)
         inv.add(2, 1)
-        inv.add(242, 1)
-        inv.add(243, 1)
+        'inv.add(242, 1)
+        'inv.add(243, 1)
     End Sub
     'load from save constructors
+    Sub pushFormStates()
+        bimbState = formStates(0)
+        magGState = formStates(1)
+        goddState = formStates(2)
+        maidState = formStates(3)
+        prinState = formStates(4)
+        dembimState1 = formStates(5)
+        dembimState2 = formStates(6)
+        succDisgState = formStates(7)
+    End Sub
     Public Sub New(ByVal s As String, ByVal v As Double)
+        '|- Setup -|
         solFlag = True
         createInvPerks()
+
         Dim playArray() As String = s.Split("#")
 
         currState = New State(Me)
@@ -166,12 +186,15 @@ Public Class Player
             formStates(i) = New State()
         Next
 
-
+        '|- Main Save States -|
         currState.read(playArray(0), v)
         sState.read(playArray(1), v)
         pState.read(playArray(2), v)
+
         pClass = classes(currState.pClass.name)
         pForm = forms(currState.pForm.name)
+
+        '|- Tertiary Save States (For TFs/etc) -|
         Dim ind As Integer
         If v > 0.4 Then
             ind = CInt(playArray(3)) - 1
@@ -179,15 +202,22 @@ Public Class Player
                 formStates(i).read(playArray(4 + i), v)
                 If i = UBound(formStates) Then Exit For
             Next
+
+            pushFormStates()
+
             playArray = playArray(5 + ind).Split("*")
         Else
             ind = 7
             For i = 0 To 7
                 formStates(i).read(playArray(3 + i), v)
             Next
+
+            pushFormStates()
+
             playArray = playArray(4 + ind).Split("*")
         End If
 
+        '|- Player Stats -|
         pos.X = playArray(0)
         pos.Y = playArray(1)
         health = playArray(2)
@@ -205,20 +235,26 @@ Public Class Player
 
         currState.load(Me)
 
+        '|- Inventory -|
         inv.load(playArray(14))
-        Dim x As Integer = -2
 
+        '|- Forced Path -|
+        Dim x As Integer = -2
         If Not playArray(17 + x).Equals("N/a") Then
+            'If the player is under the effect of the thrall collar, load their saved path.
             Dim crystal As Point = New Point(CInt(playArray(17 + x)), playArray(18 + x))
             forcedPath = {crystal}
             nextCombatAction = AddressOf ThrallTF.postLoadCrystalSpawn
         Else
+            'Otherwise, there will be a placeholder "N/a" in place of the forced path that can be ignored.
             forcedPath = Nothing
         End If
 
+        'Since the index is a bit messy at this point, currentIndex is created to clean it up
         Dim currentIndex = 18 + x
         If Not playArray(17 + x).Equals("N/a") Then currentIndex += 1
 
+        '|- Current "Prefered Form" transformation/"Slave Collar" Saved Values -|
         Dim stuff() As String = playArray(currentIndex).Split("$")
         If Not stuff(0).Equals("N/a") Then
             prefForm = New preferedForm(Color.FromArgb(CInt(stuff(0)), CInt(stuff(1)), CInt(stuff(2)), CInt(stuff(3))), _
@@ -229,17 +265,20 @@ Public Class Player
             CType(inv.item(69), ThrallCollar).setFormerLife(stuff(1), New Tuple(Of Integer, Boolean, Boolean)(CInt(stuff(2)), stuff(3), stuff(4)))
         End If
 
+        '|- List Loading Setup -|
+        'The next set of loaded values are all lists, saved as a list of lists delimitted by †
         Dim knowlegebase = playArray(currentIndex + 1).Split("†")
         currentIndex = 1
-        Dim subKB = knowlegebase(currentIndex).Split("Ͱ")
 
+        '|- Ongoing Transformations -|
+        Dim subKB = knowlegebase(currentIndex).Split("Ͱ")
         For i = 1 To CInt(subKB(0) + 1)
             Dim tf As Transformation = Transformation.newTF(subKB(i).Split("$"))
             ongoingTFs.add(tf)
         Next
         currentIndex += 1
 
-        'load the known self poly forms
+        '|- Known "Self Polymorphs" Forms -|
         subKB = knowlegebase(currentIndex).Split("Ͱ")
         For i = 1 To CInt(subKB(0) + 1)
             selfPolyForms.Add(subKB(i))
@@ -247,7 +286,7 @@ Public Class Player
         Next
         currentIndex += 1
 
-        'load the known self enemy forms
+        '|- Known "Polymorph Enemy" Forms -|
         subKB = knowlegebase(currentIndex).Split("Ͱ")
         For i = 1 To CInt(subKB(0) + 1)
             enemPolyForms.Add(subKB(i))
@@ -255,14 +294,14 @@ Public Class Player
         Next
         currentIndex += 1
 
-        'load the known spells
+        '|- Known Spells -|
         subKB = knowlegebase(currentIndex).Split("Ͱ")
         For i = 1 To CInt(subKB(0) + 1)
             knownSpells.Add(subKB(i))
-
         Next
         currentIndex += 1
-        'load the known specials
+
+        '|- Known Specials -|
         subKB = knowlegebase(currentIndex).Split("Ͱ")
         For i = 1 To CInt(subKB(0) + 1)
             knownSpecials.Add(subKB(i))
@@ -270,8 +309,9 @@ Public Class Player
         Next
         currentIndex += 1
 
+        '|- Quest Records -|
+        'Quests were added in version 10.2, and would not be present in older saves
         If v >= 10.2 Then
-            'load the player's quests
             subKB = knowlegebase(currentIndex).Split("Ͱ")
             For i = 1 To CInt(subKB(0) + 1)
                 quests(i - 1).load(subKB(i))
@@ -279,14 +319,26 @@ Public Class Player
             currentIndex += 1
         End If
 
+        '|- Ongoing Quests -|
+        'Quests were added in version 10.2, and would not be present in older saves
+        If v >= 10.2 Then
+            subKB = knowlegebase(currentIndex).Split("Ͱ")
+            For i = 1 To CInt(subKB(0) + 1)
+                ongoingQuests.add(quests(CInt(subKB(i))))
+            Next
+            currentIndex += 1
+        End If
+
+        '|- Cleanup -|
         currState.load(Me)
 
         turnCt = Game.turn
 
+        allRoute()
         drawPort()
+
         magicRoute()
         specialRoute()
-        allRoute()
 
         solFlag = False
     End Sub
@@ -345,6 +397,8 @@ Public Class Player
                 equippedArmor = inv.item("Common_Kimono")
             Case 6
                 equippedArmor = inv.item("Sneaky_Clothes")
+            Case 7
+                equippedArmor = inv.item("Adventurer's_Clothes")
             Case Else
                 equippedArmor = New Naked
                 equippedArmor.count -= 1
@@ -410,7 +464,7 @@ Public Class Player
             defense = 7
             speed = 7
             inv.add(2, 3)
-            inv.add(4, 1)
+            inv.add(88, 1)
             inv.add("Valkyrie_Sword", 1)
             Game.pushLstLog("You find a sword piercing the floor...Maybe you should equip it?")
         End If
@@ -522,6 +576,9 @@ Public Class Player
         forms.Add("Plush", New Plush())
         forms.Add("Fae", New FaeForm())
         forms.Add("Archdemoness", New ArchDemoness())
+        forms.Add("Minotaur Cow (B)", New MinotaurCowB())
+        forms.Add("Minotaur Bull (B)", New MinotaurBullB())
+        forms.Add("Cow", New Cow())
     End Sub
     Private Sub initPolymorphs()
         'compile list of polymorphs
@@ -541,9 +598,16 @@ Public Class Player
         polymorphs.Add("Plush", Nothing)
         polymorphs.Add("Fae", Nothing)
         polymorphs.Add("Horse", Nothing)
+        polymorphs.Add("Cow", Nothing)
     End Sub
     Private Sub initQuests()
         quests.Add(New HelpWanted)
+        quests.Add(New DarkPact)
+        quests.Add(New DueForAnUpgrade)
+        quests.Add(New BreakingAnEgg)
+        quests.Add(New OutOfTime)
+        quests.Add(New CursedContraband)
+        quests.Add(New StudyingSlime)
     End Sub
     Sub setStartStates()
         sState.save(Me)
@@ -558,11 +622,23 @@ Public Class Player
 
     '|MOVEMENT COMMANDS|
     Public Overrides Sub reachedFPathDest()
+
+        'Floor 4 boss bodyswap handler
         If Game.mDun.numCurrFloor = 4 And Not Game.preBSBody Is Nothing And Game.preBSStartState Is Nothing And Game.mDun.floorboss(4) = "Ooze Empress" Then
             RandoTF.floor4FirstBossEncounter()
             Exit Sub
         End If
+
+        'Thrall Crystal discovery
         If pClass.name.Equals("Thrall") Then
+
+            'Dark Pact questline
+            If quests(qInds.darkPact).getCurrStep = 1 Then
+                quests(qInds.darkPact).completeCurrOjb()
+                Exit Sub
+            End If
+
+            'Standard encounter
             If Int(Rnd() * 2) = 1 Then
                 Dim out = "You've found one of the crystals your controller is seeking!  As you circle it, you feel a familiar presence enter your mind.  " & DDUtils.RNRN &
                     """Yes!  You've found it!"" your overseer states exitedly, ""I'll be over shortly, don't go anywhere and don't touch that crystal.""" & DDUtils.RNRN &
@@ -624,12 +700,10 @@ Public Class Player
     End Sub
     'attacking a npc
     Public Sub miss(target As NPC)
-        Game.pushLstLog(CStr("You miss" & target.title & " " & target.getName() & "!"))
-        Game.pushLblCombatEvent(CStr("You miss" & target.title & " " & target.getName() & "!"))
+        Game.pushLogAndEvent(CStr("You miss" & target.title & " " & target.getName() & "!"))
     End Sub
     Public Sub hit(dmg As Integer, target As NPC)
-        Game.pushLstLog(CStr("You hit" & target.title.ToLower & target.getName() & " for " & dmg & " damage!"))
-        Game.pushLblCombatEvent(CStr("You hit" & target.title.ToLower & target.getName() & " for " & dmg & " damage!"))
+        Game.pushLogAndEvent(CStr("You hit" & target.title.ToLower & target.getName() & " for " & dmg & " damage!"))
         target.takeDMG(dmg, Me)
     End Sub
     Public Sub setTarget(ByRef t As NPC)
@@ -637,8 +711,7 @@ Public Class Player
         MyBase.currTarget = t
     End Sub
     Public Sub cHit(dmg As Integer, target As NPC)
-        Game.pushLstLog(CStr("You hit" & target.title.ToLower & target.getName() & " for " & dmg * 3 & " damage!  Critical hit!"))
-        Game.pushLblCombatEvent(CStr("You hit" & target.title.ToLower & target.getName() & " for " & dmg * 3 & " damage!  Critical hit!"))
+        Game.pushLogAndEvent(CStr("You hit" & target.title.ToLower & target.getName() & " for " & dmg * 3 & " damage!  Critical hit!"))
         target.isStunned = True
         target.stunct = 0
         target.takeDMG(dmg * 3, Me)
@@ -650,8 +723,7 @@ Public Class Player
             Exit Sub
         End If
 
-        Game.pushLstLog(CStr("You miss " & target.getName() & "!"))
-        Game.pushLblCombatEvent(CStr("You miss " & target.getName() & "!"))
+        Game.pushLogAndEvent(CStr("You miss " & target.getName() & "!"))
     End Sub
     Private Sub hit(dmg As Integer, target As Entity)
         If target.GetType() Is GetType(NPC) Or target.GetType.IsSubclassOf(GetType(NPC)) Then
@@ -659,8 +731,7 @@ Public Class Player
             Exit Sub
         End If
 
-        Game.pushLstLog(CStr("You hit " & target.getName() & " for " & dmg & " damage!"))
-        Game.pushLblCombatEvent(CStr("You hit " & target.getName() & " for " & dmg & " damage!"))
+        Game.pushLogAndEvent(CStr("You hit " & target.getName() & " for " & dmg & " damage!"))
         target.takeDMG(dmg, Me)
     End Sub
     Private Sub cHit(dmg As Integer, target As Entity)
@@ -669,8 +740,7 @@ Public Class Player
             Exit Sub
         End If
 
-        Game.pushLstLog(CStr("You hit " & target.getName() & " for " & dmg * 3 & " damage!  Critical hit!"))
-        Game.pushLblCombatEvent("You hit " & target.getName() & " for " & dmg * 3 & " damage!  Critical hit!")
+        Game.pushLogAndEvent(CStr("You hit " & target.getName() & " for " & dmg * 3 & " damage!  Critical hit!"))
         target.takeDMG(dmg * 3, Me)
     End Sub
     'taking damage
@@ -678,16 +748,16 @@ Public Class Player
         If PerkEffects.onDamage(Me, dmg) Then Exit Sub
         MyBase.takeDMG(dmg, source)
         Game.lblPHealtDiff.Tag -= dmg
-        Game.pushLstLog(CStr("You got hit! -" & dmg & " health!"))
-        Game.pushLblCombatEvent(CStr("You got hit! -" & dmg & " health!"))
+
+        Game.pushLogAndEvent(CStr("You got hit! -" & dmg & " health!"))
     End Sub
     Public Overrides Sub takeCritDMG(ByVal dmg As Integer, ByRef source As Entity)
         If PerkEffects.onDamage(Me, dmg) Then Exit Sub
         If dmg > getIntHealth() And dmg > 0.05 * getMaxHealth() Then dmg = getIntHealth() - 1
         MyBase.takeDMG(dmg, source)
         Game.lblPHealtDiff.Tag -= dmg
-        Game.pushLstLog(CStr("You got hit!  Critical hit!  -" & dmg & " health!"))
-        Game.pushLblCombatEvent(CStr("You got hit!  Critical hit! -" & dmg & " health!"))
+
+        Game.pushLogAndEvent(CStr("You got hit!  Critical hit!  -" & dmg & " health!"))
     End Sub
     'specials
     Public Sub specialRoute()
@@ -921,7 +991,7 @@ Public Class Player
         xp = CInt(nextlevelPercentage * nextLevelXp)
     End Sub
     Public Sub petrify(ByVal c As Color, ByVal dur As Integer)
-        If pForm.name.Equals("Dragon") Then revertToPState()
+        If pForm.name.Equals("Dragon") Or pForm.name.Equals("Broodmother") Then revertToPState()
         perks(perk.astatue) = dur
         changeHairColor(c, True)
         If prt.sexBool Then
@@ -972,6 +1042,7 @@ Public Class Player
         canMoveFlag = False
 
         resetPerks()
+
         If source Is Nothing Then
             DeathEffects.hardDeath()
             Exit Sub
@@ -982,6 +1053,8 @@ Public Class Player
 
         setHealth(0.1)
         If Not source Is Nothing AndAlso Not source.getSName Is Nothing Then
+            Game.pushLstLog("You are defeated!")
+
             If source.getName.Equals("stamina") Then
                 Game.pushLblEvent("You starve to death!")
             ElseIf source.getName.Equals("Fire") Then
@@ -1000,7 +1073,7 @@ Public Class Player
         If pClass.name.Equals("Bimbo") Then
             If Game.mDun.numCurrFloor = 13 Then
                 pImage = Game.picPlayerBFog.BackgroundImage
-            ElseIf Game.mDun.numCurrFloor = 9999 Then
+            ElseIf Game.mDun.numCurrFloor = 9999 Or Game.mDun.numCurrFloor = 10000 Then
                 pImage = Game.picBimboSpace.BackgroundImage
             ElseIf Game.mDun.numCurrFloor = 91017 Then
                 pImage = Game.picLegaBimbo.BackgroundImage
@@ -1012,7 +1085,7 @@ Public Class Player
         Else
             If Game.mDun.numCurrFloor = 13 Then
                 pImage = Game.picPlayerFog.BackgroundImage
-            ElseIf Game.mDun.numCurrFloor = 9999 Then
+            ElseIf Game.mDun.numCurrFloor = 9999 Or Game.mDun.numCurrFloor = 10000 Then
                 pImage = Game.picPlayerSpace.BackgroundImage
             ElseIf Game.mDun.numCurrFloor = 91017 Then
                 pImage = Game.picLegaPlayer.BackgroundImage
@@ -1041,9 +1114,7 @@ Public Class Player
         tfUpdate(pUpdateFlag)
 
         '|QUEST UPDATES|
-        For Each qu In quests
-            If qu.getActive And qu.getCurrObj.isComplete Then qu.completeCurrOjb()
-        Next
+        ongoingQuests.ping()
 
         '|PLAYER STAT UPKEEP|
         If xp >= nextLevelXp Then levelUp()
@@ -1262,7 +1333,7 @@ Public Class Player
         End If
 
         inv.invIDorder.Clear()
-        Dim numItems As Integer = Game.lstInventory.Items.Count
+        Dim numItems As Integer = Game.btnCancelCast.Items.Count
         Dim tArr(inv.count + 5) As String
         Dim ct As Integer = 0
         If Game.invFilters(0) Then
@@ -1287,10 +1358,10 @@ Public Class Player
             drawInv("-MISC:", inv.getMisc, tArr, ct)
         End If
         If ct <> numItems Or inv.invNeedsUDate Then
-            Game.lstInventory.Items.Clear()
+            Game.btnCancelCast.Items.Clear()
             For Each invItem In tArr
                 If Not invItem Is Nothing Then
-                    Game.lstInventory.Items.Add(invItem)
+                    Game.btnCancelCast.Items.Add(invItem)
                 End If
             Next
         End If
@@ -1767,18 +1838,20 @@ Public Class Player
     '|SAVE METHODS|
     Public Overrides Function ToString() As String
         Dim output As String = ""
-
         currState.save(Me)
 
+        '|- Main Save States -|
         output += currState.write()
         output += sState.write()
         output += pState.write()
 
+        '|- Tertiary Save States (For TFs/etc) -|
         output += formStates.length & "#"
         For i = 0 To UBound(formStates)
             output += formStates(i).write()
         Next
 
+        '|- Player Stats -|
         output += pos.X & "*"
         output += pos.Y & "*"
         output += health & "*"
@@ -1794,8 +1867,10 @@ Public Class Player
         output += xp & "*"
         output += nextLevelXp & "*"
 
+        '|- Inventory -|
         output += inv.save()
 
+        '|- Forced Path -|
         If forcedPath Is Nothing Then
             output += "N/a*"
         Else
@@ -1803,42 +1878,58 @@ Public Class Player
             output += (forcedPath(UBound(forcedPath)).Y & "*")
         End If
 
+        '|- Current "Prefered Form" transformation -|
         If Not prefForm Is Nothing Then
             output += prefForm.ToString & "$"
         Else
             output += "N/a$"
         End If
+
+        '|- "Slave Collar" Saved Values
         output += inv.item(69).ToString
-
         output += "*†"
-        output += ongoingTFs.save()
 
+        '|- Ongoing Transformations -|
+        output += ongoingTFs.save()
         output += "†"
+
+        '|- Known "Self Polymorphs" Forms -|
         output += selfPolyForms.Count - 1 & "Ͱ"
         For i = 0 To selfPolyForms.Count - 1
             output += selfPolyForms(i).ToString & "Ͱ"
         Next
         output += "†"
+
+        '|- Known "Polymorph Enemy" Forms -|
         output += enemPolyForms.Count - 1 & "Ͱ"
         For i = 0 To enemPolyForms.Count - 1
             output += enemPolyForms(i).ToString & "Ͱ"
         Next
         output += "†"
+
+        '|- Known Spells -|
         output += knownSpells.Count - 1 & "Ͱ"
         For i = 0 To knownSpells.Count - 1
             output += knownSpells(i).ToString & "Ͱ"
         Next
         output += "†"
+
+        '|- Known Specials -|
         output += knownSpecials.Count - 1 & "Ͱ"
         For i = 0 To knownSpecials.Count - 1
             output += knownSpecials(i).ToString & "Ͱ"
         Next
-
         output += "†"
+
+        '|- Quest Records -|
         output += quests.Count - 1 & "Ͱ"
         For i = 0 To quests.Count - 1
             output += quests(i).save & "Ͱ"
         Next
+        output += "†"
+
+        '|- Ongoing Quests -|
+        output += ongoingQuests.save()
         output += "†"
 
         Return output
@@ -1854,6 +1945,7 @@ Public Class Player
             getMaxMana() & "*" &
             getDEF() & "*" &
             getSPD() & "*" &
+            getWIL() & "*" &
             prt.sexBool & "*" &
             prt.iArrInd(pInd.eyes).Item1 & "*" &
             prt.iArrInd(pInd.eyes).Item2 & "*" &
@@ -2188,6 +2280,7 @@ Public Class Player
 
         Return If(out.Equals(originalOut), "", out)
     End Function
+
     '|LEVELING|
     Public Sub levelUp()
         level += 1

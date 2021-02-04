@@ -35,6 +35,7 @@
         If p.perks(perk.faecurse) > -1 Then p.perks(perk.faecurse) = -1 : Game.pushLstLog("The fae's curse is neutralized")
         If p.perks(perk.succubuscurse) > -1 Then p.perks(perk.succubuscurse) = -1 : Game.pushLstLog("The succubus's curse is neutralized")
         If Not p.ongoingTFs.getAt("MinoMTF") Is Nothing Then p.ongoingTFs.remove("MinoMTF") : Game.pushLstLog("The Curse of the Bull is neutralized")
+        If p.perks(perk.coftheox) > -1 Then p.perks(perk.coftheox) = -1 : Game.pushLstLog("The curse of the ox is neutralized")
 
         '| -- Cursed Equipment -- |
         If p.equippedArmor.isCursed Then Equipment.equipArmor(p, "Naked") : Game.pushLstLog("Cursed armor removed")

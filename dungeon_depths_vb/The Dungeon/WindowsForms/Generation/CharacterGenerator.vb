@@ -511,7 +511,7 @@
             Dim x As Integer = (i * 71 * Me.Size.Width / 581)
             Dim y As Integer = 0
             Dim img As New PictureBox
-            img.BackgroundImage = sexAttrList(i)
+            img.BackgroundImage = portrait.CreateBMP({picPort.Image, sexAttrList(i)}, False)
             img.Location = New Point(x, y)
             img.Size = New Point(70 * Me.Size.Width / 581, 70 * Me.Size.Width / 581)
             img.BackgroundImageLayout = ImageLayout.Stretch
@@ -680,7 +680,7 @@
         portrait.setIAInd(pInd.rearhair, r, portrait.sexBool, False)
         portrait.setIAInd(pInd.midhair, r, portrait.sexBool, False)
 
-        Dim r2 = Int(Rnd() * 7)
+        Dim r2 = Int(Rnd() * 8)
         portrait.setIAInd(pInd.clothes, r2, portrait.sexBool, False)
         portrait.setIAInd(pInd.clothesbtm, r2 * 2, portrait.sexBool, False)
 

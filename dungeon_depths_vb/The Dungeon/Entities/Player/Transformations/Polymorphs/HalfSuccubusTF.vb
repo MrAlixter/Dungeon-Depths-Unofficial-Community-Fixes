@@ -16,7 +16,7 @@
     End Sub
 
     Public Sub step1()
-        Dim p As player = game.player1
+        Dim p As player = Game.player1
         Dim out = ""
 
         'unequips
@@ -51,7 +51,7 @@
     End Sub
 
     Public Overrides Function getNextStep(stage As Integer) As Action
-        Dim p As player = game.player1
+        Dim p As player = Game.player1
         Select Case stage
             Case 0
                 Return AddressOf step1

@@ -115,6 +115,28 @@
                 Game.pushLblEvent("""Hello again Doctor, "" a metallic voice chimes from a terminal to your right.  ""I was not aware of your return.  My appologies.  Would you like me to execute standard dress protocols at this time?""", AddressOf doctorAccept, AddressOf doctorCancel, "Give the command?")
             Case 6
                 Game.pushLblEvent("Before you, you see a person-sized metal canister with an opened pink glass lid.  Looking at the chamber, you spot the text ""G.C.U"" written on the side, and a holographic countdown timer projected from a chome pedistal next to it.  This timer seems to be counting down to something called ""ConvProccess.exe"".  You think that you can fit in the canister, but you have no clue what will happen if you do...", AddressOf gConvChamb, AddressOf gcuCancel, "Get in the G.C.U?")
+            Case 7
+                Game.pushLblEvent("You press a big glowing red button, and the nearby console alerts you that ""Security gates for the Cross-Station Interchange, Contraband Locker, Staff Quarters, and Warp Chamber have been deactivated""")
+                'Warp Area
+                Game.currFloor.mBoard(5, 43).Tag = 2
+                Game.currFloor.mBoard(5, 43).Text = ""
+                Game.currFloor.mBoard(5, 49).Tag = 2
+                Game.currFloor.mBoard(5, 49).Text = ""
+                'Contraband Locker
+                Game.currFloor.mBoard(10, 26).Tag = 2
+                Game.currFloor.mBoard(10, 26).Text = ""
+                'Staff Area
+                Game.currFloor.mBoard(17, 17).Tag = 2
+                Game.currFloor.mBoard(17, 17).Text = ""
+                'Interchange
+                Game.currFloor.mBoard(22, 72).Tag = 2
+                Game.currFloor.mBoard(22, 72).Text = ""
+                Game.currFloor.mBoard(23, 72).Tag = 2
+                Game.currFloor.mBoard(23, 72).Text = ""
+                Game.currFloor.mBoard(24, 72).Tag = 2
+                Game.currFloor.mBoard(24, 72).Text = ""
+                Game.currFloor.mBoard(25, 72).Tag = 2
+                Game.currFloor.mBoard(25, 72).Text = ""
         End Select
 
         pos = New Point(-1, -1)

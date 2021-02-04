@@ -11,12 +11,10 @@
             Game.pushLblCombatEvent(CStr("Despite the difference in each of your resolves, Your spell hits the " & MyBase.getTarget.name & ", turning " & MyBase.getTarget.rPronoun & " into a sword!"))
             Game.pushLstLog(CStr("Critical Hit!  Your spell hits the " & MyBase.getTarget.name & ", turning " & MyBase.getTarget.rPronoun & " into a sword!"))
         ElseIf MyBase.getCaster.getWIL < MyBase.getTarget.getWIL Then
-            Game.pushLblCombatEvent(CStr("You lack the WILL to transform your opponent!"))
-            Game.pushLstLog(CStr("You lack the WILL to transform your opponent!"))
+            Game.pushLogAndEvent(CStr("You lack the WILL to transform your opponent!"))
             Exit Sub
         Else
-            Game.pushLstLog(CStr("Your spell hits the " & MyBase.getTarget.name & ", turning " & MyBase.getTarget.rPronoun & " into a sword!"))
-            Game.pushLblCombatEvent(CStr("Your spell hits the " & MyBase.getTarget.name & ", turning " & MyBase.getTarget.rPronoun & " into a sword!"))
+            Game.pushLogAndEvent(CStr("Your spell hits the " & MyBase.getTarget.name & ", turning " & MyBase.getTarget.rPronoun & " into a sword!"))
         End If
 
         MyBase.getCaster.inv.add(9, 1)

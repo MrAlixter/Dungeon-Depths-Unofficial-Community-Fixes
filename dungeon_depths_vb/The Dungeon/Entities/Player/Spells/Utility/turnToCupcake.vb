@@ -11,12 +11,10 @@
             Game.pushLblCombatEvent(CStr("Despite the difference in each of your resolves, Your spell hits the " & MyBase.getTarget.name & ", turning " & MyBase.getTarget.rPronoun & " into a cupcake!"))
             Game.pushLstLog(CStr("Critical Hit!  Your spell hits the " & MyBase.getTarget.name & ", turning " & MyBase.getTarget.rPronoun & " into a cupcake!"))
         ElseIf MyBase.getCaster.getWIL < MyBase.getTarget.getWIL Then
-            Game.pushLblCombatEvent(CStr("You lack the WILL to transform your opponent!"))
-            Game.pushLstLog(CStr("You lack the WILL to transform your opponent!"))
+            Game.pushLogAndEvent(CStr("You lack the WILL to transform your opponent!"))
             Exit Sub
         Else
-            Game.pushLstLog(CStr("Your spell hits the " & MyBase.getTarget.name & ", turning " & MyBase.getTarget.rPronoun & " into a cupcake!"))
-            Game.pushLblCombatEvent(CStr("Your spell hits the " & MyBase.getTarget.name & ", turning " & MyBase.getTarget.rPronoun & " into a cupcake!"))
+            Game.pushLogAndEvent(CStr("Your spell hits the " & MyBase.getTarget.name & ", turning " & MyBase.getTarget.rPronoun & " into a cupcake!"))
         End If
 
         MyBase.getCaster.inv.add(35, 1)
@@ -29,9 +27,7 @@
         Polymorph.transform(MyBase.getCaster, "Cake")
 
         MyBase.getCaster.perks(perk.polymorphed) = 1
-        Game.pushLstLog(CStr("You turn yourself into a cake-girl!"))
-        Game.pushLblCombatEvent(CStr("You turn yourself into a cake-girl!"))
-
+        Game.pushLogAndEvent(CStr("You turn yourself into a cake-girl!"))
     End Sub
 
     Public Overrides Function getDesc(ByRef c As Player, ByRef t As NPC) As Object

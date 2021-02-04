@@ -18,7 +18,7 @@
     Public Sub step1()
 
         'assign a pointer to the player character
-        Dim p As player = game.player1
+        Dim p As player = Game.player1
         If Game.preBSStartState Is Nothing Then Game.preBSStartState = p.sState.clone(p)
 
         'assign a starter class / form
@@ -97,7 +97,7 @@
         setLoadout()
 
         p.TextColor = Color.White
-        If game.mDun.numCurrFloor < 6 Then p.pImage = Game.picPlayer.BackgroundImage Else p.pImage = Game.picPlayerf.BackgroundImage
+        If Game.mDun.numCurrFloor < 6 Then p.pImage = Game.picPlayer.BackgroundImage Else p.pImage = Game.picPlayerf.BackgroundImage
 
         p.inv.invNeedsUDate = True
         p.UIupdate()
@@ -294,7 +294,7 @@
                           """I ..."" the slime says, drawing your attention back to her, ""... am the Ooze Empress.  This floor, and all who inhabit it fall under my ..."".  As she introduces herself, you find it harder and harder to focus.  Your body, especially where her tentacles are making direct contact, feels as though every inch of it is flushing with arousal.", AddressOf floor4FirstBossEncounterP2)
     End Sub
     Shared Sub floor4FirstBossEncounterP2()
-        Dim p As player = game.player1
+        Dim p As player = Game.player1
         Game.preBSBody = If(Transformation.canBeTFed(p), New State(p), p.pState.clone(p))
         Game.preBSInventory = New ArrayList()
         For i = 0 To p.inv.upperBound
@@ -311,7 +311,7 @@
                           "When you come to, you can tell some time has passed.  Though the Emperess is nowhere to be found, the amount of slime you are drenched still fills you with a bit of lust.  Looking down, however, you are not met with your familiar body, but instead that of a stranger!  You must have had one hell of a time to wake up in the wrong body, and a quick pat down reveals that all of your belongings, including the key, are missing as well!  At least the ooze didn't seem that malevolent, maybe if you can find her again you can straighten this out.")
     End Sub
     Shared Sub floor4revert()
-        Dim p As player = game.player1
+        Dim p As player = Game.player1
         Game.preBSStartState.load(p)
         p.sState.save(p)
         Game.preBSBody.load(p)
@@ -326,7 +326,7 @@
         p.UIupdate()
     End Sub
     Shared Sub floor4keep()
-        Dim p As player = game.player1
+        Dim p As player = Game.player1
         For i = 0 To Game.preBSInventory.Count - 1
             p.inv.add(i, Game.preBSInventory(i))
         Next
@@ -341,7 +341,7 @@
     End Sub
 
     Public Overrides Function getNextStep(stage As Integer) As Action
-        Dim p As player = game.player1
+        Dim p As player = Game.player1
         Select Case stage
             Case 0
                 Return AddressOf step1

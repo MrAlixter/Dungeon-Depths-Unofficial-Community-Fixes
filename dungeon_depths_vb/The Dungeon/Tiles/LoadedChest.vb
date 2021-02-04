@@ -32,6 +32,8 @@
                 Return AddressOf floor4StartChest
             Case 5
                 Return AddressOf magSlutChest
+            Case 6
+                Return AddressOf armorFragmentChest
         End Select
         Return Nothing
     End Function
@@ -52,6 +54,7 @@
         Game.player1.forcedPath = {Game.player1.forcedPath(0)}
         Game.pushLblEvent("Upon opening the chest, you find a familiar key.  Well, that was easy.")
     End Sub
+
     Sub keyChest()
         Game.player1.inv.add(53, 1)
         Game.pushLblEvent("Upon opening the chest, you find a key!")
@@ -70,6 +73,10 @@
         Game.player1.drawPort()
     End Sub
 
+    Sub armorFragmentChest()
+        Game.player1.inv.add(264, 1)
+        Game.pushLblEvent("Upon opening the chest, you find an armor fragment(s)!")
+    End Sub
 
     Public Overrides Function ToString() As String
         Return "LOADED*" & CStr(pos.X & "*") & CStr(pos.Y & "*") & CStr(cid) & "*"

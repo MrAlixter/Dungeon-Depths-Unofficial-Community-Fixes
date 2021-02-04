@@ -12,14 +12,12 @@
         If d6 = 2 Then
             'critical hit
             dmg = MyBase.getCaster.getSpellDamage(MyBase.getTarget, 2 * (dmg + d6))
-            Game.pushLstLog(CStr("Critical hit!  You hit the " & MyBase.getTarget.name & " for " & dmg & " damage!"))
-            Game.pushLblCombatEvent(CStr("Critical hit!  You hit the " & MyBase.getTarget.name & " for " & dmg & " damage!  The enemy is stunned for 2 turns!"))
+            Game.pushLogAndEvent(CStr("Critical hit!  You hit the " & MyBase.getTarget.name & " for " & dmg & " damage!  The enemy is stunned for 2 turns!"))
             MyBase.getTarget.takeDMG(dmg, MyBase.getCaster)
         Else
             'non critical hit
             dmg = MyBase.getCaster.getSpellDamage(MyBase.getTarget, dmg + d6)
-            Game.pushLstLog(CStr("You hit the " & MyBase.getTarget.name & " for " & dmg & " damage!"))
-            Game.pushLblCombatEvent(CStr("You hit the " & MyBase.getTarget.name & " for " & dmg & " damage!  The enemy is stunned for 2 turns!"))
+            Game.pushLogAndEvent(CStr("You hit the " & MyBase.getTarget.name & " for " & dmg & " damage!  The enemy is stunned for 2 turns!"))
             MyBase.getTarget.takeDMG(dmg, MyBase.getCaster)
         End If
 

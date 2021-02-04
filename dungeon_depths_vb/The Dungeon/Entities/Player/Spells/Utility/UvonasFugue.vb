@@ -16,8 +16,7 @@
         If Game.combatmode Then
             Polymorph.transform(MyBase.getTarget, "Amnesiac")
 
-            Game.pushLstLog(CStr("You wipe " & MyBase.getTarget.title & " " & MyBase.getTarget.name & "'s mind for 5 turns!"))
-            Game.pushLblCombatEvent(CStr("You wipe " & MyBase.getTarget.title & " " & MyBase.getTarget.name & "'s mind for 5 turns!"))
+            Game.pushLogAndEvent(CStr("You wipe " & MyBase.getTarget.title & " " & MyBase.getTarget.name & "'s mind for 5 turns!"))
         Else
             backfire()
         End If

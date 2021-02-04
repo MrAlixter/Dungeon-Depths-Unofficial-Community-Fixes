@@ -16,13 +16,16 @@
         p.Dispose()
 
         Dim delta As String
+
         If Game.player1.formName.Equals(fN) Then
             delta = Game.player1.className
         Else
             delta = Game.player1.formName
         End If
-        Game.pushLstLog(CStr("You turn yourself into a " & delta & "!"))
-        Game.pushLblCombatEvent(CStr("You turn yourself into a " & delta & "!"))
+
+        If delta = "Succubus" Then Game.player1.perks(perk.canmeetcyn) = 1
+
+        Game.pushLogAndEvent(CStr("You turn yourself into a " & delta & "!"))
     End Sub
     Public Overrides Sub backfire()
         If MyBase.getTarget Is Nothing Then
@@ -39,9 +42,8 @@
                 n = "Dragon​"
         End Select
         Polymorph.transform(MyBase.getTarget, n)
-        Game.pushLstLog(CStr("You turn your opponent into a " & n & "!"))
-        Game.pushLblCombatEvent(CStr("You turn your opponent into a " & n & "!"))
-        
+
+        Game.pushLogAndEvent(CStr("You turn your opponent into a " & n & "!"))
     End Sub
 
     Public Overrides Function getDesc(ByRef c As Player, ByRef t As NPC) As Object

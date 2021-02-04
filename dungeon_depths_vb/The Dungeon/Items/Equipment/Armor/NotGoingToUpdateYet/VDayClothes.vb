@@ -3,7 +3,7 @@
 
     Sub New()
         MyBase.setName("Val._Day_Suit")
-        MyBase.setDesc("" & vbCrLf & _
+        MyBase.setDesc("A handsome black, white, and red suit perfect for a romantic dinner with a signifigant other." & vbCrLf & _
                        "Fits sizes -1 through 3" & vbCrLf & _
                        "+10 DEF") '& vbCrLf & _
         '("Can not attack " & immune)

@@ -10,7 +10,8 @@
         If p.perks(perk.comilk) > -1 And Int(Rnd() * 2) = 0 Then p.perks(perk.comilk) = -1 : Game.pushLstLog("The curse of milk is neutralized")
         If p.perks(perk.coblind) > -1 And Int(Rnd() * 2) = 0 Then p.perks(perk.coblind) = -1 : Game.pushLstLog("The curse of blindness is neutralized")
         If p.perks(perk.faecurse) > -1 And Int(Rnd() * 2) = 0 Then p.perks(perk.faecurse) = -1 : Game.pushLstLog("The fae's curse is neutralized")
-        If p.perks(perk.succubuscurse) > -1 And Int(Rnd() * 2) = 0 Then p.perks(perk.succubuscurse) = -1 : Game.pushLstLog("The succubus's curse is neutralized")
+        If p.perks(perk.succubuscurse) > -1 Then p.perks(perk.succubuscurse) = -1 : Game.pushLstLog("The succubus's curse is neutralized")
+        If p.perks(perk.coftheox) > -1 And Int(Rnd() * 2) = 0 Then p.perks(perk.coftheox) = -1 : Game.pushLstLog("The curse of the ox is neutralized")
 
         If p.equippedArmor.isCursed Then
             Equipment.equipArmor(p, "Naked")

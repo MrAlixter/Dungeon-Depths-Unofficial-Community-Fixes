@@ -14,7 +14,7 @@
                     If Game.currfloor.mBoard(Game.player1.pos.Y + indY, Game.player1.pos.X + indX).Text = "H" And Game.currfloor.mBoard(Game.player1.pos.Y + indY, Game.player1.pos.X + indX).Tag < 2 Then
                         Game.currfloor.mBoard(Game.player1.pos.Y + indY, Game.player1.pos.X + indX).ForeColor = Color.Black
                         If Game.currfloor.mBoard(Game.player1.pos.Y + indY, Game.player1.pos.X + indX).Tag = 1 Then Game.currfloor.mBoard(Game.player1.pos.Y + indY, Game.player1.pos.X + indX).Tag = 2
-                        Game.pushLstLog("Floor " & game.mDun.numCurrFloor & ": Staircase Discovered")
+                        Game.pushLstLog("Floor " & Game.mDun.numCurrFloor & ": Staircase Discovered")
                     End If
                     If Game.currfloor.mBoard(Game.player1.pos.Y + indY, Game.player1.pos.X + indX).Text = "#" And Game.currfloor.mBoard(Game.player1.pos.Y + indY, Game.player1.pos.X + indX).Tag < 2 Then
                         Game.currfloor.mBoard(Game.player1.pos.Y + indY, Game.player1.pos.X + indX).ForeColor = Color.Black

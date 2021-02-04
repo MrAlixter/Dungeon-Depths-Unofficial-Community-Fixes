@@ -243,6 +243,7 @@
         Next
 
         Dim b2 As Integer = CInt(readArray(33 + b1))
+        'MsgBox(b2)
         For i = 0 To b2
             Dim arr() As String = readArray(34 + b1 + i).Split("%")
             iArrInd(i) = New Tuple(Of Integer, Boolean, Boolean)(CInt(arr(0)), CBool(arr(1)), CBool(arr(2)))

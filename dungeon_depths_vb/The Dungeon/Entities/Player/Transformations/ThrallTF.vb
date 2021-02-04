@@ -22,7 +22,7 @@
     End Sub
 
     Sub shiftTowardsPrefForm()
-        Dim p As player = game.player1
+        Dim p As player = Game.player1
         p.prefForm.shiftTowards(Game.player1)
         p.perks(perk.thrall) += 1
         If p.perks(perk.thrall) > 11 Then
@@ -32,7 +32,7 @@
         MyBase.currStep -= 1
     End Sub
     Sub crystalSpawn()
-        Dim p As player = game.player1
+        Dim p As player = Game.player1
         If p.forcedPath Is Nothing And Not Game.combatmode And Not Game.npcmode Then
 
             Dim crystal = Game.currfloor.randPoint
@@ -68,7 +68,7 @@
     End Sub
 
     Shared Sub fightSorc()
-        Dim p As player = game.player1
+        Dim p As player = Game.player1
         Dim m As Monster
         m = Monster.monsterFactory(9)
 
@@ -79,7 +79,7 @@
         Game.turn += 1
     End Sub
     Shared Sub fightSorc2()
-        Dim p As player = game.player1
+        Dim p As player = Game.player1
         Game.lblEvent.Visible = False
         Dim m As Monster
         m = Monster.monsterFactory(8)
@@ -91,14 +91,14 @@
         Game.turn += 1
     End Sub
     Shared Sub acceptSorc()
-        Dim p As player = game.player1
+        Dim p As player = Game.player1
         p.perks(perk.thrall) = -1
         p.ongoingTFs.Add(New HalfSuccubusTF())
         p.update()
         Game.pushLblEvent("""Then I deem your task concluded as a success.  Go now, and take care not to fall under the spell of any others,"" your controller states.")
     End Sub
     Shared Sub betraySorc()
-        Dim p As player = game.player1
+        Dim p As player = Game.player1
         Game.pushLblEvent("Brushing past you, your ""boss"" heads straight for the array.  As they begin fiddling with it, you take notice of their distraction and begin creeping into a position behind them.  As they chant over the array, you prepare to make your move.  " & _
                           "As their raving reaches its zenith and the runes enscribed on the crystal begin to glow you strike out, disrupting their ritual.  ""YOU!  DO YOU HAVE ANY IDEA ..."" screams the mage, and while they shout you realize you couldn't care less about them.  " & _
                           "Looking down, you see that your collar has gone dark and dangles open from your neck.  Grinning, your prepare to fight for your life.", AddressOf fightSorc2)
@@ -129,7 +129,7 @@
     End Sub
 
     Public Overrides Function getNextStep(stage As Integer) As Action
-        Dim p As player = game.player1
+        Dim p As player = Game.player1
         If p.perks(perk.thrall) = -1 Or p.formName.Equals("Half-Succubus") Then
             Return AddressOf stopTF
         ElseIf Not p.prefForm.playerMeetsForm(p) And Not p.perks(perk.thrall) > 10 Then

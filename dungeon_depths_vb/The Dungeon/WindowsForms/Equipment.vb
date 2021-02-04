@@ -51,6 +51,11 @@
         p.drawPort()
         p.UIupdate()
 
+        'update the pnlDescription image too, if necessary
+        If Game.pnlDescription.Visible Then
+            Game.picDescPort.BackgroundImage = Portrait.CreateFullBodyBMP(p.prt.iArr)
+        End If
+
         Me.Close()
     End Sub
     Public Shared Function equipArmor(ByRef p As Player, ByVal armor As String, Optional ByVal considerCurse As Boolean = True) As Boolean
@@ -109,11 +114,11 @@
 
         Return True
     End Function
-    Public Shared Function equipWeapon(ByRef p As Player, ByVal weapon As String) As Boolean
+    Public Shared Function equipWeapon(ByRef p As Player, ByVal weapon As String, Optional ByVal considerCurse As Boolean = True) As Boolean
         If Not p.inv.getWeapons.Item1.Contains(weapon) Then Return False
 
         'if clothes offer resistance on the way off, this handles that
-        If (Not p.equippedWeapon.getName.Equals(weapon) And p.equippedWeapon.isCursed) Then
+        If (Not p.equippedWeapon.getName.Equals(weapon) And p.equippedWeapon.isCursed) And considerCurse Then
             If p.inv.item("Anti_Curse_Tag").count > 0 Then
                 Game.pushLblEvent("You sheath your weapon, despite the resistance it puts up.")
                 p.inv.add("Anti_Curse_Tag", -1)
@@ -138,9 +143,9 @@
 
         Return True
     End Function
-    Public Shared Function equipAcce(ByRef p As Player, ByVal acce As String) As Boolean
+    Public Shared Function equipAcce(ByRef p As Player, ByVal acce As String, Optional ByVal considerCurse As Boolean = True) As Boolean
         'if clothes offer resistance on the way off, this handles that
-        If (Not p.equippedAcce.getName.Equals(acce) And p.equippedAcce.isCursed) Then
+        If (Not p.equippedAcce.getName.Equals(acce) And p.equippedAcce.isCursed) And considerCurse Then
             If p.inv.item("Anti_Curse_Tag").count > 0 Then
                 Game.pushLblEvent("You take off your accessory, despite the resistance it puts up.")
                 p.inv.add("Anti_Curse_Tag", -1)

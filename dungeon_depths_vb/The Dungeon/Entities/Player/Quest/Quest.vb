@@ -1,7 +1,18 @@
-﻿Public MustInherit Class Quest
+﻿Public Enum qInds
+    helpWanted
+    darkPact
+    dfaUpgrade
+    banEgg
+    outOfTime
+    cContra
+    sSlime
+End Enum
+
+Public MustInherit Class Quest
     Dim active As Boolean = False
     Dim completed As Boolean = False
     Dim name As String
+    Protected qInd As Integer
 
     Dim currStep As Integer = 0
 
@@ -25,15 +36,20 @@
 
         If currStep >= objectives.Count Then
             completed = True
-            active = True
+            active = False
         End If
     End Sub
     Public Sub completeCurrOjb()
         complete(currStep)
-        currStep += 1
     End Sub
     Public Function getCurrObj() As Objective
-        Return objectives(currStep)
+        If currStep > -1 And currStep < objectives.Count Then
+            Return objectives(currStep)
+        End If
+        Return Nothing
+    End Function
+    Public Function getCurrStep() As Integer
+        Return currStep
     End Function
     Public Overridable Function getActive() As Boolean
         Return active
@@ -44,10 +60,18 @@
     Public Function getName() As String
         Return name
     End Function
+    Public Function getQInd() As Integer
+        Return qInd
+    End Function
+    Public Sub finishEarly()
+        completed = True
+        active = False
+    End Sub
 
     Public Overridable Sub init()
         active = True
         currStep = 0
+        Game.player1.ongoingQuests.add(Game.player1.quests(qInd))
     End Sub
     Public Overridable Function canGet() As Boolean
         Return False
@@ -60,6 +84,7 @@
         out += completed & "^"
         out += name & "^"
         out += currStep & "^"
+        out += qInd & "^"
 
         Return out
     End Function
@@ -70,6 +95,7 @@
         completed = CBool(buffer(1))
         name = buffer(2)
         currStep = CInt(buffer(3))
+        qInd = CInt(buffer(4))
     End Sub
 End Class
 
@@ -89,4 +115,22 @@ Public Class Objective
     Public Overridable Function getDesc() As String
         Return description
     End Function
+
+    Public Shared Sub showNPC(ByRef npcImage As Image, ByVal msg As String)
+        Game.picNPC.BackgroundImage = npcImage
+        Game.picNPC.Visible = True
+
+        Game.pushNPCDialog(msg, AddressOf fromNPC)
+    End Sub
+    Public Shared Sub showNPC(ByRef npcImage As Image, ByVal msg As String, ByRef act As action)
+        Game.picNPC.BackgroundImage = npcImage
+        Game.picNPC.Visible = True
+
+        Game.pushNPCDialog(msg, act)
+    End Sub
+
+    Public Shared Sub fromNPC()
+        Game.picNPC.Visible = False
+        Game.closeLblEvent()
+    End Sub
 End Class

@@ -80,6 +80,6 @@
     Public Sub reveal()
         fakeName = getName()
         hasBeenUsed = True
-        Game.lstInventory.SelectedIndex = -1
+        Game.btnCancelCast.SelectedIndex = -1
     End Sub
 End Class

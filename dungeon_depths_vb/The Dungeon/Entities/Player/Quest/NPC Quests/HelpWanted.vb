@@ -4,11 +4,16 @@
     Sub New()
         MyBase.New("Help Wanted")
 
+        qInd = qInds.helpWanted
+
         objectives.Add(New HWantedSnipCollars)
     End Sub
 
     Public Overrides Sub init()
         MyBase.init()
+
+        Game.pushNPCDialog("""Hey, can I ask for your help on something?  I've been seeing a lot of people roaming around here with those collars looking for valubles, and that got me thinking... Why don't I expand my staff?  If you can snip off a few of their collars and send them my way,  I can make it worth your time.""" & DDUtils.RNRN &
+                   "Quest ""Help Wanted"" aquired!" & vbCrLf & "+1 Old Snips")
 
         Game.player1.inv.add(251, 1)
         Game.player1.perks(perk.collarssnipped) = 0
@@ -39,6 +44,9 @@ Public Class HWantedSnipCollars
         Game.pushNPCDialog("""Well done!  With the extra manpower, I'll probably be able to rotate in some more useful stock.  For more immediate payment, I hope this is to your liking.""" & DDUtils.RNRN &
                            "+1 Collar Snips" & vbCrLf &
                            "+1000 Gold")
+
+        Game.player1.gold += 1000
+        Game.player1.inv.add("Collar_Snips", 1)
     End Sub
 
     Public Overrides Function getDesc() As String

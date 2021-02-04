@@ -14,19 +14,26 @@
 
         '|Stats|
         MyBase.count = 0
-        MyBase.value = 150
-        setCalories(15)
+        MyBase.value = 500
+        setCalories(20)
 
         '|Description|
         MyBase.setDesc("A spikey magenta fruit that seems to glow with a crimson light." & DDUtils.RNRN &
-                       "+15 Stamina" & DDUtils.RNRN & "Dragoness Transformation")
+                       "+20 Stamina" & vbCrLf &
+                       "+40% Mana" & vbCrLf &
+                       "+25 XP")
     End Sub
 
     Public Overrides Sub Effect()
         Dim p As Player = Game.player1
 
-        BroodmotherTF.halfDragonTF(p)
+        Game.pushLogAndEvent("+" & CInt(Game.player1.getMaxMana * 0.4) & " Max Mana, +25 XP")
+        Game.player1.xp += 25
+        Game.player1.mana += CInt(Game.player1.getMaxMana * 0.4)
 
-        Game.pushLblEvent("As you bite into the fruit, your form changes!")
+        If Int(Rnd() * 6) = 0 Or Game.noRNG Then
+            BroodmotherTF.halfDragonTF(p)
+            Game.pushLogAndEvent("As you bite into the fruit, your form changes!")
+        End If
     End Sub
 End Class

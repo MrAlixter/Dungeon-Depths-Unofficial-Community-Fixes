@@ -1,4 +1,4 @@
-﻿Public Class defenseCharm
+﻿Public Class DefenseCharm
     Inherits Item
 
     Sub New()

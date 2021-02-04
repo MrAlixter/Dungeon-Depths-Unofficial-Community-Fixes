@@ -13,8 +13,7 @@
 
         Game.player1.health += hdif
 
-        Game.pushLstLog("You heal yourself for " & hdif * Game.player1.getmaxHealth & " health!")
-        Game.pushLblEvent("You heal yourself for " & hdif * Game.player1.getmaxHealth & " health!")
+        Game.pushLogAndEvent("You heal yourself for " & hdif * Game.player1.getMaxHealth & " health!")
     End Sub
 
     Public Overrides Function getDesc(ByRef c As Player, ByRef t As NPC) As Object

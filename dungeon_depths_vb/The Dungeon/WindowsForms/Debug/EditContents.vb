@@ -74,7 +74,7 @@
     Private Sub itemFilterUpdate()
         boxItems.Items.Clear()
         Dim p_inv = Game.player1.inv
-        For i As Integer = 0 To game.player1.inv.upperbound
+        For i As Integer = 0 To Game.player1.inv.upperbound
             If p_inv.getKeyByID(i).IndexOf(boxItemsFilter.Text, 0, StringComparison.CurrentCultureIgnoreCase) > -1 Then
                 boxItems.Items.Add(p_inv.getKeyByID(i).ToString())
             End If

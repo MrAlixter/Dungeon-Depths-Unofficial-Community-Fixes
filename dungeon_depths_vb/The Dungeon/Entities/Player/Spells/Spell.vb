@@ -40,6 +40,8 @@
         spellList.Add("Puff Up", New PuffUp(Nothing, Nothing))
         spellList.Add("Flash Bolt", New FlashBolt(Nothing, Nothing))
         spellList.Add("Firestorm", New FireStorm(Nothing, Nothing))
+        spellList.Add("Cynn's Disguise", New CynnsDisguise(Nothing, Nothing))
+        spellList.Add("Summon Battery", New SummonBattery(Nothing, Nothing))
     End Sub
 
     Sub New(ByRef c As Player, ByRef t As NPC)
@@ -48,14 +50,11 @@
     End Sub
     Sub cast()
         If caster.mana < cost Then
-            Game.pushLblEvent("You don't have enough mana! (" & name & " costs " & cost & " mana)")
-            Game.pushLstLog("You don't have enough mana!")
-
+            Game.pushLogAndEvent("You don't have enough mana! (" & name & " costs " & cost & " mana)")
             Exit Sub
         End If
         If Not Game.combatmode And Not Game.npcmode And Not useableOutOfCombat Then
-            Game.pushLblEvent("You don't have a target for that spell!")
-            Game.pushLstLog("You don't have a target for that spell!")
+            Game.pushLogAndEvent("You don't have a target for that spell!")
 
             Exit Sub
         End If
@@ -65,61 +64,49 @@
         Select Case tier
             Case 2
                 If caster.passDieRoll(10, 9) Then
-                    Game.pushLblEvent("You cast " & name & "!")
-                    Game.pushLstLog("You cast " & name & "!")
+                    Game.pushLogAndEvent("You cast " & name & "!")
                     effect()
                 Else
-                    Game.pushLblEvent("You try to cast " & name & ", but it fizzles into nothing!")
-                    Game.pushLstLog("You try to cast " & name & ", but it fizzles into nothing!")
+                    Game.pushLogAndEvent("You try to cast " & name & ", but it fizzles into nothing!")
                 End If
             Case 3
                 If caster.passDieRoll(10, 8) Then
-                    Game.pushLblEvent("You cast " & name & "!")
-                    Game.pushLstLog("You cast " & name & "!")
+                    Game.pushLogAndEvent("You cast " & name & "!")
                     effect()
                 Else
                     If caster.passDieRoll(10, 5) Then
-                        Game.pushLblEvent("You try to cast " & name & ", but it fizzles into nothing!")
-                        Game.pushLstLog("You try to cast " & name & ", but it fizzles into nothing!")
+                        Game.pushLogAndEvent("You try to cast " & name & ", but it fizzles into nothing!")
                     Else
-                        Game.pushLblEvent("You try to cast " & name & ", but it backfires!")
-                        Game.pushLstLog("You try to cast " & name & ", but it backfires!")
+                        Game.pushLogAndEvent("You try to cast " & name & ", but it backfires!")
                         backfire()
                     End If
                 End If
             Case 4
                 If caster.passDieRoll(10, 7) Then
-                    Game.pushLblEvent("You cast " & name & "!")
-                    Game.pushLstLog("You cast " & name & "!")
+                    Game.pushLogAndEvent("You cast " & name & "!")
                     effect()
                 Else
                     If caster.passDieRoll(100, 35) Then
-                        Game.pushLblEvent("You try to cast " & name & ", but it fizzles into nothing!")
-                        Game.pushLstLog("You try to cast " & name & ", but it fizzles into nothing!")
+                        Game.pushLogAndEvent("You try to cast " & name & ", but it fizzles into nothing!")
                     Else
-                        Game.pushLblEvent("You try to cast " & name & ", but it backfires!")
-                        Game.pushLstLog("You try to cast " & name & ", but it backfires!")
+                        Game.pushLogAndEvent("You try to cast " & name & ", but it backfires!")
                         backfire()
                     End If
                 End If
             Case 5
                 If caster.passDieRoll(10, 6) Then
-                    Game.pushLblEvent("You cast " & name & "!")
-                    Game.pushLstLog("You cast " & name & "!")
+                    Game.pushLogAndEvent("You cast " & name & "!")
                     effect()
                 Else
                     If caster.passDieRoll(10, 2) Then
-                        Game.pushLblEvent("You try to cast " & name & ", but it fizzles into nothing!")
-                        Game.pushLstLog("You try to cast " & name & ", but it fizzles into nothing!")
+                        Game.pushLogAndEvent("You try to cast " & name & ", but it fizzles into nothing!")
                     Else
-                        Game.pushLblEvent("You try to cast " & name & ", but it backfires!")
-                        Game.pushLstLog("You try to cast " & name & ", but it backfires!")
+                        Game.pushLogAndEvent("You try to cast " & name & ", but it backfires!")
                         backfire()
                     End If
                 End If
             Case Else
-                Game.pushLblEvent("You cast " & name & "!")
-                Game.pushLstLog("You cast " & name & "!")
+                Game.pushLogAndEvent("You cast " & name & "!")
                 effect()
         End Select
 
@@ -134,6 +121,9 @@
     Sub setName(ByVal s As String)
         name = s
     End Sub
+    Function getcost() As Integer
+        Return cost
+    End Function
     Sub setcost(ByVal i As Integer)
         cost = i
     End Sub

@@ -63,7 +63,7 @@ Partial Class Game
         Me.lblNameTitle = New System.Windows.Forms.Label()
         Me.Label1 = New System.Windows.Forms.Label()
         Me.btnUse = New System.Windows.Forms.Button()
-        Me.lstInventory = New System.Windows.Forms.ListBox()
+        Me.btnCancelCast = New System.Windows.Forms.ListBox()
         Me.lstLog = New System.Windows.Forms.ListBox()
         Me.MenuStrip1 = New System.Windows.Forms.MenuStrip()
         Me.FileToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
@@ -93,7 +93,6 @@ Partial Class Game
         Me.btnU = New System.Windows.Forms.Button()
         Me.BtnD = New System.Windows.Forms.Button()
         Me.btnLft = New System.Windows.Forms.Button()
-        Me.cboxSpec = New System.Windows.Forms.ComboBox()
         Me.btnSpec = New System.Windows.Forms.Button()
         Me.btnFilter = New System.Windows.Forms.Button()
         Me.btnOk = New System.Windows.Forms.Button()
@@ -286,6 +285,18 @@ Partial Class Game
         Me.btnSpellSpecOK = New System.Windows.Forms.Button()
         Me.Label12 = New System.Windows.Forms.Label()
         Me.cboxSpellSpecialDescSelector = New System.Windows.Forms.ComboBox()
+        Me.pnlCastUse = New System.Windows.Forms.Panel()
+        Me.btnCastSpell = New System.Windows.Forms.Button()
+        Me.lblCastCost = New System.Windows.Forms.Label()
+        Me.Label19 = New System.Windows.Forms.Label()
+        Me.txtCastDesc = New System.Windows.Forms.TextBox()
+        Me.btnCastCancel = New System.Windows.Forms.Button()
+        Me.lblKnownAbilities = New System.Windows.Forms.Label()
+        Me.cboxCast = New System.Windows.Forms.ComboBox()
+        Me.cboxSpec = New System.Windows.Forms.ComboBox()
+        Me.picSpaceBarrierH = New System.Windows.Forms.PictureBox()
+        Me.picSpaceBarrierV = New System.Windows.Forms.PictureBox()
+        Me.picTTSpace = New System.Windows.Forms.PictureBox()
         CType(Me.picEnemy, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me.picNPC, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me.picStatue, System.ComponentModel.ISupportInitialize).BeginInit()
@@ -408,6 +419,10 @@ Partial Class Game
         CType(Me.PictureBox2, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.pnlSnare.SuspendLayout()
         Me.pnlSpellSpecial.SuspendLayout()
+        Me.pnlCastUse.SuspendLayout()
+        CType(Me.picSpaceBarrierH, System.ComponentModel.ISupportInitialize).BeginInit()
+        CType(Me.picSpaceBarrierV, System.ComponentModel.ISupportInitialize).BeginInit()
+        CType(Me.picTTSpace, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.SuspendLayout()
         '
         'btnUse1
@@ -831,18 +846,18 @@ Partial Class Game
         Me.btnUse.Text = "Use"
         Me.btnUse.UseVisualStyleBackColor = False
         '
-        'lstInventory
+        'btnCancelCast
         '
-        Me.lstInventory.BackColor = System.Drawing.Color.Black
-        Me.lstInventory.DrawMode = System.Windows.Forms.DrawMode.OwnerDrawVariable
-        Me.lstInventory.Font = New System.Drawing.Font("Consolas", 10.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.lstInventory.ForeColor = System.Drawing.Color.White
-        Me.lstInventory.FormattingEnabled = True
-        Me.lstInventory.ItemHeight = 14
-        Me.lstInventory.Location = New System.Drawing.Point(734, 419)
-        Me.lstInventory.Name = "lstInventory"
-        Me.lstInventory.Size = New System.Drawing.Size(262, 172)
-        Me.lstInventory.TabIndex = 142
+        Me.btnCancelCast.BackColor = System.Drawing.Color.Black
+        Me.btnCancelCast.DrawMode = System.Windows.Forms.DrawMode.OwnerDrawVariable
+        Me.btnCancelCast.Font = New System.Drawing.Font("Consolas", 10.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.btnCancelCast.ForeColor = System.Drawing.Color.White
+        Me.btnCancelCast.FormattingEnabled = True
+        Me.btnCancelCast.ItemHeight = 14
+        Me.btnCancelCast.Location = New System.Drawing.Point(734, 419)
+        Me.btnCancelCast.Name = "btnCancelCast"
+        Me.btnCancelCast.Size = New System.Drawing.Size(262, 172)
+        Me.btnCancelCast.TabIndex = 142
         '
         'lstLog
         '
@@ -1123,25 +1138,12 @@ Partial Class Game
         Me.btnLft.Text = "<"
         Me.btnLft.UseVisualStyleBackColor = False
         '
-        'cboxSpec
-        '
-        Me.cboxSpec.BackColor = System.Drawing.Color.Black
-        Me.cboxSpec.Font = New System.Drawing.Font("Consolas", 8.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.cboxSpec.ForeColor = System.Drawing.Color.White
-        Me.cboxSpec.FormattingEnabled = True
-        Me.cboxSpec.Location = New System.Drawing.Point(237, 462)
-        Me.cboxSpec.Name = "cboxSpec"
-        Me.cboxSpec.Size = New System.Drawing.Size(149, 21)
-        Me.cboxSpec.TabIndex = 231
-        Me.cboxSpec.Text = "-- Select --"
-        Me.cboxSpec.Visible = False
-        '
         'btnSpec
         '
         Me.btnSpec.BackColor = System.Drawing.Color.Black
         Me.btnSpec.Font = New System.Drawing.Font("Consolas", 8.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.btnSpec.ForeColor = System.Drawing.Color.White
-        Me.btnSpec.Location = New System.Drawing.Point(392, 461)
+        Me.btnSpec.Location = New System.Drawing.Point(336, 461)
         Me.btnSpec.Name = "btnSpec"
         Me.btnSpec.Size = New System.Drawing.Size(90, 36)
         Me.btnSpec.TabIndex = 232
@@ -3326,6 +3328,153 @@ Partial Class Game
         Me.cboxSpellSpecialDescSelector.Size = New System.Drawing.Size(428, 21)
         Me.cboxSpellSpecialDescSelector.TabIndex = 155
         '
+        'pnlCastUse
+        '
+        Me.pnlCastUse.BackgroundImage = CType(resources.GetObject("pnlCastUse.BackgroundImage"), System.Drawing.Image)
+        Me.pnlCastUse.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch
+        Me.pnlCastUse.Controls.Add(Me.btnCastSpell)
+        Me.pnlCastUse.Controls.Add(Me.lblCastCost)
+        Me.pnlCastUse.Controls.Add(Me.Label19)
+        Me.pnlCastUse.Controls.Add(Me.txtCastDesc)
+        Me.pnlCastUse.Controls.Add(Me.btnCastCancel)
+        Me.pnlCastUse.Controls.Add(Me.lblKnownAbilities)
+        Me.pnlCastUse.Controls.Add(Me.cboxCast)
+        Me.pnlCastUse.Location = New System.Drawing.Point(48, 100)
+        Me.pnlCastUse.Name = "pnlCastUse"
+        Me.pnlCastUse.Size = New System.Drawing.Size(625, 272)
+        Me.pnlCastUse.TabIndex = 407
+        Me.pnlCastUse.Visible = False
+        '
+        'btnCastSpell
+        '
+        Me.btnCastSpell.BackColor = System.Drawing.SystemColors.Window
+        Me.btnCastSpell.Font = New System.Drawing.Font("Consolas", 8.830189!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.btnCastSpell.Location = New System.Drawing.Point(456, 235)
+        Me.btnCastSpell.Name = "btnCastSpell"
+        Me.btnCastSpell.Size = New System.Drawing.Size(75, 23)
+        Me.btnCastSpell.TabIndex = 161
+        Me.btnCastSpell.Text = "OK"
+        Me.btnCastSpell.UseVisualStyleBackColor = False
+        '
+        'lblCastCost
+        '
+        Me.lblCastCost.AutoSize = True
+        Me.lblCastCost.BackColor = System.Drawing.Color.Black
+        Me.lblCastCost.Font = New System.Drawing.Font("Consolas", 11.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.lblCastCost.ForeColor = System.Drawing.Color.White
+        Me.lblCastCost.Location = New System.Drawing.Point(36, 223)
+        Me.lblCastCost.Margin = New System.Windows.Forms.Padding(4, 0, 4, 0)
+        Me.lblCastCost.Name = "lblCastCost"
+        Me.lblCastCost.Size = New System.Drawing.Size(56, 18)
+        Me.lblCastCost.TabIndex = 160
+        Me.lblCastCost.Text = "Cost: "
+        Me.lblCastCost.UseWaitCursor = True
+        Me.lblCastCost.Visible = False
+        '
+        'Label19
+        '
+        Me.Label19.AutoSize = True
+        Me.Label19.BackColor = System.Drawing.Color.Black
+        Me.Label19.Font = New System.Drawing.Font("Consolas", 11.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.Label19.ForeColor = System.Drawing.Color.White
+        Me.Label19.Location = New System.Drawing.Point(36, 80)
+        Me.Label19.Margin = New System.Windows.Forms.Padding(4, 0, 4, 0)
+        Me.Label19.Name = "Label19"
+        Me.Label19.Size = New System.Drawing.Size(104, 18)
+        Me.Label19.TabIndex = 159
+        Me.Label19.Text = "Description:"
+        '
+        'txtCastDesc
+        '
+        Me.txtCastDesc.BackColor = System.Drawing.Color.Black
+        Me.txtCastDesc.Font = New System.Drawing.Font("Consolas", 10.18868!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.txtCastDesc.ForeColor = System.Drawing.Color.White
+        Me.txtCastDesc.Location = New System.Drawing.Point(36, 103)
+        Me.txtCastDesc.Multiline = True
+        Me.txtCastDesc.Name = "txtCastDesc"
+        Me.txtCastDesc.ScrollBars = System.Windows.Forms.ScrollBars.Vertical
+        Me.txtCastDesc.Size = New System.Drawing.Size(554, 96)
+        Me.txtCastDesc.TabIndex = 158
+        '
+        'btnCastCancel
+        '
+        Me.btnCastCancel.BackColor = System.Drawing.SystemColors.Window
+        Me.btnCastCancel.Font = New System.Drawing.Font("Consolas", 8.830189!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.btnCastCancel.Location = New System.Drawing.Point(537, 235)
+        Me.btnCastCancel.Name = "btnCastCancel"
+        Me.btnCastCancel.Size = New System.Drawing.Size(75, 23)
+        Me.btnCastCancel.TabIndex = 157
+        Me.btnCastCancel.Text = "Cancel"
+        Me.btnCastCancel.UseVisualStyleBackColor = False
+        '
+        'lblKnownAbilities
+        '
+        Me.lblKnownAbilities.AutoSize = True
+        Me.lblKnownAbilities.BackColor = System.Drawing.Color.Black
+        Me.lblKnownAbilities.Font = New System.Drawing.Font("Consolas", 11.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.lblKnownAbilities.ForeColor = System.Drawing.Color.White
+        Me.lblKnownAbilities.Location = New System.Drawing.Point(36, 12)
+        Me.lblKnownAbilities.Margin = New System.Windows.Forms.Padding(4, 0, 4, 0)
+        Me.lblKnownAbilities.Name = "lblKnownAbilities"
+        Me.lblKnownAbilities.Size = New System.Drawing.Size(136, 18)
+        Me.lblKnownAbilities.TabIndex = 156
+        Me.lblKnownAbilities.Text = "Known Abilities:"
+        '
+        'cboxCast
+        '
+        Me.cboxCast.BackColor = System.Drawing.Color.Black
+        Me.cboxCast.Font = New System.Drawing.Font("Consolas", 8.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.cboxCast.ForeColor = System.Drawing.Color.White
+        Me.cboxCast.FormattingEnabled = True
+        Me.cboxCast.Location = New System.Drawing.Point(36, 38)
+        Me.cboxCast.Margin = New System.Windows.Forms.Padding(4, 5, 4, 5)
+        Me.cboxCast.Name = "cboxCast"
+        Me.cboxCast.Size = New System.Drawing.Size(553, 21)
+        Me.cboxCast.TabIndex = 155
+        '
+        'cboxSpec
+        '
+        Me.cboxSpec.BackColor = System.Drawing.Color.Black
+        Me.cboxSpec.Font = New System.Drawing.Font("Consolas", 8.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.cboxSpec.ForeColor = System.Drawing.Color.White
+        Me.cboxSpec.FormattingEnabled = True
+        Me.cboxSpec.Location = New System.Drawing.Point(237, 462)
+        Me.cboxSpec.Name = "cboxSpec"
+        Me.cboxSpec.Size = New System.Drawing.Size(149, 21)
+        Me.cboxSpec.TabIndex = 231
+        Me.cboxSpec.Text = "-- Select --"
+        Me.cboxSpec.Visible = False
+        '
+        'picSpaceBarrierH
+        '
+        Me.picSpaceBarrierH.BackgroundImage = CType(resources.GetObject("picSpaceBarrierH.BackgroundImage"), System.Drawing.Image)
+        Me.picSpaceBarrierH.Location = New System.Drawing.Point(623, 159)
+        Me.picSpaceBarrierH.Name = "picSpaceBarrierH"
+        Me.picSpaceBarrierH.Size = New System.Drawing.Size(15, 15)
+        Me.picSpaceBarrierH.TabIndex = 408
+        Me.picSpaceBarrierH.TabStop = False
+        Me.picSpaceBarrierH.Visible = False
+        '
+        'picSpaceBarrierV
+        '
+        Me.picSpaceBarrierV.BackgroundImage = CType(resources.GetObject("picSpaceBarrierV.BackgroundImage"), System.Drawing.Image)
+        Me.picSpaceBarrierV.Location = New System.Drawing.Point(644, 159)
+        Me.picSpaceBarrierV.Name = "picSpaceBarrierV"
+        Me.picSpaceBarrierV.Size = New System.Drawing.Size(15, 15)
+        Me.picSpaceBarrierV.TabIndex = 409
+        Me.picSpaceBarrierV.TabStop = False
+        Me.picSpaceBarrierV.Visible = False
+        '
+        'picTTSpace
+        '
+        Me.picTTSpace.BackgroundImage = CType(resources.GetObject("picTTSpace.BackgroundImage"), System.Drawing.Image)
+        Me.picTTSpace.Location = New System.Drawing.Point(539, 180)
+        Me.picTTSpace.Name = "picTTSpace"
+        Me.picTTSpace.Size = New System.Drawing.Size(15, 15)
+        Me.picTTSpace.TabIndex = 410
+        Me.picTTSpace.TabStop = False
+        Me.picTTSpace.Visible = False
+        '
         'Game
         '
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Inherit
@@ -3333,6 +3482,7 @@ Partial Class Game
         Me.BackColor = System.Drawing.Color.Black
         Me.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch
         Me.ClientSize = New System.Drawing.Size(1008, 690)
+        Me.Controls.Add(Me.pnlCastUse)
         Me.Controls.Add(Me.pnlSpellSpecial)
         Me.Controls.Add(Me.pnlSnare)
         Me.Controls.Add(Me.pnlFusion)
@@ -3391,7 +3541,7 @@ Partial Class Game
         Me.Controls.Add(Me.BtnD)
         Me.Controls.Add(Me.btnLft)
         Me.Controls.Add(Me.btnFilter)
-        Me.Controls.Add(Me.lstInventory)
+        Me.Controls.Add(Me.btnCancelCast)
         Me.Controls.Add(Me.picPortrait)
         Me.Controls.Add(Me.lblEvent)
         Me.Controls.Add(Me.btnWait)
@@ -3497,6 +3647,9 @@ Partial Class Game
         Me.Controls.Add(Me.picLust3)
         Me.Controls.Add(Me.picLust2)
         Me.Controls.Add(Me.picLust1)
+        Me.Controls.Add(Me.picTTSpace)
+        Me.Controls.Add(Me.picSpaceBarrierH)
+        Me.Controls.Add(Me.picSpaceBarrierV)
         Me.DoubleBuffered = True
         Me.ForeColor = System.Drawing.Color.Black
         Me.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle
@@ -3638,6 +3791,11 @@ Partial Class Game
         Me.pnlSnare.PerformLayout()
         Me.pnlSpellSpecial.ResumeLayout(False)
         Me.pnlSpellSpecial.PerformLayout()
+        Me.pnlCastUse.ResumeLayout(False)
+        Me.pnlCastUse.PerformLayout()
+        CType(Me.picSpaceBarrierH, System.ComponentModel.ISupportInitialize).EndInit()
+        CType(Me.picSpaceBarrierV, System.ComponentModel.ISupportInitialize).EndInit()
+        CType(Me.picTTSpace, System.ComponentModel.ISupportInitialize).EndInit()
         Me.ResumeLayout(False)
         Me.PerformLayout()
 
@@ -3678,7 +3836,7 @@ Partial Class Game
     Friend WithEvents lblNameTitle As System.Windows.Forms.Label
     Friend WithEvents Label1 As System.Windows.Forms.Label
     Friend WithEvents btnUse As System.Windows.Forms.Button
-    Friend WithEvents lstInventory As System.Windows.Forms.ListBox
+    Friend WithEvents btnCancelCast As System.Windows.Forms.ListBox
     Friend WithEvents lstLog As System.Windows.Forms.ListBox
     Friend WithEvents MenuStrip1 As System.Windows.Forms.MenuStrip
     Friend WithEvents FileToolStripMenuItem As System.Windows.Forms.ToolStripMenuItem
@@ -3701,7 +3859,6 @@ Partial Class Game
     Friend WithEvents btnU As System.Windows.Forms.Button
     Friend WithEvents BtnD As System.Windows.Forms.Button
     Friend WithEvents btnLft As System.Windows.Forms.Button
-    Friend WithEvents cboxSpec As System.Windows.Forms.ComboBox
     Friend WithEvents btnSpec As System.Windows.Forms.Button
     Friend WithEvents btnFilter As System.Windows.Forms.Button
     Friend WithEvents btnOk As System.Windows.Forms.Button
@@ -3901,4 +4058,16 @@ Partial Class Game
     Friend WithEvents btnSpellSpecOK As System.Windows.Forms.Button
     Friend WithEvents Label12 As System.Windows.Forms.Label
     Friend WithEvents cboxSpellSpecialDescSelector As System.Windows.Forms.ComboBox
+    Friend WithEvents pnlCastUse As System.Windows.Forms.Panel
+    Friend WithEvents btnCastSpell As System.Windows.Forms.Button
+    Friend WithEvents lblCastCost As System.Windows.Forms.Label
+    Friend WithEvents Label19 As System.Windows.Forms.Label
+    Friend WithEvents txtCastDesc As System.Windows.Forms.TextBox
+    Friend WithEvents btnCastCancel As System.Windows.Forms.Button
+    Friend WithEvents lblKnownAbilities As System.Windows.Forms.Label
+    Friend WithEvents cboxCast As System.Windows.Forms.ComboBox
+    Friend WithEvents cboxSpec As System.Windows.Forms.ComboBox
+    Friend WithEvents picSpaceBarrierH As System.Windows.Forms.PictureBox
+    Friend WithEvents picSpaceBarrierV As System.Windows.Forms.PictureBox
+    Friend WithEvents picTTSpace As System.Windows.Forms.PictureBox
 End Class

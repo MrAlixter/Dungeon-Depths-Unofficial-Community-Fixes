@@ -76,19 +76,30 @@
     Sub fullTF()
         Dim p As Player = Game.player1
 
-        p.prt.setIAInd(pInd.rearhair, 14, True, True)
-        p.prt.setIAInd(pInd.midhair, 13, True, True)
-        p.prt.setIAInd(pInd.fronthair, 22, True, True)
+        If p.sex = "Male" Then
+            p.prt.setIAInd(pInd.midhair, 6, False, True)
+            p.prt.setIAInd(pInd.fronthair, 7, False, True)
+            p.prt.setIAInd(pInd.eyes, 14, False, True)
+        Else
+            p.prt.setIAInd(pInd.midhair, 13, True, True)
+            p.prt.setIAInd(pInd.fronthair, 22, True, True)
+            p.prt.setIAInd(pInd.eyes, 52, True, True)
+        End If
 
-        If p.breastSize <> 4 Then p.breastSize = 4
-
-        p.prt.setIAInd(pInd.mouth, 6, True, True)
-        p.prt.setIAInd(pInd.eyes, 35, True, True)
 
         p.changeHairColor(hc)
         p.changeSkinColor(sc)
 
         p.changeForm("Alraune")
+
+        'transformation description push
+        Dim out = "As you chew on a particularly leafy portion of the salad, you feel the familiar flow of transformative magic flow through your body!  Expecting the worse, you are suprised to find that it seems to be providing your body with a benevolent energy.  It isn't until a leaf droops down from the top of your head that you realize something has indeed been changed.  You are now a Alurane!"
+        Dim revertText = Game.lblEvent.Text.Split(vbCrLf)(0)
+
+        If Not p.knownSpecials.Contains("Lurk") Then p.knownSpecials.Add("Lurk") : Game.pushLstLog("Lurk special learned!")
+
+        If Not revertText.Equals("") Then out = revertText & DDUtils.RNRN & out
+        Game.pushLblEvent(out)
     End Sub
 
     Public Overrides Function getNextStep(stage As Integer) As Action

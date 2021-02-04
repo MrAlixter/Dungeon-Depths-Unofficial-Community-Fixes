@@ -1,4 +1,33 @@
-﻿Public MustInherit Class ShopNPC
+﻿Public Enum sNPCInd
+    shopkeeper
+    shadywizard
+    hypnoteach
+    foodvendor
+    weaponsmith
+    cursebroker
+    maskmaggirl
+    timetraveler
+End Enum
+
+
+'| -- New Layout Example -- |
+'|ID Info|
+
+
+'|NPC Flags|
+
+
+'|Inventory|
+
+
+'|Stats|
+
+
+'|Images|
+
+
+
+Public MustInherit Class ShopNPC
     Inherits NPC
     Public firstCTurn As Boolean = True
     Public isShop = False
@@ -7,20 +36,28 @@
     Protected discount As Double = 0
     Public Shared npcLib As ImageCollection = New ImageCollection(2)
 
+    Sub New()
+        health = 1.0
+        inv = New Inventory(False)
+        title = " the "
+    End Sub
+
     Shared Function shopFactory(ByVal nIndex As Integer)
         Select Case nIndex
-            Case 1
+            Case sNPCInd.shadywizard
                 Return New ShadyWizard
-            Case 2
+            Case sNPCInd.hypnoteach
                 Return New HTeach
-            Case 3
+            Case sNPCInd.foodvendor
                 Return New FVendor
-            Case 4
+            Case sNPCInd.weaponsmith
                 Return New WSmith
-            Case 5
+            Case sNPCInd.cursebroker
                 Return New CBrok
-            Case 6
+            Case sNPCInd.maskmaggirl
                 Return New MaskedMG
+            Case sNPCInd.timetraveler
+                Return New TimeTraveler
             Case Else
                 Return New Shopkeeper
         End Select
@@ -68,7 +105,9 @@
             Exit Sub
         End If
         setGold(9999)
-        Game.npcIndex = npcIndex
+
+        Game.player1.currTarget = Me
+        Game.currNPC = Me
 
         If Game.mDun.floorboss.ContainsKey(Game.mDun.numCurrFloor) AndAlso
             Game.mDun.floorboss(Game.mDun.numCurrFloor).Equals("Key") Then inv.setCount(53, 1) Else inv.setCount(53, 0)
@@ -101,48 +140,54 @@
 
     Overridable Sub toBunny()
         MyBase.health = 1.0
-        MyBase.maxHealth = 500
-        MyBase.attack = 1
-        MyBase.defense = 1
-        MyBase.tfCt = 1
         MyBase.tfEnd = 15
+
         MyBase.npcIndex = 4
+
         toFemale("bunny")
         MyBase.form = "Bunny Girl"
+
         Game.NPCfromCombat(Me)
+
         Game.picNPC.BackgroundImage = picNPC(npcIndex)
     End Sub
     Overridable Sub toPrincess()
         MyBase.health = 1.0
-        MyBase.maxHealth = 999
-        MyBase.attack = 50
-        MyBase.defense = 1
-        MyBase.tfCt = 1
         MyBase.tfEnd = 15
+
         MyBase.npcIndex = 3
         toFemale("prin")
-        MyBase.form = "Princess"
+
+        Game.picNPC.BackgroundImage = picNPC(npcIndex)
+    End Sub
+    Overridable Sub toCatgirl()
+        MyBase.health = 1.0
+        MyBase.tfEnd = 15
+
+        MyBase.npcIndex = getCatGirlImageInd()
+        toFemale("catg")
+
         Game.picNPC.BackgroundImage = picNPC(npcIndex)
     End Sub
     Overridable Sub toSheep()
         MyBase.health = 1.0
-        MyBase.maxHealth = 600
-        MyBase.attack = 1
-        MyBase.defense = 40
-        MyBase.tfCt = 1
-        MyBase.tfEnd = 6
+
         MyBase.npcIndex = 2
-        MyBase.form = "Sheep"
+
         Game.picNPC.BackgroundImage = picNPC(npcIndex)
     End Sub
     Overridable Sub toFrog()
         MyBase.health = 1.0
-        MyBase.maxHealth = 500
-        MyBase.attack = 1
-        MyBase.defense = 4
-        MyBase.tfCt = 1
-        MyBase.tfEnd = 6
+  
         MyBase.npcIndex = 1
+
+        Game.picNPC.BackgroundImage = picNPC(npcIndex)
+    End Sub
+    Overridable Sub toTrilobite()
+        MyBase.health = 1.0
+
+        MyBase.npcIndex = getTrilobiteImageInd()
+
         Game.picNPC.BackgroundImage = picNPC(npcIndex)
     End Sub
     Overridable Sub toArachne()
@@ -188,7 +233,12 @@
     Public Overridable Function getArachneImageInd() As Integer
         Return 6
     End Function
-
+    Public Overridable Function getCatGirlImageInd() As Integer
+        Return 7
+    End Function
+    Public Overridable Function getTrilobiteImageInd() As Integer
+        Return 8
+    End Function
 
     'save/load methods
     Function saveNPC() As String

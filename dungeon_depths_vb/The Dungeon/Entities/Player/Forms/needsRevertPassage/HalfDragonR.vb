@@ -19,6 +19,14 @@
         MyBase.overlaybsize6 = New Tuple(Of Integer, Boolean, Boolean)(13, True, False)
         MyBase.overlaybsize7 = New Tuple(Of Integer, Boolean, Boolean)(14, True, False)
 
+        MyBase.overlaybsize1C = New Tuple(Of Integer, Boolean, Boolean)(43, True, False)
+        MyBase.overlaybsize2C = New Tuple(Of Integer, Boolean, Boolean)(44, True, False)
+        MyBase.overlaybsize3C = New Tuple(Of Integer, Boolean, Boolean)(45, True, False)
+        MyBase.overlaybsize4C = New Tuple(Of Integer, Boolean, Boolean)(46, True, False)
+        MyBase.overlaybsize5C = New Tuple(Of Integer, Boolean, Boolean)(47, True, False)
+        MyBase.overlaybsize6C = New Tuple(Of Integer, Boolean, Boolean)(48, True, False)
+        MyBase.overlaybsize7C = New Tuple(Of Integer, Boolean, Boolean)(49, True, False)
+
         mybase.overlayusizeneg1 = New Tuple(Of Integer, Boolean, Boolean)(15, False, False)
         MyBase.overlayusize0 = New Tuple(Of Integer, Boolean, Boolean)(16, False, False)
         MyBase.overlayusize1 = New Tuple(Of Integer, Boolean, Boolean)(17, True, False)

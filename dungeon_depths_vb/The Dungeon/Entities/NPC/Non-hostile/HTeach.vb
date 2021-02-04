@@ -3,16 +3,18 @@
 
     Dim preHypnoID = 0
     Sub New()
-        name = "Hypnotist Teacher"
-        health = 1.0
-        maxHealth = 9999
-        attack = 99
-        defense = 999
-        speed = 99
+        MyBase.New()
 
-        'Define the inventory
-        inv = New Inventory(False)
-        'Useables
+        '|ID Info|
+        name = "Hypnotist Teacher"
+
+        '|NPC Flags|
+        pronoun = "she"
+        pPronoun = "her"
+        rPronoun = "her"
+        isShop = True
+
+        '|Inventory|
         inv.setCount("Advanced_Spellbook", 1)
         inv.item("Advanced_Spellbook").value -= 0.2 * MyBase.inv.item("Advanced_Spellbook").value
         inv.setCount("Spellbook", 1)
@@ -30,11 +32,14 @@
         inv.setCount("Base_Form_Reset", 1)
         inv.setCount("Learn_'Focus_Up'", 1)
 
-        isShop = True
+        '|Stats|
+        maxHealth = 9999
+        attack = 99
+        defense = 999
+        speed = 99
         gold = 99999
-        pronoun = "she"
-        pPronoun = "her"
-        rPronoun = "her"
+
+        '|Images|
         picNormal = ShopNPC.npcLib.atrs(0).getAt(17)
         picPrincess = ShopNPC.npcLib.atrs(0).getAt(19)
         picBunny = ShopNPC.npcLib.atrs(0).getAt(18)
@@ -52,10 +57,9 @@
                          ShopNPC.npcLib.atrs(0).getAt(22),
                          ShopNPC.npcLib.atrs(0).getAt(20),
                          picArachne,
-                         ShopNPC.npcLib.atrs(0).getAt(74)})
-
-        If speed = Game.player1.speed Then speed -= 1
-        MyBase.title = " the "
+                         ShopNPC.npcLib.atrs(0).getAt(74),
+                         ShopNPC.npcLib.atrs(0).getAt(91),
+                         ShopNPC.npcLib.atrs(0).getAt(96)})
     End Sub
 
     Public Overrides Sub encounter()
@@ -99,7 +103,7 @@
             Game.pushNPCDialog("Well salutations there, " & Game.player1.className & ".  Please let me know if there's anything I can do to help you.")
         ElseIf npcIndex = 4 Then
             Game.pushNPCDialog("HI!  I, like, don't know if it would be smart for me to try to hypno...hypotho...do my thing to you right now, but I totally have some tapes you can use!")
-        ElseIf npcIndex = 8 Then
+        ElseIf npcIndex = 8 Or npcIndex = 12 Then
             Game.pushNPCDialog("...")
         ElseIf npcIndex = 9 Then
             If Game.player1.formName.Equals("Arachne") Then
@@ -107,7 +111,8 @@
             Else
                 Game.pushNPCDialog("You should try this venom.  Or don't.  Say, you don't happen to have a Panacea in your possession, do you?")
             End If
-
+        ElseIf npcIndex = 11 Then
+            Game.pushNPCDialog("I do not approve of plagerism, but...  lucky for you...  I am rather enjoying this form...  nya...")
         End If
 
         If Game.mDun.numCurrFloor > 5 Then inv.setCount(113, 1) Else inv.setCount(113, 0)
@@ -132,10 +137,12 @@
             Return "Whaaaaaat?!?  No, like, don't do that!"
         ElseIf npcIndex = 6 Then
             Return "Cmon!  I'm, like, trying to help you out here!"
-        ElseIf npcIndex = 8 Then
+        ElseIf npcIndex = 8 Or npcIndex = 12 Then
             Return "..."
         ElseIf npcIndex = 9 Then
             Return "Outstanding!  I've been looking for the opportunity to burn off some arachnophobic stress..."
+        ElseIf npcIndex = 11 Then
+            Return "~Oooh~, you want to play?"
         End If
         Return "Bad move."
     End Function
@@ -158,8 +165,10 @@
             Return "WOAH!  That's a neat trick!"
         ElseIf npcIndex = 6 Then
             Return "Cmon!  I'm, like, trying to help you out here!"
-        ElseIf npcIndex = 8 Then
+        ElseIf npcIndex = 8 Or npcIndex = 12 Then
             Return "..."
+        ElseIf npcIndex = 11 Then
+            Return "~Oooh~, you want to play?"
         End If
         Return "Woah there!"
     End Function
@@ -193,6 +202,12 @@
 
     Public Overrides Function getArachneImageInd() As Integer
         Return 9
+    End Function
+    Public Overrides Function getCatgirlImageInd() As Integer
+        Return 11
+    End Function
+    Public Overrides Function getTrilobiteImageInd() As Integer
+        Return 12
     End Function
 
     Sub seventailsAdjustment()

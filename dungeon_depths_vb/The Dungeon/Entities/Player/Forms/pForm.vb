@@ -30,6 +30,14 @@
     Protected overlaybsize6 As Tuple(Of Integer, Boolean, Boolean) = New Tuple(Of Integer, Boolean, Boolean)(0, True, False)
     Protected overlaybsize7 As Tuple(Of Integer, Boolean, Boolean) = New Tuple(Of Integer, Boolean, Boolean)(0, True, False)
 
+    Protected overlaybsize1C As Tuple(Of Integer, Boolean, Boolean) = New Tuple(Of Integer, Boolean, Boolean)(0, True, False)
+    Protected overlaybsize2C As Tuple(Of Integer, Boolean, Boolean) = New Tuple(Of Integer, Boolean, Boolean)(0, True, False)
+    Protected overlaybsize3C As Tuple(Of Integer, Boolean, Boolean) = New Tuple(Of Integer, Boolean, Boolean)(0, True, False)
+    Protected overlaybsize4C As Tuple(Of Integer, Boolean, Boolean) = New Tuple(Of Integer, Boolean, Boolean)(0, True, False)
+    Protected overlaybsize5C As Tuple(Of Integer, Boolean, Boolean) = New Tuple(Of Integer, Boolean, Boolean)(0, True, False)
+    Protected overlaybsize6C As Tuple(Of Integer, Boolean, Boolean) = New Tuple(Of Integer, Boolean, Boolean)(0, True, False)
+    Protected overlaybsize7C As Tuple(Of Integer, Boolean, Boolean) = New Tuple(Of Integer, Boolean, Boolean)(0, True, False)
+
     Protected overlayusizeneg1 As Tuple(Of Integer, Boolean, Boolean) = New Tuple(Of Integer, Boolean, Boolean)(0, False, False)
     Protected overlayusize0 As Tuple(Of Integer, Boolean, Boolean) = New Tuple(Of Integer, Boolean, Boolean)(0, False, False)
     Protected overlayusize1 As Tuple(Of Integer, Boolean, Boolean) = New Tuple(Of Integer, Boolean, Boolean)(0, True, False)
@@ -63,28 +71,47 @@
         Return overlayface
     End Function
     Overridable Function getOverlayB(ByVal p As Player) As Tuple(Of Integer, Boolean, Boolean)
-        Select Case p.breastSize
-            Case -1
-                Return overlaybsizeneg1
-            Case 0
-                Return overlaybsize0
-            Case 1
-                Return overlaybsize1
-            Case 2
-                Return overlaybsize2
-            Case 3
-                Return overlaybsize3
-            Case 4
-                Return overlaybsize4
-            Case 5
-                Return overlaybsize5
-            Case 6
-                Return overlaybsize6
-            Case 7
-                Return overlaybsize7
-            Case Else
-                Return New Tuple(Of Integer, Boolean, Boolean)(0, True, False)
-        End Select
+        If p.equippedArmor.compressesBreasts Then
+            Select Case p.breastSize
+                Case 1
+                    Return overlaybsize1C
+                Case 2
+                    Return overlaybsize2C
+                Case 3
+                    Return overlaybsize3C
+                Case 4
+                    Return overlaybsize4C
+                Case 5
+                    Return overlaybsize5C
+                Case 6
+                    Return overlaybsize6C
+                Case 7
+                    Return overlaybsize7C
+            End Select
+        Else
+            Select Case p.breastSize
+                Case -1
+                    Return overlaybsizeneg1
+                Case 0
+                    Return overlaybsize0
+                Case 1
+                    Return overlaybsize1
+                Case 2
+                    Return overlaybsize2
+                Case 3
+                    Return overlaybsize3
+                Case 4
+                    Return overlaybsize4
+                Case 5
+                    Return overlaybsize5
+                Case 6
+                    Return overlaybsize6
+                Case 7
+                    Return overlaybsize7
+            End Select
+        End If
+
+        Return New Tuple(Of Integer, Boolean, Boolean)(0, True, False)
     End Function
     Overridable Function getOverlayS(ByVal p As Player) As Tuple(Of Integer, Boolean, Boolean)
         Select Case p.breastSize

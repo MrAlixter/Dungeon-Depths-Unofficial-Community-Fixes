@@ -116,6 +116,8 @@
                 Return New ESuccPrincess
             Case 19
                 Return New WebCasterArach
+            Case 20
+                Return New Bovinomancer
         End Select
 
         Return New Monster()
@@ -132,8 +134,16 @@
                 tier = {0, 1, 2, 4, 6, 7}
             Case 4
                 tier = {0, 1, 2, 3, 4, 6, 7, 19}
+            Case 7
+                tier = {0, 1, 3, 4, 6, 7, 12, 14, 14, 19, 20}
             Case Else
-                tier = {0, 1, 2, 3, 4, 6, 7, 12, 12, 14, 19}
+                If Int(Rnd() * 3) = 0 Then
+                    tier = {0, 1, 2, 3, 6, 7, 12, 12, 19, 20}
+                ElseIf Int(Rnd() * 3) = 1 Then
+                    tier = {0, 1, 2, 3, 4, 6, 12, 12, 14, 19}
+                Else
+                    tier = {0, 1, 2, 4, 6, 7, 12, 14, 20, 20}
+                End If
         End Select
 
         If Game.player1.getLust = 0 Then

@@ -6,7 +6,7 @@
 
         p.name = Polymorph.bimboizeName(p.name)
         p.changeClass("Bimbo")
-        If game.mDun.numCurrFloor < 6 Then p.pImage = Game.picPlayerB.BackgroundImage Else p.pImage = Game.picBimbof.BackgroundImage
+        If Game.mDun.numCurrFloor < 6 Then p.pImage = Game.picPlayerB.BackgroundImage Else p.pImage = Game.picBimbof.BackgroundImage
         p.TextColor = Color.HotPink
 
         p.drawPort()

@@ -18,8 +18,7 @@
         t.speed = Math.Max(t.speed * 0.5, 1)
         If t.speed > 1 Then t.maxHealth = t.maxHealth * 1.3
 
-        Game.pushLstLog("Your foe's body inflates slightly!  -" & sattack - t.attack & " ATK, -" & sspeed - t.speed & " SPD, +" & t.maxHealth - sHealth & " Max Health")
-        Game.pushLblEvent("Your foe's body inflates slightly!  -" & sattack - t.attack & " ATK, -" & sspeed - t.speed & " SPD, +" & t.maxHealth - sHealth & " Max Health")
+        Game.pushLogAndEvent("Your foe's body inflates slightly!  -" & sattack - t.attack & " ATK, -" & sspeed - t.speed & " SPD, +" & t.maxHealth - sHealth & " Max Health")
     End Sub
 
     Public Overrides Sub backfire()
@@ -36,8 +35,7 @@
         If Not p.buttSize = -1 Then p.ue()
         If Not p.dickSize = -1 Then p.de()
 
-        Game.pushLstLog("Your body inflates slightly!  -" & sattack - p.attack & " ATK, -" & sspeed - p.speed & " SPD, +" & p.maxHealth - sHealth & " Max Health")
-        Game.pushLblEvent("Your body inflates slightly!  -" & sattack - p.attack & " ATK, -" & sspeed - p.speed & " SPD, +" & p.maxHealth - sHealth & " Max Health")
+        Game.pushLogAndEvent("Your body inflates slightly!  -" & sattack - p.attack & " ATK, -" & sspeed - p.speed & " SPD, +" & p.maxHealth - sHealth & " Max Health")
 
         p.drawPort()
     End Sub

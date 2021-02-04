@@ -13,8 +13,7 @@
         If Game.combatmode Then
             Polymorph.transform(MyBase.getTarget, "Amnesiac")
 
-            Game.pushLstLog(CStr("You poof out a plume of pollen, hypnotizing " & MyBase.getTarget.title & " " & MyBase.getTarget.name & " for 3 turns!"))
-            Game.pushLblCombatEvent(CStr("You poof out a plume of pollen, hypnotizing " & MyBase.getTarget.title & " " & MyBase.getTarget.name & " for 3 turns!"))
+            Game.pushLogAndEvent(CStr("You poof out a plume of pollen, hypnotizing " & MyBase.getTarget.title & " " & MyBase.getTarget.name & " for 3 turns!"))
         Else
             backfire()
         End If

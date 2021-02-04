@@ -10,7 +10,7 @@ Public Class PQ
         t += getCurrentTime()
         If (t < seg.getTime()) Then
             Game.pushLstLog("Silly user, time travel is forbidden!")
-            
+
         ElseIf t = seg.getTime() Then
             seg.getEvents().add(o)
         Else   'search list for correct insertion point, then insert
@@ -33,7 +33,7 @@ Public Class PQ
     Function remove() As Updatable Implements PQInterface.remove
         If Me.isEmpty() Then
             Game.pushLstLog("Error: removing from empty queue")
-            
+
             Return Nothing
         ElseIf (seg.getEvents().length() = 0) Then
             seg = seg.getNext()

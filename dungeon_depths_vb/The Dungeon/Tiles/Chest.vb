@@ -108,7 +108,7 @@
     Public Overridable Sub open()
         'handles the opening of a chest
         If Game.player1.pos <> pos Then Exit Sub
-        If Not Game.combatmode And game.mDun.numCurrFloor >= 3 And Not Me.GetType Is GetType(LoadedChest) Then
+        If Not Game.combatmode And Game.mDun.numCurrFloor >= 3 And Not Me.GetType Is GetType(LoadedChest) Then
             Dim mOdds As Integer
             If Game.player1.perks(perk.cogreed) > -1 Then
                 mOdds = 0

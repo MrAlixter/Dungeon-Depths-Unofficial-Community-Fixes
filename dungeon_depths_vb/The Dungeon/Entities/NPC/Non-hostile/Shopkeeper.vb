@@ -1,16 +1,18 @@
 ﻿Public Class Shopkeeper
     Inherits ShopNPC
     Sub New()
-        name = "Shopkeeper"
-        health = 1.0
-        maxHealth = 9999
-        attack = 99
-        defense = 999
-        speed = 99
+        MyBase.New()
 
-        'Define the inventory
-        inv = New Inventory(False)
-        'Useables
+        '|ID Info|
+        name = "Shopkeeper"
+
+        '|NPC Flags|
+        pronoun = "he"
+        pPronoun = "his"
+        rPronoun = "him"
+        isShop = True
+
+        '|Inventory|
         inv.setCount("Compass", 1)
         inv.setCount("Spellbook", 1)
         inv.setCount("Major_Health_Potion", 1)
@@ -31,11 +33,14 @@
         inv.setCount("Gold_Sword", 1)
         inv.setCount("Golden_Staff", 1)
 
-        isShop = True
+        '|Stats|
+        maxHealth = 9999
+        attack = 99
+        defense = 999
+        speed = 99
         gold = 99999
-        pronoun = "he"
-        pPronoun = "his"
-        rPronoun = "him"
+
+        '|Images|
         picNormal = ShopNPC.npcLib.atrs(0).getAt(0)
         picPrincess = ShopNPC.npcLib.atrs(0).getAt(2)
         picBunny = ShopNPC.npcLib.atrs(0).getAt(1)
@@ -44,9 +49,10 @@
         picNPC = New List(Of Image)
         picNPC.AddRange({picNormal, ShopNPC.npcLib.atrs(0).getAt(4), ShopNPC.npcLib.atrs(0).getAt(5), picPrincess, picBunny})
 
-        picNPC.AddRange({ShopNPC.npcLib.atrs(0).getAt(3), picArachne})
-        If speed = Game.player1.speed Then speed -= 1
-        title = " the "
+        picNPC.AddRange({ShopNPC.npcLib.atrs(0).getAt(3),
+                         picArachne,
+                         ShopNPC.npcLib.atrs(0).getAt(89),
+                         ShopNPC.npcLib.atrs(0).getAt(96)})
     End Sub
 
     Public Overrides Sub encounter()
@@ -64,13 +70,19 @@
             inv.setCount("Midas_Gauntlet", 1)
         End If
 
+        If Game.player1.quests(qInds.helpWanted).getComplete Then
+            inv.setCount("Platinum_Axe", 1)
+            inv.setCount("Platinum_Daggers", 1)
+            inv.setCount("Platinum_Staff", 1)
+            inv.setCount("Platinum_Armor", 1)
+            inv.setCount("Oak_Staff", 0)
+            inv.setCount("Steel_Sword", 0)
+            inv.setCount("Bronze_Armor", 0)
+            inv.setCount("Steel_Armor", 0)
+        End If
+
         If npcIndex = 0 Then
-            If Game.player1.quests(0).canGet Then
-                Game.player1.quests(0).init()
-                Game.pushNPCDialog("""Hey, can I ask for your help on something?  I've been seeing a lot of people roaming around here with those collars looking for valubles, and that got me thinking... Why don't I expand my staff?  If you can snip off a few of their collars and send them my way,  I can make it worth your time.""" & DDUtils.RNRN &
-                                   "Quest ""Help Wanted"" aquired!" & vbCrLf & "+1 Old Snips")
-                Exit Sub
-            End If
+            If Game.player1.quests(qInds.helpWanted).canGet Then Game.player1.quests(qInds.helpWanted).init() : Exit Sub
             Game.pushNPCDialog("Hey, what's up?")
         ElseIf npcIndex = 6 Then
             Game.pushNPCDialog("Hey, what's up?")
@@ -80,9 +92,9 @@
             Game.pushNPCDialog("Baaahhh.")
         ElseIf npcIndex = 3 Then
             Game.pushNPCDialog("Hello, kind " & Game.player1.className & ", how are you on this fine day?")
-        ElseIf npcIndex = 4 Then
+        ElseIf npcIndex = 4 Or npcIndex = 7 Then
             Game.pushNPCDialog("*giggle* Hey!")
-        ElseIf npcIndex = 5 Then
+        ElseIf npcIndex = 5 Or npcIndex = 8 Then
             Game.pushNPCDialog("...")
         End If
 
@@ -98,9 +110,9 @@
             Return "BAAAAAHHHH!"
         ElseIf npcIndex = 3 Then
             Return "You would dare to challenge me? If you wish to die, you could just say so."
-        ElseIf npcIndex = 4 Then
+        ElseIf npcIndex = 4 Or npcIndex = 7 Then
             Return "I might not be the best fighter any more, but I can definitely give it my best!"
-        ElseIf npcIndex = 5 Then
+        ElseIf npcIndex = 5 Or npcIndex = 8 Then
             Return "..."
         End If
         Return "Bad move."
@@ -118,9 +130,9 @@
         ElseIf npcIndex = 3 Then
             Game.NPCtoCombat(Me)
             Return "Casting spells on royalty is genrally not a good idea."
-        ElseIf npcIndex = 4 Then
+        ElseIf npcIndex = 4 Or npcIndex = 7 Then
             Return "*giggle* Was that magic?"
-        ElseIf npcIndex = 5 Then
+        ElseIf npcIndex = 5 Or npcIndex = 8 Then
             Return "..."
         End If
         Return "Woah there!"
@@ -139,15 +151,14 @@
     Public Overrides Sub playerDeath(ByRef p As Player)
         Game.fromCombat()
         p.petrify(Color.Goldenrod, 9999)
-        Dim out As String = """You should have known better than to try and rob a shop keeper,"" the shopkeep says," &
-            " glaring down at you, ""...and if its gold you're after, I guess I've got some good news for you.""" &
-            "  With that, " & pronoun & " reaches into " & pPronoun & " bag and puts on a gaudy gauntlet " &
-            "that begins glowing with a golden light. You lack the strength to fight back as " & pronoun & " places" &
-            " his thumb on your forhead, and suddenly everything just seems so heavy. ""Noooo..."" you moan, " &
-            "as the area around where he touched turns to gold, and that gold turns your flesh and blood " &
-            "around it to gold as well. In a matter of seconds, all that is left of " & p.name & " the " &
-            p.className & " is a solid gold statue. The shopkeeper sighs, muttering to no one in particular, " & vbCrLf &
-         """Now how am I going to get you back to the refinery?""" & DDUtils.RNRN & "GAME OVER!"
+
+        Dim out As String = """You should have known better than to try and rob a shop keeper,"" the shopkeep says, glaring down at you, ""...and if its gold you're after, I guess I've got some good news for you.""" & DDUtils.RNRN &
+            "With that, " & pronoun & " reaches into " & pPronoun & " bag and puts on a gaudy gauntlet that begins glowing with a golden light. You lack the strength to fight back as " & pronoun & " places" &
+            " his thumb on your forhead, and suddenly everything just seems so heavy. ""Noooo..."" you moan, as the area around where he touched turns to gold, and that gold turns your flesh and blood " &
+            "around it to gold as well. In a matter of seconds, all that is left of " & p.name & " the " & p.className & " is a solid gold statue. The shopkeeper sighs, muttering to no one in particular, " & DDUtils.RNRN &
+            """Now how am I going to get you back to the refinery?""" & DDUtils.RNRN &
+            "GAME OVER!"
+
         Game.pushLblEvent(out, AddressOf p.die)
         p.changeClass("Trophy")
     End Sub

@@ -68,7 +68,7 @@
         s1FaceChange(p)
         s1BodyChange(p)
 
-        p.name = Polymorph.bimboizeName(p.name)
+        p.setName(Polymorph.bimboizeName(p.getName))
 
         p.lust += 10
         p.drawPort()
@@ -150,7 +150,7 @@
         Dim p = Game.player1
         Dim out As String = ""
 
-        Polymorph.giveRNDBimName(p)
+        p.setName(Polymorph.bimboizeName(p.getName))
 
         s2M2F(p, out, "platinum blonde")
         s2BodyChange(p)
@@ -187,7 +187,7 @@
         Dim cRed = Color.FromArgb(255, 215, 0, 4)
         Dim out As String = "As you don the chicken suit you found, part of you half expects to turn into some sort of bird.  You chuckle to yourself at the idea, and this quickly devolves into a giggling fit.  Parting your short red bangs off to one side, you adjust your large breasts in the suit.  You note that despite covering most of your body, it doesn't even begin to provide enough support.  You strip some parts of the outfit away, shift other parts around, and soon you are left with a pair of wings and a set of straps that provide just about all the support you think you're going to get out of it.  Proud of your handiwork, you strut back out into the dungeon still giggling at the noshun...notshi...""idea"" that some silly chicken costume could change you in any way."
 
-        Polymorph.giveRNDBimName(p)
+        p.setName(Polymorph.bimboizeName(p.getName))
 
         s2M2F(p, out, "bright red")
         s2BodyChange(p)

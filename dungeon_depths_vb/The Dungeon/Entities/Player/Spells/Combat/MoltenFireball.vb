@@ -15,8 +15,7 @@
         Else
             'non critical hit
             dmg = MyBase.getCaster.getSpellDamage(MyBase.getTarget, dmg + d31 + d32)
-            Game.pushLstLog(CStr("You hit the " & MyBase.getTarget.name & " for " & dmg & " damage!  The blowback hits you for " & dmg * 0.087 & " damage!"))
-            Game.pushLblCombatEvent(CStr("You hit the " & MyBase.getTarget.name & " for " & dmg & " damage!  The blowback hits you for " & dmg * 0.087 & " damage!"))
+            Game.pushLogAndEvent(CStr("You hit the " & MyBase.getTarget.name & " for " & dmg & " damage!  The blowback hits you for " & dmg * 0.087 & " damage!"))
             MyBase.getTarget.takeDMG(dmg, MyBase.getCaster)
             MyBase.getCaster.takeDMG(dmg * 0.087, MyBase.getCaster)
         End If

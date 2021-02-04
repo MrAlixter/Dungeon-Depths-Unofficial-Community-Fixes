@@ -107,7 +107,7 @@
         Game.fromCombat()
         Game.pushLblEvent("With a poof of smoke, " & getName() & " returns to " & rPronoun & " original form and flees into the forest...")
     End Sub
-    
+
     Public Overrides Sub die(ByRef cause As Entity)
         If isDead Then Exit Sub
         currTarget = Nothing
