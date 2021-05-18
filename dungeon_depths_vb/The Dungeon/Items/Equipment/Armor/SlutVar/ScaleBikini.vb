@@ -3,20 +3,20 @@
 
     Sub New()
         '|ID Info|
-        MyBase.setName("Scale_Bikini")
+        setName("Scale_Bikini")
         id = 177
         tier = Nothing
 
         '|Item Flags|
-        MyBase.setUsable(False)
-        MyBase.compressesBreasts = True
-        antiSlutVarInd = 176
+        usable = false
+        MyBase.compress_breast = True
+        anti_slut_ind = 176
 
         '|Stats|
-        MyBase.dBoost = 9
-        MyBase.sBoost = 7
-        MyBase.count = 0
-        MyBase.value = 1450
+        MyBase.d_boost = 9
+        MyBase.s_boost = 7
+        count = 0
+        value = 1450
 
         '|Image Index|
         MyBase.bsize0 = New Tuple(Of Integer, Boolean, Boolean)(241, True, True)
@@ -35,7 +35,7 @@
         MyBase.usize5 = New Tuple(Of Integer, Boolean, Boolean)(191, True, True)
 
         '|Description|
-        MyBase.setDesc("This bikini consists of a set of plates that contour to its wearer's breasts.  While the scales making up this ""armor"" don't offer much in the way of protection, they also don't get in the way." & DDUtils.RNRN & _
+        setDesc("This bikini consists of a set of plates that contour to its wearer's breasts.  While the scales making up this ""armor"" don't offer much in the way of protection, they also don't get in the way." & DDUtils.RNRN & _
                                      getSizeInformation() & vbCrLf & getStatInformation())
     End Sub
 End Class

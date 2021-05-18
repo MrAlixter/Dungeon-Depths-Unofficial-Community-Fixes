@@ -3,27 +3,27 @@
 
     Sub New()
         '|ID Info|
-        MyBase.setName("Bimbo_Lesson")
+        setName("Bimbo_Lesson")
         id = 87
         tier = Nothing
 
         '|Item Flags|
-        MyBase.setUsable(True)
-        MyBase.isRandoTFAcceptable = False
+        usable = true
+        rando_inv_allowed = False
         MyBase.onBuy = AddressOf teach
 
         '|Stats|
-        MyBase.count = 0
-        MyBase.value = 150
+        count = 0
+        value = 150
 
         '|Description|
-        MyBase.setDesc("""*sigh* This lesson is part of an ill-advised negotiation tactic with a shady bastard of a wizard, and now I am contractually obligated to provide it to my customers, lest he release some 'trigger' words to the public.  Once you listen to it, his magic will take its course and anything that happens to you is out of my hands.  'Buyer beware', I suppose.""")
+        setDesc("""*sigh* This lesson is part of an ill-advised negotiation tactic with a shady bastard of a wizard, and now I am contractually obligated to provide it to my customers, lest he release some 'trigger' words to the public.  Once you listen to it, his magic will take its course and anything that happens to you is out of my hands.  'Buyer beware', I suppose.""")
     End Sub
 
     Sub teach()
         count = 0
         Game.hideNPCButtons()
-        CType(Game.hteach, HTeach).hypnotize("*sigh* Fine, whatever.  You're very sleepy.  Very sleeeepy.  Here, a pendant.  Yayyyyy.", AddressOf display)
+        CType(Game.hteach, HypnoTeach).hypnotize("*sigh* Fine, whatever.  You're very sleepy.  Very sleeeepy.  Here, a pendant.  Yayyyyy.", AddressOf display)
     End Sub
     Sub display()
         Game.pushLblEvent("Unimpressed, you give the so called hypnotist a questioning glare." & DDUtils.RNRN &
@@ -34,6 +34,6 @@
         Dim bTF As BimboTF = New BimboTF(2, 0, 0.25, True)
         bTF.doubleTf()
         Game.player1.drawPort()
-        CType(Game.hteach, HTeach).back()
+        CType(Game.hteach, HypnoTeach).back()
     End Sub
 End Class

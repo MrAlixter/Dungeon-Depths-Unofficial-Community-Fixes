@@ -9,7 +9,7 @@
             MyBase.settier(5)
             MyBase.setcost(24)
         End If
-        MyBase.setName("Uvona's Fugue")
+        setName("Uvona's Fugue")
         MyBase.setUOC(True)
     End Sub
     Public Overrides Sub effect()

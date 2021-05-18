@@ -3,21 +3,21 @@
 
     Sub New()
         '|ID Info|
-        MyBase.setName("Spidersilk_Bikini")
+        setName("Spidersilk_Bikini")
         id = 240
         tier = Nothing
 
         '|Item Flags|
-        MyBase.setUsable(False)
-        MyBase.compressesBreasts = True
-        MyBase.hidesDick = False
-        MyBase.isRandoTFAcceptable = False
-        antiSlutVarInd = 239
+        usable = false
+        MyBase.compress_breast = True
+        MyBase.hide_dick = False
+        rando_inv_allowed = False
+        anti_slut_ind = 239
 
         '|Stats|
-        MyBase.sBoost = 13
-        MyBase.count = 0
-        MyBase.value = 1450
+        MyBase.s_boost = 13
+        count = 0
+        value = 1450
 
         '|Image Index|
         MyBase.bsizeneg1 = New Tuple(Of Integer, Boolean, Boolean)(72, False, True)
@@ -35,7 +35,7 @@
         MyBase.usize4 = New Tuple(Of Integer, Boolean, Boolean)(317, True, True)
 
         '|Description|
-        MyBase.setDesc("A nearly invisible bikini composed of gossamer strands of spidersilk." & DDUtils.RNRN & _
+        setDesc("A nearly invisible bikini composed of gossamer strands of spidersilk." & DDUtils.RNRN & _
                         getSizeInformation() & vbCrLf & getStatInformation())
     End Sub
 End Class

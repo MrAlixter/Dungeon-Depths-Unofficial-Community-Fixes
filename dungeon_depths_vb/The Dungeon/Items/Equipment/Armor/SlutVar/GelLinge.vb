@@ -3,20 +3,20 @@
 
     Sub New()
         '|ID Info|
-        MyBase.setName("Gelatinous_Negligee")
+        setName("Gelatinous_Negligee")
         id = 138
         tier = Nothing
 
         '|Item Flags|
-        MyBase.setUsable(False)
-        MyBase.compressesBreasts = True
-        MyBase.isMonsterDrop = False
-        MyBase.isRandoTFAcceptable = False
+        usable = false
+        MyBase.compress_breast = True
+        MyBase.droppable = False
+        rando_inv_allowed = False
 
         '|Stats|
-        MyBase.hBoost = 30
-        MyBase.count = 0
-        MyBase.value = 0
+        h_boost = 30
+        count = 0
+        value = 0
 
         '|Image Index|
         MyBase.bsizeneg1 = New Tuple(Of Integer, Boolean, Boolean)(51, False, True)
@@ -38,17 +38,21 @@
         MyBase.usize5 = New Tuple(Of Integer, Boolean, Boolean)(286, True, True)
 
         '|Description|
-        MyBase.setDesc("Negligee might even be too much to describe this skimpy outfit formed from the a pink goo that unfortunately only slimes can wear." & DDUtils.RNRN &
+        setDesc("Negligee might even be too much to describe this skimpy outfit formed from the a pink goo that unfortunately only slimes can wear." & DDUtils.RNRN &
                         getSizeInformation() & vbCrLf & getStatInformation())
     End Sub
 
     Public Overrides Sub onEquip(ByRef p As Player)
         MyBase.onEquip(p)
-
+        If p.inv.getCountAt(getName) > 1 Then p.inv.add(getName, 1)
         'If Not p.formName.Contains("Slime") And Not p.formName.Contains("Goo") Then
         '    Equipment.clothesChange(p, "Naked")
         '    Game.pushLblEvent("Your clothes melt off!")
         '    p.drawPort()
         'End If
+    End Sub
+    Public Overrides Sub onUnequip(ByRef p As Player)
+        MyBase.onUnequip(p)
+        p.inv.add(getName, -1)
     End Sub
 End Class

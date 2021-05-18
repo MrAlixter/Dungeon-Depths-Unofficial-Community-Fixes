@@ -2,16 +2,16 @@
     Inherits Accessory
     'The ruby circlet provides a +1 attack buff
     Sub New()
-        MyBase.setName("Blindfold")
-        MyBase.setDesc("A ruby inset on a gold band, this circlet is commonly worn by mages." & vbCrLf & _
+        setName("Blindfold")
+        setDesc("A ruby inset on a gold band, this circlet is commonly worn by mages." & vbCrLf & _
                        "+2 Mana.")
         id = 161
         tier = Nothing
-        MyBase.setUsable(False)
-        MyBase.count = 0
-        MyBase.value = 0
+        usable = false
+        count = 0
+        value = 0
 
-        mBoost = 2
+        m_boost = 2
 
         MyBase.fInd = New Tuple(Of Integer, Boolean, Boolean)(13, True, True)
         MyBase.mInd = New Tuple(Of Integer, Boolean, Boolean)(12, False, True)

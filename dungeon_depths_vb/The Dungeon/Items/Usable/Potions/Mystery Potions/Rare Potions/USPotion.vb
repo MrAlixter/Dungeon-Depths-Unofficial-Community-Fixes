@@ -1,14 +1,22 @@
 ﻿Public Class USPotion
     Inherits MysteryPotion
     Sub New()
-        MyBase.setName("Ass_Shrink._Potion")
-        MyBase.setDesc("A spooky-looking potion")
+        '|ID Info|
+        setName("Ass_Shrink._Potion")
         id = 233
         tier = 3
-        MyBase.setUsable(True)
-        MyBase.count = 0
-        MyBase.value = 500
+
+        '|Item Flags|
+        usable = True
         MyBase.onBuy = AddressOf reveal
+
+        '|Stats|
+        count = 0
+        value = 500
+
+        '|Description|
+        setDesc("A spooky-looking potion")
+
     End Sub
 
     Public Overrides Sub setEffectList()

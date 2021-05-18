@@ -3,29 +3,29 @@
 
     Sub New()
         '|ID Info|
-        MyBase.setName("SoulBlade")
+        setName("SoulBlade")
         id = 9
         tier = Nothing
 
         '|Item Flags|
-        MyBase.setUsable(False)
+        usable = false
 
         '|Stats|
-        MyBase.aBoost = 5
-        MyBase.count = 0
-        MyBase.value = 100
+        MyBase.a_boost = 5
+        count = 0
+        value = 100
 
         '|Description|
-        MyBase.setDesc("A ornate sword forged from someone's soul." & DDUtils.RNRN &
+        setDesc("A ornate sword forged from someone's soul." & DDUtils.RNRN &
                        getStatInformation())
     End Sub
 
     Public Sub Absorb(ByRef m As Monster)
-        MyBase.setName("SoulBlade") ' (" & m.name.Split()(0) & ")")
-        MyBase.setDesc("A ornate sword forged from " & m.name.Split()(0) & "'s soul.")
-        MyBase.setUsable(False)
-        MyBase.aBoost = m.attack
-        MyBase.value = m.maxHealth
+        setName("SoulBlade") ' (" & m.name.Split()(0) & ")")
+        setDesc("A ornate sword forged from " & m.name.Split()(0) & "'s soul.")
+        usable = false
+        MyBase.a_boost = m.attack
+        value = m.maxHealth
         m.toBlade()
     End Sub
 

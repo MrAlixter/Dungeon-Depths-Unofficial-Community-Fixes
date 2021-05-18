@@ -2,7 +2,7 @@
     Inherits Special
     Sub New(ByRef u As Player, ByRef t As NPC)
         MyBase.New(u, t)
-        MyBase.setName("Chameleon (Black Hair)")
+        setName("Chameleon (Black Hair)")
         MyBase.setUOC(True)
         MyBase.setcost(5)
     End Sub

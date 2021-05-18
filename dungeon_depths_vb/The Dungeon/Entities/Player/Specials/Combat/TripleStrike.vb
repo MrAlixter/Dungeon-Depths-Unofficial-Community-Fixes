@@ -2,7 +2,7 @@
     Inherits Special
     Sub New(ByRef u As Player, ByRef t As NPC)
         MyBase.New(u, t)
-        MyBase.setName("Triple Strike")
+        setName("Triple Strike")
         MyBase.setUOC(False)
         MyBase.setcost(45)
     End Sub
@@ -16,6 +16,7 @@
             ' Dim dmg = m.getIntHealth()
             p.attackCMD(m)
             ' dmg -= m.getIntHealth()
+            If MyBase.getTarget.isDead Then Exit For
         Next
     End Sub
 

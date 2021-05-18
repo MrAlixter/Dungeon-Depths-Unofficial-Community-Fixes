@@ -3,20 +3,20 @@
 
     Sub New()
         '|ID Info|
-        MyBase.setName("Skin_Tight_Bodysuit")
+        setName("Skin_Tight_Bodysuit")
         id = 103
         tier = Nothing
 
         '|Item Flags|
-        MyBase.setUsable(False)
-        MyBase.compressesBreasts = True
-        MyBase.isRandoTFAcceptable = False
-        MyBase.antiSlutVarInd = 102
+        usable = false
+        MyBase.compress_breast = True
+        rando_inv_allowed = False
+        MyBase.anti_slut_ind = 102
 
         '|Stats|
-        MyBase.mBoost = 23
-        MyBase.count = 0
-        MyBase.value = 1375
+        MyBase.m_boost = 23
+        count = 0
+        value = 1375
 
         '|Image Index|
         MyBase.bsizeneg1 = New Tuple(Of Integer, Boolean, Boolean)(44, False, True)
@@ -34,7 +34,7 @@
         MyBase.usize4 = New Tuple(Of Integer, Boolean, Boolean)(233, True, True)
 
         '|Description|
-        MyBase.setDesc("This sleek bodysuit leaves very little to the imagination, despite covering most of one's body.  Its thin, but flexible material trades any possible defense to maximize energy production." & DDUtils.RNRN & _
+        setDesc("This sleek bodysuit leaves very little to the imagination, despite covering most of one's body.  Its thin, but flexible material trades any possible defense to maximize energy production." & DDUtils.RNRN & _
                                       getSizeInformation() & vbCrLf & getStatInformation())
     End Sub
 End Class

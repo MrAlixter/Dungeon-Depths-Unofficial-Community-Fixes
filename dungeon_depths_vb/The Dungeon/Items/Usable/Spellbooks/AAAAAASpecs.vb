@@ -3,19 +3,20 @@
 
     Sub New()
         '|ID Info|
-        MyBase.setName("AAAAAA_Specification")
+        setName("AAAAAA_Specification")
         id = 279
         tier = Nothing
 
         '|Item Flags|
-        MyBase.setUsable(True)
+        usable = true
+        rando_inv_allowed = False
 
         '|Stats|
-        MyBase.count = 0
-        MyBase.value = 200
+        count = 0
+        value = 200
 
         '|Description|
-        MyBase.setDesc("A small paper pamphlet containing a diagam of a sextuple-A battery.  On its back, a simple incantation is scrawled in ink.")
+        setDesc("A small paper pamphlet containing a diagam of a sextuple-A battery.  On its back, a simple incantation is scrawled in ink.")
     End Sub
 
     Overrides Sub use(ByRef p As Player)

@@ -3,20 +3,20 @@
 
     Sub New()
         '|ID Info|
-        MyBase.setName("Steel_Sword")
+        setName("Steel_Sword")
         id = 6
         tier = Nothing
 
         '|Item Flags|
-        MyBase.setUsable(False)
+        usable = false
 
         '|Stats|
-        MyBase.aBoost = 17
-        MyBase.count = 0
-        MyBase.value = 235
+        MyBase.a_boost = 17
+        count = 0
+        value = 235
 
         '|Description|
-        MyBase.setDesc("A simple sword forged from steel." & DDUtils.RNRN &
+        setDesc("A simple sword forged from steel." & DDUtils.RNRN &
                        getStatInformation())
     End Sub
 End Class

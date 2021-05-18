@@ -2,15 +2,15 @@
     Inherits Accessory
     'The ruby circlet provides a +1 attack buff
     Sub New()
-        MyBase.setName("Stealth_Gear")
-        MyBase.setDesc("Wraps of fabric that tighten down loose clothing in order to make its wearer more sneaky." & vbCrLf &
+        setName("Stealth_Gear")
+        setDesc("Wraps of fabric that tighten down loose clothing in order to make its wearer more sneaky." & vbCrLf &
                        "Reduces encouter rate, low dodge chance." & vbCrLf &
                        "+4 SPD")
         id = 164
         tier = Nothing
-        MyBase.setUsable(False)
-        MyBase.count = 0
-        MyBase.value = 10
+        usable = false
+        count = 0
+        value = 10
         MyBase.fInd = New Tuple(Of Integer, Boolean, Boolean)(14, True, True)
         MyBase.mInd = New Tuple(Of Integer, Boolean, Boolean)(13, False, True)
 

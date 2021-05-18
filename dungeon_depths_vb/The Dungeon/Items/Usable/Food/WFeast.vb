@@ -1,24 +1,32 @@
 ﻿Public Class WFeast
     Inherits Food
     Sub New()
-        MyBase.setName("Warrior's_Feast")
-        MyBase.setDesc("A seared chunk of...some sort of meat still on the bone, served with a satisfying amount of bread." & vbCrLf &
-                       "+90 Stamina" & vbCrLf &
-                       "Low chance to raise ATK and DEF by 3 points each")
+        '|ID Info|
+        setName("Warrior's_Feast")
         id = 133
         tier = Nothing
-        MyBase.setUsable(True)
-        MyBase.count = 0
-        MyBase.value = 2100
+
+        '|Item Flags|
+        usable = True
+
+        '|Stats|
+        count = 0
+        value = 2100
         setCalories(90)
+
+        '|Description|
+        setDesc("A seared chunk of some sort of meat still on the bone, served with a satisfying amount of bread." & DDUtils.RNRN &
+                "+90 Stamina" & DDUtils.RNRN &
+                "Low chance to raise ATK and DEF by 3 points each")
+
     End Sub
 
-    Public Overrides Sub Effect()
+    Public Overrides Sub effect(ByRef p As Player)
         If Int(Rnd() * 5) = 0 Or Game.noRNG Then
-            Game.player1.attack += 3
-            Game.player1.defense += 3
+            p.attack += 3
+            p.defense += 3
 
-            Game.player1.UIupdate()
+            p.UIupdate()
         End If
     End Sub
 End Class

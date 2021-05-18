@@ -2,7 +2,7 @@
     Inherits Spell
     Sub New(ByRef c As Player, ByRef t As NPC)
         MyBase.New(c, t)
-        MyBase.setName("Dowse")
+        setName("Dowse")
         MyBase.setUOC(True)
         MyBase.settier(1)
         MyBase.setcost(2)
@@ -10,20 +10,26 @@
     Public Overrides Sub effect()
         For indY = -5 To 5
             For indX = -5 To 5
-                If Game.player1.pos.Y + indY < Game.mBoardHeight And Game.player1.pos.Y + indY >= 0 And Game.player1.pos.X + indX < Game.mBoardWidth And Game.player1.pos.X + indX >= 0 Then
-                    If Game.currfloor.mBoard(Game.player1.pos.Y + indY, Game.player1.pos.X + indX).Text = "H" And Game.currfloor.mBoard(Game.player1.pos.Y + indY, Game.player1.pos.X + indX).Tag < 2 Then
-                        Game.currfloor.mBoard(Game.player1.pos.Y + indY, Game.player1.pos.X + indX).ForeColor = Color.Black
-                        If Game.currfloor.mBoard(Game.player1.pos.Y + indY, Game.player1.pos.X + indX).Tag = 1 Then Game.currfloor.mBoard(Game.player1.pos.Y + indY, Game.player1.pos.X + indX).Tag = 2
+                Dim x = Game.player1.pos.X + indX
+                Dim y = Game.player1.pos.Y + indY
+                Dim tileTag = Game.currFloor.mBoard(y, x).Tag
+                Dim tileText = Game.currFloor.mBoard(y, x).Text
+                Dim tileColor = Game.currFloor.mBoard(y, x).forecolor
+
+                If y < Game.mBoardHeight And y >= 0 And x < Game.mBoardWidth And x >= 0 Then
+                    If tileText = "H" And tileTag < 2 Then
+                        tileColor = Color.Black
+                        If tileTag = 1 Then tileTag = 2
                         Game.pushLstLog("Floor " & Game.mDun.numCurrFloor & ": Staircase Discovered")
                     End If
-                    If Game.currfloor.mBoard(Game.player1.pos.Y + indY, Game.player1.pos.X + indX).Text = "#" And Game.currfloor.mBoard(Game.player1.pos.Y + indY, Game.player1.pos.X + indX).Tag < 2 Then
-                        Game.currfloor.mBoard(Game.player1.pos.Y + indY, Game.player1.pos.X + indX).ForeColor = Color.Black
-                        If Game.currfloor.mBoard(Game.player1.pos.Y + indY, Game.player1.pos.X + indX).Tag = 1 Then Game.currfloor.mBoard(Game.player1.pos.Y + indY, Game.player1.pos.X + indX).Tag = 2
+                    If tileText = "#" And tileTag < 2 Then
+                        tileColor = Color.Black
+                        If tileTag = 1 Then tileTag = 2
                         Game.pushLstLog("Chest discovered!")
                     End If
-                    If Game.currfloor.mBoard(Game.player1.pos.Y + indY, Game.player1.pos.X + indX).Text = "+" And Game.currfloor.mBoard(Game.player1.pos.Y + indY, Game.player1.pos.X + indX).Tag < 2 Then
-                        Game.currfloor.mBoard(Game.player1.pos.Y + indY, Game.player1.pos.X + indX).ForeColor = Color.Navy
-                        If Game.currfloor.mBoard(Game.player1.pos.Y + indY, Game.player1.pos.X + indX).Tag = 1 Then Game.currfloor.mBoard(Game.player1.pos.Y + indY, Game.player1.pos.X + indX).Tag = 2
+                    If tileText = "+" And tileTag < 2 Then
+                        tileColor = Color.Navy
+                        If tileTag = 1 Then tileTag = 2
                         Game.pushLstLog("Trap discovered!")
                     End If
                 End If

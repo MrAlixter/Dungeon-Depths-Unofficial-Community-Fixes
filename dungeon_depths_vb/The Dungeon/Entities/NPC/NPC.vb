@@ -1,10 +1,25 @@
-﻿Public Class NPC
+﻿'| -- New Layout Example -- |
+'|ID Info|
+
+
+'|Stats|
+
+
+'|Inventory|
+
+
+'|Dialog Variables|
+
+
+'|Misc|
+
+Public Class NPC
     Inherits Entity
     'transformation variables
     Public tfCt As Integer = 0
     Public tfEnd As Integer = 0
     Public sMaxHealth, sMana, sMaxMana, sAttack, sdefense, sWill, sSpeed As Integer
-    Public xpValue As Integer = 10
+    Public xp_value As Integer = 10
     'dialog variables
     Public form As String = ""
     Public title As String
@@ -59,8 +74,7 @@
 
         endMonster()
 
-        Game.player1.clearTarget()
-        Game.player1.xp += xpValue
+        Game.player1.xp += xp_value
         cause.currTarget = Nothing
         cause.nextCombatAction = Nothing
 
@@ -83,7 +97,7 @@
                           " is a lifeless stone statue. It doesn't seem like " & pronoun & " will be needing " &
                           pPronoun & " personal items anymore.", AddressOf Me.endMonster)
 
-        Game.currfloor.statueList.Add(New Statue(Me))
+        Game.currFloor.statueList.Add(New Statue(Me))
     End Sub
     Public Overridable Sub toGold()
         Dim gd As Integer = (maxHealth + attack + defense) * 7
@@ -156,7 +170,7 @@
             Game.pushLblEvent("Your foe drops a key!")
             inv.setCount(53, 1)
             Dim c1 As Chest = Game.baseChest.Create(inv, pos)
-            Game.currfloor.chestList.Add(c1)
+            Game.currFloor.chestList.Add(c1)
         End If
         Game.player1.perks(perk.nekocurse) = -1
         Game.player1.currState.save(Game.player1)
@@ -198,14 +212,10 @@
         If p.perks(perk.cynnsq1ct2) > -1 Then p.perks(perk.cynnsq1ct2) += 1
         Game.fromCombat()
         Game.npcList.Remove(Me)
-        Game.pushLstLog("You've defeated the " & name & "!  +" & xpValue & " XP!")
+        Game.pushLstLog("You've defeated the " & name & "!  +" & xp_value & " XP!")
 
 
         'monster transformations
-        If Not sName Is Nothing AndAlso sName.Equals("Ooze Empress") Then
-            Game.pushLblEvent(Game.lblEvent.Text.Split("Press")(0), AddressOf RandoTF.floor4revert, AddressOf RandoTF.floor4keep, "Take your body back?")
-        End If
-
         p.ongoingTFs.remove("Neko")
 
         p.perks(perk.nekocurse) = -1

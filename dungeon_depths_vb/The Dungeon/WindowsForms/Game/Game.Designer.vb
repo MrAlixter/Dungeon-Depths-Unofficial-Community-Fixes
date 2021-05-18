@@ -82,7 +82,7 @@ Partial Class Game
         Me.picPortrait = New System.Windows.Forms.PictureBox()
         Me.btnEXM = New System.Windows.Forms.Button()
         Me.lblGold = New System.Windows.Forms.Label()
-        Me.picShopkeepTile = New System.Windows.Forms.PictureBox()
+        Me.picSK = New System.Windows.Forms.PictureBox()
         Me.picLust1 = New System.Windows.Forms.PictureBox()
         Me.picLust2 = New System.Windows.Forms.PictureBox()
         Me.picLust3 = New System.Windows.Forms.PictureBox()
@@ -140,12 +140,12 @@ Partial Class Game
         Me.lblPName = New System.Windows.Forms.Label()
         Me.lblEHealth = New System.Windows.Forms.Label()
         Me.lblEName = New System.Windows.Forms.Label()
-        Me.picPHealth = New System.Windows.Forms.PictureBox()
-        Me.picEHbar = New System.Windows.Forms.PictureBox()
+        Me.Label18 = New System.Windows.Forms.Label()
+        Me.Label20 = New System.Windows.Forms.Label()
         Me.lblEvent = New System.Windows.Forms.Label()
         Me.picLoadBar = New System.Windows.Forms.PictureBox()
         Me.btnWait = New System.Windows.Forms.Button()
-        Me.picSWiz = New System.Windows.Forms.PictureBox()
+        Me.picSW = New System.Windows.Forms.PictureBox()
         Me.picSWizF = New System.Windows.Forms.PictureBox()
         Me.pnlDescription = New System.Windows.Forms.Panel()
         Me.lblNext = New System.Windows.Forms.Label()
@@ -177,17 +177,18 @@ Partial Class Game
         Me.picHT = New System.Windows.Forms.PictureBox()
         Me.picHTf = New System.Windows.Forms.PictureBox()
         Me.picFVf = New System.Windows.Forms.PictureBox()
-        Me.picFVtile = New System.Windows.Forms.PictureBox()
+        Me.picFV = New System.Windows.Forms.PictureBox()
         Me.picStaffEnd = New System.Windows.Forms.PictureBox()
-        Me.picSpaceStairs = New System.Windows.Forms.PictureBox()
+        Me.picStairsSpace = New System.Windows.Forms.PictureBox()
         Me.picSpaceTrap = New System.Windows.Forms.PictureBox()
-        Me.picSpaceChest = New System.Windows.Forms.PictureBox()
-        Me.picSpaceTile = New System.Windows.Forms.PictureBox()
+        Me.picChestSpace = New System.Windows.Forms.PictureBox()
+        Me.picTileSpace = New System.Windows.Forms.PictureBox()
         Me.picPlayerSpace = New System.Windows.Forms.PictureBox()
-        Me.picBimboSpace = New System.Windows.Forms.PictureBox()
-        Me.picSPacePath = New System.Windows.Forms.PictureBox()
-        Me.picSpaceCrystal = New System.Windows.Forms.PictureBox()
+        Me.picPlayerBSpace = New System.Windows.Forms.PictureBox()
+        Me.picPathSpace = New System.Windows.Forms.PictureBox()
+        Me.picCrystalSpace = New System.Windows.Forms.PictureBox()
         Me.pnlEvent = New System.Windows.Forms.Panel()
+        Me.picEvent = New System.Windows.Forms.PictureBox()
         Me.Label4 = New System.Windows.Forms.Label()
         Me.btnNextLPnlEvent = New System.Windows.Forms.Button()
         Me.btnNextRPnlEvent = New System.Windows.Forms.Button()
@@ -205,7 +206,7 @@ Partial Class Game
         Me.picWSf = New System.Windows.Forms.PictureBox()
         Me.picWS = New System.Windows.Forms.PictureBox()
         Me.picDragonF = New System.Windows.Forms.PictureBox()
-        Me.picCBrok = New System.Windows.Forms.PictureBox()
+        Me.picCB = New System.Windows.Forms.PictureBox()
         Me.picCBrokF = New System.Windows.Forms.PictureBox()
         Me.picPortOutline = New System.Windows.Forms.PictureBox()
         Me.picHalfDragon2 = New System.Windows.Forms.PictureBox()
@@ -216,11 +217,11 @@ Partial Class Game
         Me.picBlobM = New System.Windows.Forms.PictureBox()
         Me.picOniF = New System.Windows.Forms.PictureBox()
         Me.picUnicorn = New System.Windows.Forms.PictureBox()
-        Me.picTTTile = New System.Windows.Forms.PictureBox()
+        Me.picTT = New System.Windows.Forms.PictureBox()
         Me.picTTTileF = New System.Windows.Forms.PictureBox()
         Me.picCow = New System.Windows.Forms.PictureBox()
         Me.picCheerL = New System.Windows.Forms.PictureBox()
-        Me.picMGTile = New System.Windows.Forms.PictureBox()
+        Me.picMG = New System.Windows.Forms.PictureBox()
         Me.picMGTileF = New System.Windows.Forms.PictureBox()
         Me.picCBFog = New System.Windows.Forms.PictureBox()
         Me.picStatueFog = New System.Windows.Forms.PictureBox()
@@ -294,9 +295,20 @@ Partial Class Game
         Me.lblKnownAbilities = New System.Windows.Forms.Label()
         Me.cboxCast = New System.Windows.Forms.ComboBox()
         Me.cboxSpec = New System.Windows.Forms.ComboBox()
-        Me.picSpaceBarrierH = New System.Windows.Forms.PictureBox()
-        Me.picSpaceBarrierV = New System.Windows.Forms.PictureBox()
+        Me.picBarrierHSpace = New System.Windows.Forms.PictureBox()
+        Me.picBarrierVSpace = New System.Windows.Forms.PictureBox()
         Me.picTTSpace = New System.Windows.Forms.PictureBox()
+        Me.pnlTiles = New System.Windows.Forms.Panel()
+        Me.picStatueSpace = New System.Windows.Forms.PictureBox()
+        Me.picFireScarEndRL = New System.Windows.Forms.PictureBox()
+        Me.picFireScarEndFL = New System.Windows.Forms.PictureBox()
+        Me.picFireScarR2F = New System.Windows.Forms.PictureBox()
+        Me.picFireScarR1F = New System.Windows.Forms.PictureBox()
+        Me.picFireScarL2F = New System.Windows.Forms.PictureBox()
+        Me.picFireScarL1F = New System.Windows.Forms.PictureBox()
+        Me.picFire3F = New System.Windows.Forms.PictureBox()
+        Me.picFire2F = New System.Windows.Forms.PictureBox()
+        Me.picFire1F = New System.Windows.Forms.PictureBox()
         CType(Me.picEnemy, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me.picNPC, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me.picStatue, System.ComponentModel.ISupportInitialize).BeginInit()
@@ -309,7 +321,7 @@ Partial Class Game
         CType(Me.picStart, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.MenuStrip1.SuspendLayout()
         CType(Me.picPortrait, System.ComponentModel.ISupportInitialize).BeginInit()
-        CType(Me.picShopkeepTile, System.ComponentModel.ISupportInitialize).BeginInit()
+        CType(Me.picSK, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me.picLust1, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me.picLust2, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me.picLust3, System.ComponentModel.ISupportInitialize).BeginInit()
@@ -329,10 +341,8 @@ Partial Class Game
         CType(Me.picStatuef, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me.picTrapf, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.pnlCombat.SuspendLayout()
-        CType(Me.picPHealth, System.ComponentModel.ISupportInitialize).BeginInit()
-        CType(Me.picEHbar, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me.picLoadBar, System.ComponentModel.ISupportInitialize).BeginInit()
-        CType(Me.picSWiz, System.ComponentModel.ISupportInitialize).BeginInit()
+        CType(Me.picSW, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me.picSWizF, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.pnlDescription.SuspendLayout()
         CType(Me.picDescPort, System.ComponentModel.ISupportInitialize).BeginInit()
@@ -353,17 +363,18 @@ Partial Class Game
         CType(Me.picHT, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me.picHTf, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me.picFVf, System.ComponentModel.ISupportInitialize).BeginInit()
-        CType(Me.picFVtile, System.ComponentModel.ISupportInitialize).BeginInit()
+        CType(Me.picFV, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me.picStaffEnd, System.ComponentModel.ISupportInitialize).BeginInit()
-        CType(Me.picSpaceStairs, System.ComponentModel.ISupportInitialize).BeginInit()
+        CType(Me.picStairsSpace, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me.picSpaceTrap, System.ComponentModel.ISupportInitialize).BeginInit()
-        CType(Me.picSpaceChest, System.ComponentModel.ISupportInitialize).BeginInit()
-        CType(Me.picSpaceTile, System.ComponentModel.ISupportInitialize).BeginInit()
+        CType(Me.picChestSpace, System.ComponentModel.ISupportInitialize).BeginInit()
+        CType(Me.picTileSpace, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me.picPlayerSpace, System.ComponentModel.ISupportInitialize).BeginInit()
-        CType(Me.picBimboSpace, System.ComponentModel.ISupportInitialize).BeginInit()
-        CType(Me.picSPacePath, System.ComponentModel.ISupportInitialize).BeginInit()
-        CType(Me.picSpaceCrystal, System.ComponentModel.ISupportInitialize).BeginInit()
+        CType(Me.picPlayerBSpace, System.ComponentModel.ISupportInitialize).BeginInit()
+        CType(Me.picPathSpace, System.ComponentModel.ISupportInitialize).BeginInit()
+        CType(Me.picCrystalSpace, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.pnlEvent.SuspendLayout()
+        CType(Me.picEvent, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me.picLegaPath, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me.picLegaCrystal, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me.picLegaPlayer, System.ComponentModel.ISupportInitialize).BeginInit()
@@ -376,7 +387,7 @@ Partial Class Game
         CType(Me.picWSf, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me.picWS, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me.picDragonF, System.ComponentModel.ISupportInitialize).BeginInit()
-        CType(Me.picCBrok, System.ComponentModel.ISupportInitialize).BeginInit()
+        CType(Me.picCB, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me.picCBrokF, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me.picPortOutline, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me.picHalfDragon2, System.ComponentModel.ISupportInitialize).BeginInit()
@@ -387,11 +398,11 @@ Partial Class Game
         CType(Me.picBlobM, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me.picOniF, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me.picUnicorn, System.ComponentModel.ISupportInitialize).BeginInit()
-        CType(Me.picTTTile, System.ComponentModel.ISupportInitialize).BeginInit()
+        CType(Me.picTT, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me.picTTTileF, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me.picCow, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me.picCheerL, System.ComponentModel.ISupportInitialize).BeginInit()
-        CType(Me.picMGTile, System.ComponentModel.ISupportInitialize).BeginInit()
+        CType(Me.picMG, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me.picMGTileF, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me.picCBFog, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me.picStatueFog, System.ComponentModel.ISupportInitialize).BeginInit()
@@ -420,9 +431,20 @@ Partial Class Game
         Me.pnlSnare.SuspendLayout()
         Me.pnlSpellSpecial.SuspendLayout()
         Me.pnlCastUse.SuspendLayout()
-        CType(Me.picSpaceBarrierH, System.ComponentModel.ISupportInitialize).BeginInit()
-        CType(Me.picSpaceBarrierV, System.ComponentModel.ISupportInitialize).BeginInit()
+        CType(Me.picBarrierHSpace, System.ComponentModel.ISupportInitialize).BeginInit()
+        CType(Me.picBarrierVSpace, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me.picTTSpace, System.ComponentModel.ISupportInitialize).BeginInit()
+        Me.pnlTiles.SuspendLayout()
+        CType(Me.picStatueSpace, System.ComponentModel.ISupportInitialize).BeginInit()
+        CType(Me.picFireScarEndRL, System.ComponentModel.ISupportInitialize).BeginInit()
+        CType(Me.picFireScarEndFL, System.ComponentModel.ISupportInitialize).BeginInit()
+        CType(Me.picFireScarR2F, System.ComponentModel.ISupportInitialize).BeginInit()
+        CType(Me.picFireScarR1F, System.ComponentModel.ISupportInitialize).BeginInit()
+        CType(Me.picFireScarL2F, System.ComponentModel.ISupportInitialize).BeginInit()
+        CType(Me.picFireScarL1F, System.ComponentModel.ISupportInitialize).BeginInit()
+        CType(Me.picFire3F, System.ComponentModel.ISupportInitialize).BeginInit()
+        CType(Me.picFire2F, System.ComponentModel.ISupportInitialize).BeginInit()
+        CType(Me.picFire1F, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.SuspendLayout()
         '
         'btnUse1
@@ -467,7 +489,7 @@ Partial Class Game
         Me.btnControls.Cursor = System.Windows.Forms.Cursors.Hand
         Me.btnControls.Font = New System.Drawing.Font("Consolas", 10.18868!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.btnControls.ForeColor = System.Drawing.Color.White
-        Me.btnControls.Location = New System.Drawing.Point(335, 403)
+        Me.btnControls.Location = New System.Drawing.Point(335, 404)
         Me.btnControls.Name = "btnControls"
         Me.btnControls.Size = New System.Drawing.Size(99, 39)
         Me.btnControls.TabIndex = 203
@@ -575,73 +597,66 @@ Partial Class Game
         'picStatue
         '
         Me.picStatue.BackgroundImage = CType(resources.GetObject("picStatue.BackgroundImage"), System.Drawing.Image)
-        Me.picStatue.Location = New System.Drawing.Point(539, 50)
+        Me.picStatue.Location = New System.Drawing.Point(59, 35)
         Me.picStatue.Name = "picStatue"
         Me.picStatue.Size = New System.Drawing.Size(15, 15)
         Me.picStatue.TabIndex = 172
         Me.picStatue.TabStop = False
-        Me.picStatue.Visible = False
         '
         'picPlayerB
         '
         Me.picPlayerB.BackgroundImage = CType(resources.GetObject("picPlayerB.BackgroundImage"), System.Drawing.Image)
-        Me.picPlayerB.Location = New System.Drawing.Point(518, 50)
+        Me.picPlayerB.Location = New System.Drawing.Point(38, 35)
         Me.picPlayerB.Name = "picPlayerB"
         Me.picPlayerB.Size = New System.Drawing.Size(15, 15)
         Me.picPlayerB.TabIndex = 170
         Me.picPlayerB.TabStop = False
-        Me.picPlayerB.Visible = False
         '
         'picChest
         '
         Me.picChest.BackgroundImage = CType(resources.GetObject("picChest.BackgroundImage"), System.Drawing.Image)
-        Me.picChest.Location = New System.Drawing.Point(539, 29)
+        Me.picChest.Location = New System.Drawing.Point(59, 14)
         Me.picChest.Name = "picChest"
         Me.picChest.Size = New System.Drawing.Size(15, 15)
         Me.picChest.TabIndex = 169
         Me.picChest.TabStop = False
-        Me.picChest.Visible = False
         '
         'picStairs
         '
         Me.picStairs.BackgroundImage = CType(resources.GetObject("picStairs.BackgroundImage"), System.Drawing.Image)
-        Me.picStairs.Location = New System.Drawing.Point(560, 29)
+        Me.picStairs.Location = New System.Drawing.Point(80, 14)
         Me.picStairs.Name = "picStairs"
         Me.picStairs.Size = New System.Drawing.Size(15, 15)
         Me.picStairs.TabIndex = 168
         Me.picStairs.TabStop = False
-        Me.picStairs.Visible = False
         '
         'picPlayer
         '
         Me.picPlayer.BackgroundImage = CType(resources.GetObject("picPlayer.BackgroundImage"), System.Drawing.Image)
-        Me.picPlayer.Location = New System.Drawing.Point(497, 50)
+        Me.picPlayer.Location = New System.Drawing.Point(17, 35)
         Me.picPlayer.Name = "picPlayer"
         Me.picPlayer.Size = New System.Drawing.Size(15, 15)
         Me.picPlayer.TabIndex = 167
         Me.picPlayer.TabStop = False
-        Me.picPlayer.Visible = False
         '
         'picFog
         '
         Me.picFog.BackColor = System.Drawing.Color.FromArgb(CType(CType(64, Byte), Integer), CType(CType(64, Byte), Integer), CType(CType(64, Byte), Integer))
         Me.picFog.BackgroundImage = CType(resources.GetObject("picFog.BackgroundImage"), System.Drawing.Image)
-        Me.picFog.Location = New System.Drawing.Point(518, 29)
+        Me.picFog.Location = New System.Drawing.Point(38, 14)
         Me.picFog.Name = "picFog"
         Me.picFog.Size = New System.Drawing.Size(15, 15)
         Me.picFog.TabIndex = 166
         Me.picFog.TabStop = False
-        Me.picFog.Visible = False
         '
         'picTile
         '
         Me.picTile.BackgroundImage = CType(resources.GetObject("picTile.BackgroundImage"), System.Drawing.Image)
-        Me.picTile.Location = New System.Drawing.Point(497, 29)
+        Me.picTile.Location = New System.Drawing.Point(17, 14)
         Me.picTile.Name = "picTile"
         Me.picTile.Size = New System.Drawing.Size(15, 15)
         Me.picTile.TabIndex = 165
         Me.picTile.TabStop = False
-        Me.picTile.Visible = False
         '
         'btnL
         '
@@ -696,7 +711,7 @@ Partial Class Game
         Me.btnRUN.BackColor = System.Drawing.Color.Black
         Me.btnRUN.Font = New System.Drawing.Font("Consolas", 8.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.btnRUN.ForeColor = System.Drawing.Color.White
-        Me.btnRUN.Location = New System.Drawing.Point(543, 419)
+        Me.btnRUN.Location = New System.Drawing.Point(521, 419)
         Me.btnRUN.Name = "btnRUN"
         Me.btnRUN.Size = New System.Drawing.Size(86, 36)
         Me.btnRUN.TabIndex = 159
@@ -709,7 +724,7 @@ Partial Class Game
         Me.btnMG.BackColor = System.Drawing.Color.Black
         Me.btnMG.Font = New System.Drawing.Font("Consolas", 8.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.btnMG.ForeColor = System.Drawing.Color.White
-        Me.btnMG.Location = New System.Drawing.Point(336, 419)
+        Me.btnMG.Location = New System.Drawing.Point(327, 419)
         Me.btnMG.Name = "btnMG"
         Me.btnMG.Size = New System.Drawing.Size(90, 36)
         Me.btnMG.TabIndex = 158
@@ -722,7 +737,7 @@ Partial Class Game
         Me.btnATK.BackColor = System.Drawing.Color.Black
         Me.btnATK.Font = New System.Drawing.Font("Consolas", 8.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.btnATK.ForeColor = System.Drawing.Color.White
-        Me.btnATK.Location = New System.Drawing.Point(236, 419)
+        Me.btnATK.Location = New System.Drawing.Point(128, 419)
         Me.btnATK.Name = "btnATK"
         Me.btnATK.Size = New System.Drawing.Size(89, 36)
         Me.btnATK.TabIndex = 156
@@ -812,7 +827,7 @@ Partial Class Game
         Me.lblNameTitle.BackColor = System.Drawing.Color.Black
         Me.lblNameTitle.Font = New System.Drawing.Font("Consolas", 10.18868!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.lblNameTitle.ForeColor = System.Drawing.Color.White
-        Me.lblNameTitle.Location = New System.Drawing.Point(732, 16)
+        Me.lblNameTitle.Location = New System.Drawing.Point(732, 15)
         Me.lblNameTitle.Margin = New System.Windows.Forms.Padding(3)
         Me.lblNameTitle.MaximumSize = New System.Drawing.Size(270, 20)
         Me.lblNameTitle.Name = "lblNameTitle"
@@ -1024,15 +1039,14 @@ Partial Class Game
         Me.lblGold.TabIndex = 210
         Me.lblGold.Text = "GOLD = 999999+"
         '
-        'picShopkeepTile
+        'picSK
         '
-        Me.picShopkeepTile.BackgroundImage = CType(resources.GetObject("picShopkeepTile.BackgroundImage"), System.Drawing.Image)
-        Me.picShopkeepTile.Location = New System.Drawing.Point(497, 71)
-        Me.picShopkeepTile.Name = "picShopkeepTile"
-        Me.picShopkeepTile.Size = New System.Drawing.Size(15, 15)
-        Me.picShopkeepTile.TabIndex = 211
-        Me.picShopkeepTile.TabStop = False
-        Me.picShopkeepTile.Visible = False
+        Me.picSK.BackgroundImage = CType(resources.GetObject("picSK.BackgroundImage"), System.Drawing.Image)
+        Me.picSK.Location = New System.Drawing.Point(17, 56)
+        Me.picSK.Name = "picSK"
+        Me.picSK.Size = New System.Drawing.Size(15, 15)
+        Me.picSK.TabIndex = 211
+        Me.picSK.TabStop = False
         '
         'picLust1
         '
@@ -1143,7 +1157,7 @@ Partial Class Game
         Me.btnSpec.BackColor = System.Drawing.Color.Black
         Me.btnSpec.Font = New System.Drawing.Font("Consolas", 8.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.btnSpec.ForeColor = System.Drawing.Color.White
-        Me.btnSpec.Location = New System.Drawing.Point(336, 461)
+        Me.btnSpec.Location = New System.Drawing.Point(228, 419)
         Me.btnSpec.Name = "btnSpec"
         Me.btnSpec.Size = New System.Drawing.Size(90, 36)
         Me.btnSpec.TabIndex = 232
@@ -1291,12 +1305,11 @@ Partial Class Game
         'picTrap
         '
         Me.picTrap.BackgroundImage = CType(resources.GetObject("picTrap.BackgroundImage"), System.Drawing.Image)
-        Me.picTrap.Location = New System.Drawing.Point(623, 29)
+        Me.picTrap.Location = New System.Drawing.Point(143, 14)
         Me.picTrap.Name = "picTrap"
         Me.picTrap.Size = New System.Drawing.Size(15, 15)
         Me.picTrap.TabIndex = 244
         Me.picTrap.TabStop = False
-        Me.picTrap.Visible = False
         '
         'btnSettings
         '
@@ -1304,7 +1317,7 @@ Partial Class Game
         Me.btnSettings.Cursor = System.Windows.Forms.Cursors.Hand
         Me.btnSettings.Font = New System.Drawing.Font("Consolas", 10.18868!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.btnSettings.ForeColor = System.Drawing.Color.White
-        Me.btnSettings.Location = New System.Drawing.Point(549, 403)
+        Me.btnSettings.Location = New System.Drawing.Point(549, 404)
         Me.btnSettings.Name = "btnSettings"
         Me.btnSettings.Size = New System.Drawing.Size(99, 39)
         Me.btnSettings.TabIndex = 246
@@ -1317,7 +1330,7 @@ Partial Class Game
         Me.btnT.Cursor = System.Windows.Forms.Cursors.Hand
         Me.btnT.Font = New System.Drawing.Font("Consolas", 10.18868!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.btnT.ForeColor = System.Drawing.Color.White
-        Me.btnT.Location = New System.Drawing.Point(441, 403)
+        Me.btnT.Location = New System.Drawing.Point(444, 402)
         Me.btnT.Name = "btnT"
         Me.btnT.Size = New System.Drawing.Size(99, 39)
         Me.btnT.TabIndex = 247
@@ -1331,7 +1344,7 @@ Partial Class Game
         Me.Button1.Cursor = System.Windows.Forms.Cursors.Hand
         Me.Button1.Font = New System.Drawing.Font("Consolas", 10.18868!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.Button1.ForeColor = System.Drawing.Color.White
-        Me.Button1.Location = New System.Drawing.Point(335, 444)
+        Me.Button1.Location = New System.Drawing.Point(335, 447)
         Me.Button1.Name = "Button1"
         Me.Button1.Size = New System.Drawing.Size(313, 39)
         Me.Button1.TabIndex = 248
@@ -1496,92 +1509,83 @@ Partial Class Game
         'picTileF
         '
         Me.picTileF.BackgroundImage = CType(resources.GetObject("picTileF.BackgroundImage"), System.Drawing.Image)
-        Me.picTileF.Location = New System.Drawing.Point(497, 94)
+        Me.picTileF.Location = New System.Drawing.Point(17, 76)
         Me.picTileF.Name = "picTileF"
         Me.picTileF.Size = New System.Drawing.Size(15, 15)
         Me.picTileF.TabIndex = 261
         Me.picTileF.TabStop = False
-        Me.picTileF.Visible = False
         '
         'picTree
         '
         Me.picTree.BackgroundImage = CType(resources.GetObject("picTree.BackgroundImage"), System.Drawing.Image)
-        Me.picTree.Location = New System.Drawing.Point(518, 95)
+        Me.picTree.Location = New System.Drawing.Point(38, 77)
         Me.picTree.Name = "picTree"
         Me.picTree.Size = New System.Drawing.Size(15, 15)
         Me.picTree.TabIndex = 262
         Me.picTree.TabStop = False
-        Me.picTree.Visible = False
         '
         'picPlayerf
         '
         Me.picPlayerf.BackgroundImage = CType(resources.GetObject("picPlayerf.BackgroundImage"), System.Drawing.Image)
-        Me.picPlayerf.Location = New System.Drawing.Point(518, 115)
+        Me.picPlayerf.Location = New System.Drawing.Point(38, 97)
         Me.picPlayerf.Name = "picPlayerf"
         Me.picPlayerf.Size = New System.Drawing.Size(15, 15)
         Me.picPlayerf.TabIndex = 263
         Me.picPlayerf.TabStop = False
-        Me.picPlayerf.Visible = False
         '
         'picLadderf
         '
         Me.picLadderf.BackgroundImage = CType(resources.GetObject("picLadderf.BackgroundImage"), System.Drawing.Image)
-        Me.picLadderf.Location = New System.Drawing.Point(560, 95)
+        Me.picLadderf.Location = New System.Drawing.Point(80, 77)
         Me.picLadderf.Name = "picLadderf"
         Me.picLadderf.Size = New System.Drawing.Size(15, 15)
         Me.picLadderf.TabIndex = 264
         Me.picLadderf.TabStop = False
-        Me.picLadderf.Visible = False
         '
         'picChestf
         '
         Me.picChestf.BackgroundImage = CType(resources.GetObject("picChestf.BackgroundImage"), System.Drawing.Image)
-        Me.picChestf.Location = New System.Drawing.Point(539, 95)
+        Me.picChestf.Location = New System.Drawing.Point(59, 77)
         Me.picChestf.Name = "picChestf"
         Me.picChestf.Size = New System.Drawing.Size(15, 15)
         Me.picChestf.TabIndex = 265
         Me.picChestf.TabStop = False
-        Me.picChestf.Visible = False
         '
         'picBimbof
         '
         Me.picBimbof.BackgroundImage = CType(resources.GetObject("picBimbof.BackgroundImage"), System.Drawing.Image)
-        Me.picBimbof.Location = New System.Drawing.Point(497, 115)
+        Me.picBimbof.Location = New System.Drawing.Point(17, 97)
         Me.picBimbof.Name = "picBimbof"
         Me.picBimbof.Size = New System.Drawing.Size(15, 15)
         Me.picBimbof.TabIndex = 266
         Me.picBimbof.TabStop = False
-        Me.picBimbof.Visible = False
         '
         'picShopkeeperf
         '
         Me.picShopkeeperf.BackgroundImage = CType(resources.GetObject("picShopkeeperf.BackgroundImage"), System.Drawing.Image)
-        Me.picShopkeeperf.Location = New System.Drawing.Point(497, 136)
+        Me.picShopkeeperf.Location = New System.Drawing.Point(17, 118)
         Me.picShopkeeperf.Name = "picShopkeeperf"
         Me.picShopkeeperf.Size = New System.Drawing.Size(15, 15)
         Me.picShopkeeperf.TabIndex = 267
         Me.picShopkeeperf.TabStop = False
-        Me.picShopkeeperf.Visible = False
         '
         'picStatuef
         '
         Me.picStatuef.BackgroundImage = CType(resources.GetObject("picStatuef.BackgroundImage"), System.Drawing.Image)
-        Me.picStatuef.Location = New System.Drawing.Point(539, 115)
+        Me.picStatuef.Location = New System.Drawing.Point(59, 97)
         Me.picStatuef.Name = "picStatuef"
         Me.picStatuef.Size = New System.Drawing.Size(15, 15)
         Me.picStatuef.TabIndex = 268
         Me.picStatuef.TabStop = False
-        Me.picStatuef.Visible = False
         '
         'picTrapf
         '
         Me.picTrapf.BackgroundImage = CType(resources.GetObject("picTrapf.BackgroundImage"), System.Drawing.Image)
-        Me.picTrapf.Location = New System.Drawing.Point(623, 95)
+        Me.picTrapf.Location = New System.Drawing.Point(143, 77)
         Me.picTrapf.Name = "picTrapf"
         Me.picTrapf.Size = New System.Drawing.Size(15, 15)
         Me.picTrapf.TabIndex = 269
         Me.picTrapf.TabStop = False
-        Me.picTrapf.Visible = False
         '
         'tmrKeyCD
         '
@@ -1600,9 +1604,9 @@ Partial Class Game
         Me.pnlCombat.Controls.Add(Me.lblPName)
         Me.pnlCombat.Controls.Add(Me.lblEHealth)
         Me.pnlCombat.Controls.Add(Me.lblEName)
-        Me.pnlCombat.Controls.Add(Me.picPHealth)
-        Me.pnlCombat.Controls.Add(Me.picEHbar)
-        Me.pnlCombat.Location = New System.Drawing.Point(983, 50)
+        Me.pnlCombat.Controls.Add(Me.Label18)
+        Me.pnlCombat.Controls.Add(Me.Label20)
+        Me.pnlCombat.Location = New System.Drawing.Point(1000, 50)
         Me.pnlCombat.Name = "pnlCombat"
         Me.pnlCombat.Size = New System.Drawing.Size(568, 362)
         Me.pnlCombat.TabIndex = 270
@@ -1615,22 +1619,22 @@ Partial Class Game
         Me.lblCombatEvents.Cursor = System.Windows.Forms.Cursors.Arrow
         Me.lblCombatEvents.Font = New System.Drawing.Font("Consolas", 9.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.lblCombatEvents.ForeColor = System.Drawing.Color.White
-        Me.lblCombatEvents.Location = New System.Drawing.Point(9, 126)
+        Me.lblCombatEvents.Location = New System.Drawing.Point(8, 93)
         Me.lblCombatEvents.Multiline = True
         Me.lblCombatEvents.Name = "lblCombatEvents"
         Me.lblCombatEvents.ReadOnly = True
         Me.lblCombatEvents.ScrollBars = System.Windows.Forms.ScrollBars.Vertical
-        Me.lblCombatEvents.Size = New System.Drawing.Size(549, 205)
+        Me.lblCombatEvents.Size = New System.Drawing.Size(549, 242)
         Me.lblCombatEvents.TabIndex = 11
         '
         'Label2
         '
         Me.Label2.AutoSize = True
-        Me.Label2.Font = New System.Drawing.Font("Consolas", 8.150944!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.Label2.Font = New System.Drawing.Font("Consolas", 9.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.Label2.ForeColor = System.Drawing.Color.White
-        Me.Label2.Location = New System.Drawing.Point(5, 338)
+        Me.Label2.Location = New System.Drawing.Point(5, 341)
         Me.Label2.Name = "Label2"
-        Me.Label2.Size = New System.Drawing.Size(241, 13)
+        Me.Label2.Size = New System.Drawing.Size(280, 14)
         Me.Label2.TabIndex = 10
         Me.Label2.Text = "Press a combat button to continue . . ."
         '
@@ -1639,51 +1643,53 @@ Partial Class Game
         Me.lblPHealtDiff.AutoSize = True
         Me.lblPHealtDiff.Font = New System.Drawing.Font("Consolas", 9.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.lblPHealtDiff.ForeColor = System.Drawing.Color.White
-        Me.lblPHealtDiff.Location = New System.Drawing.Point(379, 88)
+        Me.lblPHealtDiff.Location = New System.Drawing.Point(354, 68)
         Me.lblPHealtDiff.Name = "lblPHealtDiff"
         Me.lblPHealtDiff.Size = New System.Drawing.Size(35, 14)
         Me.lblPHealtDiff.TabIndex = 8
         Me.lblPHealtDiff.Text = "-999"
+        Me.lblPHealtDiff.TextAlign = System.Drawing.ContentAlignment.MiddleLeft
         '
         'lblEHealthChange
         '
         Me.lblEHealthChange.AutoSize = True
         Me.lblEHealthChange.Font = New System.Drawing.Font("Consolas", 9.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.lblEHealthChange.ForeColor = System.Drawing.Color.White
-        Me.lblEHealthChange.Location = New System.Drawing.Point(139, 91)
+        Me.lblEHealthChange.Location = New System.Drawing.Point(179, 68)
         Me.lblEHealthChange.Name = "lblEHealthChange"
         Me.lblEHealthChange.Size = New System.Drawing.Size(35, 14)
         Me.lblEHealthChange.TabIndex = 7
         Me.lblEHealthChange.Text = "-999"
+        Me.lblEHealthChange.TextAlign = System.Drawing.ContentAlignment.MiddleRight
         '
         'lblTurn
         '
-        Me.lblTurn.AutoSize = True
         Me.lblTurn.Font = New System.Drawing.Font("Consolas", 9.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.lblTurn.ForeColor = System.Drawing.Color.White
-        Me.lblTurn.Location = New System.Drawing.Point(236, 20)
+        Me.lblTurn.Location = New System.Drawing.Point(209, 5)
         Me.lblTurn.Name = "lblTurn"
-        Me.lblTurn.Size = New System.Drawing.Size(84, 14)
+        Me.lblTurn.Size = New System.Drawing.Size(149, 18)
         Me.lblTurn.TabIndex = 6
         Me.lblTurn.Text = "Turn: 99999"
+        Me.lblTurn.TextAlign = System.Drawing.ContentAlignment.MiddleCenter
         '
         'lblPHealth
         '
-        Me.lblPHealth.AutoSize = True
-        Me.lblPHealth.Font = New System.Drawing.Font("Consolas", 9.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.lblPHealth.Font = New System.Drawing.Font("Consolas", 9.75!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.lblPHealth.ForeColor = System.Drawing.Color.White
-        Me.lblPHealth.Location = New System.Drawing.Point(450, 48)
+        Me.lblPHealth.Location = New System.Drawing.Point(353, 48)
         Me.lblPHealth.Name = "lblPHealth"
-        Me.lblPHealth.Size = New System.Drawing.Size(70, 14)
+        Me.lblPHealth.Size = New System.Drawing.Size(200, 14)
         Me.lblPHealth.TabIndex = 5
         Me.lblPHealth.Text = "9999/9999"
+        Me.lblPHealth.TextAlign = System.Drawing.ContentAlignment.MiddleRight
         '
         'lblPName
         '
         Me.lblPName.BackColor = System.Drawing.Color.Black
         Me.lblPName.Font = New System.Drawing.Font("Consolas", 9.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.lblPName.ForeColor = System.Drawing.Color.White
-        Me.lblPName.Location = New System.Drawing.Point(343, 14)
+        Me.lblPName.Location = New System.Drawing.Point(341, 14)
         Me.lblPName.Name = "lblPName"
         Me.lblPName.Size = New System.Drawing.Size(216, 27)
         Me.lblPName.TabIndex = 4
@@ -1692,14 +1698,14 @@ Partial Class Game
         '
         'lblEHealth
         '
-        Me.lblEHealth.AutoSize = True
-        Me.lblEHealth.Font = New System.Drawing.Font("Consolas", 9.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.lblEHealth.Font = New System.Drawing.Font("Consolas", 9.75!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.lblEHealth.ForeColor = System.Drawing.Color.White
-        Me.lblEHealth.Location = New System.Drawing.Point(20, 49)
+        Me.lblEHealth.Location = New System.Drawing.Point(15, 47)
         Me.lblEHealth.Name = "lblEHealth"
-        Me.lblEHealth.Size = New System.Drawing.Size(70, 14)
+        Me.lblEHealth.Size = New System.Drawing.Size(200, 14)
         Me.lblEHealth.TabIndex = 3
         Me.lblEHealth.Text = "9999/9999"
+        Me.lblEHealth.TextAlign = System.Drawing.ContentAlignment.MiddleLeft
         '
         'lblEName
         '
@@ -1713,23 +1719,27 @@ Partial Class Game
         Me.lblEName.Text = "EnemyName"
         Me.lblEName.TextAlign = System.Drawing.ContentAlignment.MiddleLeft
         '
-        'picPHealth
+        'Label18
         '
-        Me.picPHealth.BackColor = System.Drawing.Color.YellowGreen
-        Me.picPHealth.Location = New System.Drawing.Point(374, 73)
-        Me.picPHealth.Name = "picPHealth"
-        Me.picPHealth.Size = New System.Drawing.Size(174, 15)
-        Me.picPHealth.TabIndex = 1
-        Me.picPHealth.TabStop = False
+        Me.Label18.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle
+        Me.Label18.Font = New System.Drawing.Font("Consolas", 9.75!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.Label18.ForeColor = System.Drawing.Color.White
+        Me.Label18.Location = New System.Drawing.Point(351, 46)
+        Me.Label18.Name = "Label18"
+        Me.Label18.Size = New System.Drawing.Size(205, 19)
+        Me.Label18.TabIndex = 12
+        Me.Label18.TextAlign = System.Drawing.ContentAlignment.MiddleRight
         '
-        'picEHbar
+        'Label20
         '
-        Me.picEHbar.BackColor = System.Drawing.Color.YellowGreen
-        Me.picEHbar.Location = New System.Drawing.Point(22, 73)
-        Me.picEHbar.Name = "picEHbar"
-        Me.picEHbar.Size = New System.Drawing.Size(174, 15)
-        Me.picEHbar.TabIndex = 0
-        Me.picEHbar.TabStop = False
+        Me.Label20.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle
+        Me.Label20.Font = New System.Drawing.Font("Consolas", 9.75!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.Label20.ForeColor = System.Drawing.Color.White
+        Me.Label20.Location = New System.Drawing.Point(11, 45)
+        Me.Label20.Name = "Label20"
+        Me.Label20.Size = New System.Drawing.Size(205, 19)
+        Me.Label20.TabIndex = 13
+        Me.Label20.TextAlign = System.Drawing.ContentAlignment.MiddleRight
         '
         'lblEvent
         '
@@ -1759,7 +1769,7 @@ Partial Class Game
         Me.btnWait.BackColor = System.Drawing.Color.Black
         Me.btnWait.Font = New System.Drawing.Font("Consolas", 8.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.btnWait.ForeColor = System.Drawing.Color.White
-        Me.btnWait.Location = New System.Drawing.Point(448, 419)
+        Me.btnWait.Location = New System.Drawing.Point(426, 419)
         Me.btnWait.Name = "btnWait"
         Me.btnWait.Size = New System.Drawing.Size(86, 36)
         Me.btnWait.TabIndex = 272
@@ -1767,25 +1777,23 @@ Partial Class Game
         Me.btnWait.UseVisualStyleBackColor = False
         Me.btnWait.Visible = False
         '
-        'picSWiz
+        'picSW
         '
-        Me.picSWiz.BackgroundImage = CType(resources.GetObject("picSWiz.BackgroundImage"), System.Drawing.Image)
-        Me.picSWiz.Location = New System.Drawing.Point(518, 71)
-        Me.picSWiz.Name = "picSWiz"
-        Me.picSWiz.Size = New System.Drawing.Size(15, 15)
-        Me.picSWiz.TabIndex = 273
-        Me.picSWiz.TabStop = False
-        Me.picSWiz.Visible = False
+        Me.picSW.BackgroundImage = CType(resources.GetObject("picSW.BackgroundImage"), System.Drawing.Image)
+        Me.picSW.Location = New System.Drawing.Point(38, 56)
+        Me.picSW.Name = "picSW"
+        Me.picSW.Size = New System.Drawing.Size(15, 15)
+        Me.picSW.TabIndex = 273
+        Me.picSW.TabStop = False
         '
         'picSWizF
         '
         Me.picSWizF.BackgroundImage = CType(resources.GetObject("picSWizF.BackgroundImage"), System.Drawing.Image)
-        Me.picSWizF.Location = New System.Drawing.Point(518, 136)
+        Me.picSWizF.Location = New System.Drawing.Point(38, 118)
         Me.picSWizF.Name = "picSWizF"
         Me.picSWizF.Size = New System.Drawing.Size(15, 15)
         Me.picSWizF.TabIndex = 274
         Me.picSWizF.TabStop = False
-        Me.picSWizF.Visible = False
         '
         'pnlDescription
         '
@@ -1854,42 +1862,38 @@ Partial Class Game
         'picStairsLock
         '
         Me.picStairsLock.BackgroundImage = CType(resources.GetObject("picStairsLock.BackgroundImage"), System.Drawing.Image)
-        Me.picStairsLock.Location = New System.Drawing.Point(602, 29)
+        Me.picStairsLock.Location = New System.Drawing.Point(122, 14)
         Me.picStairsLock.Name = "picStairsLock"
         Me.picStairsLock.Size = New System.Drawing.Size(15, 15)
         Me.picStairsLock.TabIndex = 276
         Me.picStairsLock.TabStop = False
-        Me.picStairsLock.Visible = False
         '
         'picStairsBoss
         '
         Me.picStairsBoss.BackgroundImage = CType(resources.GetObject("picStairsBoss.BackgroundImage"), System.Drawing.Image)
-        Me.picStairsBoss.Location = New System.Drawing.Point(581, 29)
+        Me.picStairsBoss.Location = New System.Drawing.Point(101, 14)
         Me.picStairsBoss.Name = "picStairsBoss"
         Me.picStairsBoss.Size = New System.Drawing.Size(15, 15)
         Me.picStairsBoss.TabIndex = 277
         Me.picStairsBoss.TabStop = False
-        Me.picStairsBoss.Visible = False
         '
         'picstairsbossf
         '
         Me.picstairsbossf.BackgroundImage = CType(resources.GetObject("picstairsbossf.BackgroundImage"), System.Drawing.Image)
-        Me.picstairsbossf.Location = New System.Drawing.Point(581, 95)
+        Me.picstairsbossf.Location = New System.Drawing.Point(101, 77)
         Me.picstairsbossf.Name = "picstairsbossf"
         Me.picstairsbossf.Size = New System.Drawing.Size(15, 15)
         Me.picstairsbossf.TabIndex = 279
         Me.picstairsbossf.TabStop = False
-        Me.picstairsbossf.Visible = False
         '
         'picstairslockf
         '
         Me.picstairslockf.BackgroundImage = CType(resources.GetObject("picstairslockf.BackgroundImage"), System.Drawing.Image)
-        Me.picstairslockf.Location = New System.Drawing.Point(602, 95)
+        Me.picstairslockf.Location = New System.Drawing.Point(122, 77)
         Me.picstairslockf.Name = "picstairslockf"
         Me.picstairslockf.Size = New System.Drawing.Size(15, 15)
         Me.picstairslockf.TabIndex = 280
         Me.picstairslockf.TabStop = False
-        Me.picstairslockf.Visible = False
         '
         'pnlSelection
         '
@@ -2011,22 +2015,20 @@ Partial Class Game
         'picCrystal
         '
         Me.picCrystal.BackgroundImage = CType(resources.GetObject("picCrystal.BackgroundImage"), System.Drawing.Image)
-        Me.picCrystal.Location = New System.Drawing.Point(560, 50)
+        Me.picCrystal.Location = New System.Drawing.Point(80, 35)
         Me.picCrystal.Name = "picCrystal"
         Me.picCrystal.Size = New System.Drawing.Size(15, 15)
         Me.picCrystal.TabIndex = 290
         Me.picCrystal.TabStop = False
-        Me.picCrystal.Visible = False
         '
         'picCrystalf
         '
         Me.picCrystalf.BackgroundImage = CType(resources.GetObject("picCrystalf.BackgroundImage"), System.Drawing.Image)
-        Me.picCrystalf.Location = New System.Drawing.Point(560, 115)
+        Me.picCrystalf.Location = New System.Drawing.Point(80, 97)
         Me.picCrystalf.Name = "picCrystalf"
         Me.picCrystalf.Size = New System.Drawing.Size(15, 15)
         Me.picCrystalf.TabIndex = 291
         Me.picCrystalf.TabStop = False
-        Me.picCrystalf.Visible = False
         '
         'btnAbout
         '
@@ -2034,7 +2036,7 @@ Partial Class Game
         Me.btnAbout.Cursor = System.Windows.Forms.Cursors.Hand
         Me.btnAbout.Font = New System.Drawing.Font("Consolas", 10.18868!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.btnAbout.ForeColor = System.Drawing.Color.White
-        Me.btnAbout.Location = New System.Drawing.Point(441, 639)
+        Me.btnAbout.Location = New System.Drawing.Point(441, 596)
         Me.btnAbout.Name = "btnAbout"
         Me.btnAbout.Size = New System.Drawing.Size(99, 39)
         Me.btnAbout.TabIndex = 292
@@ -2044,22 +2046,20 @@ Partial Class Game
         'picPath
         '
         Me.picPath.BackgroundImage = CType(resources.GetObject("picPath.BackgroundImage"), System.Drawing.Image)
-        Me.picPath.Location = New System.Drawing.Point(581, 50)
+        Me.picPath.Location = New System.Drawing.Point(101, 35)
         Me.picPath.Name = "picPath"
         Me.picPath.Size = New System.Drawing.Size(15, 15)
         Me.picPath.TabIndex = 293
         Me.picPath.TabStop = False
-        Me.picPath.Visible = False
         '
         'picPathf
         '
         Me.picPathf.BackgroundImage = CType(resources.GetObject("picPathf.BackgroundImage"), System.Drawing.Image)
-        Me.picPathf.Location = New System.Drawing.Point(581, 115)
+        Me.picPathf.Location = New System.Drawing.Point(101, 97)
         Me.picPathf.Name = "picPathf"
         Me.picPathf.Size = New System.Drawing.Size(15, 15)
         Me.picPathf.TabIndex = 294
         Me.picPathf.TabStop = False
-        Me.picPathf.Visible = False
         '
         'lblLoadMsg
         '
@@ -2087,42 +2087,38 @@ Partial Class Game
         'picHT
         '
         Me.picHT.BackgroundImage = CType(resources.GetObject("picHT.BackgroundImage"), System.Drawing.Image)
-        Me.picHT.Location = New System.Drawing.Point(539, 70)
+        Me.picHT.Location = New System.Drawing.Point(59, 55)
         Me.picHT.Name = "picHT"
         Me.picHT.Size = New System.Drawing.Size(15, 15)
         Me.picHT.TabIndex = 308
         Me.picHT.TabStop = False
-        Me.picHT.Visible = False
         '
         'picHTf
         '
         Me.picHTf.BackgroundImage = CType(resources.GetObject("picHTf.BackgroundImage"), System.Drawing.Image)
-        Me.picHTf.Location = New System.Drawing.Point(539, 136)
+        Me.picHTf.Location = New System.Drawing.Point(59, 118)
         Me.picHTf.Name = "picHTf"
         Me.picHTf.Size = New System.Drawing.Size(15, 15)
         Me.picHTf.TabIndex = 309
         Me.picHTf.TabStop = False
-        Me.picHTf.Visible = False
         '
         'picFVf
         '
         Me.picFVf.BackgroundImage = CType(resources.GetObject("picFVf.BackgroundImage"), System.Drawing.Image)
-        Me.picFVf.Location = New System.Drawing.Point(560, 136)
+        Me.picFVf.Location = New System.Drawing.Point(80, 118)
         Me.picFVf.Name = "picFVf"
         Me.picFVf.Size = New System.Drawing.Size(15, 15)
         Me.picFVf.TabIndex = 311
         Me.picFVf.TabStop = False
-        Me.picFVf.Visible = False
         '
-        'picFVtile
+        'picFV
         '
-        Me.picFVtile.BackgroundImage = CType(resources.GetObject("picFVtile.BackgroundImage"), System.Drawing.Image)
-        Me.picFVtile.Location = New System.Drawing.Point(560, 70)
-        Me.picFVtile.Name = "picFVtile"
-        Me.picFVtile.Size = New System.Drawing.Size(15, 15)
-        Me.picFVtile.TabIndex = 312
-        Me.picFVtile.TabStop = False
-        Me.picFVtile.Visible = False
+        Me.picFV.BackgroundImage = CType(resources.GetObject("picFV.BackgroundImage"), System.Drawing.Image)
+        Me.picFV.Location = New System.Drawing.Point(80, 55)
+        Me.picFV.Name = "picFV"
+        Me.picFV.Size = New System.Drawing.Size(15, 15)
+        Me.picFV.TabIndex = 312
+        Me.picFV.TabStop = False
         '
         'picStaffEnd
         '
@@ -2134,100 +2130,105 @@ Partial Class Game
         Me.picStaffEnd.TabStop = False
         Me.picStaffEnd.Visible = False
         '
-        'picSpaceStairs
+        'picStairsSpace
         '
-        Me.picSpaceStairs.BackgroundImage = CType(resources.GetObject("picSpaceStairs.BackgroundImage"), System.Drawing.Image)
-        Me.picSpaceStairs.Location = New System.Drawing.Point(539, 159)
-        Me.picSpaceStairs.Name = "picSpaceStairs"
-        Me.picSpaceStairs.Size = New System.Drawing.Size(15, 15)
-        Me.picSpaceStairs.TabIndex = 317
-        Me.picSpaceStairs.TabStop = False
-        Me.picSpaceStairs.Visible = False
+        Me.picStairsSpace.BackgroundImage = CType(resources.GetObject("picStairsSpace.BackgroundImage"), System.Drawing.Image)
+        Me.picStairsSpace.Location = New System.Drawing.Point(59, 181)
+        Me.picStairsSpace.Name = "picStairsSpace"
+        Me.picStairsSpace.Size = New System.Drawing.Size(15, 15)
+        Me.picStairsSpace.TabIndex = 317
+        Me.picStairsSpace.TabStop = False
         '
         'picSpaceTrap
         '
         Me.picSpaceTrap.BackgroundImage = CType(resources.GetObject("picSpaceTrap.BackgroundImage"), System.Drawing.Image)
-        Me.picSpaceTrap.Location = New System.Drawing.Point(560, 159)
+        Me.picSpaceTrap.Location = New System.Drawing.Point(80, 181)
         Me.picSpaceTrap.Name = "picSpaceTrap"
         Me.picSpaceTrap.Size = New System.Drawing.Size(15, 15)
         Me.picSpaceTrap.TabIndex = 316
         Me.picSpaceTrap.TabStop = False
-        Me.picSpaceTrap.Visible = False
         '
-        'picSpaceChest
+        'picChestSpace
         '
-        Me.picSpaceChest.BackgroundImage = CType(resources.GetObject("picSpaceChest.BackgroundImage"), System.Drawing.Image)
-        Me.picSpaceChest.Location = New System.Drawing.Point(518, 159)
-        Me.picSpaceChest.Name = "picSpaceChest"
-        Me.picSpaceChest.Size = New System.Drawing.Size(15, 15)
-        Me.picSpaceChest.TabIndex = 315
-        Me.picSpaceChest.TabStop = False
-        Me.picSpaceChest.Visible = False
+        Me.picChestSpace.BackgroundImage = CType(resources.GetObject("picChestSpace.BackgroundImage"), System.Drawing.Image)
+        Me.picChestSpace.Location = New System.Drawing.Point(38, 181)
+        Me.picChestSpace.Name = "picChestSpace"
+        Me.picChestSpace.Size = New System.Drawing.Size(15, 15)
+        Me.picChestSpace.TabIndex = 315
+        Me.picChestSpace.TabStop = False
         '
-        'picSpaceTile
+        'picTileSpace
         '
-        Me.picSpaceTile.BackgroundImage = CType(resources.GetObject("picSpaceTile.BackgroundImage"), System.Drawing.Image)
-        Me.picSpaceTile.Location = New System.Drawing.Point(497, 159)
-        Me.picSpaceTile.Name = "picSpaceTile"
-        Me.picSpaceTile.Size = New System.Drawing.Size(15, 15)
-        Me.picSpaceTile.TabIndex = 314
-        Me.picSpaceTile.TabStop = False
-        Me.picSpaceTile.Visible = False
+        Me.picTileSpace.BackgroundImage = CType(resources.GetObject("picTileSpace.BackgroundImage"), System.Drawing.Image)
+        Me.picTileSpace.Location = New System.Drawing.Point(17, 181)
+        Me.picTileSpace.Name = "picTileSpace"
+        Me.picTileSpace.Size = New System.Drawing.Size(15, 15)
+        Me.picTileSpace.TabIndex = 314
+        Me.picTileSpace.TabStop = False
         '
         'picPlayerSpace
         '
         Me.picPlayerSpace.BackgroundImage = CType(resources.GetObject("picPlayerSpace.BackgroundImage"), System.Drawing.Image)
-        Me.picPlayerSpace.Location = New System.Drawing.Point(581, 159)
+        Me.picPlayerSpace.Location = New System.Drawing.Point(101, 181)
         Me.picPlayerSpace.Name = "picPlayerSpace"
         Me.picPlayerSpace.Size = New System.Drawing.Size(15, 15)
         Me.picPlayerSpace.TabIndex = 319
         Me.picPlayerSpace.TabStop = False
-        Me.picPlayerSpace.Visible = False
         '
-        'picBimboSpace
+        'picPlayerBSpace
         '
-        Me.picBimboSpace.BackgroundImage = CType(resources.GetObject("picBimboSpace.BackgroundImage"), System.Drawing.Image)
-        Me.picBimboSpace.Location = New System.Drawing.Point(602, 159)
-        Me.picBimboSpace.Name = "picBimboSpace"
-        Me.picBimboSpace.Size = New System.Drawing.Size(15, 15)
-        Me.picBimboSpace.TabIndex = 318
-        Me.picBimboSpace.TabStop = False
-        Me.picBimboSpace.Visible = False
+        Me.picPlayerBSpace.BackgroundImage = CType(resources.GetObject("picPlayerBSpace.BackgroundImage"), System.Drawing.Image)
+        Me.picPlayerBSpace.Location = New System.Drawing.Point(122, 181)
+        Me.picPlayerBSpace.Name = "picPlayerBSpace"
+        Me.picPlayerBSpace.Size = New System.Drawing.Size(15, 15)
+        Me.picPlayerBSpace.TabIndex = 318
+        Me.picPlayerBSpace.TabStop = False
         '
-        'picSPacePath
+        'picPathSpace
         '
-        Me.picSPacePath.BackgroundImage = CType(resources.GetObject("picSPacePath.BackgroundImage"), System.Drawing.Image)
-        Me.picSPacePath.Location = New System.Drawing.Point(518, 180)
-        Me.picSPacePath.Name = "picSPacePath"
-        Me.picSPacePath.Size = New System.Drawing.Size(15, 15)
-        Me.picSPacePath.TabIndex = 321
-        Me.picSPacePath.TabStop = False
-        Me.picSPacePath.Visible = False
+        Me.picPathSpace.BackgroundImage = CType(resources.GetObject("picPathSpace.BackgroundImage"), System.Drawing.Image)
+        Me.picPathSpace.Location = New System.Drawing.Point(17, 202)
+        Me.picPathSpace.Name = "picPathSpace"
+        Me.picPathSpace.Size = New System.Drawing.Size(15, 15)
+        Me.picPathSpace.TabIndex = 321
+        Me.picPathSpace.TabStop = False
         '
-        'picSpaceCrystal
+        'picCrystalSpace
         '
-        Me.picSpaceCrystal.BackgroundImage = CType(resources.GetObject("picSpaceCrystal.BackgroundImage"), System.Drawing.Image)
-        Me.picSpaceCrystal.Location = New System.Drawing.Point(497, 180)
-        Me.picSpaceCrystal.Name = "picSpaceCrystal"
-        Me.picSpaceCrystal.Size = New System.Drawing.Size(15, 15)
-        Me.picSpaceCrystal.TabIndex = 320
-        Me.picSpaceCrystal.TabStop = False
-        Me.picSpaceCrystal.Visible = False
+        Me.picCrystalSpace.BackgroundImage = CType(resources.GetObject("picCrystalSpace.BackgroundImage"), System.Drawing.Image)
+        Me.picCrystalSpace.Location = New System.Drawing.Point(143, 181)
+        Me.picCrystalSpace.Name = "picCrystalSpace"
+        Me.picCrystalSpace.Size = New System.Drawing.Size(15, 15)
+        Me.picCrystalSpace.TabIndex = 320
+        Me.picCrystalSpace.TabStop = False
         '
         'pnlEvent
         '
+        Me.pnlEvent.AutoScroll = True
         Me.pnlEvent.BackgroundImage = CType(resources.GetObject("pnlEvent.BackgroundImage"), System.Drawing.Image)
         Me.pnlEvent.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch
+        Me.pnlEvent.Controls.Add(Me.picEvent)
         Me.pnlEvent.Controls.Add(Me.Label4)
         Me.pnlEvent.Controls.Add(Me.btnNextLPnlEvent)
         Me.pnlEvent.Controls.Add(Me.btnNextRPnlEvent)
         Me.pnlEvent.Controls.Add(Me.btnClosePnlEvent)
         Me.pnlEvent.Controls.Add(Me.txtPNLEvents)
-        Me.pnlEvent.Location = New System.Drawing.Point(997, 26)
+        Me.pnlEvent.Location = New System.Drawing.Point(1000, 26)
         Me.pnlEvent.Name = "pnlEvent"
         Me.pnlEvent.Size = New System.Drawing.Size(688, 447)
         Me.pnlEvent.TabIndex = 322
         Me.pnlEvent.Visible = False
+        '
+        'picEvent
+        '
+        Me.picEvent.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Center
+        Me.picEvent.Location = New System.Drawing.Point(11, 7)
+        Me.picEvent.Name = "picEvent"
+        Me.picEvent.Size = New System.Drawing.Size(663, 399)
+        Me.picEvent.SizeMode = System.Windows.Forms.PictureBoxSizeMode.AutoSize
+        Me.picEvent.TabIndex = 237
+        Me.picEvent.TabStop = False
+        Me.picEvent.Visible = False
         '
         'Label4
         '
@@ -2297,112 +2298,101 @@ Partial Class Game
         'picLegaPath
         '
         Me.picLegaPath.BackgroundImage = CType(resources.GetObject("picLegaPath.BackgroundImage"), System.Drawing.Image)
-        Me.picLegaPath.Location = New System.Drawing.Point(518, 222)
+        Me.picLegaPath.Location = New System.Drawing.Point(38, 245)
         Me.picLegaPath.Name = "picLegaPath"
         Me.picLegaPath.Size = New System.Drawing.Size(15, 15)
         Me.picLegaPath.TabIndex = 330
         Me.picLegaPath.TabStop = False
-        Me.picLegaPath.Visible = False
         '
         'picLegaCrystal
         '
         Me.picLegaCrystal.BackgroundImage = CType(resources.GetObject("picLegaCrystal.BackgroundImage"), System.Drawing.Image)
-        Me.picLegaCrystal.Location = New System.Drawing.Point(497, 222)
+        Me.picLegaCrystal.Location = New System.Drawing.Point(17, 245)
         Me.picLegaCrystal.Name = "picLegaCrystal"
         Me.picLegaCrystal.Size = New System.Drawing.Size(15, 15)
         Me.picLegaCrystal.TabIndex = 329
         Me.picLegaCrystal.TabStop = False
-        Me.picLegaCrystal.Visible = False
         '
         'picLegaPlayer
         '
         Me.picLegaPlayer.BackgroundImage = CType(resources.GetObject("picLegaPlayer.BackgroundImage"), System.Drawing.Image)
-        Me.picLegaPlayer.Location = New System.Drawing.Point(581, 201)
+        Me.picLegaPlayer.Location = New System.Drawing.Point(101, 224)
         Me.picLegaPlayer.Name = "picLegaPlayer"
         Me.picLegaPlayer.Size = New System.Drawing.Size(15, 15)
         Me.picLegaPlayer.TabIndex = 328
         Me.picLegaPlayer.TabStop = False
-        Me.picLegaPlayer.Visible = False
         '
         'picLegaBimbo
         '
         Me.picLegaBimbo.BackgroundImage = CType(resources.GetObject("picLegaBimbo.BackgroundImage"), System.Drawing.Image)
-        Me.picLegaBimbo.Location = New System.Drawing.Point(602, 201)
+        Me.picLegaBimbo.Location = New System.Drawing.Point(122, 224)
         Me.picLegaBimbo.Name = "picLegaBimbo"
         Me.picLegaBimbo.Size = New System.Drawing.Size(15, 15)
         Me.picLegaBimbo.TabIndex = 327
         Me.picLegaBimbo.TabStop = False
-        Me.picLegaBimbo.Visible = False
         '
         'picLegaStairs
         '
         Me.picLegaStairs.BackgroundImage = CType(resources.GetObject("picLegaStairs.BackgroundImage"), System.Drawing.Image)
-        Me.picLegaStairs.Location = New System.Drawing.Point(539, 201)
+        Me.picLegaStairs.Location = New System.Drawing.Point(59, 224)
         Me.picLegaStairs.Name = "picLegaStairs"
         Me.picLegaStairs.Size = New System.Drawing.Size(15, 15)
         Me.picLegaStairs.TabIndex = 326
         Me.picLegaStairs.TabStop = False
-        Me.picLegaStairs.Visible = False
         '
         'picLegaTrap
         '
         Me.picLegaTrap.BackgroundImage = CType(resources.GetObject("picLegaTrap.BackgroundImage"), System.Drawing.Image)
-        Me.picLegaTrap.Location = New System.Drawing.Point(560, 201)
+        Me.picLegaTrap.Location = New System.Drawing.Point(80, 224)
         Me.picLegaTrap.Name = "picLegaTrap"
         Me.picLegaTrap.Size = New System.Drawing.Size(15, 15)
         Me.picLegaTrap.TabIndex = 325
         Me.picLegaTrap.TabStop = False
-        Me.picLegaTrap.Visible = False
         '
         'picLegaChest
         '
         Me.picLegaChest.BackgroundImage = CType(resources.GetObject("picLegaChest.BackgroundImage"), System.Drawing.Image)
-        Me.picLegaChest.Location = New System.Drawing.Point(518, 201)
+        Me.picLegaChest.Location = New System.Drawing.Point(38, 224)
         Me.picLegaChest.Name = "picLegaChest"
         Me.picLegaChest.Size = New System.Drawing.Size(15, 15)
         Me.picLegaChest.TabIndex = 324
         Me.picLegaChest.TabStop = False
-        Me.picLegaChest.Visible = False
         '
         'picLegaTile
         '
         Me.picLegaTile.BackgroundImage = CType(resources.GetObject("picLegaTile.BackgroundImage"), System.Drawing.Image)
-        Me.picLegaTile.Location = New System.Drawing.Point(497, 201)
+        Me.picLegaTile.Location = New System.Drawing.Point(17, 224)
         Me.picLegaTile.Name = "picLegaTile"
         Me.picLegaTile.Size = New System.Drawing.Size(15, 15)
         Me.picLegaTile.TabIndex = 323
         Me.picLegaTile.TabStop = False
-        Me.picLegaTile.Visible = False
         '
         'picLegaCaelia
         '
         Me.picLegaCaelia.BackgroundImage = CType(resources.GetObject("picLegaCaelia.BackgroundImage"), System.Drawing.Image)
-        Me.picLegaCaelia.Location = New System.Drawing.Point(539, 222)
+        Me.picLegaCaelia.Location = New System.Drawing.Point(143, 224)
         Me.picLegaCaelia.Name = "picLegaCaelia"
         Me.picLegaCaelia.Size = New System.Drawing.Size(15, 15)
         Me.picLegaCaelia.TabIndex = 331
         Me.picLegaCaelia.TabStop = False
-        Me.picLegaCaelia.Visible = False
         '
         'picWSf
         '
         Me.picWSf.BackgroundImage = CType(resources.GetObject("picWSf.BackgroundImage"), System.Drawing.Image)
-        Me.picWSf.Location = New System.Drawing.Point(581, 136)
+        Me.picWSf.Location = New System.Drawing.Point(101, 118)
         Me.picWSf.Name = "picWSf"
         Me.picWSf.Size = New System.Drawing.Size(15, 15)
         Me.picWSf.TabIndex = 341
         Me.picWSf.TabStop = False
-        Me.picWSf.Visible = False
         '
         'picWS
         '
         Me.picWS.BackgroundImage = CType(resources.GetObject("picWS.BackgroundImage"), System.Drawing.Image)
-        Me.picWS.Location = New System.Drawing.Point(581, 70)
+        Me.picWS.Location = New System.Drawing.Point(101, 55)
         Me.picWS.Name = "picWS"
         Me.picWS.Size = New System.Drawing.Size(15, 15)
         Me.picWS.TabIndex = 342
         Me.picWS.TabStop = False
-        Me.picWS.Visible = False
         '
         'picDragonF
         '
@@ -2414,25 +2404,23 @@ Partial Class Game
         Me.picDragonF.TabStop = False
         Me.picDragonF.Visible = False
         '
-        'picCBrok
+        'picCB
         '
-        Me.picCBrok.BackgroundImage = CType(resources.GetObject("picCBrok.BackgroundImage"), System.Drawing.Image)
-        Me.picCBrok.Location = New System.Drawing.Point(602, 70)
-        Me.picCBrok.Name = "picCBrok"
-        Me.picCBrok.Size = New System.Drawing.Size(15, 15)
-        Me.picCBrok.TabIndex = 347
-        Me.picCBrok.TabStop = False
-        Me.picCBrok.Visible = False
+        Me.picCB.BackgroundImage = CType(resources.GetObject("picCB.BackgroundImage"), System.Drawing.Image)
+        Me.picCB.Location = New System.Drawing.Point(122, 35)
+        Me.picCB.Name = "picCB"
+        Me.picCB.Size = New System.Drawing.Size(15, 15)
+        Me.picCB.TabIndex = 347
+        Me.picCB.TabStop = False
         '
         'picCBrokF
         '
         Me.picCBrokF.BackgroundImage = CType(resources.GetObject("picCBrokF.BackgroundImage"), System.Drawing.Image)
-        Me.picCBrokF.Location = New System.Drawing.Point(602, 136)
+        Me.picCBrokF.Location = New System.Drawing.Point(122, 118)
         Me.picCBrokF.Name = "picCBrokF"
         Me.picCBrokF.Size = New System.Drawing.Size(15, 15)
         Me.picCBrokF.TabIndex = 348
         Me.picCBrokF.TabStop = False
-        Me.picCBrokF.Visible = False
         '
         'picPortOutline
         '
@@ -2524,25 +2512,23 @@ Partial Class Game
         Me.picUnicorn.TabStop = False
         Me.picUnicorn.Visible = False
         '
-        'picTTTile
+        'picTT
         '
-        Me.picTTTile.BackgroundImage = CType(resources.GetObject("picTTTile.BackgroundImage"), System.Drawing.Image)
-        Me.picTTTile.Location = New System.Drawing.Point(623, 70)
-        Me.picTTTile.Name = "picTTTile"
-        Me.picTTTile.Size = New System.Drawing.Size(15, 15)
-        Me.picTTTile.TabIndex = 359
-        Me.picTTTile.TabStop = False
-        Me.picTTTile.Visible = False
+        Me.picTT.BackgroundImage = CType(resources.GetObject("picTT.BackgroundImage"), System.Drawing.Image)
+        Me.picTT.Location = New System.Drawing.Point(143, 35)
+        Me.picTT.Name = "picTT"
+        Me.picTT.Size = New System.Drawing.Size(15, 15)
+        Me.picTT.TabIndex = 359
+        Me.picTT.TabStop = False
         '
         'picTTTileF
         '
         Me.picTTTileF.BackgroundImage = CType(resources.GetObject("picTTTileF.BackgroundImage"), System.Drawing.Image)
-        Me.picTTTileF.Location = New System.Drawing.Point(623, 136)
+        Me.picTTTileF.Location = New System.Drawing.Point(143, 118)
         Me.picTTTileF.Name = "picTTTileF"
         Me.picTTTileF.Size = New System.Drawing.Size(15, 15)
         Me.picTTTileF.TabIndex = 360
         Me.picTTTileF.TabStop = False
-        Me.picTTTileF.Visible = False
         '
         'picCow
         '
@@ -2564,145 +2550,131 @@ Partial Class Game
         Me.picCheerL.TabStop = False
         Me.picCheerL.Visible = False
         '
-        'picMGTile
+        'picMG
         '
-        Me.picMGTile.BackgroundImage = CType(resources.GetObject("picMGTile.BackgroundImage"), System.Drawing.Image)
-        Me.picMGTile.Location = New System.Drawing.Point(644, 70)
-        Me.picMGTile.Name = "picMGTile"
-        Me.picMGTile.Size = New System.Drawing.Size(15, 15)
-        Me.picMGTile.TabIndex = 376
-        Me.picMGTile.TabStop = False
-        Me.picMGTile.Visible = False
+        Me.picMG.BackgroundImage = CType(resources.GetObject("picMG.BackgroundImage"), System.Drawing.Image)
+        Me.picMG.Location = New System.Drawing.Point(122, 56)
+        Me.picMG.Name = "picMG"
+        Me.picMG.Size = New System.Drawing.Size(15, 15)
+        Me.picMG.TabIndex = 376
+        Me.picMG.TabStop = False
         '
         'picMGTileF
         '
         Me.picMGTileF.BackgroundImage = CType(resources.GetObject("picMGTileF.BackgroundImage"), System.Drawing.Image)
-        Me.picMGTileF.Location = New System.Drawing.Point(644, 136)
+        Me.picMGTileF.Location = New System.Drawing.Point(17, 139)
         Me.picMGTileF.Name = "picMGTileF"
         Me.picMGTileF.Size = New System.Drawing.Size(15, 15)
         Me.picMGTileF.TabIndex = 377
         Me.picMGTileF.TabStop = False
-        Me.picMGTileF.Visible = False
         '
         'picCBFog
         '
         Me.picCBFog.BackgroundImage = CType(resources.GetObject("picCBFog.BackgroundImage"), System.Drawing.Image)
-        Me.picCBFog.Location = New System.Drawing.Point(539, 264)
+        Me.picCBFog.Location = New System.Drawing.Point(59, 287)
         Me.picCBFog.Name = "picCBFog"
         Me.picCBFog.Size = New System.Drawing.Size(15, 15)
         Me.picCBFog.TabIndex = 391
         Me.picCBFog.TabStop = False
-        Me.picCBFog.Visible = False
         '
         'picStatueFog
         '
         Me.picStatueFog.BackgroundImage = CType(resources.GetObject("picStatueFog.BackgroundImage"), System.Drawing.Image)
-        Me.picStatueFog.Location = New System.Drawing.Point(518, 264)
+        Me.picStatueFog.Location = New System.Drawing.Point(38, 287)
         Me.picStatueFog.Name = "picStatueFog"
         Me.picStatueFog.Size = New System.Drawing.Size(15, 15)
         Me.picStatueFog.TabIndex = 390
         Me.picStatueFog.TabStop = False
-        Me.picStatueFog.Visible = False
         '
         'picCrystalFog
         '
         Me.picCrystalFog.BackgroundImage = CType(resources.GetObject("picCrystalFog.BackgroundImage"), System.Drawing.Image)
-        Me.picCrystalFog.Location = New System.Drawing.Point(497, 264)
+        Me.picCrystalFog.Location = New System.Drawing.Point(17, 287)
         Me.picCrystalFog.Name = "picCrystalFog"
         Me.picCrystalFog.Size = New System.Drawing.Size(15, 15)
         Me.picCrystalFog.TabIndex = 389
         Me.picCrystalFog.TabStop = False
-        Me.picCrystalFog.Visible = False
         '
         'picPlayerFog
         '
         Me.picPlayerFog.BackgroundImage = CType(resources.GetObject("picPlayerFog.BackgroundImage"), System.Drawing.Image)
-        Me.picPlayerFog.Location = New System.Drawing.Point(581, 243)
+        Me.picPlayerFog.Location = New System.Drawing.Point(101, 266)
         Me.picPlayerFog.Name = "picPlayerFog"
         Me.picPlayerFog.Size = New System.Drawing.Size(15, 15)
         Me.picPlayerFog.TabIndex = 388
         Me.picPlayerFog.TabStop = False
-        Me.picPlayerFog.Visible = False
         '
         'picPlayerBFog
         '
         Me.picPlayerBFog.BackgroundImage = CType(resources.GetObject("picPlayerBFog.BackgroundImage"), System.Drawing.Image)
-        Me.picPlayerBFog.Location = New System.Drawing.Point(602, 243)
+        Me.picPlayerBFog.Location = New System.Drawing.Point(122, 266)
         Me.picPlayerBFog.Name = "picPlayerBFog"
         Me.picPlayerBFog.Size = New System.Drawing.Size(15, 15)
         Me.picPlayerBFog.TabIndex = 387
         Me.picPlayerBFog.TabStop = False
-        Me.picPlayerBFog.Visible = False
         '
         'picStairFog
         '
         Me.picStairFog.BackgroundImage = CType(resources.GetObject("picStairFog.BackgroundImage"), System.Drawing.Image)
-        Me.picStairFog.Location = New System.Drawing.Point(539, 243)
+        Me.picStairFog.Location = New System.Drawing.Point(59, 266)
         Me.picStairFog.Name = "picStairFog"
         Me.picStairFog.Size = New System.Drawing.Size(15, 15)
         Me.picStairFog.TabIndex = 386
         Me.picStairFog.TabStop = False
-        Me.picStairFog.Visible = False
         '
         'picTrapFog
         '
         Me.picTrapFog.BackgroundImage = CType(resources.GetObject("picTrapFog.BackgroundImage"), System.Drawing.Image)
-        Me.picTrapFog.Location = New System.Drawing.Point(560, 243)
+        Me.picTrapFog.Location = New System.Drawing.Point(80, 266)
         Me.picTrapFog.Name = "picTrapFog"
         Me.picTrapFog.Size = New System.Drawing.Size(15, 15)
         Me.picTrapFog.TabIndex = 385
         Me.picTrapFog.TabStop = False
-        Me.picTrapFog.Visible = False
         '
         'picChestFog
         '
         Me.picChestFog.BackgroundImage = CType(resources.GetObject("picChestFog.BackgroundImage"), System.Drawing.Image)
-        Me.picChestFog.Location = New System.Drawing.Point(518, 243)
+        Me.picChestFog.Location = New System.Drawing.Point(38, 266)
         Me.picChestFog.Name = "picChestFog"
         Me.picChestFog.Size = New System.Drawing.Size(15, 15)
         Me.picChestFog.TabIndex = 384
         Me.picChestFog.TabStop = False
-        Me.picChestFog.Visible = False
         '
         'picTileFog
         '
         Me.picTileFog.BackgroundImage = CType(resources.GetObject("picTileFog.BackgroundImage"), System.Drawing.Image)
-        Me.picTileFog.Location = New System.Drawing.Point(497, 243)
+        Me.picTileFog.Location = New System.Drawing.Point(17, 266)
         Me.picTileFog.Name = "picTileFog"
         Me.picTileFog.Size = New System.Drawing.Size(15, 15)
         Me.picTileFog.TabIndex = 383
         Me.picTileFog.TabStop = False
-        Me.picTileFog.Visible = False
         '
         'picFVFog
         '
         Me.picFVFog.BackgroundImage = CType(resources.GetObject("picFVFog.BackgroundImage"), System.Drawing.Image)
-        Me.picFVFog.Location = New System.Drawing.Point(560, 264)
+        Me.picFVFog.Location = New System.Drawing.Point(80, 287)
         Me.picFVFog.Name = "picFVFog"
         Me.picFVFog.Size = New System.Drawing.Size(15, 15)
         Me.picFVFog.TabIndex = 392
         Me.picFVFog.TabStop = False
-        Me.picFVFog.Visible = False
         '
         'picTreeFog
         '
         Me.picTreeFog.BackgroundImage = CType(resources.GetObject("picTreeFog.BackgroundImage"), System.Drawing.Image)
-        Me.picTreeFog.Location = New System.Drawing.Point(581, 264)
+        Me.picTreeFog.Location = New System.Drawing.Point(143, 266)
         Me.picTreeFog.Name = "picTreeFog"
         Me.picTreeFog.Size = New System.Drawing.Size(15, 15)
         Me.picTreeFog.TabIndex = 393
         Me.picTreeFog.TabStop = False
-        Me.picTreeFog.Visible = False
         '
         'picBossStairsFog
         '
         Me.picBossStairsFog.BackgroundImage = CType(resources.GetObject("picBossStairsFog.BackgroundImage"), System.Drawing.Image)
-        Me.picBossStairsFog.Location = New System.Drawing.Point(602, 264)
+        Me.picBossStairsFog.Location = New System.Drawing.Point(101, 287)
         Me.picBossStairsFog.Name = "picBossStairsFog"
         Me.picBossStairsFog.Size = New System.Drawing.Size(15, 15)
         Me.picBossStairsFog.TabIndex = 394
         Me.picBossStairsFog.TabStop = False
-        Me.picBossStairsFog.Visible = False
         '
         'picMushroom
         '
@@ -2786,7 +2758,7 @@ Partial Class Game
         Me.pnlMeter.Controls.Add(Me.Label8)
         Me.pnlMeter.Controls.Add(Me.Label9)
         Me.pnlMeter.Controls.Add(Me.Label10)
-        Me.pnlMeter.Location = New System.Drawing.Point(733, 41)
+        Me.pnlMeter.Location = New System.Drawing.Point(733, 36)
         Me.pnlMeter.Name = "pnlMeter"
         Me.pnlMeter.Size = New System.Drawing.Size(269, 82)
         Me.pnlMeter.TabIndex = 400
@@ -2882,22 +2854,20 @@ Partial Class Game
         'picFoxStatueGold
         '
         Me.picFoxStatueGold.BackgroundImage = CType(resources.GetObject("picFoxStatueGold.BackgroundImage"), System.Drawing.Image)
-        Me.picFoxStatueGold.Location = New System.Drawing.Point(623, 115)
+        Me.picFoxStatueGold.Location = New System.Drawing.Point(143, 97)
         Me.picFoxStatueGold.Name = "picFoxStatueGold"
         Me.picFoxStatueGold.Size = New System.Drawing.Size(15, 15)
         Me.picFoxStatueGold.TabIndex = 403
         Me.picFoxStatueGold.TabStop = False
-        Me.picFoxStatueGold.Visible = False
         '
         'picFoxStatueF
         '
         Me.picFoxStatueF.BackgroundImage = CType(resources.GetObject("picFoxStatueF.BackgroundImage"), System.Drawing.Image)
-        Me.picFoxStatueF.Location = New System.Drawing.Point(602, 115)
+        Me.picFoxStatueF.Location = New System.Drawing.Point(122, 97)
         Me.picFoxStatueF.Name = "picFoxStatueF"
         Me.picFoxStatueF.Size = New System.Drawing.Size(15, 15)
         Me.picFoxStatueF.TabIndex = 402
         Me.picFoxStatueF.TabStop = False
-        Me.picFoxStatueF.Visible = False
         '
         'pnlFusion
         '
@@ -3445,35 +3415,214 @@ Partial Class Game
         Me.cboxSpec.Text = "-- Select --"
         Me.cboxSpec.Visible = False
         '
-        'picSpaceBarrierH
+        'picBarrierHSpace
         '
-        Me.picSpaceBarrierH.BackgroundImage = CType(resources.GetObject("picSpaceBarrierH.BackgroundImage"), System.Drawing.Image)
-        Me.picSpaceBarrierH.Location = New System.Drawing.Point(623, 159)
-        Me.picSpaceBarrierH.Name = "picSpaceBarrierH"
-        Me.picSpaceBarrierH.Size = New System.Drawing.Size(15, 15)
-        Me.picSpaceBarrierH.TabIndex = 408
-        Me.picSpaceBarrierH.TabStop = False
-        Me.picSpaceBarrierH.Visible = False
+        Me.picBarrierHSpace.BackgroundImage = CType(resources.GetObject("picBarrierHSpace.BackgroundImage"), System.Drawing.Image)
+        Me.picBarrierHSpace.Location = New System.Drawing.Point(59, 202)
+        Me.picBarrierHSpace.Name = "picBarrierHSpace"
+        Me.picBarrierHSpace.Size = New System.Drawing.Size(15, 15)
+        Me.picBarrierHSpace.TabIndex = 408
+        Me.picBarrierHSpace.TabStop = False
         '
-        'picSpaceBarrierV
+        'picBarrierVSpace
         '
-        Me.picSpaceBarrierV.BackgroundImage = CType(resources.GetObject("picSpaceBarrierV.BackgroundImage"), System.Drawing.Image)
-        Me.picSpaceBarrierV.Location = New System.Drawing.Point(644, 159)
-        Me.picSpaceBarrierV.Name = "picSpaceBarrierV"
-        Me.picSpaceBarrierV.Size = New System.Drawing.Size(15, 15)
-        Me.picSpaceBarrierV.TabIndex = 409
-        Me.picSpaceBarrierV.TabStop = False
-        Me.picSpaceBarrierV.Visible = False
+        Me.picBarrierVSpace.BackgroundImage = CType(resources.GetObject("picBarrierVSpace.BackgroundImage"), System.Drawing.Image)
+        Me.picBarrierVSpace.Location = New System.Drawing.Point(80, 202)
+        Me.picBarrierVSpace.Name = "picBarrierVSpace"
+        Me.picBarrierVSpace.Size = New System.Drawing.Size(15, 15)
+        Me.picBarrierVSpace.TabIndex = 409
+        Me.picBarrierVSpace.TabStop = False
         '
         'picTTSpace
         '
         Me.picTTSpace.BackgroundImage = CType(resources.GetObject("picTTSpace.BackgroundImage"), System.Drawing.Image)
-        Me.picTTSpace.Location = New System.Drawing.Point(539, 180)
+        Me.picTTSpace.Location = New System.Drawing.Point(38, 202)
         Me.picTTSpace.Name = "picTTSpace"
         Me.picTTSpace.Size = New System.Drawing.Size(15, 15)
         Me.picTTSpace.TabIndex = 410
         Me.picTTSpace.TabStop = False
-        Me.picTTSpace.Visible = False
+        '
+        'pnlTiles
+        '
+        Me.pnlTiles.Controls.Add(Me.picStatueSpace)
+        Me.pnlTiles.Controls.Add(Me.picFireScarEndRL)
+        Me.pnlTiles.Controls.Add(Me.picFireScarEndFL)
+        Me.pnlTiles.Controls.Add(Me.picFireScarR2F)
+        Me.pnlTiles.Controls.Add(Me.picFireScarR1F)
+        Me.pnlTiles.Controls.Add(Me.picFireScarL2F)
+        Me.pnlTiles.Controls.Add(Me.picFireScarL1F)
+        Me.pnlTiles.Controls.Add(Me.picFire3F)
+        Me.pnlTiles.Controls.Add(Me.picFire2F)
+        Me.pnlTiles.Controls.Add(Me.picFire1F)
+        Me.pnlTiles.Controls.Add(Me.picTree)
+        Me.pnlTiles.Controls.Add(Me.picBarrierVSpace)
+        Me.pnlTiles.Controls.Add(Me.picBarrierHSpace)
+        Me.pnlTiles.Controls.Add(Me.picTTSpace)
+        Me.pnlTiles.Controls.Add(Me.picTile)
+        Me.pnlTiles.Controls.Add(Me.picFoxStatueGold)
+        Me.pnlTiles.Controls.Add(Me.picFog)
+        Me.pnlTiles.Controls.Add(Me.picFoxStatueF)
+        Me.pnlTiles.Controls.Add(Me.picPlayer)
+        Me.pnlTiles.Controls.Add(Me.picStairs)
+        Me.pnlTiles.Controls.Add(Me.picChest)
+        Me.pnlTiles.Controls.Add(Me.picPlayerB)
+        Me.pnlTiles.Controls.Add(Me.picStatue)
+        Me.pnlTiles.Controls.Add(Me.picSK)
+        Me.pnlTiles.Controls.Add(Me.picTrap)
+        Me.pnlTiles.Controls.Add(Me.picTileF)
+        Me.pnlTiles.Controls.Add(Me.picPlayerf)
+        Me.pnlTiles.Controls.Add(Me.picLadderf)
+        Me.pnlTiles.Controls.Add(Me.picChestf)
+        Me.pnlTiles.Controls.Add(Me.picBimbof)
+        Me.pnlTiles.Controls.Add(Me.picShopkeeperf)
+        Me.pnlTiles.Controls.Add(Me.picStatuef)
+        Me.pnlTiles.Controls.Add(Me.picTrapf)
+        Me.pnlTiles.Controls.Add(Me.picSW)
+        Me.pnlTiles.Controls.Add(Me.picSWizF)
+        Me.pnlTiles.Controls.Add(Me.picStairsLock)
+        Me.pnlTiles.Controls.Add(Me.picStairsBoss)
+        Me.pnlTiles.Controls.Add(Me.picstairsbossf)
+        Me.pnlTiles.Controls.Add(Me.picstairslockf)
+        Me.pnlTiles.Controls.Add(Me.picCrystal)
+        Me.pnlTiles.Controls.Add(Me.picCrystalf)
+        Me.pnlTiles.Controls.Add(Me.picPath)
+        Me.pnlTiles.Controls.Add(Me.picPathf)
+        Me.pnlTiles.Controls.Add(Me.picHT)
+        Me.pnlTiles.Controls.Add(Me.picHTf)
+        Me.pnlTiles.Controls.Add(Me.picFVf)
+        Me.pnlTiles.Controls.Add(Me.picFV)
+        Me.pnlTiles.Controls.Add(Me.picTileSpace)
+        Me.pnlTiles.Controls.Add(Me.picChestSpace)
+        Me.pnlTiles.Controls.Add(Me.picSpaceTrap)
+        Me.pnlTiles.Controls.Add(Me.picStairsSpace)
+        Me.pnlTiles.Controls.Add(Me.picPlayerBSpace)
+        Me.pnlTiles.Controls.Add(Me.picPlayerSpace)
+        Me.pnlTiles.Controls.Add(Me.picCrystalSpace)
+        Me.pnlTiles.Controls.Add(Me.picPathSpace)
+        Me.pnlTiles.Controls.Add(Me.picLegaTile)
+        Me.pnlTiles.Controls.Add(Me.picLegaChest)
+        Me.pnlTiles.Controls.Add(Me.picLegaTrap)
+        Me.pnlTiles.Controls.Add(Me.picLegaStairs)
+        Me.pnlTiles.Controls.Add(Me.picLegaBimbo)
+        Me.pnlTiles.Controls.Add(Me.picLegaPlayer)
+        Me.pnlTiles.Controls.Add(Me.picLegaCrystal)
+        Me.pnlTiles.Controls.Add(Me.picLegaPath)
+        Me.pnlTiles.Controls.Add(Me.picLegaCaelia)
+        Me.pnlTiles.Controls.Add(Me.picWSf)
+        Me.pnlTiles.Controls.Add(Me.picWS)
+        Me.pnlTiles.Controls.Add(Me.picCB)
+        Me.pnlTiles.Controls.Add(Me.picCBrokF)
+        Me.pnlTiles.Controls.Add(Me.picTT)
+        Me.pnlTiles.Controls.Add(Me.picTTTileF)
+        Me.pnlTiles.Controls.Add(Me.picMG)
+        Me.pnlTiles.Controls.Add(Me.picMGTileF)
+        Me.pnlTiles.Controls.Add(Me.picTileFog)
+        Me.pnlTiles.Controls.Add(Me.picChestFog)
+        Me.pnlTiles.Controls.Add(Me.picTrapFog)
+        Me.pnlTiles.Controls.Add(Me.picStairFog)
+        Me.pnlTiles.Controls.Add(Me.picPlayerBFog)
+        Me.pnlTiles.Controls.Add(Me.picPlayerFog)
+        Me.pnlTiles.Controls.Add(Me.picCrystalFog)
+        Me.pnlTiles.Controls.Add(Me.picStatueFog)
+        Me.pnlTiles.Controls.Add(Me.picCBFog)
+        Me.pnlTiles.Controls.Add(Me.picBossStairsFog)
+        Me.pnlTiles.Controls.Add(Me.picFVFog)
+        Me.pnlTiles.Controls.Add(Me.picTreeFog)
+        Me.pnlTiles.Location = New System.Drawing.Point(444, 18)
+        Me.pnlTiles.Name = "pnlTiles"
+        Me.pnlTiles.Size = New System.Drawing.Size(175, 327)
+        Me.pnlTiles.TabIndex = 411
+        Me.pnlTiles.Visible = False
+        '
+        'picStatueSpace
+        '
+        Me.picStatueSpace.BackgroundImage = CType(resources.GetObject("picStatueSpace.BackgroundImage"), System.Drawing.Image)
+        Me.picStatueSpace.Location = New System.Drawing.Point(101, 202)
+        Me.picStatueSpace.Name = "picStatueSpace"
+        Me.picStatueSpace.Size = New System.Drawing.Size(15, 15)
+        Me.picStatueSpace.TabIndex = 420
+        Me.picStatueSpace.TabStop = False
+        '
+        'picFireScarEndRL
+        '
+        Me.picFireScarEndRL.BackgroundImage = CType(resources.GetObject("picFireScarEndRL.BackgroundImage"), System.Drawing.Image)
+        Me.picFireScarEndRL.Location = New System.Drawing.Point(59, 160)
+        Me.picFireScarEndRL.Name = "picFireScarEndRL"
+        Me.picFireScarEndRL.Size = New System.Drawing.Size(15, 15)
+        Me.picFireScarEndRL.TabIndex = 419
+        Me.picFireScarEndRL.TabStop = False
+        '
+        'picFireScarEndFL
+        '
+        Me.picFireScarEndFL.BackgroundImage = CType(resources.GetObject("picFireScarEndFL.BackgroundImage"), System.Drawing.Image)
+        Me.picFireScarEndFL.Location = New System.Drawing.Point(38, 160)
+        Me.picFireScarEndFL.Name = "picFireScarEndFL"
+        Me.picFireScarEndFL.Size = New System.Drawing.Size(15, 15)
+        Me.picFireScarEndFL.TabIndex = 418
+        Me.picFireScarEndFL.TabStop = False
+        '
+        'picFireScarR2F
+        '
+        Me.picFireScarR2F.BackgroundImage = CType(resources.GetObject("picFireScarR2F.BackgroundImage"), System.Drawing.Image)
+        Me.picFireScarR2F.Location = New System.Drawing.Point(17, 160)
+        Me.picFireScarR2F.Name = "picFireScarR2F"
+        Me.picFireScarR2F.Size = New System.Drawing.Size(15, 15)
+        Me.picFireScarR2F.TabIndex = 417
+        Me.picFireScarR2F.TabStop = False
+        '
+        'picFireScarR1F
+        '
+        Me.picFireScarR1F.BackgroundImage = CType(resources.GetObject("picFireScarR1F.BackgroundImage"), System.Drawing.Image)
+        Me.picFireScarR1F.Location = New System.Drawing.Point(143, 139)
+        Me.picFireScarR1F.Name = "picFireScarR1F"
+        Me.picFireScarR1F.Size = New System.Drawing.Size(15, 15)
+        Me.picFireScarR1F.TabIndex = 416
+        Me.picFireScarR1F.TabStop = False
+        '
+        'picFireScarL2F
+        '
+        Me.picFireScarL2F.BackgroundImage = CType(resources.GetObject("picFireScarL2F.BackgroundImage"), System.Drawing.Image)
+        Me.picFireScarL2F.Location = New System.Drawing.Point(122, 139)
+        Me.picFireScarL2F.Name = "picFireScarL2F"
+        Me.picFireScarL2F.Size = New System.Drawing.Size(15, 15)
+        Me.picFireScarL2F.TabIndex = 415
+        Me.picFireScarL2F.TabStop = False
+        '
+        'picFireScarL1F
+        '
+        Me.picFireScarL1F.BackgroundImage = CType(resources.GetObject("picFireScarL1F.BackgroundImage"), System.Drawing.Image)
+        Me.picFireScarL1F.Location = New System.Drawing.Point(101, 139)
+        Me.picFireScarL1F.Name = "picFireScarL1F"
+        Me.picFireScarL1F.Size = New System.Drawing.Size(15, 15)
+        Me.picFireScarL1F.TabIndex = 414
+        Me.picFireScarL1F.TabStop = False
+        '
+        'picFire3F
+        '
+        Me.picFire3F.BackgroundImage = CType(resources.GetObject("picFire3F.BackgroundImage"), System.Drawing.Image)
+        Me.picFire3F.Location = New System.Drawing.Point(80, 139)
+        Me.picFire3F.Name = "picFire3F"
+        Me.picFire3F.Size = New System.Drawing.Size(15, 15)
+        Me.picFire3F.TabIndex = 413
+        Me.picFire3F.TabStop = False
+        '
+        'picFire2F
+        '
+        Me.picFire2F.BackgroundImage = CType(resources.GetObject("picFire2F.BackgroundImage"), System.Drawing.Image)
+        Me.picFire2F.Location = New System.Drawing.Point(59, 139)
+        Me.picFire2F.Name = "picFire2F"
+        Me.picFire2F.Size = New System.Drawing.Size(15, 15)
+        Me.picFire2F.TabIndex = 412
+        Me.picFire2F.TabStop = False
+        '
+        'picFire1F
+        '
+        Me.picFire1F.BackgroundImage = CType(resources.GetObject("picFire1F.BackgroundImage"), System.Drawing.Image)
+        Me.picFire1F.Location = New System.Drawing.Point(38, 139)
+        Me.picFire1F.Name = "picFire1F"
+        Me.picFire1F.Size = New System.Drawing.Size(15, 15)
+        Me.picFire1F.TabIndex = 411
+        Me.picFire1F.TabStop = False
         '
         'Game
         '
@@ -3482,24 +3631,23 @@ Partial Class Game
         Me.BackColor = System.Drawing.Color.Black
         Me.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch
         Me.ClientSize = New System.Drawing.Size(1008, 690)
+        Me.Controls.Add(Me.pnlCombat)
+        Me.Controls.Add(Me.pnlEvent)
+        Me.Controls.Add(Me.pnlTiles)
         Me.Controls.Add(Me.pnlCastUse)
         Me.Controls.Add(Me.pnlSpellSpecial)
         Me.Controls.Add(Me.pnlSnare)
         Me.Controls.Add(Me.pnlFusion)
-        Me.Controls.Add(Me.picFoxStatueGold)
-        Me.Controls.Add(Me.picFoxStatueF)
         Me.Controls.Add(Me.pic9tailsBimbo)
         Me.Controls.Add(Me.pnlSaveLoad)
         Me.Controls.Add(Me.btnAll)
         Me.Controls.Add(Me.btnNone)
         Me.Controls.Add(Me.pnlSelection)
-        Me.Controls.Add(Me.pnlEvent)
         Me.Controls.Add(Me.pnlDescription)
         Me.Controls.Add(Me.lblLoadMsg)
         Me.Controls.Add(Me.btnAbout)
         Me.Controls.Add(Me.chkAcc)
         Me.Controls.Add(Me.picLoadBar)
-        Me.Controls.Add(Me.pnlCombat)
         Me.Controls.Add(Me.Button1)
         Me.Controls.Add(Me.btnT)
         Me.Controls.Add(Me.btnSettings)
@@ -3550,75 +3698,6 @@ Partial Class Game
         Me.Controls.Add(Me.Label6)
         Me.Controls.Add(Me.pnlStats)
         Me.Controls.Add(Me.pnlMeter)
-        Me.Controls.Add(Me.picBossStairsFog)
-        Me.Controls.Add(Me.picTreeFog)
-        Me.Controls.Add(Me.picFVFog)
-        Me.Controls.Add(Me.picCBFog)
-        Me.Controls.Add(Me.picStatueFog)
-        Me.Controls.Add(Me.picCrystalFog)
-        Me.Controls.Add(Me.picPlayerFog)
-        Me.Controls.Add(Me.picPlayerBFog)
-        Me.Controls.Add(Me.picStairFog)
-        Me.Controls.Add(Me.picTrapFog)
-        Me.Controls.Add(Me.picChestFog)
-        Me.Controls.Add(Me.picTileFog)
-        Me.Controls.Add(Me.picMGTileF)
-        Me.Controls.Add(Me.picMGTile)
-        Me.Controls.Add(Me.picTTTileF)
-        Me.Controls.Add(Me.picTTTile)
-        Me.Controls.Add(Me.picCBrokF)
-        Me.Controls.Add(Me.picCBrok)
-        Me.Controls.Add(Me.picWS)
-        Me.Controls.Add(Me.picWSf)
-        Me.Controls.Add(Me.picLegaCaelia)
-        Me.Controls.Add(Me.picLegaPath)
-        Me.Controls.Add(Me.picLegaCrystal)
-        Me.Controls.Add(Me.picLegaPlayer)
-        Me.Controls.Add(Me.picLegaBimbo)
-        Me.Controls.Add(Me.picLegaStairs)
-        Me.Controls.Add(Me.picLegaTrap)
-        Me.Controls.Add(Me.picLegaChest)
-        Me.Controls.Add(Me.picLegaTile)
-        Me.Controls.Add(Me.picSPacePath)
-        Me.Controls.Add(Me.picSpaceCrystal)
-        Me.Controls.Add(Me.picPlayerSpace)
-        Me.Controls.Add(Me.picBimboSpace)
-        Me.Controls.Add(Me.picSpaceStairs)
-        Me.Controls.Add(Me.picSpaceTrap)
-        Me.Controls.Add(Me.picSpaceChest)
-        Me.Controls.Add(Me.picSpaceTile)
-        Me.Controls.Add(Me.picFVtile)
-        Me.Controls.Add(Me.picFVf)
-        Me.Controls.Add(Me.picHTf)
-        Me.Controls.Add(Me.picHT)
-        Me.Controls.Add(Me.picPathf)
-        Me.Controls.Add(Me.picPath)
-        Me.Controls.Add(Me.picCrystalf)
-        Me.Controls.Add(Me.picCrystal)
-        Me.Controls.Add(Me.picstairslockf)
-        Me.Controls.Add(Me.picstairsbossf)
-        Me.Controls.Add(Me.picStairsBoss)
-        Me.Controls.Add(Me.picStairsLock)
-        Me.Controls.Add(Me.picSWizF)
-        Me.Controls.Add(Me.picSWiz)
-        Me.Controls.Add(Me.picTrapf)
-        Me.Controls.Add(Me.picStatuef)
-        Me.Controls.Add(Me.picShopkeeperf)
-        Me.Controls.Add(Me.picBimbof)
-        Me.Controls.Add(Me.picChestf)
-        Me.Controls.Add(Me.picLadderf)
-        Me.Controls.Add(Me.picPlayerf)
-        Me.Controls.Add(Me.picTree)
-        Me.Controls.Add(Me.picTileF)
-        Me.Controls.Add(Me.picTrap)
-        Me.Controls.Add(Me.picShopkeepTile)
-        Me.Controls.Add(Me.picStatue)
-        Me.Controls.Add(Me.picPlayerB)
-        Me.Controls.Add(Me.picChest)
-        Me.Controls.Add(Me.picStairs)
-        Me.Controls.Add(Me.picPlayer)
-        Me.Controls.Add(Me.picFog)
-        Me.Controls.Add(Me.picTile)
         Me.Controls.Add(Me.picMushroom)
         Me.Controls.Add(Me.picPFaeShock)
         Me.Controls.Add(Me.picPFae)
@@ -3647,9 +3726,6 @@ Partial Class Game
         Me.Controls.Add(Me.picLust3)
         Me.Controls.Add(Me.picLust2)
         Me.Controls.Add(Me.picLust1)
-        Me.Controls.Add(Me.picTTSpace)
-        Me.Controls.Add(Me.picSpaceBarrierH)
-        Me.Controls.Add(Me.picSpaceBarrierV)
         Me.DoubleBuffered = True
         Me.ForeColor = System.Drawing.Color.Black
         Me.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle
@@ -3672,7 +3748,7 @@ Partial Class Game
         Me.MenuStrip1.ResumeLayout(False)
         Me.MenuStrip1.PerformLayout()
         CType(Me.picPortrait, System.ComponentModel.ISupportInitialize).EndInit()
-        CType(Me.picShopkeepTile, System.ComponentModel.ISupportInitialize).EndInit()
+        CType(Me.picSK, System.ComponentModel.ISupportInitialize).EndInit()
         CType(Me.picLust1, System.ComponentModel.ISupportInitialize).EndInit()
         CType(Me.picLust2, System.ComponentModel.ISupportInitialize).EndInit()
         CType(Me.picLust3, System.ComponentModel.ISupportInitialize).EndInit()
@@ -3693,10 +3769,8 @@ Partial Class Game
         CType(Me.picTrapf, System.ComponentModel.ISupportInitialize).EndInit()
         Me.pnlCombat.ResumeLayout(False)
         Me.pnlCombat.PerformLayout()
-        CType(Me.picPHealth, System.ComponentModel.ISupportInitialize).EndInit()
-        CType(Me.picEHbar, System.ComponentModel.ISupportInitialize).EndInit()
         CType(Me.picLoadBar, System.ComponentModel.ISupportInitialize).EndInit()
-        CType(Me.picSWiz, System.ComponentModel.ISupportInitialize).EndInit()
+        CType(Me.picSW, System.ComponentModel.ISupportInitialize).EndInit()
         CType(Me.picSWizF, System.ComponentModel.ISupportInitialize).EndInit()
         Me.pnlDescription.ResumeLayout(False)
         Me.pnlDescription.PerformLayout()
@@ -3719,18 +3793,19 @@ Partial Class Game
         CType(Me.picHT, System.ComponentModel.ISupportInitialize).EndInit()
         CType(Me.picHTf, System.ComponentModel.ISupportInitialize).EndInit()
         CType(Me.picFVf, System.ComponentModel.ISupportInitialize).EndInit()
-        CType(Me.picFVtile, System.ComponentModel.ISupportInitialize).EndInit()
+        CType(Me.picFV, System.ComponentModel.ISupportInitialize).EndInit()
         CType(Me.picStaffEnd, System.ComponentModel.ISupportInitialize).EndInit()
-        CType(Me.picSpaceStairs, System.ComponentModel.ISupportInitialize).EndInit()
+        CType(Me.picStairsSpace, System.ComponentModel.ISupportInitialize).EndInit()
         CType(Me.picSpaceTrap, System.ComponentModel.ISupportInitialize).EndInit()
-        CType(Me.picSpaceChest, System.ComponentModel.ISupportInitialize).EndInit()
-        CType(Me.picSpaceTile, System.ComponentModel.ISupportInitialize).EndInit()
+        CType(Me.picChestSpace, System.ComponentModel.ISupportInitialize).EndInit()
+        CType(Me.picTileSpace, System.ComponentModel.ISupportInitialize).EndInit()
         CType(Me.picPlayerSpace, System.ComponentModel.ISupportInitialize).EndInit()
-        CType(Me.picBimboSpace, System.ComponentModel.ISupportInitialize).EndInit()
-        CType(Me.picSPacePath, System.ComponentModel.ISupportInitialize).EndInit()
-        CType(Me.picSpaceCrystal, System.ComponentModel.ISupportInitialize).EndInit()
+        CType(Me.picPlayerBSpace, System.ComponentModel.ISupportInitialize).EndInit()
+        CType(Me.picPathSpace, System.ComponentModel.ISupportInitialize).EndInit()
+        CType(Me.picCrystalSpace, System.ComponentModel.ISupportInitialize).EndInit()
         Me.pnlEvent.ResumeLayout(False)
         Me.pnlEvent.PerformLayout()
+        CType(Me.picEvent, System.ComponentModel.ISupportInitialize).EndInit()
         CType(Me.picLegaPath, System.ComponentModel.ISupportInitialize).EndInit()
         CType(Me.picLegaCrystal, System.ComponentModel.ISupportInitialize).EndInit()
         CType(Me.picLegaPlayer, System.ComponentModel.ISupportInitialize).EndInit()
@@ -3743,7 +3818,7 @@ Partial Class Game
         CType(Me.picWSf, System.ComponentModel.ISupportInitialize).EndInit()
         CType(Me.picWS, System.ComponentModel.ISupportInitialize).EndInit()
         CType(Me.picDragonF, System.ComponentModel.ISupportInitialize).EndInit()
-        CType(Me.picCBrok, System.ComponentModel.ISupportInitialize).EndInit()
+        CType(Me.picCB, System.ComponentModel.ISupportInitialize).EndInit()
         CType(Me.picCBrokF, System.ComponentModel.ISupportInitialize).EndInit()
         CType(Me.picPortOutline, System.ComponentModel.ISupportInitialize).EndInit()
         CType(Me.picHalfDragon2, System.ComponentModel.ISupportInitialize).EndInit()
@@ -3754,11 +3829,11 @@ Partial Class Game
         CType(Me.picBlobM, System.ComponentModel.ISupportInitialize).EndInit()
         CType(Me.picOniF, System.ComponentModel.ISupportInitialize).EndInit()
         CType(Me.picUnicorn, System.ComponentModel.ISupportInitialize).EndInit()
-        CType(Me.picTTTile, System.ComponentModel.ISupportInitialize).EndInit()
+        CType(Me.picTT, System.ComponentModel.ISupportInitialize).EndInit()
         CType(Me.picTTTileF, System.ComponentModel.ISupportInitialize).EndInit()
         CType(Me.picCow, System.ComponentModel.ISupportInitialize).EndInit()
         CType(Me.picCheerL, System.ComponentModel.ISupportInitialize).EndInit()
-        CType(Me.picMGTile, System.ComponentModel.ISupportInitialize).EndInit()
+        CType(Me.picMG, System.ComponentModel.ISupportInitialize).EndInit()
         CType(Me.picMGTileF, System.ComponentModel.ISupportInitialize).EndInit()
         CType(Me.picCBFog, System.ComponentModel.ISupportInitialize).EndInit()
         CType(Me.picStatueFog, System.ComponentModel.ISupportInitialize).EndInit()
@@ -3793,9 +3868,20 @@ Partial Class Game
         Me.pnlSpellSpecial.PerformLayout()
         Me.pnlCastUse.ResumeLayout(False)
         Me.pnlCastUse.PerformLayout()
-        CType(Me.picSpaceBarrierH, System.ComponentModel.ISupportInitialize).EndInit()
-        CType(Me.picSpaceBarrierV, System.ComponentModel.ISupportInitialize).EndInit()
+        CType(Me.picBarrierHSpace, System.ComponentModel.ISupportInitialize).EndInit()
+        CType(Me.picBarrierVSpace, System.ComponentModel.ISupportInitialize).EndInit()
         CType(Me.picTTSpace, System.ComponentModel.ISupportInitialize).EndInit()
+        Me.pnlTiles.ResumeLayout(False)
+        CType(Me.picStatueSpace, System.ComponentModel.ISupportInitialize).EndInit()
+        CType(Me.picFireScarEndRL, System.ComponentModel.ISupportInitialize).EndInit()
+        CType(Me.picFireScarEndFL, System.ComponentModel.ISupportInitialize).EndInit()
+        CType(Me.picFireScarR2F, System.ComponentModel.ISupportInitialize).EndInit()
+        CType(Me.picFireScarR1F, System.ComponentModel.ISupportInitialize).EndInit()
+        CType(Me.picFireScarL2F, System.ComponentModel.ISupportInitialize).EndInit()
+        CType(Me.picFireScarL1F, System.ComponentModel.ISupportInitialize).EndInit()
+        CType(Me.picFire3F, System.ComponentModel.ISupportInitialize).EndInit()
+        CType(Me.picFire2F, System.ComponentModel.ISupportInitialize).EndInit()
+        CType(Me.picFire1F, System.ComponentModel.ISupportInitialize).EndInit()
         Me.ResumeLayout(False)
         Me.PerformLayout()
 
@@ -3848,7 +3934,7 @@ Partial Class Game
     Friend WithEvents picPortrait As System.Windows.Forms.PictureBox
     Friend WithEvents btnEXM As System.Windows.Forms.Button
     Friend WithEvents lblGold As System.Windows.Forms.Label
-    Friend WithEvents picShopkeepTile As System.Windows.Forms.PictureBox
+    Friend WithEvents picSK As System.Windows.Forms.PictureBox
     Friend WithEvents picLust1 As System.Windows.Forms.PictureBox
     Friend WithEvents picLust2 As System.Windows.Forms.PictureBox
     Friend WithEvents picLust3 As System.Windows.Forms.PictureBox
@@ -3908,14 +3994,12 @@ Partial Class Game
     Friend WithEvents lblPName As System.Windows.Forms.Label
     Friend WithEvents lblEHealth As System.Windows.Forms.Label
     Friend WithEvents lblEName As System.Windows.Forms.Label
-    Friend WithEvents picPHealth As System.Windows.Forms.PictureBox
-    Friend WithEvents picEHbar As System.Windows.Forms.PictureBox
     Friend WithEvents lblEvent As System.Windows.Forms.Label
     Friend WithEvents Label2 As System.Windows.Forms.Label
     Friend WithEvents picLoadBar As System.Windows.Forms.PictureBox
     Friend WithEvents lblCombatEvents As System.Windows.Forms.TextBox
     Friend WithEvents btnWait As System.Windows.Forms.Button
-    Friend WithEvents picSWiz As System.Windows.Forms.PictureBox
+    Friend WithEvents picSW As System.Windows.Forms.PictureBox
     Friend WithEvents picSWizF As System.Windows.Forms.PictureBox
     Friend WithEvents pnlDescription As System.Windows.Forms.Panel
     Friend WithEvents lblNext As System.Windows.Forms.Label
@@ -3948,16 +4032,16 @@ Partial Class Game
     Friend WithEvents picHT As System.Windows.Forms.PictureBox
     Friend WithEvents picHTf As System.Windows.Forms.PictureBox
     Friend WithEvents picFVf As System.Windows.Forms.PictureBox
-    Friend WithEvents picFVtile As System.Windows.Forms.PictureBox
+    Friend WithEvents picFV As System.Windows.Forms.PictureBox
     Friend WithEvents picStaffEnd As System.Windows.Forms.PictureBox
-    Friend WithEvents picSpaceStairs As System.Windows.Forms.PictureBox
+    Friend WithEvents picStairsSpace As System.Windows.Forms.PictureBox
     Friend WithEvents picSpaceTrap As System.Windows.Forms.PictureBox
-    Friend WithEvents picSpaceChest As System.Windows.Forms.PictureBox
-    Friend WithEvents picSpaceTile As System.Windows.Forms.PictureBox
+    Friend WithEvents picChestSpace As System.Windows.Forms.PictureBox
+    Friend WithEvents picTileSpace As System.Windows.Forms.PictureBox
     Friend WithEvents picPlayerSpace As System.Windows.Forms.PictureBox
-    Friend WithEvents picBimboSpace As System.Windows.Forms.PictureBox
-    Friend WithEvents picSPacePath As System.Windows.Forms.PictureBox
-    Friend WithEvents picSpaceCrystal As System.Windows.Forms.PictureBox
+    Friend WithEvents picPlayerBSpace As System.Windows.Forms.PictureBox
+    Friend WithEvents picPathSpace As System.Windows.Forms.PictureBox
+    Friend WithEvents picCrystalSpace As System.Windows.Forms.PictureBox
     Friend WithEvents pnlEvent As System.Windows.Forms.Panel
     Friend WithEvents txtPNLEvents As System.Windows.Forms.TextBox
     Friend WithEvents Label4 As System.Windows.Forms.Label
@@ -3977,7 +4061,7 @@ Partial Class Game
     Friend WithEvents picWSf As System.Windows.Forms.PictureBox
     Friend WithEvents picWS As System.Windows.Forms.PictureBox
     Friend WithEvents picDragonF As System.Windows.Forms.PictureBox
-    Friend WithEvents picCBrok As System.Windows.Forms.PictureBox
+    Friend WithEvents picCB As System.Windows.Forms.PictureBox
     Friend WithEvents picCBrokF As System.Windows.Forms.PictureBox
     Friend WithEvents picPortOutline As System.Windows.Forms.PictureBox
     Friend WithEvents picHalfDragon2 As System.Windows.Forms.PictureBox
@@ -3988,12 +4072,12 @@ Partial Class Game
     Friend WithEvents picBlobM As System.Windows.Forms.PictureBox
     Friend WithEvents picOniF As System.Windows.Forms.PictureBox
     Friend WithEvents picUnicorn As System.Windows.Forms.PictureBox
-    Friend WithEvents picTTTile As System.Windows.Forms.PictureBox
+    Friend WithEvents picTT As System.Windows.Forms.PictureBox
     Friend WithEvents picTTTileF As System.Windows.Forms.PictureBox
     Friend WithEvents DebugToolStripMenuItem1 As System.Windows.Forms.ToolStripMenuItem
     Friend WithEvents picCow As System.Windows.Forms.PictureBox
     Friend WithEvents picCheerL As System.Windows.Forms.PictureBox
-    Friend WithEvents picMGTile As System.Windows.Forms.PictureBox
+    Friend WithEvents picMG As System.Windows.Forms.PictureBox
     Friend WithEvents picMGTileF As System.Windows.Forms.PictureBox
     Friend WithEvents picCBFog As System.Windows.Forms.PictureBox
     Friend WithEvents picStatueFog As System.Windows.Forms.PictureBox
@@ -4067,7 +4151,21 @@ Partial Class Game
     Friend WithEvents lblKnownAbilities As System.Windows.Forms.Label
     Friend WithEvents cboxCast As System.Windows.Forms.ComboBox
     Friend WithEvents cboxSpec As System.Windows.Forms.ComboBox
-    Friend WithEvents picSpaceBarrierH As System.Windows.Forms.PictureBox
-    Friend WithEvents picSpaceBarrierV As System.Windows.Forms.PictureBox
+    Friend WithEvents picBarrierHSpace As System.Windows.Forms.PictureBox
+    Friend WithEvents picBarrierVSpace As System.Windows.Forms.PictureBox
     Friend WithEvents picTTSpace As System.Windows.Forms.PictureBox
+    Friend WithEvents pnlTiles As System.Windows.Forms.Panel
+    Friend WithEvents picFireScarEndRL As System.Windows.Forms.PictureBox
+    Friend WithEvents picFireScarEndFL As System.Windows.Forms.PictureBox
+    Friend WithEvents picFireScarR2F As System.Windows.Forms.PictureBox
+    Friend WithEvents picFireScarR1F As System.Windows.Forms.PictureBox
+    Friend WithEvents picFireScarL2F As System.Windows.Forms.PictureBox
+    Friend WithEvents picFireScarL1F As System.Windows.Forms.PictureBox
+    Friend WithEvents picFire3F As System.Windows.Forms.PictureBox
+    Friend WithEvents picFire2F As System.Windows.Forms.PictureBox
+    Friend WithEvents picFire1F As System.Windows.Forms.PictureBox
+    Friend WithEvents picEvent As System.Windows.Forms.PictureBox
+    Friend WithEvents Label18 As System.Windows.Forms.Label
+    Friend WithEvents Label20 As System.Windows.Forms.Label
+    Friend WithEvents picStatueSpace As System.Windows.Forms.PictureBox
 End Class

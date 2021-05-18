@@ -3,19 +3,19 @@
 
     Sub New()
         '|ID Info|
-        MyBase.setName("Gold_Armor")
+        setName("Gold_Armor")
         id = 38
         tier = Nothing
 
         '|Item Flags|
-        MyBase.setUsable(False)
-        MyBase.compressesBreasts = True
-        MyBase.slutVarInd = 39
+        usable = false
+        MyBase.compress_breast = True
+        MyBase.slut_var_ind = 39
 
         '|Stats|
-        MyBase.dBoost = 30
-        MyBase.count = 0
-        MyBase.value = 3800
+        MyBase.d_boost = 30
+        count = 0
+        value = 3800
 
         '|Image Index|
         MyBase.bsizeneg1 = New Tuple(Of Integer, Boolean, Boolean)(9, False, True)
@@ -31,7 +31,7 @@
         MyBase.usize3 = New Tuple(Of Integer, Boolean, Boolean)(266, True, True)
 
         '|Description|
-        MyBase.setDesc("A expensive looking armor set made for the wealthy." & DDUtils.RNRN &
+        setDesc("A expensive looking armor set made for the wealthy." & DDUtils.RNRN &
                                           getSizeInformation() & vbCrLf & getStatInformation())
     End Sub
 End Class

@@ -3,20 +3,20 @@
 
     Sub New()
         '|ID Info|
-        MyBase.setName("Crystalline_Armor")
+        setName("Crystalline_Armor")
         id = 144
         tier = Nothing
 
         '|Item Flags|
-        MyBase.setUsable(False)
-        MyBase.compressesBreasts = True
+        usable = false
+        MyBase.compress_breast = True
 
         '|Stats|
-        MyBase.dBoost = 20
-        MyBase.mBoost = 15
-        MyBase.wBoost = 5
-        MyBase.count = 0
-        MyBase.value = 2777
+        MyBase.d_boost = 20
+        MyBase.m_boost = 15
+        w_boost = 5
+        count = 0
+        value = 2777
 
         '|Image Index|
         MyBase.bsizeneg1 = New Tuple(Of Integer, Boolean, Boolean)(53, False, True)
@@ -32,7 +32,7 @@
         MyBase.usize3 = New Tuple(Of Integer, Boolean, Boolean)(121, True, True)
 
         '|Description|
-        MyBase.setDesc("A set of armor made up of a series of diamond-like plates enhanced by concentrated mana.  While normally these would be extremely brittle, the magical energy lends them a fair amount of durability, and lends their wearer some extra mana." & DDUtils.RNRN &
+        setDesc("A set of armor made up of a series of diamond-like plates enhanced by concentrated mana.  While normally these would be extremely brittle, the magical energy lends them a fair amount of durability, and lends their wearer some extra mana." & DDUtils.RNRN &
                        getSizeInformation() & vbCrLf & getStatInformation())
     End Sub
 

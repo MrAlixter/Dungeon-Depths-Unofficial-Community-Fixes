@@ -13,13 +13,13 @@
         If p.perks(perk.succubuscurse) > -1 Then p.perks(perk.succubuscurse) = -1 : Game.pushLstLog("The succubus's curse is neutralized")
         If p.perks(perk.coftheox) > -1 And Int(Rnd() * 2) = 0 Then p.perks(perk.coftheox) = -1 : Game.pushLstLog("The curse of the ox is neutralized")
 
-        If p.equippedArmor.isCursed Then
+        If p.equippedArmor.cursed Then
             Equipment.equipArmor(p, "Naked")
             Game.pushLstLog("Cursed armor removed")
-        ElseIf p.equippedWeapon.isCursed Then
+        ElseIf p.equippedWeapon.cursed Then
             Equipment.equipWeapon(p, "Fists")
             Game.pushLstLog("Cursed weapon removed")
-        ElseIf p.equippedAcce.isCursed Then
+        ElseIf p.equippedAcce.cursed Then
             Equipment.equipAcce(p, "Nothing")
             Game.pushLstLog("Cursed accessory removed")
         End If

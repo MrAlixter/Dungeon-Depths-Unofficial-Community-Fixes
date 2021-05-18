@@ -270,6 +270,7 @@
         internal_inventory.Add("Incandescent_Potion", New IncandPotion)         '248
         internal_inventory.Add("Learn_'Focus_Up'", New TeachFocusedMantra)      '249
         internal_inventory.Add("Familiar's_Costume", New FamCostume)            '250
+        'v11.0.0
         internal_inventory.Add("Old_Snips", New OldSnips)                       '251
         internal_inventory.Add("Collar_Snips", New CollarSnips)                 '252
         internal_inventory.Add("Cynn's_Mark", New CynnsMark)                    '253
@@ -299,6 +300,20 @@
         internal_inventory.Add("Paleomancer's_Diary", New PaleoDiary)           '277
         internal_inventory.Add("Marissa's_Notes", New MarissasNotes)            '278
         internal_inventory.Add("AAAAAA_Specification", New AAAAAASpecs)         '279
+        internal_inventory.Add("Phase_Vibrator", New PhaseVibrator)             '280
+        internal_inventory.Add("Phase_Deflector", New PhaseDeflector)           '281
+        internal_inventory.Add("Time_Cop_Clothes", New TimeCopClothes)          '282
+        internal_inventory.Add("Hallowed_Talisman", New HallowedTalisman)       '283
+        internal_inventory.Add("Large_Stick", New LargeStick)                   '284
+        internal_inventory.Add("Regular_Clothes", New CommonClothes8)           '285
+        internal_inventory.Add("Tome_Of_Knowledge", New TomeOfKnowlege)         '286
+        internal_inventory.Add("Extra_Life", New ExtraLife)                     '287
+        internal_inventory.Add("Cultist's_Cloak", New CultistCloak)             '288
+        internal_inventory.Add("Crimson_Cloak", New CrimsonCloak)               '289
+        internal_inventory.Add("Skimpy_Clothes_(G)", New SkimpyClothesG)        '290
+        internal_inventory.Add("Golden_Gum", New GoldenGum)                     '291
+        internal_inventory.Add("Imitation_Cowbell", New ImmitationCowbell)      '292
+        internal_inventory.Add("Magical_Mimic_Wand​", New MagMimicWand)          '293
 
         armor = {New Naked,
                  Me.item(5), Me.item(7), Me.item(8), Me.item(10),
@@ -321,7 +336,8 @@
                  Me.item(208), Me.item(210), Me.item(211), Me.item(216),
                  Me.item(220), Me.item(221), Me.item(222), Me.item(237),
                  Me.item(239), Me.item(240), Me.item(250), Me.item(254),
-                 Me.item(262), Me.item(265), Me.item(266)}
+                 Me.item(262), Me.item(265), Me.item(266), Me.item(282),
+                 Me.item(285), Me.item(288), Me.item(289), Me.item(290)}
 
         weapons = {New BareFists(),
                    Me.item(6), Me.item(9), Me.item(11), Me.item(21),
@@ -336,7 +352,8 @@
                    Me.item(209), Me.item(212), Me.item(213), Me.item(217),
                    Me.item(218), Me.item(238), Me.item(255), Me.item(256),
                    Me.item(257), Me.item(258), Me.item(259), Me.item(260),
-                   Me.item(273), Me.item(274), Me.item(275), Me.item(276)}
+                   Me.item(273), Me.item(274), Me.item(275), Me.item(276),
+                   Me.item(284), Me.item(293)}
 
         useable = {Me.item(0), Me.item(3), Me.item(4),
                    Me.item(65), Me.item(15), Me.item(36), Me.item(37),
@@ -352,7 +369,7 @@
                    Me.item(206), Me.item(207), Me.item(214), Me.item(215),
                    Me.item(219), Me.item(226), Me.item(227), Me.item(238),
                    Me.item(244), Me.item(251), Me.item(252), Me.item(277),
-                   Me.item(278), Me.item(279)}
+                   Me.item(278), Me.item(279), Me.item(280), Me.item(286)}
 
         food = {Me.item(1), Me.item(30), Me.item(31), Me.item(32), Me.item(33),
                 Me.item(34), Me.item(35), Me.item(44), Me.item(90),
@@ -360,7 +377,7 @@
                 Me.item(117), Me.item(125), Me.item(132), Me.item(133),
                 Me.item(134), Me.item(135), Me.item(178), Me.item(228),
                 Me.item(230), Me.item(267), Me.item(268), Me.item(269),
-                Me.item(270), Me.item(272)}
+                Me.item(270), Me.item(272), Me.item(291)}
 
         acce = {New noAcce(), Me.item(66), Me.item(67), Me.item(68),
                 Me.item(69), Me.item(70), Me.item(77), Me.item(81),
@@ -368,7 +385,7 @@
                 Me.item(140), Me.item(141), Me.item(149), Me.item(161),
                 Me.item(164), Me.item(168), Me.item(180), Me.item(197),
                 Me.item(198), Me.item(223), Me.item(225), Me.item(253),
-                Me.item(271)}
+                Me.item(271), Me.item(281), Me.item(283), Me.item(292)}
 
         potions = {Me.item(2), Me.item(13), Me.item(14), Me.item(25),
                    Me.item(26), Me.item(27), Me.item(28), Me.item(29),
@@ -381,7 +398,8 @@
         Array.Sort(potions)
 
         misc = {Me.item(43), Me.item(53), Me.item(224), Me.item(229),
-                Me.item(242), Me.item(243), Me.item(261), Me.item(264)}
+                Me.item(242), Me.item(243), Me.item(261), Me.item(264),
+                Me.item(287)}
 
         invIDorder = New List(Of Integer)
 

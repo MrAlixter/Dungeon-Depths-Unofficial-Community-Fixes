@@ -6,7 +6,7 @@
     Public tier3 = New List(Of Item)
     Public tier4 = New List(Of Item)
     Public tier5 = New List(Of Item)
-    Public tiers() As List(Of Item) = {Nothing, tier1, tier2, tier3}
+    Public tiers() As List(Of Item) = {Nothing, tier1, tier2, tier3, tier4}
     '|CONSTRUCTORS|
     Sub New()
         contents = New Inventory(False)
@@ -77,7 +77,7 @@
                     itemTier = 1
             End Select
             If itemTier < 1 Or itemTier > tiers.Length - 1 Then
-                MessageBox.Show("Chest @ (" & CStr(x) & ", " & CStr(y) & ") tried making an item out of tier range.\nDefaulting to tier 1.")
+                Console.Out.WriteLine("Chest @ (" & CStr(x) & ", " & CStr(y) & ") tried making an item out of tier range.\nDefaulting to tier 1.")
                 itemTier = 1
             End If
 
@@ -137,7 +137,7 @@
                 c += " " & vbCrLf & "+" & content.count & " " & Game.player1.inv.item(i).getName() & " "
             End If
         Next
-        c += " " & vbCrLf & " " & vbCrLf & "Press any non-movement key to continue."
+        c += " " & DDUtils.RNRN & "Press any non-movement key to continue."
         Game.lblEvent.Text = c
         Game.lblEvent.BringToFront()
         Game.lblEvent.Location = New Point((250 * Game.Size.Width / 688) - (Game.lblEvent.Size.Width / 2), 65 * Game.Size.Width / 688)

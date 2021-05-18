@@ -1,13 +1,13 @@
 ﻿Public Class HManaPotion
     Inherits MysteryPotion
     Sub New()
-        MyBase.setName("Hyper_Mana_Potion")
-        MyBase.setDesc("A outlandish-looking potion")
+        setName("Hyper_Mana_Potion")
+        setDesc("A outlandish-looking potion")
         id = 236
         tier = 3
-        MyBase.setUsable(True)
-        MyBase.count = 0
-        MyBase.value = 500
+        usable = true
+        count = 0
+        value = 500
         MyBase.onBuy = AddressOf reveal
     End Sub
 

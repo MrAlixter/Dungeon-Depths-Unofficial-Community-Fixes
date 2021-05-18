@@ -3,21 +3,21 @@
 
     Sub New()
         '|ID Info|
-        MyBase.setName("Warlock_Lesson")
+        setName("Warlock_Lesson")
         id = 124
         tier = Nothing
 
         '|Item Flags|
-        MyBase.setUsable(False)
-        MyBase.isRandoTFAcceptable = False
+        usable = false
+        rando_inv_allowed = False
         MyBase.onBuy = AddressOf teach
 
         '|Stats|
-        MyBase.count = 0
-        MyBase.value = 5900
+        count = 0
+        value = 5900
 
         '|Description|
-        MyBase.setDesc("""Are you a fan of overwhelming magical power, without regard to its cost?  Do you mind bending to the whim of, say, a goddess of forgetfulness, in order to achive your hopes and dreams?  Perhaps the Warlock life is for you...""")
+        setDesc("""Are you a fan of overwhelming magical power, without regard to its cost?  Do you mind bending to the whim of, say, a goddess of forgetfulness, in order to achive your hopes and dreams?  Perhaps the Warlock life is for you...""")
     End Sub
 
     Sub teach()
@@ -31,10 +31,10 @@
     End Sub
     Sub cancel()
         Game.player1.gold += value
-        CType(Game.hteach, HTeach).back()
+        CType(Game.hteach, HypnoTeach).back()
     End Sub
     Sub tf()
-        CType(Game.hteach, HTeach).hypnotize("Perfect!  Speaking of perfection, have you seen my pendant?  I know it is a bit of a cliche, but doesn't seeing it swing back and forth just relax you so perfectly?  Back...and forth...watch it glisten in the light...feel yourself go deeper and deeper...deeper...and deeper...until you just...*SNAP*...drift away...", AddressOf tf2)
+        CType(Game.hteach, HypnoTeach).hypnotize("Perfect!  Speaking of perfection, have you seen my pendant?  I know it is a bit of a cliche, but doesn't seeing it swing back and forth just relax you so perfectly?  Back...and forth...watch it glisten in the light...feel yourself go deeper and deeper...deeper...and deeper...until you just...*SNAP*...drift away...", AddressOf tf2)
     End Sub
     Sub tf2()
         Dim out = "As soon as she snaps, your entire reality fades away.  You can't bother to recall who you are, or what you're doing, focusing instead solely on your mistresses voice, though in your haze you don't understand much of what she's saying.  You pass in and out of conciousness several times until gradually you begin to clearly hear what she's saying." & DDUtils.RNRN &
@@ -52,7 +52,7 @@
 
         p.changeClass("Warlock")
 
-        Game.pushLblEvent(out, AddressOf CType(Game.hteach, HTeach).back)
+        Game.pushLblEvent(out, AddressOf CType(Game.hteach, HypnoTeach).back)
         p.drawPort()
         p.UIupdate()
         p.pState.save(p)

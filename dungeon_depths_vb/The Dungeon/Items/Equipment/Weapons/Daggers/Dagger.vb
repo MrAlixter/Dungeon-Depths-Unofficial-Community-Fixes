@@ -7,9 +7,11 @@
         If dmg <= 4 Then '+ ((p.lust Mod 20)) Then
             p.miss(m)
         ElseIf dmg >= 11 Then
+            If (p.getATK * 2) >= m.getIntHealth Then Return -2
             p.cHit(p.getATK, m)
         Else
-            dmg += (p.getATK) + (Me.aBoost)
+            dmg += (p.getATK) + (Me.a_boost)
+            If (Player.calcDamage(dmg, m.defense)) >= m.getIntHealth Then Return Player.calcDamage(dmg, m.defense)
             p.hit(Player.calcDamage(dmg, m.defense), m)
         End If
 
@@ -20,7 +22,7 @@
         ElseIf dmg >= 11 Then
             Return -2
         End If
-        dmg += (p.getATK) + (Me.aBoost)
+        dmg += (p.getATK) + (Me.a_boost)
         Return Player.calcDamage(dmg, m.defense)
     End Function
 End Class

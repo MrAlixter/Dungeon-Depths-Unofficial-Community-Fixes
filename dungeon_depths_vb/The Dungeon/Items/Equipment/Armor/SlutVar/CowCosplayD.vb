@@ -2,15 +2,15 @@
     Inherits Armor
 
     Sub New()
-        MyBase.setName("Cow_Cosplay_(Demonic)")
+        setName("Cow_Cosplay_(Demonic)")
 
         id = 221
         tier = Nothing
-        MyBase.setUsable(False)
-        MyBase.dBoost = 1
-        MyBase.count = 0
-        MyBase.value = 50
-        MyBase.antiSlutVarInd = 71
+        usable = false
+        MyBase.d_boost = 1
+        count = 0
+        value = 50
+        MyBase.anti_slut_ind = 71
 
         MyBase.bsize3 = New Tuple(Of Integer, Boolean, Boolean)(315, True, True)
         MyBase.bsize4 = New Tuple(Of Integer, Boolean, Boolean)(316, True, True)
@@ -23,10 +23,10 @@
         MyBase.usize3 = New Tuple(Of Integer, Boolean, Boolean)(241, True, True)
         MyBase.usize4 = New Tuple(Of Integer, Boolean, Boolean)(242, True, True)
         MyBase.usize5 = New Tuple(Of Integer, Boolean, Boolean)(243, True, True)
-        MyBase.compressesBreasts = False
-        MyBase.hidesDick = True
+        MyBase.compress_breast = False
+        MyBase.hide_dick = True
 
-        MyBase.setDesc("An unholy outfit for busty bovine demons.  While it grants its wearer an undenyable charm, it does make it harder for other succubi to take them seriously as anything other than a pet." & DDUtils.RNRN &
+        setDesc("An unholy outfit for busty bovine demons.  While it grants its wearer an undenyable charm, it does make it harder for other succubi to take them seriously as anything other than a pet." & DDUtils.RNRN &
                         getSizeInformation() & vbCrLf & getStatInformation())
     End Sub
 End Class

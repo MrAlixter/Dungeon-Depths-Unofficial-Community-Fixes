@@ -2,13 +2,21 @@
     Inherits Item
 
     Sub New()
-        MyBase.setName("Clear_Potion")
-        MyBase.setDesc("Something tells you that this might just be water.  A quick sip confirms this, though you can also taste the tell-tale flavor of filtering.")
+        '|ID Info|
+        setName("Clear_Potion")
         id = 76
         tier = 1
-        MyBase.setUsable(True)
-        MyBase.count = 0
-        MyBase.value = 100
+
+        '|Item Flags|
+        usable = True
+
+        '|Stats|
+        count = 0
+        value = 100
+
+        '|Description|
+        setDesc("Something tells you that this might just be water.  A quick sip confirms this, though you can also taste the tell-tale flavor of filtering.")
+
     End Sub
 
     Overrides Sub use(ByRef p As Player)

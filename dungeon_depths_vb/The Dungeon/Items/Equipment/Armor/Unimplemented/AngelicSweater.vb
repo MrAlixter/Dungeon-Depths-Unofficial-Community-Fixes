@@ -3,23 +3,23 @@
 
     Sub New()
         '|ID Info|
-        MyBase.setName("Angelic_Sweater")
+        setName("Angelic_Sweater")
         id = 199
         tier = Nothing
 
         '|Item Flags|
-        MyBase.setUsable(False)
-        MyBase.isMonsterDrop = False
-        MyBase.isRandoTFAcceptable = False
-        MyBase.compressesBreasts = True
-        MyBase.hidesDick = False
+        usable = false
+        MyBase.droppable = False
+        rando_inv_allowed = False
+        MyBase.compress_breast = True
+        MyBase.hide_dick = False
 
         '|Stats|
-        MyBase.hBoost = 10
-        MyBase.dBoost = 5
-        MyBase.mBoost = 20
-        MyBase.count = 0
-        MyBase.value = 7777
+        h_boost = 10
+        MyBase.d_boost = 5
+        MyBase.m_boost = 20
+        count = 0
+        value = 7777
 
         '|Image Index|
         MyBase.bsize1 = New Tuple(Of Integer, Boolean, Boolean)(280, True, True)
@@ -34,7 +34,7 @@
         MyBase.usize5 = New Tuple(Of Integer, Boolean, Boolean)(182, True, True)
 
         '|Description|
-        MyBase.setDesc("A glittering, heavenly soft sweater." & DDUtils.RNRN &
+        setDesc("A glittering, heavenly soft sweater." & DDUtils.RNRN &
                                      getSizeInformation() & vbCrLf & getStatInformation())
     End Sub
 End Class

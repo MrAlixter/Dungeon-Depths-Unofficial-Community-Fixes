@@ -19,7 +19,7 @@
 
         'assign a pointer to the player character
         Dim p As player = Game.player1
-        If Game.preBSStartState Is Nothing Then Game.preBSStartState = p.sState.clone(p)
+        If Not p.preBSStartState.initFlag Then p.preBSStartState = p.sState.clone(p)
 
         'assign a starter class / form
         p.changeClass("Classless")
@@ -89,9 +89,13 @@
         r = Int(Rnd() * 8) + 1
         p.prt.setIAInd(pInd.fronthair, r, True, False)
         p.prt.setIAInd(pInd.hat, 0, True, False)
+        p.prt.setIAInd(pInd.tail, 0, True, False)
+        p.prt.setIAInd(pInd.horns, 0, True, False)
+        p.prt.setIAInd(pInd.wings, 0, True, False)
 
         'clear all player associated lists
-        p.createInvPerks()
+        p.inv = New Inventory(True)
+        p.resetPerks()
 
         'assign random equipment
         setLoadout()
@@ -247,7 +251,7 @@
 
         For i = 0 To 4
             Dim invInd As Integer = 8
-            While Not p.inv.item(invInd).isRandoTFAcceptable
+            While Not p.inv.item(invInd).rando_inv_allowed
                 invInd = Int(Rnd() * (Game.player1.inv.upperBound + 1))
             End While
             p.inv.add(invInd, CInt(Int(Rnd() * 2) + 1))
@@ -294,8 +298,8 @@
                           """I ..."" the slime says, drawing your attention back to her, ""... am the Ooze Empress.  This floor, and all who inhabit it fall under my ..."".  As she introduces herself, you find it harder and harder to focus.  Your body, especially where her tentacles are making direct contact, feels as though every inch of it is flushing with arousal.", AddressOf floor4FirstBossEncounterP2)
     End Sub
     Shared Sub floor4FirstBossEncounterP2()
-        Dim p As player = Game.player1
-        Game.preBSBody = If(Transformation.canBeTFed(p), New State(p), p.pState.clone(p))
+        Dim p As Player = Game.player1
+        p.preBSBody = If(Transformation.canBeTFed(p), New State(p), p.pState.clone(p))
         Game.preBSInventory = New ArrayList()
         For i = 0 To p.inv.upperBound
             Game.preBSInventory.Add(p.inv.getCountAt(i))
@@ -312,9 +316,9 @@
     End Sub
     Shared Sub floor4revert()
         Dim p As player = Game.player1
-        Game.preBSStartState.load(p)
+        p.preBSStartState.load(p)
         p.sState.save(p)
-        Game.preBSBody.load(p)
+        p.preBSBody.load(p)
         p.pState.save(p)
         p.revertToPState()
         For i = 0 To Game.preBSInventory.Count - 1

@@ -2,14 +2,14 @@
     Inherits Armor
     Dim prevWingInd As Integer = 0
     Sub New()
-        MyBase.setName("Chicken_Suit")
+        setName("Chicken_Suit")
 
         id = 8
         If DDDateTime.isAni Then tier = 2 Else tier = Nothing
-        MyBase.setUsable(False)
-        MyBase.sBoost = 10
-        MyBase.count = 0
-        MyBase.value = 300
+        usable = false
+        MyBase.s_boost = 10
+        count = 0
+        value = 300
         bsizeneg1 = New Tuple(Of Integer, Boolean, Boolean)(21, False, True)
         bsize0 = New Tuple(Of Integer, Boolean, Boolean)(22, False, True)
         bsize1 = New Tuple(Of Integer, Boolean, Boolean)(111, True, True)
@@ -27,11 +27,11 @@
         usize3 = New Tuple(Of Integer, Boolean, Boolean)(92, True, True)
         usize4 = New Tuple(Of Integer, Boolean, Boolean)(93, True, True)
         usize5 = New Tuple(Of Integer, Boolean, Boolean)(94, True, True)
-        MyBase.compressesBreasts = False
+        MyBase.compress_breast = False
 
-        MyBase.isRandoTFAcceptable = False
+        rando_inv_allowed = False
 
-        MyBase.setDesc("This outfit, little more than some wings and straps, lightens its user though it doesn't actually provide any protection." & DDUtils.RNRN & _
+        setDesc("This outfit, little more than some wings and straps, lightens its user though it doesn't actually provide any protection." & DDUtils.RNRN & _
                              "Fits all sizes" & DDUtils.RNRN & getStatInformation())
     End Sub
 

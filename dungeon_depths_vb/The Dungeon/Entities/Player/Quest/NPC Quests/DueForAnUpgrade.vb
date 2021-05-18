@@ -13,11 +13,11 @@
         MyBase.init()
 
         Game.pushNPCDialog("""Hmmmm, as much as... hot?... as the outfit you have there is, it looks like your gear could be reinforced into something that offers a bit more protection.  No amount of smithing is going to break that curse if you got it, buuuut if you can find me the materials, I can at least take a crack at getting you some better armor.""" & DDUtils.RNRN &
-                   "Quest ""Due For an Upgrade"" aquired!")
+                   "Quest ""Due For an Upgrade"" acquired!")
     End Sub
 
     Public Overrides Function canGet() As Boolean
-        Return Not getActive() And Game.currFloor.floorNumber > 2 And Game.player1.equippedArmor.getAntiSlutVarInd <> -1 And Not getComplete()
+        Return Not getActive() And Game.currFloor.floorNumber > 2 And Game.player1.equippedArmor.getAntiSlutInd <> -1 And Not getComplete()
     End Function
 End Class
 

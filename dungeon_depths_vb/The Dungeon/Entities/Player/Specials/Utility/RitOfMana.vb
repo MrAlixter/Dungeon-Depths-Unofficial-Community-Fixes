@@ -2,7 +2,7 @@
     Inherits Special
     Sub New(ByRef u As Player, ByRef t As NPC)
         MyBase.New(u, t)
-        MyBase.setName("Ritual of Mana")
+        setName("Ritual of Mana")
         MyBase.setUOC(True)
 
         setcost(100)

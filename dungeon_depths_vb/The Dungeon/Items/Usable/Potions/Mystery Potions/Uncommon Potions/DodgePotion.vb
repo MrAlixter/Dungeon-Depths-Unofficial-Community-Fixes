@@ -1,14 +1,22 @@
 ﻿Public Class DodgePotion
     Inherits MysteryPotion
     Sub New()
-        MyBase.setName("Potion_of_Dodging")
-        MyBase.setDesc("A dodgy-looking potion")
+        '|ID Info|
+        setName("Potion_of_Dodging")
         id = 247
         tier = 2
-        MyBase.setUsable(True)
-        MyBase.count = 0
-        MyBase.value = 350
+
+        '|Item Flags|
+        usable = True
         MyBase.onBuy = AddressOf reveal
+
+        '|Stats|
+        count = 0
+        value = 350
+
+        '|Description|
+        setDesc("A dodgy-looking potion.")
+
     End Sub
 
     Public Overrides Sub setEffectList()

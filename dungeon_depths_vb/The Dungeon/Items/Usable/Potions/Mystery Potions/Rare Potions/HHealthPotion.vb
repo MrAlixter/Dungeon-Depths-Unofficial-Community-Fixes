@@ -1,13 +1,13 @@
 ﻿Public Class HHealthPotion
     Inherits MysteryPotion
     Sub New()
-        MyBase.setName("Hyper_Health_Potion")
-        MyBase.setDesc("A unearthly-looking potion")
+        setName("Hyper_Health_Potion")
+        setDesc("A unearthly-looking potion")
         id = 235
         tier = 3
-        MyBase.setUsable(True)
-        MyBase.count = 0
-        MyBase.value = 500
+        usable = true
+        count = 0
+        value = 500
         MyBase.onBuy = AddressOf reveal
     End Sub
 

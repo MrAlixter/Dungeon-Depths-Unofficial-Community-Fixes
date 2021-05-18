@@ -3,20 +3,20 @@
 
     Sub New()
         '|ID Info|
-        MyBase.setName("Witch_Cosplay")
+        setName("Witch_Cosplay")
         id = 18
         tier = Nothing
 
         '|Item Flags|
-        MyBase.setUsable(False)
-        MyBase.compressesBreasts = True
-        MyBase.antiSlutVarInd = 17
+        usable = false
+        MyBase.compress_breast = True
+        MyBase.anti_slut_ind = 17
 
         '|Stats|
-        MyBase.mBoost = 10
-        MyBase.dBoost = 3
-        MyBase.count = 0
-        MyBase.value = 1250
+        MyBase.m_boost = 10
+        MyBase.d_boost = 3
+        count = 0
+        value = 1250
 
         '|Image Index|
         MyBase.bsize1 = New Tuple(Of Integer, Boolean, Boolean)(25, True, True)
@@ -31,7 +31,7 @@
         MyBase.usize4 = New Tuple(Of Integer, Boolean, Boolean)(43, True, True)
 
         '|Description|
-        MyBase.setDesc("A glamourous garment made more to show off one's body than to show off any magical ability." & vbCrLf & _
+        setDesc("A glamourous garment made more to show off one's body than to show off any magical ability." & vbCrLf & _
                              getSizeInformation() & vbCrLf & getStatInformation())
     End Sub
 End Class

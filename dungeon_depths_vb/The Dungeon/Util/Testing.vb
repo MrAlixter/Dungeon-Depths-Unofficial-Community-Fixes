@@ -39,6 +39,7 @@ Public Class Testing
         out.WriteLine(vbCrLf & successes & "/" & (successes + failures) & " tests passed." & vbCrLf)
 
     End Sub
+
     '|UTILITY METHODS|
     Shared Function expectEQ(m_call As String, arg1 As Object, arg2 As Object)
         'check that arg1 is not nothing if arg2 is not.
@@ -69,6 +70,7 @@ Public Class Testing
 
         Return p
     End Function
+
     '|IMAGECOLLECTION UNIT TESTS|
     Shared Function imagecollectionAtrsInitializationTests() As Tuple(Of Boolean, String)
         Dim defimgcol = New ImageCollection(0)
@@ -91,6 +93,7 @@ Public Class Testing
 
         Return New Tuple(Of Boolean, String)(True, "ImageCollection.new() tests successful.")
     End Function
+
     '|IMAGEATTRIBUTE UNIT TESTS|
     Shared Function imageattributeIndexingTests() As Tuple(Of Boolean, String)
         Dim allimgcol = New ImageCollection(1)
@@ -107,6 +110,7 @@ Public Class Testing
 
         Return New Tuple(Of Boolean, String)(True, "ImageAttribute offset indexing tests successful.")
     End Function
+
     '|INVENTORY UNIT TESTS|
     Shared Function inventoryItemTestsByName() As Tuple(Of Boolean, String)
         Dim testInventory = New Inventory(False)
@@ -253,6 +257,17 @@ Public Class Testing
 
         Return New Tuple(Of Boolean, String)(True, "Inventory.load tests successful.")
     End Function
+
     '|PLAYER UNIT TESTS|
-    '|EQUIPMENT TESTS|
+
+    '|EQUIPMENT UNIT TESTS|
+
+    '|TRANSFORMATION UNIT TESTS|
+
+    '|QUEST UNIT TESTS|
+
+    '|TFLIST UNIT TESTS|
+
+    '|UPDATABEQUEUE UNIT TESTS|
+
 End Class

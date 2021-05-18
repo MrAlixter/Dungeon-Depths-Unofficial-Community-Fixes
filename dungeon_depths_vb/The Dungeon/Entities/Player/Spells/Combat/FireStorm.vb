@@ -2,7 +2,7 @@
     Inherits Spell
     Sub New(ByRef c As Player, ByRef t As NPC)
         MyBase.New(c, t)
-        MyBase.setName("Firestorm")
+        setName("Firestorm")
         MyBase.settier(1)
         MyBase.setcost(6)
     End Sub
@@ -16,6 +16,7 @@
             Game.pushLogAndEvent(CStr("You hit the " & MyBase.getTarget.name & " for " & dmg & " damage!"))
             MyBase.getTarget.takeDMG(dmg, MyBase.getCaster)
             If i <> 0 Then getCaster.mana -= 5
+            If MyBase.getTarget.isDead Then Exit For
         Next
     End Sub
 

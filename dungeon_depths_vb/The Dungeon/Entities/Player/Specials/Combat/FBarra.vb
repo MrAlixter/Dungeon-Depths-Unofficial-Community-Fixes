@@ -2,7 +2,7 @@
     Inherits Special
     Sub New(ByRef u As Player, ByRef t As NPC)
         MyBase.New(u, t)
-        MyBase.setName("Focused Barrage")
+        setName("Focused Barrage")
         MyBase.setUOC(False)
         MyBase.setcost(6)
     End Sub
@@ -17,9 +17,10 @@
             Dim dmg As Integer = (p.attack + p.aBuff) * p.pClass.a * p.pForm.a * 0.65
             dmg += Int(Rnd() * 2 * ((p.attack + p.aBuff) * p.pClass.a * p.pForm.a * 0.65 * 0.05)) -
                 ((p.attack + p.aBuff) * p.pClass.a * p.pForm.a * 0.65 * 0.05)
-            Game.pushLblCombatEvent("You hit your opponent for " & dmg & " damage!")
+            Game.pushLogAndEvent("You hit your opponent for " & dmg & " damage!")
             m.takeDMG(dmg, p)
             If i <> 0 Then p.stamina -= 4
+            If MyBase.getTarget.isDead Then Exit For
         Next
 
     End Sub

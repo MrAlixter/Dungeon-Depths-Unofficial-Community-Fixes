@@ -47,7 +47,7 @@ Public MustInherit Class ShopNPC
             Case sNPCInd.shadywizard
                 Return New ShadyWizard
             Case sNPCInd.hypnoteach
-                Return New HTeach
+                Return New HypnoTeach
             Case sNPCInd.foodvendor
                 Return New FVendor
             Case sNPCInd.weaponsmith
@@ -65,7 +65,7 @@ Public MustInherit Class ShopNPC
 
     Sub load(ByVal s As String)
         Dim playArray() As String = s.Split("*")
-        MyBase.setName(playArray(0) & " the " & playArray(1))
+        setName(playArray(0) & " the " & playArray(1))
         MyBase.health = playArray(3)
         MyBase.maxHealth = playArray(4)
         MyBase.attack = playArray(5)
@@ -92,7 +92,6 @@ Public MustInherit Class ShopNPC
         End If
         If npcIndex = 1 Or npcIndex = 2 Then despawn("flee")
         Game.picNPC.BackgroundImage = picNPC(npcIndex)
-
         If Game.combatmode Then attackCMD(Game.player1)
     End Sub
     Public Overrides Function getName() As String

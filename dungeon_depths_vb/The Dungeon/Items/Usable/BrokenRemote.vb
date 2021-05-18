@@ -1,26 +1,26 @@
 ﻿Public Class BrokenRemote
     Inherits Item
 
-    Public Shared forms = {"Half-Gorgon", "Gynoid", "Amazon", "Mindless", "Rando", "Half-Broodmother", "Broodmother", "Minotaur Cow", "Dragon", "Succubus", "Slime", "Bimbo", "Cake", "Blob", "Horse", "Oni", "Alraune", "Minotaur Bull", "Targax", "Half-Dragon (R)", "Tigress", "Succubus (Q)", "Minotaur Cow (B)"}
+    Public Shared forms = {"Half-Gorgon", "Gynoid", "Amazon", "Mindless", "Rando", "Half-Broodmother", "Broodmother", "Minotaur Cow", "Dragon", "Succubus", "Slime", "Bimbo", "Cake", "Blob", "Horse", "Oni", "Alraune", "Minotaur Bull", "Targax", "Half-Dragon (R)", "Tigress", "Succubus (Q)", "Minotaur Cow (B)", "Inversion", "Bimbo (Gold)"}
     Public Shared selectedForm = "Rando"
 
     Sub New()
         '|ID Info|
-        MyBase.setName("Broken_Remote")
+        setName("Broken_Remote")
         id = 119
         tier = Nothing
 
         '|Item Flags|
-        MyBase.setUsable(True)
-        MyBase.isRandoTFAcceptable = False
-        MyBase.isMonsterDrop = False
+        usable = true
+        rando_inv_allowed = False
+        MyBase.droppable = False
 
         '|Stats|
-        MyBase.count = 0
-        MyBase.value = 375
+        count = 0
+        value = 375
 
         '|Description|
-        MyBase.setDesc("This item is for testing individual transformations, and should not be in the base game")
+        setDesc("This item is for testing individual transformations, and should not be in the base game")
     End Sub
     Public Overrides Sub use(ByRef p As Player)
         Dim picker = New BrokenRemotePicker
@@ -56,6 +56,8 @@
         tf2s.Add("Goth GF", AddressOf New GothGFTF().step1)
         tf2s.Add("Targax", AddressOf TargaxTF.instantTF)
         tf2s.Add("Succubus (Q)", AddressOf DarkPactTF.step1alt)
+        tf2s.Add("Inversion", AddressOf InversionTF.snapTF)
+        tf2s.Add("Bimbo (Gold)", AddressOf GBimboTF.snapTF)
 
         If Not tfs.ContainsKey(form) And Not tf2s.ContainsKey(form) Then Exit Sub
 

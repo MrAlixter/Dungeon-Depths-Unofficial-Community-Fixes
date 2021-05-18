@@ -2,15 +2,15 @@
     Inherits Staff
 
     Sub New()
-        MyBase.setName("Spiked_Staff")
-        MyBase.setDesc("A reinforced steel staff covered in rows of wicked looking spikes.  It's as good at smacking things as it is at boosting mana." & vbCrLf &
+        setName("Spiked_Staff")
+        setDesc("A reinforced steel staff covered in rows of wicked looking spikes.  It's as good at smacking things as it is at boosting mana." & vbCrLf &
                        "+46 Mana" & vbCrLf &
                        "+23 ATK")
         id = 160
         tier = Nothing
-        MyBase.setUsable(False)
-        MyBase.mBoost = 46
-        MyBase.aBoost = 23
+        usable = false
+        MyBase.m_boost = 46
+        MyBase.a_boost = 23
         count = 0
         value = 1999
     End Sub
@@ -22,7 +22,7 @@
         ElseIf dmg >= 11 Then
             Return -2
         End If
-        dmg += (p.getATK) + (Me.aBoost)
+        dmg += (p.getATK) + (Me.a_boost)
         Return Player.calcDamage(dmg, m.defense)
     End Function
 End Class

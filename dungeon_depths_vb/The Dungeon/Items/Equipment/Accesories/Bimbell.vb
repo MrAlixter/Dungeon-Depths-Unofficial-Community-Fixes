@@ -2,17 +2,17 @@
     Inherits Accessory
 
     Sub New()
-        MyBase.setName("Bimbell")
-        MyBase.setDesc("A large metal bell attached to a pink collar that rings hypnotically with its wearer's gait." & vbCrLf &
+        setName("Bimbell")
+        setDesc("A large metal bell attached to a pink collar that rings hypnotically with its wearer's gait." & vbCrLf &
                        "+40 Health." & vbCrLf &
                        "-15 WILL")
         id = 197
         tier = 3
-        MyBase.setUsable(False)
-        MyBase.hBoost = 20
-        MyBase.wBoost = -1
-        MyBase.count = 0
-        MyBase.value = 434
+        usable = false
+        h_boost = 20
+        w_boost = -1
+        count = 0
+        value = 434
         MyBase.fInd = New Tuple(Of Integer, Boolean, Boolean)(17, True, True)
         MyBase.mInd = New Tuple(Of Integer, Boolean, Boolean)(16, False, True)
     End Sub

@@ -3,19 +3,19 @@
 
     Sub New()
         '|ID Info|
-        MyBase.setName("Platinum_Adornment")
+        setName("Platinum_Adornment")
         id = 266
         tier = Nothing
 
         '|Item Flags|
-        MyBase.setUsable(False)
-        MyBase.compressesBreasts = True
-        MyBase.antiSlutVarInd = 265
+        usable = false
+        MyBase.compress_breast = True
+        MyBase.anti_slut_ind = 265
 
         '|Stats|
-        MyBase.dBoost = 25
-        MyBase.count = 0
-        MyBase.value = 6400
+        MyBase.d_boost = 25
+        count = 0
+        value = 6400
 
         '|Image Index|
         bsize0 = New Tuple(Of Integer, Boolean, Boolean)(80, False, True)
@@ -31,7 +31,7 @@
         usize4 = New Tuple(Of Integer, Boolean, Boolean)(343, True, True)
 
         '|Description|
-        MyBase.setDesc("A glistening outfit that leaves little to the imagination for those who want to be stupendously stunning." & DDUtils.RNRN & _
+        setDesc("A glistening outfit that leaves little to the imagination for those who want to be stupendously stunning." & DDUtils.RNRN & _
                         getSizeInformation() & vbCrLf & getStatInformation())
     End Sub
 End Class

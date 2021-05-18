@@ -3,6 +3,23 @@
     Sub New()
         MyBase.New()
 
+        init()
+    End Sub
+
+    Sub New(ByRef fVend As FVendor)
+        MyBase.New()
+
+        init()
+
+        npcIndex = fVend.npcIndex
+        gold = fVend.gold
+        pronoun = fVend.pronoun
+        pPronoun = fVend.pPronoun
+        rPronoun = fVend.rPronoun
+        title = fVend.title
+    End Sub
+
+    Sub init()
         '|ID Info|
         name = "Food Vendor (Targax)"
 
@@ -13,7 +30,7 @@
         isShop = True
 
         '|Inventory|
-        inv.setCount("Better_Medicin._Tea", 1)
+        inv.setCount("Better_Medicinal_Tea", 1)
         inv.setCount("Dragonfruit", 1)
         inv.setCount("Dragonfruit_S._of_Gum", 1)
         inv.setCount("Mage's_Delicacy", 1)
@@ -54,20 +71,11 @@
                          ShopNPC.npcLib.atrs(0).getAt(96)})
     End Sub
 
-    Sub New(ByRef fVend As FVendor)
-        Me.New()
-
-        npcIndex = fVend.npcIndex
-        gold = fVend.gold
-        pronoun = fVend.pronoun
-        pPronoun = fVend.pPronoun
-        rPronoun = fVend.rPronoun
-        title = fVend.title
-    End Sub
 
     Public Overrides Sub encounter()
         'If the food vendor has the sword, use the alternate food vendor character
         If Game.player1.perks(perk.fvHasSword) < 0 Then
+            Game.currNPC = Game.fvend
             Game.fvend.encounter()
             Exit Sub
         End If
@@ -77,7 +85,7 @@
         discount = 0
 
         If npcIndex = 0 Then
-            Game.pushNPCDialog("Welcome and check out the new menu!  Turns out this sword was a little more cursed than expected.  No worries though, it'll work out and now I'm psychic.  Eat up!")
+            Game.pushNPCDialog("Welcome and check out the new menu!  Turns out this sword was a little more cursed than expected.  No worries though, I'm sure it'll work itself out...  Eat up!")
         ElseIf npcIndex = 1 Then
             Game.pushNPCDialog("Broak, croak, ribbit.")
         ElseIf npcIndex = 2 Then

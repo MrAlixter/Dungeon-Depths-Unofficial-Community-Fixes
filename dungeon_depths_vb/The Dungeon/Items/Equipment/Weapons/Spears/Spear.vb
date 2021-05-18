@@ -8,7 +8,7 @@
             Game.pushLstLog("You throw the spear across the dungeon at nothing in particular.")
         Else
             Game.pushLstLog("You throw the spear!")
-            Dim dmg As Integer = (p.getATK) + (Me.aBoost) + (Me.aBoost) + Int(Rnd() * 3 + 1)
+            Dim dmg As Integer = (p.getATK) + (Me.a_boost) + (Me.a_boost) + Int(Rnd() * 3 + 1)
             p.hit(dmg, m)
         End If
 
@@ -24,7 +24,7 @@
         ElseIf dmg >= 10 Then
             Return -2
         End If
-        dmg += (p.getATK) + (Me.aBoost)
+        dmg += (p.getATK) + (Me.a_boost)
         Return Player.calcDamage(dmg, m.defense)
     End Function
 

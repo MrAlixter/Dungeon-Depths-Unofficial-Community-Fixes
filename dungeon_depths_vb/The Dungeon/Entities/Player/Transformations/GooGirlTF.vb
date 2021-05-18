@@ -17,7 +17,7 @@
 
         p.prt.setIAInd(pInd.rearhair, 12, True, True)
         p.prt.setIAInd(pInd.midhair, 21, True, True)
-        p.prt.setIAInd(pInd.fronthair, 26, True, True)
+        p.prt.setIAInd(pInd.fronthair, 3, True, False)
         p.prt.haircolor = Color.FromArgb(180, 255, 120, 255)
         p.drawPort()
         p.perks(perk.vsslimehair) = 0

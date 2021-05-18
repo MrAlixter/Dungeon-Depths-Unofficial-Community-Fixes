@@ -3,21 +3,21 @@
 
     Sub New()
         '|ID Info|
-        MyBase.setName("Upgrade_Armor")
+        setName("Upgrade_Armor")
         id = 263
         tier = Nothing
 
         '|Item Flags|
-        MyBase.setUsable(True)
-        MyBase.isRandoTFAcceptable = False
+        usable = true
+        rando_inv_allowed = False
         MyBase.onBuy = AddressOf fix
 
         '|Stats|
-        MyBase.count = 0
-        MyBase.value = 1000
+        count = 0
+        value = 1000
 
         '|Description|
-        MyBase.setDesc("""If your equipped kit is a litte less... practical... than you'd like, I can get it adjusted to be better protection.""")
+        setDesc("""If your equipped kit is a litte less... practical... than you'd like, I can get it adjusted to be better protection.""")
     End Sub
 
     Sub fix()

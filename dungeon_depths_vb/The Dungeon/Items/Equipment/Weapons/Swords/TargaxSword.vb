@@ -3,21 +3,22 @@
 
     Sub New()
         '|ID Info|
-        MyBase.setName("Sword_of_the_Brutal")
+        setName("Sword_of_the_Brutal")
         id = 24
         tier = Nothing
 
         '|Item Flags|
-        MyBase.setUsable(False)
-        MyBase.isRandoTFAcceptable = False
+        usable = false
+        rando_inv_allowed = False
+        MyBase.onSell = AddressOf BEggGetSword.completeStep
 
         '|Stats|
-        MyBase.aBoost = 50
-        MyBase.count = 0
-        MyBase.value = 3332
+        MyBase.a_boost = 50
+        count = 0
+        value = 3332
 
         '|Description|
-        MyBase.setDesc("A suspicious sword owned by a brutal despot." & DDUtils.RNRN &
+        setDesc("A suspicious sword owned by a brutal despot." & DDUtils.RNRN &
                        getStatInformation())
     End Sub
 
@@ -26,7 +27,7 @@
         If dmg <= 4 Then '+ ((p.lust Mod 20)) Then
             Return -1
         End If
-        dmg += (p.getATK) + (Me.aBoost)
+        dmg += (p.getATK) + (Me.a_boost)
         Return Player.calcDamage(dmg, m.defense)
     End Function
 

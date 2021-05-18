@@ -52,7 +52,7 @@
             Game.pushNPCDialog("So, so many eyes.....")
         ElseIf npcIndex = 7 Then
             Game.pushNPCDialog("Meow indeed...")
-        ElseIf Not Game.player1.isCursed Then
+        ElseIf Not Game.player1.cursed Then
             npcIndex = 0
             Game.pushNPCDialog("What have you gotten yourself into this time?  Nothing?  Perhaps there's a curse somewhere out there for you...")
         Else

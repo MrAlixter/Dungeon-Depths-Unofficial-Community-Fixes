@@ -2,15 +2,23 @@
     Inherits Wand
 
     Sub New()
-        MyBase.setName("Wand_of_Shocking")
-        MyBase.setDesc("A slender black wand charged with an almost electric energy.  Frogs may want to steer clear of its bearer...")
+        '|ID Info|
+        setName("Wand_of_Shocking")
         id = 167
         tier = 3
-        MyBase.setUsable(False)
-        MyBase.count = 0
-        MyBase.value = 1000
 
-        MyBase.isMonsterDrop = False
+        '|Item Flags|
+        usable = False
+        droppable = False
+
+        '|Stats|
+        count = 0
+        value = 1000
+
+        '|Description|
+
+        setDesc("A slender black wand charged with an almost electric energy.  Frogs may want to steer clear of its bearer...")
+
     End Sub
     Public Overrides Sub spell(ByRef p As Player, ByRef m As Entity)
         Dim dmg As Integer = 10

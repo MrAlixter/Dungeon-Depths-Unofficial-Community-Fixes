@@ -3,23 +3,23 @@
 
     Sub New()
         '|ID Info|
-        MyBase.setName("Spidersilk_Bonds")
+        setName("Spidersilk_Bonds")
         id = 239
         tier = Nothing
 
         '|Item Flags|
-        MyBase.setUsable(False)
-        MyBase.compressesBreasts = True
-        MyBase.isCursed = True
-        MyBase.bindsWearer = True
-        MyBase.isRandoTFAcceptable = False
-        hidesDick = False
+        usable = false
+        MyBase.compress_breast = True
+        MyBase.cursed = True
+        MyBase.bind_wearer = True
+        rando_inv_allowed = False
+        hide_dick = False
 
         '|Stats|
-        MyBase.aBoost = -31
-        MyBase.sBoost = -31
-        MyBase.count = 0
-        MyBase.value = 25
+        MyBase.a_boost = -31
+        MyBase.s_boost = -31
+        count = 0
+        value = 25
 
         '|Image Index|
         bsizeneg1 = New Tuple(Of Integer, Boolean, Boolean)(73, False, True)
@@ -37,7 +37,7 @@
         usize3 = New Tuple(Of Integer, Boolean, Boolean)(321, True, True)
 
         '|Description|
-        MyBase.setDesc("A tight, binding web of spidersilk.  While the threads are nearly impossible to break from within, they are fairly delicate to outside attacks..." & DDUtils.RNRN & _
+        setDesc("A tight, binding web of spidersilk.  While the threads are nearly impossible to break from within, they are fairly delicate to outside attacks..." & DDUtils.RNRN & _
                        getSizeInformation() & vbCrLf & vbCrLf &
                        "-31 ATK" & vbCrLf &
                        "-31 SPD" & vbCrLf &
@@ -53,7 +53,7 @@
     End Sub
 
     Public Overrides Sub onUnequip(ByRef p As Player)
-        MyBase.bindsWearer = False
-        MyBase.bindsWearer = True
+        MyBase.bind_wearer = False
+        MyBase.bind_wearer = True
     End Sub
 End Class

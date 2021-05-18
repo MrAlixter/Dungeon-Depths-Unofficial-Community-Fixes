@@ -2,7 +2,7 @@
     Inherits Special
     Sub New(ByRef u As Player, ByRef t As NPC)
         MyBase.New(u, t)
-        MyBase.setName("Uvona's Blessing")
+        setName("Uvona's Blessing")
         MyBase.setUOC(True)
         MyBase.setcost(13)
     End Sub

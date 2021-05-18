@@ -3,20 +3,20 @@
 
     Sub New()
         '|ID Info|
-        MyBase.setName("Cow_Print_Bra")
+        setName("Cow_Print_Bra")
         id = 71
         tier = Nothing
 
         '|Item Flags|
-        MyBase.setUsable(False)
-        MyBase.compressesBreasts = True
-        MyBase.slutVarInd = 196
-        MyBase.antiSlutVarInd = 262
+        usable = false
+        MyBase.compress_breast = True
+        MyBase.slut_var_ind = 196
+        MyBase.anti_slut_ind = 262
 
         '|Stats|
-        MyBase.dBoost = 1
-        MyBase.count = 0
-        MyBase.value = 50
+        MyBase.d_boost = 1
+        count = 0
+        value = 50
 
         '|Image Index|
         MyBase.bsizeneg1 = New Tuple(Of Integer, Boolean, Boolean)(19, False, True)
@@ -38,7 +38,7 @@
         MyBase.usize5 = New Tuple(Of Integer, Boolean, Boolean)(99, True, True)
 
         '|Description|
-        MyBase.setDesc("A cow print bra created to hold cow sized breasts." & DDUtils.RNRN &
+        setDesc("A cow print bra created to hold cow sized breasts." & DDUtils.RNRN &
                                      getSizeInformation() & vbCrLf & getStatInformation())
     End Sub
 End Class

@@ -2,7 +2,7 @@
     Inherits Spell
     Sub New(ByRef c As Player, ByRef t As NPC)
         MyBase.New(c, t)
-        MyBase.setName("Sweet Sunbeam")
+        setName("Sweet Sunbeam")
         MyBase.settier(3)
         MyBase.setcost(17)
     End Sub

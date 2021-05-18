@@ -1,14 +1,22 @@
 ﻿Public Class GemOfProg
     Inherits Item
     Sub New()
-        MyBase.setName("Gem_of_Progress")
-        MyBase.setDesc("A glittering azure jewel that looks like it could be embeded into a wand")
+        '|ID Info|
+        setName("Gem_of_Progress")
         id = 206
         tier = Nothing
-        isMonsterDrop = True
-        MyBase.setUsable(True)
-        MyBase.count = 0
-        MyBase.value = 4500
+
+        '|Item Flags|
+        usable = True
+        droppable = True
+
+        '|Stats|
+        count = 0
+        value = 4500
+
+        '|Description|
+        setDesc("A glittering azure jewel that looks like it could be embeded into a wand")
+
     End Sub
 
     Overrides Sub use(ByRef p As Player)

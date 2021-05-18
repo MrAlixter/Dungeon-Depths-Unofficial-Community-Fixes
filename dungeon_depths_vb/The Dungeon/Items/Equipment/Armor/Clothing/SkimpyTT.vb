@@ -3,19 +3,19 @@
 
     Sub New()
         '|ID Info|
-        MyBase.setName("Skimpy_Tank_Top")
+        setName("Skimpy_Tank_Top")
         id = 147
         tier = Nothing
 
         '|Item Flags|
-        MyBase.setUsable(False)
-        MyBase.compressesBreasts = True
-        MyBase.isRandoTFAcceptable = False
+        usable = false
+        MyBase.compress_breast = True
+        rando_inv_allowed = False
 
         '|Stats|
-        MyBase.sBoost = 10
-        MyBase.count = 0
-        MyBase.value = 0
+        MyBase.s_boost = 10
+        count = 0
+        value = 0
 
         '|Image Index|
         MyBase.bsize1 = New Tuple(Of Integer, Boolean, Boolean)(215, True, True)
@@ -29,7 +29,7 @@
         MyBase.usize4 = New Tuple(Of Integer, Boolean, Boolean)(255, True, True)
 
         '|Description|
-        MyBase.setDesc("Barely there, this skimpy outfit boosts agility." & DDUtils.RNRN & _
+        setDesc("Barely there, this skimpy outfit boosts agility." & DDUtils.RNRN & _
                                     getSizeInformation() & vbCrLf & getStatInformation())
     End Sub
 

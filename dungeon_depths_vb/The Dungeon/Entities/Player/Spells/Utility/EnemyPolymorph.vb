@@ -2,21 +2,22 @@
     Inherits Spell
     Sub New(ByRef c As Player, ByRef t As NPC)
         MyBase.New(c, t)
-        MyBase.setName("Polymorph Enemy")
+        setName("Polymorph Enemy")
         MyBase.settier(4)
         MyBase.setcost(12)
     End Sub
     Public Overrides Sub effect()
-        Polymorph.porm = False
-        Dim p As Polymorph = New Polymorph
-        p.target = MyBase.getTarget
-        p.ShowDialog()
-        p.Dispose()
-        If MyBase.getTarget.GetType().IsSubclassOf(GetType(ShopNPC)) Then
-            MyBase.getTarget.update()
+        Game.toPNLSelec("EnemyTF")
+    End Sub
+    Public Shared Sub effectP2(ByVal fN As String, ByVal cN As String)
+        Dim t = Game.player1.currTarget
+
+        If t.GetType.IsSubclassOf(GetType(ShopNPC)) Then
+            t.update()
         End If
 
-        Game.pushLogAndEvent(CStr("You transform" & MyBase.getTarget.title & " " & MyBase.getTarget.name & "!"))
+        Game.pushLblCombatEvent(CStr("You transform" & t.title & " " & t.name & "!"))
+        Game.pushLstLog(CStr("You transform" & t.title & " " & t.name & "!"))
     End Sub
     Public Overrides Sub backfire()
         Dim n As String

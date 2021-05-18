@@ -3,20 +3,20 @@
 
     Sub New()
         '|ID Info|
-        MyBase.setName("Portal_Chalk")
+        setName("Portal_Chalk")
         id = 86
         tier = Nothing
 
         '|Item Flags|
-        MyBase.setUsable(True)
-        MyBase.isRandoTFAcceptable = False
+        usable = true
+        rando_inv_allowed = False
 
         '|Stats|
-        MyBase.count = 0
-        MyBase.value = 2
+        count = 0
+        value = 2
 
         '|Description|
-        MyBase.setDesc("A debugging item that lets one teleport/reset floors.  Use your powers for good, ok?")
+        setDesc("A debugging item that allows one to teleport between floors.  Use your powers for good, ok?")
     End Sub
 
     Overrides Sub use(ByRef p As Player)

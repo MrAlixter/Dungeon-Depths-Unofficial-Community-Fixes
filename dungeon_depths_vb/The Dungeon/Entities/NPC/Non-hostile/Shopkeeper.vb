@@ -75,6 +75,7 @@
             inv.setCount("Platinum_Daggers", 1)
             inv.setCount("Platinum_Staff", 1)
             inv.setCount("Platinum_Armor", 1)
+            inv.setCount("Crimson_Cloak", 1)
             inv.setCount("Oak_Staff", 0)
             inv.setCount("Steel_Sword", 0)
             inv.setCount("Bronze_Armor", 0)

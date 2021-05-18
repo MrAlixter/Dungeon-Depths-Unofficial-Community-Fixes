@@ -14,7 +14,7 @@
     Sub New(cs As Integer, n As Integer, tts As Integer, wi As Double, cbs As Boolean, tfd As Boolean)
         MyBase.New(cs, n, tts, wi, cbs, tfd)
         MyBase.updateDuringCombat = True
-        tfName = "ArauneTF"
+        tfName = "AlrauneTF"
         nextStep = getNextStep(cs)
     End Sub
 

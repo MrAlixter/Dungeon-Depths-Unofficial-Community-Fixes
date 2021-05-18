@@ -2,13 +2,13 @@
     Inherits Item
     'AttackCharms are useable items that permenantly boost player attack by 2
     Sub New()
-        MyBase.setName("Omni_Charm")
-        MyBase.setDesc("A charm that slightly boosts all base stats.")
+        setName("Omni_Charm")
+        setDesc("A charm that slightly boosts all base stats.")
         id = 126
         tier = Nothing
-        MyBase.setUsable(True)
-        MyBase.count = 0
-        MyBase.value = 4700
+        usable = true
+        count = 0
+        value = 4700
     End Sub
 
     Overrides Sub use(ByRef p As Player)

@@ -1,16 +1,17 @@
 ﻿Public Class ASpellbook
     Inherits Item
     Public Shared spells() As String = {"Turn to Blade", "Turn to Cupcake", "Self Polymorph",
-                                        "Magma Spear", "Petrify II", "Major Heal", "Uvona's Fugue"}
+                                        "Magma Spear", "Petrify II", "Major Heal", "Uvona's Fugue",
+                                        "Summon Apple"}
 
     Sub New()
-        MyBase.setName("Advanced_Spellbook")
-        MyBase.setDesc("An ornate, gilded book that likely contains something outside of the standard magic curriculum.")
+        setName("Advanced_Spellbook")
+        setDesc("An ornate, gilded book that likely contains something outside of the standard magic curriculum.")
         id = 65
         tier = 3
-        MyBase.setUsable(True)
-        MyBase.count = 0
-        MyBase.value = 1500
+        usable = true
+        count = 0
+        value = 1500
     End Sub
 
     Overrides Sub use(ByRef p As Player)

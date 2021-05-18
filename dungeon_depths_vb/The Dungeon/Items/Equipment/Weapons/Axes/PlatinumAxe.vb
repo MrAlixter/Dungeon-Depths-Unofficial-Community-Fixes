@@ -3,22 +3,22 @@
 
     Sub New()
         '|ID Info|
-        MyBase.setName("Platinum_Axe")
+        setName("Platinum_Axe")
         id = 255
         tier = Nothing
 
         '|Item Flags|
-        MyBase.setUsable(False)
-        MyBase.isMonsterDrop = False
+        usable = false
+        MyBase.droppable = False
 
         '|Stats|
-        MyBase.count = 0
-        MyBase.value = 5000
-        MyBase.aBoost = 45
-        MyBase.sBoost = -2
+        count = 0
+        value = 5000
+        MyBase.a_boost = 45
+        MyBase.s_boost = -2
 
         '|Description|
-        MyBase.setDesc("A glistening, jeweled axe forged for superb slashers." & DDUtils.RNRN &
+        setDesc("A glistening, jeweled axe forged for superb slashers." & DDUtils.RNRN &
                        getStatInformation())
     End Sub
 End Class

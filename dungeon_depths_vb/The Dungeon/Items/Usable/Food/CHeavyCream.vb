@@ -3,20 +3,20 @@
 
     Sub New()
         '|ID Info|
-        MyBase.setName("Cursed_Heavy_Cream")
+        setName("Cursed_Heavy_Cream")
         id = 98
         tier = Nothing
 
         '|Item Flags|
-        MyBase.setUsable(True)
+        usable = true
 
         '|Stats|
-        MyBase.count = 0
-        MyBase.value = 265
+        count = 0
+        value = 265
         setCalories(30)
 
         '|Description|
-        MyBase.setDesc("An increadibly heavy cream that seems a bit fattening.  Apperantly it might be a little bit cursed." & DDUtils.RNRN &
+        setDesc("An increadibly heavy cream that seems a bit fattening.  Apperantly it might be a little bit cursed." & DDUtils.RNRN &
                        "-30 stamina" & DDUtils.RNRN &
                        "Major breast enlargement")
     End Sub
@@ -25,16 +25,16 @@
         Game.pushLstLog("You drink the " & getName())
         p.stamina += getCalories()
         If p.stamina > 100 Then p.stamina = 100
-        Effect()
+        effect(p)
 
         count -= 1
     End Sub
-    Public Overrides Sub Effect()
-        Game.player1.be()
-        Game.player1.be()
-        If Transformation.canBeTFed(Game.player1) Then
-            Game.player1.pState.save(Game.player1)
+    Public Overrides Sub effect(ByRef p As Player)
+        p.be()
+        p.be()
+        If Transformation.canBeTFed(p) Then
+            p.pState.save(p)
         End If
-        Game.player1.drawPort()
+        p.drawPort()
     End Sub
 End Class

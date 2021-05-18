@@ -4,21 +4,21 @@ Public Class SAJumpsuit
 
     Sub New()
         '|ID Info|
-        MyBase.setName("Space_Age_Jumpsuit")
+        setName("Space_Age_Jumpsuit")
         id = 102
         tier = Nothing
 
         '|Item Flags|
-        MyBase.setUsable(False)
-        MyBase.compressesBreasts = True
-        MyBase.isRandoTFAcceptable = False
-        MyBase.slutVarInd = 103
+        usable = false
+        MyBase.compress_breast = True
+        rando_inv_allowed = False
+        MyBase.slut_var_ind = 103
 
         '|Stats|
-        MyBase.mBoost = 14
-        MyBase.dBoost = 4
-        MyBase.count = 0
-        MyBase.value = 700
+        MyBase.m_boost = 14
+        MyBase.d_boost = 4
+        count = 0
+        value = 700
 
         '|Image Index|
         MyBase.bsizeneg1 = New Tuple(Of Integer, Boolean, Boolean)(40, False, True)
@@ -34,7 +34,7 @@ Public Class SAJumpsuit
         MyBase.usize3 = New Tuple(Of Integer, Boolean, Boolean)(304, True, True)
 
         '|Description|
-        MyBase.setDesc("This garment is clearly not from the world you are used to.  Even the fabric is futuristic; focusing ambient energy from the air." & DDUtils.RNRN &
+        setDesc("This garment is clearly not from the world you are used to.  Even the fabric is futuristic; focusing ambient energy from the air." & DDUtils.RNRN &
                         getSizeInformation() & vbCrLf & getStatInformation())
     End Sub
 End Class

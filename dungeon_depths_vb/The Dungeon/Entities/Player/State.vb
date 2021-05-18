@@ -190,7 +190,6 @@
             textColor = Color.Black
             Exit Sub
         End If
-
         name = readArray(0)
         pClass = Game.player1.classes(readArray(1).Split("~")(0))
         pForm = Game.player1.forms(readArray(1).Split("~")(1))

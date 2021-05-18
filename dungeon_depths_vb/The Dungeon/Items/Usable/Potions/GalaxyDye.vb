@@ -2,13 +2,21 @@
     Inherits Item
 
     Sub New()
-        MyBase.setName("Galaxy_Dye")
-        MyBase.setDesc("A swirling nebula of lights that looks like it could contain countless stars.  Who knows what would happen if you follow the instructions on its side and apply it to your hair?")
+        '|ID Info|
+        setName("Galaxy_Dye")
         id = 130
         tier = Nothing
-        MyBase.setUsable(True)
-        MyBase.count = 0
-        MyBase.value = 1345
+
+        '|Item Flags|
+        usable = True
+
+        '|Stats|
+        count = 0
+        value = 1345
+
+        '|Description|
+        setDesc("A swirling nebula of lights that looks like it could contain countless stars.  Who knows what would happen if you follow the instructions on its side and apply it to your hair?")
+
     End Sub
 
     Overrides Sub use(ByRef p As Player)

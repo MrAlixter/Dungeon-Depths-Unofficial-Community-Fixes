@@ -2,16 +2,16 @@
     Inherits Armor
 
     Sub New()
-        MyBase.setName("Magical_Slut_Outfit")
+        setName("Magical_Slut_Outfit")
 
         id = 170
         tier = Nothing
-        MyBase.setUsable(False)
-        MyBase.dBoost = 10
-        MyBase.count = 0
-        MyBase.value = 100
+        usable = false
+        MyBase.d_boost = 10
+        count = 0
+        value = 100
 
-        antiSlutVarInd = 10
+        anti_slut_ind = 10
 
         bsizeneg1 = New Tuple(Of Integer, Boolean, Boolean)(61, False, True)
         bsize0 = New Tuple(Of Integer, Boolean, Boolean)(233, True, True)
@@ -28,11 +28,11 @@
         usize4 = New Tuple(Of Integer, Boolean, Boolean)(216, True, True)
 
 
-        MyBase.compressesBreasts = True
+        MyBase.compress_breast = True
 
-        MyBase.isRandoTFAcceptable = False
+        rando_inv_allowed = False
 
-        MyBase.setDesc("A mysterious uniform worn by a mysterious protector." & DDUtils.RNRN & _
+        setDesc("A mysterious uniform worn by a mysterious protector." & DDUtils.RNRN & _
                                    getSizeInformation() & vbCrLf & getStatInformation() &
                             "Magical girls can not remove this uniform.")
     End Sub

@@ -3,20 +3,20 @@
     'BrawlerCosplay provides a +15 defensive boost
     Sub New()
         '|ID Info|
-        MyBase.setName("Brawler_Cosplay")
+        setName("Brawler_Cosplay")
         id = 20
         tier = Nothing
 
         '|Item Flags|
-        MyBase.setUsable(False)
-        MyBase.compressesBreasts = True
-        MyBase.antiSlutVarInd = 19
+        usable = false
+        MyBase.compress_breast = True
+        MyBase.anti_slut_ind = 19
 
         '|Stats|
-        MyBase.dBoost = 6
-        MyBase.aBoost = 5
-        MyBase.count = 0
-        MyBase.value = 1250
+        MyBase.d_boost = 6
+        MyBase.a_boost = 5
+        count = 0
+        value = 1250
 
         '|Image Index|
         bsize1 = New Tuple(Of Integer, Boolean, Boolean)(32, True, True)
@@ -31,7 +31,7 @@
         usize4 = New Tuple(Of Integer, Boolean, Boolean)(38, True, True)
 
         '|Description|
-        MyBase.setDesc("A glamourous garment made more for the highlighting one's body than for any practical function. " & DDUtils.RNRN &
+        setDesc("A glamourous garment made more for the highlighting one's body than for any practical function. " & DDUtils.RNRN &
                                       getSizeInformation() & vbCrLf & getStatInformation())
     End Sub
 End Class

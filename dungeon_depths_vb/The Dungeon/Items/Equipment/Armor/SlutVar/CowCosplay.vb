@@ -2,15 +2,15 @@
     Inherits Armor
 
     Sub New()
-        MyBase.setName("Cow_Cosplay")
+        setName("Cow_Cosplay")
 
         id = 196
         tier = Nothing
-        MyBase.setUsable(False)
-        MyBase.dBoost = 1
-        MyBase.count = 0
-        MyBase.value = 50
-        MyBase.antiSlutVarInd = 31
+        usable = false
+        MyBase.d_boost = 1
+        count = 0
+        value = 50
+        MyBase.anti_slut_ind = 31
 
         MyBase.bsizeneg1 = New Tuple(Of Integer, Boolean, Boolean)(66, False, True)
         MyBase.bsize0 = New Tuple(Of Integer, Boolean, Boolean)(267, True, True)
@@ -29,10 +29,10 @@
         MyBase.usize3 = New Tuple(Of Integer, Boolean, Boolean)(161, True, True)
         MyBase.usize4 = New Tuple(Of Integer, Boolean, Boolean)(162, True, True)
         MyBase.usize5 = New Tuple(Of Integer, Boolean, Boolean)(163, True, True)
-        MyBase.compressesBreasts = False
-        MyBase.hidesDick = False
+        MyBase.compress_breast = False
+        MyBase.hide_dick = False
 
-        MyBase.setDesc("A cow print bra created to hold cow sized breasts." & DDUtils.RNRN &
+        setDesc("A cow print bra created to hold cow sized breasts." & DDUtils.RNRN &
                                      getSizeInformation() & vbCrLf & getStatInformation())
     End Sub
 End Class

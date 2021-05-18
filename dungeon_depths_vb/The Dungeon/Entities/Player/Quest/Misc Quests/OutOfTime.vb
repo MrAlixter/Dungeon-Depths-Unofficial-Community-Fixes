@@ -74,10 +74,9 @@
         Dim m As TimeTravellerFight = New TimeTravellerFight()
 
         Monster.targetRoute(m)
+        Game.toCombat(m)
 
-        Game.toCombat()
         Game.pushLstLog((m.getName() & " attacks!"))
-        Game.turn += 1
     End Sub
 
     Public Overrides Function canGet() As Boolean
@@ -102,9 +101,9 @@ Public Class OutOfTimeS1
             Game.player1.drawPort()
         End If
 
-        Game.pushLblEvent("An unknown amount of time passes..." & DDUtils.RNRN & DDUtils.RNRN & DDUtils.RNRN &
+        Game.pushLblEvent("An unknown amount of time passes..." & DDUtils.RNRN &
                           "As you wake up one morning, the now familiar hum of the shimmering barrier keeping you isolated from the rest of the faciitly seems to have faded out of your concious senses, and...." & DDUtils.RNRN &
-                          "wait..." & DDUtils.RNRN &
+                          "Wait..." & DDUtils.RNRN &
                           "Bolting up, you notice that the doorway is now clear!", AddressOf completeS2)
     End Sub
 
@@ -134,7 +133,12 @@ Public Class OutOfTimeS2
     Public Overrides Sub complete()
         MyBase.complete()
 
-        MsgBox("A")
+        Game.pushLblEvent("A slightly garbled voice coughs before speaking from a strange box on the ceiling..." & DDUtils.RNRN &
+                          """Prisoner 5, report to conference room A.""" & DDUtils.RNRN &
+                          "You look around to see if there are any other prisoners around, and the voice sighs." & DDUtils.RNRN &
+                          """Geez, didn't she explain anything to you?  YES!  YOU IN THE HALLWAY!  Head up to the junction and then it's the first door on the left.  This is EXACTLY why I've been saying we should paint some arrows in...""" & DDUtils.RNRN &
+                          "...the voice trails off into annoyed mumbling before cutting off abruptly.")
+        Game.currFloor.mBoard(18, 58).Text = "G"
     End Sub
 
     Public Overrides Function getDesc() As String
@@ -156,7 +160,145 @@ Public Class OutOfTimeS3
     Public Overrides Sub complete()
         MyBase.complete()
 
-        MsgBox("B")
+        showNPC(ShopNPC.npcLib.atrs(0).getAt(83), "Hello.  I'll be the Time Judge handling your case.  From what I've seen it should be open and shut, so let's get the procedure started." & DDUtils.RNRN &
+                "I am going to ask you a set of questions, keep your answers consise and honest.", AddressOf q1)
+    End Sub
+
+    Public Sub q1()
+        showNPC(ShopNPC.npcLib.atrs(0).getAt(83), "First things first, did you intend to send yourself into the future?", AddressOf q1ask)
+    End Sub
+    Public Sub q1ask()
+        Game.pushPnlYesNo("Did you try to go to the future?", AddressOf q1yes, AddressOf q1no)
+    End Sub
+
+    Public Sub q1no()
+        showNPC(ShopNPC.npcLib.atrs(0).getAt(83), "Good to hear.  Do you plan on returning to this point in time ever again?", AddressOf q1noq2)
+    End Sub
+    Public Sub q1yes()
+        showNPC(ShopNPC.npcLib.atrs(0).getAt(84), "Interesting... and did you consider the potential consequences that a time warp might have?", AddressOf q1yesq2)
+    End Sub
+
+    Public Sub q1noq2()
+        Game.pushPnlYesNo("Do you plan on returning?", AddressOf q1noq2yes, AddressOf q1noq2no)
+    End Sub
+    Public Sub q1noq2yes()
+        showNPC(ShopNPC.npcLib.atrs(0).getAt(84), "Hmmm.  You intend to violate time law intentionally?  Have you fully considered the weight of travelling into the future?", AddressOf q1yesq2)
+    End Sub
+    Public Sub q1noq2no()
+        showNPC(ShopNPC.npcLib.atrs(0).getAt(83), "Well then, I see no reason to hold you here any further.  You are free to go, " & If(Game.player1.sex.Equals("Male"), "sir", "ma'am") & "...", AddressOf cleanup)
+    End Sub
+
+    Public Sub q1yesq2()
+        Game.pushPnlYesNo("Did you fully think out time travel?", AddressOf q1yesq2yes, AddressOf q1yesq2no)
+    End Sub
+    Public Sub q1yesq2yes()
+        showNPC(ShopNPC.npcLib.atrs(0).getAt(84), "And still you risk tearing at the fabric of the universe?  Who do you think you are?!", AddressOf q1yesq2yesq3)
+    End Sub
+    Public Sub q1yesq2no()
+        showNPC(ShopNPC.npcLib.atrs(0).getAt(83), "So, you are simply reckless... not great for your case, but not terrible either...", AddressOf q1yesq2noq3)
+    End Sub
+
+    Public Sub q1yesq2yesq3()
+        Game.pushPnlYesNo("Answer Politely?", AddressOf q1yesq2yesq3yes, AddressOf q1yesq2yesq3no)
+    End Sub
+    Public Sub q1yesq2yesq3yes()
+        showNPC(ShopNPC.npcLib.atrs(0).getAt(83), "Do.  Not.  Do.  This.  Again." & DDUtils.RNRN &
+                                                  "For your prior actions you will be fined 40,000 credits which adds up to 1,000 of your gold coins.  If we catch you outside of your source timeline again, there will be repercussions...", AddressOf fine1)
+    End Sub
+    Public Sub fine1()
+        Game.pushPnlYesNo("Pay your fine?", AddressOf payFine1, AddressOf tjFight)
+    End Sub
+    Public Sub payFine1()
+        If Game.player1.getGold < 1000 Then
+            Game.player1.perks(perk.owetimebalance) = 1000 - Game.player1.gold
+            showNPC(ShopNPC.npcLib.atrs(0).getAt(84), "*sigh* I suppose it would be too much to ask that you have the proper payment.  Fine, we'll just need to make up the balance later.  Now leave.  The door to the portal to your home timeline is the last one on the left.")
+            Game.player1.gold = 0
+        Else
+            showNPC(ShopNPC.npcLib.atrs(0).getAt(83), "Now leave.  The door to the portal to your home timeline is the last one on the left.")
+            Game.player1.gold -= 1000
+        End If
+
+        Game.currFloor.mBoard(5, 49).Tag = 2
+        Game.currFloor.mBoard(5, 49).Text = ""
+        Game.currFloor.mBoard(5, 72).Tag = 2
+        Game.currFloor.mBoard(5, 72).Text = ""
+
+        Game.compOOT = True
+
+        Game.player1.update()
+        Game.drawBoard()
+    End Sub
+    Public Sub q1yesq2yesq3no()
+        showNPC(ShopNPC.npcLib.atrs(0).getAt(84), "I'm not just going to sit here and take this.  Have at you!", AddressOf tjFight)
+    End Sub
+
+
+    Public Sub q1yesq2noq3()
+        showNPC(ShopNPC.npcLib.atrs(0).getAt(83), "Do you plan on returning to this point in time ever again?", AddressOf q1yesq2noq3ask)
+    End Sub
+    Public Sub q1yesq2noq3ask()
+        Game.pushPnlYesNo("Do you plan on returning?", AddressOf q1yesq2noq3yes, AddressOf q1yesq2noq3no)
+    End Sub
+    Public Sub q1yesq2noq3yes()
+        showNPC(ShopNPC.npcLib.atrs(0).getAt(84), "Well then, I'm afraid that you can't be allowed to leave.  Please return to your cell.", AddressOf q1yesq2noq3yesq4)
+    End Sub
+    Public Sub q1yesq2noq3no()
+        showNPC(ShopNPC.npcLib.atrs(0).getAt(83), "Well, see that you don't.  For your prior actions you will be fined 20,000 credits which adds up to 500 of your gold coins and then you are free to go.", AddressOf fine2)
+    End Sub
+    Public Sub fine2()
+        Game.pushPnlYesNo("Pay your fine?", AddressOf payFine2, AddressOf alert)
+    End Sub
+    Public Sub payFine2()
+        If Game.player1.getGold < 500 Then
+            Game.player1.perks(perk.owetimebalance) = 500 - Game.player1.gold
+            showNPC(ShopNPC.npcLib.atrs(0).getAt(84), "We'll just need to make up the remaining balance later.  Now leave.  The door to the portal to your home timeline is the last one on the left.")
+            Game.player1.gold = 0
+        Else
+            showNPC(ShopNPC.npcLib.atrs(0).getAt(83), "The door to the portal to your home timeline is the last one on the left.")
+            Game.player1.gold -= 500
+        End If
+
+        Game.currFloor.mBoard(5, 49).Tag = 2
+        Game.currFloor.mBoard(5, 49).Text = ""
+        Game.currFloor.mBoard(5, 72).Tag = 2
+        Game.currFloor.mBoard(5, 72).Text = ""
+
+        Game.compOOT = True
+
+        Game.player1.update()
+        Game.drawBoard()
+    End Sub
+
+    Public Sub q1yesq2noq3yesq4()
+        Game.pushPnlYesNo("Return to your cell?", AddressOf q1yesq2noq3yesq4yes, AddressOf alert)
+    End Sub
+    Public Sub q1yesq2noq3yesq4yes()
+        Game.pushLblEvent("You return to your cell, and then spend the next eternity as a temporal prisoner." & DDUtils.RNRN &
+                          "Is this truly how you saw your journey ending?" & DDUtils.RNRN &
+                          "Game Over!", AddressOf Game.player1.die)
+        Game.compOOT = True
+    End Sub
+
+
+    Public Sub tjFight()
+        Dim m As TimeJudgeFight = New TimeJudgeFight()
+
+        Monster.targetRoute(m)
+        Game.toCombat(m)
+
+        Game.pushLstLog((m.getName() & " attacks!"))
+    End Sub
+
+    Public Shared Sub alert(Optional seeJudge As Boolean = True)
+        Game.pushLblEvent("A blaring alarm sounds" & If(seeJudge, ", and the judge vanishes in a column of light", "") & "!")
+        Game.currFloor.mBoard(18, 58).Text = ""
+        Game.compOOT = True
+        Game.player1.perks(perk.enemyoftime) = 1
+    End Sub
+    Public Sub cleanup()
+        Game.pushLblEvent("""Head up to the next room on the left, there's a control switch for the security barriers there.""" & DDUtils.RNRN & "Once your discussion wraps up, the judge says his farewells and vanishes in a column of light.")
+        Game.currFloor.mBoard(18, 58).Text = ""
+        Game.compOOT = True
     End Sub
 
     Public Overrides Function getDesc() As String
@@ -164,7 +306,7 @@ Public Class OutOfTimeS3
     End Function
 
     Public Overrides Function isComplete() As Boolean
-        Return Game.player1.pos.Y < 32
+        Return (Game.player1.pos.Y = 18 And Game.player1.pos.X = 59) Or Game.compOOT
     End Function
 End Class
 

@@ -5,21 +5,21 @@
     'CatLingerie is a cosmetic armor that doesn't provide a defense bonus
     Sub New()
         '|ID Info|
-        MyBase.setName("Cat_Armor")
+        setName("Cat_Armor")
         id = 146
         tier = Nothing
 
         '|Item Flags|
-        MyBase.setUsable(False)
-        MyBase.compressesBreasts = True
-        MyBase.slutVarInd = 12
+        usable = false
+        MyBase.compress_breast = True
+        MyBase.slut_var_ind = 12
 
         '|Stats|
-        MyBase.dBoost = 15
-        MyBase.aBoost = 7
-        MyBase.sBoost = 33
-        MyBase.count = 0
-        MyBase.value = 2456
+        MyBase.d_boost = 15
+        MyBase.a_boost = 7
+        MyBase.s_boost = 33
+        count = 0
+        value = 2456
 
         '|Image Index|
         bsizeneg1 = New Tuple(Of Integer, Boolean, Boolean)(54, False, True)
@@ -37,7 +37,7 @@
         usize3 = New Tuple(Of Integer, Boolean, Boolean)(78, True, True)
 
         '|Description|
-        MyBase.setDesc("An adorable cat themed set of lightweight armor that also boosts attack. Nya." & DDUtils.RNRN &
+        setDesc("An adorable cat themed set of lightweight armor that also boosts attack. Nya." & DDUtils.RNRN &
                                       getSizeInformation() & vbCrLf & getStatInformation())
     End Sub
 

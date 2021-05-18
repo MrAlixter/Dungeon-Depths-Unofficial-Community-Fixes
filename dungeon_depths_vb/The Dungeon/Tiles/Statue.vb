@@ -47,8 +47,8 @@
 
             'adds the miniboss to combat queues
             Monster.targetRoute(m)
+            Game.toCombat(m)
 
-            Game.toCombat()
             Game.pushLblCombatEvent(("The golden statue comes to life, and " & m.getName() & " attacks!"))
             Game.pushLstLog(("The golden statue comes to life, and " & m.getName() & " attacks!"))
 

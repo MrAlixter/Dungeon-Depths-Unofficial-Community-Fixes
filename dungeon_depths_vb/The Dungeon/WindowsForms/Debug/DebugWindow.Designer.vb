@@ -31,6 +31,7 @@ Partial Class Debug_Window
         Me.groupNotes = New System.Windows.Forms.GroupBox()
         Me.boxMap = New System.Windows.Forms.PictureBox()
         Me.groupGeneral = New System.Windows.Forms.GroupBox()
+        Me.lblBarrier = New System.Windows.Forms.Label()
         Me.lblTrap = New System.Windows.Forms.Label()
         Me.boxBeaten = New System.Windows.Forms.CheckBox()
         Me.lblSelected = New System.Windows.Forms.Label()
@@ -77,7 +78,6 @@ Partial Class Debug_Window
         Me.tabPageBlush = New System.Windows.Forms.TabPage()
         Me.tabPageFaceMark = New System.Windows.Forms.TabPage()
         Me.tabPageMiddleHair = New System.Windows.Forms.TabPage()
-        Me.tabPageHorns = New System.Windows.Forms.TabPage()
         Me.tabPageEars = New System.Windows.Forms.TabPage()
         Me.tabPageNose = New System.Windows.Forms.TabPage()
         Me.tabPageMouth = New System.Windows.Forms.TabPage()
@@ -86,6 +86,7 @@ Partial Class Debug_Window
         Me.tabPageGlasses = New System.Windows.Forms.TabPage()
         Me.tabPageCloak = New System.Windows.Forms.TabPage()
         Me.tabPageAccessories = New System.Windows.Forms.TabPage()
+        Me.tabPageHorns = New System.Windows.Forms.TabPage()
         Me.tabPageFrontHair = New System.Windows.Forms.TabPage()
         Me.tabPageHat = New System.Windows.Forms.TabPage()
         Me.picPreview = New System.Windows.Forms.PictureBox()
@@ -162,7 +163,6 @@ Partial Class Debug_Window
         Me.lblHeight = New System.Windows.Forms.Label()
         Me.lblWidth = New System.Windows.Forms.Label()
         Me.lblFC = New System.Windows.Forms.Label()
-        Me.lblBarrier = New System.Windows.Forms.Label()
         Me.tabMain.SuspendLayout()
         Me.tabInformation.SuspendLayout()
         Me.tabGeneral.SuspendLayout()
@@ -306,6 +306,17 @@ Partial Class Debug_Window
         Me.groupGeneral.TabIndex = 3
         Me.groupGeneral.TabStop = False
         Me.groupGeneral.Text = "GENERAL"
+        '
+        'lblBarrier
+        '
+        Me.lblBarrier.AutoSize = True
+        Me.lblBarrier.Font = New System.Drawing.Font("Consolas", 12.0!, System.Drawing.FontStyle.Bold)
+        Me.lblBarrier.ForeColor = System.Drawing.Color.DarkRed
+        Me.lblBarrier.Location = New System.Drawing.Point(56, 508)
+        Me.lblBarrier.Name = "lblBarrier"
+        Me.lblBarrier.Size = New System.Drawing.Size(72, 19)
+        Me.lblBarrier.TabIndex = 210
+        Me.lblBarrier.Text = "BARRIER"
         '
         'lblTrap
         '
@@ -675,7 +686,6 @@ Partial Class Debug_Window
         Me.tabPortrait.Controls.Add(Me.tabPageBlush)
         Me.tabPortrait.Controls.Add(Me.tabPageFaceMark)
         Me.tabPortrait.Controls.Add(Me.tabPageMiddleHair)
-        Me.tabPortrait.Controls.Add(Me.tabPageHorns)
         Me.tabPortrait.Controls.Add(Me.tabPageEars)
         Me.tabPortrait.Controls.Add(Me.tabPageNose)
         Me.tabPortrait.Controls.Add(Me.tabPageMouth)
@@ -684,6 +694,7 @@ Partial Class Debug_Window
         Me.tabPortrait.Controls.Add(Me.tabPageGlasses)
         Me.tabPortrait.Controls.Add(Me.tabPageCloak)
         Me.tabPortrait.Controls.Add(Me.tabPageAccessories)
+        Me.tabPortrait.Controls.Add(Me.tabPageHorns)
         Me.tabPortrait.Controls.Add(Me.tabPageFrontHair)
         Me.tabPortrait.Controls.Add(Me.tabPageHat)
         Me.tabPortrait.Location = New System.Drawing.Point(3, 254)
@@ -855,16 +866,6 @@ Partial Class Debug_Window
         Me.tabPageMiddleHair.TabIndex = 5
         Me.tabPageMiddleHair.Text = "MIDDLE HAIR"
         '
-        'tabPageHorns
-        '
-        Me.tabPageHorns.BackColor = System.Drawing.Color.Black
-        Me.tabPageHorns.ForeColor = System.Drawing.Color.White
-        Me.tabPageHorns.Location = New System.Drawing.Point(4, 24)
-        Me.tabPageHorns.Name = "tabPageHorns"
-        Me.tabPageHorns.Size = New System.Drawing.Size(728, 263)
-        Me.tabPageHorns.TabIndex = 25
-        Me.tabPageHorns.Text = "HORNS"
-        '
         'tabPageEars
         '
         Me.tabPageEars.AutoScroll = True
@@ -944,6 +945,16 @@ Partial Class Debug_Window
         Me.tabPageAccessories.Size = New System.Drawing.Size(728, 263)
         Me.tabPageAccessories.TabIndex = 14
         Me.tabPageAccessories.Text = "ACCESSORIES"
+        '
+        'tabPageHorns
+        '
+        Me.tabPageHorns.BackColor = System.Drawing.Color.Black
+        Me.tabPageHorns.ForeColor = System.Drawing.Color.White
+        Me.tabPageHorns.Location = New System.Drawing.Point(4, 24)
+        Me.tabPageHorns.Name = "tabPageHorns"
+        Me.tabPageHorns.Size = New System.Drawing.Size(728, 263)
+        Me.tabPageHorns.TabIndex = 25
+        Me.tabPageHorns.Text = "HORNS"
         '
         'tabPageFrontHair
         '
@@ -1738,6 +1749,7 @@ Partial Class Debug_Window
         Me.boxHeight.BackColor = System.Drawing.Color.Black
         Me.boxHeight.ForeColor = System.Drawing.Color.White
         Me.boxHeight.Location = New System.Drawing.Point(212, 82)
+        Me.boxHeight.Maximum = New Decimal(New Integer() {500, 0, 0, 0})
         Me.boxHeight.Name = "boxHeight"
         Me.boxHeight.Size = New System.Drawing.Size(120, 26)
         Me.boxHeight.TabIndex = 26
@@ -1747,6 +1759,7 @@ Partial Class Debug_Window
         Me.boxWidth.BackColor = System.Drawing.Color.Black
         Me.boxWidth.ForeColor = System.Drawing.Color.White
         Me.boxWidth.Location = New System.Drawing.Point(212, 50)
+        Me.boxWidth.Maximum = New Decimal(New Integer() {500, 0, 0, 0})
         Me.boxWidth.Name = "boxWidth"
         Me.boxWidth.Size = New System.Drawing.Size(120, 26)
         Me.boxWidth.TabIndex = 25
@@ -1777,17 +1790,6 @@ Partial Class Debug_Window
         Me.lblFC.Size = New System.Drawing.Size(108, 19)
         Me.lblFC.TabIndex = 22
         Me.lblFC.Text = "FloorCode: "
-        '
-        'lblBarrier
-        '
-        Me.lblBarrier.AutoSize = True
-        Me.lblBarrier.Font = New System.Drawing.Font("Consolas", 12.0!, System.Drawing.FontStyle.Bold)
-        Me.lblBarrier.ForeColor = System.Drawing.Color.DarkRed
-        Me.lblBarrier.Location = New System.Drawing.Point(56, 508)
-        Me.lblBarrier.Name = "lblBarrier"
-        Me.lblBarrier.Size = New System.Drawing.Size(72, 19)
-        Me.lblBarrier.TabIndex = 210
-        Me.lblBarrier.Text = "BARRIER"
         '
         'Debug_Window
         '

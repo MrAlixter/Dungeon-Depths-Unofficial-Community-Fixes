@@ -2,18 +2,18 @@
     Inherits Armor
 
     Sub New()
-        MyBase.setName("Mag._Girl_Outfit_(R)")
+        setName("Mag._Girl_Outfit_(R)")
 
 
         id = 210
         tier = Nothing
-        MyBase.setUsable(False)
-        MyBase.dBoost = 25
-        MyBase.mBoost = 17
-        MyBase.aBoost = 15
+        usable = false
+        MyBase.d_boost = 25
+        MyBase.m_boost = 17
+        MyBase.a_boost = 15
 
-        MyBase.count = 0
-        MyBase.value = 100
+        count = 0
+        value = 100
 
         bsizeneg1 = New Tuple(Of Integer, Boolean, Boolean)(296, True, True)
         bsize0 = New Tuple(Of Integer, Boolean, Boolean)(297, True, True)
@@ -25,11 +25,11 @@
         usize1 = New Tuple(Of Integer, Boolean, Boolean)(219, True, True)
         usize2 = New Tuple(Of Integer, Boolean, Boolean)(220, True, True)
 
-        MyBase.compressesBreasts = True
+        MyBase.compress_breast = True
 
-        MyBase.isRandoTFAcceptable = False
+        rando_inv_allowed = False
 
-        MyBase.setDesc("A mysterious uniform worn by a mysterious protector with a fair bit of experience." & DDUtils.RNRN & _
+        setDesc("A mysterious uniform worn by a mysterious protector with a fair bit of experience." & DDUtils.RNRN & _
                                      getSizeInformation() & vbCrLf & getStatInformation() &
                               "Magical girls can not remove this uniform.")
     End Sub

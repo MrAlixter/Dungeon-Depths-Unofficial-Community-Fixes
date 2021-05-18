@@ -3,19 +3,20 @@
     Inherits Item
     Sub New()
         '|ID Info|
-        MyBase.setName("Cat_Ears")
+        setName("Cat_Ears")
         id = 15
         tier = Nothing
 
         '|Item Flags|
-        MyBase.setUsable(True)
+        usable = true
 
         '|Stats|
-        MyBase.count = 0
-        MyBase.value = 250
+        count = 0
+        value = 250
 
         '|Description|
-        MyBase.setDesc("These will give you cat ears.")
+        setDesc("An enchanted pair of feline ears." & DDUtils.RNRN &
+                       "Using this item will give its user cat ears!")
     End Sub
 
     Overrides Sub use(ByRef p As Player)

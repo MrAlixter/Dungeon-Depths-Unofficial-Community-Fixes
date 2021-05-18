@@ -1,4 +1,4 @@
-﻿Public Class preferedForm
+﻿Public Class PreferredForm
     Public hairColor As Color
     Public skinColor As Color
     Public hasFemaleHair As Boolean
@@ -80,6 +80,8 @@
 
     Public Sub shiftTowards(ByRef p As Player)
         Randomize()
+        Game.pushLogAndEvent("The glow of someone else's magic slightly tweaks your form...")
+
         If Not p.className.Equals("Thrall") Then p.changeClass("Thrall")
         If playerMeetsForm(p) Then Exit Sub
 
@@ -128,7 +130,7 @@
             p.prt.setIAInd(pInd.eyes, 8, False, True)
         End If
 
-        p.drawPort()
+        'p.drawPort()
     End Sub
     Public Sub snapShift(ByRef p As Player)
         Randomize()
@@ -195,7 +197,7 @@
 End Class
 
 Public Class SuccMaid
-    Inherits preferedForm
+    Inherits preferredForm
 
     Public Sub New(ByVal hc As Color, ByVal sc As Color, ByVal fh As Boolean, ByVal f As Boolean, ByVal bs As Integer, ByVal s As Boolean, ByVal et As Integer,
                Optional fhi As Integer = -1, Optional rhi As Integer = -1, Optional oc As Action = Nothing)

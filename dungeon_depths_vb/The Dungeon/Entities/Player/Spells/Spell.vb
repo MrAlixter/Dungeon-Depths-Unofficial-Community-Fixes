@@ -42,6 +42,14 @@
         spellList.Add("Firestorm", New FireStorm(Nothing, Nothing))
         spellList.Add("Cynn's Disguise", New CynnsDisguise(Nothing, Nothing))
         spellList.Add("Summon Battery", New SummonBattery(Nothing, Nothing))
+        spellList.Add("Flames of Amaraphne", New FlamesOfAmaraphne(Nothing, Nothing))
+        spellList.Add("Cleansing Light", New CleansingLight(Nothing, Nothing))
+        spellList.Add("Benediction", New Benediction(Nothing, Nothing))
+        spellList.Add("Smite", New Smite(Nothing, Nothing))
+        spellList.Add("Hellfireball", New Hellfireball(Nothing, Nothing))
+        spellList.Add("Reductive Mending", New SizeForLife(Nothing, Nothing))
+        spellList.Add("Summon Apple", New SummonApple(Nothing, Nothing))
+        spellList.Add("Tentacle Crushcannon", New TentacleCrushcannon(Nothing, Nothing))
     End Sub
 
     Sub New(ByRef c As Player, ByRef t As NPC)
@@ -49,8 +57,8 @@
         target = t
     End Sub
     Sub cast()
-        If caster.mana < cost Then
-            Game.pushLogAndEvent("You don't have enough mana! (" & name & " costs " & cost & " mana)")
+        If caster.mana < getcost() Then
+            Game.pushLogAndEvent("You don't have enough mana! (" & name & " costs " & getcost() & " mana)")
             Exit Sub
         End If
         If Not Game.combatmode And Not Game.npcmode And Not useableOutOfCombat Then
@@ -59,7 +67,7 @@
             Exit Sub
         End If
         Randomize()
-        caster.mana -= cost
+        caster.mana -= getcost()
 
         Select Case tier
             Case 2
@@ -121,7 +129,7 @@
     Sub setName(ByVal s As String)
         name = s
     End Sub
-    Function getcost() As Integer
+    Overridable Function getcost() As Integer
         Return cost
     End Function
     Sub setcost(ByVal i As Integer)
@@ -149,7 +157,12 @@
     End Function
 
     Shared Sub spellCast(ByRef t As NPC, ByRef c As Player, ByVal s As String)
-        If Game.combatmode Or Game.npcmode Then
+        If Game.combatmode Then
+            If t.reactToSpell(s) Or s = "Heal" Then
+                spellroute(c, t, s)
+            End If
+        ElseIf Game.npcmode Then
+            t = Game.currNPC
             If t.reactToSpell(s) Or s = "Heal" Then
                 spellroute(c, t, s)
             End If
@@ -158,7 +171,11 @@
         End If
     End Sub
     Shared Sub spellroute(ByRef c As Player, ByRef t As NPC, ByRef s As String)
-        If s.Contains("Heartblast Starcan.") Then s = "Heartblast Starcannon"
+        If s.Contains("Heartblast Starcann.") Then s = "Heartblast Starcannon"
+        If s.Contains("Tentacle Crushcanno.") Then s = "Tentacle Crushcannon"
+        If s.Contains("Heartbreak Supernov.") Then s = "Heartblast Starcannon"
+        If s.Contains("Shiny Sparking Miss.") Then s = "Tentacle Crushcannon"
+
         If Not spellList.Keys.Contains(s) Then s = "Frazzle"
 
         If s.Equals("Self Polymorph") And Not Transformation.canBeTFed(c) Then

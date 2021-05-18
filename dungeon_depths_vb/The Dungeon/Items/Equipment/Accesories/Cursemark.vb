@@ -2,25 +2,25 @@
     Inherits Accessory
     Sub New()
         '|ID Info|
-        MyBase.setName("Cursemark")
+        setName("Cursemark")
         id = 168
         tier = Nothing
 
         '|Item Flags|
-        MyBase.setUsable(False)
-        isCursed = True
+        usable = false
+        cursed = True
         underClothes = True
 
         '|Stats|
-        MyBase.count = 0
-        MyBase.value = 0
+        count = 0
+        value = 0
 
         '|Image Index|
         MyBase.fInd = New Tuple(Of Integer, Boolean, Boolean)(12, True, True)
         MyBase.mInd = New Tuple(Of Integer, Boolean, Boolean)(12, True, True)
 
         '|Description|
-        MyBase.setDesc("A glowing pink tattoo that displays one's status as under the effect of demonic magic." & DDUtils.RNRN &
+        setDesc("A glowing pink tattoo that displays one's status as under the effect of demonic magic." & DDUtils.RNRN &
                        "Negates attack while increasing Max MP and WILL" & vbCrLf &
                        "Raises minimum lust based on availible MP" & vbCrLf &
                        "Mana does not re-generate" & DDUtils.RNRN &
@@ -55,7 +55,7 @@
                "Mana does not re-generate" & DDUtils.RNRN &
                getStatInformation()
     End Function
-    Shared Function getForm() As preferedForm
-        Return New preferedForm(Color.White, Color.FromArgb(255, 255, 78, 78), True, True, 2, True, 0, 26, 6)
+    Shared Function getForm() As preferredForm
+        Return New preferredForm(Color.White, Color.FromArgb(255, 255, 78, 78), True, True, 2, True, 0, 26, 6)
     End Function
 End Class

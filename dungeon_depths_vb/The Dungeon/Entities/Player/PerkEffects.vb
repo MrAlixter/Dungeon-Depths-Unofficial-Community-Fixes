@@ -1,7 +1,7 @@
 ﻿Public Class PerkEffects
     '|GENERAL EFFECTS|
     Shared Sub staminaEffect(ByRef p As Player)
-        If p.perks(perk.hunger) > -1 And Game.turn Mod 5 = 0 Then
+        If p.perks(perk.hunger) > -1 And Game.getTurn Mod 5 = 0 Then
             If p.stamina > 0 Then
                 p.perks(perk.hunger) = -1
             Else
@@ -12,7 +12,7 @@
         End If
     End Sub
     Shared Sub burnEffect(ByRef p As Player)
-        If p.perks(perk.burn) > -1 And Game.turn Mod 4 = 0 Then
+        If p.perks(perk.burn) > -1 And Game.getTurn Mod 4 = 0 Then
             Dim exclaim As String = "The flames scorch your arms!"
             Dim r = Int(Rnd() * 100)
             If r = 0 Then
@@ -36,7 +36,7 @@
         If Not p.prt.haircolor.A = 180 Then
             p.perks(perk.slimehair) = -1
         Else
-            If p.health < 1 And Game.turn Mod 4 = 0 Then
+            If p.health < 1 And Game.getTurn Mod 4 = 0 Then
                 p.health += 5 / p.getMaxHealth()
                 Game.pushLstLog("Your gel body heals some of the damage done to it. +5 health")
                 If p.health > 1 Then p.health = 1
@@ -44,7 +44,7 @@
         End If
     End Sub
     Shared Sub mBurst(ByRef p As Player)
-        If p.health < 1 And Game.turn Mod 4 = 0 Then
+        If p.health < 1 And Game.getTurn Mod 4 = 0 Then
             p.health += 5 / p.getMaxHealth()
             If p.mana < p.getMaxMana + 5 Then p.mana += 5 Else p.mana = p.getMaxMana
             p.stamina -= 7
@@ -58,7 +58,7 @@
         If Not p.prt.haircolor.A = 180 Then
             p.perks(perk.vsslimehair) = -1
         Else
-            If p.health < 1 And Game.turn Mod 7 = 0 Then
+            If p.health < 1 And Game.getTurn Mod 7 = 0 Then
                 Dim h As Integer = Int(Rnd() * 5) + 1
                 p.health += h / p.getMaxHealth()
                 Game.pushLstLog("The gel portion of your body is able to heal some of your wounds! +" & h & " health")
@@ -67,7 +67,7 @@
         End If
     End Sub
     Shared Sub plantRegen(ByRef p As Player)
-        If p.health < 1 And Game.turn Mod 7 = 0 Then
+        If p.health < 1 And Game.getTurn Mod 7 = 0 Then
             Dim h As Integer = 3
             p.health += h / p.getMaxHealth()
             Game.pushLstLog("You are able to absorb some nutrients through the ground. +" & h & " health")
@@ -75,7 +75,7 @@
         End If
     End Sub
     Shared Sub minorRegen(ByRef p As Player)
-        If p.health < 1 And Game.turn Mod 7 = 0 Then
+        If p.health < 1 And Game.getTurn Mod 7 = 0 Then
             Dim h As Integer = Int(Rnd() * 8) + 1
             p.health += h / p.getMaxHealth()
             Game.pushLstLog("A slight glowing aura heals some of your wounds! +" & h & " health")
@@ -93,7 +93,7 @@
             p.perks(perk.minmanregen) = -1
             Exit Sub
         End If
-        If p.mana < p.getMaxMana And Game.turn Mod 5 = 0 Then
+        If p.mana < p.getMaxMana And Game.getTurn Mod 5 = 0 Then
             Dim m As Integer = 2
             p.mana += m
             Game.pushLstLog("A slight glowing aura imbues you with magical energy! +" & m & " mana")
@@ -101,7 +101,7 @@
         End If
     End Sub
     Shared Sub Regen(ByRef p As Player)
-        If p.health < 1 And Game.turn Mod 7 = 0 Then
+        If p.health < 1 And Game.getTurn Mod 7 = 0 Then
             Dim h As Integer = Int(Rnd() * 15) + 1
             p.health += h / p.getMaxHealth()
             Game.pushLstLog("A glowing aura heals some of your wounds! +" & h & " health")
@@ -110,7 +110,7 @@
     End Sub
     Shared Function livingArmor(ByRef p As Player) As Boolean
         If p.equippedArmor.getName.Equals("Living_Armor") Then
-            If Game.turn Mod 6 = 0 And p.lust < 100 Then
+            If Game.getTurn Mod 6 = 0 And p.lust < 100 Then
                 Dim l As Integer = Int(Rnd() * 15) + 10
                 p.addLust(l)
                 Game.pushLstLog("Your living armor raises your lust!")
@@ -123,7 +123,7 @@
     End Function
     Shared Function livingLingerie(ByRef p As Player) As Boolean
         If p.equippedArmor.getName.Equals("Living_Lingerie") Then
-            If Game.turn Mod 4 = 0 And p.lust < 100 Then
+            If Game.getTurn Mod 4 = 0 And p.lust < 100 Then
                 Dim l As Integer = Int(Rnd() * 15) + 10
                 p.addLust(l)
                 Game.pushLstLog("Your living lingerie raises your lust!")
@@ -170,6 +170,39 @@
             End If
         End If
     End Sub
+    Shared Sub phaseDeflector(ByRef p As Player)
+        If p.inv.getCountAt("AAAAAA_Battery") > 0 And
+           Not (p.formName.Equals(p.pState.pForm.name) And p.className.Equals(p.pState.pClass.name) And DDUtils.cEquals(p.prt.haircolor, p.pState.getHairColor) And DDUtils.cEquals(p.prt.skincolor, p.pState.getSkinColor) And p.breastSize = p.pState.breastSize And p.buttSize = p.pState.buttSize And p.dickSize = p.pState.dickSize) Then
+
+            p.revertToPState()
+            p.ongoingTFs.reset()
+
+            Game.pushLogAndEvent("A rippling aura surrounds you, and you revert to your former state!")
+            Game.pushLstLog("The wristband ejects a single smoldering battery cell.")
+
+            p.inv.add("AAAAAA_Battery", -1)
+        End If
+    End Sub
+    Shared Sub imitationCowbell(ByRef p As Player)
+        Game.pushLogAndEvent("You feel an unfamiliar presence take hold of your mind...")
+
+        Dim closest_chest As Chest = Nothing
+        Dim route_len = 9999999999999
+        For Each chest In Game.currFloor.chestList
+            If Not (chest.pos.X = -1 Or chest.pos.Y = -1) AndAlso Game.currFloor.route(p.pos, chest.pos).Length < route_len Then
+                closest_chest = chest
+                route_len = Game.currFloor.route(p.pos, chest.pos).Length
+                Exit For
+            End If
+        Next
+
+        If Not closest_chest Is Nothing Then
+            p.forcedPath = Game.currFloor.route(p.pos, closest_chest.pos)
+        Else
+            Game.pushLogAndEvent("... but nothing happens")
+        End If
+
+    End Sub
 
     '|TRANSFORMATION TRIGGERS|
     Shared Sub targaxSwordTF(ByRef p As Player)
@@ -199,7 +232,7 @@
         Game.pushLblEvent("You, being a statue, can not do anything.")
     End Sub
     Shared Sub magicGirlStatusCheck(ByRef p As Player)
-        If p.getMana > 0 AndAlso Game.turn Mod (11 + (p.level * p.getWIL() / 4)) = 0 Then
+        If p.getMana > 0 AndAlso Game.getTurn Mod (11 + (p.level * p.getWIL() / 4)) = 0 Then
             p.mana -= 6
             Game.pushLstLog("Your transformation consumes six mana!")
         End If
@@ -210,7 +243,7 @@
         End If
     End Sub
     Shared Sub valkyrieStatusCheck(ByRef p As Player)
-        If p.stamina > 10 AndAlso Game.turn Mod (8 + (p.level * p.getWIL() / 2)) = 0 Then
+        If p.stamina > 10 AndAlso Game.getTurn Mod (8 + (p.level * p.getWIL() / 2)) = 0 Then
             p.stamina -= 10
             Game.pushLstLog("Your transformation consumes ten stamina!")
         End If
@@ -326,7 +359,7 @@
     '|CURSES|
     Shared Function curseOfRust(ByRef p As Player) As Boolean
         Dim updatePortrait = False
-        If Game.turn Mod 25 = 0 And (p.equippedAcce.count > 0 Or p.equippedArmor.count > 0 Or p.equippedWeapon.count > 0) Then
+        If Game.getTurn Mod 25 = 0 And (p.equippedAcce.count > 0 Or p.equippedArmor.count > 0 Or p.equippedWeapon.count > 0) Then
             If p.equippedAcce.count > 0 AndAlso p.equippedAcce.damage(10 + Int(Rnd() * 20)) Then
                 p.equippedAcce = New noAcce
                 updatePortrait = True
@@ -347,7 +380,7 @@
     End Function
     Shared Function curseOfMilk(ByRef p As Player) As Boolean
         Dim updatePortrait = False
-        If Game.turn Mod 30 = 0 And p.breastSize < 7 Then
+        If Game.getTurn Mod 30 = 0 And p.breastSize < 7 Then
             p.be()
             Game.pushLstLog("Your chest begins glowing a sinister red...")
             updatePortrait = True
@@ -425,7 +458,7 @@
     End Sub
 
     '|TAKE DAMAGE PERKS|
-    Shared Function onDamage(ByRef p As Player, ByVal dmg As Integer) As Boolean
+    Shared Function onDamage(ByRef p As Player, ByVal dmg As Integer, Optional ByVal crit As Boolean = False) As Boolean
         Dim flag = False
         flag = bowTieEffect(p) Or flag
         flag = hardLightEffect(dmg, p) Or flag
@@ -435,6 +468,7 @@
 
         If p.perks(perk.bunnyears) = 2 Then p.addLust(-dmg / 2)
         If p.perks(perk.infernoa) > -1 Then flag = reflectDamage(dmg, 0.45, p.currTarget, p)
+        If p.equippedAcce.getAName.Equals("Hallowed_Talisman") Then flag = reflectDamage2(dmg, 0.55, p.currTarget, p, crit)
         Return flag
     End Function
     Shared Function bowTieEffect(ByRef p As Player) As Boolean
@@ -484,8 +518,12 @@
         Return False
     End Function
     Shared Function bimboDodge(ByRef p As Player) As Boolean
-        Dim out = "You, like, totally aren't feeling this right now.  Giving your best pout, you wimper ""Hey, stop it!  You're gonna, like, hurt me or something!"".  Squeezing your arms together to show off your cleavage, you look up at your opponent, making sure your lip is quivering just a little bit.  They stop their attack short, looking more confused than merciful.  You don't even consider this subtle distinction though, instead deciding that they, like, totally thought you were too cute to hit!"
-        Dim out2 = "You realize that you probably need to dodge this next attack.  Giving your best pout, you wimper ""Hey, stop it!  You're gonna, like, hurt me or something!"".  Squeezing your arms together to show off your cleavage, you look up at your opponent, making sure your lip is quivering just a little bit.  They stop their attack short, looking more confused than merciful.  Inwardly you groan to yourself.   It looks like you aren't out of the woods yet..."
+        Dim out = "You, like, totally aren't feeling this right now." & DDUtils.RNRN &
+                  "Giving your best pout, you wimper ""Hey, stop it!  You're gonna, like, hurt me or something!"".  As you squeeze your arms together to show off your cleavage, you look up at your opponent making sure your lip is quivering just a little bit." & DDUtils.RNRN &
+                  "They stop their attack short, looking more confused than anything else.  You don't even consider this subtle distinction though, instead deciding that they, like, totally thought you were too cute to hit!"
+        Dim out2 = "You realize that you probably need to dodge this next attack." & DDUtils.RNRN &
+                   "Giving your best pout, you wimper ""Hey, stop it!  You're gonna, like, hurt me or something!"".  As you squeeze your arms together to show off your cleavage, you look up at your opponent making sure your lip is quivering just a little bit." & DDUtils.RNRN &
+                   "They stop their attack short, looking more confused than merciful.  Inwardly, you groan to yourself.   It looks like you aren't out of the woods yet..."
         If p.className.Equals("Bimbo") And Int(Rnd() * 3) = 0 Then
             Game.pushLblEvent(out)
             Return True
@@ -512,9 +550,21 @@
         Return False
     End Function
     Shared Function reflectDamage(ByVal dmg As Integer, ByVal ratio As Double, ByRef currTarget As Entity, ByRef p As Player)
-        If dmg > 0 Then
+        If dmg > 0 And dmg < p.getIntHealth Then
+            Game.pushLogAndEvent("Your opponent takes " & CInt(dmg * ratio) & " from their attack!")
             currTarget.takeDMG(CInt(dmg * ratio), p)
-            Game.pushLblEvent("Your opponent takes " & CInt(dmg * ratio) & " from their attack!")
+            Return True
+        End If
+
+        Return False
+    End Function
+    Shared Function reflectDamage2(ByVal dmg As Integer, ByVal ratio As Double, ByRef currTarget As Entity, ByRef p As Player, ByVal crit As Boolean)
+        If dmg > 0 And dmg < p.getIntHealth Then
+            If crit Then p.takeUnconditionalCritDMG(dmg, currTarget) Else p.takeUnconditionalDMG(dmg, currTarget)
+
+            Game.pushLogAndEvent("Your opponent takes " & CInt(dmg * ratio) & " from their attack!")
+            currTarget.takeDMG(CInt(dmg * ratio), p)
+
             Return True
         End If
 

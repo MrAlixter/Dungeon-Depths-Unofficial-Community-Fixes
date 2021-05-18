@@ -4,22 +4,22 @@
     Dim oldHat As Tuple(Of Integer, Boolean, Boolean) = New Tuple(Of Integer, Boolean, Boolean)(0, True, False)
     Sub New()
         '|ID Info|
-        MyBase.setName("Frock_of_Night")
+        setName("Frock_of_Night")
         id = 166
         tier = Nothing
 
         '|Item Flags|
-        MyBase.setUsable(False)
-        MyBase.compressesBreasts = True
-        MyBase.isMonsterDrop = False
-        MyBase.slutVarInd = 250
+        usable = false
+        MyBase.compress_breast = True
+        MyBase.droppable = False
+        MyBase.slut_var_ind = 250
 
         '|Stats|
-        MyBase.dBoost = 3
-        MyBase.mBoost = 20
-        MyBase.sBoost = -3
-        MyBase.count = 0
-        MyBase.value = 200
+        MyBase.d_boost = 3
+        MyBase.m_boost = 20
+        MyBase.s_boost = -3
+        count = 0
+        value = 200
 
         '|Image Index|
         bsizeneg1 = New Tuple(Of Integer, Boolean, Boolean)(59, False, True)
@@ -35,7 +35,7 @@
         usize3 = New Tuple(Of Integer, Boolean, Boolean)(144, True, True)
 
         '|Description|
-        MyBase.setDesc("A black dress commonly worn by those who aren't afraid of the dark." & DDUtils.RNRN &
+        setDesc("A black dress commonly worn by those who aren't afraid of the dark." & DDUtils.RNRN &
                                     getSizeInformation() & vbCrLf & getStatInformation())
     End Sub
 

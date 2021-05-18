@@ -2,24 +2,33 @@
     Inherits MagGirlWand
 
     Sub New()
-        MyBase.setName("Mag._Girl_Wand_(R)")
-        MyBase.setDesc("A mysterious wand used by a mysterious protector." & vbCrLf & "+25 ATK, +10 Max Mana")
+        '|ID Info|
+        setName("Mag._Girl_Wand_(R)")
         id = 212
         tier = Nothing
-        MyBase.setUsable(False)
-        MyBase.aBoost = 25
-        MyBase.mBoost = 10
-        MyBase.count = 0
-        MyBase.value = 2000
 
-        mgOutfit = 210
+        '|Item Flags|
+        usable = False
+
+        '|Stats|
+        count = 0
+        value = 2000
+        a_boost = 25
+        m_boost = 10
+        uniform_id = 210
+
+        '|Description|
+        setDesc("A mysterious wand used by a mysterious protector." & DDUtils.RNRN &
+                getStatInformation())
+
     End Sub
 
     Public Overrides Sub onEquip(ByRef p As Player)
-        If Not p.className.Equals("Magical Girl") Then
+        If Not p.className.Equals("Magical Girl") And Not p.perks(perk.tfedbyweapon) > 0 Then
 
             Dim magicGirlTF = New MagGirlRTF(2, 0, 0, False)
             p.perks(perk.tfcausingwand) = id
+            p.perks(perk.tfedbyweapon) = 1
             magicGirlTF.update()
             p.ongoingTFs.add(magicGirlTF)
         End If
@@ -32,7 +41,7 @@
         ElseIf dmg >= 11 Then
             Return -2
         End If
-        dmg += (p.getATK) + (Me.aBoost)
+        dmg += (p.getATK) + (Me.a_boost)
         Return Player.calcDamage(dmg, m.defense)
     End Function
 End Class

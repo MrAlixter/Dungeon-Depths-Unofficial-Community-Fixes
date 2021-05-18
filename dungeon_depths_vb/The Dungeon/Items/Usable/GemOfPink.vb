@@ -1,14 +1,22 @@
 ﻿Public Class GemOfPink
     Inherits Item
     Sub New()
-        MyBase.setName("Gem_of_Sweetness")
-        MyBase.setDesc("A glittering rosy pink jewel that looks like it could be embeded into a wand")
+        '|ID Info|
+        setName("Gem_of_Sweetness")
         id = 207
         tier = Nothing
-        isMonsterDrop = True
-        MyBase.setUsable(True)
-        MyBase.count = 0
-        MyBase.value = 5030
+
+        '|Item Flags|
+        usable = True
+        droppable = True
+
+        '|Stats|
+        count = 0
+        value = 5030
+
+        '|Description|
+        setDesc("A glittering rosy pink jewel that looks like it could be embeded into a wand")
+
     End Sub
 
     Overrides Sub use(ByRef p As Player)

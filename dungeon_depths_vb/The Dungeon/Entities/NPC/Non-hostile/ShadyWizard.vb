@@ -27,6 +27,7 @@
         inv.setCount("Bunny_Suit", 1)
         inv.setCount("Witch_Cosplay", 1)
         inv.setCount("Brawler_Cosplay", 1)
+        inv.setCount("Cow_Print_Bra", 1)
         inv.setCount("Cowbell", 1)
         inv.setCount("Crystalline_Armor", 1)
 
@@ -86,7 +87,7 @@
         ElseIf npcIndex = 7 Then
             Game.pushNPCDialog("Damn it, and I set aside the extra-skimpy bikini for this too...")
         ElseIf npcIndex = 6 Then
-            If Game.player1.formName.Equals("Arachne") And Game.player1.equippedArmor.getAntiSlutVarInd > 0 Then
+            If Game.player1.formName.Equals("Arachne") And Game.player1.equippedArmor.getAntiSlutInd > 0 Then
                 Game.pushNPCDialog("Ooh, darling, are you the one who laid that snare?  Aren't you a cutie...")
             ElseIf Game.player1.formName.Equals("Arachne") And Game.player1.equippedArmor.getSlutVarInd > 0 Then
                 Game.pushNPCDialog("Ooh, darling, are you the one who laid that snare?  You know, you could spice your look up a bit...")

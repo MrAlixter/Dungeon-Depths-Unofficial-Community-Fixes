@@ -2,16 +2,25 @@
     Inherits Dagger
 
     Sub New()
-        MyBase.setName("Throwing_Knife")
-        MyBase.setDesc("A small blade weighted in such a way that it tumbles end over end when hurled at a target. " & vbCrLf &
-                       "Can be thrown using the ""Use"" button." & vbCrLf &
-                       "+4 ATK")
+        '|ID Info|
+        setName("Throwing_Knife")
         id = 162
         tier = Nothing
-        MyBase.setUsable(True)
-        MyBase.aBoost = 4
-        MyBase.count = 0
-        MyBase.value = 235
+
+        '|Item Flags|
+        usable = True
+
+        '|Stats|
+        count = 0
+        value = 235
+        a_boost = 4
+
+        '|Description|
+
+        setDesc("A small blade weighted in such a way that it tumbles end over end when hurled at a target. " & DDUtils.RNRN &
+                getStatInformation() & DDUtils.RNRN &
+                "Can be thrown using the ""Use"" button.")
+
     End Sub
 
     Overridable Sub wThrow(ByRef p As Player, ByRef m As Entity)

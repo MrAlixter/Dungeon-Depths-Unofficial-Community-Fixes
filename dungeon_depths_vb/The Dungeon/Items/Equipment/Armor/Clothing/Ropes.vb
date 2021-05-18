@@ -3,23 +3,23 @@
 
     Sub New()
         '|ID Info|
-        MyBase.setName("Ropes")
+        setName("Ropes")
         id = 54
         tier = Nothing
 
         '|Item Flags|
-        MyBase.setUsable(False)
-        MyBase.compressesBreasts = True
-        MyBase.isCursed = True
-        MyBase.bindsWearer = True
-        hidesDick = False
+        usable = false
+        MyBase.compress_breast = True
+        MyBase.cursed = True
+        MyBase.bind_wearer = True
+        hide_dick = False
 
         '|Stats|
-        MyBase.aBoost = -5
-        MyBase.dBoost = -5
-        MyBase.sBoost = -5
-        MyBase.count = 0
-        MyBase.value = 100
+        MyBase.a_boost = -5
+        MyBase.d_boost = -5
+        MyBase.s_boost = -5
+        count = 0
+        value = 100
 
         '|Image Index|
         bsizeneg1 = New Tuple(Of Integer, Boolean, Boolean)(13, False, True)
@@ -38,7 +38,7 @@
         usize4 = New Tuple(Of Integer, Boolean, Boolean)(48, True, True)
 
         '|Description|
-        MyBase.setDesc("A tightened set of ropes that both reduces mobility and leaves one nearly naked." & DDUtils.RNRN & _
+        setDesc("A tightened set of ropes that both reduces mobility and leaves one nearly naked." & DDUtils.RNRN & _
                        getSizeInformation() & vbCrLf &
                        "-5 ATK" & vbCrLf &
                        "-5 DEF" & vbCrLf &
@@ -55,7 +55,7 @@
     End Sub
 
     Public Overrides Sub onUnequip(ByRef p As Player)
-        MyBase.bindsWearer = False
-        MyBase.bindsWearer = True
+        MyBase.bind_wearer = False
+        MyBase.bind_wearer = True
     End Sub
 End Class

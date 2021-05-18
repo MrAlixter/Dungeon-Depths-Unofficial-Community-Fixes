@@ -5,7 +5,7 @@
 
     Sub New(ByRef c As Player, ByRef t As NPC)
         MyBase.New(c, t)
-        MyBase.setName("Flash Bolt")
+        setName("Flash Bolt")
         MyBase.settier(2)
         MyBase.setcost(7)
     End Sub

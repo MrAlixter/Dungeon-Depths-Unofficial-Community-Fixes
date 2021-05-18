@@ -3,19 +3,19 @@
 
     Sub New()
         '|ID Info|
-        MyBase.setName("Disarment_Kit")
+        setName("Disarment_Kit")
         id = 57
         tier = 3
 
         '|Item Flags|
-        MyBase.setUsable(True)
+        usable = true
 
         '|Stats|
-        MyBase.count = 0
-        MyBase.value = 475
+        count = 0
+        value = 475
 
         '|Description|
-        MyBase.setDesc("A kit that disables any traps around you.")
+        setDesc("A kit that disables any traps around you.")
     End Sub
 
     Overrides Sub use(ByRef p As Player)

@@ -3,22 +3,22 @@
 
     Sub New()
         '|ID Info|
-        MyBase.setName("Bewitched_Wand")
+        setName("Bewitched_Wand")
         id = 259
         tier = Nothing
 
         '|Item Flags|
-        setUsable(False)
-        isCursed = True
-        isMonsterDrop = False
+        usable = False
+        cursed = True
+        droppable = False
 
         '|Stats|
-        MyBase.count = 0
-        MyBase.value = 3500
+        count = 0
+        value = 3500
 
 
         '|Description|
-        MyBase.setDesc("A gnarled wooden wand with an unnatural deep violet finish.  Its flow of mana almost feels like the rhythm of a living being." & DDUtils.RNRN &
+        setDesc("A gnarled wooden wand with an unnatural deep violet finish.  Its flow of mana almost feels like the rhythm of a living being." & DDUtils.RNRN &
                        "Each hit carries a 1 in 4 chance of an additional attack, and a 1 in 4 chance of backfiring." & DDUtils.RNRN &
                        getStatInformation())
     End Sub

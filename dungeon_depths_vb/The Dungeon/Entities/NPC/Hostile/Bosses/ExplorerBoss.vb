@@ -2,22 +2,32 @@
     Inherits MiniBoss
 
     Sub New()
+        '|ID Info|
         name = "Explorer"
+
+        '|Stats|
         maxHealth = 300
         attack = 15
         defense = 15
         speed = 15
+        xp_value = 200
+
+        '|Inventory|
         Randomize()
         For i = 0 To 5
             Dim invInd As Integer = 8
-            While Not inv.item(invInd).isRandoTFAcceptable
+            While Not inv.item(invInd).rando_inv_allowed
                 invInd = Int(Rnd() * (Game.player1.inv.upperBound + 1))
             End While
             inv.add(invInd, CInt(Rnd() * 2) + 1)
         Next
 
+        '|Dialog Variables|
+
+
+        '|Misc|
         setupMonsterOnSpawn()
-        xpValue = 200
+
     End Sub
 
     Public Overrides Sub die(ByRef cause As Entity)

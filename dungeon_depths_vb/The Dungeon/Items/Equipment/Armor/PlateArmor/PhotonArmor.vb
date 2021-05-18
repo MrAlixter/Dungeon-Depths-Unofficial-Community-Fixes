@@ -4,21 +4,21 @@ Public Class PhotonArmor
 
     Sub New()
         '|ID Info|
-        MyBase.setName("Photon_Armor")
+        setName("Photon_Armor")
         id = 104
         tier = Nothing
 
         '|Item Flags|
-        MyBase.setUsable(False)
-        MyBase.compressesBreasts = True
-        MyBase.isRandoTFAcceptable = False
-        MyBase.slutVarInd = 105
+        usable = false
+        MyBase.compress_breast = True
+        rando_inv_allowed = False
+        MyBase.slut_var_ind = 105
 
         '|Stats|
-        MyBase.mBoost = 12
-        MyBase.dBoost = 10
-        MyBase.count = 0
-        MyBase.value = 4331
+        MyBase.m_boost = 12
+        MyBase.d_boost = 10
+        count = 0
+        value = 4331
 
         '|Image Index|
         MyBase.bsizeneg1 = New Tuple(Of Integer, Boolean, Boolean)(42, False, True)
@@ -32,7 +32,7 @@ Public Class PhotonArmor
         MyBase.usize2 = New Tuple(Of Integer, Boolean, Boolean)(296, True, True)
 
         '|Description|
-        MyBase.setDesc("This armor consists of lightweight though fragile black plates of an advanced plastic, alongside a powerful shield generator that harnesses its users mana to withstand impacts." & DDUtils.RNRN &
+        setDesc("This armor consists of lightweight though fragile black plates of an advanced plastic, alongside a powerful shield generator that harnesses its users mana to withstand impacts." & DDUtils.RNRN &
                        "Hardlight Effect" & DDUtils.RNRN &
                         getSizeInformation() & vbCrLf & getStatInformation())
     End Sub

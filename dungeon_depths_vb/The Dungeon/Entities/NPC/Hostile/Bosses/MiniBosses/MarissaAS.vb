@@ -2,26 +2,32 @@
     Inherits Monster
     Dim spellCooldown = 0
     Sub New()
+        '|ID Info|
         name = "Marissa, Aspiring Sorceress"
+
+        '|Stats|
         maxHealth = 115
         attack = 15
         defense = 5
         speed = 30
         will = 15
+        xp_value = 75
 
+        '|Inventory|
         inv.setCount("Spellbook", 1)
         inv.setCount("Restore_Potion", CInt(Rnd() * 2))
         inv.setCount("Mana_Charm", 1 + CInt(Rnd() * 2))
         inv.setCount("Witch_Cosplay", CInt(Rnd() * 2))
 
-        setupMonsterOnSpawn(False)
-
+        '|Dialog Variables|
         title = " "
         pronoun = "she"
         pPronoun = "her"
         rPronoun = "her"
 
-        xpValue = 75
+        '|Misc|
+        setupMonsterOnSpawn(False)
+
     End Sub
 
     Public Overrides Sub attackCMD(ByRef target As Entity)

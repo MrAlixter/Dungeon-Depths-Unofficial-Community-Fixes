@@ -16,13 +16,13 @@
 
     Dim name As String = ""
     Dim description As String
-    Dim isUsable As Boolean = False
+    Public usable As Boolean = False
     Public count As Integer
     Public value As Integer
     Protected tier As Integer = Nothing
     Public id As Integer = -1
-    Public isMonsterDrop As Boolean = False
-    Public isRandoTFAcceptable = True
+    Public droppable As Boolean = False
+    Public rando_inv_allowed = True
 
     Public saleLim As Integer = 999
     Public onSell As Action = Nothing
@@ -53,7 +53,7 @@
         description = s
     End Sub
     Public Function getUsable()
-        Return isUsable
+        Return usable
     End Function
     Public Overridable Function getTier() As Integer
         Return tier
@@ -61,9 +61,6 @@
     Public Function getId()
         Return id
     End Function
-    Sub setUsable(ByVal b As Boolean)
-        isUsable = b
-    End Sub
     Public Function getDescription()
         Return description
     End Function

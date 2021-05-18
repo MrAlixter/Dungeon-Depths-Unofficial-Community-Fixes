@@ -1,0 +1,39 @@
+﻿Public Class GoldenGum
+    Inherits Food
+
+    Sub New()
+        '|ID Info|
+        setName("Golden_Gum")
+        id = 291
+        tier = Nothing
+
+        '|Item Flags|
+        usable = True
+        rando_inv_allowed = False
+        droppable = False
+
+        '|Stats|
+        count = 0
+        value = 100
+        setCalories(33)
+
+        '|Description|
+        setDesc("A glittery yellow piece of gum with a overpoweringly sweet smell.  There are legends that tell of its flavor, and some say that even the gods are moved by its taste." & DDUtils.RNRN &
+                "+33 Stamina")
+
+    End Sub
+
+    Overrides Sub effect(ByRef p As Player)
+        If p.className.Equals("Bimbo") Then
+            Game.pushLblEvent("Chewing the gum make your head feel warm and fuzzy and stuff. You like, totally, love this gum!" & DDUtils.RNRN &
+                              "+1000 XP")
+            p.xp += 1000
+        Else
+            GBimboTF.snapTF(p)
+
+            Game.pushLblEvent("As you unwrap the stick of gum, you can feel your hair growing out.  As your bangs, now a bright blonde, drop in front of your eyes, you pop the gum into your mouth and begin to chew.  Almost immediately, a massive rush of magical energy staggers you and a glittery cloud settling into your mind." & DDUtils.RNRN &
+                              "Through the mental haze, you look down at your tits. You, like, never noticed how round and big they had got. You giggle, all traces of intellect vanishing as your body becomes more curvy and feminine and your clothing shifts into a skimpy outfit." & DDUtils.RNRN &
+                              "You are now a bimbo!")
+        End If
+    End Sub
+End Class

@@ -2,22 +2,22 @@
     Inherits Armor
     Sub New()
         '|ID Info|
-        MyBase.setName("Succubus_Armor")
+        setName("Succubus_Armor")
         id = 237
         tier = Nothing
 
         '|Item Flags|
-        MyBase.setUsable(False)
-        MyBase.compressesBreasts = True
-        MyBase.slutVarInd = 74
+        usable = false
+        MyBase.compress_breast = True
+        MyBase.slut_var_ind = 74
 
         '|Stats|
-        MyBase.aBoost = 10
-        MyBase.wBoost = 10
-        MyBase.mBoost = 15
-        MyBase.dBoost = 20
-        MyBase.count = 0
-        MyBase.value = 0
+        MyBase.a_boost = 10
+        w_boost = 10
+        MyBase.m_boost = 15
+        MyBase.d_boost = 20
+        count = 0
+        value = 0
 
         '|Image Index|
         MyBase.bsize1 = New Tuple(Of Integer, Boolean, Boolean)(326, True, True)
@@ -31,7 +31,7 @@
         MyBase.usize4 = New Tuple(Of Integer, Boolean, Boolean)(312, True, True)
 
         '|Description|
-        MyBase.setDesc("The scanty clothes of a succubus." & DDUtils.RNRN & _
+        setDesc("The scanty clothes of a succubus." & DDUtils.RNRN & _
                               getSizeInformation() & vbCrLf & getStatInformation())
     End Sub
 End Class

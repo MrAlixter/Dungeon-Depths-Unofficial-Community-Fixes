@@ -28,7 +28,7 @@ Public Class Debug_Window
 
         'GENERAL
         If Game.mDun.numCurrFloor > -1 Then boxFloor.Value = Game.mDun.numCurrFloor Else boxFloor.Value = boxFloor.Maximum
-        boxTurn.Value = Game.turn
+        boxTurn.Value = Game.getTurn
         boxBeaten.Checked = Game.currFloor.beatBoss
 
         'MAP
@@ -115,7 +115,7 @@ Public Class Debug_Window
                     Dim c As Control = box.Controls(j)
                     If TypeOf (c) Is NumericUpDown Then
                         num = c
-                        num.Maximum = 999999
+                        num.Maximum = 9999999
                     ElseIf TypeOf (c) Is Label Then
                         lbl = c
                     End If
@@ -238,7 +238,7 @@ Public Class Debug_Window
                     map.SetPixel(boardX + 1, boardY + 1, Color.Red)
                 ElseIf (Game.currFloor.mBoard(boardY, boardX).Text = "|") Or (Game.currFloor.mBoard(boardY, boardX).Text = "-") Then 'Barrier
                     map.SetPixel(boardX + 1, boardY + 1, Color.DarkRed)
-                ElseIf (Game.currFloor.mBoard(boardY, boardX).Tag = 2) Then 'Seen
+                ElseIf (Game.currFloor.mBoard(boardY, boardX).Tag = 2) Or Game.alwaysDrawCharacters.Contains(Game.currFloor.mBoard(boardY, boardX).Text) Then 'Seen
                     map.SetPixel(boardX + 1, boardY + 1, Color.White)
                 ElseIf (Game.currFloor.mBoard(boardY, boardX).Tag = 1) Then 'Unseen
                     map.SetPixel(boardX + 1, boardY + 1, Color.Gray)
@@ -601,7 +601,7 @@ Public Class Debug_Window
         box.Name = p.Key & "Box"
         box.Location = New System.Drawing.Point(lbl.Location.X + lbl.Size.Width + 10, lbl.Location.Y)
         box.Minimum = -1
-        box.Maximum = 999
+        box.Maximum = 999999999
         box.Value = p.Value
         box.Size = New System.Drawing.Size(63, 26)
         AddHandler box.ValueChanged, AddressOf numericUpDownChanged

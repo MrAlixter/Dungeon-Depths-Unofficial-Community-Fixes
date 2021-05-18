@@ -6,6 +6,11 @@
     outOfTime
     cContra
     sSlime
+    floor4encounter
+    oppositeDay
+    nineLives
+    enthralled
+    faewoods1
 End Enum
 
 Public MustInherit Class Quest
@@ -39,8 +44,15 @@ Public MustInherit Class Quest
             active = False
         End If
     End Sub
+    Public Overridable Sub completeEntireQuest()
+        completed = True
+        active = False
+    End Sub
     Public Sub completeCurrOjb()
         complete(currStep)
+    End Sub
+    Public Sub goToStep(ByVal i As Integer)
+        currStep = i
     End Sub
     Public Function getCurrObj() As Objective
         If currStep > -1 And currStep < objectives.Count Then
@@ -74,6 +86,9 @@ Public MustInherit Class Quest
         Game.player1.ongoingQuests.add(Game.player1.quests(qInd))
     End Sub
     Public Overridable Function canGet() As Boolean
+        Return False
+    End Function
+    Public Overridable Function isHidden()
         Return False
     End Function
 

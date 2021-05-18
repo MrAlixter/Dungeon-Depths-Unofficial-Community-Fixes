@@ -15,7 +15,7 @@
             Case "Goddess"
                 Return New GoddessTF()
             Case "Slime"
-                Return New slimetf()
+                Return New SlimeTF()
             Case "Succubus"
                 Return New SuccubusTF()
             Case "Tigress"

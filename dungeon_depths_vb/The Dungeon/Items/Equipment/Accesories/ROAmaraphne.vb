@@ -3,24 +3,24 @@
 
     Sub New()
         '|ID Info|
-        MyBase.setName("Ring_of_Amaraphne")
+        setName("Ring_of_Amaraphne")
         id = 81
         If DDDateTime.isValen Then tier = 3 Else tier = Nothing
 
         '|Item Flags|
-        MyBase.setUsable(True)
-        MyBase.isRandoTFAcceptable = False
+        usable = true
+        rando_inv_allowed = False
 
         '|Stats|
-        MyBase.count = 0
-        MyBase.value = 3333
+        count = 0
+        value = 3333
 
         '|Image Index|
         MyBase.fInd = New Tuple(Of Integer, Boolean, Boolean)(12, True, True)
         MyBase.mInd = New Tuple(Of Integer, Boolean, Boolean)(12, True, True)
 
         '|Description|
-        MyBase.setDesc("While on the surface, this seems to be but an ornate ring crafted from extremely precious materials, closer inspection reveals that the inside of its band is inscribed with a blessing of Amaraphne, Goddess of Love and Lust." & DDUtils.RNRN &
+        setDesc("While on the surface, this seems to be but an ornate ring crafted from extremely precious materials, closer inspection reveals that the inside of its band is inscribed with a blessing of Amaraphne, Goddess of Love and Lust." & DDUtils.RNRN &
                        "Can be ""used"" to convert equipped armor to the corresponding slut variant" & vbCrLf &
                        "Increases DEF based on equipped armor" & vbCrLf &
                        "Increases ATK and WILL bonuses of slut variant armors" & vbCrLf &
@@ -49,13 +49,13 @@
         If p Is Nothing Then Return 0
         If p.equippedArmor.getSlutVarInd <> -1 Then Return 0
 
-        Return p.equippedArmor.aBoost * 1.5
+        Return p.equippedArmor.a_boost * 1.5
     End Function
     Public Overrides Function getDBoost(ByRef p As Player) As Integer
         If p Is Nothing Then Return 0
-        If p.equippedArmor.getSlutVarInd <> -1 Then Return -p.equippedArmor.dBoost
+        If p.equippedArmor.getSlutVarInd <> -1 Then Return -p.equippedArmor.d_boost
 
-        Dim buff = p.equippedArmor.dBoost
+        Dim buff = p.equippedArmor.d_boost
 
         If buff = 0 Then
             buff = 3
@@ -75,7 +75,7 @@
         If p Is Nothing Then Return 0
         If p.equippedArmor.getSlutVarInd <> -1 Then Return 0
 
-        Return p.equippedArmor.wBoost * 1.5
+        Return p.equippedArmor.w_boost * 1.5
     End Function
 
     Public Overrides Function getDesc() As Object

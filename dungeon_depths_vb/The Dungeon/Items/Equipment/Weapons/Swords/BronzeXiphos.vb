@@ -3,20 +3,20 @@
 
     Sub New()
         '|ID Info|
-        MyBase.setName("Bronze_Xiphos")
+        setName("Bronze_Xiphos")
         id = 23
         tier = 3
 
         '|Item Flags|
-        MyBase.setUsable(False)
+        usable = false
 
         '|Stats|
-        MyBase.aBoost = 25
+        MyBase.a_boost = 25
         count = 0
         value = 900
 
         '|Description|
-        MyBase.setDesc("A neat curved double-edged blade forged from bronze." & DDUtils.RNRN &
+        setDesc("A neat curved double-edged blade forged from bronze." & DDUtils.RNRN &
                        getStatInformation())
     End Sub
 End Class

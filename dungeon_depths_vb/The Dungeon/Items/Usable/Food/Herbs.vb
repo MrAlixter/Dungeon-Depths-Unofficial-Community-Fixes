@@ -3,33 +3,31 @@
 
     Sub New()
         '|ID Info|
-
-
-        '|Item Flags|
-
-
-        '|Stats|
-
-
-        '|Description|
-        MyBase.setName("Medicinal_Tea")
-        MyBase.setDesc("A bitter tea that restores health." & DDUtils.RNRN &
-                       "+15 Stamina" & vbCrLf & "+50 Health")
+        setName("Medicinal_Tea")
         id = 33
         tier = 2
-        MyBase.setUsable(True)
-        MyBase.count = 0
-        MyBase.value = 275
+
+        '|Item Flags|
+        usable = True
+
+        '|Stats|
+        count = 0
+        value = 275
         setCalories(15)
+
+        '|Description|
+        setDesc("A bitter tea that restores health." & DDUtils.RNRN &
+                       "+15 Stamina" & vbCrLf & "+50 Health")
+
     End Sub
 
-    Public Overrides Sub Effect()
-        If Game.player1.className.Equals("Soul-Lord") Then
+    Public Overrides Sub effect(ByRef p As Player)
+        If p.className.Equals("Soul-Lord") Then
             Game.pushLblEvent("You spike the tea leaves on the ground, kicking them all over the dungeon floor.  As you go back to your buisness, you muse on how cowardly healing is." & DDUtils.RNRN & """Only someone who cares about their mortal vessel would bother to maintain it.""")
-            Game.player1.UIupdate()
+            p.UIupdate()
             Exit Sub
         End If
-        Game.player1.health += 50 / Game.player1.getmaxHealth
-        If Game.player1.health > 1 Then Game.player1.health = 1
+        p.health += 50 / p.getMaxHealth
+        If p.health > 1 Then p.health = 1
     End Sub
 End Class

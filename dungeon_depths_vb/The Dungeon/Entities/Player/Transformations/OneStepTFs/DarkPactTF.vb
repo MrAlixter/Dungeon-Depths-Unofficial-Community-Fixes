@@ -42,8 +42,7 @@
         p.knownSpells.Add("Cynn's Disguise")
 
         p.sState.save(p)
-        p.savePState()
-
+        p.pState.save(p)
 
         'transformation description push
         out += "As hellfire engulfs you, you meet Cynn's gaze.  You give her a sinister grin as wings, horns, and a tail sprout from your now crimson body.  Cynn grins right back before remarking ""Looking good, hot stuff.  I'll give you a bit to get used to being a demon, but don't forget that you owe me.  I'll be in touch!""" & DDUtils.RNRN &

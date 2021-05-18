@@ -1,0 +1,30 @@
+﻿Public Class Hellfireball
+    Inherits Spell
+    Sub New(ByRef c As Player, ByRef t As NPC)
+        MyBase.New(c, t)
+        setName("Hellfireball")
+        MyBase.settier(1)
+        MyBase.setcost(4)
+    End Sub
+    Public Overrides Sub effect()
+        Dim dmg As Integer = 40
+        Dim d31 = Int(Rnd() * 3)
+        Dim d32 = Int(Rnd() * 3)
+        If 1 = 0 Then
+            'critical hit
+        Else
+            'non critical hit
+            dmg = Entity.calcDamage((dmg + d31 + d32) + (Math.Max(MyBase.getCaster.getLust - 10, -10)), MyBase.getTarget.getWIL)
+
+            lReduction = MyBase.getCaster.getLust / 2
+            MyBase.getCaster.addLust(-lReduction)
+
+            Game.pushLogAndEvent(CStr("You hit the " & MyBase.getTarget.name & " for " & dmg & " damage!  -" & lReduction & " Lust..."))
+            MyBase.getTarget.takeDMG(dmg, MyBase.getCaster)
+        End If
+    End Sub
+
+    Public Overrides Function getDesc(ByRef c As Player, ByRef t As NPC) As Object
+        Return "A tier 1 offensive spell that deals a medium amount of magic damage.  Unlike most offensive spells, Hellfireball increases in power based on its caster's lust rather than their will."
+    End Function
+End Class

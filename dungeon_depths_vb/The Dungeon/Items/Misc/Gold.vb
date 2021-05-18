@@ -3,24 +3,24 @@
 
     Sub New()
         '|ID Info|
-        MyBase.setName("Gold")
+        setName("Gold")
         id = 43
         tier = 2
 
         '|Item Flags|
-        MyBase.setUsable(True)
-        MyBase.isRandoTFAcceptable = False
+        usable = true
+        rando_inv_allowed = False
 
         '|Stats|
-        MyBase.count = 0
-        MyBase.value = 2
+        count = 0
+        value = 2
 
         '|Description|
-        MyBase.setDesc("TFng")
+        setDesc("TFng")
     End Sub
     Overrides Sub use(ByRef p As Player)
-        p.gold += MyBase.count
-        MyBase.count = 0
+        p.gold += count
+        count = 0
     End Sub
     Public Overrides Sub add(i As Integer)
         Game.player1.gold += i

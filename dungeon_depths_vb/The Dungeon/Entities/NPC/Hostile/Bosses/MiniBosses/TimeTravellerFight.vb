@@ -1,24 +1,29 @@
 ﻿Public Class TimeTravellerFight
     Inherits Boss
     Sub New()
+        '|ID Info|
         name = "Time Traveler"
 
+        '|Stats|
         maxHealth = 1300
         attack = 40
-        defense = 250
+        defense = 40
         speed = 40
-        will = 250
+        will = 60
+        xp_value = 5000
 
+        '|Inventory|
         inv.setCount("AAAAAA_Battery", CInt(Int(Rnd() * 2000)) + 1)
 
-        setupMonsterOnSpawn()
-
+        '|Dialog Variables|
         title = " "
         pronoun = "she"
         pPronoun = "her"
         rPronoun = "her"
 
-        xpValue = 5000
+        '|Misc|
+        setupMonsterOnSpawn()
+
     End Sub
 
     Public Overrides Sub attackCMD(ByRef target As Entity)

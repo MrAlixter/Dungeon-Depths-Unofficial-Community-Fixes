@@ -4,23 +4,29 @@
     'The compass identifies where the stairs are.
     Sub New()
         '|ID Info|
-        MyBase.setName("Compass")
+        setName("Compass")
         id = 0
         tier = 1
 
         '|Item Flags|
-        MyBase.setUsable(True)
+        usable = true
 
         '|Stats|
-        MyBase.count = 0
-        MyBase.value = 150
+        count = 0
+        value = 150
 
         '|Description|
-        MyBase.setDesc("A compass, used to find the stairs leading down to the next level.")
+        setDesc("A compass, used to find the stairs leading down to the next level.")
     End Sub
 
     Overrides Sub use(ByRef p As Player)
         If Me.getUsable() = False Then Exit Sub
+
+        If Game.currFloor.floorNumber = 8 Then
+            Game.pushLogAndEvent("The compass spins wildly...")
+            Exit Sub
+        End If
+
         Game.pushLstLog("You use the " & getName())
 
         Dim path = Game.currFloor.route(p.pos, Game.currFloor.stairs)

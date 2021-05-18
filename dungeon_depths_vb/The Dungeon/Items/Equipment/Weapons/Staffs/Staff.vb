@@ -2,12 +2,12 @@
     Inherits Weapon
 
     Sub New()
-        MyBase.setName("Staff")
-        MyBase.setDesc("A simple staff.")
+        setName("Staff")
+        setDesc("A simple staff.")
         id = 21
         tier = Nothing
-        MyBase.setUsable(False)
-        MyBase.aBoost = 0
+        usable = false
+        MyBase.a_boost = 0
         count = 0
         value = 100
     End Sub

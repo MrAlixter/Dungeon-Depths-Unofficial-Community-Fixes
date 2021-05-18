@@ -14,7 +14,7 @@
             name = "Jewelled Spider"
             attack *= 3
             speed *= 1.5
-            xpValue = 10000
+            xp_value = 10000
         End If
     End Sub
 

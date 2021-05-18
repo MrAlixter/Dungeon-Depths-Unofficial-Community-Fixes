@@ -2,13 +2,13 @@
     Inherits Item
     Public Shared specials() As String = {"Rapid Fire Jabs", "Focused Roundhouse", "Heavy Blow", "Focused Barrage", "Aura Cannon", "Dodge"}
     Sub New()
-        MyBase.setName("Combat_Manual")
-        MyBase.setDesc("A simple, leather-bound book that likely contains some skills specifically for combat.")
+        setName("Combat_Manual")
+        setDesc("A simple, leather-bound book that likely contains some skills specifically for combat.")
         id = 88
         tier = 2
-        MyBase.setUsable(True)
-        MyBase.count = 0
-        MyBase.value = 500
+        usable = true
+        count = 0
+        value = 500
     End Sub
 
     Overrides Sub use(ByRef p As Player)

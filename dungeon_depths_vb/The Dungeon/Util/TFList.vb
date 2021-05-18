@@ -35,6 +35,10 @@
         End If
     End Sub
 
+    Public Function contains(ByVal s As String) As Boolean
+        Return internalList.ContainsKey(s)
+    End Function
+
     Sub reset()
         internalList = New Dictionary(Of String, Transformation)
     End Sub

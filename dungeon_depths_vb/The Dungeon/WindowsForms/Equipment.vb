@@ -62,7 +62,7 @@
         If Not p.inv.getArmors.Item1.Contains(armor) Then Return False
 
         'if clothes offer resistance on the way off, this handles that
-        If (Not p.equippedArmor.getName.Equals(armor) And p.equippedArmor.isCursed) And considerCurse Then
+        If (Not p.equippedArmor.getName.Equals(armor) And p.equippedArmor.cursed) And considerCurse Then
             If p.inv.item("Anti_Curse_Tag").count > 0 Then
                 Game.pushLblEvent("You apply a tag to your clothes, allowing you to remove them.")
                 p.inv.add("Anti_Curse_Tag", -1)
@@ -73,12 +73,12 @@
         End If
 
         'handles any tfs or triggers triggered by equipping of certain armors by certain classes
-        If p.className.Equals("Magical Girl") And Not (armor.Contains("Outfit") And armor.Contains("Mag")) And p.equippedArmor.fits(p) Then
+        If (p.className.Equals("Magical Girl") And p.perks(perk.tfedbyweapon) > 0) And Not (armor.Contains("Outfit") And armor.Contains("Mag")) And p.equippedArmor.fits(p) Then
             Game.pushLstLog("A magical girl needs her uniform!")
             Game.pushLblEvent("A magical girl needs her uniform!")
             Return False
         End If
-        If p.className.Equals("Valkyrie") And Not armor.Equals("Valkyrie_Armor") And p.equippedArmor.fits(p) Then
+        If (p.className.Equals("Valkyrie") And p.perks(perk.tfedbyweapon) > 0) And Not armor.Equals("Valkyrie_Armor") And p.equippedArmor.fits(p) Then
             Game.pushLstLog("Your armor magically re-equips!")
             Game.pushLblEvent("Your armor magically re-equips!")
             Return False
@@ -93,7 +93,7 @@
 
         'equip the new armor
         Equipment.clothesChange(p, armor)
-        If p.equippedArmor.mBoost > 0 Then p.mana += p.equippedArmor.mBoost
+        If p.equippedArmor.m_boost > 0 Then p.mana += p.equippedArmor.m_boost
         If p.mana > p.getMaxMana Then p.mana = p.getMaxMana
 
         'if the player has the slut curse, this takes care of it
@@ -106,10 +106,10 @@
         End If
 
         'handles any tfs or triggers triggered by equipping of certain armors
-        If p.equippedArmor.getName = "Living_Armor" And Not p.perks(perk.livearm) > -1 Then
-            p.perks(perk.livearm) = 0
-        ElseIf p.equippedArmor.getName = "Living_Lingerie" And Not p.perks(perk.livelinge) > -1 Then
-            p.perks(perk.livelinge) = 0
+        If p.equippedArmor.getName = "Living_Armor" And p.perks(perk.livearm) < 0 Then
+            p.perks(perk.livearm) = 1
+        ElseIf p.equippedArmor.getName = "Living_Lingerie" And p.perks(perk.livelinge) < 0 Then
+            p.perks(perk.livelinge) = 1
         End If
 
         Return True
@@ -118,7 +118,7 @@
         If Not p.inv.getWeapons.Item1.Contains(weapon) Then Return False
 
         'if clothes offer resistance on the way off, this handles that
-        If (Not p.equippedWeapon.getName.Equals(weapon) And p.equippedWeapon.isCursed) And considerCurse Then
+        If (Not p.equippedWeapon.getName.Equals(weapon) And p.equippedWeapon.cursed) And considerCurse Then
             If p.inv.item("Anti_Curse_Tag").count > 0 Then
                 Game.pushLblEvent("You sheath your weapon, despite the resistance it puts up.")
                 p.inv.add("Anti_Curse_Tag", -1)
@@ -138,14 +138,14 @@
 
         'handles the equiping of weapons
         Equipment.weaponChange(p, weapon)
-        If p.equippedWeapon.mBoost > 0 Then p.mana += p.equippedWeapon.mBoost
+        If p.equippedWeapon.m_boost > 0 Then p.mana += p.equippedWeapon.m_boost
         If p.mana > p.getMaxMana Then p.mana = p.getMaxMana
 
         Return True
     End Function
     Public Shared Function equipAcce(ByRef p As Player, ByVal acce As String, Optional ByVal considerCurse As Boolean = True) As Boolean
         'if clothes offer resistance on the way off, this handles that
-        If (Not p.equippedAcce.getName.Equals(acce) And p.equippedAcce.isCursed) And considerCurse Then
+        If (Not p.equippedAcce.getName.Equals(acce) And p.equippedAcce.cursed) And considerCurse Then
             If p.inv.item("Anti_Curse_Tag").count > 0 Then
                 Game.pushLblEvent("You take off your accessory, despite the resistance it puts up.")
                 p.inv.add("Anti_Curse_Tag", -1)
@@ -193,43 +193,22 @@
         cboxArmor.SelectedItem = p.equippedArmor.getName()
         cboxAccessory.SelectedItem = p.equippedAcce.getName()
     End Sub
-    Sub defaultClothesOptions(ByVal options As ComboBox.ObjectCollection)
+    Sub defaultClothesOptions(ByRef options As ComboBox.ObjectCollection)
         Dim p = Game.player1
 
-        If p.className = "Princess" Then
-            options.Add("Regal_Gown")
-        ElseIf p.className = "Maid" Then
-            options.Add("Maid_Outfit")
-        ElseIf p.formName = "Succubus" Or p.formName = "Half-Succubus" Then
-            options.Add("Succubus_Garb")
-        ElseIf p.formName = "Slime" Then
+        If p.formName = "Slime" Then
             options.Add("Gelatinous_Shell")
         ElseIf p.formName = "Goo Girl" Then
             options.Add("Gelatinous_Negligee")
-        ElseIf p.className = "Goddess" Then
-            options.Add("Goddess_Gown")
         End If
     End Sub
-    Sub defaultClothesOptionsAlt(ByVal options As ListBox.ObjectCollection)
+    Sub defaultClothesOptions(ByRef options As List(Of String))
         Dim p = Game.player1
-        If p.className = "Bimbo" Or p.perks(perk.slutcurse) > -1 Or p.equippedArmor.getName.Equals("Skimpy_Clothes") Then
-            options.Add("b - Skimpy_Clothes")
-        ElseIf (p.perks(perk.slutcurse) > -1 And p.equippedArmor.getName.Equals("Skimpy_Clothes")) Or p.equippedArmor.getName.Equals("Very_Skimpy_Clothes") Then
-            options.Add("b - Very_Skimpy_Clothes")
-        ElseIf p.className = "Princess" Then
-            options.Add("b - Regal_Gown")
-        ElseIf p.className = "Maid" Then
-            options.Add("b - Maid_Outfit")
-        ElseIf p.formName = "Succubus" Or p.formName = "Half-Succubus" Then
-            options.Add("b - Succubus_Garb")
-        ElseIf p.formName = "Slime" Then
-            options.Add("b - Gelatinous_Shell")
+
+        If p.formName = "Slime" Then
+            options.Add("Gelatinous_Shell")
         ElseIf p.formName = "Goo Girl" Then
-            options.Add("b - Gelatinous_Negligee")
-        ElseIf p.className = "Goddess" Then
-            options.Add("b - Goddess_Gown")
-        Else
-            options.Add("b - Common_Clothes")
+            options.Add("Gelatinous_Negligee")
         End If
     End Sub
 
@@ -239,10 +218,10 @@
 
 
         Dim equippedArmorIndex = p.equippedArmor.id
-        Dim slutVarIndex = p.equippedArmor.getSlutVarInd
+        Dim slut_var_index = p.equippedArmor.getSlutVarInd
         p.inv.add(equippedArmorIndex, -1)
-        p.inv.add(slutVarIndex, 1)
-        clothesChange(p, p.inv.item(slutVarIndex).getAName)
+        p.inv.add(slut_var_index, 1)
+        clothesChange(p, p.inv.item(slut_var_index).getAName)
 
         Game.pushLstLog("Your curse changes your clothes.")
         If Not Game.lblEvent.Visible Then
@@ -257,13 +236,13 @@
         Return True
     End Function
     Function antiClothingCurse(ByRef p As Player) As Boolean
-        If p.equippedArmor.getAntiSlutVarInd = -1 Then Return False
+        If p.equippedArmor.getAntiSlutInd = -1 Then Return False
 
         Dim equippedArmorIndex = p.equippedArmor.id
-        Dim antiSlutVarIndex = p.equippedArmor.getAntiSlutVarInd
+        Dim anti_slut_index = p.equippedArmor.getAntiSlutInd
         p.inv.add(equippedArmorIndex, -1)
-        p.inv.add(antiSlutVarIndex, 1)
-        clothesChange(p, p.inv.item(antiSlutVarIndex).getAName)
+        p.inv.add(anti_slut_index, 1)
+        clothesChange(p, p.inv.item(anti_slut_index).getAName)
 
         Game.pushLstLog("Your curse changes your clothes.")
         If Not Game.lblEvent.Visible Then Game.pushLblEvent("Suddenly, something seems off.  You look down to see a golden glow beginning to form on your outfit.  You pop off your top, mesmerised by the shimmering light that seems to be getting brighter by the second.  As the light becomes blinding, your top seems to be gaining mass and you drop it to cover your eyes.  Peeking out a few seconds later, you see that your gear is no longer glowing, and pick it back up.  As far as you can tell, it looks the same as it always had, and annoyed at yourself for getting sidetracked, you set back out on your adventure.")
@@ -271,7 +250,6 @@
     End Function
     'clothesChange handles the equipping and unequipping of armors
     Public Sub clothesChange(ByRef p As Player, ByVal clothes As String, Optional doEquipHandlers As Boolean = True)
-        If p.perks(perk.isfae) > 0 Then Exit Sub
         If aList.Count < 1 Then init()
         If Not p.equippedArmor Is Nothing AndAlso clothes.Equals(p.equippedArmor.getName) Then Exit Sub
         Dim sArmor As Armor = Nothing
@@ -292,7 +270,6 @@
     End Sub
     'clothesChange handles the equipping and unequipping of weapon
     Public Sub weaponChange(ByRef p As Player, ByVal weapon As String, Optional doEquipHandlers As Boolean = True)
-        If p.perks(perk.isfae) > 0 Then Exit Sub
         If wList.Count < 1 Then init()
         Dim sWeapon As Weapon = Nothing
         If Not p.equippedWeapon Is Nothing AndAlso weapon.Equals(p.equippedWeapon.getName) Then Exit Sub
@@ -312,7 +289,6 @@
     End Sub
     'accChange handles the equipping and unequipping of accessories
     Public Sub accChange(ByRef p As Player, ByVal acc As String, Optional doEquipHandlers As Boolean = True)
-        If p.perks(perk.isfae) > 0 Then Exit Sub
         If acList.Count < 1 Then init()
         If Not p.equippedAcce Is Nothing AndAlso acc.Equals(p.equippedAcce.getName) Then Exit Sub
         Dim sAcc As Accessory = Nothing

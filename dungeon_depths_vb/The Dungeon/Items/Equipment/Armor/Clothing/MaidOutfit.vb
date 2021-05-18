@@ -2,19 +2,19 @@
     Inherits Armor
     Sub New()
         '|ID Info|
-        MyBase.setName("Maid_Outfit")
+        setName("Maid_Outfit")
         id = 72
         tier = Nothing
 
         '|Item Flags|
-        MyBase.setUsable(False)
-        MyBase.compressesBreasts = True
-        slutVarInd = 169
+        usable = false
+        MyBase.compress_breast = True
+        slut_var_ind = 169
 
         '|Stats|
-        MyBase.sBoost = 2
-        MyBase.count = 0
-        MyBase.value = 0
+        MyBase.s_boost = 2
+        count = 0
+        value = 0
 
         '|Image Index|
         MyBase.bsizeneg1 = New Tuple(Of Integer, Boolean, Boolean)(10, False, True)
@@ -31,7 +31,7 @@
         'MyBase.usize4 = New Tuple(Of Integer, Boolean, Boolean)(63, True, True)
 
         '|Description|
-        MyBase.setDesc("A stereotypical French maid's outfit." & DDUtils.RNRN & _
+        setDesc("A stereotypical French maid's outfit." & DDUtils.RNRN & _
                                     getSizeInformation() & vbCrLf & getStatInformation())
     End Sub
 End Class

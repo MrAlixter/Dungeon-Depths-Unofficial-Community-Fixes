@@ -3,20 +3,20 @@
 
     Sub New()
         '|ID Info|
-        MyBase.setName("Flaming_Sword")
+        setName("Flaming_Sword")
         id = 172
         tier = Nothing
 
         '|Item Flags|
-        MyBase.setUsable(False)
+        usable = false
 
         '|Stats|
-        MyBase.aBoost = 45
-        MyBase.count = 0
-        MyBase.value = 2695
+        MyBase.a_boost = 45
+        count = 0
+        value = 2695
 
         '|Description|
-        MyBase.setDesc("A slender red-orange blade that becomes engulfed in a ball of flame once pulled from its jet black scabard." & DDUtils.RNRN &
+        setDesc("A slender red-orange blade that becomes engulfed in a ball of flame once pulled from its jet black scabard." & DDUtils.RNRN &
                        "This sword will take damage from attacks" & vbCrLf &
                        getStatInformation())
     End Sub

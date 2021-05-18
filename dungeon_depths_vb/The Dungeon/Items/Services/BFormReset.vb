@@ -3,21 +3,21 @@
 
     Sub New()
         '|ID Info|
-        MyBase.setName("Base_Form_Reset")
+        setName("Base_Form_Reset")
         id = 131
         tier = Nothing
 
         '|Item Flags|
-        MyBase.setUsable(True)
-        MyBase.isRandoTFAcceptable = False
+        usable = true
+        rando_inv_allowed = False
         MyBase.onBuy = AddressOf teach
 
         '|Stats|
-        MyBase.count = 0
-        MyBase.value = 1000
+        count = 0
+        value = 1000
 
         '|Description|
-        MyBase.setDesc("""Not happy with your current base form?  I can cause you to forget it, and default you to how you are now.  Well, as long as you're in a stable form, that is...""")
+        setDesc("""Not happy with your current base form?  I can cause you to forget it, and default you to how you are now.  Well, as long as you're in a stable form, that is...""")
     End Sub
 
     Sub teach()
@@ -34,12 +34,12 @@
         p.sState.save(p)
 
         Game.hideNPCButtons()
-        CType(Game.hteach, HTeach).hypnotize("Have you seen my pendant?  I know it is a bit of a cliche, but doesn't seeing it swing back and forth just relax you so perfectly?  Back...and forth...watch it glisten in the light...feel yourself go deeper and deeper...deeper...and deeper...until you just...*SNAP*...drift away...", AddressOf wakeup)
+        CType(Game.hteach, HypnoTeach).hypnotize("Have you seen my pendant?  I know it is a bit of a cliche, but doesn't seeing it swing back and forth just relax you so perfectly?  Back...and forth...watch it glisten in the light...feel yourself go deeper and deeper...deeper...and deeper...until you just...*SNAP*...drift away...", AddressOf wakeup)
     End Sub
     Sub wakeup()
         Game.player1.UIupdate()
         Equipment.clothesChange(Game.player1, "Naked")
         Game.player1.drawPort()
-        Game.pushLblEvent("You wake up to the teacher's snap.  ""Well then, " & Game.player1.name & ", it seems like we're done here."" she says with a knowing grin.  Done?  Right!  The form reset.  She already did it?  But you've always looked like this..." & DDUtils.RNRN & "Stripping naked, you give the hypnotist a dirty look.  If she was going to rip you off, your mistress could have done a better job of hiding it...", AddressOf CType(Game.hteach, HTeach).back)
+        Game.pushLblEvent("You wake up to the teacher's snap.  ""Well then, " & Game.player1.name & ", it seems like we're done here."" she says with a knowing grin.  Done?  Right!  The form reset.  She already did it?  But you've always looked like this..." & DDUtils.RNRN & "Stripping naked, you give the hypnotist a dirty look.  If she was going to rip you off, your mistress could have done a better job of hiding it...", AddressOf CType(Game.hteach, HypnoTeach).back)
     End Sub
 End Class

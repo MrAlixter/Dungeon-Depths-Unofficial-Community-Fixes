@@ -42,11 +42,7 @@
         p.prt.setIAInd(pInd.fronthair, 26, True, True)
     End Sub
     Public Overrides Sub s2FaceChange(ByRef p As Player)
-        If p.name <> "Targax" Then
-            p.prt.setIAInd(pInd.eyes, 8, True, True)
-        Else
-            p.prt.setIAInd(pInd.eyes, 29, True, True)  'eyes
-        End If
+        p.prt.setIAInd(pInd.eyes, 29, True, True)  'eyes
         p.prt.setIAInd(pInd.mouth, 15, True, True)  'mouth
     End Sub
 

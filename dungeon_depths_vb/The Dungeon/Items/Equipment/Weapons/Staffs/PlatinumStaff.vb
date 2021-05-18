@@ -3,23 +3,23 @@
 
     Sub New()
         '|ID Info|
-        MyBase.setName("Platinum_Staff")
+        setName("Platinum_Staff")
         id = 257
         tier = Nothing
 
         '|Item Flags|
-        MyBase.setUsable(False)
-        MyBase.isMonsterDrop = False
+        usable = false
+        MyBase.droppable = False
 
         '|Stats|
         count = 0
         value = 5000
-        MyBase.mBoost = 70
-        MyBase.aBoost = 2
+        MyBase.m_boost = 70
+        MyBase.a_boost = 2
 
 
         '|Description|
-        MyBase.setDesc("A glistening, jeweled staff crafted for supreme spellcasters." & DDUtils.RNRN &
+        setDesc("A glistening, jeweled staff crafted for supreme spellcasters." & DDUtils.RNRN &
                         getStatInformation())
     End Sub
 End Class

@@ -3,21 +3,21 @@
 
     Sub New()
         '|ID Info|
-        MyBase.setName("Blight_Dismissal")
+        setName("Blight_Dismissal")
         id = 245
         tier = Nothing
 
         '|Item Flags|
-        MyBase.setUsable(True)
-        MyBase.isRandoTFAcceptable = False
+        usable = true
+        rando_inv_allowed = False
         MyBase.onBuy = AddressOf purge
 
         '|Stats|
-        MyBase.count = 0
-        MyBase.value = 3110
+        count = 0
+        value = 3110
 
         '|Description|
-        MyBase.setDesc("""There's no good reason to continue a cursed existance if you don't want to.  Come, let's get those curses off of you so that they can be put to better use elsewhere...""")
+        setDesc("""There's no good reason to continue a cursed existance if you don't want to.  Come, let's get those curses off of you so that they can be put to better use elsewhere...""")
     End Sub
 
     Sub purge()
@@ -38,9 +38,9 @@
         If p.perks(perk.coftheox) > -1 Then p.perks(perk.coftheox) = -1 : Game.pushLstLog("The curse of the ox is neutralized")
 
         '| -- Cursed Equipment -- |
-        If p.equippedArmor.isCursed Then Equipment.equipArmor(p, "Naked") : Game.pushLstLog("Cursed armor removed")
-        If p.equippedWeapon.isCursed Then Equipment.equipWeapon(p, "Fists") : Game.pushLstLog("Cursed weapon removed")
-        If p.equippedAcce.isCursed Then Equipment.equipAcce(p, "Nothing") : Game.pushLstLog("Cursed accessory removed")
+        If p.equippedArmor.cursed Then Equipment.equipArmor(p, "Naked") : Game.pushLstLog("Cursed armor removed")
+        If p.equippedWeapon.cursed Then Equipment.equipWeapon(p, "Fists") : Game.pushLstLog("Cursed weapon removed")
+        If p.equippedAcce.cursed Then Equipment.equipAcce(p, "Nothing") : Game.pushLstLog("Cursed accessory removed")
 
         Game.pushNPCDialog("Ah, a fresh slate.  Don't stay out of too much trouble now, caution won't lead you anywhere...interesting...")
 

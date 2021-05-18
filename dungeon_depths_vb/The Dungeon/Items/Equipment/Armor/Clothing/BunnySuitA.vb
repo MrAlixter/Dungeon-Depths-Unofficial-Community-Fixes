@@ -2,20 +2,20 @@
     Inherits Armor
     Sub New()
         '|ID Info|
-        MyBase.setName("Armored_Bunny_Suit")
+        setName("Armored_Bunny_Suit")
         id = 94
         tier = Nothing
 
         '|Item Flags|
-        MyBase.setUsable(False)
-        MyBase.compressesBreasts = True
-        MyBase.slutVarInd = 129
+        usable = false
+        MyBase.compress_breast = True
+        MyBase.slut_var_ind = 129
 
         '|Stats|
-        MyBase.dBoost = 16
-        MyBase.sBoost = 5
-        MyBase.count = 0
-        MyBase.value = 2534
+        MyBase.d_boost = 16
+        MyBase.s_boost = 5
+        count = 0
+        value = 2534
 
         '|Image Index|
         bsizeneg1 = New Tuple(Of Integer, Boolean, Boolean)(35, False, True)
@@ -32,7 +32,7 @@
         usize4 = New Tuple(Of Integer, Boolean, Boolean)(58, True, True)
 
         '|Description|
-        MyBase.setDesc("Once a sultry outfit worn by waitresses in a club, this bunny suit has been modified to provide more defense, and to improve mobility." & DDUtils.RNRN &
+        setDesc("Once a sultry outfit worn by waitresses in a club, this bunny suit has been modified to provide more defense, and to improve mobility." & DDUtils.RNRN &
                                      getSizeInformation() & vbCrLf & getStatInformation())
     End Sub
 End Class

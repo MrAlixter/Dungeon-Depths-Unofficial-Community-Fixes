@@ -1,14 +1,22 @@
 ﻿Public Class FemininePotion
     Inherits MysteryPotion
     Sub New()
-        MyBase.setName("Feminine_Potion")
-        MyBase.setDesc("A off-looking potion")
+        '|ID Info|
+        setName("Feminine_Potion")
         id = 29
         tier = 3
-        MyBase.setUsable(True)
-        MyBase.count = 0
-        MyBase.value = 500
+
+        '|Item Flags|
+        usable = True
         MyBase.onBuy = AddressOf reveal
+
+        '|Stats|
+        count = 0
+        value = 500
+
+        '|Description|
+        setDesc("A off-looking potion")
+
     End Sub
 
     Public Overrides Sub setEffectList()

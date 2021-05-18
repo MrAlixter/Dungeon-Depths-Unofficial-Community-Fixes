@@ -3,20 +3,20 @@
 
     Sub New()
         '|ID Info|
-        MyBase.setName("Bronze_Armor")
+        setName("Bronze_Armor")
         id = 83
         tier = Nothing
 
         '|Item Flags|
-        MyBase.setUsable(False)
-        MyBase.compressesBreasts = True
-        MyBase.slutVarInd = 85
+        usable = false
+        MyBase.compress_breast = True
+        MyBase.slut_var_ind = 85
 
         '|Stats|
-        MyBase.dBoost = 6
-        MyBase.sBoost = 2
-        MyBase.count = 0
-        MyBase.value = 125
+        MyBase.d_boost = 6
+        MyBase.s_boost = 2
+        count = 0
+        value = 125
 
         '|Image Index|
         MyBase.bsizeneg1 = New Tuple(Of Integer, Boolean, Boolean)(28, False, True)
@@ -33,7 +33,7 @@
         MyBase.usize4 = New Tuple(Of Integer, Boolean, Boolean)(24, True, True)
 
         '|Description|
-        MyBase.setDesc("A lightweight armor set forged from bronze that, while not offering much defense also gives a slight speed boost." & DDUtils.RNRN &
+        setDesc("A lightweight armor set forged from bronze that, while not offering much defense also gives a slight speed boost." & DDUtils.RNRN &
                                getSizeInformation() & vbCrLf & getStatInformation())
     End Sub
 End Class

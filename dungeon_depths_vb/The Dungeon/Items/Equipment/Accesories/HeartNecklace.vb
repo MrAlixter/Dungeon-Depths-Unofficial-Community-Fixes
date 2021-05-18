@@ -2,14 +2,14 @@
     Inherits Accessory
     'The heart necklace provides no bonuses
     Sub New()
-        MyBase.setName("Heart_Necklace")
-        MyBase.setDesc("A small pink heart on a silver chain." & vbCrLf & _
+        setName("Heart_Necklace")
+        setDesc("A small pink heart on a silver chain." & vbCrLf & _
                        "Provides no bonus.")
         id = 66
         tier = Nothing
-        MyBase.setUsable(False)
-        MyBase.count = 0
-        MyBase.value = 0
+        usable = false
+        count = 0
+        value = 0
         MyBase.fInd = New Tuple(Of Integer, Boolean, Boolean)(1, True, False)
     End Sub
 End Class

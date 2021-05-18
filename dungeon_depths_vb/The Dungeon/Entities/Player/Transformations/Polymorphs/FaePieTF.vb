@@ -7,6 +7,7 @@
     Sub New(cs As Integer, n As Integer, tts As Integer, wi As Double, cbs As Boolean, tfd As Boolean)
         MyBase.New(cs, n, tts, wi, cbs, tfd)
         nextStep = getNextStep(cs)
+        tfName = "FaePie​TF"
     End Sub
 
     Public Overrides Sub setWaitTime(stage As Integer)
@@ -14,12 +15,24 @@
     End Sub
 
     Public Overrides Sub step1()
-        Game.player1.sex = "Female"
-        Game.player1.equippedArmor = New Naked
-        Game.player1.equippedWeapon = New BareFists
-        Game.player1.equippedAcce = New noAcce
-        Game.player1.inv = New Inventory(True)
-        Game.player1.perks(perk.isfae) = 1
-        Game.player1.changeClass("Classless")
+        Dim p As Player = Game.player1
+
+        p.equippedArmor = New Naked
+        p.equippedWeapon = New BareFists
+        p.equippedAcce = New noAcce
+
+        Game.preBSInventory.Clear()
+        For i = 0 To p.inv.upperBound
+            Game.preBSInventory.Add(p.inv.getCountAt(i))
+            p.inv.item(i).count = 0
+        Next
+
+        p.prt.setIAInd(pInd.eyes, 58, True, True)
+        p.prt.setIAInd(pInd.mouth, 20, True, True)
+        p.prt.setIAInd(pInd.wings, 8, True, False)
+
+        p.perks(perk.isfae) = 1
+
+        p.changeClass("Classless")
     End Sub
 End Class

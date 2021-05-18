@@ -3,20 +3,20 @@
 
     Sub New()
         '|ID Info|
-        MyBase.setName("Armor_Fragments")
+        setName("Armor_Fragments")
         id = 264
         tier = Nothing
 
         '|Item Flags|
-        MyBase.setUsable(False)
-        MyBase.isRandoTFAcceptable = False
+        usable = false
+        rando_inv_allowed = False
 
         '|Stats|
-        MyBase.count = 0
-        MyBase.value = 10
+        count = 0
+        value = 10
 
         '|Description|
-        MyBase.setDesc("A shattered chunk of an indeterminate set of armor that seems to be made of a wide selection of different metals.  If one has a high-end furnace it might possible to smelt into something usefull, but otherwise it's basically worthless.")
+        setDesc("A shattered chunk of an indeterminate set of armor that seems to be made of a wide selection of different metals.  If one has a high-end furnace it might possible to smelt into something usefull, but otherwise it's basically worthless.")
     End Sub
 
     Public Overrides Function getTier() As Integer

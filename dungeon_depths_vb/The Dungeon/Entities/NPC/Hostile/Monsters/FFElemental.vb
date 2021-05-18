@@ -1,13 +1,23 @@
 ﻿Public Class FFElemental
     Inherits Monster
     Sub New()
+        '|ID Info|
         name = "Fox-Fire Elemental"
-        maxHealth = 1
+
+        '|Stats|
+        maxHealth = 3
         attack = 60
-        defense = 1
+        defense = 3
         speed = 60
         will = 7777
-        setInventory({49, 189, 198, 202})
+
+        '|Inventory|
+        setInventory({49, 189, 198, 205})
+
+        '|Dialog Variables|
+
+
+        '|Misc|
         setupMonsterOnSpawn()
     End Sub
 

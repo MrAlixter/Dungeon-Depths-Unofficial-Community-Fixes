@@ -2,10 +2,10 @@
     Inherits Item
     Dim calories As Integer
     Sub New()
-        MyBase.setName("Food")
-        MyBase.setDesc("This is invisible.")
-        MyBase.setUsable(True)
-        MyBase.count = 0
+        setName("Food")
+        setDesc("This is invisible.")
+        usable = true
+        count = 0
     End Sub
 
     Overrides Sub use(ByRef p As Player)
@@ -13,11 +13,11 @@
         If getName() = "Medicinal_Tea" Then Game.pushLstLog("You drink the " & getName()) Else Game.pushLstLog("You eat the " & getName())
 
         p.stamina += calories
-        If Game.player1.stamina > 100 Then Game.player1.stamina = 100
-        Effect()
+        If p.stamina > 100 Then p.stamina = 100
+        Effect(p)
         count -= 1
     End Sub
-    Overridable Sub Effect()
+    Overridable Sub effect(ByRef p As Player)
 
     End Sub
     Sub setCalories(ByVal i As Integer)

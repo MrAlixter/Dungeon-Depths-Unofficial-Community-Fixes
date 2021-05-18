@@ -71,7 +71,7 @@
         Return overlayface
     End Function
     Overridable Function getOverlayB(ByVal p As Player) As Tuple(Of Integer, Boolean, Boolean)
-        If p.equippedArmor.compressesBreasts Then
+        If p.equippedArmor.compress_breast Then
             Select Case p.breastSize
                 Case 1
                     Return overlaybsize1C

@@ -2,14 +2,14 @@
     Inherits Armor
 
     Sub New()
-        MyBase.setName("Gynoid_Uniform")
+        setName("Gynoid_Uniform")
 
         id = 116
         tier = Nothing
-        MyBase.setUsable(False)
-        MyBase.dBoost = 5
-        MyBase.count = 0
-        MyBase.value = 300
+        usable = false
+        MyBase.d_boost = 5
+        count = 0
+        value = 300
 
         MyBase.bsize0 = New Tuple(Of Integer, Boolean, Boolean)(47, False, True)
         MyBase.bsize1 = New Tuple(Of Integer, Boolean, Boolean)(163, True, True)
@@ -17,15 +17,15 @@
         MyBase.bsize3 = New Tuple(Of Integer, Boolean, Boolean)(165, True, True)
         MyBase.bsize4 = New Tuple(Of Integer, Boolean, Boolean)(166, True, True)
 
-        MyBase.usize0 = New Tuple(Of Integer, Boolean, Boolean)(134, False, True)
+        MyBase.usize0 = New Tuple(Of Integer, Boolean, Boolean)(134, True, True)
         MyBase.usize1 = New Tuple(Of Integer, Boolean, Boolean)(135, True, True)
         MyBase.usize2 = New Tuple(Of Integer, Boolean, Boolean)(136, True, True)
         MyBase.usize3 = New Tuple(Of Integer, Boolean, Boolean)(137, True, True)
         MyBase.usize4 = New Tuple(Of Integer, Boolean, Boolean)(138, True, True)
 
-        MyBase.compressesBreasts = True
+        MyBase.compress_breast = True
 
-        MyBase.setDesc("A special set of clothes equipped through the gynoid conversion process.  While it doesn't do much by itself, if one has a network of circuitry on hand its fabric collects ambient mana and improves reaction time." & DDUtils.RNRN &
+        setDesc("A special set of clothes equipped through the gynoid conversion process.  While it doesn't do much by itself, if one has a network of circuitry on hand its fabric collects ambient mana and improves reaction time." & DDUtils.RNRN &
                                       getSizeInformation() & vbCrLf & getStatInformation() & "If the wearer is robotic, +13 Max MP and +10 SPD")
     End Sub
 

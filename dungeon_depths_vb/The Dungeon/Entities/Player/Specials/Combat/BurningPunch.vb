@@ -2,7 +2,7 @@
     Inherits Special
     Sub New(ByRef u As Player, ByRef t As NPC)
         MyBase.New(u, t)
-        MyBase.setName("Megaton Punch")
+        setName("Megaton Punch")
         MyBase.setUOC(False)
         MyBase.setcost(9)
     End Sub
@@ -15,8 +15,7 @@
         Else
             'non critical hit
             dmg = MyBase.getUser.getSpellDamage(MyBase.getTarget, dmg + d31 + d32)
-            Game.pushLstLog(CStr("Megaton Punch!  You hit the " & MyBase.getTarget.name & " for " & dmg & " damage!"))
-            Game.pushLblCombatEvent(CStr("Megaton Punch!  You hit the " & MyBase.getTarget.name & " for " & dmg & " damage!"))
+            Game.pushLogAndEvent(CStr("Megaton Punch!  You hit the " & MyBase.getTarget.name & " for " & dmg & " damage!"))
             MyBase.getTarget.takeDMG(dmg, MyBase.getUser)
         End If
     End Sub

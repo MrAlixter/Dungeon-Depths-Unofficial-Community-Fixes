@@ -2,9 +2,9 @@
     Inherits Spell
     Sub New(ByRef c As Player, ByRef t As NPC)
         MyBase.New(c, t)
-        MyBase.setName("Petrify II")
+        setName("Petrify II")
         MyBase.settier(4)
-        If Not c Is Nothing AndAlso c.formName.Contains("Gorgon") Then MyBase.setcost(2) Else MyBase.setcost(14)
+        MyBase.setcost(14)
     End Sub
     Public Overrides Sub effect()
         If getTarget.sName.Equals("Medusa") Or (getCaster.formName.Contains("Gorgon") And MyBase.getTarget.GetType().IsSubclassOf(GetType(Shopkeeper))) Then
@@ -40,6 +40,10 @@
         Game.pushLstLog(CStr("You petrify yourself for " & pturns - 1 & " turns!"))
         Game.pushLblCombatEvent(CStr("You petrify yourself for " & pturns - 1 & " turns!"))
     End Sub
+
+    Public Overrides Function getcost() As Integer
+        If Not getCaster() Is Nothing AndAlso getCaster.formName.Contains("Gorgon") Then Return 2 Else Return 14
+    End Function
 
     Public Overrides Function getDesc(ByRef c As Player, ByRef t As NPC) As Object
         Return "A tier 4 spell that turns its target into little more than a stone statue with a medium chance of backfiring and a low chance of missing altogether.  This spell is twice as effective as the standard Petrify, and while it comes effortlessly to Gorgons it is also uneffective against them."

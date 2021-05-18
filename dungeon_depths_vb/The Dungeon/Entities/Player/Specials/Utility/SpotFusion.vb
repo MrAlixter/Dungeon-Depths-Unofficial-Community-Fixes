@@ -2,7 +2,7 @@
     Inherits Special
     Sub New(ByRef u As Player, ByRef t As NPC)
         MyBase.New(u, t)
-        MyBase.setName("Spot Fusion")
+        setName("Spot Fusion")
         MyBase.setUOC(True)
         setcost(50)
     End Sub
@@ -68,7 +68,6 @@
         End If
 
         p1.breastSize = (p1.breastSize + p2.breastSize) / 2
-        p1.currState.save(p1)
 
         p1.perks(perk.isspotfused) = 110
         Return p1

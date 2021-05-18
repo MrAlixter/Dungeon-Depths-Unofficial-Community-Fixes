@@ -117,39 +117,82 @@
     <Import Include="System.Threading.Tasks" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Entities\NPC\Hostile\Bosses\MiniBosses\Mayue.vb" />
+    <Compile Include="Entities\NPC\Hostile\Bosses\MiniBosses\TimeJudgeFight.vb" />
     <Compile Include="Entities\NPC\Hostile\Bosses\MiniBosses\TimeTravellerFight.vb" />
     <Compile Include="Entities\NPC\Hostile\Monsters\Bovinomancer.vb" />
     <Compile Include="Entities\NPC\Hostile\Monsters\Slime\OozeKnight.vb" />
     <Compile Include="Entities\NPC\Hostile\Monsters\Thrall\EnthConjurer.vb" />
     <Compile Include="Entities\NPC\Hostile\Monsters\Thrall\EnthSwordsman.vb" />
+    <Compile Include="Entities\NPC\Hostile\Monsters\TimeCopAgent.vb" />
     <Compile Include="Entities\NPC\Non-Hostile\FVendorTar.vb" />
+    <Compile Include="Entities\Player\Classes\Cleric.vb" />
+    <Compile Include="Entities\Player\Classes\needRevertPassage\TimeCop.vb" />
+    <Compile Include="Entities\Player\Forms\Orc.vb" />
     <Compile Include="Entities\Player\Forms\needsRevertPassage\Cow.vb" />
+    <Compile Include="Entities\Player\Quest\Floor Quests\Floor4Encounter.vb" />
+    <Compile Include="Entities\Player\Quest\Floor Quests\FaeWoods1.vb" />
+    <Compile Include="Entities\Player\Quest\Monster Loss Quests\ThrallLoss.vb" />
+    <Compile Include="Entities\Player\Quest\Misc Quests\NineLives.vb" />
+    <Compile Include="Entities\Player\Quest\Misc Quests\OppositeDay.vb" />
     <Compile Include="Entities\Player\Quest\Misc Quests\BaseQuest.vb" />
     <Compile Include="Entities\Player\Quest\Misc Quests\OutOfTime.vb" />
     <Compile Include="Entities\Player\Quest\NPC Quests\StudyingSlime.vb" />
     <Compile Include="Entities\Player\Quest\NPC Quests\CursedContraband.vb" />
     <Compile Include="Entities\Player\Quest\NPC Quests\BreakingAnEgg.vb" />
+    <Compile Include="Entities\Player\Spells\Combat\TentacleCrushcannon.vb" />
+    <Compile Include="Entities\Player\Spells\Combat\Hellfireball.vb" />
+    <Compile Include="Entities\Player\Spells\Combat\Smite.vb" />
+    <Compile Include="Entities\Player\Spells\Combat\FlamesOfAmaraphne.vb" />
+    <Compile Include="Entities\Player\Spells\Utility\Benediction.vb" />
+    <Compile Include="Entities\Player\Spells\Utility\CleansingLight.vb" />
+    <Compile Include="Entities\Player\Spells\Utility\SummonApple.vb" />
+    <Compile Include="Entities\Player\Spells\Utility\SizeForLife.vb" />
     <Compile Include="Entities\Player\Spells\Utility\SummonBattery.vb" />
     <Compile Include="Entities\Player\Transformations\BimboTFs\DragonfruitBimboTF.vb" />
+    <Compile Include="Entities\Player\Transformations\BimboTFs\GBimboTF.vb" />
+    <Compile Include="Entities\Player\Transformations\CowbellTFs\MimicMinoTF.vb" />
+    <Compile Include="Entities\Player\Transformations\MaggirlTFs\MagMimicTF.vb" />
+    <Compile Include="Entities\Player\Transformations\OneStepTFs\GynoidTF2.vb" />
+    <Compile Include="Entities\Player\Transformations\OneStepTFs\InversionTF.vb" />
     <Compile Include="Entities\Player\Transformations\OneStepTFs\MoxBTF.vb" />
     <Compile Include="Entities\Player\Transformations\Polymorphs\CowTF.vb" />
+    <Compile Include="Entities\Player\Transformations\PreferredFormTF.vb" />
+    <Compile Include="Items\Equipment\Accesories\ImmitationCowbell.vb" />
+    <Compile Include="Items\Equipment\Accesories\PhaseDeflector.vb" />
     <Compile Include="Items\Equipment\Accesories\MOTOx.vb" />
+    <Compile Include="Items\Equipment\Accesories\HallowedTalisman.vb" />
+    <Compile Include="Items\Equipment\Armor\Clothing\CommonClothes8.vb" />
+    <Compile Include="Items\Equipment\Armor\Clothing\TimeCopClothes.vb" />
+    <Compile Include="Items\Equipment\Armor\MagicCloaks\CrimsonCloak.vb" />
     <Compile Include="Items\Equipment\Armor\PlateArmor\PlatArmor.vb" />
+    <Compile Include="Items\Equipment\Armor\SlutVar\CultistCloak.vb" />
     <Compile Include="Items\Equipment\Armor\SlutVar\PlatAdornment.vb" />
+    <Compile Include="Items\Equipment\Armor\SlutVar\SkimpyClothesG.vb" />
     <Compile Include="Items\Equipment\Weapons\Misc\PhaseDrill.vb" />
     <Compile Include="Items\Equipment\Weapons\Misc\PhaseHammer.vb" />
     <Compile Include="Items\Equipment\Weapons\Misc\PhaseRifle.vb" />
     <Compile Include="Items\Equipment\Weapons\Misc\PhasePistol.vb" />
+    <Compile Include="Items\Equipment\Weapons\Misc\LargeStick.vb" />
+    <Compile Include="Items\Equipment\Weapons\Wands\MagMimicWand.vb" />
     <Compile Include="Items\Misc\ArmorFragments.vb" />
+    <Compile Include="Items\Misc\ExtraLife.vb" />
     <Compile Include="Items\Services\UpgradeArmor.vb" />
+    <Compile Include="Items\Usable\Food\GoldenGum.vb" />
+    <Compile Include="Items\Usable\PhaseVibrator.vb" />
     <Compile Include="Items\Usable\Food\DFStickOfGum.vb" />
     <Compile Include="Items\Usable\Food\BetterHerbs.vb" />
     <Compile Include="Items\Usable\Food\Steak.vb" />
     <Compile Include="Items\Usable\Food\NatureKiss.vb" />
     <Compile Include="Items\Usable\Food\RocDrumstick.vb" />
+    <Compile Include="Items\Usable\Spellbooks\TomeOfKnowlege.vb" />
     <Compile Include="Items\Usable\Spellbooks\MarissasNotes.vb" />
     <Compile Include="Items\Usable\Spellbooks\PaleoDiary.vb" />
     <Compile Include="Items\Usable\Spellbooks\AAAAAASpecs.vb" />
+    <Compile Include="Tiles\Traps\Button1Trap.vb" />
+    <Compile Include="Tiles\Traps\GynoidTrap2.vb" />
+    <Compile Include="Util\UpdatableQueueV2.vb" />
+    <Compile Include="Util\UpdatableQueue.vb" />
     <Compile Include="Util\DDDateTime.vb" />
     <Compile Include="Entities\NPC\Hostile\Bosses\MiniBosses\SevenTails.vb" />
     <Compile Include="Entities\NPC\Hostile\Monsters\Spider\WebCasterArach.vb" />
@@ -279,13 +322,12 @@
     <Compile Include="Entities\NPC\Hostile\Bosses\MiniBosses\OEmpress.vb" />
     <Compile Include="Entities\NPC\Hostile\Bosses\MiniBosses\Targax.vb" />
     <Compile Include="Entities\NPC\Non-Hostile\Caelia.vb" />
-    <Compile Include="Entities\NPC\Non-Hostile\Fae.vb" />
     <Compile Include="Entities\NPC\Non-Hostile\CBrok.vb" />
     <Compile Include="Entities\NPC\Non-Hostile\TimeTraveler.vb" />
     <Compile Include="Entities\NPC\Non-Hostile\MaskedMG.vb" />
     <Compile Include="Entities\NPC\Non-Hostile\WSmith.vb" />
     <Compile Include="Entities\NPC\Non-Hostile\FVendor.vb" />
-    <Compile Include="Entities\NPC\Non-Hostile\HTeach.vb" />
+    <Compile Include="Entities\NPC\Non-Hostile\HypnoTeach.vb" />
     <Compile Include="Entities\NPC\Non-Hostile\Shopkeeper.vb" />
     <Compile Include="Entities\NPC\Non-Hostile\ShadyWizard.vb" />
     <Compile Include="Entities\NPC\NPC.vb" />
@@ -443,7 +485,7 @@
     <Compile Include="Entities\Player\Transformations\BimboTFs\BBBimboTF.vb" />
     <Compile Include="Entities\Player\Transformations\BimboTFs\BimboPlusTF.vb" />
     <Compile Include="Entities\Player\Transformations\OneStepTFs\HGorgonTF.vb" />
-    <Compile Include="Entities\Player\Transformations\GynoidTF.vb" />
+    <Compile Include="Entities\Player\Transformations\OneStepTFs\GynoidTF.vb" />
     <Compile Include="Entities\Player\Transformations\OneStepTFs\PlantfolkTF.vb" />
     <Compile Include="Entities\Player\Transformations\ArachneTF.vb" />
     <Compile Include="Entities\Player\Transformations\BimboTFs\MBimboTF.vb" />
@@ -480,7 +522,7 @@
     <Compile Include="Entities\Player\Transformations\ThrallTF.vb" />
     <Compile Include="Entities\Player\Transformations\Transformation.vb" />
     <Compile Include="Entities\Inventory.vb" />
-    <Compile Include="Entities\preferedForm.vb" />
+    <Compile Include="Entities\PreferedForm.vb" />
     <Compile Include="Items\Equipment\Accesories\ActiveCamoflage.vb" />
     <Compile Include="Items\Equipment\Accesories\BBoyshorts.vb" />
     <Compile Include="Items\Equipment\Accesories\Bimbell.vb" />
@@ -523,14 +565,14 @@
     <Compile Include="Items\Equipment\Armor\Clothing\SkimpyTT.vb" />
     <Compile Include="Items\Equipment\Armor\SlutVar\SVBunnySuit.vb" />
     <Compile Include="Items\Equipment\Armor\SlutVar\LabcoatSV.vb" />
-    <Compile Include="Items\Equipment\Armor\Clothing\Labcoat.vb" />
+    <Compile Include="Items\Equipment\Armor\MagicCloaks\Labcoat.vb" />
     <Compile Include="Items\Equipment\Armor\SlutVar\PhotonBikini.vb" />
     <Compile Include="Items\Equipment\Armor\PlateArmor\PhotonArmor.vb" />
     <Compile Include="Items\Equipment\Armor\Clothing\GCUniform.vb" />
     <Compile Include="Items\Equipment\Armor\Seasonal\CozySweater.vb" />
     <Compile Include="Items\Equipment\Armor\SlutVar\VSkimpyClothes.vb" />
-    <Compile Include="Items\Equipment\Armor\Clothing\KitsuneRobe.vb" />
-    <Compile Include="Items\Equipment\Armor\Clothing\WarlockRobe.vb" />
+    <Compile Include="Items\Equipment\Armor\MagicCloaks\KitsuneRobe.vb" />
+    <Compile Include="Items\Equipment\Armor\MagicCloaks\WarlockRobe.vb" />
     <Compile Include="Items\Equipment\Armor\Clothing\SAJumpsuit.vb" />
     <Compile Include="Items\Equipment\Armor\PlateArmor\BarbArmor.vb" />
     <Compile Include="Items\Equipment\Armor\Clothing\BunnySuitA.vb" />
@@ -638,7 +680,7 @@
     <Compile Include="Items\Equipment\Armor\SlutVar\BronzeBikini.vb" />
     <Compile Include="Items\Equipment\Armor\PlateArmor\ChitArmor.vb" />
     <Compile Include="Items\Equipment\Armor\Clothing\CowBra.vb" />
-    <Compile Include="Items\Equipment\Armor\NotGoingToUpdateYet\VDayClothes.vb" />
+    <Compile Include="Items\Equipment\Armor\Clothing\VDayClothes.vb" />
     <Compile Include="Items\Equipment\Armor\SlutVar\VNightLingerie.vb" />
     <Compile Include="Items\Usable\PortalChalk.vb" />
     <Compile Include="Items\Usable\Potions\ClearPotion.vb" />
@@ -809,7 +851,7 @@
     </Compile>
     <Compile Include="Items\Usable\FusionCrystal.vb" />
     <Compile Include="Items\Usable\Glowstick.vb" />
-    <Compile Include="Items\Equipment\Armor\Clothing\GoddessGown.vb" />
+    <Compile Include="Items\Equipment\Armor\MagicCloaks\GoddessGown.vb" />
     <Compile Include="Items\Misc\Gold.vb" />
     <Compile Include="Items\Equipment\Armor\SlutVar\GoldAdornment.vb" />
     <Compile Include="Items\Equipment\Armor\PlateArmor\GoldArmor.vb" />
@@ -855,10 +897,7 @@
     <Compile Include="Items\Usable\Food\PApple.vb" />
     <Compile Include="Entities\Player\Player.vb" />
     <Compile Include="Items\Usable\Potions\Mystery Potions\MysteryPotion.vb" />
-    <Compile Include="PriorityQue\PQ.vb" />
-    <Compile Include="PriorityQue\PQInterface.vb" />
     <Compile Include="Items\Equipment\Armor\Clothing\PrincessGown.vb" />
-    <Compile Include="PriorityQue\Q.vb" />
     <Compile Include="Items\Usable\Potions\Mystery Potions\Uncommon Potions\GentlePotion.vb" />
     <Compile Include="Items\Usable\Potions\RestorationPotion.vb" />
     <Compile Include="Items\Usable\RigWrench.vb" />
@@ -869,7 +908,6 @@
     <Compile Include="WindowsForms\SCPicker.vb">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="PriorityQue\Segment.vb" />
     <Compile Include="WindowsForms\Settings.Designer.vb">
       <DependentUpon>Settings.vb</DependentUpon>
     </Compile>
@@ -883,7 +921,7 @@
       <SubType>Form</SubType>
     </Compile>
     <Compile Include="Items\Equipment\Armor\SlutVar\SkimpyClothes.vb" />
-    <Compile Include="Items\Equipment\Armor\Clothing\SorcerersRobes.vb" />
+    <Compile Include="Items\Equipment\Armor\MagicCloaks\SorcerersRobes.vb" />
     <Compile Include="Items\Equipment\Weapons\Swords\SoulBlade.vb" />
     <Compile Include="Items\Usable\Charms\SpeedCharm.vb" />
     <Compile Include="Items\Usable\Spellbooks\Spellbook.vb" />
@@ -1002,8 +1040,6 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="bin\Debug\img\bkg\" />
-    <Folder Include="Entities\Player\Quest\Floor Quests\" />
-    <Folder Include="Entities\Player\Quest\Monster Loss Quests\" />
     <Folder Include="Items\Unimplemented\Removed\" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.VisualBasic.targets" />

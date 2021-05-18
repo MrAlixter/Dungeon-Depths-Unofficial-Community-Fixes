@@ -1,15 +1,24 @@
 ﻿Public Class LiveLingerie
     Inherits Armor
     Sub New()
-        MyBase.setName("Living_Lingerie")
-
+        '|ID Info|
+        setName("Living_Lingerie")
         id = 56
         tier = Nothing
-        MyBase.setUsable(False)
-        MyBase.dBoost = 6
-        MyBase.count = 0
-        MyBase.value = 450
-        MyBase.antiSlutVarInd = 55
+
+        '|Item Flags|
+        usable = false
+        MyBase.compress_breast = True
+        MyBase.cursed = True
+        rando_inv_allowed = False
+        MyBase.anti_slut_ind = 55
+
+        '|Stats|
+        MyBase.d_boost = 6
+        count = 0
+        value = 450
+
+        '|Image Index|
         bsizeneg1 = New Tuple(Of Integer, Boolean, Boolean)(16, False, True)
         bsize0 = New Tuple(Of Integer, Boolean, Boolean)(266, True, True)
         bsize1 = New Tuple(Of Integer, Boolean, Boolean)(82, True, True)
@@ -23,11 +32,8 @@
         usize2 = New Tuple(Of Integer, Boolean, Boolean)(146, True, True)
         usize3 = New Tuple(Of Integer, Boolean, Boolean)(147, True, True)
 
-        MyBase.compressesBreasts = True
-        MyBase.isCursed = True
-        MyBase.isRandoTFAcceptable = False
-
-        MyBase.setDesc("A suit of living lingerie embued with a the soul of a mimic." & DDUtils.RNRN & _
+        '|Description|
+        setDesc("A suit of living lingerie embued with a the soul of a mimic." & DDUtils.RNRN & _
                                   getSizeInformation() & vbCrLf & getStatInformation() &
                            "The mimic's movment rapidly raises lust" & vbCrLf & _
                            "May not be easy to remove")
@@ -35,10 +41,10 @@
 
     Public Overrides Sub onEquip(ByRef p As Player)
         MyBase.onEquip(p)
-        If Not p.perks(perk.livelinge) > -1 Then p.perks(perk.livelinge) = 0
+        If p.perks(perk.livelinge) < 0 Then p.perks(perk.livelinge) = 1
     End Sub
     Public Overrides Sub onUnequip(ByRef p As Player)
         MyBase.onUnequip(p)
-        If Not p.perks(perk.livelinge) > -1 Then p.perks(perk.livelinge) = -1
+        If p.perks(perk.livelinge) > -1 Then p.perks(perk.livelinge) = -1
     End Sub
 End Class

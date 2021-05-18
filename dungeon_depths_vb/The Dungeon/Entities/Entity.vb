@@ -25,7 +25,7 @@
 
     '|MOVEMENT COMMANDS|
     MustOverride Sub reachedFPathDest()
-    Private Sub followPath()
+    Protected Sub followPath()
         If forcedPath.Length <= 1 Then
             reachedFPathDest()
             forcedPath = Nothing
@@ -38,7 +38,7 @@
             forcedPath = t
         End If
     End Sub
-    Public Sub move(ByVal newX, ByVal newY)
+    Public Overridable Sub move(ByVal newX, ByVal newY)
         '|-Forced Path-|
         If Not forcedPath Is Nothing Then
             followPath()
@@ -55,17 +55,6 @@
         If newY < 0 Or newY > Game.currFloor.mBoardHeight - 1 Or newX < 0 Or newX > Game.currFloor.mBoardWidth - 1 Then Exit Sub
 
         Dim board = Game.currFloor.mBoard
-
-        '|-Pickaxe Effect-|
-        If board(newY, newX).Tag = 0 AndAlso Not getPlayer() Is Nothing AndAlso getPlayer.perks(perk.pickaxe) > 0 Then board(newY, newX).Tag = 2
-
-        '|-Phase Drill Effect-|
-        If board(newY, newX).Tag = 0 AndAlso Not getPlayer() Is Nothing AndAlso getPlayer.perks(perk.pdrill) > 0 And getPlayer.inv.getCountAt("AAAAAA_Battery") > 0 Then
-            board(newY, newX).Tag = 2
-            getPlayer.inv.add("AAAAAA_Battery", -1)
-        ElseIf board(newY, newX).Tag = 0 AndAlso Not getPlayer() Is Nothing AndAlso getPlayer.perks(perk.pdrill) > 0 And getPlayer.inv.getCountAt("AAAAAA_Battery") < 1 Then
-            Game.pushLblEvent("The drill spins weakly...")
-        End If
 
         '|-Other Wall-|
         If board(newY, newX).Tag = 0 Then Exit Sub

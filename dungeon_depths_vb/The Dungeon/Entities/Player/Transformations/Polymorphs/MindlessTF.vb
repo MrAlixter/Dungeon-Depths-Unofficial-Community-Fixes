@@ -9,6 +9,7 @@
     Sub New(cs As Integer, n As Integer, tts As Integer, wi As Double, cbs As Boolean, tfd As Boolean)
         MyBase.New(cs, n, tts, wi, cbs, tfd)
         nextStep = getNextStep(cs)
+        tfName = "Mindless"
     End Sub
 
     Sub altNew()
@@ -47,7 +48,7 @@
         Dim p As Player = Game.player1
         Dim out = ""
 
-        p.pState.save(p)
+        p.savePState()
 
         'transformation
         'eyes/mouth

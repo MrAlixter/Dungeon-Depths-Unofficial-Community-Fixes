@@ -1,14 +1,22 @@
 ﻿Public Class GentlePotion
     Inherits MysteryPotion
     Sub New()
-        MyBase.setName("Gentle_Potion")
-        MyBase.setDesc("A curious-looking potion")
+        '|ID Info|
+        setName("Gentle_Potion")
         id = 27
         tier = 2
-        MyBase.setUsable(True)
-        MyBase.count = 0
-        MyBase.value = 350
+
+        '|Item Flags|
+        usable = True
         MyBase.onBuy = AddressOf reveal
+
+        '|Stats|
+        count = 0
+        value = 350
+
+        '|Description|
+        setDesc("A curious-looking potion.")
+
     End Sub
 
     Public Overrides Sub setEffectList()

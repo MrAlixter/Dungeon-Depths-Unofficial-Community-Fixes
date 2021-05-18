@@ -1,13 +1,13 @@
 ﻿Public Class IncandPotion
     Inherits MysteryPotion
     Sub New()
-        MyBase.setName("Incandescent_Potion")
-        MyBase.setDesc("A suspicious-looking potion")
+        setName("Incandescent_Potion")
+        setDesc("A suspicious-looking potion")
         id = 248
         tier = 2
-        MyBase.setUsable(True)
-        MyBase.count = 0
-        MyBase.value = 350
+        usable = true
+        count = 0
+        value = 350
         MyBase.onBuy = AddressOf reveal
     End Sub
 

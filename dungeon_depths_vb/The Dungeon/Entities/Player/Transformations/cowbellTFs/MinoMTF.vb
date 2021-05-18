@@ -18,14 +18,22 @@
     Overrides Sub tfDialogStep1(ByVal hairColorInd As Integer)
         Try
             Dim hcn = {"Black", "Brown", "Blonde", "White"}
-            Game.pushLblEvent("Your foot falls on an uneven patch of dungeon and you breifly lose your footing.  As you brush your shaken up hair back into place, you notice that at some point your hair color had changed to a shade of " & hcn(hairColorInd) & "." & DDUtils.RNRN & """Maybe I stepped on a cursed brick or something..."" you muse as you continue on." & DDUtils.RNRN & "You now have " & hcn(hairColorInd) & " hair!")
+            Game.pushLblEvent("Your foot falls on an uneven patch of dungeon and you breifly lose your footing." & DDUtils.RNRN &
+                              "As you brush your shaken up hair back into place, you notice that at some point your hair color had changed to a shade of " & hcn(hairColorInd) & "." & DDUtils.RNRN &
+                              """Maybe I stepped on a cursed brick or something..."" you muse as you continue on." & DDUtils.RNRN &
+                              "You now have " & hcn(hairColorInd) & " hair!")
         Catch ex As Exception
-            Game.pushLblEvent("Your foot falls on an uneven patch of dungeon and you breifly lose your footing.  As you brush your shaken up hair back into place, you notice that at some point your hair color had shifted." & DDUtils.RNRN & """Maybe I stepped on a cursed brick or something..."" you muse as you continue on." & DDUtils.RNRN & "Your hair color has changed!")
+            Game.pushLblEvent("Your foot falls on an uneven patch of dungeon and you breifly lose your footing." & DDUtils.RNRN &
+                              "As you brush your shaken up hair back into place, you notice that at some point your hair color had shifted." & DDUtils.RNRN &
+                              """Maybe I stepped on a cursed brick or something..."" you muse as you continue on." & DDUtils.RNRN &
+                              "Your hair color has changed!")
         End Try
     End Sub
 
     Overrides Sub tfDialogStep2()
-        Game.pushLblEvent("Out of nowhere, you feel the tile beneath you depress slightly.  You instinctively roll left just in time for a projectile to fly through the air where you just to the left.  After a nervous scan of your surroundings, you go to readjust your hair again only to find a small pair of horns.  As you size them up, you realize that they give you a slightly bovine appearance.")
+        Game.pushLblEvent("Out of nowhere, you feel the tile beneath you depress slightly." & DDUtils.RNRN &
+                          "You instinctively roll left just in time for a projectile to fly through the air where you just to the left.  After a nervous scan of your surroundings, you go to re-adjust your hair again only to find a small pair of horns." & DDUtils.RNRN &
+                          "As you size them up, you realize that they give you a slightly bovine appearance.")
     End Sub
 
     Overrides Sub earTF(ByRef p As Player)
@@ -98,7 +106,9 @@
         p.prt.setIAInd(pInd.horns, 5, True, False)
     End Sub
     Overrides Sub tfDialogStep5()
-        Game.pushLblEvent("As you trudge through a particularly dusty patch of dungeon, you feel a powerful sneeze coming on.  As the sneeze rocks your body, your head feels slightly heavier and as you feel around you can tell that your horns have gotten longer, and have a more extreme curl.  Cool.")
+        Game.pushLblEvent("As you trudge through a particularly dusty patch of dungeon, you feel a powerful sneeze coming on." & DDUtils.RNRN &
+                          "A""Achoo!"" the sneeze rocks your body, and your head feels slightly heavier.  As you feel around your head, you can tell that your horns have both gotten longer and developed a more extreme curl." & DDUtils.RNRN &
+                          "Epic.")
     End Sub
 
     Overrides Sub boobTF(ByRef p As Player)
@@ -167,7 +177,10 @@
         p.prt.setIAInd(pInd.nose, 2, False, True)
     End Sub
     Overrides Sub tfDialogStep9()
-        Game.pushLblEvent("You take another look at your chest.  It seems that with every change this curse inflicts, you've progressed a little more into some form of bovine-human hybrid.  𝘔𝘪𝘯𝘰𝘵𝘢𝘶𝘳, you correct your self.  It's been turning you into a minotaur, and a masculine one at that.  Your transformation seems pretty far along, and you'd wager you're only one more change away.  With that in mind, you focus all your energy on bulking up your already ample muscles." & DDUtils.RNRN & "You are now a male minotaur!")
+        Game.pushLblEvent("You take another look at your chest." & DDUtils.RNRN &
+                          "It seems that with every change this curse inflicts, you've progressed a little more into some form of bovine-human hybrid.  'Minotaur', you correct your self.  It's been turning you into a minotaur, and a masculine one at that." & DDUtils.RNRN &
+                          "Your transformation seems pretty far along, and you'd wager you're only one more change away.  With that in mind, you focus all your energy on bulking up your already ample muscles." & DDUtils.RNRN &
+                          "You are now a male minotaur!")
     End Sub
     Overrides Sub step9()
         Dim p As Player = Game.player1

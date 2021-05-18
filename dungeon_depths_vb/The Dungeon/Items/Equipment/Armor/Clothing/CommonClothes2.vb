@@ -2,17 +2,17 @@
     Inherits Armor
 
     Sub New()
-        MyBase.setName("Common_Garb")
+        setName("Common_Garb")
 
         id = 186
         tier = Nothing
-        MyBase.setUsable(False)
-        MyBase.dBoost = 1
-        MyBase.mBoost = 1
-        MyBase.count = 0
-        MyBase.value = 0
-        MyBase.compressesBreasts = True
-        MyBase.slutVarInd = 191
+        usable = false
+        MyBase.d_boost = 1
+        MyBase.m_boost = 1
+        count = 0
+        value = 0
+        MyBase.compress_breast = True
+        MyBase.slut_var_ind = 191
 
 
         bsizeneg1 = New Tuple(Of Integer, Boolean, Boolean)(2, False, False)
@@ -25,7 +25,7 @@
         usize1 = New Tuple(Of Integer, Boolean, Boolean)(4, True, False)
         usize2 = New Tuple(Of Integer, Boolean, Boolean)(5, True, False)
 
-        MyBase.setDesc("Common garb for the common adventurer." & DDUtils.RNRN &
+        setDesc("Common garb for the common adventurer." & DDUtils.RNRN &
                                       getSizeInformation() & vbCrLf & getStatInformation())
     End Sub
 End Class

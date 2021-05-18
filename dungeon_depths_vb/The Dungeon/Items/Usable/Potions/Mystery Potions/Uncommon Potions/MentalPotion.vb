@@ -1,13 +1,13 @@
 ﻿Public Class MentalPotion
     Inherits MysteryPotion
     Sub New()
-        MyBase.setName("Mental_Potion")
-        MyBase.setDesc("An eerie-looking potion")
+        setName("Mental_Potion")
+        setDesc("An eerie-looking potion")
         id = 231
         tier = 2
-        MyBase.setUsable(True)
-        MyBase.count = 0
-        MyBase.value = 350
+        usable = true
+        count = 0
+        value = 350
         MyBase.onBuy = AddressOf reveal
     End Sub
 

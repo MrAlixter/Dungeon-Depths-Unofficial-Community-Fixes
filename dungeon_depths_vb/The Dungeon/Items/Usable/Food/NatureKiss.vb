@@ -3,26 +3,24 @@
 
     Sub New()
         '|ID Info|
-        MyBase.setName("Nature's_Kiss")
+        setName("Nature's_Kiss")
         id = 269
         tier = Nothing
 
         '|Item Flags|
-        MyBase.setUsable(True)
+        usable = true
 
         '|Stats|
-        MyBase.count = 0
-        MyBase.value = 2300
+        count = 0
+        value = 2300
         setCalories(39)
 
         '|Description|
-        MyBase.setDesc("An amazing salad made of mixed greens grown by followers of a forest goddess.  While it may both be delectable and healthy, the Vendor describes these followers as more of a ""cult"" so the salad may be similarly unstable." & vbCrLf &
+        setDesc("An amazing salad made of mixed greens grown by followers of a forest goddess.  While it may both be delectable and healthy, the Vendor describes these followers as more of a ""cult"" so the salad may be similarly unstable." & vbCrLf &
                        "+39 stamina" & vbCrLf &
                        "Either +150 health or +75 mana (depending on which is lower)")
     End Sub
-    Public Overrides Sub Effect()
-        Dim p As Player = Game.player1
-
+    Public Overrides Sub effect(ByRef p As Player)
         If ((p.getIntHealth / p.getMaxHealth) < (p.getMana / p.getMaxMana)) Or ((p.getIntHealth / p.getMaxHealth) < (p.getMana / p.getMaxMana) And Int(Rnd() * 2) = 0) Then
             p.health += 125 / p.getMaxHealth
             Game.pushLstLog("+150 health!")

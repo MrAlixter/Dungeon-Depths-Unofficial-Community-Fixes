@@ -4,22 +4,22 @@ Public Class LabcoatSV
 
     Sub New()
         '|ID Info|
-        MyBase.setName("Labcoat​")
+        setName("Labcoat​")
         id = 107
         tier = Nothing
 
         '|Item Flags|
-        MyBase.setUsable(False)
-        MyBase.compressesBreasts = True
-        MyBase.hidesDick = False
-        MyBase.isRandoTFAcceptable = False
-        MyBase.antiSlutVarInd = 106
+        usable = false
+        MyBase.compress_breast = True
+        MyBase.hide_dick = False
+        rando_inv_allowed = False
+        MyBase.anti_slut_ind = 106
 
         '|Stats|
-        MyBase.dBoost = 2
-        MyBase.wBoost = 20
-        MyBase.count = 0
-        MyBase.value = 450
+        MyBase.d_boost = 2
+        w_boost = 20
+        count = 0
+        value = 450
 
         '|Image Index|
         MyBase.bsize0 = New Tuple(Of Integer, Boolean, Boolean)(43, False, True)
@@ -36,7 +36,7 @@ Public Class LabcoatSV
         MyBase.usize4 = New Tuple(Of Integer, Boolean, Boolean)(294, True, True)
 
         '|Description|
-        MyBase.setDesc("A white labcoat that, despite not containing much underneath itself, still gives its wearer an air of scientific authority" & DDUtils.RNRN &
+        setDesc("A white labcoat that, despite not containing much underneath itself, still gives its wearer an air of scientific authority" & DDUtils.RNRN &
                         getSizeInformation() & vbCrLf & getStatInformation())
     End Sub
 End Class

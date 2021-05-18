@@ -3,19 +3,19 @@
 
     Sub New()
         '|ID Info|
-        MyBase.setName("Marissa's_Notes")
+        setName("Marissa's_Notes")
         id = 278
         tier = Nothing
 
         '|Item Flags|
-        MyBase.setUsable(True)
+        usable = true
 
         '|Stats|
-        MyBase.count = 0
-        MyBase.value = 800
+        count = 0
+        value = 800
 
         '|Description|
-        MyBase.setDesc("A small, black book with the golden silloette of a cat on the cover.  According to the title page, the author is ""Marissa, Master Nekomancer""")
+        setDesc("A small, black book with the golden silloette of a cat on the cover.  According to the title page, the author is ""Marissa, Master Nekomancer""")
     End Sub
 
     Overrides Sub use(ByRef p As Player)

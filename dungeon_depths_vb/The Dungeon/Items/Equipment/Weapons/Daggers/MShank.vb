@@ -2,17 +2,24 @@
     Inherits Dagger
 
     Sub New()
-        MyBase.setName("Mugger's_Shank")
-        MyBase.setDesc("A well-worn blade small enough to be concealed and drawn at will." & vbCrLf &
-                       "+3 ATK" & vbCrLf &
-                       "+5 SPD" & vbCrLf &
-                       "Hits twice")
+        '|ID Info|
+        setName("Mugger's_Shank")
         id = 165
         tier = Nothing
-        MyBase.setUsable(False)
-        MyBase.aBoost = 3
-        MyBase.sBoost = 5
-        MyBase.count = 0
-        MyBase.value = 235
+
+        '|Item Flags|
+        usable = False
+
+        '|Stats|
+        count = 0
+        value = 235
+        a_boost = 3
+        s_boost = 5
+
+        '|Description|
+        setDesc("A well-worn blade small enough to be concealed and drawn at will." & DDUtils.RNRN &
+                getStatInformation() & DDUtils.RNRN &
+                "Hits twice")
+
     End Sub
 End Class

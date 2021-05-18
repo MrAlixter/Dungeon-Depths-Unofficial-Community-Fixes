@@ -100,6 +100,7 @@
 
         'cleanup
         Game.pushLblEvent(revertText & Game.lblEvent.Text.Split(vbCrLf)(0))
+        p.ongoingTFs.ping()
         p.specialRoute()
         p.magicRoute()
         p.drawPort()

@@ -3,19 +3,19 @@
 
     Sub New()
         '|ID Info|
-        MyBase.setName("Cursed_Coupon")
+        setName("Cursed_Coupon")
         id = 182
         tier = Nothing
 
         '|Item Flags|
-        MyBase.setUsable(True)
+        usable = true
 
         '|Stats|
-        MyBase.count = 0
-        MyBase.value = 560
+        count = 0
+        value = 560
 
         '|Description|
-        MyBase.setDesc("A small slip of paper advertising some sort of shady magic store.  While you have the sense not to grab it directly, who knows what havoc it could unleash if you got a little careless...")
+        setDesc("A small slip of paper advertising some sort of shady magic store.  While you have the sense not to grab it directly, who knows what havoc it could unleash if you got a little careless...")
     End Sub
 
     Public Overrides Sub use(ByRef p As Player)

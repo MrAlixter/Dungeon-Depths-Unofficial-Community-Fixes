@@ -4,6 +4,8 @@
     Sub New()
         MyBase.New("Dark Pact")
 
+        qInd = qInds.darkPact
+
         objectives.Add(New DarkPactStep1)
         objectives.Add(New DarkPactStep2)
         objectives.Add(New DarkPactStep3)
@@ -12,16 +14,16 @@
     Public Overrides Sub init()
         MyBase.init()
 
-        Objective.showNPC(ShopNPC.npcLib.atrs(0).getAt(76), """Hey.  Name's Cynn.  Couldn't help but notice that you're dabbling in the demonic form, and I just so happen to be recruiting underlings for one hell of a scheme.  You seem to be decently skilled, but it doesn't look like those horns are permenant, if you catch my drift." & DDUtils.RNRN &
+        Objective.showNPC(ShopNPC.npcLib.atrs(0).getAt(76), """Hey.  Name's Cynn.  Couldn't help but notice that you're trying out the demonic form, and I just so happen to be recruiting underlings for one hell of a scheme.  You seem to be decently skilled, but it doesn't look like those horns are permenant, if you catch my drift." & DDUtils.RNRN &
                                                             "Fortunately that's pretty easy to correct, and I'd be happy to help you out on that front in exchange for your loyalty." & DDUtils.RNRN &
                                                             "If you want in, start by, uhhh, taking down... three... succubus princesses.  Yeah, that'll work.  I'll get back in touch when you're finished, although I might be shapeshifted, so keep an eye out.""" & DDUtils.RNRN &
-                                                            "Quest ""Dark Pact"" aquired!")
+                                                            "Quest ""Dark Pact"" acquired!")
 
         Game.player1.perks(perk.cynnsq1ct1) = 0
     End Sub
 
     Public Overrides Function canGet() As Boolean
-        Return Not getActive() And Game.player1.level > 2 And Not getComplete() And Game.player1.perks(perk.canmeetcyn) > 0
+        Return Not getActive() And Game.player1.level > 2 And Not getComplete() And Game.player1.perks(perk.canmeetcyn) > 0 And ((Int(Rnd() * 3) = 0) Or Game.noRNG)
     End Function
 End Class
 

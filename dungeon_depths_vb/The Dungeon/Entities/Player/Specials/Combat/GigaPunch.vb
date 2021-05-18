@@ -2,7 +2,7 @@
     Inherits Special
     Sub New(ByRef u As Player, ByRef t As NPC)
         MyBase.New(u, t)
-        MyBase.setName("Gigaton Punch")
+        setName("Gigaton Punch")
         MyBase.setUOC(False)
         MyBase.setcost(99)
     End Sub
@@ -14,8 +14,7 @@
             'critical hit
         Else
             'non critical hit
-            Game.pushLstLog(CStr("Gigaton Punch!  You hit the " & MyBase.getTarget.name & " for " & dmg + d31 + d32 & " damage!"))
-            Game.pushLblCombatEvent(CStr("Gigaton Punch!  You hit the " & MyBase.getTarget.name & " for " & dmg + d31 + d32 & " damage!"))
+            Game.pushLogAndEvent(CStr("Gigaton Punch!  You hit the " & MyBase.getTarget.name & " for " & dmg + d31 + d32 & " damage!"))
             MyBase.getTarget.takeDMG(dmg + d31 + d32, MyBase.getUser)
         End If
     End Sub

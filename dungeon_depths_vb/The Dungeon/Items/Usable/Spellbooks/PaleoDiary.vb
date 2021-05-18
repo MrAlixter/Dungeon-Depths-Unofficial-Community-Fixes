@@ -3,19 +3,20 @@
 
     Sub New()
         '|ID Info|
-        MyBase.setName("Paleomancer's_Diary")
+        setName("Paleomancer's_Diary")
         id = 277
         tier = Nothing
 
         '|Item Flags|
-        MyBase.setUsable(True)
+        usable = true
+        rando_inv_allowed = False
 
         '|Stats|
-        MyBase.count = 0
-        MyBase.value = 800
+        count = 0
+        value = 800
 
         '|Description|
-        MyBase.setDesc("A simple, leather-bound journal written by a wizard studying the past that likely contains something cool and magic.")
+        setDesc("A simple, leather-bound journal written by a wizard studying the past that likely contains something cool and magic.")
     End Sub
 
     Overrides Sub use(ByRef p As Player)

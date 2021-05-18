@@ -28,7 +28,7 @@
                 p.perks(perk.snarednpc) = 5
             ElseIf (i.getAName.Contains("Girl") Or i.getAName.Contains("Mag.")) And i.getAName.Contains("Wand") And Not Game.mgirl.form.Equals("Arachne") Then
                 p.perks(perk.snarednpc) = 6
-            ElseIf i.GetType.IsSubclassOf(GetType(Armor)) AndAlso CType(i, Armor).getAntiSlutVarInd > 0 And Not Game.swiz.form.Equals("Arachne") Then
+            ElseIf i.GetType.IsSubclassOf(GetType(Armor)) AndAlso CType(i, Armor).getAntiSlutInd > 0 And Not Game.swiz.form.Equals("Arachne") Then
                 p.perks(perk.snarednpc) = 1
             ElseIf i.GetType.IsSubclassOf(GetType(Food)) And Not Game.fvend.form.Equals("Arachne") Then
                 p.perks(perk.snarednpc) = 3

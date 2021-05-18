@@ -5,20 +5,20 @@
 
     Sub New()
         '|ID Info|
-        MyBase.setName("Cow_Print_Armor")
+        setName("Cow_Print_Armor")
         id = 262
         tier = Nothing
 
         '|Item Flags|
-        MyBase.setUsable(False)
-        MyBase.compressesBreasts = False
-        MyBase.slutVarInd = 71
+        usable = false
+        MyBase.compress_breast = False
+        MyBase.slut_var_ind = 71
 
         '|Stats|
-        MyBase.dBoost = 27
-        MyBase.sBoost = 10
-        MyBase.count = 0
-        MyBase.value = 3001
+        MyBase.d_boost = 27
+        MyBase.s_boost = 10
+        count = 0
+        value = 3001
 
         '|Image Index|
         MyBase.bsize0 = New Tuple(Of Integer, Boolean, Boolean)(77, False, True)
@@ -38,7 +38,7 @@
         MyBase.usize5 = New Tuple(Of Integer, Boolean, Boolean)(336, True, True)
 
         '|Description|
-        MyBase.setDesc("An adorable cat themed set of lightweight armor that also boosts attack. Nya." & DDUtils.RNRN &
+        setDesc("An adorable cat themed set of lightweight armor that also boosts attack. Nya." & DDUtils.RNRN &
                                       getSizeInformation() & vbCrLf & getStatInformation())
     End Sub
 End Class

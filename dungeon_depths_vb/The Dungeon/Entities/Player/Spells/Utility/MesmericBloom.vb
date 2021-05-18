@@ -6,7 +6,7 @@
         MyBase.settier(1)
         MyBase.setcost(7)
 
-        MyBase.setName("Mesmeric Bloom")
+        setName("Mesmeric Bloom")
         MyBase.setUOC(False)
     End Sub
     Public Overrides Sub effect()

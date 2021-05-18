@@ -3,22 +3,22 @@
 
     Sub New()
         '|ID Info|
-        MyBase.setName("Phase_Rifle")
+        setName("Phase_Rifle")
         id = 274
         tier = Nothing
 
         '|Item Flags|
-        MyBase.setUsable(False)
-        MyBase.isRandoTFAcceptable = False
+        usable = false
+        rando_inv_allowed = False
 
         '|Stats|
-        MyBase.aBoost = 100
-        MyBase.sBoost = -25
+        MyBase.a_boost = 100
+        MyBase.s_boost = -25
         count = 0
         value = 3799
 
         '|Description|
-        MyBase.setDesc("A slender, scoped chrome-plated weapon that converts the meager energy contained in an AAAAAA Battery into a powerful plasma blast.  Batteries not included." & DDUtils.RNRN &
+        setDesc("A slender, scoped chrome-plated weapon that converts the meager energy contained in an AAAAAA Battery into a powerful plasma blast.  Batteries not included." & DDUtils.RNRN &
                        "Scales to the user's SPD, not ATK" & DDUtils.RNRN &
                        getStatInformation())
     End Sub
@@ -31,17 +31,14 @@
 
         Dim dmg As Integer = Int(Rnd() * 12) + 1
 
-        If dmg <= 2 Then
-            Return -1
-        ElseIf dmg >= 8 Then
-            Return -2
-        End If
+        If dmg <= 2 Then Return -1
 
-        p.inv.add("AAAAAA_Battery", -1)
-        Game.pushLogAndEvent("The rifle ejects a smoldering battery shell.  " & p.inv.getCountAt("AAAAAA_Battery") & " shots left!")
 
-        dmg += (p.getSPD) + (Me.aBoost)
+            p.inv.add("AAAAAA_Battery", -1)
+            Game.pushLogAndEvent("The rifle ejects a smoldering battery shell.  " & p.inv.getCountAt("AAAAAA_Battery") & " shot" & If(p.inv.getCountAt("AAAAAA_Battery") = 1, "", "s") & " left!")
 
-        Return Player.calcDamage(dmg, m.getWIL)
+            dmg += (p.getSPD) + (Me.a_boost)
+
+            Return Player.calcDamage(dmg, m.getWIL)
     End Function
 End Class

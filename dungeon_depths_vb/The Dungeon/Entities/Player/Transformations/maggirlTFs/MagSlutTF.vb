@@ -1,4 +1,4 @@
-﻿Public NotInheritable Class MagSlutTF
+﻿Public Class MagSlutTF
     Inherits MagGirlTF
 
     Protected Shadows Const className As String = "Magical Slut"
@@ -73,7 +73,7 @@
         stopTF()
     End Sub
 
-    Public Sub fullTF(ByRef p As Player)
+    Public Overridable Sub fullTF(ByRef p As Player)
         tfClothes(p)
         tfBody(p)
     End Sub

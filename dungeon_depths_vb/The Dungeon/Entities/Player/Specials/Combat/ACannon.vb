@@ -2,7 +2,7 @@
     Inherits Special
     Sub New(ByRef u As Player, ByRef t As NPC)
         MyBase.New(u, t)
-        MyBase.setName("Aura Cannon")
+        setName("Aura Cannon")
         MyBase.setUOC(False)
         MyBase.setcost(0)
     End Sub
@@ -14,7 +14,7 @@
         p.mana = 0
 
         dmg = p.getSpellDamage(m, dmg)
-        Game.pushLstLog("Aura Cannon!")
+        Game.pushLstLog("Aura Cannon!  You fire a beam that hits the " & getTarget.getName & " for " & dmg & " damage!")
         Game.pushLblCombatEvent("Aura Cannon!" & vbCrLf & "You focus all of your internal energy into your hands, using it to fire a beam at your opponent.  The blast hits them for " & dmg & " damage!")
 
         MyBase.getTarget.takeDMG(dmg, MyBase.getUser)

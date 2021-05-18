@@ -34,7 +34,7 @@
 
         p.changeHairColor(BimboTF.bimboyellow1)
 
-        If p.equippedArmor.dBoost > 15 Then
+        If p.equippedArmor.d_boost > 15 Then
             p.inv.add(94, 1)
             Equipment.clothesChange(p, "Armored_Bunny_Suit")
         Else

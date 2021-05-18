@@ -2,21 +2,21 @@
     Inherits Sword
     Sub New()
         '|ID Info|
-        MyBase.setName("Photon_Blade")
+        setName("Photon_Blade")
         id = 112
         tier = Nothing
 
         '|Item Flags|
-        MyBase.setUsable(False)
-        MyBase.isRandoTFAcceptable = False
+        usable = false
+        rando_inv_allowed = False
 
         '|Stats|
-        MyBase.aBoost = 37
+        MyBase.a_boost = 37
         count = 0
         value = 4320
 
         '|Description|
-        MyBase.setDesc("A shimmering red-orange blade made of pure light.  While it can deal quite a bit of damage, it also requires a fair amount of mana to remain useful." & DDUtils.RNRN &
+        setDesc("A shimmering red-orange blade made of pure light.  While it can deal quite a bit of damage, it also requires a fair amount of mana to remain useful." & DDUtils.RNRN &
                        getStatInformation())
     End Sub
 
@@ -30,7 +30,7 @@
         ElseIf dmg >= 11 Then
             Return -2
         End If
-        dmg += (p.getATK) + (Me.aBoost)
+        dmg += (p.getATK) + (Me.a_boost)
         p.mana -= 5
         Return Player.calcDamage(dmg, m.defense)
     End Function

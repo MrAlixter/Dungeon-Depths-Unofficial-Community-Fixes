@@ -2,28 +2,26 @@
     Inherits Spell
     Sub New(ByRef c As Player, ByRef t As NPC)
         MyBase.New(c, t)
-        MyBase.setName("Self Polymorph")
+        setName("Self Polymorph")
         MyBase.setUOC(True)
         MyBase.settier(4)
         MyBase.setcost(12)
     End Sub
     Public Overrides Sub effect()
-        Polymorph.porm = True
-        Dim p As Polymorph = New Polymorph
-        Dim fN = Game.player1.formName
-        Dim cN = Game.player1.className
-        p.ShowDialog()
-        p.Dispose()
+        Game.toPNLSelec("SelfTF")
+    End Sub
 
+    Public Shared Sub effectP2(ByVal fN As String, ByVal cN As String)
         Dim delta As String
 
         If Game.player1.formName.Equals(fN) Then
             delta = Game.player1.className
-        Else
+        ElseIf Game.player1.className.Equals(fN) Then
             delta = Game.player1.formName
+        Else
+            Game.player1.mana += 12
+            Exit Sub
         End If
-
-        If delta = "Succubus" Then Game.player1.perks(perk.canmeetcyn) = 1
 
         Game.pushLogAndEvent(CStr("You turn yourself into a " & delta & "!"))
     End Sub

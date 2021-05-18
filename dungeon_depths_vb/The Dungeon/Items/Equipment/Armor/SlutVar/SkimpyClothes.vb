@@ -3,19 +3,19 @@
 
     Sub New()
         '|ID Info|
-        MyBase.setName("Skimpy_Clothes")
+        setName("Skimpy_Clothes")
         id = 191
         tier = Nothing
 
         '|Item Flags|
-        MyBase.setUsable(False)
-        MyBase.compressesBreasts = True
-        MyBase.slutVarInd = 192
-        MyBase.antiSlutVarInd = 184
+        usable = false
+        MyBase.compress_breast = True
+        MyBase.slut_var_ind = 192
+        MyBase.anti_slut_ind = 184
 
         '|Stats|
-        MyBase.count = 0
-        MyBase.value = 0
+        count = 0
+        value = 0
 
         '|Image Index|
         MyBase.bsizeneg1 = New Tuple(Of Integer, Boolean, Boolean)(25, False, True)
@@ -33,11 +33,11 @@
         MyBase.usize4 = New Tuple(Of Integer, Boolean, Boolean)(18, True, True)
 
         '|Description|
-        MyBase.setDesc("A soft set of clothing that seems almost crafted to show off its wearer's body." & DDUtils.RNRN & _
+        setDesc("A soft set of clothing that seems almost crafted to show off its wearer's body." & DDUtils.RNRN & _
                                            getSizeInformation() & vbCrLf & getStatInformation())
     End Sub
 
-    Public Overrides Function getAntiSlutVarInd() As Object
+    Public Overrides Function getAntiSlutInd() As Object
         Select Case owner.sState.iArrInd(pInd.clothes).Item1
             Case 0
                 Return 184

@@ -13,7 +13,7 @@
         MyBase.init()
 
         Game.pushNPCDialog("""Hey, can I ask for your help on something?  I've been seeing a lot of people roaming around here with those collars looking for valubles, and that got me thinking... Why don't I expand my staff?  If you can snip off a few of their collars and send them my way,  I can make it worth your time.""" & DDUtils.RNRN &
-                   "Quest ""Help Wanted"" aquired!" & vbCrLf & "+1 Old Snips")
+                   "Quest ""Help Wanted"" acquired!" & vbCrLf & "+1 Old Snips")
 
         Game.player1.inv.add(251, 1)
         Game.player1.perks(perk.collarssnipped) = 0

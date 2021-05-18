@@ -2,17 +2,17 @@
     Inherits Whip
 
     Sub New()
-        MyBase.setName("Signature_Whip")
-        MyBase.setDesc("A finely crafted spear bearing a trademarked signature.  Whips will hit critically more often than a standard sword will." & vbCrLf &
+        setName("Signature_Whip")
+        setDesc("A finely crafted spear bearing a trademarked signature.  Whips will hit critically more often than a standard sword will." & vbCrLf &
                        "Each hit carries a 1 in 3 chance of stunning the opponent." & vbCrLf &
                        "+29 ATK")
-        MyBase.setUsable(False)
-        MyBase.aBoost = 29
-        isMonsterDrop = True
+        usable = false
+        MyBase.a_boost = 29
+        droppable = True
         id = 173
         tier = Nothing
-        MyBase.count = 0
-        MyBase.value = 2640
+        count = 0
+        value = 2640
     End Sub
 
     Public Overrides Function attack(ByRef p As Player, ByRef m As Entity) As Integer

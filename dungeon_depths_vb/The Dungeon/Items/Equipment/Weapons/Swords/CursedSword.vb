@@ -3,22 +3,22 @@
 
     Sub New()
         '|ID Info|
-        MyBase.setName("Accursed_Blade")
+        setName("Accursed_Blade")
         id = 258
         tier = Nothing
 
         '|Item Flags|
-        setUsable(False)
-        isCursed = True
-        isMonsterDrop = False
+        usable = false
+        cursed = True
+        droppable = False
 
         '|Stats|
-        MyBase.aBoost = 45
-        MyBase.count = 0
-        MyBase.value = 3500
+        MyBase.a_boost = 45
+        count = 0
+        value = 3500
 
         '|Description|
-        MyBase.setDesc("A pitch-black sword whose edge reflects no light.  When in use, the reverberations through it's hilt almost feel like the rhythm of a living being." & DDUtils.RNRN &
+        setDesc("A pitch-black sword whose edge reflects no light.  When in use, the reverberations through it's hilt almost feel like the rhythm of a living being." & DDUtils.RNRN &
                        "Each hit carries a 1 in 4 chance of an additional attack, and a 1 in 4 chance of backfiring." & DDUtils.RNRN &
                        getStatInformation())
     End Sub
@@ -35,7 +35,7 @@
             ElseIf dmgAA >= 11 Then
                 p.cHit(p.getATK, m)
             Else
-                dmgAA += (p.getATK) + (Me.aBoost)
+                dmgAA += (p.getATK) + (Me.a_boost)
                 p.hit(Player.calcDamage(dmgAA, m.defense), m)
             End If
 
@@ -45,7 +45,7 @@
             'Backfire
             Dim dmgBF As Integer = Int(Rnd() * 3 + 1) + Int(Rnd() * 3 + 1) + Int(Rnd() * 3 + 1) + Int(Rnd() * 3 + 1)
 
-            dmgBF += (p.getATK) + (Me.aBoost)
+            dmgBF += (p.getATK) + (Me.a_boost)
 
             Game.pushLstLog("Backfire - Your grip on the blade slips!")
             Game.pushLblCombatEvent("Backfire - Your grip on the blade slips!")
@@ -64,7 +64,7 @@
             Return -2
         End If
 
-        dmg += (p.getATK) + (Me.aBoost)
+        dmg += (p.getATK) + (Me.a_boost)
 
         Return Player.calcDamage(dmg, m.defense)
     End Function

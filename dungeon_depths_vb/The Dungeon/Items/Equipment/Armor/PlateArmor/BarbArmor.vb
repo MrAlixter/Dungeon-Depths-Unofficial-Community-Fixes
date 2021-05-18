@@ -4,20 +4,20 @@ Public Class BarbArmor
 
     Sub New()
         '|ID Info|
-        MyBase.setName("Barbarian_Armor")
+        setName("Barbarian_Armor")
         id = 101
         tier = Nothing
 
         '|Item Flags|
-        MyBase.setUsable(False)
-        MyBase.compressesBreasts = True
+        usable = false
+        MyBase.compress_breast = True
 
         '|Stats|
-        MyBase.aBoost = 12
-        MyBase.dBoost = 10
-        MyBase.sBoost = 5
-        MyBase.count = 0
-        MyBase.value = 1840
+        MyBase.a_boost = 12
+        MyBase.d_boost = 10
+        MyBase.s_boost = 5
+        count = 0
+        value = 1840
 
         '|Image Index|
         MyBase.bsizeneg1 = New Tuple(Of Integer, Boolean, Boolean)(37, False, True)
@@ -38,7 +38,7 @@ Public Class BarbArmor
         MyBase.usizeneg2 = New Tuple(Of Integer, Boolean, Boolean)(49, False, True)
 
         '|Description|
-        MyBase.setDesc("While this ""armor"" may not provide the same defense as other sets, it greatly improves offensive options." & DDUtils.RNRN &
+        setDesc("While this ""armor"" may not provide the same defense as other sets, it greatly improves offensive options." & DDUtils.RNRN &
                                       getSizeInformation() & vbCrLf & getStatInformation())
     End Sub
 End Class

@@ -2,20 +2,20 @@
     Inherits Item
     Sub New()
         '|ID Info|
-        MyBase.setName("Collar_Snips")
+        setName("Collar_Snips")
         id = 252
         tier = Nothing
 
         '|Item Flags|
-        MyBase.setUsable(True)
-        MyBase.isRandoTFAcceptable = False
+        usable = true
+        rando_inv_allowed = False
 
         '|Stats|
-        MyBase.count = 0
-        MyBase.value = 1111
+        count = 0
+        value = 1111
 
         '|Description|
-        MyBase.setDesc("A small pair of pliers capable of cutting the enchanted locks of any thrall collar, even one worn by the user.")
+        setDesc("A small pair of pliers capable of cutting the enchanted locks of any thrall collar, even one worn by the user.")
     End Sub
 
     Overrides Sub use(ByRef p As Player)

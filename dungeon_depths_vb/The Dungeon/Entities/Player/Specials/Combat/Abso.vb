@@ -2,7 +2,7 @@
     Inherits Special
     Sub New(ByRef u As Player, ByRef t As NPC)
         MyBase.New(u, t)
-        MyBase.setName("Absorbtion")
+        setName("Absorbtion")
         MyBase.setUOC(False)
         MyBase.setcost(-1)
     End Sub
@@ -15,8 +15,7 @@
 
         p.health = Math.Min(1, p.health + (rcv / p.getMaxHealth))
 
-        Game.pushLstLog("Absorbtion!")
-        Game.pushLblCombatEvent("Absorbtion!" & vbCrLf & "Deals " & dmg & " damage and heals you for " & rcv)
+        Game.pushLogAndEvent("Absorbtion!" & vbCrLf & "Deals " & dmg & " damage and heals you for " & rcv)
         m.takeDMG(dmg, p)
     End Sub
 

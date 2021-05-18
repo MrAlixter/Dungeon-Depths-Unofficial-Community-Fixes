@@ -71,7 +71,7 @@
         p.setName(Polymorph.bimboizeName(p.getName))
 
         p.lust += 10
-        p.drawPort()
+        'p.drawPort()
         s1TFText(p)
     End Sub
 
@@ -117,7 +117,7 @@
 
         If p.name <> "Targax" Then
             p.prt.haircolor = bimboyellow2
-            p.prt.setIAInd(pInd.rearhair, 12, True, True)
+            p.prt.setIAInd(pInd.rearhair, 6, True, True)
             p.prt.setIAInd(pInd.midhair, 6, True, True)
             p.prt.setIAInd(pInd.fronthair, 7, True, True)
         End If
@@ -127,7 +127,7 @@
         p.setPImage()
         p.TextColor = Color.FromArgb(255, 255, 235, 240)
         p.perks(perk.bimbotf) = -1
-        p.drawPort()
+        'p.drawPort()
         Game.pushLblEvent(out)
     End Sub
     Sub step2()

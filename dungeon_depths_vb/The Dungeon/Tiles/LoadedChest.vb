@@ -47,12 +47,13 @@
     Sub floor4StartChest()
         Game.player1.inv.add(53, 1)
         Game.currFloor.beatBoss = False
-        Game.preBSBody = Nothing
+        Game.player1.preBSBody = New State()
         Game.mDun.floorboss(4) = "Ooze Empress"
-        Game.preBSBody = New State(Game.player1)
+        Game.player1.preBSBody = New State(Game.player1)
         Game.player1.forcedPath = Game.currFloor.route(Game.player1.pos, Game.player1.pos)
         Game.player1.forcedPath = {Game.player1.forcedPath(0)}
         Game.pushLblEvent("Upon opening the chest, you find a familiar key.  Well, that was easy.")
+        Game.player1.quests(qInds.floor4encounter).init()
     End Sub
 
     Sub keyChest()
@@ -74,8 +75,8 @@
     End Sub
 
     Sub armorFragmentChest()
-        Game.player1.inv.add(264, 1)
-        Game.pushLblEvent("Upon opening the chest, you find an armor fragment(s)!")
+        Game.player1.inv.add("Armor_Fragments", 1)
+        Game.pushLblEvent("Upon opening the chest, you find several fragments of an old set of armor!")
     End Sub
 
     Public Overrides Function ToString() As String

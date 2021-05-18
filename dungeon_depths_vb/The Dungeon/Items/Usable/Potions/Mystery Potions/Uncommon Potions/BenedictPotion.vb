@@ -1,13 +1,13 @@
 ﻿Public Class BenedictPotion
     Inherits MysteryPotion
     Sub New()
-        MyBase.setName("Potion_of_Benediction")
-        MyBase.setDesc("A wonky-looking potion")
+        setName("Potion_of_Benediction")
+        setDesc("A wonky-looking potion")
         id = 246
         tier = 2
-        MyBase.setUsable(True)
-        MyBase.count = 0
-        MyBase.value = 350
+        usable = true
+        count = 0
+        value = 350
         MyBase.onBuy = AddressOf reveal
     End Sub
 

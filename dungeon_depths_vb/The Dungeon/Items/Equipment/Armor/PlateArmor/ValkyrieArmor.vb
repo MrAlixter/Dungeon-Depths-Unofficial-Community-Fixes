@@ -2,14 +2,14 @@
     Inherits Armor
 
     Sub New()
-        MyBase.setName("Valkyrie_Armor")
+        setName("Valkyrie_Armor")
 
         id = 95
         tier = Nothing
-        MyBase.setUsable(False)
-        MyBase.dBoost = 25
-        MyBase.count = 0
-        MyBase.value = 600
+        usable = false
+        MyBase.d_boost = 25
+        count = 0
+        value = 600
 
         bsizeneg1 = New Tuple(Of Integer, Boolean, Boolean)(18, False, True)
         bsize0 = New Tuple(Of Integer, Boolean, Boolean)(64, False, True)
@@ -23,11 +23,11 @@
         usize2 = New Tuple(Of Integer, Boolean, Boolean)(127, True, True)
         usize3 = New Tuple(Of Integer, Boolean, Boolean)(128, True, True)
 
-        MyBase.compressesBreasts = True
+        MyBase.compress_breast = True
 
-        MyBase.isRandoTFAcceptable = False
+        rando_inv_allowed = False
 
-        MyBase.setDesc("An etherial armor set crafted for a valiant defender." & DDUtils.RNRN & _
+        setDesc("An etherial armor set crafted for a valiant defender." & DDUtils.RNRN & _
                              getSizeInformation() & vbCrLf & getStatInformation() & vbCrLf & _
                              "Valkyries can not remove this armor.")
     End Sub

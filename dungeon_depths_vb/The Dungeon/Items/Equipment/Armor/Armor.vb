@@ -1,4 +1,19 @@
-﻿Public Class Armor
+﻿'|ID Info|
+
+
+'|Item Flags|
+
+
+'|Stats|
+
+
+'|Image Index|
+
+
+'|Description|
+
+
+Public Class Armor
     Inherits EquipmentItem
 
     'Armor is an Item subtype that provides a defencive boost, and has artworks for each breast size
@@ -7,8 +22,8 @@
     Const MINUSIZE = -2
     Const MAXUSIZE = 5
 
-    Protected slutVarInd As Integer = -1
-    Protected antiSlutVarInd As Integer = -1
+    Protected slut_var_ind As Integer = -1
+    Protected anti_slut_ind As Integer = -1
     Public bsizeneg1 As Tuple(Of Integer, Boolean, Boolean)
     Public bsize0 As Tuple(Of Integer, Boolean, Boolean)
     Public bsize1 As Tuple(Of Integer, Boolean, Boolean)
@@ -31,15 +46,18 @@
 
     Public usizeneg2 As Tuple(Of Integer, Boolean, Boolean) = Nothing
 
-    Public compressesBreasts As Boolean
-    Public hidesDick As Boolean = True
-    Public bindsWearer As Boolean = False
+    Public hood As Tuple(Of Integer, Boolean, Boolean) = Nothing
+    Public cloak As Tuple(Of Integer, Boolean, Boolean) = Nothing
+
+    Public compress_breast As Boolean
+    Public hide_dick As Boolean = True
+    Public bind_wearer As Boolean = False
 
     Overridable Function getSlutVarInd()
-        Return slutVarInd
+        Return slut_var_ind
     End Function
-    Overridable Function getAntiSlutVarInd()
-        Return antiSlutVarInd
+    Overridable Function getAntiSlutInd()
+        Return anti_slut_ind
     End Function
 
     Public Function getClothesIMGTop(ByRef p As Player) As Tuple(Of Integer, Boolean, Boolean)
@@ -94,6 +112,10 @@
 
         Return Nothing
     End Function
+    Public Overridable Function getCloak(ByRef p As Player) As Tuple(Of Integer, Boolean, Boolean)
+        Return cloak
+    End Function
+
     Public Function getClothesIMGTop(ByVal i As Integer) As Tuple(Of Integer, Boolean, Boolean)
         Select Case i
             Case -2
@@ -148,11 +170,11 @@
     End Function
 
     Public Function fits(ByRef p As Player)
-        Return Not getClothesIMGTop(p) Is Nothing AndAlso Not getClothesIMGBtm(p) Is Nothing AndAlso (p.pForm.canBeBound Or Not bindsWearer)
+        Return Not getClothesIMGTop(p) Is Nothing AndAlso Not getClothesIMGBtm(p) Is Nothing AndAlso (p.pForm.canBeBound Or Not bind_wearer)
     End Function
 
     Public Overrides Sub discard()
-        If isCursed And Not owner Is Nothing AndAlso owner.equippedArmor.getAName.Equals(getAName) Then
+        If cursed And Not owner Is Nothing AndAlso owner.equippedArmor.getAName.Equals(getAName) Then
             Game.pushLblEvent("You are unable to drop your equipped equipment.")
         Else
             MyBase.discard()

@@ -1,14 +1,22 @@
 ﻿Public Class DEPotion
     Inherits MysteryPotion
     Sub New()
-        MyBase.setName("Dick_Growth_Potion")
-        MyBase.setDesc("A peculiar-looking potion.")
+        '|ID Info|
+        setName("Dick_Growth_Potion")
         id = 194
         tier = 3
-        MyBase.setUsable(True)
-        MyBase.count = 0
-        MyBase.value = 500
+
+        '|Item Flags|
+        usable = True
         MyBase.onBuy = AddressOf reveal
+
+        '|Stats|
+        count = 0
+        value = 500
+
+        '|Description|
+        setDesc("A peculiar-looking potion.")
+
     End Sub
 
     Public Overrides Sub setEffectList()

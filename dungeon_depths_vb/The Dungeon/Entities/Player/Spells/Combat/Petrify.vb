@@ -2,9 +2,9 @@
     Inherits Spell
     Sub New(ByRef c As Player, ByRef t As NPC)
         MyBase.New(c, t)
-        MyBase.setName("Petrify")
+        setName("Petrify")
         MyBase.settier(2)
-        If Not c Is Nothing AndAlso c.formName.Contains("Gorgon") Then MyBase.setcost(1) Else MyBase.setcost(9)
+        MyBase.setcost(9)
     End Sub
     Public Overrides Sub effect()
         If getTarget.sName.Equals("Medusa") Or (getCaster.formName.Contains("Gorgon") And MyBase.getTarget.GetType().IsSubclassOf(GetType(Shopkeeper))) Then
@@ -29,6 +29,10 @@
             Game.pushLstLog(CStr("You see a statue here."))
         End If
     End Sub
+
+    Public Overrides Function getcost() As Integer
+        If Not getCaster() Is Nothing AndAlso getCaster.formName.Contains("Gorgon") Then Return 1 Else Return 9
+    End Function
 
     Public Overrides Function getDesc(ByRef c As Player, ByRef t As NPC) As Object
         Return "A tier 2 spell that slowly turns its target into little more than a stone statue with a low chance of missing altogether.  While this spell comes effortlessly to Gorgons it is also uneffective against them."

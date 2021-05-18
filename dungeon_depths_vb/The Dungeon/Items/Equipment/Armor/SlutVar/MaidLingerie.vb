@@ -1,16 +1,16 @@
 ﻿Public Class MaidLingerie
     Inherits Armor
     Sub New()
-        MyBase.setName("Maid_Lingerie")
+        setName("Maid_Lingerie")
 
         id = 169
         tier = Nothing
-        MyBase.setUsable(False)
-        MyBase.sBoost = 4
-        MyBase.count = 0
-        MyBase.value = 0
+        usable = false
+        MyBase.s_boost = 4
+        count = 0
+        value = 0
 
-        antiSlutVarInd = 72
+        anti_slut_ind = 72
 
         MyBase.bsizeneg1 = New Tuple(Of Integer, Boolean, Boolean)(56, False, True)
         MyBase.bsize0 = New Tuple(Of Integer, Boolean, Boolean)(57, False, True)
@@ -23,9 +23,9 @@
         MyBase.usize1 = New Tuple(Of Integer, Boolean, Boolean)(164, True, True)
         MyBase.usize2 = New Tuple(Of Integer, Boolean, Boolean)(165, True, True)
         MyBase.usize3 = New Tuple(Of Integer, Boolean, Boolean)(166, True, True)
-        MyBase.compressesBreasts = True
+        MyBase.compress_breast = True
 
-        MyBase.setDesc("A smutty version of a French maid's outfit." & DDUtils.RNRN & _
+        setDesc("A smutty version of a French maid's outfit." & DDUtils.RNRN & _
                                      getSizeInformation() & vbCrLf & getStatInformation())
     End Sub
 End Class

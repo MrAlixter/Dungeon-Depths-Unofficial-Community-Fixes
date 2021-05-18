@@ -2,16 +2,16 @@
     Inherits Armor
 
     Sub New()
-        MyBase.setName("TODO_Outfit")
+        setName("TODO_Outfit")
 
         id = 181
         tier = Nothing
 
-        MyBase.setUsable(False)
-        MyBase.dBoost = 9
-        MyBase.sBoost = 7
-        MyBase.count = 0
-        MyBase.value = 1450
+        usable = false
+        MyBase.d_boost = 9
+        MyBase.s_boost = 7
+        count = 0
+        value = 1450
 
         MyBase.bsize3 = New Tuple(Of Integer, Boolean, Boolean)(247, True, True)
         MyBase.bsize4 = New Tuple(Of Integer, Boolean, Boolean)(248, True, True)
@@ -25,9 +25,9 @@
         MyBase.usize4 = New Tuple(Of Integer, Boolean, Boolean)(259, True, True)
         MyBase.usize5 = New Tuple(Of Integer, Boolean, Boolean)(260, True, True)
 
-        MyBase.compressesBreasts = False
+        MyBase.compress_breast = False
 
-        MyBase.setDesc("Yeah, uhh... I didn't have time to finish the thing this was a part of, so..." & DDUtils.RNRN & _
+        setDesc("Yeah, uhh... I didn't have time to finish the thing this was a part of, so..." & DDUtils.RNRN & _
                                    getSizeInformation() & vbCrLf & getStatInformation())
     End Sub
 End Class

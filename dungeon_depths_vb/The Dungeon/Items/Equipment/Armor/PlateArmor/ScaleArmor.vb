@@ -3,20 +3,20 @@
 
     Sub New()
         '|ID Info|
-        MyBase.setName("Scale_Armor")
+        setName("Scale_Armor")
         id = 176
         tier = Nothing
 
         '|Item Flags|
-        MyBase.setUsable(False)
-        MyBase.compressesBreasts = True
-        slutVarInd = 177
+        usable = false
+        MyBase.compress_breast = True
+        slut_var_ind = 177
 
         '|Stats|
-        MyBase.dBoost = 22
-        MyBase.sBoost = -3
-        MyBase.count = 0
-        MyBase.value = 2300
+        MyBase.d_boost = 22
+        MyBase.s_boost = -3
+        count = 0
+        value = 2300
 
         '|Image Index|
         MyBase.bsizeneg1 = New Tuple(Of Integer, Boolean, Boolean)(62, False, True)
@@ -32,7 +32,7 @@
         MyBase.usize3 = New Tuple(Of Integer, Boolean, Boolean)(185, True, True)
 
         '|Description|
-        MyBase.setDesc("Unlike the its bronze and steel counterparts, this armor set consists of a series of small interlocking plates.  The unique draconic alloy used by these scales provides ample protection, although it's also fairly heavy." & DDUtils.RNRN & _
+        setDesc("Unlike the its bronze and steel counterparts, this armor set consists of a series of small interlocking plates.  The unique draconic alloy used by these scales provides ample protection, although it's also fairly heavy." & DDUtils.RNRN & _
                         getSizeInformation() & vbCrLf & getStatInformation())
     End Sub
 End Class

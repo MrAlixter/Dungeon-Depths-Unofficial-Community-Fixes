@@ -37,13 +37,13 @@
     End Sub
     Public Overrides Sub s2HairChange(ByRef p As Player)
         p.prt.haircolor = bimbopink2
-        p.prt.setIAInd(pInd.rearhair, 12, True, True)  'rearhair1
-        p.prt.setIAInd(pInd.midhair, 21, True, True)  'rearhair2
-        p.prt.setIAInd(pInd.fronthair, 33, True, True) 'fronthair
+        p.prt.setIAInd(pInd.rearhair, 6, True, True)  'rearhair1
+        p.prt.setIAInd(pInd.midhair, 34, True, True)  'rearhair2
+        p.prt.setIAInd(pInd.fronthair, 6, True, True) 'fronthair
     End Sub
     Public Overrides Sub s2FaceChange(ByRef p As Player)
         p.prt.haircolor = bimbopink2
-        p.prt.setIAInd(pInd.eyes, 49, True, True)  'eyes
+        p.prt.setIAInd(pInd.eyes, 16, True, True)  'eyes
         p.prt.setIAInd(pInd.mouth, 2, True, False)  'mouth
         p.prt.setIAInd(pInd.wings, 5, True, False)
         p.prt.setIAInd(pInd.horns, 4, True, False)

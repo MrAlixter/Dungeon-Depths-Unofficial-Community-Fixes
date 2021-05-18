@@ -83,19 +83,7 @@
             End If
         End If
 
-        Game.turn += 1
-
-        If Game.combatmode Then
-            Game.lblCombatEvents.Text = ""
-
-            Game.queueSetup()
-            Do While Game.updateList.isEmpty() = False
-                Dim u As Updatable = Game.updateList.remove()
-                u.update()
-            Loop
-            'updates the combat banner
-            Game.updatePnlCombat(p, target)
-        End If
+        Game.progressTurn()
 
         fromPNLCast(sender, e, p)
     End Sub

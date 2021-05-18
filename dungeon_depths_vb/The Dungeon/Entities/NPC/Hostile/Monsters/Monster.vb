@@ -40,7 +40,7 @@
             End Select
         End If
 
-        xpValue = (maxHealth + attack + defense + speed) / 4
+        If xp_value < 20 Then xp_value = (maxHealth + attack + defense + speed) / 4
 
         health = 1.0
 
@@ -118,6 +118,8 @@
                 Return New WebCasterArach
             Case 20
                 Return New Bovinomancer
+            Case 21
+                Return New TimeCopAgent
         End Select
 
         Return New Monster()
@@ -136,6 +138,8 @@
                 tier = {0, 1, 2, 3, 4, 6, 7, 19}
             Case 7
                 tier = {0, 1, 3, 4, 6, 7, 12, 14, 14, 19, 20}
+            Case 10000
+                tier = {}
             Case Else
                 If Int(Rnd() * 3) = 0 Then
                     tier = {0, 1, 2, 3, 6, 7, 12, 12, 19, 20}
@@ -146,6 +150,12 @@
                 End If
         End Select
 
+        If Game.player1.perks(perk.enemyoftime) > 0 Then
+            DDUtils.append(tier, 21)
+            DDUtils.append(tier, 21)
+
+            If Game.currFloor.floorNumber = 10000 Then Return tier
+        End If
         If Game.player1.getLust = 0 Then
         ElseIf Game.player1.getLust < 25 Then
             DDUtils.append(tier, 17)
@@ -190,16 +200,13 @@
         'adds the mimmic to combat queues
         targetRoute(m)
 
-        Game.toCombat()
         Game.pushLblCombatEvent((m.getName() & " attacks!"))
         Game.pushLstLog((m.getName() & " attacks!"))
 
         Game.drawBoard()
     End Sub
     Shared Sub targetRoute(ByRef m As Monster)
-        Game.npcList.Add(m)
-        Game.player1.setTarget(m)
         m.currTarget = Game.player1
-        Game.toCombat()
+        Game.toCombat(m)
     End Sub
 End Class

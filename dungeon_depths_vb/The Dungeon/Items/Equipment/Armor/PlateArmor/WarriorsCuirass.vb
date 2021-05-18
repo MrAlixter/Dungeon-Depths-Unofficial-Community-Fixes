@@ -3,20 +3,20 @@
 
     Sub New()
         '|ID Info|
-        MyBase.setName("Warrior's_Cuirass")
+        setName("Warrior's_Cuirass")
         id = 19
         tier = 3
 
         '|Item Flags|
-        MyBase.setUsable(False)
-        MyBase.compressesBreasts = True
-        MyBase.slutVarInd = 20
+        usable = false
+        MyBase.compress_breast = True
+        MyBase.slut_var_ind = 20
 
         '|Stats|
-        MyBase.aBoost = 5
-        MyBase.dBoost = 12
-        MyBase.count = 0
-        MyBase.value = 950
+        MyBase.a_boost = 5
+        MyBase.d_boost = 12
+        count = 0
+        value = 950
 
         '|Image Index|
         MyBase.bsizeneg1 = New Tuple(Of Integer, Boolean, Boolean)(8, False, True)
@@ -32,7 +32,7 @@
         MyBase.usize3 = New Tuple(Of Integer, Boolean, Boolean)(275, True, True)
 
         '|Description|
-        MyBase.setDesc("A protective garment made more for elite fighters rather than fashion-minded common folk." & DDUtils.RNRN &
+        setDesc("A protective garment made more for elite fighters rather than fashion-minded common folk." & DDUtils.RNRN &
                                 getSizeInformation() & vbCrLf & getStatInformation())
     End Sub
 

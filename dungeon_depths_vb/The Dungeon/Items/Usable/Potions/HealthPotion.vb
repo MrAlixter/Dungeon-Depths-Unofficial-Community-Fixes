@@ -2,13 +2,23 @@
     Inherits Item
 
     Sub New()
-        MyBase.setName("Health_Potion")
-        MyBase.setDesc("A normal, everyday health potion. +75 Health")
+        '|ID Info|
+        setName("Health_Potion")
         id = 2
         tier = 1
-        MyBase.setUsable(True)
-        MyBase.count = 0
-        MyBase.value = 125
+
+        '|Item Flags|
+        usable = True
+
+        '|Stats|
+        count = 0
+        value = 125
+
+        '|Description|
+
+        setDesc("A normal, everyday health potion." & DDUtils.RNRN &
+                "+75 Health")
+
     End Sub
 
     Overrides Sub use(ByRef p As Player)

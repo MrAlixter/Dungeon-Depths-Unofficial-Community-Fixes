@@ -7,7 +7,7 @@ Public Class FusionDialogBackend
     Shared possibleFusions As Dictionary(Of Integer, Player) = New Dictionary(Of Integer, Player)
     Shared fType As TypeOfFusion = TypeOfFusion.CRYSTAL_FUSION
     Shared Sub btnOKOnClick(sender As Object, e As EventArgs, ByRef p As Player)
-        Dim p2 = Game.getPlayerFromFile("saves/s" & Game.cboxFusionTarget.SelectedIndex + 1 & ".ave").Item1
+        Dim p2 = Game.getPlayerFromFile("saves/s" & getSaveInd(Game.cboxFusionTarget.SelectedIndex) & ".ave").Item1
 
         If fType = TypeOfFusion.CRYSTAL_FUSION Then
             Game.pushLblEvent(p.name & " takes the fusion crystal in both hands as they glance over at " & p2.name & _
@@ -24,13 +24,12 @@ Public Class FusionDialogBackend
 
             FusionCrystal.finalizeFusion(fuPlay, p, p2)
 
-            Game.updateList = New PQ
+            Game.updateList.clear()
 
 
 
 
             fuPlay.sState.save(fuPlay)
-
             fuPlay.pState.save(fuPlay)
 
             p = fuPlay
@@ -40,7 +39,6 @@ Public Class FusionDialogBackend
             Equipment.accChange(fuPlay, Game.cboxFusionAccessory.Text)
 
             fuPlay.drawPort()
-
 
         ElseIf fType = TypeOfFusion.SPOT_FUSION Then
             Polymorph.transform(Game.player1, "Fusion")
@@ -96,6 +94,10 @@ Public Class FusionDialogBackend
         Game.picFusionPort.BackgroundImage = fuPlay.prt.draw()
     End Sub
 
+    Shared Function getSaveInd(ByVal i As Integer)
+        Return possibleFusions.Keys(i)
+    End Function
+
     Shared Sub getFusionTargets(ByVal p As Player)
         possibleFusions.Clear()
 
@@ -114,10 +116,19 @@ Public Class FusionDialogBackend
             If p2.getName.Equals(p.getName) Then Continue For
 
             Game.cboxFusionTarget.Items.Add(p2.name & " ( Save Slot " & i & " )")
-            If fType = TypeOfFusion.CRYSTAL_FUSION Then possibleFusions.Add(i, FusionCrystal.Fusion(p, p2))
-            If fType = TypeOfFusion.SPOT_FUSION Then possibleFusions.Add(i, SpotFusion.Fusion(p, p2))
+
+            possibleFusions.Add(i, getFusion(p, p2, fType))
+
+            MsgBox(p.getName)
         Next
     End Sub
+    Private Shared Function getFusion(ByVal p1 As Player, ByVal p2 As Player, ByVal t As TypeOfFusion) As Player
+        If t = TypeOfFusion.SPOT_FUSION Then
+            Return p2
+        Else
+            Return FusionCrystal.Fusion(p1, p2)
+        End If
+    End Function
     Shared Function getArmor(ByVal p1 As Player, ByVal p2 As Player) As List(Of String)
         Dim out = New List(Of String)
 
@@ -170,7 +181,7 @@ Public Class FusionDialogBackend
     Shared Sub toPNL(ByRef p As Player, ByVal fusionType As TypeOfFusion)
         Game.closeLblEvent()
 
-
+        fType = fusionType
         Game.player1.canMoveFlag = False
 
         getFusionTargets(p)
@@ -180,8 +191,6 @@ Public Class FusionDialogBackend
             fromPNL(p)
             Exit Sub
         End If
-
-        fType = fusionType
 
         Game.cboxFusionTarget.SelectedIndex = 0
         Game.cboxFusionArmor.SelectedIndex = 0

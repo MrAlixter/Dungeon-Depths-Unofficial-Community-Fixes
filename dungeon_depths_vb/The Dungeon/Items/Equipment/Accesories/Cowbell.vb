@@ -2,19 +2,28 @@
     Inherits Accessory
     'The red headband provides a +1 attack buff
     Sub New()
-        MyBase.setName("Cowbell")
-        MyBase.setDesc("A large brass bell attached to a collar that rings steadily with its wearer's gait." & vbCrLf &
-                       "+20 Health." & vbCrLf &
-                       "-1 WILL")
+        '|ID Info|
+        setName("Cowbell")
         id = 70
         tier = 2
-        MyBase.setUsable(False)
-        MyBase.hBoost = 20
-        MyBase.wBoost = -1
-        MyBase.count = 0
-        MyBase.value = 434
-        MyBase.fInd = New Tuple(Of Integer, Boolean, Boolean)(8, True, True)
-        MyBase.mInd = New Tuple(Of Integer, Boolean, Boolean)(4, False, True)
+
+        '|Item Flags|
+        usable = False
+
+        '|Stats|
+        h_boost = 20
+        w_boost = -1
+        count = 0
+        value = 434
+
+        '|Image Index|
+        fInd = New Tuple(Of Integer, Boolean, Boolean)(8, True, True)
+        mInd = New Tuple(Of Integer, Boolean, Boolean)(4, False, True)
+
+        '|Description|
+        setDesc("A large brass bell attached to a collar that rings steadily with its wearer's gait." & DDUtils.RNRN &
+                getStatInformation())
+
     End Sub
 
     Overrides Sub onEquip(ByRef p As Player)

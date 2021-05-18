@@ -3,13 +3,18 @@
     Dim shouldRun As Boolean = False
 
     Sub New()
+        '|ID Info|
         name = "Seven-Tails"
+
+        '|Stats|
         maxHealth = 7
         attack = 7
         defense = 7777
         will = 7777
         speed = 7
+        xp_value = 1777
 
+        '|Inventory|
         inv.setCount("Fox_Ears", 3)
         inv.setCount("Mana_Charm", 1 + CInt(Rnd() * 2))
         inv.setCount("Omni_Charm", 1)
@@ -17,13 +22,14 @@
         inv.setCount("Fox_Statue", 1)
         inv.setCount("Gold", 7000)
 
-        setupMonsterOnSpawn(False)
-
+        '|Dialog Variables|
         title = " "
         pronoun = "she"
         pPronoun = "her"
         rPronoun = "her"
-        xpValue = 1777
+
+        '|Misc|
+        setupMonsterOnSpawn(False)
 
         If Game.player1.perks(perk.seventailsstage) = 2 Then
             'succubusTF()
@@ -36,23 +42,19 @@
         If shouldRun Then runAway() : Exit Sub
 
         If Int(Rnd() * 2) = 0 And getATK() < 67 Then
-            Game.pushLstLog((getName() & " casts Super Fireball!"))
-            Game.pushLblCombatEvent((getName() & " casts Super Fireball!"))
+            Game.pushLogAndEvent((getName() & " casts Super Fireball!"))
 
             hit(67, target)
         ElseIf target.getSPD > getSPD() Then
-            Game.pushLstLog((getName() & " casts Sharper Claws!  " & rPronoun & " ATK raises massively..."))
-            Game.pushLblCombatEvent((getName() & " casts Sharper Claws!  " & rPronoun & " ATK raises massively..."))
+            Game.pushLogAndEvent((getName() & " casts Swifter Haunches!  " & rPronoun & " SPD raises massively..."))
 
             speed *= 4
         ElseIf target.getATK > getATK() Then
-            Game.pushLstLog((getName() & " casts Swifter Haunches!  " & rPronoun & " ATK raises massively..."))
-            Game.pushLblCombatEvent((getName() & " casts Swifter Haunches!  " & rPronoun & " ATK raises massively..."))
+            Game.pushLogAndEvent((getName() & " casts Sharper Claws!  " & rPronoun & " ATK raises massively..."))
 
-            speed *= 4
+            attack *= 4
         Else
-            Game.pushLstLog((getName() & " casts Super Fireball!"))
-            Game.pushLblCombatEvent((getName() & " casts Super Fireball!"))
+            Game.pushLogAndEvent((getName() & " slashes at you!"))
 
             MyBase.attackCMD(target)
         End If
@@ -60,14 +62,13 @@
 
     Public Overrides Function reactToSpell(spell As String) As Boolean
         If spell.Contains("Polymorph") Or spell.Contains("Turn to") Or spell.Contains("Petrify") Then
-            Game.pushLstLog("Seven-Tails grins as the spell washes over her, to no effect!")
-            Game.pushLblCombatEvent("Seven-Tails grins as the spell washes over her, to no effect!")
+            Game.pushLogAndEvent("Seven-Tails grins as the spell washes over her, to no effect!")
             Return False
         End If
 
         If Game.player1.getWIL < 21 Then
             Game.pushLstLog("Seven-Tails grins as the spell washes over her, to no effect!" & DDUtils.RNRN &
-                            """Ooh, you need a deeper resolve for that one to do anything, dummy!  I'd say you're about... " & 21 - Game.player1.getWIL & " Will points short...""")
+                            """Ooh, you need a deeper resolve for that one to do anything, dummy!  I'd say you're about... " & 21 - Game.player1.getWIL & " WIL points short...""")
             Game.pushLblCombatEvent("Seven-Tails grins as the spell washes over her, to no effect!")
             Return False
         End If
@@ -77,10 +78,13 @@
 
     Public Overrides Sub takeDMG(dmg As Integer, ByRef source As Entity)
         If dmg >= getIntHealth() And (health = 1 Or health = 0.66 Or health = 0.33) Then
-            Game.pushLstLog("Seven-Tails stumbles out of the way of the attack!")
-            Game.pushLblCombatEvent("Seven-Tails stumbles out of the way of the attack!")
+            Game.pushLogAndEvent("Seven-Tails stumbles out of the way of the attack!")
 
             dmg = getIntHealth() - 1
+        ElseIf Int(Rnd() * 2) = 0 Then
+            Game.pushLogAndEvent("Seven-Tails deftly avoids the attack!")
+
+            Exit Sub
         End If
 
         MyBase.takeDMG(dmg, source)
@@ -88,8 +92,9 @@
         shouldRun = shouldRunST()
     End Sub
     Public Overrides Sub takeCritDMG(dmg As Integer, ByRef source As Entity)
+        Game.pushLogAndEvent("Seven-Tails lets out a little ""eep!"" as she dodges what would have been a critical hit...")
+        MyBase.takeDMG(1, source)
         shouldRun = shouldRunST()
-        MyBase.takeCritDMG(dmg, source)
     End Sub
 
     Public Function shouldRunST() As Boolean
@@ -105,31 +110,30 @@
         If getIntHealth() <= 2 Then die() : Exit Sub
         shouldRun = False
         Game.fromCombat()
-        Game.pushLblEvent("With a poof of smoke, " & getName() & " returns to " & rPronoun & " original form and flees into the forest...")
+        Game.pushLblEvent("With a poof of smoke, " & getName() & " turns into a fox and flees into the forest...")
     End Sub
 
     Public Overrides Sub die(ByRef cause As Entity)
         If isDead Then Exit Sub
         currTarget = Nothing
         nextCombatAction = Nothing
+        Game.player1.perks(perk.seventailsstage) = 7
 
         shouldRun = False
         Game.fromCombat()
-        Game.pushLblEvent("With a poof of smoke, Seven-Tails returns to her original form.  ""You..."" she mutters, venom dripping in her tone, ""I refuse to lose to the likes of you...""" & DDUtils.RNRN &
+        Game.pushLblEvent("With a poof of smoke, Seven-Tails teleports backwards, placing some distance between the two of you." & DDUtils.RNRN &
+                          """You..."" she mutters, venom dripping in her tone, ""I refuse to lose to the likes of you...""" & DDUtils.RNRN &
                           "An inferno kicks up at her feet, and seven lines of fire rise out of the air behind her.  As she raises her arms, they spiral together into a seven-sided ring, and she boldly declares ""BEHOLD, MY ULTIMATE TECHNIQUE!  This spell is the PINNACLE of pyrotechnics, capable of rending the VERY SOUL of ANY who would dare stand against it.""" & DDUtils.RNRN &
-                          "Stiffling a smug giggle, she continues, ""Normally such an overwhelming spell would backfire 5 of 6 times even for a master of flame magic, but my ability 'LUCKY 7' allows me to cheat the VERY LAWS OF PROBABILITY!  PREPARE YOURSELF, FOR THE ALL-CONSUMING BLAZE OF MY '7th RING'!!!""" & DDUtils.RNRN &
+                          "Stiffling a smug giggle, she continues, ""Normally such an overwhelming spell would backfire 5 of 6 times even for a master of flame magic, but my ability 'LUCKY 7' allows me to cheat the VERY LAWS OF PROBABILITY!  PREPARE YOURSELF, FOR THE ALL-CONSUMING BLAZE OF MY '7th RING'!""" & DDUtils.RNRN &
                           "You brace yourself for an impact, as a number strobes of heat ignite the surrounding foliage.  As the ring begins spinning in place though, Seven-Tails' maniacal grin slowly erodes.  ""Bu-bu-but the o-odds of t-that would only be one in t-three milli...""" & DDUtils.RNRN &
                           "Before she has time to let out any more than an ""eep!"", the blazing wheel erupts into a thick, blinding cloud of black ash.  As the plume settles down it's clear that your opponent is nowhere to be seen, although there does seem to be another ornemental fox statue in her place.", AddressOf deathStage2)
         Game.pushLstLog("Seven-Tails casts 7th Ring... but it backfires...")
     End Sub
     Private Sub deathStage2()
-        endMonster()
+        Game.pnlEvent.Visible = False
 
-        Game.player1.clearTarget()
-        Game.player1.xp += xpValue
-        Game.player1.currTarget = Nothing
-        Game.player1.nextCombatAction = Nothing
-
+        Game.combatmode = True
+        MyBase.die(Game.player1)
         Game.drawBoard()
     End Sub
     Public Overrides Sub playerDeath(ByRef p As Player)

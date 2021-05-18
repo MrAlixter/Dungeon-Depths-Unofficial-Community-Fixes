@@ -16,8 +16,7 @@
     End Sub
 
     Public Overrides Sub attackCMD(ByRef target As Entity)
-        If Not ("Cow".Equals(target.getPlayer.pForm.name) And Not "Cow".Equals(target.getPlayer.pForm.name)) And
-            (target.getMaxHealth > getMaxHealth() Or target.getWIL > getWIL() Or target.getATK > getATK()) And mana > 15 Then
+        If Not ("Cow".Equals(target.getPlayer.formName)) AndAlso (target.getMaxHealth > getMaxHealth() Or target.getWIL > getWIL() Or target.getATK > getATK()) And mana > 15 Then
             spell1(target)
         ElseIf mana > 5 Then
             spell2(target)
@@ -57,31 +56,55 @@
 
         e.takeDMG(dmg, Me)
 
+        If dmg > e.getIntHealth Then Exit Sub
+
         If Not e.getPlayer Is Nothing Then
             playerSpell2(e.getPlayer)
         End If
     End Sub
     Sub playerSpell2(ByRef p As Player)
-        If Int(Rnd() * 3) Then
+
+        If p.formName.Equals("Cow") Then Exit Sub
+
+        If Int(Rnd() * 3) = 0 Then
             p.prt.setIAInd(pInd.ears, 8, True, True)
-        End If
-
-        If Int(Rnd() * 3) Then
+            Game.pushLogAndEvent("The " & getName() & "'s spell gives you cow ears!")
+        ElseIf Int(Rnd() * 3) = 0 Then
             p.prt.setIAInd(pInd.horns, 1, True, False)
-        End If
-
-        If Int(Rnd() * 3) Then
+            Game.pushLogAndEvent("The " & getName() & "'s spell gives you cow horns!")
+        ElseIf Int(Rnd() * 3) = 0 Then
             p.prt.setIAInd(pInd.horns, 2, True, False)
-        End If
-
-        If Int(Rnd() * 3) Then
+            Game.pushLogAndEvent("The " & getName() & "'s spell gives you bull horns!")
+        ElseIf Int(Rnd() * 3) = 0 Then
             p.be()
-        End If
-
-        If Int(Rnd() * 3) Then
+            Game.pushLogAndEvent("The " & getName() & "'s spell gives you bigger boobs!")
+        ElseIf Int(Rnd() * 3) = 0 Then
             p.be()
+            Game.pushLogAndEvent("The " & getName() & "'s spell gives you bigger boobs!")
         End If
 
         p.drawPort()
+    End Sub
+
+    Public Overrides Sub playerDeath(ByRef p As Player)
+        Dim out As String = "As you collapse to the ground, still smoldering from the previous encounter, your foe saunters over with a smug grin." & DDUtils.RNRN &
+                            """Really, you shouldn't be suprised by this..."" " & If(Int(Rnd() * 2) = 0, "he", "she") & " says, charging another spell.  ""This is how things should be, clearly your natual state is to be cowed before your superior.""" & DDUtils.RNRN &
+                            "The " & getName() & " casts Greater Bovinize, turning you into a cow!  This transformation will have some lasting effects even after it wears off..."
+        despawn("p-death")
+        If p.sex = "Male" Then
+            p.MtF()
+            out += " Your body becomes daintier, and you are soon fully female."
+        End If
+        p.be()
+        p.be()
+        p.be()
+        p.prt.setIAInd(pInd.rearhair, 16, True, True)
+        p.prt.setIAInd(pInd.midhair, 20, True, True)
+        p.prt.setIAInd(pInd.ears, 8, True, True)
+        p.prt.setIAInd(pInd.horns, 2, True, False)
+        p.savePState()
+        Polymorph.transform(p, "Cow")
+
+        Game.pushLblEvent(out, AddressOf p.update)
     End Sub
 End Class

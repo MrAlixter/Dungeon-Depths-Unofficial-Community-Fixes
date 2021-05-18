@@ -4,20 +4,20 @@ Public Class AmaAttire
 
     Sub New()
         '|ID Info|
-        MyBase.setName("Amazonian_Attire")
+        setName("Amazonian_Attire")
         id = 99
         tier = Nothing
 
         '|Item Flags|
-        MyBase.setUsable(False)
-        MyBase.compressesBreasts = True
-        MyBase.hidesDick = False
+        usable = false
+        MyBase.compress_breast = True
+        MyBase.hide_dick = False
 
         '|Stats|
-        MyBase.aBoost = 20
-        MyBase.sBoost = 20
-        MyBase.count = 0
-        MyBase.value = 1500
+        MyBase.a_boost = 20
+        MyBase.s_boost = 20
+        count = 0
+        value = 1500
 
         '|Image Index|
         MyBase.bsize0 = New Tuple(Of Integer, Boolean, Boolean)(36, False, True)
@@ -32,7 +32,7 @@ Public Class AmaAttire
         MyBase.usize4 = New Tuple(Of Integer, Boolean, Boolean)(28, True, True)
 
         '|Description|
-        MyBase.setDesc("Apparel that aptly accentuates all an Amazon's adventageous attributes amazingly.  Alliteration!" & DDUtils.RNRN &
+        setDesc("Apparel that aptly accentuates all an Amazon's adventageous attributes amazingly.  Alliteration!" & DDUtils.RNRN &
                                       getSizeInformation() & vbCrLf & getStatInformation())
     End Sub
 End Class

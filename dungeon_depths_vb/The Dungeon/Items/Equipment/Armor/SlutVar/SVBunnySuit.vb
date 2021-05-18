@@ -2,16 +2,16 @@
     Inherits Armor
     'the BunnySuit is a cosmetic armor that provides +1 defense
     Sub New()
-        MyBase.setName("Bunny_Suit​")
+        setName("Bunny_Suit​")
 
         id = 129
         tier = Nothing
-        MyBase.setUsable(False)
-        MyBase.dBoost = 1
-        MyBase.count = 0
-        MyBase.value = 650
+        usable = false
+        MyBase.d_boost = 1
+        count = 0
+        value = 650
 
-        MyBase.antiSlutVarInd = 16
+        MyBase.anti_slut_ind = 16
 
         bsizeneg1 = New Tuple(Of Integer, Boolean, Boolean)(50, False, True)
         bsize0 = New Tuple(Of Integer, Boolean, Boolean)(183, True, True)
@@ -31,9 +31,9 @@
         usize4 = New Tuple(Of Integer, Boolean, Boolean)(83, True, True)
         usize5 = New Tuple(Of Integer, Boolean, Boolean)(84, True, True)
 
-        MyBase.compressesBreasts = False
+        MyBase.compress_breast = False
 
-        MyBase.setDesc("An extremely sultry outfit worn by waitresses in a club. " & DDUtils.RNRN & _
+        setDesc("An extremely sultry outfit worn by waitresses in a club. " & DDUtils.RNRN & _
                             getSizeInformation() & vbCrLf & getStatInformation())
     End Sub
 End Class

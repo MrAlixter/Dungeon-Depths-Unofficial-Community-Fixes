@@ -3,19 +3,19 @@
     'the BunnySuit is a cosmetic armor that provides +1 defense
     Sub New()
         '|ID Info|
-        MyBase.setName("Bunny_Suit")
+        setName("Bunny_Suit")
         id = 16
         tier = Nothing
 
         '|Item Flags|
-        MyBase.setUsable(False)
-        MyBase.compressesBreasts = True
-        MyBase.slutVarInd = 129
+        usable = false
+        MyBase.compress_breast = True
+        MyBase.slut_var_ind = 129
 
         '|Stats|
-        MyBase.dBoost = 1
-        MyBase.count = 0
-        MyBase.value = 325
+        MyBase.d_boost = 1
+        count = 0
+        value = 325
 
         '|Image Index|
         bsizeneg1 = New Tuple(Of Integer, Boolean, Boolean)(33, False, True)
@@ -34,7 +34,7 @@
         usize4 = New Tuple(Of Integer, Boolean, Boolean)(33, True, True)
 
         '|Description|
-        MyBase.setDesc("A sultry outfit worn by waitresses in a club. " & DDUtils.RNRN &
+        setDesc("A sultry outfit worn by waitresses in a club. " & DDUtils.RNRN &
                                       getSizeInformation() & vbCrLf & getStatInformation())
     End Sub
 End Class

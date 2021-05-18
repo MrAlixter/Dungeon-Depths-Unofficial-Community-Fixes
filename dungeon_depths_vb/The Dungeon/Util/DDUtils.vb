@@ -27,6 +27,16 @@
         Array.Resize(a, a.Length + 1)
         a(a.Length - 1) = i
     End Sub
+    Public Shared Function append(ByVal a As Item, ByVal b As List(Of Item)) As List(Of Item)
+        b.Insert(0, a)
+
+        Return b
+    End Function
+    Public Shared Function append(ByVal a As Integer, ByVal b As List(Of Integer)) As List(Of Integer)
+        b.Insert(0, a)
+
+        Return b
+    End Function
     Public Shared Function union(ByVal a As List(Of String), ByVal b As List(Of String)) As List(Of String)
         Dim out = New List(Of String)
 
@@ -60,6 +70,22 @@
             a(j) = tAi
         Next
     End Sub
+    Public Shared Function sortMaxToMin(ByVal l As List(Of Integer)) As List(Of Integer)
+        If l.Count < 2 Then
+            Return l
+        Else
+            Dim max As Integer = -999999999
+
+            For Each i In l
+                If i > max Then max = i
+            Next
+
+            l.Remove(max)
+
+            Return append(max, l)
+        End If
+    End Function
+
 
     '|TEXT & FORM RESIZING|
     Public Shared Sub resizeForm(ByRef form As Form)
@@ -142,8 +168,29 @@
 
         MsgBox(out)
     End Sub
+    Shared Function statBar(ByVal cval As Double, ByVal mval As Double, ByVal ctrl As Control, Optional ByVal delim As Char = "ᚋ")
+        Dim out As String = " " & cval & "/" & mval & " "
+
+        ctrl.Font = Game.lblHealthbarFont.Font
+
+        While ctrl.Width * (cval / mval) > TextRenderer.MeasureText(out, ctrl.Font).Width
+            out = delim & out & delim
+        End While
+
+        While ctrl.Width < TextRenderer.MeasureText(out, ctrl.Font).Width
+            out = out.Substring(0, out.Length - 1)
+        End While
+
+        If Not out.Contains(delim) Then out.Replace(" ", "")
+
+        Return out
+    End Function
+
 
     '|COLOR SHIFT FUNCTIONS|
+    Shared Function cEquals(ByVal a As Color, ByVal b As Color)
+        Return a.A = b.A And a.R = b.R And a.G = b.G And a.B = b.B
+    End Function
     Shared Function cShift(ByVal oC As Color, ByVal c As Color, ByVal inc As Integer)
         If oC.Equals(c) Then Return c
         Dim a, r, g, b As Integer
@@ -200,6 +247,10 @@
             If p.Y + 1 = p1.Y Or p.Y - 1 = p1.Y Then Return True
         Next
         Return False
+    End Function
+
+    Shared Function withinOnePlusMinus(pos As Point, pos1 As Point) As Boolean
+        Return (pos.X + 1 = pos1.X Or pos.X - 1 = pos1.X) Or (pos.Y + 1 = pos1.Y Or pos.Y - 1 = pos1.Y)
     End Function
 
 End Class
