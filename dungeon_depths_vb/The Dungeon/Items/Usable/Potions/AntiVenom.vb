@@ -2,13 +2,21 @@
     Inherits Item
 
     Sub New()
-        MyBase.setName("Anti_Venom")
-        MyBase.setDesc("A concoction brewed to eliminate venom from one's system.")
+        '|ID Info|
+        setName("Anti_Venom")
         id = 92
         tier = 3
-        MyBase.setUsable(True)
-        MyBase.count = 0
-        MyBase.value = 1000
+
+        '|Item Flags|
+        usable = True
+
+        '|Stats|
+        count = 0
+        value = 1000
+
+        '|Description|
+        setDesc("A concoction brewed to eliminate venom from one's system.")
+
     End Sub
 
     Overrides Sub use(ByRef p As Player)

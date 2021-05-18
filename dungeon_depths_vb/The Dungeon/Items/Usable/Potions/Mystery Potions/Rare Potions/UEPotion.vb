@@ -1,14 +1,22 @@
 ﻿Public Class UEPotion
     Inherits MysteryPotion
     Sub New()
-        MyBase.setName("Ass_Growth_Potion")
-        MyBase.setDesc("An odd-looking potion")
+        '|ID Info|
+        setName("Ass_Growth_Potion")
         id = 193
         tier = 3
-        MyBase.setUsable(True)
-        MyBase.count = 0
-        MyBase.value = 500
+
+        '|Item Flags|
+        usable = True
         MyBase.onBuy = AddressOf reveal
+
+        '|Stats|
+        count = 0
+        value = 500
+
+        '|Description|
+        setDesc("An odd-looking potion")
+
     End Sub
 
     Public Overrides Sub setEffectList()

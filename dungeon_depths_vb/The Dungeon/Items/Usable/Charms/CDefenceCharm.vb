@@ -2,13 +2,21 @@
     Inherits Item
 
     Sub New()
-        MyBase.setName("Defense_Charm​")
-        MyBase.setDesc("A charm that slightly boosts your defense.  There is a subtle red glow surrounding this charm.")
+        '|ID Info|
+        setName("Defense_Charm​")
         id = 174
-        tier = 3
-        MyBase.setUsable(True)
-        MyBase.count = 0
-        MyBase.value = 750
+        tier = 4
+
+        '|Item Flags|
+        usable = True
+
+        '|Stats|
+        count = 0
+        value = 750
+
+        '|Description|
+        setDesc("A charm that slightly boosts your defense.  There is a subtle red glow surrounding this charm.")
+
     End Sub
 
     Overrides Sub use(ByRef p As Player)

@@ -24,6 +24,9 @@
     'Dick_Shrink._Potion		occult
     'Hyper_Health_Potion		unearthly
     'Hyper_Mana_Potion		    outlandish
+    'Potion_of_Benediction	    wonky
+    'Potion_of_Dodging          dodgy
+    'Incandescent_Potion        suspicious
 
     Overrides Sub use(ByRef p As Player)
         If Not hasBeenUsed Then reveal()
@@ -41,19 +44,41 @@
         count -= 1
     End Sub
 
-    Public Sub pushLblEventEffects(ByRef appliedEffects As List(Of PEffect))
-        Dim e As String = "Potion Effects: " & vbCrLf & "~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~" & vbCrLf
-        For Each effect In appliedEffects
-            e += getEffectName(effect) & " applied." & vbCrLf
+    Sub mimicThrow(ByRef p As Player)
+        If Not hasBeenUsed Then reveal()
+        If Me.getUsable() = False Then Exit Sub
+        Game.pushLstLog("The " & getName() & " shatters!")
+
+        setEffectList()
+
+        For Each effect In effectList
+            effect.apply(p)
         Next
-        e += "~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~" & vbCrLf & "Press any non-movement key to continue."
-        Game.lblEvent.Text = e
-        Game.lblEvent.BringToFront()
-        Game.lblEvent.Location = New Point((250 * Game.Size.Width / 688) - (Game.lblEvent.Size.Width / 2), 65 * Game.Size.Width / 688)
-        Game.lblEvent.Visible = True
-        Game.player1.inv.invNeedsUDate = True
+
+        pushLblEventEffects(effectList)
+
+        effectList.Clear()
     End Sub
 
+
+
+    Public Sub pushLblEventEffects(ByRef appliedEffects As List(Of PEffect))
+        Dim e As String = "Potion Effects:" & getDisplayBar()
+
+        For Each effect In appliedEffects
+            e += vbCrLf & getEffectName(effect) & " applied."
+            Game.pushLstLog(getEffectName(effect) & " applied.")
+        Next
+
+        e += getDisplayBar()
+
+        Game.pushLblEvent(e)
+
+        Game.player1.inv.invNeedsUDate = True
+    End Sub
+    Private Function getDisplayBar() As String
+        Return If(Not Game.combatmode, vbCrLf & "~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~", "")
+    End Function
     Private Function getEffectName(ByRef pe As PEffect) As String
         Return pe.getEffectDesc
     End Function
@@ -77,6 +102,6 @@
     Public Sub reveal()
         fakeName = getName()
         hasBeenUsed = True
-        Game.lstInventory.SelectedIndex = -1
+        Game.btnCancelCast.SelectedIndex = -1
     End Sub
 End Class

@@ -1,7 +1,7 @@
 ﻿Public NotInheritable Class COServ
     Inherits Transformation
 
-    Dim destForm As preferedForm = New SuccMaid()
+    Dim destForm As preferredForm = New SuccMaid()
     Sub New()
         MyBase.New(1, 0, 0, False)
         tfName = "CurseOfServ"

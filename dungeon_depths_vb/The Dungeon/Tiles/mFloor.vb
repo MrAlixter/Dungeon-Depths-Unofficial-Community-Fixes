@@ -21,6 +21,8 @@ Public Class mFloor
 
     Public sessions As Dictionary(Of Integer, Session) = New Dictionary(Of Integer, Session)
 
+    Public Shared nonRandomFloors() As Integer = {9999, 10000, 91017, 5, 75, 9}
+
     Public Sub New(ByVal code As String, ByVal fNum As Integer,
                    Optional ByVal bh As Integer = -1,
                    Optional ByVal bw As Integer = -1)
@@ -35,7 +37,7 @@ Public Class mFloor
 
         defineBoardSpace()
 
-        If floorNumber = 9999 Or floorNumber = 91017 Or floorNumber = 5 Or floorNumber = 75 Then
+        If nonRandomFloors.Contains(floorNumber) Then
             Game.updateLoadbar(99)
             Game.boardWorker.CancelAsync()
             Exit Sub
@@ -45,7 +47,7 @@ Public Class mFloor
         placeStairs()
         placePlayer(Game.player1)
 
-        If floorNumber > 5 And Not floorNumber = 9999 And Not floorNumber = 91017 Then verifyNoDisconectedChunks(Game.player1)
+        If floorNumber > 5 And Not nonRandomFloors.Contains(floorNumber) Then verifyNoDisconectedChunks(Game.player1)
 
         placeChest(floorCode)
         If floorNumber > 2 Then placeTraps()
@@ -88,8 +90,14 @@ Public Class mFloor
             generateDungeonLevel(floorCode)
         ElseIf floorNumber = 5 Or floorNumber = 75 Then
             genBossFloor(Game.player1)
+            'ElseIf floorNumber = 8 Then
+            '    genFloor8()
+        ElseIf floorNumber = 9 Then
+            genFloor9()
         ElseIf floorNumber = 9999 Then
             genSpaceFloor()
+        ElseIf floorNumber = 10000 Then
+            genSpaceFloor2()
         ElseIf floorNumber = 91017 Then
             genLegacyFloor()
         ElseIf floorNumber > 5 Then
@@ -159,16 +167,18 @@ Public Class mFloor
                 'get the room in question
                 Dim r = rooms(j)(i)
                 allrooms.Add(r)
+
+
                 Dim potentialNeighbors As List(Of Room) = getPotentialNeigbors(rooms, i, j)
                 If potentialNeighbors.Count = 0 Then Continue For
 
                 'set the number of exits on the room
                 Dim numExits = Int(Rnd() * potentialNeighbors.Count) + 1
-                    For num = 1 To numExits
-                        connectRooms(r, potentialNeighbors(Int(Rnd() * potentialNeighbors.Count)))
-                    Next
+                For num = 1 To numExits
+                    connectRooms(r, potentialNeighbors(Int(Rnd() * potentialNeighbors.Count)))
+                Next
 
-                    r.marked = True
+                r.marked = True
             Next
         Next
 
@@ -190,6 +200,10 @@ Public Class mFloor
     End Sub
     Private Sub connectRooms(ByRef r1 As Room, ByRef r2 As Room, Optional overrideFlag As Boolean = False)
         If (r1.connectedTo(r2) Or r2.connectedTo(r1)) And Not overrideFlag Then Exit Sub
+        If r1.directConnections > Room.MAX_DIRECT_CONNECTIONS Or r2.directConnections > Room.MAX_DIRECT_CONNECTIONS Then Exit Sub
+
+        r1.directConnections += 1
+        r2.directConnections += 1
 
         connectPoints(r1.getExit, r2.getExit)
 
@@ -199,10 +213,14 @@ Public Class mFloor
     Sub connectPoints(ByVal p1 As Point, ByVal p2 As Point)
         p1 = New Point(Math.Max(p1.X, 0), Math.Max(p1.Y, 0))
         p2 = New Point(Math.Max(p2.X, 0), Math.Max(p2.Y, 0))
+        p1 = New Point(Math.Min(p1.X, mBoardWidth - 1), Math.Min(p1.Y, mBoardHeight - 1))
+        p2 = New Point(Math.Min(p2.X, mBoardWidth - 1), Math.Min(p2.Y, mBoardHeight - 1))
+
+        If p1.X.Equals(p2.X) And p1.Y.Equals(p2.Y) Then Exit Sub
 
         'Connects the entrances/exits of the rooms
         If p1.Y > p2.Y Then
-            'p1 is above p2
+            'p1 is below p2
             If p1.X > p2.X Then
                 'p1 is right of p2
                 goUpThenLeft(p1, p2)
@@ -211,7 +229,7 @@ Public Class mFloor
                 goUpThenRight(p1, p2)
             End If
         Else
-            'p1 is below p2
+            'p1 is above p2
             If p1.X > p2.X Then
                 'p1 is right of p2
                 goDownThenLeft(p1, p2)
@@ -337,6 +355,7 @@ Public Class mFloor
         If y > 0 AndAlso x < allRooms(y - 1).Count - 1 Then results.Add(allRooms(y - 1)(x))
         If y < allRooms.Count - 1 AndAlso x < allRooms(y + 1).Count - 1 Then results.Add(allRooms(y + 1)(x))
 
+        Console.WriteLine(results.Count)
         Return results
     End Function
     'floor 4
@@ -613,6 +632,168 @@ Public Class mFloor
 
         statueList.Add(New Statue(randPoint(), "seventailsstatue", "You see here a golden statue of a fox"))
     End Sub
+    'floor 8
+    Sub genFloor8()
+        Dim floorLayout As String() = {"##############################_____________________________________",
+                                       "#____________________________#_###_______________________________#_",
+                                       "#_##############_#############_#@#############################___#_",
+                                       "#_#____________#_#___________#_###_#_________________________#####_",
+                                       "#_#___####_____#_###_###_###_#_____#___________#############_#_#_#_",
+                                       "#_#___########_#_#_#_#_#####_#################_#___________#_#_#_#_",
+                                       "#_#___####___#_#_#_#_#___###_________________#_#_#########_#_#_#_#_",
+                                       "#_#__________#_#_#_#_#_____#########_#######_#_#_#__######_#_#_#_#_",
+                                       "#_############_#_#_###__________#__#_#_____#_#_#_#_________#_#_#_#_",
+                                       "#______________#_#______#######_##_#_#_###_#_#_#_#__#####__#_#_#_#_",
+                                       "################_######_#_____#_#__#_#_###_#_#_#_#__#_#_#_##_#_#_#_",
+                                       "_________________#____#_#_###_#_##_#_#_###_#_#_#_####_#___#__#_#_#_",
+                                       "_#################_##_#_#___#_#____#_#__#__#_#_#____#_#_####_#_#_#_",
+                                       "_#_____#____________#_#_#####_######_####__#_#_######___####_#___#_",
+                                       "_______#____________#_#____________#_______#_#________######_###_#_",
+                                       "____#################_#################################_####_#_#_#_",
+                                       "____#________________________________________________________#_#_#_",
+                                       "_#__#_########################################################_#_#_",
+                                       "_#__#_#________________________________________________________#_#_",
+                                       "_####_#_#######_###############__####__####__####__#############_#_",
+                                       "____#_#_#_______#_______##_#########################_____________#_",
+                                       "_####_#_#__####_#_#####_##_####__####__####__####__#############_#_",
+                                       "_#__#_#_#_###_#_#_#___#__________________________________________#_",
+                                       "_#__#_#_#_###_#_#_#_#_#_##########################################_",
+                                       "_####_#_#_###_#_#_###_#_#_____________________________________#____",
+                                       "_####_#_#_____#_#_____#_#_#########_###########################____",
+                                       "_####_#_#_#####_###_###_#_#_______#___________________________#____",
+                                       "__##__#_###_______#_#___#_#_#####_#_#########################_#____",
+                                       "__##__#_#_#######_#_#_#_#_#_#___#___#_______________________#_###__",
+                                       "______#_#_________#_#_#_#_#_#_#####_#_#_###################_#___#__",
+                                       "______#_###########_#_###_#_#_#####_#_#_#_________________#_#_####_",
+                                       "______#_____________#_____#_#_##%##_#_#_#_#################_#_####_",
+                                       "______#_#_#########_#_#####_#_#####_#_#_#_#_______#_________#_####_",
+                                       "______#_#_#___#_#_#_#_#_____#_#####_#_#_#_#_#####_#_#####_#_#_####_",
+                                       "#####_#_###_#___#_#_#_#_###_#_______#_#_#_#___#_#_#_###_#_#_#______",
+                                       "#___#_#_#_#_#_#___#_#_#_#_#_#########_#_#_#####_#_#_____#_###______",
+                                       "#_#_#_#_#_#_#_#_#___#_#_#_#___________#_#_______#_#######_#_#______",
+                                       "#_#_#_#_#_###_#_###_#_#_#_#############_#_#####_#_________#_#______",
+                                       "#_#_#_#_____###_#_#_#_#_#_______________#_____#_###########_#______",
+                                       "#_#_#_###_____#_#_#_#_#_#################_____#_____________#______",
+                                       "#_#_#_#_#####_###_#_#_#___#___________________#############_#______",
+                                       "#_#_###_____#_____#_###___#####___________________________#_#______",
+                                       "__#_#_#_###_#######_______#___#_#########################_#_###____",
+                                       "###_#_#___#_______________#_#_#_#___________________________#_#_#__",
+                                       "#___#_###_#_###_#########_#_#___#_###########################_#_#__",
+                                       "#####_#___#_#_#_#_______#_#_#_###_#___________________________#_#__",
+                                       "______#_###_#_#_#_###___#_#_#_#_#_#_###############_####______#_#__",
+                                       "______#_#___#_#_#_#####_#_#_#_#_#_#_#_____________#____########_#__",
+                                       "______#_#_#_#_#_#_###_#_#_#_#_#_#_#_#_###########_######________#__",
+                                       "______#_#_#_#_#_#_____#_#_____#_#_#_#_#_________#________########__",
+                                       "______#_#####_#_#######_#_#####_#_#_#_#_#######_#_###########___#__",
+                                       "______#_______#_________#_#_____#_#___#_______#_#_#______########__",
+                                       "______#_______###########_#######_###_#########_#_#________________",
+                                       "_####_#___________________________#_#___________#_#________________",
+                                       "_####_#############################_#############_#__#_#_#_#_#_#___",
+                                       "_####___#____#____________________________________#__#_#_###_#_#___",
+                                       "_########____######################################___#__#_#_###___",
+                                       "___________________________________________________________________"}
+
+        If mBoardHeight < 50 Then mBoardHeight = 50
+        If mBoardWidth < 69 Then mBoardWidth = 69
+
+        ReDim mBoard(mBoardHeight, mBoardWidth)
+        For y = 0 To mBoardHeight
+            For x = 0 To mBoardWidth
+                mBoard(y, x) = New mTile(0, "", Color.Black)
+            Next
+        Next
+
+        For y = 0 To UBound(floorLayout)
+            Dim line = floorLayout(y).ToCharArray
+            For x = 0 To UBound(line)
+                If Not line(x) = "_"c Then mBoard(y, x).Tag = 2
+                If line(x) = "%"c Then
+                    stairs = New Point(x, y)
+                ElseIf line(x) = "@"c Then
+                    Game.player1.pos = New Point(x, y)
+                End If
+            Next
+        Next
+
+        placeChest(floorCode)
+        placeTraps()
+    End Sub
+    'floor 9
+    Sub genFloor9()
+        Dim floorLayout As String() = {"___________________________________##✢*##___________",
+                                       "___________________________________#✢*✢*#___________",
+                                       "___________________________________*%⇨⇦#✢___________",
+                                       "___________________________________##><##___________",
+                                       "___________________________________##>⇦✢*___________",
+                                       "___________________________________##⇨<*#___________",
+                                       "___________________________________##><##___________",
+                                       "___________________________________#✢>⇦*#___________",
+                                       "___________________________________#*><##___________",
+                                       "___________________________________##⇨<##___________",
+                                       "_____________________##____________##><##___________",
+                                       "___________________#####___________#*⇨<#✢___________",
+                                       "_____________###########___________##>⇦##___________",
+                                       "___________________#####___________##><*#___________",
+                                       "____________________###____________##⇨⇦##___________",
+                                       "_____________________#_____________#*⇨<##___________",
+                                       "____#####____________#_____________##>⇦##___________",
+                                       "____#####_____###____#_____________✢#⇨<##___________",
+                                       "____#####____########################><##___________",
+                                       "____#####___###__##_______________###>⇦#*___________",
+                                       "_######_____##____###########_____###\/##___________",
+                                       "_######____###______#_______###########✢#___________",
+                                       "_#############______##_____________######___________",
+                                       "_##@#########______###______________________________",
+                                       "_######____________###______________________________",
+                                       "____________________________________________________",
+                                       "____________________________________________________"}
+        If mBoardHeight < 27 Then mBoardHeight = 27
+        If mBoardWidth < 53 Then mBoardWidth = 53
+
+        ReDim mBoard(mBoardHeight, mBoardWidth)
+        For y = 0 To mBoardHeight
+            For x = 0 To mBoardWidth
+                mBoard(y, x) = New mTile(0, "", Color.Black)
+            Next
+        Next
+
+        For y = 0 To 26
+            Dim line = floorLayout(y).ToCharArray
+            For x = 0 To UBound(line)
+                If Not line(x) = "_"c Then mBoard(y, x).Tag = 2
+                If line(x) = "%"c Then
+                    stairs = New Point(x, y)
+                ElseIf line(x) = "@"c Then
+                    Game.player1.pos = New Point(x, y)
+                ElseIf line(x) = "✢"c Then
+                    mBoard(y, x).Text = "✢"
+                ElseIf line(x) = "*"c Then
+                    mBoard(y, x).Text = "*"
+                ElseIf line(x) = "⇨"c Then
+                    mBoard(y, x).Text = "⇨"
+                    mBoard(y, x).Tag = 0
+                ElseIf line(x) = "⇦"c Then
+                    mBoard(y, x).Text = "⇦"
+                    mBoard(y, x).Tag = 0
+                ElseIf line(x) = ">"c Then
+                    mBoard(y, x).Text = ">"
+                    mBoard(y, x).Tag = 0
+                ElseIf line(x) = "<"c Then
+                    mBoard(y, x).Text = "<"
+                    mBoard(y, x).Tag = 0
+                ElseIf line(x) = "\"c Then
+                    mBoard(y, x).Text = "\"
+                    mBoard(y, x).Tag = 0
+                ElseIf line(x) = "/"c Then
+                    mBoard(y, x).Text = "/"
+                    mBoard(y, x).Tag = 0
+                End If
+            Next
+        Next
+
+        placeChest(floorCode, Int(Rnd() * 3) + 4)
+        placeTraps()
+    End Sub
 
     '|-Boss Hallways-|
     Sub genBossFloor(ByRef p As Player)
@@ -642,16 +823,17 @@ Public Class mFloor
             statueList.Add(New Statue(tr))
         Next
     End Sub
+
     '|-Space Floor-|
     Sub genSpaceFloor()
-        Dim floorLayout As String() = {"___________#######___________",
+        Dim floorLayout As String() = {"____________#####____________",
                                        "___________#######___________",
                                        "___________###%###___________",
                                        "___________#######___________",
-                                       "___________#######___________",
+                                       "____________#####____________",
                                        "__#^##________#______________",
                                        "_######_______#______####____",
-                                       "#$#############_____##&###___",
+                                       "_$#############_____##&###___",
                                        "_######_______############___",
                                        "__##^#________#_____###&##___",
                                        "______________#______####____",
@@ -677,14 +859,14 @@ Public Class mFloor
                     genSpaceChest1(chestPoint)
                 ElseIf line(x) = "$"c Then
                     Dim trapPoint = New Point(x, y)
-                    Dim trap As New Trap(CStr(x) & "*" & CStr(y) & "*" & CStr(6) & "*")
-                    trapList.Add(trap)
+                    Dim t = Trap.trapFactory(CStr(x) & "*" & CStr(y) & "*" & CStr(6) & "*")
+                    trapList.Add(t)
                     mBoard(trapPoint.Y, trapPoint.X).ForeColor = Color.FromArgb(45, 45, 45)
                     mBoard(trapPoint.Y, trapPoint.X).Text = "+"
                 ElseIf line(x) = "!"c Then
                     Dim trapPoint = New Point(x, y)
-                    Dim trap As New Trap(CStr(x) & "*" & CStr(y) & "*" & CStr(5) & "*")
-                    trapList.Add(trap)
+                    Dim t = Trap.trapFactory(CStr(x) & "*" & CStr(y) & "*" & CStr(5) & "*")
+                    trapList.Add(t)
                     mBoard(trapPoint.Y, trapPoint.X).ForeColor = Color.FromArgb(45, 45, 45)
                     mBoard(trapPoint.Y, trapPoint.X).Text = "+"
                 ElseIf line(x) = "@"c Then
@@ -733,6 +915,193 @@ Public Class mFloor
         inv.add("Combat_Module", r)
 
         inv.add("Vial_of_BIM_II", 1)
+        c1 = Game.baseChest.Create(inv, p, False)
+
+        chestList.Add(c1)
+        mBoard(p.Y, p.X).ForeColor = Color.FromArgb(45, 45, 45)
+        mBoard(p.Y, p.X).Text = "#"
+    End Sub
+
+    '|-Space Floor 2-|
+    Sub genSpaceFloor2()
+        Dim floorLayout As String() = {"_________________________________________________________________________________________",
+                                       "_________________________________________________________________________________________",
+                                       "_________________________________________________________________________________________",
+                                       "_____________________________________________###_________________________________________",
+                                       "__________________###_______________________#####________________________###_____________",
+                                       "__________________#########################|##%##|######################|###_____________",
+                                       "__________________###_______________________#####________________________###_____________",
+                                       "__________________###________________________###_________________________###_____________",
+                                       "__________________###____________________________________________________###_____________",
+                                       "__________________###______LLL___________________________LLL_____________###_____________",
+                                       "__________________########|LLL___________________________LLLLLLLLLLLLLLLL###_____________",
+                                       "__________________###______LLL___________________________LLL_____________###_____________",
+                                       "__________________###____________________________________________________###_____________",
+                                       "__________________###______###___________________________###_____________###_____________",
+                                       "__________________##########$#___________________________#!#################_____________",
+                                       "_________###______###______###___________________________###_____________###_____________",
+                                       "________#####_____###__________________####______________________________###_____________",
+                                       "________#&T######|###______LLL_________#^^#______________###_____________###_____________",
+                                       "________#####_____###LLLLLLLLL_________####______________###################_____________",
+                                       "_________###______###______LLL__________#________________###_____________###_____________",
+                                       "__________________###___________________#________________________________###_____________",
+                                       "__________________###___________________#________________________________###_____________",
+                                       "LLLLLLLLLLLLLLLLL|######################################################|###|LLLLLLLLLLLL",
+                                       "LLLLLLLLLLLLLLLLL|######################################################|###|LLLLLLLLLLLL",
+                                       "LLLLLLLLLLLLLLLLL|######################################################|###|LLLLLLLLLLLL",
+                                       "LLLLLLLLLLLLLLLLL|######################################################|###|LLLLLLLLLLLL",
+                                       "__________________---____________________________________________________###_____________",
+                                       "__________________###____________________________________________________###_____________",
+                                       "__________________###|LLLLLLLLLLLLLL____________________LLLLLLLLLLLLLLLL|###_____________",
+                                       "__________________###__________LLLLL____________________LLLLL____________###_____________",
+                                       "__________________###__________LLLLL____________________LLLLL____________###_____________",
+                                       "__________________###__________LLLLL____________________LLLLL____________###_____________",
+                                       "__________________###____________________________________________________###_____________",
+                                       "__________________###|LLLLLLLLLLLLLL____________________####################_____________",
+                                       "__________________###__________LLLLL____________________#####____________###_____________",
+                                       "__________________###__________LLLLL____________________###@#____________###_____________",
+                                       "__________________###__________LLLLL____________________#####____________###_____________",
+                                       "__________________###____________________________________________________###_____________",
+                                       "__________________###|LLLLLLLLLLLLLL____________________LLLLLLLLLLLLLLLL|###_____________",
+                                       "__________________###__________LLLLL____________________LLLLL____________###_____________",
+                                       "__________________###__________LLLLL____________________LLLLL____________###_____________",
+                                       "__________________###__________LLLLL____________________LLLLL____________###_____________",
+                                       "__________________###____________________________________________________###_____________",
+                                       "__________________###|LLLLLLLLLLLLLL____________________LLLLLLLLLLLLLLLL|###_____________",
+                                       "__________________###__________LLLLL____________________LLLLL____________###_____________",
+                                       "__________________###__________LLLLL____________________LLLLL____________###_____________",
+                                       "__________________###__________LLLLL____________________LLLLL____________###_____________",
+                                       "__________________###____________________________________________________###_____________",
+                                       "__________________---____________________________________________________---_____________",
+                                       "__________________LLL____________________________________________________LLL_____________",
+                                       "__________________LLL____________________________________________________LLL_____________",
+                                       "__________________LLL____________________________________________________LLL_____________",
+                                       "__________________LLL____________________________________________________LLL_____________",
+                                       "__________________LLL____________________________________________________LLL_____________",
+                                       "__________________LLL____________________________________________________LLL_____________",
+                                       "__________________LLL____________________________________________________LLL_____________"}
+
+        If mBoardHeight < 60 Then mBoardHeight = 60
+        If mBoardWidth < 100 Then mBoardWidth = 100
+
+        ReDim mBoard(mBoardHeight, mBoardWidth)
+        For y = 0 To mBoardHeight
+            For x = 0 To mBoardWidth
+                mBoard(y, x) = New mTile(0, "", Color.Black)
+            Next
+        Next
+
+        For y = 0 To UBound(floorLayout)
+            Dim line = floorLayout(y).ToCharArray
+            For x = 0 To UBound(line)
+                If Not line(x) = "_"c Then mBoard(y, x).Tag = 2
+                If line(x) = "L"c Then
+                    mBoard(y, x).Tag = 1
+                ElseIf line(x) = "%"c Then
+                    stairs = New Point(x, y)
+                ElseIf line(x) = "^"c Then
+                    Dim chestPoint = New Point(x, y)
+                    genSpaceChest3(chestPoint)
+                ElseIf line(x) = "&"c Then
+                    Dim chestPoint = New Point(x, y)
+                    genSpaceChest4(chestPoint)
+                ElseIf line(x) = "$"c Then
+                    Dim trapPoint = New Point(x, y)
+                    Dim t = Trap.trapFactory(CStr(x) & "*" & CStr(y) & "*" & CStr(8) & "*")
+                    trapList.Add(t)
+                    mBoard(trapPoint.Y, trapPoint.X).ForeColor = Color.FromArgb(45, 45, 45)
+                    mBoard(trapPoint.Y, trapPoint.X).Text = "+"
+                ElseIf line(x) = "!"c Then
+                    Dim trapPoint = New Point(x, y)
+                    Dim t = Trap.trapFactory(CStr(x) & "*" & CStr(y) & "*" & CStr(7) & "*")
+                    trapList.Add(t)
+                    mBoard(trapPoint.Y, trapPoint.X).ForeColor = Color.FromArgb(45, 45, 45)
+                    mBoard(trapPoint.Y, trapPoint.X).Text = "+"
+                ElseIf line(x) = "@"c Then
+                    Game.player1.pos = New Point(x, y)
+                ElseIf line(x) = "-"c Then
+                    mBoard(y, x).Tag = 0
+                    mBoard(y, x).Text = "-"
+                ElseIf line(x) = "|"c Then
+                    mBoard(y, x).Tag = 0
+                    mBoard(y, x).Text = "|"
+                ElseIf line(x) = "T"c Then
+                    addNPC(Game.ttraveler, New Point(x, y))
+                ElseIf line(x) = "@"c Then
+                    Game.ttraveler.pos = New Point(x, y)
+                End If
+            Next
+        Next
+    End Sub
+    Sub genSpaceChest3(ByVal p As Point)
+        Dim c1 As Chest
+        Dim inv = New Inventory(False)
+
+        Dim r = 0
+
+        If Int(Rnd() * 6) = 0 Then r = Int(Rnd() * 3) + 1 Else r = 0
+        inv.add("BitGold", r)
+
+        If Int(Rnd() * 8) = 0 Then r = 1 Else r = 0
+        inv.add("Galaxy_Dye", r)
+
+        If Int(Rnd() * 6) = 0 Then r = Int(Rnd() * 5) + 1 Else r = 0
+        inv.add("CryoGrenade", r)
+
+        If Int(Rnd() * 8) = 0 Then r = 1 Else r = 0
+        inv.add("Photon_Armor", r)
+
+        If Int(Rnd() * 8) = 0 Then r = 1 Else r = 0
+        inv.add("Vial_of_BIM_II", r)
+
+        If Int(Rnd() * 8) = 0 Then r = 1 Else r = 0
+        inv.add("Mobile_Powerbank", r)
+
+        If Int(Rnd() * 8) = 0 Then r = 1 Else r = 0
+        inv.add("Discharge_Gauntlets", r)
+
+        If Int(Rnd() * 8) = 0 Then r = 1 Else r = 0
+        inv.add("Photon_Blade", r)
+
+        If Int(Rnd() * 2) = 0 Then
+            Select Case Int(Rnd() * 3)
+                Case 0
+                    inv.add("Phase_Rifle", 1)
+                Case 1
+                    inv.add("Phase_Hammer", 1)
+                Case 2
+                    inv.add("Phase_Drill", 1)
+            End Select
+        Else
+            Select Case Int(Rnd() * 4)
+                Case 0
+                    inv.add("Paleomancer's_Diary", 1)
+                Case 1
+                    inv.add("Marissa's_Notes", 1)
+                Case 2
+                    inv.add("AAAAAA_Specification", 1)
+                Case 3
+                    inv.add("BitGold", 1)
+            End Select
+        End If
+
+        inv.add("AAAAAA_Battery", CInt(Rnd() * 10) + 5)
+
+        c1 = Game.baseChest.Create(inv, p, False)
+
+        chestList.Add(c1)
+        mBoard(p.Y, p.X).ForeColor = Color.FromArgb(45, 45, 45)
+        mBoard(p.Y, p.X).Text = "#"
+    End Sub
+    Sub genSpaceChest4(ByVal p As Point)
+        Dim c1 As Chest
+        Dim inv = New Inventory(False)
+
+        inv.add("Phase_Pistol", 1)
+        inv.add("Phase_Deflector", 1)
+        inv.add("Phase_Vibrator", 1)
+        inv.add("AAAAAA_Battery", CInt(Rnd() * 10) + 5)
+
         c1 = Game.baseChest.Create(inv, p, False)
 
         chestList.Add(c1)
@@ -795,7 +1164,6 @@ Public Class mFloor
         mBoard(p.Y, p.X).Text = "#"
     End Sub
 
-
     '|---OBJECT PLACEMENT---|
     Sub placeStairs()
         stairs = randPoint()
@@ -812,29 +1180,33 @@ Public Class mFloor
         Select Case floorNumber
             Case 5, 75
                 Return New Point(5, 25)
+            Case 9
+                Return New Point(4, 24)
             Case 91017
                 Return New Point(21, 1)
             Case 9999
                 Return New Point(14, 13)
+            Case 10000
+                Return New Point(59, 35)
             Case Else
                 Return randPoint()
         End Select
     End Function
-    Sub placeChest(ByVal code As String)
+    Sub placeChest(ByVal code As String, Optional ByVal numChests As Integer = 0)
         'Fill Chest Tier List
         For i = 1 To Game.baseChest.tiers.Count - 1
             Game.baseChest.tiers(i).Clear()
         Next
         For i = 0 To Game.baseChest.contents.upperBound
             Dim c_item = Game.baseChest.contents.item(i)
-            If c_item.getTier() <> Nothing And Not c_item.isMonsterDrop Then
+            If c_item.getTier() <> Nothing And Not c_item.droppable Then
                 Game.baseChest.tiers(c_item.getTier()).Add(c_item)
             End If
         Next
         Rnd(-1)
         Randomize(code.GetHashCode)
         'Dim numChests As Integer = CInt(Int(Rnd() * 8) + 3) * Int((mBoardWidth / 30) + (mBoardHeight / 30) / 2)
-        Dim numChests As Integer = CInt((Int(Rnd() * Game.chestFreqRange) + Game.chestFreqMin) * (Math.Sqrt(coveredBoardSpace) / Game.chestSizeDependence))
+        If numChests = 0 Then numChests = CInt((Int(Rnd() * Game.chestFreqRange) + Game.chestFreqMin) * (Math.Sqrt(coveredBoardSpace) / Game.chestSizeDependence))
 
         If floorNumber = 3 Then
             numChests *= 1.5
@@ -845,6 +1217,13 @@ Public Class mFloor
         If floorNumber >= 3 And Int(Rnd() * 20) = 0 Then
             Dim p = randPoint()
             addChest(New LoadedChest(p, 5), p)
+        End If
+
+        If Not Game.player1 Is Nothing AndAlso Game.player1.quests(qInds.dfaUpgrade).getActive Then
+            For i = 0 To Int(Rnd() * 3) + 1
+                Dim p = randPoint()
+                addChest(New LoadedChest(p, 6), p)
+            Next
         End If
 
         For i = 1 To numChests
@@ -871,8 +1250,8 @@ Public Class mFloor
             Dim trapPoint = randPoint()
             mBoard(trapPoint.Y, trapPoint.X).ForeColor = Color.FromArgb(45, 45, 45)
             mBoard(trapPoint.Y, trapPoint.X).Text = "+"
-            Dim trap As New Trap(trapPoint)
-            trapList.Add(trap)
+            Dim t = Trap.trapFactory(Int(Rnd() * 5), trapPoint)
+            trapList.Add(t)
         Next
     End Sub
     Sub placeNPCs(ByRef npcList As List(Of ShopNPC), ByVal possibleNPCs As Integer())
@@ -899,7 +1278,7 @@ Public Class mFloor
             placed.Add(npcInd)
         Next
 
-        If Game.player1.isCursed And Game.cbrok.pos.X = -1 And Not Game.cbrok.isDead Then addNPC(Game.cbrok, randPoint)
+        If Game.player1.cursed And Game.cbrok.pos.X = -1 And Not Game.cbrok.isDead Then addNPC(Game.cbrok, randPoint)
 
         For i = 0 To npcList.Count - 1
             npcPositions.Add(npcList(i).pos)
@@ -907,20 +1286,19 @@ Public Class mFloor
     End Sub
     Function getPossibleNPCs() As Integer()
         If floorNumber < 3 Then
-            Return {0, 1, 3}
+            Return {sNPCInd.shopkeeper, sNPCInd.shadywizard, sNPCInd.foodvendor}
         ElseIf floorNumber = 3 Then
-            Return {0, 1, 2, 3, 5}
+            Return {sNPCInd.shopkeeper, sNPCInd.shadywizard, sNPCInd.hypnoteach, sNPCInd.foodvendor, sNPCInd.cursebroker}
         ElseIf floorNumber = 7 Then
-            Return {2}
+            Return {sNPCInd.hypnoteach}
         ElseIf floorNumber = 13 Then
-            Return {3, 5}
+            Return {sNPCInd.foodvendor, sNPCInd.cursebroker}
         Else
             If Int(Rnd() * 2) = 0 And Game.player1.className.StartsWith("Magical") Then
-                Return {0, 1, 2, 4, 5, 6}
+                Return {sNPCInd.shopkeeper, sNPCInd.shadywizard, sNPCInd.hypnoteach, sNPCInd.weaponsmith, sNPCInd.cursebroker, sNPCInd.maskmaggirl}
             Else
-                Return {0, 1, 2, 3, 4, 5}
+                Return {sNPCInd.shopkeeper, sNPCInd.shadywizard, sNPCInd.hypnoteach, sNPCInd.foodvendor, sNPCInd.weaponsmith, sNPCInd.cursebroker}
             End If
-
         End If
     End Function
     Sub addNPC(ByRef n As NPC, ByRef npcPoint As Point)
@@ -1077,7 +1455,7 @@ Public Class mFloor
         out += CStr(npcPositions.Count - 1) & "%" '20 + traplist.Count + statueList.Count + chestList.Count
         For i = 0 To npcPositions.Count - 1
             out += npcPositions(i).X & "~"
-            out += npcPositions(i).X & "%"      '21 + traplist.Count + statueList.Count + chestList.Count to 20 + traplist.Count + statueList.Count + chestList.Count + npcPositions.Count
+            out += npcPositions(i).Y & "%"      '21 + traplist.Count + statueList.Count + chestList.Count to 20 + traplist.Count + statueList.Count + chestList.Count + npcPositions.Count
         Next
 
         out += "sessions%"
@@ -1113,7 +1491,7 @@ Public Class mFloor
 
         trapList.Clear()
         For i = 0 To CInt(buffer(6))
-            Dim t = New Trap(buffer(7 + i))
+            Dim t = Trap.trapFactory(buffer(7 + i))
             trapList.Add(t)
             If t.pos.X < mBoardWidth And t.pos.X > 0 And t.pos.Y < mBoardHeight And t.pos.Y > 0 Then
                 mBoard(t.pos.Y, t.pos.X).Text = "+"
@@ -1204,14 +1582,17 @@ Public Class mFloor
 End Class
 
 Public Class Room
-    Public topLeftPos As Point
+    Public Shared MAX_DIRECT_CONNECTIONS As Integer = 5
+
+    Public top_left_pos As Point
     Public width, height As Integer
     Public marked As Boolean = False
     Dim exits As List(Of Point) = New List(Of Point)
     Public connectedRooms As List(Of Room) = New List(Of Room)
+    Public directConnections As Integer
 
     Public Sub New(tlp As Point, w As Integer, h As Integer)
-        topLeftPos = tlp
+        top_left_pos = tlp
         width = w
         height = h
     End Sub
@@ -1221,13 +1602,13 @@ Public Class Room
         While (p = Nothing Or DDUtils.withinOnePlusMinus(p, exits)) And ct < 12
             Select Case Int(Rnd() * 4)
                 Case 0
-                    p = New Point(topLeftPos.X, topLeftPos.Y + Int(Rnd() * height))
+                    p = New Point(top_left_pos.X, top_left_pos.Y + Int(Rnd() * height))
                 Case 1
-                    p = New Point(topLeftPos.X + width, topLeftPos.Y + Int(Rnd() * height))
+                    p = New Point(top_left_pos.X + width, top_left_pos.Y + Int(Rnd() * height))
                 Case 2
-                    p = New Point(topLeftPos.X + Int(Rnd() * width), topLeftPos.Y)
+                    p = New Point(top_left_pos.X + Int(Rnd() * width), top_left_pos.Y)
                 Case Else
-                    p = New Point(topLeftPos.X + Int(Rnd() * width), topLeftPos.Y + height)
+                    p = New Point(top_left_pos.X + Int(Rnd() * width), top_left_pos.Y + height)
             End Select
             ct += 1
         End While
@@ -1247,14 +1628,14 @@ Public Class Room
     Public Function connectedTo(ByRef r1 As Room, Optional ByRef checkedRooms As List(Of Point) = Nothing)
         If checkedRooms Is Nothing Then checkedRooms = New List(Of Point)()
 
-        If r1.topLeftPos.Equals(topLeftPos) Then Return True
+        If r1.top_left_pos.Equals(top_left_pos) Then Return True
 
         For Each r2 In connectedRooms
-            If r2.topLeftPos.Equals(r1.topLeftPos) Then Return True
+            If r2.top_left_pos.Equals(r1.top_left_pos) Then Return True
 
             For Each subR2 In r2.connectedRooms
-                If Not checkedRooms.Contains(subR2.topLeftPos) Then
-                    checkedRooms.Add(subR2.topLeftPos)
+                If Not checkedRooms.Contains(subR2.top_left_pos) Then
+                    checkedRooms.Add(subR2.top_left_pos)
                     Return subR2.connectedTo(r1, checkedRooms)
                 End If
             Next
@@ -1265,7 +1646,7 @@ Public Class Room
     Public Overrides Function Equals(obj As Object) As Boolean
         If Not obj.GetType Is GetType(Room) Then Return False
 
-        Return CType(obj, Room).topLeftPos.Equals(topLeftPos)
+        Return CType(obj, Room).top_left_pos.Equals(top_left_pos)
     End Function
 End Class
 

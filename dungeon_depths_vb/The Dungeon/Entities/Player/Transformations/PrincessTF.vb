@@ -47,7 +47,7 @@
         Game.pushLblEvent(out, AddressOf step2)
     End Sub
     Public Sub step2()
-        Dim p As player = game.player1
+        Dim p As player = Game.player1
         Dim out = ""
 
         'equip clothes
@@ -75,7 +75,7 @@
         stopTF()
     End Sub
     Public Sub step3()
-        Dim p As player = game.player1
+        Dim p As player = Game.player1
         Dim out = ""
 
         'equip clothes
@@ -99,7 +99,7 @@
                                                    "and lay down on the floor.  As you nod off, you realize that that apple" &
                                                     " probably was probably either enchanted or poisoned, and as you black out" &
                                                    " your last thought is that this seems like something out of an old fairy " &
-                                                   "tale. " & vbCrLf & " " & vbCrLf _
+                                                   "tale. " & DDUtils.RNRN _
                         & "As you come to, several hours later, you groan and rub your forhead, only to knock a golden crown off of your head. This jolts you up, and you examine yourself further.  Long hair, poofy ballgown, gloves that go up past your elbows?!  Well, it seems like your ""fairy-tale"" hunch wasn't too far off after all.  Dusting youself off, you get ready to embark back on your journey to return to your kingdom.  Wait...that isn't why you came here..." & vbCrLf & "Or was it?"
         Dim revertText = Game.lblEvent.Text.Split(vbCrLf)(0)
         If Not revertText.Equals("") Then out = revertText & DDUtils.RNRN & out
@@ -112,7 +112,7 @@
     End Sub
 
     Public Overrides Function getNextStep(stage As Integer) As Action
-        Dim p As player = game.player1
+        Dim p As player = Game.player1
         Select Case stage
             Case 0
                 Return AddressOf step1

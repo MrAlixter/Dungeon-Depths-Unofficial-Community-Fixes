@@ -2,19 +2,19 @@
     Inherits Staff
 
     Sub New()
-        MyBase.setName("Signature_Staff")
-        MyBase.setDesc("A finely crafted staff bearing a trademarked signature. The gem contained inside of it produces a nearly infinite pool of incredibly unstable fire magic." & vbCrLf &
+        setName("Signature_Staff")
+        setDesc("A finely crafted staff bearing a trademarked signature. The gem contained inside of it produces a nearly infinite pool of incredibly unstable fire magic." & vbCrLf &
                        "+66 Mana" & vbCrLf &
                        "+10 ATK")
         id = 159
         tier = Nothing
-        MyBase.setUsable(False)
-        MyBase.mBoost = 66
-        MyBase.aBoost = 10
+        usable = false
+        MyBase.m_boost = 66
+        MyBase.a_boost = 10
         count = 0
         value = 4666
 
-        MyBase.isMonsterDrop = False
+        MyBase.droppable = False
     End Sub
 
     Public Overrides Sub onEquip(ByRef p As Player)

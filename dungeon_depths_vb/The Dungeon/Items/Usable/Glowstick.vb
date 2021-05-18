@@ -2,13 +2,21 @@
     Inherits Item
 
     Sub New()
-        MyBase.setName("Glowstick")
-        MyBase.setDesc("A light source for illuminating the map.")
+        '|ID Info|
+        setName("Glowstick")
         id = 37
         tier = 1
-        MyBase.setUsable(True)
-        MyBase.count = 0
-        MyBase.value = 250
+
+        '|Item Flags|
+        usable = True
+
+        '|Stats|
+        count = 0
+        value = 250
+
+        '|Description|
+        setDesc("A light source for illuminating dark corridors on demand.  It also has a label that says it can be used for ""raves"", whatever that means...")
+
     End Sub
 
     Overrides Sub use(ByRef p As Player)
@@ -35,7 +43,7 @@
             Next
         Next
 
-        p.perks(perk.lightsource) = 60
+        p.perks(perk.lightsource) = 240
 
         Dim r As Integer = (Int(Rnd() * 7))
         If r = 0 Then

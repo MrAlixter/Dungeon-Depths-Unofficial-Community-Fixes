@@ -26,9 +26,12 @@
         ComboBox2.Items.Add("Warrior")
         ComboBox2.Items.Add("Mage")
         ComboBox2.Items.Add("Rogue")
+        ComboBox2.Items.Add("Cleric")
         ComboBox2.Items.Add("Magical Girl")
         ComboBox2.Items.Add("Valkyrie")
         If DDDateTime.isHallow Then ComboBox2.Items.Add("Witch")
+        If Game.compOOT Then ComboBox2.Items.Add("Time Cop")
+
         ComboBox2.Text = ComboBox2.Items(Int(Rnd() * ComboBox2.Items.Count))
         picPort.BackgroundImage = portrait.draw()
 
@@ -208,9 +211,9 @@
             Dim x As Integer = (i * 71 * Me.Size.Width / 581)
             Dim y As Integer = 0
             Dim img As New PictureBox
-            img.BackgroundImage = Portrait.hairRecolor(sexAttrList(i), portrait.haircolor)
+            img.BackgroundImage = portrait.CreateFullBodyBMP({picPort.Image, portrait.hairRecolor(sexAttrList(i), portrait.haircolor)})
             img.Location = New Point(x, y)
-            img.Size = New Point(70 * Me.Size.Width / 581, 70 * Me.Size.Width / 581)
+            img.Size = New Point(70 * Me.Size.Width / 581, 260 * Me.Size.Width / 581)
             img.BackgroundImageLayout = ImageLayout.Stretch
             AddHandler img.Click, AddressOf PicOnClick
             pnlBody.Controls.Add(img)
@@ -234,9 +237,9 @@
             Dim x As Integer = (i * 71 * Me.Size.Width / 581)
             Dim y As Integer = 0
             Dim img As New PictureBox
-            img.BackgroundImage = sexAttrList(i)
+            img.BackgroundImage = portrait.CreateBMP({picPort.Image, sexAttrList(i)}, False)
             img.Location = New Point(x, y)
-            img.Size = New Point(70 * Me.Size.Width / 581, 70 * Me.Size.Width / 581)
+            img.Size = New Point(70 * Me.Size.Width / 581, 120 * Me.Size.Width / 581)
             img.BackgroundImageLayout = ImageLayout.Stretch
             AddHandler img.Click, AddressOf PicOnClick
             pnlBody.Controls.Add(img)
@@ -260,9 +263,9 @@
             Dim x As Integer = (i * 71 * Me.Size.Width / 581)
             Dim y As Integer = 0
             Dim img As New PictureBox
-            img.BackgroundImage = sexAttrList(i)
+            img.BackgroundImage = portrait.CreateBMP({picPort.Image, sexAttrList(i)}, False)
             img.Location = New Point(x, y)
-            img.Size = New Point(70 * Me.Size.Width / 581, 70 * Me.Size.Width / 581)
+            img.Size = New Point(70 * Me.Size.Width / 581, 120 * Me.Size.Width / 581)
             img.BackgroundImageLayout = ImageLayout.Stretch
             AddHandler img.Click, AddressOf PicOnClick
             pnlBody.Controls.Add(img)
@@ -398,9 +401,9 @@
             Dim x As Integer = (i * 71 * Me.Size.Width / 581)
             Dim y As Integer = 0
             Dim img As New PictureBox
-            img.BackgroundImage = sexAttrList(i)
+            img.BackgroundImage = portrait.CreateBMP({picPort.Image, sexAttrList(i)}, False)
             img.Location = New Point(x, y)
-            img.Size = New Point(70 * Me.Size.Width / 581, 70 * Me.Size.Width / 581)
+            img.Size = New Point(70 * Me.Size.Width / 581, 120 * Me.Size.Width / 581)
             img.BackgroundImageLayout = ImageLayout.Stretch
             AddHandler img.Click, AddressOf PicOnClick
             pnlBody.Controls.Add(img)
@@ -424,9 +427,9 @@
             Dim x As Integer = (i * 71 * Me.Size.Width / 581)
             Dim y As Integer = 0
             Dim img As New PictureBox
-            img.BackgroundImage = Portrait.skinRecolor(sexAttrList(i), portrait.skincolor)
+            img.BackgroundImage = portrait.CreateBMP({picPort.Image, portrait.skinRecolor(sexAttrList(i), portrait.skincolor)}, False)
             img.Location = New Point(x, y)
-            img.Size = New Point(70 * Me.Size.Width / 581, 70 * Me.Size.Width / 581)
+            img.Size = New Point(70 * Me.Size.Width / 581, 120 * Me.Size.Width / 581)
             img.BackgroundImageLayout = ImageLayout.Stretch
             AddHandler img.Click, AddressOf PicOnClick
             pnlBody.Controls.Add(img)
@@ -454,9 +457,9 @@
             Dim img As New PictureBox
 
             Dim clothesArr(2) As Image
-            clothesArr(0) = sexAttrList1(i)
+            clothesArr(1) = sexAttrList1(i)
 
-            clothesArr(1) = sexAttrList2(i * 2)
+            clothesArr(0) = sexAttrList2(i * 2)
 
 
             img.BackgroundImage = portrait.CreateFullBodyBMP(clothesArr)
@@ -511,7 +514,7 @@
             Dim x As Integer = (i * 71 * Me.Size.Width / 581)
             Dim y As Integer = 0
             Dim img As New PictureBox
-            img.BackgroundImage = sexAttrList(i)
+            img.BackgroundImage = portrait.CreateBMP({picPort.Image, sexAttrList(i)}, False)
             img.Location = New Point(x, y)
             img.Size = New Point(70 * Me.Size.Width / 581, 70 * Me.Size.Width / 581)
             img.BackgroundImageLayout = ImageLayout.Stretch
@@ -537,9 +540,9 @@
             Dim x As Integer = (i * 71 * Me.Size.Width / 581)
             Dim y As Integer = 0
             Dim img As New PictureBox
-            img.BackgroundImage = sexAttrList(i)
+            img.BackgroundImage = portrait.CreateBMP({picPort.Image, sexAttrList(i)}, False)
             img.Location = New Point(x, y)
-            img.Size = New Point(70 * Me.Size.Width / 581, 70 * Me.Size.Width / 581)
+            img.Size = New Point(70 * Me.Size.Width / 581, 130 * Me.Size.Width / 581)
             img.BackgroundImageLayout = ImageLayout.Stretch
             AddHandler img.Click, AddressOf PicOnClick
             pnlBody.Controls.Add(img)
@@ -680,7 +683,7 @@
         portrait.setIAInd(pInd.rearhair, r, portrait.sexBool, False)
         portrait.setIAInd(pInd.midhair, r, portrait.sexBool, False)
 
-        Dim r2 = Int(Rnd() * 7)
+        Dim r2 = Int(Rnd() * 8)
         portrait.setIAInd(pInd.clothes, r2, portrait.sexBool, False)
         portrait.setIAInd(pInd.clothesbtm, r2 * 2, portrait.sexBool, False)
 
@@ -728,7 +731,10 @@
     Private Sub cBoxPresets_TextChanged(sender As Object, e As EventArgs) Handles cBoxPresets.TextChanged
         If cBoxPresets.Text = "--- (none) ---" Then Exit Sub
         Dim preset = New PCPreset("presets/" & cBoxPresets.Text)
-        ComboBox2.SelectedText = preset.pClass
+
+        If Not ComboBox2.Items.Contains(preset.pClass) Then ComboBox2.Items.Add(preset.pClass)
+        ComboBox2.SelectedItem = preset.pClass
+
         TextBox1.Text = preset.pName
         portrait.iArrInd = preset.iArrInd
 

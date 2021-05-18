@@ -1,0 +1,31 @@
+﻿Public Class SSMissile
+    Inherits Spell
+    Sub New(ByRef c As Player, ByRef t As NPC)
+        MyBase.New(c, t)
+        setName("Shiny Sparking Missile")
+        MyBase.settier(1)
+        MyBase.setcost(7)
+    End Sub
+    Public Overrides Sub effect()
+        Dim dmg As Integer = 69
+        Dim d6 = Int(Rnd() * 7)
+        If d6 = 2 Then
+            'critical hit
+            dmg = MyBase.getCaster.getSpellDamage(MyBase.getTarget, 2 * (dmg + d6))
+            Game.pushLogAndEvent(CStr("Critical hit!  You hit the " & MyBase.getTarget.name & " for " & dmg & " damage!  The enemy is stunned for 2 turns!"))
+            MyBase.getTarget.takeDMG(dmg, MyBase.getCaster)
+        Else
+            'non critical hit
+            dmg = MyBase.getCaster.getSpellDamage(MyBase.getTarget, dmg + d6)
+            Game.pushLogAndEvent(CStr("You hit the " & MyBase.getTarget.name & " for " & dmg & " damage!  The enemy is stunned for 2 turns!"))
+            MyBase.getTarget.takeDMG(dmg, MyBase.getCaster)
+        End If
+
+        MyBase.getTarget.isStunned = True
+        MyBase.getTarget.stunct = 1
+    End Sub
+
+    Public Overrides Function getDesc(ByRef c As Player, ByRef t As NPC) As Object
+        Return "A tier 1 offensive spell that deals heavy magic damage while also stunning its target for 1 turn."
+    End Function
+End Class

@@ -2,8 +2,8 @@
     Inherits Armor
 
     Sub New()
-        MyBase.setName("Anniversery_Armor")
-        MyBase.setDesc("An armor set designed to commemorate the anniversery of a specific game." & vbCrLf & _
+        setName("Anniversery_Armor")
+        setDesc("An armor set designed to commemorate the anniversery of a specific game." & vbCrLf & _
                        "+30 DEF, +10 SPD, +8 Mana")
         id = 5
         If Date.Now.Month.Equals(9) And (Date.Now.Day.Equals(9) Or Date.Now.Day.Equals(10) Or Date.Now.Day.Equals(11)) Then
@@ -12,12 +12,12 @@
             tier = Nothing
         End If
 
-        MyBase.setUsable(False)
-        MyBase.dBoost = 30
-        MyBase.sBoost = 10
-        MyBase.mBoost = 8
-        MyBase.count = 0
-        MyBase.value = 2017
+        usable = false
+        MyBase.d_boost = 30
+        MyBase.s_boost = 10
+        MyBase.m_boost = 8
+        count = 0
+        value = 2017
 
         MyBase.bsizeneg1 = New Tuple(Of Integer, Boolean, Boolean)(6, False, True)
         MyBase.bsize1 = New Tuple(Of Integer, Boolean, Boolean)(13, True, True)

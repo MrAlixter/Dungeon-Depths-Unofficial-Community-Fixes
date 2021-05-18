@@ -1,26 +1,32 @@
 ﻿Public Class CBrok
     Inherits ShopNPC
     Sub New()
-        name = "Curse Broker"
-        health = 1.0
-        maxHealth = 99999
-        attack = 99999
-        defense = 99999
-        speed = 99999
+        MyBase.New()
 
-        'Define the inventory
-        inv = New Inventory(False)
-        'Useables
+        '|ID Info|
+        name = "Curse Broker"
+
+        '|NPC Flags|
+        pronoun = "they"
+        pPronoun = "their"
+        rPronoun = "them"
+        isShop = True
+
+        '|Inventory|
         inv.setCount("Anti_Curse_Tag", 1)
         inv.setCount(171, 1)
         inv.setCount(174, 1)
         inv.setCount(200, 1)
+        inv.setCount(245, 1)
 
-        isShop = True
+        '|Stats|
+        maxHealth = 99999
+        attack = 99999
+        defense = 99999
+        speed = 99999
         gold = 99999
-        pronoun = "they"
-        pPronoun = "their"
-        rPronoun = "them"
+
+        '|Images|
         picNormal = ShopNPC.npcLib.atrs(0).getAt(35)
         picPrincess = ShopNPC.npcLib.atrs(0).getAt(36)
         picBunny = ShopNPC.npcLib.atrs(0).getAt(37)
@@ -34,10 +40,9 @@
                          picBunny})
 
         picNPC.AddRange({ShopNPC.npcLib.atrs(0).getAt(38),
-                         picArachne})
-
-        If speed = Game.player1.speed Then speed -= 1
-        title = " the "
+                         picArachne,
+                         ShopNPC.npcLib.atrs(0).getAt(93),
+                         ShopNPC.npcLib.atrs(0).getAt(96)})
     End Sub
 
     Public Overrides Sub encounter()
@@ -45,7 +50,9 @@
 
         If npcIndex = 6 Then
             Game.pushNPCDialog("So, so many eyes.....")
-        ElseIf Not Game.player1.isCursed Then
+        ElseIf npcIndex = 7 Then
+            Game.pushNPCDialog("Meow indeed...")
+        ElseIf Not Game.player1.cursed Then
             npcIndex = 0
             Game.pushNPCDialog("What have you gotten yourself into this time?  Nothing?  Perhaps there's a curse somewhere out there for you...")
         Else
@@ -142,6 +149,13 @@
         badForYou()
     End Sub
     Public Overrides Sub toPrincess()
+        badForYou()
+    End Sub
+    Public Overrides Sub toCatgirl()
+        npcIndex = getCatGirlImageInd()
+        badForYou()
+    End Sub
+    Public Overrides Sub toTrilobite()
         badForYou()
     End Sub
 End Class

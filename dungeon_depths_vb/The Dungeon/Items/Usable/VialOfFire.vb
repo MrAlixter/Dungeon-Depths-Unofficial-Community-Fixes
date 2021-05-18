@@ -1,14 +1,21 @@
 ﻿Public Class VialOfFire
     Inherits Item
     Sub New()
-        MyBase.setName("Vial_of_Fire")
-        MyBase.setDesc("A glass bottle filled with actual, magically fueled fire.  It hurts to hold...")
+        '|ID Info|
+        setName("Vial_of_Fire")
         id = 205
         tier = Nothing
-        isMonsterDrop = True
-        MyBase.setUsable(True)
-        MyBase.count = 0
-        MyBase.value = 154
+
+        '|Item Flags|
+        usable = True
+        droppable = True
+
+        '|Stats|
+        count = 0
+        value = 154
+
+        '|Description|
+        setDesc("A glass bottle somehow filled with an eternally burning flame.  It hurts to hold...")
     End Sub
 
     Overrides Sub use(ByRef p As Player)

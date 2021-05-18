@@ -2,16 +2,24 @@
     Inherits Item
 
     Sub New()
-        MyBase.setName("Amazon_Lesson")
-        MyBase.setDesc("More than just mental manipulation, this lesson offers a physical transformation as well as some mental changes.  ""Are you disillusioned with all this magic and weapons malarchy?  Do you just want to smack things around with your bare hands like the powerful woman you are (or could be)?  Perhaps the Amazon life is for you...""")
+        '|ID Info|
+        setName("Amazon_Lesson")
         id = 113
         tier = Nothing
-        MyBase.setUsable(False)
-        MyBase.count = 0
-        MyBase.value = 6969
+
+        '|Item Flags|
+        usable = false
+        rando_inv_allowed = False
         MyBase.onBuy = AddressOf teach
 
-        MyBase.isRandoTFAcceptable = False
+        '|Stats|
+        count = 0
+        value = 6969
+
+        '|Description|
+
+        setDesc("More than just mental manipulation, this lesson offers a physical transformation as well as some mental changes." & DDUtils.RNRN &
+                       """Are you disillusioned with all this 'magic and weapons' malarchy?  Do you just want to smack things around with your bare hands like the powerful woman you are (or could be)?  Perhaps the Amazon life is for you...""")
     End Sub
 
     Sub teach()
@@ -26,10 +34,10 @@
     End Sub
     Sub cancel()
         Game.player1.gold += value
-        CType(Game.hteach, HTeach).back()
+        CType(Game.hteach, HypnoTeach).back()
     End Sub
     Sub tf()
-        CType(Game.hteach, HTeach).hypnotize("Perfect!  Speaking of perfection, have you seen my pendant?  I know it is a bit of a cliche, but doesn't seeing it swing back and forth just relax you so perfectly?  Back...and forth...watch it glisten in the light...feel yourself go deeper and deeper...deeper...and deeper...until you just...*SNAP*...drift away...", AddressOf tf2)
+        CType(Game.hteach, HypnoTeach).hypnotize("Perfect!  Speaking of perfection, have you seen my pendant?  I know it is a bit of a cliche, but doesn't seeing it swing back and forth just relax you so perfectly?  Back...and forth...watch it glisten in the light...feel yourself go deeper and deeper...deeper...and deeper...until you just...*SNAP*...drift away...", AddressOf tf2)
     End Sub
     Sub tf2()
         Dim out = "As soon as she snaps, your entire reality fades away.  You can't bother to recall who you are, or what you're doing, focusing instead solely on your mistresses voice, though in your haze you don't understand much of what she's saying.  You pass in and out of conciousness several times until gradually you begin to clearly hear what she's saying." & DDUtils.RNRN &
@@ -41,7 +49,7 @@
 
         Dim p = Game.player1
 
-        Game.pushLblEvent(out, AddressOf CType(Game.hteach, HTeach).back)
+        Game.pushLblEvent(out, AddressOf CType(Game.hteach, HypnoTeach).back)
         p.drawPort()
         p.UIupdate()
         p.pState.save(p)

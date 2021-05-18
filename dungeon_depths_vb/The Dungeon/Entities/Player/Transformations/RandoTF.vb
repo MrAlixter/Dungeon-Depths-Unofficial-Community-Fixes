@@ -18,8 +18,8 @@
     Public Sub step1()
 
         'assign a pointer to the player character
-        Dim p As player = game.player1
-        If Game.preBSStartState Is Nothing Then Game.preBSStartState = p.sState.clone(p)
+        Dim p As player = Game.player1
+        If Not p.preBSStartState.initFlag Then p.preBSStartState = p.sState.clone(p)
 
         'assign a starter class / form
         p.changeClass("Classless")
@@ -89,15 +89,19 @@
         r = Int(Rnd() * 8) + 1
         p.prt.setIAInd(pInd.fronthair, r, True, False)
         p.prt.setIAInd(pInd.hat, 0, True, False)
+        p.prt.setIAInd(pInd.tail, 0, True, False)
+        p.prt.setIAInd(pInd.horns, 0, True, False)
+        p.prt.setIAInd(pInd.wings, 0, True, False)
 
         'clear all player associated lists
-        p.createInvPerks()
+        p.inv = New Inventory(True)
+        p.resetPerks()
 
         'assign random equipment
         setLoadout()
 
         p.TextColor = Color.White
-        If game.mDun.numCurrFloor < 6 Then p.pImage = Game.picPlayer.BackgroundImage Else p.pImage = Game.picPlayerf.BackgroundImage
+        If Game.mDun.numCurrFloor < 6 Then p.pImage = Game.picPlayer.BackgroundImage Else p.pImage = Game.picPlayerf.BackgroundImage
 
         p.inv.invNeedsUDate = True
         p.UIupdate()
@@ -247,7 +251,7 @@
 
         For i = 0 To 4
             Dim invInd As Integer = 8
-            While Not p.inv.item(invInd).isRandoTFAcceptable
+            While Not p.inv.item(invInd).rando_inv_allowed
                 invInd = Int(Rnd() * (Game.player1.inv.upperBound + 1))
             End While
             p.inv.add(invInd, CInt(Int(Rnd() * 2) + 1))
@@ -270,6 +274,8 @@
             p.dickSize = Int(Rnd() * 3) + 1
         End If
 
+        p.lust += 10
+
         If armor.Length > 0 Then
             armorIndex = armor(Int(Rnd() * (armor.Length)))
             p.inv.add(armorIndex, 1)
@@ -285,40 +291,15 @@
     End Sub
 
     Shared Sub floor4FirstBossEncounter()
-        Game.pushLblEvent("Turning around, you are about to move on when a " & _
-                          "giggle coming from behind you causes you to stop." & _
-                          "Looking over your shoulder, you see the chest " & _
-                          "behind you become swallowed into a mass of turquoise " & _
-                          "slime.  Drawing your weapon, you turn around and " & _
-                          "prepare yourself for a fight.  As you begin your " & _
-                          "attack, a single, large, gooey tendril shoots out" & _
-                          "of the mass, yanking your weapon from your hand " & _
-                          "before several smaller tentacles wrap around your " & _
-                          "limbs, restraining you." & DDUtils.RNRN & _
-                          """Well, well, well.  What do we have here?"", a " & _
-                          "slightly distorted female voice chuckles from " & _
-                          "somewhere behind you." & DDUtils.RNRN & "Suddenly, you " & _
-                          "find yourself being flipped upside down and dragged " & _
-                          "upwards to the ceiling, where you meet the gaze of " & _
-                          "a translucent, teal woman who's lower half seems to be" & _
-                          " a mass of tentacles that has it rooted firmly to " & _
-                          "the roof.  Her remarkably curvy figure, as well as" & _
-                          "her more mature attitude suggest that you might be " & _
-                          "in for something unique from the other slime girls" & _
-                          "you've encountered so far.  As you look closer, you " & _
-                          "notice some vaugely human-shaped bodies mixed in with " & _
-                          "the writhing tendrils of slime, and you wonder what " & _
-                          "exactly you're in for here. ""I ..."" the slime says, drawing your attention " & _
-                          "back to her, ""... am the Ooze Empress.  This floor" & _
-                          ", and all who inhabit it fall under my ..."".  As " & _
-                          "she introduces herself, you find it harder and " & _
-                          "harder to focus.  Your body, especially where her" & _
-                          " tentacles are making direct contact, feels as though" & _
-                          " every inch of it is flushing with arousal.", AddressOf floor4FirstBossEncounterP2)
+        Game.pushLblEvent("Turning around, you start to leave with the key before a giggle from behind you stops you in your tracks.  Looking over your shoulder, you see the chest become swallowed and dissolved into a mass of turquoise slime that is rapidly making its way towards you.  Drawing your weapon, you stash the key and prepare yourself for a fight!" & DDUtils.RNRN &
+                          "As you begin your attack, a single, large, gooey tendril shoots out of the mass, yanking your weapon from your hand before several smaller tentacles wrap around your limbs, restraining you." & DDUtils.RNRN & _
+                          """Well, well, well.  What do we have here?"", a slightly distorted female voice chuckles from somewhere behind you." & DDUtils.RNRN &
+                          "Suddenly, you find yourself being flipped upside down and dragged upwards to the ceiling, where you meet the gaze of a translucent, teal woman who's lower half seems to be a mass of tentacles that has it rooted firmly to the dungeon's roof.  Her remarkably curvy figure, as well as her more mature attitude suggest that you might be in for something unique from the other slime girls you've encountered so far.  Glancing more closely at your captor, you notice some vaugely human-shaped bodies mixed in with the writhing tendrils of slime, and you wonder what exactly you're in for here." & DDUtils.RNRN &
+                          """I ..."" the slime says, drawing your attention back to her, ""... am the Ooze Empress.  This floor, and all who inhabit it fall under my ..."".  As she introduces herself, you find it harder and harder to focus.  Your body, especially where her tentacles are making direct contact, feels as though every inch of it is flushing with arousal.", AddressOf floor4FirstBossEncounterP2)
     End Sub
     Shared Sub floor4FirstBossEncounterP2()
-        Dim p As player = game.player1
-        Game.preBSBody = If(Transformation.canBeTFed(p), New State(p), p.pState.clone(p))
+        Dim p As Player = Game.player1
+        p.preBSBody = If(Transformation.canBeTFed(p), New State(p), p.pState.clone(p))
         Game.preBSInventory = New ArrayList()
         For i = 0 To p.inv.upperBound
             Game.preBSInventory.Add(p.inv.getCountAt(i))
@@ -327,40 +308,17 @@
         p.update()
         p.sState.save(p)
         p.savePState()
-        Game.pushLblEvent("The " & _
-                          "warmth slowly builds until you are burning with " & _
-                          "lust, and you can't help but lose intrest in what " & _
-                          "your captor is saying, lost in the fog of your " & _
-                          "pleasure.  A small giggle tells you that your " & _
-                          "distraction has not gone unnoticed.  ""Enjoying " & _
-                          "yourself?"" the Empress asks, giving you a gentle" & _
-                          " shake, ""What you're feeling now is the powerful " & _
-                          "aphrodesiac that is mixed into my body.  Would you " & _
-                          "like a more intimate taste, little one?"".  In your " & _
-                          "state, you don't even need to consider her offer.  " & _
-                          "After you give her a vigorous nod, the slime purrs " & _
-                          """Wonderful, darling, you seem like you could use a " & _
-                          "little relaxation."", plunging you into the mass of " & _
-                          "her tendrils.  If the aphrodisiac was overwhelming " & _
-                          "before, being submmerged in it practically puts you in" & _
-                          " a pleasure coma.  Before passing out from the burning " & _
-                          "need flowing throug every part of your body, you catch her " & _
-                          "motherly gaze as she giggles, ""Have fun!""." & DDUtils.RNRN & _
-                          "When you come to, you can tell some time has passed.  Though " & _
-                          "the Emperess is nowhere to be found, the amount of slime" & _
-                          " you are drenched still fills you with a bit of lust.  " & _
-                          "Looking down, however, you are not met with your familiar body, " & _
-                          "but instead that of a stranger!  You must have had one hell " & _
-                          "of a time to wake up in the wrong body, and a quick pat down" & _
-                          " reveals that all of your belongings, including the key, are " & _
-                          "missing as well!  At least the ooze didn't seem that malevolent, " & _
-                          "maybe if you can find her again you can straighten this out.")
+        Game.pushLblEvent("The warmth slowly builds until you are burning with lust, and you can't help but lose intrest in what your captor is saying, lost in the fog of your pleasure.  A small giggle tells you that your distraction has not gone unnoticed." & DDUtils.RNRN &
+                          """Enjoying yourself?"" the Empress asks, giving you a gentle shake, ""What you're feeling now is the powerful aphrodesiac that is mixed into my body.  Would you like a more intimate taste, little one?""" & DDUtils.RNRN &
+                          "In your state, you don't even need to consider her offer.  After you give her a vigorous nod, the slime purrs ""Wonderful, darling, you seem like you could use a little relaxation."", plunging you into the mass of her tendrils.  If the aphrodisiac was overwhelming before, being submmerged in it practically puts you in a horny coma.  Before passing out from the burning need flowing throug every part of your body, you catch her motherly gaze as she giggles," & DDUtils.RNRN &
+                          """Have fun!""" & DDUtils.RNRN & DDUtils.RNRN &
+                          "When you come to, you can tell some time has passed.  Though the Emperess is nowhere to be found, the amount of slime you are drenched still fills you with a bit of lust.  Looking down, however, you are not met with your familiar body, but instead that of a stranger!  You must have had one hell of a time to wake up in the wrong body, and a quick pat down reveals that all of your belongings, including the key, are missing as well!  At least the ooze didn't seem that malevolent, maybe if you can find her again you can straighten this out.")
     End Sub
     Shared Sub floor4revert()
-        Dim p As player = game.player1
-        Game.preBSStartState.load(p)
+        Dim p As player = Game.player1
+        p.preBSStartState.load(p)
         p.sState.save(p)
-        Game.preBSBody.load(p)
+        p.preBSBody.load(p)
         p.pState.save(p)
         p.revertToPState()
         For i = 0 To Game.preBSInventory.Count - 1
@@ -372,7 +330,7 @@
         p.UIupdate()
     End Sub
     Shared Sub floor4keep()
-        Dim p As player = game.player1
+        Dim p As player = Game.player1
         For i = 0 To Game.preBSInventory.Count - 1
             p.inv.add(i, Game.preBSInventory(i))
         Next
@@ -387,7 +345,7 @@
     End Sub
 
     Public Overrides Function getNextStep(stage As Integer) As Action
-        Dim p As player = game.player1
+        Dim p As player = Game.player1
         Select Case stage
             Case 0
                 Return AddressOf step1

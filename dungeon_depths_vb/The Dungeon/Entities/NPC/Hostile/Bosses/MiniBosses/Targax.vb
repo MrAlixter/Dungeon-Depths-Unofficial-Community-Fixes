@@ -3,12 +3,18 @@
 
     Dim combatCounter As Integer
     Sub New()
+        '|ID Info|
         name = "Targax the Brutal"
+
+        '|Stats|
         maxHealth = 250
         attack = 50
         defense = 20
         speed = 5
         will = 10
+        xp_value = 200
+
+        '|Inventory|
         inv.setCount("Health_Potion", 2)
         inv.setCount("Major_Health_Potion", 3)
         inv.setCount("Combat_Manual", 1)
@@ -18,15 +24,16 @@
         inv.setCount("Omni_Charm", 1)
         inv.setCount("Gold", 2500)
 
-        setupMonsterOnSpawn()
-
-        combatCounter = 0
-
+        '|Dialog Variables|
         title = " "
         pronoun = "he"
         pPronoun = "his"
         rPronoun = "him"
-        xpValue = 200
+
+        '|Misc|
+        setupMonsterOnSpawn()
+        combatCounter = 0
+
     End Sub
 
     Public Overrides Sub attackCMD(ByRef target As Entity)

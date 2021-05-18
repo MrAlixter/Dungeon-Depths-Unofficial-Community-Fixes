@@ -2,15 +2,22 @@
     Inherits Item
 
     Sub New()
-        MyBase.setName("New-U_Crystal")
-        MyBase.setDesc("A debugging item that lets one do the random transformation.  Use your powers for good, ok?")
+        '|ID Info|
+        setName("New-U_Crystal")
         id = 154
         tier = Nothing
-        MyBase.setUsable(True)
-        MyBase.count = 0
-        MyBase.value = 2
 
-        MyBase.isRandoTFAcceptable = False
+        '|Item Flags|
+        usable = True
+        rando_inv_allowed = False
+
+        '|Stats|
+        count = 0
+        value = 2
+
+        '|Description|
+        setDesc("A debugging item that lets one do the random transformation.  Use your powers for good, ok?")
+
     End Sub
 
     Overrides Sub use(ByRef p As Player)

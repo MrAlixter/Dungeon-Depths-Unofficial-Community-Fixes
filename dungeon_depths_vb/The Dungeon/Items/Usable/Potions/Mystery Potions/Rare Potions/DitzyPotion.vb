@@ -1,14 +1,22 @@
 ﻿Public Class DitzyPotion
     Inherits MysteryPotion
     Sub New()
-        MyBase.setName("Ditzy_Potion")
-        MyBase.setDesc("A puzzling-looking potion")
+        '|ID Info|
+        setName("Ditzy_Potion")
         id = 62
         tier = 3
-        MyBase.setUsable(True)
-        MyBase.count = 0
-        MyBase.value = 300
+
+        '|Item Flags|
+        usable = True
         MyBase.onBuy = AddressOf reveal
+
+        '|Stats|
+        count = 0
+        value = 300
+
+        '|Description|
+        setDesc("A puzzling-looking potion.")
+
     End Sub
 
     Public Overrides Sub setEffectList()

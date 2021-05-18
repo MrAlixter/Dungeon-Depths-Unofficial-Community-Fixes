@@ -3,23 +3,23 @@
 
     Sub New()
         '|ID Info|
-        MyBase.setName("Lance_of_Darkness")
+        setName("Lance_of_Darkness")
         id = 238
         tier = Nothing
 
         '|Item Flags|
-        MyBase.setUsable(True)
-        MyBase.isCursed = True
+        usable = true
+        MyBase.cursed = True
 
         '|Stats|
-        MyBase.aBoost = 31
-        MyBase.sBoost = -7
-        MyBase.count = 0
-        MyBase.value = 3110
+        MyBase.a_boost = 31
+        MyBase.s_boost = -7
+        count = 0
+        value = 3110
         MyBase.weight = 7
 
         '|Description|
-        MyBase.setDesc("A hefty spear crafted from a jet-black alloy.  It's more likely to hit critically than a sword, but also more likely to miss altogether." & DDUtils.RNRN &
+        setDesc("A hefty spear crafted from a jet-black alloy.  It's more likely to hit critically than a sword, but also more likely to miss altogether." & DDUtils.RNRN &
                        "Can be thrown using the ""Use"" button." & vbCrLf &
                        "+31 ATK" & vbCrLf &
                        "-7 SPD")
@@ -39,7 +39,7 @@
             Game.pushLstLog("You throw the spear across the dungeon at nothing in particular.")
         Else
             Game.pushLstLog("You throw the spear!")
-            Dim dmg As Integer = (p.getATK) + (Me.aBoost) + (Me.aBoost) + Int(Rnd() * 3 + 1)
+            Dim dmg As Integer = (p.getATK) + (Me.a_boost) + (Me.a_boost) + Int(Rnd() * 3 + 1)
             p.hit(dmg, m)
         End If
 

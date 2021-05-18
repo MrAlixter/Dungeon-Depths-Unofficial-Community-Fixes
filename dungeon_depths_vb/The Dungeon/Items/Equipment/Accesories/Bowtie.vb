@@ -2,18 +2,28 @@
     Inherits Accessory
 
     Sub New()
-        MyBase.setName("Bowtie")
-        MyBase.setDesc("A high class necktie that improves agility and speed.  While it seems ordinary enough at a glance, every once and a while it sparks suspiciously." & vbCrLf & _
-                       "+5 Speed, Dodge Effect" & vbCrLf &
-                       "If equipped by a Bunny Girl, +Max Mana and ATK based on equipped clothing")
+        '|ID Info|
+        setName("Bowtie")
         id = 97
         tier = 3
-        MyBase.setUsable(False)
-        MyBase.sBoost = 5
-        MyBase.count = 0
-        MyBase.value = 2000
+
+        '|Item Flags|
+        usable = false
+
+        '|Stats|
+        MyBase.s_boost = 5
+        count = 0
+        value = 2000
+
+        '|Image Index|
         MyBase.fInd = New Tuple(Of Integer, Boolean, Boolean)(9, True, True)
         MyBase.mInd = New Tuple(Of Integer, Boolean, Boolean)(8, False, True)
+
+        '|Description|
+        setDesc("A high class necktie that improves agility and speed.  While it seems ordinary enough at a glance, every once and a while it sparks suspiciously." & DDUtils.RNRN & _
+                       "Medium chance to dodge oncomming attacks" & vbCrLf &
+                       "Increases Max MP and ATK if equipped by a Bunny Girl" & DDUtils.RNRN &
+                       getStatInformation())
     End Sub
     Public Overrides Sub onEquip(ByRef p As Player)
         p.perks(perk.bowtie) = 1
@@ -23,10 +33,11 @@
     End Sub
 
     Public Overrides Function getABoost(ByRef p As Player) As Integer
+        If p Is Nothing Then Return 0
         If Not p.className.Equals("Bunny Girl") Then Return 0
-        If Not (p.equippedArmor.getSlutVarInd = -1 And p.equippedArmor.getAntiSlutVarInd <> -1) And Not p.equippedArmor.getName.Contains("Bunny") Then Return 0
+        If Not (p.equippedArmor.getSlutVarInd = -1 And p.equippedArmor.getAntiSlutInd <> -1) And Not p.equippedArmor.getName.Contains("Bunny") Then Return 0
 
-        Dim buff = p.equippedArmor.dBoost
+        Dim buff = p.equippedArmor.d_boost
 
         If buff = 0 Then
             buff = 3
@@ -36,13 +47,14 @@
 
         buff *= 3.3
 
-        Return buff + (p.equippedArmor.aBoost * 1.2)
+        Return buff + (p.equippedArmor.a_boost * 1.2)
     End Function
     Public Overrides Function getMBoost(ByRef p As Player) As Integer
+        If p Is Nothing Then Return 0
         If Not p.className.Equals("Bunny Girl") Then Return 0
-        If Not (p.equippedArmor.getSlutVarInd = -1 And p.equippedArmor.getAntiSlutVarInd <> -1) And Not p.equippedArmor.getName.Contains("Bunny") Then Return 0
+        If Not (p.equippedArmor.getSlutVarInd = -1 And p.equippedArmor.getAntiSlutInd <> -1) And Not p.equippedArmor.getName.Contains("Bunny") Then Return 0
 
-        Dim buff = p.equippedArmor.dBoost
+        Dim buff = p.equippedArmor.d_boost
 
         If buff = 0 Then
             buff = 3
@@ -52,6 +64,13 @@
 
         buff *= 3.3
 
-        Return buff + (p.equippedArmor.mBoost * 1.2)
+        Return buff + (p.equippedArmor.m_boost * 1.2)
+    End Function
+
+    Public Overrides Function getDesc() As Object
+        Return "A high class necktie that improves agility and speed.  While it seems ordinary enough at a glance, every once and a while it sparks suspiciously." & DDUtils.RNRN & _
+                       "Medium chance to dodge oncomming attacks" & vbCrLf &
+                       "Increases Max Mana and ATK if equipped by a Bunny Girl" & DDUtils.RNRN &
+                       getStatInformation()
     End Function
 End Class

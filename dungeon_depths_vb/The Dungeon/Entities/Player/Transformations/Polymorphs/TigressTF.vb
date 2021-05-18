@@ -7,15 +7,16 @@
     Sub New(cs As Integer, n As Integer, tts As Integer, wi As Double, cbs As Boolean, tfd As Boolean)
         MyBase.New(cs, n, tts, wi, cbs, tfd)
         nextStep = getNextStep(cs)
+        tfName = "Tigress"
     End Sub
 
     Public Overrides Sub setWaitTime(stage As Integer)
-        Dim p As player = game.player1
+        Dim p As player = Game.player1
         turnsTilNextStep = Int(Rnd() * 50) + Int(Rnd() * 50) + Int(Rnd() * p.getmaxMana) + Int(Rnd() * p.getWIL)
     End Sub
 
     Public Overrides Sub step1()
-        Dim p As player = game.player1
+        Dim p As player = Game.player1
         Dim out = ""
 
         'unequips

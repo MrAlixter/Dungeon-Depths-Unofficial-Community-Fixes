@@ -30,9 +30,15 @@
     Overridable Sub tfDialogStep1(ByVal hairColorInd As Integer)
         Try
             Dim hcn = {"Black", "Brown", "Blonde", "White"}
-            Game.pushLblEvent("Your foot falls on an uneven patch of dungeon and you breifly lose your footing. As you lurch forward, catching your balance, your cowbell gives out a loud ring.  Looking franctically around, you are relived to see that nothing seems to have been attracted by the noise.  As you brush your shaken up hair back into place, you notice that at some point your hair color had changed to a shade of " & hcn(hairColorInd) & "." & DDUtils.RNRN & """Maybe I stepped on a cursed brick or something..."" you muse as you continue on." & DDUtils.RNRN & "You now have " & hcn(hairColorInd) & " hair!")
+            Game.pushLblEvent("Your foot falls on an uneven patch of dungeon and you breifly lose your footing." & DDUtils.RNRN &
+                              "As you lurch forward, catching your balance, your cowbell gives out a loud ring.  Looking franctically around, you are relived to see that nothing seems to have been attracted by the noise.  As you brush your shaken up hair back into place, you notice that at some point your hair color had changed to a shade of " & hcn(hairColorInd) & "." & DDUtils.RNRN &
+                              """Maybe I stepped on a cursed brick or something..."" you muse as you continue on." & DDUtils.RNRN &
+                              "You now have " & hcn(hairColorInd) & " hair!")
         Catch ex As Exception
-            Game.pushLblEvent("Your foot falls on an uneven patch of dungeon and you breifly lose your footing. As you lurch forward, catching your balance, your cowbell gives out a loud ring.  Looking franctically around, you are relived to see that nothing seems to have been attracted by the noise.  As you brush your shaken up hair back into place, you notice that at some point your hair color had shifted." & DDUtils.RNRN & """Maybe I stepped on a cursed brick or something..."" you muse as you continue on." & DDUtils.RNRN & "Your hair color has changed!")
+            Game.pushLblEvent("Your foot falls on an uneven patch of dungeon and you breifly lose your footing." & DDUtils.RNRN &
+                              "As you lurch forward, catching your balance, your cowbell gives out a loud ring.  Looking franctically around, you are relived to see that nothing seems to have been attracted by the noise.  As you brush your shaken up hair back into place, you notice that at some point your hair color had shifted." & DDUtils.RNRN &
+                              """Maybe I stepped on a cursed brick or something..."" you muse as you continue on." & DDUtils.RNRN &
+                              "Your hair color has changed!")
         End Try
     End Sub
     Sub step1()
@@ -43,9 +49,12 @@
     End Sub
 
     Overridable Sub tfDialogStep2()
-        Game.pushLblEvent("Out of nowhere, you feel the tile beneath you depress slightly.  You instinctively roll left just in time for a projectile to fly through the air where you just to the left.  Breathing a sigh of relief, you take a couple of steps back only to step on another pressure plate.  Another dart fires straight for your neck and without any time to dodge it strikes you right ... in your cowbell.  The ding it lets out is louder than last time, but not by much.  After a nervous scan of your surroundings, you go to readjust your hair again only to find a small pair of horns.  As you size them up, you realize that they give you a slightly bovine appearance.")
+        Game.pushLblEvent("Out of nowhere, you feel the tile beneath you depress slightly." & DDUtils.RNRN &
+                          "You instinctively roll left just in time for a projectile to fly through the air where you just to the left.  Breathing a sigh of relief, you take a couple of steps back only to step on another pressure plate." & DDUtils.RNRN &
+                          "Another dart fires straight for your neck and without any time to dodge it strikes you right in your cowbell.  The ding it lets out is louder than last time, but not by much." & DDUtils.RNRN &
+                          "After a nervous scan of your surroundings, you go to readjust your hair again only to find a small pair of horns.  As you size them up, you realize that they give you a slightly bovine appearance...")
     End Sub
-    Sub step2()
+    Overridable Sub step2()
         Dim p As Player = Game.player1
         p.prt.setIAInd(pInd.horns, 1, True, False)
         tfDialogStep2()
@@ -65,11 +74,11 @@
         Dim out = "Through the sway of your motion your cowbell rings out quietly, but repeatedly.  After a while of this, you take a rest and check yourself for any changes that may have taken place."
 
         If tfEars Then
-            out += "  Looking at your reflection in the nearby pool of water, you see that you now have bovine ears!  Between these and the horns, you're pretty sure you're slowly turning into some sort of cow."
+            out += DDUtils.RNRN & "Looking at your reflection in the nearby pool of water, you see that you now have bovine ears!  Between these and the horns, you're pretty sure you're slowly turning into some sort of cow."
         End If
 
         If tfHair Then
-            out += "  You can feel the tickle of hair much further down on your back than you are used to, and a quick glance in a nearby puddle confirms that your hair has lengthened considerably."
+            out += DDUtils.RNRN & "You can feel the tickle of hair much further down on your back than you are used to, and a quick glance in a nearby puddle confirms that your hair has lengthened considerably."
         End If
 
         Game.pushLblEvent(out)
@@ -86,7 +95,7 @@
         Else
             hairTF1(p)
             tfHair = True
-            If Not Int(Rnd() * 3) = 0 Then
+            If Not Int(Rnd() * 3) = 0 Or Game.noRNG Then
                 earTF(p)
                 tfEars = True
             End If
@@ -110,10 +119,11 @@
         p.prt.setIAInd(pInd.fronthair, 16, True, True)
     End Sub
     Overridable Sub tfDialogStep4(ByVal dropItem As Boolean)
-        Dim out = "As you bend down to pick up a dropped item, your cowbell jangles as you stand back up.  Already used to this, you give yourself a quick once over.  You don't see that much different, though your hair seems to have styled itself since you last checked up on it."
+        Dim out = "As you bend down to pick up a dropped item, your cowbell jangles as you stand back up." & DDUtils.RNRN &
+                  "Already used to this, you give yourself a quick once over.  You don't see that much different, though your hair seems to have styled itself since you last checked up on it."
 
         If dropItem Then
-            out += "  You lose hold of your weapon, dropping it and reverting your transformation."
+            out += DDUtils.RNRN & "You lose hold of your weapon, dropping it and reverting your transformation."
         End If
 
         Game.pushLblEvent(out)
@@ -132,7 +142,10 @@
         p.prt.setIAInd(pInd.horns, 2, True, False)
     End Sub
     Overridable Sub tfDialogStep5()
-        Game.pushLblEvent("As you trudge through a particularly dusty patch of dungeon, you feel a powerful sneeze coming on.  As the sneeze rocks your body, the cowbell on your neck rattles noisily, the loudest it has rung yet, and you need to take a few minutes to get your bearings back.  Your head feels slightly heavier, and as you feel around you can tell that your horns have gotten longer, and seem to have a more extreme curl.  Sweet!")
+        Game.pushLblEvent("As you trudge through a particularly dusty patch of dungeon, you feel a powerful sneeze coming on." & DDUtils.RNRN &
+                          """Achoo!"" the sneeze rocks your body, causing the cowbell on your neck to rattle noisily.  That had to be the loudest it has rung yet, and you need to take a few minutes to get your bearings back." & DDUtils.RNRN &
+                          "Your head feels slightly heavier, and as you feel around your head you can tell that your horns have both gotten longer and developed a more extreme curl." & DDUtils.RNRN &
+                          "Sweet!")
     End Sub
     Sub step5()
         Dim p As Player = Game.player1
@@ -197,7 +210,10 @@
         Equipment.clothesChange(p, "Cow_Print_Bra")
     End Sub
     Overridable Sub tfDialogStep9()
-        Game.pushLblEvent("You take another look at your cowbell.  Every time its rung thus far, you've progressed a little more into some form of bovine-human hybrid.  'Minotaur', you correct your self.  It's been turning you into a minotaur, and a female one at that.  Your transformation seems pretty far along, and you'd wager you're only one more chime away from completing the change.  With that in mind, you give the bell a hard shake, and the sound from its ring echos throughout the dungeon." & DDUtils.RNRN & "You are now a female minotaur!")
+        Game.pushLblEvent("You take another look at your cowbell." & DDUtils.RNRN &
+                          "Every single time it has rung thus far, you've progressed a little more into some form of bovine-human hybrid.  'Minotaur', you correct yourself, it's been turning you into a minotaur and a female one at that." & DDUtils.RNRN &
+                          "Your transformation seems pretty far along, and you'd wager you're only one more chime away from completing the change.  With that in mind, you give the bell a hard shake, and the sound from its ring echos throughout the dungeon." & DDUtils.RNRN &
+                          "You are now a female minotaur!")
     End Sub
     Overridable Sub step9()
         Dim p As Player = Game.player1

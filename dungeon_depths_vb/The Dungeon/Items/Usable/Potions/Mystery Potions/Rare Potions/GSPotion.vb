@@ -1,14 +1,22 @@
 ﻿Public Class GSPotion
     Inherits MysteryPotion
     Sub New()
-        MyBase.setName("Sex_Swap_Potion")
-        MyBase.setDesc("A funny-looking potion")
+        '|ID Info|
+        setName("Sex_Swap_Potion")
         id = 28
         tier = 3
-        MyBase.setUsable(True)
-        MyBase.count = 0
-        MyBase.value = 500
+
+        '|Item Flags|
+        usable = True
         MyBase.onBuy = AddressOf reveal
+
+        '|Stats|
+        count = 0
+        value = 500
+
+        '|Description|
+        setDesc("A funny-looking potion")
+
     End Sub
 
     Public Overrides Sub setEffectList()

@@ -5,19 +5,19 @@
     Dim formerEyeType As Tuple(Of Integer, Boolean, Boolean) = New Tuple(Of Integer, Boolean, Boolean)(0, False, False)
 
     Sub New()
-        MyBase.setName("Slave_Collar")
-        MyBase.setDesc("A collar commonly placed around the necks of the thralls." & vbCrLf & _
+        setName("Slave_Collar")
+        setDesc("A collar commonly placed around the necks of the thralls." & vbCrLf & _
                        "Provides no bonus.")
         id = 69
         tier = 3
-        isMonsterDrop = True
-        MyBase.setUsable(False)
-        MyBase.count = 0
-        MyBase.value = 200
+        droppable = True
+        usable = false
+        count = 0
+        value = 200
         MyBase.fInd = New Tuple(Of Integer, Boolean, Boolean)(7, True, True)
         MyBase.mInd = New Tuple(Of Integer, Boolean, Boolean)(3, False, True)
-        MyBase.isCursed = True
-        MyBase.isRandoTFAcceptable = False
+        MyBase.cursed = True
+        rando_inv_allowed = False
     End Sub
     Overrides Sub onEquip(ByRef p As Player)
         If p.formName.Equals("Half-Succubus") Or p.className.Equals("Thrall") Then Exit Sub
@@ -35,7 +35,7 @@
         Else
             p.prt.setIAInd(pInd.eyes, 8, False, True)
         End If
-        p.prefForm = New preferedForm()
+        p.prefForm = New preferredForm()
 
         p.drawPort()
     End Sub
@@ -58,7 +58,7 @@
             p.prt.setIAInd(pInd.eyes, 8, False, True)
         End If
 
-        p.prefForm = New preferedForm()
+        p.prefForm = New preferredForm()
 
         p.drawPort()
     End Sub

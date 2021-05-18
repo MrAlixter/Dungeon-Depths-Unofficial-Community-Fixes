@@ -2,15 +2,22 @@
     Inherits Item
 
     Sub New()
-        MyBase.setName("Grappling_Hook")
-        MyBase.setDesc("A debugging item that lets one teleport/reset floors.  Use your powers for good, ok?")
+        '|ID Info|
+        setName("Grappling_Hook")
         id = 148
         tier = Nothing
-        MyBase.setUsable(True)
-        MyBase.count = 0
-        MyBase.value = 0
 
-        MyBase.isRandoTFAcceptable = False
+        '|Item Flags|
+        usable = True
+        rando_inv_allowed = False
+
+        '|Stats|
+        count = 0
+        value = 0
+
+        '|Description|
+        setDesc("A debugging item that lets one teleport/reset floors.  Use your powers for good, ok?")
+
     End Sub
 
     Overrides Sub use(ByRef p As Player)

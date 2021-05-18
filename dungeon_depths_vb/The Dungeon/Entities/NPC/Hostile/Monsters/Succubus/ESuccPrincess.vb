@@ -22,6 +22,8 @@
         If cause.GetType() Is GetType(Player) Then
             Dim p = CType(cause, Player)
 
+            If p.perks(perk.cynnsq1ct1) > -1 Then p.perks(perk.cynnsq1ct1) += 1
+
             If p.perks(perk.succubuscurse) > -1 Then
 
                 Dim isPTFed = p.perks(perk.succubuscurse) > 0

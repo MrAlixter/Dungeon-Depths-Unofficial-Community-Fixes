@@ -15,7 +15,7 @@
             Case "Goddess"
                 Return New GoddessTF()
             Case "Slime"
-                Return New slimetf()
+                Return New SlimeTF()
             Case "Succubus"
                 Return New SuccubusTF()
             Case "Tigress"
@@ -50,6 +50,8 @@
                 Return New FaePieTF()
             Case "Horse"
                 Return New HorseTF()
+            Case "Cow"
+                Return New CowTF()
             Case Else
                 Return Nothing
         End Select

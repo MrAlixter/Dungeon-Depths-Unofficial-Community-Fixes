@@ -2,31 +2,37 @@
     Inherits Food
 
     Sub New()
-        MyBase.setName("Garden_Salad")
-        MyBase.setDesc("A leafy dish that has some degree of healing/mana restoration power.  While it seems healthy enough, the magic used to give it its regenerative powers was not performed by an expert, so it may be slightly unstable." & vbCrLf &
-                       "+22 stamina, Either +35 health or +14 mana")
+        '|ID Info|
+        setName("Garden_Salad")
         id = 117
         tier = Nothing
-        MyBase.setUsable(True)
-        MyBase.count = 0
-        MyBase.value = 1999
-        setCalories(22)
-    End Sub
-    Public Overrides Sub Effect()
-        Dim p As Player = Game.player1
 
+        '|Item Flags|
+        usable = true
+
+        '|Stats|
+        count = 0
+        value = 1999
+        setCalories(22)
+
+        '|Description|
+        setDesc("A leafy dish that has some degree of healing/mana restoration power.  While it seems healthy enough, the magic used to give it its regenerative powers was not performed by an expert, so it may be slightly unstable." & DDUtils.RNRN &
+                "+22 stamina" & DDUtils.RNRN &
+                "Either +50 health or +25 mana")
+    End Sub
+    Public Overrides Sub effect(ByRef p As Player)
         If Int(Rnd() * 2) = 0 Then
-            p.health += 35 / p.getMaxHealth
+            p.health += 50 / p.getMaxHealth
             If p.health > 1 Then p.health = 1.0
-            Game.pushLstLog("+35 health!")
+            Game.pushLstLog("+50 health!")
         Else
-            p.mana += 14
+            p.mana += 25
             If p.mana > p.getMaxMana Then p.mana = p.getMaxMana
-            Game.pushLstLog("+14 mana!")
+            Game.pushLstLog("+25 mana!")
         End If
 
         If Int(Rnd() * 3) = 0 Or Game.noRNG Then
-            p.ongoingTFs.Add(New PlantfolkTF())
+            p.ongoingTFs.add(New PlantfolkTF())
         End If
 
         p.update()

@@ -2,13 +2,21 @@
     Inherits Item
 
     Sub New()
-        MyBase.setName("Mana_Potion")
-        MyBase.setDesc("A normal, everyday mana potion.")
+        '|ID Info|
+        setName("Mana_Potion")
         id = 13
         tier = 2
-        MyBase.setUsable(True)
-        MyBase.count = 0
-        MyBase.value = 633
+
+        '|Item Flags|
+        usable = True
+
+        '|Stats|
+        count = 0
+        value = 633
+
+        '|Description|
+        setDesc("A normal, everyday mana potion.")
+
     End Sub
 
     Overrides Sub use(ByRef p As Player)

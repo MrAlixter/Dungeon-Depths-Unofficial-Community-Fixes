@@ -4,13 +4,13 @@
                                           "Chameleon (Blonde)", "Chameleon (Black Hair)", "Chameleon (Redhead)",
                                           "Chameleon (Brunette)", "Chameleon (Neon)", "Chameleon (Pastels)"}
     Sub New()
-        MyBase.setName("Crimson_Manual")
-        MyBase.setDesc("A smoldering leather-bound book that contains something practical written by a succubus.")
+        setName("Crimson_Manual")
+        setDesc("A smoldering leather-bound book that contains something practical written by a succubus.")
         id = 227
         tier = Nothing
-        MyBase.setUsable(True)
-        MyBase.count = 0
-        MyBase.value = 666
+        usable = true
+        count = 0
+        value = 666
     End Sub
 
     Overrides Sub use(ByRef p As Player)

@@ -29,8 +29,9 @@ Partial Class Debug_Window
         Me.boxNotes = New System.Windows.Forms.RichTextBox()
         Me.tabGeneral = New System.Windows.Forms.TabPage()
         Me.groupNotes = New System.Windows.Forms.GroupBox()
-        Me.picBoard = New System.Windows.Forms.PictureBox()
+        Me.boxMap = New System.Windows.Forms.PictureBox()
         Me.groupGeneral = New System.Windows.Forms.GroupBox()
+        Me.lblBarrier = New System.Windows.Forms.Label()
         Me.lblTrap = New System.Windows.Forms.Label()
         Me.boxBeaten = New System.Windows.Forms.CheckBox()
         Me.lblSelected = New System.Windows.Forms.Label()
@@ -75,17 +76,17 @@ Partial Class Debug_Window
         Me.tabPageClothing = New System.Windows.Forms.TabPage()
         Me.tabPageFace = New System.Windows.Forms.TabPage()
         Me.tabPageBlush = New System.Windows.Forms.TabPage()
+        Me.tabPageFaceMark = New System.Windows.Forms.TabPage()
         Me.tabPageMiddleHair = New System.Windows.Forms.TabPage()
-        Me.tabPageHorns = New System.Windows.Forms.TabPage()
         Me.tabPageEars = New System.Windows.Forms.TabPage()
         Me.tabPageNose = New System.Windows.Forms.TabPage()
         Me.tabPageMouth = New System.Windows.Forms.TabPage()
         Me.tabPageEyes = New System.Windows.Forms.TabPage()
         Me.tabPageEyebrows = New System.Windows.Forms.TabPage()
-        Me.tabPageFaceMark = New System.Windows.Forms.TabPage()
         Me.tabPageGlasses = New System.Windows.Forms.TabPage()
         Me.tabPageCloak = New System.Windows.Forms.TabPage()
         Me.tabPageAccessories = New System.Windows.Forms.TabPage()
+        Me.tabPageHorns = New System.Windows.Forms.TabPage()
         Me.tabPageFrontHair = New System.Windows.Forms.TabPage()
         Me.tabPageHat = New System.Windows.Forms.TabPage()
         Me.picPreview = New System.Windows.Forms.PictureBox()
@@ -166,7 +167,7 @@ Partial Class Debug_Window
         Me.tabInformation.SuspendLayout()
         Me.tabGeneral.SuspendLayout()
         Me.groupNotes.SuspendLayout()
-        CType(Me.picBoard, System.ComponentModel.ISupportInitialize).BeginInit()
+        CType(Me.boxMap, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.groupGeneral.SuspendLayout()
         Me.boxMapControls.SuspendLayout()
         CType(Me.boxZoom, System.ComponentModel.ISupportInitialize).BeginInit()
@@ -259,26 +260,27 @@ Partial Class Debug_Window
         'groupNotes
         '
         Me.groupNotes.BackColor = System.Drawing.Color.Black
-        Me.groupNotes.Controls.Add(Me.picBoard)
+        Me.groupNotes.Controls.Add(Me.boxMap)
         Me.groupNotes.Location = New System.Drawing.Point(197, 7)
         Me.groupNotes.Name = "groupNotes"
         Me.groupNotes.Size = New System.Drawing.Size(537, 535)
         Me.groupNotes.TabIndex = 4
         Me.groupNotes.TabStop = False
         '
-        'picBoard
+        'boxMap
         '
-        Me.picBoard.BackColor = System.Drawing.Color.Black
-        Me.picBoard.Location = New System.Drawing.Point(3, 11)
-        Me.picBoard.Name = "picBoard"
-        Me.picBoard.Size = New System.Drawing.Size(532, 522)
-        Me.picBoard.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom
-        Me.picBoard.TabIndex = 0
-        Me.picBoard.TabStop = False
+        Me.boxMap.BackColor = System.Drawing.Color.Black
+        Me.boxMap.Location = New System.Drawing.Point(3, 11)
+        Me.boxMap.Name = "boxMap"
+        Me.boxMap.Size = New System.Drawing.Size(532, 522)
+        Me.boxMap.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom
+        Me.boxMap.TabIndex = 0
+        Me.boxMap.TabStop = False
         '
         'groupGeneral
         '
         Me.groupGeneral.BackColor = System.Drawing.Color.Black
+        Me.groupGeneral.Controls.Add(Me.lblBarrier)
         Me.groupGeneral.Controls.Add(Me.lblTrap)
         Me.groupGeneral.Controls.Add(Me.boxBeaten)
         Me.groupGeneral.Controls.Add(Me.lblSelected)
@@ -305,12 +307,23 @@ Partial Class Debug_Window
         Me.groupGeneral.TabStop = False
         Me.groupGeneral.Text = "GENERAL"
         '
+        'lblBarrier
+        '
+        Me.lblBarrier.AutoSize = True
+        Me.lblBarrier.Font = New System.Drawing.Font("Consolas", 12.0!, System.Drawing.FontStyle.Bold)
+        Me.lblBarrier.ForeColor = System.Drawing.Color.DarkRed
+        Me.lblBarrier.Location = New System.Drawing.Point(56, 508)
+        Me.lblBarrier.Name = "lblBarrier"
+        Me.lblBarrier.Size = New System.Drawing.Size(72, 19)
+        Me.lblBarrier.TabIndex = 210
+        Me.lblBarrier.Text = "BARRIER"
+        '
         'lblTrap
         '
         Me.lblTrap.AutoSize = True
         Me.lblTrap.Font = New System.Drawing.Font("Consolas", 12.0!, System.Drawing.FontStyle.Bold)
         Me.lblTrap.ForeColor = System.Drawing.Color.Red
-        Me.lblTrap.Location = New System.Drawing.Point(70, 501)
+        Me.lblTrap.Location = New System.Drawing.Point(70, 490)
         Me.lblTrap.Name = "lblTrap"
         Me.lblTrap.Size = New System.Drawing.Size(45, 19)
         Me.lblTrap.TabIndex = 209
@@ -331,7 +344,7 @@ Partial Class Debug_Window
         Me.lblSelected.AutoSize = True
         Me.lblSelected.Font = New System.Drawing.Font("Consolas", 12.0!, System.Drawing.FontStyle.Bold)
         Me.lblSelected.ForeColor = System.Drawing.Color.HotPink
-        Me.lblSelected.Location = New System.Drawing.Point(52, 348)
+        Me.lblSelected.Location = New System.Drawing.Point(52, 337)
         Me.lblSelected.Name = "lblSelected"
         Me.lblSelected.Size = New System.Drawing.Size(81, 19)
         Me.lblSelected.TabIndex = 206
@@ -340,7 +353,7 @@ Partial Class Debug_Window
         'btnEditSelection
         '
         Me.btnEditSelection.BackColor = System.Drawing.Color.Black
-        Me.btnEditSelection.Location = New System.Drawing.Point(41, 268)
+        Me.btnEditSelection.Location = New System.Drawing.Point(41, 261)
         Me.btnEditSelection.Name = "btnEditSelection"
         Me.btnEditSelection.Size = New System.Drawing.Size(102, 46)
         Me.btnEditSelection.TabIndex = 205
@@ -408,8 +421,8 @@ Partial Class Debug_Window
         '
         Me.lblStatue.AutoSize = True
         Me.lblStatue.Font = New System.Drawing.Font("Consolas", 12.0!, System.Drawing.FontStyle.Bold)
-        Me.lblStatue.ForeColor = System.Drawing.Color.LightSlateGray
-        Me.lblStatue.Location = New System.Drawing.Point(61, 444)
+        Me.lblStatue.ForeColor = System.Drawing.Color.Silver
+        Me.lblStatue.Location = New System.Drawing.Point(61, 433)
         Me.lblStatue.Name = "lblStatue"
         Me.lblStatue.Size = New System.Drawing.Size(63, 19)
         Me.lblStatue.TabIndex = 204
@@ -420,7 +433,7 @@ Partial Class Debug_Window
         Me.lblStairs.AutoSize = True
         Me.lblStairs.Font = New System.Drawing.Font("Consolas", 12.0!, System.Drawing.FontStyle.Bold)
         Me.lblStairs.ForeColor = System.Drawing.Color.Sienna
-        Me.lblStairs.Location = New System.Drawing.Point(61, 482)
+        Me.lblStairs.Location = New System.Drawing.Point(61, 471)
         Me.lblStairs.Name = "lblStairs"
         Me.lblStairs.Size = New System.Drawing.Size(63, 19)
         Me.lblStairs.TabIndex = 203
@@ -431,7 +444,7 @@ Partial Class Debug_Window
         Me.lblChest.AutoSize = True
         Me.lblChest.Font = New System.Drawing.Font("Consolas", 12.0!, System.Drawing.FontStyle.Bold)
         Me.lblChest.ForeColor = System.Drawing.Color.Yellow
-        Me.lblChest.Location = New System.Drawing.Point(65, 463)
+        Me.lblChest.Location = New System.Drawing.Point(65, 452)
         Me.lblChest.Name = "lblChest"
         Me.lblChest.Size = New System.Drawing.Size(54, 19)
         Me.lblChest.TabIndex = 202
@@ -442,7 +455,7 @@ Partial Class Debug_Window
         Me.lblNPC.AutoSize = True
         Me.lblNPC.Font = New System.Drawing.Font("Consolas", 12.0!, System.Drawing.FontStyle.Bold)
         Me.lblNPC.ForeColor = System.Drawing.Color.Blue
-        Me.lblNPC.Location = New System.Drawing.Point(74, 424)
+        Me.lblNPC.Location = New System.Drawing.Point(74, 413)
         Me.lblNPC.Name = "lblNPC"
         Me.lblNPC.Size = New System.Drawing.Size(36, 19)
         Me.lblNPC.TabIndex = 201
@@ -453,7 +466,7 @@ Partial Class Debug_Window
         Me.lblPlayer.AutoSize = True
         Me.lblPlayer.Font = New System.Drawing.Font("Consolas", 12.0!, System.Drawing.FontStyle.Bold)
         Me.lblPlayer.ForeColor = System.Drawing.Color.LawnGreen
-        Me.lblPlayer.Location = New System.Drawing.Point(61, 405)
+        Me.lblPlayer.Location = New System.Drawing.Point(61, 394)
         Me.lblPlayer.Name = "lblPlayer"
         Me.lblPlayer.Size = New System.Drawing.Size(63, 19)
         Me.lblPlayer.TabIndex = 200
@@ -464,7 +477,7 @@ Partial Class Debug_Window
         Me.lblUnseen.AutoSize = True
         Me.lblUnseen.Font = New System.Drawing.Font("Consolas", 12.0!, System.Drawing.FontStyle.Bold)
         Me.lblUnseen.ForeColor = System.Drawing.Color.Gray
-        Me.lblUnseen.Location = New System.Drawing.Point(61, 386)
+        Me.lblUnseen.Location = New System.Drawing.Point(61, 375)
         Me.lblUnseen.Name = "lblUnseen"
         Me.lblUnseen.Size = New System.Drawing.Size(63, 19)
         Me.lblUnseen.TabIndex = 199
@@ -474,7 +487,7 @@ Partial Class Debug_Window
         '
         Me.lblSeen.AutoSize = True
         Me.lblSeen.Font = New System.Drawing.Font("Consolas", 12.0!, System.Drawing.FontStyle.Bold)
-        Me.lblSeen.Location = New System.Drawing.Point(70, 367)
+        Me.lblSeen.Location = New System.Drawing.Point(70, 356)
         Me.lblSeen.Name = "lblSeen"
         Me.lblSeen.Size = New System.Drawing.Size(45, 19)
         Me.lblSeen.TabIndex = 198
@@ -484,7 +497,7 @@ Partial Class Debug_Window
         '
         Me.lblKeyHeader.AutoSize = True
         Me.lblKeyHeader.Font = New System.Drawing.Font("Consolas", 12.0!, System.Drawing.FontStyle.Underline)
-        Me.lblKeyHeader.Location = New System.Drawing.Point(56, 325)
+        Me.lblKeyHeader.Location = New System.Drawing.Point(56, 314)
         Me.lblKeyHeader.Name = "lblKeyHeader"
         Me.lblKeyHeader.Size = New System.Drawing.Size(72, 19)
         Me.lblKeyHeader.TabIndex = 197
@@ -671,17 +684,17 @@ Partial Class Debug_Window
         Me.tabPortrait.Controls.Add(Me.tabPageClothing)
         Me.tabPortrait.Controls.Add(Me.tabPageFace)
         Me.tabPortrait.Controls.Add(Me.tabPageBlush)
+        Me.tabPortrait.Controls.Add(Me.tabPageFaceMark)
         Me.tabPortrait.Controls.Add(Me.tabPageMiddleHair)
-        Me.tabPortrait.Controls.Add(Me.tabPageHorns)
         Me.tabPortrait.Controls.Add(Me.tabPageEars)
         Me.tabPortrait.Controls.Add(Me.tabPageNose)
         Me.tabPortrait.Controls.Add(Me.tabPageMouth)
         Me.tabPortrait.Controls.Add(Me.tabPageEyes)
         Me.tabPortrait.Controls.Add(Me.tabPageEyebrows)
-        Me.tabPortrait.Controls.Add(Me.tabPageFaceMark)
         Me.tabPortrait.Controls.Add(Me.tabPageGlasses)
         Me.tabPortrait.Controls.Add(Me.tabPageCloak)
         Me.tabPortrait.Controls.Add(Me.tabPageAccessories)
+        Me.tabPortrait.Controls.Add(Me.tabPageHorns)
         Me.tabPortrait.Controls.Add(Me.tabPageFrontHair)
         Me.tabPortrait.Controls.Add(Me.tabPageHat)
         Me.tabPortrait.Location = New System.Drawing.Point(3, 254)
@@ -833,6 +846,16 @@ Partial Class Debug_Window
         Me.tabPageBlush.TabIndex = 26
         Me.tabPageBlush.Text = "BLUSH"
         '
+        'tabPageFaceMark
+        '
+        Me.tabPageFaceMark.AutoScroll = True
+        Me.tabPageFaceMark.BackColor = System.Drawing.Color.Black
+        Me.tabPageFaceMark.Location = New System.Drawing.Point(4, 24)
+        Me.tabPageFaceMark.Name = "tabPageFaceMark"
+        Me.tabPageFaceMark.Size = New System.Drawing.Size(728, 263)
+        Me.tabPageFaceMark.TabIndex = 11
+        Me.tabPageFaceMark.Text = "FACE MARK"
+        '
         'tabPageMiddleHair
         '
         Me.tabPageMiddleHair.AutoScroll = True
@@ -842,16 +865,6 @@ Partial Class Debug_Window
         Me.tabPageMiddleHair.Size = New System.Drawing.Size(728, 263)
         Me.tabPageMiddleHair.TabIndex = 5
         Me.tabPageMiddleHair.Text = "MIDDLE HAIR"
-        '
-        'tabPageHorns
-        '
-        Me.tabPageHorns.BackColor = System.Drawing.Color.Black
-        Me.tabPageHorns.ForeColor = System.Drawing.Color.White
-        Me.tabPageHorns.Location = New System.Drawing.Point(4, 24)
-        Me.tabPageHorns.Name = "tabPageHorns"
-        Me.tabPageHorns.Size = New System.Drawing.Size(728, 263)
-        Me.tabPageHorns.TabIndex = 25
-        Me.tabPageHorns.Text = "HORNS"
         '
         'tabPageEars
         '
@@ -903,16 +916,6 @@ Partial Class Debug_Window
         Me.tabPageEyebrows.TabIndex = 10
         Me.tabPageEyebrows.Text = "EYEBROWS"
         '
-        'tabPageFaceMark
-        '
-        Me.tabPageFaceMark.AutoScroll = True
-        Me.tabPageFaceMark.BackColor = System.Drawing.Color.Black
-        Me.tabPageFaceMark.Location = New System.Drawing.Point(4, 24)
-        Me.tabPageFaceMark.Name = "tabPageFaceMark"
-        Me.tabPageFaceMark.Size = New System.Drawing.Size(728, 263)
-        Me.tabPageFaceMark.TabIndex = 11
-        Me.tabPageFaceMark.Text = "FACE MARK"
-        '
         'tabPageGlasses
         '
         Me.tabPageGlasses.AutoScroll = True
@@ -942,6 +945,16 @@ Partial Class Debug_Window
         Me.tabPageAccessories.Size = New System.Drawing.Size(728, 263)
         Me.tabPageAccessories.TabIndex = 14
         Me.tabPageAccessories.Text = "ACCESSORIES"
+        '
+        'tabPageHorns
+        '
+        Me.tabPageHorns.BackColor = System.Drawing.Color.Black
+        Me.tabPageHorns.ForeColor = System.Drawing.Color.White
+        Me.tabPageHorns.Location = New System.Drawing.Point(4, 24)
+        Me.tabPageHorns.Name = "tabPageHorns"
+        Me.tabPageHorns.Size = New System.Drawing.Size(728, 263)
+        Me.tabPageHorns.TabIndex = 25
+        Me.tabPageHorns.Text = "HORNS"
         '
         'tabPageFrontHair
         '
@@ -1736,6 +1749,7 @@ Partial Class Debug_Window
         Me.boxHeight.BackColor = System.Drawing.Color.Black
         Me.boxHeight.ForeColor = System.Drawing.Color.White
         Me.boxHeight.Location = New System.Drawing.Point(212, 82)
+        Me.boxHeight.Maximum = New Decimal(New Integer() {500, 0, 0, 0})
         Me.boxHeight.Name = "boxHeight"
         Me.boxHeight.Size = New System.Drawing.Size(120, 26)
         Me.boxHeight.TabIndex = 26
@@ -1745,6 +1759,7 @@ Partial Class Debug_Window
         Me.boxWidth.BackColor = System.Drawing.Color.Black
         Me.boxWidth.ForeColor = System.Drawing.Color.White
         Me.boxWidth.Location = New System.Drawing.Point(212, 50)
+        Me.boxWidth.Maximum = New Decimal(New Integer() {500, 0, 0, 0})
         Me.boxWidth.Name = "boxWidth"
         Me.boxWidth.Size = New System.Drawing.Size(120, 26)
         Me.boxWidth.TabIndex = 25
@@ -1793,7 +1808,7 @@ Partial Class Debug_Window
         Me.tabInformation.ResumeLayout(False)
         Me.tabGeneral.ResumeLayout(False)
         Me.groupNotes.ResumeLayout(False)
-        CType(Me.picBoard, System.ComponentModel.ISupportInitialize).EndInit()
+        CType(Me.boxMap, System.ComponentModel.ISupportInitialize).EndInit()
         Me.groupGeneral.ResumeLayout(False)
         Me.groupGeneral.PerformLayout()
         Me.boxMapControls.ResumeLayout(False)
@@ -1916,7 +1931,7 @@ Partial Class Debug_Window
     Friend WithEvents lblChest As Label
     Friend WithEvents lblNPC As Label
     Friend WithEvents lblStatue As Label
-    Friend WithEvents picBoard As PictureBox
+    Friend WithEvents boxMap As PictureBox
     Friend WithEvents boxMapControls As GroupBox
     Friend WithEvents btnPan As RadioButton
     Friend WithEvents btnSelect As RadioButton
@@ -1976,4 +1991,5 @@ Partial Class Debug_Window
     Friend WithEvents tabPageClothesBtm As System.Windows.Forms.TabPage
     Friend WithEvents tabPageHorns As System.Windows.Forms.TabPage
     Friend WithEvents tabPageBlush As System.Windows.Forms.TabPage
+    Friend WithEvents lblBarrier As System.Windows.Forms.Label
 End Class

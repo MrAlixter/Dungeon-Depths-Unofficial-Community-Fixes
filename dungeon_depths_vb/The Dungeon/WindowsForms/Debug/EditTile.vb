@@ -48,6 +48,11 @@
         boxType.Items.Add("@ (Statue)")
         boxType.Items.Add("$ (NPC)")
         boxType.Items.Add("+ (Trap)")
+        If Game.currFloor.floorNumber = 9999 Or Game.currFloor.floorNumber = 10000 Then
+            boxType.Items.Add("- (Barrier)")
+            boxType.Items.Add("| (Barrier)")
+        End If
+
         'Temporarily removes handler so that the event doesn't trigger
         RemoveHandler boxType.SelectedIndexChanged, AddressOf boxType_SelectedIndexChanged
         If (t.Text = "#") Then 'Chest
@@ -90,6 +95,16 @@
             addMoveButton(boxOptions.Controls.Count)
         ElseIf (t.Text = "+") Then 'Trap
             boxType.SelectedItem = "+ (Trap)"
+            boxType.Enabled = True
+            boxOptions.Visible = True
+            addMoveButton(boxOptions.Controls.Count)
+        ElseIf (t.Text = "-") Then 'Barrier
+            boxType.SelectedItem = "- (Barrier)"
+            boxType.Enabled = True
+            boxOptions.Visible = True
+            addMoveButton(boxOptions.Controls.Count)
+        ElseIf (t.Text = "|") Then 'Barrier
+            boxType.SelectedItem = "| (Barrier)"
             boxType.Enabled = True
             boxOptions.Visible = True
             addMoveButton(boxOptions.Controls.Count)
@@ -205,6 +220,18 @@
             Game.currFloor.mBoard(p.Y, p.X).ForeColor = Color.FromArgb(45, 45, 45)
             Dim trap As New Trap(New Point(p.X, p.Y))
             Game.currFloor.trapList.Add(trap)
+        ElseIf name = "- (Barrier)" Then
+            If removeFlag Then removeItem()
+            t.Tag = 0
+            t.Text = "-"
+            t.ForeColor = Color.FromArgb(45, 45, 45)
+            Game.currFloor.mBoard(p.Y, p.X).ForeColor = Color.FromArgb(45, 45, 45)
+        ElseIf name = "| (Barrier)" Then
+            If removeFlag Then removeItem()
+            t.Tag = 0
+            t.Text = "|"
+            t.ForeColor = Color.FromArgb(45, 45, 45)
+            Game.currFloor.mBoard(p.Y, p.X).ForeColor = Color.FromArgb(45, 45, 45)
         End If
 
 

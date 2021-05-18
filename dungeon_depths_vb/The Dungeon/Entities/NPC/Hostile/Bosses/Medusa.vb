@@ -3,22 +3,28 @@
     Dim hasAttackedFlag = False
     Dim pIsBlindCt = 3
     Sub New()
+        '|ID Info|
         name = "Medusa, Gorgon of Myth"
+
+        '|Stats|
         maxHealth = 200
         attack = 50
         defense = 35
         speed = 40
+        xp_value = 1000
 
+        '|Inventory|
         inv.setCount("Omni_Charm", 1)
 
-        setupMonsterOnSpawn()
-
+        '|Dialog Variables|
         title = " "
         pronoun = "she"
         pPronoun = "her"
         rPronoun = "her"
 
-        xpValue = 1000
+        '|Misc|
+        setupMonsterOnSpawn()
+
     End Sub
 
     Public Overrides Sub attackCMD(ByRef target As Entity)

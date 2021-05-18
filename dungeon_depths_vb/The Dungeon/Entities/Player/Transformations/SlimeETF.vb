@@ -15,10 +15,14 @@
     Shared Sub step1()
         'In the future this will damage/destroy armor
         Dim p = Game.player1
-        p.inv.add("Dissolved_Clothes", 1)
-        Equipment.clothesChange(p, "Dissolved_Clothes")
-        pushLblEventWithoutLoss("As you take stock of yourself, you notice that your clothing has been partially eaten away by a teal slime that you seem to sweating in small amounts.  This seems like something you are going to need to keep an eye on...")
+        If Not p.equippedArmor.getAName.Equals("Naked") Then
+            p.inv.add("Dissolved_Clothes", 1)
+            Equipment.clothesChange(p, "Dissolved_Clothes")
+            pushLblEventWithoutLoss("As you take stock of yourself, you notice that your clothing has been partially eaten away by a teal slime that you seem to sweating in small amounts.  This seems like something you are going to need to keep an eye on...")
+        End If
+
         p.drawPort()
+
         If Game.player1.perks(perk.slimetf) > -1 Then Game.player1.perks(perk.slimetf) += 1
         If Game.player1.perks(perk.googirltf) > -1 Then Game.player1.perks(perk.googirltf) += 1
     End Sub

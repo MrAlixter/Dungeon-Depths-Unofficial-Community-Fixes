@@ -2,13 +2,13 @@
     Inherits Item
 
     Sub New()
-        MyBase.setName("Health_Charm")
-        MyBase.setDesc("A charm that slightly boosts your health.")
+        setName("Health_Charm")
+        setDesc("A charm that slightly boosts your health.")
         id = 48
         tier = 3
-        MyBase.setUsable(True)
-        MyBase.count = 0
-        MyBase.value = 1750
+        usable = true
+        count = 0
+        value = 1750
     End Sub
 
     Overrides Sub use(ByRef p As Player)

@@ -7,6 +7,7 @@
     Sub New(cs As Integer, n As Integer, tts As Integer, wi As Double, cbs As Boolean, tfd As Boolean)
         MyBase.New(cs, n, tts, wi, cbs, tfd)
         nextStep = getNextStep(cs)
+        tfName = "BunnyGirl​TF"
     End Sub
 
     Public Overrides Sub setWaitTime(stage As Integer)

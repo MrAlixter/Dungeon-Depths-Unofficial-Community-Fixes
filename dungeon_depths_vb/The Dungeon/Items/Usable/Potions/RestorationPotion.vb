@@ -2,13 +2,21 @@
     Inherits Item
 
     Sub New()
-        MyBase.setName("Restore_Potion")
-        MyBase.setDesc("'Restores ye to ye original form' says the bottle.")
+        '|ID Info|
+        setName("Restore_Potion")
         id = 14
         tier = 3
-        MyBase.setUsable(True)
-        MyBase.count = 0
-        MyBase.value = 275
+
+        '|Item Flags|
+        usable = True
+
+        '|Stats|
+        count = 0
+        value = 275
+
+        '|Description|
+        setDesc("""Restores ye to ye original form"" says the bottle.")
+
     End Sub
 
     Overrides Sub use(ByRef p As Player)

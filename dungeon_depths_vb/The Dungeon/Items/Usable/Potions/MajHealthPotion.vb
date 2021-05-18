@@ -2,13 +2,21 @@
     Inherits Item
 
     Sub New()
-        MyBase.setName("Major_Health_Potion")
-        MyBase.setDesc("A turbo-charged health potion that heals all wounds completely.")
+        '|ID Info|
+        setName("Major_Health_Potion")
         id = 82
         tier = 3
-        MyBase.setUsable(True)
-        MyBase.count = 0
-        MyBase.value = 550
+
+        '|Item Flags|
+        usable = True
+
+        '|Stats|
+        count = 0
+        value = 550
+
+        '|Description|
+        setDesc("A turbo-charged health potion that heals all wounds completely.")
+
     End Sub
 
     Overrides Sub use(ByRef p As Player)

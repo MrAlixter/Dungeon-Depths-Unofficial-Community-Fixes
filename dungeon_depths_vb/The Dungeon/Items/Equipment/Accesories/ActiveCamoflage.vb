@@ -2,15 +2,15 @@
     Inherits Accessory
     'The ruby circlet provides a +1 attack buff
     Sub New()
-        MyBase.setName("Active_Camoflage")
-        MyBase.setDesc("Unimplemented")
+        setName("Active_Camoflage")
+        setDesc("Unimplemented")
         id = 141
         tier = Nothing
-        MyBase.setUsable(False)
-        MyBase.count = 0
-        MyBase.value = 0
+        usable = false
+        count = 0
+        value = 0
 
-        MyBase.isRandoTFAcceptable = False
+        rando_inv_allowed = False
     End Sub
 
     Public Overrides Sub onEquip(ByRef p As Player)

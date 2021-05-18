@@ -27,7 +27,8 @@
         inv.setCount("Bunny_Suit", 1)
         inv.setCount("Witch_Cosplay", 1)
         inv.setCount("Brawler_Cosplay", 1)
-        inv.setCount(perk.cowbell, 1)
+        inv.setCount("Cow_Print_Bra", 1)
+        inv.setCount("Cowbell", 1)
         inv.setCount("Crystalline_Armor", 1)
 
         'Weapons
@@ -47,7 +48,10 @@
         picNPC = New List(Of Image)
         picNPC.AddRange({picNormal, ShopNPC.npcLib.atrs(0).getAt(4), ShopNPC.npcLib.atrs(0).getAt(5), picPrincess, picBunny})
 
-        picNPC.AddRange({ShopNPC.npcLib.atrs(0).getAt(9), picArachne})
+        picNPC.AddRange({ShopNPC.npcLib.atrs(0).getAt(9),
+                         picArachne,
+                         ShopNPC.npcLib.atrs(0).getAt(90),
+                         ShopNPC.npcLib.atrs(0).getAt(96)})
         If speed = Game.player1.speed Then speed -= 1
         title = " the "
     End Sub
@@ -78,10 +82,12 @@
             Game.pushNPCDialog("Hey, " & Game.player1.className & ", how's it going?")
         ElseIf npcIndex = 4 Then
             Game.pushNPCDialog("So are these real or fake?  My ears, I mean.")
-        ElseIf npcIndex = 5 Then
+        ElseIf npcIndex = 5 Or npcIndex = 8 Then
             Game.pushNPCDialog("...")
+        ElseIf npcIndex = 7 Then
+            Game.pushNPCDialog("Damn it, and I set aside the extra-skimpy bikini for this too...")
         ElseIf npcIndex = 6 Then
-            If Game.player1.formName.Equals("Arachne") And Game.player1.equippedArmor.getAntiSlutVarInd > 0 Then
+            If Game.player1.formName.Equals("Arachne") And Game.player1.equippedArmor.getAntiSlutInd > 0 Then
                 Game.pushNPCDialog("Ooh, darling, are you the one who laid that snare?  Aren't you a cutie...")
             ElseIf Game.player1.formName.Equals("Arachne") And Game.player1.equippedArmor.getSlutVarInd > 0 Then
                 Game.pushNPCDialog("Ooh, darling, are you the one who laid that snare?  You know, you could spice your look up a bit...")
@@ -96,7 +102,7 @@
     End Sub
 
     Public Overrides Function toFight() As String
-        If npcIndex = 0 Then
+        If npcIndex = 0 Or npcIndex = 7 Then
             Return "Alright, get ready to fight.  This ain't going well for you."
         ElseIf npcIndex = 1 Then
             Return "Ribbit . . ."
@@ -106,7 +112,7 @@
             Return "Get ready, I was trained by the royal mage's guild and I certainly won't submit easily."
         ElseIf npcIndex = 4 Then
             Return "Whaaaat!?!"
-        ElseIf npcIndex = 5 Then
+        ElseIf npcIndex = 5 Or npcIndex = 8 Then
             Return "..."
         ElseIf npcIndex = 6 Then
             Game.pushNPCDialog("*tsk* *tsk* *tsk* Not too bright...")
@@ -114,7 +120,7 @@
         Return "Bad move."
     End Function
     Public Overrides Function hitBySpell() As String
-        If npcIndex = 0 Then
+        If npcIndex = 0 Or npcIndex = 7 Then
             Game.NPCtoCombat(Me)
             Return "Ha!  That's just sloppy."
         ElseIf npcIndex = 1 Then
@@ -128,7 +134,7 @@
             Return "I've seen better spellwork, but that was a decent attempt."
         ElseIf npcIndex = 4 Then
             Return "That's neat!"
-        ElseIf npcIndex = 5 Then
+        ElseIf npcIndex = 5 Or npcIndex = 8 Then
             Return "..."
         ElseIf npcIndex = 6 Then
             Game.NPCtoCombat(Me)
@@ -149,7 +155,6 @@
     Public Overrides Sub toDoll()
         MyBase.toDoll()
         MyBase.npcIndex = 5
-        Game.npcIndex = 5
         isShop = False
     End Sub
 

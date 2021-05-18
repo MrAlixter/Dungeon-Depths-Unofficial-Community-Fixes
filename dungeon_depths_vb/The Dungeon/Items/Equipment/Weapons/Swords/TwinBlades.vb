@@ -2,20 +2,20 @@
     Inherits Weapon
     Sub New()
         '|ID Info|
-        MyBase.setName("Twin_Xiphoi")
+        setName("Twin_Xiphoi")
         id = 150
         tier = Nothing
 
         '|Item Flags|
-        MyBase.setUsable(False)
+        usable = false
 
         '|Stats|
-        MyBase.aBoost = 25
+        MyBase.a_boost = 25
         count = 0
         value = 1820
 
         '|Description|
-        MyBase.setDesc("Why have one neat curved double-edged blade forged from bronze when you can have 2?" & DDUtils.RNRN &
+        setDesc("Why have one neat curved double-edged blade forged from bronze when you can have 2?" & DDUtils.RNRN &
                        "Hits twice" & vbCrLf &
                        getStatInformation())
     End Sub
@@ -26,9 +26,11 @@
         If dmg <= 4 Then '+ ((p.lust Mod 20)) Then
             p.miss(m)
         ElseIf dmg >= 11 Then
+            If (p.getATK * 2) >= m.getIntHealth Then Return -2
             p.cHit(p.getATK, m)
         Else
-            dmg += (p.getATK) + (Me.aBoost)
+            dmg += (p.getATK) + (Me.a_boost)
+            If (Player.calcDamage(dmg, m.defense)) >= m.getIntHealth Then Return Player.calcDamage(dmg, m.defense)
             p.hit(Player.calcDamage(dmg, m.defense), m)
         End If
 
@@ -39,7 +41,7 @@
         ElseIf dmg >= 11 Then
             Return -2
         End If
-        dmg += (p.getATK) + (Me.aBoost)
+        dmg += (p.getATK) + (Me.a_boost)
         Return Player.calcDamage(dmg, m.defense)
     End Function
 End Class

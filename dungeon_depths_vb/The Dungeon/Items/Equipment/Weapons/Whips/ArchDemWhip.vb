@@ -2,16 +2,16 @@
     Inherits Whip
 
     Sub New()
-        MyBase.setName("Archdemon_Whip")
-        MyBase.setDesc("A studded black leather whip that burns with a naughty aura that critically hits more often than a standard sword." & vbCrLf & _
+        setName("Archdemon_Whip")
+        setDesc("A studded black leather whip that burns with a naughty aura that critically hits more often than a standard sword." & vbCrLf & _
                        "+66 ATK")
-        MyBase.setUsable(False)
-        MyBase.aBoost = 66
-        isMonsterDrop = True
+        usable = false
+        MyBase.a_boost = 66
+        droppable = True
         id = 218
         tier = 3
-        MyBase.count = 0
-        MyBase.value = 6666
+        count = 0
+        value = 6666
     End Sub
 
     Public Overrides Function getTier() As Integer

@@ -2,15 +2,15 @@
     Inherits Weapon
 
     Sub New()
-        MyBase.setName("Shrink_Ray")
-        MyBase.setDesc("A pistol-like weapon that reduces an opponent to less than a tenth of their initial height.  Unfortunatley, this may take some time... An ""Warning - Exerimental"" sticker hints that it might be risky to use.")
+        setName("Shrink_Ray")
+        setDesc("A pistol-like weapon that reduces an opponent to less than a tenth of their initial height.  Unfortunatley, this may take some time... An ""Warning - Exerimental"" sticker hints that it might be risky to use.")
         id = 120
         tier = Nothing
-        MyBase.setUsable(False)
-        MyBase.count = 0
-        MyBase.value = 7500
+        usable = false
+        count = 0
+        value = 7500
 
-        MyBase.isRandoTFAcceptable = False
+        rando_inv_allowed = False
     End Sub
 
     Overrides Function attack(ByRef p As Player, ByRef m As Entity) As Integer

@@ -34,7 +34,9 @@
 
         picNPC.AddRange({ShopNPC.npcLib.atrs(0).getAt(48),
                          ShopNPC.npcLib.atrs(0).getAt(59),
-                         picArachne})
+                         picArachne,
+                         ShopNPC.npcLib.atrs(0).getAt(95),
+                         ShopNPC.npcLib.atrs(0).getAt(96)})
 
         If speed = Game.player1.speed Then speed -= 1
         title = " the "
@@ -91,6 +93,12 @@
 
     Public Overrides Function getArachneImageInd() As Integer
         Return 7
+    End Function
+    Public Overrides Function getCatgirlImageInd() As Integer
+        Return 8
+    End Function
+    Public Overrides Function getTrilobiteImageInd() As Integer
+        Return 9
     End Function
 
     Public Overrides Sub toDoll()

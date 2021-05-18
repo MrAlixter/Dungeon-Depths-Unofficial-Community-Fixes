@@ -1,10 +1,25 @@
-﻿Public Class NPC
+﻿'| -- New Layout Example -- |
+'|ID Info|
+
+
+'|Stats|
+
+
+'|Inventory|
+
+
+'|Dialog Variables|
+
+
+'|Misc|
+
+Public Class NPC
     Inherits Entity
     'transformation variables
     Public tfCt As Integer = 0
     Public tfEnd As Integer = 0
     Public sMaxHealth, sMana, sMaxMana, sAttack, sdefense, sWill, sSpeed As Integer
-    Public xpValue As Integer = 10
+    Public xp_value As Integer = 10
     'dialog variables
     Public form As String = ""
     Public title As String
@@ -19,12 +34,8 @@
     Dim img As Image
 
     Public Overrides Sub update()
-        If tfCt > 0 Then
-            tfCt += 1
-        ElseIf tfCt > tfEnd Then
-            tfCt = 0
-            revert()
-        End If
+        reactToTF()
+
         If (Game.player1.className = "Thrall" And Me.name.Contains("Thrall")) Or
            (Game.player1.formName = "Arachne" And Me.name.Contains("Arachne")) Or
             (Game.player1.formName = "Slime" And Me.name.Contains("Slime")) Or
@@ -63,8 +74,7 @@
 
         endMonster()
 
-        Game.player1.clearTarget()
-        Game.player1.xp += xpValue
+        Game.player1.xp += xp_value
         cause.currTarget = Nothing
         cause.nextCombatAction = Nothing
 
@@ -87,7 +97,7 @@
                           " is a lifeless stone statue. It doesn't seem like " & pronoun & " will be needing " &
                           pPronoun & " personal items anymore.", AddressOf Me.endMonster)
 
-        Game.currfloor.statueList.Add(New Statue(Me))
+        Game.currFloor.statueList.Add(New Statue(Me))
     End Sub
     Public Overridable Sub toGold()
         Dim gd As Integer = (maxHealth + attack + defense) * 7
@@ -160,7 +170,7 @@
             Game.pushLblEvent("Your foe drops a key!")
             inv.setCount(53, 1)
             Dim c1 As Chest = Game.baseChest.Create(inv, pos)
-            Game.currfloor.chestList.Add(c1)
+            Game.currFloor.chestList.Add(c1)
         End If
         Game.player1.perks(perk.nekocurse) = -1
         Game.player1.currState.save(Game.player1)
@@ -199,16 +209,13 @@
         'cleanup of the monster
         isDead = True
         endBoss()
+        If p.perks(perk.cynnsq1ct2) > -1 Then p.perks(perk.cynnsq1ct2) += 1
         Game.fromCombat()
         Game.npcList.Remove(Me)
-        Game.pushLstLog("You've defeated the " & name & "!  +" & xpValue & " XP!")
+        Game.pushLstLog("You've defeated the " & name & "!  +" & xp_value & " XP!")
 
 
         'monster transformations
-        If Not sName Is Nothing AndAlso sName.Equals("Ooze Empress") Then
-            Game.pushLblEvent(Game.lblEvent.Text.Split("Press")(0), AddressOf RandoTF.floor4revert, AddressOf RandoTF.floor4keep, "Take your body back?")
-        End If
-
         p.ongoingTFs.remove("Neko")
 
         p.perks(perk.nekocurse) = -1
@@ -242,7 +249,7 @@
         defense = sdefense
         speed = sSpeed
         npcIndex = 0
-        Game.pushLblEvent("The " & name & " return to " & pPronoun & " original self!")
+        Game.pushLogAndEvent("The " & name & " return to " & pPronoun & " original self!")
     End Sub
     Public Sub setInventory(ByVal contents() As Integer, Optional ByVal resetCurrentInv As Boolean = True)
         If resetCurrentInv Then inv = New Inventory(False)
@@ -294,12 +301,11 @@
                     If crit < ebound Then miss(target) Else hit(dmg, target)
                 End If
         End Select
-        
+
     End Sub
     'attacking a player
     Protected Sub miss(target As Player)
-        Game.pushLstLog(CStr("You are able to evade your opponent!"))
-        Game.pushLblCombatEvent(CStr("You are able to evade your opponent!"))
+        Game.pushLogAndEvent(CStr("You are able to evade your opponent!"))
     End Sub
     Protected Sub hit(dmg As Integer, target As Player)
         target.takeDMG(dmg, Me)
@@ -314,8 +320,7 @@
             Exit Sub
         End If
 
-        Game.pushLstLog(CStr(target.getName & " is able to evade their opponent!"))
-        Game.pushLblCombatEvent(CStr(target.getName & " is are able to evade their opponent!"))
+        Game.pushLogAndEvent(CStr(target.getName & " is are able to evade their opponent!"))
     End Sub
     Private Sub hit(dmg As Integer, target As Entity)
         If target.GetType() Is GetType(Player) Then
@@ -324,8 +329,8 @@
         End If
 
         target.takeDMG(dmg, Me)
-        Game.pushLstLog(CStr(target.getName & " got hit! -" & dmg & " health!"))
-        Game.pushLblCombatEvent(CStr(target.getName & " got hit! -" & dmg & " health!"))
+
+        Game.pushLogAndEvent(CStr(target.getName & " got hit! -" & dmg & " health!"))
     End Sub
     Private Sub cHit(dmg As Integer, target As Entity)
         If target.GetType() Is GetType(Player) Then
@@ -334,8 +339,8 @@
         End If
 
         target.takeDMG(dmg * 2, Me)
-        Game.pushLstLog(CStr(target.getName & " got hit! Critical hit! -" & dmg * 2 & " health!"))
-        Game.pushLblCombatEvent(CStr(target.getName & " got hit! Critical hit! -" & dmg * 2 & " health!"))
+
+        Game.pushLogAndEvent(CStr(target.getName & " got hit! Critical hit! -" & dmg * 2 & " health!"))
     End Sub
     'taking damage
     Public Overrides Sub takeDMG(ByVal dmg As Integer, ByRef source As Entity)
@@ -346,6 +351,14 @@
     Public Overridable Function reactToSpell(ByVal spell As String) As Boolean
         Return True
     End Function
+    Public Overridable Sub reactToTF()
+        If tfCt > 0 Then
+            tfCt += 1
+        ElseIf tfCt > tfEnd Then
+            tfCt = 0
+            revert()
+        End If
+    End Sub
 
     Overridable Sub playerDeath(ByRef p As Player)
         DeathEffects.hardDeath()

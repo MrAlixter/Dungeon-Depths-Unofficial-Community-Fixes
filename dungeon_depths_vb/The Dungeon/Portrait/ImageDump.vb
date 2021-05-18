@@ -1,4 +1,6 @@
-﻿Public Class ImageDump
+﻿Imports System.Globalization
+
+Public Class ImageDump
     Dim images As List(Of Image)
     Public key As pInd
     Shared Function imgEQ(ByVal a As Bitmap, ByVal b As Bitmap) As Boolean
@@ -51,11 +53,18 @@
         Dim dir = New IO.DirectoryInfo(direct)
         Dim images = dir.GetFiles("*.png", IO.SearchOption.AllDirectories).ToList
         Dim pictures As New List(Of Image)
+
+        Dim previousCulture = Application.CurrentCulture.Clone
+        Application.CurrentCulture = New CultureInfo("en-US")
+
         For Each img In images.OrderBy(Function(i) i.Name)
             Dim picture As Image
             picture = Image.FromFile(img.FullName)
             pictures.Add(picture)
         Next
+
+        Application.CurrentCulture = previousCulture
+
         Return pictures
     End Function
     Shared Function convToStd(ByVal s As String)

@@ -3,19 +3,19 @@
 
     Sub New()
         '|ID Info|
-        MyBase.setName("CryoGrenade")
+        setName("CryoGrenade")
         id = 128
         tier = Nothing
 
         '|Item Flags|
-        MyBase.setUsable(True)
+        usable = true
 
         '|Stats|
-        MyBase.count = 0
-        MyBase.value = 560
+        count = 0
+        value = 560
 
         '|Description|
-        MyBase.setDesc("A chrome-plated metal cage housing a core that glows an icy blue.  A set of vents keeps the frigid cold inside, but the entire device seems rather...poorly constructed.")
+        setDesc("A chrome-plated metal cage housing a core that glows an icy blue.  A set of vents keeps the frigid cold inside, but the entire device seems rather...poorly constructed.")
     End Sub
 
     Public Overrides Sub use(ByRef p As Player)

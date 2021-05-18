@@ -1,13 +1,13 @@
 ﻿Public Class BlindPotion
     Inherits MysteryPotion
     Sub New()
-        MyBase.setName("Blinding_Potion")
-        MyBase.setDesc("A vibrant-looking potion")
+        setName("Blinding_Potion")
+        setDesc("A vibrant-looking potion")
         id = 93
         tier = 2
-        MyBase.setUsable(True)
-        MyBase.count = 0
-        MyBase.value = 350
+        usable = true
+        count = 0
+        value = 350
         MyBase.onBuy = AddressOf reveal
     End Sub
 

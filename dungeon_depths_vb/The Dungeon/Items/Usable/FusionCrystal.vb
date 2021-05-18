@@ -2,17 +2,25 @@
     Inherits Item
 
     Sub New()
-        MyBase.setName("Fusion_Crystal")
-        MyBase.setDesc("A strange looking crystal reported to fuse two beings upon shattering." & DDUtils.RNRN & _
-                       "Disclaimers:" & vbCrLf &
-                       "Only saves of the current version can be fused." & vbCrLf &
-                       "Players that can not be transformed can not fuse." & vbCrLf &
-                       "Players with the same name can not fuse.")
+        '|ID Info|
+        setName("Fusion_Crystal")
         id = 58
         tier = Nothing
-        MyBase.setUsable(True)
-        MyBase.count = 0
-        MyBase.value = 1000
+
+        '|Item Flags|
+        usable = True
+
+        '|Stats|
+        count = 0
+        value = 1000
+
+        '|Description|
+        setDesc("A strange looking crystal reported to fuse two beings upon shattering." & DDUtils.RNRN & _
+                "Disclaimers:" & vbCrLf &
+                "Only saves of the current version can be fused." & vbCrLf &
+                "Players that can not be transformed can not fuse." & vbCrLf &
+                "Players with the same name can not fuse.")
+
     End Sub
     Overrides Sub use(ByRef p As Player)
         If Me.getUsable() = False Then Exit Sub
@@ -65,17 +73,11 @@
 
         player.maxMana = Math.Max(p1.maxMana * 1.5, p2.maxMana * 1.5)
         player.mana = player.maxMana
-
         player.attack = Math.Max(p1.attack * 1.5, p2.attack * 1.5)
-
         player.defense = Math.Max(p1.defense * 1.5, p2.defense * 1.5)
-
         player.will = Math.Max(p1.will * 1.5, p2.will * 1.5)
-
         player.speed = Math.Max(p1.speed * 1.5, p2.speed * 1.5)
-
         player.lust = Math.Max(p1.lust * 1.5, p2.lust * 1.5)
-
         player.stamina = Math.Min(p1.stamina, p2.stamina)
 
         player.gold = p1.gold

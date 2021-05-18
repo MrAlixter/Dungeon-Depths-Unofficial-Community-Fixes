@@ -9,6 +9,6 @@
     End Sub
 
     Public Overrides Function getEffectDesc()
-        Return "Dick shrinking effect"
+        Return "Dick growth effect"
     End Function
 End Class

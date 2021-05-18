@@ -23,8 +23,8 @@
             Equipment.antiClothingCurse(p)
 
             p.drawPort()
-            Else
-                Game.pushLblEvent("Nothing happened!")
+        Else
+            Game.pushLblEvent("Nothing happened!")
             End If
             p.savePState()
             p.drawPort()

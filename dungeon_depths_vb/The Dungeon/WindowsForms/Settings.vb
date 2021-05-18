@@ -8,12 +8,18 @@
         w.WriteLine(chkNoImg.Checked)
         w.WriteLine(chkAlwaysUnwilling.Checked)
         w.WriteLine(chkNoRNG.Checked)
+        w.WriteLine(chkOldSpellSpec.Checked)
+        w.WriteLine(chkStartWithBooks.Checked)
+        w.WriteLine(chkEoverSS.Checked)
         w.Flush()
         w.Close()
         Game.screenSize = ssize
         Game.noImg = chkNoImg.Checked
         Game.pcUnwilling = chkAlwaysUnwilling.Checked
         Game.noRNG = chkNoRNG.Checked
+        Game.useOldSpellSpec = chkOldSpellSpec.Checked
+        Game.startWithBooks = chkStartWithBooks.Checked
+        Game.mobsOverrideSState = chkEoverSS.Checked
         Me.Close()
     End Sub
 
@@ -27,6 +33,9 @@
         chkNoImg.Checked = r.ReadLine
         chkAlwaysUnwilling.Checked = r.ReadLine
         chkNoRNG.Checked = r.ReadLine
+        chkOldSpellSpec.Checked = r.ReadLine
+        chkStartWithBooks.Checked = r.ReadLine
+        chkEoverSS.Checked = r.ReadLine
 
         r.Close()
 
@@ -55,6 +64,9 @@
         w.WriteLine(False)
         w.WriteLine(False)
         w.WriteLine(False)
+        w.WriteLine(True)
+        w.WriteLine(True)
+        w.WriteLine(True)
         w.Close()
     End Sub
 

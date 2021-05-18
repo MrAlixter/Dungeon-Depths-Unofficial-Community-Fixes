@@ -12,7 +12,7 @@
 
         aList.Clear()
 
-        For i = 0 To UBound(a.Item1)
+        For i = UBound(a.Item1) To 0 Step -1
             aList.Add(a.Item1(i), a.Item2(i))
         Next
 

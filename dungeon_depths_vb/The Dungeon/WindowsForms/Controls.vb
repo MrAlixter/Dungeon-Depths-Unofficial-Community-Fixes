@@ -27,7 +27,7 @@ Public Class Controls
             Me.Controls(i).Height += CDbl(Me.Controls(i).Height * RH)
             Me.Controls(i).Left += CDbl(Me.Controls(i).Left * RW)
             Me.Controls(i).Top += CDbl(Me.Controls(i).Top * RH)
-            If Me.Controls(i).GetType Is GetType(TextBox) Then
+            If Me.Controls(i).GetType Is GetType(TextBox) And Not Me.Controls(i).Name.Contains("Selection") Then
                 AddHandler Me.Controls(i).KeyDown, AddressOf txtChanged
                 AddHandler Me.Controls(i).Click, AddressOf txt_Click
                 keys.Add(Me.Controls(i))

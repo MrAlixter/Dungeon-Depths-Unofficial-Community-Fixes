@@ -3,30 +3,35 @@
 
     Sub New()
         '|ID Info|
-        MyBase.setName("Dragonfruit​")
+        setName("Dragonfruit​")
         id = 230
         tier = Nothing
 
         '|Item Flags|
-        MyBase.setUsable(True)
-        MyBase.isRandoTFAcceptable = False
-        MyBase.isMonsterDrop = False
+        usable = true
+        rando_inv_allowed = False
+        droppable = False
 
         '|Stats|
-        MyBase.count = 0
-        MyBase.value = 150
-        setCalories(15)
+        count = 0
+        value = 500
+        setCalories(20)
 
         '|Description|
-        MyBase.setDesc("A spikey magenta fruit that seems to glow with a crimson light." & DDUtils.RNRN &
-                       "+15 Stamina" & DDUtils.RNRN & "Dragoness Transformation")
+        setDesc("A spikey magenta fruit that seems to glow with a crimson light." & DDUtils.RNRN &
+                "+20 Stamina" & vbCrLf &
+                "+40% Mana" & vbCrLf &
+                "+25 XP")
     End Sub
 
-    Public Overrides Sub Effect()
-        Dim p As Player = Game.player1
+    Public Overrides Sub effect(ByRef p As Player)
+        Game.pushLogAndEvent("+" & CInt(p.getMaxMana * 0.4) & " Max Mana, +25 XP")
+        p.xp += 25
+        p.mana += CInt(p.getMaxMana * 0.4)
 
-        BroodmotherTF.halfDragonTF(p)
-
-        Game.pushLblEvent("As you bite into the fruit, your form changes!")
+        If Int(Rnd() * 6) = 0 Or Game.noRNG Then
+            BroodmotherTF.halfDragonTF(p)
+            Game.pushLogAndEvent("As you bite into the fruit, your form changes!")
+        End If
     End Sub
 End Class

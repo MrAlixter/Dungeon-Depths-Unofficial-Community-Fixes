@@ -1,14 +1,14 @@
 ﻿Public Class CSpellbook
     Inherits Item
-    Public Shared spells() As String = {"Raise Lust", "Puff Up"}
+    Public Shared spells() As String = {"Raise Lust", "Puff Up", "Hellfireball", "Reductive Mending"}
     Sub New()
-        MyBase.setName("Crimson_Spellbook")
-        MyBase.setDesc("A smoldering leather-bound book that contains something magic written by a succubus.")
+        setName("Crimson_Spellbook")
+        setDesc("A smoldering leather-bound book that contains something magic written by a succubus.")
         id = 226
         tier = Nothing
-        MyBase.setUsable(True)
-        MyBase.count = 0
-        MyBase.value = 666
+        usable = true
+        count = 0
+        value = 666
     End Sub
 
     Overrides Sub use(ByRef p As Player)
@@ -24,7 +24,7 @@
                 ct += 1
                 Dim spell As Integer = CInt(Int(Rnd() * (spells.Length)))
                 Select Case spell
-                    Case 2
+                    Case 4
                         sName = "Self Polymorph"
                         Dim form As String = "Err"
                         Dim c As Integer = 0
@@ -45,7 +45,7 @@
                             out = "You learn how to turn yourself into a " & form & "!"
                             Exit While
                         End If
-                    Case 4
+                    Case 5
                         sName = "Polymorph Enemy"
                         Dim form As String = "Err"
                         Dim c As Integer = 0

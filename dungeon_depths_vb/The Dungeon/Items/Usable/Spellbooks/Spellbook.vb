@@ -3,13 +3,13 @@
     Public Shared spells() As String = {"Super Fireball", "Icicle Spear", "Self Polymorph", "Turn to Frog", "Polymorph Enemy",
                                         "Petrify", "Heal", "Illuminate", "Fireball", "Warp", "Arcane Compass"}
     Sub New()
-        MyBase.setName("Spellbook")
-        MyBase.setDesc("A simple, leather-bound book that likely contains something cool and magic.")
+        setName("Spellbook")
+        setDesc("A simple, leather-bound book that likely contains something cool and magic.")
         id = 4
         tier = 2
-        MyBase.setUsable(True)
-        MyBase.count = 0
-        MyBase.value = 500
+        usable = true
+        count = 0
+        value = 500
     End Sub
 
     Overrides Sub use(ByRef p As Player)

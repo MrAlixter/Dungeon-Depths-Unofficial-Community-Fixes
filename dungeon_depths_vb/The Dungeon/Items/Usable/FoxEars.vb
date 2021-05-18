@@ -2,13 +2,22 @@
     'FoxEars is a useable item that gives the player fox ears
     Inherits Item
     Sub New()
-        MyBase.setName("Fox_Ears")
-        MyBase.setDesc("These will give you fox ears.")
+        '|ID Info|
+        setName("Fox_Ears")
         id = 219
         tier = Nothing
-        MyBase.setUsable(True)
-        MyBase.count = 0
-        MyBase.value = 777
+
+        '|Item Flags|
+        usable = True
+
+        '|Stats|
+        count = 0
+        value = 777
+
+        '|Description|
+        setDesc("An enchanted pair of vulpine ears." & DDUtils.RNRN &
+                "Using this item will give its user fox ears!")
+
     End Sub
 
     Overrides Sub use(ByRef p As Player)

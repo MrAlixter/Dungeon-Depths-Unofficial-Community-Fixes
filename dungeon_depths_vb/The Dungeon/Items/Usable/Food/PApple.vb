@@ -3,28 +3,27 @@
 
     Sub New()
         '|ID Info|
-        MyBase.setName("Apple​")
+        setName("Apple​")
         id = 31
         tier = 3
 
         '|Item Flags|
-        MyBase.setUsable(True)
+        usable = true
 
         '|Stats|
-        MyBase.count = 0
-        MyBase.value = 150
+        count = 0
+        value = 150
         setCalories(15)
 
         '|Description|
-        MyBase.setDesc("An normal green apple." & DDUtils.RNRN & "+15 Stamina")
+        setDesc("An normal green apple." & DDUtils.RNRN & "+15 Stamina")
     End Sub
 
-    Public Overrides Sub Effect()
-        Dim p As Player = Game.player1
+    Public Overrides Sub effect(ByRef p As Player)
         If Game.combatmode = True Or Game.npcmode = True Or Not p.canMoveFlag Then
-            p.ongoingTFs.Add(New PrincessTF(False))
+            p.ongoingTFs.add(New PrincessTF(False))
         Else
-            p.ongoingTFs.Add(New PrincessTF())
+            p.ongoingTFs.add(New PrincessTF())
         End If
         p.update()
     End Sub

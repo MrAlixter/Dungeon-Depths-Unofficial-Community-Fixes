@@ -25,7 +25,7 @@
 
     '|MOVEMENT COMMANDS|
     MustOverride Sub reachedFPathDest()
-    Private Sub followPath()
+    Protected Sub followPath()
         If forcedPath.Length <= 1 Then
             reachedFPathDest()
             forcedPath = Nothing
@@ -38,45 +38,41 @@
             forcedPath = t
         End If
     End Sub
-    Public Sub moveUp()
+    Public Overridable Sub move(ByVal newX, ByVal newY)
+        '|-Forced Path-|
         If Not forcedPath Is Nothing Then
             followPath()
             Exit Sub
         End If
+
+        '|-NPC Encounter Movement Freeze-|
         If Game.npcmode Then Exit Sub
-        If (pos.Y - 1) < 0 Or canMoveFlag = False Then Exit Sub
-        If Game.currfloor.mBoard(pos.Y - 1, pos.X).Tag = 0 Then Exit Sub
-        pos.Y -= 1
+
+        '|-Other Movement Freezes-|
+        If canMoveFlag = False Then Exit Sub
+
+        '|-Edge of the Map-|
+        If newY < 0 Or newY > Game.currFloor.mBoardHeight - 1 Or newX < 0 Or newX > Game.currFloor.mBoardWidth - 1 Then Exit Sub
+
+        Dim board = Game.currFloor.mBoard
+
+        '|-Other Wall-|
+        If board(newY, newX).Tag = 0 Then Exit Sub
+
+        '|-Move-|
+        pos = New Point(newX, newY)
+    End Sub
+    Public Sub moveUp()
+        move(pos.X, pos.Y - 1)
     End Sub
     Public Sub moveDown()
-        If Not forcedPath Is Nothing Then
-            followPath()
-            Exit Sub
-        End If
-        If Game.npcmode Then Exit Sub
-        If (pos.Y + 1) > Game.currFloor.mBoardHeight - 1 Or canMoveFlag = False Then Exit Sub
-        If Game.currfloor.mBoard(pos.Y + 1, pos.X).Tag = 0 Then Exit Sub
-        pos.Y += 1
+        move(pos.X, pos.Y + 1)
     End Sub
     Public Sub moveLeft()
-        If Not forcedPath Is Nothing Then
-            followPath()
-            Exit Sub
-        End If
-        If Game.npcmode Then Exit Sub
-        If (pos.X - 1) < 0 Or canMoveFlag = False Then Exit Sub
-        If Game.currfloor.mBoard(pos.Y, pos.X - 1).Tag = 0 Then Exit Sub
-        pos.X -= 1
+        move(pos.X - 1, pos.Y)
     End Sub
     Public Sub moveRight()
-        If Not forcedPath Is Nothing Then
-            followPath()
-            Exit Sub
-        End If
-        If Game.npcmode Then Exit Sub
-        If (pos.X + 1) > Game.currFloor.mBoardWidth - 1 Or canMoveFlag = False Then Exit Sub
-        If Game.currfloor.mBoard(pos.Y, pos.X + 1).Tag = 0 Then Exit Sub
-        pos.X += 1
+        move(pos.X + 1, pos.Y)
     End Sub
 
     '|UPDATE|

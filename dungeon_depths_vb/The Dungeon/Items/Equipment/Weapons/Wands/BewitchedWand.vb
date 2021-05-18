@@ -1,0 +1,65 @@
+﻿Public Class BewitchedWand
+    Inherits Wand
+
+    Sub New()
+        '|ID Info|
+        setName("Bewitched_Wand")
+        id = 259
+        tier = Nothing
+
+        '|Item Flags|
+        usable = False
+        cursed = True
+        droppable = False
+
+        '|Stats|
+        count = 0
+        value = 3500
+
+
+        '|Description|
+        setDesc("A gnarled wooden wand with an unnatural deep violet finish.  Its flow of mana almost feels like the rhythm of a living being." & DDUtils.RNRN &
+                       "Each hit carries a 1 in 4 chance of an additional attack, and a 1 in 4 chance of backfiring." & DDUtils.RNRN &
+                       getStatInformation())
+    End Sub
+
+    Public Overrides Sub spell(ByRef p As Player, ByRef m As Entity)
+        Dim roll As Integer = Int(Rnd() * 4)
+
+        If roll = 0 Then
+            'Additonal Attack
+            Dim dmgAA As Integer = 65 + Int(Rnd() * 3) + Int(Rnd() * 3)
+
+            m.takeDMG(dmgAA, p)
+            Game.pushLstLog(CStr("You zap the " & m.name & " for " & dmgAA & " damage!"))
+            Game.pushLblCombatEvent(CStr("You zap the " & m.name & " for " & dmgAA & " damage!"))
+
+            'recursion
+            spell(p, m)
+        ElseIf roll = 1 Then
+            'Backfire
+            Dim dmgBF As Integer = 65 + Int(Rnd() * 3) + Int(Rnd() * 3)
+
+            Game.pushLstLog("Backfire - The wand zaps you!")
+            Game.pushLblCombatEvent("Backfire - The wand zaps you!")
+
+            p.takeDMG(Math.Max(dmgBF, p.getIntHealth - 1), p)
+
+            'recursion
+            spell(p, m)
+        End If
+
+        'Main Attack
+        Dim dmg As Integer = 65
+        Dim d31 = Int(Rnd() * 3)
+        Dim d32 = Int(Rnd() * 3)
+
+        dmg += d31 + d32
+
+        m.takeDMG(dmg, p)
+        Game.pushLstLog(CStr("You zap the " & m.name & " for " & dmg & " damage!"))
+        Game.pushLblCombatEvent(CStr("You zap the " & m.name & " for " & dmg & " damage!"))
+
+        durability -= Int(Rnd() * 10) + 5
+    End Sub
+End Class

@@ -28,16 +28,16 @@ Public Class Debug_Window
 
         'GENERAL
         If Game.mDun.numCurrFloor > -1 Then boxFloor.Value = Game.mDun.numCurrFloor Else boxFloor.Value = boxFloor.Maximum
-        boxTurn.Value = Game.turn
+        boxTurn.Value = Game.getTurn
         boxBeaten.Checked = Game.currFloor.beatBoss
 
         'MAP
-        magnification = Math.Floor(Math.Min(picBoard.Width / Game.currFloor.mBoardWidth, picBoard.Height / Game.currFloor.mBoardHeight))
+        magnification = Math.Floor(Math.Min(boxMap.Width / Game.currFloor.mBoardWidth, boxMap.Height / Game.currFloor.mBoardHeight))
         boxZoom.Value = magnification
         createMap()
-        AddHandler picBoard.Paint, AddressOf Me.picBoard_Draw
-        AddHandler picBoard.MouseDown, AddressOf Me.mapMousePress
-        AddHandler picBoard.MouseUp, AddressOf Me.mapMouseRelease
+        AddHandler boxMap.Paint, AddressOf Me.picBoard_Draw
+        AddHandler boxMap.MouseDown, AddressOf Me.mapMousePress
+        AddHandler boxMap.MouseUp, AddressOf Me.mapMouseRelease
 
         btnEditSelection.Enabled = False
 
@@ -115,7 +115,7 @@ Public Class Debug_Window
                     Dim c As Control = box.Controls(j)
                     If TypeOf (c) Is NumericUpDown Then
                         num = c
-                        num.Maximum = 999999
+                        num.Maximum = 9999999
                     ElseIf TypeOf (c) Is Label Then
                         lbl = c
                     End If
@@ -231,12 +231,14 @@ Public Class Debug_Window
                 ElseIf (Game.currFloor.mBoard(boardY, boardX).Text = "@" And Game.player1.pos.X = boardX And Game.player1.pos.Y = boardY) Then 'Player
                     map.SetPixel(boardX + 1, boardY + 1, Color.LawnGreen)
                 ElseIf (Game.currFloor.mBoard(boardY, boardX).Text = "@") Then 'Statue
-                    map.SetPixel(boardX + 1, boardY + 1, Color.LightSlateGray)
+                    map.SetPixel(boardX + 1, boardY + 1, Color.Silver)
                 ElseIf (Game.currFloor.mBoard(boardY, boardX).Text = "$") Then 'NPC
                     map.SetPixel(boardX + 1, boardY + 1, Color.Blue)
                 ElseIf (Game.currFloor.mBoard(boardY, boardX).Text = "+") Then 'Trap
                     map.SetPixel(boardX + 1, boardY + 1, Color.Red)
-                ElseIf (Game.currFloor.mBoard(boardY, boardX).Tag = 2) Then 'Seen
+                ElseIf (Game.currFloor.mBoard(boardY, boardX).Text = "|") Or (Game.currFloor.mBoard(boardY, boardX).Text = "-") Then 'Barrier
+                    map.SetPixel(boardX + 1, boardY + 1, Color.DarkRed)
+                ElseIf (Game.currFloor.mBoard(boardY, boardX).Tag = 2) Or Game.alwaysDrawCharacters.Contains(Game.currFloor.mBoard(boardY, boardX).Text) Then 'Seen
                     map.SetPixel(boardX + 1, boardY + 1, Color.White)
                 ElseIf (Game.currFloor.mBoard(boardY, boardX).Tag = 1) Then 'Unseen
                     map.SetPixel(boardX + 1, boardY + 1, Color.Gray)
@@ -249,7 +251,7 @@ Public Class Debug_Window
 
     Private Sub picBoard_Draw(sender As Object, e As PaintEventArgs)
         e.Graphics.InterpolationMode = Drawing2D.InterpolationMode.NearestNeighbor
-        e.Graphics.DrawImage(map, CInt((picBoard.Width - (map.Width * magnification)) / 2) + xOffset, CInt((picBoard.Height - (map.Height * magnification)) / 2) + yOffset, map.Width * magnification + 0, map.Height * magnification + 0)
+        e.Graphics.DrawImage(map, CInt((boxMap.Width - (map.Width * magnification)) / 2) + xOffset, CInt((boxMap.Height - (map.Height * magnification)) / 2) + yOffset, map.Width * magnification + 0, map.Height * magnification + 0)
 
         ''DEBUG LINES
         'Dim p As Pen
@@ -293,10 +295,10 @@ Public Class Debug_Window
             dragging = False
             'mouseMoveThread.Abort()
         ElseIf btnSelect.Checked Then
-            Dim Top As Integer = CInt(Math.Floor(picBoard.Height / 2 - (map.Height - 1) * magnification / 2)) + yOffset
-            Dim Bottom As Integer = CInt(Math.Floor(picBoard.Height / 2 + (map.Height - 3) * magnification / 2)) + yOffset
-            Dim Left As Integer = CInt(Math.Floor(picBoard.Width / 2 - (map.Width - 1) * magnification / 2)) + xOffset
-            Dim Right As Integer = CInt(Math.Floor(picBoard.Width / 2 + (map.Width - 3) * magnification / 2)) + xOffset
+            Dim Top As Integer = CInt(Math.Floor(boxMap.Height / 2 - (map.Height - 1) * magnification / 2)) + yOffset
+            Dim Bottom As Integer = CInt(Math.Floor(boxMap.Height / 2 + (map.Height - 3) * magnification / 2)) + yOffset
+            Dim Left As Integer = CInt(Math.Floor(boxMap.Width / 2 - (map.Width - 1) * magnification / 2)) + xOffset
+            Dim Right As Integer = CInt(Math.Floor(boxMap.Width / 2 + (map.Width - 3) * magnification / 2)) + xOffset
             If e.X > Left And e.X < Right And e.Y > Top And e.Y < Bottom Then
                 Dim _x As Integer = CInt(Math.Floor((e.X - Left) / magnification))
                 Dim _y As Integer = CInt(Math.Floor((e.Y - Top) / magnification))
@@ -308,16 +310,16 @@ Public Class Debug_Window
                 map.SetPixel(_x + 1, _y + 1, Color.HotPink)
                 btnEditSelection.Enabled = True
                 'MessageBox.Show(_x & ", " & _y)
-                picBoard.Refresh()
+                boxMap.Refresh()
             End If
         End If
     End Sub
 
     Public Sub refreshMap()
-        If picBoard.InvokeRequired Then
-            picBoard.Invoke(New delegateExecute(AddressOf refreshMap))
+        If boxMap.InvokeRequired Then
+            boxMap.Invoke(New delegateExecute(AddressOf refreshMap))
         Else
-            picBoard.Refresh()
+            boxMap.Refresh()
         End If
     End Sub
 
@@ -362,17 +364,17 @@ Public Class Debug_Window
         Next
     End Sub
 
-    Private Sub picBoard_MouseWheel(sender As Object, e As System.Windows.Forms.MouseEventArgs) Handles picBoard.MouseWheel
+    Private Sub picBoard_MouseWheel(sender As Object, e As System.Windows.Forms.MouseEventArgs) Handles boxMap.MouseWheel
         Dim scrollAmt As Integer = CInt(Math.Floor(e.Delta * SystemInformation.MouseWheelScrollLines / (120 * 6)))
         magnification -= scrollAmt
         If magnification < 1 Then magnification = 1
         boxZoom.Value = magnification
-        picBoard.Refresh()
+        boxMap.Refresh()
     End Sub
 
     Private Sub boxZoom_ValueChanged(sender As Object, e As EventArgs) Handles boxZoom.ValueChanged
         magnification = boxZoom.Value
-        picBoard.Refresh()
+        boxMap.Refresh()
     End Sub
 
     Private Sub btnEditSelection_Click(sender As Object, e As EventArgs) Handles btnEditSelection.Click
@@ -391,7 +393,7 @@ Public Class Debug_Window
             prevSelectP = tempPoint
             map.SetPixel(tempPoint.X + 1, tempPoint.Y + 1, Color.PeachPuff)
             btnEditSelection.Enabled = True
-            picBoard.Refresh()
+            boxMap.Refresh()
             Game.zoom()
         End If
     End Sub
@@ -599,7 +601,7 @@ Public Class Debug_Window
         box.Name = p.Key & "Box"
         box.Location = New System.Drawing.Point(lbl.Location.X + lbl.Size.Width + 10, lbl.Location.Y)
         box.Minimum = -1
-        box.Maximum = 999
+        box.Maximum = 999999999
         box.Value = p.Value
         box.Size = New System.Drawing.Size(63, 26)
         AddHandler box.ValueChanged, AddressOf numericUpDownChanged

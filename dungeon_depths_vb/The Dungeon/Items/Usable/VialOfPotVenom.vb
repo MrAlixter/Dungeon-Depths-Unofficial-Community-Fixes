@@ -2,20 +2,20 @@
     Inherits Item
     Sub New()
         '|ID Info|
-        MyBase.setName("Vial_of_Potent_Venom")
+        setName("Vial_of_Potent_Venom")
         id = 244
         tier = Nothing
 
         '|Item Flags|
-        MyBase.setUsable(True)
-        isMonsterDrop = True
+        usable = true
+        droppable = True
 
         '|Stats|
-        MyBase.count = 0
-        MyBase.value = 1
+        count = 0
+        value = 1
 
         '|Description|
-        MyBase.setDesc("A small glass bottle filled with an translucent golden ichor that gives off a subtle glow.")
+        setDesc("A small glass bottle filled with an translucent golden ichor that gives off a subtle glow.")
     End Sub
 
     Overrides Sub use(ByRef p As Player)

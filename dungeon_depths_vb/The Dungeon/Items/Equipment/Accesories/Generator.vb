@@ -2,17 +2,28 @@
     Inherits Accessory
 
     Sub New()
-        MyBase.setName("Mobile_Powerbank")
-        MyBase.setDesc("A small yet effective generator that, in addition to condensing mana for later use, powers a communication device.  Too bad there's no signal..." & vbCrLf & _
-                       "+5 Max Mana, Fast Mana Regen")
+        '|ID Info|
+        setName("Mobile_Powerbank")
         id = 110
         tier = Nothing
-        MyBase.setUsable(False)
-        MyBase.mBoost = 5
-        MyBase.count = 0
-        MyBase.value = 5000
+
+        '|Item Flags|
+        usable = false
+        rando_inv_allowed = False
+
+        '|Stats|
+        MyBase.m_boost = 5
+        count = 0
+        value = 5000
+
+        '|Image Index|
         MyBase.fInd = New Tuple(Of Integer, Boolean, Boolean)(10, True, True)
         MyBase.mInd = New Tuple(Of Integer, Boolean, Boolean)(10, True, True)
+
+        '|Description|
+        setDesc("A small yet effective generator that, in addition to condensing mana for later use, powers a communication device.  Too bad there's no signal..." & DDUtils.RNRN &
+                       "Mana regeneration effect" & vbCrLf &
+                       getStatInformation())
     End Sub
     Public Overrides Sub onEquip(ByRef p As Player)
         p.perks(perk.minmanregen) = 1

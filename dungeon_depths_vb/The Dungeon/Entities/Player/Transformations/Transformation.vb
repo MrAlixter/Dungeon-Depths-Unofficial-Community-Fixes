@@ -59,6 +59,8 @@ Public MustInherit Class Transformation
                 Return New MinoDTF(CInt(s(0)), CInt(s(1)), CInt(s(2)), CDbl(s(3)), CBool(s(4)), CBool(s(6)))
             Case "BimBellTF"
                 Return New BimBellTF(CInt(s(0)), CInt(s(1)), CInt(s(2)), CDbl(s(3)), CBool(s(4)), CBool(s(6)))
+            Case "MimicMinoTF"
+                Return New MimicMinoTF(CInt(s(0)), CInt(s(1)), CInt(s(2)), CDbl(s(3)), CBool(s(4)), CBool(s(6)))
             Case "Targax"
                 Return New TargaxTF(CInt(s(0)), CInt(s(1)), CInt(s(2)), CDbl(s(3)), CBool(s(4)), CBool(s(6)))
             Case "ThrallTF"
@@ -119,6 +121,12 @@ Public MustInherit Class Transformation
                 Return New MagSlutTF(CInt(s(0)), CInt(s(1)), CInt(s(2)), CDbl(s(3)), CBool(s(4)), CBool(s(6)))
             Case "KitsuneTF"
                 Return New KitsuneTF(CInt(s(0)), CInt(s(1)), CInt(s(2)), CDbl(s(3)), CBool(s(4)), CBool(s(6)))
+            Case "DragonfruitBimbo"
+                Return New DragonfruitBimboTF(CInt(s(0)), CInt(s(1)), CInt(s(2)), CDbl(s(3)), CBool(s(4)), CBool(s(6)))
+            Case "PrefFormTF"
+                Return New PreferredFormTF(CInt(s(0)), CInt(s(1)), CInt(s(2)), CDbl(s(3)), CBool(s(4)), CBool(s(6)))
+            Case "GBimbo"
+                Return New GBimboTF(CInt(s(0)), CInt(s(1)), CInt(s(2)), CDbl(s(3)), CBool(s(4)), CBool(s(6)))
             Case Else
                 Return Nothing
         End Select
@@ -131,7 +139,10 @@ Public MustInherit Class Transformation
             Not p.className.Equals("Unconscious") And
             Not p.formName.Equals("Blowup Doll") And
             Not p.formName.Equals("Fae") And
-            Not p.perks(perk.astatue) > 1 Then
+            Not p.perks(perk.astatue) > 1 And
+            Not p.perks(perk.tfedbyweapon) > 0 And
+            Not p.perks(perk.pdeflector) > 0 Then
+
             Return True
         End If
 

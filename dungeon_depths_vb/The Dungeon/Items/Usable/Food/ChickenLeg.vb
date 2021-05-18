@@ -2,20 +2,20 @@
     Inherits Food
     Sub New()
         '|ID Info|
-        MyBase.setName("Chicken_Leg")
+        setName("Chicken_Leg")
         id = 30
         tier = 1
 
         '|Item Flags|
-        MyBase.setUsable(True)
+        usable = true
 
         '|Stats|
-        MyBase.count = 0
-        MyBase.value = 150
+        count = 0
+        value = 230
         setCalories(25)
 
         '|Description|
-        MyBase.setDesc("A roasted and seasoned chicken leg, served steaming hot!" & DDUtils.RNRN &
+        setDesc("A roasted and seasoned chicken leg, served steaming hot!" & DDUtils.RNRN &
                        "+25 Stamina")
     End Sub
 End Class

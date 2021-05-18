@@ -66,8 +66,23 @@
     tfcausingwand   '64
     tfcausingsword  '65
     snarednpc       '66
+    cmark           '67
+    isspotfused     '68
+    collarssnipped  '69
+    canmeetcyn      '70
+    cynnsq1ct1      '71
+    cynnsq1ct2      '72
+    fvHasSword      '73
+    coftheox        '74
+    pickaxe         '75
+    pdrill          '76
+    pdeflector      '77
+    enemyoftime     '78
+    owetimebalance  '79
+    odstartXP       '80
+    mrevived        '81
+    tfedbyweapon    '82
 End Enum
-
 Public Class Player
     'Player is the representation of a player controlled entity (the main player, any teammates)
     'METHODS AND VARIABLES RELATED TO LEVELING HAVE BEEN COMMENTED OUT.
@@ -111,17 +126,23 @@ Public Class Player
     Public prinState As State = New State()
     Public dembimState1 As State = New State()
     Public dembimState2 As State = New State()
-    Dim formStates = {goddState, bimbState, magGState, maidState, prinState, dembimState1, dembimState2}
+    Public succDisgState As State = New State()
+    Public preBSBody As State = New State()
+    Public preBSStartState As State = New State()
+    Dim formStates = {goddState, bimbState, magGState, maidState, prinState, dembimState1, dembimState2, succDisgState, preBSBody, preBSStartState}
 
     Public solFlag = False
-    Public prefForm As preferedForm
+    Public prefForm As preferredForm
 
     'assorted lists
     Public ongoingTFs As TFList = New TFList
+    Public ongoingQuests As QuestList = New QuestList
     Public knownSpells As List(Of String) = New List(Of String)
     Public knownSpecials As List(Of String) = New List(Of String)
     Public selfPolyForms As List(Of String) = New List(Of String)
     Public enemPolyForms As List(Of String) = New List(Of String)
+    Public skillsUsedThisCombat As List(Of String) = New List(Of String)
+    Public quests As List(Of Quest) = New List(Of Quest)
 
     '|CONSTRUCTORS|:
     Public Sub New()
@@ -147,9 +168,23 @@ Public Class Player
         inv.add(2, 1)
     End Sub
     'load from save constructors
+    Sub pushFormStates()
+        bimbState = formStates(0)
+        magGState = formStates(1)
+        goddState = formStates(2)
+        maidState = formStates(3)
+        prinState = formStates(4)
+        dembimState1 = formStates(5)
+        dembimState2 = formStates(6)
+        succDisgState = formStates(7)
+        preBSBody = formStates(8)
+        preBSStartState = formStates(9)
+    End Sub
     Public Sub New(ByVal s As String, ByVal v As Double)
+        '|- Setup -|
         solFlag = True
         createInvPerks()
+
         Dim playArray() As String = s.Split("#")
 
         currState = New State(Me)
@@ -159,12 +194,15 @@ Public Class Player
             formStates(i) = New State()
         Next
 
-
+        '|- Main Save States -|
         currState.read(playArray(0), v)
         sState.read(playArray(1), v)
         pState.read(playArray(2), v)
+
         pClass = classes(currState.pClass.name)
         pForm = forms(currState.pForm.name)
+
+        '|- Tertiary Save States (For TFs/etc) -|
         Dim ind As Integer
         If v > 0.4 Then
             ind = CInt(playArray(3)) - 1
@@ -172,15 +210,22 @@ Public Class Player
                 formStates(i).read(playArray(4 + i), v)
                 If i = UBound(formStates) Then Exit For
             Next
+
+            pushFormStates()
+
             playArray = playArray(5 + ind).Split("*")
         Else
             ind = 7
-            For i = 0 To 7
+            For i = 0 To 9
                 formStates(i).read(playArray(3 + i), v)
             Next
+
+            pushFormStates()
+
             playArray = playArray(4 + ind).Split("*")
         End If
 
+        '|- Player Stats -|
         pos.X = playArray(0)
         pos.Y = playArray(1)
         health = playArray(2)
@@ -198,23 +243,29 @@ Public Class Player
 
         currState.load(Me)
 
+        '|- Inventory -|
         inv.load(playArray(14))
-        Dim x As Integer = -2
 
+        '|- Forced Path -|
+        Dim x As Integer = -2
         If Not playArray(17 + x).Equals("N/a") Then
+            'If the player is under the effect of the thrall collar, load their saved path.
             Dim crystal As Point = New Point(CInt(playArray(17 + x)), playArray(18 + x))
             forcedPath = {crystal}
             nextCombatAction = AddressOf ThrallTF.postLoadCrystalSpawn
         Else
+            'Otherwise, there will be a placeholder "N/a" in place of the forced path that can be ignored.
             forcedPath = Nothing
         End If
 
+        'Since the index is a bit messy at this point, currentIndex is created to clean it up
         Dim currentIndex = 18 + x
         If Not playArray(17 + x).Equals("N/a") Then currentIndex += 1
 
+        '|- Current "Preferred Form" transformation/"Slave Collar" Saved Values -|
         Dim stuff() As String = playArray(currentIndex).Split("$")
         If Not stuff(0).Equals("N/a") Then
-            prefForm = New preferedForm(Color.FromArgb(CInt(stuff(0)), CInt(stuff(1)), CInt(stuff(2)), CInt(stuff(3))), _
+            prefForm = New preferredForm(Color.FromArgb(CInt(stuff(0)), CInt(stuff(1)), CInt(stuff(2)), CInt(stuff(3))), _
                                         Color.FromArgb(CInt(stuff(4)), CInt(stuff(5)), CInt(stuff(6)), CInt(stuff(7))), _
                                         CBool(stuff(8)), CBool(stuff(9)), CInt(stuff(10)), CBool(stuff(11)), CInt(stuff(12)))
             CType(inv.item(69), ThrallCollar).setFormerLife(stuff(13), New Tuple(Of Integer, Boolean, Boolean)(CInt(stuff(14)), stuff(15), stuff(16)))
@@ -222,17 +273,20 @@ Public Class Player
             CType(inv.item(69), ThrallCollar).setFormerLife(stuff(1), New Tuple(Of Integer, Boolean, Boolean)(CInt(stuff(2)), stuff(3), stuff(4)))
         End If
 
+        '|- List Loading Setup -|
+        'The next set of loaded values are all lists, saved as a list of lists delimitted by †
         Dim knowlegebase = playArray(currentIndex + 1).Split("†")
         currentIndex = 1
-        Dim subKB = knowlegebase(currentIndex).Split("Ͱ")
 
+        '|- Ongoing Transformations -|
+        Dim subKB = knowlegebase(currentIndex).Split("Ͱ")
         For i = 1 To CInt(subKB(0) + 1)
             Dim tf As Transformation = Transformation.newTF(subKB(i).Split("$"))
             ongoingTFs.add(tf)
         Next
         currentIndex += 1
 
-        'load the known self poly forms
+        '|- Known "Self Polymorphs" Forms -|
         subKB = knowlegebase(currentIndex).Split("Ͱ")
         For i = 1 To CInt(subKB(0) + 1)
             selfPolyForms.Add(subKB(i))
@@ -240,7 +294,7 @@ Public Class Player
         Next
         currentIndex += 1
 
-        'load the known self enemy forms
+        '|- Known "Polymorph Enemy" Forms -|
         subKB = knowlegebase(currentIndex).Split("Ͱ")
         For i = 1 To CInt(subKB(0) + 1)
             enemPolyForms.Add(subKB(i))
@@ -248,14 +302,14 @@ Public Class Player
         Next
         currentIndex += 1
 
-        'load the known spells
+        '|- Known Spells -|
         subKB = knowlegebase(currentIndex).Split("Ͱ")
         For i = 1 To CInt(subKB(0) + 1)
             knownSpells.Add(subKB(i))
-
         Next
         currentIndex += 1
-        'load the known specials
+
+        '|- Known Specials -|
         subKB = knowlegebase(currentIndex).Split("Ͱ")
         For i = 1 To CInt(subKB(0) + 1)
             knownSpecials.Add(subKB(i))
@@ -263,14 +317,36 @@ Public Class Player
         Next
         currentIndex += 1
 
+        '|- Quest Records -|
+        'Quests were added in version 10.2, and would not be present in older saves
+        If v >= 10.2 Then
+            subKB = knowlegebase(currentIndex).Split("Ͱ")
+            For i = 1 To CInt(subKB(0) + 1)
+                quests(i - 1).load(subKB(i))
+            Next
+            currentIndex += 1
+        End If
+
+        '|- Ongoing Quests -|
+        'Quests were added in version 10.2, and would not be present in older saves
+        If v >= 10.2 Then
+            subKB = knowlegebase(currentIndex).Split("Ͱ")
+            For i = 1 To CInt(subKB(0) + 1)
+                ongoingQuests.add(quests(CInt(subKB(i))))
+            Next
+            currentIndex += 1
+        End If
+
+        '|- Cleanup -|
         currState.load(Me)
 
-        turnCt = Game.turn
+        turnCt = Game.getTurn
 
+        allRoute()
         drawPort()
+
         magicRoute()
         specialRoute()
-        allRoute()
 
         solFlag = False
     End Sub
@@ -329,6 +405,10 @@ Public Class Player
                 equippedArmor = inv.item("Common_Kimono")
             Case 6
                 equippedArmor = inv.item("Sneaky_Clothes")
+            Case 7
+                equippedArmor = inv.item("Adventurer's_Clothes")
+            Case 8
+                equippedArmor = inv.item("Regular_Clothes")
             Case Else
                 equippedArmor = New Naked
                 equippedArmor.count -= 1
@@ -366,6 +446,14 @@ Public Class Player
             inv.add(4, 1)
             inv.add(21, 1)
             equippedWeapon = inv.item(21)
+        ElseIf s = "Cleric" Then
+            knownSpells.Add("Heal")
+            inv.add(2, 1)
+            inv.add(13, 1)
+            inv.add(283, 1)
+            inv.add(284, 1)
+            equippedAcce = inv.item(283)
+            equippedWeapon = inv.item(284)
         ElseIf s = "Witch" Then
             knownSpells.Add("Turn to Frog")
             If breastSize = -1 Then breastSize = 0
@@ -386,7 +474,7 @@ Public Class Player
             inv.add(2, 3)
             inv.add(4, 1)
             inv.add(11, 1)
-            Game.pushLstLog("You find a wand lodged in the entrance...Maybe you should equip it?")
+            Game.pushLstLog("You find a wand lodged in the entrance...  Maybe you should equip it?")
         ElseIf s = "Valkyrie" Then
             pClass = classes("Classless")
             maxHealth = 80
@@ -394,13 +482,33 @@ Public Class Player
             defense = 7
             speed = 7
             inv.add(2, 3)
-            inv.add(4, 1)
+            inv.add(88, 1)
             inv.add("Valkyrie_Sword", 1)
-            Game.pushLstLog("You find a sword piercing the floor...Maybe you should equip it?")
+            Game.pushLstLog("You find a sword piercing the floor...  Maybe you should equip it?")
+        ElseIf s = "Time Cop" Then
+            pClass = classes("Time Cop")
+            inv.add("Phase_Pistol", 1)
+            inv.add("Phase_Deflector", 1)
+            inv.add("AAAAAA_Battery", 45)
+            inv.add("Time_Cop_Clothes", 1)
+
+            equippedWeapon = inv.item("Phase_Pistol")
+            equippedArmor = inv.item(282)
+            pState = New State(Me)
+            Equipment.accChange(Me, "Phase_Deflector")
+            Game.lblEvent.Visible = False
+
+            gold = 0
         End If
+
+        If Game.startWithBooks Then
+            inv.add(242, 1)
+            inv.add(243, 1)
+        End If
+
         'equip armor, boost mana if a staff is equipped
         Equipment.clothesChange(Me, equippedArmor.getName)
-        If equippedWeapon.GetType().IsSubclassOf(GetType(Staff)) Then mana += equippedWeapon.mBoost
+        mana = getMaxMana()
         'set the known specials/spells
         specialRoute()
         magicRoute()
@@ -419,6 +527,7 @@ Public Class Player
         initClasses()
         initForms()
         initPolymorphs()
+        initQuests()
     End Sub
     Private Sub initPerks()
         perks.Clear()
@@ -459,6 +568,8 @@ Public Class Player
         classes.Add("Maiden", New Maiden())
         classes.Add("Rogue", New Rogue())
         classes.Add("Witch", New Witch())
+        classes.Add("Time Cop", New TimeCop())
+        classes.Add("Cleric", New Cleric())
     End Sub
     Private Sub initForms()
         'Creates the form dictionary
@@ -505,6 +616,10 @@ Public Class Player
         forms.Add("Plush", New Plush())
         forms.Add("Fae", New FaeForm())
         forms.Add("Archdemoness", New ArchDemoness())
+        forms.Add("Minotaur Cow (B)", New MinotaurCowB())
+        forms.Add("Minotaur Bull (B)", New MinotaurBullB())
+        forms.Add("Cow", New Cow())
+        forms.Add("Orc", New Orc())
     End Sub
     Private Sub initPolymorphs()
         'compile list of polymorphs
@@ -524,9 +639,28 @@ Public Class Player
         polymorphs.Add("Plush", Nothing)
         polymorphs.Add("Fae", Nothing)
         polymorphs.Add("Horse", Nothing)
+        polymorphs.Add("Cow", Nothing)
+    End Sub
+    Private Sub initQuests()
+        quests.Clear()
+        quests.Add(New HelpWanted)
+        quests.Add(New DarkPact)
+        quests.Add(New DueForAnUpgrade)
+        quests.Add(New BreakingAnEgg)
+        quests.Add(New OutOfTime)
+        quests.Add(New CursedContraband)
+        quests.Add(New StudyingSlime)
+        quests.Add(New Floor4Encounter)
+        quests.Add(New OppositeDay)
+        quests.Add(New NineLives)
+        quests.Add(New ThrallLoss)
+        quests.Add(New FaeWoods1)
     End Sub
     Sub setStartStates()
-        sState.save(Me)
+        If Game.mobsOverrideSState Then
+            sState.save(Me)
+        End If
+
         savePState()
         If perks(perk.polymorphed) > -1 Then perks(perk.polymorphed) = -1
     End Sub
@@ -537,12 +671,57 @@ Public Class Player
     End Sub
 
     '|MOVEMENT COMMANDS|
-    Public Overrides Sub reachedFPathDest()
-        If Game.mDun.numCurrFloor = 4 And Not Game.preBSBody Is Nothing And Game.preBSStartState Is Nothing And Game.mDun.floorboss(4) = "Ooze Empress" Then
-            RandoTF.floor4FirstBossEncounter()
+    Public Overrides Sub move(ByVal newX, ByVal newY)
+        Game.progressTurn()
+
+        '|-Forced Path-|
+        If Not forcedPath Is Nothing Then
+            followPath()
             Exit Sub
         End If
+
+        '|-NPC Encounter Movement Freeze-|
+        If Game.npcmode Then Exit Sub
+
+        '|-Other Movement Freezes-|
+        If canMoveFlag = False Then Exit Sub
+
+        '|-Edge of the Map-|
+        If newY < 0 Or newY > Game.currFloor.mBoardHeight - 1 Or newX < 0 Or newX > Game.currFloor.mBoardWidth - 1 Then Exit Sub
+
+        Dim board = Game.currFloor.mBoard
+
+        '|-Pickaxe Effect-|
+        If board(newY, newX).Tag = 0 And perks(perk.pickaxe) > 0 Then board(newY, newX).Tag = 2
+
+        '|-Phase Drill Effect-|
+        If board(newY, newX).Tag = 0 And perks(perk.pdrill) > 0 And inv.getCountAt("AAAAAA_Battery") > 0 Then
+            board(newY, newX).Tag = 2
+            getPlayer.inv.add("AAAAAA_Battery", -1)
+        ElseIf board(newY, newX).Tag = 0 And perks(perk.pdrill) > 0 And inv.getCountAt("AAAAAA_Battery") < 1 Then
+            Game.pushLblEvent("The drill spins weakly...")
+        End If
+
+        '|-Other Wall-|
+        If board(newY, newX).Tag = 0 Then Exit Sub
+
+        '|-Mindless-|
+        If className.Equals("Mindless") Then wander() : Exit Sub
+
+        '|-Move-|
+        pos = New Point(newX, newY)
+    End Sub
+    Public Overrides Sub reachedFPathDest()
+        'Thrall Crystal discovery
         If pClass.name.Equals("Thrall") Then
+
+            'Dark Pact questline
+            If quests(qInds.darkPact).getCurrStep = 1 Then
+                quests(qInds.darkPact).completeCurrOjb()
+                Exit Sub
+            End If
+
+            'Standard encounter
             If Int(Rnd() * 2) = 1 Then
                 Dim out = "You've found one of the crystals your controller is seeking!  As you circle it, you feel a familiar presence enter your mind.  " & DDUtils.RNRN &
                     """Yes!  You've found it!"" your overseer states exitedly, ""I'll be over shortly, don't go anywhere and don't touch that crystal.""" & DDUtils.RNRN &
@@ -561,6 +740,14 @@ Public Class Player
                     """No, that isn't it."" your overseer states disappointedly, ""Well, I guess you can go back to your buisness now.""")
                 ongoingTFs.add(New ThrallTF())
             End If
+        ElseIf prt.checkFemInd(pInd.horns, 12) Then
+            'For Each chest In Game.currFloor.chestList
+            '    If DDUtils.withinOnePlusMinus(pos, chest.pos) Then
+            '        chest.open()
+            '        Game.currFloor.chestList.Remove(chest)
+            '        Exit For
+            '    End If
+            'Next
         End If
     End Sub
     Public Sub wander()
@@ -586,42 +773,39 @@ Public Class Player
     Public Overrides Sub attackCMD(ByRef target As Entity)
         Randomize()
 
-
         If pClass.name.Equals("Barbarian") Then
             aBuff -= perks(perk.barbarian)
             perks(perk.barbarian) = 0
         End If
 
-        Dim dmg As Integer = Math.Max(equippedWeapon.attack(Me, target), 1)
+        Dim dmg As Integer = equippedWeapon.attack(Me, target)
 
         If dmg = -1 Then
             miss(target)
         ElseIf dmg = -2 Then
             cHit(Me.getATK, target)
         ElseIf dmg <> -3 Then
-            hit(dmg, target)
+            hit(Math.Max(dmg, 1), target)
         End If
     End Sub
     'attacking a npc
     Public Sub miss(target As NPC)
-        Game.pushLstLog(CStr("You miss" & target.title & " " & target.getName() & "!"))
-        Game.pushLblCombatEvent(CStr("You miss" & target.title & " " & target.getName() & "!"))
+        Game.pushLogAndEvent(CStr("You miss" & target.title & " " & target.getName() & "!"))
     End Sub
     Public Sub hit(dmg As Integer, target As NPC)
-        Game.pushLstLog(CStr("You hit" & target.title.ToLower & target.getName() & " for " & dmg & " damage!"))
-        Game.pushLblCombatEvent(CStr("You hit" & target.title.ToLower & target.getName() & " for " & dmg & " damage!"))
+        Game.pushLogAndEvent(CStr("You hit" & target.title.ToLower & target.getName() & " for " & dmg & " damage!"))
         target.takeDMG(dmg, Me)
     End Sub
     Public Sub setTarget(ByRef t As NPC)
         currTarget = t
         MyBase.currTarget = t
     End Sub
+
     Public Sub cHit(dmg As Integer, target As NPC)
-        Game.pushLstLog(CStr("You hit" & target.title.ToLower & target.getName() & " for " & dmg * 3 & " damage!  Critical hit!"))
-        Game.pushLblCombatEvent(CStr("You hit" & target.title.ToLower & target.getName() & " for " & dmg * 3 & " damage!  Critical hit!"))
+        Game.pushLogAndEvent(CStr("You hit" & target.title.ToLower & target.getName() & " for " & dmg * 2 & " damage!  Critical hit!"))
         target.isStunned = True
         target.stunct = 0
-        target.takeDMG(dmg * 3, Me)
+        target.takeDMG(dmg * 2, Me)
     End Sub
     'attacking a non npc
     Private Sub miss(target As Entity)
@@ -630,8 +814,7 @@ Public Class Player
             Exit Sub
         End If
 
-        Game.pushLstLog(CStr("You miss " & target.getName() & "!"))
-        Game.pushLblCombatEvent(CStr("You miss " & target.getName() & "!"))
+        Game.pushLogAndEvent(CStr("You miss " & target.getName() & "!"))
     End Sub
     Private Sub hit(dmg As Integer, target As Entity)
         If target.GetType() Is GetType(NPC) Or target.GetType.IsSubclassOf(GetType(NPC)) Then
@@ -639,8 +822,7 @@ Public Class Player
             Exit Sub
         End If
 
-        Game.pushLstLog(CStr("You hit " & target.getName() & " for " & dmg & " damage!"))
-        Game.pushLblCombatEvent(CStr("You hit " & target.getName() & " for " & dmg & " damage!"))
+        Game.pushLogAndEvent(CStr("You hit " & target.getName() & " for " & dmg & " damage!"))
         target.takeDMG(dmg, Me)
     End Sub
     Private Sub cHit(dmg As Integer, target As Entity)
@@ -649,25 +831,44 @@ Public Class Player
             Exit Sub
         End If
 
-        Game.pushLstLog(CStr("You hit " & target.getName() & " for " & dmg * 3 & " damage!  Critical hit!"))
-        Game.pushLblCombatEvent("You hit " & target.getName() & " for " & dmg * 3 & " damage!  Critical hit!")
-        target.takeDMG(dmg * 3, Me)
+        Game.pushLogAndEvent(CStr("You hit " & target.getName() & " for " & dmg * 2 & " damage!  Critical hit!"))
+        target.takeDMG(dmg * 2, Me)
     End Sub
     'taking damage
     Public Overrides Sub takeDMG(ByVal dmg As Integer, ByRef source As Entity)
         If PerkEffects.onDamage(Me, dmg) Then Exit Sub
-        MyBase.takeDMG(dmg, source)
+
         Game.lblPHealtDiff.Tag -= dmg
-        Game.pushLstLog(CStr("You got hit! -" & dmg & " health!"))
-        Game.pushLblCombatEvent(CStr("You got hit! -" & dmg & " health!"))
+
+        Game.pushLogAndEvent(CStr("You got hit! -" & dmg & " health!"))
+
+        MyBase.takeDMG(dmg, source)
+    End Sub
+    Public Sub takeUnconditionalDMG(ByVal dmg As Integer, ByRef source As Entity)
+        Game.lblPHealtDiff.Tag -= dmg
+
+        Game.pushLogAndEvent(CStr("You got hit! -" & dmg & " health!"))
+
+        MyBase.takeDMG(dmg, source)
     End Sub
     Public Overrides Sub takeCritDMG(ByVal dmg As Integer, ByRef source As Entity)
-        If PerkEffects.onDamage(Me, dmg) Then Exit Sub
+        If PerkEffects.onDamage(Me, dmg, True) Then Exit Sub
         If dmg > getIntHealth() And dmg > 0.05 * getMaxHealth() Then dmg = getIntHealth() - 1
-        MyBase.takeDMG(dmg, source)
+
         Game.lblPHealtDiff.Tag -= dmg
-        Game.pushLstLog(CStr("You got hit!  Critical hit!  -" & dmg & " health!"))
-        Game.pushLblCombatEvent(CStr("You got hit!  Critical hit! -" & dmg & " health!"))
+
+        Game.pushLogAndEvent(CStr("You got hit!  Critical hit!  -" & dmg & " health!"))
+
+        MyBase.takeDMG(dmg, source)
+    End Sub
+    Public Sub takeUnconditionalCritDMG(ByVal dmg As Integer, ByRef source As Entity)
+        If dmg > getIntHealth() And dmg > 0.05 * getMaxHealth() Then dmg = getIntHealth() - 1
+
+        Game.lblPHealtDiff.Tag -= dmg
+
+        Game.pushLogAndEvent(CStr("You got hit!  Critical hit!  -" & dmg & " health!"))
+
+        MyBase.takeDMG(dmg, source)
     End Sub
     'specials
     Public Sub specialRoute()
@@ -676,15 +877,16 @@ Public Class Player
             Game.cboxSpec.Items.Add(s)
         Next
 
-        If pClass.name = "Warrior" Or pClass.name = "Paladin" Then Game.cboxSpec.Items.Add("Berserker Rage")
-        If pClass.name = "Mage" Or pClass.name = "Paladin" Then Game.cboxSpec.Items.Add("Risky Decision")
-        If pClass.name = "Rogue" Then Game.cboxSpec.Items.Add("Bounty's Collection")
-        If breastSize > 3 Then Game.cboxSpec.Items.Add("Massive Mammaries")
-        If breastSize > 5 Then Game.cboxSpec.Items.Add("Pillowy Protect")
-        If pForm.name = "Succubus" Then Game.cboxSpec.Items.Add("Charm") : Game.cboxSpec.Items.Add("Drain Soul")
-        If pForm.name = "Slime" Then Game.cboxSpec.Items.Add("Absorbtion")
-        If pForm.name = "Dragon" Then Game.cboxSpec.Items.Add("Ironhide Fury")
-        If inv.item("Shrink_Ray").count > 0 Then Game.cboxSpec.Items.Add("Shrink_Ray Shot")
+        If (pClass.name = "Warrior" Or pClass.name = "Paladin") And Not knownSpecials.Contains("Berserker Rage") Then Game.cboxSpec.Items.Add("Berserker Rage")
+        If (pClass.name = "Mage" Or pClass.name = "Paladin") And Not knownSpecials.Contains("Risky Decision") Then Game.cboxSpec.Items.Add("Risky Decision")
+        If pClass.name = "Rogue" And Not knownSpecials.Contains("Bounty's Collection") Then Game.cboxSpec.Items.Add("Bounty's Collection")
+        If breastSize > 3 And Not knownSpecials.Contains("Massive Mammaries") Then Game.cboxSpec.Items.Add("Massive Mammaries")
+        If breastSize > 5 And Not knownSpecials.Contains("Pillowy Protect") Then Game.cboxSpec.Items.Add("Pillowy Protect")
+        If pForm.name = "Succubus" And Not knownSpecials.Contains("Charm") Then Game.cboxSpec.Items.Add("Charm")
+        If pForm.name = "Succubus" And Not knownSpecials.Contains("Drain Soul") Then Game.cboxSpec.Items.Add("Drain Soul")
+        If pForm.name = "Slime" And Not knownSpecials.Contains("Absorbtion") Then Game.cboxSpec.Items.Add("Absorbtion")
+        If pForm.name = "Dragon" And Not knownSpecials.Contains("Ironhide Fury") Then Game.cboxSpec.Items.Add("Ironhide Fury")
+        If inv.item("Shrink_Ray").count > 0 And Not knownSpecials.Contains("Shrink_Ray Shot") Then Game.cboxSpec.Items.Add("Shrink_Ray Shot")
     End Sub
     Public Sub magicRoute()
         Game.cboxNPCMG.Items.Clear()
@@ -900,7 +1102,7 @@ Public Class Player
         xp = CInt(nextlevelPercentage * nextLevelXp)
     End Sub
     Public Sub petrify(ByVal c As Color, ByVal dur As Integer)
-        If pForm.name.Equals("Dragon") Then revertToPState()
+        If pForm.name.Equals("Dragon") Or pForm.name.Equals("Broodmother") Then revertToPState()
         perks(perk.astatue) = dur
         changeHairColor(c, True)
         If prt.sexBool Then
@@ -942,15 +1144,28 @@ Public Class Player
         perks(perk.mburst) = -1
         perks(perk.infernoa) = -1
         perks(perk.dodge) = -1
+        perks(perk.guardup) = -1
+        perks(perk.willup) = -1
+        perks(perk.atkup) = -1
+        perks(perk.lurk) = -1
+        perks(perk.isspotfused) = -1
+        perks(perk.owetimebalance) = -1
     End Sub
     Public Overrides Sub die(ByRef source As Entity)
         If Game.pnlSaveLoad.Visible = True Then Exit Sub
+
+        If inv.getCountAt("Extra_Life") > 0 Then
+            inv.item("Extra_Life").add(-1)
+            health = Math.Min(0.125 * inv.getCountAt("Extra_Life"), 1.0)
+            Game.pushLogAndEvent("Extra_Life consumed!")
+        End If
 
         Game.fromCombat()
         Game.pnlCombat.Visible = False
         canMoveFlag = False
 
         resetPerks()
+
         If source Is Nothing Then
             DeathEffects.hardDeath()
             Exit Sub
@@ -960,7 +1175,10 @@ Public Class Player
         source.nextCombatAction = Nothing
 
         setHealth(0.1)
+
         If Not source Is Nothing AndAlso Not source.getSName Is Nothing Then
+            Game.pushLstLog("You are defeated!")
+
             If source.getName.Equals("stamina") Then
                 Game.pushLblEvent("You starve to death!")
             ElseIf source.getName.Equals("Fire") Then
@@ -979,8 +1197,8 @@ Public Class Player
         If pClass.name.Equals("Bimbo") Then
             If Game.mDun.numCurrFloor = 13 Then
                 pImage = Game.picPlayerBFog.BackgroundImage
-            ElseIf Game.mDun.numCurrFloor = 9999 Then
-                pImage = Game.picBimboSpace.BackgroundImage
+            ElseIf Game.mDun.numCurrFloor = 9999 Or Game.mDun.numCurrFloor = 10000 Then
+                pImage = Game.picPlayerBSpace.BackgroundImage
             ElseIf Game.mDun.numCurrFloor = 91017 Then
                 pImage = Game.picLegaBimbo.BackgroundImage
             ElseIf Game.mDun.numCurrFloor > 5 Then
@@ -991,7 +1209,7 @@ Public Class Player
         Else
             If Game.mDun.numCurrFloor = 13 Then
                 pImage = Game.picPlayerFog.BackgroundImage
-            ElseIf Game.mDun.numCurrFloor = 9999 Then
+            ElseIf Game.mDun.numCurrFloor = 9999 Or Game.mDun.numCurrFloor = 10000 Then
                 pImage = Game.picPlayerSpace.BackgroundImage
             ElseIf Game.mDun.numCurrFloor = 91017 Then
                 pImage = Game.picLegaPlayer.BackgroundImage
@@ -1009,21 +1227,35 @@ Public Class Player
         If perks(perk.astatue) > -1 Then nextCombatAction = AddressOf PerkEffects.statueMove
         MyBase.update()
 
+        '|STAMINA|
+        If Game.getTurn <> turnCt And Game.getTurn Mod 25 = 0 Then stamina -= 1
+
+        '|MANA REGEN|
+        Dim m = Math.Max(CInt(7.8152 * Math.Exp(-0.011 * getWIL())), 1)
+        If Game.getTurn <> turnCt And mana < getMaxMana() And Game.getTurn Mod m = 0 And Not perks(perk.cmark) > -1 Then
+            Dim mregen = Math.Max(Int(getMaxMana() / 15), 1)
+            mana += mregen
+        End If
+
         '|PERK AND TRANSFORMATION UPDATES|
         Dim pUpdateFlag As Boolean = False
         'perks
-        If Game.turn <> turnCt Then
-            turnCt = Game.turn
+        If Game.getTurn <> turnCt Then
             pUpdateFlag = perkUpdate()
         End If
         'transformations
         tfUpdate(pUpdateFlag)
+
+        '|QUEST UPDATES|
+        ongoingQuests.ping()
 
         '|PLAYER STAT UPKEEP|
         If xp >= nextLevelXp Then levelUp()
         UIupdate()
 
         If pUpdateFlag Then drawPort()
+
+        turnCt = Game.getTurn
     End Sub
     Sub tfUpdate(Optional ByRef pUpdateFlag = False)
         'transformations
@@ -1040,8 +1272,7 @@ Public Class Player
         '|STAMINA|
         stamina = Math.Max(0, stamina)
         stamina = Math.Min(100, stamina)
-        If stamina <= 0 Then perks(perk.hunger) = 1
-        If Game.turn Mod 25 = 10 And Int(Rnd() * 2) = 0 Then stamina -= 1
+        If stamina < 1 Then perks(perk.hunger) = 1 Else perks(perk.hunger) = -1
 
         '|STATS|
         attack = Math.Max(1, attack)
@@ -1054,18 +1285,19 @@ Public Class Player
 
         lust = Math.Min(100, lust)
         lust = Math.Max(0, lust)
+        If perks(perk.cmark) > -1 Then lust = Math.Max((mana / maxMana) * 100, lust)
     End Sub
     Function perkUpdate() As Boolean
         Dim needsToUpdatePortrait = False
         '|GENERAL EFFECTS|
         'stamina
-        If perks(perk.hunger) > -1 And Game.turn Mod 5 = 0 Then
+        If perks(perk.hunger) > -1 And Game.getTurn Mod 5 = 0 Then
             PerkEffects.staminaEffect(Me)
         End If
-        If perks(perk.burn) > -1 And Game.turn Mod 4 = 0 Then
+        If perks(perk.burn) > -1 And Game.getTurn Mod 4 = 0 Then
             PerkEffects.burnEffect(Me)
         End If
-        If perks(perk.mburst) > -1 And Game.turn Mod 4 = 0 Then
+        If perks(perk.mburst) > -1 And Game.getTurn Mod 4 = 0 Then
             PerkEffects.mBurst(Me)
         End If
         'slime hair health regen
@@ -1088,10 +1320,6 @@ Public Class Player
         If perks(perk.minmanregen) > -1 Then
             PerkEffects.minorManaRegen(Me)
         End If
-        'light source effect
-        If perks(perk.minmanregen) > -1 Then
-            PerkEffects.lightSource(Me)
-        End If
         'amazon effect
         If perks(perk.amazon) > -1 Then
             PerkEffects.amazon(Me)
@@ -1100,13 +1328,22 @@ Public Class Player
         If perks(perk.barbarian) > -1 Then
             PerkEffects.barbarian(Me)
         End If
+        'caketf effect
         If perks(perk.cupcake) > -1 Then
-            If Game.turn Mod 20 = 0 Then perks(perk.cupcake) -= 1
+            If Game.getTurn Mod 20 = 0 Then perks(perk.cupcake) -= 1
         End If
+        'illuminate effect
+        If perks(perk.lightsource) > -1 Then
+            perks(perk.lightsource) -= 1
+        End If
+        'bunny ear effect
         If perks(perk.bunnyears) > -1 Then
             PerkEffects.bunnyEars(Me)
         End If
-
+        'phase deflector effect
+        If perks(perk.pdeflector) > -1 Then
+            PerkEffects.phaseDeflector(Me)
+        End If
         'living armor
         If perks(perk.livearm) > -1 Then
             needsToUpdatePortrait = PerkEffects.livingArmor(Me)
@@ -1115,23 +1352,32 @@ Public Class Player
         If perks(perk.livelinge) > -1 Then
             needsToUpdatePortrait = PerkEffects.livingLingerie(Me)
         End If
+        'golden gum
+        If inv.getCountAt("Golden_Gum") > 0 And Not ongoingTFs.contains("GBimbo") And Not className.Equals("Bimbo") Then
+            Game.pushLblEvent("A dizzy calm washes over you...")
+            ongoingTFs.add(New GBimboTF(2, 20, 0.25, True))
+        End If
+        'imitation cowbell
+        If Not pClass.name.Equals("Thrall") And forcedPath Is Nothing And prt.checkFemInd(pInd.horns, 12) AndAlso Int(Rnd() * 100) = 0 AndAlso Not Game.combatmode AndAlso Not Game.npcmode Then
+            PerkEffects.imitationCowbell(Me)
+        End If
 
         '|TRANSFORMATION TRIGGERS|
         'targax sword tf
         If perks(perk.swordpossess) > -1 Then
             PerkEffects.targaxSwordTF(Me)
         End If
-        'shift toward prefered form
-        If Not prefForm Is Nothing AndAlso (pClass.name = "Thrall" Xor equippedAcce.getName.Equals("Slave_Collar")) AndAlso Not prefForm.playerMeetsForm(Game.player1) And Not pForm.name.Equals("Half-Succubus") And Not perks(perk.thrall) = 1 And Not perks(perk.nekocurse) > -1 And Not perks(perk.polymorphed) > -1 And Not perks(perk.bimbotf) > -1 Then
+        'shift toward preferred form
+        If Not prefForm Is Nothing AndAlso Transformation.canBeTFed(Me) And (pClass.name = "Thrall" Xor equippedAcce.getName.Equals("Slave_Collar")) AndAlso Not prefForm.playerMeetsForm(Game.player1) And Not pForm.name.Equals("Half-Succubus") And Not perks(perk.thrall) = 1 Then
             PerkEffects.thrallRestore(Me)
         End If
         If perks(perk.astatue) > -1 Then
             PerkEffects.aStatue(Me)
         End If
-        If pClass.name.Equals("Magical Girl") Then
+        If pClass.name.Equals("Magical Girl") And perks(perk.tfedbyweapon) > 0 Then
             PerkEffects.magicGirlStatusCheck(Me)
         End If
-        If pClass.name.Equals("Valkyrie") Then
+        If pClass.name.Equals("Valkyrie") And perks(perk.tfedbyweapon) > 0 Then
             PerkEffects.valkyrieStatusCheck(Me)
         End If
 
@@ -1172,6 +1418,11 @@ Public Class Player
         If perks(perk.infernoa) > -1 Then
             PerkEffects.infernoAura(Me)
         End If
+        'spotfusion cooldown
+        If perks(perk.isspotfused) > -1 Then
+            perks(perk.isspotfused) -= 1
+            If perks(perk.isspotfused) < 1 Then perks(perk.isspotfused) = -1
+        End If
 
         '|CURSES|
         'clothing curse
@@ -1208,14 +1459,14 @@ Public Class Player
 
         If Game.lblNameTitle.Text <> name & " the " & pClass.name Then Game.lblNameTitle.Text = name & " the " & pClass.name
 
-        Game.lblHealth.Text = statBar(getIntHealth, getMaxHealth, Game.lblHealth)
+        Game.lblHealth.Text = DDUtils.statBar(getIntHealth, getMaxHealth, Game.lblHealth)
         Game.lblHealth.ForeColor = Game.getHPColor(getHealth)
 
-        Game.lblMana.Text = statBar(getMana, getMaxMana, Game.lblMana)
+        Game.lblMana.Text = DDUtils.statBar(getMana, getMaxMana, Game.lblMana)
 
-        Game.lblstamina.Text = statBar(stamina, 100, Game.lblstamina)
+        Game.lblstamina.Text = DDUtils.statBar(stamina, 100, Game.lblstamina)
 
-        Game.lblXP.Text = statBar(xp, nextLevelXp, Game.lblXP)
+        Game.lblXP.Text = DDUtils.statBar(xp, nextLevelXp, Game.lblXP)
 
         If Game.lblLevel.Text <> "Level = " & level Then Game.lblLevel.Text = "Level = " & level
         If Game.lblATK.Text <> "ATK = " & getATK() Then Game.lblATK.Text = "ATK = " & getATK()
@@ -1230,7 +1481,7 @@ Public Class Player
         End If
 
         inv.invIDorder.Clear()
-        Dim numItems As Integer = Game.lstInventory.Items.Count
+        Dim numItems As Integer = Game.btnCancelCast.Items.Count
         Dim tArr(inv.count + 5) As String
         Dim ct As Integer = 0
         If Game.invFilters(0) Then
@@ -1255,32 +1506,15 @@ Public Class Player
             drawInv("-MISC:", inv.getMisc, tArr, ct)
         End If
         If ct <> numItems Or inv.invNeedsUDate Then
-            Game.lstInventory.Items.Clear()
+            Game.btnCancelCast.Items.Clear()
             For Each invItem In tArr
                 If Not invItem Is Nothing Then
-                    Game.lstInventory.Items.Add(invItem)
+                    Game.btnCancelCast.Items.Add(invItem)
                 End If
             Next
         End If
         inv.invNeedsUDate = False
     End Sub
-    Function statBar(ByVal cval As Double, ByVal mval As Double, ByVal ctrl As Control, Optional ByVal delim As Char = "ᚋ")
-        Dim out As String = " " & cval & "/" & mval & " "
-
-        ctrl.Font = Game.lblHealthbarFont.Font
-
-        While ctrl.Width * (cval / mval) > TextRenderer.MeasureText(out, ctrl.Font).Width
-            out = delim & out & delim
-        End While
-
-        While ctrl.Width < TextRenderer.MeasureText(out, ctrl.Font).Width
-            out = out.Substring(0, out.Length - 1)
-        End While
-
-        If Not out.Contains(delim) Then out.Replace(" ", "")
-
-        Return out
-    End Function
     Sub drawInv(ByVal heading As String, ByRef list() As Item, ByRef tArr() As String, ByRef ct As Integer)
         tArr(ct) = heading
         inv.invIDorder.Add(-1)
@@ -1591,7 +1825,7 @@ Public Class Player
         If buttSize >= -2 And buttSize < 5 Then
             buttSize += 1
             reverseUSRoute()
-            If equippedArmor.bindsWearer Then reverseBSroute(False) Else reverseBSroute()
+            If equippedArmor.bind_wearer Then reverseBSroute(False) Else reverseBSroute()
             Game.pushLstLog("+ 1 butt size!")
         Else
             Game.pushLstLog("Your ass can get no larger!")
@@ -1605,14 +1839,14 @@ Public Class Player
         If buttSize > -1 And buttSize <= 5 Then
             buttSize -= 1
             reverseUSRoute()
-            If equippedArmor.bindsWearer Then reverseBSroute(False) Else reverseBSroute()
+            If equippedArmor.bind_wearer Then reverseBSroute(False) Else reverseBSroute()
             Game.pushLstLog("- 1 butt size!")
         Else
             Game.pushLstLog("Your butt can get no smaller!")
         End If
     End Sub
     Sub usizeroute()
-        If equippedArmor.bindsWearer Then uBsizeroute() : Exit Sub
+        If equippedArmor.bind_wearer Then uBsizeroute() : Exit Sub
         If Portrait.imgLib Is Nothing Or prt.iArr Is Nothing Or
             prt.iArrInd Is Nothing Or solFlag Then Exit Sub
         If prt.checkNDefMalInd(pInd.body, 5) And buttSize <> -2 Then
@@ -1634,7 +1868,7 @@ Public Class Player
         End If
     End Sub
     Public Sub reverseUSRoute()
-        If equippedArmor.bindsWearer Then reverseUBSRoute() : Exit Sub
+        If equippedArmor.bind_wearer Then reverseUBSRoute() : Exit Sub
         Select Case buttSize
             Case -2
                 prt.setIAInd(pInd.body, 5, False, False)
@@ -1733,20 +1967,36 @@ Public Class Player
     End Sub
 
     '|SAVE METHODS|
+    Sub pullFormStates()
+        formStates(0) = bimbState
+        formStates(1) = magGState
+        formStates(2) = goddState
+        formStates(3) = maidState
+        formStates(4) = prinState
+        formStates(5) = dembimState1
+        formStates(6) = dembimState2
+        formStates(7) = succDisgState
+        formStates(8) = preBSBody
+        formStates(9) = preBSStartState
+    End Sub
     Public Overrides Function ToString() As String
         Dim output As String = ""
-
         currState.save(Me)
 
+        '|- Main Save States -|
         output += currState.write()
         output += sState.write()
         output += pState.write()
+
+        '|- Tertiary Save States (For TFs/etc) -|
+        pullFormStates()
 
         output += formStates.length & "#"
         For i = 0 To UBound(formStates)
             output += formStates(i).write()
         Next
 
+        '|- Player Stats -|
         output += pos.X & "*"
         output += pos.Y & "*"
         output += health & "*"
@@ -1762,8 +2012,10 @@ Public Class Player
         output += xp & "*"
         output += nextLevelXp & "*"
 
+        '|- Inventory -|
         output += inv.save()
 
+        '|- Forced Path -|
         If forcedPath Is Nothing Then
             output += "N/a*"
         Else
@@ -1771,37 +2023,60 @@ Public Class Player
             output += (forcedPath(UBound(forcedPath)).Y & "*")
         End If
 
+        '|- Current "Preferred Form" transformation -|
         If Not prefForm Is Nothing Then
             output += prefForm.ToString & "$"
         Else
             output += "N/a$"
         End If
+
+        '|- "Slave Collar" Saved Values
         output += inv.item(69).ToString
-
         output += "*†"
-        output += ongoingTFs.save()
 
+        '|- Ongoing Transformations -|
+        output += ongoingTFs.save()
         output += "†"
+
+        '|- Known "Self Polymorphs" Forms -|
         output += selfPolyForms.Count - 1 & "Ͱ"
         For i = 0 To selfPolyForms.Count - 1
             output += selfPolyForms(i).ToString & "Ͱ"
         Next
         output += "†"
+
+        '|- Known "Polymorph Enemy" Forms -|
         output += enemPolyForms.Count - 1 & "Ͱ"
         For i = 0 To enemPolyForms.Count - 1
             output += enemPolyForms(i).ToString & "Ͱ"
         Next
         output += "†"
+
+        '|- Known Spells -|
         output += knownSpells.Count - 1 & "Ͱ"
         For i = 0 To knownSpells.Count - 1
             output += knownSpells(i).ToString & "Ͱ"
         Next
         output += "†"
+
+        '|- Known Specials -|
         output += knownSpecials.Count - 1 & "Ͱ"
         For i = 0 To knownSpecials.Count - 1
             output += knownSpecials(i).ToString & "Ͱ"
         Next
         output += "†"
+
+        '|- Quest Records -|
+        output += quests.Count - 1 & "Ͱ"
+        For i = 0 To quests.Count - 1
+            output += quests(i).save & "Ͱ"
+        Next
+        output += "†"
+
+        '|- Ongoing Quests -|
+        output += ongoingQuests.save()
+        output += "†"
+
         Return output
     End Function
     Public Function toGhost() As String
@@ -1815,6 +2090,7 @@ Public Class Player
             getMaxMana() & "*" &
             getDEF() & "*" &
             getSPD() & "*" &
+            getWIL() & "*" &
             prt.sexBool & "*" &
             prt.iArrInd(pInd.eyes).Item1 & "*" &
             prt.iArrInd(pInd.eyes).Item2 & "*" &
@@ -1948,7 +2224,7 @@ Public Class Player
         If will > 15 Then Return True
         Return Game.pcUnwilling
     End Function
-    Function isCursed() As Boolean
+    Function cursed() As Boolean
         If perks(perk.slutcurse) > -1 Then Return True
         If perks(perk.copoly) > -1 Then Return True
         If perks(perk.cogreed) > -1 Then Return True
@@ -1957,7 +2233,7 @@ Public Class Player
         If perks(perk.coblind) > -1 Then Return True
         If perks(perk.coscale) > -1 Then Return True
         If perks(perk.succubuscurse) > -1 Then Return True
-        If equippedArmor.isCursed Or equippedWeapon.isCursed Or equippedAcce.isCursed Then Return True
+        If equippedArmor.cursed Or equippedWeapon.cursed Or equippedAcce.cursed Then Return True
         Return False
     End Function
     Function genDescription()
@@ -1965,8 +2241,14 @@ Public Class Player
 
         Dim out As String = ""
         'general statement
-        out = "You are " & name & ", a " & sex & " " & pForm.name & " " & pClass.name & vbCrLf & " " & vbCrLf
-        out += nextLevelXp - xp & " XP to next LVL" & vbCrLf & " " & vbCrLf
+        If pClass.name.Equals("Classless") Then
+            out = "You are " & name & ", a " & sex & " " & pClass.name & " " & pForm.name & DDUtils.RNRN
+        Else
+            out = "You are " & name & ", a " & sex & " " & pForm.name & " " & pClass.name & DDUtils.RNRN
+        End If
+
+
+        out += nextLevelXp - xp & " XP to next LVL" & DDUtils.RNRN
         'check for single image forms
         Select Case pForm.name
             Case "Dragon"
@@ -1986,8 +2268,7 @@ Public Class Player
                 Return out + outPutPerkText()
             Case "Chicken"
             Case "Fae"
-                out += "You are a small, naked farie with long blond hair and a feminine body.  While you can fly using the delicate pink wings attached to your back, your size makes it difficult to wear or use any form of equipment designed for bigger folk." & DDUtils.RNRN
-                Return out + outPutPerkText()
+                out += "You are a small farie.  While you can fly using the delicate wings attached to your back, your size makes it difficult to wear or use any form of equipment designed for bigger folk." & DDUtils.RNRN
             Case "Frog"
                 out += "You are a lime green tiny frog.  Ribbit, ribbit." & DDUtils.RNRN
                 Return out + outPutPerkText()
@@ -2003,6 +2284,7 @@ Public Class Player
                     "of a similar frosting, done in a feminine style." & DDUtils.RNRN
                 Return out + outPutPerkText()
         End Select
+
         Select Case pClass.name
             Case "Magical Girl​"
                 out += "You are currently in the middle of a magical girl transformation!" & DDUtils.RNRN
@@ -2024,9 +2306,9 @@ Public Class Player
             out += "rubber "
         End If
         If prt.iArrInd(pInd.rearhair).Item2 Then
-            out += "hair, done in a feminine style." & vbCrLf & " " & vbCrLf
+            out += "hair, done in a feminine style." & DDUtils.RNRN
         Else
-            out += "hair, done in a masculine style." & vbCrLf & " " & vbCrLf
+            out += "hair, done in a masculine style." & DDUtils.RNRN
         End If
 
         'body
@@ -2034,9 +2316,9 @@ Public Class Player
             Case "Blowup Doll"
                 out += "You are a inflatable sex doll with " & getSkinColor() & "rubber skin.  "
                 If prt.sexBool Then
-                    out += "You have a feminine body, with huge breasts and a matching ""pussy""." & vbCrLf & " " & vbCrLf
+                    out += "You have a feminine body, with huge breasts and a matching ""pussy""." & DDUtils.RNRN
                 Else
-                    out += "You have a feminine body, with huge breasts, though you do have a dildo-like cock." & vbCrLf & " " & vbCrLf
+                    out += "You have a feminine body, with huge breasts, though you do have a dildo-like cock." & DDUtils.RNRN
                 End If
             Case Else
                 'skincolor
@@ -2095,29 +2377,59 @@ Public Class Player
                 End Select
 
                 If prt.sexBool Or dickSize = -1 Then
-                    out += "Your body has a generally " & uAdj & " appearance, with " & bAdj & " breasts and a pussy between your legs." & vbCrLf & " " & vbCrLf
+                    out += "Your body has a generally " & uAdj & " appearance, with " & bAdj & " breasts and a pussy between your legs." & DDUtils.RNRN
                 Else
                     If breastSize = -1 Then
-                        out += "Your body has a generally " & uAdj & " appearance, with a toned chest and a " & dAdj & " cock between your legs." & vbCrLf & " " & vbCrLf
+                        out += "Your body has a generally " & uAdj & " appearance, with a toned chest and a " & dAdj & " cock between your legs." & DDUtils.RNRN
                     Else
-                        out += "Your body has a generally " & uAdj & " appearance, with " & bAdj & " breasts and a " & dAdj & " cock between your legs." & vbCrLf & " " & vbCrLf
+                        out += "Your body has a generally " & uAdj & " appearance, with " & bAdj & " breasts and a " & dAdj & " cock between your legs." & DDUtils.RNRN
                     End If
                 End If
         End Select
 
         out += outPutPerkText()
 
+        out += listQuests()
         Return out
     End Function
     Function outPutPerkText() As String
         Dim out = ""
-        If perks(perk.hunger) > -1 Then out += "You haven't eaten anything in a while and are starving." & vbCrLf & " " & vbCrLf
-        If perks(perk.slutcurse) > -1 Then out += "You choose to dress very provocatively, showing as much skin as possible due to a curse."
-        If perks(perk.polymorphed) > -1 Then out += "You are under the effects of a temporary polymorph, and will be for " & perks(perk.polymorphed) & " more turns." & vbCrLf & " " & vbCrLf
-        If perks(perk.thrall) > -1 Then out += "You are under the thrall of a sorcerer/ess, and may not have full control over your body or mind." & vbCrLf & " " & vbCrLf
-        If perks(perk.astatue) > -1 Then out += "You are currently a statue, and won't be able to do much for " & perks(perk.astatue) & " turns." & vbCrLf & " " & vbCrLf
-        If perks(perk.lurk) > -1 Then out += "You are currently in a shrub." & vbCrLf & " " & vbCrLf
+
+        '| -- Status Indicators -- |
+        If perks(perk.hunger) > -1 Then out += "You haven't eaten anything in a while and are starving." & DDUtils.RNRN
+        If perks(perk.thrall) > -1 Then out += "You are under the thrall of a sorcerer/ess, and may not have full control over your body or mind." & DDUtils.RNRN
+        If perks(perk.polymorphed) > -1 Then out += "You are under the effects of a temporary polymorph, and will be for " & perks(perk.polymorphed) & " more turns." & DDUtils.RNRN
+        If perks(perk.astatue) > -1 Then out += "You are currently a statue, and won't be able to do much for " & perks(perk.astatue) & " turns." & DDUtils.RNRN
+        If perks(perk.lurk) > -1 Then out += "You are currently in a shrub." & DDUtils.RNRN
+        If perks(perk.blind) > -1 Then out += "You are blind." & DDUtils.RNRN
+        If perks(perk.lightsource) > -1 Then out += "Your entire body is glowing, and will continue to do so for " & perks(perk.lightsource) & " turns." & DDUtils.RNRN
+        'If perks(perk.masochist) > -1 Then out += "Damage you take will raise your lust." & DDUtils.RNRN
+        If perks(perk.burn) > -1 Then out += "You are on fire, and will continue to do so for " & perks(perk.burn) & " turns." & DDUtils.RNRN
+        If perks(perk.dodge) > -1 Then out += "You will dodge the next attack that comes your way." & DDUtils.RNRN
+        If perks(perk.isspotfused) > -1 Then out += "You can not fuse again for " & perks(perk.isspotfused) & " turns." & DDUtils.RNRN
+
+        '| -- Curse Indicators -- |
+        If perks(perk.slutcurse) > -1 Then out += "Due to a curse, any clothes or armor you wear will become skimpy and revealing." & DDUtils.RNRN
+        If perks(perk.copoly) > -1 Then out += "Due to a curse, you will occasionally change forms uncontrollably." & DDUtils.RNRN
+        If perks(perk.cogreed) > -1 Then out += "Due to a curse, all chests that you open will turn into mimics." & DDUtils.RNRN
+        If perks(perk.corust) > -1 Then out += "Due to a curse, your worn equipment will take damage occasionally." & DDUtils.RNRN
+        If perks(perk.comilk) > -1 Then out += "Due to a curse, your tits will rapidly grow larger over time." & DDUtils.RNRN
+        If perks(perk.coblind) > -1 Then out += "Due to a curse, you can no longer see." & DDUtils.RNRN
+        If perks(perk.succubuscurse) > -1 Then out += "Due to a curse, you will turn into a bimbo the hornier you get." & DDUtils.RNRN
+
         Return out
+    End Function
+    Function listQuests() As String
+        Dim originalOut = "|----- QUESTS -----|" & DDUtils.RNRN
+        Dim out = originalOut
+
+        For Each qu In quests
+            If qu.getActive And Not qu.getComplete And Not qu.isHidden Then
+                out += """" & qu.getName & """ (" & qu.getProgress & ")" & vbCrLf & "- " & qu.getCurrObj.getDesc & DDUtils.RNRN
+            End If
+        Next
+
+        Return If(out.Equals(originalOut), "", out)
     End Function
 
     '|LEVELING|

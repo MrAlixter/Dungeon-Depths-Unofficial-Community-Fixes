@@ -44,7 +44,9 @@
                          ShopNPC.npcLib.atrs(0).getAt(30),
                          ShopNPC.npcLib.atrs(0).getAt(31),
                          ShopNPC.npcLib.atrs(0).getAt(28),
-                         picArachne})
+                         picArachne,
+                         ShopNPC.npcLib.atrs(0).getAt(94),
+                         ShopNPC.npcLib.atrs(0).getAt(96)})
 
         If speed = Game.player1.speed Then speed -= 1
         title = " the "
@@ -55,7 +57,15 @@
 
         discount = 0
 
+        If Game.player1.quests(qInds.dfaUpgrade).getComplete Then
+            inv.setCount("Upgrade_Armor", 1)
+        Else
+            inv.setCount("Upgrade_Armor", 0)
+        End If
+
         If npcIndex = 0 Then
+            If Game.player1.quests(qInds.dfaUpgrade).canGet Then Game.player1.quests(qInds.dfaUpgrade).init() : Exit Sub
+
             If Int(Rnd() * 2) = 0 Then
                 npcIndex = 5
                 Game.pushNPCDialog("I'm still getting everything moved in, but feel free to check out what I've got ready so far.  I should be operating at 100% by the time 0.9 rolls around, so stay in touch, ok?")
@@ -80,7 +90,7 @@
             Game.pushNPCDialog("Oh my, I appear to have broken a nail.  I suppose it comes with the title of ""Princess of Smithery"" to get my hands dirty, but I should still be more careful...")
         ElseIf npcIndex = 4 Then
             Game.pushNPCDialog("*giggle* Let me know what you, like, need and I'll totally hop to it, cutie! *fit of giggles*")
-        ElseIf npcIndex = 7 Then
+        ElseIf npcIndex = 7 Or npcIndex = 11 Then
             Game.pushNPCDialog("...")
         ElseIf npcIndex = 9 Then
             If Game.player1.formName.Equals("Arachne") Then
@@ -88,6 +98,8 @@
             Else
                 Game.pushNPCDialog("Heeeey, you wouldn't mind drinking some of this venom, right?  I'd hate if another arachne ate one of my best customers...")
             End If
+        ElseIf npcIndex = 10 Then
+            Game.pushNPCDialog("Hey, what's up? *nya*")
         End If
 
         If npcIndex = getArachneImageInd() And Not Game.player1.formName.Equals("Arachne") Then inv.setCount(244, 1) Else inv.setCount(244, 0)
@@ -96,7 +108,7 @@
     End Sub
 
     Public Overrides Function toFight() As String
-        If npcIndex = 0 Or npcIndex = 9 Then
+        If npcIndex = 0 Or npcIndex = 9 Or npcIndex = 10 Then
             Return "Unless you're packing some serious magic, probably not your best move..."
         ElseIf npcIndex = 1 Then
             Return "CROoooOOOAK!"
@@ -106,13 +118,13 @@
             Return "As a warrior princess I shall not refuse this duel...  I shall end thou rightly!"
         ElseIf npcIndex = 4 Then
             Return "*giggle* I'll show you just how, like, cute I am, even in a fight!"
-        ElseIf npcIndex = 7 Then
+        ElseIf npcIndex = 7 Or npcIndex = 11 Then
             Return "..."
         End If
         Return "Unless you're packing some serious magic, probably not your best move..."
     End Function
     Public Overrides Function hitBySpell() As String
-        If npcIndex = 0 Then
+        If npcIndex = 0 Or npcIndex = 10 Then
             Game.NPCtoCombat(Me)
             Return "W-w-wait, don't try turning me into anything gross, ok?"
         ElseIf npcIndex = 1 Then
@@ -125,7 +137,7 @@
             Return "You now face the ""Princess of Smithery"", mage!"
         ElseIf npcIndex = 4 Then
             Return "Woah, everything's so...shiny...."
-        ElseIf npcIndex = 7 Then
+        ElseIf npcIndex = 7 Or npcIndex = 11 Then
             Return "..."
         ElseIf npcIndex = 9 Then
             Game.NPCtoCombat(Me)
@@ -138,6 +150,12 @@
 
     Public Overrides Function getArachneImageInd() As Integer
         Return 9
+    End Function
+    Public Overrides Function getCatgirlImageInd() As Integer
+        Return 10
+    End Function
+    Public Overrides Function getTrilobiteImageInd() As Integer
+        Return 11
     End Function
 
     Public Overrides Sub toDoll()

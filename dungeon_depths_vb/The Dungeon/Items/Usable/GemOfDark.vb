@@ -1,14 +1,22 @@
 ﻿Public Class GemOfDark
     Inherits Item
     Sub New()
-        MyBase.setName("Gem_of_Darkness")
-        MyBase.setDesc("A deep ebony jewel that looks like it could be embeded into a wand")
+        '|ID Info|
+        setName("Gem_of_Darkness")
         id = 215
         tier = Nothing
-        isMonsterDrop = True
-        MyBase.setUsable(True)
-        MyBase.count = 0
-        MyBase.value = 5030
+
+        '|Item Flags|
+        usable = True
+        droppable = True
+
+        '|Stats|
+        count = 0
+        value = 5030
+
+        '|Description|
+        setDesc("A deep ebony jewel that looks like it could be embeded into a wand")
+
     End Sub
 
     Overrides Sub use(ByRef p As Player)

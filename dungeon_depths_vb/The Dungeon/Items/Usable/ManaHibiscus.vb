@@ -1,20 +1,30 @@
 ﻿Public Class ManaHibiscus
     Inherits Accessory
     Sub New()
-        MyBase.setName("Mana_Hibiscus")
-        MyBase.setDesc("The runes covering this magenta flower not only keep it perpetually young, but also emit a sublte aura of mana.  Who knows what would happen if one were to try to activate them further...")
+        '|ID Info|
+        setName("Mana_Hibiscus")
         id = 149
         If DDDateTime.isAni Then tier = 2 Else tier = Nothing
-        MyBase.setUsable(True)
-        MyBase.mBoost = 17
-        MyBase.count = 0
-        MyBase.value = 1820
+
+        '|Item Flags|
+        usable = True
+
+        '|Stats|
+        MyBase.m_boost = 17
+        count = 0
+        value = 1820
+
+        '|Image Index|
         MyBase.fInd = New Tuple(Of Integer, Boolean, Boolean)(4, True, True)
         MyBase.mInd = New Tuple(Of Integer, Boolean, Boolean)(4, True, True)
+
+        '|Description|
+        setDesc("This magenta flower is covered in runes that pulse with the glowing aura of magic.  With verdant leaves that never curl with age, there's no telling what would happen if someone were to add a little more mana to the mix...")
+
     End Sub
 
     Overrides Sub use(ByRef p As Player)
-        If Game.currFloor.floorNumber = 91017 Or Game.currFloor.floorNumber = 9999 Then Exit Sub
+        If Game.currFloor.floorNumber = 91017 Or Game.currFloor.floorNumber = 9999 Or Game.currFloor.floorNumber = 10000 Then Exit Sub
         If Game.combatmode Or Game.npcmode Then Exit Sub
         Dim cae = New Caelia
         Game.npcEncounter(cae)

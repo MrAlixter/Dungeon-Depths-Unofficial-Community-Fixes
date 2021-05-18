@@ -22,8 +22,10 @@
     End Sub
 
     Sub shiftTowardsPrefForm()
-        Dim p As player = game.player1
+        Dim p As Player = Game.player1
+
         p.prefForm.shiftTowards(Game.player1)
+
         p.perks(perk.thrall) += 1
         If p.perks(perk.thrall) > 11 Then
             p.prefForm.snapShift(Game.player1)
@@ -32,7 +34,7 @@
         MyBase.currStep -= 1
     End Sub
     Sub crystalSpawn()
-        Dim p As player = game.player1
+        Dim p As player = Game.player1
         If p.forcedPath Is Nothing And Not Game.combatmode And Not Game.npcmode Then
 
             Dim crystal = Game.currfloor.randPoint
@@ -68,41 +70,39 @@
     End Sub
 
     Shared Sub fightSorc()
-        Dim p As player = game.player1
+        Dim p As player = Game.player1
         Dim m As Monster
         m = Monster.monsterFactory(9)
 
         Monster.targetRoute(m)
+        Game.toCombat(m)
 
-        Game.toCombat()
         Game.pushLstLog((m.getName() & " attacks!"))
-        Game.turn += 1
     End Sub
     Shared Sub fightSorc2()
-        Dim p As player = game.player1
+        Dim p As player = Game.player1
         Game.lblEvent.Visible = False
         Dim m As Monster
         m = Monster.monsterFactory(8)
 
         Monster.targetRoute(m)
+        Game.toCombat(m)
 
-        Game.toCombat()
         Game.pushLstLog((m.getName() & " attacks!"))
-        Game.turn += 1
     End Sub
     Shared Sub acceptSorc()
-        Dim p As player = game.player1
+        Dim p As player = Game.player1
         p.perks(perk.thrall) = -1
         p.ongoingTFs.Add(New HalfSuccubusTF())
         p.update()
-        Game.pushLblEvent("""Then I deem your task concluded as a success.  Go now, and take care not to fall under the spell of any others,"" your controller states.")
+        Game.pushLblEvent("""Then I deem your task concluded as a success.  Go now, and take care not to fall under the spell of any others...""")
     End Sub
     Shared Sub betraySorc()
-        Dim p As player = game.player1
-        Game.pushLblEvent("Brushing past you, your ""boss"" heads straight for the array.  As they begin fiddling with it, you take notice of their distraction and begin creeping into a position behind them.  As they chant over the array, you prepare to make your move.  " & _
-                          "As their raving reaches its zenith and the runes enscribed on the crystal begin to glow you strike out, disrupting their ritual.  ""YOU!  DO YOU HAVE ANY IDEA ..."" screams the mage, and while they shout you realize you couldn't care less about them.  " & _
-                          "Looking down, you see that your collar has gone dark and dangles open from your neck.  Grinning, your prepare to fight for your life.", AddressOf fightSorc2)
-
+        Dim p As player = Game.player1
+        Game.pushLblEvent("Brushing past you, your ""boss"" heads straight for the crystal.  Once they begin fiddling with it, you take advantage of their distraction and begin creeping into a position behind them." & DDUtils.RNRN &
+                          "As they chant over the array, you prepare to make your move.  The runes enscribed on the crystal begin to glow as the sorcerer's raving reaches its zenith, and in that moment you strike the back of their head, disrupting the ritual." & DDUtils.RNRN &
+                          """YOU!  DO YOU HAVE ANY IDEA ..."" screams the mage, and while they shout you realize you couldn't care less about them.  Looking down, you see that your collar has gone dark and dangles unlatched from your neck." & DDUtils.RNRN &
+                          "Grinning, your prepare to fight for your life.", AddressOf fightSorc2)
 
         Equipment.accChange(p, "Nothing")
         p.inv.add(69, -1)
@@ -110,17 +110,23 @@
         p.drawPort()
     End Sub
     Shared Sub waitSorc()
-        Dim out = "You decide against making a move now, instead waiting to see what happens next.  Your controller doesn't seem to notice you, instead focusing all their attention on the crystalline array.  As they fiddle with it, you notice a slight purple aura beginning to form around them and wait, are those horns sprouting out of their hair that seems to catch a non-existant wind?  With a flourish, they complete ... something ... and a blinding flash engulfs them.  Where once stood your human controller now stands a half-demon who only now seems to have taken notice of you." & DDUtils.RNRN &
-                        """Well... It looks like you succeeded.  For that, I will give you an ultimatium.  Join me as my general, or die in these dungeons as my slave."
+        Dim out = "You decide against making a move now, instead waiting to see what happens next." & DDUtils.RNRN &
+                  "Your controller doesn't seem to notice you, instead focusing all their attention on the crystalline array.  As they fiddle with it, you notice a slight purple aura beginning to form around them and... wait, are those horns sprouting out of their hair?  With a flourish, they complete... something... and a blinding flash engulfs them." & DDUtils.RNRN &
+                  "Where once stood your human controller now stands a half-demon who only now seems to have taken notice of you." & DDUtils.RNRN &
+                  """Well... It looks like you succeeded.  For that, I will give you an ultimatium.  Join me as my general, or die in these dungeons as my slave."""
+
         Game.pushLblEvent(out, AddressOf acceptSorc, AddressOf fightSorc, "Do you accept?")
     End Sub
 
     Shared Sub thrallLN2()
-        Dim ptype = "sister"
-        If Int(Rnd() * 2) = 0 Then
-            ptype = "brother"
-        End If
-        Game.pushLblEvent("""LISTEN UP, NEW SLAVE!  I have need of your services."" your new master begins, ""In this dungeon, there are several high-power mana arrays.  Only one of them, however, is capable of bestowing the power of a demon lord onto a mortal such as I.  Your task is to find and inspect these arrays, and report back to me with your findings.""  They snicker,  ""I'm sure you won't let me down, but I'm going to need to make a few changes to make you more ... uniform ... with the rest of your collegues.""" & DDUtils.RNRN & "        .....       " & DDUtils.RNRN & "With a final warning not to fail them, the foreign presence leaves your mind and you are once again alone with your thoughts, your new " & ptype & ", and your task.")
+        Dim ptype = If(Int(Rnd() * 2) = 0, "sister", "brother")
+
+        Game.pushLblEvent("""LISTEN UP, NEW SLAVE!  I have need of your services."" your new master begins," & DDUtils.RNRN &
+                          """In this dungeon, there are several high-powered mana arrays scrawled into purple gems.  Only one of them, however, is capable of bestowing the power of a demon lord onto a mortal." & DDUtils.RNRN &
+                          "Your task is to find and inspect these arrays, and report back to me with your findings.""" & DDUtils.RNRN &
+                          "They snicker,  ""I'm sure you won't let me down, but I'm going to need to make a few changes to make you more... uniform... with the rest of your collegues.""" & DDUtils.RNRN &
+                          "       .....       " & DDUtils.RNRN &
+                          "With a final warning not to fail them, the foreign presence leaves your mind and you are once again alone with your thoughts, your new " & ptype & ", and your task.")
     End Sub
 
     Public Overrides Sub stopTF()
@@ -129,7 +135,7 @@
     End Sub
 
     Public Overrides Function getNextStep(stage As Integer) As Action
-        Dim p As player = game.player1
+        Dim p As player = Game.player1
         If p.perks(perk.thrall) = -1 Or p.formName.Equals("Half-Succubus") Then
             Return AddressOf stopTF
         ElseIf Not p.prefForm.playerMeetsForm(p) And Not p.perks(perk.thrall) > 10 Then

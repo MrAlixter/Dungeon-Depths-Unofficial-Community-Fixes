@@ -2,14 +2,14 @@
     Inherits Weapon
 
     Sub New()
-        MyBase.setName("Midas_Gauntlet")
-        MyBase.setDesc("A ornate glove that allows you to turn a monster to gold.")
+        setName("Midas_Gauntlet")
+        setDesc("A ornate glove that allows you to turn a monster to gold.")
         id = 42
         tier = Nothing
-        MyBase.setUsable(False)
-        MyBase.aBoost = 0
-        MyBase.count = 0
-        MyBase.value = 9999
+        usable = false
+        MyBase.a_boost = 0
+        count = 0
+        value = 9999
     End Sub
 
     Overrides Function attack(ByRef p As Player, ByRef m As Entity) As Integer

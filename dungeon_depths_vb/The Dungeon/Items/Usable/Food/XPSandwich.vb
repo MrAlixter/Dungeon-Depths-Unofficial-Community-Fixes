@@ -1,22 +1,29 @@
 ﻿Public Class XPSandwich
     Inherits Food
     Sub New()
-        MyBase.setName("XP_Sandwich")
-        MyBase.setDesc("A roasted and seasoned chicken leg, served steaming hot on a bun!" & vbCrLf &
-                       "+25 Stamina")
+        '|ID Info|
+        setName("XP_Sandwich")
         id = 228
         tier = Nothing
-        MyBase.setUsable(True)
-        MyBase.isMonsterDrop = False
-        MyBase.isRandoTFAcceptable = False
-        MyBase.count = 0
-        MyBase.value = 150
+
+        '|Item Flags|
+        usable = True
+        droppable = False
+        rando_inv_allowed = False
+
+        '|Stats|
+        count = 0
+        value = 150
         setCalories(25)
+
+        '|Description|
+        setDesc("Mmmmm, sandwich..." & DDUtils.RNRN &
+                "+25 Stamina")
+
     End Sub
 
-    Public Overrides Sub Effect()
-        MyBase.Effect()
-        Game.player1.xp += 500
-        If Game.player1.xp >= Game.player1.nextLevelXp Then Game.player1.levelUp()
+    Public Overrides Sub Effect(ByRef p As Player)
+        p.xp += 500
+        If p.xp >= p.nextLevelXp Then p.levelUp()
     End Sub
 End Class

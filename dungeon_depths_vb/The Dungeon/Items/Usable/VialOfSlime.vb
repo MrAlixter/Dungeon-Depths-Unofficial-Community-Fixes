@@ -2,20 +2,20 @@
     Inherits Item
     Sub New()
         '|ID Info|
-        MyBase.setName("Vial_of_Slime")
+        setName("Vial_of_Slime")
         id = 3
         tier = 1
 
         '|Item Flags|
-        MyBase.setUsable(True)
-        isMonsterDrop = True
+        usable = true
+        droppable = True
 
         '|Stats|
-        MyBase.count = 0
-        MyBase.value = 100
+        count = 0
+        value = 100
 
         '|Description|
-        MyBase.setDesc("A glass bottle filled with an aquamarine non-newtonian gel.")
+        setDesc("A glass bottle filled with an aquamarine non-newtonian gel.")
     End Sub
 
     Overrides Sub use(ByRef p As Player)
