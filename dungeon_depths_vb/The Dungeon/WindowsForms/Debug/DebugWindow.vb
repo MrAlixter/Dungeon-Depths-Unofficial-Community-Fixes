@@ -62,10 +62,10 @@ Public Class Debug_Window
         boxMana.Value = Game.player1.getMana
         boxMaxMana.Value = Game.player1.getMaxMana
         boxstamina.Value = Game.player1.stamina
-        boxAtk.Value = Game.player1.getATK
-        boxDef.Value = Game.player1.getDEF
-        boxWil.Value = Game.player1.getWIL
-        boxSpd.Value = Game.player1.getSPD
+        boxAtk.Value = Game.player1.attack
+        boxDef.Value = Game.player1.defense
+        boxWil.Value = Game.player1.will
+        boxSpd.Value = Game.player1.speed
         boxEvd.Value = -0
         boxGold.Value = Game.player1.gold
 
