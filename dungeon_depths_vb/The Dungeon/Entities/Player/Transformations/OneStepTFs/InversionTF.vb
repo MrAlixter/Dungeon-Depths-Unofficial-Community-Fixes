@@ -1,12 +1,15 @@
 ﻿Public NotInheritable Class InversionTF
     Inherits OneStepTF
+
+    Private Const TF_IND As tfind = tfind.inversion
+
     Sub New()
         MyBase.New()
-        tfName = "InversionTF"
+        tf_name = TF_IND
     End Sub
     Sub New(cs As Integer, n As Integer, tts As Integer, wi As Double, cbs As Boolean, tfd As Boolean)
         MyBase.New(cs, n, tts, wi, cbs, tfd)
-        tfName = "InversionTF"
+        tf_name = TF_IND
     End Sub
 
     Public Overrides Sub step1()
@@ -16,7 +19,6 @@
 
         snapTF()
         Game.player1.savePState()
-        Game.player1.perks(perk.polymorphed) = 9999999
     End Sub
 
     Public Shared Sub snapTF()

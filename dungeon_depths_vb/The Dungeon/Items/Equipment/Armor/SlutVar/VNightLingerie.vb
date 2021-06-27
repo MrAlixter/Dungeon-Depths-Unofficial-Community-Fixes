@@ -32,6 +32,6 @@
 
         '|Description|
         setDesc("A lovely set of black, white, and red undergarments perfect for a romantic evening with a signifigant other." & DDUtils.RNRN &
-                       getSizeInformation() & vbCrLf & getStatInformation())
+                       getSizeInformation() & vbcrlf & getStatInformation())
     End Sub
 End Class

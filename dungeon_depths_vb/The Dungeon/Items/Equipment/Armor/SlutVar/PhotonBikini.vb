@@ -36,7 +36,7 @@ Public Class PhotonBikini
         '|Description|
         setDesc("Though at a glance it may seem unlikely, this swimsuit houses a powerful shield generator that harnesses its users mana to withstand impacts." & DDUtils.RNRN & _
                         "Hardlight Effect" & DDUtils.RNRN &
-                        getSizeInformation() & vbCrLf & getStatInformation())
+                        getSizeInformation() & vbcrlf & getStatInformation())
     End Sub
 
     Public Overrides Sub onEquip(ByRef p As Player)

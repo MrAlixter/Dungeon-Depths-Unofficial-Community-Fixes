@@ -10,7 +10,7 @@
         count = 0
         value = 1000
         MyBase.onBuy = AddressOf teach
-
+        can_be_stolen = False
         rando_inv_allowed = False
     End Sub
 

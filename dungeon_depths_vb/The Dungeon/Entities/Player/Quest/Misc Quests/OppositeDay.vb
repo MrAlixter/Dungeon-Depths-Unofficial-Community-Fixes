@@ -12,7 +12,7 @@
     Public Overrides Sub init()
         MyBase.init()
 
-        Game.player1.perks(perk.odstartXP) = Game.player1.xp
+        Game.player1.perks(perk.odxpgained) = 0
     End Sub
 
     Public Overrides Function canGet() As Boolean
@@ -34,13 +34,11 @@ Public Class OppositeDayS1
     End Sub
 
     Public Overrides Function getDesc() As String
-        Return description & "  [" & Game.player1.xp - Game.player1.perks(perk.odstartXP) & "/600]"
+        Return description & "  [" & Game.player1.perks(perk.odxpgained) & "/600]"
     End Function
 
     Public Overrides Function isComplete() As Boolean
-        If Game.player1.perks(perk.polymorphed) < 1 Then Game.player1.quests(qInds.oppositeDay).completeEntireQuest() : Return False
-
-        Return Game.player1.xp - Game.player1.perks(perk.odstartXP) >= 600
+        Return Game.player1.perks(perk.odxpgained) >= 600
     End Function
 End Class
 

@@ -20,6 +20,6 @@
         MyBase.compress_breast = True
 
         setDesc("The frilly ballgown of a bonafide princess." & DDUtils.RNRN & _
-                                   getSizeInformation() & vbCrLf & getStatInformation())
+                                   getSizeInformation() & vbcrlf & getStatInformation())
     End Sub
 End Class

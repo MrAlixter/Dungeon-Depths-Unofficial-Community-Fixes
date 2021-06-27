@@ -41,7 +41,7 @@
 
         '|Description|
         setDesc("A blood-red hooded cloak that crackles with arcane energy when touched." & DDUtils.RNRN &
-                        getSizeInformation() & vbCrLf & getStatInformation())
+                        getSizeInformation() & vbcrlf & getStatInformation())
     End Sub
 
     Public Overrides Function getCloak(ByRef p As Player) As Tuple(Of Integer, Boolean, Boolean)

@@ -57,15 +57,15 @@ Public Class Debug_Window
 
         boxForm.SelectedItem = Game.player1.className
 
-        boxHealth.Value = Game.player1.health * Game.player1.getMaxHealth()
-        boxMaxHealth.Value = Game.player1.maxHealth
-        boxMana.Value = Game.player1.mana
-        boxMaxMana.Value = Game.player1.maxMana
+        boxHealth.Value = Game.player1.getIntHealth
+        boxMaxHealth.Value = Game.player1.getMaxHealth
+        boxMana.Value = Game.player1.getMana
+        boxMaxMana.Value = Game.player1.getMaxMana
         boxstamina.Value = Game.player1.stamina
-        boxAtk.Value = Game.player1.attack
-        boxDef.Value = Game.player1.defense
-        boxWil.Value = Game.player1.will
-        boxSpd.Value = Game.player1.speed
+        boxAtk.Value = Game.player1.getATK
+        boxDef.Value = Game.player1.getDEF
+        boxWil.Value = Game.player1.getWIL
+        boxSpd.Value = Game.player1.getSPD
         boxEvd.Value = -0
         boxGold.Value = Game.player1.gold
 

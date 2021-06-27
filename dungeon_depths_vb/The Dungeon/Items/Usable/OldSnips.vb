@@ -22,7 +22,7 @@
         If Me.getUsable() = False Then Exit Sub
 
         If p.equippedAcce.getAName.Equals("Thrall_Collar") And Not Game.combatmode Then
-            Game.pushLblEvent("You can't get a proper angle with the snips on the lock sealing your collar...")
+            Game.pushLogAndEvent("You can't get a proper angle with the snips on the lock sealing your collar...")
             Exit Sub
         End If
 
@@ -30,13 +30,10 @@
 
         If p.currTarget.getName.Contains("Thrall") Then
             Game.fromCombat()
+            Game.pushLstLog("You snip the collar off of the thrall!")
             Game.pushLblEvent("You snip the collar off of the thrall, and as it falls to the ground the haze lifts from their eyes.  Before they wander off, you mention that the Shopkeeper is looking for some willing help and they nod before thanking you.")
             p.perks(perk.collarssnipped) += 1
             damage(20)
         End If
-    End Sub
-
-    Protected Overrides Sub Finalize()
-        MyBase.Finalize()
     End Sub
 End Class

@@ -5,11 +5,12 @@
 
         '|ID Info|
         name = "Time Traveler"
+        sName = name
 
         '|NPC Flags|
         pronoun = "she"
-        pPronoun = "her"
-        rPronoun = "her"
+        p_pronoun = "her"
+        r_pronoun = "her"
         isShop = False
 
         '|Stats|
@@ -17,7 +18,15 @@
         attack = 9999
         defense = 9999
         speed = 99
+        will = 99
         gold = 99999
+        xp_value = (maxHealth + attack + defense + speed) / 4
+        sMaxHealth = maxHealth
+        sMaxMana = maxMana
+        sAttack = attack
+        sdefense = defense
+        sWill = will
+        sSpeed = speed
 
         '|Inventory|
 
@@ -38,7 +47,10 @@
 
         Game.leaveNPC()
 
-        Objective.showNPC(ShopNPC.npcLib.atrs(0).getAt(43), "Oh, hey, it's you.  Weren't you supposed to be locked up?")
+        Objective.showNPC(ShopNPC.npcLib.atrs(0).getAt(43), """Oh, hey, it's you.  Weren't you supposed to be locked up?""" & DDUtils.RNRN &
+                                                            "Press any non-movement key to continue.")
+
+        Game.npcmode = False
     End Sub
 
     Public Overrides Function toFight() As String

@@ -26,6 +26,6 @@
     End Sub
 
     Public Overrides Function getDesc(ByRef c As Player, ByRef t As NPC) As Object
-        Return "A light and fast attack that is guranteed to hit first."
+        Return "A light and fast attack that is guaranteed to hit first."
     End Function
 End Class

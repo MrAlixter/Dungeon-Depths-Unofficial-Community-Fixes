@@ -127,9 +127,12 @@
     <Compile Include="Entities\NPC\Hostile\Monsters\TimeCopAgent.vb" />
     <Compile Include="Entities\NPC\Non-Hostile\FVendorTar.vb" />
     <Compile Include="Entities\Player\Classes\Cleric.vb" />
+    <Compile Include="Entities\Player\Classes\Necromancer.vb" />
     <Compile Include="Entities\Player\Classes\needRevertPassage\TimeCop.vb" />
+    <Compile Include="Entities\Player\Classes\needRevertPassage\WSmithThong2.vb" />
+    <Compile Include="Entities\Player\Classes\needRevertPassage\WSmithThong1.vb" />
     <Compile Include="Entities\Player\Forms\Orc.vb" />
-    <Compile Include="Entities\Player\Forms\needsRevertPassage\Cow.vb" />
+    <Compile Include="Entities\Player\Forms\Cow.vb" />
     <Compile Include="Entities\Player\Quest\Floor Quests\Floor4Encounter.vb" />
     <Compile Include="Entities\Player\Quest\Floor Quests\FaeWoods1.vb" />
     <Compile Include="Entities\Player\Quest\Monster Loss Quests\ThrallLoss.vb" />
@@ -140,12 +143,17 @@
     <Compile Include="Entities\Player\Quest\NPC Quests\StudyingSlime.vb" />
     <Compile Include="Entities\Player\Quest\NPC Quests\CursedContraband.vb" />
     <Compile Include="Entities\Player\Quest\NPC Quests\BreakingAnEgg.vb" />
+    <Compile Include="Entities\Player\Specials\Utility\CLight.vb" />
+    <Compile Include="Entities\Player\Specials\Utility\Pluck.vb" />
+    <Compile Include="Entities\Player\Spells\Combat\Hydrodart.vb" />
+    <Compile Include="Entities\Player\Spells\Combat\Aquageyser.vb" />
     <Compile Include="Entities\Player\Spells\Combat\TentacleCrushcannon.vb" />
     <Compile Include="Entities\Player\Spells\Combat\Hellfireball.vb" />
     <Compile Include="Entities\Player\Spells\Combat\Smite.vb" />
     <Compile Include="Entities\Player\Spells\Combat\FlamesOfAmaraphne.vb" />
     <Compile Include="Entities\Player\Spells\Utility\Benediction.vb" />
     <Compile Include="Entities\Player\Spells\Utility\CleansingLight.vb" />
+    <Compile Include="Entities\Player\Spells\Utility\FlashHeal.vb" />
     <Compile Include="Entities\Player\Spells\Utility\SummonApple.vb" />
     <Compile Include="Entities\Player\Spells\Utility\SizeForLife.vb" />
     <Compile Include="Entities\Player\Spells\Utility\SummonBattery.vb" />
@@ -156,13 +164,16 @@
     <Compile Include="Entities\Player\Transformations\OneStepTFs\GynoidTF2.vb" />
     <Compile Include="Entities\Player\Transformations\OneStepTFs\InversionTF.vb" />
     <Compile Include="Entities\Player\Transformations\OneStepTFs\MoxBTF.vb" />
+    <Compile Include="Entities\Player\Transformations\Polymorphs\BUDollTFBeach.vb" />
     <Compile Include="Entities\Player\Transformations\Polymorphs\CowTF.vb" />
     <Compile Include="Entities\Player\Transformations\PreferredFormTF.vb" />
+    <Compile Include="Items\Equipment\Accesories\SummerShades.vb" />
     <Compile Include="Items\Equipment\Accesories\ImmitationCowbell.vb" />
     <Compile Include="Items\Equipment\Accesories\PhaseDeflector.vb" />
     <Compile Include="Items\Equipment\Accesories\MOTOx.vb" />
     <Compile Include="Items\Equipment\Accesories\HallowedTalisman.vb" />
     <Compile Include="Items\Equipment\Armor\Clothing\CommonClothes8.vb" />
+    <Compile Include="Items\Equipment\Armor\Clothing\LimeBikini.vb" />
     <Compile Include="Items\Equipment\Armor\Clothing\TimeCopClothes.vb" />
     <Compile Include="Items\Equipment\Armor\MagicCloaks\CrimsonCloak.vb" />
     <Compile Include="Items\Equipment\Armor\PlateArmor\PlatArmor.vb" />
@@ -174,11 +185,16 @@
     <Compile Include="Items\Equipment\Weapons\Misc\PhaseRifle.vb" />
     <Compile Include="Items\Equipment\Weapons\Misc\PhasePistol.vb" />
     <Compile Include="Items\Equipment\Weapons\Misc\LargeStick.vb" />
+    <Compile Include="Items\Equipment\Weapons\Staffs\TidemageStaff.vb" />
     <Compile Include="Items\Equipment\Weapons\Wands\MagMimicWand.vb" />
     <Compile Include="Items\Misc\ArmorFragments.vb" />
     <Compile Include="Items\Misc\ExtraLife.vb" />
+    <Compile Include="Items\Services\AdvClassChange.vb" />
+    <Compile Include="Items\Services\BasicClassChange.vb" />
     <Compile Include="Items\Services\UpgradeArmor.vb" />
     <Compile Include="Items\Usable\Food\GoldenGum.vb" />
+    <Compile Include="Items\Usable\Food\IcePopB.vb" />
+    <Compile Include="Items\Usable\Food\IcePop.vb" />
     <Compile Include="Items\Usable\PhaseVibrator.vb" />
     <Compile Include="Items\Usable\Food\DFStickOfGum.vb" />
     <Compile Include="Items\Usable\Food\BetterHerbs.vb" />
@@ -189,6 +205,7 @@
     <Compile Include="Items\Usable\Spellbooks\MarissasNotes.vb" />
     <Compile Include="Items\Usable\Spellbooks\PaleoDiary.vb" />
     <Compile Include="Items\Usable\Spellbooks\AAAAAASpecs.vb" />
+    <Compile Include="Items\Usable\Vials\VialOfRockJuice.vb" />
     <Compile Include="Tiles\Traps\Button1Trap.vb" />
     <Compile Include="Tiles\Traps\GynoidTrap2.vb" />
     <Compile Include="Util\UpdatableQueueV2.vb" />
@@ -296,7 +313,7 @@
     <Compile Include="Items\Usable\Spellbooks\CSpellbook.vb" />
     <Compile Include="Items\Equipment\Weapons\Whips\DemWhip.vb" />
     <Compile Include="Items\Equipment\Weapons\Whips\ArchDemWhip.vb" />
-    <Compile Include="Items\Usable\VialOfPotVenom.vb" />
+    <Compile Include="Items\Usable\Vials\VialOfPotVenom.vb" />
     <Compile Include="Util\QuestList.vb" />
     <Compile Include="Util\TFList.vb" />
     <Compile Include="Util\DDUtils.vb" />
@@ -333,12 +350,12 @@
     <Compile Include="Entities\NPC\NPC.vb" />
     <Compile Include="Entities\Player\Classes\MagicSlut.vb" />
     <Compile Include="Entities\Player\Classes\Witch.vb" />
-    <Compile Include="Entities\Player\Classes\needRevertPassage\Rogue.vb" />
+    <Compile Include="Entities\Player\Classes\Rogue.vb" />
     <Compile Include="Entities\Player\Classes\needRevertPassage\Maiden.vb" />
     <Compile Include="Entities\Player\Classes\Shrunken.vb" />
-    <Compile Include="Entities\Player\Classes\needRevertPassage\Barbarian.vb" />
-    <Compile Include="Entities\Player\Classes\needRevertPassage\BimboPlusPlus.vb" />
-    <Compile Include="Entities\Player\Classes\needRevertPassage\Warlock.vb" />
+    <Compile Include="Entities\Player\Classes\Barbarian.vb" />
+    <Compile Include="Entities\Player\Classes\BimboPlusPlus.vb" />
+    <Compile Include="Entities\Player\Classes\Warlock.vb" />
     <Compile Include="Entities\Player\Classes\Mindless.vb" />
     <Compile Include="Entities\Player\Forms\Broodmother.vb" />
     <Compile Include="Entities\Player\Forms\needsRevertPassage\AmazonWeak.vb" />
@@ -353,15 +370,15 @@
     <Compile Include="Entities\Player\Classes\MagicGirlTransform.vb" />
     <Compile Include="Entities\Player\Classes\needRevertPassage\BunnyGirl.vb" />
     <Compile Include="Entities\Player\Classes\needRevertPassage\Kitty.vb" />
-    <Compile Include="Entities\Player\Classes\needRevertPassage\Maid.vb" />
-    <Compile Include="Entities\Player\Classes\needRevertPassage\Paladin.vb" />
-    <Compile Include="Entities\Player\Classes\needRevertPassage\Princess.vb" />
+    <Compile Include="Entities\Player\Classes\Maid.vb" />
+    <Compile Include="Entities\Player\Classes\Paladin.vb" />
+    <Compile Include="Entities\Player\Classes\Princess.vb" />
     <Compile Include="Entities\Player\Classes\needRevertPassage\PrincessBackfire.vb" />
     <Compile Include="Entities\Player\Classes\needRevertPassage\SoulLord.vb" />
     <Compile Include="Entities\Player\Classes\needRevertPassage\Targaxian.vb" />
-    <Compile Include="Entities\Player\Classes\needRevertPassage\Thrall.vb" />
+    <Compile Include="Entities\Player\Classes\Thrall.vb" />
     <Compile Include="Entities\Player\Classes\needRevertPassage\Trophy.vb" />
-    <Compile Include="Entities\Player\Classes\Unconcious.vb" />
+    <Compile Include="Entities\Player\Classes\needRevertPassage\Unconcious.vb" />
     <Compile Include="Entities\Player\Classes\Warrior.vb" />
     <Compile Include="Entities\Player\DeathEffects.vb" />
     <Compile Include="Entities\Player\Classes\pClass.vb" />
@@ -373,7 +390,7 @@
     <Compile Include="Entities\Player\Forms\needsRevertPassage\Goth.vb" />
     <Compile Include="Entities\Player\Forms\needsRevertPassage\Plush.vb" />
     <Compile Include="Entities\Player\Forms\needsRevertPassage\Oni.vb" />
-    <Compile Include="Entities\Player\Forms\needsRevertPassage\Horse.vb" />
+    <Compile Include="Entities\Player\Forms\Horse.vb" />
     <Compile Include="Entities\Player\Forms\needsRevertPassage\Blob.vb" />
     <Compile Include="Entities\Player\Forms\needsRevertPassage\HBroodmother.vb" />
     <Compile Include="Entities\Player\Forms\needsRevertPassage\HDragoness.vb" />
@@ -388,19 +405,19 @@
     <Compile Include="Entities\Player\Forms\needsRevertPassage\Cyborg.vb" />
     <Compile Include="Entities\Player\Forms\needsRevertPassage\Djinn.vb" />
     <Compile Include="Entities\Player\Forms\needsRevertPassage\ElderGod.vb" />
-    <Compile Include="Entities\Player\Forms\needsRevertPassage\Frog.vb" />
+    <Compile Include="Entities\Player\Forms\Frog.vb" />
     <Compile Include="Entities\Player\Forms\needsRevertPassage\Golem.vb" />
     <Compile Include="Entities\Player\Forms\needsRevertPassage\Gynoid.vb" />
-    <Compile Include="Entities\Player\Forms\needsRevertPassage\HalfDragonR.vb" />
+    <Compile Include="Entities\Player\Forms\HalfDragonR.vb" />
     <Compile Include="Entities\Player\Forms\needsRevertPassage\HalfSlime.vb" />
     <Compile Include="Entities\Player\Forms\needsRevertPassage\HalfSuccubus.vb" />
     <Compile Include="Entities\Player\Forms\needsRevertPassage\Harpy.vb" />
     <Compile Include="Entities\Player\Forms\needsRevertPassage\MinotaurBull.vb" />
     <Compile Include="Entities\Player\Forms\needsRevertPassage\MinotaurCow.vb" />
-    <Compile Include="Entities\Player\Forms\needsRevertPassage\Sheep.vb" />
+    <Compile Include="Entities\Player\Forms\Sheep.vb" />
     <Compile Include="Entities\Player\Forms\needsRevertPassage\Arachne.vb" />
     <Compile Include="Entities\Player\Forms\needsRevertPassage\Kitsune.vb" />
-    <Compile Include="Entities\Player\Forms\needsRevertPassage\Tigress.vb" />
+    <Compile Include="Entities\Player\Forms\Tigress.vb" />
     <Compile Include="Entities\Player\Forms\GooGirl.vb" />
     <Compile Include="Entities\Player\Forms\Slime.vb" />
     <Compile Include="Entities\Player\Forms\Succubus.vb" />
@@ -580,9 +597,9 @@
     <Compile Include="Items\Equipment\Armor\Clothing\DissolvedClothes.vb" />
     <Compile Include="Items\Equipment\Armor\PlateArmor\ValkyrieArmor.vb" />
     <Compile Include="Items\Services\BFormReset.vb" />
-    <Compile Include="Items\Services\WarlockLesson.vb" />
+    <Compile Include="Items\Unimplemented\Removed\WarlockLesson.vb" />
     <Compile Include="Items\Services\HGorgonLesson.vb" />
-    <Compile Include="Items\Services\BarbarianLesson.vb" />
+    <Compile Include="Items\Unimplemented\Removed\BarbarianLesson.vb" />
     <Compile Include="Items\Services\AmazonLesson.vb" />
     <Compile Include="Items\Services\NameChange.vb" />
     <Compile Include="Items\Services\BimboLesson.vb" />
@@ -594,9 +611,9 @@
     <Compile Include="Items\Usable\AntiCurseTag.vb" />
     <Compile Include="Items\Usable\CursedCoupon.vb" />
     <Compile Include="Items\Usable\Food\AntiFreeze.vb" />
-    <Compile Include="Items\Usable\GemOfFlame.vb" />
-    <Compile Include="Items\Usable\GemOfPink.vb" />
-    <Compile Include="Items\Usable\GemOfDark.vb" />
+    <Compile Include="Items\Usable\Gems\GemOfFlame.vb" />
+    <Compile Include="Items\Usable\Gems\GemOfPink.vb" />
+    <Compile Include="Items\Usable\Gems\GemOfDark.vb" />
     <Compile Include="Items\Usable\ManaHibiscus.vb" />
     <Compile Include="Items\Usable\CryoGrenade.vb" />
     <Compile Include="Items\Usable\Food\WFeast.vb" />
@@ -613,7 +630,7 @@
     <Compile Include="Items\Usable\Potions\Mystery Potions\Effects\Side Effects\GalaxyDyeEffect.vb" />
     <Compile Include="Items\Usable\CombatModule.vb" />
     <Compile Include="Items\Usable\EveryNewItem.vb" />
-    <Compile Include="Items\Usable\VialOfBimbo.vb" />
+    <Compile Include="Items\Usable\Vials\VialOfBimbo.vb" />
     <Compile Include="Items\Usable\Charms\OmniCharm.vb" />
     <Compile Include="Items\Usable\Food\BBStickOfGum.vb" />
     <Compile Include="Items\Usable\BrokenRemote.vb" />
@@ -629,10 +646,10 @@
     <Compile Include="Items\Usable\Potions\Mystery Potions\Uncommon Potions\BlindPotion.vb" />
     <Compile Include="Items\Usable\Potions\Mystery Potions\Effects\Main Effects\BlindEffect.vb" />
     <Compile Include="Items\Usable\Potions\Mystery Potions\Effects\Main Effects\AntiVenomEffect.vb" />
-    <Compile Include="Items\Usable\GemOfProg.vb" />
-    <Compile Include="Items\Usable\VialOfPSlime.vb" />
-    <Compile Include="Items\Usable\VialOfFire.vb" />
-    <Compile Include="Items\Usable\VialOfVenom.vb" />
+    <Compile Include="Items\Usable\Gems\GemOfProg.vb" />
+    <Compile Include="Items\Usable\Vials\VialOfPSlime.vb" />
+    <Compile Include="Items\Usable\Vials\VialOfFire.vb" />
+    <Compile Include="Items\Usable\Vials\VialOfVenom.vb" />
     <Compile Include="Items\Equipment\Weapons\Axes\Axe.vb" />
     <Compile Include="Items\Equipment\Weapons\Daggers\Dagger.vb" />
     <Compile Include="Items\Equipment\Weapons\Daggers\MShank.vb" />
@@ -836,6 +853,7 @@
       <SubType>Form</SubType>
     </Compile>
     <Compile Include="Portrait\ImageDump.vb" />
+    <Compile Include="WindowsForms\Generation\DPreset.vb" />
     <Compile Include="WindowsForms\Generation\PCPreset.vb" />
     <Compile Include="WindowsForms\BrokenRemotePicker.Designer.vb">
       <DependentUpon>BrokenRemotePicker.vb</DependentUpon>
@@ -941,7 +959,7 @@
     <Compile Include="Items\Usable\Potions\Mystery Potions\Rare Potions\GSPotion.vb" />
     <Compile Include="Tiles\Traps\Trap.vb" />
     <Compile Include="Entities\Updatable.vb" />
-    <Compile Include="Items\Usable\VialOfSlime.vb" />
+    <Compile Include="Items\Usable\Vials\VialOfSlime.vb" />
     <Compile Include="Items\Equipment\Armor\PlateArmor\WarriorsCuirass.vb" />
     <Compile Include="Items\Equipment\Weapons\Weapon.vb" />
     <Compile Include="Items\Equipment\Armor\SlutVar\WitchCosplay.vb" />
@@ -1040,7 +1058,6 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="bin\Debug\img\bkg\" />
-    <Folder Include="Items\Unimplemented\Removed\" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.VisualBasic.targets" />
   <PropertyGroup>

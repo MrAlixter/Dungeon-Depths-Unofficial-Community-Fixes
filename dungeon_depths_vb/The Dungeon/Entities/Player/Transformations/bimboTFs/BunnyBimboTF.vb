@@ -1,17 +1,19 @@
 ﻿Public NotInheritable Class BunnyBimboTF
     Inherits BimboTF
 
+    Private Const TF_IND As tfind = tfind.bunnybimbo
+
     Sub New(n As Integer, tts As Integer, wi As Double, cbs As Boolean)
         MyBase.New(n, tts, wi, cbs)
-        MyBase.updateDuringCombat = False
-        tfName = "BunnyBimbo"
-        nextStep = AddressOf hairColorShift
+        MyBase.update_during_combat = False
+        tf_name = TF_IND
+        next_step = AddressOf hairColorShift
     End Sub
     Sub New(cs As Integer, n As Integer, tts As Integer, wi As Double, cbs As Boolean, tfd As Boolean)
         MyBase.New(cs, n, tts, wi, cbs, tfd)
-        MyBase.updateDuringCombat = False
-        tfName = "BunnyBimbo"
-        nextStep = getNextStep(cs)
+        MyBase.update_during_combat = False
+        tf_name = TF_IND
+        next_step = getNextStep(cs)
     End Sub
 
     'Step 1
@@ -57,9 +59,9 @@
 
     Shared Sub tfPlayer(ByVal stepNum As Integer, ByRef p As Player)
         Dim bTF As BunnyBimboTF = New BunnyBimboTF(1, 0, 0, False)
-        bTF.nextStep = bTF.getNextStep(stepNum)
+        bTF.next_step = bTF.getNextStep(stepNum)
 
-        bTF.nextStep()
+        bTF.next_step()
         p.UIupdate()
     End Sub
 End Class

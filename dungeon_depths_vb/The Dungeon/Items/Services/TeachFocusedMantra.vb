@@ -10,6 +10,7 @@
         '|Item Flags|
         usable = true
         rando_inv_allowed = False
+        can_be_stolen = False
         MyBase.onBuy = AddressOf teach
 
         '|Stats|

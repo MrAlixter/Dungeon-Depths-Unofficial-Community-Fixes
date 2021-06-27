@@ -1,12 +1,15 @@
 ﻿Public NotInheritable Class MimicMinoTF
     Inherits MinoFTF
+
+    Private Const TF_IND As tfind = tfind.mimicmino
+
     Sub New(n As Integer, tts As Integer, wi As Double, cbs As Boolean)
         MyBase.New(n, tts, wi, cbs)
-        tfName = "MimicMinoTF"
+        tf_name = TF_IND
     End Sub
     Sub New(cs As Integer, n As Integer, tts As Integer, wi As Double, cbs As Boolean, tfd As Boolean)
         MyBase.New(cs, n, tts, wi, cbs, tfd)
-        tfName = "MimicMinoTF"
+        tf_name = TF_IND
     End Sub
 
     Overrides Function hairColorTF(ByRef p As Player) As Integer

@@ -1,16 +1,18 @@
 ﻿Public NotInheritable Class Blindness
     Inherits Transformation
 
+    Private Const TF_IND As tfind = tfind.blindness
+
     Sub New()
         MyBase.New(1, 0, 0, False)
-        tfName = perk.blind
-        nextStep = AddressOf step1
+        tf_name = TF_IND
+        next_step = AddressOf step1
         setTurnsTilStep(0)
     End Sub
     Sub New(cs As Integer, n As Integer, tts As Integer, wi As Double, cbs As Boolean, tfd As Boolean)
         MyBase.New(cs, n, tts, wi, cbs, tfd)
-        tfName = perk.blind
-        nextStep = getNextStep(cs)
+        tf_name = TF_IND
+        next_step = getNextStep(cs)
     End Sub
 
     Sub step1()
@@ -28,6 +30,6 @@
         Return AddressOf stopTF
     End Function
     Public Overrides Sub setWaitTime(stage As Integer)
-        turnsTilNextStep = Int(Rnd() * 100) + 5
+        turns_until_next_step = Int(Rnd() * 100) + 5
     End Sub
 End Class

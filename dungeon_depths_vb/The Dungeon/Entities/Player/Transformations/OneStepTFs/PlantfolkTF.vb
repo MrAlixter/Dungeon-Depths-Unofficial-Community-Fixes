@@ -6,13 +6,15 @@
     Dim fallColor As Color = Color.FromArgb(255, 226, 121, 5)
     Dim winterColor As Color = Color.FromArgb(255, 233, 228, 228)
 
+    Private Const TF_IND As tfind = tfind.plantfolk
+
     Sub New()
         MyBase.New()
-        tfName = "PlantfolkTF"
+        tf_name = TF_IND
     End Sub
     Sub New(cs As Integer, n As Integer, tts As Integer, wi As Double, cbs As Boolean, tfd As Boolean)
         MyBase.New(cs, n, tts, wi, cbs, tfd)
-        tfName = "PlantfolkTF"
+        tf_name = TF_IND
     End Sub
 
     Public Overrides Sub step1()

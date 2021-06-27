@@ -22,8 +22,8 @@
         '|Dialog Variables|
         title = " "
         pronoun = "she"
-        pPronoun = "her"
-        rPronoun = "her"
+        p_pronoun = "her"
+        r_pronoun = "her"
 
         '|Misc|
         setupMonsterOnSpawn()
@@ -36,7 +36,7 @@
         If target.GetType() Is GetType(Player) Then
             turns_until_spell -= 1
 
-            If turns_until_spell < 1 And inv.getCountAt("Extra_Life") < 3 And Not target.getPlayer Is Nothing And enchantment_inds_used.Count < 5 Then
+            If turns_until_spell < 1 And inv.getCountAt("Extra_Life") < 4 And Not target.getPlayer Is Nothing And enchantment_inds_used.Count < 5 Then
                 Game.pushLogAndEvent(getName() & " casts Marissa's Enchantment!")
 
                 marissasEnchantment(target.getPlayer)
@@ -61,9 +61,10 @@
     End Sub
 
     Public Sub marissasEnchantment(ByRef p As Player)
+
         Dim d5 As Integer = 0
 
-        While Not enchantment_inds_used.Contains(d5)
+        While enchantment_inds_used.Contains(d5)
             d5 = Int(Rnd() * 5)
         End While
 
@@ -116,7 +117,7 @@
     End Sub
     Private Sub die2()
         Objective.showNPC(ShopNPC.npcLib.atrs(0).getAt(101), "MARISSA THE ENCHANTRESS HAS REVIVED!" & DDUtils.RNRN &
-                        """Well, well, well, if it isn't my old pal " & Game.player1.sState.getName & ".  How's it been?""", AddressOf die3)
+                        """Well, well, well, if it isn't my old pal " & Game.player1.getName & ".  How's it been?""", AddressOf die3)
     End Sub
     Private Sub die3()
         Objective.showNPC(ShopNPC.npcLib.atrs(0).getAt(98), """I've been out of it for a while, haven't I?  It definitely lookes like someone's been doing well..."" Marissa says, smirking.  ""For what it's worth, thanks for your help.""" & DDUtils.RNRN &
@@ -125,7 +126,7 @@
     End Sub
     Private Sub die4()
         Game.pushLblEvent("Mayue pulls out a small piece of chalk, and swiftly draws a circle on the ground.  The circle flares with magical energy, and the two of them hop into the ring as a portal begins to form." & DDUtils.RNRN &
-                          """Oh, and " & Game.player1.sState.getName & "?  Keep on your toes.  There's all sorts of dangerous stuff out there.""", AddressOf die5)
+                          """Oh, and " & Game.player1.getName & "?  Keep on your toes.  There's all sorts of dangerous stuff out there.""", AddressOf die5)
     End Sub
     Private Sub die5()
         Dim c1 As Chest

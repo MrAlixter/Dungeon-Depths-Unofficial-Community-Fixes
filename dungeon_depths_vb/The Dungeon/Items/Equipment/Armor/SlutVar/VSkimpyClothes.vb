@@ -32,6 +32,6 @@
 
         '|Description|
         setDesc("A soft set of clothing that definitely seems crafted to show off its wearer's body." & DDUtils.RNRN &
-                               getSizeInformation() & vbCrLf & getStatInformation())
+                               getSizeInformation() & vbcrlf & getStatInformation())
     End Sub
 End Class

@@ -1,6 +1,6 @@
 ﻿Public Class BunnySuitC
     Inherits Armor
-    'the BunnySuit is a cosmetic armor that provides +1 defense
+
     Sub New()
         '|ID Info|
         setName("Bunny_Suit_(Classic)")
@@ -9,13 +9,13 @@
 
         '|Item Flags|
         usable = false
-        MyBase.compress_breast = True
-        MyBase.droppable = False
+        compress_breast = True
+        droppable = False
         rando_inv_allowed = False
 
         '|Stats|
         h_boost = 100
-        MyBase.d_boost = 40
+        d_boost = 40
         count = 0
         value = 0
 
@@ -36,6 +36,6 @@
 
         '|Description|
         setDesc("A sultry outfit worn by waitresses in a club.  This particular bunny suit is from the far off age of ""2017""." & DDUtils.RNRN &
-                                    getSizeInformation() & vbCrLf & getStatInformation())
+                                    getSizeInformation() & vbcrlf & getStatInformation())
     End Sub
 End Class

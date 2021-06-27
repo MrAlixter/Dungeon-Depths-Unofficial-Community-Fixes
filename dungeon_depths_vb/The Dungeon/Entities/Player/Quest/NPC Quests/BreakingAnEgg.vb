@@ -42,7 +42,7 @@ Public Class BEggGetSword
     Private Sub complete3()
         If Game.npcmode Then Game.leaveNPC()
         Game.player1.perks(perk.fvHasSword) = 1
-        Game.player1.xp += 1000
+        Game.player1.addXP(1000)
         showNPC(ShopNPC.npcLib.atrs(0).getAt(11), """Nice, thanks!  Stop by the ol' stand when you get the chance, I'll have all sorts of new stuff to try.""" & DDUtils.RNRN &
                                                   "+1000 XP")
     End Sub

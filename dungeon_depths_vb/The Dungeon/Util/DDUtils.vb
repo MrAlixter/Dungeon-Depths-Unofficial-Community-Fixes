@@ -191,7 +191,7 @@
     Shared Function cEquals(ByVal a As Color, ByVal b As Color)
         Return a.A = b.A And a.R = b.R And a.G = b.G And a.B = b.B
     End Function
-    Shared Function cShift(ByVal oC As Color, ByVal c As Color, ByVal inc As Integer)
+    Shared Function cShift(ByVal oC As Color, ByVal c As Color, ByVal inc As Integer, Optional ByVal adjustA As Boolean = True)
         If oC.Equals(c) Then Return c
         Dim a, r, g, b As Integer
         a = oC.A
@@ -199,10 +199,12 @@
         g = oC.G
         b = oC.B
 
-        If Math.Abs(a - c.A) < inc Or a > 255 Then
-            a = c.A
-        Else
-            If a > c.A Then a -= inc Else a += inc
+        If adjustA Then
+            If Math.Abs(a - c.A) < inc Or a > 255 Then
+                a = c.A
+            Else
+                If a > c.A Then a -= inc Else a += inc
+            End If
         End If
         If Math.Abs(r - c.R) < inc Or r > 255 Then
             r = c.R

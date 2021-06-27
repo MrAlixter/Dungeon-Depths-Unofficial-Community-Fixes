@@ -33,6 +33,6 @@ Public Class TimeCopClothes
 
         '|Description|
         setDesc("Tactical clothes that are standard issue for a time cop." & DDUtils.RNRN &
-                        getSizeInformation() & vbCrLf & getStatInformation())
+                        getSizeInformation() & vbcrlf & getStatInformation())
     End Sub
 End Class

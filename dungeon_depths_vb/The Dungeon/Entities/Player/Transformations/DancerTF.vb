@@ -1,17 +1,20 @@
 ﻿Public NotInheritable Class DancerTF
     Inherits Transformation
+
+    Private Const TF_IND As tfind = tfind.dancer
+
     Sub New(n As Integer, tts As Integer, wi As Double, cbs As Boolean)
         MyBase.New(n, tts, wi, cbs)
-        tfName = "Dancer"
-        nextStep = AddressOf step1
+        tf_name = TF_IND
+        next_step = AddressOf step1
     End Sub
     Sub New(cs As Integer, n As Integer, tts As Integer, wi As Double, cbs As Boolean, tfd As Boolean)
         MyBase.New(cs, n, tts, wi, cbs, tfd)
-        tfName = "Dancer"
-        nextStep = getNextStep(cs)
+        tf_name = TF_IND
+        next_step = getNextStep(cs)
     End Sub
 
-    Sub step1()
+    Public Shared Sub step1()
         Dim p As Player = Game.player1
 
         If p.sex = "Male" Then
@@ -25,8 +28,9 @@
         p.prt.setIAInd(pInd.face, 0, True, False)
         p.prt.setIAInd(pInd.midhair, 18, True, True)
         p.prt.setIAInd(pInd.nose, 0, True, False)
-        p.prt.setIAInd(pInd.mouth, 7, True, False)
+
         p.prt.setIAInd(pInd.eyes, 24, True, True)
+
         p.prt.setIAInd(pInd.eyebrows, 0, True, False)
         p.prt.setIAInd(pInd.cloak, 0, True, False)
         p.prt.setIAInd(pInd.fronthair, 18, True, True)
@@ -59,6 +63,6 @@
         End If
     End Function
     Public Overrides Sub setWaitTime(stage As Integer)
-        turnsTilNextStep = 0
+        turns_until_next_step = 0
     End Sub
 End Class

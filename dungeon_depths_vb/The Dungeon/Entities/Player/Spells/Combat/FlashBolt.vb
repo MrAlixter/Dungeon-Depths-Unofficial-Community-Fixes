@@ -27,6 +27,6 @@
     End Sub
 
     Public Overrides Function getDesc(ByRef c As Player, ByRef t As NPC) As Object
-        Return "A tier 2 spell that deals medium magic damage and is guranteed to hit first with a low chance of missing altogether."
+        Return "A tier 2 spell that deals medium magic damage and is guaranteed to hit first, with a low chance of missing altogether."
     End Function
 End Class

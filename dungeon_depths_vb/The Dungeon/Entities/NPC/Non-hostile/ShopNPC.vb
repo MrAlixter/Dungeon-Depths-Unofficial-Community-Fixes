@@ -10,7 +10,7 @@
 End Enum
 
 
-'| -- New Layout Example -- |
+'| -- Constructor Layout Example -- |
 '|ID Info|
 
 
@@ -39,7 +39,7 @@ Public MustInherit Class ShopNPC
     Sub New()
         health = 1.0
         inv = New Inventory(False)
-        title = " the "
+        title = " The "
     End Sub
 
     Shared Function shopFactory(ByVal nIndex As Integer)
@@ -63,17 +63,6 @@ Public MustInherit Class ShopNPC
         End Select
     End Function
 
-    Sub load(ByVal s As String)
-        Dim playArray() As String = s.Split("*")
-        setName(playArray(0) & " the " & playArray(1))
-        MyBase.health = playArray(3)
-        MyBase.maxHealth = playArray(4)
-        MyBase.attack = playArray(5)
-        MyBase.defense = playArray(6)
-        MyBase.speed = playArray(7)
-        inv.load(playArray(8))
-        MyBase.title = ""
-    End Sub
     Public Overrides Sub update()
         If isDead = True Then Exit Sub
         If firstTurn = True Then
@@ -90,13 +79,10 @@ Public MustInherit Class ShopNPC
             firstCTurn = False
             Exit Sub
         End If
-        If npcIndex = 1 Or npcIndex = 2 Then despawn("flee")
-        Game.picNPC.BackgroundImage = picNPC(npcIndex)
+        If img_index = 1 Or img_index = 2 Then despawn("flee")
+        Game.picNPC.BackgroundImage = picNPC(img_index)
         If Game.combatmode Then attackCMD(Game.player1)
     End Sub
-    Public Overrides Function getName() As String
-        Return title & name
-    End Function
     Public Overridable Sub encounter()
         pos = Game.player1.pos
         If isDead = True Then
@@ -111,7 +97,7 @@ Public MustInherit Class ShopNPC
         If Game.mDun.floorboss.ContainsKey(Game.mDun.numCurrFloor) AndAlso
             Game.mDun.floorboss(Game.mDun.numCurrFloor).Equals("Key") Then inv.setCount(53, 1) Else inv.setCount(53, 0)
 
-        If npcIndex < picNPC.Count Then Game.picNPC.BackgroundImage = picNPC(npcIndex)
+        If img_index < picNPC.Count Then Game.picNPC.BackgroundImage = picNPC(img_index)
         firstCTurn = True
         firstTurn = True
     End Sub
@@ -141,60 +127,60 @@ Public MustInherit Class ShopNPC
         MyBase.health = 1.0
         MyBase.tfEnd = 15
 
-        MyBase.npcIndex = 4
+        MyBase.img_index = 4
 
         toFemale("bunny")
         MyBase.form = "Bunny Girl"
 
         Game.NPCfromCombat(Me)
 
-        Game.picNPC.BackgroundImage = picNPC(npcIndex)
+        Game.picNPC.BackgroundImage = picNPC(img_index)
     End Sub
     Overridable Sub toPrincess()
         MyBase.health = 1.0
         MyBase.tfEnd = 15
 
-        MyBase.npcIndex = 3
+        MyBase.img_index = 3
         toFemale("prin")
 
-        Game.picNPC.BackgroundImage = picNPC(npcIndex)
+        Game.picNPC.BackgroundImage = picNPC(img_index)
     End Sub
     Overridable Sub toCatgirl()
         MyBase.health = 1.0
         MyBase.tfEnd = 15
 
-        MyBase.npcIndex = getCatGirlImageInd()
+        MyBase.img_index = getCatGirlImageInd()
         toFemale("catg")
 
-        Game.picNPC.BackgroundImage = picNPC(npcIndex)
+        Game.picNPC.BackgroundImage = picNPC(img_index)
     End Sub
     Overridable Sub toSheep()
         MyBase.health = 1.0
 
-        MyBase.npcIndex = 2
+        MyBase.img_index = 2
 
-        Game.picNPC.BackgroundImage = picNPC(npcIndex)
+        Game.picNPC.BackgroundImage = picNPC(img_index)
     End Sub
     Overridable Sub toFrog()
         MyBase.health = 1.0
-  
-        MyBase.npcIndex = 1
 
-        Game.picNPC.BackgroundImage = picNPC(npcIndex)
+        MyBase.img_index = 1
+
+        Game.picNPC.BackgroundImage = picNPC(img_index)
     End Sub
     Overridable Sub toTrilobite()
         MyBase.health = 1.0
 
-        MyBase.npcIndex = getTrilobiteImageInd()
+        MyBase.img_index = getTrilobiteImageInd()
 
-        Game.picNPC.BackgroundImage = picNPC(npcIndex)
+        Game.picNPC.BackgroundImage = picNPC(img_index)
     End Sub
     Overridable Sub toArachne()
         MyBase.health = 1.0
         MyBase.tfCt = 1
         MyBase.tfEnd = 9999999
 
-        npcIndex = getArachneImageInd()
+        img_index = getArachneImageInd()
 
         toFemale("arachne")
         MyBase.form = "Arachne"
@@ -208,13 +194,13 @@ Public MustInherit Class ShopNPC
     End Sub
     Public Overridable Sub toFemale(ByVal form As String)
         pronoun = "she"
-        pPronoun = "her"
-        rPronoun = "her"
+        p_pronoun = "her"
+        r_pronoun = "her"
     End Sub
     Public Overridable Sub toMale(ByVal form As String)
         pronoun = "he"
-        pPronoun = "his"
-        rPronoun = "him"
+        p_pronoun = "his"
+        r_pronoun = "him"
     End Sub
 
     Public Overrides Sub despawn(reason As String)
@@ -227,7 +213,9 @@ Public MustInherit Class ShopNPC
         Game.btnShop.Visible = False
         Game.btnFight.Visible = False
         Game.btnLeave.Visible = False
-        If npcIndex > 4 And Not Game.picNPC.BackgroundImage.Equals(ShopNPC.npcLib.atrs(0).getAt(3)) Then npcIndex = 0
+
+        'reset the npc image index
+        If img_index > 4 And Not Game.picNPC.BackgroundImage.Equals(ShopNPC.npcLib.atrs(0).getAt(9)) And Not img_index = getArachneImageInd() And Not img_index = getCatGirlImageInd() Then img_index = 0
     End Sub
     Public Overridable Function getArachneImageInd() As Integer
         Return 6
@@ -242,15 +230,15 @@ Public MustInherit Class ShopNPC
     'save/load methods
     Function saveNPC() As String
         Dim out = ""
-        out += npcIndex & "%"   '0
+        out += img_index & "%"   '0
         out += gold & "%"       '1
         out += pos.X & "%"      '2
         out += pos.Y & "%"      '3
         out += form & "%"       '4
         out += title & "%"      '5
         out += pronoun & "%"    '6
-        out += pPronoun & "%"   '7
-        out += rPronoun & "%"   '8
+        out += p_pronoun & "%"   '7
+        out += r_pronoun & "%"   '8
         out += isShop & "%"     '9
         out += isDead & "%"     '10
         Return out
@@ -258,14 +246,14 @@ Public MustInherit Class ShopNPC
     Function loadNPC(ByVal s As String) As Boolean
         Dim loadedVars = s.Split("%")
 
-        npcIndex = CInt(loadedVars(0))
+        img_index = CInt(loadedVars(0))
         gold = CInt(loadedVars(1))
         pos = New Point(CInt(loadedVars(2)), CInt(loadedVars(3)))
         form = loadedVars(4)
         title = loadedVars(5)
         pronoun = loadedVars(6)
-        pPronoun = loadedVars(7)
-        rPronoun = loadedVars(8)
+        p_pronoun = loadedVars(7)
+        r_pronoun = loadedVars(8)
         isShop = CBool(loadedVars(9))
         isDead = CBool(loadedVars(10))
         Return True

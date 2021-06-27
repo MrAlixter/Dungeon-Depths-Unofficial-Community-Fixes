@@ -11,10 +11,9 @@
         Dim xpGain As Integer = dmg
        
         'non critical hit
-        MyBase.getUser.xp += xpGain
+        MyBase.getUser.addXP(xpGain)
 
-        Game.pushLstLog(CStr("Drain Soul!  The " & MyBase.getTarget.name & " takes " & dmg & " damage and you gain " & xpGain & " XP!"))
-        Game.pushLblCombatEvent(CStr("Drain Soul!  The " & MyBase.getTarget.name & " takes " & dmg & " damage and you gain " & xpGain & " XP!"))
+        Game.pushLogAndEvent(CStr("Drain Soul!  The " & MyBase.getTarget.name & " takes " & dmg & " damage and you gain " & xpGain & " XP!"))
         MyBase.getTarget.takeDMG(dmg, Nothing)
     End Sub
 

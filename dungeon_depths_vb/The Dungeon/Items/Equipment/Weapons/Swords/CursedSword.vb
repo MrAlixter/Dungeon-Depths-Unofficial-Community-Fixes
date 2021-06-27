@@ -9,8 +9,8 @@
 
         '|Item Flags|
         usable = false
-        cursed = True
         droppable = False
+        cursed = True
 
         '|Stats|
         MyBase.a_boost = 45
@@ -24,32 +24,26 @@
     End Sub
 
     Overrides Function attack(ByRef p As Player, ByRef m As Entity) As Integer
-        Dim roll As Integer = Int(Rnd() * 4)
-
-        If roll = 0 Then
+        If Int(Rnd() * 4) = 0 Then
             'Additonal Attack
             Dim dmgAA As Integer = Int(Rnd() * 3 + 1) + Int(Rnd() * 3 + 1) + Int(Rnd() * 3 + 1) + Int(Rnd() * 3 + 1)
 
             If dmgAA <= 4 Then
                 p.miss(m)
             ElseIf dmgAA >= 11 Then
+                If (p.getATK * 2) >= m.getIntHealth Then Return -2
                 p.cHit(p.getATK, m)
             Else
-                dmgAA += (p.getATK) + (Me.a_boost)
+                dmgAA += (p.getATK)
+                If (Player.calcDamage(dmgAA, m.defense)) >= m.getIntHealth Then Return Player.calcDamage(dmgAA, m.defense)
                 p.hit(Player.calcDamage(dmgAA, m.defense), m)
             End If
 
             'recursion
             Return attack(p, m)
-        ElseIf roll = 1 Then
+        ElseIf Int(Rnd() * 4) = 0 Then
             'Backfire
-            Dim dmgBF As Integer = Int(Rnd() * 3 + 1) + Int(Rnd() * 3 + 1) + Int(Rnd() * 3 + 1) + Int(Rnd() * 3 + 1)
-
-            dmgBF += (p.getATK) + (Me.a_boost)
-
-            Game.pushLstLog("Backfire - Your grip on the blade slips!")
-            Game.pushLblCombatEvent("Backfire - Your grip on the blade slips!")
-            p.takeDMG(Math.Min(Player.calcDamage(dmgBF, m.defense), p.getIntHealth - 1), m)
+            backfire(p, m)
 
             'recursion
             Return attack(p, m)
@@ -64,8 +58,18 @@
             Return -2
         End If
 
-        dmg += (p.getATK) + (Me.a_boost)
+        dmg += (p.getATK)
 
         Return Player.calcDamage(dmg, m.defense)
     End Function
+
+    Public Sub backfire(ByRef p As Player, ByRef m As Entity)
+        Dim dmgBF As Integer = Int(Rnd() * 3 + 1) + Int(Rnd() * 3 + 1) + Int(Rnd() * 3 + 1) + Int(Rnd() * 3 + 1)
+
+        dmgBF += (p.getATK)
+
+        Game.pushLstLog("Backfire - Your grip on the blade slips!")
+        Game.pushLblCombatEvent("Backfire - Your grip on the blade slips!")
+        p.takeDMG(Math.Min(Player.calcDamage(dmgBF, m.defense), p.getIntHealth - 1), m)
+    End Sub
 End Class

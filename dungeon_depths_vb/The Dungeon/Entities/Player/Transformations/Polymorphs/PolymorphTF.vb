@@ -2,11 +2,11 @@
     Inherits Transformation
     Sub New()
         MyBase.New(1, 0, 0, False)
-        nextStep = AddressOf step1
+        next_step = AddressOf step1
     End Sub
     Sub New(cs As Integer, n As Integer, tts As Integer, wi As Double, cbs As Boolean, tfd As Boolean)
         MyBase.New(cs, n, tts, wi, cbs, tfd)
-        nextStep = getNextStep(cs)
+        next_step = getNextStep(cs)
     End Sub
     Shared Function newPoly(s As String) As PolymorphTF
         Select Case s
@@ -52,6 +52,8 @@
                 Return New HorseTF()
             Case "Cow"
                 Return New CowTF()
+            Case "Inflatable Doll"
+                Return New BUDollTFBeach()
             Case Else
                 Return Nothing
         End Select
@@ -61,18 +63,18 @@
 
     Public Overrides Sub update()
         MyBase.update()
-        If Not tfDone Then Game.player1.perks(perk.polymorphed) = turnsTilNextStep
+        If Not tf_done Then Game.player1.perks(perk.polymorphed) = turns_until_next_step
     End Sub
     Public Overrides Sub stopTF()
         MyBase.stopTF()
-        tfDone = True
+        tf_done = True
 
         Game.player1.revertToPState()
         Game.player1.perks(perk.polymorphed) = -1
     End Sub
     Public Sub stopTf2()
         MyBase.stopTF()
-        tfDone = True
+        tf_done = True
 
         Game.player1.perks(perk.polymorphed) = -1
     End Sub

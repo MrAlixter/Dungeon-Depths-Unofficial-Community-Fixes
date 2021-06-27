@@ -26,11 +26,14 @@
 
     Public Overrides Sub onEquip(ByRef p As Player)
         If Not p.className.Equals("Magical Slut") And Not p.perks(perk.tfedbyweapon) > 0 Then
+
             Dim magicGirlTF = New MagSlutTF(2, 0, 0, False)
-            p.perks(perk.tfcausingwand) = id
-            p.perks(perk.tfedbyweapon) = 1
             magicGirlTF.update()
             p.ongoingTFs.add(magicGirlTF)
+
+            p.perks(perk.tfcausingwand) = id
+            p.perks(perk.tfedbyweapon) = 1
+
         End If
     End Sub
     Public Overloads Overrides Sub onunEquip(ByRef p As Player, ByRef w As Weapon)

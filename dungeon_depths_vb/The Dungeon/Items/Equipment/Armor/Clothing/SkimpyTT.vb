@@ -30,7 +30,7 @@
 
         '|Description|
         setDesc("Barely there, this skimpy outfit boosts agility." & DDUtils.RNRN & _
-                                    getSizeInformation() & vbCrLf & getStatInformation())
+                                    getSizeInformation() & vbcrlf & getStatInformation())
     End Sub
 
     Public Overrides Sub onEquip(ByRef p As Player)

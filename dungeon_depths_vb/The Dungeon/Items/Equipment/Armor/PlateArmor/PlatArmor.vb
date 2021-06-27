@@ -31,6 +31,6 @@
 
         '|Description|
         setDesc("A glistening set of full plate armor for those who want to be superbly safeguarded." & DDUtils.RNRN &
-                        getSizeInformation() & vbCrLf & getStatInformation())
+                        getSizeInformation() & vbcrlf & getStatInformation())
     End Sub
 End Class

@@ -39,6 +39,6 @@ Public Class BarbArmor
 
         '|Description|
         setDesc("While this ""armor"" may not provide the same defense as other sets, it greatly improves offensive options." & DDUtils.RNRN &
-                                      getSizeInformation() & vbCrLf & getStatInformation())
+                                      getSizeInformation() & vbcrlf & getStatInformation())
     End Sub
 End Class

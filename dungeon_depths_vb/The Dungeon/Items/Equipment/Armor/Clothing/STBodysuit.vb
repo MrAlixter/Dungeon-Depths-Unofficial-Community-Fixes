@@ -35,6 +35,6 @@
 
         '|Description|
         setDesc("This sleek bodysuit leaves very little to the imagination, despite covering most of one's body.  Its thin, but flexible material trades any possible defense to maximize energy production." & DDUtils.RNRN & _
-                                      getSizeInformation() & vbCrLf & getStatInformation())
+                                      getSizeInformation() & vbcrlf & getStatInformation())
     End Sub
 End Class

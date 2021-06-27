@@ -18,6 +18,6 @@
     End Sub
 
     Public Overrides Function getDesc(ByRef c As Player, ByRef t As NPC) As Object
-        Return "Reverts between 4 and 12 changes at random, parially restoring one to their original form."
+        Return "Reverts between 4 and 12 changes at random, partially restoring one to their original form."
     End Function
 End Class

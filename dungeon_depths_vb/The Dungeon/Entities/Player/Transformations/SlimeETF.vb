@@ -1,15 +1,18 @@
 ﻿Public NotInheritable Class SlimeETF
     Inherits Transformation
+
+    Private Const TF_IND As tfind = tfind.slime
+
     Sub New(Optional cs As Integer = 2)
         MyBase.New(1, 0, 0, False)
-        tfName = "SlimeETF"
-        currStep = cs
-        nextStep = getNextStep(cs)
+        tf_name = TF_IND
+        curr_step = cs
+        next_step = getNextStep(cs)
     End Sub
     Sub New(cs As Integer, n As Integer, tts As Integer, wi As Double, cbs As Boolean, tfd As Boolean)
         MyBase.New(cs, n, tts, wi, cbs, tfd)
-        tfName = "SlimeETF"
-        nextStep = getNextStep(cs)
+        tf_name = TF_IND
+        next_step = getNextStep(cs)
     End Sub
 
     Shared Sub step1()
@@ -101,7 +104,7 @@
     Public Overrides Function getNextStep(stage As Integer) As Action
         Dim p As Player = Game.player1
 
-        Select Case currStep
+        Select Case curr_step
             Case 1
                 Return AddressOf step1
             Case 2

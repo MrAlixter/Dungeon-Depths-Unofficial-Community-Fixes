@@ -25,6 +25,6 @@
         usize2 = New Tuple(Of Integer, Boolean, Boolean)(11, True, False)
 
         setDesc("Traditional clothes for a katana-wielding adventurer." & DDUtils.RNRN &
-                                    getSizeInformation() & vbCrLf & getStatInformation())
+                                    getSizeInformation() & vbcrlf & getStatInformation())
     End Sub
 End Class

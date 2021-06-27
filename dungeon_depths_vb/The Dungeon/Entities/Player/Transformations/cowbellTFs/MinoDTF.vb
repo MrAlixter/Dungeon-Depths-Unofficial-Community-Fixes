@@ -1,12 +1,15 @@
 ﻿Public NotInheritable Class MinoDTF
     Inherits MinoFTF
+
+    Private Const TF_IND As tfind = tfind.demonmino
+
     Sub New(n As Integer, tts As Integer, wi As Double, cbs As Boolean)
         MyBase.New(n, tts, wi, cbs)
-        tfName = "MinoDTF"
+        tf_name = TF_IND
     End Sub
     Sub New(cs As Integer, n As Integer, tts As Integer, wi As Double, cbs As Boolean, tfd As Boolean)
         MyBase.New(cs, n, tts, wi, cbs, tfd)
-        tfName = "MinoDTF"
+        tf_name = TF_IND
     End Sub
 
     Overrides Function hairColorTF(ByRef p As Player) As Integer
@@ -153,9 +156,9 @@
 
     Shared Sub tfPlayer(ByVal stepNum As Integer, ByRef p As Player)
         Dim bTF As MinoDTF = New MinoDTF(9, 0, 0, False)
-        bTF.nextStep = bTF.getNextStep(stepNum)
+        bTF.next_step = bTF.getNextStep(stepNum)
 
-        bTF.nextStep()
+        bTF.next_step()
         p.UIupdate()
         p.drawPort()
     End Sub

@@ -30,7 +30,7 @@
         MyBase.compress_breast = True
 
         setDesc("A snazzy robe that identifies its wearer as the guardian of a long forgotten shrine." & DDUtils.RNRN & _
-                                  getSizeInformation() & vbCrLf & getStatInformation())
+                                  getSizeInformation() & vbcrlf & getStatInformation())
     End Sub
 
     Public Overrides Sub onEquip(ByRef p As Player)

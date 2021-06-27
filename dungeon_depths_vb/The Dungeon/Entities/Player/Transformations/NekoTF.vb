@@ -1,16 +1,18 @@
 ﻿Public NotInheritable Class NekoTF
     Inherits Transformation
 
+    Private Const TF_IND As tfind = tfind.neko
+
     Sub New(n As Integer, tts As Integer, wi As Double, cbs As Boolean)
         MyBase.New(n, tts, wi, cbs)
-        tfName = "Neko"
+        tf_name = TF_IND
         Game.player1.perks(perk.nekocurse) = 0
-        nextStep = AddressOf step1
+        next_step = AddressOf step1
     End Sub
     Sub New(cs As Integer, n As Integer, tts As Integer, wi As Double, cbs As Boolean, tfd As Boolean)
         MyBase.New(cs, n, tts, wi, cbs, tfd)
-        tfName = "Neko"
-        nextStep = getNextStep(cs)
+        tf_name = TF_IND
+        next_step = getNextStep(cs)
     End Sub
 
     Sub step1()
@@ -51,7 +53,7 @@
             Game.pushLblCombatEvent("Your body slims down, and your chest inlates, giving you average sized breasts.  Soon after, your cock and balls shift into a vagina. You are now female!")
         Else
             be()
-            currStep += 1
+            curr_step += 1
         End If
         p.lust += 5
     End Sub
@@ -158,8 +160,8 @@
         End Select
     End Function
     Public Overrides Sub setWaitTime(stage As Integer)
-        turnsTilNextStep = 1
-        turnsTilNextStep += generatWILResistance()
+        turns_until_next_step = 1
+        turns_until_next_step += generatWILResistance()
     End Sub
 
     Sub be()

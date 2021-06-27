@@ -34,6 +34,6 @@
         MyBase.compress_breast = False
 
         setDesc("An extremely sultry outfit worn by waitresses in a club. " & DDUtils.RNRN & _
-                            getSizeInformation() & vbCrLf & getStatInformation())
+                            getSizeInformation() & vbcrlf & getStatInformation())
     End Sub
 End Class

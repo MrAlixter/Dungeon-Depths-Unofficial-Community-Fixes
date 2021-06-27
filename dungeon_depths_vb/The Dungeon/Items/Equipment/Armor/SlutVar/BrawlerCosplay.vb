@@ -1,6 +1,6 @@
 ﻿Public Class BrawlerCosplay
     Inherits Armor
-    'BrawlerCosplay provides a +15 defensive boost
+
     Sub New()
         '|ID Info|
         setName("Brawler_Cosplay")
@@ -32,6 +32,6 @@
 
         '|Description|
         setDesc("A glamourous garment made more for the highlighting one's body than for any practical function. " & DDUtils.RNRN &
-                                      getSizeInformation() & vbCrLf & getStatInformation())
+                                      getSizeInformation() & vbcrlf & getStatInformation())
     End Sub
 End Class

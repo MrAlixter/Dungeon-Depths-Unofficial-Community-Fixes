@@ -19,8 +19,8 @@
         '|Dialog Variables|
         title = " The "
         pronoun = "he"
-        pPronoun = "his"
-        rPronoun = "him"
+        p_pronoun = "his"
+        r_pronoun = "him"
 
         '|Misc|
         health = 1.0

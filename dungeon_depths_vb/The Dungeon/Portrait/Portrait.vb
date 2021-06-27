@@ -217,6 +217,10 @@ Public Class Portrait
             pic = Game.picFrog.BackgroundImage
         ElseIf pClass.Equals("Princess​") Then
             pic = Game.picPrin.BackgroundImage
+        ElseIf pClass.Equals("Thong") Then
+            pic = Game.picWSmithThong1.BackgroundImage
+        ElseIf pClass.Equals("Thong​") Then
+            pic = Game.picWSmithThong2.BackgroundImage
         ElseIf pClass.Equals("Bunny Girl​") Then
             pic = Game.picBun.BackgroundImage
         ElseIf pForm.Equals("Half-Dragoness") Then
@@ -240,6 +244,7 @@ Public Class Portrait
         ElseIf pForm.Equals("Cow") Then
             pic = Game.picCow.BackgroundImage
         End If
+
         Return pic
     End Function
 
@@ -273,6 +278,8 @@ Public Class Portrait
             If ent.getPlayer.perks(perk.lurk) > 0 Then
                 iArr(NUM_IMG_LAYERS) = shrub()
             End If
+
+            'swapChestAndClothesBTM(ent.getPlayer)
         End If
 
         hideEars()
@@ -426,6 +433,13 @@ Public Class Portrait
         ElseIf checkNDefFemInd(pInd.accessory, 14) Or checkNDefMalInd(pInd.accessory, 13) Then
             iArr(pInd.rearhair) = imgLib.atrs(pInd.ears).getAt(New Tuple(Of Integer, Boolean, Boolean)(5, True, True))
 
+        End If
+    End Sub
+    Sub swapChestAndClothesBTM(ByRef p As Player)
+        If p.breastSize > 2 Then
+            Dim t = iArr(pInd.chest).Clone
+            iArr(pInd.chest) = iArr(pInd.clothesbtm).Clone
+            iArr(pInd.clothesbtm) = t
         End If
     End Sub
     Sub hoodsAndCloaks()

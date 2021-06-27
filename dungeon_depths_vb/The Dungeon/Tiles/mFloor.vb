@@ -845,6 +845,13 @@ Public Class mFloor
         If mBoardHeight < 15 Then mBoardHeight = 15
         If mBoardWidth < 30 Then mBoardWidth = 30
 
+        ReDim mBoard(mBoardHeight, mBoardWidth)
+        For y = 0 To mBoardHeight
+            For x = 0 To mBoardWidth
+                mBoard(y, x) = New mTile(0, "", Color.Black)
+            Next
+        Next
+
         For y = 0 To 14
             Dim line = floorLayout(y).ToCharArray
             For x = 0 To UBound(line)

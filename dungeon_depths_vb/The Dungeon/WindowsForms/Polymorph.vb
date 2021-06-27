@@ -67,8 +67,8 @@
     End Sub
 
     'player transform methods
-    Shared Sub transform(ByRef p As Player, ByVal form As String)
-        If form.Equals(p.className) Or form.Equals(p.formName) Or Not p.polymorphs.Keys.Contains(form) Then
+    Shared Sub transform(ByRef p As Player, ByVal form As String, Optional ByVal checkform As Boolean = True)
+        If checkform AndAlso (form.Equals(p.className) Or form.Equals(p.formName) Or Not p.polymorphs.Keys.Contains(form)) Then
             Exit Sub
         End If
 
@@ -88,8 +88,8 @@
         p.ongoingTFs.resetPolymorphs()
 
         p.polymorphs(form) = PolymorphTF.newPoly(form)
-        p.ongoingTFs.Add(p.polymorphs(form))
-        p.perks(perk.polymorphed) = p.polymorphs(form).getturnsTilNextStep
+        p.ongoingTFs.add(p.polymorphs(form))
+        p.perks(perk.polymorphed) = p.polymorphs(form).getTurnsTilNextStep()
 
         If form = "MASBimbo" Then form = "Bimbo"
         If p.forms.Keys.Contains(form) Then

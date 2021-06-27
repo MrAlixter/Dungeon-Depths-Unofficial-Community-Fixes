@@ -27,10 +27,12 @@
         If Not p.className.Equals("Magical Girl") And Not p.perks(perk.tfedbyweapon) > 0 Then
 
             Dim magicGirlTF = New MagGirlRTF(2, 0, 0, False)
-            p.perks(perk.tfcausingwand) = id
-            p.perks(perk.tfedbyweapon) = 1
             magicGirlTF.update()
             p.ongoingTFs.add(magicGirlTF)
+
+            p.perks(perk.tfcausingwand) = id
+            p.perks(perk.tfedbyweapon) = 1
+
         End If
     End Sub
 

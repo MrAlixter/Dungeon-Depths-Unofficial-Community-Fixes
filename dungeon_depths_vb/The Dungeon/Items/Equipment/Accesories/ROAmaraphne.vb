@@ -25,7 +25,7 @@
                        "Increases DEF based on equipped armor" & vbCrLf &
                        "Increases ATK and WILL bonuses of slut variant armors" & vbCrLf &
                        "Increases SPD based on bust size" & DDUtils.RNRN &
-                       getStatInformation() & DDUtils.RNRN &
+                       getStatInformation() & vbcrlf &
                        "[Dev. Note:]  This ring is not fully implemented yet; I plan on adding a transformation triggered by near death (as well as a secondary transformation for overusing the effect) and transitioning this from a Valentine's day item to a regular rare item.")
 
 
@@ -84,7 +84,7 @@
                        "Increases DEF based on equipped armor" & vbCrLf &
                        "Increases ATK and WILL bonuses of slut variant armors" & vbCrLf &
                        "Increases SPD based on bust size" & DDUtils.RNRN &
-                       getStatInformation() & DDUtils.RNRN &
+                       getStatInformation() & vbcrlf &
                        "[Dev. Note:]  This ring is not fully implemented yet; I plan on adding a transformation triggered by near death (as well as a secondary transformation for overusing the effect) and transitioning this from a Valentine's day item to a regular rare item."
     End Function
 End Class

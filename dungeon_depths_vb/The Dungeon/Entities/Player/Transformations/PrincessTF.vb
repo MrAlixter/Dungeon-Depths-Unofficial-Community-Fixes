@@ -1,26 +1,29 @@
 ﻿Public NotInheritable Class PrincessTF
     Inherits Transformation
+
+    Private Const TF_IND As tfind = tfind.princess
+
     Sub New()
         MyBase.New(1, 0, 0, False)
-        tfName = "PrincessTF"
-        nextStep = AddressOf step1
+        tf_name = TF_IND
+        next_step = AddressOf step1
     End Sub
     Sub New(tfStepFlag As Boolean)
         MyBase.New(1, 0, 0, False)
-        tfName = "PrincessTF"
-        nextStep = AddressOf step3
+        tf_name = TF_IND
+        next_step = AddressOf step3
     End Sub
     Sub New(cs As Integer, n As Integer, tts As Integer, wi As Double, cbs As Boolean, tfd As Boolean)
         MyBase.New(cs, n, tts, wi, cbs, tfd)
-        tfName = "PrincessTF"
-        nextStep = getNextStep(cs)
+        tf_name = TF_IND
+        next_step = getNextStep(cs)
     End Sub
 
     Public Overrides Sub setWaitTime(stage As Integer)
-        turnsTilNextStep = 0
+        turns_until_next_step = 0
     End Sub
 
-    Public Sub step1()
+    Public Shared Sub step1()
         Dim p As Player = Game.player1
 
         Dim out = ""
@@ -29,7 +32,8 @@
         p.pClass = New Unconcious()
 
         'princess transformation
-        p.prt.setIAInd(pInd.mouth, 6, p.prt.sexBool, False)
+        p.prt.setIAInd(pInd.mouth, 5, True, True)
+
         If p.prt.sexBool Then
             p.prt.setIAInd(pInd.eyes, 5, True, False)
         Else
@@ -37,48 +41,57 @@
         End If
 
         'transformation description push
-        out += "As you bite into the apple, your mind starts to get foggy.  You yawn, " &
-               "and lay down on the floor.  As you nod off, you realize that that apple" &
-               " probably was probably either enchanted or poisoned, and as you black out" &
-               " your last thought is that this seems like something out of an old fairy " &
-               "tale."
+        out += "As you bite into the apple, your mind starts to get foggy.  You yawn, and lay down on the floor.  Nodding off, you realize that that apple probably was probably either enchanted or poisoned." & DDUtils.RNRN &
+               "Your last thought as you black out is that this seems like something out of an old fairy-tale..."
+
         Dim revertText = Game.lblEvent.Text.Split(vbCrLf)(0)
         If Not revertText.Equals("") Then out = revertText & DDUtils.RNRN & out
+
         Game.pushLblEvent(out, AddressOf step2)
-    End Sub
-    Public Sub step2()
-        Dim p As player = Game.player1
-        Dim out = ""
 
-        'equip clothes
-        Equipment.clothesChange(p, "Regal_Gown")
-        p.changeClass("Princess")
-
-        'maid transformation
-        If Not p.prt.sexBool Then
-            p.MtF()
-        End If
-        p.changeHairColor(Color.FromArgb(255, 181, 148, 98))
-        p.prt.setIAInd(pInd.rearhair, 1, True, False)
-        p.prt.setIAInd(pInd.midhair, 13, True, True)
-        p.prt.setIAInd(pInd.mouth, 0, True, False)
-        p.prt.setIAInd(pInd.eyes, p.pState.iArrInd(pInd.eyes).Item1, p.pState.iArrInd(pInd.eyes).Item2, p.pState.iArrInd(pInd.eyes).Item3)
-        p.prt.setIAInd(pInd.fronthair, 10, True, True)
-        p.prt.setIAInd(pInd.hat, 6, True, False)
-
-        'transformation description push
-        out += "As you come to several hours later, you groan and rub your forhead, only to knock a golden crown off of your head. This jolts you up, and you examine yourself further.  Long hair, poofy ballgown, gloves that go up past your elbows?!  Well, it seems like your ""fairy-tale"" hunch wasn't too far off after all.  Dusting youself off, you get ready to embark back on your journey to return to your kingdom.  Wait...that isn't why you came here..." & vbCrLf & "Or was it?"
-        Dim revertText = Game.lblEvent.Text.Split(vbCrLf)(0)
-        If Not revertText.Equals("") Then out = revertText & DDUtils.RNRN & out
-        Game.pushLblEvent(out)
         p.drawPort()
-        stopTF()
     End Sub
-    Public Sub step3()
-        Dim p As player = Game.player1
+    Public Shared Sub step2()
+        Dim p As Player = Game.player1
         Dim out = ""
 
         'equip clothes
+        If p.inv.getCountAt("Regal_Gown") < 1 Then p.inv.add("Regal_Gown", 1)
+        Equipment.clothesChange(p, "Regal_Gown")
+        p.changeClass("Princess")
+
+        'maid transformation
+        If Not p.prt.sexBool Then
+            p.MtF()
+        End If
+
+        p.changeHairColor(Color.FromArgb(255, 181, 148, 98))
+        p.prt.setIAInd(pInd.rearhair, 1, True, False)
+        p.prt.setIAInd(pInd.midhair, 13, True, True)
+        p.prt.setIAInd(pInd.mouth, 0, True, False)
+        p.prt.setIAInd(pInd.eyes, p.pState.iArrInd(pInd.eyes).Item1, p.pState.iArrInd(pInd.eyes).Item2, p.pState.iArrInd(pInd.eyes).Item3)
+        p.prt.setIAInd(pInd.fronthair, 10, True, True)
+        p.prt.setIAInd(pInd.hat, 6, True, False)
+
+        'transformation description push
+        out += "As you come to several hours later, you groan and rub your forhead, only to knock a golden crown off of your head. This jolts you up, and you examine yourself further." & DDUtils.RNRN &
+               "Long hair, poofy ballgown, gloves that go up past your elbows?!  Well, it seems like your ""fairy-tale"" hunch wasn't too far off after all.  Dusting youself off, you get ready to embark back on your journey to return to your kingdom." & DDUtils.RNRN &
+               "Wait... that isn't why you came here..." & DDUtils.RNRN &
+               "Or was it?"
+
+        Dim revertText = Game.lblEvent.Text.Split(vbCrLf)(0)
+        If Not revertText.Equals("") Then out = revertText & DDUtils.RNRN & out
+
+        Game.pushLblEvent(out)
+
+        p.drawPort()
+    End Sub
+    Public Shared Sub step3()
+        Dim p As Player = Game.player1
+        Dim out = ""
+
+        'equip clothes
+        If p.inv.getCountAt("Regal_Gown") < 1 Then p.inv.add("Regal_Gown", 1)
         Equipment.clothesChange(p, "Regal_Gown")
         p.changeClass("Princess")
 
@@ -95,16 +108,20 @@
         p.prt.setIAInd(pInd.hat, 6, True, False)
 
         'transformation description push
-        out += "As you bite into the apple, your mind starts to get foggy.  You yawn, " &
-                                                   "and lay down on the floor.  As you nod off, you realize that that apple" &
-                                                    " probably was probably either enchanted or poisoned, and as you black out" &
-                                                   " your last thought is that this seems like something out of an old fairy " &
-                                                   "tale. " & DDUtils.RNRN _
-                        & "As you come to, several hours later, you groan and rub your forhead, only to knock a golden crown off of your head. This jolts you up, and you examine yourself further.  Long hair, poofy ballgown, gloves that go up past your elbows?!  Well, it seems like your ""fairy-tale"" hunch wasn't too far off after all.  Dusting youself off, you get ready to embark back on your journey to return to your kingdom.  Wait...that isn't why you came here..." & vbCrLf & "Or was it?"
+        out += "As you bite into the apple, your mind starts to get foggy.  You yawn, and lay down on the floor.  Nodding off, you realize that that apple probably was probably either enchanted or poisoned." & DDUtils.RNRN &
+               "Your last thought as you black out is that this seems like something out of an old fairy-tale..."
+
+        out += "As you come to several hours later, you groan and rub your forhead, only to knock a golden crown off of your head. This jolts you up, and you examine yourself further." & DDUtils.RNRN &
+               "Long hair, poofy ballgown, gloves that go up past your elbows?!  Well, it seems like your ""fairy-tale"" hunch wasn't too far off after all.  Dusting youself off, you get ready to embark back on your journey to return to your kingdom." & DDUtils.RNRN &
+               "Wait... that isn't why you came here..." & DDUtils.RNRN &
+               "Or was it?"
+
         Dim revertText = Game.lblEvent.Text.Split(vbCrLf)(0)
         If Not revertText.Equals("") Then out = revertText & DDUtils.RNRN & out
+
         Game.pushLblEvent(out)
-        stopTF()
+
+        p.drawPort()
     End Sub
 
     Public Overrides Sub stopTF()

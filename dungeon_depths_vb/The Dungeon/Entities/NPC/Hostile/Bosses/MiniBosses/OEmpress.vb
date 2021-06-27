@@ -14,16 +14,21 @@
         xp_value = 400
 
         '|Inventory|
-        setInventory({3, 58, 65})
-        inv.setCount("Defense_Charm", 1 + CInt(Rnd() * 2))
+        inv.setCount("Gelatinous_Shell", 1)
         inv.setCount("Omni_Charm", 1)
+        'random drops
+        inv.setCount("Vial_of_Slime", CInt(Rnd() * 5))
+        inv.setCount("Fusion_Crystal", CInt(Rnd() * 2))
+        inv.setCount("Advanced_Spellbook", CInt(Rnd() * 2))
+        inv.setCount("Defense_Charm", CInt(Rnd() * 3))
+
         inv.setCount("Gold", 5000)
 
         '|Dialog Variables|
         title = " "
         pronoun = "she"
-        pPronoun = "her"
-        rPronoun = "her"
+        p_pronoun = "her"
+        r_pronoun = "her"
 
         '|Misc|
         setupMonsterOnSpawn()

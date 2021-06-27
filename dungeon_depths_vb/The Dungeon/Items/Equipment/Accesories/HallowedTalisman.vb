@@ -4,7 +4,7 @@
     Sub New()
         setName("Hallowed_Talisman")
         setDesc("A simple, beaded necklace that always boosts its wearer's spirit." & DDUtils.RNRN &
-                       getStatInformation() & DDUtils.RNRN &
+                       getStatInformation() & vbcrlf &
                        "Damage Deflection Effect")
         id = 283
         tier = Nothing

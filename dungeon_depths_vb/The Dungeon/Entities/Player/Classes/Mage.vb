@@ -7,10 +7,10 @@
 
     Public Overrides Sub onLVLUp(ByVal level As Integer, ByRef p As Player, Optional learnSkills as Boolean = True)
         If level Mod 2 = 0 Then
-            p.maxMana += 10
-            p.mana += 10
+            p.maxMana += 4
+            p.mana += 4
         ElseIf level Mod 2 = 1 Then
-            p.will += 5
+            p.will += 4
         End If
 
         If Not learnSkills Then Exit Sub
@@ -21,9 +21,9 @@
 
     Public Overrides Sub deLVL(level As Integer, ByRef p As Player)
         If level Mod 2 = 0 Then
-            p.maxMana -= 10
+            p.maxMana -= 4
         ElseIf level Mod 2 = 1 Then
-            p.will -= 5
+            p.will -= 4
         End If
     End Sub
 End Class

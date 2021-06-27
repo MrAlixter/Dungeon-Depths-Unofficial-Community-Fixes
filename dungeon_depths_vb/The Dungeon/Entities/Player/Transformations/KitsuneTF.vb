@@ -1,14 +1,17 @@
 ﻿Public NotInheritable Class KitsuneTF
     Inherits Transformation
+
+    Private Const TF_IND As tfind = tfind.kitsune
+
     Sub New()
         MyBase.New(1, 0, 0, False)
-        tfName = "KitsuneTF"
-        nextStep = AddressOf step1
+        tf_name = TF_IND
+        next_step = AddressOf step1
     End Sub
     Sub New(cs As Integer, n As Integer, tts As Integer, wi As Double, cbs As Boolean, tfd As Boolean)
         MyBase.New(cs, n, tts, wi, cbs, tfd)
-        tfName = "KitsuneTF"
-        nextStep = getNextStep(cs)
+        tf_name = TF_IND
+        next_step = getNextStep(cs)
     End Sub
 
     Public Overrides Sub setWaitTime(stage As Integer)

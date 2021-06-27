@@ -33,7 +33,7 @@
         rando_inv_allowed = False
 
         setDesc("A mysterious uniform worn by a mysterious ""protector"" that has embraced the dark side." & DDUtils.RNRN & _
-                                  getSizeInformation() & vbCrLf & getStatInformation() & _
+                                  getSizeInformation() & vbcrlf & getStatInformation() & _
                            "Magical girls can not remove this uniform.")
     End Sub
 

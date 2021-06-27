@@ -120,6 +120,7 @@ Public Class Game
     Public startWithBooks As Boolean
     Public mobsOverrideSState As Boolean
     Public compOOT As Boolean
+    Public stealEverything As Boolean  'not added yet
 
     Dim debugWindow As Debug_Window
     Public shopMenu As ShopV2
@@ -513,7 +514,7 @@ Public Class Game
             pushPnlYesNo("Challenge the floor boss?", AddressOf ChallengeBoss, Nothing)
         End If
 
-        'If picNPC.Visible Then picNPC.BackgroundImage = NPCimgList(npcIndex)
+        'If picNPC.Visible Then picNPC.BackgroundImage = NPCimgList(img_index)
 
         player1.UIupdate()
 
@@ -1033,13 +1034,21 @@ Public Class Game
             End If
 
             If Keydata.Equals(Keys.Back) Then
-                If selectionType = "SelfTF" Or selectionType = "EnemyTF" Then player1.mana += 12
-                If selectionType = "yesNo" Then
-                    noAction()
+                If selectionType = "SelfTF" Or selectionType = "EnemyTF" Then
+                    player1.mana += 12
+                ElseIf selectionType = "BasicClassChange" Then
+                    player1.gold += New BasicClassChange().value
+                    leaveNPC()
+                ElseIf selectionType = "AdvClassChange" Then
+                    player1.gold += New AdvClassChange().value
+                    leaveNPC()
+                ElseIf selectionType = "yesNo" Then
+                    If Not noAction Is Nothing Then noAction()
                     choiceText = Nothing
                     yesAction = Nothing
                     noAction = Nothing
                 End If
+
                 selecting = False
                 pnlSelection.Visible = False
                 pnlSelection.Location = New Point(1000, pnlSelection.Location.Y)
@@ -1208,6 +1217,10 @@ Public Class Game
                 Dim cN = player1.className
                 selectEnemyTFForm(index)
                 EnemyPolymorph.effectP2(fN, cN)
+            ElseIf selectionType = "BasicClassChange" Then
+                selectBaseClassHypno(index)
+            ElseIf selectionType = "AdvClassChange" Then
+                selectAdvClassHypno(index)
             ElseIf selectionType = "Weapon" Then
                 selectWeapon(index)
             ElseIf selectionType = "yesNo" Then
@@ -1231,18 +1244,21 @@ Public Class Game
         doLblEventOnClose()
         lblCombatEvents.Text = ""
         closeLblEvent()
+
         If player1.mana <= 0 Then
             pushLblEvent("You don't have enough mana!")
             pushLstLog("You don't have enough mana!")
             Exit Sub
         End If
+
         Dim subString As String = lstSelec.Items(index).ToString.Split("-")(1)
         subString = subString.Split("·")(0)
         subString = subString.Trim()
+
         If combatmode Then
             Dim m As NPC = getCombatTarget(player1)
 
-            If subString = FlashBolt.SPELL_NAME Then
+            If subString = FlashBolt.SPELL_NAME Or subString = FlashHeal.SPELL_NAME Then
                 Spell.spellCast(m, player1, subString)
             Else
                 player1.nextCombatAction = Sub(t As Entity) Spell.spellCast(t, player1, subString)
@@ -1256,6 +1272,7 @@ Public Class Game
         Else
             Spell.spellCast(Nothing, player1, subString)
         End If
+
         ttCosts.RemoveAll()
     End Sub
     Sub selectSpec(ByVal index As Integer)
@@ -1266,17 +1283,21 @@ Public Class Game
 
         Dim m As NPC = getCombatTarget(player1)
 
-        If combatmode Then
-            player1.nextCombatAction = Sub(t As Entity) Special.specPerform(t, player1, cboxSpec.Items(index))
-        Else
-            Special.specPerform(m, player1, cboxSpec.Items(index))
-        End If
+        Dim subString As String = lstSelec.Items(index).ToString.Split("-")(1)
+        subString = subString.Split("·")(0)
+        subString = subString.Trim()
 
+        If combatmode Then
+            player1.nextCombatAction = Sub(t As Entity) Special.specPerform(t, player1, subString)
+        Else
+            Special.specPerform(m, player1, subString)
+        End If
 
         If cboxSpec.Items.Count = 0 Then
             cboxSpec.Visible = False
             btnSpec.Visible = False
         End If
+
         cboxSpec.Text = "-- Select --"
         queueSetup()
         updateList.ping()
@@ -1294,6 +1315,18 @@ Public Class Game
         player1.drawPort()
         player1.UIupdate()
 
+    End Sub
+    Sub selectBaseClassHypno(ByVal index As Integer)
+        Dim subString As String = lstSelec.Items(index).ToString.Split(" (")(2)
+
+        BasicClassChange.selectedClass = subString
+        BasicClassChange.hypnotizeP()
+    End Sub
+    Sub selectAdvClassHypno(ByVal index As Integer)
+        Dim subString As String = lstSelec.Items(index).ToString.Split(" (")(2)
+
+        AdvClassChange.selectedClass = subString
+        AdvClassChange.hypnotizeP()
     End Sub
     Sub selectOther(ByVal index As Integer)
         Dim subString As String = lstSelec.Items(index).ToString.Split(" (")(2)
@@ -1449,6 +1482,12 @@ Public Class Game
             Case "SelfTF"
                 lblWhat.Text = "Polymorph to what?"
                 fillLstSelec(player1.selfPolyForms)
+            Case "BasicClassChange"
+                lblWhat.Text = "Change classes to what?"
+                fillLstSelec(BasicClassChange.getClasses(player1))
+            Case "AdvClassChange"
+                lblWhat.Text = "Change classes to what?"
+                fillLstSelec(AdvClassChange.getClasses(player1))
             Case "EnemyTF"
                 lblWhat.Text = "Polymorph to what?"
                 fillLstSelec(player1.enemPolyForms)
@@ -1556,7 +1595,7 @@ Public Class Game
         If eClock > 0 Then eClock -= 1
 
         '|-Should we check for events?-|
-        If mDun.numCurrFloor = 5 Or mDun.numCurrFloor = 75 Or mDun.numCurrFloor = 9999 Or combatmode = True Or npcmode = True Or eClock <> 0 Or Not player1.canMoveFlag Then
+        If mDun.numCurrFloor = 5 Or mDun.numCurrFloor = 75 Or mDun.numCurrFloor = 9999 Or mDun.numCurrFloor = 10000 Or combatmode = True Or npcmode = True Or eClock <> 0 Or Not player1.canMoveFlag Then
             Exit Sub
         End If
 
@@ -1587,7 +1626,7 @@ Public Class Game
                 Dim m = Monster.monsterFactory(11)
                 m.currTarget = player1
                 toCombat(m)
-                pushLstLog((m.getName() & " attacks!"))
+                pushLstLog(Trim(m.getName() & " attacks!"))
                 eClock = eClockResetVal
             End If
             Exit Sub
@@ -1634,7 +1673,7 @@ Public Class Game
             m.currTarget = player1
             toCombat(m)
 
-            pushLstLog((m.getName() & " attacks!"))
+            pushLstLog(Trim(m.getName() & " attacks!"))
             eClock = eClockResetVal
         End If
 
@@ -1765,8 +1804,8 @@ Public Class Game
             ElseIf mDun.numCurrFloor = 9 Then
                 pushLblEvent("It looks like while there was once a formidable gate covering the stairway, something has left it rather... well, destroyed.  Glancing back at the smoldering gash in the landscape, " & If(player1.inv.getCountAt("Fox_Statue") > 0, "you fail to notice the slight gleam in the eyes of the fox statue tucked away in your bag.  Even as the flames blaze on above you, you decend to the next floor with chills at the thought of what could have left such a scar...", "you head down to the next floor with chills despite the inferno raging around you..."))
             ElseIf mDun.numCurrFloor = 13 Then
-                If player1.ongoingTFs.contains("FaePie​TF") Then
-                    player1.ongoingTFs.remove("FaePie​TF") : pushLogAndEvent("You revert from your fae form!")
+                If player1.ongoingTFs.contains(tfind.faepie) Then
+                    player1.ongoingTFs.remove(tfind.faepie) : pushLogAndEvent("You revert from your fae form!")
                     'ElseIf Not player1.perks(perk.isfae) > -1 Then
                     '    currFloor.stairs = currFloor.randPoint()
                     '    pushLblEvent("The staircase vanishes before you can decend, reappearing somewhere else on the floor..." & DDUtils.RNRN &
@@ -1993,8 +2032,7 @@ Public Class Game
         'Targax can't run
         If player1.health < 1 / player1.getMaxHealth Then Exit Sub
         If player1.perks(perk.swordpossess) > -1 Or (player1.name.Equals("Targax") And player1.className.Equals("Soul-Lord")) Then
-            pushLstLog("Something inside you decides that running away is cowardly, so you don't.")
-            pushLblCombatEvent("Something inside you decides that running away is cowardly, so you don't.")
+            pushLogAndEvent("Something inside you decides that running away is cowardly, so you don't.")
             Exit Sub
         End If
 
@@ -2008,7 +2046,7 @@ Public Class Game
                 updateList.clear()
             Else
                 updatePnlCombat(player1, player1.currTarget)
-                pushLblCombatEvent("You can't get away!")
+                pushLogAndEvent("You can't get away!")
             End If
         Next
     End Sub
@@ -2130,18 +2168,26 @@ Public Class Game
         toDesc()
     End Sub
     Sub toDesc()
-        txtPlayerDesc.Text = player1.genDescription
+        If combatmode Then
+            player1.allRoute()
+            Dim description As String = CStr(player1.name & " is a " & player1.sex & " " & player1.formName & " " & player1.className) + DDUtils.RNRN + player1.outPutPerkText() + player1.listQuests()
 
-        Dim pImg = player1.prt.oneLayerImgCheck(player1.formName, player1.className)
-        If player1.prt.oneLayerImgCheck(player1.formName, player1.className) Is Nothing Then
-            player1.prt.setIArr()
-            pImg = Portrait.CreateFullBodyBMP(player1.prt.iArr)
+            pushLblEvent(description)
+            'updatePnlCombat(player1, player1.currTarget)
+        Else
+            txtPlayerDesc.Text = player1.genDescription
+
+            Dim pImg = player1.prt.oneLayerImgCheck(player1.formName, player1.className)
+            If player1.prt.oneLayerImgCheck(player1.formName, player1.className) Is Nothing Then
+                player1.prt.setIArr()
+                pImg = Portrait.CreateFullBodyBMP(player1.prt.iArr)
+            End If
+
+            picDescPort.BackgroundImage = pImg
+
+            pnlDescription.Location = New Point((13 * (Me.Size.Width / 688)), (3 * (Me.Size.Width / 688)))
+            pnlDescription.Visible = True
         End If
-
-        picDescPort.BackgroundImage = pImg
-
-        pnlDescription.Location = New Point((13 * (Me.Size.Width / 688)), (3 * (Me.Size.Width / 688)))
-        pnlDescription.Visible = True
     End Sub
     'eat
     Sub eatKey()
@@ -2165,7 +2211,7 @@ Public Class Game
         queueSetup()
 
         '|-Print Dialog (if any)-|
-        pushLstLog((m.getName & " attacks!"))
+        pushLstLog(Trim(m.getName & " attacks!"))
         If mDun.numCurrFloor = 4 Then
             pushLblEvent("When you approach the staircase, you spot the Ooze Empress dangling over the stairs.  You wave to get her attention, she plops off the ceiling to come and greet you.  As you explain your situation to her, she chuckles, catching you off guard." & DDUtils.RNRN &
                          """You know, I was placed on this floor as kind of a buffer.  Mistress Medusa isn't interested in weaklings, and if you even want to have a chance at beating her you need to have a stronger will.""" & DDUtils.RNRN &
@@ -2451,7 +2497,8 @@ Public Class Game
         fromCombat()
         pnlSaveLoad.Location = New Point(188, pnlSaveLoad.Location.Y)
         pnlSaveLoad.Visible = True
-        'CharacterGenerator.init()
+
+
         Dim loops = 0
         While Not savePicsReady
             If loops = 100 Then
@@ -2559,7 +2606,7 @@ Public Class Game
 
             img = Portrait.CreateBMP(iarr)
         Catch ex As Exception
-            Return Nothing
+            Return ShopNPC.npcLib.atrs(0).getAt(103)
         End Try
         reader.Close()
         Return img
@@ -2642,7 +2689,7 @@ Public Class Game
     Sub NPCtoCombat(ByRef m As NPC)
         'the NPC versions of from and to combat
         player1.setTarget(m)
-        picNPC.Location = New Point(10, picPortrait.Location.Y)
+        picNPC.Visible = False
         lblEHealthChange.Tag = 0
         lblPHealtDiff.Tag = 0
         updatePnlCombat(player1, player1.currTarget)
@@ -2650,7 +2697,7 @@ Public Class Game
         pnlCombat.Visible = True
         combatmode = True
         npcmode = False
-        pushLstLog((m.getName() & " attacks!"))
+        pushLstLog(Trim(m.getName() & " attacks!"))
         btnATK.Visible = True
         btnMG.Visible = True
         btnRUN.Visible = True
@@ -2700,28 +2747,10 @@ Public Class Game
     'combat pannel
     Sub pushLblCombatEvent(ByVal s As String)
         'cleanupPanels()
-        Dim sSplit() As String = s.Split(" ")
-        Dim c As Integer = 0
-        Dim ct As Integer = 0
-        Dim out As String = ""
-        Do While c < sSplit.Length
-            If ct < 65 Then
-                If Not sSplit(c).Contains(vbCrLf) Then
-                    out += sSplit(c) & " "
-                    ct += sSplit(c).Length + 1
-                    c += 1
-                Else
-                    out += sSplit(c) & " "
-                    ct = 0
-                    c += 1
-                End If
-            Else
-                out += vbCrLf
-                ct = 0
-            End If
-        Loop
-        lblCombatEvents.Text += (out & vbCrLf &
-                                 "-------------------------------------------------" & vbCrLf)
+
+        Dim out = wrapText(s, 65)
+
+        lblCombatEvents.Text += (out & "-------------------------------------------------" & vbCrLf)
         player1.specialRoute()
         player1.magicRoute()
     End Sub
@@ -2974,6 +3003,7 @@ Public Class Game
         currNPC = Nothing
         btnEQP.Enabled = True
         npcList.Clear()
+        player1.canMoveFlag = True
 
         '|-Clean up the Player-|
         player1.clearTarget()
@@ -2995,20 +3025,20 @@ Public Class Game
         btnLeave.Visible = True
         If m.isShop Then btnShop.Enabled = True Else btnShop.Enabled = False
 
+        '|-Set up Game-|
+        npcmode = True
+        currNPC = m
+
         '|-Set up NPC-|
         npcList.Clear()
         npcList.Add(m)
         m.encounter()
         picNPC.Visible = True
 
-        '|-Set up Game-|
-        npcmode = True
-        currNPC = m
-
         '|-Set up the Player-|
         player1.canMoveFlag = False
 
-        pushLstLog(("You walk up to " & m.getName & "!"))
+        pushLstLog(("You walk up to" & m.title.ToLower & m.name & "!"))
     End Sub
     Sub npcMG()
         closeLblEvent()
@@ -3021,7 +3051,7 @@ Public Class Game
 
         pushNPCDialog(m.hitBySpell)
 
-        picNPC.BackgroundImage = currNPC.picNPC(currNPC.npcIndex)
+        picNPC.BackgroundImage = currNPC.picNPC(currNPC.img_index)
         updateList.add(player1, player1.getSPD)
         drawBoard()
     End Sub
@@ -3513,6 +3543,7 @@ Public Class Game
         End If
     End Sub
     Sub formReset()
+
         Application.Exit()
         'fromCombat()
         'picStart.Visible = True

@@ -34,6 +34,6 @@
 
         '|Description|
         setDesc("A poofy pink dress." & DDUtils.RNRN &
-                        getSizeInformation() & vbCrLf & getStatInformation())
+                        getSizeInformation() & vbcrlf & getStatInformation())
     End Sub
 End Class

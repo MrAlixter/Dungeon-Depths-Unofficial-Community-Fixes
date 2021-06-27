@@ -1,20 +1,21 @@
-﻿'|ID Info|
-
-
-'|Item Flags|
-
-
-'|Stats|
-
-
-'|Image Index|
-
-
-'|Description|
-
-
-Public Class Armor
+﻿Public Class Armor
     Inherits EquipmentItem
+
+    '| -- Constructor Layout Example -- |
+    '|ID Info|
+
+
+    '|Item Flags|
+
+
+    '|Stats|
+
+
+    '|Image Index|
+
+
+    '|Description|
+
 
     'Armor is an Item subtype that provides a defencive boost, and has artworks for each breast size
     Const MINBSIZE = -2

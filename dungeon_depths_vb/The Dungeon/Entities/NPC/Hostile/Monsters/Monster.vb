@@ -9,34 +9,9 @@
         If scaleToFloor Then
             Select Case Game.mDun.numCurrFloor 'sets the multiplier for enemy stats based on floor
                 Case 1
-                    maxHealth *= 1
-                    attack *= 1
-                    defense *= 1
-                    speed *= 1
-                Case 2
-                    maxHealth *= 1.05
-                    attack *= 1.05
-                    defense *= 1.05
-                    speed *= 1.05
-                    will = Math.Max(1, will) * 1.05
-                Case 3
-                    maxHealth *= 1.1
-                    attack *= 1.1
-                    defense *= 1.1
-                    speed *= 1.1
-                    will = Math.Max(1, will) * 1.1
-                Case 4
-                    maxHealth *= 1.2
-                    attack *= 1.2
-                    defense *= 1.2
-                    speed *= 1.2
-                    will = Math.Max(1, will) * 1.2
+                    scaleStats(1.0)
                 Case Else
-                    maxHealth *= (1 + (0.05 * Game.mDun.numCurrFloor))
-                    attack *= (1 + (0.05 * Game.mDun.numCurrFloor))
-                    defense *= (1 + (0.05 * Game.mDun.numCurrFloor))
-                    speed *= (1 + (0.05 * Game.mDun.numCurrFloor))
-                    will = Math.Max(1, will) * (1 + (0.05 * Game.mDun.numCurrFloor))
+                    scaleStats(1 + (0.08 * Game.mDun.numCurrFloor))
             End Select
         End If
 
@@ -45,6 +20,7 @@
         health = 1.0
 
         title = " The "
+
         sName = name
         sMaxHealth = maxHealth
         sMaxMana = maxMana
@@ -137,18 +113,22 @@
             Case 4
                 tier = {0, 1, 2, 3, 4, 6, 7, 19}
             Case 7
-                tier = {0, 1, 3, 4, 6, 7, 12, 14, 14, 19, 20}
+                tier = {0, 1, 3, 4, 6, 7, 12, 14, 14, 19}
             Case 10000
                 tier = {}
             Case Else
                 If Int(Rnd() * 3) = 0 Then
-                    tier = {0, 1, 2, 3, 6, 7, 12, 12, 19, 20}
+                    tier = {0, 1, 2, 3, 6, 7, 12, 12, 19}
                 ElseIf Int(Rnd() * 3) = 1 Then
-                    tier = {0, 1, 2, 3, 4, 6, 12, 12, 14, 19}
+                    tier = {0, 1, 2, 3, 4, 6, 14, 19, 19}
                 Else
-                    tier = {0, 1, 2, 4, 6, 7, 12, 14, 20, 20}
+                    tier = {0, 1, 2, 4, 6, 7, 12, 14, 14}
                 End If
         End Select
+
+        If floorInd > 6 And Not mFloor.nonRandomFloors.Contains(floorInd) And Not Game.player1.formName.Equals("Cow") Then
+            DDUtils.append(tier, 20)
+        End If
 
         If Game.player1.perks(perk.enemyoftime) > 0 Then
             DDUtils.append(tier, 21)
@@ -156,6 +136,7 @@
 
             If Game.currFloor.floorNumber = 10000 Then Return tier
         End If
+
         If Game.player1.getLust = 0 Then
         ElseIf Game.player1.getLust < 25 Then
             DDUtils.append(tier, 17)
@@ -200,8 +181,8 @@
         'adds the mimmic to combat queues
         targetRoute(m)
 
-        Game.pushLblCombatEvent((m.getName() & " attacks!"))
-        Game.pushLstLog((m.getName() & " attacks!"))
+        Game.pushLblCombatEvent(Trim(m.getName() & " attacks!"))
+        Game.pushLstLog(Trim(m.getName() & " attacks!"))
 
         Game.drawBoard()
     End Sub

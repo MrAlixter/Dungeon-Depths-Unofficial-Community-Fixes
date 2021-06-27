@@ -1,14 +1,17 @@
 ﻿Public NotInheritable Class ValkyrieTF2
     Inherits Transformation
+
+    Private Const TF_IND As tfind = tfind.valkyrie
+
     Sub New(n As Integer, tts As Integer, wi As Double, cbs As Boolean)
         MyBase.New(n, tts, wi, cbs)
-        tfName = "Valkyrie"
-        nextStep = AddressOf step1
+        tf_name = TF_IND
+        next_step = AddressOf step1
     End Sub
     Sub New(cs As Integer, n As Integer, tts As Integer, wi As Double, cbs As Boolean, tfd As Boolean)
         MyBase.New(cs, n, tts, wi, cbs, tfd)
-        tfName = "Valkyrie"
-        nextStep = getNextStep(cs)
+        tf_name = TF_IND
+        next_step = getNextStep(cs)
     End Sub
 
     Sub step1()
@@ -56,6 +59,6 @@
         End If
     End Function
     Public Overrides Sub setWaitTime(stage As Integer)
-        turnsTilNextStep = 0
+        turns_until_next_step = 0
     End Sub
 End Class

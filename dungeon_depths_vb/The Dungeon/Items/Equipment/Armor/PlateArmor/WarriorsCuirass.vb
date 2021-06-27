@@ -33,7 +33,7 @@
 
         '|Description|
         setDesc("A protective garment made more for elite fighters rather than fashion-minded common folk." & DDUtils.RNRN &
-                                getSizeInformation() & vbCrLf & getStatInformation())
+                                getSizeInformation() & vbcrlf & getStatInformation())
     End Sub
 
     Public Overrides Function getTier() As Integer

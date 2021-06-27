@@ -35,6 +35,6 @@
 
         '|Description|
         setDesc("A glittering, heavenly soft sweater." & DDUtils.RNRN &
-                                     getSizeInformation() & vbCrLf & getStatInformation())
+                                     getSizeInformation() & vbcrlf & getStatInformation())
     End Sub
 End Class

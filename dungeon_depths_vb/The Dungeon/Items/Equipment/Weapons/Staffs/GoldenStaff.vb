@@ -2,14 +2,22 @@
     Inherits Staff
 
     Sub New()
+        '|ID Info|
         setName("Golden_Staff")
-        setDesc("A glowing runed staff for powerful spellcasters. +50 MANA")
         id = 41
         tier = Nothing
-        usable = false
-        MyBase.m_boost = 50
-        MyBase.a_boost = 10
+
+        '|Item Flags|
+        usable = False
+
+        '|Stats|
+        m_boost = 50
+        a_boost = 10
         count = 0
         value = 3200
+
+        '|Description|
+        setDesc("A glowing runed staff for powerful spellcasters." & DDUtils.RNRN &
+                getStatInformation())
     End Sub
 End Class

@@ -42,7 +42,8 @@ Public Class DarkPactStep1
 
         Game.player1.perks(perk.cynnsq1ct1) = -1
 
-        Game.player1.xp += 1000
+        Game.player1.addXP(1000)
+
         Game.player1.inv.add("Chilling_Potion", 3)
 
         MyBase.complete()
@@ -70,7 +71,7 @@ Public Class DarkPactStep2
 
         Game.pushNPCDialog("Alright, great, you found a crystal!  It doesn't look like this one's been activated yet, so I'll get that going...", AddressOf completeDialogStep2)
 
-        Game.player1.xp += 1000
+        Game.player1.addXP(1000)
 
         MyBase.complete()
     End Sub
@@ -99,7 +100,7 @@ Public Class DarkPactStep2
     End Function
 
     Public Overrides Function isComplete() As Boolean
-        Return False
+        Return Not Game.lastTile Is Nothing AndAlso Game.lastTile.Item1.Equals("c")
     End Function
 End Class
 
@@ -107,24 +108,27 @@ Public Class DarkPactStep3
     Inherits Objective
 
     Sub New()
-        MyBase.New("Activate Cynn's mark by either raising your lust or defeating 36 opponents.")
+        MyBase.New("Activate Cynn's mark by either raising your lust or defeating 13 opponents.")
     End Sub
 
     Public Overrides Sub complete()
+        Game.player1.ongoingTFs.reset()
+        Game.player1.revertToPState()
+
         Dim dptf As DarkPactTF = New DarkPactTF
         dptf.step1()
 
-        Game.player1.xp += 2000
+        Game.player1.addXP(2000)
 
         MyBase.complete()
     End Sub
 
     Public Overrides Function getDesc() As String
-        Return description & "  [" & Game.player1.lust & "/100 or " & Game.player1.perks(perk.cynnsq1ct2) & "/36]"
+        Return description & "  [" & Game.player1.lust & "/100 or " & Game.player1.perks(perk.cynnsq1ct2) & "/13]"
     End Function
 
     Public Overrides Function isComplete() As Boolean
-        Return (Game.player1.lust >= 100) Or (Game.player1.perks(perk.cynnsq1ct2) >= 36)
+        Return (Game.player1.lust >= 100) Or (Game.player1.perks(perk.cynnsq1ct2) >= 13)
     End Function
 End Class
 

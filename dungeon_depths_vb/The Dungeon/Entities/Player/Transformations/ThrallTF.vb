@@ -1,24 +1,27 @@
 ﻿Public NotInheritable Class ThrallTF
     Inherits Transformation
+
+    Private Const TF_IND As tfind = tfind.thrall
+
     Sub New(n As Integer, tts As Integer, wi As Double, cbs As Boolean)
         MyBase.New(n, tts, wi, cbs)
-        tfName = "ThrallTF"
-        MyBase.updateDuringCombat = False
+        tf_name = TF_IND
+        MyBase.update_during_combat = False
         Game.player1.perks(perk.thrall) = 0
-        nextStep = AddressOf shiftTowardsPrefForm
+        next_step = AddressOf shiftTowardsPrefForm
     End Sub
     Sub New()
         MyBase.New(1, Int(Rnd() * 10) + 10, 0, False)
-        tfName = "ThrallTF"
-        MyBase.updateDuringCombat = False
+        tf_name = TF_IND
+        MyBase.update_during_combat = False
         Game.player1.perks(perk.thrall) = 11
-        nextStep = AddressOf crystalSpawn
+        next_step = AddressOf crystalSpawn
     End Sub
     Sub New(cs As Integer, n As Integer, tts As Integer, wi As Double, cbs As Boolean, tfd As Boolean)
         MyBase.New(cs, n, tts, wi, cbs, tfd)
-        tfName = "ThrallTF"
-        MyBase.updateDuringCombat = False
-        nextStep = getNextStep(cs)
+        tf_name = TF_IND
+        MyBase.update_during_combat = False
+        next_step = getNextStep(cs)
     End Sub
 
     Sub shiftTowardsPrefForm()
@@ -31,7 +34,7 @@
             p.prefForm.snapShift(Game.player1)
 
         End If
-        MyBase.currStep -= 1
+        MyBase.curr_step -= 1
     End Sub
     Sub crystalSpawn()
         Dim p As player = Game.player1
@@ -146,7 +149,7 @@
         Return Nothing
     End Function
     Public Overrides Sub setWaitTime(stage As Integer)
-        turnsTilNextStep = 5
-        turnsTilNextStep += generatWILResistance()
+        turns_until_next_step = 5
+        turns_until_next_step += generatWILResistance()
     End Sub
 End Class

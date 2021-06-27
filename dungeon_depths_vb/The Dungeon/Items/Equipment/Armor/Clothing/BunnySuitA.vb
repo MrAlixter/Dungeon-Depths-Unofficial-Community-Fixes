@@ -12,8 +12,8 @@
         MyBase.slut_var_ind = 129
 
         '|Stats|
-        MyBase.d_boost = 16
-        MyBase.s_boost = 5
+        d_boost = 16
+        s_boost = 5
         count = 0
         value = 2534
 
@@ -33,6 +33,6 @@
 
         '|Description|
         setDesc("Once a sultry outfit worn by waitresses in a club, this bunny suit has been modified to provide more defense, and to improve mobility." & DDUtils.RNRN &
-                                     getSizeInformation() & vbCrLf & getStatInformation())
+                                     getSizeInformation() & vbcrlf & getStatInformation())
     End Sub
 End Class

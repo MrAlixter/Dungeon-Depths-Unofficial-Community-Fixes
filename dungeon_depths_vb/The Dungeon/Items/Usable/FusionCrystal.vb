@@ -64,6 +64,7 @@
         Dim r As Integer = Int(Rnd() * 2)
         If r = 0 Then player.pClass = p1.pClass Else player.pClass = p2.pClass
         If (p1.className = "Warrior" And p2.className = "Mage") Or (p2.className = "Warrior" And p1.className = "Mage") Then player.pClass = player.classes("Paladin")
+        If (p1.className = "Cleric" And p2.className = "Rogue") Or (p2.className = "Cleric" And p1.className = "Rogue") Then p1.changeClass("Necromancer")
 
         r = Int(Rnd() * 2)
         If r = 0 Then player.sex = p1.sex Else player.sex = p2.sex

@@ -9,8 +9,8 @@
 
         '|Item Flags|
         usable = false
-        MyBase.compress_breast = True
-        MyBase.droppable = False
+        compress_breast = True
+        droppable = False
         rando_inv_allowed = False
 
         '|Stats|
@@ -38,21 +38,12 @@
         MyBase.usize5 = New Tuple(Of Integer, Boolean, Boolean)(286, True, True)
 
         '|Description|
-        setDesc("Negligee might even be too much to describe this skimpy outfit formed from the a pink goo that unfortunately only slimes can wear." & DDUtils.RNRN &
-                        getSizeInformation() & vbCrLf & getStatInformation())
+        setDesc("An extra layer of pink goo that a slime can don for extra provocation." & DDUtils.RNRN &
+                getSizeInformation() & DDUtils.rnrn & getStatInformation())
     End Sub
 
     Public Overrides Sub onEquip(ByRef p As Player)
         MyBase.onEquip(p)
-        If p.inv.getCountAt(getName) > 1 Then p.inv.add(getName, 1)
-        'If Not p.formName.Contains("Slime") And Not p.formName.Contains("Goo") Then
-        '    Equipment.clothesChange(p, "Naked")
-        '    Game.pushLblEvent("Your clothes melt off!")
-        '    p.drawPort()
-        'End If
-    End Sub
-    Public Overrides Sub onUnequip(ByRef p As Player)
-        MyBase.onUnequip(p)
-        p.inv.add(getName, -1)
+        If p.inv.getCountAt(getName) < 1 Then p.inv.add(getName, 1)
     End Sub
 End Class

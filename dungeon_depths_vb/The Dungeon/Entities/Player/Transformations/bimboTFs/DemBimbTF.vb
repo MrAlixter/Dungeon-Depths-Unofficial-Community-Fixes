@@ -2,23 +2,25 @@
     Inherits BimboTF
     Public Shared bimbop As Color = Color.FromArgb(255, 255, 184, 222)
 
+    Private Const TF_IND As tfind = tfind.demonbimbo
+
     Sub New(n As Integer, tts As Integer, wi As Double, cbs As Boolean)
         MyBase.New(n, tts, wi, cbs)
-        MyBase.updateDuringCombat = False
-        tfName = "DemBimbo"
-        nextStep = AddressOf hairColorShift
+        MyBase.update_during_combat = False
+        tf_name = TF_IND
+        next_step = AddressOf hairColorShift
     End Sub
     Sub New(cs As Integer, n As Integer, tts As Integer, wi As Double, cbs As Boolean, tfd As Boolean)
         MyBase.New(cs, n, tts, wi, cbs, tfd)
-        MyBase.updateDuringCombat = False
-        tfName = "DemBimbo"
-        nextStep = getNextStep(cs)
+        MyBase.update_during_combat = False
+        tf_name = TF_IND
+        next_step = getNextStep(cs)
     End Sub
 
     'Hair Color Shift
     Overrides Sub hairColorShift()
         Game.player1.prt.haircolor = DDUtils.cShift(Game.player1.prt.haircolor, bimbop, 200)
-        If Not Game.player1.getHairColor.Equals(bimbop) Then currStep -= 1
+        If Not Game.player1.getHairColor.Equals(bimbop) Then curr_step -= 1
         Game.pushLblEvent("Your hair rapidly becomes lighter, brightening towards a pastel pink.")
     End Sub
 
@@ -76,9 +78,9 @@
 
 
         Dim bTF As DemBimboTF = New DemBimboTF(3, 0, 0, False)
-        bTF.nextStep = bTF.getNextStep(stepNum)
+        bTF.next_step = bTF.getNextStep(stepNum)
 
-        bTF.nextStep()
+        bTF.next_step()
         p.UIupdate()
         p.drawPort()
     End Sub

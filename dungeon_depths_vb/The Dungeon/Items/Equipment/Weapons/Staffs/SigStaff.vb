@@ -2,19 +2,25 @@
     Inherits Staff
 
     Sub New()
+        '|ID Info|
         setName("Signature_Staff")
-        setDesc("A finely crafted staff bearing a trademarked signature. The gem contained inside of it produces a nearly infinite pool of incredibly unstable fire magic." & vbCrLf &
-                       "+66 Mana" & vbCrLf &
-                       "+10 ATK")
         id = 159
         tier = Nothing
-        usable = false
-        MyBase.m_boost = 66
-        MyBase.a_boost = 10
+
+        '|Item Flags|
+        usable = False
+        droppable = False
+
+        '|Stats|
+        m_boost = 66
+        a_boost = 10
         count = 0
         value = 4666
 
-        MyBase.droppable = False
+        '|Description|
+        setDesc("A finely crafted staff bearing a trademarked signature. The gem contained inside of it produces a nearly infinite pool of incredibly unstable fire magic." & DDUtils.RNRN &
+                getStatInformation() & vbcrlf &
+                "Grants access to the ""Molten Fireball"" spell")
     End Sub
 
     Public Overrides Sub onEquip(ByRef p As Player)

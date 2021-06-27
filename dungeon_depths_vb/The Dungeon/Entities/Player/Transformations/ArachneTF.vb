@@ -2,16 +2,18 @@
     'Displayed passages proofread and formatted as of 7/28/2019
     Inherits Transformation
 
+    Private Const TF_IND As tfind = tfind.arachne
+
     Sub New(cs As Integer)
         MyBase.New(4, 0, 100, False)
-        tfName = "Arachne"
-        currStep = cs
-        nextStep = getNextStep(cs)
+        tf_name = TF_IND
+        curr_step = cs
+        next_step = getNextStep(cs)
     End Sub
     Sub New(cs As Integer, n As Integer, tts As Integer, wi As Double, cbs As Boolean, tfd As Boolean)
         MyBase.New(cs, n, tts, wi, cbs, tfd)
-        tfName = "Arachne"
-        nextStep = getNextStep(cs)
+        tf_name = TF_IND
+        next_step = getNextStep(cs)
     End Sub
 
     Sub step1()
@@ -170,9 +172,9 @@
     End Function
     Public Overrides Sub setWaitTime(stage As Integer)
         If Game.player1.perks(perk.avenom) > -1 Then
-            turnsTilNextStep = 1
-            turnsTilNextStep += generatWILResistance()
-            turnsTilNextStep += -2 + Int(Rnd() * 4)
+            turns_until_next_step = 1
+            turns_until_next_step += generatWILResistance()
+            turns_until_next_step += -2 + Int(Rnd() * 4)
         ElseIf Game.player1.perks(perk.svenom) > -1 Then
             stopTF()
         End If

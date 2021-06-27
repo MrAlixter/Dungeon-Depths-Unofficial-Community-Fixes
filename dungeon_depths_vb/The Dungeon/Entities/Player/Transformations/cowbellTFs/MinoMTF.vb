@@ -1,18 +1,21 @@
 ﻿Public NotInheritable Class MinoMTF
     Inherits MinoFTF
+
+    Private Const TF_IND As tfind = tfind.malmino
+
     Sub New()
         MyBase.New(9, 15, 2.0, True)
-        tfName = "MinoMTF"
-        nextStep = AddressOf step1
+        tf_name = TF_IND
+        next_step = AddressOf step1
     End Sub
     Sub New(n As Integer, tts As Integer, wi As Double, cbs As Boolean)
         MyBase.New(n, tts, wi, cbs)
-        tfName = "MinoMTF"
+        tf_name = TF_IND
     End Sub
     Sub New(cs As Integer, n As Integer, tts As Integer, wi As Double, cbs As Boolean, tfd As Boolean)
         MyBase.New(cs, n, tts, wi, cbs, tfd)
-        tfName = "MinoMTF"
-        nextStep = getNextStep(cs)
+        tf_name = TF_IND
+        next_step = getNextStep(cs)
     End Sub
 
     Overrides Sub tfDialogStep1(ByVal hairColorInd As Integer)

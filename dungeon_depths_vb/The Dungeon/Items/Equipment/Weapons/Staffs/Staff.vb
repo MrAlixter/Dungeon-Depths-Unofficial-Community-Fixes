@@ -2,14 +2,21 @@
     Inherits Weapon
 
     Sub New()
+        '|ID Info|
         setName("Staff")
-        setDesc("A simple staff.")
         id = 21
         tier = Nothing
-        usable = false
-        MyBase.a_boost = 0
+
+        '|Item Flags|
+        usable = False
+
+        '|Stats|
         count = 0
         value = 100
+
+        '|Description|
+        setDesc("A simple staff." & DDUtils.RNRN &
+                getStatInformation())
     End Sub
 
     Public Overrides Sub onEquip(ByRef p As Player)

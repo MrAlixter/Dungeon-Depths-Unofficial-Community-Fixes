@@ -25,7 +25,7 @@
         MyBase.compress_breast = True
 
         setDesc("A set of armor built out of discarded chitin, commonly made and used by arachne huntresses." & DDUtils.RNRN &
-                                       getSizeInformation() & vbCrLf & getStatInformation())
+                                       getSizeInformation() & vbcrlf & getStatInformation())
     End Sub
 End Class
 

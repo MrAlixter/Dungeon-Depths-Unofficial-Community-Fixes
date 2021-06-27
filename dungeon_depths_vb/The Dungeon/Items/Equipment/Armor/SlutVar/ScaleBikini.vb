@@ -36,6 +36,6 @@
 
         '|Description|
         setDesc("This bikini consists of a set of plates that contour to its wearer's breasts.  While the scales making up this ""armor"" don't offer much in the way of protection, they also don't get in the way." & DDUtils.RNRN & _
-                                     getSizeInformation() & vbCrLf & getStatInformation())
+                                     getSizeInformation() & vbcrlf & getStatInformation())
     End Sub
 End Class

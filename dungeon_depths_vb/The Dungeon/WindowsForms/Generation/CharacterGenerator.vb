@@ -29,6 +29,7 @@
         ComboBox2.Items.Add("Cleric")
         ComboBox2.Items.Add("Magical Girl")
         ComboBox2.Items.Add("Valkyrie")
+        'ComboBox2.Items.Add("Evil Mage")
         If DDDateTime.isHallow Then ComboBox2.Items.Add("Witch")
         If Game.compOOT Then ComboBox2.Items.Add("Time Cop")
 
@@ -516,7 +517,7 @@
             Dim img As New PictureBox
             img.BackgroundImage = portrait.CreateBMP({picPort.Image, sexAttrList(i)}, False)
             img.Location = New Point(x, y)
-            img.Size = New Point(70 * Me.Size.Width / 581, 70 * Me.Size.Width / 581)
+            img.Size = New Point(70 * Me.Size.Width / 581, 130 * Me.Size.Width / 581)
             img.BackgroundImageLayout = ImageLayout.Stretch
             AddHandler img.Click, AddressOf PicOnClick
             pnlBody.Controls.Add(img)
@@ -728,8 +729,14 @@
         btnSave.Focus()
     End Sub
 
+    Protected Overrides Sub OnPaint(ByVal e As System.Windows.Forms.PaintEventArgs)
+        MyBase.OnPaint(e)
+
+        cBoxPresets.SelectionLength = 0
+    End Sub
+
     Private Sub cBoxPresets_TextChanged(sender As Object, e As EventArgs) Handles cBoxPresets.TextChanged
-        If cBoxPresets.Text = "--- (none) ---" Then Exit Sub
+        If cBoxPresets.Text = "--- (none) ---" Or cBoxPresets.SelectedIndex = -1 Then Exit Sub
         Dim preset = New PCPreset("presets/" & cBoxPresets.Text)
 
         If Not ComboBox2.Items.Contains(preset.pClass) Then ComboBox2.Items.Add(preset.pClass)

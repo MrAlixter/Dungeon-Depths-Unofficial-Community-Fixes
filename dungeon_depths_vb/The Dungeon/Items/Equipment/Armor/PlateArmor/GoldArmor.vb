@@ -32,6 +32,6 @@
 
         '|Description|
         setDesc("A expensive looking armor set made for the wealthy." & DDUtils.RNRN &
-                                          getSizeInformation() & vbCrLf & getStatInformation())
+                                          getSizeInformation() & vbcrlf & getStatInformation())
     End Sub
 End Class

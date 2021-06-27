@@ -4,41 +4,51 @@
     Dim firstMove = True
 
     Sub New()
+        '|ID Info|
         name = "Alraune"
+
+        '|Stats|
         maxHealth = 175
         attack = 15
         defense = 35
         speed = 1
         will = 13
 
+        '|Inventory|
         inv.setCount("Medicinal_Tea", 3)
         inv.setCount("Garden_Salad", 2)
 
-        setupMonsterOnSpawn()
-
+        '|Dialog Variables|
         pronoun = "she"
-        pPronoun = "her"
-        rPronoun = "her"
+        p_pronoun = "her"
+        r_pronoun = "her"
+
+        '|Misc|
+        setupMonsterOnSpawn()
     End Sub
 
     Public Overrides Sub attackCMD(ByRef target As Entity)
         If target.GetType() Is GetType(Player) Then
             If firstMove Then
-                Game.pushLblEvent("The " & getName() & " puffs out a haze of pollen!")
-                Game.player1.ongoingTFs.Add(New AlrauneTF())
+                Game.pushLogAndEvent("The " & getName() & " puffs out a haze of pollen!")
+                target.getPlayer.ongoingTFs.add(New AlrauneTF())
                 firstMove = False
                 Exit Sub
-            ElseIf Int(Rnd() * 6) = 0 Then
-                Game.pushLblEvent("The " & getName() & " casts healing aura!")
+
+            ElseIf target.getPlayer.perks(perk.mesmerized) < 0 And Int(Rnd() * 3) = 0 Then
+                Game.pushLogAndEvent("The " & getName() & " casts Mesmeric Bloom!")
+                Game.pushLblEvent("The alraune's spell puts you into a trance!")
+
+                target.getPlayer.perks(perk.mesmerized) = 3
+
+            ElseIf Int(Rnd() * 6) = 0 Or getIntHealth() < 10 Then
+                Game.pushLogAndEvent("The " & getName() & " casts healing aura!")
                 health += 0.25
                 If health > 1 Then health = 1
                 target.health += 0.25
                 If target.health > 1 Then target.health = 1
                 Exit Sub
-            ElseIf Int(Rnd() * 3) = 0 And Not CType(target, Player).className.Equals("Mindless") Then
-                Game.pushLblEvent("The " & getName() & " casts Mesmeric Bloom!")
-                Dim tf = New MindlessTF()
-                tf.step1alt()
+
             End If
         End If
         Game.pushLstLog(("The " & getName() & " uses vine lash!"))

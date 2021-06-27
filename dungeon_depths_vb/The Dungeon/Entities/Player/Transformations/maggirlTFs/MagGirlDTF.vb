@@ -1,15 +1,17 @@
 ﻿Public NotInheritable Class MagGirlDTF
     Inherits MagGirlTF
 
+    Private Const TF_IND As tfind = tfind.maggirld
+
     Sub New(n As Integer, tts As Integer, wi As Double, cbs As Boolean)
         MyBase.New(n, tts, wi, cbs)
-        tfName = "Magical Girl (D)"
-        nextStep = AddressOf step1
+        tf_name = TF_IND
+        next_step = AddressOf step1
     End Sub
     Sub New(cs As Integer, n As Integer, tts As Integer, wi As Double, cbs As Boolean, tfd As Boolean)
         MyBase.New(cs, n, tts, wi, cbs, tfd)
-        tfName = "Magical Girl (D)"
-        nextStep = getNextStep(cs)
+        tf_name = TF_IND
+        next_step = getNextStep(cs)
     End Sub
 
     Public Overrides Sub setSpells(ByRef p As Player)

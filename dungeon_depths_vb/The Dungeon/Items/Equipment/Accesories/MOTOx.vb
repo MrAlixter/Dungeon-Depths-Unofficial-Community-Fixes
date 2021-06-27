@@ -24,7 +24,7 @@
         '|Description|
         setDesc("A glowing blue tattoo in the shape of a cowbell that displays one's status as under the effect of a bovine enchantment." & DDUtils.RNRN &
                        "Transformation triggered by equipping this item." & vbCrLf &
-                       "Increase Max Mana based on stamina")
+                       "Increases Max Mana based on stamina")
     End Sub
 
     Public Overrides Sub discard()

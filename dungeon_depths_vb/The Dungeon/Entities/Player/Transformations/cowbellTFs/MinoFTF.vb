@@ -1,17 +1,20 @@
 ﻿Public Class MinoFTF
     Inherits Transformation
+
+    Private Const TF_IND As tfind = tfind.femmino
+
     Sub New(n As Integer, tts As Integer, wi As Double, cbs As Boolean)
         MyBase.New(n, tts, wi, cbs)
-        tfName = "MinoFTF"
-        MyBase.updateDuringCombat = False
+        tf_name = TF_IND
+        MyBase.update_during_combat = False
         Game.player1.perks(perk.cowbell) = 0
-        nextStep = AddressOf step1
+        next_step = AddressOf step1
     End Sub
     Sub New(cs As Integer, n As Integer, tts As Integer, wi As Double, cbs As Boolean, tfd As Boolean)
         MyBase.New(cs, n, tts, wi, cbs, tfd)
-        MyBase.updateDuringCombat = False
-        tfName = "MinoFTF"
-        nextStep = getNextStep(cs)
+        MyBase.update_during_combat = False
+        tf_name = TF_IND
+        next_step = getNextStep(cs)
     End Sub
 
     Overridable Function hairColorTF(ByRef p As Player) As Integer
@@ -258,7 +261,7 @@
         End Select
     End Function
     Public Overrides Sub setWaitTime(stage As Integer)
-        turnsTilNextStep = 10
-        turnsTilNextStep += generatWILResistance()
+        turns_until_next_step = 10
+        turns_until_next_step += generatWILResistance()
     End Sub
 End Class

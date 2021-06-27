@@ -9,8 +9,8 @@
 
         '|Item Flags|
         usable = False
-        cursed = True
         droppable = False
+        cursed = True
 
         '|Stats|
         count = 0
@@ -24,9 +24,7 @@
     End Sub
 
     Public Overrides Sub spell(ByRef p As Player, ByRef m As Entity)
-        Dim roll As Integer = Int(Rnd() * 4)
-
-        If roll = 0 Then
+        If Int(Rnd() * 4) = 0 Then
             'Additonal Attack
             Dim dmgAA As Integer = 65 + Int(Rnd() * 3) + Int(Rnd() * 3)
 
@@ -34,9 +32,11 @@
             Game.pushLstLog(CStr("You zap the " & m.name & " for " & dmgAA & " damage!"))
             Game.pushLblCombatEvent(CStr("You zap the " & m.name & " for " & dmgAA & " damage!"))
 
+            If m.isDead Then Exit Sub
+
             'recursion
             spell(p, m)
-        ElseIf roll = 1 Then
+        ElseIf Int(Rnd() * 4) = 0 Then
             'Backfire
             Dim dmgBF As Integer = 65 + Int(Rnd() * 3) + Int(Rnd() * 3)
 
@@ -61,5 +61,13 @@
         Game.pushLblCombatEvent(CStr("You zap the " & m.name & " for " & dmg & " damage!"))
 
         durability -= Int(Rnd() * 10) + 5
+    End Sub
+    Public Sub backfire(ByRef p As Player, ByRef m As Entity)
+        Dim dmgBF As Integer = 65 + Int(Rnd() * 3) + Int(Rnd() * 3)
+
+        Game.pushLstLog("Backfire - The wand zaps you!")
+        Game.pushLblCombatEvent("Backfire - The wand zaps you!")
+
+        p.takeDMG(Math.Max(dmgBF, p.getIntHealth - 1), p)
     End Sub
 End Class

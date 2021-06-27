@@ -32,6 +32,6 @@
 
         '|Description|
         setDesc("A grey tanktop made of a breathable fabric for the athletic." & DDUtils.RNRN &
-                          getSizeInformation() & vbCrLf & getStatInformation())
+                          getSizeInformation() & vbcrlf & getStatInformation())
     End Sub
 End Class

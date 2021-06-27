@@ -2,7 +2,7 @@
     Inherits pClass
     Sub New()
         MyBase.New(1, 0.005, 0.005, 2, 0.005, 0.0, "Mindless")
-        MyBase.revertPassage = "You think to yourself...wait, you can think again!  As your mind returns to you, you give a sigh of relief."
+        MyBase.revertPassage = "You think to yourself... wait, you can think again!  As your mind returns to you, you give a sigh of relief."
     End Sub
 
     Public Overrides Sub revert()

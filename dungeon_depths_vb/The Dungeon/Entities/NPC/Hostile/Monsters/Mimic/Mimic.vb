@@ -40,7 +40,7 @@
     Public Overrides Sub playerDeath(ByRef p As Player)
         despawn("p-death")
         Dim out As String = "You collapse to the ground, defeated.  At the corner of your fading vision, you can see thick tendrils unfurling out of the chest.  That's the body of the mimic, you realize..." & DDUtils.RNRN &
-                            "Several of the tendrils wrap around your wrist and ankles, while others work their way around your body, aggressively groping your thighs." & DDUtils.RNRN & "You black out as the Mimic draws you into the chest " & rPronoun & " inhabits, the interior far larger than you would have expected.  "
+                            "Several of the tendrils wrap around your wrist and ankles, while others work their way around your body, aggressively groping your thighs." & DDUtils.RNRN & "You black out as the Mimic draws you into the chest " & r_pronoun & " inhabits, the interior far larger than you would have expected.  "
 
         'roll a d10, which gives results between 0 and 9
         Dim d10 As Integer = Int(Rnd() * 10)

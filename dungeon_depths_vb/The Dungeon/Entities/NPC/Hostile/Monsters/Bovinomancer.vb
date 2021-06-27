@@ -1,23 +1,49 @@
 ﻿Public Class Bovinomancer
     Inherits Monster
+
+    Dim tfInd As Integer
+    Dim knows_p_cant_be_tfed As Boolean
+
     Sub New()
+        '|ID Info|
         name = "Bovinaemancer"
 
+        '|Stats|
         maxHealth = 250
-        mana = 100
+        mana = 45
         attack = 15
         defense = 10
         speed = 45
         will = 50
 
+        '|Inventory|
         setInventory({25, 34, 70, 71, 197})
 
+        '|Dialog Variables|
+        If Int(Rnd() * 2) = 0 Then
+            pronoun = "she"
+            p_pronoun = "her"
+            r_pronoun = "her"
+        Else
+            pronoun = "he"
+            p_pronoun = "his"
+            r_pronoun = "him"
+        End If
+
+        '|Misc|
         setupMonsterOnSpawn()
+        tfInd = 0
+        knows_p_cant_be_tfed = False
     End Sub
 
     Public Overrides Sub attackCMD(ByRef target As Entity)
-        If Not ("Cow".Equals(target.getPlayer.formName)) AndAlso (target.getMaxHealth > getMaxHealth() Or target.getWIL > getWIL() Or target.getATK > getATK()) And mana > 15 Then
-            spell1(target)
+        If Not ("Cow".Equals(target.getPlayer.formName)) AndAlso Int(Rnd() * 2) = 0 And mana > 15 And Not knows_p_cant_be_tfed Then
+            If Transformation.canBeTFed(target.getPlayer) Then
+                spell1(target)
+            Else
+                Game.pushLogAndEvent("The " & getName() & " casts ""Bovinize"", but your form prevents you from being transformed...")
+                knows_p_cant_be_tfed = True
+            End If
         ElseIf mana > 5 Then
             spell2(target)
         Else
@@ -52,58 +78,74 @@
         Dim dmg As Integer = 35 + Int(Rnd() * 20)
         dmg = getSpellDamage(e, dmg)
 
-        Game.pushLogAndEvent("The " & getName() & " casts ""Cattle Prod"", zapping you for " & dmg & "!")
+        Game.pushLogAndEvent("The " & getName() & " casts ""Cattle Prod"", zapping you for " & dmg & " damage!")
 
         e.takeDMG(dmg, Me)
 
-        If dmg > e.getIntHealth Then Exit Sub
+        If e.getIntHealth < 1 Then Exit Sub
 
         If Not e.getPlayer Is Nothing Then
             playerSpell2(e.getPlayer)
         End If
     End Sub
     Sub playerSpell2(ByRef p As Player)
-
         If p.formName.Equals("Cow") Then Exit Sub
 
-        If Int(Rnd() * 3) = 0 Then
+        If tfInd = 0 Then
             p.prt.setIAInd(pInd.ears, 8, True, True)
             Game.pushLogAndEvent("The " & getName() & "'s spell gives you cow ears!")
-        ElseIf Int(Rnd() * 3) = 0 Then
-            p.prt.setIAInd(pInd.horns, 1, True, False)
-            Game.pushLogAndEvent("The " & getName() & "'s spell gives you cow horns!")
-        ElseIf Int(Rnd() * 3) = 0 Then
-            p.prt.setIAInd(pInd.horns, 2, True, False)
-            Game.pushLogAndEvent("The " & getName() & "'s spell gives you bull horns!")
-        ElseIf Int(Rnd() * 3) = 0 Then
-            p.be()
-            Game.pushLogAndEvent("The " & getName() & "'s spell gives you bigger boobs!")
-        ElseIf Int(Rnd() * 3) = 0 Then
+        ElseIf tfInd = 1 Then
+            If Int(Rnd() * 2) = 0 Then
+                p.prt.setIAInd(pInd.horns, 1, True, False)
+                Game.pushLogAndEvent("The " & getName() & "'s spell gives you cow horns!")
+            Else
+                p.prt.setIAInd(pInd.horns, 2, True, False)
+                Game.pushLogAndEvent("The " & getName() & "'s spell gives you bull horns!")
+            End If
+        Else
             p.be()
             Game.pushLogAndEvent("The " & getName() & "'s spell gives you bigger boobs!")
         End If
+
+        tfInd += 1
 
         p.drawPort()
     End Sub
 
     Public Overrides Sub playerDeath(ByRef p As Player)
-        Dim out As String = "As you collapse to the ground, still smoldering from the previous encounter, your foe saunters over with a smug grin." & DDUtils.RNRN &
-                            """Really, you shouldn't be suprised by this..."" " & If(Int(Rnd() * 2) = 0, "he", "she") & " says, charging another spell.  ""This is how things should be, clearly your natual state is to be cowed before your superior.""" & DDUtils.RNRN &
-                            "The " & getName() & " casts Greater Bovinize, turning you into a cow!  This transformation will have some lasting effects even after it wears off..."
+        '| -- Battle Cleanup -- |
         despawn("p-death")
+
+        '| -- Revert any temporary polymorphs -- |
+        If p.polymorphs.ContainsKey(p.className) Or p.polymorphs.ContainsKey(p.formName) Then
+            p.ongoingTFs.resetPolymorphs()
+            p.perks(perk.polymorphed) = -1
+            p.revertToPState()
+        End If
+
+        '| -- TF Description -- |
+        Dim out As String = "As you collapse to the ground, still smoldering from the previous encounter, your foe saunters over with a smug grin." & DDUtils.RNRN &
+                            """Really, you shouldn't be suprised by this..."" " & r_pronoun & " says, charging another spell.  ""This is how things should be, clearly your natual state is to be cowed before your superior.""" & DDUtils.RNRN
+
+        If Transformation.canBeTFed(p) Or p.formName.Equals("Cow") Then
+            out += "The " & getName() & " casts Greater Bovinize, turning you into a cow!  This transformation will have some lasting effects even after it wears off..."
+        Else
+            out += "The " & getName() & " casts Greater Bovinize, turning you into a cow!  Your current form disrupts the lasting effects the spell may have had..."
+        End If
+
+        '| -- Transformation -- |
         If p.sex = "Male" Then
             p.MtF()
-            out += " Your body becomes daintier, and you are soon fully female."
         End If
-        p.be()
-        p.be()
-        p.be()
+
+        p.breastSize += 3
         p.prt.setIAInd(pInd.rearhair, 16, True, True)
         p.prt.setIAInd(pInd.midhair, 20, True, True)
         p.prt.setIAInd(pInd.ears, 8, True, True)
         p.prt.setIAInd(pInd.horns, 2, True, False)
         p.savePState()
-        Polymorph.transform(p, "Cow")
+
+        Polymorph.transform(p, "Cow", False)
 
         Game.pushLblEvent(out, AddressOf p.update)
     End Sub

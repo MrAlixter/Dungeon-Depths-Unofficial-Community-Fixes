@@ -3,23 +3,25 @@
     Public Shared bimbog1 As Color = Color.FromArgb(255, 102, 217, 64)
     Public Shared bimbog2 As Color = Color.FromArgb(255, 82, 209, 41)
 
+    Private Const TF_IND As tfind = tfind.watermelonbimbo
+
     Sub New(n As Integer, tts As Integer, wi As Double, cbs As Boolean)
         MyBase.New(n, tts, wi, cbs)
-        MyBase.updateDuringCombat = False
-        tfName = "WBimbo"
-        nextStep = AddressOf hairColorShift
+        MyBase.update_during_combat = False
+        tf_name = TF_IND
+        next_step = AddressOf hairColorShift
     End Sub
     Sub New(cs As Integer, n As Integer, tts As Integer, wi As Double, cbs As Boolean, tfd As Boolean)
         MyBase.New(cs, n, tts, wi, cbs, tfd)
-        MyBase.updateDuringCombat = False
-        tfName = "WBimbo"
-        nextStep = getNextStep(cs)
+        MyBase.update_during_combat = False
+        tf_name = TF_IND
+        next_step = getNextStep(cs)
     End Sub
 
     'Hair Color Shift
     Overrides Sub hairColorShift()
         Game.player1.prt.haircolor = DDUtils.cShift(Game.player1.prt.haircolor, bimbog1, 25)
-        If Not Game.player1.getHairColor.Equals(bimbog1) Then currStep -= 1
+        If Not Game.player1.getHairColor.Equals(bimbog1) Then curr_step -= 1
         Game.pushLblEvent("Your hair becomes slightly lighter, brightening towards a lime green.")
     End Sub
 

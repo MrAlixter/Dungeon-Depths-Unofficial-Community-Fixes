@@ -3,6 +3,10 @@
     'armor
     Public aList As Dictionary(Of String, Armor) = New Dictionary(Of String, Armor)
 
+    Private Sub ClothingTester_FormClosing(sender As Object, e As FormClosingEventArgs) Handles Me.FormClosing
+        p.drawPort()
+    End Sub
+
     Private Sub ClothingTester_Load(sender As Object, e As EventArgs) Handles MyBase.Load
         p = Game.player1
         DDUtils.resizeForm(Me)
@@ -35,6 +39,9 @@
             p.prt.setIArr()
             pImg = Portrait.CreateFullBodyBMP(p.prt.iArr)
         End If
+
+        lblBS.Text = p.breastSize
+        lblAS.Text = p.buttSize
 
         picDescPort.BackgroundImage = pImg
     End Sub

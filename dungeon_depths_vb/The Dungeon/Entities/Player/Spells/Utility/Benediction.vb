@@ -19,6 +19,6 @@
     End Sub
 
     Public Overrides Function getDesc(ByRef c As Player, ByRef t As NPC) As Object
-        Return "Identifies all tiles within 5 steps of the caster."
+        Return "Removes a number of curses from its caster."
     End Function
 End Class

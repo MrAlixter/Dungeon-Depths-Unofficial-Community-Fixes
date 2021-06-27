@@ -3,23 +3,25 @@
     Public Shared bimbovi1 As Color = Color.FromArgb(255, 131, 58, 113)
     Public Shared bimbovi2 As Color = Color.FromArgb(255, 111, 26, 79)
 
+    Private Const TF_IND As tfind = tfind.berrybimbo
+
     Sub New(n As Integer, tts As Integer, wi As Double, cbs As Boolean)
         MyBase.New(n, tts, wi, cbs)
-        MyBase.updateDuringCombat = False
-        tfName = "BBBimbo"
-        nextStep = AddressOf hairColorShift
+        MyBase.update_during_combat = False
+        tf_name = TF_IND
+        next_step = AddressOf hairColorShift
     End Sub
     Sub New(cs As Integer, n As Integer, tts As Integer, wi As Double, cbs As Boolean, tfd As Boolean)
         MyBase.New(cs, n, tts, wi, cbs, tfd)
-        MyBase.updateDuringCombat = False
-        tfName = "BBBimbo"
-        nextStep = getNextStep(cs)
+        MyBase.update_during_combat = False
+        tf_name = TF_IND
+        next_step = getNextStep(cs)
     End Sub
 
     'Hair color shifting
     Overrides Sub hairColorShift()
         Game.player1.prt.haircolor = DDUtils.cShift(Game.player1.prt.haircolor, bimbovi1, 25)
-        If Not Game.player1.getHairColor.Equals(bimbovi1) Then currStep -= 1
+        If Not Game.player1.getHairColor.Equals(bimbovi1) Then curr_step -= 1
         Game.pushLblEvent("Your hair becomes slightly darker, deepening towards a deep purple.")
     End Sub
 

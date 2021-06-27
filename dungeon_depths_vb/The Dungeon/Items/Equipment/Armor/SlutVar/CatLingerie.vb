@@ -25,6 +25,6 @@
         MyBase.compress_breast = True
 
         setDesc("A skimpy, pink, cat themed set of underwear. Nya." & DDUtils.RNRN &
-                                     getSizeInformation() & vbCrLf & getStatInformation())
+                                     getSizeInformation() & vbcrlf & getStatInformation())
     End Sub
 End Class

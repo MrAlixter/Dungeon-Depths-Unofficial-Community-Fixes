@@ -21,6 +21,6 @@
         MyBase.compress_breast = True
 
         setDesc("A gown worn by a goddess." & DDUtils.RNRN &
-                                      getSizeInformation() & vbCrLf & getStatInformation())
+                                      getSizeInformation() & vbcrlf & getStatInformation())
     End Sub
 End Class
