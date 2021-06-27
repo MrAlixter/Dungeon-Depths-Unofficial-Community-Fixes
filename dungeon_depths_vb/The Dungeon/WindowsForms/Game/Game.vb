@@ -3210,11 +3210,10 @@ Public Class Game
         ab1.Dispose()
     End Sub
     Private Sub DebugToolStripMenuItem_Click(sender As Object, e As EventArgs) Handles DebugToolStripMenuItem1.Click
-        Try
-            debugWindow.ToString() 'Try to do something to check if it exists
-        Catch ex As NullReferenceException
+        If debugWindow Is Nothing Then
             debugWindow = New Debug_Window
-        End Try
+        End If
+
         debugWindow.ShowDialog()
         player1.inv.invNeedsUDate = True
         player1.UIupdate()

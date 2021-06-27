@@ -15,12 +15,11 @@
     End Sub
 
     Public Overrides Function getTier() As Integer
-        Try
-            If Game.currFloor.floorNumber > 7 Then Return 3
-        Catch ex As Exception
-        End Try
-
-        Return Nothing
+        If Game?.currFloor IsNot Nothing AndAlso Game.currFloor.floorNumber > 7 Then
+            Return 3
+        Else
+            Return Nothing
+        End If
     End Function
 
     Public Overrides Function attack(ByRef p As Player, ByRef m As Entity) As Integer
