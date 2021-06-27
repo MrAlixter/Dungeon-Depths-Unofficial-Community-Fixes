@@ -23,7 +23,6 @@
     End Sub
 
     Public Overrides Sub Effect(ByRef p As Player)
-        p.xp += 500
-        If p.xp >= p.nextLevelXp Then p.levelUp()
+        p.addXP(500)
     End Sub
 End Class

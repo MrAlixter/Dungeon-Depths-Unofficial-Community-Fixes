@@ -21,8 +21,12 @@
     Overrides Sub use(ByRef p As Player)
         If Me.getUsable() = False Then Exit Sub
 
-        If p.equippedAcce.getAName.Equals("Thrall_Collar") And Not Game.combatmode Then
-            Game.pushLblEvent("You snip off the collar on your neck.")
+        If p.equippedAcce.getAName.Equals("Slave_Collar") And Not Game.combatmode Then
+            Game.pushLogAndEvent("You snip off the collar on your neck.")
+
+            Equipment.equipAcce(p, "Nothing", False)
+
+            p.drawPort()
             Exit Sub
         End If
 
@@ -30,6 +34,7 @@
 
         If p.currTarget.getName.Contains("Thrall") Then
             Game.fromCombat()
+            Game.pushLstLog("You snip the collar off of the thrall!")
             Game.pushLblEvent("You snip the collar off of the thrall, and as it falls to the ground the haze lifts from their eyes.  Before they wander off, you mention that the Shopkeeper is looking for some willing help and they nod before thanking you.")
             p.perks(perk.collarssnipped) += 1
         End If

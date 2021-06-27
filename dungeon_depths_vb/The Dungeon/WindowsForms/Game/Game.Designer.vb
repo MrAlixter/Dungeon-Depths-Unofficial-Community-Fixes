@@ -309,6 +309,8 @@ Partial Class Game
         Me.picFire3F = New System.Windows.Forms.PictureBox()
         Me.picFire2F = New System.Windows.Forms.PictureBox()
         Me.picFire1F = New System.Windows.Forms.PictureBox()
+        Me.picWSmithThong2 = New System.Windows.Forms.PictureBox()
+        Me.picWSmithThong1 = New System.Windows.Forms.PictureBox()
         CType(Me.picEnemy, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me.picNPC, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me.picStatue, System.ComponentModel.ISupportInitialize).BeginInit()
@@ -445,6 +447,8 @@ Partial Class Game
         CType(Me.picFire3F, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me.picFire2F, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me.picFire1F, System.ComponentModel.ISupportInitialize).BeginInit()
+        CType(Me.picWSmithThong2, System.ComponentModel.ISupportInitialize).BeginInit()
+        CType(Me.picWSmithThong1, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.SuspendLayout()
         '
         'btnUse1
@@ -3309,7 +3313,7 @@ Partial Class Game
         Me.pnlCastUse.Controls.Add(Me.btnCastCancel)
         Me.pnlCastUse.Controls.Add(Me.lblKnownAbilities)
         Me.pnlCastUse.Controls.Add(Me.cboxCast)
-        Me.pnlCastUse.Location = New System.Drawing.Point(48, 100)
+        Me.pnlCastUse.Location = New System.Drawing.Point(248, 100)
         Me.pnlCastUse.Name = "pnlCastUse"
         Me.pnlCastUse.Size = New System.Drawing.Size(625, 272)
         Me.pnlCastUse.TabIndex = 407
@@ -3624,6 +3628,26 @@ Partial Class Game
         Me.picFire1F.TabIndex = 411
         Me.picFire1F.TabStop = False
         '
+        'picWSmithThong2
+        '
+        Me.picWSmithThong2.BackgroundImage = CType(resources.GetObject("picWSmithThong2.BackgroundImage"), System.Drawing.Image)
+        Me.picWSmithThong2.Location = New System.Drawing.Point(66, 154)
+        Me.picWSmithThong2.Name = "picWSmithThong2"
+        Me.picWSmithThong2.Size = New System.Drawing.Size(15, 15)
+        Me.picWSmithThong2.TabIndex = 413
+        Me.picWSmithThong2.TabStop = False
+        Me.picWSmithThong2.Visible = False
+        '
+        'picWSmithThong1
+        '
+        Me.picWSmithThong1.BackgroundImage = CType(resources.GetObject("picWSmithThong1.BackgroundImage"), System.Drawing.Image)
+        Me.picWSmithThong1.Location = New System.Drawing.Point(45, 154)
+        Me.picWSmithThong1.Name = "picWSmithThong1"
+        Me.picWSmithThong1.Size = New System.Drawing.Size(15, 15)
+        Me.picWSmithThong1.TabIndex = 412
+        Me.picWSmithThong1.TabStop = False
+        Me.picWSmithThong1.Visible = False
+        '
         'Game
         '
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Inherit
@@ -3631,6 +3655,8 @@ Partial Class Game
         Me.BackColor = System.Drawing.Color.Black
         Me.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch
         Me.ClientSize = New System.Drawing.Size(1008, 690)
+        Me.Controls.Add(Me.picWSmithThong2)
+        Me.Controls.Add(Me.picWSmithThong1)
         Me.Controls.Add(Me.pnlCombat)
         Me.Controls.Add(Me.pnlEvent)
         Me.Controls.Add(Me.pnlTiles)
@@ -3882,6 +3908,8 @@ Partial Class Game
         CType(Me.picFire3F, System.ComponentModel.ISupportInitialize).EndInit()
         CType(Me.picFire2F, System.ComponentModel.ISupportInitialize).EndInit()
         CType(Me.picFire1F, System.ComponentModel.ISupportInitialize).EndInit()
+        CType(Me.picWSmithThong2, System.ComponentModel.ISupportInitialize).EndInit()
+        CType(Me.picWSmithThong1, System.ComponentModel.ISupportInitialize).EndInit()
         Me.ResumeLayout(False)
         Me.PerformLayout()
 
@@ -4168,4 +4196,6 @@ Partial Class Game
     Friend WithEvents Label18 As System.Windows.Forms.Label
     Friend WithEvents Label20 As System.Windows.Forms.Label
     Friend WithEvents picStatueSpace As System.Windows.Forms.PictureBox
+    Friend WithEvents picWSmithThong2 As System.Windows.Forms.PictureBox
+    Friend WithEvents picWSmithThong1 As System.Windows.Forms.PictureBox
 End Class

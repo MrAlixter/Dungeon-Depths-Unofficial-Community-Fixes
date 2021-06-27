@@ -19,6 +19,6 @@
 
         '|Description|
         setDesc("A glistening, jeweled axe forged for superb slashers." & DDUtils.RNRN &
-                       getStatInformation())
+                getStatInformation())
     End Sub
 End Class

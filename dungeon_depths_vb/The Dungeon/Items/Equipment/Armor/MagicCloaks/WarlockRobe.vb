@@ -34,6 +34,6 @@
 
         '|Description|
         setDesc("A snazzy robe that identifies its wearer as a high ranking follower of Uvona, Goddess of Fugue.  The goddess's power is woven into its very fabric, amplifying its wearer's own magic ability." & DDUtils.RNRN &
-                              getSizeInformation() & vbCrLf & getStatInformation())
+                              getSizeInformation() & vbcrlf & getStatInformation())
     End Sub
 End Class

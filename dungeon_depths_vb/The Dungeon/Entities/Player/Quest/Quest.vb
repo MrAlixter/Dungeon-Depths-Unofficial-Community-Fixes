@@ -19,7 +19,7 @@ Public MustInherit Class Quest
     Dim name As String
     Protected qInd As Integer
 
-    Dim currStep As Integer = 0
+    Dim curr_step As Integer = 0
 
     Protected objectives As List(Of Objective)
 
@@ -29,7 +29,7 @@ Public MustInherit Class Quest
     End Sub
 
     Public Function getProgress() As String
-        Return currStep + 1 & "/" & objectives.Count
+        Return curr_step + 1 & "/" & objectives.Count
     End Function
 
     Public Sub complete(ByVal objId As Integer)
@@ -37,9 +37,9 @@ Public MustInherit Class Quest
             objectives(objId).complete()
         End If
 
-        currStep += 1
+        curr_step += 1
 
-        If currStep >= objectives.Count Then
+        If curr_step >= objectives.Count Then
             completed = True
             active = False
         End If
@@ -49,19 +49,19 @@ Public MustInherit Class Quest
         active = False
     End Sub
     Public Sub completeCurrOjb()
-        complete(currStep)
+        complete(curr_step)
     End Sub
     Public Sub goToStep(ByVal i As Integer)
-        currStep = i
+        curr_step = i
     End Sub
     Public Function getCurrObj() As Objective
-        If currStep > -1 And currStep < objectives.Count Then
-            Return objectives(currStep)
+        If curr_step > -1 And curr_step < objectives.Count Then
+            Return objectives(curr_step)
         End If
         Return Nothing
     End Function
     Public Function getCurrStep() As Integer
-        Return currStep
+        Return curr_step
     End Function
     Public Overridable Function getActive() As Boolean
         Return active
@@ -82,7 +82,7 @@ Public MustInherit Class Quest
 
     Public Overridable Sub init()
         active = True
-        currStep = 0
+        curr_step = 0
         Game.player1.ongoingQuests.add(Game.player1.quests(qInd))
     End Sub
     Public Overridable Function canGet() As Boolean
@@ -98,7 +98,7 @@ Public MustInherit Class Quest
         out += active & "^"
         out += completed & "^"
         out += name & "^"
-        out += currStep & "^"
+        out += curr_step & "^"
         out += qInd & "^"
 
         Return out
@@ -109,7 +109,7 @@ Public MustInherit Class Quest
         active = CBool(buffer(0))
         completed = CBool(buffer(1))
         name = buffer(2)
-        currStep = CInt(buffer(3))
+        curr_step = CInt(buffer(3))
         qInd = CInt(buffer(4))
     End Sub
 End Class

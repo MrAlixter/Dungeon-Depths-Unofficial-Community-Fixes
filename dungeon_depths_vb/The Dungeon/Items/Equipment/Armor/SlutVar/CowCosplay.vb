@@ -33,6 +33,6 @@
         MyBase.hide_dick = False
 
         setDesc("A cow print bra created to hold cow sized breasts." & DDUtils.RNRN &
-                                     getSizeInformation() & vbCrLf & getStatInformation())
+                                     getSizeInformation() & vbcrlf & getStatInformation())
     End Sub
 End Class

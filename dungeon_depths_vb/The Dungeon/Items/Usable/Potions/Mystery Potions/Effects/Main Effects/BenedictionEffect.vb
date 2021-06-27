@@ -14,13 +14,13 @@
         If p.perks(perk.coftheox) > -1 And Int(Rnd() * 2) = 0 Then p.perks(perk.coftheox) = -1 : Game.pushLstLog("The curse of the ox is neutralized")
 
         If p.equippedArmor.cursed Then
-            Equipment.equipArmor(p, "Naked")
+            Equipment.equipArmor(p, "Naked", False)
             Game.pushLstLog("Cursed armor removed")
         ElseIf p.equippedWeapon.cursed Then
-            Equipment.equipWeapon(p, "Fists")
+            Equipment.equipWeapon(p, "Fists", False)
             Game.pushLstLog("Cursed weapon removed")
         ElseIf p.equippedAcce.cursed Then
-            Equipment.equipAcce(p, "Nothing")
+            Equipment.equipAcce(p, "Nothing", False)
             Game.pushLstLog("Cursed accessory removed")
         End If
 

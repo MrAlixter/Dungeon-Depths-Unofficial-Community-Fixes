@@ -16,15 +16,15 @@
         setCalories(15)
 
         '|Description|
-        setDesc("An normal green apple." & DDUtils.RNRN & "+15 Stamina")
+        setDesc("An normal green apple." & DDUtils.RNRN &
+                "+15 Stamina")
     End Sub
 
     Public Overrides Sub effect(ByRef p As Player)
         If Game.combatmode = True Or Game.npcmode = True Or Not p.canMoveFlag Then
-            p.ongoingTFs.add(New PrincessTF(False))
+            PrincessTF.step3()
         Else
-            p.ongoingTFs.add(New PrincessTF())
+            PrincessTF.step1()
         End If
-        p.update()
     End Sub
 End Class

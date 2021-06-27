@@ -18,7 +18,7 @@
 
         '|Description|
         setDesc("A well-worn blade small enough to be concealed and drawn at will." & DDUtils.RNRN &
-                getStatInformation() & DDUtils.RNRN &
+                getStatInformation() & vbcrlf &
                 "Hits twice")
 
     End Sub

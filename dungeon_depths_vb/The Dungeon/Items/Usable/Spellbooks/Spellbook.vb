@@ -1,7 +1,7 @@
 ﻿Public Class Spellbook
     Inherits Item
     Public Shared spells() As String = {"Super Fireball", "Icicle Spear", "Self Polymorph", "Turn to Frog", "Polymorph Enemy",
-                                        "Petrify", "Heal", "Illuminate", "Fireball", "Warp", "Arcane Compass"}
+                                        "Petrify", "Heal", "Illuminate", "Fireball", "Warp", "Arcane Compass", "Hydrodart"}
     Sub New()
         setName("Spellbook")
         setDesc("A simple, leather-bound book that likely contains something cool and magic.")

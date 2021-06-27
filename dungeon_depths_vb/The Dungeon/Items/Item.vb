@@ -1,7 +1,7 @@
 ﻿Public Class Item
     Implements IComparable
 
-    '| -- New Layout Example -- |
+    '| -- Constructor Layout Example -- |
     '|ID Info|
 
 
@@ -23,6 +23,7 @@
     Public id As Integer = -1
     Public droppable As Boolean = False
     Public rando_inv_allowed = True
+    Public can_be_stolen As Boolean = True
 
     Public saleLim As Integer = 999
     Public onSell As Action = Nothing

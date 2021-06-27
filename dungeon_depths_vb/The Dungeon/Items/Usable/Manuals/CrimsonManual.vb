@@ -30,7 +30,7 @@
                         sName = specials(spec)
                 End Select
                 If ct > 60 Then
-                    Game.pushLstLog("You know all the specials in crimson manuals already!")
+                    Game.pushLstLog("You know all the specials in combat manuals already!")
                     Exit Sub
                 End If
             End While
@@ -43,6 +43,8 @@
                 Game.pushLblEvent("You read the " & getName() & ". " & sName & " learned!")
             End If
         End If
+
+        p.specialRoute()
         count -= 1
     End Sub
 

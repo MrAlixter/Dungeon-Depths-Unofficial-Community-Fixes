@@ -36,7 +36,7 @@
 
         '|Description|
         setDesc("A black dress commonly worn by those who aren't afraid of the dark." & DDUtils.RNRN &
-                                    getSizeInformation() & vbCrLf & getStatInformation())
+                                    getSizeInformation() & vbcrlf & getStatInformation())
     End Sub
 
     Public Overrides Sub onEquip(ByRef p As Player)

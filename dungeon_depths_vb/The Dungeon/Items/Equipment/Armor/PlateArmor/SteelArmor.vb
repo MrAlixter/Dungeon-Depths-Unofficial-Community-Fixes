@@ -31,6 +31,6 @@
 
         '|Description|
         setDesc("A basic armor set forged from steel." & DDUtils.RNRN & _
-                              getSizeInformation() & vbCrLf & getStatInformation())
+                              getSizeInformation() & vbcrlf & getStatInformation())
     End Sub
 End Class

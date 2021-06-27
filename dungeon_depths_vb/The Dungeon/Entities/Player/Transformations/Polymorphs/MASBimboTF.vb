@@ -1,19 +1,22 @@
 ﻿Public NotInheritable Class MASBimboTF
     Inherits PolymorphTF
+
+    Private Const TF_IND As tfind = tfind.marissasbimbo
+
     Sub New()
         MyBase.New()
-        tfName = "MASBimbo"
+        tf_name = TF_IND
     End Sub
     Sub New(cs As Integer, n As Integer, tts As Integer, wi As Double, cbs As Boolean, tfd As Boolean)
         MyBase.New(cs, n, tts, wi, cbs, tfd)
-        nextStep = getNextStep(cs)
-        tfName = "MASBimbo"
+        next_step = getNextStep(cs)
+        tf_name = TF_IND
     End Sub
 
     Public Overrides Sub setWaitTime(stage As Integer)
         Dim p As Player = Game.player1
-        turnsTilNextStep = Int(Rnd() * 30) - Int(Rnd() * p.getWIL)
-        If turnsTilNextStep < 5 Then turnsTilNextStep = 5
+        turns_until_next_step = Int(Rnd() * 30) - Int(Rnd() * p.getWIL)
+        If turns_until_next_step < 5 Then turns_until_next_step = 5
     End Sub
 
     Public Overrides Sub step1()

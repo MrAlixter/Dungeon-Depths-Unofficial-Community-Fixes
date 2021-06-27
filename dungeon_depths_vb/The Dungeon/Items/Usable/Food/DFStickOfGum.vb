@@ -30,7 +30,7 @@
             Game.pushLblEvent("Chewing the gum sends a tingly shock through your mouth. You like, totally, love this gum!" & DDUtils.RNRN &
                               "+" & CInt(p.getMaxMana * 0.25) & " Max Mana" & vbCrLf &
                               "+25 XP")
-            p.xp += 25
+            p.addXP(25)
             p.mana += CInt(p.getMaxMana * 0.25)
             p.update()
 

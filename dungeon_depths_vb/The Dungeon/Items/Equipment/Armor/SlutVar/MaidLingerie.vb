@@ -26,6 +26,6 @@
         MyBase.compress_breast = True
 
         setDesc("A smutty version of a French maid's outfit." & DDUtils.RNRN & _
-                                     getSizeInformation() & vbCrLf & getStatInformation())
+                                     getSizeInformation() & vbcrlf & getStatInformation())
     End Sub
 End Class

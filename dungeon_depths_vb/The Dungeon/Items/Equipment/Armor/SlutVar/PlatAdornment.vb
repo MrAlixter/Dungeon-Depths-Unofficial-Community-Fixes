@@ -32,6 +32,6 @@
 
         '|Description|
         setDesc("A glistening outfit that leaves little to the imagination for those who want to be stupendously stunning." & DDUtils.RNRN & _
-                        getSizeInformation() & vbCrLf & getStatInformation())
+                        getSizeInformation() & vbcrlf & getStatInformation())
     End Sub
 End Class

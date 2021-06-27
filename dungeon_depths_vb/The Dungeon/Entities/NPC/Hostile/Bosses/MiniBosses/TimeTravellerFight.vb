@@ -18,8 +18,8 @@
         '|Dialog Variables|
         title = " "
         pronoun = "she"
-        pPronoun = "her"
-        rPronoun = "her"
+        p_pronoun = "her"
+        r_pronoun = "her"
 
         '|Misc|
         setupMonsterOnSpawn()
@@ -61,7 +61,7 @@
             revert()
 
             Game.pushLblEvent("A rippling aura surrounds the time traveler..." & DDUtils.RNRN &
-                              "The " & name & " return to " & pPronoun & " original self!")
+                              "The " & name & " return to " & p_pronoun & " original self!")
         End If
     End Sub
 

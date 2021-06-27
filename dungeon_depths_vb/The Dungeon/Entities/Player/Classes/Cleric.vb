@@ -7,23 +7,23 @@
 
     Public Overrides Sub onLVLUp(ByVal level As Integer, ByRef p As Player, Optional learnSkills As Boolean = True)
         If level Mod 2 = 0 Then
-            p.maxHealth += 10
+            p.maxHealth += 8
         ElseIf level Mod 2 = 1 Then
-            p.maxMana += 10
-            p.mana += 10
+            p.maxMana += 4
+            p.mana += 4
         End If
 
         If Not learnSkills Then Exit Sub
-        If level = 2 And Not p.knownSpells.Contains("Cleansing Light") Then p.knownSpells.Add("Cleansing Light") : Game.pushLstLog("Cleansing Light spell learned!")
+        If level = 2 And Not p.knownSpells.Contains("Flash Heal") Then p.knownSpells.Add("Flash Heal") : Game.pushLstLog("Flash Heal spell learned!")
         If level = 3 And Not p.knownSpells.Contains("Benediction") Then p.knownSpells.Add("Benediction") : Game.pushLstLog("Benediction spell learned!")
         If level = 4 And Not p.knownSpells.Contains("Smite") Then p.knownSpells.Add("Smite") : Game.pushLstLog("Smite spell learned!")
     End Sub
 
     Public Overrides Sub deLVL(level As Integer, ByRef p As Player)
         If level Mod 2 = 0 Then
-            p.maxHealth -= 10
+            p.maxHealth -= 8
         ElseIf level Mod 2 = 1 Then
-            p.maxMana -= 10
+            p.maxMana -= 4
         End If
     End Sub
 End Class

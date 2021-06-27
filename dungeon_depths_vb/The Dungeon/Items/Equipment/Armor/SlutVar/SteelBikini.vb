@@ -27,6 +27,6 @@
         MyBase.compress_breast = True
 
         setDesc("A skimpy steel swimsuit that gives a new meaning to ""breast plates""." & DDUtils.RNRN & _
-                                   getSizeInformation() & vbCrLf & getStatInformation())
+                                   getSizeInformation() & vbcrlf & getStatInformation())
     End Sub
 End Class

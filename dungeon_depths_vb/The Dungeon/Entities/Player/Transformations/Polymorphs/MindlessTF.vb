@@ -2,25 +2,27 @@
     Inherits PolymorphTF
 
     Dim altcourse = False
+    Private Const TF_IND As tfind = tfind.mindless
+
     Sub New()
         MyBase.New()
-        tfName = "Mindless"
+        tf_name = TF_IND
     End Sub
     Sub New(cs As Integer, n As Integer, tts As Integer, wi As Double, cbs As Boolean, tfd As Boolean)
         MyBase.New(cs, n, tts, wi, cbs, tfd)
-        nextStep = getNextStep(cs)
-        tfName = "Mindless"
+        next_step = getNextStep(cs)
+        tf_name = TF_IND
     End Sub
 
     Sub altNew()
         altcourse = True
-        nextStep = AddressOf step1alt
-        turnsTilNextStep = 3
+        next_step = AddressOf step1alt
+        turns_until_next_step = 3
     End Sub
 
     Public Overrides Sub setWaitTime(stage As Integer)
         If altcourse Then Exit Sub
-        turnsTilNextStep = 100
+        turns_until_next_step = 100
     End Sub
 
     Public Overrides Sub step1()
@@ -62,13 +64,13 @@
 
         p.changeClass("Mindless")
 
-        Game.pushLblEvent("The alraune's spell puts you into a deep trance!")
+        Game.pushLblEvent("The alraune's spell puts you into a trance!")
 
-        turnsTilNextStep = 3
+        turns_until_next_step = 1
 
         p.polymorphs("Mindless") = PolymorphTF.newPoly("MindlessAlt")
         p.ongoingTFs.Add(p.polymorphs("Mindless"))
-        p.perks(perk.polymorphed) = turnsTilNextStep
+        p.perks(perk.polymorphed) = turns_until_next_step
         p.changeClass("Mindless")
 
         p.drawPort()

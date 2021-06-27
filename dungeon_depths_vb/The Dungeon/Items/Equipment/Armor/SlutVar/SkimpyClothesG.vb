@@ -30,7 +30,7 @@
 
         '|Description|
         setDesc("A glistening set of clothing that seems almost crafted to show off its wearer's body." & DDUtils.RNRN & _
-                              getSizeInformation() & vbCrLf & getStatInformation())
+                              getSizeInformation() & vbcrlf & getStatInformation())
 
     End Sub
 

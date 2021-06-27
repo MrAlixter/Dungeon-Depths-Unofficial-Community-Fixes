@@ -1,7 +1,7 @@
 ﻿Public Class BrokenRemote
     Inherits Item
 
-    Public Shared forms = {"Half-Gorgon", "Gynoid", "Amazon", "Mindless", "Rando", "Half-Broodmother", "Broodmother", "Minotaur Cow", "Dragon", "Succubus", "Slime", "Bimbo", "Cake", "Blob", "Horse", "Oni", "Alraune", "Minotaur Bull", "Targax", "Half-Dragon (R)", "Tigress", "Succubus (Q)", "Minotaur Cow (B)", "Inversion", "Bimbo (Gold)"}
+    Public Shared forms = {"Half-Gorgon", "Gynoid", "Amazon", "Mindless", "Rando", "Half-Broodmother", "Broodmother", "Minotaur Cow", "Dragon", "Succubus", "Slime", "Bimbo", "Cake", "Blob", "Horse", "Oni", "Alraune", "Minotaur Bull", "Targax", "Half-Dragon (R)", "Tigress", "Succubus (Q)", "Minotaur Cow (B)", "Inversion", "Bimbo (Gold)", "Bunny Girl", "Tigress"}
     Public Shared selectedForm = "Rando"
 
     Sub New()
@@ -58,6 +58,7 @@
         tf2s.Add("Succubus (Q)", AddressOf DarkPactTF.step1alt)
         tf2s.Add("Inversion", AddressOf InversionTF.snapTF)
         tf2s.Add("Bimbo (Gold)", AddressOf GBimboTF.snapTF)
+        tf2s.Add("Bunny Girl", AddressOf DancerTF.step1)
 
         If Not tfs.ContainsKey(form) And Not tf2s.ContainsKey(form) Then Exit Sub
 

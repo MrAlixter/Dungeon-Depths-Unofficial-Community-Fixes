@@ -28,6 +28,6 @@ Public Class Labcoat
         rando_inv_allowed = False
 
         setDesc("A white labcoat that gives its wearer an air of scientific authority." & DDUtils.RNRN & _
-                                getSizeInformation() & vbCrLf & getStatInformation())
+                                getSizeInformation() & vbcrlf & getStatInformation())
     End Sub
 End Class

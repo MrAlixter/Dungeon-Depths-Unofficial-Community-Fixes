@@ -1,5 +1,5 @@
 ﻿Public Class TFList
-    Dim internalList As Dictionary(Of String, Transformation)
+    Dim internalList As Dictionary(Of tfind, Transformation)
     Sub New()
         reset()
     End Sub
@@ -17,7 +17,7 @@
             If tf.getTFDone Then
                 remove(internalList.Keys(i))
             Else
-                Dim c = tf.getturnsTilNextStep
+                Dim c = tf.getturnstilnextstep
                 If c = 0 Then pUpdateFlag = True
                 Try
                     tf.update()
@@ -28,19 +28,19 @@
         Next
     End Sub
 
-    Sub remove(ByVal s As String)
+    Sub remove(ByVal s As tfind)
         If internalList.ContainsKey(s) Then
             internalList(s).stopTF()
             internalList.Remove(s)
         End If
     End Sub
 
-    Public Function contains(ByVal s As String) As Boolean
+    Public Function contains(ByVal s As tfind) As Boolean
         Return internalList.ContainsKey(s)
     End Function
 
     Sub reset()
-        internalList = New Dictionary(Of String, Transformation)
+        internalList = New Dictionary(Of tfind, Transformation)
     End Sub
 
     Sub resetPolymorphs()
@@ -50,7 +50,7 @@
         Next
     End Sub
 
-    Function getAt(ByVal s As String) As Transformation
+    Function getAt(ByVal s As tfind) As Transformation
         If Not internalList.Keys.Contains(s) Then Return Nothing
 
         Return internalList(s)

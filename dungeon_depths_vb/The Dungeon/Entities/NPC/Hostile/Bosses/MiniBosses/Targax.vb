@@ -15,20 +15,19 @@
         xp_value = 200
 
         '|Inventory|
-        inv.setCount("Health_Potion", 2)
-        inv.setCount("Major_Health_Potion", 3)
-        inv.setCount("Combat_Manual", 1)
         inv.setCount("Sword_of_the_Brutal", 1)
-        inv.setCount("Warrior's_Cuirass", CInt(Rnd() * 2))
-        inv.setCount("Attack_Charm", 1 + CInt(Rnd() * 2))
         inv.setCount("Omni_Charm", 1)
+        'random drops
+        inv.setCount("Combat_Manual", CInt(Rnd() * 3))
+        inv.setCount("Warrior's_Cuirass", CInt(Rnd() * 2))
+        inv.setCount("Attack_Charm", CInt(Rnd() * 3))
         inv.setCount("Gold", 2500)
 
         '|Dialog Variables|
         title = " "
         pronoun = "he"
-        pPronoun = "his"
-        rPronoun = "him"
+        p_pronoun = "his"
+        r_pronoun = "him"
 
         '|Misc|
         setupMonsterOnSpawn()
@@ -41,7 +40,7 @@
         If combatCounter Mod 6 = 0 And health < 0.66 Then
             If Int(Rnd() * 2) = 0 Then
                 Game.pushLstLog((getName() & " focuses their energy!"))
-                Game.pushLblCombatEvent((getName() & " focuses all " & pPronoun & " energy into " & pPronoun & " blade!"))
+                Game.pushLblCombatEvent((getName() & " focuses all " & p_pronoun & " energy into " & p_pronoun & " blade!"))
 
                 attack *= 1.2
                 defense *= 0.7

@@ -30,7 +30,7 @@
                     p.currTarget.despawn("pwarp")
                     Game.updateList.clear()
                 End If
-                Game.pushLblEvent("As you eat the mushroom, you can feel something...weird.  Unlike the simple teleports of past experiences, this time a massive, slowly growing tunnel of sorts has opened up in front of you.  You try to run, but soon you find that you can not escape the pull of its void.", AddressOf Warp.gotospace)
+                Game.pushLblEvent("As you eat the mushroom, you can feel something... weird.  Unlike the simple teleports of past experiences, this time a massive, slowly growing tunnel of sorts has opened up in front of you.  You try to run, but soon you find that you can not escape the pull of its void.", AddressOf Warp.gotospace)
             Else
                 If Game.combatmode Then
                     p.currTarget.despawn("pwarp")

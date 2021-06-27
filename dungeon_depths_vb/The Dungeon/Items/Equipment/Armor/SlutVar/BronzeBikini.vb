@@ -35,6 +35,6 @@
 
         '|Description|
         setDesc("A bronze bikini covered in a fine mail of bronze rings.  While it won't stop very many hits, it is also lightweight enough to move around freely." & DDUtils.RNRN &
-                                   getSizeInformation() & vbCrLf & getStatInformation())
+                                   getSizeInformation() & vbcrlf & getStatInformation())
     End Sub
 End Class

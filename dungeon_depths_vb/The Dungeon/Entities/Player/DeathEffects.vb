@@ -31,13 +31,6 @@
             writer.Close()
         End If
 
-        Dim c As Chest
-        c = Game.baseChest.Create(p.inv, p.pos)
-        Game.currFloor.chestList.Add(c)
-        Game.currFloor.mBoard(p.pos.Y, p.pos.X).ForeColor = Color.FromArgb(45, 45, 45)
-        Game.currFloor.mBoard(p.pos.Y, p.pos.X).Text = "#"
-        Game.currFloor.writeFloorToFile()
-
         Game.pushPnlYesNo("Game Over!  Reload a save?", AddressOf tryToLoadSave, AddressOf askAboutNewGame)
         '.formReset()
     End Sub
@@ -53,6 +46,14 @@
     End Sub
     Shared Sub askAboutNewGame()
         System.Threading.Thread.Sleep(50)
+
+        Dim c As Chest
+        c = Game.baseChest.Create(Game.player1.inv, Game.player1.pos)
+        Game.currFloor.chestList.Add(c)
+        Game.currFloor.mBoard(Game.player1.pos.Y, Game.player1.pos.X).ForeColor = Color.FromArgb(45, 45, 45)
+        Game.currFloor.mBoard(Game.player1.pos.Y, Game.player1.pos.X).Text = "#"
+        Game.currFloor.writeFloorToFile()
+
         Game.pushPnlYesNo("Start a new game?", AddressOf Game.newGame, AddressOf Game.formReset)
     End Sub
 End Class

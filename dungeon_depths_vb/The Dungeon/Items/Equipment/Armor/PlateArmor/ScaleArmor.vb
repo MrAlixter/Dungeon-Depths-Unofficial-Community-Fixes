@@ -33,6 +33,6 @@
 
         '|Description|
         setDesc("Unlike the its bronze and steel counterparts, this armor set consists of a series of small interlocking plates.  The unique draconic alloy used by these scales provides ample protection, although it's also fairly heavy." & DDUtils.RNRN & _
-                        getSizeInformation() & vbCrLf & getStatInformation())
+                        getSizeInformation() & vbcrlf & getStatInformation())
     End Sub
 End Class

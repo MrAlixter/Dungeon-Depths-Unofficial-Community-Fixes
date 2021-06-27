@@ -19,6 +19,12 @@
         MyBase.compress_breast = True
 
         setDesc("The scanty clothes of a succubus." & DDUtils.RNRN & _
-                              getSizeInformation() & vbCrLf & getStatInformation())
+                              getSizeInformation() & vbcrlf & getStatInformation())
+    End Sub
+
+    Public Overrides Sub onEquip(ByRef p As Player)
+        MyBase.onEquip(p)
+
+        If p.inv.getCountAt(getAName) < 1 Then p.inv.add(getAName, 1)
     End Sub
 End Class

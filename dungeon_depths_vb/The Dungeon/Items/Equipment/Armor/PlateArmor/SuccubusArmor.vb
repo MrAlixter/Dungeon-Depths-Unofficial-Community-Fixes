@@ -32,6 +32,6 @@
 
         '|Description|
         setDesc("The scanty clothes of a succubus." & DDUtils.RNRN & _
-                              getSizeInformation() & vbCrLf & getStatInformation())
+                              getSizeInformation() & vbcrlf & getStatInformation())
     End Sub
 End Class

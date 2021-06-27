@@ -4,23 +4,25 @@
     Public Shared bimbogold2 As Color = Color.FromArgb(255, 255, 249, 179)
     Public Shared bimbogold3 As Color = Color.FromArgb(255, 255, 255, 97)
 
+    Private Const TF_IND As tfind = tfind.goldbimbo
+
     Sub New(n As Integer, tts As Integer, wi As Double, cbs As Boolean)
         MyBase.New(n, tts, wi, cbs)
-        MyBase.updateDuringCombat = False
-        tfName = "GBimbo"
-        nextStep = AddressOf hairColorShift
+        MyBase.update_during_combat = False
+        tf_name = TF_IND
+        next_step = AddressOf hairColorShift
     End Sub
     Sub New(cs As Integer, n As Integer, tts As Integer, wi As Double, cbs As Boolean, tfd As Boolean)
         MyBase.New(cs, n, tts, wi, cbs, tfd)
-        MyBase.updateDuringCombat = False
-        tfName = "GBimbo"
-        nextStep = getNextStep(cs)
+        MyBase.update_during_combat = False
+        tf_name = TF_IND
+        next_step = getNextStep(cs)
     End Sub
 
     'Hair Color Shift
     Overrides Sub hairColorShift()
         Game.player1.prt.haircolor = DDUtils.cShift(Game.player1.prt.haircolor, bimbogold1, 50)
-        If Not Game.player1.getHairColor.Equals(bimbogold1) Then currStep -= 1
+        If Not Game.player1.getHairColor.Equals(bimbogold1) Then curr_step -= 1
         Game.pushLblEvent("Your hair becomes slightly lighter, brightening to a brilliant gold." & DDUtils.RNRN & "+6 LUST")
 
         Game.player1.addLust(6)
@@ -84,8 +86,8 @@
     End Function
 
     Public Overrides Sub setWaitTime(stage As Integer)
-        turnsTilNextStep = 10 + (Int(Rnd() * 5) + 1)
-        turnsTilNextStep += generatWILResistance()
+        turns_until_next_step = 10 + (Int(Rnd() * 5) + 1)
+        turns_until_next_step += generatWILResistance()
     End Sub
 
     Public Overrides Function hasBimboHair(p As Player) As Boolean

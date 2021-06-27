@@ -34,6 +34,6 @@
 
         '|Description|
         setDesc("A lightweight armor set forged from bronze that, while not offering much defense also gives a slight speed boost." & DDUtils.RNRN &
-                               getSizeInformation() & vbCrLf & getStatInformation())
+                               getSizeInformation() & vbcrlf & getStatInformation())
     End Sub
 End Class

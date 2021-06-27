@@ -10,6 +10,7 @@
         '|Item Flags|
         usable = true
         rando_inv_allowed = False
+        can_be_stolen = False
         MyBase.onBuy = AddressOf purge
 
         '|Stats|
@@ -34,13 +35,13 @@
         If p.perks(perk.coscale) > -1 Then p.perks(perk.coscale) = -1 : Game.pushLstLog("The Curse of Scales is neutralized")
         If p.perks(perk.faecurse) > -1 Then p.perks(perk.faecurse) = -1 : Game.pushLstLog("The fae's curse is neutralized")
         If p.perks(perk.succubuscurse) > -1 Then p.perks(perk.succubuscurse) = -1 : Game.pushLstLog("The succubus's curse is neutralized")
-        If Not p.ongoingTFs.getAt("MinoMTF") Is Nothing Then p.ongoingTFs.remove("MinoMTF") : Game.pushLstLog("The Curse of the Bull is neutralized")
+        If p.ongoingTFs.contains(tfind.malmino) Then p.ongoingTFs.remove(tfind.malmino) : Game.pushLstLog("The Curse of the Bull is neutralized")
         If p.perks(perk.coftheox) > -1 Then p.perks(perk.coftheox) = -1 : Game.pushLstLog("The curse of the ox is neutralized")
 
         '| -- Cursed Equipment -- |
-        If p.equippedArmor.cursed Then Equipment.equipArmor(p, "Naked") : Game.pushLstLog("Cursed armor removed")
-        If p.equippedWeapon.cursed Then Equipment.equipWeapon(p, "Fists") : Game.pushLstLog("Cursed weapon removed")
-        If p.equippedAcce.cursed Then Equipment.equipAcce(p, "Nothing") : Game.pushLstLog("Cursed accessory removed")
+        If p.equippedArmor.cursed Then Equipment.equipArmor(p, "Naked", False) : Game.pushLstLog("Cursed armor removed")
+        If p.equippedWeapon.cursed Then Equipment.equipWeapon(p, "Fists", False) : Game.pushLstLog("Cursed weapon removed")
+        If p.equippedAcce.cursed Then Equipment.equipAcce(p, "Nothing", False) : Game.pushLstLog("Cursed accessory removed")
 
         Game.pushNPCDialog("Ah, a fresh slate.  Don't stay out of too much trouble now, caution won't lead you anywhere...interesting...")
 

@@ -28,7 +28,7 @@
         rando_inv_allowed = False
 
         setDesc("An etherial armor set crafted for a valiant defender." & DDUtils.RNRN & _
-                             getSizeInformation() & vbCrLf & getStatInformation() & vbCrLf & _
+                             getSizeInformation() & vbcrlf & getStatInformation() & vbCrLf & _
                              "Valkyries can not remove this armor.")
     End Sub
 

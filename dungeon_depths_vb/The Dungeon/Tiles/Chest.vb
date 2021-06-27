@@ -117,7 +117,7 @@
             Else
                 mOdds = Int(Rnd() * 10)
             End If
-            If Game.mDun.numCurrFloor <> 9999 And Game.mDun.numCurrFloor <> 91017 And mOdds = 0 And Not contents.getCountAt(53) > 0 Then
+            If Game.mDun.numCurrFloor <> 9999 And Game.mDun.numCurrFloor <> 10000 And Game.mDun.numCurrFloor <> 91017 And mOdds = 0 And Not contents.getCountAt(53) > 0 And Not Game.npcmode And Not Game.combatmode Then
                 Monster.createMimic(contents)
                 Exit Sub
             End If

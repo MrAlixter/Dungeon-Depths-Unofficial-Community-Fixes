@@ -14,21 +14,24 @@
         xp_value = 100
 
         '|Inventory|
-        inv.setCount("Health_Potion", 3)
-        inv.setCount("Spellbook", 2)
         inv.setCount("Cat_Lingerie", 1)
         inv.setCount("Restore_Potion", 1)
-        inv.setCount("Cat_Ears", 1)
-        inv.setCount("Mana_Charm", 1 + CInt(Rnd() * 2))
         inv.setCount("Omni_Charm", 1)
-        inv.setCount("Sorcerer's_Robes", CInt(Rnd() * 2))
         inv.setCount("Gold", 1000)
+        'random drops
+        inv.setCount("Health_Potion", CInt(Rnd() * 3))
+        inv.setCount("Mana_Potion", CInt(Rnd() * 3))
+        inv.setCount("Spellbook", CInt(Rnd() * 3))
+        inv.setCount("Cat_Ears", CInt(Rnd() * 2))
+        inv.setCount("Mana_Charm", CInt(Rnd() * 3))
+        inv.setCount("Sorcerer's_Robes", CInt(Rnd() * 2))
+
 
         '|Dialog Variables|
         title = " "
         pronoun = "she"
-        pPronoun = "her"
-        rPronoun = "her"
+        p_pronoun = "her"
+        r_pronoun = "her"
 
         '|Misc|
         setupMonsterOnSpawn()
@@ -56,8 +59,6 @@
             End If
         End If
 
-        Game.pushLstLog((getName() & " casts lightning bolt!"))
-        Game.pushLblCombatEvent((getName() & " casts lightning bolt!"))
-        MyBase.attackCMD(target)
+        attackSpell(target, "a lightning bolt", getATK)
     End Sub
 End Class

@@ -79,9 +79,11 @@
     pdeflector      '77
     enemyoftime     '78
     owetimebalance  '79
-    odstartXP       '80
+    odxpgained      '80
     mrevived        '81
     tfedbyweapon    '82
+    rubytrapstage   '83
+    mesmerized      '84
 End Enum
 Public Class Player
     'Player is the representation of a player controlled entity (the main player, any teammates)
@@ -93,7 +95,8 @@ Public Class Player
     Public pClass As pClass = New Classless()
     Public pForm As pForm = New Human()
     Dim turnCt As Integer = 0
-    Public xp, nextLevelXp As Integer
+    Private xp As Integer
+    Public nextLevelXp As Integer
 
     Public breastSize As Integer = -1
     Public dickSize As Integer = -1
@@ -499,6 +502,20 @@ Public Class Player
             Game.lblEvent.Visible = False
 
             gold = 0
+        ElseIf s = "Evil Mage" Then
+            pClass = classes("Mage")
+
+            knownSpells.Add("Self Polymorph")
+            knownSpells.Add("Fireball")
+            selfPolyForms.Add("Succubus")
+
+            maxMana = 999
+
+            inv.add(2, 3)
+            inv.add(4, 1)
+            inv.add(21, 1)
+
+            equippedWeapon = inv.item(21)
         End If
 
         If Game.startWithBooks Then
@@ -542,6 +559,7 @@ Public Class Player
         classes.Add("Classless", New Classless())
         classes.Add("Warrior", New Warrior())
         classes.Add("Mage", New Mage())
+        classes.Add("Evil Mage", New Mage())
         classes.Add("Magical Girl", New MagicGirl())
         classes.Add("Magical Girl​", New MagicGirlTransform())
         classes.Add("Magical Slut", New MagicSlut())
@@ -570,6 +588,9 @@ Public Class Player
         classes.Add("Witch", New Witch())
         classes.Add("Time Cop", New TimeCop())
         classes.Add("Cleric", New Cleric())
+        classes.Add("Necromancer", New Necromancer())
+        classes.Add("Thong", New WSmithThong1())
+        classes.Add("Thong​", New WSmithThong2())
     End Sub
     Private Sub initForms()
         'Creates the form dictionary
@@ -790,23 +811,23 @@ Public Class Player
     End Sub
     'attacking a npc
     Public Sub miss(target As NPC)
-        Game.pushLogAndEvent(CStr("You miss" & target.title & " " & target.getName() & "!"))
+        Game.pushLogAndEvent(CStr("You miss " & Trim(target.title.ToLower & target.getName()) & "!"))
     End Sub
     Public Sub hit(dmg As Integer, target As NPC)
-        Game.pushLogAndEvent(CStr("You hit" & target.title.ToLower & target.getName() & " for " & dmg & " damage!"))
+        Game.pushLogAndEvent(CStr("You hit " & Trim(target.title.ToLower & target.getName()) & " for " & dmg & " damage!"))
         target.takeDMG(dmg, Me)
+    End Sub
+    Public Sub cHit(dmg As Integer, target As NPC)
+        Game.pushLogAndEvent(CStr("You hit " & Trim(target.title.ToLower & target.getName()) & " for " & dmg * 2 & " damage!  Critical hit!"))
+        target.isStunned = True
+        target.stunct = 0
+        target.takeDMG(dmg * 2, Me)
     End Sub
     Public Sub setTarget(ByRef t As NPC)
         currTarget = t
         MyBase.currTarget = t
     End Sub
 
-    Public Sub cHit(dmg As Integer, target As NPC)
-        Game.pushLogAndEvent(CStr("You hit" & target.title.ToLower & target.getName() & " for " & dmg * 2 & " damage!  Critical hit!"))
-        target.isStunned = True
-        target.stunct = 0
-        target.takeDMG(dmg * 2, Me)
-    End Sub
     'attacking a non npc
     Private Sub miss(target As Entity)
         If target.GetType() Is GetType(NPC) Or target.GetType.IsSubclassOf(GetType(NPC)) Then
@@ -814,7 +835,7 @@ Public Class Player
             Exit Sub
         End If
 
-        Game.pushLogAndEvent(CStr("You miss " & target.getName() & "!"))
+        Game.pushLogAndEvent(CStr("You miss " & Trim(target.getName()) & "!"))
     End Sub
     Private Sub hit(dmg As Integer, target As Entity)
         If target.GetType() Is GetType(NPC) Or target.GetType.IsSubclassOf(GetType(NPC)) Then
@@ -822,7 +843,7 @@ Public Class Player
             Exit Sub
         End If
 
-        Game.pushLogAndEvent(CStr("You hit " & target.getName() & " for " & dmg & " damage!"))
+        Game.pushLogAndEvent(CStr("You hit " & Trim(target.getName()) & " for " & dmg & " damage!"))
         target.takeDMG(dmg, Me)
     End Sub
     Private Sub cHit(dmg As Integer, target As Entity)
@@ -831,7 +852,7 @@ Public Class Player
             Exit Sub
         End If
 
-        Game.pushLogAndEvent(CStr("You hit " & target.getName() & " for " & dmg * 2 & " damage!  Critical hit!"))
+        Game.pushLogAndEvent(CStr("You hit " & Trim(target.getName()) & " for " & dmg * 2 & " damage!  Critical hit!"))
         target.takeDMG(dmg * 2, Me)
     End Sub
     'taking damage
@@ -873,13 +894,15 @@ Public Class Player
     'specials
     Public Sub specialRoute()
         Game.cboxSpec.Items.Clear()
+
         For Each s In knownSpecials
             Game.cboxSpec.Items.Add(s)
         Next
 
-        If (pClass.name = "Warrior" Or pClass.name = "Paladin") And Not knownSpecials.Contains("Berserker Rage") Then Game.cboxSpec.Items.Add("Berserker Rage")
-        If (pClass.name = "Mage" Or pClass.name = "Paladin") And Not knownSpecials.Contains("Risky Decision") Then Game.cboxSpec.Items.Add("Risky Decision")
-        If pClass.name = "Rogue" And Not knownSpecials.Contains("Bounty's Collection") Then Game.cboxSpec.Items.Add("Bounty's Collection")
+        If (pClass.name = "Warrior" Or pClass.name = "Barbarian") And Not knownSpecials.Contains("Berserker Rage") Then Game.cboxSpec.Items.Add("Berserker Rage")
+        If (pClass.name = "Mage" Or pClass.name = "Warlock") And Not knownSpecials.Contains("Risky Decision") Then Game.cboxSpec.Items.Add("Risky Decision")
+        If (pClass.name = "Rogue" Or pClass.name = "Necromancer") And Not knownSpecials.Contains("Pluck") Then Game.cboxSpec.Items.Add("Pluck")
+        If (pClass.name = "Cleric" Or pClass.name = "Paladin") And Not knownSpecials.Contains("Cleansing Light") Then Game.cboxSpec.Items.Add("Cleansing Light")
         If breastSize > 3 And Not knownSpecials.Contains("Massive Mammaries") Then Game.cboxSpec.Items.Add("Massive Mammaries")
         If breastSize > 5 And Not knownSpecials.Contains("Pillowy Protect") Then Game.cboxSpec.Items.Add("Pillowy Protect")
         If pForm.name = "Succubus" And Not knownSpecials.Contains("Charm") Then Game.cboxSpec.Items.Add("Charm")
@@ -1112,6 +1135,11 @@ Public Class Player
             prt.setIAInd(pInd.mouth, 5, False, True)
             prt.setIAInd(pInd.eyes, 6, False, True)
         End If
+
+        If Not isUnwilling() Then
+            prt.setIAInd(pInd.mouth, 29, True, True)
+        End If
+
         changeSkinColor(c)
 
         isPetrified = True
@@ -1183,6 +1211,9 @@ Public Class Player
                 Game.pushLblEvent("You starve to death!")
             ElseIf source.getName.Equals("Fire") Then
                 Game.pushLblEvent("You burn to death!")
+            ElseIf source.GetType.IsSubclassOf(GetType(ShopNPC)) Then
+                CType(source, ShopNPC).playerDeath(Me)
+                Exit Sub
             ElseIf source.GetType.IsSubclassOf(GetType(NPC)) Or source.GetType.IsSubclassOf(GetType(Monster)) Then
                 CType(source, NPC).playerDeath(Me)
                 Exit Sub
@@ -1225,6 +1256,7 @@ Public Class Player
     Public Overrides Sub update()
         '|COMBAT|
         If perks(perk.astatue) > -1 Then nextCombatAction = AddressOf PerkEffects.statueMove
+        If perks(perk.mesmerized) > -1 AndAlso Int(Rnd() * 2) = 0 Then nextCombatAction = AddressOf PerkEffects.mesStun
         MyBase.update()
 
         '|STAMINA|
@@ -1250,7 +1282,6 @@ Public Class Player
         ongoingQuests.ping()
 
         '|PLAYER STAT UPKEEP|
-        If xp >= nextLevelXp Then levelUp()
         UIupdate()
 
         If pUpdateFlag Then drawPort()
@@ -1285,7 +1316,7 @@ Public Class Player
 
         lust = Math.Min(100, lust)
         lust = Math.Max(0, lust)
-        If perks(perk.cmark) > -1 Then lust = Math.Max((mana / maxMana) * 100, lust)
+        If perks(perk.cmark) > -1 Then lust = Math.Max((mana / getMaxMana()) * 100, lust)
     End Sub
     Function perkUpdate() As Boolean
         Dim needsToUpdatePortrait = False
@@ -1353,13 +1384,17 @@ Public Class Player
             needsToUpdatePortrait = PerkEffects.livingLingerie(Me)
         End If
         'golden gum
-        If inv.getCountAt("Golden_Gum") > 0 And Not ongoingTFs.contains("GBimbo") And Not className.Equals("Bimbo") Then
+        If inv.getCountAt("Golden_Gum") > 0 And Not ongoingTFs.contains(tfind.goldbimbo) And Not className.Equals("Bimbo") Then
             Game.pushLblEvent("A dizzy calm washes over you...")
             ongoingTFs.add(New GBimboTF(2, 20, 0.25, True))
         End If
         'imitation cowbell
         If Not pClass.name.Equals("Thrall") And forcedPath Is Nothing And prt.checkFemInd(pInd.horns, 12) AndAlso Int(Rnd() * 100) = 0 AndAlso Not Game.combatmode AndAlso Not Game.npcmode Then
             PerkEffects.imitationCowbell(Me)
+        End If
+        'mesmerized
+        If perks(perk.mesmerized) > -1 Then
+            PerkEffects.mesmerized(Me)
         End If
 
         '|TRANSFORMATION TRIGGERS|
@@ -1426,7 +1461,7 @@ Public Class Player
 
         '|CURSES|
         'clothing curse
-        If perks(perk.slutcurse) > -1 Then
+        If perks(perk.slutcurse) > -1 AndAlso Not equippedArmor.getAName.Contains("Skimpy") Then
             needsToUpdatePortrait = Equipment.clothingCurse1(Me)
         End If
         'curse of rust
@@ -1869,6 +1904,8 @@ Public Class Player
     End Sub
     Public Sub reverseUSRoute()
         If equippedArmor.bind_wearer Then reverseUBSRoute() : Exit Sub
+        'If formName.Equals("Blowup Doll") Then prt.setIAInd(pInd.body, 9, True, True) : Exit Sub
+
         Select Case buttSize
             Case -2
                 prt.setIAInd(pInd.body, 5, False, False)
@@ -2405,6 +2442,7 @@ Public Class Player
         If perks(perk.lightsource) > -1 Then out += "Your entire body is glowing, and will continue to do so for " & perks(perk.lightsource) & " turns." & DDUtils.RNRN
         'If perks(perk.masochist) > -1 Then out += "Damage you take will raise your lust." & DDUtils.RNRN
         If perks(perk.burn) > -1 Then out += "You are on fire, and will continue to do so for " & perks(perk.burn) & " turns." & DDUtils.RNRN
+        If perks(perk.mesmerized) > -1 Then out += "You are mesmerized, and will continue to be so for " & perks(perk.mesmerized) & " turns." & DDUtils.RNRN
         If perks(perk.dodge) > -1 Then out += "You will dodge the next attack that comes your way." & DDUtils.RNRN
         If perks(perk.isspotfused) > -1 Then out += "You can not fuse again for " & perks(perk.isspotfused) & " turns." & DDUtils.RNRN
 
@@ -2415,7 +2453,7 @@ Public Class Player
         If perks(perk.corust) > -1 Then out += "Due to a curse, your worn equipment will take damage occasionally." & DDUtils.RNRN
         If perks(perk.comilk) > -1 Then out += "Due to a curse, your tits will rapidly grow larger over time." & DDUtils.RNRN
         If perks(perk.coblind) > -1 Then out += "Due to a curse, you can no longer see." & DDUtils.RNRN
-        If perks(perk.succubuscurse) > -1 Then out += "Due to a curse, you will turn into a bimbo the hornier you get." & DDUtils.RNRN
+        If perks(perk.succubuscurse) > -1 Then out += "Due to a curse, you will progressively turn into a bimbo as your lust increases." & DDUtils.RNRN
 
         Return out
     End Function
@@ -2433,6 +2471,13 @@ Public Class Player
     End Function
 
     '|LEVELING|
+    Public Sub addXP(ByVal i As Integer)
+        xp += i
+
+        If perks(perk.odxpgained) > -1 Then perks(perk.odxpgained) += i
+
+        If xp >= nextLevelXp Then levelUp()
+    End Sub
     Public Sub levelUp()
         level += 1
         xp -= nextLevelXp

@@ -19,7 +19,7 @@
         '|Description|
         setDesc("An angular chrome-plated drill that converts the meager energy contained in an AAAAAA Battery into a focused impact.  Batteries not included." & DDUtils.RNRN &
                        "If powered, ignores target's defense" &
-                       "If powered, can cut through walls." &
+                       "If powered, can cut through walls" &
                        getStatInformation())
     End Sub
 

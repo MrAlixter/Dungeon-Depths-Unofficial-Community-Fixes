@@ -41,6 +41,8 @@
                 Game.pushLblEvent("You read the " & getName() & ". " & sName & " learned!")
             End If
         End If
+
+        p.specialRoute()
         count -= 1
     End Sub
 End Class

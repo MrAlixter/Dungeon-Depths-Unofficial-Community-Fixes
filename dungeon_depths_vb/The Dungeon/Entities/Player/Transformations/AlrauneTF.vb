@@ -2,20 +2,24 @@
     Inherits Transformation
     Dim hc As Color = Color.FromArgb(255, 255, 175, 200)
     Dim sc As Color = Color.FromArgb(255, 118, 228, 151)
+
+    Private Const TF_IND As tfind = tfind.alraune
+
     Sub New()
         Me.New(4, 3, 2.0, True)
+        tf_name = TF_IND
     End Sub
     Sub New(n As Integer, tts As Integer, wi As Double, cbs As Boolean)
         MyBase.New(n, tts, wi, cbs)
-        tfName = "AlrauneTF"
-        MyBase.updateDuringCombat = True
-        nextStep = AddressOf step1
+        tf_name = TF_IND
+        MyBase.update_during_combat = True
+        next_step = AddressOf step1
     End Sub
     Sub New(cs As Integer, n As Integer, tts As Integer, wi As Double, cbs As Boolean, tfd As Boolean)
         MyBase.New(cs, n, tts, wi, cbs, tfd)
-        MyBase.updateDuringCombat = True
-        tfName = "AlrauneTF"
-        nextStep = getNextStep(cs)
+        MyBase.update_during_combat = True
+        tf_name = TF_IND
+        next_step = getNextStep(cs)
     End Sub
 
     Sub step1()
@@ -61,7 +65,7 @@
         If p.className.Equals("Mindless") Then
             p.pState.breastSize = p.breastSize
         End If
-        If Not p.prt.haircolor.Equals(hc) Or Not p.prt.skincolor.Equals(sc) Then currStep -= 1
+        If Not p.prt.haircolor.Equals(hc) Or Not p.prt.skincolor.Equals(sc) Then curr_step -= 1
     End Sub
     Sub step4()
         Dim p As Player = Game.player1
@@ -118,7 +122,7 @@
         End Select
     End Function
     Public Overrides Sub setWaitTime(stage As Integer)
-        turnsTilNextStep = 3
-        turnsTilNextStep += generatWILResistance()
+        turns_until_next_step = 3
+        turns_until_next_step += generatWILResistance()
     End Sub
 End Class

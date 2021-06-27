@@ -26,7 +26,7 @@
         MyBase.compress_breast = True
 
         setDesc("A special set of clothes equipped through the gynoid conversion process.  While it doesn't do much by itself, if one has a network of circuitry on hand its fabric collects ambient mana and improves reaction time." & DDUtils.RNRN &
-                                      getSizeInformation() & vbCrLf & getStatInformation() & "If the wearer is robotic, +13 Max MP and +10 SPD")
+                                      getSizeInformation() & vbcrlf & getStatInformation() & "If the wearer is robotic, +13 Max MP and +10 SPD")
     End Sub
 
     Public Overrides Function getMBoost(ByRef p As Player) As Integer

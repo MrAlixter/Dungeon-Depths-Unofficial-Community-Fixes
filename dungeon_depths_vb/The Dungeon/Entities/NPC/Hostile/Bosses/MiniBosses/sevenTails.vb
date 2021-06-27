@@ -25,8 +25,8 @@
         '|Dialog Variables|
         title = " "
         pronoun = "she"
-        pPronoun = "her"
-        rPronoun = "her"
+        p_pronoun = "her"
+        r_pronoun = "her"
 
         '|Misc|
         setupMonsterOnSpawn(False)
@@ -46,11 +46,11 @@
 
             hit(67, target)
         ElseIf target.getSPD > getSPD() Then
-            Game.pushLogAndEvent((getName() & " casts Swifter Haunches!  " & rPronoun & " SPD raises massively..."))
+            Game.pushLogAndEvent((getName() & " casts Swifter Haunches!  " & r_pronoun & " SPD raises massively..."))
 
             speed *= 4
         ElseIf target.getATK > getATK() Then
-            Game.pushLogAndEvent((getName() & " casts Sharper Claws!  " & rPronoun & " ATK raises massively..."))
+            Game.pushLogAndEvent((getName() & " casts Sharper Claws!  " & r_pronoun & " ATK raises massively..."))
 
             attack *= 4
         Else

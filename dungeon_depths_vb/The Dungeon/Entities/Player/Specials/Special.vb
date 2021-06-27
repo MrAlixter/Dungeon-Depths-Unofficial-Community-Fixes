@@ -60,6 +60,8 @@
         specialList.Add("Snare", New Snare(Nothing, Nothing))
         specialList.Add("Focus Up", New FMantra(Nothing, Nothing))
         specialList.Add("Mirage Dance", New MirageDance(Nothing, Nothing))
+        specialList.Add("Pluck", New Pluck(Nothing, Nothing))
+        specialList.Add("Cleansing Light", New CLight(Nothing, Nothing))
     End Sub
 
     Sub New(ByRef u As Player, ByRef t As NPC)

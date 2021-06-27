@@ -72,10 +72,22 @@
     End Sub
 
     Public Function playerMeetsForm(ByRef p As Player)
-        Return p.prt.sexBool = isFemale And p.prt.iArrInd(pInd.rearhair).Item2 = hasFemaleHair And
-        p.prt.iArrInd(pInd.rearhair).Item1 = rHairInd And p.prt.iArrInd(pInd.fronthair).Item1 = fHairInd + 1 And
-        p.breastSize = breastSize And p.prt.iArrInd(pInd.ears).Item1 = earType And
-        ((p.perks(perk.slutcurse) > -1 And isSlut) Or (p.perks(perk.slutcurse) = -1 And Not isSlut))
+
+        If p.prt.iArrInd(pInd.rearhair).Item2 = hasFemaleHair Then
+            Return False
+        ElseIf p.prt.iArrInd(pInd.rearhair).Item1 <> rHairInd Then
+            Return False
+        ElseIf p.prt.iArrInd(pInd.fronthair).Item1 <> fHairInd + 1 Then
+            Return False
+        ElseIf p.breastSize <> breastSize Then
+            Return False
+        ElseIf p.prt.iArrInd(pInd.ears).Item1 <> earType Then
+            Return False
+        ElseIf ((p.perks(perk.slutcurse) > -1 And Not isSlut) Or (p.perks(perk.slutcurse) = -1 And isSlut)) Then
+            Return False
+        End If
+
+        Return True
     End Function
 
     Public Sub shiftTowards(ByRef p As Player)

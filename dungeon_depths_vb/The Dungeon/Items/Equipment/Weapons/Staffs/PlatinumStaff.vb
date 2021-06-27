@@ -20,6 +20,6 @@
 
         '|Description|
         setDesc("A glistening, jeweled staff crafted for supreme spellcasters." & DDUtils.RNRN &
-                        getStatInformation())
+                getStatInformation())
     End Sub
 End Class

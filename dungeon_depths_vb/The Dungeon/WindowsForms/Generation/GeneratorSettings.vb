@@ -24,6 +24,8 @@
         txtSeed.Text = floorcode
         refreshBoxes()
 
+        getPresets()
+
         'scale to the screen size
         DDUtils.resizeForm(Me)
     End Sub
@@ -35,7 +37,7 @@
         chestFreqRange = 8
         chestSizeDependence = 30
         chestRichnessBase = 1
-        chestRichnessRange = 5
+        chestRichnessRange = 4
         encounterRate = 25
         eClockResetVal = 5
         trapFreqMin = 3
@@ -44,6 +46,7 @@
     End Sub
 
     Sub refreshBoxes()
+        txtSeed.Text = floorcode
         boxWidth.Value = w
         boxHeight.Value = h
         boxChestFreqMin.Value = chestFreqMin
@@ -59,11 +62,54 @@
     End Sub
 
     Private Sub btnConfirm_Click(sender As Object, e As EventArgs) Handles btnConfirm.Click
+        If chkSavePreset.Checked Then
+            Dim presetName = InputBox("Please enter a name for this preset:", "Preset Name", "Dungeon Preset")
+            Dim preset = New DPreset(Me)
+            preset.save(presetName)
+        End If
         Me.Close()
     End Sub
 
     Private Sub btnReset_Click(sender As Object, e As EventArgs) Handles btnReset.Click
         reset()
+        refreshBoxes()
+    End Sub
+
+    '| -- Dungeon Setting Presets -- |
+    Sub getPresets()
+        Dim dir = New IO.DirectoryInfo("Presets")
+        Try
+            Dim presets = dir.GetFiles("*.dset", IO.SearchOption.AllDirectories).ToList
+            For Each pset In presets.OrderBy(Function(i) i.Name)
+                cBoxPresets.Items.Add(pset.Name)
+            Next
+        Catch e As Exception
+        End Try
+    End Sub
+
+    Protected Overrides Sub OnPaint(ByVal e As System.Windows.Forms.PaintEventArgs)
+        MyBase.OnPaint(e)
+
+        cBoxPresets.SelectionLength = 0
+    End Sub
+
+    Private Sub cBoxPresets_TextChanged(sender As Object, e As EventArgs) Handles cBoxPresets.TextChanged
+        If cBoxPresets.Text = "--- (none) ---" Or cBoxPresets.SelectedIndex = -1 Then Exit Sub
+        Dim preset = New DPreset("presets/" & cBoxPresets.Text)
+
+        w = preset.w
+        h = preset.h
+        chestFreqMin = preset.chestFreqMin
+        chestFreqRange = preset.chestFreqRange
+        chestSizeDependence = preset.chestSizeDependence
+        chestRichnessBase = preset.chestRichnessBase
+        chestRichnessRange = preset.chestRichnessRange
+        encounterRate = preset.encounterRate
+        eClockResetVal = preset.eClockResetVal
+        trapFreqMin = preset.trapFreqMin
+        trapFreqRange = preset.trapFreqRange
+        trapSizeDependence = preset.trapSizeDependence
+
         refreshBoxes()
     End Sub
 End Class

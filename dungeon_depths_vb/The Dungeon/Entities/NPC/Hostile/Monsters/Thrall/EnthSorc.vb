@@ -4,8 +4,14 @@
         Dim rng = Int(Rnd() * 2)
         If rng = 0 Then
             name = "Enthralling Sorcerer"
+            pronoun = "he"
+            p_pronoun = "his"
+            r_pronoun = "him"
         Else
             name = "Enthralling Sorceress"
+            pronoun = "she"
+            p_pronoun = "her"
+            r_pronoun = "her"
         End If
         maxHealth = 150
         attack = 40
@@ -14,6 +20,10 @@
         will = 15
         setInventory({4, 13})
         setupMonsterOnSpawn()
+    End Sub
+
+    Public Overrides Sub attackCMD(ByRef target As Entity)
+        attackSpell(target, "a bolt of black lightning", getATK)
     End Sub
 
     Public Overrides Sub playerDeath(ByRef p As Player)

@@ -130,7 +130,7 @@
         internal_inventory.Add("Discharge_Gauntlets", New ManaDisharge())       '111
         internal_inventory.Add("Photon_Blade", New PhotonBlade())               '112
         internal_inventory.Add("Amazon_Lesson", New AmazonLesson())             '113
-        internal_inventory.Add("Barbarian_Lesson", New BarbarianLesson())       '114
+        internal_inventory.Add("Basic_Class_Change", New BasicClassChange)      '114 (formerly Barbarian Lesson [edited v11.0]
         internal_inventory.Add("Warlock's_Robes", New WarlockRobe())            '115
         internal_inventory.Add("Gynoid_Uniform", New GCUniform())               '116
         internal_inventory.Add("Garden_Salad", New GardenSalad())               '117
@@ -140,7 +140,7 @@
         internal_inventory.Add("Name_Change", New NameChange())                 '121
         internal_inventory.Add("Gorgon_Lesson", New HGorgonLesson())            '122
         internal_inventory.Add("Ring_of_Uvona", New RingOfUvona())              '123
-        internal_inventory.Add("Warlock_Lesson", New WarlockLesson())           '124
+        internal_inventory.Add("Advanced_Class_Change", New AdvClassChange)     '124 (formerly Warlock Lesson [edited v11.0]
         internal_inventory.Add("Berry_Stick_of_Gum", New BBStickOfGum())        '125
         internal_inventory.Add("Omni_Charm", New OmniCharm())                   '126
         internal_inventory.Add("Vial_of_BIM_II", New VialOfBimbo())             '127
@@ -314,6 +314,12 @@
         internal_inventory.Add("Golden_Gum", New GoldenGum)                     '291
         internal_inventory.Add("Imitation_Cowbell", New ImmitationCowbell)      '292
         internal_inventory.Add("Magical_Mimic_Wand​", New MagMimicWand)          '293
+        internal_inventory.Add("Vial_of_Rock_Juice", New VialOfRockJuice)       '294
+        internal_inventory.Add("Ice_Pop", New IcePop)                           '295
+        internal_inventory.Add("Ice_Pop​", New IcePopB)                          '296
+        internal_inventory.Add("Staff_of_the_Tidemage", New TidemageStaff)      '297
+        internal_inventory.Add("Lime_Bikini", New LimeBikini)                   '298
+        internal_inventory.Add("Summertime_Shades", New SummerShades)           '299
 
         armor = {New Naked,
                  Me.item(5), Me.item(7), Me.item(8), Me.item(10),
@@ -337,7 +343,8 @@
                  Me.item(220), Me.item(221), Me.item(222), Me.item(237),
                  Me.item(239), Me.item(240), Me.item(250), Me.item(254),
                  Me.item(262), Me.item(265), Me.item(266), Me.item(282),
-                 Me.item(285), Me.item(288), Me.item(289), Me.item(290)}
+                 Me.item(285), Me.item(288), Me.item(289), Me.item(290),
+                 Me.item(298)}
 
         weapons = {New BareFists(),
                    Me.item(6), Me.item(9), Me.item(11), Me.item(21),
@@ -353,7 +360,7 @@
                    Me.item(218), Me.item(238), Me.item(255), Me.item(256),
                    Me.item(257), Me.item(258), Me.item(259), Me.item(260),
                    Me.item(273), Me.item(274), Me.item(275), Me.item(276),
-                   Me.item(284), Me.item(293)}
+                   Me.item(284), Me.item(293), Me.item(297)}
 
         useable = {Me.item(0), Me.item(3), Me.item(4),
                    Me.item(65), Me.item(15), Me.item(36), Me.item(37),
@@ -369,7 +376,8 @@
                    Me.item(206), Me.item(207), Me.item(214), Me.item(215),
                    Me.item(219), Me.item(226), Me.item(227), Me.item(238),
                    Me.item(244), Me.item(251), Me.item(252), Me.item(277),
-                   Me.item(278), Me.item(279), Me.item(280), Me.item(286)}
+                   Me.item(278), Me.item(279), Me.item(280), Me.item(286),
+                   Me.item(294)}
 
         food = {Me.item(1), Me.item(30), Me.item(31), Me.item(32), Me.item(33),
                 Me.item(34), Me.item(35), Me.item(44), Me.item(90),
@@ -377,7 +385,8 @@
                 Me.item(117), Me.item(125), Me.item(132), Me.item(133),
                 Me.item(134), Me.item(135), Me.item(178), Me.item(228),
                 Me.item(230), Me.item(267), Me.item(268), Me.item(269),
-                Me.item(270), Me.item(272), Me.item(291)}
+                Me.item(270), Me.item(272), Me.item(291), Me.item(295),
+                Me.item(296)}
 
         acce = {New noAcce(), Me.item(66), Me.item(67), Me.item(68),
                 Me.item(69), Me.item(70), Me.item(77), Me.item(81),
@@ -385,7 +394,8 @@
                 Me.item(140), Me.item(141), Me.item(149), Me.item(161),
                 Me.item(164), Me.item(168), Me.item(180), Me.item(197),
                 Me.item(198), Me.item(223), Me.item(225), Me.item(253),
-                Me.item(271), Me.item(281), Me.item(283), Me.item(292)}
+                Me.item(271), Me.item(281), Me.item(283), Me.item(292),
+                Me.item(299)}
 
         potions = {Me.item(2), Me.item(13), Me.item(14), Me.item(25),
                    Me.item(26), Me.item(27), Me.item(28), Me.item(29),

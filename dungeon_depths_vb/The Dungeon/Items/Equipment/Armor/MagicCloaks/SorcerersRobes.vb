@@ -34,7 +34,7 @@
 
         '|Description|
         setDesc("A protective garment made more for pratical funtion than for fashion. " & DDUtils.RNRN &
-                                          getSizeInformation() & vbCrLf & getStatInformation())
+                                          getSizeInformation() & vbcrlf & getStatInformation())
     End Sub
 
     Public Overrides Function getTier() As Integer

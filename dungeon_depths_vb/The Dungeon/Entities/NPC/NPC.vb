@@ -1,4 +1,4 @@
-﻿'| -- New Layout Example -- |
+﻿'| -- Constructor Layout Example -- |
 '|ID Info|
 
 
@@ -22,17 +22,25 @@ Public Class NPC
     Public xp_value As Integer = 10
     'dialog variables
     Public form As String = ""
-    Public title As String
+    Public title As String = " The "
     Public pronoun As String = "it"
-    Public pPronoun As String = "its"
-    Public rPronoun As String = "it"
-    Public npcIndex As Integer = 0
+    Public p_pronoun As String = "its"
+    Public r_pronoun As String = "it"
+    Public img_index As Integer = 0
     'stun variables
     Public isStunned As Boolean = False
     Public stunct As Integer = 0
     Public firstTurn = True
     Dim img As Image
 
+    Public Sub scaleStats(ByVal multiplier As Double)
+        maxHealth = Math.Max(1, maxHealth) * multiplier
+        maxMana = Math.Max(1, maxMana) * multiplier
+        attack = Math.Max(1, attack) * multiplier
+        defense = Math.Max(1, defense) * multiplier
+        will = Math.Max(1, will) * multiplier
+        speed = Math.Max(1, speed) * multiplier
+    End Sub
     Public Overrides Sub update()
         reactToTF()
 
@@ -49,11 +57,9 @@ Public Class NPC
             nextCombatAction = Sub(t As Entity) attackCMD(t)
         Else
             If Me.GetType() Is GetType(Monster) Then
-                Game.pushLstLog("The " & getName() & " is too stunned to react!")
-                Game.pushLblCombatEvent("The " & getName() & " is too stunned to react!")
+                Game.pushLogAndEvent(Trim(title & getName() & " is too stunned to react!"))
             Else
-                Game.pushLstLog(getName() & " is too stunned to react!")
-                Game.pushLblCombatEvent(getName() & " is too stunned to react!")
+                Game.pushLogAndEvent(Trim(title & getName() & " is too stunned to react!"))
             End If
             If stunct <= 0 Then
                 isStunned = False
@@ -64,8 +70,7 @@ Public Class NPC
         End If
 
         MyBase.update()
-        Game.pushLstLog(getName() & " has " & getIntHealth() & " life.")
-
+        Game.pushLstLog(Trim(title & getName() & " has " & getIntHealth() & " life."))
     End Sub
     Public Overloads Overrides Sub die(ByRef cause As Entity)
         If isDead Then Exit Sub
@@ -74,7 +79,7 @@ Public Class NPC
 
         endMonster()
 
-        Game.player1.xp += xp_value
+        Game.player1.addXP(xp_value)
         cause.currTarget = Nothing
         cause.nextCombatAction = Nothing
 
@@ -89,13 +94,13 @@ Public Class NPC
         Game.fromCombat()
         Me.nextCombatAction = Nothing
 
-        Game.pushLblEvent(title & name & "'s chest slowly turns to stone where the spell hits " & rPronoun &
-                          ". The petrification spreads out over " & pPronoun & " body, and as more of " & pPronoun &
-                          " body turns to a fine gray stone " & pPronoun &
+        Game.pushLblEvent(title & name & "'s chest slowly turns to stone where the spell hits " & r_pronoun &
+                          ". The petrification spreads out over " & p_pronoun & " body, and as more of " & p_pronoun &
+                          " body turns to a fine gray stone " & p_pronoun &
                           " struggling becomes less and less intense. As the last of the life drains out of " &
-                          pPronoun & " eyes, all that is left of the once dangerous " & name &
+                          p_pronoun & " eyes, all that is left of the once dangerous " & name &
                           " is a lifeless stone statue. It doesn't seem like " & pronoun & " will be needing " &
-                          pPronoun & " personal items anymore.", AddressOf Me.endMonster)
+                          p_pronoun & " personal items anymore.", AddressOf Me.endMonster)
 
         Game.currFloor.statueList.Add(New Statue(Me))
     End Sub
@@ -105,7 +110,7 @@ Public Class NPC
         Game.fromCombat()
         Me.nextCombatAction = Nothing
 
-        Game.pushLblEvent(title & name & "'s chest slowly turns to solid gold where you poked " & rPronoun & ". The gilded surface spreads out over " & pPronoun & " body, and as more of " & pPronoun & " body turns to the precious metal " & pPronoun & " struggling becomes less and less intense. As the last of the life drains out of " & pPronoun & " eyes, all that is left of the once dangerous " & name & " is a lifeless gold statue, which you then topple over, shattering it into tiny pieces.   " & vbCrLf & "+" & gd & " gold.", AddressOf endMonster)
+        Game.pushLblEvent(title & name & "'s chest slowly turns to solid gold where you poked " & r_pronoun & ". The gilded surface spreads out over " & p_pronoun & " body, and as more of " & p_pronoun & " body turns to the precious metal " & p_pronoun & " struggling becomes less and less intense. As the last of the life drains out of " & p_pronoun & " eyes, all that is left of the once dangerous " & name & " is a lifeless gold statue, which you then topple over, shattering it into tiny pieces.   " & vbCrLf & "+" & gd & " gold.", AddressOf endMonster)
     End Sub
     Public Overridable Sub toBlade()
         endMonster()
@@ -139,7 +144,7 @@ Public Class NPC
                 Game.pushLstLog("The " & name & " is friendly, and you chat briefly before setting out!")
             End If
         ElseIf reason = "npc" Then
-            Game.pushLstLog("You walk away from " & getName() & "!")
+            Game.pushLstLog("You walk away from " & Trim(title & getName()) & "!")
         ElseIf reason = "animaltf" Then
             Dim output As String = ""
             If Me.GetType() Is GetType(Monster) Then output += "The "
@@ -216,7 +221,7 @@ Public Class NPC
 
 
         'monster transformations
-        p.ongoingTFs.remove("Neko")
+        p.ongoingTFs.remove(tfind.neko)
 
         p.perks(perk.nekocurse) = -1
         If p.perks(perk.swordpossess) > -1 Then
@@ -248,8 +253,8 @@ Public Class NPC
         attack = sAttack
         defense = sdefense
         speed = sSpeed
-        npcIndex = 0
-        Game.pushLogAndEvent("The " & name & " return to " & pPronoun & " original self!")
+        img_index = 0
+        Game.pushLogAndEvent("The " & name & " return to " & p_pronoun & " original self!")
     End Sub
     Public Sub setInventory(ByVal contents() As Integer, Optional ByVal resetCurrentInv As Boolean = True)
         If resetCurrentInv Then inv = New Inventory(False)
@@ -301,7 +306,34 @@ Public Class NPC
                     If crit < ebound Then miss(target) Else hit(dmg, target)
                 End If
         End Select
+    End Sub
+    Public Overridable Sub attackSpell(ByRef target As Entity, ByVal spellName As String, ByVal dmg As Integer)
+        Game.pushLogAndEvent(Trim(title & getName() & " casts " & spellName & "!"))
 
+        Dim crit = Int(Rnd() * 20) 'roll for a critical
+        Dim damage = getSpellDamage(target, dmg) 'calculate the hit
+        If damage > 0 Then damage += Int(Rnd() * 3) + -1 'adds some variance
+
+        Select Case crit
+            Case 19
+                cHit(damage, target)
+            Case Else
+                If target.getSPD <= 20 Then
+                    If crit < 1 Then miss(target) Else hit(damage, target)
+                ElseIf target.getSPD <= 40 Then
+                    If crit < 2 Then miss(target) Else hit(damage, target)
+                ElseIf target.getSPD <= 60 Then
+                    If crit < 3 Then miss(target) Else hit(damage, target)
+                ElseIf target.getSPD <= 80 Then
+                    If crit < 4 Then miss(target) Else hit(damage, target)
+                ElseIf target.getSPD <= 100 Then
+                    If crit < 5 Then miss(target) Else hit(damage, target)
+                Else
+                    Dim ebound = 5 + ((target.getSPD / 9999) * 5)
+                    If ebound > 12 Then ebound = 12
+                    If crit < ebound Then miss(target) Else hit(damage, target)
+                End If
+        End Select
     End Sub
     'attacking a player
     Protected Sub miss(target As Player)

@@ -50,6 +50,9 @@
         spellList.Add("Reductive Mending", New SizeForLife(Nothing, Nothing))
         spellList.Add("Summon Apple", New SummonApple(Nothing, Nothing))
         spellList.Add("Tentacle Crushcannon", New TentacleCrushcannon(Nothing, Nothing))
+        spellList.Add("Flash Heal", New FlashHeal(Nothing, Nothing))
+        spellList.Add("Aquageyser", New Aquageyser(Nothing, Nothing))
+        spellList.Add("Hydrodart", New Hydrodart(Nothing, Nothing))
     End Sub
 
     Sub New(ByRef c As Player, ByRef t As NPC)

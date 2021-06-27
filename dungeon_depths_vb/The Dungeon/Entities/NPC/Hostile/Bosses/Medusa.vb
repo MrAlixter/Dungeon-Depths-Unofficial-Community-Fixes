@@ -19,8 +19,8 @@
         '|Dialog Variables|
         title = " "
         pronoun = "she"
-        pPronoun = "her"
-        rPronoun = "her"
+        p_pronoun = "her"
+        r_pronoun = "her"
 
         '|Misc|
         setupMonsterOnSpawn()

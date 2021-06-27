@@ -203,6 +203,13 @@
         End If
 
     End Sub
+    Shared Sub mesmerized(ByRef p As Player)
+        If p.perks(perk.mesmerized) > 1 Then
+            p.perks(perk.mesmerized) -= 1
+        Else
+            p.perks(perk.mesmerized) = -1
+        End If
+    End Sub
 
     '|TRANSFORMATION TRIGGERS|
     Shared Sub targaxSwordTF(ByRef p As Player)
@@ -231,6 +238,9 @@
     Shared Sub statueMove(obj As Entity)
         Game.pushLblEvent("You, being a statue, can not do anything.")
     End Sub
+    Shared Sub mesStun(obj As Entity)
+        Game.pushLblEvent("You stare blankly forward, lost in a mesmerized daze...")
+    End Sub
     Shared Sub magicGirlStatusCheck(ByRef p As Player)
         If p.getMana > 0 AndAlso Game.getTurn Mod (11 + (p.level * p.getWIL() / 4)) = 0 Then
             p.mana -= 6
@@ -240,6 +250,7 @@
         If p.getMana < 1 Then
             Equipment.weaponChange(p, "Fists")
             Game.pushLblEvent("You no longer can keep up your transformation, and revert to your previous form!")
+            p.perks(perk.tfedbyweapon) = -1
         End If
     End Sub
     Shared Sub valkyrieStatusCheck(ByRef p As Player)
@@ -250,6 +261,7 @@
 
         If p.stamina < 10 Then
             Equipment.weaponChange(p, "Fists")
+            p.perks(perk.tfedbyweapon) = -1
             Game.pushLblEvent("You no longer can keep up your transformation, and revert to your previous form!")
         End If
     End Sub
@@ -399,6 +411,8 @@
         Return updatePortrait
     End Function
     Shared Sub curseOfBimbo(ByRef p As Player)
+        If Not Transformation.canBeTFed(p) Then Exit Sub
+
         If p.getLust = 0 Then
             If p.perks(perk.succubuscurse) > 0 Then
                 p.revertToPState()
@@ -443,6 +457,7 @@
         tfs.Add("Slime", AddressOf New slimetf().step1)
         tfs.Add("Bimbo", AddressOf New BimboTF(2, 0, 0.25, True).doubleTf)
         tfs.Add("Cake", AddressOf New TTCCBF().step1)
+        tfs.Add("Alraune", AddressOf New AlrauneTF().fullTF)
 
         Dim form = tfs.Keys(Int(Rnd() * (tfs.Keys.Count - 1)))
         While Game.player1.formName.Equals(form)

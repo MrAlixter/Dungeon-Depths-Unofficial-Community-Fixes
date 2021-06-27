@@ -19,6 +19,7 @@
 
         '|Description|
         setDesc("A glittery yellow piece of gum with a overpoweringly sweet smell.  There are legends that tell of its flavor, and some say that even the gods are moved by its taste." & DDUtils.RNRN &
+                "Even holding this gum exposes one to the magic that saturates it..." & DDUtils.RNRN &
                 "+33 Stamina")
 
     End Sub
@@ -27,7 +28,7 @@
         If p.className.Equals("Bimbo") Then
             Game.pushLblEvent("Chewing the gum make your head feel warm and fuzzy and stuff. You like, totally, love this gum!" & DDUtils.RNRN &
                               "+1000 XP")
-            p.xp += 1000
+            p.addXP(1000)
         Else
             GBimboTF.snapTF(p)
 

@@ -22,8 +22,8 @@
         '|Dialog Variables|
         title = " "
         pronoun = "she"
-        pPronoun = "her"
-        rPronoun = "her"
+        p_pronoun = "her"
+        r_pronoun = "her"
 
         '|Misc|
         setupMonsterOnSpawn(False)
@@ -39,14 +39,10 @@
                 Polymorph.transform(Game.player1, "MASBimbo")
                 Game.player1.update()
             Else
-                Game.pushLstLog((getName() & " casts shock!"))
-                Game.pushLblCombatEvent((getName() & " casts shock!"))
-                MyBase.attackCMD(target)
+                attackSpell(target, "a spark", getATK)
             End If
         Else
-            Game.pushLstLog((getName() & " casts shock!"))
-            Game.pushLblCombatEvent((getName() & " casts shock!"))
-            MyBase.attackCMD(target)
+            attackSpell(target, "a spark", getATK)
         End If
     End Sub
 

@@ -34,7 +34,7 @@
 
         '|Description|
         setDesc("A suit of living armor embued with a the soul of a mimic." & DDUtils.RNRN & _
-                                   getSizeInformation() & vbCrLf & getStatInformation() &
+                                   getSizeInformation() & vbcrlf & getStatInformation() &
                             "The mimic's movment continually raises lust" & vbCrLf & _
                             "May not be easy to remove")
     End Sub

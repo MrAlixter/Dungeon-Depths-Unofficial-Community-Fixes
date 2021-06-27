@@ -44,7 +44,7 @@
         '|Description|
         setDesc("This sweater is for the chillier parts of the year, and keeps its wearer nice and toasty out in the cold.  Well, that or it's a part of some frost demon(ess)'s elaborate scheme to freeze the dungeon solid..." & DDUtils.RNRN &
                         "That would explain the arcane runes on the collar and the suspicious boost in magical ability it offers its wearer, at least." & DDUtils.RNRN &
-                        getSizeInformation() & vbCrLf & getStatInformation())
+                        getSizeInformation() & vbcrlf & getStatInformation())
     End Sub
 
     Public Overrides Sub onEquip(ByRef p As Player)

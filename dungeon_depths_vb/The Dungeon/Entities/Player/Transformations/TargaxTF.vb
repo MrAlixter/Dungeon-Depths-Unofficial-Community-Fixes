@@ -1,15 +1,17 @@
 ﻿Public NotInheritable Class TargaxTF
     Inherits Transformation
-    
+
+    Private Const TF_IND As tfind = tfind.targax
+
     Sub New(n As Integer, tts As Integer, wi As Double, cbs As Boolean)
         MyBase.New(n, tts, wi, cbs)
-        tfName = "Targax"
-        nextStep = Nothing
+        tf_name = TF_IND
+        next_step = Nothing
     End Sub
     Sub New(cs As Integer, n As Integer, tts As Integer, wi As Double, cbs As Boolean, tfd As Boolean)
         MyBase.New(cs, n, tts, wi, cbs, tfd)
-        tfName = "Targax"
-        nextStep = Nothing
+        tf_name = TF_IND
+        next_step = Nothing
     End Sub
 
     Public Overrides Function getNextStep(stage As Integer) As Action

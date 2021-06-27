@@ -15,4 +15,8 @@
         setInventory({})
         setupMonsterOnSpawn()
     End Sub
+
+    Public Overrides Sub attackCMD(ByRef target As Entity)
+        attackSpell(target, "a ball of black fire", getATK)
+    End Sub
 End Class

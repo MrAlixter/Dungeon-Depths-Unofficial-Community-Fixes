@@ -32,6 +32,6 @@
 
         '|Description|
         setDesc("A glamourous garment made more to show off one's body than to show off any magical ability." & vbCrLf & _
-                             getSizeInformation() & vbCrLf & getStatInformation())
+                             getSizeInformation() & vbcrlf & getStatInformation())
     End Sub
 End Class

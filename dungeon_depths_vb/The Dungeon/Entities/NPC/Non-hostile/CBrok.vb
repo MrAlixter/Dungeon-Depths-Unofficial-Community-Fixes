@@ -5,11 +5,12 @@
 
         '|ID Info|
         name = "Curse Broker"
+        sName = name
 
         '|NPC Flags|
         pronoun = "they"
-        pPronoun = "their"
-        rPronoun = "them"
+        p_pronoun = "their"
+        r_pronoun = "them"
         isShop = True
 
         '|Inventory|
@@ -24,7 +25,15 @@
         attack = 99999
         defense = 99999
         speed = 99999
+        will = 99999
         gold = 99999
+        xp_value = (maxHealth + attack + defense + speed) / 4
+        sMaxHealth = maxHealth
+        sMaxMana = maxMana
+        sAttack = attack
+        sdefense = defense
+        sWill = will
+        sSpeed = speed
 
         '|Images|
         picNormal = ShopNPC.npcLib.atrs(0).getAt(35)
@@ -48,19 +57,19 @@
     Public Overrides Sub encounter()
         MyBase.encounter()
 
-        If npcIndex = 6 Then
+        If img_index = 6 Then
             Game.pushNPCDialog("So, so many eyes.....")
-        ElseIf npcIndex = 7 Then
+        ElseIf img_index = 7 Then
             Game.pushNPCDialog("Meow indeed...")
         ElseIf Not Game.player1.cursed Then
-            npcIndex = 0
+            img_index = 0
             Game.pushNPCDialog("What have you gotten yourself into this time?  Nothing?  Perhaps there's a curse somewhere out there for you...")
         Else
-            npcIndex = 3
+            img_index = 3
             Game.pushNPCDialog("Oh, so you're cursed? Truely a tragedy; if you'd like I can take care of that for you...")
         End If
 
-        If npcIndex = getArachneImageInd() And Not Game.player1.formName.Equals("Arachne") Then inv.setCount(244, 1) Else inv.setCount(244, 0)
+        If img_index = getArachneImageInd() And Not Game.player1.formName.Equals("Arachne") Then inv.setCount(244, 1) Else inv.setCount(244, 0)
     End Sub
     Public Overrides Function toFight() As String
         badForYou()
@@ -152,7 +161,7 @@
         badForYou()
     End Sub
     Public Overrides Sub toCatgirl()
-        npcIndex = getCatGirlImageInd()
+        img_index = getCatGirlImageInd()
         badForYou()
     End Sub
     Public Overrides Sub toTrilobite()

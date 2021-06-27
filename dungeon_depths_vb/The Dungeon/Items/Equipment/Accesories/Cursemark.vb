@@ -32,6 +32,17 @@
         Game.pushLstLog("You can't discard this!")
     End Sub
 
+    Public Overrides Sub onEquip(ByRef p As Player)
+        MyBase.onEquip(p)
+
+        p.perks(perk.cmark) = 1
+    End Sub
+    Public Overrides Sub onUnequip(ByRef p As Player)
+        MyBase.onUnequip(p)
+
+        p.perks(perk.cmark) = -1
+    End Sub
+
     Public Overrides Function getABoost(ByRef p As Player) As Integer
         If p Is Nothing Then Return 0
 

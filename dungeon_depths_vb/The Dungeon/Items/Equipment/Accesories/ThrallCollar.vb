@@ -63,9 +63,9 @@
         p.drawPort()
     End Sub
     Public Overrides Sub onUnequip(ByRef p As Player)
-        If p.ongoingTFs.getAt("ThrallTF") Is Nothing And Not p.className.Equals("Thrall") And Not p.formName.Equals("Half-Succubus") Then Exit Sub
+        If Not p.ongoingTFs.contains(tfind.thrall) And Not p.className.Equals("Thrall") And Not p.formName.Equals("Half-Succubus") Then Exit Sub
 
-        p.ongoingTFs.remove("ThrallTF")
+        p.ongoingTFs.remove(tfind.thrall)
 
         p.perks(perk.thrall) = -1
         p.changeClass(formerClass)

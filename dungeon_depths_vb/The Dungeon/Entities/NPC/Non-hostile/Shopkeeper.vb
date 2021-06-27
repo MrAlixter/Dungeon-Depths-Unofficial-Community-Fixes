@@ -5,11 +5,12 @@
 
         '|ID Info|
         name = "Shopkeeper"
+        sName = name
 
         '|NPC Flags|
         pronoun = "he"
-        pPronoun = "his"
-        rPronoun = "him"
+        p_pronoun = "his"
+        r_pronoun = "him"
         isShop = True
 
         '|Inventory|
@@ -32,13 +33,22 @@
         inv.setCount("Oak_Staff", 1)
         inv.setCount("Gold_Sword", 1)
         inv.setCount("Golden_Staff", 1)
+        If DDDateTime.isSummer Then inv.setCount("Staff_of_the_Tidemage", 1)
 
         '|Stats|
         maxHealth = 9999
         attack = 99
         defense = 999
         speed = 99
+        will = 999
         gold = 99999
+        xp_value = (maxHealth + attack + defense + speed) / 4
+        sMaxHealth = maxHealth
+        sMaxMana = maxMana
+        sAttack = attack
+        sdefense = defense
+        sWill = will
+        sSpeed = speed
 
         '|Images|
         picNormal = ShopNPC.npcLib.atrs(0).getAt(0)
@@ -82,58 +92,58 @@
             inv.setCount("Steel_Armor", 0)
         End If
 
-        If npcIndex = 0 Then
+        If img_index = 0 Then
             If Game.player1.quests(qInds.helpWanted).canGet Then Game.player1.quests(qInds.helpWanted).init() : Exit Sub
             Game.pushNPCDialog("Hey, what's up?")
-        ElseIf npcIndex = 6 Then
+        ElseIf img_index = 6 Then
             Game.pushNPCDialog("Hey, what's up?")
-        ElseIf npcIndex = 1 Then
+        ElseIf img_index = 1 Then
             Game.pushNPCDialog("Ribbit.  Ribbit.")
-        ElseIf npcIndex = 2 Then
+        ElseIf img_index = 2 Then
             Game.pushNPCDialog("Baaahhh.")
-        ElseIf npcIndex = 3 Then
+        ElseIf img_index = 3 Then
             Game.pushNPCDialog("Hello, kind " & Game.player1.className & ", how are you on this fine day?")
-        ElseIf npcIndex = 4 Or npcIndex = 7 Then
+        ElseIf img_index = 4 Or img_index = 7 Then
             Game.pushNPCDialog("*giggle* Hey!")
-        ElseIf npcIndex = 5 Or npcIndex = 8 Then
+        ElseIf img_index = 5 Or img_index = 8 Then
             Game.pushNPCDialog("...")
         End If
 
-        If npcIndex = getArachneImageInd() And Not Game.player1.formName.Equals("Arachne") Then inv.setCount(244, 1) Else inv.setCount(244, 0)
+        If img_index = getArachneImageInd() And Not Game.player1.formName.Equals("Arachne") Then inv.setCount(244, 1) Else inv.setCount(244, 0)
 
     End Sub
     Public Overrides Function toFight() As String
-        If npcIndex = 0 Or npcIndex = 6 Then
+        If img_index = 0 Or img_index = 6 Then
             Return "So you want to fight, eh?  I'm ready whenever you are."
-        ElseIf npcIndex = 1 Then
+        ElseIf img_index = 1 Then
             Return "Ribbit . . ."
-        ElseIf npcIndex = 2 Then
+        ElseIf img_index = 2 Then
             Return "BAAAAAHHHH!"
-        ElseIf npcIndex = 3 Then
+        ElseIf img_index = 3 Then
             Return "You would dare to challenge me? If you wish to die, you could just say so."
-        ElseIf npcIndex = 4 Or npcIndex = 7 Then
+        ElseIf img_index = 4 Or img_index = 7 Then
             Return "I might not be the best fighter any more, but I can definitely give it my best!"
-        ElseIf npcIndex = 5 Or npcIndex = 8 Then
+        ElseIf img_index = 5 Or img_index = 8 Then
             Return "..."
         End If
         Return "Bad move."
     End Function
     Public Overrides Function hitBySpell() As String
-        If npcIndex = 0 Or npcIndex = 6 Then
+        If img_index = 0 Or img_index = 6 Then
             Game.NPCtoCombat(Me)
             Return "Did . . . did you just cast a spell on me?  You know I have to kill you now, right?"
-        ElseIf npcIndex = 1 Then
+        ElseIf img_index = 1 Then
             Game.NPCtoCombat(Me)
             Return "Ribbit!!!"
-        ElseIf npcIndex = 2 Then
+        ElseIf img_index = 2 Then
             Game.NPCtoCombat(Me)
             Return "[angry bleets]!"
-        ElseIf npcIndex = 3 Then
+        ElseIf img_index = 3 Then
             Game.NPCtoCombat(Me)
             Return "Casting spells on royalty is genrally not a good idea."
-        ElseIf npcIndex = 4 Or npcIndex = 7 Then
+        ElseIf img_index = 4 Or img_index = 7 Then
             Return "*giggle* Was that magic?"
-        ElseIf npcIndex = 5 Or npcIndex = 8 Then
+        ElseIf img_index = 5 Or img_index = 8 Then
             Return "..."
         End If
         Return "Woah there!"
@@ -154,7 +164,7 @@
         p.petrify(Color.Goldenrod, 9999)
 
         Dim out As String = """You should have known better than to try and rob a shop keeper,"" the shopkeep says, glaring down at you, ""...and if its gold you're after, I guess I've got some good news for you.""" & DDUtils.RNRN &
-            "With that, " & pronoun & " reaches into " & pPronoun & " bag and puts on a gaudy gauntlet that begins glowing with a golden light. You lack the strength to fight back as " & pronoun & " places" &
+            "With that, " & pronoun & " reaches into " & p_pronoun & " bag and puts on a gaudy gauntlet that begins glowing with a golden light. You lack the strength to fight back as " & pronoun & " places" &
             " his thumb on your forhead, and suddenly everything just seems so heavy. ""Noooo..."" you moan, as the area around where he touched turns to gold, and that gold turns your flesh and blood " &
             "around it to gold as well. In a matter of seconds, all that is left of " & p.name & " the " & p.className & " is a solid gold statue. The shopkeeper sighs, muttering to no one in particular, " & DDUtils.RNRN &
             """Now how am I going to get you back to the refinery?""" & DDUtils.RNRN &

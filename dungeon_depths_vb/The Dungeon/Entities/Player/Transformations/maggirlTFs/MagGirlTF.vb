@@ -2,16 +2,17 @@
     Inherits Transformation
 
     Protected Const className As String = "Magical Girl"
+    Private Const TF_IND As tfind = tfind.maggirl
 
     Sub New(n As Integer, tts As Integer, wi As Double, cbs As Boolean)
         MyBase.New(n, tts, wi, cbs)
-        tfName = "Magical Girl"
-        nextStep = AddressOf step1
+        tf_name = TF_IND
+        next_step = AddressOf step1
     End Sub
     Sub New(cs As Integer, n As Integer, tts As Integer, wi As Double, cbs As Boolean, tfd As Boolean)
         MyBase.New(cs, n, tts, wi, cbs, tfd)
-        tfName = "Magical Girl"
-        nextStep = getNextStep(cs)
+        tf_name = TF_IND
+        next_step = getNextStep(cs)
     End Sub
 
     Overridable Sub step1dialog(ByRef p As Player)
@@ -35,6 +36,11 @@
         p.magicRoute()
     End Sub
 
+    Sub step1combat()
+        step1()
+        step2()
+    End Sub
+
     Overridable Sub setSpells(ByRef p As Player)
         If Not p.knownSpells.Contains("Heartblast Starcannon") Then p.knownSpells.Add("Heartblast Starcannon")
         Game.pushLstLog("'Heartblast Starcannon' spell learned!")
@@ -52,7 +58,6 @@
         p.prt.setIAInd(pInd.cloak, 0, True, False)
         p.prt.setIAInd(pInd.fronthair, 8, True, True)
         p.prt.setIAInd(pInd.hat, 0, True, False)
-
     End Sub
     Overridable Sub tfClothes(ByRef p As Player)
         If p.inv.item(10).count < 1 Then p.inv.add(10, 1)
@@ -114,12 +119,14 @@
             Return AddressOf step2
         ElseIf p.className.Equals(className) Then
             Return AddressOf stopTF
+        ElseIf Game.combatmode Then
+            Return AddressOf step1combat
         Else
             Return AddressOf step1
         End If
     End Function
     Public Overrides Sub setWaitTime(stage As Integer)
-        turnsTilNextStep = 0
+        turns_until_next_step = 0
     End Sub
 
     Public Shared Sub pushLblEventWithoutLoss(ByRef out As String)

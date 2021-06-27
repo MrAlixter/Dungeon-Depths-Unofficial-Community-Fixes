@@ -34,7 +34,7 @@ Public Class PhotonArmor
         '|Description|
         setDesc("This armor consists of lightweight though fragile black plates of an advanced plastic, alongside a powerful shield generator that harnesses its users mana to withstand impacts." & DDUtils.RNRN &
                        "Hardlight Effect" & DDUtils.RNRN &
-                        getSizeInformation() & vbCrLf & getStatInformation())
+                        getSizeInformation() & vbcrlf & getStatInformation())
     End Sub
 
     Public Overrides Sub onEquip(ByRef p As Player)

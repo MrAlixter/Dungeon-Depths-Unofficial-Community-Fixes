@@ -2,17 +2,23 @@
     Inherits Staff
 
     Sub New()
+        '|ID Info|
         setName("Spiked_Staff")
-        setDesc("A reinforced steel staff covered in rows of wicked looking spikes.  It's as good at smacking things as it is at boosting mana." & vbCrLf &
-                       "+46 Mana" & vbCrLf &
-                       "+23 ATK")
         id = 160
         tier = Nothing
-        usable = false
-        MyBase.m_boost = 46
-        MyBase.a_boost = 23
+
+        '|Item Flags|
+        m_boost = 46
+        a_boost = 23
         count = 0
         value = 1999
+
+        '|Stats|
+        usable = False
+
+        '|Description|
+        setDesc("A reinforced steel staff covered in rows of wicked looking spikes.  It's as good at smacking things as it is at boosting mana." & DDUtils.RNRN &
+                getStatInformation())
     End Sub
 
     Overrides Function attack(ByRef p As Player, ByRef m As Entity) As Integer

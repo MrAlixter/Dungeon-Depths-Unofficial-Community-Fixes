@@ -18,7 +18,7 @@
         '|Description|
 
         setDesc("A small blade weighted in such a way that it tumbles end over end when hurled at a target. " & DDUtils.RNRN &
-                getStatInformation() & DDUtils.RNRN &
+                getStatInformation() & vbcrlf &
                 "Can be thrown using the ""Use"" button.")
 
     End Sub

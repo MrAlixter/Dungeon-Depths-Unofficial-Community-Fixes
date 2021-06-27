@@ -30,6 +30,6 @@
 
         '|Description|
         setDesc("A shiny golden outfit that leaves little to the imagination.  This is a common choice for those who want to be admired." & DDUtils.RNRN & _
-                        getSizeInformation() & vbCrLf & getStatInformation())
+                        getSizeInformation() & vbcrlf & getStatInformation())
     End Sub
 End Class

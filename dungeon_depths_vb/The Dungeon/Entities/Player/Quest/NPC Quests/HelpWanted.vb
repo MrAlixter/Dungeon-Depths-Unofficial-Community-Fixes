@@ -28,7 +28,7 @@ Public Class HWantedSnipCollars
     Inherits Objective
 
     Sub New()
-        MyBase.New("Snip the collars of 5 thralls.")
+        MyBase.New("Snip the collars off of 5 thralls.")
     End Sub
 
     Public Overrides Sub complete()

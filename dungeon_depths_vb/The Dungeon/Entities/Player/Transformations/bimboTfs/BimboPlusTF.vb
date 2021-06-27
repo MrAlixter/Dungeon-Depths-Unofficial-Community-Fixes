@@ -1,17 +1,19 @@
 ﻿Public NotInheritable Class BimboPlusTF
     Inherits BimboTF
 
+    Private Const TF_IND As tfind = tfind.bimboplus
+
     Sub New(n As Integer, tts As Integer, wi As Double, cbs As Boolean)
         MyBase.New(n, tts, wi, cbs)
-        MyBase.updateDuringCombat = False
-        tfName = "BimboPlusTF"
-        nextStep = AddressOf hairColorShift
+        MyBase.update_during_combat = False
+        tf_name = TF_IND
+        next_step = AddressOf hairColorShift
     End Sub
     Sub New(cs As Integer, n As Integer, tts As Integer, wi As Double, cbs As Boolean, tfd As Boolean)
         MyBase.New(cs, n, tts, wi, cbs, tfd)
-        MyBase.updateDuringCombat = False
-        tfName = "BimboPlusTF"
-        nextStep = getNextStep(cs)
+        MyBase.update_during_combat = False
+        tf_name = TF_IND
+        next_step = getNextStep(cs)
     End Sub
 
     'Step 1

@@ -5,11 +5,12 @@
 
         '|ID Info|
         name = "Food Vendor"
+        sName = name
 
         '|NPC Flags|
         pronoun = "he"
-        pPronoun = "his"
-        rPronoun = "him"
+        p_pronoun = "his"
+        r_pronoun = "him"
         isShop = True
 
         '|Inventory|
@@ -35,7 +36,15 @@
         attack = 999
         defense = 99
         speed = 99
+        will = 99
         gold = 99999
+        xp_value = (maxHealth + attack + defense + speed) / 4
+        sMaxHealth = maxHealth
+        sMaxMana = maxMana
+        sAttack = attack
+        sdefense = defense
+        sWill = will
+        sSpeed = speed
 
         '|Images|
         picNormal = ShopNPC.npcLib.atrs(0).getAt(11)
@@ -73,7 +82,7 @@
 
         discount = 0
         If Game.currFloor.floorNumber = 13 Then
-            npcIndex = 9
+            img_index = 9
             inv.setCount("Chicken_Leg", 0)
             inv.setCount("Warrior's_Feast", 0)
             inv.setCount("Mage's_Delicacy", 0)
@@ -81,22 +90,22 @@
             Game.pushNPCDialog("Hey!  I'm turning into a tree!  Now, obviously this ain't great, but at least I'm getting wood!  HA!" & DDUtils.RNRN &
                                "That's a little bit of some tree humor, buy some stuff before you leaf and maybe I can get this straighed out before this curse runs its course, eh?")
         Else
-            If npcIndex = 0 Then
+            If img_index = 0 Then
                 If Game.player1.quests(qInds.banEgg).canGet Then Game.player1.quests(qInds.banEgg).init() : Exit Sub
 
                 If Int(Rnd() * 20) = 0 Then
                     discount = 0.25
-                    npcIndex = 7
+                    img_index = 7
                     Game.pushNPCDialog("*ahem* Apologies, but my dear friend here is currently occupied..." & DDUtils.RNRN &
                                        "If it helps speed up your decision, I had him whip up a bit of a surplus beforehand, and I can give you a 25% discount on that.  Please leave the gold for anything you purchase on the counter." & DDUtils.RNRN &
                                        "Oh, and by the way, take care not to dawdle or try anything suspicious.  I am always in need of guinea pigs, and I have quite the back-log of expirements I would like to try on a less amiable subject.")
                 ElseIf Int(Rnd() * 20) = 1 Then
-                    npcIndex = 5
+                    img_index = 5
                     Game.pushNPCDialog("Hey!  I was trying out a new type of cream, aaaaaaaaand, well, turns out there were a couple side effects..." & DDUtils.RNRN &
                                        "Don't worry though, I'm pretty sure none of it made it into the stuff for sale.  But hey, if you want any of it, let me know, ok?" & DDUtils.RNRN &
                                        "If you're hungry, I've always got something cooking.  So, what can I get you?")
                 ElseIf Int(Rnd() * 20) = 2 Then
-                    npcIndex = 6
+                    img_index = 6
                     Game.pushNPCDialog("Say what you will about Marissa, but the lady " & If(Game.player1.perks(perk.mrevived) < 0, "had", "has") & " a type for sure..." & DDUtils.RNRN &
                                        "Fortunately for me, I've got a deal goin' on with one of the hottest mind controllers you'll find in these parts, and part of my payment was some solid mental defense training.  I'm not even worried about the new body, either.  I've got just the thing to change back me to my old self... when I get bored, that is.  No reason not to enjoy " & If(Game.player1.perks(perk.mrevived) < 0, "her student's", "her") & " ""tip"" to its fullest, right?" & DDUtils.RNRN &
                                        "In the meantime, I've always got something cooking if you're hungry.  Let me know if I can get you anything, ok?")
@@ -105,74 +114,74 @@
                                        "Not just food, by the way.  I've done a fair bit of playin' around with magic ingredients, and even if I can't use magic myself I can still work wonders with the right recipe." & DDUtils.RNRN &
                                        "So, what can I get ya?")
                 End If
-            ElseIf npcIndex = 1 Then
+            ElseIf img_index = 1 Then
                 Game.pushNPCDialog("Broak, croak, ribbit.")
-            ElseIf npcIndex = 2 Then
+            ElseIf img_index = 2 Then
                 Game.pushNPCDialog("...")
-            ElseIf npcIndex = 3 Then
+            ElseIf img_index = 3 Then
                 Game.pushNPCDialog("You dine with royalty this day, " & Game.player1.className & ".  I assure you, my cooking is more than fit for a princess, and I would know! ~🖤" & DDUtils.RNRN &
                                    "See, you may have thought you got the upper hand by turning me into a helpless princess, but now I've turned it around into marketing!  Pretty sneaky, huh?")
-            ElseIf npcIndex = 4 Then
+            ElseIf img_index = 4 Then
                 Game.pushNPCDialog("I'd be lyin' if I said I wasn't used to being turned into a woman at this point." & DDUtils.RNRN &
                                    "Between my research dates, and all the other crazy stuff that goes on around this place, it'd probably be a decent idea to have more than just the mental defenses.  But hey, variety is the spice of life, and I'm totally sizzlin' in this thing!" & DDUtils.RNRN &
                                    "Don't, uh, tell Teach I said that though, she might end up keeping me like this...")
-            ElseIf npcIndex = 8 Or npcIndex = 12 Then
+            ElseIf img_index = 8 Or img_index = 12 Then
                 Game.pushNPCDialog("...")
-            ElseIf npcIndex = 10 Then
+            ElseIf img_index = 10 Then
                 If Game.player1.formName.Equals("Arachne") Then
                     Game.pushNPCDialog("Hey, it's you!  All hail the spider goddess or whatever we're on about, to be completely honest I wasn't really paying attention during my initiation." & DDUtils.RNRN &
                                        "So, whatcha eatin'?")
                 Else
                     Game.pushNPCDialog("Ya know, they did give me this extra strength venom you could use if you wanted to try this spider thing out...")
                 End If
-            ElseIf npcIndex = 11 Then
+            ElseIf img_index = 11 Then
                 Game.pushNPCDialog("I'll be the one to say it, you're better at this than Marissa.  Are you two working together or something?")
             End If
         End If
 
-        If npcIndex = 5 Then inv.setCount(98, 1) Else inv.setCount(98, 0)
-        If npcIndex = getArachneImageInd() And Not Game.player1.formName.Equals("Arachne") Then inv.setCount(244, 1) Else inv.setCount(244, 0)
+        If img_index = 5 Then inv.setCount(98, 1) Else inv.setCount(98, 0)
+        If img_index = getArachneImageInd() And Not Game.player1.formName.Equals("Arachne") Then inv.setCount(244, 1) Else inv.setCount(244, 0)
 
-        Game.picNPC.BackgroundImage = picNPC(npcIndex)
+        Game.picNPC.BackgroundImage = picNPC(img_index)
     End Sub
 
     Public Overrides Function toFight() As String
-        If npcIndex = 0 Then
+        If img_index = 0 Then
             Return "Looks like someone ordered... a knuckle sandwich!  Hahaha, aaahhh... no?  Not a fan of the puns?  Well, all the more reason to kick your ass."
-        ElseIf npcIndex = 1 Then
+        ElseIf img_index = 1 Then
             Return "rrrrrrrr..."
-        ElseIf npcIndex = 2 Then
+        ElseIf img_index = 2 Then
             Return "!!!"
-        ElseIf npcIndex = 3 Then
+        ElseIf img_index = 3 Then
             Return "Wait, you wouldn't hit a princess, right?"
-        ElseIf npcIndex = 4 Then
+        ElseIf img_index = 4 Then
             Return "WHAA... can't we talk this out, or at least wait for me to turn back?!?"
-        ElseIf npcIndex = 8 Or npcIndex = 12 Then
+        ElseIf img_index = 8 Or img_index = 12 Then
             Return "..."
-        ElseIf npcIndex = 10 Then
+        ElseIf img_index = 10 Then
             Return "Whelp, time for one of us to die."
-        ElseIf npcIndex = 11 Then
+        ElseIf img_index = 11 Then
             Return "Alright, let's do this..."
         End If
         Return "Looks like someone ordered...a knuckle sandwich!  Hahaha, aaahhh... no?  Not a fan of the puns?  Well, all the more reason to kick your ass."
     End Function
     Public Overrides Function hitBySpell() As String
-        If npcIndex = 0 Or npcIndex = 10 Then
+        If img_index = 0 Or img_index = 10 Then
             Game.NPCtoCombat(Me)
             Return "*sigh* Alright, here we go."
-        ElseIf npcIndex = 1 Then
+        ElseIf img_index = 1 Then
             Game.NPCtoCombat(Me)
             Return "rrrrrr."
-        ElseIf npcIndex = 2 Then
+        ElseIf img_index = 2 Then
             Game.NPCtoCombat(Me)
             Return "!!!"
-        ElseIf npcIndex = 3 Then
+        ElseIf img_index = 3 Then
             Return "Hmmmm...  This actually might be useful..."
-        ElseIf npcIndex = 4 Then
+        ElseIf img_index = 4 Then
             Return "*giggle* Was tha... No, I've gotta focus...  "
-        ElseIf npcIndex = 8 Or npcIndex = 12 Then
+        ElseIf img_index = 8 Or img_index = 12 Then
             Return "..."
-        ElseIf npcIndex = 11 Then
+        ElseIf img_index = 11 Then
             Game.NPCtoCombat(Me)
             Return "Mrrrrrr..."
         End If

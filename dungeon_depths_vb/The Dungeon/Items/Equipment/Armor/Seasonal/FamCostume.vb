@@ -36,7 +36,7 @@
         '|Description|
         setDesc("A skimpy black bunny suit worn by those who aren't afraid of the dark." & DDUtils.RNRN &
                        "When worn by a bunny girl, improves speed and will" & DDUtils.RNRN &
-                        getSizeInformation() & vbCrLf & getStatInformation())
+                        getSizeInformation() & vbcrlf & getStatInformation())
     End Sub
 
     Public Overrides Function getSBoost(ByRef p As Player) As Integer
@@ -52,7 +52,7 @@
     Public Overrides Function getDesc() As Object
         Return "A skimpy black bunny suit worn by those who aren't afraid of the dark." & DDUtils.RNRN &
                 "When worn by a bunny girl, improves speed and will" & DDUtils.RNRN &
-                 getSizeInformation() & vbCrLf & getStatInformation()
+                 getSizeInformation() & vbcrlf & getStatInformation()
     End Function
 
     Public Overrides Sub onEquip(ByRef p As Player)

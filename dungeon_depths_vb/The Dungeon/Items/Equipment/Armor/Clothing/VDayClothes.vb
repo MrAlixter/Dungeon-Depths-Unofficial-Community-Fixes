@@ -34,6 +34,6 @@
 
         '|Description|
         setDesc("A handsome black, white, and red suit perfect for a romantic dinner with a signifigant other." & DDUtils.RNRN &
-                        getSizeInformation() & vbCrLf & getStatInformation())
+                        getSizeInformation() & vbcrlf & getStatInformation())
     End Sub
 End Class

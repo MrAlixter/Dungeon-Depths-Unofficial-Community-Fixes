@@ -32,7 +32,6 @@ Partial Class Controls
         Me.Label3 = New System.Windows.Forms.Label()
         Me.txtRight = New System.Windows.Forms.TextBox()
         Me.Label4 = New System.Windows.Forms.Label()
-        Me.Button2 = New System.Windows.Forms.Button()
         Me.txtMagic = New System.Windows.Forms.TextBox()
         Me.Label5 = New System.Windows.Forms.Label()
         Me.txtAttack = New System.Windows.Forms.TextBox()
@@ -95,22 +94,24 @@ Partial Class Controls
         '
         'Button1
         '
+        Me.Button1.FlatStyle = System.Windows.Forms.FlatStyle.Flat
         Me.Button1.Font = New System.Drawing.Font("Consolas", 8.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.Button1.Location = New System.Drawing.Point(12, 620)
+        Me.Button1.ForeColor = System.Drawing.Color.White
+        Me.Button1.Location = New System.Drawing.Point(226, 624)
         Me.Button1.Name = "Button1"
         Me.Button1.Size = New System.Drawing.Size(75, 28)
         Me.Button1.TabIndex = 1
-        Me.Button1.Text = "Ok"
+        Me.Button1.Text = "Save"
         Me.Button1.UseVisualStyleBackColor = True
         '
         'Label1
         '
         Me.Label1.AutoSize = True
-        Me.Label1.Font = New System.Drawing.Font("Consolas", 8.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.Label1.Font = New System.Drawing.Font("Consolas", 10.0!)
         Me.Label1.ForeColor = System.Drawing.Color.White
-        Me.Label1.Location = New System.Drawing.Point(13, 13)
+        Me.Label1.Location = New System.Drawing.Point(13, 21)
         Me.Label1.Name = "Label1"
-        Me.Label1.Size = New System.Drawing.Size(109, 13)
+        Me.Label1.Size = New System.Drawing.Size(144, 17)
         Me.Label1.TabIndex = 2
         Me.Label1.Text = "Move up ---------"
         '
@@ -120,7 +121,7 @@ Partial Class Controls
         Me.txtUp.Cursor = System.Windows.Forms.Cursors.IBeam
         Me.txtUp.Font = New System.Drawing.Font("Consolas", 8.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.txtUp.ForeColor = System.Drawing.Color.White
-        Me.txtUp.Location = New System.Drawing.Point(173, 10)
+        Me.txtUp.Location = New System.Drawing.Point(173, 20)
         Me.txtUp.MaxLength = 1
         Me.txtUp.Name = "txtUp"
         Me.txtUp.Size = New System.Drawing.Size(129, 20)
@@ -132,7 +133,7 @@ Partial Class Controls
         Me.txtDown.Cursor = System.Windows.Forms.Cursors.IBeam
         Me.txtDown.Font = New System.Drawing.Font("Consolas", 8.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.txtDown.ForeColor = System.Drawing.Color.White
-        Me.txtDown.Location = New System.Drawing.Point(173, 36)
+        Me.txtDown.Location = New System.Drawing.Point(173, 46)
         Me.txtDown.MaxLength = 1
         Me.txtDown.Name = "txtDown"
         Me.txtDown.Size = New System.Drawing.Size(129, 20)
@@ -141,11 +142,11 @@ Partial Class Controls
         'Label2
         '
         Me.Label2.AutoSize = True
-        Me.Label2.Font = New System.Drawing.Font("Consolas", 8.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.Label2.Font = New System.Drawing.Font("Consolas", 10.0!)
         Me.Label2.ForeColor = System.Drawing.Color.White
-        Me.Label2.Location = New System.Drawing.Point(13, 39)
+        Me.Label2.Location = New System.Drawing.Point(13, 47)
         Me.Label2.Name = "Label2"
-        Me.Label2.Size = New System.Drawing.Size(109, 13)
+        Me.Label2.Size = New System.Drawing.Size(144, 17)
         Me.Label2.TabIndex = 4
         Me.Label2.Text = "Move down -------"
         '
@@ -155,7 +156,7 @@ Partial Class Controls
         Me.txtLeft.Cursor = System.Windows.Forms.Cursors.IBeam
         Me.txtLeft.Font = New System.Drawing.Font("Consolas", 8.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.txtLeft.ForeColor = System.Drawing.Color.White
-        Me.txtLeft.Location = New System.Drawing.Point(173, 62)
+        Me.txtLeft.Location = New System.Drawing.Point(173, 72)
         Me.txtLeft.MaxLength = 1
         Me.txtLeft.Name = "txtLeft"
         Me.txtLeft.Size = New System.Drawing.Size(129, 20)
@@ -164,11 +165,11 @@ Partial Class Controls
         'Label3
         '
         Me.Label3.AutoSize = True
-        Me.Label3.Font = New System.Drawing.Font("Consolas", 8.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.Label3.Font = New System.Drawing.Font("Consolas", 10.0!)
         Me.Label3.ForeColor = System.Drawing.Color.White
-        Me.Label3.Location = New System.Drawing.Point(13, 65)
+        Me.Label3.Location = New System.Drawing.Point(13, 73)
         Me.Label3.Name = "Label3"
-        Me.Label3.Size = New System.Drawing.Size(109, 13)
+        Me.Label3.Size = New System.Drawing.Size(144, 17)
         Me.Label3.TabIndex = 6
         Me.Label3.Text = "Move left -------"
         '
@@ -178,7 +179,7 @@ Partial Class Controls
         Me.txtRight.Cursor = System.Windows.Forms.Cursors.IBeam
         Me.txtRight.Font = New System.Drawing.Font("Consolas", 8.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.txtRight.ForeColor = System.Drawing.Color.White
-        Me.txtRight.Location = New System.Drawing.Point(173, 88)
+        Me.txtRight.Location = New System.Drawing.Point(173, 98)
         Me.txtRight.MaxLength = 1
         Me.txtRight.Name = "txtRight"
         Me.txtRight.Size = New System.Drawing.Size(129, 20)
@@ -187,23 +188,13 @@ Partial Class Controls
         'Label4
         '
         Me.Label4.AutoSize = True
-        Me.Label4.Font = New System.Drawing.Font("Consolas", 8.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.Label4.Font = New System.Drawing.Font("Consolas", 10.0!)
         Me.Label4.ForeColor = System.Drawing.Color.White
-        Me.Label4.Location = New System.Drawing.Point(13, 91)
+        Me.Label4.Location = New System.Drawing.Point(13, 99)
         Me.Label4.Name = "Label4"
-        Me.Label4.Size = New System.Drawing.Size(109, 13)
+        Me.Label4.Size = New System.Drawing.Size(144, 17)
         Me.Label4.TabIndex = 8
         Me.Label4.Text = "Move right ------"
-        '
-        'Button2
-        '
-        Me.Button2.Font = New System.Drawing.Font("Consolas", 8.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.Button2.Location = New System.Drawing.Point(226, 620)
-        Me.Button2.Name = "Button2"
-        Me.Button2.Size = New System.Drawing.Size(75, 28)
-        Me.Button2.TabIndex = 10
-        Me.Button2.Text = "Cancel"
-        Me.Button2.UseVisualStyleBackColor = True
         '
         'txtMagic
         '
@@ -211,7 +202,7 @@ Partial Class Controls
         Me.txtMagic.Cursor = System.Windows.Forms.Cursors.IBeam
         Me.txtMagic.Font = New System.Drawing.Font("Consolas", 8.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.txtMagic.ForeColor = System.Drawing.Color.White
-        Me.txtMagic.Location = New System.Drawing.Point(173, 192)
+        Me.txtMagic.Location = New System.Drawing.Point(173, 202)
         Me.txtMagic.MaxLength = 1
         Me.txtMagic.Name = "txtMagic"
         Me.txtMagic.Size = New System.Drawing.Size(129, 20)
@@ -220,11 +211,11 @@ Partial Class Controls
         'Label5
         '
         Me.Label5.AutoSize = True
-        Me.Label5.Font = New System.Drawing.Font("Consolas", 8.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.Label5.Font = New System.Drawing.Font("Consolas", 10.0!)
         Me.Label5.ForeColor = System.Drawing.Color.White
-        Me.Label5.Location = New System.Drawing.Point(13, 195)
+        Me.Label5.Location = New System.Drawing.Point(13, 203)
         Me.Label5.Name = "Label5"
-        Me.Label5.Size = New System.Drawing.Size(109, 13)
+        Me.Label5.Size = New System.Drawing.Size(144, 17)
         Me.Label5.TabIndex = 17
         Me.Label5.Text = "Magic -----------"
         '
@@ -234,7 +225,7 @@ Partial Class Controls
         Me.txtAttack.Cursor = System.Windows.Forms.Cursors.IBeam
         Me.txtAttack.Font = New System.Drawing.Font("Consolas", 8.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.txtAttack.ForeColor = System.Drawing.Color.White
-        Me.txtAttack.Location = New System.Drawing.Point(173, 166)
+        Me.txtAttack.Location = New System.Drawing.Point(173, 176)
         Me.txtAttack.MaxLength = 1
         Me.txtAttack.Name = "txtAttack"
         Me.txtAttack.Size = New System.Drawing.Size(129, 20)
@@ -243,11 +234,11 @@ Partial Class Controls
         'Label6
         '
         Me.Label6.AutoSize = True
-        Me.Label6.Font = New System.Drawing.Font("Consolas", 8.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.Label6.Font = New System.Drawing.Font("Consolas", 10.0!)
         Me.Label6.ForeColor = System.Drawing.Color.White
-        Me.Label6.Location = New System.Drawing.Point(13, 169)
+        Me.Label6.Location = New System.Drawing.Point(13, 177)
         Me.Label6.Name = "Label6"
-        Me.Label6.Size = New System.Drawing.Size(109, 13)
+        Me.Label6.Size = New System.Drawing.Size(144, 17)
         Me.Label6.TabIndex = 15
         Me.Label6.Text = "Attack ----------"
         '
@@ -257,7 +248,7 @@ Partial Class Controls
         Me.txtTalk.Cursor = System.Windows.Forms.Cursors.IBeam
         Me.txtTalk.Font = New System.Drawing.Font("Consolas", 8.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.txtTalk.ForeColor = System.Drawing.Color.White
-        Me.txtTalk.Location = New System.Drawing.Point(173, 140)
+        Me.txtTalk.Location = New System.Drawing.Point(173, 150)
         Me.txtTalk.MaxLength = 1
         Me.txtTalk.Name = "txtTalk"
         Me.txtTalk.Size = New System.Drawing.Size(129, 20)
@@ -266,11 +257,11 @@ Partial Class Controls
         'Label7
         '
         Me.Label7.AutoSize = True
-        Me.Label7.Font = New System.Drawing.Font("Consolas", 8.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.Label7.Font = New System.Drawing.Font("Consolas", 10.0!)
         Me.Label7.ForeColor = System.Drawing.Color.White
-        Me.Label7.Location = New System.Drawing.Point(13, 143)
+        Me.Label7.Location = New System.Drawing.Point(13, 151)
         Me.Label7.Name = "Label7"
-        Me.Label7.Size = New System.Drawing.Size(109, 13)
+        Me.Label7.Size = New System.Drawing.Size(144, 17)
         Me.Label7.TabIndex = 13
         Me.Label7.Text = "Talk to NPC -----"
         '
@@ -280,7 +271,7 @@ Partial Class Controls
         Me.txtInpect.Cursor = System.Windows.Forms.Cursors.IBeam
         Me.txtInpect.Font = New System.Drawing.Font("Consolas", 8.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.txtInpect.ForeColor = System.Drawing.Color.White
-        Me.txtInpect.Location = New System.Drawing.Point(173, 114)
+        Me.txtInpect.Location = New System.Drawing.Point(173, 124)
         Me.txtInpect.MaxLength = 1
         Me.txtInpect.Name = "txtInpect"
         Me.txtInpect.Size = New System.Drawing.Size(129, 20)
@@ -289,11 +280,11 @@ Partial Class Controls
         'Label8
         '
         Me.Label8.AutoSize = True
-        Me.Label8.Font = New System.Drawing.Font("Consolas", 8.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.Label8.Font = New System.Drawing.Font("Consolas", 10.0!)
         Me.Label8.ForeColor = System.Drawing.Color.White
-        Me.Label8.Location = New System.Drawing.Point(13, 117)
+        Me.Label8.Location = New System.Drawing.Point(13, 125)
         Me.Label8.Name = "Label8"
-        Me.Label8.Size = New System.Drawing.Size(109, 13)
+        Me.Label8.Size = New System.Drawing.Size(144, 17)
         Me.Label8.TabIndex = 11
         Me.Label8.Text = "Interact --------"
         '
@@ -303,7 +294,7 @@ Partial Class Controls
         Me.txtWear2.Cursor = System.Windows.Forms.Cursors.IBeam
         Me.txtWear2.Font = New System.Drawing.Font("Consolas", 8.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.txtWear2.ForeColor = System.Drawing.Color.White
-        Me.txtWear2.Location = New System.Drawing.Point(173, 399)
+        Me.txtWear2.Location = New System.Drawing.Point(173, 409)
         Me.txtWear2.MaxLength = 1
         Me.txtWear2.Name = "txtWear2"
         Me.txtWear2.Size = New System.Drawing.Size(129, 20)
@@ -312,11 +303,11 @@ Partial Class Controls
         'Label9
         '
         Me.Label9.AutoSize = True
-        Me.Label9.Font = New System.Drawing.Font("Consolas", 8.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.Label9.Font = New System.Drawing.Font("Consolas", 10.0!)
         Me.Label9.ForeColor = System.Drawing.Color.White
-        Me.Label9.Location = New System.Drawing.Point(13, 402)
+        Me.Label9.Location = New System.Drawing.Point(13, 410)
         Me.Label9.Name = "Label9"
-        Me.Label9.Size = New System.Drawing.Size(109, 13)
+        Me.Label9.Size = New System.Drawing.Size(144, 17)
         Me.Label9.TabIndex = 33
         Me.Label9.Text = "Wear (Other) ----"
         '
@@ -326,7 +317,7 @@ Partial Class Controls
         Me.txtWear1.Cursor = System.Windows.Forms.Cursors.IBeam
         Me.txtWear1.Font = New System.Drawing.Font("Consolas", 8.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.txtWear1.ForeColor = System.Drawing.Color.White
-        Me.txtWear1.Location = New System.Drawing.Point(173, 373)
+        Me.txtWear1.Location = New System.Drawing.Point(173, 383)
         Me.txtWear1.MaxLength = 1
         Me.txtWear1.Name = "txtWear1"
         Me.txtWear1.Size = New System.Drawing.Size(129, 20)
@@ -335,11 +326,11 @@ Partial Class Controls
         'Label10
         '
         Me.Label10.AutoSize = True
-        Me.Label10.Font = New System.Drawing.Font("Consolas", 8.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.Label10.Font = New System.Drawing.Font("Consolas", 10.0!)
         Me.Label10.ForeColor = System.Drawing.Color.White
-        Me.Label10.Location = New System.Drawing.Point(13, 376)
+        Me.Label10.Location = New System.Drawing.Point(13, 384)
         Me.Label10.Name = "Label10"
-        Me.Label10.Size = New System.Drawing.Size(109, 13)
+        Me.Label10.Size = New System.Drawing.Size(144, 17)
         Me.Label10.TabIndex = 31
         Me.Label10.Text = "Wear (Armor) ----"
         '
@@ -349,7 +340,7 @@ Partial Class Controls
         Me.txtShop.Cursor = System.Windows.Forms.Cursors.IBeam
         Me.txtShop.Font = New System.Drawing.Font("Consolas", 8.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.txtShop.ForeColor = System.Drawing.Color.White
-        Me.txtShop.Location = New System.Drawing.Point(173, 347)
+        Me.txtShop.Location = New System.Drawing.Point(173, 357)
         Me.txtShop.MaxLength = 1
         Me.txtShop.Name = "txtShop"
         Me.txtShop.Size = New System.Drawing.Size(129, 20)
@@ -358,11 +349,11 @@ Partial Class Controls
         'Label11
         '
         Me.Label11.AutoSize = True
-        Me.Label11.Font = New System.Drawing.Font("Consolas", 8.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.Label11.Font = New System.Drawing.Font("Consolas", 10.0!)
         Me.Label11.ForeColor = System.Drawing.Color.White
-        Me.Label11.Location = New System.Drawing.Point(13, 350)
+        Me.Label11.Location = New System.Drawing.Point(13, 358)
         Me.Label11.Name = "Label11"
-        Me.Label11.Size = New System.Drawing.Size(109, 13)
+        Me.Label11.Size = New System.Drawing.Size(144, 17)
         Me.Label11.TabIndex = 29
         Me.Label11.Text = "Shop ------------"
         '
@@ -372,7 +363,7 @@ Partial Class Controls
         Me.txtUse.Cursor = System.Windows.Forms.Cursors.IBeam
         Me.txtUse.Font = New System.Drawing.Font("Consolas", 8.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.txtUse.ForeColor = System.Drawing.Color.White
-        Me.txtUse.Location = New System.Drawing.Point(173, 321)
+        Me.txtUse.Location = New System.Drawing.Point(173, 331)
         Me.txtUse.MaxLength = 1
         Me.txtUse.Name = "txtUse"
         Me.txtUse.Size = New System.Drawing.Size(129, 20)
@@ -381,11 +372,11 @@ Partial Class Controls
         'Label12
         '
         Me.Label12.AutoSize = True
-        Me.Label12.Font = New System.Drawing.Font("Consolas", 8.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.Label12.Font = New System.Drawing.Font("Consolas", 10.0!)
         Me.Label12.ForeColor = System.Drawing.Color.White
-        Me.Label12.Location = New System.Drawing.Point(13, 324)
+        Me.Label12.Location = New System.Drawing.Point(13, 332)
         Me.Label12.Name = "Label12"
-        Me.Label12.Size = New System.Drawing.Size(109, 13)
+        Me.Label12.Size = New System.Drawing.Size(144, 17)
         Me.Label12.TabIndex = 27
         Me.Label12.Text = "Use -------------"
         '
@@ -395,7 +386,7 @@ Partial Class Controls
         Me.txtDrink.Cursor = System.Windows.Forms.Cursors.IBeam
         Me.txtDrink.Font = New System.Drawing.Font("Consolas", 8.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.txtDrink.ForeColor = System.Drawing.Color.White
-        Me.txtDrink.Location = New System.Drawing.Point(173, 295)
+        Me.txtDrink.Location = New System.Drawing.Point(173, 305)
         Me.txtDrink.MaxLength = 1
         Me.txtDrink.Name = "txtDrink"
         Me.txtDrink.Size = New System.Drawing.Size(129, 20)
@@ -404,11 +395,11 @@ Partial Class Controls
         'Label13
         '
         Me.Label13.AutoSize = True
-        Me.Label13.Font = New System.Drawing.Font("Consolas", 8.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.Label13.Font = New System.Drawing.Font("Consolas", 10.0!)
         Me.Label13.ForeColor = System.Drawing.Color.White
-        Me.Label13.Location = New System.Drawing.Point(13, 298)
+        Me.Label13.Location = New System.Drawing.Point(13, 306)
         Me.Label13.Name = "Label13"
-        Me.Label13.Size = New System.Drawing.Size(109, 13)
+        Me.Label13.Size = New System.Drawing.Size(144, 17)
         Me.Label13.TabIndex = 25
         Me.Label13.Text = "Drink -----------"
         '
@@ -418,7 +409,7 @@ Partial Class Controls
         Me.txtRun.Cursor = System.Windows.Forms.Cursors.IBeam
         Me.txtRun.Font = New System.Drawing.Font("Consolas", 8.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.txtRun.ForeColor = System.Drawing.Color.White
-        Me.txtRun.Location = New System.Drawing.Point(173, 269)
+        Me.txtRun.Location = New System.Drawing.Point(173, 279)
         Me.txtRun.MaxLength = 1
         Me.txtRun.Name = "txtRun"
         Me.txtRun.Size = New System.Drawing.Size(129, 20)
@@ -427,13 +418,13 @@ Partial Class Controls
         'Label14
         '
         Me.Label14.AutoSize = True
-        Me.Label14.Font = New System.Drawing.Font("Consolas", 8.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.Label14.Font = New System.Drawing.Font("Consolas", 10.0!)
         Me.Label14.ForeColor = System.Drawing.Color.White
-        Me.Label14.Location = New System.Drawing.Point(13, 272)
+        Me.Label14.Location = New System.Drawing.Point(13, 280)
         Me.Label14.Name = "Label14"
-        Me.Label14.Size = New System.Drawing.Size(115, 13)
+        Me.Label14.Size = New System.Drawing.Size(144, 17)
         Me.Label14.TabIndex = 23
-        Me.Label14.Text = "Run (Combat) ---- "
+        Me.Label14.Text = "Run (Combat) ----"
         '
         'txtWait
         '
@@ -441,7 +432,7 @@ Partial Class Controls
         Me.txtWait.Cursor = System.Windows.Forms.Cursors.IBeam
         Me.txtWait.Font = New System.Drawing.Font("Consolas", 8.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.txtWait.ForeColor = System.Drawing.Color.White
-        Me.txtWait.Location = New System.Drawing.Point(173, 243)
+        Me.txtWait.Location = New System.Drawing.Point(173, 253)
         Me.txtWait.MaxLength = 1
         Me.txtWait.Name = "txtWait"
         Me.txtWait.Size = New System.Drawing.Size(129, 20)
@@ -450,11 +441,11 @@ Partial Class Controls
         'Label15
         '
         Me.Label15.AutoSize = True
-        Me.Label15.Font = New System.Drawing.Font("Consolas", 8.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.Label15.Font = New System.Drawing.Font("Consolas", 10.0!)
         Me.Label15.ForeColor = System.Drawing.Color.White
-        Me.Label15.Location = New System.Drawing.Point(13, 246)
+        Me.Label15.Location = New System.Drawing.Point(13, 254)
         Me.Label15.Name = "Label15"
-        Me.Label15.Size = New System.Drawing.Size(109, 13)
+        Me.Label15.Size = New System.Drawing.Size(144, 17)
         Me.Label15.TabIndex = 21
         Me.Label15.Text = "Wait ------------"
         '
@@ -464,7 +455,7 @@ Partial Class Controls
         Me.txtSpec.Cursor = System.Windows.Forms.Cursors.IBeam
         Me.txtSpec.Font = New System.Drawing.Font("Consolas", 8.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.txtSpec.ForeColor = System.Drawing.Color.White
-        Me.txtSpec.Location = New System.Drawing.Point(173, 217)
+        Me.txtSpec.Location = New System.Drawing.Point(173, 227)
         Me.txtSpec.MaxLength = 1
         Me.txtSpec.Name = "txtSpec"
         Me.txtSpec.Size = New System.Drawing.Size(129, 20)
@@ -473,11 +464,11 @@ Partial Class Controls
         'Label16
         '
         Me.Label16.AutoSize = True
-        Me.Label16.Font = New System.Drawing.Font("Consolas", 8.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.Label16.Font = New System.Drawing.Font("Consolas", 10.0!)
         Me.Label16.ForeColor = System.Drawing.Color.White
-        Me.Label16.Location = New System.Drawing.Point(13, 220)
+        Me.Label16.Location = New System.Drawing.Point(13, 228)
         Me.Label16.Name = "Label16"
-        Me.Label16.Size = New System.Drawing.Size(109, 13)
+        Me.Label16.Size = New System.Drawing.Size(144, 17)
         Me.Label16.TabIndex = 19
         Me.Label16.Text = "Special ---------"
         '
@@ -487,7 +478,7 @@ Partial Class Controls
         Me.txtYes.Cursor = System.Windows.Forms.Cursors.IBeam
         Me.txtYes.Font = New System.Drawing.Font("Consolas", 8.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.txtYes.ForeColor = System.Drawing.Color.White
-        Me.txtYes.Location = New System.Drawing.Point(173, 525)
+        Me.txtYes.Location = New System.Drawing.Point(173, 535)
         Me.txtYes.MaxLength = 1
         Me.txtYes.Name = "txtYes"
         Me.txtYes.Size = New System.Drawing.Size(129, 20)
@@ -496,11 +487,11 @@ Partial Class Controls
         'Label17
         '
         Me.Label17.AutoSize = True
-        Me.Label17.Font = New System.Drawing.Font("Consolas", 8.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.Label17.Font = New System.Drawing.Font("Consolas", 10.0!)
         Me.Label17.ForeColor = System.Drawing.Color.White
-        Me.Label17.Location = New System.Drawing.Point(13, 528)
+        Me.Label17.Location = New System.Drawing.Point(13, 536)
         Me.Label17.Name = "Label17"
-        Me.Label17.Size = New System.Drawing.Size(109, 13)
+        Me.Label17.Size = New System.Drawing.Size(144, 17)
         Me.Label17.TabIndex = 41
         Me.Label17.Text = "Yes -------------"
         '
@@ -510,7 +501,7 @@ Partial Class Controls
         Me.txtEat.Cursor = System.Windows.Forms.Cursors.IBeam
         Me.txtEat.Font = New System.Drawing.Font("Consolas", 8.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.txtEat.ForeColor = System.Drawing.Color.White
-        Me.txtEat.Location = New System.Drawing.Point(173, 500)
+        Me.txtEat.Location = New System.Drawing.Point(173, 510)
         Me.txtEat.MaxLength = 1
         Me.txtEat.Name = "txtEat"
         Me.txtEat.Size = New System.Drawing.Size(129, 20)
@@ -519,11 +510,11 @@ Partial Class Controls
         'Label18
         '
         Me.Label18.AutoSize = True
-        Me.Label18.Font = New System.Drawing.Font("Consolas", 8.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.Label18.Font = New System.Drawing.Font("Consolas", 10.0!)
         Me.Label18.ForeColor = System.Drawing.Color.White
-        Me.Label18.Location = New System.Drawing.Point(13, 503)
+        Me.Label18.Location = New System.Drawing.Point(13, 510)
         Me.Label18.Name = "Label18"
-        Me.Label18.Size = New System.Drawing.Size(109, 13)
+        Me.Label18.Size = New System.Drawing.Size(144, 17)
         Me.Label18.TabIndex = 39
         Me.Label18.Text = "Eat -------------"
         '
@@ -533,7 +524,7 @@ Partial Class Controls
         Me.txtSInspect.Cursor = System.Windows.Forms.Cursors.IBeam
         Me.txtSInspect.Font = New System.Drawing.Font("Consolas", 8.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.txtSInspect.ForeColor = System.Drawing.Color.White
-        Me.txtSInspect.Location = New System.Drawing.Point(173, 450)
+        Me.txtSInspect.Location = New System.Drawing.Point(173, 460)
         Me.txtSInspect.MaxLength = 1
         Me.txtSInspect.Name = "txtSInspect"
         Me.txtSInspect.Size = New System.Drawing.Size(129, 20)
@@ -542,11 +533,11 @@ Partial Class Controls
         'Label19
         '
         Me.Label19.AutoSize = True
-        Me.Label19.Font = New System.Drawing.Font("Consolas", 8.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.Label19.Font = New System.Drawing.Font("Consolas", 10.0!)
         Me.Label19.ForeColor = System.Drawing.Color.White
-        Me.Label19.Location = New System.Drawing.Point(13, 453)
+        Me.Label19.Location = New System.Drawing.Point(13, 461)
         Me.Label19.Name = "Label19"
-        Me.Label19.Size = New System.Drawing.Size(109, 13)
+        Me.Label19.Size = New System.Drawing.Size(144, 17)
         Me.Label19.TabIndex = 37
         Me.Label19.Text = "Self Inspect ----"
         '
@@ -556,7 +547,7 @@ Partial Class Controls
         Me.txtEquip.Cursor = System.Windows.Forms.Cursors.IBeam
         Me.txtEquip.Font = New System.Drawing.Font("Consolas", 8.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.txtEquip.ForeColor = System.Drawing.Color.White
-        Me.txtEquip.Location = New System.Drawing.Point(173, 424)
+        Me.txtEquip.Location = New System.Drawing.Point(173, 434)
         Me.txtEquip.MaxLength = 1
         Me.txtEquip.Name = "txtEquip"
         Me.txtEquip.Size = New System.Drawing.Size(129, 20)
@@ -565,13 +556,13 @@ Partial Class Controls
         'Label20
         '
         Me.Label20.AutoSize = True
-        Me.Label20.Font = New System.Drawing.Font("Consolas", 8.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.Label20.Font = New System.Drawing.Font("Consolas", 10.0!)
         Me.Label20.ForeColor = System.Drawing.Color.White
-        Me.Label20.Location = New System.Drawing.Point(13, 427)
+        Me.Label20.Location = New System.Drawing.Point(13, 435)
         Me.Label20.Name = "Label20"
-        Me.Label20.Size = New System.Drawing.Size(115, 13)
+        Me.Label20.Size = New System.Drawing.Size(144, 17)
         Me.Label20.TabIndex = 35
-        Me.Label20.Text = "Equip (Weapon) -- "
+        Me.Label20.Text = "Equip (Weapon) --"
         '
         'txtNo
         '
@@ -579,7 +570,7 @@ Partial Class Controls
         Me.txtNo.Cursor = System.Windows.Forms.Cursors.IBeam
         Me.txtNo.Font = New System.Drawing.Font("Consolas", 8.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.txtNo.ForeColor = System.Drawing.Color.White
-        Me.txtNo.Location = New System.Drawing.Point(173, 550)
+        Me.txtNo.Location = New System.Drawing.Point(173, 560)
         Me.txtNo.MaxLength = 1
         Me.txtNo.Name = "txtNo"
         Me.txtNo.Size = New System.Drawing.Size(129, 20)
@@ -588,11 +579,11 @@ Partial Class Controls
         'Label21
         '
         Me.Label21.AutoSize = True
-        Me.Label21.Font = New System.Drawing.Font("Consolas", 8.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.Label21.Font = New System.Drawing.Font("Consolas", 10.0!)
         Me.Label21.ForeColor = System.Drawing.Color.White
-        Me.Label21.Location = New System.Drawing.Point(13, 553)
+        Me.Label21.Location = New System.Drawing.Point(13, 561)
         Me.Label21.Name = "Label21"
-        Me.Label21.Size = New System.Drawing.Size(109, 13)
+        Me.Label21.Size = New System.Drawing.Size(144, 17)
         Me.Label21.TabIndex = 43
         Me.Label21.Text = "No --------------"
         '
@@ -602,7 +593,7 @@ Partial Class Controls
         Me.txtIInspect.Cursor = System.Windows.Forms.Cursors.IBeam
         Me.txtIInspect.Font = New System.Drawing.Font("Consolas", 8.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.txtIInspect.ForeColor = System.Drawing.Color.White
-        Me.txtIInspect.Location = New System.Drawing.Point(173, 475)
+        Me.txtIInspect.Location = New System.Drawing.Point(173, 485)
         Me.txtIInspect.MaxLength = 1
         Me.txtIInspect.Name = "txtIInspect"
         Me.txtIInspect.Size = New System.Drawing.Size(129, 20)
@@ -611,11 +602,11 @@ Partial Class Controls
         'Label22
         '
         Me.Label22.AutoSize = True
-        Me.Label22.Font = New System.Drawing.Font("Consolas", 8.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.Label22.Font = New System.Drawing.Font("Consolas", 10.0!)
         Me.Label22.ForeColor = System.Drawing.Color.White
-        Me.Label22.Location = New System.Drawing.Point(13, 478)
+        Me.Label22.Location = New System.Drawing.Point(13, 486)
         Me.Label22.Name = "Label22"
-        Me.Label22.Size = New System.Drawing.Size(109, 13)
+        Me.Label22.Size = New System.Drawing.Size(144, 17)
         Me.Label22.TabIndex = 45
         Me.Label22.Text = "Inspect Item ----"
         '
@@ -935,7 +926,6 @@ Partial Class Controls
         Me.Controls.Add(Me.Label7)
         Me.Controls.Add(Me.txtInpect)
         Me.Controls.Add(Me.Label8)
-        Me.Controls.Add(Me.Button2)
         Me.Controls.Add(Me.txtRight)
         Me.Controls.Add(Me.Label4)
         Me.Controls.Add(Me.txtLeft)
@@ -963,7 +953,6 @@ Partial Class Controls
     Friend WithEvents Label3 As System.Windows.Forms.Label
     Friend WithEvents txtRight As System.Windows.Forms.TextBox
     Friend WithEvents Label4 As System.Windows.Forms.Label
-    Friend WithEvents Button2 As System.Windows.Forms.Button
     Friend WithEvents txtMagic As System.Windows.Forms.TextBox
     Friend WithEvents Label5 As System.Windows.Forms.Label
     Friend WithEvents txtAttack As System.Windows.Forms.TextBox

@@ -17,8 +17,8 @@
         setupMonsterOnSpawn()
 
         pronoun = "she"
-        pPronoun = "her"
-        rPronoun = "her"
+        p_pronoun = "her"
+        r_pronoun = "her"
     End Sub
 
     Public Overrides Sub attackCMD(ByRef target As Entity)
