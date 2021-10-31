@@ -60,8 +60,8 @@
         Dim dmg = calcDamage(Me.getWIL, target.getWIL) 'calculate the hit
         If dmg > 0 Then dmg += Int(Rnd() * 3) + -1 'adds some variance
 
-        Game.pushLblEvent(getName() & " casts Dark Orb!")
-        Game.pushLstLog(getName() & " casts Dark Orb!")
+        TextEvent.push(getName() & " casts Dark Orb!")
+        TextEvent.pushLog(getName() & " casts Dark Orb!")
 
         Select Case crit
             Case 19

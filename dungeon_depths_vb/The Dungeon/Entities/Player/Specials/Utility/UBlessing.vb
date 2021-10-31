@@ -8,7 +8,7 @@
     End Sub
     Public Overrides Sub effect()
         Dim p = MyBase.getUser
-        If p.knownSpecials.Count >= Special.specialList.Count And p.knownSpells.Count >= Spell.spellList.Count Then Game.pushLblEvent("Nothing happens...") : Exit Sub
+        If p.knownSpecials.Count >= Special.specialList.Count And p.knownSpells.Count >= Spell.spellList.Count Then TextEvent.push("Nothing happens...") : Exit Sub
 
         Dim forgottenS As String = "none"
         Dim learnedS As String = "none"
@@ -56,13 +56,13 @@
             p.knownSpecials.Add(learnedS)
         End If
 
-        Game.pushLstLog("Uvona's Blessing!")
-        Game.pushLblEvent("Uvona's Blessing!" & vbCrLf & "Praying to the goddess of fugue has caused you to forget " & forgottenS & ", and learn " & learnedS & "!")
+        TextEvent.pushLog("Uvona's Blessing!")
+        TextEvent.push("Uvona's Blessing!" & vbCrLf & "Praying to the goddess of fugue has caused you to forget " & forgottenS & ", and learn " & learnedS & "!")
     End Sub
 
     Sub errorout()
-        Game.pushLstLog("Uvona's Blessing!")
-        Game.pushLblEvent("Uvona's Blessing!" & vbCrLf & "Praying to the goddess of fugue doesn't do anything!")
+        TextEvent.pushLog("Uvona's Blessing!")
+        TextEvent.push("Uvona's Blessing!" & vbCrLf & "Praying to the goddess of fugue doesn't do anything!")
     End Sub
 
     Public Overrides Function getDesc(ByRef c As Player, ByRef t As NPC) As Object

@@ -41,20 +41,20 @@
     Public Overrides Sub attackCMD(ByRef target As Entity)
         If target.GetType() Is GetType(Player) Then
             If Game.player1.perks(perk.nekocurse) = -1 Then
-                Game.pushLstLog((getName() & " casts a curse on you!"))
-                Game.pushLblCombatEvent((getName() & " casts a curse on you!"))
+                TextEvent.pushLog((getName() & " casts a curse on you!"))
+                TextEvent.pushCombat((getName() & " casts a curse on you!"))
                 Game.player1.ongoingTFs.Add(New NekoTF(7, 1, 0.3, True))
                 Exit Sub
             ElseIf Game.player1.perks(perk.nekocurse) > -1 And getIntHealth() < 45 Then
                 Dim healvalue = Int(Rnd() * 4) + Int(Rnd() * 2) + 30
                 If getIntHealth() + healvalue > getMaxHealth() Then healvalue = getMaxHealth() - getIntHealth()
-                Game.pushLstLog((getName() & " heals herself!  +" & healvalue & " health!"))
-                Game.pushLblCombatEvent((getName() & " heals herself for " & healvalue & " health!"))
+                TextEvent.pushLog((getName() & " heals herself!  +" & healvalue & " health!"))
+                TextEvent.pushCombat((getName() & " heals herself for " & healvalue & " health!"))
                 takeDMG(-healvalue, Nothing)
                 Exit Sub
             ElseIf Game.player1.getIntHealth < 20 Then
-                Game.pushLstLog((getName() & " waits expectantly..."))
-                Game.pushLblCombatEvent((getName() & " waits expectantly..."))
+                TextEvent.pushLog((getName() & " waits expectantly..."))
+                TextEvent.pushCombat((getName() & " waits expectantly..."))
                 Exit Sub
             End If
         End If

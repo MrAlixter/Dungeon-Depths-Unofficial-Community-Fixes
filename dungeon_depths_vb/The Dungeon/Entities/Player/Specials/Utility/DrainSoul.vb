@@ -13,7 +13,7 @@
         'non critical hit
         MyBase.getUser.addXP(xpGain)
 
-        Game.pushLogAndEvent(CStr("Drain Soul!  The " & MyBase.getTarget.name & " takes " & dmg & " damage and you gain " & xpGain & " XP!"))
+        TextEvent.pushAndLog(CStr("Drain Soul!  The " & MyBase.getTarget.name & " takes " & dmg & " damage and you gain " & xpGain & " XP!"))
         MyBase.getTarget.takeDMG(dmg, Nothing)
     End Sub
 

@@ -19,17 +19,17 @@
         value = 950
 
         '|Image Index|
-        MyBase.bsizeneg1 = New Tuple(Of Integer, Boolean, Boolean)(8, False, True)
-        MyBase.bsize0 = New Tuple(Of Integer, Boolean, Boolean)(8, False, True)
-        MyBase.bsize1 = New Tuple(Of Integer, Boolean, Boolean)(29, True, True)
-        MyBase.bsize2 = New Tuple(Of Integer, Boolean, Boolean)(30, True, True)
-        MyBase.bsize3 = New Tuple(Of Integer, Boolean, Boolean)(31, True, True)
+        bsizeneg1 = New Tuple(Of Integer, Boolean, Boolean)(8, False, True)
+        bsize0 = New Tuple(Of Integer, Boolean, Boolean)(8, False, True)
+        bsize1 = New Tuple(Of Integer, Boolean, Boolean)(29, True, True)
+        bsize2 = New Tuple(Of Integer, Boolean, Boolean)(30, True, True)
+        bsize3 = New Tuple(Of Integer, Boolean, Boolean)(31, True, True)
 
-        MyBase.usizeneg1 = New Tuple(Of Integer, Boolean, Boolean)(62, False, True)
-        MyBase.usize0 = New Tuple(Of Integer, Boolean, Boolean)(63, False, True)
-        MyBase.usize1 = New Tuple(Of Integer, Boolean, Boolean)(273, True, True)
-        MyBase.usize2 = New Tuple(Of Integer, Boolean, Boolean)(274, True, True)
-        MyBase.usize3 = New Tuple(Of Integer, Boolean, Boolean)(275, True, True)
+        usizeneg1 = New Tuple(Of Integer, Boolean, Boolean)(62, False, True)
+        usize0 = New Tuple(Of Integer, Boolean, Boolean)(63, False, True)
+        usize1 = New Tuple(Of Integer, Boolean, Boolean)(273, True, True)
+        usize2 = New Tuple(Of Integer, Boolean, Boolean)(274, True, True)
+        usize3 = New Tuple(Of Integer, Boolean, Boolean)(275, True, True)
 
         '|Description|
         setDesc("A protective garment made more for elite fighters rather than fashion-minded common folk." & DDUtils.RNRN &

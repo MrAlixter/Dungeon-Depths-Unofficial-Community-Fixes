@@ -1,20 +1,30 @@
 ﻿Public Class StealthGear
     Inherits Accessory
-    'The ruby circlet provides a +1 attack buff
+
     Sub New()
+        '|ID Info|
         setName("Stealth_Gear")
-        setDesc("Wraps of fabric that tighten down loose clothing in order to make its wearer more sneaky." & vbCrLf &
-                       "Reduces encouter rate, low dodge chance." & vbCrLf &
-                       "+4 SPD")
         id = 164
         tier = Nothing
-        usable = false
+
+        '|Item Flags|
+        usable = False
+        under_clothes = True
+        hide_mouth = True
+
+        '|Stats|
+        s_boost = 4
         count = 0
         value = 10
-        MyBase.fInd = New Tuple(Of Integer, Boolean, Boolean)(14, True, True)
-        MyBase.mInd = New Tuple(Of Integer, Boolean, Boolean)(13, False, True)
 
-        underClothes = True
+        '|Image Index|
+        fInd = New Tuple(Of Integer, Boolean, Boolean)(14, True, True)
+        mInd = New Tuple(Of Integer, Boolean, Boolean)(13, False, True)
+
+        '|Description|
+        setDesc("Wraps of fabric that tighten down loose clothing in order to make its wearer more sneaky." & DDUtils.RNRN &
+                "Reduces encouter rate, low dodge chance." & DDUtils.RNRN &
+                getStatInformation())
     End Sub
     Public Overrides Sub onEquip(ByRef p As Player)
         MyBase.onEquip(p)

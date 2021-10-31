@@ -24,17 +24,17 @@
 
     Overrides Function attack(ByRef p As Player, ByRef m As Entity) As Integer
         If p.inv.getCountAt("AAAAAA_Battery") < 1 Then
-            Game.pushLogAndEvent("You don't have the ammo!")
+            TextEvent.pushAndLog("You don't have the ammo!")
             Return -1
         End If
 
         Dim dmg As Integer = Int(Rnd() * 12) + 1
 
         If dmg <= 3 Then Return -1
-       
+
 
         p.inv.add("AAAAAA_Battery", -1)
-        Game.pushLogAndEvent("The pistol ejects a smoldering battery shell.  " & p.inv.getCountAt("AAAAAA_Battery") & " shot" & If(p.inv.getCountAt("AAAAAA_Battery") = 1, "", "s") & " left!")
+        TextEvent.pushAndLog("The pistol ejects a smoldering battery shell.  " & p.inv.getCountAt("AAAAAA_Battery") & " shot" & If(p.inv.getCountAt("AAAAAA_Battery") = 1, "", "s") & " left!")
 
         dmg += (p.getSPD) + (Me.a_boost)
 

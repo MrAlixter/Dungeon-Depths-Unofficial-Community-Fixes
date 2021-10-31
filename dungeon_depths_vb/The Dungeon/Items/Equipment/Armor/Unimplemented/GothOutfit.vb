@@ -19,17 +19,17 @@
         s_boost = 7
 
         '|Image Index|
-        MyBase.bsize3 = New Tuple(Of Integer, Boolean, Boolean)(247, True, True)
-        MyBase.bsize4 = New Tuple(Of Integer, Boolean, Boolean)(248, True, True)
-        MyBase.bsize5 = New Tuple(Of Integer, Boolean, Boolean)(249, True, True)
-        MyBase.bsize6 = New Tuple(Of Integer, Boolean, Boolean)(250, True, True)
-        MyBase.bsize7 = New Tuple(Of Integer, Boolean, Boolean)(251, True, True)
+        bsize3 = New Tuple(Of Integer, Boolean, Boolean)(247, True, True)
+        bsize4 = New Tuple(Of Integer, Boolean, Boolean)(248, True, True)
+        bsize5 = New Tuple(Of Integer, Boolean, Boolean)(249, True, True)
+        bsize6 = New Tuple(Of Integer, Boolean, Boolean)(250, True, True)
+        bsize7 = New Tuple(Of Integer, Boolean, Boolean)(251, True, True)
 
-        MyBase.usize1 = New Tuple(Of Integer, Boolean, Boolean)(256, True, True)
-        MyBase.usize2 = New Tuple(Of Integer, Boolean, Boolean)(257, True, True)
-        MyBase.usize3 = New Tuple(Of Integer, Boolean, Boolean)(258, True, True)
-        MyBase.usize4 = New Tuple(Of Integer, Boolean, Boolean)(259, True, True)
-        MyBase.usize5 = New Tuple(Of Integer, Boolean, Boolean)(260, True, True)
+        usize1 = New Tuple(Of Integer, Boolean, Boolean)(256, True, True)
+        usize2 = New Tuple(Of Integer, Boolean, Boolean)(257, True, True)
+        usize3 = New Tuple(Of Integer, Boolean, Boolean)(258, True, True)
+        usize4 = New Tuple(Of Integer, Boolean, Boolean)(259, True, True)
+        usize5 = New Tuple(Of Integer, Boolean, Boolean)(260, True, True)
 
         '|Description|
         setDesc("Yeah, uhh... I didn't have time to finish the thing this was a part of, so..." & DDUtils.RNRN &

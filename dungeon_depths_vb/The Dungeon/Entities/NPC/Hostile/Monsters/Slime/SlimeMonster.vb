@@ -12,8 +12,8 @@
 
     Public Overrides Sub attackCMD(ByRef target As Entity)
         If health < 0.75 And Int(Rnd() * 2) = 0 Then
-            Game.pushLblCombatEvent("The " & getName() & " used Absortion!")
-            Game.pushLstLog("The " & getName() & " used Absortion!")
+            TextEvent.pushCombat("The " & getName() & " used Absortion!")
+            TextEvent.pushLog("The " & getName() & " used Absortion!")
             Dim dmg = calcDamage(Me.getATK * 1.5, target.getDEF)
             hit(dmg, target)
             takeDMG(-dmg, Nothing)
@@ -32,6 +32,6 @@
         End If
 
         p.ongoingTFs.add(New SlimeETF(p.perks(perk.slimetf)))
-        Game.pushLblEvent(out, AddressOf p.update)
+        TextEvent.push(out, AddressOf p.update)
     End Sub
 End Class

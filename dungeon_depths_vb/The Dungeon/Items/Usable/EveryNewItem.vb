@@ -23,7 +23,7 @@
             p.inv.add(i, 1)
         Next
 
-        Game.pushLblEvent("Added one of every new item in v10.5.X!")
+        TextEvent.push("Added one of every new item in v10.5.X!")
 
         count -= 1
     End Sub

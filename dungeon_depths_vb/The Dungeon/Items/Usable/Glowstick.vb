@@ -21,22 +21,22 @@
 
     Overrides Sub use(ByRef p As Player)
         If Me.getUsable() = False Then Exit Sub
-        Game.pushLstLog("You use the " & getName())
+        TextEvent.pushLog("You use the " & getName())
 
         For indY = -3 To 3
             For indX = -3 To 3
                 If p.pos.Y + indY < Game.currFloor.mBoardHeight And p.pos.Y + indY >= 0 And p.pos.X + indX < Game.currFloor.mBoardWidth And p.pos.X + indX >= 0 Then
                     If Game.currFloor.mBoard(p.pos.Y + indY, p.pos.X + indX).Text = "H" And Game.currFloor.mBoard(p.pos.Y + indY, p.pos.X + indX).Tag < 2 Then
                         Game.currFloor.mBoard(p.pos.Y + indY, p.pos.X + indX).ForeColor = Color.Black
-                        Game.pushLstLog("Floor " & Game.mDun.numCurrFloor & ": Staircase Discovered")
+                        TextEvent.pushLog("Floor " & Game.mDun.numCurrFloor & ": Staircase Discovered")
                     End If
                     If Game.currFloor.mBoard(p.pos.Y + indY, p.pos.X + indX).Text = "#" And Game.currFloor.mBoard(p.pos.Y + indY, p.pos.X + indX).Tag < 2 Then
                         Game.currFloor.mBoard(p.pos.Y + indY, p.pos.X + indX).ForeColor = Color.Black
-                        Game.pushLstLog("Chest discovered!")
+                        TextEvent.pushLog("Chest discovered!")
                     End If
                     If Game.currFloor.mBoard(p.pos.Y + indY, p.pos.X + indX).Text = "$" And Game.currFloor.mBoard(p.pos.Y + indY, p.pos.X + indX).Tag < 2 Then
                         Game.currFloor.mBoard(p.pos.Y + indY, p.pos.X + indX).ForeColor = Color.Navy
-                        Game.pushLstLog("Shop discovered!")
+                        TextEvent.pushLog("Shop discovered!")
                     End If
                     If Game.currFloor.mBoard(p.pos.Y + indY, p.pos.X + indX).Tag = 1 Then Game.currFloor.mBoard(p.pos.Y + indY, p.pos.X + indX).Tag = 2
                 End If
@@ -63,7 +63,7 @@
                 Case 5
                     c = Color.GreenYellow
             End Select
-            Game.pushLblEvent("As you crack the glowstick to activate it, the tube cracks open slightly, spraying some fluid on your face.  You wipe it off, and while you don't feel any different, your hair seems a little more...vibrant than it was before.")
+            TextEvent.push("As you crack the glowstick to activate it, the tube cracks open slightly, spraying some fluid on your face.  You wipe it off, and while you don't feel any different, your hair seems a little more...vibrant than it was before.")
             p.prt.haircolor = c
             p.drawPort()
             p.savePState()

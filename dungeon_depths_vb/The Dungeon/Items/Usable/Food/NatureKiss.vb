@@ -23,10 +23,10 @@
     Public Overrides Sub effect(ByRef p As Player)
         If ((p.getIntHealth / p.getMaxHealth) < (p.getMana / p.getMaxMana)) Or ((p.getIntHealth / p.getMaxHealth) < (p.getMana / p.getMaxMana) And Int(Rnd() * 2) = 0) Then
             p.health += 125 / p.getMaxHealth
-            Game.pushLstLog("+150 health!")
+            TextEvent.pushLog("+150 health!")
         Else
             p.mana += 75
-            Game.pushLstLog("+75 mana!")
+            TextEvent.pushLog("+75 mana!")
         End If
 
         If Int(Rnd() * 3) = 0 Or Game.noRNG Then

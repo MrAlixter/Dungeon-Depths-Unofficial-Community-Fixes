@@ -14,7 +14,7 @@
     End Sub
 
     Public Overrides Sub setWaitTime(stage As Integer)
-        If Game.combatmode Then turns_until_next_step = 4 Else turns_until_next_step = 18
+        If Game.combat_engaged Then turns_until_next_step = 4 Else turns_until_next_step = 18
     End Sub
 
     Public Overrides Sub step1()

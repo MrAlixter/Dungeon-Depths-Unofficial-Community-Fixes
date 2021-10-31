@@ -16,7 +16,7 @@
             p.prt.setIAInd(pInd.fronthair, newFHairInd, False, False)
 
             If p.perks(perk.slutcurse) > -1 Then
-                Game.pushLblEvent("Thoughts of modesty return to your mind. You are free of the slut curse!")
+                TextEvent.push("Thoughts of modesty return to your mind. You are free of the slut curse!")
                 p.perks(perk.slutcurse) = -1
             End If
 
@@ -24,7 +24,7 @@
 
             p.drawPort()
         Else
-            Game.pushLblEvent("Nothing happened!")
+            TextEvent.push("Nothing happened!")
             End If
             p.savePState()
             p.drawPort()

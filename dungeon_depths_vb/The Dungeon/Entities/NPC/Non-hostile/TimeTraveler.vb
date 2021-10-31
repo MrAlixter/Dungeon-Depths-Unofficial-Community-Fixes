@@ -6,6 +6,7 @@
         '|ID Info|
         name = "Time Traveler"
         sName = name
+        npc_index = sNPCInd.timetraveler
 
         '|NPC Flags|
         pronoun = "she"
@@ -50,7 +51,7 @@
         Objective.showNPC(ShopNPC.npcLib.atrs(0).getAt(43), """Oh, hey, it's you.  Weren't you supposed to be locked up?""" & DDUtils.RNRN &
                                                             "Press any non-movement key to continue.")
 
-        Game.npcmode = False
+        Game.shop_npc_engaged = False
     End Sub
 
     Public Overrides Function toFight() As String

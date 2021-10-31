@@ -25,10 +25,10 @@
 
     Overridable Sub wThrow(ByRef p As Player, ByRef m As Entity)
         If m Is Nothing Then
-            Game.pushLblEvent("You throw the knife across the dungeon at nothing in particular.")
-            Game.pushLstLog("You throw the knife across the dungeon at nothing in particular.")
+            TextEvent.push("You throw the knife across the dungeon at nothing in particular.")
+            TextEvent.pushLog("You throw the knife across the dungeon at nothing in particular.")
         Else
-            Game.pushLstLog("You throw the knife!")
+            TextEvent.pushLog("You throw the knife!")
             Dim dmg As Integer = (p.getATK) + (10) + Int(Rnd() * 3 + 1)
             p.hit(dmg, m)
         End If

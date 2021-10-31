@@ -44,16 +44,16 @@
         '|Basic Attack|
         Dim dmg = Entity.calcDamage(getATK, ((target.getDEF + target.getWIL) / 2))
 
-        Game.pushLogAndEvent("The " & getName() & " fires a sleek chrome rifle!")
+        TextEvent.pushAndLog("The " & getName() & " fires a sleek chrome rifle!")
         target.takeDMG(dmg, Me)
     End Sub
 
     Public Overrides Sub playerDeath(ByRef p As Player)
-        Game.pushLstLog("The Time Cop tosses a cryogrenade at you!")
+        TextEvent.pushLog("The Time Cop tosses a cryogrenade at you!")
         p.petrify(Color.FromArgb(255, 75, 209, 255), 9999)
         p.drawPort()
 
-        Game.pushLblEvent("The Time Cop relaxes, staring at your frozen body." & DDUtils.RNRN &
+        TextEvent.push("The Time Cop relaxes, staring at your frozen body." & DDUtils.RNRN &
                           """I got " & If(p.sex = "Male", "him", "her") & ", I GOT " & If(p.sex = "Male", "HIM", "HER") & "!"", they exclaim into their communicatior." & DDUtils.RNRN &
                           "Before long, two more agents show up and the group hastily opens a portal to a familiar cell.  The group then rotates you horizontally, and begins carrying you towards the rift before..." & DDUtils.RNRN &
                           "CRASH!!!" & DDUtils.RNRN &

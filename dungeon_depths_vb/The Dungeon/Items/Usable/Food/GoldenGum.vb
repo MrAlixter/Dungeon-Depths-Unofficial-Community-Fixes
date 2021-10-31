@@ -26,13 +26,13 @@
 
     Overrides Sub effect(ByRef p As Player)
         If p.className.Equals("Bimbo") Then
-            Game.pushLblEvent("Chewing the gum make your head feel warm and fuzzy and stuff. You like, totally, love this gum!" & DDUtils.RNRN &
+            TextEvent.push("Chewing the gum make your head feel warm and fuzzy and stuff. You like, totally, love this gum!" & DDUtils.RNRN &
                               "+1000 XP")
             p.addXP(1000)
         Else
             GBimboTF.snapTF(p)
 
-            Game.pushLblEvent("As you unwrap the stick of gum, you can feel your hair growing out.  As your bangs, now a bright blonde, drop in front of your eyes, you pop the gum into your mouth and begin to chew.  Almost immediately, a massive rush of magical energy staggers you and a glittery cloud settling into your mind." & DDUtils.RNRN &
+            TextEvent.push("As you unwrap the stick of gum, you can feel your hair growing out.  As your bangs, now a bright blonde, drop in front of your eyes, you pop the gum into your mouth and begin to chew.  Almost immediately, a massive rush of magical energy staggers you and a glittery cloud settling into your mind." & DDUtils.RNRN &
                               "Through the mental haze, you look down at your tits. You, like, never noticed how round and big they had got. You giggle, all traces of intellect vanishing as your body becomes more curvy and feminine and your clothing shifts into a skimpy outfit." & DDUtils.RNRN &
                               "You are now a bimbo!")
         End If

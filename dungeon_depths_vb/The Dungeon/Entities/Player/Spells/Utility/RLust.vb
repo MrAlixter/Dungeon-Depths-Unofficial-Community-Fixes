@@ -8,7 +8,7 @@
         MyBase.setcost(6)
     End Sub
     Public Overrides Sub effect()
-        If Not Game.combatmode Then backfire() : Exit Sub
+        If Not Game.combat_engaged Then backfire() : Exit Sub
 
         Dim t = MyBase.getTarget
 
@@ -19,13 +19,13 @@
             t.stunct = 1
         End If
 
-        Game.pushLogAndEvent("Your foe is distracted by their lust!  " & t.stunct & " turns remaining.")
+        TextEvent.pushAndLog("Your foe is distracted by their lust!  " & t.stunct & " turns remaining.")
     End Sub
 
     Public Overrides Sub backfire()
         MyBase.getCaster.addLust(Math.Max(MyBase.getCaster.getLust, 15))
 
-        Game.pushLogAndEvent("You raise your own lust!")
+        TextEvent.pushAndLog("You raise your own lust!")
     End Sub
 
     Public Overrides Function getDesc(ByRef c As Player, ByRef t As NPC) As Object

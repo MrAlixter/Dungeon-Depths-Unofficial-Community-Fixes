@@ -17,8 +17,8 @@
 
         p.dBuff = p.dBuff + ((p.getDEF - p.dBuff) * 0.4)
 
-        Game.pushLstLog("Guard Up!")
-        Game.pushLblCombatEvent("Guard Up!" & vbCrLf & "+40% DEF for 3 turns.")
+        TextEvent.pushLog("Guard Up!")
+        TextEvent.pushCombat("Guard Up!" & vbCrLf & "+40% DEF for 3 turns.")
     End Sub
 
     Public Overrides Function getCost() As Integer

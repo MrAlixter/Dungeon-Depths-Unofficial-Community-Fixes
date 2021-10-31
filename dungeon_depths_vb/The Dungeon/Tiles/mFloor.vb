@@ -52,7 +52,7 @@ Public Class mFloor
         placeChest(floorCode)
         If floorNumber > 2 Then placeTraps()
 
-        placeNPCs(Game.shopNPCList, getPossibleNPCs)
+        placeNPCs(Game.shop_npc_list, getPossibleNPCs)
         If updateLoadbar Then Game.updateLoadbar(70)
 
         If updateLoadbar Then
@@ -81,7 +81,7 @@ Public Class mFloor
                 mBoard(y, x) = New mTile(0, "", Color.Black)
             Next
         Next
-        For Each n In Game.shopNPCList
+        For Each n In Game.shop_npc_list
             n.pos = New Point(-1, -1)
         Next
 
@@ -901,7 +901,7 @@ Public Class mFloor
         inv.add("BitGold", r)
 
         inv.add("Space_Age_Jumpsuit", 1)
-        c1 = Game.baseChest.Create(inv, p, False)
+        c1 = DDConst.BASE_CHEST.Create(inv, p, False)
 
         chestList.Add(c1)
         mBoard(p.Y, p.X).ForeColor = Color.FromArgb(45, 45, 45)
@@ -922,7 +922,7 @@ Public Class mFloor
         inv.add("Combat_Module", r)
 
         inv.add("Vial_of_BIM_II", 1)
-        c1 = Game.baseChest.Create(inv, p, False)
+        c1 = DDConst.BASE_CHEST.Create(inv, p, False)
 
         chestList.Add(c1)
         mBoard(p.Y, p.X).ForeColor = Color.FromArgb(45, 45, 45)
@@ -1094,7 +1094,7 @@ Public Class mFloor
 
         inv.add("AAAAAA_Battery", CInt(Rnd() * 10) + 5)
 
-        c1 = Game.baseChest.Create(inv, p, False)
+        c1 = DDConst.BASE_CHEST.Create(inv, p, False)
 
         chestList.Add(c1)
         mBoard(p.Y, p.X).ForeColor = Color.FromArgb(45, 45, 45)
@@ -1109,7 +1109,7 @@ Public Class mFloor
         inv.add("Phase_Vibrator", 1)
         inv.add("AAAAAA_Battery", CInt(Rnd() * 10) + 5)
 
-        c1 = Game.baseChest.Create(inv, p, False)
+        c1 = DDConst.BASE_CHEST.Create(inv, p, False)
 
         chestList.Add(c1)
         mBoard(p.Y, p.X).ForeColor = Color.FromArgb(45, 45, 45)
@@ -1164,7 +1164,7 @@ Public Class mFloor
         inv.add("Bunny_Ears", 1)
         inv.add(150, 1)
 
-        c1 = Game.baseChest.Create(inv, p, False)
+        c1 = DDConst.BASE_CHEST.Create(inv, p, False)
 
         chestList.Add(c1)
         mBoard(p.Y, p.X).ForeColor = Color.FromArgb(45, 45, 45)
@@ -1201,13 +1201,13 @@ Public Class mFloor
     End Function
     Sub placeChest(ByVal code As String, Optional ByVal numChests As Integer = 0)
         'Fill Chest Tier List
-        For i = 1 To Game.baseChest.tiers.Count - 1
-            Game.baseChest.tiers(i).Clear()
+        For i = 1 To DDConst.BASE_CHEST.tiers.Count - 1
+            DDConst.BASE_CHEST.tiers(i).Clear()
         Next
-        For i = 0 To Game.baseChest.contents.upperBound
-            Dim c_item = Game.baseChest.contents.item(i)
+        For i = 0 To DDConst.BASE_CHEST.contents.upperBound
+            Dim c_item = DDConst.BASE_CHEST.contents.item(i)
             If c_item.getTier() <> Nothing And Not c_item.droppable Then
-                Game.baseChest.tiers(c_item.getTier()).Add(c_item)
+                DDConst.BASE_CHEST.tiers(c_item.getTier()).Add(c_item)
             End If
         Next
         Rnd(-1)
@@ -1235,7 +1235,7 @@ Public Class mFloor
 
         For i = 1 To numChests
             Dim chestPoint = randPoint()
-            Dim chest As Chest = Game.baseChest.Create(chestPoint, code)
+            Dim chest As Chest = DDConst.BASE_CHEST.Create(chestPoint, code)
             addChest(chest, chestPoint)
         Next
 
@@ -1257,11 +1257,11 @@ Public Class mFloor
             Dim trapPoint = randPoint()
             mBoard(trapPoint.Y, trapPoint.X).ForeColor = Color.FromArgb(45, 45, 45)
             mBoard(trapPoint.Y, trapPoint.X).Text = "+"
-            Dim t = Trap.trapFactory(Int(Rnd() * 5), trapPoint)
+            Dim t = Trap.trapFactory(Trap.getRandomTrapId(), trapPoint)
             trapList.Add(t)
         Next
     End Sub
-    Sub placeNPCs(ByRef npcList As List(Of ShopNPC), ByVal possibleNPCs As Integer())
+    Sub placeNPCs(ByRef npc_list As List(Of ShopNPC), ByVal possibleNPCs As Integer())
         npcPositions.Clear()
 
         Dim numNpc As Integer = Int(Rnd() * possibleNPCs.Length) + 1
@@ -1271,13 +1271,13 @@ Public Class mFloor
         For i = 1 To numNpc
             Dim npcPoint = randPoint()
             Dim npcInd = Int(Rnd() * possibleNPCs.Length)
-            While placed.Contains(npcInd) And Not placed.Count >= npcList.Count
+            While placed.Contains(npcInd) And Not placed.Count >= npc_list.Count
                 npcInd = Int(Rnd() * possibleNPCs.Length)
             End While
 
             If floorNumber = 1 Then npcInd = 0
 
-            Dim sNPC = npcList(possibleNPCs(npcInd))
+            Dim sNPC = npc_list(possibleNPCs(npcInd))
 
             addNPC(sNPC, npcPoint)
 
@@ -1287,8 +1287,8 @@ Public Class mFloor
 
         If Game.player1.cursed And Game.cbrok.pos.X = -1 And Not Game.cbrok.isDead Then addNPC(Game.cbrok, randPoint)
 
-        For i = 0 To npcList.Count - 1
-            npcPositions.Add(npcList(i).pos)
+        For i = 0 To npc_list.Count - 1
+            npcPositions.Add(npc_list(i).pos)
         Next
     End Sub
     Function getPossibleNPCs() As Integer()
@@ -1567,7 +1567,7 @@ Public Class mFloor
             writer = IO.File.CreateText("floors/" & floorCode & ".flr")
             writer.WriteLine(saveMFloor)
         Catch ex As Exception
-            Game.pushLblEvent("Error writing floor " & floorCode & " to file!")
+            TextEvent.push("Error writing floor " & floorCode & " to file!")
         Finally
             writer.Flush()
             writer.Close()
@@ -1581,7 +1581,7 @@ Public Class mFloor
                 loadMFloor(reader.ReadLine)
             End If
         Catch ex As Exception
-            Game.pushLblEvent("Error reading floor " & floorCode & " from file!")
+            TextEvent.push("Error reading floor " & floorCode & " from file!")
         Finally
             If Not reader Is Nothing Then reader.Close()
         End Try

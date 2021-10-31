@@ -51,9 +51,6 @@ Public Class Debug_Window
         End If
         boxSex.Checked = playerPortrait.sexBool
         AddHandler boxSex.CheckedChanged, AddressOf boxSex_CheckedChanged
-        For i = 0 To Game.titleList.Count - 1
-            boxForm.Items.Add(Game.titleList(i).ToString())
-        Next
 
         boxForm.SelectedItem = Game.player1.className
 
@@ -238,7 +235,7 @@ Public Class Debug_Window
                     map.SetPixel(boardX + 1, boardY + 1, Color.Red)
                 ElseIf (Game.currFloor.mBoard(boardY, boardX).Text = "|") Or (Game.currFloor.mBoard(boardY, boardX).Text = "-") Then 'Barrier
                     map.SetPixel(boardX + 1, boardY + 1, Color.DarkRed)
-                ElseIf (Game.currFloor.mBoard(boardY, boardX).Tag = 2) Or Game.alwaysDrawCharacters.Contains(Game.currFloor.mBoard(boardY, boardX).Text) Then 'Seen
+                ElseIf (Game.currFloor.mBoard(boardY, boardX).Tag = 2) Or DDConst.ALWAYS_REDRAWN_CHARS.Contains(Game.currFloor.mBoard(boardY, boardX).Text) Then 'Seen
                     map.SetPixel(boardX + 1, boardY + 1, Color.White)
                 ElseIf (Game.currFloor.mBoard(boardY, boardX).Tag = 1) Then 'Unseen
                     map.SetPixel(boardX + 1, boardY + 1, Color.Gray)

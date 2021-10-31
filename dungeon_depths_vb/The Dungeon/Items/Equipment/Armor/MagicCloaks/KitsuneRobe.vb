@@ -13,17 +13,17 @@
         count = 0
         value = 7777
 
-        MyBase.bsize1 = New Tuple(Of Integer, Boolean, Boolean)(253, True, True)
-        MyBase.bsize2 = New Tuple(Of Integer, Boolean, Boolean)(254, True, True)
-        MyBase.bsize3 = New Tuple(Of Integer, Boolean, Boolean)(255, True, True)
-        MyBase.bsize4 = New Tuple(Of Integer, Boolean, Boolean)(256, True, True)
+        bsize1 = New Tuple(Of Integer, Boolean, Boolean)(253, True, True)
+        bsize2 = New Tuple(Of Integer, Boolean, Boolean)(254, True, True)
+        bsize3 = New Tuple(Of Integer, Boolean, Boolean)(255, True, True)
+        bsize4 = New Tuple(Of Integer, Boolean, Boolean)(256, True, True)
 
-        MyBase.usize0 = New Tuple(Of Integer, Boolean, Boolean)(172, True, True)
-        MyBase.usize1 = New Tuple(Of Integer, Boolean, Boolean)(173, True, True)
-        MyBase.usize2 = New Tuple(Of Integer, Boolean, Boolean)(174, True, True)
-        MyBase.usize3 = New Tuple(Of Integer, Boolean, Boolean)(175, True, True)
-        MyBase.usize4 = New Tuple(Of Integer, Boolean, Boolean)(176, True, True)
-        MyBase.usize5 = New Tuple(Of Integer, Boolean, Boolean)(177, True, True)
+        usize0 = New Tuple(Of Integer, Boolean, Boolean)(172, True, True)
+        usize1 = New Tuple(Of Integer, Boolean, Boolean)(173, True, True)
+        usize2 = New Tuple(Of Integer, Boolean, Boolean)(174, True, True)
+        usize3 = New Tuple(Of Integer, Boolean, Boolean)(175, True, True)
+        usize4 = New Tuple(Of Integer, Boolean, Boolean)(176, True, True)
+        usize5 = New Tuple(Of Integer, Boolean, Boolean)(177, True, True)
 
         MyBase.cloak = New Tuple(Of Integer, Boolean, Boolean)(5, True, False)
 

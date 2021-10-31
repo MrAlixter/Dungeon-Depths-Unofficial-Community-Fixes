@@ -12,7 +12,7 @@
     Public Overrides Sub init()
         MyBase.init()
 
-        Game.pushNPCDialog("""Hey, can I ask for your help on something?  I've been seeing a lot of people roaming around here with those collars looking for valubles, and that got me thinking... Why don't I expand my staff?  If you can snip off a few of their collars and send them my way,  I can make it worth your time.""" & DDUtils.RNRN &
+        TextEvent.pushNPCDialog("""Hey, can I ask for your help on something?  I've been seeing a lot of people roaming around here with those collars looking for valubles, and that got me thinking... Why don't I expand my staff?  If you can snip off a few of their collars and send them my way,  I can make it worth your time.""" & DDUtils.RNRN &
                    "Quest ""Help Wanted"" acquired!" & vbCrLf & "+1 Old Snips")
 
         Game.player1.inv.add(251, 1)
@@ -35,13 +35,13 @@ Public Class HWantedSnipCollars
         MyBase.complete()
 
         Dim newpoint = Game.currFloor.getRndAdjPoint(Game.player1)
-        Game.shopNPCList(0).pos = newpoint
+        Game.shop_npc_list(0).pos = newpoint
         Game.currFloor.npcPositions(0) = newpoint
 
         Game.drawBoard()
 
         Game.npcEncounter(Game.shopkeeper)
-        Game.pushNPCDialog("""Well done!  With the extra manpower, I'll probably be able to rotate in some more useful stock.  For more immediate payment, I hope this is to your liking.""" & DDUtils.RNRN &
+        TextEvent.pushNPCDialog("""Well done!  With the extra manpower, I'll probably be able to rotate in some more useful stock.  For more immediate payment, I hope this is to your liking.""" & DDUtils.RNRN &
                            "+1 Collar Snips" & vbCrLf &
                            "+1000 Gold")
 

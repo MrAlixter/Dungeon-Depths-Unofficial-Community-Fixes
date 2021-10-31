@@ -22,16 +22,16 @@
         value = 7777
 
         '|Image Index|
-        MyBase.bsize1 = New Tuple(Of Integer, Boolean, Boolean)(280, True, True)
-        MyBase.bsize2 = New Tuple(Of Integer, Boolean, Boolean)(281, True, True)
-        MyBase.bsize3 = New Tuple(Of Integer, Boolean, Boolean)(282, True, True)
-        MyBase.bsize4 = New Tuple(Of Integer, Boolean, Boolean)(283, True, True)
+        bsize1 = New Tuple(Of Integer, Boolean, Boolean)(280, True, True)
+        bsize2 = New Tuple(Of Integer, Boolean, Boolean)(281, True, True)
+        bsize3 = New Tuple(Of Integer, Boolean, Boolean)(282, True, True)
+        bsize4 = New Tuple(Of Integer, Boolean, Boolean)(283, True, True)
 
-        MyBase.usize1 = New Tuple(Of Integer, Boolean, Boolean)(178, True, True)
-        MyBase.usize2 = New Tuple(Of Integer, Boolean, Boolean)(179, True, True)
-        MyBase.usize3 = New Tuple(Of Integer, Boolean, Boolean)(180, True, True)
-        MyBase.usize4 = New Tuple(Of Integer, Boolean, Boolean)(181, True, True)
-        MyBase.usize5 = New Tuple(Of Integer, Boolean, Boolean)(182, True, True)
+        usize1 = New Tuple(Of Integer, Boolean, Boolean)(178, True, True)
+        usize2 = New Tuple(Of Integer, Boolean, Boolean)(179, True, True)
+        usize3 = New Tuple(Of Integer, Boolean, Boolean)(180, True, True)
+        usize4 = New Tuple(Of Integer, Boolean, Boolean)(181, True, True)
+        usize5 = New Tuple(Of Integer, Boolean, Boolean)(182, True, True)
 
         '|Description|
         setDesc("A glittering, heavenly soft sweater." & DDUtils.RNRN &

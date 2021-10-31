@@ -6,6 +6,7 @@
         '|ID Info|
         name = "Food Vendor"
         sName = name
+        npc_index = sNPCInd.foodvendor
 
         '|NPC Flags|
         pronoun = "he"
@@ -73,7 +74,7 @@
         'If the food vendor has the sword, use the alternate food vendor character
         If Game.player1.perks(perk.fvHasSword) > 0 Then
             Dim fvt = New FVendorTar(Me)
-            Game.currNPC = fvt
+            Game.active_shop_npc = fvt
             fvt.encounter()
             Exit Sub
         End If
@@ -87,7 +88,7 @@
             inv.setCount("Warrior's_Feast", 0)
             inv.setCount("Mage's_Delicacy", 0)
             inv.setCount("Tavern_Special", 0)
-            Game.pushNPCDialog("Hey!  I'm turning into a tree!  Now, obviously this ain't great, but at least I'm getting wood!  HA!" & DDUtils.RNRN &
+            TextEvent.pushNPCDialog("Hey!  I'm turning into a tree!  Now, obviously this ain't great, but at least I'm getting wood!  HA!" & DDUtils.RNRN &
                                "That's a little bit of some tree humor, buy some stuff before you leaf and maybe I can get this straighed out before this curse runs its course, eh?")
         Else
             If img_index = 0 Then
@@ -96,46 +97,46 @@
                 If Int(Rnd() * 20) = 0 Then
                     discount = 0.25
                     img_index = 7
-                    Game.pushNPCDialog("*ahem* Apologies, but my dear friend here is currently occupied..." & DDUtils.RNRN &
+                    TextEvent.pushNPCDialog("*ahem* Apologies, but my dear friend here is currently occupied..." & DDUtils.RNRN &
                                        "If it helps speed up your decision, I had him whip up a bit of a surplus beforehand, and I can give you a 25% discount on that.  Please leave the gold for anything you purchase on the counter." & DDUtils.RNRN &
                                        "Oh, and by the way, take care not to dawdle or try anything suspicious.  I am always in need of guinea pigs, and I have quite the back-log of expirements I would like to try on a less amiable subject.")
                 ElseIf Int(Rnd() * 20) = 1 Then
                     img_index = 5
-                    Game.pushNPCDialog("Hey!  I was trying out a new type of cream, aaaaaaaaand, well, turns out there were a couple side effects..." & DDUtils.RNRN &
+                    TextEvent.pushNPCDialog("Hey!  I was trying out a new type of cream, aaaaaaaaand, well, turns out there were a couple side effects..." & DDUtils.RNRN &
                                        "Don't worry though, I'm pretty sure none of it made it into the stuff for sale.  But hey, if you want any of it, let me know, ok?" & DDUtils.RNRN &
                                        "If you're hungry, I've always got something cooking.  So, what can I get you?")
                 ElseIf Int(Rnd() * 20) = 2 Then
                     img_index = 6
-                    Game.pushNPCDialog("Say what you will about Marissa, but the lady " & If(Game.player1.perks(perk.mrevived) < 0, "had", "has") & " a type for sure..." & DDUtils.RNRN &
+                    TextEvent.pushNPCDialog("Say what you will about Marissa, but the lady " & If(Game.player1.perks(perk.mrevived) < 0, "had", "has") & " a type for sure..." & DDUtils.RNRN &
                                        "Fortunately for me, I've got a deal goin' on with one of the hottest mind controllers you'll find in these parts, and part of my payment was some solid mental defense training.  I'm not even worried about the new body, either.  I've got just the thing to change back me to my old self... when I get bored, that is.  No reason not to enjoy " & If(Game.player1.perks(perk.mrevived) < 0, "her student's", "her") & " ""tip"" to its fullest, right?" & DDUtils.RNRN &
                                        "In the meantime, I've always got something cooking if you're hungry.  Let me know if I can get you anything, ok?")
                 Else
-                    Game.pushNPCDialog("Welcome!  If you're hungry, I've always got something cooking." & DDUtils.RNRN &
+                    TextEvent.pushNPCDialog("Welcome!  If you're hungry, I've always got something cooking." & DDUtils.RNRN &
                                        "Not just food, by the way.  I've done a fair bit of playin' around with magic ingredients, and even if I can't use magic myself I can still work wonders with the right recipe." & DDUtils.RNRN &
                                        "So, what can I get ya?")
                 End If
             ElseIf img_index = 1 Then
-                Game.pushNPCDialog("Broak, croak, ribbit.")
+                TextEvent.pushNPCDialog("Broak, croak, ribbit.")
             ElseIf img_index = 2 Then
-                Game.pushNPCDialog("...")
+                TextEvent.pushNPCDialog("...")
             ElseIf img_index = 3 Then
-                Game.pushNPCDialog("You dine with royalty this day, " & Game.player1.className & ".  I assure you, my cooking is more than fit for a princess, and I would know! ~🖤" & DDUtils.RNRN &
+                TextEvent.pushNPCDialog("You dine with royalty this day, " & Game.player1.className & ".  I assure you, my cooking is more than fit for a princess, and I would know! ~🖤" & DDUtils.RNRN &
                                    "See, you may have thought you got the upper hand by turning me into a helpless princess, but now I've turned it around into marketing!  Pretty sneaky, huh?")
             ElseIf img_index = 4 Then
-                Game.pushNPCDialog("I'd be lyin' if I said I wasn't used to being turned into a woman at this point." & DDUtils.RNRN &
+                TextEvent.pushNPCDialog("I'd be lyin' if I said I wasn't used to being turned into a woman at this point." & DDUtils.RNRN &
                                    "Between my research dates, and all the other crazy stuff that goes on around this place, it'd probably be a decent idea to have more than just the mental defenses.  But hey, variety is the spice of life, and I'm totally sizzlin' in this thing!" & DDUtils.RNRN &
                                    "Don't, uh, tell Teach I said that though, she might end up keeping me like this...")
             ElseIf img_index = 8 Or img_index = 12 Then
-                Game.pushNPCDialog("...")
+                TextEvent.pushNPCDialog("...")
             ElseIf img_index = 10 Then
                 If Game.player1.formName.Equals("Arachne") Then
-                    Game.pushNPCDialog("Hey, it's you!  All hail the spider goddess or whatever we're on about, to be completely honest I wasn't really paying attention during my initiation." & DDUtils.RNRN &
+                    TextEvent.pushNPCDialog("Hey, it's you!  All hail the spider goddess or whatever we're on about, to be completely honest I wasn't really paying attention during my initiation." & DDUtils.RNRN &
                                        "So, whatcha eatin'?")
                 Else
-                    Game.pushNPCDialog("Ya know, they did give me this extra strength venom you could use if you wanted to try this spider thing out...")
+                    TextEvent.pushNPCDialog("Ya know, they did give me this extra strength venom you could use if you wanted to try this spider thing out...")
                 End If
             ElseIf img_index = 11 Then
-                Game.pushNPCDialog("I'll be the one to say it, you're better at this than Marissa.  Are you two working together or something?")
+                TextEvent.pushNPCDialog("I'll be the one to say it, you're better at this than Marissa.  Are you two working together or something?")
             End If
         End If
 
@@ -191,7 +192,7 @@
     End Function
 
     Public Overrides Sub toDoll()
-        Game.pushNPCDialog("...")
+        TextEvent.pushNPCDialog("...")
         Game.picNPC.BackgroundImage = picNPC(8)
 
         discount = 0.5

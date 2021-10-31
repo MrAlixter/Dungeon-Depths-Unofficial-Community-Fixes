@@ -2,15 +2,23 @@
     Inherits Armor
 
     Sub New()
+        '|ID Info|
         setName("Valkyrie_Armor")
-
         id = 95
         tier = Nothing
-        usable = false
-        MyBase.d_boost = 25
+
+        '|Item Flags|
+        usable = False
+        compress_breast = True
+        rando_inv_allowed = False
+        show_underboob = True
+
+        '|Stats|
+        d_boost = 25
         count = 0
         value = 600
 
+        '|Image Index|
         bsizeneg1 = New Tuple(Of Integer, Boolean, Boolean)(18, False, True)
         bsize0 = New Tuple(Of Integer, Boolean, Boolean)(64, False, True)
         bsize1 = New Tuple(Of Integer, Boolean, Boolean)(96, True, True)
@@ -23,21 +31,18 @@
         usize2 = New Tuple(Of Integer, Boolean, Boolean)(127, True, True)
         usize3 = New Tuple(Of Integer, Boolean, Boolean)(128, True, True)
 
-        MyBase.compress_breast = True
-
-        rando_inv_allowed = False
-
+        '|Description|
         setDesc("An etherial armor set crafted for a valiant defender." & DDUtils.RNRN & _
-                             getSizeInformation() & vbcrlf & getStatInformation() & vbCrLf & _
+                             getSizeInformation() & vbCrLf & getStatInformation() & vbCrLf & _
                              "Valkyries can not remove this armor.")
     End Sub
 
     Overrides Sub discard()
         If Game.player1.className.Equals("Valkyrie") Then
-            Game.pushLstLog("Your armor magically reappears!")
+            TextEvent.pushLog("Your armor magically reappears!")
             Exit Sub
         End If
-        Game.pushLstLog("You drop the " & getName())
+        TextEvent.pushLog("You drop the " & getName())
 
         count -= 1
     End Sub

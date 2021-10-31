@@ -23,7 +23,7 @@
             out += "Twirling, you giggle before striking a pose, making sure to press your big titties together.  If you were paying better attention, you might have noticed the almost sinister crimson aura binding the wand to your perfectly manicured hand, but, like, hey, why would you want to get rid of your cute new wand?"
         End If
 
-        Game.pushLblEvent(out, AddressOf step2)
+        TextEvent.push(out, AddressOf step2)
         p.TextColor = Game.lblEvent.ForeColor
     End Sub
 
@@ -50,7 +50,7 @@
         p.prt.setIAInd(pInd.hairacc, 3, True, False)
 
         Equipment.accChange(p, "Nothing")
-        Equipment.clothesChange(p, "Magical_Slut_Outfit")
+        EquipmentDialogBackend.armorChange(p, "Magical_Slut_Outfit")
     End Sub
 
     Overrides Sub step2()

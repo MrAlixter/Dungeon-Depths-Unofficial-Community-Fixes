@@ -13,7 +13,7 @@
 
     Public Overrides Sub discard()
         If cursed And Not owner Is Nothing AndAlso owner.equippedWeapon.getAName.Equals(getAName) Then
-            Game.pushLblEvent("You are unable to drop your equipped equipment.")
+            TextEvent.push("You are unable to drop your equipped equipment.")
         Else
             MyBase.discard()
         End If

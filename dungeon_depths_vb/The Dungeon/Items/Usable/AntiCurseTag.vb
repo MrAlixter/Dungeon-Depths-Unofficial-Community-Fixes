@@ -24,13 +24,15 @@
         p.perks(perk.slutcurse) = -1
 
         If Equipment.antiClothingCurse(p) Then
-            Game.pushLblEvent("You apply the anti-curse tag to your equipment.  The slut curse is neutralized!")
-        ElseIf p.equippedArmor.cursed Then
-            Equipment.equipArmor(p, "Naked")
-        ElseIf p.equippedWeapon.cursed Then
-            Equipment.equipWeapon(p, "Fists")
-        ElseIf p.equippedAcce.cursed Then
-            Equipment.equipAcce(p, "Nothing")
+            TextEvent.push("You apply the anti-curse tag to your equipment.  The slut curse is neutralized!")
+        ElseIf p.equippedArmor.getCursed(p) Then
+            EquipmentDialogBackend.equipArmor(p, "Naked")
+        ElseIf p.equippedWeapon.getCursed(p) Then
+            EquipmentDialogBackend.equipWeapon(p, "Fists")
+        ElseIf p.equippedAcce.getCursed(p) Then
+            EquipmentDialogBackend.equipAcce(p, "Nothing")
+        ElseIf p.equippedGlasses.getCursed(p) Then
+            EquipmentDialogBackend.equipGlasses(p, "Nothing")
         End If
 
         p.drawPort()

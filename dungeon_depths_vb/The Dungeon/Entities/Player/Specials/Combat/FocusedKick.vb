@@ -11,7 +11,7 @@
         Dim m = MyBase.getTarget
 
         Dim dmg As Integer = (p.attack + p.aBuff) * p.pClass.a * p.pForm.a * 1.95
-        Game.pushLogAndEvent("Focused Roundhouse!" & vbCrLf & "You kick your opponent for " & dmg & " damage!")
+        TextEvent.pushAndLog("Focused Roundhouse!" & vbCrLf & "You kick your opponent for " & dmg & " damage!")
         m.takeDMG(dmg, p)
     End Sub
 

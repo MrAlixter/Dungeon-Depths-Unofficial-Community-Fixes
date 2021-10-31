@@ -24,8 +24,8 @@
 
         'unequips
         If p.inv.getCountAt("Succubus_Garb") < 1 Then p.inv.add("Succubus_Garb", 1)
-        Equipment.clothesChange(p, "Succubus_Garb")
-        Equipment.weaponChange(p, "Fists")
+        EquipmentDialogBackend.armorChange(p, "Succubus_Garb")
+         EquipmentDialogBackend.weaponChange(p, "Fists")
         Equipment.accChange(p, "Nothing")
 
         'succubus transformation

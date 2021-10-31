@@ -26,7 +26,7 @@
 
         If Game.player1.knownSpecials.Contains("Focus Up") Then
             Game.player1.gold += value * Game.hteach.getDiscount
-            Game.pushNPCDialog("Well, it looks like you already know 'Focus Up'.", AddressOf CType(Game.hteach, HypnoTeach).back)
+            TextEvent.pushNPCDialog("Well, it looks like you already know 'Focus Up'.", AddressOf CType(Game.hteach, HypnoTeach).back)
             Exit Sub
         End If
 
@@ -39,7 +39,7 @@
         Game.player1.UIupdate()
         Game.player1.lust = 100
         Game.player1.drawPort()
-        Game.pushLblEvent("You wake up to the teacher's snap." & DDUtils.RNRN & """Well then, " & Game.player1.name & ", it seems like we're done for the day."" she says with a smirk." & DDUtils.RNRN &
+        TextEvent.push("You wake up to the teacher's snap." & DDUtils.RNRN & """Well then, " & Game.player1.name & ", it seems like we're done for the day."" she says with a smirk." & DDUtils.RNRN &
                           "Your knees turn to jelly as one of the most intense waves of arousal you've ever felt burns through your body, and you let out a small moan as you collapse to your knees at your mistress's feet." & DDUtils.RNRN &
                           """Your assignment for next time is to deal with *that*..."" she curtly pivots, facing away from you, ""...without giving in to your..."" she pauses, breifly glancing backwards over her shoulder, ""...'baser'...desires..." & DDUtils.RNRN &
                           "You now know the 'Focus Up' special!", AddressOf CType(Game.hteach, HypnoTeach).back)

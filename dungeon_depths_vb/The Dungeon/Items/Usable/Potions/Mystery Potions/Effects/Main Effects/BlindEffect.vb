@@ -13,7 +13,7 @@
             out += "You are still temporarily blind!"
         End If
 
-        Game.pushLblEvent(out)
+        TextEvent.push(out)
     End Sub
 
     Public Overrides Function getEffectDesc()

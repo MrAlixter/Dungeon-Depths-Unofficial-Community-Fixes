@@ -5,19 +5,28 @@
     Dim formerEyeType As Tuple(Of Integer, Boolean, Boolean) = New Tuple(Of Integer, Boolean, Boolean)(0, False, False)
 
     Sub New()
+        '|ID Info|
         setName("Slave_Collar")
-        setDesc("A collar commonly placed around the necks of the thralls." & vbCrLf & _
-                       "Provides no bonus.")
         id = 69
         tier = 3
+
+        '|Item Flags|
         droppable = True
-        usable = false
+        usable = False
+        cursed = True
+        rando_inv_allowed = False
+
+        '|Stats|
         count = 0
         value = 200
-        MyBase.fInd = New Tuple(Of Integer, Boolean, Boolean)(7, True, True)
-        MyBase.mInd = New Tuple(Of Integer, Boolean, Boolean)(3, False, True)
-        MyBase.cursed = True
-        rando_inv_allowed = False
+
+        '|Image Index|
+        fInd = New Tuple(Of Integer, Boolean, Boolean)(7, True, True)
+        mInd = New Tuple(Of Integer, Boolean, Boolean)(3, False, True)
+
+        '|Description|
+        setDesc("A collar commonly placed around the necks of the thralls." & DDUtils.RNRN &
+                "Provides no bonus.")
     End Sub
     Overrides Sub onEquip(ByRef p As Player)
         If p.formName.Equals("Half-Succubus") Or p.className.Equals("Thrall") Then Exit Sub

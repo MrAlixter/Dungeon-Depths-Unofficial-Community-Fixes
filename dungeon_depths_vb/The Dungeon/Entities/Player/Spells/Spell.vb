@@ -53,6 +53,7 @@
         spellList.Add("Flash Heal", New FlashHeal(Nothing, Nothing))
         spellList.Add("Aquageyser", New Aquageyser(Nothing, Nothing))
         spellList.Add("Hydrodart", New Hydrodart(Nothing, Nothing))
+        spellList.Add("Death Cutter", New DeathCutter(Nothing, Nothing))
     End Sub
 
     Sub New(ByRef c As Player, ByRef t As NPC)
@@ -61,72 +62,76 @@
     End Sub
     Sub cast()
         If caster.mana < getcost() Then
-            Game.pushLogAndEvent("You don't have enough mana! (" & name & " costs " & getcost() & " mana)")
+            TextEvent.pushAndLog("You don't have enough mana! (" & name & " costs " & getcost() & " mana)")
             Exit Sub
         End If
-        If Not Game.combatmode And Not Game.npcmode And Not useableOutOfCombat Then
-            Game.pushLogAndEvent("You don't have a target for that spell!")
+        If Not Game.combat_engaged And Not Game.shop_npc_engaged And Not useableOutOfCombat Then
+            TextEvent.pushAndLog("You don't have a target for that spell!")
+            Exit Sub
+        End If
+        If caster.perks(perk.gagged) > 0 Then
+            TextEvent.pushAndLog("Your gag prevents you from casting spells!")
+            Exit Sub
+        End If
 
-            Exit Sub
-        End If
         Randomize()
         caster.mana -= getcost()
 
         Select Case tier
             Case 2
                 If caster.passDieRoll(10, 9) Then
-                    Game.pushLogAndEvent("You cast " & name & "!")
+                    TextEvent.pushAndLog("You cast " & name & "!")
                     effect()
                 Else
-                    Game.pushLogAndEvent("You try to cast " & name & ", but it fizzles into nothing!")
+                    TextEvent.pushAndLog("You try to cast " & name & ", but it fizzles into nothing!")
                 End If
             Case 3
                 If caster.passDieRoll(10, 8) Then
-                    Game.pushLogAndEvent("You cast " & name & "!")
+                    TextEvent.pushAndLog("You cast " & name & "!")
                     effect()
                 Else
                     If caster.passDieRoll(10, 5) Then
-                        Game.pushLogAndEvent("You try to cast " & name & ", but it fizzles into nothing!")
+                        TextEvent.pushAndLog("You try to cast " & name & ", but it fizzles into nothing!")
                     Else
-                        Game.pushLogAndEvent("You try to cast " & name & ", but it backfires!")
+                        TextEvent.pushAndLog("You try to cast " & name & ", but it backfires!")
                         backfire()
                     End If
                 End If
             Case 4
                 If caster.passDieRoll(10, 7) Then
-                    Game.pushLogAndEvent("You cast " & name & "!")
+                    TextEvent.pushAndLog("You cast " & name & "!")
                     effect()
                 Else
                     If caster.passDieRoll(100, 35) Then
-                        Game.pushLogAndEvent("You try to cast " & name & ", but it fizzles into nothing!")
+                        TextEvent.pushAndLog("You try to cast " & name & ", but it fizzles into nothing!")
                     Else
-                        Game.pushLogAndEvent("You try to cast " & name & ", but it backfires!")
+                        TextEvent.pushAndLog("You try to cast " & name & ", but it backfires!")
                         backfire()
                     End If
                 End If
             Case 5
                 If caster.passDieRoll(10, 6) Then
-                    Game.pushLogAndEvent("You cast " & name & "!")
+                    TextEvent.pushAndLog("You cast " & name & "!")
                     effect()
                 Else
                     If caster.passDieRoll(10, 2) Then
-                        Game.pushLogAndEvent("You try to cast " & name & ", but it fizzles into nothing!")
+                        TextEvent.pushAndLog("You try to cast " & name & ", but it fizzles into nothing!")
                     Else
-                        Game.pushLogAndEvent("You try to cast " & name & ", but it backfires!")
+                        TextEvent.pushAndLog("You try to cast " & name & ", but it backfires!")
                         backfire()
                     End If
                 End If
             Case Else
-                Game.pushLogAndEvent("You cast " & name & "!")
+                TextEvent.pushAndLog("You cast " & name & "!")
                 effect()
         End Select
 
     End Sub
     Overridable Sub effect()
-        Game.pushLblEvent("No effects.")
+        TextEvent.push("No effects.")
     End Sub
     Overridable Sub backfire()
-        Game.pushLblEvent("No effects.")
+        TextEvent.push("No effects.")
     End Sub
 
     Sub setName(ByVal s As String)
@@ -160,16 +165,15 @@
     End Function
 
     Shared Sub spellCast(ByRef t As NPC, ByRef c As Player, ByVal s As String)
-        If Game.combatmode Then
-            If t.reactToSpell(s) Or s = "Heal" Then
-                spellroute(c, t, s)
-            End If
-        ElseIf Game.npcmode Then
-            t = Game.currNPC
-            If t.reactToSpell(s) Or s = "Heal" Then
-                spellroute(c, t, s)
-            End If
+        'during an npc encounter, the NPC is the only viable target
+        If Game.shop_npc_engaged Then t = Game.active_shop_npc
+
+        'check for a target
+        If Not t Is Nothing Then
+            'if we have a target, check if the spell hits them
+            If t.reactToSpell(s) Then spellroute(c, t, s)
         Else
+            'otherwise just cast the spell
             spellroute(c, t, s)
         End If
     End Sub
@@ -182,12 +186,12 @@
         If Not spellList.Keys.Contains(s) Then s = "Frazzle"
 
         If s.Equals("Self Polymorph") And Not Transformation.canBeTFed(c) Then
-            Game.pushLstLog("You can't polymorph yourself!")
-            Game.pushLblCombatEvent("You can't polymorph yourself!")
+            TextEvent.pushLog("You can't polymorph yourself!")
+            TextEvent.pushCombat("You can't polymorph yourself!")
             Exit Sub
         ElseIf s.Equals("Heal") Then
             If Game.player1.className.Equals("Soul-Lord") Then
-                Game.pushLblEvent("You scoff at the thought of healing in this moment, instead firing off a much more agressive fireball.  Settling down slightly, you muse on what a waste of time a heal spell would be." & DDUtils.RNRN & """Only someone who cares about their mortal vessel would bother to maintain it.")
+                TextEvent.push("You scoff at the thought of healing in this moment, instead firing off a much more agressive fireball.  Settling down slightly, you muse on what a waste of time a heal spell would be." & DDUtils.RNRN & """Only someone who cares about their mortal vessel would bother to maintain it.")
                 s = "Fireball"
             End If
         End If

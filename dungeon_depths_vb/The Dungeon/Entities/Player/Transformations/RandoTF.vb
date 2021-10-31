@@ -104,7 +104,7 @@
         setLoadout()
 
         p.TextColor = Color.White
-        If Game.mDun.numCurrFloor < 6 Then p.pImage = Game.picPlayer.BackgroundImage Else p.pImage = Game.picPlayerf.BackgroundImage
+        If Game.mDun.numCurrFloor < 6 Then p.player_image = Game.picPlayer.BackgroundImage Else p.player_image = Game.picPlayerf.BackgroundImage
 
         p.inv.invNeedsUDate = True
         p.UIupdate()
@@ -124,8 +124,8 @@
         Dim armorIndex As Integer = -1
         Dim weaponIndex As Integer = -1
 
-        Equipment.clothesChange(p, "Naked")
-        Equipment.weaponChange(p, "Fists")
+        EquipmentDialogBackend.armorChange(p, "Naked")
+         EquipmentDialogBackend.weaponChange(p, "Fists")
         Select Case Int(Rnd() * 23)
             Case 0   'basic warrior
                 p.changeClass("Warrior")
@@ -282,19 +282,19 @@
         If armor.Length > 0 Then
             armorIndex = armor(Int(Rnd() * (armor.Length)))
             p.inv.add(armorIndex, 1)
-            Equipment.equipArmor(p, p.inv.item(armorIndex).getAName, False)
+            EquipmentDialogBackend.equipArmor(p, p.inv.item(armorIndex).getAName, False)
         End If
         If weapon.Length > 0 Then
             weaponIndex = weapon(Int(Rnd() * (weapon.Length)))
             p.inv.add(weaponIndex, 1)
-            Equipment.weaponChange(p, p.inv.item(weaponIndex).getAName)
+             EquipmentDialogBackend.weaponChange(p, p.inv.item(weaponIndex).getAName)
         End If
 
         Equipment.accChange(p, "Nothing")
     End Sub
 
     Shared Sub floor4FirstBossEncounter()
-        Game.pushLblEvent("Turning around, you start to leave with the key before a giggle from behind you stops you in your tracks.  Looking over your shoulder, you see the chest become swallowed and dissolved into a mass of turquoise slime that is rapidly making its way towards you.  Drawing your weapon, you stash the key and prepare yourself for a fight!" & DDUtils.RNRN &
+        TextEvent.push("Turning around, you start to leave with the key before a giggle from behind you stops you in your tracks.  Looking over your shoulder, you see the chest become swallowed and dissolved into a mass of turquoise slime that is rapidly making its way towards you.  Drawing your weapon, you stash the key and prepare yourself for a fight!" & DDUtils.RNRN &
                           "As you begin your attack, a single, large, gooey tendril shoots out of the mass, yanking your weapon from your hand before several smaller tentacles wrap around your limbs, restraining you." & DDUtils.RNRN & _
                           """Well, well, well.  What do we have here?"", a slightly distorted female voice chuckles from somewhere behind you." & DDUtils.RNRN &
                           "Suddenly, you find yourself being flipped upside down and dragged upwards to the ceiling, where you meet the gaze of a translucent, teal woman who's lower half seems to be a mass of tentacles that has it rooted firmly to the dungeon's roof.  Her remarkably curvy figure, as well as her more mature attitude suggest that you might be in for something unique from the other slime girls you've encountered so far.  Glancing more closely at your captor, you notice some vaugely human-shaped bodies mixed in with the writhing tendrils of slime, and you wonder what exactly you're in for here." & DDUtils.RNRN &
@@ -303,15 +303,15 @@
     Shared Sub floor4FirstBossEncounterP2()
         Dim p As Player = Game.player1
         p.preBSBody = If(Transformation.canBeTFed(p), New State(p), p.pState.clone(p))
-        Game.preBSInventory = New ArrayList()
+        Game.floor_4_starting_inv = New ArrayList()
         For i = 0 To p.inv.upperBound
-            Game.preBSInventory.Add(p.inv.getCountAt(i))
+            Game.floor_4_starting_inv.Add(p.inv.getCountAt(i))
         Next
         p.ongoingTFs.Add(New RandoTF())
         p.update()
         p.sState.save(p)
         p.savePState()
-        Game.pushLblEvent("The warmth slowly builds until you are burning with lust, and you can't help but lose intrest in what your captor is saying, lost in the fog of your pleasure.  A small giggle tells you that your distraction has not gone unnoticed." & DDUtils.RNRN &
+        TextEvent.push("The warmth slowly builds until you are burning with lust, and you can't help but lose intrest in what your captor is saying, lost in the fog of your pleasure.  A small giggle tells you that your distraction has not gone unnoticed." & DDUtils.RNRN &
                           """Enjoying yourself?"" the Empress asks, giving you a gentle shake, ""What you're feeling now is the powerful aphrodesiac that is mixed into my body.  Would you like a more intimate taste, little one?""" & DDUtils.RNRN &
                           "In your state, you don't even need to consider her offer.  After you give her a vigorous nod, the slime purrs ""Wonderful, darling, you seem like you could use a little relaxation."", plunging you into the mass of her tendrils.  If the aphrodisiac was overwhelming before, being submmerged in it practically puts you in a horny coma.  Before passing out from the burning need flowing throug every part of your body, you catch her motherly gaze as she giggles," & DDUtils.RNRN &
                           """Have fun!""" & DDUtils.RNRN & DDUtils.RNRN &
@@ -324,8 +324,8 @@
         p.preBSBody.load(p)
         p.pState.save(p)
         p.revertToPState()
-        For i = 0 To Game.preBSInventory.Count - 1
-            p.inv.add(i, Game.preBSInventory(i))
+        For i = 0 To Game.floor_4_starting_inv.Count - 1
+            p.inv.add(i, Game.floor_4_starting_inv(i))
         Next
         p.canMoveFlag = True
         Game.lblEvent.Visible = False
@@ -334,8 +334,8 @@
     End Sub
     Shared Sub floor4keep()
         Dim p As player = Game.player1
-        For i = 0 To Game.preBSInventory.Count - 1
-            p.inv.add(i, Game.preBSInventory(i))
+        For i = 0 To Game.floor_4_starting_inv.Count - 1
+            p.inv.add(i, Game.floor_4_starting_inv(i))
         Next
         p.canMoveFlag = True
         Game.lblEvent.Visible = False

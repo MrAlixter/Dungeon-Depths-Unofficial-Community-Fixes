@@ -23,8 +23,8 @@
         Dim out = ""
 
         'unequips
-        Equipment.clothesChange(p, "Goddess_Gown")
-        Equipment.weaponChange(p, "Fists")
+        EquipmentDialogBackend.armorChange(p, "Goddess_Gown")
+         EquipmentDialogBackend.weaponChange(p, "Fists")
 
         'goddess transformation
         If p.sex = "Male" Then
@@ -52,6 +52,6 @@
         p.TextColor = Color.LightGoldenrodYellow
         out += "Your eyes burn with an awesome fury as golden flames engulf you.  Your opponent squints and covers their eyes, blinded by your new found vibrance.  Dialing back your personal light show, you give them a cocky grin.  They may not know it, but this battle is already over."
 
-        Game.pushLblEvent(out)
+        TextEvent.push(out)
     End Sub
 End Class

@@ -17,10 +17,10 @@
     Public Overrides Sub setSpells(ByRef p As Player)
         MyBase.setSpells(p)
         If Not p.knownSpecials.Contains("Mana Burst") Then p.knownSpecials.Add("Mana Burst")
-        Game.pushLstLog("'Mana Burst' special learned!")
+        TextEvent.pushLog("'Mana Burst' special learned!")
 
         If Not p.knownSpells.Contains("Sweet Sunbeam") Then p.knownSpells.Add("Sweet Sunbeam")
-        Game.pushLstLog("'Sweet Sunbeam' spell learned!")
+        TextEvent.pushLog("'Sweet Sunbeam' spell learned!")
     End Sub
     Overrides Sub tfBody(ByRef p As Player)
         p.breastSize = 3
@@ -45,6 +45,6 @@
         p.prt.setIAInd(pInd.hairacc, 7, True, False)
 
         Equipment.accChange(p, "Nothing")
-        Equipment.clothesChange(p, "Mag._Girl_Outfit_(P)")
+        EquipmentDialogBackend.armorChange(p, "Mag._Girl_Outfit_(P)")
     End Sub
 End Class

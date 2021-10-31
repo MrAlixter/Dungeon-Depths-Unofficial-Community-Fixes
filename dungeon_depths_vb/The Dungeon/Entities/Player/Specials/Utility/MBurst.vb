@@ -8,8 +8,8 @@
     End Sub
     Public Overrides Sub effect()
         MyBase.getUser.perks(perk.mburst) = 14
-        Game.pushLstLog("MANA BURST!")
-        Game.pushLblCombatEvent("MANA BURST!" & vbCrLf & "Regen Health and Mana at the cost of stamina for 60 turns.")
+        TextEvent.pushLog("MANA BURST!")
+        TextEvent.pushCombat("MANA BURST!" & vbCrLf & "Regen Health and Mana at the cost of stamina for 60 turns.")
     End Sub
 
     Public Overrides Function getDesc(ByRef c As Player, ByRef t As NPC) As Object

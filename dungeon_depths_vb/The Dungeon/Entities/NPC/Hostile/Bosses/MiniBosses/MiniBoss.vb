@@ -17,7 +17,7 @@
     End Function
     Public Overrides Sub attackCMD(ByRef target As Entity)
         If isStunned Then
-            Game.pushLblEvent(name & " is stunned!")
+            TextEvent.push(name & " is stunned!")
             Exit Sub
         End If
 

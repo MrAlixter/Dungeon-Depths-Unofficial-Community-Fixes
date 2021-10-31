@@ -24,9 +24,9 @@
         p.equippedWeapon = New BareFists
         p.equippedAcce = New noAcce
 
-        Game.preBSInventory.Clear()
+        Game.floor_4_starting_inv.Clear()
         For i = 0 To p.inv.upperBound
-            Game.preBSInventory.Add(p.inv.getCountAt(i))
+            Game.floor_4_starting_inv.Add(p.inv.getCountAt(i))
             p.inv.item(i).count = 0
         Next
 

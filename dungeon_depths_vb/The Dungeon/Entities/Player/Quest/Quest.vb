@@ -135,13 +135,13 @@ Public Class Objective
         Game.picNPC.BackgroundImage = npcImage
         Game.picNPC.Visible = True
 
-        Game.pushNPCDialog(msg, AddressOf fromNPC)
+        TextEvent.pushNPCDialog(msg, AddressOf fromNPC)
     End Sub
     Public Shared Sub showNPC(ByRef npcImage As Image, ByVal msg As String, ByRef act As action)
         Game.picNPC.BackgroundImage = npcImage
         Game.picNPC.Visible = True
 
-        Game.pushNPCDialog(msg, act)
+        TextEvent.pushNPCDialog(msg, act)
     End Sub
 
     Public Shared Sub fromNPC()

@@ -13,7 +13,7 @@
 
     Overrides Sub use(ByRef p As Player)
         If Me.getUsable() = False Then Exit Sub
-        Game.pushLstLog("You use the " & getName() & ". +5 base mana!")
+        TextEvent.pushLog("You use the " & getName() & ". +5 base mana!")
 
         p.maxMana += 5
         p.mana += 5

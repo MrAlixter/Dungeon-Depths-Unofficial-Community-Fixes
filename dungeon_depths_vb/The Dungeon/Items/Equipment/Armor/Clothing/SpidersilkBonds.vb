@@ -46,9 +46,9 @@
 
     Public Overrides Sub onEquip(ByRef p As Player)
         If Not p.pForm.canBeBound Then
-            Equipment.equipArmor(p, "Naked")
-            Game.pushLblEvent("You effortlessly break your bonds.")
-            Game.pushLstLog("You effortlessly break your bonds.")
+            EquipmentDialogBackend.equipArmor(p, "Naked")
+            TextEvent.push("You effortlessly break your bonds.")
+            TextEvent.pushLog("You effortlessly break your bonds.")
         End If
     End Sub
 

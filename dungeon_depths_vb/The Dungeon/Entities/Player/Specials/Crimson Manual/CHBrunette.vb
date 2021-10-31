@@ -17,7 +17,7 @@
 
         p.prt.haircolor = Color.FromArgb(p.prt.haircolor.A, r, 80, b)
 
-        Game.pushLblEvent("CHAMELEON!  You now have brunette hair...")
+        TextEvent.push("CHAMELEON!  You now have brunette hair...")
 
         p.addLust(10)
 

@@ -21,7 +21,7 @@
     End Sub
 
     Overrides Sub use(ByRef p As Player)
-        Game.pushLblEvent("As you crack open the spellbook, a brilliant white light flares from its pages, and you drop it to cover your eyes." & DDUtils.RNRN &
+        TextEvent.push("As you crack open the spellbook, a brilliant white light flares from its pages, and you drop it to cover your eyes." & DDUtils.RNRN &
                           """SO, YOU WISH TO OBTAIN KNOWLEDGE..."" a disembodied voice thunders, ""VERY WELL, GAZE THROUGH THE EYES OF ANOTHER AND LEARN WELL.""" & DDUtils.RNRN &
                           "As your vision returns, and the light recedes, the book collapses into a pile of ash, and a tingling sensation begins rushing through your limbs..." & DDUtils.RNRN & DDUtils.RNRN &
                           "Quest ""Opposite Day"" acquired!", AddressOf tf)

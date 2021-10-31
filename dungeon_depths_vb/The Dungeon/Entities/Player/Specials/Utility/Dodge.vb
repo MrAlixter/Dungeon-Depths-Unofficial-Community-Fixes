@@ -10,8 +10,8 @@
         Dim p = MyBase.getUser
 
         p.perks(perk.dodge) = 1
-        Game.pushLstLog("DODGE!")
-        Game.pushLblCombatEvent("Dodge!" & vbCrLf & "Guaranteed to avoid the next attack!")
+        TextEvent.pushLog("DODGE!")
+        TextEvent.pushCombat("Dodge!" & vbCrLf & "Guaranteed to avoid the next attack!")
     End Sub
 
     Public Overrides Function getDesc(ByRef c As Player, ByRef t As NPC) As Object

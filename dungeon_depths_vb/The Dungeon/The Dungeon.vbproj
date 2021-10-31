@@ -147,6 +147,7 @@
     <Compile Include="Entities\Player\Specials\Utility\Pluck.vb" />
     <Compile Include="Entities\Player\Spells\Combat\Hydrodart.vb" />
     <Compile Include="Entities\Player\Spells\Combat\Aquageyser.vb" />
+    <Compile Include="Entities\Player\Spells\Combat\DeathCutter.vb" />
     <Compile Include="Entities\Player\Spells\Combat\TentacleCrushcannon.vb" />
     <Compile Include="Entities\Player\Spells\Combat\Hellfireball.vb" />
     <Compile Include="Entities\Player\Spells\Combat\Smite.vb" />
@@ -160,32 +161,59 @@
     <Compile Include="Entities\Player\Transformations\BimboTFs\DragonfruitBimboTF.vb" />
     <Compile Include="Entities\Player\Transformations\BimboTFs\GBimboTF.vb" />
     <Compile Include="Entities\Player\Transformations\CowbellTFs\MimicMinoTF.vb" />
+    <Compile Include="Entities\Player\Transformations\MaggirlTFs\MagGirlGTF.vb" />
     <Compile Include="Entities\Player\Transformations\MaggirlTFs\MagMimicTF.vb" />
     <Compile Include="Entities\Player\Transformations\OneStepTFs\GynoidTF2.vb" />
     <Compile Include="Entities\Player\Transformations\OneStepTFs\InversionTF.vb" />
+    <Compile Include="Entities\Player\Transformations\OneStepTFs\SuccubusMaidTF.vb" />
     <Compile Include="Entities\Player\Transformations\OneStepTFs\MoxBTF.vb" />
     <Compile Include="Entities\Player\Transformations\Polymorphs\BUDollTFBeach.vb" />
     <Compile Include="Entities\Player\Transformations\Polymorphs\CowTF.vb" />
     <Compile Include="Entities\Player\Transformations\PreferredFormTF.vb" />
-    <Compile Include="Items\Equipment\Accesories\SummerShades.vb" />
+    <Compile Include="Items\Equipment\Accesories\HeartGag.vb" />
+    <Compile Include="Items\Equipment\Accesories\CynnsGag.vb" />
+    <Compile Include="Items\Equipment\Accesories\SpectralGag.vb" />
     <Compile Include="Items\Equipment\Accesories\ImmitationCowbell.vb" />
     <Compile Include="Items\Equipment\Accesories\PhaseDeflector.vb" />
     <Compile Include="Items\Equipment\Accesories\MOTOx.vb" />
     <Compile Include="Items\Equipment\Accesories\HallowedTalisman.vb" />
+    <Compile Include="Items\Equipment\Accesories\Ballgag.vb" />
     <Compile Include="Items\Equipment\Armor\Clothing\CommonClothes8.vb" />
     <Compile Include="Items\Equipment\Armor\Clothing\LimeBikini.vb" />
+    <Compile Include="Items\Equipment\Armor\Clothing\MagGirlOutfitG.vb" />
+    <Compile Include="Items\Equipment\Armor\Clothing\ProMagGirlOutfitG.vb" />
     <Compile Include="Items\Equipment\Armor\Clothing\TimeCopClothes.vb" />
     <Compile Include="Items\Equipment\Armor\MagicCloaks\CrimsonCloak.vb" />
+    <Compile Include="Items\Equipment\Armor\MagicCloaks\NecromancerRobe.vb" />
+    <Compile Include="Items\Equipment\Armor\PlateArmor\AmaArmor.vb" />
+    <Compile Include="Items\Equipment\Armor\PlateArmor\PaladinArmor.vb" />
     <Compile Include="Items\Equipment\Armor\PlateArmor\PlatArmor.vb" />
+    <Compile Include="Items\Equipment\Armor\SlutVar\PlantBikini.vb" />
     <Compile Include="Items\Equipment\Armor\SlutVar\CultistCloak.vb" />
     <Compile Include="Items\Equipment\Armor\SlutVar\PlatAdornment.vb" />
     <Compile Include="Items\Equipment\Armor\SlutVar\SkimpyClothesG.vb" />
+    <Compile Include="Items\Equipment\Glasses\CircularGlasses.vb" />
+    <Compile Include="Items\Equipment\Glasses\CyberVisorG.vb" />
+    <Compile Include="Items\Equipment\Glasses\CyberVisorO.vb" />
+    <Compile Include="Items\Equipment\Glasses\MasqueraderMask.vb" />
+    <Compile Include="Items\Equipment\Glasses\Eyepatch.vb" />
+    <Compile Include="Items\Equipment\Glasses\CyberVisorP.vb" />
+    <Compile Include="Items\Equipment\Glasses\Monocle.vb" />
+    <Compile Include="Items\Equipment\Glasses\AllSeeingShades.vb" />
+    <Compile Include="Items\Equipment\Glasses\Shades.vb" />
+    <Compile Include="Items\Equipment\Glasses\ThickRimmedSpecs.vb" />
+    <Compile Include="Items\Equipment\Glasses\SmallGlasses.vb" />
+    <Compile Include="Items\Equipment\Glasses\RedRimmedSpecs.vb" />
+    <Compile Include="Items\Equipment\Glasses\Glasses.vb" />
+    <Compile Include="Items\Equipment\Glasses\noGlasses.vb" />
+    <Compile Include="Items\Equipment\Glasses\SummerShades.vb" />
     <Compile Include="Items\Equipment\Weapons\Misc\PhaseDrill.vb" />
     <Compile Include="Items\Equipment\Weapons\Misc\PhaseHammer.vb" />
     <Compile Include="Items\Equipment\Weapons\Misc\PhaseRifle.vb" />
     <Compile Include="Items\Equipment\Weapons\Misc\PhasePistol.vb" />
     <Compile Include="Items\Equipment\Weapons\Misc\LargeStick.vb" />
     <Compile Include="Items\Equipment\Weapons\Staffs\TidemageStaff.vb" />
+    <Compile Include="Items\Equipment\Weapons\Wands\MagGirlWandG.vb" />
     <Compile Include="Items\Equipment\Weapons\Wands\MagMimicWand.vb" />
     <Compile Include="Items\Misc\ArmorFragments.vb" />
     <Compile Include="Items\Misc\ExtraLife.vb" />
@@ -195,6 +223,7 @@
     <Compile Include="Items\Usable\Food\GoldenGum.vb" />
     <Compile Include="Items\Usable\Food\IcePopB.vb" />
     <Compile Include="Items\Usable\Food\IcePop.vb" />
+    <Compile Include="Items\Usable\Gems\GemOfIvy.vb" />
     <Compile Include="Items\Usable\PhaseVibrator.vb" />
     <Compile Include="Items\Usable\Food\DFStickOfGum.vb" />
     <Compile Include="Items\Usable\Food\BetterHerbs.vb" />
@@ -208,6 +237,11 @@
     <Compile Include="Items\Usable\Vials\VialOfRockJuice.vb" />
     <Compile Include="Tiles\Traps\Button1Trap.vb" />
     <Compile Include="Tiles\Traps\GynoidTrap2.vb" />
+    <Compile Include="Tiles\Traps\Notes\NoteTrap.vb" />
+    <Compile Include="Tiles\Traps\GagTrap.vb" />
+    <Compile Include="Util\DDConst.vb" />
+    <Compile Include="Util\DDError.vb" />
+    <Compile Include="Util\Savefile.vb" />
     <Compile Include="Util\UpdatableQueueV2.vb" />
     <Compile Include="Util\UpdatableQueue.vb" />
     <Compile Include="Util\DDDateTime.vb" />
@@ -541,7 +575,6 @@
     <Compile Include="Entities\Inventory.vb" />
     <Compile Include="Entities\PreferedForm.vb" />
     <Compile Include="Items\Equipment\Accesories\ActiveCamoflage.vb" />
-    <Compile Include="Items\Equipment\Accesories\BBoyshorts.vb" />
     <Compile Include="Items\Equipment\Accesories\Bimbell.vb" />
     <Compile Include="Items\Equipment\Accesories\KitsuneMask.vb" />
     <Compile Include="Items\Equipment\Accesories\PPanties.vb" />
@@ -552,7 +585,7 @@
     <Compile Include="Items\Equipment\Accesories\BracedHeadband.vb" />
     <Compile Include="Items\Equipment\Accesories\RingOfUvona.vb" />
     <Compile Include="Items\Equipment\Accesories\EmeraldCirclet.vb" />
-    <Compile Include="Items\Equipment\Accesories\Blindfold.vb" />
+    <Compile Include="Items\Equipment\Glasses\Blindfold.vb" />
     <Compile Include="Items\Equipment\Armor\Clothing\CommonClothes3.vb" />
     <Compile Include="Items\Equipment\Armor\Clothing\CommonClothes4.vb" />
     <Compile Include="Items\Equipment\Armor\Clothing\CommonClothes6.vb" />
@@ -785,7 +818,10 @@
     <Compile Include="WindowsForms\ClothingTester.vb">
       <SubType>Form</SubType>
     </Compile>
+    <Compile Include="WindowsForms\Game\FormBackends\EquipmentDialogBackend.vb" />
+    <Compile Include="WindowsForms\Game\FormBackends\TextEvent.vb" />
     <Compile Include="WindowsForms\Game\FormBackends\FusionDialogBackend.vb" />
+    <Compile Include="WindowsForms\Game\FormBackends\InventoryFilterBackend.vb" />
     <Compile Include="WindowsForms\Game\FormBackends\SnareDialogBackend.vb" />
     <Compile Include="WindowsForms\Game\FormBackends\CastDialogBackend.vb" />
     <Compile Include="WindowsForms\Game\FormBackends\SpellSpecDescBackend.vb" />
@@ -832,7 +868,6 @@
     <Compile Include="WindowsForms\Debug\TileSelector.vb">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="WindowsForms\Game\EventBox.vb" />
     <Compile Include="WindowsForms\Game\Game.Designer.vb">
       <DependentUpon>Game.vb</DependentUpon>
     </Compile>
@@ -918,7 +953,7 @@
     <Compile Include="Items\Equipment\Armor\Clothing\PrincessGown.vb" />
     <Compile Include="Items\Usable\Potions\Mystery Potions\Uncommon Potions\GentlePotion.vb" />
     <Compile Include="Items\Usable\Potions\RestorationPotion.vb" />
-    <Compile Include="Items\Usable\RigWrench.vb" />
+    <Compile Include="Items\Usable\DisarmentKit.vb" />
     <Compile Include="Items\Equipment\Armor\Clothing\Ropes.vb" />
     <Compile Include="WindowsForms\SCPicker.Designer.vb">
       <DependentUpon>SCPicker.vb</DependentUpon>

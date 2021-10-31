@@ -8,7 +8,7 @@
         MyBase.setcost(7)
     End Sub
     Public Overrides Sub effect()
-        'Game.pushLstLog("You cast Benediction!")
+        'IngameEvent.pushLog("You cast Benediction!")
         Dim p = MyBase.getCaster
 
         Dim bEffect As BenedictionEffect = New BenedictionEffect

@@ -69,8 +69,8 @@
 
         dmgBF += (p.getATK)
 
-        Game.pushLstLog("Backfire - The whip cracks back in your direction!")
-        Game.pushLblCombatEvent("Backfire - The whip cracks back in your direction!")
+        TextEvent.pushLog("Backfire - The whip cracks back in your direction!")
+        TextEvent.pushCombat("Backfire - The whip cracks back in your direction!")
         p.takeDMG(Math.Min(Player.calcDamage(dmgBF, m.defense), p.getIntHealth - 1), m)
     End Sub
 End Class

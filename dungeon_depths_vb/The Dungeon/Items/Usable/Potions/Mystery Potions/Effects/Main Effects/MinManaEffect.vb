@@ -8,7 +8,7 @@
         If p.mana > p.getMaxMana Then p.mana = p.getMaxMana
 
         out += "+10 mana."
-        Game.pushLblEvent(out)
+        TextEvent.push(out)
     End Sub
 
     Public Overrides Function getEffectDesc()

@@ -34,8 +34,8 @@
         If spellCooldown > 0 Then spellCooldown -= 1
         If target.GetType() Is GetType(Player) Then
             If spellCooldown < 1 And Not Game.player1.className.Equals("Bimbo") And (Int(Rnd() * 3) = 0 Or Game.noRNG) Then
-                Game.pushLstLog((getName() & " casts Bimbofy on you!"))
-                Game.pushLblCombatEvent((getName() & " casts Bimbofy on you!"))
+                TextEvent.pushLog((getName() & " casts Bimbofy on you!"))
+                TextEvent.pushCombat((getName() & " casts Bimbofy on you!"))
                 Polymorph.transform(Game.player1, "MASBimbo")
                 Game.player1.update()
             Else
@@ -58,7 +58,7 @@
 
         'will update
         If Int(Rnd() * 8) < 2 Then
-            Game.pushLstLog("Your victory makes you feel more confident.")
+            TextEvent.pushLog("Your victory makes you feel more confident.")
             Game.player1.will += 1
             Game.player1.UIupdate()
         End If
@@ -66,8 +66,8 @@
         'cleanup of the monster
         isDead = True
         Game.fromCombat()
-        Game.npcList.Remove(Me)
-        Game.pushLstLog("You've defeated " & getName() & "!")
+        Game.npc_list.Remove(Me)
+        TextEvent.pushLog("You've defeated " & getName() & "!")
 
         'player transformation
         Dim lastsentence = "When your senses return to you, your ear's twitch and you notice that they have become feline.  A quick glance confirms that Marissa is no longer present, though it seems like here last ditch effort might have actually held some power after all..."
@@ -78,7 +78,7 @@
         Game.player1.drawPort()
 
 
-        Game.pushLblEvent("""D-d-damn it..."" Marissa sputters, taking a shakey step backwards.  ""It looks like I u-underestimated you, but r-rest assured that it won't happen again..."" she declares, before charging a weak looking ball of energy, ""T-this one's g-going to leave you a mewing m-m-mess.""\n" &
+        TextEvent.push("""D-d-damn it..."" Marissa sputters, taking a shakey step backwards.  ""It looks like I u-underestimated you, but r-rest assured that it won't happen again..."" she declares, before charging a weak looking ball of energy, ""T-this one's g-going to leave you a mewing m-m-mess.""\n" &
                           "She half heartedly casts the spell at you, and you easily turn to the side to dodge it.  As you turn back to face her with a glare, a blinding flash of light along with a deafening whine from somewhere behind you nearly knocks you to your feet.  Momentarily stunned, you lose track of your adversary as they fade silently into the milky white that has replaced your field of vision.  " &
                           lastsentence)
 

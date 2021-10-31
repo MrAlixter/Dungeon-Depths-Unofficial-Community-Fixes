@@ -41,7 +41,7 @@
 
     Public Overloads Overrides Sub onunEquip(ByRef p As Player, ByRef w As Weapon)
         If (p.className.Equals("Magical Slut") Or p.perks(perk.tfedbyweapon) > 0) And Not w.GetType.IsSubclassOf(GetType(Wand)) Then
-            Game.pushLstLog("Sighing, you stow away your wand and revert to your base form.  Heartblast Starcannon spell forgotten...")
+            TextEvent.pushLog("Sighing, you stow away your wand and revert to your base form.  Heartblast Starcannon spell forgotten...")
             If p.knownSpecials.Contains("Tentacle Crushcannon") Then p.knownSpecials.Remove("Tentacle Crushcannon")
             p.inv.add(uniform_id, -1)
 
@@ -60,7 +60,7 @@
 
         m.takeDMG(dmg, p)
 
-        Game.pushLstLog(CStr("A tentacle whips out from the tip of the wand, hitting the " & m.name & " for " & dmg & " damage!"))
-        Game.pushLblCombatEvent(CStr("A tentacle whips out from the tip of the wand, hitting the " & m.name & " for " & dmg & " damage!"))
+        TextEvent.pushLog(CStr("A tentacle whips out from the tip of the wand, hitting the " & m.name & " for " & dmg & " damage!"))
+        TextEvent.pushCombat(CStr("A tentacle whips out from the tip of the wand, hitting the " & m.name & " for " & dmg & " damage!"))
     End Sub
 End Class

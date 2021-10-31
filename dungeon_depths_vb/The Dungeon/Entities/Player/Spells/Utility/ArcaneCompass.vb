@@ -8,7 +8,7 @@
         MyBase.setcost(5)
     End Sub
     Public Overrides Sub effect()
-        Game.pushLblEvent("With a blinding flash, your magic cuts a glowing path straight to the stairs!")
+        TextEvent.push("With a blinding flash, your magic cuts a glowing path straight to the stairs!")
         Dim p = Game.currFloor.route(Game.player1.pos, Game.currFloor.stairs)
 
         For i = 0 To UBound(p)

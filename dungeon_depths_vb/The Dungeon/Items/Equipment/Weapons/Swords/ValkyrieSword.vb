@@ -33,8 +33,8 @@
 
     Public Overrides Sub onunEquip(ByRef p As Player, ByRef w As Weapon)
         If (p.className.Equals("Valkyrie") Or p.perks(perk.tfedbyweapon) > 0) And Not w Is Nothing AndAlso Not w.GetType.IsSubclassOf(GetType(Sword)) Then
-            Game.pushLstLog("Putting away your sword causes you to change into your regular self!")
-            Game.pushLstLog("Sighing, you stow away your sword and revert to your base form.  Helix Slash special forgotten...")
+            TextEvent.pushLog("Putting away your sword causes you to change into your regular self!")
+            TextEvent.pushLog("Sighing, you stow away your sword and revert to your base form.  Helix Slash special forgotten...")
             If p.knownSpecials.Contains("Helix Slash") Then p.knownSpecials.Remove("Helix Slash")
             If p.knownSpecials.Contains("Blazing Angel Strike") Then p.knownSpecials.Remove("Blazing Angel Strike")
 

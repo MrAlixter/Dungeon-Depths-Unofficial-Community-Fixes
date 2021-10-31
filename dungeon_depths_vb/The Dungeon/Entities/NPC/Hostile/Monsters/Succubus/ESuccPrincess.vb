@@ -30,8 +30,8 @@
 
                 p.perks(perk.succubuscurse) = -1
 
-                Game.pushLstLog("The succubus's curse is lifted!")
-                Game.pushLblEvent(If(isPTFed, "The succubus's curse is lifted!  However, this does not revert your transformation...", "The succubus's curse is lifted!"))
+                TextEvent.pushLog("The succubus's curse is lifted!")
+                TextEvent.push(If(isPTFed, "The succubus's curse is lifted!  However, this does not revert your transformation...", "The succubus's curse is lifted!"))
             End If
         End If
 
@@ -43,7 +43,7 @@
 
         If r = 0 And target.GetType Is GetType(Player) AndAlso CType(target, Player).perks(perk.succubuscurse) = -1 AndAlso CType(target, Player).perks(perk.succubuscow) = -1 Then
             Dim p = CType(target, Player)
-            Game.pushLblEvent("The " & getName() & " casts Curse of the Slut!")
+            TextEvent.push("The " & getName() & " casts Curse of the Slut!")
             p.perks(perk.succubuscurse) = 0
             p.dembimState1.save(p)
             p.dembimState2.save(p)
@@ -51,14 +51,14 @@
         End If
 
         If ((r = 1 And target.GetType Is GetType(Player)) AndAlso CType(target, Player).perks(perk.succubuscurse) = -1 And Not CType(target, Player).className.Equals("Bimbo") And Not CType(target, Player).formName.Equals("Succubus")) OrElse (target.GetType Is GetType(Player) AndAlso CType(target, Player).perks(perk.succubuscow) <> -1) Then
-            Game.pushLblEvent("The " & getName() & " casts ""Moo for Me!""")
+            TextEvent.push("The " & getName() & " casts ""Moo for Me!""")
             If CType(target, Player).perks(perk.succubuscow) = -1 Then CType(target, Player).perks(perk.succubuscow) = 1 Else CType(target, Player).perks(perk.succubuscow) += 1
             MinoDTF.tfPlayer(CType(target, Player).perks(perk.succubuscow), CType(target, Player))
             Exit Sub
         End If
 
         If r = 2 And target.GetType Is GetType(Player) AndAlso CType(target, Player).dickSize < 3 Then
-            Game.pushLblEvent("The " & getName() & " casts Stand at Attention!  Your dick tingles warmly!")
+            TextEvent.push("The " & getName() & " casts Stand at Attention!  Your dick tingles warmly!")
 
             Dim p = CType(target, Player)
             p.de()
@@ -78,18 +78,18 @@
         defense *= 1.2
         speed *= 1.2
 
-        Game.pushLblEvent("The " & getName() & " used Drain Soul!  " & levelsToDrain & " levels drained!")
-        Game.pushLstLog("The " & getName() & " used Drain Soul!  " & levelsToDrain & " levels drained!")
+        TextEvent.push("The " & getName() & " used Drain Soul!  " & levelsToDrain & " levels drained!")
+        TextEvent.pushLog("The " & getName() & " used Drain Soul!  " & levelsToDrain & " levels drained!")
     End Sub
 
     Public Overrides Sub charm(ByRef t As Entity)
         If Int(Rnd() * t.will) < 15 Then
             t.addLust(lustRaiseThres)
-            Game.pushLblEvent("The " & getName() & " used Charm!")
-            Game.pushLstLog("The " & getName() & " used Charm!")
+            TextEvent.push("The " & getName() & " used Charm!")
+            TextEvent.pushLog("The " & getName() & " used Charm!")
         Else
-            Game.pushLblEvent("The " & getName() & " used Charm...but it fails...")
-            Game.pushLstLog("The " & getName() & " used Charm...but it fails...")
+            TextEvent.push("The " & getName() & " used Charm...but it fails...")
+            TextEvent.pushLog("The " & getName() & " used Charm...but it fails...")
         End If
     End Sub
 

@@ -1,7 +1,7 @@
 ﻿Imports System.Text.RegularExpressions
 
 Public Class ShopV2
-    Dim sk As ShopNPC = Game.currNPC
+    Dim sk As ShopNPC = Game.active_shop_npc
     Dim p As Player = Game.player1
     Dim skInventory As List(Of String) = Nothing
     Dim pInventory As List(Of String) = Nothing

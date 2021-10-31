@@ -24,11 +24,11 @@
         If Int(Rnd() * 2) = 0 Then
             p.health += 50 / p.getMaxHealth
             If p.health > 1 Then p.health = 1.0
-            Game.pushLstLog("+50 health!")
+            TextEvent.pushLog("+50 health!")
         Else
             p.mana += 25
             If p.mana > p.getMaxMana Then p.mana = p.getMaxMana
-            Game.pushLstLog("+25 mana!")
+            TextEvent.pushLog("+25 mana!")
         End If
 
         If Int(Rnd() * 3) = 0 Or Game.noRNG Then

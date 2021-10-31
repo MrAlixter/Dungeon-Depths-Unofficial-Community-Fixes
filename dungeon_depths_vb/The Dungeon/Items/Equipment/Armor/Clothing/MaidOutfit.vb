@@ -17,18 +17,18 @@
         value = 0
 
         '|Image Index|
-        MyBase.bsizeneg1 = New Tuple(Of Integer, Boolean, Boolean)(10, False, True)
-        MyBase.bsize1 = New Tuple(Of Integer, Boolean, Boolean)(58, True, True)
-        MyBase.bsize2 = New Tuple(Of Integer, Boolean, Boolean)(59, True, True)
-        MyBase.bsize3 = New Tuple(Of Integer, Boolean, Boolean)(60, True, True)
-        MyBase.bsize4 = New Tuple(Of Integer, Boolean, Boolean)(61, True, True)
+        bsizeneg1 = New Tuple(Of Integer, Boolean, Boolean)(10, False, True)
+        bsize1 = New Tuple(Of Integer, Boolean, Boolean)(58, True, True)
+        bsize2 = New Tuple(Of Integer, Boolean, Boolean)(59, True, True)
+        bsize3 = New Tuple(Of Integer, Boolean, Boolean)(60, True, True)
+        bsize4 = New Tuple(Of Integer, Boolean, Boolean)(61, True, True)
 
-        MyBase.usizeneg1 = New Tuple(Of Integer, Boolean, Boolean)(21, False, True)
-        MyBase.usize0 = New Tuple(Of Integer, Boolean, Boolean)(59, True, True)
-        MyBase.usize1 = New Tuple(Of Integer, Boolean, Boolean)(60, True, True)
-        MyBase.usize2 = New Tuple(Of Integer, Boolean, Boolean)(61, True, True)
-        MyBase.usize3 = New Tuple(Of Integer, Boolean, Boolean)(62, True, True)
-        'MyBase.usize4 = New Tuple(Of Integer, Boolean, Boolean)(63, True, True)
+        usizeneg1 = New Tuple(Of Integer, Boolean, Boolean)(21, False, True)
+        usize0 = New Tuple(Of Integer, Boolean, Boolean)(59, True, True)
+        usize1 = New Tuple(Of Integer, Boolean, Boolean)(60, True, True)
+        usize2 = New Tuple(Of Integer, Boolean, Boolean)(61, True, True)
+        usize3 = New Tuple(Of Integer, Boolean, Boolean)(62, True, True)
+        'usize4 = New Tuple(Of Integer, Boolean, Boolean)(63, True, True)
 
         '|Description|
         setDesc("A stereotypical French maid's outfit." & DDUtils.RNRN & _

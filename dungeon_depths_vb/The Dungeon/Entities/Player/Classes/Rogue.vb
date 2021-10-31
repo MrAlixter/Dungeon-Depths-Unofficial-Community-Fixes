@@ -14,9 +14,9 @@
 
         If Not learnSkills Then Exit Sub
 
-        If level = 2 And Not p.knownSpecials.Contains("Flash Strike") Then p.knownSpecials.Add("Flash Strike") : Game.pushLstLog("Flash Strike special learned!")
-        If level = 3 And Not p.knownSpecials.Contains("Attack Up") Then p.knownSpecials.Add("Attack Up") : Game.pushLstLog("Attack Up special learned!")
-        If level = 4 And Not p.knownSpecials.Contains("Lurk") Then p.knownSpecials.Add("Lurk") : Game.pushLstLog("Lurk special learned!")
+        If level = 2 And Not p.knownSpecials.Contains("Flash Strike") Then p.knownSpecials.Add("Flash Strike") : TextEvent.pushLog("Flash Strike special learned!")
+        If level = 3 And Not p.knownSpecials.Contains("Attack Up") Then p.knownSpecials.Add("Attack Up") : TextEvent.pushLog("Attack Up special learned!")
+        If level = 4 And Not p.knownSpecials.Contains("Lurk") Then p.knownSpecials.Add("Lurk") : TextEvent.pushLog("Lurk special learned!")
     End Sub
 
     Public Overrides Sub deLVL(level As Integer, ByRef p As Player)

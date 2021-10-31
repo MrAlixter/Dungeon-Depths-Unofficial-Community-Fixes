@@ -25,11 +25,11 @@
 
     Overrides Sub use(ByRef p As Player)
         If Game.currFloor.floorNumber = 91017 Or Game.currFloor.floorNumber = 9999 Or Game.currFloor.floorNumber = 10000 Then Exit Sub
-        If Game.combatmode Or Game.npcmode Then Exit Sub
+        If Game.combat_engaged Or Game.shop_npc_engaged Then Exit Sub
         Dim cae = New Caelia
         Game.npcEncounter(cae)
         Game.hideNPCButtons()
-        Game.pushNPCDialog("*giggle* Hi, I'm Caelia!  The magic on that flower pulled here from another place.  It also kinda opened up a time rift, soooo have fun with that!", AddressOf Caelia.teleportPlayer)
+        TextEvent.pushNPCDialog("*giggle* Hi, I'm Caelia!  The magic on that flower pulled here from another place.  It also kinda opened up a time rift, soooo have fun with that!", AddressOf Caelia.teleportPlayer)
         Equipment.accChange(p, "Nothing")
 
         count -= 1

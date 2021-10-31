@@ -27,8 +27,8 @@
 
         If m.getName.Contains("Frog") Then dmg += 30
         m.takeDMG(dmg + d31 + d32, p)
-        Game.pushLstLog(CStr("You zap the " & m.name & " for " & dmg + d31 + d32 & " damage!"))
-        Game.pushLblCombatEvent(CStr("You zap the " & m.name & " for " & dmg + d31 + d32 & " damage!"))
+        TextEvent.pushLog(CStr("You zap the " & m.name & " for " & dmg + d31 + d32 & " damage!"))
+        TextEvent.pushCombat(CStr("You zap the " & m.name & " for " & dmg + d31 + d32 & " damage!"))
 
         durability -= Int(Rnd() * 5) + 5
     End Sub

@@ -12,6 +12,7 @@
     Dim equippedWeapon As Weapon
     Public equippedArmor As Armor
     Dim equippedAcce As Accessory
+    Dim equippedGlasses As Glasses
     Public iArrInd(Portrait.NUM_IMG_LAYERS) As Tuple(Of Integer, Boolean, Boolean)
     Dim perks As Dictionary(Of perk, Integer)
     Dim invNeedsUDate As Boolean
@@ -43,6 +44,7 @@
         equippedWeapon = p.equippedWeapon
         equippedArmor = p.equippedArmor
         equippedAcce = p.equippedAcce
+        equippedGlasses = p.equippedGlasses
         iArrInd = p.prt.iArrInd.Clone
         perks = DDUtils.copyDictionary(p.perks)
         invNeedsUDate = p.inv.invNeedsUDate
@@ -76,6 +78,7 @@
         equippedWeapon = New BareFists
         equippedArmor = New Naked
         equippedAcce = New noAcce
+        equippedGlasses = New noGlasses
         iArrInd = Nothing
         perks = New Dictionary(Of perk, Integer)()
         invNeedsUDate = False
@@ -115,9 +118,10 @@
         p.dickSize = dickSize
         p.buttSize = buttSize
         p.equippedWeapon = equippedWeapon
-        Equipment.clothesChange(p, equippedArmor.getName)
+        EquipmentDialogBackend.armorChange(p, equippedArmor.getName)
         p.equippedArmor = equippedArmor
         p.equippedAcce = equippedAcce
+        p.equippedGlasses = equippedGlasses
         p.prt.iArrInd = iArrInd.Clone
         p.inv.invNeedsUDate = invNeedsUDate
         p.prt.haircolor = haircolor
@@ -149,6 +153,7 @@
         equippedWeapon = p.equippedWeapon
         equippedArmor = p.equippedArmor
         equippedAcce = p.equippedAcce
+        equippedGlasses = p.equippedGlasses
         iArrInd = p.prt.iArrInd.Clone
         perks = DDUtils.copyDictionary(p.perks)
         invNeedsUDate = p.inv.invNeedsUDate
@@ -208,15 +213,15 @@
         stamina = CInt(readArray(15))
         gold = CInt(readArray(16))
 
-        For Each k In Equipment.aList.Keys
+        For Each k In EquipmentDialogBackend.armor_list.Keys
             If readArray(17).Equals(k) Then
-                equippedArmor = Equipment.aList(k)
+                equippedArmor = EquipmentDialogBackend.armor_list(k)
                 Exit For
             End If
         Next
-        For Each k In Equipment.wList.Keys
+        For Each k In EquipmentDialogBackend.weapon_list.Keys
             If readArray(18).Equals(k) Then
-                equippedWeapon = Equipment.wList(k)
+                equippedWeapon = EquipmentDialogBackend.weapon_list(k)
                 Exit For
             End If
         Next
@@ -248,13 +253,19 @@
             iArrInd(i) = New Tuple(Of Integer, Boolean, Boolean)(CInt(arr(0)), CBool(arr(1)), CBool(arr(2)))
         Next
 
-        For Each k In Equipment.acList.Keys
+        For Each k In EquipmentDialogBackend.accessory_list.Keys
             If readArray(35 + b1 + b2) = k Then
-                equippedAcce = Equipment.acList(k)
+                equippedAcce = EquipmentDialogBackend.accessory_list(k)
                 Exit For
             End If
         Next
 
+        For Each k In EquipmentDialogBackend.glasses_list.Keys
+            If readArray(36 + b1 + b2) = k Then
+                equippedGlasses = EquipmentDialogBackend.glasses_list(k)
+                Exit For
+            End If
+        Next
 
         '|Version Based Save Updating|
         If version = 0.92 Or version = 10.0 Then
@@ -285,6 +296,7 @@
             Next
 
             output += Game.player1.equippedAcce.getName & "*"
+            output += Game.player1.equippedGlasses.getName & "*"
             Return output + "#"
         Else
             Return "N/A#"

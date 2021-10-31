@@ -23,11 +23,11 @@
             Exit Sub
         End If
 
-        Game.pushLogAndEvent(CStr("You turn yourself into a " & delta & "!"))
+        TextEvent.pushAndLog(CStr("You turn yourself into a " & delta & "!"))
     End Sub
     Public Overrides Sub backfire()
         If MyBase.getTarget Is Nothing Then
-            Game.pushLblEvent("You have no target for this to backfire on!")
+            TextEvent.push("You have no target for this to backfire on!")
             Exit Sub
         End If
         Dim n As String
@@ -41,7 +41,7 @@
         End Select
         Polymorph.transform(MyBase.getTarget, n)
 
-        Game.pushLogAndEvent(CStr("You turn your opponent into a " & n & "!"))
+        TextEvent.pushAndLog(CStr("You turn your opponent into a " & n & "!"))
     End Sub
 
     Public Overrides Function getDesc(ByRef c As Player, ByRef t As NPC) As Object

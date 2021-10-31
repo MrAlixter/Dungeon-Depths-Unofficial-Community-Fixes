@@ -19,12 +19,12 @@
     End Sub
 
     Overrides Sub use(ByRef p As Player)
-        Equipment.clothesChange(p, "Naked")
+        EquipmentDialogBackend.armorChange(p, "Naked")
 
         p.breastSize = 7
         p.buttSize = 5
 
-        Game.pushLblEvent("Peeling off the paper backing from the Curse-B-Gone tag, you place it gently on your chest.")
+        TextEvent.push("Peeling off the paper backing from the Curse-B-Gone tag, you place it gently on your chest.")
         p.drawPort()
         count -= 1
     End Sub

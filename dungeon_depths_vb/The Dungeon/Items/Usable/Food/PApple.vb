@@ -21,7 +21,7 @@
     End Sub
 
     Public Overrides Sub effect(ByRef p As Player)
-        If Game.combatmode = True Or Game.npcmode = True Or Not p.canMoveFlag Then
+        If Game.combat_engaged = True Or Game.shop_npc_engaged = True Or Not p.canMoveFlag Then
             PrincessTF.step3()
         Else
             PrincessTF.step1()

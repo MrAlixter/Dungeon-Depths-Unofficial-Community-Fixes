@@ -26,13 +26,13 @@
             Dim potions() As Integer = {233, 193, 61, 28, 29, 234, 62, 194, 60, 25, 247, 27, 26, 26, 26, 26}
             Dim potion As MysteryPotion = target.inv.item(potions(CInt(Rnd() * potions.Length)))
 
-            Game.pushLogAndEvent("The mimic spits a " & potion.getName & " at you!")
+            TextEvent.pushAndLog("The mimic spits a " & potion.getName & " at you!")
 
             potion.mimicThrow(target.getPlayer)
 
             potions_spat += 1
         Else
-            Game.pushLogAndEvent("The mimic lunges at you, chomping the lid of its chest!")
+            TextEvent.pushAndLog("The mimic lunges at you, chomping the lid of its chest!")
             MyBase.attackCMD(target)
         End If
     End Sub
@@ -61,7 +61,7 @@
             p.inv.add(x, -1)
             p.inv.add("Living_Armor", 1)
 
-            Equipment.equipArmor(p, "Living_Armor", False)
+            EquipmentDialogBackend.equipArmor(p, "Living_Armor", False)
 
             p.inv.invNeedsUDate = True
 
@@ -93,13 +93,13 @@
                    "Imitation Cowbell equipped!"
 
             If p.inv.getCountAt("Imitation_Cowbell") < 1 Then p.inv.add("Imitation_Cowbell", 1)
-            Equipment.equipAcce(p, "Imitation_Cowbell", False)
+            EquipmentDialogBackend.equipAcce(p, "Imitation_Cowbell", False)
 
             p.inv.invNeedsUDate = True
         End If
 
         p.drawPort()
-        Game.pushLblEvent(out)
+        TextEvent.push(out)
         p.UIupdate()
     End Sub
 End Class

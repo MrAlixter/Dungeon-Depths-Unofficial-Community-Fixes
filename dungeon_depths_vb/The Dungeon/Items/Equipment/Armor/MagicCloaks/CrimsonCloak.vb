@@ -21,18 +21,18 @@
         value = 5200
 
         '|Image Index|
-        MyBase.bsizeneg1 = New Tuple(Of Integer, Boolean, Boolean)(84, False, True)
-        MyBase.bsize0 = New Tuple(Of Integer, Boolean, Boolean)(85, False, True)
-        MyBase.bsize1 = New Tuple(Of Integer, Boolean, Boolean)(369, True, True)
-        MyBase.bsize2 = New Tuple(Of Integer, Boolean, Boolean)(370, True, True)
-        MyBase.bsize3 = New Tuple(Of Integer, Boolean, Boolean)(371, True, True)
-        MyBase.bsize4 = New Tuple(Of Integer, Boolean, Boolean)(372, True, True)
+        bsizeneg1 = New Tuple(Of Integer, Boolean, Boolean)(84, False, True)
+        bsize0 = New Tuple(Of Integer, Boolean, Boolean)(85, False, True)
+        bsize1 = New Tuple(Of Integer, Boolean, Boolean)(369, True, True)
+        bsize2 = New Tuple(Of Integer, Boolean, Boolean)(370, True, True)
+        bsize3 = New Tuple(Of Integer, Boolean, Boolean)(371, True, True)
+        bsize4 = New Tuple(Of Integer, Boolean, Boolean)(372, True, True)
 
-        MyBase.usizeneg1 = New Tuple(Of Integer, Boolean, Boolean)(82, False, True)
-        MyBase.usize0 = New Tuple(Of Integer, Boolean, Boolean)(83, False, True)
-        MyBase.usize1 = New Tuple(Of Integer, Boolean, Boolean)(354, True, True)
-        MyBase.usize2 = New Tuple(Of Integer, Boolean, Boolean)(355, True, True)
-        MyBase.usize3 = New Tuple(Of Integer, Boolean, Boolean)(356, True, True)
+        usizeneg1 = New Tuple(Of Integer, Boolean, Boolean)(82, False, True)
+        usize0 = New Tuple(Of Integer, Boolean, Boolean)(83, False, True)
+        usize1 = New Tuple(Of Integer, Boolean, Boolean)(354, True, True)
+        usize2 = New Tuple(Of Integer, Boolean, Boolean)(355, True, True)
+        usize3 = New Tuple(Of Integer, Boolean, Boolean)(356, True, True)
 
         MyBase.hood = New Tuple(Of Integer, Boolean, Boolean)(19, True, True)
         MyBase.cloak = New Tuple(Of Integer, Boolean, Boolean)(11, True, False)

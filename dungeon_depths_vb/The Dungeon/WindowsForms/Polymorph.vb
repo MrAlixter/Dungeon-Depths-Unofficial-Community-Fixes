@@ -81,7 +81,7 @@
             p.pForm.revert()
             revertText = p.pForm.revertPassage & DDUtils.RNRN
         Else
-            MsgBox(form.Equals(p.className) & " | " & form.Equals(p.formName))
+            DDError.badPolymorphError(form)
         End If
 
         'polymorph updates
@@ -99,7 +99,7 @@
         End If
 
         'cleanup
-        Game.pushLblEvent(revertText & Game.lblEvent.Text.Split(vbCrLf)(0))
+        TextEvent.push(revertText & Game.lblEvent.Text.Split(vbCrLf)(0))
         p.ongoingTFs.ping()
         p.specialRoute()
         p.magicRoute()

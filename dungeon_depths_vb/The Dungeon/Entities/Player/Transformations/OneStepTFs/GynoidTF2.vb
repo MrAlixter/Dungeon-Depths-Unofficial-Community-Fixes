@@ -25,14 +25,16 @@
         p.prt.setIAInd(pInd.mouth, 4, True, False)
         p.prt.setIAInd(pInd.eyes, 53, True, True)
         p.prt.setIAInd(pInd.facemark, 0, True, False)
-        p.prt.setIAInd(pInd.glasses, 8, True, True)
+
+        If p.inv.getCountAt("Cyber_Visor_(G)") < 1 Then p.inv.add("Cyber_Visor_(G)", 1)
+        EquipmentDialogBackend.glassesChange(p, "Cyber_Visor_(G)")
 
         p.prt.haircolor = Color.SpringGreen
         p.changeForm("Gynoid")
 
         p.setName(p.name & " v2.0")
         p.inv.add("Skin_Tight_Bodysuit", 1)
-        Equipment.clothesChange(p, "Skin_Tight_Bodysuit")
+        EquipmentDialogBackend.armorChange(p, "Skin_Tight_Bodysuit")
 
         p.perks(perk.slutcurse) = 1
     End Sub
@@ -55,7 +57,7 @@
             "...what were you doing again?  You giggle to yourself, you can be so airheaded sometimes..." & DDUtils.RNRN &
             "[sys/mind:] Enabling libido-------------COMPLETE!" & DDUtils.RNRN &
             "...mmmm...maybe you should try to find someone to help you out of this uniform...it's making you so horny..."
-        Game.pushLblEvent(out, AddressOf pt2)
+        TextEvent.push(out, AddressOf pt2)
         p.lust = 100
         p.drawPort()
     End Sub
@@ -68,7 +70,7 @@
             "The hatch suddenly flies open and the waves of pleasure reach their climax.  Basking in the pod, you realize that the mental dampener seems to have malfunctioned during your orgasm.  You realize that the system procedure that governs your owner assignment failed, and this leaves you a sexbot without a master.  Without anyone else calling the shots, you might actually be able to turn this new form to your..." & DDUtils.RNRN &
             "[sys/mind:] Re-enabling mental dampener-COMPLETE!" & DDUtils.RNRN &
             "... uh oh.  You giggle to your self again.  If the only time you can be, like, totally smart is right after sex, then you're like totally gonna have to bang everything in this dungeon!"
-        Game.pushLblEvent(out)
+        TextEvent.push(out)
         Game.player1.lust = 0
         Game.player1.drawPort()
     End Sub

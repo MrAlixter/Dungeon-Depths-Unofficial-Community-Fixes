@@ -9,30 +9,31 @@
 
         '|Item Flags|
         usable = false
-        MyBase.compress_breast = True
-        MyBase.hide_dick = False
+        compress_breast = True
+        hide_dick = False
+        show_underboob = True
         rando_inv_allowed = False
         anti_slut_ind = 239
 
         '|Stats|
-        MyBase.s_boost = 13
+        s_boost = 13
         count = 0
         value = 1450
 
         '|Image Index|
-        MyBase.bsizeneg1 = New Tuple(Of Integer, Boolean, Boolean)(72, False, True)
-        MyBase.bsize0 = New Tuple(Of Integer, Boolean, Boolean)(330, True, True)
-        MyBase.bsize1 = New Tuple(Of Integer, Boolean, Boolean)(331, True, True)
-        MyBase.bsize2 = New Tuple(Of Integer, Boolean, Boolean)(332, True, True)
-        MyBase.bsize3 = New Tuple(Of Integer, Boolean, Boolean)(333, True, True)
-        MyBase.bsize4 = New Tuple(Of Integer, Boolean, Boolean)(334, True, True)
+        bsizeneg1 = New Tuple(Of Integer, Boolean, Boolean)(72, False, True)
+        bsize0 = New Tuple(Of Integer, Boolean, Boolean)(330, True, True)
+        bsize1 = New Tuple(Of Integer, Boolean, Boolean)(331, True, True)
+        bsize2 = New Tuple(Of Integer, Boolean, Boolean)(332, True, True)
+        bsize3 = New Tuple(Of Integer, Boolean, Boolean)(333, True, True)
+        bsize4 = New Tuple(Of Integer, Boolean, Boolean)(334, True, True)
 
-        MyBase.usizeneg1 = New Tuple(Of Integer, Boolean, Boolean)(71, False, True)
-        MyBase.usize0 = New Tuple(Of Integer, Boolean, Boolean)(313, True, True)
-        MyBase.usize1 = New Tuple(Of Integer, Boolean, Boolean)(314, True, True)
-        MyBase.usize2 = New Tuple(Of Integer, Boolean, Boolean)(315, True, True)
-        MyBase.usize3 = New Tuple(Of Integer, Boolean, Boolean)(316, True, True)
-        MyBase.usize4 = New Tuple(Of Integer, Boolean, Boolean)(317, True, True)
+        usizeneg1 = New Tuple(Of Integer, Boolean, Boolean)(71, False, True)
+        usize0 = New Tuple(Of Integer, Boolean, Boolean)(313, True, True)
+        usize1 = New Tuple(Of Integer, Boolean, Boolean)(314, True, True)
+        usize2 = New Tuple(Of Integer, Boolean, Boolean)(315, True, True)
+        usize3 = New Tuple(Of Integer, Boolean, Boolean)(316, True, True)
+        usize4 = New Tuple(Of Integer, Boolean, Boolean)(317, True, True)
 
         '|Description|
         setDesc("A nearly invisible bikini composed of gossamer strands of spidersilk." & DDUtils.RNRN & _

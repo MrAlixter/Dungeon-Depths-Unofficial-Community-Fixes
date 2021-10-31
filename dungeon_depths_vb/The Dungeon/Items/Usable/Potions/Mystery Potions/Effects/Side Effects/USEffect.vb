@@ -4,7 +4,7 @@
     Public Overrides Sub apply(ByRef p As Player)
         p.us()
         p.savePState()
-        Game.pushLblEvent("Your ass squeezes uncomfortably...")
+        TextEvent.push("Your ass squeezes uncomfortably...")
         p.drawPort()
     End Sub
 

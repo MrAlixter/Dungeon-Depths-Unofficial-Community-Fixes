@@ -9,24 +9,25 @@
 
         '|Item Flags|
         usable = false
-        MyBase.compress_breast = True
+        compress_breast = True
+        show_underboob = True
         rando_inv_allowed = False
 
         '|Stats|
-        MyBase.s_boost = 10
+        s_boost = 10
         count = 0
         value = 0
 
         '|Image Index|
-        MyBase.bsize1 = New Tuple(Of Integer, Boolean, Boolean)(215, True, True)
-        MyBase.bsize2 = New Tuple(Of Integer, Boolean, Boolean)(216, True, True)
-        MyBase.bsize3 = New Tuple(Of Integer, Boolean, Boolean)(217, True, True)
-        MyBase.bsize4 = New Tuple(Of Integer, Boolean, Boolean)(218, True, True)
+        bsize1 = New Tuple(Of Integer, Boolean, Boolean)(215, True, True)
+        bsize2 = New Tuple(Of Integer, Boolean, Boolean)(216, True, True)
+        bsize3 = New Tuple(Of Integer, Boolean, Boolean)(217, True, True)
+        bsize4 = New Tuple(Of Integer, Boolean, Boolean)(218, True, True)
 
-        MyBase.usize1 = New Tuple(Of Integer, Boolean, Boolean)(252, True, True)
-        MyBase.usize2 = New Tuple(Of Integer, Boolean, Boolean)(253, True, True)
-        MyBase.usize3 = New Tuple(Of Integer, Boolean, Boolean)(254, True, True)
-        MyBase.usize4 = New Tuple(Of Integer, Boolean, Boolean)(255, True, True)
+        usize1 = New Tuple(Of Integer, Boolean, Boolean)(252, True, True)
+        usize2 = New Tuple(Of Integer, Boolean, Boolean)(253, True, True)
+        usize3 = New Tuple(Of Integer, Boolean, Boolean)(254, True, True)
+        usize4 = New Tuple(Of Integer, Boolean, Boolean)(255, True, True)
 
         '|Description|
         setDesc("Barely there, this skimpy outfit boosts agility." & DDUtils.RNRN & _

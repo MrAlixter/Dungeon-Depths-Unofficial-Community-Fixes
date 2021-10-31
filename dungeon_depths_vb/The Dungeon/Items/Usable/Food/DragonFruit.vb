@@ -25,13 +25,13 @@
     End Sub
 
     Public Overrides Sub effect(ByRef p As Player)
-        Game.pushLogAndEvent("+" & CInt(p.getMaxMana * 0.4) & " Max Mana, +25 XP")
+        TextEvent.pushAndLog("+" & CInt(p.getMaxMana * 0.4) & " Max Mana, +25 XP")
         p.addXP(25)
         p.mana += CInt(p.getMaxMana * 0.4)
 
         If Int(Rnd() * 6) = 0 Or Game.noRNG Then
             BroodmotherTF.halfDragonTF(p)
-            Game.pushLogAndEvent("As you bite into the fruit, your form changes!")
+            TextEvent.pushAndLog("As you bite into the fruit, your form changes!")
         End If
     End Sub
 End Class

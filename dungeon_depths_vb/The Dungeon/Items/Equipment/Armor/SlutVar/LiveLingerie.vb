@@ -8,13 +8,14 @@
 
         '|Item Flags|
         usable = false
-        MyBase.compress_breast = True
-        MyBase.cursed = True
+        compress_breast = True
+        show_underboob = True
+        cursed = True
         rando_inv_allowed = False
-        MyBase.anti_slut_ind = 55
+        anti_slut_ind = 55
 
         '|Stats|
-        MyBase.d_boost = 6
+        d_boost = 6
         count = 0
         value = 450
 

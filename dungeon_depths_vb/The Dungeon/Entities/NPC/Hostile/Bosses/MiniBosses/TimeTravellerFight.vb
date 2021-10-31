@@ -41,7 +41,7 @@
             End If
 
 
-            Game.pushLblEvent("The Time Traveler tosses a cryogrenade at you!")
+            TextEvent.push("The Time Traveler tosses a cryogrenade at you!")
             Objective.showNPC(ShopNPC.npcLib.atrs(0).getAt(42), "Alright, easy there.  Let's just put you on ice for a bit...", AddressOf OutOfTime.hostileArrest)
             Exit Sub
         End If
@@ -51,7 +51,7 @@
         Dim dmg = Entity.calcDamage(getATK, target.getDEF)
 
         If dmg > target.getIntHealth Then dmg = target.getIntHealth - 1
-        Game.pushLogAndEvent("The " & getName() & " fires a sleek chrome blaster!")
+        TextEvent.pushAndLog("The " & getName() & " fires a sleek chrome blaster!")
         target.takeDMG(dmg, Me)
     End Sub
 
@@ -60,7 +60,7 @@
             tfCt = 0
             revert()
 
-            Game.pushLblEvent("A rippling aura surrounds the time traveler..." & DDUtils.RNRN &
+            TextEvent.push("A rippling aura surrounds the time traveler..." & DDUtils.RNRN &
                               "The " & name & " return to " & p_pronoun & " original self!")
         End If
     End Sub

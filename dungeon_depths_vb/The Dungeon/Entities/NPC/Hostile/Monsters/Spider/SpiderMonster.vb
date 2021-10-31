@@ -26,6 +26,6 @@
         End If
         p.ongoingTFs.add(New ArachneTF(p.perks(perk.svenom)))
 
-        Game.pushLblEvent(out, AddressOf p.update)
+        TextEvent.push(out, AddressOf p.update)
     End Sub
 End Class

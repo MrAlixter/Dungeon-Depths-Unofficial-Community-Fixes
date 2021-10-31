@@ -10,6 +10,7 @@
         '|Item Flags|
         usable = false
         compress_breast = True
+         show_underboob = True
         droppable = False
         rando_inv_allowed = False
 
@@ -19,23 +20,23 @@
         value = 0
 
         '|Image Index|
-        MyBase.bsizeneg1 = New Tuple(Of Integer, Boolean, Boolean)(51, False, True)
-        MyBase.bsize0 = New Tuple(Of Integer, Boolean, Boolean)(191, True, True)
-        MyBase.bsize1 = New Tuple(Of Integer, Boolean, Boolean)(192, True, True)
-        MyBase.bsize2 = New Tuple(Of Integer, Boolean, Boolean)(193, True, True)
-        MyBase.bsize3 = New Tuple(Of Integer, Boolean, Boolean)(194, True, True)
-        MyBase.bsize4 = New Tuple(Of Integer, Boolean, Boolean)(195, True, True)
-        MyBase.bsize5 = New Tuple(Of Integer, Boolean, Boolean)(196, True, True)
-        MyBase.bsize6 = New Tuple(Of Integer, Boolean, Boolean)(197, True, True)
-        MyBase.bsize7 = New Tuple(Of Integer, Boolean, Boolean)(198, True, True)
+        bsizeneg1 = New Tuple(Of Integer, Boolean, Boolean)(51, False, True)
+        bsize0 = New Tuple(Of Integer, Boolean, Boolean)(191, True, True)
+        bsize1 = New Tuple(Of Integer, Boolean, Boolean)(192, True, True)
+        bsize2 = New Tuple(Of Integer, Boolean, Boolean)(193, True, True)
+        bsize3 = New Tuple(Of Integer, Boolean, Boolean)(194, True, True)
+        bsize4 = New Tuple(Of Integer, Boolean, Boolean)(195, True, True)
+        bsize5 = New Tuple(Of Integer, Boolean, Boolean)(196, True, True)
+        bsize6 = New Tuple(Of Integer, Boolean, Boolean)(197, True, True)
+        bsize7 = New Tuple(Of Integer, Boolean, Boolean)(198, True, True)
 
-        MyBase.usizeneg1 = New Tuple(Of Integer, Boolean, Boolean)(58, False, True)
-        MyBase.usize0 = New Tuple(Of Integer, Boolean, Boolean)(281, True, True)
-        MyBase.usize1 = New Tuple(Of Integer, Boolean, Boolean)(282, True, True)
-        MyBase.usize2 = New Tuple(Of Integer, Boolean, Boolean)(283, True, True)
-        MyBase.usize3 = New Tuple(Of Integer, Boolean, Boolean)(284, True, True)
-        MyBase.usize4 = New Tuple(Of Integer, Boolean, Boolean)(285, True, True)
-        MyBase.usize5 = New Tuple(Of Integer, Boolean, Boolean)(286, True, True)
+        usizeneg1 = New Tuple(Of Integer, Boolean, Boolean)(58, False, True)
+        usize0 = New Tuple(Of Integer, Boolean, Boolean)(281, True, True)
+        usize1 = New Tuple(Of Integer, Boolean, Boolean)(282, True, True)
+        usize2 = New Tuple(Of Integer, Boolean, Boolean)(283, True, True)
+        usize3 = New Tuple(Of Integer, Boolean, Boolean)(284, True, True)
+        usize4 = New Tuple(Of Integer, Boolean, Boolean)(285, True, True)
+        usize5 = New Tuple(Of Integer, Boolean, Boolean)(286, True, True)
 
         '|Description|
         setDesc("An extra layer of pink goo that a slime can don for extra provocation." & DDUtils.RNRN &

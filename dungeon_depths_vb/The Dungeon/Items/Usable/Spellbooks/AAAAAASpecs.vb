@@ -25,7 +25,7 @@
 
         If Not p.knownSpells.Contains(sName) Then
             p.knownSpells.Add(sName)
-            Game.pushLstLog("You learn ""Summon Battery""")
+            TextEvent.pushLog("You learn ""Summon Battery""")
         End If
 
         count -= 1

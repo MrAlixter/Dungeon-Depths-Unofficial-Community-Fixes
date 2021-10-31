@@ -46,7 +46,7 @@
         End If
 
         '|-NPC Encounter Movement Freeze-|
-        If Game.npcmode Then Exit Sub
+        If Game.shop_npc_engaged Then Exit Sub
 
         '|-Other Movement Freezes-|
         If canMoveFlag = False Then Exit Sub

@@ -23,7 +23,7 @@
     Overridable Sub hairColorShift()
         Game.player1.prt.haircolor = DDUtils.cShift(Game.player1.prt.haircolor, bimboYellow1, 25)
         If Not Game.player1.getHairColor.Equals(bimboYellow1) Then curr_step -= 1
-        Game.pushLblEvent("Your hair becomes slightly lighter, brightening to a light blonde.")
+        TextEvent.push("Your hair becomes slightly lighter, brightening to a light blonde.")
     End Sub
 
     'Step 1
@@ -61,7 +61,7 @@
         End If
     End Sub
     Overridable Sub s1TFText(ByRef p As Player)
-        Game.pushLblEvent("You pause to rub your temples, a massive headache comming down on you like a ton of bricks.  As you take a few minutes to recover, you notice that your center of balance is off and more disturbingly, that you can't seem to focus enough to figure out why." & DDUtils.RNRN & "Maybe you can just walk this off...")
+        TextEvent.push("You pause to rub your temples, a massive headache comming down on you like a ton of bricks.  As you take a few minutes to recover, you notice that your center of balance is off and more disturbingly, that you can't seem to focus enough to figure out why." & DDUtils.RNRN & "Maybe you can just walk this off...")
     End Sub
     Overridable Sub step1()
         Dim p As Player = Game.player1
@@ -108,7 +108,7 @@
         If Not p.equippedArmor.getName.Equals("Naked") And Not p.className.Equals("Magical Girl") Then
             If p.equippedArmor.getSlutVarInd = -1 Then
                 If p.inv.item("Skimpy_Clothes").count < 1 Then p.inv.add("Skimpy_Clothes", 1)
-                Equipment.clothesChange(p, "Skimpy_Clothes")
+                EquipmentDialogBackend.armorChange(p, "Skimpy_Clothes")
             Else
                 Equipment.clothingCurse1(p)
             End If
@@ -126,11 +126,11 @@
     End Sub
     Overridable Sub s2WrapUp(ByRef p As Player, ByRef out As String)
         p.changeClass("Bimbo")
-        p.setPImage()
+        p.setplayer_image()
         p.TextColor = Color.FromArgb(255, 255, 235, 240)
         p.perks(perk.bimbotf) = -1
         'p.drawPort()
-        Game.pushLblEvent(out)
+        TextEvent.push(out)
     End Sub
     Sub step2()
         Dim p As Player = Game.player1
@@ -166,7 +166,7 @@
         If Not p.equippedArmor.getName.Equals("Naked") Then
             If p.equippedArmor.getSlutVarInd = -1 Then
                 p.inv.add("Very_Skimpy_Clothes", 1)
-                Equipment.clothesChange(p, "Very_Skimpy_Clothes")
+                EquipmentDialogBackend.armorChange(p, "Very_Skimpy_Clothes")
             Else
                 Equipment.clothingCurse1(p)
             End If
@@ -216,7 +216,7 @@
 
         Dim mstf = New MagSlutTF(1, 0, 0, False)
         mstf.fullTF(p)
-        Game.pushLblEvent("You immediatly feel funny, the increased magic in your system reacting swiftly with the gum.  In your haze, you look down to see your clothes have become tight and pink. You giggle, all traces of intellect vanishing as your body becomes more curvy and feminine. Your hair lengthens, becoming a platinum blonde, and your clothes finish changing to match your new figure.")
+        TextEvent.push("You immediatly feel funny, the increased magic in your system reacting swiftly with the gum.  In your haze, you look down to see your clothes have become tight and pink. You giggle, all traces of intellect vanishing as your body becomes more curvy and feminine. Your hair lengthens, becoming a platinum blonde, and your clothes finish changing to match your new figure.")
         p.lust += 10
 
         p.TextColor = Color.FromArgb(255, 255, 235, 240)

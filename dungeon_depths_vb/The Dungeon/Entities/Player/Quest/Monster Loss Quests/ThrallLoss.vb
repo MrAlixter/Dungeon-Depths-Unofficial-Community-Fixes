@@ -13,7 +13,7 @@
         MyBase.init()
 
         Dim p As Player = Game.player1
-        If p.forcedPath Is Nothing And Not Game.combatmode And Not Game.npcmode Then
+        If p.forcedPath Is Nothing And Not Game.combat_engaged And Not Game.shop_npc_engaged Then
 
             Dim crystal = Game.currFloor.randPoint
 
@@ -33,7 +33,7 @@
                 s = "you mindlessly obey, moving towards the crystal with a vacant grin."
             End If
 
-            Game.pushLblEvent("As your collar flares to life, you grimace as the location of a large purple gem forces itself into your mind." & DDUtils.RNRN &
+            TextEvent.push("As your collar flares to life, you grimace as the location of a large purple gem forces itself into your mind." & DDUtils.RNRN &
                               """SERVANT!"", your controller's voice booms in your head, ""What you're seeing is another of the crystals I am seeking!  Recover it immediately!""" & DDUtils.RNRN &
                               "As their voice leaves your head, " & s)
         End If
@@ -63,15 +63,15 @@ Public Class FindCrystal
                 "Obeying, you take a seat and wait for a few minutes before a violet portal opens up near the crystal and your master steps out."
             If Game.player1.getWIL > 7 Then
                 out += "  In their attention to the crystal, they don't seem to notice you at all giving you a few minutes to yourself." & DDUtils.RNRN & "Wait... if they aren't paying attention to you..." & DDUtils.RNRN & "You fiddle around with your collar, and they still don't seem to notice your actions, so you leverage your thumb in the collars joint."
-                Game.pushLblEvent(out, AddressOf ThrallTF.betraySorc, AddressOf ThrallTF.waitSorc, "Break off your collar?")
+                TextEvent.push(out, AddressOf ThrallTF.betraySorc, AddressOf ThrallTF.waitSorc, "Break off your collar?")
             Else
                 out += "  Despite your excitement, they don't seem to notice you, instead focusing all their attention on the crystalline array.  As they fiddle with it, you notice a slight purple aura beginning to form around them and wait, are those horns sprouting out of their hair that seems to catch a non-existant wind?  With a flourish, they complete ... something ... and a blinding flash engulfs them.  Where once stood your human controller now stands a half-demon who only now seems to have taken notice of you." & _
                     """Well... It looks like you succeeded.  For that, I will give you an ultimatium.  Join me as my general, or die in these dungeons as my slave."
-                Game.pushLblEvent(out, AddressOf ThrallTF.acceptSorc, AddressOf ThrallTF.fightSorc, "Accept their offer?")
+                TextEvent.push(out, AddressOf ThrallTF.acceptSorc, AddressOf ThrallTF.fightSorc, "Accept their offer?")
             End If
 
         Else
-            Game.pushLblEvent("You've found one of the crystals your controller is seeking!  As you circle it, you feel a familiar presence enter your mind.  " & _
+            TextEvent.push("You've found one of the crystals your controller is seeking!  As you circle it, you feel a familiar presence enter your mind.  " & _
                 """No, that isn't it."" your overseer states disappointedly, ""Well, I guess you can go back to your buisness now.""")
             Game.player1.ongoingTFs.add(New ThrallTF())
             Game.player1.quests(qInds.enthralled).goToStep(1)

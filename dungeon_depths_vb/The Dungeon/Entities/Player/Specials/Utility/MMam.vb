@@ -8,8 +8,8 @@
     End Sub
     Public Overrides Sub effect()
         MyBase.getUser.perks(perk.mmammaries) = 1
-        Game.pushLstLog("Massive Mammaries!")
-        Game.pushLblCombatEvent("Massive Mammaries!" & vbCrLf & "+80% DEF for 1 turn.")
+        TextEvent.pushLog("Massive Mammaries!")
+        TextEvent.pushCombat("Massive Mammaries!" & vbCrLf & "+80% DEF for 1 turn.")
     End Sub
 
     Public Overrides Function getDesc(ByRef c As Player, ByRef t As NPC) As Object

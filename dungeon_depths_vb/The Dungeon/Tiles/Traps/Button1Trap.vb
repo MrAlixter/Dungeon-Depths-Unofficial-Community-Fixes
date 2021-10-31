@@ -9,7 +9,7 @@
     Overrides Sub activate()
         MyBase.activate()
 
-        Game.pushLblEvent("You press a big glowing red button, and the nearby console alerts you that ""Security gates for the Cross-Station Interchange, Contraband Locker, Staff Quarters, and Warp Chamber have been deactivated""", AddressOf postcheck)
+        TextEvent.push("You press a big glowing red button, and the nearby console alerts you that ""Security gates for the Cross-Station Interchange, Contraband Locker, Staff Quarters, and Warp Chamber have been deactivated""", AddressOf postcheck)
         'Warp Area
         Game.currFloor.mBoard(5, 43).Tag = 2
         Game.currFloor.mBoard(5, 43).Text = ""

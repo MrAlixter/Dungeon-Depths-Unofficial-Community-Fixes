@@ -14,7 +14,7 @@
         p.be()
         p.lust += 10
 
-        Game.pushLblEvent("Tits Up!  Your breasts tingle plesently...")
+        TextEvent.push("Tits Up!  Your breasts tingle plesently...")
 
         p.drawPort()
     End Sub

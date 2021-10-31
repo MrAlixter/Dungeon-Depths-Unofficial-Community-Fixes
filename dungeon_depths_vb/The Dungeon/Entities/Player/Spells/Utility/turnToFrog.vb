@@ -14,7 +14,7 @@
 
         Polymorph.transform(MyBase.getTarget, "Giant Frog")
 
-        Game.pushLogAndEvent(CStr("Your spell hits the " & MyBase.getTarget.name & ", turning " & MyBase.getTarget.r_pronoun & " into a giant frog!"))
+        TextEvent.pushAndLog(CStr("Your spell hits the " & MyBase.getTarget.name & ", turning " & MyBase.getTarget.r_pronoun & " into a giant frog!"))
         If MyBase.getTarget.GetType().IsSubclassOf(GetType(ShopNPC)) Then
             CType(MyBase.getTarget, ShopNPC).toFrog()
         End If

@@ -8,7 +8,7 @@
         If p.health > 1 Then p.health = 1
         out += "+45 health."
 
-        Game.pushLblEvent(out)
+        TextEvent.push(out)
     End Sub
 
     Public Overrides Function getEffectDesc()

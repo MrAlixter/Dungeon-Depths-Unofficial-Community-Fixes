@@ -39,10 +39,10 @@
 
     Overrides Sub discard()
         If Game.player1.className.Equals("Magical Girl") Then
-            Game.pushLstLog("You can't just drop your uniform!")
+            TextEvent.pushLog("You can't just drop your uniform!")
             Exit Sub
         End If
-        Game.pushLstLog("You drop the " & getName())
+        TextEvent.pushLog("You drop the " & getName())
 
         count -= 1
     End Sub

@@ -17,7 +17,7 @@
 
     Overridable Sub step1dialog(ByRef p As Player)
         Dim out = "Swinging your wand, you are engulfed in a rain of stars. As the light around your body grows blinding and your clothes disolve into the aether, you become a buxom young woman wearing a skimpy uniform!"
-        Game.pushLblEvent(out, AddressOf step2)
+        TextEvent.push(out, AddressOf step2)
         p.TextColor = Game.lblEvent.ForeColor
     End Sub
     Sub step1()
@@ -43,7 +43,7 @@
 
     Overridable Sub setSpells(ByRef p As Player)
         If Not p.knownSpells.Contains("Heartblast Starcannon") Then p.knownSpells.Add("Heartblast Starcannon")
-        Game.pushLstLog("'Heartblast Starcannon' spell learned!")
+        TextEvent.pushLog("'Heartblast Starcannon' spell learned!")
     End Sub
     Overridable Sub tfBody(ByRef p As Player)
         p.breastSize = 2
@@ -65,7 +65,7 @@
         p.prt.setIAInd(pInd.hairacc, 2, True, False)
 
         Equipment.accChange(p, "Nothing")
-        Equipment.clothesChange(p, "Magical_Girl_Outfit")
+        EquipmentDialogBackend.armorChange(p, "Magical_Girl_Outfit")
     End Sub
     Overridable Sub step2()
         Dim p As Player = Game.player1
@@ -119,7 +119,7 @@
             Return AddressOf step2
         ElseIf p.className.Equals(className) Then
             Return AddressOf stopTF
-        ElseIf Game.combatmode Then
+        ElseIf Game.combat_engaged Then
             Return AddressOf step1combat
         Else
             Return AddressOf step1
@@ -132,6 +132,6 @@
     Public Shared Sub pushLblEventWithoutLoss(ByRef out As String)
         Dim revertText = Game.lblEvent.Text.Split(vbCrLf)(0)
         If Not revertText.Equals("") Then out = revertText & DDUtils.RNRN & out
-        Game.pushLblEvent(out)
+        TextEvent.push(out)
     End Sub
 End Class

@@ -3,6 +3,7 @@
     Dim armor() As Armor
     Dim weapons() As Weapon
     Dim acce() As Accessory
+    Dim glasses() As Glasses
     Dim useable(), food(), potions(), misc() As Item
     Dim mPotions As List(Of MysteryPotion)
     Public invNeedsUDate As Boolean = False
@@ -69,7 +70,7 @@
         internal_inventory.Add("Ropes", New Ropes())                            '54
         internal_inventory.Add("Living_Armor", New LiveArmor())                 '55
         internal_inventory.Add("Living_Lingerie", New LiveLingerie())           '56
-        internal_inventory.Add("Disarment_Kit", New RigWrench())                '57
+        internal_inventory.Add("Disarment_Kit", New DisarmentKit())             '57
         internal_inventory.Add("Fusion_Crystal", New FusionCrystal())           '58
         internal_inventory.Add("Mysterious_Potion", New MysPotion())            '59
         internal_inventory.Add("Breast_Shrink._Potion", New BSPotion())         '60
@@ -320,6 +321,29 @@
         internal_inventory.Add("Staff_of_the_Tidemage", New TidemageStaff)      '297
         internal_inventory.Add("Lime_Bikini", New LimeBikini)                   '298
         internal_inventory.Add("Summertime_Shades", New SummerShades)           '299
+        'v11.5.0
+        internal_inventory.Add("Necromancer's_Robes", New NecromancerRobe)      '300
+        internal_inventory.Add("Paladin's_Armor", New PaladinArmor)             '301
+        internal_inventory.Add("Amazonian_Armor", New AmaArmor)                 '302
+        internal_inventory.Add("Plant_Bikini", New PlantBikini)                 '303
+        internal_inventory.Add("Mag._Girl_Outfit_(G)", New MagGirlOutfitG)      '304
+        internal_inventory.Add("Pro_Mag._G._Outfit_(G)", New ProMagGirlOutfitG) '305
+        internal_inventory.Add("Gem_of_Ivy", New GemOfIvy)                      '306
+        internal_inventory.Add("Mag._Girl_Wand_(G)", New MagGirlWandG)          '307
+        internal_inventory.Add("Red_Framed_Spectacles", New RedRimmedSpecs)     '308
+        internal_inventory.Add("Small_Glasses", New SmallGlasses)               '309
+        internal_inventory.Add("Circular_Glasses", New CircularGlasses)         '310
+        internal_inventory.Add("Thick_Rimmed_Specs", New ThickRimmedSpecs)      '311
+        internal_inventory.Add("Cool_Shades", New Shades)                       '312
+        internal_inventory.Add("Monocle", New Monocle)                          '313
+        internal_inventory.Add("Eyepatch", New Eyepatch)                        '314
+        internal_inventory.Add("Masquerader's_Mask", New MasqueraderMask)       '315
+        internal_inventory.Add("Cyber_Visor_(P)", New CyberVisorP)              '316
+        internal_inventory.Add("Cyber_Visor_(O)", New CyberVisorO)              '317
+        internal_inventory.Add("Cyber_Visor_(G)", New CyberVisorG)              '318
+        internal_inventory.Add("All-Seeing_Shades", New AllSeeingShades)        '319
+        internal_inventory.Add("Ball_Gag", New Ballgag)                         '320
+        internal_inventory.Add("Spectral_Gag", New SpectralGag)                 '321
 
         armor = {New Naked,
                  Me.item(5), Me.item(7), Me.item(8), Me.item(10),
@@ -344,7 +368,8 @@
                  Me.item(239), Me.item(240), Me.item(250), Me.item(254),
                  Me.item(262), Me.item(265), Me.item(266), Me.item(282),
                  Me.item(285), Me.item(288), Me.item(289), Me.item(290),
-                 Me.item(298)}
+                 Me.item(298), Me.item(300), Me.item(301), Me.item(302),
+                 Me.item(303), Me.item(304), Me.item(305)}
 
         weapons = {New BareFists(),
                    Me.item(6), Me.item(9), Me.item(11), Me.item(21),
@@ -360,42 +385,42 @@
                    Me.item(218), Me.item(238), Me.item(255), Me.item(256),
                    Me.item(257), Me.item(258), Me.item(259), Me.item(260),
                    Me.item(273), Me.item(274), Me.item(275), Me.item(276),
-                   Me.item(284), Me.item(293), Me.item(297)}
+                   Me.item(284), Me.item(293), Me.item(297), Me.item(307)}
 
-        useable = {Me.item(0), Me.item(3), Me.item(4),
-                   Me.item(65), Me.item(15), Me.item(36), Me.item(37),
-                   Me.item(45), Me.item(48), Me.item(49), Me.item(50),
-                   Me.item(51), Me.item(52), Me.item(57), Me.item(58),
-                   Me.item(81), Me.item(86), Me.item(88), Me.item(89),
-                   Me.item(91), Me.item(119), Me.item(126), Me.item(127),
-                   Me.item(128), Me.item(130), Me.item(136), Me.item(142),
-                   Me.item(143), Me.item(148), Me.item(149), Me.item(152),
-                   Me.item(153), Me.item(154), Me.item(155), Me.item(156),
-                   Me.item(157), Me.item(158), Me.item(162), Me.item(174),
-                   Me.item(182), Me.item(195), Me.item(200), Me.item(205),
-                   Me.item(206), Me.item(207), Me.item(214), Me.item(215),
-                   Me.item(219), Me.item(226), Me.item(227), Me.item(238),
-                   Me.item(244), Me.item(251), Me.item(252), Me.item(277),
-                   Me.item(278), Me.item(279), Me.item(280), Me.item(286),
-                   Me.item(294)}
+        useable = {Me.item(0), Me.item(3), Me.item(4), Me.item(65),
+                   Me.item(15), Me.item(36), Me.item(37), Me.item(45),
+                   Me.item(48), Me.item(49), Me.item(50), Me.item(51),
+                   Me.item(52), Me.item(57), Me.item(58), Me.item(81),
+                   Me.item(86), Me.item(88), Me.item(89), Me.item(91),
+                   Me.item(119), Me.item(126), Me.item(127), Me.item(128),
+                   Me.item(130), Me.item(136), Me.item(142), Me.item(143),
+                   Me.item(148), Me.item(149), Me.item(152), Me.item(153),
+                   Me.item(154), Me.item(155), Me.item(156), Me.item(157),
+                   Me.item(158), Me.item(162), Me.item(174), Me.item(182),
+                   Me.item(195), Me.item(200), Me.item(205), Me.item(206),
+                   Me.item(207), Me.item(214), Me.item(215), Me.item(219),
+                   Me.item(226), Me.item(227), Me.item(238), Me.item(244),
+                   Me.item(251), Me.item(252), Me.item(277), Me.item(278),
+                   Me.item(279), Me.item(280), Me.item(286), Me.item(294),
+                   Me.item(306)}
 
-        food = {Me.item(1), Me.item(30), Me.item(31), Me.item(32), Me.item(33),
-                Me.item(34), Me.item(35), Me.item(44), Me.item(90),
-                Me.item(98), Me.item(100), Me.item(108), Me.item(109),
-                Me.item(117), Me.item(125), Me.item(132), Me.item(133),
-                Me.item(134), Me.item(135), Me.item(178), Me.item(228),
-                Me.item(230), Me.item(267), Me.item(268), Me.item(269),
-                Me.item(270), Me.item(272), Me.item(291), Me.item(295),
-                Me.item(296)}
+        food = {Me.item(1), Me.item(30), Me.item(31), Me.item(32),
+                Me.item(33), Me.item(34), Me.item(35), Me.item(44),
+                Me.item(90), Me.item(98), Me.item(100), Me.item(108),
+                Me.item(109), Me.item(117), Me.item(125), Me.item(132),
+                Me.item(133), Me.item(134), Me.item(135), Me.item(178),
+                Me.item(228), Me.item(230), Me.item(267), Me.item(268),
+                Me.item(269), Me.item(270), Me.item(272), Me.item(291),
+                Me.item(295), Me.item(296)}
 
-        acce = {New noAcce(), Me.item(66), Me.item(67), Me.item(68),
-                Me.item(69), Me.item(70), Me.item(77), Me.item(81),
-                Me.item(97), Me.item(110), Me.item(123), Me.item(139),
-                Me.item(140), Me.item(141), Me.item(149), Me.item(161),
-                Me.item(164), Me.item(168), Me.item(180), Me.item(197),
-                Me.item(198), Me.item(223), Me.item(225), Me.item(253),
-                Me.item(271), Me.item(281), Me.item(283), Me.item(292),
-                Me.item(299)}
+        acce = {New noAcce(),
+                Me.item(66), Me.item(67), Me.item(68), Me.item(69),
+                Me.item(70), Me.item(77), Me.item(81), Me.item(97),
+                Me.item(110), Me.item(123), Me.item(139), Me.item(140),
+                Me.item(141), Me.item(149), Me.item(164), Me.item(168),
+                Me.item(180), Me.item(197), Me.item(198), Me.item(223),
+                Me.item(225), Me.item(253), Me.item(271), Me.item(281),
+                Me.item(283), Me.item(292), Me.item(320), Me.item(321)}
 
         potions = {Me.item(2), Me.item(13), Me.item(14), Me.item(25),
                    Me.item(26), Me.item(27), Me.item(28), Me.item(29),
@@ -410,6 +435,12 @@
         misc = {Me.item(43), Me.item(53), Me.item(224), Me.item(229),
                 Me.item(242), Me.item(243), Me.item(261), Me.item(264),
                 Me.item(287)}
+
+        glasses = {New noGlasses(),
+                   Me.item(161), Me.item(299), Me.item(308), Me.item(309),
+                   Me.item(310), Me.item(311), Me.item(312), Me.item(313),
+                   Me.item(314), Me.item(315), Me.item(316), Me.item(317),
+                   Me.item(318), Me.item(319)}
 
         invIDorder = New List(Of Integer)
 
@@ -452,7 +483,7 @@
         If internal_inventory.Keys.Contains(key) Then
             internal_inventory(key).add(count)
         Else
-            MsgBox("Saved inventory item not detected!  Key: " & key)
+            DDError.missingInvItemError(key)
         End If
         sum += count
     End Sub
@@ -515,7 +546,7 @@
                 If mPotions(i - (x + 1)).hasBeenUsed Then mPotions(i - (x + 1)).reveal()
             Next
         End If
-        sum = calcSum()
+        calcSum()
     End Sub
 
     '|GETTERS|
@@ -549,11 +580,14 @@
         If item(n) Is Nothing Then Return 0
         Return item(n).getCount()
     End Function
-    Private Function calcSum() As Integer
+    Public Function calcSum() As Integer
         Dim totalSum As Integer = 0
         For i = 0 To upperBound()
             totalSum += getCountAt(i)
         Next
+
+        sum = totalSum
+
         Return totalSum
     End Function
 
@@ -589,6 +623,17 @@
     End Function
     Function getMisc() As Item()
         Return misc
+    End Function
+    Function getGlasses() As Tuple(Of String(), Glasses())
+        Dim s(UBound(glasses)) As String
+        For i = 0 To UBound(glasses)
+            s(i) = glasses(i).getName
+        Next
+        Return New Tuple(Of String(), Glasses())(s, glasses)
+
+    End Function
+    Function getMPotions() As List(Of MysteryPotion)
+        Return mPotions
     End Function
     Public Function getSum() As Integer
         Return sum

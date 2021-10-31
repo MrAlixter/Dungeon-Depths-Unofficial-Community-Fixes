@@ -18,16 +18,16 @@
         value = 5200
 
         '|Image Index|
-        MyBase.bsizeneg1 = New Tuple(Of Integer, Boolean, Boolean)(78, False, True)
-        MyBase.bsize0 = New Tuple(Of Integer, Boolean, Boolean)(79, False, True)
-        MyBase.bsize1 = New Tuple(Of Integer, Boolean, Boolean)(354, True, True)
-        MyBase.bsize2 = New Tuple(Of Integer, Boolean, Boolean)(355, True, True)
+        bsizeneg1 = New Tuple(Of Integer, Boolean, Boolean)(78, False, True)
+        bsize0 = New Tuple(Of Integer, Boolean, Boolean)(79, False, True)
+        bsize1 = New Tuple(Of Integer, Boolean, Boolean)(354, True, True)
+        bsize2 = New Tuple(Of Integer, Boolean, Boolean)(355, True, True)
 
-        MyBase.usizeneg1 = New Tuple(Of Integer, Boolean, Boolean)(75, False, True)
-        MyBase.usize0 = New Tuple(Of Integer, Boolean, Boolean)(76, False, True)
-        MyBase.usize1 = New Tuple(Of Integer, Boolean, Boolean)(337, True, True)
-        MyBase.usize2 = New Tuple(Of Integer, Boolean, Boolean)(338, True, True)
-        MyBase.usize3 = New Tuple(Of Integer, Boolean, Boolean)(339, True, True)
+        usizeneg1 = New Tuple(Of Integer, Boolean, Boolean)(75, False, True)
+        usize0 = New Tuple(Of Integer, Boolean, Boolean)(76, False, True)
+        usize1 = New Tuple(Of Integer, Boolean, Boolean)(337, True, True)
+        usize2 = New Tuple(Of Integer, Boolean, Boolean)(338, True, True)
+        usize3 = New Tuple(Of Integer, Boolean, Boolean)(339, True, True)
 
         '|Description|
         setDesc("A glistening set of full plate armor for those who want to be superbly safeguarded." & DDUtils.RNRN &

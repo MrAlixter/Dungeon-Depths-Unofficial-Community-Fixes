@@ -35,7 +35,7 @@
             p.pState.iArrInd(pInd.fronthair) = New Tuple(Of Integer, Boolean, Boolean)(22, True, True)
         End If
 
-        Game.pushLblEvent("Your hair flows down, and small petals begin forming in it.  You now have Alraune hair!")
+        TextEvent.push("Your hair flows down, and small petals begin forming in it.  You now have Alraune hair!")
     End Sub
     Sub step2()
         Dim p As Player = Game.player1
@@ -48,7 +48,7 @@
             p.pState.iArrInd(pInd.eyes) = New Tuple(Of Integer, Boolean, Boolean)(35, True, True)
         End If
 
-        Game.pushLblEvent("You now have the facial features of an Alraune!")
+        TextEvent.push("You now have the facial features of an Alraune!")
     End Sub
     Sub step3()
         Dim p As Player = Game.player1
@@ -70,9 +70,9 @@
     Sub step4()
         Dim p As Player = Game.player1
 
-        If Game.combatmode Then Game.fromCombat()
-        Game.pushLblEvent("You are now an Alraune!")
-        Game.pushLstLog("You are now an Alraune!")
+        If Game.combat_engaged Then Game.fromCombat()
+        TextEvent.push("You are now an Alraune!")
+        TextEvent.pushLog("You are now an Alraune!")
         p.changeForm("Alraune")
         If Not p.knownSpells.Contains("Mesmeric Bloom") Then p.knownSpells.Add("Mesmeric Bloom")
     End Sub
@@ -100,14 +100,14 @@
         Dim out = "As you chew on a particularly leafy portion of the salad, you feel the familiar flow of transformative magic flow through your body!  Expecting the worse, you are suprised to find that it seems to be providing your body with a benevolent energy.  It isn't until a leaf droops down from the top of your head that you realize something has indeed been changed.  You are now a Alurane!"
         Dim revertText = Game.lblEvent.Text.Split(vbCrLf)(0)
 
-        If Not p.knownSpecials.Contains("Lurk") Then p.knownSpecials.Add("Lurk") : Game.pushLstLog("Lurk special learned!")
+        If Not p.knownSpecials.Contains("Lurk") Then p.knownSpecials.Add("Lurk") : TextEvent.pushLog("Lurk special learned!")
 
         If Not revertText.Equals("") Then out = revertText & DDUtils.RNRN & out
-        Game.pushLblEvent(out)
+        TextEvent.push(out)
     End Sub
 
     Public Overrides Function getNextStep(stage As Integer) As Action
-        If Not Game.combatmode Then Return AddressOf stopTF
+        If Not Game.combat_engaged Then Return AddressOf stopTF
         Select Case stage
             Case 0
                 Return AddressOf step1

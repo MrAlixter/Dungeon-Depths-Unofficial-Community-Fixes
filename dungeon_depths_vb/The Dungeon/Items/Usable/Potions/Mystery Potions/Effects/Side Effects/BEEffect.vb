@@ -4,7 +4,7 @@
     Public Overrides Sub apply(ByRef p As Player)
         p.be()
         p.savePState()
-        Game.pushLblEvent("You breasts tingle plesently...")
+        TextEvent.push("You breasts tingle plesently...")
         p.drawPort()
     End Sub
 

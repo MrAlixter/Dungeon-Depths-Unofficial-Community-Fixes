@@ -16,8 +16,8 @@
             t.update()
         End If
 
-        Game.pushLblCombatEvent(CStr("You transform" & t.title & " " & t.name & "!"))
-        Game.pushLstLog(CStr("You transform" & t.title & " " & t.name & "!"))
+        TextEvent.pushCombat(CStr("You transform" & t.title & " " & t.name & "!"))
+        TextEvent.pushLog(CStr("You transform" & t.title & " " & t.name & "!"))
     End Sub
     Public Overrides Sub backfire()
         Dim n As String
@@ -33,7 +33,7 @@
 
         MyBase.getCaster.perks(perk.polymorphed) = 1
 
-        Game.pushLogAndEvent(CStr("You turn yourself into a " & n & "!"))
+        TextEvent.pushAndLog(CStr("You turn yourself into a " & n & "!"))
     End Sub
 
     Public Overrides Function getDesc(ByRef c As Player, ByRef t As NPC) As Object

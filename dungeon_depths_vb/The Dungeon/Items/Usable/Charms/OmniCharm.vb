@@ -13,7 +13,7 @@
 
     Overrides Sub use(ByRef p As Player)
         If Me.getUsable() = False Then Exit Sub
-        Game.pushLblEvent("You use the " & getName() & ". +5 base ATK, DEF, SPD, WILL, Max Mana, +10 Max Health!")
+        TextEvent.push("You use the " & getName() & ". +5 base ATK, DEF, SPD, WILL, Max Mana, +10 Max Health!")
 
         p.attack += 5
         p.defense += 5

@@ -56,7 +56,7 @@ End Enum
         floors(numCurrFloor).playerPosition = Game.player1.pos
 
         numCurrFloor -= 1
-        If numCurrFloor = 0 Then Game.pushLblEvent("As you near the top of the staircase leading out of the dungeon, you take a deep breath.  Unfortuately, you also trip; falling to your doom.", AddressOf Game.player1.die)
+        If numCurrFloor = 0 Then TextEvent.push("As you near the top of the staircase leading out of the dungeon, you take a deep breath.  Unfortuately, you also trip; falling to your doom.", AddressOf Game.player1.die)
         setPositions()
     End Sub
     Public Sub jumpTo(ByVal i As Integer)
@@ -90,11 +90,11 @@ End Enum
 
         If Not Game.player1.forcedPath Is Nothing AndAlso UBound(Game.player1.forcedPath) > 0 Then Game.player1.forcedPath = Nothing
 
-        For i = 0 To Game.shopNPCList.Count - 1
+        For i = 0 To Game.shop_npc_list.Count - 1
             If i < floors(numCurrFloor).npcPositions.Count Then
-                Game.shopNPCList(i).pos = floors(numCurrFloor).npcPositions(i)
+                Game.shop_npc_list(i).pos = floors(numCurrFloor).npcPositions(i)
             Else
-                Game.shopNPCList(i).pos = New Point(-1, -1)
+                Game.shop_npc_list(i).pos = New Point(-1, -1)
             End If
         Next
     End Sub
@@ -102,9 +102,9 @@ End Enum
     Public Sub tfNPCToArachne()
         If Game.player1 Is Nothing OrElse Game.player1.perks(perk.snarednpc) = -1 Then Exit Sub
 
-        Dim s = Game.shopNPCList(Game.player1.perks(perk.snarednpc))
+        Dim s = Game.shop_npc_list(Game.player1.perks(perk.snarednpc))
 
-        Game.pushLblEvent("You feel a slight vibration in the web leading to your snare.  Maybe you should pay the " & s.name & " a visit...")
+        TextEvent.push("You feel a slight vibration in the web leading to your snare.  Maybe you should pay the " & s.name & " a visit...")
 
         s.toArachne()
         Game.player1.perks(perk.snarednpc) = -1

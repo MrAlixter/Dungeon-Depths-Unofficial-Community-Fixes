@@ -22,7 +22,7 @@
 
         out += "is probably a sign that the dart was actually carrying a potent aphrodisiac."
 
-        Game.pushLblEvent(out)
+        TextEvent.push(out)
         Game.player1.drawPort()
     End Sub
 End Class

@@ -14,9 +14,9 @@
         End If
 
         If Not learnSkills Then Exit Sub
-        If level = 2 And Not p.knownSpells.Contains("Flash Heal") Then p.knownSpells.Add("Flash Heal") : Game.pushLstLog("Flash Heal spell learned!")
-        If level = 3 And Not p.knownSpells.Contains("Benediction") Then p.knownSpells.Add("Benediction") : Game.pushLstLog("Benediction spell learned!")
-        If level = 4 And Not p.knownSpells.Contains("Smite") Then p.knownSpells.Add("Smite") : Game.pushLstLog("Smite spell learned!")
+        If level = 2 And Not p.knownSpells.Contains("Flash Heal") Then p.knownSpells.Add("Flash Heal") : TextEvent.pushLog("Flash Heal spell learned!")
+        If level = 3 And Not p.knownSpells.Contains("Benediction") Then p.knownSpells.Add("Benediction") : TextEvent.pushLog("Benediction spell learned!")
+        If level = 4 And Not p.knownSpells.Contains("Smite") Then p.knownSpells.Add("Smite") : TextEvent.pushLog("Smite spell learned!")
     End Sub
 
     Public Overrides Sub deLVL(level As Integer, ByRef p As Player)

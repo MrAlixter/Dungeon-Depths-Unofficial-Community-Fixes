@@ -10,6 +10,7 @@
         '|Item Flags|
         usable = false
         MyBase.compress_breast = True
+        MyBase.show_underboob = True
         MyBase.anti_slut_ind = 19
 
         '|Stats|

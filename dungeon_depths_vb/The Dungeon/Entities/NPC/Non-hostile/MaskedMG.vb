@@ -6,6 +6,7 @@
         '|ID Info|
         name = "Magical Girl"
         sName = name
+        npc_index = sNPCInd.maskmaggirl
 
         '|NPC Flags|
         pronoun = "she"
@@ -64,20 +65,20 @@
 
         If img_index = 7 Then
             If Game.player1.formName.Equals("Arachne") Then
-                Game.pushNPCDialog("Arachne or not, there are still dummies out there that need protectin'!")
+                TextEvent.pushNPCDialog("Arachne or not, there are still dummies out there that need protectin'!")
             Else
-                Game.pushNPCDialog("Hey, if I were to roll out a ""Gem Of Spiders"" do you think you'd take the plunge into eight-legged glory?  Well, I've got the next best thing in the meantime!")
+                TextEvent.pushNPCDialog("Hey, if I were to roll out a ""Gem Of Spiders"" do you think you'd take the plunge into eight-legged glory?  Well, I've got the next best thing in the meantime!")
             End If
         ElseIf Int(Rnd() * 25) = 0 Then
             img_index = 4
-            Game.pushNPCDialog("Hey, like, have you seen a shadowy guy with a hood?  He TOTALLY put some sorta curse on my wand!  It's not like I, uh, wanted to get all, like, ditzy to have some fun or whatever...")
+            TextEvent.pushNPCDialog("Hey, like, have you seen a shadowy guy with a hood?  He TOTALLY put some sorta curse on my wand!  It's not like I, uh, wanted to get all, like, ditzy to have some fun or whatever...")
         ElseIf Int(Rnd() * 25) = 0 Then
             img_index = 6
-            Game.pushNPCDialog("Hey kid, how'd you like a quick and easy path to power?  I've got just the rock for you if you don't mind a bit of darkness....")
+            TextEvent.pushNPCDialog("Hey kid, how'd you like a quick and easy path to power?  I've got just the rock for you if you don't mind a bit of darkness....")
             inv.item("Gem_of_Darkness").value -= 0.8 * inv.item("Gem_of_Darkness").value
         Else
             img_index = 0
-            Game.pushNPCDialog("Always a pleasure to run across another Magic Girl!  What can I get ya?")
+            TextEvent.pushNPCDialog("Always a pleasure to run across another Magic Girl!  What can I get ya?")
         End If
 
         If img_index = getArachneImageInd() And Not Game.player1.formName.Equals("Arachne") Then inv.setCount(244, 1) Else inv.setCount(244, 0)
@@ -95,12 +96,12 @@
     End Function
 
     Sub badForYou()
-        If Game.combatmode Then Game.fromCombat()
+        If Game.combat_engaged Then Game.fromCombat()
         Game.picNPC.BackgroundImage = picPrincess
         Game.picNPC.Location = New Point(82 * Game.Size.Width / 1024, 179 * Game.Size.Width / 1024)
         Game.picNPC.Visible = True
-        If Game.npcmode Then Game.hideNPCButtons()
-        Game.pushNPCDialog("Woah there, rookie, don't do anything crazy now.  I'm going to give you some space for now, but if you keep pushing me you're gonna regret it...", AddressOf leave)
+        If Game.shop_npc_engaged Then Game.hideNPCButtons()
+        TextEvent.pushNPCDialog("Woah there, rookie, don't do anything crazy now.  I'm going to give you some space for now, but if you keep pushing me you're gonna regret it...", AddressOf leave)
     End Sub
     Sub leave()
         Game.player1.pos = Game.currFloor.randPoint()
@@ -119,7 +120,7 @@
     End Function
 
     Public Overrides Sub toDoll()
-        Game.pushNPCDialog("*squeek*")
+        TextEvent.pushNPCDialog("*squeek*")
         Game.picNPC.BackgroundImage = picNPC(5)
 
         discount = 0.5

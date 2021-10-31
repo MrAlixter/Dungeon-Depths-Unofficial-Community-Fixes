@@ -49,13 +49,13 @@
 
         If inv.getCountAt("AAAAAA_Battery") < 1 Then
             dmg = Entity.calcDamage(dmg, target.getDEF)
-            Game.pushLblCombatEvent("The Judge's strike is not powered!")
+            TextEvent.pushCombat("The Judge's strike is not powered!")
             target.takeDMG(dmg, Me)
         Else
             inv.add("AAAAAA_Battery", -1)
             dmg += 69
             dmg = Entity.calcDamage(dmg, target.getDEF)
-            Game.pushLogAndEvent("The Judge's hammer head ejects a smoldering battery shell.")
+            TextEvent.pushAndLog("The Judge's hammer head ejects a smoldering battery shell.")
             target.takeDMG(dmg, Me)
         End If
     End Sub
@@ -77,11 +77,11 @@
     End Sub
 
     Public Overrides Sub playerDeath(ByRef p As Player)
-        Game.pushLstLog("The Time Judge tosses a cryogrenade at you!")
+        TextEvent.pushLog("The Time Judge tosses a cryogrenade at you!")
         p.petrify(Color.FromArgb(255, 75, 209, 255), 9999)
         p.drawPort()
 
-        Game.pushLblEvent("The Time judge tosses a cryogrenade that you are too weak to avoid, and with a flash your body freezes solid." & DDUtils.RNRN &
+        TextEvent.push("The Time judge tosses a cryogrenade that you are too weak to avoid, and with a flash your body freezes solid." & DDUtils.RNRN &
                           """You've proven yourself to be too large of a risk to be allowed to exist..."" the judge says readying a powerful swing ""...so on the charge of endangering the entire space time continuum, I find you...""" & DDUtils.RNRN &
                           "CRASH!!!" & DDUtils.RNRN &
                           """...guilty...""" & DDUtils.RNRN & DDUtils.RNRN & "GAME OVER!", AddressOf p.die)

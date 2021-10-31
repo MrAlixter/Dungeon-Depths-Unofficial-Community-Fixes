@@ -8,11 +8,11 @@
         MyBase.setcost(4)
     End Sub
     Public Overrides Sub effect()
-        'Game.pushLstLog("You cast Cleansing Light!")
+        'IngameEvent.pushLog("You cast Cleansing Light!")
 
         Dim out = Game.player1.revertToSState(Int(Rnd() * 9) + 4)
         out += Game.lblEvent.Text.Split(vbCrLf)(0)
-        Game.pushLblEvent(out)
+        TextEvent.push(out)
 
         Game.player1.drawPort()
     End Sub

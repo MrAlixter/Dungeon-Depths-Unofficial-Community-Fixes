@@ -35,11 +35,11 @@
     End Sub
 
     Shared Sub hypnotizeP()
-        Game.pushNPCDialog("Before we get started, I would like to make sure you really want this. This lesson will change a core aspect of your personality, afterall...", AddressOf warning)
+        TextEvent.pushNPCDialog("Before we get started, I would like to make sure you really want this. This lesson will change a core aspect of your personality, afterall...", AddressOf warning)
     End Sub
 
     Shared Sub warning()
-        Game.pushPnlYesNo("Become a " & selectedClass & "?", AddressOf tf, AddressOf cancel)
+        TextEvent.pushYesNo("Become a " & selectedClass & "?", AddressOf tf, AddressOf cancel)
     End Sub
     Shared Sub cancel()
         Game.player1.gold += COST
@@ -62,7 +62,7 @@
                   """...annnd one.  Wake up now, little " & selectedClass.ToLower & ".  Are you well?  You look a bit confused..."" the teacher asks, stowing something in her pocket and adjusting her glasses.  While it does seem like something has changed, you can't put your finger on it.  You are " & p.getName & " the " & p.className & ", same as you've always been.  Groggily, you tell her that you're fine and just a little dizzy." & DDUtils.RNRN &
                   """Well then, it seems like my work here is done.  If I can help you with anything else, please do not hesitate to ask!"""
 
-        Game.pushLblEvent(out, AddressOf CType(Game.hteach, HypnoTeach).back)
+        TextEvent.push(out, AddressOf CType(Game.hteach, HypnoTeach).back)
 
         p.changeClass(selectedClass)
 

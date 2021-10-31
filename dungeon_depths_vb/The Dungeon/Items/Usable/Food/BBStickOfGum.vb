@@ -21,13 +21,13 @@
 
     Overrides Sub effect(ByRef p As Player)
         If p.perks(perk.bimbotf) = -1 Then
-            Game.pushLblEvent("Chewing the gum causes a dizzy calm wash to over you.")
+            TextEvent.push("Chewing the gum causes a dizzy calm wash to over you.")
             p.ongoingTFs.add(New BBBimboTF(2, 5, 0.25, True))
             p.perks(perk.bimbotf) = 0
         ElseIf Game.player1.className.Equals("Bimbo") Then
-            Game.pushLblEvent("Chewing the gum make your head feel warm and fuzzy and stuff. You like, totally, love this gum!")
+            TextEvent.push("Chewing the gum make your head feel warm and fuzzy and stuff. You like, totally, love this gum!")
         Else
-            Game.pushLblEvent("Chewing the gum make your head feel warm and fuzzy.")
+            TextEvent.push("Chewing the gum make your head feel warm and fuzzy.")
         End If
     End Sub
 End Class

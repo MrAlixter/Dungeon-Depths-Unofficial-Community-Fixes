@@ -7,7 +7,7 @@
         MyBase.setcost(0)
     End Sub
     Public Overrides Sub effect()
-        Game.pushLstLog("Whatever you tried to do failed unspectacularly.")
-        Game.pushLblEvent("Something isn't right, and whatever you tried to do failed unspectacularly.")
+        TextEvent.pushLog("Whatever you tried to do failed unspectacularly.")
+        TextEvent.push("Something isn't right, and whatever you tried to do failed unspectacularly.")
     End Sub
 End Class

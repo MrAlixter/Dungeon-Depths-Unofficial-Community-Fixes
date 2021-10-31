@@ -52,7 +52,7 @@
                "Your base form is now that of a succubus!  Should you revert to your start state, this is what you will become."
         Dim revertText = Game.lblEvent.Text.Split(vbCrLf)(0)
         If Not revertText.Equals("") Then out = revertText & DDUtils.RNRN & out
-        Game.pushLblEvent(out)
+        TextEvent.push(out)
     End Sub
 
     Public Shared Sub step1alt()

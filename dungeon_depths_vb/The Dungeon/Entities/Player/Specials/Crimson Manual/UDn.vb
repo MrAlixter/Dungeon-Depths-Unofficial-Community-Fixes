@@ -14,7 +14,7 @@
         p.us()
         p.lust += 10
 
-        Game.pushLblEvent("Ass Down!  Your butt squeezes uncomfortably...")
+        TextEvent.push("Ass Down!  Your butt squeezes uncomfortably...")
 
         p.drawPort()
     End Sub

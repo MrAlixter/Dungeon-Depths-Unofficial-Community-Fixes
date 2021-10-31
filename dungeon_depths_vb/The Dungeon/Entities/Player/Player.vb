@@ -84,6 +84,7 @@
     tfedbyweapon    '82
     rubytrapstage   '83
     mesmerized      '84
+    gagged          '85
 End Enum
 Public Class Player
     'Player is the representation of a player controlled entity (the main player, any teammates)
@@ -106,6 +107,7 @@ Public Class Player
     Public equippedWeapon As Weapon = New BareFists
     Public equippedArmor As Armor = New CommonClothes0
     Public equippedAcce As Accessory = New noAcce
+    Public equippedGlasses As Glasses = New noGlasses
 
     Public Shadows currTarget As NPC = Nothing
 
@@ -113,7 +115,7 @@ Public Class Player
     Public classes As Dictionary(Of String, pClass) = New Dictionary(Of String, pClass)()
     Public forms As Dictionary(Of String, pForm) = New Dictionary(Of String, pForm)()
     Public polymorphs As Dictionary(Of String, Transformation) = New Dictionary(Of String, Transformation)()
-    Public pImage As Image 'tile image of the player
+    Public player_image As Image 'tile image of the player
     Public TextColor As Color
     Public isPetrified = False
 
@@ -391,6 +393,32 @@ Public Class Player
         End If
         equippedAcce.add(1)
     End Sub
+    Private Sub setStartingGlasses()
+        'assigns glasses based on the created player portrait
+        Select Case prt.iArrInd(pInd.glasses).Item1
+            Case 1
+                equippedGlasses = inv.item("Red_Framed_Spectacles")
+            Case 2
+                equippedGlasses = inv.item("Small_Glasses")
+            Case 3
+                equippedGlasses = inv.item("Circular_Glasses")
+            Case 4
+                equippedGlasses = inv.item("Thick_Rimmed_Specs")
+            Case 5
+                equippedGlasses = inv.item("Cool_Shades")
+            Case 6
+                equippedGlasses = inv.item("Monocle")
+            Case 7
+                equippedGlasses = inv.item("Eyepatch")
+            Case 8
+                equippedGlasses = inv.item("Masquerader's_Mask")
+            Case Else
+                equippedGlasses = New noGlasses
+                equippedGlasses.count -= 1
+        End Select
+     
+        equippedGlasses.add(1)
+    End Sub
     Private Sub setCommonClothes()
         'assigns an accessory based on the created player portrait
         Select Case prt.iArrInd(pInd.clothes).Item1
@@ -429,6 +457,7 @@ Public Class Player
         'sets default weapon/armor/accessory
         equippedWeapon = New BareFists
         setStartingAccessory()
+        setStartingGlasses()
         setCommonClothes()
         'set class
         pClass = classes(s)
@@ -477,7 +506,7 @@ Public Class Player
             inv.add(2, 3)
             inv.add(4, 1)
             inv.add(11, 1)
-            Game.pushLstLog("You find a wand lodged in the entrance...  Maybe you should equip it?")
+            TextEvent.pushLog("You find a wand lodged in the entrance...  Maybe you should equip it?")
         ElseIf s = "Valkyrie" Then
             pClass = classes("Classless")
             maxHealth = 80
@@ -487,7 +516,7 @@ Public Class Player
             inv.add(2, 3)
             inv.add(88, 1)
             inv.add("Valkyrie_Sword", 1)
-            Game.pushLstLog("You find a sword piercing the floor...  Maybe you should equip it?")
+            TextEvent.pushLog("You find a sword piercing the floor...  Maybe you should equip it?")
         ElseIf s = "Time Cop" Then
             pClass = classes("Time Cop")
             inv.add("Phase_Pistol", 1)
@@ -524,13 +553,13 @@ Public Class Player
         End If
 
         'equip armor, boost mana if a staff is equipped
-        Equipment.clothesChange(Me, equippedArmor.getName)
+        EquipmentDialogBackend.armorChange(Me, equippedArmor.getName)
         mana = getMaxMana()
         'set the known specials/spells
         specialRoute()
         magicRoute()
-        'set pImage and TextColor
-        pImage = Game.picPlayer.BackgroundImage
+        'set player_image and TextColor
+        player_image = Game.picPlayer.BackgroundImage
         TextColor = Color.White
         'sets the player description
         description = CStr(name & " is a " & sex & " " & pForm.name & " " & pClass.name)
@@ -702,7 +731,7 @@ Public Class Player
         End If
 
         '|-NPC Encounter Movement Freeze-|
-        If Game.npcmode Then Exit Sub
+        If Game.shop_npc_engaged Then Exit Sub
 
         '|-Other Movement Freezes-|
         If canMoveFlag = False Then Exit Sub
@@ -720,7 +749,7 @@ Public Class Player
             board(newY, newX).Tag = 2
             getPlayer.inv.add("AAAAAA_Battery", -1)
         ElseIf board(newY, newX).Tag = 0 And perks(perk.pdrill) > 0 And inv.getCountAt("AAAAAA_Battery") < 1 Then
-            Game.pushLblEvent("The drill spins weakly...")
+            TextEvent.push("The drill spins weakly...")
         End If
 
         '|-Other Wall-|
@@ -749,15 +778,15 @@ Public Class Player
                     "Obeying, you take a seat and wait for a few minutes before a violet portal opens up near the crystal and your master steps out."
                 If will > 7 Then
                     out += "  In their attention to the crystal, they don't seem to notice you at all giving you a few minutes to yourself." & DDUtils.RNRN & "Wait... if they aren't paying attention to you..." & DDUtils.RNRN & "You fiddle around with your collar, and they still don't seem to notice your actions, so you leverage your thumb in the collars joint."
-                    Game.pushLblEvent(out, AddressOf ThrallTF.betraySorc, AddressOf ThrallTF.waitSorc, "Break off your collar?")
+                    TextEvent.push(out, AddressOf ThrallTF.betraySorc, AddressOf ThrallTF.waitSorc, "Break off your collar?")
                 Else
                     out += "  Despite your excitement, they don't seem to notice you, instead focusing all their attention on the crystalline array.  As they fiddle with it, you notice a slight purple aura beginning to form around them and wait, are those horns sprouting out of their hair that seems to catch a non-existant wind?  With a flourish, they complete ... something ... and a blinding flash engulfs them.  Where once stood your human controller now stands a half-demon who only now seems to have taken notice of you." & _
                         """Well... It looks like you succeeded.  For that, I will give you an ultimatium.  Join me as my general, or die in these dungeons as my slave."
-                    Game.pushLblEvent(out, AddressOf ThrallTF.acceptSorc, AddressOf ThrallTF.fightSorc, "Accept their offer?")
+                    TextEvent.push(out, AddressOf ThrallTF.acceptSorc, AddressOf ThrallTF.fightSorc, "Accept their offer?")
                 End If
 
             Else
-                Game.pushLblEvent("You've found one of the crystals your controller is seeking!  As you circle it, you feel a familiar presence enter your mind.  " & _
+                TextEvent.push("You've found one of the crystals your controller is seeking!  As you circle it, you feel a familiar presence enter your mind.  " & _
                     """No, that isn't it."" your overseer states disappointedly, ""Well, I guess you can go back to your buisness now.""")
                 ongoingTFs.add(New ThrallTF())
             End If
@@ -811,14 +840,14 @@ Public Class Player
     End Sub
     'attacking a npc
     Public Sub miss(target As NPC)
-        Game.pushLogAndEvent(CStr("You miss " & Trim(target.title.ToLower & target.getName()) & "!"))
+        TextEvent.pushAndLog(CStr("You miss " & Trim(target.title.ToLower & target.getName()) & "!"))
     End Sub
     Public Sub hit(dmg As Integer, target As NPC)
-        Game.pushLogAndEvent(CStr("You hit " & Trim(target.title.ToLower & target.getName()) & " for " & dmg & " damage!"))
+        TextEvent.pushAndLog(CStr("You hit " & Trim(target.title.ToLower & target.getName()) & " for " & dmg & " damage!"))
         target.takeDMG(dmg, Me)
     End Sub
     Public Sub cHit(dmg As Integer, target As NPC)
-        Game.pushLogAndEvent(CStr("You hit " & Trim(target.title.ToLower & target.getName()) & " for " & dmg * 2 & " damage!  Critical hit!"))
+        TextEvent.pushAndLog(CStr("You hit " & Trim(target.title.ToLower & target.getName()) & " for " & dmg * 2 & " damage!  Critical hit!"))
         target.isStunned = True
         target.stunct = 0
         target.takeDMG(dmg * 2, Me)
@@ -835,7 +864,7 @@ Public Class Player
             Exit Sub
         End If
 
-        Game.pushLogAndEvent(CStr("You miss " & Trim(target.getName()) & "!"))
+        TextEvent.pushAndLog(CStr("You miss " & Trim(target.getName()) & "!"))
     End Sub
     Private Sub hit(dmg As Integer, target As Entity)
         If target.GetType() Is GetType(NPC) Or target.GetType.IsSubclassOf(GetType(NPC)) Then
@@ -843,7 +872,7 @@ Public Class Player
             Exit Sub
         End If
 
-        Game.pushLogAndEvent(CStr("You hit " & Trim(target.getName()) & " for " & dmg & " damage!"))
+        TextEvent.pushAndLog(CStr("You hit " & Trim(target.getName()) & " for " & dmg & " damage!"))
         target.takeDMG(dmg, Me)
     End Sub
     Private Sub cHit(dmg As Integer, target As Entity)
@@ -852,7 +881,7 @@ Public Class Player
             Exit Sub
         End If
 
-        Game.pushLogAndEvent(CStr("You hit " & Trim(target.getName()) & " for " & dmg * 2 & " damage!  Critical hit!"))
+        TextEvent.pushAndLog(CStr("You hit " & Trim(target.getName()) & " for " & dmg * 2 & " damage!  Critical hit!"))
         target.takeDMG(dmg * 2, Me)
     End Sub
     'taking damage
@@ -861,14 +890,14 @@ Public Class Player
 
         Game.lblPHealtDiff.Tag -= dmg
 
-        Game.pushLogAndEvent(CStr("You got hit! -" & dmg & " health!"))
+        TextEvent.pushAndLog(CStr("You got hit! -" & dmg & " health!"))
 
         MyBase.takeDMG(dmg, source)
     End Sub
     Public Sub takeUnconditionalDMG(ByVal dmg As Integer, ByRef source As Entity)
         Game.lblPHealtDiff.Tag -= dmg
 
-        Game.pushLogAndEvent(CStr("You got hit! -" & dmg & " health!"))
+        TextEvent.pushAndLog(CStr("You got hit! -" & dmg & " health!"))
 
         MyBase.takeDMG(dmg, source)
     End Sub
@@ -878,7 +907,7 @@ Public Class Player
 
         Game.lblPHealtDiff.Tag -= dmg
 
-        Game.pushLogAndEvent(CStr("You got hit!  Critical hit!  -" & dmg & " health!"))
+        TextEvent.pushAndLog(CStr("You got hit!  Critical hit!  -" & dmg & " health!"))
 
         MyBase.takeDMG(dmg, source)
     End Sub
@@ -887,7 +916,7 @@ Public Class Player
 
         Game.lblPHealtDiff.Tag -= dmg
 
-        Game.pushLogAndEvent(CStr("You got hit!  Critical hit!  -" & dmg & " health!"))
+        TextEvent.pushAndLog(CStr("You got hit!  Critical hit!  -" & dmg & " health!"))
 
         MyBase.takeDMG(dmg, source)
     End Sub
@@ -932,6 +961,7 @@ Public Class Player
         Dim tEweap As Weapon = equippedWeapon
         Dim tEarm As Armor = equippedArmor
         Dim tAcc As Accessory = equippedAcce
+        Dim tGlasses As Glasses = equippedGlasses
 
         Dim tpClassName As String = pClass.name
         Dim tpFormName As String = pForm.name
@@ -948,13 +978,15 @@ Public Class Player
         If inv.getCountAt(tEweap.getAName) < 1 Then equippedWeapon = New BareFists
         equippedAcce = tAcc
         If inv.getCountAt(tAcc.getAName) < 1 Then equippedAcce = New noAcce
+        equippedGlasses = tGlasses
+        If inv.getCountAt(tGlasses.getAName) < 1 Then equippedGlasses = New noGlasses
 
         currState.save(Me)
         savePState()
 
         Do While knownSpells.Contains("Heartblast Starcannon")
             knownSpells.Remove("Heartblast Starcannon")
-            Game.pushLstLog("'Heartblast Starcannon' spell forgotten!")
+            TextEvent.pushLog("'Heartblast Starcannon' spell forgotten!")
         Loop
 
         If health > 1 Then health = 1
@@ -972,14 +1004,14 @@ Public Class Player
 
         ongoingTFs.resetPolymorphs()
 
-        If Game.lblEvent.Visible = False Then Game.pushLblEvent(out & "You return to your former form!")
-        Game.pImage = pImage
+        If Game.lblEvent.Visible = False Then TextEvent.push(out & "You return to your former form!")
+        Game.player_image = player_image
         Game.lblEvent.ForeColor = TextColor
         Game.lblNameTitle.ForeColor = TextColor
 
         reverseAllRoute()
         drawPort()
-        setPImage()
+        setplayer_image()
         UIupdate()
     End Sub
     Public Function revertToState(ByVal numtorevert As Integer, ByRef s As State) As String
@@ -1075,7 +1107,7 @@ Public Class Player
 
         revertToState(sState)
 
-        Game.pushLblEvent("With a poof of smoke, you return to your original self!")
+        TextEvent.push("With a poof of smoke, you return to your original self!")
     End Sub
     Public Function revertToSState(ByVal numtorevert As Integer) As String
         Return revertToState(numtorevert, sState)
@@ -1087,7 +1119,7 @@ Public Class Player
         Return revertToState(numtorevert, pState)
     End Function
     Public Sub changeClass(ByVal newClass As String)
-        If Not classes.ContainsKey(newClass) Then MsgBox("Error 09: " & newClass & " is not a recognized player class!") : Exit Sub
+        If Not classes.ContainsKey(newClass) Then DDError.playerClassChangeError(newClass) : Exit Sub
         If pClass.name.Equals(newClass) Then Exit Sub
 
         Dim nextlevelPercentage As Double = xp / nextLevelXp
@@ -1106,7 +1138,7 @@ Public Class Player
         xp = CInt(nextlevelPercentage * nextLevelXp)
     End Sub
     Public Sub changeForm(ByVal newForm As String)
-        If Not forms.ContainsKey(newForm) Then MsgBox("Error 10: " & newForm & " is not a recognized player form!") : Exit Sub
+        If Not forms.ContainsKey(newForm) Then DDError.playerFormChangeError(newForm) : Exit Sub
         If pForm.name.Equals(newForm) Then Exit Sub
 
         Dim nextlevelPercentage As Double = xp / nextLevelXp
@@ -1152,7 +1184,7 @@ Public Class Player
         petrify(c, 9999)
         If r.Equals("midas") Then
             Dim out As String = "As you reach out to touch your opponent, you clumsily swipe, missing them, and hit...yourself?  Already your legs are gold, and only have a moment to scream, your vocal cords quickly following suit. ""Well,"" you think, ""...at least I won't have to worry abou money anymore."" " & vbCrLf & "And like that, the dungeon gains another decoration."
-            Game.pushLblEvent(out, AddressOf die)
+            TextEvent.push(out, AddressOf die)
         End If
     End Sub
 
@@ -1185,7 +1217,7 @@ Public Class Player
         If inv.getCountAt("Extra_Life") > 0 Then
             inv.item("Extra_Life").add(-1)
             health = Math.Min(0.125 * inv.getCountAt("Extra_Life"), 1.0)
-            Game.pushLogAndEvent("Extra_Life consumed!")
+            TextEvent.pushAndLog("Extra_Life consumed!")
         End If
 
         Game.fromCombat()
@@ -1205,12 +1237,12 @@ Public Class Player
         setHealth(0.1)
 
         If Not source Is Nothing AndAlso Not source.getSName Is Nothing Then
-            Game.pushLstLog("You are defeated!")
+            TextEvent.pushLog("You are defeated!")
 
             If source.getName.Equals("stamina") Then
-                Game.pushLblEvent("You starve to death!")
+                TextEvent.push("You starve to death!")
             ElseIf source.getName.Equals("Fire") Then
-                Game.pushLblEvent("You burn to death!")
+                TextEvent.push("You burn to death!")
             ElseIf source.GetType.IsSubclassOf(GetType(ShopNPC)) Then
                 CType(source, ShopNPC).playerDeath(Me)
                 Exit Sub
@@ -1221,33 +1253,33 @@ Public Class Player
         End If
 
         DeathEffects.hardDeath()
-        Game.npcList.Clear()
+        Game.npc_list.Clear()
     End Sub
-    Public Sub setPImage()
+    Public Sub setplayer_image()
         'sets the player tile image
         If pClass.name.Equals("Bimbo") Then
             If Game.mDun.numCurrFloor = 13 Then
-                pImage = Game.picPlayerBFog.BackgroundImage
+                player_image = Game.picPlayerBFog.BackgroundImage
             ElseIf Game.mDun.numCurrFloor = 9999 Or Game.mDun.numCurrFloor = 10000 Then
-                pImage = Game.picPlayerBSpace.BackgroundImage
+                player_image = Game.picPlayerBSpace.BackgroundImage
             ElseIf Game.mDun.numCurrFloor = 91017 Then
-                pImage = Game.picLegaBimbo.BackgroundImage
+                player_image = Game.picLegaBimbo.BackgroundImage
             ElseIf Game.mDun.numCurrFloor > 5 Then
-                pImage = Game.picBimbof.BackgroundImage
+                player_image = Game.picBimbof.BackgroundImage
             Else
-                pImage = Game.picPlayerB.BackgroundImage
+                player_image = Game.picPlayerB.BackgroundImage
             End If
         Else
             If Game.mDun.numCurrFloor = 13 Then
-                pImage = Game.picPlayerFog.BackgroundImage
+                player_image = Game.picPlayerFog.BackgroundImage
             ElseIf Game.mDun.numCurrFloor = 9999 Or Game.mDun.numCurrFloor = 10000 Then
-                pImage = Game.picPlayerSpace.BackgroundImage
+                player_image = Game.picPlayerSpace.BackgroundImage
             ElseIf Game.mDun.numCurrFloor = 91017 Then
-                pImage = Game.picLegaPlayer.BackgroundImage
+                player_image = Game.picLegaPlayer.BackgroundImage
             ElseIf Game.mDun.numCurrFloor > 5 Then
-                pImage = Game.picPlayerf.BackgroundImage
+                player_image = Game.picPlayerf.BackgroundImage
             Else
-                pImage = Game.picPlayer.BackgroundImage
+                player_image = Game.picPlayer.BackgroundImage
             End If
         End If
     End Sub
@@ -1294,10 +1326,10 @@ Public Class Player
     End Sub
     Sub keepStatsInBounds()
         '|HEALTH|
-        If Not Game.combatmode And Not solFlag Then health = Math.Min(1, health)
+        If Not Game.combat_engaged And Not solFlag Then health = Math.Min(1, health)
 
         '|MANA|
-        If Not Game.combatmode And Not solFlag Then mana = Math.Min(mana, getMaxMana)
+        If Not Game.combat_engaged And Not solFlag Then mana = Math.Min(mana, getMaxMana)
         mana = Math.Max(0, mana)
 
         '|STAMINA|
@@ -1385,11 +1417,11 @@ Public Class Player
         End If
         'golden gum
         If inv.getCountAt("Golden_Gum") > 0 And Not ongoingTFs.contains(tfind.goldbimbo) And Not className.Equals("Bimbo") Then
-            Game.pushLblEvent("A dizzy calm washes over you...")
+            TextEvent.push("A dizzy calm washes over you...")
             ongoingTFs.add(New GBimboTF(2, 20, 0.25, True))
         End If
         'imitation cowbell
-        If Not pClass.name.Equals("Thrall") And forcedPath Is Nothing And prt.checkFemInd(pInd.horns, 12) AndAlso Int(Rnd() * 100) = 0 AndAlso Not Game.combatmode AndAlso Not Game.npcmode Then
+        If Not pClass.name.Equals("Thrall") And forcedPath Is Nothing And prt.checkFemInd(pInd.horns, 12) AndAlso Int(Rnd() * 100) = 0 AndAlso Not Game.combat_engaged AndAlso Not Game.shop_npc_engaged Then
             PerkEffects.imitationCowbell(Me)
         End If
         'mesmerized
@@ -1516,45 +1548,53 @@ Public Class Player
         End If
 
         inv.invIDorder.Clear()
-        Dim numItems As Integer = Game.btnCancelCast.Items.Count
+        Dim numItems As Integer = Game.lstInventory.Items.Count
         Dim tArr(inv.count + 5) As String
         Dim ct As Integer = 0
-        If Game.invFilters(0) Then
+        If InventoryFilterBackend.invFilters(0) Then
             drawInv("-USEABLES:", inv.getUseable, tArr, ct)
         End If
-        If Game.invFilters(1) Then
+        If InventoryFilterBackend.invFilters(1) Then
             drawInv("-POTIONS:", inv.getPotions, tArr, ct)
         End If
-        If Game.invFilters(2) Then
+        If InventoryFilterBackend.invFilters(2) Then
             drawInv("-FOOD:", inv.getFood, tArr, ct)
         End If
-        If Game.invFilters(3) Then
+        If InventoryFilterBackend.invFilters(3) Then
             drawInv("-ARMOR:", inv.getArmors.Item2, tArr, ct)
         End If
-        If Game.invFilters(4) Then
+        If InventoryFilterBackend.invFilters(4) Then
             drawInv("-WEAPONS:", inv.getWeapons.Item2, tArr, ct)
         End If
-        If Game.invFilters(6) Then
+        If InventoryFilterBackend.invFilters(6) Then
             drawInv("-ACCESSORIES:", inv.getAccesories.Item2, tArr, ct)
         End If
-        If Game.invFilters(5) Then
+        If InventoryFilterBackend.invFilters(7) Then
+            drawInv("-GLASSES:", inv.getGlasses.Item2, tArr, ct)
+        End If
+        If InventoryFilterBackend.invFilters(5) Then
             drawInv("-MISC:", inv.getMisc, tArr, ct)
         End If
         If ct <> numItems Or inv.invNeedsUDate Then
-            Game.btnCancelCast.Items.Clear()
+            Game.lstInventory.Items.Clear()
             For Each invItem In tArr
                 If Not invItem Is Nothing Then
-                    Game.btnCancelCast.Items.Add(invItem)
+                    Game.lstInventory.Items.Add(invItem)
                 End If
             Next
         End If
         inv.invNeedsUDate = False
     End Sub
     Sub drawInv(ByVal heading As String, ByRef list() As Item, ByRef tArr() As String, ByRef ct As Integer)
+        'Keep track of the starting count for later use in checking what has been added
+        Dim starting_ct As Integer = ct
+
+        'Add the category heading
         tArr(ct) = heading
         inv.invIDorder.Add(-1)
         ct += 1
 
+        'Add all items for the given category that the player has at least one copy of
         Array.Sort(list)
         For i = 0 To UBound(list)
             If list(i).getCount > 0 Then
@@ -1564,6 +1604,15 @@ Public Class Player
             End If
         Next
 
+        'If we're still at the starting count, the inventory heading is empty and we should ignore it
+        If ct = starting_ct + 1 Then
+            tArr(ct) = ""
+            inv.invIDorder.RemoveAt(inv.invIDorder.Count() - 1)
+            inv.invIDorder.RemoveAt(inv.invIDorder.Count() - 1)
+            ct -= 2
+        End If
+
+        'Add a new line space to the inventory
         tArr(ct) = ""
         inv.invIDorder.Add(-1)
         ct += 1
@@ -1621,7 +1670,7 @@ Public Class Player
     'sex change methods
     Public Sub MtF()
         If perks(perk.polymorphed) > -1 Or pClass.name.Equals("Magical Girl") Or pClass.name.Equals("Valkyrie") Then
-            Game.pushLstLog("Your form prevents you from being altered.")
+            TextEvent.pushLog("Your form prevents you from being altered.")
             Exit Sub
         End If
         sex = "Female"
@@ -1633,7 +1682,7 @@ Public Class Player
     End Sub
     Public Sub FtM()
         If perks(perk.polymorphed) > -1 Or pClass.name.Equals("Magical Girl") Or pClass.name.Equals("Valkyrie") Then
-            Game.pushLstLog("Your form prevents you from being altered.")
+            TextEvent.pushLog("Your form prevents you from being altered.")
             Exit Sub
         End If
         sex = "Male"
@@ -1695,7 +1744,7 @@ Public Class Player
     'breast enlargement/reduction methods
     Public Sub be()
         If Not Transformation.canBeTFed(Me) And Not pClass.name.Equals("Thrall") Then
-            Game.pushLstLog("Your form prevents you from being altered.")
+            TextEvent.pushLog("Your form prevents you from being altered.")
             Exit Sub
         End If
 
@@ -1703,23 +1752,23 @@ Public Class Player
             breastSize += 1
             reverseBSroute()
             reverseUSRoute()
-            Game.pushLstLog("+ 1 cup size!")
+            TextEvent.pushLog("+ 1 cup size!")
         Else
-            Game.pushLstLog("Your breasts can get no larger!")
+            TextEvent.pushLog("Your breasts can get no larger!")
         End If
     End Sub
-    Friend Sub bs()
+    Public Sub bs()
         If Not Transformation.canBeTFed(Me) And Not pClass.name.Equals("Thrall") Then
-            Game.pushLstLog("Your form prevents you from being altered.")
+            TextEvent.pushLog("Your form prevents you from being altered.")
             Exit Sub
         End If
         If breastSize > -1 And breastSize <= 7 Then
             breastSize -= 1
             reverseBSroute()
             reverseUSRoute()
-            Game.pushLstLog("- 1 cup size!")
+            TextEvent.pushLog("- 1 cup size!")
         Else
-            Game.pushLstLog("Your breasts can get no smaller!")
+            TextEvent.pushLog("Your breasts can get no smaller!")
         End If
     End Sub
     Sub bsizeroute()
@@ -1795,29 +1844,29 @@ Public Class Player
     'dick enlargement/reduction methods
     Public Sub de()
         If Not Transformation.canBeTFed(Me) And Not pClass.name.Equals("Thrall") Then
-            Game.pushLstLog("Your form prevents you from being altered.")
+            TextEvent.pushLog("Your form prevents you from being altered.")
             Exit Sub
         End If
 
         If dickSize >= -1 And dickSize < 3 Then
             dickSize += 1
             reverseAllRoute()
-            Game.pushLstLog("+ dick size!")
+            TextEvent.pushLog("+ dick size!")
         Else
-            Game.pushLstLog("Your dick can get no larger!")
+            TextEvent.pushLog("Your dick can get no larger!")
         End If
     End Sub
-    Friend Sub ds()
+    Public Sub ds()
         If Not Transformation.canBeTFed(Me) And Not pClass.name.Equals("Thrall") Then
-            Game.pushLstLog("Your form prevents you from being altered.")
+            TextEvent.pushLog("Your form prevents you from being altered.")
             Exit Sub
         End If
         If dickSize > -1 And dickSize <= 3 Then
             dickSize -= 1
             reverseDSRoute()
-            Game.pushLstLog("- dick size!")
+            TextEvent.pushLog("- dick size!")
         Else
-            Game.pushLstLog("You no longer have a dick!")
+            TextEvent.pushLog("You no longer have a dick!")
         End If
     End Sub
     Sub dsizeroute()
@@ -1853,7 +1902,7 @@ Public Class Player
     'butt enlargement/reduction methods
     Public Sub ue()
         If Not Transformation.canBeTFed(Me) And Not pClass.name.Equals("Thrall") Then
-            Game.pushLstLog("Your form prevents you from being altered.")
+            TextEvent.pushLog("Your form prevents you from being altered.")
             Exit Sub
         End If
 
@@ -1861,23 +1910,23 @@ Public Class Player
             buttSize += 1
             reverseUSRoute()
             If equippedArmor.bind_wearer Then reverseBSroute(False) Else reverseBSroute()
-            Game.pushLstLog("+ 1 butt size!")
+            TextEvent.pushLog("+ 1 butt size!")
         Else
-            Game.pushLstLog("Your ass can get no larger!")
+            TextEvent.pushLog("Your ass can get no larger!")
         End If
     End Sub
-    Friend Sub us()
+    Public Sub us()
         If Not Transformation.canBeTFed(Me) And Not pClass.name.Equals("Thrall") Then
-            Game.pushLstLog("Your form prevents you from being altered.")
+            TextEvent.pushLog("Your form prevents you from being altered.")
             Exit Sub
         End If
         If buttSize > -1 And buttSize <= 5 Then
             buttSize -= 1
             reverseUSRoute()
             If equippedArmor.bind_wearer Then reverseBSroute(False) Else reverseBSroute()
-            Game.pushLstLog("- 1 butt size!")
+            TextEvent.pushLog("- 1 butt size!")
         Else
-            Game.pushLstLog("Your butt can get no smaller!")
+            TextEvent.pushLog("Your butt can get no smaller!")
         End If
     End Sub
     Sub usizeroute()
@@ -2142,27 +2191,27 @@ Public Class Player
     '|GETTER/SETTER METHODS|
     Overrides Function getMaxHealth() As Integer
         If equippedArmor Is Nothing Or equippedWeapon Is Nothing Or equippedAcce Is Nothing Then Return CInt(maxHealth * pForm.h * pForm.h) + hBuff
-        Return CInt((maxHealth + hBuff) * pClass.h * pForm.h) + equippedArmor.getHBoost(Me) + equippedWeapon.getHBoost(Me) + equippedAcce.getHBoost(Me)
+        Return CInt((maxHealth + hBuff) * pClass.h * pForm.h) + equippedArmor.getHBoost(Me) + equippedWeapon.getHBoost(Me) + equippedAcce.getHBoost(Me) + equippedGlasses.getHBoost(Me)
     End Function
     Overrides Function getMaxMana() As Integer
         If equippedArmor Is Nothing Or equippedWeapon Is Nothing Or equippedAcce Is Nothing Then Return CInt(maxMana * pForm.m * pForm.m) + mBuff
-        Return CInt((maxMana + mBuff) * pForm.m * pForm.m) + equippedArmor.getMBoost(Me) + equippedWeapon.getMBoost(Me) + equippedAcce.getMBoost(Me)
+        Return CInt((maxMana + mBuff) * pForm.m * pForm.m) + equippedArmor.getMBoost(Me) + equippedWeapon.getMBoost(Me) + equippedAcce.getMBoost(Me) + equippedGlasses.getMBoost(Me)
     End Function
     Overrides Function getATK() As Integer
         If equippedArmor Is Nothing Or equippedWeapon Is Nothing Or equippedAcce Is Nothing Then Return CInt(attack * pForm.a * pClass.a) + aBuff
-        Return CInt((attack + aBuff) * pForm.a * pClass.a) + equippedArmor.getABoost(Me) + equippedWeapon.getABoost(Me) + equippedAcce.getABoost(Me)
+        Return CInt((attack + aBuff) * pForm.a * pClass.a) + equippedArmor.getABoost(Me) + equippedWeapon.getABoost(Me) + equippedAcce.getABoost(Me) + equippedGlasses.getABoost(Me)
     End Function
     Overrides Function getDEF() As Integer
         If equippedArmor Is Nothing Or equippedWeapon Is Nothing Or equippedAcce Is Nothing Then Return CInt(defense * pClass.d * pForm.d) + dBuff
-        Return CInt((defense + dBuff) * pClass.d * pForm.d) + equippedArmor.getDBoost(Me) + equippedWeapon.getDBoost(Me) + equippedAcce.getDBoost(Me)
+        Return CInt((defense + dBuff) * pClass.d * pForm.d) + equippedArmor.getDBoost(Me) + equippedWeapon.getDBoost(Me) + equippedAcce.getDBoost(Me) + equippedGlasses.getDBoost(Me)
     End Function
     Overrides Function getSPD() As Integer
         If equippedArmor Is Nothing Or equippedWeapon Is Nothing Or equippedAcce Is Nothing Then Return CInt(speed * pClass.s * pForm.s) + sBuff
-        Return CInt((speed + sBuff) * pClass.s * pForm.s) + equippedArmor.getSBoost(Me) + equippedWeapon.getSBoost(Me) + equippedAcce.getSBoost(Me)
+        Return CInt((speed + sBuff) * pClass.s * pForm.s) + equippedArmor.getSBoost(Me) + equippedWeapon.getSBoost(Me) + equippedAcce.getSBoost(Me) + equippedGlasses.getSBoost(Me)
     End Function
     Overrides Function getWIL() As Integer
         If equippedArmor Is Nothing Or equippedWeapon Is Nothing Or equippedAcce Is Nothing Then Return CInt(will * pClass.w * pForm.w) + wBuff
-        Return CInt((will + wBuff) * pClass.w * pForm.w) + equippedArmor.getWBoost(Me) + equippedWeapon.getWBoost(Me) + equippedAcce.getWBoost(Me)
+        Return CInt((will + wBuff) * pClass.w * pForm.w) + equippedArmor.getWBoost(Me) + equippedWeapon.getWBoost(Me) + equippedAcce.getWBoost(Me) + equippedGlasses.getWBoost(Me)
     End Function
     Public Function passDieRoll(ByVal d As Integer, Optional ByVal lessthanPass As Integer = 1, Optional ByVal savingThrow As Boolean = False) As Boolean
         Dim rollPassed As Boolean = (Int(Rnd() * d) + 1) <= lessthanPass
@@ -2270,7 +2319,7 @@ Public Class Player
         If perks(perk.coblind) > -1 Then Return True
         If perks(perk.coscale) > -1 Then Return True
         If perks(perk.succubuscurse) > -1 Then Return True
-        If equippedArmor.cursed Or equippedWeapon.cursed Or equippedAcce.cursed Then Return True
+        If equippedArmor.getCursed(Me) Or equippedWeapon.getCursed(Me) Or equippedAcce.getCursed(Me) Or equippedGlasses.getCursed(Me) Then Return True
         Return False
     End Function
     Function genDescription()
@@ -2482,7 +2531,7 @@ Public Class Player
         level += 1
         xp -= nextLevelXp
         nextLevelXp = nextLevelXp * level
-        Game.pushLstLog("Level up!  " & name & " is now level " & level)
+        TextEvent.pushLog("Level up!  " & name & " is now level " & level)
         health = 1
         maxHealth += 20
 

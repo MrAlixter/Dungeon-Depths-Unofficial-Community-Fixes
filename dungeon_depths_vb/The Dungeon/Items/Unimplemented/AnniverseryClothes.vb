@@ -19,9 +19,9 @@
         count = 0
         value = 2017
 
-        MyBase.bsizeneg1 = New Tuple(Of Integer, Boolean, Boolean)(6, False, True)
-        MyBase.bsize1 = New Tuple(Of Integer, Boolean, Boolean)(13, True, True)
-        MyBase.bsize2 = New Tuple(Of Integer, Boolean, Boolean)(14, True, True)
-        MyBase.bsize3 = New Tuple(Of Integer, Boolean, Boolean)(15, True, True)
+        bsizeneg1 = New Tuple(Of Integer, Boolean, Boolean)(6, False, True)
+        bsize1 = New Tuple(Of Integer, Boolean, Boolean)(13, True, True)
+        bsize2 = New Tuple(Of Integer, Boolean, Boolean)(14, True, True)
+        bsize3 = New Tuple(Of Integer, Boolean, Boolean)(15, True, True)
     End Sub
 End Class

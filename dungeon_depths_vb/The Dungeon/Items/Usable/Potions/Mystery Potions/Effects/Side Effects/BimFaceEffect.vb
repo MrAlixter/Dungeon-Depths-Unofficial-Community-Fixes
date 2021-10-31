@@ -2,7 +2,7 @@
     Inherits PEffect
 
     Public Overrides Sub apply(ByRef p As Player)
-        Game.pushLblEvent("Your face feels different...")
+        TextEvent.push("Your face feels different...")
 
         p.prt.setIAInd(pInd.face, 0, True, False)
         p.prt.setIAInd(pInd.mouth, 6, True, True)

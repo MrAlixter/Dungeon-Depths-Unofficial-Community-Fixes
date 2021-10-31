@@ -7,7 +7,7 @@
         Game.player1.perks(perk.svenom) = -1
         out += "Venom effects neutralized!"
 
-        Game.pushLblEvent(out)
+        TextEvent.push(out)
     End Sub
 
     Public Overrides Function getEffectDesc()

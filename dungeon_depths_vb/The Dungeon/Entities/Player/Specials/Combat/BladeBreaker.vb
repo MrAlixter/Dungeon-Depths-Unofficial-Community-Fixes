@@ -11,12 +11,12 @@
        
         If 1 = 0 Then
             'critical hit
-            Game.pushLogAndEvent(CStr("Blade Breaker - Critical Hit!  You hit the " & MyBase.getTarget.name & " for " & dmg & " damage, greatly reducing their attack!"))
+            TextEvent.pushAndLog(CStr("Blade Breaker - Critical Hit!  You hit the " & MyBase.getTarget.name & " for " & dmg & " damage, greatly reducing their attack!"))
             MyBase.getTarget.takeDMG(dmg, MyBase.getUser)
             MyBase.getTarget.attack = Math.Max(1, MyBase.getTarget.attack * 0.69)
         Else
             'non critical hit
-            Game.pushLogAndEvent(CStr("Blade Breaker!  You hit the " & MyBase.getTarget.name & " for " & dmg & " damage, reducing their attack!"))
+            TextEvent.pushAndLog(CStr("Blade Breaker!  You hit the " & MyBase.getTarget.name & " for " & dmg & " damage, reducing their attack!"))
             MyBase.getTarget.takeDMG(dmg, MyBase.getUser)
             MyBase.getTarget.attack = Math.Max(1, MyBase.getTarget.attack * 0.85)
         End If

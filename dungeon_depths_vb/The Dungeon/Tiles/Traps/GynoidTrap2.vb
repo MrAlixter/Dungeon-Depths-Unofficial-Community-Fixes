@@ -9,12 +9,12 @@
     Overrides Sub activate()
         MyBase.activate()
 
-        Game.pushLblEvent("Before you, you see a large silver canister with a translucent cyan screen propped open by two hydraulic arms.  Looking closer at the chamber, you spot the text ""G.C.U II"" written on the side, and a holographic countdown timer projected from a chrome pedestal next to it." & DDUtils.RNRN &
+        TextEvent.push("Before you, you see a large silver canister with a translucent cyan screen propped open by two hydraulic arms.  Looking closer at the chamber, you spot the text ""G.C.U II"" written on the side, and a holographic countdown timer projected from a chrome pedestal next to it." & DDUtils.RNRN &
                           "This timer seems to be counting down to something called ""ConvProccess.exe"", and as you size up the device it's clear you could squeeze yourself in the lid sealed even if you have no clue what will happen if you do...", AddressOf gConvChamb, AddressOf gcuCancel, "Get in the G.C.U?")
     End Sub
 
     Shared Sub gcuCancel()
-        Game.pushLblEvent("The lid slams tightly shut, and the system begins whatever it was going to do.  You can not get in anymore.")
+        TextEvent.push("The lid slams tightly shut, and the system begins whatever it was going to do.  You can not get in anymore.")
     End Sub
     Shared Sub gConvChamb()
         Dim out = "You climb into the chamber, mere seconds until the timer hits zero." & DDUtils.RNRN &
@@ -28,10 +28,12 @@
         Dim p As Player = Game.player1
 
         p.prt.setIAInd(pInd.ears, 4, True, False)
-        p.prt.setIAInd(pInd.glasses, 6, True, True)
+
+        If p.inv.getCountAt("Cyber_Visor_(G)") < 1 Then p.inv.add("Cyber_Visor_(G)", 1)
+        EquipmentDialogBackend.glassesChange(p, "Cyber_Visor_(G)")
 
         p.ongoingTFs.add(New GynoidTF2)
 
-        Game.pushLblEvent(out, AddressOf p.update)
+        TextEvent.push(out, AddressOf p.update)
     End Sub
 End Class

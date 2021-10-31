@@ -14,7 +14,7 @@
         Do While Game.player1.knownSpecials.Contains("Helix Slash")
             Game.player1.knownSpecials.Remove("Helix Slash")
         Loop
-        Game.pushLstLog("Helix Slash special forgotten!")
+        TextEvent.pushLog("Helix Slash special forgotten!")
     End Sub
 
     Public Overrides Sub onLVLUp(ByVal level As Integer, ByRef p As Player, Optional learnSkills as Boolean = True)

@@ -13,7 +13,7 @@
 
     Overrides Sub use(ByRef p As Player)
         If Me.getUsable() = False Then Exit Sub
-        Game.pushLstLog("You use the " & getName() & ". +5 base DEF!")
+        TextEvent.pushLog("You use the " & getName() & ". +5 base DEF!")
 
         p.defense += 5
         p.UIupdate()

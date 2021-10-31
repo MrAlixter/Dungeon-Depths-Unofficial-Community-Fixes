@@ -29,6 +29,7 @@ End Enum
 
 Public MustInherit Class ShopNPC
     Inherits NPC
+    Public npc_index As sNPCInd
     Public firstCTurn As Boolean = True
     Public isShop = False
     Public picNormal, picPrincess, picBunny, picArachne As Image
@@ -75,24 +76,24 @@ Public MustInherit Class ShopNPC
             tfCt = 0
             revert()
         End If
-        If Game.combatmode And firstCTurn = True Then
+        If Game.combat_engaged And firstCTurn = True Then
             firstCTurn = False
             Exit Sub
         End If
         If img_index = 1 Or img_index = 2 Then despawn("flee")
         Game.picNPC.BackgroundImage = picNPC(img_index)
-        If Game.combatmode Then attackCMD(Game.player1)
+        If Game.combat_engaged Then attackCMD(Game.player1)
     End Sub
     Public Overridable Sub encounter()
         pos = Game.player1.pos
         If isDead = True Then
-            Game.pushLblEvent("This NPC is dead.")
+            TextEvent.push("This NPC is dead.")
             Exit Sub
         End If
         setGold(9999)
 
         Game.player1.currTarget = Me
-        Game.currNPC = Me
+        Game.active_shop_npc = Me
 
         If Game.mDun.floorboss.ContainsKey(Game.mDun.numCurrFloor) AndAlso
             Game.mDun.floorboss(Game.mDun.numCurrFloor).Equals("Key") Then inv.setCount(53, 1) Else inv.setCount(53, 0)
@@ -187,7 +188,7 @@ Public MustInherit Class ShopNPC
         Game.picNPC.BackgroundImage = picArachne
     End Sub
     Public Overridable Sub toDoll()
-        Game.pushNPCDialog("...")
+        TextEvent.pushNPCDialog("...")
         Game.picNPC.BackgroundImage = picNPC(5)
 
         discount = 0.5

@@ -28,7 +28,7 @@ Public Class ImageDump
         Try
             Return images(ind)
         Catch e As Exception
-            MsgBox(key.ToString & ": Image #" & ind & " not found!")
+            DDError.missingImageError(key.ToString, ind)
             Return Nothing
         End Try
     End Function

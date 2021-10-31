@@ -11,11 +11,11 @@
 
         If p.perks(perk.lurk) = -1 Then
             p.perks(perk.lurk) += 200
-            Game.pushLstLog("Lurk!")
-            Game.pushLblCombatEvent("Lurk!")
+            TextEvent.pushLog("Lurk!")
+            TextEvent.pushCombat("Lurk!")
         Else
             p.perks(perk.lurk) = -1
-            Game.pushLstLog("You come out of hiding...")
+            TextEvent.pushLog("You come out of hiding...")
         End If
 
         p.drawPort()

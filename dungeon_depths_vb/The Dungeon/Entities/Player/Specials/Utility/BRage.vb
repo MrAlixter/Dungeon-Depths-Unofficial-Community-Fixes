@@ -8,8 +8,8 @@
     End Sub
     Public Overrides Sub effect()
         MyBase.getUser.perks(perk.brage) = 2
-        Game.pushLstLog("BERSERKER RAGE!")
-        Game.pushLblCombatEvent("BERSERKER RAGE!" & vbCrLf & "+50% ATK, -25% DEF for 2 turns.")
+        TextEvent.pushLog("BERSERKER RAGE!")
+        TextEvent.pushCombat("BERSERKER RAGE!" & vbCrLf & "+50% ATK, -25% DEF for 2 turns.")
     End Sub
 
     Public Overrides Function getDesc(ByRef c As Player, ByRef t As NPC) As Object

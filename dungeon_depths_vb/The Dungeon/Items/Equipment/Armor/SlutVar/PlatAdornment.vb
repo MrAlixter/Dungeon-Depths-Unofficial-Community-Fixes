@@ -9,11 +9,12 @@
 
         '|Item Flags|
         usable = false
-        MyBase.compress_breast = True
-        MyBase.anti_slut_ind = 265
+        compress_breast = True
+        show_underboob = True
+        anti_slut_ind = 265
 
         '|Stats|
-        MyBase.d_boost = 25
+        d_boost = 25
         count = 0
         value = 6400
 

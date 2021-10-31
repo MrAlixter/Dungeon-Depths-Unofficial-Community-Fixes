@@ -5,9 +5,9 @@
         If p.breastSize > 0 Then
             p.bs()
             p.savePState()
-            Game.pushLblEvent("You breasts squeeze uncomfortably...")
+            TextEvent.push("You breasts squeeze uncomfortably...")
         Else
-            Game.pushLblEvent("Nothing happens")
+            TextEvent.push("Nothing happens")
         End If
         p.drawPort()
     End Sub

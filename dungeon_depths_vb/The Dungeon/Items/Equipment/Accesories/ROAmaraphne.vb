@@ -32,7 +32,7 @@
     End Sub
     Public Overrides Sub use(ByRef p As Player)
         MyBase.use(p)
-        If Not Equipment.clothingCurse1(p) Then Game.pushLblEvent("While the ring glows a little, nothing seems to happen.")
+        If Not Equipment.clothingCurse1(p) Then TextEvent.push("While the ring glows a little, nothing seems to happen.")
         p.drawPort()
     End Sub
     Public Overrides Sub onEquip(ByRef p As Player)

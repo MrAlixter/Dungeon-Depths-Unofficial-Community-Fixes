@@ -6,6 +6,7 @@
         '|ID Info|
         name = "Shady Wizard"
         sName = name
+        npc_index = sNPCInd.shadywizard
 
         '|NPC Flags|
         pronoun = "he"
@@ -84,31 +85,31 @@
 
         If img_index = 0 Then
             If CInt(Game.player1.health * Game.player1.getMaxHealth()) = 69 Then
-                Game.pushNPCDialog("Ehehe. Your health. Nice." & vbCrLf & "Anyway, what are you buying?")
+                TextEvent.pushNPCDialog("Ehehe. Your health. Nice." & vbCrLf & "Anyway, what are you buying?")
             Else
-                Game.pushNPCDialog("What are you buying?")
+                TextEvent.pushNPCDialog("What are you buying?")
             End If
         ElseIf img_index = 1 Then
-            Game.pushNPCDialog("Ribbit.  Ribbit!")
+            TextEvent.pushNPCDialog("Ribbit.  Ribbit!")
         ElseIf img_index = 2 Then
-            Game.pushNPCDialog("*bleets*")
+            TextEvent.pushNPCDialog("*bleets*")
         ElseIf img_index = 3 Then
-            Game.pushNPCDialog("Hey, " & Game.player1.className & ", how's it going?")
+            TextEvent.pushNPCDialog("Hey, " & Game.player1.className & ", how's it going?")
         ElseIf img_index = 4 Then
-            Game.pushNPCDialog("So are these real or fake?  My ears, I mean.")
+            TextEvent.pushNPCDialog("So are these real or fake?  My ears, I mean.")
         ElseIf img_index = 5 Or img_index = 8 Then
-            Game.pushNPCDialog("...")
+            TextEvent.pushNPCDialog("...")
         ElseIf img_index = 7 Then
-            Game.pushNPCDialog("Damn it, and I set aside the extra-skimpy bikini for this too...")
+            TextEvent.pushNPCDialog("Damn it, and I set aside the extra-skimpy bikini for this too...")
         ElseIf img_index = 6 Then
             If Game.player1.formName.Equals("Arachne") And Game.player1.equippedArmor.getAntiSlutInd > 0 Then
-                Game.pushNPCDialog("Ooh, darling, are you the one who laid that snare?  Aren't you a cutie...")
+                TextEvent.pushNPCDialog("Ooh, darling, are you the one who laid that snare?  Aren't you a cutie...")
             ElseIf Game.player1.formName.Equals("Arachne") And Game.player1.equippedArmor.getSlutVarInd > 0 Then
-                Game.pushNPCDialog("Ooh, darling, are you the one who laid that snare?  You know, you could spice your look up a bit...")
+                TextEvent.pushNPCDialog("Ooh, darling, are you the one who laid that snare?  You know, you could spice your look up a bit...")
             ElseIf Game.player1.formName.Equals("Arachne") Then
-                Game.pushNPCDialog("Ooh, darling, are you the one who laid that snare?  Let me know if you'd like any tips on your bondage technique...")
+                TextEvent.pushNPCDialog("Ooh, darling, are you the one who laid that snare?  Let me know if you'd like any tips on your bondage technique...")
             Else
-                Game.pushNPCDialog("Ooh, darling, you should really give the whole ""8-Legs"" thing a chance... I have a more...potent...venom if you'd like...")
+                TextEvent.pushNPCDialog("Ooh, darling, you should really give the whole ""8-Legs"" thing a chance... I have a more...potent...venom if you'd like...")
             End If
         End If
 
@@ -129,7 +130,7 @@
         ElseIf img_index = 5 Or img_index = 8 Then
             Return "..."
         ElseIf img_index = 6 Then
-            Game.pushNPCDialog("*tsk* *tsk* *tsk* Not too bright...")
+            TextEvent.pushNPCDialog("*tsk* *tsk* *tsk* Not too bright...")
         End If
         Return "Bad move."
     End Function
@@ -152,7 +153,7 @@
             Return "..."
         ElseIf img_index = 6 Then
             Game.NPCtoCombat(Me)
-            Game.pushNPCDialog("Oooh, is that really your best?  Adorable...")
+            TextEvent.pushNPCDialog("Oooh, is that really your best?  Adorable...")
         End If
         Return "Woah there!"
     End Function
@@ -184,7 +185,7 @@
                   "You desperatly lunge at them, the flood of mana coursing through you still increasing and before you can take three steps your body shrinks with a sudden jolt, leaving you looking at a far larger world." & DDUtils.RNRN &
                   "The energy within you seems to have only been focused by your diminished stature.  Its electric flow overwhelms you, and you see small crystals of pure mana beginning to form on your arms.  You try to flee, but your now giant opponent simply places the crook of their staff around you.  Escape no longer an option, you can do nothing but cower as the crystals swiftly replace your flesh and bone.  Nothing more than a gem full of magical energy now, you can't even react as the wizard raises their staff to inspect you."
         Game.picPortrait.BackgroundImage = Game.picStaffEnd.BackgroundImage
-        Game.pushLblEvent(out, AddressOf SWizDeath2)
+        TextEvent.push(out, AddressOf SWizDeath2)
     End Sub
     Sub SWizDeath2()
         Dim p = Game.player1
@@ -195,6 +196,6 @@
                   """Now that's a look that will draw in customers.  I might have to make more of these, assuming I can find a couple more shmucks like you!  I wonder what that food guy is up to...""" & DDUtils.RNRN &
                   "GAME OVER!"
         Game.picPortrait.BackgroundImage = Game.picStaffEnd.BackgroundImage
-        Game.pushLblEvent(out, AddressOf p.die)
+        TextEvent.push(out, AddressOf p.die)
     End Sub
 End Class

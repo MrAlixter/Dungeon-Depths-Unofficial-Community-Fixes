@@ -23,7 +23,7 @@
         Else
             p.prt.setIAInd(pInd.eyes, 20, True, True)
         End If
-        Game.pushLblEvent("\tSomewhat concerningly, the color of the veins in your hands have darkened to a jet black.  While you aren't exactly a biologist, it's fairly obvious that the venom you were exposed to is causing this.\n\n" &
+        TextEvent.push("\tSomewhat concerningly, the color of the veins in your hands have darkened to a jet black.  While you aren't exactly a biologist, it's fairly obvious that the venom you were exposed to is causing this.\n\n" &
                           """Arachne venom, nasty stuff,"" you remember someone telling you once, ""It's a powerful mutator, and if you take a bite, you'll be lucky if you even remain human for a single night.  More than that, once it's done with you there isn't much that can be done to bring you back.  That's why antivenom like what the Shopkeeper has is so important.""\n\n" &
                           "Well, it seems like it’s only a matter of time before you start changing.  The real question is what you should do about it.")
 
@@ -47,7 +47,7 @@
         out += "Seemingly out of nowhere, your wound throbs, and your vision goes black.  Fortunately, it quickly returns, but everything seems slightly . . . off.  While shadows seem less dark, bright areas seem no brighter, and everything looks slightly fuzzier.\n\n" &
                "As you examine yourself, you can tell that the venom has been progressing through your darkening veins, and while you aren't completely sure, your skin also seems to have become marginally greyer."
 
-        Game.pushLblEvent(out)
+        TextEvent.push(out)
         If Game.player1.perks(perk.svenom) > -1 Then Game.player1.perks(perk.svenom) += 1
     End Sub
 
@@ -68,7 +68,7 @@
         out += "With every beat of your heart, your vision becomes clearer and clearer.  It isn't until you blink and feel eight eyelids reopen that you realize why.  You have eight eyes now! With six on the front of your head, and one on each side, not only is your vision sharper, but your field of vision has expanded as well!\n\n" &
                "Between your improved sight and noticeably quickened reflexes, it seems that the venom is actually improving your body, contrary to what you had heard of it.  Examining your body further, you do notice that you seem more bottom heavy than before, with your ass easily spilling over clothes that fit perfectly just last night.  You set back out, excited for what the venom brings next."
 
-        Game.pushLblEvent(out)
+        TextEvent.push(out)
         If Game.player1.perks(perk.svenom) > -1 Then Game.player1.perks(perk.svenom) += 1
     End Sub
 
@@ -86,14 +86,14 @@
         p.prt.setIAInd(pInd.midhair, 19, True, True)
         p.prt.changeSkinColor(DDUtils.cShift(p.prt.skincolor, Color.LightSlateGray, 5))
 
-        Game.pushLblEvent("\tWhile for the most part the venom seems to be concentrated in your lower body now, all at once its familiar throb returns so suddenly it forces you to the ground and onto the brink of passing out.  It isn't until a pain unlike anything you've ever felt before flares up in your legs that you decide that unconciousness might be a blessing, and allow yourself to go under.", AddressOf step4pt1)
+        TextEvent.push("\tWhile for the most part the venom seems to be concentrated in your lower body now, all at once its familiar throb returns so suddenly it forces you to the ground and onto the brink of passing out.  It isn't until a pain unlike anything you've ever felt before flares up in your legs that you decide that unconciousness might be a blessing, and allow yourself to go under.", AddressOf step4pt1)
         p.changeForm("Arachne")
         p.lust += 5
     End Sub
     Sub step4pt1()
         Game.player1.prt.setIAInd(pInd.tail, 2, True, False)
         Game.player1.drawPort()
-        Game.pushLblEvent("\tYour many eyes snap open, and you jump to your feet.  You have no idea how long you were out, but apart from some stiffness in your lower joints, you feel fine now.  Impressed by your new stamina, you remark to yourself that an experience like that would have killed the old, weak person that you used to be.\n\n" &
+        TextEvent.push("\tYour many eyes snap open, and you jump to your feet.  You have no idea how long you were out, but apart from some stiffness in your lower joints, you feel fine now.  Impressed by your new stamina, you remark to yourself that an experience like that would have killed the old, weak person that you used to be.\n\n" &
                           "While picking up your things, you catch a glimpse of your rear over your shoulder and realize at once that you’ve undergone a drastic transformation.  From the waist down, your body has morphed into that of a massive spider.  Your waist leads directly onto your thorax, which in turn leads to a massive abdomen that is topped out with a spinneret, and it takes a few seconds for this drastic change to fully process through your brain.  Testing out your eight new limbs, you find that for as delicate as they look, you can strike the tiles around you with enough force to shatter them.\n\n" &
                           "Mere moments later, your newly heightened senses alert you to a presence behind you.", AddressOf step4pt2)
     End Sub
@@ -105,7 +105,7 @@
         p.prt.setIAInd(pInd.fronthair, 18, True, True)
         p.prt.setIAInd(pInd.hairacc, 10, True, False)
 
-        Game.pushLblEvent("\tStanding behind you is another arachne, and it is clear from her posture that she is one of the more experienced huntresses.  You stiffen up, and as the she gazes into your eyes you find yourself with a lot less control over the situation than you thought you had.\n\n" &
+        TextEvent.push("\tStanding behind you is another arachne, and it is clear from her posture that she is one of the more experienced huntresses.  You stiffen up, and as the she gazes into your eyes you find yourself with a lot less control over the situation than you thought you had.\n\n" &
                           """Well, it seems that our venom has finally run its course,"" she muses, approaching you.  As she speaks, her words supersede any thoughts flowing through your head, and you find yourself completely at her mercy.  ""Our species began when an enchanted spider bit its enchantress, and she underwent a similar process to what you have just experienced.  Since that fateful day, the Sisterhood of Arachne has spread throughout these cursed passages with the singular goal of claiming all whom enter into our ranks. Now that you are one of us, you are free to go about your business without fear of our interference.""\n\n" &
                           "Caressing your cheek, the huntress begins twisting your hair into a style you have seen on Arachne before.\n\n""Of course, the spiders of this dungeon may not share this understanding, but as long as you are Arachne our huntresses will leave you be.""\n\n" &
                           "Finishing with your hair, she kisses you on the cheek before whispering in your ear,\n\n ""Whatever you choose to do, forget who you were before.  You are one of us now, and our venom is a gift that should be passed on."".\n\n\" &
@@ -118,11 +118,11 @@
         Dim p As Player = Game.player1
         If p.equippedWeapon.getName.Equals("Magical_Girl_Wand") Or
             p.equippedWeapon.getName.Equals("Valkyrie_Sword") Then
-            Equipment.weaponChange(p, "Fists")
+            EquipmentDialogBackend.weaponChange(p, "Fists")
         End If
 
         p.setStartStates()
-        Game.pushLblEvent("Your base form is now that of an Arachne!  Should you revert to your start state, this is what you will become.")
+        TextEvent.push("Your base form is now that of an Arachne!  Should you revert to your start state, this is what you will become.")
         stopTF()
     End Sub
 

@@ -19,7 +19,7 @@
     End Sub
 
     Public Overrides Sub use(ByRef p As Player)
-        Game.pushLblEvent("Drinking the pink contents of the vial causes a dizzy calm wash to over you.")
+        TextEvent.push("Drinking the pink contents of the vial causes a dizzy calm wash to over you.")
         p.ongoingTFs.Add(New BimboPlusTF(2, 5, 0.25, True))
         p.perks(perk.bimbotf) = 0
         count -= 1

@@ -48,13 +48,13 @@
                     sName = spells(spell)
             End Select
             If ct > 60 Then
-                Game.pushLstLog("You know all the spells in advanced spellbooks already!")
+                TextEvent.pushLog("You know all the spells in advanced spellbooks already!")
                 Exit Sub
             End If
         End While
         If Not Game.player1.knownSpells.Contains(sName) Then Game.player1.knownSpells.Add(sName)
-        Game.pushLstLog("You read the " & getName() & ". " & sName & " learned!")
-        If Not out.Equals("") Then Game.pushLstLog(out)
+        TextEvent.pushLog("You read the " & getName() & ". " & sName & " learned!")
+        If Not out.Equals("") Then TextEvent.pushLog(out)
         count -= 1
     End Sub
 End Class

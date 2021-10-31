@@ -8,7 +8,7 @@
         If p.mana > p.getMaxMana Then p.mana = p.getMaxMana
         p.mBuff += 15
         p.UIupdate()
-        Game.pushLblEvent(out & "+40 Mana," & vbCrLf & "+15 Max Mana")
+        TextEvent.push(out & "+40 Mana," & vbCrLf & "+15 Max Mana")
     End Sub
 
     Public Overrides Function getEffectDesc()

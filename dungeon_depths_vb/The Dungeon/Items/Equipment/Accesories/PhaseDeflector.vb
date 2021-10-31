@@ -28,7 +28,7 @@
 
         p.perks(perk.pdeflector) = 1
 
-        Game.pushLblEvent("The device chimes as you put it on, alerting you that it is now active.")
+        TextEvent.push("The device chimes as you put it on, alerting you that it is now active.")
     End Sub
     Public Overrides Sub onUnequip(ByRef p As Player)
         p.perks(perk.pdeflector) = -1

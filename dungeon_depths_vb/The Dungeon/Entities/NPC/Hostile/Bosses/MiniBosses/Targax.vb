@@ -39,14 +39,14 @@
 
         If combatCounter Mod 6 = 0 And health < 0.66 Then
             If Int(Rnd() * 2) = 0 Then
-                Game.pushLstLog((getName() & " focuses their energy!"))
-                Game.pushLblCombatEvent((getName() & " focuses all " & p_pronoun & " energy into " & p_pronoun & " blade!"))
+                TextEvent.pushLog((getName() & " focuses their energy!"))
+                TextEvent.pushCombat((getName() & " focuses all " & p_pronoun & " energy into " & p_pronoun & " blade!"))
 
                 attack *= 1.2
                 defense *= 0.7
                 speed *= 1.2
             ElseIf Int(Rnd() * 2) = 0 Then
-                Game.pushLstLog((getName() & " fires off a shockwave!"))
+                TextEvent.pushLog((getName() & " fires off a shockwave!"))
                 Dim out = (getName() & " fires off a psychic shockwave, knocking you back!")
 
                 Dim ownedPotions As List(Of Item) = New List(Of Item)
@@ -63,13 +63,13 @@
 
                 target.takeDMG(10, Me)
 
-                Game.pushLblCombatEvent(out)
+                TextEvent.pushCombat(out)
             End If
         End If
 
 
-        Game.pushLstLog((getName() & " slashes at you!"))
-        Game.pushLblCombatEvent((getName() & " slashes at you!"))
+        TextEvent.pushLog((getName() & " slashes at you!"))
+        TextEvent.pushCombat((getName() & " slashes at you!"))
         MyBase.attackCMD(target)
     End Sub
 
@@ -77,8 +77,8 @@
         If Rnd() < (0.6) Then
             Return True
         Else
-            Game.pushLstLog("The spell bounces off Targax!")
-            Game.pushLblCombatEvent("The spell bounces off Targax!")
+            TextEvent.pushLog("The spell bounces off Targax!")
+            TextEvent.pushCombat("The spell bounces off Targax!")
             Return False
         End If
     End Function

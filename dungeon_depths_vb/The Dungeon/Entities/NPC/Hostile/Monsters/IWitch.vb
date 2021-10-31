@@ -24,12 +24,12 @@
     Public Overrides Sub attackCMD(ByRef target As Entity)
         Game.fromCombat()
         tfTarget = target
-        Game.pushLblEvent("Poof!", AddressOf tfToPanties)
+        TextEvent.push("Poof!", AddressOf tfToPanties)
     End Sub
 
     Public Sub tfToPanties()
         Dim c1 As Chest
-        c1 = Game.baseChest.Create(tfTarget.inv, pos)
+        c1 = DDConst.BASE_CHEST.Create(tfTarget.inv, pos)
         c1.contents.add("Pink_Panties", 1)
 
         Game.currFloor.writeFloorToFile()

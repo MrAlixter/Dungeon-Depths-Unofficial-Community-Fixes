@@ -4,7 +4,7 @@
     Public Overrides Sub apply(ByRef p As Player)
         If p.prt.sexBool = False Then
             p.MtF()
-            Game.pushLblEvent("Your sex changes!")
+            TextEvent.push("Your sex changes!")
         ElseIf Not p.perks(perk.slutcurse) > -1 Then
             p.perks(perk.slutcurse) = 0
 
@@ -18,9 +18,9 @@
 
             Equipment.clothingCurse1(p)
             p.be()
-            Game.pushLblEvent("All thoughts of modesty vanish from your brain.  You will now dress sluttier!")
+            TextEvent.push("All thoughts of modesty vanish from your brain.  You will now dress sluttier!")
         Else
-            Game.pushLblEvent("Nothing happened!")
+            TextEvent.push("Nothing happened!")
         End If
         p.savePState()
         p.drawPort()

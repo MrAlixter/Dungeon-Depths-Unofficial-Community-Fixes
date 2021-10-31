@@ -9,28 +9,29 @@
 
         '|Item Flags|
         usable = false
-        MyBase.compress_breast = True
-        MyBase.slut_var_ind = 192
-        MyBase.anti_slut_ind = 184
+        compress_breast = True
+        show_underboob = True
+        slut_var_ind = 192
+        anti_slut_ind = 184
 
         '|Stats|
         count = 0
         value = 0
 
         '|Image Index|
-        MyBase.bsizeneg1 = New Tuple(Of Integer, Boolean, Boolean)(25, False, True)
-        MyBase.bsize0 = New Tuple(Of Integer, Boolean, Boolean)(26, False, True)
-        MyBase.bsize1 = New Tuple(Of Integer, Boolean, Boolean)(6, True, True)
-        MyBase.bsize2 = New Tuple(Of Integer, Boolean, Boolean)(7, True, True)
-        MyBase.bsize3 = New Tuple(Of Integer, Boolean, Boolean)(8, True, True)
-        MyBase.bsize4 = New Tuple(Of Integer, Boolean, Boolean)(9, True, True)
+        bsizeneg1 = New Tuple(Of Integer, Boolean, Boolean)(25, False, True)
+        bsize0 = New Tuple(Of Integer, Boolean, Boolean)(26, False, True)
+        bsize1 = New Tuple(Of Integer, Boolean, Boolean)(6, True, True)
+        bsize2 = New Tuple(Of Integer, Boolean, Boolean)(7, True, True)
+        bsize3 = New Tuple(Of Integer, Boolean, Boolean)(8, True, True)
+        bsize4 = New Tuple(Of Integer, Boolean, Boolean)(9, True, True)
 
-        MyBase.usizeneg1 = New Tuple(Of Integer, Boolean, Boolean)(19, True, True)
-        MyBase.usize0 = New Tuple(Of Integer, Boolean, Boolean)(20, True, True)
-        MyBase.usize1 = New Tuple(Of Integer, Boolean, Boolean)(15, True, True)
-        MyBase.usize2 = New Tuple(Of Integer, Boolean, Boolean)(16, True, True)
-        MyBase.usize3 = New Tuple(Of Integer, Boolean, Boolean)(17, True, True)
-        MyBase.usize4 = New Tuple(Of Integer, Boolean, Boolean)(18, True, True)
+        usizeneg1 = New Tuple(Of Integer, Boolean, Boolean)(19, True, True)
+        usize0 = New Tuple(Of Integer, Boolean, Boolean)(20, True, True)
+        usize1 = New Tuple(Of Integer, Boolean, Boolean)(15, True, True)
+        usize2 = New Tuple(Of Integer, Boolean, Boolean)(16, True, True)
+        usize3 = New Tuple(Of Integer, Boolean, Boolean)(17, True, True)
+        usize4 = New Tuple(Of Integer, Boolean, Boolean)(18, True, True)
 
         '|Description|
         setDesc("A soft set of clothing that seems almost crafted to show off its wearer's body." & DDUtils.RNRN & _

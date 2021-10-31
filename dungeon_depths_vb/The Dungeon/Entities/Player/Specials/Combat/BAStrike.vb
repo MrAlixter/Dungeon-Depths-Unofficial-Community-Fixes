@@ -15,8 +15,8 @@
 
         p.health += rcv
         If p.health * p.getMaxHealth > p.maxHealth + p.hBuff Then p.health = 1
-        Game.pushLstLog("Helix Slash!  Your sword slashes your opponent, dealing " & dmg & " damage and healing you for " & rcv * p.getMaxHealth & " health!")
-        Game.pushLogAndEvent("Helix Slash!" & vbCrLf & "You fly up into the air, the edge of your blade burning white hot.  Before your opponent can even react, you dart at them in a supersonic spiral.  Your firey sword cleaves clean through your opponent, dealing " & dmg & " damage, and heals you for " & rcv * p.getMaxHealth & " health between blows.")
+        TextEvent.pushLog("Helix Slash!  Your sword slashes your opponent, dealing " & dmg & " damage and healing you for " & rcv * p.getMaxHealth & " health!")
+        TextEvent.pushAndLog("Helix Slash!" & vbCrLf & "You fly up into the air, the edge of your blade burning white hot.  Before your opponent can even react, you dart at them in a supersonic spiral.  Your firey sword cleaves clean through your opponent, dealing " & dmg & " damage, and heals you for " & rcv * p.getMaxHealth & " health between blows.")
         m.takeDMG(dmg, p)
     End Sub
 

@@ -20,16 +20,16 @@ Public Class TimeCopClothes
         value = 0
 
         '|Image Index|
-        MyBase.bsizeneg1 = New Tuple(Of Integer, Boolean, Boolean)(81, False, True)
-        MyBase.bsize0 = New Tuple(Of Integer, Boolean, Boolean)(82, False, True)
-        MyBase.bsize1 = New Tuple(Of Integer, Boolean, Boolean)(360, True, True)
-        MyBase.bsize2 = New Tuple(Of Integer, Boolean, Boolean)(361, True, True)
-        MyBase.bsize3 = New Tuple(Of Integer, Boolean, Boolean)(362, True, True)
+        bsizeneg1 = New Tuple(Of Integer, Boolean, Boolean)(81, False, True)
+        bsize0 = New Tuple(Of Integer, Boolean, Boolean)(82, False, True)
+        bsize1 = New Tuple(Of Integer, Boolean, Boolean)(360, True, True)
+        bsize2 = New Tuple(Of Integer, Boolean, Boolean)(361, True, True)
+        bsize3 = New Tuple(Of Integer, Boolean, Boolean)(362, True, True)
 
-        MyBase.usizeneg1 = New Tuple(Of Integer, Boolean, Boolean)(78, False, True)
-        MyBase.usize0 = New Tuple(Of Integer, Boolean, Boolean)(79, False, True)
-        MyBase.usize1 = New Tuple(Of Integer, Boolean, Boolean)(344, True, True)
-        MyBase.usize2 = New Tuple(Of Integer, Boolean, Boolean)(345, True, True)
+        usizeneg1 = New Tuple(Of Integer, Boolean, Boolean)(78, False, True)
+        usize0 = New Tuple(Of Integer, Boolean, Boolean)(79, False, True)
+        usize1 = New Tuple(Of Integer, Boolean, Boolean)(344, True, True)
+        usize2 = New Tuple(Of Integer, Boolean, Boolean)(345, True, True)
 
         '|Description|
         setDesc("Tactical clothes that are standard issue for a time cop." & DDUtils.RNRN &

@@ -11,17 +11,17 @@
         count = 0
         value = 300
 
-        MyBase.bsize0 = New Tuple(Of Integer, Boolean, Boolean)(47, False, True)
-        MyBase.bsize1 = New Tuple(Of Integer, Boolean, Boolean)(163, True, True)
-        MyBase.bsize2 = New Tuple(Of Integer, Boolean, Boolean)(164, True, True)
-        MyBase.bsize3 = New Tuple(Of Integer, Boolean, Boolean)(165, True, True)
-        MyBase.bsize4 = New Tuple(Of Integer, Boolean, Boolean)(166, True, True)
+        bsize0 = New Tuple(Of Integer, Boolean, Boolean)(47, False, True)
+        bsize1 = New Tuple(Of Integer, Boolean, Boolean)(163, True, True)
+        bsize2 = New Tuple(Of Integer, Boolean, Boolean)(164, True, True)
+        bsize3 = New Tuple(Of Integer, Boolean, Boolean)(165, True, True)
+        bsize4 = New Tuple(Of Integer, Boolean, Boolean)(166, True, True)
 
-        MyBase.usize0 = New Tuple(Of Integer, Boolean, Boolean)(134, True, True)
-        MyBase.usize1 = New Tuple(Of Integer, Boolean, Boolean)(135, True, True)
-        MyBase.usize2 = New Tuple(Of Integer, Boolean, Boolean)(136, True, True)
-        MyBase.usize3 = New Tuple(Of Integer, Boolean, Boolean)(137, True, True)
-        MyBase.usize4 = New Tuple(Of Integer, Boolean, Boolean)(138, True, True)
+        usize0 = New Tuple(Of Integer, Boolean, Boolean)(134, True, True)
+        usize1 = New Tuple(Of Integer, Boolean, Boolean)(135, True, True)
+        usize2 = New Tuple(Of Integer, Boolean, Boolean)(136, True, True)
+        usize3 = New Tuple(Of Integer, Boolean, Boolean)(137, True, True)
+        usize4 = New Tuple(Of Integer, Boolean, Boolean)(138, True, True)
 
         MyBase.compress_breast = True
 

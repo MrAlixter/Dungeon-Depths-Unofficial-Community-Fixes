@@ -8,8 +8,8 @@
     End Sub
     Public Overrides Sub effect()
         MyBase.getUser.perks(perk.pprot) = 1
-        Game.pushLstLog("Pillowy Protect!")
-        Game.pushLblCombatEvent("Pillowy Protect!" & vbCrLf & "+999% DEF for 1 turn.")
+        TextEvent.pushLog("Pillowy Protect!")
+        TextEvent.pushCombat("Pillowy Protect!" & vbCrLf & "+999% DEF for 1 turn.")
     End Sub
 
     Public Overrides Function getDesc(ByRef c As Player, ByRef t As NPC) As Object

@@ -23,7 +23,7 @@
         If Not mp Is Nothing AndAlso Int(Rnd() * 3) = 0 Then
             mp.isStunned = True
             mp.stunct = 0
-            Game.pushPnlEvent("Your attack stuns" & mp.title & m.name & "!")
+            TextEvent.pushEventBox("Your attack stuns" & mp.title & m.name & "!")
         End If
         Return dmg
     End Function

@@ -9,7 +9,7 @@
     Public Overrides Sub effect()
         Dim p = MyBase.getUser
         Dim t = MyBase.getTarget
-        Game.pushLstLog("Shrink_Ray Shot!")
+        TextEvent.pushLog("Shrink_Ray Shot!")
 
         CType(p.inv.item("Shrink_Ray"), ShrinkRay).attack(p, t)
     End Sub

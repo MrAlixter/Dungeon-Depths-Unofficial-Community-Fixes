@@ -9,8 +9,8 @@ Public Enum pInd
     body            '6
     bodyoverlay     '7
     genitalia       '8
-    chest           '9
-    clothesbtm      '10
+    clothesbtm      '9
+    chest           '10
     clothes         '11
     face            '12
     blush           '13
@@ -259,7 +259,7 @@ Public Class Portrait
                 iArr(i) = imgLib.atrs(i).getAt(iArrInd(i))
             Catch ex As Exception
                 iArr(i) = nullImg
-                MsgBox("Error!  Exception thrown in portrait creation (specifically in the " & imgLib.atrs.Keys(i).ToString & " layer).")
+                DDError.portraitCreationError(i)
             End Try
         Next
 
@@ -278,8 +278,6 @@ Public Class Portrait
             If ent.getPlayer.perks(perk.lurk) > 0 Then
                 iArr(NUM_IMG_LAYERS) = shrub()
             End If
-
-            'swapChestAndClothesBTM(ent.getPlayer)
         End If
 
         hideEars()
@@ -435,13 +433,6 @@ Public Class Portrait
 
         End If
     End Sub
-    Sub swapChestAndClothesBTM(ByRef p As Player)
-        If p.breastSize > 2 Then
-            Dim t = iArr(pInd.chest).Clone
-            iArr(pInd.chest) = iArr(pInd.clothesbtm).Clone
-            iArr(pInd.clothesbtm) = t
-        End If
-    End Sub
     Sub hoodsAndCloaks()
         If Not ent.getPlayer.equippedArmor.hood Is Nothing Then
             iArr(pInd.hat) = CreateFullBodyBMP({nullImg, iArr(pInd.hat), imgLib.atrs(pInd.hat).getAt(ent.getPlayer.equippedArmor.hood)})
@@ -453,20 +444,17 @@ Public Class Portrait
         End If
     End Sub
     Sub accUnderClothes()
-        If checkNDefFemInd(pInd.accessory, 14) Or checkNDefMalInd(pInd.accessory, 13) Then
-            iArr(pInd.midhair) = CreateFullBodyBMP({CharacterGenerator.picPort.Image, iArr(pInd.accessory), iArr(pInd.clothesbtm), iArr(pInd.clothes), iArr(pInd.midhair)})
-            iArr(pInd.accessory) = CharacterGenerator.picPort.Image
-            iArr(pInd.mouth) = CharacterGenerator.picPort.Image
-        ElseIf checkNDefFemInd(pInd.accessory, 12) Or checkNDefFemInd(pInd.accessory, 15) Or checkNDefMalInd(pInd.accessory, 14) Or checkNDefFemInd(pInd.accessory, 23) Then
-            iArr(pInd.midhair) = CreateFullBodyBMP({CharacterGenerator.picPort.Image, iArr(pInd.accessory), iArr(pInd.clothesbtm), iArr(pInd.clothes), iArr(pInd.midhair)})
+        If ent Is Nothing OrElse ent.getPlayer Is Nothing Then Exit Sub
+
+        Dim acce = ent.getPlayer().equippedAcce
+
+        If acce.under_clothes Then
+            iArr(pInd.midhair) = CreateFullBodyBMP({CharacterGenerator.picPort.Image, iArr(pInd.accessory), iArr(pInd.clothes), iArr(pInd.midhair)})
             iArr(pInd.accessory) = CharacterGenerator.picPort.Image
         End If
 
-        If Not ent Is Nothing AndAlso Not ent.getPlayer Is Nothing AndAlso (ent.getPlayer.equippedArmor.getId = 250 Or ent.getPlayer.equippedArmor.getId = 175) Then
-            Dim t = iArr(pInd.chest).Clone
-
-            iArr(pInd.chest) = iArr(pInd.clothesbtm)
-            iArr(pInd.clothesbtm) = t
+        If acce.hide_mouth Then
+            iArr(pInd.mouth) = CharacterGenerator.picPort.Image
         End If
     End Sub
     Sub spiderBody()
@@ -650,11 +638,7 @@ Public Class Portrait
             getNaked()
         End If
 
-        If Not p.equippedArmor.getName.Equals("Naked") And p.equippedArmor.compress_breast Then
-            compressBreasts()
-        ElseIf p.equippedArmor.getName.Equals("Naked") Or Not p.equippedArmor.compress_breast Then
-            notcompress()
-        End If
+        setBreastImage(p)
 
         If p.equippedAcce Is Nothing Or (p.equippedAcce.fInd Is Nothing And p.equippedAcce.mInd Is Nothing) Then
             p.equippedAcce = New noAcce()
@@ -666,6 +650,11 @@ Public Class Portrait
             End If
         End If
 
+        If p.equippedGlasses Is Nothing Or p.equippedGlasses.imgInd Is Nothing Then
+            p.equippedGlasses = New noGlasses()
+        Else
+            If Not p.equippedGlasses.imgInd Is Nothing Then iArrInd(pInd.glasses) = p.equippedGlasses.imgInd Else iArrInd(pInd.glasses) = p.equippedGlasses.imgInd
+        End If
 
         'Form1.picPortrait.BackgroundImage = CharacterGenerator1.CreateBMP(p.iArr)
     End Sub
@@ -694,73 +683,88 @@ Public Class Portrait
                 getNaked()
         End Select
     End Sub
-    Public Sub compressBreasts()
-        Dim p As Player
-        If ent.GetType Is GetType(Player) Then
-            p = CType(ent, Player)
-        Else
-            Exit Sub
-        End If
 
-        Select Case p.breastSize
-            Case -2
-                setIAInd(pInd.chest, 0, True, False)
-            Case -1
-                setIAInd(pInd.chest, 0, True, False)
-            Case 0
-                setIAInd(pInd.chest, 1, True, False)
-            Case 1
-                setIAInd(pInd.chest, 9, True, False)
-            Case 2
-                setIAInd(pInd.chest, 10, True, False)
-            Case 3
-                setIAInd(pInd.chest, 11, True, False)
-            Case 4
-                setIAInd(pInd.chest, 12, True, False)
-            Case 5
-                setIAInd(pInd.chest, 13, True, False)
-            Case 6
-                setIAInd(pInd.chest, 14, True, False)
-            Case 7
-                setIAInd(pInd.chest, 15, True, False)
-        End Select
-    End Sub
     Public Sub getNaked()
         Dim p As Player = ent.getPlayer
         If p Is Nothing Then Exit Sub
 
-        Equipment.equipArmor(p, "Naked", False)
+        EquipmentDialogBackend.equipArmor(p, "Naked", False)
 
         portraitUDate()
 
-        Game.pushLstLog("Your clothes don't fit!")
+        TextEvent.pushLog("Your clothes don't fit!")
     End Sub
-    Public Sub notcompress()
-        Dim p As Player = ent.getPlayer
-        If p Is Nothing Then Exit Sub
-
-        Select Case p.breastSize
-            Case -2
-                setIAInd(pInd.chest, 0, True, False)
-            Case -1
-                setIAInd(pInd.chest, 0, True, False)
-            Case 0
-                setIAInd(pInd.chest, 1, True, False)
-            Case 1
-                setIAInd(pInd.chest, 2, True, False)
-            Case 2
-                setIAInd(pInd.chest, 3, True, False)
-            Case 3
-                setIAInd(pInd.chest, 4, True, False)
-            Case 4
-                setIAInd(pInd.chest, 5, True, False)
-            Case 5
-                setIAInd(pInd.chest, 6, True, False)
-            Case 6
-                setIAInd(pInd.chest, 7, True, False)
-            Case 7
-                setIAInd(pInd.chest, 8, True, False)
-        End Select
+    Private Sub setBreastImage(ByRef p As Player)
+        If p.equippedArmor.getName.Equals("Naked") Or Not p.equippedArmor.compress_breast Then
+            Select Case p.breastSize
+                Case -2
+                    setIAInd(pInd.chest, 0, True, False)
+                Case -1
+                    setIAInd(pInd.chest, 0, True, False)
+                Case 0
+                    setIAInd(pInd.chest, 1, True, False)
+                Case 1
+                    setIAInd(pInd.chest, 2, True, False)
+                Case 2
+                    setIAInd(pInd.chest, 3, True, False)
+                Case 3
+                    setIAInd(pInd.chest, 4, True, False)
+                Case 4
+                    setIAInd(pInd.chest, 5, True, False)
+                Case 5
+                    setIAInd(pInd.chest, 6, True, False)
+                Case 6
+                    setIAInd(pInd.chest, 7, True, False)
+                Case 7
+                    setIAInd(pInd.chest, 8, True, False)
+            End Select
+        ElseIf p.equippedArmor.compress_breast And p.equippedArmor.show_underboob Then
+            Select Case p.breastSize
+                Case -2
+                    setIAInd(pInd.chest, 0, True, False)
+                Case -1
+                    setIAInd(pInd.chest, 0, True, False)
+                Case 0
+                    setIAInd(pInd.chest, 1, True, False)
+                Case 1
+                    setIAInd(pInd.chest, 9, True, False)
+                Case 2
+                    setIAInd(pInd.chest, 10, True, False)
+                Case 3
+                    setIAInd(pInd.chest, 11, True, False)
+                Case 4
+                    setIAInd(pInd.chest, 12, True, False)
+                Case 5
+                    setIAInd(pInd.chest, 13, True, False)
+                Case 6
+                    setIAInd(pInd.chest, 14, True, False)
+                Case 7
+                    setIAInd(pInd.chest, 15, True, False)
+            End Select
+        ElseIf p.equippedArmor.compress_breast And Not p.equippedArmor.show_underboob Then
+            Select Case p.breastSize
+                Case -2
+                    setIAInd(pInd.chest, 0, True, False)
+                Case -1
+                    setIAInd(pInd.chest, 0, True, False)
+                Case 0
+                    setIAInd(pInd.chest, 1, True, False)
+                Case 1
+                    setIAInd(pInd.chest, 16, True, False)
+                Case 2
+                    setIAInd(pInd.chest, 17, True, False)
+                Case 3
+                    setIAInd(pInd.chest, 18, True, False)
+                Case 4
+                    setIAInd(pInd.chest, 19, True, False)
+                Case 5
+                    setIAInd(pInd.chest, 20, True, False)
+                Case 6
+                    setIAInd(pInd.chest, 21, True, False)
+                Case 7
+                    setIAInd(pInd.chest, 22, True, False)
+            End Select
+        End If
     End Sub
 
     'gets the player's current sexBool

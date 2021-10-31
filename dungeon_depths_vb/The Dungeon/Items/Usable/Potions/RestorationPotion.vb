@@ -21,7 +21,7 @@
 
     Overrides Sub use(ByRef p As Player)
         If Me.getUsable() = False Then Exit Sub
-        Game.pushLstLog("You drink the " & getName())
+        TextEvent.pushLog("You drink the " & getName())
 
         Dim rEffect = New RestEffect
         rEffect.apply(p)

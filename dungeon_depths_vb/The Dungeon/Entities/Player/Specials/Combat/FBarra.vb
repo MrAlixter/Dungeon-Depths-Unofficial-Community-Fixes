@@ -10,14 +10,14 @@
 
         Dim p = MyBase.getUser
         Dim m = MyBase.getTarget
-        Game.pushLstLog("Focused Barrage!")
-        Game.pushLblCombatEvent("Focused Barrage!")
+        TextEvent.pushLog("Focused Barrage!")
+        TextEvent.pushCombat("Focused Barrage!")
 
         For i = 0 To Int(Rnd() * 4) + 4
             Dim dmg As Integer = (p.attack + p.aBuff) * p.pClass.a * p.pForm.a * 0.65
             dmg += Int(Rnd() * 2 * ((p.attack + p.aBuff) * p.pClass.a * p.pForm.a * 0.65 * 0.05)) -
                 ((p.attack + p.aBuff) * p.pClass.a * p.pForm.a * 0.65 * 0.05)
-            Game.pushLogAndEvent("You hit your opponent for " & dmg & " damage!")
+            TextEvent.pushAndLog("You hit your opponent for " & dmg & " damage!")
             m.takeDMG(dmg, p)
             If i <> 0 Then p.stamina -= 4
             If MyBase.getTarget.isDead Then Exit For

@@ -17,8 +17,8 @@
 
         p.aBuff = p.aBuff + ((p.getATK - p.aBuff) * 0.3)
 
-        Game.pushLstLog("Attack Up!")
-        Game.pushLblCombatEvent("Attack Up!" & vbCrLf & "+30% ATK for 3 turns.")
+        TextEvent.pushLog("Attack Up!")
+        TextEvent.pushCombat("Attack Up!" & vbCrLf & "+30% ATK for 3 turns.")
     End Sub
 
     Public Overrides Function getCost() As Integer

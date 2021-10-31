@@ -29,9 +29,9 @@
     Overrides Sub tfDialogStep1(ByVal hairColorInd As Integer)
         Try
             Dim hcn = {"Light Grey", "Rose", "Blonde", "White", "Sky-Colored"}
-            Game.pushLblEvent("Your foot falls on an uneven patch of dungeon and you breifly lose your footing. As you lurch forward, catching your balance, your cowbell gives out a loud ring.  Looking franctically around, you are relived to see that nothing seems to have been attracted by the noise.  As you brush your shaken up hair back into place, you notice that at some point your hair color had changed to a shade of " & hcn(hairColorInd) & "." & DDUtils.RNRN & """Maybe I stepped on a cursed brick or something..."" you muse as you continue on." & DDUtils.RNRN & "You now have " & hcn(hairColorInd) & " hair!")
+            TextEvent.push("Your foot falls on an uneven patch of dungeon and you breifly lose your footing. As you lurch forward, catching your balance, your cowbell gives out a loud ring.  Looking franctically around, you are relived to see that nothing seems to have been attracted by the noise.  As you brush your shaken up hair back into place, you notice that at some point your hair color had changed to a shade of " & hcn(hairColorInd) & "." & DDUtils.RNRN & """Maybe I stepped on a cursed brick or something..."" you muse as you continue on." & DDUtils.RNRN & "You now have " & hcn(hairColorInd) & " hair!")
         Catch ex As Exception
-            Game.pushLblEvent("Your foot falls on an uneven patch of dungeon and you breifly lose your footing. As you lurch forward, catching your balance, your cowbell gives out a loud ring.  Looking franctically around, you are relived to see that nothing seems to have been attracted by the noise.  As you brush your shaken up hair back into place, you notice that at some point your hair color had shifted." & DDUtils.RNRN & """Maybe I stepped on a cursed brick or something..."" you muse as you continue on." & DDUtils.RNRN & "Your hair color has changed!")
+            TextEvent.push("Your foot falls on an uneven patch of dungeon and you breifly lose your footing. As you lurch forward, catching your balance, your cowbell gives out a loud ring.  Looking franctically around, you are relived to see that nothing seems to have been attracted by the noise.  As you brush your shaken up hair back into place, you notice that at some point your hair color had shifted." & DDUtils.RNRN & """Maybe I stepped on a cursed brick or something..."" you muse as you continue on." & DDUtils.RNRN & "Your hair color has changed!")
         End Try
     End Sub
 
@@ -69,7 +69,7 @@
         p.prt.setIAInd(pInd.mouth, 19, True, True)
     End Sub
     Overrides Sub tfDialogStep5()
-        Game.pushLblEvent("As you trudge through a particularly dusty patch of dungeon, you feel a powerful sneeze coming on.  As the sneeze rocks your body, the cowbell on your neck rattles noisily, the loudest it has rung yet, and you need to take a few minutes to get your bearings back.  Your head feels slightly heavier, and as you feel around you can tell that your horns have gotten longer, and seem to have a more extreme curl.  Sweet!")
+        TextEvent.push("As you trudge through a particularly dusty patch of dungeon, you feel a powerful sneeze coming on.  As the sneeze rocks your body, the cowbell on your neck rattles noisily, the loudest it has rung yet, and you need to take a few minutes to get your bearings back.  Your head feels slightly heavier, and as you feel around you can tell that your horns have gotten longer, and seem to have a more extreme curl.  Sweet!")
     End Sub
 
     Overrides Sub boobTF(ByRef p As Player)
@@ -95,14 +95,14 @@
             out += "  You also notice that you feel a little ... breathier ... between your legs and a quick pat down confirms that you are now female.  Seems like this bell is turning you into a proper cow after all..."
         End If
 
-        Game.pushLblEvent(out)
+        TextEvent.push(out)
     End Sub
 
     Overrides Sub tfClothes(ByRef p As Player)
         p.inv.add(196, 1)
-        Equipment.clothesChange(p, "Cow_Cosplay")
+        EquipmentDialogBackend.armorChange(p, "Cow_Cosplay")
     End Sub
     Overrides Sub tfDialogStep9()
-        Game.pushLblEvent("Giggling, you take hold of the bell dangling from the collar on your neck.  With each ring so far you've gotten a little bit ditzier, but also a whole lot cuter.  Between your little horns and your gigantic tits, you almost look like some sort of cow...  Falling into another fit of giggles, you give the bell a hard shake, and the sound from its ring echos throughout the dungeon." & DDUtils.RNRN & "You are now a female minotaur!")
+        TextEvent.push("Giggling, you take hold of the bell dangling from the collar on your neck.  With each ring so far you've gotten a little bit ditzier, but also a whole lot cuter.  Between your little horns and your gigantic tits, you almost look like some sort of cow...  Falling into another fit of giggles, you give the bell a hard shake, and the sound from its ring echos throughout the dungeon." & DDUtils.RNRN & "You are now a female minotaur!")
     End Sub
 End Class

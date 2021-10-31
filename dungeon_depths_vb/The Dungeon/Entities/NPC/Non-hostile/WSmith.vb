@@ -6,6 +6,7 @@
         '|ID Info|
         name = "Weaponsmith"
         sName = name
+        npc_index = sNPCInd.weaponsmith
 
         '|NPC Flags|
         pronoun = "she"
@@ -86,36 +87,36 @@
 
             If Int(Rnd() * 2) = 0 Then
                 img_index = 5
-                Game.pushNPCDialog("Hey stranger, how's it hanging?" & DDUtils.RNRN &
+                TextEvent.pushNPCDialog("Hey stranger, how's it hanging?" & DDUtils.RNRN &
                                    "I'm still getting everything moved in, but feel free to check out what I've got ready so far.  I should be operating at 100% by the time- uh, wait... what year is it now?")
             ElseIf Int(Rnd() * 20) = 1 Then
                 img_index = 6
-                Game.pushNPCDialog("So I was working on smelting down some scrapped weapons and, uh, I think I'm cursed now." & DDUtils.RNRN &
+                TextEvent.pushNPCDialog("So I was working on smelting down some scrapped weapons and, uh, I think I'm cursed now." & DDUtils.RNRN &
                                    "Let's make this quick so that I can track down an old friend of mine who's pretty good at dealing with this sort of stuff." & DDUtils.RNRN &
                                    "Hopefully they're still around somewhere, because I'd rather just stay like this than ask that shady dick of a wizard for any help...")
             Else
-                Game.pushNPCDialog("Hey wanderer, what's going on?" & DDUtils.RNRN &
+                TextEvent.pushNPCDialog("Hey wanderer, what's going on?" & DDUtils.RNRN &
                                    "I've got enough fire magic to keep a mobile forge burning basically wherever I go.  Lets me keep my hardware fresh and hot off the anvil, ya know?  I can tell you're not just looking for something pointy though. If you want that top-shelf quality I've got a signature series of stabby stuff that's been through an quick enchanting process." & DDUtils.RNRN &
                                    "Let me know what I'm banging out, ok?")
             End If
         ElseIf img_index = 1 Then
-            Game.pushNPCDialog("...")
+            TextEvent.pushNPCDialog("...")
         ElseIf img_index = 2 Then
-            Game.pushNPCDialog("...")
+            TextEvent.pushNPCDialog("...")
         ElseIf img_index = 3 Then
-            Game.pushNPCDialog("Oh my, I appear to have broken a nail.  I suppose it comes with the title of ""Princess of Smithery"" to get my hands dirty, but I really should still be more careful...")
+            TextEvent.pushNPCDialog("Oh my, I appear to have broken a nail.  I suppose it comes with the title of ""Princess of Smithery"" to get my hands dirty, but I really should still be more careful...")
         ElseIf img_index = 4 Then
-            Game.pushNPCDialog("*giggle* Let me know what you, like, need and I'll totally hop to it, cutie! *fit of giggles*")
+            TextEvent.pushNPCDialog("*giggle* Let me know what you, like, need and I'll totally hop to it, cutie! *fit of giggles*")
         ElseIf img_index = 7 Or img_index = 11 Then
-            Game.pushNPCDialog("...")
+            TextEvent.pushNPCDialog("...")
         ElseIf img_index = 9 Then
             If Game.player1.formName.Equals("Arachne") Then
-                Game.pushNPCDialog("I'm suprised more members of the sisterhood don't have any intrest in metal arms and armor.  Well, let me know if you see anything you like!")
+                TextEvent.pushNPCDialog("I'm suprised more members of the sisterhood don't have any intrest in metal arms and armor.  Well, let me know if you see anything you like!")
             Else
-                Game.pushNPCDialog("Heeeey, you wouldn't mind drinking some of this venom, right?  I'd hate if another arachne ate one of my best customers...")
+                TextEvent.pushNPCDialog("Heeeey, you wouldn't mind drinking some of this venom, right?  I'd hate if another arachne ate one of my best customers...")
             End If
         ElseIf img_index = 10 Then
-            Game.pushNPCDialog("Hey, what's up? *nya*")
+            TextEvent.pushNPCDialog("Hey, what's up? *nya*")
         End If
 
         If img_index = getArachneImageInd() And Not Game.player1.formName.Equals("Arachne") Then inv.setCount(244, 1) Else inv.setCount(244, 0)
@@ -175,7 +176,7 @@
     End Function
 
     Public Overrides Sub toDoll()
-        Game.pushNPCDialog("...")
+        TextEvent.pushNPCDialog("...")
         Game.picNPC.BackgroundImage = picNPC(7)
 
         discount = 0.5
@@ -192,7 +193,7 @@
         p.changeClass("Thong")
         p.drawPort()
 
-        Game.pushLblEvent(out, AddressOf playerDeath2)
+        TextEvent.push(out, AddressOf playerDeath2)
 
     End Sub
     Public Sub playerDeath2()
@@ -203,7 +204,7 @@
         Game.player1.changeClass("Thong​")
         Game.player1.drawPort()
 
-        Game.pushLblEvent(out, AddressOf Game.player1.die)
+        TextEvent.push(out, AddressOf Game.player1.die)
 
     End Sub
 End Class

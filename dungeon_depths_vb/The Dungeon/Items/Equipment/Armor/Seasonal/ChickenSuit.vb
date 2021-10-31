@@ -28,7 +28,7 @@
         usize4 = New Tuple(Of Integer, Boolean, Boolean)(93, True, True)
         usize5 = New Tuple(Of Integer, Boolean, Boolean)(94, True, True)
         MyBase.compress_breast = False
-
+        show_underboob = True
         rando_inv_allowed = False
 
         setDesc("This outfit, little more than some wings and straps, lightens its user though it doesn't actually provide any protection." & DDUtils.RNRN & _

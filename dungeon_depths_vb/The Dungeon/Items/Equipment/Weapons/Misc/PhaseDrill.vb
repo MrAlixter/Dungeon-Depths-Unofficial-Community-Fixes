@@ -32,7 +32,7 @@
             Return Player.calcDamage(dmg, m.getDEF)
         Else
             p.inv.add("AAAAAA_Battery", -1)
-            Game.pushLogAndEvent("The back casing of the drill ejects a smoldering battery shell.  " & p.inv.getCountAt("AAAAAA_Battery") & " batteries left!")
+            TextEvent.pushAndLog("The back casing of the drill ejects a smoldering battery shell.  " & p.inv.getCountAt("AAAAAA_Battery") & " batteries left!")
         End If
 
         dmg += (getABoost(p))

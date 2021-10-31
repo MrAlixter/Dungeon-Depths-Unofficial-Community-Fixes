@@ -16,10 +16,10 @@
 
     Public Overrides Sub setSpells(ByRef p As Player)
         If Not p.knownSpecials.Contains("Inferno Aura") Then p.knownSpecials.Add("Inferno Aura")
-        Game.pushLstLog("'Inferno Aura' special learned!")
+        TextEvent.pushLog("'Inferno Aura' special learned!")
 
         If Not p.knownSpells.Contains("Heartbreak Supernova") Then p.knownSpells.Add("Heartbreak Supernova")
-        Game.pushLstLog("'Heartbreak Supernova' special learned!")
+        TextEvent.pushLog("'Heartbreak Supernova' special learned!")
     End Sub
 
     Overrides Sub tfBody(ByRef p As Player)
@@ -45,6 +45,6 @@
         p.prt.setIAInd(pInd.hairacc, 8, True, False)
 
         Equipment.accChange(p, "Nothing")
-        Equipment.clothesChange(p, "Mag._Girl_Outfit_(D)")
+        EquipmentDialogBackend.armorChange(p, "Mag._Girl_Outfit_(D)")
     End Sub
 End Class

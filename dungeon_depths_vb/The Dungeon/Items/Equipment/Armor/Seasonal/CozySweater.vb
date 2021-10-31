@@ -27,19 +27,19 @@
         value = 2450
 
         '|Image Index|
-        MyBase.bsizeneg1 = New Tuple(Of Integer, Boolean, Boolean)(12, False, True)
-        MyBase.bsize0 = New Tuple(Of Integer, Boolean, Boolean)(237, True, True)
-        MyBase.bsize1 = New Tuple(Of Integer, Boolean, Boolean)(69, True, True)
-        MyBase.bsize2 = New Tuple(Of Integer, Boolean, Boolean)(70, True, True)
-        MyBase.bsize3 = New Tuple(Of Integer, Boolean, Boolean)(71, True, True)
-        MyBase.bsize4 = New Tuple(Of Integer, Boolean, Boolean)(345, True, True)
+        bsizeneg1 = New Tuple(Of Integer, Boolean, Boolean)(12, False, True)
+        bsize0 = New Tuple(Of Integer, Boolean, Boolean)(237, True, True)
+        bsize1 = New Tuple(Of Integer, Boolean, Boolean)(69, True, True)
+        bsize2 = New Tuple(Of Integer, Boolean, Boolean)(70, True, True)
+        bsize3 = New Tuple(Of Integer, Boolean, Boolean)(71, True, True)
+        bsize4 = New Tuple(Of Integer, Boolean, Boolean)(345, True, True)
 
-        MyBase.usizeneg1 = New Tuple(Of Integer, Boolean, Boolean)(73, False, True)
-        MyBase.usize0 = New Tuple(Of Integer, Boolean, Boolean)(327, True, True)
-        MyBase.usize1 = New Tuple(Of Integer, Boolean, Boolean)(328, True, True)
-        MyBase.usize2 = New Tuple(Of Integer, Boolean, Boolean)(329, True, True)
-        MyBase.usize3 = New Tuple(Of Integer, Boolean, Boolean)(330, True, True)
-        MyBase.usize4 = New Tuple(Of Integer, Boolean, Boolean)(331, True, True)
+        usizeneg1 = New Tuple(Of Integer, Boolean, Boolean)(73, False, True)
+        usize0 = New Tuple(Of Integer, Boolean, Boolean)(327, True, True)
+        usize1 = New Tuple(Of Integer, Boolean, Boolean)(328, True, True)
+        usize2 = New Tuple(Of Integer, Boolean, Boolean)(329, True, True)
+        usize3 = New Tuple(Of Integer, Boolean, Boolean)(330, True, True)
+        usize4 = New Tuple(Of Integer, Boolean, Boolean)(331, True, True)
 
         '|Description|
         setDesc("This sweater is for the chillier parts of the year, and keeps its wearer nice and toasty out in the cold.  Well, that or it's a part of some frost demon(ess)'s elaborate scheme to freeze the dungeon solid..." & DDUtils.RNRN &

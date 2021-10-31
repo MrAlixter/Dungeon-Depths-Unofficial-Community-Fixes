@@ -8,7 +8,7 @@
         out += "-30 health."
         If p.getIntHealth < 1 Then p.setHealth(1 / p.getMaxHealth)
 
-        Game.pushLblEvent(out)
+        TextEvent.push(out)
     End Sub
 
     Public Overrides Function getEffectDesc()

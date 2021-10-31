@@ -25,12 +25,12 @@
         If Not p.perks(perk.coscale) > -1 And (Int(Rnd() * 2) <> 0 Or Game.noRNG) Then
             p.ongoingTFs.add(New BroodmotherTF(5, 15, 2.0, True))
             p.perks(perk.coscale) = 1
-            Game.pushLstLog("You use the " & getName() & ".  You've been afflicted wth the curse of scales!")
+            TextEvent.pushLog("You use the " & getName() & ".  You've been afflicted wth the curse of scales!")
         Else
             p.defense += 5
             p.UIupdate()
 
-            Game.pushLstLog("You use the " & getName() & ". +5 base DEF!")
+            TextEvent.pushLog("You use the " & getName() & ". +5 base DEF!")
         End If
 
         p.perks(perk.dcharmsused) += 1

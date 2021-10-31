@@ -86,6 +86,10 @@
         End If
     End Function
 
+    '|IARRIND|
+    Public Shared Function cloneIArrInd(ByVal tup As Tuple(Of Integer, Boolean, Boolean)) As Tuple(Of Integer, Boolean, Boolean)
+        Return New Tuple(Of Integer, Boolean, Boolean)(tup.Item1, tup.Item2, tup.Item3)
+    End Function
 
     '|TEXT & FORM RESIZING|
     Public Shared Sub resizeForm(ByRef form As Form)
@@ -132,9 +136,9 @@
 
         ctrl.Font = fitFont(ctrl, newFont)
     End Sub
-    Public Shared Function fitFont(ByRef ctrl As Control, ByVal newFont As Font) As Font
+    Public Shared Function fitFont(ByRef ctrl As Control, ByVal newFont As Font, Optional ByVal font As String = "Consolas") As Font
         While ctrl.Width < TextRenderer.MeasureText(ctrl.Text, newFont).Width Or (ctrl.Height < TextRenderer.MeasureText(ctrl.Text, newFont).Height And Not ctrl.GetType Is GetType(Label))
-            newFont = New System.Drawing.Font("Consolas", newFont.SizeInPoints * 0.9)
+            newFont = New System.Drawing.Font(font, newFont.SizeInPoints * 0.9)
         End While
 
         Return newFont
@@ -185,7 +189,13 @@
 
         Return out
     End Function
-
+    Public Shared Function safeString(ByRef s As String)
+        If String.IsNullOrEmpty(s) Then
+            Return ""
+        Else
+            Return s
+        End If
+    End Function
 
     '|COLOR SHIFT FUNCTIONS|
     Shared Function cEquals(ByVal a As Color, ByVal b As Color)
@@ -250,11 +260,23 @@
         Next
         Return False
     End Function
-
     Shared Function withinOnePlusMinus(pos As Point, pos1 As Point) As Boolean
         Return (pos.X + 1 = pos1.X Or pos.X - 1 = pos1.X) Or (pos.Y + 1 = pos1.Y Or pos.Y - 1 = pos1.Y)
     End Function
 
+    '|STRING UTILS|
+    Shared Function countToken(ByVal str As String, ByVal tok As String)
+        Return str.Length - str.Replace(tok, "").Length
+    End Function
+    Shared Sub printToFile(ByVal str As String, ByVal file_name As String)
+        Dim writer As IO.StreamWriter
+        IO.File.Delete(file_name)
+        writer = IO.File.CreateText(file_name)
+
+        writer.WriteLine(str)
+
+        writer.Close()
+    End Sub
 End Class
 
 

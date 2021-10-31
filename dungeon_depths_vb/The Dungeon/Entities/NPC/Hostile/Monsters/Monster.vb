@@ -181,8 +181,8 @@
         'adds the mimmic to combat queues
         targetRoute(m)
 
-        Game.pushLblCombatEvent(Trim(m.getName() & " attacks!"))
-        Game.pushLstLog(Trim(m.getName() & " attacks!"))
+        TextEvent.pushCombat(Trim(m.getName() & " attacks!"))
+        TextEvent.pushLog(Trim(m.getName() & " attacks!"))
 
         Game.drawBoard()
     End Sub

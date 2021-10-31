@@ -92,7 +92,7 @@
 
     Public Sub shiftTowards(ByRef p As Player)
         Randomize()
-        Game.pushLogAndEvent("The glow of someone else's magic slightly tweaks your form...")
+        TextEvent.pushAndLog("The glow of someone else's magic slightly tweaks your form...")
 
         If Not p.className.Equals("Thrall") Then p.changeClass("Thrall")
         If playerMeetsForm(p) Then Exit Sub
@@ -232,10 +232,11 @@ Public Class SuccMaid
         Dim p = Game.player1
 
         If p.inv.item("Maid_Lingerie").count < 1 Then p.inv.add("Maid_Lingerie", 1)
-        Equipment.clothesChange(p, "Maid_Lingerie")
+        EquipmentDialogBackend.armorChange(p, "Maid_Lingerie")
+        If p.inv.getCountAt("Small_Glasses") < 1 Then p.inv.add("Small_Glasses", 1)
+        EquipmentDialogBackend.glassesChange(p, "Small_Glasses")
 
         p.prt.setIAInd(pInd.eyes, 12, True, True)
-        p.prt.setIAInd(pInd.glasses, 2, True, False)
         p.prt.setIAInd(pInd.wings, 2, True, False)
         p.prt.setIAInd(pInd.horns, 3, True, False)
 

@@ -7,7 +7,7 @@
         p.perks(perk.dodge) = 1
 
         out += "You will dodge the next attack that comes your way (Note: This will not stack)."
-        Game.pushLblEvent(out)
+        TextEvent.push(out)
     End Sub
 
     Public Overrides Function getEffectDesc()

@@ -7,7 +7,7 @@
         p.addLust(-25)
         out += "-25 lust."
 
-        Game.pushLblEvent(out)
+        TextEvent.push(out)
     End Sub
 
     Public Overrides Function getEffectDesc()

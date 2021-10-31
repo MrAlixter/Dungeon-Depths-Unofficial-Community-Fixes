@@ -70,17 +70,17 @@
                         sName = spells(spell)
                 End Select
                 If ct > 60 Then
-                    Game.pushLstLog("You know all the spells in crimson spellbooks already!")
+                    TextEvent.pushLog("You know all the spells in crimson spellbooks already!")
                     Exit Sub
                 End If
             End While
             If Not Game.player1.knownSpells.Contains(sName) Then Game.player1.knownSpells.Add(sName)
-            Game.pushLstLog("You read the " & getName() & ". " & sName & " learned!")
+            TextEvent.pushLog("You read the " & getName() & ". " & sName & " learned!")
             If Not out.Equals("") Then
-                Game.pushLstLog(out)
-                Game.pushLblEvent("You read the " & getName() & ". " & sName & " learned!" & DDUtils.RNRN & out)
+                TextEvent.pushLog(out)
+                TextEvent.push("You read the " & getName() & ". " & sName & " learned!" & DDUtils.RNRN & out)
             Else
-                Game.pushLblEvent("You read the " & getName() & ". " & sName & " learned!")
+                TextEvent.push("You read the " & getName() & ". " & sName & " learned!")
             End If
         End If
         count -= 1

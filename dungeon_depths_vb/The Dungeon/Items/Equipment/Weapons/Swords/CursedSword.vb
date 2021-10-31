@@ -68,8 +68,8 @@
 
         dmgBF += (p.getATK)
 
-        Game.pushLstLog("Backfire - Your grip on the blade slips!")
-        Game.pushLblCombatEvent("Backfire - Your grip on the blade slips!")
+        TextEvent.pushLog("Backfire - Your grip on the blade slips!")
+        TextEvent.pushCombat("Backfire - Your grip on the blade slips!")
         p.takeDMG(Math.Min(Player.calcDamage(dmgBF, m.defense), p.getIntHealth - 1), m)
     End Sub
 End Class

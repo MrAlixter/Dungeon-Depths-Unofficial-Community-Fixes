@@ -43,7 +43,7 @@
 
         out += """Oh, you offer me your mind?  Very well, I shall borrow it for a while.  Perhaps if you bear my signet I'll even make some improvements before its return, loyal one..."" you hear the voice of Uvona whisper in your ear.  As she speaks, a haze falls over your mind and ... suddenly ... you can't ... think no more ..."
 
-        Game.pushLblEvent(out)
+        TextEvent.push(out)
     End Sub
 
     Public Sub step1alt()
@@ -64,7 +64,7 @@
 
         p.changeClass("Mindless")
 
-        Game.pushLblEvent("The alraune's spell puts you into a trance!")
+        TextEvent.push("The alraune's spell puts you into a trance!")
 
         turns_until_next_step = 1
 

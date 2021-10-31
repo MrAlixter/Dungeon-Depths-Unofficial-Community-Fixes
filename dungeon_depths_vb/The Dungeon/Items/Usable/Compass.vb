@@ -23,11 +23,11 @@
         If Me.getUsable() = False Then Exit Sub
 
         If Game.currFloor.floorNumber = 8 Then
-            Game.pushLogAndEvent("The compass spins wildly...")
+            TextEvent.pushAndLog("The compass spins wildly...")
             Exit Sub
         End If
 
-        Game.pushLstLog("You use the " & getName())
+        TextEvent.pushLog("You use the " & getName())
 
         Dim path = Game.currFloor.route(p.pos, Game.currFloor.stairs)
         For i = 0 To UBound(path) Step 4

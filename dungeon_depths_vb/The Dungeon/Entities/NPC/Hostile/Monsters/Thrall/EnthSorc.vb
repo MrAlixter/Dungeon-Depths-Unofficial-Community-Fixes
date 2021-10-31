@@ -29,7 +29,7 @@
     Public Overrides Sub playerDeath(ByRef p As Player)
         If p.formName.Equals("Blowup Doll") Then
             despawn("p-death")
-            Game.pushLblEvent("Your enemy, seeing your current state, decides that you likely aren't useful and leaves you alone.")
+            TextEvent.push("Your enemy, seeing your current state, decides that you likely aren't useful and leaves you alone.")
             Exit Sub
         End If
         Dim out As String = ""
@@ -51,6 +51,6 @@
             If Game.player1.will < 1 Then Game.player1.will = 0
         End If
         If Not p.currTarget Is Nothing Then despawn("p-death")
-        Game.pushLblEvent(out)
+        TextEvent.push(out)
     End Sub
 End Class

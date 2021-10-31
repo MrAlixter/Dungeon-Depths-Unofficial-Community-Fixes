@@ -18,7 +18,7 @@
 
         MyBase.getCaster.addLust(5)
 
-        Game.pushLogAndEvent(CStr("You summon " & ((getCaster.getLust \ 10) + 1) & " tentacles and hit the " & MyBase.getTarget.name & " for " & dmg & " damage!"))
+        TextEvent.pushAndLog(CStr("You summon " & ((getCaster.getLust \ 10) + 1) & " tentacles and hit the " & MyBase.getTarget.name & " for " & dmg & " damage!"))
 
         MyBase.getTarget.takeDMG(dmg, MyBase.getCaster)
     End Sub

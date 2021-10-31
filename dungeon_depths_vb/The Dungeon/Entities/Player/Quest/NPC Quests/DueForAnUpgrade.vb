@@ -12,7 +12,7 @@
     Public Overrides Sub init()
         MyBase.init()
 
-        Game.pushNPCDialog("""Hmmmm, as much as... hot?... as the outfit you have there is, it looks like your gear could be reinforced into something that offers a bit more protection.  No amount of smithing is going to break that curse if you got it, buuuut if you can find me the materials, I can at least take a crack at getting you some better armor.""" & DDUtils.RNRN &
+        TextEvent.pushNPCDialog("""Hmmmm, as much as... hot?... as the outfit you have there is, it looks like your gear could be reinforced into something that offers a bit more protection.  No amount of smithing is going to break that curse if you got it, buuuut if you can find me the materials, I can at least take a crack at getting you some better armor.""" & DDUtils.RNRN &
                    "Quest ""Due For an Upgrade"" acquired!")
     End Sub
 

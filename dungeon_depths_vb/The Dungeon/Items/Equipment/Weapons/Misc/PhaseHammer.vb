@@ -33,7 +33,7 @@
             Return Player.calcDamage(dmg, m.getDEF)
         Else
             p.inv.add("AAAAAA_Battery", -1)
-            Game.pushLogAndEvent("The hammer head ejects a smoldering battery shell.  " & p.inv.getCountAt("AAAAAA_Battery") & " batter" & If(p.inv.getCountAt("AAAAAA_Battery") = 1, "y", "ies") & " left!")
+            TextEvent.pushAndLog("The hammer head ejects a smoldering battery shell.  " & p.inv.getCountAt("AAAAAA_Battery") & " batter" & If(p.inv.getCountAt("AAAAAA_Battery") = 1, "y", "ies") & " left!")
         End If
 
         dmg += (getABoost(p))

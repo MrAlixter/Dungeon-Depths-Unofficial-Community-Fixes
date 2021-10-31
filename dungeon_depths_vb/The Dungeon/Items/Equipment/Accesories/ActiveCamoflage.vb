@@ -14,7 +14,7 @@
     End Sub
 
     Public Overrides Sub onEquip(ByRef p As Player)
-        Game.pushLblEvent("Unimplemented")
+        TextEvent.push("Unimplemented")
         MyBase.onEquip(p)
     End Sub
 

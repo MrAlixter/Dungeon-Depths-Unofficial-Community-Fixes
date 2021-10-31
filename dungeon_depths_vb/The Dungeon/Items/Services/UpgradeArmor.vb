@@ -26,9 +26,9 @@
         Game.shopMenu.Close()
 
         If Equipment.antiClothingCurse(p) Then
-            Game.pushNPCDialog("Alright, there we go!  That should do you a little better in the defense department.")
+            TextEvent.pushNPCDialog("Alright, there we go!  That should do you a little better in the defense department.")
         Else
-            Game.pushNPCDialog("Well, I hate to say it but there isn't much I can do for you there...")
+            TextEvent.pushNPCDialog("Well, I hate to say it but there isn't much I can do for you there...")
             p.gold += 2000
         End If
 

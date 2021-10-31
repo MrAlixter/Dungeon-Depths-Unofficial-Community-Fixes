@@ -25,7 +25,7 @@
 
         'unequips
         If p.inv.item(147).count < 1 Then p.inv.add(147, 1)
-        Equipment.clothesChange(p, "Skimpy_Tube_Top")
+        EquipmentDialogBackend.armorChange(p, "Skimpy_Tube_Top")
 
         'bimbo transformation
         If Not p.prt.sexBool Then
@@ -52,7 +52,7 @@
         p.prt.setIAInd(pInd.hat, 0, True, False)
 
         'transformation description push
-        Game.pushLblEvent(out)
+        TextEvent.push(out)
     End Sub
     Public Sub step2()
         Game.fromCombat()
@@ -65,9 +65,9 @@
         p.prt.setIAInd(pInd.mouth, 9, True, True)
         If p.breastSize > 0 And p.breastSize < 4 Then
             If p.inv.item("Cat_Lingerie").count < 1 Then p.inv.add("Cat_Lingerie", 1)
-            Equipment.clothesChange(p, "Cat_Lingerie")
+            EquipmentDialogBackend.armorChange(p, "Cat_Lingerie")
         End If
-        Game.pushLblEvent("In your weakened state, you are helpless to defend yourself as Marissa charges up a glowing ball of magic.\n\n" &
+        TextEvent.push("In your weakened state, you are helpless to defend yourself as Marissa charges up a glowing ball of magic.\n\n" &
                           """This is a little curse I've been working on..."" she states, gesturing at your prone body with the tip of her staff.  ""I haven't used the finished version of it on anyone yet, but I have a feeling that you're going to be my perfect little test kitty!""\n\n" &
                           "With that, she flicks her staff your direction, and a tingling sensation erupts throughout your body.  Blushing, you can feel a burning between your legs, and as a lustful haze settles over your weakened mind, the tingling just ... stops.  Confused, you glance behind you at Marissa with an expectant glare.  She, to your surprise, also seems to be confused about this turn of events.  As you begin to pull yourself to your feet, her gaze turns cold and she mutters something about you probably not making a cute kitty anyway before storming off.\n\n" &
                           "As you watch her walk off, part of you wants to get down on your hands and knees and follow her, although the majority is glad this version of Marissa seemed to be so inexperienced.")

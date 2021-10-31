@@ -17,8 +17,8 @@
 
         p.wBuff = p.wBuff + ((p.getWIL - p.wBuff) * 0.3)
 
-        Game.pushLstLog("Will Up!")
-        Game.pushLblCombatEvent("Will Up!" & vbCrLf & "+30% WILL for 3 turns.")
+        TextEvent.pushLog("Will Up!")
+        TextEvent.pushCombat("Will Up!" & vbCrLf & "+30% WILL for 3 turns.")
     End Sub
 
     Public Overrides Function getCost() As Integer

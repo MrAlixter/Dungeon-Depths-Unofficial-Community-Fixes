@@ -10,13 +10,13 @@
 
         '|Item Flags|
         usable = false
-        MyBase.compress_breast = True
-        MyBase.droppable = False
-        MyBase.anti_slut_ind = 166
+        compress_breast = True
+        droppable = False
+        anti_slut_ind = 166
 
         '|Stats|
-        MyBase.d_boost = 1
-        MyBase.m_boost = 20
+        d_boost = 1
+        m_boost = 20
         count = 0
         value = 200
 

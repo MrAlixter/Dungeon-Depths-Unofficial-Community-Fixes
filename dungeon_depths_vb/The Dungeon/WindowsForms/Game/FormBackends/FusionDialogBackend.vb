@@ -10,7 +10,7 @@ Public Class FusionDialogBackend
         Dim p2 = Game.getPlayerFromFile("saves/s" & getSaveInd(Game.cboxFusionTarget.SelectedIndex) & ".ave").Item1
 
         If fType = TypeOfFusion.CRYSTAL_FUSION Then
-            Game.pushLblEvent(p.name & " takes the fusion crystal in both hands as they glance over at " & p2.name & _
+            TextEvent.push(p.name & " takes the fusion crystal in both hands as they glance over at " & p2.name & _
                    ", who nods in confirmation.  " & p.name & " then snaps the crystal in half, keeping one half " & _
                    "and tossing the other to " & p2.name & ".  Once separated, the shards begin glowing and pulling towards " & _
                    "each other, pulling the two with them.  As the shards gets closer, their attraction increases, and soon " & _
@@ -24,7 +24,7 @@ Public Class FusionDialogBackend
 
             FusionCrystal.finalizeFusion(fuPlay, p, p2)
 
-            Game.updateList.clear()
+            Game.updatable_queue.clear()
 
 
 
@@ -34,15 +34,15 @@ Public Class FusionDialogBackend
 
             p = fuPlay
 
-            Equipment.clothesChange(fuPlay, Game.cboxFusionArmor.Text)
-            Equipment.weaponChange(fuPlay, Game.cboxFusionWeapon.Text)
+            EquipmentDialogBackend.armorChange(fuPlay, Game.cboxFusionArmor.Text)
+            EquipmentDialogBackend.weaponChange(fuPlay, Game.cboxFusionWeapon.Text)
             Equipment.accChange(fuPlay, Game.cboxFusionAccessory.Text)
 
             fuPlay.drawPort()
 
         ElseIf fType = TypeOfFusion.SPOT_FUSION Then
             Polymorph.transform(Game.player1, "Fusion")
-            Game.pushLblEvent(Game.player1.name & " and " & p2.name & " fuse together to form " & FusionCrystal.nameFusion(Game.player1.name, p2.name) & _
+            TextEvent.push(Game.player1.name & " and " & p2.name & " fuse together to form " & FusionCrystal.nameFusion(Game.player1.name, p2.name) & _
                       ", a superior explorer!")
 
             p = SpotFusion.Fusion(p, p2)
@@ -50,8 +50,8 @@ Public Class FusionDialogBackend
             p.inv.invNeedsUDate = True
             p.UIupdate()
 
-            Equipment.clothesChange(p, Game.cboxFusionArmor.Text)
-            Equipment.weaponChange(p, Game.cboxFusionWeapon.Text)
+            EquipmentDialogBackend.armorChange(p, Game.cboxFusionArmor.Text)
+            EquipmentDialogBackend.weaponChange(p, Game.cboxFusionWeapon.Text)
             Equipment.accChange(p, Game.cboxFusionAccessory.Text)
 
             p.drawPort()
@@ -81,7 +81,7 @@ Public Class FusionDialogBackend
             Game.cboxFusionAccessory.Items.Add(a)
         Next
 
-        Equipment.clothesChange(fuPlay, "Naked", False)
+        EquipmentDialogBackend.armorChange(fuPlay, "Naked", False)
 
         Game.lblFusionHP.Text = "Max HP = " & fuPlay.getMaxHealth
         Game.lblFusionMP.Text = "Max MP = " & fuPlay.getMaxMana
@@ -119,7 +119,7 @@ Public Class FusionDialogBackend
 
             possibleFusions.Add(i, getFusion(p, p2, fType))
 
-            MsgBox(p.getName)
+            'MsgBox(p.getName)
         Next
     End Sub
     Private Shared Function getFusion(ByVal p1 As Player, ByVal p2 As Player, ByVal t As TypeOfFusion) As Player
@@ -187,7 +187,7 @@ Public Class FusionDialogBackend
         getFusionTargets(p)
 
         If Not isFusionPossible(p) Then
-            Game.pushLblEvent("You can not fuse at the moment!")
+            TextEvent.push("You can not fuse at the moment!")
             fromPNL(p)
             Exit Sub
         End If

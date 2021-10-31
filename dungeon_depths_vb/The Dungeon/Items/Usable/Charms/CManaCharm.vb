@@ -21,7 +21,7 @@
 
     Overrides Sub use(ByRef p As Player)
         If Me.getUsable() = False Then Exit Sub
-        Game.pushLstLog("You use the " & getName() & ". +5 MAX MANA!")
+        TextEvent.pushLog("You use the " & getName() & ". +5 MAX MANA!")
 
         p.maxMana += 5
         p.mana += 5
@@ -31,7 +31,7 @@
         If Not p.perks(perk.coscale) > -1 And (Int(Rnd() * 2) = 0 Or Game.noRNG) Then
             p.ongoingTFs.Add(New BroodmotherTF(5, 15, 2.0, True))
             p.perks(perk.coscale) = 1
-            Game.pushLstLog("You've been afflicted wth the curse of scales!")
+            TextEvent.pushLog("You've been afflicted wth the curse of scales!")
         End If
 
         count -= 1

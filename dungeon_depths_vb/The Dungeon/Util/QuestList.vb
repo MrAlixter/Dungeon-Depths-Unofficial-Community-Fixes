@@ -6,7 +6,7 @@
 
     Sub add(ByRef q As Quest)
         If q Is Nothing Then Exit Sub
-        If q.getName Is Nothing Then MsgBox("Error 009: " & q.GetType.ToString & " quest missing name field!")
+        If q.getName Is Nothing Then DDError.questMissingNameError(q.GetType.ToString)
         If Not q.getName Is Nothing AndAlso Not internalList.ContainsKey(q.getName) Then internalList.Add(q.getName(), q)
     End Sub
 
@@ -20,7 +20,7 @@
                 Try
                     If q.getCurrObj.isComplete Then q.completeCurrOjb()
                 Catch ex As Exception
-                    MsgBox("Error 010: " & q.GetType.ToString & " quest has thrown an unhandled exception!")
+                    DDError.questError(q.GetType.ToString)
                 End Try
             End If
         Next

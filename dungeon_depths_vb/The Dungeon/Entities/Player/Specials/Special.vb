@@ -71,20 +71,20 @@
     Sub perform()
 
         If getCost() = -1 And user.skillsUsedThisCombat.Contains(name) Then
-            Game.pushLblEvent("You've already used '" & name & "' this combat!")
-            Game.pushLstLog("You've already used '" & name & "' this combat!")
+            TextEvent.push("You've already used '" & name & "' this combat!")
+            TextEvent.pushLog("You've already used '" & name & "' this combat!")
             Exit Sub
         ElseIf getCost() = -1 Then
             user.skillsUsedThisCombat.Add(name)
         End If
         If (user.stamina - getCost()) < 0 Then
-            Game.pushLblEvent("You don't have enough stamina to use this special! (" & name & " costs " & getCost() & " stamina)")
-            Game.pushLstLog("You don't have enough stamina to use this special!")
+            TextEvent.push("You don't have enough stamina to use this special! (" & name & " costs " & getCost() & " stamina)")
+            TextEvent.pushLog("You don't have enough stamina to use this special!")
             Exit Sub
         End If
-        If Not Game.combatmode And Not Game.npcmode And Not useableOutOfCombat Then
-            Game.pushLblEvent("You don't have a target for that special!")
-            Game.pushLstLog("You don't have a target for that special!")
+        If Not Game.combat_engaged And Not Game.shop_npc_engaged And Not useableOutOfCombat Then
+            TextEvent.push("You don't have a target for that special!")
+            TextEvent.pushLog("You don't have a target for that special!")
             Exit Sub
         End If
         Randomize()
@@ -94,12 +94,12 @@
             user.stamina -= getCost()
         End If
 
-        Game.pushLblEvent("You perform " & name & "!")
-        Game.pushLstLog("You perform " & name & "!")
+        TextEvent.push("You perform " & name & "!")
+        TextEvent.pushLog("You perform " & name & "!")
         effect()
     End Sub
     Overridable Sub effect()
-        Game.pushLblEvent("No effects.")
+        TextEvent.push("No effects.")
     End Sub
     Sub setName(ByVal s As String)
         name = s

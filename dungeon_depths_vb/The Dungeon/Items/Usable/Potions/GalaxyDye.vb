@@ -20,7 +20,7 @@
     End Sub
 
     Overrides Sub use(ByRef p As Player)
-        Game.pushLstLog("You apply the " & getName())
+        TextEvent.pushLog("You apply the " & getName())
 
         Dim geffect As GalaxyDyeEffect = New GalaxyDyeEffect
         geffect.apply(p)

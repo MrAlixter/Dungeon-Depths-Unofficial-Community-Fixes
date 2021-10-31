@@ -9,15 +9,16 @@
 
         '|Item Flags|
         usable = false
-        MyBase.compress_breast = True
-        MyBase.cursed = True
-        MyBase.bind_wearer = True
+        compress_breast = True
+        show_underboob = True
+        cursed = True
+        bind_wearer = True
         hide_dick = False
 
         '|Stats|
-        MyBase.a_boost = -5
-        MyBase.d_boost = -5
-        MyBase.s_boost = -5
+        a_boost = -5
+        d_boost = -5
+        s_boost = -5
         count = 0
         value = 100
 
@@ -48,9 +49,9 @@
 
     Public Overrides Sub onEquip(ByRef p As Player)
         If Not p.pForm.canBeBound Then
-            Equipment.equipArmor(p, "Naked")
-            Game.pushLblEvent("You effortlessly break your bonds.")
-            Game.pushLstLog("You effortlessly break your bonds.")
+            EquipmentDialogBackend.equipArmor(p, "Naked")
+            TextEvent.push("You effortlessly break your bonds.")
+            TextEvent.pushLog("You effortlessly break your bonds.")
         End If
     End Sub
 

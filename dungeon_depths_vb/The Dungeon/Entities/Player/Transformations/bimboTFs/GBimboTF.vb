@@ -23,7 +23,7 @@
     Overrides Sub hairColorShift()
         Game.player1.prt.haircolor = DDUtils.cShift(Game.player1.prt.haircolor, bimbogold1, 50)
         If Not Game.player1.getHairColor.Equals(bimbogold1) Then curr_step -= 1
-        Game.pushLblEvent("Your hair becomes slightly lighter, brightening to a brilliant gold." & DDUtils.RNRN & "+6 LUST")
+        TextEvent.push("Your hair becomes slightly lighter, brightening to a brilliant gold." & DDUtils.RNRN & "+6 LUST")
 
         Game.player1.addLust(6)
     End Sub
@@ -60,7 +60,7 @@
     Overrides Sub s2ClothesChange(ByRef p As Player)
         If Not p.equippedArmor.getName.Equals("Naked") And Not p.className.Equals("Magical Girl") Then
             If p.inv.item("Skimpy_Clothes_(G)").count < 1 Then p.inv.add("Skimpy_Clothes_(G)", 1)
-            Equipment.clothesChange(p, "Skimpy_Clothes_(G)")
+            EquipmentDialogBackend.armorChange(p, "Skimpy_Clothes_(G)")
         End If
     End Sub
 
@@ -102,7 +102,7 @@
         p.changeHairColor(bimbogold2)
 
         If p.inv.item("Skimpy_Clothes_(G)").count < 1 Then p.inv.add("Skimpy_Clothes_(G)", 1)
-        Equipment.clothesChange(p, "Skimpy_Clothes_(G)")
+        EquipmentDialogBackend.armorChange(p, "Skimpy_Clothes_(G)")
 
         p.prt.setIAInd(pInd.rearhair, 12, True, True)  'rearhair1
         p.prt.setIAInd(pInd.midhair, 39, True, True)  'rearhair2

@@ -43,6 +43,7 @@
     kitsune
     maggirl
     maggirld
+    maggirlg
     maggirlmimic
     maggirlp
     maggirlr
@@ -68,6 +69,7 @@
     slimepolymorph
     slolita
     spotfuse
+    succubusmaid
     succubuspolymorph
     targax
     thrall
@@ -252,6 +254,9 @@ Public MustInherit Class Transformation
         ElseIf tf = tfind.maggirld Then
             Return New MagGirlDTF(cs, n, tts, wi, cbs, tfd)
 
+        ElseIf tf = tfind.maggirlg Then
+            Return New MagGirlGTF(cs, n, tts, wi, cbs, tfd)
+
         ElseIf tf = tfind.maggirlmimic Then
             Return New MagMimicTF(cs, n, tts, wi, cbs, tfd)
 
@@ -327,6 +332,9 @@ Public MustInherit Class Transformation
         ElseIf tf = tfind.spotfuse Then
             Return New SpotFuseTF(cs, n, tts, wi, cbs, tfd)
 
+        ElseIf tf = tfind.succubusmaid Then
+            Return New SuccubusMaidTF(cs, n, tts, wi, cbs, tfd)
+
         ElseIf tf = tfind.succubuspolymorph Then
             Return New SuccubusTF(cs, n, tts, wi, cbs, tfd)
 
@@ -376,7 +384,7 @@ Public MustInherit Class Transformation
 
     'updateable implementation
     Overridable Sub update() Implements Updatable.update
-        If Not update_during_combat And Game.combatmode Then Exit Sub
+        If Not update_during_combat And Game.combat_engaged Then Exit Sub
         If turns_until_next_step = 0 Then
             next_step = getNextStep(curr_step)
             next_step()

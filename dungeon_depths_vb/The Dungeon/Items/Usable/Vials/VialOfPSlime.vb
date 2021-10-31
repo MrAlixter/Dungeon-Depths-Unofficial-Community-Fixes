@@ -21,7 +21,7 @@
     Overrides Sub use(ByRef p As Player)
         If Me.getUsable() = False Then Exit Sub
 
-        Game.pushLstLog("You apply the " & getName())
+        TextEvent.pushLog("You apply the " & getName())
 
         If p.formName.Equals("Slime") Or p.formName.Equals("Goo Girl") Then
             p.health = Math.Min(1, p.health + 0.45)
