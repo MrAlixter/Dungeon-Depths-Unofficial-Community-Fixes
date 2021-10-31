@@ -49,15 +49,10 @@
     End Sub
 
     Public Overrides Function getTier() As Integer
-        Try
-            Select Case Game.mDun.numCurrFloor
-                Case Is < 7
-                    Return Nothing
-                Case Else
-                    Return 3
-            End Select
-        Catch ex As Exception
+        If Game.mDun IsNot Nothing AndAlso Game.mDun.numCurrFloor >= 7 Then
+            Return 3
+        Else
             Return Nothing
-        End Try
+        End If
     End Function
 End Class
