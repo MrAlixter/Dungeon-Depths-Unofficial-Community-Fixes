@@ -9,7 +9,7 @@
 
         '|Item Flags|
         usable = False
-        under_clothes = True
+        under_t_clothes = True
 
         '|Stats|
         m_boost = 10

@@ -1,9 +1,12 @@
 ﻿Public Class Spellbook
     Inherits Item
+
+    Public Const ITEM_NAME = "Spellbook"
+
     Public Shared spells() As String = {"Super Fireball", "Icicle Spear", "Self Polymorph", "Turn to Frog", "Polymorph Enemy",
                                         "Petrify", "Heal", "Illuminate", "Fireball", "Warp", "Arcane Compass", "Hydrodart"}
     Sub New()
-        setName("Spellbook")
+        setName(ITEM_NAME)
         setDesc("A simple, leather-bound book that likely contains something cool and magic.")
         id = 4
         tier = 2

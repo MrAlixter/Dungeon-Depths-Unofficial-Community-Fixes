@@ -9,7 +9,7 @@
         '|Item Flags|
         usable = False
         cursed = False
-        under_clothes = True
+        under_b_clothes = True
         rando_inv_allowed = True
 
         '|Stats|

@@ -92,9 +92,9 @@
         p.perks(perk.polymorphed) = p.polymorphs(form).getTurnsTilNextStep()
 
         If form = "MASBimbo" Then form = "Bimbo"
-        If p.forms.Keys.Contains(form) Then
+        If Player.forms.Keys.Contains(form) Then
             p.changeForm(form)
-        ElseIf p.classes.Keys.Contains(form) Then
+        ElseIf Player.classes.Keys.Contains(form) Then
             p.changeClass(form)
         End If
 

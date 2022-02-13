@@ -34,7 +34,7 @@
         CType(Game.hteach, HypnoTeach).hypnotize("Have you seen my pendant?  I know it is a bit of a cliche, but doesn't seeing it swing back and forth just relax you so perfectly?  Back...and forth...watch it glisten in the light...feel yourself go deeper and deeper...deeper...and deeper...until you just...*SNAP*...drift away...", AddressOf wakeup)
     End Sub
     Sub wakeup()
-        If Not Game.player1.knownSpecials.Contains("Focus Up") Then Game.player1.knownSpecials.Add("Focus Up")
+        Game.player1.learnSpecial("Focus Up")
 
         Game.player1.UIupdate()
         Game.player1.lust = 100

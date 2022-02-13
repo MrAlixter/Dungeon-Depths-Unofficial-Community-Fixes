@@ -23,7 +23,7 @@
     End Sub
 
     Public Overrides Function canGet() As Boolean
-        Return Not getActive() And Game.player1.level > 2 And Not getComplete() And Game.player1.perks(perk.canmeetcyn) > 0 And ((Int(Rnd() * 3) = 0) Or Game.noRNG)
+        Return Not getActive() And Game.player1.level > 2 And Not getComplete() And Game.player1.perks(perk.canmeetcyn) > 0 And ((Int(Rnd() * 3) = 0) Or Settings.active(setting.norng))
     End Function
 End Class
 

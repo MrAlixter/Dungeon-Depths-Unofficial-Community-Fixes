@@ -1,9 +1,11 @@
 ﻿Public Class HealthPotion
     Inherits Item
 
+    Public Const ITEM_NAME = "Health_Potion"
+
     Sub New()
         '|ID Info|
-        setName("Health_Potion")
+        setName(ITEM_NAME)
         id = 2
         tier = 1
 

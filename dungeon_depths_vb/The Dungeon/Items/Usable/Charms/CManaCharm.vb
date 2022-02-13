@@ -28,8 +28,8 @@
         p.UIupdate()
         p.perks(perk.mcharmsused) += 1
 
-        If Not p.perks(perk.coscale) > -1 And (Int(Rnd() * 2) = 0 Or Game.noRNG) Then
-            p.ongoingTFs.Add(New BroodmotherTF(5, 15, 2.0, True))
+        If Not p.perks(perk.coscale) > -1 And (Int(Rnd() * 2) = 0 Or Settings.active(setting.norng)) Then
+            p.ongoingTFs.add(New BroodmotherTF(5, 15, 2.0, True))
             p.perks(perk.coscale) = 1
             TextEvent.pushLog("You've been afflicted wth the curse of scales!")
         End If

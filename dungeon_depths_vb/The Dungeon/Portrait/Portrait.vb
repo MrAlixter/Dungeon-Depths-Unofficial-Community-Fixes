@@ -221,6 +221,10 @@ Public Class Portrait
             pic = Game.picWSmithThong1.BackgroundImage
         ElseIf pClass.Equals("Thong​") Then
             pic = Game.picWSmithThong2.BackgroundImage
+        ElseIf pClass.Equals("Fae Bee") Then
+            pic = Game.picFaeBee.BackgroundImage
+        ElseIf pClass.Equals("Fae Bee​") Then
+            pic = Game.picFaeBee2.BackgroundImage
         ElseIf pClass.Equals("Bunny Girl​") Then
             pic = Game.picBun.BackgroundImage
         ElseIf pForm.Equals("Half-Dragoness") Then
@@ -448,8 +452,14 @@ Public Class Portrait
 
         Dim acce = ent.getPlayer().equippedAcce
 
-        If acce.under_clothes Then
-            iArr(pInd.midhair) = CreateFullBodyBMP({CharacterGenerator.picPort.Image, iArr(pInd.accessory), iArr(pInd.clothes), iArr(pInd.midhair)})
+        If acce.under_t_clothes Then
+            iArr(pInd.clothes) = CreateFullBodyBMP({CharacterGenerator.picPort.Image, iArr(pInd.face), iArr(pInd.accessory), iArr(pInd.clothes)})
+            iArr(pInd.face) = CharacterGenerator.picPort.Image
+            iArr(pInd.accessory) = CharacterGenerator.picPort.Image
+        End If
+
+        If acce.under_b_clothes Then
+            iArr(pInd.clothesbtm) = CreateFullBodyBMP({CharacterGenerator.picPort.Image, iArr(pInd.accessory), iArr(pInd.clothesbtm)})
             iArr(pInd.accessory) = CharacterGenerator.picPort.Image
         End If
 
@@ -475,7 +485,7 @@ Public Class Portrait
 
         If Not p.pForm.getOverlayU(p).Item1 = 0 Then iArrInd(pInd.bodyoverlay) = New Tuple(Of Integer, Boolean, Boolean)(0, True, False) : Exit Sub
 
-        If p.className.Equals("Warrior") Or p.className.Equals("Barbarian") Or p.className.Equals("Paladin") Or p.className.Equals("Amazon") Or p.className.Equals("Valkyrie") Or
+        If p.className.Equals("Warrior") Or p.className.Equals("Barbarian") Or p.className.Equals("Paladin") Or p.className.Equals("Amazon") Or p.className.Equals("Valkyrie") Or p.className.Equals("Pirate") Or
          p.formName.Equals("Tigress") Or p.formName.Equals("Orc") Then
             Select Case p.breastSize
                 Case -1, -2

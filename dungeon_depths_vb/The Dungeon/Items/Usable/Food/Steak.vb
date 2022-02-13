@@ -23,7 +23,7 @@
     End Sub
 
     Public Overrides Sub effect(ByRef p As Player)
-        If Int(Rnd() * 7) = 0 Or Game.noRNG Then
+        If Int(Rnd() * 7) = 0 Or Settings.active(setting.norng) Then
             Dim tf = New MoxBTF
             tf.step1()
 

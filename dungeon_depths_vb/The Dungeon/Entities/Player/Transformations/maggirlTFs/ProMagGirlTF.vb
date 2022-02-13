@@ -16,11 +16,8 @@
 
     Public Overrides Sub setSpells(ByRef p As Player)
         MyBase.setSpells(p)
-        If Not p.knownSpecials.Contains("Mana Burst") Then p.knownSpecials.Add("Mana Burst")
-        TextEvent.pushLog("'Mana Burst' special learned!")
-
-        If Not p.knownSpells.Contains("Shiny Sparking Missile") Then p.knownSpells.Add("Shiny Sparking Missile")
-        TextEvent.pushLog("'Shiny Sparking Missile' spell learned!")
+        p.learnSpecial("Mana Burst")
+        p.learnSpell("Shiny Sparking Missile")
     End Sub
     Overrides Sub tfClothes(ByRef p As Player)
         If p.inv.item(201).count < 1 Then p.inv.add(201, 1)

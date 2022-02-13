@@ -14,7 +14,7 @@
 
         If Not learnSkills Then Exit Sub
 
-        If level = 3 And Not p.knownSpecials.Contains("Mirage Dance") Then p.knownSpecials.Add("Mirage Dance") : TextEvent.pushLog("Mirage Dance special learned!")
+        If level = 3 Then p.learnSpecial("Mirage Dance")
     End Sub
 
     Public Overrides Sub deLVL(level As Integer, ByRef p As Player)

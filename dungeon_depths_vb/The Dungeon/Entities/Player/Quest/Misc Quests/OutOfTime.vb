@@ -81,7 +81,7 @@
 
     Public Overrides Function canGet() As Boolean
         'MsgBox((Not getActive()) & " " & (Game.mDun.floors.ContainsKey(9999)) & " " & (Not getComplete()) & " " & ((Int(Rnd() * 100) = 0) Or Game.noRNG))
-        Return Not getActive() And Game.mDun.floors.ContainsKey(9999) And Not getComplete() And ((Int(Rnd() * 100) = 0) Or Game.noRNG)
+        Return Not getActive() And Game.mDun.floors.ContainsKey(9999) And Not getComplete() And ((Int(Rnd() * 100) = 0) Or Settings.active(setting.norng))
     End Function
 End Class
 

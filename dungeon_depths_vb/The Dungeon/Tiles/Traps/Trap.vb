@@ -10,9 +10,10 @@
     gynoid2
     defaultnote
     gag
+    faeofwishes
 End Enum
 Public Class Trap
-    Private Shared random_traps() As tInd = {tInd.dart, tInd.rope, tInd.ruby, tInd.coupon, tInd.mirror, tInd.gag}
+    Private Shared random_traps() As tInd = {tInd.dart, tInd.rope, tInd.ruby, tInd.coupon, tInd.mirror, tInd.gag, tInd.faeofwishes}
 
     Public pos As Point
     Public iD As Integer
@@ -55,6 +56,8 @@ Public Class Trap
                 Return New NoteTrap(p)
             Case tInd.gag
                 Return New GagTrap(p)
+            Case tInd.faeofwishes
+                Return New FaeOfWishes(p)
             Case Else
                 Return New DartTrap(p)
         End Select

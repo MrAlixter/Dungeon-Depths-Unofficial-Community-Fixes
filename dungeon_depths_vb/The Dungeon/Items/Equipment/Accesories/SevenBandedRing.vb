@@ -9,7 +9,7 @@
 
         '|Item Flags|
         usable = false
-        MyBase.droppable = False
+        droppable = False
         rando_inv_allowed = False
 
         '|Stats|
@@ -17,8 +17,8 @@
         value = 15000
 
         '|Image Index|
-        MyBase.fInd = New Tuple(Of Integer, Boolean, Boolean)(0, True, False)
-        MyBase.mInd = New Tuple(Of Integer, Boolean, Boolean)(0, False, False)
+        fInd = New Tuple(Of Integer, Boolean, Boolean)(0, True, False)
+        mInd = New Tuple(Of Integer, Boolean, Boolean)(0, False, False)
 
         '|Description|
         setDesc("A ornate golden ring composed of seven interlocking bands." & DDUtils.RNRN & _

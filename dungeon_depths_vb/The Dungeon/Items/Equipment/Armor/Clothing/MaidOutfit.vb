@@ -8,11 +8,12 @@
 
         '|Item Flags|
         usable = false
-        MyBase.compress_breast = True
+        compress_breast = True
         slut_var_ind = 169
+        anti_slut_ind = 322
 
         '|Stats|
-        MyBase.s_boost = 2
+        s_boost = 2
         count = 0
         value = 0
 

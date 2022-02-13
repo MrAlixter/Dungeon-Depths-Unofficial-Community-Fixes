@@ -1,8 +1,11 @@
 ﻿Public Class BunnySuit
     Inherits Armor
+
+    Public Const ITEM_NAME = "Bunny_Suit"
+
     Sub New()
         '|ID Info|
-        setName("Bunny_Suit")
+        setName(ITEM_NAME)
         id = 16
         tier = Nothing
 

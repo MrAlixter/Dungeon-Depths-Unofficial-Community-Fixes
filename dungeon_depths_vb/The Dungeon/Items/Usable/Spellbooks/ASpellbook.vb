@@ -1,11 +1,14 @@
 ﻿Public Class ASpellbook
     Inherits Item
+
+    Public Const ITEM_NAME = "Advanced_Spellbook"
+
     Public Shared spells() As String = {"Turn to Blade", "Turn to Cupcake", "Self Polymorph",
                                         "Magma Spear", "Petrify II", "Major Heal", "Uvona's Fugue",
                                         "Summon Apple"}
 
     Sub New()
-        setName("Advanced_Spellbook")
+        setName(ITEM_NAME)
         setDesc("An ornate, gilded book that likely contains something outside of the standard magic curriculum.")
         id = 65
         tier = 3

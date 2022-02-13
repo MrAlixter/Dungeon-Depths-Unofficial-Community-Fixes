@@ -1,9 +1,11 @@
 ﻿Public Class SteelBikini
     Inherits Armor
 
+    Public Const ITEM_NAME = "Steel_Bikini"
+
     Sub New()
         '|ID Info|
-        setName("Steel_Bikini")
+        setName(ITEM_NAME)
         id = 7
         tier = Nothing
 

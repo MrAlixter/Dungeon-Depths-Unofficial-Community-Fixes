@@ -42,7 +42,7 @@
         p.drawPort()
 
 
-        p.knownSpells.Add("Cynn's Disguise")
+        p.learnSpell("Cynn's Disguise")
 
         p.sState.save(p)
         p.pState.save(p)

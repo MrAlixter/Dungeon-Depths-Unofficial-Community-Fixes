@@ -50,7 +50,7 @@
     Public Overrides Sub onEquip(ByRef p As Player)
         MyBase.onEquip(p)
 
-        If Not p.knownSpells.Contains("Snowball") Then p.knownSpells.Add("Snowball")
+        p.learnSpell("Snowball")
     End Sub
     Public Overrides Sub onUnEquip(ByRef p As Player)
         MyBase.onUnequip(p)

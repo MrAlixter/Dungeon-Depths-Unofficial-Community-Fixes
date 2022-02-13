@@ -2,14 +2,23 @@
     Inherits Accessory
     'The heart necklace provides no bonuses
     Sub New()
+        '|ID Info|
         setName("Heart_Necklace")
-        setDesc("A small pink heart on a silver chain." & vbCrLf & _
-                       "Provides no bonus.")
         id = 66
         tier = Nothing
-        usable = false
+
+        '|Item Flags|
+        usable = False
+
+        '|Stats|
         count = 0
         value = 0
-        MyBase.fInd = New Tuple(Of Integer, Boolean, Boolean)(1, True, False)
+
+        '|Image Index|
+        fInd = New Tuple(Of Integer, Boolean, Boolean)(1, True, False)
+
+        '|Description|
+        setDesc("A small pink heart on a silver chain." & DDUtils.RNRN &
+                getStatInformation())
     End Sub
 End Class

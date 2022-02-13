@@ -22,8 +22,8 @@
 
         '|Description|
         setDesc("A small yet effective generator that, in addition to condensing mana for later use, powers a communication device.  Too bad there's no signal..." & DDUtils.RNRN &
-                       "Mana regeneration effect" & vbCrLf &
-                       getStatInformation())
+                "Mana regeneration effect" & DDUtils.RNRN &
+                getStatInformation())
     End Sub
     Public Overrides Sub onEquip(ByRef p As Player)
         p.perks(perk.minmanregen) = 1

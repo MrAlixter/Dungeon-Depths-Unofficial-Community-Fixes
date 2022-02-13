@@ -62,6 +62,8 @@
         specialList.Add("Mirage Dance", New MirageDance(Nothing, Nothing))
         specialList.Add("Pluck", New Pluck(Nothing, Nothing))
         specialList.Add("Cleansing Light", New CLight(Nothing, Nothing))
+        specialList.Add("Swashbuckle", New Swashbuckle(Nothing, Nothing))
+        specialList.Add("Crow's Nest", New Crowsnest(Nothing, Nothing))
     End Sub
 
     Sub New(ByRef u As Player, ByRef t As NPC)

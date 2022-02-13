@@ -16,13 +16,14 @@
         '|Inventory|
         inv.setCount("Gelatinous_Shell", 1)
         inv.setCount("Omni_Charm", 1)
-        'random drops
-        inv.setCount("Vial_of_Slime", CInt(Rnd() * 5))
-        inv.setCount("Fusion_Crystal", CInt(Rnd() * 2))
-        inv.setCount("Advanced_Spellbook", CInt(Rnd() * 2))
-        inv.setCount("Defense_Charm", CInt(Rnd() * 3))
-
         inv.setCount("Gold", 5000)
+        'random drops
+        Dim possible_drops = {"Vial_of_Slime", "Vial_of_Slime", "Vial_of_Slime", "Fusion_Crystal", "Advanced_Spellbook", "Defense_Charm", "Defense_Charm"}
+        Dim number_of_drops = Int(Rnd() * 2) + Int(Rnd() * 3) + 1
+        For i = 0 To number_of_drops
+            Dim r = Int(Rnd() * (possible_drops.Count))
+            inv.setCount(possible_drops(r), 1)
+        Next
 
         '|Dialog Variables|
         title = " "

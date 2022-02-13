@@ -20,7 +20,7 @@
     End Sub
 
     Public Overrides Sub effect(ByRef p As Player)
-        If p.perks(perk.cupcake) > 4 Or Game.noRNG Then
+        If p.perks(perk.cupcake) > 4 Or Settings.active(setting.norng) Then
             p.ongoingTFs.add(New LolitaSTF())
             p.update()
             p.perks(perk.cupcake) = -1

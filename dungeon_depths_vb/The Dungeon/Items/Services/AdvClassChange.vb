@@ -86,6 +86,7 @@
         If p.className.Equals("Warrior") Or p.className.Equals("Rogue") Then l.Add("Barbarian")
         If p.className.Equals("Warrior") Or p.className.Equals("Cleric") Then l.Add("Paladin")
         If p.className.Equals("Mage") Or p.className.Equals("Rogue") Then l.Add("Necromancer")
+        If p.className.Equals("Bimbo") Or p.className.Equals("Maid") Or p.className.Equals("Bunny Girl") Or p.className.Equals("Maiden") Then l.Add("Battlemaiden")
 
         For Each i In l
             If i = p.className Then l.Remove(i) : Exit For
@@ -101,23 +102,31 @@
             EquipmentDialogBackend.armorChange(p, "Warlock's_Robes")
             If p.inv.getCountAt("Ring_of_Uvona") < 1 Then p.inv.add("Ring_of_Uvona", 1)
             Equipment.accChange(p, "Ring_of_Uvona")
-
             Return """...for the last time, I am not interested in your cult!"" the hypnotist teacher states, sounding mildly annoyed." & DDUtils.RNRN &
                    "A cult?  Hardly...  While you're certainly in an arrangement with a deity, it isn't that of a goddess and her worshipper so much as that of a benefactor and their beneficiary.  Uvona, the Goddess of Fugue rarely calls on you to cash in any favors, though when she does it's even rarer that you remember them.  Are there cults devoted to Uvona?  Probably, but you would never-"
+
         ElseIf c.Equals("Barbarian") Then
             If p.inv.getCountAt("Barbarian_Armor") < 1 Then p.inv.add("Barbarian_Armor", 1)
             EquipmentDialogBackend.armorChange(p, "Barbarian_Armor")
             If p.inv.getCountAt("Corse_War_Axe") < 1 Then p.inv.add("Corse_War_Axe", 1)
-             EquipmentDialogBackend.weaponChange(p, "Corse_War_Axe")
-
+            EquipmentDialogBackend.weaponChange(p, "Corse_War_Axe")
             Return """...and then we met!  Are you sure you're feeling alright?  Ever you fought off that dragon you've been a little strange..."" the teacher asks, sounding slightly concerned." & DDUtils.RNRN &
                    "Fought a dragon!?  While that sounds like something you'd do, you don't remember it at all...  All the same, you tell this strange, yet beautiful lady that you're fine.  Twirling your heavy weapon deftly, you announce that you've never felt better!"
+
         ElseIf c.Equals("Necromancer") Then
             If p.inv.getCountAt("Necromancer's_Robes") < 1 Then p.inv.add("Necromancer's_Robes", 1)
             EquipmentDialogBackend.armorChange(p, "Necromancer's_Robes")
+
         ElseIf c.Equals("Paladin") Then
             If p.inv.getCountAt("Paladin's_Armor") < 1 Then p.inv.add("Paladin's_Armor", 1)
             EquipmentDialogBackend.armorChange(p, "Paladin's_Armor")
+
+        ElseIf c.Equals("Battlemaiden") Then
+            If p.inv.getCountAt("Maid's_Armor") < 1 Then p.inv.add("Maid's_Armor", 1)
+            EquipmentDialogBackend.armorChange(p, "Maid's_Armor")
+            If p.inv.getCountAt("Featherlight_Rapier") < 1 Then p.inv.add("Featherlight_Rapier", 1)
+            EquipmentDialogBackend.weaponChange(p, "Featherlight_Rapier")
+
         End If
 
         Return """...annnd one.  Wake up now, little " & selectedClass.ToLower & ".  Are you well?  You look a bit confused..."" the teacher asks, stowing something in her pocket and adjusting her glasses.  While it does seem like something has changed, you can't put your finger on it.  You are " & p.getName & " the " & p.className & ", same as you've always been.  Groggily, you tell her that you're fine and just a little dizzy."

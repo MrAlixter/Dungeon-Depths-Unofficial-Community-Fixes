@@ -26,7 +26,7 @@
 
     Public Overrides Sub onEquip(ByRef p As Player)
         MyBase.onEquip(p)
-        If Not p.knownSpells.Contains("Aquageyser") Then p.knownSpells.Add("Aquageyser")
+        p.learnSpell("Aquageyser")
     End Sub
     Public Overloads Overrides Sub onUnEquip(ByRef p As Player, ByRef w As Weapon)
         MyBase.onUnEquip(p, w)

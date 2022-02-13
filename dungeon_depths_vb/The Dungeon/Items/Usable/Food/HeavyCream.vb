@@ -31,7 +31,7 @@
     End Sub
     Public Overrides Sub effect(ByRef p As Player)
         Dim r As Integer = Int(Rnd() * 3)
-        If r = 0 Or Game.noRNG Then p.be()
+        If r = 0 Or Settings.active(setting.norng) Then p.be()
 
         If Transformation.canBeTFed(p) Then
             p.pState.save(p)

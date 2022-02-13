@@ -20,7 +20,8 @@
     'Accessories are equippable items that provide small passive buffs
     Public fInd As Tuple(Of Integer, Boolean, Boolean)
     Public mInd As Tuple(Of Integer, Boolean, Boolean)
-    Public under_clothes As Boolean = False
+    Public under_t_clothes As Boolean = False
+    Public under_b_clothes As Boolean = False
     Public hide_mouth As Boolean = False
 
     Public Overrides Sub discard()

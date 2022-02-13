@@ -1,9 +1,11 @@
 ﻿Public Class RestorationPotion
     Inherits Item
 
+    Public Const ITEM_NAME = "Restore_Potion"
+
     Sub New()
         '|ID Info|
-        setName("Restore_Potion")
+        setName(ITEM_NAME)
         id = 14
         tier = 3
 

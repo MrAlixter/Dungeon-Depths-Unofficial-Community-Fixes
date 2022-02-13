@@ -1,9 +1,11 @@
 ﻿Public Class SteelArmor
     Inherits Armor
 
+    Public Const ITEM_NAME = "Steel_Armor"
+
     Sub New()
         '|ID Info|
-        setName("Steel_Armor")
+        setName(ITEM_NAME)
         id = 5
         tier = Nothing
 

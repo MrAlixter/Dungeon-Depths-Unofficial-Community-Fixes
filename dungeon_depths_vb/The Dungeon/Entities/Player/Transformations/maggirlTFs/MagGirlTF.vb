@@ -42,8 +42,7 @@
     End Sub
 
     Overridable Sub setSpells(ByRef p As Player)
-        If Not p.knownSpells.Contains("Heartblast Starcannon") Then p.knownSpells.Add("Heartblast Starcannon")
-        TextEvent.pushLog("'Heartblast Starcannon' spell learned!")
+        p.learnSpell("Heartblast Starcannon")
     End Sub
     Overridable Sub tfBody(ByRef p As Player)
         p.breastSize = 2

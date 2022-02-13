@@ -1,6 +1,12 @@
 ﻿Public Class MiniBoss
     Inherits Monster
 
+    Sub New()
+        name = "Explorer"
+        setInventory({})
+        setupMonsterOnSpawn()
+    End Sub
+
     Shared Function miniBossFactory(ByVal mIndex As Integer) As MiniBoss
         Select mIndex
             Case 1

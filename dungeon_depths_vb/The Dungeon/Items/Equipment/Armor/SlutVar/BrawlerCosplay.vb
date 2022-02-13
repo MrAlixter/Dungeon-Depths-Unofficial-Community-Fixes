@@ -1,9 +1,11 @@
 ﻿Public Class BrawlerCosplay
     Inherits Armor
 
+    Public Const ITEM_NAME = "Brawler_Cosplay"
+
     Sub New()
         '|ID Info|
-        setName("Brawler_Cosplay")
+        setName(ITEM_NAME)
         id = 20
         tier = Nothing
 

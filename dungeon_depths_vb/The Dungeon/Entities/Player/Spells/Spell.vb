@@ -54,6 +54,8 @@
         spellList.Add("Aquageyser", New Aquageyser(Nothing, Nothing))
         spellList.Add("Hydrodart", New Hydrodart(Nothing, Nothing))
         spellList.Add("Death Cutter", New DeathCutter(Nothing, Nothing))
+        spellList.Add("Grog Blossom", New GrogBlossom(Nothing, Nothing))
+        spellList.Add("First Sea's Scourge", New ScourgeFirstSea(Nothing, Nothing))
     End Sub
 
     Sub New(ByRef c As Player, ByRef t As NPC)

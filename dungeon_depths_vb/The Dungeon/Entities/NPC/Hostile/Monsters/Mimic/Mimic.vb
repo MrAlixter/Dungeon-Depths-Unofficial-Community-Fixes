@@ -24,7 +24,7 @@
     Public Overrides Sub attackCMD(ByRef target As Entity)
         If Int(Rnd() * 6) = 0 And potions_spat < 5 And Not target.getPlayer() Is Nothing Then
             Dim potions() As Integer = {233, 193, 61, 28, 29, 234, 62, 194, 60, 25, 247, 27, 26, 26, 26, 26}
-            Dim potion As MysteryPotion = target.inv.item(potions(CInt(Rnd() * potions.Length)))
+            Dim potion As MysteryPotion = target.inv.item(potions(Int(Rnd() * potions.Length)))
 
             TextEvent.pushAndLog("The mimic spits a " & potion.getName & " at you!")
 

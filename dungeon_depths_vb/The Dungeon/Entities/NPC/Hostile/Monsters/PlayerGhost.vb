@@ -1,48 +1,113 @@
 ﻿Public Class PlayerGhost
     Inherits Monster
-    Dim eyeInd As Tuple(Of Integer, Boolean, Boolean)
-    Dim className As String = "Classless"
+
+    Dim first_name As String = "Ghost"
+    Dim class_name As String = "Classless"
+
+    Dim sex_bool As Boolean
+    Dim eye_ind As Tuple(Of Integer, Boolean, Boolean)
+    Dim haircolor As Color
+
     Dim deathfloor = ""
+
     Sub New()
-        If name = Game.player1.getName Then Throw New Exception
         loadGhost()
+
+        'don't summon ghosts of the player's current character
+        If first_name.Equals(Game.player1.getName) Then Throw New Exception
+
+        'set the ghost's class
+        name = first_name & " the " & redefineClassName(class_name)
+
         setupMonsterOnSpawn()
+        title = " "
+
+        'if the player died on this floor, their belongings will be in a chest
         If deathfloor.Equals(Game.currFloor.floorCode) Then inv = New Inventory()
     End Sub
 
+    '| - LOADING THE GHOST - |
     Private Function loadGhost() As Boolean
         Dim reader As IO.StreamReader
         reader = IO.File.OpenText("gho.sts")
 
-        Dim ghost As String
         Try
-            ghost = reader.ReadLine()
-            ghost.Split()
-        Catch e As Exception
-            Return False
+            Dim ghost_array() As String = reader.ReadLine().Split("*")
+
+            'personal information
+            name = ghost_array(0)
+            first_name = name.Split(" the " & class_name)(0)
+            deathfloor = ghost_array(1)
+            class_name = ghost_array(2)
+
+            'stats
+            health = ghost_array(4)
+            maxHealth = ghost_array(4)
+            attack = ghost_array(5)
+            mana = ghost_array(6)
+            defense = ghost_array(7)
+            speed = ghost_array(8)
+            will = ghost_array(9)
+
+            'portrait
+            sex_bool = CBool(ghost_array(10))
+            eye_ind = New Tuple(Of Integer, Boolean, Boolean)(ghost_array(11), ghost_array(12), ghost_array(13))
+            haircolor = Color.FromArgb(255, ghost_array(14), ghost_array(15), ghost_array(16))
+
+            'inventory
+            setGhostInventory(ghost_array(17))
+
+            Return True
+        Finally
+            reader.Close()
         End Try
 
-        Dim ghostArray() As String = ghost.Split("*")
+        Return False
+    End Function
+    Sub setGhostInventory(ByVal s As String)
+        Dim old_inventory As Inventory = New Inventory()
+        old_inventory.load(s)
 
-        name = ghostArray(0)
-        deathfloor = ghostArray(1)
-        className = redefineClassName(ghostArray(2))
-        health = ghostArray(4)
-        maxHealth = ghostArray(4)
-        attack = ghostArray(5)
-        mana = ghostArray(6)
-        defense = ghostArray(7)
-        speed = ghostArray(8)
-        will = ghostArray(9)
-        Dim sexBool As Boolean = CBool(ghostArray(10))
-        eyeInd = New Tuple(Of Integer, Boolean, Boolean)(ghostArray(11), ghostArray(12), ghostArray(13))
-        Dim haircolor As Color = Color.FromArgb(255, ghostArray(14), ghostArray(15), ghostArray(16))
-        inv.load(ghostArray(17))
-        filterInv()
-        reader.Close()
-        Return True
+        Dim number_of_drops As Integer = 5
+
+        Dim checked_items As List(Of Integer) = New List(Of Integer)
+        checked_items.Add(43)
+
+        Do While number_of_drops > 0
+            If checked_items.Count = inv.count Then Exit Do
+
+            Dim rnd_ind As Integer = Int(Rnd() * inv.count)
+
+            If Not checked_items.Contains(rnd_ind) AndAlso old_inventory.item(rnd_ind).count > 0 Then
+                inv.item(rnd_ind).count = old_inventory.item(rnd_ind).count
+                number_of_drops -= 1
+            End If
+
+            checked_items.Add(rnd_ind)
+        Loop
+    End Sub
+    Function redefineClassName(ByVal s As String) As String
+        Select Case s
+            Case "Warrior", "Barbarian", "Time Cop"
+                Return "Wraith"
+            Case "Mage", "Warlock", "Necromancer"
+                Return "Specter"
+            Case "Rogue", "Battlemaiden"
+                Return "Shade"
+            Case "Paladin", "Unconscious", "Mindless"
+                Return "Poltergeist"
+            Case "Magical Girl"
+                Return "Specteral Girl"
+            Case "Witch", "Maiden", "Cleric"
+                Return "Phantom"
+            Case "Bunny Girl", "Princess", "Maid", "Shrunken", "Bimbo++"
+                Return "Siren"
+        End Select
+
+        Return s
     End Function
 
+    '| - ATTACKS - |
     Public Overrides Sub attackCMD(ByRef target As Entity)
         If attack > will Then
             MyBase.attackCMD(target)
@@ -54,7 +119,6 @@
             MyBase.attackCMD(target)
         End If
     End Sub
-
     Public Sub darkOrb(ByRef target As Entity)
         Dim crit = Int(Rnd() * 20) 'roll for a critical
         Dim dmg = calcDamage(Me.getWIL, target.getWIL) 'calculate the hit
@@ -85,42 +149,44 @@
         End Select
     End Sub
 
+    '| - DEATH HANDLERS - |
     Public Overrides Sub die(ByRef cause As Entity)
         MyBase.die(cause)
 
-        Dim writer = IO.File.CreateText("gho.sts")
-        writer.WriteLine("MTGRAVE")
+        IO.File.Delete("gho.sts")
+    End Sub
+    Public Overrides Sub playerDeath(ByRef p As Player)
+        If Not Settings.active(setting.enemiesoverwritess) Then
+            p.savePState()
+        End If
+
+
+        Dim writer As IO.StreamWriter
+        writer = IO.File.CreateText("gho.sts")
+        writer.WriteLine(p.toGhost())
         writer.Flush()
         writer.Close()
+
+        Dim out As String = "As you catch your breath, " & first_name & " begins walking towards you with an arcane glow." & DDUtils.RNRN &
+                            """Sorry, but you're my second chance..."""
+        despawn("p-death")
+
+        p.name = first_name
+
+        p.changeHairColor(DDUtils.cShift(p.prt.haircolor, haircolor, 105))
+        p.prt.setIAInd(pInd.eyes, eye_ind)
+
+        If p.sex = "Female" And Not sex_bool Then
+            p.FtM()
+        ElseIf p.sex = "Male" And sex_bool Then
+            p.MtF()
+        End If
+
+        TextEvent.push(out, AddressOf p.drawPort)
+
+        If Settings.active(setting.enemiesoverwritess) Then
+            p.sState.save(p)
+            p.pState.save(p)
+        End If
     End Sub
-
-    Sub filterInv()
-        Dim tierCount As Integer = New Chest().tiers.Length
-        For i = 0 To inv.count
-            If inv.item(i).count > 0 Then
-                If Not Int(Rnd() * (tierCount - inv.item(i).getTier)) = 0 Then inv.item(i).count = 0
-            End If
-        Next
-    End Sub
-
-    Function redefineClassName(ByVal s As String) As String
-        Select Case s
-            Case "Warrior", "Barbarian"
-                Return "Wraith"
-            Case "Mage", "Warlock"
-                Return "Specter"
-            Case "Rogue"
-                Return "Shade"
-            Case "Paladin", "Unconscious", "Mindless"
-                Return "Poltergeist"
-            Case "Magical Girl"
-                Return "Specteral Girl"
-            Case "Witch", "Maiden"
-                Return "Phantom"
-            Case "Bunny Girl", "Princess", "Maid", "Shrunken"
-                Return "Siren"
-        End Select
-
-        Return s
-    End Function
 End Class

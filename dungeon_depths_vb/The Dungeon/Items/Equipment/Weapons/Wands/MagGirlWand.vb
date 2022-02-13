@@ -1,9 +1,13 @@
 ﻿Public Class MagGirlWand
     Inherits Wand
+
+    Public Const ITEM_NAME = "Magical_Girl_Wand"
+
     Protected uniform_id As Integer = 10
+
     Sub New()
         '|ID Info|
-        setName("Magical_Girl_Wand")
+        setName(ITEM_NAME)
         id = 11
         tier = 3
 

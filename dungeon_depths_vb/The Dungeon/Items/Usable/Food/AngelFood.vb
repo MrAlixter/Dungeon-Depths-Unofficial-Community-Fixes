@@ -17,7 +17,7 @@
 
         '|Description|
         setDesc("An divine sugary confection." & DDUtils.RNRN &
-                       "+20 Stamina")
+                "+20 Stamina")
     End Sub
     Public Overrides Sub effect(ByRef p As Player)
         p.ongoingTFs.add(New AngelTF())

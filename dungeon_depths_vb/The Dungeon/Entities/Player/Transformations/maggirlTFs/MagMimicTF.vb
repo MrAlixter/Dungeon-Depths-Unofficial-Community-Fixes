@@ -50,8 +50,7 @@
     End Sub
 
     Overrides Sub setSpells(ByRef p As Player)
-        If Not p.knownSpells.Contains("Tentacle Crushcannon") Then p.knownSpells.Add("Tentacle Crushcannon")
-        TextEvent.pushLog("'Tentacle Crushcannon' spell learned!")
+        p.learnSpell("Tentacle Crushcannon")
     End Sub
 
     Public Overrides Sub fullTF(ByRef p As Player)

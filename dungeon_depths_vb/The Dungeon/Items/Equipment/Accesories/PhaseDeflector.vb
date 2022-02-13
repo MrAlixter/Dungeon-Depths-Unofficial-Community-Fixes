@@ -16,12 +16,12 @@
         value = 7566
 
         '|Image Index|
-        MyBase.fInd = New Tuple(Of Integer, Boolean, Boolean)(0, True, True)
-        MyBase.mInd = New Tuple(Of Integer, Boolean, Boolean)(0, True, True)
+        fInd = New Tuple(Of Integer, Boolean, Boolean)(0, True, True)
+        mInd = New Tuple(Of Integer, Boolean, Boolean)(0, True, True)
 
         '|Description|
         setDesc("A shiny chrome wristband that projects the energy from a AAAAAA battery into a shimmering field that reverts all changes to its wearer." & DDUtils.RNRN &
-                       getStatInformation())
+                getStatInformation())
     End Sub
     Public Overrides Sub onEquip(ByRef p As Player)
         p.savePState()

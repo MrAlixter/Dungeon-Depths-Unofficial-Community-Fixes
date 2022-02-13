@@ -74,7 +74,7 @@
         TextEvent.push("You are now an Alraune!")
         TextEvent.pushLog("You are now an Alraune!")
         p.changeForm("Alraune")
-        If Not p.knownSpells.Contains("Mesmeric Bloom") Then p.knownSpells.Add("Mesmeric Bloom")
+        p.learnSpell("Mesmeric Bloom")
     End Sub
 
     Sub fullTF()
@@ -100,7 +100,7 @@
         Dim out = "As you chew on a particularly leafy portion of the salad, you feel the familiar flow of transformative magic flow through your body!  Expecting the worse, you are suprised to find that it seems to be providing your body with a benevolent energy.  It isn't until a leaf droops down from the top of your head that you realize something has indeed been changed.  You are now a Alurane!"
         Dim revertText = Game.lblEvent.Text.Split(vbCrLf)(0)
 
-        If Not p.knownSpecials.Contains("Lurk") Then p.knownSpecials.Add("Lurk") : TextEvent.pushLog("Lurk special learned!")
+        p.learnSpecial("Lurk")
 
         If Not revertText.Equals("") Then out = revertText & DDUtils.RNRN & out
         TextEvent.push(out)

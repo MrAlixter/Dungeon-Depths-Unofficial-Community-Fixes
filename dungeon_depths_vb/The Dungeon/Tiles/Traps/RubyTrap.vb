@@ -74,7 +74,7 @@
 
         Dim out As String = "As you walk through the dungeon, you see what looks like a valuable " & gems(p.perks(perk.rubytrapstage)) & " on the ground, and you bend down to pick it up." & DDUtils.RNRN &
                             "The instant you touch it, a shock runs through your body.  You barely have time to recoil before the hand you made contact with turns into a glistening stone itself.  In seconds, your entire body converts into a solid statue of " & gems(p.perks(perk.rubytrapstage)) & ", and as the nearly silent chittering of your transformation dies down, you are left immobile and silent." & DDUtils.RNRN &
-                            "Shit!  Looks like that ruby was probably cursed..."
+                            "Shit!  Looks like that " & gems(p.perks(perk.rubytrapstage)) & " was probably cursed..."
 
         Game.currFloor.statueList.Add(New Statue(Game.player1, True))
 
@@ -85,13 +85,14 @@
     Sub rubyRevert()
         Dim p = Game.player1
 
-        p.revertToPState()
         p.canMoveFlag = True
+        p.isPetrified = False
+        p.perks(perk.astatue) = -1
 
         TextEvent.push("Several days pass..." & DDUtils.RNRN &
                           "As you stand frozen in the same position you've held since you touched the cursed stone, your legs suddenly give out and you fall face first onto the ground." & DDUtils.RNRN &
                           "Springing to your feet, you are excited to find yourself more or less as you were, and another explorer frozen in your place.  From their pose, it seems that they were going through your stuff and must have accidently touched your immobile body.  What's more, the original " & gems(p.perks(perk.rubytrapstage)) & " you touched is nowhere to be found.  You muse on the nature of the curse for a bit, before grabbing your things and moving on." & DDUtils.RNRN &
-                          "Your stomach rumbles loudly, and you can tell that your time as a statue hasn't been kind to your non-stone self...")
+                          "Your stomach rumbles loudly, and you can tell that your time as a statue hasn't been kind to your non-stone self...", AddressOf p.revertToPState)
 
         p.mana = 0
         p.stamina -= 60

@@ -1,9 +1,11 @@
 ﻿Public Class SoulBlade
     Inherits Sword
 
+    Public Const ITEM_NAME = "SoulBlade"
+
     Sub New()
         '|ID Info|
-        setName("SoulBlade")
+        setName(ITEM_NAME)
         id = 9
         tier = Nothing
 

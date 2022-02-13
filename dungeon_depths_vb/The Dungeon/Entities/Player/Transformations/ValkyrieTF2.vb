@@ -41,8 +41,7 @@
 
         EquipmentDialogBackend.armorChange(p, "Valkyrie_Armor")
 
-        If Not p.knownSpecials.Contains("Helix Slash") Then p.knownSpecials.Add("Helix Slash")
-        TextEvent.pushLog("""Helix Slash"" special learned!")
+        p.learnSpecial("Helix Slash")
         p.canMoveFlag = True
     End Sub
 

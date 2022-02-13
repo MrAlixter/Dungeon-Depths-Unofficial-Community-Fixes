@@ -22,10 +22,10 @@
     End Sub
 
     Public Overrides Sub effect(ByRef p As Player)
-        If Int(Rnd() * 2) = 0 And Not Game.noRNG Or (Game.currFloor.floorNumber = 91017 Or Game.currFloor.floorNumber = 9999) Then
+        If Int(Rnd() * 2) = 0 And Not Settings.active(setting.norng) Or (Game.currFloor.floorNumber = 91017 Or Game.currFloor.floorNumber = 9999) Then
             TextEvent.push("Disapointingly, nothing seems to have happened.")
         Else
-            If Int(Rnd() * 7) = 0 Or Game.noRNG Then
+            If Int(Rnd() * 7) = 0 Or Settings.active(setting.norng) Then
                 If Game.combat_engaged Then
                     p.currTarget.despawn("pwarp")
                     Game.updatable_queue.clear()

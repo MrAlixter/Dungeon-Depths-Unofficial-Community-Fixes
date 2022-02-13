@@ -52,12 +52,6 @@ Public Class Game
 
     '| -- Game Settings -- |
     Public screenSize As String
-    Public noImg As Boolean
-    Public pcUnwilling As Boolean
-    Public noRNG As Boolean
-    Public useOldSpellSpec As Boolean
-    Public startWithBooks As Boolean
-    Public mobsOverrideSState As Boolean
     Public compOOT As Boolean
     Public stealEverything As Boolean  'not added yet
 
@@ -92,7 +86,7 @@ Public Class Game
     Dim cKeys As List(Of System.Windows.Forms.Keys) = New List(Of Keys)
     Dim iHeight, iWidth As Integer
     Dim debugWindow As Debug_Window                     '(NOT SAVED)
-    Public shopMenu As ShopV2                           '(NOT SAVED)
+    Public shopMenu As ShopV3                           '(NOT SAVED)
     Dim health_bar_color_grad As Bitmap = Nothing
 
 
@@ -115,19 +109,9 @@ Public Class Game
         If Not IO.Directory.Exists("saves") Then IO.Directory.CreateDirectory("saves")
         If Not IO.Directory.Exists("floors") Then IO.Directory.CreateDirectory("floors")
 
-        Dim r As System.IO.StreamReader
-        r = IO.File.OpenText("sett.ing")
-        screenSize = r.ReadLine
-        noImg = r.ReadLine
-        pcUnwilling = r.ReadLine
-        noRNG = r.ReadLine
-        useOldSpellSpec = r.ReadLine
-        startWithBooks = r.ReadLine
-        mobsOverrideSState = r.ReadLine
+        Settings.applySavedSettings()
 
-        r.Close()
-
-        If noImg Then
+        If Settings.active(setting.noimg) Then
             picPortrait.Visible = False
             picDescPort.Visible = False
         End If
@@ -219,7 +203,7 @@ Public Class Game
         btnAbout.Visible = False
 
         Dim chargen As New CharacterGenerator
-        If noImg Then
+        If Settings.active(setting.noimg) Then
             chargen.picPort.Visible = False
             chargen.pnlBody.Visible = False
         End If
@@ -292,7 +276,7 @@ Public Class Game
             Loop
         End If
         'lblLoadMsg.Visible = True
-        Select Case CInt(Rnd() * 2)
+        Select Case Int(Rnd() * 2)
             Case Else
                 lblLoadMsg.Text = "You can challenge a floor boss at any time by finding the stairs " & vbCrLf &
                                   "and either clicking the ""Challenge Boss?"" button, or hitting the " & vbCrLf &
@@ -445,7 +429,7 @@ Public Class Game
         End If
 
         For Each sNPC In shop_npc_list
-            If Not sNPC.isDead And sNPC.pos.X > 0 And sNPC.pos.Y > 0 And sNPC.pos.Y < mBoardHeight And sNPC.pos.X < mBoardWidth Then
+            If Not sNPC.isDead And sNPC.pos.X >= 0 And sNPC.pos.Y >= 0 And sNPC.pos.Y < mBoardHeight And sNPC.pos.X < mBoardWidth Then
                 currFloor.mBoard(sNPC.pos.Y, sNPC.pos.X).Text = "$"
             End If
         Next
@@ -1159,6 +1143,8 @@ Public Class Game
                 selectAdvClassHypno(index)
             ElseIf selectionType = "Weapon" Then
                 selectWeapon(index)
+            ElseIf selectionType = "FaeOfWishes" Then
+                selectFaeOfWishes(index)
             ElseIf selectionType = "yesNo" Then
                 selectYesNo(index)
             End If
@@ -1298,6 +1284,20 @@ Public Class Game
         player1.drawPort()
         player1.UIupdate()
 
+    End Sub
+    Sub selectFaeOfWishes(ByVal index As Integer)
+        Dim subString As String = lstSelec.Items(index).ToString.Split(" (")(2)
+
+        Select Case subString
+            Case "Healing"
+                FaeOfWishes.heal(player1)
+            Case "Gold"
+                FaeOfWishes.gold(player1)
+            Case "Skills"
+                FaeOfWishes.skills(player1)
+            Case "Strength"
+                FaeOfWishes.stronger(player1)
+        End Select
     End Sub
     Sub selectYesNo(ByVal index As Integer)
         Dim tempAct
@@ -1478,6 +1478,14 @@ Public Class Game
                 For Each i In player1.inv.getWeapons.Item2
                     If i.getCount > 0 Then l.Add(i.getName)
                 Next
+                fillLstSelec(l)
+            Case "FaeOfWishes"
+                lblWhat.Text = "Wish for what?"
+                Dim l = New List(Of String)
+                l.Add("Healing")
+                l.Add("Gold")
+                l.Add("Skills")
+                l.Add("Strength")
                 fillLstSelec(l)
             Case "yesNo"
                 lblWhat.Text = TextEvent.choiceText
@@ -1913,7 +1921,7 @@ Public Class Game
     End Sub
     '| -- Spells -- |
     Sub magicKey()
-        If useOldSpellSpec Then
+        If Settings.active(setting.oldspellspec) Then
             toPNLSelec("Magic")
         Else
             CastDialogBackend.toPNLCast(Nothing, Nothing, player1, getCombatTarget(player1), SpellOrSpec.SPELL)
@@ -1924,7 +1932,7 @@ Public Class Game
     End Sub
     '| -- Specials -- |
     Sub specialKey()
-        If useOldSpellSpec Then
+        If Settings.active(setting.oldspellspec) Then
             toPNLSelec("Spec")
         Else
             CastDialogBackend.toPNLCast(Nothing, Nothing, player1, getCombatTarget(player1), SpellOrSpec.SPECIAL)
@@ -2043,7 +2051,7 @@ Public Class Game
         End If
 
         'Dim s As Shop = New Shop
-        Dim s As ShopV2 = New ShopV2
+        Dim s As ShopV3 = New ShopV3
         s.ShowDialog()
         s.Dispose()
     End Sub
@@ -2051,7 +2059,7 @@ Public Class Game
         doLblEventOnClose()
         closeLblEvent()
         'Dim s As Shop = New Shop
-        shopMenu = New ShopV2
+        shopMenu = New ShopV3
         shopMenu.ShowDialog()
         shopMenu.Dispose()
     End Sub
@@ -2226,6 +2234,8 @@ Public Class Game
         TextEvent.push("Game successfully saved!")
         player1.solFlag = False
         player1.drawPort()
+
+        'SaveFile.save()
     End Sub
     Sub loadSave(ByVal a As String)
         Dim reader As IO.StreamReader
@@ -2442,56 +2452,56 @@ Public Class Game
 
         If savePics(1) IsNot Nothing Then
             btnS1.BackgroundImage = savePics(1)
-            If noImg Then btnS1.BackgroundImage = Nothing
+            If Settings.active(setting.noimg) Then btnS1.BackgroundImage = Nothing
         Else
             If solFlag Then btnS1.Enabled = False Else btnS1.Enabled = True
         End If
 
         If savePics(2) IsNot Nothing Then
             btnS2.BackgroundImage = savePics(2)
-            If noImg Then btnS2.BackgroundImage = Nothing
+            If Settings.active(setting.noimg) Then btnS2.BackgroundImage = Nothing
         Else
             If solFlag Then btnS2.Enabled = False Else btnS2.Enabled = True
         End If
 
         If savePics(3) IsNot Nothing Then
             btnS3.BackgroundImage = savePics(3)
-            If noImg Then btnS3.BackgroundImage = Nothing
+            If Settings.active(setting.noimg) Then btnS3.BackgroundImage = Nothing
         Else
             If solFlag Then btnS3.Enabled = False Else btnS3.Enabled = True
         End If
 
         If savePics(4) IsNot Nothing Then
             btnS4.BackgroundImage = savePics(4)
-            If noImg Then btnS4.BackgroundImage = Nothing
+            If Settings.active(setting.noimg) Then btnS4.BackgroundImage = Nothing
         Else
             If solFlag Then btnS4.Enabled = False Else btnS4.Enabled = True
         End If
 
         If savePics(5) IsNot Nothing Then
             btnS5.BackgroundImage = savePics(5)
-            If noImg Then btnS5.BackgroundImage = Nothing
+            If Settings.active(setting.noimg) Then btnS5.BackgroundImage = Nothing
         Else
             If solFlag Then btnS5.Enabled = False Else btnS5.Enabled = True
         End If
 
         If savePics(6) IsNot Nothing Then
             btnS6.BackgroundImage = savePics(6)
-            If noImg Then btnS6.BackgroundImage = Nothing
+            If Settings.active(setting.noimg) Then btnS6.BackgroundImage = Nothing
         Else
             If solFlag Then btnS6.Enabled = False Else btnS6.Enabled = True
         End If
 
         If savePics(7) IsNot Nothing Then
             btnS7.BackgroundImage = savePics(7)
-            If noImg Then btnS7.BackgroundImage = Nothing
+            If Settings.active(setting.noimg) Then btnS7.BackgroundImage = Nothing
         Else
             If solFlag Then btnS7.Enabled = False Else btnS7.Enabled = True
         End If
 
         If savePics(8) IsNot Nothing Then
             btnS8.BackgroundImage = savePics(8)
-            If noImg Then btnS8.BackgroundImage = Nothing
+            If Settings.active(setting.noimg) Then btnS8.BackgroundImage = Nothing
         Else
             If solFlag Then btnS8.Enabled = False Else btnS8.Enabled = True
         End If
@@ -2803,7 +2813,7 @@ Public Class Game
         Dim text = DirectCast(sender, ListBox).Items(e.Index).ToString()
 
         If Not (text.Equals("")) Then
-            e.ItemHeight = TextRenderer.MeasureText(text, DirectCast(sender, ListBox).Font).Height + 2
+            e.ItemHeight = TextRenderer.MeasureText(text, DirectCast(sender, ListBox).Font).Height
         Else
             e.ItemHeight *= 0.33
         End If

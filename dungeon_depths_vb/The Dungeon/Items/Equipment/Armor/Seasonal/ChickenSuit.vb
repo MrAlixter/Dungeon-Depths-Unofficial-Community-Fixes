@@ -1,8 +1,11 @@
 ﻿Public Class ChickenSuit
     Inherits Armor
+
+    Public Const ITEM_NAME = "Chicken_Suit"
+
     Dim prevWingInd As Integer = 0
     Sub New()
-        setName("Chicken_Suit")
+        setName(ITEM_NAME)
 
         id = 8
         If DDDateTime.isAni Then tier = 2 Else tier = Nothing

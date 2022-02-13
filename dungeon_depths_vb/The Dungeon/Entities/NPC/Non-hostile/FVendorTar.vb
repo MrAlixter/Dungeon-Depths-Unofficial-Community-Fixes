@@ -33,7 +33,7 @@
 
         '|Inventory|
         inv.setCount("Better_Medicinal_Tea", 1)
-        inv.setCount("Dragonfruit", 1)
+        inv.setCount("Dragonfruit​", 1)
         inv.setCount("Dragonfruit_S._of_Gum", 1)
         inv.setCount("Mage's_Delicacy", 1)
         inv.setCount("""Normal""_Steak", 1)
@@ -117,7 +117,6 @@
         ElseIf img_index = 11 Then
             TextEvent.pushNPCDialog("I'll be the one to say it, you're better at this than Marissa.  Are you two working together or something?")
         End If
-
 
         If img_index = 5 Then inv.setCount(98, 1) Else inv.setCount(98, 0)
         If img_index = getArachneImageInd() And Not Game.player1.formName.Equals("Arachne") Then inv.setCount(244, 1) Else inv.setCount(244, 0)

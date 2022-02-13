@@ -1,9 +1,11 @@
 ﻿Public Class SorcerersRobes
     Inherits Armor
 
+    Public Const ITEM_NAME = "Sorcerer's_Robes"
+
     Sub New()
         '|ID Info|
-        setName("Sorcerer's_Robes")
+        setName(ITEM_NAME)
         id = 17
         tier = 3
 

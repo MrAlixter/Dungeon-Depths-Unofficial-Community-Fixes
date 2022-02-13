@@ -63,4 +63,7 @@
     Public Shared Sub badPolymorphError(ByVal poly As String)
         push("017", "Polymorph """ & poly & """ is not valid.")
     End Sub
+    Public Shared Sub failedToLoadSettings()
+        pushRestart("018", "Unable to load settings file, reverting to default settings.")
+    End Sub
 End Class

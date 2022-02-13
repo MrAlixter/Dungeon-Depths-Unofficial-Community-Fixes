@@ -9,7 +9,7 @@
 
         '|Item Flags|
         usable = False
-        under_clothes = True
+        hide_mouth = True
 
         '|Stats|
         count = 0

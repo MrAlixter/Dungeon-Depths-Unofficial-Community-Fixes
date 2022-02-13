@@ -72,6 +72,7 @@
 
     Public Overrides Sub encounter()
         'If the food vendor has the sword, use the alternate food vendor character
+
         If Game.player1.perks(perk.fvHasSword) > 0 Then
             Dim fvt = New FVendorTar(Me)
             Game.active_shop_npc = fvt
@@ -207,4 +208,32 @@
     Public Overrides Function getTrilobiteImageInd() As Integer
         Return 12
     End Function
+
+    Public Overrides Sub playerDeath(ByRef p As Player)
+        Game.fromCombat()
+
+        Dim out As String = """Listen, I get it..."" the cook says, as you fall back to catch your breath, ""Well, not really, but I'm willing to let you off the hook...""" & DDUtils.RNRN &
+                            """IF you agree to do me a favor.  Nothing big, it's just that the restock of salt looks a little shinier than usual.  I buy it from fairies, they're a pranksy sort, doesn't take too much to guess they're trying to pull one over on me.""" & DDUtils.RNRN &
+                            pronoun.Substring(0, 1).ToUpper & pronoun.Substring(1, pronoun.Length - 1) & " tosses you a small drawstring bag of what seems to be normal salt.  Hesitantly, you reach a finger in to give it a taste..."
+
+        Objective.showNPC(ShopNPC.npcLib.atrs(0).getAt(11), out, AddressOf playerDeath2)
+
+    End Sub
+    Public Sub playerDeath2()
+        Game.player1.changeClass("Fae Bee")
+        Game.player1.drawPort()
+
+        TextEvent.push("POP!" & DDUtils.RNRN &
+                       "The instant your finger touches the contents of the bag, your entire world shifts.  Everything is suddenly so much bigger, and you see tell-tale trails of scent that you instinctively know each lead to something in bloom." & DDUtils.RNRN &
+                       "Briefly, you take a confused glance down at the pile of junk beneath you.  Why do you feel some sense of ownership over any of it?  It's clearly too big to drag back to the hive." & DDUtils.RNRN &
+                       "From an outside perspective, it simply appears that you've vanished; replaced by a tiny glowing speck." & DDUtils.RNRN &
+                       "You flit off into the dungeon, mindlessly searching for a flower to pollenate.", AddressOf playerDeath3)
+    End Sub
+    Public Sub playerDeath3()
+        Game.player1.changeClass("Fae Bee​")
+        Game.player1.drawPort()
+
+        Objective.showNPC(ShopNPC.npcLib.atrs(0).getAt(104), """OH!  Uhhhh...  Shit...""" & DDUtils.RNRN &
+                         "GAME OVER!", AddressOf Game.player1.die)
+    End Sub
 End Class

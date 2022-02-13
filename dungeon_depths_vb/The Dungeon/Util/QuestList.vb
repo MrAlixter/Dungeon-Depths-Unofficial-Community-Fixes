@@ -41,6 +41,11 @@
 
         Return internalList(s)
     End Function
+    Function getAt(ByVal i As Integer) As Quest
+        If i >= internalList.Count() Or i < 0 Then Return Nothing
+
+        Return internalList(internalList.Keys(i))
+    End Function
 
     Function count() As Integer
         Return internalList.Count

@@ -330,6 +330,8 @@ Partial Class Game
         Me.btnEquipConfirm = New System.Windows.Forms.Button()
         Me.chkMisc = New System.Windows.Forms.CheckBox()
         Me.pnlInvFilter = New System.Windows.Forms.Panel()
+        Me.picFaeBee = New System.Windows.Forms.PictureBox()
+        Me.picFaeBee2 = New System.Windows.Forms.PictureBox()
         CType(Me.picEnemy, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me.picNPC, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me.picStatue, System.ComponentModel.ISupportInitialize).BeginInit()
@@ -474,6 +476,8 @@ Partial Class Game
         CType(Me.picWSmithThong1, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.pnlEquip.SuspendLayout()
         CType(Me.picEquipPort, System.ComponentModel.ISupportInitialize).BeginInit()
+        CType(Me.picFaeBee, System.ComponentModel.ISupportInitialize).BeginInit()
+        CType(Me.picFaeBee2, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.SuspendLayout()
         '
         'btnUse1
@@ -3895,6 +3899,26 @@ Partial Class Game
         Me.pnlInvFilter.TabIndex = 415
         Me.pnlInvFilter.Visible = False
         '
+        'picFaeBee
+        '
+        Me.picFaeBee.BackgroundImage = CType(resources.GetObject("picFaeBee.BackgroundImage"), System.Drawing.Image)
+        Me.picFaeBee.Location = New System.Drawing.Point(108, 154)
+        Me.picFaeBee.Name = "picFaeBee"
+        Me.picFaeBee.Size = New System.Drawing.Size(15, 15)
+        Me.picFaeBee.TabIndex = 417
+        Me.picFaeBee.TabStop = False
+        Me.picFaeBee.Visible = False
+        '
+        'picFaeBee2
+        '
+        Me.picFaeBee2.BackgroundImage = CType(resources.GetObject("picFaeBee2.BackgroundImage"), System.Drawing.Image)
+        Me.picFaeBee2.Location = New System.Drawing.Point(87, 154)
+        Me.picFaeBee2.Name = "picFaeBee2"
+        Me.picFaeBee2.Size = New System.Drawing.Size(15, 15)
+        Me.picFaeBee2.TabIndex = 416
+        Me.picFaeBee2.TabStop = False
+        Me.picFaeBee2.Visible = False
+        '
         'Game
         '
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Inherit
@@ -3902,6 +3926,8 @@ Partial Class Game
         Me.BackColor = System.Drawing.Color.Black
         Me.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch
         Me.ClientSize = New System.Drawing.Size(1008, 690)
+        Me.Controls.Add(Me.picFaeBee)
+        Me.Controls.Add(Me.picFaeBee2)
         Me.Controls.Add(Me.pnlEquip)
         Me.Controls.Add(Me.chkMisc)
         Me.Controls.Add(Me.picWSmithThong2)
@@ -4167,6 +4193,8 @@ Partial Class Game
         Me.pnlEquip.ResumeLayout(False)
         Me.pnlEquip.PerformLayout()
         CType(Me.picEquipPort, System.ComponentModel.ISupportInitialize).EndInit()
+        CType(Me.picFaeBee, System.ComponentModel.ISupportInitialize).EndInit()
+        CType(Me.picFaeBee2, System.ComponentModel.ISupportInitialize).EndInit()
         Me.ResumeLayout(False)
         Me.PerformLayout()
 
@@ -4474,4 +4502,6 @@ Partial Class Game
     Friend WithEvents cboxGlasses As System.Windows.Forms.ComboBox
     Friend WithEvents chkMisc As System.Windows.Forms.CheckBox
     Friend WithEvents pnlInvFilter As System.Windows.Forms.Panel
+    Friend WithEvents picFaeBee As System.Windows.Forms.PictureBox
+    Friend WithEvents picFaeBee2 As System.Windows.Forms.PictureBox
 End Class

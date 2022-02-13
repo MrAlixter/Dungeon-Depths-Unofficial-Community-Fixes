@@ -16,11 +16,8 @@
 
     Public Overrides Sub setSpells(ByRef p As Player)
         MyBase.setSpells(p)
-        If Not p.knownSpecials.Contains("Mana Burst") Then p.knownSpecials.Add("Mana Burst")
-        TextEvent.pushLog("'Mana Burst' special learned!")
-
-        If Not p.knownSpells.Contains("Sweet Sunbeam") Then p.knownSpells.Add("Sweet Sunbeam")
-        TextEvent.pushLog("'Sweet Sunbeam' spell learned!")
+        p.learnSpecial("Mana Burst")
+        p.learnSpell("Sweet Sunbeam")
     End Sub
     Overrides Sub tfBody(ByRef p As Player)
         p.breastSize = 3

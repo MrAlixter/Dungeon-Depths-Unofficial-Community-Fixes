@@ -13,9 +13,9 @@
         End If
 
         If Not learnSkills Then Exit Sub
-        If level = 2 And Not p.knownSpecials.Contains("Blade Breaker") Then p.knownSpecials.Add("Blade Breaker") : TextEvent.pushLog("Blade Breaker special learned!")
-        If level = 3 And Not p.knownSpecials.Contains("Guard Up") Then p.knownSpecials.Add("Guard Up") : TextEvent.pushLog("Guard Up special learned!")
-        If level = 4 And Not p.knownSpecials.Contains("Triple Strike") Then p.knownSpecials.Add("Triple Strike") : TextEvent.pushLog("Triple Strike special learned!")
+        If level = 2 Then p.learnSpecial("Blade Breaker")
+        If level = 3 Then p.learnSpecial("Guard Up")
+        If level = 4 Then p.learnSpecial("Triple Strike")
     End Sub
 
     Public Overrides Sub deLVL(level As Integer, ByRef p As Player)

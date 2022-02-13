@@ -1,9 +1,11 @@
 ﻿Public Class SteelSword
     Inherits Sword
 
+    Public Const ITEM_NAME = "Steel_Sword"
+
     Sub New()
         '|ID Info|
-        setName("Steel_Sword")
+        setName(ITEM_NAME)
         id = 6
         tier = Nothing
 

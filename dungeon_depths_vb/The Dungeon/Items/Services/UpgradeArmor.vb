@@ -27,6 +27,7 @@
 
         If Equipment.antiClothingCurse(p) Then
             TextEvent.pushNPCDialog("Alright, there we go!  That should do you a little better in the defense department.")
+            p.drawPort()
         Else
             TextEvent.pushNPCDialog("Well, I hate to say it but there isn't much I can do for you there...")
             p.gold += 2000

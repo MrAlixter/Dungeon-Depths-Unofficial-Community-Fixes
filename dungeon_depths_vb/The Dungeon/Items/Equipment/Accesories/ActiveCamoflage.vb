@@ -1,16 +1,25 @@
 ﻿Public Class ActiveCamoflage
     Inherits Accessory
-    'The ruby circlet provides a +1 attack buff
+
     Sub New()
+        '|ID Info|
         setName("Active_Camoflage")
-        setDesc("Unimplemented")
         id = 141
         tier = Nothing
-        usable = false
+
+        '|Item Flags|
+        usable = False
+        rando_inv_allowed = False
+
+        '|Stats|
         count = 0
         value = 0
 
-        rando_inv_allowed = False
+        '|Image Index|
+
+
+        '|Description|
+        setDesc("Unimplemented")
     End Sub
 
     Public Overrides Sub onEquip(ByRef p As Player)

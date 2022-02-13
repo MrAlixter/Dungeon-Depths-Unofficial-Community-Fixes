@@ -10,7 +10,7 @@
         '|Item Flags|
         usable = false
         compress_breast = True
-         show_underboob = True
+        show_underboob = False
         droppable = False
         rando_inv_allowed = False
 

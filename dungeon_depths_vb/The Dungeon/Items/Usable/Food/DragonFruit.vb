@@ -29,7 +29,7 @@
         p.addXP(25)
         p.mana += CInt(p.getMaxMana * 0.4)
 
-        If Int(Rnd() * 6) = 0 Or Game.noRNG Then
+        If Int(Rnd() * 6) = 0 Or Settings.active(setting.norng) Then
             BroodmotherTF.halfDragonTF(p)
             TextEvent.pushAndLog("As you bite into the fruit, your form changes!")
         End If

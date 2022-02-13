@@ -1,8 +1,11 @@
 ﻿Public Class VialOfSlime
     Inherits Item
+
+    Public Const ITEM_NAME = "Vial_of_Slime"
+
     Sub New()
         '|ID Info|
-        setName("Vial_of_Slime")
+        setName(ITEM_NAME)
         id = 3
         tier = 1
 

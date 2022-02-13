@@ -1,10 +1,12 @@
 ﻿Public Class Compass
     Inherits Item
 
+    Public Const ITEM_NAME = "Compass"
+
     'The compass identifies where the stairs are.
     Sub New()
         '|ID Info|
-        setName("Compass")
+        setName(ITEM_NAME)
         id = 0
         tier = 1
 

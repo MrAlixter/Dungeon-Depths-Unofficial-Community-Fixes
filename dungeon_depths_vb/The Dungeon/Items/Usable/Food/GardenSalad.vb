@@ -31,7 +31,7 @@
             TextEvent.pushLog("+25 mana!")
         End If
 
-        If Int(Rnd() * 3) = 0 Or Game.noRNG Then
+        If Int(Rnd() * 3) = 0 Or Settings.active(setting.norng) Then
             p.ongoingTFs.add(New PlantfolkTF())
         End If
 

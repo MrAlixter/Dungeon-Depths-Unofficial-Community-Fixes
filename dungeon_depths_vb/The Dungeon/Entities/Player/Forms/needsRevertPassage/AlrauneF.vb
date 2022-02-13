@@ -15,7 +15,6 @@
 
     Public Overrides Sub onLVLUp(ByVal level As Integer, ByRef p As Player, Optional learnSkills As Boolean = True)
         If Not learnSkills Then Exit Sub
-
-        If level = 4 And Not p.knownSpecials.Contains("Lurk") Then p.knownSpecials.Add("Lurk") : TextEvent.pushLog("Lurk special learned!")
+        If level = 4 Then p.learnSpecial("Lurk")
     End Sub
 End Class

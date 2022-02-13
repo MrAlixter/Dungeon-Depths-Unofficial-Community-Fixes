@@ -1,4 +1,5 @@
 ﻿Public Enum tfind
+    amaraphneangel
     angel
     alraune
     amazon
@@ -122,7 +123,10 @@ Public MustInherit Class Transformation
         Dim tf As tInd = CInt(s(5))
         Dim tfd As Boolean = CBool(s(6))
 
-        If tf = tfind.angel Then
+        If tf = tfind.amaraphneangel Then
+            Return New AmaraphneAngelTF(cs, n, tts, wi, cbs, tfd)
+
+        ElseIf tf = tfind.angel Then
             Return New AngelTF(cs, n, tts, wi, cbs, tfd)
 
         ElseIf tf = tfind.alraune Then
@@ -421,6 +425,15 @@ Public MustInherit Class Transformation
     Public Overrides Function ToString() As String
         Return curr_step & "$" & num_steps & "$" & turns_until_next_step & "$" & _
             will_impact & "$" & can_be_stopped & "$" & tf_name & "$" & tf_done
+    End Function
+    Public Function save() As String
+        Return curr_step & SaveFile.VALUE_DELIMITER &
+               num_steps & SaveFile.VALUE_DELIMITER &
+               turns_until_next_step & SaveFile.VALUE_DELIMITER &
+               will_impact & SaveFile.VALUE_DELIMITER &
+               can_be_stopped & SaveFile.VALUE_DELIMITER &
+               tf_name & SaveFile.VALUE_DELIMITER &
+               tf_done
     End Function
     'accessor methods
     Public Function getCanBeStopped() As Boolean

@@ -10,15 +10,13 @@
         '|Item Flags|
         usable = false
         compress_breast = True
-        show_underboob = True
+        show_underboob = False
         cursed = True
         bind_wearer = True
         hide_dick = False
 
         '|Stats|
-        a_boost = -5
-        d_boost = -5
-        s_boost = -5
+        s_boost = -15
         count = 0
         value = 100
 
@@ -39,12 +37,10 @@
         usize4 = New Tuple(Of Integer, Boolean, Boolean)(48, True, True)
 
         '|Description|
-        setDesc("A tightened set of ropes that both reduces mobility and leaves one nearly naked." & DDUtils.RNRN & _
-                       getSizeInformation() & vbCrLf &
-                       "-5 ATK" & vbCrLf &
-                       "-5 DEF" & vbCrLf &
-                       "-5 SPD" & vbCrLf &
-                       "May not be easy to remove")
+        setDesc("A tightened set of ropes that both reduces mobility and leaves one nearly naked." & DDUtils.RNRN &
+                "May not be easy to remove" & DDUtils.RNRN &
+                getStatInformation() & DDUtils.RNRN &
+                getSizeInformation())
     End Sub
 
     Public Overrides Sub onEquip(ByRef p As Player)
@@ -52,11 +48,15 @@
             EquipmentDialogBackend.equipArmor(p, "Naked")
             TextEvent.push("You effortlessly break your bonds.")
             TextEvent.pushLog("You effortlessly break your bonds.")
+        Else
+            'p.perks(perk.gagged) = 1
         End If
     End Sub
 
     Public Overrides Sub onUnequip(ByRef p As Player)
         MyBase.bind_wearer = False
         MyBase.bind_wearer = True
+
+        'p.perks(perk.gagged) = -1
     End Sub
 End Class

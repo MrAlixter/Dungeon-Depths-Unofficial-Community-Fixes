@@ -128,7 +128,11 @@
     <Compile Include="Entities\NPC\Non-Hostile\FVendorTar.vb" />
     <Compile Include="Entities\Player\Classes\Cleric.vb" />
     <Compile Include="Entities\Player\Classes\Necromancer.vb" />
+    <Compile Include="Entities\Player\Classes\needRevertPassage\Pirate.vb" />
+    <Compile Include="Entities\Player\Classes\needRevertPassage\Battlemaiden.vb" />
+    <Compile Include="Entities\Player\Classes\needRevertPassage\FVendFaeBee.vb" />
     <Compile Include="Entities\Player\Classes\needRevertPassage\TimeCop.vb" />
+    <Compile Include="Entities\Player\Classes\needRevertPassage\FVendFaeBee2.vb" />
     <Compile Include="Entities\Player\Classes\needRevertPassage\WSmithThong2.vb" />
     <Compile Include="Entities\Player\Classes\needRevertPassage\WSmithThong1.vb" />
     <Compile Include="Entities\Player\Forms\Orc.vb" />
@@ -143,11 +147,14 @@
     <Compile Include="Entities\Player\Quest\NPC Quests\StudyingSlime.vb" />
     <Compile Include="Entities\Player\Quest\NPC Quests\CursedContraband.vb" />
     <Compile Include="Entities\Player\Quest\NPC Quests\BreakingAnEgg.vb" />
+    <Compile Include="Entities\Player\Specials\Combat\Swashbuckle.vb" />
+    <Compile Include="Entities\Player\Specials\Utility\Crowsnest.vb" />
     <Compile Include="Entities\Player\Specials\Utility\CLight.vb" />
     <Compile Include="Entities\Player\Specials\Utility\Pluck.vb" />
     <Compile Include="Entities\Player\Spells\Combat\Hydrodart.vb" />
     <Compile Include="Entities\Player\Spells\Combat\Aquageyser.vb" />
     <Compile Include="Entities\Player\Spells\Combat\DeathCutter.vb" />
+    <Compile Include="Entities\Player\Spells\Combat\ScourgeFirstSea.vb" />
     <Compile Include="Entities\Player\Spells\Combat\TentacleCrushcannon.vb" />
     <Compile Include="Entities\Player\Spells\Combat\Hellfireball.vb" />
     <Compile Include="Entities\Player\Spells\Combat\Smite.vb" />
@@ -155,6 +162,7 @@
     <Compile Include="Entities\Player\Spells\Utility\Benediction.vb" />
     <Compile Include="Entities\Player\Spells\Utility\CleansingLight.vb" />
     <Compile Include="Entities\Player\Spells\Utility\FlashHeal.vb" />
+    <Compile Include="Entities\Player\Spells\Utility\GrogBlossom.vb" />
     <Compile Include="Entities\Player\Spells\Utility\SummonApple.vb" />
     <Compile Include="Entities\Player\Spells\Utility\SizeForLife.vb" />
     <Compile Include="Entities\Player\Spells\Utility\SummonBattery.vb" />
@@ -163,6 +171,7 @@
     <Compile Include="Entities\Player\Transformations\CowbellTFs\MimicMinoTF.vb" />
     <Compile Include="Entities\Player\Transformations\MaggirlTFs\MagGirlGTF.vb" />
     <Compile Include="Entities\Player\Transformations\MaggirlTFs\MagMimicTF.vb" />
+    <Compile Include="Entities\Player\Transformations\OneStepTFs\AmaraphneAngelTF.vb" />
     <Compile Include="Entities\Player\Transformations\OneStepTFs\GynoidTF2.vb" />
     <Compile Include="Entities\Player\Transformations\OneStepTFs\InversionTF.vb" />
     <Compile Include="Entities\Player\Transformations\OneStepTFs\SuccubusMaidTF.vb" />
@@ -172,20 +181,25 @@
     <Compile Include="Entities\Player\Transformations\PreferredFormTF.vb" />
     <Compile Include="Items\Equipment\Accesories\HeartGag.vb" />
     <Compile Include="Items\Equipment\Accesories\CynnsGag.vb" />
+    <Compile Include="Items\Equipment\Accesories\MOAmaraphne.vb" />
     <Compile Include="Items\Equipment\Accesories\SpectralGag.vb" />
     <Compile Include="Items\Equipment\Accesories\ImmitationCowbell.vb" />
     <Compile Include="Items\Equipment\Accesories\PhaseDeflector.vb" />
     <Compile Include="Items\Equipment\Accesories\MOTOx.vb" />
     <Compile Include="Items\Equipment\Accesories\HallowedTalisman.vb" />
     <Compile Include="Items\Equipment\Accesories\Ballgag.vb" />
+    <Compile Include="Items\Equipment\Armor\Clothing\BunnySuitG.vb" />
     <Compile Include="Items\Equipment\Armor\Clothing\CommonClothes8.vb" />
     <Compile Include="Items\Equipment\Armor\Clothing\LimeBikini.vb" />
     <Compile Include="Items\Equipment\Armor\Clothing\MagGirlOutfitG.vb" />
     <Compile Include="Items\Equipment\Armor\Clothing\ProMagGirlOutfitG.vb" />
     <Compile Include="Items\Equipment\Armor\Clothing\TimeCopClothes.vb" />
+    <Compile Include="Items\Equipment\Armor\Clothing\AmaraphneVestment.vb" />
+    <Compile Include="Items\Equipment\Armor\Clothing\AmaraphneRaiment.vb" />
     <Compile Include="Items\Equipment\Armor\MagicCloaks\CrimsonCloak.vb" />
     <Compile Include="Items\Equipment\Armor\MagicCloaks\NecromancerRobe.vb" />
     <Compile Include="Items\Equipment\Armor\PlateArmor\AmaArmor.vb" />
+    <Compile Include="Items\Equipment\Armor\PlateArmor\MaidArmor.vb" />
     <Compile Include="Items\Equipment\Armor\PlateArmor\PaladinArmor.vb" />
     <Compile Include="Items\Equipment\Armor\PlateArmor\PlatArmor.vb" />
     <Compile Include="Items\Equipment\Armor\SlutVar\PlantBikini.vb" />
@@ -195,6 +209,7 @@
     <Compile Include="Items\Equipment\Glasses\CircularGlasses.vb" />
     <Compile Include="Items\Equipment\Glasses\CyberVisorG.vb" />
     <Compile Include="Items\Equipment\Glasses\CyberVisorO.vb" />
+    <Compile Include="Items\Equipment\Glasses\SwashMagicEPatch.vb" />
     <Compile Include="Items\Equipment\Glasses\MasqueraderMask.vb" />
     <Compile Include="Items\Equipment\Glasses\Eyepatch.vb" />
     <Compile Include="Items\Equipment\Glasses\CyberVisorP.vb" />
@@ -213,6 +228,7 @@
     <Compile Include="Items\Equipment\Weapons\Misc\PhasePistol.vb" />
     <Compile Include="Items\Equipment\Weapons\Misc\LargeStick.vb" />
     <Compile Include="Items\Equipment\Weapons\Staffs\TidemageStaff.vb" />
+    <Compile Include="Items\Equipment\Weapons\Swords\FeatherSword.vb" />
     <Compile Include="Items\Equipment\Weapons\Wands\MagGirlWandG.vb" />
     <Compile Include="Items\Equipment\Weapons\Wands\MagMimicWand.vb" />
     <Compile Include="Items\Misc\ArmorFragments.vb" />
@@ -220,6 +236,7 @@
     <Compile Include="Items\Services\AdvClassChange.vb" />
     <Compile Include="Items\Services\BasicClassChange.vb" />
     <Compile Include="Items\Services\UpgradeArmor.vb" />
+    <Compile Include="Items\Usable\OuijaBoard.vb" />
     <Compile Include="Items\Usable\Food\GoldenGum.vb" />
     <Compile Include="Items\Usable\Food\IcePopB.vb" />
     <Compile Include="Items\Usable\Food\IcePop.vb" />
@@ -230,12 +247,14 @@
     <Compile Include="Items\Usable\Food\Steak.vb" />
     <Compile Include="Items\Usable\Food\NatureKiss.vb" />
     <Compile Include="Items\Usable\Food\RocDrumstick.vb" />
+    <Compile Include="Items\Usable\Spellbooks\PirateHandbook.vb" />
     <Compile Include="Items\Usable\Spellbooks\TomeOfKnowlege.vb" />
     <Compile Include="Items\Usable\Spellbooks\MarissasNotes.vb" />
     <Compile Include="Items\Usable\Spellbooks\PaleoDiary.vb" />
     <Compile Include="Items\Usable\Spellbooks\AAAAAASpecs.vb" />
     <Compile Include="Items\Usable\Vials\VialOfRockJuice.vb" />
     <Compile Include="Tiles\Traps\Button1Trap.vb" />
+    <Compile Include="Tiles\Traps\FaeOfWishes.vb" />
     <Compile Include="Tiles\Traps\GynoidTrap2.vb" />
     <Compile Include="Tiles\Traps\Notes\NoteTrap.vb" />
     <Compile Include="Tiles\Traps\GagTrap.vb" />
@@ -967,10 +986,10 @@
     <Compile Include="WindowsForms\Settings.vb">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="WindowsForms\ShopV2.Designer.vb">
-      <DependentUpon>ShopV2.vb</DependentUpon>
+    <Compile Include="WindowsForms\ShopV3.Designer.vb">
+      <DependentUpon>ShopV3.vb</DependentUpon>
     </Compile>
-    <Compile Include="WindowsForms\ShopV2.vb">
+    <Compile Include="WindowsForms\ShopV3.vb">
       <SubType>Form</SubType>
     </Compile>
     <Compile Include="Items\Equipment\Armor\SlutVar\SkimpyClothes.vb" />
@@ -1052,8 +1071,8 @@
     <EmbeddedResource Include="WindowsForms\Settings.resx">
       <DependentUpon>Settings.vb</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="WindowsForms\ShopV2.resx">
-      <DependentUpon>ShopV2.vb</DependentUpon>
+    <EmbeddedResource Include="WindowsForms\ShopV3.resx">
+      <DependentUpon>ShopV3.vb</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>

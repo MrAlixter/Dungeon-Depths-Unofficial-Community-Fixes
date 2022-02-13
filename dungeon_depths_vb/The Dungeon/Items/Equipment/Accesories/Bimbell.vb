@@ -2,19 +2,27 @@
     Inherits Accessory
 
     Sub New()
+        '|ID Info|
         setName("Bimbell")
-        setDesc("A large metal bell attached to a pink collar that rings hypnotically with its wearer's gait." & vbCrLf &
-                       "+40 Health." & vbCrLf &
-                       "-15 WILL")
         id = 197
         tier = 3
-        usable = false
+
+        '|Item Flags|
+        usable = False
+
+        '|Stats|
         h_boost = 20
         w_boost = -1
         count = 0
         value = 434
-        MyBase.fInd = New Tuple(Of Integer, Boolean, Boolean)(17, True, True)
-        MyBase.mInd = New Tuple(Of Integer, Boolean, Boolean)(16, False, True)
+
+        '|Image Index|
+        fInd = New Tuple(Of Integer, Boolean, Boolean)(17, True, True)
+        mInd = New Tuple(Of Integer, Boolean, Boolean)(16, False, True)
+
+        '|Description|
+        setDesc("A large metal bell attached to a pink collar that rings hypnotically with its wearer's gait." & DDUtils.RNRN &
+                getStatInformation())
     End Sub
 
     Overrides Sub onEquip(ByRef p As Player)

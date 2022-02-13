@@ -26,6 +26,6 @@
 
         p.changeForm("Half-Gorgon")
 
-        If Not p.knownSpells.Contains("Petrify II") Then p.knownSpells.Add("Petrify II")
+        p.learnSpell("Petrify II")
     End Sub
 End Class

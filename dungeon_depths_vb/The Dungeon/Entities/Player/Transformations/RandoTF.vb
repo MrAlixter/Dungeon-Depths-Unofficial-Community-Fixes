@@ -125,7 +125,7 @@
         Dim weaponIndex As Integer = -1
 
         EquipmentDialogBackend.armorChange(p, "Naked")
-         EquipmentDialogBackend.weaponChange(p, "Fists")
+        EquipmentDialogBackend.weaponChange(p, "Fists")
         Select Case Int(Rnd() * 23)
             Case 0   'basic warrior
                 p.changeClass("Warrior")

@@ -65,16 +65,15 @@
     End Sub
 
     Public Overrides Function getNextStep(stage As Integer) As Action
+        If Game.player1.inv.getCountAt("Golden_Gum") < 1 Or Game.player1.className.Equals("Bimbo") Then
+            Return AddressOf stopTF
+        End If
         If Not hasBimboHair(Game.player1) Then
             Return AddressOf hairColorShift
         End If
         If Game.player1.className.Equals("Magical Girl") Then
             Return AddressOf step2alt
         End If
-        If Game.player1.inv.getCountAt("Golden_Gum") < 1 or Game.player1.className.Equals("Bimbo") Then
-            Return AddressOf stopTF
-        End If
-
         Select Case stage
             Case 0
                 Return AddressOf step1

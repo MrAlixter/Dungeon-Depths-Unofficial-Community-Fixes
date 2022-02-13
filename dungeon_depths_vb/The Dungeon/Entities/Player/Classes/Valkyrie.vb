@@ -25,7 +25,6 @@
         End If
 
         If Not learnSkills Then Exit Sub
-
     End Sub
 
     Public Overrides Sub deLVL(level As Integer, ByRef p As Player)

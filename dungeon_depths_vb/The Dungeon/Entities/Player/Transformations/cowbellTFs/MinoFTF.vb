@@ -98,7 +98,7 @@
         Else
             hairTF1(p)
             tfHair = True
-            If Not Int(Rnd() * 3) = 0 Or Game.noRNG Then
+            If Not Int(Rnd() * 3) = 0 Or Settings.active(setting.norng) Then
                 earTF(p)
                 tfEars = True
             End If

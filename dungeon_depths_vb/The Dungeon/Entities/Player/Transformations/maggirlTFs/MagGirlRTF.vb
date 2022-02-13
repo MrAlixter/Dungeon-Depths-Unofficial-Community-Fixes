@@ -16,11 +16,8 @@
 
     Public Overrides Sub setSpells(ByRef p As Player)
         MyBase.setSpells(p)
-        If Not p.knownSpecials.Contains("Inferno Aura") Then p.knownSpecials.Add("Inferno Aura")
-        TextEvent.pushLog("'Inferno Aura' special learned!")
-
-        If Not p.knownSpecials.Contains("Megaton Punch") Then p.knownSpecials.Add("Megaton Punch")
-        TextEvent.pushLog("'Megaton Punch' special learned!")
+        p.learnSpecial("Inferno Aura")
+        p.learnSpecial("Megaton Punch")
     End Sub
 
     Overrides Sub tfBody(ByRef p As Player)

@@ -27,7 +27,7 @@
          EquipmentDialogBackend.weaponChange(p, "Fists")
 
         'dragon transformation
-        If Not p.knownSpells.Contains("Dragon's Breath") Then p.knownSpells.Add("Dragon's Breath")
+        p.learnSpell("Dragon's Breath")
 
         'transformation description push
         p.TextColor = Color.LightGreen

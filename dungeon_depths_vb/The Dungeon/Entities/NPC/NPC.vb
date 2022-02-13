@@ -271,13 +271,16 @@ Public Class NPC
                         Dim rng = (Int(Rnd() * 6))
                         If rng = 1 Then content.addOne()
                     Case Else
-                        Dim rng = (CInt(Rnd() * 5))
+                        Dim rng = (Int(Rnd() * 5))
                         If rng >= 3 Then rng = 0
                         content.add(rng)
                 End Select
             End If
         Next
+
         inv.setCount(43, CInt(Rnd() * 250)) 'Add some amount of gold
+
+        If Game.player1.equippedGlasses.getAName.Equals(SwashMagicEPatch.ITEM_NAME) Then inv.setCount(43, inv.getCountAt(43) * 2)
     End Sub
 
     '|COMBAT|

@@ -361,12 +361,12 @@
         End If
 
         'handles any tfs or triggers triggered by equipping of certain armors by certain classes
-        If (p.className.Equals("Magical Girl") And p.perks(perk.tfedbyweapon) > 0) And Not (armor.Contains("Outfit") And armor.Contains("Mag")) And p.equippedArmor.fits(p) Then
+        If (p.className.Equals("Magical Girl") And p.perks(perk.tfedbyweapon) > 0) AndAlso Not (armor.Contains("Outfit") And armor.Contains("Mag")) AndAlso p.equippedArmor.fits(p) Then
             TextEvent.pushLog("A magical girl needs her uniform!")
             TextEvent.push("A magical girl needs her uniform!")
             Return False
         End If
-        If (p.className.Equals("Valkyrie") And p.perks(perk.tfedbyweapon) > 0) And Not armor.Equals("Valkyrie_Armor") And p.equippedArmor.fits(p) Then
+        If (p.className.Equals("Valkyrie") And p.perks(perk.tfedbyweapon) > 0) AndAlso Not armor.Equals("Valkyrie_Armor") AndAlso p.equippedArmor.fits(p) Then
             TextEvent.pushLog("Your armor magically re-equips!")
             TextEvent.push("Your armor magically re-equips!")
             Return False

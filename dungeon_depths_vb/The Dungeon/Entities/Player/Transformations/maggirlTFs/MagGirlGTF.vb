@@ -16,8 +16,7 @@
 
     Public Overrides Sub setSpells(ByRef p As Player)
         MyBase.setSpells(p)
-        If Not p.knownSpells.Contains("Death Cutter") Then p.knownSpells.Add("Death Cutter")
-        TextEvent.pushLog("'Death Cutter' spell learned!")
+        p.learnSpell("Death Cutter")
     End Sub
 
     Overrides Sub tfBody(ByRef p As Player)

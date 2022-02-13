@@ -6,6 +6,6 @@
     End Sub
 
     Public Overrides Sub onLVLUp(level As Integer, ByRef p As Player, Optional learnSkills As Boolean = True)
-        If Not p.knownSpecials.Contains("Snare") Then p.knownSpecials.Add("Snare") : TextEvent.pushLog("Snare special learned!")
+        p.learnSpecial("Snare")
     End Sub
 End Class

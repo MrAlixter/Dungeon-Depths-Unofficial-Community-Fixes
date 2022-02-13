@@ -1,9 +1,11 @@
 ﻿Public Class ManaPotion
     Inherits Item
 
+    Public Const ITEM_NAME = "Mana_Potion"
+
     Sub New()
         '|ID Info|
-        setName("Mana_Potion")
+        setName(ITEM_NAME)
         id = 13
         tier = 2
 

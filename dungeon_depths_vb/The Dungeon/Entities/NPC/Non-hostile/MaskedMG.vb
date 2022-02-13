@@ -19,6 +19,7 @@
         inv.setCount("Gem_of_Sweetness", 1)
         inv.setCount("Gem_of_Flame", 1)
         inv.setCount("Gem_of_Darkness", 1)
+        inv.setCount("Gem_of_Ivy", 1)
 
         '|Stats|
         health = 1.0

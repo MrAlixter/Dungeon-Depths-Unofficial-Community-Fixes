@@ -210,6 +210,14 @@
             p.perks(perk.mesmerized) = -1
         End If
     End Sub
+    Shared Sub rotlgTracker(ByRef p As Player)
+        If p.perks(perk.moamarphne) > 2 Then
+            p.perks(perk.moamarphne) -= 1
+        Else
+            p.perks(perk.moamarphne) = -1
+            If p.equippedAcce.getAName.Equals("Mark_of_Amaraphne") Then EquipmentDialogBackend.equipAcce(p, "Nothing", False) : p.inv.add("Mark_of_Amaraphne", -1)
+        End If
+    End Sub
 
     '|TRANSFORMATION TRIGGERS|
     Shared Sub targaxSwordTF(ByRef p As Player)
@@ -480,6 +488,17 @@
         flag = bimboDodge(p) Or flag
         flag = stealthDodge(p) Or flag
         flag = spidersilkEffect(dmg, p) Or flag
+
+        If p.perks(perk.rotlg) > 0 And dmg >= p.getIntHealth Then
+            Dim a = New AmaraphneAngelTF()
+            a.update()
+            p.drawPort()
+            Game.fromCombat()
+            TextEvent.push("Before the strike lands, a blazing rose aura flares from your person." & DDUtils.RNRN & "You begin floating upward, and as wings burst forth from your back you are overwhelmed with a burning lust.  You can feel both your body and clothing shifting rapidly, but before you can really takes stock of what is happening you automatically flap upwards." & DDUtils.RNRN & "Your wings carry you to safety, and as soon as you touch down on the ground the glow surrounding you begins to fade.", AddressOf p.revertToPState)
+            p.pos = Game.currFloor.randPoint
+            If p.pState.breastSize = -1 Then p.pState.breastSize = 0 : p.pState.buttSize = 0
+            Return True
+        End If
 
         If p.perks(perk.bunnyears) = 2 Then p.addLust(-dmg / 2)
         If p.perks(perk.infernoa) > -1 Then flag = reflectDamage(dmg, 0.45, p.currTarget, p)

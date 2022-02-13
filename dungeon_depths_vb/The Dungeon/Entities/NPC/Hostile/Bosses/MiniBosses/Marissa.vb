@@ -19,13 +19,12 @@
         inv.setCount("Omni_Charm", 1)
         inv.setCount("Gold", 1000)
         'random drops
-        inv.setCount("Health_Potion", CInt(Rnd() * 3))
-        inv.setCount("Mana_Potion", CInt(Rnd() * 3))
-        inv.setCount("Spellbook", CInt(Rnd() * 3))
-        inv.setCount("Cat_Ears", CInt(Rnd() * 2))
-        inv.setCount("Mana_Charm", CInt(Rnd() * 3))
-        inv.setCount("Sorcerer's_Robes", CInt(Rnd() * 2))
-
+        Dim possible_drops = {"Health_Potion", "Mana_Potion", "Spellbook", "Cat_Ears", "Mana_Charm", "Sorcerer's_Robes"}
+        Dim number_of_drops = Int(Rnd() * 3) + Int(Rnd() * 3) + 1
+        For i = 0 To number_of_drops
+            Dim r = Int(Rnd() * (possible_drops.Count))
+            inv.setCount(possible_drops(r), 1)
+        Next
 
         '|Dialog Variables|
         title = " "

@@ -90,6 +90,12 @@
     Public Overrides Function ToString() As String
         Return formerClass & "$" & formerEyeType.Item1 & "$" & formerEyeType.Item2 & "$" & formerEyeType.Item3
     End Function
+    Public Function save() As String
+        Return formerClass & SaveFile.VALUE_SPLIT_DELIMITER &
+               formerEyeType.Item1 & SaveFile.VALUE_SPLIT_DELIMITER &
+               formerEyeType.Item2 & SaveFile.VALUE_SPLIT_DELIMITER &
+               formerEyeType.Item3
+    End Function
     Public Sub setFormerLife(ft As String, fet As Tuple(Of Integer, Boolean, Boolean))
         formerClass = ft
         formerEyeType = fet

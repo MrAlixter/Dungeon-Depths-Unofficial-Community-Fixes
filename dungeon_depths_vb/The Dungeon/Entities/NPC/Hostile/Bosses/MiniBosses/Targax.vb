@@ -17,11 +17,14 @@
         '|Inventory|
         inv.setCount("Sword_of_the_Brutal", 1)
         inv.setCount("Omni_Charm", 1)
-        'random drops
-        inv.setCount("Combat_Manual", CInt(Rnd() * 3))
-        inv.setCount("Warrior's_Cuirass", CInt(Rnd() * 2))
-        inv.setCount("Attack_Charm", CInt(Rnd() * 3))
         inv.setCount("Gold", 2500)
+        'random drops
+        Dim possible_drops = {"Combat_Manual", "Warrior's_Cuirass", "Attack_Charm"}
+        Dim number_of_drops = Int(Rnd() * 2) + Int(Rnd() * 2) + 1
+        For i = 0 To number_of_drops
+            Dim r = Int(Rnd() * (possible_drops.Count))
+            inv.setCount(possible_drops(r), 1)
+        Next
 
         '|Dialog Variables|
         title = " "

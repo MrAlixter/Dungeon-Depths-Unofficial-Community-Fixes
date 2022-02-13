@@ -1,9 +1,11 @@
 ﻿Public Class WarriorsCuirass
     Inherits Armor
 
+    Public Const ITEM_NAME = "Warrior's_Cuirass"
+
     Sub New()
         '|ID Info|
-        setName("Warrior's_Cuirass")
+        setName(ITEM_NAME)
         id = 19
         tier = 3
 

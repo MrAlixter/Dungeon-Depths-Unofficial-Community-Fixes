@@ -1,9 +1,11 @@
 ﻿Public Class CatLingerie
     Inherits Armor
-    'CatLingerie is a cosmetic armor that doesn't provide a defense bonus
+
+    Public Const ITEM_NAME = "Cat_Lingerie"
+
     Sub New()
         '|ID Info|
-        setName("Cat_Lingerie")
+        setName(ITEM_NAME)
         id = 12
         tier = Nothing
 

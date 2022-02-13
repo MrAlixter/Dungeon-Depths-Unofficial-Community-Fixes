@@ -1,9 +1,11 @@
 ﻿Public Class MagGirlOutfit
     Inherits Armor
 
+    Public Const ITEM_NAME = "Magical_Girl_Outfit"
+
     Sub New()
         '|ID Info|
-        setName("Magical_Girl_Outfit")
+        setName(ITEM_NAME)
         id = 10
         tier = Nothing
 

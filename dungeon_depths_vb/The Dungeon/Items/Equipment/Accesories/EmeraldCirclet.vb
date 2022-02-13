@@ -1,18 +1,27 @@
 ﻿Public Class EmeraldCirclet
     Inherits Accessory
-    'The ruby circlet provides a +1 attack buff
+
     Sub New()
+        '|ID Info|
         setName("Emerald_Circlet")
-        setDesc("A large emerald inset on a gold-alloy band, this circlet is commonly worn by archmages." & vbCrLf & _
-                       "+10 Mana, +10 SPD")
         id = 140
         tier = 2
-        usable = false
-        MyBase.m_boost = 10
-        MyBase.s_boost = 10
+
+        '|Item Flags|
+        usable = False
+
+        '|Stats|
+        m_boost = 10
+        s_boost = 10
         count = 0
         value = 1100
-        MyBase.fInd = New Tuple(Of Integer, Boolean, Boolean)(10, False, True)
-        MyBase.mInd = New Tuple(Of Integer, Boolean, Boolean)(10, False, True)
+
+        '|Image Index|
+        fInd = New Tuple(Of Integer, Boolean, Boolean)(10, False, True)
+        mInd = New Tuple(Of Integer, Boolean, Boolean)(10, False, True)
+
+        '|Description|
+        setDesc("A large emerald inset on a gold-alloy band, this circlet is commonly worn by archmages." & DDUtils.RNRN &
+                getStatInformation())
     End Sub
 End Class

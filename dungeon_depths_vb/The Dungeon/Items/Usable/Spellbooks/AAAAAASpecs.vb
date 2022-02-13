@@ -20,13 +20,7 @@
     End Sub
 
     Overrides Sub use(ByRef p As Player)
-
-        Dim sName = "Summon Battery"
-
-        If Not p.knownSpells.Contains(sName) Then
-            p.knownSpells.Add(sName)
-            TextEvent.pushLog("You learn ""Summon Battery""")
-        End If
+        p.learnSpell("Summon Battery")
 
         count -= 1
     End Sub

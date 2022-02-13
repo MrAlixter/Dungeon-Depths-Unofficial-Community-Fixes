@@ -800,6 +800,14 @@ Public Class mFloor
         'Creates a straight hallway of a floor for a boss floor
         If mBoardHeight < 30 Then mBoardHeight = 30
         If mBoardWidth < 15 Then mBoardWidth = 15
+
+        ReDim mBoard(mBoardHeight, mBoardWidth)
+        For y = 0 To mBoardHeight
+            For x = 0 To mBoardWidth
+                mBoard(y, x) = New mTile(0, "", Color.Black)
+            Next
+        Next
+
         For y = 0 To 25
             For x = 3 To 7
                 mBoard(y, x).Tag = 2

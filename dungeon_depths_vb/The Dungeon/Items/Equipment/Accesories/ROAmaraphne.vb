@@ -16,19 +16,17 @@
         value = 3333
 
         '|Image Index|
-        MyBase.fInd = New Tuple(Of Integer, Boolean, Boolean)(12, True, True)
-        MyBase.mInd = New Tuple(Of Integer, Boolean, Boolean)(12, True, True)
+        MyBase.fInd = New Tuple(Of Integer, Boolean, Boolean)(0, False, True)
+        MyBase.mInd = New Tuple(Of Integer, Boolean, Boolean)(0, False, True)
 
         '|Description|
         setDesc("While on the surface, this seems to be but an ornate ring crafted from extremely precious materials, closer inspection reveals that the inside of its band is inscribed with a blessing of Amaraphne, Goddess of Love and Lust." & DDUtils.RNRN &
                        "Can be ""used"" to convert equipped armor to the corresponding slut variant" & vbCrLf &
                        "Increases DEF based on equipped armor" & vbCrLf &
                        "Increases ATK and WILL bonuses of slut variant armors" & vbCrLf &
-                       "Increases SPD based on bust size" & DDUtils.RNRN &
-                       getStatInformation() & vbcrlf &
-                       "[Dev. Note:]  This ring is not fully implemented yet; I plan on adding a transformation triggered by near death (as well as a secondary transformation for overusing the effect) and transitioning this from a Valentine's day item to a regular rare item.")
-
-
+                       "Increases SPD based on bust size" & vbCrLf &
+                       "If certain conditions are met, Amaraphne may provide her aid should you fall" & DDUtils.RNRN &
+                       getStatInformation())
     End Sub
     Public Overrides Sub use(ByRef p As Player)
         MyBase.use(p)
@@ -36,6 +34,11 @@
         p.drawPort()
     End Sub
     Public Overrides Sub onEquip(ByRef p As Player)
+        If p.perks(perk.moamarphne) > 0 Then
+            EquipmentDialogBackend.equipAcce(p, "Nothing", False)
+            TextEvent.pushAndLog("The ring slips off your finger...")
+        End If
+
         p.perks(perk.rotlg) = 1
         p.UIupdate()
     End Sub
@@ -46,13 +49,13 @@
     End Sub
 
     Public Overrides Function getABoost(ByRef p As Player) As Integer
-        If p Is Nothing Then Return 0
+        If p Is Nothing OrElse p.equippedArmor.getAntiSlutInd <> -1 Then Return 0
         If p.equippedArmor.getSlutVarInd <> -1 Then Return 0
 
         Return p.equippedArmor.a_boost * 1.5
     End Function
     Public Overrides Function getDBoost(ByRef p As Player) As Integer
-        If p Is Nothing Then Return 0
+        If p Is Nothing OrElse p.equippedArmor.getAntiSlutInd <> -1 Then Return 0
         If p.equippedArmor.getSlutVarInd <> -1 Then Return -p.equippedArmor.d_boost
 
         Dim buff = p.equippedArmor.d_boost
@@ -68,11 +71,11 @@
         Return buff
     End Function
     Public Overrides Function getSBoost(ByRef p As Player) As Integer
-        If p Is Nothing Then Return 0
+        If p Is Nothing OrElse p.equippedArmor.getAntiSlutInd <> -1 Then Return 0
         Return CInt(2.2222 * p.breastSize)
     End Function
     Public Overrides Function getWBoost(ByRef p As Player) As Integer
-        If p Is Nothing Then Return 0
+        If p Is Nothing OrElse p.equippedArmor.getAntiSlutInd <> -1 Then Return 0
         If p.equippedArmor.getSlutVarInd <> -1 Then Return 0
 
         Return p.equippedArmor.w_boost * 1.5
@@ -83,8 +86,8 @@
                        "Can be ""used"" to convert equipped armor to the corresponding slut variant" & vbCrLf &
                        "Increases DEF based on equipped armor" & vbCrLf &
                        "Increases ATK and WILL bonuses of slut variant armors" & vbCrLf &
-                       "Increases SPD based on bust size" & DDUtils.RNRN &
-                       getStatInformation() & vbcrlf &
-                       "[Dev. Note:]  This ring is not fully implemented yet; I plan on adding a transformation triggered by near death (as well as a secondary transformation for overusing the effect) and transitioning this from a Valentine's day item to a regular rare item."
+                       "Increases SPD based on bust size" & vbCrLf &
+                       If(Game.player1.getLust >= 50, "Amaraphne will come to your aid should you fall", "If certain conditions are met, Amaraphne may provide her aid should you fall") & DDUtils.RNRN &
+                       getStatInformation()
     End Function
 End Class

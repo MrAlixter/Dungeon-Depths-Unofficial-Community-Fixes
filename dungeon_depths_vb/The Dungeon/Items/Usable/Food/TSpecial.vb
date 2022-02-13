@@ -23,7 +23,7 @@
     End Sub
 
     Public Overrides Sub effect(ByRef p As Player)
-        If Int(Rnd() * 5) = 0 Or Game.noRNG Then
+        If Int(Rnd() * 5) = 0 Or Settings.active(setting.norng) Then
             p.maxHealth += 5
             p.health += 5 / p.getMaxHealth()
             If p.health > 1 Then p.health = 1
