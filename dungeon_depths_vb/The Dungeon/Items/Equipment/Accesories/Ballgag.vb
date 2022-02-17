@@ -30,10 +30,12 @@
 
     Public Overrides Sub onEquip(ByRef p As Player)
         MyBase.onEquip(p)
+
         p.perks(perk.gagged) = 1
     End Sub
     Public Overrides Sub onUnequip(ByRef p As Player)
         MyBase.onUnequip(p)
+
         p.perks(perk.gagged) = -1
     End Sub
 
