@@ -1,9 +1,11 @@
 ﻿Public Class AntiCurseTag
     Inherits Item
 
+    Public Const ITEM_NAME As String = "Anti_Curse_Tag"
+
     Sub New()
         '|ID Info|
-        setName("Anti_Curse_Tag")
+        setName(ITEM_NAME)
         id = 153
         tier = 3
 
@@ -16,8 +18,8 @@
 
         '|Description|
         setDesc("A small paper tag with instructions to apply it to your equipment." & DDUtils.RNRN &
-                       "Using this item will un-do the slut curse on your currently equipped armor." & DDUtils.RNRN &
-                       "To remove cursed (unremoveable) equipment, unequip it as usual while at least 1 Anti_Curse_Tag is present in your inventory.  Anti_Curse_Tags are consumed per each cursed equipment unequipped.")
+                "Using this item will un-do the slut curse on your currently equipped armor." & DDUtils.RNRN &
+                "To remove cursed (unremoveable) equipment, unequip it as usual while at least 1 Anti_Curse_Tag is present in your inventory.  Anti_Curse_Tags are consumed per each cursed equipment unequipped.")
     End Sub
 
     Overrides Sub use(ByRef p As Player)

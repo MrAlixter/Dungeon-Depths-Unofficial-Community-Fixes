@@ -1,9 +1,11 @@
 ﻿Public Class AngelFood
     Inherits Food
-    'Angel Food is a food item that reduces stamina by 20 and triggers the angel transformation
+
+    Public Const ITEM_NAME As String = "Angel_Food_Cake"
+
     Sub New()
         '|ID Info|
-        setName("Angel_Food_Cake")
+        setName(ITEM_NAME)
         id = 44
         tier = 3
 

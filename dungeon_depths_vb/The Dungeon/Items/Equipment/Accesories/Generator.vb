@@ -1,9 +1,11 @@
 ﻿Public Class Generator
     Inherits Accessory
 
+    Public Const ITEM_NAME As String = "Mobile_Powerbank"
+
     Sub New()
         '|ID Info|
-        setName("Mobile_Powerbank")
+        setName(ITEM_NAME)
         id = 110
         tier = Nothing
 

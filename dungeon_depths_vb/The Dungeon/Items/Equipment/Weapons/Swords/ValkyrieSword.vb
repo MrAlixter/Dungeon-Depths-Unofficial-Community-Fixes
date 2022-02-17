@@ -1,9 +1,11 @@
 ﻿Public Class ValkyrieSword
     Inherits Sword
 
+    Public Const ITEM_NAME As String = "Valkyrie_Sword"
+
     Sub New()
         '|ID Info|
-        setName("Valkyrie_Sword")
+        setName(ITEM_NAME)
         id = 96
         tier = 3
 

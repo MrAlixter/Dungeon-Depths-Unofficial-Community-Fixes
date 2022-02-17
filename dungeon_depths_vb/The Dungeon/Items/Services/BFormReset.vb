@@ -1,9 +1,11 @@
 ﻿Public Class BFormReset
     Inherits Item
 
+    Public Const ITEM_NAME As String = "Base_Form_Reset"
+
     Sub New()
         '|ID Info|
-        setName("Base_Form_Reset")
+        setName(ITEM_NAME)
         id = 131
         tier = Nothing
 

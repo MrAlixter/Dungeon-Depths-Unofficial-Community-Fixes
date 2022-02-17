@@ -1,9 +1,11 @@
 ﻿Public Class HallowedTalisman
     Inherits Accessory
 
+    Public Const ITEM_NAME As String = "Hallowed_Talisman"
+
     Sub New()
         '|ID Info|
-        setName("Hallowed_Talisman")
+        setName(ITEM_NAME)
         id = 283
         tier = Nothing
 

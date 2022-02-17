@@ -1,9 +1,11 @@
 ﻿Public Class HGorgonLesson
     Inherits Item
 
+    Public Const ITEM_NAME As String = "Gorgon_Lesson"
+
     Sub New()
         '|ID Info|
-        setName("Gorgon_Lesson")
+        setName(ITEM_NAME)
         id = 122
         tier = Nothing
 

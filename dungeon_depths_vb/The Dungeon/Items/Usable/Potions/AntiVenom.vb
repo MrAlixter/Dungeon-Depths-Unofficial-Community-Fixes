@@ -1,9 +1,11 @@
 ﻿Public Class AntiVenom
     Inherits Item
 
+    Public Const ITEM_NAME As String = "Anti_Venom"
+
     Sub New()
         '|ID Info|
-        setName("Anti_Venom")
+        setName(ITEM_NAME)
         id = 92
         tier = 3
 

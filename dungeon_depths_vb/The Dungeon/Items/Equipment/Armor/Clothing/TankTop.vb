@@ -1,9 +1,11 @@
 ﻿Public Class TankTop
     Inherits Armor
 
+    Public Const ITEM_NAME As String = "Tank_Top"
+
     Sub New()
         '|ID Info|
-        setName("Tank_Top")
+        setName(ITEM_NAME)
         id = 46
         tier = 2
 
@@ -32,6 +34,6 @@
 
         '|Description|
         setDesc("A grey tanktop made of a breathable fabric for the athletic." & DDUtils.RNRN &
-                          getSizeInformation() & vbcrlf & getStatInformation())
+                          getSizeInformation() & DDUtils.RNRN & getStatInformation())
     End Sub
 End Class

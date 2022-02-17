@@ -1,8 +1,11 @@
 ﻿Public Class MaidOutfit
     Inherits Armor
+
+    Public Const ITEM_NAME As String = "Maid_Outfit"
+
     Sub New()
         '|ID Info|
-        setName("Maid_Outfit")
+        setName(ITEM_NAME)
         id = 72
         tier = Nothing
 
@@ -33,6 +36,6 @@
 
         '|Description|
         setDesc("A stereotypical French maid's outfit." & DDUtils.RNRN & _
-                                    getSizeInformation() & vbcrlf & getStatInformation())
+                                    getSizeInformation() & DDUtils.RNRN & getStatInformation())
     End Sub
 End Class

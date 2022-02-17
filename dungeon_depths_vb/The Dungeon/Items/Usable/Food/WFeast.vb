@@ -1,8 +1,11 @@
 ﻿Public Class WFeast
     Inherits Food
+
+    Public Const ITEM_NAME As String = "Warrior's_Feast"
+
     Sub New()
         '|ID Info|
-        setName("Warrior's_Feast")
+        setName(ITEM_NAME)
         id = 133
         tier = Nothing
 

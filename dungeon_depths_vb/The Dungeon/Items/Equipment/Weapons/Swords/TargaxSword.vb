@@ -1,9 +1,11 @@
 ﻿Public Class TargaxSword
     Inherits Sword
 
+    Public Const ITEM_NAME As String = "Sword_of_the_Brutal"
+
     Sub New()
         '|ID Info|
-        setName("Sword_of_the_Brutal")
+        setName(ITEM_NAME)
         id = 24
         tier = Nothing
 

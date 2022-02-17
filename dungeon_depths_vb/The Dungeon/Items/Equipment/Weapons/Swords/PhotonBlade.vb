@@ -1,8 +1,11 @@
 ﻿Public Class PhotonBlade
     Inherits Sword
+
+    Public Const ITEM_NAME As String = "Photon_Blade"
+
     Sub New()
         '|ID Info|
-        setName("Photon_Blade")
+        setName(ITEM_NAME)
         id = 112
         tier = Nothing
 

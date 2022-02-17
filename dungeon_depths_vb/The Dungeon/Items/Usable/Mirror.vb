@@ -1,11 +1,12 @@
 ﻿Public Class Mirror
     Inherits Item
 
+    Public Const ITEM_NAME As String = "Mirror"
     Dim target As Player
 
     Sub New()
         '|ID Info|
-        setName("Mirror")
+        setName(ITEM_NAME)
         id = 36
         tier = 2
 

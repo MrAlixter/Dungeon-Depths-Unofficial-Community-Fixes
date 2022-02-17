@@ -2,9 +2,11 @@
 Public Class SAJumpsuit
     Inherits Armor
 
+    Public Const ITEM_NAME As String = "Space_Age_Jumpsuit"
+
     Sub New()
         '|ID Info|
-        setName("Space_Age_Jumpsuit")
+        setName(ITEM_NAME)
         id = 102
         tier = Nothing
 
@@ -35,6 +37,6 @@ Public Class SAJumpsuit
 
         '|Description|
         setDesc("This garment is clearly not from the world you are used to.  Even the fabric is futuristic; focusing ambient energy from the air." & DDUtils.RNRN &
-                        getSizeInformation() & vbcrlf & getStatInformation())
+                        getSizeInformation() & DDUtils.RNRN & getStatInformation())
     End Sub
 End Class

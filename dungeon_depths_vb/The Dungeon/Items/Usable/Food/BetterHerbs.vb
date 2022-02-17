@@ -1,9 +1,11 @@
 ﻿Public Class BetterHerbs
     Inherits Food
 
+    Public Const ITEM_NAME As String = "Better_Medicinal_Tea"
+
     Sub New()
         '|ID Info|
-        setName("Better_Medicinal_Tea")
+        setName(ITEM_NAME)
         id = 270
         tier = Nothing
 
@@ -17,7 +19,8 @@
 
         '|Description|
         setDesc("A slightly less bitter tea that restores more health." & DDUtils.RNRN &
-                       "+7 Stamina" & vbCrLf & "+110 Health")
+                "+7 Stamina" & vbCrLf &
+                "+110 Health")
     End Sub
 
     Public Overrides Sub effect(ByRef p As Player)

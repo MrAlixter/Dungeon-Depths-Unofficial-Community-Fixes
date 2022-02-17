@@ -1,14 +1,25 @@
 ﻿Public Class UtilityManual
     Inherits Item
+
+    Public Const ITEM_NAME As String = "Utility_Manual"
+
     Public Shared specials() As String = {"Ritual of Mana", "Cleanse", "Spot Fusion", "Uvona's Blessing", "Charm"}
+
     Sub New()
-        setName("Utility_Manual")
-        setDesc("A simple, leather-bound book that likely contains some helpful skills.")
+        '|ID Info|
+        setName(ITEM_NAME)
         id = 89
         tier = 2
-        usable = true
+
+        '|Item Flags|
+        usable = True
+
+        '|Stats|
         count = 0
         value = 500
+
+        '|Description|
+        setDesc("A simple, leather-bound book that likely contains some helpful skills.")
     End Sub
 
     Overrides Sub use(ByRef p As Player)

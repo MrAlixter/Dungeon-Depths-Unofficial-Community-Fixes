@@ -1,15 +1,24 @@
 ﻿Public Class MidasGuantlet
     Inherits Weapon
 
+    Public Const ITEM_NAME As String = "Midas_Gauntlet"
+
     Sub New()
-        setName("Midas_Gauntlet")
-        setDesc("A ornate glove that allows you to turn a monster to gold.")
+        '|ID Info|
+        setName(ITEM_NAME)
         id = 42
         tier = Nothing
-        usable = false
-        MyBase.a_boost = 0
+
+        '|Item Flags|
+        usable = False
+
+        '|Stats|
+        a_boost = 0
         count = 0
         value = 9999
+
+        '|Description|
+        setDesc("A ornate glove that allows you to turn a monster to gold.")
     End Sub
 
     Overrides Function attack(ByRef p As Player, ByRef m As Entity) As Integer

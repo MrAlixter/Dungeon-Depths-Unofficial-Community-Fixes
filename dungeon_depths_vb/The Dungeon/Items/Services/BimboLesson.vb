@@ -1,9 +1,11 @@
 ﻿Public Class BimboLesson
     Inherits Item
 
+    Public Const ITEM_NAME As String = "Bimbo_Lesson"
+
     Sub New()
         '|ID Info|
-        setName("Bimbo_Lesson")
+        setName(ITEM_NAME)
         id = 87
         tier = Nothing
 

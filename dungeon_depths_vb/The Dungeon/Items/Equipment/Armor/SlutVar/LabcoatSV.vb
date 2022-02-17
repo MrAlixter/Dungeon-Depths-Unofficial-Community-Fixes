@@ -2,9 +2,11 @@
 Public Class LabcoatSV
     Inherits Armor
 
+    Public Const ITEM_NAME As String = "Labcoat​"
+
     Sub New()
         '|ID Info|
-        setName("Labcoat​")
+        setName(ITEM_NAME)
         id = 107
         tier = Nothing
 
@@ -38,6 +40,6 @@ Public Class LabcoatSV
 
         '|Description|
         setDesc("A white labcoat that, despite not containing much underneath itself, still gives its wearer an air of scientific authority" & DDUtils.RNRN &
-                        getSizeInformation() & vbcrlf & getStatInformation())
+                        getSizeInformation() & DDUtils.RNRN & getStatInformation())
     End Sub
 End Class

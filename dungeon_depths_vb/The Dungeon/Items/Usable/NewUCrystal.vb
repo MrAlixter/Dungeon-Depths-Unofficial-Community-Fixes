@@ -1,9 +1,11 @@
 ﻿Public Class NewUCrystal
     Inherits Item
 
+    Public Const ITEM_NAME As String = "New-U_Crystal"
+
     Sub New()
         '|ID Info|
-        setName("New-U_Crystal")
+        setName(ITEM_NAME)
         id = 154
         tier = Nothing
 
@@ -17,7 +19,6 @@
 
         '|Description|
         setDesc("A debugging item that lets one do the random transformation.  Use your powers for good, ok?")
-
     End Sub
 
     Overrides Sub use(ByRef p As Player)

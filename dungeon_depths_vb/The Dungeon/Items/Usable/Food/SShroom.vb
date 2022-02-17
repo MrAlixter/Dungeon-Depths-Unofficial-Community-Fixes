@@ -1,9 +1,11 @@
 ﻿Public Class SShroom
     Inherits Food
-    'Apple is a food item that reduces stamina by 15
+
+    Public Const ITEM_NAME As String = "Spatial_Shroom"
+
     Sub New()
         '|ID Info|
-        setName("Spatial_Shroom")
+        setName(ITEM_NAME)
         id = 108
         tier = 1
 

@@ -2,9 +2,11 @@
 Public Class PhotonBikini
     Inherits Armor
 
+    Public Const ITEM_NAME As String = "Photon_Bikini"
+
     Sub New()
         '|ID Info|
-        setName("Photon_Bikini")
+        setName(ITEM_NAME)
         id = 105
         tier = Nothing
 
@@ -37,7 +39,7 @@ Public Class PhotonBikini
         '|Description|
         setDesc("Though at a glance it may seem unlikely, this swimsuit houses a powerful shield generator that harnesses its users mana to withstand impacts." & DDUtils.RNRN & _
                         "Hardlight Effect" & DDUtils.RNRN &
-                        getSizeInformation() & vbcrlf & getStatInformation())
+                        getSizeInformation() & DDUtils.RNRN & getStatInformation())
     End Sub
 
     Public Overrides Sub onEquip(ByRef p As Player)

@@ -1,9 +1,11 @@
 ﻿Public Class AntiFreeze
     Inherits Food
 
+    Public Const ITEM_NAME As String = "Antifreeze"
+
     Sub New()
         '|ID Info|
-        setName("Antifreeze")
+        setName(ITEM_NAME)
         id = 178
         tier = Nothing
 

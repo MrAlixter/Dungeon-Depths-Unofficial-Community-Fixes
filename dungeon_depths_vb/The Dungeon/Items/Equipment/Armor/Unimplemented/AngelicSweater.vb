@@ -1,23 +1,25 @@
 ﻿Public Class AngelicSweater
     Inherits Armor
 
+    Public Const ITEM_NAME As String = "Angelic_Sweater"
+
     Sub New()
         '|ID Info|
-        setName("Angelic_Sweater")
+        setName(ITEM_NAME)
         id = 199
         tier = Nothing
 
         '|Item Flags|
         usable = false
-        MyBase.droppable = False
+        droppable = False
         rando_inv_allowed = False
-        MyBase.compress_breast = True
-        MyBase.hide_dick = False
+        compress_breast = True
+        hide_dick = False
 
         '|Stats|
         h_boost = 10
-        MyBase.d_boost = 5
-        MyBase.m_boost = 20
+        d_boost = 5
+        m_boost = 20
         count = 0
         value = 7777
 
@@ -35,6 +37,7 @@
 
         '|Description|
         setDesc("A glittering, heavenly soft sweater." & DDUtils.RNRN &
-                                     getSizeInformation() & vbcrlf & getStatInformation())
+                getSizeInformation() & DDUtils.RNRN &
+                getStatInformation())
     End Sub
 End Class

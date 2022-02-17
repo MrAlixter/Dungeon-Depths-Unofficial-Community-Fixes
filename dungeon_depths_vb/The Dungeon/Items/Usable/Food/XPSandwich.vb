@@ -1,8 +1,11 @@
 ﻿Public Class XPSandwich
     Inherits Food
+
+    Public Const ITEM_NAME As String = "XP_Sandwich"
+
     Sub New()
         '|ID Info|
-        setName("XP_Sandwich")
+        setName(ITEM_NAME)
         id = 228
         tier = Nothing
 
@@ -19,7 +22,6 @@
         '|Description|
         setDesc("Mmmmm, sandwich..." & DDUtils.RNRN &
                 "+25 Stamina")
-
     End Sub
 
     Public Overrides Sub Effect(ByRef p As Player)

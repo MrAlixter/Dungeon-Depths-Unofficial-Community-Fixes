@@ -1,9 +1,11 @@
 ﻿Public Class SevenBandedRing
     Inherits Accessory
 
+    Public Const ITEM_NAME As String = "Seven_Banded_Ring"
+
     Sub New()
         '|ID Info|
-        setName("Seven_Banded_Ring")
+        setName(ITEM_NAME)
         id = 223
         tier = Nothing
 
@@ -21,8 +23,8 @@
         mInd = New Tuple(Of Integer, Boolean, Boolean)(0, False, False)
 
         '|Description|
-        setDesc("A ornate golden ring composed of seven interlocking bands." & DDUtils.RNRN & _
-                              "Grants the ""Lucky 7"" perk to its wearer.  This perk provides a saving roll if a spell would miss/backfire.")
+        setDesc("A ornate golden ring composed of seven interlocking bands." & DDUtils.RNRN &
+                "Grants the ""Lucky 7"" perk to its wearer.  This perk provides a saving roll if a spell would miss/backfire.")
     End Sub
     Public Overrides Sub onEquip(ByRef p As Player)
         p.perks(perk.lucky7) = 1

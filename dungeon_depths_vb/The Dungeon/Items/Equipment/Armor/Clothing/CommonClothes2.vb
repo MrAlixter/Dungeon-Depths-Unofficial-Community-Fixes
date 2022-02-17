@@ -1,20 +1,26 @@
 ﻿Public Class CommonClothes2
     Inherits Armor
 
-    Sub New()
-        setName("Common_Garb")
+    Public Const ITEM_NAME As String = "Common_Garb"
 
+    Sub New()
+        '|ID Info|
+        setName(ITEM_NAME)
         id = 186
         tier = Nothing
-        usable = false
-        MyBase.d_boost = 1
-        MyBase.m_boost = 1
+
+        '|Item Flags|
+        usable = False
+        compress_breast = True
+        slut_var_ind = 191
+
+        '|Stats|
+        d_boost = 1
+        m_boost = 1
         count = 0
         value = 0
-        MyBase.compress_breast = True
-        MyBase.slut_var_ind = 191
 
-
+        '|Image Index|
         bsizeneg1 = New Tuple(Of Integer, Boolean, Boolean)(2, False, False)
         bsize0 = New Tuple(Of Integer, Boolean, Boolean)(259, True, True)
         bsize1 = New Tuple(Of Integer, Boolean, Boolean)(2, True, False)
@@ -25,7 +31,9 @@
         usize1 = New Tuple(Of Integer, Boolean, Boolean)(4, True, False)
         usize2 = New Tuple(Of Integer, Boolean, Boolean)(5, True, False)
 
+        '|Description|
         setDesc("Common garb for the common adventurer." & DDUtils.RNRN &
-                                      getSizeInformation() & vbcrlf & getStatInformation())
+                getSizeInformation() & DDUtils.RNRN &
+                getStatInformation())
     End Sub
 End Class

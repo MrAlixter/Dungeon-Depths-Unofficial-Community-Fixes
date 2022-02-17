@@ -1,7 +1,7 @@
 ﻿Public Class MagGirlWand
     Inherits Wand
 
-    Public Const ITEM_NAME = "Magical_Girl_Wand"
+    Public Const ITEM_NAME As String = "Magical_Girl_Wand"
 
     Protected uniform_id As Integer = 10
 

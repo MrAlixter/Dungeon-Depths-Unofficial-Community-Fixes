@@ -1,9 +1,11 @@
 ﻿Public Class BronzeBikini
     Inherits Armor
 
+    Public Const ITEM_NAME As String = "Bronze_Bikini"
+
     Sub New()
         '|ID Info|
-        setName("Bronze_Bikini")
+        setName(ITEM_NAME)
         id = 85
         tier = Nothing
 
@@ -36,6 +38,6 @@
 
         '|Description|
         setDesc("A bronze bikini covered in a fine mail of bronze rings.  While it won't stop very many hits, it is also lightweight enough to move around freely." & DDUtils.RNRN &
-                                   getSizeInformation() & vbcrlf & getStatInformation())
+                                   getSizeInformation() & DDUtils.RNRN & getStatInformation())
     End Sub
 End Class

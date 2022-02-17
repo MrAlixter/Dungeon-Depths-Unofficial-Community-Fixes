@@ -1,9 +1,11 @@
 ﻿Public Class PApple
     Inherits Food
 
+    Public Const ITEM_NAME As String = "Apple​"
+
     Sub New()
         '|ID Info|
-        setName("Apple​")
+        setName(ITEM_NAME)
         id = 31
         tier = 3
 

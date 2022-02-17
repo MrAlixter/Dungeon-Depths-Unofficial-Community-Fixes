@@ -1,7 +1,7 @@
 ﻿Public Class PirateHandbook
     Inherits Item
 
-    Public Const ITEM_NAME = "Pirate_Handbook"
+    Public Const ITEM_NAME As String = "Pirate_Handbook"
 
     Sub New()
         '|ID Info|

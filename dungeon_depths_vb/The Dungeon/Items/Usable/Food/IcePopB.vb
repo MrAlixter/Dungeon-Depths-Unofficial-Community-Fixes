@@ -1,8 +1,11 @@
 ﻿Public Class IcePopB
     Inherits Food
+
+    Public Const ITEM_NAME As String = "Ice_Pop​"
+
     Sub New()
         '|ID Info|
-        setName("Ice_Pop​")
+        setName(ITEM_NAME)
         id = 296
         tier = Nothing
 

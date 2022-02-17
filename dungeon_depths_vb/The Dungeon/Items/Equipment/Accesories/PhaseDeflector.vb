@@ -1,9 +1,11 @@
 ﻿Public Class PhaseDeflector
     Inherits Accessory
 
+    Public Const ITEM_NAME As String = "Phase_Deflector"
+
     Sub New()
         '|ID Info|
-        setName("Phase_Deflector")
+        setName(ITEM_NAME)
         id = 281
         tier = Nothing
 

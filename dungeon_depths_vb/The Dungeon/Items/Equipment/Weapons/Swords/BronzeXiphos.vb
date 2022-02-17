@@ -1,9 +1,11 @@
 ﻿Public Class BronzeXiphos
     Inherits Sword
 
+    Public Const ITEM_NAME As String = "Bronze_Xiphos"
+
     Sub New()
         '|ID Info|
-        setName("Bronze_Xiphos")
+        setName(ITEM_NAME)
         id = 23
         tier = 3
 

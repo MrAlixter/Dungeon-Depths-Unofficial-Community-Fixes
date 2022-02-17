@@ -1,9 +1,11 @@
 ﻿Public Class PlantBikini
     Inherits Armor
 
+    Public Const ITEM_NAME As String = "Plant_Bikini"
+
     Sub New()
         '|ID Info|
-        setName("Plant_Bikini")
+        setName(ITEM_NAME)
         id = 303
         tier = Nothing
 
@@ -36,7 +38,7 @@
 
         '|Description|
         setDesc("A wrap of leaves, flowers, and vines that makes up for its lack of support by bolstering one's health and mana." & DDUtils.RNRN &
-                getSizeInformation() & vbCrLf &
+                getSizeInformation() & DDUtils.RNRN &
                 getStatInformation())
     End Sub
 End Class

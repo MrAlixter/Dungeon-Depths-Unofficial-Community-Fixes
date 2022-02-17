@@ -2,9 +2,11 @@
 Public Class BarbArmor
     Inherits Armor
 
+    Public Const ITEM_NAME As String = "Barbarian_Armor"
+
     Sub New()
         '|ID Info|
-        setName("Barbarian_Armor")
+        setName(ITEM_NAME)
         id = 101
         tier = Nothing
 
@@ -40,6 +42,6 @@ Public Class BarbArmor
 
         '|Description|
         setDesc("While this ""armor"" may not provide the same defense as other sets, it greatly improves offensive options." & DDUtils.RNRN &
-                                      getSizeInformation() & vbcrlf & getStatInformation())
+                                      getSizeInformation() & DDUtils.RNRN & getStatInformation())
     End Sub
 End Class

@@ -1,14 +1,23 @@
 ﻿Public Class AttackCharm
     Inherits Item
-    'AttackCharms are useable items that permenantly boost player attack by 2
+
+    Public Const ITEM_NAME As String = "Attack_Charm"
+
     Sub New()
-        setName("Attack_Charm")
-        setDesc("A charm that slightly boosts your attack.")
+        '|ID Info|
+        setName(ITEM_NAME)
         id = 50
         tier = 2
-        usable = true
+
+        '|Item Flags|
+        usable = True
+
+        '|Stats|
         count = 0
         value = 1750
+
+        '|Description|
+        setDesc("A charm that slightly boosts your attack.")
     End Sub
 
     Overrides Sub use(ByRef p As Player)

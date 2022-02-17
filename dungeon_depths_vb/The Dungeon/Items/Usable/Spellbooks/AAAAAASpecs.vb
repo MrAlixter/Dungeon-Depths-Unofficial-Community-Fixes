@@ -1,9 +1,11 @@
 ﻿Public Class AAAAAASpecs
     Inherits Item
 
+    Public Const ITEM_NAME As String = "AAAAAA_Specification"
+
     Sub New()
         '|ID Info|
-        setName("AAAAAA_Specification")
+        setName(ITEM_NAME)
         id = 279
         tier = Nothing
 

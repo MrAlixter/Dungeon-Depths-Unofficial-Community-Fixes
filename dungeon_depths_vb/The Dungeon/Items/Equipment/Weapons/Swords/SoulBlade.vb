@@ -1,7 +1,7 @@
 ﻿Public Class SoulBlade
     Inherits Sword
 
-    Public Const ITEM_NAME = "SoulBlade"
+    Public Const ITEM_NAME As String = "SoulBlade"
 
     Sub New()
         '|ID Info|

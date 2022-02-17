@@ -1,9 +1,11 @@
 ﻿Public Class MagGirlWandP
     Inherits MagGirlWand
 
+    Public Shadows Const ITEM_NAME As String = "Mag._Girl_Wand_(P)"
+
     Sub New()
         '|ID Info|
-        setName("Mag._Girl_Wand_(P)")
+        setName(ITEM_NAME)
         id = 204
         tier = Nothing
 
@@ -20,7 +22,6 @@
         '|Description|
         setDesc("A mysterious wand used by a mysterious protector." & DDUtils.RNRN &
                 getStatInformation())
-
     End Sub
 
     Public Overrides Sub onEquip(ByRef p As Player)

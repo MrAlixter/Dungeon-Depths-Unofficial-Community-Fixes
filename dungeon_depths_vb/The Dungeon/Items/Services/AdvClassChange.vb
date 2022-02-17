@@ -1,12 +1,14 @@
 ﻿Public Class AdvClassChange
     Inherits Item
 
+    Public Const ITEM_NAME As String = "Advanced_Class_Change"
+    Public Const COST As Integer = 5900
+
     Public Shared selectedClass As String = "Classless"
-    Const COST As Integer = 5900
 
     Sub New()
         '|ID Info|
-        setName("Advanced_Class_Change")
+        setName(ITEM_NAME)
         id = 124
         tier = Nothing
 

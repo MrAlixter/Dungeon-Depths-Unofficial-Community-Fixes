@@ -1,9 +1,11 @@
 ﻿Public Class Glowstick
     Inherits Item
 
+    Public Const ITEM_NAME As String = "Glowstick"
+
     Sub New()
         '|ID Info|
-        setName("Glowstick")
+        setName(ITEM_NAME)
         id = 37
         tier = 1
 

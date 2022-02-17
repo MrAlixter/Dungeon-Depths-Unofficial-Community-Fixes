@@ -1,14 +1,25 @@
 ﻿Public Class CSpellbook
     Inherits Item
+
+    Public Const ITEM_NAME As String = "Crimson_Spellbook"
+
     Public Shared spells() As String = {"Raise Lust", "Puff Up", "Hellfireball", "Reductive Mending"}
+
     Sub New()
-        setName("Crimson_Spellbook")
-        setDesc("A smoldering leather-bound book that contains something magic written by a succubus.")
+        '|ID Info|
+        setName(ITEM_NAME)
         id = 226
         tier = Nothing
-        usable = true
+
+        '|Item Flags|
+        usable = True
+
+        '|Stats|
         count = 0
         value = 666
+
+        '|Description|
+        setDesc("A smoldering leather-bound book that contains something magic written by a succubus.")
     End Sub
 
     Overrides Sub use(ByRef p As Player)

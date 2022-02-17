@@ -1,9 +1,11 @@
 ﻿Public Class PaleoDiary
     Inherits Item
 
+    Public Const ITEM_NAME As String = "Paleomancer's_Diary"
+
     Sub New()
         '|ID Info|
-        setName("Paleomancer's_Diary")
+        setName(ITEM_NAME)
         id = 277
         tier = Nothing
 

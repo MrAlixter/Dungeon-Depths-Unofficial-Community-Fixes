@@ -1,9 +1,11 @@
 ﻿Public Class BracedHeadband
     Inherits Accessory
 
+    Public Const ITEM_NAME As String = "Braced_Headband"
+
     Sub New()
         '|ID Info|
-        setName("Braced_Headband")
+        setName(ITEM_NAME)
         id = 139
         tier = 2
 

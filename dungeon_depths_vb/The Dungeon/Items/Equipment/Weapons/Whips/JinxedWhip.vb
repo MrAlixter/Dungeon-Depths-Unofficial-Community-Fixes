@@ -1,9 +1,11 @@
 ﻿Public Class JinxedWhip
     Inherits Whip
 
+    Public Const ITEM_NAME As String = "Jinxed_Whip"
+
     Sub New()
         '|ID Info|
-        setName("Jinxed_Whip")
+        setName(ITEM_NAME)
         id = 260
         tier = Nothing
 
@@ -19,8 +21,8 @@
 
         '|Description|
         setDesc("A sleek golden whip that seems as though it should be worth far more than " & value & " gold.  Occasionally it seems as though the whip is moving on its own." & DDUtils.RNRN &
-                       "Each hit carries a 1 in 4 chance of an additional attack, and a 1 in 4 chance of backfiring." & DDUtils.RNRN &
-                       getStatInformation())
+                "Each hit carries a 1 in 4 chance of an additional attack, and a 1 in 4 chance of backfiring." & DDUtils.RNRN &
+                getStatInformation())
     End Sub
 
     Overrides Function attack(ByRef p As Player, ByRef m As Entity) As Integer

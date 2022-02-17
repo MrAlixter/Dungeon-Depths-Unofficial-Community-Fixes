@@ -1,9 +1,11 @@
 ﻿Public Class GardenSalad
     Inherits Food
 
+    Public Const ITEM_NAME As String = "Garden_Salad"
+
     Sub New()
         '|ID Info|
-        setName("Garden_Salad")
+        setName(ITEM_NAME)
         id = 117
         tier = Nothing
 

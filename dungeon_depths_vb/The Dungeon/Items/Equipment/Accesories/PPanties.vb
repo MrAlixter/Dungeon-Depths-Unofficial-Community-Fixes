@@ -1,8 +1,11 @@
 ﻿Public Class PPanties
     Inherits Accessory
+
+    Public Const ITEM_NAME As String = "Pink_Panties"
+
     Sub New()
         '|ID Info|
-        setName("Pink_Panties")
+        setName(ITEM_NAME)
         id = 180
         tier = Nothing
 

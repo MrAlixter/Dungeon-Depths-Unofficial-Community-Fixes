@@ -1,8 +1,11 @@
 ﻿Public Class VialOfFire
     Inherits Item
+
+    Public Const ITEM_NAME As String = "Vial_of_Fire"
+
     Sub New()
         '|ID Info|
-        setName("Vial_of_Fire")
+        setName(ITEM_NAME)
         id = 205
         tier = Nothing
 

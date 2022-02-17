@@ -1,9 +1,11 @@
 ﻿Public Class CowCosplayD
     Inherits Armor
 
+    Public Const ITEM_NAME As String = "Cow_Cosplay_(Demonic)"
+
     Sub New()
         '|ID Info|
-        setName("Cow_Cosplay_(Demonic)")
+        setName(ITEM_NAME)
         id = 221
         tier = Nothing
 
@@ -34,7 +36,7 @@
 
         '|Description|
         setDesc("An unholy outfit for busty bovine demons.  While it grants its wearer an undenyable charm, it does make it harder for other succubi to take them seriously as anything other than a pet." & DDUtils.RNRN &
-                getSizeInformation() & vbCrLf &
+                getSizeInformation() & DDUtils.RNRN &
                 getStatInformation())
     End Sub
 End Class

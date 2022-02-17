@@ -1,9 +1,11 @@
 ﻿Public Class MOAmaraphne
     Inherits Accessory
 
+    Public Const ITEM_NAME As String = "Mark_of_Amaraphne"
+
     Sub New()
         '|ID Info|
-        setName("Mark_of_Amaraphne")
+        setName(ITEM_NAME)
         id = 327
         If DDDateTime.isValen Then tier = 3 Else tier = Nothing
 

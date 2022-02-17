@@ -1,9 +1,11 @@
 ﻿Public Class GelArmor
     Inherits Armor
 
+    Public Const ITEM_NAME As String = "Gelatinous_Shell"
+
     Sub New()
         '|ID Info|
-        setName("Gelatinous_Shell")
+        setName(ITEM_NAME)
         id = 137
         tier = Nothing
 
@@ -41,7 +43,7 @@
 
         '|Description|
         setDesc("An extra layer of a more durable goo that a slime can don for extra protection." & DDUtils.RNRN &
-                getSizeInformation() & vbCrLf & getStatInformation())
+                getSizeInformation() & DDUtils.RNRN & getStatInformation())
     End Sub
 
     Public Overrides Sub onEquip(ByRef p As Player)

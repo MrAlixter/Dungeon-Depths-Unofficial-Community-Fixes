@@ -1,9 +1,11 @@
 ﻿Public Class SpidersilkBikini
     Inherits Armor
 
+    Public Const ITEM_NAME As String = "Spidersilk_Bikini"
+
     Sub New()
         '|ID Info|
-        setName("Spidersilk_Bikini")
+        setName(ITEM_NAME)
         id = 240
         tier = Nothing
 
@@ -36,7 +38,8 @@
         usize4 = New Tuple(Of Integer, Boolean, Boolean)(317, True, True)
 
         '|Description|
-        setDesc("A nearly invisible bikini composed of gossamer strands of spidersilk." & DDUtils.RNRN & _
-                        getSizeInformation() & vbcrlf & getStatInformation())
+        setDesc("A nearly invisible bikini composed of gossamer strands of spidersilk." & DDUtils.RNRN &
+                getSizeInformation() & DDUtils.RNRN &
+                getStatInformation())
     End Sub
 End Class

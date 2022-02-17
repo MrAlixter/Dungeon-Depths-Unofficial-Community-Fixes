@@ -1,9 +1,11 @@
 ﻿Public Class NecromancerRobe
     Inherits Armor
 
+    Public Const ITEM_NAME As String = "Necromancer's_Robes"
+
     Sub New()
         '|ID Info|
-        setName("Necromancer's_Robes")
+        setName(ITEM_NAME)
         id = 300
         tier = Nothing
 
@@ -39,7 +41,7 @@
 
         '|Description|
         setDesc("A pitch black robe that identifies its wearer as a mage that specializes in equally dark magic." & DDUtils.RNRN &
-                getSizeInformation() & vbCrLf &
+                getSizeInformation() & DDUtils.RNRN &
                 getStatInformation())
     End Sub
 End Class

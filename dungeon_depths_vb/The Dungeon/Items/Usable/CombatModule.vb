@@ -1,9 +1,11 @@
 ﻿Public Class CombatModule
     Inherits Item
 
+    Public Const ITEM_NAME As String = "Combat_Module"
+
     Sub New()
         '|ID Info|
-        setName("Combat_Module")
+        setName(ITEM_NAME)
         id = 142
         tier = Nothing
 

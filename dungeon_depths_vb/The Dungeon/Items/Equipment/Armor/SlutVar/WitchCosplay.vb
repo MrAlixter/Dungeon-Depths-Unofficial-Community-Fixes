@@ -1,7 +1,7 @@
 ﻿Public Class WitchCosplay
     Inherits Armor
 
-    Public Const ITEM_NAME = "Witch_Cosplay"
+    Public Const ITEM_NAME As String = "Witch_Cosplay"
 
     Sub New()
         '|ID Info|
@@ -34,6 +34,6 @@
 
         '|Description|
         setDesc("A glamourous garment made more to show off one's body than to show off any magical ability." & vbCrLf & _
-                             getSizeInformation() & vbcrlf & getStatInformation())
+                             getSizeInformation() & DDUtils.RNRN & getStatInformation())
     End Sub
 End Class

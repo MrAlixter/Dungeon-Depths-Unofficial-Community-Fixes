@@ -1,8 +1,11 @@
 ﻿Public Class EveryNewItem
-    Inherits item
+    Inherits Item
+
+    Public Const ITEM_NAME As String = "Every_New_Item"
+
     Sub New()
         '|ID Info|
-        setName("Every_New_Item")
+        setName(ITEM_NAME)
         id = 143
         tier = Nothing
 

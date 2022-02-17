@@ -1,11 +1,13 @@
 ﻿Public Class CowArmor
     Inherits Armor
 
+    Public Const ITEM_NAME As String = "Cow_Print_Armor"
+
     Dim oldHat As Tuple(Of Integer, Boolean, Boolean) = New Tuple(Of Integer, Boolean, Boolean)(0, True, False)
 
     Sub New()
         '|ID Info|
-        setName("Cow_Print_Armor")
+        setName(ITEM_NAME)
         id = 262
         tier = Nothing
 
@@ -39,7 +41,8 @@
         usize5 = New Tuple(Of Integer, Boolean, Boolean)(336, True, True)
 
         '|Description|
-        setDesc("An adorable cat themed set of lightweight armor that also boosts attack. Nya." & DDUtils.RNRN &
-                                      getSizeInformation() & vbcrlf & getStatInformation())
+        setDesc("A black and white set of plate mail, perfect for someone going for a bovine aestetic." & DDUtils.RNRN &
+                getSizeInformation() & DDUtils.RNRN &
+                getStatInformation())
     End Sub
 End Class

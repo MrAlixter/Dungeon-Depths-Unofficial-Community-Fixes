@@ -1,14 +1,25 @@
 ﻿Public Class CombatManual
     Inherits Item
+
+    Public Const ITEM_NAME As String = "Combat_Manual"
+
     Public Shared specials() As String = {"Rapid Fire Jabs", "Focused Roundhouse", "Heavy Blow", "Focused Barrage", "Aura Cannon", "Dodge"}
+
     Sub New()
-        setName("Combat_Manual")
-        setDesc("A simple, leather-bound book that likely contains some skills specifically for combat.")
+        '|ID Info|
+        setName(ITEM_NAME)
         id = 88
         tier = 2
-        usable = true
+
+        '|Item Flags|
+        usable = True
+
+        '|Stats|
         count = 0
         value = 500
+
+        '|Description|
+        setDesc("A simple, leather-bound book that likely contains some skills specifically for combat.")
     End Sub
 
     Overrides Sub use(ByRef p As Player)

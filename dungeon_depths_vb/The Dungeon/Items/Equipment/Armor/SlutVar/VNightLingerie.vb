@@ -1,9 +1,11 @@
 ﻿Public Class VNightLingerie
     Inherits Armor
 
+    Public Const ITEM_NAME As String = "Val._Night_Lingerie"
+
     Sub New()
         '|ID Info|
-        setName("Val._Night_Lingerie")
+        setName(ITEM_NAME)
         id = 78
         If DDDateTime.isValen Then tier = 2 Else tier = Nothing
 
@@ -33,6 +35,6 @@
 
         '|Description|
         setDesc("A lovely set of black, white, and red undergarments perfect for a romantic evening with a signifigant other." & DDUtils.RNRN &
-                       getSizeInformation() & vbcrlf & getStatInformation())
+                       getSizeInformation() & DDUtils.RNRN & getStatInformation())
     End Sub
 End Class

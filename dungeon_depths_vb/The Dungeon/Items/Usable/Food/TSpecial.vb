@@ -1,9 +1,11 @@
 ﻿Public Class TSpecial
     Inherits Food
 
+    Public Const ITEM_NAME As String = "Tavern_Special"
+
     Sub New()
         '|ID Info|
-        setName("Tavern_Special")
+        setName(ITEM_NAME)
         id = 135
         tier = Nothing
 

@@ -1,9 +1,11 @@
 ﻿Public Class HeartNecklace
     Inherits Accessory
-    'The heart necklace provides no bonuses
+
+    Public Const ITEM_NAME As String = "Heart_Necklace"
+
     Sub New()
         '|ID Info|
-        setName("Heart_Necklace")
+        setName(ITEM_NAME)
         id = 66
         tier = Nothing
 

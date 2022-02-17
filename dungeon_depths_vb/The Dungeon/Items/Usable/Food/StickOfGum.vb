@@ -1,7 +1,7 @@
 ﻿Public Class StickOfGum
     Inherits Food
 
-    Public Const ITEM_NAME = "Stick_of_Gum"
+    Public Const ITEM_NAME As String = "Stick_of_Gum"
 
     Sub New()
         '|ID Info|

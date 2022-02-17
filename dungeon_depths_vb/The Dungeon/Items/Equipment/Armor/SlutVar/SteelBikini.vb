@@ -1,7 +1,7 @@
 ﻿Public Class SteelBikini
     Inherits Armor
 
-    Public Const ITEM_NAME = "Steel_Bikini"
+    Public Const ITEM_NAME As String = "Steel_Bikini"
 
     Sub New()
         '|ID Info|
@@ -37,6 +37,6 @@
 
         '|Description|
         setDesc("A skimpy steel swimsuit that gives a new meaning to ""breast plates""." & DDUtils.RNRN & _
-                                   getSizeInformation() & vbCrLf & getStatInformation())
+                                   getSizeInformation() & DDUtils.RNRN & getStatInformation())
     End Sub
 End Class

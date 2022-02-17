@@ -1,8 +1,11 @@
 ﻿Public Class GemOfDark
     Inherits Item
+
+    Public Const ITEM_NAME As String = "Gem_of_Darkness"
+
     Sub New()
         '|ID Info|
-        setName("Gem_of_Darkness")
+        setName(ITEM_NAME)
         id = 215
         tier = Nothing
 
@@ -16,8 +19,7 @@
         value = 5030
 
         '|Description|
-        setDesc("A deep ebony jewel that looks like it could be embeded into a wand")
-
+        setDesc("A deep ebony jewel that looks like it could be embeded into a wand.")
     End Sub
 
     Overrides Sub use(ByRef p As Player)

@@ -1,7 +1,7 @@
 ﻿Public Class VialOfSlime
     Inherits Item
 
-    Public Const ITEM_NAME = "Vial_of_Slime"
+    Public Const ITEM_NAME As String = "Vial_of_Slime"
 
     Sub New()
         '|ID Info|

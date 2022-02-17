@@ -1,9 +1,11 @@
 ﻿Public Class PhaseVibrator
-
     Inherits Item
+
+    Public Const ITEM_NAME As String = "Phase_Vibrator"
+
     Sub New()
         '|ID Info|
-        setName("Phase_Vibrator")
+        setName(ITEM_NAME)
         id = 280
         tier = Nothing
 

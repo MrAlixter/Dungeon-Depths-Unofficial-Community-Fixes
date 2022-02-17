@@ -1,9 +1,11 @@
 ﻿Public Class CowCosplay
     Inherits Armor
 
+    Public Const ITEM_NAME As String = "Cow_Cosplay"
+
     Sub New()
         '|ID Info|
-        setName("Cow_Cosplay")
+        setName(ITEM_NAME)
         id = 196
         tier = Nothing
 
@@ -39,7 +41,7 @@
 
         '|Description|
         setDesc("A cow print bra created to hold cow sized breasts." & DDUtils.RNRN &
-                getSizeInformation() & vbCrLf &
+                getSizeInformation() & DDUtils.RNRN &
                 getStatInformation())
     End Sub
 End Class

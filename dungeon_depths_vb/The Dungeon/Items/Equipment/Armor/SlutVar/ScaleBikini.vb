@@ -1,9 +1,11 @@
 ﻿Public Class ScaleBikini
     Inherits Armor
 
+    Public Const ITEM_NAME As String = "Scale_Bikini"
+
     Sub New()
         '|ID Info|
-        setName("Scale_Bikini")
+        setName(ITEM_NAME)
         id = 177
         tier = Nothing
 
@@ -37,6 +39,6 @@
 
         '|Description|
         setDesc("This bikini consists of a set of plates that contour to its wearer's breasts.  While the scales making up this ""armor"" don't offer much in the way of protection, they also don't get in the way." & DDUtils.RNRN & _
-                                     getSizeInformation() & vbcrlf & getStatInformation())
+                                     getSizeInformation() & DDUtils.RNRN & getStatInformation())
     End Sub
 End Class

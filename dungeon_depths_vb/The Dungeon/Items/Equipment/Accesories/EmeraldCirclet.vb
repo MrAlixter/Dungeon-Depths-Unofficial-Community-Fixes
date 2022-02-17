@@ -1,9 +1,11 @@
 ﻿Public Class EmeraldCirclet
     Inherits Accessory
 
+    Public Const ITEM_NAME As String = "Emerald_Circlet"
+
     Sub New()
         '|ID Info|
-        setName("Emerald_Circlet")
+        setName(ITEM_NAME)
         id = 140
         tier = 2
 

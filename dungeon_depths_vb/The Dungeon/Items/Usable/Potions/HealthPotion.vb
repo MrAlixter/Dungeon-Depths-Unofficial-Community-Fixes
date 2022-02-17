@@ -1,7 +1,7 @@
 ﻿Public Class HealthPotion
     Inherits Item
 
-    Public Const ITEM_NAME = "Health_Potion"
+    Public Const ITEM_NAME As String = "Health_Potion"
 
     Sub New()
         '|ID Info|

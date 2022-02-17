@@ -1,9 +1,11 @@
 ﻿Public Class GrapplingHook
     Inherits Item
 
+    Public Const ITEM_NAME As String = "Grappling_Hook"
+
     Sub New()
         '|ID Info|
-        setName("Grappling_Hook")
+        setName(ITEM_NAME)
         id = 148
         tier = Nothing
 

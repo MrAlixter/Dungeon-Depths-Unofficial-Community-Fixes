@@ -1,9 +1,11 @@
 ﻿Public Class STBodysuit
     Inherits Armor
 
+    Public Const ITEM_NAME As String = "Skin_Tight_Bodysuit"
+
     Sub New()
         '|ID Info|
-        setName("Skin_Tight_Bodysuit")
+        setName(ITEM_NAME)
         id = 103
         tier = Nothing
 
@@ -35,6 +37,6 @@
 
         '|Description|
         setDesc("This sleek bodysuit leaves very little to the imagination, despite covering most of one's body.  Its thin, but flexible material trades any possible defense to maximize energy production." & DDUtils.RNRN & _
-                                      getSizeInformation() & vbcrlf & getStatInformation())
+                                      getSizeInformation() & DDUtils.RNRN & getStatInformation())
     End Sub
 End Class

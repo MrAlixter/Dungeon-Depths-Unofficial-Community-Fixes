@@ -1,8 +1,11 @@
 ﻿Public Class Cupcake
     Inherits Food
+
+    Public Const ITEM_NAME As String = "Cupcake"
+
     Sub New()
         '|ID Info|
-        setName("Cupcake")
+        setName(ITEM_NAME)
         id = 35
         tier = 3
 

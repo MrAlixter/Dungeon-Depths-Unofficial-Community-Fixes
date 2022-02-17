@@ -1,12 +1,14 @@
 ﻿Public Class CultistCloak
     Inherits Armor
 
+    Public Const ITEM_NAME As String = "Cultist's_Cloak"
+
     Dim cloakneg1 As Tuple(Of Integer, Boolean, Boolean) = Nothing
     Dim cloak1 As Tuple(Of Integer, Boolean, Boolean) = Nothing
 
     Sub New()
         '|ID Info|
-        setName("Cultist's_Cloak")
+        setName(ITEM_NAME)
         id = 288
         tier = Nothing
 
@@ -41,7 +43,7 @@
 
         '|Description|
         setDesc("A blood-red hooded cloak that tingles with arcane energy when touched." & DDUtils.RNRN &
-                getSizeInformation() & vbCrLf &
+                getSizeInformation() & DDUtils.RNRN &
                 getStatInformation())
     End Sub
 

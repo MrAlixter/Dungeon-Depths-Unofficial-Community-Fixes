@@ -1,9 +1,11 @@
 ﻿Public Class SportBra
     Inherits Armor
 
+    Public Const ITEM_NAME As String = "Sports_Bra"
+
     Sub New()
         '|ID Info|
-        setName("Sports_Bra")
+        setName(ITEM_NAME)
         id = 47
         tier = 3
 
@@ -32,6 +34,6 @@
 
         '|Description|
         setDesc("A sports bra made of a strechy matierial that allows it to fit many different bust sizes." & DDUtils.RNRN & _
-                              getSizeInformation() & vbcrlf & getStatInformation())
+                              getSizeInformation() & DDUtils.RNRN & getStatInformation())
     End Sub
 End Class

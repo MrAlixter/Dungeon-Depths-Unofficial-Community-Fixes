@@ -1,7 +1,7 @@
 ﻿Public Class SteelArmor
     Inherits Armor
 
-    Public Const ITEM_NAME = "Steel_Armor"
+    Public Const ITEM_NAME As String = "Steel_Armor"
 
     Sub New()
         '|ID Info|
@@ -33,6 +33,6 @@
 
         '|Description|
         setDesc("A basic armor set forged from steel." & DDUtils.RNRN & _
-                              getSizeInformation() & vbcrlf & getStatInformation())
+                              getSizeInformation() & DDUtils.RNRN & getStatInformation())
     End Sub
 End Class

@@ -1,17 +1,26 @@
 ﻿Public Class NameChange
     Inherits Item
 
+    Public Const ITEM_NAME As String = "Name_Change"
+
     Sub New()
-        setName("Name_Change")
-        setDesc("""Not happy with your current name?  Maybe you've evolved past who you were when it fit you?  I can give you a new name, no questions asked.""")
+        '|ID Info|
+        setName(ITEM_NAME)
         id = 121
         tier = Nothing
-        usable = true
-        count = 0
-        value = 1000
-        MyBase.onBuy = AddressOf teach
+
+        '|Item Flags|
+        usable = True
         can_be_stolen = False
         rando_inv_allowed = False
+        MyBase.onBuy = AddressOf teach
+
+        '|Stats|
+        count = 0
+        value = 1000
+
+        '|Description|
+        setDesc("""Not happy with your current name?  Maybe you've evolved past who you were when it fit you?  I can give you a new name, no questions asked.""")
     End Sub
 
     Sub teach()

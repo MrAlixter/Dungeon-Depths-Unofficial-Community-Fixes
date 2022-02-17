@@ -1,16 +1,18 @@
 ﻿Public Class GelLinge
     Inherits Armor
 
+    Public Const ITEM_NAME As String = "Gelatinous_Negligee"
+
     Sub New()
         '|ID Info|
-        setName("Gelatinous_Negligee")
+        setName(ITEM_NAME)
         id = 138
         tier = Nothing
 
         '|Item Flags|
         usable = false
         compress_breast = True
-         show_underboob = True
+        show_underboob = True
         droppable = False
         rando_inv_allowed = False
 

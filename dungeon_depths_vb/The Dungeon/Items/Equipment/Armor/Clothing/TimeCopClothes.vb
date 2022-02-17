@@ -2,20 +2,22 @@
 Public Class TimeCopClothes
     Inherits Armor
 
+    Public Const ITEM_NAME As String = "Time_Cop_Clothes"
+
     Sub New()
         '|ID Info|
-        setName("Time_Cop_Clothes")
+        setName(ITEM_NAME)
         id = 282
         tier = Nothing
 
         '|Item Flags|
         usable = false
-        MyBase.compress_breast = True
+        compress_breast = True
         rando_inv_allowed = False
 
         '|Stats|
         w_boost = 2
-        MyBase.s_boost = 2
+        s_boost = 2
         count = 0
         value = 0
 
@@ -33,6 +35,7 @@ Public Class TimeCopClothes
 
         '|Description|
         setDesc("Tactical clothes that are standard issue for a time cop." & DDUtils.RNRN &
-                        getSizeInformation() & vbcrlf & getStatInformation())
+                getSizeInformation() & DDUtils.RNRN &
+                getStatInformation())
     End Sub
 End Class

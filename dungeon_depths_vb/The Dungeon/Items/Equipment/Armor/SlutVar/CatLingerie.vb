@@ -1,7 +1,7 @@
 ﻿Public Class CatLingerie
     Inherits Armor
 
-    Public Const ITEM_NAME = "Cat_Lingerie"
+    Public Const ITEM_NAME As String = "Cat_Lingerie"
 
     Sub New()
         '|ID Info|
@@ -34,6 +34,6 @@
 
         '|Description|
         setDesc("A skimpy, pink, cat themed set of underwear. Nya." & DDUtils.RNRN &
-                getSizeInformation() & vbCrLf & getStatInformation())
+                getSizeInformation() & DDUtils.RNRN & getStatInformation())
     End Sub
 End Class

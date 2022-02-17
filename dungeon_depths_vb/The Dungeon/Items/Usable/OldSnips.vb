@@ -1,8 +1,11 @@
 ﻿Public Class OldSnips
     Inherits Item
+
+    Public Const ITEM_NAME As String = "Old_Snips"
+
     Sub New()
         '|ID Info|
-        setName("Old_Snips")
+        setName(ITEM_NAME)
         id = 251
         tier = Nothing
 

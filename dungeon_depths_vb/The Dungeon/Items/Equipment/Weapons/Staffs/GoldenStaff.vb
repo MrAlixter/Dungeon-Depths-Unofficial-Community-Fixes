@@ -1,9 +1,11 @@
 ﻿Public Class GoldenStaff
     Inherits Staff
 
+    Public Const ITEM_NAME As String = "Golden_Staff"
+
     Sub New()
         '|ID Info|
-        setName("Golden_Staff")
+        setName(ITEM_NAME)
         id = 41
         tier = Nothing
 

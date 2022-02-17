@@ -1,9 +1,11 @@
 ﻿Public Class AmazonLesson
     Inherits Item
 
+    Public Const ITEM_NAME As String = "Amazon_Lesson"
+
     Sub New()
         '|ID Info|
-        setName("Amazon_Lesson")
+        setName(ITEM_NAME)
         id = 113
         tier = Nothing
 

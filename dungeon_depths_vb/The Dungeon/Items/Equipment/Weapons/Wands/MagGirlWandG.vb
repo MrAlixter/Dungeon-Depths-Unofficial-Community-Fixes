@@ -1,9 +1,11 @@
 ﻿Public Class MagGirlWandG
     Inherits MagGirlWand
 
+    Public Shadows Const ITEM_NAME As String = "Mag._Girl_Wand_(G)"
+
     Sub New()
         '|ID Info|
-        setName("Mag._Girl_Wand_(G)")
+        setName(ITEM_NAME)
         id = 307
         tier = Nothing
 

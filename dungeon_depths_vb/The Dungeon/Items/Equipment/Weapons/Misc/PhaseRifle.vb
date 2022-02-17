@@ -1,9 +1,11 @@
 ﻿Public Class PhaseRifle
     Inherits Weapon
 
+    Public Const ITEM_NAME As String = "Phase_Rifle"
+
     Sub New()
         '|ID Info|
-        setName("Phase_Rifle")
+        setName(ITEM_NAME)
         id = 274
         tier = Nothing
 
@@ -19,8 +21,8 @@
 
         '|Description|
         setDesc("A slender, scoped chrome-plated weapon that converts the meager energy contained in an AAAAAA Battery into a powerful plasma blast.  Batteries not included." & DDUtils.RNRN &
-                       "Scales to the user's SPD, not ATK" & DDUtils.RNRN &
-                       getStatInformation())
+                "Scales to the user's SPD, not ATK" & DDUtils.RNRN &
+                getStatInformation())
     End Sub
 
     Overrides Function attack(ByRef p As Player, ByRef m As Entity) As Integer

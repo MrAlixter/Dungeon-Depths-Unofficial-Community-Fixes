@@ -1,8 +1,11 @@
 ﻿Public Class VialOfPotVenom
     Inherits Item
+
+    Public Const ITEM_NAME As String = "Vial_of_Potent_Venom"
+
     Sub New()
         '|ID Info|
-        setName("Vial_of_Potent_Venom")
+        setName(ITEM_NAME)
         id = 244
         tier = Nothing
 

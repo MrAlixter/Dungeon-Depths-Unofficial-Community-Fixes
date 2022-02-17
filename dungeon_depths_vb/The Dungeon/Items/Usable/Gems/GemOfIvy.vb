@@ -1,8 +1,11 @@
 ﻿Public Class GemOfIvy
     Inherits Item
+
+    Public Const ITEM_NAME As String = "Gem_of_Ivy"
+
     Sub New()
         '|ID Info|
-        setName("Gem_of_Ivy")
+        setName(ITEM_NAME)
         id = 306
         tier = Nothing
 

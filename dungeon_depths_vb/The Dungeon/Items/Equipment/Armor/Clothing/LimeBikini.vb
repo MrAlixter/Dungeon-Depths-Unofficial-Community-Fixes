@@ -1,9 +1,11 @@
 ﻿Public Class LimeBikini
     Inherits Armor
 
+    Public Const ITEM_NAME As String = "Lime_Bikini"
+
     Sub New()
         '|ID Info|
-        setName("Lime_Bikini")
+        setName(ITEM_NAME)
         id = 298
         tier = Nothing
 
@@ -33,7 +35,8 @@
 
         '|Description|
         setDesc("A bright green swimsuit." & DDUtils.RNRN &
-                getSizeInformation() & vbCrLf & getStatInformation())
+                getSizeInformation() & DDUtils.RNRN &
+                getStatInformation())
     End Sub
 
     Public Overrides Function getTier() As Integer

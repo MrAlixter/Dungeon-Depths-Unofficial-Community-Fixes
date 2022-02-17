@@ -1,8 +1,11 @@
 ﻿Public Class DissolvedClothes
     Inherits Armor
+
+    Public Const ITEM_NAME As String = "Dissolved_Clothes"
+
     Sub New()
         '|ID Info|
-        setName("Dissolved_Clothes")
+        setName(ITEM_NAME)
         id = 80
         tier = Nothing
 
@@ -30,6 +33,6 @@
 
         '|Description|
         setDesc("While at some point this set of apperal may have provided some defense, a generous dousing of slime has left it completely ruined." & DDUtils.RNRN &
-                        getSizeInformation() & vbcrlf & getStatInformation())
+                        getSizeInformation() & DDUtils.RNRN & getStatInformation())
     End Sub
 End Class

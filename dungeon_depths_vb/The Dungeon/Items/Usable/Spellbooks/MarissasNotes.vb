@@ -1,9 +1,11 @@
 ﻿Public Class MarissasNotes
     Inherits Item
 
+    Public Const ITEM_NAME As String = "Marissa's_Notes"
+
     Sub New()
         '|ID Info|
-        setName("Marissa's_Notes")
+        setName(ITEM_NAME)
         id = 278
         tier = Nothing
 

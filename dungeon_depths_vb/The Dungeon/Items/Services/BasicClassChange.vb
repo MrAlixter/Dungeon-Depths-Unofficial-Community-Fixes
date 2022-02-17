@@ -1,12 +1,14 @@
 ﻿Public Class BasicClassChange
     Inherits Item
 
+    Public Const ITEM_NAME As String = "Basic_Class_Change"
+    Public Const COST As Integer = 2950
+
     Public Shared selectedClass As String = "Classless"
-    Const COST As Integer = 2950
 
     Sub New()
         '|ID Info|
-        setName("Basic_Class_Change")
+        setName(ITEM_NAME)
         id = 114
         tier = Nothing
 

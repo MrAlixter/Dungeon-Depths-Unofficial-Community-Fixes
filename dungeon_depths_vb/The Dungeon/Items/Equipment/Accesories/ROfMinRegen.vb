@@ -1,9 +1,11 @@
 ﻿Public Class ROfMinRegen
     Inherits Accessory
 
+    Public Const ITEM_NAME As String = "Minor_Ring_of_Regen."
+
     Sub New()
         '|ID Info|
-        setName("Minor_Ring_of_Regen.")
+        setName(ITEM_NAME)
         id = 77
         tier = 3
 

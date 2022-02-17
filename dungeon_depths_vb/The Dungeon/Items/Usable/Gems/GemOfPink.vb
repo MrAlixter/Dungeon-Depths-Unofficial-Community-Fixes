@@ -1,8 +1,11 @@
 ﻿Public Class GemOfPink
     Inherits Item
+
+    Public Const ITEM_NAME As String = "Gem_of_Sweetness"
+
     Sub New()
         '|ID Info|
-        setName("Gem_of_Sweetness")
+        setName(ITEM_NAME)
         id = 207
         tier = Nothing
 
@@ -16,8 +19,7 @@
         value = 5030
 
         '|Description|
-        setDesc("A glittering rosy pink jewel that looks like it could be embeded into a wand")
-
+        setDesc("A glittering rosy pink jewel that looks like it could be embeded into a wand.")
     End Sub
 
     Overrides Sub use(ByRef p As Player)

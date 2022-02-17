@@ -1,9 +1,11 @@
 ﻿Public Class OuijaBoard
     Inherits Item
 
+    Public Const ITEM_NAME As String = "Ouija_Board"
+
     Sub New()
         '|ID Info|
-        setName("Ouija_Board")
+        setName(ITEM_NAME)
         id = 328
         tier = 3
 

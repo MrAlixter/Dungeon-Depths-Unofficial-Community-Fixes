@@ -1,9 +1,11 @@
 ﻿Public Class MagSlutWand
     Inherits MagGirlWand
 
+    Public Shadows Const ITEM_NAME As String = "​Magical_Girl_Wand​"
+
     Sub New()
         '|ID Info|
-        setName("​Magical_Girl_Wand​")
+        setName(ITEM_NAME)
         id = 171
         tier = Nothing
 
@@ -21,7 +23,6 @@
         '|Description|
         setDesc("A heart adorned wand used by a mysterious protector.  Every once in a while, if flickers with a sinister crimson aura" & DDUtils.RNRN &
                 getStatInformation())
-
     End Sub
 
     Public Overrides Sub onEquip(ByRef p As Player)

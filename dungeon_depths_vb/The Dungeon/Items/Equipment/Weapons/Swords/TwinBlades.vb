@@ -1,8 +1,11 @@
 ﻿Public Class TwinBlades
     Inherits Weapon
+
+    Public Const ITEM_NAME As String = "Twin_Xiphoi"
+
     Sub New()
         '|ID Info|
-        setName("Twin_Xiphoi")
+        setName(ITEM_NAME)
         id = 150
         tier = Nothing
 

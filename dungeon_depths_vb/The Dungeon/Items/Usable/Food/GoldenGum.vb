@@ -1,9 +1,11 @@
 ﻿Public Class GoldenGum
     Inherits Food
 
+    Public Const ITEM_NAME As String = "Golden_Gum"
+
     Sub New()
         '|ID Info|
-        setName("Golden_Gum")
+        setName(ITEM_NAME)
         id = 291
         tier = Nothing
 
@@ -21,7 +23,6 @@
         setDesc("A glittery yellow piece of gum with a overpoweringly sweet smell.  There are legends that tell of its flavor, and some say that even the gods are moved by its taste." & DDUtils.RNRN &
                 "Even holding this gum exposes one to the magic that saturates it..." & DDUtils.RNRN &
                 "+33 Stamina")
-
     End Sub
 
     Overrides Sub effect(ByRef p As Player)

@@ -1,9 +1,11 @@
 ﻿Public Class KitsuneMask
     Inherits Accessory
 
+    Public Const ITEM_NAME As String = "Kitsune_Mask"
+
     Sub New()
         '|ID Info|
-        setName("Kitsune_Mask")
+        setName(ITEM_NAME)
         id = 198
         tier = Nothing
 
@@ -19,8 +21,8 @@
 
 
         '|Image Index|
-        MyBase.fInd = New Tuple(Of Integer, Boolean, Boolean)(19, True, True)
-        MyBase.mInd = New Tuple(Of Integer, Boolean, Boolean)(19, True, True)
+        fInd = New Tuple(Of Integer, Boolean, Boolean)(19, True, True)
+        mInd = New Tuple(Of Integer, Boolean, Boolean)(19, True, True)
 
         '|Description|
         setDesc("A snazzy mask that invokes image of a guardian of a long forgotten shrine. A closer look reveals a smudged riddle inscribed in an shifting script..." & DDUtils.RNRN & _
@@ -28,7 +30,6 @@
                 " Worn while in the clutch of flame" & vbCrLf &
                 " Gives legends new life...""" & DDUtils.RNRN &
                 getStatInformation())
-
     End Sub
     Public Overrides Sub onEquip(ByRef p As Player)
         MyBase.onEquip(p)

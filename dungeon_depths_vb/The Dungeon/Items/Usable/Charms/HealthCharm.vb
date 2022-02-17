@@ -1,14 +1,23 @@
 ﻿Public Class HealthCharm
     Inherits Item
 
+    Public Const ITEM_NAME As String = "Health_Charm"
+
     Sub New()
-        setName("Health_Charm")
-        setDesc("A charm that slightly boosts your health.")
+        '|ID Info|
+        setName(ITEM_NAME)
         id = 48
         tier = 3
-        usable = true
+
+        '|Item Flags|
+        usable = True
+
+        '|Stats|
         count = 0
         value = 1750
+
+        '|Description|
+        setDesc("A charm that slightly boosts your health.")
     End Sub
 
     Overrides Sub use(ByRef p As Player)

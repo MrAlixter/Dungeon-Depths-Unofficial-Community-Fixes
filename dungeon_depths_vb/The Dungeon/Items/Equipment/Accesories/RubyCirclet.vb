@@ -1,9 +1,11 @@
 ﻿Public Class RubyCirclet
     Inherits Accessory
 
+    Public Const ITEM_NAME As String = "Ruby_Circlet"
+
     Sub New()
         '|ID Info|
-        setName("Ruby_Circlet")
+        setName(ITEM_NAME)
         id = 68
         tier = Nothing
 

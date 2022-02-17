@@ -1,9 +1,11 @@
 ﻿Public Class CozySweater
     Inherits Armor
 
+    Public Const ITEM_NAME As String = "Cozy_Sweater"
+
     Sub New()
         '|ID Info|
-        setName("Cozy_Sweater")
+        setName(ITEM_NAME)
         id = 175
         If DDDateTime.isHoli Then
             tier = 2
@@ -44,7 +46,7 @@
         '|Description|
         setDesc("This sweater is for the chillier parts of the year, and keeps its wearer nice and toasty out in the cold.  Well, that or it's a part of some frost demon(ess)'s elaborate scheme to freeze the dungeon solid..." & DDUtils.RNRN &
                         "That would explain the arcane runes on the collar and the suspicious boost in magical ability it offers its wearer, at least." & DDUtils.RNRN &
-                        getSizeInformation() & vbcrlf & getStatInformation())
+                        getSizeInformation() & DDUtils.RNRN & getStatInformation())
     End Sub
 
     Public Overrides Sub onEquip(ByRef p As Player)

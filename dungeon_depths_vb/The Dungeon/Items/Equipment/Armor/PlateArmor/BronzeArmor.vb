@@ -1,9 +1,11 @@
 ﻿Public Class BronzeArmor
     Inherits Armor
 
+    Public Const ITEM_NAME As String = "Bronze_Armor"
+
     Sub New()
         '|ID Info|
-        setName("Bronze_Armor")
+        setName(ITEM_NAME)
         id = 83
         tier = Nothing
 
@@ -34,6 +36,6 @@
 
         '|Description|
         setDesc("A lightweight armor set forged from bronze that, while not offering much defense also gives a slight speed boost." & DDUtils.RNRN &
-                               getSizeInformation() & vbcrlf & getStatInformation())
+                               getSizeInformation() & DDUtils.RNRN & getStatInformation())
     End Sub
 End Class

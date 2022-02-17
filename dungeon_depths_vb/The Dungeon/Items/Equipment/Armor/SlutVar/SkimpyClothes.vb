@@ -1,9 +1,11 @@
 ﻿Public Class SkimpyClothes
     Inherits Armor
 
+    Public Const ITEM_NAME As String = "Skimpy_Clothes"
+
     Sub New()
         '|ID Info|
-        setName("Skimpy_Clothes")
+        setName(ITEM_NAME)
         id = 191
         tier = Nothing
 
@@ -34,8 +36,9 @@
         usize4 = New Tuple(Of Integer, Boolean, Boolean)(18, True, True)
 
         '|Description|
-        setDesc("A soft set of clothing that seems almost crafted to show off its wearer's body." & DDUtils.RNRN & _
-                                           getSizeInformation() & vbcrlf & getStatInformation())
+        setDesc("A soft set of clothing that seems almost crafted to show off its wearer's body." & DDUtils.RNRN &
+                getSizeInformation() & DDUtils.RNRN &
+                getStatInformation())
     End Sub
 
     Public Overrides Function getAntiSlutInd() As Object

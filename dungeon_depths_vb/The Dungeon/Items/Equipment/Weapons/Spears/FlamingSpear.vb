@@ -1,9 +1,11 @@
 ﻿Public Class FlamingSpear
     Inherits Spear
 
+    Public Const ITEM_NAME As String = "Flaming_Spear"
+
     Sub New()
         '|ID Info|
-        setName("Flaming_Spear")
+        setName(ITEM_NAME)
         id = 157
         tier = Nothing
 
@@ -11,17 +13,16 @@
         usable = true
 
         '|Stats|
-        MyBase.a_boost = 37
-        MyBase.s_boost = -1
+        a_boost = 37
+        s_boost = -1
         count = 0
         value = 1820
-        MyBase.weight = 25
+        weight = 25
 
         '|Description|
         setDesc("A unique spear that's perpetually on fire.  While it hits for a lot of damage, it also takes damage from physical attacks as well as throws." & DDUtils.RNRN &
-                       "Can be thrown using the ""Use"" button." & vbCrLf &
-                       "+37 ATK" & vbCrLf &
-                       "-1 SPD")
+                "Can be thrown using the ""Use"" button." & DDUtils.RNRN &
+                getStatInformation())
     End Sub
 
     Overrides Function attack(ByRef p As Player, ByRef m As Entity) As Integer

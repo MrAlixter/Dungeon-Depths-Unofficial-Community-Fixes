@@ -1,9 +1,11 @@
 ﻿Public Class RingOfUvona
     Inherits Accessory
-    'The heart necklace provides no bonuses
+
+    Public Const ITEM_NAME As String = "Ring_of_Uvona"
+
     Sub New()
         '|ID Info|
-        setName("Ring_of_Uvona")
+        setName(ITEM_NAME)
         id = 123
         tier = Nothing
 

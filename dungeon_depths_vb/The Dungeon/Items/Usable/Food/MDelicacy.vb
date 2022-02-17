@@ -1,8 +1,11 @@
 ﻿Public Class MDelicacy
     Inherits Food
+
+    Public Const ITEM_NAME As String = "Mage's_Delicacy"
+
     Sub New()
         '|ID Info|
-        setName("Mage's_Delicacy")
+        setName(ITEM_NAME)
         id = 134
         tier = Nothing
 

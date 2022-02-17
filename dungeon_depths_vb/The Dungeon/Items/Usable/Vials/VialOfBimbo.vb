@@ -1,9 +1,11 @@
 ﻿Public Class VialOfBimbo
     Inherits Item
 
+    Public Const ITEM_NAME As String = "Vial_of_BIM_II"
+
     Sub New()
         '|ID Info|
-        setName("Vial_of_BIM_II")
+        setName(ITEM_NAME)
         id = 127
         tier = Nothing
 

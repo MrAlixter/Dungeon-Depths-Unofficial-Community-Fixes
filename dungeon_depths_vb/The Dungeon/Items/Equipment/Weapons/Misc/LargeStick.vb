@@ -1,9 +1,11 @@
 ﻿Public Class LargeStick
     Inherits Weapon
 
+    Public Const ITEM_NAME As String = "Large_Stick"
+
     Sub New()
         '|ID Info|
-        setName("Large_Stick")
+        setName(ITEM_NAME)
         id = 284
         tier = Nothing
 
@@ -11,15 +13,14 @@
         usable = true
 
         '|Stats|
-        MyBase.a_boost = 6
-        MyBase.s_boost = -2
+        a_boost = 6
+        s_boost = -2
         count = 0
         value = 125
 
         '|Description|
         setDesc("For those who speak softly, sometimes all that's needed is a sturdy branch." & DDUtils.RNRN &
-                       "+6 ATK" & vbCrLf &
-                       "-2 SPD")
+                getStatInformation())
     End Sub
 
     Overrides Function attack(ByRef p As Player, ByRef m As Entity) As Integer

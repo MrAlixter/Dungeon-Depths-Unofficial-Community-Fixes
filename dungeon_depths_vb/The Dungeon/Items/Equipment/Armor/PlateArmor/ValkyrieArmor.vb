@@ -1,9 +1,11 @@
 ﻿Public Class ValkyrieArmor
     Inherits Armor
 
+    Public Const ITEM_NAME As String = "Valkyrie_Armor"
+
     Sub New()
         '|ID Info|
-        setName("Valkyrie_Armor")
+        setName(ITEM_NAME)
         id = 95
         tier = Nothing
 
@@ -33,7 +35,7 @@
 
         '|Description|
         setDesc("An etherial armor set crafted for a valiant defender." & DDUtils.RNRN & _
-                             getSizeInformation() & vbCrLf & getStatInformation() & vbCrLf & _
+                             getSizeInformation() & DDUtils.RNRN & getStatInformation() & vbCrLf & _
                              "Valkyries can not remove this armor.")
     End Sub
 

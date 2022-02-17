@@ -1,7 +1,7 @@
 ﻿Public Class SteelSword
     Inherits Sword
 
-    Public Const ITEM_NAME = "Steel_Sword"
+    Public Const ITEM_NAME As String = "Steel_Sword"
 
     Sub New()
         '|ID Info|

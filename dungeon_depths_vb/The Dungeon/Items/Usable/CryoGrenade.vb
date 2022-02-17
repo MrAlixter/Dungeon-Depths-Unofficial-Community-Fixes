@@ -1,9 +1,11 @@
 ﻿Public Class CryoGrenade
     Inherits Item
 
+    Public Const ITEM_NAME As String = "CryoGrenade"
+
     Sub New()
         '|ID Info|
-        setName("CryoGrenade")
+        setName(ITEM_NAME)
         id = 128
         tier = Nothing
 

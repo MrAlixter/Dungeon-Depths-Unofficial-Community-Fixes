@@ -1,8 +1,11 @@
 ﻿Public Class LiveLingerie
     Inherits Armor
+
+    Public Const ITEM_NAME As String = "Living_Lingerie"
+
     Sub New()
         '|ID Info|
-        setName("Living_Lingerie")
+        setName(ITEM_NAME)
         id = 56
         tier = Nothing
 
@@ -35,7 +38,7 @@
 
         '|Description|
         setDesc("A suit of living lingerie embued with a the soul of a mimic." & DDUtils.RNRN & _
-                                  getSizeInformation() & vbcrlf & getStatInformation() &
+                                  getSizeInformation() & DDUtils.RNRN & getStatInformation() &
                            "The mimic's movment rapidly raises lust" & vbCrLf & _
                            "May not be easy to remove")
     End Sub

@@ -1,9 +1,11 @@
 ﻿Public Class WOVoltage
     Inherits Wand
 
+    Public Const ITEM_NAME As String = "Wand_of_Voltage"
+
     Sub New()
         '|ID Info|
-        setName("Wand_of_Voltage")
+        setName(ITEM_NAME)
         id = 179
         tier = 3
 

@@ -1,9 +1,11 @@
 ﻿Public Class CursedCoupon
     Inherits Item
 
+    Public Const ITEM_NAME As String = "Cursed_Coupon"
+
     Sub New()
         '|ID Info|
-        setName("Cursed_Coupon")
+        setName(ITEM_NAME)
         id = 182
         tier = Nothing
 

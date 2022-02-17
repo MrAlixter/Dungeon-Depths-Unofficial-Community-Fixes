@@ -1,9 +1,11 @@
 ﻿Public Class Blindfold
     Inherits Glasses
 
+    Public Const ITEM_NAME As String = "Blindfold"
+
     Sub New()
         '|ID Info|
-        setName("Blindfold")
+        setName(ITEM_NAME)
         id = 161
         tier = Nothing
 

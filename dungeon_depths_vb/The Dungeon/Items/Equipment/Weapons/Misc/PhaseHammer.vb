@@ -1,9 +1,11 @@
 ﻿Public Class PhaseHammer
     Inherits Weapon
 
+    Public Const ITEM_NAME As String = "Phase_Hammer"
+
     Sub New()
         '|ID Info|
-        setName("Phase_Hammer")
+        setName(ITEM_NAME)
         id = 275
         tier = Nothing
 
@@ -18,7 +20,7 @@
 
         '|Description|
         setDesc("A heavy chrome-plated mallet that converts the meager energy contained in an AAAAAA Battery into a powerful impact.  Batteries not included." & DDUtils.RNRN &
-                       getStatInformation())
+                getStatInformation())
     End Sub
 
     Overrides Function attack(ByRef p As Player, ByRef m As Entity) As Integer

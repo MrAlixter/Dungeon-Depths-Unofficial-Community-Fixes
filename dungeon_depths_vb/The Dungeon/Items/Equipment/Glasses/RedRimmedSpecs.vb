@@ -1,9 +1,11 @@
 ﻿Public Class RedRimmedSpecs
     Inherits Glasses
 
+    Public Const ITEM_NAME As String = "Red_Framed_Spectacles"
+
     Sub New()
         '|ID Info|
-        setName("Red_Framed_Spectacles")
+        setName(ITEM_NAME)
         id = 308
         tier = Nothing
 

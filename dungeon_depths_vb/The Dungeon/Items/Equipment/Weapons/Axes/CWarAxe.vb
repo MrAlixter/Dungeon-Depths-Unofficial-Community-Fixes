@@ -1,9 +1,11 @@
 ﻿Public Class CWarAxe
     Inherits Axe
 
+    Public Const ITEM_NAME As String = "Corse_War_Axe"
+
     Sub New()
         '|ID Info|
-        setName("Corse_War_Axe")
+        setName(ITEM_NAME)
         id = 118
         tier = Nothing
 

@@ -1,9 +1,11 @@
 ﻿Public Class Apple
     Inherits Food
-    'Apple is a food item that reduces stamina by 15
+
+    Public Const ITEM_NAME As String = "Apple"
+
     Sub New()
         '|ID Info|
-        setName("Apple")
+        setName(ITEM_NAME)
         id = 32
         tier = 1
 

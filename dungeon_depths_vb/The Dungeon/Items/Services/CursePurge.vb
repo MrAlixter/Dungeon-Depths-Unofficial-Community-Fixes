@@ -1,9 +1,11 @@
 ﻿Public Class CursePurge
     Inherits Item
 
+    Public Const ITEM_NAME As String = "Blight_Dismissal"
+
     Sub New()
         '|ID Info|
-        setName("Blight_Dismissal")
+        setName(ITEM_NAME)
         id = 245
         tier = Nothing
 

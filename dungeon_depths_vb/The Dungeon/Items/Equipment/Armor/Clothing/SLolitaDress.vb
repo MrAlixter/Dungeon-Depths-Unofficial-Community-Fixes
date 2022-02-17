@@ -1,9 +1,11 @@
 ﻿Public Class SLolitaDress
     Inherits Armor
 
+    Public Const ITEM_NAME As String = "Lolita_Dress_(Sweet)"
+
     Sub New()
         '|ID Info|
-        setName("Lolita_Dress_(Sweet)")
+        setName(ITEM_NAME)
         id = 151
         tier = Nothing
 
@@ -34,6 +36,7 @@
 
         '|Description|
         setDesc("A poofy pink dress." & DDUtils.RNRN &
-                        getSizeInformation() & vbcrlf & getStatInformation())
+                getSizeInformation() & DDUtils.RNRN &
+                getStatInformation())
     End Sub
 End Class

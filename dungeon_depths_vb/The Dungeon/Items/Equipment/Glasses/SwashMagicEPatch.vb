@@ -1,7 +1,7 @@
 ﻿Public Class SwashMagicEPatch
     Inherits Glasses
 
-    Public Const ITEM_NAME = "Hornswoggler's_Oculus"
+    Public Const ITEM_NAME As String = "Hornswoggler's_Oculus"
 
     Sub New()
         '|ID Info|

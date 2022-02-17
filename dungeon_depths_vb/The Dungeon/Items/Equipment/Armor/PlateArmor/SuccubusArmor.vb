@@ -1,8 +1,11 @@
 ﻿Public Class SuccubusArmor
     Inherits Armor
+
+    Public Const ITEM_NAME As String = "Succubus_Armor"
+
     Sub New()
         '|ID Info|
-        setName("Succubus_Armor")
+        setName(ITEM_NAME)
         id = 237
         tier = Nothing
 
@@ -32,7 +35,8 @@
         usize4 = New Tuple(Of Integer, Boolean, Boolean)(312, True, True)
 
         '|Description|
-        setDesc("The scanty clothes of a succubus." & DDUtils.RNRN & _
-                              getSizeInformation() & vbcrlf & getStatInformation())
+        setDesc("The scanty clothes of a succubus." & DDUtils.RNRN &
+                getSizeInformation() & DDUtils.RNRN &
+                getStatInformation())
     End Sub
 End Class

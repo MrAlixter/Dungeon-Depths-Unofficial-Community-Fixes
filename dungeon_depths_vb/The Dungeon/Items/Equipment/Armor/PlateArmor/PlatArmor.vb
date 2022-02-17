@@ -1,9 +1,11 @@
 ﻿Public Class PlatArmor
     Inherits Armor
 
+    Public Const ITEM_NAME As String = "Platinum_Armor"
+
     Sub New()
         '|ID Info|
-        setName("Platinum_Armor")
+        setName(ITEM_NAME)
         id = 265
         tier = Nothing
 
@@ -31,6 +33,7 @@
 
         '|Description|
         setDesc("A glistening set of full plate armor for those who want to be superbly safeguarded." & DDUtils.RNRN &
-                        getSizeInformation() & vbcrlf & getStatInformation())
+                getSizeInformation() & DDUtils.RNRN &
+                getStatInformation())
     End Sub
 End Class

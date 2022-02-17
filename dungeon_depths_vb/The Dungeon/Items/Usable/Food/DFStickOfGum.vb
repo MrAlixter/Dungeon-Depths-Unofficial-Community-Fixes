@@ -1,9 +1,11 @@
 ﻿Public Class DFStickOfGum
     Inherits Food
 
+    Public Const ITEM_NAME As String = "Dragonfruit_S._of_Gum"
+
     Sub New()
         '|ID Info|
-        setName("Dragonfruit_S._of_Gum")
+        setName(ITEM_NAME)
         id = 268
         tier = Nothing
 

@@ -1,9 +1,11 @@
 ﻿Public Class Herbs
     Inherits Food
 
+    Public Const ITEM_NAME As String = "Medicinal_Tea"
+
     Sub New()
         '|ID Info|
-        setName("Medicinal_Tea")
+        setName(ITEM_NAME)
         id = 33
         tier = 2
 

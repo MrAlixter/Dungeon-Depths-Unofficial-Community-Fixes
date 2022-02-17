@@ -1,8 +1,11 @@
 ﻿Public Class ManaHibiscus
     Inherits Accessory
+
+    Public Const ITEM_NAME As String = "Mana_Hibiscus"
+
     Sub New()
         '|ID Info|
-        setName("Mana_Hibiscus")
+        setName(ITEM_NAME)
         id = 149
         If DDDateTime.isAni Then tier = 2 Else tier = Nothing
 

@@ -1,15 +1,25 @@
 ﻿Public Class MStickOfGum
     Inherits Food
 
+    Public Const ITEM_NAME As String = "Mint_Stick_of_Gum"
+
     Sub New()
-        setName("Mint_Stick_of_Gum")
-        setDesc("An pale blue piece of gum with a faint chemical smell.  Supposedly, it tastes like mint.  +10 Stamina")
+        '|ID Info|
+        setName(ITEM_NAME)
         id = 109
         tier = 3
-        usable = true
+
+        '|Item Flags|
+        usable = True
+
+        '|Stats|
         count = 0
         value = 100
         setCalories(10)
+
+        '|Description|
+        setDesc("An pale blue piece of gum with a faint chemical smell.  Supposedly, it tastes like mint." & DDUtils.RNRN &
+                "+10 Stamina")
     End Sub
 
     Overrides Sub effect(ByRef p As Player)

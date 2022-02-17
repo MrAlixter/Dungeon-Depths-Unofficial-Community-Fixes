@@ -1,9 +1,11 @@
 ﻿Public Class FusionCrystal
     Inherits Item
 
+    Public Const ITEM_NAME As String = "Fusion_Crystal"
+
     Sub New()
         '|ID Info|
-        setName("Fusion_Crystal")
+        setName(ITEM_NAME)
         id = 58
         tier = Nothing
 

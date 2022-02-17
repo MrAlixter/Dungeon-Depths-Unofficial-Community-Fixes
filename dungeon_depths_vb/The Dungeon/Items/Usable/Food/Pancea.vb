@@ -1,9 +1,11 @@
 ﻿Public Class Panacea
     Inherits Food
 
+    Public Const ITEM_NAME As String = "Panacea"
+
     Sub New()
         '|ID Info|
-        setName("Panacea")
+        setName(ITEM_NAME)
         id = 90
         tier = Nothing
 

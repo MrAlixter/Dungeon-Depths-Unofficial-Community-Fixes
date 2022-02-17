@@ -205,7 +205,7 @@
         Next
 
         out += "Fits chest sizes " & minB & " through " & maxB & vbCrLf
-        out += "Fits waist sizes " & minU & " through " & maxU & vbCrLf
+        out += "Fits waist sizes " & minU & " through " & maxU
 
         Return out
     End Function

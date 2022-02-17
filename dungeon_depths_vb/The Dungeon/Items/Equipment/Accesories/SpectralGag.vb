@@ -1,9 +1,11 @@
 ﻿Public Class SpectralGag
     Inherits Accessory
 
+    Public Const ITEM_NAME As String = "Spectral_Gag"
+
     Sub New()
         '|ID Info|
-        setName("Spectral_Gag")
+        setName(ITEM_NAME)
         id = 321
         tier = Nothing
 

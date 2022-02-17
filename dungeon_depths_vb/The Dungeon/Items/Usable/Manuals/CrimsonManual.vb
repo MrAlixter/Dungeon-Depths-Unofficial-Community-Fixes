@@ -1,16 +1,26 @@
 ﻿Public Class CrimsonManual
     Inherits Item
+
+    Public Const ITEM_NAME As String = "Crimson_Manual"
+
     Public Shared specials() As String = {"Tits Up", "Tits Down", "Ass Up", "Ass Down", "Dick Up", "Dick Down",
                                           "Chameleon (Blonde)", "Chameleon (Black Hair)", "Chameleon (Redhead)",
                                           "Chameleon (Brunette)", "Chameleon (Neon)", "Chameleon (Pastels)"}
     Sub New()
-        setName("Crimson_Manual")
-        setDesc("A smoldering leather-bound book that contains something practical written by a succubus.")
+        '|ID Info|
+        setName(ITEM_NAME)
         id = 227
         tier = Nothing
-        usable = true
+
+        '|Item Flags|
+        usable = True
+
+        '|Stats|
         count = 0
         value = 666
+
+        '|Description|
+        setDesc("A smoldering leather-bound book that contains something practical written by a succubus.")
     End Sub
 
     Overrides Sub use(ByRef p As Player)

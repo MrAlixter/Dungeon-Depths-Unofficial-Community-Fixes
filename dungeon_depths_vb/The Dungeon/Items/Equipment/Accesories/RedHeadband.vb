@@ -1,9 +1,11 @@
 ﻿Public Class RedHeadband
     Inherits Accessory
 
+    Public Const ITEM_NAME As String = "Red_Headband"
+
     Sub New()
         '|ID Info|
-        setName("Red_Headband")
+        setName(ITEM_NAME)
         id = 67
         tier = Nothing
 

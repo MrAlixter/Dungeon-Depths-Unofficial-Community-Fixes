@@ -1,9 +1,11 @@
 ﻿Public Class WarlockRobe
     Inherits Armor
 
+    Public Const ITEM_NAME As String = "Warlock's_Robes"
+
     Sub New()
         '|ID Info|
-        setName("Warlock's_Robes")
+        setName(ITEM_NAME)
         id = 115
         tier = Nothing
 
@@ -34,6 +36,6 @@
 
         '|Description|
         setDesc("A snazzy robe that identifies its wearer as a high ranking follower of Uvona, Goddess of Fugue.  The goddess's power is woven into its very fabric, amplifying its wearer's own magic ability." & DDUtils.RNRN &
-                              getSizeInformation() & vbcrlf & getStatInformation())
+                              getSizeInformation() & DDUtils.RNRN & getStatInformation())
     End Sub
 End Class

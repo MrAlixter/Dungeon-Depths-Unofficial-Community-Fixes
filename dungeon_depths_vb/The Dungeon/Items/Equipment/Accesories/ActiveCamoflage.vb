@@ -1,9 +1,11 @@
 ﻿Public Class ActiveCamoflage
     Inherits Accessory
 
+    Public Const ITEM_NAME As String = "Active_Camoflage"
+
     Sub New()
         '|ID Info|
-        setName("Active_Camoflage")
+        setName(ITEM_NAME)
         id = 141
         tier = Nothing
 

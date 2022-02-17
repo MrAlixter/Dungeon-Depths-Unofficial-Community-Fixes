@@ -2,9 +2,11 @@
 Public Class AmaArmor
     Inherits Armor
 
+    Public Const ITEM_NAME As String = "Amazonian_Armor"
+
     Sub New()
         '|ID Info|
-        setName("Amazonian_Armor")
+        setName(ITEM_NAME)
         id = 302
         tier = Nothing
 
@@ -36,7 +38,7 @@ Public Class AmaArmor
 
         '|Description|
         setDesc("An aegis that aptly accentuates all an Amazon's adventageous attributes amazingly.  Alliteration!" & DDUtils.RNRN &
-                getSizeInformation() & vbCrLf &
+                getSizeInformation() & DDUtils.RNRN &
                 getStatInformation())
     End Sub
 End Class

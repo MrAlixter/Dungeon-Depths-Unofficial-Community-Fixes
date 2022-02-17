@@ -1,9 +1,11 @@
 ﻿Public Class Ballgag
     Inherits Accessory
 
+    Public Const ITEM_NAME As String = "Ball_Gag"
+
     Sub New()
         '|ID Info|
-        setName("Ball_Gag")
+        setName(ITEM_NAME)
         id = 320
         tier = Nothing
 

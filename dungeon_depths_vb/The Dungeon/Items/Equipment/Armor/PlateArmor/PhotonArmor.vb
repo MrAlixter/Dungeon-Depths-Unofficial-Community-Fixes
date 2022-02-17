@@ -2,9 +2,11 @@
 Public Class PhotonArmor
     Inherits Armor
 
+    Public Const ITEM_NAME As String = "Photon_Armor"
+
     Sub New()
         '|ID Info|
-        setName("Photon_Armor")
+        setName(ITEM_NAME)
         id = 104
         tier = Nothing
 
@@ -34,7 +36,7 @@ Public Class PhotonArmor
         '|Description|
         setDesc("This armor consists of lightweight though fragile black plates of an advanced plastic, alongside a powerful shield generator that harnesses its users mana to withstand impacts." & DDUtils.RNRN &
                        "Hardlight Effect" & DDUtils.RNRN &
-                        getSizeInformation() & vbcrlf & getStatInformation())
+                        getSizeInformation() & DDUtils.RNRN & getStatInformation())
     End Sub
 
     Public Overrides Sub onEquip(ByRef p As Player)

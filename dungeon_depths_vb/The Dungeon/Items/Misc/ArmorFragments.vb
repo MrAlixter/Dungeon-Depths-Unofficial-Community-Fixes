@@ -1,9 +1,11 @@
 ﻿Public Class ArmorFragments
     Inherits Item
 
+    Public Const ITEM_NAME As String = "Armor_Fragments"
+
     Sub New()
         '|ID Info|
-        setName("Armor_Fragments")
+        setName(ITEM_NAME)
         id = 264
         tier = Nothing
 

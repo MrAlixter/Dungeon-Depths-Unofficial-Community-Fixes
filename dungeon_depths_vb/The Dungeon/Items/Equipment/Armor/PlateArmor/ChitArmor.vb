@@ -1,9 +1,11 @@
 ﻿Public Class ChitArmor
     Inherits Armor
 
+    Public Const ITEM_NAME As String = "Chitin_Armor"
+
     Sub New()
         '|ID Info|
-        setName("Chitin_Armor")
+        setName(ITEM_NAME)
         id = 64
         tier = 3
 
@@ -33,7 +35,7 @@
 
         '|Description|
         setDesc("A set of armor built out of discarded chitin, commonly made and used by arachne huntresses." & DDUtils.RNRN &
-                                       getSizeInformation() & vbCrLf & getStatInformation())
+                                       getSizeInformation() & DDUtils.RNRN & getStatInformation())
     End Sub
 End Class
 

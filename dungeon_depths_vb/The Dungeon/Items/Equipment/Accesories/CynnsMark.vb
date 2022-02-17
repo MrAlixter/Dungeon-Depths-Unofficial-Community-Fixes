@@ -1,9 +1,12 @@
 ﻿
 Public Class CynnsMark
     Inherits Accessory
+
+    Public Const ITEM_NAME As String = "Cynn's_Mark"
+
     Sub New()
         '|ID Info|
-        setName("Cynn's_Mark")
+        setName(ITEM_NAME)
         id = 253
         tier = Nothing
 

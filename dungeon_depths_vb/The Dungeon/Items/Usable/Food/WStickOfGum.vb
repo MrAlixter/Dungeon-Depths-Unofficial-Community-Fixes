@@ -1,9 +1,11 @@
 ﻿Public Class WStickOfGum
     Inherits Food
 
+    Public Const ITEM_NAME As String = "Melon_Stick_of_Gum"
+
     Sub New()
         '|ID Info|
-        setName("Melon_Stick_of_Gum")
+        setName(ITEM_NAME)
         id = 132
         tier = 3
 
@@ -19,7 +21,6 @@
 
         setDesc("An pink piece of gum with a faint chemical smell.  Supposedly, it tastes like watermelon." & DDUtils.RNRN &
                 "+10 Stamina")
-
     End Sub
 
     Overrides Sub effect(ByRef p As Player)

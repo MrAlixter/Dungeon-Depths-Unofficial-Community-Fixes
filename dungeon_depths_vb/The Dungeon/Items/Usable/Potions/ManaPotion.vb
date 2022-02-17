@@ -1,7 +1,7 @@
 ﻿Public Class ManaPotion
     Inherits Item
 
-    Public Const ITEM_NAME = "Mana_Potion"
+    Public Const ITEM_NAME As String = "Mana_Potion"
 
     Sub New()
         '|ID Info|

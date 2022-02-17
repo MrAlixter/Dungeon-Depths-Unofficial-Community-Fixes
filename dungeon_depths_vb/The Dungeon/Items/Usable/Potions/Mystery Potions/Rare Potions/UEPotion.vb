@@ -1,8 +1,11 @@
 ﻿Public Class UEPotion
     Inherits MysteryPotion
+
+    Public Const ITEM_NAME As String = "Ass_Growth_Potion"
+
     Sub New()
         '|ID Info|
-        setName("Ass_Growth_Potion")
+        setName(ITEM_NAME)
         id = 193
         tier = 3
 
@@ -15,8 +18,7 @@
         value = 500
 
         '|Description|
-        setDesc("An odd-looking potion")
-
+        setDesc("An odd-looking potion.")
     End Sub
 
     Public Overrides Sub setEffectList()

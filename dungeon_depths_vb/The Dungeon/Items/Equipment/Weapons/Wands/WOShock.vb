@@ -1,9 +1,11 @@
 ﻿Public Class WOShock
     Inherits Wand
 
+    Public Const ITEM_NAME As String = "Wand_of_Shocking"
+
     Sub New()
         '|ID Info|
-        setName("Wand_of_Shocking")
+        setName(ITEM_NAME)
         id = 167
         tier = 3
 
@@ -16,9 +18,7 @@
         value = 1000
 
         '|Description|
-
         setDesc("A slender black wand charged with an almost electric energy.  Frogs may want to steer clear of its bearer...")
-
     End Sub
     Public Overrides Sub spell(ByRef p As Player, ByRef m As Entity)
         Dim dmg As Integer = 10

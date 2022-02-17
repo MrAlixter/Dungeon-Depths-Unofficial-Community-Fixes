@@ -1,8 +1,11 @@
 ﻿Public Class Cursemark
     Inherits Accessory
+
+    Public Const ITEM_NAME As String = "Cursemark"
+
     Sub New()
         '|ID Info|
-        setName("Cursemark")
+        setName(ITEM_NAME)
         id = 168
         tier = Nothing
 

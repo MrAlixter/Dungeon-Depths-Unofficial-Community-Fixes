@@ -1,9 +1,11 @@
 ﻿Public Class PhasePistol
     Inherits Weapon
 
+    Public Const ITEM_NAME As String = "Phase_Pistol"
+
     Sub New()
         '|ID Info|
-        setName("Phase_Pistol")
+        setName(ITEM_NAME)
         id = 273
         tier = Nothing
 
@@ -18,8 +20,8 @@
 
         '|Description|
         setDesc("A sleek chrome-plated weapon that converts the meager energy contained in an AAAAAA Battery into a powerful plasma blast.  Batteries not included." & DDUtils.RNRN &
-                       "Scales to the user's SPD, not ATK" & DDUtils.RNRN &
-                       getStatInformation())
+                "Scales to the user's SPD, not ATK" & DDUtils.RNRN &
+                getStatInformation())
     End Sub
 
     Overrides Function attack(ByRef p As Player, ByRef m As Entity) As Integer

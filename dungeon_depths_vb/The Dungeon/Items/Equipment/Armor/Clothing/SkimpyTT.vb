@@ -1,9 +1,11 @@
 ﻿Public Class SkimpyTT
     Inherits Armor
 
+    Public Const ITEM_NAME As String = "Skimpy_Tank_Top"
+
     Sub New()
         '|ID Info|
-        setName("Skimpy_Tank_Top")
+        setName(ITEM_NAME)
         id = 147
         tier = Nothing
 
@@ -31,7 +33,7 @@
 
         '|Description|
         setDesc("Barely there, this skimpy outfit boosts agility." & DDUtils.RNRN & _
-                                    getSizeInformation() & vbcrlf & getStatInformation())
+                                    getSizeInformation() & DDUtils.RNRN & getStatInformation())
     End Sub
 
     Public Overrides Sub onEquip(ByRef p As Player)

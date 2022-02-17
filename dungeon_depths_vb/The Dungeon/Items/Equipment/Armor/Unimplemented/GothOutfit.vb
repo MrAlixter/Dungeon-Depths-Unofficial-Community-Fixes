@@ -1,9 +1,11 @@
 ﻿Public Class GothOutfit
     Inherits Armor
 
+    Public Const ITEM_NAME As String = "TODO_Outfit"
+
     Sub New()
         '|ID Info|
-        setName("TODO_Outfit")
+        setName(ITEM_NAME)
         id = 181
         tier = Nothing
 
@@ -33,6 +35,7 @@
 
         '|Description|
         setDesc("Yeah, uhh... I didn't have time to finish the thing this was a part of, so..." & DDUtils.RNRN &
-                getSizeInformation() & vbcrlf & getStatInformation())
+                getSizeInformation() & DDUtils.RNRN &
+                getStatInformation())
     End Sub
 End Class

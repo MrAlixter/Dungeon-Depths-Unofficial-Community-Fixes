@@ -1,7 +1,7 @@
 ﻿Public Class WarriorsCuirass
     Inherits Armor
 
-    Public Const ITEM_NAME = "Warrior's_Cuirass"
+    Public Const ITEM_NAME As String = "Warrior's_Cuirass"
 
     Sub New()
         '|ID Info|
@@ -35,7 +35,7 @@
 
         '|Description|
         setDesc("A protective garment made more for elite fighters rather than fashion-minded common folk." & DDUtils.RNRN &
-                                getSizeInformation() & vbcrlf & getStatInformation())
+                                getSizeInformation() & DDUtils.RNRN & getStatInformation())
     End Sub
 
     Public Overrides Function getTier() As Integer

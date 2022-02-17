@@ -1,9 +1,11 @@
 ﻿Public Class TeachFocusedMantra
     Inherits Item
 
+    Public Const ITEM_NAME As String = "Learn_'Focus_Up'"
+        
     Sub New()
         '|ID Info|
-        setName("Learn_'Focus_Up'")
+        setName(ITEM_NAME)
         id = 249
         tier = Nothing
 

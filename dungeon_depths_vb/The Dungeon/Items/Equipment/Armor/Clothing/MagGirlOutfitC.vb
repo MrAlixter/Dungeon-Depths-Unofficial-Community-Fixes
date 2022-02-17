@@ -1,9 +1,11 @@
 ﻿Public Class MagGirlOutfitC
     Inherits Armor
 
+    Public Const ITEM_NAME As String = "Mag._Girl_Outfit_(C)"
+
     Sub New()
         '|ID Info|
-        setName("Mag._Girl_Outfit_(C)")
+        setName(ITEM_NAME)
         id = 216
         tier = Nothing
 
@@ -36,7 +38,8 @@
 
         '|Description|
         setDesc("A mysterious uniform worn by a mysterious protector with a bovine flair." & DDUtils.RNRN &
-                getSizeInformation() & vbCrLf & getStatInformation() &
+                getSizeInformation() & DDUtils.RNRN &
+                getStatInformation() &
                 "Magical girls can not remove this uniform.")
     End Sub
 

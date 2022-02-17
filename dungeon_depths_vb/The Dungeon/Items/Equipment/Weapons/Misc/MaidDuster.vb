@@ -1,15 +1,24 @@
 ﻿Public Class MaidDuster
     Inherits Weapon
 
+    Public Const ITEM_NAME As String = "Duster"
+
     Sub New()
-        setName("Duster")
-        setDesc("A grey feather duster that looks like you could use for cleaning.")
+        '|ID Info|
+        setName(ITEM_NAME)
         id = 45
         tier = 3
-        usable = true
-        MyBase.a_boost = 5
+
+        '|Item Flags|
+        usable = True
+
+        '|Stats|
+        a_boost = 5
         count = 0
         value = 375
+
+        '|Description|
+        setDesc("A grey feather duster that looks like you could use for cleaning.")
     End Sub
 
     Overrides Sub use(ByRef p As Player)

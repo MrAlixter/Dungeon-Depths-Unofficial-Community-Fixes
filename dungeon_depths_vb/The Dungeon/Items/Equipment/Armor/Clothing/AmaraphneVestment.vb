@@ -1,9 +1,11 @@
 ﻿Public Class AmaraphneVestment
     Inherits Armor
 
+    Public Const ITEM_NAME As String = "Vestment_of_Amaraphne"
+
     Sub New()
         '|ID Info|
-        setName("Vestment_of_Amaraphne")
+        setName(ITEM_NAME)
         id = 324
         tier = Nothing
 
@@ -37,6 +39,6 @@
 
         '|Description|
         setDesc("A white and pink gown that shimmers with the tell-tale influence of the Goddess of Lust." & DDUtils.RNRN &
-                getSizeInformation() & vbCrLf & getStatInformation())
+                getSizeInformation() & DDUtils.RNRN & getStatInformation())
     End Sub
 End Class

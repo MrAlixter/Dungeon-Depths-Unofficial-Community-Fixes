@@ -1,9 +1,11 @@
 ﻿Public Class CStickOfGum
     Inherits Food
 
+    Public Const ITEM_NAME As String = "Cherry_Stick_of_Gum"
+
     Sub New()
         '|ID Info|
-        setName("Cherry_Stick_of_Gum")
+        setName(ITEM_NAME)
         id = 100
         tier = 3
 

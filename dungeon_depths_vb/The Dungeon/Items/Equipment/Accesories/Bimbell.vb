@@ -1,9 +1,11 @@
 ﻿Public Class Bimbell
     Inherits Accessory
 
+    Public Const ITEM_NAME As String = "Bimbell"
+
     Sub New()
         '|ID Info|
-        setName("Bimbell")
+        setName(ITEM_NAME)
         id = 197
         tier = 3
 

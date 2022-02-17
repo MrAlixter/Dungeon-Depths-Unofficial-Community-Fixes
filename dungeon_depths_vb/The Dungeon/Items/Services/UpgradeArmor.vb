@@ -1,9 +1,11 @@
 ﻿Public Class UpgradeArmor
     Inherits Item
 
+    Public Const ITEM_NAME As String = "Upgrade_Armor"
+
     Sub New()
         '|ID Info|
-        setName("Upgrade_Armor")
+        setName(ITEM_NAME)
         id = 263
         tier = Nothing
 

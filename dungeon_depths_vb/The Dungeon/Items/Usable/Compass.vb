@@ -1,7 +1,7 @@
 ﻿Public Class Compass
     Inherits Item
 
-    Public Const ITEM_NAME = "Compass"
+    Public Const ITEM_NAME As String = "Compass"
 
     'The compass identifies where the stairs are.
     Sub New()

@@ -1,14 +1,24 @@
 ﻿Public Class HHealthPotion
     Inherits MysteryPotion
+
+    Public Const ITEM_NAME As String = "Hyper_Health_Potion"
+
     Sub New()
-        setName("Hyper_Health_Potion")
-        setDesc("A unearthly-looking potion")
+        '|ID Info|
+        setName(ITEM_NAME)
         id = 235
         tier = 3
-        usable = true
+
+        '|Item Flags|
+        usable = True
+        MyBase.onBuy = AddressOf reveal
+
+        '|Stats|
         count = 0
         value = 500
-        MyBase.onBuy = AddressOf reveal
+
+        '|Description|
+        setDesc("A unearthly-looking potion.")
     End Sub
 
     Public Overrides Sub setEffectList()

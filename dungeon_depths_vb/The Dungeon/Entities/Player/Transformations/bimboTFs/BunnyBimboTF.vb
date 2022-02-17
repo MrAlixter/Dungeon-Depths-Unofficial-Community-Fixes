@@ -35,7 +35,7 @@
         'face
         p.prt.setIAInd(pInd.face, 0, True, False)
         p.prt.setIAInd(pInd.eyes, 25, True, True)
-        p.prt.setIAInd(pInd.mouth, 25, True, True)
+        p.prt.setIAInd(pInd.mouth, 27, True, True)
 
         'other
         p.prt.setIAInd(pInd.cloak, 0, True, False)

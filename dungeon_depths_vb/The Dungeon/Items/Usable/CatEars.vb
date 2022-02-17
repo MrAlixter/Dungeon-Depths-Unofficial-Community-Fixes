@@ -1,7 +1,7 @@
 ﻿Public Class CatEars
     Inherits Item
 
-    Public Const ITEM_NAME = "Cat_Ears"
+    Public Const ITEM_NAME As String = "Cat_Ears"
 
     'CatEars is a useable item that gives the player cat ears
     Sub New()

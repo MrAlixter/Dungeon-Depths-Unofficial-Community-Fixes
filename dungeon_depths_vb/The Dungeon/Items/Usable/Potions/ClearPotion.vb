@@ -1,9 +1,11 @@
 ﻿Public Class ClearPotion
     Inherits Item
 
+    Public Const ITEM_NAME As String = "Clear_Potion"
+
     Sub New()
         '|ID Info|
-        setName("Clear_Potion")
+        setName(ITEM_NAME)
         id = 76
         tier = 1
 

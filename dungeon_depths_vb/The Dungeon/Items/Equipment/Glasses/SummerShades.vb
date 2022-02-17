@@ -1,9 +1,11 @@
 ﻿Public Class SummerShades
     Inherits Glasses
 
+    Public Const ITEM_NAME As String = "Summertime_Shades"
+
     Sub New()
         '|ID Info|
-        setName("Summertime_Shades")
+        setName(ITEM_NAME)
         id = 299
         tier = Nothing
 
@@ -21,8 +23,8 @@
 
         '|Description|
         setDesc("A pair of shiny black glasses in a sleek yellow frame." & DDUtils.RNRN &
-                getStatInformation() & vbCrLf &
-                "Triples the defense of any bikinis that its wielder is wearing.")
+                "Triples the defense of any bikinis that its wielder is wearing." & DDUtils.RNRN &
+                getStatInformation())
     End Sub
 
     Public Overrides Function getdBoost(ByRef p As Player) As Integer
@@ -33,7 +35,7 @@
 
     Public Overrides Function getDesc() As Object
         Return "A pair of shiny black glasses in a sleek yellow frame." & DDUtils.RNRN &
-                getStatInformation() & vbCrLf &
-                "Triples the defense of any bikinis that its wielder is wearing."
+                "Triples the defense of any bikinis that its wielder is wearing." & DDUtils.RNRN &
+                getStatInformation()
     End Function
 End Class

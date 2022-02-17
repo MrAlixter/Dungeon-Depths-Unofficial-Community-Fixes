@@ -1,9 +1,11 @@
 ﻿Public Class StealthGear
     Inherits Accessory
 
+    Public Const ITEM_NAME As String = "Stealth_Gear"
+
     Sub New()
         '|ID Info|
-        setName("Stealth_Gear")
+        setName(ITEM_NAME)
         id = 164
         tier = Nothing
 

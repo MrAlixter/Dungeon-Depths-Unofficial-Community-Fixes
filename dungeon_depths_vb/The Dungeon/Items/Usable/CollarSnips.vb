@@ -1,8 +1,11 @@
 ﻿Public Class CollarSnips
     Inherits Item
+
+    Public Const ITEM_NAME As String = "Collar_Snips"
+
     Sub New()
         '|ID Info|
-        setName("Collar_Snips")
+        setName(ITEM_NAME)
         id = 252
         tier = Nothing
 

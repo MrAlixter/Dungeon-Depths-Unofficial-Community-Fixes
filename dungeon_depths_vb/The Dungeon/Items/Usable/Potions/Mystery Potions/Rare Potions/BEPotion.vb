@@ -1,8 +1,11 @@
 ﻿Public Class BEPotion
     Inherits MysteryPotion
+
+    Public Const ITEM_NAME As String = "Breast_Growth_Potion"
+
     Sub New()
         '|ID Info|
-        setName("Breast_Growth_Potion")
+        setName(ITEM_NAME)
         id = 25
         tier = 3
 

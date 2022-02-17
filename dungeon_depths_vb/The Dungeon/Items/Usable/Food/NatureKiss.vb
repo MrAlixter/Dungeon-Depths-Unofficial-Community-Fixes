@@ -1,9 +1,11 @@
 ﻿Public Class NatureKiss
     Inherits Food
 
+    Public Const ITEM_NAME As String = "Nature's_Kiss"
+
     Sub New()
         '|ID Info|
-        setName("Nature's_Kiss")
+        setName(ITEM_NAME)
         id = 269
         tier = Nothing
 
@@ -17,8 +19,8 @@
 
         '|Description|
         setDesc("An amazing salad made of mixed greens grown by followers of a forest goddess.  While it may both be delectable and healthy, the Vendor describes these followers as more of a ""cult"" so the salad may be similarly unstable." & vbCrLf &
-                       "+39 stamina" & vbCrLf &
-                       "Either +150 health or +75 mana (depending on which is lower)")
+                "+39 stamina" & vbCrLf &
+                "Either +150 health or +75 mana (depending on which is lower)")
     End Sub
     Public Overrides Sub effect(ByRef p As Player)
         If ((p.getIntHealth / p.getMaxHealth) < (p.getMana / p.getMaxMana)) Or ((p.getIntHealth / p.getMaxHealth) < (p.getMana / p.getMaxMana) And Int(Rnd() * 2) = 0) Then

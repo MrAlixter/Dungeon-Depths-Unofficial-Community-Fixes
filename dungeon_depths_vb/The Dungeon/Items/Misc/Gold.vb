@@ -1,9 +1,11 @@
 ﻿Public Class Gold
     Inherits Item
 
+    Public Const ITEM_NAME As String = "Gold"
+
     Sub New()
         '|ID Info|
-        setName("Gold")
+        setName(ITEM_NAME)
         id = 43
         tier = 2
 

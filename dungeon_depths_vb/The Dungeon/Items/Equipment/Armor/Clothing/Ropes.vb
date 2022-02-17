@@ -1,9 +1,11 @@
 ﻿Public Class Ropes
     Inherits Armor
 
+    Public Const ITEM_NAME As String = "Ropes"
+
     Sub New()
         '|ID Info|
-        setName("Ropes")
+        setName(ITEM_NAME)
         id = 54
         tier = Nothing
 

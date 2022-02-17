@@ -1,8 +1,11 @@
 ﻿Public Class MOTOx
     Inherits Accessory
+
+    Public Const ITEM_NAME As String = "Mark_of_the_Ox"
+
     Sub New()
         '|ID Info|
-        setName("Mark_of_the_Ox")
+        setName(ITEM_NAME)
         id = 271
         tier = Nothing
 

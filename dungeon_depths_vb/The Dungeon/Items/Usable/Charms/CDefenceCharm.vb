@@ -1,9 +1,11 @@
-﻿Public Class CdefenseCharm
+﻿Public Class CDefenseCharm
     Inherits Item
+
+    Public Const ITEM_NAME As String = "Defense_Charm​"
 
     Sub New()
         '|ID Info|
-        setName("Defense_Charm​")
+        setName(ITEM_NAME)
         id = 174
         tier = 4
 
@@ -16,7 +18,6 @@
 
         '|Description|
         setDesc("A charm that slightly boosts your defense.  There is a subtle red glow surrounding this charm.")
-
     End Sub
 
     Overrides Sub use(ByRef p As Player)

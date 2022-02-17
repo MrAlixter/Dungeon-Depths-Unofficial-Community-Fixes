@@ -1,20 +1,27 @@
 ﻿Public Class ASpellbook
     Inherits Item
 
-    Public Const ITEM_NAME = "Advanced_Spellbook"
+    Public Const ITEM_NAME As String = "Advanced_Spellbook"
 
     Public Shared spells() As String = {"Turn to Blade", "Turn to Cupcake", "Self Polymorph",
                                         "Magma Spear", "Petrify II", "Major Heal", "Uvona's Fugue",
                                         "Summon Apple"}
 
     Sub New()
+        '|ID Info|
         setName(ITEM_NAME)
-        setDesc("An ornate, gilded book that likely contains something outside of the standard magic curriculum.")
         id = 65
         tier = 3
-        usable = true
+
+        '|Item Flags|
+        usable = True
+
+        '|Stats|
         count = 0
         value = 1500
+
+        '|Description|
+        setDesc("An ornate, gilded book that likely contains something outside of the standard magic curriculum.")
     End Sub
 
     Overrides Sub use(ByRef p As Player)

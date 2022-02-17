@@ -1,16 +1,24 @@
 ﻿Public Class GCUniform
     Inherits Armor
 
-    Sub New()
-        setName("Gynoid_Uniform")
+    Public Const ITEM_NAME As String = "Gynoid_Uniform"
 
+    Sub New()
+        '|ID Info|
+        setName(ITEM_NAME)
         id = 116
         tier = Nothing
-        usable = false
-        MyBase.d_boost = 5
+
+        '|Item Flags|
+        usable = False
+        compress_breast = True
+
+        '|Stats|
+        d_boost = 5
         count = 0
         value = 300
 
+        '|Image Index|
         bsize0 = New Tuple(Of Integer, Boolean, Boolean)(47, False, True)
         bsize1 = New Tuple(Of Integer, Boolean, Boolean)(163, True, True)
         bsize2 = New Tuple(Of Integer, Boolean, Boolean)(164, True, True)
@@ -23,10 +31,11 @@
         usize3 = New Tuple(Of Integer, Boolean, Boolean)(137, True, True)
         usize4 = New Tuple(Of Integer, Boolean, Boolean)(138, True, True)
 
-        MyBase.compress_breast = True
-
+        '|Description|
         setDesc("A special set of clothes equipped through the gynoid conversion process.  While it doesn't do much by itself, if one has a network of circuitry on hand its fabric collects ambient mana and improves reaction time." & DDUtils.RNRN &
-                                      getSizeInformation() & vbcrlf & getStatInformation() & "If the wearer is robotic, +13 Max MP and +10 SPD")
+                "If worn by someone who is robotic, buff their Max MP and SPD" & DDUtils.RNRN &
+                getSizeInformation() & DDUtils.RNRN &
+                getStatInformation())
     End Sub
 
     Public Overrides Function getMBoost(ByRef p As Player) As Integer
@@ -43,5 +52,12 @@
         Else
             Return MyBase.getSBoost(p)
         End If
+    End Function
+
+    Public Overrides Function getDesc() As Object
+        Return "A special set of clothes equipped through the gynoid conversion process.  While it doesn't do much by itself, if one has a network of circuitry on hand its fabric collects ambient mana and improves reaction time." & DDUtils.RNRN &
+               "If worn by someone who is robotic, buff their Max MP and SPD" & DDUtils.RNRN &
+               getSizeInformation() & DDUtils.RNRN &
+               getStatInformation()
     End Function
 End Class

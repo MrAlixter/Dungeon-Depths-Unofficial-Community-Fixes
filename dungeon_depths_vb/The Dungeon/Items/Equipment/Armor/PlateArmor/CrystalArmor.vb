@@ -1,9 +1,11 @@
 ﻿Public Class CrystalArmor
     Inherits Armor
 
+    Public Const ITEM_NAME As String = "Crystalline_Armor"
+
     Sub New()
         '|ID Info|
-        setName("Crystalline_Armor")
+        setName(ITEM_NAME)
         id = 144
         tier = Nothing
 
@@ -33,7 +35,7 @@
 
         '|Description|
         setDesc("A set of armor made up of a series of diamond-like plates enhanced by concentrated mana.  While normally these would be extremely brittle, the magical energy lends them a fair amount of durability, and lends their wearer some extra mana." & DDUtils.RNRN &
-                       getSizeInformation() & vbcrlf & getStatInformation())
+                       getSizeInformation() & DDUtils.RNRN & getStatInformation())
     End Sub
 
     Public Overrides Sub onEquip(ByRef p As Player)

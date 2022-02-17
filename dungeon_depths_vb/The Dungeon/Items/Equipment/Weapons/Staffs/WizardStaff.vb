@@ -1,9 +1,11 @@
 ﻿Public Class WizardStaff
     Inherits Staff
 
+    Public Const ITEM_NAME As String = "Wizard_Staff"
+
     Sub New()
         '|ID Info|
-        setName("Wizard_Staff")
+        setName(ITEM_NAME)
         id = 22
         tier = 3
 

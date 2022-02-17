@@ -1,16 +1,24 @@
 ﻿Public Class ShrinkRay
     Inherits Weapon
 
+    Public Const ITEM_NAME As String = "Shrink_Ray"
+
     Sub New()
-        setName("Shrink_Ray")
-        setDesc("A pistol-like weapon that reduces an opponent to less than a tenth of their initial height.  Unfortunatley, this may take some time... An ""Warning - Exerimental"" sticker hints that it might be risky to use.")
+        '|ID Info|
+        setName(ITEM_NAME)
         id = 120
         tier = Nothing
-        usable = false
+
+        '|Item Flags|
+        usable = False
+        rando_inv_allowed = False
+
+        '|Stats|
         count = 0
         value = 7500
 
-        rando_inv_allowed = False
+        '|Description|
+        setDesc("A pistol-like weapon that reduces an opponent to less than a tenth of their initial height.  Unfortunatley, this may take some time... An ""Warning - Exerimental"" sticker hints that it might be risky to use.")
     End Sub
 
     Overrides Function attack(ByRef p As Player, ByRef m As Entity) As Integer

@@ -51,7 +51,7 @@
         TextEvent.pushYesNo("Apologize?", AddressOf giveApology, AddressOf refuseApology)
     End Sub
     Sub giveApology()
-        Objective.showNPC(ShopNPC.npcLib.atrs(0).getAt(50), "Glad you have some concept of manners after all...  Tell you what, I'll forgive you if you do me a ♪sooolid!♫", AddressOf askForFavor)
+        Objective.showNPC(ShopNPC.npcLib.atrs(0).getAt(50), "Glad you have some manners after all...  Tell you what, I'll forgive you if you do me a ♪sooolid!♫", AddressOf askForFavor)
     End Sub
     Sub refuseApology()
         Objective.showNPC(ShopNPC.npcLib.atrs(0).getAt(55), "HMMPH!  Fine then, be that way.  You can find your own way through the Fae Woods.  I'd wish you luck, but honestly I hope you get turned into a tree.  You should really learn to be more polite...", AddressOf completeEntireQuest)
@@ -89,7 +89,6 @@
     End Sub
     Sub eatPie3()
         Polymorph.transform(Game.player1, "Fae")
-        ' Game.picPortrait.BackgroundImage = Portrait.CreateBMP({Game.picPortrait.BackgroundImage, Game.picPFaeShock.BackgroundImage})
         Objective.showNPC(ShopNPC.npcLib.atrs(0).getAt(51), "Oh, right, I probably should have warned you, this pie turns humans into fae; the enchantment gives the pie some of its flavor I've been told..." & DDUtils.RNRN &
                                                             "Whelp, a fae shouldn't need a guide in these parts or that pile of junk you're standing in, so I guess I'll pick that mess up for you and skedaddle!  ♪Also you're welllcome!♫", AddressOf eatPie4)
     End Sub

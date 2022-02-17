@@ -1,7 +1,7 @@
 ﻿Public Class SorcerersRobes
     Inherits Armor
 
-    Public Const ITEM_NAME = "Sorcerer's_Robes"
+    Public Const ITEM_NAME As String = "Sorcerer's_Robes"
 
     Sub New()
         '|ID Info|
@@ -36,7 +36,7 @@
 
         '|Description|
         setDesc("A protective garment made more for pratical funtion than for fashion. " & DDUtils.RNRN &
-                                          getSizeInformation() & vbcrlf & getStatInformation())
+                                          getSizeInformation() & DDUtils.RNRN & getStatInformation())
     End Sub
 
     Public Overrides Function getTier() As Integer

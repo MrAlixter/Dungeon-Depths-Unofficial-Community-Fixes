@@ -1,7 +1,7 @@
 ﻿Public Class RestorationPotion
     Inherits Item
 
-    Public Const ITEM_NAME = "Restore_Potion"
+    Public Const ITEM_NAME As String = "Restore_Potion"
 
     Sub New()
         '|ID Info|

@@ -1,9 +1,11 @@
 ﻿Public Class SVBunnySuit
     Inherits Armor
-    'the BunnySuit is a cosmetic armor that provides +1 defense
+
+    Public Const ITEM_NAME As String = "Bunny_Suit​"
+
     Sub New()
         '|ID Info|
-        setName("Bunny_Suit​")
+        setName(ITEM_NAME)
         id = 129
         tier = Nothing
 
@@ -38,6 +40,6 @@
 
         '|Description|
         setDesc("An extremely sultry outfit worn by waitresses in a club. " & DDUtils.RNRN & _
-                            getSizeInformation() & vbCrLf & getStatInformation())
+                            getSizeInformation() & DDUtils.RNRN & getStatInformation())
     End Sub
 End Class

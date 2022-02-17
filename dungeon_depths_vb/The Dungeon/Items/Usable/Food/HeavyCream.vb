@@ -1,9 +1,11 @@
 ﻿Public Class HeavyCream
     Inherits Food
 
+    Public Const ITEM_NAME As String = "Heavy_Cream"
+
     Sub New()
         '|ID Info|
-        setName("Heavy_Cream")
+        setName(ITEM_NAME)
         id = 34
         tier = 2
 

@@ -2,9 +2,11 @@
 Public Class PaladinArmor
     Inherits Armor
 
+    Public Const ITEM_NAME As String = "Paladin's_Armor"
+
     Sub New()
         '|ID Info|
-        setName("Paladin's_Armor")
+        setName(ITEM_NAME)
         id = 301
         tier = Nothing
 
@@ -34,7 +36,7 @@ Public Class PaladinArmor
 
         '|Description|
         setDesc("A thick set of plate armor that also bolsters its wearer's magical abilities." & DDUtils.RNRN &
-                getSizeInformation() & vbCrLf &
+                getSizeInformation() & DDUtils.RNRN &
                 getStatInformation())
     End Sub
 End Class

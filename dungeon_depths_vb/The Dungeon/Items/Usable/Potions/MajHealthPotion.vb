@@ -1,9 +1,11 @@
 ﻿Public Class MajHealthPotion
     Inherits Item
 
+    Public Const ITEM_NAME As String = "Major_Health_Potion"
+
     Sub New()
         '|ID Info|
-        setName("Major_Health_Potion")
+        setName(ITEM_NAME)
         id = 82
         tier = 3
 

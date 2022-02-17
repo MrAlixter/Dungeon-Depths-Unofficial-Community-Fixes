@@ -1,9 +1,11 @@
 ﻿Public Class GoldArmor
     Inherits Armor
 
+    Public Const ITEM_NAME As String = "Gold_Armor"
+
     Sub New()
         '|ID Info|
-        setName("Gold_Armor")
+        setName(ITEM_NAME)
         id = 38
         tier = Nothing
 
@@ -32,6 +34,6 @@
 
         '|Description|
         setDesc("A expensive looking armor set made for the wealthy." & DDUtils.RNRN &
-                                          getSizeInformation() & vbcrlf & getStatInformation())
+                                          getSizeInformation() & DDUtils.RNRN & getStatInformation())
     End Sub
 End Class

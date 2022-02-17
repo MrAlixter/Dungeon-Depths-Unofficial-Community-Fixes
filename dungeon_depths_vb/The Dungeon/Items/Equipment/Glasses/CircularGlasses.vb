@@ -1,9 +1,11 @@
 ﻿Public Class CircularGlasses
     Inherits Glasses
 
+    Public Const ITEM_NAME As String = "Circular_Glasses"
+
     Sub New()
         '|ID Info|
-        setName("Circular_Glasses")
+        setName(ITEM_NAME)
         id = 310
         tier = Nothing
 

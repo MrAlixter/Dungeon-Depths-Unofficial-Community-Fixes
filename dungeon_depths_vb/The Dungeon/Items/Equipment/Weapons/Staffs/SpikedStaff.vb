@@ -1,9 +1,11 @@
 ﻿Public Class SpikedStaff
     Inherits Staff
 
+    Public Const ITEM_NAME As String = "Spiked_Staff"
+
     Sub New()
         '|ID Info|
-        setName("Spiked_Staff")
+        setName(ITEM_NAME)
         id = 160
         tier = Nothing
 

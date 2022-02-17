@@ -1,9 +1,11 @@
 ﻿Public Class ScaleArmor
     Inherits Armor
 
+    Public Const ITEM_NAME As String = "Scale_Armor"
+
     Sub New()
         '|ID Info|
-        setName("Scale_Armor")
+        setName(ITEM_NAME)
         id = 176
         tier = Nothing
 
@@ -33,6 +35,6 @@
 
         '|Description|
         setDesc("Unlike the its bronze and steel counterparts, this armor set consists of a series of small interlocking plates.  The unique draconic alloy used by these scales provides ample protection, although it's also fairly heavy." & DDUtils.RNRN & _
-                        getSizeInformation() & vbcrlf & getStatInformation())
+                        getSizeInformation() & DDUtils.RNRN & getStatInformation())
     End Sub
 End Class

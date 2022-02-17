@@ -1,9 +1,11 @@
 ﻿Public Class VDayClothes
     Inherits Armor
 
+    Public Const ITEM_NAME As String = "Val._Day_Suit"
+
     Sub New()
         '|ID Info|
-        setName("Val._Day_Suit")
+        setName(ITEM_NAME)
         id = 79
         If DDDateTime.isValen Then tier = 2 Else tier = Nothing
 
@@ -34,6 +36,6 @@
 
         '|Description|
         setDesc("A handsome black, white, and red suit perfect for a romantic dinner with a signifigant other." & DDUtils.RNRN &
-                        getSizeInformation() & vbcrlf & getStatInformation())
+                        getSizeInformation() & DDUtils.RNRN & getStatInformation())
     End Sub
 End Class

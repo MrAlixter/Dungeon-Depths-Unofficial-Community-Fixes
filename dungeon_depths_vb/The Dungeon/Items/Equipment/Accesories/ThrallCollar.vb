@@ -1,12 +1,14 @@
 ﻿Public Class ThrallCollar
     Inherits Accessory
-    'The the slave collar handles the thrall tf
+
+    Public Const ITEM_NAME As String = "Slave_Collar"
+
     Dim formerClass As String = ""
     Dim formerEyeType As Tuple(Of Integer, Boolean, Boolean) = New Tuple(Of Integer, Boolean, Boolean)(0, False, False)
 
     Sub New()
         '|ID Info|
-        setName("Slave_Collar")
+        setName(ITEM_NAME)
         id = 69
         tier = 3
 

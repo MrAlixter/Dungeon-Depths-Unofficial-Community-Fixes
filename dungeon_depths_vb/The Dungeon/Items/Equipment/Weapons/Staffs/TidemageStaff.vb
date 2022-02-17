@@ -1,9 +1,11 @@
 ﻿Public Class TidemageStaff
     Inherits Staff
 
+    Public Const ITEM_NAME As String = "Staff_of_the_Tidemage"
+
     Sub New()
         '|ID Info|
-        setName("Staff_of_the_Tidemage")
+        setName(ITEM_NAME)
         id = 297
         tier = Nothing
 
@@ -19,9 +21,9 @@
 
         '|Description|
         setDesc("A staff of arcane coral used by a sect of mages that spend a lot of time at the beach." & DDUtils.RNRN &
-                getStatInformation() & vbCrLf &
                 "Becomes more powerful if its wielder is wearing a bikini." & vbCrLf &
-                "Grants access to the ""Aquageyser"" spell")
+                "Grants access to the ""Aquageyser"" spell" & DDUtils.RNRN &
+                getStatInformation())
     End Sub
 
     Public Overrides Sub onEquip(ByRef p As Player)
@@ -57,8 +59,8 @@
 
     Public Overrides Function getDesc() As Object
         Return "A staff of arcane coral used by a sect of mages that spend a lot of time at the beach." & DDUtils.RNRN &
-                getStatInformation() & vbCrLf &
                 "Becomes more powerful if its wielder is wearing a bikini." & vbCrLf &
-                "Grants access to the ""Aquageyser"" spell"
+                "Grants access to the ""Aquageyser"" spell" & DDUtils.RNRN &
+                getStatInformation()
     End Function
 End Class

@@ -1,9 +1,11 @@
 ﻿Public Class ThickRimmedSpecs
     Inherits Glasses
 
+    Public Const ITEM_NAME As String = "Thick_Rimmed_Specs"
+
     Sub New()
         '|ID Info|
-        setName("Thick_Rimmed_Specs")
+        setName(ITEM_NAME)
         id = 311
         tier = Nothing
 

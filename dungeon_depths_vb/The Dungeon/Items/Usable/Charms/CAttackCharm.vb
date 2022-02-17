@@ -1,9 +1,11 @@
 ﻿Public Class CAttackCharm
     Inherits Item
 
+    Public Const ITEM_NAME As String = "Attack_Charm​"
+
     Sub New()
         '|ID Info|
-        setName("Attack_Charm​")
+        setName(ITEM_NAME)
         id = 200
         tier = 4
 
@@ -15,7 +17,6 @@
         value = 750
 
         '|Description|
-
         setDesc("A charm that slightly boosts your attack.  There is a subtle red glow surrounding this charm.")
     End Sub
 

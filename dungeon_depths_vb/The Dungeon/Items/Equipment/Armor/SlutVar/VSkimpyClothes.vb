@@ -1,9 +1,11 @@
 ﻿Public Class VSkimpyClothes
     Inherits Armor
 
+    Public Const ITEM_NAME As String = "Very_Skimpy_Clothes"
+
     Sub New()
         '|ID Info|
-        setName("Very_Skimpy_Clothes")
+        setName(ITEM_NAME)
         id = 192
         tier = Nothing
 
@@ -33,6 +35,7 @@
 
         '|Description|
         setDesc("A soft set of clothing that definitely seems crafted to show off its wearer's body." & DDUtils.RNRN &
-                               getSizeInformation() & vbcrlf & getStatInformation())
+                getSizeInformation() & DDUtils.RNRN &
+                getStatInformation())
     End Sub
 End Class

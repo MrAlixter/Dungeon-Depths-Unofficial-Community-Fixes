@@ -1,9 +1,11 @@
 ﻿Public Class MagMimicWand
     Inherits MagGirlWand
 
+    Public Shadows Const ITEM_NAME As String = "Magical_Mimic_Wand​"
+
     Sub New()
         '|ID Info|
-        setName("Magical_Mimic_Wand​")
+        setName(ITEM_NAME)
         id = 293
         tier = Nothing
 
@@ -22,7 +24,6 @@
         '|Description|
         setDesc("A heart adorned wand used by a mysterious protector.  Every once in a while, a tendril flicks out from its tip." & DDUtils.RNRN &
                 getStatInformation())
-
     End Sub
 
     Public Overrides Sub onEquip(ByRef p As Player)

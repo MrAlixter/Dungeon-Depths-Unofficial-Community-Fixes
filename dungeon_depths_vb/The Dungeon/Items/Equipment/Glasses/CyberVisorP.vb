@@ -1,9 +1,11 @@
 ﻿Public Class CyberVisorP
     Inherits Glasses
 
+    Public Const ITEM_NAME As String = "Cyber_Visor_(P)"
+
     Sub New()
         '|ID Info|
-        setName("Cyber_Visor_(P)")
+        setName(ITEM_NAME)
         id = 316
         tier = Nothing
 

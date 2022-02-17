@@ -1,9 +1,11 @@
 ﻿Public Class BewitchedWand
     Inherits Wand
 
+    Public Const ITEM_NAME As String = "Bewitched_Wand"
+
     Sub New()
         '|ID Info|
-        setName("Bewitched_Wand")
+        setName(ITEM_NAME)
         id = 259
         tier = Nothing
 
@@ -19,8 +21,8 @@
 
         '|Description|
         setDesc("A gnarled wooden wand with an unnatural deep violet finish.  Its flow of mana almost feels like the rhythm of a living being." & DDUtils.RNRN &
-                       "Each hit carries a 1 in 4 chance of an additional attack, and a 1 in 4 chance of backfiring." & DDUtils.RNRN &
-                       getStatInformation())
+                "Each hit carries a 1 in 4 chance of an additional attack, and a 1 in 4 chance of backfiring." & DDUtils.RNRN &
+                getStatInformation())
     End Sub
 
     Public Overrides Sub spell(ByRef p As Player, ByRef m As Entity)

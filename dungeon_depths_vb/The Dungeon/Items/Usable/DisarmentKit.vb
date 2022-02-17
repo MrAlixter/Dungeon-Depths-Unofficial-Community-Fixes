@@ -1,9 +1,11 @@
 ﻿Public Class DisarmentKit
     Inherits Item
 
+    Public Const ITEM_NAME As String = "Disarment_Kit"
+
     Sub New()
         '|ID Info|
-        setName("Disarment_Kit")
+        setName(ITEM_NAME)
         id = 57
         tier = 3
 

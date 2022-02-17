@@ -1,9 +1,11 @@
 ﻿Public Class FeatherSword
     Inherits Sword
 
+    Public Const ITEM_NAME As String = "Featherlight_Rapier"
+
     Sub New()
         '|ID Info|
-        setName("Featherlight_Rapier")
+        setName(ITEM_NAME)
         id = 6
         tier = Nothing
 

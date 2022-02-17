@@ -1,16 +1,18 @@
 ﻿Public Class TomeOfKnowlege
     Inherits Item
 
+    Public Const ITEM_NAME As String = "Tome_Of_Knowledge"
+
     Sub New()
         '|ID Info|
-        setName("Tome_Of_Knowledge")
+        setName(ITEM_NAME)
         id = 286
         tier = Nothing
 
         '|Item Flags|
         usable = true
         rando_inv_allowed = False
-        MyBase.droppable = False
+        droppable = False
 
         '|Stats|
         count = 0
