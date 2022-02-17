@@ -1,24 +1,33 @@
 ﻿Public Class HealthCharm
     Inherits Item
 
+    Public Const ITEM_NAME As String = "Health_Charm"
+
     Sub New()
-        setName("Health_Charm")
-        setDesc("A charm that slightly boosts your health.")
+        '|ID Info|
+        setName(ITEM_NAME)
         id = 48
         tier = 3
-        usable = true
+
+        '|Item Flags|
+        usable = True
+
+        '|Stats|
         count = 0
         value = 1750
+
+        '|Description|
+        setDesc("A charm that slightly boosts your health.")
     End Sub
 
     Overrides Sub use(ByRef p As Player)
         If Me.getUsable() = False Then Exit Sub
         If p.className.Equals("Soul-Lord") Then
-            Game.pushLblEvent("You spike the health charm on the ground, shattering it all over the dungeon floor.  As you go back to your buisness, you muse on how cowardly healing is." & DDUtils.RNRN & """Only someone who cares about their mortal vessel would bother to maintain it.")
+            TextEvent.push("You spike the health charm on the ground, shattering it all over the dungeon floor.  As you go back to your buisness, you muse on how cowardly healing is." & DDUtils.RNRN & """Only someone who cares about their mortal vessel would bother to maintain it.")
             p.UIupdate()
             Exit Sub
         End If
-        Game.pushLstLog("You use the " & getName() & ". +10 base health!")
+        TextEvent.pushLog("You use the " & getName() & ". +10 base health!")
 
         Game.player1.maxHealth += 10
         Game.player1.health += 10 / Game.player1.getMaxHealth()

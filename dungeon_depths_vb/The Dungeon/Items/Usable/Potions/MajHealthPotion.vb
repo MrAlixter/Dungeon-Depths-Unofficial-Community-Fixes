@@ -1,9 +1,11 @@
 ﻿Public Class MajHealthPotion
     Inherits Item
 
+    Public Const ITEM_NAME As String = "Major_Health_Potion"
+
     Sub New()
         '|ID Info|
-        setName("Major_Health_Potion")
+        setName(ITEM_NAME)
         id = 82
         tier = 3
 
@@ -21,14 +23,14 @@
 
     Overrides Sub use(ByRef p As Player)
         If p.className.Equals("Soul-Lord") Then
-            Game.pushLblEvent("You spike the health potion on the ground, shattering it all over the dungeon floor.  As you go back to your buisness, you muse on how cowardly healing is." & DDUtils.RNRN & """Only someone who cares about their mortal vessel would bother to maintain it.")
+            TextEvent.push("You spike the health potion on the ground, shattering it all over the dungeon floor.  As you go back to your buisness, you muse on how cowardly healing is." & DDUtils.RNRN & """Only someone who cares about their mortal vessel would bother to maintain it.")
             p.UIupdate()
             Exit Sub
         End If
-        Game.pushLstLog("You drink the " & getName())
+        TextEvent.pushLog("You drink the " & getName())
         Dim phHealth = p.health
         p.health = 1.0
-        Game.pushLblEvent("You drink the " & getName() & ".  +" & CInt((p.health - phHealth) * p.getMaxHealth) & " health!")
+        TextEvent.push("You drink the " & getName() & ".  +" & CInt((p.health - phHealth) * p.getMaxHealth) & " health!")
         count -= 1
     End Sub
 End Class

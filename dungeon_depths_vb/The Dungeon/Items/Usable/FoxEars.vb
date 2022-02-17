@@ -1,9 +1,11 @@
 ﻿Public Class FoxEars
-    'FoxEars is a useable item that gives the player fox ears
     Inherits Item
+
+    Public Const ITEM_NAME As String = "Fox_Ears"
+
     Sub New()
         '|ID Info|
-        setName("Fox_Ears")
+        setName(ITEM_NAME)
         id = 219
         tier = Nothing
 
@@ -17,7 +19,6 @@
         '|Description|
         setDesc("An enchanted pair of vulpine ears." & DDUtils.RNRN &
                 "Using this item will give its user fox ears!")
-
     End Sub
 
     Overrides Sub use(ByRef p As Player)

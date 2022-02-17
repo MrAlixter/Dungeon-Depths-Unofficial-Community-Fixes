@@ -1,40 +1,43 @@
 ﻿Public Class AngelicSweater
     Inherits Armor
 
+    Public Const ITEM_NAME As String = "Angelic_Sweater"
+
     Sub New()
         '|ID Info|
-        setName("Angelic_Sweater")
+        setName(ITEM_NAME)
         id = 199
         tier = Nothing
 
         '|Item Flags|
         usable = false
-        MyBase.droppable = False
+        droppable = False
         rando_inv_allowed = False
-        MyBase.compress_breast = True
-        MyBase.hide_dick = False
+        compress_breast = True
+        hide_dick = False
 
         '|Stats|
         h_boost = 10
-        MyBase.d_boost = 5
-        MyBase.m_boost = 20
+        d_boost = 5
+        m_boost = 20
         count = 0
         value = 7777
 
         '|Image Index|
-        MyBase.bsize1 = New Tuple(Of Integer, Boolean, Boolean)(280, True, True)
-        MyBase.bsize2 = New Tuple(Of Integer, Boolean, Boolean)(281, True, True)
-        MyBase.bsize3 = New Tuple(Of Integer, Boolean, Boolean)(282, True, True)
-        MyBase.bsize4 = New Tuple(Of Integer, Boolean, Boolean)(283, True, True)
+        bsize1 = New Tuple(Of Integer, Boolean, Boolean)(280, True, True)
+        bsize2 = New Tuple(Of Integer, Boolean, Boolean)(281, True, True)
+        bsize3 = New Tuple(Of Integer, Boolean, Boolean)(282, True, True)
+        bsize4 = New Tuple(Of Integer, Boolean, Boolean)(283, True, True)
 
-        MyBase.usize1 = New Tuple(Of Integer, Boolean, Boolean)(178, True, True)
-        MyBase.usize2 = New Tuple(Of Integer, Boolean, Boolean)(179, True, True)
-        MyBase.usize3 = New Tuple(Of Integer, Boolean, Boolean)(180, True, True)
-        MyBase.usize4 = New Tuple(Of Integer, Boolean, Boolean)(181, True, True)
-        MyBase.usize5 = New Tuple(Of Integer, Boolean, Boolean)(182, True, True)
+        usize1 = New Tuple(Of Integer, Boolean, Boolean)(178, True, True)
+        usize2 = New Tuple(Of Integer, Boolean, Boolean)(179, True, True)
+        usize3 = New Tuple(Of Integer, Boolean, Boolean)(180, True, True)
+        usize4 = New Tuple(Of Integer, Boolean, Boolean)(181, True, True)
+        usize5 = New Tuple(Of Integer, Boolean, Boolean)(182, True, True)
 
         '|Description|
         setDesc("A glittering, heavenly soft sweater." & DDUtils.RNRN &
-                                     getSizeInformation() & vbcrlf & getStatInformation())
+                getSizeInformation() & DDUtils.RNRN &
+                getStatInformation())
     End Sub
 End Class

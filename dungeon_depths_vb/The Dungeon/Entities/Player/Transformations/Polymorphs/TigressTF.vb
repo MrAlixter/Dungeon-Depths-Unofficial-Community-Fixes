@@ -23,8 +23,8 @@
         Dim out = ""
 
         'unequips
-        Equipment.clothesChange(p, "Naked")
-        Equipment.weaponChange(p, "Fists")
+        EquipmentDialogBackend.armorChange(p, "Naked")
+         EquipmentDialogBackend.weaponChange(p, "Fists")
 
         'goddess transformation
         If p.sex = "Male" Then
@@ -54,6 +54,6 @@
         p.TextColor = Color.Orange
         out += "As a golden fur spreads over your arms and legs, your muscles surge with a new strength.  You grin, barring your newly retractable claws and taking an aggressive stance."
 
-        Game.pushLblEvent(out)
+        TextEvent.push(out)
     End Sub
 End Class

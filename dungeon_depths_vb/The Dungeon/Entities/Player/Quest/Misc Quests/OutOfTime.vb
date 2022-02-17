@@ -14,7 +14,7 @@
     Public Overrides Sub init()
         MyBase.init()
 
-        Game.pushLblEvent("As you are walking along, another glowing rift in space and time opens in front of you." & DDUtils.RNRN &
+        TextEvent.push("As you are walking along, another glowing rift in space and time opens in front of you." & DDUtils.RNRN &
                           "To your suprise, a woman in goggles steps out of it and glances around before locking eyes with you, grinning, and striking a dramatic pose.", AddressOf initStep2)
     End Sub
     Private Sub initStep2()
@@ -26,12 +26,12 @@
                           "Of course, that all depends on how cooprative you are through the arrest process.  I'm not gonna need to beat you up, right?", AddressOf initStep4)
     End Sub
     Private Sub initStep4()
-        Game.pushPnlYesNo("Cooperate?", AddressOf cooperate, AddressOf resist)
+        TextEvent.pushYesNo("Cooperate?", AddressOf cooperate, AddressOf resist)
     End Sub
     Public Shared Sub hostileArrest()
         Game.quickChangeFloor(10000)
 
-        Dim c1 As Chest = Game.baseChest.Create(Game.player1.inv, New Point(28, 10))
+        Dim c1 As Chest = DDConst.BASE_CHEST.Create(Game.player1.inv, New Point(28, 10))
         Game.currFloor.chestList.Add(c1)
         Game.currFloor.mBoard(10, 28).ForeColor = Color.FromArgb(45, 45, 45)
         Game.currFloor.mBoard(10, 28).Text = "#"
@@ -40,20 +40,20 @@
         Game.currFloor.mBoard(33, 61).Text = "|"
 
         Game.player1.inv = New Inventory(True)
-        Equipment.clothesChange(Game.player1, "Naked")
-        Equipment.weaponChange(Game.player1, "Fists")
+        EquipmentDialogBackend.armorChange(Game.player1, "Naked")
+        EquipmentDialogBackend.weaponChange(Game.player1, "Fists")
         Equipment.accChange(Game.player1, "Nothing")
 
         Game.player1.update()
         Game.drawBoard()
 
-        Game.pushLblEvent("As she picks up your frozen body, the time traveler opens another portal through the future and hops through.  You find yourself in a small holding cell, and she props you against the wall before exiting through an empty doorway with your bag and gear." & DDUtils.RNRN &
+        TextEvent.push("As she picks up your frozen body, the time traveler opens another portal through the future and hops through.  You find yourself in a small holding cell, and she props you against the wall before exiting through an empty doorway with your bag and gear." & DDUtils.RNRN &
                           """Don't go anywhere, okay?"" she snickers, slapping a button and activating a shimmering blue energy barrier between the two of you.", AddressOf defrost)
     End Sub
     Private Shared Sub defrost()
         Game.player1.perks(perk.astatue) = -1
         Game.player1.revertToPState()
-        Game.pushLblEvent("After an indeterminate amount of time, feeling returns to you fingers, and you spend the next hour slowly regaining your mobility as you thaw.")
+        TextEvent.push("After an indeterminate amount of time, feeling returns to you fingers, and you spend the next hour slowly regaining your mobility as you thaw.")
     End Sub
     Private Sub cooperate()
         Game.quickChangeFloor(10000)
@@ -64,7 +64,7 @@
         Game.player1.update()
         Game.drawBoard()
 
-        Game.pushLblEvent("The time traveler opens another portal through the future and, grabbing your hand, hops through.  You find yourself in a small holding cell, and she gives you a few moments to take in your surroundings before exiting through an empty doorway." & DDUtils.RNRN &
+        TextEvent.push("The time traveler opens another portal through the future and, grabbing your hand, hops through.  You find yourself in a small holding cell, and she gives you a few moments to take in your surroundings before exiting through an empty doorway." & DDUtils.RNRN &
                           """Since you've been pretty well behaved so far, I'm gonna let you keep your stuff.  Don't try anything, okay?"" she says, slapping a button and activating a shimmering blue energy barrier between the two of you.")
     End Sub
     Private Sub resist()
@@ -76,12 +76,12 @@
         Monster.targetRoute(m)
         Game.toCombat(m)
 
-        Game.pushLstLog((m.getName() & " attacks!"))
+        TextEvent.pushLog((m.getName() & " attacks!"))
     End Sub
 
     Public Overrides Function canGet() As Boolean
         'MsgBox((Not getActive()) & " " & (Game.mDun.floors.ContainsKey(9999)) & " " & (Not getComplete()) & " " & ((Int(Rnd() * 100) = 0) Or Game.noRNG))
-        Return Not getActive() And Game.mDun.floors.ContainsKey(9999) And Not getComplete() And ((Int(Rnd() * 100) = 0) Or Game.noRNG)
+        Return Not getActive() And Game.mDun.floors.ContainsKey(9999) And Not getComplete() And ((Int(Rnd() * 100) = 0) Or Settings.active(setting.norng))
     End Function
 End Class
 
@@ -97,11 +97,11 @@ Public Class OutOfTimeS1
 
         If Game.player1.equippedArmor.getName.Equals("Naked") Then
             Game.player1.inv.add("Space_Age_Jumpsuit", 1)
-            Equipment.clothesChange(Game.player1, "Space_Age_Jumpsuit")
+            EquipmentDialogBackend.armorChange(Game.player1, "Space_Age_Jumpsuit")
             Game.player1.drawPort()
         End If
 
-        Game.pushLblEvent("An unknown amount of time passes..." & DDUtils.RNRN &
+        TextEvent.push("An unknown amount of time passes..." & DDUtils.RNRN &
                           "As you wake up one morning, the now familiar hum of the shimmering barrier keeping you isolated from the rest of the faciitly seems to have faded out of your concious senses, and...." & DDUtils.RNRN &
                           "Wait..." & DDUtils.RNRN &
                           "Bolting up, you notice that the doorway is now clear!", AddressOf completeS2)
@@ -133,7 +133,7 @@ Public Class OutOfTimeS2
     Public Overrides Sub complete()
         MyBase.complete()
 
-        Game.pushLblEvent("A slightly garbled voice coughs before speaking from a strange box on the ceiling..." & DDUtils.RNRN &
+        TextEvent.push("A slightly garbled voice coughs before speaking from a strange box on the ceiling..." & DDUtils.RNRN &
                           """Prisoner 5, report to conference room A.""" & DDUtils.RNRN &
                           "You look around to see if there are any other prisoners around, and the voice sighs." & DDUtils.RNRN &
                           """Geez, didn't she explain anything to you?  YES!  YOU IN THE HALLWAY!  Head up to the junction and then it's the first door on the left.  This is EXACTLY why I've been saying we should paint some arrows in...""" & DDUtils.RNRN &
@@ -168,7 +168,7 @@ Public Class OutOfTimeS3
         showNPC(ShopNPC.npcLib.atrs(0).getAt(83), "First things first, did you intend to send yourself into the future?", AddressOf q1ask)
     End Sub
     Public Sub q1ask()
-        Game.pushPnlYesNo("Did you try to go to the future?", AddressOf q1yes, AddressOf q1no)
+        TextEvent.pushYesNo("Did you try to go to the future?", AddressOf q1yes, AddressOf q1no)
     End Sub
 
     Public Sub q1no()
@@ -179,7 +179,7 @@ Public Class OutOfTimeS3
     End Sub
 
     Public Sub q1noq2()
-        Game.pushPnlYesNo("Do you plan on returning?", AddressOf q1noq2yes, AddressOf q1noq2no)
+        TextEvent.pushYesNo("Do you plan on returning?", AddressOf q1noq2yes, AddressOf q1noq2no)
     End Sub
     Public Sub q1noq2yes()
         showNPC(ShopNPC.npcLib.atrs(0).getAt(84), "Hmmm.  You intend to violate time law intentionally?  Have you fully considered the weight of travelling into the future?", AddressOf q1yesq2)
@@ -189,7 +189,7 @@ Public Class OutOfTimeS3
     End Sub
 
     Public Sub q1yesq2()
-        Game.pushPnlYesNo("Did you fully think out time travel?", AddressOf q1yesq2yes, AddressOf q1yesq2no)
+        TextEvent.pushYesNo("Did you fully think out time travel?", AddressOf q1yesq2yes, AddressOf q1yesq2no)
     End Sub
     Public Sub q1yesq2yes()
         showNPC(ShopNPC.npcLib.atrs(0).getAt(84), "And still you risk tearing at the fabric of the universe?  Who do you think you are?!", AddressOf q1yesq2yesq3)
@@ -199,14 +199,14 @@ Public Class OutOfTimeS3
     End Sub
 
     Public Sub q1yesq2yesq3()
-        Game.pushPnlYesNo("Answer Politely?", AddressOf q1yesq2yesq3yes, AddressOf q1yesq2yesq3no)
+        TextEvent.pushYesNo("Answer Politely?", AddressOf q1yesq2yesq3yes, AddressOf q1yesq2yesq3no)
     End Sub
     Public Sub q1yesq2yesq3yes()
         showNPC(ShopNPC.npcLib.atrs(0).getAt(83), "Do.  Not.  Do.  This.  Again." & DDUtils.RNRN &
                                                   "For your prior actions you will be fined 40,000 credits which adds up to 1,000 of your gold coins.  If we catch you outside of your source timeline again, there will be repercussions...", AddressOf fine1)
     End Sub
     Public Sub fine1()
-        Game.pushPnlYesNo("Pay your fine?", AddressOf payFine1, AddressOf tjFight)
+        TextEvent.pushYesNo("Pay your fine?", AddressOf payFine1, AddressOf tjFight)
     End Sub
     Public Sub payFine1()
         If Game.player1.getGold < 1000 Then
@@ -237,7 +237,7 @@ Public Class OutOfTimeS3
         showNPC(ShopNPC.npcLib.atrs(0).getAt(83), "Do you plan on returning to this point in time ever again?", AddressOf q1yesq2noq3ask)
     End Sub
     Public Sub q1yesq2noq3ask()
-        Game.pushPnlYesNo("Do you plan on returning?", AddressOf q1yesq2noq3yes, AddressOf q1yesq2noq3no)
+        TextEvent.pushYesNo("Do you plan on returning?", AddressOf q1yesq2noq3yes, AddressOf q1yesq2noq3no)
     End Sub
     Public Sub q1yesq2noq3yes()
         showNPC(ShopNPC.npcLib.atrs(0).getAt(84), "Well then, I'm afraid that you can't be allowed to leave.  Please return to your cell.", AddressOf q1yesq2noq3yesq4)
@@ -246,7 +246,7 @@ Public Class OutOfTimeS3
         showNPC(ShopNPC.npcLib.atrs(0).getAt(83), "Well, see that you don't.  For your prior actions you will be fined 20,000 credits which adds up to 500 of your gold coins and then you are free to go.", AddressOf fine2)
     End Sub
     Public Sub fine2()
-        Game.pushPnlYesNo("Pay your fine?", AddressOf payFine2, AddressOf alert)
+        TextEvent.pushYesNo("Pay your fine?", AddressOf payFine2, AddressOf alert)
     End Sub
     Public Sub payFine2()
         If Game.player1.getGold < 500 Then
@@ -270,10 +270,10 @@ Public Class OutOfTimeS3
     End Sub
 
     Public Sub q1yesq2noq3yesq4()
-        Game.pushPnlYesNo("Return to your cell?", AddressOf q1yesq2noq3yesq4yes, AddressOf alert)
+        TextEvent.pushYesNo("Return to your cell?", AddressOf q1yesq2noq3yesq4yes, AddressOf alert)
     End Sub
     Public Sub q1yesq2noq3yesq4yes()
-        Game.pushLblEvent("You return to your cell, and then spend the next eternity as a temporal prisoner." & DDUtils.RNRN &
+        TextEvent.push("You return to your cell, and then spend the next eternity as a temporal prisoner." & DDUtils.RNRN &
                           "Is this truly how you saw your journey ending?" & DDUtils.RNRN &
                           "Game Over!", AddressOf Game.player1.die)
         Game.compOOT = True
@@ -286,17 +286,17 @@ Public Class OutOfTimeS3
         Monster.targetRoute(m)
         Game.toCombat(m)
 
-        Game.pushLstLog((m.getName() & " attacks!"))
+        TextEvent.pushLog((m.getName() & " attacks!"))
     End Sub
 
     Public Shared Sub alert(Optional seeJudge As Boolean = True)
-        Game.pushLblEvent("A blaring alarm sounds" & If(seeJudge, ", and the judge vanishes in a column of light", "") & "!")
+        TextEvent.push("A blaring alarm sounds" & If(seeJudge, ", and the judge vanishes in a column of light", "") & "!")
         Game.currFloor.mBoard(18, 58).Text = ""
         Game.compOOT = True
         Game.player1.perks(perk.enemyoftime) = 1
     End Sub
     Public Sub cleanup()
-        Game.pushLblEvent("""Head up to the next room on the left, there's a control switch for the security barriers there.""" & DDUtils.RNRN & "Once your discussion wraps up, the judge says his farewells and vanishes in a column of light.")
+        TextEvent.push("""Head up to the next room on the left, there's a control switch for the security barriers there.""" & DDUtils.RNRN & "Once your discussion wraps up, the judge says his farewells and vanishes in a column of light.")
         Game.currFloor.mBoard(18, 58).Text = ""
         Game.compOOT = True
     End Sub

@@ -1,9 +1,11 @@
 ﻿Public Class BronzeArmor
     Inherits Armor
 
+    Public Const ITEM_NAME As String = "Bronze_Armor"
+
     Sub New()
         '|ID Info|
-        setName("Bronze_Armor")
+        setName(ITEM_NAME)
         id = 83
         tier = Nothing
 
@@ -19,21 +21,21 @@
         value = 125
 
         '|Image Index|
-        MyBase.bsizeneg1 = New Tuple(Of Integer, Boolean, Boolean)(28, False, True)
-        MyBase.bsize0 = New Tuple(Of Integer, Boolean, Boolean)(29, False, True)
-        MyBase.bsize1 = New Tuple(Of Integer, Boolean, Boolean)(125, True, True)
-        MyBase.bsize2 = New Tuple(Of Integer, Boolean, Boolean)(126, True, True)
-        MyBase.bsize3 = New Tuple(Of Integer, Boolean, Boolean)(127, True, True)
+        bsizeneg1 = New Tuple(Of Integer, Boolean, Boolean)(28, False, True)
+        bsize0 = New Tuple(Of Integer, Boolean, Boolean)(29, False, True)
+        bsize1 = New Tuple(Of Integer, Boolean, Boolean)(125, True, True)
+        bsize2 = New Tuple(Of Integer, Boolean, Boolean)(126, True, True)
+        bsize3 = New Tuple(Of Integer, Boolean, Boolean)(127, True, True)
 
-        MyBase.usizeneg1 = New Tuple(Of Integer, Boolean, Boolean)(15, False, True)
-        MyBase.usize0 = New Tuple(Of Integer, Boolean, Boolean)(16, False, True)
-        MyBase.usize1 = New Tuple(Of Integer, Boolean, Boolean)(21, True, True)
-        MyBase.usize2 = New Tuple(Of Integer, Boolean, Boolean)(22, True, True)
-        MyBase.usize3 = New Tuple(Of Integer, Boolean, Boolean)(23, True, True)
-        MyBase.usize4 = New Tuple(Of Integer, Boolean, Boolean)(24, True, True)
+        usizeneg1 = New Tuple(Of Integer, Boolean, Boolean)(15, False, True)
+        usize0 = New Tuple(Of Integer, Boolean, Boolean)(16, False, True)
+        usize1 = New Tuple(Of Integer, Boolean, Boolean)(21, True, True)
+        usize2 = New Tuple(Of Integer, Boolean, Boolean)(22, True, True)
+        usize3 = New Tuple(Of Integer, Boolean, Boolean)(23, True, True)
+        usize4 = New Tuple(Of Integer, Boolean, Boolean)(24, True, True)
 
         '|Description|
         setDesc("A lightweight armor set forged from bronze that, while not offering much defense also gives a slight speed boost." & DDUtils.RNRN &
-                               getSizeInformation() & vbcrlf & getStatInformation())
+                               getSizeInformation() & DDUtils.RNRN & getStatInformation())
     End Sub
 End Class

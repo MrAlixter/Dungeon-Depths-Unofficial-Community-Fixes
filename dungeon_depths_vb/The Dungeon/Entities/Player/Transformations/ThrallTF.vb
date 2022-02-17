@@ -38,7 +38,7 @@
     End Sub
     Sub crystalSpawn()
         Dim p As player = Game.player1
-        If p.forcedPath Is Nothing And Not Game.combatmode And Not Game.npcmode Then
+        If p.forcedPath Is Nothing And Not Game.combat_engaged And Not Game.shop_npc_engaged Then
 
             Dim crystal = Game.currfloor.randPoint
 
@@ -57,7 +57,7 @@
             Else
                 s = "you mindlessly obey, moving towards the crystal with a vacant grin."
             End If
-            Game.pushLblEvent("As your collar flares to life, you grimace as the location of a large mana crystal becomes clear in your mind." & DDUtils.RNRN &
+            TextEvent.push("As your collar flares to life, you grimace as the location of a large mana crystal becomes clear in your mind." & DDUtils.RNRN &
                               """SERVANT!"", your controller's voice booms in your head, ""This is another of the crystals!  Recover it immediately!""" & DDUtils.RNRN & _
                               "As their voice leaves your head, " & s)
         End If
@@ -80,7 +80,7 @@
         Monster.targetRoute(m)
         Game.toCombat(m)
 
-        Game.pushLstLog((m.getName() & " attacks!"))
+        TextEvent.pushLog((m.getName() & " attacks!"))
     End Sub
     Shared Sub fightSorc2()
         Dim p As player = Game.player1
@@ -91,18 +91,18 @@
         Monster.targetRoute(m)
         Game.toCombat(m)
 
-        Game.pushLstLog((m.getName() & " attacks!"))
+        TextEvent.pushLog((m.getName() & " attacks!"))
     End Sub
     Shared Sub acceptSorc()
         Dim p As player = Game.player1
         p.perks(perk.thrall) = -1
         p.ongoingTFs.Add(New HalfSuccubusTF())
         p.update()
-        Game.pushLblEvent("""Then I deem your task concluded as a success.  Go now, and take care not to fall under the spell of any others...""")
+        TextEvent.push("""Then I deem your task concluded as a success.  Go now, and take care not to fall under the spell of any others...""")
     End Sub
     Shared Sub betraySorc()
         Dim p As player = Game.player1
-        Game.pushLblEvent("Brushing past you, your ""boss"" heads straight for the crystal.  Once they begin fiddling with it, you take advantage of their distraction and begin creeping into a position behind them." & DDUtils.RNRN &
+        TextEvent.push("Brushing past you, your ""boss"" heads straight for the crystal.  Once they begin fiddling with it, you take advantage of their distraction and begin creeping into a position behind them." & DDUtils.RNRN &
                           "As they chant over the array, you prepare to make your move.  The runes enscribed on the crystal begin to glow as the sorcerer's raving reaches its zenith, and in that moment you strike the back of their head, disrupting the ritual." & DDUtils.RNRN &
                           """YOU!  DO YOU HAVE ANY IDEA ..."" screams the mage, and while they shout you realize you couldn't care less about them.  Looking down, you see that your collar has gone dark and dangles unlatched from your neck." & DDUtils.RNRN &
                           "Grinning, your prepare to fight for your life.", AddressOf fightSorc2)
@@ -118,13 +118,13 @@
                   "Where once stood your human controller now stands a half-demon who only now seems to have taken notice of you." & DDUtils.RNRN &
                   """Well... It looks like you succeeded.  For that, I will give you an ultimatium.  Join me as my general, or die in these dungeons as my slave."""
 
-        Game.pushLblEvent(out, AddressOf acceptSorc, AddressOf fightSorc, "Do you accept?")
+        TextEvent.push(out, AddressOf acceptSorc, AddressOf fightSorc, "Do you accept?")
     End Sub
 
     Shared Sub thrallLN2()
         Dim ptype = If(Int(Rnd() * 2) = 0, "sister", "brother")
 
-        Game.pushLblEvent("""LISTEN UP, NEW SLAVE!  I have need of your services."" your new master begins," & DDUtils.RNRN &
+        TextEvent.push("""LISTEN UP, NEW SLAVE!  I have need of your services."" your new master begins," & DDUtils.RNRN &
                           """In this dungeon, there are several high-powered mana arrays scrawled into purple gems.  Only one of them, however, is capable of bestowing the power of a demon lord onto a mortal." & DDUtils.RNRN &
                           "Your task is to find and inspect these arrays, and report back to me with your findings.""" & DDUtils.RNRN &
                           "They snicker,  ""I'm sure you won't let me down, but I'm going to need to make a few changes to make you more... uniform... with the rest of your collegues.""" & DDUtils.RNRN &

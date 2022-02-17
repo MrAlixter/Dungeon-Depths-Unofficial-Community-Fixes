@@ -5,7 +5,7 @@
             If p.stamina > 0 Then
                 p.perks(perk.hunger) = -1
             Else
-                Game.pushLstLog("Your stomach aches... -5 health!")
+                TextEvent.pushLog("Your stomach aches... -5 health!")
                 p.health -= 5 / p.getMaxHealth
                 If p.health <= 0 Then p.die(Monster.monsterFactory(10))
             End If
@@ -25,7 +25,7 @@
                 exclaim = "The blaze singes your legs!"
             End If
 
-            Game.pushLstLog(exclaim & "  -2 health!")
+            TextEvent.pushLog(exclaim & "  -2 health!")
             p.health -= 2 / p.getMaxHealth
             If p.health <= 0 Then p.die(Monster.monsterFactory(15))
 
@@ -38,7 +38,7 @@
         Else
             If p.health < 1 And Game.getTurn Mod 4 = 0 Then
                 p.health += 5 / p.getMaxHealth()
-                Game.pushLstLog("Your gel body heals some of the damage done to it. +5 health")
+                TextEvent.pushLog("Your gel body heals some of the damage done to it. +5 health")
                 If p.health > 1 Then p.health = 1
             End If
         End If
@@ -48,7 +48,7 @@
             p.health += 5 / p.getMaxHealth()
             If p.mana < p.getMaxMana + 5 Then p.mana += 5 Else p.mana = p.getMaxMana
             p.stamina -= 7
-            Game.pushLstLog("Your blazing aura surges!  +5 health, +5 mana, -7 stamina")
+            TextEvent.pushLog("Your blazing aura surges!  +5 health, +5 mana, -7 stamina")
             If p.health > 1 Then p.health = 1
 
             If p.perks(perk.mburst) >= 0 Then p.perks(perk.mburst) -= 1
@@ -61,7 +61,7 @@
             If p.health < 1 And Game.getTurn Mod 7 = 0 Then
                 Dim h As Integer = Int(Rnd() * 5) + 1
                 p.health += h / p.getMaxHealth()
-                Game.pushLstLog("The gel portion of your body is able to heal some of your wounds! +" & h & " health")
+                TextEvent.pushLog("The gel portion of your body is able to heal some of your wounds! +" & h & " health")
                 If p.health > 1 Then p.health = 1
             End If
         End If
@@ -70,7 +70,7 @@
         If p.health < 1 And Game.getTurn Mod 7 = 0 Then
             Dim h As Integer = 3
             p.health += h / p.getMaxHealth()
-            Game.pushLstLog("You are able to absorb some nutrients through the ground. +" & h & " health")
+            TextEvent.pushLog("You are able to absorb some nutrients through the ground. +" & h & " health")
             If p.health > 1 Then p.health = 1
         End If
     End Sub
@@ -78,11 +78,11 @@
         If p.health < 1 And Game.getTurn Mod 7 = 0 Then
             Dim h As Integer = Int(Rnd() * 8) + 1
             p.health += h / p.getMaxHealth()
-            Game.pushLstLog("A slight glowing aura heals some of your wounds! +" & h & " health")
+            TextEvent.pushLog("A slight glowing aura heals some of your wounds! +" & h & " health")
             If p.health > 1 Then p.health = 1
 
             If Int(Rnd() * 20) = 0 Then
-                Game.pushLblEvent(Game.lblEvent.Text.Split(vbCrLf)(0) & vbCrLf & "Your ring of regeneration goes dim, before shattering into dust.")
+                TextEvent.push(Game.lblEvent.Text.Split(vbCrLf)(0) & vbCrLf & "Your ring of regeneration goes dim, before shattering into dust.")
                 p.inv.item(77).count -= 1
                 Equipment.accChange(p, "Nothing")
             End If
@@ -96,7 +96,7 @@
         If p.mana < p.getMaxMana And Game.getTurn Mod 5 = 0 Then
             Dim m As Integer = 2
             p.mana += m
-            Game.pushLstLog("A slight glowing aura imbues you with magical energy! +" & m & " mana")
+            TextEvent.pushLog("A slight glowing aura imbues you with magical energy! +" & m & " mana")
             If p.mana > p.getMaxMana Then p.mana = p.getMaxMana
         End If
     End Sub
@@ -104,7 +104,7 @@
         If p.health < 1 And Game.getTurn Mod 7 = 0 Then
             Dim h As Integer = Int(Rnd() * 15) + 1
             p.health += h / p.getMaxHealth()
-            Game.pushLstLog("A glowing aura heals some of your wounds! +" & h & " health")
+            TextEvent.pushLog("A glowing aura heals some of your wounds! +" & h & " health")
             If p.health > 1 Then p.health = 1
         End If
     End Sub
@@ -113,7 +113,7 @@
             If Game.getTurn Mod 6 = 0 And p.lust < 100 Then
                 Dim l As Integer = Int(Rnd() * 15) + 10
                 p.addLust(l)
-                Game.pushLstLog("Your living armor raises your lust!")
+                TextEvent.pushLog("Your living armor raises your lust!")
                 Return True
             End If
         Else
@@ -126,7 +126,7 @@
             If Game.getTurn Mod 4 = 0 And p.lust < 100 Then
                 Dim l As Integer = Int(Rnd() * 15) + 10
                 p.addLust(l)
-                Game.pushLstLog("Your living lingerie raises your lust!")
+                TextEvent.pushLog("Your living lingerie raises your lust!")
                 Return True
             End If
         Else
@@ -144,7 +144,7 @@
             If p.equippedWeapon.getName.Equals("Fists") And p.formName.Equals("Amazon​") Then
                 p.changeForm("Amazon​")
             ElseIf Not p.equippedWeapon.getName.Equals("Fists") And p.formName.Equals("Amazon​") Then
-                Game.pushLblEvent("Your lack of familiarity with this weapon greatly lowers your attack potential!")
+                TextEvent.push("Your lack of familiarity with this weapon greatly lowers your attack potential!")
                 p.changeForm("Amazon​")
             End If
         Else
@@ -177,14 +177,14 @@
             p.revertToPState()
             p.ongoingTFs.reset()
 
-            Game.pushLogAndEvent("A rippling aura surrounds you, and you revert to your former state!")
-            Game.pushLstLog("The wristband ejects a single smoldering battery cell.")
+            TextEvent.pushAndLog("A rippling aura surrounds you, and you revert to your former state!")
+            TextEvent.pushLog("The wristband ejects a single smoldering battery cell.")
 
             p.inv.add("AAAAAA_Battery", -1)
         End If
     End Sub
     Shared Sub imitationCowbell(ByRef p As Player)
-        Game.pushLogAndEvent("You feel an unfamiliar presence take hold of your mind...")
+        TextEvent.pushAndLog("You feel an unfamiliar presence take hold of your mind...")
 
         Dim closest_chest As Chest = Nothing
         Dim route_len = 9999999999999
@@ -199,7 +199,7 @@
         If Not closest_chest Is Nothing Then
             p.forcedPath = Game.currFloor.route(p.pos, closest_chest.pos)
         Else
-            Game.pushLogAndEvent("... but nothing happens")
+            TextEvent.pushAndLog("... but nothing happens")
         End If
 
     End Sub
@@ -208,6 +208,14 @@
             p.perks(perk.mesmerized) -= 1
         Else
             p.perks(perk.mesmerized) = -1
+        End If
+    End Sub
+    Shared Sub rotlgTracker(ByRef p As Player)
+        If p.perks(perk.moamarphne) > 2 Then
+            p.perks(perk.moamarphne) -= 1
+        Else
+            p.perks(perk.moamarphne) = -1
+            If p.equippedAcce.getAName.Equals("Mark_of_Amaraphne") Then EquipmentDialogBackend.equipAcce(p, "Nothing", False) : p.inv.add("Mark_of_Amaraphne", -1)
         End If
     End Sub
 
@@ -236,33 +244,33 @@
         End If
     End Sub
     Shared Sub statueMove(obj As Entity)
-        Game.pushLblEvent("You, being a statue, can not do anything.")
+        TextEvent.push("You, being a statue, can not do anything.")
     End Sub
     Shared Sub mesStun(obj As Entity)
-        Game.pushLblEvent("You stare blankly forward, lost in a mesmerized daze...")
+        TextEvent.push("You stare blankly forward, lost in a mesmerized daze...")
     End Sub
     Shared Sub magicGirlStatusCheck(ByRef p As Player)
         If p.getMana > 0 AndAlso Game.getTurn Mod (11 + (p.level * p.getWIL() / 4)) = 0 Then
             p.mana -= 6
-            Game.pushLstLog("Your transformation consumes six mana!")
+            TextEvent.pushLog("Your transformation consumes six mana!")
         End If
 
         If p.getMana < 1 Then
-            Equipment.weaponChange(p, "Fists")
-            Game.pushLblEvent("You no longer can keep up your transformation, and revert to your previous form!")
+            EquipmentDialogBackend.weaponChange(p, "Fists")
+            TextEvent.push("You no longer can keep up your transformation, and revert to your previous form!")
             p.perks(perk.tfedbyweapon) = -1
         End If
     End Sub
     Shared Sub valkyrieStatusCheck(ByRef p As Player)
         If p.stamina > 10 AndAlso Game.getTurn Mod (8 + (p.level * p.getWIL() / 2)) = 0 Then
             p.stamina -= 10
-            Game.pushLstLog("Your transformation consumes ten stamina!")
+            TextEvent.pushLog("Your transformation consumes ten stamina!")
         End If
 
         If p.stamina < 10 Then
-            Equipment.weaponChange(p, "Fists")
+            EquipmentDialogBackend.weaponChange(p, "Fists")
             p.perks(perk.tfedbyweapon) = -1
-            Game.pushLblEvent("You no longer can keep up your transformation, and revert to your previous form!")
+            TextEvent.push("You no longer can keep up your transformation, and revert to your previous form!")
         End If
     End Sub
 
@@ -276,7 +284,7 @@
             p.aBuff = 0
             p.dBuff = 0
             p.perks(perk.brage) = -1
-            Game.pushLstLog("Berserker rage has worn off.")
+            TextEvent.pushLog("Berserker rage has worn off.")
 
         End If
     End Sub
@@ -287,7 +295,7 @@
         Else
             p.dBuff = 0
             p.perks(perk.mmammaries) = -1
-            Game.pushLstLog("Massive mammaries has worn off.")
+            TextEvent.pushLog("Massive mammaries has worn off.")
 
         End If
     End Sub
@@ -297,7 +305,7 @@
         Else
             p.dBuff = 0
             p.perks(perk.guardup) = -1
-            Game.pushLstLog("Guard Up has worn off.")
+            TextEvent.pushLog("Guard Up has worn off.")
         End If
     End Sub
     Shared Sub willUp(ByRef p As Player)
@@ -307,7 +315,7 @@
         Else
             p.wBuff = 0
             p.perks(perk.willup) = -1
-            Game.pushLstLog("Will Up has worn off.")
+            TextEvent.pushLog("Will Up has worn off.")
         End If
     End Sub
     Shared Sub attackUp(ByRef p As Player)
@@ -316,16 +324,16 @@
         Else
             p.aBuff = 0
             p.perks(perk.atkup) = -1
-            Game.pushLstLog("Attack Up has worn off.")
+            TextEvent.pushLog("Attack Up has worn off.")
         End If
     End Sub
     Shared Sub lurk(ByRef p As Player)
         If p.perks(perk.lurk) > 0 And p.stamina > 9 Then
             p.perks(perk.lurk) -= 1
-            If Int(Rnd() * 10) = 0 Then p.stamina -= 9 : Game.pushLblEvent("Keeping up Lurk consumes 9 stamina!")
+            If Int(Rnd() * 10) = 0 Then p.stamina -= 9 : TextEvent.push("Keeping up Lurk consumes 9 stamina!")
         Else
             p.perks(perk.lurk) = -1
-            Game.pushLstLog("Lurk has worn off.")
+            TextEvent.pushLog("Lurk has worn off.")
             p.drawPort()
         End If
     End Sub
@@ -336,7 +344,7 @@
         Else
             p.dBuff = 0
             p.perks(perk.pprot) = -1
-            Game.pushLstLog("Pillowy Protect has worn off.")
+            TextEvent.pushLog("Pillowy Protect has worn off.")
 
         End If
     End Sub
@@ -351,7 +359,7 @@
             p.aBuff = 0
             p.dBuff = 0
             p.perks(perk.ihfury) = -1
-            Game.pushLstLog("Ironhide Fury has worn off.")
+            TextEvent.pushLog("Ironhide Fury has worn off.")
 
         End If
     End Sub
@@ -364,7 +372,7 @@
         Else
             p.dBuff = 0
             p.perks(perk.infernoa) = -1
-            Game.pushLstLog("Inferno Aura has worn off.")
+            TextEvent.pushLog("Inferno Aura has worn off.")
         End If
     End Sub
 
@@ -386,7 +394,7 @@
                 p.equippedWeapon = New BareFists
             End If
 
-            Game.pushLstLog("A cackling red aura washes over your equipment...")
+            TextEvent.pushLog("A cackling red aura washes over your equipment...")
         End If
         Return updatePortrait
     End Function
@@ -394,7 +402,7 @@
         Dim updatePortrait = False
         If Game.getTurn Mod 30 = 0 And p.breastSize < 7 Then
             p.be()
-            Game.pushLstLog("Your chest begins glowing a sinister red...")
+            TextEvent.pushLog("Your chest begins glowing a sinister red...")
             updatePortrait = True
         End If
         Return updatePortrait
@@ -468,8 +476,8 @@
         tfs(form)()
         Game.player1.drawPort()
         Game.player1.UIupdate()
-        Game.pushLstLog("You're enveloped by a crimson aura...")
-        Game.pushLblEvent("You are swiftly enveloped by a blinding crimson aura!  By the time you can see again, it's obvious that you've been physically changed by your curse.")
+        TextEvent.pushLog("You're enveloped by a crimson aura...")
+        TextEvent.push("You are swiftly enveloped by a blinding crimson aura!  By the time you can see again, it's obvious that you've been physically changed by your curse.")
     End Sub
 
     '|TAKE DAMAGE PERKS|
@@ -480,6 +488,17 @@
         flag = bimboDodge(p) Or flag
         flag = stealthDodge(p) Or flag
         flag = spidersilkEffect(dmg, p) Or flag
+
+        If p.perks(perk.rotlg) > 0 And dmg >= p.getIntHealth Then
+            Dim a = New AmaraphneAngelTF()
+            a.update()
+            p.drawPort()
+            Game.fromCombat()
+            TextEvent.push("Before the strike lands, a blazing rose aura flares from your person." & DDUtils.RNRN & "You begin floating upward, and as wings burst forth from your back you are overwhelmed with a burning lust.  You can feel both your body and clothing shifting rapidly, but before you can really takes stock of what is happening you automatically flap upwards." & DDUtils.RNRN & "Your wings carry you to safety, and as soon as you touch down on the ground the glow surrounding you begins to fade.", AddressOf p.revertToPState)
+            p.pos = Game.currFloor.randPoint
+            If p.pState.breastSize = -1 Then p.pState.breastSize = 0 : p.pState.buttSize = 0
+            Return True
+        End If
 
         If p.perks(perk.bunnyears) = 2 Then p.addLust(-dmg / 2)
         If p.perks(perk.infernoa) > -1 Then flag = reflectDamage(dmg, 0.45, p.currTarget, p)
@@ -495,13 +514,13 @@
                 p.drawPort()
                 Return True
             ElseIf r > 5 Then
-                Game.pushLblEvent("Your bowtie begins glowing, and suddenly everything seems to slow down.  You deftly sidestep the oncomming blow!  Time returns to its normal speed shortly, and your bowtie returns to its inert state.")
+                TextEvent.push("Your bowtie begins glowing, and suddenly everything seems to slow down.  You deftly sidestep the oncomming blow!  Time returns to its normal speed shortly, and your bowtie returns to its inert state.")
                 Return True
             End If
         ElseIf p.perks(perk.bunnyears) > -1 Then
             Dim r = Int(Rnd() * 10)
             If r > 4 Then
-                Game.pushLblEvent("Your headband begins glowing, and suddenly everything seems to slow down.  You deftly sidestep the oncomming blow!  Time returns to its normal speed shortly, and your bunny ear headband returns to its inert state.")
+                TextEvent.push("Your headband begins glowing, and suddenly everything seems to slow down.  You deftly sidestep the oncomming blow!  Time returns to its normal speed shortly, and your bunny ear headband returns to its inert state.")
                 Return True
             End If
         End If
@@ -515,10 +534,10 @@
             End If
             If dmg / 2 <= p.mana Then
                 p.mana -= dmg / 2
-                Game.pushLblEvent("Your hardlight shields withstand the impact!")
+                TextEvent.push("Your hardlight shields withstand the impact!")
                 Return True
             Else
-                Game.pushLblEvent("Your hardlight shields are completely down!")
+                TextEvent.push("Your hardlight shields are completely down!")
             End If
         End If
         Return False
@@ -528,7 +547,7 @@
         Dim shouldBreak = p.equippedArmor.durability - dmg <= 0
 
         p.equippedArmor.damage(dmg)
-        If shouldBreak Then Equipment.equipArmor(p, "Naked", False)
+        If shouldBreak Then EquipmentDialogBackend.equipArmor(p, "Naked", False)
 
         Return False
     End Function
@@ -540,13 +559,13 @@
                    "Giving your best pout, you wimper ""Hey, stop it!  You're gonna, like, hurt me or something!"".  As you squeeze your arms together to show off your cleavage, you look up at your opponent making sure your lip is quivering just a little bit." & DDUtils.RNRN &
                    "They stop their attack short, looking more confused than merciful.  Inwardly, you groan to yourself.   It looks like you aren't out of the woods yet..."
         If p.className.Equals("Bimbo") And Int(Rnd() * 3) = 0 Then
-            Game.pushLblEvent(out)
+            TextEvent.push(out)
             Return True
         ElseIf p.className.Equals("Bimbo++") And Int(Rnd() * 3) = 0 Then
-            Game.pushLblEvent(out2)
+            TextEvent.push(out2)
             Return True
         ElseIf p.formName.Contains("Bimbo") Or p.perks(perk.bimbododge) > 0 And Int(Rnd() * 3) = 0 Then
-            Game.pushLblEvent(out)
+            TextEvent.push(out)
             Return True
         End If
         Return False
@@ -554,19 +573,19 @@
     Shared Function stealthDodge(ByRef p As Player) As Boolean
         Dim out = "You dodge the oncoming attack!"
         If (p.perks(perk.stealth) > 0 And Int(Rnd() * 7) = 0) Or p.perks(perk.dodge) > 0 Then
-            Game.pushLblEvent(out)
+            TextEvent.push(out)
             If p.perks(perk.dodge) - 1 > 0 Then p.perks(perk.dodge) -= 1 Else p.perks(perk.dodge) = -1
             Return True
         End If
         If p.perks(perk.lurk) > 0 And Int(Rnd() * 4) = 0 Then
-            Game.pushLblEvent(out)
+            TextEvent.push(out)
             Return True
         End If
         Return False
     End Function
     Shared Function reflectDamage(ByVal dmg As Integer, ByVal ratio As Double, ByRef currTarget As Entity, ByRef p As Player)
         If dmg > 0 And dmg < p.getIntHealth Then
-            Game.pushLogAndEvent("Your opponent takes " & CInt(dmg * ratio) & " from their attack!")
+            TextEvent.pushAndLog("Your opponent takes " & CInt(dmg * ratio) & " from their attack!")
             currTarget.takeDMG(CInt(dmg * ratio), p)
             Return True
         End If
@@ -577,7 +596,7 @@
         If dmg > 0 And dmg < p.getIntHealth Then
             If crit Then p.takeUnconditionalCritDMG(dmg, currTarget) Else p.takeUnconditionalDMG(dmg, currTarget)
 
-            Game.pushLogAndEvent("Your opponent takes " & CInt(dmg * ratio) & " from their attack!")
+            TextEvent.pushAndLog("Your opponent takes " & CInt(dmg * ratio) & " from their attack!")
             currTarget.takeDMG(CInt(dmg * ratio), p)
 
             Return True

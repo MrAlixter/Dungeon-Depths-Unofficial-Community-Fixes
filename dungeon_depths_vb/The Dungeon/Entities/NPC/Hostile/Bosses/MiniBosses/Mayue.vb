@@ -37,7 +37,7 @@
             turns_until_spell -= 1
 
             If turns_until_spell < 1 And inv.getCountAt("Extra_Life") < 4 And Not target.getPlayer Is Nothing And enchantment_inds_used.Count < 5 Then
-                Game.pushLogAndEvent(getName() & " casts Marissa's Enchantment!")
+                TextEvent.pushAndLog(getName() & " casts Marissa's Enchantment!")
 
                 marissasEnchantment(target.getPlayer)
 
@@ -46,8 +46,8 @@
             ElseIf turns_until_spell < 1 And getIntHealth() < 50 Then
                 Dim healvalue = Int(Rnd() * 4) + Int(Rnd() * 2) + 30
                 If getIntHealth() + healvalue > getMaxHealth() Then healvalue = getMaxHealth() - getIntHealth()
-                Game.pushLstLog((getName() & " heals herself!  +" & healvalue & " health!"))
-                Game.pushLblCombatEvent((getName() & " heals herself for " & healvalue & " health!"))
+                TextEvent.pushLog((getName() & " heals herself!  +" & healvalue & " health!"))
+                TextEvent.pushCombat((getName() & " heals herself for " & healvalue & " health!"))
                 takeDMG(-healvalue, Nothing)
 
                 turns_until_spell = 3
@@ -55,8 +55,8 @@
             End If
         End If
 
-        Game.pushLstLog((getName() & " slashes at you!"))
-        Game.pushLblCombatEvent((getName() & " slashes at you!"))
+        TextEvent.pushLog((getName() & " slashes at you!"))
+        TextEvent.pushCombat((getName() & " slashes at you!"))
         MyBase.attackCMD(target)
     End Sub
 
@@ -72,31 +72,31 @@
 
         If d5 = 0 Then
             If p.inv.getCountAt("Cat_Lingerie") < 1 Then p.inv.add("Cat_Lingerie", 1)
-            Equipment.clothesChange(p, "Cat_Lingerie")
+            EquipmentDialogBackend.armorChange(p, "Cat_Lingerie")
 
-            Game.pushLogAndEvent("Your armor turns into a set of Cat_Lingerie!")
+            TextEvent.pushAndLog("Your armor turns into a set of Cat_Lingerie!")
 
         ElseIf d5 = 1 Then
             If Not p.prt.sexBool Then
                 p.MtF()
-                Game.pushLogAndEvent("You are now female!")
+                TextEvent.pushAndLog("You are now female!")
             Else
                 p.be()
             End If
 
         ElseIf d5 = 2 Then
             p.prt.setIAInd(pInd.ears, 1, p.prt.sexBool, False)
-            Game.pushLogAndEvent("You now have cat ears!")
+            TextEvent.pushAndLog("You now have cat ears!")
 
         ElseIf d5 = 3 Then
             p.prt.setIAInd(pInd.rearhair, 12, True, True)
             p.prt.setIAInd(pInd.midhair, 17, True, True)
             p.prt.setIAInd(pInd.fronthair, 1, True, False)
-            Game.pushLogAndEvent("You now have long, straight hair!")
+            TextEvent.pushAndLog("You now have long, straight hair!")
 
         ElseIf d5 = 4 Then
             p.prt.setIAInd(pInd.eyes, 13, True, True)
-            Game.pushLogAndEvent("You now have kitten eyes!")
+            TextEvent.pushAndLog("You now have kitten eyes!")
 
         End If
 
@@ -107,10 +107,10 @@
         If inv.getCountAt("Extra_Life") > 1 Then
             inv.item("Extra_Life").add(-1)
             health = 0.125 * inv.getCountAt("Extra_Life")
-            Game.pushLogAndEvent("Mayue uses an Extra_Life!")
+            TextEvent.pushAndLog("Mayue uses an Extra_Life!")
         ElseIf inv.getCountAt("Extra_Life") = 1 Then
             MyBase.despawn("quest")
-            Game.pushLblEvent("Before you land the final blow, a shimmering barrier appears between Mayue and yourself.  You dart back, spotting a familiar figure as she joins the fray.", AddressOf die2)
+            TextEvent.push("Before you land the final blow, a shimmering barrier appears between Mayue and yourself.  You dart back, spotting a familiar figure as she joins the fray.", AddressOf die2)
         Else
             MyBase.die(cause)
         End If
@@ -125,15 +125,15 @@
                           """Let it go, Mayue, we're leaving.""", AddressOf die4)
     End Sub
     Private Sub die4()
-        Game.pushLblEvent("Mayue pulls out a small piece of chalk, and swiftly draws a circle on the ground.  The circle flares with magical energy, and the two of them hop into the ring as a portal begins to form." & DDUtils.RNRN &
+        TextEvent.push("Mayue pulls out a small piece of chalk, and swiftly draws a circle on the ground.  The circle flares with magical energy, and the two of them hop into the ring as a portal begins to form." & DDUtils.RNRN &
                           """Oh, and " & Game.player1.getName & "?  Keep on your toes.  There's all sorts of dangerous stuff out there.""", AddressOf die5)
     End Sub
     Private Sub die5()
         Dim c1 As Chest
-        c1 = Game.baseChest.Create(inv, pos)
-        Game.combatmode = True
+        c1 = DDConst.BASE_CHEST.Create(inv, pos)
+        Game.combat_engaged = True
         If inv.getSum > 0 Then c1.open()
-        Game.combatmode = False
+        Game.combat_engaged = False
     End Sub
     Public Overrides Sub despawn(reason As String)
         If reason = "run" Then

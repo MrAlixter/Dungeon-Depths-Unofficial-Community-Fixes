@@ -21,12 +21,12 @@
     Overrides Sub tfDialogStep1(ByVal hairColorInd As Integer)
         Try
             Dim hcn = {"Black", "Brown", "Blonde", "White"}
-            Game.pushLblEvent("Your foot falls on an uneven patch of dungeon and you breifly lose your footing." & DDUtils.RNRN &
+            TextEvent.push("Your foot falls on an uneven patch of dungeon and you breifly lose your footing." & DDUtils.RNRN &
                               "As you brush your shaken up hair back into place, you notice that at some point your hair color had changed to a shade of " & hcn(hairColorInd) & "." & DDUtils.RNRN &
                               """Maybe I stepped on a cursed brick or something..."" you muse as you continue on." & DDUtils.RNRN &
                               "You now have " & hcn(hairColorInd) & " hair!")
         Catch ex As Exception
-            Game.pushLblEvent("Your foot falls on an uneven patch of dungeon and you breifly lose your footing." & DDUtils.RNRN &
+            TextEvent.push("Your foot falls on an uneven patch of dungeon and you breifly lose your footing." & DDUtils.RNRN &
                               "As you brush your shaken up hair back into place, you notice that at some point your hair color had shifted." & DDUtils.RNRN &
                               """Maybe I stepped on a cursed brick or something..."" you muse as you continue on." & DDUtils.RNRN &
                               "Your hair color has changed!")
@@ -34,7 +34,7 @@
     End Sub
 
     Overrides Sub tfDialogStep2()
-        Game.pushLblEvent("Out of nowhere, you feel the tile beneath you depress slightly." & DDUtils.RNRN &
+        TextEvent.push("Out of nowhere, you feel the tile beneath you depress slightly." & DDUtils.RNRN &
                           "You instinctively roll left just in time for a projectile to fly through the air where you just to the left.  After a nervous scan of your surroundings, you go to re-adjust your hair again only to find a small pair of horns." & DDUtils.RNRN &
                           "As you size them up, you realize that they give you a slightly bovine appearance.")
     End Sub
@@ -60,7 +60,7 @@
             out += "  You can feel the tickle of hair much further up on your neck than you are used to, and a quick glance in a nearby puddle confirms that your hair has shortened considerably."
         End If
 
-        Game.pushLblEvent(out)
+        TextEvent.push(out)
     End Sub
     Overrides Sub step3()
         Dim p As Player = Game.player1
@@ -95,7 +95,7 @@
             out += "You loose hold of your weapon dropping it and reverting your transformation."
         End If
 
-        If Not out.Equals("") Then Game.pushLblEvent(out)
+        If Not out.Equals("") Then TextEvent.push(out)
     End Sub
     Overrides Sub step4()
         Dim p As Player = Game.player1
@@ -109,7 +109,7 @@
         p.prt.setIAInd(pInd.horns, 5, True, False)
     End Sub
     Overrides Sub tfDialogStep5()
-        Game.pushLblEvent("As you trudge through a particularly dusty patch of dungeon, you feel a powerful sneeze coming on." & DDUtils.RNRN &
+        TextEvent.push("As you trudge through a particularly dusty patch of dungeon, you feel a powerful sneeze coming on." & DDUtils.RNRN &
                           "A""Achoo!"" the sneeze rocks your body, and your head feels slightly heavier.  As you feel around your head, you can tell that your horns have both gotten longer and developed a more extreme curl." & DDUtils.RNRN &
                           "Epic.")
     End Sub
@@ -136,7 +136,7 @@
             out += "  You also notice that you feel a little ... tighter ... between your legs and a quick pat down confirms that you now have a dick.  Seems like this curse isn't exactly turning you into a proper cow after all..."
         End If
 
-        Game.pushLblEvent(out)
+        TextEvent.push(out)
     End Sub
     Overrides Sub step678()
         Dim p As Player = Game.player1
@@ -172,7 +172,7 @@
         p.dickSize = 3
 
         If p.inv.getCountAt("Barbarian_Armor") < 1 Then p.inv.add("Barbarian_Armor", 1)
-        Equipment.clothesChange(p, "Barbarian_Armor")
+        EquipmentDialogBackend.armorChange(p, "Barbarian_Armor")
 
         p.prt.setIAInd(pInd.eyebrows, 5, False, False)
         p.prt.setIAInd(pInd.mouth, 8, False, False)
@@ -180,7 +180,7 @@
         p.prt.setIAInd(pInd.nose, 2, False, True)
     End Sub
     Overrides Sub tfDialogStep9()
-        Game.pushLblEvent("You take another look at your chest." & DDUtils.RNRN &
+        TextEvent.push("You take another look at your chest." & DDUtils.RNRN &
                           "It seems that with every change this curse inflicts, you've progressed a little more into some form of bovine-human hybrid.  'Minotaur', you correct your self.  It's been turning you into a minotaur, and a masculine one at that." & DDUtils.RNRN &
                           "Your transformation seems pretty far along, and you'd wager you're only one more change away.  With that in mind, you focus all your energy on bulking up your already ample muscles." & DDUtils.RNRN &
                           "You are now a male minotaur!")
@@ -215,7 +215,7 @@
         p.prt.setIAInd(pInd.horns, 5, True, False)
 
         If p.inv.getCountAt("Barbarian_Armor") < 1 Then p.inv.add("Barbarian_Armor", 1)
-        Equipment.clothesChange(p, "Barbarian_Armor")
+        EquipmentDialogBackend.armorChange(p, "Barbarian_Armor")
 
         p.changeForm("Minotaur Bull")
     End Sub

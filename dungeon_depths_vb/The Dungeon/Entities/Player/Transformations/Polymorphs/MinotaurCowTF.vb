@@ -22,7 +22,7 @@
         Dim out = ""
 
         'unequips
-        Equipment.clothesChange(p, "Cow_Print_Bra")
+        EquipmentDialogBackend.armorChange(p, "Cow_Print_Bra")
 
         'minotaur cow tf transformation
         If p.sex = "Male" Then
@@ -40,6 +40,6 @@
 
         Dim revertText = Game.lblEvent.Text.Split(vbCrLf)(0)
         If Not revertText.Equals("") Then out = revertText & DDUtils.RNRN & out
-        Game.pushLblEvent(out)
+        TextEvent.push(out)
     End Sub
 End Class

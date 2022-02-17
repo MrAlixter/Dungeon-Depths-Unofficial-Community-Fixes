@@ -1,13 +1,22 @@
 ﻿Public Class noAcce
     Inherits Accessory
     Sub New()
+        '|ID Info|
         setName("Nothing")
-        setDesc("NO accessory")
         tier = Nothing
-        usable = false
+
+        '|Item Flags|
+        usable = False
+
+        '|Stats|
         count = 0
         value = 0
-        MyBase.fInd = New Tuple(Of Integer, Boolean, Boolean)(0, True, False)
-        MyBase.mInd = New Tuple(Of Integer, Boolean, Boolean)(0, False, False)
+
+        '|Image Index|
+        fInd = New Tuple(Of Integer, Boolean, Boolean)(0, True, False)
+        mInd = New Tuple(Of Integer, Boolean, Boolean)(0, False, False)
+
+        '|Description|
+        setDesc("NO accessory")
     End Sub
 End Class

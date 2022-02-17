@@ -17,7 +17,7 @@ Public Class PCPreset
         Dim reader As StreamReader
         reader = New StreamReader(path)
 
-        reader.ReadLine() 'read the version
+        Dim version = reader.ReadLine() 'read the version
 
         'load the player portrait
         Dim readArray() = reader.ReadLine.Split("*")
@@ -25,6 +25,12 @@ Public Class PCPreset
             Dim arr() As String = readArray(i).Split("%")
             iArrInd(i - 1) = New Tuple(Of Integer, Boolean, Boolean)(CInt(arr(0)), CBool(arr(1)), CBool(arr(2)))
         Next
+
+        If version < 11.0 Then
+            Dim tIArrInd = DDUtils.cloneIArrInd(iArrInd(pInd.clothesbtm))
+            iArrInd(pInd.clothesbtm) = DDUtils.cloneIArrInd(iArrInd(pInd.chest))
+            iArrInd(pInd.chest) = tIArrInd
+        End If
 
         Dim hcArray() = reader.ReadLine.Split("*")
         haircolor = Color.FromArgb(255, CInt(hcArray(0)), CInt(hcArray(1)), CInt(hcArray(2)))

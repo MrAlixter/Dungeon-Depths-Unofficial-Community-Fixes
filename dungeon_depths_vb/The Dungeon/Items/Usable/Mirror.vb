@@ -1,11 +1,12 @@
 ﻿Public Class Mirror
     Inherits Item
 
+    Public Const ITEM_NAME As String = "Mirror"
     Dim target As Player
 
     Sub New()
         '|ID Info|
-        setName("Mirror")
+        setName(ITEM_NAME)
         id = 36
         tier = 2
 
@@ -27,7 +28,7 @@
         target = p
 
         If p.knownSpells.Contains("Self Polymorph") Then
-            Game.pushPnlYesNo("Do you want to cast Self Polymorph?", AddressOf castSelfPolymorph, AddressOf showPlayerDesc)
+            TextEvent.pushYesNo("Do you want to cast Self Polymorph?", AddressOf castSelfPolymorph, AddressOf showPlayerDesc)
         Else
             showPlayerDesc()
         End If
@@ -38,7 +39,7 @@
     End Sub
 
     Private Sub showPlayerDesc()
-        Game.pushLblEvent(target.genDescription)
-        Game.pushLstLog(target.description)
+        TextEvent.push(target.genDescription)
+        TextEvent.pushLog(target.description)
     End Sub
 End Class

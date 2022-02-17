@@ -13,7 +13,7 @@
 
         'non critical hit
         dmg = MyBase.getCaster.getSpellDamage(MyBase.getTarget, dmg)
-        Game.pushLogAndEvent(CStr("You hit the " & MyBase.getTarget.name & " for " & dmg & " damage!"))
+        TextEvent.pushAndLog(CStr("You hit the " & MyBase.getTarget.name & " for " & dmg & " damage!"))
         MyBase.getTarget.takeDMG(dmg, MyBase.getCaster)
     End Sub
 

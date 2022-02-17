@@ -6,6 +6,7 @@
         '|ID Info|
         name = "Curse Broker"
         sName = name
+        npc_index = sNPCInd.cursebroker
 
         '|NPC Flags|
         pronoun = "they"
@@ -58,15 +59,15 @@
         MyBase.encounter()
 
         If img_index = 6 Then
-            Game.pushNPCDialog("So, so many eyes.....")
+            TextEvent.pushNPCDialog("So, so many eyes.....")
         ElseIf img_index = 7 Then
-            Game.pushNPCDialog("Meow indeed...")
+            TextEvent.pushNPCDialog("Meow indeed...")
         ElseIf Not Game.player1.cursed Then
             img_index = 0
-            Game.pushNPCDialog("What have you gotten yourself into this time?  Nothing?  Perhaps there's a curse somewhere out there for you...")
+            TextEvent.pushNPCDialog("What have you gotten yourself into this time?  Nothing?  Perhaps there's a curse somewhere out there for you...")
         Else
             img_index = 3
-            Game.pushNPCDialog("Oh, so you're cursed? Truely a tragedy; if you'd like I can take care of that for you...")
+            TextEvent.pushNPCDialog("Oh, so you're cursed? Truely a tragedy; if you'd like I can take care of that for you...")
         End If
 
         If img_index = getArachneImageInd() And Not Game.player1.formName.Equals("Arachne") Then inv.setCount(244, 1) Else inv.setCount(244, 0)
@@ -81,12 +82,12 @@
     End Function
 
     Sub badForYou()
-        If Game.combatmode Then Game.fromCombat()
+        If Game.combat_engaged Then Game.fromCombat()
         Game.picNPC.BackgroundImage = picBunny
         Game.picNPC.Location = New Point(82 * Game.Size.Width / 1024, 179 * Game.Size.Width / 1024)
         Game.picNPC.Visible = True
-        If Game.npcmode Then Game.hideNPCButtons()
-        Game.pushNPCDialog("So be it.  While I'm not suprised by this betrayal, it's nonetheless disappointing. Your actions " &
+        If Game.shop_npc_engaged Then Game.hideNPCButtons()
+        TextEvent.pushNPCDialog("So be it.  While I'm not suprised by this betrayal, it's nonetheless disappointing. Your actions " &
                            "will result in nothing but future hardship, and moving forward I hope you get cursed into ȏ̸̞͕ḅ̷̨͠ļ̴̮́í̶̯͒v̵̪̤̓͠í̵̻̩͆o̵̰̼̓n̵͈̄. " & DDUtils.RNRN &
                            "I certainly won't stick around to save you.", AddressOf leave)
     End Sub
@@ -102,49 +103,49 @@
         If Int(Rnd() * 5) = 0 Then
             p.knownSpells.Clear()
             p.knownSpecials.Clear()
-            Game.pushLstLog("You've been afflicted with the curse of Amnesia!")
+            TextEvent.pushLog("You've been afflicted with the curse of Amnesia!")
         End If
         'Blindness
         If Int(Rnd() * 5) = 0 Then
             p.perks(perk.coblind) = 2
-            Game.pushLstLog("You've been afflicted with the curse of Blindness!")
+            TextEvent.pushLog("You've been afflicted with the curse of Blindness!")
         End If
         'Claustrophobia
         If Int(Rnd() * 5) = 0 Then
             Game.mBoardHeight = 10
             Game.mBoardWidth = 10
-            Game.pushLstLog("You've been afflicted with the curse of Claustrophobia!")
+            TextEvent.pushLog("You've been afflicted with the curse of Claustrophobia!")
         End If
         'Greed
         If Int(Rnd() * 5) = 0 Then
             p.perks(perk.cogreed) = 2
-            Game.pushLstLog("You've been afflicted with the curse of Greed!")
+            TextEvent.pushLog("You've been afflicted with the curse of Greed!")
         End If
         'Milk
         If Int(Rnd() * 5) = 0 Then
             p.perks(perk.comilk) = 2
-            Game.pushLstLog("You've been afflicted with the curse of Milk!")
+            TextEvent.pushLog("You've been afflicted with the curse of Milk!")
         End If
         'Polymorph
         If Int(Rnd() * 5) = 0 Then
             p.perks(perk.copoly) = 7
-            Game.pushLstLog("You've been afflicted with the curse of Polymorph!")
+            TextEvent.pushLog("You've been afflicted with the curse of Polymorph!")
         End If
         'Rusting
         If Int(Rnd() * 5) = 0 Then
             p.perks(perk.corust) = 2
-            Game.pushLstLog("You've been afflicted with the curse of Rusting!")
+            TextEvent.pushLog("You've been afflicted with the curse of Rusting!")
         End If
         'Tits
         If Int(Rnd() * 5) = 0 Then
             p.breastSize = 6
-            Game.pushLstLog("You've been afflicted with the curse of Tits!")
+            TextEvent.pushLog("You've been afflicted with the curse of Tits!")
             p.drawPort()
         End If
         'Servitude
         If Int(Rnd() * 5) = 80 Then
             p.ongoingTFs.add(New COServ)
-            Game.pushLstLog("You've been afflicted with the curse of Servitude!")
+            TextEvent.pushLog("You've been afflicted with the curse of Servitude!")
         End If
     End Sub
 

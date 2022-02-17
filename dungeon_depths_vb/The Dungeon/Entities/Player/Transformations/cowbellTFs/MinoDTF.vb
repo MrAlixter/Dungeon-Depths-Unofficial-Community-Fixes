@@ -27,14 +27,14 @@
     Overrides Sub tfDialogStep1(ByVal hairColorInd As Integer)
         Try
             Dim hcn = {"White", "White", "White"}
-            Game.pushLblEvent("You now have " & hcn(hairColorInd) & " hair!")
+            TextEvent.push("You now have " & hcn(hairColorInd) & " hair!")
         Catch ex As Exception
-            Game.pushLblEvent("Your hair color has changed!")
+            TextEvent.push("Your hair color has changed!")
         End Try
     End Sub
 
     Overrides Sub tfDialogStep2()
-        Game.pushLblEvent("You have a small pair of bovine horns!")
+        TextEvent.push("You have a small pair of bovine horns!")
     End Sub
 
     Overrides Sub earTF(ByRef p As Player)
@@ -53,7 +53,7 @@
             out += "Your hair has lengthened considerably!"
         End If
 
-        Game.pushLblEvent(out)
+        TextEvent.push(out)
     End Sub
 
     Overrides Sub hairTF2(ByRef p As Player)
@@ -68,14 +68,14 @@
             out += "  You lose hold of your weapon, dropping it and reverting your transformation."
         End If
 
-        Game.pushLblEvent(out)
+        TextEvent.push(out)
     End Sub
 
     Overrides Sub growHorns(ByRef p As Player)
         p.prt.setIAInd(pInd.horns, 10, True, False)
     End Sub
     Overrides Sub tfDialogStep5()
-        Game.pushLblEvent("Your horns have gotten longer, and seem to have a more extreme curl!")
+        TextEvent.push("Your horns have gotten longer, and seem to have a more extreme curl!")
     End Sub
 
     Overrides Sub boobTF(ByRef p As Player)
@@ -98,15 +98,15 @@
             out += DDUtils.RNRN & "You now have a pussy!"
         End If
 
-        Game.pushLblEvent(out)
+        TextEvent.push(out)
     End Sub
 
     Overrides Sub tfClothes(ByRef p As Player)
         p.inv.add(221, 1)
-        Equipment.clothesChange(p, "Cow_Cosplay_(Demonic)")
+        EquipmentDialogBackend.armorChange(p, "Cow_Cosplay_(Demonic)")
     End Sub
     Overrides Sub tfDialogStep9()
-        Game.pushLblEvent("You are now a Cow Succubus!")
+        TextEvent.push("You are now a Cow Succubus!")
     End Sub
     Overrides Sub step9()
         Dim p As Player = Game.player1

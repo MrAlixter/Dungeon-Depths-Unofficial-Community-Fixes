@@ -17,6 +17,7 @@
         '|Inventory|
         inv.setCount("Medicinal_Tea", 3)
         inv.setCount("Garden_Salad", 2)
+        inv.setCount("Plant_Bikini", If(Int(Rnd() * 4) = 0, 1, 0))
 
         '|Dialog Variables|
         pronoun = "she"
@@ -30,19 +31,19 @@
     Public Overrides Sub attackCMD(ByRef target As Entity)
         If target.GetType() Is GetType(Player) Then
             If firstMove Then
-                Game.pushLogAndEvent("The " & getName() & " puffs out a haze of pollen!")
+                TextEvent.pushAndLog("The " & getName() & " puffs out a haze of pollen!")
                 target.getPlayer.ongoingTFs.add(New AlrauneTF())
                 firstMove = False
                 Exit Sub
 
             ElseIf target.getPlayer.perks(perk.mesmerized) < 0 And Int(Rnd() * 3) = 0 Then
-                Game.pushLogAndEvent("The " & getName() & " casts Mesmeric Bloom!")
-                Game.pushLblEvent("The alraune's spell puts you into a trance!")
+                TextEvent.pushAndLog("The " & getName() & " casts Mesmeric Bloom!")
+                TextEvent.push("The alraune's spell puts you into a trance!")
 
                 target.getPlayer.perks(perk.mesmerized) = 3
 
             ElseIf Int(Rnd() * 6) = 0 Or getIntHealth() < 10 Then
-                Game.pushLogAndEvent("The " & getName() & " casts healing aura!")
+                TextEvent.pushAndLog("The " & getName() & " casts healing aura!")
                 health += 0.25
                 If health > 1 Then health = 1
                 target.health += 0.25
@@ -51,8 +52,8 @@
 
             End If
         End If
-        Game.pushLstLog(("The " & getName() & " uses vine lash!"))
-        Game.pushLblCombatEvent(("The " & getName() & " uses vine lash!"))
+        TextEvent.pushLog(("The " & getName() & " uses vine lash!"))
+        TextEvent.pushCombat(("The " & getName() & " uses vine lash!"))
         MyBase.attackCMD(target)
     End Sub
 
@@ -60,7 +61,7 @@
         Dim tf As action = AddressOf New AlrauneTF().fullTF
         tf()
 
-        Game.pushLblEvent("As you collapse to the ground in the haze of pollen, your alraune opponent giggles, and your conciousness slowly fades away." & DDUtils.RNRN &
+        TextEvent.push("As you collapse to the ground in the haze of pollen, your alraune opponent giggles, and your conciousness slowly fades away." & DDUtils.RNRN &
                           """Good night, honey!""" & DDUtils.RNRN &
                           "You are now an Alraune!")
         p.drawPort()

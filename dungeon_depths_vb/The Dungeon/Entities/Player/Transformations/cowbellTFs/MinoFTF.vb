@@ -33,12 +33,12 @@
     Overridable Sub tfDialogStep1(ByVal hairColorInd As Integer)
         Try
             Dim hcn = {"Black", "Brown", "Blonde", "White"}
-            Game.pushLblEvent("Your foot falls on an uneven patch of dungeon and you breifly lose your footing." & DDUtils.RNRN &
+            TextEvent.push("Your foot falls on an uneven patch of dungeon and you breifly lose your footing." & DDUtils.RNRN &
                               "As you lurch forward, catching your balance, your cowbell gives out a loud ring.  Looking franctically around, you are relived to see that nothing seems to have been attracted by the noise.  As you brush your shaken up hair back into place, you notice that at some point your hair color had changed to a shade of " & hcn(hairColorInd) & "." & DDUtils.RNRN &
                               """Maybe I stepped on a cursed brick or something..."" you muse as you continue on." & DDUtils.RNRN &
                               "You now have " & hcn(hairColorInd) & " hair!")
         Catch ex As Exception
-            Game.pushLblEvent("Your foot falls on an uneven patch of dungeon and you breifly lose your footing." & DDUtils.RNRN &
+            TextEvent.push("Your foot falls on an uneven patch of dungeon and you breifly lose your footing." & DDUtils.RNRN &
                               "As you lurch forward, catching your balance, your cowbell gives out a loud ring.  Looking franctically around, you are relived to see that nothing seems to have been attracted by the noise.  As you brush your shaken up hair back into place, you notice that at some point your hair color had shifted." & DDUtils.RNRN &
                               """Maybe I stepped on a cursed brick or something..."" you muse as you continue on." & DDUtils.RNRN &
                               "Your hair color has changed!")
@@ -52,7 +52,7 @@
     End Sub
 
     Overridable Sub tfDialogStep2()
-        Game.pushLblEvent("Out of nowhere, you feel the tile beneath you depress slightly." & DDUtils.RNRN &
+        TextEvent.push("Out of nowhere, you feel the tile beneath you depress slightly." & DDUtils.RNRN &
                           "You instinctively roll left just in time for a projectile to fly through the air where you just to the left.  Breathing a sigh of relief, you take a couple of steps back only to step on another pressure plate." & DDUtils.RNRN &
                           "Another dart fires straight for your neck and without any time to dodge it strikes you right in your cowbell.  The ding it lets out is louder than last time, but not by much." & DDUtils.RNRN &
                           "After a nervous scan of your surroundings, you go to readjust your hair again only to find a small pair of horns.  As you size them up, you realize that they give you a slightly bovine appearance...")
@@ -84,7 +84,7 @@
             out += DDUtils.RNRN & "You can feel the tickle of hair much further down on your back than you are used to, and a quick glance in a nearby puddle confirms that your hair has lengthened considerably."
         End If
 
-        Game.pushLblEvent(out)
+        TextEvent.push(out)
     End Sub
     Overridable Sub step3()
         Dim p As Player = Game.player1
@@ -98,7 +98,7 @@
         Else
             hairTF1(p)
             tfHair = True
-            If Not Int(Rnd() * 3) = 0 Or Game.noRNG Then
+            If Not Int(Rnd() * 3) = 0 Or Settings.active(setting.norng) Then
                 earTF(p)
                 tfEars = True
             End If
@@ -111,7 +111,7 @@
 
     Overridable Function dropEWeapon(ByRef p As Player) As Boolean
         If p.className.Equals("Magical Girl") Or p.className.Equals("Valkyrie") Then
-            Equipment.weaponChange(p, "Fists")
+            EquipmentDialogBackend.weaponChange(p, "Fists")
             Return True
         End If
         Return False
@@ -129,7 +129,7 @@
             out += DDUtils.RNRN & "You lose hold of your weapon, dropping it and reverting your transformation."
         End If
 
-        Game.pushLblEvent(out)
+        TextEvent.push(out)
     End Sub
     Overridable Sub step4()
         Dim p As Player = Game.player1
@@ -145,7 +145,7 @@
         p.prt.setIAInd(pInd.horns, 2, True, False)
     End Sub
     Overridable Sub tfDialogStep5()
-        Game.pushLblEvent("As you trudge through a particularly dusty patch of dungeon, you feel a powerful sneeze coming on." & DDUtils.RNRN &
+        TextEvent.push("As you trudge through a particularly dusty patch of dungeon, you feel a powerful sneeze coming on." & DDUtils.RNRN &
                           """Achoo!"" the sneeze rocks your body, causing the cowbell on your neck to rattle noisily.  That had to be the loudest it has rung yet, and you need to take a few minutes to get your bearings back." & DDUtils.RNRN &
                           "Your head feels slightly heavier, and as you feel around your head you can tell that your horns have both gotten longer and developed a more extreme curl." & DDUtils.RNRN &
                           "Sweet!")
@@ -178,7 +178,7 @@
             out += "  You also notice that you feel a little ... breathier ... between your legs and a quick pat down confirms that you are now female.  Seems like this bell is turning you into a proper cow after all..."
         End If
 
-        Game.pushLblEvent(out)
+        TextEvent.push(out)
     End Sub
     Overridable Sub step678()
         Dim p As Player = Game.player1
@@ -210,10 +210,10 @@
 
     Overridable Sub tfClothes(ByRef p As Player)
         p.inv.add(71, 1)
-        Equipment.clothesChange(p, "Cow_Print_Bra")
+        EquipmentDialogBackend.armorChange(p, "Cow_Print_Bra")
     End Sub
     Overridable Sub tfDialogStep9()
-        Game.pushLblEvent("You take another look at your cowbell." & DDUtils.RNRN &
+        TextEvent.push("You take another look at your cowbell." & DDUtils.RNRN &
                           "Every single time it has rung thus far, you've progressed a little more into some form of bovine-human hybrid.  'Minotaur', you correct yourself, it's been turning you into a minotaur and a female one at that." & DDUtils.RNRN &
                           "Your transformation seems pretty far along, and you'd wager you're only one more chime away from completing the change.  With that in mind, you give the bell a hard shake, and the sound from its ring echos throughout the dungeon." & DDUtils.RNRN &
                           "You are now a female minotaur!")
@@ -229,7 +229,7 @@
     End Sub
 
     Sub resist()
-        Game.pushLblCombatEvent("You are able to resist the curse, but you can feel your resolve wavering...")
+        TextEvent.pushCombat("You are able to resist the curse, but you can feel your resolve wavering...")
         Game.player1.will -= 1
     End Sub
     Public Overrides Sub stopTF()

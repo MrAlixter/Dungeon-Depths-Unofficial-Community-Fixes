@@ -10,7 +10,7 @@
 
     Overrides Sub use(ByRef p As Player)
         If Me.getUsable() = False Then Exit Sub
-        If getName() = "Medicinal_Tea" Then Game.pushLstLog("You drink the " & getName()) Else Game.pushLstLog("You eat the " & getName())
+        If getName() = "Medicinal_Tea" Then TextEvent.pushLog("You drink the " & getName()) Else TextEvent.pushLog("You eat the " & getName())
 
         p.stamina += calories
         If p.stamina > 100 Then p.stamina = 100

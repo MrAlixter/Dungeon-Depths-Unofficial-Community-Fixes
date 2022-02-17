@@ -1,16 +1,26 @@
 ﻿Public Class CrimsonManual
     Inherits Item
+
+    Public Const ITEM_NAME As String = "Crimson_Manual"
+
     Public Shared specials() As String = {"Tits Up", "Tits Down", "Ass Up", "Ass Down", "Dick Up", "Dick Down",
                                           "Chameleon (Blonde)", "Chameleon (Black Hair)", "Chameleon (Redhead)",
                                           "Chameleon (Brunette)", "Chameleon (Neon)", "Chameleon (Pastels)"}
     Sub New()
-        setName("Crimson_Manual")
-        setDesc("A smoldering leather-bound book that contains something practical written by a succubus.")
+        '|ID Info|
+        setName(ITEM_NAME)
         id = 227
         tier = Nothing
-        usable = true
+
+        '|Item Flags|
+        usable = True
+
+        '|Stats|
         count = 0
         value = 666
+
+        '|Description|
+        setDesc("A smoldering leather-bound book that contains something practical written by a succubus.")
     End Sub
 
     Overrides Sub use(ByRef p As Player)
@@ -30,17 +40,17 @@
                         sName = specials(spec)
                 End Select
                 If ct > 60 Then
-                    Game.pushLstLog("You know all the specials in combat manuals already!")
+                    TextEvent.pushLog("You know all the specials in combat manuals already!")
                     Exit Sub
                 End If
             End While
             If Not p.knownSpecials.Contains(sName) Then p.knownSpecials.Add(sName)
-            Game.pushLstLog("You read the " & getName() & ". " & sName & " learned!")
+            TextEvent.pushLog("You read the " & getName() & ". " & sName & " learned!")
             If Not out.Equals("") Then
-                Game.pushLstLog(out)
-                Game.pushLblEvent("You read the " & getName() & ". " & sName & " learned!" & DDUtils.RNRN & out)
+                TextEvent.pushLog(out)
+                TextEvent.push("You read the " & getName() & ". " & sName & " learned!" & DDUtils.RNRN & out)
             Else
-                Game.pushLblEvent("You read the " & getName() & ". " & sName & " learned!")
+                TextEvent.push("You read the " & getName() & ". " & sName & " learned!")
             End If
         End If
 

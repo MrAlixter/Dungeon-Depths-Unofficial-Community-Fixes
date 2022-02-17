@@ -1,9 +1,11 @@
 ﻿Public Class PortalChalk
     Inherits Item
 
+    Public Const ITEM_NAME As String = "Portal_Chalk"
+
     Sub New()
         '|ID Info|
-        setName("Portal_Chalk")
+        setName(ITEM_NAME)
         id = 86
         tier = Nothing
 

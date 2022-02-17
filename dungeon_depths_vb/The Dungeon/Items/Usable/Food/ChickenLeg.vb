@@ -1,8 +1,11 @@
 ﻿Public Class ChickenLeg
     Inherits Food
+
+    Public Const ITEM_NAME As String = "Chicken_Leg"
+
     Sub New()
         '|ID Info|
-        setName("Chicken_Leg")
+        setName(ITEM_NAME)
         id = 30
         tier = 1
 

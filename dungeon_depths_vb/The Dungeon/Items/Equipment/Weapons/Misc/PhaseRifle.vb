@@ -1,9 +1,11 @@
 ﻿Public Class PhaseRifle
     Inherits Weapon
 
+    Public Const ITEM_NAME As String = "Phase_Rifle"
+
     Sub New()
         '|ID Info|
-        setName("Phase_Rifle")
+        setName(ITEM_NAME)
         id = 274
         tier = Nothing
 
@@ -19,13 +21,13 @@
 
         '|Description|
         setDesc("A slender, scoped chrome-plated weapon that converts the meager energy contained in an AAAAAA Battery into a powerful plasma blast.  Batteries not included." & DDUtils.RNRN &
-                       "Scales to the user's SPD, not ATK" & DDUtils.RNRN &
-                       getStatInformation())
+                "Scales to the user's SPD, not ATK" & DDUtils.RNRN &
+                getStatInformation())
     End Sub
 
     Overrides Function attack(ByRef p As Player, ByRef m As Entity) As Integer
         If p.inv.getCountAt("AAAAAA_Battery") < 1 Then
-            Game.pushLogAndEvent("You don't have the ammo!")
+            TextEvent.pushAndLog("You don't have the ammo!")
             Return -1
         End If
 
@@ -34,8 +36,8 @@
         If dmg <= 2 Then Return -1
 
 
-            p.inv.add("AAAAAA_Battery", -1)
-            Game.pushLogAndEvent("The rifle ejects a smoldering battery shell.  " & p.inv.getCountAt("AAAAAA_Battery") & " shot" & If(p.inv.getCountAt("AAAAAA_Battery") = 1, "", "s") & " left!")
+        p.inv.add("AAAAAA_Battery", -1)
+        TextEvent.pushAndLog("The rifle ejects a smoldering battery shell.  " & p.inv.getCountAt("AAAAAA_Battery") & " shot" & If(p.inv.getCountAt("AAAAAA_Battery") = 1, "", "s") & " left!")
 
             dmg += (p.getSPD) + (Me.a_boost)
 

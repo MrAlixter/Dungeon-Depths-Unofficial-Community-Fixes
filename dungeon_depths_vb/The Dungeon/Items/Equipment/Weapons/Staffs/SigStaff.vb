@@ -1,9 +1,11 @@
 ﻿Public Class SigStaff
     Inherits Staff
 
+    Public Const ITEM_NAME As String = "Signature_Staff"
+
     Sub New()
         '|ID Info|
-        setName("Signature_Staff")
+        setName(ITEM_NAME)
         id = 159
         tier = Nothing
 
@@ -19,13 +21,13 @@
 
         '|Description|
         setDesc("A finely crafted staff bearing a trademarked signature. The gem contained inside of it produces a nearly infinite pool of incredibly unstable fire magic." & DDUtils.RNRN &
-                getStatInformation() & vbcrlf &
-                "Grants access to the ""Molten Fireball"" spell")
+                "Grants access to the ""Molten Fireball"" spell" & DDUtils.RNRN &
+                getStatInformation())
     End Sub
 
     Public Overrides Sub onEquip(ByRef p As Player)
         MyBase.onEquip(p)
-        If Not p.knownSpells.Contains("Molten Fireball") Then p.knownSpells.Add("Molten Fireball")
+        p.learnSpell("Molten Fireball")
     End Sub
     Public Overloads Overrides Sub onUnEquip(ByRef p As Player, ByRef w As Weapon)
         MyBase.onUnEquip(p, w)

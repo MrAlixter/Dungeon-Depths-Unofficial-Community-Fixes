@@ -12,7 +12,7 @@
 
         Game.player1.UIupdate()
 
-        Game.pushLogAndEvent("You summon a crisp red apple!")
+        TextEvent.pushAndLog("You summon a crisp red apple!")
     End Sub
 
     Public Overrides Function getDesc(ByRef c As Player, ByRef t As NPC) As Object

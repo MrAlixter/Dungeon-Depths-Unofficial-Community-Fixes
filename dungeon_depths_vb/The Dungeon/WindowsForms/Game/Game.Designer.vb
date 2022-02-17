@@ -8,9 +8,9 @@ Partial Class Game
         Try
             If disposing AndAlso components IsNot Nothing Then
                 components.Dispose()
-                If Not seenBoardPic Is Nothing Then seenBoardPic.Dispose()
-                If Not savedBoardPic Is Nothing Then savedBoardPic.Dispose()
-                If Not boardPic Is Nothing Then boardPic.Dispose()
+                'If Not seenBoardPic Is Nothing Then seenBoardPic.Dispose()
+                'If Not savedBoardPic Is Nothing Then savedBoardPic.Dispose()
+                'If Not boardPic Is Nothing Then boardPic.Dispose()
             End If
         Finally
             MyBase.Dispose(disposing)
@@ -63,7 +63,7 @@ Partial Class Game
         Me.lblNameTitle = New System.Windows.Forms.Label()
         Me.Label1 = New System.Windows.Forms.Label()
         Me.btnUse = New System.Windows.Forms.Button()
-        Me.btnCancelCast = New System.Windows.Forms.ListBox()
+        Me.lstInventory = New System.Windows.Forms.ListBox()
         Me.lstLog = New System.Windows.Forms.ListBox()
         Me.MenuStrip1 = New System.Windows.Forms.MenuStrip()
         Me.FileToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
@@ -99,9 +99,9 @@ Partial Class Game
         Me.chkUseable = New System.Windows.Forms.CheckBox()
         Me.chkPotion = New System.Windows.Forms.CheckBox()
         Me.chkFood = New System.Windows.Forms.CheckBox()
-        Me.frmArmor = New System.Windows.Forms.CheckBox()
+        Me.chkArmor = New System.Windows.Forms.CheckBox()
         Me.chkWeapon = New System.Windows.Forms.CheckBox()
-        Me.chkMisc = New System.Windows.Forms.CheckBox()
+        Me.chkGlasses = New System.Windows.Forms.CheckBox()
         Me.btnAll = New System.Windows.Forms.Button()
         Me.btnNone = New System.Windows.Forms.Button()
         Me.picTrap = New System.Windows.Forms.PictureBox()
@@ -188,7 +188,7 @@ Partial Class Game
         Me.picPathSpace = New System.Windows.Forms.PictureBox()
         Me.picCrystalSpace = New System.Windows.Forms.PictureBox()
         Me.pnlEvent = New System.Windows.Forms.Panel()
-        Me.picEvent = New System.Windows.Forms.PictureBox()
+        Me.txtNoteEvent = New System.Windows.Forms.TextBox()
         Me.Label4 = New System.Windows.Forms.Label()
         Me.btnNextLPnlEvent = New System.Windows.Forms.Button()
         Me.btnNextRPnlEvent = New System.Windows.Forms.Button()
@@ -299,6 +299,11 @@ Partial Class Game
         Me.picBarrierVSpace = New System.Windows.Forms.PictureBox()
         Me.picTTSpace = New System.Windows.Forms.PictureBox()
         Me.pnlTiles = New System.Windows.Forms.Panel()
+        Me.picNoteFog = New System.Windows.Forms.PictureBox()
+        Me.picLegaNote = New System.Windows.Forms.PictureBox()
+        Me.picNoteSpace = New System.Windows.Forms.PictureBox()
+        Me.picNoteF = New System.Windows.Forms.PictureBox()
+        Me.picNote = New System.Windows.Forms.PictureBox()
         Me.picStatueSpace = New System.Windows.Forms.PictureBox()
         Me.picFireScarEndRL = New System.Windows.Forms.PictureBox()
         Me.picFireScarEndFL = New System.Windows.Forms.PictureBox()
@@ -311,6 +316,22 @@ Partial Class Game
         Me.picFire1F = New System.Windows.Forms.PictureBox()
         Me.picWSmithThong2 = New System.Windows.Forms.PictureBox()
         Me.picWSmithThong1 = New System.Windows.Forms.PictureBox()
+        Me.pnlEquip = New System.Windows.Forms.Panel()
+        Me.lblEquippedGlasses = New System.Windows.Forms.Label()
+        Me.cboxGlasses = New System.Windows.Forms.ComboBox()
+        Me.lblEquippedAccessory = New System.Windows.Forms.Label()
+        Me.cboxAccessory = New System.Windows.Forms.ComboBox()
+        Me.lblEquippedArmor = New System.Windows.Forms.Label()
+        Me.cboxArmor = New System.Windows.Forms.ComboBox()
+        Me.lblEquippedWeapon = New System.Windows.Forms.Label()
+        Me.cboxWeapon = New System.Windows.Forms.ComboBox()
+        Me.btnEquipCancel = New System.Windows.Forms.Button()
+        Me.picEquipPort = New System.Windows.Forms.PictureBox()
+        Me.btnEquipConfirm = New System.Windows.Forms.Button()
+        Me.chkMisc = New System.Windows.Forms.CheckBox()
+        Me.pnlInvFilter = New System.Windows.Forms.Panel()
+        Me.picFaeBee = New System.Windows.Forms.PictureBox()
+        Me.picFaeBee2 = New System.Windows.Forms.PictureBox()
         CType(Me.picEnemy, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me.picNPC, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me.picStatue, System.ComponentModel.ISupportInitialize).BeginInit()
@@ -376,7 +397,6 @@ Partial Class Game
         CType(Me.picPathSpace, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me.picCrystalSpace, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.pnlEvent.SuspendLayout()
-        CType(Me.picEvent, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me.picLegaPath, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me.picLegaCrystal, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me.picLegaPlayer, System.ComponentModel.ISupportInitialize).BeginInit()
@@ -437,6 +457,11 @@ Partial Class Game
         CType(Me.picBarrierVSpace, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me.picTTSpace, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.pnlTiles.SuspendLayout()
+        CType(Me.picNoteFog, System.ComponentModel.ISupportInitialize).BeginInit()
+        CType(Me.picLegaNote, System.ComponentModel.ISupportInitialize).BeginInit()
+        CType(Me.picNoteSpace, System.ComponentModel.ISupportInitialize).BeginInit()
+        CType(Me.picNoteF, System.ComponentModel.ISupportInitialize).BeginInit()
+        CType(Me.picNote, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me.picStatueSpace, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me.picFireScarEndRL, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me.picFireScarEndFL, System.ComponentModel.ISupportInitialize).BeginInit()
@@ -449,6 +474,10 @@ Partial Class Game
         CType(Me.picFire1F, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me.picWSmithThong2, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me.picWSmithThong1, System.ComponentModel.ISupportInitialize).BeginInit()
+        Me.pnlEquip.SuspendLayout()
+        CType(Me.picEquipPort, System.ComponentModel.ISupportInitialize).BeginInit()
+        CType(Me.picFaeBee, System.ComponentModel.ISupportInitialize).BeginInit()
+        CType(Me.picFaeBee2, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.SuspendLayout()
         '
         'btnUse1
@@ -865,18 +894,18 @@ Partial Class Game
         Me.btnUse.Text = "Use"
         Me.btnUse.UseVisualStyleBackColor = False
         '
-        'btnCancelCast
+        'lstInventory
         '
-        Me.btnCancelCast.BackColor = System.Drawing.Color.Black
-        Me.btnCancelCast.DrawMode = System.Windows.Forms.DrawMode.OwnerDrawVariable
-        Me.btnCancelCast.Font = New System.Drawing.Font("Consolas", 10.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.btnCancelCast.ForeColor = System.Drawing.Color.White
-        Me.btnCancelCast.FormattingEnabled = True
-        Me.btnCancelCast.ItemHeight = 14
-        Me.btnCancelCast.Location = New System.Drawing.Point(734, 419)
-        Me.btnCancelCast.Name = "btnCancelCast"
-        Me.btnCancelCast.Size = New System.Drawing.Size(262, 172)
-        Me.btnCancelCast.TabIndex = 142
+        Me.lstInventory.BackColor = System.Drawing.Color.Black
+        Me.lstInventory.DrawMode = System.Windows.Forms.DrawMode.OwnerDrawVariable
+        Me.lstInventory.Font = New System.Drawing.Font("Consolas", 10.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.lstInventory.ForeColor = System.Drawing.Color.White
+        Me.lstInventory.FormattingEnabled = True
+        Me.lstInventory.ItemHeight = 14
+        Me.lstInventory.Location = New System.Drawing.Point(734, 419)
+        Me.lstInventory.Name = "lstInventory"
+        Me.lstInventory.Size = New System.Drawing.Size(262, 180)
+        Me.lstInventory.TabIndex = 142
         '
         'lstLog
         '
@@ -1184,7 +1213,7 @@ Partial Class Game
         '
         Me.btnOk.BackColor = System.Drawing.SystemColors.Window
         Me.btnOk.Font = New System.Drawing.Font("Consolas", 8.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.btnOk.Location = New System.Drawing.Point(896, 556)
+        Me.btnOk.Location = New System.Drawing.Point(897, 564)
         Me.btnOk.Name = "btnOk"
         Me.btnOk.Size = New System.Drawing.Size(94, 29)
         Me.btnOk.TabIndex = 235
@@ -1195,11 +1224,9 @@ Partial Class Game
         'chkUseable
         '
         Me.chkUseable.AutoSize = True
-        Me.chkUseable.Checked = True
-        Me.chkUseable.CheckState = System.Windows.Forms.CheckState.Checked
         Me.chkUseable.Font = New System.Drawing.Font("Consolas", 10.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.chkUseable.ForeColor = System.Drawing.Color.White
-        Me.chkUseable.Location = New System.Drawing.Point(738, 422)
+        Me.chkUseable.Location = New System.Drawing.Point(739, 423)
         Me.chkUseable.Name = "chkUseable"
         Me.chkUseable.Size = New System.Drawing.Size(83, 21)
         Me.chkUseable.TabIndex = 236
@@ -1210,11 +1237,9 @@ Partial Class Game
         'chkPotion
         '
         Me.chkPotion.AutoSize = True
-        Me.chkPotion.Checked = True
-        Me.chkPotion.CheckState = System.Windows.Forms.CheckState.Checked
         Me.chkPotion.Font = New System.Drawing.Font("Consolas", 10.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.chkPotion.ForeColor = System.Drawing.Color.White
-        Me.chkPotion.Location = New System.Drawing.Point(738, 444)
+        Me.chkPotion.Location = New System.Drawing.Point(739, 445)
         Me.chkPotion.Name = "chkPotion"
         Me.chkPotion.Size = New System.Drawing.Size(83, 21)
         Me.chkPotion.TabIndex = 237
@@ -1225,11 +1250,9 @@ Partial Class Game
         'chkFood
         '
         Me.chkFood.AutoSize = True
-        Me.chkFood.Checked = True
-        Me.chkFood.CheckState = System.Windows.Forms.CheckState.Checked
         Me.chkFood.Font = New System.Drawing.Font("Consolas", 10.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.chkFood.ForeColor = System.Drawing.Color.White
-        Me.chkFood.Location = New System.Drawing.Point(738, 466)
+        Me.chkFood.Location = New System.Drawing.Point(739, 467)
         Me.chkFood.Name = "chkFood"
         Me.chkFood.Size = New System.Drawing.Size(59, 21)
         Me.chkFood.TabIndex = 238
@@ -1237,29 +1260,25 @@ Partial Class Game
         Me.chkFood.UseVisualStyleBackColor = True
         Me.chkFood.Visible = False
         '
-        'frmArmor
+        'chkArmor
         '
-        Me.frmArmor.AutoSize = True
-        Me.frmArmor.Checked = True
-        Me.frmArmor.CheckState = System.Windows.Forms.CheckState.Checked
-        Me.frmArmor.Font = New System.Drawing.Font("Consolas", 10.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.frmArmor.ForeColor = System.Drawing.Color.White
-        Me.frmArmor.Location = New System.Drawing.Point(738, 488)
-        Me.frmArmor.Name = "frmArmor"
-        Me.frmArmor.Size = New System.Drawing.Size(67, 21)
-        Me.frmArmor.TabIndex = 239
-        Me.frmArmor.Text = "Armor"
-        Me.frmArmor.UseVisualStyleBackColor = True
-        Me.frmArmor.Visible = False
+        Me.chkArmor.AutoSize = True
+        Me.chkArmor.Font = New System.Drawing.Font("Consolas", 10.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.chkArmor.ForeColor = System.Drawing.Color.White
+        Me.chkArmor.Location = New System.Drawing.Point(739, 489)
+        Me.chkArmor.Name = "chkArmor"
+        Me.chkArmor.Size = New System.Drawing.Size(67, 21)
+        Me.chkArmor.TabIndex = 239
+        Me.chkArmor.Text = "Armor"
+        Me.chkArmor.UseVisualStyleBackColor = True
+        Me.chkArmor.Visible = False
         '
         'chkWeapon
         '
         Me.chkWeapon.AutoSize = True
-        Me.chkWeapon.Checked = True
-        Me.chkWeapon.CheckState = System.Windows.Forms.CheckState.Checked
         Me.chkWeapon.Font = New System.Drawing.Font("Consolas", 10.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.chkWeapon.ForeColor = System.Drawing.Color.White
-        Me.chkWeapon.Location = New System.Drawing.Point(738, 510)
+        Me.chkWeapon.Location = New System.Drawing.Point(739, 511)
         Me.chkWeapon.Name = "chkWeapon"
         Me.chkWeapon.Size = New System.Drawing.Size(75, 21)
         Me.chkWeapon.TabIndex = 240
@@ -1267,26 +1286,24 @@ Partial Class Game
         Me.chkWeapon.UseVisualStyleBackColor = True
         Me.chkWeapon.Visible = False
         '
-        'chkMisc
+        'chkGlasses
         '
-        Me.chkMisc.AutoSize = True
-        Me.chkMisc.Checked = True
-        Me.chkMisc.CheckState = System.Windows.Forms.CheckState.Checked
-        Me.chkMisc.Font = New System.Drawing.Font("Consolas", 10.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.chkMisc.ForeColor = System.Drawing.Color.White
-        Me.chkMisc.Location = New System.Drawing.Point(738, 554)
-        Me.chkMisc.Name = "chkMisc"
-        Me.chkMisc.Size = New System.Drawing.Size(59, 21)
-        Me.chkMisc.TabIndex = 241
-        Me.chkMisc.Text = "Misc"
-        Me.chkMisc.UseVisualStyleBackColor = True
-        Me.chkMisc.Visible = False
+        Me.chkGlasses.AutoSize = True
+        Me.chkGlasses.Font = New System.Drawing.Font("Consolas", 10.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.chkGlasses.ForeColor = System.Drawing.Color.White
+        Me.chkGlasses.Location = New System.Drawing.Point(739, 555)
+        Me.chkGlasses.Name = "chkGlasses"
+        Me.chkGlasses.Size = New System.Drawing.Size(83, 21)
+        Me.chkGlasses.TabIndex = 241
+        Me.chkGlasses.Text = "Glasses"
+        Me.chkGlasses.UseVisualStyleBackColor = True
+        Me.chkGlasses.Visible = False
         '
         'btnAll
         '
         Me.btnAll.BackColor = System.Drawing.SystemColors.Window
         Me.btnAll.Font = New System.Drawing.Font("Consolas", 8.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.btnAll.Location = New System.Drawing.Point(941, 424)
+        Me.btnAll.Location = New System.Drawing.Point(942, 425)
         Me.btnAll.Name = "btnAll"
         Me.btnAll.Size = New System.Drawing.Size(49, 29)
         Me.btnAll.TabIndex = 242
@@ -1298,7 +1315,7 @@ Partial Class Game
         '
         Me.btnNone.BackColor = System.Drawing.SystemColors.Window
         Me.btnNone.Font = New System.Drawing.Font("Consolas", 8.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.btnNone.Location = New System.Drawing.Point(890, 424)
+        Me.btnNone.Location = New System.Drawing.Point(891, 425)
         Me.btnNone.Name = "btnNone"
         Me.btnNone.Size = New System.Drawing.Size(48, 29)
         Me.btnNone.TabIndex = 243
@@ -2004,11 +2021,9 @@ Partial Class Game
         'chkAcc
         '
         Me.chkAcc.AutoSize = True
-        Me.chkAcc.Checked = True
-        Me.chkAcc.CheckState = System.Windows.Forms.CheckState.Checked
         Me.chkAcc.Font = New System.Drawing.Font("Consolas", 10.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.chkAcc.ForeColor = System.Drawing.Color.White
-        Me.chkAcc.Location = New System.Drawing.Point(738, 532)
+        Me.chkAcc.Location = New System.Drawing.Point(739, 533)
         Me.chkAcc.Name = "chkAcc"
         Me.chkAcc.Size = New System.Drawing.Size(115, 21)
         Me.chkAcc.TabIndex = 289
@@ -2211,7 +2226,7 @@ Partial Class Game
         Me.pnlEvent.AutoScroll = True
         Me.pnlEvent.BackgroundImage = CType(resources.GetObject("pnlEvent.BackgroundImage"), System.Drawing.Image)
         Me.pnlEvent.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch
-        Me.pnlEvent.Controls.Add(Me.picEvent)
+        Me.pnlEvent.Controls.Add(Me.txtNoteEvent)
         Me.pnlEvent.Controls.Add(Me.Label4)
         Me.pnlEvent.Controls.Add(Me.btnNextLPnlEvent)
         Me.pnlEvent.Controls.Add(Me.btnNextRPnlEvent)
@@ -2223,16 +2238,24 @@ Partial Class Game
         Me.pnlEvent.TabIndex = 322
         Me.pnlEvent.Visible = False
         '
-        'picEvent
+        'txtNoteEvent
         '
-        Me.picEvent.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Center
-        Me.picEvent.Location = New System.Drawing.Point(11, 7)
-        Me.picEvent.Name = "picEvent"
-        Me.picEvent.Size = New System.Drawing.Size(663, 399)
-        Me.picEvent.SizeMode = System.Windows.Forms.PictureBoxSizeMode.AutoSize
-        Me.picEvent.TabIndex = 237
-        Me.picEvent.TabStop = False
-        Me.picEvent.Visible = False
+        Me.txtNoteEvent.BackColor = System.Drawing.Color.Black
+        Me.txtNoteEvent.Cursor = System.Windows.Forms.Cursors.Arrow
+        Me.txtNoteEvent.Font = New System.Drawing.Font("Segoe Print", 11.25!, System.Drawing.FontStyle.Italic, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.txtNoteEvent.ForeColor = System.Drawing.Color.Peru
+        Me.txtNoteEvent.Location = New System.Drawing.Point(93, 13)
+        Me.txtNoteEvent.Margin = New System.Windows.Forms.Padding(10)
+        Me.txtNoteEvent.Multiline = True
+        Me.txtNoteEvent.Name = "txtNoteEvent"
+        Me.txtNoteEvent.ReadOnly = True
+        Me.txtNoteEvent.ScrollBars = System.Windows.Forms.ScrollBars.Vertical
+        Me.txtNoteEvent.Size = New System.Drawing.Size(488, 389)
+        Me.txtNoteEvent.TabIndex = 237
+        Me.txtNoteEvent.Text = "iiiiiiiiiiiiiiiii....iiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiii" & _
+    "iiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiii" & _
+    "iiiiiiiiiiiiiiiiiiiiiiiiiiii"
+        Me.txtNoteEvent.Visible = False
         '
         'Label4
         '
@@ -3448,6 +3471,11 @@ Partial Class Game
         '
         'pnlTiles
         '
+        Me.pnlTiles.Controls.Add(Me.picNoteFog)
+        Me.pnlTiles.Controls.Add(Me.picLegaNote)
+        Me.pnlTiles.Controls.Add(Me.picNoteSpace)
+        Me.pnlTiles.Controls.Add(Me.picNoteF)
+        Me.pnlTiles.Controls.Add(Me.picNote)
         Me.pnlTiles.Controls.Add(Me.picStatueSpace)
         Me.pnlTiles.Controls.Add(Me.picFireScarEndRL)
         Me.pnlTiles.Controls.Add(Me.picFireScarEndFL)
@@ -3534,9 +3562,54 @@ Partial Class Game
         Me.pnlTiles.Controls.Add(Me.picTreeFog)
         Me.pnlTiles.Location = New System.Drawing.Point(444, 18)
         Me.pnlTiles.Name = "pnlTiles"
-        Me.pnlTiles.Size = New System.Drawing.Size(175, 327)
+        Me.pnlTiles.Size = New System.Drawing.Size(175, 320)
         Me.pnlTiles.TabIndex = 411
         Me.pnlTiles.Visible = False
+        '
+        'picNoteFog
+        '
+        Me.picNoteFog.BackgroundImage = CType(resources.GetObject("picNoteFog.BackgroundImage"), System.Drawing.Image)
+        Me.picNoteFog.Location = New System.Drawing.Point(122, 287)
+        Me.picNoteFog.Name = "picNoteFog"
+        Me.picNoteFog.Size = New System.Drawing.Size(15, 15)
+        Me.picNoteFog.TabIndex = 425
+        Me.picNoteFog.TabStop = False
+        '
+        'picLegaNote
+        '
+        Me.picLegaNote.BackgroundImage = CType(resources.GetObject("picLegaNote.BackgroundImage"), System.Drawing.Image)
+        Me.picLegaNote.Location = New System.Drawing.Point(59, 245)
+        Me.picLegaNote.Name = "picLegaNote"
+        Me.picLegaNote.Size = New System.Drawing.Size(15, 15)
+        Me.picLegaNote.TabIndex = 424
+        Me.picLegaNote.TabStop = False
+        '
+        'picNoteSpace
+        '
+        Me.picNoteSpace.BackgroundImage = CType(resources.GetObject("picNoteSpace.BackgroundImage"), System.Drawing.Image)
+        Me.picNoteSpace.Location = New System.Drawing.Point(122, 202)
+        Me.picNoteSpace.Name = "picNoteSpace"
+        Me.picNoteSpace.Size = New System.Drawing.Size(15, 15)
+        Me.picNoteSpace.TabIndex = 423
+        Me.picNoteSpace.TabStop = False
+        '
+        'picNoteF
+        '
+        Me.picNoteF.BackgroundImage = CType(resources.GetObject("picNoteF.BackgroundImage"), System.Drawing.Image)
+        Me.picNoteF.Location = New System.Drawing.Point(80, 160)
+        Me.picNoteF.Name = "picNoteF"
+        Me.picNoteF.Size = New System.Drawing.Size(15, 15)
+        Me.picNoteF.TabIndex = 422
+        Me.picNoteF.TabStop = False
+        '
+        'picNote
+        '
+        Me.picNote.BackgroundImage = CType(resources.GetObject("picNote.BackgroundImage"), System.Drawing.Image)
+        Me.picNote.Location = New System.Drawing.Point(143, 56)
+        Me.picNote.Name = "picNote"
+        Me.picNote.Size = New System.Drawing.Size(15, 15)
+        Me.picNote.TabIndex = 421
+        Me.picNote.TabStop = False
         '
         'picStatueSpace
         '
@@ -3648,6 +3721,204 @@ Partial Class Game
         Me.picWSmithThong1.TabStop = False
         Me.picWSmithThong1.Visible = False
         '
+        'pnlEquip
+        '
+        Me.pnlEquip.AutoScroll = True
+        Me.pnlEquip.BackgroundImage = CType(resources.GetObject("pnlEquip.BackgroundImage"), System.Drawing.Image)
+        Me.pnlEquip.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch
+        Me.pnlEquip.Controls.Add(Me.lblEquippedGlasses)
+        Me.pnlEquip.Controls.Add(Me.cboxGlasses)
+        Me.pnlEquip.Controls.Add(Me.lblEquippedAccessory)
+        Me.pnlEquip.Controls.Add(Me.cboxAccessory)
+        Me.pnlEquip.Controls.Add(Me.lblEquippedArmor)
+        Me.pnlEquip.Controls.Add(Me.cboxArmor)
+        Me.pnlEquip.Controls.Add(Me.lblEquippedWeapon)
+        Me.pnlEquip.Controls.Add(Me.cboxWeapon)
+        Me.pnlEquip.Controls.Add(Me.btnEquipCancel)
+        Me.pnlEquip.Controls.Add(Me.picEquipPort)
+        Me.pnlEquip.Controls.Add(Me.btnEquipConfirm)
+        Me.pnlEquip.Location = New System.Drawing.Point(363, 40)
+        Me.pnlEquip.Name = "pnlEquip"
+        Me.pnlEquip.Size = New System.Drawing.Size(350, 445)
+        Me.pnlEquip.TabIndex = 323
+        Me.pnlEquip.Visible = False
+        '
+        'lblEquippedGlasses
+        '
+        Me.lblEquippedGlasses.AutoSize = True
+        Me.lblEquippedGlasses.BackColor = System.Drawing.Color.Black
+        Me.lblEquippedGlasses.Font = New System.Drawing.Font("Consolas", 8.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.lblEquippedGlasses.ForeColor = System.Drawing.Color.White
+        Me.lblEquippedGlasses.Location = New System.Drawing.Point(18, 249)
+        Me.lblEquippedGlasses.Margin = New System.Windows.Forms.Padding(4, 0, 4, 0)
+        Me.lblEquippedGlasses.Name = "lblEquippedGlasses"
+        Me.lblEquippedGlasses.Size = New System.Drawing.Size(109, 13)
+        Me.lblEquippedGlasses.TabIndex = 288
+        Me.lblEquippedGlasses.Text = "Equipped Glasses:"
+        '
+        'cboxGlasses
+        '
+        Me.cboxGlasses.BackColor = System.Drawing.Color.Black
+        Me.cboxGlasses.Font = New System.Drawing.Font("Consolas", 8.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.cboxGlasses.ForeColor = System.Drawing.Color.White
+        Me.cboxGlasses.FormattingEnabled = True
+        Me.cboxGlasses.Location = New System.Drawing.Point(20, 274)
+        Me.cboxGlasses.Margin = New System.Windows.Forms.Padding(4, 5, 4, 5)
+        Me.cboxGlasses.Name = "cboxGlasses"
+        Me.cboxGlasses.Size = New System.Drawing.Size(199, 21)
+        Me.cboxGlasses.TabIndex = 287
+        '
+        'lblEquippedAccessory
+        '
+        Me.lblEquippedAccessory.AutoSize = True
+        Me.lblEquippedAccessory.BackColor = System.Drawing.Color.Black
+        Me.lblEquippedAccessory.Font = New System.Drawing.Font("Consolas", 8.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.lblEquippedAccessory.ForeColor = System.Drawing.Color.White
+        Me.lblEquippedAccessory.Location = New System.Drawing.Point(15, 174)
+        Me.lblEquippedAccessory.Margin = New System.Windows.Forms.Padding(4, 0, 4, 0)
+        Me.lblEquippedAccessory.Name = "lblEquippedAccessory"
+        Me.lblEquippedAccessory.Size = New System.Drawing.Size(121, 13)
+        Me.lblEquippedAccessory.TabIndex = 284
+        Me.lblEquippedAccessory.Text = "Equipped Accessory:"
+        '
+        'cboxAccessory
+        '
+        Me.cboxAccessory.BackColor = System.Drawing.Color.Black
+        Me.cboxAccessory.Font = New System.Drawing.Font("Consolas", 8.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.cboxAccessory.ForeColor = System.Drawing.Color.White
+        Me.cboxAccessory.FormattingEnabled = True
+        Me.cboxAccessory.Location = New System.Drawing.Point(17, 199)
+        Me.cboxAccessory.Margin = New System.Windows.Forms.Padding(4, 5, 4, 5)
+        Me.cboxAccessory.Name = "cboxAccessory"
+        Me.cboxAccessory.Size = New System.Drawing.Size(199, 21)
+        Me.cboxAccessory.TabIndex = 283
+        '
+        'lblEquippedArmor
+        '
+        Me.lblEquippedArmor.AutoSize = True
+        Me.lblEquippedArmor.BackColor = System.Drawing.Color.Black
+        Me.lblEquippedArmor.Font = New System.Drawing.Font("Consolas", 8.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.lblEquippedArmor.ForeColor = System.Drawing.Color.White
+        Me.lblEquippedArmor.Location = New System.Drawing.Point(12, 99)
+        Me.lblEquippedArmor.Margin = New System.Windows.Forms.Padding(4, 0, 4, 0)
+        Me.lblEquippedArmor.Name = "lblEquippedArmor"
+        Me.lblEquippedArmor.Size = New System.Drawing.Size(97, 13)
+        Me.lblEquippedArmor.TabIndex = 282
+        Me.lblEquippedArmor.Text = "Equipped Armor:"
+        '
+        'cboxArmor
+        '
+        Me.cboxArmor.BackColor = System.Drawing.Color.Black
+        Me.cboxArmor.Font = New System.Drawing.Font("Consolas", 8.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.cboxArmor.ForeColor = System.Drawing.Color.White
+        Me.cboxArmor.FormattingEnabled = True
+        Me.cboxArmor.Location = New System.Drawing.Point(14, 124)
+        Me.cboxArmor.Margin = New System.Windows.Forms.Padding(4, 5, 4, 5)
+        Me.cboxArmor.Name = "cboxArmor"
+        Me.cboxArmor.Size = New System.Drawing.Size(199, 21)
+        Me.cboxArmor.TabIndex = 281
+        '
+        'lblEquippedWeapon
+        '
+        Me.lblEquippedWeapon.AutoSize = True
+        Me.lblEquippedWeapon.BackColor = System.Drawing.Color.Black
+        Me.lblEquippedWeapon.Font = New System.Drawing.Font("Consolas", 8.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.lblEquippedWeapon.ForeColor = System.Drawing.Color.White
+        Me.lblEquippedWeapon.Location = New System.Drawing.Point(13, 27)
+        Me.lblEquippedWeapon.Margin = New System.Windows.Forms.Padding(4, 0, 4, 0)
+        Me.lblEquippedWeapon.Name = "lblEquippedWeapon"
+        Me.lblEquippedWeapon.Size = New System.Drawing.Size(103, 13)
+        Me.lblEquippedWeapon.TabIndex = 280
+        Me.lblEquippedWeapon.Text = "Equipped Weapon:"
+        '
+        'cboxWeapon
+        '
+        Me.cboxWeapon.BackColor = System.Drawing.Color.Black
+        Me.cboxWeapon.Font = New System.Drawing.Font("Consolas", 8.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.cboxWeapon.ForeColor = System.Drawing.Color.White
+        Me.cboxWeapon.FormattingEnabled = True
+        Me.cboxWeapon.Location = New System.Drawing.Point(14, 52)
+        Me.cboxWeapon.Margin = New System.Windows.Forms.Padding(4, 5, 4, 5)
+        Me.cboxWeapon.Name = "cboxWeapon"
+        Me.cboxWeapon.Size = New System.Drawing.Size(199, 21)
+        Me.cboxWeapon.TabIndex = 279
+        '
+        'btnEquipCancel
+        '
+        Me.btnEquipCancel.BackColor = System.Drawing.Color.Black
+        Me.btnEquipCancel.Font = New System.Drawing.Font("Consolas", 8.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.btnEquipCancel.ForeColor = System.Drawing.Color.White
+        Me.btnEquipCancel.Location = New System.Drawing.Point(185, 407)
+        Me.btnEquipCancel.Name = "btnEquipCancel"
+        Me.btnEquipCancel.Size = New System.Drawing.Size(73, 28)
+        Me.btnEquipCancel.TabIndex = 278
+        Me.btnEquipCancel.Text = "Cancel"
+        Me.btnEquipCancel.UseVisualStyleBackColor = False
+        '
+        'picEquipPort
+        '
+        Me.picEquipPort.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch
+        Me.picEquipPort.Location = New System.Drawing.Point(235, 12)
+        Me.picEquipPort.Name = "picEquipPort"
+        Me.picEquipPort.Size = New System.Drawing.Size(104, 384)
+        Me.picEquipPort.TabIndex = 277
+        Me.picEquipPort.TabStop = False
+        '
+        'btnEquipConfirm
+        '
+        Me.btnEquipConfirm.BackColor = System.Drawing.Color.Black
+        Me.btnEquipConfirm.Font = New System.Drawing.Font("Consolas", 8.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.btnEquipConfirm.ForeColor = System.Drawing.Color.White
+        Me.btnEquipConfirm.Location = New System.Drawing.Point(266, 407)
+        Me.btnEquipConfirm.Name = "btnEquipConfirm"
+        Me.btnEquipConfirm.Size = New System.Drawing.Size(73, 28)
+        Me.btnEquipConfirm.TabIndex = 233
+        Me.btnEquipConfirm.Text = "Equip"
+        Me.btnEquipConfirm.UseVisualStyleBackColor = False
+        '
+        'chkMisc
+        '
+        Me.chkMisc.AutoSize = True
+        Me.chkMisc.Font = New System.Drawing.Font("Consolas", 10.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.chkMisc.ForeColor = System.Drawing.Color.White
+        Me.chkMisc.Location = New System.Drawing.Point(739, 576)
+        Me.chkMisc.Name = "chkMisc"
+        Me.chkMisc.Size = New System.Drawing.Size(59, 21)
+        Me.chkMisc.TabIndex = 414
+        Me.chkMisc.Text = "Misc"
+        Me.chkMisc.UseVisualStyleBackColor = True
+        Me.chkMisc.Visible = False
+        '
+        'pnlInvFilter
+        '
+        Me.pnlInvFilter.BackgroundImage = CType(resources.GetObject("pnlInvFilter.BackgroundImage"), System.Drawing.Image)
+        Me.pnlInvFilter.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch
+        Me.pnlInvFilter.Location = New System.Drawing.Point(734, 419)
+        Me.pnlInvFilter.Name = "pnlInvFilter"
+        Me.pnlInvFilter.Size = New System.Drawing.Size(262, 180)
+        Me.pnlInvFilter.TabIndex = 415
+        Me.pnlInvFilter.Visible = False
+        '
+        'picFaeBee
+        '
+        Me.picFaeBee.BackgroundImage = CType(resources.GetObject("picFaeBee.BackgroundImage"), System.Drawing.Image)
+        Me.picFaeBee.Location = New System.Drawing.Point(108, 154)
+        Me.picFaeBee.Name = "picFaeBee"
+        Me.picFaeBee.Size = New System.Drawing.Size(15, 15)
+        Me.picFaeBee.TabIndex = 417
+        Me.picFaeBee.TabStop = False
+        Me.picFaeBee.Visible = False
+        '
+        'picFaeBee2
+        '
+        Me.picFaeBee2.BackgroundImage = CType(resources.GetObject("picFaeBee2.BackgroundImage"), System.Drawing.Image)
+        Me.picFaeBee2.Location = New System.Drawing.Point(87, 154)
+        Me.picFaeBee2.Name = "picFaeBee2"
+        Me.picFaeBee2.Size = New System.Drawing.Size(15, 15)
+        Me.picFaeBee2.TabIndex = 416
+        Me.picFaeBee2.TabStop = False
+        Me.picFaeBee2.Visible = False
+        '
         'Game
         '
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Inherit
@@ -3655,6 +3926,10 @@ Partial Class Game
         Me.BackColor = System.Drawing.Color.Black
         Me.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch
         Me.ClientSize = New System.Drawing.Size(1008, 690)
+        Me.Controls.Add(Me.picFaeBee)
+        Me.Controls.Add(Me.picFaeBee2)
+        Me.Controls.Add(Me.pnlEquip)
+        Me.Controls.Add(Me.chkMisc)
         Me.Controls.Add(Me.picWSmithThong2)
         Me.Controls.Add(Me.picWSmithThong1)
         Me.Controls.Add(Me.pnlCombat)
@@ -3677,9 +3952,9 @@ Partial Class Game
         Me.Controls.Add(Me.Button1)
         Me.Controls.Add(Me.btnT)
         Me.Controls.Add(Me.btnSettings)
-        Me.Controls.Add(Me.chkMisc)
+        Me.Controls.Add(Me.chkGlasses)
         Me.Controls.Add(Me.chkWeapon)
-        Me.Controls.Add(Me.frmArmor)
+        Me.Controls.Add(Me.chkArmor)
         Me.Controls.Add(Me.chkFood)
         Me.Controls.Add(Me.chkPotion)
         Me.Controls.Add(Me.chkUseable)
@@ -3715,7 +3990,6 @@ Partial Class Game
         Me.Controls.Add(Me.BtnD)
         Me.Controls.Add(Me.btnLft)
         Me.Controls.Add(Me.btnFilter)
-        Me.Controls.Add(Me.btnCancelCast)
         Me.Controls.Add(Me.picPortrait)
         Me.Controls.Add(Me.lblEvent)
         Me.Controls.Add(Me.btnWait)
@@ -3752,6 +4026,8 @@ Partial Class Game
         Me.Controls.Add(Me.picLust3)
         Me.Controls.Add(Me.picLust2)
         Me.Controls.Add(Me.picLust1)
+        Me.Controls.Add(Me.pnlInvFilter)
+        Me.Controls.Add(Me.lstInventory)
         Me.DoubleBuffered = True
         Me.ForeColor = System.Drawing.Color.Black
         Me.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle
@@ -3831,7 +4107,6 @@ Partial Class Game
         CType(Me.picCrystalSpace, System.ComponentModel.ISupportInitialize).EndInit()
         Me.pnlEvent.ResumeLayout(False)
         Me.pnlEvent.PerformLayout()
-        CType(Me.picEvent, System.ComponentModel.ISupportInitialize).EndInit()
         CType(Me.picLegaPath, System.ComponentModel.ISupportInitialize).EndInit()
         CType(Me.picLegaCrystal, System.ComponentModel.ISupportInitialize).EndInit()
         CType(Me.picLegaPlayer, System.ComponentModel.ISupportInitialize).EndInit()
@@ -3898,6 +4173,11 @@ Partial Class Game
         CType(Me.picBarrierVSpace, System.ComponentModel.ISupportInitialize).EndInit()
         CType(Me.picTTSpace, System.ComponentModel.ISupportInitialize).EndInit()
         Me.pnlTiles.ResumeLayout(False)
+        CType(Me.picNoteFog, System.ComponentModel.ISupportInitialize).EndInit()
+        CType(Me.picLegaNote, System.ComponentModel.ISupportInitialize).EndInit()
+        CType(Me.picNoteSpace, System.ComponentModel.ISupportInitialize).EndInit()
+        CType(Me.picNoteF, System.ComponentModel.ISupportInitialize).EndInit()
+        CType(Me.picNote, System.ComponentModel.ISupportInitialize).EndInit()
         CType(Me.picStatueSpace, System.ComponentModel.ISupportInitialize).EndInit()
         CType(Me.picFireScarEndRL, System.ComponentModel.ISupportInitialize).EndInit()
         CType(Me.picFireScarEndFL, System.ComponentModel.ISupportInitialize).EndInit()
@@ -3910,6 +4190,11 @@ Partial Class Game
         CType(Me.picFire1F, System.ComponentModel.ISupportInitialize).EndInit()
         CType(Me.picWSmithThong2, System.ComponentModel.ISupportInitialize).EndInit()
         CType(Me.picWSmithThong1, System.ComponentModel.ISupportInitialize).EndInit()
+        Me.pnlEquip.ResumeLayout(False)
+        Me.pnlEquip.PerformLayout()
+        CType(Me.picEquipPort, System.ComponentModel.ISupportInitialize).EndInit()
+        CType(Me.picFaeBee, System.ComponentModel.ISupportInitialize).EndInit()
+        CType(Me.picFaeBee2, System.ComponentModel.ISupportInitialize).EndInit()
         Me.ResumeLayout(False)
         Me.PerformLayout()
 
@@ -3950,7 +4235,7 @@ Partial Class Game
     Friend WithEvents lblNameTitle As System.Windows.Forms.Label
     Friend WithEvents Label1 As System.Windows.Forms.Label
     Friend WithEvents btnUse As System.Windows.Forms.Button
-    Friend WithEvents btnCancelCast As System.Windows.Forms.ListBox
+    Friend WithEvents lstInventory As System.Windows.Forms.ListBox
     Friend WithEvents lstLog As System.Windows.Forms.ListBox
     Friend WithEvents MenuStrip1 As System.Windows.Forms.MenuStrip
     Friend WithEvents FileToolStripMenuItem As System.Windows.Forms.ToolStripMenuItem
@@ -3979,9 +4264,9 @@ Partial Class Game
     Friend WithEvents chkUseable As System.Windows.Forms.CheckBox
     Friend WithEvents chkPotion As System.Windows.Forms.CheckBox
     Friend WithEvents chkFood As System.Windows.Forms.CheckBox
-    Friend WithEvents frmArmor As System.Windows.Forms.CheckBox
+    Friend WithEvents chkArmor As System.Windows.Forms.CheckBox
     Friend WithEvents chkWeapon As System.Windows.Forms.CheckBox
-    Friend WithEvents chkMisc As System.Windows.Forms.CheckBox
+    Friend WithEvents chkGlasses As System.Windows.Forms.CheckBox
     Friend WithEvents btnAll As System.Windows.Forms.Button
     Friend WithEvents btnNone As System.Windows.Forms.Button
     Friend WithEvents picTrap As System.Windows.Forms.PictureBox
@@ -4192,10 +4477,31 @@ Partial Class Game
     Friend WithEvents picFire3F As System.Windows.Forms.PictureBox
     Friend WithEvents picFire2F As System.Windows.Forms.PictureBox
     Friend WithEvents picFire1F As System.Windows.Forms.PictureBox
-    Friend WithEvents picEvent As System.Windows.Forms.PictureBox
     Friend WithEvents Label18 As System.Windows.Forms.Label
     Friend WithEvents Label20 As System.Windows.Forms.Label
     Friend WithEvents picStatueSpace As System.Windows.Forms.PictureBox
     Friend WithEvents picWSmithThong2 As System.Windows.Forms.PictureBox
     Friend WithEvents picWSmithThong1 As System.Windows.Forms.PictureBox
+    Friend WithEvents txtNoteEvent As System.Windows.Forms.TextBox
+    Friend WithEvents picNoteF As System.Windows.Forms.PictureBox
+    Friend WithEvents picNote As System.Windows.Forms.PictureBox
+    Friend WithEvents picNoteFog As System.Windows.Forms.PictureBox
+    Friend WithEvents picLegaNote As System.Windows.Forms.PictureBox
+    Friend WithEvents picNoteSpace As System.Windows.Forms.PictureBox
+    Friend WithEvents pnlEquip As System.Windows.Forms.Panel
+    Friend WithEvents btnEquipCancel As System.Windows.Forms.Button
+    Friend WithEvents picEquipPort As System.Windows.Forms.PictureBox
+    Friend WithEvents btnEquipConfirm As System.Windows.Forms.Button
+    Friend WithEvents lblEquippedAccessory As System.Windows.Forms.Label
+    Friend WithEvents cboxAccessory As System.Windows.Forms.ComboBox
+    Friend WithEvents lblEquippedArmor As System.Windows.Forms.Label
+    Friend WithEvents cboxArmor As System.Windows.Forms.ComboBox
+    Friend WithEvents lblEquippedWeapon As System.Windows.Forms.Label
+    Friend WithEvents cboxWeapon As System.Windows.Forms.ComboBox
+    Friend WithEvents lblEquippedGlasses As System.Windows.Forms.Label
+    Friend WithEvents cboxGlasses As System.Windows.Forms.ComboBox
+    Friend WithEvents chkMisc As System.Windows.Forms.CheckBox
+    Friend WithEvents pnlInvFilter As System.Windows.Forms.Panel
+    Friend WithEvents picFaeBee As System.Windows.Forms.PictureBox
+    Friend WithEvents picFaeBee2 As System.Windows.Forms.PictureBox
 End Class

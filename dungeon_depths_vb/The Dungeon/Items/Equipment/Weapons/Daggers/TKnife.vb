@@ -1,9 +1,11 @@
 ﻿Public Class TKnife
     Inherits Dagger
 
+    Public Const ITEM_NAME As String = "Throwing_Knife"
+
     Sub New()
         '|ID Info|
-        setName("Throwing_Knife")
+        setName(ITEM_NAME)
         id = 162
         tier = Nothing
 
@@ -18,17 +20,16 @@
         '|Description|
 
         setDesc("A small blade weighted in such a way that it tumbles end over end when hurled at a target. " & DDUtils.RNRN &
-                getStatInformation() & vbcrlf &
-                "Can be thrown using the ""Use"" button.")
-
+                "Can be thrown using the ""Use"" button." & DDUtils.RNRN &
+                getStatInformation())
     End Sub
 
     Overridable Sub wThrow(ByRef p As Player, ByRef m As Entity)
         If m Is Nothing Then
-            Game.pushLblEvent("You throw the knife across the dungeon at nothing in particular.")
-            Game.pushLstLog("You throw the knife across the dungeon at nothing in particular.")
+            TextEvent.push("You throw the knife across the dungeon at nothing in particular.")
+            TextEvent.pushLog("You throw the knife across the dungeon at nothing in particular.")
         Else
-            Game.pushLstLog("You throw the knife!")
+            TextEvent.pushLog("You throw the knife!")
             Dim dmg As Integer = (p.getATK) + (10) + Int(Rnd() * 3 + 1)
             p.hit(dmg, m)
         End If

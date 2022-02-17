@@ -1,8 +1,11 @@
 ﻿Public Class RocDrumstick
     Inherits Food
+
+    Public Const ITEM_NAME As String = "Roc_Drumstick"
+
     Sub New()
         '|ID Info|
-        setName("Roc_Drumstick")
+        setName(ITEM_NAME)
         id = 267
         tier = Nothing
 
@@ -16,7 +19,7 @@
 
         '|Description|
         setDesc("A massive roasted bird leg, served steaming hot!" & DDUtils.RNRN &
-                       "+40 Stamina")
+                "+40 Stamina")
     End Sub
 
     Public Overrides Function getTier() As Integer

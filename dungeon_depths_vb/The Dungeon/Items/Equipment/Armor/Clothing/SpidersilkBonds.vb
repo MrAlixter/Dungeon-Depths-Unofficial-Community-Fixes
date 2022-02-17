@@ -1,23 +1,25 @@
 ﻿Public Class SpidersilkBonds
     Inherits Armor
 
+    Public Const ITEM_NAME As String = "Spidersilk_Bonds"
+
     Sub New()
         '|ID Info|
-        setName("Spidersilk_Bonds")
+        setName(ITEM_NAME)
         id = 239
         tier = Nothing
 
         '|Item Flags|
         usable = false
-        MyBase.compress_breast = True
-        MyBase.cursed = True
-        MyBase.bind_wearer = True
+        compress_breast = True
+        cursed = True
+        bind_wearer = True
         rando_inv_allowed = False
         hide_dick = False
 
         '|Stats|
-        MyBase.a_boost = -31
-        MyBase.s_boost = -31
+        a_boost = -31
+        s_boost = -31
         count = 0
         value = 25
 
@@ -37,18 +39,17 @@
         usize3 = New Tuple(Of Integer, Boolean, Boolean)(321, True, True)
 
         '|Description|
-        setDesc("A tight, binding web of spidersilk.  While the threads are nearly impossible to break from within, they are fairly delicate to outside attacks..." & DDUtils.RNRN & _
-                       getSizeInformation() & vbCrLf & vbCrLf &
-                       "-31 ATK" & vbCrLf &
-                       "-31 SPD" & vbCrLf &
-                       "May not be easy to remove")
+        setDesc("A tight, binding web of spidersilk.  While the threads are nearly impossible to break from within, they are fairly delicate to outside attacks..." & DDUtils.RNRN &
+                "May not be easy to remove" & DDUtils.RNRN &
+                getSizeInformation() & DDUtils.RNRN &
+                getStatInformation())
     End Sub
 
     Public Overrides Sub onEquip(ByRef p As Player)
         If Not p.pForm.canBeBound Then
-            Equipment.equipArmor(p, "Naked")
-            Game.pushLblEvent("You effortlessly break your bonds.")
-            Game.pushLstLog("You effortlessly break your bonds.")
+            EquipmentDialogBackend.equipArmor(p, "Naked")
+            TextEvent.push("You effortlessly break your bonds.")
+            TextEvent.pushLog("You effortlessly break your bonds.")
         End If
     End Sub
 

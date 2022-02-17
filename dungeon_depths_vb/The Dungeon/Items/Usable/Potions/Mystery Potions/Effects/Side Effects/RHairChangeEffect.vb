@@ -2,7 +2,7 @@
     Inherits PEffect
 
     Public Overrides Sub apply(ByRef p As Player)
-        Game.pushLblEvent("You now have a new hairstyle!")
+        TextEvent.push("You now have a new hairstyle!")
 
         Dim r = Int(Rnd() * 2)
         Dim moF As Boolean = True

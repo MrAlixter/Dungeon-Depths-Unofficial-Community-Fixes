@@ -108,7 +108,7 @@
     Public Overridable Sub open()
         'handles the opening of a chest
         If Game.player1.pos <> pos Then Exit Sub
-        If Not Game.combatmode And Game.mDun.numCurrFloor >= 3 And Not Me.GetType Is GetType(LoadedChest) Then
+        If Not Game.combat_engaged And Game.mDun.numCurrFloor >= 3 And Not Me.GetType Is GetType(LoadedChest) Then
             Dim mOdds As Integer
             If Game.player1.perks(perk.cogreed) > -1 Then
                 mOdds = 0
@@ -117,14 +117,14 @@
             Else
                 mOdds = Int(Rnd() * 10)
             End If
-            If Game.mDun.numCurrFloor <> 9999 And Game.mDun.numCurrFloor <> 10000 And Game.mDun.numCurrFloor <> 91017 And mOdds = 0 And Not contents.getCountAt(53) > 0 And Not Game.npcmode And Not Game.combatmode Then
+            If Game.mDun.numCurrFloor <> 9999 And Game.mDun.numCurrFloor <> 10000 And Game.mDun.numCurrFloor <> 91017 And mOdds = 0 And Not contents.getCountAt(53) > 0 And Not Game.shop_npc_engaged And Not Game.combat_engaged Then
                 Monster.createMimic(contents)
                 Exit Sub
             End If
         End If
         pushLblEventChest()
         Game.player1.UIupdate()
-        Game.pushLstLog("You open a chest!")
+        TextEvent.pushLog("You open a chest!")
 
     End Sub
     Public Sub pushLblEventChest()

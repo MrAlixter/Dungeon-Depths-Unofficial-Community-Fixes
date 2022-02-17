@@ -1,9 +1,11 @@
 ﻿Public Class AAAAAASpecs
     Inherits Item
 
+    Public Const ITEM_NAME As String = "AAAAAA_Specification"
+
     Sub New()
         '|ID Info|
-        setName("AAAAAA_Specification")
+        setName(ITEM_NAME)
         id = 279
         tier = Nothing
 
@@ -20,13 +22,7 @@
     End Sub
 
     Overrides Sub use(ByRef p As Player)
-
-        Dim sName = "Summon Battery"
-
-        If Not p.knownSpells.Contains(sName) Then
-            p.knownSpells.Add(sName)
-            Game.pushLstLog("You learn ""Summon Battery""")
-        End If
+        p.learnSpell("Summon Battery")
 
         count -= 1
     End Sub

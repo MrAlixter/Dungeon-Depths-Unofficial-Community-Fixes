@@ -1,9 +1,11 @@
 ﻿Public Class CursedSword
     Inherits Sword
 
+    Public Const ITEM_NAME As String = "Accursed_Blade"
+
     Sub New()
         '|ID Info|
-        setName("Accursed_Blade")
+        setName(ITEM_NAME)
         id = 258
         tier = Nothing
 
@@ -19,8 +21,8 @@
 
         '|Description|
         setDesc("A pitch-black sword whose edge reflects no light.  When in use, the reverberations through it's hilt almost feel like the rhythm of a living being." & DDUtils.RNRN &
-                       "Each hit carries a 1 in 4 chance of an additional attack, and a 1 in 4 chance of backfiring." & DDUtils.RNRN &
-                       getStatInformation())
+                "Each hit carries a 1 in 4 chance of an additional attack, and a 1 in 4 chance of backfiring." & DDUtils.RNRN &
+                getStatInformation())
     End Sub
 
     Overrides Function attack(ByRef p As Player, ByRef m As Entity) As Integer
@@ -68,8 +70,8 @@
 
         dmgBF += (p.getATK)
 
-        Game.pushLstLog("Backfire - Your grip on the blade slips!")
-        Game.pushLblCombatEvent("Backfire - Your grip on the blade slips!")
+        TextEvent.pushLog("Backfire - Your grip on the blade slips!")
+        TextEvent.pushCombat("Backfire - Your grip on the blade slips!")
         p.takeDMG(Math.Min(Player.calcDamage(dmgBF, m.defense), p.getIntHealth - 1), m)
     End Sub
 End Class

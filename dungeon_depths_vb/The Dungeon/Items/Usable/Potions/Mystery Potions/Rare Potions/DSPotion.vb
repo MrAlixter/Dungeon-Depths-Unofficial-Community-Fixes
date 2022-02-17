@@ -1,8 +1,11 @@
 ﻿Public Class DSPotion
     Inherits MysteryPotion
+
+    Public Const ITEM_NAME As String = "Dick_Shrink._Potion"
+
     Sub New()
         '|ID Info|
-        setName("Dick_Shrink._Potion")
+        setName(ITEM_NAME)
         id = 234
         tier = 3
 
@@ -16,7 +19,6 @@
 
         '|Description|
         setDesc("An occult-looking potion.")
-
     End Sub
 
     Public Overrides Sub setEffectList()

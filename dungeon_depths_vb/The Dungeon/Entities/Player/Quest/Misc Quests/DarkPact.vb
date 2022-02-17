@@ -23,7 +23,7 @@
     End Sub
 
     Public Overrides Function canGet() As Boolean
-        Return Not getActive() And Game.player1.level > 2 And Not getComplete() And Game.player1.perks(perk.canmeetcyn) > 0 And ((Int(Rnd() * 3) = 0) Or Game.noRNG)
+        Return Not getActive() And Game.player1.level > 2 And Not getComplete() And Game.player1.perks(perk.canmeetcyn) > 0 And ((Int(Rnd() * 3) = 0) Or Settings.active(setting.norng))
     End Function
 End Class
 
@@ -69,7 +69,7 @@ Public Class DarkPactStep2
         Game.picNPC.BackgroundImage = ShopNPC.npcLib.atrs(0).getAt(77)
         Game.picNPC.Visible = True
 
-        Game.pushNPCDialog("Alright, great, you found a crystal!  It doesn't look like this one's been activated yet, so I'll get that going...", AddressOf completeDialogStep2)
+        TextEvent.pushNPCDialog("Alright, great, you found a crystal!  It doesn't look like this one's been activated yet, so I'll get that going...", AddressOf completeDialogStep2)
 
         Game.player1.addXP(1000)
 
@@ -79,7 +79,7 @@ Public Class DarkPactStep2
     Private Sub completeDialogStep2()
         Game.picNPC.Visible = False
 
-        Game.pushLblEvent("Cynn places a hand on the crystal, and she is quickly engulfed in a crackling red aura.  As the crystal begins glowing a sinister purple, Cynn bursts into a jet black flame and reverts to her demonic form.  She glances over at you, and gestures for you to come over." & DDUtils.RNRN &
+        TextEvent.push("Cynn places a hand on the crystal, and she is quickly engulfed in a crackling red aura.  As the crystal begins glowing a sinister purple, Cynn bursts into a jet black flame and reverts to her demonic form.  She glances over at you, and gestures for you to come over." & DDUtils.RNRN &
                           "She grabs your hand, and with a surge of energy and a blinding flash the crystal returns to a dormant state." & DDUtils.RNRN &
                           "Your abdomen is now marked with a glowing red glyph!", AddressOf completeDialogStep3)
 
@@ -100,7 +100,7 @@ Public Class DarkPactStep2
     End Function
 
     Public Overrides Function isComplete() As Boolean
-        Return Not Game.lastTile Is Nothing AndAlso Game.lastTile.Item1.Equals("c")
+        Return Not Game.last_tile Is Nothing AndAlso Game.last_tile.Item1.Equals("c")
     End Function
 End Class
 

@@ -66,7 +66,7 @@
 
     Private Sub cmbArmor_SelectedValueChanged(sender As Object, e As EventArgs) Handles cmbArmor.SelectedValueChanged
         If p.inv.item(cmbArmor.SelectedItem).count < 1 Then p.inv.add(cmbArmor.SelectedItem, 1)
-        Equipment.clothesChange(p, cmbArmor.SelectedItem)
+        EquipmentDialogBackend.armorChange(p, cmbArmor.SelectedItem)
 
         p.prt.portraitUDate()
         drawImg()

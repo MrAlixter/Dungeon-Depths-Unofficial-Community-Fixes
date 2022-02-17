@@ -1,9 +1,11 @@
 ﻿Public Class FusionCrystal
     Inherits Item
 
+    Public Const ITEM_NAME As String = "Fusion_Crystal"
+
     Sub New()
         '|ID Info|
-        setName("Fusion_Crystal")
+        setName(ITEM_NAME)
         id = 58
         tier = Nothing
 
@@ -142,7 +144,7 @@
 
         player.pos = p1.pos
 
-        player.pImage = p1.pImage
+        player.player_image = p1.player_image
 
         player.currState = New State(player)
         player.pState = New State(player)

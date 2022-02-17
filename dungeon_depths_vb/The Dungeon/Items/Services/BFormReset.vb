@@ -1,9 +1,11 @@
 ﻿Public Class BFormReset
     Inherits Item
 
+    Public Const ITEM_NAME As String = "Base_Form_Reset"
+
     Sub New()
         '|ID Info|
-        setName("Base_Form_Reset")
+        setName(ITEM_NAME)
         id = 131
         tier = Nothing
 
@@ -26,7 +28,7 @@
         Dim p = Game.player1
 
         If Not Transformation.canBeTFed(p) Then
-            Game.pushNPCDialog("Unfortunately, you seem to be in a rather unstable state.  I am afraid that I will not be able to set your base state at this time.")
+            TextEvent.pushNPCDialog("Unfortunately, you seem to be in a rather unstable state.  I am afraid that I will not be able to set your base state at this time.")
             Game.player1.gold += value
             Exit Sub
         End If
@@ -39,8 +41,8 @@
     End Sub
     Sub wakeup()
         Game.player1.UIupdate()
-        Equipment.clothesChange(Game.player1, "Naked")
+        EquipmentDialogBackend.armorChange(Game.player1, "Naked")
         Game.player1.drawPort()
-        Game.pushLblEvent("You wake up to the teacher's snap.  ""Well then, " & Game.player1.name & ", it seems like we're done here."" she says with a knowing grin.  Done?  Right!  The form reset.  She already did it?  But you've always looked like this..." & DDUtils.RNRN & "Stripping naked, you give the hypnotist a dirty look.  If she was going to rip you off, your mistress could have done a better job of hiding it...", AddressOf CType(Game.hteach, HypnoTeach).back)
+        TextEvent.push("You wake up to the teacher's snap.  ""Well then, " & Game.player1.name & ", it seems like we're done here."" she says with a knowing grin.  Done?  Right!  The form reset.  She already did it?  But you've always looked like this..." & DDUtils.RNRN & "Stripping naked, you give the hypnotist a dirty look.  If she was going to rip you off, your mistress could have done a better job of hiding it...", AddressOf CType(Game.hteach, HypnoTeach).back)
     End Sub
 End Class

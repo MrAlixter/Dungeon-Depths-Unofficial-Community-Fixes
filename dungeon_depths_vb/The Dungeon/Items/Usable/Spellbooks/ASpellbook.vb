@@ -1,17 +1,27 @@
 ﻿Public Class ASpellbook
     Inherits Item
+
+    Public Const ITEM_NAME As String = "Advanced_Spellbook"
+
     Public Shared spells() As String = {"Turn to Blade", "Turn to Cupcake", "Self Polymorph",
                                         "Magma Spear", "Petrify II", "Major Heal", "Uvona's Fugue",
                                         "Summon Apple"}
 
     Sub New()
-        setName("Advanced_Spellbook")
-        setDesc("An ornate, gilded book that likely contains something outside of the standard magic curriculum.")
+        '|ID Info|
+        setName(ITEM_NAME)
         id = 65
         tier = 3
-        usable = true
+
+        '|Item Flags|
+        usable = True
+
+        '|Stats|
         count = 0
         value = 1500
+
+        '|Description|
+        setDesc("An ornate, gilded book that likely contains something outside of the standard magic curriculum.")
     End Sub
 
     Overrides Sub use(ByRef p As Player)
@@ -48,13 +58,13 @@
                     sName = spells(spell)
             End Select
             If ct > 60 Then
-                Game.pushLstLog("You know all the spells in advanced spellbooks already!")
+                TextEvent.pushLog("You know all the spells in advanced spellbooks already!")
                 Exit Sub
             End If
         End While
         If Not Game.player1.knownSpells.Contains(sName) Then Game.player1.knownSpells.Add(sName)
-        Game.pushLstLog("You read the " & getName() & ". " & sName & " learned!")
-        If Not out.Equals("") Then Game.pushLstLog(out)
+        TextEvent.pushLog("You read the " & getName() & ". " & sName & " learned!")
+        If Not out.Equals("") Then TextEvent.pushLog(out)
         count -= 1
     End Sub
 End Class

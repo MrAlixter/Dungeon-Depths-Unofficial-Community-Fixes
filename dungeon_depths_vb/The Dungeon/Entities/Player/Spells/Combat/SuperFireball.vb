@@ -13,19 +13,19 @@
         If d51 = d52 And d52 = 2 Then
             'critical hit
             dmg = MyBase.getCaster.getSpellDamage(MyBase.getTarget, 2 * (dmg + d51 + d52))
-            Game.pushLogAndEvent(CStr("Critical hit!  You hit the " & MyBase.getTarget.name & " for " & dmg & " damage!"))
+            TextEvent.pushAndLog(CStr("Critical hit!  You hit the " & MyBase.getTarget.name & " for " & dmg & " damage!"))
             MyBase.getTarget.takeDMG(dmg, MyBase.getCaster)
         Else
             'non critical hit
             dmg = MyBase.getCaster.getSpellDamage(MyBase.getTarget, dmg + d51 + d52)
-            Game.pushLogAndEvent(CStr("You hit the " & MyBase.getTarget.name & " for " & dmg & " damage!"))
+            TextEvent.pushAndLog(CStr("You hit the " & MyBase.getTarget.name & " for " & dmg & " damage!"))
             MyBase.getTarget.takeDMG(dmg, MyBase.getCaster)
         End If
     End Sub
     Public Overrides Sub backfire()
         Dim dmg = Int(Rnd() * 30) + 10
         MyBase.getCaster.takeDMG(dmg, Nothing)
-        Game.pushLogAndEvent("You hit yourself for " & dmg & " damage!")
+        TextEvent.pushAndLog("You hit yourself for " & dmg & " damage!")
     End Sub
 
     Public Overrides Function getDesc(ByRef c As Player, ByRef t As NPC) As Object

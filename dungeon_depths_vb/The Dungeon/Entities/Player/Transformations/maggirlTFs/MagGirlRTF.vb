@@ -16,17 +16,14 @@
 
     Public Overrides Sub setSpells(ByRef p As Player)
         MyBase.setSpells(p)
-        If Not p.knownSpecials.Contains("Inferno Aura") Then p.knownSpecials.Add("Inferno Aura")
-        Game.pushLstLog("'Inferno Aura' special learned!")
-
-        If Not p.knownSpecials.Contains("Megaton Punch") Then p.knownSpecials.Add("Megaton Punch")
-        Game.pushLstLog("'Megaton Punch' special learned!")
+        p.learnSpecial("Inferno Aura")
+        p.learnSpecial("Megaton Punch")
     End Sub
 
     Overrides Sub tfBody(ByRef p As Player)
         p.breastSize = 1
 
-        p.prt.haircolor = Color.FromArgb(255, 217, 0, 24)
+        p.prt.haircolor = Color.FromArgb(255, 22, 21, 26)
         p.prt.setIAInd(pInd.rearhair, 34, True, True)
         p.prt.setIAInd(pInd.face, 0, True, False)
         p.prt.setIAInd(pInd.midhair, 40, True, True)
@@ -44,6 +41,6 @@
         If p.inv.item(210).count < 1 Then p.inv.add(210, 1)
 
         Equipment.accChange(p, "Nothing")
-        Equipment.clothesChange(p, "Mag._Girl_Outfit_(R)")
+        EquipmentDialogBackend.armorChange(p, "Mag._Girl_Outfit_(R)")
     End Sub
 End Class

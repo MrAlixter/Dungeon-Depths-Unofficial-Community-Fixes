@@ -1,21 +1,30 @@
 ﻿Public Class DemWhip
     Inherits Whip
 
+    Public Const ITEM_NAME As String = "Demonic_Whip"
+
     Sub New()
-        setName("Demonic_Whip")
-        setDesc("A black leather whip that burns with a naughty aura and critically hits more often than a standard sword.  " & vbCrLf & _
-                       "+38 ATK")
-        usable = false
-        MyBase.a_boost = 38
-        droppable = True
+        '|ID Info|
+        setName(ITEM_NAME)
         id = 217
         tier = Nothing
+
+        '|Item Flags|
+        usable = False
+        droppable = True
+
+        '|Stats|
+        a_boost = 38
         count = 0
         value = 3333
+
+        '|Description|
+        setDesc("A black leather whip that burns with a naughty aura and critically hits more often than a standard sword.  " & DDUtils.RNRN &
+                getStatInformation())
     End Sub
 
     Public Overrides Function getTier() As Integer
-        If Game?.currFloor IsNot Nothing AndAlso Game.currFloor.floorNumber > 7 Then
+        If Game.currFloor IsNot Nothing AndAlso Game.currFloor.floorNumber > 7 Then
             Return 3
         Else
             Return Nothing

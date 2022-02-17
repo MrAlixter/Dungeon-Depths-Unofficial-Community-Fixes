@@ -1,9 +1,11 @@
 ﻿Public Class SteelSpear
     Inherits Spear
 
+    Public Const ITEM_NAME As String = "Steel_Spear"
+
     Sub New()
         '|ID Info|
-        setName("Steel_Spear")
+        setName(ITEM_NAME)
         id = 156
         tier = Nothing
 
@@ -19,8 +21,7 @@
 
         '|Description|
         setDesc("A hearty spear forged from steel.  It's more likely to hit critically than a sword, but also more likely to miss altogether." & DDUtils.RNRN &
-                              "Can be thrown using the ""Use"" button." & vbCrLf &
-                              "+22 ATK" & vbCrLf &
-                              "-5 SPD")
+                "Can be thrown using the ""Use"" button." & DDUtils.RNRN &
+                getStatInformation())
     End Sub
 End Class

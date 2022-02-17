@@ -1,9 +1,11 @@
 ﻿Public Class BookOSpecials
     Inherits Item
 
+    Public Const ITEM_NAME As String = "Big_Book_O'_Specials"
+
     Sub New()
         '|ID Info|
-        setName("Big_Book_O'_Specials")
+        setName(ITEM_NAME)
         id = 243
         tier = Nothing
 

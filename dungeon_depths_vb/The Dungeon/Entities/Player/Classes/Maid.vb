@@ -13,7 +13,8 @@
         End If
 
         If Not learnSkills Then Exit Sub
-
+        If level = 2 Then p.learnSpell("Heal")
+        If level = 4 Then p.learnSpell("Major Heal")
     End Sub
 
     Public Overrides Sub deLVL(level As Integer, ByRef p As Player)

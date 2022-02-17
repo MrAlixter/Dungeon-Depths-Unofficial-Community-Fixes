@@ -1,9 +1,11 @@
 ﻿Public Class MShank
     Inherits Dagger
 
+    Public Const ITEM_NAME As String = "Mugger's_Shank"
+
     Sub New()
         '|ID Info|
-        setName("Mugger's_Shank")
+        setName(ITEM_NAME)
         id = 165
         tier = Nothing
 
@@ -18,8 +20,7 @@
 
         '|Description|
         setDesc("A well-worn blade small enough to be concealed and drawn at will." & DDUtils.RNRN &
-                getStatInformation() & vbcrlf &
-                "Hits twice")
-
+                "When attacking, the user hits twice." & DDUtils.RNRN &
+                getStatInformation())
     End Sub
 End Class

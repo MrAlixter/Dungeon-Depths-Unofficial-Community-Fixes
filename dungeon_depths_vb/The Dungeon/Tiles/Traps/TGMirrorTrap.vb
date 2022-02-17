@@ -20,6 +20,6 @@
         Game.player1.drawPort()
         Game.player1.UIupdate()
 
-        Game.pushLblEvent(out)
+        TextEvent.push(out)
     End Sub
 End Class

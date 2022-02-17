@@ -1,14 +1,24 @@
 ﻿Public Class IncandPotion
     Inherits MysteryPotion
+
+    Public Const ITEM_NAME As String = "Incandescent_Potion"
+
     Sub New()
-        setName("Incandescent_Potion")
-        setDesc("A suspicious-looking potion")
+        '|ID Info|
+        setName(ITEM_NAME)
         id = 248
         tier = 2
-        usable = true
+
+        '|Item Flags|
+        usable = True
+        MyBase.onBuy = AddressOf reveal
+
+        '|Stats|
         count = 0
         value = 350
-        MyBase.onBuy = AddressOf reveal
+
+        '|Description|
+        setDesc("A suspicious-looking potion.")
     End Sub
 
     Public Overrides Sub setEffectList()

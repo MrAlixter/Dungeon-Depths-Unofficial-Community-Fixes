@@ -1,15 +1,18 @@
 ﻿Public Class GelArmor
     Inherits Armor
 
+    Public Const ITEM_NAME As String = "Gelatinous_Shell"
+
     Sub New()
         '|ID Info|
-        setName("Gelatinous_Shell")
+        setName(ITEM_NAME)
         id = 137
         tier = Nothing
 
         '|Item Flags|
         usable = false
         compress_breast = True
+        show_underboob = False
         droppable = False
         rando_inv_allowed = False
 
@@ -20,27 +23,27 @@
         value = 0
 
         '|Image Index|
-        MyBase.bsizeneg1 = New Tuple(Of Integer, Boolean, Boolean)(52, False, True)
-        MyBase.bsize0 = New Tuple(Of Integer, Boolean, Boolean)(199, True, True)
-        MyBase.bsize1 = New Tuple(Of Integer, Boolean, Boolean)(200, True, True)
-        MyBase.bsize2 = New Tuple(Of Integer, Boolean, Boolean)(201, True, True)
-        MyBase.bsize3 = New Tuple(Of Integer, Boolean, Boolean)(202, True, True)
-        MyBase.bsize4 = New Tuple(Of Integer, Boolean, Boolean)(203, True, True)
-        MyBase.bsize5 = New Tuple(Of Integer, Boolean, Boolean)(204, True, True)
-        MyBase.bsize6 = New Tuple(Of Integer, Boolean, Boolean)(205, True, True)
-        MyBase.bsize7 = New Tuple(Of Integer, Boolean, Boolean)(206, True, True)
+        bsizeneg1 = New Tuple(Of Integer, Boolean, Boolean)(52, False, True)
+        bsize0 = New Tuple(Of Integer, Boolean, Boolean)(199, True, True)
+        bsize1 = New Tuple(Of Integer, Boolean, Boolean)(200, True, True)
+        bsize2 = New Tuple(Of Integer, Boolean, Boolean)(201, True, True)
+        bsize3 = New Tuple(Of Integer, Boolean, Boolean)(202, True, True)
+        bsize4 = New Tuple(Of Integer, Boolean, Boolean)(203, True, True)
+        bsize5 = New Tuple(Of Integer, Boolean, Boolean)(204, True, True)
+        bsize6 = New Tuple(Of Integer, Boolean, Boolean)(205, True, True)
+        bsize7 = New Tuple(Of Integer, Boolean, Boolean)(206, True, True)
 
-        MyBase.usizeneg1 = New Tuple(Of Integer, Boolean, Boolean)(36, False, True)
-        MyBase.usize0 = New Tuple(Of Integer, Boolean, Boolean)(113, True, True)
-        MyBase.usize1 = New Tuple(Of Integer, Boolean, Boolean)(114, True, True)
-        MyBase.usize2 = New Tuple(Of Integer, Boolean, Boolean)(115, True, True)
-        MyBase.usize3 = New Tuple(Of Integer, Boolean, Boolean)(116, True, True)
-        MyBase.usize4 = New Tuple(Of Integer, Boolean, Boolean)(117, True, True)
-        MyBase.usize5 = New Tuple(Of Integer, Boolean, Boolean)(118, True, True)
+        usizeneg1 = New Tuple(Of Integer, Boolean, Boolean)(36, False, True)
+        usize0 = New Tuple(Of Integer, Boolean, Boolean)(113, True, True)
+        usize1 = New Tuple(Of Integer, Boolean, Boolean)(114, True, True)
+        usize2 = New Tuple(Of Integer, Boolean, Boolean)(115, True, True)
+        usize3 = New Tuple(Of Integer, Boolean, Boolean)(116, True, True)
+        usize4 = New Tuple(Of Integer, Boolean, Boolean)(117, True, True)
+        usize5 = New Tuple(Of Integer, Boolean, Boolean)(118, True, True)
 
         '|Description|
         setDesc("An extra layer of a more durable goo that a slime can don for extra protection." & DDUtils.RNRN &
-                getSizeInformation() & vbCrLf & getStatInformation())
+                getSizeInformation() & DDUtils.RNRN & getStatInformation())
     End Sub
 
     Public Overrides Sub onEquip(ByRef p As Player)

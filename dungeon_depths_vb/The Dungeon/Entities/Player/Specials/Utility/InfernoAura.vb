@@ -10,8 +10,8 @@
         Dim p = MyBase.getUser
 
         p.perks(perk.infernoa) = 5
-        Game.pushLstLog("Inferno Aura!")
-        Game.pushLblCombatEvent("Inferno Aura!" & vbCrLf & "+45% DEF, Reflect 30% of damage taken for 5 turns.")
+        TextEvent.pushLog("Inferno Aura!")
+        TextEvent.pushCombat("Inferno Aura!" & vbCrLf & "+45% DEF, Reflect 30% of damage taken for 5 turns.")
     End Sub
 
     Public Overrides Function getDesc(ByRef c As Player, ByRef t As NPC) As Object

@@ -22,8 +22,8 @@
     End Sub
 
     Public Overrides Sub attackCMD(ByRef target As Entity)
-        Game.pushLblCombatEvent("The " & getName() & " casts Blaze!")
-        Game.pushLstLog("The " & getName() & " casts Blaze!")
+        TextEvent.pushCombat("The " & getName() & " casts Blaze!")
+        TextEvent.pushLog("The " & getName() & " casts Blaze!")
         Dim dmg = calcDamage(Me.getATK, target.getDEF * 0.8)
         hit(dmg, target)
 

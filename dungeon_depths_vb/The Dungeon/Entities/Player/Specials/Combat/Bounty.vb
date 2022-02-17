@@ -9,12 +9,12 @@
     Public Overrides Sub effect()
         Dim p = MyBase.getUser
         Dim m = MyBase.getTarget
-        Game.pushLstLog("Bounty's Collection!")
-        Game.pushLblCombatEvent("Bounty's Collection!")
+        TextEvent.pushLog("Bounty's Collection!")
+        TextEvent.pushCombat("Bounty's Collection!")
 
         If m.getIntHealth > Entity.calcDamage(p.getATK, m.getDEF / 2) Then
             'Fail
-            Game.pushLblCombatEvent("Failed to collect bounty!  All loot lost...")
+            TextEvent.pushCombat("Failed to collect bounty!  All loot lost...")
             Dim hasKey = False
             If m.inv.getCountAt("Key") > 0 Then hasKey = True
             m.inv = New Inventory()
@@ -25,7 +25,7 @@
             m.inv.setCount(43, 4 * m.inv.getCountAt(43))
 
             m.die(p)
-            Game.pushLblCombatEvent("Bounty Collected!")
+            TextEvent.pushCombat("Bounty Collected!")
         End If
     End Sub
 

@@ -10,7 +10,7 @@
         Do While Game.player1.knownSpells.Contains("Heartblast Starcannon")
             Game.player1.knownSpells.Remove("Heartblast Starcannon")
         Loop
-        Game.pushLstLog("'Heartblast Starcannon' spell forgotten!")
+        TextEvent.pushLog("'Heartblast Starcannon' spell forgotten!")
     End Sub
 
     Public Overrides Sub onLVLUp(ByVal level As Integer, ByRef p As Player, Optional learnSkills as Boolean = True)

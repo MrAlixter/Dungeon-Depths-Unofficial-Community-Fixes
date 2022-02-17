@@ -1,15 +1,17 @@
 ﻿Public Class FoxStatue
     Inherits Item
 
+    Public Const ITEM_NAME As String = "Fox_Statue"
+
     Sub New()
         '|ID Info|
-        setName("Fox_Statue")
+        setName(ITEM_NAME)
         id = 224
         tier = Nothing
 
         '|Item Flags|
         usable = false
-        MyBase.droppable = False
+        droppable = False
         rando_inv_allowed = False
 
         '|Stats|

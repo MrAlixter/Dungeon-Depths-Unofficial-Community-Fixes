@@ -1798,6 +1798,7 @@ Partial Class Debug_Window
         Me.BackColor = System.Drawing.Color.Black
         Me.ClientSize = New System.Drawing.Size(750, 576)
         Me.Controls.Add(Me.tabMain)
+        Me.DoubleBuffered = True
         Me.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedToolWindow
         Me.Icon = CType(resources.GetObject("$this.Icon"), System.Drawing.Icon)
         Me.Name = "Debug_Window"

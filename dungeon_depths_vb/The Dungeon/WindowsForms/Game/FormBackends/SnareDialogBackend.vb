@@ -37,7 +37,7 @@
             ElseIf (i.value) > 1000 And Not Game.shopkeeper.form.Equals("Arachne") Then
                 p.perks(perk.snarednpc) = 0
             End If
-            Game.pushLblEvent(If(p.perks(perk.snarednpc) > -1, "The previous snare you set withers away..." & DDUtils.RNRN, "") & "You expertly weave a snare, leaving the " & i.getName & " dangling by a nearly invisible thread." & DDUtils.RNRN &
+            TextEvent.push(If(p.perks(perk.snarednpc) > -1, "The previous snare you set withers away..." & DDUtils.RNRN, "") & "You expertly weave a snare, leaving the " & i.getName & " dangling by a nearly invisible thread." & DDUtils.RNRN &
                               "Getting to the next floor should allow you to reel in whatever takes the bait...")
             i.count -= 1
         End If

@@ -21,7 +21,7 @@
     Overrides Sub hairColorShift()
         Game.player1.prt.haircolor = DDUtils.cShift(Game.player1.prt.haircolor, bimbop, 200)
         If Not Game.player1.getHairColor.Equals(bimbop) Then curr_step -= 1
-        Game.pushLblEvent("Your hair rapidly becomes lighter, brightening towards a pastel pink.")
+        TextEvent.push("Your hair rapidly becomes lighter, brightening towards a pastel pink.")
     End Sub
 
     'Step 1
@@ -53,7 +53,7 @@
     Overrides Sub s2ClothesChange(ByRef p As Player)
         If Not p.equippedArmor.getName.Equals("Naked") And Not p.className.Equals("Magical Girl") Then
             If p.inv.item("Skimpy_Clothes_(D)").count < 1 Then p.inv.add("Skimpy_Clothes_(D)", 1)
-            Equipment.clothesChange(p, "Skimpy_Clothes_(D)")
+            EquipmentDialogBackend.armorChange(p, "Skimpy_Clothes_(D)")
         End If
     End Sub
 

@@ -1,18 +1,30 @@
 ﻿Public Class ROfMinRegen
     Inherits Accessory
 
+    Public Const ITEM_NAME As String = "Minor_Ring_of_Regen."
+
     Sub New()
-        setName("Minor_Ring_of_Regen.")
-        setDesc("A ring containing a glowing pink gem." & vbCrLf & _
-                       "+5 Health, Minor Regen Effect.")
+        '|ID Info|
+        setName(ITEM_NAME)
         id = 77
         tier = 3
-        usable = false
+
+        '|Item Flags|
+        usable = False
+
+        '|Stats|
         h_boost = 5
         count = 0
         value = 2000
-        MyBase.fInd = New Tuple(Of Integer, Boolean, Boolean)(0, True, False)
-        MyBase.mInd = New Tuple(Of Integer, Boolean, Boolean)(0, False, False)
+
+        '|Image Index|
+        fInd = New Tuple(Of Integer, Boolean, Boolean)(0, True, False)
+        mInd = New Tuple(Of Integer, Boolean, Boolean)(0, False, False)
+
+        '|Description|
+        setDesc("A ring containing a glowing pink gem." & DDUtils.RNRN &
+                "Minor regen effect" & DDUtils.RNRN &
+                getStatInformation())
     End Sub
     Public Overrides Sub onEquip(ByRef p As Player)
         p.perks(perk.minRegen) = 1

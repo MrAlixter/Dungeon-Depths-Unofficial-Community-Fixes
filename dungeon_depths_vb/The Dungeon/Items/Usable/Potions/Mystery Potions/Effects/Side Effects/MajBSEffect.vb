@@ -6,9 +6,9 @@
             p.bs()
             p.bs()
             p.savePState()
-            Game.pushLblEvent("You breasts squeeze painfully . . .")
+            TextEvent.push("You breasts squeeze painfully . . .")
         Else
-            Game.pushLblEvent("Nothing happens")
+            TextEvent.push("Nothing happens")
         End If
         p.drawPort()
     End Sub

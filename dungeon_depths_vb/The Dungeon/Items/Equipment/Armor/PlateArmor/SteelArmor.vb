@@ -1,9 +1,11 @@
 ﻿Public Class SteelArmor
     Inherits Armor
 
+    Public Const ITEM_NAME As String = "Steel_Armor"
+
     Sub New()
         '|ID Info|
-        setName("Steel_Armor")
+        setName(ITEM_NAME)
         id = 5
         tier = Nothing
 
@@ -18,19 +20,19 @@
         value = 564
 
         '|Image Index|
-        MyBase.bsizeneg1 = New Tuple(Of Integer, Boolean, Boolean)(6, False, True)
-        MyBase.bsize1 = New Tuple(Of Integer, Boolean, Boolean)(13, True, True)
-        MyBase.bsize2 = New Tuple(Of Integer, Boolean, Boolean)(14, True, True)
-        MyBase.bsize3 = New Tuple(Of Integer, Boolean, Boolean)(15, True, True)
+        bsizeneg1 = New Tuple(Of Integer, Boolean, Boolean)(6, False, True)
+        bsize1 = New Tuple(Of Integer, Boolean, Boolean)(13, True, True)
+        bsize2 = New Tuple(Of Integer, Boolean, Boolean)(14, True, True)
+        bsize3 = New Tuple(Of Integer, Boolean, Boolean)(15, True, True)
 
-        MyBase.usizeneg1 = New Tuple(Of Integer, Boolean, Boolean)(34, False, True)
-        MyBase.usize0 = New Tuple(Of Integer, Boolean, Boolean)(34, False, True)
-        MyBase.usize1 = New Tuple(Of Integer, Boolean, Boolean)(104, True, True)
-        MyBase.usize2 = New Tuple(Of Integer, Boolean, Boolean)(104, True, True)
-        MyBase.usize3 = New Tuple(Of Integer, Boolean, Boolean)(105, True, True)
+        usizeneg1 = New Tuple(Of Integer, Boolean, Boolean)(34, False, True)
+        usize0 = New Tuple(Of Integer, Boolean, Boolean)(34, False, True)
+        usize1 = New Tuple(Of Integer, Boolean, Boolean)(104, True, True)
+        usize2 = New Tuple(Of Integer, Boolean, Boolean)(104, True, True)
+        usize3 = New Tuple(Of Integer, Boolean, Boolean)(105, True, True)
 
         '|Description|
         setDesc("A basic armor set forged from steel." & DDUtils.RNRN & _
-                              getSizeInformation() & vbcrlf & getStatInformation())
+                              getSizeInformation() & DDUtils.RNRN & getStatInformation())
     End Sub
 End Class

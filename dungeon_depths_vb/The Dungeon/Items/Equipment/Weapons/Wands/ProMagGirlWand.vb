@@ -1,9 +1,11 @@
 ﻿Public Class ProMagGirlWand
     Inherits MagGirlWand
 
+    Public Shadows Const ITEM_NAME As String = "Pro_Mag._Girl_Wand"
+
     Sub New()
         '|ID Info|
-        setName("Pro_Mag._Girl_Wand")
+        setName(ITEM_NAME)
         id = 203
         tier = Nothing
 
@@ -22,7 +24,6 @@
         '|Description|
         setDesc("A mysterious wand used by a mysterious protector." & DDUtils.RNRN &
                 getStatInformation())
-
     End Sub
 
     Public Overrides Sub onEquip(ByRef p As Player)
@@ -45,7 +46,7 @@
 
         m.takeDMG(dmg + d31 + d32, p)
 
-        Game.pushLstLog(CStr("You fire off a heart-shaped blast, hitting the " & m.name & " for " & dmg + d31 + d32 & " damage!"))
-        Game.pushLblCombatEvent(CStr("You fire off a heart-shaped blast, hitting the " & m.name & " for " & dmg + d31 + d32 & " damage!"))
+        TextEvent.pushLog(CStr("You fire off a heart-shaped blast, hitting the " & m.name & " for " & dmg + d31 + d32 & " damage!"))
+        TextEvent.pushCombat(CStr("You fire off a heart-shaped blast, hitting the " & m.name & " for " & dmg + d31 + d32 & " damage!"))
     End Sub
 End Class

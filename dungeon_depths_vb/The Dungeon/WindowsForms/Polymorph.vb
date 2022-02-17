@@ -81,7 +81,7 @@
             p.pForm.revert()
             revertText = p.pForm.revertPassage & DDUtils.RNRN
         Else
-            MsgBox(form.Equals(p.className) & " | " & form.Equals(p.formName))
+            DDError.badPolymorphError(form)
         End If
 
         'polymorph updates
@@ -92,14 +92,14 @@
         p.perks(perk.polymorphed) = p.polymorphs(form).getTurnsTilNextStep()
 
         If form = "MASBimbo" Then form = "Bimbo"
-        If p.forms.Keys.Contains(form) Then
+        If Player.forms.Keys.Contains(form) Then
             p.changeForm(form)
-        ElseIf p.classes.Keys.Contains(form) Then
+        ElseIf Player.classes.Keys.Contains(form) Then
             p.changeClass(form)
         End If
 
         'cleanup
-        Game.pushLblEvent(revertText & Game.lblEvent.Text.Split(vbCrLf)(0))
+        TextEvent.push(revertText & Game.lblEvent.Text.Split(vbCrLf)(0))
         p.ongoingTFs.ping()
         p.specialRoute()
         p.magicRoute()

@@ -13,7 +13,7 @@
             Game.player1.ongoingTFs.add(New BUDollTF())
             Game.player1.update()
         Else
-            Game.pushLblEvent("You spot a slip of paper on the floor, although a gust of wind blows it away before you can investigate further...")
+            TextEvent.push("You spot a slip of paper on the floor, although a gust of wind blows it away before you can investigate further...")
         End If
     End Sub
 End Class

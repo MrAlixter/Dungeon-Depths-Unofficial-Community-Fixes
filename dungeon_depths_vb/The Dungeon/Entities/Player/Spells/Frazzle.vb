@@ -8,6 +8,6 @@
         MyBase.setcost(0)
     End Sub
     Public Overrides Sub effect()
-        Game.pushLogAndEvent("Something isn't right, and whatever you tried to cast fizzled into nothing.")
+        TextEvent.pushAndLog("Something isn't right, and whatever you tried to cast fizzled into nothing.")
     End Sub
 End Class

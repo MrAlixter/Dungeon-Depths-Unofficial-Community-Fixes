@@ -20,7 +20,7 @@
         Dim p = Game.player1
         If Not p.equippedArmor.getAName.Equals("Naked") Then
             p.inv.add("Dissolved_Clothes", 1)
-            Equipment.clothesChange(p, "Dissolved_Clothes")
+            EquipmentDialogBackend.armorChange(p, "Dissolved_Clothes")
             pushLblEventWithoutLoss("As you take stock of yourself, you notice that your clothing has been partially eaten away by a teal slime that you seem to sweating in small amounts.  This seems like something you are going to need to keep an eye on...")
         End If
 
@@ -54,7 +54,7 @@
         Dim p As Player = Game.player1
         If p.equippedWeapon.getName.Equals("Magical_Girl_Wand") Or
             p.equippedWeapon.getName.Equals("Valkyrie_Sword") Then
-            Equipment.weaponChange(p, "Fists")
+             EquipmentDialogBackend.weaponChange(p, "Fists")
         End If
 
         p.health = 1
@@ -70,7 +70,7 @@
         p.prt.setIAInd(pInd.hat, 0, True, False)
 
         p.changeForm("Slime")
-        Equipment.clothesChange(p, "Naked")
+        EquipmentDialogBackend.armorChange(p, "Naked")
 
         p.prt.skincolor = Color.FromArgb(200, p.prt.skincolor.R, p.prt.skincolor.G, p.prt.skincolor.B)
 
@@ -120,7 +120,7 @@
     Public Shared Sub pushLblEventWithoutLoss(ByRef out As String)
         Dim revertText = Game.lblEvent.Text.Split(vbCrLf)(0)
         If Not revertText.Equals("") Then out = revertText & DDUtils.RNRN & out
-        Game.pushLblEvent(out)
+        TextEvent.push(out)
     End Sub
     Public Overrides Sub setWaitTime(stage As Integer)
         stopTF()

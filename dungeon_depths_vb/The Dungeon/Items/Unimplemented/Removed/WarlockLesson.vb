@@ -22,12 +22,12 @@
 
     Sub teach()
         count = 0
-        Game.pushNPCDialog("Before we get started, I just want to make sure you really want this.  This lesson will completely change who you are and were, forever.", AddressOf warning)
+        TextEvent.pushNPCDialog("Before we get started, I just want to make sure you really want this.  This lesson will completely change who you are and were, forever.", AddressOf warning)
         Game.shopMenu.Close()
         Game.hideNPCButtons()
     End Sub
     Sub warning()
-        Game.pushPnlYesNo("Start over as a Warlock?", AddressOf tf, AddressOf cancel)
+        TextEvent.pushYesNo("Start over as a Warlock?", AddressOf tf, AddressOf cancel)
     End Sub
     Sub cancel()
         Game.player1.gold += value
@@ -45,14 +45,14 @@
         Dim p = Game.player1
 
         p.inv.add("Warlock's_Robes", 1)
-        Equipment.clothesChange(p, "Warlock's_Robes")
+        EquipmentDialogBackend.armorChange(p, "Warlock's_Robes")
         p.inv.add("Ring_of_Uvona", 1)
         Equipment.accChange(p, "Ring_of_Uvona")
 
 
         p.changeClass("Warlock")
 
-        Game.pushLblEvent(out, AddressOf CType(Game.hteach, HypnoTeach).back)
+        TextEvent.push(out, AddressOf CType(Game.hteach, HypnoTeach).back)
         p.drawPort()
         p.UIupdate()
         p.pState.save(p)

@@ -1,9 +1,11 @@
 ﻿Public Class PaleoDiary
     Inherits Item
 
+    Public Const ITEM_NAME As String = "Paleomancer's_Diary"
+
     Sub New()
         '|ID Info|
-        setName("Paleomancer's_Diary")
+        setName(ITEM_NAME)
         id = 277
         tier = Nothing
 
@@ -26,14 +28,14 @@
 
         If Not p.knownSpells.Contains(sName) Then
             p.knownSpells.Add(sName)
-            Game.pushLstLog("You learn ""Polymorph Enemy""")
+            TextEvent.pushLog("You learn ""Polymorph Enemy""")
         End If
 
         If Not p.enemPolyForms.Contains("Trilobite") Then
             p.enemPolyForms.Add("Trilobite")
-            Game.pushLstLog(out)
+            TextEvent.pushLog(out)
         Else
-            Game.pushLogAndEvent("The book doesn't contain any new information...")
+            TextEvent.pushAndLog("The book doesn't contain any new information...")
         End If
 
         count -= 1

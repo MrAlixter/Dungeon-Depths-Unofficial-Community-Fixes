@@ -1,8 +1,11 @@
 ﻿Public Class BunnySuitA
     Inherits Armor
+
+    Public Const ITEM_NAME As String = "Armored_Bunny_Suit"
+
     Sub New()
         '|ID Info|
-        setName("Armored_Bunny_Suit")
+        setName(ITEM_NAME)
         id = 94
         tier = Nothing
 
@@ -33,6 +36,6 @@
 
         '|Description|
         setDesc("Once a sultry outfit worn by waitresses in a club, this bunny suit has been modified to provide more defense, and to improve mobility." & DDUtils.RNRN &
-                                     getSizeInformation() & vbcrlf & getStatInformation())
+                                     getSizeInformation() & DDUtils.RNRN & getStatInformation())
     End Sub
 End Class

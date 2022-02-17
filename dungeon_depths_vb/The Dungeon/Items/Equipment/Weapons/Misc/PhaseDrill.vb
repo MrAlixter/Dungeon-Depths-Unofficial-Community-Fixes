@@ -1,9 +1,11 @@
 ﻿Public Class PhaseDrill
     Inherits Weapon
 
+    Public Const ITEM_NAME As String = "Phase_Drill"
+
     Sub New()
         '|ID Info|
-        setName("Phase_Drill")
+        setName(ITEM_NAME)
         id = 276
         tier = Nothing
 
@@ -18,9 +20,9 @@
 
         '|Description|
         setDesc("An angular chrome-plated drill that converts the meager energy contained in an AAAAAA Battery into a focused impact.  Batteries not included." & DDUtils.RNRN &
-                       "If powered, ignores target's defense" &
-                       "If powered, can cut through walls" &
-                       getStatInformation())
+                "If powered, ignores target's defense" &
+                "If powered, can cut through walls" &
+                getStatInformation())
     End Sub
 
     Overrides Function attack(ByRef p As Player, ByRef m As Entity) As Integer
@@ -32,7 +34,7 @@
             Return Player.calcDamage(dmg, m.getDEF)
         Else
             p.inv.add("AAAAAA_Battery", -1)
-            Game.pushLogAndEvent("The back casing of the drill ejects a smoldering battery shell.  " & p.inv.getCountAt("AAAAAA_Battery") & " batteries left!")
+            TextEvent.pushAndLog("The back casing of the drill ejects a smoldering battery shell.  " & p.inv.getCountAt("AAAAAA_Battery") & " batteries left!")
         End If
 
         dmg += (getABoost(p))

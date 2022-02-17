@@ -14,7 +14,7 @@
         Dim c As Integer = Int(Rnd() * 35) + 15
         p.prt.haircolor = Color.FromArgb(p.prt.haircolor.A, c, c, c)
 
-        Game.pushLblEvent("CHAMELEON!  You now have black hair...")
+        TextEvent.push("CHAMELEON!  You now have black hair...")
 
         p.addLust(10)
 

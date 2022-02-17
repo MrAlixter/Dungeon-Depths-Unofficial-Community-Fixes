@@ -12,7 +12,7 @@
     Public Overrides Sub init()
         MyBase.init()
 
-        Game.pushNPCDialog("""Hey " & If(Game.player1.sex.Equals("Male"), "guy", "you") & ", do you mind doing me a favor?  I've been scouting ahead and I can give my menu a good ol' overhaul if I can deal with some of the bigger mosters that are roaming around.  There's a sword that the guy on floor 2 used to carry around that's wicked sharp, buuuut also pretty evil.  Get it.  Trust me, I've got the psychic chops to handle its...well...psychic chops.""" & DDUtils.RNRN &
+        TextEvent.pushNPCDialog("""Hey " & If(Game.player1.sex.Equals("Male"), "guy", "you") & ", do you mind doing me a favor?  I've been scouting ahead and I can give my menu a good ol' overhaul if I can deal with some of the bigger mosters that are roaming around.  There's a sword that the guy on floor 2 used to carry around that's wicked sharp, buuuut also pretty evil.  Get it.  Trust me, I've got the psychic chops to handle its...well...psychic chops.""" & DDUtils.RNRN &
                                      "Quest ""Breaking an Egg"" acquired!")
     End Sub
 
@@ -34,13 +34,13 @@ Public Class BEggGetSword
         Game.picNPC.BackgroundImage = ShopNPC.npcLib.atrs(0).getAt(11)
         Game.picNPC.Visible = True
 
-        Game.pushNPCDialog("Hey, awesome!  You sure you just want to hand 'er over?", AddressOf complete2)
+        TextEvent.pushNPCDialog("Hey, awesome!  You sure you just want to hand 'er over?", AddressOf complete2)
     End Sub
     Private Sub complete2()
-        Game.pushPnlYesNo("Turn over the sword?", AddressOf complete3, AddressOf fromNPC)
+        TextEvent.pushYesNo("Turn over the sword?", AddressOf complete3, AddressOf fromNPC)
     End Sub
     Private Sub complete3()
-        If Game.npcmode Then Game.leaveNPC()
+        If Game.shop_npc_engaged Then Game.leaveNPC()
         Game.player1.perks(perk.fvHasSword) = 1
         Game.player1.addXP(1000)
         showNPC(ShopNPC.npcLib.atrs(0).getAt(11), """Nice, thanks!  Stop by the ol' stand when you get the chance, I'll have all sorts of new stuff to try.""" & DDUtils.RNRN &

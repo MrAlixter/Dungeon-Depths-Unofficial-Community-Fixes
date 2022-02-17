@@ -13,7 +13,7 @@
     Public Overrides Sub init()
         MyBase.init()
 
-        Game.pushLblEvent("""Hey!  Help, Over here!"" you hear someone call out behind you.  You quickly turn around before relaxing slightly as a floppily-behatted young woman approaches you, panting as though she has been running for quite some time.", AddressOf introDialog)
+        TextEvent.push("""Hey!  Help, Over here!"" you hear someone call out behind you.  You quickly turn around before relaxing slightly as a floppily-behatted young woman approaches you, panting as though she has been running for quite some time.", AddressOf introDialog)
     End Sub
 
     Private Sub introDialog()
@@ -22,7 +22,7 @@
     End Sub
 
     Private Sub introDialog2()
-        Game.pushPnlYesNo("Help her out?", AddressOf helpOut, AddressOf beADick)
+        TextEvent.pushYesNo("Help her out?", AddressOf helpOut, AddressOf beADick)
     End Sub
 
     Private Sub helpOut()
@@ -30,7 +30,7 @@
     End Sub
 
     Private Sub beADick()
-        Game.pushLblEvent("Wordlessly you turn back around, continuing on your way." & DDUtils.RNRN &
+        TextEvent.push("Wordlessly you turn back around, continuing on your way." & DDUtils.RNRN &
                           """JERK!"" the woman cries out, without following you." & DDUtils.RNRN &
                           "..." & DDUtils.RNRN &
                           "If not for the fact that nearly everything in this dungeon is some kind of weird trap, you'd probably agree...")
@@ -82,7 +82,7 @@ Public Class NineLivesS2
         MyBase.complete()
 
         Game.player1.perks(perk.mrevived) = 1
-        Game.pushLblEvent("While you've been off acquiring ingredients, the woman appears to have set up a small camp.  ""Oh, um, hey!"" she greets you, stiring a mixture in a small cauldron, ""D-did you get the potion?  Awesome!""" & DDUtils.RNRN &
+        TextEvent.push("While you've been off acquiring ingredients, the woman appears to have set up a small camp.  ""Oh, um, hey!"" she greets you, stiring a mixture in a small cauldron, ""D-did you get the potion?  Awesome!""" & DDUtils.RNRN &
                           "You hand it to her, and she pours it into the brew." & DDUtils.RNRN &
                           """Awesome, awesome, awesome...  I can't thank you enough for helping me out on this.  We've got the medicine and enough concentrated mana to power the ritual, and you helping me out was the final ingredient.  An act of kindness...""", AddressOf complete2)
     End Sub
@@ -106,7 +106,7 @@ Public Class NineLivesS2
         Monster.targetRoute(m)
         Game.toCombat(m)
 
-        Game.pushLstLog((m.getName() & " attacks!"))
+        TextEvent.pushLog((m.getName() & " attacks!"))
     End Sub
 
     Private Function getProgress() As Integer

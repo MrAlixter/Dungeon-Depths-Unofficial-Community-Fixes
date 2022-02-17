@@ -1,15 +1,18 @@
 ﻿Public Class FoNight
     Inherits Armor
 
+    Public Const ITEM_NAME As String = "Frock_of_Night"
+
     Dim oldHat As Tuple(Of Integer, Boolean, Boolean) = New Tuple(Of Integer, Boolean, Boolean)(0, True, False)
+
     Sub New()
         '|ID Info|
-        setName("Frock_of_Night")
+        setName(ITEM_NAME)
         id = 166
         tier = Nothing
 
         '|Item Flags|
-        usable = false
+        usable = False
         MyBase.compress_breast = True
         MyBase.droppable = False
         MyBase.slut_var_ind = 250
@@ -36,7 +39,7 @@
 
         '|Description|
         setDesc("A black dress commonly worn by those who aren't afraid of the dark." & DDUtils.RNRN &
-                                    getSizeInformation() & vbcrlf & getStatInformation())
+                                    getSizeInformation() & DDUtils.RNRN & getStatInformation())
     End Sub
 
     Public Overrides Sub onEquip(ByRef p As Player)

@@ -1,8 +1,11 @@
 ﻿Public Class MDelicacy
     Inherits Food
+
+    Public Const ITEM_NAME As String = "Mage's_Delicacy"
+
     Sub New()
         '|ID Info|
-        setName("Mage's_Delicacy")
+        setName(ITEM_NAME)
         id = 134
         tier = Nothing
 
@@ -23,7 +26,7 @@
     End Sub
 
     Public Overrides Sub effect(ByRef p As Player)
-        If Int(Rnd() * 5) = 0 Or Game.noRNG Then
+        If Int(Rnd() * 5) = 0 Or Settings.active(setting.norng) Then
             p.maxMana += 3
             p.mana += 3
 

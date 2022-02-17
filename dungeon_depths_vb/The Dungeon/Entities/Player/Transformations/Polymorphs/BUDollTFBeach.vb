@@ -23,7 +23,7 @@
         Dim out = ""
 
         'equip clothes
-        Equipment.clothesChange(p, "Naked")
+        EquipmentDialogBackend.armorChange(p, "Naked")
         p.changeForm("Blowup Doll")
 
         'bu doll transformation
@@ -56,7 +56,7 @@
                "A rush of air from within inflates you into an exagerated female form.  Propping yourself up, you try to re-equip your gear only to find that you can barely hold a weapon, let alone wear armor.  A warning on the stick of the ice pop lists ""summer fun"" as a side effect, and it seems to have turned you into a sentient sex doll!"
         Dim revertText = Game.lblEvent.Text.Split(vbCrLf)(0)
         If Not revertText.Equals("") Then out = revertText & DDUtils.RNRN & out
-        Game.pushLblEvent(out)
+        TextEvent.push(out)
     End Sub
 
     Public Overrides Sub stopTF()

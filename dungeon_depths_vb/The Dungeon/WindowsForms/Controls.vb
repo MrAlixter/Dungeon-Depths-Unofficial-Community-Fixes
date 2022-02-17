@@ -29,12 +29,12 @@ Public Class Controls
         Dim used As New List(Of String)
         For i = 0 To keys.Count - 1
             If keys(i).Text.Equals("Invalid") Or keys(i).Text.Equals("") Then
-                MsgBox("Error 006: Invalid key selected.")
+                DDError.invalidControlKeyError()
                 sw.Close()
                 Exit Sub
                 Exit For
             ElseIf used.Contains(keys(i).Text) Then
-                MsgBox("Error 007: " & keys(i).Text & " is already in use!")
+                DDError.controlKeyInUseError(keys(i).Text)
                 sw.Close()
                 Exit Sub
                 Exit For

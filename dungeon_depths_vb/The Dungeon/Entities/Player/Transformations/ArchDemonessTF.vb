@@ -44,10 +44,10 @@
 
         If p.inv.getCountAt("Succubus_Armor") < 1 Then p.inv.add("Succubus_Armor", 1)
 
-        Equipment.clothesChange(p, "Succubus_Armor")
+        EquipmentDialogBackend.armorChange(p, "Succubus_Armor")
 
-        If Not p.knownSpecials.Contains("Helix Slash") Then p.knownSpecials.Add("Helix Slash")
-        Game.pushLstLog("""Helix Slash"" special learned!")
+        p.learnSpecial("Helix Slash")
+
         p.canMoveFlag = True
     End Sub
 

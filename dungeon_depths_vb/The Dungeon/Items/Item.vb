@@ -77,11 +77,11 @@
         count += i
     End Sub
     Overridable Sub discard()
-        Game.pushLstLog("You drop the " & getName())
+        TextEvent.pushLog("You drop the " & getName())
         count -= 1
     End Sub
     Overridable Sub remove()
-        Game.pushLstLog("The " & getName() & " fades into non-existance")
+        TextEvent.pushLog("The " & getName() & " fades into non-existance")
         count -= 1
 
     End Sub
@@ -89,8 +89,7 @@
     '| -- Player Interaction -- |
     Overridable Sub use(ByRef p As Player)
         If Me.getUsable() = False Then Exit Sub
-        Game.pushLstLog("You use the " & getName())
-
+        TextEvent.pushLog("You use the " & getName())
     End Sub
     Overridable Function damage(ByVal i As Integer) As Boolean
         durability -= i
@@ -101,7 +100,7 @@
         Return False
     End Function
     Overridable Sub break()
-        Game.pushLstLog("The " & getName() & " breaks!")
+        TextEvent.pushLog("The " & getName() & " breaks!")
         count -= 1
         durability = 100
     End Sub
@@ -109,9 +108,9 @@
     '| -- Misc. -- |
     Public Sub examine()
         If durability > 99 Then
-            Game.pushLblEvent(getDesc())
+            TextEvent.push(getDesc())
         Else
-            Game.pushLblEvent(getDesc() & DDUtils.RNRN & "Durability: " & durability & " (Breaks at 0)")
+            TextEvent.push(getDesc() & DDUtils.RNRN & "Durability: " & durability & " (Breaks at 0)")
         End If
 
     End Sub

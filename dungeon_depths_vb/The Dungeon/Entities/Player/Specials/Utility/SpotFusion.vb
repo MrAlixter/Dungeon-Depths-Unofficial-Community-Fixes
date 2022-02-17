@@ -7,12 +7,12 @@
         setcost(50)
     End Sub
     Public Overrides Sub effect()
-        Game.pushLstLog("Spot Fusion!")
+        TextEvent.pushLog("Spot Fusion!")
 
         If MyBase.getUser.perks(perk.isspotfused) > 0 Then
-            Game.pushLblEvent("You can not fuse again for " & MyBase.getUser.perks(perk.isspotfused) & " more turns.")
+            TextEvent.push("You can not fuse again for " & MyBase.getUser.perks(perk.isspotfused) & " more turns.")
         Else
-            Game.pushLblCombatEvent("Spot Fusion!" & vbCrLf & "Fuses two explorers for 100 turns.")
+            TextEvent.pushCombat("Spot Fusion!" & vbCrLf & "Fuses two explorers for 100 turns.")
 
             FusionDialogBackend.toPNL(MyBase.getUser, TypeOfFusion.SPOT_FUSION)
         End If

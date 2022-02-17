@@ -1,23 +1,34 @@
 ﻿Public Class ThrallCollar
     Inherits Accessory
-    'The the slave collar handles the thrall tf
+
+    Public Const ITEM_NAME As String = "Slave_Collar"
+
     Dim formerClass As String = ""
     Dim formerEyeType As Tuple(Of Integer, Boolean, Boolean) = New Tuple(Of Integer, Boolean, Boolean)(0, False, False)
 
     Sub New()
-        setName("Slave_Collar")
-        setDesc("A collar commonly placed around the necks of the thralls." & vbCrLf & _
-                       "Provides no bonus.")
+        '|ID Info|
+        setName(ITEM_NAME)
         id = 69
         tier = 3
+
+        '|Item Flags|
         droppable = True
-        usable = false
+        usable = False
+        cursed = True
+        rando_inv_allowed = False
+
+        '|Stats|
         count = 0
         value = 200
-        MyBase.fInd = New Tuple(Of Integer, Boolean, Boolean)(7, True, True)
-        MyBase.mInd = New Tuple(Of Integer, Boolean, Boolean)(3, False, True)
-        MyBase.cursed = True
-        rando_inv_allowed = False
+
+        '|Image Index|
+        fInd = New Tuple(Of Integer, Boolean, Boolean)(7, True, True)
+        mInd = New Tuple(Of Integer, Boolean, Boolean)(3, False, True)
+
+        '|Description|
+        setDesc("A collar commonly placed around the necks of the thralls." & DDUtils.RNRN &
+                "Provides no bonus.")
     End Sub
     Overrides Sub onEquip(ByRef p As Player)
         If p.formName.Equals("Half-Succubus") Or p.className.Equals("Thrall") Then Exit Sub
@@ -80,6 +91,12 @@
     End Function
     Public Overrides Function ToString() As String
         Return formerClass & "$" & formerEyeType.Item1 & "$" & formerEyeType.Item2 & "$" & formerEyeType.Item3
+    End Function
+    Public Function save() As String
+        Return formerClass & SaveFile.VALUE_SPLIT_DELIMITER &
+               formerEyeType.Item1 & SaveFile.VALUE_SPLIT_DELIMITER &
+               formerEyeType.Item2 & SaveFile.VALUE_SPLIT_DELIMITER &
+               formerEyeType.Item3
     End Function
     Public Sub setFormerLife(ft As String, fet As Tuple(Of Integer, Boolean, Boolean))
         formerClass = ft

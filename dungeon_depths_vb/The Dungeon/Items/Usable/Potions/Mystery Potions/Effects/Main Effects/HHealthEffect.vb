@@ -8,7 +8,7 @@
         If p.health > 1 Then p.health = 1
         p.hBuff += 25
         p.UIupdate()
-        Game.pushLblEvent(out & "+100 Health," & vbCrLf & "+25 Max Health")
+        TextEvent.push(out & "+100 Health," & vbCrLf & "+25 Max Health")
     End Sub
 
     Public Overrides Function getEffectDesc()

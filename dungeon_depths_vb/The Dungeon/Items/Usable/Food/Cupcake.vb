@@ -1,8 +1,11 @@
 ﻿Public Class Cupcake
     Inherits Food
+
+    Public Const ITEM_NAME As String = "Cupcake"
+
     Sub New()
         '|ID Info|
-        setName("Cupcake")
+        setName(ITEM_NAME)
         id = 35
         tier = 3
 
@@ -20,7 +23,7 @@
     End Sub
 
     Public Overrides Sub effect(ByRef p As Player)
-        If p.perks(perk.cupcake) > 4 Or Game.noRNG Then
+        If p.perks(perk.cupcake) > 4 Or Settings.active(setting.norng) Then
             p.ongoingTFs.add(New LolitaSTF())
             p.update()
             p.perks(perk.cupcake) = -1

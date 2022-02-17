@@ -1,35 +1,38 @@
 ﻿Public Class Cursemark
     Inherits Accessory
+
+    Public Const ITEM_NAME As String = "Cursemark"
+
     Sub New()
         '|ID Info|
-        setName("Cursemark")
+        setName(ITEM_NAME)
         id = 168
         tier = Nothing
 
         '|Item Flags|
         usable = false
         cursed = True
-        underClothes = True
+        under_b_clothes = True
 
         '|Stats|
         count = 0
         value = 0
 
         '|Image Index|
-        MyBase.fInd = New Tuple(Of Integer, Boolean, Boolean)(12, True, True)
-        MyBase.mInd = New Tuple(Of Integer, Boolean, Boolean)(12, True, True)
+        fInd = New Tuple(Of Integer, Boolean, Boolean)(12, True, True)
+        mInd = New Tuple(Of Integer, Boolean, Boolean)(12, True, True)
 
         '|Description|
         setDesc("A glowing pink tattoo that displays one's status as under the effect of demonic magic." & DDUtils.RNRN &
-                       "Negates attack while increasing Max MP and WILL" & vbCrLf &
-                       "Raises minimum lust based on availible MP" & vbCrLf &
-                       "Mana does not re-generate" & DDUtils.RNRN &
-                       getStatInformation())
+                "Negates attack while increasing Max MP and WILL" & vbCrLf &
+                "Raises minimum lust based on availible MP" & vbCrLf &
+                "Mana does not re-generate" & DDUtils.RNRN &
+                getStatInformation())
     End Sub
 
     Public Overrides Sub discard()
-        Game.pushLblEvent("You can't discard this!")
-        Game.pushLstLog("You can't discard this!")
+        TextEvent.push("You can't discard this!")
+        TextEvent.pushLog("You can't discard this!")
     End Sub
 
     Public Overrides Sub onEquip(ByRef p As Player)

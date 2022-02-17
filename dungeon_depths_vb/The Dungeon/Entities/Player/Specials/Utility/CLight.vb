@@ -10,7 +10,7 @@
 
         Dim out = "Cleansing Light!  " & Game.player1.revertToSState(Int(Rnd() * 9) + 4)
         out += Game.lblEvent.Text.Split(vbCrLf)(0)
-        Game.pushLblEvent(out)
+        TextEvent.push(out)
 
         Game.player1.drawPort()
     End Sub

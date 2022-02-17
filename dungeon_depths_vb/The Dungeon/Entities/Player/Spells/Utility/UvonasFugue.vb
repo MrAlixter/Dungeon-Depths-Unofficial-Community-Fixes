@@ -13,10 +13,10 @@
         MyBase.setUOC(True)
     End Sub
     Public Overrides Sub effect()
-        If Game.combatmode Then
+        If Game.combat_engaged Then
             Polymorph.transform(MyBase.getTarget, "Amnesiac")
 
-            Game.pushLogAndEvent(CStr("You wipe " & MyBase.getTarget.title & " " & MyBase.getTarget.name & "'s mind for 5 turns!"))
+            TextEvent.pushAndLog(CStr("You wipe " & MyBase.getTarget.title & " " & MyBase.getTarget.name & "'s mind for 5 turns!"))
         Else
             backfire()
         End If

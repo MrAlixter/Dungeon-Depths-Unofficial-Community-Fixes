@@ -92,7 +92,7 @@
 
     Public Sub shiftTowards(ByRef p As Player)
         Randomize()
-        Game.pushLogAndEvent("The glow of someone else's magic slightly tweaks your form...")
+        TextEvent.pushAndLog("The glow of someone else's magic slightly tweaks your form...")
 
         If Not p.className.Equals("Thrall") Then p.changeClass("Thrall")
         If playerMeetsForm(p) Then Exit Sub
@@ -100,15 +100,15 @@
         If Not p.prt.haircolor.Equals(hairColor) Then p.changeHairColor(DDUtils.cShift(p.prt.haircolor, hairColor, 8))
         If Not p.prt.skincolor.Equals(skinColor) Then p.changeSkinColor(DDUtils.cShift(p.prt.skincolor, skinColor, 8))
 
-        If Int(Rnd() * 3) = 0 Or Game.noRNG Then
+        If Int(Rnd() * 3) = 0 Or Settings.active(setting.norng) Then
             p.prt.iArrInd(pInd.rearhair) = New Tuple(Of Integer, Boolean, Boolean)(rHairInd, hasFemaleHair, False)
             p.prt.iArrInd(pInd.midhair) = New Tuple(Of Integer, Boolean, Boolean)(rHairInd, hasFemaleHair, False)
         End If
-        If Int(Rnd() * 3) = 0 Or Game.noRNG Then
+        If Int(Rnd() * 3) = 0 Or Settings.active(setting.norng) Then
             p.prt.setIAInd(pInd.fronthair, fHairInd + 1, hasFemaleHair, False)
         End If
 
-        If p.prt.sexBool <> isFemale And (Int(Rnd() * 3) = 0 Or Game.noRNG) Then
+        If p.prt.sexBool <> isFemale And (Int(Rnd() * 3) = 0 Or Settings.active(setting.norng)) Then
             If p.prt.sexBool Then
                 p.FtM()
             Else
@@ -122,7 +122,7 @@
             p.breastSize += 1
         End If
 
-        If isFemale And ((p.perks(perk.slutcurse) = -1 And isSlut) Or (p.perks(perk.slutcurse) > -1 And Not isSlut)) And (Int(Rnd() * 3) = 0 Or Game.noRNG) Then
+        If isFemale And ((p.perks(perk.slutcurse) = -1 And isSlut) Or (p.perks(perk.slutcurse) > -1 And Not isSlut)) And (Int(Rnd() * 3) = 0 Or Settings.active(setting.norng)) Then
             If (p.perks(perk.slutcurse) = -1 And isSlut) Then
                 p.perks(perk.slutcurse) = 0
                 Equipment.clothingCurse1(p)
@@ -132,7 +132,7 @@
             End If
         End If
 
-        If Not p.prt.iArrInd(pInd.ears).Item1 = earType And (Int(Rnd() * 3) = 0 Or Game.noRNG) Then
+        If Not p.prt.iArrInd(pInd.ears).Item1 = earType And (Int(Rnd() * 3) = 0 Or Settings.active(setting.norng)) Then
             p.prt.setIAInd(pInd.ears, earType, isFemale, False)
         End If
 
@@ -232,10 +232,11 @@ Public Class SuccMaid
         Dim p = Game.player1
 
         If p.inv.item("Maid_Lingerie").count < 1 Then p.inv.add("Maid_Lingerie", 1)
-        Equipment.clothesChange(p, "Maid_Lingerie")
+        EquipmentDialogBackend.armorChange(p, "Maid_Lingerie")
+        If p.inv.getCountAt("Small_Glasses") < 1 Then p.inv.add("Small_Glasses", 1)
+        EquipmentDialogBackend.glassesChange(p, "Small_Glasses")
 
         p.prt.setIAInd(pInd.eyes, 12, True, True)
-        p.prt.setIAInd(pInd.glasses, 2, True, False)
         p.prt.setIAInd(pInd.wings, 2, True, False)
         p.prt.setIAInd(pInd.horns, 3, True, False)
 

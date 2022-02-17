@@ -1,8 +1,11 @@
 ﻿Public Class DodgePotion
     Inherits MysteryPotion
+
+    Public Const ITEM_NAME As String = "Potion_of_Dodging"
+
     Sub New()
         '|ID Info|
-        setName("Potion_of_Dodging")
+        setName(ITEM_NAME)
         id = 247
         tier = 2
 
@@ -16,7 +19,6 @@
 
         '|Description|
         setDesc("A dodgy-looking potion.")
-
     End Sub
 
     Public Overrides Sub setEffectList()

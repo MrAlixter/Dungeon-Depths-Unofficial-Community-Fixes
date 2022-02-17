@@ -1,20 +1,27 @@
 ﻿Public Class SigDagger
     Inherits Dagger
 
+    Public Const ITEM_NAME As String = "Signature_Dagger"
+
     Sub New()
-        setName("Signature_Dagger")
-        setDesc("A finely crafted dagger bearing a trademarked signature.  Despite its sturdy construction, the blade is also light enough to allow its bearer to strike thrice in the same time as a sword-swing." & vbCrLf &
-                       "+10 ATK" & vbCrLf &
-                       "+5 SPD")
+        '|ID Info|
+        setName(ITEM_NAME)
         id = 163
         tier = Nothing
-        usable = false
-        MyBase.a_boost = 10
-        MyBase.s_boost = 5
+
+        '|Item Flags|
+        usable = False
+        droppable = False
+
+        '|Stats|
+        a_boost = 10
+        s_boost = 5
         count = 0
         value = 235
 
-        MyBase.droppable = False
+        '|Description|
+        setDesc("A finely crafted dagger bearing a trademarked signature.  Despite its sturdy construction, the blade is also light enough to allow its bearer to strike thrice in the same time as a sword-swing." & DDUtils.RNRN &
+                getStatInformation())
     End Sub
 
     Overrides Function attack(ByRef p As Player, ByRef m As Entity) As Integer

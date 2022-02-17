@@ -19,13 +19,12 @@
         inv.setCount("Omni_Charm", 1)
         inv.setCount("Gold", 1000)
         'random drops
-        inv.setCount("Health_Potion", CInt(Rnd() * 3))
-        inv.setCount("Mana_Potion", CInt(Rnd() * 3))
-        inv.setCount("Spellbook", CInt(Rnd() * 3))
-        inv.setCount("Cat_Ears", CInt(Rnd() * 2))
-        inv.setCount("Mana_Charm", CInt(Rnd() * 3))
-        inv.setCount("Sorcerer's_Robes", CInt(Rnd() * 2))
-
+        Dim possible_drops = {"Health_Potion", "Mana_Potion", "Spellbook", "Cat_Ears", "Mana_Charm", "Sorcerer's_Robes"}
+        Dim number_of_drops = Int(Rnd() * 3) + Int(Rnd() * 3) + 1
+        For i = 0 To number_of_drops
+            Dim r = Int(Rnd() * (possible_drops.Count))
+            inv.setCount(possible_drops(r), 1)
+        Next
 
         '|Dialog Variables|
         title = " "
@@ -41,20 +40,20 @@
     Public Overrides Sub attackCMD(ByRef target As Entity)
         If target.GetType() Is GetType(Player) Then
             If Game.player1.perks(perk.nekocurse) = -1 Then
-                Game.pushLstLog((getName() & " casts a curse on you!"))
-                Game.pushLblCombatEvent((getName() & " casts a curse on you!"))
+                TextEvent.pushLog((getName() & " casts a curse on you!"))
+                TextEvent.pushCombat((getName() & " casts a curse on you!"))
                 Game.player1.ongoingTFs.Add(New NekoTF(7, 1, 0.3, True))
                 Exit Sub
             ElseIf Game.player1.perks(perk.nekocurse) > -1 And getIntHealth() < 45 Then
                 Dim healvalue = Int(Rnd() * 4) + Int(Rnd() * 2) + 30
                 If getIntHealth() + healvalue > getMaxHealth() Then healvalue = getMaxHealth() - getIntHealth()
-                Game.pushLstLog((getName() & " heals herself!  +" & healvalue & " health!"))
-                Game.pushLblCombatEvent((getName() & " heals herself for " & healvalue & " health!"))
+                TextEvent.pushLog((getName() & " heals herself!  +" & healvalue & " health!"))
+                TextEvent.pushCombat((getName() & " heals herself for " & healvalue & " health!"))
                 takeDMG(-healvalue, Nothing)
                 Exit Sub
             ElseIf Game.player1.getIntHealth < 20 Then
-                Game.pushLstLog((getName() & " waits expectantly..."))
-                Game.pushLblCombatEvent((getName() & " waits expectantly..."))
+                TextEvent.pushLog((getName() & " waits expectantly..."))
+                TextEvent.pushCombat((getName() & " waits expectantly..."))
                 Exit Sub
             End If
         End If

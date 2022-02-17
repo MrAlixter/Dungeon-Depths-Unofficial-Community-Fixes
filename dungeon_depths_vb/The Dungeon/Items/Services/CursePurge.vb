@@ -1,9 +1,11 @@
 ﻿Public Class CursePurge
     Inherits Item
 
+    Public Const ITEM_NAME As String = "Blight_Dismissal"
+
     Sub New()
         '|ID Info|
-        setName("Blight_Dismissal")
+        setName(ITEM_NAME)
         id = 245
         tier = Nothing
 
@@ -26,24 +28,25 @@
         Game.shopMenu.Close()
 
         '| -- Curses -- |
-        If p.perks(perk.slutcurse) > -1 Then p.perks(perk.slutcurse) = -1 : Game.pushLstLog("The slut curse is neutralized")
-        If p.perks(perk.copoly) > -1 Then p.perks(perk.copoly) = -1 : Game.pushLstLog("The curse of polymorph is neutralized")
-        If p.perks(perk.cogreed) > -1 Then p.perks(perk.cogreed) = -1 : Game.pushLstLog("The curse of greed is neutralized")
-        If p.perks(perk.corust) > -1 Then p.perks(perk.corust) = -1 : Game.pushLstLog("The curse of rust is neutralized")
-        If p.perks(perk.comilk) > -1 Then p.perks(perk.comilk) = -1 : Game.pushLstLog("The curse of milk is neutralized")
-        If p.perks(perk.coblind) > -1 Then p.perks(perk.coblind) = -1 : Game.pushLstLog("The curse of blindness is neutralized")
-        If p.perks(perk.coscale) > -1 Then p.perks(perk.coscale) = -1 : Game.pushLstLog("The Curse of Scales is neutralized")
-        If p.perks(perk.faecurse) > -1 Then p.perks(perk.faecurse) = -1 : Game.pushLstLog("The fae's curse is neutralized")
-        If p.perks(perk.succubuscurse) > -1 Then p.perks(perk.succubuscurse) = -1 : Game.pushLstLog("The succubus's curse is neutralized")
-        If p.ongoingTFs.contains(tfind.malmino) Then p.ongoingTFs.remove(tfind.malmino) : Game.pushLstLog("The Curse of the Bull is neutralized")
-        If p.perks(perk.coftheox) > -1 Then p.perks(perk.coftheox) = -1 : Game.pushLstLog("The curse of the ox is neutralized")
+        If p.perks(perk.slutcurse) > -1 Then p.perks(perk.slutcurse) = -1 : TextEvent.pushLog("The slut curse is neutralized")
+        If p.perks(perk.copoly) > -1 Then p.perks(perk.copoly) = -1 : TextEvent.pushLog("The curse of polymorph is neutralized")
+        If p.perks(perk.cogreed) > -1 Then p.perks(perk.cogreed) = -1 : TextEvent.pushLog("The curse of greed is neutralized")
+        If p.perks(perk.corust) > -1 Then p.perks(perk.corust) = -1 : TextEvent.pushLog("The curse of rust is neutralized")
+        If p.perks(perk.comilk) > -1 Then p.perks(perk.comilk) = -1 : TextEvent.pushLog("The curse of milk is neutralized")
+        If p.perks(perk.coblind) > -1 Then p.perks(perk.coblind) = -1 : TextEvent.pushLog("The curse of blindness is neutralized")
+        If p.perks(perk.coscale) > -1 Then p.perks(perk.coscale) = -1 : TextEvent.pushLog("The Curse of Scales is neutralized")
+        If p.perks(perk.faecurse) > -1 Then p.perks(perk.faecurse) = -1 : TextEvent.pushLog("The fae's curse is neutralized")
+        If p.perks(perk.succubuscurse) > -1 Then p.perks(perk.succubuscurse) = -1 : TextEvent.pushLog("The succubus's curse is neutralized")
+        If p.ongoingTFs.contains(tfind.malmino) Then p.ongoingTFs.remove(tfind.malmino) : TextEvent.pushLog("The Curse of the Bull is neutralized")
+        If p.perks(perk.coftheox) > -1 Then p.perks(perk.coftheox) = -1 : TextEvent.pushLog("The curse of the ox is neutralized")
 
         '| -- Cursed Equipment -- |
-        If p.equippedArmor.cursed Then Equipment.equipArmor(p, "Naked", False) : Game.pushLstLog("Cursed armor removed")
-        If p.equippedWeapon.cursed Then Equipment.equipWeapon(p, "Fists", False) : Game.pushLstLog("Cursed weapon removed")
-        If p.equippedAcce.cursed Then Equipment.equipAcce(p, "Nothing", False) : Game.pushLstLog("Cursed accessory removed")
+        If p.equippedArmor.getCursed(p) Then EquipmentDialogBackend.equipArmor(p, "Naked", False) : TextEvent.pushLog("Cursed armor removed")
+        If p.equippedWeapon.getCursed(p) Then EquipmentDialogBackend.equipWeapon(p, "Fists", False) : TextEvent.pushLog("Cursed weapon removed")
+        If p.equippedAcce.getCursed(p) Then EquipmentDialogBackend.equipAcce(p, "Nothing", False) : TextEvent.pushLog("Cursed accessory removed")
+        If p.equippedGlasses.getCursed(p) Then EquipmentDialogBackend.equipGlasses(p, "Nothing", False) : TextEvent.pushLog("Cursed glasses removed")
 
-        Game.pushNPCDialog("Ah, a fresh slate.  Don't stay out of too much trouble now, caution won't lead you anywhere...interesting...")
+        TextEvent.pushNPCDialog("Ah, a fresh slate.  Don't stay out of too much trouble now, caution won't lead you anywhere...interesting...")
 
         count -= 1
     End Sub

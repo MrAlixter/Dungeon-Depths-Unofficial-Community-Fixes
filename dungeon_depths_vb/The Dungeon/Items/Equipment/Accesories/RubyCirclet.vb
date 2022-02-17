@@ -1,17 +1,28 @@
 ﻿Public Class RubyCirclet
     Inherits Accessory
-    'The ruby circlet provides a +1 attack buff
+
+    Public Const ITEM_NAME As String = "Ruby_Circlet"
+
     Sub New()
-        setName("Ruby_Circlet")
-        setDesc("A ruby inset on a gold band, this circlet is commonly worn by mages." & vbCrLf & _
-                       "+2 Mana.")
+        '|ID Info|
+        setName(ITEM_NAME)
         id = 68
         tier = Nothing
-        usable = false
-        MyBase.m_boost = 2
+
+        '|Item Flags|
+        usable = False
+
+        '|Stats|
+        m_boost = 2
         count = 0
         value = 0
-        MyBase.fInd = New Tuple(Of Integer, Boolean, Boolean)(3, True, False)
-        MyBase.mInd = New Tuple(Of Integer, Boolean, Boolean)(2, False, False)
+
+        '|Image Index|
+        fInd = New Tuple(Of Integer, Boolean, Boolean)(3, True, False)
+        mInd = New Tuple(Of Integer, Boolean, Boolean)(2, False, False)
+
+        '|Description|
+        setDesc("A ruby inset on a gold band, this circlet is commonly worn by mages." & DDUtils.RNRN &
+                getStatInformation())
     End Sub
 End Class

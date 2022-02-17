@@ -23,13 +23,13 @@
 
   Sub teach()
         count = 0
-        Game.pushNPCDialog("Before we get started, I just want to make sure you really want this.  This lesson will completely change who you are and were, forever.", AddressOf warning)
+        TextEvent.pushNPCDialog("Before we get started, I just want to make sure you really want this.  This lesson will completely change who you are and were, forever.", AddressOf warning)
         Game.shopMenu.Close()
         Game.hideNPCButtons()
     End Sub
 
     Sub warning()
-        Game.pushPnlYesNo("Start over as a Barbarian?", AddressOf tf, AddressOf cancel)
+        TextEvent.pushYesNo("Start over as a Barbarian?", AddressOf tf, AddressOf cancel)
     End Sub
     Sub cancel()
         Game.player1.gold += value
@@ -47,14 +47,14 @@
         Dim p = Game.player1
 
         p.inv.add("Barbarian_Armor", 1)
-        Equipment.clothesChange(p, "Barbarian_Armor")
+        EquipmentDialogBackend.armorChange(p, "Barbarian_Armor")
         p.inv.add("Corse_War_Axe", 1)
-        Equipment.weaponChange(p, "Corse_War_Axe")
+        EquipmentDialogBackend.weaponChange(p, "Corse_War_Axe")
 
 
         p.changeClass("Barbarian")
 
-        Game.pushLblEvent(out, AddressOf CType(Game.hteach, HypnoTeach).back)
+        TextEvent.push(out, AddressOf CType(Game.hteach, HypnoTeach).back)
         p.drawPort()
         p.UIupdate()
         p.pState.save(p)

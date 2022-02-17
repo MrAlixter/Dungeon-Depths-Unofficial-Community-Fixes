@@ -1,36 +1,44 @@
 ﻿Public Class KitsuneRobe
     Inherits Armor
 
-    Sub New()
-        setName("Kitsune's_Robes")
+    Public Const ITEM_NAME As String = "Kitsune's_Robes"
 
+    Sub New()
+        '|ID Info|
+        setName(ITEM_NAME)
         id = 183
         tier = Nothing
-        usable = false
+
+        '|Item Flags|
+        usable = False
+        compress_breast = True
+
+        '|Stats|
         h_boost = 10
-        MyBase.d_boost = 5
-        MyBase.m_boost = 20
+        d_boost = 5
+        m_boost = 20
         count = 0
         value = 7777
 
-        MyBase.bsize1 = New Tuple(Of Integer, Boolean, Boolean)(253, True, True)
-        MyBase.bsize2 = New Tuple(Of Integer, Boolean, Boolean)(254, True, True)
-        MyBase.bsize3 = New Tuple(Of Integer, Boolean, Boolean)(255, True, True)
-        MyBase.bsize4 = New Tuple(Of Integer, Boolean, Boolean)(256, True, True)
+        '|Image Index|
+        bsize1 = New Tuple(Of Integer, Boolean, Boolean)(253, True, True)
+        bsize2 = New Tuple(Of Integer, Boolean, Boolean)(254, True, True)
+        bsize3 = New Tuple(Of Integer, Boolean, Boolean)(255, True, True)
+        bsize4 = New Tuple(Of Integer, Boolean, Boolean)(256, True, True)
 
-        MyBase.usize0 = New Tuple(Of Integer, Boolean, Boolean)(172, True, True)
-        MyBase.usize1 = New Tuple(Of Integer, Boolean, Boolean)(173, True, True)
-        MyBase.usize2 = New Tuple(Of Integer, Boolean, Boolean)(174, True, True)
-        MyBase.usize3 = New Tuple(Of Integer, Boolean, Boolean)(175, True, True)
-        MyBase.usize4 = New Tuple(Of Integer, Boolean, Boolean)(176, True, True)
-        MyBase.usize5 = New Tuple(Of Integer, Boolean, Boolean)(177, True, True)
+        usize0 = New Tuple(Of Integer, Boolean, Boolean)(172, True, True)
+        usize1 = New Tuple(Of Integer, Boolean, Boolean)(173, True, True)
+        usize2 = New Tuple(Of Integer, Boolean, Boolean)(174, True, True)
+        usize3 = New Tuple(Of Integer, Boolean, Boolean)(175, True, True)
+        usize4 = New Tuple(Of Integer, Boolean, Boolean)(176, True, True)
+        usize5 = New Tuple(Of Integer, Boolean, Boolean)(177, True, True)
 
-        MyBase.cloak = New Tuple(Of Integer, Boolean, Boolean)(5, True, False)
+        cloak = New Tuple(Of Integer, Boolean, Boolean)(5, True, False)
 
-        MyBase.compress_breast = True
-
-        setDesc("A snazzy robe that identifies its wearer as the guardian of a long forgotten shrine." & DDUtils.RNRN & _
-                                  getSizeInformation() & vbcrlf & getStatInformation())
+        '|Description|
+        setDesc("A snazzy robe that identifies its wearer as the guardian of a long forgotten shrine." & DDUtils.RNRN &
+                getSizeInformation() & DDUtils.RNRN &
+                getStatInformation())
     End Sub
 
     Public Overrides Sub onEquip(ByRef p As Player)

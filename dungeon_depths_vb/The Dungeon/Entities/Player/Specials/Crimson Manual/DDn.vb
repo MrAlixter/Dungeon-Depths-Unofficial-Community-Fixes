@@ -14,7 +14,7 @@
         p.ds()
         p.lust += 10
 
-        Game.pushLblEvent("Dick Down!  Your cock squeezes uncomfortably...")
+        TextEvent.push("Dick Down!  Your cock squeezes uncomfortably...")
 
         p.drawPort()
     End Sub

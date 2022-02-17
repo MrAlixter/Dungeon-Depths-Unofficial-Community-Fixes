@@ -14,8 +14,8 @@
         p.mana = 0
 
         dmg = p.getSpellDamage(m, dmg)
-        Game.pushLstLog("Aura Cannon!  You fire a beam that hits the " & getTarget.getName & " for " & dmg & " damage!")
-        Game.pushLblCombatEvent("Aura Cannon!" & vbCrLf & "You focus all of your internal energy into your hands, using it to fire a beam at your opponent.  The blast hits them for " & dmg & " damage!")
+        TextEvent.pushLog("Aura Cannon!  You fire a beam that hits the " & getTarget.getName & " for " & dmg & " damage!")
+        TextEvent.pushCombat("Aura Cannon!" & vbCrLf & "You focus all of your internal energy into your hands, using it to fire a beam at your opponent.  The blast hits them for " & dmg & " damage!")
 
         MyBase.getTarget.takeDMG(dmg, MyBase.getUser)
     End Sub

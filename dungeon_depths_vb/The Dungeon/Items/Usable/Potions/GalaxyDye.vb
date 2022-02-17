@@ -1,9 +1,11 @@
 ﻿Public Class GalaxyDye
     Inherits Item
 
+    Public Const ITEM_NAME As String = "Galaxy_Dye"
+
     Sub New()
         '|ID Info|
-        setName("Galaxy_Dye")
+        setName(ITEM_NAME)
         id = 130
         tier = Nothing
 
@@ -20,7 +22,7 @@
     End Sub
 
     Overrides Sub use(ByRef p As Player)
-        Game.pushLstLog("You apply the " & getName())
+        TextEvent.pushLog("You apply the " & getName())
 
         Dim geffect As GalaxyDyeEffect = New GalaxyDyeEffect
         geffect.apply(p)

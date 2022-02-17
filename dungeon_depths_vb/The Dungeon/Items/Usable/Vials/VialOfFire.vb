@@ -1,8 +1,11 @@
 ﻿Public Class VialOfFire
     Inherits Item
+
+    Public Const ITEM_NAME As String = "Vial_of_Fire"
+
     Sub New()
         '|ID Info|
-        setName("Vial_of_Fire")
+        setName(ITEM_NAME)
         id = 205
         tier = Nothing
 
@@ -21,8 +24,8 @@
     Overrides Sub use(ByRef p As Player)
         If Me.getUsable() = False Then Exit Sub
 
-        Game.pushLstLog("You apply the " & getName())
-        Game.pushLblEvent("You crack open the bottle of flames, and pour its content all over yourself.  Somewhat unsuprisingly, you immediately catch fire...")
+        TextEvent.pushLog("You apply the " & getName())
+        TextEvent.push("You crack open the bottle of flames, and pour its content all over yourself.  Somewhat unsuprisingly, you immediately catch fire...")
 
         p.perks(perk.burn) = 6
 

@@ -1,8 +1,11 @@
 ﻿Public Class EveryNewItem
-    Inherits item
+    Inherits Item
+
+    Public Const ITEM_NAME As String = "Every_New_Item"
+
     Sub New()
         '|ID Info|
-        setName("Every_New_Item")
+        setName(ITEM_NAME)
         id = 143
         tier = Nothing
 
@@ -19,11 +22,11 @@
 
     End Sub
     Public Overrides Sub use(ByRef p As Player)
-        For i = 251 To (p.inv.count - 1)
+        For i = 300 To (p.inv.count - 1)
             p.inv.add(i, 1)
         Next
 
-        Game.pushLblEvent("Added one of every new item in v10.5.X!")
+        TextEvent.push("Added one of every new item in v11.5.X!")
 
         count -= 1
     End Sub

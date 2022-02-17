@@ -1,9 +1,11 @@
 ﻿Public Class UpgradeArmor
     Inherits Item
 
+    Public Const ITEM_NAME As String = "Upgrade_Armor"
+
     Sub New()
         '|ID Info|
-        setName("Upgrade_Armor")
+        setName(ITEM_NAME)
         id = 263
         tier = Nothing
 
@@ -26,9 +28,10 @@
         Game.shopMenu.Close()
 
         If Equipment.antiClothingCurse(p) Then
-            Game.pushNPCDialog("Alright, there we go!  That should do you a little better in the defense department.")
+            TextEvent.pushNPCDialog("Alright, there we go!  That should do you a little better in the defense department.")
+            p.drawPort()
         Else
-            Game.pushNPCDialog("Well, I hate to say it but there isn't much I can do for you there...")
+            TextEvent.pushNPCDialog("Well, I hate to say it but there isn't much I can do for you there...")
             p.gold += 2000
         End If
 

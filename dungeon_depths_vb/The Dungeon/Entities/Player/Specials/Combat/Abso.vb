@@ -15,7 +15,7 @@
 
         p.health = Math.Min(1, p.health + (rcv / p.getMaxHealth))
 
-        Game.pushLogAndEvent("Absorbtion!" & vbCrLf & "Deals " & dmg & " damage and heals you for " & rcv)
+        TextEvent.pushAndLog("Absorbtion!" & vbCrLf & "Deals " & dmg & " damage and heals you for " & rcv)
         m.takeDMG(dmg, p)
     End Sub
 

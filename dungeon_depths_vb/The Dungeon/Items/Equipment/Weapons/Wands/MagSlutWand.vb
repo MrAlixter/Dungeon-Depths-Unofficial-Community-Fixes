@@ -1,9 +1,11 @@
 ﻿Public Class MagSlutWand
     Inherits MagGirlWand
 
+    Public Shadows Const ITEM_NAME As String = "​Magical_Girl_Wand​"
+
     Sub New()
         '|ID Info|
-        setName("​Magical_Girl_Wand​")
+        setName(ITEM_NAME)
         id = 171
         tier = Nothing
 
@@ -21,7 +23,6 @@
         '|Description|
         setDesc("A heart adorned wand used by a mysterious protector.  Every once in a while, if flickers with a sinister crimson aura" & DDUtils.RNRN &
                 getStatInformation())
-
     End Sub
 
     Public Overrides Sub onEquip(ByRef p As Player)
@@ -38,7 +39,7 @@
     End Sub
     Public Overloads Overrides Sub onunEquip(ByRef p As Player, ByRef w As Weapon)
         If (p.className.Equals("Magical Slut") Or p.perks(perk.tfedbyweapon) > 0) And Not w.GetType.IsSubclassOf(GetType(Wand)) Then
-            Game.pushLstLog("Sighing, you stow away your wand and revert to your base form.  Heartblast Starcannon spell forgotten...")
+            TextEvent.pushLog("Sighing, you stow away your wand and revert to your base form.  Heartblast Starcannon spell forgotten...")
             If p.knownSpecials.Contains("Heartblast Starcannon") Then p.knownSpecials.Remove("Heartblast Starcannon")
             p.inv.add(uniform_id, -1)
 
@@ -55,7 +56,7 @@
         Dim d32 = Int(Rnd() * 5)
 
         m.takeDMG(dmg + d31 + d32, p)
-        Game.pushLstLog(CStr("You fire off a heart-shaped blast, hitting the " & m.name & " for " & dmg + d31 + d32 & " damage!"))
-        Game.pushLblCombatEvent(CStr("You fire off a heart-shaped blast, hitting the " & m.name & " for " & dmg + d31 + d32 & " damage!"))
+        TextEvent.pushLog(CStr("You fire off a heart-shaped blast, hitting the " & m.name & " for " & dmg + d31 + d32 & " damage!"))
+        TextEvent.pushCombat(CStr("You fire off a heart-shaped blast, hitting the " & m.name & " for " & dmg + d31 + d32 & " damage!"))
     End Sub
 End Class

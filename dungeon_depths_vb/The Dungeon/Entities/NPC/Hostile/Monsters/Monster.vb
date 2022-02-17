@@ -137,6 +137,8 @@
             If Game.currFloor.floorNumber = 10000 Then Return tier
         End If
 
+        If Game.player1.perks(perk.moamarphne) > 0 Or Settings.active(setting.nospawnsuccubi) Then Return tier
+
         If Game.player1.getLust = 0 Then
         ElseIf Game.player1.getLust < 25 Then
             DDUtils.append(tier, 17)
@@ -181,8 +183,8 @@
         'adds the mimmic to combat queues
         targetRoute(m)
 
-        Game.pushLblCombatEvent(Trim(m.getName() & " attacks!"))
-        Game.pushLstLog(Trim(m.getName() & " attacks!"))
+        TextEvent.pushCombat(Trim(m.getName() & " attacks!"))
+        TextEvent.pushLog(Trim(m.getName() & " attacks!"))
 
         Game.drawBoard()
     End Sub

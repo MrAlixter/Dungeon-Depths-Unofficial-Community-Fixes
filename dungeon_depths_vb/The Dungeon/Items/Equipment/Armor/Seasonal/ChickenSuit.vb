@@ -1,15 +1,27 @@
 ﻿Public Class ChickenSuit
     Inherits Armor
+
+    Public Const ITEM_NAME As String = "Chicken_Suit"
+
     Dim prevWingInd As Integer = 0
     Sub New()
-        setName("Chicken_Suit")
-
+        '|ID Info|
+        setName(ITEM_NAME)
         id = 8
         If DDDateTime.isAni Then tier = 2 Else tier = Nothing
-        usable = false
-        MyBase.s_boost = 10
+
+        '|Item Flags|
+        usable = False
+        compress_breast = False
+        show_underboob = True
+        rando_inv_allowed = False
+
+        '|Stats|
+        s_boost = 10
         count = 0
         value = 300
+
+        '|Image Index|
         bsizeneg1 = New Tuple(Of Integer, Boolean, Boolean)(21, False, True)
         bsize0 = New Tuple(Of Integer, Boolean, Boolean)(22, False, True)
         bsize1 = New Tuple(Of Integer, Boolean, Boolean)(111, True, True)
@@ -27,24 +39,27 @@
         usize3 = New Tuple(Of Integer, Boolean, Boolean)(92, True, True)
         usize4 = New Tuple(Of Integer, Boolean, Boolean)(93, True, True)
         usize5 = New Tuple(Of Integer, Boolean, Boolean)(94, True, True)
-        MyBase.compress_breast = False
 
-        rando_inv_allowed = False
-
-        setDesc("This outfit, little more than some wings and straps, lightens its user though it doesn't actually provide any protection." & DDUtils.RNRN & _
-                             "Fits all sizes" & DDUtils.RNRN & getStatInformation())
+        '|Description|
+        setDesc("This outfit, little more than some wings and straps, lightens its user though it doesn't actually provide any protection." & DDUtils.RNRN &
+                "Fits all sizes" & DDUtils.RNRN &
+                getStatInformation())
     End Sub
 
     Public Overrides Sub onEquip(ByRef p As Player)
         MyBase.onEquip(p)
+
         Dim bTF As BimboTF = New BimboTF(2, 0, 0.25, True)
         bTF.chickenTf()
+
         prevWingInd = CInt(p.prt.iArrInd(pInd.wings).Item1)
+
         p.prt.setIAInd(pInd.wings, 3, True, False)
     End Sub
 
     Public Overrides Sub onUnequip(ByRef p As Player)
         MyBase.onUnequip(p)
+
         p.prt.setIAInd(pInd.wings, prevWingInd, True, True)
     End Sub
 End Class

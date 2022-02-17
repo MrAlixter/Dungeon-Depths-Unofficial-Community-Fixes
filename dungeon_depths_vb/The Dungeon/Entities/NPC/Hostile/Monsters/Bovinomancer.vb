@@ -41,7 +41,7 @@
             If Transformation.canBeTFed(target.getPlayer) Then
                 spell1(target)
             Else
-                Game.pushLogAndEvent("The " & getName() & " casts ""Bovinize"", but your form prevents you from being transformed...")
+                TextEvent.pushAndLog("The " & getName() & " casts ""Bovinize"", but your form prevents you from being transformed...")
                 knows_p_cant_be_tfed = True
             End If
         ElseIf mana > 5 Then
@@ -52,7 +52,7 @@
     End Sub
 
     Sub spell1(ByRef e As Entity)
-        Game.pushLogAndEvent("The " & getName() & " casts ""Bovinize"", turning you into a cow!")
+        TextEvent.pushAndLog("The " & getName() & " casts ""Bovinize"", turning you into a cow!")
 
         If Not e.getPlayer Is Nothing Then
             playerSpell1(e.getPlayer)
@@ -78,7 +78,7 @@
         Dim dmg As Integer = 35 + Int(Rnd() * 20)
         dmg = getSpellDamage(e, dmg)
 
-        Game.pushLogAndEvent("The " & getName() & " casts ""Cattle Prod"", zapping you for " & dmg & " damage!")
+        TextEvent.pushAndLog("The " & getName() & " casts ""Cattle Prod"", zapping you for " & dmg & " damage!")
 
         e.takeDMG(dmg, Me)
 
@@ -93,18 +93,18 @@
 
         If tfInd = 0 Then
             p.prt.setIAInd(pInd.ears, 8, True, True)
-            Game.pushLogAndEvent("The " & getName() & "'s spell gives you cow ears!")
+            TextEvent.pushAndLog("The " & getName() & "'s spell gives you cow ears!")
         ElseIf tfInd = 1 Then
             If Int(Rnd() * 2) = 0 Then
                 p.prt.setIAInd(pInd.horns, 1, True, False)
-                Game.pushLogAndEvent("The " & getName() & "'s spell gives you cow horns!")
+                TextEvent.pushAndLog("The " & getName() & "'s spell gives you cow horns!")
             Else
                 p.prt.setIAInd(pInd.horns, 2, True, False)
-                Game.pushLogAndEvent("The " & getName() & "'s spell gives you bull horns!")
+                TextEvent.pushAndLog("The " & getName() & "'s spell gives you bull horns!")
             End If
         Else
             p.be()
-            Game.pushLogAndEvent("The " & getName() & "'s spell gives you bigger boobs!")
+            TextEvent.pushAndLog("The " & getName() & "'s spell gives you bigger boobs!")
         End If
 
         tfInd += 1
@@ -147,6 +147,6 @@
 
         Polymorph.transform(p, "Cow", False)
 
-        Game.pushLblEvent(out, AddressOf p.update)
+        TextEvent.push(out, AddressOf p.update)
     End Sub
 End Class

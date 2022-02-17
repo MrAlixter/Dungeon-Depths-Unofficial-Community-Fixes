@@ -1,9 +1,11 @@
 ﻿Public Class AmazonLesson
     Inherits Item
 
+    Public Const ITEM_NAME As String = "Amazon_Lesson"
+
     Sub New()
         '|ID Info|
-        setName("Amazon_Lesson")
+        setName(ITEM_NAME)
         id = 113
         tier = Nothing
 
@@ -25,13 +27,13 @@
 
     Sub teach()
         count = 0
-        Game.pushNPCDialog("Before we get started, I just want to make sure you really want this.  This lesson will completely change who you are and were, forever.", AddressOf warning)
+        TextEvent.pushNPCDialog("Before we get started, I just want to make sure you really want this.  This lesson will completely change who you are and were, forever.", AddressOf warning)
         Game.shopMenu.Close()
         Game.hideNPCButtons()
     End Sub
 
     Sub warning()
-        Game.pushPnlYesNo("Start over as an Amazon?", AddressOf tf, AddressOf cancel)
+        TextEvent.pushYesNo("Start over as an Amazon?", AddressOf tf, AddressOf cancel)
     End Sub
     Sub cancel()
         Game.player1.gold += value
@@ -50,7 +52,7 @@
 
         Dim p = Game.player1
 
-        Game.pushLblEvent(out, AddressOf CType(Game.hteach, HypnoTeach).back)
+        TextEvent.push(out, AddressOf CType(Game.hteach, HypnoTeach).back)
         p.drawPort()
         p.UIupdate()
         p.pState.save(p)

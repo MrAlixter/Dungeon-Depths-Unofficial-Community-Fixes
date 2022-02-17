@@ -10,8 +10,8 @@
         Dim p = MyBase.getUser
 
         p.perks(perk.ihfury) = 3
-        Game.pushLstLog("Ironhide Fury!")
-        Game.pushLblCombatEvent("Ironhide Fury!" & vbCrLf & "+50% ATK, +60% DEF for 3 turns.")
+        TextEvent.pushLog("Ironhide Fury!")
+        TextEvent.pushCombat("Ironhide Fury!" & vbCrLf & "+50% ATK, +60% DEF for 3 turns.")
     End Sub
 
     Public Overrides Function getDesc(ByRef c As Player, ByRef t As NPC) As Object

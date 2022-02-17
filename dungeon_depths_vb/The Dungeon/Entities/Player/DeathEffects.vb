@@ -6,7 +6,7 @@
         p.perks(perk.bimbotf) = 1
         Dim out As String = "Exausted, you slump to the floor.  Glancing up, the horny mess attacking you seem to have gotten a running start, throwing herself on top of you, and pulling you into a sloppy kiss.  As she clumsily fumbles around, trying to remove your clothes, you roll out from underneath her and beat a hasty retreat, the faint sweetness of bubblegum lingering in your mouth."
         p.currTarget.despawn("p-death")
-        Game.pushLblEvent(out)
+        TextEvent.push(out)
     End Sub
 
     '|BOSS / MINIBOSS DEATHS|
@@ -31,29 +31,29 @@
             writer.Close()
         End If
 
-        Game.pushPnlYesNo("Game Over!  Reload a save?", AddressOf tryToLoadSave, AddressOf askAboutNewGame)
+        TextEvent.pushYesNo("Game Over!  Reload a save?", AddressOf tryToLoadSave, AddressOf askAboutNewGame)
         '.formReset()
     End Sub
     Shared Sub tryToLoadSave()
         Try
-            Game.combatmode = False
+            Game.combat_engaged = False
             Game.solFlag = True
             Game.toSOL()
             Exit Sub
         Catch ex As Exception
-            MsgBox("No save detected!")
+            DDError.noSaveDetectedError()
         End Try
     End Sub
     Shared Sub askAboutNewGame()
         System.Threading.Thread.Sleep(50)
 
         Dim c As Chest
-        c = Game.baseChest.Create(Game.player1.inv, Game.player1.pos)
+        c = DDConst.BASE_CHEST.Create(Game.player1.inv, Game.player1.pos)
         Game.currFloor.chestList.Add(c)
         Game.currFloor.mBoard(Game.player1.pos.Y, Game.player1.pos.X).ForeColor = Color.FromArgb(45, 45, 45)
         Game.currFloor.mBoard(Game.player1.pos.Y, Game.player1.pos.X).Text = "#"
         Game.currFloor.writeFloorToFile()
 
-        Game.pushPnlYesNo("Start a new game?", AddressOf Game.newGame, AddressOf Game.formReset)
+        TextEvent.pushYesNo("Start a new game?", AddressOf Game.newGame, AddressOf Game.formReset)
     End Sub
 End Class

@@ -1,15 +1,18 @@
 ﻿Public Class BrawlerCosplay
     Inherits Armor
 
+    Public Const ITEM_NAME As String = "Brawler_Cosplay"
+
     Sub New()
         '|ID Info|
-        setName("Brawler_Cosplay")
+        setName(ITEM_NAME)
         id = 20
         tier = Nothing
 
         '|Item Flags|
         usable = false
         MyBase.compress_breast = True
+        MyBase.show_underboob = True
         MyBase.anti_slut_ind = 19
 
         '|Stats|
@@ -32,6 +35,6 @@
 
         '|Description|
         setDesc("A glamourous garment made more for the highlighting one's body than for any practical function. " & DDUtils.RNRN &
-                                      getSizeInformation() & vbcrlf & getStatInformation())
+                                      getSizeInformation() & DDUtils.RNRN & getStatInformation())
     End Sub
 End Class

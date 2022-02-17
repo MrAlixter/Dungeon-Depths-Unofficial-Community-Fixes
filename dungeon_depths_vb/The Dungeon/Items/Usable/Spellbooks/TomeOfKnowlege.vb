@@ -1,16 +1,18 @@
 ﻿Public Class TomeOfKnowlege
     Inherits Item
 
+    Public Const ITEM_NAME As String = "Tome_Of_Knowledge"
+
     Sub New()
         '|ID Info|
-        setName("Tome_Of_Knowledge")
+        setName(ITEM_NAME)
         id = 286
         tier = Nothing
 
         '|Item Flags|
         usable = true
         rando_inv_allowed = False
-        MyBase.droppable = False
+        droppable = False
 
         '|Stats|
         count = 0
@@ -21,7 +23,7 @@
     End Sub
 
     Overrides Sub use(ByRef p As Player)
-        Game.pushLblEvent("As you crack open the spellbook, a brilliant white light flares from its pages, and you drop it to cover your eyes." & DDUtils.RNRN &
+        TextEvent.push("As you crack open the spellbook, a brilliant white light flares from its pages, and you drop it to cover your eyes." & DDUtils.RNRN &
                           """SO, YOU WISH TO OBTAIN KNOWLEDGE..."" a disembodied voice thunders, ""VERY WELL, GAZE THROUGH THE EYES OF ANOTHER AND LEARN WELL.""" & DDUtils.RNRN &
                           "As your vision returns, and the light recedes, the book collapses into a pile of ash, and a tingling sensation begins rushing through your limbs..." & DDUtils.RNRN & DDUtils.RNRN &
                           "Quest ""Opposite Day"" acquired!", AddressOf tf)

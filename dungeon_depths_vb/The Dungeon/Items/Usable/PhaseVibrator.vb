@@ -1,9 +1,11 @@
 ﻿Public Class PhaseVibrator
-
     Inherits Item
+
+    Public Const ITEM_NAME As String = "Phase_Vibrator"
+
     Sub New()
         '|ID Info|
-        setName("Phase_Vibrator")
+        setName(ITEM_NAME)
         id = 280
         tier = Nothing
 
@@ -23,16 +25,16 @@
         If Me.getUsable() = False Then Exit Sub
 
         If p.inv.getCountAt("AAAAAA_Battery") < 1 Then
-            Game.pushLogAndEvent("You need at least one battery!")
+            TextEvent.pushAndLog("You need at least one battery!")
         Else
             p.inv.add("AAAAAA_Battery", -1)
             If p.getLust > 90 Then
                 p.lust = 0
-                Game.pushLogAndEvent("A massive wave of pleasure washes throughout your whole body!" & DDUtils.RNRN &
+                TextEvent.pushAndLog("A massive wave of pleasure washes throughout your whole body!" & DDUtils.RNRN &
                                      p.inv.getCountAt("AAAAAA_Battery") & " batteries left!")
             Else
                 p.addLust(50)
-                Game.pushLogAndEvent("You flush with an arousal..." & DDUtils.RNRN &
+                TextEvent.pushAndLog("You flush with an arousal..." & DDUtils.RNRN &
                                      p.inv.getCountAt("AAAAAA_Battery") & " batteries left!")
             End If
         End If

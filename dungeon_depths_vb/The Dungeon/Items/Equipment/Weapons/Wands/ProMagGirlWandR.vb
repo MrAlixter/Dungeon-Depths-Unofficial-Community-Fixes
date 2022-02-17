@@ -1,26 +1,29 @@
 ﻿Public Class ProMagGirlWandR
     Inherits MagGirlWand
 
+    Public Shadows Const ITEM_NAME As String = "Pro_Mag._G._Wand_(R)"
+
     Sub New()
         '|ID Info|
-        setName("Pro_Mag._G._Wand_(R)")
+        setName(ITEM_NAME)
         id = 213
         tier = Nothing
 
         '|Item Flags|
         usable = false
-        MyBase.droppable = False
+        droppable = False
         rando_inv_allowed = False
         uniform_id = 211
 
         '|Stats|
-        MyBase.a_boost = 33
-        MyBase.m_boost = 15
+        a_boost = 33
+        m_boost = 15
         count = 0
         value = 2000
 
         '|Description|
-        setDesc("A mysterious wand used by a mysterious protector." & vbCrLf & "+33 ATK, +15 Max Mana")
+        setDesc("A mysterious wand used by a mysterious protector." & DDUtils.RNRN &
+                getStatInformation())
     End Sub
 
     Public Overrides Sub onEquip(ByRef p As Player)

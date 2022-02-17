@@ -1,4 +1,5 @@
 ﻿Public Enum tfind
+    amaraphneangel
     angel
     alraune
     amazon
@@ -43,6 +44,7 @@
     kitsune
     maggirl
     maggirld
+    maggirlg
     maggirlmimic
     maggirlp
     maggirlr
@@ -68,6 +70,7 @@
     slimepolymorph
     slolita
     spotfuse
+    succubusmaid
     succubuspolymorph
     targax
     thrall
@@ -120,7 +123,10 @@ Public MustInherit Class Transformation
         Dim tf As tInd = CInt(s(5))
         Dim tfd As Boolean = CBool(s(6))
 
-        If tf = tfind.angel Then
+        If tf = tfind.amaraphneangel Then
+            Return New AmaraphneAngelTF(cs, n, tts, wi, cbs, tfd)
+
+        ElseIf tf = tfind.angel Then
             Return New AngelTF(cs, n, tts, wi, cbs, tfd)
 
         ElseIf tf = tfind.alraune Then
@@ -252,6 +258,9 @@ Public MustInherit Class Transformation
         ElseIf tf = tfind.maggirld Then
             Return New MagGirlDTF(cs, n, tts, wi, cbs, tfd)
 
+        ElseIf tf = tfind.maggirlg Then
+            Return New MagGirlGTF(cs, n, tts, wi, cbs, tfd)
+
         ElseIf tf = tfind.maggirlmimic Then
             Return New MagMimicTF(cs, n, tts, wi, cbs, tfd)
 
@@ -327,6 +336,9 @@ Public MustInherit Class Transformation
         ElseIf tf = tfind.spotfuse Then
             Return New SpotFuseTF(cs, n, tts, wi, cbs, tfd)
 
+        ElseIf tf = tfind.succubusmaid Then
+            Return New SuccubusMaidTF(cs, n, tts, wi, cbs, tfd)
+
         ElseIf tf = tfind.succubuspolymorph Then
             Return New SuccubusTF(cs, n, tts, wi, cbs, tfd)
 
@@ -376,7 +388,7 @@ Public MustInherit Class Transformation
 
     'updateable implementation
     Overridable Sub update() Implements Updatable.update
-        If Not update_during_combat And Game.combatmode Then Exit Sub
+        If Not update_during_combat And Game.combat_engaged Then Exit Sub
         If turns_until_next_step = 0 Then
             next_step = getNextStep(curr_step)
             next_step()
@@ -413,6 +425,15 @@ Public MustInherit Class Transformation
     Public Overrides Function ToString() As String
         Return curr_step & "$" & num_steps & "$" & turns_until_next_step & "$" & _
             will_impact & "$" & can_be_stopped & "$" & tf_name & "$" & tf_done
+    End Function
+    Public Function save() As String
+        Return curr_step & SaveFile.VALUE_DELIMITER &
+               num_steps & SaveFile.VALUE_DELIMITER &
+               turns_until_next_step & SaveFile.VALUE_DELIMITER &
+               will_impact & SaveFile.VALUE_DELIMITER &
+               can_be_stopped & SaveFile.VALUE_DELIMITER &
+               tf_name & SaveFile.VALUE_DELIMITER &
+               tf_done
     End Function
     'accessor methods
     Public Function getCanBeStopped() As Boolean

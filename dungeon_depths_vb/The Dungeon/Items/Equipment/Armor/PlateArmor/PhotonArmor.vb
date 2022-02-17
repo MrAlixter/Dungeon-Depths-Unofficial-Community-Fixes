@@ -2,9 +2,11 @@
 Public Class PhotonArmor
     Inherits Armor
 
+    Public Const ITEM_NAME As String = "Photon_Armor"
+
     Sub New()
         '|ID Info|
-        setName("Photon_Armor")
+        setName(ITEM_NAME)
         id = 104
         tier = Nothing
 
@@ -21,20 +23,20 @@ Public Class PhotonArmor
         value = 4331
 
         '|Image Index|
-        MyBase.bsizeneg1 = New Tuple(Of Integer, Boolean, Boolean)(42, False, True)
-        MyBase.bsize0 = New Tuple(Of Integer, Boolean, Boolean)(71, False, True)
-        MyBase.bsize1 = New Tuple(Of Integer, Boolean, Boolean)(145, True, True)
-        MyBase.bsize2 = New Tuple(Of Integer, Boolean, Boolean)(146, True, True)
+        bsizeneg1 = New Tuple(Of Integer, Boolean, Boolean)(42, False, True)
+        bsize0 = New Tuple(Of Integer, Boolean, Boolean)(71, False, True)
+        bsize1 = New Tuple(Of Integer, Boolean, Boolean)(145, True, True)
+        bsize2 = New Tuple(Of Integer, Boolean, Boolean)(146, True, True)
 
-        MyBase.usizeneg1 = New Tuple(Of Integer, Boolean, Boolean)(65, False, True)
-        MyBase.usize0 = New Tuple(Of Integer, Boolean, Boolean)(66, False, True)
-        MyBase.usize1 = New Tuple(Of Integer, Boolean, Boolean)(295, True, True)
-        MyBase.usize2 = New Tuple(Of Integer, Boolean, Boolean)(296, True, True)
+        usizeneg1 = New Tuple(Of Integer, Boolean, Boolean)(65, False, True)
+        usize0 = New Tuple(Of Integer, Boolean, Boolean)(66, False, True)
+        usize1 = New Tuple(Of Integer, Boolean, Boolean)(295, True, True)
+        usize2 = New Tuple(Of Integer, Boolean, Boolean)(296, True, True)
 
         '|Description|
         setDesc("This armor consists of lightweight though fragile black plates of an advanced plastic, alongside a powerful shield generator that harnesses its users mana to withstand impacts." & DDUtils.RNRN &
                        "Hardlight Effect" & DDUtils.RNRN &
-                        getSizeInformation() & vbcrlf & getStatInformation())
+                        getSizeInformation() & DDUtils.RNRN & getStatInformation())
     End Sub
 
     Public Overrides Sub onEquip(ByRef p As Player)

@@ -210,7 +210,7 @@
             t.Text = "#"
             t.ForeColor = Color.FromArgb(45, 45, 45)
             Game.currFloor.mBoard(p.Y, p.X).ForeColor = Color.FromArgb(45, 45, 45)
-            Dim c As Chest = Game.baseChest.Create(New Point(p.X, p.Y))
+            Dim c As Chest = DDConst.BASE_CHEST.Create(New Point(p.X, p.Y))
             Game.currFloor.chestList.Add(c)
         ElseIf name = "+ (Trap)" Then
             If removeFlag Then removeItem()
@@ -218,8 +218,8 @@
             t.Text = "+"
             t.ForeColor = Color.FromArgb(45, 45, 45)
             Game.currFloor.mBoard(p.Y, p.X).ForeColor = Color.FromArgb(45, 45, 45)
-            Dim trap As New Trap(New Point(p.X, p.Y))
-            Game.currFloor.trapList.Add(trap)
+            Dim trp = Trap.trapFactory(Trap.getRandomTrapId(), New Point(p.X, p.Y))
+            Game.currFloor.trapList.Add(trp)
         ElseIf name = "- (Barrier)" Then
             If removeFlag Then removeItem()
             t.Tag = 0
@@ -259,7 +259,7 @@
         'Else
         '    If prevTypeSel = "(Wall)" Or prevTypeSel = "(Walkable)" Then
         '        If boxType.SelectedItem = "# (Chest)" Then
-        '            Dim c As Chest = Game.baseChest.Create(p.X, p.Y)
+        '            Dim c As Chest = DDConst.BASE_CHEST.Create(p.X, p.Y)
         '            Game.currfloor.chestList.Add(c)
         '            Game.currfloor.mBoard(p.Y, p.X).ForeColor = Color.FromArgb(45, 45, 45)
         '            Game.currfloor.mBoard(p.Y, p.X).Text = "#"
@@ -320,7 +320,7 @@
                     toReplace.Text = "H"
                     Game.currFloor.stairs = ts.selected
                 ElseIf item.IndexOf("NPC") <> -1 Then
-                    For Each npc As ShopNPC In Game.npcList
+                    For Each npc As ShopNPC In Game.npc_list
                         If npc.pos = p Then
                             npc.pos = ts.selected
                             Exit For

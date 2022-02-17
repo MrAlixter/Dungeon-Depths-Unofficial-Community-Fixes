@@ -6,6 +6,7 @@
         '|ID Info|
         name = "Shopkeeper"
         sName = name
+        npc_index = sNPCInd.shopkeeper
 
         '|NPC Flags|
         pronoun = "he"
@@ -94,19 +95,19 @@
 
         If img_index = 0 Then
             If Game.player1.quests(qInds.helpWanted).canGet Then Game.player1.quests(qInds.helpWanted).init() : Exit Sub
-            Game.pushNPCDialog("Hey, what's up?")
+            TextEvent.pushNPCDialog("Hey, what's up?")
         ElseIf img_index = 6 Then
-            Game.pushNPCDialog("Hey, what's up?")
+            TextEvent.pushNPCDialog("Hey, what's up?")
         ElseIf img_index = 1 Then
-            Game.pushNPCDialog("Ribbit.  Ribbit.")
+            TextEvent.pushNPCDialog("Ribbit.  Ribbit.")
         ElseIf img_index = 2 Then
-            Game.pushNPCDialog("Baaahhh.")
+            TextEvent.pushNPCDialog("Baaahhh.")
         ElseIf img_index = 3 Then
-            Game.pushNPCDialog("Hello, kind " & Game.player1.className & ", how are you on this fine day?")
+            TextEvent.pushNPCDialog("Hello, kind " & Game.player1.className & ", how are you on this fine day?")
         ElseIf img_index = 4 Or img_index = 7 Then
-            Game.pushNPCDialog("*giggle* Hey!")
+            TextEvent.pushNPCDialog("*giggle* Hey!")
         ElseIf img_index = 5 Or img_index = 8 Then
-            Game.pushNPCDialog("...")
+            TextEvent.pushNPCDialog("...")
         End If
 
         If img_index = getArachneImageInd() And Not Game.player1.formName.Equals("Arachne") Then inv.setCount(244, 1) Else inv.setCount(244, 0)
@@ -153,8 +154,8 @@
         If Rnd() < (0.01) Then
             Return True
         Else
-            Game.pushLstLog("The spell bounces off the Shopkeeper!")
-            Game.pushLblCombatEvent("The spell bounces off the Shopkeeper!")
+            TextEvent.pushLog("The spell bounces off the Shopkeeper!")
+            TextEvent.pushCombat("The spell bounces off the Shopkeeper!")
             Return False
         End If
     End Function
@@ -170,7 +171,7 @@
             """Now how am I going to get you back to the refinery?""" & DDUtils.RNRN &
             "GAME OVER!"
 
-        Game.pushLblEvent(out, AddressOf p.die)
+        TextEvent.push(out, AddressOf p.die)
         p.changeClass("Trophy")
     End Sub
 End Class

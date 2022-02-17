@@ -7,11 +7,10 @@
         setcost(15)
     End Sub
     Public Overrides Sub effect()
-        Game.pushLstLog("Cleanse!")
-        Game.pushLblEvent("Cleanse!" & vbCrLf & "Reverts between 3 and 5 changes.")
+        TextEvent.pushLog("Cleanse!  Reverts between 3 and 5 changes.")
         Dim out = Game.player1.revertToPState(Int(Rnd() * 3) + 3)
-        out += Game.lblEvent.Text.Split(vbCrLf)(0)
-        Game.pushLblCombatEvent(out)
+        out = Game.lblEvent.Text.Split(vbCrLf)(0) & DDUtils.RNRN & out
+        TextEvent.push(out)
     End Sub
 
     Public Overrides Function getDesc(ByRef c As Player, ByRef t As NPC) As Object

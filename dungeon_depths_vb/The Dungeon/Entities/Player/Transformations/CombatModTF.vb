@@ -33,7 +33,9 @@
             p.prt.setIAInd(pInd.eyes, 36, True, True)
         End If
 
-        p.prt.setIAInd(pInd.glasses, 7, True, True)
+        If p.inv.getCountAt("Cyber_Visor_(O)") < 1 Then p.inv.add("Cyber_Visor_(O)", 1)
+        EquipmentDialogBackend.glassesChange(p, "Cyber_Visor_(O)")
+
         p.prt.setIAInd(pInd.mouth, 12, True, False)
         p.changeForm("Combat Unit")
 

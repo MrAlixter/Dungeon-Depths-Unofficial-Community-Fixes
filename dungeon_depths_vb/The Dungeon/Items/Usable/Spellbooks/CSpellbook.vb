@@ -1,14 +1,25 @@
 ﻿Public Class CSpellbook
     Inherits Item
+
+    Public Const ITEM_NAME As String = "Crimson_Spellbook"
+
     Public Shared spells() As String = {"Raise Lust", "Puff Up", "Hellfireball", "Reductive Mending"}
+
     Sub New()
-        setName("Crimson_Spellbook")
-        setDesc("A smoldering leather-bound book that contains something magic written by a succubus.")
+        '|ID Info|
+        setName(ITEM_NAME)
         id = 226
         tier = Nothing
-        usable = true
+
+        '|Item Flags|
+        usable = True
+
+        '|Stats|
         count = 0
         value = 666
+
+        '|Description|
+        setDesc("A smoldering leather-bound book that contains something magic written by a succubus.")
     End Sub
 
     Overrides Sub use(ByRef p As Player)
@@ -70,17 +81,17 @@
                         sName = spells(spell)
                 End Select
                 If ct > 60 Then
-                    Game.pushLstLog("You know all the spells in crimson spellbooks already!")
+                    TextEvent.pushLog("You know all the spells in crimson spellbooks already!")
                     Exit Sub
                 End If
             End While
             If Not Game.player1.knownSpells.Contains(sName) Then Game.player1.knownSpells.Add(sName)
-            Game.pushLstLog("You read the " & getName() & ". " & sName & " learned!")
+            TextEvent.pushLog("You read the " & getName() & ". " & sName & " learned!")
             If Not out.Equals("") Then
-                Game.pushLstLog(out)
-                Game.pushLblEvent("You read the " & getName() & ". " & sName & " learned!" & DDUtils.RNRN & out)
+                TextEvent.pushLog(out)
+                TextEvent.push("You read the " & getName() & ". " & sName & " learned!" & DDUtils.RNRN & out)
             Else
-                Game.pushLblEvent("You read the " & getName() & ". " & sName & " learned!")
+                TextEvent.push("You read the " & getName() & ". " & sName & " learned!")
             End If
         End If
         count -= 1

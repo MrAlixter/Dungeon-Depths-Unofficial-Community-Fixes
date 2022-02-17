@@ -8,15 +8,24 @@
     gynoid1
     button1
     gynoid2
+    defaultnote
+    gag
+    faeofwishes
 End Enum
 Public Class Trap
+    Private Shared random_traps() As tInd = {tInd.dart, tInd.rope, tInd.ruby, tInd.coupon, tInd.mirror, tInd.gag, tInd.faeofwishes}
+
     Public pos As Point
     Public iD As Integer
 
     Sub New(ByVal p As Point)
         pos = p
-        iD = Int(Rnd() * 5)
+        iD = getRandomTrapId()
     End Sub
+
+    Public Shared Function getRandomTrapId() As tInd
+        Return random_traps(Int(Rnd() * 6))
+    End Function
 
     Shared Function trapFactory(ByVal s As String)
         Dim cArray() As String = s.Split("*")
@@ -43,6 +52,12 @@ Public Class Trap
                 Return New Button1Trap(p)
             Case tInd.gynoid2
                 Return New GynoidTrap2(p)
+            Case tInd.defaultnote
+                Return New NoteTrap(p)
+            Case tInd.gag
+                Return New GagTrap(p)
+            Case tInd.faeofwishes
+                Return New FaeOfWishes(p)
             Case Else
                 Return New DartTrap(p)
         End Select
@@ -50,7 +65,7 @@ Public Class Trap
     End Function
 
     Public Overridable Sub activate()
-        Game.pushLstLog("Trap activated!")
+        TextEvent.pushLog("Trap activated!")
         pos = New Point(-1, -1)
     End Sub
 

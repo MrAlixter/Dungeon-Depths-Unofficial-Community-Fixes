@@ -1,36 +1,39 @@
 ﻿
 Public Class CynnsMark
     Inherits Accessory
+
+    Public Const ITEM_NAME As String = "Cynn's_Mark"
+
     Sub New()
         '|ID Info|
-        setName("Cynn's_Mark")
+        setName(ITEM_NAME)
         id = 253
         tier = Nothing
 
         '|Item Flags|
         usable = false
         cursed = True
-        underClothes = True
+        under_b_clothes = True
         rando_inv_allowed = False
-        MyBase.droppable = False
+        droppable = False
 
         '|Stats|
         count = 0
         value = 0
 
         '|Image Index|
-        MyBase.fInd = New Tuple(Of Integer, Boolean, Boolean)(21, True, True)
-        MyBase.mInd = New Tuple(Of Integer, Boolean, Boolean)(21, True, True)
+        fInd = New Tuple(Of Integer, Boolean, Boolean)(21, True, True)
+        mInd = New Tuple(Of Integer, Boolean, Boolean)(21, True, True)
 
         '|Description|
         setDesc("A glowing red tattoo that displays one's status as under the effect a particular demoness's magic." & DDUtils.RNRN &
-                       "Transformation triggered by raising lust or by killing opponents." & DDUtils.RNRN &
-                       getStatInformation())
+                "Transformation triggered by raising lust or by killing opponents." & DDUtils.RNRN &
+                getStatInformation())
     End Sub
 
     Public Overrides Sub discard()
-        Game.pushLblEvent("You can't discard this!")
-        Game.pushLstLog("You can't discard this!")
+        TextEvent.push("You can't discard this!")
+        TextEvent.pushLog("You can't discard this!")
     End Sub
 
     Public Overrides Sub onEquip(ByRef p As Player)

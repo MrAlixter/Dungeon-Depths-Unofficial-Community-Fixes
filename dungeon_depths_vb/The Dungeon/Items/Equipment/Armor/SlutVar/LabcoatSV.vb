@@ -2,41 +2,44 @@
 Public Class LabcoatSV
     Inherits Armor
 
+    Public Const ITEM_NAME As String = "Labcoat​"
+
     Sub New()
         '|ID Info|
-        setName("Labcoat​")
+        setName(ITEM_NAME)
         id = 107
         tier = Nothing
 
         '|Item Flags|
         usable = false
-        MyBase.compress_breast = True
-        MyBase.hide_dick = False
+        compress_breast = True
+        show_underboob = True
+        hide_dick = False
         rando_inv_allowed = False
-        MyBase.anti_slut_ind = 106
+        anti_slut_ind = 106
 
         '|Stats|
-        MyBase.d_boost = 2
+        d_boost = 2
         w_boost = 20
         count = 0
         value = 450
 
         '|Image Index|
-        MyBase.bsize0 = New Tuple(Of Integer, Boolean, Boolean)(43, False, True)
-        MyBase.bsize1 = New Tuple(Of Integer, Boolean, Boolean)(151, True, True)
-        MyBase.bsize2 = New Tuple(Of Integer, Boolean, Boolean)(152, True, True)
-        MyBase.bsize3 = New Tuple(Of Integer, Boolean, Boolean)(153, True, True)
-        MyBase.bsize4 = New Tuple(Of Integer, Boolean, Boolean)(154, True, True)
+        bsize0 = New Tuple(Of Integer, Boolean, Boolean)(43, False, True)
+        bsize1 = New Tuple(Of Integer, Boolean, Boolean)(151, True, True)
+        bsize2 = New Tuple(Of Integer, Boolean, Boolean)(152, True, True)
+        bsize3 = New Tuple(Of Integer, Boolean, Boolean)(153, True, True)
+        bsize4 = New Tuple(Of Integer, Boolean, Boolean)(154, True, True)
 
-        MyBase.usize0 = New Tuple(Of Integer, Boolean, Boolean)(289, True, True)
-        MyBase.usize1 = New Tuple(Of Integer, Boolean, Boolean)(290, True, True)
-        MyBase.usize2 = New Tuple(Of Integer, Boolean, Boolean)(291, True, True)
-        MyBase.usize3 = New Tuple(Of Integer, Boolean, Boolean)(292, True, True)
-        MyBase.usize4 = New Tuple(Of Integer, Boolean, Boolean)(293, True, True)
-        MyBase.usize4 = New Tuple(Of Integer, Boolean, Boolean)(294, True, True)
+        usize0 = New Tuple(Of Integer, Boolean, Boolean)(289, True, True)
+        usize1 = New Tuple(Of Integer, Boolean, Boolean)(290, True, True)
+        usize2 = New Tuple(Of Integer, Boolean, Boolean)(291, True, True)
+        usize3 = New Tuple(Of Integer, Boolean, Boolean)(292, True, True)
+        usize4 = New Tuple(Of Integer, Boolean, Boolean)(293, True, True)
+        usize4 = New Tuple(Of Integer, Boolean, Boolean)(294, True, True)
 
         '|Description|
         setDesc("A white labcoat that, despite not containing much underneath itself, still gives its wearer an air of scientific authority" & DDUtils.RNRN &
-                        getSizeInformation() & vbcrlf & getStatInformation())
+                        getSizeInformation() & DDUtils.RNRN & getStatInformation())
     End Sub
 End Class

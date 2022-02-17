@@ -15,7 +15,7 @@
 
         p.prt.haircolor = colors(Int(Rnd() * colors.Length))
 
-        Game.pushLblEvent("CHAMELEON!  You now have pastel hair...")
+        TextEvent.push("CHAMELEON!  You now have pastel hair...")
 
         p.addLust(10)
 

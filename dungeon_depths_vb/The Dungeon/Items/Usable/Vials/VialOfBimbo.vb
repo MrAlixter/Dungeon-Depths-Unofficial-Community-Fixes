@@ -1,9 +1,11 @@
 ﻿Public Class VialOfBimbo
     Inherits Item
 
+    Public Const ITEM_NAME As String = "Vial_of_BIM_II"
+
     Sub New()
         '|ID Info|
-        setName("Vial_of_BIM_II")
+        setName(ITEM_NAME)
         id = 127
         tier = Nothing
 
@@ -19,7 +21,7 @@
     End Sub
 
     Public Overrides Sub use(ByRef p As Player)
-        Game.pushLblEvent("Drinking the pink contents of the vial causes a dizzy calm wash to over you.")
+        TextEvent.push("Drinking the pink contents of the vial causes a dizzy calm wash to over you.")
         p.ongoingTFs.Add(New BimboPlusTF(2, 5, 0.25, True))
         p.perks(perk.bimbotf) = 0
         count -= 1

@@ -15,8 +15,8 @@
 
             MyBase.getTarget.takeDMG(dmg + d6, MyBase.getCaster)
 
-            Game.pushLstLog(CStr("A golden ray engulfs your foe!"))
-            Game.pushLblCombatEvent(CStr("A golden ray of light engulfs your foe, cackling with a rosy glow!  As they stumble back, you notice that they seem a little ... cuter ... than they did before..."))
+            TextEvent.pushLog(CStr("A golden ray engulfs your foe!"))
+            TextEvent.pushCombat(CStr("A golden ray of light engulfs your foe, cackling with a rosy glow!  As they stumble back, you notice that they seem a little ... cuter ... than they did before..."))
         End If
     End Sub
     Public Overrides Sub backfire()
@@ -29,8 +29,8 @@
         MyBase.getTarget.form = "Plush"
         MyBase.getTarget.attack = 0
         MyBase.getTarget.defense *= 1.25
-        Game.pushLstLog(CStr("Your spell hits the " & MyBase.getTarget.name & ", turning " & MyBase.getTarget.r_pronoun & " into a plush!"))
-        Game.pushLblCombatEvent(CStr("Your spell hits the " & MyBase.getTarget.name & ", turning " & MyBase.getTarget.r_pronoun & " into a plush version of their prior form!"))
+        TextEvent.pushLog(CStr("Your spell hits the " & MyBase.getTarget.name & ", turning " & MyBase.getTarget.r_pronoun & " into a plush!"))
+        TextEvent.pushCombat(CStr("Your spell hits the " & MyBase.getTarget.name & ", turning " & MyBase.getTarget.r_pronoun & " into a plush version of their prior form!"))
     End Sub
 
     Sub selfPlushTF()

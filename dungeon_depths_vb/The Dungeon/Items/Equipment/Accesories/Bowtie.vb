@@ -1,9 +1,11 @@
 ﻿Public Class Bowtie
     Inherits Accessory
 
+    Public Const ITEM_NAME As String = "Bowtie"
+
     Sub New()
         '|ID Info|
-        setName("Bowtie")
+        setName(ITEM_NAME)
         id = 97
         tier = 3
 

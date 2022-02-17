@@ -14,7 +14,7 @@
             'critical hit
         Else
             'non critical hit
-            Game.pushLogAndEvent(CStr("Gigaton Punch!  You hit the " & MyBase.getTarget.name & " for " & dmg + d31 + d32 & " damage!"))
+            TextEvent.pushAndLog(CStr("Gigaton Punch!  You hit the " & MyBase.getTarget.name & " for " & dmg + d31 + d32 & " damage!"))
             MyBase.getTarget.takeDMG(dmg + d31 + d32, MyBase.getUser)
         End If
     End Sub

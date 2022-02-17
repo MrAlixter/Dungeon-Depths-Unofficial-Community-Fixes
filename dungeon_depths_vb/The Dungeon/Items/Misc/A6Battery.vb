@@ -1,9 +1,11 @@
 ﻿Public Class A6Battery
     Inherits Item
 
+    Public Const ITEM_NAME As String = "AAAAAA_Battery"
+
     Sub New()
         '|ID Info|
-        setName("AAAAAA_Battery")
+        setName(ITEM_NAME)
         id = 261
         tier = Nothing
 

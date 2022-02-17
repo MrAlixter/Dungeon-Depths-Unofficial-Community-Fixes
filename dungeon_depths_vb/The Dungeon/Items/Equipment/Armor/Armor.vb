@@ -51,6 +51,7 @@
     Public cloak As Tuple(Of Integer, Boolean, Boolean) = Nothing
 
     Public compress_breast As Boolean
+    Public show_underboob As Boolean = False
     Public hide_dick As Boolean = True
     Public bind_wearer As Boolean = False
 
@@ -176,7 +177,7 @@
 
     Public Overrides Sub discard()
         If cursed And Not owner Is Nothing AndAlso owner.equippedArmor.getAName.Equals(getAName) Then
-            Game.pushLblEvent("You are unable to drop your equipped equipment.")
+            TextEvent.push("You are unable to drop your equipped equipment.")
         Else
             MyBase.discard()
         End If
@@ -204,7 +205,7 @@
         Next
 
         out += "Fits chest sizes " & minB & " through " & maxB & vbCrLf
-        out += "Fits waist sizes " & minU & " through " & maxU & vbCrLf
+        out += "Fits waist sizes " & minU & " through " & maxU
 
         Return out
     End Function

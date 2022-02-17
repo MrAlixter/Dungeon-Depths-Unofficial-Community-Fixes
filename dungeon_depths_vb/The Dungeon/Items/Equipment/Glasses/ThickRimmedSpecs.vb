@@ -1,0 +1,28 @@
+﻿Public Class ThickRimmedSpecs
+    Inherits Glasses
+
+    Public Const ITEM_NAME As String = "Thick_Rimmed_Specs"
+
+    Sub New()
+        '|ID Info|
+        setName(ITEM_NAME)
+        id = 311
+        tier = Nothing
+
+        '|Item Flags|
+        usable = False
+        droppable = False
+        rando_inv_allowed = False
+
+        '|Stats|    
+        count = 0
+        value = 0
+
+        '|Image Index|
+        imgInd = New Tuple(Of Integer, Boolean, Boolean)(4, False, False)
+
+        '|Description|
+        setDesc("A simple pair of glasses with a black frame" & DDUtils.RNRN &
+                getStatInformation())
+    End Sub
+End Class

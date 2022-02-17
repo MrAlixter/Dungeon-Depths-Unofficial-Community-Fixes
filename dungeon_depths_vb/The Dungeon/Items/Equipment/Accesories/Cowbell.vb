@@ -1,9 +1,11 @@
 ﻿Public Class Cowbell
     Inherits Accessory
-    'The red headband provides a +1 attack buff
+
+    Public Const ITEM_NAME As String = "Cowbell"
+
     Sub New()
         '|ID Info|
-        setName("Cowbell")
+        setName(ITEM_NAME)
         id = 70
         tier = 2
 

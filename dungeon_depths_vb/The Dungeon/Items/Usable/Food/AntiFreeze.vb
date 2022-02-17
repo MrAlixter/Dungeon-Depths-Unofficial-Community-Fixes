@@ -1,9 +1,11 @@
 ﻿Public Class AntiFreeze
     Inherits Food
 
+    Public Const ITEM_NAME As String = "Antifreeze"
+
     Sub New()
         '|ID Info|
-        setName("Antifreeze")
+        setName(ITEM_NAME)
         id = 178
         tier = Nothing
 
@@ -21,7 +23,7 @@
     End Sub
     Overrides Sub use(ByRef p As Player)
         If Me.getUsable() = False Then Exit Sub
-        Game.pushLstLog("You drink the " & getName())
+        TextEvent.pushLog("You drink the " & getName())
         p.stamina += getCalories()
         If p.stamina > 100 Then p.stamina = 100
         effect(p)

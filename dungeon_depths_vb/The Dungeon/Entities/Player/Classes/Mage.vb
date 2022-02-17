@@ -14,9 +14,9 @@
         End If
 
         If Not learnSkills Then Exit Sub
-        If level = 2 And Not p.knownSpells.Contains("Flash Bolt") Then p.knownSpells.Add("Flash Bolt") : Game.pushLstLog("Flash Bolt spell learned!")
-        If level = 3 And Not p.knownSpecials.Contains("Will Up") Then p.knownSpecials.Add("Will Up") : Game.pushLstLog("Will Up special learned!")
-        If level = 4 And Not p.knownSpells.Contains("Firestorm") Then p.knownSpells.Add("Firestorm") : Game.pushLstLog("Firestorm spell learned!")
+        If level = 2 Then p.learnSpell("Flash Bolt")
+        If level = 3 Then p.learnSpecial("Will Up")
+        If level = 4 Then p.learnSpell("Firestorm")
     End Sub
 
     Public Overrides Sub deLVL(level As Integer, ByRef p As Player)

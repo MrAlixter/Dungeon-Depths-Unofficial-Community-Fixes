@@ -1,9 +1,11 @@
 ﻿Public Class CombatModule
     Inherits Item
 
+    Public Const ITEM_NAME As String = "Combat_Module"
+
     Sub New()
         '|ID Info|
-        setName("Combat_Module")
+        setName(ITEM_NAME)
         id = 142
         tier = Nothing
 
@@ -20,12 +22,12 @@
 
     Public Overrides Sub use(ByRef p As Player)
         If p.formName.Equals("Cyborg") Or p.formName.Equals("Gynoid") Or p.formName.Equals("Android") Then
-            Game.pushLblEvent("Plugging in the combat module floods your system with a wealth of offensive and defensive strategies")
+            TextEvent.push("Plugging in the combat module floods your system with a wealth of offensive and defensive strategies")
             p.ongoingTFs.Add(New CombatModTF())
             p.update()
             count -= 1
         Else
-            Game.pushLblEvent("You can't use this as you aren't robotic in nature.")
+            TextEvent.push("You can't use this as you aren't robotic in nature.")
         End If
     End Sub
 End Class

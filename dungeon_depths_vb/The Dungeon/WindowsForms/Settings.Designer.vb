@@ -23,7 +23,7 @@ Partial Class Settings
     <System.Diagnostics.DebuggerStepThrough()> _
     Private Sub InitializeComponent()
         Dim resources As System.ComponentModel.ComponentResourceManager = New System.ComponentModel.ComponentResourceManager(GetType(Settings))
-        Me.Button1 = New System.Windows.Forms.Button()
+        Me.btnSettingsOK = New System.Windows.Forms.Button()
         Me.Label1 = New System.Windows.Forms.Label()
         Me.cboxScreenSize = New System.Windows.Forms.ComboBox()
         Me.chkNoImg = New System.Windows.Forms.CheckBox()
@@ -32,19 +32,20 @@ Partial Class Settings
         Me.chkOldSpellSpec = New System.Windows.Forms.CheckBox()
         Me.chkStartWithBooks = New System.Windows.Forms.CheckBox()
         Me.chkEoverSS = New System.Windows.Forms.CheckBox()
+        Me.chkNoSuccubi = New System.Windows.Forms.CheckBox()
         Me.SuspendLayout()
         '
-        'Button1
+        'btnSettingsOK
         '
-        Me.Button1.BackgroundImage = CType(resources.GetObject("Button1.BackgroundImage"), System.Drawing.Image)
-        Me.Button1.Font = New System.Drawing.Font("Consolas", 8.150944!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.Button1.ForeColor = System.Drawing.Color.White
-        Me.Button1.Location = New System.Drawing.Point(185, 426)
-        Me.Button1.Name = "Button1"
-        Me.Button1.Size = New System.Drawing.Size(75, 30)
-        Me.Button1.TabIndex = 0
-        Me.Button1.Text = "Ok"
-        Me.Button1.UseVisualStyleBackColor = True
+        Me.btnSettingsOK.BackgroundImage = CType(resources.GetObject("btnSettingsOK.BackgroundImage"), System.Drawing.Image)
+        Me.btnSettingsOK.Font = New System.Drawing.Font("Consolas", 8.150944!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.btnSettingsOK.ForeColor = System.Drawing.Color.White
+        Me.btnSettingsOK.Location = New System.Drawing.Point(185, 447)
+        Me.btnSettingsOK.Name = "btnSettingsOK"
+        Me.btnSettingsOK.Size = New System.Drawing.Size(75, 30)
+        Me.btnSettingsOK.TabIndex = 0
+        Me.btnSettingsOK.Text = "Ok"
+        Me.btnSettingsOK.UseVisualStyleBackColor = True
         '
         'Label1
         '
@@ -102,7 +103,7 @@ Partial Class Settings
         Me.chkNoRNG.AutoSize = True
         Me.chkNoRNG.Font = New System.Drawing.Font("Consolas", 10.18868!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.chkNoRNG.ForeColor = System.Drawing.Color.White
-        Me.chkNoRNG.Location = New System.Drawing.Point(16, 172)
+        Me.chkNoRNG.Location = New System.Drawing.Point(16, 174)
         Me.chkNoRNG.Name = "chkNoRNG"
         Me.chkNoRNG.Size = New System.Drawing.Size(259, 38)
         Me.chkNoRNG.TabIndex = 23
@@ -116,7 +117,7 @@ Partial Class Settings
         Me.chkOldSpellSpec.CheckState = System.Windows.Forms.CheckState.Checked
         Me.chkOldSpellSpec.Font = New System.Drawing.Font("Consolas", 10.18868!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.chkOldSpellSpec.ForeColor = System.Drawing.Color.White
-        Me.chkOldSpellSpec.Location = New System.Drawing.Point(16, 224)
+        Me.chkOldSpellSpec.Location = New System.Drawing.Point(16, 226)
         Me.chkOldSpellSpec.Name = "chkOldSpellSpec"
         Me.chkOldSpellSpec.Size = New System.Drawing.Size(227, 38)
         Me.chkOldSpellSpec.TabIndex = 24
@@ -130,7 +131,7 @@ Partial Class Settings
         Me.chkStartWithBooks.CheckState = System.Windows.Forms.CheckState.Checked
         Me.chkStartWithBooks.Font = New System.Drawing.Font("Consolas", 10.18868!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.chkStartWithBooks.ForeColor = System.Drawing.Color.White
-        Me.chkStartWithBooks.Location = New System.Drawing.Point(17, 276)
+        Me.chkStartWithBooks.Location = New System.Drawing.Point(17, 278)
         Me.chkStartWithBooks.Name = "chkStartWithBooks"
         Me.chkStartWithBooks.Size = New System.Drawing.Size(219, 38)
         Me.chkStartWithBooks.TabIndex = 25
@@ -144,19 +145,32 @@ Partial Class Settings
         Me.chkEoverSS.CheckState = System.Windows.Forms.CheckState.Checked
         Me.chkEoverSS.Font = New System.Drawing.Font("Consolas", 10.18868!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.chkEoverSS.ForeColor = System.Drawing.Color.White
-        Me.chkEoverSS.Location = New System.Drawing.Point(17, 327)
+        Me.chkEoverSS.Location = New System.Drawing.Point(17, 329)
         Me.chkEoverSS.Name = "chkEoverSS"
         Me.chkEoverSS.Size = New System.Drawing.Size(227, 38)
         Me.chkEoverSS.TabIndex = 26
         Me.chkEoverSS.Text = "Enemies can overwrite the" & Global.Microsoft.VisualBasic.ChrW(13) & Global.Microsoft.VisualBasic.ChrW(10) & "player's starting form"
         Me.chkEoverSS.UseVisualStyleBackColor = True
         '
+        'chkNoSuccubi
+        '
+        Me.chkNoSuccubi.AutoSize = True
+        Me.chkNoSuccubi.Font = New System.Drawing.Font("Consolas", 10.18868!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.chkNoSuccubi.ForeColor = System.Drawing.Color.White
+        Me.chkNoSuccubi.Location = New System.Drawing.Point(17, 381)
+        Me.chkNoSuccubi.Name = "chkNoSuccubi"
+        Me.chkNoSuccubi.Size = New System.Drawing.Size(203, 38)
+        Me.chkNoSuccubi.TabIndex = 27
+        Me.chkNoSuccubi.Text = "Prevent succubi random" & Global.Microsoft.VisualBasic.ChrW(13) & Global.Microsoft.VisualBasic.ChrW(10) & "encounters"
+        Me.chkNoSuccubi.UseVisualStyleBackColor = True
+        '
         'Settings
         '
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Inherit
         Me.BackColor = System.Drawing.Color.Black
-        Me.ClientSize = New System.Drawing.Size(272, 468)
+        Me.ClientSize = New System.Drawing.Size(272, 491)
         Me.ControlBox = False
+        Me.Controls.Add(Me.chkNoSuccubi)
         Me.Controls.Add(Me.chkEoverSS)
         Me.Controls.Add(Me.chkStartWithBooks)
         Me.Controls.Add(Me.chkOldSpellSpec)
@@ -165,7 +179,7 @@ Partial Class Settings
         Me.Controls.Add(Me.chkNoImg)
         Me.Controls.Add(Me.Label1)
         Me.Controls.Add(Me.cboxScreenSize)
-        Me.Controls.Add(Me.Button1)
+        Me.Controls.Add(Me.btnSettingsOK)
         Me.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedToolWindow
         Me.Name = "Settings"
         Me.StartPosition = System.Windows.Forms.FormStartPosition.CenterParent
@@ -174,7 +188,7 @@ Partial Class Settings
         Me.PerformLayout()
 
     End Sub
-    Friend WithEvents Button1 As System.Windows.Forms.Button
+    Friend WithEvents btnSettingsOK As System.Windows.Forms.Button
     Friend WithEvents Label1 As System.Windows.Forms.Label
     Friend WithEvents cboxScreenSize As System.Windows.Forms.ComboBox
     Friend WithEvents chkNoImg As System.Windows.Forms.CheckBox
@@ -183,4 +197,5 @@ Partial Class Settings
     Friend WithEvents chkOldSpellSpec As System.Windows.Forms.CheckBox
     Friend WithEvents chkStartWithBooks As System.Windows.Forms.CheckBox
     Friend WithEvents chkEoverSS As System.Windows.Forms.CheckBox
+    Friend WithEvents chkNoSuccubi As System.Windows.Forms.CheckBox
 End Class

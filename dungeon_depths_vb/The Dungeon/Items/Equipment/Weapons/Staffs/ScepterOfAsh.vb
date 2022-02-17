@@ -1,9 +1,11 @@
 ﻿Public Class ScepterOfAsh
     Inherits Staff
 
+    Public Const ITEM_NAME As String = "Scepter_of_Ash"
+
     Sub New()
         '|ID Info|
-        setName("Scepter_of_Ash")
+        setName(ITEM_NAME)
         id = 145
         tier = Nothing
 

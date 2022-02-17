@@ -36,7 +36,7 @@
             Try
                 bodySwap(Game.player1)
             Catch ex As Exception
-                Game.pushLblEvent("The body swap fails!")
+                TextEvent.push("The body swap fails!")
             End Try
         End If
     End Sub
@@ -45,6 +45,6 @@
         p.ongoingTFs.Add(New RandoTF())
         p.update()
         p.health = 0.1
-        Game.pushLblEvent("As the explorer is defeated, they mumble some arcane poem and make a hand gesture which causes the two of you to begin glowing.  With a flash, you suddenly find yourself looking at the dungeon from a slightly different angle.  As you black out and collapse, the last thing you see is your grinning face standing over you." & vbCrLf & "The Explorer has taken your body!")
+        TextEvent.push("As the explorer is defeated, they mumble some arcane poem and make a hand gesture which causes the two of you to begin glowing.  With a flash, you suddenly find yourself looking at the dungeon from a slightly different angle.  As you black out and collapse, the last thing you see is your grinning face standing over you." & vbCrLf & "The Explorer has taken your body!")
     End Sub
 End Class

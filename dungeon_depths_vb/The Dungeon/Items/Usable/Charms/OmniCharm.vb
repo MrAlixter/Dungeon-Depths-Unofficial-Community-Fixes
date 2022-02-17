@@ -1,19 +1,28 @@
 ﻿Public Class OmniCharm
     Inherits Item
-    'AttackCharms are useable items that permenantly boost player attack by 2
+
+    Public Const ITEM_NAME As String = "Omni_Charm"
+
     Sub New()
-        setName("Omni_Charm")
-        setDesc("A charm that slightly boosts all base stats.")
+        '|ID Info|
+        setName(ITEM_NAME)
         id = 126
         tier = Nothing
-        usable = true
+
+        '|Item Flags|
+        usable = True
+
+        '|Stats|
         count = 0
         value = 4700
+
+        '|Description|
+        setDesc("A charm that slightly boosts all base stats.")
     End Sub
 
     Overrides Sub use(ByRef p As Player)
         If Me.getUsable() = False Then Exit Sub
-        Game.pushLblEvent("You use the " & getName() & ". +5 base ATK, DEF, SPD, WILL, Max Mana, +10 Max Health!")
+        TextEvent.push("You use the " & getName() & ". +5 base ATK, DEF, SPD, WILL, Max Mana, +10 Max Health!")
 
         p.attack += 5
         p.defense += 5

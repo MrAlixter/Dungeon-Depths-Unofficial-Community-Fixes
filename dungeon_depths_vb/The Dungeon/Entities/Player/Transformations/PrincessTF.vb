@@ -47,7 +47,7 @@
         Dim revertText = Game.lblEvent.Text.Split(vbCrLf)(0)
         If Not revertText.Equals("") Then out = revertText & DDUtils.RNRN & out
 
-        Game.pushLblEvent(out, AddressOf step2)
+        TextEvent.push(out, AddressOf step2)
 
         p.drawPort()
     End Sub
@@ -57,7 +57,7 @@
 
         'equip clothes
         If p.inv.getCountAt("Regal_Gown") < 1 Then p.inv.add("Regal_Gown", 1)
-        Equipment.clothesChange(p, "Regal_Gown")
+        EquipmentDialogBackend.armorChange(p, "Regal_Gown")
         p.changeClass("Princess")
 
         'maid transformation
@@ -82,7 +82,7 @@
         Dim revertText = Game.lblEvent.Text.Split(vbCrLf)(0)
         If Not revertText.Equals("") Then out = revertText & DDUtils.RNRN & out
 
-        Game.pushLblEvent(out)
+        TextEvent.push(out)
 
         p.drawPort()
     End Sub
@@ -92,7 +92,7 @@
 
         'equip clothes
         If p.inv.getCountAt("Regal_Gown") < 1 Then p.inv.add("Regal_Gown", 1)
-        Equipment.clothesChange(p, "Regal_Gown")
+        EquipmentDialogBackend.armorChange(p, "Regal_Gown")
         p.changeClass("Princess")
 
         'maid transformation
@@ -119,7 +119,7 @@
         Dim revertText = Game.lblEvent.Text.Split(vbCrLf)(0)
         If Not revertText.Equals("") Then out = revertText & DDUtils.RNRN & out
 
-        Game.pushLblEvent(out)
+        TextEvent.push(out)
 
         p.drawPort()
     End Sub

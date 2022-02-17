@@ -1,24 +1,29 @@
 ﻿Public Class ProMagGirlOutfit
     Inherits Armor
 
-    Sub New()
-        setName("Pro_Mag._Girl_Outfit")
+    Public Const ITEM_NAME As String = "Pro_Mag._Girl_Outfit"
 
+    Sub New()
+        '|ID Info|
+        setName(ITEM_NAME)
         id = 201
         tier = Nothing
-        usable = false
-        MyBase.droppable = False
+
+        '|Item Flags|
+        usable = False
+        droppable = False
         rando_inv_allowed = False
+        compress_breast = True
+        slut_var_ind = 10
 
-        MyBase.d_boost = 30
-        MyBase.s_boost = 20
-        MyBase.m_boost = 40
-
+        '|Stats|
+        d_boost = 30
+        s_boost = 20
+        m_boost = 40
         count = 0
         value = 100
 
-        slut_var_ind = 10
-
+        '|Image Index|
         bsize0 = New Tuple(Of Integer, Boolean, Boolean)(288, True, True)
         bsize1 = New Tuple(Of Integer, Boolean, Boolean)(289, True, True)
         bsize2 = New Tuple(Of Integer, Boolean, Boolean)(290, True, True)
@@ -30,21 +35,19 @@
         usize3 = New Tuple(Of Integer, Boolean, Boolean)(204, True, True)
         usize4 = New Tuple(Of Integer, Boolean, Boolean)(205, True, True)
 
-        MyBase.compress_breast = True
-
-        rando_inv_allowed = False
-
-        setDesc("A mysterious uniform worn by a mysterious protector with a fair bit of experience." & DDUtils.RNRN & _
-                                getSizeInformation() & vbcrlf & getStatInformation() &
-                               "Magical girls can not remove this uniform.")
+        '|Description|
+        setDesc("A mysterious uniform worn by a mysterious protector with a fair bit of experience." & DDUtils.RNRN &
+                getSizeInformation() & DDUtils.RNRN &
+                getStatInformation() &
+                "Magical girls can not remove this uniform.")
     End Sub
 
     Overrides Sub discard()
         If Game.player1.className.Equals("Magical Girl") Then
-            Game.pushLstLog("You can't just drop your uniform!")
+            TextEvent.pushLog("You can't just drop your uniform!")
             Exit Sub
         End If
-        Game.pushLstLog("You drop the " & getName())
+        TextEvent.pushLog("You drop the " & getName())
 
         count -= 1
     End Sub

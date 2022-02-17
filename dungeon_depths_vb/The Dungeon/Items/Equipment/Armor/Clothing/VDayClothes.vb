@@ -1,9 +1,11 @@
 ﻿Public Class VDayClothes
     Inherits Armor
 
+    Public Const ITEM_NAME As String = "Val._Day_Suit"
+
     Sub New()
         '|ID Info|
-        setName("Val._Day_Suit")
+        setName(ITEM_NAME)
         id = 79
         If DDDateTime.isValen Then tier = 2 Else tier = Nothing
 
@@ -20,20 +22,20 @@
         MyBase.slut_var_ind = 78
 
         '|Image Index|
-        MyBase.bsizeneg1 = New Tuple(Of Integer, Boolean, Boolean)(24, False, True)
-        MyBase.bsize0 = New Tuple(Of Integer, Boolean, Boolean)(23, False, True)
-        MyBase.bsize1 = New Tuple(Of Integer, Boolean, Boolean)(120, True, True)
-        MyBase.bsize2 = New Tuple(Of Integer, Boolean, Boolean)(121, True, True)
-        MyBase.bsize3 = New Tuple(Of Integer, Boolean, Boolean)(122, True, True)
+        bsizeneg1 = New Tuple(Of Integer, Boolean, Boolean)(24, False, True)
+        bsize0 = New Tuple(Of Integer, Boolean, Boolean)(23, False, True)
+        bsize1 = New Tuple(Of Integer, Boolean, Boolean)(120, True, True)
+        bsize2 = New Tuple(Of Integer, Boolean, Boolean)(121, True, True)
+        bsize3 = New Tuple(Of Integer, Boolean, Boolean)(122, True, True)
 
-        MyBase.usizeneg1 = New Tuple(Of Integer, Boolean, Boolean)(80, True, True)
-        MyBase.usize0 = New Tuple(Of Integer, Boolean, Boolean)(81, True, True)
-        MyBase.usize1 = New Tuple(Of Integer, Boolean, Boolean)(346, True, True)
-        MyBase.usize2 = New Tuple(Of Integer, Boolean, Boolean)(347, True, True)
-        MyBase.usize3 = New Tuple(Of Integer, Boolean, Boolean)(348, True, True)
+        usizeneg1 = New Tuple(Of Integer, Boolean, Boolean)(80, False, True)
+        usize0 = New Tuple(Of Integer, Boolean, Boolean)(81, False, True)
+        usize1 = New Tuple(Of Integer, Boolean, Boolean)(346, True, True)
+        usize2 = New Tuple(Of Integer, Boolean, Boolean)(347, True, True)
+        usize3 = New Tuple(Of Integer, Boolean, Boolean)(348, True, True)
 
         '|Description|
         setDesc("A handsome black, white, and red suit perfect for a romantic dinner with a signifigant other." & DDUtils.RNRN &
-                        getSizeInformation() & vbcrlf & getStatInformation())
+                        getSizeInformation() & DDUtils.RNRN & getStatInformation())
     End Sub
 End Class

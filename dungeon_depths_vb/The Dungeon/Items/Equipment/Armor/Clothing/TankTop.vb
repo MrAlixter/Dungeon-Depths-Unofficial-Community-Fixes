@@ -1,9 +1,11 @@
 ﻿Public Class TankTop
     Inherits Armor
 
+    Public Const ITEM_NAME As String = "Tank_Top"
+
     Sub New()
         '|ID Info|
-        setName("Tank_Top")
+        setName(ITEM_NAME)
         id = 46
         tier = 2
 
@@ -18,20 +20,20 @@
         value = 400
 
         '|Image Index|
-        MyBase.bsizeneg1 = New Tuple(Of Integer, Boolean, Boolean)(11, False, True)
-        MyBase.bsize0 = New Tuple(Of Integer, Boolean, Boolean)(69, False, True)
-        MyBase.bsize1 = New Tuple(Of Integer, Boolean, Boolean)(66, True, True)
-        MyBase.bsize2 = New Tuple(Of Integer, Boolean, Boolean)(67, True, True)
-        MyBase.bsize3 = New Tuple(Of Integer, Boolean, Boolean)(68, True, True)
+        bsizeneg1 = New Tuple(Of Integer, Boolean, Boolean)(11, False, True)
+        bsize0 = New Tuple(Of Integer, Boolean, Boolean)(69, False, True)
+        bsize1 = New Tuple(Of Integer, Boolean, Boolean)(66, True, True)
+        bsize2 = New Tuple(Of Integer, Boolean, Boolean)(67, True, True)
+        bsize3 = New Tuple(Of Integer, Boolean, Boolean)(68, True, True)
 
-        MyBase.usizeneg1 = New Tuple(Of Integer, Boolean, Boolean)(56, False, True)
-        MyBase.usize0 = New Tuple(Of Integer, Boolean, Boolean)(57, False, True)
-        MyBase.usize1 = New Tuple(Of Integer, Boolean, Boolean)(261, True, True)
-        MyBase.usize2 = New Tuple(Of Integer, Boolean, Boolean)(262, True, True)
-        MyBase.usize3 = New Tuple(Of Integer, Boolean, Boolean)(263, True, True)
+        usizeneg1 = New Tuple(Of Integer, Boolean, Boolean)(56, False, True)
+        usize0 = New Tuple(Of Integer, Boolean, Boolean)(57, False, True)
+        usize1 = New Tuple(Of Integer, Boolean, Boolean)(261, True, True)
+        usize2 = New Tuple(Of Integer, Boolean, Boolean)(262, True, True)
+        usize3 = New Tuple(Of Integer, Boolean, Boolean)(263, True, True)
 
         '|Description|
         setDesc("A grey tanktop made of a breathable fabric for the athletic." & DDUtils.RNRN &
-                          getSizeInformation() & vbcrlf & getStatInformation())
+                          getSizeInformation() & DDUtils.RNRN & getStatInformation())
     End Sub
 End Class

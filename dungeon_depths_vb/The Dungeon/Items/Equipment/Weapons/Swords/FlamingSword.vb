@@ -1,9 +1,11 @@
 ﻿Public Class FlamingSword
     Inherits Sword
 
+    Public Const ITEM_NAME As String = "Flaming_Sword"
+
     Sub New()
         '|ID Info|
-        setName("Flaming_Sword")
+        setName(ITEM_NAME)
         id = 172
         tier = Nothing
 
@@ -17,8 +19,8 @@
 
         '|Description|
         setDesc("A slender red-orange blade that becomes engulfed in a ball of flame once pulled from its jet black scabard." & DDUtils.RNRN &
-                       "This sword will take damage from attacks" & vbCrLf &
-                       getStatInformation())
+                "This sword will take damage from attacks" & DDUtils.RNRN &
+                getStatInformation())
     End Sub
 	
 	 Overrides Function attack(ByRef p As Player, ByRef m As Entity) As Integer

@@ -1,9 +1,11 @@
 ﻿Public Class ManaPotion
     Inherits Item
 
+    Public Const ITEM_NAME As String = "Mana_Potion"
+
     Sub New()
         '|ID Info|
-        setName("Mana_Potion")
+        setName(ITEM_NAME)
         id = 13
         tier = 2
 
@@ -20,13 +22,13 @@
     End Sub
 
     Overrides Sub use(ByRef p As Player)
-        Game.pushLstLog("You drink the " & getName())
+        TextEvent.pushLog("You drink the " & getName())
         Dim phMana = p.mana
 
         Dim meffect As ManaEffect = New ManaEffect
         meffect.apply(p)
 
-        Game.pushLblEvent("You drink the " & getName() & ".  +" & (p.mana - phMana) & " mana!")
+        TextEvent.push("You drink the " & getName() & ".  +" & (p.mana - phMana) & " mana!")
         count -= 1
     End Sub
 End Class

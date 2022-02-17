@@ -31,7 +31,7 @@
     Overrides Sub use(ByRef p As Player)
         If Not hasBeenUsed Then reveal()
         If Me.getUsable() = False Then Exit Sub
-        Game.pushLstLog("You drink the " & getName())
+        TextEvent.pushLog("You drink the " & getName())
 
         setEffectList()
 
@@ -47,7 +47,7 @@
     Sub mimicThrow(ByRef p As Player)
         If Not hasBeenUsed Then reveal()
         If Me.getUsable() = False Then Exit Sub
-        Game.pushLstLog("The " & getName() & " shatters!")
+        TextEvent.pushLog("The " & getName() & " shatters!")
 
         setEffectList()
 
@@ -67,17 +67,17 @@
 
         For Each effect In appliedEffects
             e += vbCrLf & getEffectName(effect) & " applied."
-            Game.pushLstLog(getEffectName(effect) & " applied.")
+            TextEvent.pushLog(getEffectName(effect) & " applied.")
         Next
 
         e += getDisplayBar()
 
-        Game.pushLblEvent(e)
+        TextEvent.push(e)
 
         Game.player1.inv.invNeedsUDate = True
     End Sub
     Private Function getDisplayBar() As String
-        Return If(Not Game.combatmode, vbCrLf & "~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~", "")
+        Return If(Not Game.combat_engaged, vbCrLf & "~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~", "")
     End Function
     Private Function getEffectName(ByRef pe As PEffect) As String
         Return pe.getEffectDesc
@@ -102,6 +102,6 @@
     Public Sub reveal()
         fakeName = getName()
         hasBeenUsed = True
-        Game.btnCancelCast.SelectedIndex = -1
+        Game.lstInventory.SelectedIndex = -1
     End Sub
 End Class

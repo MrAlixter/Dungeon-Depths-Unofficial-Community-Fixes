@@ -1,38 +1,47 @@
 ﻿Public Class CowCosplay
     Inherits Armor
 
-    Sub New()
-        setName("Cow_Cosplay")
+    Public Const ITEM_NAME As String = "Cow_Cosplay"
 
+    Sub New()
+        '|ID Info|
+        setName(ITEM_NAME)
         id = 196
         tier = Nothing
-        usable = false
-        MyBase.d_boost = 1
+
+        '|Item Flags|
+        usable = False
+        anti_slut_ind = 31
+        compress_breast = False
+        hide_dick = False
+
+        '|Stats|
+        d_boost = 1
         count = 0
         value = 50
-        MyBase.anti_slut_ind = 31
 
-        MyBase.bsizeneg1 = New Tuple(Of Integer, Boolean, Boolean)(66, False, True)
-        MyBase.bsize0 = New Tuple(Of Integer, Boolean, Boolean)(267, True, True)
-        MyBase.bsize1 = New Tuple(Of Integer, Boolean, Boolean)(268, True, True)
-        MyBase.bsize2 = New Tuple(Of Integer, Boolean, Boolean)(269, True, True)
-        MyBase.bsize3 = New Tuple(Of Integer, Boolean, Boolean)(270, True, True)
-        MyBase.bsize4 = New Tuple(Of Integer, Boolean, Boolean)(271, True, True)
-        MyBase.bsize5 = New Tuple(Of Integer, Boolean, Boolean)(272, True, True)
-        MyBase.bsize6 = New Tuple(Of Integer, Boolean, Boolean)(273, True, True)
-        MyBase.bsize7 = New Tuple(Of Integer, Boolean, Boolean)(274, True, True)
+        '|Image Index|
+        bsizeneg1 = New Tuple(Of Integer, Boolean, Boolean)(66, False, True)
+        bsize0 = New Tuple(Of Integer, Boolean, Boolean)(267, True, True)
+        bsize1 = New Tuple(Of Integer, Boolean, Boolean)(268, True, True)
+        bsize2 = New Tuple(Of Integer, Boolean, Boolean)(269, True, True)
+        bsize3 = New Tuple(Of Integer, Boolean, Boolean)(270, True, True)
+        bsize4 = New Tuple(Of Integer, Boolean, Boolean)(271, True, True)
+        bsize5 = New Tuple(Of Integer, Boolean, Boolean)(272, True, True)
+        bsize6 = New Tuple(Of Integer, Boolean, Boolean)(273, True, True)
+        bsize7 = New Tuple(Of Integer, Boolean, Boolean)(274, True, True)
 
-        MyBase.usizeneg1 = New Tuple(Of Integer, Boolean, Boolean)(46, False, True)
-        MyBase.usize0 = New Tuple(Of Integer, Boolean, Boolean)(158, True, True)
-        MyBase.usize1 = New Tuple(Of Integer, Boolean, Boolean)(159, True, True)
-        MyBase.usize2 = New Tuple(Of Integer, Boolean, Boolean)(160, True, True)
-        MyBase.usize3 = New Tuple(Of Integer, Boolean, Boolean)(161, True, True)
-        MyBase.usize4 = New Tuple(Of Integer, Boolean, Boolean)(162, True, True)
-        MyBase.usize5 = New Tuple(Of Integer, Boolean, Boolean)(163, True, True)
-        MyBase.compress_breast = False
-        MyBase.hide_dick = False
+        usizeneg1 = New Tuple(Of Integer, Boolean, Boolean)(46, False, True)
+        usize0 = New Tuple(Of Integer, Boolean, Boolean)(158, True, True)
+        usize1 = New Tuple(Of Integer, Boolean, Boolean)(159, True, True)
+        usize2 = New Tuple(Of Integer, Boolean, Boolean)(160, True, True)
+        usize3 = New Tuple(Of Integer, Boolean, Boolean)(161, True, True)
+        usize4 = New Tuple(Of Integer, Boolean, Boolean)(162, True, True)
+        usize5 = New Tuple(Of Integer, Boolean, Boolean)(163, True, True)
 
+        '|Description|
         setDesc("A cow print bra created to hold cow sized breasts." & DDUtils.RNRN &
-                                     getSizeInformation() & vbcrlf & getStatInformation())
+                getSizeInformation() & DDUtils.RNRN &
+                getStatInformation())
     End Sub
 End Class

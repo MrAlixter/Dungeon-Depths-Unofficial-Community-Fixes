@@ -49,16 +49,16 @@
             Monster.targetRoute(m)
             Game.toCombat(m)
 
-            Game.pushLblCombatEvent(("The golden statue comes to life, and " & m.getName() & " attacks!"))
-            Game.pushLstLog(("The golden statue comes to life, and " & m.getName() & " attacks!"))
+            TextEvent.pushCombat(("The golden statue comes to life, and " & m.getName() & " attacks!"))
+            TextEvent.pushLog(("The golden statue comes to life, and " & m.getName() & " attacks!"))
 
             Game.player1.perks(perk.seventailsstage) = 1
 
             pos = New Point(-1, -1)
             Game.drawBoard()
         Else
-            Game.pushLstLog(desc)
-            Game.pushLblEvent(desc)
+            TextEvent.pushLog(desc)
+            TextEvent.push(desc)
         End If
     End Sub
 

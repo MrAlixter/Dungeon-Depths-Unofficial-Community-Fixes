@@ -1,14 +1,17 @@
 ﻿Public Class CatEars
-    'CatEars is a useable item that gives the player cat ears
     Inherits Item
+
+    Public Const ITEM_NAME As String = "Cat_Ears"
+
+    'CatEars is a useable item that gives the player cat ears
     Sub New()
         '|ID Info|
-        setName("Cat_Ears")
+        setName(ITEM_NAME)
         id = 15
         tier = Nothing
 
         '|Item Flags|
-        usable = true
+        usable = True
 
         '|Stats|
         count = 0

@@ -10,8 +10,8 @@
     Public Overrides Sub effect()
         Dim p = MyBase.getUser
         p.mana += 15
-        Game.pushLstLog("Ritual of Mana!")
-        Game.pushLblEvent("Ritual of Mana!" & vbCrLf & "Generate 15 mana, with a stamina cost based on the user's existing mana.")
+        TextEvent.pushLog("Ritual of Mana!")
+        TextEvent.push("Ritual of Mana!" & vbCrLf & "Generate 15 mana, with a stamina cost based on the user's existing mana.")
     End Sub
 
     Public Overrides Function getCost() As Integer

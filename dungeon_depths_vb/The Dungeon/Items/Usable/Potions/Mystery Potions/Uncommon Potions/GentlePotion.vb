@@ -1,8 +1,11 @@
 ﻿Public Class GentlePotion
     Inherits MysteryPotion
+
+    Public Const ITEM_NAME As String = "Gentle_Potion"
+
     Sub New()
         '|ID Info|
-        setName("Gentle_Potion")
+        setName(ITEM_NAME)
         id = 27
         tier = 2
 

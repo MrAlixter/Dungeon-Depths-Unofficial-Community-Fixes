@@ -4,7 +4,7 @@
     Private Shared sosIND As SpellOrSpec = SpellOrSpec.SPECIAL
 
     Shared Sub toPNLCast(sender As Object, e As EventArgs, ByRef p As Player, ByRef n As NPC, ByVal sos As SpellOrSpec)
-        If Not Game.lblEventOnClose Is Nothing Then
+        If Not TextEvent.lblEventOnClose Is Nothing Then
             Game.doLblEventOnClose()
             Game.closeLblEvent()
             Exit Sub
@@ -19,7 +19,7 @@
 
             Dim knownSpecials = DDUtils.union(p.knownSpecials, DDUtils.cboxToList(Game.cboxSpec.Items))
 
-            If knownSpecials.Count <= 0 Then Game.pushLblEvent("You don't know any specials!") : Exit Sub
+            If knownSpecials.Count <= 0 Then TextEvent.push("You don't know any specials!") : Exit Sub
             For Each s In knownSpecials
                 If Not sosDescs.ContainsKey(s) Then sosDescs.Add(s, Special.specialList(s).getDesc(p, p.currTarget)) : Game.cboxCast.Items.Add(s)
             Next
@@ -29,7 +29,7 @@
         ElseIf sos = SpellOrSpec.SPELL Then
             p.magicRoute()
 
-            If p.knownSpells.Count <= 0 Then Game.pushLblEvent("You don't know any spells!") : Exit Sub
+            If p.knownSpells.Count <= 0 Then TextEvent.push("You don't know any spells!") : Exit Sub
             For Each s In p.knownSpells
                 If Not sosDescs.ContainsKey(s) Then sosDescs.Add(s, Spell.spellList(s).getDesc(p, p.currTarget)) : Game.cboxCast.Items.Add(s)
             Next
@@ -65,7 +65,7 @@
     End Sub
 
     Shared Sub doCastUse(sender As Object, e As EventArgs, ByRef p As Player)
-        If Game.combatmode Then
+        If Game.combat_engaged Then
             If sosIND = SpellOrSpec.SPECIAL Then
                 p.nextCombatAction = Sub(t As Entity) Special.specPerform(t, Game.player1, Game.cboxCast.Text)
             Else
@@ -91,6 +91,6 @@
     Shared Sub fromPNLCast(sender As Object, e As EventArgs, ByRef p As Player)
         Game.lblEvent.Focus()
         Game.pnlCastUse.Visible = False
-        If Game.combatmode Then Game.pnlCombat.Visible = True
+        If Game.combat_engaged Then Game.pnlCombat.Visible = True
     End Sub
 End Class

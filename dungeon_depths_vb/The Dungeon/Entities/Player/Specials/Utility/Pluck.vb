@@ -14,7 +14,7 @@
         Next
 
         If potentialSteals.Count < 1 Then
-            Game.pushLogAndEvent(CStr("Pluck! " & getTarget.title & MyBase.getTarget.getName & " doesn't really have anything to steal..."))
+            TextEvent.pushAndLog(CStr("Pluck! " & getTarget.title & MyBase.getTarget.getName & " doesn't really have anything to steal..."))
         Else
             Dim i As Item = potentialSteals(Int(Rnd() * potentialSteals.Count))
             getTarget.inv.add(i.id, -1)
@@ -22,7 +22,7 @@
 
             getUser.UIupdate()
 
-            Game.pushLogAndEvent(CStr("Pluck!  You snatch yourself a " & i.getName & " from" & getTarget.title.ToLower & MyBase.getTarget.getName & "'s belongings."))
+            TextEvent.pushAndLog(CStr("Pluck!  You snatch yourself a " & i.getName & " from" & getTarget.title.ToLower & MyBase.getTarget.getName & "'s belongings."))
         End If
     End Sub
 

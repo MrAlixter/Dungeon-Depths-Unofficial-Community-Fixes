@@ -42,19 +42,19 @@
         If shouldRun Then runAway() : Exit Sub
 
         If Int(Rnd() * 2) = 0 And getATK() < 67 Then
-            Game.pushLogAndEvent((getName() & " casts Super Fireball!"))
+            TextEvent.pushAndLog((getName() & " casts Super Fireball!"))
 
             hit(67, target)
         ElseIf target.getSPD > getSPD() Then
-            Game.pushLogAndEvent((getName() & " casts Swifter Haunches!  " & r_pronoun & " SPD raises massively..."))
+            TextEvent.pushAndLog((getName() & " casts Swifter Haunches!  " & r_pronoun & " SPD raises massively..."))
 
             speed *= 4
         ElseIf target.getATK > getATK() Then
-            Game.pushLogAndEvent((getName() & " casts Sharper Claws!  " & r_pronoun & " ATK raises massively..."))
+            TextEvent.pushAndLog((getName() & " casts Sharper Claws!  " & r_pronoun & " ATK raises massively..."))
 
             attack *= 4
         Else
-            Game.pushLogAndEvent((getName() & " slashes at you!"))
+            TextEvent.pushAndLog((getName() & " slashes at you!"))
 
             MyBase.attackCMD(target)
         End If
@@ -62,14 +62,14 @@
 
     Public Overrides Function reactToSpell(spell As String) As Boolean
         If spell.Contains("Polymorph") Or spell.Contains("Turn to") Or spell.Contains("Petrify") Then
-            Game.pushLogAndEvent("Seven-Tails grins as the spell washes over her, to no effect!")
+            TextEvent.pushAndLog("Seven-Tails grins as the spell washes over her, to no effect!")
             Return False
         End If
 
         If Game.player1.getWIL < 21 Then
-            Game.pushLstLog("Seven-Tails grins as the spell washes over her, to no effect!" & DDUtils.RNRN &
+            TextEvent.pushLog("Seven-Tails grins as the spell washes over her, to no effect!" & DDUtils.RNRN &
                             """Ooh, you need a deeper resolve for that one to do anything, dummy!  I'd say you're about... " & 21 - Game.player1.getWIL & " WIL points short...""")
-            Game.pushLblCombatEvent("Seven-Tails grins as the spell washes over her, to no effect!")
+            TextEvent.pushCombat("Seven-Tails grins as the spell washes over her, to no effect!")
             Return False
         End If
 
@@ -78,11 +78,11 @@
 
     Public Overrides Sub takeDMG(dmg As Integer, ByRef source As Entity)
         If dmg >= getIntHealth() And (health = 1 Or health = 0.66 Or health = 0.33) Then
-            Game.pushLogAndEvent("Seven-Tails stumbles out of the way of the attack!")
+            TextEvent.pushAndLog("Seven-Tails stumbles out of the way of the attack!")
 
             dmg = getIntHealth() - 1
         ElseIf Int(Rnd() * 2) = 0 Then
-            Game.pushLogAndEvent("Seven-Tails deftly avoids the attack!")
+            TextEvent.pushAndLog("Seven-Tails deftly avoids the attack!")
 
             Exit Sub
         End If
@@ -92,7 +92,7 @@
         shouldRun = shouldRunST()
     End Sub
     Public Overrides Sub takeCritDMG(dmg As Integer, ByRef source As Entity)
-        Game.pushLogAndEvent("Seven-Tails lets out a little ""eep!"" as she dodges what would have been a critical hit...")
+        TextEvent.pushAndLog("Seven-Tails lets out a little ""eep!"" as she dodges what would have been a critical hit...")
         MyBase.takeDMG(1, source)
         shouldRun = shouldRunST()
     End Sub
@@ -110,7 +110,7 @@
         If getIntHealth() <= 2 Then die() : Exit Sub
         shouldRun = False
         Game.fromCombat()
-        Game.pushLblEvent("With a poof of smoke, " & getName() & " turns into a fox and flees into the forest...")
+        TextEvent.push("With a poof of smoke, " & getName() & " turns into a fox and flees into the forest...")
     End Sub
 
     Public Overrides Sub die(ByRef cause As Entity)
@@ -121,18 +121,18 @@
 
         shouldRun = False
         Game.fromCombat()
-        Game.pushLblEvent("With a poof of smoke, Seven-Tails teleports backwards, placing some distance between the two of you." & DDUtils.RNRN &
+        TextEvent.push("With a poof of smoke, Seven-Tails teleports backwards, placing some distance between the two of you." & DDUtils.RNRN &
                           """You..."" she mutters, venom dripping in her tone, ""I refuse to lose to the likes of you...""" & DDUtils.RNRN &
                           "An inferno kicks up at her feet, and seven lines of fire rise out of the air behind her.  As she raises her arms, they spiral together into a seven-sided ring, and she boldly declares ""BEHOLD, MY ULTIMATE TECHNIQUE!  This spell is the PINNACLE of pyrotechnics, capable of rending the VERY SOUL of ANY who would dare stand against it.""" & DDUtils.RNRN &
                           "Stiffling a smug giggle, she continues, ""Normally such an overwhelming spell would backfire 5 of 6 times even for a master of flame magic, but my ability 'LUCKY 7' allows me to cheat the VERY LAWS OF PROBABILITY!  PREPARE YOURSELF, FOR THE ALL-CONSUMING BLAZE OF MY '7th RING'!""" & DDUtils.RNRN &
                           "You brace yourself for an impact, as a number strobes of heat ignite the surrounding foliage.  As the ring begins spinning in place though, Seven-Tails' maniacal grin slowly erodes.  ""Bu-bu-but the o-odds of t-that would only be one in t-three milli...""" & DDUtils.RNRN &
                           "Before she has time to let out any more than an ""eep!"", the blazing wheel erupts into a thick, blinding cloud of black ash.  As the plume settles down it's clear that your opponent is nowhere to be seen, although there does seem to be another ornemental fox statue in her place.", AddressOf deathStage2)
-        Game.pushLstLog("Seven-Tails casts 7th Ring... but it backfires...")
+        TextEvent.pushLog("Seven-Tails casts 7th Ring... but it backfires...")
     End Sub
     Private Sub deathStage2()
         Game.pnlEvent.Visible = False
 
-        Game.combatmode = True
+        Game.combat_engaged = True
         MyBase.die(Game.player1)
         Game.drawBoard()
     End Sub
@@ -142,27 +142,27 @@
                   "She waves her hand, and suddenly you start to feel a lot lighter.  With a *pomph*, you find yourself forced into an immobile pose as your lips begin to puff up into a permenant 'O' shape.  As your eyes widen in suprise, your expression settles as it becomes painted on to your smooth face." & DDUtils.RNRN &
                   """HA!  Oh, she's gonna get a kick out of you, the resemblance is uncanny!"" she laughs, tossing you up in the air.  As you slowly drift to the ground, the air ripples around you..."
         Game.picPortrait.BackgroundImage = Portrait.CreateBMP({Portrait.nullImg, Game.pic9tailsBimbo.BackgroundImage})
-        Game.pushLblEvent(out, AddressOf stailsDeath1)
+        TextEvent.push(out, AddressOf stailsDeath1)
     End Sub
     Public Sub stailsDeath1()
         Dim p = Game.player1
 
         p.pos = Game.currFloor.randPoint
-        Game.pushLblEvent("With an audible *pop*, you suddenly find yourself in another part of the dungeon, your immobile form dropping at the feet of another kitsune.  Each of her nine tails jolts straight up in surprise, and she takes a deft leap backwards as she draws a red-hot blade.", AddressOf stailsDeath2)
+        TextEvent.push("With an audible *pop*, you suddenly find yourself in another part of the dungeon, your immobile form dropping at the feet of another kitsune.  Each of her nine tails jolts straight up in surprise, and she takes a deft leap backwards as she draws a red-hot blade.", AddressOf stailsDeath2)
         Game.drawBoard()
     End Sub
     Public Sub stailsDeath2()
         Dim p = Game.player1
 
         Game.picNPC.BackgroundImage = ShopNPC.npcLib.atrs(0).getAt(65)
-        Game.pushNPCDialog("AHHH, what the hell!  Where did...  Why would...  WHAT?!?", AddressOf stailsDeath3)
+        TextEvent.pushNPCDialog("AHHH, what the hell!  Where did...  Why would...  WHAT?!?", AddressOf stailsDeath3)
     End Sub
     Public Sub stailsDeath3()
         Dim p = Game.player1
 
         'Game.picNPC.BackgroundImage = ShopNPC.npcLib.atrs(0).getAt(66)
         Game.picNPC.Visible = False
-        Game.pushLblEvent("As she relaxes her posture and her suprise fades into visible annoyance, the kitsune angles her weapon in your general direction. " & DDUtils.RNRN &
+        TextEvent.push("As she relaxes her posture and her suprise fades into visible annoyance, the kitsune angles her weapon in your general direction. " & DDUtils.RNRN &
                           """Clearly you're a product of my sister's work...  I don't suppose you were one of her opponents, were you?""" & DDUtils.RNRN &
                           "With a rush of scorching wind, the edge of her blade glows white and the air surrounding it bursts into flame.  As the blaze engulfs you, her expression hardens and she continues," & DDUtils.RNRN &
                           """Well, you should know for the rest of whatever future awaits you...""", AddressOf stailsDeath4)
@@ -172,14 +172,14 @@
 
         Game.picNPC.BackgroundImage = ShopNPC.npcLib.atrs(0).getAt(66)
         Game.picNPC.Visible = True
-        Game.pushNPCDialog("""...that I am nothing like my sister.""" & DDUtils.RNRN &
+        TextEvent.pushNPCDialog("""...that I am nothing like my sister.""" & DDUtils.RNRN &
                            "Press any non combat key to continue...", AddressOf p.die)
     End Sub
 
     '|Arachne Fight|
     Public Sub arachneTF()
-        Game.pushLstLog((getName() & " casts self polymorph, becoming an arachne!"))
-        Game.pushLblCombatEvent((getName() & " casts self polymorph, becoming an arachne!"))
+        TextEvent.pushLog((getName() & " casts self polymorph, becoming an arachne!"))
+        TextEvent.pushCombat((getName() & " casts self polymorph, becoming an arachne!"))
         form = "Fire-Bite Arachne"
         maxHealth = 777
         attack = 77
@@ -193,15 +193,15 @@
     Public Sub aAttack(ByRef target As Entity)
         If Int(Rnd() * 2) = 0 Then
             Dim tATK As Integer = CInt(attack)
-            Game.pushLstLog((getName() & " casts Super Fireball!"))
-            Game.pushLblCombatEvent((getName() & " casts Super Fireball!"))
+            TextEvent.pushLog((getName() & " casts Super Fireball!"))
+            TextEvent.pushCombat((getName() & " casts Super Fireball!"))
             attack *= 2
             MyBase.attackCMD(target)
 
             attack = tATK
         Else
-            Game.pushLstLog((getName() & " goes in for a bite!"))
-            Game.pushLblCombatEvent((getName() & " goes in for a bite!"))
+            TextEvent.pushLog((getName() & " goes in for a bite!"))
+            TextEvent.pushCombat((getName() & " goes in for a bite!"))
             MyBase.attackCMD(target)
             If Not target.getPlayer Is Nothing Then target.getPlayer.perks(perk.burn) = 3
         End If
@@ -209,8 +209,8 @@
 
     '|Dragon Fight|
     Public Sub dragonTF()
-        Game.pushLstLog((getName() & " casts self polymorph, becoming a dragon!"))
-        Game.pushLblCombatEvent((getName() & " casts self polymorph, becoming a dragon!"))
+        TextEvent.pushLog((getName() & " casts self polymorph, becoming a dragon!"))
+        TextEvent.pushCombat((getName() & " casts self polymorph, becoming a dragon!"))
         Game.picNPC.Visible = False
         form = "Horned Dragon"
         maxHealth = 777
@@ -224,8 +224,8 @@
     End Sub
     Public Sub dAttack(ByRef target As Entity)
         If Int(Rnd() * 2) = 0 Then
-            Game.pushLstLog((getName() & " swings a claw at you!"))
-            Game.pushLblCombatEvent((getName() & " swings a claw at you!"))
+            TextEvent.pushLog((getName() & " swings a claw at you!"))
+            TextEvent.pushCombat((getName() & " swings a claw at you!"))
 
             MyBase.attackCMD(target)
         Else
@@ -243,15 +243,15 @@
                 target.inv.item(ownedPotions(i).getAName).use(Game.player1)
             End If
 
-            Game.pushLstLog(out)
-            Game.pushLblCombatEvent(getName() & " swings their tail, knocking you back!")
+            TextEvent.pushLog(out)
+            TextEvent.pushCombat(getName() & " swings their tail, knocking you back!")
         End If
     End Sub
 
     '|Succubus Fight|
     Public Sub succubusTF()
-        Game.pushLstLog((getName() & " casts self polymorph, becoming a trio of succubi!"))
-        Game.pushLblCombatEvent((getName() & " casts self polymorph, becoming a trio of succubi!"))
+        TextEvent.pushLog((getName() & " casts self polymorph, becoming a trio of succubi!"))
+        TextEvent.pushCombat((getName() & " casts self polymorph, becoming a trio of succubi!"))
         form = "Trio of Succubi"
         maxHealth = 666
         attack = 66

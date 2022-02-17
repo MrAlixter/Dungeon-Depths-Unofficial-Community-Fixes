@@ -1,14 +1,24 @@
 ﻿Public Class BlindPotion
     Inherits MysteryPotion
+
+    Public Const ITEM_NAME As String = "Blinding_Potion"
+
     Sub New()
-        setName("Blinding_Potion")
-        setDesc("A vibrant-looking potion")
+        '|ID Info|
+        setName(ITEM_NAME)
         id = 93
         tier = 2
-        usable = true
+
+        '|Item Flags|
+        usable = True
+        MyBase.onBuy = AddressOf reveal
+
+        '|Stats|
         count = 0
         value = 350
-        MyBase.onBuy = AddressOf reveal
+
+        '|Description|
+        setDesc("A vibrant-looking potion")
     End Sub
 
     Public Overrides Sub setEffectList()

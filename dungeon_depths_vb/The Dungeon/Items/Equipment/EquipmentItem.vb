@@ -8,7 +8,7 @@
     Protected Friend s_boost As Integer = 0
     Protected Friend w_boost As Integer = 0
 
-    Public cursed As Boolean = False
+    Protected Friend cursed As Boolean = False
 
     Protected owner As Player
 
@@ -36,6 +36,9 @@
     End Function
     Public Overridable Function getWBoost(ByRef p As Player) As Integer
         Return w_boost
+    End Function
+    Public Overridable Function getCursed(ByRef p As Player) As Boolean
+        Return cursed
     End Function
 
     Public Function getStatInformation() As String

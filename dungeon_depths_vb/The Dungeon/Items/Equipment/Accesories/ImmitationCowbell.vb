@@ -1,9 +1,11 @@
 ﻿Public Class ImmitationCowbell
     Inherits Accessory
 
+    Public Const ITEM_NAME As String = "Imitation_Cowbell"
+
     Sub New()
         '|ID Info|
-        setName("Imitation_Cowbell")
+        setName(ITEM_NAME)
         id = 292
         tier = Nothing
 
@@ -26,7 +28,6 @@
         '|Description|
         setDesc("A large metallic bell attached to a collar that rings steadily with its wearer's gait.  Occasionally a small tendril flicks out from the bell..." & DDUtils.RNRN &
                 getStatInformation())
-
     End Sub
 
     Overrides Sub onEquip(ByRef p As Player)

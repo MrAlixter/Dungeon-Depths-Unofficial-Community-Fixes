@@ -20,17 +20,17 @@
                     If tileText = "H" And tileTag < 2 Then
                         tileColor = Color.Black
                         If tileTag = 1 Then tileTag = 2
-                        Game.pushLstLog("Floor " & Game.mDun.numCurrFloor & ": Staircase Discovered")
+                        TextEvent.pushLog("Floor " & Game.mDun.numCurrFloor & ": Staircase Discovered")
                     End If
                     If tileText = "#" And tileTag < 2 Then
                         tileColor = Color.Black
                         If tileTag = 1 Then tileTag = 2
-                        Game.pushLstLog("Chest discovered!")
+                        TextEvent.pushLog("Chest discovered!")
                     End If
                     If tileText = "+" And tileTag < 2 Then
                         tileColor = Color.Navy
                         If tileTag = 1 Then tileTag = 2
-                        Game.pushLstLog("Trap discovered!")
+                        TextEvent.pushLog("Trap discovered!")
                     End If
                 End If
             Next

@@ -96,24 +96,24 @@
     Public Overridable Sub charm(ByRef t As Entity)
         If Int(Rnd() * t.will) < 15 Then
             t.addLust(lustRaiseThres)
-            Game.pushLblEvent("The " & getName() & " used Charm!")
-            Game.pushLstLog("The " & getName() & " used Charm!")
+            TextEvent.push("The " & getName() & " used Charm!")
+            TextEvent.pushLog("The " & getName() & " used Charm!")
         Else
-            Game.pushLblEvent("The " & getName() & " used Charm...but it fails...")
-            Game.pushLstLog("The " & getName() & " used Charm...but it fails...")
+            TextEvent.push("The " & getName() & " used Charm...but it fails...")
+            TextEvent.pushLog("The " & getName() & " used Charm...but it fails...")
         End If
     End Sub
 
     Public Overridable Sub sapPlayer(ByRef p As Player)
         If name.Contains("Charming") Then
             If totalCharms(p) < 3 And Not Int(Rnd() * totalCharms(p) / 2) = 0 AndAlso playerHadCharmsReverted(p) Then
-                Game.pushLblEvent("The " & getName() & " used Drain Charm!  1 charm removed!")
-                Game.pushLstLog("The " & getName() & " used Drain Charm!  1 charm removed!")
+                TextEvent.push("The " & getName() & " used Drain Charm!  1 charm removed!")
+                TextEvent.pushLog("The " & getName() & " used Drain Charm!  1 charm removed!")
             End If
         Else
             p.deLevel(levelsToDrain)
-            Game.pushLblEvent("The " & getName() & " used Drain Soul!  1 level drained!")
-            Game.pushLstLog("The " & getName() & " used Drain Soul!  1 level drained!")
+            TextEvent.push("The " & getName() & " used Drain Soul!  1 level drained!")
+            TextEvent.pushLog("The " & getName() & " used Drain Soul!  1 level drained!")
         End If
     End Sub
     Public Overridable Sub sapEntity(ByRef e As Entity)
@@ -128,9 +128,9 @@
     Public Overrides Sub playerDeath(ByRef p As Player)
         despawn("p-death")
 
-        Game.pushLblEvent("You black out..." & DDUtils.RNRN &
+        TextEvent.push("You black out..." & DDUtils.RNRN &
                         "-1 level!")
-        Game.pushLstLog("You black out...")
+        TextEvent.pushLog("You black out...")
 
         p.deLevel(1)
         p.addLust(-p.lust)

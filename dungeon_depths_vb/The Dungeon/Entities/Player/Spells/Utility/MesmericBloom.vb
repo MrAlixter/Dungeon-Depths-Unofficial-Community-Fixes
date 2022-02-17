@@ -10,10 +10,10 @@
         MyBase.setUOC(False)
     End Sub
     Public Overrides Sub effect()
-        If Game.combatmode Then
+        If Game.combat_engaged Then
             Polymorph.transform(MyBase.getTarget, "Amnesiac")
 
-            Game.pushLogAndEvent(CStr("You poof out a plume of pollen, hypnotizing " & MyBase.getTarget.title & " " & MyBase.getTarget.name & " for 3 turns!"))
+            TextEvent.pushAndLog(CStr("You poof out a plume of pollen, hypnotizing " & MyBase.getTarget.title & " " & MyBase.getTarget.name & " for 3 turns!"))
         Else
             backfire()
         End If

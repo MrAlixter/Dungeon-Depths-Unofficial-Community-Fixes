@@ -16,13 +16,14 @@
         '|Inventory|
         inv.setCount("Gelatinous_Shell", 1)
         inv.setCount("Omni_Charm", 1)
-        'random drops
-        inv.setCount("Vial_of_Slime", CInt(Rnd() * 5))
-        inv.setCount("Fusion_Crystal", CInt(Rnd() * 2))
-        inv.setCount("Advanced_Spellbook", CInt(Rnd() * 2))
-        inv.setCount("Defense_Charm", CInt(Rnd() * 3))
-
         inv.setCount("Gold", 5000)
+        'random drops
+        Dim possible_drops = {"Vial_of_Slime", "Vial_of_Slime", "Vial_of_Slime", "Fusion_Crystal", "Advanced_Spellbook", "Defense_Charm", "Defense_Charm"}
+        Dim number_of_drops = Int(Rnd() * 2) + Int(Rnd() * 3) + 1
+        For i = 0 To number_of_drops
+            Dim r = Int(Rnd() * (possible_drops.Count))
+            inv.setCount(possible_drops(r), 1)
+        Next
 
         '|Dialog Variables|
         title = " "
@@ -42,15 +43,15 @@
     Public Overrides Sub die(ByRef cause As Entity)
         MyBase.die(cause)
 
-        Game.lblEventOnClose = AddressOf die2
+        TextEvent.lblEventOnClose = AddressOf die2
     End Sub
     Private Sub die2()
-        Game.pushPnlYesNo("Take your body back?", AddressOf RandoTF.floor4revert, AddressOf RandoTF.floor4keep)
+        TextEvent.pushYesNo("Take your body back?", AddressOf RandoTF.floor4revert, AddressOf RandoTF.floor4keep)
     End Sub
 
     Public Overrides Sub playerDeath(ByRef p As Player)
         despawn("p-death")
-        Game.pushLblEvent("""Aww, sweetie, if you wanted another go you should have just asked!"", the Ooze Empress chuckles, her aphrodesiac-laced tendrils wrapping you in their arousing embrace.  ""You really do need to relax more.  Lucky for you, I have just the thing..."" she states, plunging your entire body deeper into her slime." & DDUtils.RNRN &
+        TextEvent.push("""Aww, sweetie, if you wanted another go you should have just asked!"", the Ooze Empress chuckles, her aphrodesiac-laced tendrils wrapping you in their arousing embrace.  ""You really do need to relax more.  Lucky for you, I have just the thing..."" she states, plunging your entire body deeper into her slime." & DDUtils.RNRN &
                           "As the pleasure once again overtakes you, you resign yourself to needing to try again.  Well, maybe not right away...", AddressOf oEmpDeathPt2)
     End Sub
     Sub oEmpDeathPt2()
@@ -58,7 +59,7 @@
         p.ongoingTFs.add(New RandoTF())
         p.sState.save(p)
         p.pState.save(p)
-        Game.pushLblEvent("You awaken once again, in another body, in another part of the dungeon.")
+        TextEvent.push("You awaken once again, in another body, in another part of the dungeon.")
 
         p.pos = Game.currFloor.randPoint
 

@@ -23,7 +23,7 @@
         Dim out = ""
 
         'equip clothes
-        Equipment.clothesChange(p, "Naked")
+        EquipmentDialogBackend.armorChange(p, "Naked")
         p.changeForm("Blowup Doll")
 
         'bu doll transformation
@@ -50,7 +50,7 @@
                "Flipping the scrap over, your fingers brush against a rune, activating it with the slightest touch.  You suddenly find yourself feeling immobile, yet strangely light as your body collapses in on itself, leaving you an immobile sheet of vinyl.  A rush of air from the rune returns you to an exagerated female form, though apart from having changed with the rest of your genitalia seems largly unchanged.  Propping yourself up, you try to re-equip your gear only to find that you can barely hold a weapon, let alone wear armor. This ""free sample"" seems to have turned you into a sentient sex doll." & DDUtils.RNRN & "Brown Hat, huh..."
         Dim revertText = Game.lblEvent.Text.Split(vbCrLf)(0)
         If Not revertText.Equals("") Then out = revertText & DDUtils.RNRN & out
-        Game.pushLblEvent(out)
+        TextEvent.push(out)
     End Sub
 
     Public Overrides Sub stopTF()

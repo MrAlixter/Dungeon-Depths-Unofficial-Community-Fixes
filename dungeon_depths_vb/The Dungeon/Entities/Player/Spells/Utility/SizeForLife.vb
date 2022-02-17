@@ -31,7 +31,7 @@
             out = "The spell fizzles out as you cast it, and your chest and " & If(getCaster.dickSize = 0, "dick", "pussy") & " squeeze uncomfortably..."
         End If
 
-        Game.pushLogAndEvent(out)
+        TextEvent.pushAndLog(out)
     End Sub
 
     Public Overrides Function getDesc(ByRef c As Player, ByRef t As NPC) As Object

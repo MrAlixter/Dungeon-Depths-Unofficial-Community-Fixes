@@ -1,19 +1,22 @@
 ﻿Public Class GoldAdornment
     Inherits Armor
 
+    Public Const ITEM_NAME As String = "Gold_Adornment"
+
     Sub New()
         '|ID Info|
-        setName("Gold_Adornment")
+        setName(ITEM_NAME)
         id = 39
         tier = Nothing
 
         '|Item Flags|
         usable = false
-        MyBase.compress_breast = True
-        MyBase.anti_slut_ind = 38
+        compress_breast = True
+        show_underboob = True
+        anti_slut_ind = 38
 
         '|Stats|
-        MyBase.d_boost = 10
+        d_boost = 10
         count = 0
         value = 4100
 
@@ -30,6 +33,6 @@
 
         '|Description|
         setDesc("A shiny golden outfit that leaves little to the imagination.  This is a common choice for those who want to be admired." & DDUtils.RNRN & _
-                        getSizeInformation() & vbcrlf & getStatInformation())
+                        getSizeInformation() & DDUtils.RNRN & getStatInformation())
     End Sub
 End Class

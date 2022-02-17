@@ -22,7 +22,7 @@
     Public Overrides Sub stopTF()
         MyBase.stopTF()
         Game.player1.perks(perk.blind) = -1
-        Game.pushLblEvent("You can see again!")
+        TextEvent.push("You can see again!")
     End Sub
 
     Public Overrides Function getNextStep(stage As Integer) As Action

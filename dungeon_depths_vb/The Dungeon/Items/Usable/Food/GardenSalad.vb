@@ -1,9 +1,11 @@
 ﻿Public Class GardenSalad
     Inherits Food
 
+    Public Const ITEM_NAME As String = "Garden_Salad"
+
     Sub New()
         '|ID Info|
-        setName("Garden_Salad")
+        setName(ITEM_NAME)
         id = 117
         tier = Nothing
 
@@ -24,14 +26,14 @@
         If Int(Rnd() * 2) = 0 Then
             p.health += 50 / p.getMaxHealth
             If p.health > 1 Then p.health = 1.0
-            Game.pushLstLog("+50 health!")
+            TextEvent.pushLog("+50 health!")
         Else
             p.mana += 25
             If p.mana > p.getMaxMana Then p.mana = p.getMaxMana
-            Game.pushLstLog("+25 mana!")
+            TextEvent.pushLog("+25 mana!")
         End If
 
-        If Int(Rnd() * 3) = 0 Or Game.noRNG Then
+        If Int(Rnd() * 3) = 0 Or Settings.active(setting.norng) Then
             p.ongoingTFs.add(New PlantfolkTF())
         End If
 

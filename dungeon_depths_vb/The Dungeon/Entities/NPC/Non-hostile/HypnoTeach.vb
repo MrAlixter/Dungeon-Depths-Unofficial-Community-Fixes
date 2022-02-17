@@ -8,6 +8,7 @@
         '|ID Info|
         name = "Hypnotist Teacher"
         sName = name
+        npc_index = sNPCInd.hypnoteach
 
         '|NPC Flags|
         pronoun = "she"
@@ -82,38 +83,38 @@
             If Int(Rnd() * 20) = 0 And Game.currFloor.floorNumber <> 7 Then
                 MyBase.discount = 0.25
                 img_index = 6
-                Game.pushNPCDialog("Like, hey!  I, like, totally just got back from negot...nagosh...trying to work out a deal with that wizard guy, and it like, didn't go too well..." & DDUtils.RNRN &
+                TextEvent.pushNPCDialog("Like, hey!  I, like, totally just got back from negot...nagosh...trying to work out a deal with that wizard guy, and it like, didn't go too well..." & DDUtils.RNRN &
                                    "But hey, now I feel soooo gooood, and I'm even doing a I'm-having-fun sale!  I ran into Food Guy, and don't tell him I said this but he's, like, toootally a cutie..." & DDUtils.RNRN &
                                    "Anyway, like, he has that panana...penasi...special food thing that can get me back to my normal self!" & DDUtils.RNRN &
                                    "But first, I'm like, totally gonna take a break from being all serious and see what else he has that I can eat! ~🖤")
             ElseIf Int(Rnd() * 20) = 1 And Game.currFloor.floorNumber <> 7 Then
                 img_index = 7
-                Game.pushNPCDialog("Hello, potential customer!  I do not suppose you have seen Mr. Vendor around anywhere, have you?" & DDUtils.RNRN &
+                TextEvent.pushNPCDialog("Hello, potential customer!  I do not suppose you have seen Mr. Vendor around anywhere, have you?" & DDUtils.RNRN &
                                    "He appears to have mixed the cream in my usual morning coffee up with some other malarkey and now, as I am sure you can see, I have begun morphing into some sort of bovine.  Hopefully he has some Panacea on hand, because otherwise I would be in a bit of a prediciment.  Ugh, he is just so..." & DDUtils.RNRN &
                                    "*sigh* Apologies, this is not appropriate buisness talk.  I have spellbooks and manuals for sale, and if you are looking for something specific, I have some recorded hypnotic lessons on tape.  Take a look around, in the meantime I am going to track down my idiot.")
             Else
-                Game.pushNPCDialog("Hello, kind stranger.  I have been researching a new technique combining traditional hypnosis with the arcane arts for more potent effects faster than either is capable of alone." & DDUtils.RNRN &
+                TextEvent.pushNPCDialog("Hello, kind stranger.  I have been researching a new technique combining traditional hypnosis with the arcane arts for more potent effects faster than either is capable of alone." & DDUtils.RNRN &
                                    "While I will admit it is still slightly experimental, I have worked out most of the kinks thanks to some volunteering by the Food Vendor you may have seen around.  Together, we have achived impressive results in long term behavior modification." & DDUtils.RNRN &
                                    "If you're feeling a bit... hesitant, I also have a curated selection of books and manuals for sale.")
             End If
         ElseIf img_index = 1 Then
-            Game.pushNPCDialog("CROAK!")
+            TextEvent.pushNPCDialog("CROAK!")
         ElseIf img_index = 2 Then
-            Game.pushNPCDialog("BLEEEET!")
+            TextEvent.pushNPCDialog("BLEEEET!")
         ElseIf img_index = 3 Then
-            Game.pushNPCDialog("Well salutations there, " & Game.player1.className & ".  Please let me know if there's anything I can do to help you.")
+            TextEvent.pushNPCDialog("Well salutations there, " & Game.player1.className & ".  Please let me know if there's anything I can do to help you.")
         ElseIf img_index = 4 Then
-            Game.pushNPCDialog("HI!  I, like, don't know if it would be smart for me to try to hypno...hypotho...do my thing to you right now, but I totally have some tapes you can use!")
+            TextEvent.pushNPCDialog("HI!  I, like, don't know if it would be smart for me to try to hypno...hypotho...do my thing to you right now, but I totally have some tapes you can use!")
         ElseIf img_index = 8 Or img_index = 12 Then
-            Game.pushNPCDialog("...")
+            TextEvent.pushNPCDialog("...")
         ElseIf img_index = 9 Then
             If Game.player1.formName.Equals("Arachne") Then
-                Game.pushNPCDialog("Oh, it's you.  I'm not sure which is worse, the fact that I'm part bug now, or the fact that your bait actually decieved me.")
+                TextEvent.pushNPCDialog("Oh, it's you.  I'm not sure which is worse, the fact that I'm part bug now, or the fact that your bait actually decieved me.")
             Else
-                Game.pushNPCDialog("You should try this venom.  Or don't.  Say, you don't happen to have a Panacea in your possession, do you?")
+                TextEvent.pushNPCDialog("You should try this venom.  Or don't.  Say, you don't happen to have a Panacea in your possession, do you?")
             End If
         ElseIf img_index = 11 Then
-            Game.pushNPCDialog("I do not approve of plagerism, but...  lucky for you...  I am rather enjoying this form...  nya...")
+            TextEvent.pushNPCDialog("I do not approve of plagerism, but...  lucky for you...  I am rather enjoying this form...  nya...")
         End If
 
         If Game.mDun.numCurrFloor > 5 Then inv.setCount(113, 1) Else inv.setCount(113, 0)
@@ -180,20 +181,20 @@
 
         If form.Equals("Arachne") Then img_index = 10 Else img_index = 5
 
-        Game.pushNPCDialog(s, a)
+        TextEvent.pushNPCDialog(s, a)
         Game.shopMenu.Close()
 
         Game.picNPC.BackgroundImage = picNPC(img_index)
     End Sub
     Public Sub back()
         img_index = preHypnoID
-        Game.pushNPCDialog("So, anything else?")
+        TextEvent.pushNPCDialog("So, anything else?")
         Game.picNPC.BackgroundImage = picNPC(img_index)
         Game.showNPCButtons()
         Game.player1.canMoveFlag = False
     End Sub
     Public Overrides Sub toDoll()
-        Game.pushNPCDialog("...")
+        TextEvent.pushNPCDialog("...")
         Game.picNPC.BackgroundImage = picNPC(8)
 
         discount = 0.5
@@ -224,8 +225,8 @@
         End If
     End Sub
     Public Shared Sub sevenTailsFight()
-        If Game.combatmode Then Game.fromCombat()
-        If Game.npcmode Then Game.hideNPCButtons()
+        If Game.combat_engaged Then Game.fromCombat()
+        If Game.shop_npc_engaged Then Game.hideNPCButtons()
         Game.picNPC.Visible = False
         Game.lblEvent.Visible = False
 
@@ -236,12 +237,12 @@
         Monster.targetRoute(m)
         Game.toCombat(m)
 
-        Game.pushLogAndEvent("With a poof of smoke, the hypnotist shifts into a familiar kitsune and " & m.getName() & " attacks!")
+        TextEvent.pushAndLog("With a poof of smoke, the hypnotist shifts into a familiar kitsune and " & m.getName() & " attacks!")
 
         Game.player1.perks(perk.seventailsstage) = 2
 
         Game.currFloor.beatBoss = False
-        Game.npcmode = False
+        Game.shop_npc_engaged = False
         Game.mDun.floorboss.Add(7, "Seven-Tails")
 
         Game.hteach.pos = New Point(-1, -1)

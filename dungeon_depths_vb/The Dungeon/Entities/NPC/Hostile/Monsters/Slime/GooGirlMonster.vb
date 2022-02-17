@@ -18,6 +18,6 @@
         End If
 
         p.ongoingTFs.add(New GooGirlTF(p.perks(perk.googirltf)))
-        Game.pushLblEvent(out, AddressOf p.update)
+        TextEvent.push(out, AddressOf p.update)
     End Sub
 End Class

@@ -1,12 +1,14 @@
 ﻿Public Class BrokenRemote
     Inherits Item
 
+    Public Const ITEM_NAME As String = "Broken_Remote"
+
     Public Shared forms = {"Half-Gorgon", "Gynoid", "Amazon", "Mindless", "Rando", "Half-Broodmother", "Broodmother", "Minotaur Cow", "Dragon", "Succubus", "Slime", "Bimbo", "Cake", "Blob", "Horse", "Oni", "Alraune", "Minotaur Bull", "Targax", "Half-Dragon (R)", "Tigress", "Succubus (Q)", "Minotaur Cow (B)", "Inversion", "Bimbo (Gold)", "Bunny Girl", "Tigress"}
     Public Shared selectedForm = "Rando"
 
     Sub New()
         '|ID Info|
-        setName("Broken_Remote")
+        setName(ITEM_NAME)
         id = 119
         tier = Nothing
 

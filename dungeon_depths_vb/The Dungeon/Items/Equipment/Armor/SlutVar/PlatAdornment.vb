@@ -1,19 +1,22 @@
 ﻿Public Class PlatAdornment
     Inherits Armor
 
+    Public Const ITEM_NAME As String = "Platinum_Adornment"
+
     Sub New()
         '|ID Info|
-        setName("Platinum_Adornment")
+        setName(ITEM_NAME)
         id = 266
         tier = Nothing
 
         '|Item Flags|
         usable = false
-        MyBase.compress_breast = True
-        MyBase.anti_slut_ind = 265
+        compress_breast = True
+        show_underboob = True
+        anti_slut_ind = 265
 
         '|Stats|
-        MyBase.d_boost = 25
+        d_boost = 25
         count = 0
         value = 6400
 
@@ -31,7 +34,8 @@
         usize4 = New Tuple(Of Integer, Boolean, Boolean)(343, True, True)
 
         '|Description|
-        setDesc("A glistening outfit that leaves little to the imagination for those who want to be stupendously stunning." & DDUtils.RNRN & _
-                        getSizeInformation() & vbcrlf & getStatInformation())
+        setDesc("A glistening outfit that leaves little to the imagination for those who want to be stupendously stunning." & DDUtils.RNRN &
+                getSizeInformation() & DDUtils.RNRN &
+                getStatInformation())
     End Sub
 End Class

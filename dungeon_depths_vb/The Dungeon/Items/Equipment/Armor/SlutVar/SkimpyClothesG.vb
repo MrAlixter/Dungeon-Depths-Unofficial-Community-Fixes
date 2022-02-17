@@ -1,37 +1,39 @@
 ﻿Public Class SkimpyClothesG
     Inherits Armor
 
+    Public Const ITEM_NAME As String = "Skimpy_Clothes_(G)"
+
     Sub New()
         '|ID Info|
-        setName("Skimpy_Clothes_(G)")
+        setName(ITEM_NAME)
         id = 220
         tier = Nothing
 
         '|Item Flags|
         usable = false
-        MyBase.compress_breast = True
+        compress_breast = True
 
         '|Stats|
         count = 0
         value = 0
 
         '|Image Index|
-        MyBase.bsize1 = New Tuple(Of Integer, Boolean, Boolean)(373, True, True)
-        MyBase.bsize2 = New Tuple(Of Integer, Boolean, Boolean)(374, True, True)
-        MyBase.bsize3 = New Tuple(Of Integer, Boolean, Boolean)(375, True, True)
-        MyBase.bsize4 = New Tuple(Of Integer, Boolean, Boolean)(376, True, True)
-        MyBase.bsize5 = New Tuple(Of Integer, Boolean, Boolean)(377, True, True)
+        bsize1 = New Tuple(Of Integer, Boolean, Boolean)(373, True, True)
+        bsize2 = New Tuple(Of Integer, Boolean, Boolean)(374, True, True)
+        bsize3 = New Tuple(Of Integer, Boolean, Boolean)(375, True, True)
+        bsize4 = New Tuple(Of Integer, Boolean, Boolean)(376, True, True)
+        bsize5 = New Tuple(Of Integer, Boolean, Boolean)(377, True, True)
 
-        MyBase.usize1 = New Tuple(Of Integer, Boolean, Boolean)(357, True, True)
-        MyBase.usize2 = New Tuple(Of Integer, Boolean, Boolean)(358, True, True)
-        MyBase.usize3 = New Tuple(Of Integer, Boolean, Boolean)(359, True, True)
-        MyBase.usize4 = New Tuple(Of Integer, Boolean, Boolean)(360, True, True)
-        MyBase.usize5 = New Tuple(Of Integer, Boolean, Boolean)(361, True, True)
+        usize1 = New Tuple(Of Integer, Boolean, Boolean)(357, True, True)
+        usize2 = New Tuple(Of Integer, Boolean, Boolean)(358, True, True)
+        usize3 = New Tuple(Of Integer, Boolean, Boolean)(359, True, True)
+        usize4 = New Tuple(Of Integer, Boolean, Boolean)(360, True, True)
+        usize5 = New Tuple(Of Integer, Boolean, Boolean)(361, True, True)
 
         '|Description|
-        setDesc("A glistening set of clothing that seems almost crafted to show off its wearer's body." & DDUtils.RNRN & _
-                              getSizeInformation() & vbcrlf & getStatInformation())
-
+        setDesc("A glistening set of clothing that seems almost crafted to show off its wearer's body." & DDUtils.RNRN &
+                getSizeInformation() & DDUtils.RNRN &
+                getStatInformation())
     End Sub
 
     Public Overrides Function getAntiSlutInd() As Object

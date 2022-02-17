@@ -1,9 +1,11 @@
 ﻿Public Class ClearPotion
     Inherits Item
 
+    Public Const ITEM_NAME As String = "Clear_Potion"
+
     Sub New()
         '|ID Info|
-        setName("Clear_Potion")
+        setName(ITEM_NAME)
         id = 76
         tier = 1
 
@@ -20,8 +22,8 @@
     End Sub
 
     Overrides Sub use(ByRef p As Player)
-        Game.pushLstLog("You drink the " & getName())
-        Game.pushLblEvent("You drink the " & getName() & ".  -5 stamina, -15 lust!")
+        TextEvent.pushLog("You drink the " & getName())
+        TextEvent.push("You drink the " & getName() & ".  -5 stamina, -15 lust!")
         Dim mseffect As MinstaminaEffect = New MinstaminaEffect
         mseffect.apply(p)
         p.addLust(-15)

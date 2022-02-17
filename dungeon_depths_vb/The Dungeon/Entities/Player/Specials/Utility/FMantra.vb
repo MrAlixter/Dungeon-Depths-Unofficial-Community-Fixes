@@ -7,17 +7,17 @@
         MyBase.setcost(3)
     End Sub
     Public Overrides Sub effect()
-        Game.pushLstLog("Focus Up!")
+        TextEvent.pushLog("Focus Up!")
         If MyBase.getUser.className.Equals("Bimbo") Or MyBase.getUser.className.Equals("Magical Slut") Then
-            Game.pushLblCombatEvent("You, like, totally can't, ummm... focus right now!")
+            TextEvent.pushCombat("You, like, totally can't, ummm... focus right now!")
             Exit Sub
         ElseIf MyBase.getUser.className.Equals("Mindless") Or MyBase.getUser.className.Equals("Unconscious") Or MyBase.getUser.className.Equals("Thrall") Then
-            Game.pushLblCombatEvent("You can't focus right now!")
+            TextEvent.pushCombat("You can't focus right now!")
             Exit Sub
         End If
 
         MyBase.getUser.addLust(-20)
-        Game.pushLblCombatEvent("Focus Up!" & vbCrLf & "-20 Lust.")
+        TextEvent.pushCombat("Focus Up!" & vbCrLf & "-20 Lust.")
     End Sub
 
     Public Overrides Function getDesc(ByRef c As Player, ByRef t As NPC) As Object

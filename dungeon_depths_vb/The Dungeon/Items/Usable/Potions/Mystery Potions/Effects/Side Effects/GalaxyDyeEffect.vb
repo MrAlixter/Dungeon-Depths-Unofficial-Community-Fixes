@@ -2,7 +2,7 @@
     Inherits PEffect
 
     Public Overrides Sub apply(ByRef p As Player)
-        Game.pushLblEvent("You now have galactic hair!")
+        TextEvent.push("You now have galactic hair!")
 
 
         p.prt.haircolor = Color.FromArgb(p.prt.haircolor.A, 127, 77, 157)

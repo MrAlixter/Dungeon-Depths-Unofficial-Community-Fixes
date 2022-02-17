@@ -1,9 +1,11 @@
 ﻿Public Class BewitchedWand
     Inherits Wand
 
+    Public Const ITEM_NAME As String = "Bewitched_Wand"
+
     Sub New()
         '|ID Info|
-        setName("Bewitched_Wand")
+        setName(ITEM_NAME)
         id = 259
         tier = Nothing
 
@@ -19,8 +21,8 @@
 
         '|Description|
         setDesc("A gnarled wooden wand with an unnatural deep violet finish.  Its flow of mana almost feels like the rhythm of a living being." & DDUtils.RNRN &
-                       "Each hit carries a 1 in 4 chance of an additional attack, and a 1 in 4 chance of backfiring." & DDUtils.RNRN &
-                       getStatInformation())
+                "Each hit carries a 1 in 4 chance of an additional attack, and a 1 in 4 chance of backfiring." & DDUtils.RNRN &
+                getStatInformation())
     End Sub
 
     Public Overrides Sub spell(ByRef p As Player, ByRef m As Entity)
@@ -29,8 +31,8 @@
             Dim dmgAA As Integer = 65 + Int(Rnd() * 3) + Int(Rnd() * 3)
 
             m.takeDMG(dmgAA, p)
-            Game.pushLstLog(CStr("You zap the " & m.name & " for " & dmgAA & " damage!"))
-            Game.pushLblCombatEvent(CStr("You zap the " & m.name & " for " & dmgAA & " damage!"))
+            TextEvent.pushLog(CStr("You zap the " & m.name & " for " & dmgAA & " damage!"))
+            TextEvent.pushCombat(CStr("You zap the " & m.name & " for " & dmgAA & " damage!"))
 
             If m.isDead Then Exit Sub
 
@@ -40,8 +42,8 @@
             'Backfire
             Dim dmgBF As Integer = 65 + Int(Rnd() * 3) + Int(Rnd() * 3)
 
-            Game.pushLstLog("Backfire - The wand zaps you!")
-            Game.pushLblCombatEvent("Backfire - The wand zaps you!")
+            TextEvent.pushLog("Backfire - The wand zaps you!")
+            TextEvent.pushCombat("Backfire - The wand zaps you!")
 
             p.takeDMG(Math.Max(dmgBF, p.getIntHealth - 1), p)
 
@@ -57,16 +59,16 @@
         dmg += d31 + d32
 
         m.takeDMG(dmg, p)
-        Game.pushLstLog(CStr("You zap the " & m.name & " for " & dmg & " damage!"))
-        Game.pushLblCombatEvent(CStr("You zap the " & m.name & " for " & dmg & " damage!"))
+        TextEvent.pushLog(CStr("You zap the " & m.name & " for " & dmg & " damage!"))
+        TextEvent.pushCombat(CStr("You zap the " & m.name & " for " & dmg & " damage!"))
 
         durability -= Int(Rnd() * 10) + 5
     End Sub
     Public Sub backfire(ByRef p As Player, ByRef m As Entity)
         Dim dmgBF As Integer = 65 + Int(Rnd() * 3) + Int(Rnd() * 3)
 
-        Game.pushLstLog("Backfire - The wand zaps you!")
-        Game.pushLblCombatEvent("Backfire - The wand zaps you!")
+        TextEvent.pushLog("Backfire - The wand zaps you!")
+        TextEvent.pushCombat("Backfire - The wand zaps you!")
 
         p.takeDMG(Math.Max(dmgBF, p.getIntHealth - 1), p)
     End Sub

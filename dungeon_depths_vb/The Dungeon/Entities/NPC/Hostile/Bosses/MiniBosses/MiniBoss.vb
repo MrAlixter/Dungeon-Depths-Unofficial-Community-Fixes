@@ -1,6 +1,12 @@
 ﻿Public Class MiniBoss
     Inherits Monster
 
+    Sub New()
+        name = "Explorer"
+        setInventory({})
+        setupMonsterOnSpawn()
+    End Sub
+
     Shared Function miniBossFactory(ByVal mIndex As Integer) As MiniBoss
         Select mIndex
             Case 1
@@ -17,7 +23,7 @@
     End Function
     Public Overrides Sub attackCMD(ByRef target As Entity)
         If isStunned Then
-            Game.pushLblEvent(name & " is stunned!")
+            TextEvent.push(name & " is stunned!")
             Exit Sub
         End If
 

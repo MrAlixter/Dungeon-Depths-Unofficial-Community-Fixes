@@ -8,13 +8,13 @@
     End Sub
     Public Overrides Sub effect()
         If MyBase.getCaster.getWIL < MyBase.getTarget.getWIL And Int(Rnd() * 10) = 1 Then
-            Game.pushLblCombatEvent(CStr("Despite the difference in each of your resolves, Your spell hits the " & MyBase.getTarget.name & ", turning " & MyBase.getTarget.r_pronoun & " into a cupcake!"))
-            Game.pushLstLog(CStr("Critical Hit!  Your spell hits the " & MyBase.getTarget.name & ", turning " & MyBase.getTarget.r_pronoun & " into a cupcake!"))
+            TextEvent.pushCombat(CStr("Despite the difference in each of your resolves, Your spell hits the " & MyBase.getTarget.name & ", turning " & MyBase.getTarget.r_pronoun & " into a cupcake!"))
+            TextEvent.pushLog(CStr("Critical Hit!  Your spell hits the " & MyBase.getTarget.name & ", turning " & MyBase.getTarget.r_pronoun & " into a cupcake!"))
         ElseIf MyBase.getCaster.getWIL < MyBase.getTarget.getWIL Then
-            Game.pushLogAndEvent(CStr("You lack the WILL to transform your opponent!"))
+            TextEvent.pushAndLog(CStr("You lack the WILL to transform your opponent!"))
             Exit Sub
         Else
-            Game.pushLogAndEvent(CStr("Your spell hits the " & MyBase.getTarget.name & ", turning " & MyBase.getTarget.r_pronoun & " into a cupcake!"))
+            TextEvent.pushAndLog(CStr("Your spell hits the " & MyBase.getTarget.name & ", turning " & MyBase.getTarget.r_pronoun & " into a cupcake!"))
         End If
 
         MyBase.getCaster.inv.add(35, 1)
@@ -27,7 +27,7 @@
         Polymorph.transform(MyBase.getCaster, "Cake")
 
         MyBase.getCaster.perks(perk.polymorphed) = 1
-        Game.pushLogAndEvent(CStr("You turn yourself into a cake-girl!"))
+        TextEvent.pushAndLog(CStr("You turn yourself into a cake-girl!"))
     End Sub
 
     Public Overrides Function getDesc(ByRef c As Player, ByRef t As NPC) As Object

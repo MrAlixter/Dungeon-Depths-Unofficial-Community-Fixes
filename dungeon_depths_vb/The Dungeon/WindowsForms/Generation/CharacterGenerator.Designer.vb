@@ -45,14 +45,14 @@ Partial Class CharacterGenerator
         Me.btnHC = New System.Windows.Forms.Button()
         Me.btnSC = New System.Windows.Forms.Button()
         Me.btnRandom = New System.Windows.Forms.Button()
-        Me.TextBox1 = New System.Windows.Forms.TextBox()
+        Me.txtName = New System.Windows.Forms.TextBox()
         Me.Label1 = New System.Windows.Forms.Label()
-        Me.ComboBox2 = New System.Windows.Forms.ComboBox()
+        Me.cboxClass = New System.Windows.Forms.ComboBox()
         Me.Label3 = New System.Windows.Forms.Label()
         Me.btnBack = New System.Windows.Forms.Button()
         Me.chkSavePreset = New System.Windows.Forms.CheckBox()
         Me.Label2 = New System.Windows.Forms.Label()
-        Me.cBoxPresets = New System.Windows.Forms.ComboBox()
+        Me.cboxPresets = New System.Windows.Forms.ComboBox()
         CType(Me.picPort, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.SuspendLayout()
         '
@@ -317,16 +317,16 @@ Partial Class CharacterGenerator
         Me.btnRandom.Text = "Randomize"
         Me.btnRandom.UseVisualStyleBackColor = False
         '
-        'TextBox1
+        'txtName
         '
-        Me.TextBox1.BackColor = System.Drawing.Color.Black
-        Me.TextBox1.Font = New System.Drawing.Font("Consolas", 10.18868!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.TextBox1.ForeColor = System.Drawing.Color.White
-        Me.TextBox1.Location = New System.Drawing.Point(12, 31)
-        Me.TextBox1.Name = "TextBox1"
-        Me.TextBox1.Size = New System.Drawing.Size(196, 25)
-        Me.TextBox1.TabIndex = 24
-        Me.TextBox1.Text = "Alex"
+        Me.txtName.BackColor = System.Drawing.Color.Black
+        Me.txtName.Font = New System.Drawing.Font("Consolas", 10.18868!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.txtName.ForeColor = System.Drawing.Color.White
+        Me.txtName.Location = New System.Drawing.Point(12, 31)
+        Me.txtName.Name = "txtName"
+        Me.txtName.Size = New System.Drawing.Size(196, 23)
+        Me.txtName.TabIndex = 24
+        Me.txtName.Text = "Alex"
         '
         'Label1
         '
@@ -335,20 +335,20 @@ Partial Class CharacterGenerator
         Me.Label1.ForeColor = System.Drawing.Color.White
         Me.Label1.Location = New System.Drawing.Point(8, 9)
         Me.Label1.Name = "Label1"
-        Me.Label1.Size = New System.Drawing.Size(54, 19)
+        Me.Label1.Size = New System.Drawing.Size(48, 17)
         Me.Label1.TabIndex = 23
         Me.Label1.Text = "Name:"
         '
-        'ComboBox2
+        'cboxClass
         '
-        Me.ComboBox2.BackColor = System.Drawing.Color.Black
-        Me.ComboBox2.Font = New System.Drawing.Font("Consolas", 10.18868!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.ComboBox2.ForeColor = System.Drawing.Color.White
-        Me.ComboBox2.FormattingEnabled = True
-        Me.ComboBox2.Location = New System.Drawing.Point(12, 84)
-        Me.ComboBox2.Name = "ComboBox2"
-        Me.ComboBox2.Size = New System.Drawing.Size(196, 26)
-        Me.ComboBox2.TabIndex = 26
+        Me.cboxClass.BackColor = System.Drawing.Color.Black
+        Me.cboxClass.Font = New System.Drawing.Font("Consolas", 10.18868!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.cboxClass.ForeColor = System.Drawing.Color.White
+        Me.cboxClass.FormattingEnabled = True
+        Me.cboxClass.Location = New System.Drawing.Point(12, 84)
+        Me.cboxClass.Name = "cboxClass"
+        Me.cboxClass.Size = New System.Drawing.Size(196, 25)
+        Me.cboxClass.TabIndex = 26
         '
         'Label3
         '
@@ -357,7 +357,7 @@ Partial Class CharacterGenerator
         Me.Label3.ForeColor = System.Drawing.Color.White
         Me.Label3.Location = New System.Drawing.Point(8, 62)
         Me.Label3.Name = "Label3"
-        Me.Label3.Size = New System.Drawing.Size(63, 19)
+        Me.Label3.Size = New System.Drawing.Size(56, 17)
         Me.Label3.TabIndex = 25
         Me.Label3.Text = "Class:"
         '
@@ -381,7 +381,7 @@ Partial Class CharacterGenerator
         Me.chkSavePreset.ForeColor = System.Drawing.Color.White
         Me.chkSavePreset.Location = New System.Drawing.Point(611, 357)
         Me.chkSavePreset.Name = "chkSavePreset"
-        Me.chkSavePreset.Size = New System.Drawing.Size(154, 23)
+        Me.chkSavePreset.Size = New System.Drawing.Size(139, 21)
         Me.chkSavePreset.TabIndex = 28
         Me.chkSavePreset.Text = "Save As Preset"
         Me.chkSavePreset.UseVisualStyleBackColor = False
@@ -393,22 +393,22 @@ Partial Class CharacterGenerator
         Me.Label2.ForeColor = System.Drawing.Color.White
         Me.Label2.Location = New System.Drawing.Point(511, 6)
         Me.Label2.Name = "Label2"
-        Me.Label2.Size = New System.Drawing.Size(72, 19)
+        Me.Label2.Size = New System.Drawing.Size(64, 17)
         Me.Label2.TabIndex = 29
         Me.Label2.Text = "Preset:"
         '
-        'cBoxPresets
+        'cboxPresets
         '
-        Me.cBoxPresets.BackColor = System.Drawing.Color.Black
-        Me.cBoxPresets.Font = New System.Drawing.Font("Consolas", 10.18868!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.cBoxPresets.ForeColor = System.Drawing.Color.White
-        Me.cBoxPresets.FormattingEnabled = True
-        Me.cBoxPresets.Items.AddRange(New Object() {"--- (none) ---"})
-        Me.cBoxPresets.Location = New System.Drawing.Point(514, 26)
-        Me.cBoxPresets.Name = "cBoxPresets"
-        Me.cBoxPresets.Size = New System.Drawing.Size(196, 26)
-        Me.cBoxPresets.TabIndex = 30
-        Me.cBoxPresets.Text = "--- (none) ---"
+        Me.cboxPresets.BackColor = System.Drawing.Color.Black
+        Me.cboxPresets.Font = New System.Drawing.Font("Consolas", 10.18868!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.cboxPresets.ForeColor = System.Drawing.Color.White
+        Me.cboxPresets.FormattingEnabled = True
+        Me.cboxPresets.Items.AddRange(New Object() {"--- (none) ---"})
+        Me.cboxPresets.Location = New System.Drawing.Point(514, 26)
+        Me.cboxPresets.Name = "cboxPresets"
+        Me.cboxPresets.Size = New System.Drawing.Size(196, 25)
+        Me.cboxPresets.TabIndex = 30
+        Me.cboxPresets.Text = "--- (none) ---"
         '
         'CharacterGenerator
         '
@@ -416,13 +416,13 @@ Partial Class CharacterGenerator
         Me.BackColor = System.Drawing.Color.Black
         Me.ClientSize = New System.Drawing.Size(877, 396)
         Me.ControlBox = False
-        Me.Controls.Add(Me.cBoxPresets)
+        Me.Controls.Add(Me.cboxPresets)
         Me.Controls.Add(Me.Label2)
         Me.Controls.Add(Me.chkSavePreset)
         Me.Controls.Add(Me.btnBack)
-        Me.Controls.Add(Me.ComboBox2)
+        Me.Controls.Add(Me.cboxClass)
         Me.Controls.Add(Me.Label3)
-        Me.Controls.Add(Me.TextBox1)
+        Me.Controls.Add(Me.txtName)
         Me.Controls.Add(Me.Label1)
         Me.Controls.Add(Me.btnRandom)
         Me.Controls.Add(Me.btnSC)
@@ -479,12 +479,12 @@ Partial Class CharacterGenerator
     Friend WithEvents btnHC As System.Windows.Forms.Button
     Friend WithEvents btnSC As System.Windows.Forms.Button
     Friend WithEvents btnRandom As System.Windows.Forms.Button
-    Friend WithEvents TextBox1 As System.Windows.Forms.TextBox
+    Friend WithEvents txtName As System.Windows.Forms.TextBox
     Friend WithEvents Label1 As System.Windows.Forms.Label
-    Friend WithEvents ComboBox2 As System.Windows.Forms.ComboBox
+    Friend WithEvents cboxClass As System.Windows.Forms.ComboBox
     Friend WithEvents Label3 As System.Windows.Forms.Label
     Friend WithEvents btnBack As Button
     Friend WithEvents chkSavePreset As System.Windows.Forms.CheckBox
     Friend WithEvents Label2 As System.Windows.Forms.Label
-    Friend WithEvents cBoxPresets As System.Windows.Forms.ComboBox
+    Friend WithEvents cboxPresets As System.Windows.Forms.ComboBox
 End Class

@@ -1,22 +1,25 @@
 ﻿Public Class FamCostume
     Inherits Armor
 
+    Public Const ITEM_NAME As String = "Familiar's_Costume"
+
     Dim oldHat As Tuple(Of Integer, Boolean, Boolean) = New Tuple(Of Integer, Boolean, Boolean)(0, True, False)
+
     Sub New()
         '|ID Info|
-        setName("Familiar's_Costume")
+        setName(ITEM_NAME)
         id = 250
         tier = Nothing
 
         '|Item Flags|
-        usable = false
-        MyBase.compress_breast = True
-        MyBase.droppable = False
-        MyBase.anti_slut_ind = 166
+        usable = False
+        compress_breast = True
+        droppable = False
+        anti_slut_ind = 166
 
         '|Stats|
-        MyBase.d_boost = 1
-        MyBase.m_boost = 20
+        d_boost = 1
+        m_boost = 20
         count = 0
         value = 200
 
@@ -35,8 +38,9 @@
 
         '|Description|
         setDesc("A skimpy black bunny suit worn by those who aren't afraid of the dark." & DDUtils.RNRN &
-                       "When worn by a bunny girl, improves speed and will" & DDUtils.RNRN &
-                        getSizeInformation() & vbcrlf & getStatInformation())
+                "When worn by a bunny girl, improves speed and will" & DDUtils.RNRN &
+                getSizeInformation() & DDUtils.RNRN &
+                getStatInformation())
     End Sub
 
     Public Overrides Function getSBoost(ByRef p As Player) As Integer
@@ -52,7 +56,7 @@
     Public Overrides Function getDesc() As Object
         Return "A skimpy black bunny suit worn by those who aren't afraid of the dark." & DDUtils.RNRN &
                 "When worn by a bunny girl, improves speed and will" & DDUtils.RNRN &
-                 getSizeInformation() & vbcrlf & getStatInformation()
+                 getSizeInformation() & DDUtils.RNRN & getStatInformation()
     End Function
 
     Public Overrides Sub onEquip(ByRef p As Player)

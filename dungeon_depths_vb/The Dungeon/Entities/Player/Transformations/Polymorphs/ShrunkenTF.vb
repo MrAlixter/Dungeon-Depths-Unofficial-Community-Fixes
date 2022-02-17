@@ -27,6 +27,6 @@
 
         out += "The shrink ray in your hands doesn't do anything, despite your pulling of its trigger numerous times.  As it begins emitting a high frequency whine, it occurs to you that perhaps something might be wrong.  As your line of sight starts lowering on the horizon, your heart sinks and you toss aside the broken ray gun.  As soon as it makes contact with the ground, however, it fires a highly concentrated beam that hits you straight in the chest.  Nearly instantaniously you and all of your belongings shrink down to the size of a small pebble.  Fortunately, it doesn't seem like your opponent has lost track of you for now, but given how small you are you may want to avoid direct conflict for now."
 
-        Game.pushLblEvent(out)
+        TextEvent.push(out)
     End Sub
 End Class

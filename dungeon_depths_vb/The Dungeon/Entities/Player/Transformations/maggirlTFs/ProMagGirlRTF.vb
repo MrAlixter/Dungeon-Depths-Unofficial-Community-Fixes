@@ -31,19 +31,14 @@
 
     Public Overrides Sub setSpells(ByRef p As Player)
         MyBase.setSpells(p)
-        If Not p.knownSpecials.Contains("Inferno Aura") Then p.knownSpecials.Add("Inferno Aura")
-        Game.pushLstLog("'Inferno Aura' special learned!")
-
-        If Not p.knownSpecials.Contains("Megaton Punch") Then p.knownSpecials.Add("Megaton Punch")
-        Game.pushLstLog("'Megaton Punch' special learned!")
-
-        If Not p.knownSpecials.Contains("Gigaton Punch") Then p.knownSpecials.Add("Gigaton Punch")
-        Game.pushLstLog("'Gigaton Punch' special learned!")
+        p.learnSpecial("Inferno Aura")
+        p.learnSpecial("Megaton Punch")
+        p.learnSpecial("Gigaton Punch")
     End Sub
     Overrides Sub tfClothes(ByRef p As Player)
         If p.inv.item(211).count < 1 Then p.inv.add(211, 1)
 
         Equipment.accChange(p, "Nothing")
-        Equipment.clothesChange(p, "Pro_Mag._G._Outfit_(R)")
+        EquipmentDialogBackend.armorChange(p, "Pro_Mag._G._Outfit_(R)")
     End Sub
 End Class

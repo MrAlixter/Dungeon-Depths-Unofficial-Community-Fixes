@@ -28,7 +28,7 @@
 
     'introduction conversation
     Sub askForName()
-        Game.pushPnlYesNo("Tell the Fae your name?", AddressOf giveName, AddressOf declineToGiveName1)
+        TextEvent.pushYesNo("Tell the Fae your name?", AddressOf giveName, AddressOf declineToGiveName1)
     End Sub
     Sub giveName()
         Objective.showNPC(ShopNPC.npcLib.atrs(0).getAt(50), "Interesting, interesting, that's a solid name!  It suits you well!  Say, " & Game.player1.name & ", I don't suppose you could do me a favor before we're off...", AddressOf askForFavor)
@@ -37,7 +37,7 @@
         Objective.showNPC(ShopNPC.npcLib.atrs(0).getAt(54), "Ugh, c'mon, it's just a name...  It's going to get reeeeal awkward if I'm just calling you ""pal"" or ""you"" or something like that.  Be polite and give me your dumb name, alright?", AddressOf askForNameAgain)
     End Sub
     Sub askForNameAgain()
-        Game.pushPnlYesNo("Tell the Fae your class title?", AddressOf giveTitle, AddressOf declineToGiveName2)
+        TextEvent.pushYesNo("Tell the Fae your class title?", AddressOf giveTitle, AddressOf declineToGiveName2)
     End Sub
     Sub giveTitle()
         Objective.showNPC(ShopNPC.npcLib.atrs(0).getAt(50), "Oooooh, vocational...  Say, " & Game.player1.className & ", I don't suppose you could do me a favor before we're off...", AddressOf askForFavor)
@@ -48,10 +48,10 @@
 
     'apology conversation
     Sub askForApology()
-        Game.pushPnlYesNo("Apologize?", AddressOf giveApology, AddressOf refuseApology)
+        TextEvent.pushYesNo("Apologize?", AddressOf giveApology, AddressOf refuseApology)
     End Sub
     Sub giveApology()
-        Objective.showNPC(ShopNPC.npcLib.atrs(0).getAt(50), "Glad you have some concept of manners after all...  Tell you what, I'll forgive you if you do me a ♪sooolid!♫", AddressOf askForFavor)
+        Objective.showNPC(ShopNPC.npcLib.atrs(0).getAt(50), "Glad you have some manners after all...  Tell you what, I'll forgive you if you do me a ♪sooolid!♫", AddressOf askForFavor)
     End Sub
     Sub refuseApology()
         Objective.showNPC(ShopNPC.npcLib.atrs(0).getAt(55), "HMMPH!  Fine then, be that way.  You can find your own way through the Fae Woods.  I'd wish you luck, but honestly I hope you get turned into a tree.  You should really learn to be more polite...", AddressOf completeEntireQuest)
@@ -59,13 +59,13 @@
 
     'favor conversation
     Sub askForFavor()
-        Game.pushPnlYesNo("Do the Fae's favor?", AddressOf acceptFavor, AddressOf refuseFavor)
+        TextEvent.pushYesNo("Do the Fae's favor?", AddressOf acceptFavor, AddressOf refuseFavor)
     End Sub
     Sub acceptFavor()
         Objective.showNPC(ShopNPC.npcLib.atrs(0).getAt(49), "Yay, great!  I've been workshopping a pie recipe, but for some reason no one wants to try it.  Have a slice and let me know what you think, ok?", AddressOf askToEatPie)
     End Sub
     Sub refuseFavor()
-        Game.pushPnlYesNo("Decline Politely?", AddressOf declinePolitely, AddressOf declineRudely)
+        TextEvent.pushYesNo("Decline Politely?", AddressOf declinePolitely, AddressOf declineRudely)
     End Sub
     Sub declinePolitely()
         Objective.showNPC(ShopNPC.npcLib.atrs(0).getAt(53), "Oh, that's too bad...  I understand though, I guess you can't be too careful in these parts!  I guess I'll see you around, ok?", AddressOf completeEntireQuest)
@@ -76,26 +76,25 @@
 
     'pie conversation
     Sub askToEatPie()
-        Game.pushPnlYesNo("Eat a slice of pie?", AddressOf eatPie1, AddressOf declinePolitely)
+        TextEvent.pushYesNo("Eat a slice of pie?", AddressOf eatPie1, AddressOf declinePolitely)
     End Sub
     Sub eatPie1()
         Objective.showNPC(ShopNPC.npcLib.atrs(0).getAt(56), "I appreciate it!  Here, I'll get some for both of us!", AddressOf eatPie2)
     End Sub
     Sub eatPie2()
-        Game.pushLblEvent("The fae waves one of her hands, and a plate containing a steaming hot slice of apple pie materializes in front of her.  Grasping it with both hands, she hands it over to you before twirling a fork from nothingness and placing it on the plate.  As you inspect the pie, she beams and summons herself a smaller plate." & DDUtils.RNRN &
+        TextEvent.push("The fae waves one of her hands, and a plate containing a steaming hot slice of apple pie materializes in front of her.  Grasping it with both hands, she hands it over to you before twirling a fork from nothingness and placing it on the plate.  As you inspect the pie, she beams and summons herself a smaller plate." & DDUtils.RNRN &
                           """Dig in!""" & DDUtils.RNRN &
                           "As the fae begins eating, you glance down one last time before shrugging and taking a bite.  To your suprise, the pie is some of the best you've ever tasted!  Before long, your plate is clean, and you are enthusiastically praising the fae on her recipe.  The fae... who seeeems to be getting bigger by the second..." & DDUtils.RNRN &
                           "With folktales and warnings of the tricks of the fairies running through your mind, you internally curse yourself as you sink deep into your apparel.", AddressOf eatPie3)
     End Sub
     Sub eatPie3()
         Polymorph.transform(Game.player1, "Fae")
-        ' Game.picPortrait.BackgroundImage = Portrait.CreateBMP({Game.picPortrait.BackgroundImage, Game.picPFaeShock.BackgroundImage})
         Objective.showNPC(ShopNPC.npcLib.atrs(0).getAt(51), "Oh, right, I probably should have warned you, this pie turns humans into fae; the enchantment gives the pie some of its flavor I've been told..." & DDUtils.RNRN &
                                                             "Whelp, a fae shouldn't need a guide in these parts or that pile of junk you're standing in, so I guess I'll pick that mess up for you and skedaddle!  ♪Also you're welllcome!♫", AddressOf eatPie4)
     End Sub
     Sub eatPie4()
         Game.leaveNPC()
-        Game.pushLblEvent("As the fae vanishes into the mist with all of your stuff, you collapse to your tiny knees." & DDUtils.RNRN &
+        TextEvent.push("As the fae vanishes into the mist with all of your stuff, you collapse to your tiny knees." & DDUtils.RNRN &
                           """Did I really just get robbed by a damn fairy!?""", AddressOf completeEntireQuest)
     End Sub
 

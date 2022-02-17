@@ -1,9 +1,11 @@
 ﻿Public Class Spellcyclopedia
     Inherits Item
 
+    Public Const ITEM_NAME As String = "Spellcyclopedia"
+
     Sub New()
         '|ID Info|
-        setName("Spellcyclopedia")
+        setName(ITEM_NAME)
         id = 242
         tier = Nothing
 

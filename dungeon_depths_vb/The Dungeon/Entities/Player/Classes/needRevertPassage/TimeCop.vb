@@ -12,8 +12,7 @@
         End If
 
         If Not learnSkills Then Exit Sub
-
-        If level = 4 And Not p.knownSpells.Contains("Summon Battery") Then p.knownSpells.Add("Summon Battery") : Game.pushLstLog("Summon Battery spell learned!")
+        If level = 4 Then p.learnSpell("Summon Battery")
     End Sub
 
     Public Overrides Sub deLVL(level As Integer, ByRef p As Player)

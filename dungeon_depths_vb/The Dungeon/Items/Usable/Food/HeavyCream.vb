@@ -1,9 +1,11 @@
 ﻿Public Class HeavyCream
     Inherits Food
 
+    Public Const ITEM_NAME As String = "Heavy_Cream"
+
     Sub New()
         '|ID Info|
-        setName("Heavy_Cream")
+        setName(ITEM_NAME)
         id = 34
         tier = 2
 
@@ -22,7 +24,7 @@
     End Sub
     Overrides Sub use(ByRef p As Player)
         If Me.getUsable() = False Then Exit Sub
-        Game.pushLstLog("You drink the " & getName())
+        TextEvent.pushLog("You drink the " & getName())
         p.stamina += getCalories()
         If p.stamina > 100 Then p.stamina = 100
         effect(p)
@@ -31,7 +33,7 @@
     End Sub
     Public Overrides Sub effect(ByRef p As Player)
         Dim r As Integer = Int(Rnd() * 3)
-        If r = 0 Or Game.noRNG Then p.be()
+        If r = 0 Or Settings.active(setting.norng) Then p.be()
 
         If Transformation.canBeTFed(p) Then
             p.pState.save(p)

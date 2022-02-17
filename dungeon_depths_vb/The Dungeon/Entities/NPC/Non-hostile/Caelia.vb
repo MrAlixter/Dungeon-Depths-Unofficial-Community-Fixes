@@ -46,11 +46,11 @@
         Else
             Game.NPCfromCombat(Me)
             Game.leaveNPC()
-            Game.pushLblEvent("""Well, someone needs to relax...""")
+            TextEvent.push("""Well, someone needs to relax...""")
             Dim bTF As BimboTF = New BimboTF(2, 0, 0.25, True)
             bTF.step2()
             Game.player1.inv.add(147, 1)
-            Equipment.clothesChange(Game.player1, "Skimpy_Tube_Top")
+            EquipmentDialogBackend.armorChange(Game.player1, "Skimpy_Tube_Top")
             Game.player1.drawPort()
             pos = New Point(-1, -1)
         End If
@@ -59,21 +59,21 @@
         Game.leaveNPC()
         Game.mDun.jumpTo(91017)
         Game.mDun.setFloor(Game.currFloor)
-        Game.player1.setPImage()
+        Game.player1.setplayer_image()
         Game.drawBoard()
     End Sub
     Public Overrides Sub encounter()
         MyBase.encounter()
         If img_index = 0 Then
-            Game.pushNPCDialog("Hey, what's up?")
+            TextEvent.pushNPCDialog("Hey, what's up?")
         ElseIf img_index = 1 Then
-            Game.pushNPCDialog("Ribbit.  Ribbit.")
+            TextEvent.pushNPCDialog("Ribbit.  Ribbit.")
         ElseIf img_index = 2 Then
-            Game.pushNPCDialog("Baaahhh.")
+            TextEvent.pushNPCDialog("Baaahhh.")
         ElseIf img_index = 3 Then
-            Game.pushNPCDialog("Hello, kind " & Game.player1.className & ", how are you on this fine day?")
+            TextEvent.pushNPCDialog("Hello, kind " & Game.player1.className & ", how are you on this fine day?")
         ElseIf img_index = 4 Then
-            Game.pushNPCDialog("*giggle* Hey!")
+            TextEvent.pushNPCDialog("*giggle* Hey!")
         End If
     End Sub
     Public Overrides Function toFight() As String

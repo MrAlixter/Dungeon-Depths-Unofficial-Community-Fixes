@@ -1,28 +1,29 @@
 ﻿Public Class LanceOfDarkness
     Inherits Spear
 
+    Public Const ITEM_NAME As String = "Lance_of_Darkness"
+
     Sub New()
         '|ID Info|
-        setName("Lance_of_Darkness")
+        setName(ITEM_NAME)
         id = 238
         tier = Nothing
 
         '|Item Flags|
         usable = true
-        MyBase.cursed = True
+        cursed = True
 
         '|Stats|
-        MyBase.a_boost = 31
-        MyBase.s_boost = -7
+        a_boost = 31
+        s_boost = -7
         count = 0
         value = 3110
-        MyBase.weight = 7
+        weight = 7
 
         '|Description|
         setDesc("A hefty spear crafted from a jet-black alloy.  It's more likely to hit critically than a sword, but also more likely to miss altogether." & DDUtils.RNRN &
-                       "Can be thrown using the ""Use"" button." & vbCrLf &
-                       "+31 ATK" & vbCrLf &
-                       "-7 SPD")
+                "Can be thrown using the ""Use"" button." & DDUtils.RNRN &
+                getStatInformation())
     End Sub
 
     Public Overrides Sub onEquip(ByRef p As Player)
@@ -35,10 +36,10 @@
 
     Overrides Sub wThrow(ByRef p As Player, ByRef m As Entity)
         If m Is Nothing Then
-            Game.pushLblEvent("You throw the spear across the dungeon at nothing in particular.")
-            Game.pushLstLog("You throw the spear across the dungeon at nothing in particular.")
+            TextEvent.push("You throw the spear across the dungeon at nothing in particular.")
+            TextEvent.pushLog("You throw the spear across the dungeon at nothing in particular.")
         Else
-            Game.pushLstLog("You throw the spear!")
+            TextEvent.pushLog("You throw the spear!")
             Dim dmg As Integer = (p.getATK) + (Me.a_boost) + (Me.a_boost) + Int(Rnd() * 3 + 1)
             p.hit(dmg, m)
         End If

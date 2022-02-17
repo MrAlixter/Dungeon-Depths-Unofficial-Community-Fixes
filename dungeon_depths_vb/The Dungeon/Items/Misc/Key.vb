@@ -1,9 +1,11 @@
 ﻿Public Class Key
     Inherits Item
 
+    Public Const ITEM_NAME As String = "Key"
+
     Sub New()
         '|ID Info|
-        setName("Key")
+        setName(ITEM_NAME)
         id = 53
         tier = Nothing
 

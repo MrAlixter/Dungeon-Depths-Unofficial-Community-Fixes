@@ -61,11 +61,11 @@
         p.prt.setIAInd(pInd.fronthair, 32, True, True)
         p.prt.setIAInd(pInd.hat, 0, True, False)
 
-        Equipment.clothesChange(p, "Goth_Outfit")
+        EquipmentDialogBackend.armorChange(p, "Goth_Outfit")
         'transformation description push
         out += "GothGF TF"
 
-        Game.pushLblEvent(out)
+        TextEvent.push(out)
 
         p.changeForm("Goth")
     End Sub

@@ -12,8 +12,8 @@
         Dim m_boost As Integer = (p.getmaxHealth / 4)
         If (p.health * p.getmaxHealth) <= m_boost Then p.Die() Else p.health -= m_boost / p.getmaxHealth
         p.mana += m_boost
-        Game.pushLstLog("Risky Decision!")
-        Game.pushLblCombatEvent("Risky Decision!" & vbCrLf & "Convert 25% Max Health into mana.")
+        TextEvent.pushLog("Risky Decision!")
+        TextEvent.pushCombat("Risky Decision!" & vbCrLf & "Convert 25% Max Health into mana.")
     End Sub
 
     Public Overrides Function getDesc(ByRef c As Player, ByRef t As NPC) As Object

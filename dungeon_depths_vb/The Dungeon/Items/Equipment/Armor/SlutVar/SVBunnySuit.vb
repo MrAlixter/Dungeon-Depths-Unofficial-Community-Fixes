@@ -1,18 +1,25 @@
 ﻿Public Class SVBunnySuit
     Inherits Armor
-    'the BunnySuit is a cosmetic armor that provides +1 defense
-    Sub New()
-        setName("Bunny_Suit​")
 
+    Public Const ITEM_NAME As String = "Bunny_Suit​"
+
+    Sub New()
+        '|ID Info|
+        setName(ITEM_NAME)
         id = 129
         tier = Nothing
-        usable = false
-        MyBase.d_boost = 1
+
+        '|Item Flags|
+        usable = False
+        compress_breast = False
+        anti_slut_ind = 16
+
+        '|Stats|
+        d_boost = 1
         count = 0
         value = 650
 
-        MyBase.anti_slut_ind = 16
-
+        '|Image Index|
         bsizeneg1 = New Tuple(Of Integer, Boolean, Boolean)(50, False, True)
         bsize0 = New Tuple(Of Integer, Boolean, Boolean)(183, True, True)
         bsize1 = New Tuple(Of Integer, Boolean, Boolean)(184, True, True)
@@ -31,9 +38,8 @@
         usize4 = New Tuple(Of Integer, Boolean, Boolean)(83, True, True)
         usize5 = New Tuple(Of Integer, Boolean, Boolean)(84, True, True)
 
-        MyBase.compress_breast = False
-
+        '|Description|
         setDesc("An extremely sultry outfit worn by waitresses in a club. " & DDUtils.RNRN & _
-                            getSizeInformation() & vbcrlf & getStatInformation())
+                            getSizeInformation() & DDUtils.RNRN & getStatInformation())
     End Sub
 End Class

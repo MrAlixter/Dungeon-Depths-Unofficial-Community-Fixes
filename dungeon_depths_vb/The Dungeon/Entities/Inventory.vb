@@ -3,7 +3,8 @@
     Dim armor() As Armor
     Dim weapons() As Weapon
     Dim acce() As Accessory
-    Dim useable(), food(), potions(), misc() As Item
+    Dim glasses() As Glasses
+    Dim useable(), food(), potions(), services(), misc() As Item
     Dim mPotions As List(Of MysteryPotion)
     Public invNeedsUDate As Boolean = False
     Public invIDorder As List(Of Integer)
@@ -12,314 +13,346 @@
     '|CONSTUCTOR|
     Sub New(Optional ByVal shufflePotions As Boolean = False)
         '0.1 - 0.4
-        internal_inventory.Add("Compass", New Compass())                        '0
-        internal_inventory.Add("Stick_of_Gum", New StickOfGum())                '1
-        internal_inventory.Add("Health_Potion", New HealthPotion())             '2
-        internal_inventory.Add("Vial_of_Slime", New VialOfSlime())              '3
-        internal_inventory.Add("Spellbook", New Spellbook())                    '4
-        internal_inventory.Add("Steel_Armor", New SteelArmor())                 '5
-        internal_inventory.Add("Steel_Sword", New SteelSword())                 '6
-        internal_inventory.Add("Steel_Bikini", New SteelBikini())               '7
-        internal_inventory.Add("Chicken_Suit", New ChickenSuit())               '8
-        internal_inventory.Add("SoulBlade", New SoulBlade())                    '9
-        internal_inventory.Add("Magical_Girl_Outfit", New MagGirlOutfit())      '10
-        internal_inventory.Add("Magical_Girl_Wand", New MagGirlWand())          '11
-        internal_inventory.Add("Cat_Lingerie", New CatLingerie())               '12
-        internal_inventory.Add("Mana_Potion", New ManaPotion())                 '13
-        internal_inventory.Add("Restore_Potion", New RestorationPotion())       '14
-        internal_inventory.Add("Cat_Ears", New CatEars())                       '15
-        internal_inventory.Add("Bunny_Suit", New BunnySuit())                   '16
-        internal_inventory.Add("Sorcerer's_Robes", New SorcerersRobes())        '17
-        internal_inventory.Add("Witch_Cosplay", New WitchCosplay())             '18
-        internal_inventory.Add("Warrior's_Cuirass", New WarriorsCuirass())      '19
-        internal_inventory.Add("Brawler_Cosplay", New BrawlerCosplay())         '20
-        internal_inventory.Add("Oak_Staff", New OakStaff())                     '21
-        internal_inventory.Add("Wizard_Staff", New WizardStaff())               '22
-        internal_inventory.Add("Bronze_Xiphos", New BronzeXiphos())             '23
-        internal_inventory.Add("Sword_of_the_Brutal", New TargaxSword())        '24
-        internal_inventory.Add("Breast_Growth_Potion", New BEPotion())          '25
-        internal_inventory.Add("Hazardous_Potion", New HazardousPotion())       '26
-        internal_inventory.Add("Gentle_Potion", New GentlePotion())             '27
-        internal_inventory.Add("Sex_Swap_Potion", New GSPotion())               '28
-        internal_inventory.Add("Feminine_Potion", New FemininePotion())         '29
-        internal_inventory.Add("Chicken_Leg", New ChickenLeg())                 '30
-        internal_inventory.Add("Apple​", New PApple())                           '31
-        internal_inventory.Add("Apple", New Apple())                            '32
-        internal_inventory.Add("Medicinal_Tea", New Herbs())                    '33
-        internal_inventory.Add("Heavy_Cream", New HeavyCream())                 '34
-        internal_inventory.Add("Cupcake", New Cupcake())                        '35
-        internal_inventory.Add("Mirror", New Mirror())                          '36
-        internal_inventory.Add("Glowstick", New Glowstick())                    '37
-        internal_inventory.Add("Gold_Armor", New GoldArmor())                   '38
-        internal_inventory.Add("Gold_Adornment", New GoldAdornment())           '39
-        internal_inventory.Add("Gold_Sword", New GoldSword())                   '40
-        internal_inventory.Add("Golden_Staff", New GoldenStaff())               '41
-        internal_inventory.Add("Midas_Gauntlet", New MidasGuantlet())           '42
-        internal_inventory.Add("Gold", New Gold())                              '43
-        internal_inventory.Add("Angel_Food_Cake", New AngelFood())              '44
-        internal_inventory.Add("Duster", New MaidDuster())                      '45
-        internal_inventory.Add("Tank_Top", New TankTop())                       '46
-        internal_inventory.Add("Sports_Bra", New SportBra())                    '47
-        internal_inventory.Add("Health_Charm", New HealthCharm())               '48
-        internal_inventory.Add("Mana_Charm", New ManaCharm())                   '49
-        internal_inventory.Add("Attack_Charm", New AttackCharm())               '50
-        internal_inventory.Add("Defense_Charm", New DefenseCharm())             '51
-        internal_inventory.Add("Speed_Charm", New SpeedCharm())                 '52
-        internal_inventory.Add("Key", New Key())                                '53
-        internal_inventory.Add("Ropes", New Ropes())                            '54
-        internal_inventory.Add("Living_Armor", New LiveArmor())                 '55
-        internal_inventory.Add("Living_Lingerie", New LiveLingerie())           '56
-        internal_inventory.Add("Disarment_Kit", New RigWrench())                '57
-        internal_inventory.Add("Fusion_Crystal", New FusionCrystal())           '58
-        internal_inventory.Add("Mysterious_Potion", New MysPotion())            '59
-        internal_inventory.Add("Breast_Shrink._Potion", New BSPotion())         '60
-        internal_inventory.Add("Masculine_Potion", New MasculinePotion())       '61
-        internal_inventory.Add("Ditzy_Potion", New DitzyPotion())               '62
-        internal_inventory.Add("Spidersilk_Whip", New SpidersilkWhip())         '63
-        internal_inventory.Add("Chitin_Armor", New ChitArmor())                 '64
-        '0.5
-        internal_inventory.Add("Advanced_Spellbook", New ASpellbook())          '65
-        '0.6
-        internal_inventory.Add("Heart_Necklace", New HeartNecklace())           '66
-        internal_inventory.Add("Red_Headband", New RedHeadband())               '67
-        internal_inventory.Add("Ruby_Circlet", New RubyCirclet())               '68
-        internal_inventory.Add("Slave_Collar", New ThrallCollar())              '69
-        internal_inventory.Add("Cowbell", New Cowbell())                        '70
-        internal_inventory.Add("Cow_Print_Bra", New CowBra())                   '71
-        '0.7
-        internal_inventory.Add("Maid_Outfit", New MaidOutfit())                 '72
-        internal_inventory.Add("Goddess_Gown", New GoddessGown())               '73
-        internal_inventory.Add("Succubus_Garb", New SuccubusGarb())             '74
-        internal_inventory.Add("Regal_Gown", New PrincessGown())                '75
-        internal_inventory.Add("Clear_Potion", New ClearPotion())               '76
-        internal_inventory.Add("Minor_Ring_of_Regen.", New ROfMinRegen())       '77
-        internal_inventory.Add("Val._Night_Lingerie", New VNightLingerie())     '78
-        internal_inventory.Add("Val._Day_Suit", New VDayClothes())              '79
-        internal_inventory.Add("Dissolved_Clothes", New DissolvedClothes())     '80     actually a part of 0.8
-        internal_inventory.Add("Ring_of_Amaraphne", New ROAmaraphne())          '81
-        internal_inventory.Add("Major_Health_Potion", New MajHealthPotion())    '82
-        internal_inventory.Add("Bronze_Armor", New BronzeArmor())               '83
-        internal_inventory.Add("Bronze_Battle_Axe", New BronzeAxe())            '84
-        internal_inventory.Add("Bronze_Bikini", New BronzeBikini())             '85
-        internal_inventory.Add("Portal_Chalk", New PortalChalk())               '86
-        '0.8
-        internal_inventory.Add("Bimbo_Lesson", New BimboLesson())               '87
-        internal_inventory.Add("Combat_Manual", New CombatManual())             '88
-        internal_inventory.Add("Utility_Manual", New UtilityManual())           '89
-        internal_inventory.Add("Panacea", New Panacea())                        '90
-        internal_inventory.Add("Vial_of_Venom", New VialOfVenom())              '91
-        internal_inventory.Add("Anti_Venom", New AntiVenom())                   '92
-        internal_inventory.Add("Blinding_Potion", New BlindPotion())            '93
-        internal_inventory.Add("Armored_Bunny_Suit", New BunnySuitA())          '94
-        internal_inventory.Add("Valkyrie_Armor", New ValkyrieArmor())           '95
-        internal_inventory.Add("Valkyrie_Sword", New ValkyrieSword())           '96
-        internal_inventory.Add("Bowtie", New Bowtie())                          '97
-        internal_inventory.Add("Cursed_Heavy_Cream", New CHeavyCream())         '98
-        internal_inventory.Add("Amazonian_Attire", New AmaAttire())             '99
-        internal_inventory.Add("Cherry_Stick_of_Gum", New CStickOfGum())        '100
-        internal_inventory.Add("Barbarian_Armor", New BarbArmor())              '101
-        internal_inventory.Add("Space_Age_Jumpsuit", New SAJumpsuit())          '102
-        internal_inventory.Add("Skin_Tight_Bodysuit", New STBodysuit())         '103
-        internal_inventory.Add("Photon_Armor", New PhotonArmor())               '104
-        internal_inventory.Add("Photon_Bikini", New PhotonBikini())             '105
-        internal_inventory.Add("Labcoat", New Labcoat())                        '106
-        internal_inventory.Add("Labcoat​", New LabcoatSV())                      '107
-        internal_inventory.Add("Spatial_Shroom", New SShroom())                 '108
-        internal_inventory.Add("Mint_Stick_of_Gum", New MStickOfGum())          '109
-        internal_inventory.Add("Mobile_Powerbank", New Generator())             '110
-        internal_inventory.Add("Discharge_Gauntlets", New ManaDisharge())       '111
-        internal_inventory.Add("Photon_Blade", New PhotonBlade())               '112
-        internal_inventory.Add("Amazon_Lesson", New AmazonLesson())             '113
-        internal_inventory.Add("Basic_Class_Change", New BasicClassChange)      '114 (formerly Barbarian Lesson [edited v11.0]
-        internal_inventory.Add("Warlock's_Robes", New WarlockRobe())            '115
-        internal_inventory.Add("Gynoid_Uniform", New GCUniform())               '116
-        internal_inventory.Add("Garden_Salad", New GardenSalad())               '117
-        internal_inventory.Add("Corse_War_Axe", New CWarAxe())                  '118
-        internal_inventory.Add("Broken_Remote", New BrokenRemote())             '119
-        internal_inventory.Add("Shrink_Ray", New ShrinkRay())                   '120
-        internal_inventory.Add("Name_Change", New NameChange())                 '121
-        internal_inventory.Add("Gorgon_Lesson", New HGorgonLesson())            '122
-        internal_inventory.Add("Ring_of_Uvona", New RingOfUvona())              '123
-        internal_inventory.Add("Advanced_Class_Change", New AdvClassChange)     '124 (formerly Warlock Lesson [edited v11.0]
-        internal_inventory.Add("Berry_Stick_of_Gum", New BBStickOfGum())        '125
-        internal_inventory.Add("Omni_Charm", New OmniCharm())                   '126
-        internal_inventory.Add("Vial_of_BIM_II", New VialOfBimbo())             '127
-        internal_inventory.Add("CryoGrenade", New CryoGrenade())                '128
-        internal_inventory.Add("Bunny_Suit​", New SVBunnySuit())                 '129
-        internal_inventory.Add("Galaxy_Dye", New GalaxyDye())                   '130
-        internal_inventory.Add("Base_Form_Reset", New BFormReset())             '131
-        internal_inventory.Add("Melon_Stick_of_Gum", New WStickOfGum())         '132
-        internal_inventory.Add("Warrior's_Feast", New WFeast())                 '133
-        internal_inventory.Add("Mage's_Delicacy", New MDelicacy())              '134
-        internal_inventory.Add("Tavern_Special", New TSpecial())                '135
-        internal_inventory.Add("Vial_of_Pink_Slime", New VialOfPSlime())        '136
-        internal_inventory.Add("Gelatinous_Shell", New GelArmor())              '137
-        internal_inventory.Add("Gelatinous_Negligee", New GelLinge())           '138
-        internal_inventory.Add("Braced_Headband", New BracedHeadband())         '139
-        internal_inventory.Add("Emerald_Circlet", New EmeraldCirclet())         '140
-        internal_inventory.Add("Active_Camoflage", New ActiveCamoflage())       '141
-        internal_inventory.Add("Combat_Module", New CombatModule())             '142
-        internal_inventory.Add("Every_New_Item", New EveryNewItem())            '143
-        internal_inventory.Add("Crystalline_Armor", New CrystalArmor())         '144
-        internal_inventory.Add("Scepter_of_Ash", New ScepterOfAsh())            '145
-        '0.9                                                                    
-        internal_inventory.Add("Cat_Armor", New CatArmor())                     '146
-        internal_inventory.Add("Skimpy_Tank_Top", New SkimpyTT())               '147
-        internal_inventory.Add("Grappling_Hook", New GrapplingHook())           '148
-        internal_inventory.Add("Mana_Hibiscus", New ManaHibiscus())             '149
-        internal_inventory.Add("Twin_Xiphoi", New TwinBlades())                 '150
-        internal_inventory.Add("Lolita_Dress_(Sweet)", New SLolitaDress())      '151
-        internal_inventory.Add("Will_Charm", New WillCharm())                   '152
-        internal_inventory.Add("Anti_Curse_Tag", New AntiCurseTag())            '153
-        internal_inventory.Add("New-U_Crystal", New NewUCrystal())              '154
-        internal_inventory.Add("Bronze_Spear", New BronzeSpear())               '155
-        internal_inventory.Add("Steel_Spear", New SteelSpear())                 '156
-        internal_inventory.Add("Flaming_Spear", New FlamingSpear())             '157
-        internal_inventory.Add("Signature_Spear", New SigSpear())               '158
-        internal_inventory.Add("Signature_Staff", New SigStaff())               '159
-        internal_inventory.Add("Spiked_Staff", New SpikedStaff())               '160
-        internal_inventory.Add("Blindfold", New Blindfold())                    '161
-        internal_inventory.Add("Throwing_Knife", New TKnife())                  '162
-        internal_inventory.Add("Signature_Dagger", New SigDagger())             '163
-        internal_inventory.Add("Stealth_Gear", New StealthGear())               '164
-        internal_inventory.Add("Mugger's_Shank", New MShank())                  '165
-        internal_inventory.Add("Frock_of_Night", New FoNight())                 '166
-        internal_inventory.Add("Wand_of_Shocking", New WOShock())               '167
-        internal_inventory.Add("Cursemark", New Cursemark())                    '168
-        internal_inventory.Add("Maid_Lingerie", New MaidLingerie())             '169
-        internal_inventory.Add("Magical_Slut_Outfit", New MagSlutOutfit())      '170
-        internal_inventory.Add("​Magical_Girl_Wand​", New MagSlutWand())          '171
-        internal_inventory.Add("Flaming_Sword", New FlamingSword())             '172
-        internal_inventory.Add("Signature_Whip", New SigWhip())                 '173
-        internal_inventory.Add("Defense_Charm​", New CdefenseCharm())            '174
-        internal_inventory.Add("Cozy_Sweater", New CozySweater())               '175
-        internal_inventory.Add("Scale_Armor", New ScaleArmor())                 '176
-        internal_inventory.Add("Scale_Bikini", New ScaleBikini())               '177
-        internal_inventory.Add("Antifreeze", New AntiFreeze())                  '178
-        internal_inventory.Add("Wand_of_Voltage", New WOVoltage())              '179
-        internal_inventory.Add("Pink_Panties", New PPanties())                  '180
-        internal_inventory.Add("TODO_Outfit", New GothOutfit())                 '181
-        internal_inventory.Add("Cursed_Coupon", New CursedCoupon())             '182
-        internal_inventory.Add("Kitsune's_Robes", New KitsuneRobe())            '183
-        'v0.9.1
-        internal_inventory.Add("Common_Clothes", New CommonClothes0())          '184
-        internal_inventory.Add("Common_Armor", New CommonClothes1())            '185
-        internal_inventory.Add("Common_Garb", New CommonClothes2())             '186
-        internal_inventory.Add("Fancy_Clothes", New CommonClothes3())           '187
-        internal_inventory.Add("Ordinary_Clothes", New CommonClothes4())        '188
-        internal_inventory.Add("Common_Kimono", New CommonClothes5())           '189
-        internal_inventory.Add("Sneaky_Clothes", New CommonClothes6())          '190
-        internal_inventory.Add("Skimpy_Clothes", New SkimpyClothes())           '191
-        internal_inventory.Add("Very_Skimpy_Clothes", New VSkimpyClothes())     '192
-        internal_inventory.Add("Ass_Growth_Potion", New UEPotion())             '193
-        internal_inventory.Add("Dick_Growth_Potion", New DEPotion())            '194
-        internal_inventory.Add("Curse_'B'_Gone", New CurseBGone())              '195
-        internal_inventory.Add("Cow_Cosplay", New CowCosplay())                 '196
-        internal_inventory.Add("Bimbell", New Bimbell())                        '197
-        internal_inventory.Add("Kitsune_Mask", New KitsuneMask())               '198
-        internal_inventory.Add("Angelic_Sweater", New AngelicSweater())         '199
-        internal_inventory.Add("Attack_Charm​", New CAttackCharm())              '200
-        internal_inventory.Add("Pro_Mag._Girl_Outfit", New ProMagGirlOutfit())  '201
-        internal_inventory.Add("Mag._Girl_Outfit_(P)", New MagGirlOutfitP())    '202
-        internal_inventory.Add("Pro_Mag._Girl_Wand", New ProMagGirlWand())      '203
-        internal_inventory.Add("Mag._Girl_Wand_(P)", New MagGirlWandP())        '204
-        internal_inventory.Add("Vial_of_Fire", New VialOfFire())                '205
-        internal_inventory.Add("Gem_of_Progress", New GemOfProg())              '206
-        internal_inventory.Add("Gem_of_Sweetness", New GemOfPink())             '207
-        internal_inventory.Add("Mag._Girl_Outfit_(D)", New MagGirlOutfitD())    '208
-        internal_inventory.Add("Mag._Girl_Wand_(D)", New MagGirlWandD)          '209
-        internal_inventory.Add("Mag._Girl_Outfit_(R)", New MagGirlOutfitR)      '210
-        internal_inventory.Add("Pro_Mag._G._Outfit_(R)", New ProMagGirlOutfitR) '211
-        internal_inventory.Add("Mag._Girl_Wand_(R)", New MagGirlWandR)          '212
-        internal_inventory.Add("Pro_Mag._G._Wand_(R)", New ProMagGirlWandR)     '213
-        internal_inventory.Add("Gem_of_Flame", New GemOfFlame())                '214
-        internal_inventory.Add("Gem_of_Darkness", New GemOfDark())              '215
-        internal_inventory.Add("Mag._Girl_Outfit_(C)", New MagGirlOutfitC)      '216
-        internal_inventory.Add("Demonic_Whip", New DemWhip)                     '217
-        internal_inventory.Add("Archdemon_Whip", New ArchDemWhip)               '218
-        internal_inventory.Add("Fox_Ears", New FoxEars)                         '219
-        internal_inventory.Add("Skimpy_Clothes_(D)", New SkimpyClothesD)        '220
-        internal_inventory.Add("Cow_Cosplay_(Demonic)", New CowCosplayD)        '221
-        internal_inventory.Add("Bunny_Suit_(Classic)", New BunnySuitC)          '222
-        internal_inventory.Add("Seven_Banded_Ring", New SevenBandedRing)        '223
-        internal_inventory.Add("Fox_Statue", New FoxStatue)                     '224
-        internal_inventory.Add("Bunny_Ears", New BunnyEars)                     '225
-        internal_inventory.Add("Crimson_Spellbook", New CSpellbook)             '226
-        internal_inventory.Add("Crimson_Manual", New CrimsonManual)             '227
-        internal_inventory.Add("XP_Sandwich", New XPSandwich)                   '228
-        internal_inventory.Add("BitGold", New BitGold)                          '229
-        'v10.0.1
-        internal_inventory.Add("Dragonfruit", New DragonFruit)                  '230
-        internal_inventory.Add("Mental_Potion", New MentalPotion)               '231
-        internal_inventory.Add("Chilling_Potion", New ChillingPotion)           '232
-        internal_inventory.Add("Ass_Shrink._Potion", New USPotion)              '233
-        internal_inventory.Add("Dick_Shrink._Potion", New DSPotion)             '234
-        internal_inventory.Add("Hyper_Health_Potion", New HHealthPotion)        '235
-        internal_inventory.Add("Hyper_Mana_Potion", New HManaPotion)            '236
-        internal_inventory.Add("Succubus_Armor", New SuccubusArmor)             '237
-        internal_inventory.Add("Lance_of_Darkness", New LanceOfDarkness)        '238
-        internal_inventory.Add("Spidersilk_Bonds", New SpidersilkBonds)         '239
-        internal_inventory.Add("Spidersilk_Bikini", New SpidersilkBikini)       '240
-        internal_inventory.Add("Major_Mana_Potion", New MajManaPotion)          '241
-        internal_inventory.Add("Spellcyclopedia", New Spellcyclopedia)          '242
-        internal_inventory.Add("Big_Book_O'_Specials", New BookOSpecials)       '243
-        internal_inventory.Add("Vial_of_Potent_Venom", New VialOfPotVenom)      '244
-        internal_inventory.Add("Blight_Dismissal", New CursePurge)              '245
-        internal_inventory.Add("Potion_of_Benediction", New BenedictPotion)     '246
-        internal_inventory.Add("Potion_of_Dodging", New DodgePotion)            '247
-        internal_inventory.Add("Incandescent_Potion", New IncandPotion)         '248
-        internal_inventory.Add("Learn_'Focus_Up'", New TeachFocusedMantra)      '249
-        internal_inventory.Add("Familiar's_Costume", New FamCostume)            '250
-        'v11.0.0
-        internal_inventory.Add("Old_Snips", New OldSnips)                       '251
-        internal_inventory.Add("Collar_Snips", New CollarSnips)                 '252
-        internal_inventory.Add("Cynn's_Mark", New CynnsMark)                    '253
-        internal_inventory.Add("Adventurer's_Clothes", New CommonClothes7)      '254
-        internal_inventory.Add("Platinum_Axe", New PlatinumAxe)                 '255
-        internal_inventory.Add("Platinum_Daggers", New PlatinumDaggers)         '256
-        internal_inventory.Add("Platinum_Staff", New PlatinumStaff)             '257
-        internal_inventory.Add("Accursed_Blade", New CursedSword)               '258
-        internal_inventory.Add("Bewitched_Wand", New BewitchedWand)             '259
-        internal_inventory.Add("Jinxed_Whip", New JinxedWhip)                   '260
-        internal_inventory.Add("AAAAAA_Battery", New A6Battery)                 '261
-        internal_inventory.Add("Cow_Print_Armor", New CowArmor)                 '262
-        internal_inventory.Add("Upgrade_Armor", New UpgradeArmor)               '263
-        internal_inventory.Add("Armor_Fragments", New ArmorFragments)           '264
-        internal_inventory.Add("Platinum_Armor", New PlatArmor)                 '265
-        internal_inventory.Add("Platinum_Adornment", New PlatAdornment)         '266
-        internal_inventory.Add("Roc_Drumstick", New RocDrumstick)               '267
-        internal_inventory.Add("Dragonfruit_S._of_Gum", New DFStickOfGum)       '268
-        internal_inventory.Add("Nature's_Kiss", New NatureKiss)                 '269
-        internal_inventory.Add("Better_Medicinal_Tea", New BetterHerbs)         '270
-        internal_inventory.Add("Mark_of_the_Ox", New MOTOx)                     '271
-        internal_inventory.Add("""Normal""_Steak", New Steak)                   '272
-        internal_inventory.Add("Phase_Pistol", New PhasePistol)                 '273
-        internal_inventory.Add("Phase_Rifle", New PhaseRifle)                   '274
-        internal_inventory.Add("Phase_Hammer", New PhaseHammer)                 '275
-        internal_inventory.Add("Phase_Drill", New PhaseDrill)                   '276
-        internal_inventory.Add("Paleomancer's_Diary", New PaleoDiary)           '277
-        internal_inventory.Add("Marissa's_Notes", New MarissasNotes)            '278
-        internal_inventory.Add("AAAAAA_Specification", New AAAAAASpecs)         '279
-        internal_inventory.Add("Phase_Vibrator", New PhaseVibrator)             '280
-        internal_inventory.Add("Phase_Deflector", New PhaseDeflector)           '281
-        internal_inventory.Add("Time_Cop_Clothes", New TimeCopClothes)          '282
-        internal_inventory.Add("Hallowed_Talisman", New HallowedTalisman)       '283
-        internal_inventory.Add("Large_Stick", New LargeStick)                   '284
-        internal_inventory.Add("Regular_Clothes", New CommonClothes8)           '285
-        internal_inventory.Add("Tome_Of_Knowledge", New TomeOfKnowlege)         '286
-        internal_inventory.Add("Extra_Life", New ExtraLife)                     '287
-        internal_inventory.Add("Cultist's_Cloak", New CultistCloak)             '288
-        internal_inventory.Add("Crimson_Cloak", New CrimsonCloak)               '289
-        internal_inventory.Add("Skimpy_Clothes_(G)", New SkimpyClothesG)        '290
-        internal_inventory.Add("Golden_Gum", New GoldenGum)                     '291
-        internal_inventory.Add("Imitation_Cowbell", New ImmitationCowbell)      '292
-        internal_inventory.Add("Magical_Mimic_Wand​", New MagMimicWand)          '293
-        internal_inventory.Add("Vial_of_Rock_Juice", New VialOfRockJuice)       '294
-        internal_inventory.Add("Ice_Pop", New IcePop)                           '295
-        internal_inventory.Add("Ice_Pop​", New IcePopB)                          '296
-        internal_inventory.Add("Staff_of_the_Tidemage", New TidemageStaff)      '297
-        internal_inventory.Add("Lime_Bikini", New LimeBikini)                   '298
-        internal_inventory.Add("Summertime_Shades", New SummerShades)           '299
+        internal_inventory.Add(Compass.ITEM_NAME, New Compass)                       '0
+        internal_inventory.Add(StickOfGum.ITEM_NAME, New StickOfGum)                 '1
+        internal_inventory.Add(HealthPotion.ITEM_NAME, New HealthPotion)             '2
+        internal_inventory.Add(VialOfSlime.ITEM_NAME, New VialOfSlime)               '3
+        internal_inventory.Add(Spellbook.ITEM_NAME, New Spellbook)                   '4
+        internal_inventory.Add(SteelArmor.ITEM_NAME, New SteelArmor)                 '5
+        internal_inventory.Add(SteelSword.ITEM_NAME, New SteelSword)                 '6
+        internal_inventory.Add(SteelBikini.ITEM_NAME, New SteelBikini)               '7
+        internal_inventory.Add(ChickenSuit.ITEM_NAME, New ChickenSuit)               '8
+        internal_inventory.Add(SoulBlade.ITEM_NAME, New SoulBlade)                   '9
+        internal_inventory.Add(MagGirlOutfit.ITEM_NAME, New MagGirlOutfit)           '10
+        internal_inventory.Add(MagGirlWand.ITEM_NAME, New MagGirlWand)               '11
+        internal_inventory.Add(CatLingerie.ITEM_NAME, New CatLingerie)               '12
+        internal_inventory.Add(ManaPotion.ITEM_NAME, New ManaPotion)                 '13
+        internal_inventory.Add(RestorationPotion.ITEM_NAME, New RestorationPotion)   '14
+        internal_inventory.Add(CatEars.ITEM_NAME, New CatEars)                       '15
+        internal_inventory.Add(BunnySuit.ITEM_NAME, New BunnySuit)                   '16
+        internal_inventory.Add(SorcerersRobes.ITEM_NAME, New SorcerersRobes)         '17
+        internal_inventory.Add(WitchCosplay.ITEM_NAME, New WitchCosplay)             '18
+        internal_inventory.Add(WarriorsCuirass.ITEM_NAME, New WarriorsCuirass)       '19
+        internal_inventory.Add(BrawlerCosplay.ITEM_NAME, New BrawlerCosplay)         '20
+        internal_inventory.Add(OakStaff.ITEM_NAME, New OakStaff)                     '21
+        internal_inventory.Add(WizardStaff.ITEM_NAME, New WizardStaff)               '22
+        internal_inventory.Add(BronzeXiphos.ITEM_NAME, New BronzeXiphos)             '23
+        internal_inventory.Add(TargaxSword.ITEM_NAME, New TargaxSword)               '24
+        internal_inventory.Add(BEPotion.ITEM_NAME, New BEPotion)                     '25
+        internal_inventory.Add(HazardousPotion.ITEM_NAME, New HazardousPotion)       '26
+        internal_inventory.Add(GentlePotion.ITEM_NAME, New GentlePotion)             '27
+        internal_inventory.Add(GSPotion.ITEM_NAME, New GSPotion)                     '28
+        internal_inventory.Add(FemininePotion.ITEM_NAME, New FemininePotion)         '29
+        internal_inventory.Add(ChickenLeg.ITEM_NAME, New ChickenLeg)                 '30
+        internal_inventory.Add(PApple.ITEM_NAME, New PApple)                         '31
+        internal_inventory.Add(Apple.ITEM_NAME, New Apple)                           '32
+        internal_inventory.Add(Herbs.ITEM_NAME, New Herbs)                           '33
+        internal_inventory.Add(HeavyCream.ITEM_NAME, New HeavyCream)                 '34
+        internal_inventory.Add(Cupcake.ITEM_NAME, New Cupcake)                       '35
+        internal_inventory.Add(Mirror.ITEM_NAME, New Mirror)                         '36
+        internal_inventory.Add(Glowstick.ITEM_NAME, New Glowstick)                   '37
+        internal_inventory.Add(GoldArmor.ITEM_NAME, New GoldArmor)                   '38
+        internal_inventory.Add(GoldAdornment.ITEM_NAME, New GoldAdornment)           '39
+        internal_inventory.Add(GoldSword.ITEM_NAME, New GoldSword)                   '40
+        internal_inventory.Add(GoldenStaff.ITEM_NAME, New GoldenStaff)               '41
+        internal_inventory.Add(MidasGuantlet.ITEM_NAME, New MidasGuantlet)           '42
+        internal_inventory.Add(Gold.ITEM_NAME, New Gold)                             '43
+        internal_inventory.Add(AngelFood.ITEM_NAME, New AngelFood)                   '44
+        internal_inventory.Add(MaidDuster.ITEM_NAME, New MaidDuster)                 '45
+        internal_inventory.Add(TankTop.ITEM_NAME, New TankTop)                       '46
+        internal_inventory.Add(SportBra.ITEM_NAME, New SportBra)                     '47
+        internal_inventory.Add(HealthCharm.ITEM_NAME, New HealthCharm)               '48
+        internal_inventory.Add(ManaCharm.ITEM_NAME, New ManaCharm)                   '49
+        internal_inventory.Add(AttackCharm.ITEM_NAME, New AttackCharm)               '50
+        internal_inventory.Add(DefenseCharm.ITEM_NAME, New DefenseCharm)             '51
+        internal_inventory.Add(SpeedCharm.ITEM_NAME, New SpeedCharm)                 '52
+        internal_inventory.Add(Key.ITEM_NAME, New Key)                               '53
+        internal_inventory.Add(Ropes.ITEM_NAME, New Ropes)                           '54
+        internal_inventory.Add(LiveArmor.ITEM_NAME, New LiveArmor)                   '55
+        internal_inventory.Add(LiveLingerie.ITEM_NAME, New LiveLingerie)             '56
+        internal_inventory.Add(DisarmentKit.ITEM_NAME, New DisarmentKit)             '57
+        internal_inventory.Add(FusionCrystal.ITEM_NAME, New FusionCrystal)           '58
+        internal_inventory.Add(MysPotion.ITEM_NAME, New MysPotion)                   '59
+        internal_inventory.Add(BSPotion.ITEM_NAME, New BSPotion)                     '60
+        internal_inventory.Add(MasculinePotion.ITEM_NAME, New MasculinePotion)       '61
+        internal_inventory.Add(DitzyPotion.ITEM_NAME, New DitzyPotion)               '62
+        internal_inventory.Add(SpidersilkWhip.ITEM_NAME, New SpidersilkWhip)         '63
+        internal_inventory.Add(ChitArmor.ITEM_NAME, New ChitArmor)                   '64
+        '0.5                                                                           
+        internal_inventory.Add(ASpellbook.ITEM_NAME, New ASpellbook)                 '65
+        '0.6                                                                           
+        internal_inventory.Add(HeartNecklace.ITEM_NAME, New HeartNecklace)           '66
+        internal_inventory.Add(RedHeadband.ITEM_NAME, New RedHeadband)               '67
+        internal_inventory.Add(RubyCirclet.ITEM_NAME, New RubyCirclet)               '68
+        internal_inventory.Add(ThrallCollar.ITEM_NAME, New ThrallCollar)             '69
+        internal_inventory.Add(Cowbell.ITEM_NAME, New Cowbell)                       '70
+        internal_inventory.Add(CowBra.ITEM_NAME, New CowBra)                         '71
+        '0.7                                                                           
+        internal_inventory.Add(MaidOutfit.ITEM_NAME, New MaidOutfit)                 '72
+        internal_inventory.Add(GoddessGown.ITEM_NAME, New GoddessGown)               '73
+        internal_inventory.Add(SuccubusGarb.ITEM_NAME, New SuccubusGarb)             '74
+        internal_inventory.Add(PrincessGown.ITEM_NAME, New PrincessGown)             '75
+        internal_inventory.Add(ClearPotion.ITEM_NAME, New ClearPotion)               '76
+        internal_inventory.Add(ROfMinRegen.ITEM_NAME, New ROfMinRegen)               '77
+        internal_inventory.Add(VNightLingerie.ITEM_NAME, New VNightLingerie)         '78
+        internal_inventory.Add(VDayClothes.ITEM_NAME, New VDayClothes)               '79
+        internal_inventory.Add(DissolvedClothes.ITEM_NAME, New DissolvedClothes)     '80     actually a part of 0.8
+        internal_inventory.Add(ROAmaraphne.ITEM_NAME, New ROAmaraphne)               '81
+        internal_inventory.Add(MajHealthPotion.ITEM_NAME, New MajHealthPotion)       '82
+        internal_inventory.Add(BronzeArmor.ITEM_NAME, New BronzeArmor)               '83
+        internal_inventory.Add(BronzeAxe.ITEM_NAME, New BronzeAxe)                   '84
+        internal_inventory.Add(BronzeBikini.ITEM_NAME, New BronzeBikini)             '85
+        internal_inventory.Add(PortalChalk.ITEM_NAME, New PortalChalk)               '86
+        '0.8                                                                           
+        internal_inventory.Add(BimboLesson.ITEM_NAME, New BimboLesson)               '87
+        internal_inventory.Add(CombatManual.ITEM_NAME, New CombatManual)             '88
+        internal_inventory.Add(UtilityManual.ITEM_NAME, New UtilityManual)           '89
+        internal_inventory.Add(Panacea.ITEM_NAME, New Panacea)                       '90
+        internal_inventory.Add(VialOfVenom.ITEM_NAME, New VialOfVenom)               '91
+        internal_inventory.Add(AntiVenom.ITEM_NAME, New AntiVenom)                   '92
+        internal_inventory.Add(BlindPotion.ITEM_NAME, New BlindPotion)               '93
+        internal_inventory.Add(BunnySuitA.ITEM_NAME, New BunnySuitA)                 '94
+        internal_inventory.Add(ValkyrieArmor.ITEM_NAME, New ValkyrieArmor)           '95
+        internal_inventory.Add(ValkyrieSword.ITEM_NAME, New ValkyrieSword)           '96
+        internal_inventory.Add(Bowtie.ITEM_NAME, New Bowtie)                         '97
+        internal_inventory.Add(CHeavyCream.ITEM_NAME, New CHeavyCream)               '98
+        internal_inventory.Add(AmaAttire.ITEM_NAME, New AmaAttire)                   '99
+        internal_inventory.Add(CStickOfGum.ITEM_NAME, New CStickOfGum)               '100
+        internal_inventory.Add(BarbArmor.ITEM_NAME, New BarbArmor)                   '101
+        internal_inventory.Add(SAJumpsuit.ITEM_NAME, New SAJumpsuit)                 '102
+        internal_inventory.Add(STBodysuit.ITEM_NAME, New STBodysuit)                 '103
+        internal_inventory.Add(PhotonArmor.ITEM_NAME, New PhotonArmor)               '104
+        internal_inventory.Add(PhotonBikini.ITEM_NAME, New PhotonBikini)             '105
+        internal_inventory.Add(Labcoat.ITEM_NAME, New Labcoat)                       '106
+        internal_inventory.Add(LabcoatSV.ITEM_NAME, New LabcoatSV)                   '107
+        internal_inventory.Add(SShroom.ITEM_NAME, New SShroom)                       '108
+        internal_inventory.Add(MStickOfGum.ITEM_NAME, New MStickOfGum)               '109
+        internal_inventory.Add(Generator.ITEM_NAME, New Generator)                   '110
+        internal_inventory.Add(ManaDisharge.ITEM_NAME, New ManaDisharge)             '111
+        internal_inventory.Add(PhotonBlade.ITEM_NAME, New PhotonBlade)               '112
+        internal_inventory.Add(AmazonLesson.ITEM_NAME, New AmazonLesson)             '113
+        internal_inventory.Add(BasicClassChange.ITEM_NAME, New BasicClassChange)     '114 (formerly Barbarian Lesson [edited v11.0]
+        internal_inventory.Add(WarlockRobe.ITEM_NAME, New WarlockRobe)               '115
+        internal_inventory.Add(GCUniform.ITEM_NAME, New GCUniform)                   '116
+        internal_inventory.Add(GardenSalad.ITEM_NAME, New GardenSalad)               '117
+        internal_inventory.Add(CWarAxe.ITEM_NAME, New CWarAxe)                       '118
+        internal_inventory.Add(BrokenRemote.ITEM_NAME, New BrokenRemote)             '119
+        internal_inventory.Add(ShrinkRay.ITEM_NAME, New ShrinkRay)                   '120
+        internal_inventory.Add(NameChange.ITEM_NAME, New NameChange)                 '121
+        internal_inventory.Add(HGorgonLesson.ITEM_NAME, New HGorgonLesson)           '122
+        internal_inventory.Add(RingOfUvona.ITEM_NAME, New RingOfUvona)               '123
+        internal_inventory.Add(AdvClassChange.ITEM_NAME, New AdvClassChange)         '124 (formerly Warlock Lesson [edited v11.0]
+        internal_inventory.Add(BBStickOfGum.ITEM_NAME, New BBStickOfGum)             '125
+        internal_inventory.Add(OmniCharm.ITEM_NAME, New OmniCharm)                   '126
+        internal_inventory.Add(VialOfBimbo.ITEM_NAME, New VialOfBimbo)               '127
+        internal_inventory.Add(CryoGrenade.ITEM_NAME, New CryoGrenade)               '128
+        internal_inventory.Add(SVBunnySuit.ITEM_NAME, New SVBunnySuit)               '129
+        internal_inventory.Add(GalaxyDye.ITEM_NAME, New GalaxyDye)                   '130
+        internal_inventory.Add(BFormReset.ITEM_NAME, New BFormReset)                 '131
+        internal_inventory.Add(WStickOfGum.ITEM_NAME, New WStickOfGum)               '132
+        internal_inventory.Add(WFeast.ITEM_NAME, New WFeast)                         '133
+        internal_inventory.Add(MDelicacy.ITEM_NAME, New MDelicacy)                   '134
+        internal_inventory.Add(TSpecial.ITEM_NAME, New TSpecial)                     '135
+        internal_inventory.Add(VialOfPSlime.ITEM_NAME, New VialOfPSlime)             '136
+        internal_inventory.Add(GelArmor.ITEM_NAME, New GelArmor)                     '137
+        internal_inventory.Add(GelLinge.ITEM_NAME, New GelLinge)                     '138
+        internal_inventory.Add(BracedHeadband.ITEM_NAME, New BracedHeadband)         '139
+        internal_inventory.Add(EmeraldCirclet.ITEM_NAME, New EmeraldCirclet)         '140
+        internal_inventory.Add(ActiveCamoflage.ITEM_NAME, New ActiveCamoflage)       '141
+        internal_inventory.Add(CombatModule.ITEM_NAME, New CombatModule)             '142
+        internal_inventory.Add(EveryNewItem.ITEM_NAME, New EveryNewItem)             '143
+        internal_inventory.Add(CrystalArmor.ITEM_NAME, New CrystalArmor)             '144
+        internal_inventory.Add(ScepterOfAsh.ITEM_NAME, New ScepterOfAsh)             '145
+        '0.9                                                                           
+        internal_inventory.Add(CatArmor.ITEM_NAME, New CatArmor)                     '146
+        internal_inventory.Add(SkimpyTT.ITEM_NAME, New SkimpyTT)                     '147
+        internal_inventory.Add(GrapplingHook.ITEM_NAME, New GrapplingHook)           '148
+        internal_inventory.Add(ManaHibiscus.ITEM_NAME, New ManaHibiscus)             '149
+        internal_inventory.Add(TwinBlades.ITEM_NAME, New TwinBlades)                 '150
+        internal_inventory.Add(SLolitaDress.ITEM_NAME, New SLolitaDress)             '151
+        internal_inventory.Add(WillCharm.ITEM_NAME, New WillCharm)                   '152
+        internal_inventory.Add(AntiCurseTag.ITEM_NAME, New AntiCurseTag)             '153
+        internal_inventory.Add(NewUCrystal.ITEM_NAME, New NewUCrystal)               '154
+        internal_inventory.Add(BronzeSpear.ITEM_NAME, New BronzeSpear)               '155
+        internal_inventory.Add(SteelSpear.ITEM_NAME, New SteelSpear)                 '156
+        internal_inventory.Add(FlamingSpear.ITEM_NAME, New FlamingSpear)             '157
+        internal_inventory.Add(SigSpear.ITEM_NAME, New SigSpear)                     '158
+        internal_inventory.Add(SigStaff.ITEM_NAME, New SigStaff)                     '159
+        internal_inventory.Add(SpikedStaff.ITEM_NAME, New SpikedStaff)               '160
+        internal_inventory.Add(Blindfold.ITEM_NAME, New Blindfold)                   '161
+        internal_inventory.Add(TKnife.ITEM_NAME, New TKnife)                         '162
+        internal_inventory.Add(SigDagger.ITEM_NAME, New SigDagger)                   '163
+        internal_inventory.Add(StealthGear.ITEM_NAME, New StealthGear)               '164
+        internal_inventory.Add(MShank.ITEM_NAME, New MShank)                         '165
+        internal_inventory.Add(FoNight.ITEM_NAME, New FoNight)                       '166
+        internal_inventory.Add(WOShock.ITEM_NAME, New WOShock)                       '167
+        internal_inventory.Add(Cursemark.ITEM_NAME, New Cursemark)                   '168
+        internal_inventory.Add(MaidLingerie.ITEM_NAME, New MaidLingerie)             '169
+        internal_inventory.Add(MagSlutOutfit.ITEM_NAME, New MagSlutOutfit)           '170
+        internal_inventory.Add(MagSlutWand.ITEM_NAME, New MagSlutWand)               '171
+        internal_inventory.Add(FlamingSword.ITEM_NAME, New FlamingSword)             '172
+        internal_inventory.Add(SigWhip.ITEM_NAME, New SigWhip)                       '173
+        internal_inventory.Add(CDefenseCharm.ITEM_NAME, New CDefenseCharm)           '174
+        internal_inventory.Add(CozySweater.ITEM_NAME, New CozySweater)               '175
+        internal_inventory.Add(ScaleArmor.ITEM_NAME, New ScaleArmor)                 '176
+        internal_inventory.Add(ScaleBikini.ITEM_NAME, New ScaleBikini)               '177
+        internal_inventory.Add(AntiFreeze.ITEM_NAME, New AntiFreeze)                 '178
+        internal_inventory.Add(WOVoltage.ITEM_NAME, New WOVoltage)                   '179
+        internal_inventory.Add(PPanties.ITEM_NAME, New PPanties)                     '180
+        internal_inventory.Add(GothOutfit.ITEM_NAME, New GothOutfit)                 '181
+        internal_inventory.Add(CursedCoupon.ITEM_NAME, New CursedCoupon)             '182
+        internal_inventory.Add(KitsuneRobe.ITEM_NAME, New KitsuneRobe)               '183
+        'v0.9.1                                                                        
+        internal_inventory.Add(CommonClothes0.ITEM_NAME, New CommonClothes0)         '184
+        internal_inventory.Add(CommonClothes1.ITEM_NAME, New CommonClothes1)         '185
+        internal_inventory.Add(CommonClothes2.ITEM_NAME, New CommonClothes2)         '186
+        internal_inventory.Add(CommonClothes3.ITEM_NAME, New CommonClothes3)         '187
+        internal_inventory.Add(CommonClothes4.ITEM_NAME, New CommonClothes4)         '188
+        internal_inventory.Add(CommonClothes5.ITEM_NAME, New CommonClothes5)         '189
+        internal_inventory.Add(CommonClothes6.ITEM_NAME, New CommonClothes6)         '190
+        internal_inventory.Add(SkimpyClothes.ITEM_NAME, New SkimpyClothes)           '191
+        internal_inventory.Add(VSkimpyClothes.ITEM_NAME, New VSkimpyClothes)         '192
+        internal_inventory.Add(UEPotion.ITEM_NAME, New UEPotion)                     '193
+        internal_inventory.Add(DEPotion.ITEM_NAME, New DEPotion)                     '194
+        internal_inventory.Add(CurseBGone.ITEM_NAME, New CurseBGone)                 '195
+        internal_inventory.Add(CowCosplay.ITEM_NAME, New CowCosplay)                 '196
+        internal_inventory.Add(Bimbell.ITEM_NAME, New Bimbell)                       '197
+        internal_inventory.Add(KitsuneMask.ITEM_NAME, New KitsuneMask)               '198
+        internal_inventory.Add(AngelicSweater.ITEM_NAME, New AngelicSweater)         '199
+        internal_inventory.Add(CAttackCharm.ITEM_NAME, New CAttackCharm)             '200
+        internal_inventory.Add(ProMagGirlOutfit.ITEM_NAME, New ProMagGirlOutfit)     '201
+        internal_inventory.Add(MagGirlOutfitP.ITEM_NAME, New MagGirlOutfitP)         '202
+        internal_inventory.Add(ProMagGirlWand.ITEM_NAME, New ProMagGirlWand)         '203
+        internal_inventory.Add(MagGirlWandP.ITEM_NAME, New MagGirlWandP)             '204
+        internal_inventory.Add(VialOfFire.ITEM_NAME, New VialOfFire)                 '205
+        internal_inventory.Add(GemOfProg.ITEM_NAME, New GemOfProg)                   '206
+        internal_inventory.Add(GemOfPink.ITEM_NAME, New GemOfPink)                   '207
+        internal_inventory.Add(MagGirlOutfitD.ITEM_NAME, New MagGirlOutfitD)         '208
+        internal_inventory.Add(MagGirlWandD.ITEM_NAME, New MagGirlWandD)             '209
+        internal_inventory.Add(MagGirlOutfitR.ITEM_NAME, New MagGirlOutfitR)         '210
+        internal_inventory.Add(ProMagGirlOutfitR.ITEM_NAME, New ProMagGirlOutfitR)   '211
+        internal_inventory.Add(MagGirlWandR.ITEM_NAME, New MagGirlWandR)             '212
+        internal_inventory.Add(ProMagGirlWandR.ITEM_NAME, New ProMagGirlWandR)       '213
+        internal_inventory.Add(GemOfFlame.ITEM_NAME, New GemOfFlame)                 '214
+        internal_inventory.Add(GemOfDark.ITEM_NAME, New GemOfDark)                   '215
+        internal_inventory.Add(MagGirlOutfitC.ITEM_NAME, New MagGirlOutfitC)         '216
+        internal_inventory.Add(DemWhip.ITEM_NAME, New DemWhip)                       '217
+        internal_inventory.Add(ArchDemWhip.ITEM_NAME, New ArchDemWhip)               '218
+        internal_inventory.Add(FoxEars.ITEM_NAME, New FoxEars)                       '219
+        internal_inventory.Add(SkimpyClothesD.ITEM_NAME, New SkimpyClothesD)         '220
+        internal_inventory.Add(CowCosplayD.ITEM_NAME, New CowCosplayD)               '221
+        internal_inventory.Add(BunnySuitC.ITEM_NAME, New BunnySuitC)                 '222
+        internal_inventory.Add(SevenBandedRing.ITEM_NAME, New SevenBandedRing)       '223
+        internal_inventory.Add(FoxStatue.ITEM_NAME, New FoxStatue)                   '224
+        internal_inventory.Add(BunnyEars.ITEM_NAME, New BunnyEars)                   '225
+        internal_inventory.Add(CSpellbook.ITEM_NAME, New CSpellbook)                 '226
+        internal_inventory.Add(CrimsonManual.ITEM_NAME, New CrimsonManual)           '227
+        internal_inventory.Add(XPSandwich.ITEM_NAME, New XPSandwich)                 '228
+        internal_inventory.Add(BitGold.ITEM_NAME, New BitGold)                       '229
+        'v10.0.1                                                                     
+        internal_inventory.Add(DragonFruit.ITEM_NAME, New DragonFruit)               '230
+        internal_inventory.Add(MentalPotion.ITEM_NAME, New MentalPotion)             '231
+        internal_inventory.Add(ChillingPotion.ITEM_NAME, New ChillingPotion)         '232
+        internal_inventory.Add(USPotion.ITEM_NAME, New USPotion)                     '233
+        internal_inventory.Add(DSPotion.ITEM_NAME, New DSPotion)                     '234
+        internal_inventory.Add(HHealthPotion.ITEM_NAME, New HHealthPotion)           '235
+        internal_inventory.Add(HManaPotion.ITEM_NAME, New HManaPotion)               '236
+        internal_inventory.Add(SuccubusArmor.ITEM_NAME, New SuccubusArmor)           '237
+        internal_inventory.Add(LanceOfDarkness.ITEM_NAME, New LanceOfDarkness)       '238
+        internal_inventory.Add(SpidersilkBonds.ITEM_NAME, New SpidersilkBonds)       '239
+        internal_inventory.Add(SpidersilkBikini.ITEM_NAME, New SpidersilkBikini)     '240
+        internal_inventory.Add(MajManaPotion.ITEM_NAME, New MajManaPotion)           '241
+        internal_inventory.Add(Spellcyclopedia.ITEM_NAME, New Spellcyclopedia)       '242
+        internal_inventory.Add(BookOSpecials.ITEM_NAME, New BookOSpecials)           '243
+        internal_inventory.Add(VialOfPotVenom.ITEM_NAME, New VialOfPotVenom)         '244
+        internal_inventory.Add(CursePurge.ITEM_NAME, New CursePurge)                 '245
+        internal_inventory.Add(BenedictPotion.ITEM_NAME, New BenedictPotion)         '246
+        internal_inventory.Add(DodgePotion.ITEM_NAME, New DodgePotion)               '247
+        internal_inventory.Add(IncandPotion.ITEM_NAME, New IncandPotion)             '248
+        internal_inventory.Add(TeachFocusedMantra.ITEM_NAME, New TeachFocusedMantra) '249
+        internal_inventory.Add(FamCostume.ITEM_NAME, New FamCostume)                 '250
+        'v11.0.0                                                                     
+        internal_inventory.Add(OldSnips.ITEM_NAME, New OldSnips)                     '251
+        internal_inventory.Add(CollarSnips.ITEM_NAME, New CollarSnips)               '252
+        internal_inventory.Add(CynnsMark.ITEM_NAME, New CynnsMark)                   '253
+        internal_inventory.Add(CommonClothes7.ITEM_NAME, New CommonClothes7)         '254
+        internal_inventory.Add(PlatinumAxe.ITEM_NAME, New PlatinumAxe)               '255
+        internal_inventory.Add(PlatinumDaggers.ITEM_NAME, New PlatinumDaggers)       '256
+        internal_inventory.Add(PlatinumStaff.ITEM_NAME, New PlatinumStaff)           '257
+        internal_inventory.Add(CursedSword.ITEM_NAME, New CursedSword)               '258
+        internal_inventory.Add(BewitchedWand.ITEM_NAME, New BewitchedWand)           '259
+        internal_inventory.Add(JinxedWhip.ITEM_NAME, New JinxedWhip)                 '260
+        internal_inventory.Add(A6Battery.ITEM_NAME, New A6Battery)                   '261
+        internal_inventory.Add(CowArmor.ITEM_NAME, New CowArmor)                     '262
+        internal_inventory.Add(UpgradeArmor.ITEM_NAME, New UpgradeArmor)             '263
+        internal_inventory.Add(ArmorFragments.ITEM_NAME, New ArmorFragments)         '264
+        internal_inventory.Add(PlatArmor.ITEM_NAME, New PlatArmor)                   '265
+        internal_inventory.Add(PlatAdornment.ITEM_NAME, New PlatAdornment)           '266
+        internal_inventory.Add(RocDrumstick.ITEM_NAME, New RocDrumstick)             '267
+        internal_inventory.Add(DFStickOfGum.ITEM_NAME, New DFStickOfGum)             '268
+        internal_inventory.Add(NatureKiss.ITEM_NAME, New NatureKiss)                 '269
+        internal_inventory.Add(BetterHerbs.ITEM_NAME, New BetterHerbs)               '270
+        internal_inventory.Add(MOTOx.ITEM_NAME, New MOTOx)                           '271
+        internal_inventory.Add(Steak.ITEM_NAME, New Steak)                           '272
+        internal_inventory.Add(PhasePistol.ITEM_NAME, New PhasePistol)               '273
+        internal_inventory.Add(PhaseRifle.ITEM_NAME, New PhaseRifle)                 '274
+        internal_inventory.Add(PhaseHammer.ITEM_NAME, New PhaseHammer)               '275
+        internal_inventory.Add(PhaseDrill.ITEM_NAME, New PhaseDrill)                 '276
+        internal_inventory.Add(PaleoDiary.ITEM_NAME, New PaleoDiary)                 '277
+        internal_inventory.Add(MarissasNotes.ITEM_NAME, New MarissasNotes)           '278
+        internal_inventory.Add(AAAAAASpecs.ITEM_NAME, New AAAAAASpecs)               '279
+        internal_inventory.Add(PhaseVibrator.ITEM_NAME, New PhaseVibrator)           '280
+        internal_inventory.Add(PhaseDeflector.ITEM_NAME, New PhaseDeflector)         '281
+        internal_inventory.Add(TimeCopClothes.ITEM_NAME, New TimeCopClothes)         '282
+        internal_inventory.Add(HallowedTalisman.ITEM_NAME, New HallowedTalisman)     '283
+        internal_inventory.Add(LargeStick.ITEM_NAME, New LargeStick)                 '284
+        internal_inventory.Add(CommonClothes8.ITEM_NAME, New CommonClothes8)         '285
+        internal_inventory.Add(TomeOfKnowlege.ITEM_NAME, New TomeOfKnowlege)         '286
+        internal_inventory.Add(ExtraLife.ITEM_NAME, New ExtraLife)                   '287
+        internal_inventory.Add(CultistCloak.ITEM_NAME, New CultistCloak)             '288
+        internal_inventory.Add(CrimsonCloak.ITEM_NAME, New CrimsonCloak)             '289
+        internal_inventory.Add(SkimpyClothesG.ITEM_NAME, New SkimpyClothesG)         '290
+        internal_inventory.Add(GoldenGum.ITEM_NAME, New GoldenGum)                   '291
+        internal_inventory.Add(ImmitationCowbell.ITEM_NAME, New ImmitationCowbell)   '292
+        internal_inventory.Add(MagMimicWand.ITEM_NAME, New MagMimicWand)             '293
+        internal_inventory.Add(VialOfRockJuice.ITEM_NAME, New VialOfRockJuice)       '294
+        internal_inventory.Add(IcePop.ITEM_NAME, New IcePop)                         '295
+        internal_inventory.Add(IcePopB.ITEM_NAME, New IcePopB)                       '296
+        internal_inventory.Add(TidemageStaff.ITEM_NAME, New TidemageStaff)           '297
+        internal_inventory.Add(LimeBikini.ITEM_NAME, New LimeBikini)                 '298
+        internal_inventory.Add(SummerShades.ITEM_NAME, New SummerShades)             '299
+        'v11.5.0                                                                     
+        internal_inventory.Add(NecromancerRobe.ITEM_NAME, New NecromancerRobe)       '300
+        internal_inventory.Add(PaladinArmor.ITEM_NAME, New PaladinArmor)             '301
+        internal_inventory.Add(AmaArmor.ITEM_NAME, New AmaArmor)                     '302
+        internal_inventory.Add(PlantBikini.ITEM_NAME, New PlantBikini)               '303
+        internal_inventory.Add(MagGirlOutfitG.ITEM_NAME, New MagGirlOutfitG)         '304
+        internal_inventory.Add(ProMagGirlOutfitG.ITEM_NAME, New ProMagGirlOutfitG)   '305
+        internal_inventory.Add(GemOfIvy.ITEM_NAME, New GemOfIvy)                     '306
+        internal_inventory.Add(MagGirlWandG.ITEM_NAME, New MagGirlWandG)             '307
+        internal_inventory.Add(RedRimmedSpecs.ITEM_NAME, New RedRimmedSpecs)         '308
+        internal_inventory.Add(SmallGlasses.ITEM_NAME, New SmallGlasses)             '309
+        internal_inventory.Add(CircularGlasses.ITEM_NAME, New CircularGlasses)       '310
+        internal_inventory.Add(ThickRimmedSpecs.ITEM_NAME, New ThickRimmedSpecs)     '311
+        internal_inventory.Add(Shades.ITEM_NAME, New Shades)                         '312
+        internal_inventory.Add(Monocle.ITEM_NAME, New Monocle)                       '313
+        internal_inventory.Add(Eyepatch.ITEM_NAME, New Eyepatch)                     '314
+        internal_inventory.Add(MasqueraderMask.ITEM_NAME, New MasqueraderMask)       '315
+        internal_inventory.Add(CyberVisorP.ITEM_NAME, New CyberVisorP)               '316
+        internal_inventory.Add(CyberVisorO.ITEM_NAME, New CyberVisorO)               '317
+        internal_inventory.Add(CyberVisorG.ITEM_NAME, New CyberVisorG)               '318
+        internal_inventory.Add(AllSeeingShades.ITEM_NAME, New AllSeeingShades)       '319
+        internal_inventory.Add(Ballgag.ITEM_NAME, New Ballgag)                       '320
+        internal_inventory.Add(SpectralGag.ITEM_NAME, New SpectralGag)               '321 
+        internal_inventory.Add(MaidArmor.ITEM_NAME, New MaidArmor)                   '322
+        internal_inventory.Add(BunnySuitG.ITEM_NAME, New BunnySuitG)                 '323
+        internal_inventory.Add(AmaraphneVestment.ITEM_NAME, New AmaraphneVestment)   '324
+        internal_inventory.Add(AmaraphneRaiment.ITEM_NAME, New AmaraphneRaiment)     '325
+        internal_inventory.Add(FeatherSword.ITEM_NAME, New FeatherSword)             '326
+        internal_inventory.Add(MOAmaraphne.ITEM_NAME, New MOAmaraphne)               '327
+        internal_inventory.Add(OuijaBoard.ITEM_NAME, New OuijaBoard)                 '328
+        internal_inventory.Add(SwashMagicEPatch.ITEM_NAME, New SwashMagicEPatch)     '329
+        internal_inventory.Add(PirateHandbook.ITEM_NAME, New PirateHandbook)         '330
 
         armor = {New Naked,
                  Me.item(5), Me.item(7), Me.item(8), Me.item(10),
@@ -344,7 +377,9 @@
                  Me.item(239), Me.item(240), Me.item(250), Me.item(254),
                  Me.item(262), Me.item(265), Me.item(266), Me.item(282),
                  Me.item(285), Me.item(288), Me.item(289), Me.item(290),
-                 Me.item(298)}
+                 Me.item(298), Me.item(300), Me.item(301), Me.item(302),
+                 Me.item(303), Me.item(304), Me.item(305), Me.item(322),
+                 Me.item(323), Me.item(324), Me.item(325)}
 
         weapons = {New BareFists(),
                    Me.item(6), Me.item(9), Me.item(11), Me.item(21),
@@ -360,42 +395,48 @@
                    Me.item(218), Me.item(238), Me.item(255), Me.item(256),
                    Me.item(257), Me.item(258), Me.item(259), Me.item(260),
                    Me.item(273), Me.item(274), Me.item(275), Me.item(276),
-                   Me.item(284), Me.item(293), Me.item(297)}
+                   Me.item(284), Me.item(293), Me.item(297), Me.item(307),
+                   Me.item(326)}
 
-        useable = {Me.item(0), Me.item(3), Me.item(4),
-                   Me.item(65), Me.item(15), Me.item(36), Me.item(37),
-                   Me.item(45), Me.item(48), Me.item(49), Me.item(50),
-                   Me.item(51), Me.item(52), Me.item(57), Me.item(58),
-                   Me.item(81), Me.item(86), Me.item(88), Me.item(89),
-                   Me.item(91), Me.item(119), Me.item(126), Me.item(127),
-                   Me.item(128), Me.item(130), Me.item(136), Me.item(142),
-                   Me.item(143), Me.item(148), Me.item(149), Me.item(152),
-                   Me.item(153), Me.item(154), Me.item(155), Me.item(156),
-                   Me.item(157), Me.item(158), Me.item(162), Me.item(174),
-                   Me.item(182), Me.item(195), Me.item(200), Me.item(205),
-                   Me.item(206), Me.item(207), Me.item(214), Me.item(215),
-                   Me.item(219), Me.item(226), Me.item(227), Me.item(238),
-                   Me.item(244), Me.item(251), Me.item(252), Me.item(277),
-                   Me.item(278), Me.item(279), Me.item(280), Me.item(286),
-                   Me.item(294)}
+        useable = {Me.item(0), Me.item(3), Me.item(4), Me.item(65),
+                   Me.item(15), Me.item(36), Me.item(37), Me.item(45),
+                   Me.item(48), Me.item(49), Me.item(50), Me.item(51),
+                   Me.item(52), Me.item(57), Me.item(58), Me.item(81),
+                   Me.item(86), Me.item(88), Me.item(89), Me.item(91),
+                   Me.item(119), Me.item(126), Me.item(127), Me.item(128),
+                   Me.item(130), Me.item(136), Me.item(142), Me.item(143),
+                   Me.item(148), Me.item(149), Me.item(152), Me.item(153),
+                   Me.item(154), Me.item(155), Me.item(156), Me.item(157),
+                   Me.item(158), Me.item(162), Me.item(174), Me.item(182),
+                   Me.item(195), Me.item(200), Me.item(205), Me.item(206),
+                   Me.item(207), Me.item(214), Me.item(215), Me.item(219),
+                   Me.item(226), Me.item(227), Me.item(238), Me.item(244),
+                   Me.item(251), Me.item(252), Me.item(277), Me.item(278),
+                   Me.item(279), Me.item(280), Me.item(286), Me.item(294),
+                   Me.item(306), Me.item(327), Me.item(328), Me.item(330)}
 
-        food = {Me.item(1), Me.item(30), Me.item(31), Me.item(32), Me.item(33),
-                Me.item(34), Me.item(35), Me.item(44), Me.item(90),
-                Me.item(98), Me.item(100), Me.item(108), Me.item(109),
-                Me.item(117), Me.item(125), Me.item(132), Me.item(133),
-                Me.item(134), Me.item(135), Me.item(178), Me.item(228),
-                Me.item(230), Me.item(267), Me.item(268), Me.item(269),
-                Me.item(270), Me.item(272), Me.item(291), Me.item(295),
-                Me.item(296)}
+        food = {Me.item(1), Me.item(30), Me.item(31), Me.item(32),
+                Me.item(33), Me.item(34), Me.item(35), Me.item(44),
+                Me.item(90), Me.item(98), Me.item(100), Me.item(108),
+                Me.item(109), Me.item(117), Me.item(125), Me.item(132),
+                Me.item(133), Me.item(134), Me.item(135), Me.item(178),
+                Me.item(228), Me.item(230), Me.item(267), Me.item(268),
+                Me.item(269), Me.item(270), Me.item(272), Me.item(291),
+                Me.item(295), Me.item(296)}
 
-        acce = {New noAcce(), Me.item(66), Me.item(67), Me.item(68),
-                Me.item(69), Me.item(70), Me.item(77), Me.item(81),
-                Me.item(97), Me.item(110), Me.item(123), Me.item(139),
-                Me.item(140), Me.item(141), Me.item(149), Me.item(161),
-                Me.item(164), Me.item(168), Me.item(180), Me.item(197),
-                Me.item(198), Me.item(223), Me.item(225), Me.item(253),
-                Me.item(271), Me.item(281), Me.item(283), Me.item(292),
-                Me.item(299)}
+        acce = {New noAcce(),
+                Me.item(66), Me.item(67), Me.item(68), Me.item(69),
+                Me.item(70), Me.item(77), Me.item(81), Me.item(97),
+                Me.item(110), Me.item(123), Me.item(139), Me.item(140),
+                Me.item(141), Me.item(149), Me.item(164), Me.item(168),
+                Me.item(180), Me.item(197), Me.item(198), Me.item(223),
+                Me.item(225), Me.item(253), Me.item(271), Me.item(281),
+                Me.item(283), Me.item(292), Me.item(320), Me.item(321),
+                Me.item(327)}
+
+        services = {Me.item(87), Me.item(113), Me.item(114), Me.item(121),
+                    Me.item(122), Me.item(124), Me.item(131), Me.item(245),
+                    Me.item(249), Me.item(263)}
 
         potions = {Me.item(2), Me.item(13), Me.item(14), Me.item(25),
                    Me.item(26), Me.item(27), Me.item(28), Me.item(29),
@@ -410,6 +451,12 @@
         misc = {Me.item(43), Me.item(53), Me.item(224), Me.item(229),
                 Me.item(242), Me.item(243), Me.item(261), Me.item(264),
                 Me.item(287)}
+
+        glasses = {New noGlasses(),
+                   Me.item(161), Me.item(299), Me.item(308), Me.item(309),
+                   Me.item(310), Me.item(311), Me.item(312), Me.item(313),
+                   Me.item(314), Me.item(315), Me.item(316), Me.item(317),
+                   Me.item(318), Me.item(319), Me.item(329)}
 
         invIDorder = New List(Of Integer)
 
@@ -452,7 +499,7 @@
         If internal_inventory.Keys.Contains(key) Then
             internal_inventory(key).add(count)
         Else
-            MsgBox("Saved inventory item not detected!  Key: " & key)
+            DDError.missingInvItemError(key)
         End If
         sum += count
     End Sub
@@ -515,7 +562,7 @@
                 If mPotions(i - (x + 1)).hasBeenUsed Then mPotions(i - (x + 1)).reveal()
             Next
         End If
-        sum = calcSum()
+        calcSum()
     End Sub
 
     '|GETTERS|
@@ -549,11 +596,14 @@
         If item(n) Is Nothing Then Return 0
         Return item(n).getCount()
     End Function
-    Private Function calcSum() As Integer
+    Public Function calcSum() As Integer
         Dim totalSum As Integer = 0
         For i = 0 To upperBound()
             totalSum += getCountAt(i)
         Next
+
+        sum = totalSum
+
         Return totalSum
     End Function
 
@@ -587,8 +637,22 @@
     Function getPotions() As Item()
         Return potions
     End Function
+    Function getServices() As Item()
+        Return services
+    End Function
     Function getMisc() As Item()
         Return misc
+    End Function
+    Function getGlasses() As Tuple(Of String(), Glasses())
+        Dim s(UBound(glasses)) As String
+        For i = 0 To UBound(glasses)
+            s(i) = glasses(i).getName
+        Next
+        Return New Tuple(Of String(), Glasses())(s, glasses)
+
+    End Function
+    Function getMPotions() As List(Of MysteryPotion)
+        Return mPotions
     End Function
     Public Function getSum() As Integer
         Return sum

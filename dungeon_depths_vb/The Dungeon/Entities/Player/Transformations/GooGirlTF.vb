@@ -46,7 +46,7 @@
             p.MtF()
         End If
 
-        Equipment.clothesChange(p, "Naked")
+        EquipmentDialogBackend.armorChange(p, "Naked")
 
         p.breastSize = 4
 

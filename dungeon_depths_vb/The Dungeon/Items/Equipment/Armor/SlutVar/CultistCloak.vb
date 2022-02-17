@@ -1,19 +1,22 @@
 ﻿Public Class CultistCloak
     Inherits Armor
 
+    Public Const ITEM_NAME As String = "Cultist's_Cloak"
+
     Dim cloakneg1 As Tuple(Of Integer, Boolean, Boolean) = Nothing
     Dim cloak1 As Tuple(Of Integer, Boolean, Boolean) = Nothing
 
     Sub New()
         '|ID Info|
-        setName("Cultist's_Cloak")
+        setName(ITEM_NAME)
         id = 288
         tier = Nothing
 
         '|Item Flags|
         usable = false
-        MyBase.compress_breast = True
-        MyBase.anti_slut_ind = 265
+        compress_breast = True
+        show_underboob = True
+        anti_slut_ind = 265
 
         '|Stats|
         w_boost = 25
@@ -33,14 +36,15 @@
         usize3 = New Tuple(Of Integer, Boolean, Boolean)(352, True, True)
         usize4 = New Tuple(Of Integer, Boolean, Boolean)(353, True, True)
 
-        MyBase.hood = New Tuple(Of Integer, Boolean, Boolean)(19, True, True)
-        MyBase.cloak = New Tuple(Of Integer, Boolean, Boolean)(11, True, False)
+        hood = New Tuple(Of Integer, Boolean, Boolean)(19, True, True)
+        cloak = New Tuple(Of Integer, Boolean, Boolean)(11, True, False)
         cloakneg1 = New Tuple(Of Integer, Boolean, Boolean)(12, True, False)
         cloak1 = New Tuple(Of Integer, Boolean, Boolean)(13, True, False)
 
         '|Description|
-        setDesc("A blood-red hooded cloak that tingles with arcane energy when touched." & DDUtils.RNRN & _
-                        getSizeInformation() & vbcrlf & getStatInformation())
+        setDesc("A blood-red hooded cloak that tingles with arcane energy when touched." & DDUtils.RNRN &
+                getSizeInformation() & DDUtils.RNRN &
+                getStatInformation())
     End Sub
 
     Public Overrides Function getCloak(ByRef p As Player) As Tuple(Of Integer, Boolean, Boolean)

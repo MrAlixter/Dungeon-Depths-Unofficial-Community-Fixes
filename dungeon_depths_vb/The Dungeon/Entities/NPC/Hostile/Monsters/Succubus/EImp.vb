@@ -26,8 +26,8 @@
         defense *= 1.6
         speed *= 1.6
 
-        Game.pushLblEvent("The " & getName() & " used Drain Soul!  " & levelsToDrain & " levels drained!")
-        Game.pushLstLog("The " & getName() & " used Drain Soul!  " & levelsToDrain & " levels drained!")
+        TextEvent.push("The " & getName() & " used Drain Soul!  " & levelsToDrain & " levels drained!")
+        TextEvent.pushLog("The " & getName() & " used Drain Soul!  " & levelsToDrain & " levels drained!")
     End Sub
 
     Public Overrides Sub sapPlayer(ByRef p As Player)

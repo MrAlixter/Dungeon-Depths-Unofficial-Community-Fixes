@@ -1,20 +1,31 @@
 ﻿Public Class ActiveCamoflage
     Inherits Accessory
-    'The ruby circlet provides a +1 attack buff
+
+    Public Const ITEM_NAME As String = "Active_Camoflage"
+
     Sub New()
-        setName("Active_Camoflage")
-        setDesc("Unimplemented")
+        '|ID Info|
+        setName(ITEM_NAME)
         id = 141
         tier = Nothing
-        usable = false
+
+        '|Item Flags|
+        usable = False
+        rando_inv_allowed = False
+
+        '|Stats|
         count = 0
         value = 0
 
-        rando_inv_allowed = False
+        '|Image Index|
+
+
+        '|Description|
+        setDesc("Unimplemented")
     End Sub
 
     Public Overrides Sub onEquip(ByRef p As Player)
-        Game.pushLblEvent("Unimplemented")
+        TextEvent.push("Unimplemented")
         MyBase.onEquip(p)
     End Sub
 

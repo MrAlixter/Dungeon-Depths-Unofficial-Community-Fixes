@@ -1,10 +1,12 @@
 ﻿Public Class BitGold
     Inherits Item
 
+    Public Const ITEM_NAME As String = "BitGold"
+
     Sub New()
         '|ID Info|
-        setName("BitGold")
-        MyBase.id = 229
+        setName(ITEM_NAME)
+        id = 229
         tier = Nothing
 
         '|Item Flags|

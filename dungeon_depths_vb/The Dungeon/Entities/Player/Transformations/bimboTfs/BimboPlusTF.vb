@@ -24,7 +24,7 @@
         p.prt.setIAInd(pInd.fronthair, 6, True, True)
     End Sub
     Public Overrides Sub s1TFText(ByRef p As Player)
-        Game.pushLblEvent("You pause to rub your temples, a massive headache comming down on you like a ton of bricks.  As you take a few minutes to recover, you notice that your center of balance is off.  You hypothisize that maybe that vial you drank might be causing these effects." & DDUtils.RNRN & "Maybe you can just walk this off...")
+        TextEvent.push("You pause to rub your temples, a massive headache comming down on you like a ton of bricks.  As you take a few minutes to recover, you notice that your center of balance is off.  You hypothisize that maybe that vial you drank might be causing these effects." & DDUtils.RNRN & "Maybe you can just walk this off...")
     End Sub
 
     'Step 2
@@ -53,7 +53,8 @@
         End If
 
         p.prt.setIAInd(pInd.mouth, 6, True, True)
-        p.prt.setIAInd(pInd.glasses, 2, True, False)
+        If p.inv.getCountAt("Small_Glasses") < 1 Then p.inv.add("Small_Glasses", 1)
+        EquipmentDialogBackend.glassesChange(p, "Small_Glasses")
     End Sub
 
     'Alternate Step 2
@@ -68,13 +69,15 @@
         p.prt.setIAInd(pInd.mouth, 6, True, True)
         p.prt.setIAInd(pInd.eyes, 34, True, True)
         p.prt.setIAInd(pInd.cloak, 0, True, True)
-        p.prt.setIAInd(pInd.glasses, 2, True, False)
-        Equipment.clothesChange(p, "Magical_Slut_Outfit")
+        If p.inv.getCountAt("Small_Glasses") < 1 Then p.inv.add("Small_Glasses", 1)
+        EquipmentDialogBackend.glassesChange(p, "Small_Glasses")
+        If p.inv.getCountAt("Magical_Slut_Outfit") < 1 Then p.inv.add("Magical_Slut_Outfit", 1)
+        EquipmentDialogBackend.armorChange(p, "Magical_Slut_Outfit")
         p.breastSize = 3
-        Game.pushLblEvent("You immediatly feel funny, the increased magic in your system reacting swiftly with the gum.  Mind clearer than ever, you look down to see your clothes have become tight and pink. You smirk; while you look like a typical brainless bimbo, you're far more intellegent than you were before. Your hair lengthens, becoming a platinum blonde, and your clothes finish changing to match your new figure.  While the effects on your body confirm your hypothesis that BIM_II is likely the chemical used in those sticks of gum the increased IQ hints that there may be another compound involved.")
+        TextEvent.push("You immediatly feel funny, the increased magic in your system reacting swiftly with the gum.  Mind clearer than ever, you look down to see your clothes have become tight and pink. You smirk; while you look like a typical brainless bimbo, you're far more intellegent than you were before. Your hair lengthens, becoming a platinum blonde, and your clothes finish changing to match your new figure.  While the effects on your body confirm your hypothesis that BIM_II is likely the chemical used in those sticks of gum the increased IQ hints that there may be another compound involved.")
         p.lust += 10
 
-        If Game.mDun.numCurrFloor < 6 Then p.pImage = Game.picPlayerB.BackgroundImage Else p.pImage = Game.picBimbof.BackgroundImage
+        If Game.mDun.numCurrFloor < 6 Then p.player_image = Game.picPlayerB.BackgroundImage Else p.player_image = Game.picBimbof.BackgroundImage
         p.TextColor = Color.HotPink
         p.perks(perk.bimbotf) = -1
         stopTF()

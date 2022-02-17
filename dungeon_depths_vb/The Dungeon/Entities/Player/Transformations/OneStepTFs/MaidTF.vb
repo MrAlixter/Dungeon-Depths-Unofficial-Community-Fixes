@@ -22,7 +22,7 @@
         p.changeClass("Maid")
 
         'equip clothes
-        Equipment.clothesChange(p, "Maid_Outfit")
+        EquipmentDialogBackend.armorChange(p, "Maid_Outfit")
         'maid transformation
         p.prt.haircolor = Color.FromArgb(255, 115, 72, 65)
         p.prt.setIAInd(pInd.rearhair, 8, True, True)
@@ -39,6 +39,6 @@
         End If
         Dim revertText = Game.lblEvent.Text.Split(vbCrLf)(0)
         If Not revertText.Equals("") Then out = revertText & DDUtils.RNRN & out
-        Game.pushLblEvent(out)
+        TextEvent.push(out)
     End Sub
 End Class

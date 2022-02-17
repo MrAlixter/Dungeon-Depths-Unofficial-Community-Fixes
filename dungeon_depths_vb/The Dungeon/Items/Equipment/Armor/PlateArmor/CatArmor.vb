@@ -1,11 +1,13 @@
 ﻿Public Class CatArmor
     Inherits Armor
 
+    Public Const ITEM_NAME As String = "Cat_Armor"
+
     Dim oldHat As Tuple(Of Integer, Boolean, Boolean) = New Tuple(Of Integer, Boolean, Boolean)(0, True, False)
-    'CatLingerie is a cosmetic armor that doesn't provide a defense bonus
+
     Sub New()
         '|ID Info|
-        setName("Cat_Armor")
+        setName(ITEM_NAME)
         id = 146
         tier = Nothing
 
@@ -38,7 +40,7 @@
 
         '|Description|
         setDesc("An adorable cat themed set of lightweight armor that also boosts attack. Nya." & DDUtils.RNRN &
-                                      getSizeInformation() & vbcrlf & getStatInformation())
+                                      getSizeInformation() & DDUtils.RNRN & getStatInformation())
     End Sub
 
     Public Overrides Sub onEquip(ByRef p As Player)

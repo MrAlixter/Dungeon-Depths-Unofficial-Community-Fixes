@@ -1,8 +1,11 @@
 ﻿Public Class VialOfPotVenom
     Inherits Item
+
+    Public Const ITEM_NAME As String = "Vial_of_Potent_Venom"
+
     Sub New()
         '|ID Info|
-        setName("Vial_of_Potent_Venom")
+        setName(ITEM_NAME)
         id = 244
         tier = Nothing
 
@@ -20,7 +23,7 @@
 
     Overrides Sub use(ByRef p As Player)
         If Me.getUsable() = False Then Exit Sub
-        Game.pushLstLog("You drink the " & getName())
+        TextEvent.pushLog("You drink the " & getName())
         Dim out As String = "You drink the vial of potent venom!  You rapidly transform into an arachne!"
 
         ArachneTF.rapidTF(p)

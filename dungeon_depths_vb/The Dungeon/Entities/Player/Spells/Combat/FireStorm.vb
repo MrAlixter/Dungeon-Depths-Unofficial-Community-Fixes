@@ -13,7 +13,7 @@
             Dim dmg As Integer = 35
             Dim d31 = Int(Rnd() * 3)
             dmg = MyBase.getCaster.getSpellDamage(MyBase.getTarget, dmg + d31)
-            Game.pushLogAndEvent(CStr("You hit the " & MyBase.getTarget.name & " for " & dmg & " damage!"))
+            TextEvent.pushAndLog(CStr("You hit the " & MyBase.getTarget.name & " for " & dmg & " damage!"))
             MyBase.getTarget.takeDMG(dmg, MyBase.getCaster)
             If i <> 0 Then getCaster.mana -= 5
             If MyBase.getTarget.isDead Then Exit For

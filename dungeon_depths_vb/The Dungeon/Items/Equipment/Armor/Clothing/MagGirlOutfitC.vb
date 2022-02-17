@@ -1,19 +1,28 @@
 ﻿Public Class MagGirlOutfitC
     Inherits Armor
 
-    Sub New()
-        setName("Mag._Girl_Outfit_(C)")
+    Public Const ITEM_NAME As String = "Mag._Girl_Outfit_(C)"
 
+    Sub New()
+        '|ID Info|
+        setName(ITEM_NAME)
         id = 216
         tier = Nothing
-        usable = false
-        MyBase.d_boost = 5
-        MyBase.m_boost = 25
-        h_boost = 50
 
+        '|Item Flags|
+        usable = False
+        show_underboob = True
+        compress_breast = True
+        rando_inv_allowed = False
+
+        '|Stats|
+        d_boost = 5
+        m_boost = 25
+        h_boost = 50
         count = 0
         value = 100
 
+        '|Image Index|
         bsize1 = New Tuple(Of Integer, Boolean, Boolean)(304, True, True)
         bsize2 = New Tuple(Of Integer, Boolean, Boolean)(305, True, True)
         bsize3 = New Tuple(Of Integer, Boolean, Boolean)(306, True, True)
@@ -27,21 +36,19 @@
         usize4 = New Tuple(Of Integer, Boolean, Boolean)(228, True, True)
         usize5 = New Tuple(Of Integer, Boolean, Boolean)(229, True, True)
 
-        MyBase.compress_breast = True
-
-        rando_inv_allowed = False
-
-        setDesc("A mysterious uniform worn by a mysterious protector with a bovine flair." & DDUtils.RNRN & _
-                                   getSizeInformation() & vbcrlf & getStatInformation() &
-                            "Magical girls can not remove this uniform.")
+        '|Description|
+        setDesc("A mysterious uniform worn by a mysterious protector with a bovine flair." & DDUtils.RNRN &
+                getSizeInformation() & DDUtils.RNRN &
+                getStatInformation() &
+                "Magical girls can not remove this uniform.")
     End Sub
 
     Overrides Sub discard()
         If Game.player1.className.Equals("Magical Girl") Then
-            Game.pushLstLog("You can't just drop your uniform!")
+            TextEvent.pushLog("You can't just drop your uniform!")
             Exit Sub
         End If
-        Game.pushLstLog("You drop the " & getName())
+        TextEvent.pushLog("You drop the " & getName())
 
         count -= 1
     End Sub

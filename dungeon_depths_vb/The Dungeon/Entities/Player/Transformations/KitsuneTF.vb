@@ -42,7 +42,7 @@
         p.prt.setIAInd(pInd.fronthair, 35, True, True)
 
         If p.inv.getCountAt("Kitsune's_Robes") < 1 Then p.inv.add("Kitsune's_Robes", 1)
-        Equipment.clothesChange(p, "Kitsune's_Robes")
+        EquipmentDialogBackend.armorChange(p, "Kitsune's_Robes")
 
         p.changeForm("Kitsune")
     End Sub

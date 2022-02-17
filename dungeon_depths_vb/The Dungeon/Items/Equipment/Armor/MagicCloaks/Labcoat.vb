@@ -2,32 +2,40 @@
 Public Class Labcoat
     Inherits Armor
 
-    Sub New()
-        setName("Labcoat")
+    Public Const ITEM_NAME As String = "Labcoat"
 
+    Sub New()
+        '|ID Info|
+        setName(ITEM_NAME)
         id = 106
         tier = Nothing
-        usable = false
-        MyBase.d_boost = 3
+
+        '|Item Flags|
+        usable = False
+        compress_breast = True
+        rando_inv_allowed = False
+        slut_var_ind = 107
+
+        '|Stats|
+        d_boost = 3
         w_boost = 30
         count = 0
         value = 600
-        MyBase.slut_var_ind = 107
-        MyBase.bsizeneg1 = New Tuple(Of Integer, Boolean, Boolean)(39, False, True)
-        MyBase.bsize0 = New Tuple(Of Integer, Boolean, Boolean)(65, False, True)
-        MyBase.bsize1 = New Tuple(Of Integer, Boolean, Boolean)(143, True, True)
-        MyBase.bsize2 = New Tuple(Of Integer, Boolean, Boolean)(144, True, True)
 
-        MyBase.usizeneg1 = New Tuple(Of Integer, Boolean, Boolean)(41, False, True)
-        MyBase.usize0 = New Tuple(Of Integer, Boolean, Boolean)(42, False, True)
-        MyBase.usize1 = New Tuple(Of Integer, Boolean, Boolean)(139, True, True)
-        MyBase.usize2 = New Tuple(Of Integer, Boolean, Boolean)(140, True, True)
+        '|Image Index|
+        bsizeneg1 = New Tuple(Of Integer, Boolean, Boolean)(39, False, True)
+        bsize0 = New Tuple(Of Integer, Boolean, Boolean)(65, False, True)
+        bsize1 = New Tuple(Of Integer, Boolean, Boolean)(143, True, True)
+        bsize2 = New Tuple(Of Integer, Boolean, Boolean)(144, True, True)
 
-        MyBase.compress_breast = True
+        usizeneg1 = New Tuple(Of Integer, Boolean, Boolean)(41, False, True)
+        usize0 = New Tuple(Of Integer, Boolean, Boolean)(42, False, True)
+        usize1 = New Tuple(Of Integer, Boolean, Boolean)(139, True, True)
+        usize2 = New Tuple(Of Integer, Boolean, Boolean)(140, True, True)
 
-        rando_inv_allowed = False
-
-        setDesc("A white labcoat that gives its wearer an air of scientific authority." & DDUtils.RNRN & _
-                                getSizeInformation() & vbcrlf & getStatInformation())
+        '|Description|
+        setDesc("A white labcoat that gives its wearer an air of scientific authority." & DDUtils.RNRN &
+                getSizeInformation() & DDUtils.RNRN &
+                getStatInformation())
     End Sub
 End Class

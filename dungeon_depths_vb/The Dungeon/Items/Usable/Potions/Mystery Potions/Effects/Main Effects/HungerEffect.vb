@@ -8,7 +8,7 @@
         If p.stamina < 0 Then p.stamina = 0
 
         out += "+25 stamina."
-        Game.pushLblEvent(out)
+        TextEvent.push(out)
     End Sub
 
     Public Overrides Function getEffectDesc()

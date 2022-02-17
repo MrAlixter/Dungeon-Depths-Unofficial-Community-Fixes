@@ -2,20 +2,21 @@
     'the State class contains all relevent data unique to a player's form at any given time
 
     'instance data for a state
-    Dim name, sex, description As String
+    public name, sex, description As String
     Public pClass As pClass = New Classless()
     Public pForm As pForm = New Human()
-    Dim health As Double
+    Public health As Double
     Public maxHealth, mana, maxMana, attack, defense As Integer
-    Dim will, speed, gold, lust As Integer
+    Public will, speed, gold, lust As Integer
     Public breastSize, stamina, dickSize, buttSize As Integer
-    Dim equippedWeapon As Weapon
+    Public equippedWeapon As Weapon
     Public equippedArmor As Armor
-    Dim equippedAcce As Accessory
+    Public equippedAcce As Accessory
+    Public equippedGlasses As Glasses
     Public iArrInd(Portrait.NUM_IMG_LAYERS) As Tuple(Of Integer, Boolean, Boolean)
-    Dim perks As Dictionary(Of perk, Integer)
-    Dim invNeedsUDate As Boolean
-    Dim haircolor, skincolor, textColor As Color
+    Public perks As Dictionary(Of perk, Integer)
+    Public invNeedsUDate As Boolean
+    Public haircolor, skincolor, textColor As Color
     Public initFlag As Boolean = False
     Public isPetrified = False
 
@@ -23,8 +24,8 @@
     Sub New(ByRef p As Player)
         name = p.name
         sex = p.sex
-        pClass = p.classes(p.className)
-        pForm = p.forms(p.formName)
+        pClass = Player.classes(p.className)
+        pForm = Player.forms(p.formName)
         description = p.description
         health = p.health
         maxHealth = p.maxHealth
@@ -43,6 +44,7 @@
         equippedWeapon = p.equippedWeapon
         equippedArmor = p.equippedArmor
         equippedAcce = p.equippedAcce
+        equippedGlasses = p.equippedGlasses
         iArrInd = p.prt.iArrInd.Clone
         perks = DDUtils.copyDictionary(p.perks)
         invNeedsUDate = p.inv.invNeedsUDate
@@ -52,7 +54,6 @@
         initFlag = True
     End Sub
     'constructs a state with placeholder values
-    'this constructor is used to initialize a state
     Sub New()
         name = ""
         sex = ""
@@ -76,6 +77,7 @@
         equippedWeapon = New BareFists
         equippedArmor = New Naked
         equippedAcce = New noAcce
+        equippedGlasses = New noGlasses
         iArrInd = Nothing
         perks = New Dictionary(Of perk, Integer)()
         invNeedsUDate = False
@@ -115,9 +117,10 @@
         p.dickSize = dickSize
         p.buttSize = buttSize
         p.equippedWeapon = equippedWeapon
-        Equipment.clothesChange(p, equippedArmor.getName)
+        EquipmentDialogBackend.armorChange(p, equippedArmor.getName)
         p.equippedArmor = equippedArmor
         p.equippedAcce = equippedAcce
+        p.equippedGlasses = equippedGlasses
         p.prt.iArrInd = iArrInd.Clone
         p.inv.invNeedsUDate = invNeedsUDate
         p.prt.haircolor = haircolor
@@ -129,8 +132,8 @@
     Public Sub save(ByRef p As Player)
         name = p.name
         sex = p.sex
-        pClass = p.classes(p.className)
-        pForm = p.forms(p.formName)
+        pClass = Player.classes(p.className)
+        pForm = Player.forms(p.formName)
         description = p.description
         health = p.health
         maxHealth = p.maxHealth
@@ -149,6 +152,7 @@
         equippedWeapon = p.equippedWeapon
         equippedArmor = p.equippedArmor
         equippedAcce = p.equippedAcce
+        equippedGlasses = p.equippedGlasses
         iArrInd = p.prt.iArrInd.Clone
         perks = DDUtils.copyDictionary(p.perks)
         invNeedsUDate = p.inv.invNeedsUDate
@@ -191,8 +195,8 @@
             Exit Sub
         End If
         name = readArray(0)
-        pClass = Game.player1.classes(readArray(1).Split("~")(0))
-        pForm = Game.player1.forms(readArray(1).Split("~")(1))
+        pClass = Player.classes(readArray(1).Split("~")(0))
+        pForm = Player.forms(readArray(1).Split("~")(1))
         description = readArray(2)
         health = CDbl(readArray(3))
         maxHealth = CInt(readArray(4))
@@ -208,15 +212,15 @@
         stamina = CInt(readArray(15))
         gold = CInt(readArray(16))
 
-        For Each k In Equipment.aList.Keys
+        For Each k In EquipmentDialogBackend.armor_list.Keys
             If readArray(17).Equals(k) Then
-                equippedArmor = Equipment.aList(k)
+                equippedArmor = EquipmentDialogBackend.armor_list(k)
                 Exit For
             End If
         Next
-        For Each k In Equipment.wList.Keys
+        For Each k In EquipmentDialogBackend.weapon_list.Keys
             If readArray(18).Equals(k) Then
-                equippedWeapon = Equipment.wList(k)
+                equippedWeapon = EquipmentDialogBackend.weapon_list(k)
                 Exit For
             End If
         Next
@@ -248,13 +252,19 @@
             iArrInd(i) = New Tuple(Of Integer, Boolean, Boolean)(CInt(arr(0)), CBool(arr(1)), CBool(arr(2)))
         Next
 
-        For Each k In Equipment.acList.Keys
+        For Each k In EquipmentDialogBackend.accessory_list.Keys
             If readArray(35 + b1 + b2) = k Then
-                equippedAcce = Equipment.acList(k)
+                equippedAcce = EquipmentDialogBackend.accessory_list(k)
                 Exit For
             End If
         Next
 
+        For Each k In EquipmentDialogBackend.glasses_list.Keys
+            If readArray(36 + b1 + b2) = k Then
+                equippedGlasses = EquipmentDialogBackend.glasses_list(k)
+                Exit For
+            End If
+        Next
 
         '|Version Based Save Updating|
         If version = 0.92 Or version = 10.0 Then
@@ -285,6 +295,7 @@
             Next
 
             output += Game.player1.equippedAcce.getName & "*"
+            output += Game.player1.equippedGlasses.getName & "*"
             Return output + "#"
         Else
             Return "N/A#"
