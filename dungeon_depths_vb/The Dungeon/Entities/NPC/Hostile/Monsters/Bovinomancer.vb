@@ -116,16 +116,9 @@
         '| -- Battle Cleanup -- |
         despawn("p-death")
 
-        '| -- Revert any temporary polymorphs -- |
-        If p.polymorphs.ContainsKey(p.className) Or p.polymorphs.ContainsKey(p.formName) Then
-            p.ongoingTFs.resetPolymorphs()
-            p.perks(perk.polymorphed) = -1
-            p.revertToPState()
-        End If
-
         '| -- TF Description -- |
         Dim out As String = "As you collapse to the ground, still smoldering from the previous encounter, your foe saunters over with a smug grin." & DDUtils.RNRN &
-                            """Really, you shouldn't be suprised by this..."" " & r_pronoun & " says, charging another spell.  ""This is how things should be, clearly your natual state is to be cowed before your superior.""" & DDUtils.RNRN
+                            """Really, you shouldn't be suprised by this..."" " & pronoun & " says, charging another spell.  ""This is how things should be, clearly your natual state is to be cowed before your superior.""" & DDUtils.RNRN
 
         If Transformation.canBeTFed(p) Or p.formName.Equals("Cow") Then
             out += "The " & getName() & " casts Greater Bovinize, turning you into a cow!  This transformation will have some lasting effects even after it wears off..."
@@ -134,18 +127,33 @@
         End If
 
         '| -- Transformation -- |
-        If p.sex = "Male" Then
-            p.MtF()
-        End If
+        Try
+            '| -- Revert any temporary polymorphs -- |
+            If p.polymorphs.ContainsKey(p.className) Or p.polymorphs.ContainsKey(p.formName) Then
+                p.ongoingTFs.resetPolymorphs()
+                p.perks(perk.polymorphed) = -1
+                p.revertToPState()
+            End If
 
-        p.breastSize += 3
-        p.prt.setIAInd(pInd.rearhair, 16, True, True)
-        p.prt.setIAInd(pInd.midhair, 20, True, True)
-        p.prt.setIAInd(pInd.ears, 8, True, True)
-        p.prt.setIAInd(pInd.horns, 2, True, False)
-        p.savePState()
+            '| -- Lasting Effects Transformation -- |
+            If p.sex = "Male" Then
+                p.MtF()
+            End If
 
-        Polymorph.transform(p, "Cow", False)
+            p.breastSize = Math.Min(p.breastSize + 3, 7)
+
+            p.prt.setIAInd(pInd.rearhair, 16, True, True)
+            p.prt.setIAInd(pInd.midhair, 20, True, True)
+            p.prt.setIAInd(pInd.ears, 8, True, True)
+            p.prt.setIAInd(pInd.horns, 2, True, False)
+            p.savePState()
+
+            '| -- Cow Transformation -- |
+            Polymorph.transform(p, "Cow", False)
+        Catch ex As Exception
+            out = "As you collapse to the ground, still smoldering from the previous encounter, your foe saunters over with a smug grin." & DDUtils.RNRN &
+                  """Really, you shouldn't be suprised by this..."" " & pronoun & " says, stroking your cheek.  ""This is how things should be, clearly your natual state is to be cowed before your superior.""" & DDUtils.RNRN
+        End Try
 
         TextEvent.push(out, AddressOf p.update)
     End Sub
