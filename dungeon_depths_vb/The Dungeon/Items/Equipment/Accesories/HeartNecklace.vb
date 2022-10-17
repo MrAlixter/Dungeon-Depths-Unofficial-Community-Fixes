@@ -11,6 +11,7 @@
 
         '|Item Flags|
         usable = False
+        under_t_clothes = True
 
         '|Stats|
         count = 0
@@ -20,7 +21,7 @@
         fInd = New Tuple(Of Integer, Boolean, Boolean)(1, True, False)
 
         '|Description|
-        setDesc("A small pink heart on a silver chain." & DDUtils.RNRN &
+        setDesc("A small, pink, heart-shaped charm on a silver chain." & DDUtils.RNRN &
                 getStatInformation())
     End Sub
 End Class

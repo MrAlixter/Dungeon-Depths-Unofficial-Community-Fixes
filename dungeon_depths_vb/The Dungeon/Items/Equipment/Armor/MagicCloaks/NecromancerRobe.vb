@@ -12,6 +12,7 @@
         '|Item Flags|
         usable = False
         compress_breast = True
+        hide_rearhair = True
 
         '|Stats|
         h_boost = 10

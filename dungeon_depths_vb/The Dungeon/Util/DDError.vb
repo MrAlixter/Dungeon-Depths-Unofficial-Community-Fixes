@@ -66,4 +66,7 @@
     Public Shared Sub failedToLoadSettings()
         pushRestart("018", "Unable to load settings file, reverting to default settings.")
     End Sub
+    Public Shared Sub failedToLoadTile(ByVal t As tile, ByVal s As tSet)
+        push("019", "Failed to find/load the " & t.ToString & " tile from the " & s.ToString & " tileset.")
+    End Sub
 End Class

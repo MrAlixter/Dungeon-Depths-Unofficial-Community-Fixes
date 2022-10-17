@@ -13,6 +13,7 @@ Public Class PaladinArmor
         '|Item Flags|
         usable = False
         compress_breast = True
+        adjust_sleeve_layer = False
 
         '|Stats|
         m_boost = 10

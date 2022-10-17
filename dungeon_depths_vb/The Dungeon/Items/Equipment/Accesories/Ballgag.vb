@@ -13,6 +13,7 @@
         usable = False
         cursed = True
         hide_mouth = True
+        gag = True
 
         '|Stats|
         d_boost = 5
@@ -26,17 +27,6 @@
         '|Description|
         setDesc("A simple gag that prevents its wearer from speaking or casting spells, sealed by a spell that prevents removal by those who are aroused." & DDUtils.RNRN &
                 getStatInformation())
-    End Sub
-
-    Public Overrides Sub onEquip(ByRef p As Player)
-        MyBase.onEquip(p)
-
-        p.perks(perk.gagged) = 1
-    End Sub
-    Public Overrides Sub onUnequip(ByRef p As Player)
-        MyBase.onUnequip(p)
-
-        p.perks(perk.gagged) = -1
     End Sub
 
     Public Overrides Function getCursed(ByRef p As Player) As Boolean

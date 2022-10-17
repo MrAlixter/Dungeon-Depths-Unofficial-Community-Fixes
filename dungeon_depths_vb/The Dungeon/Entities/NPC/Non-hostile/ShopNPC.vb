@@ -7,6 +7,7 @@
     cursebroker
     maskmaggirl
     timetraveler
+    faequeen
 End Enum
 
 
@@ -59,6 +60,8 @@ Public MustInherit Class ShopNPC
                 Return New MaskedMG
             Case sNPCInd.timetraveler
                 Return New TimeTraveler
+            Case sNPCInd.faequeen
+                Return New FaeQueen
             Case Else
                 Return New Shopkeeper
         End Select

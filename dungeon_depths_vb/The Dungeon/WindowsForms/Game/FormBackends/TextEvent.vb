@@ -21,7 +21,7 @@
             Exit Sub
         End If
 
-        If s.Length > 250 Then
+        If s.Length > 350 Then
             pushEventBox(s, effect)
             Exit Sub
         End If
@@ -30,7 +30,7 @@
 
         Dim out = wrapText(s)
 
-        If Not Game.combat_engaged Then out += " " & DDUtils.RNRN & "Press any non-movement key to continue." Else out += " " & DDUtils.RNRN & "Click a combat button to continue."
+        If Not Game.combat_engaged Then out += " " & DDUtils.PAKTC Else out += " " & DDUtils.RNRN & "Click a combat button to continue."
         If 1 = 1 Then Game.lblEvent.Text = out Else Game.lblEvent.Text = vbCrLf & "---------------------------------------------------------------------------" & vbCrLf & out
         Game.lblEvent.BringToFront()
 
@@ -54,7 +54,7 @@
 
         Dim out = wrapText(s)
 
-        out += " " & DDUtils.RNRN & "Press any non-movement key to continue."
+        out += " " & DDUtils.PAKTC
 
         Game.lblEvent.Text = out
         Game.lblEvent.BringToFront()
@@ -131,6 +131,26 @@
         choiceText = s
         makeChoice()
     End Sub
+    Public Shared Sub pushManySelect(ByVal s As String, ByVal ParamArray options() As Tuple(Of String, Action))
+        choiceText = s
+
+        Game.selectionList = New Dictionary(Of String, Action)
+        For Each o In options
+            Game.selectionList.Add(o.Item1, o.Item2)
+        Next
+
+        Game.toPNLSelec("manySelect")
+    End Sub
+    Public Shared Sub pushManySelect(ByVal s As String, ByVal options As List(Of Tuple(Of String, Action)))
+        choiceText = s
+
+        Game.selectionList = New Dictionary(Of String, Action)
+        For Each o In options
+            Game.selectionList.Add(o.Item1, o.Item2)
+        Next
+
+        Game.toPNLSelec("manySelect")
+    End Sub
     Public Shared Sub pushNote(s As String, Optional onClose As Action = Nothing)
         'uses special note formatting for the message
         If s.Equals("") Then Exit Sub
@@ -158,7 +178,7 @@
     End Sub
 
     '| - Interactions - |
-    Public Shared Sub makeChoice()
+    Private Shared Sub makeChoice()
         Game.toPNLSelec("yesNo")
     End Sub
 

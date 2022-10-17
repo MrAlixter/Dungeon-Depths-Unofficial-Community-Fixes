@@ -29,8 +29,8 @@
         MyBase.onEquip(p)
         p.learnSpell("Molten Fireball")
     End Sub
-    Public Overloads Overrides Sub onUnEquip(ByRef p As Player, ByRef w As Weapon)
-        MyBase.onUnEquip(p, w)
-        p.knownSpells.Remove("Molten Fireball")
+    Public Overloads Overrides Sub onUnequip(ByRef p As Player, ByRef w As Weapon)
+        MyBase.onUnequip(p, w)
+        p.forgetSpell("Molten Fireball")
     End Sub
 End Class

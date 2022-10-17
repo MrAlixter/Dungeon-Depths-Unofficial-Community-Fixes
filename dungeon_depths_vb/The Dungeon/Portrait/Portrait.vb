@@ -28,19 +28,28 @@ Public Enum pInd
     fronthair       '25
     hat             '26
 End Enum
-
+Public Enum RENDER_MODE
+    half
+    full
+End Enum
 Public Class Portrait
     Public Const NUM_IMG_LAYERS As Integer = 26
+    Protected Friend Shared STARTING_INDEX() As Integer = {0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0} 'the starting indexes of each catagory
 
     Dim ent As Entity
+
     Public iArr(NUM_IMG_LAYERS) As Bitmap
     Public iArrInd(NUM_IMG_LAYERS) As Tuple(Of Integer, Boolean, Boolean)
+
     Public haircolor As Color = Color.FromArgb(255, 204, 203, 213)
     Public skincolor As Color = Color.FromArgb(255, 247, 219, 195)
     Public Shared backcolor As Color = Color.FromArgb(255, 32, 34, 38)
+
+    Public renderMode As RENDER_MODE = RENDER_MODE.full
+
     Public Shared imgLib As ImageCollection
     Public Shared nullImg As Image
-    Dim sInts() As Integer = {0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0} 'the starting indexes of each catagory
+
     Shared Sub New()
         imgLib = New ImageCollection(1)
         nullImg = imgLib.atrs(pInd.clothes).getAt(New Tuple(Of Integer, Boolean, Boolean)(5, False, True))
@@ -48,7 +57,7 @@ Public Class Portrait
 
     Sub New(ByVal sex As Boolean, ByRef e As Entity)
         For i = 0 To Portrait.NUM_IMG_LAYERS
-            iArrInd(i) = New Tuple(Of Integer, Boolean, Boolean)(sInts(i), sex, False)
+            iArrInd(i) = New Tuple(Of Integer, Boolean, Boolean)(STARTING_INDEX(i), sex, False)
         Next
 
         If sex Then
@@ -76,9 +85,9 @@ Public Class Portrait
     'converts an array of images into a .bmp image
     Shared Function CreateBMP(ByRef img() As Image, Optional ByVal drawBoarder As Boolean = True) As Bitmap
         Dim startTime As Double = DDDateTime.getTimeNow()
-        'MsgBox("CreateBMP")
         Dim bmp As New Bitmap(146, 216)
         Dim g As Graphics = Graphics.FromImage(bmp)
+
         If img(0).Size.Height < 300 Then g.DrawImage(img(0), 0, 0, 146, 216) Else g.DrawImage(img(0), 0, 0, 144, 144)
         For i = 1 To UBound(img)
             If img(i) Is Nothing Then img(i) = CharacterGenerator.picPort.Image
@@ -91,8 +100,7 @@ Public Class Portrait
         Return bmp
     End Function
     Shared Function CreateBMPFast(ByRef img() As Image, Optional ByVal drawBoarder As Boolean = True) As Bitmap
-        Dim startTime As Double = DDDateTime.getTimeNow()
-        'MsgBox("CreateBMP")
+        'Dim startTime As Double = DDDateTime.getTimeNow()
         Dim bmp As New Bitmap(146, 216)
 
         Dim cachedPixels(bmp.Height, bmp.Width) As Integer
@@ -105,8 +113,8 @@ Public Class Portrait
         Dim g As Graphics = Graphics.FromImage(bmp)
         If drawBoarder Then g.DrawImage(Game.picPortOutline.BackgroundImage, 0, 0, 146, 216)
 
-        Dim endTime = DDDateTime.getTimeNow()
-        Console.WriteLine("HBPRT RENDER TIME: (FAST)" + (endTime - startTime).ToString())
+        'Dim endTime = DDDateTime.getTimeNow()
+        'Console.WriteLine("HBPRT RENDER TIME: (FAST)" + (endTime - startTime).ToString())
         Return bmp
     End Function
     Shared Sub fastDraw(ByRef bkg As Bitmap, ByRef img As Bitmap, ByVal x As Integer, ByVal y As Integer, ByVal w As Integer, ByVal h As Integer, ByRef cachedPixels As Integer(,))
@@ -127,8 +135,8 @@ Public Class Portrait
         Next
     End Sub
     Shared Function CreateFullBodyBMP(ByRef img() As Image) As Bitmap
-        Dim startTime As Double = DDDateTime.getTimeNow()
-        'MsgBox("CreateFullBodyBMP")
+        'Dim startTime As Double = DDDateTime.getTimeNow()
+
         Dim bmp As New Bitmap(164, 610)
         Dim g As Graphics = Graphics.FromImage(bmp)
         g.DrawImage(img(0), 0, 0, 164, 610)
@@ -137,8 +145,8 @@ Public Class Portrait
             g.DrawImage(img(i), getRelativeX(img(i).Size, True), getRelativeY(img(i).Size, True), getRelativeSizeX(img(i).Size), getRelativeSizeY(img(i).Size))
         Next
 
-        Dim endTime = DDDateTime.getTimeNow()
-        Console.WriteLine("FBPRT RENDER TIME: " + (endTime - startTime).ToString())
+        'Dim endTime = DDDateTime.getTimeNow()
+        'Console.WriteLine("FBPRT RENDER TIME: " + (endTime - startTime).ToString())
         Return bmp
     End Function
     Shared Function getRelativeX(ByVal s As Size, ByVal fullBody As Boolean)
@@ -188,6 +196,39 @@ Public Class Portrait
             Return 610
         End If
     End Function
+    Shared Function topClothesMask(ByRef img As Image, ByRef c_mask As Image, Optional ByVal initial_y As Integer = 265) As Bitmap
+        'Assumes that the two images are the same size
+        If img Is Nothing OrElse c_mask Is Nothing OrElse Not img.Size.Equals(c_mask.Size) Then Return nullImg
+
+        Dim bmp As Bitmap = New Bitmap(img)
+        Dim b_c_mask As Bitmap = New Bitmap(c_mask)
+
+        Dim clear = Color.FromArgb(0, 0, 0, 0)
+
+        For y = initial_y To bmp.Size.Height - 1
+            For x = 0 To bmp.Size.Width - 1
+                If b_c_mask.GetPixel(x, y).A > 0 Then
+                    bmp.SetPixel(x, y, clear)
+                End If
+            Next
+        Next
+
+        Return bmp
+    End Function
+    Shared Function getMaskInitialY(ByVal bsize As Integer, ByVal compress As Boolean)
+        Select Case bsize
+            Case 4
+                If compress Then Return 265 Else Return 268
+            Case 5
+                If compress Then Return 268 Else Return 277
+            Case 6
+                If compress Then Return 275 Else Return 287
+            Case 7
+                If compress Then Return 284 Else Return 296
+        End Select
+
+        Return 260
+    End Function
 
     'exports the current assembled portrait as a .bmp image
     Public Function ExportIMG() As Image
@@ -209,6 +250,8 @@ Public Class Portrait
             pic = Game.picDragonF.BackgroundImage
         ElseIf pClass.Equals("Magical Girl​") Then
             pic = Game.picmgp1.BackgroundImage
+        ElseIf pClass.Equals("Valkyrie​") Then
+            pic = Game.picvalktf.BackgroundImage
         ElseIf pForm.Equals("Sheep") Then
             pic = Game.picSheep.BackgroundImage
         ElseIf pForm.Equals("Cake") Then
@@ -253,6 +296,8 @@ Public Class Portrait
     End Function
 
     Public Sub setIArr()
+        'Dim startTime As Double = DDDateTime.getTimeNow()
+
         For i = 0 To Portrait.NUM_IMG_LAYERS
             If Not (checkNDefFemInd(pInd.clothes, 47) Or checkNDefMalInd(pInd.clothes, 5)) And i = pInd.genitalia Then
                 iArr(i) = nullImg
@@ -269,13 +314,17 @@ Public Class Portrait
 
         changeHairColor(haircolor)
         changeSkinColor(skincolor)
-        accUnderClothes()
+
+        resolveLayerConflicts()
         lustBlushUpdate()
+
+        hideEars()
+        hideRearHair()
 
         If Not ent Is Nothing AndAlso Not ent.getPlayer Is Nothing Then
             hoodsAndCloaks()
 
-            If ent.getPlayer.equippedArmor.hide_dick Then
+            If ent.getPlayer.equippedArmor.hide_dick Or ent.getPlayer.equippedAcce.hide_dick Then
                 iArr(pInd.genitalia) = nullImg
             End If
 
@@ -284,11 +333,19 @@ Public Class Portrait
             End If
         End If
 
-        hideEars()
-        hideRearHair()
-
+        'Dim endTime = DDDateTime.getTimeNow()
+        'Console.WriteLine("setIArr RENDER TIME (" + renderMode.ToString + "): " + (endTime - startTime).ToString())
     End Sub
+    Public Function drawFull()
+        renderMode = RENDER_MODE.full
+        'portraitUDate()
+
+        setIArr()
+
+        Return CreateFullBodyBMP(iArr)
+    End Function
     Public Function draw()
+        renderMode = RENDER_MODE.half
         portraitUDate()
         If ent Is Nothing Then
             Select Case sexBool()
@@ -304,6 +361,8 @@ Public Class Portrait
         Return CreateBMP(iArr)
     End Function
     Public Function draw(ByVal solFlag As Boolean, ByVal isPetrified As Boolean, ByVal errorAction As action, ByVal pForm As String, ByVal pClass As String) As Image
+        renderMode = RENDER_MODE.half
+
         If solFlag Then Return Game.picPortrait.BackgroundImage
 
         If Not oneLayerImgCheck(pForm, pClass) Is Nothing Then Return CreateBMP({iArr(pInd.bkg), oneLayerImgCheck(pForm, pClass)})
@@ -313,7 +372,6 @@ Public Class Portrait
         setIArr()
         Return CreateBMP(iArr)
     End Function
-
     Public Sub changeHairColor(ByVal c As Color)
         haircolor = c
         Dim rearHairIndsToIgnore = {25, 26, 32, 34, 35, 36}
@@ -324,6 +382,8 @@ Public Class Portrait
         If Not checkNDefFemInd(pInd.midhair, midHairIndsToIgnore) And Not checkNDefMalInd(pInd.midhair, 5) Then iArr(pInd.midhair) = Portrait.hairRecolor(imgLib.atrs(pInd.midhair).getAt(iArrInd(pInd.midhair)), c)
         iArr(pInd.eyebrows) = Portrait.hairRecolor(imgLib.atrs(pInd.eyebrows).getAt(iArrInd(pInd.eyebrows)), c)
         If Not checkNDefFemInd(pInd.fronthair, frontHairIndsToIgnore) And Not checkNDefMalInd(pInd.fronthair, 6) Then iArr(pInd.fronthair) = Portrait.hairRecolor(imgLib.atrs(pInd.fronthair).getAt(iArrInd(pInd.fronthair)), c)
+
+        If checkFemInd(pInd.wings, 10) Then iArr(pInd.wings) = Portrait.hairRecolor(imgLib.atrs(pInd.wings).getAt(iArrInd(pInd.wings)), DDUtils.cShift(c, Color.White, 75))
 
         If Not ent Is Nothing AndAlso ent.GetType Is GetType(Player) AndAlso CType(ent, Player).perks(perk.astatue) > -1 Then
             iArr(pInd.eyes) = Portrait.hairRecolor(imgLib.atrs(pInd.eyes).getAt(iArrInd(pInd.eyes)), c)
@@ -336,31 +396,33 @@ Public Class Portrait
 
         bodyOverlay()
 
+        Dim recolorFunction = If(Not ent Is Nothing AndAlso Not ent.getPlayer Is Nothing AndAlso ent.getPlayer.isPetrified, Function(img, clr) petrificationRecolor(img, clr), Function(img, clr) skinRecolor(img, clr))
+
         Dim p = If((Not ent Is Nothing AndAlso ent.GetType Is GetType(Player)), CType(ent, Player), Nothing)
 
         If c.A = 255 Then
-            iArr(pInd.body) = Portrait.skinRecolor(imgLib.atrs(pInd.body).getAt(iArrInd(pInd.body)), c)
+            iArr(pInd.body) = recolorFunction(imgLib.atrs(pInd.body).getAt(iArrInd(pInd.body)), c)
             If Not p Is Nothing AndAlso Not p.pForm.getOverlayU(p).Item1 = 0 Then iArr(pInd.body) = CreateFullBodyBMP({nullImg, iArr(pInd.body), imgLib.atrs(pInd.bodyoverlay).getAt(p.pForm.getOverlayU(p))})
-            iArr(pInd.chest) = Portrait.skinRecolor(imgLib.atrs(pInd.chest).getAt(iArrInd(pInd.chest)), c)
+            iArr(pInd.chest) = recolorFunction(imgLib.atrs(pInd.chest).getAt(iArrInd(pInd.chest)), c)
             If Not p Is Nothing AndAlso Not p.pForm.getOverlayB(p).Item1 = 0 Then iArr(pInd.chest) = CreateFullBodyBMP({nullImg, iArr(pInd.chest), imgLib.atrs(pInd.bodyoverlay).getAt(p.pForm.getOverlayB(p))})
-            iArr(pInd.shoulders) = Portrait.skinRecolor(imgLib.atrs(pInd.shoulders).getAt(iArrInd(pInd.shoulders)), c)
+            iArr(pInd.shoulders) = recolorFunction(imgLib.atrs(pInd.shoulders).getAt(iArrInd(pInd.shoulders)), c)
             If Not p Is Nothing AndAlso Not p.pForm.getOverlayS(p).Item1 = 0 Then iArr(pInd.shoulders) = CreateFullBodyBMP({nullImg, iArr(pInd.shoulders), imgLib.atrs(pInd.bodyoverlay).getAt(p.pForm.getOverlayS(p))})
-            iArr(pInd.bodyoverlay) = Portrait.skinRecolor(imgLib.atrs(pInd.bodyoverlay).getAt(iArrInd(pInd.bodyoverlay)), c)
+            iArr(pInd.bodyoverlay) = recolorFunction(imgLib.atrs(pInd.bodyoverlay).getAt(iArrInd(pInd.bodyoverlay)), c)
         Else
             Dim bImg = CreateFullBodyBMP({imgLib.atrs(pInd.body).getAt(iArrInd(pInd.body)), imgLib.atrs(pInd.bodyoverlay).getAt(iArrInd(pInd.bodyoverlay)),
                                           imgLib.atrs(pInd.shoulders).getAt(iArrInd(pInd.shoulders)), imgLib.atrs(pInd.chest).getAt(iArrInd(pInd.chest))})
-            iArr(pInd.body) = Portrait.skinRecolor(bImg, c)
+            iArr(pInd.body) = recolorFunction(bImg, c)
             iArr(pInd.chest) = nullImg
             iArr(pInd.shoulders) = nullImg
             iArr(pInd.bodyoverlay) = nullImg
         End If
 
-        iArr(pInd.genitalia) = Portrait.skinRecolor(imgLib.atrs(pInd.genitalia).getAt(iArrInd(pInd.genitalia)), c)
-        iArr(pInd.face) = Portrait.skinRecolor(imgLib.atrs(pInd.face).getAt(iArrInd(pInd.face)), c)
+        If renderMode <> RENDER_MODE.half Then iArr(pInd.genitalia) = recolorFunction(imgLib.atrs(pInd.genitalia).getAt(iArrInd(pInd.genitalia)), c)
+        iArr(pInd.face) = recolorFunction(imgLib.atrs(pInd.face).getAt(iArrInd(pInd.face)), c)
         If Not p Is Nothing AndAlso Not p.pForm.getOverlayF(p).Item1 = 0 Then iArr(pInd.face) = CreateFullBodyBMP({nullImg, iArr(pInd.face), imgLib.atrs(pInd.bodyoverlay).getAt(p.pForm.getOverlayF(p))})
 
         colorEars(c)
-        'iArr(pInd.nose) = Portrait.skinRecolor(imgLib.atrs(pInd.nose).getAt(iArrInd(pInd.nose)), c)
+        'iArr(pInd.nose) = recolorFunction(imgLib.atrs(pInd.nose).getAt(iArrInd(pInd.nose)), c)
     End Sub
     Public Sub lustBlushUpdate()
         If ent Is Nothing OrElse Not ent.GetType Is GetType(Player) Then
@@ -407,10 +469,19 @@ Public Class Portrait
         iArr(pInd.ears) = t
     End Sub
     Sub colorEars(ByVal c As Color)
-        If Not checkNDefMalInd(pInd.ears, 3) And
-           Not checkNDefFemInd(pInd.ears, 3) And
-           Not checkNDefFemInd(pInd.ears, 9) Then
-            iArr(pInd.ears) = Portrait.skinRecolor(imgLib.atrs(pInd.ears).getAt(iArrInd(pInd.ears)), c)
+        Dim recolorFunction = If(Not ent Is Nothing AndAlso Not ent.getPlayer Is Nothing AndAlso ent.getPlayer.isPetrified, Function(img, clr) petrificationRecolor(img, clr), Function(img, clr) skinRecolor(img, clr))
+
+        If Not checkMalInd(pInd.ears, 1) And Not checkFemInd(pInd.ears, 1) And
+           Not checkMalInd(pInd.ears, 2) And Not checkFemInd(pInd.ears, 2) And
+           Not checkMalInd(pInd.ears, 4) And Not checkFemInd(pInd.ears, 4) And
+           Not checkNDefFemInd(pInd.ears, 7) And
+           Not checkNDefFemInd(pInd.ears, 9) And
+           Not checkNDefFemInd(pInd.ears, 10) And
+           Not checkNDefFemInd(pInd.ears, 11) And
+           Not checkNDefFemInd(pInd.ears, 13) And
+           Not checkNDefFemInd(pInd.ears, 15) And
+           Not checkNDefMalInd(pInd.ears, 6) Then
+            iArr(pInd.ears) = recolorFunction(imgLib.atrs(pInd.ears).getAt(iArrInd(pInd.ears)), c)
         End If
     End Sub
     Sub hideRearHair()
@@ -432,25 +503,33 @@ Public Class Portrait
             iArr(pInd.hat) = imgLib.atrs(pInd.hat).getAt(New Tuple(Of Integer, Boolean, Boolean)(18, True, True))
             iArr(pInd.rearhair) = CreateFullBodyBMP({nullImg, imgLib.atrs(pInd.hat).getAt(New Tuple(Of Integer, Boolean, Boolean)(16, True, True)), iArr(pInd.rearhair)})
 
+        ElseIf checkMalInd(pInd.hat, 5) Or checkFemInd(pInd.hat, 4) Then
+            iArr(pInd.hat) = imgLib.atrs(pInd.hat).getAt(New Tuple(Of Integer, Boolean, Boolean)(26, True, True))
+            iArr(pInd.rearhair) = CreateFullBodyBMP({nullImg, imgLib.atrs(pInd.hairacc).getAt(New Tuple(Of Integer, Boolean, Boolean)(29, True, False)), iArr(pInd.rearhair)})
+
         ElseIf checkNDefFemInd(pInd.accessory, 14) Or checkNDefMalInd(pInd.accessory, 13) Then
             iArr(pInd.rearhair) = imgLib.atrs(pInd.ears).getAt(New Tuple(Of Integer, Boolean, Boolean)(5, True, True))
-
         End If
     End Sub
     Sub hoodsAndCloaks()
-        If Not ent.getPlayer.equippedArmor.hood Is Nothing Then
-            iArr(pInd.hat) = CreateFullBodyBMP({nullImg, iArr(pInd.hat), imgLib.atrs(pInd.hat).getAt(ent.getPlayer.equippedArmor.hood)})
+        If ent.getPlayer.equippedArmor.hide_rearhair Then
             iArr(pInd.rearhair) = nullImg
+        End If
+
+        If Not ent.getPlayer.equippedArmor.hood Is Nothing Then
+            iArr(pInd.hat) = CreateFullBodyBMP({nullImg, imgLib.atrs(pInd.hat).getAt(ent.getPlayer.equippedArmor.hood), imgLib.atrs(pInd.hat).getAt(iArrInd(pInd.hat))})
+            iArr(pInd.hairacc) = nullImg
         End If
 
         If Not ent.getPlayer.equippedArmor.cloak Is Nothing Then
             iArr(pInd.wings) = CreateFullBodyBMP({nullImg, iArr(pInd.wings), imgLib.atrs(pInd.hairacc).getAt(ent.getPlayer.equippedArmor.getCloak(ent.getPlayer))})
         End If
     End Sub
-    Sub accUnderClothes()
+    Sub resolveLayerConflicts()
         If ent Is Nothing OrElse ent.getPlayer Is Nothing Then Exit Sub
 
         Dim acce = ent.getPlayer().equippedAcce
+        Dim armor = ent.getPlayer().equippedArmor
 
         If acce.under_t_clothes Then
             iArr(pInd.clothes) = CreateFullBodyBMP({CharacterGenerator.picPort.Image, iArr(pInd.face), iArr(pInd.accessory), iArr(pInd.clothes)})
@@ -458,7 +537,13 @@ Public Class Portrait
             iArr(pInd.accessory) = CharacterGenerator.picPort.Image
         End If
 
-        If acce.under_b_clothes Then
+        If acce.under_chin Then
+            iArr(pInd.clothes) = CreateFullBodyBMP({CharacterGenerator.picPort.Image, iArr(pInd.clothes), iArr(pInd.accessory), iArr(pInd.face)})
+            iArr(pInd.face) = CharacterGenerator.picPort.Image
+            iArr(pInd.accessory) = CharacterGenerator.picPort.Image
+        End If
+
+        If acce.under_b_clothes And renderMode <> RENDER_MODE.half Then
             iArr(pInd.clothesbtm) = CreateFullBodyBMP({CharacterGenerator.picPort.Image, iArr(pInd.accessory), iArr(pInd.clothesbtm)})
             iArr(pInd.accessory) = CharacterGenerator.picPort.Image
         End If
@@ -466,10 +551,24 @@ Public Class Portrait
         If acce.hide_mouth Then
             iArr(pInd.mouth) = CharacterGenerator.picPort.Image
         End If
+
+        If acce.hide_eyes Then
+            iArr(pInd.eyes) = CharacterGenerator.picPort.Image
+        End If
+
+        If armor.adjust_sleeve_layer And renderMode <> RENDER_MODE.half Then
+            iArr(pInd.clothes) = topClothesMask(iArr(pInd.clothes), iArr(pInd.clothesbtm), getMaskInitialY(ent.getPlayer.breastSize, armor.compress_breast))
+        End If
+
+        If armor.swap_gen_clothesbtm And renderMode <> RENDER_MODE.half Then
+            Dim t = iArr(pInd.clothesbtm).Clone
+            iArr(pInd.clothesbtm) = iArr(pInd.genitalia).Clone
+            iArr(pInd.genitalia) = t
+        End If
     End Sub
     Sub spiderBody()
         If iArrInd(pInd.tail).Item1 = 2 Then
-            iArr(pInd.clothes) = CreateFullBodyBMP({iArr(pInd.clothes), imgLib.atrs(pInd.horns).getAt(6)})
+            iArr(pInd.clothesbtm) = CreateFullBodyBMP({iArr(pInd.clothesbtm), imgLib.atrs(pInd.horns).getAt(6)})
         End If
     End Sub
     Function shrub() As Image
@@ -570,7 +669,7 @@ Public Class Portrait
 
         Return False
     End Function
-    'hairRecolor changes the color of an image, assumed to be of the same color as the players hair 
+    'hairRecolor changes the color of an image, assumed to be of the same base color as the player's hair 
     Shared Function hairRecolor(ByVal img As Bitmap, ByVal c As Color) As Image
         If img Is Nothing Then Return Nothing
         Dim cImg As Bitmap = img.Clone
@@ -599,7 +698,7 @@ Public Class Portrait
         Next
         Return cImg
     End Function
-    'skinRecolor changes the color of an image, assumed to be of the same color as the players skin
+    'skinRecolor changes the color of an image, assumed to be of the same base color as the player's skin
     Shared Function skinRecolor(ByVal img As Bitmap, ByVal c As Color) As Image
         If img Is Nothing Then Return Nothing
         Dim cImg As Bitmap = img.Clone
@@ -607,14 +706,44 @@ Public Class Portrait
             For y = 0 To img.Height - 1
                 If Not img.GetPixel(x, y).A = 0 Then 
                     Dim afactor As Double = (img.GetPixel(x, y).A / 255)
-                    Dim rfactor As Double = (img.GetPixel(x, y).R / 247)
-                    Dim gfactor As Double = (img.GetPixel(x, y).G / 219)
+                    Dim rfactor As Double = (img.GetPixel(x, y).R / 249)
+                    Dim gfactor As Double = (img.GetPixel(x, y).G / 220)
                     Dim bfactor As Double = (img.GetPixel(x, y).B / 195)
 
                     Dim A As Integer = (c.A * (afactor))
                     Dim R As Integer = (c.R * (rfactor))
                     Dim G As Integer = (c.G * (gfactor))
                     Dim B As Integer = (c.B * (bfactor))
+                    If A > 255 Then A = 255
+                    If R > 255 Then R = 255
+                    If G > 255 Then G = 255
+                    If B > 255 Then B = 255
+
+                    Dim c1 As Color = Color.FromArgb(A, R, G, B)
+
+                    cImg.SetPixel(x, y, c1)
+                End If
+            Next
+        Next
+        Return cImg
+    End Function
+    Shared Function petrificationRecolor(ByVal img As Bitmap, ByVal c As Color) As Image
+        If img Is Nothing Then Return Nothing
+        Dim cImg As Bitmap = img.Clone
+        For x = 0 To img.Width - 1
+            For y = 0 To img.Height - 1
+                If Not img.GetPixel(x, y).A = 0 Then
+                    Dim afactor As Double = (img.GetPixel(x, y).A / 255)
+                    Dim rfactor As Double = (img.GetPixel(x, y).R / 249) '243
+                    Dim gfactor As Double = (img.GetPixel(x, y).G / 220) '189
+                    Dim bfactor As Double = (img.GetPixel(x, y).B / 195) '149
+
+                    Dim avgfactor = (rfactor + gfactor + bfactor) / 3
+
+                    Dim A As Integer = (c.A * (afactor))
+                    Dim R As Integer = (c.R * (avgfactor))
+                    Dim G As Integer = (c.G * (avgfactor))
+                    Dim B As Integer = (c.B * (avgfactor))
                     If A > 255 Then A = 255
                     If R > 255 Then R = 255
                     If G > 255 Then G = 255
@@ -653,11 +782,7 @@ Public Class Portrait
         If p.equippedAcce Is Nothing Or (p.equippedAcce.fInd Is Nothing And p.equippedAcce.mInd Is Nothing) Then
             p.equippedAcce = New noAcce()
         Else
-            If sexBool() Then
-                If Not p.equippedAcce.fInd Is Nothing Then iArrInd(pInd.accessory) = p.equippedAcce.fInd Else iArrInd(pInd.accessory) = p.equippedAcce.mInd
-            Else
-                If Not p.equippedAcce.mInd Is Nothing Then iArrInd(pInd.accessory) = p.equippedAcce.mInd Else iArrInd(pInd.accessory) = p.equippedAcce.fInd
-            End If
+            iArrInd(pInd.accessory) = p.equippedAcce.getAccIMG(p)
         End If
 
         If p.equippedGlasses Is Nothing Or p.equippedGlasses.imgInd Is Nothing Then

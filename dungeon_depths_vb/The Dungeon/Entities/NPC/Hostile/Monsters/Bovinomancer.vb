@@ -1,12 +1,14 @@
 ﻿Public Class Bovinomancer
     Inherits Monster
 
+    Public Const BASE_NAME As String = "Bovinaemancer"
+
     Dim tfInd As Integer
     Dim knows_p_cant_be_tfed As Boolean
 
     Sub New()
         '|ID Info|
-        name = "Bovinaemancer"
+        name = BASE_NAME
 
         '|Stats|
         maxHealth = 250

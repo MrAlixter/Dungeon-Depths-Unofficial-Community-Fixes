@@ -159,9 +159,8 @@
         Return If(Me.GetType Is GetType(Player), CType(Me, Player), Nothing)
     End Function
     Public Function getNPC() As NPC
-        Return If(Me.GetType Is GetType(NPC), CType(Me, NPC), Nothing)
+        Return If(Me.GetType.IsSubclassOf(GetType(NPC)), CType(Me, NPC), Nothing)
     End Function
-
 
     '|SETTERS|
     Public Overridable Sub setName(ByVal n As String)

@@ -146,7 +146,7 @@
         internal_inventory.Add(OmniCharm.ITEM_NAME, New OmniCharm)                   '126
         internal_inventory.Add(VialOfBimbo.ITEM_NAME, New VialOfBimbo)               '127
         internal_inventory.Add(CryoGrenade.ITEM_NAME, New CryoGrenade)               '128
-        internal_inventory.Add(SVBunnySuit.ITEM_NAME, New SVBunnySuit)               '129
+        internal_inventory.Add(ReverseBunnySuit.ITEM_NAME, New ReverseBunnySuit)     '129
         internal_inventory.Add(GalaxyDye.ITEM_NAME, New GalaxyDye)                   '130
         internal_inventory.Add(BFormReset.ITEM_NAME, New BFormReset)                 '131
         internal_inventory.Add(WStickOfGum.ITEM_NAME, New WStickOfGum)               '132
@@ -353,6 +353,53 @@
         internal_inventory.Add(OuijaBoard.ITEM_NAME, New OuijaBoard)                 '328
         internal_inventory.Add(SwashMagicEPatch.ITEM_NAME, New SwashMagicEPatch)     '329
         internal_inventory.Add(PirateHandbook.ITEM_NAME, New PirateHandbook)         '330
+        'v12.0.0 
+        internal_inventory.Add(SkimpyClothesF.ITEM_NAME, New SkimpyClothesF)         '331
+        internal_inventory.Add(CommonClothesF.ITEM_NAME, New CommonClothesF)         '332
+        internal_inventory.Add(RegalLingerieF.ITEM_NAME, New RegalLingerieF)         '333
+        internal_inventory.Add(GAStickOfGum.ITEM_NAME, New GAStickOfGum)             '334
+        internal_inventory.Add(RegalGownF.ITEM_NAME, New RegalGownF)                 '335
+        internal_inventory.Add(SkycladRunes.ITEM_NAME, New SkycladRunes)             '336
+        internal_inventory.Add(MedusaEye.ITEM_NAME, New MedusaEye)                   '337
+        internal_inventory.Add(SthenoSalve.ITEM_NAME, New SthenoSalve)               '338
+        internal_inventory.Add(VipersFang.ITEM_NAME, New VipersFang)                 '339
+        internal_inventory.Add(FaeForgedRing.ITEM_NAME, New FaeForgedRing)           '340
+        internal_inventory.Add(FaePApple.ITEM_NAME, New FaePApple)                   '341
+        internal_inventory.Add(FaeRose.ITEM_NAME, New FaeRose)                       '342
+        internal_inventory.Add(FaeLingerie.ITEM_NAME, New FaeLingerie)               '343
+        internal_inventory.Add(CursedBridle.ITEM_NAME, New CursedBridle)             '344
+        internal_inventory.Add(ArmoredLimeBikini.ITEM_NAME, New ArmoredLimeBikini)   '345
+        internal_inventory.Add(FaeStockings.ITEM_NAME, New FaeStockings)             '346
+        internal_inventory.Add(Acorn.ITEM_NAME, New Acorn)                           '347
+        internal_inventory.Add(Tulip.ITEM_NAME, New Tulip)                           '348
+        internal_inventory.Add(FaeQueenAmulet.ITEM_NAME, New FaeQueenAmulet)         '349
+        internal_inventory.Add(LingerieCatalog.ITEM_NAME, New LingerieCatalog)       '350
+        internal_inventory.Add(IronDagger.ITEM_NAME, New IronDagger)                 '351
+        internal_inventory.Add(LumpOfIron.ITEM_NAME, New LumpOfIron)                 '352
+        internal_inventory.Add(FeatherDagger.ITEM_NAME, New FeatherDagger)           '353
+        internal_inventory.Add(FaerieWitchRobes.ITEM_NAME, New FaerieWitchRobes)     '354
+        internal_inventory.Add(DiamondCirclet.ITEM_NAME, New DiamondCirclet)         '355
+        internal_inventory.Add(PinkHeadband.ITEM_NAME, New PinkHeadband)             '356
+        internal_inventory.Add(CrystalBikini.ITEM_NAME, New CrystalBikini)           '357
+        internal_inventory.Add(HPStickOfGum.ITEM_NAME, New HPStickOfGum)             '358
+        internal_inventory.Add(SWRestoration.ITEM_NAME, New SWRestoration)           '359
+        internal_inventory.Add(MPStickOfGum.ITEM_NAME, New MPStickOfGum)             '360
+        internal_inventory.Add(ScaleTalisman.ITEM_NAME, New ScaleTalisman)           '361
+        internal_inventory.Add(LanceOfSFury.ITEM_NAME, New LanceOfSFury)             '362
+        internal_inventory.Add(BunnySuitS.ITEM_NAME, New BunnySuitS)                 '363
+        internal_inventory.Add(GShowgirlOutfit.ITEM_NAME, New GShowgirlOutfit)       '364
+        internal_inventory.Add(StickWand.ITEM_NAME, New StickWand)                   '365
+        internal_inventory.Add(FantomaWand.ITEM_NAME, New FantomaWand)               '366
+        internal_inventory.Add(HBSWand.ITEM_NAME, New HBSWand)                       '367
+        internal_inventory.Add(HealFeelWand.ITEM_NAME, New HealFeelWand)             '368
+        internal_inventory.Add(DitzDazeWand.ITEM_NAME, New DitzDazeWand)             '369
+        internal_inventory.Add(RNDPolyWand.ITEM_NAME, New RNDPolyWand)               '370
+        internal_inventory.Add(MGReset.ITEM_NAME, New MGReset)                       '371
+        internal_inventory.Add(LepSlimeWhip.ITEM_NAME, New LepSlimeWhip)             '372
+        internal_inventory.Add(VialOfManyNames.ITEM_NAME, New VialOfManyNames)       '373
+        internal_inventory.Add(FaerieBlossom.ITEM_NAME, New FaerieBlossom)           '374
+        internal_inventory.Add(IronCollar.ITEM_NAME, New IronCollar)                 '375
+        internal_inventory.Add(FaeQueensCrown.ITEM_NAME, New FaeQueensCrown)         '376
 
         armor = {New Naked,
                  Me.item(5), Me.item(7), Me.item(8), Me.item(10),
@@ -379,7 +426,10 @@
                  Me.item(285), Me.item(288), Me.item(289), Me.item(290),
                  Me.item(298), Me.item(300), Me.item(301), Me.item(302),
                  Me.item(303), Me.item(304), Me.item(305), Me.item(322),
-                 Me.item(323), Me.item(324), Me.item(325)}
+                 Me.item(323), Me.item(324), Me.item(325), Me.item(331),
+                 Me.item(332), Me.item(333), Me.item(335), Me.item(336),
+                 Me.item(343), Me.item(345), Me.item(354), Me.item(357),
+                 Me.item(363), Me.item(364)}
 
         weapons = {New BareFists(),
                    Me.item(6), Me.item(9), Me.item(11), Me.item(21),
@@ -396,24 +446,29 @@
                    Me.item(257), Me.item(258), Me.item(259), Me.item(260),
                    Me.item(273), Me.item(274), Me.item(275), Me.item(276),
                    Me.item(284), Me.item(293), Me.item(297), Me.item(307),
-                   Me.item(326)}
+                   Me.item(326), Me.item(339), Me.item(348), Me.item(351),
+                   Me.item(353), Me.item(362), Me.item(365), Me.item(366),
+                   Me.item(367), Me.item(368), Me.item(369), Me.item(370),
+                   Me.item(372)}
 
         useable = {Me.item(0), Me.item(3), Me.item(4), Me.item(65),
-                   Me.item(15), Me.item(36), Me.item(37), Me.item(45),
-                   Me.item(48), Me.item(49), Me.item(50), Me.item(51),
-                   Me.item(52), Me.item(57), Me.item(58), Me.item(81),
-                   Me.item(86), Me.item(88), Me.item(89), Me.item(91),
-                   Me.item(119), Me.item(126), Me.item(127), Me.item(128),
-                   Me.item(130), Me.item(136), Me.item(142), Me.item(143),
-                   Me.item(148), Me.item(149), Me.item(152), Me.item(153),
-                   Me.item(154), Me.item(155), Me.item(156), Me.item(157),
-                   Me.item(158), Me.item(162), Me.item(174), Me.item(182),
-                   Me.item(195), Me.item(200), Me.item(205), Me.item(206),
-                   Me.item(207), Me.item(214), Me.item(215), Me.item(219),
-                   Me.item(226), Me.item(227), Me.item(238), Me.item(244),
-                   Me.item(251), Me.item(252), Me.item(277), Me.item(278),
-                   Me.item(279), Me.item(280), Me.item(286), Me.item(294),
-                   Me.item(306), Me.item(327), Me.item(328), Me.item(330)}
+                   Me.item(15), Me.item(36), Me.item(37), Me.item(48),
+                   Me.item(49), Me.item(50), Me.item(51), Me.item(52),
+                   Me.item(57), Me.item(58), Me.item(81), Me.item(86),
+                   Me.item(88), Me.item(89), Me.item(91), Me.item(119),
+                   Me.item(126), Me.item(127), Me.item(128), Me.item(130),
+                   Me.item(136), Me.item(142), Me.item(143), Me.item(148),
+                   Me.item(149), Me.item(152), Me.item(153), Me.item(154),
+                   Me.item(155), Me.item(156), Me.item(157), Me.item(158),
+                   Me.item(162), Me.item(174), Me.item(182), Me.item(195),
+                   Me.item(200), Me.item(205), Me.item(206), Me.item(207),
+                   Me.item(214), Me.item(215), Me.item(219), Me.item(226),
+                   Me.item(227), Me.item(238), Me.item(244), Me.item(251),
+                   Me.item(252), Me.item(277), Me.item(278), Me.item(279),
+                   Me.item(280), Me.item(286), Me.item(294), Me.item(306),
+                   Me.item(327), Me.item(328), Me.item(330), Me.item(334),
+                   Me.item(338), Me.item(344), Me.item(350), Me.item(373),
+                   Me.item(375)}
 
         food = {Me.item(1), Me.item(30), Me.item(31), Me.item(32),
                 Me.item(33), Me.item(34), Me.item(35), Me.item(44),
@@ -422,7 +477,8 @@
                 Me.item(133), Me.item(134), Me.item(135), Me.item(178),
                 Me.item(228), Me.item(230), Me.item(267), Me.item(268),
                 Me.item(269), Me.item(270), Me.item(272), Me.item(291),
-                Me.item(295), Me.item(296)}
+                Me.item(295), Me.item(296), Me.item(341), Me.item(347),
+                Me.item(358), Me.item(360)}
 
         acce = {New noAcce(),
                 Me.item(66), Me.item(67), Me.item(68), Me.item(69),
@@ -432,11 +488,14 @@
                 Me.item(180), Me.item(197), Me.item(198), Me.item(223),
                 Me.item(225), Me.item(253), Me.item(271), Me.item(281),
                 Me.item(283), Me.item(292), Me.item(320), Me.item(321),
-                Me.item(327)}
+                Me.item(327), Me.item(337), Me.item(340), Me.item(342),
+                Me.item(344), Me.item(346), Me.item(349), Me.item(355),
+                Me.item(356), Me.item(361), Me.item(374), Me.item(375),
+                Me.item(376)}
 
         services = {Me.item(87), Me.item(113), Me.item(114), Me.item(121),
                     Me.item(122), Me.item(124), Me.item(131), Me.item(245),
-                    Me.item(249), Me.item(263)}
+                    Me.item(249), Me.item(263), Me.item(359), Me.item(371)}
 
         potions = {Me.item(2), Me.item(13), Me.item(14), Me.item(25),
                    Me.item(26), Me.item(27), Me.item(28), Me.item(29),
@@ -450,7 +509,7 @@
 
         misc = {Me.item(43), Me.item(53), Me.item(224), Me.item(229),
                 Me.item(242), Me.item(243), Me.item(261), Me.item(264),
-                Me.item(287)}
+                Me.item(287), Me.item(352)}
 
         glasses = {New noGlasses(),
                    Me.item(161), Me.item(299), Me.item(308), Me.item(309),
@@ -468,7 +527,7 @@
                       "Azure_Potion", "Rose_Potion", "Mauve_Potion", "Jet_Potion",
                       "Ruby_Potion", "Emerald_Potion", "Sapphire_Potion", "Silver_Potion",
                       "Murky_Potion", "Smokey_Potion", "Pink_Potion", "Glittery_Potion",
-                      "Florecent_Potion", "Coral_Potion", "Steely_Potion", "Cyan_Potion",
+                      "Fluorescent_Potion", "Coral_Potion", "Steely_Potion", "Cyan_Potion",
                       "Violet_Potion", "Pewter_Potion", "Pearly_Potion", "Verdant_Potion",
                       "Lilac_Potion"})
         mPotions = New List(Of MysteryPotion)
@@ -610,7 +669,7 @@
     Function getArmors() As Tuple(Of String(), Armor())
         Dim s(UBound(armor)) As String
         For i = 0 To UBound(armor)
-                s(i) = armor(i).getName
+            s(i) = armor(i).getName
         Next
         Return New Tuple(Of String(), Armor())(s, armor)
     End Function

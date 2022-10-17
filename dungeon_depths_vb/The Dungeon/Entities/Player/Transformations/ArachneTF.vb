@@ -151,8 +151,11 @@
         Game.player1.perks(perk.avenom) = -1
     End Sub
 
+    Public Overrides Function getTFDone() As Boolean
+        Return MyBase.getTFDone() Or Game.player1.perks(perk.avenom) < 0 And Game.player1.perks(perk.svenom) < 0
+    End Function
     Public Overrides Function getNextStep(stage As Integer) As Action
-        If (Game.player1.perks(perk.avenom) = -1 And Game.player1.perks(perk.svenom) = -1) Or Game.player1.formName.Equals("Arachne") Then
+        If (Game.player1.perks(perk.avenom) < 0 And Game.player1.perks(perk.svenom) < 0) Or Game.player1.formName.Equals("Arachne") Then
             Return AddressOf stopTF
         End If
         If Game.player1.perks(perk.svenom) > -1 Then stage = Game.player1.perks(perk.svenom)

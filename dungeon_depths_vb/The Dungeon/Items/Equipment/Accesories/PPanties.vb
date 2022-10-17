@@ -14,6 +14,7 @@
         cursed = False
         under_b_clothes = True
         rando_inv_allowed = True
+        hide_dick = True
 
         '|Stats|
         h_boost = 10
@@ -26,11 +27,32 @@
         value = 0
 
         '|Image Index|
-        fInd = New Tuple(Of Integer, Boolean, Boolean)(15, True, True)
-        mInd = New Tuple(Of Integer, Boolean, Boolean)(14, False, True)
+        fInd = New Tuple(Of Integer, Boolean, Boolean)(0, True, False)
+        mInd = New Tuple(Of Integer, Boolean, Boolean)(0, False, False)
 
         '|Description|
         setDesc("A pink pair of panties that aren't a part of anything in the non-debug menu game.  Well, at least not yet..." & DDUtils.RNRN &
                 getStatInformation())
     End Sub
+
+    Public Overrides Function getAccIMG(ByRef p As Player) As Tuple(Of Integer, Boolean, Boolean)
+        Select Case p.buttSize
+            Case -1
+                Return New Tuple(Of Integer, Boolean, Boolean)(34, True, True)
+            Case 0
+                Return New Tuple(Of Integer, Boolean, Boolean)(35, True, True)
+            Case 1
+                Return New Tuple(Of Integer, Boolean, Boolean)(15, True, True)
+            Case 2
+                Return New Tuple(Of Integer, Boolean, Boolean)(36, True, True)
+            Case 3
+                Return New Tuple(Of Integer, Boolean, Boolean)(37, True, True)
+            Case 4
+                Return New Tuple(Of Integer, Boolean, Boolean)(38, True, True)
+            Case 5
+                Return New Tuple(Of Integer, Boolean, Boolean)(39, True, True)
+            Case Else
+                Return mInd
+        End Select
+    End Function
 End Class

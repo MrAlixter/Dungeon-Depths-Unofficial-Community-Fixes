@@ -1,7 +1,9 @@
-﻿Public NotInheritable Class ValkyrieTF2
+﻿Public Class ValkyrieTF2
     Inherits Transformation
 
     Private Const TF_IND As tfind = tfind.valkyrie
+
+    Protected Const className As String = "Valkyrie"
 
     Sub New(n As Integer, tts As Integer, wi As Double, cbs As Boolean)
         MyBase.New(n, tts, wi, cbs)
@@ -14,7 +16,35 @@
         next_step = getNextStep(cs)
     End Sub
 
+    Overridable Sub step1dialog(ByRef p As Player)
+        Dim out = "You swing your blade in a wide arc over your head, and you are engulfed in a ball of fire." & DDUtils.RNRN &
+                  "The inferno becomes blinding and your clothes burn away into the aether, as beams of red-hot energy twirl around your shifting silhouette." & DDUtils.RNRN &
+                  "With a final explosion of brilliant light, the sword dims and you flare your glorious wings."
+
+        TextEvent.push(out, AddressOf step2)
+        TextEvent.pushLog("You activate your magical girl transformation!")
+        p.textColor = Game.lblEvent.ForeColor
+    End Sub
     Sub step1()
+        Dim p As Player = Game.player1
+        p.changeClass("Valkyrie​")
+
+        If p.sex = "Male" Then
+            p.MtF()
+        End If
+
+        step1dialog(p)
+
+        p.specialRoute()
+        p.magicRoute()
+    End Sub
+
+    Sub step1combat()
+        step1()
+        step2()
+    End Sub
+
+    Sub step2()
         Dim p As Player = Game.player1
 
         If p.sex = "Male" Then
@@ -42,7 +72,14 @@
         EquipmentDialogBackend.armorChange(p, "Valkyrie_Armor")
 
         p.learnSpecial("Helix Slash")
+
+        Game.lblEvent.Text = ""
+        Game.lblEvent.Visible = False
         p.canMoveFlag = True
+
+        p.drawPort()
+
+        stopTF()
     End Sub
 
     Public Overrides Sub stopTF()
@@ -50,9 +87,13 @@
     End Sub
 
     Public Overrides Function getNextStep(stage As Integer) As Action
-        Dim p As player = Game.player1
-        If p.className.Equals("Valkyrie") Then
+        Dim p As Player = Game.player1
+        If p.className.Equals("Valkyrie​") Then
+            Return AddressOf step2
+        ElseIf p.className.Equals(className) Then
             Return AddressOf stopTF
+        ElseIf Game.combat_engaged Then
+            Return AddressOf step1combat
         Else
             Return AddressOf step1
         End If

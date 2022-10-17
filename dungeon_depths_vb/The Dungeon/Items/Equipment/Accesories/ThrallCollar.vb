@@ -13,10 +13,11 @@
         tier = 3
 
         '|Item Flags|
-        droppable = True
+        npc_drop_only = True
         usable = False
         cursed = True
         rando_inv_allowed = False
+        under_chin = True
 
         '|Stats|
         count = 0
@@ -27,25 +28,29 @@
         mInd = New Tuple(Of Integer, Boolean, Boolean)(3, False, True)
 
         '|Description|
-        setDesc("A collar commonly placed around the necks of the thralls." & DDUtils.RNRN &
-                "Provides no bonus.")
+        setDesc("A small metal collar meant to be wrapped around one's neck.  A set of arcane runes around its band guarantee that anyone who wears it will become a thrall in body and mind...")
     End Sub
     Overrides Sub onEquip(ByRef p As Player)
         If p.formName.Equals("Half-Succubus") Or p.className.Equals("Thrall") Then Exit Sub
+
         MagGirlTF.chkForMagGirlRevert(p)
 
         p.perks(perk.thrall) = 0
         p.ongoingTFs.Add(New ThrallTF(2, 10, 3.0, True))
 
-        If Not p.className.equals("Thrall") Then formerClass = p.className
+        If Not p.className.Equals("Thrall") Then formerClass = p.className
         formerEyeType = p.prt.iArrInd(pInd.eyes)
+
         p.savePState()
+
         p.changeClass("Thrall")
+
         If p.prt.sexBool Then
             p.prt.setIAInd(pInd.eyes, 19, True, True)
         Else
             p.prt.setIAInd(pInd.eyes, 8, False, True)
         End If
+
         p.prefForm = New preferredForm()
 
         p.drawPort()
@@ -53,23 +58,8 @@
     Sub forceEquip()
         Dim p As Player = Game.player1
 
-        If p.formName.Equals("Half-Succubus") Or p.className.Equals("Thrall") Then Exit Sub
-        MagGirlTF.chkForMagGirlRevert(p)
-
-        p.perks(perk.thrall) = 0
-        p.ongoingTFs.Add(New ThrallTF(2, 10, 3.0, True))
-
-        formerClass = p.className
-        formerEyeType = p.prt.iArrInd(pInd.eyes)
-        p.savePState()
-        p.changeClass("Thrall")
-        If p.prt.sexBool Then
-            p.prt.setIAInd(pInd.eyes, 19, True, True)
-        Else
-            p.prt.setIAInd(pInd.eyes, 8, False, True)
-        End If
-
-        p.prefForm = New preferredForm()
+        If p.inv.getCountAt(ThrallCollar.ITEM_NAME) < 1 Then p.inv.add(ThrallCollar.ITEM_NAME, 1)
+        EquipmentDialogBackend.equipAcce(p, ThrallCollar.ITEM_NAME, False)
 
         p.drawPort()
     End Sub

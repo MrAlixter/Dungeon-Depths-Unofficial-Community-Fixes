@@ -25,15 +25,15 @@
 
     Protected slut_var_ind As Integer = -1
     Protected anti_slut_ind As Integer = -1
-    Public bsizeneg1 As Tuple(Of Integer, Boolean, Boolean)
-    Public bsize0 As Tuple(Of Integer, Boolean, Boolean)
-    Public bsize1 As Tuple(Of Integer, Boolean, Boolean)
-    Public bsize2 As Tuple(Of Integer, Boolean, Boolean)
-    Public bsize3 As Tuple(Of Integer, Boolean, Boolean)
-    Public bsize4 As Tuple(Of Integer, Boolean, Boolean)
-    Public bsize5 As Tuple(Of Integer, Boolean, Boolean)
-    Public bsize6 As Tuple(Of Integer, Boolean, Boolean)
-    Public bsize7 As Tuple(Of Integer, Boolean, Boolean)
+    Public bsizeneg1 As Tuple(Of Integer, Boolean, Boolean) = Nothing
+    Public bsize0 As Tuple(Of Integer, Boolean, Boolean) = Nothing
+    Public bsize1 As Tuple(Of Integer, Boolean, Boolean) = Nothing
+    Public bsize2 As Tuple(Of Integer, Boolean, Boolean) = Nothing
+    Public bsize3 As Tuple(Of Integer, Boolean, Boolean) = Nothing
+    Public bsize4 As Tuple(Of Integer, Boolean, Boolean) = Nothing
+    Public bsize5 As Tuple(Of Integer, Boolean, Boolean) = Nothing
+    Public bsize6 As Tuple(Of Integer, Boolean, Boolean) = Nothing
+    Public bsize7 As Tuple(Of Integer, Boolean, Boolean) = Nothing
 
     Public bsizeneg2 As Tuple(Of Integer, Boolean, Boolean) = Nothing
 
@@ -50,9 +50,12 @@
     Public hood As Tuple(Of Integer, Boolean, Boolean) = Nothing
     Public cloak As Tuple(Of Integer, Boolean, Boolean) = Nothing
 
-    Public compress_breast As Boolean
+    Public compress_breast As Boolean = True
+    Public hide_rearhair As Boolean = False
+    Public adjust_sleeve_layer As Boolean = True
     Public show_underboob As Boolean = False
     Public hide_dick As Boolean = True
+    Public swap_gen_clothesbtm As Boolean = False
     Public bind_wearer As Boolean = False
 
     Overridable Function getSlutVarInd()
@@ -62,7 +65,7 @@
         Return anti_slut_ind
     End Function
 
-    Public Function getClothesIMGTop(ByRef p As Player) As Tuple(Of Integer, Boolean, Boolean)
+    Public Overridable Function getClothesIMGTop(ByRef p As Player) As Tuple(Of Integer, Boolean, Boolean)
         Select Case p.breastSize
             Case -2
                 Return bsizeneg2
@@ -92,7 +95,7 @@
 
         Return Nothing
     End Function
-    Public Function getClothesIMGBtm(ByRef p As Player) As Tuple(Of Integer, Boolean, Boolean)
+    Public Overridable Function getClothesIMGBtm(ByRef p As Player) As Tuple(Of Integer, Boolean, Boolean)
         Select Case p.buttSize
             Case -2
                 Return usizeneg2

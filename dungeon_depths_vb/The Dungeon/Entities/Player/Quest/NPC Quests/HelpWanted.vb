@@ -4,7 +4,7 @@
     Sub New()
         MyBase.New("Help Wanted")
 
-        qInd = qInds.helpWanted
+        quest_index = qInd.helpWanted
 
         objectives.Add(New HWantedSnipCollars)
     End Sub
@@ -24,7 +24,7 @@
     End Function
 End Class
 
-Public Class HWantedSnipCollars
+Friend Class HWantedSnipCollars
     Inherits Objective
 
     Sub New()

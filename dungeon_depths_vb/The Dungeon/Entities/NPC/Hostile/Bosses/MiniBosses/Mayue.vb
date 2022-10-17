@@ -137,7 +137,7 @@
     End Sub
     Public Overrides Sub despawn(reason As String)
         If reason = "run" Then
-            Game.player1.quests(qInds.nineLives).completeEntireQuest()
+            Game.player1.quests(qInd.nineLives).completeEntireQuest()
         End If
         MyBase.despawn(reason)
     End Sub

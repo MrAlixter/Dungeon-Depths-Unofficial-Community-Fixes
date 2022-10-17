@@ -76,14 +76,11 @@
 
         discount = 0
 
-        If Game.player1.quests(qInds.dfaUpgrade).getComplete Then
-            inv.setCount("Upgrade_Armor", 1)
-        Else
-            inv.setCount("Upgrade_Armor", 0)
-        End If
+        If Game.player1.quests(qInd.dfaUpgrade).getComplete Then inv.setCount("Upgrade_Armor", 1) Else inv.setCount("Upgrade_Armor", 0)
+        If Game.player1.perks(perk.irondagger) > 0 Then inv.setCount(IronDagger.ITEM_NAME, 1) Else inv.setCount(IronDagger.ITEM_NAME, 0)
 
         If img_index = 0 Then
-            If Game.player1.quests(qInds.dfaUpgrade).canGet Then Game.player1.quests(qInds.dfaUpgrade).init() : Exit Sub
+            If Game.player1.quests(qInd.dfaUpgrade).canGet Then Game.player1.quests(qInd.dfaUpgrade).init() : Exit Sub
 
             If Int(Rnd() * 2) = 0 Then
                 img_index = 5

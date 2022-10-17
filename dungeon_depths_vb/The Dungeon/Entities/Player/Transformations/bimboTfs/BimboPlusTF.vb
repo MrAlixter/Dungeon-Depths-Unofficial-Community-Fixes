@@ -56,6 +56,13 @@
         If p.inv.getCountAt("Small_Glasses") < 1 Then p.inv.add("Small_Glasses", 1)
         EquipmentDialogBackend.glassesChange(p, "Small_Glasses")
     End Sub
+    Overrides Sub s2WrapUp(ByRef p As Player, ByRef out As String)
+        p.changeClass("Bimbo++")
+        p.textColor = Color.FromArgb(255, 255, 235, 240)
+        p.perks(perk.bimbotf) = -1
+        'p.drawPort()
+        TextEvent.push(out)
+    End Sub
 
     'Alternate Step 2
     Overrides Sub step2alt()
@@ -77,7 +84,6 @@
         TextEvent.push("You immediatly feel funny, the increased magic in your system reacting swiftly with the gum.  Mind clearer than ever, you look down to see your clothes have become tight and pink. You smirk; while you look like a typical brainless bimbo, you're far more intellegent than you were before. Your hair lengthens, becoming a platinum blonde, and your clothes finish changing to match your new figure.  While the effects on your body confirm your hypothesis that BIM_II is likely the chemical used in those sticks of gum the increased IQ hints that there may be another compound involved.")
         p.lust += 10
 
-        If Game.mDun.numCurrFloor < 6 Then p.player_image = Game.picPlayerB.BackgroundImage Else p.player_image = Game.picBimbof.BackgroundImage
         p.TextColor = Color.HotPink
         p.perks(perk.bimbotf) = -1
         stopTF()

@@ -24,7 +24,7 @@
         mInd = New Tuple(Of Integer, Boolean, Boolean)(9, False, True)
 
         '|Description|
-        setDesc("An aggressive looking red headband that looks like it can take a hit thanks to a steel plate." & DDUtils.RNRN &
+        setDesc("A crimson length of cloth to be wrapped around the forehead of a fighter.  A riveted steel plate gives more protection than fabric alone can manage." & DDUtils.RNRN &
                 getStatInformation())
     End Sub
 End Class

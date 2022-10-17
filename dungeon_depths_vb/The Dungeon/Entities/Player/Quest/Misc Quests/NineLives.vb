@@ -4,7 +4,7 @@
     Sub New()
         MyBase.New("Nine Lives")
 
-        qInd = qInds.nineLives
+        quest_index = qInd.nineLives
 
         objectives.Add(New NineLivesS1)
         objectives.Add(New NineLivesS2)
@@ -43,7 +43,7 @@
     End Function
 End Class
 
-Public Class NineLivesS1
+Friend Class NineLivesS1
     Inherits Objective
 
     Sub New()
@@ -71,7 +71,7 @@ Public Class NineLivesS1
     End Function
 End Class
 
-Public Class NineLivesS2
+Friend Class NineLivesS2
     Inherits Objective
 
     Sub New()

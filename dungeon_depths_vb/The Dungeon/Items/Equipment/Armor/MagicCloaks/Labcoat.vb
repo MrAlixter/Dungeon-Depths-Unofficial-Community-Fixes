@@ -13,6 +13,7 @@ Public Class Labcoat
         '|Item Flags|
         usable = False
         compress_breast = True
+        adjust_sleeve_layer = False
         rando_inv_allowed = False
         slut_var_ind = 107
 

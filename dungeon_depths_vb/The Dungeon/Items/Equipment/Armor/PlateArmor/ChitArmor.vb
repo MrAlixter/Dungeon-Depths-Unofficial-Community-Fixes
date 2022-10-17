@@ -10,7 +10,7 @@
         tier = 3
 
         '|Item Flags|
-        droppable = True
+        npc_drop_only = True
         usable = False
         compress_breast = True
         show_underboob = True

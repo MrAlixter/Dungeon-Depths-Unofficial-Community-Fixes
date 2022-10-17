@@ -17,13 +17,12 @@
 
         '|Item Flags|
         usable = false
-        MyBase.compress_breast = True
-        MyBase.droppable = False
+        compress_breast = True
         rando_inv_allowed = False
 
         '|Stats|
-        MyBase.d_boost = 25
-        MyBase.m_boost = 15
+        d_boost = 25
+        m_boost = 15
         w_boost = 15
         count = 0
         value = 2450
@@ -54,8 +53,8 @@
 
         p.learnSpell("Snowball")
     End Sub
-    Public Overrides Sub onUnEquip(ByRef p As Player)
+    Public Overrides Sub onUnequip(ByRef p As Player)
         MyBase.onUnequip(p)
-        p.knownSpells.Remove("Snowball")
+        p.forgetSpell("Snowball")
     End Sub
 End Class

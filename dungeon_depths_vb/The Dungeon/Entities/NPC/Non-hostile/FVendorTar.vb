@@ -76,7 +76,7 @@
                          ShopNPC.npcLib.atrs(0).getAt(82),
                          ShopNPC.npcLib.atrs(0).getAt(61),
                          picArachne,
-                         ShopNPC.npcLib.atrs(0).getAt(82),
+                         ShopNPC.npcLib.atrs(0).getAt(92),
                          ShopNPC.npcLib.atrs(0).getAt(96)})
     End Sub
 

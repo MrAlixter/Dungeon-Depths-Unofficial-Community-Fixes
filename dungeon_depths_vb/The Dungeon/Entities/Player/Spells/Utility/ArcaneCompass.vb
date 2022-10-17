@@ -8,6 +8,8 @@
         MyBase.setcost(5)
     End Sub
     Public Overrides Sub effect()
+        If Game.mDun.numCurrFloor = 13 Then TextEvent.pushAndLog("With a blinding flash, your magic... fizzles into nothing...") : Exit Sub
+
         TextEvent.push("With a blinding flash, your magic cuts a glowing path straight to the stairs!")
         Dim p = Game.currFloor.route(Game.player1.pos, Game.currFloor.stairs)
 

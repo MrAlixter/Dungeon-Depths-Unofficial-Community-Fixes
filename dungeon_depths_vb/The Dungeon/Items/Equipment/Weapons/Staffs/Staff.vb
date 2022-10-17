@@ -24,7 +24,7 @@
         Game.player1.mana += getMBoost(p)
     End Sub
 
-    Public Overloads Overrides Sub onUnEquip(ByRef p As Player, ByRef w As Weapon)
+    Public Overloads Overrides Sub onUnequip(ByRef p As Player, ByRef w As Weapon)
         MyBase.onUnequip(p, w)
         Game.player1.mana -= getMBoost(p)
         If Game.player1.mana < 0 Then Game.player1.mana = 0

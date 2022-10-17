@@ -4,7 +4,7 @@
     Sub New()
         MyBase.New("Dark Pact")
 
-        qInd = qInds.darkPact
+        quest_index = qInd.darkPact
 
         objectives.Add(New DarkPactStep1)
         objectives.Add(New DarkPactStep2)
@@ -15,8 +15,8 @@
         MyBase.init()
 
         Objective.showNPC(ShopNPC.npcLib.atrs(0).getAt(76), """Hey.  Name's Cynn.  Couldn't help but notice that you're trying out the demonic form, and I just so happen to be recruiting underlings for one hell of a scheme.  You seem to be decently skilled, but it doesn't look like those horns are permenant, if you catch my drift." & DDUtils.RNRN &
-                                                            "Fortunately that's pretty easy to correct, and I'd be happy to help you out on that front in exchange for your loyalty." & DDUtils.RNRN &
-                                                            "If you want in, start by, uhhh, taking down... three... succubus princesses.  Yeah, that'll work.  I'll get back in touch when you're finished, although I might be shapeshifted, so keep an eye out.""" & DDUtils.RNRN &
+                                                            "Fortunately that's pretty easy to correct, and I'd be happy to help you out on that front in exchange for your loyalty.  If you want in, start by, uhhh, taking down... three... yeah, three succubus princesses.  I'll get back in touch when you're finished." & DDUtils.RNRN &
+                                                            "Ah, I might be shapeshifted then... so just keep an eye out, I guess.""" & DDUtils.RNRN &
                                                             "Quest ""Dark Pact"" acquired!")
 
         Game.player1.perks(perk.cynnsq1ct1) = 0
@@ -27,7 +27,7 @@
     End Function
 End Class
 
-Public Class DarkPactStep1
+Friend Class DarkPactStep1
     Inherits Objective
 
     Sub New()
@@ -58,7 +58,7 @@ Public Class DarkPactStep1
     End Function
 End Class
 
-Public Class DarkPactStep2
+Friend Class DarkPactStep2
     Inherits Objective
 
     Sub New()
@@ -104,7 +104,7 @@ Public Class DarkPactStep2
     End Function
 End Class
 
-Public Class DarkPactStep3
+Friend Class DarkPactStep3
     Inherits Objective
 
     Sub New()

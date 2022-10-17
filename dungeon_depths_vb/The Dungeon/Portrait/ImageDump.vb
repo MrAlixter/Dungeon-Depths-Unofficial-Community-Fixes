@@ -15,8 +15,12 @@ Public Class ImageDump
         End If
         Return False
     End Function
-    Sub New(ByVal path As String)
-        images = getImg(path)
+    Sub New(ByVal path As String, Optional tileset As Boolean = False)
+        If tileset Then
+            images = getTileImg(path)
+        Else
+            images = getImg(path)
+        End If
     End Sub
     Sub New(ByVal img As List(Of Image))
         images = img
@@ -60,6 +64,24 @@ Public Class ImageDump
         For Each img In images.OrderBy(Function(i) i.Name)
             Dim picture As Image
             picture = Image.FromFile(img.FullName)
+            pictures.Add(picture)
+        Next
+
+        Application.CurrentCulture = previousCulture
+
+        Return pictures
+    End Function
+    Shared Function getTileImg(ByVal direct As String) As List(Of Image)
+        Dim dir = New IO.DirectoryInfo(direct)
+        Dim images = dir.GetFiles("*.png", IO.SearchOption.AllDirectories).ToList
+        Dim pictures As New List(Of Image)
+
+        Dim previousCulture = Application.CurrentCulture.Clone
+        Application.CurrentCulture = New CultureInfo("en-US")
+
+        For Each t In System.Enum.GetNames(GetType(tile))
+            Dim picture As Image
+            picture = Image.FromFile(direct & "/" & t & ".png")
             pictures.Add(picture)
         Next
 

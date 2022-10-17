@@ -7,23 +7,30 @@
     Sub New(n As Integer, tts As Integer, wi As Double, cbs As Boolean)
         MyBase.New(n, tts, wi, cbs)
         tf_name = TF_IND
+        MG_IND = mgind.magicalslut
         next_step = AddressOf step1
     End Sub
     Sub New(cs As Integer, n As Integer, tts As Integer, wi As Double, cbs As Boolean, tfd As Boolean)
         MyBase.New(cs, n, tts, wi, cbs, tfd)
         tf_name = TF_IND
+        MG_IND = mgind.magicalslut
         next_step = getNextStep(cs)
     End Sub
 
     Public Overrides Sub step1dialog(ByRef p As Player)
-        Dim out = "Swinging your wand, you are engulfed in a rain of hearts. As the light around your body grows blinding and your clothes disolve into the aether, you become a increadibly busty young woman wearing next to nothing!  "
+        Dim out = "You swing your wand in a wide arc over your head, and you are engulfed in a rain of hearts." & DDUtils.RNRN &
+                  "The light around your body becomes blinding and your clothes disolve into the aether, as beams of rose-colored energy twirl around your shifting silhouette." & DDUtils.RNRN &
+                  "With a final flash of brilliant white, the wand dims and "
         If p.isUnwilling() Then
-            out += "Scoffing, you tug at your outfit, unable to remove it.  You throw the wand across the dungeon, only for it to poof back into your hand seconds later.  Grumbling to yourself, you stomp your feet before setting back out, tugging down on your new skirt in a failing attempt to preserve some of your dignity."
+            out += "you tug at your skimpy new outfit, scoffing as you find yourself unable to remove it.  You throw the wand across the dungeon, only for it to poof back into your hand seconds later." & DDUtils.RNRN &
+                   "Grumbling to yourself, you stomp your feet before setting back out, tugging down on your new skirt in a failing attempt to preserve what's left of your dignity."
         Else
-            out += "Twirling, you giggle before striking a pose, making sure to press your big titties together.  If you were paying better attention, you might have noticed the almost sinister crimson aura binding the wand to your perfectly manicured hand, but, like, hey, why would you want to get rid of your cute new wand?"
+            out += "you giggle before striking a cutesy pose, making sure to press your big titties together." & DDUtils.RNRN &
+                   "If you were paying better attention, you might have noticed the sinister crimson aura binding the wand to your perfectly manicured hand, but, like, hey, why would you want to get rid of your cute new wand?"
         End If
 
         TextEvent.push(out, AddressOf step2)
+        TextEvent.pushLog("You activate your magical girl transformation!")
         p.TextColor = Game.lblEvent.ForeColor
     End Sub
 
@@ -51,6 +58,8 @@
 
         Equipment.accChange(p, "Nothing")
         EquipmentDialogBackend.armorChange(p, "Magical_Slut_Outfit")
+
+        p.textColor = Color.HotPink
     End Sub
 
     Overrides Sub step2()

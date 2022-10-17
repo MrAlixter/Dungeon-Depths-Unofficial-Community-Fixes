@@ -116,8 +116,8 @@
         p.breastSize = breastSize
         p.dickSize = dickSize
         p.buttSize = buttSize
-        p.equippedWeapon = equippedWeapon
-        EquipmentDialogBackend.armorChange(p, equippedArmor.getName)
+        If p.perks(perk.tfedbyweapon) < 0 Then p.equippedWeapon = equippedWeapon
+        EquipmentDialogBackend.equipArmor(p, equippedArmor.getName)
         p.equippedArmor = equippedArmor
         p.equippedAcce = equippedAcce
         p.equippedGlasses = equippedGlasses
@@ -281,7 +281,7 @@
     'write converts a state into a string to be put into a save file
     Public Function write() As String
         If initFlag Then
-            Dim output As String = CStr(name & "*" & pClass.name & "~" & pForm.name & "*" & description & "*" & health & "*" & maxHealth & "*" & mana & "*" & maxMana & "*" & dickSize & "*" & haircolor.A & "*" & skincolor.A & "*" & _
+            Dim output As String = CStr(name & "*" & pClass.name & "~" & pForm.name & "*" & Replace(description, vbCrLf, "") & "*" & health & "*" & maxHealth & "*" & mana & "*" & maxMana & "*" & dickSize & "*" & haircolor.A & "*" & skincolor.A & "*" & _
                attack & "*" & defense & "*" & will & "*" & speed & "*" & isPetrified & "*" & stamina & "*" & gold & "*" & equippedArmor.getName() & "*" & equippedWeapon.getName() & "*" & _
                sex & "*" & buttSize & "*" & breastSize & "*" & haircolor.R & "*" & haircolor.G & "*" & haircolor.B & "*" & skincolor.R & "*" & skincolor.G & "*" & skincolor.B & "*" & _
                textColor.R & "*" & textColor.G & "*" & textColor.B & "*" & lust & "*")

@@ -12,11 +12,8 @@
             Exit Sub
         End If
 
-        If MyBase.getTarget.GetType() Is GetType(Monster) Then
-            TextEvent.pushAndLog(CStr("Your magic strikes the " & MyBase.getTarget.name & " in the chest, turning it briefly to stone!"))
-        Else
-            TextEvent.pushAndLog(CStr("Your magic strikes " & MyBase.getTarget.name & " in the chest, turning " & MyBase.getTarget.r_pronoun & " to stone"))
-        End If
+        TextEvent.pushAndLog(CStr("Your magic strikes " & target.getNameWithTitle() & " in the chest, turning " & MyBase.getTarget.r_pronoun & " to stone."))
+
         If MyBase.getTarget.speed / 10 > 0 Then
             TextEvent.pushAndLog(CStr(Math.Ceiling(MyBase.getTarget.speed / 10) & " more until they become a statue!"))
         End If

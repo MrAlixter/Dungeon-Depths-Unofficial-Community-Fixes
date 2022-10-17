@@ -101,7 +101,7 @@ Public Class FusionDialogBackend
     Shared Sub getFusionTargets(ByVal p As Player)
         possibleFusions.Clear()
 
-        For i = 1 To 8
+        For i = 1 To 10
             Dim saveName = "saves/s" & i & ".ave"
 
             If Not System.IO.File.Exists(saveName) Then Continue For

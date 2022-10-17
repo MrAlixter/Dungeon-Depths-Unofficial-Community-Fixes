@@ -5,10 +5,15 @@
         Return Player.calcDamage(p.getATK, m.getDEF)
     End Function
 
+    Overridable Sub outOfCombatAttack(ByRef p As Player)
+        TextEvent.pushAndLog("You swing your " & getName().Replace("_", " ") & " at the air.")
+    End Sub
+
     Overridable Overloads Sub onUnequip(ByRef p As Player, ByRef w As Weapon)
     End Sub
-    Overrides Sub onunequip(ByRef p As Player)
-        onunequip(p, Nothing)
+
+    Overrides Sub onUnequip(ByRef p As Player)
+        onUnequip(p, Nothing)
     End Sub
 
     Public Overrides Sub discard()

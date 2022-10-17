@@ -7,10 +7,7 @@
 
     Public Overrides Sub revert()
         MyBase.revert()
-        Do While Game.player1.knownSpells.Contains("Mesmeric Bloom")
-            Game.player1.knownSpells.Remove("Mesmeric Bloom")
-        Loop
-        TextEvent.pushLog("""Mesmeric Bloom"" spell forgotten!")
+        Game.player1.forgetSpell("Mesmeric Bloom")
     End Sub
 
     Public Overrides Sub onLVLUp(ByVal level As Integer, ByRef p As Player, Optional learnSkills As Boolean = True)

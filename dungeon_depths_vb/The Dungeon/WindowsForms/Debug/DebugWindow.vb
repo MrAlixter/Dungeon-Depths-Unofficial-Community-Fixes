@@ -55,9 +55,9 @@ Public Class Debug_Window
         boxForm.SelectedItem = Game.player1.className
 
         boxHealth.Value = Game.player1.getIntHealth
-        boxMaxHealth.Value = Game.player1.getMaxHealth
+        boxMaxHealth.Value = Game.player1.maxHealth
         boxMana.Value = Game.player1.getMana
-        boxMaxMana.Value = Game.player1.getMaxMana
+        boxMaxMana.Value = Math.Max(Game.player1.maxMana, boxMaxMana.Minimum)
         boxstamina.Value = Game.player1.stamina
         boxAtk.Value = Game.player1.attack
         boxDef.Value = Game.player1.defense
@@ -113,6 +113,7 @@ Public Class Debug_Window
                     If TypeOf (c) Is NumericUpDown Then
                         num = c
                         num.Maximum = 9999999
+                        num.Minimum = -10
                     ElseIf TypeOf (c) Is Label Then
                         lbl = c
                     End If

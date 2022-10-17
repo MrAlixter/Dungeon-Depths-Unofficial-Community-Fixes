@@ -14,6 +14,7 @@
         compress_breast = True
         show_underboob = True
         rando_inv_allowed = False
+        anti_slut_ind = 345
 
         '|Stats|
         d_boost = 11

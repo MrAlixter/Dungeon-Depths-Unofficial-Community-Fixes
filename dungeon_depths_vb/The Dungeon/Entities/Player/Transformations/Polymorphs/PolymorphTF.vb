@@ -50,6 +50,8 @@
                 Return New FaePieTF()
             Case "Horse"
                 Return New HorseTF()
+            Case "Unicorn"
+                Return New UnicornTF()
             Case "Cow"
                 Return New CowTF()
             Case "Inflatable Doll"

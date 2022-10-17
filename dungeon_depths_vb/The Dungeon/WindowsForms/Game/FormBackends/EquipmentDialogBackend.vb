@@ -128,8 +128,7 @@
         Dim pImg = p.prt.oneLayerImgCheck(p.formName, p.className)
 
         If p.prt.oneLayerImgCheck(p.formName, p.className) Is Nothing Then
-            p.prt.setIArr()
-            pImg = Portrait.CreateFullBodyBMP(p.prt.iArr)
+            pImg = p.prt.drawFull
         End If
 
         Game.picEquipPort.BackgroundImage = pImg
@@ -210,6 +209,27 @@
         'If this curse cannot be applied to the player's current armor, no action is needed
         If p.equippedArmor.getSlutVarInd = -1 Then Return False
 
+        'Push a text dialog
+        TextEvent.pushLog("Your curse twists and changes your clothing.")
+        If Not Game.lblEvent.Visible And Not Game.combat_engaged Then
+            If p.isUnwilling Then
+                'Author Credit: Big Iron Red
+                TextEvent.push("Suddenly, something seems... off..." & DDUtils.RNRN &
+                               "You look down to see an aura of pink lightning beginning to crackle across the surface of your gear.  The arcs of twisting energy force you to shield your face, as the glow coming off your equipment flares bright enough blind you." & DDUtils.RNRN &
+                               "The flashes of magic intensify, and your clothing seems to be getting lighter as its shape is reweaved by the whims of the curse.  With a final corrupting surge of rose electricity, the curse finishes its work and you hesitantly open your eyes again, feeling an oddly cold draft as you do so." & DDUtils.RNRN &
+                               "You look down in abject horror as you find your previously protective armor has become a humiliatingly feminine facsimile of itself.  You quickly remove the outfit it's become in an attempt to somehow undo the transformation, though alas it remains the same embarrassingly useless ensemble that serves only to show the world your feminine body." & DDUtils.RNRN &
+                               "Tears welling in your eyes, you slip back into what used to be your original " & If(p.equippedArmor.getAName.Contains("Armor"), "armor", "clothes") & ", feeling incredibly exposed and vulnerable. ""How will anyone take me seriously wearing this?"" you think, as you wobble unsteadily ahead, followed by the unmistakable sound of high heels clicking on the dungeon floor.")
+            Else
+                TextEvent.push("Suddenly, something seems... off..." & DDUtils.RNRN &
+                               "You look down to see an aura of pink lightning beginning to crackle across the surface of your gear.  The arcs of twisting energy force you to shield your face, as the glow coming off your equipment flares bright enough blind you." & DDUtils.RNRN &
+                               "The flashes of magic intensify, and your clothing seems to be getting lighter as its shape is reweaved by the whims of the curse.  With a final corrupting surge of rose electricity, the curse finishes its work and you hesitantly open your eyes again." & DDUtils.RNRN &
+                               "You strip down and inspect your outfit which, as far as you can tell, seems just as skimpy as it has always been.  With a vacant smile, you get dressed again and with a twirl you set back out on your adventure.")
+            End If
+        ElseIf Game.combat_engaged Then
+            TextEvent.push("Arcs of blinding pink lightning crackle across your body, and your clothing becomes lighter as its shape is reweaved by the whims of a curse!" & DDUtils.RNRN &
+                           "Your outfit has been corrupted into a slutty perversion of its original form!")
+        End If
+
         'Otherwise, change the player's equipped armor to the slut variant
         Dim equippedArmorIndex = p.equippedArmor.id
         Dim slut_var_index = p.equippedArmor.getSlutVarInd
@@ -217,17 +237,6 @@
         p.inv.add(slut_var_index, 1)
         armorChange(p, p.inv.item(slut_var_index).getAName)
 
-        'Push a text dialog
-        TextEvent.pushLog("Your curse changes your clothes.")
-        If Not Game.lblEvent.Visible Then
-            If p.isUnwilling Then
-                'Author Credit: Big Iron Red
-                TextEvent.push("As you adjust your clothes, a crackling pink lightning coats them and they begin to shift across your body.  The flashes of magic intensify, and despite your panic, you find yourself forced to close your eyes at the risk of being overwhelmed by the blaze erupting from your equipment. As soon as it started, the curse finishes its work and you hesitantly open your eyes, feeling an oddly cold draft as you do so. You look down in abject horror as you find your previously protective armor has become a humiliatingly feminine facsimile of itself.\n" &
-                                  "You quickly remove the outfit in a vain attempt to regain your former equipment, yet it remains the same embarrassingly useless ensemble that serves only to show the world your feminine body. Tears welling in your eyes, you slip back on what used to be your original armor, feeling incredibly exposed and vulnerable. ""How will anyone take me seriously wearing this?"" you think, as you wobble unsteadily ahead, followed by the unmistakable sound of high heels clicking on the dungeon floor.")
-            Else
-                TextEvent.push("As you adust your clothes, a crackling pink lightning coats them and they begin to shift across your body.  As the flashes of magic intensify, and despite your panic, you find yourself forced to close your eyes at the risk of being overwhelmed by the blaze erupting from your equipment.  As soon as it started, the curse finishes its work and you hesitantly open your eyes only to find nothing seems to be amiss after all.  You take off and inspect the outfit which, as far as you can tell, doesn't seem any different after all.  Unconcerned by your brief nudity, you get dressed again and with a twirl you set back out on your adventure.")
-            End If
-        End If
         Return True
     End Function
     Public Shared Function antiClothingCurse(ByRef p As Player) As Boolean
@@ -242,8 +251,17 @@
         armorChange(p, p.inv.item(anti_slut_index).getAName)
 
         'Push a text dialog
-        TextEvent.pushLog("Your curse changes your clothes.")
-        If Not Game.lblEvent.Visible Then TextEvent.push("Suddenly, something seems off.  You look down to see a golden glow beginning to form on your outfit.  You pop off your top, mesmerised by the shimmering light that seems to be getting brighter by the second.  As the light becomes blinding, your top seems to be gaining mass and you drop it to cover your eyes.  Peeking out a few seconds later, you see that your gear is no longer glowing, and pick it back up.  As far as you can tell, it looks the same as it always had, and annoyed at yourself for getting sidetracked, you set back out on your adventure.")
+        TextEvent.pushLog("The curse is lifted from your clothing.")
+        If Not Game.lblEvent.Visible And Not Game.combat_engaged Then
+            If Not Game.lblEvent.Visible Then TextEvent.push("Suddenly, something seems... off..." & DDUtils.RNRN &
+                                                             "You look down to see a golden glow beginning to ripple across your outfit.  Mesmerized by the shimmering light, you strip off your clothes as their aura becomes brighter and brighter." & DDUtils.RNRN &
+                                                             "As the glow becomes blinding, your gear gains mass and you shield your eyes as it twists and morphs.  A few seconds later, you peek out to find that the glow has died down and your " & If(p.equippedArmor.getAName.Contains("Armor"), "armor", "clothing") & "... looks the same as it always had." & DDUtils.RNRN &
+                                                             "Annoyed at yourself for getting sidetracked by nothing, you re-equip the " & p.equippedArmor.getAName.Replace("_", " ") & " and set back out on your adventure.")
+        ElseIf Game.combat_engaged Then
+            TextEvent.push("A blinding golden glow ripples across your body, and your outfit gains mass as its shape is restored to a more practical arrangement!" & DDUtils.RNRN &
+                           "Your " & If(p.equippedArmor.getAName.Contains("Armor"), "armor", "clothes") & " has been shifted into a less slutty version of itself!")
+        End If
+
         Return True
     End Function
 
@@ -283,7 +301,7 @@
                 If weapon.Equals(k) Then
                     'MsgBox("{" & cmbobxweapon.SelectedItem & "}&[") ' & aNameList(i) & "]")
                     sWeapon = weapon_list(k)
-                    If Not p.equippedWeapon Is Nothing And doEquipHandlers Then p.equippedWeapon.onUnequip(p)
+                    If Not p.equippedWeapon Is Nothing And doEquipHandlers Then p.equippedWeapon.onUnequip(p, sWeapon)
                     Exit For
                 End If
             Next

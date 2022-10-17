@@ -12,6 +12,7 @@
         rando_inv_allowed = False
         compress_breast = False
         hide_dick = False
+        adjust_sleeve_layer = False
 
         '|Stats|
         count = 0

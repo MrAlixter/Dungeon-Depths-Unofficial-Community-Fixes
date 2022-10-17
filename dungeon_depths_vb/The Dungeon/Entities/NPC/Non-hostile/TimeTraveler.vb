@@ -48,8 +48,7 @@
 
         Game.leaveNPC()
 
-        Objective.showNPC(ShopNPC.npcLib.atrs(0).getAt(43), """Oh, hey, it's you.  Weren't you supposed to be locked up?""" & DDUtils.RNRN &
-                                                            "Press any non-movement key to continue.")
+        Objective.showNPC(ShopNPC.npcLib.atrs(0).getAt(43), """Oh, hey, it's you.  Weren't you supposed to be locked up?""" & DDUtils.PAKTC)
 
         Game.shop_npc_engaged = False
     End Sub

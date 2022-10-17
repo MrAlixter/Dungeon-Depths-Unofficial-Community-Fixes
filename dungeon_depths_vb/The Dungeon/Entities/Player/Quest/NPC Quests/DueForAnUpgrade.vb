@@ -4,7 +4,7 @@
     Sub New()
         MyBase.New("Due For an Upgrade")
 
-        qInd = qInds.dfaUpgrade
+        quest_index = qInd.dfaUpgrade
 
         objectives.Add(New DFAUpgradeStep1)
     End Sub
@@ -21,7 +21,7 @@
     End Function
 End Class
 
-Public Class DFAUpgradeStep1
+Friend Class DFAUpgradeStep1
     Inherits Objective
 
     Sub New()

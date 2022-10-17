@@ -22,7 +22,7 @@
 
         '|Image Index|
         bsizeneg1 = New Tuple(Of Integer, Boolean, Boolean)(32, False, True)
-        bsize0 = New Tuple(Of Integer, Boolean, Boolean)(32, False, True)
+        bsize0 = New Tuple(Of Integer, Boolean, Boolean)(99, False, True)
         bsize1 = New Tuple(Of Integer, Boolean, Boolean)(131, True, True)
         bsize2 = New Tuple(Of Integer, Boolean, Boolean)(132, True, True)
 
@@ -33,6 +33,7 @@
 
         '|Description|
         setDesc("While at some point this set of apperal may have provided some defense, a generous dousing of slime has left it completely ruined." & DDUtils.RNRN &
-                        getSizeInformation() & DDUtils.RNRN & getStatInformation())
+                getSizeInformation() & DDUtils.RNRN &
+                getStatInformation())
     End Sub
 End Class

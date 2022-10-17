@@ -31,7 +31,7 @@
             mP.tfEnd += Int(3 * m.maxHealth / mP.sMaxHealth)
             TextEvent.push("You zap your target with the shrink ray, and they get slightly smaller!")
         Else
-            If Int(Rnd() * 2) = 0 And Not p.className.Equals("Shrunken") Then
+            If Int(Rnd() * 2) = 0 And Not p.className.Equals("Shrunken") And Transformation.canBeTFed(p) Then
                 'backfire
                 Polymorph.transform(p, "Shrunken")
                 EquipmentDialogBackend.weaponChange(p, "Fists")

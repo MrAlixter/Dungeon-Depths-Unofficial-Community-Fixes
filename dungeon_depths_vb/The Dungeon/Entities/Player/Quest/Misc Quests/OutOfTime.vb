@@ -4,7 +4,7 @@
     Sub New()
         MyBase.New("Out of Time")
 
-        qInd = qInds.outOfTime
+        quest_index = qInd.outOfTime
 
         objectives.Add(New OutOfTimeS1)
         objectives.Add(New OutOfTimeS2)
@@ -65,7 +65,7 @@
         Game.drawBoard()
 
         TextEvent.push("The time traveler opens another portal through the future and, grabbing your hand, hops through.  You find yourself in a small holding cell, and she gives you a few moments to take in your surroundings before exiting through an empty doorway." & DDUtils.RNRN &
-                          """Since you've been pretty well behaved so far, I'm gonna let you keep your stuff.  Don't try anything, okay?"" she says, slapping a button and activating a shimmering blue energy barrier between the two of you.")
+                       """Since you've been pretty well behaved so far, I'm gonna let you keep your stuff.  Don't try anything, okay?"" she says, slapping a button and activating a shimmering blue energy barrier between the two of you.")
     End Sub
     Private Sub resist()
         Objective.showNPC(ShopNPC.npcLib.atrs(0).getAt(43), "Well, one way or another I'm taking you in.  If you're going to resist, I guess that's just how it's gonna be.", AddressOf fightTT)
@@ -85,7 +85,7 @@
     End Function
 End Class
 
-Public Class OutOfTimeS1
+Friend Class OutOfTimeS1
     Inherits Objective
 
     Sub New()
@@ -123,7 +123,7 @@ Public Class OutOfTimeS1
     End Function
 End Class
 
-Public Class OutOfTimeS2
+Friend Class OutOfTimeS2
     Inherits Objective
 
     Sub New()
@@ -150,7 +150,7 @@ Public Class OutOfTimeS2
     End Function
 End Class
 
-Public Class OutOfTimeS3
+Friend Class OutOfTimeS3
     Inherits Objective
 
     Sub New()

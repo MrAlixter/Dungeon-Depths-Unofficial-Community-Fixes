@@ -65,6 +65,7 @@ Partial Class BrokenRemotePicker
         Me.cboxRemoteForms.Margin = New System.Windows.Forms.Padding(4, 5, 4, 5)
         Me.cboxRemoteForms.Name = "cboxRemoteForms"
         Me.cboxRemoteForms.Size = New System.Drawing.Size(199, 21)
+        Me.cboxRemoteForms.Sorted = True
         Me.cboxRemoteForms.TabIndex = 16
         Me.cboxRemoteForms.Text = "-- Select --"
         '

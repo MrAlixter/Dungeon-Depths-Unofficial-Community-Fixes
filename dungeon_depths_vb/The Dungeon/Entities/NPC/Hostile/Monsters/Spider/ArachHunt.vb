@@ -1,13 +1,25 @@
 ﻿Public Class ArachHunt
     Inherits Monster
+
+    Public Const BASE_NAME As String = "Arachne Huntress"
+
     Sub New()
-        name = "Arachne Huntress"
+        '|ID Info|
+        name = BASE_NAME
+
+        '|Stats|
         maxHealth = 110
         attack = 65
         defense = 10
         speed = 60
         will = 15
+
+        '|Inventory|
         setInventory({63, 64})
+
+        '|Dialog Variables|
+
+        '|Misc|
         setupMonsterOnSpawn()
     End Sub
 

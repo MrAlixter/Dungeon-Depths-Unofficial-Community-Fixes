@@ -35,8 +35,10 @@
         usize4 = New Tuple(Of Integer, Boolean, Boolean)(406, True, True)
         usize5 = New Tuple(Of Integer, Boolean, Boolean)(407, True, True)
 
+        hood = New Tuple(Of Integer, Boolean, Boolean)(21, True, True)
+
         '|Description|
-        setDesc("A sultry outfit worn by primo waitresses in a club. " & DDUtils.RNRN &
+        setDesc("A sultry outfit worn by glamorous waitresses in a ritzy club." & DDUtils.RNRN &
                 getSizeInformation() & DDUtils.RNRN & getStatInformation())
     End Sub
 End Class

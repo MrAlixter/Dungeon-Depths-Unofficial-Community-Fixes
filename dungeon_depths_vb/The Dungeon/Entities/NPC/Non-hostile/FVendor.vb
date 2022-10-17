@@ -66,7 +66,7 @@
                          ShopNPC.npcLib.atrs(0).getAt(14),
                          ShopNPC.npcLib.atrs(0).getAt(61),
                          picArachne,
-                         ShopNPC.npcLib.atrs(0).getAt(82),
+                         ShopNPC.npcLib.atrs(0).getAt(92),
                          ShopNPC.npcLib.atrs(0).getAt(96)})
     End Sub
 
@@ -93,7 +93,7 @@
                                "That's a little bit of some tree humor, buy some stuff before you leaf and maybe I can get this straighed out before this curse runs its course, eh?")
         Else
             If img_index = 0 Then
-                If Game.player1.quests(qInds.banEgg).canGet Then Game.player1.quests(qInds.banEgg).init() : Exit Sub
+                If Game.player1.quests(qInd.banEgg).canGet Then Game.player1.quests(qInd.banEgg).init() : Exit Sub
 
                 If Int(Rnd() * 20) = 0 Then
                     discount = 0.25
@@ -165,7 +165,7 @@
         ElseIf img_index = 11 Then
             Return "Alright, let's do this..."
         End If
-        Return "Looks like someone ordered...a knuckle sandwich!  Hahaha, aaahhh... no?  Not a fan of the puns?  Well, all the more reason to kick your ass."
+        Return "Looks like someone ordered... a knuckle sandwich!  Hahaha, aaahhh... no?  Not a fan of the puns?  Well, all the more reason to kick your ass."
     End Function
     Public Overrides Function hitBySpell() As String
         If img_index = 0 Or img_index = 10 Then

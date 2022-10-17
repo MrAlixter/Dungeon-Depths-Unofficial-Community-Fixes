@@ -1,13 +1,25 @@
 ﻿Public Class WebCasterArach
     Inherits ArachHunt
+
+    Public Shadows Const BASE_NAME As String = "Webcaster Arachne"
+
     Sub New()
-        name = "Webcaster Arachne"
+        '|ID Info|
+        name = BASE_NAME
+
+        '|Stats|
         maxHealth = 125
         attack = 35
         defense = 20
         speed = 40
         will = 35
+
+        '|Inventory|
         setInventory({63, 64, 239})
+
+        '|Dialog Variables|
+
+        '|Misc|
         setupMonsterOnSpawn()
     End Sub
 

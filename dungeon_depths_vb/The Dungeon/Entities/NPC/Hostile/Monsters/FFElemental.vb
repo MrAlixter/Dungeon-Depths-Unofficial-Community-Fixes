@@ -1,8 +1,11 @@
 ﻿Public Class FFElemental
     Inherits Monster
+
+    Public Const BASE_NAME As String = "Fox-Fire Elemental"
+
     Sub New()
         '|ID Info|
-        name = "Fox-Fire Elemental"
+        name = BASE_NAME
 
         '|Stats|
         maxHealth = 3
@@ -15,7 +18,6 @@
         setInventory({49, 189, 198, 205})
 
         '|Dialog Variables|
-
 
         '|Misc|
         setupMonsterOnSpawn()

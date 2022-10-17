@@ -15,29 +15,27 @@
         isShop = True
 
         '|Inventory|
-        inv.setCount("Mana_Potion", 1)
-        inv.item("Mana_Potion").value -= 0.1 * MyBase.inv.item("Mana_Potion").value
+        inv.setCount(CurseBGone.ITEM_NAME, 1)
 
         'Foods
-        inv.setCount("Apple​", 1)
-        inv.setCount("Angel_Food_Cake", 1)
-        inv.setCount("Berry_Stick_of_Gum", 1)
-        inv.setCount("Melon_Stick_of_Gum", 1)
+        inv.setCount(PApple.ITEM_NAME, 1)
+        inv.setCount(HPStickOfGum.ITEM_NAME, 1)
+        inv.setCount(MPStickOfGum.ITEM_NAME, 1)
 
         'Armors
-        inv.setCount("Bronze_Bikini", 1)
-        inv.setCount("Bunny_Suit", 1)
-        inv.setCount("Witch_Cosplay", 1)
-        inv.setCount("Brawler_Cosplay", 1)
-        inv.setCount("Crystalline_Armor", 1)
-        If DDDateTime.isSummer Then inv.setCount("Lime_Bikini", 1)
+        inv.setCount(CrystalBikini.ITEM_NAME, 1)
+        If DDDateTime.isSummer Then inv.setCount(LimeBikini.ITEM_NAME, 1)
 
         'Accessories
-        inv.setCount("Cowbell", 1)
+        inv.setCount(Cowbell.ITEM_NAME, 1)
+        inv.setCount(ScaleTalisman.ITEM_NAME, 1)
 
         'Weapons
-        inv.setCount("Duster", 1)
-        inv.setCount("Scepter_of_Ash", 1)
+        inv.setCount(MaidDuster.ITEM_NAME, 1)
+        inv.setCount(ScepterOfAsh.ITEM_NAME, 1)
+
+        'Services
+        inv.setCount(SWRestoration.ITEM_NAME, 1)
 
         '|Stats|
         health = (1.0)
@@ -74,9 +72,9 @@
     Public Overrides Sub encounter()
 
         If Game.mDun.numCurrFloor < 3 Then
-            inv.setCount("Scale_Bikini", 1)
+            inv.setCount(ScaleBikini.ITEM_NAME, 1)
         Else
-            inv.setCount("Gold_Adornment", 1)
+            inv.setCount(GoldAdornment.ITEM_NAME, 1)
         End If
 
         MyBase.encounter()
@@ -109,7 +107,7 @@
             ElseIf Game.player1.formName.Equals("Arachne") Then
                 TextEvent.pushNPCDialog("Ooh, darling, are you the one who laid that snare?  Let me know if you'd like any tips on your bondage technique...")
             Else
-                TextEvent.pushNPCDialog("Ooh, darling, you should really give the whole ""8-Legs"" thing a chance... I have a more...potent...venom if you'd like...")
+                TextEvent.pushNPCDialog("Ooh, darling, you should really give the whole ""8-Legs"" thing a chance... I have a more... potent... venom if you'd like...")
             End If
         End If
 

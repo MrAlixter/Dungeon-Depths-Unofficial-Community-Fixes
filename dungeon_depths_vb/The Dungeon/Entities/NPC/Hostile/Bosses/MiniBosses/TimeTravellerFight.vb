@@ -68,6 +68,6 @@
     Public Overrides Sub die(ByRef cause As Entity)
         MyBase.die(cause)
 
-        Game.player1.quests(qInds.outOfTime).finishEarly()
+        Game.player1.quests(qInd.outOfTime).finishEarly()
     End Sub
 End Class

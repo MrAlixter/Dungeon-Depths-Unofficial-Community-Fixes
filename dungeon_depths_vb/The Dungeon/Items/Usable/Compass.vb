@@ -24,7 +24,7 @@
     Overrides Sub use(ByRef p As Player)
         If Me.getUsable() = False Then Exit Sub
 
-        If Game.currFloor.floorNumber = 8 Then
+        If Game.currFloor.floorNumber = 8 Or Game.currFloor.floorNumber = 13 Then
             TextEvent.pushAndLog("The compass spins wildly...")
             Exit Sub
         End If

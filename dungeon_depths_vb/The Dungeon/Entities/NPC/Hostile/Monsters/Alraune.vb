@@ -1,11 +1,13 @@
 ﻿Public Class Alraune
     Inherits Monster
 
+    Public Const BASE_NAME As String = "Alraune"
+
     Dim firstMove = True
 
     Sub New()
         '|ID Info|
-        name = "Alraune"
+        name = BASE_NAME
 
         '|Stats|
         maxHealth = 175

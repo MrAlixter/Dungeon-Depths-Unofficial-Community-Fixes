@@ -126,7 +126,6 @@
     End Sub
     Overridable Sub s2WrapUp(ByRef p As Player, ByRef out As String)
         p.changeClass("Bimbo")
-        p.setplayer_image()
         p.TextColor = Color.FromArgb(255, 255, 235, 240)
         p.perks(perk.bimbotf) = -1
         'p.drawPort()

@@ -4,7 +4,7 @@
     Sub New()
         MyBase.New("Breaking an Egg")
 
-        qInd = qInds.banEgg
+        quest_index = qInd.banEgg
 
         objectives.Add(New BEggGetSword)
     End Sub
@@ -12,8 +12,10 @@
     Public Overrides Sub init()
         MyBase.init()
 
-        TextEvent.pushNPCDialog("""Hey " & If(Game.player1.sex.Equals("Male"), "guy", "you") & ", do you mind doing me a favor?  I've been scouting ahead and I can give my menu a good ol' overhaul if I can deal with some of the bigger mosters that are roaming around.  There's a sword that the guy on floor 2 used to carry around that's wicked sharp, buuuut also pretty evil.  Get it.  Trust me, I've got the psychic chops to handle its...well...psychic chops.""" & DDUtils.RNRN &
-                                     "Quest ""Breaking an Egg"" acquired!")
+        TextEvent.pushNPCDialog("""Hey " & If(Game.player1.sex.Equals("Male"), "guy", "you") & ", do you mind doing me a favor?  I've been scouting ahead and I can give my menu a good ol' overhaul if I can deal with some of the bigger mosters that are roaming around." & DDUtils.RNRN &
+                                "There's a sword that the guy on floor 2 used to carry around that's wicked sharp, buuuut also pretty evil.  Get it, and bring it over." & DDUtils.RNRN &
+                                "Trust me, I've got the psychic chops to handle its... well... psychic chops.""" & DDUtils.RNRN &
+                                "Quest ""Breaking an Egg"" acquired!")
     End Sub
 
     Public Overrides Function canGet() As Boolean
@@ -21,7 +23,7 @@
     End Function
 End Class
 
-Public Class BEggGetSword
+Friend Class BEggGetSword
     Inherits Objective
 
     Sub New()
@@ -41,6 +43,10 @@ Public Class BEggGetSword
     End Sub
     Private Sub complete3()
         If Game.shop_npc_engaged Then Game.leaveNPC()
+
+        Game.player1.inv.add(TargaxSword.ITEM_NAME, -1)
+        If Game.player1.equippedWeapon.getAName.Equals(TargaxSword.ITEM_NAME) Then EquipmentDialogBackend.equipWeapon(Game.player1, "Fists", False)
+
         Game.player1.perks(perk.fvHasSword) = 1
         Game.player1.addXP(1000)
         showNPC(ShopNPC.npcLib.atrs(0).getAt(11), """Nice, thanks!  Stop by the ol' stand when you get the chance, I'll have all sorts of new stuff to try.""" & DDUtils.RNRN &
@@ -48,7 +54,7 @@ Public Class BEggGetSword
     End Sub
 
     Shared Sub completeStep()
-        If Not Game.player1.quests(qInds.banEgg).getActive Then Exit Sub
+        If Not Game.player1.quests(qInd.banEgg).getActive Then Exit Sub
 
         Dim obj = New BEggGetSword
 

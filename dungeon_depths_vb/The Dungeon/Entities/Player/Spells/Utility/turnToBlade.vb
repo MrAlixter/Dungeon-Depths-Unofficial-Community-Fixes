@@ -17,13 +17,14 @@
             TextEvent.pushAndLog(CStr("Your spell hits the " & MyBase.getTarget.name & ", turning " & MyBase.getTarget.r_pronoun & " into a sword!"))
         End If
 
-        MyBase.getCaster.inv.add(9, 1)
-        If MyBase.getCaster.inv.item(9).count < 1 Then MyBase.getCaster.inv.item(9).remove()
+        MyBase.getCaster.inv.setCount(SoulBlade.ITEM_NAME, 1)
+
         MyBase.getCaster.UIupdate()
+
         CType(MyBase.getCaster.inv.item(9), SoulBlade).Absorb(MyBase.getTarget)
     End Sub
 
     Public Overrides Function getDesc(ByRef c As Player, ByRef t As NPC) As Object
-        Return "A tier 5 spell that transforms its target into a sword with a medium chance of backfiring or missing altogether.  If successful, this will end combat instantly."
+        Return "A tier 2 spell that transforms its target into a sword with a low chance of missing altogether.  If successful, this will end combat instantly."
     End Function
 End Class

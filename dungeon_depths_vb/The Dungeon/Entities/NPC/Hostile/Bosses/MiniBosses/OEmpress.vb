@@ -51,18 +51,29 @@
 
     Public Overrides Sub playerDeath(ByRef p As Player)
         despawn("p-death")
-        TextEvent.push("""Aww, sweetie, if you wanted another go you should have just asked!"", the Ooze Empress chuckles, her aphrodesiac-laced tendrils wrapping you in their arousing embrace.  ""You really do need to relax more.  Lucky for you, I have just the thing..."" she states, plunging your entire body deeper into her slime." & DDUtils.RNRN &
-                          "As the pleasure once again overtakes you, you resign yourself to needing to try again.  Well, maybe not right away...", AddressOf oEmpDeathPt2)
+        Objective.showNPC(ShopNPC.npcLib.atrs(0).getAt(153), """Aww, sweetie, if you wanted another go you could have just asked!"", the Ooze Empress chuckles, her aphrodesiac-laced tendrils wrapping you in their arousing embrace." & DDUtils.RNRN &
+                                                             """You really do need to relax, though.  Luckily, I have just the thing for that..."" she states, plunging your entire body once again into her slime." & DDUtils.RNRN &
+                                                             "As the overwhelming waves of pleasure wash over you, you resign yourself to another attempt." & DDUtils.RNRN &
+                                                             "Well, maybe not... right away...", AddressOf oEmpDeathPt2)
     End Sub
     Sub oEmpDeathPt2()
         Dim p As Player = Game.player1
         p.ongoingTFs.add(New RandoTF())
         p.sState.save(p)
         p.pState.save(p)
-        TextEvent.push("You awaken once again, in another body, in another part of the dungeon.")
+        TextEvent.pushAndLog("You awaken once again, in another body, in another part of the dungeon.")
 
         p.pos = Game.currFloor.randPoint
 
         p.update()
+    End Sub
+
+    Public Overrides Sub preFightDialog()
+        Objective.showNPC(ShopNPC.npcLib.atrs(0).getAt(153), "As you approach the staircase, you spot the Ooze Empress dangling above.  You wave to get her attention, and she plops down to greet you." & DDUtils.RNRN &
+                                                             "You explain your situation to her, but she simply chuckles before twisting closer." & DDUtils.RNRN &
+                                                             """You know, I was placed on this floor as, like, a buffer.  Lady Medusa isn't interested in weaklings, and you aren't going anywhere important if you can't even keep track of your own body...""" & DDUtils.RNRN &
+                                                             "Noticing a shift in her previously bubbly personality, you leap back as her tentacles flare out around you." & DDUtils.RNRN &
+                                                             """Let's see if you've learned anyhing since last time..."" she says with an somewhat mencing grin, ""...though I'm sure neither of us would mind a repeat, either...""", AddressOf Game.ChallengeBoss)
+        MyBase.preFightDialog()
     End Sub
 End Class

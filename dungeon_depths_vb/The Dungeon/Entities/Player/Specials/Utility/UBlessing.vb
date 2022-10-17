@@ -45,7 +45,7 @@
         Dim r = Int(Rnd() * p.knownSpells.Count)
         forgottenS = allKnownSpellsAndSpecials(r)
         If p.knownSpells.Contains(forgottenS) Then
-            p.knownSpells.RemoveAt(r)
+            p.forgetSpell(forgottenS)
         Else
             p.knownSpecials.RemoveAt(r)
         End If

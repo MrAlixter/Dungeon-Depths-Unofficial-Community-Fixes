@@ -1,13 +1,25 @@
 ﻿Public Class SpiderMonster
     Inherits Monster
+
+    Public Const BASE_NAME As String = "Spider"
+
     Sub New()
-        name = "Spider"
+        '|ID Info|
+        name = BASE_NAME
+
+        '|Stats|
         maxHealth = 65
         attack = 35
         defense = 1
         speed = 45
         will = 6
+
+        '|Inventory|
         setInventory({63})
+
+        '|Dialog Variables|
+
+        '|Misc|
         setupMonsterOnSpawn()
 
         If Int(Rnd() * 75) = 1 Then

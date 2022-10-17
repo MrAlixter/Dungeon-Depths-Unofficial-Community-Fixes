@@ -6,7 +6,7 @@ Friend Enum inv_type
 End Enum
 
 Public Class ShopV3
-    Private Const P_ITEMNAME_LENGTH As Integer = 23
+    Public Const P_ITEMNAME_LENGTH As Integer = 23
     Private Const S_ITEMNAME_LENGTH As Integer = 28
     Private Const P_PRICE_LENGTH As Integer = 7
     Private Const S_PRICE_LENGTH As Integer = 8
@@ -28,7 +28,7 @@ Public Class ShopV3
         'update the player's inventory
         For Each itm In getFormattedInventory(p.inv, inv_type.player)
             If Not itm.EndsWith(":") And Not itm.Equals("") Then
-                boxInventory.Items.Add(lineup(p.inv.item(itm).getAName(), (p.inv.item(itm).value / 2), p.inv.item(itm).count))
+                boxInventory.Items.Add(lineup(p.inv.item(itm).getName(), (p.inv.item(itm).value / 2), p.inv.item(itm).count))
                 pInventory.Add(itm)
             Else
                 boxInventory.Items.Add(itm)

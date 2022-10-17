@@ -15,6 +15,7 @@
         '|Item Flags|
         usable = false
         compress_breast = True
+        hide_rearhair = True
         slut_var_ind = 288
 
         '|Stats|

@@ -34,6 +34,8 @@
         usize3 = New Tuple(Of Integer, Boolean, Boolean)(57, True, True)
         usize4 = New Tuple(Of Integer, Boolean, Boolean)(58, True, True)
 
+        hood = New Tuple(Of Integer, Boolean, Boolean)(8, True, False)
+
         '|Description|
         setDesc("Once a sultry outfit worn by waitresses in a club, this bunny suit has been modified to provide more defense, and to improve mobility." & DDUtils.RNRN &
                                      getSizeInformation() & DDUtils.RNRN & getStatInformation())

@@ -11,7 +11,7 @@
 
         '|Item Flags|
         usable = True
-        droppable = True
+        npc_drop_only = True
 
         '|Stats|
         count = 0

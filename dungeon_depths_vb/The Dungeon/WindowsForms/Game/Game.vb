@@ -32,7 +32,11 @@ Public Class Game
     Public currFloor As mFloor
 
     '| -- Board Front End -- |  
+    Private Const VIEW_HEIGHT As Integer = 15
+    Private Const VIEW_WIDTH As Integer = 23
+    Dim board As Image                                  '(NOT SAVED)
     Public mPics(,) As PictureBox                       '(NOT SAVED)
+    Dim viewArray(VIEW_HEIGHT, VIEW_WIDTH) As Integer   '(NOT SAVED)
     Public last_tile As Tuple(Of String, Point)         '(NOT SAVED)
 
     '| -- Dungeon Settings -- |
@@ -56,7 +60,7 @@ Public Class Game
     Public stealEverything As Boolean  'not added yet
 
     '| -- Player(s) -- |
-    Public player1 As Player = New Player()
+    Public player1 As Player
     Public player_image As Image                        '(NOT SAVED)
 
     '| -- Entities -- |
@@ -66,7 +70,7 @@ Public Class Game
 
     '| -- Shop NPCs -- |
     Public shop_npc_list As List(Of ShopNPC) = New List(Of ShopNPC)
-    Public shopkeeper, swiz, hteach, fvend, wsmith, cbrok, mgirl, ttraveler As ShopNPC
+    Public shopkeeper, swiz, hteach, fvend, wsmith, cbrok, mgirl, ttraveler, fqueen As ShopNPC
     Public active_shop_npc As ShopNPC                   '(NOT SAVED)
     Public shop_npc_engaged As Boolean = False          '(NOT SAVED)
 
@@ -89,25 +93,28 @@ Public Class Game
     Public shopMenu As ShopV3                           '(NOT SAVED)
     Dim health_bar_color_grad As Bitmap = Nothing
 
-
     Dim eClock As Integer = eClockResetVal * 3
     Public solFlag As Boolean = True
-    Private savePics As New List(Of Image)(9)
+    Private savePics As New List(Of Image)(11)
     Dim imagesWorkerArg = Nothing
     Dim savePicsReady As Boolean = False
     Dim boardReady As Boolean = False
     Dim selecting As Boolean = False
     Dim selectionType As String = ""
+    Protected Friend selectionList As Dictionary(Of String, Action) = Nothing
     Dim maxSelectionPages As Integer = 0
 
     '| - STARTUP - |
     Private Sub Form1_Load(sender As Object, e As EventArgs) Handles Me.Load
-        'Form1_Load handles the loading of the form
         If Not IO.File.Exists("sett.ing") Then Settings.makeNewSetting()
         If Not IO.File.Exists("configs.ave") Then createConfigs()
         If Not IO.Directory.Exists("presets") Then IO.Directory.CreateDirectory("presets")
         If Not IO.Directory.Exists("saves") Then IO.Directory.CreateDirectory("saves")
         If Not IO.Directory.Exists("floors") Then IO.Directory.CreateDirectory("floors")
+        If Not IO.Directory.Exists("items") Then IO.Directory.CreateDirectory("items")
+
+        mTile.init()
+        player1 = New Player()
 
         Settings.applySavedSettings()
 
@@ -115,6 +122,13 @@ Public Class Game
             picPortrait.Visible = False
             picDescPort.Visible = False
         End If
+
+        pnlCombat.Location = New Point(115, pnlCombat.Location.Y)
+        pnlDescription.Location = New Point(115, pnlDescription.Location.Y)
+        pnlSaveLoad.Location = New Point(208, pnlSaveLoad.Location.Y)
+        pnlSelection.Location = New Point(115, pnlSelection.Location.Y)
+        pnlEquip.Location = New Point(363, pnlEquip.Location.Y)
+        picStart.Location = New Point(-2, picStart.Location.Y)
 
         iHeight = CInt(Size.Height)
         iWidth = CInt(Size.Width)
@@ -131,14 +145,6 @@ Public Class Game
             health_bar_color_grad = Image.FromFile("img/LifeColors.png")
         End If
 
-        'sets the player tile image to the default @
-        player_image = picPlayer.BackgroundImage
-
-        pnlCombat.Location = New Point(115, pnlCombat.Location.Y)
-        pnlDescription.Location = New Point(115, pnlDescription.Location.Y)
-        pnlSaveLoad.Location = New Point(188, pnlSaveLoad.Location.Y)
-        pnlSelection.Location = New Point(115, pnlSelection.Location.Y)
-        picStart.Location = New Point(-2, picStart.Location.Y)
         If Not System.IO.File.Exists("dis.cla") Then
             If MessageBox.Show("This game features adult content sexual in nature, and is not for anyone under the age of 18 or otherwise of legal age in their country. By clicking 'Yes' below, you confirm that you are legally an adult in your country.", "Obligatory Disclaimer", MessageBoxButtons.YesNo) = Windows.Forms.DialogResult.Yes Then
                 System.IO.File.CreateText("dis.cla")
@@ -177,21 +183,13 @@ Public Class Game
         w.WriteLine("A")
         w.WriteLine("S")
         w.WriteLine("W")
-        'w.WriteLine("A")
-        'w.WriteLine("B")
-        'w.WriteLine("C")
-        'w.WriteLine("D")
-        'w.WriteLine("E")
-        'w.WriteLine("F")
-        'w.WriteLine("G")
-        'w.WriteLine("H")
-        'w.WriteLine("I")
-        'w.WriteLine("J")
-        'w.WriteLine("K")
         w.Close()
     End Sub
     Sub newGame()
         If combat_engaged Or shop_npc_engaged Then Exit Sub
+
+        cleanupPanels()
+
         player1 = New Player()
 
         'newGame prepares the application at the start of a new game
@@ -259,7 +257,8 @@ Public Class Game
         cbrok = ShopNPC.shopFactory(5)
         mgirl = ShopNPC.shopFactory(6)
         ttraveler = ShopNPC.shopFactory(7)
-        shop_npc_list.AddRange({shopkeeper, swiz, hteach, fvend, wsmith, cbrok, mgirl, ttraveler})
+        fqueen = ShopNPC.shopFactory(8)
+        shop_npc_list.AddRange({shopkeeper, swiz, hteach, fvend, wsmith, cbrok, mgirl, ttraveler, fqueen})
         mDun = New Dungeon
 
         setupDungeon()
@@ -288,7 +287,6 @@ Public Class Game
         mDun.setFloor(currFloor)
         initializeBoard(False)
         updateLoadbar(60)
-        drawBoard()
 
         'setup the player
         player1.currState = New State(player1)
@@ -303,10 +301,13 @@ Public Class Game
         TextEvent.pushLog("You see before you a dungeon.")
         picStart.Visible = False
 
+        'this also updates the player's UI
         player1.UIupdate()
 
         updateLoadbar(99)
         boardWorker.CancelAsync()
+
+        drawBoard()
     End Sub
     Sub loadCKeys()
         cKeys.Clear()
@@ -327,13 +328,14 @@ Public Class Game
         lblEvent.Visible = False
         player1.canMoveFlag = False
         last_tile = Nothing
-        newBoard()
+        'newBoard()
 
+        player1.setPlayerImage()
         If Draw Then drawBoard()
     End Sub
     Sub newBoard()
         'newBoard creates a new representation of the board.
-        player1.setplayer_image()
+        player1.setPlayerImage()
         Dim Margin As Integer = 3
         Dim XSize As Double = 23 * (CDbl(Me.Size.Width) / iWidth)
         Dim YSize As Double = 23 * (CDbl(Me.Size.Height) / iHeight)
@@ -352,8 +354,6 @@ Public Class Game
 
         ReDim mPics(viewHeight, viewWidth)
 
-
-        Dim viewPicsDone As Integer = 0
         For y As Integer = 0 To viewHeight - 1
             For x As Integer = 0 To viewWidth - 1
                 Dim newPicture As PictureBox = New PictureBox()
@@ -365,8 +365,6 @@ Public Class Game
                 'newPicture.BorderStyle = BorderStyle.FixedSingle
                 Me.Controls.Add(newPicture)
                 mPics(y, x) = newPicture
-
-                viewPicsDone += 1
             Next
         Next
     End Sub
@@ -397,48 +395,44 @@ Public Class Game
 
     '| - DRAW - |
     Sub drawBoard()
-        'drawBoard updates the board with the players actions
-
+        'Dim startTime As Double = DDDateTime.getTimeNow()
         '"discover" any hidden tiles adjacent to the player and erase the players last location
         viewBubble()
 
-        'updates the combat banner
+        'update the combat banner
         If combat_engaged Then
             updatePnlCombat(player1, player1.currTarget)
         End If
 
-        'fills in any missing spaces
-        If currFloor.mBoard(currFloor.stairs.Y, currFloor.stairs.X).Text <> "H" Then
-            currFloor.mBoard(currFloor.stairs.Y, currFloor.stairs.X).Text = "H"
-        End If
-        If currFloor.chestList.Count > 0 Then
-            For i = 0 To currFloor.chestList.Count - 1
-                If currFloor.mBoard(currFloor.chestList.Item(i).pos.Y, currFloor.chestList.Item(i).pos.X).Text <> "#" Then
-                    currFloor.mBoard(currFloor.chestList.Item(i).pos.Y, currFloor.chestList.Item(i).pos.X).Text = "#"
-                End If
-            Next
-        End If
-        If currFloor.statueList.Count > 0 Then
-            For i = 0 To currFloor.statueList.Count - 1
-                If currFloor.statueList.Item(i).pos.X <> -1 And currFloor.statueList.Item(i).pos.Y <> -1 Then
-                    If currFloor.mBoard(currFloor.statueList.Item(i).pos.Y, currFloor.statueList.Item(i).pos.X).Text <> "@" Then
-                        currFloor.mBoard(currFloor.statueList.Item(i).pos.Y, currFloor.statueList.Item(i).pos.X).Text = "@"
-                    End If
-                End If
-            Next
-        End If
 
+        'fill in the stairs if they are missing
+        currFloor.mBoard(currFloor.stairs.Y, currFloor.stairs.X).Text = "H"
+
+        'fill in any missing chests
+        For Each c In currFloor.chestList
+            currFloor.mBoard(c.pos.Y, c.pos.X).Text = "#"
+        Next
+
+        'fill in any missing statues
+        For Each s In currFloor.statueList
+            If s.pos.X <> -1 And s.pos.Y <> -1 Then
+                currFloor.mBoard(s.pos.Y, s.pos.X).Text = s.getBoardCharacter()
+            End If
+        Next
+
+        'fill in any missing shop NPCs
         For Each sNPC In shop_npc_list
-            If Not sNPC.isDead And sNPC.pos.X >= 0 And sNPC.pos.Y >= 0 And sNPC.pos.Y < mBoardHeight And sNPC.pos.X < mBoardWidth Then
+            If Not sNPC.isDead AndAlso sNPC.pos.X >= 0 And sNPC.pos.Y >= 0 And sNPC.pos.Y < mBoardHeight And sNPC.pos.X < mBoardWidth Then
                 currFloor.mBoard(sNPC.pos.Y, sNPC.pos.X).Text = "$"
             End If
         Next
 
-        If currFloor.mBoard(player1.pos.Y, player1.pos.X).Text = "+" Or currFloor.mBoard(player1.pos.Y, player1.pos.X).Text = "♩" Then
-            For i = 0 To currFloor.trapList.Count - 1
-                If currFloor.trapList(i).pos = player1.pos And Not player1.pos.Equals(New Point(-1, -1)) Then
+        'activate any traps that the player stepped on
+        If currFloor.mBoard(player1.pos.Y, player1.pos.X).Text = "+" OrElse currFloor.mBoard(player1.pos.Y, player1.pos.X).Text = "♩" Then
+            For Each t In currFloor.trapList
+                If t.pos = player1.pos And Not t.Equals(New Point(-1, -1)) Then
                     Try
-                        currFloor.trapList(i).activate()
+                        t.activate()
                     Catch ex As Exception
                         TextEvent.push("As you wander forward, your foot falls on a pressure plate.  As soon as you hear it click, you snap to attention.  Looking around, you see that nothing seems to have happened." & DDUtils.RNRN & "Something must have gone wrong with the trap's activation...")
                     End Try
@@ -465,55 +459,108 @@ Public Class Game
         If mDun.floorboss.ContainsKey(mDun.numCurrFloor) AndAlso currFloor.beatBoss = False AndAlso Not mDun.floorboss(mDun.numCurrFloor).Equals("Key") And
             combat_engaged = False And player1.health > 0 And player1.canMoveFlag = True AndAlso
             New Point(player1.pos.Y, player1.pos.X).Equals(New Point(currFloor.stairs.Y, currFloor.stairs.X)) Then
-            TextEvent.pushYesNo("Challenge the floor boss?", AddressOf ChallengeBoss, Nothing)
+            If Not combat_engaged Then TextEvent.pushYesNo("Challenge the floor boss?", AddressOf ChallengeBoss, Nothing)
         End If
 
         'If picNPC.Visible Then picNPC.BackgroundImage = NPCimgList(img_index)
 
-        player1.UIupdate()
+        player1.UIupdate(False)
 
         If player1.isDead And lblEvent.Visible = False And pnlEvent.Visible = False Then player1.die()
+
+        drawBoardView()
+        'Dim endTime = DDDateTime.getTimeNow()
+        'Console.WriteLine(" - DRAW BOARD TIME: " + (endTime - startTime).ToString())
+    End Sub
+    Sub drawBoardView()
+        Dim x_size As Integer = Int(30 * (CSng(Me.Size.Width) / iWidth))
+        Dim y_size As Integer = Int(30 * (CSng(Me.Size.Height) / iHeight))
+
+        Dim board_width = (x_size * VIEW_WIDTH)
+        Dim board_height = (x_size * VIEW_HEIGHT)
+        Dim board As Bitmap = New Bitmap(board_width, board_height)
+
+        Dim g As Graphics = Graphics.FromImage(board)
+        g.InterpolationMode = Drawing2D.InterpolationMode.NearestNeighbor
+        g.CompositingMode = Drawing2D.CompositingMode.SourceOver
+
+        For y As Integer = 0 To VIEW_HEIGHT - 1
+            For x As Integer = 0 To VIEW_WIDTH - 1
+                Select Case mDun.numCurrFloor
+                    Case 6, 7, 8, 9, 10, 11, 12
+                        g.DrawImage(getForestTileImg(x, y, viewArray), x_size * x, y_size * y, x_size, y_size)
+                    Case 13
+                        g.DrawImage(getFoggyForestTileImg(x, y, viewArray), x_size * x, y_size * y, x_size, y_size)
+                    Case 14
+                        g.DrawImage(getHubTileImg(x, y, viewArray), x_size * x, y_size * y, x_size, y_size)
+                        'Case 15
+                        '    g.DrawImage(getDesertTileImg(x, y, viewArray), x_size * x, y_size * y, x_size, y_size)
+                    Case 9999, 10000
+                        g.DrawImage(getSpaceTileImg(x, y, viewArray), x_size * x, y_size * y, x_size, y_size)
+                    Case 91017
+                        g.DrawImage(getLegacyTileImg(x, y, viewArray), x_size * x, y_size * y, x_size, y_size)
+                    Case 91018
+                        g.DrawImage(getCaveHTileImg(x, y, viewArray), x_size * x, y_size * y, x_size, y_size)
+                    Case Is > 14
+                        g.DrawImage(getHubTileImg(x, y, viewArray), x_size * x, y_size * y, x_size, y_size)
+                    Case Else
+                        g.DrawImage(getDungeonTileImg(x, y, viewArray), x_size * x, y_size * y, x_size, y_size)
+                End Select
+            Next
+        Next
+
+        If Not picBoard.Size.Height = board_height Or Not picBoard.Size.Width = board_width Then picBoard.Size = New Size(board_width, board_height)
+        picBoard.BackgroundImage = board
+        g.Dispose()
     End Sub
     Sub viewBubble()
+        'viewBubble "discovers" the area around the player and erases the players previous location
         Dim viewRad = 1
         If player1.perks(perk.lightsource) > 0 Then viewRad = 2
         If player1.equippedGlasses.getAName.Equals("All-Seeing_Shades") Then viewRad = 5
-        'viewBubble "discovers" the area around the player and erases the players previous location
 
-        Dim startTime As Double = DDDateTime.getTimeNow()
+        'Dim startTime As Double = DDDateTime.getTimeNow()
         For indY = -viewRad To viewRad
             For indX = -viewRad To viewRad
-                If (player1.pos.Y + indY < currFloor.mBoardHeight And player1.pos.Y + indY >= 0 And player1.pos.X + indX < currFloor.mBoardWidth And player1.pos.X + indX >= 0) Then
-                    If currFloor.mBoard(player1.pos.Y + indY, player1.pos.X + indX).Text = "@" Then currFloor.mBoard(player1.pos.Y + indY, player1.pos.X + indX).Text = ""
-                    If currFloor.mBoard(player1.pos.Y + indY, player1.pos.X + indX).Text = "H" And currFloor.mBoard(player1.pos.Y + indY, player1.pos.X + indX).Tag < 2 Then
-                        currFloor.mBoard(player1.pos.Y + indY, player1.pos.X + indX).ForeColor = Color.Black
+                Dim x = player1.pos.X + indX
+                Dim y = player1.pos.Y + indY
+                If (y < currFloor.mBoardHeight And y >= 0 And x < currFloor.mBoardWidth And x >= 0) Then
+                    Dim tile = currFloor.mBoard(y, x)
+
+                    If tile.Text = "@" Then tile.Text = ""
+
+                    If tile.Text = "H" And tile.Tag < 2 Then
                         TextEvent.pushLog("Floor " & mDun.numCurrFloor & ": Staircase Discovered")
                     End If
-                    If currFloor.mBoard(player1.pos.Y + indY, player1.pos.X + indX).Text = "#" And currFloor.mBoard(player1.pos.Y + indY, player1.pos.X + indX).Tag < 2 Then
-                        currFloor.mBoard(player1.pos.Y + indY, player1.pos.X + indX).ForeColor = Color.Black
+
+                    If tile.Text = "#" And tile.Tag < 2 Then
                         TextEvent.pushLog("Chest discovered!")
                     End If
-                    If currFloor.mBoard(player1.pos.Y + indY, player1.pos.X + indX).Text = "$" And currFloor.mBoard(player1.pos.Y + indY, player1.pos.X + indX).Tag < 2 Then
-                        currFloor.mBoard(player1.pos.Y + indY, player1.pos.X + indX).ForeColor = Color.Navy
+
+                    If tile.Text = "$" And tile.Tag < 2 Then
                         TextEvent.pushLog("Shop discovered!")
                     End If
-                    If (currFloor.mBoard(player1.pos.Y + indY, player1.pos.X + indX).Text = "d" Or currFloor.mBoard(player1.pos.Y + indY, player1.pos.X + indX).Text = "D") And currFloor.mBoard(player1.pos.Y + indY, player1.pos.X + indX).Tag < 2 Then
-                        currFloor.mBoard(player1.pos.Y + indY, player1.pos.X + indX).ForeColor = Color.Gray
+
+                    If tile.Text = "`" And tile.Tag < 2 Then
+                        TextEvent.pushLog("Statue discovered!")
+                    End If
+
+                    If tile.Text = "d" And tile.Tag < 2 Then
                         TextEvent.pushLog("Fox Statue discovered!")
                     End If
-                    If currFloor.mBoard(player1.pos.Y + indY, player1.pos.X + indX).Tag = 1 Then currFloor.mBoard(player1.pos.Y + indY, player1.pos.X + indX).Tag = 2
+
+                    If tile.Tag = 1 Then tile.Tag = 2
                 End If
             Next
         Next
 
-        Dim endTime = DDDateTime.getTimeNow()
-        Console.WriteLine("VIEW BUBBLE TIME: " + (endTime - startTime).ToString())
+        'Dim endTime = DDDateTime.getTimeNow()
+        'Console.WriteLine("- VIEW BUBBLE TIME: " + (endTime - startTime).ToString())
     End Sub
     Sub zoom()
         'zoom interperates the data around the player from mBoard, and displays it on mPics
 
         'Dim startTime As Double = DDDateTime.getTimeNow()
-        Dim viewArray(15, 23) As Integer
         Dim x As Integer = 0
         Dim y As Integer = 0
         For indY = -7 To 7
@@ -535,28 +582,42 @@ Public Class Game
                     End If
 
                     If currFloor.mBoard(player1.pos.Y + indY, player1.pos.X + indX).Text = "@" Then
-                        If indY = 0 And indX = 0 Then viewArray(y, x) = 4 Else viewArray(y, x) = 7
+                        If indY = 0 And indX = 0 Then viewArray(y, x) = 4
+                    End If
+                ElseIf mDun.numCurrFloor = 13 AndAlso (player1.pos.Y + indY >= currFloor.mBoardHeight Or player1.pos.Y + indY < 0) And (player1.pos.X + indX >= 0 And player1.pos.X + indX < currFloor.mBoardWidth) Then
+                    Dim y_offset = 0
+                    If player1.pos.Y + indY < 0 Then
+                        y_offset = currFloor.mBoardHeight + (player1.pos.Y + indY)
+                    Else
+                        y_offset = indY - (currFloor.mBoardHeight - player1.pos.Y)
+                    End If
+
+                    Dim tileText As String = currFloor.mBoard(y_offset, player1.pos.X + indX).Text
+                    Dim tileTag As Integer = currFloor.mBoard(y_offset, player1.pos.X + indX).Tag
+
+                    viewArray(y, x) = tileTag
+                    If tileTag = 2 Or DDConst.ALWAYS_REDRAWN_CHARS.Contains(tileText) Then
+                        'get the tile to display
+                        viewArray(y, x) = getTileToDisplay(player1.pos.X + indX, y_offset, tileText, tileTag)
+
+                        'if the player is blind, treat all tiles as unseen
+                        If player1.perks(perk.blind) > -1 Then viewArray(y, x) = 1
+                    End If
+
+                    If currFloor.mBoard(y_offset, player1.pos.X + indX).Text = "@" Then
+                        If indY = 0 And indX = 0 Then viewArray(y, x) = 4
                     End If
                 Else
                     viewArray(y, x) = 0
                 End If
-                If mDun.numCurrFloor = 13 Then
-                    setFoggyForestTileImg(x, y, viewArray)
-                ElseIf mDun.numCurrFloor = 9999 Or mDun.numCurrFloor = 10000 Then
-                    setSpaceTileImg(x, y, viewArray)
-                ElseIf mDun.numCurrFloor = 91017 Then
-                    setLegacyTileImg(x, y, viewArray)
-                ElseIf mDun.numCurrFloor > 5 Then
-                    setForestTileImg(x, y, viewArray)
-                Else
-                    setDungeonTileImg(x, y, viewArray)
-                End If
+
                 x += 1
             Next
             y += 1
         Next
+
         'Dim endTime As Double = DDDateTime.getTimeNow()
-        'Console.WriteLine("UPDATE TIME: " + (endTime - startTime).ToString())
+        'Console.WriteLine(" - ZOOM TIME: " + (endTime - startTime).ToString())
     End Sub
     Function getTileToDisplay(ByVal posX As Integer, ByVal posY As Integer, ByVal tileText As String, ByVal tileTag As Integer)
         'tile IDs
@@ -595,6 +656,8 @@ Public Class Game
         '32 = firescar end L
         '33 = firescar end R
         '34 = note
+        '35 = fae queen
+        '36 = generic NPC
 
         Select Case tileText
             Case ""
@@ -628,15 +691,17 @@ Public Class Game
                     Return 18
                 ElseIf posY = ttraveler.pos.Y And posX = ttraveler.pos.X Then
                     Return 23
+                ElseIf posY = fqueen.pos.Y And posX = fqueen.pos.X Then
+                    Return 35
                 End If
+            Case "`"
+                Return 7
             Case "+"
                 Return 8
             Case "c"
                 Return 12
             Case "d"
                 Return 19
-            Case "D"
-                Return 20
             Case "-"
                 Return 21
             Case "|"
@@ -644,10 +709,10 @@ Public Class Game
             Case "G"
                 Return 24
             Case "✢"
-                currFloor.mBoard(posY, posX).Text = "*"
+                If (Int(Rnd() * 3) = 0) Then currFloor.mBoard(posY, posX).Text = "*"
                 Return 25
             Case "*"
-                currFloor.mBoard(posY, posX).Text = "✢"
+                If (Int(Rnd() * 3) = 0) Then currFloor.mBoard(posY, posX).Text = "✢"
                 Return 27
             Case ">"
                 If (Int(Rnd() * 2) = 0) Then currFloor.mBoard(posY, posX).Text = "⇨"
@@ -667,236 +732,372 @@ Public Class Game
                 Return 33
             Case "♩"
                 Return 34
+            Case "a"
+                Return 36
         End Select
 
         Return 2
     End Function
-    Sub setDungeonTileImg(ByVal x As Integer, ByVal y As Integer, ByRef viewArray As Integer(,))
+    Function getDungeonTileImg(ByVal x As Integer, ByVal y As Integer, ByRef viewArray As Integer(,)) As Image
         Select Case viewArray(y, x)
             Case 0
-                'MsgBox(x & " " & y)
-                mPics(y, x).BackgroundImage = Nothing
-                mPics(y, x).BackColor = Color.Black
+                Return mTile.imgLib.getImg(tSet.dungeon, tile.wall)
             Case 1
-                mPics(y, x).BackgroundImage = picFog.BackgroundImage
+                Return mTile.imgLib.getImg(tSet.dungeon, tile.fog)
             Case 2
-                mPics(y, x).BackgroundImage = picTile.BackgroundImage
+                Return mTile.imgLib.getImg(tSet.dungeon, tile.tile)
             Case 3
-                mPics(y, x).BackgroundImage = picStairs.BackgroundImage
+                Return mTile.imgLib.getImg(tSet.dungeon, tile.stairs)
             Case 4
-                mPics(y, x).BackgroundImage = player1.player_image
+                Return player1.player_image
             Case 5
-                mPics(y, x).BackgroundImage = picChest.BackgroundImage
+                Return mTile.imgLib.getImg(tSet.dungeon, tile.chest)
             Case 6
-                mPics(y, x).BackgroundImage = picSK.BackgroundImage
+                Return mTile.imgLib.getImg(tSet.dungeon, tile.sk)
             Case 7
-                mPics(y, x).BackgroundImage = picStatue.BackgroundImage
+                Return mTile.imgLib.getImg(tSet.dungeon, tile.statue)
             Case 8
-                mPics(y, x).BackgroundImage = picTrap.BackgroundImage
+                Return mTile.imgLib.getImg(tSet.dungeon, tile.trap)
             Case 9
-                mPics(y, x).BackgroundImage = picStairsLock.BackgroundImage
+                Return mTile.imgLib.getImg(tSet.dungeon, tile.stairslock)
             Case 10
-                mPics(y, x).BackgroundImage = picStairsBoss.BackgroundImage
+                Return mTile.imgLib.getImg(tSet.dungeon, tile.stairsboss)
             Case 11
-                mPics(y, x).BackgroundImage = picSW.BackgroundImage
+                Return mTile.imgLib.getImg(tSet.dungeon, tile.sw)
             Case 12
-                mPics(y, x).BackgroundImage = picCrystal.BackgroundImage
+                Return mTile.imgLib.getImg(tSet.dungeon, tile.crystal)
             Case 13
-                mPics(y, x).BackgroundImage = picPath.BackgroundImage
+                Return mTile.imgLib.getImg(tSet.dungeon, tile.path)
             Case 14
-                mPics(y, x).BackgroundImage = picHT.BackgroundImage
+                Return mTile.imgLib.getImg(tSet.dungeon, tile.ht)
             Case 15
-                mPics(y, x).BackgroundImage = picFV.BackgroundImage
+                Return mTile.imgLib.getImg(tSet.dungeon, tile.fv)
             Case 16
-                mPics(y, x).BackgroundImage = picWS.BackgroundImage
+                Return mTile.imgLib.getImg(tSet.dungeon, tile.ws)
             Case 17
-                mPics(y, x).BackgroundImage = picCB.BackgroundImage
+                Return mTile.imgLib.getImg(tSet.dungeon, tile.cb)
             Case 18
-                mPics(y, x).BackgroundImage = picMG.BackgroundImage
+                Return mTile.imgLib.getImg(tSet.dungeon, tile.mg)
             Case 24
-                mPics(y, x).BackgroundImage = picPlayer.BackgroundImage
+                Return mTile.imgLib.getImg(tSet.dungeon, tile.player)
             Case 34
-                mPics(y, x).BackgroundImage = picNote.BackgroundImage
+                Return mTile.imgLib.getImg(tSet.dungeon, tile.note)
+            Case Else
+                Return mTile.imgLib.getImg(tSet.dungeon, tile.wall)
         End Select
-    End Sub
-    Sub setForestTileImg(ByVal x As Integer, ByVal y As Integer, ByRef viewArray As Integer(,))
+    End Function
+    Function getForestTileImg(ByVal x As Integer, ByVal y As Integer, ByRef viewArray As Integer(,)) As Image
         Select Case viewArray(y, x)
             Case 0
-                mPics(y, x).BackgroundImage = picTree.BackgroundImage
+                Return mTile.imgLib.getImg(tSet.forest, tile.wall)
             Case 1
-                mPics(y, x).BackgroundImage = Nothing
-                mPics(y, x).BackColor = Color.FromArgb(255, 19, 38, 22)
+                Return mTile.imgLib.getImg(tSet.forest, tile.fog)
             Case 2
-                mPics(y, x).BackgroundImage = picTileF.BackgroundImage
+                Return mTile.imgLib.getImg(tSet.forest, tile.tile)
             Case 3
-                mPics(y, x).BackgroundImage = picLadderf.BackgroundImage
+                Return mTile.imgLib.getImg(tSet.forest, tile.stairs)
             Case 4
-                mPics(y, x).BackgroundImage = player1.player_image
+                Return player1.player_image
             Case 5
-                mPics(y, x).BackgroundImage = picChestf.BackgroundImage
+                Return mTile.imgLib.getImg(tSet.forest, tile.chest)
             Case 6
-                mPics(y, x).BackgroundImage = picShopkeeperf.BackgroundImage
+                Return mTile.imgLib.getImg(tSet.forest, tile.sk)
             Case 7
-                mPics(y, x).BackgroundImage = picStatuef.BackgroundImage
+                Return mTile.imgLib.getImg(tSet.forest, tile.statue)
             Case 8
-                mPics(y, x).BackgroundImage = picTrapf.BackgroundImage
+                Return mTile.imgLib.getImg(tSet.forest, tile.trap)
             Case 9
-                mPics(y, x).BackgroundImage = picstairslockf.BackgroundImage
+                Return mTile.imgLib.getImg(tSet.forest, tile.stairslock)
             Case 10
-                mPics(y, x).BackgroundImage = picstairsbossf.BackgroundImage
+                Return mTile.imgLib.getImg(tSet.forest, tile.stairsboss)
             Case 11
-                mPics(y, x).BackgroundImage = picSWizF.BackgroundImage
+                Return mTile.imgLib.getImg(tSet.forest, tile.sw)
             Case 12
-                mPics(y, x).BackgroundImage = picCrystalf.BackgroundImage
+                Return mTile.imgLib.getImg(tSet.forest, tile.crystal)
             Case 13
-                mPics(y, x).BackgroundImage = picPathf.BackgroundImage
+                Return mTile.imgLib.getImg(tSet.forest, tile.path)
             Case 14
-                mPics(y, x).BackgroundImage = picHTf.BackgroundImage
+                Return mTile.imgLib.getImg(tSet.forest, tile.ht)
             Case 15
-                mPics(y, x).BackgroundImage = picFVf.BackgroundImage
+                Return mTile.imgLib.getImg(tSet.forest, tile.fv)
             Case 16
-                mPics(y, x).BackgroundImage = picWSf.BackgroundImage
+                Return mTile.imgLib.getImg(tSet.forest, tile.ws)
             Case 17
-                mPics(y, x).BackgroundImage = picCBrokF.BackgroundImage
+                Return mTile.imgLib.getImg(tSet.forest, tile.cb)
             Case 18
-                mPics(y, x).BackgroundImage = picMGTileF.BackgroundImage
+                Return mTile.imgLib.getImg(tSet.forest, tile.mg)
             Case 19
-                mPics(y, x).BackgroundImage = picFoxStatueF.BackgroundImage
-            Case 20
-                mPics(y, x).BackgroundImage = picFoxStatueGold.BackgroundImage
+                Return mTile.imgLib.getImg(tSet.forest, tile.extra11)
             Case 24
-                mPics(y, x).BackgroundImage = picPlayerf.BackgroundImage
+                Return mTile.imgLib.getImg(tSet.forest, tile.player)
             Case 25
-                mPics(y, x).BackgroundImage = picFire1F.BackgroundImage
+                Return mTile.imgLib.getImg(tSet.forest, tile.extra1)
             Case 26
-                mPics(y, x).BackgroundImage = picFire2F.BackgroundImage
+                Return mTile.imgLib.getImg(tSet.forest, tile.extra2)
             Case 27
-                mPics(y, x).BackgroundImage = picFire3F.BackgroundImage
+                Return mTile.imgLib.getImg(tSet.forest, tile.extra3)
             Case 28
-                mPics(y, x).BackgroundImage = picFireScarL1F.BackgroundImage
+                Return mTile.imgLib.getImg(tSet.forest, tile.extra6)
             Case 29
-                mPics(y, x).BackgroundImage = picFireScarL2F.BackgroundImage
+                Return mTile.imgLib.getImg(tSet.forest, tile.extra7)
             Case 30
-                mPics(y, x).BackgroundImage = picFireScarR1F.BackgroundImage
+                Return mTile.imgLib.getImg(tSet.forest, tile.extra8)
             Case 31
-                mPics(y, x).BackgroundImage = picFireScarR2F.BackgroundImage
+                Return mTile.imgLib.getImg(tSet.forest, tile.extra9)
             Case 32
-                mPics(y, x).BackgroundImage = picFireScarEndFL.BackgroundImage
+                Return mTile.imgLib.getImg(tSet.forest, tile.extra4)
             Case 33
-                mPics(y, x).BackgroundImage = picFireScarEndRL.BackgroundImage
+                Return mTile.imgLib.getImg(tSet.forest, tile.extra5)
             Case 34
-                mPics(y, x).BackgroundImage = picNoteF.BackgroundImage
+                Return mTile.imgLib.getImg(tSet.forest, tile.note)
+            Case Else
+                Return mTile.imgLib.getImg(tSet.dungeon, tile.wall)
         End Select
-    End Sub
-    Sub setSpaceTileImg(ByVal x As Integer, ByVal y As Integer, ByRef viewArray As Integer(,))
+    End Function
+    Function getSpaceTileImg(ByVal x As Integer, ByVal y As Integer, ByRef viewArray As Integer(,)) As Image
         Select Case viewArray(y, x)
             Case 0
-                'MsgBox(x & " " & y)
-                mPics(y, x).BackgroundImage = Nothing
-                mPics(y, x).BackColor = Color.Black
+                Return mTile.imgLib.getImg(tSet.space, tile.wall)
             Case 1
-                mPics(y, x).BackgroundImage = picFog.BackgroundImage
+                Return mTile.imgLib.getImg(tSet.space, tile.fog)
             Case 2
-                mPics(y, x).BackgroundImage = picTileSpace.BackgroundImage
+                Return mTile.imgLib.getImg(tSet.space, tile.tile)
             Case 3
-                mPics(y, x).BackgroundImage = picStairsSpace.BackgroundImage
+                Return mTile.imgLib.getImg(tSet.space, tile.stairs)
             Case 4
-                mPics(y, x).BackgroundImage = player1.player_image
+                Return player1.player_image
             Case 5
-                mPics(y, x).BackgroundImage = picChestSpace.BackgroundImage
+                Return mTile.imgLib.getImg(tSet.space, tile.chest)
             Case 7
-                mPics(y, x).BackgroundImage = picStatueSpace.BackgroundImage
+                Return mTile.imgLib.getImg(tSet.space, tile.statue)
             Case 8
-                mPics(y, x).BackgroundImage = picSpaceTrap.BackgroundImage
+                Return mTile.imgLib.getImg(tSet.space, tile.trap)
             Case 12
-                mPics(y, x).BackgroundImage = picCrystalSpace.BackgroundImage
+                Return mTile.imgLib.getImg(tSet.space, tile.crystal)
             Case 13
-                mPics(y, x).BackgroundImage = picPathSpace.BackgroundImage
+                Return mTile.imgLib.getImg(tSet.space, tile.path)
             Case 21
-                mPics(y, x).BackgroundImage = picBarrierHSpace.BackgroundImage
+                Return mTile.imgLib.getImg(tSet.space, tile.extra3)
             Case 22
-                mPics(y, x).BackgroundImage = picBarrierVSpace.BackgroundImage
+                Return mTile.imgLib.getImg(tSet.space, tile.extra2)
             Case 23
-                mPics(y, x).BackgroundImage = picTTSpace.BackgroundImage
+                Return mTile.imgLib.getImg(tSet.space, tile.tt)
             Case 24
-                mPics(y, x).BackgroundImage = picPlayerSpace.BackgroundImage
+                Return mTile.imgLib.getImg(tSet.space, tile.player)
             Case 34
-                mPics(y, x).BackgroundImage = picNoteSpace.BackgroundImage
+                Return mTile.imgLib.getImg(tSet.space, tile.note)
             Case Else
-                mPics(y, x).BackgroundImage = Nothing
-                mPics(y, x).BackColor = Color.Black
+                Return mTile.imgLib.getImg(tSet.dungeon, tile.wall)
         End Select
-    End Sub
-    Sub setLegacyTileImg(ByVal x As Integer, ByVal y As Integer, ByRef viewArray As Integer(,))
+    End Function
+    Function getLegacyTileImg(ByVal x As Integer, ByVal y As Integer, ByRef viewArray As Integer(,)) As Image
         Select Case viewArray(y, x)
             Case 0
-                'MsgBox(x & " " & y)
-                mPics(y, x).BackgroundImage = Nothing
-                mPics(y, x).BackColor = Color.Black
+                Return mTile.imgLib.getImg(tSet.legacy, tile.wall)
             Case 1
-                mPics(y, x).BackgroundImage = picFog.BackgroundImage
+                Return mTile.imgLib.getImg(tSet.legacy, tile.fog)
             Case 2
-                mPics(y, x).BackgroundImage = picLegaTile.BackgroundImage
+                Return mTile.imgLib.getImg(tSet.legacy, tile.tile)
             Case 3
-                mPics(y, x).BackgroundImage = picLegaStairs.BackgroundImage
+                Return mTile.imgLib.getImg(tSet.legacy, tile.stairs)
             Case 4
-                mPics(y, x).BackgroundImage = player1.player_image
+                Return player1.player_image
             Case 5
-                mPics(y, x).BackgroundImage = picLegaChest.BackgroundImage
+                Return mTile.imgLib.getImg(tSet.legacy, tile.chest)
             Case 7
-                mPics(y, x).BackgroundImage = picLegaCrystal.BackgroundImage
+                Return mTile.imgLib.getImg(tSet.legacy, tile.crystal)
             Case 8
-                mPics(y, x).BackgroundImage = picLegaTrap.BackgroundImage
+                Return mTile.imgLib.getImg(tSet.legacy, tile.trap)
             Case 12
-                mPics(y, x).BackgroundImage = picLegaCrystal.BackgroundImage
+                Return mTile.imgLib.getImg(tSet.legacy, tile.crystal)
             Case 13
-                mPics(y, x).BackgroundImage = picLegaPath.BackgroundImage
+                Return mTile.imgLib.getImg(tSet.legacy, tile.path)
             Case 16
-                mPics(y, x).BackgroundImage = picLegaCaelia.BackgroundImage
+                Return mTile.imgLib.getImg(tSet.legacy, tile.extra1)
             Case 24
-                mPics(y, x).BackgroundImage = picLegaPlayer.BackgroundImage
+                Return mTile.imgLib.getImg(tSet.legacy, tile.player)
             Case 34
-                mPics(y, x).BackgroundImage = picLegaNote.BackgroundImage
+                Return mTile.imgLib.getImg(tSet.legacy, tile.note)
             Case Else
-                mPics(y, x).BackgroundImage = Nothing
-                mPics(y, x).BackColor = Color.Black
+                Return mTile.imgLib.getImg(tSet.dungeon, tile.wall)
         End Select
-    End Sub
-    Sub setFoggyForestTileImg(ByVal x As Integer, ByVal y As Integer, ByRef viewArray As Integer(,))
+    End Function
+    Function getFoggyForestTileImg(ByVal x As Integer, ByVal y As Integer, ByRef viewArray As Integer(,)) As Image
         Select Case viewArray(y, x)
             Case 0
-                mPics(y, x).BackgroundImage = picTreeFog.BackgroundImage
+                Return mTile.imgLib.getImg(tSet.fogforest, tile.wall)
             Case 1
-                mPics(y, x).BackgroundImage = Nothing
-                mPics(y, x).BackColor = Color.FromArgb(255, 36, 63, 52)
+                Return mTile.imgLib.getImg(tSet.fogforest, tile.fog)
             Case 2
-                mPics(y, x).BackgroundImage = picTileFog.BackgroundImage
+                Return mTile.imgLib.getImg(tSet.fogforest, tile.tile)
             Case 3
-                mPics(y, x).BackgroundImage = picStairFog.BackgroundImage
+                Return mTile.imgLib.getImg(tSet.fogforest, tile.stairs)
             Case 4
-                mPics(y, x).BackgroundImage = player1.player_image
+                Return player1.player_image
             Case 5
-                mPics(y, x).BackgroundImage = picChestFog.BackgroundImage
+                Return mTile.imgLib.getImg(tSet.fogforest, tile.chest)
             Case 7
-                mPics(y, x).BackgroundImage = picStatueFog.BackgroundImage
+                Return mTile.imgLib.getImg(tSet.fogforest, tile.statue)
             Case 8
-                mPics(y, x).BackgroundImage = picTrapFog.BackgroundImage
+                Return mTile.imgLib.getImg(tSet.fogforest, tile.trap)
             Case 10
-                mPics(y, x).BackgroundImage = picBossStairsFog.BackgroundImage
+                Return mTile.imgLib.getImg(tSet.fogforest, tile.stairsboss)
             Case 12
-                mPics(y, x).BackgroundImage = picCrystalFog.BackgroundImage
+                Return mTile.imgLib.getImg(tSet.fogforest, tile.crystal)
             Case 13
-                mPics(y, x).BackgroundImage = picPathf.BackgroundImage
+                Return mTile.imgLib.getImg(tSet.fogforest, tile.path)
             Case 15
-                mPics(y, x).BackgroundImage = picFVFog.BackgroundImage
+                Return mTile.imgLib.getImg(tSet.fogforest, tile.fv)
             Case 17
-                mPics(y, x).BackgroundImage = picCBFog.BackgroundImage
+                Return mTile.imgLib.getImg(tSet.fogforest, tile.cb)
             Case 24
-                mPics(y, x).BackgroundImage = picPlayerFog.BackgroundImage
+                Return mTile.imgLib.getImg(tSet.fogforest, tile.player)
+            Case 32
+                Return mTile.imgLib.getImg(tSet.fogforest, tile.extra2)
+            Case 33
+                Return mTile.imgLib.getImg(tSet.fogforest, tile.extra3)
             Case 34
-                mPics(y, x).BackgroundImage = picNoteFog.BackgroundImage
+                Return mTile.imgLib.getImg(tSet.fogforest, tile.note)
+            Case 35
+                Return mTile.imgLib.getImg(tSet.fogforest, tile.extra1)
+            Case 36
+                Return mTile.imgLib.getImg(tSet.fogforest, tile.extra4)
+            Case Else
+                Return mTile.imgLib.getImg(tSet.dungeon, tile.wall)
         End Select
-    End Sub
+    End Function
+    Function getHubTileImg(ByVal x As Integer, ByVal y As Integer, ByRef viewArray As Integer(,)) As Image
+        Select Case viewArray(y, x)
+            Case 0
+                Return mTile.imgLib.getImg(tSet.hub, tile.wall)
+            Case 1
+                Return mTile.imgLib.getImg(tSet.hub, tile.fog)
+            Case 2
+                Return mTile.imgLib.getImg(tSet.hub, tile.tile)
+            Case 3
+                Return mTile.imgLib.getImg(tSet.hub, tile.stairs)
+            Case 4
+                Return player1.player_image
+            Case 5
+                Return mTile.imgLib.getImg(tSet.hub, tile.chest)
+            Case 6
+                Return mTile.imgLib.getImg(tSet.hub, tile.sk)
+            Case 7
+                Return mTile.imgLib.getImg(tSet.hub, tile.statue)
+            Case 8
+                Return mTile.imgLib.getImg(tSet.hub, tile.trap)
+            Case 9
+                Return mTile.imgLib.getImg(tSet.hub, tile.stairslock)
+            Case 10
+                Return mTile.imgLib.getImg(tSet.hub, tile.stairsboss)
+            Case 11
+                Return mTile.imgLib.getImg(tSet.hub, tile.sw)
+            Case 12
+                Return mTile.imgLib.getImg(tSet.hub, tile.crystal)
+            Case 13
+                Return mTile.imgLib.getImg(tSet.hub, tile.path)
+            Case 14
+                Return mTile.imgLib.getImg(tSet.hub, tile.ht)
+            Case 15
+                Return mTile.imgLib.getImg(tSet.hub, tile.fv)
+            Case 16
+                Return mTile.imgLib.getImg(tSet.hub, tile.ws)
+            Case 17
+                Return mTile.imgLib.getImg(tSet.hub, tile.cb)
+            Case 18
+                Return mTile.imgLib.getImg(tSet.hub, tile.mg)
+            Case 24
+                Return mTile.imgLib.getImg(tSet.hub, tile.player)
+            Case 34
+                Return mTile.imgLib.getImg(tSet.hub, tile.note)
+            Case Else
+                Return mTile.imgLib.getImg(tSet.dungeon, tile.wall)
+        End Select
+    End Function
+    Function getDesertTileImg(ByVal x As Integer, ByVal y As Integer, ByRef viewArray As Integer(,)) As Image
+        Select Case viewArray(y, x)
+            Case 0
+                Return mTile.imgLib.getImg(tSet.desert, tile.wall)
+            Case 1
+                Return mTile.imgLib.getImg(tSet.desert, tile.fog)
+            Case 2
+                Return mTile.imgLib.getImg(tSet.desert, tile.tile)
+            Case 3
+                Return mTile.imgLib.getImg(tSet.desert, tile.stairs)
+            Case 4
+                Return player1.player_image
+            Case 5
+                Return mTile.imgLib.getImg(tSet.desert, tile.chest)
+            Case 7
+                Return mTile.imgLib.getImg(tSet.desert, tile.crystal)
+            Case 8
+                Return mTile.imgLib.getImg(tSet.desert, tile.trap)
+            Case 12
+                Return mTile.imgLib.getImg(tSet.desert, tile.crystal)
+            Case 13
+                Return mTile.imgLib.getImg(tSet.desert, tile.path)
+            Case 16
+                Return mTile.imgLib.getImg(tSet.desert, tile.extra1)
+            Case 24
+                Return mTile.imgLib.getImg(tSet.desert, tile.player)
+            Case 34
+                Return mTile.imgLib.getImg(tSet.desert, tile.note)
+            Case Else
+                Return mTile.imgLib.getImg(tSet.dungeon, tile.wall)
+        End Select
+    End Function
+    Function getCaveHTileImg(ByVal x As Integer, ByVal y As Integer, ByRef viewArray As Integer(,)) As Image
+        Select Case viewArray(y, x)
+            Case 0
+                Return mTile.imgLib.getImg(tSet.caveh, tile.wall)
+            Case 1
+                Return mTile.imgLib.getImg(tSet.caveh, tile.fog)
+            Case 2
+                Return mTile.imgLib.getImg(tSet.caveh, tile.tile)
+            Case 3
+                Return mTile.imgLib.getImg(tSet.caveh, tile.stairs)
+            Case 4
+                Return player1.player_image
+            Case 5
+                Return mTile.imgLib.getImg(tSet.caveh, tile.chest)
+            Case 6
+                Return mTile.imgLib.getImg(tSet.caveh, tile.sk)
+            Case 7
+                Return mTile.imgLib.getImg(tSet.caveh, tile.statue)
+            Case 8
+                Return mTile.imgLib.getImg(tSet.caveh, tile.trap)
+            Case 9
+                Return mTile.imgLib.getImg(tSet.caveh, tile.stairslock)
+            Case 10
+                Return mTile.imgLib.getImg(tSet.caveh, tile.stairsboss)
+            Case 11
+                Return mTile.imgLib.getImg(tSet.caveh, tile.sw)
+            Case 12
+                Return mTile.imgLib.getImg(tSet.caveh, tile.crystal)
+            Case 13
+                Return mTile.imgLib.getImg(tSet.caveh, tile.path)
+            Case 14
+                Return mTile.imgLib.getImg(tSet.caveh, tile.ht)
+            Case 15
+                Return mTile.imgLib.getImg(tSet.caveh, tile.fv)
+            Case 16
+                Return mTile.imgLib.getImg(tSet.caveh, tile.ws)
+            Case 17
+                Return mTile.imgLib.getImg(tSet.caveh, tile.cb)
+            Case 18
+                Return mTile.imgLib.getImg(tSet.caveh, tile.mg)
+            Case 24
+                Return mTile.imgLib.getImg(tSet.caveh, tile.player)
+            Case 25
+                Return mTile.imgLib.getImg(tSet.caveh, tile.extra3)
+            Case 27
+                Return mTile.imgLib.getImg(tSet.caveh, tile.extra4)
+            Case 34
+                Return mTile.imgLib.getImg(tSet.caveh, tile.note)
+            Case Else
+                Return mTile.imgLib.getImg(tSet.caveh, tile.wall)
+        End Select
+    End Function
 
     '| - PROGRESS TURN - |
     Public Sub progressTurn()
@@ -967,11 +1168,12 @@ Public Class Game
                     TextEvent.choiceText = Nothing
                     TextEvent.yesAction = Nothing
                     TextEvent.noAction = Nothing
+                ElseIf selectionType = "FaeQueen" Then
+                    FaeQueen.playerLeaves()
                 End If
 
                 selecting = False
                 pnlSelection.Visible = False
-                pnlSelection.Location = New Point(1000, pnlSelection.Location.Y)
                 endTime = DDDateTime.getTimeNow()
                 Console.WriteLine("TOTAL TIME: " + (endTime - startTime).ToString())
                 Return True
@@ -1058,7 +1260,9 @@ Public Class Game
                     Me.FormBorderStyle = Windows.Forms.FormBorderStyle.FixedSingle
                     Me.WindowState = FormWindowState.Normal
                     Size = New Size(iWidth, iHeight)
-                    Game_Resize()
+                    DDUtils.resizeForm(Me)
+                    If Not player1 Is Nothing Then player1.UIupdate()
+                    drawBoard()
                     Return True
                 End If
         End Select
@@ -1113,7 +1317,6 @@ Public Class Game
             selecting = False
             player1.canMoveFlag = True
             pnlSelection.Visible = False
-            pnlSelection.Location = New Point(1000, pnlSelection.Location.Y)
 
             If selectionType.Equals("Potion") Or selectionType.Equals("Useable") Or selectionType.Equals("Food") Then
                 selectItem(index)
@@ -1143,8 +1346,8 @@ Public Class Game
                 selectAdvClassHypno(index)
             ElseIf selectionType = "Weapon" Then
                 selectWeapon(index)
-            ElseIf selectionType = "FaeOfWishes" Then
-                selectFaeOfWishes(index)
+            ElseIf selectionType = "manySelect" Then
+                selectManySelect(index)
             ElseIf selectionType = "yesNo" Then
                 selectYesNo(index)
             End If
@@ -1195,7 +1398,6 @@ Public Class Game
             Spell.spellCast(Nothing, player1, subString)
         End If
 
-        ttCosts.RemoveAll()
     End Sub
     Sub selectSpec(ByVal index As Integer)
         turn += 1
@@ -1226,7 +1428,6 @@ Public Class Game
 
         'updates the combat banner
         updatePnlCombat(player1, player1.currTarget)
-        ttCosts.RemoveAll()
     End Sub
     Sub selectArmor(ByVal index As Integer)
         Dim subString As String = lstSelec.Items(index).ToString.Split(" (")(2)
@@ -1285,19 +1486,11 @@ Public Class Game
         player1.UIupdate()
 
     End Sub
-    Sub selectFaeOfWishes(ByVal index As Integer)
-        Dim subString As String = lstSelec.Items(index).ToString.Split(" (")(2)
+    Sub selectManySelect(ByVal index As Integer)
+        Dim subString As String = lstSelec.Items(index).ToString.Substring(4)
 
-        Select Case subString
-            Case "Healing"
-                FaeOfWishes.heal(player1)
-            Case "Gold"
-                FaeOfWishes.gold(player1)
-            Case "Skills"
-                FaeOfWishes.skills(player1)
-            Case "Strength"
-                FaeOfWishes.stronger(player1)
-        End Select
+        Console.Out.WriteLine(subString)
+        selectionList(subString)()
     End Sub
     Sub selectYesNo(ByVal index As Integer)
         Dim tempAct
@@ -1479,13 +1672,9 @@ Public Class Game
                     If i.getCount > 0 Then l.Add(i.getName)
                 Next
                 fillLstSelec(l)
-            Case "FaeOfWishes"
-                lblWhat.Text = "Wish for what?"
-                Dim l = New List(Of String)
-                l.Add("Healing")
-                l.Add("Gold")
-                l.Add("Skills")
-                l.Add("Strength")
+            Case "manySelect"
+                lblWhat.Text = TextEvent.choiceText
+                Dim l = New List(Of String)(selectionList.Keys)
                 fillLstSelec(l)
             Case "yesNo"
                 lblWhat.Text = TextEvent.choiceText
@@ -1502,7 +1691,6 @@ Public Class Game
                      If(maxSelectionPages > 1, (lstSelec.Tag + 1) & " of " & maxSelectionPages, "")
 
         selectionType = mode
-        pnlSelection.Location = New Point(115, pnlSelection.Location.Y)
         pnlSelection.Visible = True
     End Sub
     Function lineup(ByVal s1 As String, ByVal s2 As String)
@@ -1542,25 +1730,30 @@ Public Class Game
         End If
 
         '|-Quest Aquisition-|
-        If player1.quests(qInds.darkPact).canGet Then
-            player1.quests(qInds.darkPact).init()
+        If player1.quests(qInd.darkPact).canGet Then
+            player1.quests(qInd.darkPact).init()
             Exit Sub
         End If
 
-        If player1.quests(qInds.outOfTime).canGet Then
-            player1.quests(qInds.outOfTime).init()
+        If player1.quests(qInd.outOfTime).canGet Then
+            player1.quests(qInd.outOfTime).init()
             Exit Sub
         End If
 
-        If player1.quests(qInds.nineLives).canGet Then
-            player1.quests(qInds.nineLives).init()
+        If player1.quests(qInd.nineLives).canGet Then
+            player1.quests(qInd.nineLives).init()
             Exit Sub
         End If
 
-        'If player1.quests(qInds.faewoods1).canGet Then
-        '    player1.quests(qInds.faewoods1).init()
-        '    Exit Sub
-        'End If
+        If player1.quests(qInd.faewoods1a).canGet Then
+            player1.quests(qInd.faewoods1a).init()
+            Exit Sub
+        End If
+
+        If currFloor.chestList.Count < 1 And player1.quests(qInd.faewoods2a).canGet Then
+            player1.quests(qInd.faewoods2a).init()
+            Exit Sub
+        End If
 
         '|-Legacy Floor (91017) Events-|
         If mDun.numCurrFloor = 91017 Then
@@ -1579,19 +1772,19 @@ Public Class Game
             If Int(Rnd() * 130) = 0 Then
                 Select Case Int(Rnd() * 7)
                     Case 1
-                        TextEvent.push("You feel eyes glaring through the shroud of mist...")
+                        TextEvent.pushLog("You feel eyes glaring through the shroud of mist...")
                     Case 2
-                        TextEvent.push("You hear a multitude of whispers surrounding you from all directions...")
+                        TextEvent.pushLog("You hear a multitude of whispers surrounding you from all directions...")
                     Case 3
-                        TextEvent.push("Something lurks menacingly just outside of your vision...")
+                        TextEvent.pushLog("Something lurks menacingly just outside of your vision...")
                     Case 4
-                        TextEvent.push("A sinister voice whispers """ & My.Computer.Info.OSFullName & " suuuckssssssss"" in your ear...")
+                        TextEvent.pushLog("A foreboding bird caws in the distance...")
                     Case 5
-                        TextEvent.push("The ground writhes beneath you, slinking out of view...")
+                        TextEvent.pushLog("The ground writhes beneath you, slinking out of view...")
                     Case 6
-                        TextEvent.push("You feel unwelcome in this place...")
+                        TextEvent.pushLog("You feel unwelcome in this place...")
                     Case Else
-                        TextEvent.push("A shadow darts behind a tree before peeking back out and staring slightly to your left...")
+                        TextEvent.pushLog("A shadow darts behind a tree before peeking back out and staring slightly to your left...")
                 End Select
             End If
         End If
@@ -1618,7 +1811,6 @@ Public Class Game
             TextEvent.pushLog(Trim(m.getName() & " attacks!"))
             eClock = eClockResetVal
         End If
-
     End Sub
     Sub closeLblEvent()
         If lblEvent.Visible = True Then
@@ -1638,10 +1830,12 @@ Public Class Game
 
         player1.canMoveFlag = True
         btnEQP.Enabled = True
+
     End Sub
     Function shouldReturnEarly(ByVal Keydata As Keys)
         'This function determines if the key input should be ignored.
         'If it returns true, HandleKeyPress returns false before anything is done
+
         If Keydata = Keys.Escape Then Return False
         If picStart.Visible = True Then Return True
         If btnS.Visible Then Return True
@@ -1663,8 +1857,8 @@ Public Class Game
             Return False
         End If
         If pnlDescription.Visible And Not lblEvent.Visible Then
-            pnlDescription.Location = New Point(1000, pnlDescription.Location.Y)
             pnlDescription.Visible = False
+
             Return True
         End If
         If (lblEvent.Visible Or pnlEvent.Visible) And Not (Keydata.Equals(Keys.Enter)) And Not Keydata.Equals(cKeys(0)) And Not Keydata.Equals(cKeys(1)) And Not Keydata.Equals(cKeys(2)) And Not Keydata.Equals(cKeys(3)) _
@@ -1705,6 +1899,7 @@ Public Class Game
     '| - COMMANDS - |
     Sub oemSemiColon()
         If combat_engaged Then Exit Sub
+
         'oemSemicolon triggers when a player hits the semicolon key, or any of its equivalents
         For Each sNPC In shop_npc_list
             If player1.pos.Equals(sNPC.pos) Then
@@ -1712,16 +1907,21 @@ Public Class Game
             End If
         Next
 
+        If Not last_tile Is Nothing AndAlso last_tile.Item1 = "a" AndAlso player1.ongoingQuests.contains("Fae Woods Q2A - Simple Instructions") Then FaeWoodsQ2A.passengerDialog(player1.pos)
+
         If btnEQP.Enabled = False Then btnEQP.Enabled = True
+
         If currFloor.chestList.Count > 0 Then
             For i = 0 To currFloor.chestList.Count - 1
                 If player1.pos = currFloor.chestList.Item(i).pos Then
                     currFloor.chestList.Item(i).open()
+                    If currFloor.floorNumber = 13 AndAlso player1.quests(qInd.faewoods2a).canGet Then TextEvent.lblEventOnClose = AddressOf FaeWoodsQ2A.altInit
                     currFloor.chestList.RemoveAt(i)
                     Exit For
                 End If
             Next
         End If
+
         If mDun.floorboss.ContainsKey(mDun.numCurrFloor) Then
             If mDun.currFloorBoss.Equals("Key") And player1.inv.getCountAt("Key") > 0 Then currFloor.beatBoss = True
             If player1.pos = currFloor.stairs And currFloor.beatBoss Then
@@ -1734,7 +1934,7 @@ Public Class Game
                 If combat_engaged Then fromCombat()
                 player1.canMoveFlag = True
             ElseIf player1.pos = currFloor.stairs Then
-                If mDun.currFloorBoss.Equals("Key") Then TextEvent.push("The stairs are behind a locked gate!  Perhaps the key is in a chest..." & vbCrLf & "[while this game is in development it can also be bought from the shop for 2500]") Else TextEvent.push("You must defeat " & mDun.currFloorBoss & "!")
+                If mDun.currFloorBoss.Equals("Key") Then TextEvent.push("The stairs are behind a locked gate!  Perhaps the key is in a chest..." & DDUtils.RNRN & "[While this game is in development it can also be bought from any shop for 2500]") Else TextEvent.push("You must defeat " & mDun.currFloorBoss & "!")
             End If
         ElseIf player1.pos = currFloor.stairs Then
             If mDun.numCurrFloor = 9999 Or mDun.numCurrFloor = 10000 Then
@@ -1748,21 +1948,20 @@ Public Class Game
                 mDun.setFloor(currFloor)
             ElseIf mDun.numCurrFloor = 9 Then
                 TextEvent.push("It looks like while there was once a formidable gate covering the stairway, something has left it rather... well, destroyed.  Glancing back at the smoldering gash in the landscape, " & If(player1.inv.getCountAt("Fox_Statue") > 0, "you fail to notice the slight gleam in the eyes of the fox statue tucked away in your bag.  Even as the flames blaze on above you, you decend to the next floor with chills at the thought of what could have left such a scar...", "you head down to the next floor with chills despite the inferno raging around you..."))
-            ElseIf mDun.numCurrFloor = 13 Then
-                If player1.ongoingTFs.contains(tfind.faepie) Then
-                    player1.ongoingTFs.remove(tfind.faepie) : TextEvent.pushAndLog("You revert from your fae form!")
-                    'ElseIf Not player1.perks(perk.isfae) > -1 Then
-                    '    currFloor.stairs = currFloor.randPoint()
-                    '    IngameEvent.push("The staircase vanishes before you can decend, reappearing somewhere else on the floor..." & DDUtils.RNRN &
-                    '                 "It seems like you need some fae magic to move to the next floor.")
-                    '    IngameEvent.pushLog("The staircase vanishes before you can decend, reappearing somewhere else on the floor...")
-                    '    drawBoard()
-                    '    Exit Sub
-                End If
             End If
+
             mDun.floorDown()
             mDun.setFloor(currFloor)
             initializeBoard()
+
+            If mDun.lastVisitedFloor = 13 Then
+                If player1.ongoingTFs.contains(tfind.faepie) Then
+                    player1.ongoingTFs.remove(tfind.faepie) : TextEvent.pushAndLog("You revert from your fae form!")
+                End If
+                If player1.equippedAcce.getAName.Equals(CursedBridle.ITEM_NAME) Then
+                    CursedBridle.forceUnequip(player1)
+                End If
+            End If
 
             mDun.tfNPCToArachne()
 
@@ -1842,6 +2041,10 @@ Public Class Game
                     player1.deLevel(f)
                 Catch ex As Exception
                 End Try
+            ElseIf last_keys_pressed = "ffff" Then
+                Dim p = player1
+
+                FanPhanStep3.losstf(p)
             ElseIf last_keys_pressed = "swda" Then
                 Try
                     Dim npcInd As Integer = CInt(InputBox("Enter an NPC index:" & vbCrLf &
@@ -1893,6 +2096,8 @@ Public Class Game
             For Each s In shop_npc_list
                 If player1.pos.Equals(s.pos) Then npcEncounter(s) : Exit For
             Next
+
+            If Not last_tile Is Nothing AndAlso last_tile.Item1 = "a" AndAlso player1.ongoingQuests.contains("Fae Woods Q2A - Simple Instructions") Then FaeWoodsQ2A.passengerDialog(player1.pos)
         Else
             doLblEventOnClose()
             closeLblEvent()
@@ -1911,7 +2116,7 @@ Public Class Game
 
             player1.nextCombatAction = Sub(t As Entity) player1.attackCMD(t)
         Else
-            TextEvent.push("You swing your " & player1.equippedWeapon.getName & " at the air.")
+            player1.equippedWeapon.outOfCombatAttack(player1)
         End If
 
         progressTurn()
@@ -1951,6 +2156,10 @@ Public Class Game
 
         Dim m As NPC = getCombatTarget(player1)
         player1.setTarget(m)
+
+        If Not combat_engaged And Not shop_npc_engaged And player1.quests(qInd.faewoods1b).canGet Then
+            player1.quests(qInd.faewoods1b).init()
+        End If
 
         TextEvent.push("You wait for a bit...")
         progressTurn()
@@ -2087,6 +2296,8 @@ Public Class Game
         'f3.Dispose()
     End Sub
     Function checkIfCantEquip() As Boolean
+        If player1 Is Nothing Then Return False
+
         If player1.formName.Equals("Blowup Doll") Then
             TextEvent.push("Any weapon you try to wield, and any armor or accessories you try to equip slide off.  It doesn't look like you'll be able to do this until you're not a blowup doll.")
             Return True
@@ -2097,12 +2308,8 @@ Public Class Game
 
         Dim b = False
         player1.oneLayerImgCheck(b)
-        If b Then
-            TextEvent.push("You can't change equipment now!")
-            Return True
-        End If
 
-        If player1.formName = "Fae" Then
+        If b Or player1.formName = "Fae" Or player1.ongoingQuests.contains("Phantastic Fantom") Then
             TextEvent.push("You can't change equipment now!")
             Return True
         End If
@@ -2123,12 +2330,14 @@ Public Class Game
             TextEvent.push(description)
             'updatePnlCombat(player1, player1.currTarget)
         Else
+            If TextEvent.lblEventOnClose Is Nothing Then closeLblEvent() Else TextEvent.pushLog("Press any non-movement key to continue...") : Exit Sub
+            If selecting Then TextEvent.pushLog("Press a selection key to continue...") : Exit Sub
+            If Settings.active(setting.textcolors) Then txtPlayerDesc.ForeColor = player1.textColor
             txtPlayerDesc.Text = player1.genDescription
 
             Dim pImg = player1.prt.oneLayerImgCheck(player1.formName, player1.className)
             If player1.prt.oneLayerImgCheck(player1.formName, player1.className) Is Nothing Then
-                player1.prt.setIArr()
-                pImg = Portrait.CreateFullBodyBMP(player1.prt.iArr)
+                pImg = player1.prt.drawFull()
             End If
 
             picDescPort.BackgroundImage = pImg
@@ -2148,24 +2357,25 @@ Public Class Game
     Sub noKey()
 
     End Sub
-    Private Sub ChallengeBoss()
-        '|-Get the Boss For a Floor-|
-        Dim m As NPC
+    Public Sub ChallengeBoss()
+        '| - Get the Boss For a Floor - |
+        Dim m As MiniBoss
         m = Boss.bossFactory(mDun.numCurrFloor)
 
-        '|-Route Targets-|
+        '| - Pre-boss-fight dialogs - |
+        If Not currFloor.bossDialog And mDun.numCurrFloor = 4 Then
+            m.preFightDialog()
+            Exit Sub
+        End If
+
+        '| - Route Targets - |
+
         Monster.targetRoute(m)
         toCombat(m)
         queueSetup()
 
-        '|-Print Dialog (if any)-|
+        '| - Print Dialog (if any) -|
         TextEvent.pushLog(Trim(m.getName & " attacks!"))
-        If mDun.numCurrFloor = 4 Then
-            TextEvent.push("When you approach the staircase, you spot the Ooze Empress dangling over the stairs.  You wave to get her attention, she plops off the ceiling to come and greet you.  As you explain your situation to her, she chuckles, catching you off guard." & DDUtils.RNRN &
-                         """You know, I was placed on this floor as kind of a buffer.  Mistress Medusa isn't interested in weaklings, and if you even want to have a chance at beating her you need to have a stronger will.""" & DDUtils.RNRN &
-                         "You notice a shift in her previously bubbly personality, and when the rest of her tentacles drop down, you take a leap back and prepare for combat!" & DDUtils.RNRN &
-                         """Let's see if you've learned anthing since the last time you tried this..."" she says with an somewhat mencing grin, ""...though I'm sure neither of us would mind a repeat either...""")
-        End If
     End Sub
     '| -- Movement -- |
     Private Sub BtnD_Click(sender As Object, e As EventArgs) Handles BtnD.Click
@@ -2183,8 +2393,6 @@ Public Class Game
 
     '| - SAVE/LOAD - |
     Sub save(ByVal a As String)
-        sessionID = DateTime.Now.GetHashCode
-
         'save handles the saving of the game
         Dim writer As IO.StreamWriter
         IO.File.Delete(a)
@@ -2267,7 +2475,7 @@ Public Class Game
         lstLog.Items.Clear()
         npc_list = New List(Of NPC)
         updatable_queue.clear()
-        player_image = picPlayer.BackgroundImage
+        player_image = mTile.imgLib.getImg(tSet.dungeon, tile.player)
         lblNameTitle.ForeColor = Color.White
         If Not picPortrait.BackgroundImage Is Nothing Then picPortrait.BackgroundImage.Dispose()
         lblEvent.Visible = False
@@ -2313,7 +2521,7 @@ Public Class Game
             Next
         End If
 
-        If player1.quests(qInds.outOfTime).getComplete Then compOOT = True
+        If player1.quests(qInd.outOfTime).getComplete Then compOOT = True
 
         updateLoadbar(60)
 
@@ -2332,6 +2540,7 @@ Public Class Game
         cbrok = shop_npc_list(5)
         mgirl = shop_npc_list(6)
         ttraveler = shop_npc_list(7)
+        fqueen = shop_npc_list(8)
         updateLoadbar(70)
 
         'load the dungeon generation settings
@@ -2352,9 +2561,6 @@ Public Class Game
 
         Equipment.init()
         reader.Close()
-        player1.setplayer_image()
-
-        drawBoard()
 
         'update the display
         player1.UIupdate()
@@ -2370,9 +2576,11 @@ Public Class Game
 
         updateLoadbar(99)
         boardWorker.CancelAsync()
+
+        drawBoard()
     End Sub
     'save/load drivers
-    Private Sub btnSavePic_Click(sender As Object, e As MouseEventArgs) Handles btnS1.Click, btnS2.Click, btnS3.Click, btnS4.Click, btnS5.Click, btnS6.Click, btnS7.Click, btnS8.Click
+    Private Sub btnSaveTile_Click(sender As Object, e As MouseEventArgs) Handles btnS1.Click, btnS2.Click, btnS3.Click, btnS4.Click, btnS5.Click, btnS6.Click, btnS7.Click, btnS8.Click, btnS9.Click, btnS10.Click
         pnlSaveLoad.Visible = False
 
         btnS1.Enabled = False
@@ -2383,6 +2591,8 @@ Public Class Game
         btnS6.Enabled = False
         btnS7.Enabled = False
         btnS8.Enabled = False
+        btnS9.Enabled = False
+        btnS10.Enabled = False
 
         Dim btn As Button = CType(sender, Button)
         Dim name As String = btn.Name
@@ -2392,21 +2602,20 @@ Public Class Game
 
         If mouseEvent IsNot Nothing AndAlso mouseEvent.Button = MouseButtons.Left Then
             If solFlag Then
-                Try
-                    player1.solFlag = True
-                    loadSave("saves/s" & fileNum & ".ave")
-                    player1.solFlag = False
-                Catch ex As System.IO.FileNotFoundException
-                    DDError.noSaveDetectedError()
-                Catch ex2 As Exception
-                    DDError.saveFileError()
-                End Try
+                ' Try
+                player1.solFlag = True
+                loadSave("saves/s" & fileNum & ".ave")
+                player1.solFlag = False
+                'Catch ex As System.IO.FileNotFoundException
+                '    DDError.noSaveDetectedError()
+                'Catch ex2 As Exception
+                '    DDError.saveFileError()
+                'End Try
             Else
                 save("saves/s" & fileNum & ".ave")
                 imagesWorkerArg = Convert.ToInt32(fileNum)
                 imagesWorker.RunWorkerAsync()
             End If
-            pnlSaveLoad.Location = New Point(1000, pnlSaveLoad.Location.Y)
             If picStart.Visible Then closesol()
         End If
 
@@ -2418,9 +2627,10 @@ Public Class Game
         btnS6.Enabled = True
         btnS7.Enabled = True
         btnS8.Enabled = True
+        btnS9.Enabled = True
+        btnS10.Enabled = True
     End Sub
     Private Sub btnCancel_Click(sender As Object, e As EventArgs) Handles btnCancel.Click
-        pnlSaveLoad.Location = New Point(1000, pnlSaveLoad.Location.Y)
         pnlSaveLoad.Visible = False
         If picStart.Visible = True Then
             btnS.Visible = True
@@ -2430,11 +2640,14 @@ Public Class Game
             btnAbout.Visible = True
         End If
         player1.canMoveFlag = True
+
+
         If player1.isDead Then formReset()
     End Sub
     Sub toSOL()
         fromCombat()
-        pnlSaveLoad.Location = New Point(188, pnlSaveLoad.Location.Y)
+
+        If picStart.Visible = True Then pnlSaveLoad.Location = New Point(208, pnlSaveLoad.Location.Y) Else pnlSaveLoad.Location = New Point(63, pnlSaveLoad.Location.Y)
         pnlSaveLoad.Visible = True
 
 
@@ -2506,6 +2719,20 @@ Public Class Game
             If solFlag Then btnS8.Enabled = False Else btnS8.Enabled = True
         End If
 
+        If savePics(9) IsNot Nothing Then
+            btnS9.BackgroundImage = savePics(9)
+            If Settings.active(setting.noimg) Then btnS9.BackgroundImage = Nothing
+        Else
+            If solFlag Then btnS9.Enabled = False Else btnS9.Enabled = True
+        End If
+
+        If savePics(10) IsNot Nothing Then
+            btnS10.BackgroundImage = savePics(10)
+            If Settings.active(setting.noimg) Then btnS10.BackgroundImage = Nothing
+        Else
+            If solFlag Then btnS10.Enabled = False Else btnS10.Enabled = True
+        End If
+
         Me.Update()
         player1.canMoveFlag = False
     End Sub
@@ -2515,6 +2742,7 @@ Public Class Game
         If Not mDun Is Nothing Then picStart.Visible = False
         If player1.isDead Then formReset()
         player1.canMoveFlag = True
+
     End Sub
     'save access files
     Shared Function getImgFromFile(ByVal a As String) As Image
@@ -2575,6 +2803,7 @@ Public Class Game
     End Function
     Sub toCombat(ByRef m As NPC)
         '|-Set up Game-|
+        cleanupPanels()
         combat_engaged = True
         npc_list.Add(m)
 
@@ -2583,9 +2812,9 @@ Public Class Game
         player1.specialRoute()
         player1.magicRoute()
         player1.setTarget(m)
+        player1.UIupdate()
 
         '|-Combat Dialog Box-|
-        pnlCombat.Location = New Point(115, pnlCombat.Location.Y)
         lblCombatEvents.Text = ""
         lblEHealthChange.Tag = 0
         lblPHealtDiff.Tag = 0
@@ -2616,7 +2845,6 @@ Public Class Game
         combat_engaged = False
         npc_list.Clear()
         updatable_queue.clear()
-        ttCosts.RemoveAll()
 
         '|-Clean up the Player-|
         If player1.perks(perk.astatue) < 0 Then player1.canMoveFlag = True
@@ -2624,6 +2852,7 @@ Public Class Game
         player1.specialRoute()
         player1.magicRoute()
         player1.skillsUsedThisCombat.Clear()
+
     End Sub
     Sub NPCtoCombat(ByRef m As NPC)
         'the NPC versions of from and to combat
@@ -2632,10 +2861,10 @@ Public Class Game
         lblEHealthChange.Tag = 0
         lblPHealtDiff.Tag = 0
         updatePnlCombat(player1, player1.currTarget)
-        pnlCombat.Location = New Point(115, pnlCombat.Location.Y)
         pnlCombat.Visible = True
         combat_engaged = True
         shop_npc_engaged = False
+        player1.UIupdate()
         TextEvent.pushLog(Trim(m.getName() & " attacks!"))
         btnATK.Visible = True
         btnMG.Visible = True
@@ -2646,6 +2875,7 @@ Public Class Game
         player1.canMoveFlag = False
 
         hideNPCButtons()
+
     End Sub
     Sub NPCfromCombat(ByRef m As NPC)
         pnlCombatClose()
@@ -2666,6 +2896,7 @@ Public Class Game
         showNPCButtons()
         player1.specialRoute()
         player1.magicRoute()
+
     End Sub
     Sub hideNPCButtons()
         'btnTalk.Visible = False
@@ -2684,11 +2915,11 @@ Public Class Game
         btnLeave.Visible = True
     End Sub
     'combat pannel
-    Sub updatePnlCombat(ByVal p As Player, ByVal t As Entity)
+    Sub updatePnlCombat(ByVal p As Player, ByVal t As Entity, Optional turnOverride As Boolean = False)
         Dim ratio As Double = Me.Size.Width / 1024
 
         '|-- Update the turn counter --|
-        If lblTurn.Text.Equals("Turn: " & turn) Or t Is Nothing Then Exit Sub
+        If (lblTurn.Text.Equals("Turn: " & turn) And Not turnOverride) Or t Is Nothing Then Exit Sub
         lblTurn.Text = "Turn: " & turn
 
         '|-- Kill the target, if needed --|
@@ -2761,7 +2992,6 @@ Public Class Game
     End Function
     Sub pnlCombatClose()
         pnlCombat.Visible = False
-        pnlCombat.Location = New Point(1000, pnlCombat.Location.Y)
 
         lblCombatEvents.Text = ""
     End Sub
@@ -3127,6 +3357,7 @@ Public Class Game
         Me.Close()
     End Sub
 
+
     '| - TIMERS - |
     Private Sub tmrKeyCD_Tick(sender As Object, e As EventArgs) Handles tmrKeyCD.Tick
         tmrKeyCD.Enabled = False
@@ -3145,6 +3376,8 @@ Public Class Game
 
         player1.canMoveFlag = True
         btnEQP.Enabled = True
+
+
     End Sub
     Private Sub btnClosePnlEvent_Click(sender As Object, e As EventArgs) Handles btnClosePnlEvent.Click
         closeLblEvent()
@@ -3218,12 +3451,6 @@ Public Class Game
     End Sub
 
     '| - GENERAL USE/UTILITY - |
-    Private Sub cboxNPCMG_SelectedIndexChanged(sender As Object, e As EventArgs) Handles cboxNPCMG.SelectedIndexChanged
-        If Not cboxNPCMG.Text.Equals("-- Select --") And Not cboxNPCMG.Text = "" Then ttCosts.SetToolTip(Me.cboxNPCMG, Spell.spellCost(cboxNPCMG.Text))
-    End Sub
-    Private Sub cmboxSpec_SelectedIndexChanged(sender As Object, e As EventArgs) Handles cboxSpec.SelectedIndexChanged
-        If Not cboxSpec.Text.Equals("-- Select --") And Not cboxSpec.Text = "" Then ttCosts.SetToolTip(Me.cboxSpec, Special.specCost(cboxSpec.Text))
-    End Sub
     Private Sub prefetchImages()
         If imagesWorkerArg Is Nothing Then
             savePicsReady = False
@@ -3234,7 +3461,7 @@ Public Class Game
                 savePics.Add(Nothing)
             End Try
 
-            For i = 1 To 8
+            For i = 1 To 10
                 If System.IO.File.Exists("saves/s" & i.ToString() & ".ave") Then
                     Dim pic As Image
                     If System.IO.File.Exists("saves/s" & i.ToString() & ".ave.png") Then
@@ -3263,7 +3490,7 @@ Public Class Game
         Else
             If System.IO.File.Exists("saves/s" & imagesWorkerArg.ToString() & ".ave") Then
                 'Dim pic As Image = getImgFromFile("s" & imagesWorkerArg.ToString() & ".ave")
-                Dim pic As Image = picPortrait.BackgroundImage.Clone()
+                Dim pic As Image = getSavePicture(picPortrait.BackgroundImage.Clone())
                 Try
                     savePics(imagesWorkerArg) = pic
                 Catch ex As Exception
@@ -3280,6 +3507,42 @@ Public Class Game
             imagesWorkerArg = Nothing
         End If
     End Sub
+    Private Function getSavePicture(ByVal pic As Image)
+        Dim g = Graphics.FromImage(pic)
+        g.SmoothingMode = Drawing2D.SmoothingMode.None
+        g.InterpolationMode = Drawing2D.InterpolationMode.NearestNeighbor
+
+        Dim f = New System.Drawing.Font(lblNameTitle.Font.FontFamily, Convert.ToSingle(lblNameTitle.Font.SizeInPoints), FontStyle.Bold, lblNameTitle.Font.Unit, lblNameTitle.Font.GdiCharSet)
+
+        Dim n = centerSaveName(player1.name)
+
+        g.DrawString(n, f, Brushes.Black, New Point(1, 190))
+        g.DrawString(n, f, Brushes.Black, New Point(3, 190))
+        g.DrawString(n, f, Brushes.Black, New Point(5, 190))
+
+        g.DrawString(n, f, Brushes.Black, New Point(1, 188))
+        g.DrawString(n, f, Brushes.Black, New Point(3, 188))
+        g.DrawString(n, f, Brushes.Black, New Point(5, 188))
+
+        g.DrawString(n, f, Brushes.Black, New Point(1, 192))
+        g.DrawString(n, f, Brushes.Black, New Point(3, 192))
+        g.DrawString(n, f, Brushes.Black, New Point(5, 192))
+
+        g.DrawString(n, f, Brushes.White, New Point(3, 190))
+
+        Return pic
+    End Function
+    Private Function centerSaveName(ByVal n As String) As String
+        Dim MAX_LENGTH As Integer = 14
+
+        If n.Length > MAX_LENGTH Then Return n.Substring(0, MAX_LENGTH) & "."
+
+        While n.Length < MAX_LENGTH + 1
+            n = n & " "
+        End While
+
+        Return n
+    End Function
     Sub formReset()
 
         Application.Exit()
@@ -3292,7 +3555,7 @@ Public Class Game
     End Sub
     Private Sub Game_Resize()
         DDUtils.resizeForm(Me, iHeight, iWidth)
-        player1.UIupdate()
+        If Not player1 Is Nothing Then player1.UIupdate()
     End Sub
     Private Sub CreateMapAndImages()
         'Dim XSize As Double = 15.0 * (CDbl(Me.Size.Width) / 688.0)

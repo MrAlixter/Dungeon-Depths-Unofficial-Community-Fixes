@@ -1,7 +1,7 @@
 ﻿Public NotInheritable Class BroodmotherTF
     Inherits Transformation
-    Shared hc As Color = Color.FromArgb(255, 236, 196, 87)
-    Shared sc As Color = Color.FromArgb(255, 213, 145, 113)
+    Public Shared hc As Color = Color.FromArgb(255, 236, 196, 87)
+    Public Shared sc As Color = Color.FromArgb(255, 213, 145, 113)
 
     Private Const TF_IND As tfind = tfind.broodmother
 

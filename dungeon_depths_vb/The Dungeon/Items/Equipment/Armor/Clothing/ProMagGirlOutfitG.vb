@@ -14,6 +14,7 @@
         droppable = False
         rando_inv_allowed = False
         compress_breast = True
+        hide_rearhair = True
 
         '|Stats|
         d_boost = 30

@@ -11,10 +11,10 @@
 
         '|Item Flags|
         usable = false
-        MyBase.compress_breast = True
-        MyBase.cursed = True
+        compress_breast = True
+        cursed = True
         rando_inv_allowed = False
-        MyBase.slut_var_ind = 56
+        slut_var_ind = 56
 
         '|Stats|
         MyBase.d_boost = 6

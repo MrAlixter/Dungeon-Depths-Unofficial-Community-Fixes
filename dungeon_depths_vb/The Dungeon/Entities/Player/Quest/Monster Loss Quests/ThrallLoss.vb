@@ -4,7 +4,7 @@
     Sub New()
         MyBase.New("Enthralled")
 
-        qInd = qInds.enthralled
+        quest_index = qInd.enthralled
 
         objectives.Add(New FindCrystal)
     End Sub
@@ -49,7 +49,7 @@
     End Function
 End Class
 
-Public Class FindCrystal
+Friend Class FindCrystal
     Inherits Objective
 
     Sub New()
@@ -74,7 +74,7 @@ Public Class FindCrystal
             TextEvent.push("You've found one of the crystals your controller is seeking!  As you circle it, you feel a familiar presence enter your mind.  " & _
                 """No, that isn't it."" your overseer states disappointedly, ""Well, I guess you can go back to your buisness now.""")
             Game.player1.ongoingTFs.add(New ThrallTF())
-            Game.player1.quests(qInds.enthralled).goToStep(1)
+            Game.player1.quests(qInd.enthralled).goToStep(1)
         End If
 
         MyBase.complete()

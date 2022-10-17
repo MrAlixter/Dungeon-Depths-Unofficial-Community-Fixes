@@ -22,7 +22,7 @@
     End Sub
 
     Public Overrides Function getTier() As Integer
-        'If Game.player1.quests(qInds.dfaUpgrade).getActive Then Return 1
+        'If Game.player1.quests(qInd.dfaUpgrade).getActive Then Return 1
 
         Return MyBase.getTier()
     End Function

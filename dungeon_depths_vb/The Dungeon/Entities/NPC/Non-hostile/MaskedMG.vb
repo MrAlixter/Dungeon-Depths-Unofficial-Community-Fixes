@@ -15,11 +15,13 @@
         isShop = True
 
         '|Inventory|
-        inv.setCount("Gem_of_Progress", 1)
-        inv.setCount("Gem_of_Sweetness", 1)
-        inv.setCount("Gem_of_Flame", 1)
-        inv.setCount("Gem_of_Darkness", 1)
-        inv.setCount("Gem_of_Ivy", 1)
+        inv.setCount(GemOfProg.ITEM_NAME, 1)
+        inv.setCount(GemOfPink.ITEM_NAME, 1)
+        inv.setCount(GemOfFlame.ITEM_NAME, 1)
+        inv.setCount(GemOfDark.ITEM_NAME, 1)
+        inv.setCount(GemOfIvy.ITEM_NAME, 1)
+
+        inv.setCount(MGReset.ITEM_NAME, 1)
 
         '|Stats|
         health = 1.0

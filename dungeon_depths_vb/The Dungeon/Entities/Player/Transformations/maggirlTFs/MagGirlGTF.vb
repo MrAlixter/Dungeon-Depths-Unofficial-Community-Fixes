@@ -6,11 +6,13 @@
     Sub New(n As Integer, tts As Integer, wi As Double, cbs As Boolean)
         MyBase.New(n, tts, wi, cbs)
         tf_name = TF_IND
+        MG_IND = mgind.greenmagicalgirl
         next_step = AddressOf step1
     End Sub
     Sub New(cs As Integer, n As Integer, tts As Integer, wi As Double, cbs As Boolean, tfd As Boolean)
         MyBase.New(cs, n, tts, wi, cbs, tfd)
         tf_name = TF_IND
+        MG_IND = mgind.greenmagicalgirl
         next_step = getNextStep(cs)
     End Sub
 
@@ -30,7 +32,7 @@
 
         p.prt.setIAInd(pInd.face, 0, True, False)
         p.prt.setIAInd(pInd.nose, 0, True, False)
-        p.prt.setIAInd(pInd.mouth, 22, True, True)
+        p.prt.setIAInd(pInd.mouth, 32, True, True)
         p.prt.setIAInd(pInd.eyes, 59, True, True)
         p.prt.setIAInd(pInd.eyebrows, 0, True, False)
         p.prt.setIAInd(pInd.cloak, 0, True, False)
@@ -42,5 +44,7 @@
 
         Equipment.accChange(p, "Nothing")
         EquipmentDialogBackend.armorChange(p, "Mag._Girl_Outfit_(G)")
+
+        p.textColor = Color.LightGreen
     End Sub
 End Class

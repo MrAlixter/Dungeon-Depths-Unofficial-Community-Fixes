@@ -1,8 +1,10 @@
 ﻿Imports System.ComponentModel
-Public Enum worldFlags
+Public Enum wFlag
     allfrogs
-    fvendhassword
+    fvendsword
     hteachslime
+    snarednpc
+    mrevived
 End Enum
 
 <Serializable()> Public Class Dungeon
@@ -20,7 +22,7 @@ End Enum
         floorboss.Add(3, "Key")
         floorboss.Add(4, "Key")
         floorboss.Add(5, "Medusa")
-        floorboss.Add(75, "???")
+        floorboss.Add(91018, "???")
 
         floorCodes.Add(0, mFloor.genRNDLVLCode)
         floorCodes.Add(1, Game.seed)
@@ -80,8 +82,6 @@ End Enum
         End If
     End Sub
     Private Sub setPositions()
-        'If floors(numCurrFloor).sessions.ContainsKey(Game.sessionID) Then
-        '    floors(numCurrFloor).sessions(Game.sessionID).load(floors(numCurrFloor))
         If floors(numCurrFloor).playerPosition.X = -1 Or floors(numCurrFloor).playerPosition.Y = -1 Then
             Game.player1.pos = floors(numCurrFloor).getStartPlayerPos
         Else
@@ -173,7 +173,6 @@ End Enum
             Dim tFloor = New mFloor(buffer(3 + i), False)
             floors.Add(tFloor.floorNumber, tFloor)
         Next
-
 
         floorboss.Clear()
         For i = 0 To CInt(buffer(3 + floors.Keys.Count))

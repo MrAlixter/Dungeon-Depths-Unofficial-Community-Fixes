@@ -14,7 +14,9 @@
         xp_value = 1000
 
         '|Inventory|
-        inv.setCount("Omni_Charm", 1)
+        inv.setCount(OmniCharm.ITEM_NAME, 1)
+        inv.setCount(MedusaEye.ITEM_NAME, 1)
+        inv.setCount(SthenoSalve.ITEM_NAME, 1)
 
         '|Dialog Variables|
         title = " "
@@ -93,9 +95,10 @@
     End Function
     Public Overrides Sub playerDeath(ByRef p As Player)
         Game.fromCombat()
-        p.petrify(Color.White, 9999)
-        TextEvent.push("Cackling with delight, Medusa slithers directly in front of you and glares intently into your eyes.\n\n" &
-                          "As you try to back away in shock, your legs quickly calcify and before long your lower body is composed of a light-ish gray stone.  Even as you try to shut your eyes and look away, the petrification reaches your face.\n\n" &
-                          "In mere moments, the stony gaze of Medusa has left " & p.getName & " as nothing but another decoration adorning the hall of the mythical Gorgon.", AddressOf DeathEffects.hardDeath)
+        p.petrify(Color.White, 999999)
+        TextEvent.push("Cackling with delight, Medusa coils around your weakened form, propping you upwards as she gently positions your head and peers intensely into your eyes.  For little more than an instant you meet her beautiful, deadly gaze, but that instant is all it takes to seal your fate." & DDUtils.RNRN &
+                       "As you try to jolt yourself free of her scaly embrace, your legs become heavier and heavier as your lower body becomes a fine white marble.  The stoney texture creeps upwards, setting more and more of you into an eternal pose as you struggle in vain.  The cool stone reaches your fingertips, as your mind still races to desperately find a way out of this dire situation." & DDUtils.RNRN &
+                       "In one last futile act of resistance, you try to shut your eyes and look away.  The marble is faster than your now-sluggish reflexes, and your efforts only serve to give a distant, vacant expression to the statue you've become." & DDUtils.RNRN &
+                       "In mere moments, the cruel, stoney gaze of Medusa has left " & p.getName & " as nothing but another decoration adorning the hall of the mythical gorgon.", AddressOf DeathEffects.hardDeath)
     End Sub
 End Class

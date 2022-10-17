@@ -42,8 +42,4 @@
             p.perks(perk.collarssnipped) += 1
         End If
     End Sub
-
-    Protected Overrides Sub Finalize()
-        MyBase.Finalize()
-    End Sub
 End Class

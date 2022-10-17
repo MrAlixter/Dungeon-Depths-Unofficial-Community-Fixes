@@ -1,0 +1,41 @@
+﻿Public Class SthenoSalve
+    Inherits Item
+
+    Public Const ITEM_NAME As String = "Stheno's_Salve"
+
+    Sub New()
+        '|ID Info|
+        setName(ITEM_NAME)
+        id = 338
+        tier = 4
+
+        '|Item Flags|
+        usable = True
+        npc_drop_only = True
+
+        '|Stats|
+        count = 0
+        value = 250
+
+        '|Description|
+        setDesc("A glass vial filled to the brim with a brilliant golden elixir.  A small label with a crude drawing of a smiling gorgon states that it should be used ""for mistakes""...")
+    End Sub
+
+    Overrides Sub use(ByRef p As Player)
+        If Me.getUsable() = False Then Exit Sub
+
+        TextEvent.pushLog("You apply the " & getName())
+
+        If p.perks(perk.astatue) > 0 Then
+            p.perks(perk.astatue) = -1
+            p.revertToPState()
+            p.canMoveFlag = True
+
+            TextEvent.push("You rock yourself over, deftly landing on the vial of salve and nothing else.  It shatters, and as its contents spill on the floor beneath you, the stoney curse is broken and you are once again animate!")
+        Else
+            TextEvent.push("You crack open the vial, and pour its content all over yourself.  Somewhat disappointingly, nothing happens...")
+        End If
+
+        count -= 1
+    End Sub
+End Class

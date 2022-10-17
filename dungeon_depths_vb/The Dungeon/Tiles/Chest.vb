@@ -1,12 +1,13 @@
 ﻿Public Class Chest
     Public contents As Inventory
     Public pos As Point
-    Public tier1 = New List(Of Item)
-    Public tier2 = New List(Of Item)
-    Public tier3 = New List(Of Item)
-    Public tier4 = New List(Of Item)
-    Public tier5 = New List(Of Item)
+    Dim tier1 = New List(Of Item)
+    Dim tier2 = New List(Of Item)
+    Dim tier3 = New List(Of Item)
+    Dim tier4 = New List(Of Item)
+    Dim tier5 = New List(Of Item)
     Public tiers() As List(Of Item) = {Nothing, tier1, tier2, tier3, tier4}
+
     '|CONSTRUCTORS|
     Sub New()
         contents = New Inventory(False)
@@ -125,20 +126,26 @@
         pushLblEventChest()
         Game.player1.UIupdate()
         TextEvent.pushLog("You open a chest!")
-
     End Sub
     Public Sub pushLblEventChest()
         Dim c As String = "Chest Contents: " & vbCrLf
 
-        Game.player1.inv.merge(contents)
+
         For i = 0 To contents.upperBound
             Dim content As Item = contents.item(i)
-            If contents.getCountAt(i) > 0 Then
+            If content.only_drop_one And Game.player1.inv.getCountAt(i) > 0 Then contents.item(i).count = 0
+            If contents.getCountAt(i) > 0 And Not i = 43 Then
                 c += " " & vbCrLf & "+" & content.count & " " & Game.player1.inv.item(i).getName() & " "
             End If
         Next
-        c += " " & DDUtils.RNRN & "Press any non-movement key to continue."
+
+        Game.player1.inv.merge(contents)
+
+        If contents.getCountAt(43) > 0 Then c += " " & vbCrLf & "+" & contents.getCountAt(43) & " " & Game.player1.inv.item(43).getName() & " "
+
+        c += " " & DDUtils.PAKTC
         Game.lblEvent.Text = c
+        If Settings.active(setting.textcolors) Then Game.lblEvent.ForeColor = Game.player1.textColor
         Game.lblEvent.BringToFront()
         Game.lblEvent.Location = New Point((250 * Game.Size.Width / 688) - (Game.lblEvent.Size.Width / 2), 65 * Game.Size.Width / 688)
         Game.lblEvent.Visible = True

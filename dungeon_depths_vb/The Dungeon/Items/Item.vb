@@ -16,14 +16,15 @@
 
     Dim name As String = ""
     Dim description As String
-    Public usable As Boolean = False
+    Protected usable As Boolean = False
     Public count As Integer
     Public value As Integer
     Protected tier As Integer = Nothing
     Public id As Integer = -1
-    Public droppable As Boolean = False
+    Public npc_drop_only As Boolean = False
     Public rando_inv_allowed = True
     Public can_be_stolen As Boolean = True
+    Public only_drop_one As Boolean = False
 
     Public saleLim As Integer = 999
     Public onSell As Action = Nothing
@@ -53,9 +54,6 @@
     Sub setDesc(ByVal s As String)
         description = s
     End Sub
-    Public Function getUsable()
-        Return usable
-    End Function
     Public Overridable Function getTier() As Integer
         Return tier
     End Function
@@ -67,6 +65,9 @@
     End Function
     Function getCount()
         Return count
+    End Function
+    Public Overridable Function getUsable() As Boolean
+        Return usable
     End Function
 
     '| -- Inventory -- |
@@ -113,5 +114,53 @@
             TextEvent.push(getDesc() & DDUtils.RNRN & "Durability: " & durability & " (Breaks at 0)")
         End If
 
+    End Sub
+    Public Overridable Sub toSavedItem(ByRef ent As Entity)
+        Dim output = CStr(
+            ent.name & "*" &
+            getAName() & "*" &
+            id & "*" &
+            Game.sessionID & "*" &
+            Game.currFloor.floorCode & "*" &
+            ent.health & "*" &
+            ent.getMaxHealth() & "*" &
+            ent.getMaxMana() & "*" &
+            ent.getATK() & "*" &
+            ent.getDEF() & "*" &
+            ent.getSPD() & "*" &
+            ent.getWIL() & "*")
+
+        Dim writer As IO.StreamWriter
+        Dim filename As String = "items\" & Game.sessionID & "_" & id & ".itm"
+        IO.File.Delete(filename)
+        writer = IO.File.CreateText(filename)
+        writer.WriteLine(output)
+        writer.Flush()
+        writer.Close()
+    End Sub
+    Public Overridable Sub loadSavedItem(ByVal sessionID As String, ByVal itmid As Integer)
+        Dim filename As String = "items\" & sessionID & "_" & itmid & ".itm"
+
+        Dim reader As IO.StreamReader
+        reader = IO.File.OpenText(filename)
+
+        Try
+            'TO DO per item
+
+            'saved name     - 0
+            'item name      - 1
+            'item id        - 2
+            'session id     - 3
+            'floor code     - 4
+            'health         - 5
+            'max health     - 6
+            'max mana       - 7
+            'ATK            - 8
+            'DEF            - 9
+            'SPD            - 10
+            'WIL            - 11
+        Finally
+            reader.Close()
+        End Try
     End Sub
 End Class

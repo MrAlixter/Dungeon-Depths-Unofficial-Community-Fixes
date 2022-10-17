@@ -37,9 +37,10 @@
 
         End If
     End Sub
-    Public Overloads Overrides Sub onunEquip(ByRef p As Player, ByRef w As Weapon)
-        If (p.className.Equals("Magical Slut") Or p.perks(perk.tfedbyweapon) > 0) And Not w.GetType.IsSubclassOf(GetType(Wand)) Then
-            TextEvent.pushLog("Sighing, you stow away your wand and revert to your base form.  Heartblast Starcannon spell forgotten...")
+    Public Overloads Overrides Sub onUnequip(ByRef p As Player, ByRef w As Weapon)
+        If (p.className.Equals("Magical Slut") Or p.perks(perk.tfedbyweapon) > 0) And (w Is Nothing OrElse Not w.GetType.IsSubclassOf(GetType(Wand))) Then
+            TextEvent.push("Sighing, you stow away your wand and revert to your base form.  Heartblast Starcannon spell forgotten...")
+            TextEvent.push("You revert to your base form.  Heartblast Starcannon spell forgotten!")
             If p.knownSpecials.Contains("Heartblast Starcannon") Then p.knownSpecials.Remove("Heartblast Starcannon")
             p.inv.add(uniform_id, -1)
 

@@ -12,13 +12,13 @@ Public Class PhotonArmor
 
         '|Item Flags|
         usable = false
-        MyBase.compress_breast = True
+        compress_breast = True
         rando_inv_allowed = False
-        MyBase.slut_var_ind = 105
+        slut_var_ind = 105
 
         '|Stats|
-        MyBase.m_boost = 12
-        MyBase.d_boost = 10
+        m_boost = 12
+        d_boost = 10
         count = 0
         value = 4331
 
@@ -35,8 +35,8 @@ Public Class PhotonArmor
 
         '|Description|
         setDesc("This armor consists of lightweight though fragile black plates of an advanced plastic, alongside a powerful shield generator that harnesses its users mana to withstand impacts." & DDUtils.RNRN &
-                       "Hardlight Effect" & DDUtils.RNRN &
-                        getSizeInformation() & DDUtils.RNRN & getStatInformation())
+                "Hardlight Effect" & DDUtils.RNRN &
+                getSizeInformation() & DDUtils.RNRN & getStatInformation())
     End Sub
 
     Public Overrides Sub onEquip(ByRef p As Player)

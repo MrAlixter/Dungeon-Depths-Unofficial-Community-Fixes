@@ -39,6 +39,6 @@
     End Sub
 
     Public Overrides Function getTier() As Integer
-        Return If(Game.player1.quests(qInds.oppositeDay).canGet, 2, Nothing) And Game.player1.inv.getCountAt(getAName) < 1
+        Return If(Game.player1.quests(qInd.oppositeDay).canGet, 2, Nothing) And Game.player1.inv.getCountAt(getAName) < 1
     End Function
 End Class

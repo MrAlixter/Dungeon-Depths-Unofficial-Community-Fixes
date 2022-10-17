@@ -11,11 +11,10 @@
 
         '|Item Flags|
         usable = true
-        MyBase.droppable = False
 
         '|Stats|
-        MyBase.a_boost = 35
-        MyBase.s_boost = -2
+        a_boost = 35
+        s_boost = -2
         count = 0
         value = 3300
 

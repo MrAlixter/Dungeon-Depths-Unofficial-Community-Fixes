@@ -4,7 +4,7 @@
     Sub New()
         MyBase.New("Studying Slime")
 
-        qInd = qInds.sSlime
+        quest_index = qInd.sSlime
 
         objectives.Add(New StudyingSlimeS1)
     End Sub
@@ -18,7 +18,7 @@
     End Function
 End Class
 
-Public Class StudyingSlimeS1
+Friend Class StudyingSlimeS1
     Inherits Objective
 
     Sub New()

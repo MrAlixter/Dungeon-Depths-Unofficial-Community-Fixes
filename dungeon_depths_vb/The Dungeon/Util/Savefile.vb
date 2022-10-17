@@ -295,10 +295,10 @@
     End Sub
 
     '| - Ongoing Quest Segment - |
-    Public Shared Function saveOngoingQuestSegment(ByRef q As qInds) As String
+    Public Shared Function saveOngoingQuestSegment(ByRef q As qInd) As String
         Return ONGOING_QUEST_SEG & VALUE_DELIMITER & q.ToString() & SEGMENT_DELIMITER
     End Function
-    Public Shared Function loadOngoingQuestSegment(ByVal seg As String) As qInds
+    Public Shared Function loadOngoingQuestSegment(ByVal seg As String) As qInd
         seg = seg.Replace(SEGMENT_DELIMITER, "")
         seg = seg.Replace(ONGOING_QUEST_SEG & VALUE_DELIMITER, "")
 

@@ -1,33 +1,18 @@
 ﻿Public Class ClothingTester
     Dim p As Player
-    'armor
-    Public aList As Dictionary(Of String, Armor) = New Dictionary(Of String, Armor)
 
     Private Sub ClothingTester_FormClosing(sender As Object, e As FormClosingEventArgs) Handles Me.FormClosing
         p.drawPort()
     End Sub
 
     Private Sub ClothingTester_Load(sender As Object, e As EventArgs) Handles MyBase.Load
+        Dim startTime As Double = DDDateTime.getTimeNow()
         p = Game.player1
+
         DDUtils.resizeForm(Me)
 
-        Dim a As Tuple(Of String(), Armor())
-        a = p.inv.getArmors
-
-        aList.Clear()
-
-        For i = UBound(a.Item1) To 0 Step -1
-            aList.Add(a.Item1(i), a.Item2(i))
-        Next
-
-        For Each v In aList.Values
-            If v.usize1 Is Nothing Then
-                cmbArmor.Items.Add(v.getName())
-            Else
-                cmbArmor.Items.Insert(0, v.getName())
-            End If
-
-        Next
+        cmbArmor.Items.Clear()
+        cmbArmor.Items.AddRange(p.inv.getArmors.Item1())
         cmbArmor.SelectedText = p.equippedArmor.getAName
 
         drawImg()
@@ -35,9 +20,9 @@
 
     Sub drawImg()
         Dim pImg = p.prt.oneLayerImgCheck(p.formName, p.className)
+
         If p.prt.oneLayerImgCheck(p.formName, p.className) Is Nothing Then
-            p.prt.setIArr()
-            pImg = Portrait.CreateFullBodyBMP(p.prt.iArr)
+            pImg = p.prt.drawFull
         End If
 
         lblBS.Text = p.breastSize
@@ -65,7 +50,7 @@
     End Sub
 
     Private Sub cmbArmor_SelectedValueChanged(sender As Object, e As EventArgs) Handles cmbArmor.SelectedValueChanged
-        If p.inv.item(cmbArmor.SelectedItem).count < 1 Then p.inv.add(cmbArmor.SelectedItem, 1)
+        If Not cmbArmor.SelectedItem = "Naked" AndAlso p.inv.item(cmbArmor.SelectedItem).count < 1 Then p.inv.add(cmbArmor.SelectedItem, 1)
         EquipmentDialogBackend.armorChange(p, cmbArmor.SelectedItem)
 
         p.prt.portraitUDate()

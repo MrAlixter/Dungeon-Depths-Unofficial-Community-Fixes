@@ -59,7 +59,7 @@
         Game.leaveNPC()
         Game.mDun.jumpTo(91017)
         Game.mDun.setFloor(Game.currFloor)
-        Game.player1.setplayer_image()
+        Game.player1.setPlayerImage()
         Game.drawBoard()
     End Sub
     Public Overrides Sub encounter()

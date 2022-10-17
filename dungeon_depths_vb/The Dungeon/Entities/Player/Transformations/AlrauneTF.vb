@@ -97,10 +97,43 @@
         p.changeForm("Alraune")
 
         'transformation description push
-        Dim out = "As you chew on a particularly leafy portion of the salad, you feel the familiar flow of transformative magic flow through your body!  Expecting the worse, you are suprised to find that it seems to be providing your body with a benevolent energy.  It isn't until a leaf droops down from the top of your head that you realize something has indeed been changed.  You are now a Alurane!"
+        Dim out = "As you chew on a particularly leafy portion of the salad, you feel the familiar flow of transformative magic flow through your body..." & DDUtils.RNRN &
+                  "Preparing for the worse, you are surprised to find that it seems to be charging your body with a more positive energy than you were maybe expecting.  It isn't until a leaf droops down from the top of your head that you realize something has indeed been changed." & DDUtils.RNRN &
+                  "You are now a Alurane!"
+
         Dim revertText = Game.lblEvent.Text.Split(vbCrLf)(0)
 
         p.learnSpecial("Lurk")
+
+        If Not revertText.Equals("") Then out = revertText & DDUtils.RNRN & out
+        TextEvent.push(out)
+    End Sub
+
+    Sub fullRNDTF()
+        Dim p As Player = Game.player1
+
+        If p.sex = "Male" Then
+            p.prt.setIAInd(pInd.midhair, 6, False, True)
+            p.prt.setIAInd(pInd.fronthair, 7, False, True)
+            p.prt.setIAInd(pInd.eyes, 14, False, True)
+        Else
+            p.prt.setIAInd(pInd.midhair, 13, True, True)
+            p.prt.setIAInd(pInd.fronthair, 22, True, True)
+            p.prt.setIAInd(pInd.eyes, 52, True, True)
+        End If
+
+
+        p.changeHairColor(hc)
+        p.changeSkinColor(sc)
+
+        p.changeForm("Alraune")
+
+        'transformation description push
+        Dim out = "A surge of transformative magic begins to flow through your body..." & DDUtils.RNRN &
+                  "Preparing for the worse, you are surprised to find that it seems to be charging your body with a more positive energy than you were maybe expecting.  It isn't until a leaf droops down from the top of your head that you realize something has indeed been changed." & DDUtils.RNRN &
+                  "You are now a Alurane!"
+
+        Dim revertText = Game.lblEvent.Text.Split(vbCrLf)(0)
 
         If Not revertText.Equals("") Then out = revertText & DDUtils.RNRN & out
         TextEvent.push(out)

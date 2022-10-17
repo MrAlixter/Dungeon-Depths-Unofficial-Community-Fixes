@@ -81,7 +81,7 @@
             inv.setCount("Midas_Gauntlet", 1)
         End If
 
-        If Game.player1.quests(qInds.helpWanted).getComplete Then
+        If Game.player1.quests(qInd.helpWanted).getComplete Then
             inv.setCount("Platinum_Axe", 1)
             inv.setCount("Platinum_Daggers", 1)
             inv.setCount("Platinum_Staff", 1)
@@ -94,7 +94,7 @@
         End If
 
         If img_index = 0 Then
-            If Game.player1.quests(qInds.helpWanted).canGet Then Game.player1.quests(qInds.helpWanted).init() : Exit Sub
+            If Game.player1.quests(qInd.helpWanted).canGet Then Game.player1.quests(qInd.helpWanted).init() : Exit Sub
             TextEvent.pushNPCDialog("Hey, what's up?")
         ElseIf img_index = 6 Then
             TextEvent.pushNPCDialog("Hey, what's up?")

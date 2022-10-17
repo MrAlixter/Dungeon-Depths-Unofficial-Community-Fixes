@@ -13,6 +13,7 @@
     Sub ping(Optional ByRef pUpdateFlag = False)
         For i = internalList.Count - 1 To 0 Step -1
             tf = internalList.Values(i)
+
             If tf Is Nothing Then Continue For
             If tf.getTFDone Then
                 remove(internalList.Keys(i))

@@ -11,11 +11,12 @@
 
         '|Item Flags|
         usable = false
-        MyBase.compress_breast = True
-        MyBase.slut_var_ind = 266
+        compress_breast = True
+        adjust_sleeve_layer = False
+        slut_var_ind = 266
 
         '|Stats|
-        MyBase.d_boost = 45
+        d_boost = 45
         count = 0
         value = 5200
 

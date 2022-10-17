@@ -11,7 +11,7 @@
 
         '|Item Flags|
         usable = False
-        droppable = True
+        npc_drop_only = True
 
         '|Stats| 
         a_boost = 25
