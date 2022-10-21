@@ -30,6 +30,8 @@
     End Sub
 
     Public Overrides Sub attackCMD(ByRef target As Entity)
+        If target.getPlayer Is Nothing And target.getPlayer.formName.Contains("Fae") Then despawn("friend")
+
         If Not target.getPlayer Is Nothing AndAlso shouldCastSpell(target.getPlayer) Then
             castSpell(target.getPlayer)
         End If

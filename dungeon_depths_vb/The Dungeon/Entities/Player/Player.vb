@@ -694,6 +694,7 @@ Public Class Player
         forms.Add("Minotaur Bull (B)", New MinotaurBullB())
         forms.Add("Cow", New Cow())
         forms.Add("Orc", New Orc())
+        forms.Add("Bee Girl", New BeeGirl())
     End Sub
     Private Sub initPolymorphs()
         'compile list of polymorphs

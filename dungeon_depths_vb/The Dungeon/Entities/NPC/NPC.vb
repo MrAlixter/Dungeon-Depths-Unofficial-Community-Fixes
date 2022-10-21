@@ -128,7 +128,7 @@ Public Class NPC
 
         '| - Specific Despawn Cases - |
         If reason = "run" Then
-            TextEvent.pushLog("You ran from the " & name & "!")
+            TextEvent.pushLog("You ran from " & getNameWithTitle() & "!")
             If Int(Rnd() * 30) < 2 Then
                 TextEvent.pushLog("Running away makes you less confident...")
                 Game.player1.will -= 1
@@ -136,10 +136,11 @@ Public Class NPC
                 Game.player1.UIupdate()
             End If
         ElseIf reason = "warp" Then
-            TextEvent.pushAndLog("With a flash, you teleport the " & name & " far away!")
+            TextEvent.pushAndLog("With a flash, you teleport " & getNameWithTitle() & " far away!")
         ElseIf reason = "pwarp" Then
             TextEvent.pushAndLog("With a flash, you teleport away!")
         ElseIf reason = "p-death" Then
+            TextEvent.pushLog("You are defeated by " & getNameWithTitle() & "...")
         ElseIf reason = "friend" Then
             If Int(Rnd() * 3) = 0 Then
                 TextEvent.pushLog(DDUtils.capitalizeFirst(getNameWithTitle) & " is friendly, and " & pronoun & " gives you some supplies!")
@@ -151,31 +152,28 @@ Public Class NPC
                 Game.player1.inv.add(ManaPotion.ITEM_NAME, 1)
                 Game.player1.inv.add(Apple.ITEM_NAME, 1)
             Else
-                TextEvent.pushAndLog(DDUtils.capitalizeFirst(getNameWithTitle) & " is friendly, and you chat for a bit about your master's will...")
+                TextEvent.pushAndLog(DDUtils.capitalizeFirst(getNameWithTitle) & " is friendly, and the fight resolves itself peacefully...")
             End If
         ElseIf reason = "npc" Then
-            TextEvent.pushLog("You walk away from " & Trim(title & getName()) & "!")
+            TextEvent.pushLog("You walk away from " & getNameWithTitle() & "!")
         ElseIf reason = "animaltf" Then
             Dim output As String = ""
-            If Me.GetType() Is GetType(Monster) Then output += "The "
-            output += name & ", seeing that you are no longer human, wanders off."
+            output += DDUtils.capitalizeFirst(getNameWithTitle()) & ", seeing that you are no longer human, wanders off."
             TextEvent.pushAndLog(output)
         ElseIf reason = "shrink" Then
             Dim output As String = ""
-            If Me.GetType() Is GetType(Monster) Then output += "The "
-            output += name & ", losing track of you, wanders off."
+            output += DDUtils.capitalizeFirst(getNameWithTitle()) & ", losing track of you, wanders off."
             TextEvent.pushAndLog(output)
         ElseIf reason = "flee" Then
             Dim output As String = ""
-            If Me.GetType() Is GetType(Monster) Then output += "The "
-            output += name & " runs away in fear!"
+            output += DDUtils.capitalizeFirst(getNameWithTitle()) & " runs away in fear!"
             TextEvent.pushAndLog(output)
         ElseIf reason = "cupcake" Then
             Dim c1 As Chest
             c1 = DDConst.BASE_CHEST.Create(inv, pos)
             If inv.getSum > 0 Then c1.open()
             Game.npc_list.Remove(Me)
-            TextEvent.pushLog("You've defeated the " & name & "!")
+            TextEvent.pushLog("You've defeated " & getNameWithTitle() & "!")
             Game.player1.currState.save(Game.player1)
             isDead = True
             endBoss()

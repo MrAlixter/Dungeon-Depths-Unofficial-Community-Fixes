@@ -204,7 +204,6 @@
 
         Else
             Exit Sub
-
         End If
 
         t.tfCt = 1

@@ -27,6 +27,7 @@
     default_ghost
     faerie
     namestealer_faerie
+    faerie_hunter
 End Enum
 
 Public Class Monster
@@ -53,6 +54,7 @@ Public Class Monster
         l.Add(New Tuple(Of mInd, String)(mInd.less_gorgon, LesserGorgon.BASE_NAME))
         l.Add(New Tuple(Of mInd, String)(mInd.faerie, FaerieEnemy.BASE_NAME))
         l.Add(New Tuple(Of mInd, String)(mInd.namestealer_faerie, NamestealerFaerie.BASE_NAME))
+        l.Add(New Tuple(Of mInd, String)(mInd.faerie_hunter, FaerieHunter.BASE_NAME))
 
         Return l
     End Function
@@ -158,6 +160,8 @@ Public Class Monster
                 Return New FaerieEnemy
             Case mInd.namestealer_faerie
                 Return New NamestealerFaerie
+            Case mInd.faerie_hunter
+                Return New FaerieHunter
         End Select
 
         Return New Monster()
@@ -248,10 +252,12 @@ Public Class Monster
         '| --- Fae Curse Enemies --- |
         If floorInd = 13 And Game.player1.perks(perk.faecurse) > -1 Then
             DDUtils.append(tier, mInd.namestealer_faerie)
+            DDUtils.append(tier, mInd.faerie_hunter)
 
             If Game.player1.perks(perk.faecurse) > 1 Then
                 DDUtils.append(tier, mInd.namestealer_faerie)
                 DDUtils.append(tier, mInd.namestealer_faerie)
+                DDUtils.append(tier, mInd.faerie_hunter)
             End If
         End If
 

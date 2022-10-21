@@ -5,6 +5,7 @@
     amazon
     arachne
     archdemoness
+    beehoney
     berrybimbo
     blindness
     blueox
@@ -149,6 +150,9 @@ Public MustInherit Class Transformation
 
         ElseIf tf = tfind.archdemoness Then
             Return New ArchDemonessTF(cs, n, tts, wi, cbs, tfd)
+
+        ElseIf tf = tfind.beehoney Then
+            Return New BeeHoneyTF(cs, n, tts, wi, cbs, tfd)
 
         ElseIf tf = tfind.berrybimbo Then
             Return New BBBimboTF(cs, n, tts, wi, cbs, tfd)

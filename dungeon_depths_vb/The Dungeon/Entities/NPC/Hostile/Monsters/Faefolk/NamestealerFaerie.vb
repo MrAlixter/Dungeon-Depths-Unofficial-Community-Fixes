@@ -32,27 +32,18 @@
     End Sub
 
     Protected Overrides Function pDeathEffect(ByRef p As Player) As String
-        PerkEffects.faeleafHair(p)
+        
+        If Transformation.canBeTFed(p) Then
+            p.ongoingTFs.add(New FaerieTF())
+            p.update()
 
-        If p.equippedAcce.getAName.Equals(FaerieBlossom.ITEM_NAME) And p.breastSize < 7 And p.buttSize < 5 Then
-            If p.breastSize < 7 Then
-                p.be()
-            End If
+        Else
 
-            If p.buttSize < 5 Then
-                p.ue()
-            End If
-
-            Return """Ooh, it looks like you're already someone's flower bed...  Do you think they'd mind if I did some gardening myself?"""
         End If
 
-        EquipmentDialogBackend.equipAcce(p, FaerieBlossom.ITEM_NAME, False)
-
-        p.drawPort()
-
         Return """Oh!  Someone big like you would make a sweet garden!  That's perfect! ~♥"" " & pronoun & " exclaims, flying around you as she sprinkles a fine mist of twinkly dust over your person." & DDUtils.RNRN &
-               "Minty green leaves begin sprouting from your hair, and a small white flower blooms out from the new flora.  You reach up to touch your now-verdant locks, and the faerie bursts into another fit of giggles before drifting back into the woods." & DDUtils.RNRN &
-               """Hey, big " & If(p.sex.Equals("Male"), "guy", "gal") & ", you look better already!  Don't forget to water yourself, ok?"""
+               "As she speaks, you find yourself shrinking" & DDUtils.RNRN &
+               """Hey, big- er, little " & If(p.sex.Equals("Male"), "guy", "gal") & ", you came out alright!  Enjoy the wings, ok?"""
     End Function
 
     Public Overrides Sub attackCMD(ByRef target As Entity)

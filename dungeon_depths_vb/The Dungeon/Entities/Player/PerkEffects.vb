@@ -12,6 +12,7 @@
         halfDragonR
         tigress
         faerie
+        beegirl
     End Enum
 
     '|GENERAL EFFECTS|
@@ -564,6 +565,7 @@
         tfs.Add(randomPolymorph.halfDragonR, AddressOf DragonTF.halfDragonRTF)
         tfs.Add(randomPolymorph.tigress, AddressOf New TigressTF().step1Full)
         tfs.Add(randomPolymorph.faerie, AddressOf New FaerieTF().step1)
+        tfs.Add(randomPolymorph.beegirl, AddressOf BeeHoneyTF.fullTF)
 
         Dim form = tfs.Keys(Int(Rnd() * (tfs.Keys.Count - 1)))
         While Game.player1.formName.Equals(form)

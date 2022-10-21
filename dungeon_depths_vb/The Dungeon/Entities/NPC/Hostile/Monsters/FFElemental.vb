@@ -31,4 +31,10 @@
 
         If target.GetType() Is GetType(Player) Then CType(target, Player).perks(perk.burn) += 3
     End Sub
+
+    Public Overrides Sub playerDeath(ByRef p As Player)
+        despawn("p-death")
+
+        TextEvent.push("You collapse, defeated..." & DDUtils.PAKTC)
+    End Sub
 End Class

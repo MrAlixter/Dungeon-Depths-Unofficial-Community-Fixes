@@ -519,8 +519,8 @@
         mfEquivalentIndexes.Add(pInd.mouth, New MFRouting({5, 6, 9},
                                               {10, 16, 26}))
         'eyes
-        mfEquivalentIndexes.Add(pInd.eyes, New MFRouting({5, 6, 7, 8, 9, 10, 11, 12, 15, 16},
-                                              {11, 14, 15, 19, 20, 33, 36, 38, 54, 55}))
+        mfEquivalentIndexes.Add(pInd.eyes, New MFRouting({5, 6, 7, 8, 9, 10, 11, 12, 15, 16, 18},
+                                                         {11, 14, 15, 19, 20, 33, 36, 38, 54, 55, 62}))
         'eyebrows
         mfEquivalentIndexes.Add(pInd.eyebrows, New MFRouting({},
                                               {}))

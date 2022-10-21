@@ -124,6 +124,7 @@
     <Compile Include="Entities\NPC\Hostile\Monsters\Faefolk\NamestealerFaerie.vb" />
     <Compile Include="Entities\NPC\Hostile\Monsters\Faefolk\FaerieEnemy.vb" />
     <Compile Include="Entities\NPC\Hostile\Monsters\Bovinomancer.vb" />
+    <Compile Include="Entities\NPC\Hostile\Monsters\FaerieHunter.vb" />
     <Compile Include="Entities\NPC\Hostile\Monsters\LesserGorgon.vb" />
     <Compile Include="Entities\NPC\Hostile\Monsters\ManySquirrels.vb" />
     <Compile Include="Entities\NPC\Hostile\Monsters\PlayerGhosts\DefaultGhost.vb" />
@@ -143,6 +144,7 @@
     <Compile Include="Entities\Player\Classes\needRevertPassage\FVendFaeBee2.vb" />
     <Compile Include="Entities\Player\Classes\needRevertPassage\WSmithThong2.vb" />
     <Compile Include="Entities\Player\Classes\needRevertPassage\WSmithThong1.vb" />
+    <Compile Include="Entities\Player\Forms\needsRevertPassage\BeeGirl.vb" />
     <Compile Include="Entities\Player\Forms\Unicorn.vb" />
     <Compile Include="Entities\Player\Forms\Orc.vb" />
     <Compile Include="Entities\Player\Forms\Cow.vb" />
@@ -204,6 +206,7 @@
     <Compile Include="Entities\Player\Transformations\Polymorphs\UnicornTF.vb" />
     <Compile Include="Entities\Player\Transformations\PreferredFormTF.vb" />
     <Compile Include="Entities\Player\Transformations\FaePrincessTF.vb" />
+    <Compile Include="Entities\Player\Transformations\BeeHoneyTF.vb" />
     <Compile Include="Items\Equipment\Accesories\FaerieBlossom.vb" />
     <Compile Include="Items\Equipment\Accesories\CursedBridle.vb" />
     <Compile Include="Items\Equipment\Accesories\FaeQueenAmulet.vb" />
