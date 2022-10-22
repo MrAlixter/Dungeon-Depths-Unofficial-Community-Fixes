@@ -61,7 +61,7 @@ Partial Class Settings
         Me.Label1.Location = New System.Drawing.Point(13, 9)
         Me.Label1.Margin = New System.Windows.Forms.Padding(4, 0, 4, 0)
         Me.Label1.Name = "Label1"
-        Me.Label1.Size = New System.Drawing.Size(104, 17)
+        Me.Label1.Size = New System.Drawing.Size(154, 24)
         Me.Label1.TabIndex = 20
         Me.Label1.Text = "Window Size:"
         '
@@ -74,7 +74,7 @@ Partial Class Settings
         Me.cboxScreenSize.Location = New System.Drawing.Point(17, 33)
         Me.cboxScreenSize.Margin = New System.Windows.Forms.Padding(4, 5, 4, 5)
         Me.cboxScreenSize.Name = "cboxScreenSize"
-        Me.cboxScreenSize.Size = New System.Drawing.Size(199, 25)
+        Me.cboxScreenSize.Size = New System.Drawing.Size(199, 31)
         Me.cboxScreenSize.TabIndex = 19
         Me.cboxScreenSize.Text = "-- Select --"
         '
@@ -84,7 +84,6 @@ Partial Class Settings
         Me.chkNoImg.FlatAppearance.CheckedBackColor = System.Drawing.Color.Black
         Me.chkNoImg.FlatAppearance.MouseDownBackColor = System.Drawing.Color.Black
         Me.chkNoImg.FlatAppearance.MouseOverBackColor = System.Drawing.Color.Black
-        Me.chkNoImg.FlatStyle = System.Windows.Forms.FlatStyle.Flat
         Me.chkNoImg.Font = New System.Drawing.Font("Consolas", 10.18868!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.chkNoImg.ForeColor = System.Drawing.Color.White
         Me.chkNoImg.Location = New System.Drawing.Point(17, 78)
@@ -100,7 +99,6 @@ Partial Class Settings
         Me.chkAlwaysUnwilling.FlatAppearance.CheckedBackColor = System.Drawing.Color.Black
         Me.chkAlwaysUnwilling.FlatAppearance.MouseDownBackColor = System.Drawing.Color.Black
         Me.chkAlwaysUnwilling.FlatAppearance.MouseOverBackColor = System.Drawing.Color.Black
-        Me.chkAlwaysUnwilling.FlatStyle = System.Windows.Forms.FlatStyle.Flat
         Me.chkAlwaysUnwilling.Font = New System.Drawing.Font("Consolas", 10.18868!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.chkAlwaysUnwilling.ForeColor = System.Drawing.Color.White
         Me.chkAlwaysUnwilling.Location = New System.Drawing.Point(16, 107)
@@ -117,7 +115,6 @@ Partial Class Settings
         Me.chkNoRNG.FlatAppearance.CheckedBackColor = System.Drawing.Color.Black
         Me.chkNoRNG.FlatAppearance.MouseDownBackColor = System.Drawing.Color.Black
         Me.chkNoRNG.FlatAppearance.MouseOverBackColor = System.Drawing.Color.Black
-        Me.chkNoRNG.FlatStyle = System.Windows.Forms.FlatStyle.Flat
         Me.chkNoRNG.Font = New System.Drawing.Font("Consolas", 10.18868!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.chkNoRNG.ForeColor = System.Drawing.Color.White
         Me.chkNoRNG.Location = New System.Drawing.Point(16, 174)
@@ -135,7 +132,6 @@ Partial Class Settings
         Me.chkOldSpellSpec.FlatAppearance.CheckedBackColor = System.Drawing.Color.Black
         Me.chkOldSpellSpec.FlatAppearance.MouseDownBackColor = System.Drawing.Color.Black
         Me.chkOldSpellSpec.FlatAppearance.MouseOverBackColor = System.Drawing.Color.Black
-        Me.chkOldSpellSpec.FlatStyle = System.Windows.Forms.FlatStyle.Flat
         Me.chkOldSpellSpec.Font = New System.Drawing.Font("Consolas", 10.18868!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.chkOldSpellSpec.ForeColor = System.Drawing.Color.White
         Me.chkOldSpellSpec.Location = New System.Drawing.Point(16, 226)
@@ -153,7 +149,6 @@ Partial Class Settings
         Me.chkStartWithBooks.FlatAppearance.CheckedBackColor = System.Drawing.Color.Black
         Me.chkStartWithBooks.FlatAppearance.MouseDownBackColor = System.Drawing.Color.Black
         Me.chkStartWithBooks.FlatAppearance.MouseOverBackColor = System.Drawing.Color.Black
-        Me.chkStartWithBooks.FlatStyle = System.Windows.Forms.FlatStyle.Flat
         Me.chkStartWithBooks.Font = New System.Drawing.Font("Consolas", 10.18868!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.chkStartWithBooks.ForeColor = System.Drawing.Color.White
         Me.chkStartWithBooks.Location = New System.Drawing.Point(17, 278)
@@ -171,7 +166,6 @@ Partial Class Settings
         Me.chkEoverSS.FlatAppearance.CheckedBackColor = System.Drawing.Color.Black
         Me.chkEoverSS.FlatAppearance.MouseDownBackColor = System.Drawing.Color.Black
         Me.chkEoverSS.FlatAppearance.MouseOverBackColor = System.Drawing.Color.Black
-        Me.chkEoverSS.FlatStyle = System.Windows.Forms.FlatStyle.Flat
         Me.chkEoverSS.Font = New System.Drawing.Font("Consolas", 10.18868!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.chkEoverSS.ForeColor = System.Drawing.Color.White
         Me.chkEoverSS.Location = New System.Drawing.Point(17, 329)
@@ -187,7 +181,6 @@ Partial Class Settings
         Me.chkTextColor.FlatAppearance.CheckedBackColor = System.Drawing.Color.Black
         Me.chkTextColor.FlatAppearance.MouseDownBackColor = System.Drawing.Color.Black
         Me.chkTextColor.FlatAppearance.MouseOverBackColor = System.Drawing.Color.Black
-        Me.chkTextColor.FlatStyle = System.Windows.Forms.FlatStyle.Flat
         Me.chkTextColor.Font = New System.Drawing.Font("Consolas", 10.18868!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.chkTextColor.ForeColor = System.Drawing.Color.White
         Me.chkTextColor.Location = New System.Drawing.Point(17, 385)
@@ -218,12 +211,11 @@ Partial Class Settings
         Me.chkBimboNames.FlatAppearance.CheckedBackColor = System.Drawing.Color.Black
         Me.chkBimboNames.FlatAppearance.MouseDownBackColor = System.Drawing.Color.Black
         Me.chkBimboNames.FlatAppearance.MouseOverBackColor = System.Drawing.Color.Black
-        Me.chkBimboNames.FlatStyle = System.Windows.Forms.FlatStyle.Flat
         Me.chkBimboNames.Font = New System.Drawing.Font("Consolas", 10.18868!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.chkBimboNames.ForeColor = System.Drawing.Color.White
         Me.chkBimboNames.Location = New System.Drawing.Point(16, 437)
         Me.chkBimboNames.Name = "chkBimboNames"
-        Me.chkBimboNames.Size = New System.Drawing.Size(224, 21)
+        Me.chkBimboNames.Size = New System.Drawing.Size(336, 28)
         Me.chkBimboNames.TabIndex = 30
         Me.chkBimboNames.Text = "Use pre-made random names"
         Me.chkBimboNames.UseVisualStyleBackColor = True
@@ -244,10 +236,10 @@ Partial Class Settings
         Me.tabSpawnRates.BackColor = System.Drawing.Color.Black
         Me.tabSpawnRates.Font = New System.Drawing.Font("Consolas", 9.0!)
         Me.tabSpawnRates.ForeColor = System.Drawing.Color.White
-        Me.tabSpawnRates.Location = New System.Drawing.Point(4, 24)
+        Me.tabSpawnRates.Location = New System.Drawing.Point(4, 32)
         Me.tabSpawnRates.Name = "tabSpawnRates"
         Me.tabSpawnRates.Padding = New System.Windows.Forms.Padding(3)
-        Me.tabSpawnRates.Size = New System.Drawing.Size(462, 397)
+        Me.tabSpawnRates.Size = New System.Drawing.Size(462, 389)
         Me.tabSpawnRates.TabIndex = 0
         Me.tabSpawnRates.Text = "Monster Spawn Rates"
         '

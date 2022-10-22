@@ -168,17 +168,17 @@ Public Class Monster
     End Function
     Shared Function floorMonsterTier(ByVal floorInd As Integer) As Integer()
         '| -- Random Enemies -- |
-        Dim tier = {mInd.mesm_thrall, mInd.slime, mInd.player_ghost, mInd.spider}
+        Dim tier = {mInd.mesm_thrall, mInd.slime, mInd.spider}
 
         Select Case floorInd
             Case 1
-                tier = {mInd.mesm_thrall, mInd.slime, mInd.player_ghost, mInd.spider}
+                tier = {mInd.mesm_thrall, mInd.slime, mInd.spider}
             Case 2
-                tier = {mInd.mesm_thrall, mInd.slime, mInd.player_ghost, mInd.enth_sorc, mInd.spider}
+                tier = {mInd.mesm_thrall, mInd.slime, mInd.enth_sorc, mInd.spider}
             Case 3
-                tier = {mInd.mesm_thrall, mInd.slime, mInd.player_ghost, mInd.enth_sorc, mInd.spider, mInd.arach_hunt}
+                tier = {mInd.mesm_thrall, mInd.slime, mInd.enth_sorc, mInd.spider, mInd.arach_hunt}
             Case 4
-                tier = {mInd.mesm_thrall, mInd.slime, mInd.player_ghost, mInd.goo_girl, mInd.enth_sorc, mInd.spider, mInd.arach_hunt, mInd.web_caster_arach}
+                tier = {mInd.mesm_thrall, mInd.slime, mInd.goo_girl, mInd.enth_sorc, mInd.spider, mInd.arach_hunt, mInd.web_caster_arach}
             Case 7
                 tier = {mInd.mesm_thrall, mInd.slime, mInd.goo_girl, mInd.enth_sorc, mInd.spider, mInd.arach_hunt, mInd.alraune, mInd.fox_fire_elem, mInd.fox_fire_elem, mInd.web_caster_arach}
             Case 7
@@ -187,11 +187,11 @@ Public Class Monster
                 tier = {}
             Case Else
                 If Int(Rnd() * 3) = 0 Then
-                    tier = {mInd.mesm_thrall, mInd.slime, mInd.player_ghost, mInd.goo_girl, mInd.spider, mInd.arach_hunt, mInd.alraune, mInd.alraune, mInd.web_caster_arach}
+                    tier = {mInd.mesm_thrall, mInd.slime, mInd.goo_girl, mInd.spider, mInd.arach_hunt, mInd.alraune, mInd.alraune, mInd.web_caster_arach}
                 ElseIf Int(Rnd() * 3) = 1 Then
-                    tier = {mInd.mesm_thrall, mInd.slime, mInd.player_ghost, mInd.goo_girl, mInd.enth_sorc, mInd.spider, mInd.fox_fire_elem, mInd.web_caster_arach, mInd.web_caster_arach}
+                    tier = {mInd.mesm_thrall, mInd.slime, mInd.goo_girl, mInd.enth_sorc, mInd.spider, mInd.fox_fire_elem, mInd.web_caster_arach, mInd.web_caster_arach}
                 Else
-                    tier = {mInd.mesm_thrall, mInd.slime, mInd.player_ghost, mInd.enth_sorc, mInd.spider, mInd.arach_hunt, mInd.alraune, mInd.fox_fire_elem, mInd.fox_fire_elem}
+                    tier = {mInd.mesm_thrall, mInd.slime, mInd.enth_sorc, mInd.spider, mInd.arach_hunt, mInd.alraune, mInd.fox_fire_elem, mInd.fox_fire_elem}
                 End If
         End Select
 
@@ -201,6 +201,10 @@ Public Class Monster
 
         If floorInd > 5 And Not mFloor.nonRandomFloors.Contains(floorInd) And Int(Rnd() * 3) = 0 Then
             DDUtils.append(tier, mInd.less_gorgon)
+        End If
+
+        If IO.File.Exists("gho.sts") And Not mFloor.nonRandomFloors.Contains(floorInd) Then
+            DDUtils.append(tier, mInd.player_ghost)
         End If
 
         '| --- Time Cops --- |

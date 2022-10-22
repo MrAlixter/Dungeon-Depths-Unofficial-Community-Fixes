@@ -6,10 +6,10 @@
     '| - LOADING THE GHOST - |
     Protected Overrides Function loadGhost() As Boolean
         'personal information
-        name = "Amber the Bimbo"
         first_name = "Amber"
         deathfloor = Game.currFloor.floorNumber - 1
         class_name = "Bimbo"
+        name = first_name & " the " & redefineClassName(class_name)
 
         'stats
         health = 1.0
