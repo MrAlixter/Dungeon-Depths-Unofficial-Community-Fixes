@@ -432,9 +432,11 @@ Public Class Game
             For Each t In currFloor.trapList
                 If t.pos = player1.pos And Not t.Equals(New Point(-1, -1)) Then
                     Try
+                        If Trap.shouldBreak(player1) Then Throw New Exception("Trap should break.")
                         t.activate()
                     Catch ex As Exception
-                        TextEvent.push("As you wander forward, your foot falls on a pressure plate.  As soon as you hear it click, you snap to attention.  Looking around, you see that nothing seems to have happened." & DDUtils.RNRN & "Something must have gone wrong with the trap's activation...")
+                        TextEvent.push("Your foot falls on an unseen pressure plate, with an audible click..." & DDUtils.RNRN &
+                                       "...but nothing happens.")
                     End Try
                     Exit For
                 End If
@@ -1947,7 +1949,10 @@ Public Class Game
                 mDun.jumpTo(mDun.lastVisitedFloor)
                 mDun.setFloor(currFloor)
             ElseIf mDun.numCurrFloor = 9 Then
-                TextEvent.push("It looks like while there was once a formidable gate covering the stairway, something has left it rather... well, destroyed.  Glancing back at the smoldering gash in the landscape, " & If(player1.inv.getCountAt("Fox_Statue") > 0, "you fail to notice the slight gleam in the eyes of the fox statue tucked away in your bag.  Even as the flames blaze on above you, you decend to the next floor with chills at the thought of what could have left such a scar...", "you head down to the next floor with chills despite the inferno raging around you..."))
+                mDun.floorDown()
+                mDun.setFloor(currFloor)
+                TextEvent.push("It looks like while there was once a formidable gate covering the stairway, something has left it rather... well, destroyed.  Glancing back at the smoldering gash in the landscape, " & If(player1.inv.getCountAt("Fox_Statue") > 0, "you fail to notice the slight gleam in the eyes of the fox statue tucked away in your bag.  Even as the flames blaze on above you, you decend to the next floor with chills at the thought of what could have left such a scar...", "you head down to the next floor with chills despite the inferno raging around you..."), AddressOf initializeBoard)
+                Exit Sub
             End If
 
             mDun.floorDown()

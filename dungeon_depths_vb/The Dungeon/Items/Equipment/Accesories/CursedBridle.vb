@@ -65,14 +65,13 @@
         End If
 
         p.revertToPState()
-
+        EquipmentDialogBackend.accessoryChange(p, "Nothing", False)
         p.inv.add(getAName, -1)
     End Sub
 
     Public Shared Sub forceUnequip(ByRef p As Player)
-        EquipmentDialogBackend.accessoryChange(p, "Nothing", False)
-
         p.revertToPState()
+        EquipmentDialogBackend.accessoryChange(p, "Nothing", False)
         p.inv.add(ITEM_NAME, -1)
 
         If Game.player1.ongoingQuests.contains("Fae Woods Q2A - Simple Instructions") Then Game.player1.ongoingQuests.getAt("Fae Woods Q2A - Simple Instructions").completeEntireQuest()

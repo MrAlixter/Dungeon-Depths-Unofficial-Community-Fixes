@@ -1,8 +1,6 @@
 ﻿Public Class FaeWoodsQ1B
     Inherits Quest
 
-    Public Shared turnOne As Integer = 0
-
     Dim passangerBool As Boolean = False
 
     Sub New()
@@ -20,7 +18,7 @@
     End Sub
 
     Public Overrides Function canGet() As Boolean
-        Return Not getActive() And Game.mDun.numCurrFloor = 13 AndAlso Game.player1.perks(perk.meetfae1) < 1 And Not Game.player1.quests(qInd.faewoods1a).getComplete() And Game.turn < turnOne + 1 And Not getComplete()
+        Return Not getActive() And Game.mDun.numCurrFloor = 13 AndAlso Game.player1.perks(perk.meetfae1) < 1 And Not Game.player1.quests(qInd.faewoods1a).getComplete() And Not getComplete()
     End Function
 
     '| - QUESTIONS - |

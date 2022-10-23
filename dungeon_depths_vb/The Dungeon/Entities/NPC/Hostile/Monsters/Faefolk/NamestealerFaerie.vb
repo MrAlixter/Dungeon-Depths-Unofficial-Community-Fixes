@@ -32,18 +32,22 @@
     End Sub
 
     Protected Overrides Function pDeathEffect(ByRef p As Player) As String
-        
-        If Transformation.canBeTFed(p) Then
+        If Transformation.canBeTFed(p) And Not p.formName.Contains("Fae") Then
+            Dim oldform = p.formName.ToString
+
             p.ongoingTFs.add(New FaerieTF())
             p.update()
 
+            Return """Oh!  How about we swap?  I'll be the " & oldform & ", and you'll be the Faerie!  That's perfect! ~♥"" " & pronoun & " exclaims, flying around you in a tight spiral of twinkly dust." & DDUtils.RNRN &
+             "The fairy cackles as her spell begins its work, the world seeming to rise up around you as you dwindle in height and " & pronoun & " grows larger and larger.  With a sparkly shimmer, her wings vanish into mist as you suddenly find yourself flitting upwards on a pair of your own." & DDUtils.RNRN &
+             """Hey, big- er, little " & If(p.sex.Equals("Male"), "guy", "gal") & ", you look way better from up here!"""
         Else
-
+            p.name = Polymorph.rndBimName(p)
+            p.UIupdate()
+            Return """Yep, this is a toughie...  Not much I can do to you at the moment any way I look at it...""" & DDUtils.RNRN &
+                   DDUtils.capitalizeFirst(pronoun) & " snaps her tiny fingers, flashing you a smug grin." & DDUtils.RNRN &
+                   """Well, not much apart from- heh, this.  A more fitting name for someone like you, no?"""
         End If
-
-        Return """Oh!  Someone big like you would make a sweet garden!  That's perfect! ~♥"" " & pronoun & " exclaims, flying around you as she sprinkles a fine mist of twinkly dust over your person." & DDUtils.RNRN &
-               "As she speaks, you find yourself shrinking" & DDUtils.RNRN &
-               """Hey, big- er, little " & If(p.sex.Equals("Male"), "guy", "gal") & ", you came out alright!  Enjoy the wings, ok?"""
     End Function
 
     Public Overrides Sub attackCMD(ByRef target As Entity)

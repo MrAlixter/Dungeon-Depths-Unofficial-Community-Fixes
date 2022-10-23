@@ -34,6 +34,7 @@
 
         If Not target.getPlayer Is Nothing AndAlso shouldCastSpell(target.getPlayer) Then
             castSpell(target.getPlayer)
+            Exit Sub
         End If
 
         attackSpell(target, "Twinkle Thorn", getWIL)
@@ -45,7 +46,7 @@
         Dim death_passage As String = "You collapse, unable to continue fighting." & DDUtils.RNRN &
                                       "Vines creep towards you, ensnaring your arms and legs and forcing your gaze upwards.  The faerie giggles and flits closer, sizing you up as " & p_pronoun & " prison of flora keeps you completely trapped on the forest floor." & DDUtils.RNRN &
                                       """Hmm...  What should I do with you?"" " & pronoun & " asks with a quizzical smirk, ""Too weak to make a good present for Her Majesty, too big to make a cute pet for me...""" & DDUtils.RNRN &
-                                      DDUtils.capitalizeFirst(pronoun) & " lands and sits on your head, thinking for a few seconds before she suddenly hops up."
+                                      DDUtils.capitalizeFirst(pronoun) & " lands and sits on your head, thinking for a few seconds before she suddenly hops up." & DDUtils.RNRN
 
         death_passage += pDeathEffect(p)
 
@@ -71,7 +72,7 @@
 
         p.drawPort()
 
-        Return """Oh!  Someone big like you would make a sweet garden!  That's perfect! ~♥"" " & pronoun & " exclaims, flying around you as she sprinkles a fine mist of twinkly dust over your person." & DDUtils.RNRN &
+        Return """Oh!  Someone big like you would make a sweet garden!  That's perfect! ~♥"" " & pronoun & " exclaims, flying around you in a tight spiral of twinkly dust." & DDUtils.RNRN &
                "Minty green leaves begin sprouting from your hair, and a small white flower blooms out from the new flora.  You reach up to touch your now-verdant locks, and the faerie bursts into another fit of giggles before drifting back into the woods." & DDUtils.RNRN &
                """Hey, big " & If(p.sex.Equals("Male"), "guy", "gal") & ", you look better already!  Don't forget to water yourself, ok?"""
     End Function

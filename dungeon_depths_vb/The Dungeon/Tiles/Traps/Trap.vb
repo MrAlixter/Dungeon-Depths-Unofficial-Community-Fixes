@@ -26,6 +26,17 @@ Public Class Trap
         iD = getRandomTrapId()
     End Sub
 
+    Public Shared Function shouldBreak(ByRef p As Player) As Boolean
+        If Not p.forcedPath Is Nothing Then
+            Return True
+        End If
+
+        If Game.currFloor.floorNumber = 13 AndAlso p.equippedAcce.getAName.Equals(CursedBridle.ITEM_NAME) Then
+            Return True
+        End If
+
+        Return False
+    End Function
     Public Shared Function getRandomTrapId(Optional ByVal floor As Integer = 1) As tInd
         If {6, 7, 8, 9, 10, 11, 12, 13}.Contains(floor) Then
             random_traps = {tInd.ruby, tInd.mirror, tInd.faeofwishes, tInd.mspores, tInd.acorn}
@@ -44,8 +55,6 @@ Public Class Trap
         Return trapFactory(i, p)
     End Function
     Shared Function trapFactory(ByVal i As Integer, ByVal p As Point)
-        If Not Game.player1.forcedPath Is Nothing Then Return New BrokenTrap(p)
-
         Select Case i
             Case tInd.rope
                 Return New RopeTrap(p)
@@ -73,6 +82,8 @@ Public Class Trap
                 Return New MesmerizingSpores(p)
             Case tInd.acorn
                 Return New AcornTrap(p)
+            Case tInd.broken
+                Return New BrokenTrap(p)
             Case Else
                 Return New DartTrap(p)
         End Select

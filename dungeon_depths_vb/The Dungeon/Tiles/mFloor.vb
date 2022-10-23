@@ -894,8 +894,6 @@ Public Class mFloor
         placeChest(floorCode)
         If floorNumber > 2 Then placeTraps()
 
-        FaeWoodsQ1B.turnOne = Game.turn
-
         placeNPCs(Game.shop_npc_list, getPossibleNPCs)
     End Sub
 

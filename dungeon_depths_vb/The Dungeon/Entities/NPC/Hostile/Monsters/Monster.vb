@@ -181,7 +181,7 @@ Public Class Monster
                 tier = {mInd.mesm_thrall, mInd.slime, mInd.goo_girl, mInd.enth_sorc, mInd.spider, mInd.arach_hunt, mInd.web_caster_arach}
             Case 7
                 tier = {mInd.mesm_thrall, mInd.slime, mInd.goo_girl, mInd.enth_sorc, mInd.spider, mInd.arach_hunt, mInd.alraune, mInd.fox_fire_elem, mInd.fox_fire_elem, mInd.web_caster_arach}
-            Case 7
+            Case 13
                 tier = {mInd.faerie, mInd.alraune}
             Case 10000, 91018
                 tier = {}

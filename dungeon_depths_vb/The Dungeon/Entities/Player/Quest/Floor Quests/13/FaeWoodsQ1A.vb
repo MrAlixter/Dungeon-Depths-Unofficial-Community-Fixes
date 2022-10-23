@@ -22,7 +22,9 @@
 
         Game.player1.perks(perk.meetfae1) = 1
 
-        Objective.showNPC(ShopNPC.npcLib.atrs(0).getAt(49), "Welcome to the Fae Woods, big " & refP & "!  People tend to end up lost here on there lonesome, but lucky for you I was passing by and just so happen to know the way.  Yep, I could be your very own fairy guide, " & title & "...", AddressOf askForName)
+        Objective.showNPC(ShopNPC.npcLib.atrs(0).getAt(49), "Welcome to the Fae Woods, big " & refP & "!" & DDUtils.RNRN &
+                                                            "People tend to end up lost here on their lonesome, but lucky for you I was passing by and just so happen to know the way." & DDUtils.RNRN &
+                                                            "Yep, I could be your very own fairy guide, " & title & "...", AddressOf askForName)
     End Sub
     Public Overrides Function canGet() As Boolean
         Return Not getActive() And Game.mDun.numCurrFloor = 13 And Game.player1.perks(perk.meetfae1) < 1 And Int(Rnd() * 2) = 0 And Not getComplete()
@@ -92,8 +94,8 @@
     End Sub
     Sub ClericTFEnd()
         Objective.showNPC(ShopNPC.npcLib.atrs(0).getAt(56), Game.player1.name & " the " & Game.player1.className & ", huh?  Nah, that doesn't sound right..." & DDUtils.RNRN &
-                        "You're way too calm and collected to be a " & Game.player1.className & ", not to mention that you don't have the figure for it!" & DDUtils.RNRN &
-                        "Clearly you're " & Game.player1.name & " the Cleric, right?", AddressOf fairyDustEnd)
+                                                            "You're way too calm and collected to be a " & Game.player1.className & ", not to mention that you don't have the figure for it!" & DDUtils.RNRN &
+                                                            "Clearly you're " & Game.player1.name & " the Cleric, right?", AddressOf fairyDustEnd)
 
         Game.player1.ongoingTFs.add(New FClericTF(2, 5, 0.25, True))
         Game.player1.perks(perk.bimbotf) = 0
@@ -101,7 +103,7 @@
     Sub RebelEnd()
         Objective.showNPC(ShopNPC.npcLib.atrs(0).getAt(51), "Woah, woah, didn't mean to pry..." & DDUtils.RNRN &
                                                             "Fine, if you don't want my help, you don't want my help.  But, " & Game.player1.name & "?  Just know, if I were going to pull something fast on you, I'd have already gotten all I needed..." & DDUtils.RNRN &
-                          "You stay safe now, you hear?", AddressOf completeEntireQuest)
+                                                            "You stay safe now, you hear?", AddressOf completeEntireQuest)
         Game.player1.perks(perk.faestaysafe) = 1
         Game.player1.perks(perk.faecurse) = 1
 
