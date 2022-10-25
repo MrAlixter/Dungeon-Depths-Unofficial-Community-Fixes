@@ -23,7 +23,7 @@
 
         '|Description|
         setDesc("A high class necktie that improves agility and speed.  While it seems ordinary enough at a glance, every once and a while it sparks suspiciously." & DDUtils.RNRN & _
-                       "Medium chance to dodge oncomming attacks" & vbCrLf &
+                       "Medium chance to dodge oncoming attacks" & vbCrLf &
                        "Increases Max MP and ATK if equipped by a Bunny Girl" & DDUtils.RNRN &
                        getStatInformation())
     End Sub
@@ -75,7 +75,7 @@
 
     Public Overrides Function getDesc() As Object
         Return "A high class necktie that improves agility and speed.  While it seems ordinary enough at a glance, every once and a while it sparks suspiciously." & DDUtils.RNRN & _
-                       "Medium chance to dodge oncomming attacks" & vbCrLf &
+                       "Medium chance to dodge oncoming attacks" & vbCrLf &
                        "Increases Max Mana and ATK if equipped by a Bunny Girl" & DDUtils.RNRN &
                        getStatInformation()
     End Function

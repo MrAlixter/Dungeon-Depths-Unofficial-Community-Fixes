@@ -190,37 +190,34 @@ Friend Class FaeWoodsQ2AS2
         spawnClearing(Game.currFloor)
     End Sub
     Private Shared Sub carriage3()
-        Objective.showNPC(ShopNPC.npcLib.atrs(0).getAt(60), "See, most of the people from your side of the treeline are pretty easy to work around.  You come in all big and trudging, giving everyone a real name, and then you wonder why you end up as someone's fountain for the rest of time." & DDUtils.RNRN &
-                                                            "However, every once and a while, we get someone craftier." & DDUtils.RNRN &
-                                                            "Some are here to see the fae queen, some are here to cause trouble, but the one thing they all have in common is that they're all carrying coin." & DDUtils.RNRN &
-                                                            "And in these woods, whoever controls the coin...", AddressOf carriage4)
-    End Sub
-    Private Shared Sub carriage4()
-        Objective.showNPC(ShopNPC.npcLib.atrs(0).getAt(62), """...controls absolutely nothing.  It's completely worthless here, but you all seem to like it a whole lot." & DDUtils.RNRN &
-                                                            "I'm thinking that with enough saved up I can snag something cool off one of you.  Maybe a ship or a boat, something like that?  I've heard a thing or two about these 'high seas', and-""" & DDUtils.RNRN &
+        Objective.showNPC(ShopNPC.npcLib.atrs(0).getAt(60), """Most of the people from your side of the treeline are surprisingly easy to work around, but every once and a while we get someone craftier." & DDUtils.RNRN &
+                                                            "Some are here to see the fae queen, some are just here to cause trouble, but all of them have a bunch of those coins you lot like so much." & DDUtils.RNRN &
+                                                            "Yeah, it's completely worthless here, but I'm thinking that with enough of 'em I can snag something cool off one of you.  Maybe a ship or a boat, something like that?  I've heard a-""" & DDUtils.RNRN &
                                                             "The fae is cut off by a rustling on the far side of the clearing, as two humans break through the underbrush.", AddressOf passenger1)
     End Sub
 
     Private Shared Sub passenger1()
         Objective.showNPC(ShopNPC.npcLib.atrs(0).getAt(114), "Leading the pair is a muscular blonde woman who immediately narrows her gaze on the two of you.  Despite not wearing much of anything, her gleaming body seems untouched by the branches and briars." & DDUtils.RNRN &
                                                              """Ah, here it is."" she says, with a sigh." & DDUtils.RNRN &
-                                                             """I am seeking safe passage out of this realm for my lady and myself.  Might you be able to help us in this regard?""" & DDUtils.RNRN &
-                                                             "The smaller of the two, a young woman in an expensive-looking purple gown, peeks out from behind with an excited smile." & DDUtils.RNRN &
-                                                             """WOAH!  We get to go on a secret carriage ride?!  You're the best, B-*mph*"" the lady exclaims before the amazon clamps a hand over her mouth and whispers something about names that your ears can't quite make out.", AddressOf passenger2)
+                                                             """I am seeking safe passage out of this realm for my lady and myself.  Might you be able to help us in this regard?""", AddressOf passenger2)
     End Sub
     Private Shared Sub passenger2()
+        Objective.showNPC(ShopNPC.npcLib.atrs(0).getAt(114), "The smaller of the two, a young woman in an expensive-looking purple gown, peeks out from behind her guard with an excited smile." & DDUtils.RNRN &
+                                                             """WOAH!  We get to go on a secret carriage ride?!  You're the best, B-*mph*"" the lady exclaims before the amazon clamps a hand over her mouth and whispers something about names that your ears can't quite make out.", AddressOf passenger3)
+    End Sub
+    Private Shared Sub passenger3()
         TextEvent.push("""Indeed I can, B, as long as you have 2000G on ya..."" the fae leans over in her seat, grinning at the pair, ""You do have the coin, right?""" & DDUtils.RNRN &
                        "Glancing back at the sign, the amazon sighs and withdraws a small pouch before tossing it to your driver.  The fae catches it with both hands and quickly rifles through it before slipping it into her sleeve." & DDUtils.RNRN &
                        """Hey, thanks!  Feel free to load up the back with any gear ya got and hop on in, ok?""" & DDUtils.RNRN &
                        "As the warrioress loads a large backpack into the carriage, the fae turns back and asks, with sickeningly sweet sincerity;" & DDUtils.RNRN &
-                       """So what does that 'B' stand for, anyways?""", AddressOf passenger3)
+                       """So what does that 'B' stand for, anyways?""", AddressOf passenger4)
     End Sub
-    Private Shared Sub passenger3()
+    Private Shared Sub passenger4()
         TextEvent.push("""Pardon?"" says the amazon, before turning aroud with an annoyed glare." & DDUtils.RNRN &
                        """Does it stand for Brenda?""" & DDUtils.RNRN &
                        "The warrioress goes back to her task, ignoring your driver." & DDUtils.RNRN &
-                       """Maybe Bethanie?  Blanche?  Perhaps..."" the fae goes on, as the other woman glowers, ""... could it be 'Bitch'?""" & DDUtils.RNRN &
-                       """Do not concern yourself with my name..."" the warrioress snarls back, ""Your requested payment has been handed over, please take us to whichever exit would fastest get us out of these damned woods.""" & DDUtils.RNRN &
+                       """Maybe Bethanie?  Blanche?  Perhaps..."" the fae goes on, as the other woman stares daggers at her, ""...'Bitch'?""" & DDUtils.RNRN &
+                       """Do not concern yourself with my name..."" the warrioress snarls back, ""Your requested payment has been handed over, so take us to whichever exit will get us out of these damned woods the fastest.  Please.""" & DDUtils.RNRN &
                        """Hey, B, no problem, I'll figure it out eventually..."" the fae turns to you, giggling at her passenger's clear agrivation, ""You ready, " & Game.player1.name & "?""")
 
         Game.player1.perks(perk.faepassangers) = 1
@@ -273,14 +270,15 @@ Friend Class FWQ2APassenger1
     Public Overrides Function isComplete() As Boolean
         If Game.player1.pos.Y < 20 And Not askedPassengers Then
             TextEvent.push("As you travel, the fae turns back to the two women resting in the carriage." & DDUtils.RNRN &
-                           """So, Bitch and co, what brings you two to the fae woods?""" & DDUtils.RNRN &
+                           """So, what brings you two to the fae woods?""" & DDUtils.RNRN &
                            """Magic!"" exclaims the young sociallite, while her companion simply glowers at the faerie." & DDUtils.RNRN &
-                           """That is not my name.""" & DDUtils.RNRN &
-                           """You know, for someone who isn't named 'Bitch' you sure seem to be responding to it a lot..."" the fae says, with a sly grin.")
+                           """Our reasons are many, and they are none of your buisness.""" & DDUtils.RNRN &
+                           """Geez, Bitch..."" the fae says, with a sly grin, ""You could stand to lighten up a little, you know?""")
             askedPassengers = True
         ElseIf Game.player1.pos.Equals(New Point(51, 14)) Then
-            Objective.showNPC(ShopNPC.npcLib.atrs(0).getAt(62), "Hey, we're here!  You lot just need to take the stairs to the right, and you'll be back in big people land or wherever it is you come from." & DDUtils.RNRN &
-                                                                "Not you though, " & Game.player1.name & ", hang tight for a sec while I see if there's anyone else looking for a ride.  I'll meet you back out in the woods!")
+            Objective.showNPC(ShopNPC.npcLib.atrs(0).getAt(62), """Hey, we're here!  You lot just need to take the stairs to the right, and you'll be back in big people land or wherever it is you come from.""" & DDUtils.RNRN &
+                                                                "The two passengers depart the carriage, and the warrioress seems a little dazed as she steps back down into the forest floor.  Patting your head, the disguised faerie goes on," & DDUtils.RNRN &
+                                                                """Ah, except for you, " & Game.player1.name & ", those stairs will... kill you.  I'm going to check quick to see if there's anyone else looking for a ride, meet me back out in the main part of the the woods whenever you're ready, ok?""")
 
             Game.currFloor.mBoard(13, 52).Text = "a"
             Game.currFloor.mBoard(15, 52).Text = "a"
@@ -349,7 +347,7 @@ Friend Class FWQ2APassenger2
 
             Game.player1.perks(perk.f13p2startturn) = Game.turn
 
-            Objective.showNPC(ShopNPC.npcLib.atrs(0).getAt(60), "Feel free to take the long way around." & DDUtils.RNRN &
+            Objective.showNPC(ShopNPC.npcLib.atrs(0).getAt(60), "Hey, try to take the long way around, ok?" & DDUtils.RNRN &
                                                                 "I'm gonna work my magic so our friend back there can get some much needed rest...")
         ElseIf Game.player1.pos.Equals(New Point(51, 14)) And Game.player1.perks(perk.faepassangers) = 2 Then
             Game.currFloor.mBoard(13, 52).Text = "a"

@@ -12,7 +12,7 @@
         attack = 5
         defense = 25
         speed = 70
-        will = 30
+        will = 25
 
         '|Inventory|
         If Int(Rnd() * 10) = 0 Then inv.add(DitzDazeWand.ITEM_NAME, 1)
@@ -30,7 +30,11 @@
     End Sub
 
     Public Overrides Sub attackCMD(ByRef target As Entity)
-        If target.getPlayer Is Nothing And target.getPlayer.formName.Contains("Fae") Then despawn("friend")
+        If Not target.getPlayer Is Nothing AndAlso target.getPlayer.formName.Contains("Fae") Then
+            despawn("friend")
+            Exit Sub
+        End If
+
 
         If Not target.getPlayer Is Nothing AndAlso shouldCastSpell(target.getPlayer) Then
             castSpell(target.getPlayer)

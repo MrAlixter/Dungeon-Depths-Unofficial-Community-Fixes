@@ -43,7 +43,9 @@
         p.prt.setIAInd(pInd.fronthair, 6, True, True)
     End Sub
     Public Overrides Sub s1TFText(ByRef p As Player)
-        TextEvent.push("You pause to rub your temples, a massive headache comming down on you like a ton of bricks.  As you take a few minutes to recover, you notice that your center of balance is off.  You hypothisize that maybe that fae you ran into might be causing these effects." & DDUtils.RNRN & "Maybe you can just walk this off...")
+        TextEvent.push("You pause to rub your temples, a massive headache overwhelming your senses.  As you take a few minutes to recover, you notice that your center of balance is also... off." & DDUtils.RNRN &
+                       "Hmm..." & DDUtils.RNRN &
+                       "You hypothesize that maybe that fae you encountered might have, like, done something to you...")
     End Sub
     Overrides Sub step1()
         Dim p As Player = Game.player1
@@ -60,9 +62,9 @@
     'Step 2
     Public Overrides Sub s2M2F(ByRef p As Player, ByRef out As String, ByRef haircolor As String)
         haircolor = "chestnut brown"
-        If Not p.prt.sexBool And p.breastSize > 0 Then
+        If Not p.prt.sexBool And p.breastSize = -1 Then
             out += "Your clothing ripples, before shifting to an entirely different outfit altogether.  As you inspect the fabric, it slips under your radar that you no longer have breasts..."
-        ElseIf p.prt.sexBool And p.breastSize > 1 Then
+        ElseIf p.prt.sexBool And p.breastSize > 0 Then
             out += "Your clothing ripples, before shifting to an entirely different outfit altogether.  As you inspect the fabric, it slips under your radar that your breasts have shrunken a bit..."
         Else
             out += "Your clothing ripples, before shifting to an entirely different outfit altogether..."

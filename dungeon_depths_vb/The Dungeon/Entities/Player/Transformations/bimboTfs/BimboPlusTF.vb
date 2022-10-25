@@ -24,7 +24,7 @@
         p.prt.setIAInd(pInd.fronthair, 6, True, True)
     End Sub
     Public Overrides Sub s1TFText(ByRef p As Player)
-        TextEvent.push("You pause to rub your temples, a massive headache comming down on you like a ton of bricks.  As you take a few minutes to recover, you notice that your center of balance is off.  You hypothisize that maybe that vial you drank might be causing these effects." & DDUtils.RNRN & "Maybe you can just walk this off...")
+        TextEvent.push("You pause to rub your temples, a massive headache coming down on you like a ton of bricks.  As you take a few minutes to recover, you notice that your center of balance is off.  You hypothesize that maybe that vial you drank might be causing these effects." & DDUtils.RNRN & "Maybe you can just walk this off...")
     End Sub
 
     'Step 2

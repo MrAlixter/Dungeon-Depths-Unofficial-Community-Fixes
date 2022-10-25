@@ -615,13 +615,13 @@
                 p.drawPort()
                 Return True
             ElseIf r > 5 Then
-                TextEvent.push("Your bowtie begins glowing, and suddenly everything seems to slow down.  You deftly sidestep the oncomming blow!  Time returns to its normal speed shortly, and your bowtie returns to its inert state.")
+                TextEvent.push("Your bowtie begins glowing, and suddenly everything seems to slow down.  You deftly sidestep the oncoming blow!  Time returns to its normal speed shortly, and your bowtie returns to its inert state.")
                 Return True
             End If
         ElseIf p.perks(perk.bunnyears) > -1 Then
             Dim r = Int(Rnd() * 10)
             If r > 4 Then
-                TextEvent.push("Your headband begins glowing, and suddenly everything seems to slow down.  You deftly sidestep the oncomming blow!  Time returns to its normal speed shortly, and your bunny ear headband returns to its inert state.")
+                TextEvent.push("Your headband begins glowing, and suddenly everything seems to slow down.  You deftly sidestep the oncoming blow!  Time returns to its normal speed shortly, and your bunny ear headband returns to its inert state.")
                 Return True
             End If
         End If

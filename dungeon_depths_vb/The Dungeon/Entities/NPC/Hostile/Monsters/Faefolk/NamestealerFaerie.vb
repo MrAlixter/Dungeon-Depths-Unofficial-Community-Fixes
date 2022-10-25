@@ -15,7 +15,7 @@
         attack = 5
         defense = 20
         speed = 60
-        will = 35
+        will = 30
 
         '|Inventory|
         Dim r As Integer = Int(Rnd() * 3)
