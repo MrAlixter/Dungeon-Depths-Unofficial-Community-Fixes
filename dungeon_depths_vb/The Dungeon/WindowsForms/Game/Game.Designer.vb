@@ -1281,6 +1281,7 @@ Partial Class Game
         Me.btnS5.Name = "btnS5"
         Me.btnS5.Size = New System.Drawing.Size(110, 167)
         Me.btnS5.TabIndex = 253
+        Me.btnS5.Tag = "5"
         Me.btnS5.UseVisualStyleBackColor = False
         '
         'btnS4
@@ -1294,6 +1295,7 @@ Partial Class Game
         Me.btnS4.Name = "btnS4"
         Me.btnS4.Size = New System.Drawing.Size(110, 167)
         Me.btnS4.TabIndex = 252
+        Me.btnS4.Tag = "4"
         Me.btnS4.UseVisualStyleBackColor = False
         '
         'btnS3
@@ -1307,6 +1309,7 @@ Partial Class Game
         Me.btnS3.Name = "btnS3"
         Me.btnS3.Size = New System.Drawing.Size(110, 167)
         Me.btnS3.TabIndex = 251
+        Me.btnS3.Tag = "3"
         Me.btnS3.UseVisualStyleBackColor = False
         '
         'btnS2
@@ -1320,6 +1323,7 @@ Partial Class Game
         Me.btnS2.Name = "btnS2"
         Me.btnS2.Size = New System.Drawing.Size(110, 167)
         Me.btnS2.TabIndex = 250
+        Me.btnS2.Tag = "2"
         Me.btnS2.UseVisualStyleBackColor = False
         '
         'btnS1
@@ -1333,6 +1337,7 @@ Partial Class Game
         Me.btnS1.Name = "btnS1"
         Me.btnS1.Size = New System.Drawing.Size(110, 167)
         Me.btnS1.TabIndex = 249
+        Me.btnS1.Tag = "1"
         Me.btnS1.UseVisualStyleBackColor = False
         '
         'pnlSaveLoad
@@ -1366,6 +1371,7 @@ Partial Class Game
         Me.btnS6.Name = "btnS6"
         Me.btnS6.Size = New System.Drawing.Size(110, 167)
         Me.btnS6.TabIndex = 257
+        Me.btnS6.Tag = "6"
         Me.btnS6.UseVisualStyleBackColor = False
         '
         'btnS7
@@ -1379,6 +1385,7 @@ Partial Class Game
         Me.btnS7.Name = "btnS7"
         Me.btnS7.Size = New System.Drawing.Size(110, 167)
         Me.btnS7.TabIndex = 258
+        Me.btnS7.Tag = "7"
         Me.btnS7.UseVisualStyleBackColor = False
         '
         'btnS8
@@ -1392,6 +1399,7 @@ Partial Class Game
         Me.btnS8.Name = "btnS8"
         Me.btnS8.Size = New System.Drawing.Size(110, 167)
         Me.btnS8.TabIndex = 259
+        Me.btnS8.Tag = "8"
         Me.btnS8.UseVisualStyleBackColor = False
         '
         'btnS10
@@ -1405,6 +1413,7 @@ Partial Class Game
         Me.btnS10.Name = "btnS10"
         Me.btnS10.Size = New System.Drawing.Size(110, 167)
         Me.btnS10.TabIndex = 261
+        Me.btnS10.Tag = "10"
         Me.btnS10.UseVisualStyleBackColor = False
         '
         'btnS9
@@ -1418,6 +1427,7 @@ Partial Class Game
         Me.btnS9.Name = "btnS9"
         Me.btnS9.Size = New System.Drawing.Size(110, 167)
         Me.btnS9.TabIndex = 260
+        Me.btnS9.Tag = "9"
         Me.btnS9.UseVisualStyleBackColor = False
         '
         'picSheep

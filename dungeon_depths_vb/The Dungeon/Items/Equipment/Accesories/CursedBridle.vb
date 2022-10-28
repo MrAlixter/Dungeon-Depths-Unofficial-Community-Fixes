@@ -28,8 +28,8 @@
 
         '|Description|
         setDesc("An elaborate set of leather straps and steel hardware used to direct farm animals.  While it seems to have been fitted for a horse, nothing would stop you from putting it on yourself if you wanted to..." & DDUtils.RNRN &
-                "Can be removed by using this item" & DDUtils.RNRN &
-                "Requires 35 mana to remove" & DDUtils.RNRN &
+                "Can be unequipped by using this item." & DDUtils.RNRN &
+                "Requires 35 mana to unequip." & DDUtils.RNRN &
                 getStatInformation())
     End Sub
 
@@ -64,15 +64,18 @@
             End If
         End If
 
+        revertTF(p)
+    End Sub
+    Public Shared Sub revertTF(ByRef p As Player)
         p.revertToPState()
         EquipmentDialogBackend.accessoryChange(p, "Nothing", False)
-        p.inv.add(getAName, -1)
+        p.inv.add(CursedBridle.ITEM_NAME, -1)
+        p.resetPerks()
     End Sub
 
+
     Public Shared Sub forceUnequip(ByRef p As Player)
-        p.revertToPState()
-        EquipmentDialogBackend.accessoryChange(p, "Nothing", False)
-        p.inv.add(ITEM_NAME, -1)
+        revertTF(p)
 
         If Game.player1.ongoingQuests.contains("Fae Woods Q2A - Simple Instructions") Then Game.player1.ongoingQuests.getAt("Fae Woods Q2A - Simple Instructions").completeEntireQuest()
 

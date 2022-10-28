@@ -1601,7 +1601,11 @@ Public Class mFloor
         out += "boardtags%"
         For y = 0 To mBoardHeight - 1
             For x = 0 To mBoardWidth - 1
-                out += mBoard(y, x).Tag & "%"   '23 + traplist.Count + statueList.Count + chestList.Count + npcPositions.Count + sessions.Count
+                out += mBoard(y, x).Tag.ToString
+                If DDConst.SAVED_CHARS.Contains(mBoard(y, x).Text) Then
+                    out += "`" & mBoard(y, x).Text
+                End If
+                out += "%"   '23 + traplist.Count + statueList.Count + chestList.Count + npcPositions.Count + sessions.Count
             Next
         Next
 
@@ -1671,7 +1675,9 @@ Public Class mFloor
         For y = 0 To mBoardHeight - 1
             For x = 0 To mBoardWidth - 1
                 Dim i = (y * mBoardWidth) + x
-                mBoard(y, x).Tag = CInt(buffer(22 + sessionLines + trapList.Count + statueList.Count + chestList.Count + npcPositions.Count + sessions.Count + i))
+                Dim tile = buffer(22 + sessionLines + trapList.Count + statueList.Count + chestList.Count + npcPositions.Count + sessions.Count + i).Split("`")
+                mBoard(y, x).Tag = CInt(tile(0))
+                If tile.Length > 1 Then mBoard(y, x).Text = tile(1)
                 If mBoard(y, x).Tag > 0 Then coveredBoardSpace += 1
             Next
         Next

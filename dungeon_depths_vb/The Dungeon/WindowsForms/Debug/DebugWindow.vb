@@ -598,7 +598,7 @@ Public Class Debug_Window
         box.ForeColor = System.Drawing.Color.White
         box.Name = p.Key & "Box"
         box.Location = New System.Drawing.Point(lbl.Location.X + lbl.Size.Width + 10, lbl.Location.Y)
-        box.Minimum = -1
+        box.Minimum = -100
         box.Maximum = 999999999
         box.Value = p.Value
         box.Size = New System.Drawing.Size(63, 26)

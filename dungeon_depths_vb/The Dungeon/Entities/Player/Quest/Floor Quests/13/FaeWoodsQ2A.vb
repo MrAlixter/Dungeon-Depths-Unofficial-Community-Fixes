@@ -67,7 +67,7 @@
         Select Case True
             Case p.Equals(New Point(48, 56))
                 If Game.player1.perks(perk.faepassangers) = 1 Then Objective.showNPC(ShopNPC.npcLib.atrs(0).getAt(115), "Your owner is quite grating on the nerves, is she not?")
-                If Game.player1.perks(perk.faepassangers) = 3 Then Objective.showNPC(ShopNPC.npcLib.atrs(0).getAt(123), "Ah, I was wondering when you would show up...", AddressOf FWQ2APassenger3.passenger1)
+                If Game.player1.perks(perk.faepassangers) = 3 And Game.currFloor.mBoard(56, 39).Text = "" Then Objective.showNPC(ShopNPC.npcLib.atrs(0).getAt(123), "Ah, by all means, take as much time you need...") Else Objective.showNPC(ShopNPC.npcLib.atrs(0).getAt(123), "Ah, I was wondering when you would show up...", AddressOf FWQ2APassenger3.passenger1)
             Case p.Equals(New Point(48, 55))
                 If Game.player1.perks(perk.faepassangers) = 1 Then Objective.showNPC(ShopNPC.npcLib.atrs(0).getAt(116), "Thank you, horsey!")
             Case p.Equals(New Point(52, 13))
@@ -76,10 +76,10 @@
                     Select Case Game.player1.perks(perk.f13p2startturn)
                         Case -5
                             Objective.showNPC(ShopNPC.npcLib.atrs(0).getAt(126), "I... um, like... what- I... you..." & DDUtils.RNRN &
-                                                                                 "Spinny... empty... hot and stuff...")
+                                                                                 "Spinny... empty... hot 'n stuff...")
                         Case -4
                             Objective.showNPC(ShopNPC.npcLib.atrs(0).getAt(125), "Hi, Pony!  Like, tell the, um, sparkle lady..." & DDUtils.RNRN &
-                                                                                 "She, um, like, woah... My head's all... fluffy...")
+                                                                                 "She, um, like, woah... I'm, uh, all... fluffy...")
                         Case -2
                             Objective.showNPC(ShopNPC.npcLib.atrs(0).getAt(124), "Sigh... Like all moments of rest, this ride ended far too soon..." & DDUtils.RNRN &
                                                                                  "Well, back to the battlefield.")
@@ -88,7 +88,6 @@
                                                                                  "Like, woah, she wasn't kidding...")
                     End Select
                 End If
-
             Case p.Equals(New Point(52, 15))
                 If Game.player1.perks(perk.faepassangers) = 1 Then Objective.showNPC(ShopNPC.npcLib.atrs(0).getAt(118), "It was a fun ride, we'll have to come back soon!")
             Case p.Equals(New Point(26, 23))
@@ -378,6 +377,8 @@ End Class
 
 Friend Class FWQ2APassenger3
     Inherits Objective
+
+    Dim askedPassengers As Boolean = False
     Dim askedPlayerOffCourse As Boolean = True
 
     Sub New()
@@ -389,69 +390,125 @@ Friend Class FWQ2APassenger3
     End Function
 
     Protected Friend Shared Sub passenger1()
-        Game.currFloor.mBoard(56, 39).Text = "a"
+        Game.player1.perks(perk.faepassangers) = 3
+        Game.currFloor.mBoard(56, 39).Text = ""
         Game.currFloor.cleanPaths()
         Game.drawBoard()
 
         Dim p_form = Game.player1.sState.pForm.name
         TextEvent.push("""Ah, sorry if I kept you waiting, we were just fin-"" the faerie says before the veiled figure interrupts." & DDUtils.RNRN &
-                       """Hush, little flower, I am talking with the transformed " & p_form & ".  I'll get to you in a bit.""" & DDUtils.RNRN &
-                       """O-oh.  I, uh, found them like that..."" your driver mumbles as the woman turns back to you." & DDUtils.RNRN &
-                       """True name magic is powerful to be sure, but there are better ways to reduce an adventurer to a mere beast of burden.  Ancient arts that warp reality itself, and that can bend even the most powerful mage to your will." & DDUtils.RNRN &
-                       "Would you, " & p_form & ", be interested in learning this sort of ability?""", AddressOf passenger1Question)
+                       """Hush, little flower, I am speaking with the transformed " & p_form & ".  I shall get to you in a bit.""" & DDUtils.RNRN &
+                       """O-oh...  I, uh, found them like that..."" your driver mumbles as the new stranger turns back to you." & DDUtils.RNRN &
+                       """" & p_form & ", would you like a bit of help?""", AddressOf passenger1Question)
     End Sub
     Private Shared Sub passenger1Question()
-        TextEvent.pushYesNo("Learn the ancient ways?", AddressOf passenger1Learn, AddressOf passenger1Decline)
+        TextEvent.pushYesNo("Would you like a bit of help?", AddressOf passenger1Help, AddressOf passenger1Decline)
     End Sub
-    Private Shared Sub passenger1Learn()
+    Private Shared Sub passenger1Help()
+        Dim p_form = Game.player1.sState.pForm.name
+        Objective.showNPC(ShopNPC.npcLib.atrs(0).getAt(57), "The faerie drops her disguise with a sudden *poof*." & DDUtils.RNRN &
+                                                            """H-hey, listen, uh, h-how about I, um, waive the-""" & DDUtils.RNRN &
+                                                            """I said hush, Hyacinth."" the woman cuts her off, ""I still am not talking to you.""" & DDUtils.RNRN &
+                                                            """Y-y-you..."" the fae, Hyacinth, stammers, as the other figure slowly raises a hand; fingers pressed together.", AddressOf passenger1Help2)
+    End Sub
+    Private Shared Sub passenger1Help2()
+        Objective.showNPC(ShopNPC.npcLib.atrs(0).getAt(58), """W-w-what i-if...""" & DDUtils.RNRN &
+                                                            "With a sigh, the yellow stranger snaps her fingers and Hyacinth collapses into a pile of fabric.  In an instant, the faerie has been turned into an outfit of clothing!" & DDUtils.RNRN &
+                                                            """There.  Much better.""", AddressOf passenger1Help3)
+    End Sub
+    Private Shared Sub passenger1Help3()
+        If Game.player1.equippedAcce.getAName.Equals(CursedBridle.ITEM_NAME) Then CursedBridle.forceUnequip(Game.player1)
 
+        Game.player1.pos = New Point(52, 14)
+        Game.drawBoard()
+
+        Game.currFloor.mBoard(56, 48).Text = ""
+
+        Game.player1.drawPort()
+
+        TextEvent.push("You find yourself able to spit out the bridle, and as you do it turns to ash.  Your form ripples back to that of a " & Game.player1.formName & ", and you are finally able to meet the gaze of the veiled figure as she rests her face on a gloved hand." & DDUtils.RNRN &
+                       """Tch, I had been hoping for that carriage ride though..."" she says, seemingly eyeing you from behind her veil." & DDUtils.RNRN &
+                       """Oh well, no one to blame but myself.  Prepare yourself, this will be more expedient either way.""" & DDUtils.RNRN &
+                       "With the wave of the woman's hand, the forest warps around you both until you find yourself at a familiar staircase." & DDUtils.RNRN &
+                       """Ah, and as a reminder, so that we are clear...""", AddressOf passenger1HelpFinal)
+    End Sub
+    Private Shared Sub passenger1HelpFinal()
+        Objective.showNPC(ShopNPC.npcLib.atrs(0).getAt(123), """You owe me a favor now...""" & DDUtils.RNRN &
+                                                             "+3000 " & Gold.ITEM_NAME & vbCrLf &
+                                                             "+1 " & FaerieWitchRobes.ITEM_NAME.Replace("_", " "))
+        TextEvent.pushLog("+3000 " & Gold.ITEM_NAME)
+        TextEvent.pushLog("+1 " & FaerieWitchRobes.ITEM_NAME.Replace("_", " "))
+
+        Game.player1.inv.add(Gold.ITEM_NAME, 3000)
+        Game.player1.inv.add(FaerieWitchRobes.ITEM_NAME, 1)
+
+        Game.player1.perks(perk.faepassangers) = -1
+        Game.player1.perks(perk.yellowonefavor) = 1
+
+        Game.player1.ongoingQuests.getAt("Fae Woods Q2A - Simple Instructions").completeEntireQuest()
     End Sub
     Private Shared Sub passenger1Decline()
-        Objective.showNPC(ShopNPC.npcLib.atrs(0).getAt(123), """Disappointing...  If that is your choice though, then so be it.""" & DDUtils.RNRN &
-                                                             "The veiled lady lets out a deep sigh, before addressing your driver, ""Well, little flower, I suppose I could go for a ride.  Your cart could use a little work though...""" & DDUtils.RNRN &
+        Objective.showNPC(ShopNPC.npcLib.atrs(0).getAt(123), """Hmm, fair enough.  Very well then, I suppose I could go for a ride.. .""" & DDUtils.RNRN &
+                                                             "The veiled lady assesses the carriage for a moment, before addressing your driver, ""Your cart could use a little work though.""" & DDUtils.RNRN &
                                                              "She snaps her fingers, and the plain wooden carriage twists into an ornately decorated stagecoach.  As the golden stranger takes a seat on a luxurious cushion that wasn't there a second ago, the fae gawks back." & DDUtils.RNRN &
-                                                             """U-uh, y-yeah, no problem.  H-hey, do you think that maybe I could learn some of those ancient ways?   Since, uh, " & Game.player1.name & " doesn't want to?""", AddressOf passenger1Decline2)
-    End Sub
-    Private Shared Sub passenger1Decline2()
-        Dim tfForm = If(Game.player1.formName.Equals("Horse"), "Unicorn", "Horse")
-        TextEvent.push("The veiled lady pauses for but a second, before laughing melodically.  ""Sure, why not?  You could prove to be an interesting replacement if our friend here is content to remain unenlightened...""" & DDUtils.RNRN &
-                       "You can feel your body shift slightly, and while you have yet to feel the telltale tingle of a polymorph spell at work, you seem to have been turned into a " & tfForm & "!" & DDUtils.RNRN &
-                       """Reality can be such a... fickle thing.  By pouring mana into a spell, one can convince reality to allow supernatural effects to take place.  Mana, however, is not the only force that can twist and transform.  This spell, 'Transfigure the Body' works on another of these forces." & DDUtils.RNRN &
-                       "Now, a clever little faerie like you should be able to figure out how it works before we reach out destination, right?  Especially after seeing it cast in person, right?" & DDUtils.RNRN &
-                       "Hmm, if I'm not to gain a new student, I suppose I could use a new cow...  Understand?""")
-        Game.player1.changeForm(tfForm)
-        Game.player1.drawPort()
+                                                             """U-uh, y-yeah, no problem.""")
     End Sub
     Protected Friend Shared Sub passenger2()
-        Game.currFloor.mBoard(56, 48).Text = "a"
+        Game.currFloor.mBoard(56, 48).Text = ""
         Game.currFloor.cleanPaths()
         Game.drawBoard()
 
-        TextEvent.push("")
+        TextEvent.push("...")
+    End Sub
+
+    Protected Friend Shared Sub questRewards1()
+        If Game.player1.equippedAcce.getAName.Equals(CursedBridle.ITEM_NAME) Then CursedBridle.forceUnequip(Game.player1)
+
+        TextEvent.push("Quest Completed!" & DDUtils.RNRN &
+                       "+1500 XP" & vbCrLf &
+                       "+1500 " & Gold.ITEM_NAME & vbCrLf &
+                       "+1 " & Hyacinth.ITEM_NAME)
+
+        Game.player1.addXP(1500)
+
+        TextEvent.pushLog("+1500 " & Gold.ITEM_NAME)
+        Game.player1.inv.add(Gold.ITEM_NAME, 1500)
+
+        TextEvent.pushLog("+1 " & Hyacinth.ITEM_NAME)
+        Game.player1.inv.add(Hyacinth.ITEM_NAME, 1)
+
+        Game.player1.perks(perk.faepassangers) = -1
+
+        Game.player1.ongoingQuests.getAt("Fae Woods Q2A - Simple Instructions").completeEntireQuest()
+        Game.player1.drawPort()
     End Sub
 
     Public Overrides Function isComplete() As Boolean
-
-        If Game.player1.pos.Equals(New Point(51, 14)) And Game.player1.perks(perk.faepassangers) = 2 And Game.currFloor.mBoard(13, 52).Text = "a" Then
+        If Game.player1.pos.Y < 20 And Not askedPassengers Then
+            TextEvent.push("As you travel, the fae turns back to the veiled passenger." & DDUtils.RNRN &
+                           """S-so, what brings y-you to the woods?""" & DDUtils.RNRN &
+                           """Magic..."" the yellow woman replies, with a tiny laugh, ""Why, would you like to become a part of my affairs?""" & DDUtils.RNRN &
+                           """NOPE!  A-ah, t-thanks for the offer, but, uh, I'll have to pass.""" & DDUtils.RNRN &
+                           "The woman giggles, covering her mouth with one hand, ""Oh, but we could have so much fun together...""")
+            askedPassengers = True
+        ElseIf Game.player1.pos.Equals(New Point(51, 14)) And Game.player1.perks(perk.faepassangers) = 2 And Game.currFloor.mBoard(13, 52).Text = "a" Then
             Game.currFloor.mBoard(13, 52).Text = ""
             Game.currFloor.mBoard(15, 52).Text = ""
 
-            Game.currFloor.mBoard(56, 38).Tag = 2
-            Game.currFloor.mBoard(56, 39).Tag = 2
+            'Game.currFloor.mBoard(56, 38).Tag = 2
+            'Game.currFloor.mBoard(56, 39).Tag = 2
 
-            Game.currFloor.mBoard(56, 39).Text = "a"
+            'Game.currFloor.mBoard(56, 39).Text = "a"
             Game.currFloor.mBoard(56, 48).Text = "a"
 
-            Game.player1.perks(perk.faepassangers) = 3
+            'Dim path = Game.currFloor.route(Game.player1.pos, New Point(39, 56))
 
-            Dim path = Game.currFloor.route(Game.player1.pos, New Point(39, 56))
+            'For i = 0 To UBound(path) Step 3
+            '    Game.currFloor.mBoard(path(i).Y, path(i).X).Tag = 2
+            '    If Game.currFloor.mBoard(path(i).Y, path(i).X).Text = "" Then Game.currFloor.mBoard(path(i).Y, path(i).X).Text = "x"
+            'Next
 
-            For i = 0 To UBound(path) Step 3
-                Game.currFloor.mBoard(path(i).Y, path(i).X).Tag = 2
-                If Game.currFloor.mBoard(path(i).Y, path(i).X).Text = "" Then Game.currFloor.mBoard(path(i).Y, path(i).X).Text = "x"
-            Next
-
-            Dim path2 = Game.currFloor.route(New Point(37, 46), New Point(48, 56))
+            Dim path2 = Game.currFloor.route(Game.player1.pos, New Point(48, 56))
 
             For i = 0 To UBound(path2) Step 3
                 Game.currFloor.mBoard(path2(i).Y, path2(i).X).Tag = 2
@@ -460,11 +517,38 @@ Friend Class FWQ2APassenger3
 
             Game.drawBoard()
 
-            Objective.showNPC(ShopNPC.npcLib.atrs(0).getAt(60), "Huh, we had another passenger lined up, but it looks like someone also is waiting at the signpost..." & DDUtils.RNRN &
-                                                                "Tell ya what, " & Game.player1.name & ", I think we've made a decent haul for now, why don't you choose which one we'll pick up?" & DDUtils.RNRN &
-                                                                "After that, I'll turn you back and we'll divy up, ok?")
+            Objective.showNPC(ShopNPC.npcLib.atrs(0).getAt(60), "Huh, we had another passenger lined up, but it looks like someone is snooping around at the signpost.  Hmm, this might be drawing more attention then I'd hoped..." & DDUtils.RNRN &
+                                                                "Tell ya what, " & Game.player1.name & ", I think we've made a decent haul for now.  Let's make this the last one, yeah?" & DDUtils.RNRN &
+                                                                "After that, I'll turn you back and we'll divy up.")
+            '"Tell ya what, " & Game.player1.name & ", I think we've made a decent haul for now, why don't you choose which one we'll pick up?" & DDUtils.RNRN &
+        ElseIf Game.player1.pos.Equals(New Point(46, 54)) And Game.player1.perks(perk.faepassangers) = 3 Then
+            Objective.showNPC(ShopNPC.npcLib.atrs(0).getAt(60), "A-alright, " & Game.player1.name & "... let's, ah, wrap this up...")
+
+            FaeQueen.spawnStairs(Game.currFloor)
+
+            Dim path = Game.currFloor.route(Game.player1.pos, Game.currFloor.stairs)
+
+            For i = 0 To UBound(path) Step 3
+                Game.currFloor.mBoard(path(i).Y, path(i).X).Tag = 2
+                If Game.currFloor.mBoard(path(i).Y, path(i).X).Text = "" Then Game.currFloor.mBoard(path(i).Y, path(i).X).Text = "x"
+            Next
+
+            Game.currFloor.mBoard(56, 48).Text = ""
+
+            Game.drawBoard()
+        ElseIf Game.player1.pos.Equals(New Point(51, 14)) And Game.player1.perks(perk.faepassangers) = 3 And Game.currFloor.mBoard(56, 48).Text = "" Then
+            TextEvent.push("As you arrive at the staircase, the faerie yanks back on your reins.  You slow down and stop, and she hops down to help the yellow woman out of the carriage." & DDUtils.RNRN &
+                           """Thank you for the ride, little flower.  I hope you will find your payment to be... satisfactory."" the woman says, handing over a small velvet pouch." & DDUtils.RNRN &
+                           """O-oh, you don't need to-""" & DDUtils.RNRN &
+                           """Ah, but I insist.""" & DDUtils.RNRN &
+                           "The fae thanks the stranger, who vanishes into the aether after a brief farewell.  Turning back to you, the faerie slips open the pouch and counts a few coins from within.", AddressOf postQuest)
+            Return True
         End If
 
         Return False
     End Function
+
+    Protected Friend Shared Sub postQuest()
+        Objective.showNPC(ShopNPC.npcLib.atrs(0).getAt(60), """Alright, let's get that bridle off of ya.  Your cut comes out to...""", AddressOf questRewards1)
+    End Sub
 End Class

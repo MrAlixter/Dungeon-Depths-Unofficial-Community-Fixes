@@ -44,6 +44,17 @@
         count -= 1
     End Sub
 
+    Sub textlessApply(ByRef p As Player)
+        setEffectList()
+
+        For Each effect In effectList
+            effect.apply(p)
+        Next
+        pushLblEventEffects(effectList)
+
+        effectList.Clear()
+    End Sub
+
     Sub mimicThrow(ByRef p As Player)
         If Not hasBeenUsed Then reveal()
         If Me.getUsable() = False Then Exit Sub

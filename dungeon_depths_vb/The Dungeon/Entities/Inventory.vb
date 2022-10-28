@@ -400,6 +400,7 @@
         internal_inventory.Add(FaerieBlossom.ITEM_NAME, New FaerieBlossom)           '374
         internal_inventory.Add(IronCollar.ITEM_NAME, New IronCollar)                 '375
         internal_inventory.Add(FaeQueensCrown.ITEM_NAME, New FaeQueensCrown)         '376
+        internal_inventory.Add(Hyacinth.ITEM_NAME, New Hyacinth)                     '377
 
         armor = {New Naked,
                  Me.item(5), Me.item(7), Me.item(8), Me.item(10),
@@ -449,7 +450,7 @@
                    Me.item(326), Me.item(339), Me.item(348), Me.item(351),
                    Me.item(353), Me.item(362), Me.item(365), Me.item(366),
                    Me.item(367), Me.item(368), Me.item(369), Me.item(370),
-                   Me.item(372)}
+                   Me.item(372), Me.item(377)}
 
         useable = {Me.item(0), Me.item(3), Me.item(4), Me.item(65),
                    Me.item(15), Me.item(36), Me.item(37), Me.item(48),

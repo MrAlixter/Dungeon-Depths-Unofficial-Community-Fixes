@@ -2158,7 +2158,7 @@ Public Class Game
     '| -- Wait -- |
     Sub waitKey()
         closeLblEvent()
-
+        MsgBox(player1.pos.ToString & "-" & currFloor.mBoard(player1.pos.Y, player1.pos.X).Text)
         Dim m As NPC = getCombatTarget(player1)
         player1.setTarget(m)
 
@@ -2602,7 +2602,7 @@ Public Class Game
         Dim btn As Button = CType(sender, Button)
         Dim name As String = btn.Name
 
-        Dim fileNum As String = name(name.Length - 1)
+        Dim fileNum As String = btn.Tag
         Dim mouseEvent As MouseEventArgs = TryCast(e, MouseEventArgs)
 
         If mouseEvent IsNot Nothing AndAlso mouseEvent.Button = MouseButtons.Left Then

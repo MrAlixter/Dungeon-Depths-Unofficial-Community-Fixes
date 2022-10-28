@@ -98,6 +98,7 @@
     dragonboobs     '96
     metfantoma      '97
     vofmanynames    '98
+    yellowonefavor  '99
 End Enum
 Public Class Player
     'Player is the representation of a player controlled entity (the main player, any teammates)
