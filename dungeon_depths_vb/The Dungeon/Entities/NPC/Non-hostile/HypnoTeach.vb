@@ -153,7 +153,7 @@
 
     '| - DIALOG - |
     Protected Overrides Function normalDialog(ByRef p As Player)
-        If Int(Rnd() * 20) = 0 And Game.currFloor.floorNumber <> 7 Then
+        If Int(Rnd() * 20) <> 0 And Game.currFloor.floorNumber <> 7 Then
             discount = 0.25
             img_index = LocalImgInd.alt4
             Return "Like, hey!  I, like, totally just got back from negot...nagosh... um, trying to work out a deal with that wizard guy, and it like, didn't go too well..." & DDUtils.RNRN &

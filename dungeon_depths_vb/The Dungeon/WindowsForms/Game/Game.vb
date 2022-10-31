@@ -1841,32 +1841,37 @@ Public Class Game
         If Keydata = Keys.Escape Then Return False
         If picStart.Visible = True Then Return True
         If btnS.Visible Then Return True
+
         If combat_engaged And (Keydata.Equals(cKeys(0)) Or Keydata.Equals(cKeys(1)) Or Keydata.Equals(cKeys(2)) Or Keydata.Equals(cKeys(3)) Or Keydata.Equals(Keys.Left) Or Keydata.Equals(Keys.Right) Or Keydata.Equals(Keys.Down) Or Keydata.Equals(Keys.Up)) And Not selecting Then
             Return True
         ElseIf combat_engaged Then
             Return False
         End If
+
         If tmrKeyCD.Enabled Then Return True Else tmrKeyCD.Enabled = True
         If (lblEvent.Visible Or pnlEvent.Visible) And shop_npc_engaged = True And Not Keydata.Equals(cKeys(13)) Then
             If Not TextEvent.lblEventOnClose Is Nothing Then
                 doLblEventOnClose()
-            Else
-                closeLblEvent()
             End If
             Return True
         End If
+
         If (lblEvent.Visible Or pnlEvent.Visible) And shop_npc_engaged = True And Keydata.Equals(cKeys(13)) Then
             Return False
         End If
+
         If pnlDescription.Visible And Not lblEvent.Visible Then
             pnlDescription.Visible = False
 
             Return True
         End If
+
         If (lblEvent.Visible Or pnlEvent.Visible) And Not (Keydata.Equals(Keys.Enter)) And Not Keydata.Equals(cKeys(0)) And Not Keydata.Equals(cKeys(1)) And Not Keydata.Equals(cKeys(2)) And Not Keydata.Equals(cKeys(3)) _
             And Not Keydata.Equals(Keys.Left) And Not Keydata.Equals(Keys.Right) And Not Keydata.Equals(Keys.Down) And Not Keydata.Equals(Keys.Up) Then
-            If shop_npc_engaged = False Then
+
+            If Not shop_npc_engaged Then
                 closeLblEvent()
+
                 player1.canMoveFlag = True
                 If Not combat_engaged Then
                     player1.canMoveFlag = True
@@ -1875,8 +1880,10 @@ Public Class Game
 
                 doLblEventOnClose()
                 drawBoard()
+
                 If btnEQP.Enabled = False Then btnEQP.Enabled = True
             End If
+
             Return True
         End If
         If (lblEvent.Visible Or pnlEvent.Visible) And (Keydata.Equals(cKeys(0)) Or Keydata.Equals(cKeys(1)) Or Keydata.Equals(cKeys(2)) Or Keydata.Equals(cKeys(3)) _
