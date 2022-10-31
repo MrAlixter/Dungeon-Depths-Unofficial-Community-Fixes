@@ -1,4 +1,4 @@
-﻿Public Enum sNPCInd
+﻿Public Enum ShopNPCInd
     shopkeeper
     shadywizard
     hypnoteach
@@ -9,7 +9,6 @@
     timetraveler
     faequeen
 End Enum
-
 
 '| -- Constructor Layout Example -- |
 '|ID Info|
@@ -26,92 +25,103 @@ End Enum
 
 '|Images|
 
-
-
 Public MustInherit Class ShopNPC
     Inherits NPC
-    Public npc_index As sNPCInd
-    Public firstCTurn As Boolean = True
-    Public isShop = False
-    Public picNormal, picPrincess, picBunny, picArachne As Image
-    Public picNPC As List(Of Image)
-    Protected discount As Double = 0
-    Public Shared npcLib As ImageCollection = New ImageCollection(2)
+
+    Protected Enum LocalImgInd
+        normal
+        frog
+        bunny
+        princess
+        sheep
+        doll
+        arachne
+        alt1
+        alt2
+        alt3
+        alt4
+        alt5
+        alt6
+        alt7
+        alt8
+        catgirl
+        trilobite
+        beegirl
+    End Enum
+
+    '| -- Identification Vars -- |
+    Public npc_index As ShopNPCInd
+
+    '| -- Combat Vars -- |
+    Protected firstCTurn As Boolean = True
+
+    '| -- NPC Flags -- |
+    Public isShop As Boolean = False
+    Public discount As Double = 0
+
+    '| -- Image Vars -- |
+    Protected local_img As Dictionary(Of LocalImgInd, Image)
+    Public Shared gbl_img As ImageCollection = New ImageCollection(2)
 
     Sub New()
-        health = 1.0
+        '|-- Inventory -- |
         inv = New Inventory(False)
+
+        '| -- Stats -- |
+        health = 1.0
+
+        '| -- Dialog Handles -- |
         title = " The "
     End Sub
 
-    Shared Function shopFactory(ByVal nIndex As Integer)
-        Select Case nIndex
-            Case sNPCInd.shadywizard
-                Return New ShadyWizard
-            Case sNPCInd.hypnoteach
-                Return New HypnoTeach
-            Case sNPCInd.foodvendor
-                Return New FVendor
-            Case sNPCInd.weaponsmith
-                Return New WSmith
-            Case sNPCInd.cursebroker
-                Return New CBrok
-            Case sNPCInd.maskmaggirl
-                Return New MaskedMG
-            Case sNPCInd.timetraveler
-                Return New TimeTraveler
-            Case sNPCInd.faequeen
-                Return New FaeQueen
-            Case Else
-                Return New Shopkeeper
-        End Select
-    End Function
-
     Public Overrides Sub update()
+        '| -- Genral/Clean Up -- |
         If isDead = True Then Exit Sub
-        If firstTurn = True Then
-            firstTurn = False
+
+        If img_index = LocalImgInd.frog Or img_index = LocalImgInd.sheep Then
+            despawn("flee")
             Exit Sub
         End If
+
+        If local_img.ContainsKey(img_index) Then
+            Game.picNPC.BackgroundImage = local_img(img_index)
+        Else
+            Game.picNPC.BackgroundImage = local_img(LocalImgInd.normal)
+        End If
+
+        If Game.combat_engaged Then attackCMD(Game.player1)
+
+        '| -- First Turn -- |
+        If firstTurn = True Then
+            firstTurn = False
+        End If
+
+        If Game.combat_engaged And firstCTurn = True Then
+            firstCTurn = False
+        End If
+
+        '| -- Polymorph Handling -- |
         If tfCt > 0 Then
             tfCt += 1
         ElseIf tfCt > tfEnd Then
             tfCt = 0
             revert()
         End If
-        If Game.combat_engaged And firstCTurn = True Then
-            firstCTurn = False
-            Exit Sub
-        End If
-        If img_index = 1 Or img_index = 2 Then despawn("flee")
-        Game.picNPC.BackgroundImage = picNPC(img_index)
-        If Game.combat_engaged Then attackCMD(Game.player1)
     End Sub
-    Public Overridable Sub encounter()
-        pos = Game.player1.pos
-        If isDead = True Then
-            TextEvent.push("This NPC is dead.")
-            Exit Sub
-        End If
-        setGold(9999)
-
-        Game.player1.currTarget = Me
-        Game.active_shop_npc = Me
-
-        If Game.mDun.floorboss.ContainsKey(Game.mDun.numCurrFloor) AndAlso
-            Game.mDun.floorboss(Game.mDun.numCurrFloor).Equals("Key") Then inv.setCount(53, 1) Else inv.setCount(53, 0)
-
-        If img_index < picNPC.Count Then Game.picNPC.BackgroundImage = picNPC(img_index)
-        firstCTurn = True
-        firstTurn = True
+    Public Sub drawPort()
+        If local_img.ContainsKey(img_index) Then Game.picNPC.BackgroundImage = local_img(img_index) Else Game.picNPC.BackgroundImage = local_img(LocalImgInd.normal)
     End Sub
 
     Public Overridable Function getShopInv() As Inventory
         Dim tInv As Inventory = New Inventory(False)
-        tInv.mergeRevalue(inv)
-        If Game.mDun.floorboss.ContainsKey(Game.mDun.numCurrFloor) AndAlso
-            Game.mDun.floorboss(Game.mDun.numCurrFloor).Equals("Key") Then tInv.setCount(53, 1) Else tInv.setCount(53, 0)
 
+        tInv.mergeRevalue(inv)
+
+        If Game.mDun.floorboss.ContainsKey(Game.mDun.numCurrFloor) AndAlso Game.mDun.floorboss(Game.mDun.numCurrFloor).Equals("Key") Then
+            tInv.setCount(53, 1)
+        Else
+            tInv.setCount(53, 0)
+        End If
 
         For i = 0 To tInv.upperBound()
             Dim n = tInv.item(i).value
@@ -120,82 +130,149 @@ Public MustInherit Class ShopNPC
 
         Return tInv
     End Function
-    Public Function getDiscount() As Double
-        Return discount
+
+    Public Overrides Sub despawn(reason As String)
+        MyBase.despawn(reason)
+
+        Dim ratio As Double = Game.Size.Width / 1024
+        Game.picNPC.Location = New Point(82 * ratio, 179 * ratio)
+        Game.btnTalk.Visible = False
+        Game.btnNPCMG.Visible = False
+        Game.cboxNPCMG.Visible = False
+        Game.btnShop.Visible = False
+        Game.btnFight.Visible = False
+        Game.btnLeave.Visible = False
+
+        'reset the npc image index
+        If img_index > 4 And Not Game.picNPC.BackgroundImage.Equals(ShopNPC.gbl_img.atrs(0).getAt(9)) And Not img_index = LocalImgInd.arachne And Not img_index = LocalImgInd.catgirl Then img_index = LocalImgInd.normal
+    End Sub
+
+    Public Overridable Sub encounter()
+        '| -- Genral/Clean Up -- |
+        If isDead = True Then
+            TextEvent.push("This NPC is dead.")
+            Exit Sub
+        End If
+        Dim p As Player = Game.player1
+
+        '| -- NPC Reset -- |
+        pos = p.pos
+        p.currTarget = Me
+        Game.active_shop_npc = Me
+        discount = 0
+        setGold(9999)
+        firstCTurn = True
+        firstTurn = True
+
+        '| -- Inventory Update -- |
+        If Game.mDun.floorboss.ContainsKey(Game.mDun.numCurrFloor) AndAlso Game.mDun.floorboss(Game.mDun.numCurrFloor).Equals("Key") Then
+            inv.setCount(53, 1)
+        Else
+            inv.setCount(53, 0)
+        End If
+        If img_index = LocalImgInd.arachne And Not p.formName.Equals("Arachne") Then
+            inv.setCount(244, 1)
+        Else
+            inv.setCount(244, 0)
+        End If
+
+        inventoryUpdate()
+
+        '| -- Dialog -- |
+        Dim dialog = ""
+        Select Case img_index
+            Case LocalImgInd.frog
+                dialog = frogDialog(p)
+            Case LocalImgInd.bunny
+                dialog = bunnyDialog(p)
+            Case LocalImgInd.princess
+                dialog = princessDialog(p)
+            Case LocalImgInd.sheep
+                dialog = sheepDialog(p)
+            Case LocalImgInd.doll
+                dialog = dollDialog(p)
+            Case LocalImgInd.arachne
+                dialog = arachneDialog(p)
+            Case LocalImgInd.catgirl
+                dialog = catgirlDialog(p)
+            Case LocalImgInd.trilobite
+                dialog = trilobiteDialog(p)
+            Case LocalImgInd.beegirl
+                dialog = beegirlDialog(p)
+            Case Else
+                dialog = normalDialog(p)
+        End Select
+
+        If Not dialog.Equals("") Then TextEvent.pushNPCDialog(dialog)
+
+        '| -- Image Setting -- |
+        drawPort()
+    End Sub
+    Public Overridable Sub inventoryUpdate()
+    End Sub
+
+    Public Overridable Function toFight() As String
+        Dim p As Player = Game.player1
+
+        Select Case img_index
+            Case LocalImgInd.frog
+                Return frogFightDialog(p)
+            Case LocalImgInd.bunny
+                Return bunnyFightDialog(p)
+            Case LocalImgInd.princess
+                Return princessFightDialog(p)
+            Case LocalImgInd.sheep
+                Return sheepFightDialog(p)
+            Case LocalImgInd.doll
+                Return dollFightDialog(p)
+            Case LocalImgInd.arachne
+                Return arachneFightDialog(p)
+            Case LocalImgInd.catgirl
+                Return catgirlFightDialog(p)
+            Case LocalImgInd.trilobite
+                Return trilobiteDialog(p)
+            Case LocalImgInd.beegirl
+                Return beegirlFightDialog(p)
+            Case Else
+                Return normalFightDialog(p)
+        End Select
     End Function
 
-    Public MustOverride Function toFight() As String
-    Public MustOverride Function hitBySpell() As String
+    Public Overridable Function hitBySpell() As String
+        Dim p As Player = Game.player1
 
-    Overridable Sub toBunny()
-        MyBase.health = 1.0
-        MyBase.tfEnd = 15
+        Select Case img_index
+            Case LocalImgInd.frog
+                Game.toCombat(Me)
+                Return frogSpellDialog(p)
+            Case LocalImgInd.bunny
+                Return bunnySpellDialog(p)
+            Case LocalImgInd.princess
+                Game.toCombat(Me)
+                Return princessSpellDialog(p)
+            Case LocalImgInd.sheep
+                Game.toCombat(Me)
+                Return sheepSpellDialog(p)
+            Case LocalImgInd.doll
+                Return dollSpellDialog(p)
+            Case LocalImgInd.arachne
+                Game.toCombat(Me)
+                Return arachneSpellDialog(p)
+            Case LocalImgInd.catgirl
+                Game.toCombat(Me)
+                Return catgirlSpellDialog(p)
+            Case LocalImgInd.trilobite
+                Return trilobiteDialog(p)
+            Case LocalImgInd.beegirl
+                Game.toCombat(Me)
+                Return beegirlSpellDialog(p)
+            Case Else
+                Game.toCombat(Me)
+                Return normalSpellDialog(p)
+        End Select
+    End Function
 
-        MyBase.img_index = 4
-
-        toFemale("bunny")
-        MyBase.form = "Bunny Girl"
-
-        Game.NPCfromCombat(Me)
-
-        Game.picNPC.BackgroundImage = picNPC(img_index)
-    End Sub
-    Overridable Sub toPrincess()
-        MyBase.health = 1.0
-        MyBase.tfEnd = 15
-
-        MyBase.img_index = 3
-        toFemale("prin")
-
-        Game.picNPC.BackgroundImage = picNPC(img_index)
-    End Sub
-    Overridable Sub toCatgirl()
-        MyBase.health = 1.0
-        MyBase.tfEnd = 15
-
-        MyBase.img_index = getCatGirlImageInd()
-        toFemale("catg")
-
-        Game.picNPC.BackgroundImage = picNPC(img_index)
-    End Sub
-    Overridable Sub toSheep()
-        MyBase.health = 1.0
-
-        MyBase.img_index = 2
-
-        Game.picNPC.BackgroundImage = picNPC(img_index)
-    End Sub
-    Overridable Sub toFrog()
-        MyBase.health = 1.0
-
-        MyBase.img_index = 1
-
-        Game.picNPC.BackgroundImage = picNPC(img_index)
-    End Sub
-    Overridable Sub toTrilobite()
-        MyBase.health = 1.0
-
-        MyBase.img_index = getTrilobiteImageInd()
-
-        Game.picNPC.BackgroundImage = picNPC(img_index)
-    End Sub
-    Overridable Sub toArachne()
-        MyBase.health = 1.0
-        MyBase.tfCt = 1
-        MyBase.tfEnd = 9999999
-
-        img_index = getArachneImageInd()
-
-        toFemale("arachne")
-        MyBase.form = "Arachne"
-        Game.picNPC.BackgroundImage = picArachne
-    End Sub
-    Public Overridable Sub toDoll()
-        TextEvent.pushNPCDialog("...")
-        Game.picNPC.BackgroundImage = picNPC(5)
-
-        discount = 0.5
-    End Sub
+    '| - TRANSFORMATIONS - |
     Public Overridable Sub toFemale(ByVal form As String)
         pronoun = "she"
         p_pronoun = "her"
@@ -207,31 +284,171 @@ Public MustInherit Class ShopNPC
         r_pronoun = "him"
     End Sub
 
-    Public Overrides Sub despawn(reason As String)
-        MyBase.despawn(reason)
-        Dim ratio As Double = Game.Size.Width / 1024
-        Game.picNPC.Location = New Point(82 * ratio, 179 * ratio)
-        Game.btnTalk.Visible = False
-        Game.btnNPCMG.Visible = False
-        Game.cboxNPCMG.Visible = False
-        Game.btnShop.Visible = False
-        Game.btnFight.Visible = False
-        Game.btnLeave.Visible = False
-
-        'reset the npc image index
-        If img_index > 4 And Not Game.picNPC.BackgroundImage.Equals(ShopNPC.npcLib.atrs(0).getAt(9)) And Not img_index = getArachneImageInd() And Not img_index = getCatGirlImageInd() Then img_index = 0
+    Protected Sub tfStatUpdate()
+        health = 1.0
+        Game.picNPC.BackgroundImage = local_img(img_index)
     End Sub
-    Public Overridable Function getArachneImageInd() As Integer
-        Return 6
+
+    Public Overridable Sub toFrog()
+        img_index = LocalImgInd.frog
+        tfStatUpdate()
+    End Sub
+    Public Overridable Sub toBunny()
+        tfEnd = 15
+
+        toFemale("bunny")
+        form = "Bunny Girl"
+
+        Game.NPCfromCombat(Me)
+
+        img_index = LocalImgInd.bunny
+        tfStatUpdate()
+    End Sub
+    Public Overridable Sub toPrincess()
+        tfEnd = 15
+
+        toFemale("prin")
+
+        img_index = LocalImgInd.princess
+        tfStatUpdate()
+    End Sub
+    Public Overridable Sub toSheep()
+        tfEnd = 15
+
+        img_index = LocalImgInd.sheep
+        tfStatUpdate()
+    End Sub
+    Public Overridable Sub toDoll()
+        TextEvent.pushNPCDialog("*squeak*")
+        Game.picNPC.BackgroundImage = local_img(LocalImgInd.doll)
+        discount = 0.5
+    End Sub
+    Public Overridable Sub toArachne()
+        tfCt = 1
+        tfEnd = 9999999
+
+        toFemale("arachne")
+        form = "Arachne"
+
+        img_index = LocalImgInd.arachne
+        tfStatUpdate()
+    End Sub
+    Public Overridable Sub toCatgirl()
+        tfEnd = 15
+
+        toFemale("catg")
+
+        img_index = LocalImgInd.catgirl
+        tfStatUpdate()
+    End Sub
+    Public Overridable Sub toTrilobite()
+        img_index = LocalImgInd.trilobite
+        tfStatUpdate()
+    End Sub
+    Public Overridable Sub toBeeGirl()
+        tfEnd = 15
+
+        toFemale("beeg")
+
+        img_index = LocalImgInd.beegirl
+        tfStatUpdate()
+    End Sub
+
+    '| - DIALOG - |
+    Protected Overridable Function normalDialog(ByRef p As Player)
+        Return "Hello, valued customer!"
     End Function
-    Public Overridable Function getCatGirlImageInd() As Integer
-        Return 7
+    Protected Overridable Function frogDialog(ByRef p As Player)
+        Return "Ribbit.  Ribbit."
     End Function
-    Public Overridable Function getTrilobiteImageInd() As Integer
-        Return 8
+    Protected Overridable Function bunnyDialog(ByRef p As Player)
+        Return "Like, hey, cutie customer!"
+    End Function
+    Protected Overridable Function princessDialog(ByRef p As Player)
+        Return "Hark, valued customer!"
+    End Function
+    Protected Overridable Function sheepDialog(ByRef p As Player)
+        Return "Baaahhh."
+    End Function
+    Protected Overridable Function dollDialog(ByRef p As Player)
+        Return "..."
+    End Function
+    Protected Overridable Function arachneDialog(ByRef p As Player)
+        Return "Hello, valued customer!"
+    End Function
+    Protected Overridable Function catgirlDialog(ByRef p As Player)
+        Return "Nya-llo, valued customer!"
+    End Function
+    Protected Overridable Function trilobiteDialog(ByRef p As Player)
+        Return "..."
+    End Function
+    Protected Overridable Function beegirlDialog(ByRef p As Player)
+        Return "Bzz.  Bzzz."
     End Function
 
-    'save/load methods
+    Protected Overridable Function normalFightDialog(ByRef p As Player)
+        Return "Have at you!"
+    End Function
+    Protected Overridable Function frogFightDialog(ByRef p As Player)
+        Return "RIBBIT!"
+    End Function
+    Protected Overridable Function bunnyFightDialog(ByRef p As Player)
+        Return "Like, no!"
+    End Function
+    Protected Overridable Function princessFightDialog(ByRef p As Player)
+        Return "Have at thee!"
+    End Function
+    Protected Overridable Function sheepFightDialog(ByRef p As Player)
+        Return "BAAAAAHHHH!"
+    End Function
+    Protected Overridable Function dollFightDialog(ByRef p As Player)
+        Return "..."
+    End Function
+    Protected Overridable Function arachneFightDialog(ByRef p As Player)
+        Return "Have at you!"
+    End Function
+    Protected Overridable Function catgirlFightDialog(ByRef p As Player)
+        Return "Have at you!"
+    End Function
+    Protected Overridable Function trilobiteFightDialog(ByRef p As Player)
+        Return "..."
+    End Function
+    Protected Overridable Function beegirlFightDialog(ByRef p As Player)
+        Return "BZZ! BZZBZZBZZ!"
+    End Function
+
+    Protected Overridable Function normalSpellDialog(ByRef p As Player)
+        Return "Have at you!"
+    End Function
+    Protected Overridable Function frogSpellDialog(ByRef p As Player)
+        Return "RIBBIT!"
+    End Function
+    Protected Overridable Function bunnySpellDialog(ByRef p As Player)
+        Return "Like, no!"
+    End Function
+    Protected Overridable Function princessSpellDialog(ByRef p As Player)
+        Return "Have at thee!"
+    End Function
+    Protected Overridable Function sheepSpellDialog(ByRef p As Player)
+        Return "BAAAAAHHHH!"
+    End Function
+    Protected Overridable Function dollSpellDialog(ByRef p As Player)
+        Return "..."
+    End Function
+    Protected Overridable Function arachneSpellDialog(ByRef p As Player)
+        Return "Have at you!"
+    End Function
+    Protected Overridable Function catgirlSpellDialog(ByRef p As Player)
+        Return "Have at you!"
+    End Function
+    Protected Overridable Function trilobiteSpellDialog(ByRef p As Player)
+        Return "..."
+    End Function
+    Protected Overridable Function beegirlSpellDialog(ByRef p As Player)
+        Return "BZZ! BZZBZZBZZ!"
+    End Function
+
+    '| -- SAVE / LOAD -- |
     Function saveNPC() As String
         Dim out = ""
         out += img_index & "%"   '0
@@ -261,5 +478,29 @@ Public MustInherit Class ShopNPC
         isShop = CBool(loadedVars(9))
         isDead = CBool(loadedVars(10))
         Return True
+    End Function
+
+    '| - MISC - |
+    Shared Function shopFactory(ByVal ind As ShopNPCInd)
+        Select Case ind
+            Case ShopNPCInd.shadywizard
+                Return New ShadyWizard
+            Case ShopNPCInd.hypnoteach
+                Return New HypnoTeach
+            Case ShopNPCInd.foodvendor
+                Return New FVendor
+            Case ShopNPCInd.weaponsmith
+                Return New WSmith
+            Case ShopNPCInd.cursebroker
+                Return New CBrok
+            Case ShopNPCInd.maskmaggirl
+                Return New MaskedMG
+            Case ShopNPCInd.timetraveler
+                Return New TimeTraveler
+            Case ShopNPCInd.faequeen
+                Return New FaeQueen
+            Case Else
+                Return New Shopkeeper
+        End Select
     End Function
 End Class

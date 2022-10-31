@@ -154,13 +154,13 @@
     Public Sub stailsDeath2()
         Dim p = Game.player1
 
-        Game.picNPC.BackgroundImage = ShopNPC.npcLib.atrs(0).getAt(65)
+        Game.picNPC.BackgroundImage = ShopNPC.gbl_img.atrs(0).getAt(65)
         TextEvent.pushNPCDialog("AHHH, what the hell!  Where did...  Why would...  WHAT?!?", AddressOf stailsDeath3)
     End Sub
     Public Sub stailsDeath3()
         Dim p = Game.player1
 
-        'Game.picNPC.BackgroundImage = ShopNPC.npcLib.atrs(0).getAt(66)
+        'Game.picNPC.BackgroundImage = ShopNPC.gbl_img.atrs(0).getAt(66)
         Game.picNPC.Visible = False
         TextEvent.push("As she relaxes her posture and her suprise fades into visible annoyance, the kitsune angles her weapon in your general direction. " & DDUtils.RNRN &
                           """Clearly you're a product of my sister's work...  I don't suppose you were one of her opponents, were you?""" & DDUtils.RNRN &
@@ -170,7 +170,7 @@
     Public Sub stailsDeath4()
         Dim p = Game.player1
 
-        Game.picNPC.BackgroundImage = ShopNPC.npcLib.atrs(0).getAt(66)
+        Game.picNPC.BackgroundImage = ShopNPC.gbl_img.atrs(0).getAt(66)
         Game.picNPC.Visible = True
         TextEvent.pushNPCDialog("""...that I am nothing like my sister.""" & DDUtils.RNRN &
                            "Press any non combat key to continue...", AddressOf p.die)

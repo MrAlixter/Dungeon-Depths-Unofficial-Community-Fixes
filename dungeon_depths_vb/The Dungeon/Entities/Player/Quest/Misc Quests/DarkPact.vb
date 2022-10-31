@@ -14,7 +14,7 @@
     Public Overrides Sub init()
         MyBase.init()
 
-        Objective.showNPC(ShopNPC.npcLib.atrs(0).getAt(76), """Hey.  Name's Cynn.  Couldn't help but notice that you're trying out the demonic form, and I just so happen to be recruiting underlings for one hell of a scheme.  You seem to be decently skilled, but it doesn't look like those horns are permenant, if you catch my drift." & DDUtils.RNRN &
+        Objective.showNPC(ShopNPC.gbl_img.atrs(0).getAt(76), """Hey.  Name's Cynn.  Couldn't help but notice that you're trying out the demonic form, and I just so happen to be recruiting underlings for one hell of a scheme.  You seem to be decently skilled, but it doesn't look like those horns are permenant, if you catch my drift." & DDUtils.RNRN &
                                                             "Fortunately that's pretty easy to correct, and I'd be happy to help you out on that front in exchange for your loyalty.  If you want in, start by, uhhh, taking down... three... yeah, three succubus princesses.  I'll get back in touch when you're finished." & DDUtils.RNRN &
                                                             "Ah, I might be shapeshifted then... so just keep an eye out, I guess.""" & DDUtils.RNRN &
                                                             "Quest ""Dark Pact"" acquired!")
@@ -35,7 +35,7 @@ Friend Class DarkPactStep1
     End Sub
 
     Public Overrides Sub complete()
-        showNPC(ShopNPC.npcLib.atrs(0).getAt(75), """Ha, awesome!  I didn't think you had it in you, but that makes " & Game.player1.perks(perk.cynnsq1ct1) &
+        showNPC(ShopNPC.gbl_img.atrs(0).getAt(75), """Ha, awesome!  I didn't think you had it in you, but that makes " & Game.player1.perks(perk.cynnsq1ct1) &
                          " less snooty royals to get in my way.  I'd say I'm impressed, buuuuut they'll be replaced in no time at all." & DDUtils.RNRN &
                          "Still though, that's more than enough for me to see you won't get picked off easy. Your next step?  Track down one of those dark crystals floating around...""" & DDUtils.RNRN &
                          "+3 Chilling_Potion" & vbCrLf & "+1000 XP")
@@ -66,7 +66,7 @@ Friend Class DarkPactStep2
     End Sub
 
     Public Overrides Sub complete()
-        Game.picNPC.BackgroundImage = ShopNPC.npcLib.atrs(0).getAt(77)
+        Game.picNPC.BackgroundImage = ShopNPC.gbl_img.atrs(0).getAt(77)
         Game.picNPC.Visible = True
 
         TextEvent.pushNPCDialog("Alright, great, you found a crystal!  It doesn't look like this one's been activated yet, so I'll get that going...", AddressOf completeDialogStep2)
@@ -90,7 +90,7 @@ Friend Class DarkPactStep2
     End Sub
 
     Private Sub completeDialogStep3()
-        showNPC(ShopNPC.npcLib.atrs(0).getAt(76), "Alright, now all you gotta do is activate that bad boy by killing a bunch of stuff or getting real horny and you'll be a full demon.  If you're getting cold feet, now's the last chance you have to back out because after this, you'll be on the dark side and it isn't exactly easy to cross back over...")
+        showNPC(ShopNPC.gbl_img.atrs(0).getAt(76), "Alright, now all you gotta do is activate that bad boy by killing a bunch of stuff or getting real horny and you'll be a full demon.  If you're getting cold feet, now's the last chance you have to back out because after this, you'll be on the dark side and it isn't exactly easy to cross back over...")
 
         Game.player1.perks(perk.cynnsq1ct2) = 0
     End Sub

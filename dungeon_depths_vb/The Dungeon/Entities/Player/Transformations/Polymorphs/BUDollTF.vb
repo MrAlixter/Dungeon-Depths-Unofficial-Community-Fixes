@@ -43,14 +43,36 @@
         p.reverseBSroute()
         p.prt.setIAInd(pInd.shoulders, 9, True, False)
         p.prt.setIAInd(pInd.genitalia, 5, True, False)
+    End Sub
 
-        'transformation description push
-        out += "Looking down, you see some sort of coupon laying on the ground.  Picking it up, you read..." & DDUtils.RNRN &
-               """Need potent magic items with no questions asked?  Hit up The Brown Hat, coming to a dungeon near you soon!  [See the back for a free sample]""" & DDUtils.RNRN &
-               "Flipping the scrap over, your fingers brush against a rune, activating it with the slightest touch.  You suddenly find yourself feeling immobile, yet strangely light as your body collapses in on itself, leaving you an immobile sheet of vinyl.  A rush of air from the rune returns you to an exagerated female form, though apart from having changed with the rest of your genitalia seems largly unchanged.  Propping yourself up, you try to re-equip your gear only to find that you can barely hold a weapon, let alone wear armor. This ""free sample"" seems to have turned you into a sentient sex doll." & DDUtils.RNRN & "Brown Hat, huh..."
-        Dim revertText = Game.lblEvent.Text.Split(vbCrLf)(0)
-        If Not revertText.Equals("") Then out = revertText & DDUtils.RNRN & out
-        TextEvent.push(out)
+    Public Shared Sub faeriePrincessTF()
+        Dim p As Player = Game.player1
+
+        'equip clothes
+        If p.inv.getCountAt(RegalGownF.ITEM_NAME) < 1 Then p.inv.add(RegalGownF.ITEM_NAME, 1)
+        EquipmentDialogBackend.armorChange(p, RegalGownF.ITEM_NAME)
+        p.changeForm("Blowup Doll")
+
+        'bu doll transformation
+
+        p.breastSize = 3
+        p.buttSize = 2
+        p.dickSize = -1
+        p.reverseAllRoute()
+
+        p.prt.setIAInd(pInd.face, 1, True, True)
+        p.prt.setIAInd(pInd.nose, 1, True, True)
+        p.prt.setIAInd(pInd.mouth, 12, True, True)
+        p.prt.setIAInd(pInd.eyes, 17, True, True)
+        p.prt.setIAInd(pInd.eyebrows, 2, True, False)
+
+        p.prt.setIAInd(pInd.cloak, 0, True, True)
+        p.prt.setIAInd(pInd.hat, 22, True, True)
+
+        p.prt.setIAInd(pInd.shoulders, 9, True, False)
+        p.prt.setIAInd(pInd.genitalia, 5, True, False)
+
+        p.drawPort()
     End Sub
 
     Public Overrides Sub stopTF()

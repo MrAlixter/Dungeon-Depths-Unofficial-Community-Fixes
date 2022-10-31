@@ -401,6 +401,8 @@
         internal_inventory.Add(IronCollar.ITEM_NAME, New IronCollar)                 '375
         internal_inventory.Add(FaeQueensCrown.ITEM_NAME, New FaeQueensCrown)         '376
         internal_inventory.Add(Hyacinth.ITEM_NAME, New Hyacinth)                     '377
+        internal_inventory.Add(Lepanacea.ITEM_NAME, New Lepanacea)                   '378
+        internal_inventory.Add(RosePetalSpellbook.ITEM_NAME, New RosePetalSpellbook) '379
 
         armor = {New Naked,
                  Me.item(5), Me.item(7), Me.item(8), Me.item(10),
@@ -469,7 +471,7 @@
                    Me.item(280), Me.item(286), Me.item(294), Me.item(306),
                    Me.item(327), Me.item(328), Me.item(330), Me.item(334),
                    Me.item(338), Me.item(344), Me.item(350), Me.item(373),
-                   Me.item(375)}
+                   Me.item(375), Me.item(379)}
 
         food = {Me.item(1), Me.item(30), Me.item(31), Me.item(32),
                 Me.item(33), Me.item(34), Me.item(35), Me.item(44),
@@ -504,7 +506,8 @@
                    Me.item(76), Me.item(82), Me.item(92), Me.item(93),
                    Me.item(193), Me.item(194), Me.item(231), Me.item(232),
                    Me.item(233), Me.item(234), Me.item(235), Me.item(236),
-                   Me.item(241), Me.item(246), Me.item(247), Me.item(248)}
+                   Me.item(241), Me.item(246), Me.item(247), Me.item(248),
+                   Me.item(378)}
 
         Array.Sort(potions)
 

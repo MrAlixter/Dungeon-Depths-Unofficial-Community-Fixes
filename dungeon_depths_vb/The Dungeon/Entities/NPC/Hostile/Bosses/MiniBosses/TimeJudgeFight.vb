@@ -64,15 +64,15 @@
         If title.Equals("Princess") Then
             despawn("judgetfeds")
 
-            Objective.showNPC(ShopNPC.npcLib.atrs(0).getAt(86), "HOW DARE YOU?!  Get out of my courtroom you curr!", AddressOf OutOfTimeS3.alert)
+            Objective.showNPC(ShopNPC.gbl_img.atrs(0).getAt(86), "HOW DARE YOU?!  Get out of my courtroom you curr!", AddressOf OutOfTimeS3.alert)
         ElseIf title.Equals("Bunny") Then
             despawn("judgetfeds")
 
-            Objective.showNPC(ShopNPC.npcLib.atrs(0).getAt(85), "Wh-what the hell did you do to me?!  G-g-g-go away!", AddressOf OutOfTimeS3.alert)
+            Objective.showNPC(ShopNPC.gbl_img.atrs(0).getAt(85), "Wh-what the hell did you do to me?!  G-g-g-go away!", AddressOf OutOfTimeS3.alert)
         ElseIf title.Equals("Cat-Girl") Then
             despawn("judgetfeds")
 
-            Objective.showNPC(ShopNPC.npcLib.atrs(0).getAt(87), "Alright, alright, just leave...", AddressOf OutOfTimeS3.alert)
+            Objective.showNPC(ShopNPC.gbl_img.atrs(0).getAt(87), "Alright, alright, just leave...", AddressOf OutOfTimeS3.alert)
         End If
     End Sub
 

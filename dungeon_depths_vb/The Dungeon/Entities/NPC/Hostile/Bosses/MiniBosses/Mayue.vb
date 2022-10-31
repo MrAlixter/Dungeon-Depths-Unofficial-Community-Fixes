@@ -116,11 +116,11 @@
         End If
     End Sub
     Private Sub die2()
-        Objective.showNPC(ShopNPC.npcLib.atrs(0).getAt(101), "MARISSA THE ENCHANTRESS HAS REVIVED!" & DDUtils.RNRN &
+        Objective.showNPC(ShopNPC.gbl_img.atrs(0).getAt(101), "MARISSA THE ENCHANTRESS HAS REVIVED!" & DDUtils.RNRN &
                         """Well, well, well, if it isn't my old pal " & Game.player1.getName & ".  How's it been?""", AddressOf die3)
     End Sub
     Private Sub die3()
-        Objective.showNPC(ShopNPC.npcLib.atrs(0).getAt(98), """I've been out of it for a while, haven't I?  It definitely lookes like someone's been doing well..."" Marissa says, smirking.  ""For what it's worth, thanks for your help.""" & DDUtils.RNRN &
+        Objective.showNPC(ShopNPC.gbl_img.atrs(0).getAt(98), """I've been out of it for a while, haven't I?  It definitely lookes like someone's been doing well..."" Marissa says, smirking.  ""For what it's worth, thanks for your help.""" & DDUtils.RNRN &
                           """But Lady Marissa, you don't need to-"" Mayue interjects, before Marissa holds up a hand, stopping her." & DDUtils.RNRN &
                           """Let it go, Mayue, we're leaving.""", AddressOf die4)
     End Sub

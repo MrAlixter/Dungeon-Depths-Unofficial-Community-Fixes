@@ -2158,7 +2158,7 @@ Public Class Game
     '| -- Wait -- |
     Sub waitKey()
         closeLblEvent()
-        MsgBox(player1.pos.ToString & "-" & currFloor.mBoard(player1.pos.Y, player1.pos.X).Text)
+
         Dim m As NPC = getCombatTarget(player1)
         player1.setTarget(m)
 
@@ -2607,15 +2607,15 @@ Public Class Game
 
         If mouseEvent IsNot Nothing AndAlso mouseEvent.Button = MouseButtons.Left Then
             If solFlag Then
-                ' Try
-                player1.solFlag = True
-                loadSave("saves/s" & fileNum & ".ave")
-                player1.solFlag = False
-                'Catch ex As System.IO.FileNotFoundException
-                '    DDError.noSaveDetectedError()
-                'Catch ex2 As Exception
-                '    DDError.saveFileError()
-                'End Try
+                Try
+                    player1.solFlag = True
+                    loadSave("saves/s" & fileNum & ".ave")
+                    player1.solFlag = False
+                Catch ex As System.IO.FileNotFoundException
+                    DDError.noSaveDetectedError()
+                Catch ex2 As Exception
+                    DDError.saveFileError()
+                End Try
             Else
                 save("saves/s" & fileNum & ".ave")
                 imagesWorkerArg = Convert.ToInt32(fileNum)
@@ -2778,7 +2778,7 @@ Public Class Game
 
             img = Portrait.CreateBMP(iarr)
         Catch ex As Exception
-            Return ShopNPC.npcLib.atrs(0).getAt(103)
+            Return ShopNPC.gbl_img.atrs(0).getAt(103)
         End Try
         reader.Close()
         Return img
@@ -2827,6 +2827,7 @@ Public Class Game
         pnlCombat.Visible = True
 
         '|-Combat Buttons-|
+        If shop_npc_engaged Then hideNPCButtons()
         btnATK.Visible = True
         btnMG.Visible = True
         btnWait.Visible = True
@@ -2880,7 +2881,6 @@ Public Class Game
         player1.canMoveFlag = False
 
         hideNPCButtons()
-
     End Sub
     Sub NPCfromCombat(ByRef m As NPC)
         pnlCombatClose()
@@ -3177,8 +3177,8 @@ Public Class Game
         queueSetup()
 
         TextEvent.pushNPCDialog(m.hitBySpell)
+        m.drawPort()
 
-        picNPC.BackgroundImage = active_shop_npc.picNPC(active_shop_npc.img_index)
         updatable_queue.add(player1, player1.getSPD)
         drawBoard()
     End Sub

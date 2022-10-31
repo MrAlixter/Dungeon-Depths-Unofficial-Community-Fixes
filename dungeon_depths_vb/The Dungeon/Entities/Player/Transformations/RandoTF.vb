@@ -304,7 +304,7 @@
                        """Well, well, well.  What do we have here?"", a slightly distorted female voice chuckles from somewhere behind you.", AddressOf floor4FirstBossEncounterP2)
     End Sub
     Shared Sub floor4FirstBossEncounterP2()
-        Objective.showNPC(ShopNPC.npcLib.atrs(0).getAt(147), "Suddenly, you find yourself being flipped upside down and dragged upwards to the ceiling, where you meet the translucent smug gaze of a teal woman made of slime." & DDUtils.RNRN &
+        Objective.showNPC(ShopNPC.gbl_img.atrs(0).getAt(147), "Suddenly, you find yourself being flipped upside down and dragged upwards to the ceiling, where you meet the translucent smug gaze of a teal woman made of slime." & DDUtils.RNRN &
                                                              "Her lower half seems to be a writhing mass of tentacles rooted firmly to the dungeon's roof, and closer inspection highlights a number of vaugely human-shaped bodies mixed in with the tendrils of slime.  Her curvy figure and mature demeanor set her apart as unique from any other goo girl you've encountered so far." & DDUtils.RNRN &
                                                              """I..."" the slime says, drawing your attention back to her, ""...am the Ooze Empress.  This fourth floor, and all who inhabit it, fall well under my control.""" & DDUtils.PAKTC, AddressOf floor4FirstBossEncounterP3)
     End Sub

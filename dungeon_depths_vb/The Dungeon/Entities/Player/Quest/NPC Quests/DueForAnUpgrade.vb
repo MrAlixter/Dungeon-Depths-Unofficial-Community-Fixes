@@ -30,7 +30,7 @@ Friend Class DFAUpgradeStep1
 
     Public Overrides Sub complete()
         MyBase.complete()
-        showNPC(ShopNPC.npcLib.atrs(0).getAt(29), """Nice!  I'm gonna stoke my furnace and melt these down, stop by when you get the chance and I'll forge you a better set of armor, okay?""" & DDUtils.RNRN &
+        showNPC(ShopNPC.gbl_img.atrs(0).getAt(29), """Nice!  I'm gonna stoke my furnace and melt these down, stop by when you get the chance and I'll forge you a better set of armor, okay?""" & DDUtils.RNRN &
                          "+1000 Gold")
 
         Game.player1.gold += 1000

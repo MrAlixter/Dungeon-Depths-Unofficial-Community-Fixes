@@ -72,7 +72,7 @@ Friend Class FindCrystal
 
         Else
             TextEvent.push("You've found one of the crystals your controller is seeking!  As you circle it, you feel a familiar presence enter your mind.  " & _
-                """No, that isn't it."" your overseer states disappointedly, ""Well, I guess you can go back to your buisness now.""")
+                """No, that isn't it."" your overseer states disappointedly, ""Well, I guess you can go back to your business now.""")
             Game.player1.ongoingTFs.add(New ThrallTF())
             Game.player1.quests(qInd.enthralled).goToStep(1)
         End If

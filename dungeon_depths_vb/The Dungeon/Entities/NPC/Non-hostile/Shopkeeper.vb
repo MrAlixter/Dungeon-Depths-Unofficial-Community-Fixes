@@ -6,7 +6,7 @@
         '|ID Info|
         name = "Shopkeeper"
         sName = name
-        npc_index = sNPCInd.shopkeeper
+        npc_index = ShopNPCInd.shopkeeper
 
         '|NPC Flags|
         pronoun = "he"
@@ -52,25 +52,21 @@
         sSpeed = speed
 
         '|Images|
-        picNormal = ShopNPC.npcLib.atrs(0).getAt(0)
-        picPrincess = ShopNPC.npcLib.atrs(0).getAt(2)
-        picBunny = ShopNPC.npcLib.atrs(0).getAt(1)
-        picArachne = ShopNPC.npcLib.atrs(0).getAt(67)
+        local_img = New Dictionary(Of ShopNPC.LocalImgInd, Image)()
 
-        picNPC = New List(Of Image)
-        picNPC.AddRange({picNormal, ShopNPC.npcLib.atrs(0).getAt(4), ShopNPC.npcLib.atrs(0).getAt(5), picPrincess, picBunny})
-
-        picNPC.AddRange({ShopNPC.npcLib.atrs(0).getAt(3),
-                         picArachne,
-                         ShopNPC.npcLib.atrs(0).getAt(89),
-                         ShopNPC.npcLib.atrs(0).getAt(96)})
+        local_img.Add(LocalImgInd.normal, ShopNPC.gbl_img.atrs(0).getAt(0))
+        local_img.Add(LocalImgInd.frog, ShopNPC.gbl_img.atrs(0).getAt(4))
+        local_img.Add(LocalImgInd.bunny, ShopNPC.gbl_img.atrs(0).getAt(1))
+        local_img.Add(LocalImgInd.princess, ShopNPC.gbl_img.atrs(0).getAt(2))
+        local_img.Add(LocalImgInd.sheep, ShopNPC.gbl_img.atrs(0).getAt(5))
+        local_img.Add(LocalImgInd.doll, ShopNPC.gbl_img.atrs(0).getAt(3))
+        local_img.Add(LocalImgInd.arachne, ShopNPC.gbl_img.atrs(0).getAt(67))
+        local_img.Add(LocalImgInd.catgirl, ShopNPC.gbl_img.atrs(0).getAt(89))
+        local_img.Add(LocalImgInd.trilobite, ShopNPC.gbl_img.atrs(0).getAt(96))
+        local_img.Add(LocalImgInd.beegirl, ShopNPC.gbl_img.atrs(0).getAt(148))
     End Sub
 
-    Public Overrides Sub encounter()
-        MyBase.encounter()
-
-        MyBase.discount = 0
-
+    Public Overrides Sub inventoryUpdate()
         If Game.mDun.numCurrFloor < 2 Then
             inv.setCount("Scale_Armor", 1)
             inv.setCount("Gold_Armor", 0)
@@ -92,64 +88,9 @@
             inv.setCount("Bronze_Armor", 0)
             inv.setCount("Steel_Armor", 0)
         End If
-
-        If img_index = 0 Then
-            If Game.player1.quests(qInd.helpWanted).canGet Then Game.player1.quests(qInd.helpWanted).init() : Exit Sub
-            TextEvent.pushNPCDialog("Hey, what's up?")
-        ElseIf img_index = 6 Then
-            TextEvent.pushNPCDialog("Hey, what's up?")
-        ElseIf img_index = 1 Then
-            TextEvent.pushNPCDialog("Ribbit.  Ribbit.")
-        ElseIf img_index = 2 Then
-            TextEvent.pushNPCDialog("Baaahhh.")
-        ElseIf img_index = 3 Then
-            TextEvent.pushNPCDialog("Hello, kind " & Game.player1.className & ", how are you on this fine day?")
-        ElseIf img_index = 4 Or img_index = 7 Then
-            TextEvent.pushNPCDialog("*giggle* Hey!")
-        ElseIf img_index = 5 Or img_index = 8 Then
-            TextEvent.pushNPCDialog("...")
-        End If
-
-        If img_index = getArachneImageInd() And Not Game.player1.formName.Equals("Arachne") Then inv.setCount(244, 1) Else inv.setCount(244, 0)
-
     End Sub
-    Public Overrides Function toFight() As String
-        If img_index = 0 Or img_index = 6 Then
-            Return "So you want to fight, eh?  I'm ready whenever you are."
-        ElseIf img_index = 1 Then
-            Return "Ribbit . . ."
-        ElseIf img_index = 2 Then
-            Return "BAAAAAHHHH!"
-        ElseIf img_index = 3 Then
-            Return "You would dare to challenge me? If you wish to die, you could just say so."
-        ElseIf img_index = 4 Or img_index = 7 Then
-            Return "I might not be the best fighter any more, but I can definitely give it my best!"
-        ElseIf img_index = 5 Or img_index = 8 Then
-            Return "..."
-        End If
-        Return "Bad move."
-    End Function
-    Public Overrides Function hitBySpell() As String
-        If img_index = 0 Or img_index = 6 Then
-            Game.NPCtoCombat(Me)
-            Return "Did . . . did you just cast a spell on me?  You know I have to kill you now, right?"
-        ElseIf img_index = 1 Then
-            Game.NPCtoCombat(Me)
-            Return "Ribbit!!!"
-        ElseIf img_index = 2 Then
-            Game.NPCtoCombat(Me)
-            Return "[angry bleets]!"
-        ElseIf img_index = 3 Then
-            Game.NPCtoCombat(Me)
-            Return "Casting spells on royalty is genrally not a good idea."
-        ElseIf img_index = 4 Or img_index = 7 Then
-            Return "*giggle* Was that magic?"
-        ElseIf img_index = 5 Or img_index = 8 Then
-            Return "..."
-        End If
-        Return "Woah there!"
-    End Function
 
+    '| - COMBAT - |
     Public Overrides Function reactToSpell(spell As String) As Boolean
         If Rnd() < (0.01) Then
             Return True
@@ -174,4 +115,64 @@
         TextEvent.push(out, AddressOf p.die)
         p.changeClass("Trophy")
     End Sub
+
+    '| - DIALOG - |
+    Protected Overrides Function normalDialog(ByRef p As Player)
+        If Game.player1.quests(qInd.helpWanted).canGet Then
+            Game.player1.quests(qInd.helpWanted).init()
+            Return ""
+        End If
+
+        Return "Hey, what's up?"
+    End Function
+    Protected Overrides Function bunnyDialog(ByRef p As Player)
+        Return "*giggle* Hey!"
+    End Function
+    Protected Overrides Function princessDialog(ByRef p As Player)
+        Return "Hello, kind " & p.className & ", how are you on this fine day?"
+    End Function
+    Protected Overrides Function arachneDialog(ByRef p As Player)
+        Return "Hey, what's up?"
+    End Function
+    Protected Overrides Function catgirlDialog(ByRef p As Player)
+        Return bunnyDialog(p)
+    End Function
+
+    Protected Overrides Function normalFightDialog(ByRef p As Player)
+        Return "So you want to fight, eh?  Well, I'm ready whenever you are."
+    End Function
+    Protected Overrides Function bunnyFightDialog(ByRef p As Player)
+        Return "I might not, like, be the best fighter anymore... but I can totally give it my best!"
+    End Function
+    Protected Overrides Function princessFightDialog(ByRef p As Player)
+        Return "You would dare to challenge me? If you wish to die, you could just say so."
+    End Function
+    Protected Overrides Function arachneFightDialog(ByRef p As Player)
+        Return normalFightDialog(p)
+    End Function
+    Protected Overrides Function catgirlFightDialog(ByRef p As Player)
+        Return bunnyFightDialog(p)
+    End Function
+
+    Protected Overrides Function normalSpellDialog(ByRef p As Player)
+        Return "Did...  Did you just cast a spell on me?  You know I have to kill you now, right?"
+    End Function
+    Protected Overrides Function frogSpellDialog(ByRef p As Player)
+        Return "Ribbit!!!"
+    End Function
+    Protected Overrides Function bunnySpellDialog(ByRef p As Player)
+        Return "*giggle* Was that magic?"
+    End Function
+    Protected Overrides Function princessSpellDialog(ByRef p As Player)
+        Return "Casting unrequested spells on royalty is generally a poor idea..."
+    End Function
+    Protected Overrides Function sheepSpellDialog(ByRef p As Player)
+        Return "[angry bleets]!"
+    End Function
+    Protected Overrides Function arachneSpellDialog(ByRef p As Player)
+        Return normalDialog(p)
+    End Function
+    Protected Overrides Function catgirlSpellDialog(ByRef p As Player)
+        Return bunnyDialog(p)
+    End Function
 End Class

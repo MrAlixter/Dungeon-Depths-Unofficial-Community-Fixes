@@ -51,7 +51,7 @@
 
     Public Overrides Sub playerDeath(ByRef p As Player)
         despawn("p-death")
-        Objective.showNPC(ShopNPC.npcLib.atrs(0).getAt(147), """Aww, sweetie, if you wanted another go you could have just asked!"", the Ooze Empress chuckles, her aphrodesiac-laced tendrils wrapping you in their arousing embrace." & DDUtils.RNRN &
+        Objective.showNPC(ShopNPC.gbl_img.atrs(0).getAt(147), """Aww, sweetie, if you wanted another go you could have just asked!"", the Ooze Empress chuckles, her aphrodesiac-laced tendrils wrapping you in their arousing embrace." & DDUtils.RNRN &
                                                              """You really do need to relax, though.  Luckily, I have just the thing for that..."" she states, plunging your entire body once again into her slime." & DDUtils.RNRN &
                                                              "As the overwhelming waves of pleasure wash over you, you resign yourself to another attempt." & DDUtils.RNRN &
                                                              "Well, maybe not... right away...", AddressOf oEmpDeathPt2)
@@ -69,7 +69,7 @@
     End Sub
 
     Public Overrides Sub preFightDialog()
-        Objective.showNPC(ShopNPC.npcLib.atrs(0).getAt(147), "As you approach the staircase, you spot the Ooze Empress dangling above.  You wave to get her attention, and she plops down to greet you." & DDUtils.RNRN &
+        Objective.showNPC(ShopNPC.gbl_img.atrs(0).getAt(147), "As you approach the staircase, you spot the Ooze Empress dangling above.  You wave to get her attention, and she plops down to greet you." & DDUtils.RNRN &
                                                              "You explain your situation to her, but she simply chuckles before twisting closer." & DDUtils.RNRN &
                                                              """You know, I was placed on this floor as, like, a buffer.  Lady Medusa isn't interested in weaklings, and you aren't going anywhere important if you can't even keep track of your own body...""" & DDUtils.RNRN &
                                                              "Noticing a shift in her previously bubbly personality, you leap back as her tentacles flare out around you." & DDUtils.RNRN &

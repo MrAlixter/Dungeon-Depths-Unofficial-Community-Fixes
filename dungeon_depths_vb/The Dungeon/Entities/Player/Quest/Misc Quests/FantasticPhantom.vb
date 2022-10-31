@@ -22,17 +22,17 @@
         Dim enemy = Game.player1.currTarget.getNameWithTitle()
         Game.fromCombat()
 
-        Objective.showNPC(ShopNPC.npcLib.atrs(0).getAt(129), "With a poof of white smoke, " & enemy & " suddenly vanishes into a flock of inumerable doves, cutting your fight short." & DDUtils.RNRN &
+        Objective.showNPC(ShopNPC.gbl_img.atrs(0).getAt(129), "With a poof of white smoke, " & enemy & " suddenly vanishes into a flock of inumerable doves, cutting your fight short." & DDUtils.RNRN &
                                                              """Hello and good" & DDDateTime.getGeneralTimeOfDay & ", ladies and gentlemen,"" announces a new figure, shrouded in mist." & DDUtils.RNRN &
                                                              """I've got an amazing show lined up for you fine folks " & If(DateTime.Now().Hour > 17, "today", "tonight") & "!  There'll be stunts that defy reality, tricks that will boggle the mind.  Watch closely, ladies and gentlemen, you won't want to miss a thing." & DDUtils.RNRN &
                                                              "So, without further ado...""" & DDUtils.PAKTC, AddressOf init2)
     End Sub
     Private Sub init2()
-        Objective.showNPC(ShopNPC.npcLib.atrs(0).getAt(128), "With a loud CRACK, a spotlight beams down from above onto the figure and an impressive wooden stage twists upwards from below her feet.  The top-hatted woman, now clearly visible, takes a few tappy steps forward." & DDUtils.RNRN &
+        Objective.showNPC(ShopNPC.gbl_img.atrs(0).getAt(128), "With a loud CRACK, a spotlight beams down from above onto the figure and an impressive wooden stage twists upwards from below her feet.  The top-hatted woman, now clearly visible, takes a few tappy steps forward." & DDUtils.RNRN &
                                                              """Let's start the show!""" & DDUtils.PAKTC, AddressOf initIntroduction)
     End Sub
     Private Sub initIntroduction()
-        Objective.showNPC(ShopNPC.npcLib.atrs(0).getAt(128), "She pauses for a brief round of applause that comes from nowhere in particular, before raising a finger as a number of additional spotlights begin sweeping around you." & DDUtils.RNRN &
+        Objective.showNPC(ShopNPC.gbl_img.atrs(0).getAt(128), "She pauses for a brief round of applause that comes from nowhere in particular, before raising a finger as a number of additional spotlights begin sweeping around you." & DDUtils.RNRN &
                                                              """Ah, but what is a magician without her lovely assitant?  Say, you over there, I don't suppose I could borrow you for a spell?""" & DDUtils.RNRN &
                                                              "Not seeing anyone else around, you hesitantly point up at yourself and the performer nods enthusiastically." & DDUtils.PAKTC, AddressOf askForVolunteer)
     End Sub
@@ -40,20 +40,20 @@
         TextEvent.pushYesNo("Play along?", AddressOf initVolunteerYes, AddressOf initVolunteerNo)
     End Sub
     Private Sub initVolunteerYes()
-        Objective.showNPC(ShopNPC.npcLib.atrs(0).getAt(127), """Wonderful, we haved a volunteer!  Let's give them a hand, folks!""" & DDUtils.RNRN &
+        Objective.showNPC(ShopNPC.gbl_img.atrs(0).getAt(127), """Wonderful, we haved a volunteer!  Let's give them a hand, folks!""" & DDUtils.RNRN &
                                                              "A round of thunderous applause breaks out from seemingly every direction, and you head to join her on stage." & DDUtils.RNRN &
                                                              "Quest ""Phantastic Fantom"" acquired!", AddressOf FanPhanStep1.step1Change)
 
         Game.player1.perks(perk.metfantoma) = MET_FANTOMA_BASE
     End Sub
     Private Sub initVolunteerNo()
-        Objective.showNPC(ShopNPC.npcLib.atrs(0).getAt(127), """Ooh, looks like they're a little shy...  Let's give them a little encouragement, folks!""" & DDUtils.RNRN &
+        Objective.showNPC(ShopNPC.gbl_img.atrs(0).getAt(127), """Ooh, looks like they're a little shy...  Let's give them a little encouragement, folks!""" & DDUtils.RNRN &
                                                              "A round of cheers and applause breaks out from seemingly every direction." & DDUtils.RNRN &
                                                              "You glare back at the woman, unamused." & DDUtils.RNRN &
                                                              """Ah, one sec everyone."" she says with a sheepish chuckle, teleporting besides you with a poof of smoke.", AddressOf initVolunteerNo2)
     End Sub
     Private Sub initVolunteerNo2()
-        Objective.showNPC(ShopNPC.npcLib.atrs(0).getAt(128), """Come on, what are you doing?"" the performer whispers, sounding a little annoyed.  ""This ain't anything sinister, just a harmless little bit of fun!""" & DDUtils.RNRN &
+        Objective.showNPC(ShopNPC.gbl_img.atrs(0).getAt(128), """Come on, what are you doing?"" the performer whispers, sounding a little annoyed.  ""This ain't anything sinister, just a harmless little bit of fun!""" & DDUtils.RNRN &
                                                             "She vanishes with another poof, reappearing back on stage with a flourish." & DDUtils.RNRN &
                                                              """So whaddya say, pal, won't you lend me a hand?""", AddressOf askForVolunteer2)
     End Sub
@@ -62,7 +62,7 @@
     End Sub
 
     Private Sub initVolunteerNoFinal()
-        Objective.showNPC(ShopNPC.npcLib.atrs(0).getAt(127), "You walk away.  The performer doesn't stop grinning as she turns back around herself, but you can hear a subtle break in her tone." & DDUtils.RNRN &
+        Objective.showNPC(ShopNPC.gbl_img.atrs(0).getAt(127), "You walk away.  The performer doesn't stop grinning as she turns back around herself, but you can hear a subtle break in her tone." & DDUtils.RNRN &
                                                              """W-well, silly little assistant or not, the show must go on!""" & DDUtils.RNRN &
                                                              "Whizzing and popping noises erupt behind you, as a chorus of oohs and ahhs fill the air." & DDUtils.PAKTC, AddressOf initVolunteerNoFinal2)
     End Sub
@@ -88,7 +88,7 @@ Public Class FanPhanStep1
     End Sub
 
     Protected Friend Shared Sub step1Change()
-        Objective.showNPC(ShopNPC.npcLib.atrs(0).getAt(128), "You step over to the woman, and she extends a hand." & DDUtils.RNRN &
+        Objective.showNPC(ShopNPC.gbl_img.atrs(0).getAt(128), "You step over to the woman, and she extends a hand." & DDUtils.RNRN &
                                                              """I'm Fantoma, pleased to meet ya!""" & DDUtils.RNRN &
                                                              "She gives your hand a vigorous shake, before wrapping an arm over and leaning on your shoulder." & DDUtils.RNRN &
                                                              """... and you are?""" & DDUtils.PAKTC, AddressOf step1Change2)
@@ -131,7 +131,7 @@ Public Class FanPhanStep1
 
         p.drawPort()
 
-        Objective.showNPC(ShopNPC.npcLib.atrs(0).getAt(128), "As you reach out for the outfit, it quickly flickers out of sight.  A quick glance down confirms that it didn't go far, and before you have time to think too much more on it the curtain flaps up and a beaming Fantoma announces:" & DDUtils.RNRN &
+        Objective.showNPC(ShopNPC.gbl_img.atrs(0).getAt(128), "As you reach out for the outfit, it quickly flickers out of sight.  A quick glance down confirms that it didn't go far, and before you have time to think too much more on it the curtain flaps up and a beaming Fantoma announces:" & DDUtils.RNRN &
                                                              """My assistant, ladies and gentlemen;  Give it up for " & p.getName() & "!""" & DDUtils.RNRN &
                                                              "In the instant before the crowd can react, a thought occurs..." & DDUtils.PAKTC, AddressOf strikeAPose)
         TextEvent.pushLog("A " & BunnySuitG.ITEM_NAME & " equips onto you!")
@@ -144,7 +144,7 @@ Public Class FanPhanStep1
 
         p.drawPort()
 
-        Objective.showNPC(ShopNPC.npcLib.atrs(0).getAt(128), "As you reach out for the outfit, it quickly flickers out of sight.  A quick glance down confirms that it didn't go far, and before you have time to think too much more on it the curtain flaps up and a beaming Fantoma announces:" & DDUtils.RNRN &
+        Objective.showNPC(ShopNPC.gbl_img.atrs(0).getAt(128), "As you reach out for the outfit, it quickly flickers out of sight.  A quick glance down confirms that it didn't go far, and before you have time to think too much more on it the curtain flaps up and a beaming Fantoma announces:" & DDUtils.RNRN &
                                                              """My assistant, ladies and gentlemen;  Give it up for " & p.getName() & "!""" & DDUtils.RNRN &
                                                              "In the instant before the crowd can react, a thought occurs..." & DDUtils.PAKTC, AddressOf strikeAPose)
         TextEvent.pushLog("A " & GShowgirlOutfit.ITEM_NAME & " equips onto you!")
@@ -159,7 +159,7 @@ Public Class FanPhanStep1
 
         p.drawPort()
 
-        Objective.showNPC(ShopNPC.npcLib.atrs(0).getAt(128), "As you reach out for the bowtie, it quickly flickers out of sight.  A quick glance down confirms that... woah, like, that's new..." & DDUtils.RNRN &
+        Objective.showNPC(ShopNPC.gbl_img.atrs(0).getAt(128), "As you reach out for the bowtie, it quickly flickers out of sight.  A quick glance down confirms that... woah, like, that's new..." & DDUtils.RNRN &
                                                              "Before you have time to think too much, the curtain flaps up and a beaming Fantoma announces:" & DDUtils.RNRN &
                                                              """My assistant, ladies and gentlemen;  Give it up for the beautiful " & p.getName() & "!""" & DDUtils.RNRN &
                                                              "In the instant before the crowd can react, a thought occurs..." & DDUtils.RNRN &
@@ -174,7 +174,7 @@ Public Class FanPhanStep1
 
         p.drawPort()
 
-        Objective.showNPC(ShopNPC.npcLib.atrs(0).getAt(128), "As you reach out for the bikini, it quickly flickers out of sight.  A quick glance down confirms that it didn't go far, and before you have time to think too much more on it the curtain flaps up and a beaming Fantoma announces:" & DDUtils.RNRN &
+        Objective.showNPC(ShopNPC.gbl_img.atrs(0).getAt(128), "As you reach out for the bikini, it quickly flickers out of sight.  A quick glance down confirms that it didn't go far, and before you have time to think too much more on it the curtain flaps up and a beaming Fantoma announces:" & DDUtils.RNRN &
                                                              """My... cow, I guess; Ladies and gentlemen, give it up for " & p.getName() & "!""" & DDUtils.RNRN &
                                                              "In the instant before the crowd can react, a thought occurs..." & DDUtils.PAKTC, AddressOf strikeAPose)
         TextEvent.pushLog("A " & CowBra.ITEM_NAME & " equips onto you!")
@@ -187,7 +187,7 @@ Public Class FanPhanStep1
 
         p.drawPort()
 
-        Objective.showNPC(ShopNPC.npcLib.atrs(0).getAt(128), "As you reach out for the cobweb, it quickly flickers out of sight.  A quick glance down reveals that you are now bound in silky strands, and before you have time to think too much more on it the curtain flaps up and a beaming Fantoma announces:" & DDUtils.RNRN &
+        Objective.showNPC(ShopNPC.gbl_img.atrs(0).getAt(128), "As you reach out for the cobweb, it quickly flickers out of sight.  A quick glance down reveals that you are now bound in silky strands, and before you have time to think too much more on it the curtain flaps up and a beaming Fantoma announces:" & DDUtils.RNRN &
                                                              """My assistant, ladies and- uhh... heh heh, well, we aren't running that version of the show tonight...""" & DDUtils.RNRN &
                                                              "She draws out a slender black wand and taps your head, and with a poof of smoke the cobwebs shifts into a less immobilizing bunny suit." & DDUtils.RNRN &
                                                              """Ladies and gentlemen, give it up for " & p.getName() & "!""" & DDUtils.RNRN &
@@ -202,13 +202,13 @@ Public Class FanPhanStep1
         TextEvent.pushYesNo("Strike a Pose?", AddressOf pose, AddressOf noPose)
     End Sub
     Private Shared Sub pose()
-        Objective.showNPC(ShopNPC.npcLib.atrs(0).getAt(127), "You strike a sexy pose, and flash the audience your own grin." & DDUtils.RNRN &
+        Objective.showNPC(ShopNPC.gbl_img.atrs(0).getAt(127), "You strike a sexy pose, and flash the audience your own grin." & DDUtils.RNRN &
                           """Aww, isn't " & If(Game.player1.sex.Equals("Male"), "he", "she") & " just a treat?""" & DDUtils.RNRN &
                           "Fantoma's praise seems genuine, and it seems like that was exactly what she was hoping you would do." & DDUtils.PAKTC, AddressOf FanPhanStep2.step2Wand)
         Game.player1.quests(qInd.fanPhan).completeCurrOjb()
     End Sub
     Private Shared Sub noPose()
-        Objective.showNPC(ShopNPC.npcLib.atrs(0).getAt(127), "You strike a sexy pose, and flash the audience your own grin." & DDUtils.RNRN &
+        Objective.showNPC(ShopNPC.gbl_img.atrs(0).getAt(127), "You strike a sexy pose, and flash the audience your own grin." & DDUtils.RNRN &
                           """Aww, isn't " & If(Game.player1.sex.Equals("Male"), "he", "she") & " just a treat?""" & DDUtils.RNRN &
                           "Despite your outward confidence, you feel dazed, and foggy.  You weren't planning to do a pose, right?" & DDUtils.PAKTC, AddressOf FanPhanStep2.step2Wand)
         Game.player1.wBuff -= 5
@@ -251,13 +251,13 @@ Public Class FanPhanStep2
                    """...lucky, lucky, you get to spin..."""
         End If
 
-        Objective.showNPC(ShopNPC.npcLib.atrs(0).getAt(128), out & DDUtils.PAKTC, AddressOf step2spin1)
+        Objective.showNPC(ShopNPC.gbl_img.atrs(0).getAt(128), out & DDUtils.PAKTC, AddressOf step2spin1)
     End Sub
 
     Private Shared Sub step2spin1()
         Dim PAKTS As String = DDUtils.RNRN & "Press any non-movement key to SPIN THE WHEEEEL!"
 
-        Objective.showNPC(ShopNPC.npcLib.atrs(0).getAt(127), """THE WHEEL OF WACKY WANDS!"" she chants, along with the audience." & DDUtils.RNRN &
+        Objective.showNPC(ShopNPC.gbl_img.atrs(0).getAt(127), """THE WHEEL OF WACKY WANDS!"" she chants, along with the audience." & DDUtils.RNRN &
                                                              "A massive spin wheel slowly lowers from the ceiling, with inumerable blinking segments that cast a colorful glow across the stage." & DDUtils.RNRN &
                                                              """Step right up and give 'er a spin!  Will you win an ultimate weapon, or mayhaps land on the sliver of instant demise?  Only the wheel knows, only the wheel can design your fate!""" & DDUtils.RNRN &
                                                              "You approach to the wheel, and hesitantly place a hand on the spinner..." & PAKTS, AddressOf step2spin2)
@@ -364,13 +364,13 @@ Public Class FanPhanStep3
         EquipmentDialogBackend.armorChange(p, BunnySuitG.ITEM_NAME, False)
         p.drawPort()
 
-        Objective.showNPC(ShopNPC.npcLib.atrs(0).getAt(127), """TA-DAAAA!"" Fantoma cheers, plucking your head up by the rabbit-ear headband from her now upside down hat." & DDUtils.RNRN &
+        Objective.showNPC(ShopNPC.gbl_img.atrs(0).getAt(127), """TA-DAAAA!"" Fantoma cheers, plucking your head up by the rabbit-ear headband from her now upside down hat." & DDUtils.RNRN &
                                                              "Once you've been pulled fully out, she turns away from you, towards her 'audience', and throws her hands out with a flourish." & DDUtils.RNRN &
                                                              """Ladies and gentlemen, " & Game.player1.getName & "!""" & DDUtils.RNRN &
                                                              "As the roar of the invisible crowd dies down, Fantoma bows and gestures for you to do the same.  Before long, the dungeon falls silent once again and you Fantoma stand alone on the stage." & DDUtils.PAKTC, AddressOf lose3)
     End Sub
     Private Shared Sub lose3()
-        Objective.showNPC(ShopNPC.npcLib.atrs(0).getAt(128), """I don't know about you, but I had a blast."" Fantoma chuckles, patting you on the shoulder." & DDUtils.RNRN &
+        Objective.showNPC(ShopNPC.gbl_img.atrs(0).getAt(128), """I don't know about you, but I had a blast."" Fantoma chuckles, patting you on the shoulder." & DDUtils.RNRN &
                                                              """Hey, Magical Girl, I'll be sure to get in touch next time I need an assistant!""" & DDUtils.RNRN &
                                                              "With a poof of smoke, Fantoma vanishes as suddenly as she appeared." & DDUtils.RNRN &
                                                              "Quest complete!" & DDUtils.PAKTC)
@@ -415,7 +415,7 @@ Public Class FanPhanStep3
                        """Let's hear it for the magnificent " & Game.player1.getName & "!""", AddressOf win2)
     End Sub
     Private Shared Sub win2()
-        Objective.showNPC(ShopNPC.npcLib.atrs(0).getAt(127), "After the roar of the invisible crowd begins to die down, Fantoma bows and gestures for you to do the same.  Before long, the dungeon falls silent once again and you Fantoma stand alone on the stage." & DDUtils.RNRN &
+        Objective.showNPC(ShopNPC.gbl_img.atrs(0).getAt(127), "After the roar of the invisible crowd begins to die down, Fantoma bows and gestures for you to do the same.  Before long, the dungeon falls silent once again and you Fantoma stand alone on the stage." & DDUtils.RNRN &
                                                              """Hey, you did great!  Next time I'm looking for help with something, I'll definitely be keeping you in mind."" she says, tossing you a small pouch of coins and waving a hand, causing your clothing and original wand to flicker back into place." & DDUtils.RNRN &
                                                              "+1500 Gold" & DDUtils.PAKTC, AddressOf win3)
 
@@ -428,7 +428,7 @@ Public Class FanPhanStep3
         p.drawPort()
     End Sub
     Private Shared Sub win3()
-        Objective.showNPC(ShopNPC.npcLib.atrs(0).getAt(128), """Don't worry though, when the time comes I'll find you." & DDUtils.RNRN &
+        Objective.showNPC(ShopNPC.gbl_img.atrs(0).getAt(128), """Don't worry though, when the time comes I'll find you." & DDUtils.RNRN &
                                                              "It was a pleasure, " & Game.player1.getName & " the " & Game.player1.className & "!""" & DDUtils.RNRN &
                                                              "With a poof of smoke, Fantoma vanishes as suddenly as she appeared." & DDUtils.RNRN &
                                                              "Quest complete!" & DDUtils.PAKTC)

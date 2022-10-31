@@ -18,10 +18,10 @@
                           "To your suprise, a woman in goggles steps out of it and glances around before locking eyes with you, grinning, and striking a dramatic pose.", AddressOf initStep2)
     End Sub
     Private Sub initStep2()
-        Objective.showNPC(ShopNPC.npcLib.atrs(0).getAt(39), "HELLO, DENIZEN OF THE PAST!  You haven't exactly been keeping to your timeline, now have you?", AddressOf initStep3)
+        Objective.showNPC(ShopNPC.gbl_img.atrs(0).getAt(39), "HELLO, DENIZEN OF THE PAST!  You haven't exactly been keeping to your timeline, now have you?", AddressOf initStep3)
     End Sub
     Private Sub initStep3()
-        Objective.showNPC(ShopNPC.npcLib.atrs(0).getAt(43), "Our logs clearly show you were traipsing around in the far-off future, and that's a pretty severe infraction." & DDUtils.RNRN &
+        Objective.showNPC(ShopNPC.gbl_img.atrs(0).getAt(43), "Our logs clearly show you were traipsing around in the far-off future, and that's a pretty severe infraction." & DDUtils.RNRN &
                           "Lucky for you, it doesn't look like you're up to anything, and this is a first time offense so you're probably just gonna get a slap on the wrist." & DDUtils.RNRN &
                           "Of course, that all depends on how cooprative you are through the arrest process.  I'm not gonna need to beat you up, right?", AddressOf initStep4)
     End Sub
@@ -68,7 +68,7 @@
                        """Since you've been pretty well behaved so far, I'm gonna let you keep your stuff.  Don't try anything, okay?"" she says, slapping a button and activating a shimmering blue energy barrier between the two of you.")
     End Sub
     Private Sub resist()
-        Objective.showNPC(ShopNPC.npcLib.atrs(0).getAt(43), "Well, one way or another I'm taking you in.  If you're going to resist, I guess that's just how it's gonna be.", AddressOf fightTT)
+        Objective.showNPC(ShopNPC.gbl_img.atrs(0).getAt(43), "Well, one way or another I'm taking you in.  If you're going to resist, I guess that's just how it's gonna be.", AddressOf fightTT)
     End Sub
     Private Sub fightTT()
         Dim m As TimeTravellerFight = New TimeTravellerFight()
@@ -160,49 +160,49 @@ Friend Class OutOfTimeS3
     Public Overrides Sub complete()
         MyBase.complete()
 
-        showNPC(ShopNPC.npcLib.atrs(0).getAt(83), "Hello.  I'll be the Time Judge handling your case.  From what I've seen it should be open and shut, so let's get the procedure started." & DDUtils.RNRN &
+        showNPC(ShopNPC.gbl_img.atrs(0).getAt(83), "Hello.  I'll be the Time Judge handling your case.  From what I've seen it should be open and shut, so let's get the procedure started." & DDUtils.RNRN &
                 "I am going to ask you a set of questions, keep your answers consise and honest.", AddressOf q1)
     End Sub
 
     Public Sub q1()
-        showNPC(ShopNPC.npcLib.atrs(0).getAt(83), "First things first, did you intend to send yourself into the future?", AddressOf q1ask)
+        showNPC(ShopNPC.gbl_img.atrs(0).getAt(83), "First things first, did you intend to send yourself into the future?", AddressOf q1ask)
     End Sub
     Public Sub q1ask()
         TextEvent.pushYesNo("Did you try to go to the future?", AddressOf q1yes, AddressOf q1no)
     End Sub
 
     Public Sub q1no()
-        showNPC(ShopNPC.npcLib.atrs(0).getAt(83), "Good to hear.  Do you plan on returning to this point in time ever again?", AddressOf q1noq2)
+        showNPC(ShopNPC.gbl_img.atrs(0).getAt(83), "Good to hear.  Do you plan on returning to this point in time ever again?", AddressOf q1noq2)
     End Sub
     Public Sub q1yes()
-        showNPC(ShopNPC.npcLib.atrs(0).getAt(84), "Interesting... and did you consider the potential consequences that a time warp might have?", AddressOf q1yesq2)
+        showNPC(ShopNPC.gbl_img.atrs(0).getAt(84), "Interesting... and did you consider the potential consequences that a time warp might have?", AddressOf q1yesq2)
     End Sub
 
     Public Sub q1noq2()
         TextEvent.pushYesNo("Do you plan on returning?", AddressOf q1noq2yes, AddressOf q1noq2no)
     End Sub
     Public Sub q1noq2yes()
-        showNPC(ShopNPC.npcLib.atrs(0).getAt(84), "Hmmm.  You intend to violate time law intentionally?  Have you fully considered the weight of travelling into the future?", AddressOf q1yesq2)
+        showNPC(ShopNPC.gbl_img.atrs(0).getAt(84), "Hmmm.  You intend to violate time law intentionally?  Have you fully considered the weight of travelling into the future?", AddressOf q1yesq2)
     End Sub
     Public Sub q1noq2no()
-        showNPC(ShopNPC.npcLib.atrs(0).getAt(83), "Well then, I see no reason to hold you here any further.  You are free to go, " & If(Game.player1.sex.Equals("Male"), "sir", "ma'am") & "...", AddressOf cleanup)
+        showNPC(ShopNPC.gbl_img.atrs(0).getAt(83), "Well then, I see no reason to hold you here any further.  You are free to go, " & If(Game.player1.sex.Equals("Male"), "sir", "ma'am") & "...", AddressOf cleanup)
     End Sub
 
     Public Sub q1yesq2()
         TextEvent.pushYesNo("Did you fully think out time travel?", AddressOf q1yesq2yes, AddressOf q1yesq2no)
     End Sub
     Public Sub q1yesq2yes()
-        showNPC(ShopNPC.npcLib.atrs(0).getAt(84), "And still you risk tearing at the fabric of the universe?  Who do you think you are?!", AddressOf q1yesq2yesq3)
+        showNPC(ShopNPC.gbl_img.atrs(0).getAt(84), "And still you risk tearing at the fabric of the universe?  Who do you think you are?!", AddressOf q1yesq2yesq3)
     End Sub
     Public Sub q1yesq2no()
-        showNPC(ShopNPC.npcLib.atrs(0).getAt(83), "So, you are simply reckless... not great for your case, but not terrible either...", AddressOf q1yesq2noq3)
+        showNPC(ShopNPC.gbl_img.atrs(0).getAt(83), "So, you are simply reckless... not great for your case, but not terrible either...", AddressOf q1yesq2noq3)
     End Sub
 
     Public Sub q1yesq2yesq3()
         TextEvent.pushYesNo("Answer Politely?", AddressOf q1yesq2yesq3yes, AddressOf q1yesq2yesq3no)
     End Sub
     Public Sub q1yesq2yesq3yes()
-        showNPC(ShopNPC.npcLib.atrs(0).getAt(83), "Do.  Not.  Do.  This.  Again." & DDUtils.RNRN &
+        showNPC(ShopNPC.gbl_img.atrs(0).getAt(83), "Do.  Not.  Do.  This.  Again." & DDUtils.RNRN &
                                                   "For your prior actions you will be fined 40,000 credits which adds up to 1,000 of your gold coins.  If we catch you outside of your source timeline again, there will be repercussions...", AddressOf fine1)
     End Sub
     Public Sub fine1()
@@ -211,10 +211,10 @@ Friend Class OutOfTimeS3
     Public Sub payFine1()
         If Game.player1.getGold < 1000 Then
             Game.player1.perks(perk.owetimebalance) = 1000 - Game.player1.gold
-            showNPC(ShopNPC.npcLib.atrs(0).getAt(84), "*sigh* I suppose it would be too much to ask that you have the proper payment.  Fine, we'll just need to make up the balance later.  Now leave.  The door to the portal to your home timeline is the last one on the left.")
+            showNPC(ShopNPC.gbl_img.atrs(0).getAt(84), "*sigh* I suppose it would be too much to ask that you have the proper payment.  Fine, we'll just need to make up the balance later.  Now leave.  The door to the portal to your home timeline is the last one on the left.")
             Game.player1.gold = 0
         Else
-            showNPC(ShopNPC.npcLib.atrs(0).getAt(83), "Now leave.  The door to the portal to your home timeline is the last one on the left.")
+            showNPC(ShopNPC.gbl_img.atrs(0).getAt(83), "Now leave.  The door to the portal to your home timeline is the last one on the left.")
             Game.player1.gold -= 1000
         End If
 
@@ -229,21 +229,21 @@ Friend Class OutOfTimeS3
         Game.drawBoard()
     End Sub
     Public Sub q1yesq2yesq3no()
-        showNPC(ShopNPC.npcLib.atrs(0).getAt(84), "I'm not just going to sit here and take this.  Have at you!", AddressOf tjFight)
+        showNPC(ShopNPC.gbl_img.atrs(0).getAt(84), "I'm not just going to sit here and take this.  Have at you!", AddressOf tjFight)
     End Sub
 
 
     Public Sub q1yesq2noq3()
-        showNPC(ShopNPC.npcLib.atrs(0).getAt(83), "Do you plan on returning to this point in time ever again?", AddressOf q1yesq2noq3ask)
+        showNPC(ShopNPC.gbl_img.atrs(0).getAt(83), "Do you plan on returning to this point in time ever again?", AddressOf q1yesq2noq3ask)
     End Sub
     Public Sub q1yesq2noq3ask()
         TextEvent.pushYesNo("Do you plan on returning?", AddressOf q1yesq2noq3yes, AddressOf q1yesq2noq3no)
     End Sub
     Public Sub q1yesq2noq3yes()
-        showNPC(ShopNPC.npcLib.atrs(0).getAt(84), "Well then, I'm afraid that you can't be allowed to leave.  Please return to your cell.", AddressOf q1yesq2noq3yesq4)
+        showNPC(ShopNPC.gbl_img.atrs(0).getAt(84), "Well then, I'm afraid that you can't be allowed to leave.  Please return to your cell.", AddressOf q1yesq2noq3yesq4)
     End Sub
     Public Sub q1yesq2noq3no()
-        showNPC(ShopNPC.npcLib.atrs(0).getAt(83), "Well, see that you don't.  For your prior actions you will be fined 20,000 credits which adds up to 500 of your gold coins and then you are free to go.", AddressOf fine2)
+        showNPC(ShopNPC.gbl_img.atrs(0).getAt(83), "Well, see that you don't.  For your prior actions you will be fined 20,000 credits which adds up to 500 of your gold coins and then you are free to go.", AddressOf fine2)
     End Sub
     Public Sub fine2()
         TextEvent.pushYesNo("Pay your fine?", AddressOf payFine2, AddressOf alert)
@@ -251,10 +251,10 @@ Friend Class OutOfTimeS3
     Public Sub payFine2()
         If Game.player1.getGold < 500 Then
             Game.player1.perks(perk.owetimebalance) = 500 - Game.player1.gold
-            showNPC(ShopNPC.npcLib.atrs(0).getAt(84), "We'll just need to make up the remaining balance later.  Now leave.  The door to the portal to your home timeline is the last one on the left.")
+            showNPC(ShopNPC.gbl_img.atrs(0).getAt(84), "We'll just need to make up the remaining balance later.  Now leave.  The door to the portal to your home timeline is the last one on the left.")
             Game.player1.gold = 0
         Else
-            showNPC(ShopNPC.npcLib.atrs(0).getAt(83), "The door to the portal to your home timeline is the last one on the left.")
+            showNPC(ShopNPC.gbl_img.atrs(0).getAt(83), "The door to the portal to your home timeline is the last one on the left.")
             Game.player1.gold -= 500
         End If
 

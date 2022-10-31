@@ -44,15 +44,15 @@
     Public Shared Sub setImg(ByVal m As mode)
         Select Case m
             Case mode.bimbo
-                happy = ShopNPC.npcLib.atrs(0).getAt(134)
-                annoy = ShopNPC.npcLib.atrs(0).getAt(137)
-                cast1 = ShopNPC.npcLib.atrs(0).getAt(135)
-                cast2 = ShopNPC.npcLib.atrs(0).getAt(136)
+                happy = ShopNPC.gbl_img.atrs(0).getAt(134)
+                annoy = ShopNPC.gbl_img.atrs(0).getAt(137)
+                cast1 = ShopNPC.gbl_img.atrs(0).getAt(135)
+                cast2 = ShopNPC.gbl_img.atrs(0).getAt(136)
             Case Else
-                happy = ShopNPC.npcLib.atrs(0).getAt(130)
-                annoy = ShopNPC.npcLib.atrs(0).getAt(133)
-                cast1 = ShopNPC.npcLib.atrs(0).getAt(131)
-                cast2 = ShopNPC.npcLib.atrs(0).getAt(132)
+                happy = ShopNPC.gbl_img.atrs(0).getAt(130)
+                annoy = ShopNPC.gbl_img.atrs(0).getAt(133)
+                cast1 = ShopNPC.gbl_img.atrs(0).getAt(131)
+                cast2 = ShopNPC.gbl_img.atrs(0).getAt(132)
         End Select
     End Sub
 

@@ -308,6 +308,7 @@
     <Compile Include="Items\Usable\Food\FaePApple.vb" />
     <Compile Include="Items\Usable\Food\MPStickOfGum.vb" />
     <Compile Include="Items\Usable\Food\HPStickOfGum.vb" />
+    <Compile Include="Items\Usable\Potions\Lepanacea.vb" />
     <Compile Include="Items\Usable\OuijaBoard.vb" />
     <Compile Include="Items\Usable\Food\GoldenGum.vb" />
     <Compile Include="Items\Usable\Food\IcePopB.vb" />
@@ -319,7 +320,11 @@
     <Compile Include="Items\Usable\Food\Steak.vb" />
     <Compile Include="Items\Usable\Food\NatureKiss.vb" />
     <Compile Include="Items\Usable\Food\RocDrumstick.vb" />
+    <Compile Include="Items\Usable\Potions\Mystery Potions\Effects\Side Effects\ShowgirlArmorEffect.vb" />
+    <Compile Include="Items\Usable\Potions\Mystery Potions\Effects\Side Effects\ShowgirlWeaponEffect.vb" />
+    <Compile Include="Items\Usable\Potions\Mystery Potions\Effects\Side Effects\BunnyEarsEffect.vb" />
     <Compile Include="Items\Usable\Spellbooks\LingerieCatalog.vb" />
+    <Compile Include="Items\Usable\Spellbooks\RosePetalSpellbook.vb" />
     <Compile Include="Items\Usable\Spellbooks\PirateHandbook.vb" />
     <Compile Include="Items\Usable\Spellbooks\TomeOfKnowlege.vb" />
     <Compile Include="Items\Usable\Spellbooks\MarissasNotes.vb" />

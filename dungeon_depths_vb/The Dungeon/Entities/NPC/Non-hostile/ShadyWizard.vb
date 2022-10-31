@@ -1,12 +1,19 @@
 ﻿Public Class ShadyWizard
     Inherits ShopNPC
+
+    Public Shared ReadOnly SECRET_INV_CLASSES() As String = {"Bimbo", "Magical Slut", "Maid", "Bunny Girl", "Bimbo++"}
+    Public Shared ReadOnly NORMAL_INV() As String = {CurseBGone.ITEM_NAME, PApple.ITEM_NAME, HPStickOfGum.ITEM_NAME, MPStickOfGum.ITEM_NAME, CrystalBikini.ITEM_NAME, Cowbell.ITEM_NAME, ScaleTalisman.ITEM_NAME, MaidDuster.ITEM_NAME, ScepterOfAsh.ITEM_NAME, SWRestoration.ITEM_NAME, Lepanacea.ITEM_NAME}
+    Public Shared ReadOnly SECRET_INV() As String = {HPStickOfGum.ITEM_NAME, MPStickOfGum.ITEM_NAME, CrystalBikini.ITEM_NAME, BrawlerCosplay.ITEM_NAME, BronzeBikini.ITEM_NAME, CowCosplay.ITEM_NAME, CultistCloak.ITEM_NAME, MaidLingerie.ITEM_NAME, BunnySuit.ITEM_NAME, ReverseBunnySuit.ITEM_NAME, SkimpyClothes.ITEM_NAME, SteelBikini.ITEM_NAME, WitchCosplay.ITEM_NAME, SportBra.ITEM_NAME}
+
+    Private use_secret_inv As Boolean = SECRET_INV_CLASSES.Contains(Game.player1.className)
+
     Sub New()
         MyBase.New()
 
         '|ID Info|
         name = "Shady Wizard"
         sName = name
-        npc_index = sNPCInd.shadywizard
+        npc_index = ShopNPCInd.shadywizard
 
         '|NPC Flags|
         pronoun = "he"
@@ -15,27 +22,11 @@
         isShop = True
 
         '|Inventory|
-        inv.setCount(CurseBGone.ITEM_NAME, 1)
-
-        'Foods
-        inv.setCount(PApple.ITEM_NAME, 1)
-        inv.setCount(HPStickOfGum.ITEM_NAME, 1)
-        inv.setCount(MPStickOfGum.ITEM_NAME, 1)
+        setNormalInv()
 
         'Armors
-        inv.setCount(CrystalBikini.ITEM_NAME, 1)
         If DDDateTime.isSummer Then inv.setCount(LimeBikini.ITEM_NAME, 1)
-
-        'Accessories
-        inv.setCount(Cowbell.ITEM_NAME, 1)
-        inv.setCount(ScaleTalisman.ITEM_NAME, 1)
-
-        'Weapons
-        inv.setCount(MaidDuster.ITEM_NAME, 1)
-        inv.setCount(ScepterOfAsh.ITEM_NAME, 1)
-
-        'Services
-        inv.setCount(SWRestoration.ITEM_NAME, 1)
+        If DDDateTime.isHallow Then inv.setCount(FamCostume.ITEM_NAME, 1)
 
         '|Stats|
         health = (1.0)
@@ -54,108 +45,57 @@
         sSpeed = speed
 
         '|Images|
-        picNormal = ShopNPC.npcLib.atrs(0).getAt(6)
-        picPrincess = ShopNPC.npcLib.atrs(0).getAt(8)
-        picBunny = ShopNPC.npcLib.atrs(0).getAt(7)
-        picArachne = ShopNPC.npcLib.atrs(0).getAt(68)
+        local_img = New Dictionary(Of ShopNPC.LocalImgInd, Image)()
 
-        picNPC = New List(Of Image)
-        picNPC.AddRange({picNormal, ShopNPC.npcLib.atrs(0).getAt(4), ShopNPC.npcLib.atrs(0).getAt(5), picPrincess, picBunny})
-
-        picNPC.AddRange({ShopNPC.npcLib.atrs(0).getAt(9),
-                         picArachne,
-                         ShopNPC.npcLib.atrs(0).getAt(90),
-                         ShopNPC.npcLib.atrs(0).getAt(96)})
-
+        local_img.Add(LocalImgInd.normal, ShopNPC.gbl_img.atrs(0).getAt(6))
+        local_img.Add(LocalImgInd.frog, ShopNPC.gbl_img.atrs(0).getAt(4))
+        local_img.Add(LocalImgInd.bunny, ShopNPC.gbl_img.atrs(0).getAt(7))
+        local_img.Add(LocalImgInd.princess, ShopNPC.gbl_img.atrs(0).getAt(8))
+        local_img.Add(LocalImgInd.sheep, ShopNPC.gbl_img.atrs(0).getAt(5))
+        local_img.Add(LocalImgInd.doll, ShopNPC.gbl_img.atrs(0).getAt(9))
+        local_img.Add(LocalImgInd.arachne, ShopNPC.gbl_img.atrs(0).getAt(68))
+        local_img.Add(LocalImgInd.catgirl, ShopNPC.gbl_img.atrs(0).getAt(90))
+        local_img.Add(LocalImgInd.trilobite, ShopNPC.gbl_img.atrs(0).getAt(96))
+        local_img.Add(LocalImgInd.beegirl, ShopNPC.gbl_img.atrs(0).getAt(148))
+        local_img.Add(LocalImgInd.alt1, ShopNPC.gbl_img.atrs(0).getAt(10))
     End Sub
 
-    Public Overrides Sub encounter()
+    '| - INVENTORY - |
+    Private Sub setNormalInv()
+        For Each itm In SECRET_INV
+            inv.setCount(itm, 0)
+        Next
+
+        For Each itm In NORMAL_INV
+            inv.setCount(itm, 1)
+        Next
+    End Sub
+    Private Sub setSecretInv()
+        For Each itm In NORMAL_INV
+            inv.setCount(itm, 0)
+        Next
+
+        For Each itm In SECRET_INV
+            inv.setCount(itm, 1)
+        Next
+    End Sub
+
+    '| - EVENT HANDLERS - |
+    Public Overrides Sub inventoryUpdate()
+        use_secret_inv = SECRET_INV_CLASSES.Contains(Game.player1.className)
+
+        If use_secret_inv Then
+            setSecretInv()
+        Else
+            setNormalInv()
+        End If
 
         If Game.mDun.numCurrFloor < 3 Then
             inv.setCount(ScaleBikini.ITEM_NAME, 1)
         Else
             inv.setCount(GoldAdornment.ITEM_NAME, 1)
         End If
-
-        MyBase.encounter()
-
-        MyBase.discount = 0
-
-        If img_index = 0 Then
-            If CInt(Game.player1.health * Game.player1.getMaxHealth()) = 69 Then
-                TextEvent.pushNPCDialog("Ehehe. Your health. Nice." & vbCrLf & "Anyway, what are you buying?")
-            Else
-                TextEvent.pushNPCDialog("What are you buying?")
-            End If
-        ElseIf img_index = 1 Then
-            TextEvent.pushNPCDialog("Ribbit.  Ribbit!")
-        ElseIf img_index = 2 Then
-            TextEvent.pushNPCDialog("*bleets*")
-        ElseIf img_index = 3 Then
-            TextEvent.pushNPCDialog("Hey, " & Game.player1.className & ", how's it going?")
-        ElseIf img_index = 4 Then
-            TextEvent.pushNPCDialog("So are these real or fake?  My ears, I mean.")
-        ElseIf img_index = 5 Or img_index = 8 Then
-            TextEvent.pushNPCDialog("...")
-        ElseIf img_index = 7 Then
-            TextEvent.pushNPCDialog("Damn it, and I set aside the extra-skimpy bikini for this too...")
-        ElseIf img_index = 6 Then
-            If Game.player1.formName.Equals("Arachne") And Game.player1.equippedArmor.getAntiSlutInd > 0 Then
-                TextEvent.pushNPCDialog("Ooh, darling, are you the one who laid that snare?  Aren't you a cutie...")
-            ElseIf Game.player1.formName.Equals("Arachne") And Game.player1.equippedArmor.getSlutVarInd > 0 Then
-                TextEvent.pushNPCDialog("Ooh, darling, are you the one who laid that snare?  You know, you could spice your look up a bit...")
-            ElseIf Game.player1.formName.Equals("Arachne") Then
-                TextEvent.pushNPCDialog("Ooh, darling, are you the one who laid that snare?  Let me know if you'd like any tips on your bondage technique...")
-            Else
-                TextEvent.pushNPCDialog("Ooh, darling, you should really give the whole ""8-Legs"" thing a chance... I have a more... potent... venom if you'd like...")
-            End If
-        End If
-
-        If img_index = getArachneImageInd() And Not Game.player1.formName.Equals("Arachne") Then inv.setCount(244, 1) Else inv.setCount(244, 0)
     End Sub
-
-    Public Overrides Function toFight() As String
-        If img_index = 0 Or img_index = 7 Then
-            Return "Alright, get ready to fight.  This ain't going well for you."
-        ElseIf img_index = 1 Then
-            Return "Ribbit . . ."
-        ElseIf img_index = 2 Then
-            Return "BAAAAAHHHH!"
-        ElseIf img_index = 3 Then
-            Return "Get ready, I was trained by the royal mage's guild and I certainly won't submit easily."
-        ElseIf img_index = 4 Then
-            Return "Whaaaat!?!"
-        ElseIf img_index = 5 Or img_index = 8 Then
-            Return "..."
-        ElseIf img_index = 6 Then
-            TextEvent.pushNPCDialog("*tsk* *tsk* *tsk* Not too bright...")
-        End If
-        Return "Bad move."
-    End Function
-    Public Overrides Function hitBySpell() As String
-        If img_index = 0 Or img_index = 7 Then
-            Game.NPCtoCombat(Me)
-            Return "Ha!  That's just sloppy."
-        ElseIf img_index = 1 Then
-            Game.NPCtoCombat(Me)
-            Return "Ribbit!!!"
-        ElseIf img_index = 2 Then
-            Game.NPCtoCombat(Me)
-            Return "[angry bleets]!"
-        ElseIf img_index = 3 Then
-            Game.NPCtoCombat(Me)
-            Return "I've seen better spellwork, but that was a decent attempt."
-        ElseIf img_index = 4 Then
-            Return "That's neat!"
-        ElseIf img_index = 5 Or img_index = 8 Then
-            Return "..."
-        ElseIf img_index = 6 Then
-            Game.NPCtoCombat(Me)
-            TextEvent.pushNPCDialog("Oooh, is that really your best?  Adorable...")
-        End If
-        Return "Woah there!"
-    End Function
-
     Public Overrides Sub toFemale(form As String)
         MyBase.toFemale(form)
         setName("Shady Witch")
@@ -164,17 +104,15 @@
         MyBase.toMale(form)
         setName("Shady Wizard")
     End Sub
-
-    Public Overrides Sub attackCMD(ByRef target As Entity)
-        attackSpell(target, "Confuego", MyBase.getWIL)
-    End Sub
-
     Public Overrides Sub toDoll()
-        MyBase.toDoll()
-        MyBase.img_index = 5
+        toDoll()
         isShop = False
     End Sub
 
+    '| - COMBAT - |
+    Public Overrides Sub attackCMD(ByRef target As Entity)
+        attackSpell(target, "Confuego", MyBase.getWIL)
+    End Sub
     Public Overrides Sub playerDeath(ByRef p As Player)
         Game.fromCombat()
         Dim out = "You collapse to the ground, the wizard's onslaught wearing down your last defenses.  Twirling " & p_pronoun & " staff, they fire off one final blast and as it hits you your lifeforce... surges?  Startled, you notice that your body is coursing with magical energy- far more than you were capable of mustering before." & DDUtils.RNRN &
@@ -196,4 +134,88 @@
         Game.picPortrait.BackgroundImage = Game.picStaffEnd.BackgroundImage
         TextEvent.push(out, AddressOf p.die)
     End Sub
+
+    '| - DIALOG - |
+    Protected Overrides Function normalDialog(ByRef p As Player)
+        If use_secret_inv Then
+            Return "Hey sugar, looking good...  Heh, just for you, let's bust out the ol' special inventory, yeah?"
+        ElseIf Game.player1.getIntHealth = 69 Then
+            Return "Ehehe.  Your health...  Nice." & DDUtils.RNRN &
+                   "Anyway, what are you buying?"
+        Else
+            Return "Heh...  What are you buying?"
+        End If
+    End Function
+    Protected Overrides Function bunnyDialog(ByRef p As Player)
+        If use_secret_inv Then
+            Return "OMG, you gotta check out my special inventory!  You'd, like, totally look hot in one of these bikinis."
+        Else
+            Return "So, like, are these thingies real or fake?  Uh, like, my ears, I mean..."
+        End If
+    End Function
+    Protected Overrides Function princessDialog(ByRef p As Player)
+        If use_secret_inv Then
+            Return "Hey, " & Game.player1.className & ", wanna buy a brassiere?"
+        Else
+            Return "Hey, " & Game.player1.className & ", how's it going?"
+        End If
+    End Function
+    Protected Overrides Function sheepDialog(ByRef p As Player)
+        Return "*bleets*"
+    End Function
+    Protected Overrides Function arachneDialog(ByRef p As Player)
+        If Game.player1.formName.Equals("Arachne") And Game.player1.equippedArmor.getAntiSlutInd > 0 Then
+            Return "Ooh, darling, are you the one who laid that snare?  Aren't you a cutie..."
+        ElseIf Game.player1.formName.Equals("Arachne") And Game.player1.equippedArmor.getSlutVarInd > 0 Then
+            Return "Ooh, darling, are you the one who laid that snare?  You know, I could spice your look up a bit..."
+        ElseIf Game.player1.formName.Equals("Arachne") Then
+            Return "Ooh, darling, are you the one who laid that snare?  Let me know if you'd like any tips on your bondage technique..."
+        Else
+            Return "Ooh, darling, you should really give the whole ""8-Legs"" thing a chance.  I have a more... potent... venom if you'd like..."
+        End If
+    End Function
+    Protected Overrides Function catgirlDialog(ByRef p As Player)
+        Return "Damn it, and I set aside the extra-skimpy bikini for this too..."
+    End Function
+    Protected Overrides Function beegirlDialog(ByRef p As Player)
+        Return "Ehehehe... Bzz Bzz Bzz..."
+    End Function
+
+    Protected Overrides Function normalFightDialog(ByRef p As Player)
+        Return "Alright, get ready to fight.  This ain't gonna go well for you."
+    End Function
+    Protected Overrides Function frogFightDialog(ByRef p As Player)
+        Return "Ribbit..."
+    End Function
+    Protected Overrides Function bunnyFightDialog(ByRef p As Player)
+        Return "Whaaaat!?!"
+    End Function
+    Protected Overrides Function princessFightDialog(ByRef p As Player)
+        Return "Get ready, I was trained by the royal mage's guild and I certainly ain't gonna submit easily."
+    End Function
+    Protected Overrides Function arachneFightDialog(ByRef p As Player)
+        Return "*tsk* *tsk* *tsk* Not too bright..."
+    End Function
+    Protected Overrides Function catgirlFightDialog(ByRef p As Player)
+        Return normalFightDialog(p)
+    End Function
+
+    Protected Overrides Function normalSpellDialog(ByRef p As Player)
+        Return "Ha!  That's just sloppy."
+    End Function
+    Protected Overrides Function bunnySpellDialog(ByRef p As Player)
+        Return "That's neat!"
+    End Function
+    Protected Overrides Function princessSpellDialog(ByRef p As Player)
+        Return "I've seen better spellwork, but that was a decent attempt."
+    End Function
+    Protected Overrides Function sheepSpellDialog(ByRef p As Player)
+        Return "[angry bleets]!"
+    End Function
+    Protected Overrides Function arachneSpellDialog(ByRef p As Player)
+        Return "Oooh, is that really your best?  Adorable..."
+    End Function
+    Protected Overrides Function catgirlSpellDialog(ByRef p As Player)
+        Return normalSpellDialog(p)
+    End Function
 End Class

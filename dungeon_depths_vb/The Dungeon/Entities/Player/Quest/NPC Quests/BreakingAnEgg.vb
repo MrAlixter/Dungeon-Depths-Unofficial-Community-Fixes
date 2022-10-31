@@ -33,7 +33,7 @@ Friend Class BEggGetSword
     Public Overrides Sub complete()
         MyBase.complete()
 
-        Game.picNPC.BackgroundImage = ShopNPC.npcLib.atrs(0).getAt(11)
+        Game.picNPC.BackgroundImage = ShopNPC.gbl_img.atrs(0).getAt(11)
         Game.picNPC.Visible = True
 
         TextEvent.pushNPCDialog("Hey, awesome!  You sure you just want to hand 'er over?", AddressOf complete2)
@@ -49,7 +49,7 @@ Friend Class BEggGetSword
 
         Game.player1.perks(perk.fvHasSword) = 1
         Game.player1.addXP(1000)
-        showNPC(ShopNPC.npcLib.atrs(0).getAt(11), """Nice, thanks!  Stop by the ol' stand when you get the chance, I'll have all sorts of new stuff to try.""" & DDUtils.RNRN &
+        showNPC(ShopNPC.gbl_img.atrs(0).getAt(11), """Nice, thanks!  Stop by the ol' stand when you get the chance, I'll have all sorts of new stuff to try.""" & DDUtils.RNRN &
                                                   "+1000 XP")
     End Sub
 

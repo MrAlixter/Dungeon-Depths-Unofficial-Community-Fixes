@@ -18,7 +18,7 @@
         '|ID Info|
         name = "Fae Queen"
         sName = name
-        npc_index = sNPCInd.faequeen
+        npc_index = ShopNPCInd.faequeen
 
         '|NPC Flags|
         pronoun = "she"
@@ -50,13 +50,16 @@
         firstCTurn = False
 
         '|Images|
-        picNormal = ShopNPC.npcLib.atrs(0).getAt(107)
-        picPrincess = ShopNPC.npcLib.atrs(0).getAt(108)
-        picBunny = ShopNPC.npcLib.atrs(0).getAt(109)
-        picArachne = ShopNPC.npcLib.atrs(0).getAt(110)
+        local_img = New Dictionary(Of ShopNPC.LocalImgInd, Image)()
 
-        picNPC = New List(Of Image)
-        picNPC.AddRange({picNormal, picPrincess, picBunny, picArachne})
+        local_img.Add(LocalImgInd.normal, ShopNPC.gbl_img.atrs(0).getAt(107))
+        local_img.Add(LocalImgInd.frog, ShopNPC.gbl_img.atrs(0).getAt(4))
+        local_img.Add(LocalImgInd.sheep, ShopNPC.gbl_img.atrs(0).getAt(5))
+        local_img.Add(LocalImgInd.trilobite, ShopNPC.gbl_img.atrs(0).getAt(96))
+        local_img.Add(LocalImgInd.beegirl, ShopNPC.gbl_img.atrs(0).getAt(148))
+        local_img.Add(LocalImgInd.alt1, ShopNPC.gbl_img.atrs(0).getAt(108))
+        local_img.Add(LocalImgInd.alt2, ShopNPC.gbl_img.atrs(0).getAt(109))
+        local_img.Add(LocalImgInd.alt3, ShopNPC.gbl_img.atrs(0).getAt(110))
     End Sub
 
     Public Shared Sub spawn(ByRef floor As mFloor)
@@ -112,11 +115,11 @@
         Game.picBoard.Select()
 
         If Game.player1.perks(perk.f13fqueentalked) > 0 Then
-            Objective.showNPC(picNormal, "Hello again...")
+            Objective.showNPC(local_img(LocalImgInd.normal), "Hello again...")
         ElseIf Game.player1.perks(perk.faecurse) = 1 Then
-            Objective.showNPC(picNormal, """Oh, hello...  Who do we have here?""" & DDUtils.PAKTC, AddressOf faeCursedInitialResponse)
+            Objective.showNPC(local_img(LocalImgInd.normal), """Oh, hello...  Who do we have here?""" & DDUtils.PAKTC, AddressOf faeCursedInitialResponse)
         Else
-            Objective.showNPC(picNormal, """Well, well, well...  Who do we have here?""" & DDUtils.PAKTC, AddressOf selectInitialResponse)
+            Objective.showNPC(local_img(LocalImgInd.normal), """Well, well, well...  Who do we have here?""" & DDUtils.PAKTC, AddressOf selectInitialResponse)
         End If
     End Sub
     Public Overrides Sub despawn(reason As String)
@@ -194,13 +197,13 @@
         selected_tree = 3
     End Sub
     Public Shared Sub dialogTree4()
-        Objective.showNPC(ShopNPC.npcLib.atrs(0).getAt(107), """Oh, is that so?  Well then, by all means, let's see you try...""" & DDUtils.PAKTC, AddressOf toCombat)
+        Objective.showNPC(ShopNPC.gbl_img.atrs(0).getAt(107), """Oh, is that so?  Well then, by all means, let's see you try...""" & DDUtils.PAKTC, AddressOf toCombat)
 
         selected_tree = 4
         Game.player1.perks(perk.f13fqueentalked) = 4
     End Sub
     Public Shared Sub playerLeaves()
-        Objective.showNPC(ShopNPC.npcLib.atrs(0).getAt(108), """Are you ignoring me?  Hmm, how rude...""" & DDUtils.PAKTC)
+        Objective.showNPC(ShopNPC.gbl_img.atrs(0).getAt(108), """Are you ignoring me?  Hmm, how rude...""" & DDUtils.PAKTC)
 
         Game.player1.canMoveFlag = True
 
@@ -210,12 +213,12 @@
 
     '| - STORY PROGRESSION - |
     Private Shared Sub fakeCurse1()
-        Objective.showNPC(ShopNPC.npcLib.atrs(0).getAt(107), "Ah, so that was your real name...  Well, I suppose I can't fault you for honesty." & DDUtils.RNRN &
+        Objective.showNPC(ShopNPC.gbl_img.atrs(0).getAt(107), "Ah, so that was your real name...  Well, I suppose I can't fault you for honesty." & DDUtils.RNRN &
                                                              "Your naiveity, on the other hand, may prove useful to me yet...", AddressOf fakeCurse2)
     End Sub
     Private Shared Sub fakeCurse2()
         Game.player1.revertToPState()
-        Objective.showNPC(ShopNPC.npcLib.atrs(0).getAt(108), "With a wave of her hand, and a plume of glittery dust, the fae returns you to your original form." & DDUtils.RNRN &
+        Objective.showNPC(ShopNPC.gbl_img.atrs(0).getAt(108), "With a wave of her hand, and a plume of glittery dust, the fae returns you to your original form." & DDUtils.RNRN &
                                                              """It can be so hard to find someone- particularly an outsider- that I can trust.  But I know I can trust you, " & Game.player1.name & "." & DDUtils.RNRN &
                                                              "I have your name, after all, and names have such power, now don't they?""", AddressOf fakeCurse3)
     End Sub
@@ -241,7 +244,7 @@
     End Sub
 
     Private Shared Sub fakeName1()
-        Objective.showNPC(ShopNPC.npcLib.atrs(0).getAt(108), "Still though, I cannot allow a lying outsider to run rampant through my realm." & DDUtils.RNRN &
+        Objective.showNPC(ShopNPC.gbl_img.atrs(0).getAt(108), "Still though, I cannot allow a lying outsider to run rampant through my realm." & DDUtils.RNRN &
                                                              "Choose your next words carefully, because if you aren't the trustworthy type..." & DDUtils.RNRN &
                                                              "Well, we can always change that, now can't we?", AddressOf giveRealName)
     End Sub
@@ -262,13 +265,13 @@
         p.update()
     End Sub
     Private Shared Sub fakeCurse1alt()
-        Objective.showNPC(ShopNPC.npcLib.atrs(0).getAt(107), "Ah, so that was your real name...  Well, I suppose I can't fault you for being cautious." & DDUtils.RNRN &
+        Objective.showNPC(ShopNPC.gbl_img.atrs(0).getAt(107), "Ah, so that was your real name...  Well, I suppose I can't fault you for being cautious." & DDUtils.RNRN &
                                                              "Your shrewdness may actually prove useful to me yet...", AddressOf fakeCurse2)
     End Sub
     Private Shared Sub fakeNameCanBeTrusted()
         Dim fakename = If(Game.player1.name.Equals("Alex"), "Schmalex", "Alex")
 
-        Objective.showNPC(ShopNPC.npcLib.atrs(0).getAt(109), """See, you say that, '" & fakename & "'...""" & DDUtils.RNRN &
+        Objective.showNPC(ShopNPC.gbl_img.atrs(0).getAt(109), """See, you say that, '" & fakename & "'...""" & DDUtils.RNRN &
                                                              "With the flick of a finger, she directs a ball of dark energy straight at you." & DDUtils.RNRN &
                                                              """...but we both know that it isn't true.  You've already lied to me once, now twice.  It will not happen again.""" & DDUtils.RNRN &
                                                              "Without time to dodge, all you can do is raise a makeshift arcane barrier that is quickly swallowed by the spell, along with your remaining MP." & DDUtils.RNRN &
@@ -277,7 +280,7 @@
         Game.player1.UIupdate()
     End Sub
     Private Shared Sub fakeNameCannotBeTrusted()
-        Objective.showNPC(ShopNPC.npcLib.atrs(0).getAt(107), "Fair enough.  You probably shouldn't trust me either." & DDUtils.RNRN &
+        Objective.showNPC(ShopNPC.gbl_img.atrs(0).getAt(107), "Fair enough.  You probably shouldn't trust me either." & DDUtils.RNRN &
                                                              "Now you've got me curious though, which means we get to do this the fun way...", AddressOf toCombat)
     End Sub
     Private Shared Sub fakeNameEnd()
@@ -311,7 +314,7 @@
     End Sub
     Private Shared Sub fakeNameEnd2()
         Game.player1.perks(perk.f13fqueentalked) = 2
-        Objective.showNPC(ShopNPC.npcLib.atrs(0).getAt(57), """What the hell...""" & DDUtils.RNRN &
+        Objective.showNPC(ShopNPC.gbl_img.atrs(0).getAt(57), """What the hell...""" & DDUtils.RNRN &
                                                             "GAME OVER!", AddressOf Game.player1.die)
     End Sub
 
@@ -454,7 +457,7 @@
         MyBase.playerDeath(p)
         If Game.combat_engaged Then Game.fromCombat()
 
-        Objective.showNPC(picBunny, """Avert your gaze, you insect.  You aren't even worthy to lick my boots, let alone look me in the eyes." & DDUtils.RNRN &
+        Objective.showNPC(local_img(LocalImgInd.alt2), """Avert your gaze, you insect.  You aren't even worthy to lick my boots, let alone look me in the eyes." & DDUtils.RNRN &
                           "Mmm, 'insect' may even be too kind to describe someone like you...""" & DDUtils.RNRN &
                           "A contemplative look falls over the Queen's face, before shifting to a sinister grin." & DDUtils.RNRN &
                           """Take heart though, " & Game.player1.formName & ", for I have decided to grant you a form that isn't quite so repulsive.""", AddressOf leaveP1)
@@ -475,7 +478,7 @@
                "A contemplative look falls over the Queen's face, before shifting to a sinister grin." & DDUtils.RNRN &
                """Take heart though, " & Game.player1.name & ", for I have decided that you may serve some purpose yet."""
 
-        Objective.showNPC(picBunny, out, AddressOf leaveP1)
+        Objective.showNPC(local_img(LocalImgInd.alt2), out, AddressOf leaveP1)
 
         If Game.shop_npc_engaged Then Game.hideNPCButtons()
     End Sub
@@ -515,14 +518,14 @@
         End Select
     End Sub
     Private Sub leaveP2()
-        Objective.showNPC(picNormal, "There.  Much better...", AddressOf Game.player1.die)
+        Objective.showNPC(local_img(LocalImgInd.normal), "There.  Much better...", AddressOf Game.player1.die)
     End Sub
 
     Private Sub faeCursedToCombat()
         If Game.player1.perks(perk.faehasname) < 0 Then
-            Objective.showNPC(ShopNPC.npcLib.atrs(0).getAt(108), """I find your presence in my domain to be quite unpleasant...""" & DDUtils.PAKTC, AddressOf toCombat)
+            Objective.showNPC(ShopNPC.gbl_img.atrs(0).getAt(108), """I find your presence in my domain to be quite unpleasant...""" & DDUtils.PAKTC, AddressOf toCombat)
         Else
-            Objective.showNPC(ShopNPC.npcLib.atrs(0).getAt(51), """Ah, by the way, your Majesty, their name is " & Game.player1.name & "."" a familiar faerie says, flitting in from the woods." & DDUtils.RNRN &
+            Objective.showNPC(ShopNPC.gbl_img.atrs(0).getAt(51), """Ah, by the way, your Majesty, their name is " & Game.player1.name & "."" a familiar faerie says, flitting in from the woods." & DDUtils.RNRN &
                                                                 """Most apprecieated..."" smirks the Fae Queen, """ & Game.player1.name & ", I find your presence in my domain to be quite unpleasant...""" & DDUtils.PAKTC, AddressOf toCombat)
 
             deducedName = Game.player1.name
@@ -546,7 +549,7 @@
 
         If debuffed Then inv.setCount(LingerieCatalog.ITEM_NAME, 0)
 
-        Objective.showNPC(picArachne, """G-GET OUT!  WHAT IS THIS CRAP!?  NO WAY I'D LOSE TO A " & Game.player1.formName & "!""" & DDUtils.RNRN &
+        Objective.showNPC(local_img(LocalImgInd.alt3), """G-GET OUT!  WHAT IS THIS CRAP!?  NO WAY I'D LOSE TO A " & Game.player1.formName & "!""" & DDUtils.RNRN &
                                     "The fae vanishes in a plume of mist, but now there's nothing to stop you from going through her stuff...", AddressOf pushChestContents)
     End Sub
     Private Sub pushChestContents()

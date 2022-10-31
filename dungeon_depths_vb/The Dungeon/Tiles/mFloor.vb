@@ -1416,18 +1416,18 @@ Public Class mFloor
     End Sub
     Function getPossibleNPCs() As Integer()
         If floorNumber < 3 Then
-            Return {sNPCInd.shopkeeper, sNPCInd.shadywizard, sNPCInd.foodvendor}
+            Return {ShopNPCInd.shopkeeper, ShopNPCInd.shadywizard, ShopNPCInd.foodvendor}
         ElseIf floorNumber = 3 Then
-            Return {sNPCInd.shopkeeper, sNPCInd.shadywizard, sNPCInd.hypnoteach, sNPCInd.foodvendor, sNPCInd.cursebroker}
+            Return {ShopNPCInd.shopkeeper, ShopNPCInd.shadywizard, ShopNPCInd.hypnoteach, ShopNPCInd.foodvendor, ShopNPCInd.cursebroker}
         ElseIf floorNumber = 7 Then
-            Return {sNPCInd.hypnoteach}
+            Return {ShopNPCInd.hypnoteach}
         ElseIf floorNumber = 13 Then
-            Return {sNPCInd.foodvendor, sNPCInd.cursebroker}
+            Return {ShopNPCInd.foodvendor, ShopNPCInd.cursebroker}
         Else
             If Int(Rnd() * 2) = 0 And Game.player1.className.StartsWith("Magical") Then
-                Return {sNPCInd.shopkeeper, sNPCInd.shadywizard, sNPCInd.hypnoteach, sNPCInd.weaponsmith, sNPCInd.cursebroker, sNPCInd.maskmaggirl}
+                Return {ShopNPCInd.shopkeeper, ShopNPCInd.shadywizard, ShopNPCInd.hypnoteach, ShopNPCInd.weaponsmith, ShopNPCInd.cursebroker, ShopNPCInd.maskmaggirl}
             Else
-                Return {sNPCInd.shopkeeper, sNPCInd.shadywizard, sNPCInd.hypnoteach, sNPCInd.foodvendor, sNPCInd.weaponsmith, sNPCInd.cursebroker}
+                Return {ShopNPCInd.shopkeeper, ShopNPCInd.shadywizard, ShopNPCInd.hypnoteach, ShopNPCInd.foodvendor, ShopNPCInd.weaponsmith, ShopNPCInd.cursebroker}
             End If
         End If
     End Function

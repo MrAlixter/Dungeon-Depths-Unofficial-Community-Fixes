@@ -9,7 +9,7 @@
     Overrides Sub activate()
         MyBase.activate()
 
-        Objective.showNPC(ShopNPC.npcLib.atrs(0).getAt(105), """Hi there!  I'm the fae of wishes, and you've just won a free wish!""" & DDUtils.RNRN &
+        Objective.showNPC(ShopNPC.gbl_img.atrs(0).getAt(105), """Hi there!  I'm the fae of wishes, and you've just won a free wish!""" & DDUtils.RNRN &
                           "Press any non-movement key to continue...", AddressOf displayDialog)
     End Sub
 
@@ -28,7 +28,7 @@
         p.mana = p.getMaxMana
         p.stamina = 100
 
-        Objective.showNPC(ShopNPC.npcLib.atrs(0).getAt(106), "That's an easy one!  Consider your wish granted.")
+        Objective.showNPC(ShopNPC.gbl_img.atrs(0).getAt(106), "That's an easy one!  Consider your wish granted.")
     End Sub
     Shared Sub gold()
         Dim p As Player = Game.player1
@@ -38,14 +38,14 @@
         EquipmentDialogBackend.equipGlasses(p, "Hornswoggler's_Oculus", False)
         p.drawPort()
 
-        Objective.showNPC(ShopNPC.npcLib.atrs(0).getAt(106), "Hmmm...  Gold...  Oh, you know who gets a lot of gold?  Pirates!  You could use this snazzy pirate trick to get more gold!")
+        Objective.showNPC(ShopNPC.gbl_img.atrs(0).getAt(106), "Hmmm...  Gold...  Oh, you know who gets a lot of gold?  Pirates!  You could use this snazzy pirate trick to get more gold!")
     End Sub
     Shared Sub skills()
         Dim p As Player = Game.player1
 
         p.inv.add("Pirate_Handbook", 1)
 
-        Objective.showNPC(ShopNPC.npcLib.atrs(0).getAt(106), """More skills?  I'm not really sure where I would get- OH!  Check out this pirate handbook!  You could definitely learn a thing or two from the high seas!""" & DDUtils.RNRN &
+        Objective.showNPC(ShopNPC.gbl_img.atrs(0).getAt(106), """More skills?  I'm not really sure where I would get- OH!  Check out this pirate handbook!  You could definitely learn a thing or two from the high seas!""" & DDUtils.RNRN &
                           "+1 Pirate Handbook")
     End Sub
     Shared Sub stronger()
@@ -58,6 +58,6 @@
 
         p.changeClass("Pirate")
 
-        Objective.showNPC(ShopNPC.npcLib.atrs(0).getAt(106), "Stronger, eh?  Pirates are really strong!  If you want to be really strong, you should be a pirate!")
+        Objective.showNPC(ShopNPC.gbl_img.atrs(0).getAt(106), "Stronger, eh?  Pirates are really strong!  If you want to be really strong, you should be a pirate!")
     End Sub
 End Class
