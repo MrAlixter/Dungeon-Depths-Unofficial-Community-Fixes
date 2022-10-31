@@ -18,7 +18,8 @@
         value = 9999
 
         '|Description|
-        setDesc("A ornate glove that allows you to turn a monster to gold.")
+        setDesc("An ornate, armored glove can turn a monster to gold with a single touch.  If you were to accidentally graze yourself, though, you too would meet the same fate..." & DDUtils.RNRN &
+                "On attack, 2 in 3 odds to turn the target to gold.  1 in 3 odds to turn the player to gold.")
     End Sub
 
     Overrides Function attack(ByRef p As Player, ByRef m As Entity) As Integer
@@ -31,6 +32,7 @@
         Else
             CType(m, NPC).toGold()
         End If
+
         Return 0
     End Function
 End Class

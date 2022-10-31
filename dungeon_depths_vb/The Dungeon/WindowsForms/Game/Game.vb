@@ -1340,6 +1340,7 @@ Public Class Game
             ElseIf selectionType = "EnemyTF" Then
                 Dim fN = player1.formName
                 Dim cN = player1.className
+                If Not player1.currTarget Is Nothing Then TextEvent.pushLog(CStr("You transform " & player1.currTarget.getNameWithTitle & "!"))
                 selectEnemyTFForm(index)
                 EnemyPolymorph.effectP2(fN, cN)
             ElseIf selectionType = "BasicClassChange" Then
@@ -1832,7 +1833,6 @@ Public Class Game
 
         player1.canMoveFlag = True
         btnEQP.Enabled = True
-
     End Sub
     Function shouldReturnEarly(ByVal Keydata As Keys)
         'This function determines if the key input should be ignored.
@@ -2807,6 +2807,11 @@ Public Class Game
         Return p.currTarget
     End Function
     Sub toCombat(ByRef m As NPC)
+        If shop_npc_engaged Then
+            ShopNPCToCombat(m)
+            Exit Sub
+        End If
+
         '|-Set up Game-|
         cleanupPanels()
         combat_engaged = True
@@ -2827,7 +2832,6 @@ Public Class Game
         pnlCombat.Visible = True
 
         '|-Combat Buttons-|
-        If shop_npc_engaged Then hideNPCButtons()
         btnATK.Visible = True
         btnMG.Visible = True
         btnWait.Visible = True
@@ -2858,66 +2862,6 @@ Public Class Game
         player1.specialRoute()
         player1.magicRoute()
         player1.skillsUsedThisCombat.Clear()
-
-    End Sub
-    Sub NPCtoCombat(ByRef m As NPC)
-        'the NPC versions of from and to combat
-        player1.setTarget(m)
-        picNPC.Visible = False
-        lblEHealthChange.Tag = 0
-        lblPHealtDiff.Tag = 0
-        updatePnlCombat(player1, player1.currTarget)
-        pnlCombat.Visible = True
-        combat_engaged = True
-        shop_npc_engaged = False
-        player1.UIupdate()
-        TextEvent.pushLog(Trim(m.getName() & " attacks!"))
-        btnATK.Visible = True
-        btnMG.Visible = True
-        btnRUN.Visible = True
-        btnWait.Visible = True
-        'cboxSpec.Visible = True
-        btnSpec.Visible = True
-        player1.canMoveFlag = False
-
-        hideNPCButtons()
-    End Sub
-    Sub NPCfromCombat(ByRef m As NPC)
-        pnlCombatClose()
-        Dim ratio As Double = Me.Size.Width / 1024
-        picNPC.Location = New Point(82 * ratio, 179 * ratio)
-        combat_engaged = False
-        shop_npc_engaged = True
-        TextEvent.push((m.getName() & " stops fighting!"))
-        TextEvent.pushLog((m.getName() & " stops fighting!"))
-        btnATK.Visible = False
-        btnMG.Visible = False
-        btnRUN.Visible = False
-        btnWait.Visible = False
-        cboxSpec.Visible = False
-        btnSpec.Visible = False
-        If player1.perks(perk.astatue) = -1 Then player1.canMoveFlag = True
-
-        showNPCButtons()
-        player1.specialRoute()
-        player1.magicRoute()
-
-    End Sub
-    Sub hideNPCButtons()
-        'btnTalk.Visible = False
-        btnNPCMG.Visible = False
-        cboxNPCMG.Visible = False
-        btnShop.Visible = False
-        btnFight.Visible = False
-        btnLeave.Visible = False
-    End Sub
-    Sub showNPCButtons()
-        'btnTalk.Visible = True
-        btnNPCMG.Visible = True
-        cboxNPCMG.Visible = True
-        btnShop.Visible = True
-        btnFight.Visible = True
-        btnLeave.Visible = True
     End Sub
     'combat pannel
     Sub updatePnlCombat(ByVal p As Player, ByVal t As Entity, Optional turnOverride As Boolean = False)
@@ -3109,6 +3053,55 @@ Public Class Game
     End Sub
 
     '| - NPC - |
+    Sub npcEncounter(ByRef m As ShopNPC)
+        If m.isDead Then Exit Sub
+
+        '|-NPC Buttons-|
+        showNPCButtons()
+        If Not m.isShop Then btnShop.Enabled = False
+
+        Dim validSpells() As String = {"Turn to Frog", "Polymorph Enemy", "Petrify", "Petrify II"}
+        player1.magicRoute()
+        For Each spell In validSpells
+            If player1.knownSpells.Contains(spell) Then cboxNPCMG.Items.Add(spell)
+        Next
+
+        '|-Set up Game-|
+        shop_npc_engaged = True
+        active_shop_npc = m
+        TextEvent.pushLog(("You approach " & m.getNameWithTitle & "."))
+
+        '|-Set up NPC-|
+        npc_list.Clear()
+        npc_list.Add(m)
+        m.encounter()
+        picNPC.Visible = True
+
+        '|-Set up the Player-|
+        player1.canMoveFlag = False
+    End Sub
+    Sub shopNPCToCombat(ByRef m As NPC)
+        '|-Set up Game-|
+        picNPC.Visible = False
+        shop_npc_engaged = False
+
+        '|-Combat Dialog Box-|
+        TextEvent.pushLog(DDUtils.capitalizeFirst(m.getNameWithTitle) & " attacks!")
+
+        '|-Combat Buttons-|
+        hideNPCButtons()
+
+        toCombat(m)
+    End Sub
+    Sub showNPCButtons()
+        'btnTalk.Visible = True
+        btnNPCMG.Visible = True
+        cboxNPCMG.Visible = True
+        btnShop.Visible = True
+        btnFight.Visible = True
+        btnLeave.Visible = True
+    End Sub
+
     Sub leaveNPC()
         '|-NPC Buttons-|
         If combat_engaged Then fromCombat()
@@ -3135,79 +3128,57 @@ Public Class Game
         '|-Clean up the Player-|
         player1.clearTarget()
     End Sub
-    Sub npcEncounter(ByRef m As ShopNPC)
-        If m.isDead Then Exit Sub
+    Sub shopNPCFromCombat(ByRef m As NPC)
+        fromCombat()
 
-        '|-NPC Buttons-|
-        Dim validSpells() As String = {"Turn to Frog", "Polymorph Enemy", "Petrify", "Petrify II"}
-        player1.magicRoute()
-        For i = 0 To UBound(validSpells)
-            If player1.knownSpells.Contains(validSpells(i)) Then cboxNPCMG.Items.Add(validSpells(i))
-        Next
-        'btnTalk.Visible = True
-        btnNPCMG.Visible = True
-        cboxNPCMG.Visible = True
-        btnShop.Visible = True
-        btnFight.Visible = True
-        btnLeave.Visible = True
-        If m.isShop Then btnShop.Enabled = True Else btnShop.Enabled = False
-
-        '|-Set up Game-|
-        shop_npc_engaged = True
-        active_shop_npc = m
-
-        '|-Set up NPC-|
-        npc_list.Clear()
-        npc_list.Add(m)
-        m.encounter()
-        picNPC.Visible = True
-
-        '|-Set up the Player-|
-        player1.canMoveFlag = False
-
-        TextEvent.pushLog(("You walk up to" & m.title.ToLower & m.name & "!"))
+        '|-Reset the NPC-|
+        TextEvent.pushLog(DDUtils.capitalizeFirst(m.getNameWithTitle) & " stops fighting!")
+        npcEncounter(m)
     End Sub
-    Sub npcMG()
-        closeLblEvent()
-        If cboxNPCMG.Text = "-- Select --" Or player1.mana <= 0 Then Exit Sub
-        Dim m As ShopNPC = active_shop_npc
-
-        Spell.spellCast(m, player1, cboxNPCMG.Text)
-
-        queueSetup()
-
-        TextEvent.pushNPCDialog(m.hitBySpell)
-        m.drawPort()
-
-        updatable_queue.add(player1, player1.getSPD)
-        drawBoard()
-    End Sub
-    Sub npcFight()
-        Dim m As ShopNPC = active_shop_npc
-
-        If currFloor.floorNumber = 7 And player1.perks(perk.seventailsstage) = 1 Then HypnoTeach.sevenTailsFight() : Exit Sub
-
-        queueSetup()
-        NPCtoCombat(m)
-
-        closeLblEvent()
-
-        TextEvent.pushNPCDialog(m.toFight())
-    End Sub
-    Private Sub btnNPCMG_Click(sender As Object, e As EventArgs) Handles btnNPCMG.Click
-        doLblEventOnClose()
-        TextEvent.pushYesNo("Are you sure you want to do this?", AddressOf npcMG, AddressOf nofight)
-    End Sub
-    Private Sub btnFight_Click(sender As Object, e As EventArgs) Handles btnFight.Click
-        doLblEventOnClose()
-        TextEvent.pushYesNo("Are you sure you want to do this?", AddressOf npcFight, AddressOf nofight)
-    End Sub
-    Sub nofight()
-        player1.canMoveFlag = False
+    Sub hideNPCButtons()
+        'btnTalk.Visible = False
+        btnNPCMG.Visible = False
+        cboxNPCMG.Visible = False
+        btnShop.Visible = False
+        btnFight.Visible = False
+        btnLeave.Visible = False
     End Sub
     Private Sub btnLeave_Click(sender As Object, e As EventArgs) Handles btnLeave.Click
         leaveNPC()
         doLblEventOnClose()
+    End Sub
+
+    Sub npcMG()
+        If cboxNPCMG.Text = "-- Select --" Or active_shop_npc Is Nothing Then Exit Sub
+        closeLblEvent()
+
+        TextEvent.pushNPCDialog(active_shop_npc.hitBySpell)
+
+        Spell.spellCast(active_shop_npc, player1, cboxNPCMG.Text)
+
+        If combat_engaged Then updatePnlCombat(player1, player1.currTarget)
+        active_shop_npc.drawPort()
+        drawBoard()
+    End Sub
+    Private Sub btnNPCMG_Click(sender As Object, e As EventArgs) Handles btnNPCMG.Click
+        doLblEventOnClose()
+        TextEvent.pushYesNo("Are you sure you want to do this?", AddressOf npcMG, Nothing)
+    End Sub
+
+    Sub npcFight()
+        If currFloor.floorNumber = 7 And player1.perks(perk.seventailsstage) = 1 Then
+            HypnoTeach.sevenTailsFight()
+            Exit Sub
+        End If
+
+        If active_shop_npc Is Nothing Then Exit Sub
+
+        shopNPCToCombat(active_shop_npc)
+        TextEvent.pushNPCDialog(active_shop_npc.toFight())
+    End Sub
+    Private Sub btnFight_Click(sender As Object, e As EventArgs) Handles btnFight.Click
+        doLblEventOnClose()
+        TextEvent.pushYesNo("Are you sure you want to do this?", AddressOf npcFight, Nothing)
     End Sub
 
     '| - UI BUTTONS - |

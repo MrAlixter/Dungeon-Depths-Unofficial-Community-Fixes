@@ -182,7 +182,9 @@
                "I, like, don't know if it would be smart for me to try to hypno...hypotho... um, do my thing to you right now... but I totally have some tapes you can use!"
     End Function
     Protected Overrides Function princessDialog(ByRef p As Player)
-        Return "Well salutations there, " & p.className & ".  Please let me know if there's anything I can do to help you."
+        Return "Hark!" & DDUtils.RNRN &
+               "My salutations to thee, " & p.className & "." & DDUtils.RNRN &
+               "Please let me know if there is anything I can help you with."
     End Function
     Protected Overrides Function sheepDialog(ByRef p As Player)
         Return "BLEET!"
@@ -232,7 +234,7 @@
     Public Overrides Function hitBySpell() As String
         If img_index = LocalImgInd.alt4 Then Return "Cmon!  I'm, like, trying to help you out here!"
 
-        Return MyBase.toFight()
+        Return MyBase.hitBySpell()
     End Function
     Protected Overrides Function normalSpellDialog(ByRef p As Player)
         Return "*sigh*" & DDUtils.RNRN &
@@ -245,7 +247,7 @@
         Return "WOAH!  That's a neat trick!"
     End Function
     Protected Overrides Function princessSpellDialog(ByRef p As Player)
-        Return "Prepare yourself, I won't be manipulated easily."
+        Return "Prepare yourself, for I shan't be manipulated so easily..."
     End Function
     Protected Overrides Function sheepSpellDialog(ByRef p As Player)
         Return "Bah, BAH!"

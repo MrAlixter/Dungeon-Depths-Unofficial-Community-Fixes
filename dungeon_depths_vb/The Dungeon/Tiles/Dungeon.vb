@@ -82,7 +82,7 @@ End Enum
         End If
     End Sub
     Private Sub setPositions()
-        If floors(numCurrFloor).playerPosition.X = -1 Or floors(numCurrFloor).playerPosition.Y = -1 Then
+        If floors(numCurrFloor).playerPosition.X = -1 Or floors(numCurrFloor).playerPosition.Y = -1 Or mFloor.nonRandomFloors.Contains(numCurrFloor) Then
             Game.player1.pos = floors(numCurrFloor).getStartPlayerPos
         Else
             Game.player1.pos = floors(numCurrFloor).playerPosition

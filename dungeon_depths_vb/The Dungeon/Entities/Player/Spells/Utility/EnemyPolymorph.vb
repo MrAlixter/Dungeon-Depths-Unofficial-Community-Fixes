@@ -15,9 +15,6 @@
         If t.GetType.IsSubclassOf(GetType(ShopNPC)) Then
             t.update()
         End If
-
-        TextEvent.pushCombat(CStr("You transform" & t.title & " " & t.name & "!"))
-        TextEvent.pushLog(CStr("You transform" & t.title & " " & t.name & "!"))
     End Sub
     Public Overrides Sub backfire()
         Dim n As String

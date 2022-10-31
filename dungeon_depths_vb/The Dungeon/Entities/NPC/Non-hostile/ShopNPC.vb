@@ -89,15 +89,17 @@ Public MustInherit Class ShopNPC
             Game.picNPC.BackgroundImage = local_img(LocalImgInd.normal)
         End If
 
-        If Game.combat_engaged Then attackCMD(Game.player1)
-
         '| -- First Turn -- |
         If firstTurn = True Then
             firstTurn = False
         End If
 
+        If Game.combat_engaged Then Game.lblEName.Text = getName()
+
         If Game.combat_engaged And firstCTurn = True Then
             firstCTurn = False
+        ElseIf Game.combat_engaged Then
+            attackCMD(Game.player1)
         End If
 
         '| -- Polymorph Handling -- |
@@ -134,14 +136,7 @@ Public MustInherit Class ShopNPC
     Public Overrides Sub despawn(reason As String)
         MyBase.despawn(reason)
 
-        Dim ratio As Double = Game.Size.Width / 1024
-        Game.picNPC.Location = New Point(82 * ratio, 179 * ratio)
-        Game.btnTalk.Visible = False
-        Game.btnNPCMG.Visible = False
-        Game.cboxNPCMG.Visible = False
-        Game.btnShop.Visible = False
-        Game.btnFight.Visible = False
-        Game.btnLeave.Visible = False
+        Game.hideNPCButtons()
 
         'reset the npc image index
         If img_index > 4 And Not Game.picNPC.BackgroundImage.Equals(ShopNPC.gbl_img.atrs(0).getAt(9)) And Not img_index = LocalImgInd.arachne And Not img_index = LocalImgInd.catgirl Then img_index = LocalImgInd.normal
@@ -299,10 +294,10 @@ Public MustInherit Class ShopNPC
         toFemale("bunny")
         form = "Bunny Girl"
 
-        Game.NPCfromCombat(Me)
-
         img_index = LocalImgInd.bunny
         tfStatUpdate()
+
+        If Game.combat_engaged Then Game.shopNPCFromCombat(Me)
     End Sub
     Public Overridable Sub toPrincess()
         tfEnd = 15
@@ -322,6 +317,8 @@ Public MustInherit Class ShopNPC
         TextEvent.pushNPCDialog("*squeak*")
         Game.picNPC.BackgroundImage = local_img(LocalImgInd.doll)
         discount = 0.5
+
+        If Game.combat_engaged Then Game.shopNPCFromCombat(Me)
     End Sub
     Public Overridable Sub toArachne()
         tfCt = 1
@@ -352,6 +349,8 @@ Public MustInherit Class ShopNPC
 
         img_index = LocalImgInd.beegirl
         tfStatUpdate()
+
+        If Game.combat_engaged And Game.player1.formName.Equals("Bee Girl") Then Game.shopNPCFromCombat(Me)
     End Sub
 
     '| - DIALOG - |

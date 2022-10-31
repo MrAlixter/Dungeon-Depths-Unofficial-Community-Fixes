@@ -352,7 +352,7 @@
         Game.npc_list.Add(m)
 
         Game.queueSetup()
-        Game.NPCtoCombat(m)
+        Game.ShopNPCToCombat(m)
 
         Game.closeLblEvent()
 

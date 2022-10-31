@@ -44,7 +44,7 @@
         If Not target.GetType() Is GetType(Player) Then
             MyBase.attackCMD(target)
         Else
-            Game.NPCfromCombat(Me)
+            Game.ShopNPCFromCombat(Me)
             Game.leaveNPC()
             TextEvent.push("""Well, someone needs to relax...""")
             Dim bTF As BimboTF = New BimboTF(2, 0, 0.25, True)
