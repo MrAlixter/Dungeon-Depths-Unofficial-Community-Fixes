@@ -44,6 +44,14 @@
         internalList = New Dictionary(Of tfind, Transformation)
     End Sub
 
+    Function containsPolymorph() As Boolean
+        For i = internalList.Count - 1 To 0 Step -1
+            tf = internalList.Values(i)
+            If tf.GetType().IsSubclassOf(GetType(PolymorphTF)) Then Return True
+        Next
+
+        Return False
+    End Function
     Sub resetPolymorphs()
         For i = internalList.Count - 1 To 0 Step -1
             tf = internalList.Values(i)

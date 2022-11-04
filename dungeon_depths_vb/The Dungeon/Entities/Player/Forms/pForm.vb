@@ -4,6 +4,8 @@
     Public useSleeves As Boolean
     Public canBeBound As Boolean = True
     Public revertPassage As String
+    Public transformPassage As String
+    Public canBeTFed As Boolean = True
 
     Public bsizeneg2 As Tuple(Of Integer, Boolean, Boolean) = New Tuple(Of Integer, Boolean, Boolean)(0, False, False)
     Public bsizeneg1 As Tuple(Of Integer, Boolean, Boolean) = New Tuple(Of Integer, Boolean, Boolean)(0, False, False)

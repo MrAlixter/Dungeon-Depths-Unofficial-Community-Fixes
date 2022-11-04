@@ -3,7 +3,6 @@
     Sub New()
         MyBase.New()
         MyBase.name = "Witch"
-        MyBase.revertPassage = "Your mind feels slightly weaker, and your magical aptitude becomes far more average."
     End Sub
 
     Public Overrides Sub onLVLUp(ByVal level As Integer, ByRef p As Player, Optional learnSkills as Boolean = True)

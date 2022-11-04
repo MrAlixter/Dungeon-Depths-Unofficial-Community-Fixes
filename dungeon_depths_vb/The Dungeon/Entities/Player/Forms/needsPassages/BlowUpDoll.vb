@@ -27,5 +27,6 @@
         MyBase.overlayusize5 = New Tuple(Of Integer, Boolean, Boolean)(56, True, False)
 
         canBeBound = False
+        canBeTFed = False
     End Sub
 End Class

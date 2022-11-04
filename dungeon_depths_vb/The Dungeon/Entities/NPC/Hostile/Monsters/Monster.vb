@@ -195,7 +195,7 @@ Public Class Monster
                 End If
         End Select
 
-        If floorInd > 6 And Not mFloor.nonRandomFloors.Contains(floorInd) And Not Game.player1.formName.Equals("Cow") Then
+        If floorInd > 0 And Not mFloor.nonRandomFloors.Contains(floorInd) And Not Game.player1.formName.Equals("Cow") Then
             DDUtils.append(tier, mInd.bovinomancer)
         End If
 

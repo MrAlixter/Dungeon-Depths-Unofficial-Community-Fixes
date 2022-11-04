@@ -2,6 +2,6 @@
     Inherits pClass
     Sub New()
         MyBase.New(0.1, 0.1, 0.1, 0.1, 0.1, 0.1, "Fae Bee​")
-        MyBase.revertPassage = ""
+        canBeTFed = False
     End Sub
 End Class

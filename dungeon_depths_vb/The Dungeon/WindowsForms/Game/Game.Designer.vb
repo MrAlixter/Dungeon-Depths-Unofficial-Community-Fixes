@@ -260,6 +260,9 @@ Partial Class Game
         Me.picFVTBoss2 = New System.Windows.Forms.PictureBox()
         Me.picFVTBoss3 = New System.Windows.Forms.PictureBox()
         Me.picFVTBoss4 = New System.Windows.Forms.PictureBox()
+        Me.picBlowupCynn = New System.Windows.Forms.PictureBox()
+        Me.picCynnOnahole1 = New System.Windows.Forms.PictureBox()
+        Me.picCynnOnahole2 = New System.Windows.Forms.PictureBox()
         CType(Me.picEnemy, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me.picNPC, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me.picStart, System.ComponentModel.ISupportInitialize).BeginInit()
@@ -322,6 +325,9 @@ Partial Class Game
         CType(Me.picFVTBoss2, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me.picFVTBoss3, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me.picFVTBoss4, System.ComponentModel.ISupportInitialize).BeginInit()
+        CType(Me.picBlowupCynn, System.ComponentModel.ISupportInitialize).BeginInit()
+        CType(Me.picCynnOnahole1, System.ComponentModel.ISupportInitialize).BeginInit()
+        CType(Me.picCynnOnahole2, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.SuspendLayout()
         '
         'btnUse1
@@ -3051,7 +3057,7 @@ Partial Class Game
         'picFVTBoss1
         '
         Me.picFVTBoss1.BackgroundImage = CType(resources.GetObject("picFVTBoss1.BackgroundImage"), System.Drawing.Image)
-        Me.picFVTBoss1.Location = New System.Drawing.Point(192, 70)
+        Me.picFVTBoss1.Location = New System.Drawing.Point(247, 70)
         Me.picFVTBoss1.Name = "picFVTBoss1"
         Me.picFVTBoss1.Size = New System.Drawing.Size(15, 15)
         Me.picFVTBoss1.TabIndex = 420
@@ -3061,7 +3067,7 @@ Partial Class Game
         'picFVTBoss2
         '
         Me.picFVTBoss2.BackgroundImage = CType(resources.GetObject("picFVTBoss2.BackgroundImage"), System.Drawing.Image)
-        Me.picFVTBoss2.Location = New System.Drawing.Point(213, 70)
+        Me.picFVTBoss2.Location = New System.Drawing.Point(268, 70)
         Me.picFVTBoss2.Name = "picFVTBoss2"
         Me.picFVTBoss2.Size = New System.Drawing.Size(15, 15)
         Me.picFVTBoss2.TabIndex = 421
@@ -3071,7 +3077,7 @@ Partial Class Game
         'picFVTBoss3
         '
         Me.picFVTBoss3.BackgroundImage = CType(resources.GetObject("picFVTBoss3.BackgroundImage"), System.Drawing.Image)
-        Me.picFVTBoss3.Location = New System.Drawing.Point(234, 70)
+        Me.picFVTBoss3.Location = New System.Drawing.Point(289, 70)
         Me.picFVTBoss3.Name = "picFVTBoss3"
         Me.picFVTBoss3.Size = New System.Drawing.Size(15, 15)
         Me.picFVTBoss3.TabIndex = 422
@@ -3081,12 +3087,42 @@ Partial Class Game
         'picFVTBoss4
         '
         Me.picFVTBoss4.BackgroundImage = CType(resources.GetObject("picFVTBoss4.BackgroundImage"), System.Drawing.Image)
-        Me.picFVTBoss4.Location = New System.Drawing.Point(255, 70)
+        Me.picFVTBoss4.Location = New System.Drawing.Point(310, 70)
         Me.picFVTBoss4.Name = "picFVTBoss4"
         Me.picFVTBoss4.Size = New System.Drawing.Size(15, 15)
         Me.picFVTBoss4.TabIndex = 423
         Me.picFVTBoss4.TabStop = False
         Me.picFVTBoss4.Visible = False
+        '
+        'picBlowupCynn
+        '
+        Me.picBlowupCynn.BackgroundImage = CType(resources.GetObject("picBlowupCynn.BackgroundImage"), System.Drawing.Image)
+        Me.picBlowupCynn.Location = New System.Drawing.Point(171, 70)
+        Me.picBlowupCynn.Name = "picBlowupCynn"
+        Me.picBlowupCynn.Size = New System.Drawing.Size(15, 15)
+        Me.picBlowupCynn.TabIndex = 424
+        Me.picBlowupCynn.TabStop = False
+        Me.picBlowupCynn.Visible = False
+        '
+        'picCynnOnahole1
+        '
+        Me.picCynnOnahole1.BackgroundImage = CType(resources.GetObject("picCynnOnahole1.BackgroundImage"), System.Drawing.Image)
+        Me.picCynnOnahole1.Location = New System.Drawing.Point(171, 91)
+        Me.picCynnOnahole1.Name = "picCynnOnahole1"
+        Me.picCynnOnahole1.Size = New System.Drawing.Size(15, 15)
+        Me.picCynnOnahole1.TabIndex = 425
+        Me.picCynnOnahole1.TabStop = False
+        Me.picCynnOnahole1.Visible = False
+        '
+        'picCynnOnahole2
+        '
+        Me.picCynnOnahole2.BackgroundImage = CType(resources.GetObject("picCynnOnahole2.BackgroundImage"), System.Drawing.Image)
+        Me.picCynnOnahole2.Location = New System.Drawing.Point(171, 112)
+        Me.picCynnOnahole2.Name = "picCynnOnahole2"
+        Me.picCynnOnahole2.Size = New System.Drawing.Size(15, 15)
+        Me.picCynnOnahole2.TabIndex = 426
+        Me.picCynnOnahole2.TabStop = False
+        Me.picCynnOnahole2.Visible = False
         '
         'Game
         '
@@ -3095,6 +3131,9 @@ Partial Class Game
         Me.BackColor = System.Drawing.Color.Black
         Me.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch
         Me.ClientSize = New System.Drawing.Size(1008, 690)
+        Me.Controls.Add(Me.picCynnOnahole2)
+        Me.Controls.Add(Me.picCynnOnahole1)
+        Me.Controls.Add(Me.picBlowupCynn)
         Me.Controls.Add(Me.pnlSaveLoad)
         Me.Controls.Add(Me.picFVTBoss4)
         Me.Controls.Add(Me.picFVTBoss3)
@@ -3285,6 +3324,9 @@ Partial Class Game
         CType(Me.picFVTBoss2, System.ComponentModel.ISupportInitialize).EndInit()
         CType(Me.picFVTBoss3, System.ComponentModel.ISupportInitialize).EndInit()
         CType(Me.picFVTBoss4, System.ComponentModel.ISupportInitialize).EndInit()
+        CType(Me.picBlowupCynn, System.ComponentModel.ISupportInitialize).EndInit()
+        CType(Me.picCynnOnahole1, System.ComponentModel.ISupportInitialize).EndInit()
+        CType(Me.picCynnOnahole2, System.ComponentModel.ISupportInitialize).EndInit()
         Me.ResumeLayout(False)
         Me.PerformLayout()
 
@@ -3522,4 +3564,7 @@ Partial Class Game
     Friend WithEvents btnS8 As System.Windows.Forms.Button
     Friend WithEvents btnS10 As System.Windows.Forms.Button
     Friend WithEvents btnS9 As System.Windows.Forms.Button
+    Friend WithEvents picBlowupCynn As System.Windows.Forms.PictureBox
+    Friend WithEvents picCynnOnahole1 As System.Windows.Forms.PictureBox
+    Friend WithEvents picCynnOnahole2 As System.Windows.Forms.PictureBox
 End Class

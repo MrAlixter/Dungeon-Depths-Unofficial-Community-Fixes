@@ -67,6 +67,7 @@
         local_img.Add(LocalImgInd.sheep, ShopNPC.gbl_img.atrs(0).getAt(5))
         local_img.Add(LocalImgInd.doll, ShopNPC.gbl_img.atrs(0).getAt(82))
         local_img.Add(LocalImgInd.arachne, ShopNPC.gbl_img.atrs(0).getAt(81))
+        local_img.Add(LocalImgInd.catgirl, ShopNPC.gbl_img.atrs(0).getAt(149))
         local_img.Add(LocalImgInd.trilobite, ShopNPC.gbl_img.atrs(0).getAt(96))
         local_img.Add(LocalImgInd.beegirl, ShopNPC.gbl_img.atrs(0).getAt(148))
         local_img.Add(LocalImgInd.alt1, ShopNPC.gbl_img.atrs(0).getAt(61))
@@ -139,7 +140,7 @@
         End If
     End Function
     Protected Overrides Function catgirlDialog(ByRef p As Player)
-        Return "I'll be the one to say it, you're better at this than Marissa.  Are you two working together or something?"
+        Return "Umm... I... Meow?"
     End Function
     Protected Overrides Function beegirlDialog(ByRef p As Player)
         Return "Bzz, h o n e y..."

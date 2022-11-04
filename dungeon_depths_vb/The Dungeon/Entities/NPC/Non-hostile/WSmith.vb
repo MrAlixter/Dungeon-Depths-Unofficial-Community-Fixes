@@ -79,6 +79,7 @@
 
         p.changeClass("Thong")
         p.drawPort()
+        p.UIupdate()
 
         TextEvent.push(out, AddressOf playerDeath2)
 

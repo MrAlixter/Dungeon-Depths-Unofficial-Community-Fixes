@@ -49,17 +49,16 @@
     Public Overrides Sub onEquip(ByRef p As Player)
         MyBase.onEquip(p)
 
-        Dim bTF As BimboTF = New BimboTF(2, 0, 0.25, True)
-        bTF.chickenTf()
+        Dim btf As BimboTF = New BimboTF(2, 5, 0.25, True)
+        btf.chickenTf(p)
 
         prevWingInd = CInt(p.prt.iArrInd(pInd.wings).Item1)
-
         p.prt.setIAInd(pInd.wings, 3, True, False)
     End Sub
 
     Public Overrides Sub onUnequip(ByRef p As Player)
         MyBase.onUnequip(p)
 
-        p.prt.setIAInd(pInd.wings, prevWingInd, True, True)
+        If p.prt.checkFemInd(pInd.wings, 3) Then p.prt.setIAInd(pInd.wings, prevWingInd, True, True)
     End Sub
 End Class

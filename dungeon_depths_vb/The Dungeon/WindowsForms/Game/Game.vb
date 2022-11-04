@@ -436,7 +436,7 @@ Public Class Game
                         t.activate()
                     Catch ex As Exception
                         TextEvent.push("Your foot falls on an unseen pressure plate, with an audible click..." & DDUtils.RNRN &
-                                       "...but nothing happens.")
+                        "...but nothing happens.")
                     End Try
                     Exit For
                 End If

@@ -2,6 +2,7 @@
     Inherits pForm
     Sub New()
         MyBase.New(1, 1.5, 1, 1.5, 0.75, 1, "Half-Broodmother", False)
-        MyBase.revertPassage = ""
+        revertPassage = ""
+        canBeTFed = False
     End Sub
 End Class

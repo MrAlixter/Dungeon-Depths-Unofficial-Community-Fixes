@@ -65,6 +65,8 @@
 
         step1Effect(p, m)
         tfDialogStep1(p, m)
+
+        p.UIupdate()
     End Sub
 
     '| -- Step 2 -- |
@@ -98,7 +100,7 @@
             out += "Your chest tingles, and your mana reserves seem to have increased slightly." & DDUtils.RNRN
         End If
 
-        TextEvent.push(out & DDUtils.RNRN &
+        TextEvent.push(out &
                        "Patches of tiny crimson scales dot your forearms, and an almost unintelligible murmur seeps from the talisman." & DDUtils.RNRN &
                        """...magnificent- beginning...""")
         TextEvent.pushLog("Your " & ScaleTalisman.ITEM_NAME.Replace("_", " ") & " surges with fiery energy!")
@@ -117,6 +119,8 @@
 
         step2Effect(p, m)
         tfDialogStep2(p, m)
+
+        p.UIupdate()
     End Sub
 
     '| -- Step 3 -- |
@@ -157,7 +161,6 @@
                """...good- pierce through... shadows of unseen..."""
           
         TextEvent.push(out)
-
         TextEvent.pushLog("Your " & ScaleTalisman.ITEM_NAME.Replace("_", " ") & " surges with fiery energy!")
     End Sub
     Sub step3()
@@ -174,6 +177,8 @@
 
         step3Effect(p, m)
         tfDialogStep3(p, m)
+
+        p.UIupdate()
     End Sub
 
     '| -- Step 4 -- |
@@ -213,7 +218,6 @@
                """...I am... Fotia... YOU... student of... FIRE ---"""
 
         TextEvent.push(out)
-
         TextEvent.pushLog("Your " & ScaleTalisman.ITEM_NAME.Replace("_", " ") & " surges with fiery energy!")
     End Sub
     Sub step4()
@@ -230,6 +234,8 @@
 
         step4Effect(p, m)
         tfDialogStep4(p, m)
+
+        p.UIupdate()
     End Sub
 
     '| -- Step 5 -- |
@@ -285,6 +291,8 @@
 
         step5Effect(p, m)
         tfDialogStep5(p, m)
+
+        p.UIupdate()
     End Sub
 
     '| -- Step 6 -- |
@@ -329,6 +337,9 @@
 
         step6Effect(p, m)
         tfDialogStep6(p, m)
+
+        p.drawPort()
+        p.UIupdate()
     End Sub
 
     '| -- Step 7 -- |
@@ -345,9 +356,15 @@
 
         tfDialogStep7()
 
+        If p.sex = "Male" Then
+            p.MtF()
+        End If
+
         If Not p.knownSpells.Contains("Dragon's Breath") Then p.learnSpell("Dragon's Breath")
         p.prt.setIAInd(pInd.wings, 5, True, False)
         p.changeForm("Half-Dragon (R)")
+
+        p.UIupdate()
     End Sub
 
     Public Overrides Sub stopTF()

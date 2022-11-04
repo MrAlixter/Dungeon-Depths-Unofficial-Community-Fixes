@@ -23,6 +23,7 @@
     coserv
     cow
     cynndisguise
+    cynntonic
     dancer
     darkpact
     demonbimbo
@@ -201,6 +202,9 @@ Public MustInherit Class Transformation
 
         ElseIf tf = tfind.cow Then
             Return New CowTF(cs, n, tts, wi, cbs, tfd)
+
+        ElseIf tf = tfind.cynntonic Then
+            Return New CynnTonicTF(cs, n, tts, wi, cbs, tfd)
 
         ElseIf tf = tfind.cynndisguise Then
             Return New CynnDisguiseTF(cs, n, tts, wi, cbs, tfd)
@@ -407,11 +411,8 @@ Public MustInherit Class Transformation
     Shared Function canBeTFed(ByRef p As Player) As Boolean
         If Game.player1.ongoingTFs.count < 1 And
             (Not p.polymorphs.ContainsKey(p.className) And Not p.polymorphs.ContainsKey(p.formName)) And
-            Not p.className.Equals("Magical Girl") And
-            Not p.className.Equals("Valkyrie") And
-            Not p.className.Equals("Unconscious") And
-            Not p.formName.Equals("Blowup Doll") And
-            Not p.formName.Equals("Faerie") And
+            p.pClass.canBeTFed And
+            p.pForm.canBeTFed And
             Not p.perks(perk.astatue) > 1 And
             Not p.perks(perk.tfedbyweapon) > 0 And
             Not p.perks(perk.pdeflector) > 0 Then

@@ -39,9 +39,8 @@
     End Sub
     Public Overloads Overrides Sub onUnequip(ByRef p As Player, ByRef w As Weapon)
         If (p.className.Equals("Magical Slut") Or p.perks(perk.tfedbyweapon) > 0) And (w Is Nothing OrElse Not w.GetType.IsSubclassOf(GetType(Wand))) Then
-            TextEvent.push("Sighing, you stow away your wand and revert to your base form.  Heartblast Starcannon spell forgotten...")
-            TextEvent.push("You revert to your base form.  Heartblast Starcannon spell forgotten!")
-            If p.knownSpecials.Contains("Heartblast Starcannon") Then p.knownSpecials.Remove("Heartblast Starcannon")
+            TextEvent.pushAndLog("Sighing, you stow away your wand and revert to your base form.")
+
             p.inv.add(uniform_id, -1)
 
             p.perks(perk.tfedbyweapon) = -1
@@ -57,7 +56,6 @@
         Dim d32 = Int(Rnd() * 5)
 
         m.takeDMG(dmg + d31 + d32, p)
-        TextEvent.pushLog(CStr("You fire off a heart-shaped blast, hitting the " & m.name & " for " & dmg + d31 + d32 & " damage!"))
-        TextEvent.pushCombat(CStr("You fire off a heart-shaped blast, hitting the " & m.name & " for " & dmg + d31 + d32 & " damage!"))
+        TextEvent.pushAndLog(CStr("You fire off a heart-shaped blast, hitting the " & m.name & " for " & dmg + d31 + d32 & " damage!"))
     End Sub
 End Class

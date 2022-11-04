@@ -99,6 +99,7 @@
     metfantoma      '97
     vofmanynames    '98
     yellowonefavor  '99
+    cynnstonic      '100
 End Enum
 Public Class Player
     'Player is the representation of a player controlled entity (the main player, any teammates)
@@ -644,6 +645,8 @@ Public Class Player
         classes.Add("Fae Bee​", New FVendFaeBee2())
         classes.Add("Battlemaiden", New Battlemaiden())
         classes.Add("Pirate", New Pirate())
+        classes.Add("Cynn Onahole", New CynnOnahole())
+        classes.Add("Onahole", New CynnOnahole2())
     End Sub
     Private Shared Sub initForms()
         'Creates the form dictionary
@@ -696,6 +699,7 @@ Public Class Player
         forms.Add("Cow", New Cow())
         forms.Add("Orc", New Orc())
         forms.Add("Bee Girl", New BeeGirl())
+        forms.Add("Blow-Up Cynn", New BlowUpCynn())
     End Sub
     Private Sub initPolymorphs()
         'compile list of polymorphs
@@ -1012,10 +1016,8 @@ Public Class Player
         Dim t_equip_acc As String = equippedAcce.getAName()
         Dim t_equip_glasses As String = equippedGlasses.getAName()
 
-        Dim tpClassName As String = pClass.name
-        Dim tpFormName As String = pForm.name
-        Dim tpClassRP As String = pClass.revertPassage
-        Dim tpFormRP As String = pClass.revertPassage
+        Dim tpClass As pClass = pClass
+        Dim tpForm As pForm = pForm
 
         s.load(Me, False)
 
@@ -1026,7 +1028,7 @@ Public Class Player
         If inv.getCountAt(t_equip_weapon) > 0 Then EquipmentDialogBackend.weaponChange(Me, t_equip_weapon, False)
         If inv.getCountAt(t_equip_acc) > 0 Then EquipmentDialogBackend.accessoryChange(Me, t_equip_acc, False)
         If inv.getCountAt(t_equip_glasses) > 0 Then EquipmentDialogBackend.equipGlasses(Me, t_equip_glasses, False)
-       
+
         currState.save(Me)
         savePState()
 
@@ -1034,13 +1036,17 @@ Public Class Player
         If mana > maxMana + mBuff Then mana = maxMana + mBuff
 
         Dim out = ""
-        If Not tpClassName.Equals(pClass.name) And perks(perk.tfedbyweapon) < 0 Then
-            pClass.revert()
-            If pClass.revertPassage <> "" Then out += pClass.revertPassage & DDUtils.RNRN
+
+        If Not tpForm.name.Equals(pForm.name) Then
+            tpForm.revert()
+            If tpForm.revertPassage <> "" Then out += tpForm.revertPassage & DDUtils.RNRN
+            If pForm.transformPassage <> "" Then out += pForm.transformPassage & DDUtils.RNRN
         End If
-        If Not tpFormName.Equals(pForm.name) Then
-            pForm.revert()
-            If pForm.revertPassage <> "" Then out += pForm.revertPassage & DDUtils.RNRN
+
+        If Not tpClass.name.Equals(pClass.name) And perks(perk.tfedbyweapon) < 0 Then
+            tpClass.revert()
+            If tpClass.revertPassage <> "" Then out += tpClass.revertPassage & DDUtils.RNRN
+            If pClass.transformPassage <> "" Then out += pClass.transformPassage & DDUtils.RNRN
         End If
 
         ongoingTFs.resetPolymorphs()
@@ -1416,6 +1422,11 @@ Public Class Player
         If perks(perk.mburst) > -1 And Game.getTurn Mod 4 = 0 Then
             PerkEffects.mBurst(Me)
         End If
+        'polymorph
+        If perks(perk.polymorphed) > -1 And Not ongoingTFs.containsPolymorph() Then
+            If perks(perk.polymorphed) = 0 Then revertToPState()
+            perks(perk.polymorphed) -= 1
+        End If
         'slime hair health regen
         If perks(perk.slimehair) > -1 Then
             PerkEffects.slimeHairRegen(Me)
@@ -1492,8 +1503,12 @@ Public Class Player
             drawPort()
         End If
         'fae blossom
-        If equippedAcce.getAName.Equals(FaeStockings.ITEM_NAME) And Int(Rnd() * 200) = 0 Then
+        If equippedAcce.getAName.Equals(FaerieBlossom.ITEM_NAME) And Int(Rnd() * 200) = 0 Then
             PerkEffects.faeleafBloom(Me)
+        End If
+        'cynn's tonic
+        If perks(perk.cynnstonic) > -1 Then
+            If Game.turn Mod 5 = 0 Then perks(perk.cynnstonic) -= 1
         End If
 
         '|TRANSFORMATION TRIGGERS|
@@ -2116,20 +2131,10 @@ Public Class Player
     End Sub
     Sub idRouteMF(Optional halfRevertFlag As Boolean = False)
         Dim mfr = Portrait.imgLib.mfEquivalentIndexes
-        For i = 0 To mfr.Count - 1
+        For Each key In mfr.Keys
             'checks for half reversion
-            If Int(Rnd() * 2) = 0 Or halfRevertFlag = False Then
-                'handles routing for default options
-                If (i = pInd.eyebrows Or i = pInd.eyes) And prt.iArrInd(i).Item1 < 5 Then
-                    prt.setIAInd(i, prt.iArrInd(i).Item1, True, False)
-                ElseIf (i = pInd.facemark) And prt.iArrInd(i).Item1 < 6 Then
-                    prt.setIAInd(i, prt.iArrInd(i).Item1, True, False)
-                ElseIf i <> pInd.blush Then
-                    'handles routing for non-default options
-                    Dim f = mfr(i).getFfromM(prt.iArrInd(i).Item1)
-                    If (i = pInd.face) And f = -1 Then f = 0
-                    If f <> -1 Then prt.setIAInd(i, f, True, prt.iArrInd(i).Item3)
-                End If
+            If Int(Rnd() * 2) = 0 Or Not halfRevertFlag Then
+                prt.iArrInd(key) = mfr(key).getFfromM(prt.iArrInd(key))
             End If
         Next
 
@@ -2140,24 +2145,14 @@ Public Class Player
     End Sub
     Sub idRouteFM(Optional halfRevertFlag As Boolean = False)
         Dim fmr = Portrait.imgLib.mfEquivalentIndexes
-        For i = 0 To fmr.Count - 1
+        For Each key In fmr.Keys
             'checks for half reversion
-            If Int(Rnd() * 2) = 0 Or halfRevertFlag = False Then
-                'handles routing for default options
-                If (i = pInd.eyebrows Or i = pInd.eyes) And prt.iArrInd(i).Item1 < 5 Then
-                    prt.setIAInd(i, prt.iArrInd(i).Item1, False, False)
-                ElseIf (i = pInd.facemark) And prt.iArrInd(i).Item1 < 6 Then
-                    prt.setIAInd(i, prt.iArrInd(i).Item1, False, False)
-                ElseIf i <> pInd.blush Then
-                    'handles routing for non-default options
-                    Dim m = fmr(i).getMfromF(prt.iArrInd(i).Item1)
-                    If (i = pInd.face) And m = -1 Then m = 0
-                    If m <> -1 Then prt.setIAInd(i, m, False, prt.iArrInd(i).Item3)
-                End If
+            If Int(Rnd() * 2) = 0 Or Not halfRevertFlag Then
+                prt.iArrInd(key) = fmr(key).getMfromF(prt.iArrInd(key))
             End If
         Next
 
-        allRoute()
+        reverseAllRoute()
 
         'update the players clothing
         prt.portraitUDate()
@@ -2368,7 +2363,7 @@ Public Class Player
             buttSize = 3
         ElseIf prt.checkNDefFemInd(pInd.body, 3) And buttSize <> 4 Then
             buttSize = 4
-        ElseIf prt.checkNDefFemInd(pInd.body, 11) And buttSize <> 5 Then
+        ElseIf prt.checkNDefFemInd(pInd.body, 4) And buttSize <> 5 Then
             buttSize = 5
         End If
     End Sub
@@ -2399,7 +2394,7 @@ Public Class Player
                 prt.setIAInd(pInd.body, 3, True, True)
                 If breastSize < 1 Then breastSize = 1
             Case 5
-                prt.setIAInd(pInd.body, 11, True, True)
+                prt.setIAInd(pInd.body, 4, True, True)
                 If breastSize < 1 Then breastSize = 1
         End Select
         prt.portraitUDate()
@@ -2410,15 +2405,15 @@ Public Class Player
             prt.iArrInd Is Nothing Or solFlag Then Exit Sub
         If prt.checkNDefMalInd(pInd.body, 4) And buttSize <> -1 Then
             buttSize = -1
-        ElseIf prt.checkNDefFemInd(pInd.body, 12) And buttSize <> 0 Then
+        ElseIf prt.checkNDefFemInd(pInd.body, 5) And buttSize <> 0 Then
             buttSize = 0
-        ElseIf prt.checkNDefFemInd(pInd.body, 13) And buttSize <> 1 Then
+        ElseIf prt.checkNDefFemInd(pInd.body, 6) And buttSize <> 1 Then
             buttSize = 1
-        ElseIf prt.checkNDefFemInd(pInd.body, 14) And buttSize <> 2 Then
+        ElseIf prt.checkNDefFemInd(pInd.body, 7) And buttSize <> 2 Then
             buttSize = 2
-        ElseIf prt.checkNDefFemInd(pInd.body, 15) And buttSize <> 3 Then
+        ElseIf prt.checkNDefFemInd(pInd.body, 8) And buttSize <> 3 Then
             buttSize = 3
-        ElseIf prt.checkNDefFemInd(pInd.body, 16) And buttSize <> 4 Then
+        ElseIf prt.checkNDefFemInd(pInd.body, 9) And buttSize <> 4 Then
             buttSize = 4
         End If
     End Sub
@@ -2429,27 +2424,27 @@ Public Class Player
                 prt.setIAInd(pInd.shoulders, 3, False, False)
                 breastSize = -1
             Case 0
-                prt.setIAInd(pInd.body, 12, True, True)
+                prt.setIAInd(pInd.body, 5, True, True)
                 prt.setIAInd(pInd.shoulders, 4, False, False)
                 breastSize = 0
             Case 1
-                prt.setIAInd(pInd.body, 13, True, False)
+                prt.setIAInd(pInd.body, 6, True, False)
                 prt.setIAInd(pInd.shoulders, 5, False, False)
                 If breastSize < 1 Then breastSize = 1
             Case 2
-                prt.setIAInd(pInd.body, 14, True, True)
+                prt.setIAInd(pInd.body, 7, True, True)
                 prt.setIAInd(pInd.shoulders, 5, False, False)
                 If breastSize < 1 Then breastSize = 1
             Case 3
-                prt.setIAInd(pInd.body, 15, True, True)
+                prt.setIAInd(pInd.body, 8, True, True)
                 prt.setIAInd(pInd.shoulders, 5, False, False)
                 If breastSize < 1 Then breastSize = 1
             Case 4
-                prt.setIAInd(pInd.body, 16, True, True)
+                prt.setIAInd(pInd.body, 9, True, True)
                 prt.setIAInd(pInd.shoulders, 5, False, False)
                 If breastSize < 1 Then breastSize = 1
             Case 5
-                prt.setIAInd(pInd.body, 16, True, True)
+                prt.setIAInd(pInd.body, 9, True, True)
                 prt.setIAInd(pInd.shoulders, 5, False, False)
                 If breastSize < 1 Then breastSize = 1
         End Select
@@ -2909,7 +2904,12 @@ Public Class Player
         If perks(perk.hunger) > -1 Then out += "You haven't eaten anything in a while and are starving." & DDUtils.RNRN
         If perks(perk.thrall) > -1 Then out += "You are under the thrall of a sorcerer/ess, and may not have full control over your body or mind." & DDUtils.RNRN
         If perks(perk.polymorphed) > -1 Then out += "You are under the effects of a temporary polymorph, and will be for " & perks(perk.polymorphed) & " more turns." & DDUtils.RNRN
-        If perks(perk.astatue) > -1 Then out += "You are currently a statue, and won't be able to do much for " & perks(perk.astatue) & " turns." & DDUtils.RNRN
+        If perks(perk.astatue) > -1 And className.Equals("Cynn Onahole") Then
+            out += "You are currently inanimate, and won't be able to do much for " & perks(perk.astatue) & " turns." & DDUtils.RNRN
+        ElseIf perks(perk.astatue) > -1 Then
+            out += "You are currently a statue, and won't be able to do much for " & perks(perk.astatue) & " turns." & DDUtils.RNRN
+        End If
+
         If perks(perk.lurk) > -1 Then out += "You are currently in a shrub." & DDUtils.RNRN
         If perks(perk.blind) > -1 Then out += "You are blind." & DDUtils.RNRN
         If perks(perk.lightsource) > -1 Then out += "Your entire body is glowing, and will continue to do so for " & perks(perk.lightsource) & " turns." & DDUtils.RNRN
@@ -2919,6 +2919,7 @@ Public Class Player
         If perks(perk.dodge) > -1 Then out += "You will dodge the next attack that comes your way." & DDUtils.RNRN
         If perks(perk.isspotfused) > -1 Then out += "You can not fuse again for " & perks(perk.isspotfused) & " turns." & DDUtils.RNRN
         If perks(perk.vofmanynames) > -1 Then out += "Your true name is hidden!  " & perks(perk.vofmanynames) & " charges remain." & DDUtils.RNRN
+        If perks(perk.cynnstonic) > -1 Then out += "You are under the " & CynnTonic.getEffectTier(Me) & " influence of Cynn's Tonic!  " & perks(perk.cynnstonic) & " charges remain." & DDUtils.RNRN
 
         '| -- Curse Indicators -- |
         If perks(perk.slutcurse) > -1 Then out += "Due to a curse, any clothes or armor you wear will become skimpy and revealing." & DDUtils.RNRN
@@ -2992,6 +2993,8 @@ Public Class Player
         TextEvent.pushLog(spell & " spell learned!")
     End Sub
     Public Sub forgetSpell(ByVal spell As String)
+        If Not knownSpells.Contains(spell) Then Exit Sub
+
         While knownSpells.Contains(spell)
             knownSpells.Remove(spell)
         End While

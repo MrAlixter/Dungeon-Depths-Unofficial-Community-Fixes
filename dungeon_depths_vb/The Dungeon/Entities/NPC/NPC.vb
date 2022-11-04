@@ -79,17 +79,41 @@ Public Class NPC
             stunct -= 1
         End If
     End Sub
+    Protected Function getXPValue() As Integer
+        Dim p As Player = Game.player1
+
+        '| -- Cynn's Tonic -- |
+        If p.perks(perk.cynnstonic) > -1 Then
+            If p.perks(perk.cynnstonic) < CynnTonic.TIER2 Then
+                xp_value *= 1.15
+                p.perks(perk.cynnstonic) /= 2
+            ElseIf p.perks(perk.cynnstonic) < CynnTonic.TIER3 Then
+                xp_value *= 1.25
+                p.perks(perk.cynnstonic) *= (7 / 8)
+            ElseIf p.perks(perk.cynnstonic) < CynnTonic.TIER4 Then
+                xp_value *= 2
+                TextEvent.lblEventOnClose = AddressOf CynnTonicTF.blowupCynnTF
+            ElseIf p.perks(perk.cynnstonic) < CynnTonic.TIER5 Then
+                xp_value *= 10
+                TextEvent.lblEventOnClose = AddressOf CynnTonicTF.cynnOnaholeTF
+                p.perks(perk.cynnstonic) *= 3
+            Else
+                TextEvent.lblEventOnClose = AddressOf CynnTonicTF.onaholeTF
+            End If
+        End If
+
+        Return xp_value
+    End Function
     Public Overloads Overrides Sub die(ByRef cause As Entity)
         If isDead Then Exit Sub
         currTarget = Nothing
         nextCombatAction = Nothing
-
-        endMonster()
-
-        Game.player1.addXP(xp_value)
         cause.currTarget = Nothing
         cause.nextCombatAction = Nothing
 
+        Game.player1.addXP(getXPValue)
+
+        endMonster()
 
         If getName.Contains("Enthralling Half-Dem") Then
             Equipment.accChange(Game.player1, "Nothing")

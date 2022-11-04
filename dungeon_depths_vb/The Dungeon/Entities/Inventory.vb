@@ -403,6 +403,7 @@
         internal_inventory.Add(Hyacinth.ITEM_NAME, New Hyacinth)                     '377
         internal_inventory.Add(Lepanacea.ITEM_NAME, New Lepanacea)                   '378
         internal_inventory.Add(RosePetalSpellbook.ITEM_NAME, New RosePetalSpellbook) '379
+        internal_inventory.Add(CynnTonic.ITEM_NAME, New CynnTonic)                   '380
 
         armor = {New Naked,
                  Me.item(5), Me.item(7), Me.item(8), Me.item(10),
@@ -471,7 +472,7 @@
                    Me.item(280), Me.item(286), Me.item(294), Me.item(306),
                    Me.item(327), Me.item(328), Me.item(330), Me.item(334),
                    Me.item(338), Me.item(344), Me.item(350), Me.item(373),
-                   Me.item(375), Me.item(379)}
+                   Me.item(375), Me.item(379), Me.item(380)}
 
         food = {Me.item(1), Me.item(30), Me.item(31), Me.item(32),
                 Me.item(33), Me.item(34), Me.item(35), Me.item(44),

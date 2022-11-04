@@ -242,57 +242,65 @@ Public Class Portrait
     End Function
 
     Function oneLayerImgCheck(ByVal pForm As String, ByVal pClass As String) As Image
-        Dim pic = Nothing
-
-        If pForm.Equals("Dragon") And Not sexBool() Then
-            pic = Game.picDragonM.BackgroundImage
-        ElseIf pForm.Equals("Dragon") And sexBool() Then
-            pic = Game.picDragonF.BackgroundImage
-        ElseIf pClass.Equals("Magical Girl​") Then
-            pic = Game.picmgp1.BackgroundImage
+        '| - Classes - |
+        If pClass.Equals("Magical Girl​") Then
+            Return Game.picmgp1.BackgroundImage
         ElseIf pClass.Equals("Valkyrie​") Then
-            pic = Game.picvalktf.BackgroundImage
-        ElseIf pForm.Equals("Sheep") Then
-            pic = Game.picSheep.BackgroundImage
-        ElseIf pForm.Equals("Cake") Then
-            pic = Game.picCake.BackgroundImage
-        ElseIf pForm.Equals("Frog") Then
-            pic = Game.picFrog.BackgroundImage
+            Return Game.picvalktf.BackgroundImage
         ElseIf pClass.Equals("Princess​") Then
-            pic = Game.picPrin.BackgroundImage
+            Return Game.picPrin.BackgroundImage
         ElseIf pClass.Equals("Thong") Then
-            pic = Game.picWSmithThong1.BackgroundImage
+            Return Game.picWSmithThong1.BackgroundImage
         ElseIf pClass.Equals("Thong​") Then
-            pic = Game.picWSmithThong2.BackgroundImage
+            Return Game.picWSmithThong2.BackgroundImage
         ElseIf pClass.Equals("Fae Bee") Then
-            pic = Game.picFaeBee.BackgroundImage
+            Return Game.picFaeBee.BackgroundImage
         ElseIf pClass.Equals("Fae Bee​") Then
-            pic = Game.picFaeBee2.BackgroundImage
+            Return Game.picFaeBee2.BackgroundImage
         ElseIf pClass.Equals("Bunny Girl​") Then
-            pic = Game.picBun.BackgroundImage
-        ElseIf pForm.Equals("Half-Dragoness") Then
-            pic = Game.picHalfDragon1.BackgroundImage
-        ElseIf pForm.Equals("Half-Broodmother") Then
-            pic = Game.picHalfDragon2.BackgroundImage
-        ElseIf pForm.Equals("Broodmother") Then
-            pic = Game.picBroodmother.BackgroundImage
-        ElseIf pForm.Equals("Horse") Then
-            pic = Game.picHorse.BackgroundImage
-        ElseIf pForm.Equals("Unicorn") Then
-            pic = Game.picUnicorn.BackgroundImage
-        ElseIf pForm.Equals("Oni") Then
-            pic = Game.picOniF.BackgroundImage
-        ElseIf pForm.Equals("Blob") And Not sexBool() Then
-            pic = Game.picBlobM.BackgroundImage
-        ElseIf pForm.Equals("Blob") And sexBool() Then
-            pic = Game.picBlobF.BackgroundImage
-        ElseIf pForm.Equals("Fae") Then
-            pic = Nothing  'Game.picPFae.BackgroundImage
-        ElseIf pForm.Equals("Cow") Then
-            pic = Game.picCow.BackgroundImage
+            Return Game.picBun.BackgroundImage
+        ElseIf pClass.Equals("Cynn Onahole") Then
+            Return Game.picCynnOnahole1.BackgroundImage
+        ElseIf pClass.Equals("Onahole") Then
+            Return Game.picCynnOnahole2.BackgroundImage
         End If
 
-        Return pic
+        '| - Forms - |
+        If pForm.Equals("Dragon") And Not sexBool() Then
+            Return Game.picDragonM.BackgroundImage
+        ElseIf pForm.Equals("Dragon") And sexBool() Then
+            Return Game.picDragonF.BackgroundImage
+        ElseIf pForm.Equals("Sheep") Then
+            Return Game.picSheep.BackgroundImage
+        ElseIf pForm.Equals("Cake") Then
+            Return Game.picCake.BackgroundImage
+        ElseIf pForm.Equals("Frog") Then
+            Return Game.picFrog.BackgroundImage
+        ElseIf pForm.Equals("Half-Dragoness") Then
+            Return Game.picHalfDragon1.BackgroundImage
+        ElseIf pForm.Equals("Half-Broodmother") Then
+            Return Game.picHalfDragon2.BackgroundImage
+        ElseIf pForm.Equals("Broodmother") Then
+            Return Game.picBroodmother.BackgroundImage
+        ElseIf pForm.Equals("Horse") Then
+            Return Game.picHorse.BackgroundImage
+        ElseIf pForm.Equals("Unicorn") Then
+            Return Game.picUnicorn.BackgroundImage
+        ElseIf pForm.Equals("Oni") Then
+            Return Game.picOniF.BackgroundImage
+        ElseIf pForm.Equals("Blob") And Not sexBool() Then
+            Return Game.picBlobM.BackgroundImage
+        ElseIf pForm.Equals("Blob") And sexBool() Then
+            Return Game.picBlobF.BackgroundImage
+        ElseIf pForm.Equals("Fae") Then
+            Return Nothing  'Game.picPFae.BackgroundImage
+        ElseIf pForm.Equals("Cow") Then
+            Return Game.picCow.BackgroundImage
+        ElseIf pForm.Equals("Blow-Up Cynn") Then
+            Return Game.picBlowupCynn.BackgroundImage
+        End If
+
+        Return Nothing
     End Function
 
     Public Sub setIArr()
@@ -611,8 +619,11 @@ Public Class Portrait
 
         p.dsizeroute()
     End Sub
-    Sub setIAInd(ByVal attrInd As pInd, ByVal i As Integer, ByVal b As Boolean, ByVal nonDefFlag As Boolean)
-        iArrInd(attrInd) = New Tuple(Of Integer, Boolean, Boolean)(i, b, nonDefFlag)
+    Shared Function mkIAInd(ByVal i As Integer, ByVal fem As Boolean, ByVal non_def As Boolean) As Tuple(Of Integer, Boolean, Boolean)
+        Return New Tuple(Of Integer, Boolean, Boolean)(i, fem, non_def)
+    End Function
+    Sub setIAInd(ByVal attrInd As pInd, ByVal i As Integer, ByVal fem As Boolean, ByVal non_def As Boolean)
+        iArrInd(attrInd) = mkIAInd(i, fem, non_def)
     End Sub
     Sub setIAInd(ByVal attrInd As pInd, ByVal iaInd As Tuple(Of Integer, Boolean, Boolean))
         iArrInd(attrInd) = iaInd
