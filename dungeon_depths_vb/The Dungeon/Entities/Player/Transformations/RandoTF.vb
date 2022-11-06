@@ -22,7 +22,7 @@
 
         'assign a pointer to the player character
         Dim p As player = Game.player1
-        If Not p.preBSStartState.initFlag Then p.preBSStartState = p.sState.clone(p)
+        If Not p.formStates(stateInd.preBSStartState).initFlag Then p.formStates(stateInd.preBSStartState) = p.sState.clone(p)
 
         'assign a starter class / form
         p.changeClass("Classless")
@@ -310,7 +310,7 @@
     End Sub
     Shared Sub floor4FirstBossEncounterP3()
         Dim p As Player = Game.player1
-        p.preBSBody = If(Transformation.canBeTFed(p), New State(p), p.pState.clone(p))
+        p.formStates(stateInd.preBSBody) = If(Transformation.canBeTFed(p), New State(p), p.pState.clone(p))
         Game.floor_4_starting_inv = New ArrayList()
         For i = 0 To p.inv.upperBound
             Game.floor_4_starting_inv.Add(p.inv.getCountAt(i))
@@ -336,9 +336,9 @@
     End Sub
     Shared Sub floor4revert()
         Dim p As player = Game.player1
-        p.preBSStartState.load(p)
+        p.formStates(stateInd.preBSStartState).load(p)
         p.sState.save(p)
-        p.preBSBody.load(p)
+        p.formStates(stateInd.preBSBody).load(p)
         p.pState.save(p)
         p.revertToPState()
         For i = 0 To Game.floor_4_starting_inv.Count - 1

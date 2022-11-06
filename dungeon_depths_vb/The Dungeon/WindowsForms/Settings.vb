@@ -139,6 +139,7 @@ Public Class Settings
 
         'scale to the screen size
         DDUtils.resizeForm(Me)
+        Me.CenterToParent()
 
         'load all possible settings
         loadSettings()
@@ -191,6 +192,8 @@ Public Class Settings
             btnAdv.Location = New Point(66 * (CDbl(Me.Width) / CDbl(compressed_X)), btnAdv.Location.Y)
             btnSettingsOK.Location = New Point(185 * (CDbl(Me.Width) / CDbl(compressed_X)), btnSettingsOK.Location.Y)
         End If
+
+        Me.CenterToParent()
     End Sub
     Private Sub createSpawnRatePanel(ByVal m_name As String, ByVal m_ind As mInd, ByVal index As Integer)
         Dim r As Double = CDbl(Me.Width) / CDbl(expanded_X)

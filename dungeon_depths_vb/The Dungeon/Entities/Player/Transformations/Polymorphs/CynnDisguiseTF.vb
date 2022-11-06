@@ -21,15 +21,15 @@
     Public Overrides Sub step1()
         Dim p As Player = Game.player1
 
-        p.changeForm(p.succDisgState.pForm.name)
+        p.changeForm(p.formStates(stateInd.succDisgState).pForm.name)
 
         Dim pinds() As pInd = {pInd.wings, pInd.horns, pInd.tail, pInd.rearhair, pInd.midhair, pInd.fronthair, pInd.ears, pInd.mouth}
 
         For Each pi In pinds
-            p.prt.setIAInd(pi, p.succDisgState.iArrInd(pi).Item1, p.succDisgState.iArrInd(pi).Item2, p.succDisgState.iArrInd(pi).Item3)
+            p.prt.setIAInd(pi, p.formStates(stateInd.succDisgState).iArrInd(pi).Item1, p.formStates(stateInd.succDisgState).iArrInd(pi).Item2, p.formStates(stateInd.succDisgState).iArrInd(pi).Item3)
         Next
 
-        p.prt.haircolor = p.succDisgState.getHairColor()
-        p.prt.skincolor = p.succDisgState.getSkinColor()
+        p.prt.haircolor = p.formStates(stateInd.succDisgState).getHairColor()
+        p.prt.skincolor = p.formStates(stateInd.succDisgState).getSkinColor()
     End Sub
 End Class

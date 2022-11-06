@@ -80,7 +80,6 @@ Partial Class Polymorph
         Me.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle
         Me.Icon = CType(resources.GetObject("$this.Icon"), System.Drawing.Icon)
         Me.Name = "Polymorph"
-        Me.StartPosition = System.Windows.Forms.FormStartPosition.CenterParent
         Me.Text = "Polymorph"
         Me.ResumeLayout(False)
         Me.PerformLayout()

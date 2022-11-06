@@ -39,6 +39,8 @@
                     cboxPolymorph.Items.Add(p.enemPolyForms.Item(i))
                 Next
         End Select
+
+        Me.CenterToParent()
     End Sub
     Private Sub BtnPolymorphOK_Click(sender As Object, e As EventArgs) Handles btnPolymorphOK.Click
         'Cancel the polymorph if an invalid form type is selected

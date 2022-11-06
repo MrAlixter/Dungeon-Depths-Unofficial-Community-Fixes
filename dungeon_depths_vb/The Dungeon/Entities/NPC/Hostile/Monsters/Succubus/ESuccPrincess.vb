@@ -55,8 +55,8 @@
             Dim p = CType(target, Player)
             TextEvent.push("The " & getName() & " casts Curse of the Slut!")
             p.perks(perk.succubuscurse) = 0
-            p.dembimState1.save(p)
-            p.dembimState2.save(p)
+            p.formStates(stateInd.dembimState1).save(p)
+            p.formStates(stateInd.dembimState2).save(p)
             Exit Sub
         End If
 

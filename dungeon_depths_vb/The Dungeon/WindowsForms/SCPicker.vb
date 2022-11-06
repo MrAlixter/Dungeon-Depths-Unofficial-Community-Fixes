@@ -46,5 +46,7 @@
             Me.Controls(i).Left += CDbl(Me.Controls(i).Left * RW)
             Me.Controls(i).Top += CDbl(Me.Controls(i).Top * RH)
         Next
+
+        Me.CenterToParent()
     End Sub
 End Class

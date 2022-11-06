@@ -46,7 +46,7 @@
         p.prt.setIAInd(pInd.cloak, 0, True, False)
         p.prt.setIAInd(pInd.fronthair, 9, True, True)
         p.prt.setIAInd(pInd.hat, 0, True, False)
-        p.goddState.save(p)
+        p.formStates(stateInd.goddState).save(p)
 
         'transformation description push
         p.TextColor = Color.LightGoldenrodYellow

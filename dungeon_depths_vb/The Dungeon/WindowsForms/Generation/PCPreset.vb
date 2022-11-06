@@ -47,7 +47,7 @@ Public Class PCPreset
 
     Sub save(ByVal c As String) 'ByVal genSet As GeneratorSettings)
         'set preset values
-        ReDim iArrInd(UBound(Game.player1.prt.iArrInd))
+        ReDim iArrInd(Portrait.NUM_IMG_LAYERS)
         For i = 0 To UBound(iArrInd)
             iArrInd(i) = (Game.player1.prt.iArrInd(i))
         Next

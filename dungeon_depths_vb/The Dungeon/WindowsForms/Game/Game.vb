@@ -2528,8 +2528,8 @@ Public Class Game
         If (mDun.numCurrFloor = 4 And mDun.floorboss(4) = "Ooze Empress") Then
             Dim l1 = reader.ReadLine()
             Dim l2 = reader.ReadLine()
-            If Not l1.Equals("placeholder") Then player1.preBSBody.read(l1, version)
-            If Not l2.Equals("placeholder") Then player1.preBSStartState.read(l2, version)
+            If Not l1.Equals("placeholder") Then player1.formStates(stateInd.preBSBody).read(l1, version)
+            If Not l2.Equals("placeholder") Then player1.formStates(stateInd.preBSStartState).read(l2, version)
             floor_4_starting_inv = New ArrayList
             For i As Integer = 0 To reader.ReadLine()
                 floor_4_starting_inv.Add(reader.ReadLine())
@@ -3304,7 +3304,7 @@ Public Class Game
     Private Sub SaveToolStripMenuItem_Click(sender As Object, e As EventArgs) Handles SaveToolStripMenuItem.Click
         solFlag = False
         If (lblEvent.Visible Or pnlEvent.Visible) Or combat_engaged Or shop_npc_engaged Or Me.MdiChildren.Length > 0 Or
-            (mDun.numCurrFloor = 4 And mDun.floorboss(4) = "Ooze Empress" And Not player1.preBSStartState.initFlag) Then
+            (mDun.numCurrFloor = 4 And mDun.floorboss(4) = "Ooze Empress" And Not player1.formStates(stateInd.preBSStartState).initFlag) Then
             TextEvent.push("You can't save now!")
             Exit Sub
         End If
@@ -3542,6 +3542,7 @@ Public Class Game
     Private Sub Game_Resize()
         DDUtils.resizeForm(Me, iHeight, iWidth)
         If Not player1 Is Nothing Then player1.UIupdate()
+        Me.CenterToScreen()
     End Sub
     Private Sub CreateMapAndImages()
         'Dim XSize As Double = 15.0 * (CDbl(Me.Size.Width) / 688.0)

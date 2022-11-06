@@ -41,7 +41,7 @@ Partial Class Equipment
         Me.Label2.Location = New System.Drawing.Point(45, 81)
         Me.Label2.Margin = New System.Windows.Forms.Padding(4, 0, 4, 0)
         Me.Label2.Name = "Label2"
-        Me.Label2.Size = New System.Drawing.Size(120, 17)
+        Me.Label2.Size = New System.Drawing.Size(91, 13)
         Me.Label2.TabIndex = 15
         Me.Label2.Text = "Equiped Armor:"
         '
@@ -54,7 +54,7 @@ Partial Class Equipment
         Me.cboxArmor.Location = New System.Drawing.Point(47, 106)
         Me.cboxArmor.Margin = New System.Windows.Forms.Padding(4, 5, 4, 5)
         Me.cboxArmor.Name = "cboxArmor"
-        Me.cboxArmor.Size = New System.Drawing.Size(199, 23)
+        Me.cboxArmor.Size = New System.Drawing.Size(199, 21)
         Me.cboxArmor.TabIndex = 14
         '
         'Label1
@@ -66,7 +66,7 @@ Partial Class Equipment
         Me.Label1.Location = New System.Drawing.Point(46, 9)
         Me.Label1.Margin = New System.Windows.Forms.Padding(4, 0, 4, 0)
         Me.Label1.Name = "Label1"
-        Me.Label1.Size = New System.Drawing.Size(128, 17)
+        Me.Label1.Size = New System.Drawing.Size(97, 13)
         Me.Label1.TabIndex = 13
         Me.Label1.Text = "Equiped Weapon:"
         '
@@ -92,7 +92,7 @@ Partial Class Equipment
         Me.cboxWeapon.Location = New System.Drawing.Point(47, 34)
         Me.cboxWeapon.Margin = New System.Windows.Forms.Padding(4, 5, 4, 5)
         Me.cboxWeapon.Name = "cboxWeapon"
-        Me.cboxWeapon.Size = New System.Drawing.Size(199, 23)
+        Me.cboxWeapon.Size = New System.Drawing.Size(199, 21)
         Me.cboxWeapon.TabIndex = 11
         '
         'Label3
@@ -104,7 +104,7 @@ Partial Class Equipment
         Me.Label3.Location = New System.Drawing.Point(48, 153)
         Me.Label3.Margin = New System.Windows.Forms.Padding(4, 0, 4, 0)
         Me.Label3.Name = "Label3"
-        Me.Label3.Size = New System.Drawing.Size(152, 17)
+        Me.Label3.Size = New System.Drawing.Size(115, 13)
         Me.Label3.TabIndex = 17
         Me.Label3.Text = "Equiped Accessory:"
         '
@@ -117,7 +117,7 @@ Partial Class Equipment
         Me.cboxAccessory.Location = New System.Drawing.Point(50, 178)
         Me.cboxAccessory.Margin = New System.Windows.Forms.Padding(4, 5, 4, 5)
         Me.cboxAccessory.Name = "cboxAccessory"
-        Me.cboxAccessory.Size = New System.Drawing.Size(199, 23)
+        Me.cboxAccessory.Size = New System.Drawing.Size(199, 21)
         Me.cboxAccessory.TabIndex = 16
         '
         'Equipment
@@ -136,7 +136,6 @@ Partial Class Equipment
         Me.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle
         Me.Icon = CType(resources.GetObject("$this.Icon"), System.Drawing.Icon)
         Me.Name = "Equipment"
-        Me.StartPosition = System.Windows.Forms.FormStartPosition.CenterParent
         Me.Text = "Equip Menu"
         Me.ResumeLayout(False)
         Me.PerformLayout()

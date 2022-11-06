@@ -239,7 +239,6 @@ Partial Class ShopV3
         Me.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedToolWindow
         Me.Icon = CType(resources.GetObject("$this.Icon"), System.Drawing.Icon)
         Me.Name = "ShopV3"
-        Me.StartPosition = System.Windows.Forms.FormStartPosition.CenterParent
         CType(Me.number, System.ComponentModel.ISupportInitialize).EndInit()
         Me.ResumeLayout(False)
         Me.PerformLayout()

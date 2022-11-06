@@ -81,7 +81,6 @@ Partial Class BrokenRemotePicker
         Me.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle
         Me.Icon = CType(resources.GetObject("$this.Icon"), System.Drawing.Icon)
         Me.Name = "BrokenRemotePicker"
-        Me.StartPosition = System.Windows.Forms.FormStartPosition.CenterParent
         Me.Text = "Broken Remote"
         Me.ResumeLayout(False)
         Me.PerformLayout()

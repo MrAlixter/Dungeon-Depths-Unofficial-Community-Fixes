@@ -86,15 +86,15 @@ Public Class MagGirlTF
     End Sub
     Overridable Sub step2()
         Dim p As Player = Game.player1
-        If p.magGState.initFlag And (p.perks(perk.mgind) = MG_IND Or p.perks(perk.mgind) = -1) Then
-            p.magGState.load(p)
+        If p.formStates(stateInd.magGState).initFlag And (p.perks(perk.mgind) = MG_IND Or p.perks(perk.mgind) = -1) Then
+            p.formStates(stateInd.magGState).load(p)
         Else
             tfBody(p)
             p.changeClass(className)
 
             p.perks(perk.mgind) = MG_IND
-            p.magGState.save(p)
-            p.magGState.initFlag = True
+            p.formStates(stateInd.magGState).save(p)
+            p.formStates(stateInd.magGState).initFlag = True
         End If
 
         setSpells(p)

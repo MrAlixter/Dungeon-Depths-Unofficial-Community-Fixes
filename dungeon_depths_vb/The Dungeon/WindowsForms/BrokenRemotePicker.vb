@@ -3,6 +3,7 @@
     Private Sub BrokenRemotePicker_Load(sender As Object, e As EventArgs) Handles MyBase.Load
         'scale to the screen size
         DDUtils.resizeForm(Me)
+        Me.CenterToParent()
 
         Dim p = Game.player1
 

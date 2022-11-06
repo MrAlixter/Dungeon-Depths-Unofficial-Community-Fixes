@@ -42,7 +42,7 @@
 
         Dim m_avg_stats = (m.maxHealth + m.maxMana + m.attack + m.defense + m.will + m.speed) / 6
 
-        If p.perks(perk.tfedbyweapon) > -1 Then PerkEffects.randomPoly(p.magGState) Else PerkEffects.randomPoly()
+        If p.perks(perk.tfedbyweapon) > -1 Then PerkEffects.randomPoly(p.formStates(stateInd.magGState)) Else PerkEffects.randomPoly()
 
         Dim ind = [Enum].GetNames(GetType(randomPolymorphNPC)).Length
         polymorphNPC(m.getNPC, indToForm([Enum].GetValues(GetType(randomPolymorphNPC))(Int(Rnd() * ind))))

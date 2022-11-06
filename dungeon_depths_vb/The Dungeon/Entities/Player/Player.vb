@@ -103,6 +103,18 @@
     metcynthia      '101
     faewishesmade   '102
 End Enum
+Public Enum stateInd
+    goddState
+    bimbState
+    magGState
+    maidState
+    prinState
+    dembimState1
+    dembimState2
+    succDisgState
+    preBSBody
+    preBSStartState
+End Enum
 Public Class Player
     'Player is the representation of a player controlled entity (the main player, any teammates)
     Inherits Entity
@@ -139,20 +151,10 @@ Public Class Player
 
     'player & form states
     Public currState, pState, sState As State
-    Public bimbState As State = New State()
-    Public magGState As State = New State()
-    Public goddState As State = New State()
-    Public maidState As State = New State()
-    Public prinState As State = New State()
-    Public dembimState1 As State = New State()
-    Public dembimState2 As State = New State()
-    Public succDisgState As State = New State()
-    Public preBSBody As State = New State()
-    Public preBSStartState As State = New State()
-    Public formStates = {goddState, bimbState, magGState, maidState, prinState, dembimState1, dembimState2, succDisgState, preBSBody, preBSStartState}
+    Public formStates(9)
 
     Public solFlag = False
-    Public prefForm As preferredForm
+    Public prefForm As PreferredForm
 
     'assorted lists
     Public ongoingTFs As TFList = New TFList
@@ -187,23 +189,15 @@ Public Class Player
         maxMana = mana
         stamina = 100
 
+        For i = 0 To UBound(formStates)
+            formStates(i) = New State()
+        Next
+
         createInvPerks()
         inv.add(0, 1)
         inv.add(2, 1)
     End Sub
     'load from save constructors
-    Sub pushFormStates()
-        bimbState = formStates(0)
-        magGState = formStates(1)
-        goddState = formStates(2)
-        maidState = formStates(3)
-        prinState = formStates(4)
-        dembimState1 = formStates(5)
-        dembimState2 = formStates(6)
-        succDisgState = formStates(7)
-        preBSBody = formStates(8)
-        preBSStartState = formStates(9)
-    End Sub
     Public Sub New(ByVal s As String, ByVal v As Double)
         '|- Setup -|
         solFlag = True
@@ -235,16 +229,12 @@ Public Class Player
                 If i = UBound(formStates) Then Exit For
             Next
 
-            pushFormStates()
-
             playArray = playArray(5 + ind).Split("*")
         Else
             ind = 7
             For i = 0 To 9
                 formStates(i).read(playArray(3 + i), v)
             Next
-
-            pushFormStates()
 
             playArray = playArray(4 + ind).Split("*")
         End If
@@ -435,7 +425,7 @@ Public Class Player
                 equippedGlasses = New noGlasses
                 equippedGlasses.count -= 1
         End Select
-     
+
         equippedGlasses.add(1)
     End Sub
     Private Sub setCommonClothes()
@@ -581,7 +571,7 @@ Public Class Player
         magicRoute()
         'set player_image and TextColor
         player_image = mTile.imgLib.getImg(tSet.dungeon, tile.player)
-        TextColor = Color.White
+        textColor = Color.White
         'sets the player description
         description = CStr(name & " is a " & sex & " " & pForm.name & " " & pClass.name)
         'saves the player's state
@@ -2473,18 +2463,6 @@ Public Class Player
     End Sub
 
     '|SAVE METHODS|
-    Sub pullFormStates()
-        formStates(0) = bimbState
-        formStates(1) = magGState
-        formStates(2) = goddState
-        formStates(3) = maidState
-        formStates(4) = prinState
-        formStates(5) = dembimState1
-        formStates(6) = dembimState2
-        formStates(7) = succDisgState
-        formStates(8) = preBSBody
-        formStates(9) = preBSStartState
-    End Sub
     Public Overrides Function ToString() As String
         Dim output As String = ""
         currState.save(Me)
@@ -2493,9 +2471,6 @@ Public Class Player
         output += currState.write()
         output += sState.write()
         output += pState.write()
-
-        '|- Tertiary Save States (For TFs/etc) -|
-        pullFormStates()
 
         output += formStates.length & "#"
         For i = 0 To UBound(formStates)

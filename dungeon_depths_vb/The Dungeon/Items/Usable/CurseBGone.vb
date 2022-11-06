@@ -17,7 +17,7 @@
         value = 300
 
         '|Description|
-        setDesc("A small paper tag with instructions to ""Stuck in a bind?  Slap this bad on any cursed clothing to 'bust' out of it!""")
+        setDesc("A small paper tag with instructions to ""Stuck in a bind?  Slap this bad boy on any cursed clothing to 'bust' out of it!""")
     End Sub
 
     Overrides Sub use(ByRef p As Player)

@@ -131,6 +131,7 @@ Public Class ShopV3
         txtDesc.Text = ""
 
         DDUtils.resizeForm(Me)
+        Me.CenterToParent()
 
         RefreshScreen()
         lblPlayer.Text = p.getName

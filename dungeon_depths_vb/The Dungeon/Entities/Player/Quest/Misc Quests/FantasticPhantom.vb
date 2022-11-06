@@ -355,7 +355,7 @@ Public Class FanPhanStep3
         Dim p = Game.player1
 
         losstf(p)
-        p.magGState.save(p)
+        p.formStates(stateInd.magGState).save(p)
 
         EquipmentDialogBackend.equipWeapon(p, "Fists", False)
 

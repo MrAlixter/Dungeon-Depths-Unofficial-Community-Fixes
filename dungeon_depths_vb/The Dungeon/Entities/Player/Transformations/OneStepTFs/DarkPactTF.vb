@@ -28,8 +28,8 @@
         p.prt.setIAInd(pInd.nose, 0, True, False)
         p.prt.setIAInd(pInd.eyes, 12, True, True)
 
-        p.succDisgState.initFlag = True
-        p.succDisgState.save(p)
+        p.formStates(stateInd.succDisgState).initFlag = True
+        p.formStates(stateInd.succDisgState).save(p)
 
         p.prt.setIAInd(pInd.eyebrows, 0, True, False)
 

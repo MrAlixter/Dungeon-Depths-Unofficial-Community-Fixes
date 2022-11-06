@@ -39,6 +39,6 @@
     Private Shared Sub reset()
         Dim p = Game.player1
 
-        p.magGState = New State()
+        p.formStates(stateInd.magGState) = New State()
     End Sub
 End Class

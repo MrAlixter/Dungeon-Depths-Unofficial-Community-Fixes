@@ -28,6 +28,7 @@
 
         'scale to the screen size
         DDUtils.resizeForm(Me)
+        Me.CenterToParent()
     End Sub
 
     Sub reset()

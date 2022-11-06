@@ -199,7 +199,6 @@ Partial Class ClothingTester
         Me.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedToolWindow
         Me.Margin = New System.Windows.Forms.Padding(2)
         Me.Name = "ClothingTester"
-        Me.StartPosition = System.Windows.Forms.FormStartPosition.CenterParent
         Me.Text = "Clothing Tester"
         CType(Me.picDescPort, System.ComponentModel.ISupportInitialize).EndInit()
         Me.ResumeLayout(False)

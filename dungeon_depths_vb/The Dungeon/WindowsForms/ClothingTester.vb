@@ -10,6 +10,7 @@
         p = Game.player1
 
         DDUtils.resizeForm(Me)
+        Me.CenterToParent()
 
         cmbArmor.Items.Clear()
         cmbArmor.Items.AddRange(p.inv.getArmors.Item1())

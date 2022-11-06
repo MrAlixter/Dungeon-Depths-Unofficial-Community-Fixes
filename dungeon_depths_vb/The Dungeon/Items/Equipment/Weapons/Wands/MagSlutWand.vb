@@ -45,7 +45,7 @@
 
             p.perks(perk.tfedbyweapon) = -1
 
-            p.magGState.save(p)
+            p.formStates(stateInd.magGState).save(p)
             p.revertToPState()
         End If
     End Sub

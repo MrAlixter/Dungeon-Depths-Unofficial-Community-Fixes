@@ -78,13 +78,12 @@
         equippedArmor = New Naked
         equippedAcce = New noAcce
         equippedGlasses = New noGlasses
-        iArrInd = Nothing
+        ReDim iArrInd(Portrait.NUM_IMG_LAYERS)
         perks = New Dictionary(Of perk, Integer)()
         invNeedsUDate = False
         haircolor = Color.Black
         skincolor = Color.Black
         textColor = Color.Black
-        ReDim iArrInd(Portrait.NUM_IMG_LAYERS)
     End Sub
 
     Public Function clone(ByVal p As Player)
@@ -186,7 +185,10 @@
             stamina = 0
             equippedWeapon = New BareFists
             equippedArmor = New Naked
-            iArrInd = {New Tuple(Of Integer, Boolean, Boolean)(2, False, False), New Tuple(Of Integer, Boolean, Boolean)(2, False, False), New Tuple(Of Integer, Boolean, Boolean)(2, False, False), New Tuple(Of Integer, Boolean, Boolean)(2, False, False), New Tuple(Of Integer, Boolean, Boolean)(2, False, False), New Tuple(Of Integer, Boolean, Boolean)(2, False, False), New Tuple(Of Integer, Boolean, Boolean)(2, False, False), New Tuple(Of Integer, Boolean, Boolean)(2, False, False), New Tuple(Of Integer, Boolean, Boolean)(2, False, False), New Tuple(Of Integer, Boolean, Boolean)(2, False, False), New Tuple(Of Integer, Boolean, Boolean)(2, False, False), New Tuple(Of Integer, Boolean, Boolean)(2, False, False), New Tuple(Of Integer, Boolean, Boolean)(2, False, False), New Tuple(Of Integer, Boolean, Boolean)(2, False, False), New Tuple(Of Integer, Boolean, Boolean)(2, False, False), New Tuple(Of Integer, Boolean, Boolean)(2, False, False), New Tuple(Of Integer, Boolean, Boolean)(2, False, False), New Tuple(Of Integer, Boolean, Boolean)(2, False, False), New Tuple(Of Integer, Boolean, Boolean)(2, False, False), New Tuple(Of Integer, Boolean, Boolean)(2, False, False)}
+            ReDim iArrInd(Portrait.NUM_IMG_LAYERS)
+            For i = 0 To Portrait.NUM_IMG_LAYERS
+                iArrInd(i) = New Tuple(Of Integer, Boolean, Boolean)(Portrait.STARTING_INDEX(i), True, False)
+            Next
             perks = New Dictionary(Of perk, Integer)()
             invNeedsUDate = False
             haircolor = Color.Black
