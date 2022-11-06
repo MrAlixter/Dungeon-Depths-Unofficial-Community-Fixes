@@ -29,7 +29,6 @@
         specialList.Add("Uvona's Blessing", New UBlessing(Nothing, Nothing))
         specialList.Add("Shrink_Ray Shot", New ShrinkRayShoot(Nothing, Nothing))
         specialList.Add("Bounty's Collection", New Bounty(Nothing, Nothing))
-        specialList.Add("Blazing Angel Strike", New BAStrike(Nothing, Nothing))
         specialList.Add("Helix Slash", New BAStrike(Nothing, Nothing))
         specialList.Add("Pillowy Protect", New PProt(Nothing, Nothing))
         specialList.Add("Mana Burst", New MBurst(Nothing, Nothing))

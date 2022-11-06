@@ -118,7 +118,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Entities\NPC\Hostile\Bosses\MiniBosses\Mayue.vb" />
-    <Compile Include="Entities\NPC\Hostile\Bosses\MiniBosses\LeporineOoze.vb" />
+    <Compile Include="Entities\NPC\Hostile\Monsters\Slime\LeporineOoze.vb" />
     <Compile Include="Entities\NPC\Hostile\Bosses\MiniBosses\TimeJudgeFight.vb" />
     <Compile Include="Entities\NPC\Hostile\Bosses\MiniBosses\TimeTravellerFight.vb" />
     <Compile Include="Entities\NPC\Hostile\Monsters\Faefolk\NamestealerFaerie.vb" />
@@ -169,6 +169,7 @@
     <Compile Include="Entities\Player\Specials\Utility\CLight.vb" />
     <Compile Include="Entities\Player\Specials\Utility\Pluck.vb" />
     <Compile Include="Entities\Player\Specials\Utility\SiphonSlash.vb" />
+    <Compile Include="Entities\Player\Spells\Combat\Slitherslice.vb" />
     <Compile Include="Entities\Player\Spells\Utility\FotiaGaze.vb" />
     <Compile Include="Entities\Player\Spells\Combat\Hydrodart.vb" />
     <Compile Include="Entities\Player\Spells\Combat\Aquageyser.vb" />
@@ -233,6 +234,7 @@
     <Compile Include="Items\Equipment\Accesories\HallowedTalisman.vb" />
     <Compile Include="Items\Equipment\Accesories\Ballgag.vb" />
     <Compile Include="Items\Equipment\Armor\Clothing\BunnySuitS.vb" />
+    <Compile Include="Items\Equipment\Armor\Clothing\CommonClothes9.vb" />
     <Compile Include="Items\Equipment\Armor\Clothing\FaeLingerie.vb" />
     <Compile Include="Items\Equipment\Armor\Clothing\ArmoredLimeBikini.vb" />
     <Compile Include="Items\Equipment\Armor\Clothing\SkycladRunes.vb" />
@@ -281,6 +283,7 @@
     <Compile Include="Items\Equipment\Weapons\Daggers\FeatherDagger.vb" />
     <Compile Include="Items\Equipment\Weapons\Daggers\VipersFang.vb" />
     <Compile Include="Items\Equipment\Weapons\Misc\Hyacinth.vb" />
+    <Compile Include="Items\Equipment\Weapons\Misc\Rose.vb" />
     <Compile Include="Items\Equipment\Weapons\Misc\Tulip.vb" />
     <Compile Include="Items\Equipment\Weapons\Misc\PhaseDrill.vb" />
     <Compile Include="Items\Equipment\Weapons\Misc\PhaseHammer.vb" />
@@ -308,10 +311,12 @@
     <Compile Include="Items\Services\SWRestoration.vb" />
     <Compile Include="Items\Services\UpgradeArmor.vb" />
     <Compile Include="Items\Usable\Food\Acorn.vb" />
+    <Compile Include="Items\Usable\Food\Orange.vb" />
     <Compile Include="Items\Usable\Food\GAStickOfGum.vb" />
     <Compile Include="Items\Usable\Food\FaePApple.vb" />
     <Compile Include="Items\Usable\Food\MPStickOfGum.vb" />
     <Compile Include="Items\Usable\Food\HPStickOfGum.vb" />
+    <Compile Include="Items\Usable\Potions\Mystery Potions\Rare Potions\HealthPotionHB.vb" />
     <Compile Include="Items\Usable\Potions\Lepanacea.vb" />
     <Compile Include="Items\Usable\OuijaBoard.vb" />
     <Compile Include="Items\Usable\Food\GoldenGum.vb" />
@@ -324,6 +329,7 @@
     <Compile Include="Items\Usable\Food\Steak.vb" />
     <Compile Include="Items\Usable\Food\NatureKiss.vb" />
     <Compile Include="Items\Usable\Food\RocDrumstick.vb" />
+    <Compile Include="Items\Usable\Potions\Mystery Potions\Rare Potions\ManaPotionHB.vb" />
     <Compile Include="Items\Usable\Potions\Mystery Potions\Effects\Side Effects\ShowgirlArmorEffect.vb" />
     <Compile Include="Items\Usable\Potions\Mystery Potions\Effects\Side Effects\ShowgirlWeaponEffect.vb" />
     <Compile Include="Items\Usable\Potions\Mystery Potions\Effects\Side Effects\BunnyEarsEffect.vb" />
@@ -468,7 +474,7 @@
     <Compile Include="Entities\NPC\Hostile\Bosses\MiniBosses\Marissa.vb" />
     <Compile Include="Entities\NPC\Hostile\Bosses\Medusa.vb" />
     <Compile Include="Entities\NPC\Hostile\Bosses\TarFoodVend.vb" />
-    <Compile Include="Entities\NPC\Hostile\Monsters\IWitch.vb" />
+    <Compile Include="Entities\NPC\Hostile\Monsters\ArchwitchRecluse.vb" />
     <Compile Include="Entities\NPC\Hostile\Monsters\Spider\ArachHunt.vb" />
     <Compile Include="Entities\NPC\Hostile\Monsters\Thrall\EnrSorc.vb" />
     <Compile Include="Entities\NPC\Hostile\Monsters\Thrall\EnthDem.vb" />
@@ -678,7 +684,7 @@
     <Compile Include="Entities\Player\Transformations\PrincessTF.vb" />
     <Compile Include="Entities\Player\Transformations\RandoTF.vb" />
     <Compile Include="Entities\Player\Transformations\DancerTF.vb" />
-    <Compile Include="Entities\Player\Transformations\ValkyrieTF2.vb" />
+    <Compile Include="Entities\Player\Transformations\MaggirlTFs\ValkyrieTF2.vb" />
     <Compile Include="Entities\Player\Transformations\VialOfSlimeTF.vb" />
     <Compile Include="Entities\Player\Transformations\TargaxTF.vb" />
     <Compile Include="Entities\Player\Transformations\ThrallTF.vb" />

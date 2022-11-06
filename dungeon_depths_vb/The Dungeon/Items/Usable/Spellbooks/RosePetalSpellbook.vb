@@ -3,11 +3,13 @@
 
     Public Const ITEM_NAME As String = "Rosepetal_Spellbook"
 
+    Public Shared spells() As String = {"Slitherslice", "Polymorph Enemy", "Turn to Frog"}
+
     Sub New()
         '|ID Info|
         setName(ITEM_NAME)
         id = 379
-        tier = Nothing
+        tier = 3
 
         '|Item Flags|
         usable = True
@@ -22,21 +24,43 @@
     End Sub
 
     Overrides Sub use(ByRef p As Player)
+        If Me.getUsable() = False Then Exit Sub
 
-        Dim sName = "Polymorph Enemy"
-        Dim out = "You learn how to polymorph somthing into a Bee-Girl!"
+        Randomize()
 
-        If Not p.knownSpells.Contains(sName) Then
-            p.knownSpells.Add(sName)
-            TextEvent.pushLog("You learn ""Polymorph Enemy""")
-        End If
+        Dim sName As String = "ERROR"
+        Dim ct As Integer = 0
+        Dim out As String = ""
 
-        If Not p.enemPolyForms.Contains("Bee-Girl") Then
-            p.enemPolyForms.Add("Bee-Girl")
-            TextEvent.pushLog(out)
-        Else
-            TextEvent.pushAndLog("The book doesn't contain any new information...")
-        End If
+        While ct < 1 Or Game.player1.knownSpells.Contains(sName)
+            ct += 1
+
+            Dim spell As Integer = CInt(Int(Rnd() * (spells.Length)))
+
+            Select Case spell
+                Case 1
+                    sName = "Polymorph Enemy"
+
+                    If Game.player1.enemPolyForms.Contains("Bee-Girl") Then
+                        out = "All polymorph enemy forms learned from this spellbook!"
+                    Else
+                        out = "You learn how to polymorph somthing into a Bee-Girl!"
+                    End If
+
+                    TextEvent.pushLog(out)
+                Case Else
+                    sName = spells(spell)
+            End Select
+
+            If ct > 60 Then
+                TextEvent.pushLog("You know all the spells in spellbooks already!")
+                Exit Sub
+            End If
+        End While
+
+        If Not Game.player1.knownSpells.Contains(sName) Then Game.player1.knownSpells.Add(sName)
+
+        TextEvent.pushAndLog("You read the " & getName() & ". " & sName & " learned!")
 
         count -= 1
     End Sub

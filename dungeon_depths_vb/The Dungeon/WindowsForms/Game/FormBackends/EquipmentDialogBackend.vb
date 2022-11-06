@@ -233,8 +233,10 @@
         'Otherwise, change the player's equipped armor to the slut variant
         Dim equippedArmorIndex = p.equippedArmor.id
         Dim slut_var_index = p.equippedArmor.getSlutVarInd
+
         p.inv.add(equippedArmorIndex, -1)
         p.inv.add(slut_var_index, 1)
+
         armorChange(p, p.inv.item(slut_var_index).getAName)
 
         Return True
@@ -246,8 +248,10 @@
         'Otherwise, revert the player's equipped armor to the non-slut variant
         Dim equippedArmorIndex = p.equippedArmor.id
         Dim anti_slut_index = p.equippedArmor.getAntiSlutInd
+
         p.inv.add(equippedArmorIndex, -1)
         p.inv.add(anti_slut_index, 1)
+
         armorChange(p, p.inv.item(anti_slut_index).getAName)
 
         'Push a text dialog

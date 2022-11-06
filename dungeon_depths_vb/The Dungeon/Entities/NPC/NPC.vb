@@ -57,7 +57,11 @@ Public Class NPC
         End If
 
         If Not isStunned Then
-            If Game.player1.formName.Equals("Black Cat") Or Game.player1.formName.Equals("Chicken") And Me.GetType() = GetType(Monster) Then despawn("animaltf")
+            If (Game.player1.formName.Equals("Frog") Or Game.player1.formName.Equals("Chicken") Or Game.player1.formName.Equals("Cow")) And Me.GetType().IsSubclassOf(GetType(Monster)) Then
+                despawn("animaltf")
+                Exit Sub
+            End If
+
             nextCombatAction = Sub(t As Entity) attackCMD(t)
         Else
             handleStun()
@@ -164,6 +168,7 @@ Public Class NPC
         ElseIf reason = "pwarp" Then
             TextEvent.pushAndLog("With a flash, you teleport away!")
         ElseIf reason = "p-death" Then
+            If Game.lstLog.Items(Game.lstLog.Items.Count - 1).Equals("You are defeated!") Then Game.lstLog.Items.RemoveAt(Game.lstLog.Items.Count - 1)
             TextEvent.pushLog("You are defeated by " & getNameWithTitle() & "...")
         ElseIf reason = "friend" Then
             If Int(Rnd() * 3) = 0 Then
@@ -182,7 +187,7 @@ Public Class NPC
             TextEvent.pushLog("You walk away from " & getNameWithTitle() & "!")
         ElseIf reason = "animaltf" Then
             Dim output As String = ""
-            output += DDUtils.capitalizeFirst(getNameWithTitle()) & ", seeing that you are no longer human, wanders off."
+            output += DDUtils.capitalizeFirst(getNameWithTitle()) & " sees you as nothing but a harmless animal, and wanders off..."
             TextEvent.pushAndLog(output)
         ElseIf reason = "shrink" Then
             Dim output As String = ""
@@ -248,7 +253,6 @@ Public Class NPC
         Game.npc_list.Remove(Me)
         TextEvent.pushLog("You've defeated the " & name & "!  +" & xp_value & " XP!")
 
-
         'monster transformations
         p.ongoingTFs.remove(tfind.neko)
 
@@ -300,10 +304,10 @@ Public Class NPC
                         If rng = 1 Then content.addOne()
                     Case 2, Nothing
                         Dim rng = (Int(Rnd() * 6))
-                        If rng = 1 Then content.addOne()
+                        If rng < 2 Then content.addOne()
                     Case Else
                         Dim rng = (Int(Rnd() * 5))
-                        If rng >= 3 Then rng = 0
+                        If rng < 4 Then rng = 0
                         content.add(rng)
                 End Select
             End If

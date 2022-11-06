@@ -21,7 +21,7 @@
         value = 10
 
         '|Description|
-        setDesc("A tar-black whip of opaque slime dripping off of a twig of a wand.  Two small ""ears"" spring up just above the handle..." & DDUtils.RNRN &
+        setDesc("A tar-black whip of opaque slime dripping off of the consumed shaft of a wand.  Two small ""ears"" spring up just above the handle..." & DDUtils.RNRN &
                 getStatInformation())
     End Sub
 

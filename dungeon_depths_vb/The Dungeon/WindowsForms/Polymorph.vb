@@ -202,6 +202,13 @@
             t.will *= 1.25
             t.tfEnd = 2
 
+        ElseIf s = "Bee-Girl" Then              '+WIL/SPD Debuff
+            t.maxHealth *= 0.5
+            t.attack *= 1.5
+            t.defense *= 1.5
+            t.speed *= 3.0
+            t.will *= 0.33
+            t.tfEnd = 6
         Else
             Exit Sub
         End If
@@ -223,6 +230,8 @@
             t.toCatgirl()
         ElseIf s = "Trilobite" Then
             t.toTrilobite()
+        ElseIf s = "Bee-Girl" Then
+            t.toBeeGirl()
         End If
     End Sub
 

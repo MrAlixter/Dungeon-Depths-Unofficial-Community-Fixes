@@ -16,6 +16,7 @@
         '|Inventory|
         inv.setCount("Gelatinous_Shell", 1)
         inv.setCount("Omni_Charm", 1)
+        inv.setCount("Key", 1)
         inv.setCount("Gold", 5000)
         'random drops
         Dim possible_drops = {"Vial_of_Slime", "Vial_of_Slime", "Vial_of_Slime", "Fusion_Crystal", "Advanced_Spellbook", "Defense_Charm", "Defense_Charm"}

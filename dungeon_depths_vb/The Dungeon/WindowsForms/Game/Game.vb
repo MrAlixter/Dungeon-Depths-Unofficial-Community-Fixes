@@ -1649,6 +1649,9 @@ Public Class Game
                 For Each i In cboxSpec.Items
                     l.Add(i.ToString)
                 Next
+                For Each i In player1.knownSpecials
+                    If Not l.Contains(i.ToString) Then l.Add(i.ToString)
+                Next
                 fillLstSelec(l)
             Case "Armor"
                 lblWhat.Text = "Equip what?"

@@ -24,18 +24,22 @@
 
         If Int(Rnd() * 75) = 1 Then
             name = "Jewelled Spider"
-            attack *= 3
+            attack *= 2
             speed *= 1.5
-            xp_value = 10000
+            xp_value *= 10
         End If
     End Sub
 
     Public Overrides Sub playerDeath(ByRef p As Player)
-        Dim out As String = "As the " & getName() & " closes in on you, you push yourself off the ground, and sidestep it.  It anticipates this though, and with a lunging bite it latches onto your arm and delivers a powerful bite.  You smack it off, and make your escape, though a trickle of a golden venom hints that you might not be out of the woods yet."
+        Dim out As String = "As " & getNameWithTitle() & " closes in on you, you push yourself off the ground with a lunging sidestep." & DDUtils.RNRN &
+                            "It anticipates this, though, and springs towards you; delivering a powerful bite." & DDUtils.RNRN &
+                            "You smack it off and make your escape, though a trickle of a golden venom hints that you might not be out of the woods quite yet..."
         despawn("p-death")
+
         If p.perks(perk.avenom) = -1 And p.perks(perk.svenom) = -1 Then
             p.perks(perk.svenom) = 1
         End If
+
         p.ongoingTFs.add(New ArachneTF(p.perks(perk.svenom)))
 
         TextEvent.push(out, AddressOf p.update)

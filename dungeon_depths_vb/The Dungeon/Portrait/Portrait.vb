@@ -515,6 +515,10 @@ Public Class Portrait
             iArr(pInd.hat) = imgLib.atrs(pInd.hat).getAt(New Tuple(Of Integer, Boolean, Boolean)(26, True, True))
             iArr(pInd.rearhair) = CreateFullBodyBMP({nullImg, imgLib.atrs(pInd.hairacc).getAt(New Tuple(Of Integer, Boolean, Boolean)(29, True, False)), iArr(pInd.rearhair)})
 
+        ElseIf checkMalInd(pInd.hat, 8) Or checkFemInd(pInd.hat, 10) Then
+            iArr(pInd.hat) = imgLib.atrs(pInd.hat).getAt(New Tuple(Of Integer, Boolean, Boolean)(27, True, True))
+            iArr(pInd.rearhair) = CreateFullBodyBMP({nullImg, imgLib.atrs(pInd.hairacc).getAt(New Tuple(Of Integer, Boolean, Boolean)(30, True, False))})
+
         ElseIf checkNDefFemInd(pInd.accessory, 14) Or checkNDefMalInd(pInd.accessory, 13) Then
             iArr(pInd.rearhair) = imgLib.atrs(pInd.ears).getAt(New Tuple(Of Integer, Boolean, Boolean)(5, True, True))
         End If

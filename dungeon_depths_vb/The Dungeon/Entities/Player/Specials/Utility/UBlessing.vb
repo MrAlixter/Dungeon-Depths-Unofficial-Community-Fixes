@@ -52,6 +52,8 @@
 
         If coin = 0 Then
             p.knownSpells.Add(learnedS)
+            If learnedS.Equals("Self Polymorph") And p.selfPolyForms.Count = 0 Then p.selfPolyForms.Add("Succubus")
+            If learnedS.Equals("Polymorph Enemy") And p.enemPolyForms.Count = 0 Then p.enemPolyForms.Add("Cat-Girl")
         Else
             p.knownSpecials.Add(learnedS)
         End If

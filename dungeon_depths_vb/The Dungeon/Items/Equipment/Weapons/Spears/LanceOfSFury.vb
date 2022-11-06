@@ -23,6 +23,7 @@
 
         '|Item Flags|
         usable = True
+        rando_inv_allowed = False
 
         '|Stats|
         a_boost = 40
@@ -33,7 +34,7 @@
         '|Description|
         setDesc("An impressive spear made of a brilliant platinum alloy.  It glows with a shimmering crimson aura as your hand approaches, and it almost feels as though you are being judged.  Once in your grip, burning runes dance along its length." & DDUtils.RNRN &
                 "This was the favored weapon of Cynthia, Archangel Paladin." & DDUtils.RNRN &
-                "More likely to hit critically than a sword, but also more likely to miss altogether." & vbCrLf &
+                "More likely to hit critically than a sword, but also more likely to miss altogether." & DDUtils.RNRN &
                 "Can be thrown using the ""Use"" button." & DDUtils.RNRN &
                 getStatInformation())
 
@@ -41,6 +42,26 @@
         setImg(current_mode)
     End Sub
 
+    Public Overrides Sub onEquip(ByRef p As Player)
+        MyBase.onEquip(p)
+
+        If Not p.perks(perk.metcynthia) > -1 And Not Game.combat_engaged Then
+            TextEvent.push("As you equip the Lance, blazing runes begin to dance along its length.  You toss it aside to avoid getting burned!" & DDUtils.RNRN &
+                           "From within the cerise flames, an angelic phantom manifests...", AddressOf onEquip2)
+
+            p.perks(perk.metcynthia) = 2
+        ElseIf Not p.perks(perk.metcynthia) > -1 Then
+            TextEvent.pushAndLog("You meet Cynthia, the spirit inhabiting the " & LanceOfSFury.ITEM_NAME & "!  She understands the urgency of combat and agrees to help you...")
+            p.perks(perk.metcynthia) = 2
+        End If
+    End Sub
+
+    Protected Sub onEquip2()
+        Objective.showNPC(annoy, """WHO THE HELL ARE YOU?  WHAT'S GOING ON?  Wait...  AM I DEAD?!""" & DDUtils.RNRN &
+                                 "You introduce yourself, and explain that you were simply given this lance by the fae of wishes.  The spirit seems uncertain, but she eventually calms down and you are able to re-equip the lance." & DDUtils.RNRN &
+                                 """Did... I- I guess the Celestial War must have gone worse than I thought...""")
+        TextEvent.pushLog("You meet Cynthia, the spirit inhabiting the " & LanceOfSFury.ITEM_NAME & "!")
+    End Sub
     Public Shared Sub setImg(ByVal m As mode)
         Select Case m
             Case mode.bimbo
@@ -106,6 +127,12 @@
         TextEvent.pushLog("You swing your " & getName().Replace("_", " ") & " at the air.")
     End Sub
 
+    Public Shared Sub levelUp()
+        out = "Cynthia materializes next to you." & DDUtils.RNRN & """Hey, congrats on leveling up!  Keep up the good work."""
+        Game.picPortrait.BackgroundImage = happy
+        TextEvent.push(out, AddressOf cleanupPortraitImage)
+    End Sub
+
     Overrides Sub wThrow(ByRef p As Player, ByRef m As Entity)
         If Not p.equippedWeapon.getAName.Equals(getAName()) Then
             TextEvent.pushAndLog("The lance slips from your grip!  If only it were equipped...")
@@ -139,7 +166,7 @@
         End If
     End Sub
 
-    Sub cleanupPortraitImage()
+    Shared Sub cleanupPortraitImage()
         Game.player1.drawPort()
     End Sub
 
@@ -147,13 +174,15 @@
         If current_mode = mode.bimbo Then
             Return "An impressive spear made of a brilliant platinum alloy.  It glows with a shimmering cerise aura as your hand approaches, and it almost feels as though you are being judged.  Once in your grip, sparkly runes dance along its length." & DDUtils.RNRN &
                    "This was the favored weapon of Tia, Human Bimbo." & DDUtils.RNRN &
-                   "More likely to hit critically than a sword, but also more likely to miss altogether." & vbCrLf &
-                   "Can be thrown using the ""Use"" button."
+                   "More likely to hit critically than a sword, but also more likely to miss altogether." & DDUtils.RNRN &
+                   "Can be thrown using the ""Use"" button." & DDUtils.RNRN &
+                   getStatInformation()
         End If
 
         Return "An impressive spear made of a brilliant platinum alloy.  It glows with a shimmering crimson aura as your hand approaches, and it almost feels as though you are being judged.  Once in your grip, burning runes dance along its length." & DDUtils.RNRN &
                 "This was the favored weapon of Cynthia, Archangel Paladin." & DDUtils.RNRN &
-                "More likely to hit critically than a sword, but also more likely to miss altogether." & vbCrLf &
-                "Can be thrown using the ""Use"" button."
+                "More likely to hit critically than a sword, but also more likely to miss altogether." & DDUtils.RNRN &
+                "Can be thrown using the ""Use"" button." & DDUtils.RNRN &
+                getStatInformation()
     End Function
 End Class

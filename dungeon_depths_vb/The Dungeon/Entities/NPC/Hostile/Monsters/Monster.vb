@@ -28,6 +28,7 @@
     faerie
     namestealer_faerie
     faerie_hunter
+    archwitch_recluse
 End Enum
 
 Public Class Monster
@@ -55,6 +56,8 @@ Public Class Monster
         l.Add(New Tuple(Of mInd, String)(mInd.faerie, FaerieEnemy.BASE_NAME))
         l.Add(New Tuple(Of mInd, String)(mInd.namestealer_faerie, NamestealerFaerie.BASE_NAME))
         l.Add(New Tuple(Of mInd, String)(mInd.faerie_hunter, FaerieHunter.BASE_NAME))
+        l.Add(New Tuple(Of mInd, String)(mInd.archwitch_recluse, ArchwitchRecluse.BASE_NAME))
+        l.Add(New Tuple(Of mInd, String)(mInd.lepo_ooze, LeporineOoze.BASE_NAME))
 
         Return l
     End Function
@@ -83,6 +86,7 @@ Public Class Monster
         sName = name
         sMaxHealth = maxHealth
         sMaxMana = maxMana
+        mana = maxMana
         sAttack = attack
         sDefense = defense
         sWill = will
@@ -128,8 +132,8 @@ Public Class Monster
                 Return New MarissaAS
             Case mInd.alraune
                 Return New Alraune
-            Case mInd.i_witch
-                Return New IWitch
+            Case mInd.archwitch_recluse
+                Return New ArchwitchRecluse
             Case mInd.fox_fire_elem
                 Return New FFElemental
             Case mInd.fire
@@ -182,7 +186,7 @@ Public Class Monster
             Case 7
                 tier = {mInd.mesm_thrall, mInd.slime, mInd.goo_girl, mInd.enth_sorc, mInd.spider, mInd.arach_hunt, mInd.alraune, mInd.fox_fire_elem, mInd.fox_fire_elem, mInd.web_caster_arach}
             Case 13
-                tier = {mInd.faerie, mInd.alraune}
+                tier = {mInd.faerie, mInd.alraune, mInd.archwitch_recluse, mInd.namestealer_faerie}
             Case 10000, 91018
                 tier = {}
             Case Else
@@ -195,8 +199,12 @@ Public Class Monster
                 End If
         End Select
 
-        If floorInd > 0 And Not mFloor.nonRandomFloors.Contains(floorInd) And Not Game.player1.formName.Equals("Cow") Then
+        If floorInd > 6 And Not mFloor.nonRandomFloors.Contains(floorInd) And Not Game.player1.formName.Equals("Cow") Then
             DDUtils.append(tier, mInd.bovinomancer)
+        End If
+
+        If floorInd > 2 And Not mFloor.nonRandomFloors.Contains(floorInd) And Int(Rnd() * 2) = 0 Then
+            DDUtils.append(tier, mInd.lepo_ooze)
         End If
 
         If floorInd > 5 And Not mFloor.nonRandomFloors.Contains(floorInd) And Int(Rnd() * 3) = 0 Then
@@ -259,7 +267,6 @@ Public Class Monster
             DDUtils.append(tier, mInd.faerie_hunter)
 
             If Game.player1.perks(perk.faecurse) > 1 Then
-                DDUtils.append(tier, mInd.namestealer_faerie)
                 DDUtils.append(tier, mInd.namestealer_faerie)
                 DDUtils.append(tier, mInd.faerie_hunter)
             End If

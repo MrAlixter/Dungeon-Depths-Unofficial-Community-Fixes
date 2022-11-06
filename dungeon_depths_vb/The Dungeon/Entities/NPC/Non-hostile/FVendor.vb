@@ -245,4 +245,8 @@
     Protected Overrides Function beegirlSpellDialog(ByRef p As Player)
         Return beegirlFightDialog(p)
     End Function
+
+    Public Overrides Function postPurchaseDialog(ByRef p As Player) As Object
+        Return "Anything else I can get ya?"
+    End Function
 End Class

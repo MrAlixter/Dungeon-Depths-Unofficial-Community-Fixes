@@ -24,6 +24,11 @@
     End Sub
 
     Public Overrides Sub attackCMD(ByRef target As Entity)
+        If Not target.getPlayer Is Nothing And target.getPlayer.formName.Contains("Arachne") Then
+            despawn("friend")
+            Exit Sub
+        End If
+
         If Int(Rnd() * 2) = 0 AndAlso Not target.getPlayer Is Nothing AndAlso Not target.getPlayer.equippedArmor.getName().Equals("Spidersilk_Bonds") Then
             Dim dmg = Entity.calcDamage(getATK() * 0.35, target.getDEF)
 

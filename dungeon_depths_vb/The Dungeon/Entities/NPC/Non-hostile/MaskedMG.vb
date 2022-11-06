@@ -104,4 +104,8 @@
             Return "Hey, if I were to roll out a ""Gem Of Spiders"" do you think you'd take the plunge into eight-legged glory?  Well, I've got the next best thing in the meantime!"
         End If
     End Function
+
+    Public Overrides Function postPurchaseDialog(ByRef p As Player) As Object
+        Return "Anything else I can get ya?"
+    End Function
 End Class

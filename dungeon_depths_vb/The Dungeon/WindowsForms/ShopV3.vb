@@ -38,7 +38,7 @@ Public Class ShopV3
         'update the shopkeeper's inventory
         For Each itm In getFormattedInventory(sk.inv, inv_type.shopkeeper)
             If Not itm.EndsWith(":") And Not itm.Equals("") Then
-                boxShop.Items.Add(lineupSeller(sk.inv.item(itm).getAName(), (sk.inv.item(itm).value)))
+                boxShop.Items.Add(lineupSeller(sk.inv.item(itm).getAName(), ShopNPC.getAdjustedValue(sk, itm)))
                 skInventory.Add(itm)
             Else
                 boxShop.Items.Add(itm)
@@ -135,6 +135,9 @@ Public Class ShopV3
         RefreshScreen()
         lblPlayer.Text = p.getName
         lblShopkeeper.Text = sk.name
+    End Sub
+    Private Sub ShopV3_FormClosing(sender As Object, e As FormClosingEventArgs) Handles Me.FormClosing
+        If Not sk Is Nothing And Not Game.lblEvent.Visible And Not Game.pnlEvent.Visible Then TextEvent.pushNPCDialog(sk.postPurchaseDialog(p))
     End Sub
     Private Sub inventory_SelectedIndexChange(sender As Object, e As EventArgs) Handles boxInventory.SelectedIndexChanged, boxShop.SelectedIndexChanged
         If sender.SelectedItem Is Nothing Or sender.SelectedItem.endsWith(":") Or sender.SelectedItem.Equals("") Then Exit Sub
@@ -323,7 +326,7 @@ Public Class ShopV3
             'add the value of the shopkeeper's item to the total
             Dim item As Item = sk.getShopInv.item(item_index)
             If number.Value > item.saleLim Then number.Value = item.saleLim
-            cost += (item.value) * number.Value
+            cost += ShopNPC.getAdjustedValue(sk, item.getAName) * number.Value
         Next
 
         If cost <= p.gold Then

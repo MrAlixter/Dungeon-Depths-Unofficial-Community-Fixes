@@ -175,4 +175,8 @@
     Protected Overrides Function catgirlSpellDialog(ByRef p As Player)
         Return bunnyDialog(p)
     End Function
+
+    Public Overrides Function postPurchaseDialog(ByRef p As Player) As Object
+        Return "Thank you for your patronage!"
+    End Function
 End Class

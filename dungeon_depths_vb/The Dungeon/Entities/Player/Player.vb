@@ -100,6 +100,8 @@
     vofmanynames    '98
     yellowonefavor  '99
     cynnstonic      '100
+    metcynthia      '101
+    faewishesmade   '102
 End Enum
 Public Class Player
     'Player is the representation of a player controlled entity (the main player, any teammates)
@@ -457,6 +459,8 @@ Public Class Player
                 equippedArmor = inv.item("Adventurer's_Clothes")
             Case 8
                 equippedArmor = inv.item("Regular_Clothes")
+            Case 9
+                equippedArmor = inv.item(CommonClothes9.ITEM_NAME)
             Case Else
                 equippedArmor = New Naked
                 equippedArmor.count -= 1
@@ -2966,6 +2970,8 @@ Public Class Player
         pForm.onLVLUp(level, Me)
 
         If xp > nextLevelXp Then levelUp()
+
+        If equippedWeapon.getAName.Equals(LanceOfSFury.ITEM_NAME) AndAlso TextEvent.lblEventOnClose Is Nothing Then TextEvent.lblEventOnClose = AddressOf LanceOfSFury.levelUp
     End Sub
     Public Function deLevel(ByVal lostLevels As Integer) As Integer
         If lostLevels < 1 Or level = 1 Then Return 0

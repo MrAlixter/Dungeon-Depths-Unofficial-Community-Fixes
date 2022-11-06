@@ -82,31 +82,6 @@
         End If
 
         MyBase.encounter()
-
-        If img_index = 0 Then
-            TextEvent.pushNPCDialog("Welcome and check out the new menu!  Turns out this sword was a little more cursed than expected.  No worries though, I'm sure it'll work itself out...  Eat up!")
-        ElseIf img_index = 1 Then
-            TextEvent.pushNPCDialog("Broak, croak, ribbit.")
-        ElseIf img_index = 2 Then
-            TextEvent.pushNPCDialog("...")
-        ElseIf img_index = 3 Then
-            TextEvent.pushNPCDialog("You... ~mmm~... dine with royalty this day, " & Game.player1.className & "...  I assure you, I am more than fit for a princess, and you would know! ~🖤  " &
-                               "Oh, you might have thought you got the upper hand by turning me into a helpless princess, but...  ~ooohhh~ this... probably doesn't bode well...")
-        ElseIf img_index = 4 Then
-            discount = 2.0
-            TextEvent.pushNPCDialog("Hello once again, my murderer.  Remember me?  Targax?  This fool is usually able to supress my influance, but in her current state taking full control was easy pickings.  As a show of gratitude I won't turn you away this time, but once I've finished turning the chef into a proper vessal you will know my wrath.")
-        ElseIf img_index = 8 Or img_index = 12 Then
-            TextEvent.pushNPCDialog("...")
-        ElseIf img_index = 10 Then
-            If Game.player1.formName.Equals("Arachne") Then
-                TextEvent.pushNPCDialog("Hey, it's you!  All hail the spider goddess or whatever we're on about, to be completely honest I wasn't really paying attention during my initiation." & DDUtils.RNRN &
-                                   "So, whatcha eatin'?")
-            Else
-                TextEvent.pushNPCDialog("Ya know, they did give me this extra strength venom you could use if you wanted to try this spider thing out...")
-            End If
-        ElseIf img_index = 11 Then
-            TextEvent.pushNPCDialog("I'll be the one to say it, you're better at this than Marissa.  Are you two working together or something?")
-        End If
     End Sub
 
     '| - DIALOG - |
@@ -118,7 +93,7 @@
         Return "Broak, croak, ribbit."
     End Function
     Protected Overrides Function bunnyDialog(ByRef p As Player)
-        discount = 2.0
+        discount = -2.0
         Return "Hello once again, my murderer." & DDUtils.RNRN &
                "Remember me?  Targax?  This fool is usually able to supress my influence, but in this form taking full control was easy pickings." & DDUtils.RNRN &
                "As a show of gratitude I won't turn you away this time, but you will face my wrath once I've finished turning this pathetic chef into a proper vessel."
@@ -196,5 +171,9 @@
     End Function
     Protected Overrides Function beegirlSpellDialog(ByRef p As Player)
         Return beegirlFightDialog(p)
+    End Function
+
+    Public Overrides Function postPurchaseDialog(ByRef p As Player) As Object
+        Return "Anything else I can get ya?"
     End Function
 End Class

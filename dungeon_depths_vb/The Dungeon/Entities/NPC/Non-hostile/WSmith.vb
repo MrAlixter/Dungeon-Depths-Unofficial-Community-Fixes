@@ -191,4 +191,8 @@
     Protected Overrides Function beegirlSpellDialog(ByRef p As Player)
         Return "!!!"
     End Function
+
+    Public Overrides Function postPurchaseDialog(ByRef p As Player) As Object
+        Return "Stay safe, yeah?"
+    End Function
 End Class

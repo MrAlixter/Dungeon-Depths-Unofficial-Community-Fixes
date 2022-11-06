@@ -163,4 +163,8 @@
     Protected Overrides Function catgirlDialog(ByRef p As Player)
         Return "Meow indeed..."
     End Function
+
+    Public Overrides Function postPurchaseDialog(ByRef p As Player) As Object
+        Return "Come back soon..."
+    End Function
 End Class

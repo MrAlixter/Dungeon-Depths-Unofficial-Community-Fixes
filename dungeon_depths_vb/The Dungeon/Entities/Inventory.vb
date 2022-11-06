@@ -404,6 +404,11 @@
         internal_inventory.Add(Lepanacea.ITEM_NAME, New Lepanacea)                   '378
         internal_inventory.Add(RosePetalSpellbook.ITEM_NAME, New RosePetalSpellbook) '379
         internal_inventory.Add(CynnTonic.ITEM_NAME, New CynnTonic)                   '380
+        internal_inventory.Add(Rose.ITEM_NAME, New Rose)                             '381
+        internal_inventory.Add(HealthPotionHB.ITEM_NAME, New HealthPotionHB)         '382
+        internal_inventory.Add(ManaPotionHB.ITEM_NAME, New ManaPotionHB)             '383
+        internal_inventory.Add(CommonClothes9.ITEM_NAME, New CommonClothes9)         '384
+        internal_inventory.Add(Orange.ITEM_NAME, New Orange)                         '385
 
         armor = {New Naked,
                  Me.item(5), Me.item(7), Me.item(8), Me.item(10),
@@ -433,7 +438,7 @@
                  Me.item(323), Me.item(324), Me.item(325), Me.item(331),
                  Me.item(332), Me.item(333), Me.item(335), Me.item(336),
                  Me.item(343), Me.item(345), Me.item(354), Me.item(357),
-                 Me.item(363), Me.item(364)}
+                 Me.item(363), Me.item(364), Me.item(384)}
 
         weapons = {New BareFists(),
                    Me.item(6), Me.item(9), Me.item(11), Me.item(21),
@@ -453,7 +458,7 @@
                    Me.item(326), Me.item(339), Me.item(348), Me.item(351),
                    Me.item(353), Me.item(362), Me.item(365), Me.item(366),
                    Me.item(367), Me.item(368), Me.item(369), Me.item(370),
-                   Me.item(372), Me.item(377)}
+                   Me.item(372), Me.item(377), Me.item(381)}
 
         useable = {Me.item(0), Me.item(3), Me.item(4), Me.item(65),
                    Me.item(15), Me.item(36), Me.item(37), Me.item(48),
@@ -482,7 +487,7 @@
                 Me.item(228), Me.item(230), Me.item(267), Me.item(268),
                 Me.item(269), Me.item(270), Me.item(272), Me.item(291),
                 Me.item(295), Me.item(296), Me.item(341), Me.item(347),
-                Me.item(358), Me.item(360)}
+                Me.item(358), Me.item(360), Me.item(385)}
 
         acce = {New noAcce(),
                 Me.item(66), Me.item(67), Me.item(68), Me.item(69),
@@ -508,7 +513,7 @@
                    Me.item(193), Me.item(194), Me.item(231), Me.item(232),
                    Me.item(233), Me.item(234), Me.item(235), Me.item(236),
                    Me.item(241), Me.item(246), Me.item(247), Me.item(248),
-                   Me.item(378)}
+                   Me.item(378), Me.item(382), Me.item(383)}
 
         Array.Sort(potions)
 
@@ -534,7 +539,7 @@
                       "Murky_Potion", "Smokey_Potion", "Pink_Potion", "Glittery_Potion",
                       "Fluorescent_Potion", "Coral_Potion", "Steely_Potion", "Cyan_Potion",
                       "Violet_Potion", "Pewter_Potion", "Pearly_Potion", "Verdant_Potion",
-                      "Lilac_Potion"})
+                      "Lilac_Potion", "Fuchsia_Potion", "Cornflower_Potion"})
         mPotions = New List(Of MysteryPotion)
         For i = 0 To UBound(potions)
             If potions(i).GetType().IsSubclassOf(GetType(MysteryPotion)) Then mPotions.Add(potions(i))

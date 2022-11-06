@@ -1,10 +1,17 @@
 ﻿Imports System.ComponentModel
 Public Enum wFlag
+    stolecharmmarissa
+    stolecharmtargax
+    stolecharmoozee
+    stolecharmmedusa
     allfrogs
     fvendsword
     hteachslime
     snarednpc
     mrevived
+    stolecharmfaequeen
+    metcynn
+    metfantoma
 End Enum
 
 <Serializable()> Public Class Dungeon

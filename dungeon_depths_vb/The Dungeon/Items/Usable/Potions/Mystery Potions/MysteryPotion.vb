@@ -27,6 +27,8 @@
     'Potion_of_Benediction	    wonky
     'Potion_of_Dodging          dodgy
     'Incandescent_Potion        suspicious
+    'Mana_Potion_(Homebrewed)   astral
+    'Health_Potion_(Homebrewed) earthy
 
     Overrides Sub use(ByRef p As Player)
         If Not hasBeenUsed Then reveal()

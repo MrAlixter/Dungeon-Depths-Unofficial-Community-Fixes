@@ -11,7 +11,7 @@
 
         '|Item Flags|
         usable = False
-        anti_slut_ind = 31
+        anti_slut_ind = 71
         compress_breast = False
         hide_dick = False
         swap_gen_clothesbtm = True

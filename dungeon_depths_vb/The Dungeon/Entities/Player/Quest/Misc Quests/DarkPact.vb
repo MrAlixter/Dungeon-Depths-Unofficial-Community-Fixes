@@ -35,9 +35,8 @@ Friend Class DarkPactStep1
     End Sub
 
     Public Overrides Sub complete()
-        showNPC(ShopNPC.gbl_img.atrs(0).getAt(75), """Ha, awesome!  I didn't think you had it in you, but that makes " & Game.player1.perks(perk.cynnsq1ct1) &
-                         " less snooty royals to get in my way.  I'd say I'm impressed, buuuuut they'll be replaced in no time at all." & DDUtils.RNRN &
-                         "Still though, that's more than enough for me to see you won't get picked off easy. Your next step?  Track down one of those dark crystals floating around...""" & DDUtils.RNRN &
+        showNPC(ShopNPC.gbl_img.atrs(0).getAt(75), """Ha, awesome!  I didn't think you had it in you, but that makes " & Game.player1.perks(perk.cynnsq1ct1) & " less snooty royals to get in my way.  I'd say I'm impressed, buuuuut they'll be replaced in no time at all." & DDUtils.RNRN &
+                         "Still though, that's more than enough for me to see you won't get picked off easy.  Your next step?  Track down one of those dark crystals floating around...""" & DDUtils.RNRN &
                          "+3 Chilling_Potion" & vbCrLf & "+1000 XP")
 
         Game.player1.perks(perk.cynnsq1ct1) = -1
@@ -80,8 +79,8 @@ Friend Class DarkPactStep2
         Game.picNPC.Visible = False
 
         TextEvent.push("Cynn places a hand on the crystal, and she is quickly engulfed in a crackling red aura.  As the crystal begins glowing a sinister purple, Cynn bursts into a jet black flame and reverts to her demonic form.  She glances over at you, and gestures for you to come over." & DDUtils.RNRN &
-                          "She grabs your hand, and with a surge of energy and a blinding flash the crystal returns to a dormant state." & DDUtils.RNRN &
-                          "Your abdomen is now marked with a glowing red glyph!", AddressOf completeDialogStep3)
+                       "She grabs your hand, and with a surge of energy and a blinding flash the crystal returns to a dormant state." & DDUtils.RNRN &
+                       "Your abdomen is now marked with a glowing red glyph!", AddressOf completeDialogStep3)
 
         If Game.player1.inv.getCountAt("Cynn's_Mark") < 1 Then Game.player1.inv.add("Cynn's_Mark", 1)
         Equipment.accChange(Game.player1, "Cynn's_Mark")

@@ -125,11 +125,6 @@ Public MustInherit Class ShopNPC
             tInv.setCount(53, 0)
         End If
 
-        For i = 0 To tInv.upperBound()
-            Dim n = tInv.item(i).value
-            tInv.item(i).value -= (n * discount)
-        Next
-
         Return tInv
     End Function
 
@@ -447,6 +442,10 @@ Public MustInherit Class ShopNPC
         Return "BZZ! BZZBZZBZZ!"
     End Function
 
+    Public Overridable Function postPurchaseDialog(ByRef p As Player)
+        Return "Thank you, valued customer!"
+    End Function
+
     '| -- SAVE / LOAD -- |
     Function saveNPC() As String
         Dim out = ""
@@ -501,5 +500,8 @@ Public MustInherit Class ShopNPC
             Case Else
                 Return New Shopkeeper
         End Select
+    End Function
+    Public Shared Function getAdjustedValue(ByRef sk As ShopNPC, ByRef itm As String) As Integer
+        Return (sk.inv.item(itm).value) - (sk.discount * (sk.inv.item(itm).value))
     End Function
 End Class

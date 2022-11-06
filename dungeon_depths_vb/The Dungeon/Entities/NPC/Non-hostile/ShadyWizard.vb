@@ -218,4 +218,8 @@
     Protected Overrides Function catgirlSpellDialog(ByRef p As Player)
         Return normalSpellDialog(p)
     End Function
+
+    Public Overrides Function postPurchaseDialog(ByRef p As Player) As Object
+        Return "See ya around..."
+    End Function
 End Class

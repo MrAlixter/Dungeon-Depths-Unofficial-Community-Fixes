@@ -3248,7 +3248,7 @@ Partial Class Game
         Me.MaximizeBox = False
         Me.Name = "Game"
         Me.SizeGripStyle = System.Windows.Forms.SizeGripStyle.Hide
-        Me.StartPosition = System.Windows.Forms.FormStartPosition.Manual
+        Me.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen
         Me.Text = "Dungeon_Depths"
         CType(Me.picEnemy, System.ComponentModel.ISupportInitialize).EndInit()
         CType(Me.picNPC, System.ComponentModel.ISupportInitialize).EndInit()

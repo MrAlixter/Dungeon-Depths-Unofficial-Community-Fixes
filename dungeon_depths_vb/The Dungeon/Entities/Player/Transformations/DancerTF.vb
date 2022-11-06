@@ -49,7 +49,7 @@
         p.canMoveFlag = True
     End Sub
 
-    Public Shared Sub step1RND()
+    Public Shared Sub step1RND(Optional ByVal suit As String = BunnySuit.ITEM_NAME)
         Dim p As Player = Game.player1
 
         If p.sex = "Male" Then
@@ -59,6 +59,7 @@
         p.changeClass("Bunny Girl")
 
         p.breastSize = 2
+        p.buttSize = 1
         p.prt.setIAInd(pInd.rearhair, 6, True, True)
         p.prt.setIAInd(pInd.face, 0, True, False)
         p.prt.setIAInd(pInd.midhair, 18, True, True)
@@ -68,10 +69,8 @@
         p.prt.setIAInd(pInd.cloak, 0, True, False)
         p.prt.setIAInd(pInd.fronthair, 18, True, True)
 
-        p.changeHairColor(BimboTF.bimboyellow1)
-
-        If p.inv.getCountAt(BunnySuit.ITEM_NAME) < 1 Then p.inv.add(BunnySuit.ITEM_NAME, 1)
-        EquipmentDialogBackend.equipArmor(p, BunnySuit.ITEM_NAME)
+        If p.inv.getCountAt(suit) < 1 Then p.inv.add(suit, 1)
+        EquipmentDialogBackend.equipArmor(p, suit)
 
         p.canMoveFlag = True
     End Sub
