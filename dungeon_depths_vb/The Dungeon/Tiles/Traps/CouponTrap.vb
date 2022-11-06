@@ -18,7 +18,7 @@
     End Sub
 
     Public Sub activateP2()
-        Objective.showNPC(ShopNPC.gbl_img.atrs(0).getAt(149), """Need powerful magic artifacts, with no questions asked?" & DDUtils.RNRN &
+        Objective.showNPC(ShopNPC.gbl_img.atrs(0).getAt(151), """Need powerful magic artifacts, with no questions asked?" & DDUtils.RNRN &
                                                               "Swing by BROWN HAT MYSTICAL ODDITIES for MIND-MELTING, LIFECHANGING, VERY-NOT-CURSED savings on quality curio!" & DDUtils.RNRN &
                                                               "[See the back for a free sample]""", AddressOf activateP3)
     End Sub
