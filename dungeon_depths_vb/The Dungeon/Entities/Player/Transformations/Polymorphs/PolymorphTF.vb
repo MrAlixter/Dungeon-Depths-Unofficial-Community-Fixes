@@ -56,6 +56,8 @@
                 Return New CowTF()
             Case "Inflatable Doll"
                 Return New BUDollTFBeach()
+            Case "Human"
+                Return New HumanTF()
             Case Else
                 Return Nothing
         End Select

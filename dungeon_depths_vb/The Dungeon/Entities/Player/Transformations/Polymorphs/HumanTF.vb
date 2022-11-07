@@ -1,12 +1,11 @@
 ﻿Public NotInheritable Class HumanTF
-    Inherits Transformation
+    Inherits PolymorphTF
 
     Private Const TF_IND As tfind = tfind.humanpolymorph
 
     Sub New()
-        MyBase.New(1, 0, 0, False)
+        MyBase.New()
         tf_name = TF_IND
-        next_step = AddressOf step1
     End Sub
     Sub New(cs As Integer, n As Integer, tts As Integer, wi As Double, cbs As Boolean, tfd As Boolean)
         MyBase.New(cs, n, tts, wi, cbs, tfd)
@@ -19,8 +18,8 @@
         turns_until_next_step = 2 * (Int(Rnd() * 50) + Int(Rnd() * 50) + Int(Rnd() * p.getMaxMana) + Int(Rnd() * p.getWIL))
     End Sub
 
-    Public Sub step1()
-        Dim p As player = Game.player1
+    Public Overrides Sub step1()
+        Dim p As Player = Game.player1
 
         change(p)
     End Sub
