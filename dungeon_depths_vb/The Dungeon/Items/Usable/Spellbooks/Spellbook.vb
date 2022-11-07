@@ -41,7 +41,7 @@
                         Dim c As Integer = 0
                         While c < 1 Or p.selfPolyForms.Contains(form)
                             c += 1
-                            Dim learnForm As Integer = CInt(Int(Rnd() * 4))
+                            Dim learnForm As Integer = CInt(Int(Rnd() * 5))
                             Select Case learnForm
                                 Case 0
                                     form = "Dragon"
@@ -51,6 +51,8 @@
                                     form = "Slime"
                                 Case 3
                                     form = "Tigress"
+                                Case 4
+                                    form = "Human"
                             End Select
                             If c > 40 Then
                                 out = "All self polymorph forms learned from spellbooks!"

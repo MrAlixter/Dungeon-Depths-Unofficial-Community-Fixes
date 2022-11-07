@@ -32,11 +32,14 @@
 
     Sub step1()
         Dim p As Player = Game.player1
-        p.changeClass("Valkyrie​")
+
+        HumanTF.change(p)
 
         If p.sex = "Male" Then
             p.MtF()
         End If
+
+        p.changeClass("Valkyrie​")
 
         step1dialog(p)
 

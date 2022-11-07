@@ -102,7 +102,7 @@
                 Return "Specteral Girl"
             Case "Witch", "Maiden", "Cleric"
                 Return "Phantom"
-            Case "Bunny Girl", "Princess", "Maid", "Shrunken", "Bimbo++"
+            Case "Bimbo", "Bunny Girl", "Princess", "Maid", "Shrunken", "Bimbo++"
                 Return "Siren"
         End Select
 

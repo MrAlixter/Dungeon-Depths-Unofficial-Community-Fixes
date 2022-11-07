@@ -145,7 +145,7 @@
                 weapon = New Integer() {6, 23, 40, 118, 176}
             Case 3   'advanced mage
                 p.changeClass("Mage")
-                armor = New Integer() {5, 17, 46, 83}
+                armor = New Integer() {5, 17, 46, 83, 300}
                 weapon = New Integer() {21, 22}
             Case 4   'basic bimbo
                 p.changeClass("Bimbo")

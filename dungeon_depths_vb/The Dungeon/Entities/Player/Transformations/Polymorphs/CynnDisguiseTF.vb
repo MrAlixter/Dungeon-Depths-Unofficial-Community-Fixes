@@ -21,6 +21,7 @@
     Public Overrides Sub step1()
         Dim p As Player = Game.player1
 
+        DarkPactTF.createDisguise(p)
         p.changeForm(p.formStates(stateInd.succDisgState).pForm.name)
 
         Dim pinds() As pInd = {pInd.wings, pInd.horns, pInd.tail, pInd.rearhair, pInd.midhair, pInd.fronthair, pInd.ears, pInd.mouth}

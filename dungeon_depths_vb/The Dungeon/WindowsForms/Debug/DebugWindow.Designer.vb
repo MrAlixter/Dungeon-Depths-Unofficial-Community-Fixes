@@ -54,6 +54,8 @@ Partial Class Debug_Window
         Me.lblTurn = New System.Windows.Forms.Label()
         Me.lblFloor = New System.Windows.Forms.Label()
         Me.tabPlayer = New System.Windows.Forms.TabPage()
+        Me.boxForm = New System.Windows.Forms.ComboBox()
+        Me.lblForm = New System.Windows.Forms.Label()
         Me.boxSex = New System.Windows.Forms.CheckBox()
         Me.boxAlpha = New System.Windows.Forms.NumericUpDown()
         Me.lblAlpha = New System.Windows.Forms.Label()
@@ -113,9 +115,9 @@ Partial Class Debug_Window
         Me.lblOf1 = New System.Windows.Forms.Label()
         Me.boxHealth = New System.Windows.Forms.NumericUpDown()
         Me.lblHealth = New System.Windows.Forms.Label()
-        Me.boxForm = New System.Windows.Forms.ComboBox()
+        Me.boxClass = New System.Windows.Forms.ComboBox()
         Me.boxName = New System.Windows.Forms.TextBox()
-        Me.lblTitle = New System.Windows.Forms.Label()
+        Me.lblClass = New System.Windows.Forms.Label()
         Me.lblSex = New System.Windows.Forms.Label()
         Me.lblName = New System.Windows.Forms.Label()
         Me.tabPerks = New System.Windows.Forms.TabPage()
@@ -555,6 +557,8 @@ Partial Class Debug_Window
         'tabPlayer
         '
         Me.tabPlayer.BackColor = System.Drawing.Color.Black
+        Me.tabPlayer.Controls.Add(Me.boxForm)
+        Me.tabPlayer.Controls.Add(Me.lblForm)
         Me.tabPlayer.Controls.Add(Me.boxSex)
         Me.tabPlayer.Controls.Add(Me.boxAlpha)
         Me.tabPlayer.Controls.Add(Me.lblAlpha)
@@ -587,9 +591,9 @@ Partial Class Debug_Window
         Me.tabPlayer.Controls.Add(Me.lblOf1)
         Me.tabPlayer.Controls.Add(Me.boxHealth)
         Me.tabPlayer.Controls.Add(Me.lblHealth)
-        Me.tabPlayer.Controls.Add(Me.boxForm)
+        Me.tabPlayer.Controls.Add(Me.boxClass)
         Me.tabPlayer.Controls.Add(Me.boxName)
-        Me.tabPlayer.Controls.Add(Me.lblTitle)
+        Me.tabPlayer.Controls.Add(Me.lblClass)
         Me.tabPlayer.Controls.Add(Me.lblSex)
         Me.tabPlayer.Controls.Add(Me.lblName)
         Me.tabPlayer.Location = New System.Drawing.Point(4, 24)
@@ -599,12 +603,34 @@ Partial Class Debug_Window
         Me.tabPlayer.TabIndex = 1
         Me.tabPlayer.Text = "PLAYER"
         '
+        'boxForm
+        '
+        Me.boxForm.BackColor = System.Drawing.Color.Black
+        Me.boxForm.Font = New System.Drawing.Font("Consolas", 12.0!)
+        Me.boxForm.ForeColor = System.Drawing.Color.White
+        Me.boxForm.FormattingEnabled = True
+        Me.boxForm.Location = New System.Drawing.Point(364, 4)
+        Me.boxForm.Name = "boxForm"
+        Me.boxForm.Size = New System.Drawing.Size(134, 27)
+        Me.boxForm.TabIndex = 272
+        '
+        'lblForm
+        '
+        Me.lblForm.AutoSize = True
+        Me.lblForm.Font = New System.Drawing.Font("Consolas", 12.0!)
+        Me.lblForm.ForeColor = System.Drawing.Color.White
+        Me.lblForm.Location = New System.Drawing.Point(255, 7)
+        Me.lblForm.Name = "lblForm"
+        Me.lblForm.Size = New System.Drawing.Size(45, 19)
+        Me.lblForm.TabIndex = 271
+        Me.lblForm.Text = "FORM"
+        '
         'boxSex
         '
         Me.boxSex.CheckAlign = System.Drawing.ContentAlignment.MiddleRight
-        Me.boxSex.Location = New System.Drawing.Point(417, 9)
+        Me.boxSex.Location = New System.Drawing.Point(676, 231)
         Me.boxSex.Name = "boxSex"
-        Me.boxSex.Size = New System.Drawing.Size(81, 17)
+        Me.boxSex.Size = New System.Drawing.Size(33, 17)
         Me.boxSex.TabIndex = 270
         Me.boxSex.Text = "CheckBox1"
         Me.boxSex.UseVisualStyleBackColor = True
@@ -1245,17 +1271,16 @@ Partial Class Debug_Window
         Me.lblHealth.TabIndex = 225
         Me.lblHealth.Text = "HEALTH"
         '
-        'boxForm
+        'boxClass
         '
-        Me.boxForm.BackColor = System.Drawing.Color.Black
-        Me.boxForm.Enabled = False
-        Me.boxForm.Font = New System.Drawing.Font("Consolas", 12.0!)
-        Me.boxForm.ForeColor = System.Drawing.Color.White
-        Me.boxForm.FormattingEnabled = True
-        Me.boxForm.Location = New System.Drawing.Point(110, 33)
-        Me.boxForm.Name = "boxForm"
-        Me.boxForm.Size = New System.Drawing.Size(134, 27)
-        Me.boxForm.TabIndex = 212
+        Me.boxClass.BackColor = System.Drawing.Color.Black
+        Me.boxClass.Font = New System.Drawing.Font("Consolas", 12.0!)
+        Me.boxClass.ForeColor = System.Drawing.Color.White
+        Me.boxClass.FormattingEnabled = True
+        Me.boxClass.Location = New System.Drawing.Point(110, 33)
+        Me.boxClass.Name = "boxClass"
+        Me.boxClass.Size = New System.Drawing.Size(134, 27)
+        Me.boxClass.TabIndex = 212
         '
         'boxName
         '
@@ -1267,23 +1292,23 @@ Partial Class Debug_Window
         Me.boxName.Size = New System.Drawing.Size(134, 26)
         Me.boxName.TabIndex = 211
         '
-        'lblTitle
+        'lblClass
         '
-        Me.lblTitle.AutoSize = True
-        Me.lblTitle.Font = New System.Drawing.Font("Consolas", 12.0!)
-        Me.lblTitle.ForeColor = System.Drawing.Color.White
-        Me.lblTitle.Location = New System.Drawing.Point(3, 36)
-        Me.lblTitle.Name = "lblTitle"
-        Me.lblTitle.Size = New System.Drawing.Size(54, 19)
-        Me.lblTitle.TabIndex = 210
-        Me.lblTitle.Text = "TITLE"
+        Me.lblClass.AutoSize = True
+        Me.lblClass.Font = New System.Drawing.Font("Consolas", 12.0!)
+        Me.lblClass.ForeColor = System.Drawing.Color.White
+        Me.lblClass.Location = New System.Drawing.Point(3, 36)
+        Me.lblClass.Name = "lblClass"
+        Me.lblClass.Size = New System.Drawing.Size(54, 19)
+        Me.lblClass.TabIndex = 210
+        Me.lblClass.Text = "CLASS"
         '
         'lblSex
         '
         Me.lblSex.AutoSize = True
         Me.lblSex.Font = New System.Drawing.Font("Consolas", 12.0!)
         Me.lblSex.ForeColor = System.Drawing.Color.White
-        Me.lblSex.Location = New System.Drawing.Point(250, 7)
+        Me.lblSex.Location = New System.Drawing.Point(526, 228)
         Me.lblSex.Name = "lblSex"
         Me.lblSex.Size = New System.Drawing.Size(144, 19)
         Me.lblSex.TabIndex = 208
@@ -1889,9 +1914,9 @@ Partial Class Debug_Window
     Friend WithEvents lblOf1 As Label
     Friend WithEvents boxHealth As NumericUpDown
     Friend WithEvents lblHealth As Label
-    Friend WithEvents boxForm As ComboBox
+    Friend WithEvents boxClass As ComboBox
     Friend WithEvents boxName As TextBox
-    Friend WithEvents lblTitle As Label
+    Friend WithEvents lblClass As Label
     Friend WithEvents lblSex As Label
     Friend WithEvents lblName As Label
     Friend WithEvents tabPortrait As TabControl
@@ -1993,4 +2018,6 @@ Partial Class Debug_Window
     Friend WithEvents tabPageHorns As System.Windows.Forms.TabPage
     Friend WithEvents tabPageBlush As System.Windows.Forms.TabPage
     Friend WithEvents lblBarrier As System.Windows.Forms.Label
+    Friend WithEvents boxForm As System.Windows.Forms.ComboBox
+    Friend WithEvents lblForm As System.Windows.Forms.Label
 End Class

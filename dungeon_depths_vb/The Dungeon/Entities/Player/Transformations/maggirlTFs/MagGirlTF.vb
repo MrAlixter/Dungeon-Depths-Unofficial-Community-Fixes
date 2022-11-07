@@ -40,11 +40,14 @@ Public Class MagGirlTF
     End Sub
     Sub step1()
         Dim p As Player = Game.player1
-        p.changeClass("Magical Girl​")
+
+        HumanTF.change(p)
 
         If p.sex = "Male" Then
             p.MtF()
         End If
+
+        p.changeClass("Magical Girl​")
 
         step1dialog(p)
 

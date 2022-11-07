@@ -48,6 +48,7 @@
     halfsuccubus
     horse
     hpbimbo
+    humanpolymorph
     inversion
     kitsune
     maggirl
@@ -280,6 +281,9 @@ Public MustInherit Class Transformation
 
         ElseIf tf = tfind.hpbimbo Then
             Return New HPBimboTF(cs, n, tts, wi, cbs, tfd)
+
+        ElseIf tf = tfind.humanpolymorph Then
+            Return New HumanTF(cs, n, tts, wi, cbs, tfd)
 
         ElseIf tf = tfind.inversion Then
             Return New InversionTF(cs, n, tts, wi, cbs, tfd)

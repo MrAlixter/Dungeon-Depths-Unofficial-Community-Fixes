@@ -16,23 +16,9 @@
         Dim p As Player = Game.player1
         Dim out = ""
 
+        createDisguise(p)
+
         'succubus transformation
-        If p.sex = "Male" Then
-            p.MtF()
-            out += "Your body becomes daintier, and you are soon fully female.  "
-        End If
-
-
-        If p.breastSize < 2 Then p.breastSize = 2
-        p.prt.setIAInd(pInd.face, 0, True, False)
-        p.prt.setIAInd(pInd.nose, 0, True, False)
-        p.prt.setIAInd(pInd.eyes, 12, True, True)
-
-        p.formStates(stateInd.succDisgState).initFlag = True
-        p.formStates(stateInd.succDisgState).save(p)
-
-        p.prt.setIAInd(pInd.eyebrows, 0, True, False)
-
         p.prt.setIAInd(pInd.hat, 0, True, False)
         p.prt.setIAInd(pInd.wings, 2, True, False)
         p.prt.setIAInd(pInd.horns, 3, True, False)
@@ -40,7 +26,6 @@
         p.prt.skincolor = Color.FromArgb(255, 255, 105, 180)
         p.changeForm("Succubus")
         p.drawPort()
-
 
         p.learnSpell("Cynn's Disguise")
 
@@ -53,6 +38,25 @@
         Dim revertText = Game.lblEvent.Text.Split(vbCrLf)(0)
         If Not revertText.Equals("") Then out = revertText & DDUtils.RNRN & out
         TextEvent.push(out)
+    End Sub
+
+    Shared Sub createDisguise(ByRef p As Player)
+        If p.formStates(stateInd.succDisgState).initFlag Then Exit Sub
+
+        HumanTF.change(p)
+
+        If p.sex = "Male" Then
+            p.MtF()
+        End If
+
+        If p.breastSize < 2 Then p.breastSize = 2
+        p.prt.setIAInd(pInd.face, 0, True, False)
+        p.prt.setIAInd(pInd.nose, 0, True, False)
+        p.prt.setIAInd(pInd.eyes, 12, True, True)
+        p.prt.setIAInd(pInd.eyebrows, 0, True, False)
+
+        p.formStates(stateInd.succDisgState).initFlag = True
+        p.formStates(stateInd.succDisgState).save(p)
     End Sub
 
     Public Shared Sub step1alt()

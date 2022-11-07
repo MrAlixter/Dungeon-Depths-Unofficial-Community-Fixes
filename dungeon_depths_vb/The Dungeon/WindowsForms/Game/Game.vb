@@ -2059,7 +2059,7 @@ Public Class Game
             ElseIf last_keys_pressed = "ffff" Then
                 Dim p = player1
 
-                FanPhanStep3.losstf(p)
+                p.learnSpell("Cynn's Disguise")
             ElseIf last_keys_pressed = "swda" Then
                 Try
                     Dim npcInd As Integer = CInt(InputBox("Enter an NPC index:" & vbCrLf &

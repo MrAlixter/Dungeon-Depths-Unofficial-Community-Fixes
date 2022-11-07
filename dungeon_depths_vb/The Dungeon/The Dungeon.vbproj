@@ -199,6 +199,7 @@
     <Compile Include="Entities\Player\Transformations\MaggirlTFs\MagGirlGTF.vb" />
     <Compile Include="Entities\Player\Transformations\MaggirlTFs\MagMimicTF.vb" />
     <Compile Include="Entities\Player\Transformations\OneStepTFs\CynnTonicTF.vb" />
+    <Compile Include="Entities\Player\Transformations\Polymorphs\HumanTF.vb" />
     <Compile Include="Entities\Player\Transformations\ScaleTalismanTF.vb" />
     <Compile Include="Entities\Player\Transformations\OneStepTFs\AmaraphneAngelTF.vb" />
     <Compile Include="Entities\Player\Transformations\OneStepTFs\FaerieTF.vb" />

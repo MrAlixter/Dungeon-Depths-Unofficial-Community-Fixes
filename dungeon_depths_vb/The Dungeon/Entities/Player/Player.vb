@@ -715,6 +715,7 @@ Public Class Player
         polymorphs.Add("Horse", Nothing)
         polymorphs.Add("Unicorn", Nothing)
         polymorphs.Add("Cow", Nothing)
+        polymorphs.Add("Human", Nothing)
     End Sub
     Private Sub initQuests()
         quests.Clear()
@@ -1306,7 +1307,7 @@ Public Class Player
         source.currTarget = Nothing
         source.nextCombatAction = Nothing
 
-        setHealth(0.1)
+        setHealth(0.25)
 
         If Not source Is Nothing AndAlso Not source.getSName Is Nothing Then
             TextEvent.pushLog("You are defeated!")
