@@ -13,6 +13,7 @@
         will = 7777
         speed = 7
         xp_value = 1777
+        setupMonsterOnSpawn(False)
 
         '|Inventory|
         inv.setCount("Fox_Ears", 3)
@@ -29,8 +30,6 @@
         r_pronoun = "her"
 
         '|Misc|
-        setupMonsterOnSpawn(False)
-
         If Game.player1.perks(perk.seventailsstage) = 2 Then
             'succubusTF()
             health = 0.33
@@ -138,7 +137,8 @@
     End Sub
     Public Overrides Sub playerDeath(ByRef p As Player)
         despawn("p-death")
-        Dim out = """Hmmmm, what to do with you..."" Seven-Tails grins, prodding your nearly unconscious body with a light kick.  ""Ooh, Sis's birthday is right around the corner!""" & DDUtils.RNRN &
+        Dim out = "You collapse, defeated..." & DDUtils.RNRN &
+                  """Hmmmm, what to do with you..."" Seven-Tails grins, prodding your nearly unconscious body with a light kick.  ""Ooh, Sis's birthday is right around the corner!""" & DDUtils.RNRN &
                   "She waves her hand, and suddenly you start to feel a lot lighter.  With a *pomph*, you find yourself forced into an immobile pose as your lips begin to puff up into a permenant 'O' shape.  As your eyes widen in suprise, your expression settles as it becomes painted on to your smooth face." & DDUtils.RNRN &
                   """HA!  Oh, she's gonna get a kick out of you, the resemblance is uncanny!"" she laughs, tossing you up in the air.  As you slowly drift to the ground, the air ripples around you..."
         Game.picPortrait.BackgroundImage = Portrait.CreateBMP({Portrait.nullImg, Game.pic9tailsBimbo.BackgroundImage})

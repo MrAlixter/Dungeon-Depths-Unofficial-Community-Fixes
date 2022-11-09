@@ -11,6 +11,7 @@
         speed = 40
         will = 60
         xp_value = 5000
+        setupMonsterOnSpawn()
 
         '|Inventory|
         inv.setCount("AAAAAA_Battery", CInt(Int(Rnd() * 2000)) + 1)
@@ -22,7 +23,6 @@
         r_pronoun = "her"
 
         '|Misc|
-        setupMonsterOnSpawn()
 
     End Sub
 

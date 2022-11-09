@@ -12,6 +12,7 @@
         speed = 10
         will = 20
         xp_value = 100
+        setupMonsterOnSpawn()
 
         '|Inventory|
         inv.setCount("Cat_Lingerie", 1)
@@ -33,7 +34,6 @@
         r_pronoun = "her"
 
         '|Misc|
-        setupMonsterOnSpawn()
 
     End Sub
 

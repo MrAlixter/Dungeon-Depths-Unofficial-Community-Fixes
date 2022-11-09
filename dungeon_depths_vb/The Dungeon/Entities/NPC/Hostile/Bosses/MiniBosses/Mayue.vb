@@ -14,6 +14,7 @@
         speed = 44
         will = -5
         xp_value = 200
+        setupMonsterOnSpawn()
 
         '|Inventory|
         inv.setCount("Extra_Life", 8)
@@ -26,7 +27,6 @@
         r_pronoun = "her"
 
         '|Misc|
-        setupMonsterOnSpawn()
         turns_until_spell = 3
         enchantment_inds_used = New List(Of Integer)
 

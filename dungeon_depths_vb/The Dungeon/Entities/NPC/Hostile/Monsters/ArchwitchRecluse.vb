@@ -17,6 +17,7 @@
         defense = 22
         speed = 1
         will = 35
+        setupMonsterOnSpawn()
 
         '|Inventory|
         setInventory({379, 381, 382, 383})
@@ -27,7 +28,7 @@
         r_pronoun = "her"
 
         '|Misc|
-        setupMonsterOnSpawn()
+
     End Sub
 
     Public Overrides Sub attackCMD(ByRef target As Entity)

@@ -21,7 +21,7 @@
         'set the ghost's class
         name = first_name & " the " & redefineClassName(class_name)
 
-        setupMonsterOnSpawn()
+        setupMonsterOnSpawn(False)
         title = " "
 
         'if the player died on this floor, their belongings will be in a chest
@@ -94,19 +94,21 @@
                 Return "Wraith"
             Case "Mage", "Warlock", "Necromancer"
                 Return "Specter"
-            Case "Rogue", "Battlemaiden"
+            Case "Rogue", "Battlemaiden", "Pirate"
                 Return "Shade"
-            Case "Paladin", "Unconscious", "Mindless"
+            Case "Paladin", "Unconscious", "Mindless", "Classless"
                 Return "Poltergeist"
-            Case "Magical Girl"
+            Case "Magical Girl", "Magical Slut"
                 Return "Specteral Girl"
             Case "Witch", "Maiden", "Cleric"
                 Return "Phantom"
             Case "Bimbo", "Bunny Girl", "Princess", "Maid", "Shrunken", "Bimbo++"
                 Return "Siren"
+            Case "Thrall", "Soul-Lord", "Targaxian", "Fae Bee​"
+                Return "Thrall"
+            Case Else
+                Return "Ghost"
         End Select
-
-        Return s
     End Function
 
     '| - ATTACKS - |

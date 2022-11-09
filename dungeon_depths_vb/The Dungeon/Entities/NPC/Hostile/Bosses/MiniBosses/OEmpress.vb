@@ -12,6 +12,7 @@
         speed = 1
         will = 25
         xp_value = 400
+        setupMonsterOnSpawn()
 
         '|Inventory|
         inv.setCount("Gelatinous_Shell", 1)
@@ -27,13 +28,12 @@
         Next
 
         '|Dialog Variables|
-        title = " "
+        title = " the "
         pronoun = "she"
         p_pronoun = "her"
         r_pronoun = "her"
 
         '|Misc|
-        setupMonsterOnSpawn()
 
     End Sub
 

@@ -13,6 +13,7 @@
         defense = 3
         speed = 60
         will = 7777
+        setupMonsterOnSpawn()
 
         '|Inventory|
         setInventory({49, 189, 198, 205})
@@ -20,7 +21,7 @@
         '|Dialog Variables|
 
         '|Misc|
-        setupMonsterOnSpawn()
+
     End Sub
 
     Public Overrides Sub attackCMD(ByRef target As Entity)

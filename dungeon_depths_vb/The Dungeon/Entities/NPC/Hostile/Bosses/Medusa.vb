@@ -12,6 +12,7 @@
         defense = 35
         speed = 40
         xp_value = 1000
+        setupMonsterOnSpawn()
 
         '|Inventory|
         inv.setCount(OmniCharm.ITEM_NAME, 1)
@@ -25,7 +26,6 @@
         r_pronoun = "her"
 
         '|Misc|
-        setupMonsterOnSpawn()
 
     End Sub
 

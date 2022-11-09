@@ -12,6 +12,7 @@
         attack = 15
         defense = 20
         speed = 60
+        setupMonsterOnSpawn()
 
         '|Inventory|
         Dim r As Integer = Int(Rnd() * 6)
@@ -23,7 +24,7 @@
         r_pronoun = "them"
 
         '|Misc|
-        setupMonsterOnSpawn()
+
     End Sub
 
     Public Overrides Sub attackCMD(ByRef target As Entity)

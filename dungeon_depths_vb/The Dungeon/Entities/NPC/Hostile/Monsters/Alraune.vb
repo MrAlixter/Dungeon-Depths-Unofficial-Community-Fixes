@@ -15,6 +15,7 @@
         defense = 35
         speed = 1
         will = 13
+        setupMonsterOnSpawn()
 
         '|Inventory|
         inv.setCount("Medicinal_Tea", 3)
@@ -27,7 +28,7 @@
         r_pronoun = "her"
 
         '|Misc|
-        setupMonsterOnSpawn()
+
     End Sub
 
     Public Overrides Sub attackCMD(ByRef target As Entity)

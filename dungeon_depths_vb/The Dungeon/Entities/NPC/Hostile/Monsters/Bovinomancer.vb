@@ -17,6 +17,7 @@
         defense = 10
         speed = 45
         will = 50
+        setupMonsterOnSpawn()
 
         '|Inventory|
         setInventory({25, 34, 70, 71, 197})
@@ -33,7 +34,6 @@
         End If
 
         '|Misc|
-        setupMonsterOnSpawn()
         tfInd = 0
         knows_p_cant_be_tfed = False
     End Sub

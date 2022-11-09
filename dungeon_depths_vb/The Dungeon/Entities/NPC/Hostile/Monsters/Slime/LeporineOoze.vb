@@ -14,8 +14,9 @@
         maxHealth = 450
         attack = 32
         defense = 0
-        speed = 40
+        speed = 10
         will = 0
+        setupMonsterOnSpawn()
 
         '|Inventory|
         setBunnySuit()
@@ -34,7 +35,6 @@
         r_pronoun = "it"
 
         '|Misc|
-        setupMonsterOnSpawn()
     End Sub
 
     Public Sub setBunnySuit()

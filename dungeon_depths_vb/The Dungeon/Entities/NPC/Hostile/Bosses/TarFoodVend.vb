@@ -11,6 +11,7 @@
         speed = 700
         will = 250
         xp_value = 70000
+        setupMonsterOnSpawn()
 
         '|Inventory|
         inv.setCount("Omni_Charm", 1)
@@ -24,7 +25,6 @@
 
 
         '|Misc|
-        setupMonsterOnSpawn()
 
     End Sub
 

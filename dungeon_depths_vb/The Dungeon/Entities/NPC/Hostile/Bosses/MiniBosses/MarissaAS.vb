@@ -12,6 +12,7 @@
         speed = 30
         will = 15
         xp_value = 75
+        setupMonsterOnSpawn(False)
 
         '|Inventory|
         inv.setCount("Spellbook", 1)
@@ -26,7 +27,6 @@
         r_pronoun = "her"
 
         '|Misc|
-        setupMonsterOnSpawn(False)
 
     End Sub
 

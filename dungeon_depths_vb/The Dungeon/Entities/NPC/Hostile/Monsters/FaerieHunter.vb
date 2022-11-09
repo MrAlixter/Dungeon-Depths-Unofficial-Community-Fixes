@@ -28,6 +28,7 @@
         defense = 20
         speed = 10
         will = 20
+        setupMonsterOnSpawn()
 
         '|Inventory| 
         Dim r As Boolean = Game.player1.passDieRoll(4, 1)
@@ -45,8 +46,6 @@
         End If
 
         '|Misc|
-        setupMonsterOnSpawn()
-
         maxHealth *= 0.5
         attack *= 1.5
         defense *= 1.5

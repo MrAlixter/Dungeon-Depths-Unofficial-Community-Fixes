@@ -12,7 +12,7 @@
             Exit Sub
         End If
 
-        TextEvent.pushAndLog(CStr("Your magic strikes " & target.getNameWithTitle() & " in the chest, turning " & MyBase.getTarget.r_pronoun & " to stone."))
+        TextEvent.pushAndLog(CStr("Your gaze washes over " & target.getNameWithTitle() & ", turning " & MyBase.getTarget.r_pronoun & " to stone."))
 
         If MyBase.getTarget.speed / CInt(MyBase.getTarget.sSpeed / 4) > 0 Then
             TextEvent.pushAndLog(CStr(Math.Ceiling(MyBase.getTarget.speed / CInt(MyBase.getTarget.sSpeed / 4)) & " more until they become a statue!"))

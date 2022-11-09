@@ -13,6 +13,7 @@
         speed = 5
         will = 10
         xp_value = 200
+        setupMonsterOnSpawn()
 
         '|Inventory|
         inv.setCount("Sword_of_the_Brutal", 1)
@@ -33,7 +34,6 @@
         r_pronoun = "him"
 
         '|Misc|
-        setupMonsterOnSpawn()
         combatCounter = 0
 
     End Sub

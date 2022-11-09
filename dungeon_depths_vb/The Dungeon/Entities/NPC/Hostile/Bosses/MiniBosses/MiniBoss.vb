@@ -23,7 +23,7 @@
     End Function
     Public Overrides Sub attackCMD(ByRef target As Entity)
         If isStunned Then
-            TextEvent.push(name & " is stunned!")
+            TextEvent.push(DDUtils.capitalizeFirst(getNameWithTitle) & " is stunned!")
             Exit Sub
         End If
 
@@ -31,7 +31,7 @@
     End Sub
     Public Overloads Sub attackCMD(ByRef target As Entity, ByVal checkStun As Boolean)
         If isStunned And checkStun Then
-            TextEvent.push(name & " is stunned!")
+            TextEvent.push(DDUtils.capitalizeFirst(getNameWithTitle) & " is stunned!")
             Exit Sub
         End If
 

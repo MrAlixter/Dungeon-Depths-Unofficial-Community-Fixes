@@ -15,12 +15,13 @@
         defense = 20
         speed = 50
         will = 15
+        setupMonsterOnSpawn()
 
         '|Inventory|
         setInventory({0})
 
         '|Misc|
-        setupMonsterOnSpawn()
+
     End Sub
 
     Public Overrides Sub attackCMD(ByRef target As Entity)
