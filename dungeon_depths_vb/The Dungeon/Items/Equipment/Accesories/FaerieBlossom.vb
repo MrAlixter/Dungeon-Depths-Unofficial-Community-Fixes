@@ -23,7 +23,7 @@
         mInd = New Tuple(Of Integer, Boolean, Boolean)(51, True, True)
 
         '|Description|
-        setDesc("A simple gag that prevents its wearer from speaking or casting spells, sealed by a spell that prevents removal by those who are aroused." & DDUtils.RNRN &
+        setDesc("A small white flower, jinxed by a tricksy faerie." & DDUtils.RNRN &
                 getStatInformation())
     End Sub
 End Class

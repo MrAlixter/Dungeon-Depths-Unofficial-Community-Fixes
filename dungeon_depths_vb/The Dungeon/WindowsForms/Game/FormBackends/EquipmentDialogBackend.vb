@@ -247,7 +247,7 @@
 
         'Otherwise, revert the player's equipped armor to the non-slut variant
         Dim equippedArmorIndex = p.equippedArmor.id
-        Dim anti_slut_index = p.equippedArmor.getAntiSlutInd
+        Dim anti_slut_index = p.equippedArmor.getAntiSlutInd()
 
         p.inv.add(equippedArmorIndex, -1)
         p.inv.add(anti_slut_index, 1)

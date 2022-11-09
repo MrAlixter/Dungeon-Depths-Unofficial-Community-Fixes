@@ -21,6 +21,7 @@
 
         '|Image Index|
         bsizeneg1 = New Tuple(Of Integer, Boolean, Boolean)(6, False, True)
+        bsize0 = New Tuple(Of Integer, Boolean, Boolean)(104, False, True)
         bsize1 = New Tuple(Of Integer, Boolean, Boolean)(13, True, True)
         bsize2 = New Tuple(Of Integer, Boolean, Boolean)(14, True, True)
         bsize3 = New Tuple(Of Integer, Boolean, Boolean)(15, True, True)

@@ -51,7 +51,7 @@
         usize4 = New Tuple(Of Integer, Boolean, Boolean)(440, True, True)
 
         '|Description|
-        setDesc("A slinky set of underwear, radiating with magical energy.  Stitched into the bustier is the name """", " & DDUtils.RNRN &
+        setDesc("A slinky set of underwear, radiating with magical energy.  Stitched into the bustier is the name """"..." & DDUtils.RNRN &
                 getSizeInformation() & DDUtils.RNRN &
                 getStatInformation())
     End Sub
@@ -67,8 +67,9 @@
     End Sub
 
     Public Overrides Function getDesc() As Object
-        Return "A tiny " & Trim(Player.getColor(h_color)) & " flower, radiating with magical energy..." & DDUtils.RNRN &
-               getStatInformation()
+        Return "A slinky set of underwear, radiating with magical energy.  Stitched into the bustier is the name """ & soul_name & """..." & DDUtils.RNRN &
+                getSizeInformation() & DDUtils.RNRN &
+                getStatInformation()
     End Function
 
     Public Overrides Sub toSavedItem(ByRef ent As Entity)

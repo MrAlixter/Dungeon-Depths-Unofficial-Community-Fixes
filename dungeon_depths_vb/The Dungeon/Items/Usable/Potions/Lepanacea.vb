@@ -52,6 +52,8 @@
                 side_effect.apply(p)
             End If
         Next
+
+        count -= 1
     End Sub
 
     Private Function translatePEffect(ByRef effect As PEffect) As String

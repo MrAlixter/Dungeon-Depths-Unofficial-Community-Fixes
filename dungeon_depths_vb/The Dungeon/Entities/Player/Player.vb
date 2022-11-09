@@ -2154,11 +2154,6 @@ Public Class Player
     End Sub
     'breast enlargement/reduction methods
     Public Sub be()
-        If Not Transformation.canBeTFed(Me) And Not pClass.name.Equals("Thrall") Then
-            TextEvent.pushLog("Your form prevents you from being altered.")
-            Exit Sub
-        End If
-
         If breastSize >= -2 And breastSize < 7 Then
             breastSize += 1
             reverseBSroute()
@@ -2169,10 +2164,6 @@ Public Class Player
         End If
     End Sub
     Public Sub bs()
-        If Not Transformation.canBeTFed(Me) And Not pClass.name.Equals("Thrall") Then
-            TextEvent.pushLog("Your form prevents you from being altered.")
-            Exit Sub
-        End If
         If breastSize > -1 And breastSize <= 7 Then
             breastSize -= 1
             reverseBSroute()
@@ -2254,11 +2245,6 @@ Public Class Player
     End Sub
     'dick enlargement/reduction methods
     Public Sub de()
-        If Not Transformation.canBeTFed(Me) And Not pClass.name.Equals("Thrall") Then
-            TextEvent.pushLog("Your form prevents you from being altered.")
-            Exit Sub
-        End If
-
         If dickSize >= -1 And dickSize < 3 Then
             dickSize += 1
             reverseAllRoute()
@@ -2268,10 +2254,6 @@ Public Class Player
         End If
     End Sub
     Public Sub ds()
-        If Not Transformation.canBeTFed(Me) And Not pClass.name.Equals("Thrall") Then
-            TextEvent.pushLog("Your form prevents you from being altered.")
-            Exit Sub
-        End If
         If dickSize > -1 And dickSize <= 3 Then
             dickSize -= 1
             reverseDSRoute()
@@ -2312,11 +2294,6 @@ Public Class Player
     End Sub
     'butt enlargement/reduction methods
     Public Sub ue()
-        If Not Transformation.canBeTFed(Me) And Not pClass.name.Equals("Thrall") Then
-            TextEvent.pushLog("Your form prevents you from being altered.")
-            Exit Sub
-        End If
-
         If buttSize >= -2 And buttSize < 5 Then
             buttSize += 1
             reverseUSRoute()
@@ -2327,10 +2304,6 @@ Public Class Player
         End If
     End Sub
     Public Sub us()
-        If Not Transformation.canBeTFed(Me) And Not pClass.name.Equals("Thrall") Then
-            TextEvent.pushLog("Your form prevents you from being altered.")
-            Exit Sub
-        End If
         If buttSize > -1 And buttSize <= 5 Then
             buttSize -= 1
             reverseUSRoute()

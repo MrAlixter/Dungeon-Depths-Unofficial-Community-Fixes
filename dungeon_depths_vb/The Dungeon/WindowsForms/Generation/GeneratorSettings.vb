@@ -40,7 +40,7 @@
         chestRichnessBase = 1
         chestRichnessRange = 4
         encounterRate = 25
-        eClockResetVal = 15
+        eClockResetVal = 10
         trapFreqMin = 3
         trapFreqRange = 5
         trapSizeDependence = 30

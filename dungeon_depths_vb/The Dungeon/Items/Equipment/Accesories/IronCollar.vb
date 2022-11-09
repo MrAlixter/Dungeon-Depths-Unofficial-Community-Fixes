@@ -24,7 +24,7 @@
         mInd = New Tuple(Of Integer, Boolean, Boolean)(27, False, True)
 
         '|Description|
-        setDesc("A simple, beaded necklace that always boosts its wearer's spirit." & DDUtils.RNRN &
+        setDesc("A restrictive neckpiece made of silver metal." & DDUtils.RNRN &
                 getStatInformation() & DDUtils.RNRN &
                 "If unequipped, can be used to greatly debuff a fae during combat.")
     End Sub

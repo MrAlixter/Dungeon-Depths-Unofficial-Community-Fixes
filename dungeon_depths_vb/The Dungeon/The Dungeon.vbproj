@@ -283,9 +283,9 @@
     <Compile Include="Items\Equipment\Weapons\Daggers\IronDagger.vb" />
     <Compile Include="Items\Equipment\Weapons\Daggers\FeatherDagger.vb" />
     <Compile Include="Items\Equipment\Weapons\Daggers\VipersFang.vb" />
-    <Compile Include="Items\Equipment\Weapons\Misc\Hyacinth.vb" />
-    <Compile Include="Items\Equipment\Weapons\Misc\Rose.vb" />
-    <Compile Include="Items\Equipment\Weapons\Misc\Tulip.vb" />
+    <Compile Include="Items\Equipment\Weapons\Staffs\Hyacinth.vb" />
+    <Compile Include="Items\Equipment\Weapons\Whips\Rose.vb" />
+    <Compile Include="Items\Equipment\Weapons\Axes\Tulip.vb" />
     <Compile Include="Items\Equipment\Weapons\Misc\PhaseDrill.vb" />
     <Compile Include="Items\Equipment\Weapons\Misc\PhaseHammer.vb" />
     <Compile Include="Items\Equipment\Weapons\Misc\PhaseRifle.vb" />

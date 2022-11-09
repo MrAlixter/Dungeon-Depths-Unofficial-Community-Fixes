@@ -42,6 +42,8 @@
     End Sub
 
     Public Overrides Function getAntiSlutInd() As Object
+        If owner Is Nothing Then Return 184
+
         Select Case owner.sState.iArrInd(pInd.clothes).Item1
             Case 0
                 Return 184
@@ -57,6 +59,12 @@
                 Return 189
             Case 6
                 Return 190
+            Case 7
+                Return 254
+            Case 8
+                Return 285
+            Case 9
+                Return 384
             Case Else
                 Return 184
         End Select

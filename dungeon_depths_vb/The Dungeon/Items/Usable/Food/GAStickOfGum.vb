@@ -36,4 +36,9 @@
             p.update()
         End If
     End Sub
+
+    Public Overrides Function getTier() As Integer
+        If Not Game.mDun Is Nothing AndAlso Game.mDun.numCurrFloor = 13 Then Return 2
+        Return Nothing
+    End Function
 End Class

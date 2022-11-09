@@ -21,7 +21,7 @@
         mInd = New Tuple(Of Integer, Boolean, Boolean)(23, False, True)
 
         '|Description|
-        setDesc("" & DDUtils.RNRN &
+        setDesc("A small golden talisman bearing the image of a rose." & DDUtils.RNRN &
                 getStatInformation())
     End Sub
     Public Overrides Sub onEquip(ByRef p As Player)
