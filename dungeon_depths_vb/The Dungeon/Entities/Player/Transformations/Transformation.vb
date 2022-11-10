@@ -414,9 +414,10 @@ Public MustInherit Class Transformation
     End Function
     Shared Function canBeTFed(ByRef p As Player) As Boolean
         If Game.player1.ongoingTFs.count < 1 And
-            (Not p.polymorphs.ContainsKey(p.className) And Not p.polymorphs.ContainsKey(p.formName)) And
             p.pClass.canBeTFed And
             p.pForm.canBeTFed And
+            p.prt.oneLayerImgCheck(p.formName, p.className) Is Nothing And
+            Not p.perks(perk.polymorphed) > 0 And
             Not p.perks(perk.astatue) > 1 And
             Not p.perks(perk.tfedbyweapon) > 0 And
             Not p.perks(perk.pdeflector) > 0 Then

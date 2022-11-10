@@ -74,11 +74,15 @@ Public MustInherit Class ShopNPC
         title = " The "
     End Sub
 
+    Public Overridable Function fleeFromAnimalTF() As Boolean
+        Return True
+    End Function
+
     Public Overrides Sub update()
         '| -- Genral/Clean Up -- |
         If isDead = True Then Exit Sub
 
-        If img_index = LocalImgInd.frog Or img_index = LocalImgInd.sheep Then
+        If fleeFromAnimalTF() And (img_index = LocalImgInd.frog Or img_index = LocalImgInd.sheep) Then
             despawn("flee")
             Exit Sub
         End If
@@ -504,4 +508,13 @@ Public MustInherit Class ShopNPC
     Public Shared Function getAdjustedValue(ByRef sk As ShopNPC, ByRef itm As String) As Integer
         Return (sk.inv.item(itm).value) - (sk.discount * (sk.inv.item(itm).value))
     End Function
+    Public Overridable Sub buildShopArea(ByRef floor As mFloor)
+        Dim area = {New Point(pos.X - 1, pos.Y - 1), New Point(pos.X, pos.Y - 1), New Point(pos.X + 1, pos.Y - 1),
+                    New Point(pos.X - 1, pos.Y), New Point(pos.X, pos.Y), New Point(pos.X + 1, pos.Y),
+                    New Point(pos.X - 1, pos.Y + 1), New Point(pos.X, pos.Y + 1), New Point(pos.X + 1, pos.Y + 1)}
+
+        For Each pt In area
+            If floor.ptInBounds(pt) Then floor.mBoard(pt.Y, pt.X).Tag = 2
+        Next
+    End Sub
 End Class

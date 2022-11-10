@@ -82,7 +82,7 @@
         count -= 1
     End Sub
     Overridable Sub remove()
-        TextEvent.pushLog("The " & getName() & " fades into non-existance")
+        TextEvent.pushLog("The " & getName() & " fades into non-existence")
         count -= 1
 
     End Sub

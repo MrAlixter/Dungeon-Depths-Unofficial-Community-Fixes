@@ -136,7 +136,7 @@
             Return ""
         End If
 
-        If Game.currFloor.floorNumber = 13 Then
+        If Game.mDun.numCurrFloor = 13 Then
             img_index = LocalImgInd.alt4
             Return "Hey!  I'm turning into a tree!  Now, obviously this ain't great, but at least I'm getting wood!  HA!" & DDUtils.RNRN &
                    "That's a little bit of some tree humor, buy some stuff before you leaf and maybe I can get this straighed out before this curse runs its course, eh?"

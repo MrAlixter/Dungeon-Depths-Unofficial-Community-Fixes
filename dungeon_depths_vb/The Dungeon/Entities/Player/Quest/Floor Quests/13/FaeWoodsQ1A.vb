@@ -105,7 +105,6 @@
                                                             "Fine, if you don't want my help, you don't want my help.  But, " & Game.player1.name & "?  Just know, if I were going to pull something fast on you, I'd have already gotten all I needed..." & DDUtils.RNRN &
                                                             "You stay safe now, you hear?", AddressOf completeEntireQuest)
         Game.player1.perks(perk.faestaysafe) = 1
-        Game.player1.perks(perk.faecurse) = 1
 
         FaeQueen.spawn(Game.currFloor)
     End Sub

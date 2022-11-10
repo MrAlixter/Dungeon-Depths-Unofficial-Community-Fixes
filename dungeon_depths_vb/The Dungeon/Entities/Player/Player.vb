@@ -1335,7 +1335,7 @@ Public Class Player
         If perks(perk.astatue) > -1 Then nextCombatAction = AddressOf PerkEffects.statueMove
         If perks(perk.mesmerized) > -1 AndAlso Int(Rnd() * 2) = 0 Then nextCombatAction = AddressOf PerkEffects.mesStun
         If perks(perk.stunned) = 1 Then nextCombatAction = AddressOf PerkEffects.stun
-        If perks(perk.faepassangers) = 1 Then nextCombatAction = AddressOf FaeWoodsQ2A.faeAttack
+        If perks(perk.faepassangers) = 1 Or perks(perk.faepassangers) = 2 Or perks(perk.faepassangers) = 3 Then nextCombatAction = AddressOf FaeWoodsQ2A.faeAttack
 
         MyBase.update()
 
@@ -2688,6 +2688,9 @@ Public Class Player
         If perks(perk.coblind) > -1 Then Return True
         If perks(perk.coscale) > -1 Then Return True
         If perks(perk.succubuscurse) > -1 Then Return True
+        If perks(perk.faecurse) > -1 Then Return True
+        If perks(perk.coftheox) > -1 Then Return True
+        If ongoingTFs.contains(tfind.malmino) Then Return True
         If equippedArmor.getCursed(Me) Or equippedWeapon.getCursed(Me) Or equippedAcce.getCursed(Me) Or equippedGlasses.getCursed(Me) Then Return True
         Return False
     End Function

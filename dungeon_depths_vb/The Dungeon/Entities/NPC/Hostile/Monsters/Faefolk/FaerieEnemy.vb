@@ -69,6 +69,8 @@
                 p.ue()
             End If
 
+            p.drawPort()
+
             Return """Ooh, it looks like you're already someone's flower bed...  Do you think they'd mind if I did some gardening myself?"""
         End If
 

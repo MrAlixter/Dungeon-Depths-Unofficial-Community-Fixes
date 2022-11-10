@@ -21,6 +21,7 @@
         npc_index = ShopNPCInd.faequeen
 
         '|NPC Flags|
+        title = "the "
         pronoun = "she"
         p_pronoun = "her"
         r_pronoun = "her"
@@ -98,6 +99,9 @@
         Game.player1.pos = New Point(24, 38)
     End Sub
 
+    Public Overrides Function fleeFromAnimalTF() As Boolean
+        Return False
+    End Function
     Public Overrides Sub encounter()
         npc_index = 0
         Game.shop_npc_engaged = False
@@ -114,10 +118,12 @@
 
         Game.picBoard.Select()
 
-        If Game.player1.perks(perk.f13fqueentalked) > 0 Then
-            Objective.showNPC(local_img(LocalImgInd.normal), "Hello again...")
-        ElseIf Game.player1.perks(perk.faecurse) = 1 Then
+        If Game.player1.perks(perk.faecurse) > -1 And Game.player1.perks(perk.f13fqueentalked) > 0 Then
+            Objective.showNPC(local_img(LocalImgInd.normal), """You again, outstanding...  Must I do everything myself?""" & DDUtils.PAKTC, AddressOf toCombat)
+        ElseIf Game.player1.perks(perk.faecurse) > -1 Then
             Objective.showNPC(local_img(LocalImgInd.normal), """Oh, hello...  Who do we have here?""" & DDUtils.PAKTC, AddressOf faeCursedInitialResponse)
+        ElseIf Game.player1.perks(perk.f13fqueentalked) > 0 And Game.currFloor.mBoard(Game.currFloor.stairs.Y, Game.currFloor.stairs.X).Tag = 2 Then
+            Objective.showNPC(local_img(LocalImgInd.normal), "Hello again...")
         Else
             Objective.showNPC(local_img(LocalImgInd.normal), """Well, well, well...  Who do we have here?""" & DDUtils.PAKTC, AddressOf selectInitialResponse)
         End If
@@ -146,6 +152,7 @@
     End Sub
 
     Private Sub faeCursedInitialResponse()
+        Game.player1.perks(perk.f13fqueentalked) = 1
         TextEvent.push("You think about the question for a few seconds, before a presence overtakes you and you blurt out ""Death to the Fae Queen!""" & DDUtils.RNRN &
                        "A twinkling mist seeps out from your mouth as you launch into a barrage of insults, the Fae Queen simply standing by with one eyebrow raised.  Eventually, she cuts you off with a hand motion and you find yourself unable to speak." & DDUtils.RNRN &
                        """SILENCE!"" decrees the Fae Queen, ""I don't very much care for your prattle.  In fact...""", AddressOf faeCursedToCombat)
@@ -346,6 +353,14 @@
     End Sub
 
     '| - COMBAT - |
+    Public Overrides Function reactToSpell(spell As String) As Boolean
+        If spell.Contains("Polymorph") Or spell.Contains("Turn to") Then
+            TextEvent.pushAndLog(DDUtils.capitalizeFirst(getNameWithTitle) & " smiles as the spell washes over her, to no effect!")
+            Return False
+        End If
+
+        Return True
+    End Function
     Shared Sub toCombat()
         Dim m As FaeQueen = Game.fqueen
         Game.active_shop_npc = Game.fqueen

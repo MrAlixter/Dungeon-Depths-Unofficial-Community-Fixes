@@ -1431,10 +1431,12 @@ Public Class mFloor
             End If
         End If
     End Function
-    Sub addNPC(ByRef n As NPC, ByRef npcPoint As Point)
+    Sub addNPC(ByRef n As ShopNPC, ByRef npcPoint As Point)
         n.pos = npcPoint
         mBoard(npcPoint.Y, npcPoint.X).ForeColor = Color.FromArgb(45, 45, 45)
         mBoard(npcPoint.Y, npcPoint.X).Text = "$"
+
+        n.buildShopArea(Me)
     End Sub
     Sub placeKeyChest()
         Dim ChestP = randPoint()

@@ -69,9 +69,9 @@
 
     Public Overrides Function getName() As String
         If w_mode = mode.flower Then
-            Return "Hyacinthian_Staff"
+            Return "Hyacinth"
         End If
 
-        Return "Hyacinth"
+        Return "Hyacinthian_Staff"
     End Function
 End Class

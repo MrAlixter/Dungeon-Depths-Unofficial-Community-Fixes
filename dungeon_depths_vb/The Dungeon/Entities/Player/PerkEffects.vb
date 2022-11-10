@@ -258,20 +258,18 @@
         End Select
     End Function
     Shared Sub faeleafBloom(ByRef p As Player)
-        faeleafBloom(p)
-
         TextEvent.pushAndLog("A puff of pollen poofs out from the " & FaerieBlossom.ITEM_NAME.Replace("_", " ") & "...")
 
         Dim d10 As Integer = Int(Rnd() * 10)
         If d10 = 0 Or d10 = 1 Then
             p.inv.setPotionNames()
-            TextEvent.pushAndLog("The labels on your potions shift and twist around!")
+            TextEvent.pushLog("The labels on your potions shift and twist around!")
         ElseIf d10 = 2 Or d10 = 3 Then
             Dim mp = Int(0.35 * p.getMaxMana())
             p.mana += mp
-            TextEvent.pushAndLog("Your MP is restored by " & mp & "!")
+            TextEvent.pushLog("Your MP is restored by " & mp & "!")
         Else
-            TextEvent.pushAndLog("...but nothing else happens.")
+            TextEvent.pushLog("...but nothing else happens.")
         End If
     End Sub
 

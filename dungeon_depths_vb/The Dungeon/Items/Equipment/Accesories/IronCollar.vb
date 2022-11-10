@@ -47,6 +47,7 @@
 
             p.currTarget.debuffed = True
             TextEvent.pushAndLog("You clamp the collar around the neck of " & p.currTarget.getNameWithTitle & "!")
+            If TypeOf p.currTarget Is FaeQueen Then TextEvent.pushAndLog("""W-what the hell is this?!?"" " & p.currTarget.getNameWithTitle & " exclaims, clearly rattled...")
         Else
             TextEvent.pushAndLog("You lunge in with the collar... but you miss your target!")
         End If

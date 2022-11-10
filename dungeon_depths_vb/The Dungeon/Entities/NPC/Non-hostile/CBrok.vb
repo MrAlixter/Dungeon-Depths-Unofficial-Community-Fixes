@@ -148,7 +148,14 @@
 
     '| - DIALOG - |
     Protected Overrides Function normalDialog(ByRef p As Player)
-        If p.cursed Then
+
+        If p.perks(perk.faecurse) > 1 Then
+            img_index = LocalImgInd.normal
+            Return "Ah, so you've spurned one of the faefolk?" & DDUtils.RNRN &
+                   "An interesting choice... but not necessarily an unwise one.  Far better to anger them than to give up your name." & DDUtils.RNRN &
+                   "Of course, to move forward you'll need to go through the Fae Queen now.  That curse seems made solely to provoke her, if you do battle I would suggest hiding your true name; perhaps her Namestealers may be of assistance there." & DDUtils.RNRN &
+                   "Those former ""Fae Hunters"" may also still carry iron collars.  Iron is most effective against the fae..."
+        ElseIf p.cursed Then
             img_index = LocalImgInd.normal
             Return "Oh, so you're cursed?" & DDUtils.RNRN &
                    "Truely a tragedy, if you'd like I can take care of that for you..."

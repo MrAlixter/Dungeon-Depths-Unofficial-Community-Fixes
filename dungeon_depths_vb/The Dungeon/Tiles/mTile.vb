@@ -44,6 +44,8 @@
     extra10
     extra11
     extra12
+    sk_barrel
+    sk_crate
 End Enum
 Public Enum tSet
     dungeon

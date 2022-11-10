@@ -263,7 +263,6 @@ Public Class Monster
 
         '| --- Fae Curse Enemies --- |
         If floorInd = 13 And Game.player1.perks(perk.faecurse) > -1 Then
-            DDUtils.append(tier, mInd.namestealer_faerie)
             DDUtils.append(tier, mInd.faerie_hunter)
 
             If Game.player1.perks(perk.faecurse) > 1 Then

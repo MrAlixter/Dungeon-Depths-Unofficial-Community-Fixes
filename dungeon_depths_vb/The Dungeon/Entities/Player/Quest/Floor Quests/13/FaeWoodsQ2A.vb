@@ -30,7 +30,7 @@
     End Sub
     Public Overrides Function canGet() As Boolean
         Dim p = Game.player1
-        Return Not getActive() And Game.mDun.numCurrFloor = 13 And p.perks(perk.meetfae1) > 0 And Game.player1.perks(perk.faecurse) < 0 And p.quests(qInd.faewoods1a).getComplete And ((Game.currFloor.chestList.Count < 1 And Int(Rnd() * 3) = 0) Or Game.currFloor.chestList.Count > 0) And Not p.ongoingTFs.contains(tfind.faebimbo) And Not p.ongoingTFs.contains(tfind.faecleric) And Not getComplete() And Not Game.combat_engaged And Not Game.shop_npc_engaged
+        Return Not getActive() And Game.mDun.numCurrFloor = 13 And p.perks(perk.meetfae1) > 0 And Game.player1.perks(perk.faecurse) < 0 And Game.fqueen.pos.X = -1 And p.quests(qInd.faewoods1a).getComplete And ((Game.currFloor.chestList.Count < 1 And Int(Rnd() * 3) = 0) Or Game.currFloor.chestList.Count > 0) And Not p.ongoingTFs.contains(tfind.faebimbo) And Not p.ongoingTFs.contains(tfind.faecleric) And Not getComplete() And Not Game.combat_engaged And Not Game.shop_npc_engaged
     End Function
 
     '| - QUESTIONS - |
@@ -67,8 +67,8 @@
         Select Case True
             Case p.Equals(New Point(48, 56))
                 If Game.player1.perks(perk.faepassangers) = 1 Then Objective.showNPC(ShopNPC.gbl_img.atrs(0).getAt(115), "Your owner is quite grating on the nerves, is she not?")
-                If Game.player1.perks(perk.faepassangers) = 3 And Game.currFloor.mBoard(56, 39).Text = "" Then Objective.showNPC(ShopNPC.gbl_img.atrs(0).getAt(123), "Ah, by all means, take as much time you need...")
-                If Game.player1.perks(perk.faepassangers) = 3 And Game.currFloor.mBoard(56, 39).Text <> "" Then Objective.showNPC(ShopNPC.gbl_img.atrs(0).getAt(123), "Ah, I was wondering when you would show up...", AddressOf FWQ2APassenger3.passenger1)
+                If Game.player1.perks(perk.faepassangers) = 3 Then Objective.showNPC(ShopNPC.gbl_img.atrs(0).getAt(123), "Ah, by all means, take as much time you need...")
+                If Game.player1.perks(perk.faepassangers) = 2 Then Objective.showNPC(ShopNPC.gbl_img.atrs(0).getAt(123), "Ah, I was wondering when you would show up...", AddressOf FWQ2APassenger3.passenger1)
             Case p.Equals(New Point(48, 55))
                 If Game.player1.perks(perk.faepassangers) = 1 Then Objective.showNPC(ShopNPC.gbl_img.atrs(0).getAt(116), "Thank you, horsey!")
             Case p.Equals(New Point(52, 13))
@@ -486,7 +486,7 @@ Friend Class FWQ2APassenger3
     End Sub
 
     Public Overrides Function isComplete() As Boolean
-        If Game.player1.pos.Y < 20 And Not askedPassengers Then
+        If Game.player1.pos.Y < 20 And Not askedPassengers And Game.player1.perks(perk.faepassangers) = 3 Then
             TextEvent.push("As you travel, the fae turns back to the veiled passenger." & DDUtils.RNRN &
                            """S-so, what brings y-you to the woods?""" & DDUtils.RNRN &
                            """Magic..."" the yellow woman replies, with a tiny laugh, ""Why, would you like to become a part of my affairs?""" & DDUtils.RNRN &
