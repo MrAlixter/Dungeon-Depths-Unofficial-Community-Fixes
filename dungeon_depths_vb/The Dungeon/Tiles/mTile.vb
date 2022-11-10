@@ -32,6 +32,20 @@
     mg
     cb
     tt
+    sk_barrel
+    sk_crate
+    sw_barrel
+    sw_mannequin
+    ht_lounge
+    ht_table
+    fv_grill
+    fv_table
+    ws_anvil
+    ws_crate
+    cb_rune
+    cb_pot
+    mg_mannequin
+    mg_mannequin2
     extra1
     extra2
     extra3
@@ -44,8 +58,6 @@
     extra10
     extra11
     extra12
-    sk_barrel
-    sk_crate
 End Enum
 Public Enum tSet
     dungeon
