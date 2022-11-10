@@ -42,8 +42,8 @@
     fv_table
     ws_anvil
     ws_crate
-    cb_rune
-    cb_pot
+    cb_barrel
+    cb_table
     mg_mannequin
     mg_mannequin2
     extra1
