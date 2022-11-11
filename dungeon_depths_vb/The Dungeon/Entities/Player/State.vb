@@ -116,8 +116,7 @@
         p.dickSize = dickSize
         p.buttSize = buttSize
         If p.perks(perk.tfedbyweapon) < 0 Then p.equippedWeapon = equippedWeapon
-        EquipmentDialogBackend.equipArmor(p, equippedArmor.getName)
-        p.equippedArmor = equippedArmor
+        If p.inv.getCountAt(equippedArmor.getAName) > 0 Then EquipmentDialogBackend.equipArmor(p, equippedArmor.getAName)
         p.equippedAcce = equippedAcce
         p.equippedGlasses = equippedGlasses
         p.prt.iArrInd = iArrInd.Clone

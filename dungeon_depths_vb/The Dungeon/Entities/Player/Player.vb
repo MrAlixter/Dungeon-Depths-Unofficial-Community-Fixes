@@ -2857,6 +2857,7 @@ Public Class Player
         Dim out = ""
 
         '| -- Status Indicators -- |
+        If Not Transformation.canBeTFed(Me) Then out += "Your form is unstable..." & DDUtils.RNRN
         If perks(perk.hunger) > -1 Then out += "You haven't eaten anything in a while and are starving." & DDUtils.RNRN
         If perks(perk.thrall) > -1 Then out += "You are under the thrall of a sorcerer/ess, and may not have full control over your body or mind." & DDUtils.RNRN
         If perks(perk.polymorphed) > -1 Then out += "You are under the effects of a temporary polymorph, and will be for " & perks(perk.polymorphed) & " more turns." & DDUtils.RNRN
@@ -2865,7 +2866,6 @@ Public Class Player
         ElseIf perks(perk.astatue) > -1 Then
             out += "You are currently a statue, and won't be able to do much for " & perks(perk.astatue) & " turns." & DDUtils.RNRN
         End If
-
         If perks(perk.lurk) > -1 Then out += "You are currently in a shrub." & DDUtils.RNRN
         If perks(perk.blind) > -1 Then out += "You are blind." & DDUtils.RNRN
         If perks(perk.lightsource) > -1 Then out += "Your entire body is glowing, and will continue to do so for " & perks(perk.lightsource) & " turns." & DDUtils.RNRN
