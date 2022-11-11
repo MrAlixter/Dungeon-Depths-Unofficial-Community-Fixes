@@ -1424,7 +1424,7 @@ Public Class mFloor
         ElseIf floorNumber = 13 Then
             Return {ShopNPCInd.foodvendor, ShopNPCInd.cursebroker}
         Else
-            If Int(Rnd() * 2) = 0 And Game.player1.className.StartsWith("Magical") Then
+            If Game.player1.className.StartsWith("Magical") Then
                 Return {ShopNPCInd.shopkeeper, ShopNPCInd.shadywizard, ShopNPCInd.hypnoteach, ShopNPCInd.weaponsmith, ShopNPCInd.cursebroker, ShopNPCInd.maskmaggirl}
             Else
                 Return {ShopNPCInd.shopkeeper, ShopNPCInd.shadywizard, ShopNPCInd.hypnoteach, ShopNPCInd.foodvendor, ShopNPCInd.weaponsmith, ShopNPCInd.cursebroker}
@@ -1436,7 +1436,7 @@ Public Class mFloor
         mBoard(npcPoint.Y, npcPoint.X).ForeColor = Color.FromArgb(45, 45, 45)
         mBoard(npcPoint.Y, npcPoint.X).Text = "$"
 
-        n.buildShopArea(Me)
+        If Not nonRandomFloors.Contains(floorNumber) Then n.buildShopArea(Me)
     End Sub
     Sub placeKeyChest()
         Dim ChestP = randPoint()

@@ -62,4 +62,8 @@
         Game.player1.setPlayerImage()
         Game.drawBoard()
     End Sub
+
+    '| - MISC - |
+    Public Overrides Sub buildShopArea(ByRef floor As mFloor)
+    End Sub
 End Class

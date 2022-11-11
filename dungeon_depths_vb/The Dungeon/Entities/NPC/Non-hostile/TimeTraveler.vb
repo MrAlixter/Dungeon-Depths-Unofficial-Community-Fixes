@@ -60,4 +60,8 @@
     Public Overrides Function hitBySpell() As String
         Return "Oh, hey, it's you.  Weren't you supposed to be locked up?"
     End Function
+
+    '| - MISC - |
+    Public Overrides Sub buildShopArea(ByRef floor As mFloor)
+    End Sub
 End Class

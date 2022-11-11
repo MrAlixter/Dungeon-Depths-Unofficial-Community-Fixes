@@ -88,6 +88,20 @@
             Return append(max, l)
         End If
     End Function
+    Public Shared Function getClosest(ByVal i As Integer, ByVal arr() As Integer) As Integer
+        Dim dif As Integer = 9999
+        Dim closest As Integer = -1
+
+        For Each a In arr
+            Dim d = Math.Abs(i - a)
+            If d < dif Then
+                closest = a
+                dif = d
+            End If
+        Next
+
+        Return closest
+    End Function
 
     '|IARRIND|
     Public Shared Function cloneIArrInd(ByVal tup As Tuple(Of Integer, Boolean, Boolean)) As Tuple(Of Integer, Boolean, Boolean)

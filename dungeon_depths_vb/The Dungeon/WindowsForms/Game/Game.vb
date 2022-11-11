@@ -32,11 +32,12 @@ Public Class Game
     Public currFloor As mFloor
 
     '| -- Board Front End -- |  
-    Private Const VIEW_HEIGHT As Integer = 15
-    Private Const VIEW_WIDTH As Integer = 23
+    Private view_height As Integer = -1
+    Private view_width As Integer = -1
+    Private tile_size As Integer = -1
     Dim board As Image                                  '(NOT SAVED)
     Public mPics(,) As PictureBox                       '(NOT SAVED)
-    Dim viewArray(VIEW_HEIGHT, VIEW_WIDTH) As Integer   '(NOT SAVED)
+    Dim viewArray(,) As Integer                         '(NOT SAVED)
     Public last_tile As Tuple(Of String, Point)         '(NOT SAVED)
 
     '| -- Dungeon Settings -- |
@@ -474,20 +475,44 @@ Public Class Game
         'Dim endTime = DDDateTime.getTimeNow()
         'Console.WriteLine(" - DRAW BOARD TIME: " + (endTime - startTime).ToString())
     End Sub
-    Sub drawBoardView()
-        Dim x_size As Integer = Int(30 * (CSng(Me.Size.Width) / iWidth))
-        Dim y_size As Integer = Int(30 * (CSng(Me.Size.Height) / iHeight))
+    Private Function getTileSize() As Integer
+        If tile_size < 1 Then
+            Dim s As Integer = Int(30 * (CSng(Me.Size.Width) / iWidth))
 
-        Dim board_width = (x_size * VIEW_WIDTH)
-        Dim board_height = (x_size * VIEW_HEIGHT)
+            tile_size = DDUtils.getClosest(s, DDConst.TILE_SIZES)
+        End If
+
+        Return tile_size
+    End Function
+    Private Function getViewHeight() As Integer
+        If view_height < 1 Then
+            view_height = Math.Floor((450 * (CSng(Me.Size.Height) / iHeight)) / getTileSize())
+        End If
+
+        Return view_height
+    End Function
+    Private Function getViewWidth() As Integer
+        If view_width < 1 Then
+            view_width = Math.Floor((690 * (CSng(Me.Size.Width) / iWidth)) / getTileSize())
+        End If
+
+        Return view_width
+    End Function
+    Sub drawBoardView()
+        Dim x_size As Integer = getTileSize()
+        Dim y_size As Integer = getTileSize()
+
+        Dim board_width = (x_size * getViewWidth())
+        Dim board_height = (x_size * getViewHeight())
         Dim board As Bitmap = New Bitmap(board_width, board_height)
 
         Dim g As Graphics = Graphics.FromImage(board)
         g.InterpolationMode = Drawing2D.InterpolationMode.NearestNeighbor
         g.CompositingMode = Drawing2D.CompositingMode.SourceOver
+        g.CompositingQuality = Drawing2D.CompositingQuality.HighSpeed
 
-        For y As Integer = 0 To VIEW_HEIGHT - 1
-            For x As Integer = 0 To VIEW_WIDTH - 1
+        For y As Integer = 0 To getViewHeight() - 1
+            For x As Integer = 0 To getViewWidth() - 1
                 Select Case mDun.numCurrFloor
                     Case 6, 7, 8, 9, 10, 11, 12
                         g.DrawImage(getForestTileImg(x, y, viewArray), x_size * x, y_size * y, x_size, y_size)
@@ -560,21 +585,23 @@ Public Class Game
         'Console.WriteLine("- VIEW BUBBLE TIME: " + (endTime - startTime).ToString())
     End Sub
     Sub zoom()
-        'zoom interperates the data around the player from mBoard, and displays it on mPics
-
         'Dim startTime As Double = DDDateTime.getTimeNow()
+
         Dim x As Integer = 0
         Dim y As Integer = 0
-        For indY = -7 To 7
+
+        For indY = -Math.Floor(getViewHeight() / 2) To Math.Ceiling(getViewHeight() / 2)
             x = 0
-            For indX = -11 To 11
+            For indX = -Math.Floor(getViewWidth() / 2) To Math.Ceiling(getViewWidth() / 2)
                 If (player1.pos.Y + indY >= 0 And player1.pos.Y + indY < currFloor.mBoardHeight) And (player1.pos.X + indX >= 0 And player1.pos.X + indX < currFloor.mBoardWidth) Then
                     'get the tile's text/tag
+
                     'Console.WriteLine(player1.pos.X + indX & ", " & player1.pos.Y + indY)
                     Dim tileText As String = currFloor.mBoard(player1.pos.Y + indY, player1.pos.X + indX).Text
                     Dim tileTag As Integer = currFloor.mBoard(player1.pos.Y + indY, player1.pos.X + indX).Tag
 
                     viewArray(y, x) = tileTag
+
                     If tileTag = 2 Or DDConst.ALWAYS_REDRAWN_CHARS.Contains(tileText) Then
                         'get the tile to display
                         viewArray(y, x) = getTileToDisplay(player1.pos.X + indX, player1.pos.Y + indY, tileText, tileTag)
@@ -660,6 +687,20 @@ Public Class Game
         '34 = note
         '35 = fae queen
         '36 = generic NPC
+        '37 = sk_barrel
+        '38 = sk_crate
+        '39 = sw_barrel
+        '40 = sw_mannequin
+        '41 = ht_lounge
+        '42 = ht_table
+        '43 = fv_grill
+        '44 = fv_table
+        '45 = ws_anvil
+        '46 = ws_crate
+        '47 = cb_barrel
+        '48 = cb_table
+        '49 = mg_mannequin
+        '50 = mg_mannequin2
 
         Select Case tileText
             Case ""
@@ -736,6 +777,34 @@ Public Class Game
                 Return 34
             Case "a"
                 Return 36
+            Case "¢"
+                Return 37
+            Case "£"
+                Return 38
+            Case "¤"
+                Return 39
+            Case "¥"
+                Return 40
+            Case "¦"
+                Return 41
+            Case "§"
+                Return 42
+            Case "±"
+                Return 43
+            Case "µ"
+                Return 44
+            Case "¡"
+                Return 45
+            Case "¶"
+                Return 46
+            Case "¿"
+                Return 47
+            Case "×"
+                Return 48
+            Case "ø"
+                Return 49
+            Case "æ"
+                Return 50
         End Select
 
         Return 2
@@ -784,6 +853,34 @@ Public Class Game
                 Return mTile.imgLib.getImg(tSet.dungeon, tile.player)
             Case 34
                 Return mTile.imgLib.getImg(tSet.dungeon, tile.note)
+            Case 37
+                Return mTile.imgLib.getImg(tSet.dungeon, tile.sk_barrel)
+            Case 38
+                Return mTile.imgLib.getImg(tSet.dungeon, tile.sk_crate)
+            Case 39
+                Return mTile.imgLib.getImg(tSet.dungeon, tile.sw_barrel)
+            Case 40
+                Return mTile.imgLib.getImg(tSet.dungeon, tile.sw_mannequin)
+            Case 41
+                Return mTile.imgLib.getImg(tSet.dungeon, tile.ht_lounge)
+            Case 42
+                Return mTile.imgLib.getImg(tSet.dungeon, tile.ht_table)
+            Case 43
+                Return mTile.imgLib.getImg(tSet.dungeon, tile.fv_grill)
+            Case 44
+                Return mTile.imgLib.getImg(tSet.dungeon, tile.fv_table)
+            Case 45
+                Return mTile.imgLib.getImg(tSet.dungeon, tile.ws_anvil)
+            Case 46
+                Return mTile.imgLib.getImg(tSet.dungeon, tile.ws_crate)
+            Case 47
+                Return mTile.imgLib.getImg(tSet.dungeon, tile.cb_barrel)
+            Case 48
+                Return mTile.imgLib.getImg(tSet.dungeon, tile.cb_table)
+            Case 49
+                Return mTile.imgLib.getImg(tSet.dungeon, tile.mg_mannequin)
+            Case 50
+                Return mTile.imgLib.getImg(tSet.dungeon, tile.mg_mannequin2)
             Case Else
                 Return mTile.imgLib.getImg(tSet.dungeon, tile.wall)
         End Select
@@ -852,6 +949,34 @@ Public Class Game
                 Return mTile.imgLib.getImg(tSet.forest, tile.extra5)
             Case 34
                 Return mTile.imgLib.getImg(tSet.forest, tile.note)
+            Case 37
+                Return mTile.imgLib.getImg(tSet.forest, tile.sk_barrel)
+            Case 38
+                Return mTile.imgLib.getImg(tSet.forest, tile.sk_crate)
+            Case 39
+                Return mTile.imgLib.getImg(tSet.forest, tile.sw_barrel)
+            Case 40
+                Return mTile.imgLib.getImg(tSet.forest, tile.sw_mannequin)
+            Case 41
+                Return mTile.imgLib.getImg(tSet.forest, tile.ht_lounge)
+            Case 42
+                Return mTile.imgLib.getImg(tSet.forest, tile.ht_table)
+            Case 43
+                Return mTile.imgLib.getImg(tSet.forest, tile.fv_grill)
+            Case 44
+                Return mTile.imgLib.getImg(tSet.forest, tile.fv_table)
+            Case 45
+                Return mTile.imgLib.getImg(tSet.forest, tile.ws_anvil)
+            Case 46
+                Return mTile.imgLib.getImg(tSet.forest, tile.ws_crate)
+            Case 47
+                Return mTile.imgLib.getImg(tSet.forest, tile.cb_barrel)
+            Case 48
+                Return mTile.imgLib.getImg(tSet.forest, tile.cb_table)
+            Case 49
+                Return mTile.imgLib.getImg(tSet.forest, tile.mg_mannequin)
+            Case 50
+                Return mTile.imgLib.getImg(tSet.forest, tile.mg_mannequin2)
             Case Else
                 Return mTile.imgLib.getImg(tSet.dungeon, tile.wall)
         End Select
@@ -888,6 +1013,34 @@ Public Class Game
                 Return mTile.imgLib.getImg(tSet.space, tile.player)
             Case 34
                 Return mTile.imgLib.getImg(tSet.space, tile.note)
+            Case 37
+                Return mTile.imgLib.getImg(tSet.space, tile.sk_barrel)
+            Case 38
+                Return mTile.imgLib.getImg(tSet.space, tile.sk_crate)
+            Case 39
+                Return mTile.imgLib.getImg(tSet.space, tile.sw_barrel)
+            Case 40
+                Return mTile.imgLib.getImg(tSet.space, tile.sw_mannequin)
+            Case 41
+                Return mTile.imgLib.getImg(tSet.space, tile.ht_lounge)
+            Case 42
+                Return mTile.imgLib.getImg(tSet.space, tile.ht_table)
+            Case 43
+                Return mTile.imgLib.getImg(tSet.space, tile.fv_grill)
+            Case 44
+                Return mTile.imgLib.getImg(tSet.space, tile.fv_table)
+            Case 45
+                Return mTile.imgLib.getImg(tSet.space, tile.ws_anvil)
+            Case 46
+                Return mTile.imgLib.getImg(tSet.space, tile.ws_crate)
+            Case 47
+                Return mTile.imgLib.getImg(tSet.space, tile.cb_barrel)
+            Case 48
+                Return mTile.imgLib.getImg(tSet.space, tile.cb_table)
+            Case 49
+                Return mTile.imgLib.getImg(tSet.space, tile.mg_mannequin)
+            Case 50
+                Return mTile.imgLib.getImg(tSet.space, tile.mg_mannequin2)
             Case Else
                 Return mTile.imgLib.getImg(tSet.dungeon, tile.wall)
         End Select
@@ -920,6 +1073,34 @@ Public Class Game
                 Return mTile.imgLib.getImg(tSet.legacy, tile.player)
             Case 34
                 Return mTile.imgLib.getImg(tSet.legacy, tile.note)
+            Case 37
+                Return mTile.imgLib.getImg(tSet.legacy, tile.sk_barrel)
+            Case 38
+                Return mTile.imgLib.getImg(tSet.legacy, tile.sk_crate)
+            Case 39
+                Return mTile.imgLib.getImg(tSet.legacy, tile.sw_barrel)
+            Case 40
+                Return mTile.imgLib.getImg(tSet.legacy, tile.sw_mannequin)
+            Case 41
+                Return mTile.imgLib.getImg(tSet.legacy, tile.ht_lounge)
+            Case 42
+                Return mTile.imgLib.getImg(tSet.legacy, tile.ht_table)
+            Case 43
+                Return mTile.imgLib.getImg(tSet.legacy, tile.fv_grill)
+            Case 44
+                Return mTile.imgLib.getImg(tSet.legacy, tile.fv_table)
+            Case 45
+                Return mTile.imgLib.getImg(tSet.legacy, tile.ws_anvil)
+            Case 46
+                Return mTile.imgLib.getImg(tSet.legacy, tile.ws_crate)
+            Case 47
+                Return mTile.imgLib.getImg(tSet.legacy, tile.cb_barrel)
+            Case 48
+                Return mTile.imgLib.getImg(tSet.legacy, tile.cb_table)
+            Case 49
+                Return mTile.imgLib.getImg(tSet.legacy, tile.mg_mannequin)
+            Case 50
+                Return mTile.imgLib.getImg(tSet.legacy, tile.mg_mannequin2)
             Case Else
                 Return mTile.imgLib.getImg(tSet.dungeon, tile.wall)
         End Select
@@ -964,6 +1145,34 @@ Public Class Game
                 Return mTile.imgLib.getImg(tSet.fogforest, tile.extra1)
             Case 36
                 Return mTile.imgLib.getImg(tSet.fogforest, tile.extra4)
+            Case 37
+                Return mTile.imgLib.getImg(tSet.fogforest, tile.sk_barrel)
+            Case 38
+                Return mTile.imgLib.getImg(tSet.fogforest, tile.sk_crate)
+            Case 39
+                Return mTile.imgLib.getImg(tSet.fogforest, tile.sw_barrel)
+            Case 40
+                Return mTile.imgLib.getImg(tSet.fogforest, tile.sw_mannequin)
+            Case 41
+                Return mTile.imgLib.getImg(tSet.fogforest, tile.ht_lounge)
+            Case 42
+                Return mTile.imgLib.getImg(tSet.fogforest, tile.ht_table)
+            Case 43
+                Return mTile.imgLib.getImg(tSet.fogforest, tile.fv_grill)
+            Case 44
+                Return mTile.imgLib.getImg(tSet.fogforest, tile.fv_table)
+            Case 45
+                Return mTile.imgLib.getImg(tSet.fogforest, tile.ws_anvil)
+            Case 46
+                Return mTile.imgLib.getImg(tSet.fogforest, tile.ws_crate)
+            Case 47
+                Return mTile.imgLib.getImg(tSet.fogforest, tile.cb_barrel)
+            Case 48
+                Return mTile.imgLib.getImg(tSet.fogforest, tile.cb_table)
+            Case 49
+                Return mTile.imgLib.getImg(tSet.fogforest, tile.mg_mannequin)
+            Case 50
+                Return mTile.imgLib.getImg(tSet.fogforest, tile.mg_mannequin2)
             Case Else
                 Return mTile.imgLib.getImg(tSet.dungeon, tile.wall)
         End Select
@@ -1012,6 +1221,34 @@ Public Class Game
                 Return mTile.imgLib.getImg(tSet.hub, tile.player)
             Case 34
                 Return mTile.imgLib.getImg(tSet.hub, tile.note)
+            Case 37
+                Return mTile.imgLib.getImg(tSet.hub, tile.sk_barrel)
+            Case 38
+                Return mTile.imgLib.getImg(tSet.hub, tile.sk_crate)
+            Case 39
+                Return mTile.imgLib.getImg(tSet.hub, tile.sw_barrel)
+            Case 40
+                Return mTile.imgLib.getImg(tSet.hub, tile.sw_mannequin)
+            Case 41
+                Return mTile.imgLib.getImg(tSet.hub, tile.ht_lounge)
+            Case 42
+                Return mTile.imgLib.getImg(tSet.hub, tile.ht_table)
+            Case 43
+                Return mTile.imgLib.getImg(tSet.hub, tile.fv_grill)
+            Case 44
+                Return mTile.imgLib.getImg(tSet.hub, tile.fv_table)
+            Case 45
+                Return mTile.imgLib.getImg(tSet.hub, tile.ws_anvil)
+            Case 46
+                Return mTile.imgLib.getImg(tSet.hub, tile.ws_crate)
+            Case 47
+                Return mTile.imgLib.getImg(tSet.hub, tile.cb_barrel)
+            Case 48
+                Return mTile.imgLib.getImg(tSet.hub, tile.cb_table)
+            Case 49
+                Return mTile.imgLib.getImg(tSet.hub, tile.mg_mannequin)
+            Case 50
+                Return mTile.imgLib.getImg(tSet.hub, tile.mg_mannequin2)
             Case Else
                 Return mTile.imgLib.getImg(tSet.dungeon, tile.wall)
         End Select
@@ -1044,6 +1281,34 @@ Public Class Game
                 Return mTile.imgLib.getImg(tSet.desert, tile.player)
             Case 34
                 Return mTile.imgLib.getImg(tSet.desert, tile.note)
+            Case 37
+                Return mTile.imgLib.getImg(tSet.desert, tile.sk_barrel)
+            Case 38
+                Return mTile.imgLib.getImg(tSet.desert, tile.sk_crate)
+            Case 39
+                Return mTile.imgLib.getImg(tSet.desert, tile.sw_barrel)
+            Case 40
+                Return mTile.imgLib.getImg(tSet.desert, tile.sw_mannequin)
+            Case 41
+                Return mTile.imgLib.getImg(tSet.desert, tile.ht_lounge)
+            Case 42
+                Return mTile.imgLib.getImg(tSet.desert, tile.ht_table)
+            Case 43
+                Return mTile.imgLib.getImg(tSet.desert, tile.fv_grill)
+            Case 44
+                Return mTile.imgLib.getImg(tSet.desert, tile.fv_table)
+            Case 45
+                Return mTile.imgLib.getImg(tSet.desert, tile.ws_anvil)
+            Case 46
+                Return mTile.imgLib.getImg(tSet.desert, tile.ws_crate)
+            Case 47
+                Return mTile.imgLib.getImg(tSet.desert, tile.cb_barrel)
+            Case 48
+                Return mTile.imgLib.getImg(tSet.desert, tile.cb_table)
+            Case 49
+                Return mTile.imgLib.getImg(tSet.desert, tile.mg_mannequin)
+            Case 50
+                Return mTile.imgLib.getImg(tSet.desert, tile.mg_mannequin2)
             Case Else
                 Return mTile.imgLib.getImg(tSet.dungeon, tile.wall)
         End Select
@@ -1096,6 +1361,34 @@ Public Class Game
                 Return mTile.imgLib.getImg(tSet.caveh, tile.extra4)
             Case 34
                 Return mTile.imgLib.getImg(tSet.caveh, tile.note)
+            Case 37
+                Return mTile.imgLib.getImg(tSet.caveh, tile.sk_barrel)
+            Case 38
+                Return mTile.imgLib.getImg(tSet.caveh, tile.sk_crate)
+            Case 39
+                Return mTile.imgLib.getImg(tSet.caveh, tile.sw_barrel)
+            Case 40
+                Return mTile.imgLib.getImg(tSet.caveh, tile.sw_mannequin)
+            Case 41
+                Return mTile.imgLib.getImg(tSet.caveh, tile.ht_lounge)
+            Case 42
+                Return mTile.imgLib.getImg(tSet.caveh, tile.ht_table)
+            Case 43
+                Return mTile.imgLib.getImg(tSet.caveh, tile.fv_grill)
+            Case 44
+                Return mTile.imgLib.getImg(tSet.caveh, tile.fv_table)
+            Case 45
+                Return mTile.imgLib.getImg(tSet.caveh, tile.ws_anvil)
+            Case 46
+                Return mTile.imgLib.getImg(tSet.caveh, tile.ws_crate)
+            Case 47
+                Return mTile.imgLib.getImg(tSet.caveh, tile.cb_barrel)
+            Case 48
+                Return mTile.imgLib.getImg(tSet.caveh, tile.cb_table)
+            Case 49
+                Return mTile.imgLib.getImg(tSet.caveh, tile.mg_mannequin)
+            Case 50
+                Return mTile.imgLib.getImg(tSet.caveh, tile.mg_mannequin2)
             Case Else
                 Return mTile.imgLib.getImg(tSet.caveh, tile.wall)
         End Select
@@ -3541,7 +3834,16 @@ Public Class Game
     End Sub
     Private Sub Game_Resize()
         DDUtils.resizeForm(Me, iHeight, iWidth)
+
         If Not player1 Is Nothing Then player1.UIupdate()
+
+        tile_size = -1
+        view_height = -1
+        view_width = -1
+
+        getTileSize()
+        ReDim viewArray(getViewHeight(), getViewWidth())
+
         Me.CenterToScreen()
     End Sub
     Private Sub CreateMapAndImages()

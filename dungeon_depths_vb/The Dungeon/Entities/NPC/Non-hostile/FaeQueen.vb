@@ -374,8 +374,9 @@
         TextEvent.pushAndLog((DDUtils.capitalizeFirst(m.getNameWithTitle) & " awaits!"))
 
         If Game.player1.perks(perk.faecurse) > -1 And Not Game.cbrok.isDead Then
-            TextEvent.push("You seem to be under some sort of fae curse... Is this even a fight you can win?")
-            Game.cbrok.pos = New Point(18, 36)
+            TextEvent.push("You seem to be under some sort of fae curse...  Is this even a fight you can win?" & DDUtils.RNRN &
+                           "It might be better to run away for now...")
+            Game.cbrok.pos = New Point(4, 29)
 
             Game.player1.perks(perk.faecurse) += 1
 
@@ -587,5 +588,9 @@
         Game.lblEvent.BringToFront()
         Game.lblEvent.Location = New Point((250 * Game.Size.Width / 688) - (Game.lblEvent.Size.Width / 2), 65 * Game.Size.Width / 688)
         Game.lblEvent.Visible = True
+    End Sub
+
+    '| - MISC - |
+    Public Overrides Sub buildShopArea(ByRef floor As mFloor)
     End Sub
 End Class

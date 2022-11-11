@@ -222,4 +222,8 @@
     Public Overrides Function postPurchaseDialog(ByRef p As Player) As Object
         Return "See ya around..."
     End Function
+
+      '| - MISC - |
+    Public Overrides Sub buildShopArea(ByRef floor As mFloor)
+    End Sub
 End Class
