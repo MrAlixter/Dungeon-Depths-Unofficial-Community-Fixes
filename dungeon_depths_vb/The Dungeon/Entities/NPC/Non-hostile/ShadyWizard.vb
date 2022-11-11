@@ -225,5 +225,18 @@
 
       '| - MISC - |
     Public Overrides Sub buildShopArea(ByRef floor As mFloor)
+        MyBase.buildShopArea(floor)
+
+        Dim mannequins = {New Point(pos.X - 1, pos.Y)}
+
+        Dim barrels = {New Point(pos.X + 1, pos.Y)}
+
+        For Each pt In mannequins
+            If floor.ptInBounds(pt) Then floor.mBoard(pt.Y, pt.X).Text = "¥"
+        Next
+
+        For Each pt In barrels
+            If floor.ptInBounds(pt) Then floor.mBoard(pt.Y, pt.X).Text = "¤"
+        Next
     End Sub
 End Class
