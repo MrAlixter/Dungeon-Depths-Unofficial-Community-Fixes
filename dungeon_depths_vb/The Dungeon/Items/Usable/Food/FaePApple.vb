@@ -3,10 +3,10 @@
 
     Public Const ITEM_NAME As String = "Apple​​"
 
-    Private soul_name As String
-    Private b_size As Integer
-    Private h_color As Color
-    Private s_color As Color
+    Private Shared soul_name As String
+    Private Shared b_size As Integer
+    Private Shared h_color As Color
+    Private Shared s_color As Color
 
     Sub New()
         '|ID Info|
@@ -25,11 +25,13 @@
         '|Description|
         setDesc("An ""normal"" purple apple with sinister aura that seems out of line with what you'd expect of fruit.")
 
-        If DDUtils.fileExistsWC("items\", "*_" & id & ".itm") Then loadSavedItem(DDUtils.getSessionID(DDUtils.getPathUsingWC("items\", "*_" & id & ".itm")), id)
+        If DDUtils.fileExistsWC("items\", "*_" & id & ".itm") And soul_name = "" Then loadSavedItem(DDUtils.getSessionID(DDUtils.getPathUsingWC("items\", "*_" & id & ".itm")), id)
     End Sub
 
     Public Overrides Function getTier() As Integer
-        Return If(soul_name = "" Or Game.player1.inv.getCountAt(ITEM_NAME) > 0, Nothing, 2)
+        If soul_name = "" Or Game.player1.inv.getCountAt(ITEM_NAME) > 0 Then Return Nothing
+
+        Return 2
     End Function
 
     Public Overrides Sub effect(ByRef p As Player)

@@ -642,6 +642,11 @@
             For Each p In potions
                 If p.getName = n Then Return p
             Next
+
+            If n.Equals(Hyacinth.TFED_NAME) Then Return item(Hyacinth.ITEM_NAME)
+            If n.Equals(Rose.TFED_NAME) Then Return item(Rose.ITEM_NAME)
+            If n.Equals(Tulip.TFED_NAME) Then Return item(Tulip.ITEM_NAME)
+
             Return Nothing
         End If
     End Function

@@ -125,6 +125,7 @@
     Public Shared Sub sevenTailsFight()
         If Game.combat_engaged Then Game.fromCombat()
         If Game.shop_npc_engaged Then Game.hideNPCButtons()
+        Game.npc_list.Clear()
         Game.picNPC.Visible = False
         Game.lblEvent.Visible = False
 

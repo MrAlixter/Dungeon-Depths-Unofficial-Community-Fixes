@@ -3,21 +3,21 @@
 
     Public Const ITEM_NAME As String = "Fae-Touched_Lingerie"
 
-    Private soul_name As String
-    Private h_color As Color
+    Private Shared soul_name As String
+    Private Shared h_color As Color
 
-    Public Shared img_ind_bsizeneg1 As Tuple(Of Integer, Boolean, Boolean) = New Tuple(Of Integer, Boolean, Boolean)(0, False, False)
-    Public Shared img_ind_bsize0 As Tuple(Of Integer, Boolean, Boolean) = New Tuple(Of Integer, Boolean, Boolean)(0, False, False)
-    Public Shared img_ind_bsize1 As Tuple(Of Integer, Boolean, Boolean) = New Tuple(Of Integer, Boolean, Boolean)(0, False, False)
-    Public Shared img_ind_bsize2 As Tuple(Of Integer, Boolean, Boolean) = New Tuple(Of Integer, Boolean, Boolean)(0, False, False)
-    Public Shared img_ind_bsize3 As Tuple(Of Integer, Boolean, Boolean) = New Tuple(Of Integer, Boolean, Boolean)(0, False, False)
+    Private Shared img_ind_bsizeneg1 As Tuple(Of Integer, Boolean, Boolean) = New Tuple(Of Integer, Boolean, Boolean)(0, False, False)
+    Private Shared img_ind_bsize0 As Tuple(Of Integer, Boolean, Boolean) = New Tuple(Of Integer, Boolean, Boolean)(0, False, False)
+    Private Shared img_ind_bsize1 As Tuple(Of Integer, Boolean, Boolean) = New Tuple(Of Integer, Boolean, Boolean)(0, False, False)
+    Private Shared img_ind_bsize2 As Tuple(Of Integer, Boolean, Boolean) = New Tuple(Of Integer, Boolean, Boolean)(0, False, False)
+    Private Shared img_ind_bsize3 As Tuple(Of Integer, Boolean, Boolean) = New Tuple(Of Integer, Boolean, Boolean)(0, False, False)
 
-    Public Shared img_ind_usizeneg1 As Tuple(Of Integer, Boolean, Boolean) = New Tuple(Of Integer, Boolean, Boolean)(0, False, False)
-    Public Shared img_ind_usize0 As Tuple(Of Integer, Boolean, Boolean) = New Tuple(Of Integer, Boolean, Boolean)(0, False, False)
-    Public Shared img_ind_usize1 As Tuple(Of Integer, Boolean, Boolean) = New Tuple(Of Integer, Boolean, Boolean)(0, False, False)
-    Public Shared img_ind_usize2 As Tuple(Of Integer, Boolean, Boolean) = New Tuple(Of Integer, Boolean, Boolean)(0, False, False)
-    Public Shared img_ind_usize3 As Tuple(Of Integer, Boolean, Boolean) = New Tuple(Of Integer, Boolean, Boolean)(0, False, False)
-    Public Shared img_ind_usize4 As Tuple(Of Integer, Boolean, Boolean) = New Tuple(Of Integer, Boolean, Boolean)(0, False, False)
+    Private Shared img_ind_usizeneg1 As Tuple(Of Integer, Boolean, Boolean) = New Tuple(Of Integer, Boolean, Boolean)(0, False, False)
+    Private Shared img_ind_usize0 As Tuple(Of Integer, Boolean, Boolean) = New Tuple(Of Integer, Boolean, Boolean)(0, False, False)
+    Private Shared img_ind_usize1 As Tuple(Of Integer, Boolean, Boolean) = New Tuple(Of Integer, Boolean, Boolean)(0, False, False)
+    Private Shared img_ind_usize2 As Tuple(Of Integer, Boolean, Boolean) = New Tuple(Of Integer, Boolean, Boolean)(0, False, False)
+    Private Shared img_ind_usize3 As Tuple(Of Integer, Boolean, Boolean) = New Tuple(Of Integer, Boolean, Boolean)(0, False, False)
+    Private Shared img_ind_usize4 As Tuple(Of Integer, Boolean, Boolean) = New Tuple(Of Integer, Boolean, Boolean)(0, False, False)
 
     Sub New()
         '|ID Info|
@@ -54,7 +54,21 @@
         setDesc("A slinky set of underwear, radiating with magical energy.  Stitched into the bustier is the name """"..." & DDUtils.RNRN &
                 getSizeInformation() & DDUtils.RNRN &
                 getStatInformation())
+
+        If DDUtils.fileExistsWC("items\", "*_" & id & ".itm") And soul_name = "" Then loadSavedItem(DDUtils.getSessionID(DDUtils.getPathUsingWC("items\", "*_" & id & ".itm")), id)
     End Sub
+
+    Public Overrides Function getTier() As Integer
+        If soul_name = "" Or Game.player1.inv.getCountAt(ITEM_NAME) > 0 Then Return Nothing
+
+        Return 2
+    End Function
+
+    Public Overrides Function getDesc() As Object
+        Return "A slinky set of underwear, radiating with magical energy.  Stitched into the bustier is the name """ & soul_name & """..." & DDUtils.RNRN &
+                getSizeInformation() & DDUtils.RNRN &
+                getStatInformation()
+    End Function
 
     Public Overrides Sub onEquip(ByRef p As Player)
         MyBase.onEquip(p)
@@ -65,12 +79,6 @@
             TextEvent.pushAndLog("The lingerie crumbles to dust...")
         End If
     End Sub
-
-    Public Overrides Function getDesc() As Object
-        Return "A slinky set of underwear, radiating with magical energy.  Stitched into the bustier is the name """ & soul_name & """..." & DDUtils.RNRN &
-                getSizeInformation() & DDUtils.RNRN &
-                getStatInformation()
-    End Function
 
     Public Overrides Sub toSavedItem(ByRef ent As Entity)
         If ent.getPlayer Is Nothing Then
@@ -120,10 +128,6 @@
 
         makeClothesImg()
     End Sub
-
-    Public Overrides Function getTier() As Integer
-        Return If(soul_name = "" Or Game.player1.inv.getCountAt(ITEM_NAME) > 0, Nothing, 2)
-    End Function
 
     Public Sub makeClothesImg()
         Dim img_bneg1 = Portrait.hairRecolor(Portrait.imgLib.atrs(pInd.clothes).getAt(bsizeneg1), h_color)

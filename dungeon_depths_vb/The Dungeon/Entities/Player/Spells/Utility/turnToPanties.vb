@@ -18,8 +18,9 @@
         End If
 
         MyBase.getCaster.inv.setCount(PPanties.ITEM_NAME, 1)
-
+        MyBase.getCaster.inv.invNeedsUDate = True
         MyBase.getCaster.UIupdate()
+        MyBase.getTarget.despawn("cupcake")
     End Sub
 
     Public Overrides Function getDesc(ByRef c As Player, ByRef t As NPC) As Object

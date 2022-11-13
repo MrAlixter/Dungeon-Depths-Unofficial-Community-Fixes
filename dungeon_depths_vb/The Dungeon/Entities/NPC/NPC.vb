@@ -238,20 +238,20 @@ Public Class NPC
         c1 = DDConst.BASE_CHEST.Create(inv, pos)
         If inv.getSum > 0 Then c1.open()
 
-        'will update
-        If Int(Rnd() * 20) < 2 Then
-            TextEvent.pushLog("Your victory makes you feel more confident.")
-            p.will += 1
-            p.UIupdate()
-        End If
-
         'cleanup of the monster
         isDead = True
         endBoss()
         If p.perks(perk.cynnsq1ct2) > -1 Then p.perks(perk.cynnsq1ct2) += 1
         Game.fromCombat()
         Game.npc_list.Remove(Me)
-        TextEvent.pushLog("You've defeated the " & name & "!  +" & xp_value & " XP!")
+        TextEvent.push2ndLastLog("You've defeated the " & name & "!  +" & xp_value & " XP!")
+
+        'will update
+        If Int(Rnd() * 20) < 2 Then
+            TextEvent.pushLog("Your victory makes you feel more confident.")
+            p.will += 1
+            p.UIupdate()
+        End If
 
         'monster transformations
         p.ongoingTFs.remove(tfind.neko)
@@ -413,11 +413,16 @@ Public Class NPC
         TextEvent.pushAndLog(CStr(target.getName & " got hit! Critical hit! -" & dmg * 2 & " health!"))
     End Sub
     'taking damage
-    Public Overrides Sub takeDMG(ByVal dmg As Integer, ByRef source As Entity)
-        MyBase.takeDMG(dmg, source)
-        If Not source Is Nothing Then currTarget = source
-        Game.lblEHealthChange.Tag -= dmg
-    End Sub
+    Public Overrides Function takeDMG(ByRef dmg As Integer, ByRef source As Entity) As Boolean
+        Dim took_damage = MyBase.takeDMG(dmg, source)
+
+        If took_damage Then
+            If Not source Is Nothing Then currTarget = source
+            Game.lblEHealthChange.Tag -= dmg
+        End If
+
+        Return took_damage
+    End Function
     Public Overridable Function reactToSpell(ByVal spell As String) As Boolean
         Return True
     End Function

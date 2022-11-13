@@ -51,7 +51,7 @@
             Exit Sub
         End If
 
-        If p.className.Equals("Thrall") Then
+        If p.className.Equals("Thrall") Or p.equippedAcce.getCursed(p) Then
             TextEvent.push("Despite your fatigue, you are able to roll out of the way of the hostile " & If(pronoun.Equals("he"), "sorcerer", "sorceress") & "'s grasp...")
             Exit Sub
         End If

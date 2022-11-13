@@ -3,12 +3,12 @@
 
     Public Const ITEM_NAME As String = "Fae-Touched_Earrings"
 
-    Private soul_name As String
-    Private b_size As Integer
-    Private d_size As Integer
-    Private a_size As Integer
-    Private h_color As Color
-    Private s_color As Color
+    Private Shared soul_name As String
+    Private Shared b_size As Integer
+    Private Shared d_size As Integer
+    Private Shared a_size As Integer
+    Private Shared h_color As Color
+    Private Shared s_color As Color
 
     Sub New()
         '|ID Info|
@@ -32,11 +32,13 @@
         setDesc("A shiny pair of crystaline ear-wear that glint with a faint verdant sheen.  The patterns within the stone resemble a face, and while holding the ring it almost feels like someone- somewhere- is watching you..." & DDUtils.RNRN &
                 getStatInformation())
 
-        If DDUtils.fileExistsWC("items\", "*_" & id & ".itm") Then loadSavedItem(DDUtils.getSessionID(DDUtils.getPathUsingWC("items\", "*_" & id & ".itm")), id)
+        If DDUtils.fileExistsWC("items\", "*_" & id & ".itm") And soul_name = "" Then loadSavedItem(DDUtils.getSessionID(DDUtils.getPathUsingWC("items\", "*_" & id & ".itm")), id)
     End Sub
 
     Public Overrides Function getTier() As Integer
-        Return If(soul_name = "" Or Game.player1.inv.getCountAt(ITEM_NAME) > 0, Nothing, 2)
+        If soul_name = "" Or Game.player1.inv.getCountAt(ITEM_NAME) > 0 Then Return Nothing
+
+        Return 2
     End Function
 
     Overrides Sub onEquip(ByRef p As Player)
@@ -68,10 +70,6 @@
         End If
 
         Return fInd
-    End Function
-    Public Overrides Function getDesc() As Object
-        Return "A polished wooden ring that glints with a faint verdant sheen.  The grain of the wood vaguely resembles a face, and while holding it almost feels like someone- somewhere- is watching you..." & DDUtils.RNRN &
-                getStatInformation()
     End Function
 
     Public Overrides Sub toSavedItem(ByRef ent As Entity)

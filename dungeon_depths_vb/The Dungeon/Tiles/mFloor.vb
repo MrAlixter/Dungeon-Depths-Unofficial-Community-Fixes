@@ -1324,7 +1324,7 @@ Public Class mFloor
     End Function
     Sub placeChest(ByVal code As String, Optional ByVal numChests As Integer = 0)
         'Fill Chest Tier List
-        For i = 1 To DDConst.BASE_CHEST.tiers.Count - 1
+        For i = cTier.tier1 To DDConst.BASE_CHEST.tiers.Count - 1
             DDConst.BASE_CHEST.tiers(i).Clear()
         Next
         For i = 0 To DDConst.BASE_CHEST.contents.upperBound
@@ -1333,7 +1333,7 @@ Public Class mFloor
                 DDConst.BASE_CHEST.tiers(c_item.getTier()).Add(c_item)
             End If
         Next
-        Rnd(-1)
+
         Randomize(code.GetHashCode)
         'Dim numChests As Integer = CInt(Int(Rnd() * 8) + 3) * Int((mBoardWidth / 30) + (mBoardHeight / 30) / 2)
         If numChests = 0 Then numChests = CInt((Int(Rnd() * Game.chestFreqRange) + Game.chestFreqMin) * (Math.Sqrt(coveredBoardSpace) / Game.chestSizeDependence))

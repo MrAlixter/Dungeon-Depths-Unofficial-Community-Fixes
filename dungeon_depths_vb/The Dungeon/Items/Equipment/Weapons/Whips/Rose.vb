@@ -7,6 +7,7 @@
     End Enum
 
     Public Const ITEM_NAME As String = "Rose"
+    Public Const TFED_NAME As String = "Whip_of_Thorns"
     Private w_mode As mode = mode.flower
 
     Sub New()
@@ -63,9 +64,9 @@
 
     Public Overrides Function getName() As String
         If w_mode = mode.flower Then
-            Return "Rose"
+            Return MyBase.getName()
         End If
 
-        Return "Whip_of_Thorns"
+        Return TFED_NAME
     End Function
 End Class

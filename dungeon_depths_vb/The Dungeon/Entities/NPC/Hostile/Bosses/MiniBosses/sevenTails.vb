@@ -75,7 +75,7 @@
         Return True
     End Function
 
-    Public Overrides Sub takeDMG(dmg As Integer, ByRef source As Entity)
+    Public Overrides Function takeDMG(ByRef dmg As Integer, ByRef source As Entity) As Boolean
         If dmg >= getIntHealth() And (health = 1 Or health = 0.66 Or health = 0.33) Then
             TextEvent.pushAndLog("Seven-Tails stumbles out of the way of the attack!")
 
@@ -83,18 +83,21 @@
         ElseIf Int(Rnd() * 2) = 0 Then
             TextEvent.pushAndLog("Seven-Tails deftly avoids the attack!")
 
-            Exit Sub
+            Return False
         End If
 
-        MyBase.takeDMG(dmg, source)
+        Dim took_dmg = MyBase.takeDMG(dmg, source)
 
         shouldRun = shouldRunST()
-    End Sub
-    Public Overrides Sub takeCritDMG(dmg As Integer, ByRef source As Entity)
+
+        Return took_dmg
+    End Function
+    Public Overrides Function takeCritDMG(ByRef dmg As Integer, ByRef source As Entity) As Boolean
         TextEvent.pushAndLog("Seven-Tails lets out a little ""eep!"" as she dodges what would have been a critical hit...")
-        MyBase.takeDMG(1, source)
+        Dim took_dmg = MyBase.takeDMG(1, source)
         shouldRun = shouldRunST()
-    End Sub
+        Return took_dmg
+    End Function
 
     Public Function shouldRunST() As Boolean
         If Game.player1.perks(perk.seventailsstage) = 1 Then

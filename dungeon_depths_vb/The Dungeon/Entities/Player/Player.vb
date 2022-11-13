@@ -581,9 +581,6 @@ Public Class Player
     Public Sub createInvPerks()
         inv = New Inventory(True)
         If System.IO.File.Exists("items\" & Game.sessionID & "_9.itm") Then inv.item(SoulBlade.ITEM_NAME).loadSavedItem(Game.sessionID, 9)
-        If DDUtils.fileExistsWC("items\", "*_342.itm") Then inv.item(FaeRose.ITEM_NAME).loadSavedItem(DDUtils.getSessionID(DDUtils.getPathUsingWC("items\", "*_342.itm")), 342)
-        If DDUtils.fileExistsWC("items\", "*_343.itm") Then inv.item(FaeLingerie.ITEM_NAME).loadSavedItem(DDUtils.getSessionID(DDUtils.getPathUsingWC("items\", "*_343.itm")), 343)
-        If DDUtils.fileExistsWC("items\", "*_346.itm") Then inv.item(FaeStockings.ITEM_NAME).loadSavedItem(DDUtils.getSessionID(DDUtils.getPathUsingWC("items\", "*_346.itm")), 346)
 
         initPerks()
         initPolymorphs()
@@ -890,14 +887,24 @@ Public Class Player
         TextEvent.pushAndLog(CStr("You miss " & target.getNameWithTitle() & "!"))
     End Sub
     Public Sub hit(dmg As Integer, target As NPC)
-        TextEvent.pushAndLog(CStr("You hit " & target.getNameWithTitle() & " for " & DDUtils.formatBigNumber(dmg) & " damage!"))
-        target.takeDMG(dmg, Me)
+        Dim t_took_dmg = target.takeDMG(dmg, Me)
+
+        If t_took_dmg And Not target.isDead Then
+            TextEvent.pushAndLog(CStr("You hit " & target.getNameWithTitle() & " for " & DDUtils.formatBigNumber(dmg) & " damage!"))
+        ElseIf t_took_dmg Then
+            TextEvent.push3rdLastLog(CStr("You hit " & target.getNameWithTitle() & " for " & DDUtils.formatBigNumber(dmg) & " damage!"))
+        End If
     End Sub
     Public Sub cHit(dmg As Integer, target As NPC)
-        TextEvent.pushAndLog(CStr("You hit " & target.getNameWithTitle() & " for " & DDUtils.formatBigNumber(dmg * 2) & " damage!  Critical hit!"))
-        target.isStunned = True
-        target.stunct = 0
-        target.takeDMG(dmg * 2, Me)
+        Dim t_took_dmg = target.takeDMG(dmg * 2, Me)
+
+        If t_took_dmg And Not target.isDead Then
+            target.isStunned = True
+            target.stunct = 0
+            TextEvent.pushAndLog(CStr("You hit " & target.getNameWithTitle() & " for " & DDUtils.formatBigNumber(dmg * 2) & " damage!  Critical hit!"))
+        ElseIf t_took_dmg Then
+            TextEvent.push3rdLastLog(CStr("You hit " & target.getNameWithTitle() & " for " & DDUtils.formatBigNumber(dmg * 2) & " damage!  Critical hit!"))
+        End If
     End Sub
     Public Sub setTarget(ByRef t As NPC)
         currTarget = t
@@ -932,15 +939,15 @@ Public Class Player
         target.takeDMG(dmg * 2, Me)
     End Sub
     'taking damage
-    Public Overrides Sub takeDMG(ByVal dmg As Integer, ByRef source As Entity)
-        If PerkEffects.onDamage(Me, dmg) Then Exit Sub
+    Public Overrides Function takeDMG(ByRef dmg As Integer, ByRef source As Entity) As Boolean
+        If PerkEffects.onDamage(Me, dmg) Then Return False
 
         Game.lblPHealtDiff.Tag -= dmg
 
         TextEvent.pushAndLog(CStr("You got hit! -" & DDUtils.formatBigNumber(dmg) & " health!"))
 
-        MyBase.takeDMG(dmg, source)
-    End Sub
+        Return MyBase.takeDMG(dmg, source)
+    End Function
     Public Sub takeUnconditionalDMG(ByVal dmg As Integer, ByRef source As Entity)
         Game.lblPHealtDiff.Tag -= dmg
 
@@ -948,16 +955,16 @@ Public Class Player
 
         MyBase.takeDMG(dmg, source)
     End Sub
-    Public Overrides Sub takeCritDMG(ByVal dmg As Integer, ByRef source As Entity)
-        If PerkEffects.onDamage(Me, dmg, True) Then Exit Sub
+    Public Overrides Function takeCritDMG(ByRef dmg As Integer, ByRef source As Entity) As Boolean
+        If PerkEffects.onDamage(Me, dmg, True) Then Return False
         If dmg > getIntHealth() And dmg > 0.05 * getMaxHealth() Then dmg = getIntHealth() - 1
 
         Game.lblPHealtDiff.Tag -= dmg
 
         TextEvent.pushAndLog(CStr("You got hit!  Critical hit!  -" & DDUtils.formatBigNumber(dmg) & " health!"))
 
-        MyBase.takeDMG(dmg, source)
-    End Sub
+        Return MyBase.takeDMG(dmg, source)
+    End Function
     Public Sub takeUnconditionalCritDMG(ByVal dmg As Integer, ByRef source As Entity)
         If dmg > getIntHealth() And dmg > 0.05 * getMaxHealth() Then dmg = getIntHealth() - 1
 

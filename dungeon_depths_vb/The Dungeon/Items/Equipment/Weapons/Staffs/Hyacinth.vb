@@ -7,12 +7,13 @@
     End Enum
 
     Public Const ITEM_NAME As String = "Hyacinth"
+    Public Const TFED_NAME As String = "Hyacinthian_Staff"
     Private w_mode As mode = mode.flower
 
     Sub New()
         '|ID Info|
         setName(ITEM_NAME)
-        id = 348
+        id = 377
         tier = Nothing
 
         '|Item Flags|
@@ -69,9 +70,9 @@
 
     Public Overrides Function getName() As String
         If w_mode = mode.flower Then
-            Return "Hyacinth"
+            Return MyBase.getName()
         End If
 
-        Return "Hyacinthian_Staff"
+        Return TFED_NAME
     End Function
 End Class

@@ -104,10 +104,6 @@
         MyBase.toMale(form)
         setName("Shady Wizard")
     End Sub
-    Public Overrides Sub toDoll()
-        toDoll()
-        isShop = False
-    End Sub
 
     '| - COMBAT - |
     Public Overrides Sub attackCMD(ByRef target As Entity)

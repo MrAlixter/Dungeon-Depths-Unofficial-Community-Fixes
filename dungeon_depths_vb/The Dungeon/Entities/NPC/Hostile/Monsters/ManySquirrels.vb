@@ -57,17 +57,19 @@
         End Select
     End Sub
 
-    Public Overrides Sub takeDMG(ByVal dmg As Integer, ByRef source As Entity)
+    Public Overrides Function takeDMG(ByRef dmg As Integer, ByRef source As Entity) As Boolean
         Dim startHealth = getIntHealth()
 
-        MyBase.takeDMG(dmg, source)
+        Dim took_damage = MyBase.takeDMG(dmg, source)
 
         If Not Game.lblEvent.Visible Then
             TextEvent.pushAndLog(dmg & " squirrels are defeated!")
         Else
             TextEvent.pushLog(startHealth & " squirrels are defeated!")
         End If
-    End Sub
+
+        Return took_damage
+    End Function
 
     Protected Overrides Sub miss(target As Player)
         TextEvent.pushAndLog(CStr("You are able to evade your opponents!"))

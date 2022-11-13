@@ -48,6 +48,8 @@
 
         TextEvent.pushNPCDialog("Ah, a fresh slate.  Don't stay out of too much trouble now, caution won't lead you anywhere...interesting...")
 
+        p.drawPort()
+
         count -= 1
     End Sub
 End Class

@@ -3,10 +3,10 @@
 
     Public Const ITEM_NAME As String = "Fae-Touched_Rose"
 
-    Private soul_name As String
-    Private h_color As Color
+    Private Shared soul_name As String
+    Private Shared h_color As Color
 
-    Public Shared img_ind As Tuple(Of Integer, Boolean, Boolean) = New Tuple(Of Integer, Boolean, Boolean)(0, False, False)
+    Private Shared img_ind As Tuple(Of Integer, Boolean, Boolean) = New Tuple(Of Integer, Boolean, Boolean)(0, False, False)
 
     Sub New()
         '|ID Info|
@@ -31,6 +31,8 @@
         '|Description|
         setDesc("A tiny flower, radiating with magical energy..." & DDUtils.RNRN &
                 getStatInformation())
+
+        If DDUtils.fileExistsWC("items\", "*_" & id & ".itm") And soul_name = "" Then loadSavedItem(DDUtils.getSessionID(DDUtils.getPathUsingWC("items\", "*_" & id & ".itm")), id)
     End Sub
 
     Public Overrides Sub onEquip(ByRef p As Player)
@@ -98,7 +100,9 @@
     End Sub
 
     Public Overrides Function getTier() As Integer
-        Return If(soul_name = "" Or Game.player1.inv.getCountAt(ITEM_NAME) > 0, Nothing, 2)
+        If soul_name = "" Or Game.player1.inv.getCountAt(ITEM_NAME) > 0 Then Return Nothing
+
+        Return 2
     End Function
 
     Public Sub makeAccImg()

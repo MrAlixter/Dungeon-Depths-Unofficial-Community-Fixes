@@ -30,7 +30,7 @@
     End Sub
 
     Public Overrides Function getUsable() As Boolean
-        Return Game.combat_engaged And Not Game.player1 Is Nothing AndAlso (Not Game.player1.equippedAcce.getAName.Equals(ITEM_NAME) And Game.player1.currTarget.getSName.Contains("Fae") And Not Game.player1.currTarget.debuffed)
+        Return Game.combat_engaged And Not Game.player1 Is Nothing And Not Game.player1.currTarget Is Nothing AndAlso (Not Game.player1.equippedAcce.getAName.Equals(ITEM_NAME) And Game.player1.currTarget.getSName.Contains("Fae") And Not Game.player1.currTarget.debuffed)
     End Function
 
     Public Overrides Sub use(ByRef p As Player)
