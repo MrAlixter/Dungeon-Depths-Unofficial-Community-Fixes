@@ -66,8 +66,8 @@
         End If
 
         p.changeHairColor(Color.FromArgb(255, 181, 148, 98))
-        p.prt.setIAInd(pInd.rearhair, 41, True, True)
-        p.prt.setIAInd(pInd.midhair, 47, True, True)
+        p.prt.setIAInd(pInd.rearhair, 39, True, True)
+        p.prt.setIAInd(pInd.midhair, 21, True, True)
         p.prt.setIAInd(pInd.mouth, 0, True, False)
         p.prt.setIAInd(pInd.eyes, p.pState.iArrInd(pInd.eyes).Item1, p.pState.iArrInd(pInd.eyes).Item2, p.pState.iArrInd(pInd.eyes).Item3)
         p.prt.setIAInd(pInd.fronthair, 10, True, True)
@@ -100,8 +100,8 @@
             p.MtF()
         End If
         p.changeHairColor(Color.FromArgb(255, 181, 148, 98))
-        p.prt.setIAInd(pInd.rearhair, 41, True, True)
-        p.prt.setIAInd(pInd.midhair, 47, True, True)
+        p.prt.setIAInd(pInd.rearhair, 39, True, True)
+        p.prt.setIAInd(pInd.midhair, 21, True, True)
         p.prt.setIAInd(pInd.mouth, 0, True, False)
         p.prt.setIAInd(pInd.eyes, p.pState.iArrInd(pInd.eyes).Item1, p.pState.iArrInd(pInd.eyes).Item2, p.pState.iArrInd(pInd.eyes).Item3)
         p.prt.setIAInd(pInd.fronthair, 10, True, True)
