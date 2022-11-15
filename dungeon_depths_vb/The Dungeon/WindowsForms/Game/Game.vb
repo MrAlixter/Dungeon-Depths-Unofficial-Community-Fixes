@@ -3962,4 +3962,8 @@ Public Class Game
     Private Sub cboxSpellSpecialDescSelector_SelectedIndexChanged(sender As Object, e As EventArgs) Handles cboxSpellSpecialDescSelector.SelectedIndexChanged
         SpellSpecDescBackend.cboxSpellSpecIndexChanged(sender, e, player1)
     End Sub
+
+    Private Sub lstLog_SelectedIndexChanged(sender As Object, e As EventArgs) Handles lstLog.SelectedIndexChanged
+        lstLog.SelectedIndex = -1
+    End Sub
 End Class

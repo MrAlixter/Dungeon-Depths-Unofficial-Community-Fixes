@@ -50,7 +50,6 @@ Public Class Monster
         l.Add(New Tuple(Of mInd, String)(mInd.imp, EImp.BASE_NAME))
         l.Add(New Tuple(Of mInd, String)(mInd.succ_princess, ESuccPrincess.BASE_NAME))
         l.Add(New Tuple(Of mInd, String)(mInd.web_caster_arach, WebCasterArach.BASE_NAME))
-        l.Add(New Tuple(Of mInd, String)(mInd.succ_princess, ESuccPrincess.BASE_NAME))
         l.Add(New Tuple(Of mInd, String)(mInd.bovinomancer, Bovinomancer.BASE_NAME))
         l.Add(New Tuple(Of mInd, String)(mInd.less_gorgon, LesserGorgon.BASE_NAME))
         l.Add(New Tuple(Of mInd, String)(mInd.faerie, FaerieEnemy.BASE_NAME))

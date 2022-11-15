@@ -3,9 +3,9 @@
 
     Public Const ITEM_NAME As String = "Cynn's_Tonic"
 
-    Public Const TIER2 = 50
-    Public Const TIER3 = 100
-    Public Const TIER4 = 200
+    Public Const TIER2 = 75
+    Public Const TIER3 = 150
+    Public Const TIER4 = 300
     Public Const TIER5 = 500
 
     Sub New()
@@ -25,8 +25,14 @@
         '|Description|
         setDesc("A glass vial filled to the brim with a brilliant scarlet elixir.  A small label with a crude drawing of a grinning demoness states that it should be used ""for a good time""..." & DDUtils.RNRN &
                 "Increases the XP of all defeated enemies for a limited time.  Drink Cynn's Tonic responsibly..." & DDUtils.RNRN & DDUtils.RNRN &
-                "[Cannot be used if the player cannot be transformed at the moment]")
+                "[Cannot be used if the player's form is not stable]")
     End Sub
+
+    Public Overrides Function getDesc() As Object
+        Return "A glass vial filled to the brim with a brilliant scarlet elixir.  A small label with a crude drawing of a grinning demoness states that it should be used ""for a good time""..." & DDUtils.RNRN &
+                "Increases the XP of all defeated enemies for a limited time.  Drink Cynn's Tonic responsibly..." & DDUtils.RNRN &
+                If(Transformation.canBeTFed(Game.player1), "[Cannot be used if the player's form is not stable]", "Your form is not stable, and the vial doesn't seem to want to open...")
+    End Function
 
     Overrides Sub use(ByRef p As Player)
         If Me.getUsable() = False Then Exit Sub

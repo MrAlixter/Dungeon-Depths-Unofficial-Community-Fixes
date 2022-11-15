@@ -12,7 +12,7 @@
 
         '|Stats|
         maxHealth = 250
-        mana = 45
+        maxMana = 45
         attack = 15
         defense = 10
         speed = 45
@@ -54,6 +54,7 @@
     End Sub
 
     Sub spell1(ByRef e As Entity)
+        mana -= 14
         TextEvent.pushAndLog("The " & getName() & " casts ""Bovinize"", turning you into a cow!")
 
         If Not e.getPlayer Is Nothing Then
@@ -77,6 +78,7 @@
     End Sub
 
     Sub spell2(ByRef e As Entity)
+        mana -= 5
         Dim dmg As Integer = 35 + Int(Rnd() * 20)
         dmg = getSpellDamage(e, dmg)
 
