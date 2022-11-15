@@ -30,9 +30,11 @@
         If Not isPlayerTFed(p) Then
             out = "Well... not much to change back yet, right?"
             Game.player1.inv.add(Gold.ITEM_NAME, value)
+            Game.player1.inv.setCount(ITEM_NAME, 0)
         ElseIf Not Transformation.canBeTFed(p) Then
             out = "No can do friend, looks like you've still got something going on..."
             Game.player1.inv.add(Gold.ITEM_NAME, value)
+            Game.player1.inv.setCount(ITEM_NAME, 0)
         Else
             out = "Alright, hold steady for a bit, I've got the perfect little charm to get you right back to normal."
             p.revertToSState()

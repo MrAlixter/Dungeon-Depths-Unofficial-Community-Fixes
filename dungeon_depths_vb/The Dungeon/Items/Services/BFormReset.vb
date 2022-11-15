@@ -28,6 +28,7 @@
         Dim p = Game.player1
 
         If Not Transformation.canBeTFed(p) Then
+            Game.shopMenu.Close()
             TextEvent.pushNPCDialog("Unfortunately, you seem to be in a rather unstable state.  I am afraid that I will not be able to set your base state at this time.")
             Game.player1.gold += value
             Exit Sub
