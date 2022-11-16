@@ -3,7 +3,8 @@
 
     Public Const ITEM_NAME As String = "Chicken_Suit"
 
-    Dim prevWingInd As Integer = 0
+    Dim prevWingInd As Tuple(Of Integer, Boolean, Boolean) = New Tuple(Of Integer, Boolean, Boolean)(0, False, False)
+
     Sub New()
         '|ID Info|
         setName(ITEM_NAME)
@@ -52,13 +53,13 @@
         Dim btf As BimboTF = New BimboTF(2, 5, 0.25, True)
         btf.chickenTf(p)
 
-        prevWingInd = CInt(p.prt.iArrInd(pInd.wings).Item1)
+        prevWingInd = p.prt.iArrInd(pInd.wings)
         p.prt.setIAInd(pInd.wings, 3, True, False)
     End Sub
 
     Public Overrides Sub onUnequip(ByRef p As Player)
         MyBase.onUnequip(p)
 
-        If p.prt.checkFemInd(pInd.wings, 3) Then p.prt.setIAInd(pInd.wings, prevWingInd, True, True)
+        If p.prt.checkFemInd(pInd.wings, 3) Then p.prt.setIAInd(pInd.wings, prevWingInd)
     End Sub
 End Class
