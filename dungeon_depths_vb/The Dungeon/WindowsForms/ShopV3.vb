@@ -27,7 +27,7 @@ Public Class ShopV3
 
         'update the player's inventory
         For Each itm In getFormattedInventory(p.inv, inv_type.player)
-            If Not itm.EndsWith(":") And Not itm.Equals("") Then
+            If Not p.inv.item(itm) Is Nothing AndAlso Not itm.EndsWith(":") And Not itm.Equals("") Then
                 boxInventory.Items.Add(lineup(p.inv.item(itm).getName(), (p.inv.item(itm).value / 2), p.inv.item(itm).count))
                 pInventory.Add(itm)
             Else
@@ -37,7 +37,7 @@ Public Class ShopV3
 
         'update the shopkeeper's inventory
         For Each itm In getFormattedInventory(sk.inv, inv_type.shopkeeper)
-            If Not itm.EndsWith(":") And Not itm.Equals("") Then
+            If Not sk.inv.item(itm) Is Nothing AndAlso Not itm.EndsWith(":") And Not itm.Equals("") Then
                 boxShop.Items.Add(lineupSeller(sk.inv.item(itm).getAName(), ShopNPC.getAdjustedValue(sk, itm)))
                 skInventory.Add(itm)
             Else
@@ -125,6 +125,12 @@ Public Class ShopV3
 
     '| - EVENT HANDLERS - |
     Private Sub Shop_Load(sender As Object, e As EventArgs) Handles MyBase.Load
+        If sk Is Nothing OrElse Not sk.isShop Then
+            TextEvent.pushLog("There isn't an NPC to shop with here...")
+            Me.Close()
+            Exit Sub
+        End If
+
         skInventory = New List(Of String)
         pInventory = New List(Of String)
 

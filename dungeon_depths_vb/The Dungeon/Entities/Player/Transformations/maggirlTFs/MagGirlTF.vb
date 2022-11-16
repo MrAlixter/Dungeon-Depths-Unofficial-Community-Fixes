@@ -90,7 +90,7 @@ Public Class MagGirlTF
     Overridable Sub step2()
         Dim p As Player = Game.player1
         If p.formStates(stateInd.magGState).initFlag And (p.perks(perk.mgind) = MG_IND Or p.perks(perk.mgind) = -1) Then
-            p.formStates(stateInd.magGState).load(p)
+            revertPToState(p, p.formStates(stateInd.magGState))
         Else
             tfBody(p)
             p.changeClass(className)
@@ -113,6 +113,22 @@ Public Class MagGirlTF
         p.drawPort()
 
         stopTF()
+    End Sub
+
+    Protected Sub revertPToState(ByRef p As Player, ByRef s As State)
+        Dim tHth As Integer = p.health
+        Dim tMna As Integer = p.mana
+        Dim tHun As Integer = p.stamina
+        Dim tGold As Integer = p.gold
+
+        s.load(p, False)
+
+        p.health = tHth
+        p.mana = tMna
+        p.stamina = tHun
+        p.gold = tGold
+
+        p.UIupdate()
     End Sub
 
     Shared Sub halfRevert(ByRef p As Player)

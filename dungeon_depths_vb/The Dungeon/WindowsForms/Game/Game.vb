@@ -422,6 +422,7 @@ Public Class Game
         Next
 
         'fill in any missing shop NPCs
+        If Not shop_npc_engaged And Not active_shop_npc Is Nothing Then active_shop_npc = Nothing
         For Each sNPC In shop_npc_list
             If Not sNPC.isDead AndAlso sNPC.pos.X >= 0 And sNPC.pos.Y >= 0 And sNPC.pos.Y < mBoardHeight And sNPC.pos.X < mBoardWidth Then
                 currFloor.mBoard(sNPC.pos.Y, sNPC.pos.X).Text = "$"
@@ -3423,7 +3424,6 @@ Public Class Game
         '|-Clean up Game-|
         picNPC.Visible = False
         shop_npc_engaged = False
-        active_shop_npc = Nothing
         btnEQP.Enabled = True
         npc_list.Clear()
         player1.canMoveFlag = True
@@ -3486,21 +3486,25 @@ Public Class Game
 
     '| - UI BUTTONS - |
     Private Sub btnDrop_Click(sender As Object, e As EventArgs) Handles btnDrop.Click
+        If selectedItem Is Nothing Then Exit Sub
+
         doLblEventOnClose()
         selectedItem.discard()
         player1.inv.invNeedsUDate = True
         player1.UIupdate()
 
-        lstInventory.SelectedItem = Nothing
+        lstInventory.SelectedIndex = -1
         selectedItem = Nothing
         btnUse.Enabled = False
         btnDrop.Enabled = False
         btnLook.Enabled = False
     End Sub
     Private Sub btnLook_Click(sender As Object, e As EventArgs) Handles btnLook.Click
+        If selectedItem Is Nothing Then Exit Sub
+
         doLblEventOnClose()
         selectedItem.examine()
-        lstInventory.SelectedItem = Nothing
+        lstInventory.SelectedIndex = -1
         selectedItem = Nothing
         btnUse.Enabled = False
         btnDrop.Enabled = False

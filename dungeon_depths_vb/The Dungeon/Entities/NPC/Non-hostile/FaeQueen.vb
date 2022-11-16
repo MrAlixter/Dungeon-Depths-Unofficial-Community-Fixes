@@ -347,6 +347,8 @@
             Game.currFloor.mBoard(p.Y, p.X).Tag = 0
         Next
 
+        spawnStairs(Game.currFloor)
+
         Game.drawBoard()
 
         Game.player1.perks(perk.f13fqueentalked) = 3
