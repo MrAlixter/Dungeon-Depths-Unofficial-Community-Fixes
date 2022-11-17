@@ -1342,7 +1342,7 @@ Public Class Player
         If perks(perk.astatue) > -1 Then nextCombatAction = AddressOf PerkEffects.statueMove
         If perks(perk.mesmerized) > -1 AndAlso Int(Rnd() * 2) = 0 Then nextCombatAction = AddressOf PerkEffects.mesStun
         If perks(perk.stunned) = 1 Then nextCombatAction = AddressOf PerkEffects.stun
-        If perks(perk.faepassangers) = 1 Or perks(perk.faepassangers) = 2 Or perks(perk.faepassangers) = 3 Then nextCombatAction = AddressOf FaeWoodsQ2A.faeAttack
+        If Game.currFloor.floorNumber = 13 And perks(perk.faepassangers) = 1 Or perks(perk.faepassangers) = 2 Or perks(perk.faepassangers) = 3 Then nextCombatAction = AddressOf FaeWoodsQ2A.faeAttack
 
         MyBase.update()
 

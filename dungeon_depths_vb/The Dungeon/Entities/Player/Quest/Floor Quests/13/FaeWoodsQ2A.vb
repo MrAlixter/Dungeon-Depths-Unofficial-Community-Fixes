@@ -33,6 +33,12 @@
         Return Not getActive() And Game.mDun.numCurrFloor = 13 And p.perks(perk.meetfae1) > 0 And Game.player1.perks(perk.faecurse) < 0 And Game.fqueen.pos.X = -1 And p.quests(qInd.faewoods1a).getComplete And ((Game.currFloor.chestList.Count < 1 And Int(Rnd() * 3) = 0) Or Game.currFloor.chestList.Count > 0) And Not p.ongoingTFs.contains(tfind.faebimbo) And Not p.ongoingTFs.contains(tfind.faecleric) And Not getComplete() And Not Game.combat_engaged And Not Game.shop_npc_engaged
     End Function
 
+    Public Overrides Sub completeEntireQuest()
+        MyBase.completeEntireQuest()
+
+        Game.player1.perks(perk.faepassangers) = -1
+    End Sub
+
     '| - QUESTIONS - |
     Sub askForHelp()
         TextEvent.pushYesNo("Are you interested?", AddressOf agreeHelp, AddressOf disagreeHelp)

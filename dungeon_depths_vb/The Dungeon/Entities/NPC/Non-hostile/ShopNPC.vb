@@ -349,7 +349,7 @@ Public MustInherit Class ShopNPC
         img_index = LocalImgInd.beegirl
         tfStatUpdate()
 
-        If Game.combat_engaged And Game.player1.formName.Equals("Bee Girl") Then Game.shopNPCFromCombat(Me)
+        If Game.combat_engaged Then Game.shopNPCFromCombat(Me)
     End Sub
 
     '| - DIALOG - |

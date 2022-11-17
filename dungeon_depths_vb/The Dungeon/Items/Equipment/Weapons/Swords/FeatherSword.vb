@@ -6,7 +6,7 @@
     Sub New()
         '|ID Info|
         setName(ITEM_NAME)
-        id = 6
+        id = 326
         tier = Nothing
 
         '|Item Flags|
