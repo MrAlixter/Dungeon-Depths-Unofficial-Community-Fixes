@@ -1709,7 +1709,11 @@ Public Class Game
         subString = subString.Trim()
 
         If combat_engaged Then
-            player1.nextCombatAction = Sub(t As Entity) Special.specPerform(t, player1, subString)
+            If subString = "Flash Strike" Then
+                Special.specPerform(m, player1, subString)
+            Else
+                player1.nextCombatAction = Sub(t As Entity) Special.specPerform(t, player1, subString)
+            End If
         Else
             Special.specPerform(m, player1, subString)
         End If
