@@ -3177,7 +3177,6 @@ Partial Class Game
         Me.Controls.Add(Me.picEnemy)
         Me.Controls.Add(Me.btnLeave)
         Me.Controls.Add(Me.cboxNPCMG)
-        Me.Controls.Add(Me.btnShop)
         Me.Controls.Add(Me.btnTalk)
         Me.Controls.Add(Me.picNPC)
         Me.Controls.Add(Me.btnL)
@@ -3241,6 +3240,7 @@ Partial Class Game
         Me.Controls.Add(Me.pnlInvFilter)
         Me.Controls.Add(Me.lstInventory)
         Me.Controls.Add(Me.picBoard)
+        Me.Controls.Add(Me.btnShop)
         Me.DoubleBuffered = True
         Me.ForeColor = System.Drawing.Color.Black
         Me.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle
