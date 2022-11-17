@@ -3177,6 +3177,7 @@ Partial Class Game
         Me.Controls.Add(Me.picEnemy)
         Me.Controls.Add(Me.btnLeave)
         Me.Controls.Add(Me.cboxNPCMG)
+        Me.Controls.Add(Me.btnShop)
         Me.Controls.Add(Me.btnTalk)
         Me.Controls.Add(Me.picNPC)
         Me.Controls.Add(Me.btnL)
