@@ -255,7 +255,6 @@ Partial Class Game
         Me.picFaeBee = New System.Windows.Forms.PictureBox()
         Me.picFaeBee2 = New System.Windows.Forms.PictureBox()
         Me.picvalktf = New System.Windows.Forms.PictureBox()
-        Me.picBoard = New System.Windows.Forms.PictureBox()
         Me.picFVTBoss1 = New System.Windows.Forms.PictureBox()
         Me.picFVTBoss2 = New System.Windows.Forms.PictureBox()
         Me.picFVTBoss3 = New System.Windows.Forms.PictureBox()
@@ -263,6 +262,7 @@ Partial Class Game
         Me.picBlowupCynn = New System.Windows.Forms.PictureBox()
         Me.picCynnOnahole1 = New System.Windows.Forms.PictureBox()
         Me.picCynnOnahole2 = New System.Windows.Forms.PictureBox()
+        Me.picBoard = New System.Windows.Forms.PictureBox()
         CType(Me.picEnemy, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me.picNPC, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me.picStart, System.ComponentModel.ISupportInitialize).BeginInit()
@@ -320,7 +320,6 @@ Partial Class Game
         CType(Me.picFaeBee, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me.picFaeBee2, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me.picvalktf, System.ComponentModel.ISupportInitialize).BeginInit()
-        CType(Me.picBoard, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me.picFVTBoss1, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me.picFVTBoss2, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me.picFVTBoss3, System.ComponentModel.ISupportInitialize).BeginInit()
@@ -328,6 +327,7 @@ Partial Class Game
         CType(Me.picBlowupCynn, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me.picCynnOnahole1, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me.picCynnOnahole2, System.ComponentModel.ISupportInitialize).BeginInit()
+        CType(Me.picBoard, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.SuspendLayout()
         '
         'btnUse1
@@ -3045,15 +3045,6 @@ Partial Class Game
         Me.picvalktf.TabStop = False
         Me.picvalktf.Visible = False
         '
-        'picBoard
-        '
-        Me.picBoard.BackColor = System.Drawing.Color.Black
-        Me.picBoard.Location = New System.Drawing.Point(20, 39)
-        Me.picBoard.Name = "picBoard"
-        Me.picBoard.Size = New System.Drawing.Size(690, 450)
-        Me.picBoard.TabIndex = 419
-        Me.picBoard.TabStop = False
-        '
         'picFVTBoss1
         '
         Me.picFVTBoss1.BackgroundImage = CType(resources.GetObject("picFVTBoss1.BackgroundImage"), System.Drawing.Image)
@@ -3124,6 +3115,15 @@ Partial Class Game
         Me.picCynnOnahole2.TabStop = False
         Me.picCynnOnahole2.Visible = False
         '
+        'picBoard
+        '
+        Me.picBoard.BackColor = System.Drawing.Color.Black
+        Me.picBoard.Location = New System.Drawing.Point(20, 39)
+        Me.picBoard.Name = "picBoard"
+        Me.picBoard.Size = New System.Drawing.Size(690, 450)
+        Me.picBoard.TabIndex = 419
+        Me.picBoard.TabStop = False
+        '
         'Game
         '
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Inherit
@@ -3177,7 +3177,6 @@ Partial Class Game
         Me.Controls.Add(Me.picEnemy)
         Me.Controls.Add(Me.btnLeave)
         Me.Controls.Add(Me.cboxNPCMG)
-        Me.Controls.Add(Me.btnShop)
         Me.Controls.Add(Me.btnTalk)
         Me.Controls.Add(Me.picNPC)
         Me.Controls.Add(Me.btnL)
@@ -3240,8 +3239,8 @@ Partial Class Game
         Me.Controls.Add(Me.picLust1)
         Me.Controls.Add(Me.pnlInvFilter)
         Me.Controls.Add(Me.lstInventory)
-        Me.Controls.Add(Me.picBoard)
         Me.Controls.Add(Me.btnShop)
+        Me.Controls.Add(Me.picBoard)
         Me.DoubleBuffered = True
         Me.ForeColor = System.Drawing.Color.Black
         Me.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle
@@ -3319,7 +3318,6 @@ Partial Class Game
         CType(Me.picFaeBee, System.ComponentModel.ISupportInitialize).EndInit()
         CType(Me.picFaeBee2, System.ComponentModel.ISupportInitialize).EndInit()
         CType(Me.picvalktf, System.ComponentModel.ISupportInitialize).EndInit()
-        CType(Me.picBoard, System.ComponentModel.ISupportInitialize).EndInit()
         CType(Me.picFVTBoss1, System.ComponentModel.ISupportInitialize).EndInit()
         CType(Me.picFVTBoss2, System.ComponentModel.ISupportInitialize).EndInit()
         CType(Me.picFVTBoss3, System.ComponentModel.ISupportInitialize).EndInit()
@@ -3327,6 +3325,7 @@ Partial Class Game
         CType(Me.picBlowupCynn, System.ComponentModel.ISupportInitialize).EndInit()
         CType(Me.picCynnOnahole1, System.ComponentModel.ISupportInitialize).EndInit()
         CType(Me.picCynnOnahole2, System.ComponentModel.ISupportInitialize).EndInit()
+        CType(Me.picBoard, System.ComponentModel.ISupportInitialize).EndInit()
         Me.ResumeLayout(False)
         Me.PerformLayout()
 
@@ -3554,7 +3553,6 @@ Partial Class Game
     Friend WithEvents tsQuadrupedKey As System.Windows.Forms.ToolStripMenuItem
     Friend WithEvents tsUnicornKey As System.Windows.Forms.ToolStripMenuItem
     Friend WithEvents tsDragonKey As System.Windows.Forms.ToolStripMenuItem
-    Friend WithEvents picBoard As System.Windows.Forms.PictureBox
     Friend WithEvents picFVTBoss1 As System.Windows.Forms.PictureBox
     Friend WithEvents picFVTBoss2 As System.Windows.Forms.PictureBox
     Friend WithEvents picFVTBoss3 As System.Windows.Forms.PictureBox
@@ -3567,4 +3565,5 @@ Partial Class Game
     Friend WithEvents picBlowupCynn As System.Windows.Forms.PictureBox
     Friend WithEvents picCynnOnahole1 As System.Windows.Forms.PictureBox
     Friend WithEvents picCynnOnahole2 As System.Windows.Forms.PictureBox
+    Friend WithEvents picBoard As System.Windows.Forms.PictureBox
 End Class
