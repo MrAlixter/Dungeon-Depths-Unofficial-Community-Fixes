@@ -1,5 +1,5 @@
 ﻿Public Class LeporineOoze
-    Inherits MiniBoss
+    Inherits Monster
 
     Public Const BASE_NAME As String = "Leporine Ooze"
 
@@ -98,7 +98,16 @@
         End If
 
         TextEvent.pushAndLog(DDUtils.capitalizeFirst(getNameWithTitle() & " swipes at you with a tendril of slime!"))
-        MyBase.attackCMD(target, False)
+        attackCMD(target, False)
+    End Sub
+
+    Public Overloads Sub attackCMD(ByRef target As Entity, ByVal checkStun As Boolean)
+        If isStunned And checkStun Then
+            TextEvent.push(DDUtils.capitalizeFirst(getNameWithTitle) & " is stunned!")
+            Exit Sub
+        End If
+
+        MyBase.attackCMD(target)
     End Sub
 
     Public Overrides Function reactToSpell(spell As String) As Boolean

@@ -98,7 +98,7 @@
         End If
 
         If mtf Then
-            out += "  You also notice that you feel a little ... breathier ... between your legs and a quick pat down confirms that you are now female.  Seems like this bell is turning you into a proper cow..."
+            out += "  You also notice that you feel a little ... breezier ... between your legs and a quick pat down confirms that you are now female.  Seems like this bell is turning you into a proper cow..."
         End If
 
         TextEvent.push(out)

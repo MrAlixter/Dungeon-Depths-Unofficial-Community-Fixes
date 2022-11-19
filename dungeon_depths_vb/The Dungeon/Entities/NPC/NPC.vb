@@ -209,7 +209,7 @@ Public Class NPC
         End If
 
         '| - Key Handling - |
-        If inv.getCountAt(53) > 0 And Not Me.GetType().IsSubclassOf(GetType(ShopNPC)) Then
+        If inv.getCountAt(53) > 0 And Not Me.GetType().IsSubclassOf(GetType(ShopNPC)) And Not Me.GetType().IsSubclassOf(GetType(MiniBoss)) And Not Me.GetType().IsSubclassOf(GetType(Boss)) Then
             TextEvent.push("Your foe drops a key!")
             inv.setCount(53, 1)
             Dim c1 As Chest = DDConst.BASE_CHEST.Create(inv, pos)

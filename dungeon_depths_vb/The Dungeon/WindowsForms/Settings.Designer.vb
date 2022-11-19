@@ -215,9 +215,9 @@ Partial Class Settings
         Me.chkBimboNames.ForeColor = System.Drawing.Color.White
         Me.chkBimboNames.Location = New System.Drawing.Point(16, 437)
         Me.chkBimboNames.Name = "chkBimboNames"
-        Me.chkBimboNames.Size = New System.Drawing.Size(227, 21)
+        Me.chkBimboNames.Size = New System.Drawing.Size(251, 21)
         Me.chkBimboNames.TabIndex = 30
-        Me.chkBimboNames.Text = "Use pre-made random names"
+        Me.chkBimboNames.Text = "Avoid beta name change logic" & Global.Microsoft.VisualBasic.ChrW(13) & Global.Microsoft.VisualBasic.ChrW(10)
         Me.chkBimboNames.UseVisualStyleBackColor = True
         '
         'tabAdvSettings
